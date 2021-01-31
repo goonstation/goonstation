@@ -25,6 +25,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 	var/animationScale = 3
 	var/detonation_time = INFINITY
 	var/lightColor = list(255,255,255,255)
+	var/recharge_delay = 0
 	examine_hint = "It is covered in very conspicuous markings."
 
 	New()
@@ -32,7 +33,8 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 		src.react_heat[2] = "VOLATILE REACTION DETECTED"
 
 	post_setup()
-		if (artitype.name != "eldritch" && prob(5))
+		. = ..()
+		if (artitype.name != "eldritch" && prob(3))
 			dud = 1
 
 	effect_activate(var/obj/O)
@@ -40,16 +42,12 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 			return
 		var/turf/T = get_turf(O)
 		src.detonation_time = TIME + src.explode_delay
-		if(doAlert && ON_COOLDOWN(O, "alertArm", 10 MINUTES))
+		if(recharge_delay && ON_COOLDOWN(O, "bomb_cooldown", recharge_delay))
 			T.visible_message("<b><span class='alert'>[O] [text_cooldown]</span></b>")
 			playsound(T, sound_cooldown, 100, 1)
 			SPAWN_DBG(3 SECONDS)
 				O.ArtifactDeactivated() // lol get rekt spammer
 			return
-		if (explode_delay < 1)
-			deploy_payload(O)
-			return
-
 
 		// this is all just fluff
 		if (warning_initial)
@@ -65,10 +63,13 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 
 
 	effect_process(var/obj/O)
+		if(..())
+			return
 		if(!src.activated)
 			return
 		var/turf/T = get_turf(O)
-		playsound(T, alarm_during, 30, 1) // repeating noise, so people who come near later know it's a bomb
+		if(alarm_during)
+			playsound(T, alarm_during, 30, 1) // repeating noise, so people who come near later know it's a bomb
 
 		if(TIME > src.detonation_time)
 			src.detonation_time = INFINITY
@@ -86,12 +87,13 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 
 			// actual boom
 			SPAWN_DBG(10 SECONDS)
-				if (src.activated)
+				if (!O.disposed && src.activated)
 					blewUp = 1
 					deploy_payload(O)
 
 	effect_deactivate(obj/O)
-		. = ..()
+		if(..())
+			return
 		// and remove all the animation stuff when it is deactivated (:
 		animate(O, pixel_y = 0, pixel_y = 0, time = 3,loop = 1, easing = LINEAR_EASING)
 		if(O.simple_light)
@@ -164,6 +166,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 	associated_object = /obj/machinery/artifact/bomb/devastating
 	rarity_class = 4
 	doAlert = 1
+	recharge_delay = 10 MINUTES
 	animationScale = 6
 
 	New()
@@ -210,14 +213,18 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 	associated_object = /obj/machinery/artifact/bomb/chemical
 	rarity_class = 2
 	explode_delay = 0
+	alarm_initial = null
+	alarm_during = null
+	alarm_final = null
 	react_xray = list(5,65,20,11,"HOLLOW")
 	validtypes = list("ancient","martian","eldritch","precursor")
 	validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/heat,/datum/artifact_trigger/carbon_touch)
 	var/payload_type = 0 // 0 for smoke, 1 for foam, 2 for propellant, 3 for just dumping fluids
-	var/recharge_delay = 600
+	recharge_delay = 10 MINUTES
 	var/list/payload_reagents = list()
 
 	post_setup()
+		. = ..()
 		payload_type = rand(0,3)
 		var/list/potential_reagents = list()
 		switch(artitype.name)

@@ -77,10 +77,9 @@ MATERIAL
 			var/obj/item/sheet/metal/M = new /obj/item/sheet/metal(usr.loc)
 			if(src.material) M.setMaterial(src.material)
 			M.amount = weldinput
-			src.amount -= weldinput * 2
+			src.consume_rods(weldinput * 2)
 
 			user.visible_message("<span class='alert'><B>[user]</B> welds the rods together into metal.</span>")
-			if(src.amount < 1)	qdel(src)
 			return
 		if (istype(W, /obj/item/rods))
 			var/obj/item/rods/R = W

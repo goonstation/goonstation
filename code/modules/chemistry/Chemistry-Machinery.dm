@@ -441,7 +441,7 @@
 			else
 				for (var/i=pillcount, i>0, i--)
 					var/obj/item/reagent_containers/pill/P = new(src.output_target)
-					P.name = pillname
+					P.name = "[pillname] pill"
 					R.trans_to(P, pillvol)
 					color_icon(P)
 			src.updateUsrDialog()
@@ -471,7 +471,7 @@
 				return
 			var/med = src.check_whitelist(R)
 			var/obj/item/reagent_containers/patch/P
-			if (R.total_volume <= 20)
+			if (R.total_volume <= 15)
 				P = new /obj/item/reagent_containers/patch/mini(src.output_target)
 				P.name = "[patchname] mini-patch"
 				R.trans_to(P, P.initial_volume)

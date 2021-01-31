@@ -547,7 +547,9 @@
 	if (ismob(AM))
 		var/mob/tmob = AM
 		if (ishuman(tmob))
-			src:viral_transmission(AM,"Contact",1)
+			if(isliving(src))
+				var/mob/living/L = src
+				L.viral_transmission(AM,"Contact",1)
 
 			if ((tmob.bioHolder.HasEffect("magnets_pos") && src.bioHolder.HasEffect("magnets_pos")) || (tmob.bioHolder.HasEffect("magnets_neg") && src.bioHolder.HasEffect("magnets_neg")))
 				//prevent ping-pong loops by deactivating for a second, as they can crash the server under some circumstances
@@ -1441,6 +1443,9 @@
 		return (!mover.density || !src.density || src.lying)
 
 /mob/proc/update_inhands()
+
+/mob/proc/has_any_hands()
+	. = FALSE
 
 /mob/proc/put_in_hand(obj/item/I, hand)
 	. = 0

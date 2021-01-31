@@ -196,7 +196,7 @@
 	name = "molitz crystal"
 	desc = "An unusual crystal of Molitz."
 	icon_state = "molitz"
-	material_name = "Molitz"
+	material_name = "Molitz Beta"
 	crystal = 1
 
 	setup_material()

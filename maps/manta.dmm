@@ -6007,7 +6007,7 @@
 	icon_state = "1-4"
 	},
 /obj/machinery/drainage/big,
-/turf/simulated/floor/airless/bluewhite/corner{
+/turf/simulated/floor/bluewhite/corner{
 	dir = 4
 	},
 /area/station/medical/medbay/lobby)

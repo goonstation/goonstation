@@ -335,6 +335,14 @@ function output(message, group) {
     }
 }
 
+//Receive a large number of messages all at once to cut down on round trips.
+function outputBatch(messages) {
+    var list = JSON.parse(messages);
+    for (var i = 0; i < list.length; i++) {
+        output(list[i].message, list[i].group);
+    }
+}
+
 //Runs a route within byond, client or server side. Consider this "ehjax" for byond.
 function runByond(uri) {
     window.location = uri;

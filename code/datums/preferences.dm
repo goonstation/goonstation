@@ -143,14 +143,8 @@ datum/preferences
 			src.randomize_name(0, 0, 1)
 
 		src.real_name = src.name_first + " " + src.name_last
-/*		var/list/namecheck = splittext(trim(real_name), " ")
-		if (namecheck.len < 2 || length(real_name) < 5)
-			randomize_name()
-			return
-		for (var/i = 1, i <= namecheck.len, i++)
-			namecheck[i] = capitalize(namecheck[i])
-		real_name = jointext(namecheck, " ")
-*/
+
+
 	proc/update_preview_icon()
 		if (!AH)
 			logTheThing("debug", usr ? usr : null, null, "a preference datum's appearence holder is null!")

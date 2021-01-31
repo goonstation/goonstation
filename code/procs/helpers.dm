@@ -2028,7 +2028,7 @@ proc/countJob(rank)
 	if (!digits)
 		digits = 6
 	. = ""
-	for (var/i = 0, i < digits, i++)
+	for (var/i in 1 to digits)
 		. += pick(hex_chars)
 
 //A global cooldown on this so it doesnt destroy the external server
