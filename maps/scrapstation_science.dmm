@@ -1,0 +1,162 @@
+"ak" = (/turf/simulated/floor/purplewhite{dir = 10},/area/station/science/restroom)
+"aC" = (/obj/machinery/shower{dir = 8},/obj/machinery/drainage/big,/turf/simulated/floor/purpleblack{dir = 8},/area/station/science/chemistry)
+"aQ" = (/obj/machinery/chem_heater,/turf/simulated/floor/purpleblack{dir = 1},/area/station/science/chemistry)
+"aX" = (/turf/simulated/wall/auto/supernorn,/area/space)
+"bD" = (/turf/simulated/floor/stairs/medical/wide/middle{dir = 8},/area/station/science/teleporter)
+"dC" = (/obj/machinery/door/airlock/pyro/glass/sci{dir = 4; name = "Teleporter Public Access"},/obj/firedoor_spawn,/obj/machinery/door/poddoor/pyro{dir = 8; id = "scienceteleporter"; name = "Pad Shutters"; p_open = 1},/turf/simulated/floor/engine{allows_vehicles = 0},/area/station/science/teleporter)
+"dM" = (/obj/table/reinforced/chemistry/auto,/obj/item/reagent_containers/dropper/mechanical{pixel_x = -4},/obj/item/reagent_containers/dropper/mechanical{pixel_x = -7},/obj/item/clothing/glasses/spectro{pixel_y = 6},/obj/item/clothing/glasses/spectro{pixel_y = 9},/obj/item/reagent_containers/dropper{pixel_x = 2; pixel_y = -4},/obj/item/reagent_containers/dropper{pixel_x = 2},/turf/simulated/floor/black,/area/station/science/chemistry)
+"es" = (/obj/stool/chair/moveable{dir = 4},/turf/simulated/floor/purplewhite{dir = 8},/area/station/science/lobby)
+"fl" = (/obj/table/reinforced/chemistry/auto,/obj/item/paper/book/medical_guide{pixel_x = 3},/obj/item/paper/book/medical_guide{pixel_x = -3},/turf/simulated/floor/purpleblack{dir = 1},/area/station/science/chemistry)
+"fx" = (/obj/rack,/obj/item/clothing/suit/space/emerg{pixel_y = -2},/obj/item/clothing/head/emerg{pixel_x = -3; pixel_y = 10},/obj/item/clothing/mask/gas{pixel_x = 7; pixel_y = 6},/obj/item/tank/emergency_oxygen{pixel_x = 12; pixel_y = -5},/obj/item/device/light/flashlight,/obj/item/device/light/glowstick,/obj/item/storage/wall/medical{dir = 1; pixel_y = 32},/turf/simulated/floor/purplewhite{dir = 5},/area/station/science/teleporter)
+"fX" = (/obj/table/reinforced/auto,/obj/machinery/door/airlock/pyro/glass/windoor{dir = 8},/obj/firedoor_spawn,/obj/access_spawn/chemistry,/turf/simulated/floor/purple,/area/station/science/chemistry)
+"gT" = (/obj/machinery/door/airlock/pyro/glass/sci{name = "Teleporter Access"},/obj/access_spawn/chemistry,/obj/firedoor_spawn,/obj/machinery/door/poddoor/pyro{dir = 1; id = "scienceteleporter"; name = "Pad Shutters"; p_open = 1},/turf/simulated/floor/engine{allows_vehicles = 0},/area/station/science/teleporter)
+"hf" = (/turf/simulated/floor/purplewhite{dir = 5},/area/station/science/lobby)
+"hC" = (/turf/simulated/floor/purplewhite{dir = 1},/area/station/science/lobby)
+"im" = (/obj/submachine/chem_extractor,/turf/simulated/floor/purpleblack,/area/station/science/chemistry)
+"jf" = (/turf/simulated/floor/purpleblack{dir = 8},/area/station/science/chemistry)
+"jW" = (/obj/lrteleporter,/turf/simulated/floor/purplewhite{dir = 10},/area/station/science/teleporter)
+"ku" = (/obj/table/reinforced/chemistry/auto,/obj/item/storage/box/beakerbox,/obj/item/storage/box/beakerbox{pixel_y = 3},/turf/simulated/floor/black,/area/station/science/chemistry)
+"kK" = (/turf/simulated/floor/purplewhite/corner{dir = 4},/area/station/science/lobby)
+"li" = (/obj/stool/chair/office/purple{dir = 1},/turf/simulated/floor/purpleblack{dir = 9},/area/station/science/chemistry)
+"mo" = (/obj/storage/crate{name = "Expedition Crate"},/obj/item/reagent_containers/food/snacks/sandwich/pbh{desc = "Peanut butter and honey between two slices of bread. It's grown some spotty green mold on its surface, eurgh!"; name = "moldy peanut butter and honey sandwich"},/obj/item/reagent_containers/food/snacks/sandwich/pbh{desc = "Peanut butter and honey between two slices of bread. It's grown some spotty green mold on its surface, eurgh!"; name = "moldy peanut butter and honey sandwich"},/obj/item/reagent_containers/food/snacks/sandwich/pbh{desc = "Peanut butter and honey between two slices of bread. It's grown some spotty green mold on its surface, eurgh!"; name = "moldy peanut butter and honey sandwich"},/obj/item/camera_test,/obj/item/camera_test,/obj/item/camera_test,/obj/item/device/radio/headset/multifreq,/obj/item/device/radio/headset/multifreq,/obj/item/device/radio/headset/multifreq,/obj/item/audio_tape,/obj/item/audio_tape,/obj/item/device/audio_log,/turf/simulated/floor/purplewhite{dir = 4},/area/station/science/teleporter)
+"mB" = (/obj/submachine/chef_sink/chem_sink{desc = "A water-filled unit intended for hand-washing purposes."; dir = 8; pixel_x = 8},/turf/simulated/floor/purpleblack{dir = 4},/area/station/science/chemistry)
+"oP" = (/obj/stool/chair/office/purple{dir = 8},/turf/simulated/floor/purpleblack{dir = 8},/area/station/science/chemistry)
+"pp" = (/turf/simulated/wall/auto/reinforced/supernorn,/area/station/science/chemistry)
+"qp" = (/turf/space,/area/space)
+"qw" = (/obj/machinery/chem_heater,/obj/item_dispenser/latex_gloves{amount = 10; pixel_x = 32; pixel_y = 0},/turf/simulated/floor/purpleblack{dir = 4},/area/station/science/chemistry)
+"qD" = (/obj/machinery/chem_master{dir = 4; pixel_x = -4},/turf/simulated/floor/purpleblack{dir = 8},/area/station/science/chemistry)
+"sD" = (/obj/machinery/door/airlock/pyro/glass/sci,/obj/firedoor_spawn,/obj/access_spawn/chemistry,/turf/space,/area/station/science/teleporter)
+"sP" = (/obj/machinery/door/airlock/pyro/glass/sci{dir = 4},/obj/firedoor_spawn,/obj/access_spawn/chemistry,/turf/simulated/floor/purple,/area/station/science/chemistry)
+"tK" = (/turf/simulated/wall/auto/supernorn,/area/station/science/restroom)
+"vb" = (/turf/simulated/floor/darkblue,/area/station/science/bot_storage)
+"vJ" = (/obj/machinery/door_control{id = "scienceteleporter"; name = "Pad Shutters"; pixel_x = -8; pixel_y = 26},/obj/machinery/door_control{id = "scienceteleporter2"; name = "Pad Access Door"; pixel_x = 8; pixel_y = 26},/turf/simulated/floor/purplewhite{dir = 5},/area/station/science/teleporter)
+"wS" = (/obj/machinery/door/airlock/pyro/glass/sci{dir = 4},/obj/access_spawn/research,/obj/firedoor_spawn,/turf/simulated/floor/purple,/area/station/science/lobby)
+"xN" = (/obj/table/auto,/obj/item/device/gps{pixel_x = 5; pixel_y = 2},/obj/item/device/gps{pixel_x = -6; pixel_y = 2},/turf/simulated/floor/purplewhite{dir = 4},/area/station/science/teleporter)
+"xU" = (/turf/simulated/floor/purpleblack{dir = 1},/area/station/science/chemistry)
+"yg" = (/turf/simulated/floor/purplewhite{dir = 4},/area/station/science/teleporter)
+"yU" = (/turf/simulated/floor/purpleblack{dir = 10},/area/station/science/chemistry)
+"zh" = (/turf/simulated/floor/purplewhite{dir = 8},/area/station/science/teleporter)
+"zO" = (/obj/machinery/door/airlock/pyro/glass/sci{dir = 4},/obj/firedoor_spawn,/obj/access_spawn/chemistry,/turf/simulated/floor/darkblue,/area/station/science/bot_storage)
+"Ah" = (/turf/simulated/floor/purplewhite{dir = 1},/area/station/science/teleporter)
+"Au" = (/turf/simulated/floor/purplewhite{dir = 4},/area/station/science/restroom)
+"AQ" = (/turf/simulated/floor/purplewhite{dir = 1},/area/station/science/restroom)
+"Bl" = (/obj/machinery/glass_recycler,/obj/table/reinforced/chemistry/beakers,/turf/simulated/floor/black,/area/station/science/chemistry)
+"Bn" = (/obj/cabinet/chemicals,/turf/simulated/floor/purpleblack{dir = 5},/area/station/science/chemistry)
+"Cc" = (/obj/stool/chair/moveable,/turf/simulated/floor/purplewhite{dir = 1},/area/station/science/lobby)
+"CJ" = (/turf/simulated/floor/purpleblack{dir = 6},/area/station/science/chemistry)
+"Dg" = (/obj/wingrille_spawn/auto/crystal,/turf/simulated/floor/purple,/area/station/science/chemistry)
+"Dm" = (/turf/simulated/wall/auto/supernorn,/area/station/science/teleporter)
+"DQ" = (/turf/simulated/floor/purpleblack{dir = 4},/area/station/science/chemistry)
+"Eh" = (/obj/machinery/chem_master,/turf/simulated/floor/purpleblack,/area/station/science/chemistry)
+"Fd" = (/turf/simulated/floor/purplewhite{dir = 5},/area/station/science/restroom)
+"Fh" = (/obj/table/reinforced/chemistry/auto,/turf/simulated/floor/purpleblack/corner,/area/station/science/chemistry)
+"Fo" = (/turf/simulated/floor/purplewhite/corner,/area/station/science/restroom)
+"FA" = (/turf/simulated/floor/purplewhite{dir = 8},/area/station/science/lobby)
+"Gf" = (/obj/table/reinforced/chemistry/auto,/turf/simulated/floor/purpleblack,/area/station/science/chemistry)
+"GH" = (/obj/stool/chair/office/purple,/turf/simulated/floor/purpleblack{dir = 6},/area/station/science/chemistry)
+"Hb" = (/obj/machinery/networked/teleconsole,/turf/simulated/floor/purplewhite{dir = 9},/area/station/science/teleporter)
+"Hx" = (/obj/storage/closet/emergency,/turf/simulated/floor/purplewhite{dir = 6},/area/station/science/teleporter)
+"Hz" = (/obj/item_dispenser/latex_gloves{amount = 10},/obj/machinery/bot/firebot,/turf/simulated/floor/purpleblack{dir = 1},/area/station/science/chemistry)
+"Ip" = (/turf/simulated/floor/white,/area/station/science/restroom)
+"Iq" = (/turf/simulated/floor/purplewhite/corner,/area/station/science/lobby)
+"Iv" = (/obj/machinery/chem_dispenser,/turf/simulated/floor/purpleblack{dir = 6},/area/station/science/chemistry)
+"Ji" = (/obj/table/reinforced/auto,/obj/item/device/camera_viewer{network = "Zeta"},/obj/item/clothing/head/helmet/camera{pixel_y = 12},/turf/simulated/floor/purplewhite{dir = 10},/area/station/science/teleporter)
+"Kg" = (/obj/machinery/chemicompiler_stationary,/turf/simulated/floor/purpleblack{dir = 10},/area/station/science/chemistry)
+"KG" = (/obj/submachine/chem_extractor{dir = 4; pixel_x = -4},/turf/simulated/floor/purpleblack{dir = 8},/area/station/science/chemistry)
+"KP" = (/turf/simulated/floor/purplewhite/corner{dir = 8},/area/station/science/restroom)
+"Ls" = (/turf/simulated/floor/stairs/medical/wide/other{dir = 8},/area/station/science/teleporter)
+"Ly" = (/turf/simulated/floor/engine{allows_vehicles = 0},/area/station/science/teleporter)
+"Lz" = (/obj/item/storage/wall/office{dir = 4; pixel_x = -32; pixel_y = 0},/turf/simulated/floor/purplewhite{dir = 9},/area/station/science/lobby)
+"LJ" = (/turf/simulated/floor/purplewhite{dir = 9},/area/station/science/restroom)
+"LQ" = (/obj/machinery/door/airlock/pyro/glass/sci,/obj/firedoor_spawn,/obj/access_spawn/chemistry,/turf/simulated/floor/purple,/area/station/science/restroom)
+"LT" = (/turf/simulated/floor/purplewhite{dir = 10},/area/station/science/lobby)
+"Mo" = (/obj/submachine/chef_sink/chem_sink{desc = "A water-filled unit intended for hand-washing purposes."; dir = 8; pixel_x = 8},/turf/simulated/floor/purpleblack{dir = 6},/area/station/science/chemistry)
+"Ob" = (/turf/simulated/floor/purplewhite{dir = 10},/area/station/science/teleporter)
+"OA" = (/turf/simulated/floor/white,/area/station/science/lobby)
+"OM" = (/turf/simulated/floor/white,/area/station/science/teleporter)
+"Px" = (/obj/table/reinforced/chemistry/auto,/obj/item/storage/box/syringes,/obj/machinery/phone/wall{pixel_y = 32},/turf/simulated/floor/purpleblack{dir = 1},/area/station/science/chemistry)
+"PE" = (/turf/simulated/floor/purpleblack,/area/station/science/chemistry)
+"Qb" = (/turf/simulated/floor/purplewhite{dir = 9},/area/station/science/lobby)
+"Qk" = (/turf/simulated/floor/purplewhite,/area/station/science/restroom)
+"Qo" = (/turf/simulated/floor/purplewhite{dir = 8},/area/station/science/restroom)
+"Qt" = (/turf/simulated/floor/purplewhite/corner{dir = 4},/area/station/science/teleporter)
+"Qz" = (/turf/simulated/floor/purplewhite{dir = 4},/area/station/science/lobby)
+"QA" = (/obj/item/device/radio/beacon,/turf/simulated/floor/white,/area/station/science/teleporter)
+"QX" = (/obj/stool/chair/office{dir = 1},/turf/simulated/floor/purplewhite{dir = 8},/area/station/science/teleporter)
+"Ro" = (/turf/simulated/wall/auto/reinforced/supernorn,/area/station/science/teleporter)
+"RC" = (/obj/machinery/networked/telepad,/turf/simulated/floor/engine{allows_vehicles = 0},/area/station/science/teleporter)
+"Sh" = (/obj/table/reinforced/chemistry/auto,/turf/simulated/floor/purpleblack{dir = 9},/area/station/science/chemistry)
+"Sw" = (/turf/simulated/floor/purplewhite/corner{dir = 1},/area/station/science/restroom)
+"SH" = (/obj/machinery/door/airlock/pyro/glass/sci{dir = 4},/obj/firedoor_spawn,/obj/access_spawn/chemistry,/turf/simulated/floor/purple,/area/station/science/lobby)
+"TK" = (/turf/simulated/floor/purplewhite{dir = 6},/area/station/science/restroom)
+"TN" = (/obj/rack,/obj/item/clothing/suit/space/emerg{pixel_y = -2},/obj/item/clothing/head/emerg{pixel_x = -3; pixel_y = 10},/obj/item/clothing/mask/gas{pixel_x = 7; pixel_y = 6},/obj/item/tank/emergency_oxygen{pixel_x = 12; pixel_y = -5},/obj/item/device/light/flashlight,/obj/item/device/light/glowstick,/turf/simulated/floor/purplewhite{dir = 4},/area/station/science/teleporter)
+"TR" = (/turf/simulated/floor/purplewhite,/area/station/science/lobby)
+"UR" = (/obj/machinery/door/airlock/pyro/glass/sci,/obj/firedoor_spawn,/obj/access_spawn/chemistry,/turf/simulated/floor/purple,/area/station/science/chemistry)
+"US" = (/obj/machinery/computer/telescope,/turf/simulated/floor/purplewhite{dir = 6},/area/station/science/teleporter)
+"UT" = (/obj/machinery/shower{dir = 4},/obj/machinery/drainage/big,/turf/simulated/floor/purpleblack{dir = 4},/area/station/science/chemistry)
+"Vd" = (/obj/machinery/chem_dispenser,/turf/simulated/floor/purpleblack{dir = 1},/area/station/science/chemistry)
+"Vg" = (/turf/simulated/floor/purplewhite/corner{dir = 1},/area/station/science/lobby)
+"Vq" = (/obj/machinery/door/airlock/pyro/glass/sci{dir = 4; name = "Teleporter Access"},/obj/access_spawn/chemistry,/obj/firedoor_spawn,/obj/machinery/door/poddoor/pyro{dir = 4; id = "scienceteleporter"; name = "Pad Shutters"; p_open = 1},/turf/simulated/floor/engine{allows_vehicles = 0},/area/station/science/teleporter)
+"Vr" = (/turf/simulated/floor/purplewhite{dir = 6},/area/station/science/lobby)
+"VZ" = (/obj/reagent_dispensers/foamtank,/obj/item/extinguisher,/obj/item/storage/wall/fire{pixel_y = 32},/turf/simulated/floor/purplewhite{dir = 9},/area/station/science/teleporter)
+"Wm" = (/turf/simulated/floor/purplewhite/corner{dir = 8},/area/station/science/lobby)
+"WR" = (/obj/wingrille_spawn/auto,/turf/simulated/floor/engine{allows_vehicles = 0},/area/station/science/teleporter)
+"WU" = (/turf/simulated/wall/auto/supernorn,/area/station/science/lobby)
+"Xd" = (/turf/simulated/floor/purpleblack/corner,/area/station/science/chemistry)
+"Yf" = (/obj/table/auto,/turf/simulated/floor/white,/area/station/science/lobby)
+"YQ" = (/turf/simulated/floor/purpleblack{dir = 5},/area/station/science/chemistry)
+"ZE" = (/turf/simulated/wall/auto/supernorn,/area/station/science/bot_storage)
+"ZV" = (/obj/machinery/portable_atmospherics/canister/oxygen,/turf/simulated/floor/purplewhite,/area/station/science/teleporter)
+
+(1,1,1) = {"
+qpqpqpDgDgDgDgppppppppppWUWUWUWUqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqp
+qpqpqpDgShVdaQHzPxflBnppQbhChfZEZEZEZEZEqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqp
+qpqpqpDgKGlixUxUxUYQUTppFAOAQzZEvbvbvbZEZEqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqp
+qpqpqpDgqDjfdMBlkuDQDQsPFAOAQzZEvbvbvbvbZEqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqp
+qpqpqpfXjfjfFhPEPEGHqwppFAOAQzzOvbvbvbvbZEqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqp
+qpqpqpfXoPjfDQXdimEhIvDgFAOAQzzOvbvbvbvbZEqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqp
+qpqpqpppaCyUCJmBppDgDgDgFAOAQzZEvbvbvbvbZEqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqp
+qpqpqpppKgGfPEMoppLzCcCcVgOAQzZEvbvbvbvbZEqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqp
+qpqpqpppppppURURppesYfYfOAOAQzZEZEZEZEZEZEqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqp
+qpqpqpwSQbhChChChCVgOAOAOAOAWmhChChChChfWUqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqp
+qpqpqpwSLTTRTRTRTRTRTRTRkKOAOAOAOAOAOAQzWUqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqp
+qpqpqpRoWRWRWRRoDmsDDmWUFAOAIqTRTRTRTRVrWUqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqp
+qpqpqpWRLyLyLyRoVZAhfxWUFAOAQzWUWUWUWUWUWUqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqp
+qpqpqpdCLyRCLyVqzhOMTNWUFAOAQzWUqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqp
+qpqpqpWRLyLyLyRozhOMTNWUFAOAQzWUqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqp
+qpqpqpRoWRgTRoRozhOMxNWUFAOAQzWUqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqp
+qpqpqpDmHbAhvJLszhOMmoWUFAOAQzWUqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqp
+qpqpqpDmQXQAygbDzhOMygSHFAOAQzWUqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqp
+qpqpqpDmJiQtygbDObZVHxWUFAOAQzWUqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqp
+qpqpqpaXDmjWUSDmDmDmDmWULTTRVrWUqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqp
+qpqpqpqptKtKtKtKLJAQFdtKtKLQtKtKqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqp
+qpqpqpqptKLJAQAQSwIpKPAQAQAQFdtKqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqp
+qpqpqpqptKQoIpIpIpIpIpIpIpIpAutKqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqp
+qpqpqpqptKQoIpIpIpIpIpIpIpIpAutKqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqp
+qpqpqpqptKQoIpIpFoQkQkQkQkQkTKtKqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqp
+qpqpqpqptKakQkQkTKtKtKtKtKtKtKtKqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqp
+qpqpqpqptKtKtKtKtKtKqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqp
+qpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqp
+qpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqp
+qpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqp
+qpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqp
+qpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqp
+qpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqp
+qpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqp
+qpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqp
+qpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqp
+qpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqp
+qpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqp
+qpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqp
+qpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqp
+qpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqp
+qpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqp
+qpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqp
+qpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqp
+qpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqp
+qpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqp
+qpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqp
+qpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqp
+qpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqp
+qpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqp
+"}
