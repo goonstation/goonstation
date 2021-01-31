@@ -119,8 +119,6 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 
 /datum/manufacture/mechanics/ai_status_display
 	name = "AI display"
-	item_paths = list("MET-1","CON-1","CRY-1")
-	item_amounts = list(2,6,6)
 	time = 5 SECONDS
 	create = 1
 	frame_path = /obj/machinery/ai_status_display
