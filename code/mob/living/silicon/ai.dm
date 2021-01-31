@@ -1238,11 +1238,10 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	src.updateOverlaysClient(src.client) //ov1
 	if (!isdead(src))
 		for (var/obj/machinery/ai_status_display/O in machine_registry[MACHINES_STATUSDISPLAYS]) //change status
-			SPAWN_DBG(0)
-				if (O.owner && O.owner != src)
-					return
-				O.owner = src
-				O.mode = 1
+			if (O.owner && O.owner != src)
+				continue
+			O.owner = src
+			O.mode = 1
 	return
 
 /mob/living/silicon/ai/Logout()
@@ -1250,14 +1249,13 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	..()
 	// Only turn off the status displays if we're dead.
 	if (isdead(src))
-		SPAWN_DBG(0)
-			for (var/obj/machinery/ai_status_display/O in machine_registry[MACHINES_STATUSDISPLAYS]) //change status
-				if (O.owner == src)
-					O.mode = 0
-					O.owner = null
-					O.emotion = null
-					O.message = null
-					O.face_color = null
+		for (var/obj/machinery/ai_status_display/O in machine_registry[MACHINES_STATUSDISPLAYS]) //change status
+			if (O.owner == src)
+				O.mode = 0
+				O.owner = null
+				O.emotion = null
+				O.message = null
+				O.face_color = null
 	return
 
 /mob/living/silicon/ai/say_understands(var/other)
