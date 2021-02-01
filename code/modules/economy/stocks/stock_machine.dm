@@ -17,7 +17,7 @@
 		return B.fields["current_money"]
 	return "--- account not found ---"
 
-/obj/machinery/computer/stockexchange/attack_hand(var/mob/user)
+/obj/machinery/computer/stockexchange/attack_hand(mob/user)
 	if(..())
 		return
 	src.add_dialog(user)
@@ -143,7 +143,7 @@
 	onclose(user, "computer")
 	return
 
-/obj/machinery/computer/stockexchange/attackby(var/obj/item/I as obj, user as mob)
+/obj/machinery/computer/stockexchange/attackby(obj/item/I as obj, user as mob)
 	if (istype(I, /obj/item/card/id) || (istype(I, /obj/item/device/pda2) && I:ID_card))
 		if (istype(I, /obj/item/device/pda2) && I:ID_card) I = I:ID_card
 		var/obj/item/card/id/ID = I
@@ -164,7 +164,7 @@
 	else src.attack_hand(user)
 	return
 
-/obj/machinery/computer/stockexchange/proc/sell_some_shares(var/datum/stock/ticker/S, var/mob/user)
+/obj/machinery/computer/stockexchange/proc/sell_some_shares(datum/stock/ticker/S, mob/user)
 	if (!user || !S)
 		return
 	var/li = logged_in
@@ -202,7 +202,7 @@
 		return
 	boutput(user, "<span class='notice'>Sold [amt] shares of [S.name] for [total] credits.</span>")
 
-/obj/machinery/computer/stockexchange/proc/buy_some_shares(var/datum/stock/ticker/S, var/mob/user)
+/obj/machinery/computer/stockexchange/proc/buy_some_shares(datum/stock/ticker/S, mob/user)
 	if (!user || !S)
 		return
 	var/li = logged_in
@@ -241,7 +241,7 @@
 		return
 	boutput(user, "<span class='notice'>Bought [amt] shares of [S.name] for [total] credits.</span>")
 
-/obj/machinery/computer/stockexchange/proc/do_borrowing_deal(var/datum/stock/borrow/B, var/mob/user)
+/obj/machinery/computer/stockexchange/proc/do_borrowing_deal(datum/stock/borrow/B, mob/user)
 	if (B.stock.borrow(B, logged_in))
 		boutput(user, "<span class='notice'>You successfully borrowed [B.share_amount] shares. Deposit: [B.deposit].</span>")
 	else
