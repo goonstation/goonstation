@@ -1,5 +1,11 @@
 
 (t)mon feb 01 21
+(u)Superlagg
+(p)3297
+(e)⚖🔄|balance, rework
+(+)NT struck a deal with the Wizard Federation to tone down Rathens' Secret regarding tails and cyberlimbs, in exchange for shooting a lot more blood and guts out of peoples' butts.
+(+)Rathens' Secret will only sever tails if their owner is missing limbs.
+(+)It'll also fail to sever most cyberlimbs and exotic appendages.
 (u)BenLubar
 (p)2956
 (e)🆕|feature
