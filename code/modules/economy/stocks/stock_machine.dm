@@ -5,9 +5,9 @@
 	var/logged_in = null
 	var/vmode = 0
 	deconstruct_flags = DECON_MULTITOOL
-	lr = 1
-	lg = 0.7
-	lb = 0.03
+	light_r =1
+	light_g = 0.7
+	light_b = 0.03
 
 /obj/machinery/computer/stockexchange/proc/balance()
 	if (!logged_in)
