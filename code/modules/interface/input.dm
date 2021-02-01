@@ -36,6 +36,9 @@ var/list/dirty_keystates = list()
 		if(!isnull(numkey) && M.abilityHolder)
 			if (M.abilityHolder.actionKey(numkey))
 				return
+		if(!isnull(numkey) && src.buildmode?.is_active)
+			if(src.buildmode.number_key_pressed(numkey, keys_modifier))
+				return
 
 		var/action = src.keymap.check_keybind(key, keys_modifier)
 
