@@ -1917,21 +1917,24 @@ Returns:
 	anchored = 1
 	opacity = 0
 
-	var/datum/particleSystem/barrelSmoke/particles
+	var/datum/particleSystem/barrelSmoke/smoke_part
 	var/datum/light/light
 
 	New()
-		particles = particleMaster.SpawnSystem(new /datum/particleSystem/barrelSmoke(src))
+		smoke_part = particleMaster.SpawnSystem(new /datum/particleSystem/barrelSmoke(src))
 		light = new /datum/light/point
 		light.attach(src)
 		light.set_brightness(1)
 		light.set_color(0.5, 0.3, 0)
 		light.enable()
-
 		..()
 
 	disposing()
 		particleMaster.RemoveSystem(/datum/particleSystem/barrelSmoke, src)
+		smoke_part = null
+		light.disable()
+		light.detach()
+		light = null
 		..()
 
 	attackby(obj/item/W as obj, mob/user as mob)

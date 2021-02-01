@@ -777,7 +777,7 @@ WET FLOOR SIGN
 	anchored = 1
 	layer = EFFECTS_LAYER_BASE
 	var/datum/light/light
-	var/obj/holoparticles/particles
+	var/obj/holoparticles/holoparticles
 
 	New(var/_loc)
 		set_loc(_loc)
@@ -794,14 +794,15 @@ WET FLOOR SIGN
 			animate(src, pixel_y=10, time=15, flags=ANIMATION_PARALLEL, easing=SINE_EASING, loop=-1)
 			animate(pixel_y=16, easing=SINE_EASING, time=15)
 
-		particles = new/obj/holoparticles(src.loc)
-		attached_objs = list(particles)
+		holoparticles = new/obj/holoparticles(src.loc)
+		attached_objs = list(holoparticles)
 		..(_loc)
 
 	disposing()
-		if(particles)
-			particles.invisibility = 101
-			qdel(particles)
+		if(holoparticles)
+			holoparticles.invisibility = 101
+			qdel(holoparticles)
+			holoparticles = null
 		..()
 
 /obj/holoparticles
