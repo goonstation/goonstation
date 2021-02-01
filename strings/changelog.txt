@@ -1,5 +1,9 @@
 
 (t)mon feb 01 21
+(u)BenLubar
+(p)2956
+(e)🆕|feature
+(*)Added a new Chef traitor item: Pizza Sharpener.
 (u)Flappybat
 (p)3363
 (e)🔄|rework
