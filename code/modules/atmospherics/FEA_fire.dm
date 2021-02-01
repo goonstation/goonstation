@@ -197,12 +197,14 @@
 
 			//Inhibit hotspot use as turf heats up to resolve abuse of hotspots unless catalyst is present...
 			//Scale volume at 40% of HOTSPOT_MAX_TEMPERATURE to allow for hotspot icon to transition to 2nd state
-			if(src.temperature > ( HOTSPOT_MAX_TEMPERATURE * 0.4 ))
+			if(src.temperature > ( HOTSPOT_MAX_NOCAT_TEMPERATURE * 0.4 ))
 				// Force volume as heat increases, scale to cell volume with tempurature to trigger hotspot bypass
-				if(!src.catalyst_active)
+				var/max_temp = HOTSPOT_MAX_NOCAT_TEMPERATURE
+				if(src.catalyst_active)
 					// Limit temperature based scaling to not exceed cell volume so spreading and exposure don't inappropriately scale
-					var/temperature_scaled_volume = clamp((src.temperature * CELL_VOLUME / HOTSPOT_MAX_TEMPERATURE), 1, CELL_VOLUME)
-					src.volume = max(src.volume, temperature_scaled_volume)
+					max_temp = HOTSPOT_MAX_CAT_TEMPERATURE
+				var/temperature_scaled_volume = clamp((src.temperature * CELL_VOLUME /  max_temp), 1, CELL_VOLUME)
+				src.volume = max(src.volume, temperature_scaled_volume)
 
 			location.assume_air(affected)
 
