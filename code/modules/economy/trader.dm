@@ -1,6 +1,6 @@
-/proc/most_applicable_trade(var/list/goods_buy, var/obj/item/sell_item)
+/proc/most_applicable_trade(var/list/datum/commodity/goods_buy, var/obj/item/sell_item)
 	var/list/goods_buy_types = new /list(0)
-	for(var/datum/commodity/N in goods_buy)
+	for(var/datum/commodity/N as() in goods_buy)
 		if (istype(sell_item, N.comtype))
 			goods_buy_types[N.comtype] = N
 	return goods_buy_types[maximal_subtype(goods_buy_types)]
@@ -517,11 +517,11 @@
 				user.visible_message("<span class='notice'>[src] rummages through [user]'s [O].</span>")
 				playsound(src.loc, "rustle", 60, 1)
 				var/cratevalue = null
-				for (var/obj/M in O.contents)
-					var/datum/commodity/tradetype = most_applicable_trade(src.goods_buy, M)
+				for (var/obj/sellitem in O.contents)
+					var/datum/commodity/tradetype = most_applicable_trade(src.goods_buy, sellitem)
 					if(tradetype)
 						cratevalue += tradetype.price
-						qdel(M)
+						qdel(sellitem)
 				if(cratevalue)
 					boutput(user, "<span class='notice'>[src] takes what they want from [O]. [cratevalue] credits have been transferred to your account.</span>")
 					account.fields["current_money"] += cratevalue
