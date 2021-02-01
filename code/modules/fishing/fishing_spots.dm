@@ -95,10 +95,11 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/obj/item/fish/salmon = 20,\
 	/obj/item/fish/herring = 15,\
 	/obj/item/fish/red_herring = 5,\
-	/obj/item/reagent_containers/food/snacks/yuckburn = 20)
+	/obj/item/reagent_containers/food/snacks/yuckburn = 20,
+	/obj/item/reagent_containers/food/snacks/fish_fingers = 10)
 
 	generate_fish(var/mob/user, var/obj/item/fishing_rod/fishing_rod, atom/target)
 		. = ..()
-		if(!istype(., /obj/item/reagent_containers/food/snacks/yuckburn))
+		if(!istype(., /obj/item/reagent_containers/food/snacks))
 			var/obj/machinery/deep_fryer/fryer = target
 			. = fryer.fryify(.)
