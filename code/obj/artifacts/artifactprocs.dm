@@ -171,6 +171,8 @@
 	if (!src.ArtifactSanityCheck())
 		return
 	var/datum/artifact/A = src.artifact
+	if (!A.activated) // do not deactivate if already deactivated
+		return
 	if (A.deact_sound)
 		playsound(src.loc, A.deact_sound, 100, 1)
 	if (A.deact_text)
