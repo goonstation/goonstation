@@ -582,7 +582,7 @@ var/list/special_pa_observing_verbs = list(
 	src.verbs -= special_admin_observing_verbs
 	src.verbs -= special_pa_observing_verbs
 
-	src.buildmode = 0
+	src.buildmode = null
 	src.show_popup_menus = 1
 
 	if (widescreen)
