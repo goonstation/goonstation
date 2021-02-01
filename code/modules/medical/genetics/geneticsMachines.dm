@@ -793,9 +793,10 @@
 						temp -= BE.id
 						matches++
 				if (matches == GR.required_effects.len)
-					var/datum/bioEffect/NEWBE = new GR.result(src)
+					var/datum/bioEffect/NEWBE = new GR.result()
 					src.saved_mutations += NEWBE
 					var/datum/bioEffect/GBE = NEWBE.get_global_instance()
+					NEWBE.dnaBlocks.blockList = GBE.dnaBlocks.blockList
 					GBE.research_level = max(GBE.research_level, EFFECT_RESEARCH_ACTIVATED) // counts as researching it
 					for (var/datum/bioEffect/X as() in src.combining)
 						src.saved_mutations -= X
