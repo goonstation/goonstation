@@ -1829,9 +1829,6 @@ Returns:
 	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
 	item_state = "ouijaboard"
 	w_class = 3.0
-	var/ready = 1
-	var/list/users = list()
-	var/use_delay = 30
 
 	New()
 		. = ..()
@@ -1845,10 +1842,7 @@ Returns:
 	Click(location,control,params)
 		if(isobserver(usr) || iswraith(usr))
 
-			if(!users.Find(usr))
-				users[usr] = 0
-
-			if((world.time - users[usr]) >= use_delay)
+			if(GET_COOLDOWN(src, usr) == 0)
 				var/list/words = list()
 				for(var/i=0, i<rand(5, 10), i++)
 					var/picked = pick(strings("ouija_board.txt", "ouija_board_words"))
@@ -1858,21 +1852,23 @@ Returns:
 					var/selected = input(usr, "Select a word:", src.name) as null|anything in words
 					if(!selected) return
 
-					if((world.time - users[usr]) < use_delay)
+					if(ON_COOLDOWN(src, usr, 3 SECONDS))
 						usr.show_text("Please wait a moment before using the board again.", "red")
 						return
 
-					users[usr] = world.time
-
-					SPAWN_DBG(0)
-						if(src && selected)
-							animate_float(src, 1, 5, 1)
-							for (var/mob/O in observersviewers(7, src))
-								O.show_message("<B><span class='notice'>The board spells out a message ... \"[selected]\"</span></B>", 1)
+					if(src && selected)
+						animate_float(src, 1, 5, 1)
+						if(prob(20) && !ON_COOLDOWN(src, "bother chaplains", 1 MINUTE))
+							var/area/AR = get_area(src)
+							for(var/mob/M in by_cat[TR_CAT_CHAPLAINS])
+								if(M.client)
+									boutput(M, "<span class='notice'>You sense a disturbance emanating from \a [src] in \the [AR.name].</span>")
+						for (var/mob/O in observersviewers(7, src))
+							O.show_message("<B><span class='notice'>The board spells out a message ... \"[selected]\"</span></B>", 1)
 #ifdef HALLOWEEN
-							if (istype(usr.abilityHolder, /datum/abilityHolder/ghost_observer))
-								var/datum/abilityHolder/ghost_observer/GH = usr.abilityHolder
-								GH.change_points(30)
+						if (istype(usr.abilityHolder, /datum/abilityHolder/ghost_observer))
+							var/datum/abilityHolder/ghost_observer/GH = usr.abilityHolder
+							GH.change_points(30)
 #endif
 			else
 				usr.show_text("Please wait a moment before using the board again.", "red")
