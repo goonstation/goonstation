@@ -289,6 +289,14 @@ proc/make_cleanable(var/type,var/loc,var/list/viral_list)
 			src.reagents.add_reagent("bloodc", 0.1)
 		src.sample_reagent = reagent_id
 		src.reagents.add_reagent(reagent_id, amt)
+		src.update_color()
+
+	proc/update_color()
+		if(src.reagents.total_volume > 0.5)
+			src.color = src.reagents.get_average_rgb()
+		else
+			var/datum/reagent/reagent = reagents_cache[src.sample_reagent]
+			src.color = rgb(reagent.fluid_r, reagent.fluid_g, reagent.fluid_b)
 
 
 	HasEntered(atom/movable/AM as mob|obj)
@@ -1765,8 +1773,12 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 						if (src.blood_DNA && src.blood_type) // For forensics (Convair880).
 							b.blood_DNA = src.blood_DNA
 							b.blood_type = src.blood_type
+						b.color = src.color
 						if (randcolor) // only used by funnygibs atm. in the future, the possibilities are endless for this var. imagine what it could do..........
 							b.color = random_saturated_hex_color()
+						if(src.sample_reagent)
+							b.set_sample_reagent_custom(src.sample_reagent, 10)
+
 					if("MARTIAN")
 						if (prob(40))
 							var/obj/decal/cleanable/blood/b = make_cleanable( /obj/decal/cleanable/blood/splatter/extra,get_turf(src))
