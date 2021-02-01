@@ -318,7 +318,7 @@
 			return 1
 		return 0
 
-	proc/sellShares(vwhose, howmany)
+	proc/sellShares(whose, howmany)
 		if (howmany < 0)
 			return
 		howmany = round(howmany)
