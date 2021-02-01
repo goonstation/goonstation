@@ -8,7 +8,7 @@
 	flags = NOSPLASH
 	mats = 20
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS
-	var/obj/item/target_item = null
+	var/obj/target_item = null
 	var/cooktime = 0
 	var/max_wclass = 3
 	var/obj/item/material_piece/my_bar = null
@@ -17,9 +17,27 @@
 		..()
 		UnsubscribeProcess()
 
+	custom_suicide = TRUE
+	suicide(mob/user)
+		if (!src.user_can_suicide(user))
+			return 0
+		if(isnull(src.my_bar))
+			boutput(user, "<span class='alert'>You can't plate yourself without a source material!</span>")
+			return 0
+		user.visible_message("<span class='alert'><b>[user] jumps into \the [src].</b></span>")
+		var/obj/statue = user.become_statue(src.my_bar.material)
+		pool(src.my_bar)
+		src.my_bar = null
+		statue.set_loc(src)
+		src.cooktime = 0
+		src.target_item = statue
+		src.icon_state = "plater1"
+		SubscribeToProcess()
+		return 1
+
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (isghostdrone(user) || isAI(user))
-			boutput(usr, "<span class='alert'>[src] refuses to interface with you!</span>")
+			boutput(user, "<span class='alert'>[src] refuses to interface with you!</span>")
 			return
 		if (W.cant_drop) //For borg held items
 			boutput(user, "<span class='alert'>You can't put that in [src] when it's attached to you!</span>")
@@ -67,7 +85,7 @@
 			SubscribeToProcess()
 			return
 		else
-			boutput(user, "<span class='alert'>You can't plate something without a source material!.</span>")
+			boutput(user, "<span class='alert'>You can't plate something without a source material!</span>")
 			return
 
 	onVarChanged(variable, oldval, newval)
@@ -116,13 +134,13 @@
 			UnsubscribeProcess()
 			return
 
-		if(my_bar?.material)
+		if(my_bar?.material && isnull(target_item.material))
 			target_item.setMaterial(my_bar.material)
 			pool(my_bar)
-			my_bar = null
+		my_bar = null
 
-		for (var/obj/item/I in src) //Things can get dropped somehow sometimes ok
-			I.set_loc(src.loc)
+		for (var/atom/movable/AM in src) //Things can get dropped somehow sometimes ok
+			AM.set_loc(src.loc)
 
 		src.target_item = null
 		src.icon_state = "plater0"
