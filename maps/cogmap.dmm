@@ -49821,7 +49821,8 @@
 /obj/machinery/atmospherics/pipe/vent{
 	dir = 4
 	},
-/turf/simulated/floor/airless/plating/scorched,
+/obj/lattice,
+/turf/space,
 /area/space)
 "cch" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
@@ -49860,7 +49861,8 @@
 /obj/machinery/atmospherics/pipe/vent{
 	dir = 8
 	},
-/turf/simulated/floor/airless/plating/scorched,
+/obj/lattice,
+/turf/space,
 /area/space)
 "ccm" = (
 /obj/cable{
