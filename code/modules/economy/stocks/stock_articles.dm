@@ -1,4 +1,4 @@
-/datum/article
+/datum/stock/article
 	var/headline = "Something big is happening"
 	var/subtitle = "Investors panic as stock market collapses"
 	var/article = "God, it's going to be fun to randomly generate this."

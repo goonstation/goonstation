@@ -4,30 +4,30 @@
 	var/list/tokens = list()
 
 	var/list/title_templates = list("The brand new %product_name% by %company_name% will revolutionize %industry%", \
-																				 "%jobs% rejoice as %product_name% hits shelves", \
-																				 "Does %product_name% threaten to reorganize the %industrial% status quo?")
+																	"%jobs% rejoice as %product_name% hits shelves", \
+																	"Does %product_name% threaten to reorganize the %industrial% status quo?")
 
 	var/list/title_templates_neutral = list("%product_name%: as if nothing happened", \
-																								 "Nothing new but the name: %product_name% not quite exciting %jobs%", \
-																								 "Same old %company_name%, same old product")
+																					"Nothing new but the name: %product_name% not quite exciting %jobs%", \
+																					"Same old %company_name%, same old product")
 
 	var/list/title_templates_bad = list("%product_name% shaping up to be the disappointment of the century", \
-																						 "Recipe for disaster: %company_name% releases %product_name%", \
-																						 "Atrocious quality - %jobs% boycott %product_name%")
+																			"Recipe for disaster: %company_name% releases %product_name%", \
+																			"Atrocious quality - %jobs% boycott %product_name%")
 
 	var/list/title_templates_ooc = list("%company_name% is looking to enter the %industry% playing field with %product_name%", \
-																						 "%company_name% broadens spectrum, %product_name% is their latest and greatest")
+																			"%company_name% broadens spectrum, %product_name% is their latest and greatest")
 	var/list/subtitle_templates = list("%author% investigates whether or not you should invest!", \
-																						"%outlet%'s very own %author% takes it to the magnifying glass", \
-																						"%outlet% lets you know if you should use it", \
-																						"Read our top tips for investors", \
-																						"%author% wants you to know if it's a safe bet to buy")
+																			"%outlet%'s very own %author% takes it to the magnifying glass", \
+																			"%outlet% lets you know if you should use it", \
+																			"Read our top tips for investors", \
+																			"%author% wants you to know if it's a safe bet to buy")
 
 	proc/generateProductName(var/company_name)
 		return
 
 	proc/generateInCharacterProductArticle(var/product_name, var/datum/stock/ticker/S)
-		var/datum/article/A = new
+		var/datum/stock/article/A = new
 		var/list/add_tokens = list("company_name" = S.name, "product_name" = product_name, "outlet" = A.outlet, "author" = A.author)
 		A.about = S
 		A.opinion = rand(-1, 1)
