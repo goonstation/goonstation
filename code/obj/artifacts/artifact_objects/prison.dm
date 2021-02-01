@@ -30,7 +30,7 @@
 			user.set_loc(O)
 			prisoner = user
 			SPAWN_DBG(imprison_time)
-				if (O.disposed) //ZeWaka: Fix for null.contents
+				if (!O.disposed) //ZeWaka: Fix for null.contents
 					O.ArtifactDeactivated()
 
 	effect_deactivate(obj/O)
