@@ -272,7 +272,7 @@
 			var/list/tag
 			var/list/newnumbers = c.overlay_number_convert(src.clayer,CAKE_MODE_STACK,singlecake)
 			tag = replacetext("[overlay_ref]","[newnumbers[1]]","[newnumbers[2]]")
-			if(c.cake_candle.len)
+			if(length(c.cake_candle))
 				src.cake_candle = c.cake_candle
 				src.cake_candle[1] = replacetext("[c.cake_candle[1]]","[newnumbers[1]]","[newnumbers[2]]")
 				c.cake_candle = list()

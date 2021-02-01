@@ -199,7 +199,7 @@ var/list/dirty_keystates = list()
 				if(istype(object,/obj))
 					var/obj/o = object
 					if(o.object_flags & IGNORE_CONTEXT_CLICK_ATTACKBY)
-						if((o.loc != mob) && (get_dist(o, mob) <= 1) && mob.equipped())
+						if((o.loc != mob) && in_interact_range(o,mob) && mob.equipped())
 							..()
 					else 
 						mob.showContextActions(contexts, o)
