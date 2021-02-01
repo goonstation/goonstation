@@ -1308,7 +1308,7 @@ var/f_color_selector_handler/F_Color_Selector
 					var/ircmsg[] = new()
 					ircmsg["key"] = nick
 					ircmsg["key2"] = (M.client != null && M.client.key != null) ? M.client.key : "*no client*"
-					ircmsg["name2"] = (M.real_name != null) ? M.real_name : ""
+					ircmsg["name2"] = (M.real_name != null) ? stripTextMacros(M.real_name) : ""
 					ircmsg["msg"] = html_decode(msg)
 					return ircbot.response(ircmsg)
 				else
@@ -1341,7 +1341,7 @@ var/f_color_selector_handler/F_Color_Selector
 					var/ircmsg[] = new()
 					ircmsg["key"] = nick
 					ircmsg["key2"] = (M.client != null && M.client.key != null) ? M.client.key : "*no client*"
-					ircmsg["name2"] = (M.real_name != null) ? M.real_name : ""
+					ircmsg["name2"] = (M.real_name != null) ? stripTextMacros(M.real_name) : ""
 					ircmsg["msg"] = html_decode(msg)
 					return ircbot.response(ircmsg)
 				else

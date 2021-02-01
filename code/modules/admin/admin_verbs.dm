@@ -730,7 +730,7 @@ var/list/special_pa_observing_verbs = list(
 	if (src.owner:stealth)
 		var/ircmsg[] = new()
 		ircmsg["key"] = src.owner:key
-		ircmsg["name"] = (usr?.real_name) ? usr.real_name : "NULL"
+		ircmsg["name"] = (usr?.real_name) ? stripTextMacros(usr.real_name) : "NULL"
 		ircmsg["msg"] = "Has enabled stealth mode as ([src.owner:fakekey])"
 		ircbot.export("admin", ircmsg)
 
@@ -773,7 +773,7 @@ var/list/special_pa_observing_verbs = list(
 	if (src.alt_key)
 		var/ircmsg[] = new()
 		ircmsg["key"] = src.owner:key
-		ircmsg["name"] = (usr?.real_name) ? usr.real_name : "NULL"
+		ircmsg["name"] = (usr?.real_name) ? stripTextMacros(usr.real_name) : "NULL"
 		ircmsg["msg"] = "Has set their displayed key to ([src.owner:fakekey])"
 		ircbot.export("admin", ircmsg)
 */

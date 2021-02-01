@@ -372,7 +372,7 @@ var/global/noir = 0
 				// someone forgetting about leaving shuttle calling disabled would be bad so let's inform the Admin Crew if it happens, just in case
 				var/ircmsg[] = new()
 				ircmsg["key"] = src.owner:key
-				ircmsg["name"] = (usr?.real_name) ? usr.real_name : "NULL"
+				ircmsg["name"] = (usr?.real_name) ? stripTextMacros(usr.real_name) : "NULL"
 				ircmsg["msg"] = "Has [emergency_shuttle.disabled ? "dis" : "en"]abled calling the Emergency Shuttle"
 				ircbot.export("admin", ircmsg)
 			else
@@ -424,7 +424,7 @@ var/global/noir = 0
 
 							var/ircmsg[] = new()
 							ircmsg["key"] = src.owner:key
-							ircmsg["name"] = (usr?.real_name) ? usr.real_name : "NULL"
+							ircmsg["name"] = (usr?.real_name) ? stripTextMacros(usr.real_name) : "NULL"
 							ircmsg["msg"] = "Deleted note [noteId] belonging to [player]"
 							ircbot.export("admin", ircmsg)
 
@@ -446,7 +446,7 @@ var/global/noir = 0
 
 					var/ircmsg[] = new()
 					ircmsg["key"] = src.owner:key
-					ircmsg["name"] = (usr?.real_name) ? usr.real_name : "NULL"
+					ircmsg["name"] = (usr?.real_name) ? stripTextMacros(usr.real_name) : "NULL"
 					ircmsg["msg"] = "Added a note for [player]: [the_note]"
 					ircbot.export("admin", ircmsg)
 
@@ -2116,7 +2116,7 @@ var/global/noir = 0
 
 					var/ircmsg[] = new()
 					ircmsg["key"] = usr.client.key
-					ircmsg["name"] = (usr?.real_name) ? usr.real_name : "NULL"
+					ircmsg["name"] = (usr?.real_name) ? stripTextMacros(usr.real_name) : "NULL"
 					ircmsg["msg"] = "has removed [C]'s adminship"
 					ircbot.export("admin", ircmsg)
 
@@ -2131,7 +2131,7 @@ var/global/noir = 0
 
 					var/ircmsg[] = new()
 					ircmsg["key"] = usr.client.key
-					ircmsg["name"] = (usr?.real_name) ? usr.real_name : "NULL"
+					ircmsg["name"] = (usr?.real_name) ? stripTextMacros(usr.real_name) : "NULL"
 					ircmsg["msg"] = "has made [C] a [rank]"
 					ircbot.export("admin", ircmsg)
 
@@ -4230,7 +4230,7 @@ var/global/noir = 0
 
 		var/ircmsg[] = new()
 		ircmsg["key"] = usr.client.key
-		ircmsg["name"] = (usr?.real_name) ? usr.real_name : "NULL"
+		ircmsg["name"] = (usr?.real_name) ? stripTextMacros(usr.real_name) : "NULL"
 		ircmsg["msg"] = "manually restarted the server."
 		ircbot.export("admin", ircmsg)
 
@@ -4310,7 +4310,7 @@ var/global/noir = 0
 
 		var/ircmsg[] = new()
 		ircmsg["key"] = (usr?.client) ? usr.client.key : "NULL"
-		ircmsg["name"] = (usr?.real_name) ? usr.real_name : "NULL"
+		ircmsg["name"] = (usr?.real_name) ? stripTextMacros(usr.real_name) : "NULL"
 		ircmsg["msg"] = "has delayed the server restart."
 		ircbot.export("admin", ircmsg)
 
@@ -4323,7 +4323,7 @@ var/global/noir = 0
 
 		var/ircmsg[] = new()
 		ircmsg["key"] = (usr?.client) ? usr.client.key : "NULL"
-		ircmsg["name"] = (usr?.real_name) ? usr.real_name : "NULL"
+		ircmsg["name"] = (usr?.real_name) ? stripTextMacros(usr.real_name) : "NULL"
 		ircmsg["msg"] = "has removed the server restart delay."
 		ircbot.export("admin", ircmsg)
 
