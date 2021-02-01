@@ -11440,7 +11440,7 @@
 /obj/storage/secure/crate/plasma/armory/anti_biological{
 	req_access = null
 	},
-/obj/item/flamethrower/assembled/loaded,
+/obj/item/gun/flamethrower/assembled/loaded,
 /obj/access_spawn/sec_lockers,
 /turf/simulated/floor/bot,
 /area/station/security/brig)

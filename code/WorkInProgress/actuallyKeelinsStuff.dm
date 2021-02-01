@@ -1852,7 +1852,7 @@ Returns:
 				var/list/words = list()
 				for(var/i=0, i<rand(5, 10), i++)
 					var/picked = pick(strings("ouija_board.txt", "ouija_board_words"))
-					if(!words.Find(picked)) words.Add(picked)
+					words |= picked
 
 				if(words.len)
 					var/selected = input(usr, "Select a word:", src.name) as null|anything in words
@@ -3234,6 +3234,7 @@ Returns:
 	density = 1
 	anchored = 1
 	icon = 'icons/obj/fluid.dmi'
+	plane = PLANE_FLOOR
 	icon_state = "pool"
 
 /obj/pool_springboard
@@ -3871,7 +3872,7 @@ var/list/lag_list = new/list()
 
 	Topic(href, href_list)
 		if(usr.stat || usr.restrained()) return
-		if(!in_range(src, usr)) return
+		if(!in_interact_range(src, usr)) return
 		src.add_dialog(usr)
 		if (href_list["set_mode"])
 			active_mode = locate(href_list["set_mode"]) in modes

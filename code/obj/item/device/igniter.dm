@@ -154,7 +154,7 @@
 
 /obj/item/device/igniter/examine(mob/user)
 	. = ..()
-	if ((in_range(src, user) || src.loc == user))
+	if ((in_interact_range(src, user) || src.loc == user))
 		if (src.status)
 			. += "The igniter is ready!"
 		else

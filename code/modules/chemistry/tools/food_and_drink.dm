@@ -830,7 +830,7 @@
 			t = copytext(strip_html(t), 1, 24)
 			if (isnull(t) || !length(t) || t == " ")
 				return
-			if (!in_range(src, usr) && src.loc != usr)
+			if (!in_interact_range(src, usr) && src.loc != usr)
 				return
 
 			src.name = t
@@ -1578,6 +1578,22 @@
 		item_state = "dan_mug"
 		initial_volume = 120
 		initial_reagents = list("coffee" = 80, "vodka" = 40)
+
+/obj/item/reagent_containers/food/drinks/mug/HoS
+	name = "Head of Security's mug"
+	desc = ""
+	icon_state = "HoSMug"
+	item_state = "mug"
+
+	get_desc(var/dist, var/mob/user)
+		if (user.mind?.assigned_role == "Head of Security")
+			. = "Its your favourite mug! It reads 'Galaxy's Number One HoS!' on the front. You remember when you got it last Christmas from a secret admirer."
+		else
+			. = "It reads 'Galaxy's Number One HoS!' on the front. You remember finding the receipt for it in disposals when the HoS bought it for themselves last Spacemas."
+
+/obj/item/reagent_containers/food/drinks/mug/HoS/blue
+	icon_state = "HoSMugBlue"
+	item_state = "mug"
 
 /obj/item/reagent_containers/food/drinks/mug/random_color
 	New()

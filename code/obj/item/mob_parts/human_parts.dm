@@ -1093,58 +1093,6 @@
 		..()
 
 
-/obj/item/parts/human_parts/arm/left/hunter
-	name = "left hunter arm"
-	desc = "A muscular and strong arm."
-	icon_state = "arm_left_hunter"
-	slot = "l_arm"
-	side = "left"
-	decomp_affected = 0
-	skintoned = 0
-	override_attack_hand = 1
-	limb_type = /datum/limb/hunter
-	handlistPart = "l_hand_hunter"
-	show_on_examine = 1
-	limb_is_unnatural = TRUE
-
-	New(var/atom/holder)
-		if (holder != null)
-			set_loc(holder)
-		..()
-
-	getMobIcon(var/lying, var/decomp_stage = 0)
-		if (src.standImage && ((src.decomp_affected && src.current_decomp_stage_s == decomp_stage) || !src.decomp_affected))
-			return src.standImage
-		current_decomp_stage_s = decomp_stage
-		src.standImage = image('icons/mob/human.dmi', "[src.slot]_hunter")
-		return standImage
-
-/obj/item/parts/human_parts/arm/right/hunter
-	name = "right hunter arm"
-	desc = "A muscular and strong arm."
-	icon_state = "arm_right_hunter"
-	slot = "r_arm"
-	side = "right"
-	decomp_affected = 0
-	skintoned = 0
-	override_attack_hand = 1
-	limb_type = /datum/limb/hunter
-	handlistPart = "r_hand_hunter"
-	show_on_examine = 1
-	limb_is_unnatural = TRUE
-
-	New(var/atom/holder)
-		if (holder != null)
-			set_loc(holder)
-		..()
-
-	getMobIcon(var/lying, var/decomp_stage = 0)
-		if (src.standImage && ((src.decomp_affected && src.current_decomp_stage_s == decomp_stage) || !src.decomp_affected))
-			return src.standImage
-		current_decomp_stage_s = decomp_stage
-		src.standImage = image('icons/mob/human.dmi', "[src.slot]_hunter")
-		return standImage
-
 /obj/item/parts/human_parts/arm/left/claw
 	name = "left claw arm"
 	icon_state = "arm_left_wendigo"
@@ -1967,6 +1915,7 @@ obj/item/parts/human_parts/arm/right/stone
 	slot = "l_arm"
 	side = "left"
 	handlistPart = "hand_left"
+
 /obj/item/parts/human_parts/arm/mutant/kudzu/right
 	name = "right kudzu arm"
 	desc = "A kudzu'ssss right arm."
@@ -1987,6 +1936,121 @@ obj/item/parts/human_parts/arm/right/stone
 /obj/item/parts/human_parts/leg/mutant/kudzu/right
 	name = "right kudzu leg"
 	desc = "A kudzu'sssss right leg."
+	icon_state = "leg_right"
+	slot = "r_leg"
+	side = "right"
+	partlistPart = "foot_right"
+	step_image_state = "footprintsR"
+
+/// HUNTER LIMBS ///
+///// PARENT /////
+
+/obj/item/parts/human_parts/arm/mutant/hunter
+	icon = 'icons/mob/hunter.dmi'
+	partIcon = 'icons/mob/hunter.dmi'
+
+/obj/item/parts/human_parts/leg/mutant/hunter
+	icon = 'icons/mob/hunter.dmi'
+	partIcon = 'icons/mob/hunter.dmi'
+
+///// LIMBS /////
+
+/obj/item/parts/human_parts/arm/mutant/hunter/left
+	name = "left hunter arm"
+	desc = "A muscular and strong arm."
+	icon_state = "arm_left"
+	slot = "l_arm"
+	side = "left"
+	decomp_affected = 0
+	skintoned = 0
+	override_attack_hand = 1
+	limb_type = /datum/limb/hunter
+	handlistPart = "hand_left"
+	show_on_examine = 1
+	limb_is_unnatural = TRUE
+
+	New(var/atom/holder)
+		if (holder != null)
+			set_loc(holder)
+		..()
+
+/obj/item/parts/human_parts/arm/mutant/hunter/right
+	name = "right hunter arm"
+	desc = "A muscular and strong arm."
+	icon_state = "arm_right"
+	slot = "r_arm"
+	side = "right"
+	decomp_affected = 0
+	skintoned = 0
+	override_attack_hand = 1
+	limb_type = /datum/limb/hunter
+	handlistPart = "hand_right"
+	show_on_examine = 1
+	limb_is_unnatural = TRUE
+
+	New(var/atom/holder)
+		if (holder != null)
+			set_loc(holder)
+		..()
+
+/obj/item/parts/human_parts/leg/mutant/hunter/left
+	name = "left hunter leg"
+	desc = "A muscular and strong left leg."
+	icon_state = "leg_left"
+	slot = "l_leg"
+	side = "left"
+	partlistPart = "foot_left"
+	step_image_state = "footprintsL"
+
+/obj/item/parts/human_parts/leg/mutant/hunter/right
+	name = "right hunter leg"
+	desc = "A muscular and strong right leg."
+	icon_state = "leg_right"
+	slot = "r_leg"
+	side = "right"
+	partlistPart = "foot_right"
+	step_image_state = "footprintsR"
+
+/// VIRTUAL LIMBS ///
+///// PARENT /////
+/obj/item/parts/human_parts/arm/mutant/virtual
+	icon = 'icons/mob/virtual.dmi'
+	partIcon = 'icons/mob/virtual.dmi'
+
+/obj/item/parts/human_parts/leg/mutant/virtual
+	icon = 'icons/mob/virtual.dmi'
+	partIcon = 'icons/mob/virtual.dmi'
+
+///// LIMBS /////
+
+/obj/item/parts/human_parts/arm/mutant/virtual/left
+	name = "left virtual arm"
+	desc = "A simulated left arm."
+	icon_state = "arm_left"
+	slot = "l_arm"
+	side = "left"
+	handlistPart = "hand_left"
+
+/obj/item/parts/human_parts/arm/mutant/virtual/right
+	name = "left virtual arm"
+	desc = "A simulated right arm"
+	icon_state = "arm_right"
+	slot = "r_arm"
+	side = "right"
+	handlistPart = "hand_right"
+
+/obj/item/parts/human_parts/leg/mutant/virtual/left
+	name = "left virtual leg"
+	desc = "A simulated left leg."
+	icon_state = "leg_left"
+	slot = "l_leg"
+	side = "left"
+	partlistPart = "foot_left"
+	step_image_state = "footprintsL"
+
+/obj/item/parts/human_parts/leg/mutant/virtual/right
+	name = "right virtual leg"
+	desc = "A simulated right leg."
 	icon_state = "leg_right"
 	slot = "r_leg"
 	side = "right"

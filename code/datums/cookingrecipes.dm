@@ -756,6 +756,13 @@
 	output = /obj/item/reagent_containers/food/drinks/eggnog
 
 //Cookies
+/datum/cookingrecipe/stroopwafel
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough_cookie
+	amt1 = 2
+	item2 = /obj/item/reagent_containers/food/snacks/condiment/syrup
+	cookbonus = 4
+	output = /obj/item/reagent_containers/food/snacks/stroopwafel
+
 /datum/cookingrecipe/cookie
 	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough_cookie
 	cookbonus = 4

@@ -13762,7 +13762,7 @@
 	},
 /area/station/security/detectives_office)
 "axM" = (
-/obj/machinery/door/airlock/pyro/maintenance/alt{
+/obj/machinery/door/airlock/pyro/security/alt{
 	dir = 4;
 	name = "Detective's Office";
 	req_access = null
@@ -16607,9 +16607,6 @@
 	name = "autoname  - SS13";
 	pixel_y = 21
 	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/west)
-"aEc" = (
 /obj/reagent_dispensers/heliumtank,
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
@@ -17598,8 +17595,8 @@
 /area/station/maintenance/west)
 "aGd" = (
 /obj/disposalpipe/segment,
-/obj/machinery/door/airlock/pyro/maintenance/alt{
-	req_access = null
+/obj/machinery/door/airlock/pyro/sci_alt{
+	name = "Pharmacy"
 	},
 /obj/firedoor_spawn,
 /obj/access_spawn/medical,
@@ -25339,6 +25336,9 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
+/obj/landmark/start{
+	name = "Security Assistant"
+	},
 /turf/simulated/floor,
 /area/station/security/main)
 "aTN" = (
@@ -26204,6 +26204,9 @@
 /obj/item/wrench,
 /obj/item/clothing/head/helmet/camera/security,
 /obj/item/device/detective_scanner,
+/obj/item/device/ticket_writer{
+	pixel_y = 20
+	},
 /turf/simulated/floor/carpet{
 	icon_state = "fred1"
 	},
@@ -29809,6 +29812,9 @@
 	anchored = 0;
 	dir = 4
 	},
+/obj/landmark/start{
+	name = "Security Assistant"
+	},
 /turf/simulated/floor/red/side,
 /area/station/security/main)
 "bbD" = (
@@ -31839,6 +31845,9 @@
 "bfg" = (
 /obj/stool/chair/red{
 	dir = 8
+	},
+/obj/landmark/start{
+	name = "Security Assistant"
 	},
 /turf/simulated/floor/carpet,
 /area/station/security/main)
@@ -39515,9 +39524,8 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/engine/elect)
 "bsk" = (
-/obj/machinery/door/airlock/pyro/maintenance/alt{
-	name = "Mechanics";
-	req_access = null
+/obj/machinery/door/airlock/pyro/engineering/alt{
+	name = "Mechanics"
 	},
 /obj/access_spawn/engineering_mechanic,
 /obj/firedoor_spawn,
@@ -49842,7 +49850,7 @@
 	icon_state = "line1"
 	},
 /obj/storage/secure/crate/plasma/armory/anti_biological,
-/obj/item/flamethrower/assembled/loaded,
+/obj/item/gun/flamethrower/assembled/loaded,
 /turf/simulated/floor/black,
 /area/station/security/armory)
 "bMO" = (
@@ -76028,7 +76036,7 @@ aAb
 aAU
 aAV
 axS
-aEc
+aGS
 aFh
 aEa
 aHb

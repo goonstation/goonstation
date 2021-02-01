@@ -19,6 +19,12 @@ Click on the secondary adventure button to begin your adventure journey!<br>
 			submodes += SM.name
 			submodes[SM.name] = SM
 
+	copy()
+		var/list/copy_env = list()
+		copy_env[holder] = holder
+		var/datum/buildmode/adventure/new_mode = semi_deep_copy(src, null, copy_env)
+		return new_mode
+
 	click_left(atom/object, var/ctrl, var/alt, var/shift)
 		if (!submode)
 			boutput(usr, "<span class='alert'>Select an adventure mode first.</span>")
@@ -43,6 +49,7 @@ Click on the secondary adventure button to begin your adventure journey!<br>
 			submode.deselected()
 		submode = submodes[which]
 		submode.selected()
+		src.update_button_text(submode.name)
 
 /datum/adventure_submode
 	var/name = "Adventure submode"
@@ -81,7 +88,7 @@ Click on the secondary adventure button to begin your adventure journey!<br>
 		parent = A
 
 	clicked(var/list/pa)
-		if (pa.Find("left"))
+		if ("left" in pa)
 			parent.select_submode()
-		else if (pa.Find("right") && parent.submode)
-			parent.submode.settings(pa.Find("ctrl"), pa.Find("alt"), pa.Find("shift"))
+		else if (("right" in pa) && parent.submode)
+			parent.submode.settings(("ctrl" in pa), ("alt" in pa), ("shift" in pa))

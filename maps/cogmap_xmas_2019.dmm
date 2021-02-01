@@ -1582,7 +1582,7 @@
 /area/station/security/armory)
 "adP" = (
 /obj/storage/secure/crate/plasma/armory/anti_biological,
-/obj/item/flamethrower/assembled/loaded,
+/obj/item/gun/flamethrower/assembled/loaded,
 /turf/simulated/floor/caution/west,
 /area/station/security/armory)
 "adQ" = (

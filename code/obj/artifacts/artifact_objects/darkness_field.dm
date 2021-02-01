@@ -11,6 +11,7 @@
 	var/field_radius = 0
 	var/field_time = 0
 	var/max_alpha = 255
+	var/list/obj/overlay/darkness_field/darkfields = list()
 
 	New()
 		..()
@@ -26,12 +27,18 @@
 		O.visible_message("<span class='alert'><b>[O]</b> emits a wave of absolute darkness!</span>")
 		O.anchored = 1
 		var/turf/T = get_turf(O)
-		new /obj/overlay/darkness_field(T, field_time, radius = 0.5 + field_radius, max_alpha = max_alpha)
-		new /obj/overlay/darkness_field{plane = PLANE_SELFILLUM}(T, field_time, radius = 0.5 + field_radius, max_alpha = max_alpha)
+		darkfields += new /obj/overlay/darkness_field(T, null, radius = 0.5 + field_radius, max_alpha = max_alpha)
+		darkfields += new /obj/overlay/darkness_field{plane = PLANE_SELFILLUM}(T, null, radius = 0.5 + field_radius, max_alpha = max_alpha)
 		SPAWN_DBG(field_time)
 			if (O)
 				O.anchored = 0
 				O.ArtifactDeactivated()
+
+	effect_deactivate(obj/O)
+		if(..())
+			return
+		for(var/obj/overlay/darkness_field/D as() in darkfields)
+			D.deactivate()
 
 /obj/overlay/darkness_field
 	icon = 'icons/effects/vision.dmi' // sorry

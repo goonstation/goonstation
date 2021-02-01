@@ -2830,8 +2830,8 @@
 	name = "Security Equipment";
 	req_access_txt = "27"
 	},
-/obj/access_spawn/sec_lockers,
 /obj/firedoor_spawn,
+/obj/access_spawn/security,
 /turf/simulated/floor/red,
 /area/station/security/main)
 "hl" = (
@@ -3170,7 +3170,7 @@
 	pixel_y = 21
 	},
 /obj/storage/secure/crate/plasma/armory/anti_biological,
-/obj/item/flamethrower/assembled/loaded,
+/obj/item/gun/flamethrower/assembled/loaded,
 /turf/simulated/floor/red/side{
 	dir = 1
 	},
@@ -3191,9 +3191,6 @@
 /obj/stool/chair/office/red{
 	dir = 1
 	},
-/obj/landmark/start{
-	name = "Security Officer"
-	},
 /obj/cable{
 	d1 = 2;
 	d2 = 8;
@@ -3206,6 +3203,9 @@
 	},
 /obj/cable{
 	icon_state = "2-4"
+	},
+/obj/landmark/start{
+	name = "Security Assistant"
 	},
 /turf/simulated/floor,
 /area/station/security/main)
@@ -5271,6 +5271,10 @@
 "mT" = (
 /obj/table/auto,
 /obj/item/storage/box/revimp_kit,
+/obj/item/device/ticket_writer{
+	pixel_x = 5;
+	pixel_y = 4
+	},
 /turf/simulated/floor/carpet/red/fancy/edge/se,
 /area/station/security/main)
 "mU" = (
@@ -7265,7 +7269,7 @@
 	dir = 4
 	},
 /obj/landmark/start{
-	name = "Security Officer"
+	name = "Security Assistant"
 	},
 /turf/simulated/floor/red/side{
 	dir = 4

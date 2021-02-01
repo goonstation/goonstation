@@ -134,9 +134,9 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 	var/last_market_update = -INFINITY
 	var/price_list = null
 
-	lr = 1
-	lg = 0.7
-	lb = 0.03
+	light_r =1
+	light_g = 0.7
+	light_b = 0.03
 
 	disposing()
 		radio_controller.remove_object(src, "1435")
@@ -655,7 +655,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 	if(..())
 		return
 
-	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
+	if ((usr.contents.Find(src) || (in_interact_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
 		src.add_dialog(usr)
 
 	var/subaction = (href_list["subaction"] ? href_list["subaction"] : null)

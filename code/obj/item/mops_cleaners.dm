@@ -946,6 +946,19 @@ WET FLOOR SIGN
 					boutput(user, "<span class='notice'>[src]'s [src.bucket] is now full.</span>")
 				success = TRUE
 
+		var/obj/reagent_dispensers/cleanable/ants/ants = locate(/obj/reagent_dispensers/cleanable/ants) in T
+		if(ants)
+			if(isnull(src.bucket))
+				boutput(user, "<span class='alert'>\The [src] tries to suck up the ants but has no bucket!</span>")
+				. = FALSE
+			else if(src.bucket.reagents.is_full())
+				boutput(user, "<span class='alert'>\The [src] tries to suck up the ants but its bucket is full!</span>")
+				. = FALSE
+			else
+				qdel(ants)
+				src.bucket.reagents.add_reagent("ants", 5)
+				success = TRUE
+
 		var/list/obj/item/items_to_suck = list()
 		for(var/obj/item/I in T)
 			if((I.w_class <= 1 || istype(I, /obj/item/raw_material/shard)) && !I.anchored)
@@ -1077,12 +1090,13 @@ WET FLOOR SIGN
 								boutput(M, "<span class='alert'>You are pulled by the force of [user]'s [master].</span>")
 						else
 							var/mob/M = A
-							if(M.equipped() && prob(25))
+							if(!issilicon(M) && M.equipped() && prob(25))
 								var/obj/item/I = M.equipped()
-								I.set_loc(M.loc)
-								M.u_equip(I)
-								I.dropped()
-								boutput(M, "<span class='alert'>Your [I] is pulled from your hands by the force of [user]'s [master].</span>")
+								if(!I.cant_drop)
+									I.set_loc(M.loc)
+									M.u_equip(I)
+									I.dropped()
+									boutput(M, "<span class='alert'>Your [I] is pulled from your hands by the force of [user]'s [master].</span>")
 				new/obj/effect/suck(T, get_dir(T, last))
 				last = T
 				if(end_now)

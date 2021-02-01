@@ -156,7 +156,7 @@ var/global/lastStationNameChange = 0 //timestamp
 			formattedName += "[word] "
 			continue
 
-		if (!station_name_whitelist.Find(lowertext(word)))
+		if (!(lowertext(word) in station_name_whitelist))
 			valid = 0
 			break
 
@@ -197,7 +197,7 @@ var/global/lastStationNameChange = 0 //timestamp
 
 			var/ircmsg[] = new()
 			ircmsg["key"] = user.client.key
-			ircmsg["name"] = (user?.real_name) ? user.real_name : "NULL"
+			ircmsg["name"] = (user?.real_name) ? stripTextMacros(user.real_name) : "NULL"
 			ircmsg["msg"] = "changed the station name to [name]"
 			ircbot.export("admin", ircmsg)
 

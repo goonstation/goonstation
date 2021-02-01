@@ -6,9 +6,12 @@
 	var/mobonly = 1 //If the reward can only be redeemed if the player has a /mob/living.
 
 
-	proc/rewardActivate(var/mob/activator) //Called when the reward is claimed from the locker. Spawn item here / give verbs here / do whatever for reward.
+	///Called when the reward is claimed from the locker. Spawn item here / give verbs here / do whatever for reward. Return 1 on success or bugs will happen.
+	proc/rewardActivate(var/mob/activator)
 		boutput(activator, "This reward is undefined. Please inform a coder.")
-		return							   //You could even make one-time reward by stripping their medal here.
+		//You could even make one-time reward by stripping their medal here.
+		return
+
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// Rewards below
 /datum/achievementReward/satchel
@@ -412,6 +415,7 @@
 					M.real_name = "grand alchemist's robes"
 					M.desc = "Well you sure LOOK the part with these on. (Base Item: [prev])"
 					H.set_clothing_icon_dirty()
+					return 1
 			boutput(activator, "<span class='alert'>Unable to redeem... you need to be wearing a labcoat.</span>")
 			return
 

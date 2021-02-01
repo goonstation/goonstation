@@ -6069,7 +6069,7 @@
 	icon_state = "2-8"
 	},
 /obj/landmark/start{
-	name = "Security Officer"
+	name = "Security Assistant"
 	},
 /turf/simulated/floor,
 /area/station/security/brig)
@@ -11200,7 +11200,7 @@
 	req_access = null
 	},
 /obj/access_spawn/sec_lockers,
-/obj/item/flamethrower/assembled/loaded,
+/obj/item/gun/flamethrower/assembled/loaded,
 /turf/simulated/floor/bot,
 /area/station/security/brig)
 "azB" = (
@@ -15206,6 +15206,9 @@
 /obj/disposalpipe/segment/ejection{
 	icon_state = "pipe-c"
 	},
+/obj/landmark/start{
+	name = "Security Assistant"
+	},
 /turf/simulated/floor/red/side{
 	dir = 1
 	},
@@ -16674,11 +16677,11 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
-/obj/landmark/start{
-	name = "Security Officer"
-	},
 /obj/cable{
 	icon_state = "1-8"
+	},
+/obj/landmark/start{
+	name = "Security Assistant"
 	},
 /turf/simulated/floor/red/side{
 	dir = 4
@@ -17517,6 +17520,9 @@
 /obj/item/pen{
 	pixel_x = -4;
 	pixel_y = 9
+	},
+/obj/item/device/ticket_writer{
+	pixel_x = 3
 	},
 /turf/simulated/floor/carpet,
 /area/station/security/main)
@@ -19294,7 +19300,7 @@
 	icon_state = "1-2"
 	},
 /obj/landmark/start{
-	name = "Security Officer"
+	name = "Security Assistant"
 	},
 /turf/simulated/floor/red/side,
 /area/station/security/main)
@@ -20113,6 +20119,10 @@
 	pixel_y = 5
 	},
 /obj/machinery/light,
+/obj/item/reagent_containers/food/drinks/mug/HoS{
+	pixel_x = -7;
+	pixel_y = 13
+	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/hos)
 "aRX" = (
@@ -24284,6 +24294,10 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/blind_switch/area/north{
+	pixel_x = -8
+	},
+/obj/machinery/light_switch/north,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/heads)
 "bba" = (
@@ -63007,6 +63021,12 @@
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/south)
+"kgy" = (
+/obj/landmark/start{
+	name = "Security Assistant"
+	},
+/turf/simulated/floor,
+/area/station/security/main)
 "klV" = (
 /obj/machinery/light{
 	dir = 8;
@@ -95018,7 +95038,7 @@ aNW
 aOX
 awK
 aRb
-aHB
+kgy
 aTa
 aUl
 aUn

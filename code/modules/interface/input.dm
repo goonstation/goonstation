@@ -36,6 +36,9 @@ var/list/dirty_keystates = list()
 		if(!isnull(numkey) && M.abilityHolder)
 			if (M.abilityHolder.actionKey(numkey))
 				return
+		if(!isnull(numkey) && src.buildmode?.is_active)
+			if(src.buildmode.number_key_pressed(numkey, keys_modifier))
+				return
 
 		var/action = src.keymap.check_keybind(key, keys_modifier)
 
@@ -191,16 +194,9 @@ var/list/dirty_keystates = list()
 
 		if (parameters["left"])	//Had to move this up into here as the clickbuffer was causing issues.
 			var/list/contexts = mob.checkContextActions(object)
-
-			if(contexts.len)
-				if(istype(object,/obj))
-					var/obj/o = object
-					if(o.object_flags & IGNORE_CONTEXT_CLICK_ATTACKBY)
-						if((o.loc != mob) && (get_dist(o, mob) <= 1) && mob.equipped())
-							..()
-					else 
-						mob.showContextActions(contexts, o)
-						return
+			if(length(contexts))
+				mob.showContextActions(contexts, object)
+				return
 
 		var/mob/user = usr
 		// super shit hack for swapping hands over the HUD, please replace this then murder me
@@ -229,12 +225,6 @@ var/list/dirty_keystates = list()
 				if( get_dist(t, get_turf(mob)) < 5 )
 					src.stathover = t
 					src.stathover_start = get_turf(mob)
-
-		// if (parameters["left"])	//Had to move this up into here as the clickbuffer was causing issues.
-		// 	var/list/contexts = mob.checkContextActions(object)
-		// 	if(contexts.len)
-		// 		mob.showContextActions(contexts, object)
-		// 		return
 
 		if(prob(10) && user.traitHolder && iscarbon(user) && isturf(object.loc) && user.traitHolder.hasTrait("clutz"))
 			var/list/filtered = list()

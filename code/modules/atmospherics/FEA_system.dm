@@ -183,7 +183,7 @@ datum/controller/air_system
 				test.length_space_border = 0
 				for(var/direction in cardinal)
 					var/turf/T = get_step(test,direction)
-					if(T && !members.Find(T) && test.CanPass(null, T, null,1))
+					if(T && !(T in members) && test.CanPass(null, T, null,1))
 						if(istype(T,/turf/simulated))
 							if(!T:parent)
 								possible_members += T

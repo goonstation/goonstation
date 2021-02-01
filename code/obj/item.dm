@@ -13,6 +13,8 @@
 	var/wear_image_icon = 'icons/mob/belt.dmi'
 	var/image/inhand_image = null
 	var/inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
+	/// set to a colour to make the inhand image be that colour. if the item is coloured though that takes priority over this variable
+	var/inhand_color = null
 
 	/*_______*/
 	/*Burning*/
@@ -642,7 +644,7 @@
 	else
 
 		if (isturf(over_object))
-			if (on_turf && in_range(over_object,src) && !src.anchored) //drag from floor to floor == slide
+			if (on_turf && in_interact_range(over_object,src) && !src.anchored) //drag from floor to floor == slide
 				if (istype(over_object,/turf/simulated/floor) || istype(over_object,/turf/unsimulated/floor))
 					step_to(src,over_object)
 					//this would be cool ha ha h
@@ -684,7 +686,7 @@
 	if (istype(over_object,/obj/item/storage) && over_object != src)
 		var/obj/item/storage/storage = over_object
 		if (istype(storage.loc, /turf))
-			if (!(in_range(src,user) && in_range(storage,user)))
+			if (!(in_interact_range(src,user) && in_interact_range(storage,user)))
 				return
 
 		src.pick_up_by(user)
