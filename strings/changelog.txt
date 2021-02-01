@@ -2,6 +2,7 @@
 (t)sun jan 31 21
 (u)pali
 (+)You can now suicide into the arc electroplater.
+(+)It is now possible to fish in spatial tears.
 (u)Sovexe
 (e)🆕🎨|feature, sprites
 (*)New chicken breed added! View minor changes for hint [Gen 2] [From Clown Chicken] (Don't let Emily find out!)
