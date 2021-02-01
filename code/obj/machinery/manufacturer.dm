@@ -448,7 +448,7 @@
 
 			can_be_made = (mats_used.len >= A.item_paths.len)
 
-			var/icon_text = "<p><p>"
+			var/icon_text = "<img class='icon'>"
 			// @todo probably refactor this since it's copy pasted twice now.
 			// if (A.item_outputs)
 			// 	var/icon_rsc = getItemIcon(A.item_outputs[1], C = usr.client)
@@ -519,16 +519,15 @@
 
 	// Validate that an item is inside this machine for HREF check purposes
 	proc/validate_disp(var/datum/manufacture/M)
-		if(src.available && src.available.Find(M))
-			return 1
+		. = FALSE
+		if(src.available && (M in src.available))
+			return TRUE
 
-		if(src.download && src.download.Find(M))
-			return 1
+		if(src.download && (M in src.download))
+			return TRUE
 
-		if(src.hacked && src.hidden && src.hidden.Find(M))
-			return 1
-
-		return 0
+		if(src.hacked && src.hidden && (M in src.hidden))
+			return TRUE
 
 
 	Topic(href, href_list)
@@ -1705,7 +1704,7 @@
 				// shut up
 				remove_link = "&#8987; Working..."
 
-			var/icon_text = "<p><p>"
+			var/icon_text = "<img class='icon'>"
 			// if (A.item_outputs)
 			// 	var/icon_rsc = getItemIcon(A.item_outputs[1], C = usr.client)
 			// 	// usr << browse_rsc(browse_item_icons[icon_rsc], icon_rsc)
@@ -2025,6 +2024,7 @@
 	/datum/manufacture/robo_leg_r_light,
 	/datum/manufacture/robo_leg_l_light,
 	/datum/manufacture/robo_leg_treads,
+	/datum/manufacture/robo_head_screen,
 	/datum/manufacture/robo_module,
 	/datum/manufacture/cyberheart,
 	/datum/manufacture/cybereye,
@@ -2124,6 +2124,8 @@
 		/datum/manufacture/hypospray,
 		/datum/manufacture/patch,
 		/datum/manufacture/mender,
+		/datum/manufacture/penlight,
+		/datum/manufacture/stethoscope,
 		/datum/manufacture/latex_gloves,
 		/datum/manufacture/surgical_mask,
 		/datum/manufacture/surgical_shield,

@@ -258,18 +258,6 @@ var/f_color_selector_handler/F_Color_Selector
 			screenOverlayLibrary.Add(over)
 			screenOverlayLibrary[over] = E
 
-		plmaster = new /obj/overlay(  )
-		plmaster.icon = 'icons/effects/tile_effects.dmi'
-		plmaster.icon_state = "plasma"
-		plmaster.layer = FLY_LAYER
-		plmaster.mouse_opacity = 0
-
-		slmaster = new /obj/overlay(  )
-		slmaster.icon = 'icons/effects/tile_effects.dmi'
-		slmaster.icon_state = "sleeping_agent"
-		slmaster.layer = FLY_LAYER
-		slmaster.mouse_opacity = 0
-
 		Z_LOG_DEBUG("Preload", "initLimiter() (whatever the fuck that does)")
 		initLimiter()
 		Z_LOG_DEBUG("Preload", "Creating named color list...")
@@ -577,6 +565,10 @@ var/f_color_selector_handler/F_Color_Selector
 	build_camera_network()
 	//build_manufacturer_icons()
 	clothingbooth_setup()
+
+	Z_LOG_DEBUG("World/Init", "Loading fishing spots...")
+	global.initialise_fishing_spots()
+
 #if ASS_JAM
 	ass_jam_init()
 #endif
@@ -757,19 +749,19 @@ var/f_color_selector_handler/F_Color_Selector
 	Z_LOG_DEBUG("World/Status", "Updating status")
 
 	//we start off with an animated bee gif because, well, this is who we are.
-	var/s = "<img src=\"https://i.imgur.com/XN0yOcf.gif\" alt=\"Bee\" /> "
+	var/s = "<img src=\"http://goonhub.com/bee.gif\"/>"
 
 	if (config?.server_name)
 		s += "<b><a href=\"https://goonhub.com\">[config.server_name]</a></b> &#8212; "
 	else
-		s += "<b>SERVER NAME HERE &#8212; "
+		s += "<b>SERVER NAME HERE</b> &#8212; "
 
-	s += "The classic SS13 experience. &#8212; (<a href=\"https://bit.ly/3pVRuTT\">Discord</a>)<br>"
+	s += "The classic SS13 experience. &#8212; (<a href=\"http://bit.ly/gndscd\">Discord</a>)<br>"
 
 	if (map_settings)
 		var/map_name = istext(map_settings.display_name) ? "[map_settings.display_name]" : "[map_settings.name]"
 		//var/map_link_str = map_settings.goonhub_map ? "<a href=\"[map_settings.goonhub_map]\">[map_name]</a>" : "[map_name]"
-		s += "Map:<b> [map_name]</b><br>"
+		s += "Map: <b>[map_name]</b><br>"
 
 	var/list/features = list()
 
@@ -797,6 +789,7 @@ var/f_color_selector_handler/F_Color_Selector
 	/* does this help? I do not know */
 	if (src.status != s)
 		src.status = s
+
 	Z_LOG_DEBUG("World/Status", "Status update complete")
 
 /world/proc/installUpdate()
@@ -1069,7 +1062,7 @@ var/f_color_selector_handler/F_Color_Selector
 							if (ishuman(twitch_mob))
 								var/mob/living/carbon/human/H = twitch_mob
 								for (var/obj/item/I in H.contents)
-									if (istype(I,/obj/item/organ) || istype(I,/obj/item/skull) || istype(I,/obj/item/parts) || istype(I,/obj/screen/hud)) continue //FUCK
+									if (istype(I,/obj/item/organ) || istype(I,/obj/item/skull) || istype(I,/obj/item/parts) || istype(I,/atom/movable/screen/hud)) continue //FUCK
 									hudlist += I
 									if (istype(I,/obj/item/storage))
 										hudlist += I.contents
@@ -1078,7 +1071,7 @@ var/f_color_selector_handler/F_Color_Selector
 							for (var/obj/item/I in view(1,twitch_mob) + hudlist)
 								if (!isturf(I.loc)) continue
 								if (TWITCH_BOT_INTERACT_BLOCK(I)) continue
-								if (istype(I,/obj/item/organ) || istype(I,/obj/item/skull) || istype(I,/obj/item/parts) || istype(I,/obj/screen/hud)) continue //FUCK
+								if (istype(I,/obj/item/organ) || istype(I,/obj/item/skull) || istype(I,/obj/item/parts) || istype(I,/atom/movable/screen/hud)) continue //FUCK
 								if (I.name == msg)
 									close_match.len = 0
 									close_match += I

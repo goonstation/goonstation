@@ -15,13 +15,16 @@
 
 	var/broken = 0
 	var/burnt = 0
+	var/has_material = TRUE
 	var/plate_mat = null
 	var/reinforced = FALSE
 
 	New()
 		..()
-		plate_mat = getMaterial("steel")
-		setMaterial(getMaterial("steel"))
+		if (has_material)
+			if (isnull(plate_mat))
+				plate_mat = getMaterial("steel")
+			setMaterial(plate_mat)
 		var/obj/plan_marker/floor/P = locate() in src
 		if (P)
 			src.icon = P.icon
@@ -121,6 +124,7 @@
 	name = "plating"
 	icon_state = "plating"
 	intact = 0
+	layer = PLATING_LAYER
 
 /turf/simulated/floor/plating/jen
 	icon_state = "plating_jen"
@@ -1099,6 +1103,7 @@
 	nitrogen = 0.01
 	temperature = TCMB
 	intact = 0
+	layer = PLATING_LAYER
 	allows_vehicles = 1 // let the constructor pods move around on these
 	step_material = "step_plating"
 	step_priority = STEP_PRIORITY_MED
@@ -1274,7 +1279,7 @@
 		name_old = name
 	src.name = "plating"
 	src.icon_state = "plating"
-	intact = 0
+	setIntact(FALSE)
 	broken = 0
 	burnt = 0
 	if(plate_mat)
@@ -1319,7 +1324,7 @@
 
 /turf/simulated/floor/proc/restore_tile()
 	if(intact) return
-	intact = 1
+	setIntact(TRUE)
 	broken = 0
 	burnt = 0
 	icon = initial(icon)
@@ -1659,6 +1664,17 @@ DEFINE_FLOORS_SIMMED_UNSIMMED(racing/rainbow_road,
 			desc = "The outer shell of some large microwave array thing."
 			icon_state = "leadwall_white"
 
+		white_2
+			icon_state = "leadwall_white"
+
+			junction
+				name = "shielded wall"
+				desc
+				icon_state = "leadjunction_white"
+
+			junction_four
+				icon_state = "leadjunction_white_4way"
+
 	leadwindow
 		name = "shielded window"
 		desc = "Seems pretty sturdy."
@@ -1670,6 +1686,12 @@ DEFINE_FLOORS_SIMMED_UNSIMMED(racing/rainbow_road,
 
 		gray
 			icon_state = "leadwindow_gray_1"
+
+		white
+			icon_state = "leadwindow_white_1"
+
+			full
+				icon_state = "leadwindow_white_2"
 
 	rootwall
 		name = "overgrown wall"

@@ -143,7 +143,7 @@
 						duckets += add
 						break
 					else if (istype(O, /obj/item/spacecash))
-						duckets += O:amount
+						duckets += 0.9 * O:amount
 						pool(O)
 		else // Please excuse this duplicate code, I'm gonna change trader commodity lists into associative ones later I swear
 			for(var/obj/O in sell_crate.contents)

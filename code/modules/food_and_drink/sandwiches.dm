@@ -207,7 +207,7 @@
 /obj/item/reagent_containers/food/snacks/burger/monkeyburger
 	name = "monkeyburger"
 	desc = "The cornerstone of every nutritious breakfast."
-	icon_state = "mburger"
+	icon_state = "hburger"
 	food_effects = list("food_energized", "food_brute")
 
 /obj/item/reagent_containers/food/snacks/burger/butterburger
@@ -277,7 +277,7 @@
 /obj/item/reagent_containers/food/snacks/burger/synthburger
 	name = "synthburger"
 	desc = "A thoroughly artificial snack."
-	icon_state = "mburger"
+	icon_state = "hburger"
 	amount = 5
 	heal_amt = 2
 
@@ -345,7 +345,7 @@
 /obj/item/reagent_containers/food/snacks/burger/cheeseburger
 	name = "cheeseburger"
 	desc = "Tasty, but not paticularly healthy."
-	icon_state = "hburger"
+	icon_state = "cburger"
 	amount = 6
 	heal_amt = 2
 	food_effects = list("food_brute", "food_burn")
@@ -353,7 +353,7 @@
 /obj/item/reagent_containers/food/snacks/burger/cheeseburger_m
 	name = "monkey cheese burger"
 	desc = "How very dadaist."
-	icon_state = "hburger"
+	icon_state = "cburger"
 	amount = 6
 	heal_amt = 2
 

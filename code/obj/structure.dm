@@ -236,13 +236,7 @@ obj/structure/ex_act(severity)
 					var/datum/material/M = getMaterial("steel")
 					WALL.setMaterial(M)
 				WALL.inherit_area()
-				// drsingh attempted fix for Cannot read null.amount
-				if (!isnull(S))
-					S.amount -= 2
-					if (S.amount <= 0)
-						qdel(the_tool)
-					else
-						S.inventory_counter.update_number(S.amount)
+				S?.consume_sheets(2)
 
 				qdel(the_girder)
 		owner.visible_message("<span class='notice'>[owner] [verbens] [the_girder].</span>")

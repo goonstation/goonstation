@@ -526,6 +526,7 @@
 		var/list/fillingColors = list()
 		var/onBreadText = ""
 		var/extraSlices = 0
+		var/isToast = FALSE
 
 		var/i = 1
 		for (var/obj/item/reagent_containers/food/snacks/snack in ourCooker)
@@ -534,6 +535,25 @@
 
 			else if (istype(snack, /obj/item/reagent_containers/food/snacks/breadslice))
 				if (slice1 && slice2)
+					// fix up ordering of toast sandwich components
+					var/toast1 = istype(slice1, /obj/item/reagent_containers/food/snacks/breadslice/toastslice)
+					var/toast2 = istype(slice2, /obj/item/reagent_containers/food/snacks/breadslice/toastslice)
+					var/toast3 = istype(snack, /obj/item/reagent_containers/food/snacks/breadslice/toastslice)
+					if (extraSlices == 0 && toast1 + toast2 + toast3 == 1)
+						var/obj/item/reagent_containers/food/snacks/breadslice/temp = snack
+						if (toast1)
+							snack = slice1
+							slice1 = temp
+						else if (toast2)
+							snack = slice2
+							slice2 = temp
+						isToast = TRUE
+						onBreadText = "on [slice1.real_name == "bread" ? "plain bread" : slice1.real_name]"
+						if (slice1.real_name != slice2.real_name)
+							onBreadText += " and [slice2.real_name == "bread" ? "plain" : slice2.real_name]"
+					else
+						isToast = FALSE
+
 					extraSlices++
 
 					if (snack.reagents)
@@ -570,7 +590,12 @@
 
 				qdel(snack)
 
-		if (!fillings.len)
+		if (!fillings.len && isToast)
+			customSandwich.name = "toast"
+			customSandwich.desc = "A slice of toast between two slices of bread. Apparently this counts as a sandwich?"
+			extraSlices--
+			customSandwich.reagents.add_reagent("worcestershire_sauce", 25)
+		else if (!fillings.len)
 			customSandwich.name = "wish"
 			customSandwich.desc = "So named because you 'wish' you had something to put between the slices of bread. Ha.  ha.  Ha..."
 		else
@@ -731,6 +756,13 @@
 	output = /obj/item/reagent_containers/food/drinks/eggnog
 
 //Cookies
+/datum/cookingrecipe/stroopwafel
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough_cookie
+	amt1 = 2
+	item2 = /obj/item/reagent_containers/food/snacks/condiment/syrup
+	cookbonus = 4
+	output = /obj/item/reagent_containers/food/snacks/stroopwafel
+
 /datum/cookingrecipe/cookie
 	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough_cookie
 	cookbonus = 4
@@ -1047,6 +1079,34 @@
 	item2 = /obj/item/clothing/head/butt
 	cookbonus = 15
 	output = /obj/item/reagent_containers/food/snacks/pie/ass
+
+/datum/cookingrecipe/pie_chocolate
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough_s
+	item2 = /obj/item/reagent_containers/food/snacks/candy
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/butter
+	cookbonus = 10
+	output = /obj/item/reagent_containers/food/snacks/pie/chocolate
+
+/datum/cookingrecipe/pot_pie
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough_s
+	item2 = /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget
+	item3 = /obj/item/reagent_containers/food/snacks/plant/carrot
+	cookbonus = 12
+	output = /obj/item/reagent_containers/food/snacks/pie/pot
+
+/datum/cookingrecipe/pie_weed
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough_s
+	item2 = /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget
+	item3 = /obj/item/plant/herb/cannabis
+	cookbonus = 12
+	output = /obj/item/reagent_containers/food/snacks/pie/weed
+
+/datum/cookingrecipe/pie_fish
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough_s
+	item2 = /obj/item/reagent_containers/food/snacks/ingredient/meat/fish
+	item3 = /obj/item/reagent_containers/food/snacks/plant/potato
+	cookbonus = 10
+	output = /obj/item/reagent_containers/food/snacks/pie/fish
 
 /datum/cookingrecipe/custard
 	item1 = /obj/item/reagent_containers/food/drinks/milk

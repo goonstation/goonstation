@@ -225,7 +225,7 @@
 	reagentcure = list("heparin")
 	recureprob = 10
 	affected_species = list("Human","Monkey")
-	stage_prob = 0
+	stage_prob = 5
 
 /datum/ailment/malady/bloodclot/on_infection(var/mob/living/affected_mob,var/datum/ailment_data/malady/D)
 	..()

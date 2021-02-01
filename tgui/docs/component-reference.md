@@ -27,7 +27,6 @@ Make sure to add new items to this list if you document new components.
   - [`Flex.Item`](#flexitem)
   - [`Grid`](#grid)
   - [`Grid.Column`](#gridcolumn)
-  - [`HealthStat`](#HealthStat)
   - [`Icon`](#icon)
   - [`Icon.Stack`](#iconstack)
   - [`Input`](#input)
@@ -44,12 +43,15 @@ Make sure to add new items to this list if you document new components.
   - [`RoundGauge`](#roundgauge)
   - [`Section`](#section)
   - [`Slider`](#slider)
+  - [`Stack`](#stack)
   - [`Table`](#table)
   - [`Table.Row`](#tablerow)
   - [`Table.Cell`](#tablecell)
   - [`Tabs`](#tabs)
   - [`Tabs.Tab`](#tabstab)
   - [`Tooltip`](#tooltip)
+- [`tgui/interfaces/common`](#tguiinterfacescommon)
+  - [`HealthStat`](#healthstat)
 - [`tgui/layouts`](#tguilayouts)
   - [`Window`](#window)
   - [`Window.Content`](#windowcontent)
@@ -306,6 +308,8 @@ It supports a full set of `Box` properties for layout purposes.
 - `params: any` - An object with parameters, which are directly passed to
 the `winset` proc call. You can find a full reference of these parameters
 in [BYOND controls and parameters guide](https://secure.byond.com/docs/ref/skinparams.html).
+- `hideOnScroll: boolean` - If true, this component does not render if any
+parent containers are scrolled away from the top.
 
 ### `Collapsible`
 
@@ -342,6 +346,7 @@ Content is automatically centered inside the dimmer.
 **Props:**
 
 - See inherited props: [Box](#box)
+- `full: boolean` - Covers the entire Window, therefore working with scrollables.
 
 ### `Divider`
 
@@ -387,10 +392,9 @@ to the left, and certain elements to the right:
 
 ```jsx
 <Flex>
-  <Flex.Item>
+  <Flex.Item grow={1}>
     Button description
   </Flex.Item>
-  <Flex.Item grow={1} />
   <Flex.Item>
     <Button>
       Perform an action
@@ -399,16 +403,14 @@ to the left, and certain elements to the right:
 </Flex>
 ```
 
-Flex item with `grow` property serves as a "filler", to separate the other
-two flex items as far as possible from each other.
+Flex item with `grow` property will grow to take all available empty space,
+while flex items without grow will take the minimum amount of space. This
+effectively places the last flex item to the very end of the flex container.
 
 **Props:**
 
 - See inherited props: [Box](#box)
-- `spacing: number` - Spacing between flex items, in integer units
-(1 unit - 0.5em). Does not directly relate to a flex css property
-(adds a modifier class under the hood), and only integer numbers are
-supported.
+- ~~`spacing: number`~~ - **Removed in tgui 4.3**, use [Stack](#stack) instead.
 - `inline: boolean` - Makes flexbox container inline, with similar behavior
 to an `inline` property on a `Box`.
 - `direction: string` - This establishes the main-axis, thus defining the
@@ -455,16 +457,16 @@ when they overflow the line.
 - `order: number` - By default, flex items are laid out in the source order.
 However, the order property controls the order in which they appear in the
 flex container.
-- `grow: number` - This defines the ability for a flex item to grow if
-necessary. It accepts a unitless value that serves as a proportion. It
+- `grow: number | boolean` - This defines the ability for a flex item to grow
+if necessary. It accepts a unitless value that serves as a proportion. It
 dictates what amount of the available space inside the flex container the
 item should take up. This number is unit-less and is relative to other
 siblings.
-- `shrink: number` - This defines the ability for a flex item to shrink
-if necessary. Inverse of `grow`.
-- `basis: string` - This defines the default size of an element before any
-flex-related calculations are done. Has to be a length (e.g. `20%`, `5rem`),
-an `auto` or `content` keyword.
+- `shrink: number | boolean` - This defines the ability for a flex item to
+shrink if necessary. Inverse of `grow`.
+- `basis: number | string` - This defines the default size of an element
+before any flex-related calculations are done. Has to be a length
+(e.g. `20%`, `5rem`), an `auto` or `content` keyword.
   - **Important:** IE11 flex is buggy, and auto width/height calculations
   can sometimes end up in a circular dependency. This usually happens, when
   working with tables inside flex (they have wacky internal widths and such).
@@ -508,25 +510,6 @@ Example:
 
 - See inherited props: [Table.Cell](#tablecell)
 - `size: number` (default: 1) - Size of the column relative to other columns.
-
-### `HealthStat`
-
-A box that applies a color to its contents depending on the damage type.
-
-**Props:**
-
-- See inherited props: [Box](#box)
-- `info: boolean` - Info box
-- `type: string` - Damage type oxy, toxin, burn, brute
-- `content: string` - Content to render inside the box.
-
-Example:
-
-```jsx
-<HealthStat
-  type="DamageType"
-  content="content" />
-```
 
 ### `Icon`
 
@@ -715,7 +698,7 @@ Must be a direct child of a layout component (e.g. [Window](#window)).
 
 **Props:**
 
-- See inherited props: [Box](#box)
+- See inherited props: [Box](#box) and [Dimmer](#dimmer)
 
 ### `NoticeBox`
 
@@ -900,6 +883,76 @@ the input, or successfully enter a number.
 - `onDrag: (e, value) => void` - An event, which fires about every 500ms
 when you drag the input up and down, on release and on manual editing.
 
+### `Stack`
+
+A higher-level component, that is based on [Flex](#flex). The main difference
+from `Flex`, is that this component automatically adds spacing between
+all stack items, reducing the boilerplate that you have to write!
+
+Consists of two elements: `<Stack>` and `<Stack.Item>`.
+
+Stacks can be vertical by adding a `vertical` property.
+
+**Example:**
+
+```jsx
+<Stack>
+  <Stack.Item grow>
+    Button description
+  </Stack.Item>
+  <Stack.Item>
+    <Button>
+      Perform an action
+    </Button>
+  </Stack.Item>
+</Stack>
+```
+
+**Example of a high-level window layout:**
+
+Stacks can be used for high level window layout.
+Make sure to use the `fill` property.
+
+```jsx
+<Window>
+  <Window.Content>
+    <Stack fill>
+      <Stack.Item>
+        <Section fill>
+          Sidebar
+        </Section>
+      </Stack.Item>
+      <Stack.Item grow>
+        <Stack fill vertical>
+          <Stack.Item grow>
+            <Section fill scrollable>
+              Main content
+            </Section>
+          </Stack.Item>
+          <Stack.Item>
+            <Section>
+              Bottom pane
+            </Section>
+          </Stack.Item>
+        </Stack>
+      </Stack.Item>
+    </Stack>
+  </Window.Content>
+</Window>
+```
+
+**Props:**
+
+- See inherited props: [Flex](#flex)
+- `fill: boolean` - If set, stack will fill all available height.
+- `vertical: boolean` - If set, stack will work in vertical mode.
+
+### `Stack.Item`
+
+**Props:**
+
+- See inherited props: [Flex.Item](#flexitem)
+
 ### `Table`
 
 A straight forward mapping to a standard html table, which is slightly
@@ -1034,6 +1087,28 @@ Usage:
 - `position: string` - Tooltip position.
 - `content: string` - Content of the tooltip. Must be a plain string.
 Fragments or other elements are **not** supported.
+
+## `tgui/interfaces/common`
+
+### `HealthStat`
+
+A box that applies a color to its contents depending on the damage type.
+
+**Props:**
+
+- See inherited props: [Box](#box)
+- `info: boolean` - Info box
+- `type: string` - Damage type oxy, toxin, burn, brute
+- `content: string` - Content to render inside the box.
+
+Example:
+
+```jsx
+<HealthStat
+  type="DamageType"
+  content="content"
+/>
+```
 
 ## `tgui/layouts`
 

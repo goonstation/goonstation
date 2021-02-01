@@ -53,10 +53,15 @@ Contains:
 		if(thing == src.rider)
 			src.eject_rider()
 
+	proc/eject_other_stuff() // override if there's some stuff integral to the vehicle that should not be ejected
+		for(var/atom/movable/AM in src)
+			AM.set_loc(src.loc)
+
 	proc/eject_rider(var/crashed, var/selfdismount)
-		if(rider.loc == src)
+		if(rider?.loc == src)
 			rider.set_loc(src.loc)
-		rider = null
+			rider = null
+		src.eject_other_stuff()
 
 	ex_act(severity)
 		switch(severity)

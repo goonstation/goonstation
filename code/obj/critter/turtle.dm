@@ -18,6 +18,7 @@
 	chase_text = "charges into"
 	crit_text = "rams really hard into"
 	var/shell_count = 0		//Count down to 0. Measured in process cycles. If they are in their shell when this is 0, exit.
+	var/wandering_count = 0		//Make them move less frequently when wandering... They're slow.
 
 	ai_think()
 		if (shell_count > 0)
@@ -27,7 +28,6 @@
 			src.attack = 0
 			src.target = null
 			exit_shell()
-
 
 		..()
 
@@ -101,7 +101,7 @@
 		icon_state = "turtle-shell"
 		density = 0
 
-		src.visible_message("<span class='alert'><b>[src]</b> retreats into their shell!")
+		src.visible_message("<span class='alert'><b>[src]</b> retreats into [his_or_her()] shell!")
 		return 1
 
 	//sets shellcount to 0 and changes task to "thinking". changes icon state and protections.
@@ -115,7 +115,7 @@
 		icon_state = "turtle"
 		density = 1
 
-		src.visible_message("<span class='notice'><b>[src]</b> comes out of their shell!")
+		src.visible_message("<span class='notice'><b>[src]</b> comes out of [his_or_her()] shell!")
 		return 1
 
 	//Just completely override this to change values of severity. Kinda ugly, but it's what I want!
@@ -141,6 +141,16 @@
 		if (src.health <= 0)
 			src.CritterDeath()
 
+//Yes, I stole this from mobprocs cause that one only works on mobs and I didn't think it worthwhile to change it to work on objects too.
+/obj/critter/turtle/proc/his_or_her()
+	switch (src.gender)
+		if ("male")
+			return "his"
+		if ("female")
+			return "her"
+		else
+			return "their"
+
 
 //The HoS's pet turtle. He can wear the beret!
 /obj/critter/turtle/sylvester
@@ -150,6 +160,7 @@
 	health = 100
 	generic = 0
 	is_pet = 2
+	gender = MALE
 //Starts with the beret on!
 /obj/critter/turtle/sylvester/HoS
 

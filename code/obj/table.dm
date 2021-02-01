@@ -8,6 +8,7 @@
 	flags = NOSPLASH
 	event_handler_flags = USE_FLUID_ENTER | USE_CANPASS
 	layer = OBJ_LAYER-0.1
+	stops_space_move = TRUE
 	mat_changename = 1
 	var/auto_type = /obj/table/auto
 	var/parts_type = /obj/item/furniture_parts/table
@@ -319,7 +320,7 @@
 			return 0
 
 	MouseDrop_T(atom/O, mob/user as mob)
-		if (!in_range(user, src) || !in_range(user, O) || user.restrained() || user.getStatusDuration("paralysis") || user.sleeping || user.stat || user.lying)
+		if (!in_interact_range(user, src) || !in_interact_range(user, O) || user.restrained() || user.getStatusDuration("paralysis") || user.sleeping || user.stat || user.lying)
 			return
 
 		if (ismob(O) && O == user)
@@ -686,22 +687,13 @@
 				var/obj/item/sheet/S = W
 				if (!S.material || !S.material.material_flags & MATERIAL_CRYSTAL)
 					boutput(user, "<span class='alert'>You have to use glass or another crystalline material to repair [src]!</span>")
-					return
-				else if (S.amount >= 1)
+				else if (S.consume_sheets(1))
 					boutput(user, "<span class='notice'>You add glass to [src]!</span>")
 					if (S.reinforcement)
 						src.reinforced = 1
 					if (S.material)
 						src.setMaterial(S.material)
 					src.repair()
-					S.amount--
-					if (S.amount <= 0)
-						user.u_equip(S)
-						qdel(S)
-				else // there's none!
-					user.u_equip(S)
-					qdel(S)
-				return
 			else
 				return ..()
 

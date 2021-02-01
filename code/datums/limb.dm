@@ -71,6 +71,9 @@
 		user.lastattacked = target
 
 	proc/grab(mob/living/target, var/mob/living/user)
+		if(target == user)
+			user.grab_self()
+			return
 		if (issilicon(target))
 			return
 		user.grab_other(target)
@@ -491,7 +494,7 @@
 				O.explode()
 				O.visible_message("<span class='alert'><b>[user]</b> violently rips [O] apart!</span>")
 
-			if(prob(40))
+			if(prob(40) && !ON_COOLDOWN(user, "zombie arm scream", 1 SECOND))
 				user.emote("scream")
 			return
 
