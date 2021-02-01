@@ -105,17 +105,18 @@
 
 
 			var/bad_stuff = 0
+			var/list/implants = list()
 			if (L.implant && L.implant.len > 0)
 				for (var/obj/item/implant/I in L)
-					if (istype(I, /obj/item/implant/projectile))
+					if(I.shrapnel)
 						bad_stuff ++
+						implants[I.body_part] += 1
 
 			if (ishuman)
 				var/mob/living/carbon/human/H = L
-				if(H.chest_item != null) // If item is in chest, add one
-					bad_stuff ++
 				if (bad_stuff)
-					blood_data += " | <span class='alert'><B>Foreign object[s_es(bad_stuff)] detected</B></span>"
+					for(var/body_part in implants)
+						blood_data += " | <span class='alert'><B>Foreign object[s_es(implants[body_part])] detected in the [zone_sel2name[body_part]].</B></span>"
 				if(H.chest_item != null) // State that large foreign object is located in chest
 					blood_data += " | <span class='alert'><B>Sizable foreign object located below sternum</B></span>"
 			else
