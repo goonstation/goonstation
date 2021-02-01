@@ -277,6 +277,13 @@
 
 	src.closeContextActions()
 
+	src.update_grab_loc()
+
+	if (src.s_active && !(s_active.master in src))
+		src.detach_hud(src.s_active)
+		src.s_active = null
+
+/mob/proc/update_grab_loc()
 	//robust grab : keep em close
 	for (var/obj/item/grab/G in equipped_list(check_for_magtractor = 0))
 		if (G.state < GRAB_NECK) continue
@@ -288,10 +295,6 @@
 		G.affecting.glide_size = src.glide_size
 		G.set_affected_loc()
 		G.affecting.glide_size = src.glide_size
-
-	if (src.s_active && !(s_active.master in src))
-		src.detach_hud(src.s_active)
-		src.s_active = null
 
 /mob/disposing()
 	for(var/mob/dead/target_observer/TO in observers)
@@ -648,6 +651,7 @@
 					logTheThing("combat", src, tmob, "trades places with (Help Intent) [constructTarget(tmob,"combat")], pushing them into a fire.")
 				deliver_move_trigger("swap")
 				tmob.deliver_move_trigger("swap")
+				tmob.update_grab_loc()
 				src.now_pushing = 0
 
 				return

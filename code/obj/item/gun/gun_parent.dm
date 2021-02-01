@@ -251,11 +251,11 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 
 /obj/item/gun/proc/shoot_point_blank(var/mob/M as mob, var/mob/user as mob, var/second_shot = 0)
 	if (!M || !user)
-		return
+		return FALSE
 
 	if (isghostdrone(user))
 		user.show_text("<span class='combat bold'>Your internal law subroutines kick in and prevent you from using [src]!</span>")
-		return
+		return FALSE
 
 	//Ok. i know it's kind of dumb to add this param 'second_shot' to the shoot_point_blank proc just to make sure pointblanks don't repeat forever when we could just move these checks somewhere else.
 	//but if we do the double-gun checks here, it makes stuff like double-hold-at-gunpoint-pointblanks easier!
@@ -284,7 +284,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 			playsound(user, "sound/weapons/Gunclick.ogg", 60, 1)
 		else
 			user.show_text("*click* *click*", "red")
-		return
+		return FALSE
 
 	if (ishuman(user) && src.add_residue) // Additional forensic evidence for kinetic firearms (Convair880).
 		var/mob/living/carbon/human/H = user
@@ -298,7 +298,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 		boutput(user, "<span class='alert'>You silently shoot [user == M ? "yourself" : M] point-blank with [src]!</span>") // Was non-functional (Convair880).
 
 	if (!process_ammo(user))
-		return
+		return FALSE
 
 	if (src.muzzle_flash)
 		if (isturf(user.loc))
@@ -327,7 +327,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	for (var/i = 0; i < current_projectile.shot_number; i++)
 		var/obj/projectile/P = initialize_projectile_pixel_spread(user, current_projectile, M, 0, 0, spread, alter_proj = new/datum/callback(src, .proc/alter_projectile))
 		if (!P)
-			return
+			return FALSE
 		if (user == M)
 			P.shooter = null
 			P.mob_shooter = user
@@ -358,19 +358,19 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 /obj/item/gun/proc/shoot(var/target,var/start,var/mob/user,var/POX,var/POY)
 	if (isghostdrone(user))
 		user.show_text("<span class='combat bold'>Your internal law subroutines kick in and prevent you from using [src]!</span>")
-		return
+		return FALSE
 	if (!canshoot())
 		if (ismob(user))
 			user.show_text("*click* *click*", "red") // No more attack messages for empty guns (Convair880).
 			if (!silenced)
 				playsound(user, "sound/weapons/Gunclick.ogg", 60, 1)
-		return
+		return FALSE
 	if (!process_ammo(user))
-		return
+		return FALSE
 	if (!isturf(target) || !isturf(start))
-		return
+		return FALSE
 	if (!istype(src.current_projectile,/datum/projectile/))
-		return
+		return FALSE
 
 	if (src.muzzle_flash)
 		if (isturf(user.loc))

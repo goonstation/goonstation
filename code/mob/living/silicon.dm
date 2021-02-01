@@ -491,10 +491,15 @@ var/global/list/module_editors = list()
 	else
 		return 1
 
-/mob/living/silicon/choose_name(var/retries = 3)
+/mob/living/silicon/choose_name(var/retries = 3, var/what_you_are = null, var/default_name = null, var/force_instead = 0)
 	var/newname
+	if(isnull(default_name))
+		default_name = src.real_name
 	for (retries, retries > 0, retries--)
-		newname = input(src, "You are a Robot. Would you like to change your name to something else?", "Name Change", src.real_name) as null|text
+		if(force_instead)
+			newname = default_name
+		else
+			newname = input(src, "You are a Robot. Would you like to change your name to something else?", "Name Change", default_name) as null|text
 		if (!newname)
 			src.real_name = borgify_name("Robot")
 			src.name = src.real_name

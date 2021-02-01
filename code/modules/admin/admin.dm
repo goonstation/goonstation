@@ -4627,24 +4627,24 @@ var/global/noir = 0
 		if(findtext("[path]", object))
 			matches += path
 
-	return matches
+	. = matches
 
 /proc/get_one_match(var/object, var/base = /atom)
 	var/list/matches = get_matches(object, base)
 
-	if(matches.len==0)
+	if(!matches.len)
 		return null
 
 	var/chosen
-	if(matches.len==1)
+	if(matches.len == 1)
 		chosen = matches[1]
 	else
 		var/safe_matches = matches - list(/database, /client, /icon, /sound, /savefile)
-		chosen = input("Select an atom type", "Matches for pattern", null) as null|anything in safe_matches
+		chosen = tgui_input_list(usr, "Select an atom type", "Matches for pattern", safe_matches)
 		if(!chosen)
 			return null
 
-	return chosen
+	. = chosen
 
 /datum/admins/proc/spawn_atom(var/object as text)
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)

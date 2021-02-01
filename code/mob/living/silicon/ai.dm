@@ -2125,16 +2125,20 @@ proc/get_mobs_trackable_by_AI()
 
 	vox_help(src)
 
-/mob/living/silicon/ai/choose_name(var/retries = 3)
-	var/randomname = pick_string_autokey("names/ai.txt")
+/mob/living/silicon/ai/choose_name(var/retries = 3, var/what_you_are = null, var/default_name = null, var/force_instead = 0)
 	var/obj/item/organ/brain/brain_owner = src.brain.owner
+	if(isnull(default_name))
+		default_name = pick_string_autokey("names/ai.txt")
 	var/newname
 	for (retries, retries > 0, retries--)
-		newname = input(src, "You are an AI. Would you like to change your name to something else?", "Name Change", randomname) as null|text
+		if(force_instead)
+			newname = default_name
+		else
+			newname = input(src, "You are an AI. Would you like to change your name to something else?", "Name Change", default_name) as null|text
 		if (src.brain.owner != brain_owner)
 			return
 		if (!newname)
-			src.real_name = randomname
+			src.real_name = default_name
 			src.name = src.real_name
 			src.internal_pda.name = "[src]'s Internal PDA Unit"
 			src.internal_pda.owner = "[src]"
@@ -2157,7 +2161,7 @@ proc/get_mobs_trackable_by_AI()
 				else
 					continue
 	if (!newname)
-		src.real_name = randomname
+		src.real_name = default_name
 		src.name = src.real_name
 
 /*-----Core-Creation---------------------------------------*/

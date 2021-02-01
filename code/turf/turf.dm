@@ -934,10 +934,10 @@
 
 		// This is gross. I'm sorry.
 		var/list/servers = list()
-		servers["main"]		= {"<a style='color: #88f;' href='byond://winset?command=Change-Server "main'>Goonstation</a>"}
-		servers["main3"]	= {"<a style='color: #88f;' href='byond://winset?command=Change-Server "main3'>Goonstation Overflow</a>"}
-		servers["rp"]		= {"<a style='color: #88f;' href='byond://winset?command=Change-Server "rp'>Goonstation Roleplay</a>"}
-		servers["main2"]	= {"<a style='color: #88f;' href='byond://winset?command=Change-Server "main2'>Goonstation Roleplay Overflow</a></span>"}
+		servers["main1"] = {"<a style='color: #88f;' href='byond://winset?command=Change-Server "main1'>Goonstation 1 Classic: Heisenbee</a>"}
+		servers["main2"] = {"<a style='color: #88f;' href='byond://winset?command=Change-Server "main2'>Goonstation 2 Classic: Bombini</a>"}
+		servers["main3"] = {"<a style='color: #88f;' href='byond://winset?command=Change-Server "main3'>Goonstation 3 Roleplay: Morty</a>"}
+		servers["main4"] = {"<a style='color: #88f;' href='byond://winset?command=Change-Server "main4'>Goonstation 4 Roleplay: Sylvester</a></span>"}
 
 		var/serverList = ""
 		for (var/serverId in servers)

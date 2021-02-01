@@ -819,7 +819,7 @@ obj/item/contract/greed
 				SPAWN_DBG(10 SECONDS)
 					boutput(user, "<span class='notice'>Well, you were right.</span>")
 					var/mob/living/carbon/human/H = user
-					H.become_gold_statue(1)
+					H.become_statue(getMaterial("gold"))
 			if (src.limiteduse == 1)
 				src.used++
 				tooltip_rebuild = 1

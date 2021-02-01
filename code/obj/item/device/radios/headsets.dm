@@ -210,6 +210,20 @@
 		)
 	icon_override = "sec"
 
+/obj/item/device/radio/headset/detective
+	name = "Detective's Headset"
+	desc = "A radio headset that is also capable of communicating over the Security radio channels."
+	icon_state = "sec headset" //I see no use for a special sprite for the det headset itself.
+	secure_frequencies = list(
+		"g" = R_FREQ_SECURITY,
+		"d" = R_FREQ_DETECTIVE,
+		)
+	secure_classes = list(
+		"g" = RADIOCL_SECURITY,
+		"d" = RADIOCL_DETECTIVE,
+		)
+	icon_override = "det" //neat little magnifying glass sprite I made
+
 /obj/item/device/radio/headset/engineer
 	name = "Engineering Headset"
 	desc = "A radio headset that is also capable of communicating over the Engineering radio channels."

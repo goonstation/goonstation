@@ -95,7 +95,6 @@ ABSTRACT_TYPE(/datum/spacebee_extension_command/state_based/confirmation/mob_tar
 	server_targeting = COMMAND_TARGETING_SINGLE_SERVER
 	argument_types = list(/datum/command_argument/string="ckey")
 	var/action_name
-	var/actt
 	var/ckey
 
 /datum/spacebee_extension_command/state_based/confirmation/mob_targeting/prepare(user, ckey)

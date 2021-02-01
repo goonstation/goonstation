@@ -3234,6 +3234,7 @@ Returns:
 	density = 1
 	anchored = 1
 	icon = 'icons/obj/fluid.dmi'
+	plane = PLANE_FLOOR
 	icon_state = "pool"
 
 /obj/pool_springboard
