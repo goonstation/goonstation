@@ -380,11 +380,15 @@
 		src.create_inventory_counter()
 	
 	attack(mob/T as mob, mob/user as mob, def_zone) // stonepillar's crayon project
+		if (user.a_intent != INTENT_HARM)
+			..()
+			return
 		if (iscarbon(T))
 			var/mob/living/carbon/M = T
 			if (M == user)
-				return // so you don't accidentally shove a crayon while drawing
-				       // if you want to add this, PLEASE make it obvious
+				user.visible_message("<span class='alert'>[user] jams [src] up their own nose!</span>",\
+				"<span class='alert'><b>You jammed [src] up your nose. Good job.</b></span>")
+				logTheThing("combat", user, M, "jams [src] up their own nose at [log_loc(user)].")
 			else if(check_target_immunity (M))
 				user.show_message( "<span class='alert'>You try to jam [src] up [M]'s nose, but it won't fit!</span>")
 				return
