@@ -1713,7 +1713,7 @@ datum
 
 			reaction_turf(var/turf/T, var/volume)
 				src = null
-				if(volume >= 5 && !(locate(/obj/item/reagent_containers/food/snacks/breadslice) in T))
+				if(!(locate(/obj/item/reagent_containers/food/snacks/breadslice) in T))
 					new /obj/item/reagent_containers/food/snacks/breadslice(T)
 
 		fooddrink/george_melonium
@@ -1934,7 +1934,7 @@ datum
 
 			reaction_turf(var/turf/T, var/volume)
 				src = null
-				if(volume >= 5 && !(locate(/obj/item/reagent_containers/food/snacks/ingredient/cheese) in T))
+				if(!(locate(/obj/item/reagent_containers/food/snacks/ingredient/cheese) in T))
 					new /obj/item/reagent_containers/food/snacks/ingredient/cheese(T)
 
 			on_mob_life(var/mob/M, var/mult = 1)
@@ -1961,7 +1961,7 @@ datum
 
 			reaction_turf(var/turf/T, var/volume)
 				src = null
-				if(volume >= 5 && !(locate(/obj/item/reagent_containers/food/snacks/ingredient/gcheese) in T))
+				if(/* volume >= 5 &&  */!(locate(/obj/item/reagent_containers/food/snacks/ingredient/gcheese) in T))///LAGGNOTE
 					new /obj/item/reagent_containers/food/snacks/ingredient/gcheese(T)
 
 			on_mob_life(var/mob/M, var/mult = 1)
@@ -1988,7 +1988,7 @@ datum
 				if (covered.len > 9)
 					volume = (volume/covered.len)
 
-				if(volume >= 5 && prob(10))
+				if(prob(10))
 					if(!locate(/obj/decal/cleanable/blood/gibs) in T)
 						playsound(T, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
 						make_cleanable(/obj/decal/cleanable/blood/gibs,T)
@@ -2275,8 +2275,7 @@ datum
 
 			reaction_turf(var/turf/T, var/volume)
 				src = null
-				if(volume >= 3)
-					if(locate(/obj/item/reagent_containers/food/snacks/candy/chocolate) in T) return
+				if(!locate(/obj/item/reagent_containers/food/snacks/candy/chocolate) in T)
 					new /obj/item/reagent_containers/food/snacks/candy/chocolate(T)
 
 		fooddrink/nectar
@@ -2309,10 +2308,7 @@ datum
 
 			reaction_turf(var/turf/T, var/volume)
 				src = null
-				if (volume >= 5)
-					if (locate(/obj/item/reagent_containers/food/snacks/ingredient/honey) in T)
-						return
-
+				if (!locate(/obj/item/reagent_containers/food/snacks/ingredient/honey) in T)
 					new /obj/item/reagent_containers/food/snacks/ingredient/honey(T)
 
 		fooddrink/royal_jelly
@@ -2541,10 +2537,9 @@ datum
 				if (covered.len > 9)
 					volume = (volume/covered.len)
 
-				if (volume >= 5)
-					if (!locate(/obj/decal/cleanable/ketchup) in T)
-						playsound(T, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
-						make_cleanable(/obj/decal/cleanable/ketchup,T)
+				if (!locate(/obj/decal/cleanable/ketchup) in T)
+					playsound(T, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
+					make_cleanable(/obj/decal/cleanable/ketchup,T)
 
 		fooddrink/mustard
 			name = "mustard"

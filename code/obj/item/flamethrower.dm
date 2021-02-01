@@ -301,6 +301,37 @@ A Flamethrower in various states of assembly
 		..()
 		gastank.reagents.add_reagent("napalm_goo", 4000)
 
+/obj/item/gun/flamethrower/backtank/crud
+	name = "Vega crudthrower"
+	desc = "A crud-grade crudthrower, supplied with crud and propellant from a back-mounted crudpack. Developed by Almacrud Crud Fabrication."
+	New()
+		..()
+		gastank.reagents.add_reagent("vomit", 1)
+		gastank.reagents.add_reagent("gvomit", 1)
+		gastank.reagents.add_reagent("bread", 1)
+		gastank.reagents.add_reagent("paper", 1)
+		gastank.reagents.add_reagent("blood", 1)
+		gastank.reagents.add_reagent("glitter", 1)
+		gastank.reagents.add_reagent("glitter_harmless", 1)
+		gastank.reagents.add_reagent("chocolate", 1)
+		gastank.reagents.add_reagent("urine", 1)
+		gastank.reagents.add_reagent("magnesium", 1)
+		gastank.reagents.add_reagent("carbon", 1)
+		gastank.reagents.add_reagent("carpet", 1)
+		gastank.reagents.add_reagent("ectoplasm", 1)
+		gastank.reagents.add_reagent("synthflesh", 1)
+		gastank.reagents.add_reagent("meat_slurry", 1)
+		gastank.reagents.add_reagent("triplepiss", 1)
+		gastank.reagents.add_reagent("ants", 1)
+		gastank.reagents.add_reagent("spiders", 1)
+		gastank.reagents.add_reagent("ice", 1)
+		gastank.reagents.add_reagent("luminol", 1)
+		gastank.reagents.add_reagent("cheese", 1)
+		gastank.reagents.add_reagent("gcheese", 1)
+		gastank.reagents.add_reagent("honey", 1)
+		gastank.reagents.add_reagent("ketchup", 1)
+		gastank.reagents.add_reagent("platinum", 3976)
+
 /obj/item/gun/flamethrower/assembled/New()
 	..()
 	welder = new /obj/item/weldingtool

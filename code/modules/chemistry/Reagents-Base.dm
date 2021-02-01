@@ -55,9 +55,8 @@ datum
 			reaction_turf(var/turf/T, var/volume)
 				src = null
 				if(!istype(T, /turf/space))
-					if(volume >= 5)
-						if(!locate(/obj/decal/cleanable/dirt) in T)
-							make_cleanable(/obj/decal/cleanable/dirt,T)
+					if(!locate(/obj/decal/cleanable/dirt) in T)
+						make_cleanable(/obj/decal/cleanable/dirt,T)
 
 		chlorine
 			name = "chlorine"
@@ -306,9 +305,8 @@ datum
 
 			reaction_turf(var/turf/T, var/volume)
 				src = null
-				if (volume >= 10)
-					if (!locate(/obj/decal/cleanable/magnesiumpile) in T)
-						make_cleanable(/obj/decal/cleanable/magnesiumpile,T)
+				if (!locate(/obj/decal/cleanable/magnesiumpile) in T)
+					make_cleanable(/obj/decal/cleanable/magnesiumpile,T)
 
 		mercury
 			name = "mercury"
