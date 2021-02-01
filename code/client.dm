@@ -901,17 +901,17 @@ var/global/curr_day = null
 	var/serverURL
 	var/serverName
 	switch (server)
-		if (1, "rp")
-			serverName = "Goonstation Roleplay"
+		if (1, "main1")
+			serverName = "Goonstation 1 Classic: Heisenbee"
 			serverURL = "byond://goon1.goonhub.com:26100"
-		if (2, "main")
-			serverName = "Goonstation"
+		if (2, "main2")
+			serverName = "Goonstation 2 Classic: Bombini"
 			serverURL = "byond://goon2.goonhub.com:26200"
-		if (3, "main2")
-			serverName = "Goonstation Roleplay Overflow"
+		if (3, "main3")
+			serverName = "Goonstation 3 Roleplay: Morty"
 			serverURL = "byond://goon3.goonhub.com:26300"
-		if (4, "main3")
-			serverName = "Goonstation Overflow"
+		if (4, "main4")
+			serverName = "Goonstation 4 Roleplay: Sylvester"
 			serverURL = "byond://goon4.goonhub.com:26400"
 
 	if (serverURL)
