@@ -26,14 +26,15 @@
 	src.pixel_y = 0
 	src.set_loc(statueperson)
 	statueperson.appearance = src.appearance
-	statueperson.name = "[M.name] statue of [src.name]"
+	statueperson.real_name = "statue of [src.name]"
 	if(desc)
-		statueperson.desc = newDesc
+		statueperson.real_desc = newDesc
 	else
-		statueperson.desc = src.desc
+		statueperson.real_desc = src.get_desc()
 	statueperson.setMaterial(M)
 	statueperson.set_dir(src.dir)
 	src.remove()
+	return statueperson
 
 /mob/proc/become_statue_ice()
 	become_statue(getMaterial("ice"), "We here at Space Station 13 believe in the transparency of our employees. It doesn't look like a functioning human can be retrieved from this.")
