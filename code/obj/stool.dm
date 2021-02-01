@@ -869,8 +869,6 @@
 		return
 
 /obj/item/chair/folded/attack(atom/target, mob/user as mob)
-	var/mob/living/carbon/human/H = user
-	var/mob/living/M = target
 	if (ishuman(target))
 		//M.TakeDamage("chest", 5, 0) //what???? we have 'force' var
 		playsound(src.loc, pick(sounds_punch), 100, 1)
