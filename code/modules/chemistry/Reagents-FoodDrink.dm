@@ -372,8 +372,13 @@ datum
 				if(method == INGEST)
 					if(M.client && (istraitor(M) || isspythief(M)))
 						M.reagents.add_reagent("omnizine",10)
-						M.reagents.del_reagent("moonshine")
 						return
+
+			on_mob_life(var/mob/target, var/mult = 1)
+				if(target.client && (istraitor(target) || isspythief(target)))
+					target.reagents.del_reagent("moonshine")
+					return
+				..()
 
 		fooddrink/alcoholic/bojack // Bar Contest Winner's Drink
 			name = "Bo Jack Daniel's"
