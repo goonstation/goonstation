@@ -1,4 +1,9 @@
 
+(t)mon feb 01 21
+(u)zjdtmkhzt
+(p)3548
+(e)|
+(+)Dragging crates onto traders to sell their contents should now work again for all types of items.
 (t)sun jan 31 21
 (u)pali
 (+)You can now suicide into the arc electroplater.
