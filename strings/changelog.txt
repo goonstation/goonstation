@@ -3,11 +3,7 @@
 (u)Sovexe
 (e)🆕🎨|feature, sprites
 (*)New chicken breed added! View minor changes for hint [Gen 2] [From Clown Chicken] (Don't let Emily find out!)
-(t)sun jan 31 21
-(u)Sovexe
-(e)🆕🎨|feature, sprites
-(*)They're quite popular, I think they're really going to take off!
-(t)sun jan 31 21
+(+)They're quite popular, I think they're really going to take off!
 (u)pali
 (+)Vacuums now clean ants.
 (u)Emily
