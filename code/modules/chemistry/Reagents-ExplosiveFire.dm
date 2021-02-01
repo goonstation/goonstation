@@ -264,10 +264,9 @@ datum
 				var/datum/reagents/myholder = holder
 				if(!ignited)
 					ignited = TRUE
-					src = null
 					SPAWN_DBG(1 DECI SECOND)
 						myholder.smoke_start(volume,classic = 1) //moved to a proc in Chemistry-Holder.dm so that the instant reaction and powder can use the same proc
-				myholder?.del_reagent(id)
+				myholder.del_reagent(id)
 
 		combustible/sonicpowder
 			name = "hootingium"
