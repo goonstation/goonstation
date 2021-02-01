@@ -11,11 +11,12 @@
 				. += C
 
 	var/obj/item/W = src.equipped()
-	if(W && W != target && length(W.contextActions))
-		for(var/datum/contextAction/C as() in W.contextActions)
-			var/action = C.checkRequirements(target, src)
-			if(action)
-				. += C
+	if(W && !(W.object_flags & IGNORE_CONTEXT_CLICK_EQUIPPED))
+		if(W != target && length(W.contextActions))
+			for(var/datum/contextAction/C as() in W.contextActions)
+				var/action = C.checkRequirements(target, src)
+				if(action)
+					. += C
 
 	if(src != target && length(src.contextActions))
 		for(var/datum/contextAction/C as() in src.contextActions)
