@@ -872,9 +872,6 @@
 	var/mob/living/carbon/human/H = user
 	var/mob/living/M = target
 	if (ishuman(target))
-		if (iswrestler(H))
-			M.changeStatus("stunned", 4 SECONDS)
-			H.emote("scream")
 		//M.TakeDamage("chest", 5, 0) //what???? we have 'force' var
 		playsound(src.loc, pick(sounds_punch), 100, 1)
 	..()
