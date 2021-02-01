@@ -38868,7 +38868,9 @@
 	},
 /obj/firedoor_spawn,
 /obj/access_spawn/engineering_engine,
-/obj/machinery/atmospherics/pipe/simple/insulated,
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	can_rupture = 0
+	},
 /turf/simulated/floor/delivery,
 /area/station/engine/inner)
 "bFK" = (
@@ -38881,7 +38883,9 @@
 	},
 /obj/firedoor_spawn,
 /obj/access_spawn/engineering_engine,
-/obj/machinery/atmospherics/pipe/simple/insulated/cold,
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	can_rupture = 0
+	},
 /turf/simulated/floor/delivery,
 /area/station/engine/inner)
 "bFL" = (
