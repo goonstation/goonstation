@@ -158,10 +158,12 @@
 	convert(M,user)
 
 	// Log entry.
-	var/blind_msg = "!"
+	var/blind_msg_target = "!"
+	var/blind_msg_others = "!"
 	if (!blind_success)
-		blind_msg = " but [(user != M) ? "their" : "your"] eyes are protected!"
-	M.visible_message("<span class='alert'>[user] blinds [M] with the [src.name][blind_msg]</span>", "<span class='alert'>You are blinded by the [src.name][blind_msg]</span>")
+		blind_msg_target = " but your eyes are protected!"
+		blind_msg_others = " but [his_or_her(M)] eyes are protected!"
+	M.visible_message("<span class='alert'>[user] blinds [M] with \the [src][blind_msg_others]</span>", "<span class='alert'>You are blinded by \the [src][blind_msg_target]</span>")
 	logTheThing("combat", user, M, "blinds [constructTarget(M,"combat")] with [src] at [log_loc(user)].")
 	if (src.emagged)
 		logTheThing("combat", user, user, "blinds themself with [src] at [log_loc(user)].")
