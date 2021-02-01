@@ -608,7 +608,7 @@
 				speak("[(src.slept_through_laser_class || !user) ? "" : "Thank you, [user]! "]Oh... but article-[(rand(1,6))] subsection-[rand(1,32764)] of Spacelaw prohibits any [fluffbud] [budfluff] from wielding a Class-[pick("A", "B","C", "D")] laser weapon.")
 				SPAWN_DBG(2 SECONDS)
 					speak("Oh! This weapon has a stun setting! That makes it [pick("A-OK", "totally fine", "well within certain loopholes of the law")] for me to use!")
-					src.budgun.current_projectile = new /datum/projectile/energy_bolt
+					src.budgun.set_current_projectile(new /datum/projectile/energy_bolt)
 					src.budgun.item_state = "egun"
 					src.budgun.icon_state = "energystun100"
 					src.budgun.muzzle_flash = "muzzle_flash_elec"
@@ -618,7 +618,7 @@
 			speak("I can't kill anything with this!")
 			SPAWN_DBG(2 SECONDS)
 				speak("Much better!")
-				src.budgun.current_projectile = new /datum/projectile/laser
+				src.budgun.set_current_projectile(new /datum/projectile/laser)
 				src.budgun.item_state = "egun"
 				src.budgun.icon_state = "energykill100"
 				src.budgun.muzzle_flash = "muzzle_flash_laser"

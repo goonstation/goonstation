@@ -190,6 +190,15 @@
 		..()
 		src.add_topping(0)
 
+/obj/item/reagent_containers/food/snacks/stroopwafel
+	name = "stroopwafel"
+	desc = "A traditional cookie from Holland. Doesn't this need to go into the microwave?"
+	icon = 'icons/obj/foodNdrink/food_snacks.dmi'
+	icon_state = "stroopwafel"
+	amount = 2
+	heal_amt = 2
+	food_effects = list("food_refreshed")
+
 /obj/item/reagent_containers/food/snacks/cookie
 	name = "sugar cookie"
 	desc = "Outside of North America, the Earth's Moon, and certain regions of Europa, these are referred to as biscuits."

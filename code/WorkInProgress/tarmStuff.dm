@@ -19,10 +19,10 @@
 	accepted_mag = AMMO_MAGAZINE
 	firemodes = list(new/datum/firemode/triple)
 
-	New()
-		current_projectile = new/datum/projectile/bullet/g11
+	// New()
+	// 	current_projectile = new/datum/projectile/bullet/g11
 
-		. = ..()
+	// 	. = ..()
 
 	shoot(var/target,var/start,var/mob/user,var/POX,var/POY)
 		spread_angle = max(0, shoot_delay*2+last_shot_time-TIME)*0.4

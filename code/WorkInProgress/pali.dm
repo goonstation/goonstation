@@ -46,10 +46,10 @@
 	two_handed = 1
 	w_class = 4
 
-	New()
+	// New()
 
-		current_projectile = new/datum/projectile/special/spawner/beepsky
-		..()
+	// 	current_projectile = new/datum/projectile/special/spawner/beepsky
+	// 	..()
 
 	setupProperties()
 		..()

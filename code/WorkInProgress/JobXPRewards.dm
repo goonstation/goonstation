@@ -414,11 +414,11 @@ mob/verb/checkrewards()
 
 		if (tmp_ammo && tmp_current_projectile)
 			colt.ammo = tmp_ammo
-			colt.current_projectile = tmp_current_projectile
+			colt.set_current_projectile(tmp_current_projectile)
 		if (!colt.ammo)
 			colt.ammo = new/obj/item/ammo/bullets/a38/stun
 		if (!colt.current_projectile)
-			colt.current_projectile = new/datum/projectile/bullet/revolver_38/stunners
+			colt.set_current_projectile(new/datum/projectile/bullet/revolver_38/stunners)
 
 		colt.set_loc(get_turf(C.mob))
 		C.mob.put_in_hand(colt)

@@ -601,7 +601,7 @@
 		if (!emitter)
 			emitter = new /obj/item/gun_parts/emitter
 		if(!current_projectile)
-			current_projectile = src.emitter.projectile
+			set_current_projectile(src.emitter.projectile)
 		projectiles = list(current_projectile)
 		..() */
 
@@ -1333,6 +1333,7 @@
 	name = "Signifer II"
 	desc = "It's a handgun? Or an smg? You can't tell."
 	icon_state = "signifer2"
+	w_class = 3		//for clarity
 	force = 8
 	two_handed = 0
 	ammo = new/obj/item/ammo/power_cell/self_charging/ntso_signifer
@@ -1354,13 +1355,15 @@
 				shoot_delay = 2
 				spread_angle = 0
 				force = 9
+				w_class = 3
 			else //if (current_projectile.type == /datum/projectile/laser)
 				src.item_state = "signifer_2-smg"
 				src.icon_state = "signifer_2-smg"
 				muzzle_flash = "muzzle_flash_bluezap"
-				force = 12
 				spread_angle = 3
 				shoot_delay = 5
+				force = 12
+				w_class = 4
 
 	attack_self(var/mob/M)
 		if (!src.two_handed)
@@ -1398,9 +1401,9 @@
 
 /obj/item/gun/energy/tasersmg
 	name = "Taser SMG"
-	icon_state = "ntneutral100"
+	icon_state = "tsmg_burst100"
 	desc = "A weapon that produces an cohesive electrical charge that stuns its target, capable of firing in two shot burst or full auto configurations."
-	item_state = "ntgun"
+	item_state = "tsmg"
 	force = 5.0
 	two_handed = 1
 	can_dual_wield = 0
@@ -1420,9 +1423,9 @@
 			var/ratio = min(1, src.loaded_magazine.charge / src.loaded_magazine.max_charge)
 			ratio = round(ratio, 0.25) * 100
 			if(current_projectile.type == /datum/projectile/energy_bolt/smgauto)
-				src.icon_state = "ntstun[ratio]"
+				src.icon_state = "tsmg_auto[ratio]"
 			else if (current_projectile.type == /datum/projectile/energy_bolt/smgburst)
-				src.icon_state = "ntneutral[ratio]"
+				src.icon_state = "tsmg_burst[ratio]"
 
 
 	attack_self(mob/user as mob)

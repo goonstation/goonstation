@@ -947,3 +947,8 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 
 	src.update_icon()
 	return
+
+///setter for current_projectile so we can have a signal attached. do not set current_projectile on guns without this proc
+/obj/item/gun/proc/set_current_projectile(datum/projectile/newProj)
+	src.current_projectile = newProj
+	SEND_SIGNAL(src, COMSIG_GUN_PROJECTILE_CHANGED, newProj)

@@ -79,6 +79,8 @@
 		if (proj_data)
 			proj_data.on_launch(src)
 		src.setup()
+		if(proj_data)
+			proj_data.post_setup(src)
 		if (!disposed && !pooled)
 			SPAWN_DBG(0)
 				if (!is_processing)
@@ -187,10 +189,10 @@
 							src.collide(X, first = 0)
 					if(src.pooled)
 						return
-			if (pierces_left == 0 || (sigreturn & PROJ_ATOM_CANNOT_PASS))
-				die()
-			else
-				if(!(sigreturn & PROJ_ATOM_PASSTHROUGH))
+			if(!(sigreturn & PROJ_ATOM_PASSTHROUGH))
+				if (pierces_left == 0 || (sigreturn & PROJ_ATOM_CANNOT_PASS))
+					die()
+				else
 					pierces_left--
 
 		else if (isobj(A))
@@ -517,6 +519,9 @@
 		src.tracked_blood = null
 		return
 
+	temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+		return
+
 ABSTRACT_TYPE(/datum/projectile)
 datum/projectile
 	// These vars were copied from the an projectile datum. I am not sure which version, probably not 4407.
@@ -574,6 +579,9 @@ datum/projectile
 		hit_object_sound = 0
 		hit_mob_sound = 0
 
+		///if a fullauto-capable weapon should be able to fullauto this ammo type
+		fullauto_valid = 0
+
 	// Determines the amount of length units the projectile travels each tick
 	// A tile is 32 wide, 32 long, and 32 * sqrt(2) across.
 	// Setting this to 32 will mimic the old behaviour for shots travelling in one of the cardinal directions.
@@ -630,6 +638,7 @@ datum/projectile
 		on_hit(atom/hit, angle, var/obj/projectile/O) //MBC : what the fuck shouldn't this all be in bullet_act on human in damage.dm?? this split is giving me bad vibes
 			impact_image_effect(ie_type, hit)
 			return
+		/// Does a thing every step this projectile takes
 		tick(var/obj/projectile/O)
 			return
 		on_launch(var/obj/projectile/O)
@@ -646,6 +655,9 @@ datum/projectile
 
 		get_power(obj/projectile/P, atom/A)
 			return P.initial_power - max(0, (P.travelled/32 - src.dissipation_delay))*src.dissipation_rate
+
+		post_setup(obj/projectile/P)
+			return
 
 // WOO IMPACT RANGES
 // Meticulously calculated by hand.

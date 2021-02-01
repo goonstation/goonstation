@@ -1277,7 +1277,10 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 						D.desc += " Awarded by the esteemed clown professor [src.name] to [M.name] at [o_clock_time()]."
 			else
 				src.put_in_hand_or_drop(thing)
-				message = "<B>[src]</B> tries to hand [thing] to [M], but [M]'s hands are full!"
+				if (M.has_any_hands())
+					message = "<B>[src]</B> tries to hand [thing] to [M], but [M]'s hands are full!"
+				else
+					message = "<B>[src]</B> tries to hand [thing] to [M], but [M] doesn't have any hands!"
 		else
 			message = "<B>[src]</B> tries to hand [thing] to [M], but [M] declines."
 
@@ -1376,12 +1379,12 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 		boutput(M, "You cannot interact with other people before the game has started.")
 		return
 
-	actions.interrupt(src, INTERRUPT_ATTACKED)
 	M.lastattacked = src
 
 	attack_particle(M,src)
 
 	if (M.a_intent != INTENT_HELP)
+		actions.interrupt(src, INTERRUPT_ATTACKED)
 		src.was_harmed(M, intent = M.a_intent)
 
 		if (M.mob_flags & AT_GUNPOINT)

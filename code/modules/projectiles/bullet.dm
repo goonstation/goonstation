@@ -200,6 +200,19 @@ toxic - poisons
 			if(M.getStatusDuration("slowed") < 2.5 SECONDS)
 				M.changeStatus("slowed", 1 SECOND, optional = 2)
 
+
+// /datum/projectile/bullet/nine_mm_NATO/burst
+// 	shot_number = 3
+// 	cost = 3
+// 	sname = "burst fire"
+
+/datum/projectile/bullet/nine_mm_NATO/auto
+	fullauto_valid = 1
+	shot_number = 1
+	cost = 1
+	shot_volume = 66
+	sname = "full auto"
+
 /datum/projectile/bullet/rifle_3006
 	name = "bullet"
 	ammo_ID = "bullet_3006_rifle"
@@ -558,6 +571,7 @@ toxic - poisons
 			M.changeStatus("staggered", clamp(P.power/8, 5, 1) SECONDS)
 
 	auto
+		fullauto_valid = 1
 		sname = "full auto"
 		shot_volume = 66
 		cost = 1

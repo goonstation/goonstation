@@ -1093,7 +1093,7 @@ proc/Create_Tommyname()
 			//IRCbot alert, for fun
 			var/ircmsg[] = new()
 			ircmsg["key"] =  M.key
-			ircmsg["name"] = M.real_name
+			ircmsg["name"] = stripTextMacros(M.real_name)
 			ircmsg["msg"] = "[message] and got themselves got by the anti-cheat cluwne."
 			ircbot.export("admin", ircmsg)
 

@@ -2692,7 +2692,7 @@
 	density = 0
 	can_rotate = 1
 	var/obj/item/gun/Gun = null
-	var/compatible_guns = /obj/item/gun/kinetic
+	var/list/compatible_guns = list(/obj/item/gun/kinetic, /obj/item/gun/flamethrower)
 	cabinet_banned = true // non-functional thankfully
 	get_desc()
 		. += "<br><span class='notice'>Current Gun: [Gun ? "[Gun] [Gun.canshoot() ? "(ready to fire)" : "(out of [istype(Gun, /obj/item/gun/energy) ? "charge)" : "ammo)"]"]" : "None"]</span>"
@@ -2714,7 +2714,13 @@
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if(..(W, user)) return 1
-		else if(istype(W, src.compatible_guns))
+		var/gun_fits = 0
+		for(var/I in src.compatible_guns)
+			if(istype(W, I))
+				gun_fits = 1
+				break
+
+		if(gun_fits)
 			if(!Gun)
 				boutput(usr, "You put the [W] inside the [src].")
 				logTheThing("station", usr, null, "adds [W] to [src] at [log_loc(src)].")
@@ -2746,7 +2752,6 @@
 			if(Gun.canshoot())
 				var/atom/target = getTarget()
 				if(target)
-					//DEBUG_MESSAGE("Target: [log_loc(target)]. Src: [src]")
 					Gun.shoot(target, get_turf(src), src)
 			else
 				src.visible_message("<span class='game say'><span class='name'>[src]</span> beeps, \"The [Gun.name] has no [istype(Gun, /obj/item/gun/energy) ? "charge" : "ammo"] remaining.\"</span>")
