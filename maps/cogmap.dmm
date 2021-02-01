@@ -32563,14 +32563,7 @@
 /turf/simulated/floor/delivery,
 /area/station/routing/engine)
 "bsg" = (
-/obj/machinery/atmospherics/binary/pump{
-	dir = 1;
-	frequency = 1225;
-	icon_state = "intact_on";
-	id = "Hot Loop Purge Pump";
-	on = 1;
-	target_pressure = 2000
-	},
+/obj/machinery/atmospherics/pipe/simple/insulated,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hangar/engine)
 "bsh" = (
@@ -32582,17 +32575,6 @@
 	},
 /obj/access_spawn/engineering_engine,
 /turf/simulated/floor/plating,
-/area/station/hangar/engine)
-"bsi" = (
-/obj/machinery/atmospherics/binary/pump{
-	dir = 1;
-	frequency = 1225;
-	icon_state = "intact_on";
-	id = "Cold Loop Purge Pump";
-	on = 1;
-	target_pressure = 2000
-	},
-/turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hangar/engine)
 "bsj" = (
 /obj/machinery/camera{
@@ -38516,9 +38498,13 @@
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
 "bEY" = (
-/obj/machinery/atmospherics/pipe/simple/insulated{
-	can_rupture = 0;
-	dir = 9
+/obj/machinery/atmospherics/binary/pump{
+	dir = 2;
+	frequency = 1225;
+	icon_state = "intact_on";
+	id = "Hot Loop Purge Pump";
+	on = 1;
+	target_pressure = 2000
 	},
 /turf/simulated/floor/delivery,
 /area/station/engine/inner)
@@ -38531,12 +38517,16 @@
 /turf/simulated/floor,
 /area/station/engine/inner)
 "bFa" = (
-/obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	can_rupture = 0;
-	dir = 5
-	},
 /obj/cable{
 	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/binary/pump{
+	dir = 2;
+	frequency = 1225;
+	icon_state = "intact_on";
+	id = "Cold Loop Purge Pump";
+	on = 1;
+	target_pressure = 2000
 	},
 /turf/simulated/floor/delivery,
 /area/station/engine/inner)
@@ -38878,6 +38868,7 @@
 	},
 /obj/firedoor_spawn,
 /obj/access_spawn/engineering_engine,
+/obj/machinery/atmospherics/pipe/simple/insulated,
 /turf/simulated/floor/delivery,
 /area/station/engine/inner)
 "bFK" = (
@@ -38890,6 +38881,7 @@
 	},
 /obj/firedoor_spawn,
 /obj/access_spawn/engineering_engine,
+/obj/machinery/atmospherics/pipe/simple/insulated/cold,
 /turf/simulated/floor/delivery,
 /area/station/engine/inner)
 "bFL" = (
@@ -39353,6 +39345,10 @@
 	dir = 1;
 	icon_state = "xtra_bigstripe-edge"
 	},
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	can_rupture = 0;
+	dir = 9
+	},
 /turf/simulated/floor,
 /area/station/engine/engineering)
 "bGF" = (
@@ -39379,6 +39375,10 @@
 	dir = 1;
 	icon_state = "xtra_bigstripe-edge"
 	},
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	can_rupture = 0;
+	dir = 5
+	},
 /turf/simulated/floor,
 /area/station/engine/engineering)
 "bGH" = (
@@ -39394,12 +39394,13 @@
 /obj/disposalpipe/trunk/mail{
 	dir = 8
 	},
-/obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	can_rupture = 0
-	},
 /obj/machinery/light{
 	dir = 1;
 	pixel_y = 21
+	},
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	can_rupture = 0;
+	dir = 10
 	},
 /turf/simulated/floor/yellow/side{
 	dir = 1
@@ -39774,6 +39775,7 @@
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	can_rupture = 0
 	},
+/obj/machinery/meter,
 /turf/simulated/floor,
 /area/station/engine/engineering)
 "bHt" = (
@@ -39791,6 +39793,7 @@
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	can_rupture = 0
 	},
+/obj/machinery/meter,
 /turf/simulated/floor,
 /area/station/engine/engineering)
 "bHw" = (
@@ -42244,14 +42247,15 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/pipe/simple/insulated{
-	can_rupture = 0
-	},
 /obj/machinery/light{
 	dir = 1;
 	pixel_y = 21
 	},
 /obj/reagent_dispensers/watertank/fountain,
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	can_rupture = 0;
+	dir = 6
+	},
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
@@ -63207,13 +63211,6 @@
 "mCe" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/ranch)
-"mKe" = (
-/obj/securearea,
-/obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	can_rupture = 0
-	},
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/engine/inner)
 "naz" = (
 /obj/machinery/space_heater,
 /turf/simulated/floor,
@@ -63375,14 +63372,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/engine/hotloop)
-"oqx" = (
-/obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	can_rupture = 0;
-	dir = 10
-	},
-/obj/firedoor_spawn,
-/turf/simulated/floor/plating,
-/area/station/engine/inner)
 "osp" = (
 /obj/decal/tile_edge/stripe/big{
 	dir = 1;
@@ -63698,9 +63687,6 @@
 /area/station/security/armory)
 "tAM" = (
 /obj/securearea,
-/obj/machinery/atmospherics/pipe/simple/insulated{
-	can_rupture = 0
-	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/inner)
 "tFl" = (
@@ -64088,14 +64074,6 @@
 "xXP" = (
 /obj/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/insulated/cold,
-/turf/simulated/floor/plating,
-/area/station/engine/inner)
-"yfg" = (
-/obj/machinery/atmospherics/pipe/simple/insulated{
-	can_rupture = 0;
-	dir = 6
-	},
-/obj/firedoor_spawn,
 /turf/simulated/floor/plating,
 /area/station/engine/inner)
 "yhD" = (
@@ -111391,7 +111369,7 @@ vBu
 bCu
 bvf
 bEt
-yfg
+btD
 tAM
 bMn
 bHs
@@ -112282,7 +112260,7 @@ bpR
 bqs
 bqU
 brA
-bsi
+bqs
 bsQ
 btC
 buu
@@ -112599,8 +112577,8 @@ bBF
 bCx
 bvf
 bEt
-oqx
-mKe
+btD
+tAM
 bGH
 bHv
 bIt
