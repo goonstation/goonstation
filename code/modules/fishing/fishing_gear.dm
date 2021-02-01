@@ -87,7 +87,7 @@
 			src.user.update_inhands()
 			return
 
-		if (src.fishing_spot.try_fish(src.user, src.rod)) //if it returns one we successfully fished, otherwise lets restart the loop
+		if (src.fishing_spot.try_fish(src.user, src.rod, target)) //if it returns one we successfully fished, otherwise lets restart the loop
 			..()
 			src.rod.is_fishing = false
 			src.rod.update_icon()

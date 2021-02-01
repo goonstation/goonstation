@@ -23,6 +23,7 @@
 (+)You can now suicide into the arc electroplater.
 (+)It is now possible to fish in spatial tears.
 (+)Chaplains can now sometimes notice a disturbance in the force when ghosts are using the ouija board.
+(+)You can now fish in <b>closed</b> deep fryers. (If it doesn't have an item inside you'll fry your rod. Don't fry your rod.)
 (u)Sovexe
 (e)🆕🎨|feature, sprites
 (*)New chicken breed added! View minor changes for hint [Gen 2] [From Clown Chicken] (Don't let Emily find out!)
