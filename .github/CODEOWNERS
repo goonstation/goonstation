@@ -35,6 +35,8 @@
 
 # Pali
 /code/datums/components/ @pali6
+/code/obj/artifacts/ @pali6
+/code/datums/controllers/artifact_controls.dm @pali6
 
 # Multiple Owners
 /tgui/ @mordent-goonstation @ZeWaka
