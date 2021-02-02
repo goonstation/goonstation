@@ -258,7 +258,7 @@
 				logTheThing("combat", user, victim, "stuns [constructTarget(victim,"combat")] with the [src.name] at [log_loc(victim)].")
 				JOB_XP(victim, "Clown", 3)
 				if (type == "stun_classic")
-					playsound(get_turf(src), "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1, -1)
+					playsound(get_turf(src), "swing_hit", 50, 1, -1)
 				else
 					flick(flick_baton_active, src)
 					playsound(get_turf(src), "sound/impact_sounds/Energy_Hit_3.ogg", 50, 1, -1)
