@@ -62,9 +62,9 @@
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
 
 	var/datum/light/light
-	var/lr = 0.88
-	var/lg = 0.88
-	var/lb = 1
+	var/light_r =0.88
+	var/light_g = 0.88
+	var/light_b = 1
 
 	New()
 		..()
@@ -72,7 +72,7 @@
 		light.attach(src)
 		light.set_brightness(0.6)
 		light.set_height(1.5)
-		light.set_color(lr,lg,lb)
+		light.set_color(light_r, light_g, light_b)
 
 		contextLayout = new /datum/contextLayout/flexdefault(4, 32, 32)
 

@@ -118,7 +118,6 @@ datum
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed)
 				. = ..()
-				src = null
 				if (!volume_passed)
 					return
 				if (!isliving(M))
@@ -492,7 +491,6 @@ datum
 				return
 
 			reaction_obj(var/obj/O, var/volume)
-				src = null
 				if (volume < 5 || istype(O, /obj/critter) || istype(O, /obj/machinery/bot) || istype(O, /obj/decal) || O.anchored || O.invisibility) return
 				O.visible_message("<span class='alert'>The [O] comes to life!</span>")
 				var/obj/critter/livingobj/L = new/obj/critter/livingobj(O.loc)
@@ -534,7 +532,6 @@ datum
 
 			reaction_mob(var/mob/target, var/method=TOUCH, var/volume_passed)
 				. = ..()
-				src = null
 				if (!volume_passed)
 					return
 				var/mob/living/M = target
@@ -580,7 +577,6 @@ datum
 				return
 
 			reaction_obj(var/obj/O, var/volume)
-				src = null
 				if (istype(O, /obj/critter))
 					var/obj/critter/critter = O
 					if (!critter.alive && critter.can_revive) //I should probably check for organic critters, but most robotic ones just blow up on death
@@ -617,7 +613,6 @@ datum
 				if (T.icon == 'icons/turf/floors.dmi' && volume >= 5)
 					SPAWN_DBG(1.5 SECONDS)
 						T.icon_state = "grimy"
-				src = null
 				return
 
 		fffoam
@@ -633,7 +628,6 @@ datum
 			viscosity = 0.14
 
 			reaction_turf(var/turf/target, var/volume)
-				src = null
 				var/obj/hotspot = (locate(/obj/hotspot) in target)
 				if (hotspot)
 					if (istype(target, /turf/simulated))
@@ -657,7 +651,6 @@ datum
 				return
 
 			reaction_obj(var/obj/item/O, var/volume)
-				src = null
 				if (istype(O) && prob(80))
 					if (O.burning)
 						O.burning = 0
@@ -665,7 +658,6 @@ datum
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				. = ..()
-				src = null
 				if (method == TOUCH)
 					var/mob/living/L = M
 					if (istype(L) && L.getStatusDuration("burning"))
@@ -690,7 +682,6 @@ datum
 			viscosity = 0.4
 
 			reaction_obj(var/obj/O, var/volume)
-				src = null
 				if (istype(O,/obj/window))
 					var/obj/window/W = O
 
@@ -736,7 +727,6 @@ datum
 
 			reaction_turf(var/turf/target, var/volume)
 				var/list/covered = holder.covered_turf()
-				src = null
 				var/turf/simulated/T = target
 				var/volume_mult = 1
 
@@ -770,7 +760,6 @@ datum
 
 			reaction_turf(var/turf/target, var/volume)
 				var/visible = src.visible
-				src = null
 				var/turf/simulated/T = target
 				if (istype(T))
 					if (T.wet >= 3) return
@@ -941,7 +930,6 @@ datum
 				..()
 
 			reaction_turf(var/turf/T, var/volume)
-				src = null
 				if (volume >= 10)
 					if (locate(/obj/item/reagent_containers/food/snacks/ectoplasm) in T) return
 					new /obj/item/reagent_containers/food/snacks/ectoplasm(T)
@@ -1018,9 +1006,6 @@ datum
 								cube_mob(M,volume_passed)
 						else
 							cube_mob(M,volume_passed)
-
-				src = null
-
 				return
 
 			proc/cube_mob(var/mob/M, var/volume_passed)
@@ -1040,7 +1025,6 @@ datum
 				return
 
 			reaction_turf(var/turf/target, var/volume)
-				src = null
 				if (volume >= 3)
 					if (locate(/obj/decal/icefloor) in target) return
 					var/obj/decal/icefloor/B = new /obj/decal/icefloor(target)
@@ -1181,7 +1165,6 @@ datum
 			reaction_turf(var/turf/target, var/volume)
 				var/turf/simulated/T = target
 				if (istype(T) && T.wet) //Wire: fix for Undefined variable /turf/space/var/wet (&& T.wet)
-					src = null
 					if (T.wet >= 2) return
 					var/wet = image('icons/effects/water.dmi',"wet_floor")
 					T.UpdateOverlays(wet, "wet_overlay")
@@ -1541,7 +1524,6 @@ datum
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				. = ..()
-				src = null
 				if (method == INGEST)
 					boutput(M, "<span class='alert'>Aaaagh! It tastes fucking horrendous!</span>")
 					SPAWN_DBG(1 SECOND)
@@ -1577,7 +1559,6 @@ datum
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				. = ..()
-				src = null
 				boutput(M, "<span class='alert'><b>OH SHIT ANTS!!!!</b></span>")
 				M.emote("scream")
 				random_brute_damage(M, 4)
@@ -1604,7 +1585,6 @@ datum
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				. = ..()
-				src = null
 				if (method == TOUCH)
 					boutput(M, "<span class='alert'><b>OH [pick("SHIT", "FUCK", "GOD")] SPIDERS[pick("", " ON MY FACE", " EVERYWHERE")]![pick("", "!", "!!", "!!!", "!!!!")]</b></span>")
 				if (method == INGEST)
@@ -1769,12 +1749,10 @@ datum
 				return
 
 			reaction_obj(var/obj/O, var/volume)
-				src = null
 				O.color = rgb(rand(0,255),rand(0,255),rand(0,255))
 				return
 
 			reaction_turf(var/turf/T, var/volume)
-				src = null
 				T.color = rgb(rand(0,255),rand(0,255),rand(0,255))
 				return
 
@@ -1865,7 +1843,6 @@ datum
 
 			reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume_passed)
 				. = ..()
-				src = null
 				if(!volume_passed)
 					return
 				if(!isliving(M))
@@ -1929,7 +1906,6 @@ datum
 
 			reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume_passed)
 				. = ..()
-				src = null
 				if(!volume_passed)
 					return
 				if(ismartian(M))
@@ -2022,7 +1998,6 @@ datum
 			reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume_passed)
 				. = ..()
 				var/col = rgb(fluid_r, fluid_g, fluid_b)
-				src = null
 				if(!volume_passed)
 					return
 				if(method == INGEST)
@@ -2034,7 +2009,6 @@ datum
 						boutput(M, "<span class='alert'>Oh god it's not coming off! You're tinted like this forever!</span>")
 
 			reaction_turf(var/turf/T, var/volume)
-				src = null
 				if (!istype(T, /turf/space))
 					if (volume >= 50 && (istype(T, /turf/simulated/floor) || istype(T, /turf/simulated/wall)))
 						T.visible_message("<span class='notice'>The substance flows out and sinks into [T], forming new shapes.</span>")
@@ -2078,7 +2052,6 @@ datum
 
 			reaction_turf(var/turf/T, var/volume)
 				var/list/covered = holder.covered_turf()
-				src = null
 				if (covered.len > 9)
 					volume = (volume/covered.len)
 
@@ -2097,7 +2070,6 @@ datum
 			transparency = 255
 
 			reaction_turf(var/turf/T, var/volume)
-				src = null
 				if (!istype(T, /turf/space))
 					if (volume >= 10)
 						if (!locate(/obj/item/material_piece/rubber/latex) in T)
@@ -2583,8 +2555,6 @@ datum
 
 			reaction_turf(var/turf/T, var/volume)
 				var/list/covered = holder.covered_turf()
-				src = null
-
 				if (covered.len > 9)
 					volume = (volume/covered.len)
 
@@ -2652,8 +2622,6 @@ datum
 
 			reaction_turf(var/turf/T, var/volume)
 				var/list/covered = holder.covered_turf()
-				src = null
-
 				if (covered.len > 9)
 					volume = (volume/covered.len)
 				if (!istype(T, /turf/space))
@@ -2978,8 +2946,6 @@ datum
 
 			reaction_turf(var/turf/T, var/volume)
 				var/list/covered = holder.covered_turf()
-				src = null
-
 				if (covered.len > 9)
 					volume = (volume/covered.len)
 
@@ -2992,7 +2958,6 @@ datum
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed)
 				. = ..()
-				src = null
 				if (!volume_passed) return
 				if (!ishuman(M)) return
 				if (method == INGEST)
@@ -3096,8 +3061,6 @@ datum
 
 			reaction_turf(var/turf/T, var/volume)
 				var/list/covered = holder.covered_turf()
-				src = null
-
 				if (covered.len > 9)
 					volume = (volume/covered.len)
 				if (volume >= 5)
@@ -3121,8 +3084,6 @@ datum
 
 			reaction_turf(var/turf/T, var/volume)
 				var/list/covered = holder.covered_turf()
-				src = null
-
 				if (covered.len > 9)
 					volume = (volume/covered.len)
 				if (volume >= 5)
@@ -3152,8 +3113,6 @@ datum
 				return*/
 			reaction_turf(var/turf/T, var/volume)
 				var/list/covered = holder.covered_turf()
-				src = null
-
 				if (covered.len > 9)
 					volume = (volume/covered.len)
 				if (volume > 10)
@@ -3176,8 +3135,6 @@ datum
 
 			reaction_turf(var/turf/T, var/volume)
 				var/list/covered = holder.covered_turf()
-				src = null
-
 				if (covered.len > 9)
 					volume = (volume/covered.len)
 				if (volume > 10)
@@ -3228,12 +3185,10 @@ datum
 
 			pierces_outerwear = 1//shoo, biofool
 			reaction_turf(var/turf/T, var_volume)
-				src = null
 				T.ex_act(1)
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				. = ..()
-				src = null
 				if(istype(M, /mob/dead))
 					return
 				M.ex_act(1)
@@ -3310,7 +3265,6 @@ datum
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed)
 				. = ..()
-				src = null
 				M.bioHolder.AddEffect("reversed_speech", timeleft = 180)
 
 			on_mob_life(var/mob/M, var/mult = 1)
@@ -3330,7 +3284,6 @@ datum
 			viscosity = 0.3
 
 			reaction_turf(var/turf/target, var/volume)
-				src = null
 				var/turf/simulated/T = target
 				if (istype(T))
 					if (T.wet >= 2) return
@@ -3714,7 +3667,6 @@ datum
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed)
 				. = ..()
-				src = null
 				if(!volume_passed)
 					return
 				if (M.bioHolder && M.bioHolder.HasEffect("toxic_farts"))
@@ -3780,7 +3732,6 @@ datum
 			hygiene_value = 0.25
 
 			reaction_turf(var/turf/target, var/volume)
-				src = null
 				var/turf/simulated/floor/T = target
 
 				if (istype(T))

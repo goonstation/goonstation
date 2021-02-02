@@ -19,7 +19,7 @@
 	var/current_trend = 0
 	var/last_trend = 0
 	var/speculation = 0
-	var/bankrupt = 0
+	var/bankrupt = FALSE
 
 	var/disp_value_change = 0
 	var/optimism = 0
@@ -33,30 +33,28 @@
 	var/list/shareholders = list()
 	var/list/borrows = list()
 	var/list/events = list()
-	var/list/articles = list()
+	var/list/datum/stock/article/articles = list()
 	var/fluctuation_rate = 15
 	var/fluctuation_counter = 0
 	var/datum/stock/industry/industry = null
 
-	proc/addEvent(var/datum/stock/event/E)
-		if (!(E in events))
-			events += E
+	proc/addEvent(datum/stock/event/E)
+		events |= E
 
-	proc/addArticle(var/datum/article/A)
-		if (!(A in articles))
+	proc/addArticle(datum/stock/article/A)
+		if (!(A in articles)) // we need to append new articles to the top
 			articles.Insert(1, A)
 		A.ticks = ticker.round_elapsed_ticks
 
 	proc/generateEvents()
-		var/list/types = childrentypesof(/datum/stock/event)
-		for (var/T in types)
-			generateEvent(T)
+		for (var/datum/stock/event/type in concrete_typesof(/datum/stock/event))
+			generateEvent(type)
 
-	proc/generateEvent(var/T)
-		var/datum/stock/event/E = new T(src)
+	proc/generateEvent(datum/stock/event/type)
+		var/datum/stock/event/E = new type(src)
 		addEvent(E)
 
-	proc/affectPublicOpinion(var/boost)
+	proc/affectPublicOpinion(boost)
 		optimism += rand(0, 500) / 500 * boost
 		average_optimism += rand(0, 150) / 5000 * boost
 		speculation += rand(-5, 25) / 10 * boost
@@ -279,7 +277,7 @@
 			return 1
 		return 0
 
-	proc/borrow(var/datum/stock/borrow/B, var/who)
+	proc/borrow(datum/stock/borrow/B, who)
 		if (B.lease_expires)
 			return 0
 		B.lease_expires = ticker.round_elapsed_ticks + B.lease_time
@@ -304,7 +302,7 @@
 			FrozenAccounts[who] += B
 		return 1
 
-	proc/buyShares(var/who, var/howmany)
+	proc/buyShares(who, howmany)
 		if (howmany <= 0)
 			return
 		howmany = round(howmany)
@@ -320,7 +318,7 @@
 			return 1
 		return 0
 
-	proc/sellShares(var/whose, var/howmany)
+	proc/sellShares(whose, howmany)
 		if (howmany < 0)
 			return
 		howmany = round(howmany)
@@ -335,5 +333,5 @@
 			return 1
 		return 0
 
-	proc/displayValues(var/mob/user)
+	proc/displayValues(mob/user)
 		user.Browse(plotBarGraph(values, "[name] share value per share"), "window=stock_[name];size=450x450")

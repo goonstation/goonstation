@@ -291,17 +291,17 @@ var/global/list/playersSeen = list()
 			return
 		data["reason"] = reason
 
-		var/server_nice = input(usr, "What server does the ban apply to?", "Ban") as null|anything in list("All", "Roleplay", "Main", "Roleplay Overflow", "Main Overflow")
+		var/server_nice = input(usr, "What server does the ban apply to?", "Ban") as null|anything in list("All", "1 Classic: Heisenbee", "2 Classic: Bombini", "3 Roleplay: Morty", "4 Roleplay: Sylvester")
 		var/server = null
 		switch (server_nice)
-			if ("Roleplay")
-				server = "rp"
-			if ("Main")
-				server = "main"
-			if ("Roleplay Overflow")
+			if ("1 Classic: Heisenbee")
+				server = "main1"
+			if ("2 Classic: Bombini")
 				server = "main2"
-			if ("Main Overflow")
+			if ("3 Roleplay: Morty")
 				server = "main3"
+			if ("4 Roleplay: Sylvester")
+				server = "main4"
 		data["server"] = server
 
 		var/ban_time = input(usr,"How long will the ban be?","Ban") as null|anything in list("Half-hour","One Hour","Six Hours","One Day","Half a Week","One Week","One Month","Permanent","Custom")
@@ -386,7 +386,7 @@ var/global/list/playersSeen = list()
 
 		var/ircmsg[] = new()
 		ircmsg["key"] = (isclient(adminC) && adminC.key ? adminC.key : adminC)
-		ircmsg["name"] = (isclient(adminC) && adminC.mob && adminC.mob.name ? adminC.mob.name : "N/A")
+		ircmsg["name"] = (isclient(adminC) && adminC.mob && adminC.mob.name ? stripTextMacros(adminC.mob.name) : "N/A")
 		ircmsg["msg"] = "edited [target]'s ban. Reason: [row["reason"]]. Duration: [(expiry == 0 ? "Permanent": "[expiry]")]. [serverLogSnippet]."
 		ircbot.export("admin", ircmsg)
 
@@ -519,7 +519,7 @@ var/global/list/playersSeen = list()
 
 		var/ircmsg[] = new()
 		ircmsg["key"] = (isclient(adminC) && adminC.key ? adminC.key : adminC)
-		ircmsg["name"] = (expired ? "\[Expired\]" : "[isclient(adminC) && adminC.mob && adminC.mob.name ? adminC.mob.name : "N/A"]")
+		ircmsg["name"] = (expired ? "\[Expired\]" : "[isclient(adminC) && adminC.mob && adminC.mob.name ? stripTextMacros(adminC.mob.name) : "N/A"]")
 		ircmsg["msg"] = (expired ? "[row["ckey"]]'s ban removed." : "deleted [row["ckey"]]'s ban.")
 		ircbot.export("admin", ircmsg)
 
@@ -590,7 +590,7 @@ var/global/list/playersSeen = list()
 
 		var/ircmsg[] = new()
 		ircmsg["key"] = (isclient(adminC) && adminC.key ? adminC.key : adminC)
-		ircmsg["name"] = (expired ? "\[Expired\]" : "[isclient(adminC) && adminC.mob && adminC.mob.name ? adminC.mob.name : "N/A"]")
+		ircmsg["name"] = (expired ? "\[Expired\]" : "[isclient(adminC) && adminC.mob && adminC.mob.name ? stripTextMacros(adminC.mob.name) : "N/A"]")
 		ircmsg["msg"] = (expired ? "[row["ckey"]]'s ban removed." : "deleted [row["ckey"]]'s ban.")
 		ircbot.export("admin", ircmsg)
 

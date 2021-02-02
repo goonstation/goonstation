@@ -28,9 +28,9 @@
 	var/stat_msg2
 	desc = "A computer that allows one to call and recall the emergency shuttle, as well as recieve messages from Centcom."
 
-	lr = 0.6
-	lg = 1
-	lb = 0.1
+	light_r =0.6
+	light_g = 1
+	light_b = 0.1
 
 	disposing()
 		radio_controller.remove_object(src, status_display_freq)

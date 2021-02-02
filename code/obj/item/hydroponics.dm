@@ -209,6 +209,9 @@
 /obj/item/saw/syndie/attack(mob/living/carbon/human/target as mob, mob/user as mob)
 	var/mob/living/carbon/human/H = target
 
+	if(prob(35))
+		gibs(target.loc, blood_DNA=H.bioHolder.Uid, blood_type=H.bioHolder.bloodType, headbits=FALSE, source=H)
+
 	if (H.organHolder && active == 1)
 		if (H.organHolder.appendix)
 			H.organHolder.drop_organ("appendix")

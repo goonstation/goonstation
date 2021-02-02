@@ -15,7 +15,6 @@ datum
 
 			/* this wont work properly and has been driving me fucking insane so disabling it for now
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
-				src = null
 				if(!M)
 					M = holder.my_atom
 				var/mob/living/L = M

@@ -417,23 +417,6 @@
 	partlistPart = "foot_right"
 	step_image_state = "footprintsR"
 
-/*
-/obj/item/parts/human_parts/arm/left/synth
-	name = "synthetic left arm"
-	desc = "A left arm. Looks like a rope composed of flesh coloured vines. And tofu??"
-
-/obj/item/parts/human_parts/arm/right/synth
-	name = "synthetic right arm"
-	desc = "A right arm. Looks like a rope composed of flesh coloured vines."
-
-/obj/item/parts/human_parts/leg/left/synth
-	name = "synthetic left leg"
-	desc = "A left leg. Looks like a rope composed of flesh coloured vines."
-
-/obj/item/parts/human_parts/leg/right/synth
-	name = "synthetic right leg"
-	desc = "A right leg. Looks like a rope composed of flesh coloured vines."
-*/
 //gimmick parts
 
 #define ORIGINAL_FLAGS_CANT_DROP 1
@@ -458,6 +441,7 @@
 	var/image/handimage = 0
 	/// No more yee eating csaber arms
 	limb_is_unnatural = TRUE
+	kind_of_limb = (LIMB_ITEM)
 
 	New(new_holder, var/obj/item/I)
 		..()
@@ -606,6 +590,7 @@
 	var/special_icons = 'icons/mob/human.dmi'
 	/// Also, item arms are supposedly junk jammed into a severed limb's socket
 	limb_is_unnatural = TRUE
+	kind_of_limb = (LIMB_ITEM)
 
 	New(new_holder, var/obj/item/I)
 		..()
@@ -730,6 +715,7 @@
 	show_on_examine = 1
 	/// Wendigeese are pretty unnatural, and most people'd miss em if they suddenly turned into a lizard arm
 	limb_is_unnatural = TRUE
+	kind_of_limb = (LIMB_WENDIGO)
 
 	New(var/atom/holder)
 		if (holder != null)
@@ -757,6 +743,7 @@
 	show_on_examine = 1
 	/// If you went through the trouble to get yourself a wendy arm, you should keep it no matter how inhuman you become
 	limb_is_unnatural = TRUE
+	kind_of_limb = (LIMB_WENDIGO)
 
 	New(var/atom/holder)
 		if (holder != null)
@@ -783,13 +770,12 @@
 	handlistPart = "hand_left"
 	show_on_examine = 1
 	limb_is_unnatural = TRUE
+	kind_of_limb = (LIMB_HOT)
 
 	New(var/atom/holder)
 		if (holder != null)
 			set_loc(holder)
 		..()
-
-
 
 /obj/item/parts/human_parts/arm/right/hot
 	name = "right hot arm"
@@ -804,6 +790,7 @@
 	handlistPart = "hand_right"
 	show_on_examine = 1
 	limb_is_unnatural = TRUE
+	kind_of_limb = (LIMB_HOT)
 
 	New(var/atom/holder)
 		if (holder != null)
@@ -825,6 +812,7 @@
 	handlistPart = "l_hand_bear"
 	show_on_examine = 1
 	limb_is_unnatural = TRUE
+	kind_of_limb = (LIMB_BEAR)
 
 	New(var/atom/holder)
 		if (holder != null)
@@ -853,6 +841,7 @@
 	handlistPart = "r_hand_bear"
 	show_on_examine = 1
 	limb_is_unnatural = TRUE
+	kind_of_limb = (LIMB_BEAR)
 
 	New(var/atom/holder)
 		if (holder != null)
@@ -881,6 +870,7 @@
 	easy_attach = 1
 	/// Plants are pretty unnatural
 	limb_is_unnatural = TRUE
+	kind_of_limb = (LIMB_PLANT)
 
 	New(var/atom/holder)
 		if (holder != null)
@@ -907,6 +897,7 @@
 	show_on_examine = 1
 	easy_attach = 1
 	limb_is_unnatural = TRUE
+	kind_of_limb = (LIMB_PLANT)
 
 	New(var/atom/holder)
 		if (holder != null)
@@ -933,6 +924,7 @@
 	show_on_examine = 1
 	easy_attach = 1
 	limb_is_unnatural = TRUE
+	kind_of_limb = (LIMB_PLANT)
 
 	New(var/atom/holder)
 		if (holder != null)
@@ -959,6 +951,7 @@
 	show_on_examine = 1
 	easy_attach = 1
 	limb_is_unnatural = TRUE
+	kind_of_limb = (LIMB_PLANT)
 
 	New(var/atom/holder)
 		if (holder != null)
@@ -1012,6 +1005,7 @@
 	show_on_examine = 1
 	/// About as unnatural as it gets
 	limb_is_unnatural = TRUE
+	kind_of_limb = (LIMB_ABOM)
 
 	New(var/atom/holder)
 		if (holder != null)
@@ -1038,6 +1032,7 @@
 	handlistPart = "r_hand_abomination"
 	show_on_examine = 1
 	limb_is_unnatural = TRUE
+	kind_of_limb = (LIMB_ABOM)
 
 	New(var/atom/holder)
 		if (holder != null)
@@ -1066,6 +1061,7 @@
 	show_on_examine = 1
 	/// Supernatural if not abnormally gross
 	limb_is_unnatural = TRUE
+	kind_of_limb = (LIMB_ZOMBIE)
 
 	New(var/atom/holder)
 		if (holder != null)
@@ -1086,6 +1082,7 @@
 	override_attack_hand = 1
 	show_on_examine = 1
 	limb_is_unnatural = TRUE
+	kind_of_limb = (LIMB_ZOMBIE)
 
 	New(var/atom/holder)
 		if (holder != null)
@@ -1107,6 +1104,7 @@
 	siemens_coefficient = 0
 	show_on_examine = 1
 	limb_is_unnatural = TRUE
+	kind_of_limb = (LIMB_WENDIGO)
 
 	New(var/atom/holder)
 		if (holder != null)
@@ -1134,6 +1132,7 @@
 	siemens_coefficient = 0
 	show_on_examine = 1
 	limb_is_unnatural = TRUE
+	kind_of_limb = (LIMB_WENDIGO)
 
 	New(var/atom/holder)
 		if (holder != null)
@@ -1147,7 +1146,7 @@
 		src.standImage = image('icons/mob/human.dmi', "[src.slot]_wendigo")
 		return standImage
 
-obj/item/parts/human_parts/arm/right/stone
+/obj/item/parts/human_parts/arm/right/stone
 	name = "synthetic right arm"
 	desc = "A right arm. Looks like it's made out of stone. How is that even possible?"
 	icon_state = "arm_right_stone"
@@ -1159,6 +1158,7 @@ obj/item/parts/human_parts/arm/right/stone
 	var/name_thing = "stone"
 	show_on_examine = 1
 	limb_is_unnatural = TRUE
+	kind_of_limb = (LIMB_STONE)
 
 	New(var/atom/holder)
 		if (holder != null)
@@ -1184,6 +1184,7 @@ obj/item/parts/human_parts/arm/right/stone
 	var/name_thing = "stone"
 	show_on_examine = 1
 	limb_is_unnatural = TRUE
+	kind_of_limb = (LIMB_STONE)
 
 	New(var/atom/holder)
 		if (holder != null)
@@ -1209,6 +1210,7 @@ obj/item/parts/human_parts/arm/right/stone
 	var/name_thing = "stone"
 	show_on_examine = 1
 	limb_is_unnatural = TRUE
+	kind_of_limb = (LIMB_STONE)
 
 	New(var/atom/holder)
 		if (holder != null)
@@ -1234,6 +1236,7 @@ obj/item/parts/human_parts/arm/right/stone
 	var/name_thing = "stone"
 	show_on_examine = 1
 	limb_is_unnatural = TRUE
+	kind_of_limb = (LIMB_STONE)
 
 	New(var/atom/holder)
 		if (holder != null)
@@ -1259,6 +1262,7 @@ obj/item/parts/human_parts/arm/right/stone
 	side = "left"
 	handlistPart = "hand_left"
 	skintoned = 0
+	kind_of_limb = (LIMB_MUTANT)
 
 	New(var/atom/holder)
 		if (holder != null)
@@ -1276,6 +1280,7 @@ obj/item/parts/human_parts/arm/right/stone
 	partlistPart = "foot_left"
 	step_image_state = "footprintsL"
 	skintoned = 0
+	kind_of_limb = (LIMB_MUTANT)
 
 	New(var/atom/holder)
 		if (holder != null)
@@ -1580,11 +1585,13 @@ obj/item/parts/human_parts/arm/right/stone
 /obj/item/parts/human_parts/leg/mutant/werewolf
 	icon = 'icons/mob/werewolf.dmi'
 	partIcon = 'icons/mob/werewolf.dmi'
+	kind_of_limb = (LIMB_MUTANT | LIMB_WOLF)
 
 /obj/item/parts/human_parts/arm/mutant/werewolf
 	icon = 'icons/mob/werewolf.dmi'
 	partIcon = 'icons/mob/werewolf.dmi'
 	limb_type = /datum/limb/abomination/werewolf
+	kind_of_limb = (LIMB_MUTANT | LIMB_WOLF)
 
 //// THE ACTUAL WOLFLIMBS ////
 /obj/item/parts/human_parts/leg/mutant/werewolf/left
@@ -1648,10 +1655,12 @@ obj/item/parts/human_parts/arm/right/stone
 /obj/item/parts/human_parts/arm/mutant/vamp_zombie
 	icon = 'icons/mob/vamp_zombie.dmi'
 	partIcon = 'icons/mob/vamp_zombie.dmi'
+	kind_of_limb = (LIMB_MUTANT | LIMB_ZOMBIE)
 
 /obj/item/parts/human_parts/leg/mutant/vamp_zombie
 	icon = 'icons/mob/vamp_zombie.dmi'
 	partIcon = 'icons/mob/vamp_zombie.dmi'
+	kind_of_limb = (LIMB_MUTANT | LIMB_ZOMBIE)
 
 //// LIMBS ////
 /obj/item/parts/human_parts/arm/mutant/vamp_zombie/left
@@ -1694,10 +1703,14 @@ obj/item/parts/human_parts/arm/right/stone
 /obj/item/parts/human_parts/arm/mutant/skeleton
 	icon = 'icons/mob/skeleton.dmi'
 	partIcon = 'icons/mob/skeleton.dmi'
+	easy_attach = 1 // Its just a bone... full of meat. Kind of.
+	kind_of_limb = (LIMB_MUTANT | LIMB_SKELLY)
 
 /obj/item/parts/human_parts/leg/mutant/skeleton
 	icon = 'icons/mob/skeleton.dmi'
 	partIcon = 'icons/mob/skeleton.dmi'
+	easy_attach = 1
+	kind_of_limb = (LIMB_MUTANT | LIMB_SKELLY)
 
 //// LIMBS ////
 /obj/item/parts/human_parts/arm/mutant/skeleton/left
@@ -1883,6 +1896,8 @@ obj/item/parts/human_parts/arm/right/stone
 	limb_overlay_1_color = null
 	handfoot_overlay_1_color = null
 	severed_overlay_1_color = null
+	easy_attach = 1 // These plants really like humanoid flesh
+	kind_of_limb = (LIMB_MUTANT | LIMB_PLANT)
 
 	New()
 		limb_overlay_1_state = "[src.slot]_kudzu"
@@ -1900,6 +1915,8 @@ obj/item/parts/human_parts/arm/right/stone
 	limb_overlay_1_color = null
 	handfoot_overlay_1_color = null
 	severed_overlay_1_color = null
+	easy_attach = 1
+	kind_of_limb = (LIMB_MUTANT | LIMB_PLANT)
 
 	New()
 		limb_overlay_1_state = "[src.slot]_kudzu"

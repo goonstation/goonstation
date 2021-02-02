@@ -5,9 +5,9 @@
 	var/list/authorized = list(  )
 	desc = "A computer that controls the movement of the nearby shuttle."
 
-	lr = 0.6
-	lg = 1
-	lb = 0.1
+	light_r =0.6
+	light_g = 1
+	light_b = 0.1
 
 /obj/machinery/computer/shuttle/embedded
 	icon_state = "shuttle-embed"

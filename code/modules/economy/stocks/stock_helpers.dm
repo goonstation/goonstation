@@ -1,12 +1,9 @@
-/proc/consonant()
-	return pick(consonants_upper)
 
-/proc/vowel()
-	return pick(vowels_upper)
-
+/// Uppercases first letter
 /proc/ucfirst(str)
 	return "[uppertext(copytext(str, 1))][copytext(str, 2)]"
 
+/// Uppercases first letter of every word
 /proc/ucfirsts(str)
 	var/list/split = splittext(str, " ")
 	. = list()
@@ -21,7 +18,7 @@ var/global/list/FrozenAccounts = list()
 		boutput(usr, "[A]: [length(FrozenAccounts[A])] borrows")
 
 
-/proc/plotBarGraph(var/list/points, var/base_text, var/width=400, var/height=400)
+/proc/plotBarGraph(list/points, base_text, width = 400, height = 400)
 	var/output = "<table style='border:1px solid black; border-collapse: collapse; width: [width]px; height: [height]px'>"
 	if (points.len && height > 20 && width > 20)
 		var/min = points[1]

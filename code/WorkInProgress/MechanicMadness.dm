@@ -350,10 +350,10 @@
 	var/can_rotate = 0
 	var/cooldown_time = 3 SECONDS
 	var/when_next_ready = 0
-	var/list/particles
+	var/list/particle_list
 
 	New()
-		particles = new/list()
+		particle_list = new/list()
 		AddComponent(/datum/component/mechanics_holder)
 		processing_items |= src
 		return ..()
@@ -367,10 +367,10 @@
 	proc
 
 		cutParticles()
-			if(length(particles))
-				for(var/datum/particleSystem/mechanic/M in particles)
+			if(length(particle_list))
+				for(var/datum/particleSystem/mechanic/M in particle_list)
 					M.Die()
-				particles.Cut()
+				particle_list.Cut()
 			return
 		light_up_housing( ) // are we in a housing? if so, tell it to light up
 			var/obj/item/storage/mechanics/the_container = src.loc
@@ -385,10 +385,10 @@
 		var/pointer_container[1] //A list of size 1, to store the address of the list we want
 		SEND_SIGNAL(src, _COMSIG_MECHCOMP_GET_OUTGOING, pointer_container)
 		var/list/connected_outgoing = pointer_container[1]
-		if(length(particles) != length(connected_outgoing))
+		if(length(particle_list) != length(connected_outgoing))
 			cutParticles()
 			for(var/atom/X in connected_outgoing)
-				particles.Add(particleMaster.SpawnSystem(new /datum/particleSystem/mechanic(src.loc, X.loc)))
+				particle_list.Add(particleMaster.SpawnSystem(new /datum/particleSystem/mechanic(src.loc, X.loc)))
 
 		return
 

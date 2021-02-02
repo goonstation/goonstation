@@ -173,7 +173,6 @@ MATERIAL
 				S.amount += src.amount
 				S.inventory_counter.update_number(S.amount)
 				boutput(user, "<span class='notice'>You add [S] to the stack. It now has [S.amount] sheets.</span>")
-				//SN src = null
 				qdel(src)
 				return
 
@@ -726,7 +725,6 @@ MATERIAL
 				R.amount += src.amount
 				boutput(user, "<span class='notice'>You add [R.amount] rods to the stack. It now has [R.amount] rods.</span>")
 				R.update_icon()
-				//SN src = null
 				qdel(src)
 				return
 		if (istype(W, /obj/item/organ/head))
@@ -1019,7 +1017,6 @@ MATERIAL
 			user.put_in_hand_or_drop(F)
 			F.inventory_counter?.update_number(F.amount)
 			if (src.amount < 1)
-				//SN src = null
 				qdel(src)
 				return
 			src.inventory_counter?.update_number(src.amount)
@@ -1070,7 +1067,6 @@ MATERIAL
 			W.inventory_counter?.update_number(W.amount)
 			// @TODO Zamu here -- in the future we should probably make this like update_amount,
 			// so we can have multiple icon states for varying stack amounts. Ah well. Not today.
-			//SN src = null
 			qdel(src)
 			return
 		return

@@ -649,3 +649,45 @@ proc/get_opaqueness(var/trans)	// 0=transparent, 255=fully opaque
 
 proc/LoadSavefile(name)
 	. = new/savefile(name)
+
+/// Returns a turf at the edge of a squared circle of specified radius around a thing
+proc/GetRandomPerimeterTurf(var/atom/A, var/dist = 10, var/dir)
+	var/turf/T = get_turf(A)
+	if(!isturf(T))
+		return
+	var/T_x = T.x
+	var/T_y = T.y
+	var/T_z = T.z
+	var/out_x
+	var/out_y
+	var/x_or_y = pick("x", "y") // Which edge of the squircle isn't randomized
+	if(dir)
+		if(dir == NORTH || dir == SOUTH)
+			x_or_y = "y"
+		else
+			x_or_y = "x"
+	if(x_or_y == "x")
+		if(dir)
+			if(dir == EAST)
+				out_x = clamp(T_x + dist, 0, world.maxx)
+			else if (dir == WEST)
+				out_x = clamp(T_x - dist, 0, world.maxx)
+		else
+			out_x = clamp(pick((T_x + dist), (T_x - dist)), 0, world.maxx)
+		out_y = clamp(rand(T_y - dist, T_y + dist), 0, world.maxy)
+	else
+		if(dir)
+			if(dir == NORTH)
+				out_y = clamp(T_y + dist, 0, world.maxy)
+			else if (dir == SOUTH)
+				out_y = clamp(T_y - dist, 0, world.maxy)
+		out_x = clamp(rand(T_x - dist, T_x + dist), 0, world.maxx)
+		out_y = clamp(pick((T_y + dist), (T_y - dist)), 0, world.maxy)
+	T = locate(out_x, out_y, T_z)
+	if(isturf(T))
+		return T
+
+proc/ThrowRandom(var/atom/movable/A, var/dist = 10, var/speed = 1, var/list/params, var/thrown_from, var/throw_type, var/allow_anchored, var/bonus_throwforce, var/end_throw_callback)
+	if(istype(A))
+		var/turf/Y = GetRandomPerimeterTurf(A, dist)
+		A.throw_at(Y, dist, speed, params, thrown_from, throw_type, allow_anchored, bonus_throwforce, end_throw_callback)

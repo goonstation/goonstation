@@ -21,7 +21,7 @@
 // the suiciding var is already at the mob level for fuck's sakes
 /mob/verb/suicide()
 
-	if ((!isliving(src) || isdead(src)) && !istype(src, /mob/dead/aieye))
+	if ((!isliving(src) || isdead(src)) && !istype(src, /mob/dead/aieye) && !istype(src, /mob/zoldorf))
 		boutput(src, "You're already dead!")
 		return
 

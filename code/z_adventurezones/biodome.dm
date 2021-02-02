@@ -790,7 +790,6 @@ SYNDICATE DRONE FACTORY AREAS
 		icon_state = "rubble"
 		set_density(0)
 		opacity = 0
-		src = null
 		SPAWN_DBG(18 SECONDS)
 			if ( smoke )
 				smoke.name = initial(smoke.name)

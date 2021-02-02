@@ -1227,7 +1227,6 @@ datum
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				. = ..()
-				src = null
 				if ( (method==TOUCH && prob((3 * volume) + 2)) || method==INGEST)
 					M.bioHolder.RandomEffect("bad")
 				return
@@ -1264,7 +1263,6 @@ datum
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				. = ..()
-				src = null
 				if ( (method==TOUCH && prob((5 * volume) + 1)) || method==INGEST)
 					M.bioHolder.RandomEffect("bad")
 				return

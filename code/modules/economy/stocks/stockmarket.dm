@@ -1,26 +1,30 @@
 
-var/global/datum/stock/market/stockExchange = new
-
 /datum/stock/market
-	var/list/stocks = list()
-	var/list/balances = list()
-	var/list/last_read = list()
+	var/list/datum/stock/ticker/stocks
+	var/list/stockBrokers
+	var/list/balances
+	var/list/last_read
 
 	New()
 		..()
+		stocks = list()
+		stockBrokers = list()
+		balances = list()
+		last_read = list()
 		generateBrokers()
 		generateStocks()
 
-	proc/balanceLog(var/whose, var/net)
+	proc/process()
+		for (var/datum/stock/ticker/S as() in stocks)
+			S.process()
+
+	proc/balanceLog(whose, net)
 		if (!(whose in balances))
 			balances[whose] = net
 		else
 			balances[whose] += net
 
-	var/list/stockBrokers = list()
-
 	proc/generateBrokers()
-		stockBrokers = list()
 		var/list/fnames = list("Goldman", "Edward", "James", "Luis", "Alexander", "Walter", "Eugene", "Mary", "Morgan", "Jane", "Elizabeth", "Xavier", "Hayden", "Samuel", "Lee")
 		var/list/names = list("Johnson", "Rothschild", "Sachs", "Stanley", "Hepburn", "Brown", "McColl", "Fischer", "Edwards", "Becker", "Witter", "Walker", "Lambert", "Smith", "Montgomery", "Lynch", "Roosevelt", "Lehman")
 		var/list/locations = list("Earth", "Luna", "Mars", "Saturn", "Jupiter", "Uranus", "Pluto", "Europa", "Io", "Phobos", "Deimos", "Space", "Venus", "Neptune", "Mercury", "Kalliope", "Ganymede", "Callisto", "Amalthea", "Himalia")
@@ -44,7 +48,7 @@ var/global/datum/stock/market/stockExchange = new
 				continue
 			stockBrokers += pname
 
-	proc/generateDesignation(var/name)
+	proc/generateDesignation(name)
 		if (length(name) <= 4)
 			return uppertext(name)
 		var/list/w = splittext(name, " ")
@@ -73,7 +77,7 @@ var/global/datum/stock/market/stockExchange = new
 			switch (rand(1,6))
 				if(1)
 					while (sname == "" || sname == "FAG") // honestly it's a 0.6% chance per round this happens - or once in 166 rounds - so i'm accounting for it before someone yells at me
-						sname = "[consonant()][vowel()][consonant()]"
+						sname = "[pick(consonants_upper)][pick(vowels_upper)][pick(consonants_upper)]"
 				if (2)
 					sname = "[pick(tech_prefix)][pick(tech_short)][prob(20) ? " " + pick(company) : null]"
 				if (3 to 4)
@@ -110,7 +114,3 @@ var/global/datum/stock/market/stockExchange = new
 			S.generateEvents()
 			stocks += S
 			last_read[S] = list()
-
-	proc/process()
-		for (var/datum/stock/ticker/S in stocks)
-			S.process()
