@@ -34,7 +34,7 @@
 /tools/ @ZeWaka
 
 # Pali
-/code/datums/components @pali6
+/code/datums/components/ @pali6
 
 # Multiple Owners
 /tgui/ @mordent-goonstation @ZeWaka
