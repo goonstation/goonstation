@@ -1665,18 +1665,19 @@
 	var/list/viral_list = list()
 	for (var/datum/ailment_data/AD in src.ailments)
 		viral_list += AD
-	var/list/ejectables = list()
+	var/list/ejectables = list_ejectables()
+	for(var/obj/item/organ/organ in ejectables)
+		if(organ.donor == src)
+			organ.on_removal()
 	if (!custom_gib_handler)
 		if (iscarbon(src))
-			ejectables = list_ejectables()
 			if (bdna && btype)
-				. = gibs(src.loc, viral_list, ejectables, bdna, btype) // For forensics (Convair880).
+				. = gibs(src.loc, viral_list, ejectables, bdna, btype, source=src) // For forensics (Convair880).
 			else
-				. = gibs(src.loc, viral_list, ejectables)
+				. = gibs(src.loc, viral_list, ejectables, source=src)
 		else
 			. = robogibs(src.loc, viral_list)
 	else
-		ejectables = list_ejectables()
 		. = call(custom_gib_handler)(src.loc, viral_list, ejectables, bdna, btype)
 
 	// splash our fluids around

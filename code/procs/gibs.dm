@@ -1,4 +1,4 @@
-/proc/gibs(atom/location, var/list/diseases, var/list/ejectables, var/blood_DNA, var/blood_type, var/headbits = 1)
+/proc/gibs(atom/location, var/list/diseases, var/list/ejectables, var/blood_DNA, var/blood_type, var/headbits = 1, mob/living/source=null)
     // Added blood type and DNA for forensics (Convair880).
 	var/obj/decal/cleanable/blood/gibs/gib = null
 	var/list/gibs = new()
@@ -15,6 +15,7 @@
 	gib.diseases += diseases
 	gib.blood_DNA = blood_DNA
 	gib.blood_type = blood_type
+	if(source?.blood_id) gib.sample_reagent = source.blood_id
 	gibs.Add(gib)
 
 	LAGCHECK(LAG_LOW)
@@ -26,6 +27,7 @@
 	gib.diseases += diseases
 	gib.blood_DNA = blood_DNA
 	gib.blood_type = blood_type
+	if(source?.blood_id) gib.sample_reagent = source.blood_id
 	gibs.Add(gib)
 
 	LAGCHECK(LAG_LOW)
@@ -35,6 +37,7 @@
 	gib.diseases += diseases
 	gib.blood_DNA = blood_DNA
 	gib.blood_type = blood_type
+	if(source?.blood_id) gib.sample_reagent = source.blood_id
 	gibs.Add(gib)
 
 	LAGCHECK(LAG_LOW)
@@ -44,6 +47,7 @@
 	gib.diseases += diseases
 	gib.blood_DNA = blood_DNA
 	gib.blood_type = blood_type
+	if(source?.blood_id) gib.sample_reagent = source.blood_id
 	gibs.Add(gib)
 
 	if(headbits)
@@ -54,6 +58,7 @@
 		gib.diseases += diseases
 		gib.blood_DNA = blood_DNA
 		gib.blood_type = blood_type
+		if(source?.blood_id) gib.sample_reagent = source.blood_id
 		gibs.Add(gib)
 
 	LAGCHECK(LAG_LOW)
@@ -62,6 +67,7 @@
 	gib.diseases += diseases
 	gib.blood_DNA = blood_DNA
 	gib.blood_type = blood_type
+	if(source?.blood_id) gib.sample_reagent = source.blood_id
 	gibs.Add(gib)
 
 	LAGCHECK(LAG_LOW)
