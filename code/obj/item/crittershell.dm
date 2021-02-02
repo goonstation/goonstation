@@ -8,10 +8,6 @@
 	var/mob/living/critter/held_mobcritter = null
 	w_class = 1
 
-	// New()
-	// 	. = ..()
-	// 	RegisterSignal(src, list(COMSIG_ITEM_DROPPED), .proc/unshellify_critter)
-
 	disposing()
 		. = ..()
 		if(src.held_critter)
@@ -32,7 +28,10 @@
 			src.held_critter.attack_ai(user)
 
 	attack_hand(mob/user)
-		if(!user.a_intent == INTENT_GRAB && istype(src.held_critter))
+		if(!user.is_in_hands(src)) // Not in your hand? Might be in your backpack
+			. = ..() // Go get it then
+			return
+		if(!user.a_intent == INTENT_GRAB && istype(src.held_critter)) //
 			src.held_critter.attack_hand(user)
 
 	/// eat it, pet it, strangle it, intent based?
@@ -49,7 +48,7 @@
 		. = ..()
 
 	dropped(mob/user)
-		if(!istype(src.loc, /mob) && !istype(src.loc, /obj/item/storage))
+		if(!istype(src.loc, /mob) && !istype(src.loc, /obj/item/storage)) // Only unshell it if it stops being in a mob or a container
 			src.unshellify_critter()
 		. = ..()
 
