@@ -15,6 +15,8 @@
 	var/gas_type = "oxygen"
 	var/gas_temp = 310
 	var/gas_amount = 100
+	var/gas_amount_current = 0
+	var/gas_amount_growth = 5
 	examine_hint = "It is covered in very conspicuous markings."
 
 	post_setup()
@@ -74,28 +76,36 @@
 	effect_process(var/obj/O)
 		if (..())
 			return
+		if(src.gas_amount_current < src.gas_amount)
+			src.gas_amount_current = min(src.gas_amount_current + src.gas_amount_growth, src.gas_amount)
 		var/turf/simulated/L = get_turf(O)
 		if(istype(L))
 			var/datum/gas_mixture/gas = unpool(/datum/gas_mixture)
 			gas.zero()
 			switch(src.gas_type)
 				if("oxygen")
-					gas.oxygen = src.gas_amount
+					gas.oxygen = src.gas_amount_current
 				if("nitrogen")
-					gas.nitrogen = src.gas_amount
+					gas.nitrogen = src.gas_amount_current
 				if("plasma")
-					gas.toxins = src.gas_amount
+					gas.toxins = src.gas_amount_current
 				if("carbon dioxide")
-					gas.carbon_dioxide = src.gas_amount
+					gas.carbon_dioxide = src.gas_amount_current
 				if("farts")
-					gas.farts = src.gas_amount
+					gas.farts = src.gas_amount_current
 				if("agent b")
 					var/datum/gas/oxygen_agent_b/trace = gas.get_or_add_trace_gas_by_type(/datum/gas/oxygen_agent_b)
-					trace.moles = src.gas_amount
+					trace.moles = src.gas_amount_current
 				if("sleeping agent")
 					var/datum/gas/sleeping_agent/trace = gas.get_or_add_trace_gas_by_type(/datum/gas/sleeping_agent)
-					trace.moles = src.gas_amount
+					trace.moles = src.gas_amount_current
 			gas.temperature = src.gas_temp
 			gas.volume = R_IDEAL_GAS_EQUATION * src.gas_temp / 1000
 			if (L)
 				L.assume_air(gas)
+
+	effect_deactivate(obj/O)
+		if(..())
+			return
+		src.gas_amount_current = 0
+
