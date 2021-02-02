@@ -525,23 +525,29 @@ datum/light
 					E.RL_ApplyGeneration = generation
 					RL_APPLY_LIGHT_LINE(E, src.x, src.y, src.dir, dist_cast, src.brightness, height2, r, g, b)
 					ADDUPDATE(E)
-					ADDUPDATE(get_step(T, SOUTHEAST))
+					if(get_step(T, SOUTHEAST))
+						ADDUPDATE(get_step(T, SOUTHEAST))
 
 				var/turf/N = get_step(T, NORTH)
 				if (N && N.RL_ApplyGeneration < generation)
 					N.RL_ApplyGeneration = generation
 					RL_APPLY_LIGHT_LINE(N, src.x, src.y, src.dir, dist_cast, src.brightness, height2, r, g, b)
 					ADDUPDATE(N)
-					ADDUPDATE(get_step(T, NORTHWEST))
+					if(get_step(T, NORTHWEST))
+						ADDUPDATE(get_step(T, NORTHWEST))
 
-				if (T.NE && T.NE.RL_ApplyGeneration < generation)
-					RL_APPLY_LIGHT_LINE(T.NE, src.x, src.y, src.dir, dist_cast, src.brightness, height2, r, g, b)
-					T.NE.RL_ApplyGeneration = generation
-					ADDUPDATE(T.NE)
+				var/turf/NE = get_step(T, NORTHEAST)
+				if (NE && NE.RL_ApplyGeneration < generation)
+					RL_APPLY_LIGHT_LINE(NE, src.x, src.y, src.dir, dist_cast, src.brightness, height2, r, g, b)
+					NE.RL_ApplyGeneration = generation
+					ADDUPDATE(NE)
 
-				ADDUPDATE(get_step(T, WEST))
-				ADDUPDATE(get_step(T, SOUTH))
-				ADDUPDATE(get_step(T, SOUTHWEST))
+				if(get_step(T, WEST))
+					ADDUPDATE(get_step(T, WEST))
+				if(get_step(T, SOUTH))
+					ADDUPDATE(get_step(T, SOUTH))
+				if(get_step(T, SOUTHWEST))
+					ADDUPDATE(get_step(T, SOUTHWEST))
 
 			//account for blocked visibility (try to worm me way around somethin) also lol this is shit and doesnt work. maybe fix later :)
 			/*
@@ -638,11 +644,6 @@ turf
 		RL_OverlayState = ""
 		list/datum/light/RL_Lights = null
 		opaque_atom_count = 0
-		turf/N
-		turf/S
-		turf/W
-		turf/E
-		turf/NE
 #ifdef DEBUG_LIGHTING_UPDATES
 		var/obj/maptext_junk/RL_counter/counter = null
 #endif

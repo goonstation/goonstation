@@ -134,9 +134,9 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 	var/last_market_update = -INFINITY
 	var/price_list = null
 
-	lr = 1
-	lg = 0.7
-	lb = 0.03
+	light_r =1
+	light_g = 0.7
+	light_b = 0.03
 
 	disposing()
 		radio_controller.remove_object(src, "1435")

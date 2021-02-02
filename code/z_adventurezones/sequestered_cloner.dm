@@ -9,11 +9,6 @@
         and lore entries
 */
 
-/area/prefab/sequestered_cloner
-	name = "Sequestered Cloner"
-
-/area/prefab/sequestered_cloner/puzzle
-
 //Quickly turns everything back on as soon as there's a little bit of power
 /obj/machinery/power/apc/puzzle_apc
 	name = "Puzzle APC"

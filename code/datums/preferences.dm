@@ -143,14 +143,8 @@ datum/preferences
 			src.randomize_name(0, 0, 1)
 
 		src.real_name = src.name_first + " " + src.name_last
-/*		var/list/namecheck = splittext(trim(real_name), " ")
-		if (namecheck.len < 2 || length(real_name) < 5)
-			randomize_name()
-			return
-		for (var/i = 1, i <= namecheck.len, i++)
-			namecheck[i] = capitalize(namecheck[i])
-		real_name = jointext(namecheck, " ")
-*/
+
+
 	proc/update_preview_icon()
 		if (!AH)
 			logTheThing("debug", usr ? usr : null, null, "a preference datum's appearence holder is null!")
@@ -948,6 +942,7 @@ $(updateCharacterPreviewPos);
 			src.ResetAllPrefsToDefault(user)
 			boutput(user, "<span class='alert'><b>Your Job Preferences were empty, and have been reset.</b></span>")
 		else
+			// remove/replace jobs that were removed/renamed
 			for (var/job in removed_jobs)
 				if (job in src.jobs_med_priority)
 					src.jobs_med_priority -= job
@@ -961,11 +956,31 @@ $(updateCharacterPreviewPos);
 					src.jobs_unwanted -= job
 					if (removed_jobs[job])
 						src.jobs_unwanted |= removed_jobs[job]
+			// add missing jobs
 			for (var/datum/job/J in job_controls.staple_jobs)
 				if (istype(J, /datum/job/daily))
 					continue
-				if (!(J.name in src.jobs_med_priority) && !(J.name in src.jobs_low_priority))
+				if (src.job_favorite != J.name && !(J.name in src.jobs_med_priority) && !(J.name in src.jobs_low_priority))
 					src.jobs_unwanted |= J.name
+			// remove duplicate jobs
+			var/list/seen_jobs = list()
+			if (src.job_favorite)
+				seen_jobs[src.job_favorite] = TRUE
+			for (var/J in src.jobs_med_priority)
+				if (seen_jobs[J])
+					src.jobs_med_priority.Remove(J)
+				else
+					seen_jobs[J] = TRUE
+			for (var/J in src.jobs_low_priority)
+				if (seen_jobs[J])
+					src.jobs_low_priority.Remove(J)
+				else
+					seen_jobs[J] = TRUE
+			for (var/J in src.jobs_unwanted)
+				if (seen_jobs[J])
+					src.jobs_unwanted.Remove(J)
+				else
+					seen_jobs[J] = TRUE
 
 
 		var/list/HTML = list()

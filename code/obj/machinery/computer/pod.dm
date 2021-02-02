@@ -7,9 +7,9 @@
 	var/time = 30.0
 	//var/TPR = 0
 
-	lr = 0.6
-	lg = 1
-	lb = 0.1
+	light_r =0.6
+	light_g = 1
+	light_b = 0.1
 
 /obj/machinery/computer/pod/old
 	icon_state = "old"

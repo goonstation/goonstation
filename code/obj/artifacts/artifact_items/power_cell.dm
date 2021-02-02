@@ -96,11 +96,12 @@
 	ArtifactActivated()
 		. = ..()
 		src.maxcharge = src.chargeCap
+		processing_items |= src				// in case someone decides to make big cells work like small cells
 
 	ArtifactDeactivated()
 		. = ..()
-		src.maxcharge = 0
-		src.charge = 0
+		src.maxcharge = 1
+		src.charge = 1
 
 /datum/artifact/powercell
 	associated_object = /obj/item/cell/artifact

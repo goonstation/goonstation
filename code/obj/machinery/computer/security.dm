@@ -12,9 +12,9 @@
 	var/first_click = 1				//for creating the chui on first use
 	var/skip_disabled = 1			//If we skip over disabled cameras in AI camera movement mode. Just leaving it in for admins maybe.
 
-	lr = 1
-	lg = 0.7
-	lb = 0.74
+	light_r =1
+	light_g = 0.7
+	light_b = 0.74
 
 	disposing()
 		..()

@@ -21,9 +21,9 @@
 	var/require_login = 1
 	desc = "A computer that allows an authorized user to set warrants, view fingerprints, and add notes to various crewmembers."
 
-	lr = 1
-	lg = 0.7
-	lb = 0.74
+	light_r =1
+	light_g = 0.7
+	light_b = 0.74
 
 /obj/machinery/computer/secure_data/detective_computer
 	icon = 'icons/obj/computer.dmi'

@@ -208,7 +208,7 @@ There's buttons for pretty much anything you want to do with Git. When you're al
 
 Ok. We're almost there!
 :::info
-This can also be done (somewhat easier) using the GitHub interface, but this guide's goal is to stay in-editor.
+This can also be done using the GitHub interface ***(which is easier, and more simple + powerful)*** , but this guide's goal is to stay in-editor.
 :::
 Click the GitHub icon on the left sidebar. It looks like a cat in  circle. Now, you'll want to click the + sign that appears in the top left, like this:
 

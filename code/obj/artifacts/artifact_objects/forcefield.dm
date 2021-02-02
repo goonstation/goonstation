@@ -17,6 +17,7 @@
 	var/field_time = 80
 	var/icon_state = "shieldsparkles"
 	var/next_activate = 0
+	var/list/forcefields = list()
 
 	New()
 		..()
@@ -40,16 +41,19 @@
 			return
 		O.anchored = 1
 		var/turf/Aloc = get_turf(O)
-		var/list/forcefields = list()
 		for (var/turf/T in range(field_radius,Aloc))
 			if(get_dist(O,T) == field_radius)
 				var/obj/forcefield/wand/FF = new /obj/forcefield/wand(T,0,src.icon_state)
-				forcefields += FF
+				src.forcefields += FF
 		SPAWN_DBG(field_time)
-			for (var/obj/forcefield/F in forcefields)
-				forcefields -= F
-				qdel(F)
-			next_activate = ticker.round_elapsed_ticks + cooldown
 			if (O)
 				O.ArtifactDeactivated()
 				O.anchored = 0
+
+	effect_deactivate(obj/O)
+		if(..())
+			return
+		for (var/obj/forcefield/F in src.forcefields)
+			src.forcefields -= F
+			qdel(F)
+		next_activate = ticker.round_elapsed_ticks + cooldown

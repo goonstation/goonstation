@@ -350,10 +350,10 @@
 	var/can_rotate = 0
 	var/cooldown_time = 3 SECONDS
 	var/when_next_ready = 0
-	var/list/particles
+	var/list/particle_list
 
 	New()
-		particles = new/list()
+		particle_list = new/list()
 		AddComponent(/datum/component/mechanics_holder)
 		processing_items |= src
 		return ..()
@@ -367,10 +367,10 @@
 	proc
 
 		cutParticles()
-			if(length(particles))
-				for(var/datum/particleSystem/mechanic/M in particles)
+			if(length(particle_list))
+				for(var/datum/particleSystem/mechanic/M in particle_list)
 					M.Die()
-				particles.Cut()
+				particle_list.Cut()
 			return
 		light_up_housing( ) // are we in a housing? if so, tell it to light up
 			var/obj/item/storage/mechanics/the_container = src.loc
@@ -385,10 +385,10 @@
 		var/pointer_container[1] //A list of size 1, to store the address of the list we want
 		SEND_SIGNAL(src, _COMSIG_MECHCOMP_GET_OUTGOING, pointer_container)
 		var/list/connected_outgoing = pointer_container[1]
-		if(length(particles) != length(connected_outgoing))
+		if(length(particle_list) != length(connected_outgoing))
 			cutParticles()
 			for(var/atom/X in connected_outgoing)
-				particles.Add(particleMaster.SpawnSystem(new /datum/particleSystem/mechanic(src.loc, X.loc)))
+				particle_list.Add(particleMaster.SpawnSystem(new /datum/particleSystem/mechanic(src.loc, X.loc)))
 
 		return
 
@@ -2692,7 +2692,7 @@
 	density = 0
 	can_rotate = 1
 	var/obj/item/gun/Gun = null
-	var/compatible_guns = /obj/item/gun/kinetic
+	var/list/compatible_guns = list(/obj/item/gun/kinetic, /obj/item/gun/flamethrower)
 	cabinet_banned = true // non-functional thankfully
 	get_desc()
 		. += "<br><span class='notice'>Current Gun: [Gun ? "[Gun] [Gun.canshoot() ? "(ready to fire)" : "(out of [istype(Gun, /obj/item/gun/energy) ? "charge)" : "ammo)"]"]" : "None"]</span>"
@@ -2714,7 +2714,13 @@
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if(..(W, user)) return 1
-		else if(istype(W, src.compatible_guns))
+		var/gun_fits = 0
+		for(var/I in src.compatible_guns)
+			if(istype(W, I))
+				gun_fits = 1
+				break
+
+		if(gun_fits)
 			if(!Gun)
 				boutput(usr, "You put the [W] inside the [src].")
 				logTheThing("station", usr, null, "adds [W] to [src] at [log_loc(src)].")
@@ -2746,7 +2752,6 @@
 			if(Gun.canshoot())
 				var/atom/target = getTarget()
 				if(target)
-					//DEBUG_MESSAGE("Target: [log_loc(target)]. Src: [src]")
 					Gun.shoot(target, get_turf(src), src)
 			else
 				src.visible_message("<span class='game say'><span class='name'>[src]</span> beeps, \"The [Gun.name] has no [istype(Gun, /obj/item/gun/energy) ? "charge" : "ammo"] remaining.\"</span>")

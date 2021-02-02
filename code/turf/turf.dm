@@ -934,10 +934,10 @@
 
 		// This is gross. I'm sorry.
 		var/list/servers = list()
-		servers["main"]		= {"<a style='color: #88f;' href='byond://winset?command=Change-Server "main'>Goonstation</a>"}
-		servers["main3"]	= {"<a style='color: #88f;' href='byond://winset?command=Change-Server "main3'>Goonstation Overflow</a>"}
-		servers["rp"]		= {"<a style='color: #88f;' href='byond://winset?command=Change-Server "rp'>Goonstation Roleplay</a>"}
-		servers["main2"]	= {"<a style='color: #88f;' href='byond://winset?command=Change-Server "main2'>Goonstation Roleplay Overflow</a></span>"}
+		servers["main1"] = {"<a style='color: #88f;' href='byond://winset?command=Change-Server "main1'>Goonstation 1 Classic: Heisenbee</a>"}
+		servers["main2"] = {"<a style='color: #88f;' href='byond://winset?command=Change-Server "main2'>Goonstation 2 Classic: Bombini</a>"}
+		servers["main3"] = {"<a style='color: #88f;' href='byond://winset?command=Change-Server "main3'>Goonstation 3 Roleplay: Morty</a>"}
+		servers["main4"] = {"<a style='color: #88f;' href='byond://winset?command=Change-Server "main4'>Goonstation 4 Roleplay: Sylvester</a></span>"}
 
 		var/serverList = ""
 		for (var/serverId in servers)
@@ -1037,17 +1037,13 @@ Other Goonstation servers:[serverList]"}
 	if (istype(A, /area/supply/spawn_point || /area/supply/delivery_point || /area/supply/sell_point))
 		boutput(usr, "<span class='alert'>You can't build here.</span>")
 		return
-	if (istype(C, /obj/item/rods))
+	var/obj/item/rods/R = C
+	if (istype(R) && R.consume_rods(1))
 		boutput(user, "<span class='notice'>Constructing support lattice ...</span>")
 		playsound(src, "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
 		ReplaceWithLattice()
-		if(C.material) src.setMaterial(C.material)
-		C:amount--
-
-		if (C:amount < 1)
-			user.u_equip(C)
-			qdel(C)
-			return
+		if (R.material)
+			src.setMaterial(C.material)
 		return
 
 	if (istype(C, /obj/item/tile))

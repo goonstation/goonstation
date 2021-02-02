@@ -718,7 +718,7 @@
 obj/trait/pilot
 	name = "Pilot (0) \[Background\]"
 	cleanName = "Pilot"
-	desc = "You spawn in a pod off-station with a Space GPS, Emergency Oxygen Tank, Breath Mask and proper protection but without a PDA."
+	desc = "You spawn in a pod off-station with a Space GPS, Emergency Oxygen Tank, Breath Mask and proper protection, but you have no PDA and your pod cannot open wormholes."
 	id = "pilot"
 	icon_state = "pilot"
 	category = "background"

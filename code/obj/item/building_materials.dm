@@ -68,7 +68,9 @@ MATERIAL
 
 	proc/consume_sheets(var/use_amount)
 		if (!isnum(amount))
-			return
+			return FALSE
+		if (amount < use_amount)
+			return FALSE
 		src.amount = max(0,amount - use_amount)
 		if (amount < 1)
 			if (isliving(src.loc))
@@ -79,7 +81,7 @@ MATERIAL
 			qdel(src)
 		else
 			src.inventory_counter?.update_number(amount)
-		return
+		return TRUE
 
 	proc/set_reinforcement(var/datum/material/M)
 		if (!istype(M))
