@@ -39629,11 +39629,6 @@
 /obj/machinery/light/small/floor/netural,
 /turf/unsimulated/floor/grass/random,
 /area/afterlife/heaven/hydroponics)
-"bTQ" = (
-/turf/unsimulated/wall/titlecard{
-	tag = "the_ss13_screen"
-	},
-/area/titlescreen)
 "bTR" = (
 /obj/pool/perspective{
 	density = 0;
@@ -172641,7 +172636,7 @@ eZW
 gLs
 ukK
 daz
-bTQ
+daz
 ajg
 aaa
 ciG
