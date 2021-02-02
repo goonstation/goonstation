@@ -499,8 +499,7 @@
 				if (isintangible(L))
 					continue
 				if (!burn_living(L,power) && source) //burn_living() returns 1 if they are gibbed, 0 otherwise
-					if (!source.affecting_mobs.Find(L))
-						source.affecting_mobs.Add(L)
+					source.affecting_mobs |= L
 
 	..()
 
@@ -510,8 +509,7 @@
 /obj/lpt_laser/HasEntered(var/atom/movable/AM)
 	if (src.active && isliving(AM) && !isintangible(AM))
 		if (!burn_living(AM,power) && source) //burn_living() returns 1 if they are gibbed, 0 otherwise
-			if (!source.affecting_mobs.Find(AM))
-				source.affecting_mobs.Add(AM)
+			source.affecting_mobs |= AM
 
 /obj/lpt_laser/Uncrossed(var/atom/movable/AM)
 	if(isliving(AM) && source)

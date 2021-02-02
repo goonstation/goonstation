@@ -25,7 +25,7 @@
 	var/obj/item/organ/tail = null
 	var/lungs_changed = 2				//for changing lung stamina debuffs if it has changed since last cycle. starts at 2 for having 2 working lungs
 
-	var/list/organ_list = list("all", "head", "skull", "brain", "left_eye", "right_eye", "chest", "heart", "left_lung", "right_lung", "butt", "left_kidney", "right_kidney", "liver", "stomach", "intestines", "spleen", "pancreas", "appendix")
+	var/list/organ_list = list("all", "head", "skull", "brain", "left_eye", "right_eye", "chest", "heart", "left_lung", "right_lung", "butt", "left_kidney", "right_kidney", "liver", "stomach", "intestines", "spleen", "pancreas", "appendix", "tail")
 
 	var/list/organ_type_list = list(
 		"head"="/obj/item/organ/head",
@@ -714,18 +714,18 @@
 				return mytail
 
 	/// drops the organ, then hurls it somewhere
-	proc/drop_and_throw_organ(var/organ, var/location, var/direction, var/vigor, var/showtext)
+	proc/drop_and_throw_organ(var/organ, var/location, var/direction, var/dist, var/speed, var/showtext)
 		. = src.drop_organ(organ, location)
 		if(istype(., /obj))
 			var/obj/organ_toss = .
 			if (!location)
 				location = src.donor.loc
 
-			if(!direction)
-				direction = pick(alldirs)
-
-			var/atom/target = get_edge_target_turf(organ_toss, direction)
-			organ_toss.throw_at(target, vigor, vigor)
+			if(direction in alldirs)
+				var/atom/target = get_edge_target_turf(organ_toss, direction)
+				organ_toss.throw_at(target, dist, speed)
+			else
+				ThrowRandom(organ_toss, dist, speed)
 
 			if(showtext && ishuman(src.donor))
 				var/grody_arc = "bloody"
@@ -1209,6 +1209,11 @@
 		return 0
 	return src.organHolder.drop_organ(organ, location)
 
+/mob/living/carbon/human/proc/drop_and_throw_organ(var/organ, var/location, var/direction, var/dist, var/speed, var/showtext)
+	if (!src.organHolder || !organ)
+		return 0
+	return src.organHolder.drop_and_throw_organ(organ, location, direction, dist, speed, showtext)
+
 /mob/living/carbon/human/proc/receive_organ(var/obj/item/I, var/organ, var/op_stage = 0.0, var/force = 0)
 	if (!src.organHolder || !I || !organ)
 		return 0
@@ -1303,7 +1308,7 @@
 	regenRate = 0
 	tabName = "Body"
 
-/obj/screen/ability/topBar/organ
+/atom/movable/screen/ability/topBar/organ
 	clicked(params)
 		var/datum/targetable/organAbility/spell = owner
 		if (!istype(spell))
@@ -1337,7 +1342,7 @@
 	var/obj/item/organ/linked_organ = null
 
 	New()
-		var/obj/screen/ability/topBar/organ/B = new /obj/screen/ability/topBar/organ(null)
+		var/atom/movable/screen/ability/topBar/organ/B = new /atom/movable/screen/ability/topBar/organ(null)
 		B.name = src.name
 		B.desc = src.desc
 		B.icon = src.icon
@@ -1348,7 +1353,7 @@
 	updateObject()
 		..()
 		if (!src.object)
-			src.object = new /obj/screen/ability/topBar/organ()
+			src.object = new /atom/movable/screen/ability/topBar/organ()
 			object.icon = src.icon
 			object.owner = src
 		if (disabled)

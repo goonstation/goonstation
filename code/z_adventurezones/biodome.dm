@@ -790,7 +790,6 @@ SYNDICATE DRONE FACTORY AREAS
 		icon_state = "rubble"
 		set_density(0)
 		opacity = 0
-		src = null
 		SPAWN_DBG(18 SECONDS)
 			if ( smoke )
 				smoke.name = initial(smoke.name)
@@ -838,7 +837,7 @@ SYNDICATE DRONE FACTORY AREAS
 	w_class = 1.0
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
-		if(!in_range(target, usr) && !istype(target, /obj/alchemy/circle))
+		if(!in_interact_range(target, usr) && !istype(target, /obj/alchemy/circle))
 			return
 		if(target == loc) return
 		boutput(user, "<span class='notice'>Your sprinkle some powder on \the [target].</span>")

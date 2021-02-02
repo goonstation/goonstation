@@ -118,7 +118,7 @@
 					W.afterattack(pot,user) // ????
 
 	MouseDrop_T(obj/item/W as obj, mob/user as mob)
-		if (istype(W, /obj/item/soup_pot) && in_range(W, user) && in_range(src, user))
+		if (istype(W, /obj/item/soup_pot) && in_interact_range(W, user) && in_interact_range(src, user))
 			return src.attackby(W, user)
 		return ..()
 
@@ -420,7 +420,7 @@
 		..()
 
 	MouseDrop_T(obj/item/W as obj, mob/user as mob)
-		if (istype(W) && in_range(W, user) && in_range(src, user))
+		if (istype(W) && in_interact_range(W, user) && in_interact_range(src, user))
 			return src.attackby(W, user)
 		return ..()
 

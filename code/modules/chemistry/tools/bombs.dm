@@ -105,7 +105,6 @@
 		src.triggering_device = null
 		src.igniter = null
 		src.payload = null
-		//SN src = null
 		qdel(src)
 		return
 

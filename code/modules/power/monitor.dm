@@ -26,7 +26,7 @@
 
 /obj/machinery/power/monitor/proc/interacted(mob/user)
 
-	if ( (!in_range(src, user)) || (status & (BROKEN|NOPOWER)) )
+	if ( (!in_interact_range(src, user)) || (status & (BROKEN|NOPOWER)) )
 		src.remove_dialog(user)
 		user.Browse(null, "window=[window_tag]")
 		return
@@ -40,8 +40,8 @@
 
 		var/list/L = list()
 		for(var/obj/machinery/power/terminal/term in powernet.nodes)
-			if(istype(term.master, /obj/machinery/power/apc))
-				var/obj/machinery/power/apc/A = term.master
+			var/obj/machinery/power/apc/A = term.master
+			if(istype(A) && (!A.area || A.area.requires_power))
 				L += A
 
 		t += "<PRE>Total power: [engineering_notation(powernet.avail)]W<BR>Total load:  [engineering_notation(powernet.viewload)]W<BR>"
@@ -141,7 +141,7 @@
 
 /obj/machinery/power/monitor/smes/interacted(mob/user)
 
-	if ( (!in_range(src,user)) || (status & (BROKEN|NOPOWER)) )
+	if ( (!in_interact_range(src,user)) || (status & (BROKEN|NOPOWER)) )
 		src.remove_dialog(user)
 		user.Browse(null, "window=[window_tag]")
 		return

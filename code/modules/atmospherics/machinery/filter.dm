@@ -220,7 +220,7 @@ Filter types:
 		else if(reference == node_in)
 			network_in = new_network
 
-		if(new_network.normal_members.Find(src))
+		if(src in new_network.normal_members)
 			return 0
 
 		new_network.normal_members += src

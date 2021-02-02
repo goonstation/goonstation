@@ -760,6 +760,13 @@
 	output = /obj/item/reagent_containers/food/drinks/eggnog
 
 //Cookies
+/datum/cookingrecipe/stroopwafel
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough_cookie
+	amt1 = 2
+	item2 = /obj/item/reagent_containers/food/snacks/condiment/syrup
+	cookbonus = 4
+	output = /obj/item/reagent_containers/food/snacks/stroopwafel
+
 /datum/cookingrecipe/cookie
 	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough_cookie
 	cookbonus = 4
@@ -1076,6 +1083,34 @@
 	item2 = /obj/item/clothing/head/butt
 	cookbonus = 15
 	output = /obj/item/reagent_containers/food/snacks/pie/ass
+
+/datum/cookingrecipe/pie_chocolate
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough_s
+	item2 = /obj/item/reagent_containers/food/snacks/candy
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/butter
+	cookbonus = 10
+	output = /obj/item/reagent_containers/food/snacks/pie/chocolate
+
+/datum/cookingrecipe/pot_pie
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough_s
+	item2 = /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget
+	item3 = /obj/item/reagent_containers/food/snacks/plant/carrot
+	cookbonus = 12
+	output = /obj/item/reagent_containers/food/snacks/pie/pot
+
+/datum/cookingrecipe/pie_weed
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough_s
+	item2 = /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget
+	item3 = /obj/item/plant/herb/cannabis
+	cookbonus = 12
+	output = /obj/item/reagent_containers/food/snacks/pie/weed
+
+/datum/cookingrecipe/pie_fish
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough_s
+	item2 = /obj/item/reagent_containers/food/snacks/ingredient/meat/fish
+	item3 = /obj/item/reagent_containers/food/snacks/plant/potato
+	cookbonus = 10
+	output = /obj/item/reagent_containers/food/snacks/pie/fish
 
 /datum/cookingrecipe/custard
 	item1 = /obj/item/reagent_containers/food/drinks/milk

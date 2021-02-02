@@ -64,7 +64,7 @@
 
 	var/ircmsg[] = new()
 	ircmsg["key"] = client.key
-	ircmsg["name"] = client.mob.real_name
+	ircmsg["name"] = stripTextMacros(client.mob.real_name)
 	ircmsg["msg"] = html_decode(msg)
 	ircbot.export("help", ircmsg)
 
@@ -132,9 +132,10 @@
 	boutput(client.mob, "<span class='mhelp'><b>MENTORHELP: You</b>: [msg]</span>")
 	logTheThing("mentor_help", client.mob, null, "MENTORHELP: [msg]")
 	logTheThing("diary", client.mob, null, "MENTORHELP: [msg]", "mhelp")
+	var/dead = isdead(client.mob) ? "Dead" : ""
 	var/ircmsg[] = new()
 	ircmsg["key"] = client.key
-	ircmsg["name"] = client.mob.job ? "[client.mob.real_name] \[[client.mob.job]]" : client.mob.real_name
+	ircmsg["name"] = client.mob.job ? "[stripTextMacros(client.mob.real_name)] \[[dead] [client.mob.job]]" : (dead ? "[stripTextMacros(client.mob.real_name)] \[[dead]\]" : stripTextMacros(client.mob.real_name))
 	ircmsg["msg"] = html_decode(msg)
 	ircbot.export("mentorhelp", ircmsg)
 
@@ -149,6 +150,9 @@
 		return
 	if(client.ismuted())
 		boutput(client.mob, "You are muted and cannot pray.")
+		return
+	if(client.cloud_available() && client.cloud_get( "prayer_banner" ))
+		boutput(client.mob, "You have been banned from using this command.")
 		return
 
 	if (IsGuestKey(client.key))
@@ -260,9 +264,9 @@
 
 		var/ircmsg[] = new()
 		ircmsg["key"] = user?.client ? user.client.key : ""
-		ircmsg["name"] = user.real_name
+		ircmsg["name"] = stripTextMacros(user.real_name)
 		ircmsg["key2"] = (M != null && M.client != null && M.client.key != null) ? M.client.key : ""
-		ircmsg["name2"] = (M != null && M.real_name != null) ? M.real_name : ""
+		ircmsg["name2"] = (M != null && M.real_name != null) ? stripTextMacros(M.real_name) : ""
 		ircmsg["msg"] = html_decode(t)
 		ircbot.export("pm", ircmsg)
 

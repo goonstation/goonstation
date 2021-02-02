@@ -62,7 +62,7 @@
 
 /obj/machinery/power/switchgear/proc/interacted(mob/user)
 
-	if ( (!in_range(src, user)) || (status & (BROKEN|NOPOWER)) )
+	if ( (!in_interact_range(src, user)) || (status & (BROKEN|NOPOWER)) )
 		src.remove_dialog(user)
 		user.Browse(null, "window=switchgear")
 		return

@@ -918,7 +918,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 			src.create_reagents(1000)
 
 		src.set_mutantrace(/datum/mutantrace/krampus)
-		src.reagents.add_reagent("stimulants", 50)
+		src.changeStatus("stimulants", 4 MINUTES)
 		src.gender = "male"
 		bioHolder.AddEffect("loud_voice")
 		bioHolder.AddEffect("cold_resist")

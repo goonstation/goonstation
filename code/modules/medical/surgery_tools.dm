@@ -1157,7 +1157,7 @@ CONTAINS:
 		if(isturf(over_object))
 			..() //Lets it do the turf-to-turf slide
 			return
-		else if (istype(over_object, /obj/screen/hud))
+		else if (istype(over_object, /atom/movable/screen/hud))
 			over_object = usr //Try to fold & pick up the bag with your mob instead
 		else if (!(over_object == usr))
 			return

@@ -527,7 +527,7 @@
 		new src.item_shoes(src.loc)
 		if (prob(25))
 			new src.item_mask(src.loc)
-		gib.streak(list(NORTH, NORTHEAST, NORTHWEST))
+		gib.streak_cleanable(NORTH)
 		qdel (src)
 
 	disposing()
@@ -587,7 +587,7 @@
 		new src.item_shoes(src.loc)
 		if (prob(25))
 			new src.item_mask(src.loc)
-		gib.streak(list(NORTH, NORTHEAST, NORTHWEST))
+		gib.streak_cleanable(NORTH)
 		qdel (src)
 
 

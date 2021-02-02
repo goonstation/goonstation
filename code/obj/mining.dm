@@ -106,7 +106,7 @@
 					qdel(O)
 			T.overlays.len = 0
 			if (!istype(T, /turf/space))
-				new /turf/space(T)
+				T.ReplaceWithSpaceForce()
 
 	proc/generate_walls()
 		var/list/walls = list()
@@ -868,7 +868,7 @@
 		if(..())
 			return
 
-		if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
+		if ((usr.contents.Find(src) || (in_interact_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
 			src.add_dialog(usr)
 
 		src.add_fingerprint(usr)
@@ -911,8 +911,13 @@
 // Turf Defines
 
 /turf/simulated/wall/asteroid
+#ifdef UNDERWATER_MAP
+	name = "cavern wall"
+	desc = "A cavern wall, possibly flowing with mineral deposits."
+#else
 	name = "asteroid"
 	desc = "A free-floating mineral deposit from space."
+#endif
 	icon = 'icons/turf/asteroid.dmi'
 	icon_state = "ast1"
 	plane = PLANE_FLOOR
@@ -947,14 +952,6 @@
 
 	consider_superconductivity(starting)
 		return FALSE
-
-	trench
-		name = "cavern wall"
-		desc = "A cavern wall, possibly flowing with mineral deposits."
-		space_overlays()
-			return
-		build_icon()
-			return
 
 	dark
 		fullbright = 0
@@ -1053,11 +1050,14 @@
 
 
 
-	New(var/loc,var/do_overlays_now = 1)
+	New(var/loc)
 		src.icon_state = pick("ast1","ast2","ast3")
 		..()
-		if (do_overlays_now)
-			src.space_overlays()
+		worldgenCandidates += src
+
+	generate_worldgen()
+		. = ..()
+		src.space_overlays()
 
 	ex_act(severity)
 		switch(severity)
@@ -1186,8 +1186,11 @@
 	proc/space_overlays()
 		for (var/turf/space/A in orange(src,1))
 			var/image/edge_overlay = image('icons/turf/asteroid.dmi', "edge[get_dir(A,src)]")
+			edge_overlay.appearance_flags = PIXEL_SCALE | TILE_BOUND | RESET_COLOR | RESET_ALPHA
 			edge_overlay.layer = src.layer + 1
-			edge_overlay.color = src.stone_color
+			edge_overlay.plane = PLANE_FLOOR
+			edge_overlay.layer = TURF_EFFECTS_LAYER
+			//edge_overlay.color = src.stone_color
 			A.overlays += edge_overlay
 			src.space_overlays += edge_overlay
 
@@ -1356,6 +1359,7 @@
 	temperature = TCMB
 	step_material = "step_plating"
 	step_priority = STEP_PRIORITY_MED
+	has_material = FALSE
 	var/sprite_variation = 1
 	var/stone_color = null
 	var/image/coloration_overlay = null
@@ -1387,12 +1391,17 @@
 
 	New()
 		..()
+		src.name = initial(src.name)
 		src.sprite_variation = rand(1,3)
 		icon_state = "astfloor" + "[sprite_variation]"
 		coloration_overlay = image(src.icon,"color_overlay")
 		coloration_overlay.blend_mode = 4
 		update_icon()
-		space_overlays()
+		worldgenCandidates += src
+
+	generate_worldgen()
+		. = ..()
+		src.space_overlays()
 
 	ex_act(severity)
 		return
@@ -1416,6 +1425,10 @@
 			coloration_overlay = image(src.icon, "color_overlay")
 		coloration_overlay.color = src.stone_color
 		src.overlays += coloration_overlay
+		#ifndef UNDERWATER_MAP
+		if (fullbright)
+			src.overlays += /image/fullbright //Fixes perma-darkness
+		#endif
 		SPAWN_DBG(1 DECI SECOND)
 			if (istype(src)) //Wire note: just roll with this ok
 				for (var/turf/simulated/wall/asteroid/A in orange(src,1))
@@ -1423,23 +1436,20 @@
 				for (var/turf/space/A in orange(src,1))
 					src.apply_edge_overlay(get_dir(src, A))
 
-				#ifdef UNDERWATER_MAP //FUCK THIS SHIT. NO FULLBRIGHT ON THE MINING LEVEL, I DONT CARE.
-				if (z == AST_ZLEVEL) return
-				#endif
-				if (fullbright)
-					src.overlays += /image/fullbright //Fixes perma-darkness
-
 	proc/apply_edge_overlay(var/thedir) //For overlays ON THE FLOOR TILE
 		var/image/dig_overlay = image('icons/turf/asteroid.dmi', "edge[thedir]")
-		dig_overlay.color = src.stone_color
+		//dig_overlay.color = src.stone_color
+		dig_overlay.appearance_flags = PIXEL_SCALE | TILE_BOUND | RESET_COLOR | RESET_ALPHA
 		//dig_overlay.layer = src.layer + 1
 		src.overlays += dig_overlay
 
 	proc/space_overlays() //For overlays ON THE SPACE TILE
 		for (var/turf/space/A in orange(src,1))
 			var/image/edge_overlay = image('icons/turf/asteroid.dmi', "edge[get_dir(A,src)]")
-			//edge_overlay.layer = src.layer + 1
-			edge_overlay.color = src.stone_color
+			edge_overlay.appearance_flags = PIXEL_SCALE | TILE_BOUND | RESET_COLOR | RESET_ALPHA
+			edge_overlay.plane = PLANE_FLOOR
+			edge_overlay.layer = TURF_EFFECTS_LAYER
+			//edge_overlay.color = src.stone_color
 			A.overlays += edge_overlay
 			src.space_overlays += edge_overlay
 

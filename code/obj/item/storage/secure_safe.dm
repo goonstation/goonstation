@@ -2,8 +2,8 @@
 
 /obj/item/storage/secure
 	name = "storage/secure"
-	var/obj/screen/storage/boxes = null
-	var/obj/screen/close/closer = null
+	var/atom/movable/screen/storage/boxes = null
+	var/atom/movable/screen/close/closer = null
 	var/icon_locking = "secureb"
 	var/icon_sparking = "securespark"
 	var/icon_open = "secure0"

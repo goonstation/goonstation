@@ -163,6 +163,12 @@
 		STOP_TRACKING
 		..()
 
+	initializeBioholder()
+		if (src.name == "monkey" || !src.name)
+			randomize_look(src, 1, 1, 1, 0, 1, 0)
+			src.gender = src.bioHolder?.mobAppearance.gender
+		. = ..()
+
 	ai_action()
 		if(ai_aggressive)
 			return ..()
@@ -504,6 +510,7 @@
 	name = "sea monkey"
 	max_health = 150
 	static_type_override = /datum/mutantrace/monkey/seamonkey
+	ai_useitems = FALSE // or they eat all the floor pills and die before anyone visits
 
 	New()
 		..()

@@ -432,6 +432,7 @@ var/fartcount = 0
 		..()
 
 	was_harmed(var/mob/M as mob, var/obj/item/weapon = 0, var/special = 0, var/intent = null)
+		. = ..()
 		if (special) //vamp or ling
 			src.target = M
 			src.ai_state = AI_ATTACKING
@@ -535,7 +536,7 @@ var/bombini_saved = 0
 /obj/machinery/computer/shuttle_bus/Topic(href, href_list)
 	if(..())
 		return
-	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
+	if ((usr.contents.Find(src) || (in_interact_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
 		src.add_dialog(usr)
 
 		if (href_list["send"])

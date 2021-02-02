@@ -2,9 +2,6 @@
 	name = "artifact noisy thing"
 	associated_datum = /datum/artifact/noisy_thing
 
-	ArtifactDeactivated()
-		return // hahaha nope
-
 /datum/artifact/noisy_thing
 	associated_object = /obj/machinery/artifact/noisy_thing
 	rarity_class = 1
@@ -49,6 +46,7 @@
 				src.times_to_play = 10
 
 	post_setup()
+		. = ..()
 		var/harmprob = 5
 		if (src.artitype.name == "eldritch")
 			harmprob += 20

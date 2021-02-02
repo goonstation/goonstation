@@ -115,6 +115,7 @@
 	icon_state = "eye-cyber"
 	item_state = "heart_robo1"
 	robotic = 1
+	created_decal = /obj/decal/cleanable/oil
 	edible = 0
 	mats = 6
 	made_from = "pharosium"
