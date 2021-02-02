@@ -1741,6 +1741,8 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 		destination = pick(directions)
 		if(!(destination in cardinal))
 			destination = null
+	else if(isnum(directions))
+		destination = directions
 
 	if(destination)
 		destination = GetRandomPerimeterTurf(get_turf(src), dist, destination)
