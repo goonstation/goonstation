@@ -1842,7 +1842,6 @@
 /area/diner/dining)
 "aeA" = (
 /obj/overlay{
-	anchored = 1;
 	density = 1;
 	desc = "A networked tape drive.  It looks to be in fairly poor condition.  I bet the vacuum columns don't work worth a damn.";
 	icon = 'icons/obj/networked.dmi';
@@ -17349,6 +17348,10 @@
 /obj/item/paper_bin,
 /obj/item/pen,
 /obj/item/clothing/head/rastacap,
+/obj/item/reagent_containers/glass/water_pipe{
+	pixel_x = -1;
+	pixel_y = 9
+	},
 /turf/simulated/floor/grass/random,
 /area/station/hydroponics/bay)
 "aPE" = (
@@ -20762,7 +20765,6 @@
 /area/station/medical/research)
 "aXA" = (
 /obj/overlay{
-	anchored = 1;
 	icon = 'icons/misc/beach2.dmi';
 	icon_state = "palm1";
 	layer = 10;
@@ -21371,7 +21373,6 @@
 /area/station/medical/research)
 "aYS" = (
 /obj/overlay{
-	anchored = 1;
 	icon = 'icons/misc/beach2.dmi';
 	icon_state = "palm1";
 	layer = 10;
