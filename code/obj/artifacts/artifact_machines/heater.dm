@@ -1,6 +1,7 @@
 /obj/machinery/artifact/heater
 	name = "artifact heater"
 	associated_datum = /datum/artifact/heater
+	pressure_resistance = 1000 * ONE_ATMOSPHERE // please do not move
 
 /datum/artifact/heater
 	associated_object = /obj/machinery/artifact/heater
