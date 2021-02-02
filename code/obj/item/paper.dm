@@ -1345,7 +1345,6 @@ Only trained personnel should operate station systems. Follow all procedures car
 		M.visible_message("<span class='notice'>[M] stuffs [src] into [his_or_her(M)] mouth and and eats it.</span>")
 		eat_twitch(M)
 		var/obj/item/paper/P = src
-		src = null
 		usr.u_equip(P)
 		pool(P)
 	else
