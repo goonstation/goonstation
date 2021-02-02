@@ -58,6 +58,7 @@ datum
 		var/temperature_min = 0
 
 		var/postfoam = 0 //attempt at killing infinite foam
+		var/can_be_heated = TRUE //can be heated by external sources
 
 		New(maximum=100)
 			..()
@@ -114,6 +115,8 @@ datum
 
 		proc/temperature_reagents(exposed_temperature, exposed_volume, divisor = 35, change_cap = 15) //This is what you use to change the temp of a reagent holder.
 			                                                      //Do not manually change the reagent unless you know what youre doing.
+			if (!src.can_be_heated)
+				return
 			last_temp = total_temperature
 			var/difference = abs(total_temperature - exposed_temperature)
 			if (!difference)
