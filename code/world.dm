@@ -1464,11 +1464,10 @@ var/f_color_selector_handler/F_Color_Selector
 					return 1
 
 			if ("roundEnd")
-				if (!plist["server"] || !plist["address"] || !plist["mode"]) return 0
+				if (!plist["server"] || !plist["address"]) return 0
 
 				var/server = plist["server"]
 				var/address = plist["address"]
-				var/mode = plist["mode"]
 				var/msg = "<br><div style='text-align: center; font-weight: bold;' class='deadsay'>---------------------<br>"
 				msg += "A round just ended on [server]<br>"
 				msg += "<a href='[address]'>Click here to join it</a><br>"
