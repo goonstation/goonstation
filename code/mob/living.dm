@@ -1379,12 +1379,12 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 		boutput(M, "You cannot interact with other people before the game has started.")
 		return
 
-	actions.interrupt(src, INTERRUPT_ATTACKED)
 	M.lastattacked = src
 
 	attack_particle(M,src)
 
 	if (M.a_intent != INTENT_HELP)
+		actions.interrupt(src, INTERRUPT_ATTACKED)
 		src.was_harmed(M, intent = M.a_intent)
 
 		if (M.mob_flags & AT_GUNPOINT)

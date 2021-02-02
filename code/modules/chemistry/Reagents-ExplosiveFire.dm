@@ -40,6 +40,7 @@ datum
 				return
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed)
+				. = ..()
 				if (!holder) //Wire: Fix for Cannot read null.total_temperature
 					return
 				if(holder.total_temperature <= T0C - 50) return
@@ -92,6 +93,7 @@ datum
 			viscosity = 0.8
 			minimum_reaction_temperature = T0C + 100
 			var/temp_reacted = 0
+			penetrates_skin = 1
 
 			reaction_temperature(exposed_temperature, exposed_volume)
 				if(!temp_reacted)
@@ -105,6 +107,7 @@ datum
 				return
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
+				. = ..()
 				src = null
 				if(method == TOUCH)
 					var/mob/living/L = M
@@ -197,6 +200,7 @@ datum
 					fireflash_sm(A, 0, rand(20000, 25000) + volume * 2500, 0, 0, 1) // Bypasses the RNG roll to melt walls (Convair880).
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
+				. = ..()
 				src = null
 				if(method == TOUCH)
 					var/mob/living/L = M
@@ -236,7 +240,6 @@ datum
 				var/datum/reagents/myholder = holder
 				if(!ignited)
 					ignited = 1
-					src=null
 					SPAWN_DBG(1 DECI SECOND)
 						myholder.smoke_start(volume) //moved to a proc in Chemistry-Holder.dm so that the instant reaction and powder can use the same proc
 				myholder.del_reagent(id)
@@ -251,17 +254,16 @@ datum
 			fluid_b = 255
 			transparency = 230
 			minimum_reaction_temperature = T0C + 100
-			var/ignited = 0
+			var/ignited = FALSE
 
 			pooled()
 				..()
-				ignited = 0
+				ignited = FALSE
 
 			reaction_temperature(exposed_temperature, exposed_volume)
 				var/datum/reagents/myholder = holder
 				if(!ignited)
-					ignited = 1
-					src=null
+					ignited = TRUE
 					SPAWN_DBG(1 DECI SECOND)
 						myholder.smoke_start(volume,classic = 1) //moved to a proc in Chemistry-Holder.dm so that the instant reaction and powder can use the same proc
 				myholder.del_reagent(id)
@@ -437,6 +439,7 @@ datum
 					fireflash_sm(T, radius, 4500 + volume * 500, 350)
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
+				. = ..()
 				src = null
 				if(method == TOUCH || method == INGEST)
 					var/mob/living/L = M
@@ -489,6 +492,7 @@ datum
 				return
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
+				. = ..()
 				src = null
 				if(method == TOUCH || method == INGEST)
 					var/mob/living/L = M
@@ -594,6 +598,7 @@ datum
 
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
+				. = ..()
 				return
 
 		combustible/liquiddarkmatter
@@ -632,6 +637,7 @@ datum
 			*/
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
+				. = ..()
 				return
 
 		combustible/something
@@ -708,6 +714,7 @@ datum
 				return 1
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
+				. = ..()
 				src = null
 				if(method == TOUCH)
 					var/mob/living/L = M

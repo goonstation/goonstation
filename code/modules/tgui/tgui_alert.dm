@@ -109,6 +109,7 @@
 
 /datum/tgui_modal/ui_data(mob/user)
 	if(timeout)
+		. = list()
 		.["timeout"] = clamp(((timeout - (TIME - start_time) - 1 SECONDS) / (timeout - 1 SECONDS)), 0, 1)
 
 /datum/tgui_modal/ui_static_data(mob/user)

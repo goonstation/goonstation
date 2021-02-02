@@ -140,6 +140,7 @@
 
 // Command Jobs
 
+ABSTRACT_TYPE(/datum/job/command)
 /datum/job/command
 	linkcolor = "#00CC00"
 	slot_card = /obj/item/card/id/command
@@ -445,6 +446,7 @@
 
 // Security Jobs
 
+ABSTRACT_TYPE(/datum/job/security)
 /datum/job/security
 	linkcolor = "#FF0000"
 	slot_card = /obj/item/card/id/security
@@ -543,7 +545,7 @@
 	slot_head = /obj/item/clothing/head/det_hat
 	slot_glov = /obj/item/clothing/gloves/black
 	slot_suit = /obj/item/clothing/suit/det_suit
-	slot_ears = /obj/item/device/radio/headset/security
+	slot_ears = /obj/item/device/radio/headset/detective
 	items_in_backpack = list(/obj/item/clothing/glasses/vr,/obj/item/storage/box/detectivegun)
 
 	New()
@@ -562,6 +564,7 @@
 
 // Research Jobs
 
+ABSTRACT_TYPE(/datum/job/research)
 /datum/job/research
 	linkcolor = "#9900FF"
 	slot_card = /obj/item/card/id/research
@@ -671,6 +674,7 @@
 
 // Engineering Jobs
 
+ABSTRACT_TYPE(/datum/job/engineering)
 /datum/job/engineering
 	linkcolor = "#FF9900"
 	slot_card = /obj/item/card/id/engineering
@@ -822,6 +826,7 @@
 
 // Civilian Jobs
 
+ABSTRACT_TYPE(/datum/job/civilian)
 /datum/job/civilian
 	linkcolor = "#0099FF"
 	slot_card = /obj/item/card/id/civilian
@@ -944,6 +949,7 @@
 		if (!M)
 			return
 		M.traitHolder.addTrait("training_chaplain")
+		OTHER_START_TRACKING_CAT(M, TR_CAT_CHAPLAINS)
 		if (prob(15))
 			M.see_invisible = 15
 
@@ -1727,6 +1733,7 @@
 /*
  * Halloween jobs
  */
+ABSTRACT_TYPE(/datum/job/special/halloween)
 /datum/job/special/halloween
 	linkcolor = "#FF7300"
 

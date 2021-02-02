@@ -174,6 +174,8 @@
 
 	New(M)
 		..()
+		if(isnull(M))
+			CRASH("human HUD created with no master")
 		master = M
 
 		SPAWN_DBG(0)

@@ -414,6 +414,7 @@ datum
 				return
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
+				. = ..()
 				src = null
 				if(method == TOUCH)
 					var/mob/living/L = M

@@ -13,9 +13,9 @@ obj/machinery/computer/general_air_control
 	var/list/sensor_information = list()
 	var/datum/radio_frequency/radio_connection
 
-	lr = 0.6
-	lg = 1
-	lb = 0.1
+	light_r =0.6
+	light_g = 1
+	light_b = 0.1
 
 	disposing()
 		radio_controller.remove_object(src, "[frequency]")

@@ -388,6 +388,7 @@ datum
 			value = 9 // 6c + 2c + 1c
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed, var/list/paramslist = 0)
+				. = ..()
 				src = null
 				if(!volume_passed)
 					return
@@ -1004,6 +1005,7 @@ datum
 				return
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed, var/list/paramslist = 0)
+				. = ..()
 				src = null
 				if (!volume_passed)
 					return
@@ -1233,6 +1235,7 @@ datum
 				return
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed, var/list/paramslist = 0)
+				. = ..()
 				src = null
 				if(!volume_passed)
 					return

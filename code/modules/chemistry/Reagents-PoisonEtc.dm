@@ -78,6 +78,7 @@ datum
 				return
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
+				. = ..()
 				if (method == TOUCH)
 					if (volume > 25)
 						if (ishuman(M))
@@ -156,6 +157,7 @@ datum
 			blob_damage = 0.2
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
+				. = ..()
 				if (method == TOUCH)
 					if (volume >= 50 && prob(75))
 						M.TakeDamage("head", 5, 15, 0, DAMAGE_BURN)
@@ -782,6 +784,7 @@ datum
 				return
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
+				. = ..()
 				if (method == TOUCH && volume >= 10)
 					if (ishuman(M))
 						var/mob/living/carbon/human/H = M
@@ -1223,6 +1226,7 @@ datum
 			value = 3 // 1 1 1
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
+				. = ..()
 				src = null
 				if ( (method==TOUCH && prob((3 * volume) + 2)) || method==INGEST)
 					M.bioHolder.RandomEffect("bad")
@@ -1259,6 +1263,7 @@ datum
 			transparency = 255
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
+				. = ..()
 				src = null
 				if ( (method==TOUCH && prob((5 * volume) + 1)) || method==INGEST)
 					M.bioHolder.RandomEffect("bad")
@@ -1399,6 +1404,7 @@ datum
 				return
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
+				. = ..()
 				if (method == TOUCH)
 					M.reagents.add_reagent("histamine", min(10,volume * 2))
 					M.make_jittery(10)

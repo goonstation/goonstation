@@ -115,6 +115,7 @@ datum
 			return 1
 
 		proc/reaction_mob(var/mob/M, var/method=TOUCH, var/volume, var/paramslist = 0) //By default we have a chance to transfer some
+			SHOULD_CALL_PARENT(TRUE)
 			var/datum/reagent/self = src					  //of the reagent to the mob on TOUCHING it.
 			var/did_not_react = 1
 			switch(method)

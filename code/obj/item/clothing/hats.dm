@@ -761,7 +761,7 @@
 						if (istype(the_head))
 							H.visible_message("<span class='combat'><b>[H]'s head flies right off [his_or_her(H)] shoulders![prob(33) ? " HOLY SHIT!" : null]</b></span>")
 							var/the_dir = src.last_move ? src.last_move : alldirs//istype(src.throw_source) ? get_dir(src.throw_source, H) : alldirs
-							the_head.streak(the_dir, the_head.created_decal)
+							the_head.streak_object(the_dir, the_head.created_decal)
 							src.throw_source = null
 					else
 						M.TakeDamageAccountArmor("chest", 10, 0)
