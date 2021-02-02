@@ -499,6 +499,7 @@
 	uses_charges = 0
 	uses_electricity = 0
 	stamina_damage = 105
+	stamina_cost = 25
 	stun_normal_weakened = 8
 	stun_normal_stuttering = 8
 	stamina_based_stun_amount = 105
