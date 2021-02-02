@@ -89,12 +89,10 @@
 				if("farts")
 					gas.farts = src.gas_amount
 				if("agent b")
-					var/datum/gas/oxygen_agent_b/trace = new
-					gas.trace_gases = list(trace)
+					var/datum/gas/oxygen_agent_b/trace = gas.get_or_add_trace_gas_by_type(var/datum/gas/oxygen_agent_b)
 					trace.moles = src.gas_amount
 				if("sleeping agent")
-					var/datum/gas/sleeping_agent/trace = new
-					gas.trace_gases = list(trace)
+					var/datum/gas/sleeping_agent/trace = gas.get_or_add_trace_gas_by_type(var/datum/gas/sleeping_agent)
 					trace.moles = src.gas_amount
 			gas.temperature = src.gas_temp
 			gas.volume = R_IDEAL_GAS_EQUATION * src.gas_temp / 1000
