@@ -80,6 +80,9 @@
 
 	var/pull_w_class = 2
 
+	/// The meta-object holder thing that lets this mob be picked up by humans
+	var/obj/item/critter_shell/metaholder = null
+
 	blood_id = "blood"
 
 	New()
@@ -320,6 +323,14 @@
 			return
 		else
 			..()
+
+	attack_hand(mob/living/M, params, location, control)
+		. = ..()
+		if (M.a_intent == INTENT_GRAB)
+			if (!istype(src.metaholder) && !istype(src.loc, /obj/item/critter_shell))
+				var/obj/item/critter_shell/c_holder = new(get_turf(src))
+				if(c_holder.shellify_critter(src, M))
+					src.metaholder = c_holder
 
 	proc/butcher(var/mob/M)
 		var/i = rand(2,4)

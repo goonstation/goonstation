@@ -972,7 +972,13 @@
 
 	if (!I || !isitem(I) || I.cant_drop) return
 
-	if (istype(I, /obj/item/grab))
+	if (istype(I, /obj/item/critter_shell))
+		var/obj/item/critter_shell/c_shell = I
+		I = c_shell.held_critter
+		c_shell.unshellify_critter()
+		if (!I) return
+
+	else if (istype(I, /obj/item/grab))
 		var/obj/item/grab/G = I
 		I = G.handle_throw(src, target)
 		if (!I) return

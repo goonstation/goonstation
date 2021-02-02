@@ -1,5 +1,12 @@
 // p much straight up copied from secbot code =I
 
+#define HELD_REACTION_CHILL 1
+#define HELD_REACTION_DISLIKE 2
+#define HELD_REACTION_VIOLENT 3
+#define BAG_REACTION_CHILL 1
+#define BAG_REACTION_DISLIKE 2
+#define BAG_REACTION_VIOLENT 3
+
 /obj/critter/
 	name = "critter"
 	desc = "you shouldnt be able to see this"
@@ -103,6 +110,18 @@
 	var/area/registered_area = null //the area this critter is registered in
 	var/parent = null			//the mob or obj/critter that is the progenitor of this critter. Currently only set via hatched eggs
 
+	/// The critter holding shell used when this critter is picked up and used as an item
+	var/obj/item/critter_shell/metaholder = null
+	/// How does this critter react to being held? Being bitten or hurt sets it to VIOLENT, since most things dont like being bitten
+	/// HELD_REACTION_CHILL, DISLIKE, VIOLENT
+	var/hold_response = HELD_REACTION_DISLIKE
+	/// How does this critter react to being stuffed in a container?
+	/// BAG_REACTION_CHILL, DISLIKE, VIOLENT
+	var/bag_response = BAG_REACTION_DISLIKE
+	/// The mob that grabbed us
+	var/mob/grabber
+
+	var/test_freedom_countdown = 10
 
 	proc/tokenized_message(var/message, var/target)
 		if (!message || !length(message))
@@ -352,9 +371,9 @@
 
 	attack_hand(var/mob/user as mob)
 		..()
-		if (!src.alive)
-			..()
-			return
+		// if (!src.alive)
+		// 	..()
+		// 	return
 
 		if (src.sleeping)
 			sleeping = 0
@@ -363,33 +382,42 @@
 		user.lastattacked = src
 		attack_particle(user,src)
 
+		var/turf/T = get_turf(src)
+
 		if (user.a_intent == INTENT_HARM)
 			src.health -= rand(1,2) * src.brutevuln
-			src.visible_message("<span class='alert'><b>[user]</b> punches [src]!</span>")
+			T.visible_message("<span class='alert'><b>[user]</b> punches [src]!</span>")
 			playsound(src.loc, pick(sounds_punch), 100, 1)
 			attack_twitch(user)
 			hit_twitch(src)
 			if (hitsound)
 				playsound(src, hitsound, 50, 1)
-			if (src.alive && src.health <= 0) src.CritterDeath()
+			if (src.alive && src.health <= 0)
+				src.CritterDeath()
 			if (src.alive)
 				on_damaged(user)
-			if (src.defensive)
-				if (src.target == user && src.task == "attacking")
-					if (prob(50))
-						return
-					else
-						src.visible_message("<span class='alert'><b>[src]</b> flinches!</span>")
-				src.target = user
-				src.oldtarget_name = user.name
-				src.visible_message("<span class='alert'><b>[src]</b> [src.angertext] [user.name]!</span>")
-				src.task = "chasing"
-				on_grump()
+				if (src.defensive)
+					if (src.target == user && src.task == "attacking")
+						if (prob(50))
+							return
+						else
+							T.visible_message("<span class='alert'><b>[src]</b> flinches!</span>")
+					src.target = user
+					src.oldtarget_name = user.name
+					T.visible_message("<span class='alert'><b>[src]</b> [src.angertext] [user.name]!</span>")
+					src.task = "chasing"
+					on_grump()
+		else if (user.a_intent == INTENT_GRAB)
+			if (!istype(src.metaholder) && !istype(src.loc, /obj/item/critter_shell))
+				var/obj/item/critter_shell/c_holder = new(get_turf(src))
+				if(c_holder.shellify_critter(src, user))
+					src.metaholder = c_holder
 		else
 			var/pet_verb = islist(src.pet_text) ? pick(src.pet_text) : src.pet_text
 			var/post_pet_verb = islist(src.post_pet_text) ? pick(src.post_pet_text) : src.post_pet_text
-			src.visible_message("<span class='notice'><b>[user]</b> [pet_verb] [src]![post_pet_verb]</span>", 1)
-			on_pet(user)
+			T.visible_message("<span class='notice'><b>[user]</b> [pet_verb] [src]![post_pet_verb]</span>", 1)
+			if(src.alive)
+				on_pet(user)
 
 	proc/patrol_step()
 		if (!mobile)
@@ -535,15 +563,10 @@
 
 		for (var/client/C)
 			var/mob/M = C.mob
-			if (M && src.z == M.z && get_dist(src,M) <= 10)
+			if (M && IN_RANGE_TURF(src,M, 10))
 				if (isliving(M))
 					waking = 1
 					break
-
-		//for(var/mob/living/M in range(10, src))
-		//	if(M.client)
-		//		waking = 1
-		//		break
 
 		if (!waking)
 			if (get_area(src) == colosseum_controller.colosseum)
@@ -570,15 +593,10 @@
 
 		for (var/client/C)
 			var/mob/M = C.mob
-			if (M && src.z == M.z && get_dist(src,M) <= 10)
+			if (M && IN_RANGE_TURF(src, M, 10))
 				if (isliving(M))
 					stay_awake = 1
 					break
-
-		//for(var/mob/living/M in range(10, src))
-		//	if(M.client)
-		//		stay_awake = 1
-		//		break
 
 		if(!stay_awake)
 			sleeping = 10
@@ -613,6 +631,21 @@
 		return ai_think()
 
 	proc/ai_think()
+		switch(src.task)
+			if("held", "bagged")
+				if(!istype(src.metaholder))
+					if(src.task == "held")
+						src.task = "freed from hold"
+					else
+						src.task = "freed from bag"
+			else
+				if(istype(src.metaholder))
+					boutput(world, "[src] I am in [src.metaholder.loc]")
+					if(istype(src.metaholder.loc, /obj/item/storage))
+						src.task = "bagged"
+					else
+						src.task = "held"
+
 		switch(task)
 			if ("thinking")
 				src.attack = 0
@@ -781,6 +814,106 @@
 			if ("wandering")
 
 				patrol_step()
+
+			if ("held")
+				if(istype(src.metaholder?.loc, /obj/item/storage))
+					src.task = "bagged"
+				else
+					switch(src.hold_response)
+						if(HELD_REACTION_CHILL)
+							return
+						if(HELD_REACTION_DISLIKE)
+							if(!istype(src.metaholder))
+								src.task = "thinking"
+							if(!src.grabber && istype(src.metaholder?.loc, /mob))
+								src.grabber = src.metaholder.loc
+							src.target = src.grabber
+							boutput(world, "I am [src] in [src.metaholder] held by [src.metaholder.loc]. I hate [src.target], who is my target.")
+							var/direct = pick(cardinal)
+							src.set_dir(pick(cardinal))
+							boutput(world, "I am now facing [direct]. I AM [src]")
+							playsound(get_turf(src), "sound/musical_instruments/Vuvuzela_1.ogg", 100, 1)
+							if(!src.attacking && IN_RANGE_TURF(src, src.target, 1))
+								CritterAttack(src.target)
+							if(src.test_freedom_countdown-- <= 0)
+								boutput(world, "I freedoming!!!. I AM [src]")
+								src.metaholder?.unshellify_critter()
+							else
+								boutput(world, "[src.test_freedom_countdown] turns till I flip out!. I AM [src]")
+						if(HELD_REACTION_VIOLENT)
+							src.aggressive = 1
+							return
+
+			if ("bagged")
+				if(istype(src.metaholder?.loc, /mob))
+					src.task = "held"
+				else
+					switch(src.bag_response)
+						if(BAG_REACTION_CHILL)
+							return
+						if(BAG_REACTION_DISLIKE)
+							if(!istype(src.metaholder))
+								src.task = "thinking"
+							if(!src.grabber)
+								var/mob/living/potential_grabber = (locate(/mob/living) in get_turf(src))
+								if(istype(potential_grabber) && IN_RANGE_TURF(src, potential_grabber, 1))
+									src.grabber = potential_grabber
+							src.target = src.grabber
+							boutput(world, "I am [src] in [src.metaholder] held by [src.metaholder.loc]. I hate [src.target], who is my target.")
+							var/direct = pick(cardinal)
+							src.set_dir(pick(cardinal))
+							boutput(world, "I am now facing [direct]. I AM [src]")
+							playsound(get_turf(src), "sound/musical_instruments/airhorn_1.ogg", 100, 1)
+							if(!src.attacking && IN_RANGE_TURF(src, src.target, 1))
+								CritterAttack(src.target)
+							var/obj/item/storage/bag = src.metaholder?.loc
+							if(istype(bag))
+								boutput(world, "I'm in [bag]. contents are [english_list(bag.contents)]. I AM [src]")
+								var/list/bag_contents = bag.get_all_contents()
+								if(length(bag_contents) - 1 >= 1) // gotta have something to mess with
+									var/obj/item/messwith
+									var/one_or_two = pick(1,2)
+									var/tries = 5
+									boutput(world, "I'm in [bag]. ALL contents are [english_list(bag_contents)]. I AM [src]")
+									while(tries-- > 1 && (!istype(messwith, /obj/item) || messwith == src.metaholder))
+										messwith = pick(bag_contents)
+										boutput(world, "messing with [messwith]. I AM [src]")
+									if(istype(messwith))
+										messwith.set_loc(get_turf(src))
+										bag.hud?.remove_item(messwith)
+										bag.hud?.update()
+
+
+						// if(src.test_freedom_countdown-- <= 0)
+						// 	boutput(world, "I freedoming!!!. I AM [src]")
+						// 	src.metaholder?.unshellify_critter()
+						// else
+						// 	boutput(world, "[src.test_freedom_countdown] turns till I flip out!. I AM [src]")
+					if(BAG_REACTION_VIOLENT)
+						src.aggressive = 1
+						return
+
+			if ("freed from hold")
+				switch(src.hold_response)
+					if(HELD_REACTION_CHILL) // Isn't angry about being held, go back to crittering
+						src.task = "thinking"
+					if(HELD_REACTION_DISLIKE) // Unhappy about being held, go bite your holder
+						if(!ismob(src.grabber)) // If you have one
+							src.task = "thinking"
+							return
+						else
+							src.target = src.grabber
+							if(src.defensive)
+								src.attacker = src.grabber
+							src.task = "chasing"
+					if(HELD_REACTION_VIOLENT) // Absolutely furious! Go bite something
+						src.aggressive = 1
+						for (var/mob/M in mobs) // Anything'll do
+							if (M && IN_RANGE_TURF(src, M, 10))
+								src.target = M
+								break
+						src.task = "chasing"
+
 		return 1
 
 

@@ -65,7 +65,7 @@
 /*******************
 *   Item Adding
 ********************/
-
+///LAGGNOTE
 obj/machinery/microwave/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	if(src.broken > 0)
 		if (isscrewingtool(O) && src.broken == 2)
