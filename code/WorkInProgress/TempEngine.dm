@@ -129,21 +129,21 @@
 			switch(repairstate)
 				if(1)
 					if (isweldingtool(W) && W:try_weld(user,0,-1,0,0))
-						actions.start(new /datum/action/bar/icon/teg_circulator_repair(src, W, 50), user)
+						actions.start(new /datum/action/bar/icon/teg_circulator_repair(src, W, 5 SECONDS), user)
 						return
 				if(2)
 					if (istool(W, TOOL_PRYING))
-						actions.start(new /datum/action/bar/icon/teg_circulator_repair(src, W, 50), user)
+						actions.start(new /datum/action/bar/icon/teg_circulator_repair(src, W, 5 SECONDS), user)
 						return
 				if(3)
 					if (istype(W, /obj/item/rods))
 						var/obj/item/rods/S = W
 						if (S.amount >= 5)
-							actions.start(new /datum/action/bar/icon/teg_circulator_repair(src, W, 50), user)
+							actions.start(new /datum/action/bar/icon/teg_circulator_repair(src, W, 5 SECONDS), user)
 						return
 				if(4)
 					if (isweldingtool(W) && W:try_weld(user,0,-1,0,0))
-						actions.start(new /datum/action/bar/icon/teg_circulator_repair(src, W, 50), user)
+						actions.start(new /datum/action/bar/icon/teg_circulator_repair(src, W, 5 SECONDS), user)
 						return
 
 		if(isscrewingtool(W))
@@ -879,31 +879,31 @@ datum/pump_ui/circulator_ui
 		switch(semiconductor_state)
 			if(TEG_SEMI_STATE_PRESENT)
 				if (istool(W, TOOL_SCREWING))
-					actions.start(new /datum/action/bar/icon/teg_semiconductor_removal(src, W, 50), user)
+					actions.start(new /datum/action/bar/icon/teg_semiconductor_removal(src, W, 5 SECONDS), user)
 					return
 			if(TEG_SEMI_STATE_UNSCREWED)
 				if (istool(W, TOOL_SNIPPING))
-					actions.start(new /datum/action/bar/icon/teg_semiconductor_removal(src, W, 50), user)
+					actions.start(new /datum/action/bar/icon/teg_semiconductor_removal(src, W, 5 SECONDS), user)
 					return
 				if (istool(W, TOOL_SCREWING))
-					actions.start(new /datum/action/bar/icon/teg_semiconductor_replace(src, W, 50), user)
+					actions.start(new /datum/action/bar/icon/teg_semiconductor_replace(src, W, 5 SECONDS), user)
 					return
 			if(TEG_SEMI_STATE_CONNECTED)
 				if (istool(W, TOOL_SNIPPING))
-					actions.start(new /datum/action/bar/icon/teg_semiconductor_replace(src, W, 50), user)
+					actions.start(new /datum/action/bar/icon/teg_semiconductor_replace(src, W, 5 SECONDS), user)
 					return
 			if(TEG_SEMI_STATE_DISCONNECTED)
 				if (istool(W, TOOL_PRYING))
-					actions.start(new /datum/action/bar/icon/teg_semiconductor_removal(src, W, 50), user)
+					actions.start(new /datum/action/bar/icon/teg_semiconductor_removal(src, W, 5 SECONDS), user)
 					return
 				if (istype(W, /obj/item/cable_coil))
 					var/obj/item/cable_coil/C = W
 					if (C.amount >= 4)
-						actions.start(new /datum/action/bar/icon/teg_semiconductor_replace(src, W, 50), user)
+						actions.start(new /datum/action/bar/icon/teg_semiconductor_replace(src, W, 5 SECONDS), user)
 						return
 			if(TEG_SEMI_STATE_MISSING)
 				if(istype(W,/obj/item/teg_semiconductor))
-					actions.start(new /datum/action/bar/icon/teg_semiconductor_replace(src, W, 50), user)
+					actions.start(new /datum/action/bar/icon/teg_semiconductor_replace(src, W, 5 SECONDS), user)
 					return
 
 		..()

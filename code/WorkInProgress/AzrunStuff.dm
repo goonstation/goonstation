@@ -74,8 +74,8 @@
 				possible_transformations += TT
 
 	disposing()
-		. = ..()
 		generator = null
+		. = ..()
 
 	/// Periodic function to check if transformation by reagent is possible
 	proc/check_reagent_transformation()
@@ -102,7 +102,7 @@
 	/// from the TEG.  Transformation requires the semiconductor fully back in place and energy
 	/// is present to activate NANITES!
 	proc/check_material_transformation()
-		if(!generator.active_form || generator.active_form.type == /datum/teg_transformation/matsci)
+		if(!generator.active_form || istype(generator.active_form, /datum/teg_transformation/matsci))
 			if(generator.semiconductor?.material && ((src.generator.semiconductor.material.mat_id != src.generator.material?.mat_id) || !src.generator.material))
 				if(src.generator.semiconductor_state == 0 && src.generator.powered())
 					SPAWN_DBG(1.5 SECONDS)
@@ -145,8 +145,8 @@ datum/teg_transformation
 	var/skip_transformation_checks = FALSE
 
 	disposing()
-		. = ..()
 		teg = null
+		. = ..()
 
 	/// Return False by default to cause classic grump behavior
 	proc/on_grump()
