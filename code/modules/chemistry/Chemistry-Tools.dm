@@ -393,10 +393,10 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 
 	attack_self(mob/user as mob)
 		if (src.splash_all_contents)
-			boutput(user, "<span class='notice'>You tighten your grip on the [src].</span>")
+			boutput(user, "<span class='notice'>You tighten your grip on the [src]. You will now splash in [src.amount_per_transfer_from_this] unit increments.</span>")
 			src.splash_all_contents = 0
 		else
-			boutput(user, "<span class='notice'>You loosen your grip on the [src].</span>")
+			boutput(user, "<span class='notice'>You loosen your grip on the [src]. You will now splash all of the [src]'s contents.</span>")
 			src.splash_all_contents = 1
 		return
 
