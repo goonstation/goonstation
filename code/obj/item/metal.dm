@@ -96,7 +96,6 @@ MATERIAL
 			else
 				R.amount += src.amount
 				boutput(user, "<span class='notice'>You add [R.amount] rods to the stack. It now has [R.amount] rods.</span>")
-				//SN src = null
 				qdel(src)
 				return
 		return
@@ -205,7 +204,6 @@ MATERIAL
 		else
 			W.amount += src.amount
 			boutput(user, "<span class='notice'>You add the metal to the stack. It now has [W.amount] sheets.</span>")
-			//SN src = null
 			qdel(src)
 			return
 		return
@@ -249,7 +247,6 @@ MATERIAL
 				return
 		if (href_list["make"])
 			if (src.amount < 1)
-				//SN src = null
 				qdel(src)
 				return
 			switch(href_list["make"])
@@ -464,7 +461,6 @@ MATERIAL
 			W.amount = src.max_stack
 		else
 			W.amount += src.amount
-			//SN src = null
 			qdel(src)
 			return
 		return
@@ -476,7 +472,6 @@ MATERIAL
 			return
 		if (href_list["make"])
 			if (src.amount < 1)
-				//SN src = null
 				qdel(src)
 				return
 			switch(href_list["make"])

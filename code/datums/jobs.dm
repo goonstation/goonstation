@@ -949,6 +949,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 		if (!M)
 			return
 		M.traitHolder.addTrait("training_chaplain")
+		OTHER_START_TRACKING_CAT(M, TR_CAT_CHAPLAINS)
 		if (prob(15))
 			M.see_invisible = 15
 

@@ -5,9 +5,19 @@
 
 //foo 40: bodacious grandiose bargaloo mambo prime preceed wow github cdn sub jekyll docs rsc ci
 
-//everything here is wip, this can also be ascertained by the location of this file
 
-/////////////////////// Greek Adventurezone Thingy
+/* 514 checklist
+	`as() in` -> `as anything in`
+	?[] experimentation perhaps
+	hsv/hsl/hcy destruction
+	make some lib animate stuff better with spaces? (better rainbow anyone?)
+	world.map_cpu hookin (fuck why i delete the old code)
+	enable TILE_MOVEMENT_MODE and see if break
+	time2text timezone stuff for external? wire?
+*/
+
+
+// Greek Adventurezone Thingy
 
 /turf/unsimulated/greek/
 	name = "Greek Adventurezone Sprites"
@@ -21,7 +31,7 @@
 	skip_sims = 1
 	sims_score = 30
 
-///////////////////////////////////// Beach zone Stuff
+// Beach zone Stuff
 
 /area/greek/beach
 	name = "Strange Beach"
@@ -60,7 +70,7 @@
 	desc = "Splish splash, it's water."
 	icon_state = "water"
 
-///////////////////////////////////// Cave Stuff
+// Cave Stuff
 
 /area/greek/caves
 	name = "Strange Caves"
@@ -169,7 +179,7 @@
 		SPAWN_DBG(1 SECOND)
 			src.attacking = 0
 
-////////////////////////////// Underworld Stuff
+// Underworld Stuff
 
 /area/greek/underworld
 	name = "Strange Depths"
@@ -213,7 +223,7 @@
 			return
 		else ..()
 
-/////////////////////////////////// Misc Stuff
+// Misc Stuff
 
 /obj/decal/lightshaft/rainbow
 	name = "rainbow"
@@ -222,4 +232,3 @@
 
 
 //th3*vqoE
-// :O

@@ -1,5 +1,19 @@
 
 (t)mon feb 01 21
+(u)Superlagg
+(p)3297
+(e)⚖🔄|balance, rework
+(+)NT struck a deal with the Wizard Federation to tone down Rathens' Secret regarding tails and cyberlimbs, in exchange for shooting a lot more blood and guts out of peoples' butts.
+(+)Rathens' Secret will only sever tails if their owner is missing limbs.
+(+)It'll also fail to sever most cyberlimbs and exotic appendages.
+(u)BenLubar
+(p)2956
+(e)🆕|feature
+(*)Added a new Chef traitor item: Pizza Sharpener.
+(u)Flappybat
+(p)3363
+(e)🔄|rework
+(*)Improved spy bounty target picking logic. Prevents duplicates, targets on the Listening Post and can find targets that were almost never shown before!
 (u)zjdtmkhzt
 (p)3548
 (e)|
@@ -8,6 +22,8 @@
 (u)pali
 (+)You can now suicide into the arc electroplater.
 (+)It is now possible to fish in spatial tears.
+(+)Chaplains can now sometimes notice a disturbance in the force when ghosts are using the ouija board.
+(+)You can now fish in <b>closed</b> deep fryers. (If it doesn't have an item inside you'll fry your rod. Don't fry your rod.)
 (u)Sovexe
 (e)🆕🎨|feature, sprites
 (*)New chicken breed added! View minor changes for hint [Gen 2] [From Clown Chicken] (Don't let Emily find out!)

@@ -45,7 +45,6 @@ datum
 					return
 				if(holder.total_temperature <= T0C - 50) return
 				var/MB = mob_burning
-				src = null
 				var/mob/living/L = M
 				if(istype(L))
 					L.update_burning(MB)
@@ -108,7 +107,6 @@ datum
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				. = ..()
-				src = null
 				if(method == TOUCH)
 					var/mob/living/L = M
 					var/datum/statusEffect/simpledot/burning/burn = L.hasStatus("burning")
@@ -195,13 +193,11 @@ datum
 					var/id = src.id
 					var/datum/reagents/holder = src.holder
 					var/volume
-					src = null
 					holder.del_reagent(id)
 					fireflash_sm(A, 0, rand(20000, 25000) + volume * 2500, 0, 0, 1) // Bypasses the RNG roll to melt walls (Convair880).
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				. = ..()
-				src = null
 				if(method == TOUCH)
 					var/mob/living/L = M
 					if(istype(L) && L.getStatusDuration("burning"))
@@ -209,7 +205,6 @@ datum
 				return
 
 			reaction_turf(var/turf/T, var/volume)
-				src = null
 				if(istype(T, /turf/simulated))
 					if(!T.reagents) T.create_reagents(volume)
 					T.reagents.add_reagent("thermite", volume, null)
@@ -399,7 +394,6 @@ datum
 			reaction_obj(var/obj/O, var/volume)
 				var/datum/reagents/old_holder = src.holder //mbc pls, ZeWaka fix: null.holder
 				var/id = src.id
-				src = null
 				if (isnull(O)) return
 				if(isitem(O))
 					var/obj/item/I = O
@@ -420,8 +414,6 @@ datum
 
 			reaction_turf(var/turf/T, var/volume)
 				var/datum/reagents/old_holder = src.holder //mbc pls, ZeWaka fix: null.holder
-
-				src = null
 				//if(!T.reagents) T.create_reagents(50)
 				//T.reagents.add_reagent("infernite", 5, null)
 				if (volume < 3)
@@ -440,7 +432,6 @@ datum
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				. = ..()
-				src = null
 				if(method == TOUCH || method == INGEST)
 					var/mob/living/L = M
 					if(istype(L))
@@ -475,7 +466,6 @@ datum
 			volatility = 4
 
 			reaction_turf(var/turf/T, var/volume)
-				src = null
 				//if(!T.reagents) T.create_reagents(50)
 				//T.reagents.add_reagent("infernite", 5, null)
 				tfireflash(T, min(max(0,volume/10),8), 7000)
@@ -493,7 +483,6 @@ datum
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				. = ..()
-				src = null
 				if(method == TOUCH || method == INGEST)
 					var/mob/living/L = M
 					if(istype(L))
@@ -527,7 +516,6 @@ datum
 				holder.del_reagent(id)
 
 			reaction_obj(var/obj/O, var/volume)
-				src = null
 				if (O)
 					if(!O.reagents)
 						O.create_reagents(50)
@@ -535,7 +523,6 @@ datum
 				return
 
 			reaction_turf(var/turf/T, var/volume)
-				src = null
 				if (T)
 					if(!T.reagents)
 						T.create_reagents(50)
@@ -565,10 +552,8 @@ datum
 						holder.del_reagent(id)
 
 			reaction_obj(var/obj/O, var/volume)
-				src = null
 				return
 			reaction_turf(var/turf/T, var/volume)
-				src = null
 				return
 
 		combustible/sorium
@@ -630,7 +615,6 @@ datum
 				if(prob(75)) return
 
 				var/datum/reagent/us = src
-				src = null
 				if(!T.reagents) T.create_reagents(50)
 				T.reagents.add_reagent(us.id, 5, null)
 				return
@@ -710,12 +694,10 @@ datum
 					holder?.del_reagent(id)
 
 			reaction_obj(var/obj/O, var/volume)
-				src = null
 				return 1
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				. = ..()
-				src = null
 				if(method == TOUCH)
 					var/mob/living/L = M
 					if(istype(L) && L.getStatusDuration("burning"))
@@ -825,11 +807,9 @@ datum
 									holder.del_reagent(id)
 
 			reaction_obj(var/obj/O, var/volume)
-				src = null
 				return
 
 			reaction_turf(var/turf/T, var/volume)
-				src = null
 				if(!istype(T, /turf/space))
 					//if(volume >= 5)
 					if(!locate(/obj/decal/cleanable/dirt) in T)
@@ -878,7 +858,6 @@ datum
 
 					var/datum/reagents/H = holder
 					SPAWN_DBG(0)
-						src = null
 						H.del_reagent("nitrotri_wet")
 						H.del_reagent("nitrotri_dry")
 						H.del_reagent("nitrotri_parent")
@@ -890,14 +869,11 @@ datum
 				var/vol = volume
 				if(!H)
 					return
-
-				src = null
 				H.del_reagent(reagent="nitrotri_wet")
 				H.add_reagent(reagent="nitrotri_dry", amount=vol, donotreact=1)
 
 
 			reaction_turf(var/turf/T, var/volume)
-				src = null
 				if(!istype(T, /turf/space) && volume >= 5 && !locate(/obj/decal/cleanable/nitrotriiodide) in T)
 					return make_cleanable(/obj/decal/cleanable/nitrotriiodide,T)
 

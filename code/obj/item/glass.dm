@@ -61,7 +61,6 @@ SHARDS
 			else
 				G.amount += src.amount
 				boutput(user, "<span class='notice'>You add the glass sheet to the stack. It now has [G.amount] sheets.</span>")
-				//SN src = null
 				qdel(src)
 				return
 			return
@@ -264,7 +263,6 @@ SHARDS
 		return
 	var/atom/A = new /obj/item/sheet/glass( user.loc )
 	if(src.material) A.setMaterial(src.material)
-	//SN src = null
 	qdel(src)
 	return
 
