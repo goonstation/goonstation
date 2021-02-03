@@ -388,6 +388,51 @@ var/f_color_selector_handler/F_Color_Selector
 		Z_LOG_DEBUG("Preload", "Preload stage complete")
 		..()
 
+/datum/titlecard
+	#if defined(MAP_OVERRIDE_OSHAN)
+	var/image_url = "images/oshan_titlecard.png"
+	#elif defined(MAP_OVERRIDE_MANTA)
+	var/image_url = "images/manta_titlecard.png"
+	#else
+	var/image_url = "images/main_titlecard.gif"
+	#endif
+	var/add_html = ""
+	var/overlay_image_url = null
+	var/last_pregame_html = ""
+
+	heisenbee
+		image_url = "images/heisenbee_titlecard.png"
+		add_html = {"<a href="https://www.deviantart.com/alexbluebird" target="_blank" style="position:absolute;bottom:3px;right:3px;color:white;opacity:0.7;">by AlexBlueBird</a>"}
+
+	hehe
+		image_url = "images/hehe_titlecard.png"
+
+	s
+		image_url = "images/s_titlecard.png"
+
+	s
+		image_url = "images/nightshade_titlecard.png"
+
+	disaster
+		overlay_image_url = "images/disaster_titlecard.gif"
+
+	battleroyale
+		overlay_image_url = "images/battleroyale_titlecard.png"
+
+/datum/titlecard/proc/set_pregame_html()
+	src.last_pregame_html = {"<meta http-equiv='X-UA-Compatible' content='IE=edge'><style>body,#overlay{margin:0;padding:0;background:url([resource(src.image_url)]) black;background-size:100%;background-repeat:no-repeat;overflow:hidden;background-position:center center;background-attachment:fixed;}"}
+	if (isnull(src.overlay_image_url))
+		src.last_pregame_html += {"#overlay{display:none;}"}
+	else
+		src.last_pregame_html += {"#overlay{background-image:url([resource(src.overlay_image_url)]);background-color:transparent;left:0;top:0;right:0;bottom:0;position:fixed;}"}
+	src.last_pregame_html += {"</style><script>document.onclick=function(){location="byond://winset?id=mapwindow.map&focus=true";}</script><div id="overlay"></div>[src.add_html]"}
+	pregameHTML = src.last_pregame_html
+	for(var/client/C)
+		if(istype(C.mob, /mob/new_player))
+			C << browse(pregameHTML, "window=pregameBrowser")
+			if(C)
+				winshow(C, "pregameBrowser", 1)
+
 /world/New()
 	Z_LOG_DEBUG("World/New", "World New()")
 	TgsNew(new /datum/tgs_event_handler/impl, TGS_SECURITY_TRUSTED)
@@ -395,10 +440,11 @@ var/f_color_selector_handler/F_Color_Selector
 //	loop_checks = 0
 
 	if(world.load_intra_round_value("heisenbee_tier") >= 15 && prob(50) || prob(3))
-		pregameHTML = {"
-			<meta http-equiv='X-UA-Compatible' content='IE=edge'><style>body{margin:0;padding:0;background:url([resource("images/heisenbee_titlecard.png")]) black;background-size:100%;background-repeat:no-repeat;overflow:hidden;background-position:center center;background-attachment:fixed;}</style><script>document.onclick=function(){window.location.href="byond://winset?id=mapwindow.map&focus=true";}</script>
-			<a href="https://www.deviantart.com/alexbluebird" target="_blank" style="position:absolute;bottom:3px;right:3px;color:white;opacity:0.7;">by AlexBlueBird</a>
-		"}
+		lobby_titlecard = new /datum/titlecard/heisenbee()
+	else
+		lobby_titlecard = new /datum/titlecard()
+
+	lobby_titlecard.set_pregame_html()
 
 	diary = file("data/logs/[time2text(world.realtime, "YYYY/MM-Month/DD-Day")].log")
 	diary_name = "data/logs/[time2text(world.realtime, "YYYY/MM-Month/DD-Day")].log"

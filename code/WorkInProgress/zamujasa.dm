@@ -946,51 +946,35 @@ Read the rules, don't grief, and have fun!</div>"}
 /obj/overlay/zamujasa/round_start_countdown
 	New()
 		..()
-		if (lobby_titlecard)
-			src.x = lobby_titlecard.x + 13
-			src.y = lobby_titlecard.y + 0
-			src.z = lobby_titlecard.z
-			src.layer = lobby_titlecard.layer + 1
-		else
-			// oops
-			src.x = 7
-			src.y = 2
-			src.z = 1
-			src.layer = 1
+			// let's just hard-code coordinates
+		src.x = 295
+		src.y = 19
+		src.z = Z_LEVEL_ADVENTURE
+		src.layer = HUD_LAYER
 
-		src.maptext = ""
 		src.maptext_width = 320
 		src.maptext_x = -(320 / 2) + 16
 		src.maptext_height = 48
 		src.plane = 100
+		src.set_text("")
 
+	proc/set_text(text)
+		src.maptext = text
 
-	proc/update_status(var/message)
+	proc/update_status(message)
 		if (message)
-			src.maptext = "<span class='c ol vga vt'>Setting up game...\n<span style='color: #aaaaaa;'>[message]</span></span>"
+			src.set_text("<span class='c ol vga vt'>Setting up game...\n<span style='color: #aaaaaa;'>[message]</span></span>")
 		else
-			src.maptext = ""
+			src.set_text("")
 
 	timer
 		New()
 			..()
-			if (lobby_titlecard)
-				src.x = lobby_titlecard.x + 13
-				src.y = lobby_titlecard.y + 1
-				src.z = lobby_titlecard.z
-				src.layer = lobby_titlecard.layer + 1
-			else
-				// oops
-				src.x = 7
-				src.y = 1
-				src.z = 1
-				src.layer = 1
+			// what could possibly go wrong
+			src.x = 295
+			src.y = 20
 
-			src.maptext = ""
-			src.maptext_width = 320
-			src.maptext_x = -(320 / 2) + 16
 			src.maptext_height = 96
-			src.plane = 100
 
 		proc/update_time(var/time)
 			if (time >= 0)
@@ -1007,6 +991,37 @@ Read the rules, don't grief, and have fun!</div>"}
 				src.maptext = "<span class='c ol vga vt'>Round begins in<br><span style='color: [timeLeftColor]; font-size: 36px;'>[time]</span></span>"
 			else
 				src.maptext = "<span class='c ol vga vt'>Round begins<br><span style='color: #aaaaaa; font-size: 36px;'>soon</span></span>"
+
+	encourage
+		New()
+			..()
+			// apart from "everything", that is
+			src.x = 278
+			src.y = 19
+
+			// This is gross. I'm sorry.
+			var/list/servers = list()
+			servers["main1"] = "1 Classic: Heisenbee"
+			servers["main2"] = "2 Classic: Bombini"
+			servers["main3"] = "3 Roleplay: Morty"
+			servers["main4"] = "4 Roleplay: Sylvester"
+
+			var/serverList = ""
+			for (var/serverId in servers)
+				if (serverId == config.server_id)
+					continue
+				serverList += {"\n<a style='color: #88f;' href='byond://winset?command=Change-Server "[serverId]'>Goonstation [servers[serverId]]</a>"}
+
+			src.maptext_x = 0
+			src.maptext_width = 600
+			src.maptext_height = 400
+			src.set_text({"<span class='ol vga'>
+Welcome to Goonstation!
+New? <a style='color: #88f;' href="https://mini.xkeeper.net/ss13/tutorial/">Check the tutorial</a>!
+Have questions? Ask mentors with \[F3]!
+Need an admin? Message us with \[F1].
+
+Other Goonstation servers:[serverList]</span>"})
 
 
 
