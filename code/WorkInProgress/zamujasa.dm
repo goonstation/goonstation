@@ -212,6 +212,11 @@
 		Z_LOG_DEBUG("shit", "Doing teleport")
 		do_the_teleport(AM)
 
+	ex_act(severity)
+		return
+
+	meteorhit(obj/meteor)
+		return
 
 	proc/do_the_teleport(atom/movable/AM as mob|obj)
 		Z_LOG_DEBUG("shit", "Teleporting [AM]")
