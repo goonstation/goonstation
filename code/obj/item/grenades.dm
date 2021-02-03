@@ -686,48 +686,80 @@ PIPE BOMBS + CONSTRUCTION
 		return
 
 /obj/item/old_grenade/decoy
-	desc = "It is set to detonate in 5 seconds."
+	desc = "Finishes with a fake explosion. It is set to detonate in 7 seconds."
 	name = "decoy grenade"
-	det_time = 50.0
-	org_det_time = 50
-	alt_det_time = 100
-	icon_state = "emp"
-	item_state = "emp"
+	det_time = 70.0
+	org_det_time = 70
+	alt_det_time = 50
+	icon_state = "noise_grenade"
+	item_state = "noise_grenade"
 	is_syndicate = 1
 	sound_armed = "sound/weapons/armbomb.ogg"
-	icon_state_armed = "emp1"
+	icon_state_armed = "noise_grenade1"
 	var/list/decoy_list = list("sound/weapons/ak47shot.ogg",\
 														"sound/weapons/derringer.ogg",\
 														"sound/weapons/Gunshot.ogg",\
 														"sound/weapons/smallcaliber.ogg",\
 														"sound/weapons/shotgunshot.ogg")
-	var/list/
+	var/list/security_list = list("sound/weapons/Taser.ogg",\
+														"sound/weapons/wavegun.ogg",\
+														"sound/weapons/Gunshot.ogg",\
+														"sound/weapons/shotgunshot.ogg")
 
 
 	prime()
 		var/turf/T = ..()
 		if (T)
-			var/list/sounds_list = decoy_list.Copy()
+			desc = "Some kind of weird looking grenade."
 			var/shooter1_sound = pick(decoy_list)
-			sounds_list -= shooter1_sound
-			var/shooter2_sound = pick(decoy_list)
-			for (var/x=1, x<=pick(2,3), x++)
+			security_list -= shooter1_sound
+			var/shooter2_sound = pick(security_list)
+			for (var/x=1, x<=2, x++)
 				if (prob(50))
 					// Single weapon type
 					for (var/y=1, y<=rand(2,6), y++)
-						sleep(0.2 * pick(1, 2, 3, 4) SECONDS)
+						sleep(0.2 * pick(2, 3, 4) SECONDS)
 						playsound(T, shooter1_sound, 100, 1, 8)
 				else
 					// Gun duel
 					for (var/y=1, y<=rand(2,6), y++)
-						sleep(0.2 * pick(1, 2, 3, 4, 8) SECONDS)
+						sleep(0.2 * pick(2, 3, 4, 6) SECONDS)
 						playsound(T, shooter1_sound, 100, 1, 8)
-						sleep(0.2 * pick(1, 2, 3, 4) SECONDS)
+						sleep(0.2 * pick(2, 3, 4) SECONDS)
 						playsound(T, shooter2_sound, 100, 1, 8)
-				sleep(pick(3,6,12) SECONDS)
-		else
-			qdel(src)
+				if (x == 1)
+					sleep(pick(3,6,12) SECONDS)
+				else
+					sleep(3 SECONDS)
+			detonate()
 		return
+
+	proc/detonate()
+		// Fake explosion and self destruct
+		var/turf/T = src.loc
+		for(var/client/C in clients)
+			if(C.mob && (C.mob.z == src.z))
+				shake_camera(C.mob, 8, 24)
+				C << sound(explosions.distant_sound)
+		message_admins("[key_name(usr)]'s decoy grenade made a fake explosion at [log_loc(src)].")
+		logTheThing("combat", usr, null, "decoy grenade caused a fake explosion at [log_loc(src)].")
+		robogibs(T)
+		qdel(src)
+
+/obj/item/old_grenade/decoy/blood
+	desc = "Filled with free range monkey blood. It is set to detonate in 7 seconds."
+	icon_state = "noise_grenade_red"
+	item_state = "noise_grenade_red"
+	icon_state_armed = "noise_grenade_red1"
+
+	detonate()
+		// Messy crime scene and self destruct
+		var/turf/T = src.loc
+		T.fluid_react_single("blood",200)
+		playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
+		message_admins("[key_name(usr)]'s decoy grenade made a fake murder scene at [log_loc(src)].")
+		logTheThing("combat", usr, null, "decoy grenade caused a fake murder scene at [log_loc(src)].")
+		qdel(src)
 
 ////////////////////////// Gimmick bombs /////////////////////////////////
 
