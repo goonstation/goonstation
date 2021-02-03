@@ -1,0 +1,21 @@
+
+/datum/component/wearertargeting/crayonwalk // stonepillar's crayon project
+	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
+	signals = list(COMSIG_MOVABLE_MOVED)
+	mobtype = /mob/living/carbon/human
+	proctype = .proc/crayonwalk
+
+/datum/component/wearertargeting/crayonwalk/proc/crayonwalk(mob/living/carbon/human/H, last_turf, direct)
+	if (!H.lying && istype(H.shoes, /obj/item/clothing/shoes/clown_shoes))
+		var/obj/item/clothing/shoes/clown_shoes/S = H.shoes
+		if (length(S.crayons))
+			var/obj/item/pen/crayon/crayon = pick(S.crayons)
+			if(length(crayon.symbol_setting) && prob(50))
+				var/list/params = list()
+				params["icon-x"] = 16
+				params["icon-y"] = 16
+				crayon.write_on_turf(last_turf, H, params)
+			else
+				S.crayons.Remove(crayon)
+				crayon.set_loc(last_turf)
+				boutput(H, "<span class='alert'>Plonk! \The [crayon] fell out of your shoes!</span>")
