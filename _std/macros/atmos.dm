@@ -316,7 +316,7 @@ proc/gas_text_color(gas_id)
 
 // requires var/total_moles = TOTAL_MOLES(MIXTURE) defined beforehand
 #define _CONCENTRATION_REPORT(GAS, _, NAME, MIXTURE, SEP) "[NAME]: [round(MIXTURE.GAS / total_moles * 100)]%[SEP]" +
-#define _UNKNOWN_CONCETRATION_REPORT(MIXTURE) (length((MIXTURE).trace_gases) ? "Unknown: [round((total_moles - BASE_GASES_TOTAL_MOLES(MIXTURE)) / total_moles * 100)]%<br/>": "")
+#define _UNKNOWN_CONCETRATION_REPORT(MIXTURE) (length((MIXTURE).trace_gases) ? "Unknown: [round((total_moles - BASE_GASES_TOTAL_MOLES(MIXTURE)) / total_moles * 100)]%": "")
 #define CONCENTRATION_REPORT(MIXTURE, SEP) (APPLY_TO_GASES(_CONCENTRATION_REPORT, MIXTURE, SEP) _UNKNOWN_CONCETRATION_REPORT(MIXTURE))
 
 #define _LIST_CONCENTRATION_REPORT(GAS, _, NAME, MIXTURE, LIST) LIST += "[NAME]: [round(MIXTURE.GAS / total_moles * 100)]%";
