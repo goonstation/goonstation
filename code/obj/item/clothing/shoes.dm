@@ -268,10 +268,49 @@
 	module_research = list("audio" = 5)
 	step_lots = 1
 	step_priority = 999
+	var/list/crayons = list() // stonepillar's crayon project
+	var/max_crayons = 5
+
+	attackby(obj/item/W as obj, mob/living/user as mob)
+		if (istype(W, /obj/item/pen/crayon))
+			if (user.bioHolder.HasEffect("clumsy"))
+				var/obj/item/pen/crayon/C = W
+				if (!length(C.symbol_setting))
+					boutput(user, "<span class='alert'>You need to set the crayon's symbol first!</span>")
+					return
+				if (src.crayons)
+					if (length(src.crayons) == src.max_crayons)
+						boutput(user, "<span class='alert'>You try your best to shove [C] into [src], but there's not enough room!</span>")
+						return
+					else
+						boutput(user, "<span class='notice'>You shove [C] into the soles of [src].</span>")
+						src.crayons.Add(C)
+						user.u_equip(W)
+						C.set_loc(src)
+						return
+			else
+				boutput(user, "<span class='alert'>You aren't funny enough to do that. Wait, did the shoes just laugh at you?</span>")
+		else
+			return ..()
+
+	attack_hand(mob/user as mob)
+		if (length(src.crayons))
+			if (!user.bioHolder.HasEffect("clumsy"))
+				boutput(user, "<span class='alert'>You aren't funny enough to do that. Wait, did the shoes just laugh at you?</span>")
+				return
+			var/obj/item/pen/crayon/picked = pick(src.crayons)
+			src.crayons.Remove(picked)
+			user.put_in_hand_or_drop(picked)
+			boutput(user, "<span class='notice'>You pull [picked] out from the soles of [src].</span>")
+			src.add_fingerprint(user)
+			return
+		return ..()
+
 
 /obj/item/clothing/shoes/clown_shoes/New()
 	. = ..()
 	AddComponent(/datum/component/wearertargeting/tripsalot, list(SLOT_SHOES))
+	AddComponent(/datum/component/wearertargeting/crayonwalk, list(SLOT_SHOES))
 
 /obj/item/clothing/shoes/flippers
 	name = "flippers"
