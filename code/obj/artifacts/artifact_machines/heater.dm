@@ -65,9 +65,9 @@
 
 		// text
 		var/tempText = ""
-		if (gas_temp > 310)
+		if (gas_temp > 310 KELVIN)
 			tempText = "hot "
-		else if (gas_temp < 310)
+		else if (gas_temp < 310 KELVIN)
 			tempText = "cold "
 
 		src.activ_text = "begins to emit [tempText] gas!"
