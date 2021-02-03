@@ -38,6 +38,7 @@
 				else
 					if (!A.irradiated)
 						A.irradiated = 1
+						A.icon_state = "red"
 					for (var/turf/T in A)
 						if (rand(0,1000) < 5 && T.z == 1 && istype(T,/turf/simulated/floor))
 							Artifact_Spawn(T)
@@ -88,6 +89,7 @@
 					break
 				if (!A.permarads)
 					A.irradiated = 0
+				A.icon_state = ""
 			blowout = 0
 
 			command_alert("All radiation alerts onboard [station_name(1)] have been cleared. You may now leave the tunnels freely. Maintenance doors will regain their normal access requirements shortly.", "All Clear")
