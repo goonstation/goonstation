@@ -13,10 +13,10 @@
 	deact_text = "stops emitting gas."
 	react_xray = list(10,85,80,5,"COMPLEX")
 	var/gas_type = "oxygen"
-	var/gas_temp = 310
-	var/gas_amount = 100
-	var/gas_amount_current = 0
-	var/gas_amount_growth = 5
+	var/gas_temp = 310 KELVIN
+	var/gas_amount = 100 MOLES
+	var/gas_amount_current = 0 MOLES
+	var/gas_amount_growth = 5 MOLES
 	examine_hint = "It is covered in very conspicuous markings."
 
 	post_setup()
@@ -53,15 +53,15 @@
 					30;"sleeping agent")
 
 		// temperature
-		gas_temp = rand(0,620)
+		gas_temp = rand(0 KELVIN, 620 KELVIN)
 		if (artitype.name == "eldritch" && prob(66))
-			if (gas_temp > 310)
+			if (gas_temp > 310 KELVIN)
 				gas_temp *= 2
-			if (gas_temp < 310)
+			if (gas_temp < 310 KELVIN)
 				gas_temp /= 2
 
 		// amount
-		gas_amount = rand(50,200)
+		gas_amount = rand(50 MOLES, 200 MOLES)
 
 		// text
 		var/tempText = ""
@@ -107,5 +107,5 @@
 	effect_deactivate(obj/O)
 		if(..())
 			return
-		src.gas_amount_current = 0
+		src.gas_amount_current = 0 MOLES
 
