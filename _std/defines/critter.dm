@@ -7,3 +7,26 @@
 
 // Critter families
 #define BUG 1
+
+// Critter hold/bag reactions
+/// Is okay with being held, won't struggle until you mess with it
+#define HOLD_RESPONSE_CHILL 1
+/// Doesn't like being held, will struggle and try to escape
+#define HOLD_RESPONSE_DISLIKE 2
+/// Hates being held, will struggle and attack the holder, and will attack anyone for a while after escaping
+#define HOLD_RESPONSE_VIOLENT 3
+/// Is okay with being in a bag, won't struggle until you mess with it
+#define BAG_RESPONSE_CHILL 1
+/// Doesn't like being in a bag, will struggle and try to escape, and mess with things in the bag
+#define BAG_RESPONSE_DISLIKE 2
+/// Hates being in a bad, will struggle and try to escape, mess with things in the bad, and will attack anyone for a while after escaping
+#define BAG_RESPONSE_VIOLENT 3
+/// critter pickupability flags
+/// Critter can't be picked up
+#define GRABBABLE_NEVER 0
+/// Critter needs lizard arms to pick up
+#define GRABBABLE_LIZARD (1<<0)
+/// Critter must not be angry at someone to be picked up
+#define GRABBABLE_NOT_WHILE_ANGRY (1<<1)
+/// Critter must not be angry *at the grabber* to be picked up
+#define GRABBABLE_NOT_WHILE_ANGRY_AT_GRABBER (1<<2)

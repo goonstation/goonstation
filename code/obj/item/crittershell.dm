@@ -62,7 +62,8 @@
 		if(!L.put_in_hand(src))
 			L.u_equip(src)
 			boutput(world, "[AM] cantnt be shelled")
-			return src.unshellify_critter()
+			src.unshellify_critter()
+			return FALSE
 		else
 			boutput(world, "[AM] shelled inside [src]!!!")
 
@@ -178,7 +179,7 @@
 					src.held_objcritter.target = M
 					src.held_objcritter.oldtarget_name = M.name
 					src.held_objcritter.visible_message("<span class='alert'><b>[src.held_objcritter]</b> [src.held_objcritter.angertext] [M.name]!</span>")
-					src.held_objcritter.task = "chasing"
+					src.held_objcritter.hold_response = HOLD_RESPONSE_VIOLENT
 					src.held_objcritter.on_grump()
 
 			M.visible_message("<span class='alert'>[M] finishes eating [src.held_objcritter].</span>",\
