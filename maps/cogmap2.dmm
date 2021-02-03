@@ -11233,6 +11233,10 @@
 	desc = "Ugh, is that patchouli?";
 	name = "grody candle"
 	},
+/obj/item/reagent_containers/glass/water_pipe{
+	pixel_x = 6;
+	pixel_y = 5
+	},
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},
@@ -24144,7 +24148,6 @@
 	dir = 4
 	},
 /obj/overlay{
-	anchored = 1;
 	desc = "A portrait of a man wearing a ridiculous merchant hat.  That must be Discount Dan.";
 	icon = 'icons/obj/decals/wallsigns.dmi';
 	icon_state = "portrait";
@@ -74296,7 +74299,6 @@
 /area/station/medical/dome)
 "dfl" = (
 /obj/overlay{
-	anchored = 1;
 	icon = 'icons/misc/beach2.dmi';
 	icon_state = "palm1";
 	layer = 10;
@@ -74321,7 +74323,6 @@
 /area/station/medical/dome)
 "dfn" = (
 /obj/overlay{
-	anchored = 1;
 	icon = 'icons/misc/beach2.dmi';
 	icon_state = "palm1";
 	layer = 10;
@@ -74516,7 +74517,6 @@
 /area/station/medical/dome)
 "dfK" = (
 /obj/overlay{
-	anchored = 1;
 	icon = 'icons/misc/beach2.dmi';
 	icon_state = "palm2";
 	layer = 10;
@@ -74776,7 +74776,6 @@
 /area/station/medical/cdc)
 "dgh" = (
 /obj/overlay{
-	anchored = 1;
 	icon = 'icons/misc/beach2.dmi';
 	icon_state = "palm2";
 	layer = 10;
@@ -74806,7 +74805,6 @@
 /area/station/medical/dome)
 "dgk" = (
 /obj/overlay{
-	anchored = 1;
 	icon = 'icons/misc/beach2.dmi';
 	icon_state = "palm1";
 	layer = 10;

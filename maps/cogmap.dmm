@@ -11907,6 +11907,10 @@
 /obj/item/device/light/lava_lamp{
 	pixel_y = 8
 	},
+/obj/item/reagent_containers/glass/water_pipe{
+	pixel_x = 8;
+	pixel_y = 6
+	},
 /turf/simulated/floor/green/side,
 /area/station/hydroponics/bay)
 "aAW" = (
@@ -58976,7 +58980,6 @@
 /area/station/janitor/supply)
 "cvN" = (
 /obj/overlay{
-	anchored = 1;
 	icon = 'icons/misc/beach2.dmi';
 	icon_state = "palm1";
 	layer = 10;
@@ -59918,7 +59921,6 @@
 /area/station/medical/cdc)
 "cxx" = (
 /obj/overlay{
-	anchored = 1;
 	icon = 'icons/misc/beach2.dmi';
 	icon_state = "palm1";
 	layer = 10;
@@ -59934,7 +59936,6 @@
 /area/station/medical/research)
 "cxy" = (
 /obj/overlay{
-	anchored = 1;
 	icon = 'icons/misc/beach2.dmi';
 	icon_state = "palm1";
 	layer = 10;
@@ -60086,7 +60087,6 @@
 /area/station/medical/research)
 "cxI" = (
 /obj/overlay{
-	anchored = 1;
 	icon = 'icons/misc/beach2.dmi';
 	icon_state = "palm1";
 	layer = 10;
