@@ -997,9 +997,9 @@ Read the rules, don't grief, and have fun!</div>"}
 						timeLeftColor = "#ffb400"
 					if (0 to 30)
 						timeLeftColor = "#ff6666"
-				src.set_text("<span class='c ol vga vt'>Round begins in<br><span style='color: [timeLeftColor]; font-size: 36px;'>[time]</span></span>")
+				src.set_text("<span class='c ol vga vt'>Round begins in<br><span style='color: [timeLeftColor]; font-size: 3em;'>[time]</span></span>")
 			else
-				src.set_text("<span class='c ol vga vt'>Round begins<br><span style='color: #aaaaaa; font-size: 36px;'>soon</span></span>")
+				src.set_text("<span class='c ol vga vt'>Round begins<br><span style='color: #aaaaaa; font-size: 3em;'>soon</span></span>")
 
 	encourage
 		maptext_area = "leftside"

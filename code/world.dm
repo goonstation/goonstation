@@ -422,12 +422,12 @@ var/f_color_selector_handler/F_Color_Selector
 		overlay_image_url = "images/battleroyale_titlecard.png"
 
 /datum/titlecard/proc/set_pregame_html()
-	last_pregame_html = {"<meta http-equiv='X-UA-Compatible' content='IE=edge'><style>body,#overlay{margin:0;padding:0;background:url([resource(src.image_url)]) black;background-size:100%;background-repeat:no-repeat;overflow:hidden;background-position:center center;background-attachment:fixed;image-rendering:pixelated;}"}
+	last_pregame_html = {"<html><head><meta http-equiv='X-UA-Compatible' content='IE=edge'><style>@font-face{font-family:'PxPlus IBM VGA9';src:url([resource("misc/ibmvga9.ttf")]);}body,#overlay{margin:0;padding:0;background:url([resource(src.image_url)]) black;background-size:contain;background-repeat:no-repeat;overflow:hidden;background-position:center center;background-attachment:fixed;image-rendering:pixelated;}"}
 	if (isnull(src.overlay_image_url))
 		last_pregame_html += {"#overlay{display:none;}"}
 	else
 		last_pregame_html += {"#overlay{background-image:url([resource(src.overlay_image_url)]);background-color:transparent;left:0;top:0;right:0;bottom:0;position:fixed;}"}
-	last_pregame_html += {".area{white-space:pre;color:#fff;font:12px 'PxPlus IBM VGA9';-dm-text-outline:1px black;}</style><script>document.onclick=function(){location="byond://winset?id=mapwindow.map&focus=true";};function set_area(id,text){document.getElementById(id).innerHTML=text||"";};location="byond://winset?command=.send-lobby-text";</script><div id="overlay"></div><div id="status" class="area">status_empty</div><div id="timer" class="area">timer_empty</div><div id="leftside" class="area">leftside_empty</div>[src.add_html]"}
+	last_pregame_html += {".area{white-space:pre;color:#fff;font:1em 'PxPlus IBM VGA9';-webkit-text-stroke:0.083em black;}a{text-decoration:none;}#leftside{position:fixed;left:0;bottom:0;}#status,#timer{text-align:center;position:fixed;right:0;bottom:0;height:12%;width:40%;}#timer{bottom:15%;}</style></head><body><script>document.onclick=function(){location="byond://winset?id=mapwindow.map&focus=true";};function set_area(id,text){document.getElementById(id).innerHTML=text||"";};onresize=function(){document.body.style.fontSize=Math.min(innerWidth/672,innerHeight/480)*16+"px";};onload=function(){onresize();location="byond://winset?command=.send-lobby-text";};</script><div id="overlay"></div><div id="status" class="area"></div><div id="timer" class="area"></div><div id="leftside" class="area"></div>[src.add_html]</body></html>"}
 	pregameHTML = last_pregame_html
 	for(var/client/C)
 		if(istype(C.mob, /mob/new_player))
