@@ -146,7 +146,6 @@
 		if (ishuman(user) && !user:gloves)
 			F.add_fingerprint(user)
 		if (src.amount < 1)
-			//SN src = null
 			qdel(src)
 			return
 	else

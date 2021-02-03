@@ -182,6 +182,8 @@
 			if(master?.disposed)
 				qdel(src)
 				return
+			if(src.disposed)
+				return
 			var/icon/hud_style = hud_style_selection[get_hud_style(master)]
 			if (isicon(hud_style))
 				src.icon_hud = hud_style

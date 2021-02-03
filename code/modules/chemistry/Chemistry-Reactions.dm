@@ -1,6 +1,9 @@
 /proc/ldmatter_reaction(var/datum/reagents/holder, var/created_volume, var/id)
 	var/in_container = 0
 	var/atom/psource = holder.my_atom
+	if(created_volume < 5)
+		return
+
 	while (psource)
 		psource = psource.loc
 		if (istype(psource, /obj) && !isitem(psource) && (istype(psource, /obj/machinery/vehicle) || !istype(psource, /obj/machinery)) && !istype(psource, /obj/submachine))
@@ -14,6 +17,8 @@
 	var/howmany = max(1,covered.len / 2.2)
 	for(var/i = 0, i < howmany, i++)
 		var/atom/source = pick(covered)
+		if(ON_COOLDOWN(source, "ldm_reaction_ratelimit", 0.1 SECONDS))
+			return
 		new/obj/decal/implo(source)
 		playsound(source, 'sound/effects/suck.ogg', 100, 1)
 
@@ -31,7 +36,7 @@
 				qdel(psource)
 				return
 
-		for(var/atom/movable/M in view(3 + (created_volume > 30 ? 1:0), source))
+		for(var/atom/movable/M in view(clamp(2+round(created_volume/15), 0, 4), source))
 			if(M.anchored || M == source || M.throwing) continue
 			M.throw_at(source, 20 + round(created_volume * 2), 1 + round(created_volume / 10))
 			LAGCHECK(LAG_MED)

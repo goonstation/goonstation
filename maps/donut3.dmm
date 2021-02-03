@@ -52637,6 +52637,10 @@
 	pixel_x = -6;
 	pixel_y = 16
 	},
+/obj/item/device/multitool{
+	pixel_x = 2;
+	pixel_y = -1
+	},
 /turf/simulated/floor/wood/five,
 /area/station/hydroponics/bay)
 "pGt" = (
@@ -67529,9 +67533,9 @@
 	pixel_x = -5;
 	pixel_y = 2
 	},
-/obj/item/device/multitool{
-	pixel_x = 2;
-	pixel_y = -1
+/obj/item/reagent_containers/glass/water_pipe{
+	pixel_x = 3;
+	pixel_y = 6
 	},
 /turf/simulated/floor/wood/five,
 /area/station/hydroponics/bay)

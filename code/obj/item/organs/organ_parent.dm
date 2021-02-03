@@ -164,7 +164,7 @@
 		cleanable.blood_type = src.blood_type
 		if(istype(cleanable, /obj/decal/cleanable/blood))
 			var/obj/decal/cleanable/blood/blood = cleanable
-			blood.set_sample_reagent_custom(src.blood_reagent, 0)
+			blood.set_sample_reagent_custom(src.blood_reagent, 10)
 			if(!isnull(src.blood_color))
 				blood.color = src.blood_color
 		src.decal_done = TRUE

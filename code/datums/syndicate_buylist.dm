@@ -731,6 +731,16 @@ This is basically useless for anyone but miners.
 	job = list("Medical Director")
 	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/revolution)
 
+/datum/syndicate_buylist/traitor/pizza_sharpener
+	name = "Pizza Sharpener"
+	item = /obj/item/kitchen/utensil/knife/pizza_cutter/traitor
+	cost = 5
+	desc = "Have you ever been making a pizza and thought \"this pizza would be better if I could fatally injure someone by throwing it at them\"? Well think no longer! Because you're sharpening pizzas now. You weirdo."
+	job = list("Chef")
+	not_in_crates = 1
+	blockedmode = list(/datum/game_mode/revolution)
+
+
 /datum/syndicate_buylist/traitor/syndiesauce
 	name = "Syndicate Sauce"
 	item = /obj/item/reagent_containers/food/snacks/condiment/syndisauce
