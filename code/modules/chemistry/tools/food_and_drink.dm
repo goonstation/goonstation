@@ -1395,6 +1395,7 @@
 	initial_volume = 50
 	amount_per_transfer_from_this = 5
 	rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
+	var/image/chem = new /image('icons/obj/foodNdrink/food.dmi',"icing_tube_chem")
 
 	on_reagent_change()
 		src.underlays = null
@@ -1403,8 +1404,9 @@
 				src.icon_state = "icing_tube"
 			else
 				src.icon_state = "icing_tube_2"
+			if(length(src.underlays))
+				src.underlays = null
 			var/datum/color/average = reagents.get_average_color()
-			var/image/chem = new /image('icons/obj/foodNdrink/food.dmi',"icing_tube_chem")
 			chem.color = average.to_rgba()
 			src.underlays += chem
 		signal_event("icon_updated")
