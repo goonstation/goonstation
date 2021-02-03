@@ -191,6 +191,9 @@ ABSTRACT_TYPE(/datum/bioEffect)
 		//Make sure you don't have more gaps than basepairs or youll get an error.
 		//But at that point the mutation would be unsolvable.
 
+		if(owner.blockGaps > length(blockListCurr))
+			CRASH("bioEffect [owner.name] has [owner.blockGaps] block gaps but only [length(blockListCurr)] blocks")
+
 		for(var/i=0, i<owner.blockGaps, i++)
 			var/datum/basePair/bp = pick(blockListCurr - gapList)
 			gapList.Add(bp)

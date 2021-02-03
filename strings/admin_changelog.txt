@@ -1,3 +1,6 @@
+(t)mon feb 01 21
+(u)pali
+(*)Build mode now has a numberic keybind bar! Middle-clicking current mode or pressing shift+number will add a copy of the current mode to the hotbar. Middleclicking the hotbar removes a mode. Pressing the number key on your keyboard switches to the mode. You can even have multiple copies of the same mode, each with different settings.
 (t)wed jan 27 21
 (u)pali
 (*)The admin interact menu (~ + click) now has a Copy Here option which makes a deep copy of the object or mob on your tile. This is experimental and there might be bugs. Build mode tool coming soon™.

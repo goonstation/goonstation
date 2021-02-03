@@ -8627,26 +8627,12 @@
 	dir = 4
 	},
 /area/station/hallway/primary/north)
-"avg" = (
-/obj/stool/chair/boxingrope_corner{
-	dir = 10;
-	icon_state = "ringrope"
-	},
-/turf/simulated/floor/specialroom/gym,
-/area/station/crew_quarters/fitness)
 "avh" = (
 /obj/decal/boxingropeenter,
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
 "avi" = (
 /obj/decal/boxingrope,
-/turf/simulated/floor/specialroom/gym,
-/area/station/crew_quarters/fitness)
-"avj" = (
-/obj/stool/chair/boxingrope_corner{
-	dir = 6;
-	icon_state = "ringrope"
-	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
 "avk" = (
@@ -18515,16 +18501,6 @@
 /obj/machinery/light,
 /turf/simulated/floor/grass,
 /area/station/medical/dome)
-"aSG" = (
-/obj/overlay{
-	anchored = 1;
-	icon = 'icons/misc/beach2.dmi';
-	icon_state = "palm1";
-	layer = 10;
-	name = "palm tree"
-	},
-/turf/simulated/floor/grass,
-/area/station/medical/dome)
 "aSH" = (
 /obj/stool/bench/blue/auto,
 /obj/disposalpipe/segment/bent/north,
@@ -21361,16 +21337,6 @@
 /obj/decal/poster/wallsign/space,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/maintenance/solar/west)
-"aZk" = (
-/obj/overlay{
-	anchored = 1;
-	icon = 'icons/misc/beach2.dmi';
-	icon_state = "palm2";
-	layer = 10;
-	name = "palm tree"
-	},
-/turf/simulated/floor/grass,
-/area/station/medical/dome)
 "aZl" = (
 /obj/cable{
 	icon_state = "0-2"
@@ -24947,19 +24913,6 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
-"biB" = (
-/obj/overlay{
-	anchored = 1;
-	icon = 'icons/misc/beach2.dmi';
-	icon_state = "palm1";
-	layer = 10;
-	name = "palm tree"
-	},
-/obj/disposalpipe/segment/morgue{
-	dir = 1
-	},
-/turf/simulated/floor/grass,
-/area/station/medical/dome)
 "biC" = (
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/machinery/door/airlock/pyro/glass{
@@ -30875,25 +30828,6 @@
 	},
 /obj/decal/xmas_lights/ephemeral{
 	pixel_y = 32
-	},
-/turf/simulated/floor/green/side{
-	dir = 1
-	},
-/area/station/hydroponics/bay)
-"bxe" = (
-/obj/disposalpipe/segment/food{
-	dir = 8;
-	icon_state = "pipe-c"
-	},
-/obj/table/auto,
-/obj/item/device/light/lava_lamp{
-	pixel_x = 6;
-	pixel_y = 8
-	},
-/obj/item/reagent_containers/food/snacks/sandwich/meat_m{
-	name = "100% synthetic freerange monkey sandwich";
-	pixel_x = -7;
-	pixel_y = 9
 	},
 /turf/simulated/floor/green/side{
 	dir = 1
@@ -53038,6 +52972,12 @@
 /area/station/maintenance/storage{
 	name = "Inner Southwest Maintenance"
 	})
+"gGR" = (
+/obj/stool/chair/boxingrope_corner{
+	dir = 6
+	},
+/turf/simulated/floor/specialroom/gym,
+/area/station/crew_quarters/fitness)
 "gII" = (
 /obj/table/auto,
 /obj/item/bandage,
@@ -53325,6 +53265,18 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
+"hkZ" = (
+/obj/overlay{
+	icon = 'icons/misc/beach2.dmi';
+	icon_state = "palm1";
+	layer = 10;
+	name = "palm tree"
+	},
+/obj/disposalpipe/segment/morgue{
+	dir = 1
+	},
+/turf/simulated/floor/grass,
+/area/station/medical/dome)
 "hmG" = (
 /obj/disposalpipe/segment/brig{
 	dir = 8
@@ -54192,6 +54144,15 @@
 	},
 /turf/simulated/floor/dirt,
 /area/station/ranch)
+"jKx" = (
+/obj/overlay{
+	icon = 'icons/misc/beach2.dmi';
+	icon_state = "palm1";
+	layer = 10;
+	name = "palm tree"
+	},
+/turf/simulated/floor/grass,
+/area/station/medical/dome)
 "jOn" = (
 /obj/machinery/door/airlock/pyro{
 	name = "Serving Area"
@@ -54806,6 +54767,19 @@
 /obj/disposalpipe/segment/bent/west,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/courtroom)
+"lDC" = (
+/obj/machinery/power/apc/autoname_north,
+/obj/table/wood/auto,
+/obj/item/storage/briefcase/toxins{
+	pixel_x = 1;
+	pixel_y = 4
+	},
+/obj/machinery/phone,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/carpet/purple/fancy/edge/ne,
+/area/station/science/research_director)
 "lGU" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/security/interrogation)
@@ -55415,6 +55389,29 @@
 /obj/random_item_spawner/junk/one_or_zero,
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
+"nrq" = (
+/obj/disposalpipe/segment/food{
+	dir = 8;
+	icon_state = "pipe-c"
+	},
+/obj/table/auto,
+/obj/item/device/light/lava_lamp{
+	pixel_x = 6;
+	pixel_y = 8
+	},
+/obj/item/reagent_containers/food/snacks/sandwich/meat_m{
+	name = "100% synthetic freerange monkey sandwich";
+	pixel_x = -7;
+	pixel_y = 9
+	},
+/obj/item/reagent_containers/glass/water_pipe{
+	pixel_x = -7;
+	pixel_y = 5
+	},
+/turf/simulated/floor/green/side{
+	dir = 1
+	},
+/area/station/hydroponics/bay)
 "nsO" = (
 /obj/machinery/shieldgenerator/meteorshield,
 /turf/simulated/floor/plating,
@@ -55954,6 +55951,12 @@
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/circuit/green,
 /area/station/turret_protected/Zeta)
+"oGT" = (
+/obj/stool/chair/boxingrope_corner{
+	dir = 10
+	},
+/turf/simulated/floor/specialroom/gym,
+/area/station/crew_quarters/fitness)
 "oHK" = (
 /obj/stool/chair{
 	dir = 8
@@ -57121,6 +57124,15 @@
 /obj/machinery/r_door_control/podbay/security/new_walls/east,
 /turf/simulated/floor/engine,
 /area/station/routing/security)
+"rDR" = (
+/obj/overlay{
+	icon = 'icons/misc/beach2.dmi';
+	icon_state = "palm2";
+	layer = 10;
+	name = "palm tree"
+	},
+/turf/simulated/floor/grass,
+/area/station/medical/dome)
 "rFS" = (
 /obj/machinery/light/runway_light/delay5,
 /obj/lattice{
@@ -58659,6 +58671,19 @@
 /obj/lattice,
 /turf/space,
 /area/station/ai_monitored/armory)
+"vGH" = (
+/obj/stool/chair/red{
+	dir = 4
+	},
+/obj/disposalpipe/segment/transport{
+	dir = 4
+	},
+/obj/machinery/computer/riotgear{
+	dir = 4;
+	pixel_x = -28
+	},
+/turf/simulated/floor/engine,
+/area/station/ai_monitored/armory)
 "vHo" = (
 /obj/cable{
 	d1 = 2;
@@ -59172,20 +59197,6 @@
 /obj/cable,
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/lobby)
-"xhb" = (
-/obj/stool/chair/red{
-	dir = 4
-	},
-/obj/disposalpipe/segment/transport{
-	dir = 4
-	},
-/obj/machinery/computer/riotgear{
-	dir = 4;
-	icon_state = "drawbr0";
-	pixel_x = -28
-	},
-/turf/simulated/floor/engine,
-/area/station/ai_monitored/armory)
 "xid" = (
 /obj/stool/bar,
 /obj/machinery/light/small{
@@ -59313,19 +59324,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/turret_protected/Zeta)
-"xwx" = (
-/obj/machinery/power/apc/autoname_north,
-/obj/table/wood/auto,
-/obj/item/storage/briefcase/toxins{
-	pixel_x = 1;
-	pixel_y = 4
-	},
-/obj/machinery/phone,
-/obj/cable{
-	icon_state = "0-2"
-	},
-/turf/simulated/floor/carpet/purple/fancy/edge/ne,
-/area/station/science/research_director)
 "xwP" = (
 /obj/disposalpipe/segment/bent/west,
 /obj/grille/catwalk{
@@ -95744,7 +95742,7 @@ aLx
 aMt
 aNE
 aPt
-aZk
+rDR
 aQs
 aRB
 bdK
@@ -96352,7 +96350,7 @@ aQu
 aQu
 aRC
 bdL
-biB
+hkZ
 bmg
 bmq
 aWp
@@ -97257,7 +97255,7 @@ aYu
 aSE
 aSE
 aRB
-aSG
+jKx
 aTA
 aQr
 aVc
@@ -112383,7 +112381,7 @@ jvK
 cSO
 buN
 bvQ
-bxe
+nrq
 uDm
 bzt
 bAB
@@ -117541,7 +117539,7 @@ sJD
 bWR
 bXJ
 bYy
-xhb
+vGH
 cbY
 cba
 iRI
@@ -118072,11 +118070,11 @@ ciB
 asj
 atp
 aBv
-avg
+oGT
 aws
 ayw
 ayw
-avg
+oGT
 aAw
 atr
 aCD
@@ -119280,11 +119278,11 @@ arb
 axD
 att
 atr
-avj
+gGR
 awu
 awu
 aHB
-avj
+gGR
 aAy
 atr
 aNf
@@ -122962,7 +122960,7 @@ cGB
 usi
 sun
 bAM
-xwx
+lDC
 gbn
 bKj
 bLz

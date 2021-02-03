@@ -16366,6 +16366,13 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/east)
+"eET" = (
+/obj/item/storage/briefcase/toxins{
+	pixel_x = -6;
+	pixel_y = 16
+	},
+/turf/simulated/floor/carpet/purple/fancy/junction/ne_w,
+/area/station/crew_quarters/hor)
 "eFa" = (
 /obj/lantern{
 	dir = 8;
@@ -31224,13 +31231,6 @@
 /obj/machinery/light/emergency,
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay)
-"jih" = (
-/obj/item/storage/briefcase/toxins{
-	pixel_x = -6;
-	pixel_y = 16
-	},
-/turf/simulated/floor/carpet/purple/fancy/junction/ne_w,
-/area/station/crew_quarters/hor)
 "jiR" = (
 /obj/item/reagent_containers/glass/wateringcan{
 	pixel_x = -1;
@@ -36948,6 +36948,30 @@
 	},
 /turf/simulated/floor/carpet/green/standard,
 /area/station/medical/breakroom)
+"kYY" = (
+/obj/decal/tile_edge/line/green{
+	dir = 8;
+	icon_state = "line1"
+	},
+/obj/table/auto,
+/obj/item/hand_labeler{
+	pixel_x = -2;
+	pixel_y = -1
+	},
+/obj/item/cargotele{
+	pixel_x = 7;
+	pixel_y = 7
+	},
+/obj/item/device/light/lava_lamp{
+	pixel_x = -6;
+	pixel_y = 16
+	},
+/obj/item/device/multitool{
+	pixel_x = 2;
+	pixel_y = -1
+	},
+/turf/simulated/floor/wood/five,
+/area/station/hydroponics/bay)
 "kZa" = (
 /turf/simulated/floor/wood/six,
 /area/station/hallway/primary/west)
@@ -52623,26 +52647,6 @@
 /obj/firedoor_spawn,
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay/cloner)
-"pGo" = (
-/obj/decal/tile_edge/line/green{
-	dir = 8;
-	icon_state = "line1"
-	},
-/obj/table/auto,
-/obj/item/hand_labeler{
-	pixel_x = -2;
-	pixel_y = -1
-	},
-/obj/item/cargotele{
-	pixel_x = 7;
-	pixel_y = 7
-	},
-/obj/item/device/light/lava_lamp{
-	pixel_x = -6;
-	pixel_y = 16
-	},
-/turf/simulated/floor/wood/five,
-/area/station/hydroponics/bay)
 "pGt" = (
 /obj/cabinet/chemistry,
 /turf/simulated/floor/purpleblack/corner{
@@ -59906,6 +59910,22 @@
 "rGo" = (
 /turf/simulated/wall/auto/jen/purple,
 /area/station/science/gen_storage)
+"rGr" = (
+/obj/table/wood/round/auto,
+/obj/item/decoration/ashtray{
+	pixel_x = 7;
+	pixel_y = 7
+	},
+/obj/item/device/light/zippo{
+	pixel_x = -5;
+	pixel_y = 2
+	},
+/obj/item/reagent_containers/glass/water_pipe{
+	pixel_x = 3;
+	pixel_y = 6
+	},
+/turf/simulated/floor/wood/five,
+/area/station/hydroponics/bay)
 "rGs" = (
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
@@ -67523,22 +67543,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
-"tYs" = (
-/obj/table/wood/round/auto,
-/obj/item/decoration/ashtray{
-	pixel_x = 7;
-	pixel_y = 7
-	},
-/obj/item/device/light/zippo{
-	pixel_x = -5;
-	pixel_y = 2
-	},
-/obj/item/device/multitool{
-	pixel_x = 2;
-	pixel_y = -1
-	},
-/turf/simulated/floor/wood/five,
-/area/station/hydroponics/bay)
 "tYw" = (
 /obj/disposalpipe/trunk{
 	dir = 2;
@@ -130813,7 +130817,7 @@ mfs
 mfs
 gco
 tqm
-pGo
+kYY
 qKS
 uug
 aNn
@@ -131232,7 +131236,7 @@ ttF
 qFY
 nYR
 vOl
-jih
+eET
 jvw
 rdj
 rdj
@@ -131415,7 +131419,7 @@ bRk
 fPD
 wqJ
 cZX
-tYs
+rGr
 eYZ
 smZ
 smZ

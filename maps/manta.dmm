@@ -1840,17 +1840,6 @@
 	},
 /turf/simulated/floor/specialroom/bar,
 /area/diner/dining)
-"aeA" = (
-/obj/overlay{
-	anchored = 1;
-	density = 1;
-	desc = "A networked tape drive.  It looks to be in fairly poor condition.  I bet the vacuum columns don't work worth a damn.";
-	icon = 'icons/obj/networked.dmi';
-	icon_state = "tapedrive-p";
-	name = "broken databank"
-	},
-/turf/simulated/floor/grime,
-/area/abandonedmedicalship/robot_trader)
 "aeB" = (
 /obj/table/reinforced/auto,
 /obj/submachine/mixer,
@@ -4648,16 +4637,6 @@
 	},
 /turf/simulated/floor/carpet/red/fancy/edge/west,
 /area/listeningpost/syndicateassaultvessel)
-"anb" = (
-/obj/table/reinforced/bar/auto,
-/obj/holosigntest{
-	desc = "... is that Abzu..?";
-	name = "... is that Abzu..?";
-	pixel_y = 8
-	},
-/obj/random_item_spawner/desk_stuff/g_clip_bin_fpen,
-/turf/simulated/floor/carpet/red/fancy,
-/area/listeningpost/syndicateassaultvessel)
 "anc" = (
 /obj/table/reinforced/bar/auto,
 /obj/syndicateholoemitter,
@@ -6510,30 +6489,6 @@
 /obj/machinery/power/seaheater/big,
 /turf/space/fluid/manta,
 /area/mantaSpace)
-"aqR" = (
-/obj/rack,
-/obj/item/storage/box/QM_grenadekit_security,
-/obj/item/storage/box/QM_grenadekit_experimentalweapons,
-/obj/item/storage/box/flaregun,
-/obj/item/flamethrower/assembled/loaded,
-/obj/item/gun/energy/phaser_gun,
-/obj/item/gun/energy/phaser_gun,
-/obj/item/gun/energy/phaser_gun,
-/obj/item/shipcomponent/mainweapon/laser,
-/obj/item/shipcomponent/mainweapon/laser,
-/obj/item/shipcomponent/mainweapon/disruptor_light,
-/obj/item/shipcomponent/mainweapon/disruptor_light,
-/obj/item/ammo/bullets/autocannon/seeker,
-/obj/item/ammo/bullets/autocannon/seeker,
-/obj/machinery/light/incandescent/warm,
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/cable{
-	icon_state = "1-8"
-	},
-/turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
 "aqS" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/turret_protected/starboard)
@@ -17343,14 +17298,6 @@
 /obj/cable,
 /turf/simulated/floor/longtile/black,
 /area/station/turret_protected/starboard)
-"aPD" = (
-/obj/table/wood/auto,
-/obj/machinery/light/small/floor/warm,
-/obj/item/paper_bin,
-/obj/item/pen,
-/obj/item/clothing/head/rastacap,
-/turf/simulated/floor/grass/random,
-/area/station/hydroponics/bay)
 "aPE" = (
 /turf/simulated/floor/longtile/black,
 /area/station/turret_protected/starboard)
@@ -20760,19 +20707,6 @@
 	name = "astroturf"
 	},
 /area/station/medical/research)
-"aXA" = (
-/obj/overlay{
-	anchored = 1;
-	icon = 'icons/misc/beach2.dmi';
-	icon_state = "palm1";
-	layer = 10;
-	name = "palm tree"
-	},
-/obj/machinery/light/incandescent/warm,
-/turf/simulated/floor/grass{
-	name = "astroturf"
-	},
-/area/station/medical/research)
 "aXB" = (
 /obj/decoration/toiletholder{
 	pixel_y = 32
@@ -21364,18 +21298,6 @@
 "aYR" = (
 /obj/landmark/start{
 	name = "Geneticist"
-	},
-/turf/simulated/floor/grass{
-	name = "astroturf"
-	},
-/area/station/medical/research)
-"aYS" = (
-/obj/overlay{
-	anchored = 1;
-	icon = 'icons/misc/beach2.dmi';
-	icon_state = "palm1";
-	layer = 10;
-	name = "palm tree"
 	},
 /turf/simulated/floor/grass{
 	name = "astroturf"
@@ -31396,22 +31318,6 @@
 	dir = 4
 	},
 /area/station/crew_quarters/hor/horprivate)
-"buC" = (
-/obj/stool{
-	desc = "A soft little bed the general size and shape of a space bee.";
-	icon = 'icons/misc/critter.dmi';
-	icon_state = "beebed";
-	name = "heisenbed"
-	},
-/obj/critter/domestic_bee/heisenbee,
-/obj/item/storage/briefcase/toxins{
-	pixel_x = -7;
-	pixel_y = 21
-	},
-/turf/simulated/floor/wood/eight{
-	dir = 4
-	},
-/area/station/crew_quarters/hor/horprivate)
 "buD" = (
 /obj/disposalpipe/segment,
 /turf/simulated/wall/auto/supernorn,
@@ -31723,32 +31629,6 @@
 /obj/machinery/light/runway_light/delay4,
 /turf/space/fluid/manta,
 /area/mantaSpace)
-"bvu" = (
-/obj/machinery/light/incandescent/netural{
-	dir = 1
-	},
-/obj/juggleplaque{
-	desc = {"Dedicated to Lieutenant Emily Claire for her brave sacrifice aboard NSS Manta  \"May their sacrifice not paint a grim picture of things to come. - Space Commodore J. Ledger\""};
-	name = "dedication plaque";
-	pixel_y = 25
-	},
-/turf/simulated/floor/carpet{
-	dir = 4;
-	icon_state = "fgreen2"
-	},
-/area/station/crew_quarters/cafeteria/the_rising_tide_bar)
-"bvv" = (
-/obj/disposalpipe/segment{
-	dir = 2;
-	icon_state = "pipe-c"
-	},
-/obj/juggleplaque{
-	desc = {"NCS Atlas, Nanotrasen,  \"Man always kills the thing he loves, and so we the pioneers have killed our wilderness. Some say we had to. Be that as it may, I am glad I shall never be young without wild country to be young in. Of what avail are forty freedoms without a blank spot on the map?  - Aldo Leopold\""};
-	name = "dedication plaque";
-	pixel_y = 25
-	},
-/turf/simulated/floor/plating/random,
-/area/station/maintenance/upperstarboard)
 "bvw" = (
 /obj/storage/crate/bin,
 /obj/item/radio_tape/advertisement/dans_tickets,
@@ -42470,6 +42350,14 @@
 	},
 /turf/simulated/floor/red,
 /area/listeningpost/syndicateassaultvessel)
+"eOU" = (
+/obj/disposalpipe/segment{
+	dir = 2;
+	icon_state = "pipe-c"
+	},
+/obj/juggleplaque/manta,
+/turf/simulated/floor/plating/random,
+/area/station/maintenance/upperstarboard)
 "ePj" = (
 /obj/lattice{
 	dir = 5;
@@ -42759,6 +42647,16 @@
 /obj/window_blinds/cog2/left,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/hor)
+"hgV" = (
+/obj/overlay{
+	density = 1;
+	desc = "A networked tape drive.  It looks to be in fairly poor condition.  I bet the vacuum columns don't work worth a damn.";
+	icon = 'icons/obj/networked.dmi';
+	icon_state = "tapedrive-p";
+	name = "broken databank"
+	},
+/turf/simulated/floor/grime,
+/area/abandonedmedicalship/robot_trader)
 "hhp" = (
 /obj/wingrille_spawn/auto,
 /obj/cable,
@@ -42874,6 +42772,18 @@
 	},
 /turf/simulated/floor/yellow,
 /area/station/engine/inner)
+"hWN" = (
+/obj/table/wood/auto,
+/obj/machinery/light/small/floor/warm,
+/obj/item/paper_bin,
+/obj/item/pen,
+/obj/item/clothing/head/rastacap,
+/obj/item/reagent_containers/glass/water_pipe{
+	pixel_x = -1;
+	pixel_y = 9
+	},
+/turf/simulated/floor/grass/random,
+/area/station/hydroponics/bay)
 "iaS" = (
 /obj/lattice{
 	dir = 1;
@@ -42968,6 +42878,22 @@
 "jtU" = (
 /turf/simulated/floor,
 /area/station/crewquarters/garbagegarbs)
+"jzF" = (
+/obj/stool{
+	desc = "A soft little bed the general size and shape of a space bee.";
+	icon = 'icons/misc/critter.dmi';
+	icon_state = "beebed";
+	name = "heisenbed"
+	},
+/obj/critter/domestic_bee/heisenbee,
+/obj/item/storage/briefcase/toxins{
+	pixel_x = -7;
+	pixel_y = 21
+	},
+/turf/simulated/floor/wood/eight{
+	dir = 4
+	},
+/area/station/crew_quarters/hor/horprivate)
 "jBB" = (
 /obj/machinery/arc_electroplater,
 /turf/simulated/floor/industrial,
@@ -43153,6 +43079,30 @@
 /obj/window_blinds/cog2/left,
 /turf/simulated/floor/plating,
 /area/station/security/hos)
+"lPP" = (
+/obj/rack,
+/obj/item/storage/box/QM_grenadekit_security,
+/obj/item/storage/box/QM_grenadekit_experimentalweapons,
+/obj/item/storage/box/flaregun,
+/obj/item/gun/flamethrower/assembled/loaded,
+/obj/item/gun/energy/phaser_gun,
+/obj/item/gun/energy/phaser_gun,
+/obj/item/gun/energy/phaser_gun,
+/obj/item/shipcomponent/mainweapon/laser,
+/obj/item/shipcomponent/mainweapon/laser,
+/obj/item/shipcomponent/mainweapon/disruptor_light,
+/obj/item/shipcomponent/mainweapon/disruptor_light,
+/obj/item/ammo/bullets/autocannon/seeker,
+/obj/item/ammo/bullets/autocannon/seeker,
+/obj/machinery/light/incandescent/warm,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/black,
+/area/station/ai_monitored/armory)
 "lSg" = (
 /obj/decal/tile_edge/line/purple{
 	dir = 10;
@@ -43270,6 +43220,18 @@
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
+"mNq" = (
+/obj/overlay{
+	icon = 'icons/misc/beach2.dmi';
+	icon_state = "palm1";
+	layer = 10;
+	name = "palm tree"
+	},
+/obj/machinery/light/incandescent/warm,
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/station/medical/research)
 "mPy" = (
 /obj/machinery/disposal/mail/small{
 	dir = 1;
@@ -43461,6 +43423,16 @@
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/diner/hangar)
+"oBS" = (
+/obj/machinery/light/incandescent/netural{
+	dir = 1
+	},
+/obj/juggleplaque/manta,
+/turf/simulated/floor/carpet{
+	dir = 4;
+	icon_state = "fgreen2"
+	},
+/area/station/crew_quarters/cafeteria/the_rising_tide_bar)
 "oGT" = (
 /obj/lattice{
 	icon_state = "lattice-dir"
@@ -43991,6 +43963,16 @@
 	},
 /turf/simulated/floor/black,
 /area/station/security/checkpoint/sec_foyer)
+"vcs" = (
+/obj/table/reinforced/bar/auto,
+/obj/holosign{
+	desc = "... is that Abzu..?";
+	name = "... is that Abzu..?";
+	pixel_y = 8
+	},
+/obj/random_item_spawner/desk_stuff/g_clip_bin_fpen,
+/turf/simulated/floor/carpet/red/fancy,
+/area/listeningpost/syndicateassaultvessel)
 "vdL" = (
 /obj/cable{
 	icon_state = "2-8"
@@ -44028,6 +44010,17 @@
 /obj/machinery/light/runway_light/delay4,
 /turf/space/fluid/manta,
 /area/mantaSpace)
+"vtl" = (
+/obj/overlay{
+	icon = 'icons/misc/beach2.dmi';
+	icon_state = "palm1";
+	layer = 10;
+	name = "palm tree"
+	},
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/station/medical/research)
 "vzA" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -53232,7 +53225,7 @@ aaa
 aaa
 aaa
 afN
-aeA
+hgV
 aeQ
 aeQ
 afn
@@ -81395,7 +81388,7 @@ biL
 auv
 aPn
 aPv
-aPD
+hWN
 biL
 biK
 bqo
@@ -85897,7 +85890,7 @@ aQx
 aFi
 aSj
 oIR
-aqR
+lPP
 aRl
 aSj
 aRr
@@ -86222,7 +86215,7 @@ beb
 bcb
 aCM
 aCM
-bvu
+oBS
 aGf
 aGE
 aDd
@@ -87843,7 +87836,7 @@ amr
 amA
 amK
 amT
-anb
+vcs
 amT
 ann
 akH
@@ -95877,7 +95870,7 @@ aWR
 aXz
 aXY
 aYQ
-aXA
+mNq
 baq
 bbp
 bbq
@@ -96176,7 +96169,7 @@ aTi
 aVY
 aUB
 aWR
-aXA
+mNq
 aXZ
 aYR
 aYQ
@@ -96480,7 +96473,7 @@ aWs
 aHA
 aJe
 aYa
-aYS
+vtl
 aYQ
 baq
 bbr
@@ -101333,7 +101326,7 @@ bpH
 bnW
 bsx
 btj
-buC
+jzF
 bvZ
 bxF
 aOJ
@@ -114923,7 +114916,7 @@ aaa
 act
 aBr
 aBr
-bvv
+eOU
 bOE
 bOM
 btx

@@ -2,9 +2,6 @@
 	name = "artifact noisy thing"
 	associated_datum = /datum/artifact/noisy_thing
 
-	ArtifactDeactivated()
-		return // hahaha nope
-
 /datum/artifact/noisy_thing
 	associated_object = /obj/machinery/artifact/noisy_thing
 	rarity_class = 1

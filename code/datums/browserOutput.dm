@@ -176,7 +176,7 @@ var/global
 						//Irc message too
 						var/ircmsg[] = new()
 						ircmsg["key"] = owner.key
-						ircmsg["name"] = owner.mob.name
+						ircmsg["name"] = stripTextMacros(owner.mob.name)
 						ircmsg["msg"] = "just attempted to crash the server using at least 5 '\['s in a row."
 						ircbot.export("admin", ircmsg)
 					return
@@ -194,7 +194,7 @@ var/global
 							break
 
 					//Uh oh this fucker has a history of playing on a banned account!!
-					if (found.len > 0)
+					if (found.len > 0 && found["ckey"] != src.owner.ckey)
 						//TODO: add a new evasion ban for the CURRENT client details, using the matched row details
 						message_admins("[key_name(src.owner)] has a cookie from a banned account! (Matched: [found["ckey"]], [found["ip"]], [found["compid"]])")
 						logTheThing("debug", src.owner, null, "has a cookie from a banned account! (Matched: [found["ckey"]], [found["ip"]], [found["compid"]])")
@@ -204,9 +204,18 @@ var/global
 						if(owner)
 							var/ircmsg[] = new()
 							ircmsg["key"] = owner.key
-							ircmsg["name"] = owner.mob.name
+							ircmsg["name"] = stripTextMacros(owner.mob.name)
 							ircmsg["msg"] = "has a cookie from banned account [found["ckey"]](IP: [found["ip"]], CompID: [found["compID"]])"
 							ircbot.export("admin", ircmsg)
+
+						var/banData[] = new()
+						banData["ckey"] = src.owner.ckey
+						banData["compID"] = src.owner.computer_id
+						banData["akey"] = "Auto Banner"
+						banData["ip"] = src.owner.address
+						banData["reason"] = "\[Evasion Attempt\] Previous ckey: [found["ckey"]]"
+						banData["mins"] = 0
+						addBan(banData)
 			src.cookieSent = 1
 
 		getContextFlags()

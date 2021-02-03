@@ -11963,11 +11963,6 @@
 	dir = 8
 	},
 /area/station/hydroponics/bay)
-"avY" = (
-/obj/table/reinforced/auto,
-/obj/item/device/light/lava_lamp,
-/turf/simulated/floor,
-/area/station/hydroponics/bay)
 "avZ" = (
 /obj/decal/tile_edge/line/green{
 	dir = 4;
@@ -20944,23 +20939,6 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/west)
-"aKT" = (
-/obj/item/device/audio_log{
-	pixel_x = -28
-	},
-/obj/overlay{
-	anchored = 1;
-	icon = 'icons/misc/beach2.dmi';
-	icon_state = "palm1";
-	layer = 10;
-	name = "palm tree"
-	},
-/obj/landmark{
-	icon_state = "x3";
-	name = "peststart"
-	},
-/turf/simulated/floor/grass/random,
-/area/station/medical/research)
 "aKU" = (
 /obj/landmark/start{
 	name = "Geneticist"
@@ -22008,17 +21986,6 @@
 /area/station/maintenance/west)
 "aMD" = (
 /obj/storage/secure/closet/animal,
-/turf/simulated/floor/grass/random,
-/area/station/medical/research)
-"aME" = (
-/obj/window/reinforced/east,
-/obj/overlay{
-	anchored = 1;
-	icon = 'icons/misc/beach2.dmi';
-	icon_state = "palm1";
-	layer = 10;
-	name = "palm tree"
-	},
 /turf/simulated/floor/grass/random,
 /area/station/medical/research)
 "aMF" = (
@@ -25724,26 +25691,6 @@
 	icon_state = "pipe-c"
 	},
 /turf/simulated/wall/auto/reinforced/gannets,
-/area/station/science/research_director{
-	workplace = 1
-	})
-"aTa" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
-/obj/item/storage/briefcase/toxins{
-	pixel_x = -5;
-	pixel_y = 16
-	},
-/turf/simulated/floor/carpet{
-	dir = 10;
-	icon_state = "fpurple2"
-	},
 /area/station/science/research_director{
 	workplace = 1
 	})
@@ -45442,6 +45389,15 @@
 	dir = 6
 	},
 /area/space)
+"dOg" = (
+/obj/table/reinforced/auto,
+/obj/item/device/light/lava_lamp,
+/obj/item/reagent_containers/glass/water_pipe{
+	pixel_x = -8;
+	pixel_y = 8
+	},
+/turf/simulated/floor,
+/area/station/hydroponics/bay)
 "eLW" = (
 /obj/decal/tile_edge/line/purple{
 	dir = 8;
@@ -45456,6 +45412,22 @@
 /obj/machinery/photocopier,
 /turf/simulated/floor,
 /area/station/crew_quarters/lounge/starboard)
+"iKX" = (
+/obj/item/device/audio_log{
+	pixel_x = -28
+	},
+/obj/overlay{
+	icon = 'icons/misc/beach2.dmi';
+	icon_state = "palm1";
+	layer = 10;
+	name = "palm tree"
+	},
+/obj/landmark{
+	icon_state = "x3";
+	name = "peststart"
+	},
+/turf/simulated/floor/grass/random,
+/area/station/medical/research)
 "iWh" = (
 /obj/stool/chair/office/yellow{
 	dir = 4
@@ -45491,6 +45463,26 @@
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
+"nhE" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
+/obj/item/storage/briefcase/toxins{
+	pixel_x = -5;
+	pixel_y = 16
+	},
+/turf/simulated/floor/carpet{
+	dir = 10;
+	icon_state = "fpurple2"
+	},
+/area/station/science/research_director{
+	workplace = 1
+	})
 "ouD" = (
 /obj/cable{
 	d1 = 1;
@@ -45500,6 +45492,16 @@
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor,
 /area/station/science/lab)
+"twL" = (
+/obj/window/reinforced/east,
+/obj/overlay{
+	icon = 'icons/misc/beach2.dmi';
+	icon_state = "palm1";
+	layer = 10;
+	name = "palm tree"
+	},
+/turf/simulated/floor/grass/random,
+/area/station/medical/research)
 "tzx" = (
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/carpet/arcade,
@@ -72900,7 +72902,7 @@ ayf
 apR
 aFd
 aIV
-aKT
+iKX
 aMD
 aFd
 aFd
@@ -73505,7 +73507,7 @@ aFc
 aFd
 aIX
 aKV
-aME
+twL
 aOw
 aFd
 aFd
@@ -95233,7 +95235,7 @@ arP
 arP
 auT
 avw
-avY
+dOg
 awA
 axg
 avw
@@ -99480,7 +99482,7 @@ aKl
 aNZ
 aPF
 aRr
-aTa
+nhE
 aUs
 aWd
 aXO

@@ -11195,14 +11195,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hydroponics/bay)
-"azA" = (
-/obj/storage/secure/crate/plasma/armory/anti_biological{
-	req_access = null
-	},
-/obj/access_spawn/sec_lockers,
-/obj/item/flamethrower/assembled/loaded,
-/turf/simulated/floor/bot,
-/area/station/security/brig)
 "azB" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -11902,13 +11894,6 @@
 /obj/submachine/chem_extractor,
 /turf/simulated/floor/green/side,
 /area/station/hydroponics/lobby)
-"aAV" = (
-/obj/table/auto,
-/obj/item/device/light/lava_lamp{
-	pixel_y = 8
-	},
-/turf/simulated/floor/green/side,
-/area/station/hydroponics/bay)
 "aAW" = (
 /obj/machinery/light_switch{
 	name = "S light switch";
@@ -44729,22 +44714,6 @@
 /obj/deskclutter,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/hor)
-"bQV" = (
-/obj/stool/chair{
-	dir = 8
-	},
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/item/storage/briefcase/toxins{
-	pixel_x = 6;
-	pixel_y = -11
-	},
-/turf/simulated/floor/carpet{
-	dir = 9;
-	icon_state = "fred5"
-	},
-/area/station/crew_quarters/hor)
 "bQW" = (
 /turf/simulated/floor/carpet{
 	dir = 4;
@@ -58978,21 +58947,6 @@
 "cvM" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/janitor/supply)
-"cvN" = (
-/obj/overlay{
-	anchored = 1;
-	icon = 'icons/misc/beach2.dmi';
-	icon_state = "palm1";
-	layer = 10;
-	name = "palm tree"
-	},
-/obj/landmark/start{
-	name = "Test Subject"
-	},
-/turf/simulated/floor/grass{
-	name = "astroturf"
-	},
-/area/station/medical/research)
 "cvO" = (
 /obj/table/reinforced/auto,
 /obj/item/paper_bin{
@@ -59920,37 +59874,6 @@
 /obj/machinery/centrifuge,
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
-"cxx" = (
-/obj/overlay{
-	anchored = 1;
-	icon = 'icons/misc/beach2.dmi';
-	icon_state = "palm1";
-	layer = 10;
-	name = "palm tree"
-	},
-/obj/machinery/light{
-	dir = 8;
-	tag = ""
-	},
-/turf/simulated/floor/grass{
-	name = "astroturf"
-	},
-/area/station/medical/research)
-"cxy" = (
-/obj/overlay{
-	anchored = 1;
-	icon = 'icons/misc/beach2.dmi';
-	icon_state = "palm1";
-	layer = 10;
-	name = "palm tree"
-	},
-/obj/machinery/light{
-	dir = 4
-	},
-/turf/simulated/floor/grass{
-	name = "astroturf"
-	},
-/area/station/medical/research)
 "cxA" = (
 /obj/table/reinforced/chemistry/auto,
 /obj/item/storage/toolbox/mechanical{
@@ -60084,18 +60007,6 @@
 /area/station/medical/cdc)
 "cxH" = (
 /obj/storage/secure/closet/animal,
-/turf/simulated/floor/grass{
-	name = "astroturf"
-	},
-/area/station/medical/research)
-"cxI" = (
-/obj/overlay{
-	anchored = 1;
-	icon = 'icons/misc/beach2.dmi';
-	icon_state = "palm1";
-	layer = 10;
-	name = "palm tree"
-	},
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},
@@ -62313,6 +62224,20 @@
 /obj/machinery/power/apc/autoname_east,
 /turf/simulated/floor/engine,
 /area/station/engine/core)
+"cHE" = (
+/obj/overlay{
+	icon = 'icons/misc/beach2.dmi';
+	icon_state = "palm1";
+	layer = 10;
+	name = "palm tree"
+	},
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/station/medical/research)
 "cKD" = (
 /obj/table/wood/auto,
 /obj/item/plate{
@@ -62707,6 +62632,17 @@
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/medical/cdc)
+"fRX" = (
+/obj/overlay{
+	icon = 'icons/misc/beach2.dmi';
+	icon_state = "palm1";
+	layer = 10;
+	name = "palm tree"
+	},
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/station/medical/research)
 "fSi" = (
 /obj/lattice,
 /obj/machinery/light/small/broken{
@@ -62827,6 +62763,17 @@
 	dir = 10
 	},
 /area/station/quartermaster/refinery)
+"gvJ" = (
+/obj/table/auto,
+/obj/item/device/light/lava_lamp{
+	pixel_y = 8
+	},
+/obj/item/reagent_containers/glass/water_pipe{
+	pixel_x = 8;
+	pixel_y = 6
+	},
+/turf/simulated/floor/green/side,
+/area/station/hydroponics/bay)
 "gAO" = (
 /obj/railing/orange/reinforced{
 	dir = 1
@@ -63387,6 +63334,20 @@
 /obj/firedoor_spawn,
 /turf/simulated/floor/plating,
 /area/station/engine/inner)
+"orK" = (
+/obj/overlay{
+	icon = 'icons/misc/beach2.dmi';
+	icon_state = "palm1";
+	layer = 10;
+	name = "palm tree"
+	},
+/obj/landmark/start{
+	name = "Test Subject"
+	},
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/station/medical/research)
 "osp" = (
 /obj/decal/tile_edge/stripe/big{
 	dir = 1;
@@ -63679,6 +63640,14 @@
 	name = "reinforced plating"
 	},
 /area/station/quartermaster/refinery)
+"sQk" = (
+/obj/storage/secure/crate/plasma/armory/anti_biological{
+	req_access = null
+	},
+/obj/access_spawn/sec_lockers,
+/obj/item/gun/flamethrower/assembled/loaded,
+/turf/simulated/floor/bot,
+/area/station/security/brig)
 "txq" = (
 /obj/machinery/atmospherics/valve{
 	desc = "hot reserve tank valve";
@@ -63920,6 +63889,22 @@
 	},
 /turf/simulated/floor/grime,
 /area/station/engine/coldloop)
+"vWo" = (
+/obj/stool/chair{
+	dir = 8
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/item/storage/briefcase/toxins{
+	pixel_x = 6;
+	pixel_y = -11
+	},
+/turf/simulated/floor/carpet{
+	dir = 9;
+	icon_state = "fred5"
+	},
+/area/station/crew_quarters/hor)
 "wfk" = (
 /obj/machinery/atmospherics/valve{
 	desc = "freezer bypass valve";
@@ -64112,6 +64097,21 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/inner)
+"yjm" = (
+/obj/overlay{
+	icon = 'icons/misc/beach2.dmi';
+	icon_state = "palm1";
+	layer = 10;
+	name = "palm tree"
+	},
+/obj/machinery/light{
+	dir = 8;
+	tag = ""
+	},
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/station/medical/research)
 
 (1,1,1) = {"
 adC
@@ -93212,7 +93212,7 @@ aqf
 arC
 asR
 axn
-azA
+sQk
 awK
 ayi
 azI
@@ -93588,7 +93588,7 @@ bLl
 bMN
 bOm
 bPE
-bQV
+vWo
 bSx
 bJY
 bVi
@@ -102981,7 +102981,7 @@ cwe
 cDp
 aKZ
 cxq
-cxx
+yjm
 cxH
 cxH
 cxf
@@ -103888,11 +103888,11 @@ cwQ
 cxg
 cxr
 cxq
-cxI
+fRX
 cDv
 cxr
 cxq
-cvN
+orK
 cyd
 aah
 adC
@@ -104793,7 +104793,7 @@ cwk
 csQ
 ctD
 cxq
-cxy
+cHE
 cxq
 rNh
 cyd
@@ -123415,7 +123415,7 @@ atV
 auW
 axQ
 azk
-aAV
+gvJ
 atV
 aaG
 adC
