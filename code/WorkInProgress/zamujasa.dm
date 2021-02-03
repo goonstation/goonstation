@@ -944,6 +944,8 @@ Read the rules, don't grief, and have fun!</div>"}
 
 
 /obj/overlay/zamujasa/round_start_countdown
+	var/maptext_area = "status"
+
 	New()
 		..()
 			// let's just hard-code coordinates
@@ -958,8 +960,13 @@ Read the rules, don't grief, and have fun!</div>"}
 		src.plane = 100
 		src.set_text("")
 
+	disposing()
+		lobby_titlecard.set_maptext(maptext_area, "")
+		..()
+
 	proc/set_text(text)
 		src.maptext = text
+		lobby_titlecard.set_maptext(maptext_area, text)
 
 	proc/update_status(message)
 		if (message)
@@ -968,6 +975,8 @@ Read the rules, don't grief, and have fun!</div>"}
 			src.set_text("")
 
 	timer
+		maptext_area = "timer"
+
 		New()
 			..()
 			// what could possibly go wrong
@@ -988,11 +997,13 @@ Read the rules, don't grief, and have fun!</div>"}
 						timeLeftColor = "#ffb400"
 					if (0 to 30)
 						timeLeftColor = "#ff6666"
-				src.maptext = "<span class='c ol vga vt'>Round begins in<br><span style='color: [timeLeftColor]; font-size: 36px;'>[time]</span></span>"
+				src.set_text("<span class='c ol vga vt'>Round begins in<br><span style='color: [timeLeftColor]; font-size: 36px;'>[time]</span></span>")
 			else
-				src.maptext = "<span class='c ol vga vt'>Round begins<br><span style='color: #aaaaaa; font-size: 36px;'>soon</span></span>"
+				src.set_text("<span class='c ol vga vt'>Round begins<br><span style='color: #aaaaaa; font-size: 36px;'>soon</span></span>")
 
 	encourage
+		maptext_area = "leftside"
+
 		New()
 			..()
 			// apart from "everything", that is

@@ -398,7 +398,9 @@ var/f_color_selector_handler/F_Color_Selector
 	#endif
 	var/add_html = ""
 	var/overlay_image_url = null
-	var/last_pregame_html = ""
+
+	var/global/list/maptext_areas = list()
+	var/global/last_pregame_html = ""
 
 	heisenbee
 		image_url = "images/heisenbee_titlecard.png"
@@ -420,18 +422,41 @@ var/f_color_selector_handler/F_Color_Selector
 		overlay_image_url = "images/battleroyale_titlecard.png"
 
 /datum/titlecard/proc/set_pregame_html()
-	src.last_pregame_html = {"<meta http-equiv='X-UA-Compatible' content='IE=edge'><style>body,#overlay{margin:0;padding:0;background:url([resource(src.image_url)]) black;background-size:100%;background-repeat:no-repeat;overflow:hidden;background-position:center center;background-attachment:fixed;}"}
+	last_pregame_html = {"<meta http-equiv='X-UA-Compatible' content='IE=edge'><style>body,#overlay{margin:0;padding:0;background:url([resource(src.image_url)]) black;background-size:100%;background-repeat:no-repeat;overflow:hidden;background-position:center center;background-attachment:fixed;image-rendering:pixelated;}"}
 	if (isnull(src.overlay_image_url))
-		src.last_pregame_html += {"#overlay{display:none;}"}
+		last_pregame_html += {"#overlay{display:none;}"}
 	else
-		src.last_pregame_html += {"#overlay{background-image:url([resource(src.overlay_image_url)]);background-color:transparent;left:0;top:0;right:0;bottom:0;position:fixed;}"}
-	src.last_pregame_html += {"</style><script>document.onclick=function(){location="byond://winset?id=mapwindow.map&focus=true";}</script><div id="overlay"></div>[src.add_html]"}
-	pregameHTML = src.last_pregame_html
+		last_pregame_html += {"#overlay{background-image:url([resource(src.overlay_image_url)]);background-color:transparent;left:0;top:0;right:0;bottom:0;position:fixed;}"}
+	last_pregame_html += {".area{white-space:pre;color:#fff;font:12px 'PxPlus IBM VGA9';-dm-text-outline:1px black;}</style><script>document.onclick=function(){location="byond://winset?id=mapwindow.map&focus=true";};function set_area(id,text){document.getElementById(id).innerHTML=text||"";};location="byond://winset?command=.send-lobby-text";</script><div id="overlay"></div><div id="status" class="area">status_empty</div><div id="timer" class="area">timer_empty</div><div id="leftside" class="area">leftside_empty</div>[src.add_html]"}
+	pregameHTML = last_pregame_html
 	for(var/client/C)
 		if(istype(C.mob, /mob/new_player))
 			C << browse(pregameHTML, "window=pregameBrowser")
 			if(C)
 				winshow(C, "pregameBrowser", 1)
+
+/datum/titlecard/proc/set_maptext(id, text)
+	maptext_areas[id] = text
+	if (last_pregame_html == pregameHTML)
+		for(var/client/C)
+			if(istype(C.mob, /mob/new_player))
+				C << output(list2params(list(id, text)), "pregameBrowser:set_area")
+
+/client/verb/send_lobby_text()
+	set name = ".send-lobby-text"
+	set hidden = 1
+
+	if (!istype(src?.mob, /mob/new_player))
+		return
+
+	lobby_titlecard.send_lobby_text(src)
+
+/datum/titlecard/proc/send_lobby_text(client/C)
+	if (last_pregame_html != pregameHTML)
+		return
+
+	for (var/id in maptext_areas)
+		C << output(list2params(list(id, maptext_areas[id])), "pregameBrowser:set_area")
 
 /world/New()
 	Z_LOG_DEBUG("World/New", "World New()")
