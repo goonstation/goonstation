@@ -1,4 +1,8 @@
 
+(t)tue feb 02 21
+(u)Emily
+(e)|
+(+)Selkie chickens now come from White Silkies, not Black Silkies as they did previously.
 (t)mon feb 01 21
 (u)Superlagg
 (p)3297
