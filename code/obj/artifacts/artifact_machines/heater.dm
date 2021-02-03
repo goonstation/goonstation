@@ -42,7 +42,7 @@
 					100;"nitrogen",
 					50;"carbon dioxide",
 					50;"agent b")
-			if("precursor") // the rest
+			if("precursor") // all the god damn gases
 				gas_type = pick(
 					125;"oxygen",
 					100;"nitrogen",
