@@ -53892,7 +53892,7 @@
 	pixel_x = 3;
 	pixel_y = 24
 	},
-/obj/stool/chair,
+/obj/machinery/chem_dispenser/chef,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "iWG" = (
@@ -55283,6 +55283,13 @@
 	dir = 8
 	},
 /area/station/crew_quarters/quarters_south)
+"naK" = (
+/obj/stool/chair{
+	anchored = 0;
+	dir = 4
+	},
+/turf/simulated/floor/grey,
+/area/station/crew_quarters/catering)
 "nbp" = (
 /obj/table/round/auto,
 /obj/item/goboard,
@@ -112667,7 +112674,7 @@ aXL
 beq
 bft
 bgE
-bgF
+naK
 bgF
 bft
 blD

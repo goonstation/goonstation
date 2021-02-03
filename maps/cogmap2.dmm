@@ -10513,6 +10513,7 @@
 /obj/item/reagent_containers/food/drinks/bowl,
 /obj/item/reagent_containers/food/drinks/bowl,
 /obj/disposalpipe/segment,
+/obj/item/instrument/bikehorn/dramatic,
 /turf/simulated/floor/white,
 /area/station/crew_quarters/kitchen)
 "axN" = (
@@ -11351,7 +11352,7 @@
 /obj/disposalpipe/segment,
 /obj/machinery/atmospherics/unary/vent_pump/east,
 /obj/table/auto,
-/obj/item/instrument/bikehorn/dramatic,
+/obj/item/storage/box/cutlery,
 /turf/simulated/floor/white,
 /area/station/crew_quarters/kitchen)
 "azB" = (
@@ -11365,8 +11366,7 @@
 	layer = 9.1;
 	pixel_x = 10
 	},
-/obj/table/auto,
-/obj/item/storage/box/cutlery,
+/obj/machinery/chem_dispenser/chef,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "azD" = (

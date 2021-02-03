@@ -10062,7 +10062,10 @@
 /obj/landmark/start{
 	name = "Chef"
 	},
-/obj/disposalpipe/segment/food,
+/obj/disposalpipe/segment/food{
+	dir = 1;
+	icon_state = "pipe-c"
+	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "asi" = (
@@ -10306,13 +10309,13 @@
 /obj/item/reagent_containers/food/snacks/breadloaf,
 /obj/item/reagent_containers/glass/bottle/icing,
 /obj/item/reagent_containers/glass/bottle/icing,
-/obj/disposalpipe/segment/food,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "asF" = (
 /obj/table/reinforced/auto,
 /obj/machinery/glass_recycler,
 /obj/item/reagent_containers/food/drinks/milk,
+/obj/disposalpipe/segment/food,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "asG" = (
@@ -10672,13 +10675,13 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/disposalpipe/segment{
-	dir = 4
-	},
 /obj/landmark/start{
 	name = "Chef"
 	},
 /obj/disposalpipe/segment/food,
+/obj/disposalpipe/segment{
+	dir = 4
+	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "atu" = (
@@ -10686,21 +10689,16 @@
 	icon_state = "4-8"
 	},
 /obj/disposalpipe/segment{
-	dir = 4
+	dir = 2;
+	icon_state = "pipe-c"
 	},
-/obj/disposalpipe/segment/food,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "atv" = (
 /obj/cable{
 	icon_state = "1-8"
 	},
-/obj/machinery/disposal/small{
-	dir = 8
-	},
-/obj/disposalpipe/trunk{
-	dir = 8
-	},
+/obj/machinery/chem_dispenser/chef,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "atw" = (
@@ -10878,7 +10876,12 @@
 /turf/simulated/wall/auto/gannets,
 /area/station/hydroponics/bay)
 "atQ" = (
-/obj/disposalpipe/segment/food,
+/obj/machinery/disposal/small{
+	dir = 4
+	},
+/obj/disposalpipe/trunk{
+	dir = 1
+	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "atR" = (
@@ -11339,7 +11342,6 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/disposalpipe/segment/food,
 /turf/simulated/floor/blue/side,
 /area/station/hydroponics/bay)
 "auP" = (
@@ -11349,6 +11351,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
+/obj/disposalpipe/segment/food,
 /turf/simulated/floor/blue/side,
 /area/station/hydroponics/bay)
 "auQ" = (
@@ -11651,13 +11654,12 @@
 /turf/simulated/floor/black,
 /area/station/hydroponics/bay)
 "avs" = (
-/obj/wingrille_spawn/reinforced,
 /obj/disposalpipe/segment/food{
-	dir = 8;
+	dir = 2;
 	icon_state = "pipe-c"
 	},
-/turf/simulated/floor/plating/random,
-/area/station/hydroponics/bay)
+/turf/simulated/floor/specialroom/cafeteria,
+/area/station/crew_quarters/kitchen)
 "avt" = (
 /obj/wingrille_spawn/reinforced,
 /turf/simulated/floor/plating/random,
@@ -45454,6 +45456,18 @@
 /obj/machinery/photocopier,
 /turf/simulated/floor,
 /area/station/crew_quarters/lounge/starboard)
+"hwo" = (
+/obj/wingrille_spawn/reinforced,
+/obj/disposalpipe/segment/food{
+	dir = 8;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/floor/plating/random,
+/area/station/hydroponics/bay)
+"iCJ" = (
+/obj/disposalpipe/segment/food,
+/turf/simulated/floor/specialroom/cafeteria,
+/area/station/crew_quarters/kitchen)
 "iWh" = (
 /obj/stool/chair/office/yellow{
 	dir = 4
@@ -45476,6 +45490,13 @@
 	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
+"mKS" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment/food,
+/turf/simulated/floor/specialroom/cafeteria,
+/area/station/crew_quarters/kitchen)
 "mMk" = (
 /obj/cable{
 	d1 = 4;
@@ -45498,6 +45519,19 @@
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor,
 /area/station/science/lab)
+"pTi" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/specialroom/cafeteria,
+/area/station/crew_quarters/kitchen)
+"rsP" = (
+/obj/submachine/chef_oven,
+/obj/landmark{
+	name = "shitty_bill_respawn"
+	},
+/turf/simulated/floor/specialroom/cafeteria,
+/area/station/crew_quarters/kitchen)
 "tzx" = (
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/carpet/arcade,
@@ -45520,6 +45554,12 @@
 	dir = 4
 	},
 /area/station/chapel/sanctuary)
+"xpC" = (
+/obj/table/reinforced/auto,
+/obj/submachine/mixer,
+/obj/disposalpipe/segment/food,
+/turf/simulated/floor/specialroom/cafeteria,
+/area/station/crew_quarters/kitchen)
 
 (1,1,1) = {"
 aaa
@@ -93715,12 +93755,12 @@ apZ
 arM
 ash
 asE
-bBQ
+rsP
 atu
 atQ
 auq
 auO
-avs
+atO
 avU
 awv
 axd
@@ -94015,14 +94055,14 @@ aqH
 apZ
 apZ
 arN
-asf
+avs
 asF
-asR
-ats
-asf
+xpC
+mKS
+iCJ
 aur
 auP
-avt
+hwo
 avW
 awx
 awv
@@ -94320,7 +94360,7 @@ arO
 asf
 asG
 asB
-ats
+pTi
 atR
 arP
 auQ
@@ -94622,7 +94662,7 @@ arP
 asi
 arP
 asT
-ats
+pTi
 atS
 arP
 auR

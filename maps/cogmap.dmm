@@ -5410,12 +5410,7 @@
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "anc" = (
-/obj/machinery/power/data_terminal,
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/table/auto,
-/obj/machinery/computer3/generic/personal,
+/obj/machinery/chem_dispenser/chef,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "and" = (
@@ -5456,7 +5451,12 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "ang" = (
-/obj/reagent_dispensers/still,
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/table/auto,
+/obj/machinery/computer3/generic/personal,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "anh" = (
@@ -6081,15 +6081,9 @@
 /obj/disposalpipe/trunk/mail{
 	dir = 4
 	},
-/obj/cable{
-	icon_state = "1-4"
-	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "aou" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
@@ -6097,9 +6091,6 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/kitchen)
 "aov" = (
-/obj/cable{
-	icon_state = "2-8"
-	},
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -6111,12 +6102,18 @@
 	dir = 8;
 	tag = ""
 	},
+/obj/cable{
+	icon_state = "2-4"
+	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "aow" = (
 /obj/disposalpipe/segment/produce{
 	dir = 1;
 	icon_state = "pipe-c"
+	},
+/obj/cable{
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
@@ -63247,6 +63244,15 @@
 	},
 /turf/simulated/floor,
 /area/station/security/brig)
+"neN" = (
+/obj/disposalpipe/segment/produce{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/black,
+/area/station/crew_quarters/catering)
 "niO" = (
 /turf/simulated/wall/auto/shuttle{
 	icon_state = "3"
@@ -63362,6 +63368,15 @@
 /obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/engine/vacuum,
 /area/station/engine/hotloop)
+"ogi" = (
+/obj/disposalpipe/segment/produce{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/black,
+/area/station/crew_quarters/catering)
 "opf" = (
 /obj/machinery/light/small{
 	dir = 1
@@ -63490,6 +63505,13 @@
 	},
 /turf/simulated/floor/black,
 /area/station/engine/coldloop)
+"qkq" = (
+/obj/disposalpipe/segment/produce{
+	dir = 4
+	},
+/obj/reagent_dispensers/still,
+/turf/simulated/floor/black,
+/area/station/crew_quarters/catering)
 "qoa" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 9
@@ -116456,7 +116478,7 @@ ajc
 aie
 amj
 anf
-aox
+ogi
 apJ
 aqW
 asu
@@ -116758,7 +116780,7 @@ ajc
 aie
 amj
 ang
-aox
+neN
 apK
 aqX
 apA
@@ -117664,7 +117686,7 @@ ajc
 aie
 amj
 anj
-aox
+qkq
 apJ
 aqW
 asw

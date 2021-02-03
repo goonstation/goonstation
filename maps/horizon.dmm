@@ -11741,16 +11741,11 @@
 /turf/simulated/floor/carpet/blue/fancy/edge/se,
 /area/station/crew_quarters/hor)
 "aCY" = (
-/obj/table/auto,
 /obj/machinery/power/apc/autoname_north,
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/item/storage/box/plates,
-/obj/item/reagent_containers/food/snacks/cake/chocolate{
-	desc = "Holy shit! This cake probably costs more than the gross domestic product of Bulgaria!";
-	name = "Extravagant Chocolate Gateau"
-	},
+/obj/machinery/chem_dispenser/chef,
 /turf/simulated/floor/white/checker{
 	dir = 6
 	},
@@ -37929,14 +37924,17 @@
 /obj/disposalpipe/segment/food{
 	dir = 4
 	},
-/obj/item/storage/box/beakerbox,
-/obj/item/storage/box/cutlery,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 4;
 	name = "autoname - SS13";
 	pixel_x = -10;
 	tag = ""
+	},
+/obj/item/storage/box/plates,
+/obj/item/reagent_containers/food/snacks/cake/chocolate{
+	desc = "Holy shit! This cake probably costs more than the gross domestic product of Bulgaria!";
+	name = "Extravagant Chocolate Gateau"
 	},
 /turf/simulated/floor/white/checker{
 	dir = 6
@@ -40906,7 +40904,8 @@
 	icon_state = "1-2"
 	},
 /obj/table/auto,
-/obj/item/instrument/bikehorn/dramatic,
+/obj/item/storage/box/beakerbox,
+/obj/item/storage/box/cutlery,
 /turf/simulated/floor/white,
 /area/station/crew_quarters/kitchen)
 "bNp" = (
@@ -42182,6 +42181,7 @@
 /obj/table/auto,
 /obj/item/kitchen/rollingpin,
 /obj/item/reagent_containers/glass/bottle/icing,
+/obj/item/instrument/bikehorn/dramatic,
 /turf/simulated/floor/white,
 /area/station/crew_quarters/kitchen)
 "bQc" = (

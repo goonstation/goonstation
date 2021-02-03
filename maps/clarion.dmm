@@ -15985,8 +15985,7 @@
 	dir = 4;
 	pixel_x = 10
 	},
-/obj/table,
-/obj/machinery/phone,
+/obj/machinery/chem_dispenser/chef,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "aCG" = (
@@ -16414,6 +16413,7 @@
 	},
 /obj/table/reinforced/auto,
 /obj/machinery/disposal/mail/small,
+/obj/machinery/phone,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "aDB" = (

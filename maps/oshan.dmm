@@ -24716,7 +24716,17 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/baroffice)
 "bin" = (
-/obj/machinery/light/incandescent/netural,
+/obj/storage/crate,
+/obj/item/storage/goodybag,
+/obj/item/storage/box/crayon{
+	pixel_x = 6;
+	pixel_y = -6
+	},
+/obj/item/item_box/assorted/stickers/stickers_limited{
+	pixel_x = -4;
+	pixel_y = 5
+	},
+/obj/item/kitchen/peach_rings,
 /turf/simulated/floor/white,
 /area/station/crew_quarters/kitchen)
 "bio" = (
@@ -26385,10 +26395,8 @@
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/baroffice)
 "bmt" = (
-/obj/stove,
-/obj/item/soup_pot,
-/obj/item/ladle,
 /obj/machinery/light/incandescent/netural,
+/obj/machinery/chem_dispenser/chef,
 /turf/simulated/floor/white,
 /area/station/crew_quarters/kitchen)
 "bmu" = (
@@ -26605,17 +26613,9 @@
 	},
 /area/station/crew_quarters/kitchen)
 "bmU" = (
-/obj/storage/crate,
-/obj/item/storage/goodybag,
-/obj/item/storage/box/crayon{
-	pixel_x = 6;
-	pixel_y = -6
-	},
-/obj/item/item_box/assorted/stickers/stickers_limited{
-	pixel_x = -4;
-	pixel_y = 5
-	},
-/obj/item/kitchen/peach_rings,
+/obj/stove,
+/obj/item/soup_pot,
+/obj/item/ladle,
 /turf/simulated/floor/white,
 /area/station/crew_quarters/kitchen)
 "bmV" = (

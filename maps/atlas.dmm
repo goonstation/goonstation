@@ -2707,6 +2707,7 @@
 /area/station/crew_quarters/clown)
 "gT" = (
 /obj/table/auto,
+/obj/item/storage/box/plates,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "gU" = (
@@ -3476,8 +3477,7 @@
 	},
 /area/station/hallway/primary/west)
 "iF" = (
-/obj/table/auto,
-/obj/item/storage/box/plates,
+/obj/machinery/chem_dispenser/chef,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "iG" = (
@@ -69645,7 +69645,7 @@ em
 fA
 gT
 hF
-iF
+eX
 jF
 kv
 kt
@@ -69946,8 +69946,8 @@ ej
 eX
 fB
 gU
-gT
-gT
+iF
+eX
 jF
 kw
 md
