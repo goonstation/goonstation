@@ -219,20 +219,20 @@ proc/get_angle(atom/a, atom/b)
 		if(curr.density) return 0
 	return 1
 
-/proc/do_mob(mob/user , atom/target as turf|obj|mob, time = 3 SECONDS) //This is quite an ugly solution but i refuse to use the old request system.
+/proc/do_mob(mob/user , atom/target as turf|obj|mob, time = 3 SECONDS, private = FALSE) //This is quite an ugly solution but i refuse to use the old request system.
 	if(!user || !target) return 0
 	. = 0
-	var/datum/action/bar/icon/mob_doer/doer = new(user, target, time)
+	var/datum/action/bar/icon/mob_doer/doer = new(user, target, time, private)
 	actions.start(doer, user)
 	while (doer.success == -1)
 		sleep(1)
 	. = doer.success
 
-/proc/do_after(mob/M, time)
+/proc/do_after(mob/M, time, private = FALSE)
 	if (!ismob(M))
 		return 0
 	. = 0
-	var/datum/action/bar/icon/mob_doer/doer = new(M, M, time)
+	var/datum/action/bar/icon/mob_doer/doer = new(M, M, time, private)
 	actions.start(doer, M)
 	while (doer.success == -1)
 		sleep(1)

@@ -434,8 +434,9 @@ var/datum/action_controller/actions
 	var/atom/target_loc
 	var/obj/item/holding
 	var/success = -1
+	var/private = FALSE
 
-	New(mob/user, atom/target as turf|obj|mob, time)
+	New(mob/user, atom/target as turf|obj|mob, time, private = FALSE)
 		. = ..()
 		src.owner = user
 		src.user = user
@@ -446,6 +447,34 @@ var/datum/action_controller/actions
 		src.holding = user.equipped()
 		src.icon = src.holding?.icon
 		src.icon_state = src.holding?.icon_state
+		src.private = private
+
+	onStart()
+		..()
+		if (!private)
+			bar.icon = null
+			border.icon = null
+			owner << bar.img
+			owner << border.img
+
+			if (icon && icon_state && owner)
+				icon_image = image(icon, owner, icon_state, 10)
+				icon_image.pixel_y = icon_y_off
+				icon_image.pixel_x = icon_x_off
+				icon_image.plane = icon_plane
+
+				icon_image.filters += filter(type="outline", size=0.5, color=rgb(255,255,255))
+				owner << icon_image
+
+	onDelete()
+		if (private)
+			bar.icon = 'icons/ui/actions.dmi'
+			border.icon = 'icons/ui/actions.dmi'
+			del(bar.img)
+			del(border.img)
+			del(icon_image)
+
+		..()
 
 	onUpdate()
 		..()
