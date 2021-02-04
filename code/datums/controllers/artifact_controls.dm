@@ -23,14 +23,14 @@ var/datum/artifact_controller/artifact_controls
 		// and also one that just holds all types
 		// the type is the index, the value the rarity
 		// for use with weighted_pick
-		for (var/datum/artifact/A as() in concrete_typesof(/datum/artifact))
+		for (var/A as() in concrete_typesof(/datum/artifact))
 			var/datum/artifact/AI = new A
 			artifact_types += AI
 
-			artifact_rarities["all"][A] = initial(A.rarity)
+			artifact_rarities["all"][A] = AI.rarity
 			for (var/origin in artifact_rarities)
 				if(origin in AI.validtypes)
-					artifact_rarities[origin][A] = initial(A.rarity)
+					artifact_rarities[origin][A] = AI.rarity
 
 	proc/get_origin_from_string(var/string)
 		if (!istext(string))
