@@ -184,4 +184,4 @@
 		var/eye_blurry = issilicon(M) ? 0 : max(0, amount * (5 - dist) * 0.2)
 		var/stam_damage = 26 * min(amount, 5)
 
-		M.apply_flash(anim_dur, stunned, stunned, 0, eye_blurry, eye_damage, stam_damage)
+		M.apply_flash(anim_dur, stunned, stunned, 0, eye_blurry, eye_damage, stamina_damage = stam_damage)
