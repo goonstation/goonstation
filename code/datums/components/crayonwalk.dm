@@ -7,7 +7,7 @@
 
 /datum/component/wearertargeting/crayonwalk/proc/crayonwalk(mob/living/carbon/human/H, last_turf, direct)
 	if (!H.lying && istype(src.parent, /obj/item/clothing/shoes/clown_shoes))
-		var/obj/item/clothing/shoes/clown_shoes/S = H.shoes
+		var/obj/item/clothing/shoes/clown_shoes/S = src.parent
 		if (length(S.crayons))
 			var/obj/item/pen/crayon/crayon = pick(S.crayons)
 			if(length(crayon.symbol_setting))
