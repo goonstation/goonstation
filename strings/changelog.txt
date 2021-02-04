@@ -1,5 +1,10 @@
 
 (t)sat jan 30 21
+(u)Superlagg
+(p)3473
+(e)🆕🗺🔄|feature, mapping, rework
+(*)Made flamethrowers more configurable and shoot chem-loaded projectiles.
+(+)Flamethrowers can now be added to gun components.
 (u)Nefarious6th
 (p)3491
 (e)⚖🔄|balance, rework
