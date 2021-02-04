@@ -828,11 +828,13 @@ var/global/noir = 0
 					master_mode = requestedMode
 					if(master_mode == "battle_royale")
 						lobby_titlecard = new /datum/titlecard/battleroyale()
+						lobby_titlecard.set_pregame_html()
 					else if(master_mode == "disaster")
 						lobby_titlecard = new /datum/titlecard/disaster()
-					else
+						lobby_titlecard.set_pregame_html()
+					else if (lobby_titlecard.is_game_mode)
 						lobby_titlecard = new /datum/titlecard()
-					lobby_titlecard.set_pregame_html()
+						lobby_titlecard.set_pregame_html()
 					if (alert("Declare mode change to all players?","Mode Change","Yes","No") == "Yes")
 						boutput(world, "<span class='notice'><b>The mode is now: [requestedMode]</b></span>")
 				else
