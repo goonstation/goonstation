@@ -3,6 +3,7 @@
 #define CAKE_MODE_SLICE 2
 #define CAKE_MODE_STACK 3
 #define CAKE_MODE_BUILD 4
+#define CAKE_SLICES 10
 
 /obj/item/reagent_containers/food/snacks/cake_batter
 	name = "cake batter"
@@ -171,14 +172,14 @@
 
 		candle_lit = build_cake(s,user,CAKE_MODE_SLICE,layer_tag,replacetext)
 
-		var/transferamount = (src.reagents.total_volume/10)/clayer //amount of reagent to transfer to slices
+		var/transferamount = (src.reagents.total_volume/CAKE_SLICES)/clayer //amount of reagent to transfer to slices
 		var/deletionqueue //is the source cake deleted after slicing?
 		if(src.clayer == 1) //qdel(src) if there was only one layer to the cake, otherwise, decrement the layer
 			deletionqueue = 1
 		else
 			src.clayer--
 			src.update_cake_context()
-		for(var/i in 1 to 10) //generating child slices of the parent template
+		for(var/i in 1 to CAKE_SLICES) //generating child slices of the parent template
 			var/obj/item/reagent_containers/food/snacks/cake/schild = new /obj/item/reagent_containers/food/snacks/cake
 			schild.icon_state = "slice-base_custom"
 			for(var/overlay_ref in s.overlay_refs) //looping through parent overlays and copying them over to the children
