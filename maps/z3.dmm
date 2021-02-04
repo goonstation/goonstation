@@ -19777,8 +19777,10 @@
 /area/iss)
 "aYw" = (
 /obj/structure/woodwall{
+	color = "#CCCCCC";
 	icon = 'icons/turf/fake_woodwall.dmi';
-	name = "odd asteroid wall"
+	name = "odd asteroid wall";
+	plane = -105
 	},
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
@@ -103937,7 +103939,7 @@ aab
 aab
 aab
 aab
-aIL
+aab
 aab
 aab
 aab
@@ -104239,9 +104241,9 @@ aUz
 aUz
 aUz
 aUz
-aIL
-aIL
-aIL
+aab
+aab
+aab
 aab
 aab
 aab
