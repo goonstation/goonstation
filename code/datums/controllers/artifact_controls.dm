@@ -13,7 +13,7 @@ var/datum/artifact_controller/artifact_controls
 		artifact_rarities["all"] = list()
 
 		// origin list
-		for (var/X as() in childrentypesof(/datum/artifact_origin))
+		for (var/X in childrentypesof(/datum/artifact_origin))
 			var/datum/artifact_origin/AO = new X
 			artifact_origins += AO
 			artifact_rarities[AO.name] = list()
@@ -23,7 +23,7 @@ var/datum/artifact_controller/artifact_controls
 		// and also one that just holds all types
 		// the type is the index, the value the rarity
 		// for use with weighted_pick
-		for (var/A as() in concrete_typesof(/datum/artifact))
+		for (var/A in concrete_typesof(/datum/artifact))
 			var/datum/artifact/AI = new A
 			artifact_types += AI
 
