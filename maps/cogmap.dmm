@@ -4099,11 +4099,11 @@
 	pixel_x = -9;
 	pixel_y = 6
 	},
-/obj/item/reagent_containers/glass/bottle/icing{
+/obj/item/reagent_containers/food/drinks/drinkingglass/icing{
 	pixel_x = -3;
 	pixel_y = 7
 	},
-/obj/item/reagent_containers/glass/bottle/icing{
+/obj/item/reagent_containers/food/drinks/drinkingglass/icing{
 	pixel_x = 1;
 	pixel_y = 8
 	},
@@ -7746,7 +7746,7 @@
 	p_open = 1
 	},
 /obj/item/plate,
-/obj/item/reagent_containers/food/snacks/cake/chocolate{
+/obj/item/reagent_containers/food/snacks/cake/chocolate/gateau{
 	desc = "Holy shit! This cake probably costs more than the gross domestic product of Bulgaria!";
 	name = "Extravagant Chocolate Gateau";
 	pixel_y = 8

@@ -235,9 +235,6 @@
 				if (src.festivity)
 					modify_christmas_cheer(src.festivity)
 				if (!src.amount)
-					/*M.visible_message("<span class='alert'>[M] finishes eating [src].</span>",\
-					"<span class='alert'>You finish eating [src].</span>")*/
-					boutput(M, "<span class='alert'>You finish eating [src].</span>")
 					if (istype(src, /obj/item/reagent_containers/food/snacks/plant/) && prob(20))
 						var/obj/item/reagent_containers/food/snacks/plant/P = src
 						var/doseed = 1
@@ -312,8 +309,6 @@
 				src.heal(M)
 				playsound(M.loc, "sound/items/eatfood.ogg", rand(10,50), 1)
 				if (!src.amount)
-					M.visible_message("<span class='alert'>[M] finishes eating [src].</span>",\
-					"<span class='alert'>You finish eating [src].</span>")
 					if(src.dropped_item)
 						drop_item(dropped_item)
 					user.u_equip(src)
@@ -1391,6 +1386,45 @@
 	glass_style = "pitcher"
 	initial_volume = 120
 	shard_amt = 2
+
+/obj/item/reagent_containers/food/drinks/drinkingglass/icing
+	name = "icing tube"
+	desc = "Used to put icing on cakes."
+	icon = 'icons/obj/foodNdrink/food.dmi'
+	icon_state = "icing_tube"
+	initial_volume = 50
+	amount_per_transfer_from_this = 5
+	rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
+	var/image/chem = new /image('icons/obj/foodNdrink/food.dmi',"icing_tube_chem")
+
+	on_reagent_change()
+		src.underlays = null
+		if (reagents.total_volume >= 0)
+			if(reagents.total_volume == 0)
+				src.icon_state = "icing_tube"
+			else
+				src.icon_state = "icing_tube_2"
+			if(length(src.underlays))
+				src.underlays = null
+			var/datum/color/average = reagents.get_average_color()
+			chem.color = average.to_rgba()
+			src.underlays += chem
+		signal_event("icon_updated")
+
+	attackby(obj/item/W as obj, mob/user as mob)
+		return
+
+	attack_self(var/mob/user as mob)
+		return
+
+	update_icon()
+		return
+
+	throw_impact(var/turf/T)
+		return
+
+	ex_act(severity)
+		qdel(src)
 
 /obj/item/reagent_containers/food/drinks/drinkingglass/random_style
 	rand_pos = 1

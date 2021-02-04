@@ -21749,7 +21749,7 @@
 	},
 /obj/table/auto,
 /obj/item/kitchen/rollingpin,
-/obj/item/reagent_containers/glass/bottle/icing,
+/obj/item/reagent_containers/food/drinks/drinkingglass/icing,
 /obj/machinery/firealarm{
 	pixel_x = 1;
 	pixel_y = 26;

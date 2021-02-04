@@ -11747,10 +11747,7 @@
 	icon_state = "0-2"
 	},
 /obj/item/storage/box/plates,
-/obj/item/reagent_containers/food/snacks/cake/chocolate{
-	desc = "Holy shit! This cake probably costs more than the gross domestic product of Bulgaria!";
-	name = "Extravagant Chocolate Gateau"
-	},
+/obj/item/reagent_containers/food/snacks/cake/chocolate/gateau,
 /turf/simulated/floor/white/checker{
 	dir = 6
 	},
@@ -42181,7 +42178,7 @@
 	},
 /obj/table/auto,
 /obj/item/kitchen/rollingpin,
-/obj/item/reagent_containers/glass/bottle/icing,
+/obj/item/reagent_containers/food/drinks/drinkingglass/icing,
 /turf/simulated/floor/white,
 /area/station/crew_quarters/kitchen)
 "bQc" = (
@@ -43575,7 +43572,7 @@
 	desc = "Ew.";
 	name = "meat of questionable origin"
 	},
-/obj/item/reagent_containers/glass/bottle/icing,
+/obj/item/reagent_containers/food/drinks/drinkingglass/icing,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/south)
 "bSV" = (

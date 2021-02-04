@@ -576,7 +576,7 @@ ABSTRACT_TYPE (/datum/supply_packs/electrical)
 					/obj/item/storage/box/balloonbox = 2,
 					/obj/item/reagent_containers/food/drinks/duo = 6,
 					/obj/item/reagent_containers/food/drinks/bottle/beer = 6,
-					/obj/item/reagent_containers/food/snacks/cake/chocolate = 1)
+					/obj/item/reagent_containers/food/snacks/cake/chocolate/gateau = 1)
 	cost = 750
 	containertype = /obj/storage/crate
 	containername = "Party Supplies"

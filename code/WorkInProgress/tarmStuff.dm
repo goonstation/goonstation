@@ -423,7 +423,7 @@ obj/item/gun/reagent/syringe/lovefilled
 	/obj/item/reagent_containers/food/snacks/yellow_cake_uranium_cake,\
 	/obj/item/reagent_containers/food/snacks/cake/cream,\
 	/obj/item/reagent_containers/food/snacks/cake/cream,\
-	/obj/item/reagent_containers/food/snacks/cake/chocolate,\
+	/obj/item/reagent_containers/food/snacks/cake/chocolate/gateau,\
 	/obj/item/reagent_containers/food/snacks/cake,\
 )
 
