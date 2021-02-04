@@ -85158,6 +85158,14 @@
 	icon_state = "shore-36"
 	},
 /area/titlescreen)
+"oju" = (
+/obj/landmark{
+	name = "lobby_leftside"
+	},
+/turf/unsimulated/floor/dream/beach{
+	icon_state = "space-1"
+	},
+/area/titlescreen)
 "onw" = (
 /obj/indestructible/shuttle_corner{
 	dir = 8;
@@ -86871,6 +86879,14 @@
 /area/centcom/offices{
 	icon_state = "blue"
 	})
+"uEj" = (
+/obj/landmark{
+	name = "lobby_status"
+	},
+/turf/unsimulated/floor/dream/beach{
+	icon_state = "space-1"
+	},
+/area/titlescreen)
 "uFz" = (
 /obj/lattice{
 	dir = 5;
@@ -86903,6 +86919,14 @@
 /area/centcom/offices{
 	icon_state = "blue"
 	})
+"uOU" = (
+/obj/landmark{
+	name = "lobby_timer"
+	},
+/turf/unsimulated/floor/dream/beach{
+	icon_state = "space-1"
+	},
+/area/titlescreen)
 "uTj" = (
 /obj/table/wood/auto/desk,
 /obj/machinery/computer3/generic/personal,
@@ -171730,7 +171754,7 @@ daz
 daz
 daz
 daz
-daz
+oju
 ajg
 aaa
 ciG
@@ -176863,8 +176887,8 @@ ozw
 eZW
 kCH
 nCt
-daz
-daz
+uOU
+uEj
 ajg
 aaa
 cbF

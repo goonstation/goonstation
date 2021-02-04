@@ -948,10 +948,7 @@ Read the rules, don't grief, and have fun!</div>"}
 
 	New()
 		..()
-			// let's just hard-code coordinates
-		src.x = 295
-		src.y = 19
-		src.z = Z_LEVEL_ADVENTURE
+		src.set_loc(landmarks[LANDMARK_LOBBY_STATUS])
 		src.layer = HUD_LAYER
 
 		src.maptext_width = 320
@@ -979,9 +976,7 @@ Read the rules, don't grief, and have fun!</div>"}
 
 		New()
 			..()
-			// what could possibly go wrong
-			src.x = 295
-			src.y = 20
+			src.set_loc(landmarks[LANDMARK_LOBBY_TIMER])
 
 			src.maptext_height = 96
 
@@ -1006,9 +1001,7 @@ Read the rules, don't grief, and have fun!</div>"}
 
 		New()
 			..()
-			// apart from "everything", that is
-			src.x = 278
-			src.y = 19
+			src.set_loc(landmarks[LANDMARK_LOBBY_LEFTSIDE])
 
 			// This is gross. I'm sorry.
 			var/list/servers = list()
