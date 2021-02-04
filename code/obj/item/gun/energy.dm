@@ -1677,7 +1677,7 @@
 	two_handed = 1
 	can_dual_wield = 0
 	cell_type = /obj/item/ammo/power_cell/high_power
-	desc = "A weapon with two modes, one heals people and the other makes them sleep, utilizing chemicals that are produced inside it."
+	desc = "A weapon with three modes, one heals people, the other makes them sleep and the last one injects them with stimulants. Utilizing chemicals that are produced inside it."
 	muzzle_flash = null
 
 	New()
