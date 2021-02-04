@@ -264,7 +264,7 @@
 	name = "Support"
 	path = /obj/item/storage/belt/security/support
 	category = "Loadout"
-	description = "One belt containing a baton, two robust donuts, and some morphine auto-injectors."
+	description = "One belt containing a baton, a support rifle, two robust donuts and two morphine auto-injectors."
 
 /datum/materiel/loadout/control
 	name = "Control"

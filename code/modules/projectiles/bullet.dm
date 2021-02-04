@@ -286,6 +286,31 @@ toxic - poisons
 	anti_mutant
 		reagent_payload = "mutadone" // HAH
 
+	support_rifle_sleepy
+		power = 0
+		sname = "sleepy"
+		name = "sleepy dart"
+		caliber = 0.355
+		casing = /obj/item/casing/small
+		shot_sound = 'sound/weapons/tranq_pistol.ogg'
+
+	support_rifle_healing
+		reagent_payload = "saline"
+		sname = "healing"
+		name = "healing dart"
+		power = 0
+		caliber = 0.355
+		casing = /obj/item/casing/small
+		shot_sound = 'sound/weapons/tranq_pistol.ogg'
+
+	support_rifle_stimulant
+		reagent_payload = "synaptizine"
+		sname = "stimulant"
+		name = "stimulant dart"
+		power = 0
+		caliber = 0.355
+		casing = /obj/item/casing/small
+		shot_sound = 'sound/weapons/tranq_pistol.ogg'
 
 
 

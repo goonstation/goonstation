@@ -1666,3 +1666,44 @@
 		else
 			spread_angle = 2
 		update_icon()
+
+////////////////////////////////////Support Rifle
+/obj/item/gun/energy/support_rifle
+	name = "Support Rifle"
+	icon = 'icons/obj/48x32.dmi'
+	icon_state = "support_rifle"
+	item_state = "suprifle"
+	force = 5.0
+	two_handed = 1
+	can_dual_wield = 0
+	cell_type = /obj/item/ammo/power_cell/high_power
+	desc = "A weapon with two modes, one heals people and the other makes them sleep, utilizing chemicals that are produced inside it."
+	muzzle_flash = null
+
+	New()
+		set_current_projectile(new/datum/projectile/bullet/tranq_dart/support_rifle_healing)
+		projectiles = list(current_projectile,new/datum/projectile/bullet/tranq_dart/support_rifle_sleepy,new/datum/projectile/bullet/tranq_dart/support_rifle_stimulant)
+		..()
+
+	update_icon()
+		..()
+		if (src.cell)
+			var/ratio = min(1, src.cell.charge / src.cell.max_charge)
+			ratio = round(ratio, 0.25) * 100
+			if(current_projectile.type == /datum/projectile/bullet/tranq_dart/support_rifle_healing)
+				src.icon_state = "support_rifle_heal_[ratio]"
+				item_state = "suprifleheal"
+				current_projectile.cost = 25
+			else if (current_projectile.type == /datum/projectile/bullet/tranq_dart/support_rifle_sleepy)
+				src.icon_state = "support_rifle_sleepy_[ratio]"
+				item_state = "supriflesleep"
+				current_projectile.cost = 50
+			else
+				src.icon_state = "support_rifle_stimulant_[ratio]"
+				item_state = "supriflestim"
+				current_projectile.cost = 100
+
+	attack_self(mob/user as mob)
+		..()
+		update_icon()
+		user.update_inhands()
