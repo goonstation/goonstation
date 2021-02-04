@@ -9,6 +9,7 @@
 ////////////////
 proc/make_cleanable(var/type,var/loc,var/list/viral_list)
 	var/obj/decal/cleanable/C = unpool(type)
+	C.name = initial(C.name) // ugh
 	C.setup(loc,viral_list)
 	.= C
 
