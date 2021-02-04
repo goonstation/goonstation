@@ -394,7 +394,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 		carries_over = 0
 
 		Create(var/mob/living/M)
-			setdead(M)
+			M.death(FALSE)
 			boutput(M, "<span class='notice'><b>You magically keel over and die! Oh, no!</b></span>")
 			return 1
 
@@ -613,4 +613,3 @@ var/global/list/persistent_bank_purchaseables =	list(\
 				A.set_hat(new picked())
 				return 1
 			return 0
-

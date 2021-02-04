@@ -11949,11 +11949,6 @@
 	dir = 8
 	},
 /area/station/hydroponics/bay)
-"avY" = (
-/obj/table/reinforced/auto,
-/obj/item/device/light/lava_lamp,
-/turf/simulated/floor,
-/area/station/hydroponics/bay)
 "avZ" = (
 /obj/decal/tile_edge/line/green{
 	dir = 4;
@@ -13557,6 +13552,19 @@
 /obj/landmark{
 	icon_state = "x3";
 	name = "peststart"
+	},
+/turf/simulated/floor/specialroom/bar,
+/area/station/crew_quarters/bar)
+"azd" = (
+/obj/machinery/door/firedoor/border_only,
+/obj/table/reinforced/auto,
+/obj/window/reinforced/south,
+/obj/machinery/door/window/eastright{
+	req_access_txt = "25"
+	},
+/obj/machinery/cashreg,
+/obj/item/clothing/glasses/spectro{
+	pixel_y = 11
 	},
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/bar)
@@ -20917,23 +20925,6 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/west)
-"aKT" = (
-/obj/item/device/audio_log{
-	pixel_x = -28
-	},
-/obj/overlay{
-	anchored = 1;
-	icon = 'icons/misc/beach2.dmi';
-	icon_state = "palm1";
-	layer = 10;
-	name = "palm tree"
-	},
-/obj/landmark{
-	icon_state = "x3";
-	name = "peststart"
-	},
-/turf/simulated/floor/grass/random,
-/area/station/medical/research)
 "aKU" = (
 /obj/landmark/start{
 	name = "Geneticist"
@@ -21981,17 +21972,6 @@
 /area/station/maintenance/west)
 "aMD" = (
 /obj/storage/secure/closet/animal,
-/turf/simulated/floor/grass/random,
-/area/station/medical/research)
-"aME" = (
-/obj/window/reinforced/east,
-/obj/overlay{
-	anchored = 1;
-	icon = 'icons/misc/beach2.dmi';
-	icon_state = "palm1";
-	layer = 10;
-	name = "palm tree"
-	},
 /turf/simulated/floor/grass/random,
 /area/station/medical/research)
 "aMF" = (
@@ -31169,6 +31149,32 @@
 "bcF" = (
 /turf/simulated/wall/auto/gannets,
 /area/station/security/main)
+"bcG" = (
+/obj/disposalpipe/segment{
+	dir = 1;
+	icon_state = "pipe-c"
+	},
+/obj/item/device/radio/intercom/security{
+	dir = 4;
+	layer = 6.02
+	},
+/obj/machinery/firealarm{
+	layer = 3.5;
+	pixel_y = 24
+	},
+/obj/table/reinforced/auto,
+/obj/machinery/recharger,
+/obj/item/kitchen/food_box/donut_box,
+/obj/decal/tile_edge/line/red{
+	dir = 1;
+	icon_state = "line1"
+	},
+/obj/item/device/ticket_writer{
+	pixel_x = 5;
+	pixel_y = 4
+	},
+/turf/simulated/floor,
+/area/station/security/main)
 "bcH" = (
 /obj/decal/tile_edge/line/red{
 	dir = 1;
@@ -32193,6 +32199,18 @@
 	pixel_y = 0
 	},
 /obj/item/device/detective_scanner,
+/turf/simulated/floor,
+/area/station/security/main)
+"bex" = (
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
+/obj/stool/chair/office/red{
+	dir = 8
+	},
+/obj/landmark/start{
+	name = "Security Assistant"
+	},
 /turf/simulated/floor,
 /area/station/security/main)
 "bey" = (
@@ -33717,6 +33735,43 @@
 /obj/disposalpipe/segment/ejection{
 	dir = 1;
 	icon_state = "pipe-c"
+	},
+/turf/simulated/floor/red,
+/area/station/security/brig)
+"bhi" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/junction{
+	dir = 4
+	},
+/obj/machinery/door_timer{
+	id = "solitary_w";
+	name = "door timer (West Solitary)";
+	pixel_x = -8;
+	pixel_y = 24
+	},
+/obj/machinery/door_timer{
+	id = "solitary_e";
+	name = "door timer (East Solitary)";
+	pixel_x = 8;
+	pixel_y = 24
+	},
+/obj/window/crystal/reinforced/north,
+/obj/machinery/light{
+	dir = 1;
+	pixel_x = -1
+	},
+/obj/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/obj/window/crystal/reinforced/north,
+/obj/landmark/start{
+	name = "Security Assistant"
 	},
 /turf/simulated/floor/red,
 /area/station/security/brig)
@@ -36259,6 +36314,23 @@
 	},
 /turf/simulated/floor/black,
 /area/station/security/main)
+"bln" = (
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
+/obj/disposalpipe/segment/brig,
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/stool/chair/red{
+	anchored = 0;
+	dir = 8
+	},
+/obj/landmark/start{
+	name = "Security Assistant"
+	},
+/turf/simulated/floor/black,
+/area/station/security/main)
 "blo" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -36862,6 +36934,12 @@
 /area/station/security/main)
 "bmv" = (
 /obj/disposalpipe/segment/brig,
+/turf/simulated/floor/black,
+/area/station/security/main)
+"bmw" = (
+/obj/landmark/start{
+	name = "Security Assistant"
+	},
 /turf/simulated/floor/black,
 /area/station/security/main)
 "bmx" = (
@@ -41260,6 +41338,24 @@
 /area/station/security/hos{
 	workplace = 1
 	})
+"btU" = (
+/obj/table/wood/auto,
+/obj/item/clipboard,
+/obj/item/paper_bin,
+/obj/item/pen,
+/obj/item/pen/fancy,
+/obj/item/reagent_containers/food/drinks/mug/random_color,
+/obj/item/stamp/hos,
+/obj/item/reagent_containers/food/drinks/mug/HoS{
+	pixel_x = 12;
+	pixel_y = 4
+	},
+/turf/simulated/floor/red/checker{
+	dir = 4
+	},
+/area/station/security/hos{
+	workplace = 1
+	})
 "btV" = (
 /obj/table/wood/auto,
 /obj/machinery/power/data_terminal,
@@ -45295,6 +45391,24 @@
 	dir = 6
 	},
 /area/space)
+"ccz" = (
+/obj/table/wood/auto,
+/obj/item/storage/secure/ssafe{
+	pixel_y = -24
+	},
+/obj/machinery/light/lamp{
+	pixel_x = 6;
+	pixel_y = 1;
+	switchon = 1
+	},
+/obj/item/pinpointer/teg_semi{
+	pixel_x = -3;
+	pixel_y = 6
+	},
+/turf/simulated/floor/carpet{
+	icon_state = "fgreen2"
+	},
+/area/station/crew_quarters/ce)
 "eLW" = (
 /obj/decal/tile_edge/line/purple{
 	dir = 8;
@@ -45304,61 +45418,11 @@
 /obj/machinery/vending/janitor,
 /turf/simulated/floor,
 /area/station/janitor/office)
-"eUZ" = (
-/obj/disposalpipe/segment{
-	dir = 1;
-	icon_state = "pipe-c"
-	},
-/obj/item/device/radio/intercom/security{
-	dir = 4;
-	layer = 6.02
-	},
-/obj/machinery/firealarm{
-	layer = 3.5;
-	pixel_y = 24
-	},
-/obj/table/reinforced/auto,
-/obj/machinery/recharger,
-/obj/item/kitchen/food_box/donut_box,
-/obj/decal/tile_edge/line/red{
-	dir = 1;
-	icon_state = "line1"
-	},
-/obj/item/device/ticket_writer{
-	pixel_x = 5;
-	pixel_y = 4
-	},
-/turf/simulated/floor,
-/area/station/security/main)
-"fcw" = (
-/obj/landmark/start{
-	name = "Security Assistant"
-	},
-/turf/simulated/floor/black,
-/area/station/security/main)
 "gly" = (
 /obj/cable,
 /obj/machinery/photocopier,
 /turf/simulated/floor,
 /area/station/crew_quarters/lounge/starboard)
-"iUb" = (
-/obj/table/wood/auto,
-/obj/item/clipboard,
-/obj/item/paper_bin,
-/obj/item/pen,
-/obj/item/pen/fancy,
-/obj/item/reagent_containers/food/drinks/mug/random_color,
-/obj/item/stamp/hos,
-/obj/item/reagent_containers/food/drinks/mug/HoS{
-	pixel_x = 12;
-	pixel_y = 4
-	},
-/turf/simulated/floor/red/checker{
-	dir = 4
-	},
-/area/station/security/hos{
-	workplace = 1
-	})
 "iWh" = (
 /obj/stool/chair/office/yellow{
 	dir = 4
@@ -45381,23 +45445,16 @@
 	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
-"lcx" = (
-/obj/disposalpipe/segment/mail{
-	dir = 4
+"lTd" = (
+/obj/window/reinforced/east,
+/obj/overlay{
+	icon = 'icons/misc/beach2.dmi';
+	icon_state = "palm1";
+	layer = 10;
+	name = "palm tree"
 	},
-/obj/disposalpipe/segment/brig,
-/obj/cable{
-	icon_state = "1-8"
-	},
-/obj/stool/chair/red{
-	anchored = 0;
-	dir = 8
-	},
-/obj/landmark/start{
-	name = "Security Assistant"
-	},
-/turf/simulated/floor/black,
-/area/station/security/main)
+/turf/simulated/floor/grass/random,
+/area/station/medical/research)
 "mMk" = (
 /obj/cable{
 	d1 = 4;
@@ -45411,37 +45468,6 @@
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
-"nok" = (
-/obj/machinery/door/firedoor/border_only,
-/obj/table/reinforced/auto,
-/obj/window/reinforced/south,
-/obj/machinery/door/window/eastright{
-	req_access_txt = "25"
-	},
-/obj/machinery/cashreg,
-/obj/item/clothing/glasses/spectro{
-	pixel_y = 11
-	},
-/turf/simulated/floor/specialroom/bar,
-/area/station/crew_quarters/bar)
-"nZH" = (
-/obj/table/wood/auto,
-/obj/item/storage/secure/ssafe{
-	pixel_y = -24
-	},
-/obj/machinery/light/lamp{
-	pixel_x = 6;
-	pixel_y = 1;
-	switchon = 1
-	},
-/obj/item/pinpointer/teg_semi{
-	pixel_x = -3;
-	pixel_y = 6
-	},
-/turf/simulated/floor/carpet{
-	icon_state = "fgreen2"
-	},
-/area/station/crew_quarters/ce)
 "ouD" = (
 /obj/cable{
 	d1 = 1;
@@ -45451,43 +45477,15 @@
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor,
 /area/station/science/lab)
-"sgh" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/disposalpipe/junction{
-	dir = 4
-	},
-/obj/machinery/door_timer{
-	id = "solitary_w";
-	name = "door timer (West Solitary)";
+"rFk" = (
+/obj/table/reinforced/auto,
+/obj/item/device/light/lava_lamp,
+/obj/item/reagent_containers/glass/water_pipe{
 	pixel_x = -8;
-	pixel_y = 24
+	pixel_y = 8
 	},
-/obj/machinery/door_timer{
-	id = "solitary_e";
-	name = "door timer (East Solitary)";
-	pixel_x = 8;
-	pixel_y = 24
-	},
-/obj/window/crystal/reinforced/north,
-/obj/machinery/light{
-	dir = 1;
-	pixel_x = -1
-	},
-/obj/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
-	},
-/obj/window/crystal/reinforced/north,
-/obj/landmark/start{
-	name = "Security Assistant"
-	},
-/turf/simulated/floor/red,
-/area/station/security/brig)
+/turf/simulated/floor,
+/area/station/hydroponics/bay)
 "tzx" = (
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/carpet/arcade,
@@ -45504,18 +45502,22 @@
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay/lobby)
-"vJH" = (
-/obj/disposalpipe/segment/mail{
-	dir = 4
+"vFN" = (
+/obj/item/device/audio_log{
+	pixel_x = -28
 	},
-/obj/stool/chair/office/red{
-	dir = 8
+/obj/overlay{
+	icon = 'icons/misc/beach2.dmi';
+	icon_state = "palm1";
+	layer = 10;
+	name = "palm tree"
 	},
-/obj/landmark/start{
-	name = "Security Assistant"
+/obj/landmark{
+	icon_state = "x3";
+	name = "peststart"
 	},
-/turf/simulated/floor,
-/area/station/security/main)
+/turf/simulated/floor/grass/random,
+/area/station/medical/research)
 "vMk" = (
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/specialroom/chapel{
@@ -72900,7 +72902,7 @@ ayf
 apR
 aFd
 aIV
-aKT
+vFN
 aMD
 aFd
 aFd
@@ -73505,7 +73507,7 @@ aFc
 aFd
 aIX
 aKV
-aME
+lTd
 aOw
 aFd
 aFd
@@ -81068,7 +81070,7 @@ bbe
 bcw
 bcw
 bcw
-sgh
+bhi
 biB
 bjT
 bep
@@ -82883,7 +82885,7 @@ bfS
 bho
 biH
 bjZ
-lcx
+bln
 bmv
 bnO
 bkh
@@ -83186,7 +83188,7 @@ bhn
 bht
 bka
 blo
-fcw
+bmw
 bmA
 bkh
 bpO
@@ -83783,7 +83785,7 @@ aXb
 aYs
 aZN
 bbg
-eUZ
+bcG
 bew
 bfU
 bfX
@@ -84086,7 +84088,7 @@ aYx
 aZO
 bbf
 bcH
-vJH
+bex
 bfV
 bhq
 biJ
@@ -85307,7 +85309,7 @@ bpU
 brb
 bsg
 btc
-iUb
+btU
 buw
 brd
 brd
@@ -90406,7 +90408,7 @@ awn
 awW
 axH
 ayv
-nok
+azd
 asM
 aAx
 aBj
@@ -92126,7 +92128,7 @@ adU
 adY
 aed
 aek
-nZH
+ccz
 aev
 aeB
 aeI
@@ -95233,7 +95235,7 @@ arP
 arP
 auT
 avw
-avY
+rFk
 awA
 axg
 avw

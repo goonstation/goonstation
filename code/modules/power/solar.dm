@@ -431,7 +431,6 @@
 /obj/machinery/power/solar_control/ex_act(severity)
 	switch(severity)
 		if(1.0)
-			//SN src = null
 			qdel(src)
 			return
 		if(2.0)

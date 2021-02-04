@@ -267,7 +267,6 @@ Contains:
 		src.part2.master = null
 		src.part1 = null
 		src.part2 = null
-		//SN src = null
 		qdel(src)
 		return
 	if (!isscrewingtool(W))

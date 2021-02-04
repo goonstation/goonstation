@@ -151,7 +151,6 @@
 		playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
 		src.connected.update()
 		add_fingerprint(user)
-		//SN src = null
 		src.set_loc(src.connected)
 		return
 	return
@@ -395,7 +394,6 @@
 		playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
 		src.connected.update()
 		add_fingerprint(user)
-		//SN src = null
 		src.set_loc(src.connected)
 		return
 	return

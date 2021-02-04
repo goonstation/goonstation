@@ -568,7 +568,6 @@
 			W.master = E
 			user.u_equip(W)
 			W.layer = initial(W.layer)
-			//SN src = null
 			qdel(src)
 			return
 		else

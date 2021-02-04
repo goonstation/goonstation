@@ -27,8 +27,9 @@
 		if(isnull(src.my_bar))
 			boutput(user, "<span class='alert'>You can't plate yourself without a source material!</span>")
 			return 0
-		user.visible_message("<span class='alert'><b>[user] jumps into \the [src].</b></span>")
-		var/obj/statue = user.become_statue(src.my_bar.material)
+		user.visible_message("<span class='alert'><b>[user] jumps into \the [src].</b></span>", "<span class='alert'><b>You jump into \the [src].</b></span>")
+		var/obj/statue = user.become_statue(src.my_bar.material, survive=TRUE)
+		user.TakeDamage("All", burn=200)
 		pool(src.my_bar)
 		src.my_bar = null
 		statue.set_loc(src)
@@ -46,7 +47,11 @@
 			boutput(user, "<span class='alert'>You can't put that in [src] when it's attached to you!</span>")
 			return
 
-		if(istype(W,/obj/item/material_piece/))
+		if(istype(W, /obj/item/raw_material))
+			boutput(user, "<span class='alert'>You need to process \the [W] first before using it in [src]!</span>")
+			return
+
+		if(istype(W,/obj/item/material_piece))
 			if(my_bar)
 				boutput(user, "<span class='alert'>There is already a source material loaded in [src]!</span>")
 				return

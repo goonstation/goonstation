@@ -51,7 +51,6 @@ Contains:
 			return null
 
 		var/loc_to_check = istype(src.loc, /obj/item/magtractor) ? src.loc.loc : src.loc
-		src = null
 		for(var/turf/T in range(1, loc_to_check))
 
 			if(T.interesting)
@@ -101,7 +100,6 @@ Contains:
 			return null
 
 		var/loc_to_check = istype(src.loc, /obj/item/magtractor) ? src.loc.loc : src.loc
-		src = null
 		for(var/turf/T in range(2, loc_to_check))
 
 			if(T.interesting)

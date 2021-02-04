@@ -280,6 +280,8 @@ proc/make_cleanable(var/type,var/loc,var/list/viral_list)
 						O.add_blood(src)
 
 	proc/set_sample_reagent_custom(var/reagent_id, var/amt = 10)
+		if(isnull(reagent_id))
+			return
 		if (!src.reagents)
 			src.create_reagents(reagents_max)
 		else
@@ -296,7 +298,8 @@ proc/make_cleanable(var/type,var/loc,var/list/viral_list)
 			src.color = src.reagents.get_average_rgb()
 		else
 			var/datum/reagent/reagent = reagents_cache[src.sample_reagent]
-			src.color = rgb(reagent.fluid_r, reagent.fluid_g, reagent.fluid_b)
+			if(reagent)
+				src.color = rgb(reagent.fluid_r, reagent.fluid_g, reagent.fluid_b)
 
 
 	HasEntered(atom/movable/AM as mob|obj)
@@ -1738,6 +1741,8 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 		destination = pick(directions)
 		if(!(destination in cardinal))
 			destination = null
+	else if(isnum(directions))
+		destination = directions
 
 	if(destination)
 		destination = GetRandomPerimeterTurf(get_turf(src), dist, destination)

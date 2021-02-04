@@ -307,7 +307,6 @@ var/global/meteor_shower_active = 0
 			SPAWN_DBG(1 DECI SECOND)
 				explosion(src, get_turf(src), exp_dev, exp_hvy, exp_lit, exp_fsh)
 		var/atom/source = src
-		src = null
 		qdel(source)
 
 	proc/dump_ore()
@@ -321,7 +320,6 @@ var/global/meteor_shower_active = 0
 			A.name = "meteor chunk"
 
 		var/atom/source = src
-		src = null
 		qdel(source)
 
 /////////////////////////HUGE
@@ -365,5 +363,4 @@ var/global/meteor_shower_active = 0
 			var/atom/trg = get_step(src, A)
 			new type(src.loc, trg)
 		var/atom/source = src
-		src = null
 		qdel(source)
