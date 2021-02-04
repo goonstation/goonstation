@@ -1555,7 +1555,7 @@
 
 	get_desc(var/dist, var/mob/user)
 		if (user.mind?.assigned_role == "Head of Security")
-			. = "Its your favourite mug! It reads 'Galaxy's Number One HoS!' on the front. You remember when you got it last Christmas from a secret admirer."
+			. = "Its your favourite mug! It reads 'Galaxy's Number One HoS!' on the front. You remember when you got it last Spacemas from a secret admirer."
 		else
 			. = "It reads 'Galaxy's Number One HoS!' on the front. You remember finding the receipt for it in disposals when the HoS bought it for themselves last Spacemas."
 
