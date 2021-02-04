@@ -2144,6 +2144,8 @@
 /mob/living/proc/do_suplex(obj/item/grab/G)
 	if (!(G.state >= 1 && isturf(src.loc) && isturf(G.affecting.loc)))
 		return null
+	if(!IN_RANGE(src, G.affecting, 1))
+		return null
 
 	var/obj/table/tabl = locate() in src.loc.contents
 	var/turf/newloc = src.loc
