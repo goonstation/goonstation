@@ -1733,6 +1733,9 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 
 /// Input a cardinal direction, it'll throw it somewhere within +-45 degrees of that direction. More or less.
 /obj/decal/cleanable/proc/streak_cleanable(var/list/directions, var/randcolor = 0, var/full_streak)
+	if(isnull(get_turf(src)))
+		CRASH("Attempting to streak cleanable [src] which is in null.")
+
 	var/destination
 	var/dist = rand(1,6)
 	if(prob(10))
