@@ -170,14 +170,14 @@
 	if(L.kind_of_limb)
 		/// Returns if the limb is not ass-severable, and a message to the owner about why not
 		var/F = L.kind_of_limb
-		if(F & LIMB_ROBOT)
-			if(F & LIMB_LIGHT)
-				return 2 // Flimsy little things
+		if(HAS_FLAG(F,LIMB_ROBOT))
+			if(HAS_FLAG(F,LIMB_LIGHT))
+				return 1 // Flimsy little things
 			else
 				return 0
-		else if((F & LIMB_ABOM) || (F & LIMB_BEAR))
+		else if((HAS_FLAG(F,LIMB_ABOM)) || (HAS_FLAG(F,LIMB_BEAR)))
 			return 0 // Not even magic wants to get near these things
-		else if((F & LIMB_WENDIGO) || (F & LIMB_WOLF) || (F & LIMB_STONE))
+		else if((HAS_FLAG(F,LIMB_WENDIGO)) || (HAS_FLAG(F,LIMB_WOLF)) || (HAS_FLAG(F,LIMB_STONE)))
 			return 2 // Both sturdy and scary
 
 /// returns some flufftext as to why their limb didnt come off. Or came off anyway.
@@ -187,8 +187,8 @@
 		/// Returns if the limb is not ass-severable, and a message to the owner about why not
 		var/F = L.kind_of_limb
 		var/ch = ischangeling(H)
-		if(F & LIMB_ROBOT)
-			if(F & LIMB_LIGHT)
+		if(HAS_FLAG(F,LIMB_ROBOT))
+			if(HAS_FLAG(F,LIMB_LIGHT))
 				if(magical)
 					boutput(H, "<span class='alert'>An invisible hand clamps down around [ch ? "our" : "your"] [L] and yanks it with a powerful, otherworldly force!</span>")
 					if(severed)
@@ -201,14 +201,14 @@
 						boutput(H, "<span class='alert'>It bursts through [ch ? "our" : "your"] [armleg == "arm" ? "armpit" : "hip"] like a celestial zit, launching [ch ? "our" : "your"] [L] off with the force of a thousand suns!</span>")
 					else
 						boutput(H, "<span class='notification'>...and then seems to just dissipate back into the aether!</span>")
-			else if(F & LIMB_HEAVY)
+			else if(HAS_FLAG(F,LIMB_HEAVY))
 				if(magical)
 					boutput(H, "<span class='alert'>A pair of invisible hands clamp down around [ch ? "our" : "your"] [L] and yanks it with a powerful, otherworldly force!</span>")
 					boutput(H, "<span class='notification'>...but the cyber-attachment medi-staples holding it in place extend so deep into [ch ? "our" : "your"] [armleg == "arm" ? "shoulder" : "hip"] that you'd be torn in half long before it'd pop free!</span>")
 				else
 					boutput(H, "<span class='alert'>[ch ? "We" : "You"] feel a cosmic force conduct through [ch ? "our" : "your"] body, collecting around [ch ? "our" : "your"] [L]!</span>")
 					boutput(H, "<span class='notification'>...but the cyberlimb's internal cosmic lighting rod safely conducts it back out into the aether!</span>")
-			else if(F & LIMB_HEAVIER)
+			else if(HAS_FLAG(F,LIMB_HEAVIER))
 				if(magical)
 					boutput(H, "<span class='alert'>A pair of invisible hands try to clamp down around [ch ? "our" : "your"] [L]!</span>")
 					boutput(H, "<span class='notification'>...but they just can't seem to find a good grip arouond that massive hunk of metal you call [armleg == "arm" ? "an arm" : "a leg"]!</span>")
@@ -223,7 +223,7 @@
 					boutput(H, "<span class='alert'>[ch ? "We" : "You"] feel a cosmic force conduct through [ch ? "our" : "your"] body, collecting around [ch ? "our" : "your"] [L]!</span>")
 					boutput(H, "<span class='notification'>...but the cyberlimb's \"creative\" wiring conducts it safely back out into the aether!</span>")
 
-		else if(F & LIMB_ABOM)
+		else if(HAS_FLAG(F,LIMB_ABOM))
 			if(ch)
 				if(magical)
 					boutput(H, "<span class='alert'>An invisible being tried to grab our [L]!</span>")
@@ -239,7 +239,7 @@
 					boutput(H, "<span class='alert'>You feel a cosmic force conduct through your body, coursing into your [L]!</span>")
 					boutput(H, "<span class='notification'>...it willomies for a moment, but otherwise it looks just fine.</span>")
 
-		else if(F & LIMB_BEAR)
+		else if(HAS_FLAG(F,LIMB_BEAR))
 			if(ch)
 				if(magical)
 					boutput(H, "<span class='alert'>It felt like we just raked our [pick("viciously restless", "restlessly viscious")] bear claws through an invisible arm!</span>")
@@ -257,7 +257,7 @@
 					boutput(H, "<span class='alert'>You feel a cosmic force conduct through your body, coursing into your [L]!</span>")
 					boutput(H, "<span class='notification'>...it flails around and disperses the energy back into the aether.</span>")
 
-		else if (F & LIMB_WENDIGO)
+		else if (HAS_FLAG(F,LIMB_WENDIGO))
 			if(magical)
 				boutput(H, "<span class='alert'>An invisible hand clamps down around [ch ? "our" : "your"] [L] and yanks it with a powerful, otherworldly force!</span>")
 				if(severed)
@@ -271,7 +271,7 @@
 				else
 					boutput(H, "<span class='notification'>...and then seems to just dissipate back into the aether!</span>")
 
-		else if (F & LIMB_WOLF)
+		else if (HAS_FLAG(F,LIMB_WOLF))
 			if(magical)
 				boutput(H, "<span class='alert'>A pair of invisible hands clamp down around [ch ? "our" : "your"] [L] and yanks it with a powerful, otherworldly force!</span>")
 				if(severed)
@@ -286,7 +286,7 @@
 				else
 					boutput(H, "<span class='notification'>...and then seems to just dissipate back into the aether!</span>")
 
-		else if (F & LIMB_STONE)
+		else if (HAS_FLAG(F,LIMB_STONE))
 			if(magical)
 				boutput(H, "<span class='alert'>An invisible hand clamps down around [ch ? "our" : "your"] [L] and yanks it with a powerful, otherworldly force!</span>")
 				if(severed)

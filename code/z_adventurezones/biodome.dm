@@ -243,6 +243,7 @@ SYNDICATE DRONE FACTORY AREAS
 	anchored = 1
 	opacity = 0
 	layer = NOLIGHT_EFFECTS_LAYER_BASE
+	plane = PLANE_NOSHADOW_ABOVE
 	icon = 'icons/effects/64x64.dmi'
 	icon_state = "lightshaft"
 	luminosity = 2

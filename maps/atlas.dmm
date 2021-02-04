@@ -2714,7 +2714,7 @@
 /obj/table/auto,
 /obj/item/paper/book/cookbook,
 /obj/item/kitchen/rollingpin,
-/obj/item/reagent_containers/glass/bottle/icing,
+/obj/item/reagent_containers/food/drinks/drinkingglass/icing,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "gV" = (

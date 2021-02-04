@@ -14914,7 +14914,7 @@
 /obj/disposalpipe/segment/food{
 	dir = 4
 	},
-/obj/item/reagent_containers/food/snacks/cake/fruit,
+/obj/item/reagent_containers/food/snacks/fruit_cake,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/kitchen)
 "azD" = (
@@ -21293,7 +21293,7 @@
 	dir = 1;
 	pixel_x = -1
 	},
-/obj/item/reagent_containers/food/snacks/cake/fruit,
+/obj/item/reagent_containers/food/snacks/fruit_cake,
 /turf/simulated/floor/black/side{
 	dir = 1
 	},

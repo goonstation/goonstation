@@ -4,7 +4,7 @@
 
 /datum/artifact/forcefield_gen
 	associated_object = /obj/artifact/forcefield_generator
-	rarity_class = 1
+	rarity_weight = 450
 	validtypes = list("wizard","eldritch","precursor")
 	validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/carbon_touch,
 	/datum/artifact_trigger/silicon_touch)
@@ -48,11 +48,11 @@
 		SPAWN_DBG(field_time)
 			if (O)
 				O.ArtifactDeactivated()
-				O.anchored = 0
 
 	effect_deactivate(obj/O)
 		if(..())
 			return
+		O.anchored = 0
 		for (var/obj/forcefield/F in src.forcefields)
 			src.forcefields -= F
 			qdel(F)

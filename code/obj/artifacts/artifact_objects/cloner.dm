@@ -5,7 +5,7 @@
 
 /datum/artifact/cloner
 	associated_object = /obj/artifact/cloner
-	rarity_class = 4
+	rarity_weight = 90
 	min_triggers = 2
 	max_triggers = 2
 	validtriggers = list(/datum/artifact_trigger/carbon_touch,/datum/artifact_trigger/silicon_touch)
