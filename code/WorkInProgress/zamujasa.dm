@@ -948,7 +948,7 @@ Read the rules, don't grief, and have fun!</div>"}
 
 	New()
 		..()
-		src.set_loc(landmarks[LANDMARK_LOBBY_STATUS])
+		src.set_loc(landmarks[LANDMARK_LOBBY_STATUS][1])
 		src.layer = HUD_LAYER
 
 		src.maptext_width = 320
@@ -976,7 +976,7 @@ Read the rules, don't grief, and have fun!</div>"}
 
 		New()
 			..()
-			src.set_loc(landmarks[LANDMARK_LOBBY_TIMER])
+			src.set_loc(landmarks[LANDMARK_LOBBY_TIMER][1])
 
 			src.maptext_height = 96
 
@@ -1001,7 +1001,7 @@ Read the rules, don't grief, and have fun!</div>"}
 
 		New()
 			..()
-			src.set_loc(landmarks[LANDMARK_LOBBY_LEFTSIDE])
+			src.set_loc(landmarks[LANDMARK_LOBBY_LEFTSIDE][1])
 
 			// This is gross. I'm sorry.
 			var/list/servers = list()
