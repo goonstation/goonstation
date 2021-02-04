@@ -36,7 +36,6 @@
 	heal_amt = 2
 	use_bite_mask = 0
 	flags = FPRINT | TABLEPASS | NOSPLASH
-	object_flags = IGNORE_CONTEXT_CLICK_ATTACKBY | IGNORE_CONTEXT_CLICK_EQUIPPED
 	initial_volume = 100
 	w_class = 4.0
 	var/list/cake_bases //stores the name of the base types of each layer of cake i.e. ("custom","gateau","meat")
@@ -45,6 +44,7 @@
 	var/clayer = 1
 	var/list/cake_candle = list()
 	var/litfam = FALSE //is the cake lit (candle)
+	var/list/datum/contextAction/cakeActions
 
 	New()
 		..()
@@ -413,17 +413,17 @@
 	/*‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾*/
 
 	proc/update_cake_context()
-		src.contextActions = list()
+		src.cakeActions = list()
 
 		var/pickup = FALSE
 		if(clayer > 1)
-			contextActions += new /datum/contextAction/cake/unstack
+			cakeActions += new /datum/contextAction/cake/unstack
 			pickup = TRUE
 		if(litfam)
-			contextActions += new /datum/contextAction/cake/candle
+			cakeActions += new /datum/contextAction/cake/candle
 			pickup = TRUE
 		if(pickup)
-			contextActions += new /datum/contextAction/cake/pickup
+			cakeActions += new /datum/contextAction/cake/pickup
 
 	proc/unstack(var/mob/user)
 		var/obj/item/reagent_containers/food/snacks/cake/s = new /obj/item/reagent_containers/food/snacks/cake
@@ -496,8 +496,8 @@
 				qdel(W)
 
 	attack_hand(mob/user as mob)
-		if(length(contextActions))
-			user.showContextActions(contextActions, src)
+		if(length(cakeActions))
+			user.showContextActions(cakeActions, src)
 		else
 			..()
 
