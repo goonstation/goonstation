@@ -1,5 +1,10 @@
 
 (t)thu feb 04 21
+(u)AwkwardDryad
+(p)1707
+(e)🆕🗺🔄🎨|feature, mapping, rework, sprites
+(*)Added modular cakes - Create a cute cakes!・Frost with chems for fun designs!・Add toppings!
+(+)Items that are on fire now extinguish properly after being splashed with water or firefighting foam, fire extinguished, or dunked in sinks.
 (u)BenLubar
 (p)3486
 (e)|
