@@ -27,10 +27,10 @@ var/datum/artifact_controller/artifact_controls
 			var/datum/artifact/AI = new A
 			artifact_types += AI
 
-			artifact_rarities["all"][A] = AI.rarity
+			artifact_rarities["all"][A] = AI.rarity_weight
 			for (var/origin in artifact_rarities)
 				if(origin in AI.validtypes)
-					artifact_rarities[origin][A] = AI.rarity
+					artifact_rarities[origin][A] = AI.rarity_weight
 
 	proc/get_origin_from_string(var/string)
 		if (!istext(string))

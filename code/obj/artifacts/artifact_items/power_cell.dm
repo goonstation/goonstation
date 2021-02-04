@@ -105,7 +105,7 @@
 
 /datum/artifact/powercell
 	associated_object = /obj/item/cell/artifact
-	rarity = 350
+	rarity_weight = 350
 	validtypes = list("ancient","martian","wizard","precursor")
 	automatic_activation = 1
 	react_elec = list("equal",0,10)

@@ -3,7 +3,7 @@
 ABSTRACT_TYPE(/datum/artifact/)
 /datum/artifact/
 	var/associated_object = null
-	var/rarity = 0
+	var/rarity_weight = 0
 	// weighted commonness, so a higher number will make it more likely
 	// 0 should not make it spawn at all, naturally
 

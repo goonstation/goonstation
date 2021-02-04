@@ -3,7 +3,7 @@
 ABSTRACT_TYPE(/datum/artifact/bomb)
 /datum/artifact/bomb
 	associated_object = null
-	rarity = 0
+	rarity_weight = 0
 	validtypes = list("ancient","eldritch","precursor")
 	validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/electric,/datum/artifact_trigger/heat,
 	/datum/artifact_trigger/cold,/datum/artifact_trigger/radiation)
@@ -136,7 +136,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 
 /datum/artifact/bomb/explosive
 	associated_object = /obj/machinery/artifact/bomb
-	rarity = 200
+	rarity_weight = 200
 	var/exp_deva = 1
 	var/exp_hevy = 2
 	var/exp_lite = 3
@@ -164,7 +164,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 
 /datum/artifact/bomb/explosive/devastating
 	associated_object = /obj/machinery/artifact/bomb/devastating
-	rarity = 90
+	rarity_weight = 90
 	doAlert = 1
 	recharge_delay = 10 MINUTES
 	animationScale = 6
@@ -184,7 +184,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 
 /datum/artifact/bomb/blackhole
 	associated_object = /obj/machinery/artifact/bomb/blackhole
-	rarity = 90
+	rarity_weight = 90
 	react_xray = list(12,75,30,11,"ULTRADENSE")
 	warning_initial = "begins intensifying its own gravity!"
 	warning_final = "begins to collapse in on itself!"
@@ -211,7 +211,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 
 /datum/artifact/bomb/chemical
 	associated_object = /obj/machinery/artifact/bomb/chemical
-	rarity = 350
+	rarity_weight = 350
 	explode_delay = 0
 	alarm_initial = null
 	alarm_during = null
@@ -318,7 +318,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 /datum/artifact/bomb/transmute
 	associated_object = /obj/machinery/artifact/bomb/transmute
 	validtypes = list("wizard","eldritch","martian","ancient","precursor")
-	rarity = 90
+	rarity_weight = 90
 	react_xray = list(17,95,95,3,"ANOMALOUS")
 	warning_initial = ""
 	warning_final = ""

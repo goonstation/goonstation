@@ -4,7 +4,7 @@
 
 /datum/artifact/forcefield_gen
 	associated_object = /obj/artifact/forcefield_generator
-	rarity = 450
+	rarity_weight = 450
 	validtypes = list("wizard","eldritch","precursor")
 	validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/carbon_touch,
 	/datum/artifact_trigger/silicon_touch)

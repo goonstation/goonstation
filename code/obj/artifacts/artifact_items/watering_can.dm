@@ -158,7 +158,7 @@
 
 /datum/artifact/watercan
 	associated_object = /obj/item/reagent_containers/glass/wateringcan/artifact
-	rarity = 350
+	rarity_weight = 350
 	validtypes = list("martian","wizard","precursor")
 	min_triggers = 0
 	max_triggers = 0

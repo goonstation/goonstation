@@ -6,7 +6,7 @@
 
 /datum/artifact/activator_key
 	associated_object = /obj/item/artifact/activator_key
-	rarity = 200
+	rarity_weight = 200
 	validtypes = list("ancient","martian","wizard","eldritch","precursor")
 	automatic_activation = 1
 	react_xray = list(12,80,95,8,"COMPLEX")

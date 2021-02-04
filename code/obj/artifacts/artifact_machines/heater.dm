@@ -4,7 +4,7 @@
 
 /datum/artifact/heater
 	associated_object = /obj/machinery/artifact/heater
-	rarity = 450
+	rarity_weight = 450
 	validtypes = list("ancient","martian","eldritch","precursor")
 	validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/electric,/datum/artifact_trigger/heat,
 	/datum/artifact_trigger/radiation,/datum/artifact_trigger/cold)
