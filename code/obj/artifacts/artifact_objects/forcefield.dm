@@ -48,11 +48,11 @@
 		SPAWN_DBG(field_time)
 			if (O)
 				O.ArtifactDeactivated()
-				O.anchored = 0
 
 	effect_deactivate(obj/O)
 		if(..())
 			return
+		O.anchored = 0
 		for (var/obj/forcefield/F in src.forcefields)
 			src.forcefields -= F
 			qdel(F)
