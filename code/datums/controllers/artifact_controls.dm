@@ -13,7 +13,7 @@ var/datum/artifact_controller/artifact_controls
 		artifact_rarities["all"] = list()
 
 		// origin list
-		for (var/datum/artifact_origin/X as() in childrentypesof(/datum/artifact_origin))
+		for (var/X as() in childrentypesof(/datum/artifact_origin))
 			var/datum/artifact_origin/AO = new X
 			artifact_origins += AO
 			artifact_rarities[AO.name] = list()
