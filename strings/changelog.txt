@@ -1,3 +1,9 @@
+
+(t)thu feb 04 21
+(u)Stonepillar
+(p)3592
+(e)🆕|feature
+(+)You can put crayons into clown shoes and the shoes will automatically draw on the ground. Requires Klutz trait.
 (t)wed feb 03 21
 (u)Emily
 (e)🆕|feature
