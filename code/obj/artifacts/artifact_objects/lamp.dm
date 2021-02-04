@@ -20,7 +20,7 @@
 
 /datum/artifact/lamp
 	associated_object = /obj/artifact/lamp
-	rarity_class = 1
+	rarity = 450
 	validtypes = list("martian","wizard","precursor")
 	validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/electric,/datum/artifact_trigger/heat,
 	/datum/artifact_trigger/radiation,/datum/artifact_trigger/carbon_touch,/datum/artifact_trigger/silicon_touch,

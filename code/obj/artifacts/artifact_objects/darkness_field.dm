@@ -4,7 +4,7 @@
 
 /datum/artifact/darkness_field
 	associated_object = /obj/artifact/darkness_field
-	rarity_class = 2
+	rarity = 350
 	max_triggers = 3
 	validtypes = list("wizard","eldritch","precursor")
 	react_xray = list(15,90,90,11,"NONE")

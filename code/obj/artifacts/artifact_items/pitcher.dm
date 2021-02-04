@@ -176,7 +176,7 @@
 
 /datum/artifact/pitcher
 	associated_object = /obj/item/reagent_containers/food/drinks/drinkingglass/artifact
-	rarity_class = 2
+	rarity = 350
 	validtypes = list("martian","wizard","eldritch")
 	min_triggers = 0
 	max_triggers = 0

@@ -4,7 +4,7 @@
 
 /datum/artifact/turret
 	associated_object = /obj/machinery/artifact/turret
-	rarity_class = 3
+	rarity = 200
 	validtypes = list("wizard","eldritch","precursor")
 	validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/electric,/datum/artifact_trigger/heat,
 	/datum/artifact_trigger/radiation,/datum/artifact_trigger/carbon_touch,/datum/artifact_trigger/silicon_touch)

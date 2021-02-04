@@ -3,15 +3,34 @@ var/datum/artifact_controller/artifact_controls
 /datum/artifact_controller
 	var/list/artifacts = list()
 	var/list/artifact_types = list()
+	var/list/artifact_rarities = list()
 	var/list/artifact_origins = list()
 	var/spawner_type = null
 	var/spawner_cine = 0
 
 	New()
 		..()
-		for (var/X in childrentypesof(/datum/artifact_origin))
+		artifact_rarities["all"] = list()
+
+		// origin list
+		for (var/datum/artifact_origin/X as() in childrentypesof(/datum/artifact_origin))
 			var/datum/artifact_origin/AO = new X
 			artifact_origins += AO
+			artifact_rarities[AO.name] = list()
+
+		// type list
+		// also make one list for each origin of all artifact types
+		// and also one that just holds all types
+		// the type is the index, the value the rarity
+		// for use with weighted_pick
+		for (var/datum/artifact/A as() in concrete_typesof(/datum/artifact))
+			var/datum/artifact/AI = new A
+			artifact_types += AI
+
+			artifact_rarities["all"][A] = initial(A.rarity)
+			for (var/origin in artifact_rarities)
+				if(origin in AI.validtypes)
+					artifact_rarities[origin][A] = initial(A.rarity)
 
 	proc/get_origin_from_string(var/string)
 		if (!istext(string))
