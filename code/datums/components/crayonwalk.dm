@@ -11,7 +11,7 @@
 		if (length(S.crayons) && !(locate(/obj/decal/cleanable/writing) in last_turf))
 			var/obj/item/pen/crayon/crayon = pick(S.crayons)
 			if(length(crayon.symbol_setting))
-				if(prob(50))
+				if(prob(10))
 					var/list/params = list()
 					params["icon-x"] = 16
 					params["icon-y"] = 16
