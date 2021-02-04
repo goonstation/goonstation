@@ -294,7 +294,7 @@
 			return ..()
 
 	attack_hand(mob/user as mob)
-		if (length(src.crayons))
+		if (length(src.crayons) && src.loc == user)
 			if (!user.bioHolder.HasEffect("clumsy"))
 				boutput(user, "<span class='alert'>You aren't funny enough to do that. Wait, did the shoes just laugh at you?</span>")
 				return
