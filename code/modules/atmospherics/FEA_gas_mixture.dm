@@ -141,26 +141,32 @@ What are the archived variables for?
 	graphic_archived = graphic
 
 /datum/gas_mixture/proc/react(atom/dump_location)
-	var/reacting = 0 //set to 1 if a notable reaction occured (used by pipe_network)
+	. = 0 //set to non-zero if a notable reaction occured (used by pipe_network and hotspots)
+	var/reaction_rate
 
-	if(length(src.trace_gases) > 0)
-		if(src.temperature > 900)
-			if(src.toxins > MINIMUM_HEAT_CAPACITY && src.carbon_dioxide > MINIMUM_HEAT_CAPACITY)
-				var/datum/gas/oxygen_agent_b/trace_gas = src.get_trace_gas_by_type(/datum/gas/oxygen_agent_b/)
-				if(trace_gas)
-					var/reaction_rate = min(src.carbon_dioxide*0.75, src.toxins*0.25, trace_gas.moles*0.05)
+	if(length(src.trace_gases))
+		if(src.temperature > 900 && src.toxins > MINIMUM_REACT_QUANTITY && src.carbon_dioxide > MINIMUM_REACT_QUANTITY)
+			// refs are accessed directly to optimize functions as trace_gases
+			// has already been asserted above instead of utilizing get_trace_gas_by_type()
+			var/datum/gas/oxygen_agent_b/trace_gas = src.trace_gas_refs[/datum/gas/oxygen_agent_b/]
+			if(trace_gas?.moles > MINIMUM_REACT_QUANTITY )
+				reaction_rate = min(src.carbon_dioxide*0.75, src.toxins*0.25, trace_gas.moles*0.05)
+				reaction_rate = QUANTIZE(reaction_rate)
 
-					src.carbon_dioxide -= reaction_rate
-					src.oxygen += reaction_rate
+				src.carbon_dioxide -= reaction_rate
+				src.oxygen += reaction_rate
 
-					trace_gas.moles -= reaction_rate*0.05
+				trace_gas.moles -= reaction_rate*0.05
 
-					src.temperature += (reaction_rate*20000)/HEAT_CAPACITY(src)
+				src.temperature += (reaction_rate*20000)/HEAT_CAPACITY(src)
 
-					reacting = 1
+				if(reaction_rate > MINIMUM_REACT_QUANTITY)
+					. |= CATALYST_ACTIVE
+				. |= REACTION_ACTIVE
 
-	if(src.temperature > 900 && src.farts && src.toxins > MINIMUM_HEAT_CAPACITY && src.carbon_dioxide > MINIMUM_HEAT_CAPACITY)
-		var/reaction_rate = min(src.carbon_dioxide*0.75, src.toxins*0.25, src.farts*0.05)
+	if(src.temperature > 900 && src.farts > MINIMUM_REACT_QUANTITY && src.toxins > MINIMUM_REACT_QUANTITY && src.carbon_dioxide > MINIMUM_REACT_QUANTITY)
+		reaction_rate = min(src.carbon_dioxide*0.75, src.toxins*0.25, src.farts*0.05)
+		reaction_rate = QUANTIZE(reaction_rate)
 
 		src.carbon_dioxide -= reaction_rate
 		src.toxins += reaction_rate
@@ -168,15 +174,12 @@ What are the archived variables for?
 		src.farts -= reaction_rate*0.05
 
 		src.temperature += (reaction_rate*10000)/HEAT_CAPACITY(src)
-
-		reacting = 1
+		. |= REACTION_ACTIVE
 
 	fuel_burnt = 0
 	if(temperature > FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
 		if(fire() > 0)
-			reacting = 1
-
-	return reacting
+			. |= COMBUSTION_ACTIVE
 
 /datum/gas_mixture/proc/fire()
 	var/energy_released = 0
@@ -203,7 +206,7 @@ What are the archived variables for?
 			src.fuel_burnt += burned_fuel
 
 	//Handle plasma burning
-	if(src.toxins > MINIMUM_HEAT_CAPACITY)
+	if(src.toxins > MINIMUM_REACT_QUANTITY)
 		var/plasma_burn_rate = 0
 		var/oxygen_burn_rate = 0
 		//more energy released at higher temperatures
@@ -218,10 +221,10 @@ What are the archived variables for?
 				plasma_burn_rate = (src.toxins * temperature_scale) / 4
 			else
 				plasma_burn_rate = (temperature_scale * (src.oxygen / PLASMA_OXYGEN_FULLBURN)) / 4
-			if(plasma_burn_rate > MINIMUM_HEAT_CAPACITY)
-				src.toxins -= plasma_burn_rate / 3
-				src.oxygen -= plasma_burn_rate * oxygen_burn_rate
-				src.carbon_dioxide += plasma_burn_rate / 3
+			if(plasma_burn_rate > MINIMUM_REACT_QUANTITY)
+				src.toxins -= QUANTIZE(plasma_burn_rate / 3)
+				src.oxygen -= QUANTIZE(plasma_burn_rate * oxygen_burn_rate)
+				src.carbon_dioxide += QUANTIZE(plasma_burn_rate / 3)
 
 				energy_released += FIRE_PLASMA_ENERGY_RELEASED * (plasma_burn_rate)
 
@@ -232,7 +235,7 @@ What are the archived variables for?
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
 			src.temperature = (src.temperature * old_heat_capacity + energy_released) / new_heat_capacity
 
-	return fuel_burnt
+	return src.fuel_burnt
 
 //Update archived versions of variables
 //Returns: 1 in all cases
@@ -338,7 +341,7 @@ What are the archived variables for?
 	var/datum/gas_mixture/removed = unpool(/datum/gas_mixture)
 
 	#define _REMOVE_GAS_RATIO(GAS, ...) \
-		removed.GAS = QUANTIZE(GAS*ratio); \
+		removed.GAS = min(QUANTIZE(GAS*ratio), GAS); \
 		GAS -= removed.GAS/group_multiplier;
 	APPLY_TO_GASES(_REMOVE_GAS_RATIO)
 	#undef _REMOVE_GAS_RATIO

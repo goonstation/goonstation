@@ -101,7 +101,7 @@
 		name2 = pick(appearance.nouns_large)
 
 	src.name = "[name1] [name2]"
-	src:real_name = "[name1] [name2]"
+	src.real_name = "[name1] [name2]"
 	desc = "You have no idea what this thing is!"
 	A.touch_descriptors |= appearance.touch_descriptors
 
@@ -125,17 +125,17 @@
 
 	if (A.automatic_activation)
 		src.ArtifactActivated()
-	else
-		var/list/valid_triggers = A.validtriggers
-		var/trigger_amount = rand(A.min_triggers,A.max_triggers)
-		var/selection = null
-		while (trigger_amount > 0)
-			trigger_amount--
-			selection = pick(valid_triggers)
-			if (ispath(selection))
-				var/datum/artifact_trigger/AT = new selection
-				A.triggers += AT
-				valid_triggers -= selection
+
+	var/list/valid_triggers = A.validtriggers
+	var/trigger_amount = rand(A.min_triggers,A.max_triggers)
+	var/selection = null
+	while (trigger_amount > 0)
+		trigger_amount--
+		selection = pick(valid_triggers)
+		if (ispath(selection))
+			var/datum/artifact_trigger/AT = new selection
+			A.triggers += AT
+			valid_triggers -= selection
 
 	artifact_controls.artifacts += src
 	A.post_setup()
@@ -171,6 +171,8 @@
 	if (!src.ArtifactSanityCheck())
 		return
 	var/datum/artifact/A = src.artifact
+	if (!A.activated) // do not deactivate if already deactivated
+		return
 	if (A.deact_sound)
 		playsound(src.loc, A.deact_sound, 100, 1)
 	if (A.deact_text)
@@ -199,13 +201,16 @@
 		if (!W.ArtifactSanityCheck())
 			return
 		var/datum/artifact/A = src.artifact
-		var/datum/artifact/K = ACT.artifact
+		var/datum/artifact/activator_key/K = ACT.artifact
 
 		if (K.activated)
-			if (ACT.universal || A.artitype == K.artitype)
-				if (ACT.activator && !A.activated)
+			if (K.universal || A.artitype == K.artitype)
+				if (K.activator && !A.activated)
 					src.ArtifactActivated()
-				else if (!ACT.activator && A.activated)
+					if(K.corrupting && A.faults.len < 10) // there's only so much corrupting you can do ok
+						for(var/i=1,i<rand(1,3),i++)
+							src.ArtifactDevelopFault(100)
+				else if (A.activated)
 					src.ArtifactDeactivated()
 
 	if (isweldingtool(W))
@@ -284,6 +289,8 @@
 
 	if (W.force)
 		src.ArtifactStimulus("force", W.force)
+
+	src.ArtifactHitWith(W, user)
 	return 1
 
 /obj/proc/ArtifactFaultUsed(var/mob/user)
@@ -398,6 +405,10 @@
 		if (A.activated)
 			A.effect_touch(src,user)
 	return
+
+/obj/proc/ArtifactHitWith(var/obj/item/O, var/mob/user)
+	if (!src.ArtifactSanityCheck())
+		return 1
 
 /obj/proc/ArtifactTakeDamage(var/dmg_amount)
 	if (!src.ArtifactSanityCheck() || !isnum(dmg_amount))

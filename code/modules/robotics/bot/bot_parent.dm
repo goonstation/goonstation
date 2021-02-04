@@ -107,4 +107,4 @@
 		if(P.initial_power <= 0)
 			P.die()
 	if(!src.density)
-		return PROJ_OBJ_HIT_OTHER_OBJS | PROJ_ATOM_PASSTHROGH
+		return PROJ_OBJ_HIT_OTHER_OBJS | PROJ_ATOM_PASSTHROUGH

@@ -332,7 +332,7 @@
 
 //////////////////////////////////////////// Ability holder /////////////////////////////////////////
 
-/obj/screen/ability/topBar/werewolf
+/atom/movable/screen/ability/topBar/werewolf
 	clicked(params)
 		var/datum/targetable/werewolf/spell = owner
 		if (!istype(spell))
@@ -402,7 +402,7 @@
 
 	New()
 		..()
-		var/obj/screen/ability/topBar/werewolf/B = new /obj/screen/ability/topBar/werewolf(null)
+		var/atom/movable/screen/ability/topBar/werewolf/B = new /atom/movable/screen/ability/topBar/werewolf(null)
 		B.icon = src.icon
 		B.icon_state = src.icon_state
 		B.owner = src
@@ -414,7 +414,7 @@
 	updateObject()
 		..()
 		if (!src.object)
-			src.object = new /obj/screen/ability/topBar/werewolf()
+			src.object = new /atom/movable/screen/ability/topBar/werewolf()
 			object.icon = src.icon
 			object.owner = src
 		if (src.last_cast > world.time)

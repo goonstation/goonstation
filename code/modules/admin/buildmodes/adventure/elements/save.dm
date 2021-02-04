@@ -28,9 +28,9 @@
 		..()
 
 	build_click(var/mob/user, var/datum/buildmode_holder/holder, var/list/pa, var/atom/object)
-		if (pa.Find("left"))
+		if ("left" in pa)
 			var/turf/T = get_turf(object)
-			if (pa.Find("ctrl"))
+			if ("ctrl" in pa)
 				finished = 1
 				return
 			if (T)
@@ -88,7 +88,7 @@
 							Q.serialize(F, "[base].TURF", sandbox)
 							var/objc = 0
 							for (var/obj/O in Q)
-								if (!istype(O, /obj/overlay) && !istype(O, /obj/screen))
+								if (!istype(O, /obj/overlay) && !istype(O, /atom/movable/screen))
 									O:serialize(F, "[base].OBJ.[objc]", sandbox)
 									objc++
 							F["[base].OBJC"] << objc

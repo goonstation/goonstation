@@ -11,7 +11,9 @@
 	var/allow_traitors = 1
 	var/allow_spy_theft = 1
 	var/cant_spawn_as_rev = 0 // For the revoltion game mode. See jobprocs.dm for notes etc (Convair880).
+	var/cant_spawn_as_con = 0 // Prevents this job spawning as a conspirator in the conspiracy gamemode.
 	var/requires_whitelist = 0
+	var/requires_supervisor_job = null // Enter job name, this job will only be present if the entered job has joined already
 	var/needs_college = 0
 	var/assigned = 0
 	var/high_priority_job = 0
@@ -138,6 +140,7 @@
 
 // Command Jobs
 
+ABSTRACT_TYPE(/datum/job/command)
 /datum/job/command
 	linkcolor = "#00CC00"
 	slot_card = /obj/item/card/id/command
@@ -148,6 +151,9 @@
 	wages = PAY_EXECUTIVE
 	high_priority_job = 1
 	recieves_miranda = 1
+#ifdef RP_MODE
+	allow_traitors = 0
+#endif
 	cant_spawn_as_rev = 1
 	announce_on_join = 1
 	allow_spy_theft = 0
@@ -234,12 +240,13 @@
 	recieves_miranda = 1
 	allow_traitors = 0
 	allow_spy_theft = 0
+	cant_spawn_as_con = 1
 	cant_spawn_as_rev = 1
 	announce_on_join = 1
 	receives_disk = 1
 	receives_security_disk = 1
 	receives_badge = 1
-	recieves_implant = /obj/item/implant/health/security
+	recieves_implant = /obj/item/implant/health/security/anti_mindslave
 
 
 #ifdef SUBMARINE_MAP
@@ -439,6 +446,7 @@
 
 // Security Jobs
 
+ABSTRACT_TYPE(/datum/job/security)
 /datum/job/security
 	linkcolor = "#FF0000"
 	slot_card = /obj/item/card/id/security
@@ -454,6 +462,7 @@
 	wages = PAY_TRADESMAN
 	allow_traitors = 0
 	allow_spy_theft = 0
+	cant_spawn_as_con = 1
 	cant_spawn_as_rev = 1
 	recieves_implant = /obj/item/implant/health/security
 	receives_disk = 1
@@ -469,7 +478,7 @@
 	slot_eyes = /obj/item/clothing/glasses/sunglasses/sechud
 	slot_poc1 = /obj/item/storage/security_pouch //replaces sec starter kit
 	slot_poc2 = /obj/item/requisition_token/security
-	rounds_needed_to_play = 13 //ss13, and also seems like a good number to go with
+	rounds_needed_to_play = 30 //higher barrier of entry than before but now with a trainee job to get into the rythym of things to compensate
 
 	New()
 		..()
@@ -481,6 +490,26 @@
 		if (!M)
 			return
 		M.traitHolder.addTrait("training_security")
+
+	assistant
+		name = "Security Assistant"
+		limit = 3
+		cant_spawn_as_con = 1
+		wages = PAY_UNTRAINED
+		slot_jump = /obj/item/clothing/under/rank/security/assistant
+		slot_suit = null
+		slot_glov = /obj/item/clothing/gloves/fingerless
+		slot_head = /obj/item/clothing/head/red
+		slot_foot = /obj/item/clothing/shoes/brown
+		slot_poc1 = /obj/item/storage/security_pouch/assistant
+		slot_poc2 = /obj/item/requisition_token/security/assistant
+		items_in_backpack = list(/obj/item/paper/book/space_law)
+		rounds_needed_to_play = 5
+
+		New()
+			..()
+			src.access = get_access("Security Assistant")
+			return
 
 	derelict
 		//name = "NT-SO Officer"
@@ -516,7 +545,7 @@
 	slot_head = /obj/item/clothing/head/det_hat
 	slot_glov = /obj/item/clothing/gloves/black
 	slot_suit = /obj/item/clothing/suit/det_suit
-	slot_ears = /obj/item/device/radio/headset/security
+	slot_ears = /obj/item/device/radio/headset/detective
 	items_in_backpack = list(/obj/item/clothing/glasses/vr,/obj/item/storage/box/detectivegun)
 
 	New()
@@ -535,6 +564,7 @@
 
 // Research Jobs
 
+ABSTRACT_TYPE(/datum/job/research)
 /datum/job/research
 	linkcolor = "#9900FF"
 	slot_card = /obj/item/card/id/research
@@ -644,6 +674,7 @@
 
 // Engineering Jobs
 
+ABSTRACT_TYPE(/datum/job/engineering)
 /datum/job/engineering
 	linkcolor = "#FF9900"
 	slot_card = /obj/item/card/id/engineering
@@ -795,6 +826,7 @@
 
 // Civilian Jobs
 
+ABSTRACT_TYPE(/datum/job/civilian)
 /datum/job/civilian
 	linkcolor = "#0099FF"
 	slot_card = /obj/item/card/id/civilian
@@ -876,6 +908,7 @@
 	slot_foot = /obj/item/clothing/shoes/brown
 	slot_glov = /obj/item/clothing/gloves/black
 	slot_ears = /obj/item/device/radio/headset/civilian
+	items_in_backpack = list(/obj/item/fishing_rod)
 
 	New()
 		..()
@@ -916,6 +949,7 @@
 		if (!M)
 			return
 		M.traitHolder.addTrait("training_chaplain")
+		OTHER_START_TRACKING_CAT(M, TR_CAT_CHAPLAINS)
 		if (prob(15))
 			M.see_invisible = 15
 
@@ -1089,6 +1123,7 @@
 	limit = 0
 	wages = PAY_TRADESMAN
 	allow_traitors = 0
+	cant_spawn_as_con = 1
 	cant_spawn_as_rev = 1
 	receives_badge = 1
 	recieves_miranda = 1
@@ -1472,7 +1507,7 @@
 	slot_jump = /obj/item/clothing/under/suit/pinstripe
 	slot_head = /obj/item/clothing/head/flatcap
 	slot_foot = /obj/item/clothing/shoes/brown
-	items_in_backpack = list(/obj/item/instrument/saxophone,/obj/item/instrument/harmonica,/obj/item/instrument/bagpipe,/obj/item/instrument/fiddle)
+	items_in_backpack = list(/obj/item/instrument/saxophone,/obj/item/instrument/guitar,/obj/item/instrument/bagpipe,/obj/item/instrument/fiddle)
 
 /datum/job/special/random/union
 	name = "Union Rep"
@@ -1698,6 +1733,7 @@
 /*
  * Halloween jobs
  */
+ABSTRACT_TYPE(/datum/job/special/halloween)
 /datum/job/special/halloween
 	linkcolor = "#FF7300"
 
@@ -2322,6 +2358,7 @@
 	limit = 1 // backup during HELL WEEK. players will probably like it
 	wages = PAY_TRADESMAN
 	requires_whitelist = 1
+	requires_supervisor_job = "Head of Security"
 	allow_traitors = 0
 	allow_spy_theft = 0
 	cant_spawn_as_rev = 1
@@ -2585,6 +2622,7 @@
 	limit = 2
 	wages = PAY_TRADESMAN
 	allow_traitors = 0
+	cant_spawn_as_con = 1
 	cant_spawn_as_rev = 1
 	receives_badge = 1
 	recieves_miranda = 1

@@ -53,7 +53,6 @@ datum
 			transparency = 255
 
 			reaction_turf(var/turf/T, var/volume)
-				src = null
 				if(!istype(T, /turf/space))
 					if(volume >= 5)
 						if(!locate(/obj/decal/cleanable/dirt) in T)
@@ -305,7 +304,6 @@ datum
 			transparency = 255
 
 			reaction_turf(var/turf/T, var/volume)
-				src = null
 				if (volume >= 10)
 					if (!locate(/obj/decal/cleanable/magnesiumpile) in T)
 						make_cleanable(/obj/decal/cleanable/magnesiumpile,T)
@@ -402,7 +400,8 @@ datum
 						var/list/covered = holder.covered_turf()
 						for(var/turf/t in covered)
 							SPAWN_DBG(1 DECI SECOND) fireflash(t, min(max(0,((volume/covered.len)/15)),6))
-						holder.del_reagent(id)
+				if(holder)
+					holder.del_reagent(id)
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
@@ -413,7 +412,7 @@ datum
 				return
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
-				src = null
+				. = ..()
 				if(method == TOUCH)
 					var/mob/living/L = M
 					if(istype(L) && L.getStatusDuration("burning"))
@@ -421,11 +420,9 @@ datum
 				return 1
 
 			reaction_obj(var/obj/O, var/volume)
-				src = null
 				return 1
 
 			reaction_turf(var/turf/T, var/volume)
-				src = null
 				return 1 //changed return value to 1 for fluids. remove if this was a bad idea
 
 			on_plant_life(var/obj/machinery/plantpot/P)
@@ -656,8 +653,6 @@ datum
 
 			reaction_turf(var/turf/T, var/volume)
 				var/list/covered = holder.covered_turf()
-				src = null
-
 				var/spawncleanable = 1
 				if(covered.len > 5 && (volume/covered.len) < 1)
 					spawncleanable = prob((volume/covered.len) * 10)
@@ -774,7 +769,6 @@ datum
 				return 1//fluid is better. remove this later probably
 
 			reaction_obj(var/obj/item/O, var/volume)
-				src = null
 				if(istype(O))
 					if(O.burning && prob(80))
 						O.burning = 0
@@ -785,7 +779,6 @@ datum
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				..()
-				src = null
 				if(!volume)
 					volume = 10
 				if(method == TOUCH)
@@ -913,11 +906,9 @@ datum
 					holder.del_reagent(id)
 
 			reaction_obj(var/obj/O, var/volume)
-				src = null
 				return
 
 			reaction_turf(var/turf/T, var/volume)
-				src = null
 				if (volume >= 5 && !(locate(/obj/item/raw_material/ice) in T))
 					var/obj/item/raw_material/ice/I = unpool(/obj/item/raw_material/ice)
 					I.set_loc(T)

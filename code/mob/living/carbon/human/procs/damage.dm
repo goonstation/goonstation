@@ -687,9 +687,6 @@
 	if (!isnum(amount) || amount == 0)
 		return 1
 
-	//old way that has damage attached to var on /mob/living/carbon/human not on /obj/item/organ/brain
-	// src.brainloss = max(0,min(src.brainloss + amount,120))
-
 	if (src.organHolder && src.organHolder.brain)
 		if (amount > 0)
 			src.organHolder.damage_organ(amount, 0, 0, "brain")
@@ -698,10 +695,7 @@
 
 	if (src.organHolder && src.organHolder.brain && src.organHolder.brain.get_damage() >= 120 && isalive(src))
 		src.visible_message("<span class='alert'><b>[src.name]</b> goes limp, their facial expression utterly blank.</span>")
-		src.death()
-		return
-	return
-
+		INVOKE_ASYNC(src, /mob/living/carbon/human.proc/death)
 
 /mob/living/carbon/human/get_brain_damage()
 	if (src.organHolder && src.organHolder.brain)

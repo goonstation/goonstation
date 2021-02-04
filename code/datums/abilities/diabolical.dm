@@ -16,7 +16,7 @@
 	else return
 
 /* 	/		/		/		/		/		/		Ability Holder		/		/		/		/		/		/		/		/		*/
-/obj/screen/ability/topBar/merchant
+/atom/movable/screen/ability/topBar/merchant
 	clicked(params)
 		var/datum/targetable/merchant/spell = owner
 		if (!istype(spell))
@@ -67,7 +67,7 @@
 	var/not_when_handcuffed = 0
 
 	New()
-		var/obj/screen/ability/topBar/merchant/B = new /obj/screen/ability/topBar/merchant(null)
+		var/atom/movable/screen/ability/topBar/merchant/B = new /atom/movable/screen/ability/topBar/merchant(null)
 		B.icon = src.icon
 		B.icon_state = src.icon_state
 		B.owner = src
@@ -79,7 +79,7 @@
 	updateObject()
 		..()
 		if (!src.object)
-			src.object = new /obj/screen/ability/topBar/merchant()
+			src.object = new /atom/movable/screen/ability/topBar/merchant()
 			object.icon = src.icon
 			object.owner = src
 		if (src.last_cast > world.time)

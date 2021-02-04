@@ -5169,6 +5169,7 @@
 "bld" = (
 /obj/item/device/radio/beacon,
 /obj/machinery/drainage,
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/black,
 /area/station/science/chemistry)
 "blg" = (
@@ -5336,6 +5337,7 @@
 	icon_state = "0-4"
 	},
 /obj/cable,
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/orangeblack/side{
 	dir = 8
 	},
@@ -7156,6 +7158,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/black,
 /area/station/medical/research{
 	name = "Genetic Research"
@@ -7601,6 +7604,7 @@
 	icon_state = "4-8"
 	},
 /obj/stool,
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/solar/east)
 "bVo" = (
@@ -9655,6 +9659,7 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/specialroom/freezer,
 /area/station/medical/morgue)
 "cBK" = (
@@ -11314,6 +11319,9 @@
 /obj/stool/chair/comfy{
 	dir = 4
 	},
+/obj/landmark/start{
+	name = "Security Assistant"
+	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/quarters)
 "dbj" = (
@@ -12306,6 +12314,7 @@
 /area/station/hallway/primary/east)
 "dqc" = (
 /obj/disposalpipe/segment/mail,
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/yellowblack{
 	dir = 1
 	},
@@ -14802,6 +14811,7 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/yellowblack{
 	dir = 9
 	},
@@ -16838,6 +16848,7 @@
 	icon_state = "tile1"
 	},
 /obj/item/device/radio/beacon,
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/white,
 /area/station/science/teleporter)
 "eLg" = (
@@ -17146,6 +17157,7 @@
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade)
 "ePH" = (
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/carpet/red/fancy/innercorner{
 	dir = 9
 	},
@@ -17175,6 +17187,10 @@
 	name = "Robust Donuts";
 	pixel_x = 1;
 	pixel_y = 6
+	},
+/obj/item/device/ticket_writer{
+	pixel_x = -7;
+	pixel_y = -3
 	},
 /turf/simulated/floor/carpet{
 	dir = 8;
@@ -18802,6 +18818,10 @@
 /obj/machinery/firealarm{
 	pixel_y = 25
 	},
+/obj/item/clothing/glasses/spectro{
+	pixel_x = 4;
+	pixel_y = -2
+	},
 /turf/simulated/floor{
 	icon_state = "corner_east"
 	},
@@ -20132,7 +20152,14 @@
 /area/station/library/reading2)
 "fIr" = (
 /obj/table/wood/round/auto,
-/obj/item/storage/box/nerd_kit,
+/obj/item/paper/book/monster_manual_revised{
+	pixel_x = -3;
+	pixel_y = 1
+	},
+/obj/item/paper/book/DNDrulebook{
+	pixel_x = 3;
+	pixel_y = 1
+	},
 /turf/simulated/floor/carpet/arcade/half,
 /area/station/crew_quarters/arcade/dungeon)
 "fIA" = (
@@ -20621,6 +20648,7 @@
 /area/station/hallway/primary/west)
 "fQR" = (
 /obj/item/device/radio/beacon,
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/yellow,
 /area/station/engine/elect)
 "fRb" = (
@@ -30207,6 +30235,7 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/black,
 /area/station/medical/medbay/pharmacy)
 "iPM" = (
@@ -30266,6 +30295,10 @@
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/se)
+"iQY" = (
+/obj/landmark/gps_waypoint,
+/turf/simulated/floor/black/grime,
+/area/station/quartermaster/refinery)
 "iRo" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/cable{
@@ -31725,6 +31758,18 @@
 "jqe" = (
 /turf/simulated/floor/plating/airless/asteroid,
 /area/station/garden/owlery)
+"jqq" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment/morgue{
+	name = "kitchen freezer pipe"
+	},
+/obj/landmark/gps_waypoint,
+/turf/simulated/floor/wood,
+/area/station/crew_quarters/fitness)
 "jqw" = (
 /obj/storage/secure/closet/personal,
 /turf/simulated/floor/white,
@@ -32596,6 +32641,7 @@
 	icon_state = "check1"
 	},
 /obj/item/device/radio/beacon,
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade)
 "jFA" = (
@@ -33402,6 +33448,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/solar/west)
 "jQP" = (
@@ -33451,6 +33498,15 @@
 	},
 /turf/space,
 /area/space)
+"jRA" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/landmark/gps_waypoint,
+/turf/simulated/floor/grey,
+/area/station/science/lab)
 "jRU" = (
 /obj/machinery/door/window/westright,
 /obj/access_spawn/robotics,
@@ -36176,6 +36232,10 @@
 	},
 /turf/simulated/floor/purple/side,
 /area/station/hallway/primary/south)
+"kMI" = (
+/obj/landmark/gps_waypoint,
+/turf/simulated/floor/dirt,
+/area/station/ranch)
 "kMO" = (
 /obj/machinery/navbeacon{
 	codes_txt = "patrol;next_patrol=medsci";
@@ -41611,6 +41671,9 @@
 /obj/stool/chair/comfy{
 	dir = 8
 	},
+/obj/landmark/start{
+	name = "Security Assistant"
+	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/quarters)
 "msW" = (
@@ -45996,6 +46059,7 @@
 /area/station/crew_quarters/heads)
 "nMd" = (
 /obj/item/device/radio/beacon,
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/black,
 /area/station/science/bot_storage)
 "nMh" = (
@@ -46354,6 +46418,7 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/black,
 /area/station/medical/medbay/cloner)
 "nRR" = (
@@ -47487,6 +47552,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/black,
 /area/station/turret_protected/AIsat)
 "oiR" = (
@@ -47550,6 +47616,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/airless/plating,
 /area/station/engine/singcore)
 "okq" = (
@@ -47644,6 +47711,10 @@
 /obj/machinery/computer/arcade,
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
+"olP" = (
+/obj/landmark/gps_waypoint,
+/turf/simulated/floor/grass/random,
+/area/station/hydroponics/bay)
 "olQ" = (
 /obj/cable{
 	d1 = 4;
@@ -49643,6 +49714,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/specialroom/arcade,
 /area/station/science/artifact)
 "oON" = (
@@ -52565,6 +52637,10 @@
 	pixel_x = -6;
 	pixel_y = 16
 	},
+/obj/item/device/multitool{
+	pixel_x = 2;
+	pixel_y = -1
+	},
 /turf/simulated/floor/wood/five,
 /area/station/hydroponics/bay)
 "pGt" = (
@@ -53869,7 +53945,10 @@
 /area/station/crew_quarters/courtroom)
 "qaQ" = (
 /obj/table/wood/round/auto,
-/obj/item/paper/book/critter_compendium,
+/obj/item/storage/box/nerd_kit{
+	pixel_x = 4;
+	pixel_y = 4
+	},
 /turf/simulated/floor/carpet/arcade/half,
 /area/station/crew_quarters/arcade/dungeon)
 "qaT" = (
@@ -54317,6 +54396,9 @@
 /area/station/hallway/primary/south)
 "qgO" = (
 /obj/stool/chair/comfy,
+/obj/landmark/start{
+	name = "Security Assistant"
+	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/quarters)
 "qgQ" = (
@@ -57655,6 +57737,7 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment,
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/wood/seven,
 /area/station/security/detectives_office)
 "raQ" = (
@@ -58754,6 +58837,9 @@
 /obj/stool/chair/office/red{
 	dir = 4
 	},
+/obj/landmark/start{
+	name = "Security Assistant"
+	},
 /turf/simulated/floor/redwhite{
 	dir = 4
 	},
@@ -58891,6 +58977,7 @@
 /area/station/hallway/primary/east)
 "rtp" = (
 /obj/item/device/radio/beacon,
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor,
 /area/station/crew_quarters/courtroom)
 "rtr" = (
@@ -59690,6 +59777,25 @@
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/heads)
+"rEW" = (
+/obj/table/wood/round/auto,
+/obj/item/clothing/suit/cultist{
+	desc = "Neeeeerds.";
+	name = "+2 robes of dungeon mastery";
+	pixel_x = 5;
+	pixel_y = 2
+	},
+/obj/item/clothing/head/apprentice{
+	desc = "NEEERRRRRDS.";
+	name = "+3 Cap of Sorcerous Origin";
+	pixel_x = -8;
+	pixel_y = 12
+	},
+/obj/item/clothing/mask/skull{
+	pixel_x = -4
+	},
+/turf/simulated/floor/carpet/arcade/half,
+/area/station/crew_quarters/arcade/dungeon)
 "rFa" = (
 /obj/railing/yellow{
 	dir = 4
@@ -64600,6 +64706,7 @@
 	name = "Cyborg"
 	},
 /obj/item/device/radio/beacon,
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "tiv" = (
@@ -65249,6 +65356,7 @@
 	dir = 8;
 	icon_state = "line1"
 	},
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/specialroom/arcade,
 /area/station/janitor/office)
 "tsr" = (
@@ -67425,9 +67533,9 @@
 	pixel_x = -5;
 	pixel_y = 2
 	},
-/obj/item/device/multitool{
-	pixel_x = 2;
-	pixel_y = -1
+/obj/item/reagent_containers/glass/water_pipe{
+	pixel_x = 3;
+	pixel_y = 6
 	},
 /turf/simulated/floor/wood/five,
 /area/station/hydroponics/bay)
@@ -68801,17 +68909,41 @@
 /area/station/crewquarters/fuq3)
 "uxc" = (
 /obj/table/wood/round/auto,
-/obj/item/clothing/head/apprentice{
-	desc = "NEEERRRRRDS.";
-	name = "+3 Cap of Sorcerous Origin";
-	pixel_x = -11;
-	pixel_y = 7
-	},
-/obj/item/clothing/suit/cultist{
-	desc = "Neeeeerds.";
-	name = "+2 robes of dungeon mastery";
+/obj/item/paper_bin{
 	pixel_x = 5;
-	pixel_y = 2
+	pixel_y = 4
+	},
+/obj/item/clipboard{
+	pixel_x = -4;
+	pixel_y = 5
+	},
+/obj/item/clipboard{
+	pixel_x = -4;
+	pixel_y = 5
+	},
+/obj/item/clipboard{
+	pixel_x = -4;
+	pixel_y = 5
+	},
+/obj/item/clipboard{
+	pixel_x = -4;
+	pixel_y = 5
+	},
+/obj/item/pen{
+	pixel_x = -5;
+	pixel_y = 4
+	},
+/obj/item/pen{
+	pixel_x = -5;
+	pixel_y = 4
+	},
+/obj/item/pen{
+	pixel_x = -5;
+	pixel_y = 4
+	},
+/obj/item/pen{
+	pixel_x = -5;
+	pixel_y = 4
 	},
 /turf/simulated/floor/carpet/arcade/half,
 /area/station/crew_quarters/arcade/dungeon)
@@ -75258,6 +75390,10 @@
 	},
 /obj/cable,
 /obj/random_item_spawner/desk_stuff/one,
+/obj/item/reagent_containers/food/drinks/mug/HoS{
+	pixel_x = -8;
+	pixel_y = 15
+	},
 /turf/simulated/floor/carpet/red/fancy/edge{
 	dir = 1
 	},
@@ -76927,6 +77063,9 @@
 	dir = 4;
 	icon_state = "pipe-c"
 	},
+/obj/landmark/start{
+	name = "Security Assistant"
+	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/quarters)
 "wOV" = (
@@ -77566,6 +77705,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/plating/jen,
 /area/station/storage/tech)
 "wWw" = (
@@ -119613,7 +119753,7 @@ vGa
 uAS
 ecX
 bWg
-cnA
+jRA
 cnA
 cnA
 cnA
@@ -122838,7 +122978,7 @@ yht
 eer
 bpC
 gWT
-uTJ
+jqq
 qgq
 uTJ
 uTJ
@@ -126464,7 +126604,7 @@ nNm
 hTi
 loH
 gmE
-qaQ
+fgQ
 uxc
 gmE
 fGQ
@@ -126766,7 +126906,7 @@ nNm
 hTi
 aNZ
 qND
-fgQ
+qaQ
 fgQ
 sLe
 bJK
@@ -127069,7 +127209,7 @@ hTi
 unS
 gmE
 fIr
-fgQ
+rEW
 gmE
 geI
 ltD
@@ -128864,7 +129004,7 @@ iba
 kHx
 mke
 nVl
-mke
+olP
 kHx
 txZ
 fYJ
@@ -129461,7 +129601,7 @@ mBB
 mBB
 mBB
 oJP
-orn
+kMI
 jLx
 mwk
 iba
@@ -136450,7 +136590,7 @@ aaM
 vpC
 rLN
 nQT
-fNb
+iQY
 fNb
 hzd
 hzd

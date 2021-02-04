@@ -1369,6 +1369,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor{
 	icon_state = "nt_logo"
 	},
@@ -1729,6 +1730,7 @@
 /obj/stool/chair/yellow{
 	dir = 8
 	},
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/north)
 "adB" = (
@@ -2284,6 +2286,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/plating/airless,
 /area/station/solar/small_backup2)
 "aeL" = (
@@ -2400,6 +2403,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/clown{
 	name = "Clown's Quarters"
@@ -2968,6 +2972,7 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/blueblack{
 	dir = 1
 	},
@@ -11228,6 +11233,10 @@
 	desc = "Ugh, is that patchouli?";
 	name = "grody candle"
 	},
+/obj/item/reagent_containers/glass/water_pipe{
+	pixel_x = 6;
+	pixel_y = 5
+	},
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},
@@ -18519,7 +18528,6 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/checkpoint/chapel)
 "aQo" = (
-/obj/machinery/vending/security,
 /obj/machinery/door_control{
 	id = "lockdown_checkpoint1";
 	name = "Checkpoint Lockdown";
@@ -18527,6 +18535,8 @@
 	pixel_y = 8
 	},
 /obj/machinery/light_switch/west,
+/obj/table/reinforced/auto,
+/obj/machinery/recharger,
 /turf/simulated/floor/specialroom/bar,
 /area/station/security/checkpoint/chapel)
 "aQp" = (
@@ -18547,7 +18557,11 @@
 /area/station/security/checkpoint/chapel)
 "aQr" = (
 /obj/table/reinforced/auto,
-/obj/machinery/recharger,
+/obj/item/kitchen/food_box/donut_box{
+	desc = "It appears to be a Martian brand of donuts.";
+	name = "Robust Donuts";
+	pixel_y = 10
+	},
 /turf/simulated/floor/specialroom/bar,
 /area/station/security/checkpoint/chapel)
 "aQs" = (
@@ -19235,17 +19249,27 @@
 /area/station/crew_quarters/quartersA)
 "aSa" = (
 /obj/table/wood/round/auto,
-/obj/random_item_spawner/desk_stuff,
 /obj/disposalpipe/segment,
+/obj/item/paper/book/DNDrulebook{
+	pixel_x = -3;
+	pixel_y = 2
+	},
+/obj/item/paper/book/monster_manual_revised{
+	pixel_x = 5;
+	pixel_y = 2
+	},
 /turf/simulated/floor/carpet,
 /area/station/crew_quarters/quartersA)
 "aSb" = (
 /obj/table/wood/round/auto,
-/obj/machinery/light/lamp/green,
 /obj/cable{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
+	},
+/obj/machinery/light/lamp/green{
+	pixel_x = -3;
+	pixel_y = 12
 	},
 /turf/simulated/floor/carpet,
 /area/station/crew_quarters/quartersA)
@@ -19542,7 +19566,8 @@
 /turf/simulated/floor/grass/leafy,
 /area/station/garden/owlery)
 "aSS" = (
-/obj/machinery/flasher/portable,
+/obj/table/reinforced/auto,
+/obj/machinery/vending/security,
 /turf/simulated/floor/specialroom/bar,
 /area/station/security/checkpoint/chapel)
 "aST" = (
@@ -19639,17 +19664,18 @@
 /obj/disposalpipe/segment,
 /obj/machinery/atmospherics/unary/vent_pump/south,
 /obj/table/wood/round/auto,
-/obj/item/storage/box/cutlery,
+/obj/random_item_spawner/desk_stuff,
 /turf/simulated/floor/carpet,
 /area/station/crew_quarters/quartersA)
 "aTf" = (
 /obj/table/wood/round/auto,
-/obj/item/reagent_containers/food/drinks/bowl,
-/obj/item/reagent_containers/food/snacks/cereal_box,
 /obj/cable{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
+	},
+/obj/item/storage/box/nerd_kit{
+	pixel_y = 3
 	},
 /turf/simulated/floor/carpet,
 /area/station/crew_quarters/quartersA)
@@ -21002,6 +21028,10 @@
 "aWe" = (
 /obj/table/wood/auto,
 /obj/item/decoration/ashtray,
+/obj/machinery/light/lamp/green{
+	pixel_x = 7;
+	pixel_y = 12
+	},
 /turf/simulated/floor/carpet{
 	dir = 9;
 	icon_state = "blue1"
@@ -21009,9 +21039,15 @@
 /area/station/crew_quarters/arcade/dungeon)
 "aWf" = (
 /obj/table/wood/auto,
-/obj/item/paper/book/critter_compendium,
 /obj/disposalpipe/segment,
-/obj/item/reagent_containers/food/drinks/cola,
+/obj/item/paper/book/monster_manual_revised{
+	pixel_x = -3;
+	pixel_y = 1
+	},
+/obj/item/paper/book/DNDrulebook{
+	pixel_x = 3;
+	pixel_y = 1
+	},
 /turf/simulated/floor/carpet{
 	dir = 5;
 	icon_state = "blue1"
@@ -21445,7 +21481,13 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/item/item_box/assorted/stickers/stickers_limited,
+/obj/item/item_box/assorted/stickers/stickers_limited{
+	pixel_x = -6;
+	pixel_y = 4
+	},
+/obj/item/storage/box/cutlery{
+	pixel_x = 7
+	},
 /turf/simulated/floor/carpet,
 /area/station/crew_quarters/quartersA)
 "aXf" = (
@@ -21463,6 +21505,14 @@
 /area/station/crew_quarters/quartersA)
 "aXg" = (
 /obj/table/wood/round/auto,
+/obj/item/reagent_containers/food/snacks/cereal_box{
+	pixel_x = -5;
+	pixel_y = 5
+	},
+/obj/item/reagent_containers/food/drinks/bowl{
+	pixel_x = 4;
+	pixel_y = 3
+	},
 /turf/simulated/floor{
 	icon_state = "carpetS"
 	},
@@ -21636,8 +21686,41 @@
 /area/station/crew_quarters/arcade/dungeon)
 "aXD" = (
 /obj/table/wood/auto,
-/obj/machinery/computer/security/wooden_tv/small{
-	pixel_y = 8
+/obj/item/paper_bin{
+	pixel_x = 5;
+	pixel_y = 4
+	},
+/obj/item/clipboard{
+	pixel_x = -4;
+	pixel_y = 5
+	},
+/obj/item/clipboard{
+	pixel_x = -4;
+	pixel_y = 5
+	},
+/obj/item/clipboard{
+	pixel_x = -4;
+	pixel_y = 5
+	},
+/obj/item/clipboard{
+	pixel_x = -4;
+	pixel_y = 5
+	},
+/obj/item/pen{
+	pixel_x = -5;
+	pixel_y = 4
+	},
+/obj/item/pen{
+	pixel_x = -5;
+	pixel_y = 4
+	},
+/obj/item/pen{
+	pixel_x = -5;
+	pixel_y = 4
+	},
+/obj/item/pen{
+	pixel_x = -5;
+	pixel_y = 4
 	},
 /turf/simulated/floor/carpet{
 	dir = 5;
@@ -21646,16 +21729,12 @@
 /area/station/crew_quarters/arcade/dungeon)
 "aXE" = (
 /obj/table/wood/auto,
-/obj/item/paper_bin{
-	pixel_x = -7;
-	pixel_y = 6
-	},
-/obj/item/pen,
-/obj/item/pen/fancy,
-/obj/item/dice/d20,
 /obj/disposalpipe/segment{
 	dir = 1;
 	icon_state = "pipe-c"
+	},
+/obj/item/storage/box/nerd_kit{
+	pixel_y = 5
 	},
 /turf/simulated/floor/carpet{
 	dir = 9;
@@ -22101,6 +22180,7 @@
 	dir = 1
 	},
 /obj/disposalpipe/segment,
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/carpet{
 	icon_state = "fgreen2"
 	},
@@ -22560,14 +22640,20 @@
 /area/station/crew_quarters/arcade/dungeon)
 "aZp" = (
 /obj/table/wood/auto,
-/obj/item/storage/box/nerd_kit,
+/obj/item/dice/magic8ball{
+	pixel_x = 4;
+	pixel_y = 6
+	},
+/obj/item/reagent_containers/food/drinks/cola{
+	pixel_x = -3;
+	pixel_y = 4
+	},
 /turf/simulated/floor/carpet{
 	dir = 9;
 	icon_state = "blue1"
 	},
 /area/station/crew_quarters/arcade/dungeon)
 "aZq" = (
-/obj/machinery/light/lamp/green,
 /obj/table/wood/auto,
 /turf/simulated/floor/carpet{
 	dir = 5;
@@ -23213,13 +23299,6 @@
 /area/station/crew_quarters/arcade/dungeon)
 "baL" = (
 /obj/table/wood/auto,
-/obj/item/clipboard,
-/obj/item/clipboard,
-/obj/item/clipboard,
-/obj/item/pen,
-/obj/item/pen,
-/obj/item/pen,
-/obj/item/clothing/head/apprentice,
 /turf/simulated/floor/carpet{
 	dir = 6;
 	icon_state = "blue5"
@@ -23227,8 +23306,17 @@
 /area/station/crew_quarters/arcade/dungeon)
 "baM" = (
 /obj/table/wood/auto,
-/obj/item/clothing/suit/cultist/nerd,
-/obj/item/clothing/mask/skull,
+/obj/item/clothing/suit/cultist/nerd{
+	pixel_x = 5;
+	pixel_y = -1
+	},
+/obj/item/clothing/head/apprentice{
+	pixel_x = -8;
+	pixel_y = 12
+	},
+/obj/item/clothing/mask/skull{
+	pixel_x = -4
+	},
 /turf/simulated/floor/carpet{
 	icon_state = "blue5"
 	},
@@ -24063,7 +24151,6 @@
 	dir = 4
 	},
 /obj/overlay{
-	anchored = 1;
 	desc = "A portrait of a man wearing a ridiculous merchant hat.  That must be Discount Dan.";
 	icon = 'icons/obj/decals/wallsigns.dmi';
 	icon_state = "portrait";
@@ -30948,11 +31035,21 @@
 /obj/table/reinforced/auto,
 /obj/item/kitchen/food_box/donut_box{
 	desc = "It appears to be a Martian brand of donuts.";
-	name = "Robust Donuts"
+	name = "Robust Donuts";
+	pixel_y = 10
 	},
-/obj/item/device/detective_scanner,
-/obj/item/device/detective_scanner,
-/obj/item/device/detective_scanner,
+/obj/item/device/detective_scanner{
+	pixel_x = -5;
+	pixel_y = -5
+	},
+/obj/item/device/detective_scanner{
+	pixel_x = -5;
+	pixel_y = -5
+	},
+/obj/item/device/detective_scanner{
+	pixel_x = -5;
+	pixel_y = -5
+	},
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
@@ -31748,6 +31845,9 @@
 /obj/table/reinforced/auto,
 /obj/machinery/computer3/generic/personal,
 /obj/machinery/power/data_terminal,
+/obj/item/device/ticket_writer{
+	pixel_x = 5
+	},
 /turf/simulated/floor/carpet{
 	icon_state = "fred1"
 	},
@@ -31847,6 +31947,9 @@
 	pixel_y = 3
 	},
 /obj/disposalpipe/segment/transport,
+/obj/item/reagent_containers/food/drinks/mug/HoS{
+	pixel_y = 12
+	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/hos)
 "buw" = (
@@ -37890,14 +37993,9 @@
 	},
 /area/station/security/checkpoint/podbay)
 "bFV" = (
-/obj/window/auto/reinforced,
-/obj/grille/steel,
-/obj/decal/poster/wallsign/hazard_caution{
-	desc = "High-intensity laser beamline. Approach with extreme caution."
-	},
 /obj/landmark/gps_waypoint,
-/turf/simulated/floor/plating,
-/area/station/security/checkpoint/podbay)
+/turf/simulated/floor/specialroom/arcade,
+/area/station/janitor/supply)
 "bFW" = (
 /obj/disposalpipe/segment/transport{
 	dir = 4
@@ -38614,6 +38712,9 @@
 /obj/disposalpipe/segment/transport{
 	dir = 1;
 	icon_state = "pipe-c"
+	},
+/obj/landmark/start{
+	name = "Security Assistant"
 	},
 /turf/simulated/floor/red/side{
 	dir = 4
@@ -40001,6 +40102,7 @@
 	icon_state = "4-8"
 	},
 /obj/item/device/radio/beacon,
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/circuit/off,
 /area/station/bridge)
 "bJy" = (
@@ -40145,7 +40247,6 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/landmark/gps_waypoint,
 /turf/simulated/floor/carpet{
 	dir = 4;
 	icon_state = "fblue3"
@@ -40909,6 +41010,9 @@
 /obj/disposalpipe/segment/transport{
 	dir = 4;
 	icon_state = "pipe-c"
+	},
+/obj/landmark/start{
+	name = "Security Assistant"
 	},
 /turf/simulated/floor/red/side{
 	dir = 4
@@ -45877,6 +45981,9 @@
 /obj/disposalpipe/segment/ejection{
 	dir = 4
 	},
+/obj/landmark/start{
+	name = "Security Assistant"
+	},
 /turf/simulated/floor,
 /area/station/security/main)
 "bUt" = (
@@ -46581,6 +46688,11 @@
 /area/space)
 "bVT" = (
 /obj/table/wood/round/auto,
+/obj/item/kitchen/food_box/donut_box{
+	desc = "It appears to be a Martian brand of donuts.";
+	name = "Robust Donuts";
+	pixel_y = 10
+	},
 /obj/item/decoration/ashtray,
 /turf/simulated/floor/carpet{
 	dir = 5;
@@ -47814,6 +47926,7 @@
 /obj/disposalpipe/trunk/ejection{
 	dir = 1
 	},
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/delivery,
 /area/station/security/brig)
 "bYJ" = (
@@ -47975,7 +48088,7 @@
 	dir = 4
 	},
 /obj/landmark/start{
-	name = "Security Officer"
+	name = "Security Assistant"
 	},
 /turf/simulated/floor/carpet{
 	dir = 1;
@@ -48964,7 +49077,7 @@
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4;
 	name = "Security Locker Room";
-	req_access_txt = "38"
+	req_access_txt = "1"
 	},
 /obj/disposalpipe/segment/transport{
 	dir = 4
@@ -53066,6 +53179,7 @@
 /obj/stool/chair/office{
 	dir = 4
 	},
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor,
 /area/station/science/teleporter)
 "ckY" = (
@@ -57340,6 +57454,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/specialroom/arcade,
 /area/station/janitor/office)
 "cuf" = (
@@ -58978,6 +59093,7 @@
 /area/station/medical/robotics)
 "cxQ" = (
 /obj/disposalpipe/segment/mail/vertical,
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "cxR" = (
@@ -59013,6 +59129,7 @@
 	dir = 1;
 	icon_state = "pipe-j2"
 	},
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor,
 /area/station/science/bot_storage)
 "cxV" = (
@@ -60680,6 +60797,7 @@
 /area/station/engine/elect)
 "cBz" = (
 /obj/disposalpipe/segment/mail/bent/east,
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/yellow/side,
 /area/station/engine/elect)
 "cBA" = (
@@ -64059,6 +64177,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/black,
 /area/station/medical/medbay/pharmacy)
 "cJp" = (
@@ -65820,6 +65939,7 @@
 	icon_state = "4-8"
 	},
 /obj/disposalpipe/segment/mail/horizontal,
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/purplewhite{
 	dir = 8
 	},
@@ -66068,6 +66188,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/bluewhite{
 	dir = 1
 	},
@@ -70129,6 +70250,7 @@
 	})
 "cWC" = (
 /obj/disposalpipe/segment/mail/vertical,
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/carpet{
 	dir = 1;
 	icon_state = "blue2"
@@ -70676,6 +70798,7 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/white,
 /area/station/science/artifact)
 "cXE" = (
@@ -74179,7 +74302,6 @@
 /area/station/medical/dome)
 "dfl" = (
 /obj/overlay{
-	anchored = 1;
 	icon = 'icons/misc/beach2.dmi';
 	icon_state = "palm1";
 	layer = 10;
@@ -74204,7 +74326,6 @@
 /area/station/medical/dome)
 "dfn" = (
 /obj/overlay{
-	anchored = 1;
 	icon = 'icons/misc/beach2.dmi';
 	icon_state = "palm1";
 	layer = 10;
@@ -74399,7 +74520,6 @@
 /area/station/medical/dome)
 "dfK" = (
 /obj/overlay{
-	anchored = 1;
 	icon = 'icons/misc/beach2.dmi';
 	icon_state = "palm2";
 	layer = 10;
@@ -74659,7 +74779,6 @@
 /area/station/medical/cdc)
 "dgh" = (
 /obj/overlay{
-	anchored = 1;
 	icon = 'icons/misc/beach2.dmi';
 	icon_state = "palm2";
 	layer = 10;
@@ -74689,7 +74808,6 @@
 /area/station/medical/dome)
 "dgk" = (
 /obj/overlay{
-	anchored = 1;
 	icon = 'icons/misc/beach2.dmi';
 	icon_state = "palm1";
 	layer = 10;
@@ -74739,6 +74857,7 @@
 /obj/stool/chair/yellow{
 	dir = 8
 	},
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/south)
 "dgp" = (
@@ -79024,6 +79143,10 @@
 	},
 /turf/simulated/floor/dirt,
 /area/station/ranch)
+"gGV" = (
+/obj/landmark/gps_waypoint,
+/turf/simulated/floor,
+/area/station/ai_monitored/storage/eva)
 "hRi" = (
 /turf/space,
 /area/shuttle/arrival/station)
@@ -79078,6 +79201,10 @@
 /obj/grille/steel,
 /turf/simulated/floor,
 /area/station/ranch)
+"jNp" = (
+/obj/item/paper/book/monster_manual_revised,
+/turf/simulated/wall/asteroid,
+/area/space)
 "lAy" = (
 /obj/machinery/light_switch/east,
 /obj/submachine/chicken_feed_grinder,
@@ -79131,6 +79258,10 @@
 	icon_state = "fgreen2"
 	},
 /area/station/hydroponics/bay)
+"mtx" = (
+/obj/landmark/gps_waypoint,
+/turf/simulated/floor,
+/area/station/quartermaster/office)
 "mBI" = (
 /turf/simulated/floor/dirt,
 /area/station/ranch)
@@ -79164,6 +79295,10 @@
 	dir = 9
 	},
 /area/station/ranch)
+"oHZ" = (
+/obj/landmark/gps_waypoint,
+/turf/simulated/floor/sanitary/white,
+/area/station/medical/morgue)
 "pdE" = (
 /obj/machinery/chem_master{
 	dir = 4
@@ -79190,6 +79325,13 @@
 /obj/machinery/light,
 /turf/simulated/floor/dirt,
 /area/station/ranch)
+"qKy" = (
+/obj/machinery/atmospherics/valve{
+	dir = 4
+	},
+/obj/landmark/gps_waypoint,
+/turf/simulated/floor/specialroom/cafeteria,
+/area/station/science/lab)
 "rsz" = (
 /obj/cable{
 	icon_state = "2-8"
@@ -79220,6 +79362,14 @@
 	name = "astroturf"
 	},
 /area/station/hydroponics)
+"tGo" = (
+/obj/landmark/gps_waypoint,
+/turf/simulated/floor/purple,
+/area/station/teleporter)
+"tJa" = (
+/obj/machinery/flasher/portable,
+/turf/simulated/floor/specialroom/bar,
+/area/station/security/checkpoint/chapel)
 "tPC" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
@@ -87205,7 +87355,7 @@ aaa
 aaa
 aaa
 aab
-aab
+jNp
 aaa
 aaa
 aaa
@@ -103134,7 +103284,7 @@ cyJ
 cAe
 cBK
 cCZ
-cBK
+qKy
 cCZ
 cBK
 cIM
@@ -110945,7 +111095,7 @@ byI
 bAl
 bFR
 bDY
-bFV
+bJO
 bHS
 bJO
 bLt
@@ -117334,7 +117484,7 @@ cIk
 cJy
 cJy
 cJy
-cJy
+oHZ
 cOh
 cQR
 cNU
@@ -121487,7 +121637,7 @@ aDQ
 aNG
 aTV
 aVn
-aVn
+bFV
 aYk
 aZQ
 bbl
@@ -126997,7 +127147,7 @@ cHn
 cIy
 cJS
 cLw
-cMY
+mtx
 cIu
 cPO
 cRp
@@ -127522,7 +127672,7 @@ aLi
 aMA
 aNP
 aOU
-aNP
+tJa
 aQs
 aRK
 aSQ
@@ -142346,7 +142496,7 @@ bjj
 bjq
 bqZ
 bsN
-buG
+gGV
 bwq
 byr
 bzX
@@ -142663,7 +142813,7 @@ bOr
 bBw
 bRx
 bTa
-bUB
+tGo
 bWl
 bRv
 bNm

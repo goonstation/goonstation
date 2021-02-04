@@ -55,6 +55,12 @@
 /obj/item/storage/box/cookie_tin/sugar
 	spawn_contents = list(/obj/item/reagent_containers/food/snacks/cookie = 7)
 
+/obj/item/storage/box/stroopwafel_tin
+	name = "stroopwafel bag"
+	desc = "Full of fresh Dutch stroopwafels, picked ripe from the Dutch stroopwafel trees in Space Holland. There apears to be a lable on the back saying something about microwaves, the rest is in Dutch."
+	icon_state = "cookie_tin"
+	spawn_contents = list(/obj/item/reagent_containers/food/snacks/stroopwafel = 7)
+
 /obj/item/storage/box/beer
 	name = "beer in a box"
 	icon_state = "beer"

@@ -164,9 +164,10 @@ var/global/list/job_start_locations = list()
 	)
 
 	New()
-		if(current_state >= GAME_STATE_WORLD_INIT && prob(spawnchance))
+		if(current_state >= GAME_STATE_WORLD_INIT && prob(spawnchance) && !src.disposed)
 			SPAWN_DBG(6 SECONDS) // bluh, replace with some `initialize` variant later when someone makes it (needs to work with dmm loader)
-				initialize()
+				if(!src.disposed)
+					initialize()
 		..()
 
 	initialize()
@@ -216,6 +217,9 @@ var/global/list/job_start_locations = list()
 /obj/landmark/viscontents_spawn
 	name = "visual mirror spawn"
 	desc = "Links a pair of corresponding turfs in holy Viscontent Matrimony. You shouldnt be seeing this."
+	icon = 'icons/effects/mapeditor.dmi'
+	icon_state = "landmark"
+	color = "#FF0000"
 	var/targetZ = 1 // target z-level to push it's contents to
 	var/xOffset = 0 // use only for pushing to the same z-level
 	var/yOffset = 0 // use only for pushing to the same z-level

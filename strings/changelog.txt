@@ -1,9 +1,285 @@
 
+(t)tue feb 02 21
+(u)Emily
+(e)|
+(+)Selkie chickens now come from White Silkies, not Black Silkies as they did previously.
+(t)mon feb 01 21
+(u)Superlagg
+(p)3297
+(e)⚖🔄|balance, rework
+(+)NT struck a deal with the Wizard Federation to tone down Rathens' Secret regarding tails and cyberlimbs, in exchange for shooting a lot more blood and guts out of peoples' butts.
+(+)Rathens' Secret will only sever tails if their owner is missing limbs.
+(+)It'll also fail to sever most cyberlimbs and exotic appendages.
+(u)BenLubar
+(p)2956
+(e)🆕|feature
+(*)Added a new Chef traitor item: Pizza Sharpener.
+(u)Flappybat
+(p)3363
+(e)🔄|rework
+(*)Improved spy bounty target picking logic. Prevents duplicates, targets on the Listening Post and can find targets that were almost never shown before!
+(u)zjdtmkhzt
+(p)3548
+(e)|
+(+)Dragging crates onto traders to sell their contents should now work again for all types of items.
+(t)sun jan 31 21
+(u)pali
+(+)You can now suicide into the arc electroplater.
+(+)It is now possible to fish in spatial tears.
+(+)Chaplains can now sometimes notice a disturbance in the force when ghosts are using the ouija board.
+(+)You can now fish in <b>closed</b> deep fryers. (If it doesn't have an item inside you'll fry your rod. Don't fry your rod.)
+(u)Sovexe
+(e)🆕🎨|feature, sprites
+(*)New chicken breed added! View minor changes for hint [Gen 2] [From Clown Chicken] (Don't let Emily find out!)
+(+)They're quite popular, I think they're really going to take off!
+(u)pali
+(+)Vacuums now clean ants.
+(u)Emily
+(e)🆕|feature
+(*)Ixworth chickens added! Their eggs, when made into feed, prevent chickens from dying of old age. Give tomato feed to white chickens to make them!
+(u)BenLubar
+(p)3552
+(e)|
+(+)MedTrak has been updated to display allergy information.
+(u)BenLubar
+(p)3550
+(e)🐛|bug
+(+)Receiving a friendly pat on the head no longer counts as being attacked for the purpose of interrupts.
+(u)BenLubar
+(p)3547
+(e)🎨|sprites
+(+)Non-cheese burgers no longer have a mysterious yellow non-cheese substance on them.
+(u)ArbitraryKnapsack
+(p)3169
+(e)|
+(*)Created a new radio channel, :d, for the detective's private use.  Keep tabs on the station without annoying all of security.
+(+)Made a little chat icon for detective to visually identify them at a glance.
+(t)sat jan 30 21
+(u)Superlagg
+(p)3473
+(e)🆕🗺🔄|feature, mapping, rework
+(*)Made flamethrowers more configurable and shoot chem-loaded projectiles.
+(+)Flamethrowers can now be added to gun components.
+(u)Nefarious6th
+(p)3491
+(e)⚖🔄|balance, rework
+(*)Captains on the RP servers can now only roll conspirator as a potential antagonist type.
+(u)BenLubar
+(p)3499
+(e)|
+(+)Marking a job as favorite no longer creates a second copy of that job as unwanted.
+(u)zjdtmkhzt
+(p)3504
+(e)🆕|feature
+(+)Added a new type of bomb artifact that has a high chance of destroying either the science department or the economy.
+(u)Chickenish
+(p)3529
+(e)🆕|feature
+(+)It is now possible to anchor air scrubbers with a wrench.
+(u)Azrun
+(p)3537
+(e)⚖🐛|balance, bug
+(+)Possessed canisters behave as expected in regards to gases.  Possessed creates will no longer shuffle around when closed.
+(u)Moonlol
+(p)3542
+(e)🐛|bug
+(+)You can no longer grab things from the other side of a thin window.
+(u)zjdtmkhzt
+(p)3509
+(e)⚖🆕|balance, feature
+(+)Artifact activators are now more common, but not all of them will be universal anymore. Be wary of those of eldritch origin...
+(t)fri jan 29 21
+(u)Flaborized
+(p)3496
+(e)🎨|sprites
+(+)Resprited personal computers.
+(u)Chickenish
+(p)3417
+(e)🐛|bug
+(+)The cyborg weapons lock is no longer lengthened by lag.
+(t)thu jan 28 21
+(u)pali
+(+)Some artifacts now sometimes have slightly tweaked visuals to provide greater variety.
+(u)BenLubar
+(p)3514
+(e)🐛|bug
+(+)You can once again apply metal and glass sheets to several construction projects.
+(t)wed jan 27 21
+(u)pali
+(p)3367
+(e)🆕📄|feature, tgui
+(*)Radio station voice synthesizer got a new cool UI!
+(u)BenLubar
+(p)3498
+(e)🐛📄|bug, tgui
+(+)The new GeneTek UI no longer makes the port-a-gene explode. Sorry about that.
+(u)Kyle
+(p)3477
+(e)|
+(*)Tracking implants now alert security when they are removed from a person with their location.
+(u)pali
+(p)3455
+(e)⚖|balance
+(*)Blob temperature damage rebalanced a bit. Sources which create "smaller" hot areas are likely less effective.
+(u)BenLubar
+(p)3206
+(e)🆕📄|feature, tgui
+(*)GeneTek has released the next generation of their gene scanner computer interface!
+(+)Lab monkeys now have randomized ages and blood types.
+(t)tue jan 26 21
+(u)BenLubar
+(p)3484
+(e)|
+(+)The power issues aboard the Von Ricken have been resolved.
+(u)virvatuli
+(p)3474
+(e)|
+(+)Added a new firing sound effect for the wavegun, that sounds appropriately sci-fi!
+(u)BenLubar
+(p)3449
+(e)🐛🗺|bug, mapping
+(+)Several fixes to the generation and contents of the mining z-level.
+(t)mon jan 25 21
+(u)pali
+(+)Miasma now has a status effect and it does slightly different things based on how much of it is in you.
+(u)ZeWaka
+(e)🐛|bug
+(+)If you get set on fire while laying down, you now properly roll in agony.
+(u)Tarmunora
+(e)⚖🆕|balance, feature
+(+)Stimulants are now a status effect
+(u)adharainspace
+(p)3468
+(e)🆕🎨|feature, sprites
+(*)Ranchers now have a fishing rod in their backpacks. Fishing itself is pretty WIP but there's some content there for you.
+(t)sun jan 24 21
+(u)Tarmunora
+(e)⚖|balance
+(+)Cyberappendices now only inject chems if you are hurt, and will damage themself slightly doing so if you are more than superficially injured, forcing you to replace it eventually.
+(u)DimWhat
+(p)3463
+(e)⚖|balance
+(+)Security crates ordered through QM now require security equipment access.
+(u)Flourish
+(p)3450
+(e)⚖|balance
+(*)Authorizing the armory open now requires security equipment access (the access you need to open security lockers) as opposed to regular security access. This means lawyers, vice officers, and detectives can no longer help authorize it open.
+(+)Vice officers no longer have security equipment access.
+(u)BenLubar
+(p)3462
+(e)|
+(+)Ion Storms can no longer open/close emergency shutters, such as the doors around the crusher in most maps.
+(u)Carbadox, Flaborized, and Flourish
+(p)3017
+(e)🆕🗺🔄🎨|feature, mapping, rework, sprites
+(*)Added a new permanent security role, security assistant. This role will provide an entry point to players interested in the Security department without having to start off in a high pressure role like security officer. Please be nice to them!
+(*)Security PDAs now spawn with a special security alert module. When used, this module sends a "backup requested" PDA alert to the entire security department from the user's PDA.
+(*)Security departments now have a couple ticket writer devices laying around, which allow officers to issue tickets (and only tickets) without having to wrangle with their PDA.
+(u)pali
+(p)3331
+(e)|
+(+)NTSO job is now only available after HoS has been picked.
+(u)Carbadox
+(p)3334
+(e)🆕🗺🎨|feature, mapping, sprites
+(+)Added a new Bartender job reward, the spectroscopic monocle.
+(u)BatElite
+(p)3432
+(e)🆕|feature
+(+)The cables in electrical toolboxes are now of a random colour. Go do aesthetic engineering.
+(t)sat jan 23 21
+(u)Azrun
+(p)2808
+(e)⚖🔄|balance, rework
+(*)Adjusted combustion, targeting chamber burns, to be safer for the station by gating a state with exponential scaling.  Tools exist to make it unsafe again, go find them!
+(*)Molitz will now provide oxygen similar to plasmastone (just on a limited scale). A rare variant of Molitz will be an especially useful tool for making combustion spicy. (Thanks pali & UrsulaMajor)
+(u)BenLubar
+(p)3411
+(e)|
+(+)Outgoing PDA messages are now shown in your chat log. The AI can take notes while looking at a camera. File sharing with groups is no longer broken!
+(u)Nefarious6th
+(p)3424
+(e)🆕🎨|feature, sprites
+(+)Added recipes for chicken pot pie, chicken "pot" pie, stargazy pie, and chocolate mud pie.
+(t)fri jan 22 21
+(u)AwkwardDryad
+(p)3378
+(e)⚖|balance
+(+)Added sterile masks and latex gloves to public MiniMeds.
+(+)MiniMed items are now more affordable!
+(u)Emily
+(e)🆕|feature
+(*)New silkie breed added! View minor changes for hint. [Gen 2] [From Black Silkie]
+(+)To sleep: perchance to dream; for in that sleep of death what dreams may come must give us pause: there's the respect that makes calamity of so long life.
+(t)thu jan 21 21
+(u)Tarmunora
+(p)3415
+(e)⚖🆕|balance, feature
+(*)Added bouncy mode to wave guns, moves old EMP mode to pulse rifles.
+(u)BatElite
+(p)3354
+(e)🆕🎨|feature, sprites
+(+)Implants cut out of or reclaimed from people now come in disposable paper wads instead of mysterious glass cases. Implant cases should also now be coloured properly based on their contents.
+(+)Said wads also have a forensic blood trace of the implant's previous owner, in case you need to be mindful of your traces.
+(u)Flourish
+(p)3404
+(e)⚖|balance
+(+)NTSOs now only have access to command and security channels on their headset.
+(u)Carbadox
+(p)3390
+(e)🆕🗺🔄|feature, mapping, rework
+(*)Added an "official" Stations and Syndicates rulebook to the game, the SS13 version of Dungeons and Dragons. It's been made to accommodate SS13 virtual environment with a much light ruleset. It comes along with a basic monster manual. Check out your local nerd dungeons for a copy or a book/gaming vendor.
+(u)zjdtmkhzt
+(p)3316
+(e)⚖🆕|balance, feature
+(+)Made artifact cells a little bit more interesting.
+(u)Emily
+(e)🆕|feature
+(*)New silkie breed! Be sure to give it a tank with lots of water, or you'll regret it.
+(*)Another new silkie breed! These ones are quite dandy. :) [Gen 2] [From Cream Colored Silkies]
+(t)wed jan 20 21
+(u)BenLubar
+(p)3395
+(e)🐛|bug
+(+)The CDC now has a more conventional understanding of how time and causality work.
+(u)Sovexe
+(p)3412
+(e)🆕|feature
+(+)Floor goblins now hide between the floor tiles and plating instead of under the floor.
+(u)pali & Cookie
+(*)The handheld vacuum cleaner got new sprites and its special attack got rebalanced. Also fixed a bunch of things. Oh and also experimentally adding an overcharged version of the vacuum cleaner to janitor's traitor uplink.
+(t)tue jan 19 21
+(u)Flourish
+(*)The research radio channel is now purple and the medical radio channel is now blue (they were swapped before this!).
+(u)Flourish
+(+)When you send a crate of credits out QM, the traders will now take a 10% fee. Meaning if you send out 100 credits, you'll get 90 added to your shipping budget.
+(u)Flaborized
+(p)3370
+(e)🆕|feature
+(*)Musicians now have a guitar.
+(u)pali
+(p)3397
+(e)🆕🎨|feature, sprites
+(*)Janitor closets now have a new handheld vacuum cleaner. It can suck up small items and smoke (like miasma). Temporary sprites unless <i>you</i> make me better ones.
+(u)UrsulaMajor
+(e)⚖🆕|balance, feature
+(*)The Pathology Research test has concluded. Thank you for your participation! Please give your thoughts here: <a target="_blank" href="https://forum.ss13.co/showthread.php?tid=15693">Pathology Feedback</a>
+(u)pali
+(p)3372
+(e)🆕|feature
+(*)Enabled a certain locker-related random event.
+(u)Tarmunora
+(e)⚖🆕|balance, feature
+(*)CPR now has a small chance to cure cardiac arrest, if the patient isn't too injured. Cardiac stimulants may help your odds.
+(u)zjdtmkhzt
+(p)3361
+(e)⚖🆕|balance, feature
+(+)Devastating artifact bombs now give a stationwide message when armed or disarmed (you can use an activator artifact on them to do that!).
 (t)mon jan 18 21
 (u)BenLubar
 (p)3384
 (e)|
-(*)APCs are now able to automatically exit Fully Charged status. See the pull request for technical details.
+(+)Fixed a bug with APCs not exiting their "fully charged" status. See the pull request for technical details.
 (u)Chickenish
 (p)3330
 (e)|
