@@ -14,7 +14,7 @@
 	if(forceartitype)
 		picked = forceartitype
 	else
-		if (artifactweights.len < 1)
+		if (artifactweights.len == 0)
 			return
 		picked = weighted_pick(artifactweights)
 
