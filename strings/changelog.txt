@@ -1,5 +1,9 @@
 
 (t)thu feb 04 21
+(u)zjdtmkhzt
+(p)3602
+(e)|
+(+)Electroplaters should now only take one bar from a stack.
 (u)Stonepillar
 (p)3592
 (e)🆕|feature
