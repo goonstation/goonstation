@@ -1697,7 +1697,7 @@
 			else if (current_projectile.type == /datum/projectile/bullet/tranq_dart/support_rifle_sleepy)
 				src.icon_state = "support_rifle_sleepy_[ratio]"
 				item_state = "supriflesleep"
-				current_projectile.cost = 50
+				current_projectile.cost = 75
 			else
 				src.icon_state = "support_rifle_stimulant_[ratio]"
 				item_state = "supriflestim"

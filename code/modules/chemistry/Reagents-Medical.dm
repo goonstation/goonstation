@@ -163,6 +163,21 @@ datum
 
 				..()
 				return
+			medical/safeether
+				name = "ether"
+				id = "safeether"
+				description = "A strong but safe anesthetic and sedative."
+				reagent_state = LIQUID
+				fluid_r = 169
+				fluid_g = 251
+				fluid_b = 25
+				transparency = 30
+				addiction_prob = 0//50
+				addiction_min = 100
+				overdose = 200
+				value = 5
+
+		medical/cold_medicine
 
 		medical/cold_medicine
 			name = "robustissin"

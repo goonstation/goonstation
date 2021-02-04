@@ -287,6 +287,7 @@ toxic - poisons
 		reagent_payload = "mutadone" // HAH
 
 	support_rifle_sleepy
+		reagent_payload = "safeether"
 		power = 0
 		sname = "sleepy"
 		name = "sleepy dart"
