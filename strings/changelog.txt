@@ -1,5 +1,9 @@
 
 (t)thu feb 04 21
+(u)BenLubar
+(p)3486
+(e)|
+(*)Cyborgs can now drag humans into the industrial cryogenic storage unit, and don't need to be holding an item to put themselves in.
 (u)TTerc
 (p)3586
 (e)🐛|bug
