@@ -31,12 +31,12 @@
 		darkfields += new /obj/overlay/darkness_field{plane = PLANE_SELFILLUM}(T, null, radius = 0.5 + field_radius, max_alpha = max_alpha)
 		SPAWN_DBG(field_time)
 			if (O)
-				O.anchored = 0
 				O.ArtifactDeactivated()
 
 	effect_deactivate(obj/O)
 		if(..())
 			return
+		O.anchored = 0
 		for(var/obj/overlay/darkness_field/D as() in darkfields)
 			D.deactivate()
 
