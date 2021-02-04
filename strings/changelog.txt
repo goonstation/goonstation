@@ -1,6 +1,10 @@
 
 (t)thu feb 04 21
 (u)TTerc
+(p)3586
+(e)🐛|bug
+(+)Traitors and miscreants can now roll the "Destroy the Captain's ship in a bottle." objective on Manta.
+(u)TTerc
 (p)3589
 (e)🆕|feature
 (+)Water pipes can now be found in hacked GardenGear vendors.
