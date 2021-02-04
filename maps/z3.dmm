@@ -25428,6 +25428,11 @@
 	},
 /turf/simulated/floor/black,
 /area/mining/quarters)
+"rzX" = (
+/turf/simulated/floor/plating/airless/asteroid{
+	stone_color = "#575A5E"
+	},
+/area/space)
 "uGt" = (
 /obj/item/storage/secure/ssafe{
 	configure_mode = 0;
@@ -49266,7 +49271,7 @@ aHr
 aHr
 aHr
 aHr
-aau
+aHr
 aaa
 aaa
 aaa
@@ -49568,7 +49573,7 @@ aHr
 aHr
 aHr
 aHr
-aab
+aHr
 aaa
 aaa
 aaa
@@ -49870,7 +49875,7 @@ aHr
 aHr
 aHr
 aHr
-aab
+aHr
 aaa
 aaa
 aaa
@@ -50475,7 +50480,7 @@ aHr
 aHr
 aHr
 aHr
-aac
+rzX
 aaa
 aaa
 aaa
@@ -51379,7 +51384,7 @@ aaa
 aHr
 aHr
 aHr
-aac
+rzX
 aad
 aaa
 aaa
@@ -51680,7 +51685,7 @@ aaa
 aaa
 aaa
 aHr
-aac
+rzX
 aHA
 aHU
 aMm
