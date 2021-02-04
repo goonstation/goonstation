@@ -184,7 +184,7 @@
 			for(var/overlay_ref in s.overlay_refs) //looping through parent overlays and copying them over to the children
 				schild.UpdateOverlays(s.GetOverlayImage(overlay_ref), overlay_ref)
 			if(cake_candle.len) //making sure there's only one candle :)
-				if(candle_lit == TRUE)
+				if(candle_lit)
 					schild.UpdateOverlays(new /image(src.icon,"slice-candle_lit"),"slice-candle")
 					candle_lit = FALSE
 				else
@@ -463,6 +463,11 @@
 				return
 			else
 				..()
+		else if(istype(W,/obj/item/kitchen/utensil/spoon) || istool(W,TOOL_SPOONING))
+			if(!src.sliced)
+				return
+			else
+				..()
 		else if(istype(W,/obj/item/reagent_containers/food/drinks/drinkingglass/icing))
 			frost_cake(W,user)
 			return
@@ -476,8 +481,7 @@
 		else
 			var/list/topping = check_for_topping(W) //if the item used on the cake wasn't handled previously, check for valid toppings next
 			if(!topping[1]) //if the item wasn't a valid topping, perfom the default action
-				..()
-				return
+				return ..()
 
 			//adding topping overlays to the cake. Yay :D
 			if(src.sliced) //if you add a topping to a sliced cake, it updates the icon_state to the sliced version.
