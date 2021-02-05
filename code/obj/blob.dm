@@ -70,7 +70,7 @@
 				playsound(src.loc, "sound/voice/blob/blobsucc[rand(1, 3)].ogg", 10, 1)
 
 	proc/right_click_action()
-		usr.examine_verb()
+		usr.examine_verb(src)
 
 	Click(location, control, params)
 		if (usr != overmind)
