@@ -334,27 +334,13 @@
 	equipped(var/mob/user, var/slot)
 		..()
 		user.visible_message("<b>[user]</b> starts hopping around!","You start hopping around.")
-		src.moonloop(user)
-		return
+		animate(user, pixel_y=3, time=0.1 SECONDS, loop=-1, flags=ANIMATION_PARALLEL | ANIMATION_RELATIVE)
+		animate(pixel_y=-6, time=0.2 SECONDS, flags=ANIMATION_RELATIVE)
+		animate(pixel_y=3, time=0.1 SECONDS, flags=ANIMATION_RELATIVE)
 
 	unequipped(var/mob/user)
-		user.pixel_y = 0
+		animate(user)
 		..()
-		return
-
-	proc/moonloop(var/mob/user)
-		SPAWN_DBG(0)
-			while(user && !user.stat && user:shoes == src)
-				if(user.pixel_y < 12)
-					user.pixel_y += 3
-					sleep(0.1 SECONDS)
-				else
-					user.pixel_y -= 6
-					sleep(0.1 SECONDS)
-
-			if(user)
-				user.pixel_y = 0
-		return
 
 /obj/item/clothing/shoes/cowboy
 	name = "Cowboy boots"

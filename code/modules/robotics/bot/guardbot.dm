@@ -1884,6 +1884,8 @@
 
 			src.add_task(src.model_task.copy_file(),1)
 
+		if(src.task?.disposed || src.task.master != src)
+			src.task = null
 		if(istype(src.task))
 			src.task.task_act()
 

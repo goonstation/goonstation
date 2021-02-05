@@ -1,4 +1,12 @@
 
+(t)fri feb 05 21
+(u)Emily
+(e)🆕🐛|feature, bug
+(*)Incubators can now be disassembled using wrenches to transport them. You can screw or unscrew the nesting boxes with a screwdriver.
+(*)New Chicken Breed! See Minor Changes for a hint.
+(*)Peas
+(+)Two words: Undersea Reefer [Gen 3]
+(+)Fixed bug where witchens weren't possible to make.
 (t)thu feb 04 21
 (u)AwkwardDryad
 (p)1707

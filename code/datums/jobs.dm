@@ -436,7 +436,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	slot_belt = /obj/item/device/pda2/heads
 	slot_poc1 = /obj/item/pen/fancy
 	slot_head = /obj/item/clothing/head/sea_captain/comm_officer_hat
-	items_in_backpack = list(/obj/item/device/camera_viewer, /obj/item/device/audio_log)
+	items_in_backpack = list(/obj/item/device/camera_viewer, /obj/item/device/audio_log, /obj/item/device/flash)
 
 	New()
 		..()
