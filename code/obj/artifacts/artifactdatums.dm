@@ -133,7 +133,7 @@ ABSTRACT_TYPE(/datum/artifact/)
 		return null
 
 	proc/get_rarity_modifier()
-		return src.rarity_weight ? (450 / src.rarity_weight) : 1 // ~ 5 for highest tier, 1.2 for lowest
+		return src.rarity_weight ? 0.995^src.rarity_weight : 0.2 // ~0.63 for tier 5, ~0.1 for tier 1
 
 // SPECIFIC DATUMS
 

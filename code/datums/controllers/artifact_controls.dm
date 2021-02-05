@@ -203,9 +203,9 @@ var/datum/artifact_controller/artifact_controls
 	proc/post_setup(obj/artifact)
 		var/datum/artifact/AD = artifact.artifact
 		var/rarityMod = AD.get_rarity_modifier()
-		if(prob(25))
+		if(prob(100*rarity_Mod))
 			artifact.transform = matrix(artifact.transform, -1, 1, MATRIX_SCALE)
-		if(prob(5 * rarityMod))
+		if(prob(20 * rarityMod))
 			artifact.transform = matrix(artifact.transform, 1, -1, MATRIX_SCALE)
 
 	proc/generate_name()
@@ -239,9 +239,9 @@ var/datum/artifact_controller/artifact_controls
 		. = ..()
 		var/datum/artifact/AD = artifact.artifact
 		var/rarityMod = AD.get_rarity_modifier()
-		if(prob(5 * rarityMod))
+		if(prob(50 * rarityMod))
 			artifact.transform = matrix(artifact.transform, 1.1, 1.1, MATRIX_SCALE)
-		if(prob(10 * rarityMod))
+		if(prob(100 * rarityMod))
 			var/col = rand(160, 230)
 			artifact.color = rgb(col, col, col)
 
@@ -277,9 +277,9 @@ var/datum/artifact_controller/artifact_controls
 		. = ..()
 		var/datum/artifact/AD = artifact.artifact
 		var/rarityMod = AD.get_rarity_modifier()
-		if(prob(5 * rarityMod))
+		if(prob(50 * rarityMod))
 			artifact.transform = matrix(artifact.transform, rand(-10, 10), MATRIX_ROTATE)
-		if(prob(40))
+		if(prob(200 * rarityMod))
 			artifact.color = rgb(rand(240, 255), rand(240, 255), rand(240, 255))
 
 	generate_name()
@@ -319,15 +319,15 @@ var/datum/artifact_controller/artifact_controls
 		. = ..()
 		var/datum/artifact/AD = artifact.artifact
 		var/rarityMod = AD.get_rarity_modifier()
-		if(prob(70))
-			var/hue1 = prob(10*rarityMod) ? rand(360) : (55 + rand(-10, 10))
+		if(prob(300*rarityMod))
+			var/hue1 = prob(100*rarityMod) ? rand(360) : (55 + rand(-10, 10))
 			var/list/col1
-			if(prob(20*rarityMod))
+			if(prob(150*rarityMod))
 				col1 = hsv2rgblist(hue1, rand() * 0.2 + 0.5, rand() * 0.2 + 0.6)
 			else
 				col1 = list(255, 168, 0)
 			var/hue2 = 180 + hue1 + rand(-135, 135)
-			if(prob(10*rarityMod))
+			if(prob(100*rarityMod))
 				hue2 = rand(360)
 			var/list/col2 = hsv2rgblist(hue2, rand() * 0.3 + 0.7, rand() * 0.1 + 0.9)
 			artifact.color = list(
@@ -341,7 +341,7 @@ var/datum/artifact_controller/artifact_controls
 				0,
 				1
 			)
-		if(prob(5*rarityMod))
+		if(prob(50*rarityMod))
 			artifact.alpha = rand(200, 255)
 
 	generate_name()
