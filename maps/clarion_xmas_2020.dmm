@@ -14500,10 +14500,7 @@
 "azC" = (
 /obj/machinery/door/firedoor/border_only,
 /obj/table/reinforced/auto,
-/obj/item/reagent_containers/food/snacks/cake/chocolate{
-	desc = "Holy shit! This cake probably costs more than the gross domestic product of Bulgaria!";
-	name = "Extravagant Chocolate Gateau"
-	},
+/obj/item/reagent_containers/food/snacks/cake/chocolate/gateau,
 /obj/disposalpipe/segment/food{
 	dir = 4
 	},

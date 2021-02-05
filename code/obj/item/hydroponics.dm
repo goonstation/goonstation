@@ -594,3 +594,8 @@
 	rc_flags = RC_SCALE
 	initial_volume = 250
 	initial_reagents = list("saltpetre"=50, "ammonia"=50, "potash"=50, "poo"=50, "space_fungus"=50)
+
+/obj/item/reagent_containers/glass/water_pipe
+	name = "water pipe"
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "bong"

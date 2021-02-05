@@ -11535,10 +11535,7 @@
 	req_access_txt = "28"
 	},
 /obj/machinery/cashreg,
-/obj/item/reagent_containers/food/snacks/cake/chocolate{
-	desc = "Holy shit! This cake probably costs more than the gross domestic product of Bulgaria!";
-	name = "Extravagant Chocolate Gateau"
-	},
+/obj/item/reagent_containers/food/snacks/cake/chocolate/gateau,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/cafeteria)
 "avT" = (

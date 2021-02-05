@@ -194,6 +194,7 @@ var/list/dirty_keystates = list()
 
 		if (parameters["left"])	//Had to move this up into here as the clickbuffer was causing issues.
 			var/list/contexts = mob.checkContextActions(object)
+			
 			if(length(contexts))
 				mob.showContextActions(contexts, object)
 				return

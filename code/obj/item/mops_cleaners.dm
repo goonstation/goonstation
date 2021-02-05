@@ -921,6 +921,8 @@ WET FLOOR SIGN
 		if(ON_COOLDOWN(src, "suck", 0.3 SECONDS))
 			return
 		var/turf/T = get_turf(target)
+		if(isnull(T)) // fluids getting disposed or something????
+			return
 		new/obj/effect/suck(T, get_dir(T, user))
 		if(src.suck(T, user))
 			playsound(T, "sound/effects/suck.ogg", 20, TRUE, 0, 1.5)

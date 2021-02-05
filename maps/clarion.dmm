@@ -14545,10 +14545,7 @@
 /area/station/crew_quarters/bar)
 "azC" = (
 /obj/table/reinforced/auto,
-/obj/item/reagent_containers/food/snacks/cake/chocolate{
-	desc = "Holy shit! This cake probably costs more than the gross domestic product of Bulgaria!";
-	name = "Extravagant Chocolate Gateau"
-	},
+/obj/item/reagent_containers/food/snacks/cake/chocolate/gateau,
 /obj/disposalpipe/segment/food{
 	dir = 4
 	},
@@ -15422,7 +15419,7 @@
 "aBw" = (
 /obj/table/reinforced/auto,
 /obj/item/reagent_containers/food/snacks/breadloaf,
-/obj/item/reagent_containers/glass/bottle/icing,
+/obj/item/reagent_containers/food/drinks/drinkingglass/icing,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "aBx" = (

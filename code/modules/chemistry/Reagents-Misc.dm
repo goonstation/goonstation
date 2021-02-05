@@ -651,9 +651,9 @@ datum
 				return
 
 			reaction_obj(var/obj/item/O, var/volume)
-				if (istype(O) && prob(80))
+				if (istype(O))
 					if (O.burning)
-						O.burning = 0
+						O.combust_ended()
 				return
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)

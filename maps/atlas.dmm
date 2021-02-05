@@ -2713,7 +2713,7 @@
 /obj/table/auto,
 /obj/item/paper/book/cookbook,
 /obj/item/kitchen/rollingpin,
-/obj/item/reagent_containers/glass/bottle/icing,
+/obj/item/reagent_containers/food/drinks/drinkingglass/icing,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "gV" = (
@@ -8366,6 +8366,10 @@
 	layer = 9.1;
 	pixel_x = -10
 	},
+/obj/item/reagent_containers/glass/water_pipe{
+	pixel_x = 7;
+	pixel_y = 5
+	},
 /turf/simulated/floor/green/side{
 	dir = 8
 	},
@@ -11328,7 +11332,6 @@
 	pixel_x = -7
 	},
 /obj/item/clipboard/with_pen{
-	name = "clipboard";
 	pixel_x = 6
 	},
 /obj/item/pen/fancy,
