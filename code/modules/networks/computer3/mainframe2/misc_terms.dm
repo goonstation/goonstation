@@ -4460,9 +4460,9 @@
 			use_power(80)
 
 			if (src.temperature < src.temptarget)
-				src.temperature += 5
+				src.temperature += min(5, src.temptarget-src.temperature)
 			else if (src.temperature > src.temptarget)
-				src.temperature -= 5
+				src.temperature -= min(5, src.temperature-src.temptarget)
 
 			if (src.temperature != 310)
 				for (var/obj/M in src.loc.contents)
@@ -4572,8 +4572,9 @@
 
 			if ("pulse")
 				var/duration = text2num(packetData["duration"])
-				if (isnum(duration) && (duration >= 200 && duration <= 400))
-					temptarget = duration
+				if (isnum(duration) )
+					if(duration >= 200 && duration <= 400)
+						temptarget = duration
 				else
 					message_host("command=nack")
 					return
