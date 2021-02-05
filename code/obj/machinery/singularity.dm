@@ -281,11 +281,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	src.energy += gain
 
 /obj/machinery/the_singularity/proc/get_center()
-	. = get_turf(src)
-	//if(!(get_step(., SOUTHWEST) in src.locs)) // I hate this, neither `loc` nor `get_turf` behave consistently, sometimes they are the center tile and sometimes they are the south west tile, aaaa
-	if(has_moved)
-		. = get_step(., NORTHEAST)
-	return loc
+	return src.loc
 
 
 /obj/machinery/the_singularity/attackby(var/obj/item/I as obj, var/mob/user as mob)
