@@ -320,7 +320,7 @@ var/datum/artifact_controller/artifact_controls
 		var/datum/artifact/AD = artifact.artifact
 		var/rarityMod = AD.get_rarity_modifier()
 		if(prob(70))
-			var/hue1 = prob(90/rarityMod) ? (55 + rand(-10, 10)) : rand(360)
+			var/hue1 = prob(10*rarityMod) ? rand(360) : (55 + rand(-10, 10))
 			var/list/col1
 			if(prob(80/rarityMod))
 				col1 = list(255, 168, 0)
