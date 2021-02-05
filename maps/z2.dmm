@@ -39025,7 +39025,7 @@
 	},
 /area/crypt/sigma)
 "bSb" = (
-/obj/storage/secure/closet/command/ruined/hos,
+/obj/storage/closet/command/ruined/hos,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},

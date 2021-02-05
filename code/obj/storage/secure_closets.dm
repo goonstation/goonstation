@@ -29,15 +29,6 @@
 	icon_closed = "command"
 	icon_opened = "secure_blue-open"
 
-/obj/storage/secure/closet/command/ruined //replacements for azones and mining level flavor
-	name = "\improper Dented command locker"
-	desc = "This thing looks ransacked."
-	icon_state = "dented_c"
-	icon_closed = "dented_c"
-	icon_opened = "dented_c-open"
-	req_access = null
-	spawn_contents = list()
-
 /obj/storage/secure/closet/command/captain
 	name = "\improper Captain's locker"
 	spawn_contents = list(/obj/item/gun/energy/egun,
@@ -79,17 +70,7 @@
 	/obj/item/stamp/hos,
 	/obj/item/device/radio/headset/command/hos,
 	/obj/item/clothing/shoes/swat/heavy,
-
 	/obj/item/barrier)
-
-/obj/storage/secure/closet/command/ruined/hos //rejoice HoS players
-	name = "\improper Dented Head of Security's locker"
-	desc = "A banged up Head of Security locker. Looks like somebody took the law into their own hands."
-	icon_state = "dented_c"
-	icon_closed = "dented_c"
-	icon_opened = "dented_c-open"
-	req_access = null
-	spawn_contents = list(/obj/item/clothing/shoes/brown)
 
 /obj/storage/secure/closet/command/hop
 	name = "\improper Head of Personnel's locker"
