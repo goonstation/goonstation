@@ -1,4 +1,46 @@
 
+(t)thu feb 04 21
+(u)AwkwardDryad
+(p)1707
+(e)🆕🗺🔄🎨|feature, mapping, rework, sprites
+(*)Added modular cakes - Create a cute cakes!・Frost with chems for fun designs!・Add toppings!
+(+)Items that are on fire now extinguish properly after being splashed with water or firefighting foam, fire extinguished, or dunked in sinks.
+(u)BenLubar
+(p)3486
+(e)|
+(*)Cyborgs can now drag humans into the industrial cryogenic storage unit, and don't need to be holding an item to put themselves in.
+(u)TTerc
+(p)3586
+(e)🐛|bug
+(+)Traitors and miscreants can now roll the "Destroy the Captain's ship in a bottle." objective on Manta.
+(u)TTerc
+(p)3589
+(e)🆕|feature
+(+)Water pipes can now be found in hacked GardenGear vendors.
+(u)Superlagg
+(p)3579
+(e)⚖|balance
+(+)The Wizards Federation has made a magical breakthrough! Rathens' Secret now has no problem severing light cyberlimbs.
+(u)zjdtmkhzt
+(p)3602
+(e)|
+(+)Electroplaters should now only take one bar from a stack.
+(u)Stonepillar
+(p)3592
+(e)🆕|feature
+(+)You can put crayons into clown shoes and the shoes will automatically draw on the ground. Requires Klutz trait.
+(t)wed feb 03 21
+(u)Emily
+(e)🆕|feature
+(*)Three new chickens! See minor changes for clues.
+(+)Ixworth chicken egg feed now only extends the lifespan of chickens; it doesn't make them immortal.
+(+)My hour is almost come, when I to sulph'rous and tormenting flames, must render up myself. [Gen 2] [From Black Silkies]
+(+)Some call these glass cannons, I call them high wizards [Gen 2] [From Glass Chickens]
+(+)These chickens are rather chilly, and you better keep them that way lest they melt. [Gen 2] [From White Silkies]
+(t)tue feb 02 21
+(u)Emily
+(e)|
+(+)Selkie chickens now come from White Silkies, not Black Silkies as they did previously.
 (t)mon feb 01 21
 (u)Superlagg
 (p)3297

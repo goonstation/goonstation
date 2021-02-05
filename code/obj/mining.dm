@@ -1054,6 +1054,8 @@
 		src.icon_state = pick("ast1","ast2","ast3")
 		..()
 		worldgenCandidates += src
+		if(current_state <= GAME_STATE_PREGAME)
+			src.build_icon()
 
 	generate_worldgen()
 		. = ..()
@@ -1176,12 +1178,15 @@
 		return
 
 	proc/build_icon(var/wipe_overlays = 0)
+		/*
 		if (wipe_overlays)
 			src.overlays = list()
 		var/image/coloration = image(src.icon,"color_overlay")
 		coloration.blend_mode = 4
 		coloration.color = src.stone_color
 		src.overlays += coloration
+		*/
+		src.color = src.stone_color
 
 	proc/space_overlays()
 		for (var/turf/space/A in orange(src,1))
@@ -1190,7 +1195,7 @@
 			edge_overlay.layer = src.layer + 1
 			edge_overlay.plane = PLANE_FLOOR
 			edge_overlay.layer = TURF_EFFECTS_LAYER
-			//edge_overlay.color = src.stone_color
+			edge_overlay.color = src.stone_color
 			A.overlays += edge_overlay
 			src.space_overlays += edge_overlay
 
@@ -1361,7 +1366,7 @@
 	step_priority = STEP_PRIORITY_MED
 	has_material = FALSE
 	var/sprite_variation = 1
-	var/stone_color = null
+	var/stone_color = "#CCCCCC"
 	var/image/coloration_overlay = null
 	var/list/space_overlays = list()
 	turf_flags = MOB_SLIP | MOB_STEP | IS_TYPE_SIMULATED | FLUID_MOVE
@@ -1421,15 +1426,18 @@
 
 	update_icon()
 		src.overlays = list()
+		/*
 		if (!coloration_overlay)
 			coloration_overlay = image(src.icon, "color_overlay")
 		coloration_overlay.color = src.stone_color
 		src.overlays += coloration_overlay
+		*/
+		src.color = src.stone_color
 		#ifndef UNDERWATER_MAP
 		if (fullbright)
 			src.overlays += /image/fullbright //Fixes perma-darkness
 		#endif
-		SPAWN_DBG(1 DECI SECOND)
+		SPAWN_DBG(0)
 			if (istype(src)) //Wire note: just roll with this ok
 				for (var/turf/simulated/wall/asteroid/A in orange(src,1))
 					src.apply_edge_overlay(get_dir(src, A))
@@ -1438,7 +1446,7 @@
 
 	proc/apply_edge_overlay(var/thedir) //For overlays ON THE FLOOR TILE
 		var/image/dig_overlay = image('icons/turf/asteroid.dmi', "edge[thedir]")
-		//dig_overlay.color = src.stone_color
+		dig_overlay.color = src.stone_color
 		dig_overlay.appearance_flags = PIXEL_SCALE | TILE_BOUND | RESET_COLOR | RESET_ALPHA
 		//dig_overlay.layer = src.layer + 1
 		src.overlays += dig_overlay
@@ -1449,7 +1457,7 @@
 			edge_overlay.appearance_flags = PIXEL_SCALE | TILE_BOUND | RESET_COLOR | RESET_ALPHA
 			edge_overlay.plane = PLANE_FLOOR
 			edge_overlay.layer = TURF_EFFECTS_LAYER
-			//edge_overlay.color = src.stone_color
+			edge_overlay.color = src.stone_color
 			A.overlays += edge_overlay
 			src.space_overlays += edge_overlay
 

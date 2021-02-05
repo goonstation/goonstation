@@ -1003,7 +1003,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		var/amt_to_emit = (chem_amt <= 0.1) ? chem_amt : (chemR.maximum_volume * O.special_data["chem_pct_app_tile"])
 
 		var/datum/reagents/copied = new/datum/reagents(amt_to_emit)
-		copied = chemR.copy_to(copied, 1, copy_temperature = 1)
+		copied = chemR.copy_to(copied, amt_to_emit/chemR.total_volume, copy_temperature = 1)
 
 		if(!T.reagents) // first get the turf
 			T.create_reagents(100)

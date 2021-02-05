@@ -4,7 +4,7 @@
 
 /datum/artifact/plant_helper
 	associated_object = /obj/machinery/artifact/plant_helper
-	rarity_class = 2
+	rarity_weight = 350
 	validtypes = list("martian","precursor")
 	validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/electric,/datum/artifact_trigger/carbon_touch)
 	activated = 0

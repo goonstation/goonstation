@@ -8629,8 +8629,7 @@
 /area/station/hallway/primary/north)
 "avg" = (
 /obj/stool/chair/boxingrope_corner{
-	dir = 10;
-	icon_state = "ringrope"
+	dir = 10
 	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
@@ -8644,8 +8643,7 @@
 /area/station/crew_quarters/fitness)
 "avj" = (
 /obj/stool/chair/boxingrope_corner{
-	dir = 6;
-	icon_state = "ringrope"
+	dir = 6
 	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
@@ -18517,7 +18515,6 @@
 /area/station/medical/dome)
 "aSG" = (
 /obj/overlay{
-	anchored = 1;
 	icon = 'icons/misc/beach2.dmi';
 	icon_state = "palm1";
 	layer = 10;
@@ -21363,7 +21360,6 @@
 /area/station/maintenance/solar/west)
 "aZk" = (
 /obj/overlay{
-	anchored = 1;
 	icon = 'icons/misc/beach2.dmi';
 	icon_state = "palm2";
 	layer = 10;
@@ -23010,7 +23006,7 @@
 "bdt" = (
 /obj/table/auto,
 /obj/item/kitchen/rollingpin,
-/obj/item/reagent_containers/glass/bottle/icing,
+/obj/item/reagent_containers/food/drinks/drinkingglass/icing,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "bdu" = (
@@ -24658,7 +24654,7 @@
 	pixel_x = -4;
 	pixel_y = 3
 	},
-/obj/item/reagent_containers/glass/bottle/icing{
+/obj/item/reagent_containers/food/drinks/drinkingglass/icing{
 	pixel_x = 4
 	},
 /turf/simulated/floor/black,
@@ -24949,7 +24945,6 @@
 /area/station/medical/medbay)
 "biB" = (
 /obj/overlay{
-	anchored = 1;
 	icon = 'icons/misc/beach2.dmi';
 	icon_state = "palm1";
 	layer = 10;
@@ -30894,6 +30889,10 @@
 	name = "100% synthetic freerange monkey sandwich";
 	pixel_x = -7;
 	pixel_y = 9
+	},
+/obj/item/reagent_containers/glass/water_pipe{
+	pixel_x = -7;
+	pixel_y = 5
 	},
 /turf/simulated/floor/green/side{
 	dir = 1
@@ -59181,7 +59180,6 @@
 	},
 /obj/machinery/computer/riotgear{
 	dir = 4;
-	icon_state = "drawbr0";
 	pixel_x = -28
 	},
 /turf/simulated/floor/engine,

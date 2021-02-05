@@ -19,8 +19,16 @@
 	anchored = 0
 	density = 1
 	layer = MOB_LAYER
+	var/mob/mob_inside
 
-/mob/proc/become_statue(var/datum/material/M, var/newDesc = null)
+	Exited(atom/movable/AM, atom/newloc)
+		. = ..()
+		if(AM == src.mob_inside)
+			boutput(src.mob_inside, "<span class='alert'>Some kind of force rips your statue-bound body apart.</span>")
+			src.mob_inside.remove()
+			src.mob_inside = null
+
+/mob/proc/become_statue(var/datum/material/M, var/newDesc = null, survive=FALSE)
 	var/obj/statue/statueperson = new /obj/statue(get_turf(src))
 	src.pixel_x = 0
 	src.pixel_y = 0
@@ -33,7 +41,10 @@
 		statueperson.real_desc = src.get_desc()
 	statueperson.setMaterial(M)
 	statueperson.set_dir(src.dir)
-	src.remove()
+	if(!survive)
+		src.remove()
+	else
+		statueperson.mob_inside = src
 	return statueperson
 
 /mob/proc/become_statue_ice()

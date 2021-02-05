@@ -1,4 +1,3 @@
-//The reaction procs must ALWAYS set src = null, this detaches the proc from the object (the reagent)
 //so that it can continue working when the reagent is deleted while the proc is still active.
 
 //important MBC reagent note : implement mult for on_mob_life(). needed for proper realtime processing. lookk for examples, there are plenty
@@ -167,18 +166,16 @@ datum
 			M.material?.triggerChem(M, src, volume)
 			for(var/atom/A in M)
 				if(A.material) A.material.triggerChem(A, src, volume)
-			src = null
 			return did_not_react
 
 		proc/reaction_obj(var/obj/O, var/volume) //By default we transfer a small part of the reagent to the object
-			src = null						//if it can hold reagents. nope!
+								//if it can hold reagents. nope!
 			O.material?.triggerChem(O, src, volume)
 			//if(O.reagents)
 			//	O.reagents.add_reagent(id,volume/3)
 			return 1
 
 		proc/reaction_turf(var/turf/T, var/volume)
-			src = null
 			T.material?.triggerChem(T, src, volume)
 			return 1 // returns 1 to spawn fluid. Checked in 'reaction()' proc of Chemistry-Holder.dm
 
@@ -341,7 +338,6 @@ datum
 			transparency = 40
 
 			reaction_turf(var/turf/T, var/volume)
-				src = null
 				if(volume >= 5)
 					if(!locate(/turf/unsimulated/floor/void) in T)
 						playsound(T, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)

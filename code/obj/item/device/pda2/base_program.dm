@@ -178,6 +178,8 @@
 			return 1
 		if ((!usr.contents.Find(src.master) && (!in_interact_range(src.master, usr) || !istype(src.master.loc, /turf) || !isAI(usr))) && (!issilicon(usr) && !isAI(usr)))
 			return 1
+		if(isghostdrone(usr))
+			return 1
 		if(usr.stat || usr.restrained())
 			return 1
 		if(!(holder in src.master.contents))

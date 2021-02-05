@@ -9,6 +9,7 @@
 ////////////////
 proc/make_cleanable(var/type,var/loc,var/list/viral_list)
 	var/obj/decal/cleanable/C = unpool(type)
+	C.name = initial(C.name) // ugh
 	C.setup(loc,viral_list)
 	.= C
 
@@ -280,6 +281,8 @@ proc/make_cleanable(var/type,var/loc,var/list/viral_list)
 						O.add_blood(src)
 
 	proc/set_sample_reagent_custom(var/reagent_id, var/amt = 10)
+		if(isnull(reagent_id))
+			return
 		if (!src.reagents)
 			src.create_reagents(reagents_max)
 		else
@@ -296,7 +299,8 @@ proc/make_cleanable(var/type,var/loc,var/list/viral_list)
 			src.color = src.reagents.get_average_rgb()
 		else
 			var/datum/reagent/reagent = reagents_cache[src.sample_reagent]
-			src.color = rgb(reagent.fluid_r, reagent.fluid_g, reagent.fluid_b)
+			if(reagent)
+				src.color = rgb(reagent.fluid_r, reagent.fluid_g, reagent.fluid_b)
 
 
 	HasEntered(atom/movable/AM as mob|obj)
@@ -1730,6 +1734,9 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 
 /// Input a cardinal direction, it'll throw it somewhere within +-45 degrees of that direction. More or less.
 /obj/decal/cleanable/proc/streak_cleanable(var/list/directions, var/randcolor = 0, var/full_streak)
+	if(isnull(get_turf(src)))
+		CRASH("Attempting to streak cleanable [src] which is in null.")
+
 	var/destination
 	var/dist = rand(1,6)
 	if(prob(10))
@@ -1738,6 +1745,8 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 		destination = pick(directions)
 		if(!(destination in cardinal))
 			destination = null
+	else if(isnum(directions))
+		destination = directions
 
 	if(destination)
 		destination = GetRandomPerimeterTurf(get_turf(src), dist, destination)

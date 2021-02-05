@@ -338,15 +338,6 @@
 	amount_per_transfer_from_this = 5
 	rc_flags = RC_FULLNESS
 
-/obj/item/reagent_containers/glass/bottle/icing
-	name = "icing tube"
-	desc = "Used to put icing on cakes."
-	icon = 'icons/obj/foodNdrink/food.dmi'
-	icon_state = "icing_tube"
-	initial_volume = 50
-	amount_per_transfer_from_this = 5
-	rc_flags = RC_FULLNESS
-
 /obj/item/reagent_containers/glass/bottle/holywater
 	name = "Holy Water"
 	desc = "A small bottle filled with blessed water."
