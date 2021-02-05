@@ -261,7 +261,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 				if (src.can_selfdestruct == 1)
 					dat += "[do_divider == 1 ? "<HR>" : ""]<A href='byond://?src=\ref[src];selfdestruct=1'>Self-Destruct</A>"
 
-		usr.Browse(jointext(dat), "window=radio")
+		usr.Browse(jointext(dat, ""), "window=radio")
 		onclose(usr, "radio")
 		return
 
