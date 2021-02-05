@@ -11,6 +11,7 @@
 	var/maxrange = 5 //max range for the thing.
 	var/connected = 0 //amount of tiles "connected" to.
 	var/list/connectedto = list() //the tiles its connected to
+	passthrough = 1 //drones can pass through this, might change this later, as balance point
 	poweruse = 0
 	usesgroups = 1
 	icon_state = "collector"

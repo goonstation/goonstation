@@ -10,6 +10,7 @@
 	var/charge_status = -1 //-1 == not charged,0 == losing charge, 1 == charging, 2 == charged
 	var/charge = 0 //0-100 charge percent
 	var/powered = 0
+	passthrough = 1 //drones can pass through this, might change this later, as balance point
 	usesgroups = 1
 	poweruse = 20//debug amount scale up if needed.
 
@@ -46,21 +47,18 @@
 				var/mob/m = null
 				var/list/hit = list()
 				for(m in mobs)
-					if(IN_RANGE(m, src, 5) && !isflock(m))
+					if(IN_RANGE(m, src, 5) && !isflock(m) && isturf(m.loc) && src.flock?.isEnemy(m))
 						break//found target
 				if(!m) return//if no target stop
 				var/chain = rand(5, 6)
 				arcFlash(src, m, 10000)
 				hit += m
 				while(chain > 0)
-					for(var/mob/nearbymob in range(3, m))//todo: optimize this.
-						world.log << "[m] is m in the loop"
-						if(nearbymob != m && !(nearbymob in hit) && !isflock(nearbymob))
+					for(var/mob/nearbymob in range(2, m))//todo: optimize(?) this.
+						if(nearbymob != m && !isflock(nearbymob) && !(nearbymob in hit) && isturf(nearbymob.loc) && src.flock?.isEnemy(nearbymob))
 							arcFlash(m, nearbymob, 10000)
 							hit += nearbymob
-							world.log << "[m] is m before being set to [nearbymob]"
 							m = nearbymob
-							world.log << "[m] is m after being set to [nearbymob]"
 						chain--//infinite loop prevention, wouldve been in the if statement.
 				hit.len = 0//clean up
 				charge = 1
