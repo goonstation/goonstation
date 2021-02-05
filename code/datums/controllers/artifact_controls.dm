@@ -203,7 +203,7 @@ var/datum/artifact_controller/artifact_controls
 	proc/post_setup(obj/artifact)
 		var/datum/artifact/AD = artifact.artifact
 		var/rarityMod = AD.get_rarity_modifier()
-		if(prob(100*rarity_Mod))
+		if(prob(100*rarityMod))
 			artifact.transform = matrix(artifact.transform, -1, 1, MATRIX_SCALE)
 		if(prob(20 * rarityMod))
 			artifact.transform = matrix(artifact.transform, 1, -1, MATRIX_SCALE)
