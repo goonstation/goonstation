@@ -880,7 +880,7 @@
 					make_spitter(M)
 
 			M.add_stam_mod_max("zombie", 100)
-			M.add_stam_mod_regen("zombie", -5)
+			APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "zombie", -5)
 
 	proc/make_bubs(var/mob/living/carbon/human/M)
 		M.bioHolder.AddEffect("strong")
@@ -910,7 +910,7 @@
 	disposing()
 		if (ishuman(mob))
 			mob.remove_stam_mod_max("zombie")
-			mob.remove_stam_mod_regen("zombie")
+			REMOVE_MOB_PROPERTY(mob, PROP_STAMINA_REGEN_BONUS, "zombie")
 		..()
 
 	proc/add_ability(var/mob/living/carbon/human/H)
@@ -1036,12 +1036,12 @@
 		if(ishuman(mob))
 			src.add_ability(mob)
 			M.add_stam_mod_max("vamp_zombie", 100)
-			//M.add_stam_mod_regen("vamp_zombie", 15)
+			//APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "vamp_zombie", 15)
 
 	disposing()
 		if (ishuman(mob))
 			mob.remove_stam_mod_max("vamp_zombie")
-			//mob.remove_stam_mod_regen("vamp_zombie")
+			//REMOVE_MOB_PROPERTY(mob, PROP_STAMINA_REGEN_BONUS, "vamp_zombie")
 		..()
 
 	proc/add_ability(var/mob/living/carbon/human/H)
@@ -1150,7 +1150,7 @@
 	New(var/mob/living/carbon/human/M)
 		if(ruff_tuff_and_ultrabuff && ishuman(M))
 			M.add_stam_mod_max("abomination", 1000)
-			M.add_stam_mod_regen("abomination", 1000)
+			APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "abomination", 1000)
 			M.add_stun_resist_mod("abomination", 1000)
 			APPLY_MOB_PROPERTY(M, PROP_CANTSPRINT, src)
 		last_drain = world.time
@@ -1159,7 +1159,7 @@
 	disposing()
 		if(mob)
 			mob.remove_stam_mod_max("abomination")
-			mob.remove_stam_mod_regen("abomination")
+			REMOVE_MOB_PROPERTY(mob, PROP_STAMINA_REGEN_BONUS, "abomination")
 			mob.remove_stun_resist_mod("abomination")
 			REMOVE_MOB_PROPERTY(mob, PROP_CANTSPRINT, src)
 		return ..()
@@ -1248,7 +1248,7 @@
 			mob.AddComponent(/datum/component/consume/can_eat_inedible_organs, 1) // can also eat heads
 			mob.mob_flags |= SHOULD_HAVE_A_TAIL
 			mob.add_stam_mod_max("werewolf", 40) // Gave them a significant stamina boost, as they're melee-orientated (Convair880).
-			mob.add_stam_mod_regen("werewolf", 9) //mbc : these increase as they feast now. reduced!
+			APPLY_MOB_PROPERTY(mob, PROP_STAMINA_REGEN_BONUS, "werewolf", 9) //mbc : these increase as they feast now. reduced!
 			mob.add_stun_resist_mod("werewolf", 40)
 			mob.max_health += 50
 			health_update_queue |= mob
@@ -1276,7 +1276,7 @@
 			var/datum/component/D = mob.GetComponent(/datum/component/consume/can_eat_inedible_organs)
 			D?.RemoveComponent(/datum/component/consume/can_eat_inedible_organs)
 			mob.remove_stam_mod_max("werewolf")
-			mob.remove_stam_mod_regen("werewolf")
+			REMOVE_MOB_PROPERTY(mob, PROP_STAMINA_REGEN_BONUS, "werewolf")
 			mob.remove_stun_resist_mod("werewolf")
 			mob.max_health -= 30
 			health_update_queue |= mob
@@ -1354,12 +1354,12 @@
 		. = ..()
 		if(ishuman(M))
 			M.add_stam_mod_max("hunter", 50)
-			M.add_stam_mod_regen("hunter", 10)
+			APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "hunter", 10)
 
 	disposing()
 		if(ishuman(mob))
 			mob.remove_stam_mod_max("hunter")
-			mob.remove_stam_mod_regen("hunter")
+			REMOVE_MOB_PROPERTY(mob, PROP_STAMINA_REGEN_BONUS, "hunter")
 		return ..()
 
 	sight_modifier()
@@ -1887,7 +1887,7 @@
 			if(ishuman(mob))
 				H.setStatus("maxhealth-", null, -50)
 				H.add_stam_mod_max("kudzu", -100)
-				H.add_stam_mod_regen("kudzu", -5)
+				APPLY_MOB_PROPERTY(H, PROP_STAMINA_REGEN_BONUS, "kudzu", -5)
 				H.bioHolder.AddEffect("xray", magical=1)
 				H.abilityHolder = new /datum/abilityHolder/kudzu(H)
 				H.abilityHolder.owner = H
@@ -1912,7 +1912,7 @@
 				H.abilityHolder.removeAbility(/datum/targetable/kudzu/kudzusay)
 				H.abilityHolder.removeAbility(/datum/targetable/kudzu/vine_appendage)
 			H.remove_stam_mod_max("kudzu")
-			H.remove_stam_mod_regen("kudzu")
+			REMOVE_MOB_PROPERTY(H, PROP_STAMINA_REGEN_BONUS, "kudzu")
 		return ..()
 /* Commented out as this bypasses restricted Z checks. We will just lazily give them xray genes instead
 	// vision modifier (see_mobs, etc i guess)
