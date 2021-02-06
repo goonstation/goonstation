@@ -15,6 +15,7 @@ var/global/list/logged_phrases = null
  *  ailaw - custom AI laws
  *  record - custom radio station record names
  *  emote - custom emotes
+ *  prayer - prayers
  */
 
 proc/load_logged_phrases()
