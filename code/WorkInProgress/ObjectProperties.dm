@@ -534,8 +534,10 @@ to say if there's demand for that.
 	desc = "Affects stamina regenration." //Value is flat effective change to stamina regeneration.
 	tooltipImg = "stamregen.png"
 	defaultValue = 1
+	
 	getTooltipDesc(var/obj/propOwner, var/propVal)
 		return "[propVal] stamina regen."
+
 	ASSOCIATE_MOB_PROPERTY(PROP_STAMINA_REGEN_BONUS)
 
 #undef ASSOCIATE_MOB_PROPERTY
