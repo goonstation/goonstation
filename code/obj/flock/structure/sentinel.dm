@@ -10,7 +10,10 @@
 	var/charge_status = -1 //-1 == not charged,0 == losing charge, 1 == charging, 2 == charged
 	var/charge = 0 //0-100 charge percent
 	var/powered = 0
+
+	event_handler_flags = USE_CANPASS
 	passthrough = 1 //drones can pass through this, might change this later, as balance point
+
 	usesgroups = 1
 	poweruse = 20//debug amount scale up if needed.
 

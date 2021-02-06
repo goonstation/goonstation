@@ -7,6 +7,7 @@
 	var/building = null //thing thats being built
 	var/currentmats = 0 //mats currently in the thing.
 	flock_id = "Construction Tealprint"
+	density = 0
 
 
 /obj/flock_structure/ghost/building_specific_info()

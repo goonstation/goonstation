@@ -16,7 +16,7 @@
 	var/bruteVuln = 1.2
 	var/fireVuln = 0.2 // very flame-retardant
 	var/datum/flock/flock = null
-	var/passthrough = 0 //can flockdrones pass through this akin to a grille?
+	var/passthrough = 0 //can flockdrones pass through this akin to a grille? need to set USE_CANPASS to make this work however
 	var/poweruse = 0 //does this use(/how much) power? (negatives mean it makes power)
 	var/usesgroups = 0 //not everything needs a group so dont check for everysingle god damn structure
 	var/datum/flock_tile_group/group = null //what group are we connected to?
@@ -201,7 +201,8 @@
 	src.visible_message("<span class='alert'>[src] is hit by the blob!/span>")
 
 /obj/flock_structure/CanPass(atom/movable/mover, turf/target)
-	if (src.passthrough && istype(mover, /mob/living/critter/flock/drone) && !mover:floorrunning)
+	var/mob/living/critter/flock/drone/d = mover
+	if(src.passthrough && istype(d) && !d.floorrunning)
 		animate_flock_passthrough(mover)
 		return 1
 	return ..()
