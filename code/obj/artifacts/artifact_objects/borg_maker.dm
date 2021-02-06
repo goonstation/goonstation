@@ -48,7 +48,7 @@
 
 			ArtifactLogs(user, null, O, "touched", "robotizing user", 0) // Added (Convair880).
 
-			if (ismonkey(user) || jobban_isbanned(user, "Cyborg"))
+			if (ismonkey(user) || jobban_isbanned(user, "Cyborg") || (user.traitHolder && user.traitHolder.hasTrait("electronicincompatibility")))
 				user.death()
 				user.ghostize()
 				var/robopath = pick(/obj/machinery/bot/guardbot,/obj/machinery/bot/secbot,

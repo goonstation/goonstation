@@ -900,6 +900,14 @@ obj/trait/pilot
 	points = 2
 	isPositive = 0
 
+/obj/trait/electronicincompatibility
+	name = "Electronic Incompatibility (0)"
+	cleanName = "Electronic Incompatibility"
+	desc = "You cannot be borged, but can still be cloned."
+	id = "electronicincompatibility"
+	points = 0
+	isPositive = 0
+
 /obj/trait/survivalist
 	name = "Survivalist (-1)"
 	cleanName = "Survivalist"
