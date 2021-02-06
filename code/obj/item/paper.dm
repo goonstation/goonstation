@@ -1473,3 +1473,9 @@ exposed to overconfident outbursts on the part of individuals unqualifed to embo
 		pixel_x = rand(-8, 8)
 		pixel_y = rand(-8, 8)
 		info = "<html><body style='margin:2px'><img src='[resource("images/pocket_guides/botanyguide.png")]'></body></html>"
+
+/obj/item/paper/iou
+	name = "IOU"
+	desc = "Somebody took whatever was in here."
+	icon_state = "postit-writing"
+	info = {"<h2>IOU</h2>"}

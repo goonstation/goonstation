@@ -531,4 +531,5 @@
 /obj/storage/closet/command/ruined/hos //rejoice HoS players
 	name = "Dented Head of Security's locker"
 	desc = "A banged up Head of Security locker. Looks like somebody took the law into their own hands."
-	spawn_contents = list(/obj/item/clothing/shoes/brown)
+	spawn_contents = list(/obj/item/clothing/shoes/brown,
+	/obj/item/paper/iou)
