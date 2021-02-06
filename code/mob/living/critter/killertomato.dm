@@ -35,6 +35,20 @@
 	add_abilities = list(/datum/targetable/critter/slam,
 						/datum/targetable/critter/bite)
 
+	pickup_grab_level = MOBCRITTER_GRAB_KILL
+	pickup_needs_lizard = 1 // very dangerous!
+	hold_two_handed = 1
+	hold_struggle_stam = 40
+	hold_struggle_stam_cost = 20
+	struggle_cooldown = 0.4 SECONDS
+	bag_throw_prob = 40
+	bag_mess_prob = 70
+	bag_escape_prob = 40
+	bag_dump_prob = 50
+	hold_response = HOLD_RESPONSE_VIOLENT
+	bag_response = BAG_RESPONSE_VIOLENT
+	w_class = 3 // they're pretty big
+
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
 		switch (act)
 			if ("scream")

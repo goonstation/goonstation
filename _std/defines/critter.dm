@@ -21,12 +21,24 @@
 #define BAG_RESPONSE_DISLIKE 2
 /// Hates being in a bad, will struggle and try to escape, mess with things in the bad, and will attack anyone for a while after escaping
 #define BAG_RESPONSE_VIOLENT 3
-/// critter pickupability flags
-/// Critter can't be picked up
+/// ObjCritter pickupability flags
+/// ObjCritter can't be picked up
 #define GRABBABLE_NEVER 0
-/// Critter needs lizard arms to pick up
+/// ObjCritter needs lizard arms to pick up
 #define GRABBABLE_LIZARD (1<<0)
-/// Critter must not be angry at someone to be picked up
+/// ObjCritter must not be angry at someone to be picked up
 #define GRABBABLE_NOT_WHILE_ANGRY (1<<1)
-/// Critter must not be angry *at the grabber* to be picked up
+/// ObjCritter must not be angry *at the grabber* to be picked up
 #define GRABBABLE_NOT_WHILE_ANGRY_AT_GRABBER (1<<2)
+
+// What level of grab is needed to pick up this MobCritter
+/// Never mind, mob can't be picked up
+#define MOBCRITTER_GRAB_NEVER 0
+/// Simple grab
+#define MOBCRITTER_GRAB_PASSIVE 1
+/// Aggressive grab
+#define MOBCRITTER_GRAB_AGGRESSIVE 2
+/// Neck grab
+#define MOBCRITTER_GRAB_NECK 3
+/// Kill grab
+#define MOBCRITTER_GRAB_KILL 4

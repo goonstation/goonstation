@@ -301,6 +301,17 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 	butcherable = 2
 	is_pet = 1
 
+	grab_flags = GRABBABLE_LIZARD | GRABBABLE_NOT_WHILE_ANGRY_AT_GRABBER
+	hold_two_handed = 1
+	hold_response = HOLD_RESPONSE_VIOLENT
+	bag_response = BAG_RESPONSE_VIOLENT
+	hold_struggle_stam = 60
+	bag_throw_prob = 0
+	bag_mess_prob = 0
+	bag_escape_prob = 30
+	temp_angry_duration = 10
+	w_class = 3
+
 	New()
 		..()
 		src.name = pick_string_autokey("names/seals.txt")
@@ -392,6 +403,16 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 	brutevuln = 0.5
 	butcherable = 1
 
+	grab_flags = GRABBABLE_LIZARD | GRABBABLE_NOT_WHILE_ANGRY_AT_GRABBER
+	hold_two_handed = 2
+	hold_response = HOLD_RESPONSE_VIOLENT
+	bag_response = BAG_RESPONSE_VIOLENT
+	hold_struggle_stam = 150
+	bag_throw_prob = 0
+	bag_mess_prob = 0
+	bag_escape_prob = 80
+	temp_angry_duration = 10
+	w_class = 3
 
 	seek_target()
 		src.anchored = 0

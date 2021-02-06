@@ -80,16 +80,11 @@
 
 	var/pull_w_class = 2
 
-	/// The meta-object holder thing that lets this mob be picked up by humans
-	var/obj/item/critter_shell/metaholder = null
+	pickup_grab_level = MOBCRITTER_GRAB_PASSIVE
 
 	blood_id = "blood"
 
 	New()
-//		if (ispath(default_task))
-//			default_task = new default_task
-//		if (ispath(current_task))
-//			current_task = new current_task
 
 		setup_hands()
 		post_setup_hands()

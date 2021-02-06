@@ -65,6 +65,17 @@
 
 	var/lastattacker
 
+	grab_flags = GRABBABLE_NOT_WHILE_ANGRY
+	hold_two_handed = 1
+	hold_response = HOLD_RESPONSE_CHILL
+	bag_response = BAG_RESPONSE_CHILL
+	hold_struggle_stam = 40
+	bag_throw_prob = 0
+	bag_mess_prob = 0
+	bag_escape_prob = 40
+	temp_angry_duration = 10
+	w_class = 3
+
 	New()
 		..()
 		src.create_reagents(honey_production_amount)
@@ -169,12 +180,15 @@
 						src.visible_message("<span class='alert'><b>[user]</b> attempts to wrangle [src], but [src] is [pick("mad","grumpy","hecka grumpy","agitated", "too angry")] and resists!</span>")
 					return
 
-				user.pulling = src
-				src.wanderer = 0
-				if (src.task == "wandering")
-					src.task = "thinking"
-				src.wrangler = user
-				src.visible_message("<span class='alert'><b>[user]</b> wrangles [src].</span>")
+				if(!src.wrangler)
+					user.pulling = src
+					src.wanderer = 0
+					if (src.task == "wandering")
+						src.task = "thinking"
+					src.wrangler = user
+					src.visible_message("<span class='alert'><b>[user]</b> wrangles [src].</span>")
+				else
+					src.grab_critter(user)
 
 			else
 

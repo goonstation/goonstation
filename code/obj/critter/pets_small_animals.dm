@@ -13,6 +13,17 @@
 	flying = 1
 	flags = FPRINT | CONDUCT | USEDELAY | TABLEPASS | FLUID_SUBMERGE
 
+	grab_flags = GRABBABLE_NOT_WHILE_ANGRY | GRABBABLE_LIZARD
+	hold_two_handed = 0
+	hold_response = HOLD_RESPONSE_CHILL
+	bag_response = BAG_RESPONSE_CHILL
+	hold_struggle_stam = 40
+	bag_throw_prob = 0
+	bag_mess_prob = 0
+	bag_escape_prob = 40
+	temp_angry_duration = 10
+	w_class = 1
+
 /obj/critter/roach
 	name = "cockroach"
 	desc = "An unpleasant insect that lives in filthy places."
@@ -29,11 +40,19 @@
 	butcherable = 1
 	flags = FPRINT | CONDUCT | USEDELAY | TABLEPASS | FLUID_SUBMERGE | FLUID_SUBMERGE
 
+	grab_flags = GRABBABLE_LIZARD
+	hold_two_handed = 0
+	hold_response = HOLD_RESPONSE_CHILL
+	bag_response = BAG_RESPONSE_CHILL
+	hold_struggle_stam = 5
+	bag_throw_prob = 0
+	bag_mess_prob = 0
+	bag_escape_prob = 5
+	temp_angry_duration = 10
+	w_class = 1
+
 	attack_hand(mob/user as mob)
-		if (src.alive && (user.a_intent != INTENT_HARM))
-			src.visible_message("<span class='combat'><b>[user]</b> pets [src]!</span>")
-			return
-		if (prob(95))
+		if (user.a_intent == INTENT_HARM && prob(95))
 			if(src.alive)
 				src.visible_message("<span class='combat'><B>[user] stomps [src], killing it instantly!</B></span>")
 				CritterDeath()
@@ -41,7 +60,8 @@
 			else
 				src.visible_message("<span class='combat'><B>[user] squishes [src] a little more for good measure.</B></span>")
 				return
-		..()
+		else
+			..()
 
 /obj/critter/mouse
 	name = "space mouse"
@@ -86,6 +106,18 @@
 	atk_diseases = list(/datum/ailment/disease/berserker, /datum/ailment/disease/space_madness)
 	atk_disease_prob = 35
 	atkcarbon = 1
+
+	grab_flags = GRABBABLE_LIZARD | GRABBABLE_NOT_WHILE_ANGRY_AT_GRABBER
+	hold_two_handed = 0
+	hold_response = HOLD_RESPONSE_VIOLENT
+	bag_response = BAG_RESPONSE_VIOLENT
+	hold_struggle_stam = 30
+	bag_throw_prob = 0
+	bag_mess_prob = 20
+	bag_escape_prob = 20
+	temp_angry_duration = 10
+	w_class = 1
+
 /*
 	CritterAttack(mob/living/M)
 		src.attacking = 1
@@ -148,6 +180,17 @@
 	aggressive = 0
 	generic = 0
 
+	grab_flags = GRABBABLE_NOT_WHILE_ANGRY_AT_GRABBER
+	hold_two_handed = 0
+	hold_response = HOLD_RESPONSE_CHILL
+	bag_response = BAG_RESPONSE_CHILL
+	hold_struggle_stam = 30
+	bag_throw_prob = 0
+	bag_mess_prob = 20
+	bag_escape_prob = 20
+	temp_angry_duration = 10
+	w_class = 1
+
 /obj/critter/opossum
 	name = "space opossum"
 	desc = "A possum that came from space. Or maybe went to space. Who knows how it got here?"
@@ -167,6 +210,17 @@
 
 	skinresult = /obj/item/material_piece/cloth/leather
 	max_skins = 1
+
+	grab_flags = GRABBABLE_LIZARD | GRABBABLE_NOT_WHILE_ANGRY
+	hold_two_handed = 1
+	hold_response = HOLD_RESPONSE_DISLIKE
+	bag_response = BAG_RESPONSE_DISLIKE
+	hold_struggle_stam = 30
+	bag_throw_prob = 0
+	bag_mess_prob = 20
+	bag_escape_prob = 20
+	temp_angry_duration = 10
+	w_class = 1
 
 	New()
 		. = ..()
@@ -231,6 +285,17 @@
 	var/randomize_cat = 1
 	var/catnip = 0
 	event_handler_flags = USE_HASENTERED | USE_PROXIMITY | USE_FLUID_ENTER
+
+	grab_flags = GRABBABLE_NOT_WHILE_ANGRY
+	hold_two_handed = 1
+	hold_response = HOLD_RESPONSE_CHILL
+	bag_response = BAG_RESPONSE_DISLIKE
+	hold_struggle_stam = 30
+	bag_throw_prob = 100
+	bag_mess_prob = 50
+	bag_escape_prob = 20
+	temp_angry_duration = 10
+	w_class = 2
 
 	New()
 		if(src.name == "jons the catte")
@@ -466,6 +531,17 @@
 	butcherable = 0
 	generic = 0
 
+	grab_flags = GRABBABLE_NOT_WHILE_ANGRY
+	hold_two_handed = 1
+	hold_response = HOLD_RESPONSE_CHILL
+	bag_response = BAG_RESPONSE_CHILL
+	hold_struggle_stam = INFINITY
+	bag_throw_prob = 100
+	bag_mess_prob = 50
+	bag_escape_prob = 100
+	temp_angry_duration = 10
+	w_class = 2
+
 	New()
 		. = ..()
 		START_TRACKING
@@ -516,7 +592,7 @@
 			M.changeStatus("weakened", 2 SECONDS)
 
 	attack_hand(mob/user as mob)
-		if (src.alive && (user.a_intent != INTENT_HARM))
+		if (src.alive && user.a_intent != INTENT_HARM && user.a_intent != INTENT_GRAB)
 			src.visible_message("<span class='combat'><b>[user]</b> pets [src]!</span>")
 			if(prob(30))
 				src.icon_state = "[src.doggy]-lying"
@@ -556,6 +632,17 @@
 	doggy = "pug"
 	is_pet = 2
 
+	grab_flags = GRABBABLE_NOT_WHILE_ANGRY
+	hold_two_handed = 1
+	hold_response = HOLD_RESPONSE_CHILL
+	bag_response = BAG_RESPONSE_CHILL
+	hold_struggle_stam = 30
+	bag_throw_prob = 15
+	bag_mess_prob = 50
+	bag_escape_prob = 20
+	temp_angry_duration = 10
+	w_class = 2
+
 var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pecan", "Daikon", "Seaweed")
 
 // am bad at dog names
@@ -566,6 +653,17 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 	doggy = "shiba"
 	var/randomize_shiba = 1
 
+	grab_flags = GRABBABLE_NOT_WHILE_ANGRY
+	hold_two_handed = 1
+	hold_response = HOLD_RESPONSE_CHILL
+	bag_response = BAG_RESPONSE_CHILL
+	hold_struggle_stam = 30
+	bag_throw_prob = 15
+	bag_mess_prob = 50
+	bag_escape_prob = 20
+	temp_angry_duration = 10
+	w_class = 2
+
 	New()
 		..()
 		if (src.randomize_shiba)
@@ -575,7 +673,18 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 	name = "highly illegal dog"
 	icon_state = "illegal"
 	var/doggy = "illegal"
+	contraband = 100
 
+	grab_flags = GRABBABLE_NOT_WHILE_ANGRY_AT_GRABBER
+	hold_two_handed = 1
+	hold_response = HOLD_RESPONSE_CHILL
+	bag_response = BAG_RESPONSE_CHILL
+	hold_struggle_stam = 30
+	bag_throw_prob = 15
+	bag_mess_prob = 50
+	bag_escape_prob = 20
+	temp_angry_duration = 10
+	w_class = 2
 /obj/critter/pig
 	name = "space pig"
 	desc = "A pig. In space."
@@ -601,6 +710,17 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 
 	skinresult = /obj/item/material_piece/cloth/leather
 	max_skins = 2
+
+	grab_flags = GRABBABLE_LIZARD | GRABBABLE_NOT_WHILE_ANGRY_AT_GRABBER
+	hold_two_handed = 1 // fun fact: the average lizard can suplex 12,900 hogs per hour at top efficiency
+	hold_response = HOLD_RESPONSE_DISLIKE
+	bag_response = BAG_RESPONSE_DISLIKE
+	hold_struggle_stam = 70 // greased-ass pig
+	bag_throw_prob = 40
+	bag_mess_prob = 50
+	bag_escape_prob = 20
+	temp_angry_duration = 10
+	w_class = 3
 
 	CritterDeath()
 		..()
@@ -669,6 +789,17 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 	chase_text = "swoops down upon"
 	var/feather_color = list("#803427","#7d5431")
 	var/last_feather_time = 0
+
+	grab_flags = GRABBABLE_NOT_WHILE_ANGRY
+	hold_two_handed = 1
+	hold_response = HOLD_RESPONSE_CHILL
+	bag_response = BAG_RESPONSE_CHILL
+	hold_struggle_stam = 30
+	bag_throw_prob = 15
+	bag_mess_prob = 50
+	bag_escape_prob = 20
+	temp_angry_duration = 10
+	w_class = 2
 
 	attackby(obj/item/W as obj, mob/M as mob)
 		if(istype(W,/obj/item/clothing/head/void_crown))
@@ -768,6 +899,17 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 	chase_text = "tackles"
 	var/feather_color = list("#393939","#f2ebd5","#68422a","#ffffff")
 	var/last_feather_time = 0
+
+	grab_flags = GRABBABLE_NOT_WHILE_ANGRY
+	hold_two_handed = 1
+	hold_response = HOLD_RESPONSE_VIOLENT
+	bag_response = BAG_RESPONSE_VIOLENT
+	hold_struggle_stam = 30
+	bag_throw_prob = 100
+	bag_mess_prob = 100
+	bag_escape_prob = 20
+	temp_angry_duration = 10
+	w_class = 2
 
 	ai_think()
 		..()
@@ -889,6 +1031,17 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 	var/hat_offset_x = 0						// same as above but for x axis
 	var/feather_color = "#ba1418"				// color(s) of feathers the bird can randomly spawn
 	var/last_feather_time = 0					// last world time a feather was spawned
+
+	grab_flags = GRABBABLE_NOT_WHILE_ANGRY
+	hold_two_handed = 1
+	hold_response = HOLD_RESPONSE_DISLIKE
+	bag_response = BAG_RESPONSE_CHILL // oh. bedtime
+	hold_struggle_stam = 30
+	bag_throw_prob = 100
+	bag_mess_prob = 100
+	bag_escape_prob = 20
+	temp_angry_duration = 10
+	w_class = 2
 
 	New(loc, nspecies)
 		..()
@@ -1657,6 +1810,17 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 	var/feather_color = list("#ffffff","#949494","#353535")
 	var/last_feather_time = 0
 
+	grab_flags = GRABBABLE_NOT_WHILE_ANGRY
+	hold_two_handed = 1
+	hold_response = HOLD_RESPONSE_DISLIKE
+	bag_response = BAG_RESPONSE_CHILL
+	hold_struggle_stam = 30
+	bag_throw_prob = 15
+	bag_mess_prob = 50
+	bag_escape_prob = 20
+	temp_angry_duration = 10
+	w_class = 2
+
 	patrol_to(var/turf/towhat)
 		.=..()
 		if (prob(1) && prob(22) && (src.last_feather_time + 3000) <= world.time)
@@ -1710,6 +1874,17 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 	flags = FPRINT | CONDUCT | USEDELAY | TABLEPASS | FLUID_SUBMERGE
 	var/feather_color = "#212121"
 	var/last_feather_time = 0
+
+	grab_flags = GRABBABLE_NOT_WHILE_ANGRY
+	hold_two_handed = 1
+	hold_response = HOLD_RESPONSE_CHILL
+	bag_response = BAG_RESPONSE_CHILL
+	hold_struggle_stam = 30
+	bag_throw_prob = 15
+	bag_mess_prob = 50
+	bag_escape_prob = 20
+	temp_angry_duration = 10
+	w_class = 2
 
 	New()
 		..()
@@ -1811,6 +1986,17 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 	var/dance_forever = 0
 	death_text = "%src% stops dancing forever."
 
+	grab_flags = GRABBABLE_NOT_WHILE_ANGRY
+	hold_two_handed = 1
+	hold_response = HOLD_RESPONSE_CHILL
+	bag_response = BAG_RESPONSE_CHILL
+	hold_struggle_stam = 30
+	bag_throw_prob = 0
+	bag_mess_prob = 0
+	bag_escape_prob = 20
+	temp_angry_duration = 10
+	w_class = 2
+
 	proc/do_a_little_dance()
 		if (src.icon_state == "boogie")
 			if (!src.muted)
@@ -1896,6 +2082,17 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 	var/lazy_state = "ferret-lazy"
 	var/lock_color = 0
 
+	grab_flags = GRABBABLE_NOT_WHILE_ANGRY
+	hold_two_handed = 1
+	hold_response = HOLD_RESPONSE_DISLIKE
+	bag_response = BAG_RESPONSE_DISLIKE
+	hold_struggle_stam = 45
+	bag_throw_prob = 100
+	bag_mess_prob = 100
+	bag_escape_prob = 60
+	temp_angry_duration = 4 // they distract easily
+	w_class = 2
+
 	New()
 		..()
 
@@ -1931,6 +2128,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 			src.freakout--
 			if (!src.freakout)
 				src.visible_message("\The [src] calms down.")
+				REMOVE_FLAG(src.grab_flags, GRABBABLE_LIZARD)
 
 		else
 			..()
@@ -1938,6 +2136,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 				if (src.alive && !src.sleeping && prob(2) && !src.lying && !src.freakout)
 					if (prob(50))
 						src.freakout = rand(10,20) //x * 1.6 (critter loop tickrate) = duration in seconds
+						ADD_FLAG(src.grab_flags, GRABBABLE_LIZARD)
 						return
 					else
 						src.lying = 1
@@ -2022,6 +2221,17 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 	skinresult = /obj/item/clothing/head/raccoon
 	max_skins = 1
 
+	grab_flags = GRABBABLE_NOT_WHILE_ANGRY | GRABBABLE_LIZARD
+	hold_two_handed = 1
+	hold_response = HOLD_RESPONSE_VIOLENT
+	bag_response = BAG_RESPONSE_VIOLENT
+	hold_struggle_stam = 45
+	bag_throw_prob = 100
+	bag_mess_prob = 100
+	bag_escape_prob = 60
+	temp_angry_duration = 10
+	w_class = 2
+
 	New()
 		..()
 		if (prob(10))
@@ -2058,6 +2268,17 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 	butcherable = 1
 	flags = FPRINT | CONDUCT | USEDELAY | TABLEPASS | FLUID_SUBMERGE
 	var/slime_chance = 22
+
+	grab_flags = GRABBABLE_LIZARD
+	hold_two_handed = 0
+	hold_response = HOLD_RESPONSE_CHILL
+	bag_response = BAG_RESPONSE_CHILL
+	hold_struggle_stam = 5
+	bag_throw_prob = 0
+	bag_mess_prob = 0
+	bag_escape_prob = 20
+	temp_angry_duration = 1
+	w_class = 2
 
 	attack_hand(mob/user as mob)
 		if (src.alive && (user.a_intent != INTENT_HARM))
@@ -2119,6 +2340,17 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 	generic = 1
 	angertext = "snips angrily at"
 	death_text = "%src% dies."
+
+	grab_flags = GRABBABLE_LIZARD | GRABBABLE_NOT_WHILE_ANGRY
+	hold_two_handed = 1
+	hold_response = HOLD_RESPONSE_CHILL
+	bag_response = BAG_RESPONSE_CHILL
+	hold_struggle_stam = 45
+	bag_throw_prob = 0
+	bag_mess_prob = 40
+	bag_escape_prob = 20
+	temp_angry_duration = 10
+	w_class = 2
 
 	attackby(obj/item/W as obj, mob/living/user as mob)
 		if (src.alive && istype(W, /obj/item/clothing/head/cowboy))
@@ -2203,3 +2435,14 @@ obj/critter/frog
 	atk_text = "hops into"
 	angertext = "croaks angrily at"
 	chase_text = "hops after"
+
+	grab_flags = GRABBABLE_LIZARD
+	hold_two_handed = 0
+	hold_response = HOLD_RESPONSE_CHILL
+	bag_response = BAG_RESPONSE_CHILL
+	hold_struggle_stam = 10
+	bag_throw_prob = 0
+	bag_mess_prob = 0
+	bag_escape_prob = 60
+	temp_angry_duration = 10
+	w_class = 1

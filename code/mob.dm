@@ -247,6 +247,7 @@
 	src.lastattacked = src //idk but it fixes bug
 	render_target = "\ref[src]"
 	mob_properties = list()
+	START_TRACKING
 
 /// do you want your mob to have custom hairstyles and stuff? don't use spawns but set all of those properties here
 /mob/proc/initializeBioholder()
@@ -297,6 +298,7 @@
 		G.affecting.glide_size = src.glide_size
 
 /mob/disposing()
+	STOP_TRACKING
 	for(var/mob/dead/target_observer/TO in observers)
 		observers -= TO
 		TO.ghostize()

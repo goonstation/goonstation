@@ -200,13 +200,17 @@
 
 				else if (user.is_hulk() || prob(75))
 					logTheThing("combat", src.assailant, src.affecting, "'s grip upped to aggressive on [constructTarget(src.affecting,"combat")]")
-					for(var/mob/O in AIviewers(src.assailant, null))
-						O.show_message("<span class='alert'>[src.assailant] has grabbed [src.affecting] aggressively (now hands)!</span>", 1)
 					icon_state = "reinforce"
 					src.state = GRAB_NECK //used to be '1'. SKIP LEVEL 1
+					/// If we picked the mob up, no need to continue, mob's in our hand(s)!
+					if(src.affecting.pickup_grab_level != MOBCRITTER_GRAB_NEVER && src.affecting != src.assailant)
+						var/mob/living/critter/mobcritter = src.affecting
+						if(mobcritter.try_pickup( src.assailant, src.state, src))
+							return
+					for(var/mob/O in AIviewers(src.assailant, null))
+						O.show_message("<span class='alert'>[src.assailant] has grabbed [src.affecting] aggressively (now hands)!</span>", 1)
 					if (!src.affecting.buckled)
 						set_affected_loc()
-
 					user.next_click = world.time + user.combat_click_delay //+ rand(6,11) //this was utterly disgusting, leaving it here in memorial
 				else
 					for(var/mob/O in AIviewers(src.assailant, null))
@@ -221,6 +225,11 @@
 							return
 				icon_state = "!reinforce"
 				src.state = GRAB_NECK
+				/// If we picked the mob up, no need to continue, mob's in our hand(s)!
+				if(src.affecting.pickup_grab_level != MOBCRITTER_GRAB_NEVER && src.affecting != src.assailant)
+					var/mob/living/critter/mobcritter = src.affecting
+					if(mobcritter.try_pickup( src.assailant, src.state, src))
+						return
 				if (!src.affecting.buckled)
 					set_affected_loc()
 				src.assailant.lastattacked = src.affecting
@@ -253,6 +262,12 @@
 		logTheThing("combat", src.assailant, src.affecting, "chokes [constructTarget(src.affecting,"combat")]")
 		choke_count = 0
 
+		src.state = GRAB_KILL
+		/// If we picked the mob up, no need to continue, mob's in our hand(s)!
+		if(src.affecting.pickup_grab_level != MOBCRITTER_GRAB_NEVER && src.affecting != src.assailant)
+			var/mob/living/critter/mobcritter = src.affecting
+			if(mobcritter.try_pickup(src.assailant, src.state, src))
+				return
 		if (!msg_overridden)
 			if (isitem(src.loc))
 				var/obj/item/I = src.loc
@@ -261,17 +276,12 @@
 			else
 				for (var/mob/O in AIviewers(src.assailant, null))
 					O.show_message("<span class='alert'>[src.assailant] has tightened [his_or_her(assailant)] grip on [src.affecting]'s neck!</span>", 1)
-		src.state = GRAB_KILL
 		REMOVE_MOB_PROPERTY(src.assailant, PROP_CANTMOVE, src.type)
 		src.assailant.lastattacked = src.affecting
 		src.affecting.lastattacker = src.assailant
 		src.affecting.lastattackertime = world.time
 		if (!src.affecting.buckled)
 			set_affected_loc()
-		//src.affecting.losebreath++
-		//if (src.affecting.paralysis < 2)
-		//	src.affecting.paralysis = 2
-		//src.affecting.stunned = max(src.affecting.stunned, 3)
 		if (ishuman(src.affecting))
 			var/mob/living/carbon/human/H = src.affecting
 			H.set_stamina(min(0, H.stamina))
@@ -420,7 +430,7 @@
 //PROGRESS BAR STUFF//
 //////////////////////
 
-/datum/action/bar/icon/strangle_target
+/datum/action/bar/icon/strangle_target ///LAGGNOTE
 	duration = 30
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED
 	id = "strangle_target"

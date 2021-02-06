@@ -18,6 +18,17 @@
 	var/venom1 = "venom"
 	var/flailing = 0
 
+	grab_flags = GRABBABLE_NOT_WHILE_ANGRY_AT_GRABBER
+	hold_two_handed = 2
+	hold_response = HOLD_RESPONSE_CHILL
+	bag_response = BAG_RESPONSE_CHILL
+	hold_struggle_stam = 45
+	bag_throw_prob = 0
+	bag_mess_prob = 10
+	bag_escape_prob = 60
+	temp_angry_duration = 10
+	w_class = 2
+
 	CritterAttack(mob/M)
 		..()
 		if(iscarbon(M) && M.reagents)
@@ -100,6 +111,17 @@
 
 	skinresult = /obj/item/material_piece/cloth/spidersilk
 	max_skins = 4
+
+	grab_flags = GRABBABLE_LIZARD | GRABBABLE_NOT_WHILE_ANGRY_AT_GRABBER
+	hold_two_handed = 0
+	hold_response = HOLD_RESPONSE_VIOLENT
+	bag_response = BAG_RESPONSE_VIOLENT
+	hold_struggle_stam = 45
+	bag_throw_prob = 0
+	bag_mess_prob = 10
+	bag_escape_prob = 60
+	temp_angry_duration = 10
+	w_class = 1
 
 	New()
 		..()
@@ -315,6 +337,17 @@
 	max_skins = 1
 	adultpath = "/obj/critter/spider"
 
+	grab_flags = GRABBABLE_LIZARD
+	hold_two_handed = 0
+	hold_response = HOLD_RESPONSE_VIOLENT
+	bag_response = BAG_RESPONSE_VIOLENT
+	hold_struggle_stam = 5
+	bag_throw_prob = 0
+	bag_mess_prob = 0
+	bag_escape_prob = 60
+	temp_angry_duration = 10
+	w_class = 1
+
 	// don't ask
 	proc/streak(var/list/directions)
 		SPAWN_DBG(0)
@@ -348,6 +381,17 @@
 	max_skins = 4
 	reacting = 0
 
+	grab_flags = GRABBABLE_LIZARD | GRABBABLE_NOT_WHILE_ANGRY_AT_GRABBER
+	hold_two_handed = 1
+	hold_response = HOLD_RESPONSE_VIOLENT
+	bag_response = BAG_RESPONSE_VIOLENT
+	hold_struggle_stam = 80
+	bag_throw_prob = 0
+	bag_mess_prob = 0
+	bag_escape_prob = 90
+	temp_angry_duration = 10
+	w_class = 2
+
 /// subtypes
 
 /obj/critter/spider/ice/baby
@@ -361,6 +405,17 @@
 	babyspider = 1
 	max_skins = 1
 	adultpath = "/obj/critter/spider/ice"
+
+	grab_flags = GRABBABLE_LIZARD | GRABBABLE_NOT_WHILE_ANGRY_AT_GRABBER
+	hold_two_handed = 0
+	hold_response = HOLD_RESPONSE_VIOLENT
+	bag_response = BAG_RESPONSE_VIOLENT
+	hold_struggle_stam = 45
+	bag_throw_prob = 0
+	bag_mess_prob = 0
+	bag_escape_prob = 60
+	temp_angry_duration = 10
+	w_class = 1
 
 /obj/item/reagent_containers/food/snacks/ingredient/egg/critter/icespider
 	name = "ice spider egg"
@@ -380,6 +435,17 @@
 	skinresult = /obj/item/material_piece/cloth/spidersilk
 	max_skins = 8
 
+	grab_flags = GRABBABLE_LIZARD | GRABBABLE_NOT_WHILE_ANGRY_AT_GRABBER
+	hold_two_handed = 1
+	hold_response = HOLD_RESPONSE_VIOLENT
+	bag_response = BAG_RESPONSE_VIOLENT
+	hold_struggle_stam = 110
+	bag_throw_prob = 100
+	bag_mess_prob = 100
+	bag_escape_prob = 100
+	temp_angry_duration = 10
+	w_class = 3
+
 /obj/critter/spider/ice/nice
 	name = "nice spider"
 	desc = "Aww, hi there!"
@@ -389,6 +455,9 @@
 	atksilicon = 0
 	venom1 = "hugs"
 	venom2 = "glitter_harmless"
+
+	hold_response = HOLD_RESPONSE_CHILL
+	bag_response = BAG_RESPONSE_CHILL
 
 /obj/critter/spider/ice/queen/nice
 	name = "queen nice spider"
@@ -400,6 +469,9 @@
 	atksilicon = 0
 	venom1 = "hugs"
 	venom2 = "glitter_harmless"
+
+	hold_response = HOLD_RESPONSE_CHILL
+	bag_response = BAG_RESPONSE_CHILL
 
 /obj/critter/spider/spacerachnid // you get to be in here TOO
 	name = "spacerachnid"
@@ -419,6 +491,17 @@
 	venom1 = "venom"
 	venom2 = "venom"
 	death_text = "%src% is squashed!"
+
+	grab_flags = GRABBABLE_LIZARD | GRABBABLE_NOT_WHILE_ANGRY_AT_GRABBER
+	hold_two_handed = 0
+	hold_response = HOLD_RESPONSE_VIOLENT
+	bag_response = BAG_RESPONSE_VIOLENT
+	hold_struggle_stam = 45
+	bag_throw_prob = 0
+	bag_mess_prob = 0
+	bag_escape_prob = 60
+	temp_angry_duration = 10
+	w_class = 2
 
 /obj/item/reagent_containers/food/snacks/ingredient/egg/critter/spacerachnid
 	name = "spacerachnid egg"
@@ -463,10 +546,7 @@
 		src.parent = parent
 
 	attack_hand(mob/user as mob)
-		if (src.alive && (user.a_intent != INTENT_HARM))
-			src.visible_message("<span class='combat'><b>[user]</b> [src.pet_text] [src]!</span>")
-			return
-		if(prob(50))
+		if (user.a_intent == INTENT_HARM && prob(95))
 			if(src.alive)
 				src.visible_message("<span class='combat'><B>[user] stomps [src], killing it instantly!</B></span>")
 				CritterDeath()
@@ -474,7 +554,8 @@
 			else
 				src.visible_message("<span class='combat'><B>[user] squishes [src] a little more for good measure.</B></span>")
 				return
-		..()
+		else
+			..()
 
 	CritterAttack(mob/M)
 		playsound(src.loc, "swing_hit", 30, 0)
@@ -550,6 +631,17 @@
 	var/sound_effect = 'sound/musical_instruments/Bikehorn_1.ogg'
 	var/item_shoes = /obj/item/clothing/shoes/clown_shoes
 	var/item_mask = /obj/item/clothing/mask/clown_hat
+
+	grab_flags = GRABBABLE_LIZARD | GRABBABLE_NOT_WHILE_ANGRY_AT_GRABBER
+	hold_two_handed = 1
+	hold_response = HOLD_RESPONSE_VIOLENT
+	bag_response = BAG_RESPONSE_VIOLENT
+	hold_struggle_stam = 120
+	bag_throw_prob = 100
+	bag_mess_prob = 100
+	bag_escape_prob = 100
+	temp_angry_duration = 10
+	w_class = 3
 
 	cluwne
 		name = "queen cluwnespider"

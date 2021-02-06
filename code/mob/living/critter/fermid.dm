@@ -47,6 +47,20 @@
   var/limb_path = /datum/limb/small_critter/fermid
   var/mouth_path = /datum/limb/mouth/small/fermid
 
+  pickup_grab_level = MOBCRITTER_GRAB_KILL
+  pickup_needs_lizard = 1 // very dangerous!
+  hold_two_handed = 1
+  hold_struggle_stam = 40
+  hold_struggle_stam_cost = 20
+  struggle_cooldown = 0.4 SECONDS
+  bag_throw_prob = 40
+  bag_mess_prob = 70
+  bag_escape_prob = 40
+  bag_dump_prob = 50
+  hold_response = HOLD_RESPONSE_VIOLENT
+  bag_response = BAG_RESPONSE_VIOLENT
+  w_class = 3 // they're pretty big
+
 /mob/living/critter/fermid/setup_hands()
   ..()
   var/datum/handHolder/HH = hands[1]

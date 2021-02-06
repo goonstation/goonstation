@@ -1,5 +1,5 @@
 // living
-
+#define MOB_STRUGGLE_COOLDOWN "min_time_between_struggles"
 /mob/living
 	event_handler_flags = USE_FLUID_ENTER | USE_CANPASS | IS_FARTABLE
 	var/spell_soulguard = 0
@@ -127,6 +127,42 @@
 	can_lie = 1
 
 	var/const/singing_prefix = "%"
+
+	/// What level of grab is needed to pick this critter up?
+	var/pickup_grab_level = MOBCRITTER_GRAB_NEVER
+	/// Does the mob need lizard arms to pick up? Typically for critters that'd be pretty hard to catch
+	var/pickup_needs_lizard = 0
+	/// The critter holding shell used when this critter is picked up and used as an item
+	var/obj/item/critter_shell/metaholder = null
+	/// Does the mob need two hands to hold?
+	var/hold_two_handed = 1
+	/// Stamina the critter removes when it struggles for freedom
+	var/hold_struggle_stam = 40
+	/// How much a struggle costs in stamina
+	var/hold_struggle_stam_cost = 20
+	/// Cooldown on struggle attempts
+	var/struggle_cooldown = 0.4 SECONDS
+	/// Probability that the critter will throw something out of its holding storage
+	var/bag_throw_prob = 50
+	/// Probability that the critter will try to use something in there
+	var/bag_mess_prob = 50
+	/// Probability the critter will escape its container
+	var/bag_escape_prob = 20
+	/// Probability the critter will dump everything out of its container too
+	var/bag_dump_prob = 10
+	/// How does this critter react to being held? Being bitten or hurt sets it to VIOLENT, since most things dont like being bitten
+	/// HOLD_RESPONSE_CHILL, DISLIKE, VIOLENT
+	var/hold_response = HOLD_RESPONSE_CHILL
+	/// How does this critter react to being stuffed in a container?
+	/// BAG_RESPONSE_CHILL, DISLIKE, VIOLENT
+	var/bag_response = BAG_RESPONSE_DISLIKE
+	/// The mob that grabbed us
+	var/mob/grabber
+	/// How bulky is this mob while wrapped in a shell
+	var/w_class = 1
+	/// Various bits of misc information that the mob should remember
+	/// Assoc list, ("type_of_memory" = "happened")
+	var/list/misc_data = list()
 
 /mob/living/New()
 	..()
@@ -290,6 +326,8 @@
 			return 1
 		else
 			hibernating = 0
+	else
+		src.try_struggle()
 //#endif
 	if (..(parent))
 		return 1
@@ -496,6 +534,8 @@
 				return
 		else
 			var/reach = can_reach(src, target)
+			if(!reach && istype(src.metaholder) && IN_RANGE_TURF(src,target,0) && is_within_target(target))
+				reach = 1
 			if (src.pre_attack_modify())
 				equipped = src.equipped() //might have changed from successful modify
 			if (reach || (equipped && equipped.special) || (equipped && (equipped.flags & EXTRADELAY))) //Fuck you, magic number prickjerk //MBC : added bit to get weapon_attack->pixelaction to work for itemspecial
@@ -1303,11 +1343,15 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 			return
 
 	var/turf/T = get_turf(src)
-	if (T.active_liquid && src.lying)
+	if (T.active_liquid && src.lying && !istype(src.metaholder))
 		T.active_liquid.HasEntered(src, T)
 		src.visible_message("<span class='alert'>[src] splashes around in [T.active_liquid]!</b></span>", "<span class='notice'>You splash around in [T.active_liquid].</span>")
 
 	if (!src.restrained())
+		if(istype(src.metaholder) && src.loc == src.metaholder)
+			src.struggle()
+			return
+
 		var/struggled_grab = 0
 		if (src.canmove)
 			for (var/obj/item/grab/G in src.grabbed_by)
@@ -1407,7 +1451,11 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 
 	M.viral_transmission(src,"Contact",1)
 
-	switch(M.a_intent)
+	var/mob_intent = src.a_intent
+	if(mob_intent == INTENT_GRAB && istype(src.metaholder) && src.loc == src.metaholder)
+		mob_intent = INTENT_DISARM
+
+	switch(mob_intent)
 		if (INTENT_HELP)
 			var/datum/limb/L = M.equipped_limb()
 			if (!L)
@@ -1997,3 +2045,443 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 			return copytext(message, 2)
 	src.singing = 0
 	. =  message
+
+/mob/living/proc/try_pickup(mob/living/grab_doer, grab_level, obj/item/grab/grab_thing)
+	if(!istype(grab_doer))
+		return FALSE
+
+	if(src.pickup_grab_level == MOBCRITTER_GRAB_NEVER)
+		return FALSE
+
+	if (istype(src.metaholder) || istype(src.loc, /obj/item/critter_shell))
+		return FALSE // Already got a holder, thanks!
+
+	var/shell_the_mob = 0
+	switch(grab_level)
+		if(GRAB_PASSIVE)
+			if(src.pickup_grab_level == MOBCRITTER_GRAB_PASSIVE)
+				shell_the_mob = 1
+			else
+				return FALSE
+		if(GRAB_AGGRESSIVE)
+			if(src.pickup_grab_level <= MOBCRITTER_GRAB_AGGRESSIVE)
+				shell_the_mob = 1
+			else
+				return FALSE
+		if(GRAB_NECK)
+			if(src.pickup_grab_level <= MOBCRITTER_GRAB_NECK)
+				shell_the_mob = 1
+			else
+				return FALSE
+		if(GRAB_KILL)
+			if(src.pickup_grab_level <= MOBCRITTER_GRAB_KILL)
+				shell_the_mob = 1
+			else
+				return FALSE
+
+	var/grab_doer_has_lizlimb = 0
+	if(shell_the_mob)
+		if(src.pickup_needs_lizard)
+			if(ishuman(grab_doer))
+				var/mob/living/carbon/human/H = grab_doer
+				/// Look for an empty hand that's attached to a lizard arm
+				if(!istype(H.l_hand) && istype(H.limbs.l_arm, /obj/item/parts/human_parts/arm/mutant/lizard))
+					grab_doer_has_lizlimb += 1
+				if(!grab_doer_has_lizlimb && !istype(H.r_hand) && istype(H.limbs.r_arm, /obj/item/parts/human_parts/arm/mutant/lizard))
+					grab_doer_has_lizlimb += 1
+			if(!grab_doer_has_lizlimb || (src.hold_two_handed && grab_doer_has_lizlimb < 2))
+				boutput(grab_doer, "<span class='alert'><b>[src]</b> deftly evades your grasp!</span>")
+				return FALSE
+
+		var/obj/item/critter_shell/c_holder = new(get_turf(src))
+		if(c_holder.shellify_critter(src, grab_doer))
+			src.metaholder = c_holder
+			src.grabber = grab_doer
+			if(grab_doer_has_lizlimb)
+				grab_doer.visible_message("<span class='notice'>[grab_doer] snatches [src] with a scaled claw!</span>", "<span class='notice'>You snatch up [src] with a scaled claw!</span>")
+			else
+				grab_doer.visible_message("<span class='notice'>[grab_doer] picks up [src].</span>", "<span class='notice'>You pick up [src].</span>")
+			if(istype(grab_thing)) // There was a grab, let's dispose of it carefully
+				qdel(grab_thing)
+			return TRUE // =3
+		else // fail messages!
+			if(src.hold_two_handed)
+				boutput(grab_doer, "<span class='alert'>[src] needs both hands to carry!</span>")
+			return FALSE
+
+/// Called by Resist, for playermobs to escape (or mess with) anything holding them
+/mob/living/proc/struggle()
+	if(!src.metaholder)
+		return
+
+	if(is_incapacitated(src))
+		return
+
+	if(GET_COOLDOWN(src, MOB_STRUGGLE_COOLDOWN))
+		return
+
+	switch(src.a_intent)
+		if (INTENT_HELP)
+			src.struggle_help()
+		if (INTENT_DISARM)
+			src.struggle_disarm()
+		if (INTENT_GRAB)
+			src.struggle_grab()
+		if (INTENT_HARM)
+			src.struggle_harm()
+
+/// Mostly just wiggling around and spewing flavor text, being all cute and shit
+/mob/living/proc/struggle_help()
+	var/turf/T = get_turf(src)
+	T.visible_message("[src] wiggles around like an asshole.", "You wiggle around like an asshole.")
+	playsound(T, "rustle", 56, vary=1)
+
+/// Wiggle around and try to escape, but don't try to hurt the holder or mess with their things
+/mob/living/proc/struggle_disarm()
+	var/turf/T = get_turf(src)
+	switch(get_metaholder_holder())
+		if("mob")
+			if(!src.grabber || IN_RANGE_TURF(src, src.grabber, 0))
+				src.get_grabber()
+				if(!istype(src.grabber)) // oh they mustve let go
+					src.metaholder.unshellify_critter()
+					return
+			boutput(world, "I am [src] in [src.metaholder] held by [src.metaholder.loc].")
+			src.set_dir(pick(cardinal))
+			var/prev_stam = src.grabber.get_stamina()
+			var/last_intent = src.a_intent
+			src.a_intent = INTENT_DISARM
+			src.click(src.grabber, list())
+			src.a_intent = last_intent
+			src.grabber.remove_stamina(src.hold_struggle_stam)
+			src.grabber.stamina_stun()
+			playsound(T, "rustle", 56, vary=1)
+			attack_twitch(src.metaholder)
+			if(prev_stam > 0 && src.grabber.get_stamina() <= 0)
+				T.visible_message("<span class='alert'><b>[src]</b> breaks free of [src.grabber]'s grip!</span>")
+				src.metaholder.unshellify_critter()
+			else
+				boutput(src.grabber, "<span class='alert'><b>[src]</b> wiggles around in your grip!</span>")
+
+		if("storage")
+			boutput(world, "I am [src] in [src.metaholder] held by [src.metaholder.loc].")
+			src.set_dir(pick(cardinal))
+			playsound(T, "rustle", 50, vary=1)
+			animate_storage_rustle(src.metaholder.loc)
+			attack_twitch(src.metaholder)
+			if(prob(src.bag_escape_prob))
+				var/obj/item/storage/bag = src.metaholder?.loc
+				if(istype(bag))
+					src.visible_message("<span class='alert'><b>[src]</b> leaps out of \the [bag]!</span>")
+				src.metaholder.unshellify_critter()
+				return
+
+/// Wiggle around and mess with the holder and their stuff, but don't try to escape
+/mob/living/proc/struggle_grab()
+	var/turf/T = get_turf(src)
+	switch(get_metaholder_holder())
+		if("mob")
+			if(!src.grabber || IN_RANGE_TURF(src, src.grabber, 0))
+				src.get_grabber()
+				if(!istype(src.grabber)) // oh they mustve let go
+					src.metaholder.unshellify_critter()
+					return // being held requires a grabber. cus otherwise, what's holding us?
+			boutput(world, "I am [src] in [src.metaholder] held by [src.metaholder.loc].")
+			src.set_dir(pick(cardinal))
+			var/last_intent = src.a_intent
+			src.a_intent = INTENT_DISARM
+			src.click(src.grabber, list())
+			src.a_intent = last_intent
+			playsound(T, "rustle", 56, vary=0.2)
+			attack_twitch(src.metaholder)
+			T.visible_message("[src] wrenches around in [src.grabber]'s grip!")
+
+		if("storage")
+			boutput(world, "I am [src] in [src.metaholder] held by [src.metaholder.loc]")
+			src.set_dir(pick(cardinal))
+			playsound(T, "rustle", 50, vary=1)
+			animate_storage_rustle(src.metaholder.loc)
+			attack_twitch(src.metaholder)
+			if(prob(src.bag_mess_prob))
+				var/obj/item/storage/bag = src.metaholder?.loc
+				if(istype(bag))
+					boutput(world, "I'm in [bag]. contents are [english_list(bag.contents)]. I AM [src]")
+					var/list/bag_contents = bag.get_all_contents()
+					for(var/atom/A as() in bag_contents) // remove the critter and its shell
+						if(istype(A, /obj/item/critter_shell) || A == src)
+							bag_contents -= A
+					if(length(bag_contents) >= 1) // gotta have something to mess with
+						var/obj/item/messwith
+						var/tries = 5
+						boutput(world, "I'm in [bag]. ALL contents are [english_list(bag_contents)]. I AM [src]")
+						while(tries-- > 1 && (!istype(messwith, /obj/item) || messwith == src.metaholder))
+							messwith = pick(bag_contents)
+							boutput(world, "messing with [messwith]. I AM [src]")
+						if(istype(messwith))
+							bag_contents -= messwith
+							switch(rand(1,2))
+								if(1) // Drop the thing
+									messwith.set_loc(get_turf(src))
+									bag.hud?.remove_item(messwith)
+									bag.hud?.update()
+									if(prob(src.bag_throw_prob)) // and maybe throw it too
+										ThrowRandom(messwith, rand(2,4), 1)
+								if(2) // Use the thing on something
+									for_by_tcl(nearmobs, /mob)
+										if(IN_RANGE_TURF(src, nearmobs, 0))
+											bag_contents |= nearmobs // also grab people nearby, too. And yourself
+									bag_contents -= src.metaholder
+									var/atom/mess_target = pick(bag_contents)
+									if(ismob(mess_target))
+										messwith.attack(mess_target, src)
+									else if(isobj(mess_target))
+										mess_target.attackby(messwith, src)
+
+/// Thrash around and attack the holder and their stuff, try to escape
+/mob/living/proc/struggle_harm()
+	var/turf/T = get_turf(src)
+	src.emote("scream")
+	switch(get_metaholder_holder())
+		if("mob")
+			if(!src.grabber || IN_RANGE_TURF(src, src.grabber, 0))
+				src.get_grabber()
+				if(!istype(src.grabber)) // oh they mustve let go
+					src.metaholder.unshellify_critter()
+					return // being held requires a grabber. cus otherwise, what's holding us?
+			boutput(world, "I am [src] in [src.metaholder] held by [src.metaholder.loc].")
+			src.set_dir(pick(cardinal))
+			var/last_intent = src.a_intent
+			src.a_intent = INTENT_HARM
+			src.click(src.grabber, list())
+			src.a_intent = last_intent
+			playsound(T, "rustle", 56, vary=0.2)
+			attack_twitch(src.metaholder)
+			var/prev_stam = src.grabber.get_stamina()
+			src.grabber.remove_stamina(src.hold_struggle_stam)
+			src.grabber.stamina_stun()
+			if(prev_stam > 0 && src.grabber.get_stamina() <= 0)
+				T.visible_message("<span class='alert'><b>[src]</b> breaks free of [src.grabber]'s grip!</span>")
+				src.metaholder.unshellify_critter()
+			else
+				boutput(src.grabber, "<span class='alert'><b>[src]</b> thrashes around in your grip!</span>")
+
+		if("storage")
+			boutput(world, "I am [src] in [src.metaholder] held by [src.metaholder.loc]")
+			src.set_dir(pick(cardinal))
+			playsound(T, "rustle", 50, vary=1)
+			animate_storage_rustle(src.metaholder.loc)
+			attack_twitch(src.metaholder)
+			if(prob(src.bag_mess_prob))
+				var/obj/item/storage/bag = src.metaholder?.loc
+				if(istype(bag))
+					boutput(world, "I'm in [bag]. contents are [english_list(bag.contents)]. I AM [src]")
+					playsound(T, "rustle", 50, vary=1)
+					animate_storage_rustle(src.metaholder.loc)
+					T.visible_message("Something thrashes around in [src.metaholder.loc]!")
+					if(prob(src.bag_escape_prob))
+						if(prob(src.bag_dump_prob))
+							src.visible_message("<span class='alert'><b>[src]</b> leaps out of \the [bag], dumping everything out!</span>")
+							for (var/obj/item/I in bag)
+								I.set_loc(T)
+								I.layer = initial(I.layer)
+								if (istype(I, /obj/item/mousetrap))
+									var/obj/item/mousetrap/MT = I
+									if (MT.armed)
+										MT.visible_message("<span class='alert'>[MT] triggers as it falls on the ground!</span>")
+										MT.triggered(usr, null)
+								else if (istype(I, /obj/item/mine))
+									var/obj/item/mine/M = I
+									if (M.armed && M.used_up != 1)
+										M.visible_message("<span class='alert'>[M] triggers as it falls on the ground!</span>")
+										M.triggered(usr)
+								if(prob(bag_throw_prob))
+									ThrowRandom(I, rand(1,3), 1)
+								bag.hud?.remove_item(I)
+								bag.hud?.update()
+						else
+							src.visible_message("<span class='alert'><b>[src]</b> leaps out of \the [bag]!</span>")
+						src.metaholder.unshellify_critter()
+						return
+					var/list/bag_contents = bag.get_all_contents()
+					for(var/atom/A as() in bag_contents) // remove the critter and its shell
+						if(istype(A, /obj/item/critter_shell) || A == src)
+							bag_contents -= A
+					if(length(bag_contents) >= 1) // gotta have something to mess with
+						var/obj/item/messwith
+						var/tries = 5
+						boutput(world, "I'm in [bag]. ALL contents are [english_list(bag_contents)]. I AM [src]")
+						while(tries-- > 1 && (!istype(messwith, /obj/item) || messwith == src.metaholder))
+							messwith = pick(bag_contents)
+							boutput(world, "messing with [messwith]. I AM [src]")
+						if(istype(messwith))
+							bag_contents -= messwith
+							switch(rand(2,2))
+								if(1) // Drop the thing
+									messwith.set_loc(get_turf(src))
+									bag.hud?.remove_item(messwith)
+									bag.hud?.update()
+									if(prob(src.bag_throw_prob)) // and maybe throw it too
+										ThrowRandom(messwith, rand(2,4), 1)
+								if(2) // Use the thing on something
+									for_by_tcl(nearmobs, /mob)
+										if(IN_RANGE_TURF(src, nearmobs, 0))
+											bag_contents |= nearmobs // also grab people nearby, too. And yourself
+									bag_contents -= src.metaholder
+									var/atom/mess_target = istype(src.grabber) && IN_RANGE_TURF(src,src.grabber,1) && prob(50) ? src.grabber : pick(bag_contents)
+									if(ismob(mess_target))
+										messwith.attack(mess_target, src)
+									else if(isobj(mess_target))
+										mess_target.attackby(messwith, src)
+
+/// returns the kind of thing holding our metaholdler
+/mob/living/proc/get_metaholder_holder()
+	if(!istype(src.metaholder))
+		return src.metaholder.unshellify_critter()
+	if(istype(src.metaholder.loc, /mob))
+		return "mob"
+	else if (istype(src.metaholder.loc, /obj/item/storage))
+		return "storage"
+
+/// returns the most likely thing to be responsible for us being grabbed
+/mob/living/proc/get_grabber()
+	if(istype(src.metaholder))
+		boutput(world, "[src] I am in [src.metaholder.loc]. My loc's loc is [src.metaholder.loc?.loc]")
+		switch(get_metaholder_holder())
+			if("storage")
+				if(!istype(src.grabber) || (istype(src.grabber) && !(src.metaholder.loc in src.grabber.get_equipped_items())))
+					var/turf/T = get_turf(src)
+					if(isturf(T))
+						for(var/mob/living/L in T.contents) // would be rude to climb out of someone else's bag
+							var/list/mob_equipped = L.get_equipped_items()
+							if(src.metaholder.loc in mob_equipped)
+								src.grabber = L
+								break
+			if ("mob")
+				if(!istype(src.grabber) || (istype(src.grabber) && !(src.metaholder in src.grabber.contents)))
+					var/turf/T = get_turf(src)
+					if(isturf(T))
+						for(var/mob/living/L in T.contents) // would be awkward if we squirmed out of someone else's hands
+							if(src.metaholder in L.contents)
+								src.grabber = L
+								break
+
+/// Allows held mobs to interact with whatever's holding them and their stuff
+/mob/living/proc/is_within_target(atom/target)
+	var/max_depth = 5 // How much ~recursion~ are we allowed before being ruled "too deep" to interact with the target?
+	var/atom/A_src = src
+	/// Are we within the target?
+	for(var/i in 1 to max_depth)
+		if(A_src == target)
+			return TRUE
+
+		else if(A_src == A_src?.loc || !A_src)
+			break // We've hit ground, no need to continue
+		else
+			A_src = A_src?.loc
+			if(!A_src)
+				break
+			max_depth -= 1
+	/// Maybe our target is within whatever we're within!
+	A_src = src
+	var/atom/A_target = target
+	var/list/src_loc_path_to_ground = list() // list of things we're nested in
+	var/list/target_loc_path_to_ground = list() // list of things our target's nested in
+	for(var/i in 1 to max_depth)
+		src_loc_path_to_ground |= A_src.loc
+		target_loc_path_to_ground |= A_target.loc
+		if(length(target_loc_path_to_ground & src_loc_path_to_ground))
+			return TRUE // a common locester! Maybe
+		A_src = A_src.loc
+		A_target = A_target.loc
+	return FALSE
+
+/// Used by non-cliented mobs to spam resist when held
+/mob/living/proc/try_struggle()
+	if(src.client || !isalive(src))
+		return
+	if(ON_COOLDOWN(src, MOB_STRUGGLE_COOLDOWN, src.struggle_cooldown))
+		return
+	if(!istype(src.metaholder) || !istype(src.loc, /obj/item/critter_shell))
+		return
+	if(src.misc_data["was_bitten"] == 1)
+		src.struggle_harm()
+		return
+
+	switch(src.get_metaholder_holder())
+		if("mob")
+			switch(src.hold_response)
+				if(HOLD_RESPONSE_CHILL)
+					switch(rand(1,100))
+						if(1 to 50)
+							src.struggle_help()
+						if(51 to 60)
+							src.struggle_grab()
+						else
+							return
+				if(HOLD_RESPONSE_DISLIKE)
+					if(prob(80))
+						src.struggle_disarm()
+					else
+						src.struggle_grab()
+				if(HOLD_RESPONSE_VIOLENT)
+					src.struggle_harm()
+		if("storage")
+			switch(src.bag_response)
+				if(BAG_RESPONSE_CHILL)
+					switch(rand(1,100))
+						if(1 to 50)
+							src.struggle_help()
+						if(51 to 60)
+							src.struggle_grab()
+						else
+							return
+				if(BAG_RESPONSE_DISLIKE)
+					if(prob(80))
+						src.struggle_disarm()
+					else
+						src.struggle_grab()
+				if(BAG_RESPONSE_VIOLENT)
+					src.struggle_harm()
+
+/obj/item/hitme_stick
+	name = "hitme stick"
+	icon = 'icons/obj/items/items.dmi'
+	icon_state = "c_tube"
+	w_class = 0
+
+	attack(mob/M, mob/user, def_zone, is_special)
+		//. = ..()
+		var/mob/living/L = user
+		if(user.a_intent == INTENT_HARM)
+			var/obj/item/W = M.equipped()
+			if (W)
+				M.click(W, list())
+		else if(user.a_intent == INTENT_DISARM)
+			if(M.back)
+				M.back.attackby(L.metaholder, M)
+		else
+			M.a_intent = user.a_intent
+			user.attack_hand(M)
+
+/obj/item/remote_controller
+	name = "remote stick"
+	icon = 'icons/obj/items/items.dmi'
+	icon_state = "c_tube"
+	w_class = 0
+	var/mob/living/controlled
+
+	attack_hand(mob/user)
+		. = ..()
+		if(src.controlled)
+			src.controlled = null
+			boutput(user, "No more controlled!")
+
+	pixelaction(atom/target, params, mob/user, reach)
+		if(!istype(controlled))
+			if(isliving(target))
+				src.controlled = target
+				boutput(user, "[target] set as controlled :3")
+			return
+		else
+			controlled.a_intent = user.a_intent
+			controlled.click(target, list())

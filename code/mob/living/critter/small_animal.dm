@@ -65,7 +65,19 @@ todo: add more small animals!
 
 	var/is_pet = null // null = autodetect
 
-
+	pickup_grab_level = MOBCRITTER_GRAB_AGGRESSIVE
+	pickup_needs_lizard = 0
+	hold_two_handed = 0
+	hold_struggle_stam = 40
+	hold_struggle_stam_cost = 20
+	struggle_cooldown = 0.4 SECONDS
+	bag_throw_prob = 40
+	bag_mess_prob = 70
+	bag_escape_prob = 10
+	bag_dump_prob = 50
+	hold_response = HOLD_RESPONSE_CHILL
+	bag_response = BAG_RESPONSE_CHILL
+	w_class = 1
 
 	New(loc)
 		if(isnull(src.is_pet))
@@ -134,6 +146,19 @@ todo: add more small animals!
 	health_brute = 8
 	health_burn = 8
 
+	pickup_grab_level = MOBCRITTER_GRAB_PASSIVE
+	pickup_needs_lizard = 1 // Tiny, skittery things
+	hold_two_handed = 0
+	hold_struggle_stam = 20
+	hold_struggle_stam_cost = 10
+	struggle_cooldown = 0.4 SECONDS
+	bag_throw_prob = 0
+	bag_mess_prob = 10
+	bag_escape_prob = 70
+	bag_dump_prob = 0
+	hold_response = HOLD_RESPONSE_DISLIKE
+	bag_response = BAG_RESPONSE_CHILL // packrats
+	w_class = 1
 
 	New()
 		..()
@@ -224,6 +249,10 @@ todo: add more small animals!
 	health_burn = 33
 	pull_w_class = 3
 
+	pickup_needs_lizard = 0 // chef's best friend, more or less
+	hold_response = HOLD_RESPONSE_CHILL
+	bag_response = BAG_RESPONSE_CHILL
+
 	setup_overlays()
 		return
 
@@ -267,6 +296,20 @@ todo: add more small animals!
 	var/randomize_name = 1
 	var/randomize_look = 1
 	var/catnip = 0
+
+	pickup_grab_level = MOBCRITTER_GRAB_AGGRESSIVE
+	pickup_needs_lizard = 0
+	hold_two_handed = 1
+	hold_struggle_stam = 50
+	hold_struggle_stam_cost = 20
+	struggle_cooldown = 0.4 SECONDS
+	bag_throw_prob = 100
+	bag_mess_prob = 100
+	bag_escape_prob = 30
+	bag_dump_prob = 50
+	hold_response = HOLD_RESPONSE_CHILL
+	bag_response = BAG_RESPONSE_DISLIKE
+	w_class = 2
 
 	New()
 		..()
@@ -458,6 +501,20 @@ todo: add more small animals!
 	var/gabe = 0 //sniff. bark bork. brork.
 	pull_w_class = 4
 
+	pickup_grab_level = MOBCRITTER_GRAB_AGGRESSIVE
+	pickup_needs_lizard = 0
+	hold_two_handed = 1
+	hold_struggle_stam = 40
+	hold_struggle_stam_cost = 20
+	struggle_cooldown = 0.4 SECONDS
+	bag_throw_prob = 40
+	bag_mess_prob = 70
+	bag_escape_prob = 30
+	bag_dump_prob = 75
+	hold_response = HOLD_RESPONSE_CHILL
+	bag_response = BAG_RESPONSE_CHILL
+	w_class = 2
+
 	OnMove()
 		if(client?.player?.shamecubed)
 			loc = client.player.shamecubed
@@ -547,6 +604,20 @@ todo: add more small animals!
 	speechverb_ask = "spiy"
 	speechverb_stammer = "sremmats"
 	speechverb_gasp = "spsag"
+
+	pickup_grab_level = MOBCRITTER_GRAB_NECK
+	pickup_needs_lizard = 1
+	hold_two_handed = 0
+	hold_struggle_stam = 4
+	hold_struggle_stam_cost = 2
+	struggle_cooldown = 4.0 SECONDS
+	bag_throw_prob = 4
+	bag_mess_prob = 7
+	bag_escape_prob = 3
+	bag_dump_prob = 57
+	hold_response = HOLD_RESPONSE_VIOLENT
+	bag_response = BAG_RESPONSE_VIOLENT
+	w_class = 2
 
 	mob_flags = SPEECH_REVERSE
 	/*
@@ -699,6 +770,10 @@ todo: add more small animals!
 	icon_state_dead = "illegal-lying"
 	dogtype = "illegal"
 
+	New(loc)
+		. = ..()
+		src.misc_data["contraband"] = 100
+
 /* -------------------- Vaguely Illegal -------------------- */
 
 /mob/living/critter/small_animal/dog/patrick
@@ -708,6 +783,10 @@ todo: add more small animals!
 	icon_state = "patrick"
 	icon_state_dead = "patrick-dead"
 	dogtype = "patrick"
+
+	New(loc)
+		. = ..()
+		src.misc_data["contraband"] = 2
 
 /* ============================================== */
 /* -------------------- Bird -------------------- */
@@ -744,6 +823,19 @@ todo: add more small animals!
 	health_brute = 15
 	health_burn = 15
 	pull_w_class = 4
+
+	pickup_grab_level = MOBCRITTER_GRAB_KILL
+	pickup_needs_lizard = 0
+	hold_two_handed = 1
+	hold_struggle_stam = 40
+	hold_struggle_stam_cost = 20
+	bag_throw_prob = 100
+	bag_mess_prob = 100
+	bag_escape_prob = 10
+	bag_dump_prob = 25
+	hold_response = HOLD_RESPONSE_DISLIKE
+	bag_response = BAG_RESPONSE_DISLIKE
+	w_class = 2
 
 	New(loc, nspecies)
 		..()
@@ -996,6 +1088,15 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	fits_under_table = 0
 	species = "cassowary"
 
+	pickup_grab_level = MOBCRITTER_GRAB_KILL
+	pickup_needs_lizard = 1
+	hold_two_handed = 1
+	hold_struggle_stam = 60
+	hold_struggle_stam_cost = 20
+	hold_response = HOLD_RESPONSE_VIOLENT
+	bag_response = BAG_RESPONSE_VIOLENT
+	w_class = 3
+
 /* -------------------- Penguin -------------------- */
 
 /mob/living/critter/small_animal/bird/penguin
@@ -1029,6 +1130,13 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	species = "smallowl"
 	bird_call_msg = list("hoots", "hoos")
 	bird_call_sound = "sound/voice/animal/hoot.ogg"
+
+	pickup_grab_level = MOBCRITTER_GRAB_PASSIVE
+	pickup_needs_lizard = 0
+	hold_two_handed = 0
+	hold_response = HOLD_RESPONSE_CHILL
+	bag_response = BAG_RESPONSE_CHILL
+	w_class = 2
 
 	attackby(obj/item/W as obj, mob/M as mob)
 		if(istype(W, /obj/item/plutonium_core/hootonium_core)) //Owls interestingly are capable of absorbing hootonium into their bodies harmlessly. This is the only safe method of removing it.
@@ -1064,6 +1172,11 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	health_brute = 30
 	health_burn = 30
 	good_grip = 0.5
+
+	pickup_grab_level = MOBCRITTER_GRAB_KILL
+	pickup_needs_lizard = 1
+	hold_two_handed = 1
+	w_class = 3
 
 	attackby(obj/item/W as obj, mob/M as mob)
 		if(istype(W, /obj/item/plutonium_core/hootonium_core)) //Owls interestingly are capable of absorbing hootonium into their bodies harmlessly. This is the only safe method of removing it.
@@ -1103,6 +1216,8 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	feather_color = list("#806055","#ff0066")
 	add_abilities = list(/datum/targetable/critter/hootat)
 
+	pickup_grab_level = MOBCRITTER_GRAB_NEVER // more than wise to your pickups
+
 /* -------------------- Turkey -------------------- */
 
 /mob/living/critter/small_animal/bird/turkey
@@ -1127,6 +1242,8 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	health_burn = 20
 	species = null
 	gender = FEMALE
+
+	w_class = 1
 
 	New()
 		..()
@@ -1158,6 +1275,9 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	health_burn = 30
 	gender = MALE
 
+	hold_response = HOLD_RESPONSE_VIOLENT
+	bag_response = BAG_RESPONSE_CHILL
+
 /* -------------------- Timberdoodle -------------------- */
 
 /mob/living/critter/small_animal/bird/timberdoodle
@@ -1181,10 +1301,31 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	health_brute = 20
 	health_burn = 20
 
+	pickup_grab_level = MOBCRITTER_GRAB_PASSIVE
+	pickup_needs_lizard = 1
+	hold_two_handed = 0
+	hold_struggle_stam = 40
+	hold_struggle_stam_cost = 20
+	bag_throw_prob = 100
+	bag_mess_prob = 100
+	bag_escape_prob = 30
+	bag_dump_prob = 75
+	hold_response = HOLD_RESPONSE_CHILL
+	bag_response = BAG_RESPONSE_CHILL
+	w_class = 1
+
 /mob/living/critter/small_animal/bird/timberdoodle/strong
 	health_brute = 50
 	health_burn = 50
 	good_grip = 1
+
+	pickup_grab_level = MOBCRITTER_GRAB_KILL
+	hold_two_handed = 1
+	hold_struggle_stam = 70
+	bag_escape_prob = 60
+	bag_dump_prob = 100
+	hold_response = HOLD_RESPONSE_CHILL
+	bag_response = BAG_RESPONSE_VIOLENT
 
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
 		if(act == "flip" && istype(src.equipped(), /obj/item/grab))
@@ -1208,6 +1349,10 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	feather_color = list("#ffffff","#949494","#353535")
 	good_grip = 0
 	species = "gull"
+
+	pickup_grab_level = MOBCRITTER_GRAB_AGGRESSIVE
+	pickup_needs_lizard = 1
+	hold_two_handed = 0
 
 /* -------------------- Gannet -------------------- */
 
@@ -1238,6 +1383,19 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	good_grip = 1
 	species = "crow"
 	add_abilities = list(/datum/targetable/critter/peck/crow)
+
+	pickup_grab_level = MOBCRITTER_GRAB_PASSIVE
+	pickup_needs_lizard = 1
+	hold_two_handed = 0
+	hold_struggle_stam = 40
+	hold_struggle_stam_cost = 20
+	bag_throw_prob = 100
+	bag_mess_prob = 100
+	bag_escape_prob = 80
+	bag_dump_prob = 100
+	hold_response = HOLD_RESPONSE_DISLIKE
+	bag_response = BAG_RESPONSE_VIOLENT
+	w_class = 2
 
 	New()
 		..()
@@ -1272,6 +1430,15 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	add_abilities = list(/datum/targetable/critter/peck,
 						/datum/targetable/critter/tackle)
 
+	pickup_grab_level = MOBCRITTER_GRAB_KILL
+	pickup_needs_lizard = 1
+	hold_two_handed = 1
+	hold_struggle_stam = 50
+	hold_struggle_stam_cost = 20
+	hold_response = HOLD_RESPONSE_VIOLENT
+	bag_response = BAG_RESPONSE_VIOLENT
+	w_class = 3
+
 /* -------------------- Goose -------------------- */
 
 /mob/living/critter/small_animal/bird/goose/swan
@@ -1300,6 +1467,19 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	health_burn = 5
 	flags = TABLEPASS | DOORPASS
 	fits_under_table = 1
+
+	pickup_grab_level = MOBCRITTER_GRAB_PASSIVE
+	pickup_needs_lizard = 0
+	hold_two_handed = 0
+	hold_struggle_stam = 5
+	hold_struggle_stam_cost = 5
+	bag_throw_prob = 0
+	bag_mess_prob = 0
+	bag_escape_prob = 50
+	bag_dump_prob = 0
+	hold_response = HOLD_RESPONSE_DISLIKE
+	bag_response = BAG_RESPONSE_DISLIKE
+	w_class = 1
 
 	setup_overlays()
 		fur_color = src.client?.preferences.AH.customization_first_color
@@ -1362,6 +1542,19 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	health_burn = 5
 	flags = TABLEPASS | DOORPASS
 	fits_under_table = 1
+
+	pickup_grab_level = MOBCRITTER_GRAB_PASSIVE
+	pickup_needs_lizard = 1 // dangerous!
+	hold_two_handed = 0
+	hold_struggle_stam = 5
+	hold_struggle_stam_cost = 5
+	bag_throw_prob = 0
+	bag_mess_prob = 0
+	bag_escape_prob = 40
+	bag_dump_prob = 0
+	hold_response = HOLD_RESPONSE_VIOLENT
+	bag_response = BAG_RESPONSE_VIOLENT
+	w_class = 1
 
 	setup_hands()
 		..()
@@ -1439,6 +1632,18 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	var/freakout = 0
 	add_abilities = list(/datum/targetable/critter/trip)
 
+	pickup_grab_level = MOBCRITTER_GRAB_NECK
+	hold_two_handed = 1
+	hold_struggle_stam = 35
+	hold_struggle_stam_cost = 5
+	bag_throw_prob = 100
+	bag_mess_prob = 100
+	bag_escape_prob = 50
+	bag_dump_prob = 60
+	hold_response = HOLD_RESPONSE_DISLIKE
+	bag_response = BAG_RESPONSE_DISLIKE
+	w_class = 2
+
 	New()
 		..()
 
@@ -1475,6 +1680,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			return 0
 
 		if (src.freakout)
+			src.pickup_needs_lizard = 1
 			SPAWN_DBG(0)
 				var/x = rand(2,4)
 				while (x-- > 0)
@@ -1492,6 +1698,8 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 				src.visible_message("[src] calms down.")
 		else if (!src.client && prob(2))
 			src.freakout = rand(30,40)
+		else
+			src.pickup_needs_lizard = 0
 		..()
 
 
@@ -1512,6 +1720,19 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	health_brute = 15
 	health_burn = 15
 	pet_text = list("gently baps", "pets", "cuddles")
+
+	pickup_grab_level = MOBCRITTER_GRAB_NECK
+	pickup_needs_lizard = 1 // ribbit
+	hold_two_handed = 0
+	hold_struggle_stam = 5
+	hold_struggle_stam_cost = 5
+	bag_throw_prob = 15
+	bag_mess_prob = 20
+	bag_escape_prob = 50
+	bag_dump_prob = 10
+	hold_response = HOLD_RESPONSE_CHILL
+	bag_response = BAG_RESPONSE_CHILL
+	w_class = 1
 
 	New()
 		if (prob(80))
@@ -1563,6 +1784,19 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	health_burn = 15
 	pet_text = list("gently baps", "pets", "cuddles")
 	var/playing_dead = 0
+
+	pickup_grab_level = MOBCRITTER_GRAB_PASSIVE
+	pickup_needs_lizard = 0
+	hold_two_handed = 1
+	hold_struggle_stam = 40
+	hold_struggle_stam_cost = 20
+	bag_throw_prob = 20
+	bag_mess_prob = 20
+	bag_escape_prob = 30
+	bag_dump_prob = 75
+	hold_response = HOLD_RESPONSE_DISLIKE
+	bag_response = BAG_RESPONSE_CHILL // Peace and quiet inside this smelly bag
+	w_class = 2
 
 	New()
 		. = ..()
@@ -1670,6 +1904,19 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	health_brute = 10
 	health_burn = 10
 
+	pickup_grab_level = MOBCRITTER_GRAB_KILL
+	pickup_needs_lizard = 1
+	hold_two_handed = 0
+	hold_struggle_stam = 40
+	hold_struggle_stam_cost = 20
+	bag_throw_prob = 0
+	bag_mess_prob = 0
+	bag_escape_prob = 50
+	bag_dump_prob = 0
+	hold_response = HOLD_RESPONSE_CHILL
+	bag_response = BAG_RESPONSE_CHILL
+	w_class = 1
+
 	setup_hands()
 		..()
 		var/datum/handHolder/HH = hands[1]
@@ -1699,6 +1946,19 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	speechverb_exclaim = "squeals"
 	meat_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/bacon
 	name_the_meat = 0
+
+	pickup_grab_level = MOBCRITTER_GRAB_AGGRESSIVE
+	pickup_needs_lizard = 1 // fun fact: the top 1000 spaceissippi hog-wrastlin' champions are all lizards
+	hold_two_handed = 1
+	hold_struggle_stam = 80
+	hold_struggle_stam_cost = 20
+	bag_throw_prob = 100
+	bag_mess_prob = 100
+	bag_escape_prob = 30
+	bag_dump_prob = 75
+	hold_response = HOLD_RESPONSE_DISLIKE
+	bag_response = BAG_RESPONSE_DISLIKE
+	w_class = 3
 
 	setup_hands()
 		..()
@@ -1747,6 +2007,19 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	speechverb_ask = "squeaks"
 	health_brute = 8
 	health_burn = 8
+
+	pickup_grab_level = MOBCRITTER_GRAB_PASSIVE
+	pickup_needs_lizard = 1
+	hold_two_handed = 0
+	hold_struggle_stam = 10
+	hold_struggle_stam_cost = 20
+	bag_throw_prob = 20
+	bag_mess_prob = 20
+	bag_escape_prob = 60
+	bag_dump_prob = 10
+	hold_response = HOLD_RESPONSE_DISLIKE
+	bag_response = BAG_RESPONSE_CHILL // batcave
+	w_class = 1
 
 	New()
 		..()
@@ -1805,6 +2078,19 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	health_brute = 25
 	health_burn = 25
 
+	pickup_grab_level = MOBCRITTER_GRAB_KILL
+	pickup_needs_lizard = 1
+	hold_two_handed = 2 // this anger requires both hands
+	hold_struggle_stam = 70
+	hold_struggle_stam_cost = 10
+	bag_throw_prob = 100
+	bag_mess_prob = 100
+	bag_escape_prob = 40
+	bag_dump_prob = 100
+	hold_response = HOLD_RESPONSE_VIOLENT
+	bag_response = BAG_RESPONSE_VIOLENT
+	w_class = 1
+
 /* -------------------- Dr. Acula -------------------- */
 
 /mob/living/critter/small_animal/bat/doctor
@@ -1835,6 +2121,19 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	flags = TABLEPASS
 	fits_under_table = 1
 	add_abilities = list(/datum/targetable/critter/wasp_sting)
+
+	pickup_grab_level = MOBCRITTER_GRAB_KILL
+	pickup_needs_lizard = 1
+	hold_two_handed = 0
+	hold_struggle_stam = 10
+	hold_struggle_stam_cost = 20
+	bag_throw_prob = 0
+	bag_mess_prob = 0
+	bag_escape_prob = 25
+	bag_dump_prob = 0
+	hold_response = HOLD_RESPONSE_VIOLENT
+	bag_response = BAG_RESPONSE_VIOLENT
+	w_class = 1
 
 	setup_hands()
 		..()
@@ -1891,6 +2190,19 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	flags = TABLEPASS
 	fits_under_table = 1
 	add_abilities = list(/datum/targetable/critter/pounce)
+
+	pickup_grab_level = MOBCRITTER_GRAB_NECK
+	pickup_needs_lizard = 1
+	hold_two_handed = 1
+	hold_struggle_stam = 40
+	hold_struggle_stam_cost = 20
+	bag_throw_prob = 100
+	bag_mess_prob = 100
+	bag_escape_prob = 30
+	bag_dump_prob = 100
+	hold_response = HOLD_RESPONSE_VIOLENT
+	bag_response = BAG_RESPONSE_VIOLENT
+	w_class = 2
 
 	butcherable = 1
 	skinresult = /obj/item/clothing/head/raccoon
@@ -1965,6 +2277,19 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	base_walk_delay = 8
 	var/slime_chance = 22
 
+	pickup_grab_level = MOBCRITTER_GRAB_PASSIVE
+	pickup_needs_lizard = 1 // only a lizard would be gross enough to touch these things
+	hold_two_handed = 0
+	hold_struggle_stam = 5
+	hold_struggle_stam_cost = 20
+	bag_throw_prob = 0
+	bag_mess_prob = 0
+	bag_escape_prob = 40
+	bag_dump_prob = 0
+	hold_response = HOLD_RESPONSE_CHILL
+	bag_response = BAG_RESPONSE_CHILL
+	w_class = 1
+
 	setup_hands()
 		..()
 		var/datum/handHolder/HH = hands[1]
@@ -2018,6 +2343,19 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	health_burn = 8
 	var/butterflytype = 1
 	isFlying = 1
+
+	pickup_grab_level = MOBCRITTER_GRAB_PASSIVE
+	pickup_needs_lizard = 1
+	hold_two_handed = 0
+	hold_struggle_stam = 40
+	hold_struggle_stam_cost = 20
+	bag_throw_prob = 0
+	bag_mess_prob = 0
+	bag_escape_prob = 40
+	bag_dump_prob = 0
+	hold_response = HOLD_RESPONSE_CHILL
+	bag_response = BAG_RESPONSE_CHILL
+	w_class = 1
 
 	New()
 		..()
@@ -2111,6 +2449,19 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	health_burn = 8
 	isFlying = 1
 
+	pickup_grab_level = MOBCRITTER_GRAB_PASSIVE
+	pickup_needs_lizard = 1
+	hold_two_handed = 0
+	hold_struggle_stam = 5
+	hold_struggle_stam_cost = 5
+	bag_throw_prob = 0
+	bag_mess_prob = 0
+	bag_escape_prob = 60
+	bag_dump_prob = 0
+	hold_response = HOLD_RESPONSE_DISLIKE
+	bag_response = BAG_RESPONSE_DISLIKE
+	w_class = 1
+
 	New()
 		..()
 		abilityHolder = new /datum/abilityHolder/critter(src)
@@ -2175,6 +2526,19 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	health_burn = 8
 	isFlying = 1
 
+	pickup_grab_level = MOBCRITTER_GRAB_PASSIVE
+	pickup_needs_lizard = 1
+	hold_two_handed = 0
+	hold_struggle_stam = 15
+	hold_struggle_stam_cost = 5
+	bag_throw_prob = 0
+	bag_mess_prob = 0
+	bag_escape_prob = 40
+	bag_dump_prob = 0
+	hold_response = HOLD_RESPONSE_VIOLENT
+	bag_response = BAG_RESPONSE_VIOLENT
+	w_class = 1
+
 	New()
 		..()
 		abilityHolder = new /datum/abilityHolder/critter(src)
@@ -2230,6 +2594,8 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	health_brute = 20
 	health_burn = 20
 	pull_w_class = 4
+
+	pickup_grab_level = MOBCRITTER_GRAB_NEVER
 
 	setup_hands()
 		..()
@@ -2299,6 +2665,19 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	speechverb_ask = "asks"
 	health_brute = 20
 	health_burn = 20
+
+	pickup_grab_level = MOBCRITTER_GRAB_PASSIVE
+	pickup_needs_lizard = 0
+	hold_two_handed = 1
+	hold_struggle_stam = 40
+	hold_struggle_stam_cost = 20
+	bag_throw_prob = 0
+	bag_mess_prob = 0
+	bag_escape_prob = 50
+	bag_dump_prob = 75
+	hold_response = HOLD_RESPONSE_CHILL
+	bag_response = BAG_RESPONSE_CHILL
+	w_class = 2
 
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
 		switch (act)
@@ -2383,6 +2762,19 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	health_burn = 20
 	var/datum/figure_info/info = 0
 	var/voice_gender = "male"
+
+	pickup_grab_level = MOBCRITTER_GRAB_PASSIVE
+	pickup_needs_lizard = 0
+	hold_two_handed = 0
+	hold_struggle_stam = 5
+	hold_struggle_stam_cost = 5
+	bag_throw_prob = 100 // putting the action in action figure
+	bag_mess_prob = 100
+	bag_escape_prob = 30
+	bag_dump_prob = 75
+	hold_response = HOLD_RESPONSE_CHILL
+	bag_response = BAG_RESPONSE_CHILL
+	w_class = 1
 
 	New()
 		..()
@@ -2488,6 +2880,8 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	var/icon_state_exclaim = "mouse-mentor-exclaim"
 	health_brute = 35
 	health_burn = 35
+
+	pickup_grab_level = MOBCRITTER_GRAB_NEVER // They have their own ways...
 
 	New()
 		..()
@@ -2629,6 +3023,19 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	health_burn = 15
 	pet_text = list("gently snips", "rubs with a soft claw", "cuddles")
 
+	pickup_grab_level = MOBCRITTER_GRAB_AGGRESSIVE
+	pickup_needs_lizard = 1 // lizenzed professionals only
+	hold_two_handed = 0
+	hold_struggle_stam = 40
+	hold_struggle_stam_cost = 5
+	bag_throw_prob = 0
+	bag_mess_prob = 100
+	bag_escape_prob = 30
+	bag_dump_prob = 100 // More that they rip a hole in the bag. That instantly patches itself up
+	hold_response = HOLD_RESPONSE_VIOLENT
+	bag_response = BAG_RESPONSE_VIOLENT
+	w_class = 1
+
 	New()
 		..()
 
@@ -2668,6 +3075,8 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 
 	base_move_delay = 4
 	base_walk_delay = 5
+
+	pickup_grab_level = MOBCRITTER_GRAB_NEVER
 
 //	var/mob/living/target = null
 
@@ -2747,6 +3156,8 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	base_move_delay = 13
 	base_walk_delay = 15
 
+	pickup_grab_level = MOBCRITTER_GRAB_NEVER
+
 //	var/mob/living/target = null
 
 	New()
@@ -2817,6 +3228,8 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 
 	base_move_delay = 2.3
 	base_walk_delay = 4
+
+	pickup_grab_level = MOBCRITTER_GRAB_NEVER
 
 //	var/mob/living/target = null
 

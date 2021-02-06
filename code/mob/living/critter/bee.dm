@@ -55,6 +55,20 @@
 
 	var/non_admin_bee_allowed = 0
 
+	pickup_grab_level = MOBCRITTER_GRAB_NECK
+	pickup_needs_lizard = 0
+	hold_two_handed = 1
+	hold_struggle_stam = 40
+	hold_struggle_stam_cost = 20
+	struggle_cooldown = 0.4 SECONDS
+	bag_throw_prob = 0 // No hands! Sort of
+	bag_mess_prob = 0
+	bag_escape_prob = 40
+	bag_dump_prob = 50 // big clumsy things
+	hold_response = HOLD_RESPONSE_CHILL
+	bag_response = BAG_RESPONSE_CHILL
+	w_class = 3 // they're pretty big
+
 	New()
 		..()
 		// bee mobs should have their actual bee names

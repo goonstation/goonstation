@@ -52,7 +52,7 @@ var/list/ai_move_scheduled = list()
 		..()
 
 	proc/tick()
-		if(!enabled)
+		if(!enabled || (istype(owner.metaholder)))
 			walk(owner, 0)
 			return
 		if (!current_task)

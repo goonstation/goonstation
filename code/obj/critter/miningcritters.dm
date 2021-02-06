@@ -20,6 +20,17 @@
 	var/eaten = 0
 	var/const/rocks_per_gem = 10
 
+	grab_flags = GRABBABLE_NOT_WHILE_ANGRY_AT_GRABBER
+	hold_two_handed = 1
+	hold_response = HOLD_RESPONSE_CHILL
+	bag_response = BAG_RESPONSE_CHILL
+	hold_struggle_stam = 45
+	bag_throw_prob = 0
+	bag_mess_prob = 0
+	bag_escape_prob = 60
+	temp_angry_duration = 10
+	w_class = 2
+
 	seek_target()
 		src.anchored = 0
 		for (var/obj/item/raw_material/C in view(src.seekrange,src))
@@ -70,7 +81,7 @@
 				if(1) created = unpool(/obj/item/raw_material/gemstone)
 				if(2) created = unpool(/obj/item/raw_material/uqill)
 				if(3) created = unpool(/obj/item/raw_material/fibrilith)
-			created.set_loc(src.loc)
+			created.set_loc(get_turf(src))
 			src.eaten -= rocks_per_gem
 
 /obj/critter/rockworm/gary
@@ -98,6 +109,17 @@
 	crit_brute_amt = 5
 	crit_text = "grabs and stings"
 	crit_chance = 10
+
+	grab_flags = GRABBABLE_LIZARD | GRABBABLE_NOT_WHILE_ANGRY_AT_GRABBER
+	hold_two_handed = 1
+	hold_response = HOLD_RESPONSE_VIOLENT
+	bag_response = BAG_RESPONSE_VIOLENT
+	hold_struggle_stam = 45
+	bag_throw_prob = 100
+	bag_mess_prob = 30
+	bag_escape_prob = 60
+	temp_angry_duration = 10
+	w_class = 3
 
 	CritterAttack(mob/M)
 		..()

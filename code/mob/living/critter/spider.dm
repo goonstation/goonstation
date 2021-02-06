@@ -42,6 +42,19 @@
 
 	var/bite_transfer_amt = 2
 
+	pickup_grab_level = MOBCRITTER_GRAB_KILL // Takes an inhuman amount of determination to muster up the courage to pick this guy up
+	pickup_needs_lizard = 1 // and some inhuman limbs
+	hold_two_handed = 0
+	hold_struggle_stam = 25
+	hold_struggle_stam_cost = 5
+	bag_throw_prob = 0
+	bag_mess_prob = 0
+	bag_escape_prob = 30
+	bag_dump_prob = 0
+	hold_response = HOLD_RESPONSE_CHILL // But as it turns out
+	bag_response = BAG_RESPONSE_CHILL // they're more scared of you than you are of it
+	w_class = 1
+
 	New()
 		..()
 		if (src.icon_state == "big_spide")
@@ -148,6 +161,19 @@
 	venom1 = "toxin"
 	venom2 = "black_goop"
 
+	pickup_grab_level = MOBCRITTER_GRAB_PASSIVE // The cute appearance makes it a lot easier to grab
+	pickup_needs_lizard = 1 // still needs lizard hands
+	hold_two_handed = 1
+	hold_struggle_stam = 25
+	hold_struggle_stam_cost = 5
+	bag_throw_prob = 15
+	bag_mess_prob = 50
+	bag_escape_prob = 30
+	bag_dump_prob = 40
+	hold_response = HOLD_RESPONSE_CHILL
+	bag_response = BAG_RESPONSE_CHILL
+	w_class = 2
+
 /mob/living/critter/spider/baby
 	name = "li'l space spider"
 	desc = "A li'l tiny spider, from space. In space. A space spider."
@@ -185,6 +211,17 @@
 	adultpath = /mob/living/critter/spider
 	bite_transfer_amt = 1.2
 
+	hold_two_handed = 1
+	hold_struggle_stam = 30
+	hold_struggle_stam_cost = 5
+	bag_throw_prob = 25
+	bag_mess_prob = 50
+	bag_escape_prob = 30
+	bag_dump_prob = 40
+	hold_response = HOLD_RESPONSE_DISLIKE
+	bag_response = BAG_RESPONSE_CHILL
+	w_class = 2
+
 /mob/living/critter/spider/ice
 	name = "ice spider"
 	desc = "It seems to be adapted to a frozen climate."
@@ -204,6 +241,18 @@
 	max_skins = 4
 	reacting = 0
 
+	pickup_needs_lizard = 1
+	hold_two_handed = 1
+	hold_struggle_stam = 50
+	hold_struggle_stam_cost = 5
+	bag_throw_prob = 40
+	bag_mess_prob = 50
+	bag_escape_prob = 30
+	bag_dump_prob = 40
+	hold_response = HOLD_RESPONSE_VIOLENT // not these guys though
+	bag_response = BAG_RESPONSE_VIOLENT // they're not afraid of you at all!
+	w_class = 2
+
 /mob/living/critter/spider/ice/baby
 	name = "baby ice spider"
 	desc = "Dawww."
@@ -217,6 +266,10 @@
 	babyspider = 1
 	max_skins = 1
 	adultpath = /mob/living/critter/spider/ice
+
+	hold_struggle_stam = 20
+	hold_struggle_stam_cost = 5
+	w_class = 1
 
 	New()
 		..()
@@ -237,6 +290,18 @@
 	venom2 = "spidereggs"
 	max_skins = 8
 	good_grip = 1
+
+	pickup_needs_lizard = 1
+	hold_two_handed = 1
+	hold_struggle_stam = 50
+	hold_struggle_stam_cost = 5
+	bag_throw_prob = 100
+	bag_mess_prob = 100
+	bag_escape_prob = 65
+	bag_dump_prob = 100
+	hold_response = HOLD_RESPONSE_VIOLENT
+	bag_response = BAG_RESPONSE_VIOLENT
+	w_class = 3
 
 /mob/living/critter/spider/spacerachnid
 	name = "spacerachnid"
@@ -281,6 +346,19 @@
 						/datum/targetable/critter/spider_drain)
 	var/item_shoes = /obj/item/clothing/shoes/clown_shoes
 	var/item_mask = /obj/item/clothing/mask/clown_hat
+
+	pickup_grab_level = MOBCRITTER_GRAB_KILL
+	pickup_needs_lizard = 1
+	hold_two_handed = 0
+	hold_struggle_stam = 25
+	hold_struggle_stam_cost = 5
+	bag_throw_prob = 100
+	bag_mess_prob = 100
+	bag_escape_prob = 15
+	bag_dump_prob = 100
+	hold_response = HOLD_RESPONSE_VIOLENT
+	bag_response = BAG_RESPONSE_VIOLENT
+	w_class = 1
 
 	Life(datum/controller/process/mobs/parent)
 		if (..(parent))
@@ -339,6 +417,19 @@
 	// var/egg_path = /obj/item/reagent_containers/food/snacks/ingredient/egg/critter/clown
 	var/max_defensive_babies = 100
 
+	pickup_grab_level = MOBCRITTER_GRAB_KILL
+	pickup_needs_lizard = 1
+	hold_two_handed = 1
+	hold_struggle_stam = 70
+	hold_struggle_stam_cost = 5
+	bag_throw_prob = 100
+	bag_mess_prob = 100
+	bag_escape_prob = 15
+	bag_dump_prob = 100
+	hold_response = HOLD_RESPONSE_VIOLENT
+	bag_response = BAG_RESPONSE_VIOLENT
+	w_class = 3
+
 	cluwne
 		name = "queen cluwnespider"
 		desc = "...I got nothin'."
@@ -353,6 +444,19 @@
 		item_mask = /obj/item/clothing/mask/cursedclown_hat
 		// egg_path = /obj/item/reagent_containers/food/snacks/ingredient/egg/critter/cluwne
 		max_defensive_babies = 150
+
+	pickup_grab_level = MOBCRITTER_GRAB_KILL
+	pickup_needs_lizard = 1
+	hold_two_handed = 0
+	hold_struggle_stam = 25
+	hold_struggle_stam_cost = 5
+	bag_throw_prob = 100
+	bag_mess_prob = 100
+	bag_escape_prob = 15
+	bag_dump_prob = 100
+	hold_response = HOLD_RESPONSE_VIOLENT
+	bag_response = BAG_RESPONSE_VIOLENT
+	w_class = 3
 
 	New()
 		..()

@@ -61,7 +61,7 @@
 	if(isdead(owner))
 		enabled = 0
 		walk(owner,0)
-	if (!enabled)
+	if(!enabled || (istype(owner.metaholder)))
 		return
 	if(sleeping > 0)
 		sleeping--

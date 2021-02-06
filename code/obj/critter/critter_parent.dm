@@ -104,11 +104,11 @@
 	var/parent = null			//the mob or obj/critter that is the progenitor of this critter. Currently only set via hatched eggs
 
 	/// How easy is this critter to hold?
-	var/grab_flags = GRABBABLE_NOT_WHILE_ANGRY
+	var/grab_flags = GRABBABLE_NEVER
 	/// The critter holding shell used when this critter is picked up and used as an item
 	var/obj/item/critter_shell/metaholder = null
 	/// Does the mob need two hands to hold?
-	var/hold_two_handed = 1
+	var/hold_two_handed = 0
 	/// How does this critter react to being held? Being bitten or hurt sets it to VIOLENT, since most things dont like being bitten
 	/// HOLD_RESPONSE_CHILL, DISLIKE, VIOLENT
 	var/hold_response = HOLD_RESPONSE_DISLIKE
@@ -131,6 +131,10 @@
 	var/temp_angry_ticks_left
 	/// The base ticks the mob will stay angry after being let go
 	var/temp_angry_duration = 10
+	/// How bulky is this mob when picked up?
+	var/w_class = 1
+	/// How illegal is this mob to hold?
+	var/contraband = 0
 
 	proc/tokenized_message(var/message, var/target)
 		if (!message || !length(message))
@@ -437,10 +441,10 @@
 
 	proc/grab_critter(mob/user)
 		if(!ismob(user))
-			return
+			return FALSE
 
 		if (istype(src.metaholder) || istype(src.loc, /obj/item/critter_shell))
-			return // Already got a holder, thanks!
+			return FALSE // Already got a holder, thanks!
 
 		var/turf/T = get_turf(src)
 		if(src.grab_flags == GRABBABLE_NEVER) // Just pet it instead
@@ -449,18 +453,18 @@
 			T.visible_message("<span class='notice'><b>[user]</b> [pet_verb] [src]![post_pet_verb]</span>", 1)
 			if(src.alive)
 				on_pet(user)
-			return
+			return FALSE
 
 		var/user_has_lizlimb = 0
 		if(src.temp_angry || (ismob(src.target) && (src.task == "chasing" || src.task == "attacking")))
 			if(HAS_FLAG(src.grab_flags, GRABBABLE_NOT_WHILE_ANGRY)) // critter is mad as heck at something
 				boutput(user, "<span class='alert'><b>[src]</b> is too angry to pick up!</span>")
-				return
+				return FALSE
 
 		if(src.target == user)
 			if(HAS_FLAG(src.grab_flags, GRABBABLE_NOT_WHILE_ANGRY_AT_GRABBER)) // critter is mad as heck at you!
 				boutput(user, "<span class='alert'><b>[src]</b> anticipates your grasp and evades!</span>")
-				return
+				return FALSE
 
 		if(HAS_FLAG(src.grab_flags, GRABBABLE_LIZARD)) // Critter needs lizard arms to grab
 			if(ishuman(user))
@@ -472,19 +476,22 @@
 					user_has_lizlimb = 1
 			if(!user_has_lizlimb)
 				boutput(user, "<span class='alert'><b>[src]</b> deftly evades your grasp!</span>")
-				return
+				return FALSE
 
 		if (!istype(src.metaholder) && !istype(src.loc, /obj/item/critter_shell))
 			var/obj/item/critter_shell/c_holder = new(get_turf(src))
 			if(c_holder.shellify_critter(src, user))
 				src.metaholder = c_holder
+				src.wrangler = null
 				if(user_has_lizlimb)
 					user.visible_message("<span class='notice'>[user] snatches [src] with a scaled claw!</span>", "<span class='notice'>You snatch up [src] with a scaled claw!</span>")
 				else
 					user.visible_message("<span class='notice'>[user] picks up [src].</span>", "<span class='notice'>You pick up [src].</span>")
+				return TRUE
 			else // fail messages!
 				if(src.hold_two_handed)
 					boutput(user, "<span class='alert'>[src] needs both hands to carry!</span>")
+				return FALSE
 
 	proc/patrol_step()
 		if (!mobile)
@@ -712,7 +719,6 @@
 					src.task = "freed from bag"
 
 		if(istype(src.metaholder)) // In a metaholder, but not set to be held?
-			boutput(world, "[src] I am in [src.metaholder.loc]. My loc's loc is [src.metaholder.loc?.loc]")
 			if(istype(src.metaholder.loc, /obj/item/storage)) // Get held, then!
 				src.task = "bagged"
 				/// Let's make sure the critter has a viable grabber
@@ -924,19 +930,16 @@
 							return
 						if(HOLD_RESPONSE_DISLIKE, HOLD_RESPONSE_VIOLENT)
 							src.target = src.grabber
-							boutput(world, "I am [src] in [src.metaholder] held by [src.metaholder.loc]. I hate [src.target], who is my target.")
-							var/direct = pick(cardinal)
 							src.set_dir(pick(cardinal))
-							boutput(world, "I am now facing [direct]. I AM [src]")
-							playsound(get_turf(src), "sound/musical_instruments/Vuvuzela_1.ogg", 100, 1)
 							if(!src.attacking && IN_RANGE_TURF(src, src.grabber, 1))
 								if(src.hold_response == HOLD_RESPONSE_VIOLENT)
-									CritterAttack(src.grabber)
+									ChaseAttack(src.target)
+									CritterAttack(src.target)
 								var/prev_stam = src.grabber.get_stamina()
 								src.grabber.remove_stamina(src.hold_struggle_stam)
 								src.grabber.stamina_stun()
 								var/turf/T = get_turf(src)
-								playsound(T, "sound/items/pickup_[max(min(src.w_class,3),1)].ogg", 56, vary=0.2)
+								playsound(T, "rustle", 50, vary=1)
 								attack_twitch(src.metaholder)
 								if(prev_stam > 0 && src.grabber.get_stamina() <= 0) //We were just knocked out.
 									src.grabber.set_clothing_icon_dirty()
@@ -954,14 +957,13 @@
 							return
 						if(BAG_RESPONSE_DISLIKE, BAG_RESPONSE_VIOLENT)
 							src.target = src.grabber
-							boutput(world, "I am [src] in [src.metaholder] held by [src.metaholder.loc]. I hate [src.target], who is my target.")
-							var/direct = pick(cardinal)
 							src.set_dir(pick(cardinal))
-							boutput(world, "I am now facing [direct]. I AM [src]")
-							playsound(T, "sound/items/pickup_[max(min(src.w_class,3),1)].ogg", 56, vary=0.2)
-							hit_twitch(src.metaholder.loc)
+							var/turf/T = get_turf(src)
+							playsound(T, "rustle", 56, vary=0.2)
+							animate_storage_rustle(src.metaholder.loc)
 							attack_twitch(src.metaholder)
 							if(!src.attacking && IN_RANGE_TURF(src, src.target, 1))
+								ChaseAttack(src.target)
 								CritterAttack(src.target)
 							if(prob(src.bag_escape_prob))
 								var/obj/item/storage/old_holder = src.metaholder.loc
@@ -973,7 +975,6 @@
 							if(prob(src.bag_mess_prob))
 								var/obj/item/storage/bag = src.metaholder?.loc
 								if(istype(bag))
-									boutput(world, "I'm in [bag]. contents are [english_list(bag.contents)]. I AM [src]")
 									var/list/bag_contents = bag.get_all_contents()
 									for(var/atom/A as() in bag_contents) // remove the critter and its shell
 										if(istype(A, /obj/item/critter_shell) || A == src)
@@ -981,17 +982,14 @@
 									if(length(bag_contents) >= 1) // gotta have something to mess with
 										var/obj/item/messwith
 										var/tries = 5
-										boutput(world, "I'm in [bag]. ALL contents are [english_list(bag_contents)]. I AM [src]")
 										while(tries-- > 1 && (!istype(messwith, /obj/item) || messwith == src.metaholder))
 											messwith = pick(bag_contents)
-											boutput(world, "messing with [messwith]. I AM [src]")
 										if(istype(messwith))
 											messwith.set_loc(get_turf(src))
 											bag.hud?.remove_item(messwith)
 											bag.hud?.update()
-											// if(prob(src.bag_throw_prob)) // and maybe throw it too
-											// 	ThrowRandom(messwith, rand(2,4), 1)
-											// most attack procs expect a mob. So, just drop shit for now
+											if(prob(src.bag_throw_prob)) // and maybe throw it too
+												ThrowRandom(messwith, rand(2,4), 1)
 			if ("freed from hold")
 				switch(src.hold_response)
 					if(HOLD_RESPONSE_CHILL) // Isn't angry about being held, go back to crittering

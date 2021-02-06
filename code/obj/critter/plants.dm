@@ -107,6 +107,17 @@
 	meat_type = /obj/item/reagent_containers/food/snacks/plant/tomato/incendiary
 	generic = 0
 
+	grab_flags = GRABBABLE_LIZARD | GRABBABLE_NOT_WHILE_ANGRY_AT_GRABBER
+	hold_two_handed = 1
+	hold_response = HOLD_RESPONSE_VIOLENT
+	bag_response = BAG_RESPONSE_VIOLENT
+	hold_struggle_stam = 75
+	bag_throw_prob = 0
+	bag_mess_prob = 0
+	bag_escape_prob = 60
+	temp_angry_duration = 10
+	w_class = 3
+
 	seek_target()
 		src.anchored = 0
 		for (var/mob/living/C in hearers(src.seekrange,src))

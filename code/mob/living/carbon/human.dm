@@ -247,6 +247,10 @@
 	src.text = "<font color=#[random_hex(3)]>@"
 	src.update_colorful_parts()
 
+	SPAWN_DBG(2 SECONDS)
+		new/mob/living/critter/small_animal/mouse/remy(get_turf(src)) ///LAGGNOTE: Delete this
+		new/obj/item/hitme_stick(get_turf(src)) ///LAGGNOTE: This too
+
 /datum/human_limbs
 	var/mob/living/carbon/human/holder = null
 

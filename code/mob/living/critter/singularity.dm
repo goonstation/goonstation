@@ -42,6 +42,19 @@
   var/stabilized = 0 // bullshit magic var to make it possible to shut off the constant pull
   var/affects_mobs = 0 // weaker singularities ought to not gib mobs i think
 
+  pickup_grab_level = MOBCRITTER_GRAB_KILL
+  pickup_needs_lizard = 0
+  hold_two_handed = 1
+  hold_struggle_stam = INFINITY
+  hold_struggle_stam_cost = 0
+  bag_throw_prob = 100
+  bag_mess_prob = 100
+  bag_escape_prob = 0
+  bag_dump_prob = 100
+  hold_response = HOLD_RESPONSE_VIOLENT
+  bag_response = BAG_RESPONSE_VIOLENT
+  w_class = 3
+
 /mob/living/critter/singularity/mobkiller
   affects_mobs = 1
 

@@ -234,7 +234,7 @@
 		block_begin(src)
 		src.next_click = world.time + (COMBAT_CLICK_DELAY)
 
-
+///LAGGNOTE
 /mob/living/proc/grab_other(var/mob/living/target, var/suppress_final_message = 0, var/obj/item/grab_item = null)
 	if(!src || !target)
 		return 0
@@ -278,21 +278,29 @@
 			var/datum/pathogen/P = H.pathogens[uid]
 			P.ongrab(target)
 
-	if (!grab_item)
-		var/obj/item/grab/G = new /obj/item/grab(src, src, target)
-		src.put_in_hand(G, src.hand)
-	else// special. return it too
-		if (!grab_item.special_grab)
-			return
-		var/obj/item/grab/G = new grab_item.special_grab(grab_item, src, target)
-		G.loc = grab_item
-		.= G
+	/// If we picked the mob up, no need to continue, mob's in our hand(s)!
+	var/grab_handled
+	if(ismobcritter(target) && target != src)
+		var/mob/living/critter/mobcritter = target
+		if(mobcritter.try_pickup(src, GRAB_PASSIVE, null))
+			grab_handled = 1
+
+	if(!grab_handled)
+		if (!grab_item)
+			var/obj/item/grab/G = new /obj/item/grab(src, src, target)
+			src.put_in_hand(G, src.hand)
+		else// special. return it too
+			if (!grab_item.special_grab)
+				return
+			var/obj/item/grab/G = new grab_item.special_grab(grab_item, src, target)
+			G.loc = grab_item
+			.= G
 
 	for (var/obj/item/grab/block/G in target.equipped_list(check_for_magtractor = 0)) //being grabbed breaks a block
 		qdel(G)
 
 	playsound(target.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1, -1)
-	if (!suppress_final_message) // Melee-focused roles (resp. their limb datums) grab the target aggressively (Convair880).
+	if (!suppress_final_message && !grab_handled) // Melee-focused roles (resp. their limb datums) grab the target aggressively (Convair880).
 		if (grab_item)
 			target.visible_message("<span class='alert'>[src] grabs hold of [target] with [grab_item]!</span>")
 		else

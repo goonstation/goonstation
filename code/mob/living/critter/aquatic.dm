@@ -182,6 +182,18 @@
 
 	var/swimming_away = 0
 
+	pickup_grab_level = MOBCRITTER_GRAB_NECK
+	pickup_needs_lizard = 1 // takes a scaled monster to nab a scaled monster
+	hold_two_handed = 0
+	hold_struggle_stam = 25
+	hold_struggle_stam_cost = 5
+	bag_throw_prob = 0
+	bag_mess_prob = 0
+	bag_escape_prob = 15
+	bag_dump_prob = 30
+	hold_response = HOLD_RESPONSE_DISLIKE
+	bag_response = BAG_RESPONSE_DISLIKE
+	w_class = 1
 
 /mob/living/critter/aquatic/fish/setup_hands()
 	..()
@@ -403,6 +415,19 @@
 
 	bound_width = 96
 	bound_height = 64
+
+	pickup_grab_level = MOBCRITTER_GRAB_KILL
+	pickup_needs_lizard = 1
+	hold_two_handed = 1
+	hold_struggle_stam = 75
+	hold_struggle_stam_cost = 5
+	bag_throw_prob = 100
+	bag_mess_prob = 70
+	bag_escape_prob = 15
+	bag_dump_prob = 100
+	hold_response = HOLD_RESPONSE_VIOLENT
+	bag_response = BAG_RESPONSE_VIOLENT
+	w_class = 3
 
 /mob/living/critter/aquatic/king_crab/setup_hands()
 	..()

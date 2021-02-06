@@ -71,6 +71,17 @@
 	brutevuln = 2
 	flying = 1
 
+	grab_flags = GRABBABLE_LIZARD
+	hold_two_handed = 0
+	hold_response = HOLD_RESPONSE_CHILL
+	bag_response = BAG_RESPONSE_CHILL
+	hold_struggle_stam = 0
+	bag_throw_prob = 0
+	bag_mess_prob = 0
+	bag_escape_prob = 0
+	temp_angry_duration = 10
+	w_class = 3
+
 	CritterDeath()
 		..()
 		var/turf/T = get_turf(src.loc)
@@ -406,6 +417,17 @@
 	flying = 1
 	//var/neurotoxin = 2
 	chase_text = "stings"
+
+	grab_flags = GRABBABLE_LIZARD | GRABBABLE_NOT_WHILE_ANGRY_AT_GRABBER
+	hold_two_handed = 0
+	hold_response = HOLD_RESPONSE_VIOLENT
+	bag_response = BAG_RESPONSE_VIOLENT
+	hold_struggle_stam = 45
+	bag_throw_prob = 0
+	bag_mess_prob = 0
+	bag_escape_prob = 60
+	temp_angry_duration = 10
+	w_class = 2
 
 	CritterDeath()
 		..()

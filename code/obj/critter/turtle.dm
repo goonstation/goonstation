@@ -20,6 +20,17 @@
 	var/shell_count = 0		//Count down to 0. Measured in process cycles. If they are in their shell when this is 0, exit.
 	var/wandering_count = 0		//Make them move less frequently when wandering... They're slow.
 
+	grab_flags = GRABBABLE_LIZARD | GRABBABLE_NOT_WHILE_ANGRY_AT_GRABBER
+	hold_two_handed = 1
+	hold_response = HOLD_RESPONSE_CHILL
+	bag_response = BAG_RESPONSE_CHILL
+	hold_struggle_stam = 45
+	bag_throw_prob = 0
+	bag_mess_prob = 0
+	bag_escape_prob = 60
+	temp_angry_duration = 10
+	w_class = 2
+
 	ai_think()
 		if (shell_count > 0)
 			shell_count--

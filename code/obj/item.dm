@@ -1117,7 +1117,7 @@
 	if (chokehold)
 		chokehold.attack(M, user, def_zone, is_special)
 		return
-	else if (special_grab)
+	else if (special_grab && !istype(user, /obj/item/critter_shell)) // please don't grab people if you, yourself, are within their grasp. And you're a critter. Inside a critter shell.
 		if (user.a_intent == INTENT_GRAB)
 			src.try_grab(M, user)
 			return
