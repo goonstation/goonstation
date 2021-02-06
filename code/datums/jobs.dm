@@ -436,7 +436,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	slot_belt = /obj/item/device/pda2/heads
 	slot_poc1 = /obj/item/pen/fancy
 	slot_head = /obj/item/clothing/head/sea_captain/comm_officer_hat
-	items_in_backpack = list(/obj/item/device/camera_viewer, /obj/item/device/audio_log)
+	items_in_backpack = list(/obj/item/device/camera_viewer, /obj/item/device/audio_log, /obj/item/device/flash)
 
 	New()
 		..()
@@ -907,8 +907,9 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_head = /obj/item/clothing/head/cowboy
 	slot_foot = /obj/item/clothing/shoes/brown
 	slot_glov = /obj/item/clothing/gloves/black
+	slot_poc1 = /obj/item/paper/ranch_guide
 	slot_ears = /obj/item/device/radio/headset/civilian
-	items_in_backpack = list(/obj/item/fishing_rod)
+	items_in_backpack = list(/obj/item/fishing_rod, /obj/item/chicken_carrier)
 
 	New()
 		..()

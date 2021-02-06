@@ -67,7 +67,7 @@
 	icon_state = "pizza_p"
 	amount = 6
 	heal_amt = 3
-	var/topping_color = null
+	var/topping_color = "#ff0000"
 	var/sharpened = FALSE
 	var/sliced = FALSE
 	var/topping = FALSE
@@ -117,6 +117,7 @@
 				P.icon_state = "pslice"
 				P.quality = src.quality
 				P.heal_amt += round((src.heal_amt/makeslices))
+				P.topping_color = src.topping_color
 				if(topping)
 					P.name = src.name
 					P.desc = src.desc

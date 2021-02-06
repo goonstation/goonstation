@@ -95,10 +95,12 @@
 //		jobs["Chemist"] = PAY_DOCTORATE
 		jobs["Quartermaster"] = PAY_TRADESMAN
 		jobs["Botanist"] = PAY_TRADESMAN
+		jobs["Rancher"] = PAY_TRADESMAN
 //		jobs["Attorney at Space-Law"] = PAY_DOCTORATE
 		jobs["Staff Assistant"] = PAY_UNTRAINED
 		jobs["Medical Assistant"] = PAY_UNTRAINED
 		jobs["Technical Assistant"] = PAY_UNTRAINED
+		jobs["Security Assistant"] = PAY_UNTRAINED
 		jobs["Captain"] = PAY_EXECUTIVE
 
 		src.time_until_lotto = ( ticker ? ticker.round_elapsed_ticks : 0 ) + time_between_lotto

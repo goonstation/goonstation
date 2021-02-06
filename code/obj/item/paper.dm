@@ -1474,6 +1474,19 @@ exposed to overconfident outbursts on the part of individuals unqualifed to embo
 		pixel_y = rand(-8, 8)
 		info = "<html><body style='margin:2px'><img src='[resource("images/pocket_guides/botanyguide.png")]'></body></html>"
 
+/obj/item/paper/ranch_guide
+	name = "Ranch Field Guide"
+	desc = "Some kinda informative poster. Or is it a pamphlet? Either way, it wants to teach you things. About chickens."
+	icon_state = "ranch_guide"
+	sizex = 970
+	sizey = 690
+
+	New()
+		..()
+		pixel_x = rand(-8, 8)
+		pixel_y = rand(-8, 8)
+		info = "<html><body><style>img {width: 100%; height: auto;}></style><img src='[resource("images/pocket_guides/ranchguide.png")]'></body></html>"
+
 /obj/item/paper/iou
 	name = "IOU"
 	desc = "Somebody took whatever was in here."
