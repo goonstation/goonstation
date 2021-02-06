@@ -79,6 +79,22 @@ A Flamethrower in various states of assembly
 		if(istype(src.gastank) && src.gastank.air_contents && istype(src.fueltank) && src.fueltank.reagents)
 			return TRUE
 
+
+	/// allow refilling the fuel tank by simply clicking the reagent dispensers
+	afterattack(atom/target, mob/user , flag)
+		if(istype(target, /obj/reagent_dispensers) && get_dist(src,target) <= 1)
+			if(istype(src.fueltank))
+				var/obj/o = target
+				o.reagents.trans_to(src.fueltank, (src.fueltank?.reagents?.maximum_volume - (src.fueltank?.reagents?.total_volume)))
+				inventory_counter?.update_percent(src.fueltank?.reagents?.total_volume, src.fueltank?.reagents?.maximum_volume)
+				boutput(user, "<span class='notice'>You refill the flamethrower's fuel tank.</span>")
+				playsound(src.loc, "sound/effects/zzzt.ogg", 50, 1, -6)
+				user.lastattacked = target
+				return
+			else
+				boutput(user, "<span class='notice'>Load the fuel tank first!</span>")
+
+
 	/// check for tank, pressure in tank, fuelltank, fuel in tank, and... then dump the stuff into it!
 	process_ammo(var/mob/user)
 		var/turf/T = get_turf(src)
