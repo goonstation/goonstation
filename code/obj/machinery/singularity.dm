@@ -98,8 +98,8 @@ Contains:
 	var/dieot = 0
 	var/selfmove = 1
 	var/grav_pull = 6
-	var/radius = 0 //the variable used for all calculations involving size
-
+	var/radius = 0 //the variable used for all calculations involving size.this is the current size
+	var/maxradius = INFINITY//the maximum size the singularity can grow to
 
 
 
@@ -112,7 +112,11 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 /obj/machinery/the_singularity/New(loc, var/E = 100, var/Ti = null,var/rad = 2)
 	START_TRACKING
 	src.energy = E
-	radius=rad
+	maxradius = rad
+	if(maxradius<2)
+		radius = maxradius
+	else
+		radius = 2
 	SafeScale((radius+1)/3.0,(radius+1)/3.0)
 	grav_pull = (radius+1)*3
 	event()
@@ -151,10 +155,11 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			move()
 	else//this should probably be modified to use the enclosed test of the generator
 		var/checkpointC = 0
-		for (var/obj/machinery/containment_field/X in orange(radius+2,src))
+		for (var/obj/machinery/containment_field/X in orange(maxradius+2,src))
 			checkpointC ++
 		if (checkpointC < max(MIN_TO_CONTAIN,(radius*8)))//as radius of a 5x5 should be 2, 16 tiles are needed to hold it in, this allows for 4 failures before the singularity is loose
 			src.active = 1
+			maxradius = INFINITY
 
 
 /obj/machinery/the_singularity/emp_act()
@@ -237,6 +242,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 					if ("Clown")
 						// Hilarious.
 						gain = 500
+						grow()
 					if ("Lawyer")
 						// Satan.
 						gain = 250
@@ -297,6 +303,11 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	else
 		return ..()
 
+/obj/machinery/the_singularity/proc/grow()
+	if(radius<maxradius)
+		radius++
+		SafeScale((radius+0.5)/(radius-0.5),(radius+0.5)/(radius-0.5))
+
 // totally rewrote this proc from the ground-up because it was puke but I want to keep this comment down here vvv so we can bask in the glory of What Used To Be - haine
 		/* uh why was lighting a cig causing the singularity to have an extra process()?
 		   this is dumb as hell, commenting this. the cigarette will get processed very soon. -drsingh
@@ -307,6 +318,8 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 /////////////////////////////////////////////Controls which "event" is called
 /obj/machinery/the_singularity/proc/event()
 	var/numb = rand(1,4)
+	if(prob(25))
+		grow()
 	switch (numb)
 		if (1)//EMP
 			Zzzzap()
@@ -320,6 +333,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		if (4)//Stun mobs who lack optic scanners
 			Mezzer()
 			return
+
 
 /obj/machinery/the_singularity/proc/Toxmob()
 
