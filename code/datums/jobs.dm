@@ -907,6 +907,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_head = /obj/item/clothing/head/cowboy
 	slot_foot = /obj/item/clothing/shoes/brown
 	slot_glov = /obj/item/clothing/gloves/black
+	slot_poc1 = /obj/item/paper/ranch_guide
 	slot_ears = /obj/item/device/radio/headset/civilian
 	items_in_backpack = list(/obj/item/fishing_rod)
 
