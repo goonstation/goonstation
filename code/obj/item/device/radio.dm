@@ -348,16 +348,16 @@ Green Wire: <a href='?src=\ref[src];wires=[WIRE_TRANSMIT]'>[src.wires & WIRE_TRA
 
 	// hi it's me cirr here to shoehorn in another thing
 	// flockdrones and flockmind should hear all channels, but with terrible corruption
-	if(length(flocks))
-		for(var/F in flocks)
-			var/datum/flock/flock = flocks[F]
-			if(flock)
-				if(flock.flockmind)
-					heard_flock |= flock.flockmind
-				if(flock.units && flock.units.len > 0)
-					for(var/mob/living/D in flock.units)
-						if(D)
-							heard_flock |= D
+		if(length(flocks))
+			for(var/F in flocks)
+				var/datum/flock/flock = flocks[F]
+				if(flock)
+					if(flock.flockmind)
+						heard_flock |= flock.flockmind
+					if(flock.units && flock.units.len > 0)
+						for(var/mob/living/D in flock.units)
+							if(D)
+								heard_flock |= D
 
 	for (var/client/C)
 		if (!C.mob) continue
