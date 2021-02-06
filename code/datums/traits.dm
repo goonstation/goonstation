@@ -908,7 +908,7 @@ obj/trait/pilot
 	points = 0
 	isPositive = 0
 	onAdd(var/mob/owner)
-		owner.mind.canBeSilicon = FALSE
+		owner.mind?.canBeSilicon = FALSE
 
 
 
