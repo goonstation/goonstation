@@ -37,11 +37,15 @@ proc/log_logged_phrase(category, phrase)
 		global.logged_phrases[category] = list(phrase)
 
 proc/save_logged_phrases()
-	// TODO: bias towards keeping 50% of old and 50% of new
 	for(var/category in global.logged_phrases)
 		var/list/phrases = global.logged_phrases[category]
 		if(length(phrases) > MAX_LOGGED_PHRASES)
-			shuffle_list(phrases)
+			for(var/i in 1 to length(phrases))
+				// bias towards old phrases so we don't get a new "say" category every round basically
+				if(i <= MAX_LOGGED_PHRASES && prob(80))
+					phrases.Swap(i, rand(i, MAX_LOGGED_PHRASES))
+				else
+					phrases.Swap(i, rand(i, length(phrases)))
 			global.logged_phrases[category] = phrases.Copy(1, MAX_LOGGED_PHRASES)
 	text2file(json_encode(global.logged_phrases), LOGGED_PHRASES_FILENAME)
 
