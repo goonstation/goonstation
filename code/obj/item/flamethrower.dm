@@ -81,7 +81,7 @@ A Flamethrower in various states of assembly
 
 
 	/// allow refilling the fuel tank by simply clicking the reagent dispensers
-	afterattack(atom/target, mob/user , flag)
+	afterattack(atom/target, mob/user, flag)
 		if(istype(target, /obj/reagent_dispensers) && get_dist(src,target) <= 1)
 			if(istype(src.fueltank))
 				var/obj/o = target
@@ -93,6 +93,7 @@ A Flamethrower in various states of assembly
 				return
 			else
 				boutput(user, "<span class='notice'>Load the fuel tank first!</span>")
+				return
 
 
 	/// check for tank, pressure in tank, fuelltank, fuel in tank, and... then dump the stuff into it!
