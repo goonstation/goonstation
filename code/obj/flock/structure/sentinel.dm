@@ -88,23 +88,3 @@
 	else
 		var/f = src.filters[length(src.filters)]
 		animate(f, size=((-(cos(180*(3/100))-1)/2)*32), time=10 SECONDS, flags = ANIMATION_PARALLEL)
-
-
-
-/*
-	if(charge > 2)//else it just makes the sprite invisible, due to floats. this is small enough that it doesnt even showup anyway since its under the sprite
-		src.filters = filter(type="rays", x=0, y=10, size=((-(cos(180*(charge/100))-1)/2)*32), color=rgb(0,155,155), offset=rand(1000), density=20, threshold=0.2, factor=1, flags=FILTER_UNDERLAY)
-		var/f = src.filters[length(src.filters)]
-		animate(f, time=5 MINUTES, easing=LINEAR_EASING, loop=-1, offset=f:offset + 100, flags = ANIMATION_PARALLEL)
-	else
-		src.filters = filter(type="rays", x=0, y=10, size=((-(cos(180*(3/100))-1)/2)*32), color=rgb(0,155,155), offset=rand(1000), density=20, threshold=0.2, factor=1, flags=FILTER_UNDERLAY)
-		var/f = src.filters[length(src.filters)]
-		animate(f, time=5 MINUTES, easing=LINEAR_EASING, loop=-1, offset=f:offset + 100, flags = ANIMATION_PARALLEL)
-*/
-/*
-	var/f = src.filters[length(src.filters)]
-	if(charge > 2)//else it just makes the sprite invisible, due to floats. this is small enough that it doesnt even showup anyway since its under the sprite
-		animate(f, size=((-(cos(180*(charge/100))-1)/2)*32), time=10 SECONDS, loop=-1, f:offset+=100)
-	else
-		animate(f, size=((-(cos(180*(3))-1)/2)*32), time=10 SECONDS, loop=-1, f:offset+=100)
-*/
