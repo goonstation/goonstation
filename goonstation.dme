@@ -1593,6 +1593,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\procs\helpers.dm"
 #include "code\procs\jobprocs.dm"
 #include "code\procs\lists.dm"
+#include "code\procs\logged_phrases.dm"
 #include "code\procs\logging.dm"
 #include "code\procs\loop_debug.dm"
 #include "code\procs\mob_procs.dm"

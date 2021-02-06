@@ -1058,6 +1058,9 @@
 	if (length(heard_b))
 		processed = saylist(messages[2], heard_b, olocs, thickness, italics, processed, 1)
 
+	if(src.client)
+		log_logged_phrase("say", messages[1])
+
 	message = src.say_quote(messages[1])
 
 
