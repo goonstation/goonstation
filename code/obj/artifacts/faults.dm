@@ -164,6 +164,7 @@ ABSTRACT_TYPE(/datum/artifact_fault/messager/)
 		return random_logged_phrase("deadsay")
 
 /datum/artifact_fault/messager/ai_laws
+	trigger_prob = 15
 	text_style = "monospace"
 	generate_message(obj/O, mob/living/user)
 		return random_logged_phrase("ailaw")
