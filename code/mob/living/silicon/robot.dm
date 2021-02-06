@@ -1180,7 +1180,7 @@
 				var/obj/item/organ/brain/B = W
 				user.drop_item()
 				user.visible_message("<span class='notice'>[user] inserts [W] into [src]'s head.</span>")
-				if (B.owner && (B.owner.dnr || jobban_isbanned(B.owner.current, "Cyborg") || (B.owner.traitHolder && B.owner.traitHolder.hasTrait("electronicincompatibility"))))
+				if (B.owner && (B.owner.dnr || jobban_isbanned(B.owner.current, "Cyborg") || !B.owner.canBeSilicon))
 					src.visible_message("<span class='alert'>\The [B] is hit by a spark of electricity from \the [src]!</span>")
 					B.combust()
 					return
@@ -1196,7 +1196,7 @@
 						return
 					if (!isdead(M)) // so if they're in VR, the afterlife bar, or a ghostcritter
 						boutput(M, "<span class='notice'>You feel yourself being pulled out of your current plane of existence!</span>")
-						B.owner M =.ghostize()?.mind
+						B.owner = M.ghostize()?.mind
 						qdel(M)
 					B.owner.transfer_to(src)
 					if (src.emagged || src.syndicate)

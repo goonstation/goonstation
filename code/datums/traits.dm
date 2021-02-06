@@ -907,6 +907,10 @@ obj/trait/pilot
 	id = "electronicincompatibility"
 	points = 0
 	isPositive = 0
+	onAdd(var/mob/owner)
+		owner.mind.canBeSilicon = FALSE
+
+
 
 /obj/trait/survivalist
 	name = "Survivalist (-1)"

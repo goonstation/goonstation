@@ -334,7 +334,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 			user.drop_item()
 			W.set_loc(src)
 			var/obj/item/organ/brain/B = W
-			if (B.owner && (B.owner.dnr || jobban_isbanned(B.owner.current, "AI")))
+			if (B.owner && (B.owner.dnr || jobban_isbanned(B.owner.current, "AI") || !B.owner.canBeSilicon))
 				src.visible_message("<span class='alert'>\The [B] is hit by a spark of electricity from \the [src]!</span>")
 				B.combust()
 				return

@@ -47,6 +47,7 @@ datum/mind
 	var/master = null
 
 	var/dnr = 0
+	var/canBeSilicon = TRUE
 	var/joined_observer = 0 //keep track of whether this player joined round as an observer (blocks them from bank payouts)
 
 	var/luck = 50 // todo:
