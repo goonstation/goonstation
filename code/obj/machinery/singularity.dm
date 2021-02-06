@@ -10,6 +10,9 @@ Contains:
 // I came here with good intentions, I swear, I didn't know what this code was like until I was already waist deep in it
 #define SINGULARITY_TIME 11
 #define SINGULARITY_MAX_DIMENSION 11//defines the maximum dimension possible by a player created singularity.
+#define MIN_TO_CONTAIN 4
+#define DEFAULT_AREA 25
+
 // I'm sorry
 //////////////////////////////////////////////////// Singularity generator /////////////////////
 
@@ -150,7 +153,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		var/checkpointC = 0
 		for (var/obj/machinery/containment_field/X in orange(radius+2,src))
 			checkpointC ++
-		if (checkpointC < max(4,(radius*8)))//as radius of a 5x5 should be 2, 16 tiles are needed to hold it in, this allows for 4 failures before the singularity is loose
+		if (checkpointC < max(MIN_TO_CONTAIN,(radius*8)))//as radius of a 5x5 should be 2, 16 tiles are needed to hold it in, this allows for 4 failures before the singularity is loose
 			src.active = 1
 
 
@@ -1443,7 +1446,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		var/power_s = 0
 		var/power_p = 0
 		if(!isnull(S1))
-			power_s += S1.energy*((S1.radius*2+1)**2)/25//should give the area of the singularity and divide it by the area of a standard singularity(a 5x5)
+			power_s += S1.energy*((S1.radius*2+1)**2)/DEFAULT_AREA  //should give the area of the singularity and divide it by the area of a standard singularity(a 5x5)
 		power_p += 50
 		power_a = power_p*power_s*50
 		src.lastpower = power_a
