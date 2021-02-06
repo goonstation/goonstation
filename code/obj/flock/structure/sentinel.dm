@@ -59,7 +59,7 @@
 							arcFlash(m, nearbymob, 10000)
 							hit += nearbymob
 							m = nearbymob
-						chain--//infinite loop prevention, wouldve been in the if statement.
+						chain--//infinite loop prevention, wouldve been in the if statement otherwise.
 				hit.len = 0//clean up
 				charge = 1
 				var/f = src.filters[length(src.filters)]//force the visual to power down
