@@ -1,5 +1,9 @@
 
 (t)sat feb 06 21
+(u)zjdtmkhzt
+(p)3571
+(e)🆕|feature
+(*)Heater type artifacts are now more interesting (and more dangerous). Good thing research has air scrubbers ready!
 (u)Emily
 (e)🆕|feature
 (*)New Chicken Breed! See Minor Changes for a hint.
