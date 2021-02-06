@@ -212,6 +212,9 @@
 		heal_brute = 10
 		heal_burn = 10
 		heal_tox = 5
+		var/muscliness_factor = 7
+		var/filter
+
 
 		onAdd(optional)
 			. = ..()
@@ -220,6 +223,10 @@
 				M.add_stam_mod_regen("stims", 500)
 				M.add_stam_mod_max("stims", 500)
 				M.add_stun_resist_mod("stims", 1000)
+				M.filters += filter(type="displace", icon=icon('icons/effects/distort.dmi', "muscly"), size=0)
+				src.filter = M.filters[length(M.filters)]
+				animate(filter, size=src.muscliness_factor, time=1 SECOND, easing=SINE_EASING)
+
 
 		onRemove()
 			. = ..()
@@ -228,6 +235,11 @@
 				M.remove_stam_mod_regen("stims")
 				M.remove_stam_mod_max("stims")
 				M.remove_stun_resist_mod("stims")
+				animate(filter, size=0, time=1 SECOND, easing=SINE_EASING)
+				SPAWN_DBG(1 SECOND)
+					M.filters -= filter
+					filter = null
+
 			owner.changeStatus("stimulant_withdrawl", 1 MINUTE)
 
 		onUpdate(timePassed)

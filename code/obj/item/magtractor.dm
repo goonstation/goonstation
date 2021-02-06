@@ -169,9 +169,10 @@
 	proc/updateHeldOverlay(obj/item/W as obj)
 		if (W && !W.disposed)
 			var/image/heldItem = GetOverlayImage("heldItem")
-			if (!heldItem) heldItem = image(W.icon, W.icon_state)
+			if (!heldItem)
+				heldItem = image(W.icon, W.icon_state)
+				heldItem.transform *= 0.85
 			heldItem.color = W.color
-			heldItem.transform *= 0.85
 			heldItem.pixel_y = 1
 			heldItem.layer = -1
 			src.UpdateOverlays(heldItem, "heldItem")

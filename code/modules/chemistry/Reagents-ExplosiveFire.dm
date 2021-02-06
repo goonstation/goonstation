@@ -206,12 +206,14 @@ datum
 
 			reaction_turf(var/turf/T, var/volume)
 				if(istype(T, /turf/simulated))
-					if(!T.reagents) T.create_reagents(volume)
-					T.reagents.add_reagent("thermite", volume, null)
-					T.overlays = null
-					T.overlays = image('icons/effects/effects.dmi',icon_state = "thermite")
-					if (T.active_hotspot)
-						T.reagents.temperature_reagents(T.active_hotspot.temperature, T.active_hotspot.volume, 10, 300)
+					if(!T.reagents)
+						T.create_reagents(volume)
+					if(!T.reagents.has_reagent("thermite"))
+						T.reagents.add_reagent("thermite", volume, null)
+						T.overlays = null
+						T.overlays = image('icons/effects/effects.dmi',icon_state = "thermite")
+						if (T.active_hotspot)
+							T.reagents.temperature_reagents(T.active_hotspot.temperature, T.active_hotspot.volume, 10, 300)
 				return
 
 
@@ -235,8 +237,9 @@ datum
 				var/datum/reagents/myholder = holder
 				if(!ignited)
 					ignited = 1
+					var/vol = volume
 					SPAWN_DBG(1 DECI SECOND)
-						myholder.smoke_start(volume) //moved to a proc in Chemistry-Holder.dm so that the instant reaction and powder can use the same proc
+						myholder.smoke_start(vol) //moved to a proc in Chemistry-Holder.dm so that the instant reaction and powder can use the same proc
 				myholder.del_reagent(id)
 
 		combustible/propellant
@@ -259,8 +262,9 @@ datum
 				var/datum/reagents/myholder = holder
 				if(!ignited)
 					ignited = TRUE
+					var/vol = volume
 					SPAWN_DBG(1 DECI SECOND)
-						myholder.smoke_start(volume,classic = 1) //moved to a proc in Chemistry-Holder.dm so that the instant reaction and powder can use the same proc
+						myholder.smoke_start(vol,classic = 1) //moved to a proc in Chemistry-Holder.dm so that the instant reaction and powder can use the same proc
 				myholder.del_reagent(id)
 
 		combustible/sonicpowder
@@ -354,26 +358,7 @@ datum
 					reacting = 1
 					var/list/covered = holder.covered_turf()
 					var/location = covered.len ? covered[1] : 0
-					elecflash(location)
-
-					for (var/mob/living/M in all_viewers(5, location))
-						if (issilicon(M) || isintangible(M))
-							continue
-
-						var/dist = get_dist(M, location)
-						var/stunned = max(0, holder.get_reagent_amount(id) * (3 - dist) * 0.1)
-						var/eye_damage = max(0, holder.get_reagent_amount(id) * (2 - dist) * 0.1)
-						var/eye_blurry = max(0, holder.get_reagent_amount(id) * (5 - dist) * 0.2)
-
-						M.apply_flash(60, 0, max(0, stunned), 0, max(0, eye_blurry), max(0, eye_damage))
-
-					for (var/mob/living/silicon/M in all_viewers(world.view, location))
-						var/checkdist = get_dist(M, location)
-						var/C_weakened = max(0, holder.get_reagent_amount(id) * (3 - checkdist) * 0.1)
-						var/C_stunned = max(0, holder.get_reagent_amount(id) * (5 - checkdist) * 0.1)
-
-						M.apply_flash(30, max(0, C_weakened), max(0, C_stunned))
-
+					flashpowder_reaction(location, holder.get_reagent_amount(id))
 				holder?.del_reagent(id)
 
 		combustible/infernite // COGWERKS CHEM REVISION PROJECT. this could be Chlorine Triflouride, a really mean thing

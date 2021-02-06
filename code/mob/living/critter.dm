@@ -758,7 +758,7 @@
 		empty_hands()
 		if (do_drop_equipment)
 			drop_equipment()
-		hud.update_health()
+		hud?.update_health()
 		update_stunned_icon(canmove=1)//force it to go away
 		return ..(gibbed)
 

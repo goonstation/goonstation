@@ -1311,6 +1311,7 @@
 	if (LinkBlocked(usr.loc,src.loc)) return
 	if (isAI(usr) || isAI(src)) return
 	if (isghostcritter(usr) && !isdead(src)) return
+	if(!isliving(usr)) return
 	src.show_inv(usr)
 
 /mob/living/carbon/human/verb/fuck()

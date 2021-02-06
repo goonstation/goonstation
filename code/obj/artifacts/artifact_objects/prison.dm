@@ -4,7 +4,7 @@
 
 /datum/artifact/prison
 	associated_object = /obj/artifact/prison
-	rarity_class = 2
+	rarity_weight = 350
 	min_triggers = 2
 	max_triggers = 2
 	validtypes = list("ancient","martian","wizard","eldritch","precursor")

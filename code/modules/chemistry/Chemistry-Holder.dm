@@ -721,7 +721,7 @@ datum
 				fluid_turf.fluid_react(temp_fluid_reagents, temp_fluid_reagents.total_volume)
 
 		proc/add_reagent(var/reagent, var/amount, var/sdata, var/temp_new=T20C, var/donotreact = 0, var/donotupdate = 0)
-			if(!isnum(amount) || amount <= 0)
+			if(!isnum(amount) || amount <= 0 || src.disposed)
 				return 1
 			var/added_new = 0
 			if (!donotupdate)
@@ -1061,9 +1061,9 @@ datum
 				logTheThing("combat", our_user, null, "Smoke reaction ([my_atom ? log_reagents(my_atom) : log_reagents(src)]) at [T ? "[log_loc(T)]" : "null"].[our_fingerprints ? " Container last touched by: [our_fingerprints]." : ""]")
 
 			if (classic)
-				classic_smoke_reaction(src, min(round(volume / 5) + 1, 4), location = my_atom ? get_turf(my_atom) : 0)
+				classic_smoke_reaction(src, min(round(volume / 5), 4), location = my_atom ? get_turf(my_atom) : 0)
 			else
-				smoke_reaction(src, round(min(5, volume/10)), location = my_atom ? get_turf(my_atom) : 0)
+				smoke_reaction(src, round(min(5, round(volume/10))), location = my_atom ? get_turf(my_atom) : 0)
 
 ///////////////////////////////////////////////////////////////////////////////////
 

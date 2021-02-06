@@ -1319,6 +1319,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	health_burn = 50
 	good_grip = 1
 
+
 	pickup_grab_level = MOBCRITTER_GRAB_KILL
 	hold_two_handed = 1
 	hold_struggle_stam = 70
@@ -1326,6 +1327,13 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	bag_dump_prob = 100
 	hold_response = HOLD_RESPONSE_CHILL
 	bag_response = BAG_RESPONSE_VIOLENT
+
+	New()
+		. = ..()
+		src.remove_stam_mod_max("small_animal")
+		src.add_stam_mod_max("wrestledoodle", 30)
+		src.add_stam_mod_regen("wrestledoodle", 5)
+
 
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
 		if(act == "flip" && istype(src.equipped(), /obj/item/grab))
