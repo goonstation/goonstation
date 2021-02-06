@@ -141,6 +141,13 @@ ABSTRACT_TYPE(/datum/artifact_fault/messager/)
 	"surrender","its hopeless","you are in hell","its all lies","hate","there is only despair","your heart will stop",
 	"they will all forget you","they have abandoned you","please stop","no one will mourn you")
 
+/datum/artifact_fault/messager/comforting_whispers
+	text_style = "small"
+	messages = list("it's not your fault", "believe in yourself", "you are strong", "you can do it!", "keep on trying",
+	"life is beautiful", "you are important", "this station relies on you", "you can do anything", "follow your dreams",
+	"success awaits", "your friends think you are very cool", "be yourself", "everything is fine", "there's still hope",
+	"nothing is impossible", "don't stop trying", "you are smart", "love", "today is your lucky day", "I'll always be there for you")
+
 /datum/artifact_fault/poison
 	trigger_prob = 8
 	var/poison_type = "toxin"
