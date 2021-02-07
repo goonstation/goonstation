@@ -3903,11 +3903,6 @@
 	},
 /turf/simulated/floor,
 /area/station/security/main)
-"jH" = (
-/turf/simulated/wall/auto/supernorn{
-	icon_state = "3"
-	},
-/area/station/crew_quarters/kitchen)
 "jI" = (
 /turf/simulated/floor/red/side{
 	dir = 4
@@ -7586,11 +7581,6 @@
 /obj/machinery/atmospherics/portables_connector,
 /turf/simulated/floor/caution/west,
 /area/station/engine/core)
-"sk" = (
-/turf/simulated/wall/auto/supernorn{
-	icon_state = "3"
-	},
-/area/station/chapel/office)
 "sl" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	can_rupture = 0;
@@ -17295,11 +17285,6 @@
 	wet = 2
 	},
 /area/station/crew_quarters/clown)
-"QH" = (
-/turf/simulated/wall/auto/supernorn{
-	icon_state = "12"
-	},
-/area/station/crew_quarters/cafeteria)
 "QJ" = (
 /obj/machinery/power/apc/autoname_east,
 /obj/cable{
@@ -17632,11 +17617,6 @@
 	dir = 8
 	},
 /area/station/mining/staff_room)
-"Se" = (
-/turf/simulated/wall/auto/reinforced/supernorn{
-	icon_state = "R12"
-	},
-/area/station/engine/engineering)
 "Sf" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -18267,11 +18247,6 @@
 	name = "solar paneling"
 	},
 /area/station/solar/south)
-"UC" = (
-/turf/simulated/wall/auto/supernorn{
-	icon_state = "3"
-	},
-/area/station/hydroponics/bay)
 "UD" = (
 /obj/machinery/power/terminal,
 /obj/cable,
@@ -18566,11 +18541,6 @@
 /obj/marker/supplymarker,
 /turf/simulated/floor/plating/random,
 /area/station/crew_quarters/clown)
-"VI" = (
-/turf/simulated/wall/auto/supernorn{
-	icon_state = "12"
-	},
-/area/station/bridge/captain)
 "VK" = (
 /obj/storage/secure/closet/security/equipment,
 /obj/machinery/light{
@@ -18658,9 +18628,7 @@
 /area/station/crew_quarters/heads)
 "VY" = (
 /obj/disposalpipe/segment,
-/turf/simulated/wall/auto/supernorn{
-	icon_state = "12"
-	},
+/turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/heads)
 "VZ" = (
 /turf/simulated/floor/grass/leafy,
@@ -18713,11 +18681,6 @@
 	dir = 8
 	},
 /area/station/crew_quarters/kitchen)
-"Wk" = (
-/turf/simulated/wall/auto/supernorn{
-	icon_state = "3"
-	},
-/area/station/bridge/captain)
 "Wn" = (
 /obj/machinery/atmospherics/portables_connector/south,
 /obj/machinery/firealarm{
@@ -19508,11 +19471,6 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/science/storage)
-"YC" = (
-/turf/simulated/wall/auto/supernorn{
-	icon_state = "3"
-	},
-/area/station/mining/staff_room)
 "YD" = (
 /turf/simulated/floor/black,
 /area/station/crew_quarters/heads)
@@ -58787,7 +58745,7 @@ tn
 uD
 py
 wy
-Se
+np
 zJ
 Az
 Bl
@@ -60279,7 +60237,7 @@ eF
 fn
 fn
 fn
-YC
+fn
 fn
 fn
 kh
@@ -66633,7 +66591,7 @@ uV
 qK
 qK
 Up
-UC
+vP
 eH
 vP
 qK
@@ -67529,7 +67487,7 @@ gV
 gV
 gV
 gV
-jH
+gV
 gV
 kn
 kn
@@ -70246,7 +70204,7 @@ eX
 eX
 eX
 eX
-QH
+jF
 js
 kt
 kX
@@ -76281,7 +76239,7 @@ aa
 cz
 dl
 ew
-sk
+ew
 fM
 hi
 hY
@@ -77800,7 +77758,7 @@ iJ
 iJ
 hf
 mu
-Wk
+lu
 lu
 lu
 lu
@@ -79617,7 +79575,7 @@ xu
 xC
 pG
 pG
-VI
+lu
 Rm
 sW
 ug
