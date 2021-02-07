@@ -14007,7 +14007,6 @@
 /area/station/janitor/office)
 "Ii" = (
 /obj/machinery/power/apc/autoname_east,
-/obj/machinery/power/apc/autoname_east,
 /obj/cable,
 /obj/cable{
 	d2 = 8;
