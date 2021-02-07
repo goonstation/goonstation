@@ -306,14 +306,14 @@ var/datum/artifact_controller/artifact_controls
 	fault_types = list(
 		/datum/artifact_fault/irradiate = 10,
 		/datum/artifact_fault/shutdown = 10,
-	/datum/artifact_fault/warp = 15,
-	/datum/artifact_fault/zap = 10,
-	/datum/artifact_fault/burn = 10,
-	/datum/artifact_fault/explode = 5,
-	/datum/artifact_fault/messager/creepy_whispers = 5,
-	/datum/artifact_fault/messager/comforting_whispers = 5,
-	/datum/artifact_fault/messager/what_dead_people_said = 5,
-	/datum/artifact_fault/messager/what_people_said = 5)
+		/datum/artifact_fault/warp = 15,
+		/datum/artifact_fault/zap = 10,
+		/datum/artifact_fault/burn = 10,
+		/datum/artifact_fault/explode = 5,
+		/datum/artifact_fault/messager/creepy_whispers = 5,
+		/datum/artifact_fault/messager/comforting_whispers = 5,
+		/datum/artifact_fault/messager/what_dead_people_said = 5,
+		/datum/artifact_fault/messager/what_people_said = 5)
 	activation_sounds = list('sound/machines/ArtifactWiz1.ogg')
 	instrument_sounds = list("sound/musical_instruments/artifact/Artifact_Wizard_1.ogg",
 		"sound/musical_instruments/artifact/Artifact_Wizard_2.ogg",
