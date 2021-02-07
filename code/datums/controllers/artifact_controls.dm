@@ -220,7 +220,7 @@ var/datum/artifact_controller/artifact_controls
 		/datum/artifact_fault/shutdown = 10,
 		/datum/artifact_fault/zap = 10,
 		/datum/artifact_fault/explode = 10,
-		/datum/artifact_fault/messager/ai_laws)
+		/datum/artifact_fault/messager/ai_laws = 10)
 	activation_sounds = list('sound/machines/ArtifactAnc1.ogg')
 	instrument_sounds = list("sound/musical_instruments/artifact/Artifact_Ancient_1.ogg",
 		"sound/musical_instruments/artifact/Artifact_Ancient_2.ogg",
