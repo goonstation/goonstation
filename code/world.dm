@@ -622,7 +622,6 @@ var/f_color_selector_handler/F_Color_Selector
 	TgsInitializationComplete()
 	//sleep_offline = 1
 
-	load_logged_phrases()
 	// Biodome elevator accident stats
 	bioele_load_stats()
 	bioele_shifts_since_accident++
@@ -674,7 +673,7 @@ var/f_color_selector_handler/F_Color_Selector
 	processScheduler.stop()
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_REBOOT)
 	save_intraround_jars()
-	save_logged_phrases()
+	global.phrase_log.save()
 	save_tetris_highscores()
 	if (current_state < GAME_STATE_FINISHED)
 		current_state = GAME_STATE_FINISHED

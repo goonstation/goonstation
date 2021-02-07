@@ -53,7 +53,7 @@
 	if(src?.client?.preferences.auto_capitalization)
 		message = capitalize(message)
 
-	log_logged_phrase("deadsay", message)
+	phrase_log.log("deadsay", message)
 	. = src.say_dead(message)
 
 	for (var/mob/M in hearers(null, null))

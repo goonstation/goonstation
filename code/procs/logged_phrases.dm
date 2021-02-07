@@ -1,11 +1,6 @@
-#define MAX_LOGGED_PHRASES 200
-#define LOGGED_PHRASES_FILENAME "data/logged_phrases.json"
-
-var/global/list/logged_phrases = null
-
 /**
  * This system keeps a logged list of player-created phrases of various categories. The lists are cross-round.
- * Useful for stuff like hallucinations etc. If the number of phrases in a category exceeds MAX_LOGGED_PHRASES
+ * Useful for stuff like hallucinations etc. If the number of phrases in a category exceeds src.max_length
  * random phrases get thrown out to reduce the size when saving.
  * Currently logged categories:
  *  say - people talking
@@ -18,40 +13,48 @@ var/global/list/logged_phrases = null
  *  prayer - prayers
  */
 
-proc/load_logged_phrases()
-	if(fexists(LOGGED_PHRASES_FILENAME))
-		global.logged_phrases = json_decode(file2text(LOGGED_PHRASES_FILENAME))
-	else
-		global.logged_phrases = list()
+var/global/datum/phrase_log/phrase_log = new
 
-/// Gets a random logged phrase from a selected category duh
-proc/random_logged_phrase(category)
-	if(length(global.logged_phrases[category]))
-		return pick(global.logged_phrases[category])
-	return null
+/datum/phrase_log
+	var/list/phrases
+	var/max_length = 200
+	var/filename = "data/logged_phrases.json"
 
-/// Logs a phrase to a selected category duh
-proc/log_logged_phrase(category, phrase)
-	if(category in global.logged_phrases)
-		global.logged_phrases[category] += phrase
-	else
-		global.logged_phrases[category] = list(phrase)
+	New()
+		..()
+		src.load()
 
-proc/save_logged_phrases()
-	if(isnull(global.logged_phrases))
-		return
-	for(var/category in global.logged_phrases)
-		var/list/phrases = global.logged_phrases[category]
-		if(length(phrases) > MAX_LOGGED_PHRASES)
-			for(var/i in 1 to length(phrases))
-				// bias towards old phrases so we don't get a new "say" category every round basically
-				if(i <= MAX_LOGGED_PHRASES && prob(80))
-					phrases.Swap(i, rand(i, MAX_LOGGED_PHRASES))
-				else
-					phrases.Swap(i, rand(i, length(phrases)))
-			global.logged_phrases[category] = phrases.Copy(1, MAX_LOGGED_PHRASES)
-	fdel(LOGGED_PHRASES_FILENAME)
-	text2file(json_encode(global.logged_phrases), LOGGED_PHRASES_FILENAME)
+	proc/load()
+		if(fexists(src.filename))
+			src.phrases = json_decode(file2text(src.filename))
+		else
+			src.phrases = list()
 
-#undef MAX_LOGGED_PHRASES
-#undef LOGGED_PHRASES_FILENAME
+	/// Gets a random logged phrase from a selected category duh
+	proc/random_phrase(category)
+		if(length(src.phrases[category]))
+			return pick(src.phrases[category])
+		return null
+
+	/// Logs a phrase to a selected category duh
+	proc/log(category, phrase)
+		if(category in src.phrases)
+			src.phrases[category] += phrase
+		else
+			src.phrases[category] = list(phrase)
+
+	proc/save()
+		if(isnull(src.phrases))
+			return
+		for(var/category in src.phrases)
+			var/list/phrases = src.phrases[category]
+			if(length(phrases) > src.max_length)
+				for(var/i in 1 to length(phrases))
+					// bias towards old phrases so we don't get a new "say" category every round basically
+					if(i <= src.max_length && prob(80))
+						phrases.Swap(i, rand(i, src.max_length))
+					else
+						phrases.Swap(i, rand(i, length(phrases)))
+				src.phrases[category] = phrases.Copy(1, src.max_length)
+		fdel(src.filename)
+		text2file(json_encode(src.phrases), src.filename)
