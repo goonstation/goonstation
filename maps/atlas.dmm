@@ -19432,9 +19432,17 @@
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "Yv" = (
-/obj/landmark/gps_waypoint,
-/turf/simulated/floor/red,
-/area/station/security/brig/genpop)
+/obj/machinery/door/airlock/pyro/glass{
+	name = "Teleporter Pad"
+	},
+/obj/machinery/door/poddoor/pyro{
+	id = "tele";
+	name = "Teleporter Lockdown Shutter"
+	},
+/obj/access_spawn/research,
+/obj/firedoor_spawn,
+/turf/simulated/floor/plating,
+/area/station/science/teleporter)
 "Yw" = (
 /obj/item/sheet/steel/fullstack,
 /obj/table/auto,
@@ -59963,7 +59971,7 @@ Dc
 DI
 Ey
 Fg
-Dc
+Yv
 GI
 UE
 GG
@@ -72024,7 +72032,7 @@ mq
 Pk
 oE
 vu
-Yv
+qL
 rL
 uc
 ov
