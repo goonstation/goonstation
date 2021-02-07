@@ -10256,7 +10256,7 @@
 "yt" = (
 /obj/lattice,
 /obj/warp_beacon{
-	name = "starboard warp beacon"
+	name = "fore warp beacon"
 	},
 /turf/space,
 /area/space)
