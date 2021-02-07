@@ -2135,6 +2135,8 @@ proc/get_mobs_trackable_by_AI()
 			newname = default_name
 		else
 			newname = input(src, "You are an AI. Would you like to change your name to something else?", "Name Change", default_name) as null|text
+			if(newname && newname != default_name)
+				phrase_log.log_phrase("name-ai", newname, no_duplicates=TRUE)
 		if (src.brain.owner != brain_owner)
 			return
 		if (!newname)

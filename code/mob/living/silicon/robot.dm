@@ -686,6 +686,8 @@
 				newname = default_name
 			else
 				newname = input(src,"You are a Cyborg. Would you like to change your name to something else?", "Name Change", default_name) as null|text
+				if(newname && newname != default_name)
+					phrase_log.log_phrase("name-cyborg", newname, no_duplicates=TRUE)
 			if (!newname)
 				src.real_name = borgify_name("Cyborg")
 				src.name = src.real_name
