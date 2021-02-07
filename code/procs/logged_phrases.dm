@@ -37,7 +37,7 @@ var/global/datum/phrase_log/phrase_log = new
 		return null
 
 	/// Logs a phrase to a selected category duh
-	proc/log(category, phrase)
+	proc/log_phrase(category, phrase)
 		if(category in src.phrases)
 			src.phrases[category] += phrase
 		else

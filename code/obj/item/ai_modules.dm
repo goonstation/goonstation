@@ -238,7 +238,7 @@ AI MODULES
 	attack_self(var/mob/user)
 		input_law_info(user, "Freeform", "Please enter anything you want the AI to do. Anything. Serious.", (lawTarget ? lawTarget : "Eat shit and die"))
 		if(src.lawTarget && src.lawTarget != "Eat shit and die")
-			phrase_log.log("ailaw", src.get_law_text())
+			phrase_log.log_phrase("ailaw", src.get_law_text())
 
 /******************** Reset ********************/
 

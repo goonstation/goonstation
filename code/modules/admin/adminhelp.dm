@@ -169,7 +169,7 @@
 		msg = input("Please enter your prayer to any gods that may be listening - be careful what you wish for as the gods may be the vengeful sort!") as null|text
 
 	if(msg)
-		phrase_log.log("prayer", msg)
+		phrase_log.log_phrase("prayer", msg)
 
 	msg = copytext(strip_html(msg), 1, MAX_MESSAGE_LEN)
 

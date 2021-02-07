@@ -367,7 +367,7 @@
 					else
 						alert("Unable to use this emote, must be either audible or visible.")
 						return
-					phrase_log.log("emote", input)
+					phrase_log.log_phrase("emote", input)
 					message = "<B>[src]</B> [input]"
 					maptext_out = "<I>[input]</I>"
 					custom = copytext(input, 1, 10)
@@ -379,7 +379,7 @@
 					if(!param) return
 
 				param = sanitize(html_encode(param))
-				phrase_log.log("emote", param)
+				phrase_log.log_phrase("emote", param)
 				message = "<b>[src]</b> [param]"
 				maptext_out = "<I>[param]</I>"
 				m_type = 1
@@ -391,7 +391,7 @@
 					param = input("Choose an emote to display.")
 					if(!param) return
 				param = sanitize(html_encode(param))
-				phrase_log.log("emote", param)
+				phrase_log.log_phrase("emote", param)
 				message = "<b>[src]</b> [param]"
 				maptext_out = "<I>[param]</I>"
 				m_type = 2
@@ -402,7 +402,7 @@
 				if (!param)
 					return
 				param = sanitize(html_encode(param))
-				phrase_log.log("emote", param)
+				phrase_log.log_phrase("emote", param)
 				message = "<b>[src]</b> [param]"
 				maptext_out = "<I>[param]</I>"
 				m_type = 1 // default to visible
