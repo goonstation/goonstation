@@ -260,7 +260,9 @@ var/datum/artifact_controller/artifact_controls
 		/datum/artifact_fault/zap = 5,
 		/datum/artifact_fault/poison = 15,
 		/datum/artifact_fault/messager/what_people_said = 5,
-		/datum/artifact_fault/messager/comforting_whispers = 5)
+		/datum/artifact_fault/messager/comforting_whispers = 5,
+		/datum/artifact_fault/grow = 8,
+		/datum/artifact_fault/shrink = 8)
 	activation_sounds = list('sound/machines/ArtifactMar1.ogg','sound/machines/ArtifactMar2.ogg')
 	instrument_sounds = list("sound/musical_instruments/artifact/Artifact_Martian_1.ogg",
 		"sound/musical_instruments/artifact/Artifact_Martian_2.ogg",
@@ -386,7 +388,9 @@ var/datum/artifact_controller/artifact_controls
 		/datum/artifact_fault/shutdown = 5,
 		/datum/artifact_fault/zap = 8,
 		/datum/artifact_fault/explode = 5,
-		/datum/artifact_fault/warp = 15)
+		/datum/artifact_fault/warp = 15,
+		/datum/artifact_fault/grow = 5,
+		/datum/artifact_fault/shrink = 5)
 	impact_reaction_one = 0.5
 	impact_reaction_two = 0
 	heat_reaction_one = 0.25
