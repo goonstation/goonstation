@@ -38,6 +38,7 @@ proc/log_logged_phrase(category, phrase)
 		global.logged_phrases[category] = list(phrase)
 
 proc/save_logged_phrases()
+	if(isnull(global.logged_phrases)) global.logged_phrases = list()
 	for(var/category in global.logged_phrases)
 		var/list/phrases = global.logged_phrases[category]
 		if(length(phrases) > MAX_LOGGED_PHRASES)
@@ -48,6 +49,7 @@ proc/save_logged_phrases()
 				else
 					phrases.Swap(i, rand(i, length(phrases)))
 			global.logged_phrases[category] = phrases.Copy(1, MAX_LOGGED_PHRASES)
+	fdel(LOGGED_PHRASES_FILENAME)
 	text2file(json_encode(global.logged_phrases), LOGGED_PHRASES_FILENAME)
 
 #undef MAX_LOGGED_PHRASES
