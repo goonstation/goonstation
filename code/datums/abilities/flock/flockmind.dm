@@ -311,13 +311,13 @@
 	name = "Fabricate Structure"
 	desc = "Create a structure tealprint for your drones to construct onto."
 	icon_state = "fabstructure"
-	cooldown = 40
+	cooldown = 4 SECONDS
 	targeted = 0
 
 /datum/targetable/flockmindAbility/createStructure/cast()
 	var/resourcecost = null
 	var/structurewantedtype = null
-	var/t = get_turf(holder.owner)//turf
+	var/turf/t = get_turf(holder.owner)
 	if(!istype(t, /turf/simulated/floor/feather))
 		boutput(holder.owner, "<span class='alert'>You aren't above a flocktile.</span>")//todo maybe make this flock themed?
 		return 1
