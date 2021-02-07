@@ -1543,6 +1543,7 @@
 		product_list += new/datum/data/vending_product(/obj/item/kitchen/utensil/fork, 10)
 		product_list += new/datum/data/vending_product(/obj/item/kitchen/utensil/knife, 10)
 		product_list += new/datum/data/vending_product(/obj/item/kitchen/utensil/spoon, 10)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/drinkingglass/icing, 3)
 		product_list += new/datum/data/vending_product(/obj/item/kitchen/chopsticks_package, 5)
 		product_list += new/datum/data/vending_product(/obj/item/plate/tray, 3)
 		product_list += new/datum/data/vending_product(/obj/surgery_tray/kitchen_island, 2)
