@@ -238,9 +238,9 @@ PIPE BOMBS + CONSTRUCTION
 /obj/item/old_grenade/singularity
 	desc = "It is set to detonate in 10 seconds."
 	name = "singularity grenade"
-	det_time = 100
-	org_det_time = 100
-	alt_det_time = 60
+	det_time = 70
+	org_det_time = 70
+	alt_det_time = 50
 	icon_state = "graviton"
 	item_state = "emp"
 	is_syndicate = 1
@@ -697,7 +697,6 @@ PIPE BOMBS + CONSTRUCTION
 	sound_armed = "sound/weapons/armbomb.ogg"
 	icon_state_armed = "noise_grenade1"
 	var/list/decoy_list = list("sound/weapons/ak47shot.ogg",\
-														"sound/weapons/derringer.ogg",\
 														"sound/weapons/Gunshot.ogg",\
 														"sound/weapons/smallcaliber.ogg",\
 														"sound/weapons/shotgunshot.ogg")
@@ -717,18 +716,18 @@ PIPE BOMBS + CONSTRUCTION
 			for (var/x=1, x<=2, x++)
 				if (prob(50))
 					// Single weapon type
-					for (var/y=1, y<=rand(2,6), y++)
-						sleep(0.2 * pick(2, 3, 4) SECONDS)
+					for (var/y=1, y<=rand(3,6), y++)
+						sleep((rand() * 0.6 + 0.4) SECONDS)
 						playsound(T, shooter1_sound, 100, 1, 8)
 				else
 					// Gun duel
-					for (var/y=1, y<=rand(2,6), y++)
-						sleep(0.2 * pick(2, 3, 4, 6) SECONDS)
+					for (var/y=1, y<=rand(3,8), y++)
+						sleep((rand() * 0.6 + 0.4) SECONDS)
 						playsound(T, shooter1_sound, 100, 1, 8)
-						sleep(0.2 * pick(2, 3, 4) SECONDS)
+						sleep((rand() * 0.8 + 0.2) SECONDS)
 						playsound(T, shooter2_sound, 100, 1, 8)
 				if (x == 1)
-					sleep(pick(3,6,12) SECONDS)
+					sleep(pick(3,6,8) SECONDS)
 				else
 					sleep(3 SECONDS)
 			detonate()
