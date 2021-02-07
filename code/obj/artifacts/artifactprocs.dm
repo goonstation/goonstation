@@ -454,7 +454,7 @@
 	faultprob = max(0,min(faultprob,100))
 
 	if (prob(faultprob) && A.fault_types.len)
-		var/new_fault = pick(A.fault_types)
+		var/new_fault = weighted_pick(A.fault_types)
 		if (ispath(new_fault))
 			var/datum/artifact_fault/F = new new_fault(A)
 			F.holder = A
