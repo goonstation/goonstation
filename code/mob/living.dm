@@ -1059,7 +1059,10 @@
 		processed = saylist(messages[2], heard_b, olocs, thickness, italics, processed, 1)
 
 	if(src.client)
-		phrase_log.log_phrase("say", html_decode(messages[1]))
+		if(singing)
+			phrase_log.log_phrase("sing", html_decode(messages[1]))
+		else
+			phrase_log.log_phrase("say", html_decode(messages[1]))
 
 	message = src.say_quote(messages[1])
 

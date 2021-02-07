@@ -13,6 +13,7 @@
  *  prayer - prayers
  *  name-X - player chosen name for X where X is from the set {ai, cyborg, clown, mime, wizard, ...}
  *  vehicle - vehicle names (via a bottle of Champagne)
+ *  sing - people singing
  */
 
 var/global/datum/phrase_log/phrase_log = new
