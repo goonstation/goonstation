@@ -1,5 +1,9 @@
 
 (t)sun feb 07 21
+(u)Flappybat
+(p)3578
+(e)🐛⛔|bug, removal
+(*)Retired lawn darts from the traitor buy list.
 (u)Arthur Holiday
 (p)3628
 (e)|
