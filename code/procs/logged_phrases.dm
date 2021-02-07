@@ -38,7 +38,8 @@ proc/log_logged_phrase(category, phrase)
 		global.logged_phrases[category] = list(phrase)
 
 proc/save_logged_phrases()
-	if(isnull(global.logged_phrases)) global.logged_phrases = list()
+	if(isnull(global.logged_phrases))
+		return
 	for(var/category in global.logged_phrases)
 		var/list/phrases = global.logged_phrases[category]
 		if(length(phrases) > MAX_LOGGED_PHRASES)
