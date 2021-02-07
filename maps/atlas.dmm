@@ -8991,9 +8991,9 @@
 /obj/cable,
 /obj/machinery/power/data_terminal,
 /obj/machinery/networked/printer{
-	name = "Printer - Escape Checkpoint";
+	name = "Printer - Bridge";
 	pixel_y = 5;
-	print_id = "EscapeCheckpoint"
+	print_id = "Bridge"
 	},
 /turf/simulated/floor/carpet{
 	dir = 10;
