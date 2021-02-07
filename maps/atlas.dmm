@@ -7167,9 +7167,6 @@
 	pixel_y = 32
 	},
 /obj/disposalpipe/trunk,
-/obj/machinery/disposal/small{
-	dir = 8
-	},
 /turf/simulated/floor/grass/random,
 /area/station/hydroponics/bay)
 "ro" = (
