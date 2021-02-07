@@ -11,6 +11,9 @@
  *  record - custom radio station record names
  *  emote - custom emotes
  *  prayer - prayers
+ *  name-X - player chosen name for X where X is from the set {ai, cyborg, clown, mime, wizard, ...}
+ *  vehicle - vehicle names (via a bottle of Champagne)
+ *  sing - people singing
  */
 
 var/global/datum/phrase_log/phrase_log = new
@@ -19,6 +22,7 @@ var/global/datum/phrase_log/phrase_log = new
 	var/list/phrases
 	var/max_length = 200
 	var/filename = "data/logged_phrases.json"
+	var/list/original_lengths
 
 	New()
 		..()
@@ -29,6 +33,9 @@ var/global/datum/phrase_log/phrase_log = new
 			src.phrases = json_decode(file2text(src.filename))
 		else
 			src.phrases = list()
+		src.original_lengths = list()
+		for(var/category in src.phrases)
+			src.original_lengths[category] = length(src.phrases[category])
 
 	/// Gets a random logged phrase from a selected category duh
 	proc/random_phrase(category)
@@ -36,10 +43,19 @@ var/global/datum/phrase_log/phrase_log = new
 			return pick(src.phrases[category])
 		return null
 
+	/// Gets a random logged phrase from a selected category ignoring stuff added this round
+	proc/random_old_phrase(category)
+		if(src.original_lengths[category])
+			return src.phrases[rand(1, src.original_lengths[category])]
+		return null
+
 	/// Logs a phrase to a selected category duh
-	proc/log_phrase(category, phrase)
+	proc/log_phrase(category, phrase, no_duplicates=FALSE)
 		if(category in src.phrases)
-			src.phrases[category] += phrase
+			if(no_duplicates)
+				src.phrases[category] |= phrase
+			else
+				src.phrases[category] += phrase
 		else
 			src.phrases[category] = list(phrase)
 
@@ -49,10 +65,11 @@ var/global/datum/phrase_log/phrase_log = new
 		for(var/category in src.phrases)
 			var/list/phrases = src.phrases[category]
 			if(length(phrases) > src.max_length)
+				var/orig_len = src.original_lengths[category]
 				for(var/i in 1 to length(phrases))
 					// bias towards old phrases so we don't get a new "say" category every round basically
-					if(i <= src.max_length && prob(80))
-						phrases.Swap(i, rand(i, src.max_length))
+					if(i <= orig_len && prob(80))
+						phrases.Swap(i, rand(i, orig_len))
 					else
 						phrases.Swap(i, rand(i, length(phrases)))
 				src.phrases[category] = phrases.Copy(1, src.max_length)
