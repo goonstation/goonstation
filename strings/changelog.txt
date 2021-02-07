@@ -1,6 +1,10 @@
 
 (t)sun feb 07 21
 (u)Emily
+(e)⚖|balance
+(*)The cyborg force shield now more consistently drains battery across different sources of damage.
+(*)The cyborg force shield upgrade now has an "overheat" counter, making it less effective if you take rapid, repeated damage.
+(u)Emily
 (e)🆕|feature
 (*)New Chicken Breed! See Minor Changes for a hint.
 (+)This chicken needs a serpent's tail; you'll have to find something close enough. [Gen 3] [From Stone Chickens]
