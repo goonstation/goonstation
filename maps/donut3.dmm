@@ -21664,7 +21664,6 @@
 	rand_pos = 1
 	},
 /obj/machinery/light/incandescent/netural,
-/obj/table/auto,
 /turf/simulated/floor/dirt,
 /area/station/ranch)
 "ggy" = (
@@ -22839,7 +22838,6 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/firedoor_spawn,
 /turf/simulated/floor/plating/jen,
 /area/station/ranch)
 "gzE" = (
@@ -26123,13 +26121,6 @@
 	icon_state = "R12"
 	},
 /area/station/turret_protected/ai_upload)
-"hAi" = (
-/obj/table/auto,
-/obj/machinery/door/airlock/pyro/glass/windoor,
-/obj/access_spawn/rancher,
-/obj/firedoor_spawn,
-/turf/simulated/floor/plating,
-/area/station/ranch)
 "hAj" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/cable{
@@ -129449,7 +129440,7 @@ mBB
 mBB
 oJP
 cQf
-hAi
+sJC
 mwk
 iba
 kHx
