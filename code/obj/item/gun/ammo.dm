@@ -119,6 +119,7 @@
 	swap(var/obj/item/ammo/bullets/A, var/obj/item/gun/kinetic/K)
 		// I tweaked this for improved user feedback and to support zip guns (Convair880).
 		var/check = 0
+		message_admins("A caliber: [A.caliber]")
 		if (!A || !K)
 			check = 0
 		if (K.sanitycheck() == 0)
@@ -128,7 +129,10 @@
 		else if (A.caliber in K.caliber) // Some guns can have multiple calibers.
 			check = 1
 		else if (K.caliber == null) // Special treatment for zip guns, huh.
-			check = 1
+			if (A.caliber == 1.58)  // Prevent MRPT rocket
+				check = 0
+			else
+				check = 1
 		if (!check)
 			return 0
 			//DEBUG_MESSAGE("Couldn't swap [K]'s ammo ([K.ammo.type]) with [A.type].")
@@ -198,7 +202,10 @@
 		else if (A.caliber in K.caliber)
 			check = 1
 		else if (K.caliber == null)
-			check = 1 // For zip guns.
+			if (A.caliber == 1.58) // Prevent MRPT rocket
+				check = 0
+			else
+				check = 1 // For zip guns.
 		if (!check)
 			return 1
 
