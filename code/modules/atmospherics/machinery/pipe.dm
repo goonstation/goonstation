@@ -349,8 +349,11 @@ obj/machinery/atmospherics/pipe
 			if (src.destroyed || destroy || (pressure > 10*fatigue_pressure && prob(1)) )
 				ruptured = 4
 				src.destroyed = TRUE
-				icon_state = "destroyed"
 				src.desc = "The remnants of a section of pipe that needs to be replaced.  Perhaps rods would be sufficient?"
+				parent.mingle_with_turf(loc, volume)
+				node1?.disconnect(src)
+				node2?.disconnect(src)
+				update_icon()
 				return
 			else if (pressure > 4*fatigue_pressure && prob(30)) new_rupture = 3
 			else if (pressure > 2*fatigue_pressure && prob(60)) new_rupture = 2
@@ -428,6 +431,10 @@ obj/machinery/atmospherics/pipe
 				src.destroyed = FALSE
 				src.icon_state = "disco"
 				src.desc = "A one meter section of regular pipe has been placed but needs to be welded into place."
+				// create valid edges back to us and rebuild from here out to merge pipeline(s)
+				node1.initialize()
+				node2.initialize()
+				src.parent.build_pipeline(src)
 
 		disposing()
 			node1?.disconnect(src)
@@ -436,10 +443,14 @@ obj/machinery/atmospherics/pipe
 			..()
 
 		pipeline_expansion()
+			if(destroyed)
+				return list(null, null)
 			return list(node1, node2)
 
 		update_icon()
-			if(node1&&node2)
+			if(destroyed)
+				icon_state = "destroyed"
+			else if(node1&&node2)
 				icon_state = "intact"//[invisibility ? "-f" : "" ]"
 				alpha = invisibility ? 128 : 255
 
