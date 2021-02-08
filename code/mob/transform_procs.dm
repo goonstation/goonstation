@@ -637,7 +637,7 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 		var/turf/spawnpoint = pick_landmark(LANDMARK_PESTSTART)
 		if(!spawnpoint)
 			spawnpoint = pick_landmark(LANDMARK_LATEJOIN, get_turf(src))
-		src.make_ghost_critter(spawnpoint)
+		src.make_ghost_critter(get_turf(src))
 
 
 /mob/proc/make_ghost_critter(var/turf/spawnpoint, var/list/types = null)

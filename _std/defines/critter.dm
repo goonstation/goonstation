@@ -7,3 +7,15 @@
 
 // Critter families
 #define BUG 1
+
+// What level of grab is needed to pick up this MobCritter
+/// Never mind, mob can't be picked up
+#define MOBCRITTER_GRAB_NEVER 0
+/// Simple grab
+#define MOBCRITTER_GRAB_PASSIVE 1
+/// Aggressive grab
+#define MOBCRITTER_GRAB_AGGRESSIVE 2
+/// Neck grab
+#define MOBCRITTER_GRAB_NECK 3
+/// Kill grab
+#define MOBCRITTER_GRAB_KILL 4

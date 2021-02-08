@@ -314,6 +314,7 @@
 	density = 0
 	icon_state = "eyespider"
 	icon_state_dead = "eyespider-dead"
+	item_state_inhand = "eye"
 	abilityHolder
 	var/marked_target = null
 	base_move_delay = 1.65
@@ -498,6 +499,7 @@
 	desc = "Well. OK then. Thats a thing."
 	icon_state = "buttcrab"
 	icon_state_dead = "buttcrab-dead"
+	item_state_inhand = "butt"
 	hand_count = 0
 	base_move_delay = 4
 	base_walk_delay = 5

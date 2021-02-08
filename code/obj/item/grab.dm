@@ -203,14 +203,18 @@
 
 				else if (user.is_hulk() || prob(75))
 					logTheThing("combat", src.assailant, src.affecting, "'s grip upped to aggressive on [constructTarget(src.affecting,"combat")]")
-					for(var/mob/O in AIviewers(src.assailant, null))
-						O.show_message("<span class='alert'>[src.assailant] has grabbed [src.affecting] aggressively (now hands)!</span>", 1)
 					icon_state = "reinforce"
 					src.state = GRAB_NECK //used to be '1'. SKIP LEVEL 1
+					user.next_click = world.time + user.combat_click_delay //+ rand(6,11) //this was utterly disgusting, leaving it here in memorial
+					/// If we picked the mob up, no need to continue, mob's in our hand(s)!
+					if(isghostcritter(src.affecting) && !ishelpermouse(src.affecting) && src.affecting != src.assailant)
+						var/mob/living/critter/mobcritter = src.affecting
+						if(mobcritter.try_pickup(src.assailant, src.state, src))
+							return
+					for(var/mob/O in AIviewers(src.assailant, null))
+						O.show_message("<span class='alert'>[src.assailant] has grabbed [src.affecting] aggressively (now hands)!</span>", 1)
 					if (!src.affecting.buckled)
 						set_affected_loc()
-
-					user.next_click = world.time + user.combat_click_delay //+ rand(6,11) //this was utterly disgusting, leaving it here in memorial
 				else
 					for(var/mob/O in AIviewers(src.assailant, null))
 						O.show_message("<span class='alert'>[src.assailant] has failed to grab [src.affecting] aggressively!</span>", 1)
@@ -231,6 +235,11 @@
 				src.affecting.lastattackertime = world.time
 				logTheThing("combat", src.assailant, src.affecting, "'s grip upped to neck on [constructTarget(src.affecting,"combat")]")
 				user.next_click = world.time + user.combat_click_delay
+				/// If we picked the mob up, no need to continue, mob's in our hand(s)!
+				if(isghostcritter(src.affecting) && !ishelpermouse(src.affecting) && src.affecting != src.assailant)
+					var/mob/living/critter/mobcritter = src.affecting
+					if(mobcritter.try_pickup(src.assailant, src.state, src))
+						return
 				src.assailant.visible_message("<span class='alert'>[src.assailant] has reinforced [his_or_her(assailant)] grip on [src.affecting] (now neck)!</span>")
 			if (GRAB_NECK)
 				if (ishuman(src.affecting))
@@ -255,6 +264,13 @@
 		icon_state = "disarm/kill"
 		logTheThing("combat", src.assailant, src.affecting, "chokes [constructTarget(src.affecting,"combat")]")
 		choke_count = 0
+		src.state = GRAB_KILL
+
+		/// If we picked the mob up, no need to continue, mob's in our hand(s)!
+		if(isghostcritter(src.affecting) && !ishelpermouse(src.affecting) && src.affecting != src.assailant)
+			var/mob/living/critter/mobcritter = src.affecting
+			if(mobcritter.try_pickup(src.assailant, src.state, src))
+				return
 
 		if (!msg_overridden)
 			if (isitem(src.loc))
@@ -264,17 +280,15 @@
 			else
 				for (var/mob/O in AIviewers(src.assailant, null))
 					O.show_message("<span class='alert'>[src.assailant] has tightened [his_or_her(assailant)] grip on [src.affecting]'s neck!</span>", 1)
-		src.state = GRAB_KILL
+
 		REMOVE_MOB_PROPERTY(src.assailant, PROP_CANTMOVE, src.type)
+
 		src.assailant.lastattacked = src.affecting
 		src.affecting.lastattacker = src.assailant
 		src.affecting.lastattackertime = world.time
 		if (!src.affecting.buckled)
 			set_affected_loc()
-		//src.affecting.losebreath++
-		//if (src.affecting.paralysis < 2)
-		//	src.affecting.paralysis = 2
-		//src.affecting.stunned = max(src.affecting.stunned, 3)
+
 		if (ishuman(src.affecting))
 			var/mob/living/carbon/human/H = src.affecting
 			H.set_stamina(min(0, H.stamina))

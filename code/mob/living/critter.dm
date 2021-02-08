@@ -1,3 +1,5 @@
+#define MOB_STRUGGLE_COOLDOWN "min_time_between_struggles"
+
 /mob/living/critter
 	name = "critter"
 	desc = "A beastie!"
@@ -6,6 +8,10 @@
 	var/icon_state_alive = null
 	var/icon_state_dead = null
 	var/icon_state_ghost = null
+	/// in-hand images of the mob while its being held
+	var/icon_inhand = 'icons/mob/inhand/hand_critters.dmi'
+	/// the in-hand state of the held mob, minus the suffix
+	var/item_state_inhand = null
 	abilityHolder = null
 	var/list/add_abilities = null
 
@@ -79,6 +85,21 @@
 	var/use_stunned_icon = 1
 
 	var/pull_w_class = 2
+
+	/// What level of grab is needed to pick this critter up?
+	var/pickup_grab_level = MOBCRITTER_GRAB_PASSIVE
+	/// The critter holding shell used when this critter is picked up and used as an item
+	var/obj/item/critter_shell/metaholder = null
+	/// Stamina the critter removes from the grabber when it struggles for freedom
+	var/hold_struggle_stam = 15
+	/// How much a struggle costs in stamina
+	var/hold_struggle_stam_cost = 20
+	/// Held critters escape from being held if the holder's stamina goes below this percent of their maximum
+	var/hold_escape_stam_percent = 75
+	/// Cooldown on struggle attempts
+	var/struggle_cooldown = 0.4 SECONDS
+	/// The thing supposedly holding this mob
+	var/mob/living/grabber
 
 	blood_id = "blood"
 
@@ -447,6 +468,8 @@
 			. += 14
 
 	Move(var/turf/NewLoc, direct)
+		if(istype(src.metaholder))
+			src.metaholder.unshellify()
 		if (!src.lying && isturf(NewLoc) && NewLoc.turf_flags & MOB_STEP)
 			if (NewLoc.active_liquid)
 				if (NewLoc.active_liquid.step_sound)
@@ -628,8 +651,8 @@
 		if (!user)
 			return 1 // so things can do if (..())
 		var/pmsg = islist(src.pet_text) ? pick(src.pet_text) : src.pet_text
-		src.visible_message("<span class='notice'><b>[user] [pmsg] [src]!</b></span>",\
-		"<span class='notice'><b>[user] [pmsg] you!</b></span>")
+		user.visible_message("<span class='notice'><b>[user] [pmsg] you!</b></span>",\
+		"<span class='notice'><b>[user] [pmsg] [src]!</b></span>")
 		return
 
 	proc/get_active_hand()
@@ -1320,3 +1343,123 @@
 
 	src.TakeDamage("All", damage, 0)
 	return
+
+/mob/living/critter/resist()
+	if(src.metaholder)
+		src.struggle()
+	else
+		. = ..()
+
+/// Called by Resist, for playermobs to escape their holder
+/mob/living/critter/proc/struggle()
+	if(!src.check_metaholder())
+		return FALSE
+
+	if(is_incapacitated(src))
+		return FALSE
+
+	if(ON_COOLDOWN(src, MOB_STRUGGLE_COOLDOWN, struggle_cooldown))
+		return FALSE
+
+	if(src.a_intent == INTENT_HELP)
+		return src.struggle_cute()
+	else
+		return src.struggle_escape()
+
+/// Mostly just wiggling around and spewing flavor text, being all cute and shit
+/mob/living/critter/proc/struggle_cute()
+	src.grabber?.visible_message("[src] wiggles around in [src.grabber]'s hand.", "[src] wiggles around in your hand.")
+	playsound(get_turf(src), "rustle", 56, vary=1)
+	return FALSE
+
+/// Wiggle around and try to escape the grabber's grip
+/mob/living/critter/proc/struggle_escape()
+	src.set_dir(pick(cardinal))
+	playsound(get_turf(src), 'sound/impact_sounds/Generic_Shove_1.ogg', 56, vary=1)
+	attack_twitch(src.metaholder)
+	hit_twitch(src.grabber)
+	src.grabber.remove_stamina(src.hold_struggle_stam)
+	src.grabber.stamina_stun()
+	if(src.grabber.get_stamina() <= (src.grabber.stamina_max * (src.hold_escape_stam_percent * 0.01)))
+		src.grabber.visible_message("<span class='alert'><b>[src]</b> breaks free of [src.grabber]'s grip!</span>", "<span class='alert'><b>[src]</b> breaks free from your grip!</span>")
+		src.metaholder.unshellify()
+		return TRUE
+	else
+		src.grabber.visible_message("<span class='alert'><b>[src]</b> wrenches around in [src.grabber]'s grip!</span>", "<span class='alert'><b>[src]</b> wrenches around in your grip!</span>")
+		return FALSE
+
+
+/// Handles checking grip level and making a new metaholder for the mob
+/mob/living/critter/proc/try_pickup(mob/living/grab_doer, grab_level, obj/item/grab/grab_thing)
+	if(!istype(grab_doer))
+		return FALSE
+
+	if(src.pickup_grab_level == MOBCRITTER_GRAB_NEVER)
+		return FALSE
+
+	if (src.check_metaholder())
+		return FALSE // Already being held, thanks!
+
+	var/shell_the_mob = 0
+	switch(grab_level)
+		if(GRAB_PASSIVE)
+			if(src.pickup_grab_level == MOBCRITTER_GRAB_PASSIVE)
+				shell_the_mob = 1
+			else
+				return FALSE
+		if(GRAB_AGGRESSIVE)
+			if(src.pickup_grab_level <= MOBCRITTER_GRAB_AGGRESSIVE)
+				shell_the_mob = 1
+			else
+				return FALSE
+		if(GRAB_NECK)
+			if(src.pickup_grab_level <= MOBCRITTER_GRAB_NECK)
+				shell_the_mob = 1
+			else
+				return FALSE
+		if(GRAB_KILL)
+			if(src.pickup_grab_level <= MOBCRITTER_GRAB_KILL)
+				shell_the_mob = 1
+			else
+				return FALSE
+
+	if(shell_the_mob)
+		var/obj/item/critter_shell/c_holder = new(get_turf(src))
+		if(c_holder.shellify_critter(src, grab_doer))
+			grab_doer.visible_message("<span class='notice'>[grab_doer] picks up [src].</span>", "<span class='notice'>You pick up [src].</span>")
+			if(istype(grab_thing)) // There was a grab, let's dispose of it carefully
+				qdel(grab_thing)
+			return TRUE
+		else
+			return FALSE
+
+/// Returns TRUE if we're inside the right metaholder with a valid grabber, otherwise disposes of the metaholder and returns FALSE
+/mob/living/critter/proc/check_metaholder()
+	if(istype(src.metaholder)) // Have metaholder? Let's see if we're in it
+		if(src.loc != src.metaholder) // Not in our metaholder? Get rid of it, then
+			src.metaholder.unshellify()
+			return FALSE
+		// metaholder exists and we're inside it, let's see if anyone's holding us
+		if(isliving(src.grabber)) // We have an assigned grabber, let's see if they're holding us
+			if(src.grabber.find_in_hand(src.metaholder)) // Grabber is holding us, good!
+				return TRUE
+			else // We have a grabber, but we arent in their hands. Huh.
+				src.metaholder.unshellify()
+				return FALSE
+		if(!isliving(src.grabber)) // No grabber assigned? Lets go look for them
+			var/turf/T = get_turf(src) // They *should* be on the same turf as us
+			if(isturf(T))
+				for(var/mob/living/L in T.contents)
+					if(L.find_in_hand(src.metaholder))
+						src.grabber = L
+						return TRUE
+			src.metaholder.unshellify()
+			return FALSE
+	else if(istype(src.loc, /obj/item/critter_shell)) // We don't have an assigned metaholder, yet we're in one? No good!
+		var/obj/item/critter_shell/rogue_shell = src.loc
+		src.set_loc(get_turf(rogue_shell))
+		if(length(rogue_shell.contents))
+			for(var/atom/movable/AM in rogue_shell.contents)
+				AM.set_loc(get_turf(rogue_shell))
+		qdel(rogue_shell)
+		return FALSE

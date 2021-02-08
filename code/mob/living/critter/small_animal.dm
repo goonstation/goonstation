@@ -128,6 +128,7 @@ todo: add more small animals!
 	hand_count = 2
 	icon_state = "mouse_white"
 	icon_state_dead = "mouse_white-dead"
+	item_state_inhand = "mouse"
 	speechverb_say = "squeaks"
 	speechverb_exclaim = "squeals"
 	speechverb_ask = "squeaks"
@@ -254,6 +255,7 @@ todo: add more small animals!
 	desc = "A cat. In space."
 	icon_state = "cat1"
 	icon_state_dead = "cat1-dead"
+	item_state_inhand = "cat"
 	hand_count = 2
 	speechverb_say = "meows"
 	speechverb_exclaim = "yowls"
@@ -446,6 +448,7 @@ todo: add more small animals!
 	desc = "A dog. In space."
 	icon_state = "pug"
 	icon_state_dead = "pug-lying"
+	item_state_inhand = "pug"
 	hand_count = 2
 	add_abilities = list(/datum/targetable/critter/pounce)
 	speechverb_say = "barks"
@@ -584,6 +587,7 @@ todo: add more small animals!
 /mob/living/critter/small_animal/dog/corgi
 	icon_state = "corgi"
 	icon_state_dead = "corgi-lying"
+	item_state_inhand = "corgi"
 	dogtype = "corgi"
 
 	weak
@@ -675,6 +679,7 @@ todo: add more small animals!
 /mob/living/critter/small_animal/dog/shiba
 	icon_state = "shiba"
 	icon_state_dead = "shiba-lying"
+	item_state_inhand = "shibbe"
 	dogtype = "shiba"
 	var/randomize_shiba = 1
 
@@ -1511,6 +1516,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	desc = "Ribbit."
 	icon_state = "frog"
 	icon_state_dead = "frog-dead"
+	item_state_inhand = "frog"
 	hand_count = 2
 	speechverb_say = "croaks"
 	speechverb_exclaim = "croaks"

@@ -977,6 +977,11 @@
 		I = G.handle_throw(src, target)
 		if (!I) return
 
+	else if (istype(I, /obj/item/critter_shell))
+		var/obj/item/critter_shell/CS = I
+		I = CS.unshellify()
+		if (!I) return
+
 	I.set_loc(src.loc)
 
 	u_equip(I)
