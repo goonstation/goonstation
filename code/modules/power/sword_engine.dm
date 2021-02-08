@@ -1,5 +1,9 @@
 //The SWORD Engine.
-//Essentially it is a better, movable SMES with a removable core. I believe it is different enough to make separately.
+//Essentially it should be a better, movable SMES with a removable core.
+//However, as my knowledge of engineering is quite subpar, I will leave this in it's current, unfinished state - it doesn't work, although the UI is interactable.
+//Someone with a larger affinity than me for such technological exploits can attempt to "restore" the engine to a functional form.
+//For now, it will merely exist as a quasi-functional loot source. As in, people can extract the core from it for other purposes.
+//I am disappointed in myself for not pushing forward enough to understand and finish what I've started, but I've been feeling more and more drained recently so I'd rather leave this to a "professional". Sorry.
 
 #define SEMAXCHARGELEVEL 400000
 #define SEMAXOUTPUT 400000
@@ -30,7 +34,7 @@
 	var/image/core
 
 	get_desc()
-		. = {"It's [online ? "on" : "off"]line. [charging ? "It's charging, and it" : "It"] looks about [round(charge / capacity * 100, 20)]% full."}
+		. = {"It's [online ? "on" : "off"]line. [charging ? "It's charging, and it" : "It"] looks about [round(charge / capacity * 100, 20)]% full. [integrity_state ? "This engine, even with the metal debris removed, seems nigh unfixable" : "It looks quite broken"]. [core_inserted ? "It would be wise to repurpose it's core for something else, as it's still intact" : "The core is missing.."]."}
 
 
 /obj/machinery/power/sword_engine/attackby(obj/item/W as obj, mob/user as mob)
@@ -80,14 +84,14 @@
 			if(src.anchored == 0)
 				boutput(user, "<span class='notice'>You secured the SWORD Engine!</span>")
 				src.anchored = 1
-				terminal_setup()
+				//terminal_setup()
 			else
 				boutput(user, "<span class='notice'>You unsecured the SWORD Engine!</span>")
 				src.anchored = 0
-				for(var/obj/machinery/power/terminal/temp_term in get_turf(src))
-					if(temp_term.master == src)
-						qdel(temp_term)
-						terminal = null
+				//for(var/obj/machinery/power/terminal/temp_term in get_turf(src))
+				//	if(temp_term.master == src)
+				//		qdel(temp_term)
+				//		terminal = null
 		updateicon()
 	
 	else if (integrity_state == 2 && ispryingtool(W) && core_inserted)
@@ -176,14 +180,17 @@
 
 
 /obj/machinery/power/sword_engine/process()
+	if (prob(4))
+		elecflash(src.loc)
+
 	if (online == 1 && (!core_inserted || integrity_state == 0 || anchored != 1))
 		src.charging = 0
 		src.online = 0
 		return
 
-	if (!terminal && core_inserted && integrity_state != 0 && anchored == 1)
-		terminal_setup()
-		return
+	//if (!terminal && core_inserted && integrity_state != 0 && anchored == 1)
+	//	terminal_setup()
+	//	return
 
 	if (status & BROKEN)
 		return

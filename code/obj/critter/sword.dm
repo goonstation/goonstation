@@ -20,7 +20,7 @@
 	crit_text = "slams into"
 	atk_delay = 50
 	crit_chance = 25
-	health = 6000
+	health = 5400
 	bound_height = 96
 	bound_width = 96
 	layer = MOB_LAYER + 5
@@ -28,7 +28,7 @@
 	atksilicon = 1
 	flying = 1
 	generic = 0
-	seekrange = 256						//A perk of being a high-tech prototype - incredibly large detection range.
+	seekrange = 128						//A perk of being a high-tech prototype - large detection range.
 	var/mode = 0						//0 - Beacon. 1 - Unanchored. 2 - Anchored.
 	var/cooldown = 0					//Used to prevent the SWORD from using abilities all the time.
 	var/transformation_triggered = false//Used to check if the initial transformation has already been started or not.
@@ -39,6 +39,7 @@
 	var/current_heat_level = 0			//Used to keep track of the SWORD's heat for Heat Reallocation.
 	var/stuck_location = null			//Used to prevent the SWORD from getting stuck too much.
 	var/stuck_timer = null				//Ditto.
+	var/reported = false				//Used to prevent spam-reporting the death of the SWORD.
 	var/image/glow
 
 	New()
@@ -48,36 +49,39 @@
 		brutevuln = 0
 		miscvuln = 0
 
-		SPAWN_DBG(1 MINUTE)
+		SPAWN_DBG(rand(15, 30) SECONDS)
 			if(mode == 0 && !changing_modes && !transformation_triggered)	//If in Beacon form and not already transforming...
 				transformation_countdown()									//...the countdown starts.
 		return
 	
 	CritterDeath()
 		..()
-		SPAWN_DBG(5 SECONDS)
-			command_announcement("<br><b><span class='alert'>The Syndicate Weapon has been eliminated.</span></b>", "Safety Update", "sound/misc/announcement_1.ogg")
-			logTheThing("combat", src, null, "has been defeated.")
-			message_admins("The Syndicate Weapon: Orion Retribution Device has been defeated.")
+		if (!reported)
+			reported = true
+			SPAWN_DBG(5 SECONDS)
+				command_announcement("<br><b><span class='alert'>The Syndicate Weapon has been eliminated.</span></b>", "Safety Update", "sound/misc/announcement_1.ogg")
+				logTheThing("combat", src, null, "has been defeated.")
+				message_admins("The Syndicate Weapon: Orion Retribution Device has been defeated.")
 
 		var/datum/effects/system/harmless_smoke_spread/smoke = new /datum/effects/system/harmless_smoke_spread()
-		smoke.set_up(5, 0, get_center())
+		var/death_loc = get_center()
+		smoke.set_up(rand(12, 15), 0, death_loc)
 		smoke.attach(src)
 		smoke.start()
 
-		explosion_new(get_center(), get_center(), rand(6, 12))
-		fireflash(get_center(), 2)
+		explosion_new(death_loc, death_loc, rand(6, 12))
+		fireflash(death_loc, 2)
 
 		for(var/board_count = rand(4, 8), board_count > 0, board_count--)
-			new/obj/item/factionrep/ntboard(locate(src.loc.x + rand(-1, 3), src.loc.y + rand(-1, 3), src.loc.z))
+			new/obj/item/factionrep/ntboard(locate(death_loc.loc.x + rand(-2, 2), death_loc.loc.y + rand(-2, 2), death_loc.loc.z))
 			board_count--
 		for(var/alloy_count = rand(1, 3), alloy_count > 0, alloy_count--)
-			new/obj/item/material_piece/iridiumalloy(locate(src.loc.x + rand(0, 2), src.loc.y + rand(0, 2), src.loc.z))
+			new/obj/item/material_piece/iridiumalloy(locate(death_loc.loc.x + rand(-1, 1), death_loc.loc.y + rand(-1, 1), death_loc.loc.z))
 			alloy_count--
-		new/obj/machinery/power/sword_engine(get_center())
+		new/obj/machinery/power/sword_engine(death_loc)
 
-		SPAWN_DBG(1 SECOND)
-			elecflash(get_center())
+		SPAWN_DBG(2 SECOND)
+			elecflash(death_loc)
 			qdel(src)
 
 	process()
@@ -158,7 +162,7 @@
 					seek_target()
 					if (!src.target) src.task = "wandering"
 				if("chasing")
-					if (src.frustration >= rand(32,64))
+					if (src.frustration >= rand(16,32))
 						src.target = null
 						src.last_found = world.time
 						src.frustration = 0
@@ -570,7 +574,7 @@
 					src.pixel_y += 4
 				else
 					src.pixel_y -= 4
-				sleep(0.2)
+				sleep(5)
 			for (var/mob/M in range(3,get_center()))
 				random_brute_damage(M, 60)
 			tile_purge(src.loc.x + 1,src.loc.y + 1,1)
@@ -590,6 +594,7 @@
 			firevuln = 1
 			brutevuln = 1
 			miscvuln = 0.2
+			anchored = 0
 			current_ability = null
 
 
@@ -722,7 +727,7 @@
 								playsound(get_center(), 'sound/effects/smoke_tile_spread.ogg', 70, 1)
 								tile_purge(src.loc.x - 1,src.loc.y + 1 + increment,0)
 				step(src, src.dir)
-				sleep(0.1)
+				sleep(0.4)
 			for (var/mob/M in range(3,get_center()))
 				random_brute_damage(M, 60)
 
@@ -773,6 +778,7 @@
 			firevuln = 1
 			brutevuln = 1
 			miscvuln = 0.2
+			anchored = 0
 			current_ability = null
 
 
@@ -806,7 +812,7 @@
 			else
 				T.ReplaceWithSpace()
 		else
-			if(T && prob(90))
+			if(T && prob(90) && !istype(T, /turf/space))
 				new /obj/item/raw_material/scrap_metal(T)
 				if(prob(48))
 					new /obj/item/raw_material/scrap_metal(T)
