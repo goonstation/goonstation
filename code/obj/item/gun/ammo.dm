@@ -119,7 +119,6 @@
 	swap(var/obj/item/ammo/bullets/A, var/obj/item/gun/kinetic/K)
 		// I tweaked this for improved user feedback and to support zip guns (Convair880).
 		var/check = 0
-		message_admins("A caliber: [A.caliber]")
 		if (!A || !K)
 			check = 0
 		if (K.sanitycheck() == 0)
