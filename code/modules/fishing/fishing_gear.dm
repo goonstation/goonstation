@@ -97,4 +97,9 @@
 		else //lets restart the action
 			src.onRestart()
 
+/obj/item/fishing_rod/enhanced //for testing/admin shenanigans
+	name = "enhanced fibreglass Telescope Ultralight 47" //droods
+	desc = "The latest model"
+	fishing_speed = -4 SECONDS
+	fishing_delay = 0.1 SECONDS
 
