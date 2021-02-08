@@ -11682,6 +11682,7 @@
 	},
 /obj/chicken_nesting_box,
 /obj/disposalpipe/segment,
+/obj/railing/orange/reinforced,
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "dgA" = (
@@ -15018,9 +15019,6 @@
 /obj/machinery/camera{
 	dir = 5
 	},
-/obj/railing/orange/reinforced{
-	dir = 1
-	},
 /turf/simulated/floor/grasstodirt{
 	dir = 1
 	},
@@ -15840,6 +15838,7 @@
 /obj/machinery/light/incandescent/netural{
 	dir = 8
 	},
+/obj/railing/orange/reinforced,
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "ewf" = (
@@ -28660,6 +28659,10 @@
 	},
 /turf/simulated/floor/red/checker,
 /area/station/security/checkpoint/arrivals)
+"ioV" = (
+/obj/railing/orange/reinforced,
+/turf/simulated/floor/grass/leafy,
+/area/station/ranch)
 "ipb" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/cable{
@@ -32090,13 +32093,6 @@
 	d1 = 1;
 	d2 = 4;
 	icon_state = "1-4"
-	},
-/obj/railing/orange/reinforced{
-	dir = 1
-	},
-/obj/disposalpipe/segment{
-	dir = 1;
-	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/grasstodirt{
 	dir = 1
@@ -49471,9 +49467,6 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "oJP" = (
-/obj/railing/orange/reinforced{
-	dir = 1
-	},
 /turf/simulated/floor/grasstodirt{
 	dir = 1
 	},
@@ -129437,7 +129430,7 @@ mBB
 mBB
 mBB
 mBB
-mBB
+ioV
 oJP
 cQf
 sJC
@@ -129739,7 +129732,7 @@ mBB
 mBB
 mBB
 mBB
-mBB
+ioV
 oJP
 kMI
 jLx
@@ -130041,7 +130034,7 @@ mBB
 mBB
 mBB
 mBB
-mBB
+ioV
 oJP
 orn
 sJC
@@ -130343,7 +130336,7 @@ mBB
 mBB
 mBB
 mBB
-mBB
+ioV
 oJP
 ggs
 sJC
@@ -130645,7 +130638,7 @@ xmA
 mBB
 mBB
 mBB
-mBB
+ioV
 oJP
 faq
 mfs
