@@ -4140,9 +4140,7 @@
 "aSY" = (
 /obj/grille/catwalk/jen/side,
 /obj/decal/cleanable/dirt/jen,
-/obj/disposalpipe/segment{
-	dir = 1
-	},
+/obj/disposalpipe/junction/left/north,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/ne)
 "aTe" = (
@@ -27116,6 +27114,17 @@
 /obj/firedoor_spawn,
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
+"hPy" = (
+/obj/grille/catwalk/jen/side,
+/obj/decal/cleanable/dirt/jen,
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/turf/simulated/floor/plating/jen,
+/area/station/maintenance/outer/ne)
 "hPz" = (
 /obj/cable{
 	d2 = 2;
@@ -131846,7 +131855,7 @@ wwj
 nnx
 jxq
 gRC
-mwv
+hPy
 kwJ
 wqJ
 wMW
