@@ -18,6 +18,7 @@
 	atk_text = "bumps into"
 	chase_text = "chases after"
 	crit_text = "slams into"
+	alpha = 0
 	atk_delay = 50
 	crit_chance = 25
 	health = 5400
@@ -39,7 +40,7 @@
 	var/current_heat_level = 0			//Used to keep track of the SWORD's heat for Heat Reallocation.
 	var/stuck_location = null			//Used to prevent the SWORD from getting stuck too much.
 	var/stuck_timer = null				//Ditto.
-	var/reported = false				//Used to prevent spam-reporting the death of the SWORD.
+	var/died_already = false				//Used to prevent spam-reporting the death of the SWORD.
 	var/image/glow
 
 	New()
@@ -49,40 +50,56 @@
 		brutevuln = 0
 		miscvuln = 0
 
+		for (var/turf/simulated/OV in oview(get_center(),2))
+			tile_purge(OV.loc.x,OV.loc.y,2)
+
+		var/increment
+		for(increment = 0; increment <= 14; increment++)
+			SPAWN_DBG(increment)
+				src.alpha += 17
+
 		SPAWN_DBG(rand(15, 30) SECONDS)
+			src.alpha = 255
 			if(mode == 0 && !changing_modes && !transformation_triggered)	//If in Beacon form and not already transforming...
 				transformation_countdown()									//...the countdown starts.
 		return
 	
 	CritterDeath()
 		..()
-		if (!reported)
-			reported = true
+		if (!died_already)
+			died_already = true
 			SPAWN_DBG(5 SECONDS)
 				command_announcement("<br><b><span class='alert'>The Syndicate Weapon has been eliminated.</span></b>", "Safety Update", "sound/misc/announcement_1.ogg")
 				logTheThing("combat", src, null, "has been defeated.")
 				message_admins("The Syndicate Weapon: Orion Retribution Device has been defeated.")
+		
+			playsound(src, "sound/effects/ship_engage.ogg", 100, 1)
 
-		var/datum/effects/system/harmless_smoke_spread/smoke = new /datum/effects/system/harmless_smoke_spread()
-		var/death_loc = get_center()
-		smoke.set_up(rand(12, 15), 0, death_loc)
-		smoke.attach(src)
-		smoke.start()
+			var/datum/effects/system/harmless_smoke_spread/smoke = new /datum/effects/system/harmless_smoke_spread()
+			var/death_loc = get_center()
+			var/death_loc_x = src.loc.x + 1
+			var/death_loc_y = src.loc.y + 1
+			var/death_loc_z = src.loc.z
 
-		explosion_new(death_loc, death_loc, rand(6, 12))
-		fireflash(death_loc, 2)
+			smoke.set_up(rand(12, 15), 0, death_loc)
+			smoke.start()
 
-		for(var/board_count = rand(4, 8), board_count > 0, board_count--)
-			new/obj/item/factionrep/ntboard(locate(death_loc.loc.x + rand(-2, 2), death_loc.loc.y + rand(-2, 2), death_loc.loc.z))
-			board_count--
-		for(var/alloy_count = rand(1, 3), alloy_count > 0, alloy_count--)
-			new/obj/item/material_piece/iridiumalloy(locate(death_loc.loc.x + rand(-1, 1), death_loc.loc.y + rand(-1, 1), death_loc.loc.z))
-			alloy_count--
-		new/obj/machinery/power/sword_engine(death_loc)
+			SPAWN_DBG(45)
+				explosion_new(death_loc, death_loc, rand(6, 12))
+				fireflash(death_loc, 2)
 
-		SPAWN_DBG(2 SECOND)
-			elecflash(death_loc)
-			qdel(src)
+			SPAWN_DBG(55)
+				for(var/board_count = rand(4, 8), board_count > 0, board_count--)
+					new/obj/item/factionrep/ntboard(locate(death_loc_x + rand(-2, 2), death_loc_y + rand(-2, 2), death_loc_z))
+					board_count--
+				for(var/alloy_count = rand(2, 4), alloy_count > 0, alloy_count--)
+					new/obj/item/material_piece/iridiumalloy(locate(death_loc_x + rand(-1, 1), death_loc_y + rand(-1, 1), death_loc_z))
+					alloy_count--
+				new/obj/machinery/power/sword_engine(death_loc)
+
+			SPAWN_DBG(65)
+				elecflash(death_loc)
+				qdel(src)
 
 	process()
 		if (!src.alive) return 0
@@ -571,8 +588,10 @@
 			for(var/i=0, i < 6, i++)
 				step(src, src.dir)
 				if(i < 3)
+					src.alpha -= 17
 					src.pixel_y += 4
 				else
+					src.alpha += 17
 					src.pixel_y -= 4
 				sleep(5)
 			for (var/mob/M in range(3,get_center()))

@@ -1,3 +1,5 @@
+var/sword_summoned_before = false
+
 /obj/item/makeshift_signaller_frame
 	name = "makeshift signaller frame"
 	icon = 'icons/misc/retribution/makeshift_signaller.dmi'
@@ -60,6 +62,7 @@
 	throw_range = 20
 	m_amt = 500
 	var/metadata = 0
+	var/was_emagged = false
 	var/is_exploding = false
 	is_syndicate = 1
 	mats = 4
@@ -71,20 +74,40 @@
 		..()
 
 	attack_self(mob/user as mob)
-		if(metadata >= 8 && !is_exploding)								//If all 8 metadata nodes are filled and the item isn't already in it's exploding animation, spawn the Syndicate Retribution event and play the exploding animation, alongside a delayed deletion of the item.
-			//Future me, make this spawn the Syndicate Retribution event please.
-			icon_state = "explosion"
-			user.show_message("<span class='notice'>You sent a signal to an unknown coordinate derived from the uploaded metadata! This can't be good...</span>", 1)
-			desc = "Oh shit, it's overloading!"
-			tooltip_rebuild = 1
-			is_exploding = true
-			spawn(2 SECONDS)
-				logTheThing("combat", user, null, "has summoned the Syndicate Weapon: Orion Retribution Device. It will arrive in 1 minute.")
-				message_admins("[key_name(user)] has summoned the Syndicate Weapon: Orion Retribution Device. It will arrive in 1 minute.")
-				elecflash(src.loc)
-				qdel(src)
-			return
-		else if(metadata >= 0 && metadata < 8 && !is_exploding)			//If there are still unfilled metadata nodes left, display the filled nodes' amount.
+		if (metadata >= 8 && !is_exploding)								//If all 8 metadata nodes are filled and the item isn't already in it's exploding animation, spawn the Syndicate Retribution event and play the exploding animation, alongside a delayed deletion of the item.
+			if (ticker.round_elapsed_ticks >= 15 MINUTES)
+				if (!isrestrictedz(src.z))
+					if (!sword_summoned_before)
+						var/list/nearby_turfs = list()
+						for (var/turf/T in oview(src.loc,10))
+							if (istype(T, /turf/space))
+								nearby_turfs += T
+						if (length(nearby_turfs))
+							new/obj/critter/sword(pick(nearby_turfs))
+							sword_summoned_before = true
+
+							icon_state = "explosion"
+							user.show_message("<span class='notice'>You sent a signal to unknown coordinates derived from the uploaded metadata! This can't be good...</span>", 1)
+							desc = "Oh shit, it's overloading!"
+							tooltip_rebuild = 1
+							is_exploding = true
+							spawn(2 SECONDS)
+								logTheThing("combat", user, null, "has summoned the Syndicate Weapon: Orion Retribution Device. It will become active in about 1 minute.")
+								message_admins("[key_name(user)] has summoned the Syndicate Weapon: Orion Retribution Device. It will become active in about 1 minute.")
+								elecflash(src.loc)
+								qdel(src)
+							return
+						else
+							user.show_message("<span class='notice'>You failed to send a signal. To avoid interference, it's best to try again closer to open space.</span>", 1)
+					else
+						user.show_message("<span class='notice'>You failed to send a signal. The device seems oddly dormant...</span>", 1)
+						desc = "This device is dormant. It has no purpose now."
+						tooltip_rebuild = 1
+				else
+					user.show_message("<span class='notice'>You failed to send a signal. To avoid interference, it's best to try again in an unrestricted area.</span>", 1)
+			else
+				user.show_message("<span class='notice'>You failed to send a signal. The device is currently waiting for a link to establish. It's best to try again later.</span>", 1)
+		else if (metadata >= 0 && metadata < 8 && !is_exploding)			//If there are still unfilled metadata nodes left, display the filled nodes' amount.
 			user.show_message("<span class='notice'>Metadata nodes currently filled: [metadata]</span>", 1)
 			return
 		return
@@ -106,6 +129,25 @@
 			return
 		return
 
+	emag_act(mob/user, obj/item/card/emag/E)
+		. = ..()
+		if (!was_emagged)
+			if (metadata >= 8)											//If all metadata nodes are filled, alert the player instead.
+				user.show_message("<span class='notice'>All 8 metadata nodes have been filled already!</span>", 1)
+				return
+			else
+				metadata += rand(2, 7)
+				playsound(src.loc, "sound/misc/flockmind/flockdrone_beep2.ogg", 60, 0)
+				playsound(src.loc, "sound/effects/sparks4.ogg", 100, 0)
+				was_emagged = true
+			if(metadata >= 8)
+				desc = "This device has a menacing aura around it. All 8 nodes of metadata are filled. The signal is ready to be sent."
+				tooltip_rebuild = 1
+			set_icon_state("metadata_[metadata]")
+		else
+			user.show_message("<span class='notice'>This device has been emagged already!</span>", 1)
+		return
+
 /obj/item/makeshift_syndicate_signaller/proc/metadata_increase(source, dying_drone)
 	if (metadata >= 8)
 		return
@@ -114,9 +156,13 @@
 	if (!(istype(dying_drone, /obj/critter/gunbot/drone/buzzdrone/fish) || istype(dying_drone, /obj/critter/gunbot/drone/gunshark)) && T1.z == T2.z)	//Not increasing the filled metadata node amount if the dead drone is an aquatic one, as they drop Syndicate Circuit Boards already.
 		if (metadata < 8)
 			metadata += 1
-			//user.show_message("<span class='notice'>The makeshift syndicate signaller catches a dying drone's distress signal, converting what's possible into readable metadata.</span>", 1) //This needs "mob/user as mob" but I doubt a dying drone can send that information. What do I do here?
+			playsound(src.loc, "sound/misc/flockmind/flockdrone_beep3.ogg", metadata * 12, 0)
 			set_icon_state("metadata_[metadata]")
 		if (metadata >= 8)
-			desc = "This device has a menacing aura around it. All 8 nodes of metadata are filled. The signal is ready to be sent."
+			playsound(src.loc, "sound/misc/flockmind/flockdrone_beep4.ogg", 100, 0)
+			if(!sword_summoned_before)
+				desc = "This device has a menacing aura around it. All 8 nodes of metadata are filled. The signal is ready to be sent."
+			else
+				desc = "This device has no menacing aura around it. In fact, it is completely dormant."
 			tooltip_rebuild = 1
 	return
