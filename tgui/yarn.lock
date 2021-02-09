@@ -2269,10 +2269,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"core-js@npm:^3.8.2":
-  version: 3.8.2
-  resolution: "core-js@npm:3.8.2"
-  checksum: 8fa2c580b77b9d54d3f6ee147be4d9ae01ea6d77f35f16b05962161e9bec02d846449cce4c68b9d190145edc8ded71142f6fd99e35b53fc642b20a3bf47bbd07
+"core-js@npm:^3.8.3":
+  version: 3.8.3
+  resolution: "core-js@npm:3.8.3"
+  checksum: 3c67d1732d505f6afaf836f18038dae8267e8c0e8e84e1c679bac67589e66d0807c24750c7d8b1118cc386c3d66a1d96f20d9cb0f6a879b19cfc04e9f073fe78
   languageName: node
   linkType: hard
 
@@ -5872,7 +5872,7 @@ fsevents@~2.1.2:
     glob: ^7.1.6
     source-map: ^0.7.3
     stacktrace-parser: ^0.1.10
-    ws: ^7.4.2
+    ws: ^7.4.3
   languageName: unknown
   linkType: soft
 
@@ -5893,7 +5893,7 @@ fsevents@~2.1.2:
   version: 0.0.0-use.local
   resolution: "tgui-polyfill@workspace:packages/tgui-polyfill"
   dependencies:
-    core-js: ^3.8.2
+    core-js: ^3.8.3
     regenerator-runtime: ^0.13.7
     whatwg-fetch: ^3.5.0
   languageName: unknown
@@ -6347,7 +6347,7 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
-"ws@npm:^7.3.1, ws@npm:^7.4.2":
+"ws@npm:^7.3.1":
   version: 7.4.2
   resolution: "ws@npm:7.4.2"
   peerDependencies:
@@ -6359,6 +6359,21 @@ fsevents@~2.1.2:
     utf-8-validate:
       optional: true
   checksum: 832efdf1440706058ac04708aa56da951b6e5d10d956e6d01f7a2a32cd3f67acaabea8feb4b578b041a55289e421fc4c48769cbcf02f4d42915eb918c3f7e496
+  languageName: node
+  linkType: hard
+
+"ws@npm:^7.4.3":
+  version: 7.4.3
+  resolution: "ws@npm:7.4.3"
+  peerDependencies:
+    bufferutil: ^4.0.1
+    utf-8-validate: ^5.0.2
+  peerDependenciesMeta:
+    bufferutil:
+      optional: true
+    utf-8-validate:
+      optional: true
+  checksum: 493655b7c4589d09ff3c2b6e8870b9ad7f7aea0aff34034e2dbb9a2e13f6868a47b06b423bc2365aec6143500b04ad24fdaecfbd9a6752f8eab2d339182c9884
   languageName: node
   linkType: hard
 

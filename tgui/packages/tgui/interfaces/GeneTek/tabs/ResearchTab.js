@@ -66,7 +66,6 @@ export const ResearchTab = (props, context) => {
         {availableResearch.map((ar, tier) => (
           <Section
             key={tier}
-            level={2}
             title={"Tier " + (tier + 1)}>
             {ar.length ? ar.map(r => (
               <Section
@@ -91,7 +90,6 @@ export const ResearchTab = (props, context) => {
         {finishedResearch.map((fr, tier) => (
           <Section
             key={tier}
-            level={2}
             title={"Tier " + (tier + 1)}>
             {fr.length ? fr.map(r => (
               <Section
