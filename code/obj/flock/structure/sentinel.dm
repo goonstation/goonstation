@@ -49,8 +49,8 @@
 			if(2)
 				var/mob/m = null
 				var/list/hit = list()
-				for(m in mobs)
-					if(IN_RANGE(m, src, 5) && !isflock(m) && isturf(m.loc) && src.flock?.isEnemy(m))
+				for(m in src.flock?.enemies)
+					if(IN_RANGE(m, src, 5) && !isflock(m) && isturf(m.loc))
 						break//found target
 				if(!m) return//if no target stop
 				var/chain = rand(5, 6)

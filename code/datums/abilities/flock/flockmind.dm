@@ -214,7 +214,7 @@
 			// skip this one
 			continue
 		var/obj/item/device/radio/R = M.ears
-		if(R?.listening)
+		if(istype(R) && R?.listening)
 			// your headset's on, you're fair game!!
 			targets += M
 	if(targets.len >= 1)
