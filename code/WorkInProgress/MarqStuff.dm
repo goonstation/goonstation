@@ -4,15 +4,6 @@
 /proc/chs(var/str, var/i)
 	return ascii2text(text2ascii(str,i))
 
-/**
- * BASH explode:
- * Splits a string into string pieces the same way BASH handles this.
- * - Process quoted strings LTR: Apostrophized strings are unparsed. Quoted strings are parsed.
- * - Insert parsed strings back into the string by using a placeholder for spaces.
- * - Split the string with the usual space separation method.
- * - Return list.
- */
-
 // TODO: Variable processing.
 
 #define NONE 0
@@ -21,6 +12,14 @@
 
 #define ESCAPE "\\"
 
+/**
+ * BASH explode: Splits a string into string pieces the same way BASH handles this.
+ *
+ * - Process quoted strings LTR: Apostrophized strings are unparsed. Quoted strings are parsed.
+ * - Insert parsed strings back into the string by using a placeholder for spaces.
+ * - Split the string with the usual space separation method.
+ * - Return list.
+ */
 /proc/bash_explode(var/str)
 	var/fin = 0
 	var/state = NONE
