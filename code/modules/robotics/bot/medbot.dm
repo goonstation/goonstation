@@ -86,6 +86,7 @@
 	terrifying = 1
 	anchored = 1 // don't drag it into space goddamn jerks
 	no_camera = 1
+	hostile_last_patient_cooldown = 3 SECONDS // There's usually only one target anyway, and we want to mess them up right good
 
 /obj/machinery/bot/medbot/head_surgeon
 	name = "Medibot - 'Head Surgeon'"
