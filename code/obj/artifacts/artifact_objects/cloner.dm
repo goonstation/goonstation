@@ -5,7 +5,7 @@
 
 /datum/artifact/cloner
 	associated_object = /obj/artifact/cloner
-	rarity_class = 4
+	rarity_weight = 90
 	min_triggers = 2
 	max_triggers = 2
 	validtriggers = list(/datum/artifact_trigger/carbon_touch,/datum/artifact_trigger/silicon_touch)
@@ -101,13 +101,16 @@
 
 			SPAWN_DBG(imprison_time)
 				if (!O.disposed)
-					for(var/obj/I in O.contents)
-						I.set_loc(get_turf(O))
-					if (clone.loc == O)
-						clone.set_loc(get_turf(O))
-						O.visible_message("<span class='alert'><b>[O]</b> releases [clone.name] and shuts down!</span>")
-					else
-						O.visible_message("<span class='alert'><b>[O]</b> shuts down strangely!</span>")
-					clone = null
 					O.ArtifactDeactivated()
+
+	effect_deactivate(obj/O)
+		if (..())
 			return
+		for(var/obj/I in O.contents)
+			I.set_loc(get_turf(O))
+		if (clone.loc == O)
+			clone.set_loc(get_turf(O))
+			O.visible_message("<span class='alert'><b>[O]</b> releases [clone.name] and shuts down!</span>")
+		else
+			O.visible_message("<span class='alert'><b>[O]</b> shuts down strangely!</span>")
+		clone = null

@@ -30,7 +30,7 @@ THROWING DARTS
 
 	//For PDA/signal alert stuff on implants
 	var/uses_radio = 0
-	var/list/mailgroups = null 
+	var/list/mailgroups = null
 	var/net_id = null
 	var/pda_alert_frequency = 1149
 	var/datum/radio_frequency/radio_connection
@@ -1708,7 +1708,7 @@ circuitry. As a result neurotoxins can cause massive damage.<BR>
 			var/mob/living/carbon/human/H = M
 			H.implant.Add(src)
 			src.visible_message("<span class='alert'>[src] gets embedded in [M]!</span>")
-			playsound(src.loc, "sound/weapons/slashcut.ogg", 100, 1)
+			playsound(src.loc, "sound/impact_sounds/Flesh_Cut_1.ogg", 100, 1)
 			H.changeStatus("weakened", 2 SECONDS)
 			random_brute_damage(M, 20)//if it can get in you, it probably doesn't give a damn about your armor
 			take_bleeding_damage(M, null, 10, DAMAGE_CUT)

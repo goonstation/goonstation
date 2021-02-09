@@ -3,6 +3,8 @@
 
 // copy flags
 #define COPY_SKIP_EXPLOITABLE (1<<0)
+#define COPY_SHALLOW (1<<1)
+#define COPY_SHALLOW_EXCEPT_FOR_LISTS (1<<2)
 
 #define _SEMI_DEEP_COPY(x) ((isnum(x) || istext(x) || isnull(x) || isclient(x) || isicon(x) || isfile(x) || ispath(x)) ? (x) : semi_deep_copy(x, environment=environment, root=root, copy_flags=copy_flags))
 
@@ -14,6 +16,8 @@ var/global/list/longest_copy_stack
 #endif
 
 proc/semi_deep_copy(orig, new_arg=null, list/environment=null, root=null, copy_flags=0)
+	if(((copy_flags & COPY_SHALLOW) || (copy_flags & COPY_SHALLOW_EXCEPT_FOR_LISTS && !islist(orig))) && !isnull(root))
+		return orig
 	if(isnum(orig) || istext(orig) || isnull(orig) || isclient(orig) || isicon(orig) || isfile(orig) || ispath(orig) || \
 			istype(orig, /datum/chemical_reaction) || istype(orig, /datum/radio_frequency))
 		return orig
@@ -75,6 +79,8 @@ proc/semi_deep_copy(orig, new_arg=null, list/environment=null, root=null, copy_f
 	else if(istype(orig_datum, /datum/hud) && hasvar(orig_datum, "master"))
 		var/datum/hud/orig_hud = orig
 		result = new type(_SEMI_DEEP_COPY(orig_hud:master))
+	else if(istype(orig_datum, /datum) && hasvar(orig_datum, "holder"))
+		result = new type(_SEMI_DEEP_COPY(orig:holder))
 	else
 		result = new type
 	environment[orig_datum] = result
@@ -84,8 +90,15 @@ proc/semi_deep_copy(orig, new_arg=null, list/environment=null, root=null, copy_f
 		for(var/atom/A in result_atom)
 			qdel(A)
 		result_atom.contents.Cut()
+		#ifdef COPY_DEBUG
+		global.copy_stack += "contents"
+		if(length(global.copy_stack) >= length(global.longest_copy_stack)) global.longest_copy_stack = global.copy_stack.Copy()
+		#endif
 		for(var/atom/A in orig_atom)
 			semi_deep_copy(A, result, environment, root, copy_flags)
+		#ifdef COPY_DEBUG
+		global.copy_stack.len--
+		#endif
 		if(!isarea(result))
 			result_atom:vis_contents = null
 			for(var/A in orig_atom:vis_contents)

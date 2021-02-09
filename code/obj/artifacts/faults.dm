@@ -117,22 +117,27 @@ ABSTRACT_TYPE(/datum/artifact_fault/messager/)
 	var/text_style = null
 	var/list/messages = list()
 
+	proc/generate_message(obj/O, mob/living/user)
+		if(length(messages))
+			return pick(messages)
+		return "😱"
+
 	deploy(var/obj/O,var/mob/living/user)
 		if (..())
 			return
-		if (messages.len < 1)
-			return
 		switch(text_style)
 			if ("small")
-				boutput(user, "<small>[pick(messages)]</small>")
+				boutput(user, "<small>[generate_message(O, user)]</small>")
 			if ("big")
-				boutput(user, "<big>[pick(messages)]</big>")
+				boutput(user, "<big>[generate_message(O, user)]</big>")
 			if ("red")
-				boutput(user, "<span class='alert'>[pick(messages)]</span>")
+				boutput(user, "<span class='alert'>[generate_message(O, user)]</span>")
 			if ("blue")
-				boutput(user, "<span class='notice'>[pick(messages)]</span>")
+				boutput(user, "<span class='notice'>[generate_message(O, user)]</span>")
+			if ("monospace")
+				boutput(user, "<span style='font-family: monospace;'>[generate_message(O, user)]</span>")
 			else
-				boutput(user, "[pick(messages)]")
+				boutput(user, "[generate_message(O, user)]")
 
 /datum/artifact_fault/messager/creepy_whispers
 	text_style = "small"
@@ -140,6 +145,29 @@ ABSTRACT_TYPE(/datum/artifact_fault/messager/)
 	"die","stop","give up","no","theyre watching you","theres nothing you can do","you have failed","run","i see you",
 	"surrender","its hopeless","you are in hell","its all lies","hate","there is only despair","your heart will stop",
 	"they will all forget you","they have abandoned you","please stop","no one will mourn you")
+
+/datum/artifact_fault/messager/comforting_whispers
+	text_style = "small"
+	messages = list("it's not your fault", "believe in yourself", "you are strong", "you can do it!", "keep on trying",
+	"life is beautiful", "you are important", "this station relies on you", "you can do anything", "follow your dreams",
+	"success awaits", "your friends think you are very cool", "be yourself", "everything is fine", "there's still hope",
+	"nothing is impossible", "don't stop trying", "you are smart", "love", "today is your lucky day", "I'll always be there for you")
+
+/datum/artifact_fault/messager/what_people_said
+	text_style = "small"
+	generate_message(obj/O, mob/living/user)
+		return phrase_log.random_phrase("say")
+
+/datum/artifact_fault/messager/what_dead_people_said
+	text_style = "small"
+	generate_message(obj/O, mob/living/user)
+		return phrase_log.random_phrase("deadsay")
+
+/datum/artifact_fault/messager/ai_laws
+	trigger_prob = 15
+	text_style = "monospace"
+	generate_message(obj/O, mob/living/user)
+		return phrase_log.random_phrase("ailaw")
 
 /datum/artifact_fault/poison
 	trigger_prob = 8

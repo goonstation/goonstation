@@ -40,11 +40,11 @@ datum
 				return
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed)
+				. = ..()
 				if (!holder) //Wire: Fix for Cannot read null.total_temperature
 					return
 				if(holder.total_temperature <= T0C - 50) return
 				var/MB = mob_burning
-				src = null
 				var/mob/living/L = M
 				if(istype(L))
 					L.update_burning(MB)
@@ -92,6 +92,7 @@ datum
 			viscosity = 0.8
 			minimum_reaction_temperature = T0C + 100
 			var/temp_reacted = 0
+			penetrates_skin = 1
 
 			reaction_temperature(exposed_temperature, exposed_volume)
 				if(!temp_reacted)
@@ -105,7 +106,7 @@ datum
 				return
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
-				src = null
+				. = ..()
 				if(method == TOUCH)
 					var/mob/living/L = M
 					var/datum/statusEffect/simpledot/burning/burn = L.hasStatus("burning")
@@ -192,12 +193,11 @@ datum
 					var/id = src.id
 					var/datum/reagents/holder = src.holder
 					var/volume
-					src = null
 					holder.del_reagent(id)
 					fireflash_sm(A, 0, rand(20000, 25000) + volume * 2500, 0, 0, 1) // Bypasses the RNG roll to melt walls (Convair880).
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
-				src = null
+				. = ..()
 				if(method == TOUCH)
 					var/mob/living/L = M
 					if(istype(L) && L.getStatusDuration("burning"))
@@ -205,14 +205,15 @@ datum
 				return
 
 			reaction_turf(var/turf/T, var/volume)
-				src = null
 				if(istype(T, /turf/simulated))
-					if(!T.reagents) T.create_reagents(volume)
-					T.reagents.add_reagent("thermite", volume, null)
-					T.overlays = null
-					T.overlays = image('icons/effects/effects.dmi',icon_state = "thermite")
-					if (T.active_hotspot)
-						T.reagents.temperature_reagents(T.active_hotspot.temperature, T.active_hotspot.volume, 10, 300)
+					if(!T.reagents)
+						T.create_reagents(volume)
+					if(!T.reagents.has_reagent("thermite"))
+						T.reagents.add_reagent("thermite", volume, null)
+						T.overlays = null
+						T.overlays = image('icons/effects/effects.dmi',icon_state = "thermite")
+						if (T.active_hotspot)
+							T.reagents.temperature_reagents(T.active_hotspot.temperature, T.active_hotspot.volume, 10, 300)
 				return
 
 
@@ -236,9 +237,9 @@ datum
 				var/datum/reagents/myholder = holder
 				if(!ignited)
 					ignited = 1
-					src=null
+					var/vol = volume
 					SPAWN_DBG(1 DECI SECOND)
-						myholder.smoke_start(volume) //moved to a proc in Chemistry-Holder.dm so that the instant reaction and powder can use the same proc
+						myholder.smoke_start(vol) //moved to a proc in Chemistry-Holder.dm so that the instant reaction and powder can use the same proc
 				myholder.del_reagent(id)
 
 		combustible/propellant
@@ -251,19 +252,19 @@ datum
 			fluid_b = 255
 			transparency = 230
 			minimum_reaction_temperature = T0C + 100
-			var/ignited = 0
+			var/ignited = FALSE
 
 			pooled()
 				..()
-				ignited = 0
+				ignited = FALSE
 
 			reaction_temperature(exposed_temperature, exposed_volume)
 				var/datum/reagents/myholder = holder
 				if(!ignited)
-					ignited = 1
-					src=null
+					ignited = TRUE
+					var/vol = volume
 					SPAWN_DBG(1 DECI SECOND)
-						myholder.smoke_start(volume,classic = 1) //moved to a proc in Chemistry-Holder.dm so that the instant reaction and powder can use the same proc
+						myholder.smoke_start(vol,classic = 1) //moved to a proc in Chemistry-Holder.dm so that the instant reaction and powder can use the same proc
 				myholder.del_reagent(id)
 
 		combustible/sonicpowder
@@ -357,26 +358,7 @@ datum
 					reacting = 1
 					var/list/covered = holder.covered_turf()
 					var/location = covered.len ? covered[1] : 0
-					elecflash(location)
-
-					for (var/mob/living/M in all_viewers(5, location))
-						if (issilicon(M) || isintangible(M))
-							continue
-
-						var/dist = get_dist(M, location)
-						var/stunned = max(0, holder.get_reagent_amount(id) * (3 - dist) * 0.1)
-						var/eye_damage = max(0, holder.get_reagent_amount(id) * (2 - dist) * 0.1)
-						var/eye_blurry = max(0, holder.get_reagent_amount(id) * (5 - dist) * 0.2)
-
-						M.apply_flash(60, 0, max(0, stunned), 0, max(0, eye_blurry), max(0, eye_damage))
-
-					for (var/mob/living/silicon/M in all_viewers(world.view, location))
-						var/checkdist = get_dist(M, location)
-						var/C_weakened = max(0, holder.get_reagent_amount(id) * (3 - checkdist) * 0.1)
-						var/C_stunned = max(0, holder.get_reagent_amount(id) * (5 - checkdist) * 0.1)
-
-						M.apply_flash(30, max(0, C_weakened), max(0, C_stunned))
-
+					flashpowder_reaction(location, holder.get_reagent_amount(id))
 				holder?.del_reagent(id)
 
 		combustible/infernite // COGWERKS CHEM REVISION PROJECT. this could be Chlorine Triflouride, a really mean thing
@@ -397,7 +379,6 @@ datum
 			reaction_obj(var/obj/O, var/volume)
 				var/datum/reagents/old_holder = src.holder //mbc pls, ZeWaka fix: null.holder
 				var/id = src.id
-				src = null
 				if (isnull(O)) return
 				if(isitem(O))
 					var/obj/item/I = O
@@ -418,8 +399,6 @@ datum
 
 			reaction_turf(var/turf/T, var/volume)
 				var/datum/reagents/old_holder = src.holder //mbc pls, ZeWaka fix: null.holder
-
-				src = null
 				//if(!T.reagents) T.create_reagents(50)
 				//T.reagents.add_reagent("infernite", 5, null)
 				if (volume < 3)
@@ -437,7 +416,7 @@ datum
 					fireflash_sm(T, radius, 4500 + volume * 500, 350)
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
-				src = null
+				. = ..()
 				if(method == TOUCH || method == INGEST)
 					var/mob/living/L = M
 					if(istype(L))
@@ -472,7 +451,6 @@ datum
 			volatility = 4
 
 			reaction_turf(var/turf/T, var/volume)
-				src = null
 				//if(!T.reagents) T.create_reagents(50)
 				//T.reagents.add_reagent("infernite", 5, null)
 				tfireflash(T, min(max(0,volume/10),8), 7000)
@@ -489,7 +467,7 @@ datum
 				return
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
-				src = null
+				. = ..()
 				if(method == TOUCH || method == INGEST)
 					var/mob/living/L = M
 					if(istype(L))
@@ -523,7 +501,6 @@ datum
 				holder.del_reagent(id)
 
 			reaction_obj(var/obj/O, var/volume)
-				src = null
 				if (O)
 					if(!O.reagents)
 						O.create_reagents(50)
@@ -531,7 +508,6 @@ datum
 				return
 
 			reaction_turf(var/turf/T, var/volume)
-				src = null
 				if (T)
 					if(!T.reagents)
 						T.create_reagents(50)
@@ -561,10 +537,8 @@ datum
 						holder.del_reagent(id)
 
 			reaction_obj(var/obj/O, var/volume)
-				src = null
 				return
 			reaction_turf(var/turf/T, var/volume)
-				src = null
 				return
 
 		combustible/sorium
@@ -594,6 +568,7 @@ datum
 
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
+				. = ..()
 				return
 
 		combustible/liquiddarkmatter
@@ -625,13 +600,13 @@ datum
 				if(prob(75)) return
 
 				var/datum/reagent/us = src
-				src = null
 				if(!T.reagents) T.create_reagents(50)
 				T.reagents.add_reagent(us.id, 5, null)
 				return
 			*/
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
+				. = ..()
 				return
 
 		combustible/something
@@ -704,11 +679,10 @@ datum
 					holder?.del_reagent(id)
 
 			reaction_obj(var/obj/O, var/volume)
-				src = null
 				return 1
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
-				src = null
+				. = ..()
 				if(method == TOUCH)
 					var/mob/living/L = M
 					if(istype(L) && L.getStatusDuration("burning"))
@@ -818,11 +792,9 @@ datum
 									holder.del_reagent(id)
 
 			reaction_obj(var/obj/O, var/volume)
-				src = null
 				return
 
 			reaction_turf(var/turf/T, var/volume)
-				src = null
 				if(!istype(T, /turf/space))
 					//if(volume >= 5)
 					if(!locate(/obj/decal/cleanable/dirt) in T)
@@ -871,7 +843,6 @@ datum
 
 					var/datum/reagents/H = holder
 					SPAWN_DBG(0)
-						src = null
 						H.del_reagent("nitrotri_wet")
 						H.del_reagent("nitrotri_dry")
 						H.del_reagent("nitrotri_parent")
@@ -883,14 +854,11 @@ datum
 				var/vol = volume
 				if(!H)
 					return
-
-				src = null
 				H.del_reagent(reagent="nitrotri_wet")
 				H.add_reagent(reagent="nitrotri_dry", amount=vol, donotreact=1)
 
 
 			reaction_turf(var/turf/T, var/volume)
-				src = null
 				if(!istype(T, /turf/space) && volume >= 5 && !locate(/obj/decal/cleanable/nitrotriiodide) in T)
 					return make_cleanable(/obj/decal/cleanable/nitrotriiodide,T)
 

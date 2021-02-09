@@ -36,6 +36,9 @@ var/list/dirty_keystates = list()
 		if(!isnull(numkey) && M.abilityHolder)
 			if (M.abilityHolder.actionKey(numkey))
 				return
+		if(!isnull(numkey) && src.buildmode?.is_active)
+			if(src.buildmode.number_key_pressed(numkey, keys_modifier))
+				return
 
 		var/action = src.keymap.check_keybind(key, keys_modifier)
 
@@ -191,6 +194,7 @@ var/list/dirty_keystates = list()
 
 		if (parameters["left"])	//Had to move this up into here as the clickbuffer was causing issues.
 			var/list/contexts = mob.checkContextActions(object)
+			
 			if(length(contexts))
 				mob.showContextActions(contexts, object)
 				return

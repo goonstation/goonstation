@@ -6,9 +6,9 @@
 	var/obj/item/card/id/scan = null
 	var/console_location = null
 
-	lr = 1
-	lg = 0.7
-	lb = 0.03
+	light_r =1
+	light_g = 0.7
+	light_b = 0.03
 
 	New()
 		..()

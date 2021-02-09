@@ -29,9 +29,9 @@
 	//Sound for scans and toggling gene analysis. They need to be the same so you can fake the former with the latter
 	var/sound_ping = 'sound/machines/ping.ogg'
 
-	lr = 1
-	lg = 0.6
-	lb = 1
+	light_r =1
+	light_g = 0.6
+	light_b = 1
 
 	disposing()
 		scanner?.connected = null

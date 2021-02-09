@@ -388,7 +388,7 @@ datum
 			value = 9 // 6c + 2c + 1c
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed, var/list/paramslist = 0)
-				src = null
+				. = ..()
 				if(!volume_passed)
 					return
 				if(method == TOUCH)
@@ -409,8 +409,6 @@ datum
 
 			reaction_turf(var/turf/T, var/volume)
 				var/list/covered = holder.covered_turf()
-				src = null
-
 				if (covered.len > 9)
 					volume = (volume/covered.len)
 
@@ -1004,7 +1002,7 @@ datum
 				return
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed, var/list/paramslist = 0)
-				src = null
+				. = ..()
 				if (!volume_passed)
 					return
 
@@ -1233,7 +1231,7 @@ datum
 				return
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed, var/list/paramslist = 0)
-				src = null
+				. = ..()
 				if(!volume_passed)
 					return
 				if(!isliving(M)) // fucking human shitfucks

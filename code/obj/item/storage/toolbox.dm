@@ -102,15 +102,15 @@
 
 	make_my_stuff()
 		var/picked = pick(/obj/item/cable_coil,\
-		/obj/item/cable_coil/colored/yellow,\
-		/obj/item/cable_coil/colored/orange,\
-		/obj/item/cable_coil/colored/blue,\
-		/obj/item/cable_coil/colored/green,\
-		/obj/item/cable_coil/colored/purple,\
-		/obj/item/cable_coil/colored/black,\
-		/obj/item/cable_coil/colored/hotpink,\
-		/obj/item/cable_coil/colored/brown,\
-		/obj/item/cable_coil/colored/white)
+		/obj/item/cable_coil/yellow,\
+		/obj/item/cable_coil/orange,\
+		/obj/item/cable_coil/blue,\
+		/obj/item/cable_coil/green,\
+		/obj/item/cable_coil/purple,\
+		/obj/item/cable_coil/black,\
+		/obj/item/cable_coil/hotpink,\
+		/obj/item/cable_coil/brown,\
+		/obj/item/cable_coil/white)
 		spawn_contents.Add(picked)
 		if (!istype(src, /obj/item/storage/toolbox/electrical/mechanic_spawn))
 			spawn_contents.Add(picked,picked)

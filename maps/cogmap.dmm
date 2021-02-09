@@ -4099,11 +4099,11 @@
 	pixel_x = -9;
 	pixel_y = 6
 	},
-/obj/item/reagent_containers/glass/bottle/icing{
+/obj/item/reagent_containers/food/drinks/drinkingglass/icing{
 	pixel_x = -3;
 	pixel_y = 7
 	},
-/obj/item/reagent_containers/glass/bottle/icing{
+/obj/item/reagent_containers/food/drinks/drinkingglass/icing{
 	pixel_x = 1;
 	pixel_y = 8
 	},
@@ -7746,7 +7746,7 @@
 	p_open = 1
 	},
 /obj/item/plate,
-/obj/item/reagent_containers/food/snacks/cake/chocolate{
+/obj/item/reagent_containers/food/snacks/cake/chocolate/gateau{
 	desc = "Holy shit! This cake probably costs more than the gross domestic product of Bulgaria!";
 	name = "Extravagant Chocolate Gateau";
 	pixel_y = 8
@@ -11906,6 +11906,10 @@
 /obj/table/auto,
 /obj/item/device/light/lava_lamp{
 	pixel_y = 8
+	},
+/obj/item/reagent_containers/glass/water_pipe{
+	pixel_x = 8;
+	pixel_y = 6
 	},
 /turf/simulated/floor/green/side,
 /area/station/hydroponics/bay)
@@ -58976,7 +58980,6 @@
 /area/station/janitor/supply)
 "cvN" = (
 /obj/overlay{
-	anchored = 1;
 	icon = 'icons/misc/beach2.dmi';
 	icon_state = "palm1";
 	layer = 10;
@@ -59918,7 +59921,6 @@
 /area/station/medical/cdc)
 "cxx" = (
 /obj/overlay{
-	anchored = 1;
 	icon = 'icons/misc/beach2.dmi';
 	icon_state = "palm1";
 	layer = 10;
@@ -59934,7 +59936,6 @@
 /area/station/medical/research)
 "cxy" = (
 /obj/overlay{
-	anchored = 1;
 	icon = 'icons/misc/beach2.dmi';
 	icon_state = "palm1";
 	layer = 10;
@@ -60086,7 +60087,6 @@
 /area/station/medical/research)
 "cxI" = (
 /obj/overlay{
-	anchored = 1;
 	icon = 'icons/misc/beach2.dmi';
 	icon_state = "palm1";
 	layer = 10;

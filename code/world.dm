@@ -395,10 +395,11 @@ var/f_color_selector_handler/F_Color_Selector
 //	loop_checks = 0
 
 	if(world.load_intra_round_value("heisenbee_tier") >= 15 && prob(50) || prob(3))
-		pregameHTML = {"
-			<meta http-equiv='X-UA-Compatible' content='IE=edge'><style>body{margin:0;padding:0;background:url([resource("images/heisenbee_titlecard.png")]) black;background-size:100%;background-repeat:no-repeat;overflow:hidden;background-position:center center;background-attachment:fixed;}</style><script>document.onclick=function(){window.location.href="byond://winset?id=mapwindow.map&focus=true";}</script>
-			<a href="https://www.deviantart.com/alexbluebird" target="_blank" style="position:absolute;bottom:3px;right:3px;color:white;opacity:0.7;">by AlexBlueBird</a>
-		"}
+		lobby_titlecard = new /datum/titlecard/heisenbee()
+	else
+		lobby_titlecard = new /datum/titlecard()
+
+	lobby_titlecard.set_pregame_html()
 
 	diary = file("data/logs/[time2text(world.realtime, "YYYY/MM-Month/DD-Day")].log")
 	diary_name = "data/logs/[time2text(world.realtime, "YYYY/MM-Month/DD-Day")].log"
@@ -672,6 +673,7 @@ var/f_color_selector_handler/F_Color_Selector
 	processScheduler.stop()
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_REBOOT)
 	save_intraround_jars()
+	global.phrase_log.save()
 	save_tetris_highscores()
 	if (current_state < GAME_STATE_FINISHED)
 		current_state = GAME_STATE_FINISHED
@@ -749,19 +751,19 @@ var/f_color_selector_handler/F_Color_Selector
 	Z_LOG_DEBUG("World/Status", "Updating status")
 
 	//we start off with an animated bee gif because, well, this is who we are.
-	var/s = "<img src=\"https://i.imgur.com/XN0yOcf.gif\" alt=\"Bee\" /> "
+	var/s = "<img src=\"http://goonhub.com/bee.gif\"/>"
 
 	if (config?.server_name)
 		s += "<b><a href=\"https://goonhub.com\">[config.server_name]</a></b> &#8212; "
 	else
-		s += "<b>SERVER NAME HERE &#8212; "
+		s += "<b>SERVER NAME HERE</b> &#8212; "
 
-	s += "The classic SS13 experience. &#8212; (<a href=\"https://bit.ly/3pVRuTT\">Discord</a>)<br>"
+	s += "The classic SS13 experience. &#8212; (<a href=\"http://bit.ly/gndscd\">Discord</a>)<br>"
 
 	if (map_settings)
 		var/map_name = istext(map_settings.display_name) ? "[map_settings.display_name]" : "[map_settings.name]"
 		//var/map_link_str = map_settings.goonhub_map ? "<a href=\"[map_settings.goonhub_map]\">[map_name]</a>" : "[map_name]"
-		s += "Map:<b> [map_name]</b><br>"
+		s += "Map: <b>[map_name]</b><br>"
 
 	var/list/features = list()
 
@@ -789,6 +791,7 @@ var/f_color_selector_handler/F_Color_Selector
 	/* does this help? I do not know */
 	if (src.status != s)
 		src.status = s
+
 	Z_LOG_DEBUG("World/Status", "Status update complete")
 
 /world/proc/installUpdate()
@@ -1307,7 +1310,7 @@ var/f_color_selector_handler/F_Color_Selector
 					var/ircmsg[] = new()
 					ircmsg["key"] = nick
 					ircmsg["key2"] = (M.client != null && M.client.key != null) ? M.client.key : "*no client*"
-					ircmsg["name2"] = (M.real_name != null) ? M.real_name : ""
+					ircmsg["name2"] = (M.real_name != null) ? stripTextMacros(M.real_name) : ""
 					ircmsg["msg"] = html_decode(msg)
 					return ircbot.response(ircmsg)
 				else
@@ -1340,7 +1343,7 @@ var/f_color_selector_handler/F_Color_Selector
 					var/ircmsg[] = new()
 					ircmsg["key"] = nick
 					ircmsg["key2"] = (M.client != null && M.client.key != null) ? M.client.key : "*no client*"
-					ircmsg["name2"] = (M.real_name != null) ? M.real_name : ""
+					ircmsg["name2"] = (M.real_name != null) ? stripTextMacros(M.real_name) : ""
 					ircmsg["msg"] = html_decode(msg)
 					return ircbot.response(ircmsg)
 				else
@@ -1463,14 +1466,12 @@ var/f_color_selector_handler/F_Color_Selector
 					return 1
 
 			if ("roundEnd")
-				if (!plist["server"] || !plist["address"] || !plist["mode"]) return 0
+				if (!plist["server"] || !plist["address"]) return 0
 
 				var/server = plist["server"]
 				var/address = plist["address"]
-				var/mode = plist["mode"]
 				var/msg = "<br><div style='text-align: center; font-weight: bold;' class='deadsay'>---------------------<br>"
 				msg += "A round just ended on [server]<br>"
-				msg += "It is running [mode]<br>"
 				msg += "<a href='[address]'>Click here to join it</a><br>"
 				msg += "---------------------</div><br>"
 				for (var/client/C)

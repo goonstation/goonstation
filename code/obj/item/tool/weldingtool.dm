@@ -170,6 +170,7 @@
 	attack_self(mob/user as mob)
 		if (status > 1) return
 		src.welding = !(src.welding)
+		src.firesource = !(src.firesource)
 		if (src.welding)
 			if (get_fuel() <= 0)
 				boutput(user, "<span class='notice'>Need more fuel!</span>")
@@ -198,6 +199,10 @@
 		if (exposed_temperature > 1000)
 			return ..()
 		return
+
+	firesource_interact()
+		if (reagents.get_reagent_amount("fuel"))
+			reagents.remove_reagent("fuel", 1)
 
 	process()
 		if(!welding)
