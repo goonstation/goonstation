@@ -5,9 +5,9 @@
 	var/logged_in = null
 	var/vmode = 0
 	deconstruct_flags = DECON_MULTITOOL
-	lr = 1
-	lg = 0.7
-	lb = 0.03
+	light_r =1
+	light_g = 0.7
+	light_b = 0.03
 
 /obj/machinery/computer/stockexchange/proc/balance()
 	if (!logged_in)
@@ -17,31 +17,31 @@
 		return B.fields["current_money"]
 	return "--- account not found ---"
 
-/obj/machinery/computer/stockexchange/attack_hand(var/mob/user)
+/obj/machinery/computer/stockexchange/attack_hand(mob/user)
 	if(..())
 		return
 	src.add_dialog(user)
 
 	var/css={"<style>
-.company {
-	font-weight: bold;
-}
-.stable {
-	width: 100%
-	border: 1px solid black;
-	border-collapse: collapse;
-}
-.stable tr {
-	border: none;
-}
-.stable td, .stable th {
-	border-right: 1px solid white;
-	border-bottom: 1px solid black;
-}
-a.updated {
-	color: red;
-}
-</style>"}
+						.company {
+							font-weight: bold;
+						}
+						.stable {
+							width: 100%
+							border: 1px solid black;
+							border-collapse: collapse;
+						}
+						.stable tr {
+							border: none;
+						}
+						.stable td, .stable th {
+							border-right: 1px solid white;
+							border-bottom: 1px solid black;
+						}
+						a.updated {
+							color: red;
+						}
+						</style>"}
 	var/dat = "<html><head><title>[station_name()] Stock Exchange</title>[css]</head><body><h2>Stock Exchange</h2>"
 	dat += "<i>This is a work in progress. Certain features may not be available.</i><br>"
 
@@ -49,7 +49,7 @@ a.updated {
 		dat += "<span class='user'>Welcome, <b>NT_Guest</b></span><br>"
 	else
 		dat += "<span class='user'>Welcome, <b>[logged_in]</b></span> <a href='?src=\ref[src];logout=1'>Log out</a><br><span class='balance'><b>Your account balance:</b> [balance()] credits</span><br>"
-		for (var/datum/stock/S in stockExchange.last_read)
+		for (var/datum/stock/ticker/S in stockExchange.last_read)
 			var/list/LR = stockExchange.last_read[S]
 			if (!(logged_in in LR))
 				LR[logged_in] = 0
@@ -58,7 +58,7 @@ a.updated {
 	dat += "<h3>Listed stocks</h3>"
 
 	if (vmode == 0)
-		for (var/datum/stock/S in stockExchange.stocks)
+		for (var/datum/stock/ticker/S as() in stockExchange.stocks)
 			var/mystocks = 0
 			if (logged_in && (logged_in in S.shareholders))
 				mystocks = S.shareholders[logged_in]
@@ -76,7 +76,7 @@ a.updated {
 				dat += "<i>[prod]</i><br>"
 			dat += "<br><b>Borrow options:</b><br>"
 			if (S.borrow_brokers.len)
-				for (var/datum/borrow/B in S.borrow_brokers)
+				for (var/datum/stock/borrow/B in S.borrow_brokers)
 					dat += "<b>[B.broker]</b> offers <i>[B.share_amount] shares</i> for borrowing, for a deposit of <i>[B.deposit * 100]%</i> of the shares' value.<br>"
 					dat += "The broker expects the return of the shares after <i>[B.lease_time / 600] minutes</i>, with a grace period of <i>[B.grace_time / 600]</i> minute(s).<br>"
 					dat += "<i>This offer expires in [(B.offer_expires - ticker.round_elapsed_ticks) / 600] minutes.</i><br>"
@@ -85,7 +85,7 @@ a.updated {
 					dat += "<a href='?src=\ref[src];take=\ref[B]'>Take offer</a> (Estimated deposit: [B.deposit * S.current_value * B.share_amount] credits)<br><br>"
 			else
 				dat += "<i>No borrow options available</i><br><br>"
-			for (var/datum/borrow/B in S.borrows)
+			for (var/datum/stock/borrow/B in S.borrows)
 				if (B.borrower == logged_in)
 					dat += "You are borrowing <i>[B.share_amount] shares</i> from <b>[B.broker]</b>.<br>"
 					dat += "Your deposit riding on the deal is <i>[B.deposit] credits</i>.<br>"
@@ -97,12 +97,12 @@ a.updated {
 			if (logged_in)
 				var/list/LR = stockExchange.last_read[S]
 				var/lrt = LR[logged_in]
-				for (var/datum/article/A in S.articles)
+				for (var/datum/stock/article/A as() in S.articles)
 					if (A.ticks > lrt)
 						news = 1
 						break
 				if (!news)
-					for (var/datum/stockEvent/E in S.events)
+					for (var/datum/stock/event/E as() in S.events)
 						if (E.last_change > lrt && !E.hidden)
 							news = 1
 							break
@@ -110,7 +110,7 @@ a.updated {
 	else if (vmode == 1)
 		dat += "<b>Actions:</b> + Buy, - Sell, (A)rchives, (H)istory<br><br>"
 		dat += "<table class='stable'><tr><th>&nbsp;</th><th>Name</th><th>Value</th><th>Owned/Avail</th><th>Actions</th></tr>"
-		for (var/datum/stock/S in stockExchange.stocks)
+		for (var/datum/stock/ticker/S as() in stockExchange.stocks)
 			var/mystocks = 0
 			if (logged_in && (logged_in in S.shareholders))
 				mystocks = S.shareholders[logged_in]
@@ -122,12 +122,12 @@ a.updated {
 			if (logged_in)
 				var/list/LR = stockExchange.last_read[S]
 				var/lrt = LR[logged_in]
-				for (var/datum/article/A in S.articles)
+				for (var/datum/stock/article/A as() in S.articles)
 					if (A.ticks > lrt)
 						news = 1
 						break
 				if (!news)
-					for (var/datum/stockEvent/E in S.events)
+					for (var/datum/stock/event/E as() in S.events)
 						if (E.last_change > lrt && !E.hidden)
 							news = 1
 							break
@@ -143,7 +143,7 @@ a.updated {
 	onclose(user, "computer")
 	return
 
-/obj/machinery/computer/stockexchange/attackby(var/obj/item/I as obj, user as mob)
+/obj/machinery/computer/stockexchange/attackby(obj/item/I as obj, user as mob)
 	if (istype(I, /obj/item/card/id) || (istype(I, /obj/item/device/pda2) && I:ID_card))
 		if (istype(I, /obj/item/device/pda2) && I:ID_card) I = I:ID_card
 		var/obj/item/card/id/ID = I
@@ -164,7 +164,7 @@ a.updated {
 	else src.attack_hand(user)
 	return
 
-/obj/machinery/computer/stockexchange/proc/sell_some_shares(var/datum/stock/S, var/mob/user)
+/obj/machinery/computer/stockexchange/proc/sell_some_shares(datum/stock/ticker/S, mob/user)
 	if (!user || !S)
 		return
 	var/li = logged_in
@@ -202,7 +202,7 @@ a.updated {
 		return
 	boutput(user, "<span class='notice'>Sold [amt] shares of [S.name] for [total] credits.</span>")
 
-/obj/machinery/computer/stockexchange/proc/buy_some_shares(var/datum/stock/S, var/mob/user)
+/obj/machinery/computer/stockexchange/proc/buy_some_shares(datum/stock/ticker/S, mob/user)
 	if (!user || !S)
 		return
 	var/li = logged_in
@@ -241,7 +241,7 @@ a.updated {
 		return
 	boutput(user, "<span class='notice'>Bought [amt] shares of [S.name] for [total] credits.</span>")
 
-/obj/machinery/computer/stockexchange/proc/do_borrowing_deal(var/datum/borrow/B, var/mob/user)
+/obj/machinery/computer/stockexchange/proc/do_borrowing_deal(datum/stock/borrow/B, mob/user)
 	if (B.stock.borrow(B, logged_in))
 		boutput(user, "<span class='notice'>You successfully borrowed [B.share_amount] shares. Deposit: [B.deposit].</span>")
 	else
@@ -255,7 +255,7 @@ a.updated {
 		src.add_dialog(usr)
 
 	if (href_list["viewhistory"])
-		var/datum/stock/S = locate(href_list["viewhistory"])
+		var/datum/stock/ticker/S = locate(href_list["viewhistory"])
 		if (S)
 			S.displayValues(usr)
 
@@ -263,29 +263,29 @@ a.updated {
 		logged_in = null
 
 	if (href_list["buyshares"])
-		var/datum/stock/S = locate(href_list["buyshares"])
+		var/datum/stock/ticker/S = locate(href_list["buyshares"])
 		if (S)
 			buy_some_shares(S, usr)
 
 	if (href_list["sellshares"])
-		var/datum/stock/S = locate(href_list["sellshares"])
+		var/datum/stock/ticker/S = locate(href_list["sellshares"])
 		if (S)
 			sell_some_shares(S, usr)
 
 	if (href_list["take"])
-		var/datum/borrow/B = locate(href_list["take"])
+		var/datum/stock/borrow/B = locate(href_list["take"])
 		if (B && !B.lease_expires)
 			do_borrowing_deal(B, usr)
 
 	if (href_list["archive"])
-		var/datum/stock/S = locate(href_list["archive"])
+		var/datum/stock/ticker/S = locate(href_list["archive"])
 		if (logged_in && logged_in != "")
 			var/list/LR = stockExchange.last_read[S]
 			LR[logged_in] = ticker.round_elapsed_ticks
 		var/dat = "<html><head><title>News feed for [S.name]</title></head><body><h2>News feed for [S.name]</h2><div><a href='?src=\ref[src];archive=\ref[S]'>Refresh</a></div>"
 		dat += "<div><h3>Events</h3>"
 		var/p = 0
-		for (var/datum/stockEvent/E in S.events)
+		for (var/datum/stock/event/E as() in S.events)
 			if (E.hidden)
 				continue
 			if (p > 0)
@@ -294,7 +294,7 @@ a.updated {
 			p++
 		dat += "</div><hr><div><h3>Articles</h3>"
 		p = 0
-		for (var/datum/article/A in S.articles)
+		for (var/datum/stock/article/A as() in S.articles)
 			if (p > 0)
 				dat += "<hr>"
 			dat += "<div><b style='font-size:1.25em'>[A.headline]</b><br><i>[A.subtitle]</i><br><br>[A.article]<br>- [A.author], [A.spacetime] (via <i>[A.outlet]</i>)</div>"

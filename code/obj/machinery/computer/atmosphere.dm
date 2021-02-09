@@ -7,9 +7,9 @@ Atmos alert computer
 /obj/machinery/computer/atmosphere
 	name = "atmos"
 
-	lr = 0.85
-	lg = 0.86
-	lb = 1
+	light_r =0.85
+	light_g = 0.86
+	light_b = 1
 
 /obj/machinery/computer/atmosphere/alerts
 	name = "Alert Computer"

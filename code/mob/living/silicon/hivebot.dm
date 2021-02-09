@@ -545,7 +545,8 @@
 /mob/living/silicon/hivebot/attack_hand(mob/user)
 	user.lastattacked = src
 	if(!user.stat)
-		actions.interrupt(src, INTERRUPT_ATTACKED)
+		if (user.a_intent != INTENT_HELP)
+			actions.interrupt(src, INTERRUPT_ATTACKED)
 		switch(user.a_intent)
 			if(INTENT_HELP) //Friend person
 				playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1, -2)

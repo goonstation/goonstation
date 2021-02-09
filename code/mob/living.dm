@@ -692,7 +692,7 @@
 		var/mob/living/carbon/human/H = src
 		// If theres no oxygen
 		if (H.oxyloss > 10 || H.losebreath >= 4 || (H.reagents?.has_reagent("capulettium_plus") && H.hasStatus("resting"))) // Perfluorodecalin cap - normal life() depletion - buffer.
-			H.whisper(message)
+			H.whisper(message, forced=TRUE)
 			return
 
 	//Pod coloseum is broken - disable this unnecessary istype
@@ -1058,6 +1058,12 @@
 	if (length(heard_b))
 		processed = saylist(messages[2], heard_b, olocs, thickness, italics, processed, 1)
 
+	if(src.client)
+		if(singing)
+			phrase_log.log_phrase("sing", html_decode(messages[1]))
+		else
+			phrase_log.log_phrase("say", html_decode(messages[1]))
+
 	message = src.say_quote(messages[1])
 
 
@@ -1379,12 +1385,12 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 		boutput(M, "You cannot interact with other people before the game has started.")
 		return
 
-	actions.interrupt(src, INTERRUPT_ATTACKED)
 	M.lastattacked = src
 
 	attack_particle(M,src)
 
 	if (M.a_intent != INTENT_HELP)
+		actions.interrupt(src, INTERRUPT_ATTACKED)
 		src.was_harmed(M, intent = M.a_intent)
 
 		if (M.mob_flags & AT_GUNPOINT)

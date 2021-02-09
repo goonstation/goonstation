@@ -39,9 +39,9 @@
 				sleep(3 SECONDS)
 				playsound(src.loc, "sound/voice/burp_alien.ogg", 50, 1)
 				var/obj/decal/cleanable/blood/gibs/gib =make_cleanable( /obj/decal/cleanable/blood/gibs/core, src.loc )
-				gib.streak(src.dir)
+				gib.streak_cleanable(src.dir)
 				gib = make_cleanable( /obj/decal/cleanable/blood/gibs, src.loc )
-				gib.streak(src.dir)
+				gib.streak_cleanable(src.dir)
 				var/limb_type = pick(/obj/item/parts/human_parts/arm/left, /obj/item/parts/human_parts/arm/right, /obj/item/parts/human_parts/leg/left, /obj/item/parts/human_parts/leg/right)
 				gib = new limb_type(src.loc)
 				gib.throw_at(get_edge_target_turf(src.loc, src.dir), 4, 3)
@@ -54,18 +54,18 @@
 				user.changeStatus("stunned", -100)
 				user.TakeDamage("All", 20, 0, DAMAGE_STAB)
 				var/obj/decal/cleanable/blood/gibs/gib =make_cleanable( /obj/decal/cleanable/blood/gibs, src.loc )
-				gib.streak(user.dir)
+				gib.streak_cleanable(user.dir)
 
 	else if(prob(45))
 		boutput(user, "<span class='alert'>You pull something out!</span>")
 		var/itemtype = pick(/obj/item/gun/energy/laser_gun,/obj/critter/cat,/obj/item/skull)
 		new itemtype(src.loc)
 		var/obj/decal/cleanable/blood/gibs/gib =make_cleanable( /obj/decal/cleanable/blood/gibs, src.loc )
-		gib.streak(user.dir)
+		gib.streak_cleanable(user.dir)
 	else
 		boutput(user, "<span class='alert'>There doesn't appear to be anything inside</span>")
 		var/obj/decal/cleanable/blood/gibs/gib =make_cleanable( /obj/decal/cleanable/blood/gibs, src.loc )
-		gib.streak(user.dir)
+		gib.streak_cleanable(user.dir)
 	icon_state = "crevice1"
 	used = 1
 	desc = "The crevice has closed"

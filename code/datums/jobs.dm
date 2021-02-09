@@ -11,6 +11,7 @@
 	var/allow_traitors = 1
 	var/allow_spy_theft = 1
 	var/cant_spawn_as_rev = 0 // For the revoltion game mode. See jobprocs.dm for notes etc (Convair880).
+	var/cant_spawn_as_con = 0 // Prevents this job spawning as a conspirator in the conspiracy gamemode.
 	var/requires_whitelist = 0
 	var/requires_supervisor_job = null // Enter job name, this job will only be present if the entered job has joined already
 	var/needs_college = 0
@@ -132,13 +133,17 @@
 
 			if (src.change_name_on_spawn && !jobban_isbanned(M, "Custom Names"))
 				//if (ishuman(M)) //yyeah this doesn't work with critters fix later
-				M.choose_name(3, src.name, M.real_name + " the " + src.name)
+				var/default = M.real_name + " the " + src.name
+				M.choose_name(3, src.name, default)
+				if(M.real_name != default)
+					phrase_log.log_phrase("name-[ckey(src.name)]", M.real_name, no_duplicates=TRUE)
 
 			if (M.traitHolder && !M.traitHolder.hasTrait("loyalist"))
 				cant_spawn_as_rev = 1 //Why would an NT Loyalist be a revolutionary?
 
 // Command Jobs
 
+ABSTRACT_TYPE(/datum/job/command)
 /datum/job/command
 	linkcolor = "#00CC00"
 	slot_card = /obj/item/card/id/command
@@ -149,6 +154,9 @@
 	wages = PAY_EXECUTIVE
 	high_priority_job = 1
 	recieves_miranda = 1
+#ifdef RP_MODE
+	allow_traitors = 0
+#endif
 	cant_spawn_as_rev = 1
 	announce_on_join = 1
 	allow_spy_theft = 0
@@ -235,6 +243,7 @@
 	recieves_miranda = 1
 	allow_traitors = 0
 	allow_spy_theft = 0
+	cant_spawn_as_con = 1
 	cant_spawn_as_rev = 1
 	announce_on_join = 1
 	receives_disk = 1
@@ -430,7 +439,7 @@
 	slot_belt = /obj/item/device/pda2/heads
 	slot_poc1 = /obj/item/pen/fancy
 	slot_head = /obj/item/clothing/head/sea_captain/comm_officer_hat
-	items_in_backpack = list(/obj/item/device/camera_viewer, /obj/item/device/audio_log)
+	items_in_backpack = list(/obj/item/device/camera_viewer, /obj/item/device/audio_log, /obj/item/device/flash)
 
 	New()
 		..()
@@ -440,6 +449,7 @@
 
 // Security Jobs
 
+ABSTRACT_TYPE(/datum/job/security)
 /datum/job/security
 	linkcolor = "#FF0000"
 	slot_card = /obj/item/card/id/security
@@ -455,6 +465,7 @@
 	wages = PAY_TRADESMAN
 	allow_traitors = 0
 	allow_spy_theft = 0
+	cant_spawn_as_con = 1
 	cant_spawn_as_rev = 1
 	recieves_implant = /obj/item/implant/health/security
 	receives_disk = 1
@@ -486,6 +497,7 @@
 	assistant
 		name = "Security Assistant"
 		limit = 3
+		cant_spawn_as_con = 1
 		wages = PAY_UNTRAINED
 		slot_jump = /obj/item/clothing/under/rank/security/assistant
 		slot_suit = null
@@ -536,7 +548,7 @@
 	slot_head = /obj/item/clothing/head/det_hat
 	slot_glov = /obj/item/clothing/gloves/black
 	slot_suit = /obj/item/clothing/suit/det_suit
-	slot_ears = /obj/item/device/radio/headset/security
+	slot_ears = /obj/item/device/radio/headset/detective
 	items_in_backpack = list(/obj/item/clothing/glasses/vr,/obj/item/storage/box/detectivegun)
 
 	New()
@@ -555,6 +567,7 @@
 
 // Research Jobs
 
+ABSTRACT_TYPE(/datum/job/research)
 /datum/job/research
 	linkcolor = "#9900FF"
 	slot_card = /obj/item/card/id/research
@@ -664,6 +677,7 @@
 
 // Engineering Jobs
 
+ABSTRACT_TYPE(/datum/job/engineering)
 /datum/job/engineering
 	linkcolor = "#FF9900"
 	slot_card = /obj/item/card/id/engineering
@@ -815,6 +829,7 @@
 
 // Civilian Jobs
 
+ABSTRACT_TYPE(/datum/job/civilian)
 /datum/job/civilian
 	linkcolor = "#0099FF"
 	slot_card = /obj/item/card/id/civilian
@@ -895,8 +910,9 @@
 	slot_head = /obj/item/clothing/head/cowboy
 	slot_foot = /obj/item/clothing/shoes/brown
 	slot_glov = /obj/item/clothing/gloves/black
+	slot_poc1 = /obj/item/paper/ranch_guide
 	slot_ears = /obj/item/device/radio/headset/civilian
-	items_in_backpack = list(/obj/item/fishing_rod)
+	items_in_backpack = list(/obj/item/fishing_rod, /obj/item/chicken_carrier)
 
 	New()
 		..()
@@ -937,6 +953,7 @@
 		if (!M)
 			return
 		M.traitHolder.addTrait("training_chaplain")
+		OTHER_START_TRACKING_CAT(M, TR_CAT_CHAPLAINS)
 		if (prob(15))
 			M.see_invisible = 15
 
@@ -1110,6 +1127,7 @@
 	limit = 0
 	wages = PAY_TRADESMAN
 	allow_traitors = 0
+	cant_spawn_as_con = 1
 	cant_spawn_as_rev = 1
 	receives_badge = 1
 	recieves_miranda = 1
@@ -1719,6 +1737,7 @@
 /*
  * Halloween jobs
  */
+ABSTRACT_TYPE(/datum/job/special/halloween)
 /datum/job/special/halloween
 	linkcolor = "#FF7300"
 
@@ -2607,6 +2626,7 @@
 	limit = 2
 	wages = PAY_TRADESMAN
 	allow_traitors = 0
+	cant_spawn_as_con = 1
 	cant_spawn_as_rev = 1
 	receives_badge = 1
 	recieves_miranda = 1

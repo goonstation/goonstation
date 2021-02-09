@@ -311,10 +311,11 @@
 /obj/machinery/computer/genetics/proc/decrypt_sanity_check()
 	if (!istype(src.decrypt_gene))
 		return TRUE
-	if (src.decrypt_bp.marker != "locked" || !src.scanner?.occupant?.bioHolder)
+	var/mob/subject = src.get_scan_subject()
+	if (src.decrypt_bp.marker != "locked" || !subject?.bioHolder)
 		src.clear_decrypt()
 		return TRUE
-	if (src.scanner.occupant.bioHolder.effectPool[src.decrypt_gene.id] != src.decrypt_gene)
+	if (subject.bioHolder.effectPool[src.decrypt_gene.id] != src.decrypt_gene)
 		src.clear_decrypt()
 		return TRUE
 	return FALSE
@@ -793,9 +794,10 @@
 						temp -= BE.id
 						matches++
 				if (matches == GR.required_effects.len)
-					var/datum/bioEffect/NEWBE = new GR.result(src)
+					var/datum/bioEffect/NEWBE = new GR.result()
 					src.saved_mutations += NEWBE
 					var/datum/bioEffect/GBE = NEWBE.get_global_instance()
+					NEWBE.dnaBlocks.blockList = GBE.dnaBlocks.blockList
 					GBE.research_level = max(GBE.research_level, EFFECT_RESEARCH_ACTIVATED) // counts as researching it
 					for (var/datum/bioEffect/X as() in src.combining)
 						src.saved_mutations -= X

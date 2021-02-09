@@ -12,9 +12,9 @@
 	desc = "A computer that allows an authorized user to change the identification of other ID cards."
 
 	deconstruct_flags = DECON_MULTITOOL
-	lr = 0.7
-	lg = 1
-	lb = 0.1
+	light_r =0.7
+	light_g = 1
+	light_b = 0.1
 
 
 /obj/machinery/computer/card/console_upper

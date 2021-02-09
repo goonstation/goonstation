@@ -57,7 +57,7 @@
 			return
 		..()
 
-	streak(var/list/directions)
+	streak_object(var/list/directions)
 		SPAWN_DBG(0)
 			var/direction = pick(directions)
 			for (var/i = 0, i < pick(1, 200; 2, 150; 3, 50; 4), i++)
@@ -215,6 +215,18 @@
 	plant_reagent = "nitrogen"
 	food_color = "#CCFFCC"
 	food_effects = list("food_space_farts")
+
+/obj/item/reagent_containers/food/snacks/plant/peas
+	name = "pea pod"
+	crop_suffix = " pod"
+	desc = "These peas are like peas in a pod. Yeah."
+	planttype = /datum/plant/crop/peas
+	icon_state = "peapod"
+	amount = 1
+	heal_amt = 1
+	throwforce = 0
+	force = 0
+	food_color = "#77AA77"
 
 /obj/item/reagent_containers/food/snacks/plant/soylent
 	name = "soylent chartreuse"

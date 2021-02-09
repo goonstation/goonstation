@@ -4,7 +4,7 @@
 
 /datum/artifact/wish_granter
 	associated_object = /obj/artifact/wish_granter
-	rarity_class = 4
+	rarity_weight = 90
 	validtypes = list("wizard","eldritch")
 	validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/electric,/datum/artifact_trigger/heat,
 	/datum/artifact_trigger/radiation,/datum/artifact_trigger/cold)
@@ -56,8 +56,7 @@
 						N.flash(3 SECONDS)
 						if(N.client)
 							shake_camera(N, 6, 16)
-					user.desc = "A statue of someone very wealthy"
-					user.become_gold_statue()
+					user.become_statue(getMaterial("gold"),"A statue of someone very wealthy")
 
 				if("I wish for great power!")
 					O.visible_message("<span class='alert'><b>[O] discharges a massive bolt of electricity!</b></span>")

@@ -1842,7 +1842,6 @@
 /area/diner/dining)
 "aeA" = (
 /obj/overlay{
-	anchored = 1;
 	density = 1;
 	desc = "A networked tape drive.  It looks to be in fairly poor condition.  I bet the vacuum columns don't work worth a damn.";
 	icon = 'icons/obj/networked.dmi';
@@ -4650,7 +4649,7 @@
 /area/listeningpost/syndicateassaultvessel)
 "anb" = (
 /obj/table/reinforced/bar/auto,
-/obj/holosigntest{
+/obj/holosign{
 	desc = "... is that Abzu..?";
 	name = "... is that Abzu..?";
 	pixel_y = 8
@@ -6515,7 +6514,7 @@
 /obj/item/storage/box/QM_grenadekit_security,
 /obj/item/storage/box/QM_grenadekit_experimentalweapons,
 /obj/item/storage/box/flaregun,
-/obj/item/flamethrower/assembled/loaded,
+/obj/item/gun/flamethrower/assembled/loaded,
 /obj/item/gun/energy/phaser_gun,
 /obj/item/gun/energy/phaser_gun,
 /obj/item/gun/energy/phaser_gun,
@@ -9177,7 +9176,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/engineering/ce)
 "axc" = (
-/obj/cable/colored/white{
+/obj/cable/white{
 	icon_state = "4-6"
 	},
 /turf/simulated/floor/yellow,
@@ -9547,13 +9546,13 @@
 /turf/simulated/floor/yellow,
 /area/station/engine/engineering/breakroom)
 "axP" = (
-/obj/cable/colored/yellow{
+/obj/cable/yellow{
 	icon_state = "6-10"
 	},
-/obj/cable/colored/white{
+/obj/cable/white{
 	icon_state = "2-8"
 	},
-/obj/cable/colored/yellow{
+/obj/cable/yellow{
 	icon_state = "4-10"
 	},
 /turf/simulated/floor/yellow/side{
@@ -9850,13 +9849,13 @@
 	},
 /area/station/engine/engineering/ce)
 "ayt" = (
-/obj/cable/colored/yellow{
+/obj/cable/yellow{
 	icon_state = "2-8"
 	},
-/obj/cable/colored/yellow{
+/obj/cable/yellow{
 	icon_state = "0-2"
 	},
-/obj/cable/colored/yellow{
+/obj/cable/yellow{
 	icon_state = "0-8"
 	},
 /turf/simulated/floor,
@@ -9968,16 +9967,16 @@
 	},
 /area/station/engine/engineering/ce)
 "ayH" = (
-/obj/cable/colored/yellow{
+/obj/cable/yellow{
 	icon_state = "5-6"
 	},
 /turf/simulated/floor/yellow,
 /area/station/engine/inner)
 "ayI" = (
-/obj/cable/colored/yellow{
+/obj/cable/yellow{
 	icon_state = "6-9"
 	},
-/obj/cable/colored/white{
+/obj/cable/white{
 	icon_state = "1-9"
 	},
 /turf/simulated/floor/yellow/side{
@@ -9985,10 +9984,10 @@
 	},
 /area/station/engine/inner)
 "ayJ" = (
-/obj/cable/colored/yellow{
+/obj/cable/yellow{
 	icon_state = "9-10"
 	},
-/obj/cable/colored/yellow{
+/obj/cable/yellow{
 	icon_state = "1-10"
 	},
 /turf/simulated/floor,
@@ -10015,7 +10014,7 @@
 	},
 /area/station/engine/engineering/ce)
 "ayL" = (
-/obj/cable/colored/yellow{
+/obj/cable/yellow{
 	icon_state = "5-9"
 	},
 /turf/simulated/floor/yellow/side{
@@ -17349,6 +17348,10 @@
 /obj/item/paper_bin,
 /obj/item/pen,
 /obj/item/clothing/head/rastacap,
+/obj/item/reagent_containers/glass/water_pipe{
+	pixel_x = -1;
+	pixel_y = 9
+	},
 /turf/simulated/floor/grass/random,
 /area/station/hydroponics/bay)
 "aPE" = (
@@ -20762,7 +20765,6 @@
 /area/station/medical/research)
 "aXA" = (
 /obj/overlay{
-	anchored = 1;
 	icon = 'icons/misc/beach2.dmi';
 	icon_state = "palm1";
 	layer = 10;
@@ -21371,7 +21373,6 @@
 /area/station/medical/research)
 "aYS" = (
 /obj/overlay{
-	anchored = 1;
 	icon = 'icons/misc/beach2.dmi';
 	icon_state = "palm1";
 	layer = 10;
@@ -21748,7 +21749,7 @@
 	},
 /obj/table/auto,
 /obj/item/kitchen/rollingpin,
-/obj/item/reagent_containers/glass/bottle/icing,
+/obj/item/reagent_containers/food/drinks/drinkingglass/icing,
 /obj/machinery/firealarm{
 	pixel_x = 1;
 	pixel_y = 26;
@@ -31723,11 +31724,7 @@
 /obj/machinery/light/incandescent/netural{
 	dir = 1
 	},
-/obj/juggleplaque{
-	desc = {"Dedicated to Lieutenant Emily Claire for her brave sacrifice aboard NSS Manta  \"May their sacrifice not paint a grim picture of things to come. - Space Commodore J. Ledger\""};
-	name = "dedication plaque";
-	pixel_y = 25
-	},
+/obj/juggleplaque/manta,
 /turf/simulated/floor/carpet{
 	dir = 4;
 	icon_state = "fgreen2"
@@ -31738,11 +31735,7 @@
 	dir = 2;
 	icon_state = "pipe-c"
 	},
-/obj/juggleplaque{
-	desc = {"NCS Atlas, Nanotrasen,  \"Man always kills the thing he loves, and so we the pioneers have killed our wilderness. Some say we had to. Be that as it may, I am glad I shall never be young without wild country to be young in. Of what avail are forty freedoms without a blank spot on the map?  - Aldo Leopold\""};
-	name = "dedication plaque";
-	pixel_y = 25
-	},
+/obj/juggleplaque/manta,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/upperstarboard)
 "bvw" = (

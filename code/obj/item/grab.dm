@@ -20,6 +20,9 @@
 
 	New(atom/loc, mob/assailant = null, mob/affecting = null)
 		..()
+		if(!affecting || affecting.disposed)
+			qdel(src)
+			return
 
 		var/icon/hud_style = hud_style_selection[get_hud_style(src.assailant)]
 		if (isicon(hud_style))

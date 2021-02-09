@@ -83,6 +83,20 @@ ABSTRACT_TYPE(/datum/plant/crop)
 	commuts = list(/datum/plant_gene_strain/immunity_toxin,/datum/plant_gene_strain/metabolism_slow)
 	assoc_reagents = list("nitrogen")
 
+/datum/plant/crop/peas
+	name = "Peas"
+	seedcolor = "#77AA77"
+	crop = /obj/item/reagent_containers/food/snacks/plant/peas
+	starthealth = 40
+	growtime = 50
+	harvtime = 130
+	cropsize = 2
+	harvests = 4
+	endurance = 0
+	vending = 1
+	genome = 8
+	commuts = list(/datum/plant_gene_strain/immunity_toxin,/datum/plant_gene_strain/metabolism_slow)
+
 /datum/plant/crop/corn
 	name = "Corn"
 	seedcolor = "#FFFF00"

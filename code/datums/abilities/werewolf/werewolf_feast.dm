@@ -91,7 +91,7 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
-		var/done = world.time - started
+		var/done = TIME - started
 		var/complete = max(min((done / duration), 1), 0)
 
 		if (complete >= 0.1 && last_complete < 0.1)

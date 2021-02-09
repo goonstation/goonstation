@@ -748,6 +748,42 @@
 			extra_time = 5 SECONDS
 			. = ..()
 
+/datum/contextAction/cake
+	icon = 'icons/ui/context16x16.dmi'
+	name = "Cake action"
+	desc = "You shouldn't be reading this, bug."
+	icon_state = "wrench"
+
+	checkRequirements(var/atom/target, var/mob/user)
+		return 1
+
+	unstack
+		name = "Remove Layer"
+		desc = "Removes a layer of cake." 
+		icon_state = "unstack"
+
+		execute(var/atom/target, var/mob/user)
+			var/obj/item/reagent_containers/food/snacks/cake/c = target
+			c.unstack(user)
+
+	candle
+		name = "Extinguish"
+		desc = "Blows out the cake's candle."
+		icon_state = "candle"
+
+		execute(var/atom/target, var/mob/user)
+			var/obj/item/reagent_containers/food/snacks/cake/c = target
+			c.extinguish(user)
+
+	pickup
+		name = "Pick Up"
+		desc = "Picks up the cake."
+		icon_state = "up_arrow"
+
+		execute(var/atom/target, var/mob/user)
+			var/obj/item/c = target 
+			user.put_in_hand_or_drop(c)
+
 /*
 	offered
 		icon = null

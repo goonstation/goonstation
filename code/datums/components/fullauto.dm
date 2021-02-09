@@ -24,9 +24,24 @@
 	var/delaystart
 	var/delaymin
 	var/rampfactor
+	/// If 0, don't fullauto. Otherwise, fullauto is true
 	var/toggle = 0
 	var/list/atom/movable/screen/fullautoAimHUD/hudSquares = list()
 	var/client/aimer
+
+	InheritComponent(datum/component/holdertargeting/fullauto/C, i_am_original, _delaystart, _delaymin, _rampfactor)
+		if(C)
+			src.delaystart = C.delaystart
+			src.delaymin = C.delaymin
+			src.rampfactor = C.rampfactor
+		else
+			if (isnum_safe(_delaystart))
+				src.delaystart = _delaystart
+			if (isnum_safe(_delaymin))
+				src.delaymin = _delaymin
+			if (isnum_safe(_rampfactor))
+				src.rampfactor = _rampfactor
+
 
 	Initialize(delaystart = 4 DECI SECONDS, delaymin=1 DECI SECOND, rampfactor=0.9)
 		if(..() == COMPONENT_INCOMPATIBLE || !istype(parent, /obj/item/gun))

@@ -507,7 +507,7 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 
 			if(SECBOT_HUNT)		// hunting for perp
 
-				if (src.target.hasStatus("handcuffed") || src.frustration >= 8) // if can't reach perp for long enough, go idle
+				if (!src.target || src.target.hasStatus("handcuffed") || src.frustration >= 8) // if can't reach perp for long enough, go idle
 					src.target = null
 					src.last_found = world.time
 					src.frustration = 0

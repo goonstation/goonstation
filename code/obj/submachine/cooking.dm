@@ -42,6 +42,8 @@
 		else if (istype(W, /obj/item/grab))
 			playsound(src.loc, "sound/impact_sounds/Liquid_Slosh_1.ogg", 100, 1)
 			user.visible_message(__blue("[user] dunks [W:affecting]'s head in the sink!"))
+		else if (W.burning)
+			W.combust_ended()
 		else
 			user.visible_message(__blue("[user] cleans [W]."))
 			W.clean_forensic() // There's a global proc for this stuff now (Convair880).
@@ -484,6 +486,7 @@ table#cooktime a#start {
 			src.recipes += new /datum/cookingrecipe/candy_apple_poison(src)
 			src.recipes += new /datum/cookingrecipe/candy_apple(src)
 			src.recipes += new /datum/cookingrecipe/cake_bacon(src)
+			src.recipes += new /datum/cookingrecipe/cake_true_bacon(src)
 			src.recipes += new /datum/cookingrecipe/cake_meat(src)
 			src.recipes += new /datum/cookingrecipe/cake_chocolate(src)
 			src.recipes += new /datum/cookingrecipe/cake_cream(src)
