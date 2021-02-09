@@ -55,22 +55,18 @@
 	var/static/list/terrifying_meds = list("formaldehyde" = 15,
 																				"ketamine" = 5,
 																				"pancuronium" = 5,
-																				"haloperidol" = 5,
+																				"haloperidol" = 15,
+																				"morphine" = 20,
+																				"cold_medicine" = 40,
+																				"simethicone" = 10,
+																				"sulfonal" = 5, /* its an oldetimey sedative */
 																				"atropine" = 30,
 																				"methamphetamine" = 20,
-																				"blood" = 20,
+																				"ethanol" = 20, /* rubbing alcohol */
 																				"fog" = 20,
-																				"calomel" = 10,
 																				"ether" = 10,
-																				"mercury" = 5,
-																				"loose_screws" = 10,
-																				"salts1" = 10,
-																				"salmonella" = 10,
-																				"MRSA" = 10,
-																				"rat_venom" = 10,
-																				"green mucus" = 10,
-																				"mucus" = 10,
-																				"e.coli" = 10)
+																				"chlorine" = 10, /* disinfectant */
+																				"mercury" = 5)
 
 /obj/machinery/bot/medbot/no_camera
 	no_camera = 1
@@ -364,27 +360,7 @@
 			"I knew it, I should've been a plastic surgeon.",\
 			"What kind of medbay is this? Everyone's dropping like dead flies.","Delicious!")
 			src.speak(message)
-
-		for_by_tcl(C, /mob/living/carbon) //Time to find a patient!
-			if(!IN_RANGE(src, C, 7))
-				continue
-
-			if ((isdead(C)) || !ishuman(C))
-				continue
-
-			if (C == src.oldpatient)
-				continue
-
-			if (src.assess_patient(C))
-				src.patient = C
-				src.doing_something = 1
-				if (ON_COOLDOWN(src, "[MEDBOT_POINT_COOLDOWN]-[ckey(src.patient?.name)]", src.point_cooldown)) //Don't spam these messages!
-					src.point(src.patient, 1)
-					var/message = pick("Hey, you! Hold on, I'm coming.","Wait! I want to help!","You appear to be injured!","Don't worry, I'm trained for this!")
-					src.speak(message)
-				break
-			else
-				continue
+		src.seek_patient()
 
 	if (src.patient)
 		if(IN_RANGE(src,src.patient,1))
@@ -394,8 +370,46 @@
 		else if(IN_RANGE(src,src.patient,10))
 			src.KillPathAndGiveUp(0)
 			navigate_to(get_turf(src.patient), MEDBOT_MOVE_SPEED, max_dist = 10)
+			if(!length(src.path))
+				src.frustration += 2
 		else
 			src.KillPathAndGiveUp(1)
+
+	if(src.frustration >= 8)
+		src.KillPathAndGiveUp(1)
+
+/obj/machinery/bot/medbot/proc/seek_patient()
+	for_by_tcl(C, /mob/living/carbon) //Time to find a patient!
+		if(!IN_RANGE(src, C, 7))
+			continue
+
+		if ((isdead(C)) || !ishuman(C))
+			continue
+
+		if (C == src.oldpatient)
+			continue
+
+		if (src.assess_patient(C) && IN_RANGE(src,C,10))
+			src.patient = C
+			src.doing_something = 1
+			if (ON_COOLDOWN(src, "[MEDBOT_POINT_COOLDOWN]-[ckey(src.patient?.name)]", src.point_cooldown)) //Don't spam these messages!
+				src.point(src.patient, 1)
+				var/message = pick("Hey, you! Hold on, I'm coming.","Wait! I want to help!","You appear to be injured!","Don't worry, I'm trained for this!")
+				src.speak(message)
+
+			if(IN_RANGE(src,src.patient,1))
+				src.KillPathAndGiveUp(0)
+				return
+			else
+				src.KillPathAndGiveUp(0)
+				navigate_to(get_turf(src.patient), MEDBOT_MOVE_SPEED, max_dist = 10)
+				if(!length(src.path))
+					src.patient = null
+					continue
+				else
+					return
+		else
+			continue
 
 /obj/machinery/bot/medbot/proc/pick_poison()
 	src.dangerous_stuff = list()
@@ -481,17 +495,17 @@
 
 /obj/machinery/bot/medbot/proc/medicate_patient(mob/living/carbon/C as mob)
 	if(!src.on || src.currently_healing)
-		return
+		return FALSE
 
 	if(!istype(C))
 		src.KillPathAndGiveUp(1)
-		return
+		return FALSE
 
 	if(isdead(C))
 		var/death_message = pick("No! NO!","Live, damnit! LIVE!","I...I've never lost a patient before. Not today, I mean.")
 		src.speak(death_message)
 		src.KillPathAndGiveUp(1)
-		return
+		return FALSE
 
 	var/list/reagent_id = list()
 	var/brute = C.get_brute_damage()
@@ -542,10 +556,10 @@
 		var/message = pick("All patched up!","An apple a day keeps me away.","Feel better soon!")
 		src.speak(message)
 		src.KillPathAndGiveUp(1)
-		return
+		return FALSE
 	else
 		actions.start(new/datum/action/bar/icon/medbot_inject(src, reagent_id), src)
-	return
+	return TRUE
 
 /obj/machinery/bot/medbot/DoWhileMoving()
 	. = ..()
@@ -575,7 +589,7 @@
 		src.master = the_bot
 		src.reagent_id = reagentid
 		if(master.terrifying)
-			duration = 2.5 SECONDS
+			duration = 2 SECONDS
 			REMOVE_FLAG(interrupt_flags, INTERRUPT_MOVE)
 		..()
 
@@ -643,6 +657,8 @@
 			else
 				for(var/reagent in reagent_id)
 					master.patient.reagents.add_reagent(reagent, reagent_id[reagent])
+				if(master.emagged && !master.terrifying && prob(1))
+					master.pick_poison()
 			master.visible_message("<span class='alert'><B>[master] injects [master.patient] with the syringe!</B></span>")
 
 		else if(master.terrifying)
