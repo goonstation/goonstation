@@ -342,11 +342,9 @@ obj/machinery/atmospherics/pipe
 				if(prob(rupture_prob))
 					rupture(pressure_difference)
 
-			return
-
 		proc/rupture(pressure, destroy=FALSE)
 			var/new_rupture
-			if (src.destroyed || destroy || (pressure > 10*fatigue_pressure && prob(1)) )
+			if (src.destroyed || destroy || ((pressure > (10*fatigue_pressure)) && prob(1)) )
 				ruptured = 4
 				src.destroyed = TRUE
 				src.desc = "The remnants of a section of pipe that needs to be replaced.  Perhaps rods would be sufficient?"
@@ -355,13 +353,12 @@ obj/machinery/atmospherics/pipe
 				node2?.disconnect(src)
 				update_icon()
 				return
-			else if (pressure > 4*fatigue_pressure && prob(30)) new_rupture = 3
-			else if (pressure > 2*fatigue_pressure && prob(60)) new_rupture = 2
+			else if ((pressure > (4*fatigue_pressure)) && prob(30)) new_rupture = 3
+			else if ((pressure > (2*fatigue_pressure)) && prob(60)) new_rupture = 2
 			else new_rupture = 1
 			ruptured = max(ruptured, new_rupture)
 			icon_state = "exposed"
 			src.desc = "A one meter section of ruptured pipe still looks salvageable through some careful welding."
-
 
 		ex_act(severity) // cogwerks - adding an override so pda bombs aren't quite so ruinous in the engine
 			switch(severity)
@@ -432,7 +429,9 @@ obj/machinery/atmospherics/pipe
 				src.icon_state = "disco"
 				src.desc = "A one meter section of regular pipe has been placed but needs to be welded into place."
 				// create valid edges back to us and rebuild from here out to merge pipeline(s)
+				node1.dir = node1.initialize_directions
 				node1.initialize()
+				node2.dir = node2.initialize_directions
 				node2.initialize()
 				src.parent.build_pipeline(src)
 
@@ -443,14 +442,14 @@ obj/machinery/atmospherics/pipe
 			..()
 
 		pipeline_expansion()
+			. = list(node1, node2)
 			if(destroyed)
-				return list(null, null)
-			return list(node1, node2)
+				. = list(null, null)
 
 		update_icon()
 			if(destroyed)
 				icon_state = "destroyed"
-			else if(node1&&node2)
+			else if(node1 && node2)
 				icon_state = "intact"//[invisibility ? "-f" : "" ]"
 				alpha = invisibility ? 128 : 255
 
@@ -466,13 +465,14 @@ obj/machinery/atmospherics/pipe
 				alpha = invisibility ? 128 : 255
 
 				if(node1)
-					dir = get_dir(src,node1)
+					dir = get_dir(src, node1)
 
 				else if(node2)
-					dir = get_dir(src,node2)
+					dir = get_dir(src, node2)
 
-				else
-					qdel(src)
+				// Deletion should be added as part of constructable atmos
+				//else
+				//	qdel(src)
 
 		initialize()
 			var/connect_directions
@@ -634,7 +634,7 @@ obj/machinery/atmospherics/pipe
 			dir = NORTHWEST
 
 		update_icon()
-			if(node1&&node2)
+			if(node1 && node2)
 				icon_state = "intact"
 
 				var/node1_direction = get_dir(src, node1)
@@ -1069,7 +1069,7 @@ obj/machinery/atmospherics/pipe
 			..()
 
 		update_icon()
-			if(node1&&node2&&node3)
+			if(node1 && node2&& node3)
 				icon_state = "manifold"//[invisibility ? "-f" : ""]"
 				alpha = invisibility ? 128 : 255
 
