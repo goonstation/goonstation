@@ -224,7 +224,6 @@
 			return ..()
 
 
-
 // I don't know if this was used for something but it was breaking my important "shake salt and pepper onto things" feature
 // so it's getting commented out until I get yelled at for breaking something
 //	attackby(obj/item/I as obj, mob/user as mob)
@@ -1243,6 +1242,45 @@
 	initial_volume = 120
 	shard_amt = 2
 
+/obj/item/reagent_containers/food/drinks/drinkingglass/icing
+	name = "icing tube"
+	desc = "Used to put icing on cakes."
+	icon = 'icons/obj/foodNdrink/food.dmi'
+	icon_state = "icing_tube"
+	initial_volume = 50
+	amount_per_transfer_from_this = 5
+	rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
+	var/image/chem = new /image('icons/obj/foodNdrink/food.dmi',"icing_tube_chem")
+
+	on_reagent_change()
+		src.underlays = null
+		if (reagents.total_volume >= 0)
+			if(reagents.total_volume == 0)
+				src.icon_state = "icing_tube"
+			else
+				src.icon_state = "icing_tube_2"
+			if(length(src.underlays))
+				src.underlays = null
+			var/datum/color/average = reagents.get_average_color()
+			chem.color = average.to_rgba()
+			src.underlays += chem
+		signal_event("icon_updated")
+
+	attackby(obj/item/W as obj, mob/user as mob)
+		return
+
+	attack_self(var/mob/user as mob)
+		return
+
+	update_icon()
+		return
+
+	throw_impact(var/turf/T)
+		return
+
+	ex_act(severity)
+		qdel(src)
+
 /obj/item/reagent_containers/food/drinks/drinkingglass/random_style
 	rand_pos = 1
 	New()
@@ -1406,7 +1444,7 @@
 
 	get_desc(var/dist, var/mob/user)
 		if (user.mind?.assigned_role == "Head of Security")
-			. = "Its your favourite mug! It reads 'Galaxy's Number One HoS!' on the front. You remember when you got it last Christmas from a secret admirer."
+			. = "Its your favourite mug! It reads 'Galaxy's Number One HoS!' on the front. You remember when you got it last Spacemas from a secret admirer."
 		else
 			. = "It reads 'Galaxy's Number One HoS!' on the front. You remember finding the receipt for it in disposals when the HoS bought it for themselves last Spacemas."
 

@@ -823,7 +823,8 @@
 /obj/item/shipcomponent/secondary_system/crash/proc/crashtime(atom/A)
 	var/tempstate = ship.icon_state
 	ship.icon_state = "flaming"
-	A.meteorhit(ship)
+	if(!istype(A, /obj/critter/gunbot/drone))
+		A.meteorhit(ship)
 	playsound(ship.loc, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 40, 1)
 	ship.icon_state = tempstate
 	crashhits --

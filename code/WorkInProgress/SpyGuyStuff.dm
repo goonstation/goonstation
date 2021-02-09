@@ -10,11 +10,11 @@ Fibre wire
 */
 
 
-//////////////////////////////
+//--------------------------//
 //The pretty darn mean skull
 //That's nice to ghosts
 //		Yay
-////////////////////////////
+//-------------------------//
 /obj/item/soulskull
 	name = "ominous skull"
 	desc = "This skull gives you the heebie-jeebies."
@@ -166,9 +166,9 @@ proc/Create_Tommyname()
 		src.bioHolder.AddEffect("accent_tommy")
 	src.update_colorful_parts()
 
-//////////////////////////////
+//------------------------//
 //Tommy gun
-////////////////////////////
+//------------------------//
 
 /datum/projectile/tommy
 	name = "space-tommy disruption"
