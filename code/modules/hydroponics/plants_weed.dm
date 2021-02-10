@@ -124,7 +124,6 @@ ABSTRACT_TYPE(/datum/plant/weed)
 	special_proc = 1
 	vending = 2
 	genome = 40
-	nectarlevel = 15//allows production of pentetic honey and in greater volume than most honeys. also allows radium and phlog honey
 	assoc_reagents = list("radium")
 	mutations = list(/datum/plantmutation/radweed/redweed,/datum/plantmutation/radweed/safeweed)
 
