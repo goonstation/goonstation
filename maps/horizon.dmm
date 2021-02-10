@@ -14088,6 +14088,8 @@
 	icon_state = "0-8"
 	},
 /obj/storage/closet/wardrobe/black/chaplain,
+/obj/item/storage/box/clothing/witchfinder,
+/obj/item/storage/box/holywaterkit,
 /turf/simulated/floor/black,
 /area/station/chapel/office)
 "aIy" = (
