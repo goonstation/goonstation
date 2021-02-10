@@ -296,7 +296,7 @@
 			var/turf/simulated/floor/F = T
 			//F.health	= 100
 			F.burnt	= 1
-			F.intact	= 0
+			F.setIntact(FALSE)
 			F.levelupdate()
 			new /obj/item/tile/steel(H)	// add to holder so it will be thrown with other stuff
 			F.icon_state = "[F.burnt ? "panelscorched" : "plating"]"
@@ -1829,21 +1829,21 @@
 
 /obj/decal/cleanable/blood/gibs/pipe_eject(var/direction)
 	var/list/dirs
-	if(direction)
-		dirs = list( direction, turn(direction, -45), turn(direction, 45))
+	if(direction in cardinal)
+		dirs = direction
 	else
-		dirs = alldirs.Copy()
+		dirs = cardinal.Copy()
 
-	src.streak(dirs)
+	src.streak_cleanable(dirs)
 
 /obj/decal/cleanable/robot_debris/gib/pipe_eject(var/direction)
 	var/list/dirs
-	if(direction)
-		dirs = list( direction, turn(direction, -45), turn(direction, 45))
+	if(direction in cardinal)
+		dirs = direction
 	else
-		dirs = alldirs.Copy()
+		dirs = cardinal.Copy()
 
-	src.streak(dirs)
+	src.streak_cleanable(dirs)
 
 
 

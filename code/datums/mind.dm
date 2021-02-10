@@ -103,6 +103,8 @@ datum/mind
 				current.removeOverlaysClient(current.client)
 				tgui_process.on_transfer(current, new_character)
 				new_character.lastKnownIP = current.client.address
+				if(isghostdrone(src.current)) //clear the static overlays on death, qdel, being cloned, etc.
+					current.client.images.Remove(mob_static_icons)
 			current.mind = null
 
 		new_character.mind = src

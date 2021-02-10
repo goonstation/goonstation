@@ -116,7 +116,7 @@
 			logTheThing("diary", usr, M, "has icegibbed [constructTarget(M,"diary")]", "admin")
 			message_admins("[key_name(usr)] has icegibbed [key_name(M)]")
 
-		SPAWN_DBG(0.5 SECONDS) M:become_ice_statue()
+		SPAWN_DBG(0.5 SECONDS) M.become_statue_ice()
 
 /client/proc/cmd_admin_goldgib(mob/M as mob in world)
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
@@ -138,7 +138,7 @@
 			message_admins("[key_name(usr)] has goldgibbed [key_name(M)]")
 
 		M.desc = "A dumb looking statue. Very shiny, though."
-		SPAWN_DBG(0.5 SECONDS) M:become_gold_statue()
+		SPAWN_DBG(0.5 SECONDS) M.become_statue(getMaterial("gold"))
 
 /client/proc/cmd_admin_spidergib(mob/M as mob in world)
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)

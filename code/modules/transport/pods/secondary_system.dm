@@ -205,7 +205,7 @@
 
 	var/inrange = 0
 	for(var/turf/ST in src.ship.locs)
-		if (in_range(T,ST) && in_range(user,ST))
+		if (in_interact_range(T,ST) && in_interact_range(user,ST))
 			inrange = 1
 			break
 	if (!inrange)
@@ -257,7 +257,7 @@
 
 	var/inrange = 0
 	for (var/turf/T in src.ship.locs)
-		if (in_range(T,C) && in_range(usr,C))
+		if (in_interact_range(T,C) && in_interact_range(usr,C))
 			inrange = 1
 			break
 	if (!inrange)
@@ -507,7 +507,7 @@
 		if(..())
 			return
 
-		if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
+		if ((usr.contents.Find(src) || (in_interact_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
 			src.add_dialog(usr)
 		if (href_list["release"])
 			for(var/mob/M in ship)
@@ -661,7 +661,7 @@
 		if(..())
 			return
 
-		if ((usr.contents.Find(src) || (in_range(ship, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
+		if ((usr.contents.Find(src) || (in_interact_range(ship, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
 			src.add_dialog(usr)
 
 		if (href_list["enter"])
@@ -823,7 +823,8 @@
 /obj/item/shipcomponent/secondary_system/crash/proc/crashtime(atom/A)
 	var/tempstate = ship.icon_state
 	ship.icon_state = "flaming"
-	A.meteorhit(ship)
+	if(!istype(A, /obj/critter/gunbot/drone))
+		A.meteorhit(ship)
 	playsound(ship.loc, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 40, 1)
 	ship.icon_state = tempstate
 	crashhits --

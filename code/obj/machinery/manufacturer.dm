@@ -519,16 +519,15 @@
 
 	// Validate that an item is inside this machine for HREF check purposes
 	proc/validate_disp(var/datum/manufacture/M)
-		if(src.available && src.available.Find(M))
-			return 1
+		. = FALSE
+		if(src.available && (M in src.available))
+			return TRUE
 
-		if(src.download && src.download.Find(M))
-			return 1
+		if(src.download && (M in src.download))
+			return TRUE
 
-		if(src.hacked && src.hidden && src.hidden.Find(M))
-			return 1
-
-		return 0
+		if(src.hacked && src.hidden && (M in src.hidden))
+			return TRUE
 
 
 	Topic(href, href_list)
@@ -1763,9 +1762,8 @@
 			playsound(src.loc, src.sound_damaged, 50, 2)
 			if (src.health == 0)
 				src.visible_message("<span class='alert'><b>[src.name] is destroyed!</b></span>")
-				SPAWN_DBG(0)
-					robogibs(src.loc,null)
 				playsound(src.loc, src.sound_destroyed, 50, 2)
+				robogibs(src.loc, null)
 				qdel(src)
 				return
 			if (src.health <= 70 && !src.malfunction && prob(33))
@@ -2125,6 +2123,8 @@
 		/datum/manufacture/hypospray,
 		/datum/manufacture/patch,
 		/datum/manufacture/mender,
+		/datum/manufacture/penlight,
+		/datum/manufacture/stethoscope,
 		/datum/manufacture/latex_gloves,
 		/datum/manufacture/surgical_mask,
 		/datum/manufacture/surgical_shield,

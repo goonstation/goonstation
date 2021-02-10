@@ -245,7 +245,8 @@
 
 				SPAWN_DBG(0)
 					var/newname = input(traitor.current,"You are a Wizard. Would you like to change your name to something else?", "Name change",randomname)
-
+					if(newname && newname != randomname)
+						phrase_log.log_phrase("name-wizard", randomname, no_duplicates=TRUE)
 					if (length(ckey(newname)) == 0)
 						newname = randomname
 

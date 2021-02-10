@@ -287,9 +287,12 @@
 		. = ..()
 		if (. && src.buckled_guy)
 			var/mob/living/carbon/C = src.buckled_guy
-			C.buckled = null
-			C.Move(src.loc)
-			C.buckled = src
+			if(src.buckled_guy.loc == src.loc)
+				C.buckled = null
+				C.Move(src.loc)
+				C.buckled = src
+			else
+				src.unbuckle()
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/clothing/suit/bedsheet))
@@ -565,7 +568,6 @@
 			W.master = E
 			user.u_equip(W)
 			W.layer = initial(W.layer)
-			//SN src = null
 			qdel(src)
 			return
 		else
@@ -866,12 +868,7 @@
 		return
 
 /obj/item/chair/folded/attack(atom/target, mob/user as mob)
-	var/mob/living/carbon/human/H = user
-	var/mob/living/M = target
 	if (ishuman(target))
-		if (iswrestler(H))
-			M.changeStatus("stunned", 4 SECONDS)
-			H.emote("scream")
 		//M.TakeDamage("chest", 5, 0) //what???? we have 'force' var
 		playsound(src.loc, pick(sounds_punch), 100, 1)
 	..()
@@ -1340,7 +1337,7 @@
 
 	Topic(href, href_list)
 		if (usr.getStatusDuration("stunned") || usr.getStatusDuration("weakened") || usr.stat || usr.restrained()) return
-		if (!in_range(src, usr)) return
+		if (!in_interact_range(src, usr)) return
 
 		if (href_list["on"])
 			toggle_active()

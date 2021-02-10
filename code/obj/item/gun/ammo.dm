@@ -179,7 +179,7 @@
 			qdel(A) // We don't need you anymore.
 			ammoGun.set_loc(K)
 			K.ammo = ammoGun
-			K.current_projectile = ammoGun.ammo_type
+			K.set_current_projectile(ammoGun.ammo_type)
 			if(K.silenced)
 				K.current_projectile.shot_sound = 'sound/machines/click.ogg'
 			K.update_icon()
@@ -230,7 +230,7 @@
 				qdel(K.ammo)
 				ammoGun.set_loc(K)
 				K.ammo = ammoGun
-				K.current_projectile = A.ammo_type
+				K.set_current_projectile(A.ammo_type)
 				if(K.silenced)
 					K.current_projectile.shot_sound = 'sound/machines/click.ogg'
 

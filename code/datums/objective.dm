@@ -381,6 +381,22 @@ proc/create_fluff(var/datum/mind/target)
 
 /datum/objective/regular/bonsaitree
 	// Brought this back as a very rare gimmick objective (Convair880).
+#ifdef MAP_OVERRIDE_MANTA
+	explanation_text = "Destroy the Captain's ship in a bottle."
+
+	check_completion()
+		var/area/cap_quarters = locate(/area/station/captain)
+		var/obj/captain_bottleship/cap_ship
+
+		for (var/obj/captain_bottleship/T in cap_quarters)
+			cap_ship = T
+		if (!cap_ship)
+			return 1  // Somebody deleted it somehow, I suppose?
+		else if (cap_ship?.destroyed == 1)
+			return 1
+		else
+			return 0
+#else
 	explanation_text = "Destroy the Captain's prized bonsai tree."
 
 	check_completion()
@@ -390,12 +406,12 @@ proc/create_fluff(var/datum/mind/target)
 		for (var/obj/shrub/captainshrub/T in cap_quarters)
 			our_tree = T
 		if (!our_tree)
-			return 1  // Somebody deleted it somehow, I suppose?
+			return 1
 		else if (our_tree?.destroyed == 1)
 			return 1
 		else
 			return 0
-
+#endif
 ///////////////////////////////////////////////////////////////
 // Regular objectives not currently used in current gameplay //
 ///////////////////////////////////////////////////////////////

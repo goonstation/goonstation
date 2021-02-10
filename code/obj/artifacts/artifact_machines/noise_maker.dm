@@ -2,12 +2,9 @@
 	name = "artifact noisy thing"
 	associated_datum = /datum/artifact/noisy_thing
 
-	ArtifactDeactivated()
-		return // hahaha nope
-
 /datum/artifact/noisy_thing
 	associated_object = /obj/machinery/artifact/noisy_thing
-	rarity_class = 1
+	rarity_weight = 450
 	validtypes = list("ancient","martian","wizard","eldritch","precursor")
 	validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/electric,/datum/artifact_trigger/heat,
 	/datum/artifact_trigger/radiation,/datum/artifact_trigger/carbon_touch,/datum/artifact_trigger/silicon_touch)
@@ -49,6 +46,7 @@
 				src.times_to_play = 10
 
 	post_setup()
+		. = ..()
 		var/harmprob = 5
 		if (src.artitype.name == "eldritch")
 			harmprob += 20

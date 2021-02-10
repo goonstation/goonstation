@@ -17,13 +17,6 @@ function byond() {
     Http.send();
 }
 
-function preview(i){
-	document.getElementById("image_overlay").src = i + "?" + new Date().getTime();
-	setTimeout(function(){
-		document.getElementById("image_overlay").src = i + "?" + new Date().getTime();
-	}, 300);
-}
-
 var boop = function(e){ //updated
 	console.log(currentrender);
 	e.preventDefault();
@@ -74,7 +67,7 @@ var boop = function(e){ //updated
 			currentrender = path;
 			byond("command","render","path",path,"cost",e.srcElement.dataset.cost);
 		}
-	}	
+	}
 }
 window.onload = function(e) {
 	//initialize categories
@@ -96,4 +89,22 @@ window.onload = function(e) {
 		catdiv.appendChild(linkchild);
 		categorylist.appendChild(catdiv);
 	}
+
+	function positionPreview() {
+		var rect = document.getElementById("preview").getBoundingClientRect();
+
+		window.location = ("byond://winset?id=" + previewID
+			+ "&type=map"
+			+ "&parent=ClothingBooth"
+			+ "&pos=" + Math.floor(rect.left) + "," + Math.floor(rect.top)
+			+ "&size=" + Math.floor(rect.width) + "x" + Math.floor(rect.height));
+	}
+	addEventListener("unload", function() {
+		var xhr = new XMLHttpRequest();
+		xhr.open("GET", "winset?id=ClothingBooth." + previewID + ";parent=");
+		xhr.send();
+	});
+	addEventListener("resize", positionPreview);
+	addEventListener("scroll", positionPreview);
+	positionPreview();
 }

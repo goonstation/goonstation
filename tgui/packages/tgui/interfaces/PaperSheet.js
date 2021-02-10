@@ -7,7 +7,6 @@
  * @license MIT
  */
 import { resolveAsset } from '../assets';
-import { Fragment } from 'inferno';
 import { Component } from 'inferno';
 import marked from 'marked';
 import { useBackend } from '../backend';
@@ -30,7 +29,7 @@ const textWidth = (text, font, fontsize) => {
 
 const setFontinText = (text, font, color, bold=false) => {
   return "<span style=\""
-    + "color:'" + color + "';"
+    + "color:" + color + ";"
     + "font-family:'" + font + "';"
     + ((bold)
       ? "font-weight: bold;"
@@ -355,7 +354,7 @@ class PaperSheetStamper extends Component {
       rotate: this.state.rotate,
     };
     return (
-      <Fragment>
+      <>
         <PaperSheetView
           readOnly
           value={value}
@@ -364,7 +363,7 @@ class PaperSheetStamper extends Component {
           activeStamp
           opacity={0.5}
           image={currentPos} />
-      </Fragment>
+      </>
     );
   }
 }
@@ -614,8 +613,7 @@ export const PaperSheet = (props, context) => {
       title={name}
       theme="paper"
       width={sizeX || 400}
-      height={sizeY || 500}
-      resizable>
+      height={sizeY || 500}>
       <Window.Content
         backgroundColor={paperColor}
         scrollable>

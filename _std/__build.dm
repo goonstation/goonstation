@@ -29,7 +29,6 @@ o+`        `-` ``..-:yooos-..----------..`
            `d.                     .d`
 */
 
-
 //////////// OPTIONS TO GO FAST
 
 //#define IM_REALLY_IN_A_FUCKING_HURRY_HERE 1  // Skip setup for atmos, Z5, don't show changelogs, skip pregame lobby

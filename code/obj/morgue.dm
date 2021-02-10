@@ -89,7 +89,7 @@
 			return
 		if (user.equipped() != P)
 			return
-		if ((!in_range(src, usr) && src.loc != user))
+		if ((!in_interact_range(src, usr) && src.loc != user))
 			return
 		t = copytext(adminscrub(t),1,128)
 		if (t)
@@ -151,7 +151,6 @@
 		playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
 		src.connected.update()
 		add_fingerprint(user)
-		//SN src = null
 		src.set_loc(src.connected)
 		return
 	return
@@ -159,7 +158,7 @@
 /obj/m_tray/MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
 	if (!(isobj(O) || ismob(O)) || O.anchored || get_dist(user, src) > 1 || get_dist(user, O) > 1 || user.contents.Find(O)) //user.contents.Find(src) WHY WERE WE LOOKING FOR THE MORGUE TRAY IN THE USER
 		return
-	if (istype(O, /obj/screen) || istype(O, /obj/effects) || istype(O, /obj/ability_button) || istype(O, /obj/item/grab))
+	if (istype(O, /atom/movable/screen) || istype(O, /obj/effects) || istype(O, /obj/ability_button) || istype(O, /obj/item/grab))
 		return
 	O.set_loc(src.loc)
 	if (user != O)
@@ -278,7 +277,7 @@
 			return
 		if (user.equipped() != P)
 			return
-		if ((!in_range(src, usr) > 1 && src.loc != user))
+		if ((!in_interact_range(src, usr) > 1 && src.loc != user))
 			return
 		t = copytext(adminscrub(t),1,128)
 		if (t)
@@ -395,7 +394,6 @@
 		playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
 		src.connected.update()
 		add_fingerprint(user)
-		//SN src = null
 		src.set_loc(src.connected)
 		return
 	return
@@ -403,7 +401,7 @@
 /obj/c_tray/MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
 	if (!(isobj(O) || ismob(O)) || O.anchored || get_dist(user, src) > 1 || get_dist(user, O) > 1 || user.contents.Find(O))
 		return
-	if (istype(O, /obj/screen) || istype(O, /obj/effects) || istype(O, /obj/ability_button) || istype(O, /obj/item/grab))
+	if (istype(O, /atom/movable/screen) || istype(O, /obj/effects) || istype(O, /obj/ability_button) || istype(O, /obj/item/grab))
 		return
 	O.set_loc(src.loc)
 	if (user != O)
@@ -526,7 +524,7 @@
 				return
 			if (user.equipped() != P)
 				return
-			if ((!in_range(src, usr) > 1 && src.loc != user))
+			if ((!in_interact_range(src, usr) > 1 && src.loc != user))
 				return
 			t = copytext(adminscrub(t),1,128)
 			if (t)

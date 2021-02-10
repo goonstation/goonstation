@@ -251,16 +251,17 @@
 			. = TRUE
 
 /obj/item/paper/ui_static_data(mob/user)
-	. = list()
-	.["name"] = src.name
-	.["sizeX"] = src.sizex
-	.["sizeY"] = src.sizey
-	.["text"] = src.info
-	.["max_length"] = PAPER_MAX_LENGTH
-	.["paperColor"] = src.color || "white"	// color might not be set
-	.["stamps"] = src.stamps
-	.["stampable"] = src.stampable
-	.["sealed"] = src.sealed
+	. = list(
+		"name" = src.name,
+		"sizeX" = src.sizex,
+		"sizeY" = src.sizey,
+		"text" = src.info,
+		"max_length" = PAPER_MAX_LENGTH,
+		"paperColor" = src.color || "white",	// color might not be set
+		"stamps" = src.stamps,
+		"stampable" = src.stampable,
+		"sealed" = src.sealed,
+	)
 
 /obj/item/paper/ui_data(mob/user)
 	. = list(
@@ -1061,7 +1062,7 @@ Only trained personnel should operate station systems. Follow all procedures car
 	return
 
 /obj/item/paper_bin/MouseDrop(mob/user as mob)
-	if (user == usr && !usr.restrained() && !usr.stat && (usr.contents.Find(src) || in_range(src, usr)))
+	if (user == usr && !usr.restrained() && !usr.stat && (usr.contents.Find(src) || in_interact_range(src, usr)))
 		if (!user.put_in_hand(src))
 			return ..()
 
@@ -1344,7 +1345,6 @@ Only trained personnel should operate station systems. Follow all procedures car
 		M.visible_message("<span class='notice'>[M] stuffs [src] into [his_or_her(M)] mouth and and eats it.</span>")
 		eat_twitch(M)
 		var/obj/item/paper/P = src
-		src = null
 		usr.u_equip(P)
 		pool(P)
 	else
@@ -1473,3 +1473,16 @@ exposed to overconfident outbursts on the part of individuals unqualifed to embo
 		pixel_x = rand(-8, 8)
 		pixel_y = rand(-8, 8)
 		info = "<html><body style='margin:2px'><img src='[resource("images/pocket_guides/botanyguide.png")]'></body></html>"
+
+/obj/item/paper/ranch_guide
+	name = "Ranch Field Guide"
+	desc = "Some kinda informative poster. Or is it a pamphlet? Either way, it wants to teach you things. About chickens."
+	icon_state = "ranch_guide"
+	sizex = 970
+	sizey = 690
+
+	New()
+		..()
+		pixel_x = rand(-8, 8)
+		pixel_y = rand(-8, 8)
+		info = "<html><body><style>img {width: 100%; height: auto;}></style><img src='[resource("images/pocket_guides/ranchguide.png")]'></body></html>"

@@ -66,6 +66,11 @@
 			if(my_id == src.ping_id)
 				src.ping.loc = null
 
+	examine_verb(atom/A)
+		. = ..()
+		if(istype(A, /obj/machinery/computer3))
+			A.attack_hand(src)
+
 	say_understands(var/other)
 		return 1
 

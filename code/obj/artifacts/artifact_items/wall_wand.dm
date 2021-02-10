@@ -17,7 +17,7 @@
 
 /datum/artifact/wallwand
 	associated_object = /obj/item/artifact/forcewall_wand
-	rarity_class = 2
+	rarity_weight = 350
 	validtypes = list("ancient","wizard","eldritch","precursor")
 	react_xray = list(10,60,92,11,"COMPLEX")
 	var/wall_duration = 5
