@@ -478,6 +478,8 @@
 	harvest_override = 1
 	crop = /obj/item/reagent_containers/food/snacks/plant/lashberry/
 	chance = 20
+	assoc_reagents = list("booster_enzyme")
+
 
 // Radweed Mutations
 
