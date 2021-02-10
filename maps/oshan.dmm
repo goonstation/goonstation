@@ -46731,6 +46731,9 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/black,
 /area/research_outpost)
 "fsJ" = (
@@ -47025,6 +47028,12 @@
 	},
 /turf/space/fluid,
 /area/space)
+"iMs" = (
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/black,
+/area/research_outpost)
 "iPj" = (
 /obj/item/kitchen/food_box/donut_box{
 	pixel_x = -3;
@@ -47086,6 +47095,12 @@
 /obj/disposalpipe/segment/mail,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hangar/sec)
+"jwF" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/black,
+/area/research_outpost)
 "jxG" = (
 /obj/machinery/light/incandescent/netural,
 /obj/cabinet/pathology,
@@ -47551,6 +47566,8 @@
 /area/research_outpost)
 "oWv" = (
 /obj/machinery/communications_dish,
+/obj/cable,
+/obj/machinery/power/data_terminal,
 /turf/simulated/floor/plating/airless,
 /area/station/com_dish/research_outpost)
 "oXf" = (
@@ -47817,6 +47834,9 @@
 	dir = 4
 	},
 /obj/firedoor_spawn,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/plating/random,
 /area/research_outpost/maint)
 "sRT" = (
@@ -48059,6 +48079,13 @@
 	},
 /turf/simulated/floor/grime,
 /area/station/maintenance/inner/central)
+"vLl" = (
+/obj/wingrille_spawn/auto/crystal,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating/random,
+/area/research_outpost)
 "vLB" = (
 /obj/rack,
 /obj/item/device/radio/electropack,
@@ -131709,9 +131736,9 @@ aqn
 aeB
 bbg
 oFy
-ksg
+iMs
 fkH
-aSP
+vLl
 gKC
 gKC
 gKC
@@ -132011,7 +132038,7 @@ hBQ
 hBQ
 bbg
 ksg
-ksg
+jwF
 bec
 mZL
 aqn
@@ -132615,7 +132642,7 @@ xFh
 ljO
 bdt
 ggG
-gaJ
+eXS
 bee
 bdt
 aqn
