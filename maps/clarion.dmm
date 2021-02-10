@@ -33278,7 +33278,6 @@
 	dir = 1;
 	pixel_y = 30
 	},
-/obj/machinery/drainage,
 /turf/simulated/floor/purpleblack{
 	dir = 1
 	},
