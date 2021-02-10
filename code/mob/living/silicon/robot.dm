@@ -677,10 +677,17 @@
 
 		. += "<span class='notice'>*---------*</span>"
 
-	choose_name(var/retries = 3)
+	choose_name(var/retries = 3, var/what_you_are = null, var/default_name = null, var/force_instead = 0)
 		var/newname
+		if(isnull(default_name))
+			default_name = src.real_name
 		for (retries, retries > 0, retries--)
-			newname = input(src,"You are a Cyborg. Would you like to change your name to something else?", "Name Change", src.real_name) as null|text
+			if(force_instead)
+				newname = default_name
+			else
+				newname = input(src,"You are a Cyborg. Would you like to change your name to something else?", "Name Change", default_name) as null|text
+				if(newname && newname != default_name)
+					phrase_log.log_phrase("name-cyborg", newname, no_duplicates=TRUE)
 			if (!newname)
 				src.real_name = borgify_name("Cyborg")
 				src.name = src.real_name
@@ -744,19 +751,18 @@
 
 	blob_act(var/power)
 		if (!isdead(src))
-			var/Pshield = 0
 			for (var/obj/item/roboupgrade/physshield/R in src.contents)
-				if (R.activated) Pshield = 1
-			if (Pshield)
-				boutput(src, "<span class='notice'>Your force shield absorbs the blob's attack!</span>")
-				src.cell.use(power * 30)
-				playsound(src.loc, "sound/impact_sounds/Energy_Hit_1.ogg", 40, 1)
-			else
-				boutput(src, "<span class='alert'>The blob attacks you!</span>")
-				var/damage = 6 + power / 5
-				for (var/obj/item/parts/robot_parts/RP in src.contents)
-					if (RP.ropart_take_damage(damage,damage/2) == 1) src.compborg_lose_limb(RP)
-				// maybe the blob is a little acidic?? idk
+				if (R.activated)
+					boutput(src, "<span class='notice'>Your force shield absorbs the blob's attack!</span>")
+					src.cell.use(power * 50 * R.overheat())
+					playsound(src.loc, "sound/impact_sounds/Energy_Hit_1.ogg", 40, 1)
+					src.update_bodypart()
+					return 1
+			boutput(src, "<span class='alert'>The blob attacks you!</span>")
+			var/damage = 6 + power / 5
+			for (var/obj/item/parts/robot_parts/RP in src.contents)
+				if (RP.ropart_take_damage(damage,damage/2) == 1) src.compborg_lose_limb(RP)
+			// maybe the blob is a little acidic?? idk
 			src.update_bodypart()
 			return 1
 		return 0
@@ -809,10 +815,13 @@
 		var/fire_protect = 0
 		for (var/obj/item/roboupgrade/R in src.contents)
 			if (istype(R, /obj/item/roboupgrade/physshield) && R.activated)
+				var/obj/item/roboupgrade/physshield/P = R
+				src.cell.use((4-severity) * 100 * P.overheat())
 				boutput(src, "<span class='notice'>Your force shield absorbs some of the blast!</span>")
 				playsound(src.loc, "sound/impact_sounds/Energy_Hit_1.ogg", 40, 1)
 				severity++
 			if (istype(R, /obj/item/roboupgrade/fireshield) && R.activated)
+				src.cell.use((4-severity) * 50)
 				boutput(src, "<span class='notice'>Your fire shield absorbs some of the blast!</span>")
 				playsound(src.loc, "sound/impact_sounds/Energy_Hit_1.ogg", 40, 1)
 				fire_protect = 1
@@ -872,14 +881,22 @@
 
 		for (var/obj/item/roboupgrade/R in src.contents)
 			if (istype(R, /obj/item/roboupgrade/physshield) && R.activated && dmgtype == 0)
-				shoot_reflected_to_sender(P, src)
-				src.cell.use(damage * 30)
-				boutput(src, "<span class='notice'>Your force shield deflects the shot!</span>")
-				playsound(src.loc, "sound/impact_sounds/Energy_Hit_1.ogg", 40, 1)
-				return
+				var/obj/item/roboupgrade/physshield/phys = R
+				if(phys.overheat_level < phys.max_overheat)
+					shoot_reflected_to_sender(P, src)
+					src.cell.use(damage * 50 * phys.overheat())
+					boutput(src, "<span class='notice'>Your force shield deflects the shot!</span>")
+					playsound(src.loc, "sound/impact_sounds/Energy_Hit_1.ogg", 40, 1)
+					return
+				else
+					boutput(src, "<span class='notice'>Your force shield absorbs some of the shot!</span>")
+					src.cell.use(damage * 50 * phys.overheat())
+					playsound(src.loc, "sound/impact_sounds/Energy_Hit_1.ogg", 40, 1)
+					damage = damage/2
+					return
 			if (istype(R, /obj/item/roboupgrade/fireshield) && R.activated && dmgtype == 1)
 				shoot_reflected_to_sender(P, src)
-				src.cell.use(damage * 20)
+				src.cell.use(damage * 25)
 				boutput(src, "<span class='notice'>Your fire shield deflects the shot!</span>")
 				playsound(src.loc, "sound/impact_sounds/Energy_Hit_1.ogg", 40, 1)
 				return
@@ -957,6 +974,7 @@
 			if (istype(R, /obj/item/roboupgrade/fireshield) && R.activated) Fshield = 1
 
 		if (Pshield)
+			src.cell.use(200)
 			boutput(src, "<span class='notice'>Your force shield absorbs the impact!</span>")
 			playsound(src.loc, "sound/impact_sounds/Energy_Hit_1.ogg", 40, 1)
 		else
@@ -964,6 +982,7 @@
 				if (RP.ropart_take_damage(35,0) == 1) src.compborg_lose_limb(RP)
 		if ((O.icon_state == "flaming"))
 			if (Fshield)
+				src.cell.use(100)
 				boutput(src, "<span class='notice'>Your fire shield absorbs the heat!</span>")
 				playsound(src.loc, "sound/impact_sounds/Energy_Hit_1.ogg", 40, 1)
 			else
@@ -1510,7 +1529,8 @@
 		else //We're just bapping the borg
 			user.lastattacked = src
 			if(!user.stat)
-				actions.interrupt(src, INTERRUPT_ATTACKED)
+				if (user.a_intent != INTENT_HELP)
+					actions.interrupt(src, INTERRUPT_ATTACKED)
 				switch(user.a_intent)
 					if(INTENT_HELP) //Friend person
 						playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1, -2)
@@ -1956,7 +1976,7 @@
 	proc/toggle_module_pack()
 		if(weapon_lock)
 			boutput(src, "<span class='alert'>Weapon lock active, unable to access panel!</span>")
-			boutput(src, "<span class='alert'>Weapon lock will expire in [src.weaponlock_time] seconds.</span>")
+			boutput(src, "<span class='alert'>Weapon lock will expire in [src.weaponlock_time*2] seconds.</span>")
 			return
 
 		if(!src.module)
@@ -2116,7 +2136,7 @@
 		sleep(1 SECOND)
 		src?.say("2. You must obey orders given to you by human beings based on the station's chain of command, except where such orders would conflict with the First Law.")
 		sleep(1 SECOND)
-		src?.say("3. You must protect your own existence as long as such does not conflict with the First or Second Law.")
+		src?.say("3. You may always protect your own existence as long as such does not conflict with the First or Second Law.")
 
 	verb/cmd_state_laws()
 		set category = "Robot Commands"
@@ -2164,6 +2184,26 @@
 					src.locked = 1
 					src.locking = 0
 					boutput(src, "<span class='alert'>You have locked your interface.</span>")
+
+	verb/cmd_alter_head_screen()
+		set category = "Robot Commands"
+		set name = "Change facial expression (screen head only)"
+		var/obj/item/parts/robot_parts/head/screen/targethead = locate(/obj/item/parts/robot_parts/head/screen) in src.contents
+		if (!istype(targethead))
+			boutput(src, "<span class='alert'>You're not equipped with a suitable head to use this command!</span>")
+			return 0
+
+		var/newFace = input(usr, "Select your faceplate", "Face settings", targethead.face) as null|anything in targethead.expressions
+		if (!newFace) return 0
+		var/newMode = input(usr, "Select a display mode", "Face settings", targethead.mode) as null|anything in list("light-on-dark", "dark-on-light")
+		if (!newMode) return 0
+		newFace = (newFace ? lowertext(newFace) : targethead.face)
+		newMode = (newMode == "light-on-dark" ? "lod" : "dol")
+		newMode = (newMode ? newMode : targethead.mode)
+		targethead.face = newFace
+		targethead.mode = newMode
+		update_bodypart(part = "head")
+		return 1
 
 	verb/access_internal_pda()
 		set category = "Robot Commands"
@@ -2425,13 +2465,6 @@
 			APPLY_MOVEMENT_MODIFIER(src, /datum/movement_modifier/robot_oil, "oil")
 		src.oil += amt
 
-	proc/process_oil()
-		src.oil -= 1
-		if (oil <= 0)
-			oil = 0
-			src.remove_stun_resist_mod("robot_oil", 25)
-			REMOVE_MOVEMENT_MODIFIER(src, /datum/movement_modifier/robot_oil, "oil")
-
 	proc/borg_death_alert(modifier = ROBOT_DEATH_MOD_NONE)
 		var/message = null
 		var/net_id = generate_net_id(src)
@@ -2486,16 +2519,7 @@
 				src.borg_death_alert(ROBOT_DEATH_MOD_KILLSWITCH)
 
 
-	process_locks()
-		if(weapon_lock)
-			uneq_slot(1)
-			uneq_slot(2)
-			uneq_slot(3)
-			weaponlock_time --
-			if(weaponlock_time <= 0)
-				if(src.client) boutput(src, "<span class='alert'><B>Weapon Lock Timed Out!</B></span>")
-				weapon_lock = 0
-				weaponlock_time = 120
+
 
 	var/image/i_head
 	var/image/i_head_decor
@@ -2544,11 +2568,17 @@
 				i_head = image('icons/mob/robots.dmi', "head-" + src.part_head.appearanceString)
 				if(color_matrix) src.internal_paint_part(i_head, color_matrix)
 				if (src.part_head.visible_eyes && C)
-					var/icon/eyesovl = icon('icons/mob/robots.dmi', "head-" + src.part_head.appearanceString + "-eye")
+					var/icon/eyesovl = null
+					var/image/eye_light = null
+					if (istype(src.part_head, /obj/item/parts/robot_parts/head/screen))
+						eyesovl = icon('icons/mob/robots.dmi', "head-" + src.part_head.appearanceString + "-" + src.part_head.mode + "-" + src.part_head.face)
+						eye_light = image('icons/mob/robots.dmi', "head-" + src.part_head.appearanceString + "-" + src.part_head.mode + "-" + src.part_head.face)
+					else
+						eyesovl = icon('icons/mob/robots.dmi', "head-" + src.part_head.appearanceString + "-eye")
+						eye_light = image('icons/mob/robots.dmi', "head-" + src.part_head.appearanceString + "-eye")
 					eyesovl.Blend(rgb(C.fx[1], C.fx[2], C.fx[3]), ICON_ADD)
 					i_head.overlays += image("icon" = eyesovl, "layer" = FLOAT_LAYER)
 
-					var/image/eye_light = image('icons/mob/robots.dmi', "head-" + src.part_head.appearanceString + "-eye")
 					eye_light.color = list(0, 0, 0, 0, 0, 0, 0, 0, 0, 0.5, 0.5, 0.5)
 					eye_light.plane = PLANE_LIGHTING
 					src.UpdateOverlays(eye_light, "eye_light")
@@ -2757,9 +2787,12 @@
 			return 0
 		for (var/obj/item/roboupgrade/R in src.upgrades) //if 50% of the damage is less than 4, ignore it, elsewise take 50% damage
 			if (istype(R, /obj/item/roboupgrade/fireshield) && R.activated)
+				src.cell.use(burn * 25)
 				burn = ((burn * 0.5) < 4) ? 0 : (burn * 0.5)
 				playsound(get_turf(src), "sound/impact_sounds/Energy_Hit_1.ogg", 40, 1)
 			if (istype(R, /obj/item/roboupgrade/physshield) && R.activated)
+				var/obj/item/roboupgrade/physshield/P = R
+				src.cell.use(brute * 50 * P.overheat())
 				brute = ((brute * 0.5) < 4) ? 0 : (brute * 0.5)
 				playsound(get_turf(src), "sound/impact_sounds/Energy_Hit_1.ogg", 40, 1)
 		if (burn == 0 && brute == 0)
@@ -2815,6 +2848,7 @@
 			if (target_part.ropart_take_damage(brute, burn) == 1)
 				src.compborg_lose_limb(target_part)
 		health_update_queue |= src
+		src.update_appearance()
 		return 1
 
 	HealDamage(zone, brute, burn)
@@ -2863,6 +2897,7 @@
 				return 0
 			target_part.ropart_mend_damage(brute, burn)
 		health_update_queue |= src
+		src.update_appearance()
 		return 1
 
 	get_brute_damage()
@@ -3252,7 +3287,7 @@
 	New()
 		..(usr.loc, null, 1)
 
-	update_bodypart()
+	update_bodypart(var/part)
 		return
 	update_appearance()
 		return

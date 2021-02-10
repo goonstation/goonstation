@@ -3,15 +3,34 @@ var/datum/artifact_controller/artifact_controls
 /datum/artifact_controller
 	var/list/artifacts = list()
 	var/list/artifact_types = list()
+	var/list/artifact_rarities = list()
 	var/list/artifact_origins = list()
 	var/spawner_type = null
 	var/spawner_cine = 0
 
 	New()
 		..()
+		artifact_rarities["all"] = list()
+
+		// origin list
 		for (var/X in childrentypesof(/datum/artifact_origin))
 			var/datum/artifact_origin/AO = new X
 			artifact_origins += AO
+			artifact_rarities[AO.name] = list()
+
+		// type list
+		// also make one list for each origin of all artifact types
+		// and also one that just holds all types
+		// the type is the index, the value the rarity
+		// for use with weighted_pick
+		for (var/A in concrete_typesof(/datum/artifact))
+			var/datum/artifact/AI = new A
+			artifact_types += AI
+
+			artifact_rarities["all"][A] = AI.rarity_weight
+			for (var/origin in artifact_rarities)
+				if(origin in AI.validtypes)
+					artifact_rarities[origin][A] = AI.rarity_weight
 
 	proc/get_origin_from_string(var/string)
 		if (!istext(string))
@@ -179,10 +198,19 @@ var/datum/artifact_controller/artifact_controls
 	New()
 		..()
 		if ("all" in fault_types)
-			fault_types += childrentypesof(/datum/artifact_fault)
+			fault_types += concrete_typesof(/datum/artifact_fault)
+
+	proc/post_setup(obj/artifact)
+		var/datum/artifact/AD = artifact.artifact
+		var/rarityMod = AD.get_rarity_modifier()
+		if(prob(100*rarityMod))
+			artifact.transform = matrix(artifact.transform, -1, 1, MATRIX_SCALE)
+		if(prob(20 * rarityMod))
+			artifact.transform = matrix(artifact.transform, 1, -1, MATRIX_SCALE)
 
 	proc/generate_name()
 		return "unknown object"
+
 
 /datum/artifact_origin/ancient
 	name = "ancient"
@@ -206,6 +234,16 @@ var/datum/artifact_controller/artifact_controls
 	nouns_large = list("monolith","slab","obelisk","pylon","menhir","machine","structure")
 	nouns_small = list("implement","device","instrument","apparatus","appliance","mechanism","tool")
 	touch_descriptors = list("It feels cold.","It feels smooth.","Touching it makes you feel uneasy.")
+
+	post_setup(obj/artifact)
+		. = ..()
+		var/datum/artifact/AD = artifact.artifact
+		var/rarityMod = AD.get_rarity_modifier()
+		if(prob(50 * rarityMod))
+			artifact.transform = matrix(artifact.transform, 1.1, 1.1, MATRIX_SCALE)
+		if(prob(100 * rarityMod))
+			var/col = rand(160, 230)
+			artifact.color = rgb(col, col, col)
 
 	generate_name()
 		return "unit [pick("alpha","sigma","tau","phi","gamma","epsilon")]-[pick("x","z","d","e","k")] [rand(100,999)]"
@@ -234,6 +272,15 @@ var/datum/artifact_controller/artifact_controls
 	var/list/prefix = list("cardio","neuro","physio","morpho","brachio","bronchi","dermo","ossu")
 	var/list/thingy = list("cystic","genetic","metabolic","static","vascular","muscular")
 	var/list/action = list("stimulator","suppressor","regenerator","depressor","mutator")
+
+	post_setup(obj/artifact)
+		. = ..()
+		var/datum/artifact/AD = artifact.artifact
+		var/rarityMod = AD.get_rarity_modifier()
+		if(prob(50 * rarityMod))
+			artifact.transform = matrix(artifact.transform, rand(-10, 10), MATRIX_ROTATE)
+		if(prob(200 * rarityMod))
+			artifact.color = rgb(rand(240, 255), rand(240, 255), rand(240, 255))
 
 	generate_name()
 		var/namestring = ""
@@ -267,6 +314,35 @@ var/datum/artifact_controller/artifact_controls
 	var/list/material = list("ebon","ivory","pearl","golden","malachite","diamond","ruby","emerald","sapphire","opal")
 	var/list/object = list("jewel","trophy","favor","boon","token","crown","treasure","sacrament","oath")
 	var/list/aspect = list("wonder","splendor","power","plenty","mystery","glory","majesty","eminence","grace")
+
+	post_setup(obj/artifact)
+		. = ..()
+		var/datum/artifact/AD = artifact.artifact
+		var/rarityMod = AD.get_rarity_modifier()
+		if(prob(300*rarityMod))
+			var/hue1 = prob(100*rarityMod) ? rand(360) : (55 + rand(-10, 10))
+			var/list/col1
+			if(prob(150*rarityMod))
+				col1 = hsv2rgblist(hue1, rand() * 0.2 + 0.5, rand() * 0.2 + 0.6)
+			else
+				col1 = list(255, 168, 0)
+			var/hue2 = 180 + hue1 + rand(-135, 135)
+			if(prob(100*rarityMod))
+				hue2 = rand(360)
+			var/list/col2 = hsv2rgblist(hue2, rand() * 0.3 + 0.7, rand() * 0.1 + 0.9)
+			artifact.color = list(
+				(168 * col2[1] - 35 * col1[1]) / 20307,
+				(168 * col2[2] - 35 * col1[2]) / 20307,
+				(168 * col2[3] - 35 * col1[3]) / 20307,
+				(174 * col1[1] - 255 * col2[1]) / 20307,
+				(174 * col1[2] - 255 * col2[2]) / 20307,
+				(174 * col1[3] - 255 * col2[3]) / 20307,
+				0,
+				0,
+				1
+			)
+		if(prob(50*rarityMod))
+			artifact.alpha = rand(200, 255)
 
 	generate_name()
 		var/namestring = ""

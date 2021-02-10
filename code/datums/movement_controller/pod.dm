@@ -86,6 +86,9 @@
 		owner.set_dir(last_dir)
 
 	process_move(mob/user, keys)
+		if(user != src.owner.pilot)
+			return FALSE
+
 		if (istype(src.owner, /obj/machinery/vehicle/escape_pod))
 			return FALSE
 

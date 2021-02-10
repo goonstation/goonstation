@@ -297,6 +297,7 @@
 	health = 10000;
 	name = "Hooty McOwlface"
 	},
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/bluegreen/side{
 	dir = 1
 	},
@@ -1026,11 +1027,6 @@
 /obj/submachine/chef_sink/chem_sink{
 	dir = 8;
 	pixel_x = 4
-	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 0;
-	name = "autoname - SS13"
 	},
 /obj/machinery/light{
 	dir = 1
@@ -3453,6 +3449,7 @@
 /obj/disposalpipe/segment/brig{
 	dir = 4
 	},
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/red,
 /area/station/security/checkpoint{
 	name = "Security Checkpoint"
@@ -3538,6 +3535,7 @@
 /obj/disposalpipe/segment/morgue{
 	dir = 4
 	},
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/blue,
 /area/station/medical/medbooth)
 "agd" = (
@@ -4175,6 +4173,7 @@
 	location = "tour16";
 	name = "tour beacon - escape"
 	},
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "aht" = (
@@ -4744,11 +4743,6 @@
 /obj/disposalpipe/segment{
 	dir = 8;
 	icon_state = "pipe-c"
-	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 1;
-	name = "autoname - SS13"
 	},
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/toilets)
@@ -8803,6 +8797,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/light_switch/east,
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai)
 "apZ" = (
@@ -9361,6 +9356,7 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/grey/side{
 	dir = 1
 	},
@@ -10266,10 +10262,7 @@
 	req_access_txt = "28"
 	},
 /obj/machinery/cashreg,
-/obj/item/reagent_containers/food/snacks/cake/chocolate{
-	desc = "Holy shit! This cake probably costs more than the gross domestic product of Bulgaria!";
-	name = "Extravagant Chocolate Gateau"
-	},
+/obj/item/reagent_containers/food/snacks/cake/chocolate/gateau,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/kitchen)
 "asA" = (
@@ -10308,8 +10301,8 @@
 "asE" = (
 /obj/table/reinforced/auto,
 /obj/item/reagent_containers/food/snacks/breadloaf,
-/obj/item/reagent_containers/glass/bottle/icing,
-/obj/item/reagent_containers/glass/bottle/icing,
+/obj/item/reagent_containers/food/drinks/drinkingglass/icing,
+/obj/item/reagent_containers/food/drinks/drinkingglass/icing,
 /obj/disposalpipe/segment/food,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
@@ -11694,6 +11687,7 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/blue/corner{
 	dir = 8
 	},
@@ -11861,6 +11855,7 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/bar)
 "avO" = (
@@ -11968,6 +11963,10 @@
 "avY" = (
 /obj/table/reinforced/auto,
 /obj/item/device/light/lava_lamp,
+/obj/item/reagent_containers/glass/water_pipe{
+	pixel_x = -8;
+	pixel_y = 8
+	},
 /turf/simulated/floor,
 /area/station/hydroponics/bay)
 "avZ" = (
@@ -13027,6 +13026,7 @@
 /obj/landmark/start{
 	name = "Janitor"
 	},
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor,
 /area/station/janitor/office)
 "ayb" = (
@@ -13551,7 +13551,7 @@
 	},
 /obj/item/device/reagentscanner,
 /turf/simulated/floor/carpet/grime,
-/area/space)
+/area/station/crew_quarters/baroffice)
 "aza" = (
 /obj/machinery/firealarm{
 	dir = 8;
@@ -13583,6 +13583,9 @@
 	req_access_txt = "25"
 	},
 /obj/machinery/cashreg,
+/obj/item/clothing/glasses/spectro{
+	pixel_y = 11
+	},
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/bar)
 "aze" = (
@@ -14080,28 +14083,72 @@
 /area/station/hallway/primary/east)
 "aAa" = (
 /obj/table/wood/auto,
-/obj/item/clipboard,
-/obj/item/clipboard,
-/obj/item/clipboard,
-/obj/item/pen,
-/obj/item/pen,
-/obj/item/pen,
-/obj/item/reagent_containers/food/snacks/chips,
-/obj/item/reagent_containers/food/drinks/cola,
+/obj/item/paper_bin{
+	pixel_x = 5;
+	pixel_y = 4
+	},
+/obj/item/clipboard{
+	pixel_x = -4;
+	pixel_y = 5
+	},
+/obj/item/clipboard{
+	pixel_x = -4;
+	pixel_y = 5
+	},
+/obj/item/clipboard{
+	pixel_x = -4;
+	pixel_y = 5
+	},
+/obj/item/clipboard{
+	pixel_x = -4;
+	pixel_y = 5
+	},
+/obj/item/pen{
+	pixel_x = -5;
+	pixel_y = 4
+	},
+/obj/item/pen{
+	pixel_x = -5;
+	pixel_y = 4
+	},
+/obj/item/pen{
+	pixel_x = -5;
+	pixel_y = 4
+	},
+/obj/item/pen{
+	pixel_x = -5;
+	pixel_y = 4
+	},
 /turf/simulated/floor/black,
 /area/station/hallway/primary/east)
 "aAb" = (
 /obj/table/wood/auto,
-/obj/item/paper_bin,
-/obj/item/clothing/suit/cultist/nerd,
-/obj/item/dice/magic8ball,
+/obj/item/storage/box/nerd_kit{
+	pixel_x = 8;
+	pixel_y = 5
+	},
+/obj/item/clothing/suit/cultist/nerd{
+	pixel_x = -5
+	},
+/obj/item/clothing/head/apprentice{
+	pixel_x = -8;
+	pixel_y = 12
+	},
+/obj/item/clothing/mask/skull{
+	pixel_x = -4
+	},
 /turf/simulated/floor/black,
 /area/station/hallway/primary/east)
 "aAc" = (
 /obj/table/wood/auto,
-/obj/item/storage/box/nerd_kit,
-/obj/item/clothing/head/apprentice,
-/obj/item/clothing/mask/skull,
+/obj/item/paper/book/monster_manual_revised{
+	pixel_x = -3;
+	pixel_y = 1
+	},
+/obj/item/paper/book/DNDrulebook{
+	pixel_x = 3;
+	pixel_y = 1
+	},
 /turf/simulated/floor/black,
 /area/station/hallway/primary/east)
 "aAd" = (
@@ -17015,6 +17062,7 @@
 	dir = 8;
 	icon_state = "line1"
 	},
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor,
 /area/station/turret_protected/Zeta)
 "aEM" = (
@@ -17312,6 +17360,7 @@
 /obj/decal/tile_edge/stripe{
 	icon_state = "bigstripe-edge3"
 	},
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/redblack/corner{
 	dir = 4
 	},
@@ -18296,6 +18345,7 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/plating/random,
 /area/station/storage/tech)
 "aGU" = (
@@ -20830,6 +20880,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/plating/random,
 /area/station/crew_quarters/clown)
 "aKO" = (
@@ -20899,7 +20950,6 @@
 	pixel_x = -28
 	},
 /obj/overlay{
-	anchored = 1;
 	icon = 'icons/misc/beach2.dmi';
 	icon_state = "palm1";
 	layer = 10;
@@ -21963,7 +22013,6 @@
 "aME" = (
 /obj/window/reinforced/east,
 /obj/overlay{
-	anchored = 1;
 	icon = 'icons/misc/beach2.dmi';
 	icon_state = "palm1";
 	layer = 10;
@@ -22000,6 +22049,7 @@
 	dir = 4
 	},
 /obj/item/device/radio/beacon,
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/purple,
 /area/station/medical/research)
 "aMH" = (
@@ -25648,6 +25698,7 @@
 /area/station/science/teleporter)
 "aSX" = (
 /obj/item/device/radio/beacon,
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/white,
 /area/station/science/teleporter)
 "aSY" = (
@@ -25797,6 +25848,7 @@
 	dir = 9;
 	icon_state = "line1"
 	},
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor,
 /area/station/science/bot_storage)
 "aTi" = (
@@ -26177,6 +26229,7 @@
 	icon_state = "x3";
 	name = "peststart"
 	},
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/purple,
 /area/station/medical/medbay/pharmacy)
 "aTR" = (
@@ -26744,6 +26797,7 @@
 	name = "peststart"
 	},
 /obj/item/device/radio/beacon,
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/disposal)
 "aUS" = (
@@ -28141,6 +28195,7 @@
 	},
 /obj/item/device/radio/beacon,
 /obj/machinery/navbeacon/tour/destiny/tour8,
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "aXu" = (
@@ -30275,6 +30330,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/stairs{
 	dir = 1;
 	icon_state = "wood_stairs"
@@ -31159,6 +31215,10 @@
 	dir = 1;
 	icon_state = "line1"
 	},
+/obj/item/device/ticket_writer{
+	pixel_x = 5;
+	pixel_y = 4
+	},
 /turf/simulated/floor,
 /area/station/security/main)
 "bcH" = (
@@ -31531,6 +31591,7 @@
 	dir = 10;
 	icon_state = "line1"
 	},
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor,
 /area/station/mining/refinery)
 "bdo" = (
@@ -31587,6 +31648,7 @@
 	dir = 8;
 	icon_state = "line1"
 	},
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/yellow/side{
 	dir = 8
 	},
@@ -32035,6 +32097,7 @@
 /obj/landmark/start{
 	name = "Medical Doctor"
 	},
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/redwhite{
 	dir = 8
 	},
@@ -32192,7 +32255,7 @@
 	dir = 8
 	},
 /obj/landmark/start{
-	name = "Security Officer"
+	name = "Security Assistant"
 	},
 /turf/simulated/floor,
 /area/station/security/main)
@@ -32333,6 +32396,7 @@
 	dir = 4;
 	icon_state = "pipe-c"
 	},
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/white,
 /area/station/crew_quarters/pool)
 "beO" = (
@@ -32775,6 +32839,7 @@
 	name = "Scientist"
 	},
 /obj/item/device/radio/beacon,
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/engine,
 /area/station/science/testchamber)
 "bfA" = (
@@ -33373,6 +33438,7 @@
 /obj/landmark/start{
 	name = "Scientist"
 	},
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/white,
 /area/station/science/artifact)
 "bgE" = (
@@ -33750,6 +33816,9 @@
 	icon_state = "2-4"
 	},
 /obj/window/crystal/reinforced/north,
+/obj/landmark/start{
+	name = "Security Assistant"
+	},
 /turf/simulated/floor/red,
 /area/station/security/brig)
 "bhj" = (
@@ -33784,6 +33853,7 @@
 	dir = 4
 	},
 /obj/window/crystal/reinforced/north,
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/red,
 /area/station/security/brig)
 "bhl" = (
@@ -34479,6 +34549,7 @@
 /obj/landmark/start{
 	name = "Scientist"
 	},
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/white,
 /area/station/science/chemistry)
 "bil" = (
@@ -35778,11 +35849,6 @@
 	pixel_y = 2
 	},
 /obj/machinery/light_switch/north,
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 9;
-	name = "autoname - SS13"
-	},
 /turf/simulated/floor/white/grime,
 /area/station/crew_quarters/showers{
 	name = "Pool Shower Room"
@@ -35879,6 +35945,7 @@
 	name = "Mineral Magnet Pad"
 	},
 /obj/item/device/radio/beacon,
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor,
 /area/station/mining/staff_room)
 "bkG" = (
@@ -36195,6 +36262,7 @@
 /obj/decal/tile_edge/line/black{
 	icon_state = "line1"
 	},
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/black,
 /area/station/medical/morgue)
 "ble" = (
@@ -36305,7 +36373,7 @@
 	dir = 8
 	},
 /obj/landmark/start{
-	name = "Security Officer"
+	name = "Security Assistant"
 	},
 /turf/simulated/floor/black,
 /area/station/security/main)
@@ -36916,7 +36984,7 @@
 /area/station/security/main)
 "bmw" = (
 /obj/landmark/start{
-	name = "Security Officer"
+	name = "Security Assistant"
 	},
 /turf/simulated/floor/black,
 /area/station/security/main)
@@ -40484,6 +40552,7 @@
 	},
 /obj/cable,
 /obj/item/paper/engine,
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/caution/northsouth,
 /area/station/engine/core)
 "bsx" = (
@@ -40584,6 +40653,7 @@
 /area/station/teleporter)
 "bsI" = (
 /obj/item/device/radio/beacon,
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/black,
 /area/station/teleporter)
 "bsJ" = (
@@ -41322,6 +41392,10 @@
 /obj/item/pen/fancy,
 /obj/item/reagent_containers/food/drinks/mug/random_color,
 /obj/item/stamp/hos,
+/obj/item/reagent_containers/food/drinks/mug/HoS{
+	pixel_x = 12;
+	pixel_y = 4
+	},
 /turf/simulated/floor/red/checker{
 	dir = 4
 	},
@@ -45377,6 +45451,16 @@
 /obj/machinery/photocopier,
 /turf/simulated/floor,
 /area/station/crew_quarters/lounge/starboard)
+"iWh" = (
+/obj/stool/chair/office/yellow{
+	dir = 4
+	},
+/obj/landmark/start{
+	name = "Engineer"
+	},
+/obj/landmark/gps_waypoint,
+/turf/simulated/floor/yellow,
+/area/station/engine/engineering)
 "jor" = (
 /obj/cable{
 	d1 = 1;
@@ -45389,6 +45473,50 @@
 	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
+"mMk" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/decal/tile_edge/line/yellow{
+	dir = 1;
+	icon_state = "line1"
+	},
+/obj/landmark/gps_waypoint,
+/turf/simulated/floor,
+/area/station/quartermaster/office)
+"ouD" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/landmark/gps_waypoint,
+/turf/simulated/floor,
+/area/station/science/lab)
+"tzx" = (
+/obj/landmark/gps_waypoint,
+/turf/simulated/floor/carpet/arcade,
+/area/station/crew_quarters/arcade)
+"ukX" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
+/obj/landmark/gps_waypoint,
+/turf/simulated/floor/bluewhite,
+/area/station/medical/medbay/lobby)
+"vMk" = (
+/obj/landmark/gps_waypoint,
+/turf/simulated/floor/specialroom/chapel{
+	dir = 4
+	},
+/area/station/chapel/sanctuary)
 
 (1,1,1) = {"
 aaa
@@ -85143,7 +85271,7 @@ ayh
 ayh
 ayh
 aAX
-aBQ
+ukX
 aCK
 aEb
 aFE
@@ -88193,7 +88321,7 @@ boX
 bqc
 brj
 bsm
-brj
+iWh
 bqc
 brj
 bqc
@@ -92053,7 +92181,7 @@ akC
 akO
 amg
 amq
-amE
+tzx
 amO
 anb
 ano
@@ -93266,7 +93394,7 @@ amP
 ane
 anl
 anG
-anT
+vMk
 aog
 anT
 aog
@@ -93526,9 +93654,9 @@ aaa
 aaa
 aaa
 ahv
-aaa
-aaa
 ahJ
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -98456,7 +98584,7 @@ bjw
 bkS
 bic
 bnq
-bov
+mMk
 bpz
 bqx
 brJ
@@ -102971,7 +103099,7 @@ aMl
 aOj
 aPO
 aRx
-aMl
+ouD
 aUD
 aWn
 aXU

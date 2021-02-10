@@ -67,9 +67,10 @@
 	icon_state = "pizza_p"
 	amount = 6
 	heal_amt = 3
-	var/topping_color = null
-	var/sliced = 0
-	var/topping = 0
+	var/topping_color = "#ff0000"
+	var/sharpened = FALSE
+	var/sliced = FALSE
+	var/topping = FALSE
 	var/num = 0
 	var/list/topping_colors = list()
 	var/list/topping_holder = list()
@@ -89,8 +90,17 @@
 				src.visible_message("<b>[src]</b> <i>says, \"I'm pizza.\"</i>")
 
 	attackby(obj/item/W as obj, mob/user as mob)
+		if (istype(W, /obj/item/kitchen/utensil/knife/pizza_cutter/traitor))
+			var/obj/item/kitchen/utensil/knife/pizza_cutter/traitor/cutter = W
+			if (cutter.sharpener_mode)
+				if (src.sharpened)
+					boutput(user, "<span class='alert'>This has already been sharpened.</span>")
+					return
+				boutput(user, "<span class='notice'>You sharpen? the pizza???</span>")
+				src.sharpened = TRUE
+				return
 		if (istool(W, TOOL_CUTTING | TOOL_SAWING))
-			if (src.sliced == 1)
+			if (src.sliced)
 				boutput(user, "<span class='alert'>This has already been sliced.</span>")
 				return
 			boutput(user, "<span class='notice'>You cut the pizza into slices.</span>")
@@ -101,15 +111,17 @@
 				var/obj/item/reagent_containers/food/snacks/pizza/P = new src.type(get_turf(src))
 				P.topping_holder += src.topping_colors
 				P.overlays.len = 0
-				P.sliced = 1
+				P.sharpened = src.sharpened
+				P.sliced = TRUE
 				P.amount = 1
 				P.icon_state = "pslice"
 				P.quality = src.quality
 				P.heal_amt += round((src.heal_amt/makeslices))
+				P.topping_color = src.topping_color
 				if(topping)
 					P.name = src.name
 					P.desc = src.desc
-					P.topping = 1
+					P.topping = TRUE
 					P.num = src.num
 					P.add_topping(num)
 				src.reagents.trans_to(P, src.reagents.total_volume/makeslices)
@@ -119,6 +131,9 @@
 			qdel (src)
 
 	attack(mob/M as mob, mob/user as mob, def_zone)
+		if (sharpened && prob(15))
+			boutput(M, "<span class='alert'>That pizza was sharp!</span>")
+			take_bleeding_damage(user, null, 15, DAMAGE_CUT)
 		if (!src.sliced)
 			if (user == M)
 				boutput(user, "<span class='alert'>You can't just cram that in your mouth, you greedy beast!</span>")
@@ -128,11 +143,53 @@
 				user.visible_message("<span class='alert'><b>[user]</b> futilely attempts to shove [src] into [M]'s mouth!</span>")
 				return
 		else
+			if (sharpened)
+				boutput(M, "<span class='alert'>The pizza was too pointy!</span>")
+				take_bleeding_damage(M, user, 50, DAMAGE_CUT)
 			..()
+
+	attack_self(var/mob/user as mob)
+		if (sharpened && prob(15))
+			boutput(user, "<span class='alert'>The pizza was sharp!</span>")
+			take_bleeding_damage(user, null, 15, DAMAGE_CUT)
+		if (!src.sliced)
+			boutput(user, "<span class='alert'>You can't just cram that in your mouth, you greedy beast!</span>")
+			user.visible_message("<b>[user]</b> stares at [src] in a confused manner.")
+			return
+		else
+			if (sharpened)
+				boutput(user, "<span class='alert'>The pizza was too pointy!</span>")
+				take_bleeding_damage(user, user, 50, DAMAGE_CUT)
+			..()
+
+	throw_impact(M)
+		..()
+		if (!sharpened || isnull(M))
+			return
+		if (sliced)
+			if (ishuman(M))
+				var/mob/living/carbon/human/H = M
+				H.implant.Add(src)
+				src.visible_message("<span class='alert'>[src] gets embedded in [M]!</span>")
+				playsound(src.loc, "sound/weapons/slashcut.ogg", 100, 1)
+				H.changeStatus("weakened", 2 SECONDS)
+				src.set_loc(M)
+				src.transfer_all_reagents(M)
+			random_brute_damage(M, 11)
+			take_bleeding_damage(M, null, 25, DAMAGE_STAB)
+		else
+			playsound(src.loc, "sound/weapons/slashcut.ogg", 100, 1)
+			if (ishuman(M))
+				var/mob/living/carbon/human/H = M
+				H.changeStatus("weakened", 5 SECONDS)
+				H.TakeDamage("chest", 35, 0, 0, DAMAGE_CUT)
+			else
+				random_brute_damage(M, 35)
+			take_bleeding_damage(M, null, 25, DAMAGE_CUT)
 
 	proc/add_topping(var/num)
 		var/icon/I
-		if (sliced == 0)
+		if (!sliced)
 			I = new /icon('icons/obj/foodNdrink/food_meals.dmi',"pizza_topping_1")
 			I.Blend(topping_color, ICON_ADD)
 			src.overlays += I
@@ -152,7 +209,7 @@
 /obj/item/reagent_containers/food/snacks/pizza/pepperoni
 	name = "pepperoni pizza"
 	desc = "A typical pepperoni pizza."
-	topping = 1
+	topping = TRUE
 	topping_color = "#C90E0E"
 
 	New()
@@ -162,7 +219,7 @@
 /obj/item/reagent_containers/food/snacks/pizza/meatball
 	name = "meatball pizza"
 	desc = "A typical meatball pizza."
-	topping = 1
+	topping = TRUE
 	topping_color = "#663300"
 
 	New()
@@ -172,7 +229,7 @@
 /obj/item/reagent_containers/food/snacks/pizza/mushroom
 	name = "mushroom pizza"
 	desc = "A typical mushroom pizza."
-	topping = 1
+	topping = TRUE
 	topping_color = "#CFCFCF"
 	food_effects = list("food_disease_resist")
 
@@ -183,12 +240,21 @@
 /obj/item/reagent_containers/food/snacks/pizza/xmas
 	name = "\improper Spacemas pizza"
 	desc = "A traditional Spacemas pizza! It has ham, mashed potatoes, gingerbread and candy canes on it, with eggnog sauce and a fruitcake crust! Yum!"
-	topping = 1
+	topping = TRUE
 	topping_color = "#3CFF00"
 
 	New()
 		..()
 		src.add_topping(0)
+
+/obj/item/reagent_containers/food/snacks/stroopwafel
+	name = "stroopwafel"
+	desc = "A traditional cookie from Holland. Doesn't this need to go into the microwave?"
+	icon = 'icons/obj/foodNdrink/food_snacks.dmi'
+	icon_state = "stroopwafel"
+	amount = 2
+	heal_amt = 2
+	food_effects = list("food_refreshed")
 
 /obj/item/reagent_containers/food/snacks/cookie
 	name = "sugar cookie"
@@ -810,7 +876,7 @@
 	food_effects = list("food_bad_breath")
 
 	attack(mob/M as mob, mob/user as mob, def_zone)
-		if (src.icon_state == "sursd")
+		if (src.icon_state == "surs")
 			if (user == M)
 				boutput(user, "<span class='alert'>You need to take the lid off first, you greedy beast!</span>")
 				user.visible_message("<b>[user]</b> stares at [src] in a confused manner.")
@@ -905,19 +971,19 @@
 	examine(mob/user)
 		. = ..()
 		if (user.bioHolder.HasEffect("accent_swedish"))
-			if (src.icon_state == "surs_closed")
+			if (src.icon_state == "surs")
 				. += "Oooh, a can of surströmming! It's been a while since you've seen one of these. It looks like it's ready to eat."
 			else
 				. += "Oooh, a can of surströmming! It's been a while since you've seen one of these. It smells heavenly!"
 			return
 		else
-			if (src.icon_state == "surs_closed")
+			if (src.icon_state == "surs")
 				. += "The fuck is this? The label's written in some sort of gibberish, and you're pretty sure cans aren't supposed to bulge like that."
 			else
 				. += "<b>AAAAAAAAAAAAAAAAUGH AAAAAAAAAAAUGH IT SMELLS LIKE FERMENTED SKUNK EGG BUTTS MAKE IT STOP</b>"
 
 	attack_self(var/mob/user as mob)
-		if (src.icon_state == "surs_closed")
+		if (src.icon_state == "surs")
 			boutput(user, "<span class='notice'>You pop the lid off the [src].</span>")
 			src.icon_state = "surs-open" //todo: get real sprite
 			for(var/mob/living/carbon/M in viewers(user, null))
@@ -926,7 +992,7 @@
 						boutput(user, "<span class='notice'>Ahhh, that smells wonderful!</span>")
 					else
 						boutput(user, "<span class='alert'><font size=4><B>HOLY FUCK THAT REEKS!!!!!</b></font></span>")
-						user.changeStatus("weakened", 80)
+						user.changeStatus("weakened", 8 SECONDS)
 						user.visible_message("<span class='alert'>[user] suddenly and violently vomits!</span>")
 						user.vomit()
 				else

@@ -363,7 +363,7 @@
 			if(!newkey)
 				return
 
-			if (!src.master || !in_range(src.master, usr) && src.master.loc != usr)
+			if (!src.master?.is_user_in_interact_range(usr))
 				return
 
 			if(!(src.holder in src.master))
@@ -375,7 +375,7 @@
 				newval = codekey
 				return
 
-			if (!src.master || !in_range(src.master, usr) && src.master.loc != usr)
+			if (!src.master?.is_user_in_interact_range(usr))
 				return
 
 			if(!(src.holder in src.master))
@@ -398,7 +398,7 @@
 			if(!newkey)
 				return
 
-			if (!src.master || !in_range(src.master, usr) && src.master.loc != usr)
+			if (!src.master?.is_user_in_interact_range(usr))
 				return
 
 			if(!(src.holder in src.master))
@@ -412,7 +412,7 @@
 			if(!keyval)
 				keyval = new()
 
-			if (!src.master || !in_range(src.master, usr) && src.master.loc != usr)
+			if (!src.master?.is_user_in_interact_range(usr))
 				return
 
 			if(!(src.holder in src.master))

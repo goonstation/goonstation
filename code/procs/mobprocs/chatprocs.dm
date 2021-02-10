@@ -1,8 +1,12 @@
 /mob/proc/say()
 	return
 
-/mob/verb/whisper()
+/mob/proc/whisper(message, forced=FALSE)
 	return
+
+/mob/verb/whisper_verb(message as text)
+	set name = "whisper"
+	return src.whisper(message)
 
 /mob/verb/say_verb(message as text)
 	set name = "say"
@@ -672,7 +676,7 @@
 		if (!C.mob) continue
 		var/mob/M = C.mob
 
-		if (recipients.Find(M.client))
+		if (M.client in recipients)
 			continue
 		if (M.client.holder && !M.client.only_local_looc && !M.client.player_mode)
 			recipients += M.client
@@ -776,7 +780,7 @@
 	return null
 
 /mob/proc/see(message)
-	if (!src.is_active())
+	if (!isalive(src))
 		return 0
 	boutput(src, message)
 	return 1
@@ -795,9 +799,10 @@
 	usr.client.preferences.auto_capitalization = !usr.client.preferences.auto_capitalization
 	boutput(usr, "<span class='notice'>[usr.client.preferences.auto_capitalization ? "Now": "No Longer"] auto capitalizing messages.</span>")
 
-/mob/verb/togglelocaldeadchat()
+/mob/dead/verb/togglelocaldeadchat()
 	set desc = "Toggle whether you can hear all chat while dead or just local chat"
 	set name = "Toggle Deadchat Range"
+	set category = "Ghost"
 
 	if (!usr.client) //How could this even happen?
 		return
@@ -808,6 +813,7 @@
 /mob/dead/verb/toggle_ghost_radio()
 	set desc = "Toggle whether you can hear radio chatter while dead"
 	set name = "Toggle Ghost Radio"
+	set category = "Ghost"
 
 	if (!usr.client) //How could this even happen?
 		return

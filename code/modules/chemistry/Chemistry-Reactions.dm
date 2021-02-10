@@ -1,6 +1,9 @@
 /proc/ldmatter_reaction(var/datum/reagents/holder, var/created_volume, var/id)
 	var/in_container = 0
 	var/atom/psource = holder.my_atom
+	if(created_volume < 5)
+		return
+
 	while (psource)
 		psource = psource.loc
 		if (istype(psource, /obj) && !isitem(psource) && (istype(psource, /obj/machinery/vehicle) || !istype(psource, /obj/machinery)) && !istype(psource, /obj/submachine))
@@ -14,6 +17,8 @@
 	var/howmany = max(1,covered.len / 2.2)
 	for(var/i = 0, i < howmany, i++)
 		var/atom/source = pick(covered)
+		if(ON_COOLDOWN(source, "ldm_reaction_ratelimit", 0.1 SECONDS))
+			return
 		new/obj/decal/implo(source)
 		playsound(source, 'sound/effects/suck.ogg', 100, 1)
 
@@ -31,7 +36,7 @@
 				qdel(psource)
 				return
 
-		for(var/atom/movable/M in view(3 + (created_volume > 30 ? 1:0), source))
+		for(var/atom/movable/M in view(clamp(2+round(created_volume/15), 0, 4), source))
 			if(M.anchored || M == source || M.throwing) continue
 			M.throw_at(source, 20 + round(created_volume * 2), 1 + round(created_volume / 10))
 			LAGCHECK(LAG_MED)
@@ -165,3 +170,18 @@
 	H.bioHolder.mobAppearance.customization_third = "None"
 	H.cust_three_state = customization_styles["None"]
 	H.update_colorful_parts()
+
+/proc/flashpowder_reaction(turf/center, amount)
+	elecflash(center)
+
+	for (var/mob/living/M in all_viewers(5, center))
+		if (isintangible(M))
+			continue
+		var/anim_dur = issilicon(M) ? 30 : 60
+		var/dist = get_dist(M, center)
+		var/stunned = max(0, amount * (3 - dist) * 0.1)
+		var/eye_damage = issilicon(M) ? 0 : max(0, amount * (2 - dist) * 0.1)
+		var/eye_blurry = issilicon(M) ? 0 : max(0, amount * (5 - dist) * 0.2)
+		var/stam_damage = 26 * min(amount, 5)
+
+		M.apply_flash(anim_dur, stunned, stunned, 0, eye_blurry, eye_damage, stamina_damage = stam_damage)

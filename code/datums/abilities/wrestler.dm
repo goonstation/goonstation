@@ -97,7 +97,7 @@
 
 /* 	/		/		/		/		/		/		Ability Holder		/		/		/		/		/		/		/		/		*/
 
-/obj/screen/ability/topBar/wrestler
+/atom/movable/screen/ability/topBar/wrestler
 	clicked(params)
 		var/datum/targetable/wrestler/spell = owner
 		if (!istype(spell))
@@ -134,6 +134,12 @@
 	var/is_inherent = 0 // Are we a wrestler as opposed to somebody with a wrestling belt?
 	var/fake = 0
 
+	deepCopy()
+		. = ..()
+		var/datum/abilityHolder/wrestler/copy = .
+		if(istype(copy) && src.is_inherent == TRUE)
+			copy.is_inherent = TRUE
+
 /datum/abilityHolder/wrestler/fake
 	fake = 1
 /////////////////////////////////////////////// Wrestler spell parent ////////////////////////////
@@ -151,7 +157,7 @@
 	var/fake = 0
 
 	New()
-		var/obj/screen/ability/topBar/wrestler/B = new /obj/screen/ability/topBar/wrestler(null)
+		var/atom/movable/screen/ability/topBar/wrestler/B = new /atom/movable/screen/ability/topBar/wrestler(null)
 		B.icon = src.icon
 		B.icon_state = src.icon_state
 		B.owner = src
@@ -163,7 +169,7 @@
 	updateObject()
 		..()
 		if (!src.object)
-			src.object = new /obj/screen/ability/topBar/wrestler()
+			src.object = new /atom/movable/screen/ability/topBar/wrestler()
 			object.icon = src.icon
 			object.owner = src
 		if (src.last_cast > world.time)

@@ -154,8 +154,8 @@
 			T.setup(traitor_mob.mind, P)
 			pda_pass = T.lock_code
 
-			boutput(traitor_mob, "The Syndicate have cunningly disguised a Syndicate Uplink as your [P.name] [loc]. Simply enter the code \"[pda_pass]\" into the ringtone select to unlock its hidden features.")
-			traitor_mob.mind.store_memory("<B>Set your ringtone to:</B> [pda_pass] (In the Messenger menu in the [P.name] [loc]).")
+			boutput(traitor_mob, "The Syndicate have cunningly disguised a Syndicate Uplink as your [P.name] [loc]. Simply enter the code \"[pda_pass]\" into the ring message select to unlock its hidden features.")
+			traitor_mob.mind.store_memory("<B>Set your ring message to:</B> [pda_pass] (In the Messenger menu in the [P.name] [loc]).")
 
 		else
 			var/obj/item/uplink/syndicate/T = new(get_turf(traitor_mob))
@@ -196,6 +196,9 @@
 	if (!R && istype(traitor_mob.l_store, /obj/item/device/pda2))
 		R = traitor_mob.l_store
 		loc = "In your pocket"
+	if (!R && istype(traitor_mob.wear_id, /obj/item/device/pda2))
+		R = traitor_mob.wear_id
+		loc = "In your ID slot"
 	if (!R && istype(traitor_mob.l_hand, /obj/item/storage))
 		var/obj/item/storage/S = traitor_mob.l_hand
 		var/list/L = S.get_contents()
@@ -232,8 +235,8 @@
 		pda_pass = T.lock_code
 
 		SHOW_SPY_THIEF_TIPS(traitor_mob)
-		boutput(traitor_mob, "The Syndicate have cunningly disguised a Spy Uplink as your [P.name] [loc]. Simply enter the code \"[pda_pass]\" into the ringtone select to unlock its hidden features.")
-		traitor_mob.mind.store_memory("<B>Set your ringtone to:</B> [pda_pass] (In the Messenger menu in the [P.name] [loc]).")
+		boutput(traitor_mob, "The Syndicate have cunningly disguised a Spy Uplink as your [P.name] [loc]. Simply enter the code \"[pda_pass]\" into the ring message select to unlock its hidden features.")
+		traitor_mob.mind.store_memory("<B>Set your ring message to:</B> [pda_pass] (In the Messenger menu in the [P.name] [loc]).")
 	else
 		boutput(traitor_mob, "Something is BUGGED and we couldn't find you a PDA. Tell a coder.")
 

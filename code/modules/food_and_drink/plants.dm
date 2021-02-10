@@ -57,7 +57,7 @@
 			return
 		..()
 
-	streak(var/list/directions)
+	streak_object(var/list/directions)
 		SPAWN_DBG(0)
 			var/direction = pick(directions)
 			for (var/i = 0, i < pick(1, 200; 2, 150; 3, 50; 4), i++)
@@ -215,6 +215,18 @@
 	plant_reagent = "nitrogen"
 	food_color = "#CCFFCC"
 	food_effects = list("food_space_farts")
+
+/obj/item/reagent_containers/food/snacks/plant/peas
+	name = "pea pod"
+	crop_suffix = " pod"
+	desc = "These peas are like peas in a pod. Yeah."
+	planttype = /datum/plant/crop/peas
+	icon_state = "peapod"
+	amount = 1
+	heal_amt = 1
+	throwforce = 0
+	force = 0
+	food_color = "#77AA77"
 
 /obj/item/reagent_containers/food/snacks/plant/soylent
 	name = "soylent chartreuse"
@@ -1094,24 +1106,21 @@
 				new /obj/item/reagent_containers/food/snacks/ingredient/chips(get_turf(src))
 				pool (src)
 				qdel(src)
-		if (istype(W, /obj/item/cable_coil)) //kubius potato battery: creation operation
-			if (src.icon_state == "potato")
+		var/obj/item/cable_coil/C = W
+		if (istype(C)) //kubius potato battery: creation operation
+			if (src.icon_state == "potato" && C.use(1))
 				user.visible_message("[user] sticks some wire into [src].", "You stick some wire into [src], creating a makeshift power cell.")
 				var/datum/plantgenes/DNA = src.plantgenes
 				var/obj/item/cell/potato/P = new /obj/item/cell/potato(get_turf(src),DNA.potency,DNA.endurance)
 				P.name = "[src.name] battery"
 				P.transform = src.transform
-				W:amount -= 1
-				W:updateicon()
 				qdel (src)
-			else if (src.icon_state == "potato-peeled")
+			else if (src.icon_state == "potato-peeled" && C.use(1))
 				user.visible_message("[user] sticks some wire into [src].", "You stick some wire into [src], creating a makeshift battery.")
 				var/datum/plantgenes/DNA = src.plantgenes
 				var/obj/item/ammo/power_cell/self_charging/potato/P = new /obj/item/ammo/power_cell/self_charging/potato(get_turf(src),DNA.potency,DNA.endurance)
 				P.name = "[src.name] battery"
 				P.transform = src.transform
-				W:amount -= 1
-				W:updateicon()
 				qdel (src)
 		else ..()
 
@@ -1350,3 +1359,8 @@
 	food_color = "#ccccff"
 	validforhat = 1
 	var/datum/light/light
+
+	spawnable
+		make_reagents()
+			..()
+			reagents.add_reagent("omnizine", 10)

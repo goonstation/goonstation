@@ -40,7 +40,7 @@
 	name = "Revenant"
 	desc = "The subject appears to be possessed by a wraith."
 	id = "revenant"
-	effectType = EFFECT_TYPE_POWER
+	effectType = EFFECT_TYPE_DISABILITY
 	isBad = 0 // depends on who you ask really
 	can_copy = 0
 	var/isDying = 0
@@ -244,7 +244,7 @@
 	theme = "wraith"
 
 	New()
-		var/obj/screen/ability/topBar/B = new /obj/screen/ability/topBar(null)
+		var/atom/movable/screen/ability/topBar/B = new /atom/movable/screen/ability/topBar(null)
 		B.icon = src.icon
 		B.icon_state = src.icon_state
 		B.owner = src

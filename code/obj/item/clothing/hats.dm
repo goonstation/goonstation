@@ -7,9 +7,10 @@
 	wear_image_icon = 'icons/mob/head.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_headgear.dmi'
 	body_parts_covered = HEAD
-	compatible_species = list("human", "monkey", "werewolf", "flubber")
+	compatible_species = list("human", "cow", "werewolf", "flubber")
 	var/seal_hair = 0 // best variable name I could come up with, if 1 it forms a seal with a suit so no hair can stick out
 	block_vision = 0
+	var/path_prot = 1 // protection from airborne pathogens, multiplier for chance to be infected
 
 
 	setupProperties()
@@ -81,6 +82,7 @@
 	c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH | BLOCKCHOKE
 	desc = "This hood protects you from harmful biological contaminants."
 	seal_hair = 1
+	path_prot = 0
 
 	setupProperties()
 		..()
@@ -115,6 +117,7 @@
 	c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH | BLOCKCHOKE
 	desc = "Helps protect from vacuum for a short period of time."
 	seal_hair = 1
+	path_prot = 0
 
 	setupProperties()
 		..()
@@ -183,12 +186,14 @@
 			src.on = !src.on
 
 		if (src.on)
+			src.firesource = TRUE
 			src.force = 10
 			src.hit_type = DAMAGE_BURN
 			src.icon_state = "cakehat1"
 			light.enable()
 			processing_items |= src
 		else
+			src.firesource = FALSE
 			src.force = 3
 			src.hit_type = DAMAGE_BLUNT
 			src.icon_state = "cakehat0"
@@ -758,7 +763,7 @@
 						if (istype(the_head))
 							H.visible_message("<span class='combat'><b>[H]'s head flies right off [his_or_her(H)] shoulders![prob(33) ? " HOLY SHIT!" : null]</b></span>")
 							var/the_dir = src.last_move ? src.last_move : alldirs//istype(src.throw_source) ? get_dir(src.throw_source, H) : alldirs
-							the_head.streak(the_dir, the_head.created_decal)
+							the_head.streak_object(the_dir, the_head.created_decal)
 							src.throw_source = null
 					else
 						M.TakeDamageAccountArmor("chest", 10, 0)
@@ -1222,3 +1227,9 @@
 	item_state = "antlers"
 	w_class = 1.0
 	throwforce = 0
+
+/obj/item/clothing/head/pajama_cap
+	name = "nightcap"
+	desc = "Is it truly a good night without one?"
+	icon_state = "pajama_hat"
+	item_state = "pajama_hat"

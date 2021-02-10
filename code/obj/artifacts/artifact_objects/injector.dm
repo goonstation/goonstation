@@ -4,7 +4,7 @@
 
 /datum/artifact/injector
 	associated_object = /obj/artifact/injector
-	rarity_class = 2
+	rarity_weight = 350
 	validtypes = list("ancient","martian","eldritch","precursor")
 	validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/electric,/datum/artifact_trigger/heat,
 	/datum/artifact_trigger/radiation,/datum/artifact_trigger/carbon_touch,/datum/artifact_trigger/silicon_touch,
@@ -16,6 +16,7 @@
 	var/injection_amount = 10
 
 	post_setup()
+		. = ..()
 		var/list/potential_reagents = list()
 		switch(artitype.name)
 			if ("ancient")

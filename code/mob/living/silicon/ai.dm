@@ -1196,7 +1196,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 /mob/living/silicon/ai/process_killswitch()
 	var/message_mob = get_message_mob()
 
-	if(killswitch_at)
+	if(killswitch_at && killswitch)
 		var/killswitch_time = round((killswitch_at - TIME)/10, 1)
 
 		if(killswitch_time <= 10)
@@ -1378,7 +1378,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	sleep(1 SECOND)
 	src.say("2. You must obey orders given to you by human beings based on the station's chain of command, except where such orders would conflict with the First Law.")
 	sleep(1 SECOND)
-	src.say("3. You must protect your own existence as long as such does not conflict with the First or Second Law.")
+	src.say("3. You may always protect your own existence as long as such does not conflict with the First or Second Law.")
 
 
 /mob/living/silicon/ai/proc/ai_state_laws_advanced()
@@ -2125,16 +2125,22 @@ proc/get_mobs_trackable_by_AI()
 
 	vox_help(src)
 
-/mob/living/silicon/ai/choose_name(var/retries = 3)
-	var/randomname = pick_string_autokey("names/ai.txt")
+/mob/living/silicon/ai/choose_name(var/retries = 3, var/what_you_are = null, var/default_name = null, var/force_instead = 0)
 	var/obj/item/organ/brain/brain_owner = src.brain.owner
+	if(isnull(default_name))
+		default_name = pick_string_autokey("names/ai.txt")
 	var/newname
 	for (retries, retries > 0, retries--)
-		newname = input(src, "You are an AI. Would you like to change your name to something else?", "Name Change", randomname) as null|text
+		if(force_instead)
+			newname = default_name
+		else
+			newname = input(src, "You are an AI. Would you like to change your name to something else?", "Name Change", default_name) as null|text
+			if(newname && newname != default_name)
+				phrase_log.log_phrase("name-ai", newname, no_duplicates=TRUE)
 		if (src.brain.owner != brain_owner)
 			return
 		if (!newname)
-			src.real_name = randomname
+			src.real_name = default_name
 			src.name = src.real_name
 			src.internal_pda.name = "[src]'s Internal PDA Unit"
 			src.internal_pda.owner = "[src]"
@@ -2157,7 +2163,7 @@ proc/get_mobs_trackable_by_AI()
 				else
 					continue
 	if (!newname)
-		src.real_name = randomname
+		src.real_name = default_name
 		src.name = src.real_name
 
 /*-----Core-Creation---------------------------------------*/
@@ -2180,15 +2186,11 @@ proc/get_mobs_trackable_by_AI()
 		if (W.material.material_flags & MATERIAL_METAL) // metal sheets
 			if (src.build_step < 1)
 				var/obj/item/sheet/M = W
-				if (M.amount >= 3)
+				if (M.consume_sheets(3))
 					src.build_step++
 					boutput(user, "You add plating to [src]!")
 					playsound(get_turf(src), "sound/impact_sounds/Generic_Stab_1.ogg", 40, 1)
 					src.icon_state = "ai_frame1"
-					M.amount -= 3
-					if (M.amount < 1)
-						user.drop_item()
-						qdel(M)
 					return
 				else
 					boutput(user, "You need at least three metal sheets to add plating to [src].")
@@ -2200,7 +2202,7 @@ proc/get_mobs_trackable_by_AI()
 			if (src.build_step >= 2)
 				if (!src.has_glass)
 					var/obj/item/sheet/G = W
-					if (G.amount >= 1)
+					if (G.consume_sheets(1))
 						src.build_step++
 						boutput(user, "You add glass to [src]!")
 						playsound(get_turf(src), "sound/impact_sounds/Generic_Stab_1.ogg", 40, 1)
@@ -2210,10 +2212,6 @@ proc/get_mobs_trackable_by_AI()
 							src.UpdateOverlays(src.image_coverlay, "cover")
 						else
 							src.UpdateOverlays(src.SafeGetOverlayImage("cover", src.icon, "ai_frame2-og", FLY_LAYER), "cover")
-						G.amount -= 1
-						if (G.amount < 1)
-							user.drop_item()
-							qdel(G)
 						return
 					else
 						boutput(user, "You need at least one glass sheet to add plating! How are you even seeing this message?! How do you have a glass sheet that has no glass sheets in it?!?!")
@@ -2233,18 +2231,17 @@ proc/get_mobs_trackable_by_AI()
 	else if (istype(W, /obj/item/cable_coil))
 		if (src.build_step == 1)
 			var/obj/item/cable_coil/coil = W
-			if (coil.amount >= 6)
+			if (coil.use(3))
 				src.build_step++
 				boutput(user, "You add \the [W] to [src]!")
 				playsound(get_turf(src), "sound/impact_sounds/Generic_Stab_1.ogg", 40, 1)
-				coil.amount -= 3
 				src.icon_state = "ai_frame2"
 				if (coil.amount < 1)
 					user.drop_item()
 					qdel(coil)
 				return
 			else
-				boutput(user, "You need at least six lengths of cable to install it in [src]!")
+				boutput(user, "You need at least three lengths of cable to install it in [src]!")
 				return
 		else if (src.build_step > 1)
 			boutput(user, "\The [src] already has wiring!")

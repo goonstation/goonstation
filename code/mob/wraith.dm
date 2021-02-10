@@ -389,8 +389,7 @@
 			/*var/rendered = "<strong>[src.name]</strong> screeches incomprehensibly!"
 
 			var/list/listening = all_hearers(null, src)
-			listening -= src
-			listening += src
+			listening |= src
 
 			for (var/mob/M in listening)
 				M.show_message(rendered, 2)*/

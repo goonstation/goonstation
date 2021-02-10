@@ -87,7 +87,7 @@
 			boutput(usr, "<span class='alert'>Quit that! You're dead!</span>")
 			return
 
-		if(!istype(over_object, /obj/screen/hud))
+		if(!istype(over_object, /atom/movable/screen/hud))
 			if (get_dist(usr,src) > 1)
 				boutput(usr, "<span class='alert'>You're too far away from it to do that.</span>")
 				return
@@ -122,8 +122,8 @@
 						continue
 					src.stack_item(I)
 				usr.visible_message("<span class='notice'>[usr.name] stacks \the [src]!</span>")
-		else if(istype(over_object, /obj/screen/hud))
-			var/obj/screen/hud/H = over_object
+		else if(istype(over_object, /atom/movable/screen/hud))
+			var/atom/movable/screen/hud/H = over_object
 			var/mob/living/carbon/human/dude = usr
 			switch(H.id)
 				if("lhand")
@@ -190,6 +190,17 @@
 
 	setup_material()
 		src.setMaterial(getMaterial("molitz"), appearance = 0, setname = 0)
+		return ..()
+
+/obj/item/raw_material/molitz_beta
+	name = "molitz crystal"
+	desc = "An unusual crystal of Molitz."
+	icon_state = "molitz"
+	material_name = "Molitz Beta"
+	crystal = 1
+
+	setup_material()
+		src.setMaterial(getMaterial("molitz_b"), appearance = 1, setname = 0)
 		return ..()
 
 /obj/item/raw_material/pharosium
@@ -582,7 +593,7 @@
 				//Can't step on stuff if you have no legs, and it can't hurt if they're robolegs.
 				if (!istype(H.limbs.l_leg, /obj/item/parts/human_parts) && !istype(H.limbs.r_leg, /obj/item/parts/human_parts))
 					return
-				if(!H.shoes || (src.material && src.material.hasProperty("hard") && src.material.getProperty("hard") >= 70))
+				if((!H.shoes || (src.material && src.material.hasProperty("hard") && src.material.getProperty("hard") >= 70)) && !iscow(H))
 					boutput(H, "<span class='alert'><B>You step on [src]! Ouch!</B></span>")
 					step_on(H)
 		..()
@@ -613,9 +624,9 @@
 
 /obj/item/raw_material/shard/proc/step_on(mob/living/carbon/human/H as mob)
 	playsound(src.loc, src.sound_stepped, 50, 1)
-	var/obj/item/affecting = H.organs[pick("l_leg", "r_leg")]
 	H.changeStatus("weakened", 3 SECONDS)
 	H.force_laydown_standup()
+	var/obj/item/affecting = H.organs[pick("l_leg", "r_leg")]
 	affecting.take_damage(force, 0)
 	H.UpdateDamageIcon()
 

@@ -29,12 +29,9 @@ var/global
 
 	datum/datacore/data_core = null
 
-	obj/overlay/plmaster = null
-	obj/overlay/slmaster = null
-
 	turf/buzztile = null
 
-	obj/screen/renderSourceHolder
+	atom/movable/screen/renderSourceHolder
 	obj/overlay/zamujasa/round_start_countdown/game_start_countdown	// Countdown clock for round start
 	list/globalImages = list() //List of images that are always shown to all players. Management procs at the bottom of the file.
 	list/image/globalRenderSources = list() //List of images that are always attached invisibly to all player screens. This makes sure they can be used as rendersources.
@@ -439,7 +436,7 @@ var/global
 	farty_party = 0
 	deep_farting = 0
 
-	turf/unsimulated/wall/titlecard/lobby_titlecard
+	datum/titlecard/lobby_titlecard
 
 	total_souls_sold = 0
 	total_souls_value = 0
