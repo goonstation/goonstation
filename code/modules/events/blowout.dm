@@ -22,7 +22,7 @@
 			for_by_tcl(A, /obj/machinery/door/airlock)
 				LAGCHECK(LAG_LOW)
 				if (A.z != Z_LEVEL_STATION)
-					break
+					continue
 				if (!(istype(A, /obj/machinery/door/airlock/maintenance) || istype(A, /obj/machinery/door/airlock/pyro/maintenance) || istype(A, /obj/machinery/door/airlock/gannets/maintenance) || istype(A, /obj/machinery/door/airlock/gannets/glass/maintenance)))
 					continue
 				A.req_access = null
