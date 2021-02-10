@@ -403,6 +403,7 @@
 	var/is_awful_monsterthing = 0
 	var/static/list/grody_adj = list("horrifying", "disgusting", "monstrous", "soulless", "grody", "depraved", "wild", "savage", "big, bad")
 	var/static/list/grody_noun = list("animal", "beast", "monster", "ghoul", "abomination", "bear", "lizard", "weirdo", "creep")
+
 	New(var/obj/item/thing2eat, var/mob/_M, var/mob/_user)
 		..()
 		src.master = thing2eat
