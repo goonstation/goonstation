@@ -1119,6 +1119,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\vending\vending.dm"
 #include "code\modules\worldgen\GenerateMining.dm"
 #include "code\modules\worldgen\PrefabRuntimeChecker.dm"
+#include "code\modules\worldgen\prefabs.dm"
 #include "code\modules\worldgen\worldgen_parent.dm"
 #include "code\obj\access_spawn.dm"
 #include "code\obj\airbridge.dm"
