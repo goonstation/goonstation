@@ -897,6 +897,8 @@ datum/projectile/snowball
 		return
 	var/turf/Q1 = get_turf(S)
 	var/turf/Q2 = get_turf(T)
+	if (!(Q1 && Q2))
+		return
 	return initialize_projectile(Q1, DATA, Q2.x - Q1.x, Q2.y - Q1.y, S, remote_sound_source, alter_proj = alter_proj)
 
 /proc/initialize_projectile_pixel(var/atom/movable/S, var/datum/projectile/DATA, var/T, var/pox, var/poy, var/datum/callback/alter_proj = null)
@@ -906,6 +908,8 @@ datum/projectile/snowball
 		return
 	var/turf/Q1 = get_turf(S)
 	var/turf/Q2 = get_turf(T)
+	if (!(Q1 && Q2))
+		return
 	return initialize_projectile(Q1, DATA, (Q2.x - Q1.x) * 32 + pox, (Q2.y - Q1.y) * 32 + poy, S, alter_proj = alter_proj)
 
 /proc/initialize_projectile_pixel_spread(var/atom/movable/S, var/datum/projectile/DATA, var/T, var/pox, var/poy, var/spread_angle, var/datum/callback/alter_proj = null)
