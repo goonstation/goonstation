@@ -29,17 +29,17 @@
 	atksilicon = 1
 	flying = 1
 	generic = 0
-	seekrange = 128						//A perk of being a high-tech prototype - large detection range.
-	var/mode = 0						//0 - Beacon. 1 - Unanchored. 2 - Anchored.
-	var/cooldown = 0					//Used to prevent the SWORD from using abilities all the time.
-	var/transformation_triggered = false//Used to check if the initial transformation has already been started or not.
-	var/changing_modes = false			//Used to prevent some things during transformation sequences.
-	var/rotation_locked = false			//Used to lock the SWORD's rotation in place.
-	var/current_ability = null			//Used to keep track of what ability the SWORD is currently using.
-	var/used_ability = 0				//Used to only allow transforming after at least one ability has been used.
-	var/current_heat_level = 0			//Used to keep track of the SWORD's heat for Heat Reallocation.
-	var/stuck_location = null			//Used to prevent the SWORD from getting stuck too much.
-	var/stuck_timer = null				//Ditto.
+	seekrange = 128							//A perk of being a high-tech prototype - large detection range.
+	var/mode = 0							//0 - Beacon. 1 - Unanchored. 2 - Anchored.
+	var/cooldown = 0						//Used to prevent the SWORD from using abilities all the time.
+	var/transformation_triggered = false	//Used to check if the initial transformation has already been started or not.
+	var/changing_modes = false				//Used to prevent some things during transformation sequences.
+	var/rotation_locked = false				//Used to lock the SWORD's rotation in place.
+	var/current_ability = null				//Used to keep track of what ability the SWORD is currently using.
+	var/used_ability = 0					//Used to only allow transforming after at least one ability has been used.
+	var/current_heat_level = 0				//Used to keep track of the SWORD's heat for Heat Reallocation.
+	var/stuck_location = null				//Used to prevent the SWORD from getting stuck too much.
+	var/stuck_timer = null					//Ditto.
 	var/died_already = false				//Used to prevent spam-reporting the death of the SWORD.
 	var/image/glow
 
