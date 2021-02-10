@@ -201,9 +201,11 @@
 
 		var/datum/lifeprocess/L
 		for (var/thing in src.lifeprocesses)
-			if (!thing) continue
 			if(src.disposed) return
 			L = src.lifeprocesses[thing]
+			if(!L)
+				logTheThing("debug", src, null, "had lifeprocess [thing] removed during Life() probably.")
+				continue
 			L.process(environment)
 
 		for (var/obj/item/implant/I in src.implant)

@@ -395,10 +395,11 @@ var/f_color_selector_handler/F_Color_Selector
 //	loop_checks = 0
 
 	if(world.load_intra_round_value("heisenbee_tier") >= 15 && prob(50) || prob(3))
-		pregameHTML = {"
-			<meta http-equiv='X-UA-Compatible' content='IE=edge'><style>body{margin:0;padding:0;background:url([resource("images/heisenbee_titlecard.png")]) black;background-size:100%;background-repeat:no-repeat;overflow:hidden;background-position:center center;background-attachment:fixed;}</style><script>document.onclick=function(){window.location.href="byond://winset?id=mapwindow.map&focus=true";}</script>
-			<a href="https://www.deviantart.com/alexbluebird" target="_blank" style="position:absolute;bottom:3px;right:3px;color:white;opacity:0.7;">by AlexBlueBird</a>
-		"}
+		lobby_titlecard = new /datum/titlecard/heisenbee()
+	else
+		lobby_titlecard = new /datum/titlecard()
+
+	lobby_titlecard.set_pregame_html()
 
 	diary = file("data/logs/[time2text(world.realtime, "YYYY/MM-Month/DD-Day")].log")
 	diary_name = "data/logs/[time2text(world.realtime, "YYYY/MM-Month/DD-Day")].log"
@@ -672,6 +673,7 @@ var/f_color_selector_handler/F_Color_Selector
 	processScheduler.stop()
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_REBOOT)
 	save_intraround_jars()
+	global.phrase_log.save()
 	save_tetris_highscores()
 	if (current_state < GAME_STATE_FINISHED)
 		current_state = GAME_STATE_FINISHED

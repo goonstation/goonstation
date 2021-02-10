@@ -1301,6 +1301,7 @@
 	if (LinkBlocked(usr.loc,src.loc)) return
 	if (isAI(usr) || isAI(src)) return
 	if (isghostcritter(usr) && !isdead(src)) return
+	if(!isliving(usr)) return
 	src.show_inv(usr)
 
 /mob/living/carbon/human/verb/fuck()
@@ -1412,7 +1413,7 @@
 	if (src.stamina < STAMINA_WINDED_SPEAK_MIN && !ignore_stamina_winded)
 		//src.emote(pick("gasp", "choke", "cough"))
 		//boutput(src, "<span class='alert'>You are too exhausted to speak.</span>")
-		whisper(message)
+		whisper(message, forced=TRUE)
 		src.say_language = original_language
 		return
 
@@ -1469,7 +1470,7 @@
 	return ..(text,special)
 
 //Lallander was here
-/mob/living/carbon/human/whisper(message as text)
+/mob/living/carbon/human/whisper(message as text, forced=FALSE)
 	if (src.bioHolder.HasEffect("revenant"))
 		return src.say(message)
 	var/message_mode = null
@@ -1614,6 +1615,8 @@
 		processed = saylist(messages[2], heard_b, olocs, thickness, italics, processed, 1)
 
 	message = messages[1]
+	if(src.client && !forced)
+		phrase_log.log_phrase("whisper", html_decode(message))
 	for (var/mob/M in eavesdropping)
 		if (M.say_understands(src, lang_id))
 			var/message_c = stars(message)

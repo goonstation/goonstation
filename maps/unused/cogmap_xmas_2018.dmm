@@ -11934,7 +11934,7 @@
 /obj/machinery/door/firedoor/pyro{
 	dir = 4
 	},
-/obj/item/reagent_containers/food/snacks/cake/fruit,
+/obj/item/reagent_containers/food/snacks/fruit_cake,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/cafeteria)
 "aAs" = (
@@ -27081,7 +27081,7 @@
 /obj/item/plate,
 /obj/item/decoration/ashtray,
 /obj/item/kitchen/utensil/fork,
-/obj/item/reagent_containers/food/snacks/cake/fruit,
+/obj/item/reagent_containers/food/snacks/fruit_cake,
 /turf/simulated/floor/carpet/green/standard/edge/east,
 /area/station/crew_quarters/cafeteria)
 "beu" = (

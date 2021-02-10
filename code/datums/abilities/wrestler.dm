@@ -134,6 +134,12 @@
 	var/is_inherent = 0 // Are we a wrestler as opposed to somebody with a wrestling belt?
 	var/fake = 0
 
+	deepCopy()
+		. = ..()
+		var/datum/abilityHolder/wrestler/copy = .
+		if(istype(copy) && src.is_inherent == TRUE)
+			copy.is_inherent = TRUE
+
 /datum/abilityHolder/wrestler/fake
 	fake = 1
 /////////////////////////////////////////////// Wrestler spell parent ////////////////////////////

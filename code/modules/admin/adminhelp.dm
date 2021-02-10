@@ -59,7 +59,8 @@
 		var/ircmsg[] = new()
 		ircmsg["key"] = "Loggo"
 		ircmsg["name"] = "First Adminhelp Notice"
-		ircmsg["msg"] = "Logs for this round can be found here: https://mini.xkeeper.net/ss13/admin/log-get.php?id=[config.server_id]&date=[roundLog_date]"
+		// ircmsg["msg"] = "Logs for this round can be found here: https://mini.xkeeper.net/ss13/admin/log-get.php?id=[config.server_id]&date=[roundLog_date]"
+		ircmsg["msg"] = "Logs for this round can be found here: https://mini.xkeeper.net/ss13/admin/log-viewer.php?server=[config.server_id]&redownload=1&view=[roundLog_date].html"
 		ircbot.export("help", ircmsg)
 
 	var/ircmsg[] = new()
@@ -166,6 +167,9 @@
 
 	if(!msg)
 		msg = input("Please enter your prayer to any gods that may be listening - be careful what you wish for as the gods may be the vengeful sort!") as null|text
+
+	if(msg)
+		phrase_log.log_phrase("prayer", msg)
 
 	msg = copytext(strip_html(msg), 1, MAX_MESSAGE_LEN)
 

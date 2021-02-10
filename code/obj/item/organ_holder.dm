@@ -1124,7 +1124,7 @@
 		if (islist(organ_list))
 			for (var/i in organ_list)
 				//ignore these things which can't be robotic for a regular human atm. And butts cause they aren't real organs, plus removing butts is a crime.
-				if (i =="all" || i == "head" || i == "skull" || i == "brain" || i == "chest" || i == "butt")
+				if (i =="all" || i == "head" || i == "skull" || i == "brain" || i == "chest" || i == "butt" || i == "tail")
 					continue
 				var/obj/item/organ/O = organ_list[i]
 				//if it's not robotic we're done, return 0
