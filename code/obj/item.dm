@@ -378,7 +378,6 @@
 	..()
 
 
-//disgusting proc. merge with foods later. PLEASE - ok
 /obj/item/proc/Eat(var/mob/M as mob, var/mob/user, var/bypass_utensils = 0)
 	if(!M.can_eat(src, user, bypass_utensils))
 		return 0
