@@ -1,5 +1,4 @@
 #define ISDISTEDGE(A, D) (((A.x > (world.maxx - D) || A.x <= D)||(A.y > (world.maxy - D) || A.y <= D))?1:0) //1 if A is within D tiles range from edge of the map.
-#define SPAWN(TYPE,LOC,NUM) for(var/i=0, i<NUM, i++) new TYPE(LOC)
 
 var/list/miningModifiers = list()
 var/list/miningModifiersUsed = list()//Assoc list, type:times used
