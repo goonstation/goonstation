@@ -504,13 +504,9 @@
 			master.reagents.reaction(M, INGEST)
 			master.reagents.trans_to(M, master.reagents.total_volume/master.amount)
 
-		if (!master || !M || !user)
-			return
-
 		playsound(M.loc,"sound/items/eatfood.ogg", rand(10, 50), 1)
 		eat_twitch(M)
 		M.on_eat(master)
-
 
 		var/ate_the_whole_thing = 0
 		if(src.is_it_organs && !istype(master, /obj/item/clothing/head/butt))
@@ -565,7 +561,7 @@
 	proc/failchecks()
 		if(!M || !user || !master)
 			return 1
-		if(!IN_RANGE(get_turf(M), get_turf(user), 1))
+		if(!in_interact_range(M, user))
 			return 1
 		if(is_incapacitated(user))
 			return 1
