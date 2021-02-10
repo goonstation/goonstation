@@ -148,9 +148,9 @@
 			boutput(M, __red("Also, you should probably contact a coder because something has gone horribly wrong."))
 			return 0
 
-		if (!(total_souls_value >= 5))
+		if (!(total_souls_value >= CONTRACT_COST))
 			boutput(M, __red("You don't have enough souls in your satanic bank account to buy another contract!"))
-			boutput(M, __red("You need [5 - total_souls_value] more to afford a contract!"))
+			boutput(M, __red("You need [CONTRACT_COST - total_souls_value] more to afford a contract!"))
 			return 0
 
 		return 1
@@ -165,7 +165,7 @@
 /datum/targetable/merchant/summon_contract
 	icon_state = "clairvoyance"
 	name = "Summon Contract"
-	desc = "Spend five souls to summon a random new contract to your location"
+	desc = "Spend 3 souls to summon a random new contract to your location"
 	targeted = 0
 	target_nodamage_check = 0
 	max_range = 0
@@ -180,16 +180,16 @@
 		var/mob/living/M = holder.owner
 		if (!M)
 			return 1
-		if (!(total_souls_value >= 5))
+		if (!(total_souls_value >= CONTRACT_COST))
 			boutput(M, __red("You don't have enough souls in your satanic bank account to buy another contract!"))
-			boutput(M, __red("You need [5 - total_souls_value] more to afford a contract!"))
+			boutput(M, __red("You need [CONTRACT_COST - total_souls_value] more to afford a contract!"))
 			return 1
 		if (!isdiabolical(M))
 			boutput(M, __red("You aren't evil enough to use this power!"))
 			boutput(M, __red("Also, you should probably contact a coder because something has gone horribly wrong."))
 			return 1
-		total_souls_value -= 5
-		boutput(M, __red("You spend five souls and summon a brand new contract along with a pen! However, losing the power of those souls has weakened your weapons."))
+		souladjust(-CONTRACT_COST)
+		boutput(M, __red("You spend [CONTRACT_COST] souls and summon a brand new contract along with a pen! However, losing the power of those souls has weakened your weapons."))
 		spawncontract(M, 1, 1) //strong contract + pen
 		soulcheck(M)
 		return 0
