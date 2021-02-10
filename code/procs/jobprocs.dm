@@ -500,6 +500,14 @@
 		var/obj/item/device/gps/GPSDEVICE = new /obj/item/device/gps(src.loc)
 		src.force_equip(GPSDEVICE, slot_in_backpack)
 
+	if (src.traitHolder?.hasTrait("overslept"))
+		var/obj/item/clothing/under/gimmick/pajamas/PJ = new /obj/item/clothing/under/gimmick/pajamas(src.loc)
+		src.force_equip(PJ, slot_w_uniform)
+		var/obj/item/clothing/shoes/fuzzy/FUZ = new /obj/item/clothing/shoes/fuzzy(src.loc)
+		src.force_equip(FUZ, slot_shoes)
+		var/obj/item/clothing/head/PJC = new /obj/item/clothing/head/pajama_cap(src.loc)
+		src.force_equip(PJC, slot_head)
+
 	if (JOB.slot_jump)
 		src.equip_new_if_possible(JOB.slot_jump, slot_w_uniform)
 

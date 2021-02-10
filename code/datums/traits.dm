@@ -725,6 +725,16 @@ obj/trait/pilot
 	points = 0
 	isPositive = 0
 
+obj/trait/overslept
+	name = "Overslept (0) \[Background\]"
+	cleanName = "Overslept"
+	desc = "You overslept and forgot your clothing!"
+	id = "overslept"
+	icon_state = "pilot"
+	category = "background"
+	points = 0
+	isPositive = 0
+
 // NO CATEGORY - Grey Border
 
 /obj/trait/hemo
