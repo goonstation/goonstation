@@ -88,14 +88,18 @@
 				explosion_new(death_loc, death_loc, rand(6, 12))
 				fireflash(death_loc, 2)
 
-			SPAWN_DBG(55)
+			SPAWN_DBG(50)
 				for(var/board_count = rand(4, 8), board_count > 0, board_count--)
 					new/obj/item/factionrep/ntboard(locate(death_loc_x + rand(-2, 2), death_loc_y + rand(-2, 2), death_loc_z))
 					board_count--
+			
+			SPAWN_DBG(55)
 				for(var/alloy_count = rand(2, 4), alloy_count > 0, alloy_count--)
 					new/obj/item/material_piece/iridiumalloy(locate(death_loc_x + rand(-1, 1), death_loc_y + rand(-1, 1), death_loc_z))
 					alloy_count--
-				new/obj/machinery/power/sword_engine(death_loc)
+			
+			SPAWN_DBG(60)
+				new/obj/machinery/power/sword_engine(locate(death_loc_x, death_loc_y, death_loc_z))
 
 			SPAWN_DBG(65)
 				elecflash(death_loc)
@@ -822,6 +826,7 @@
 		var/turf/simulated/T = locate(point_x,point_y,src.z)
 		if(dam_type == 2 && istype(T, /turf/simulated/wall))
 			leavescan(T, 1)
+			fireflash(locate(point_x,point_y,src.z), 0)
 			if(prob(64))
 				new /obj/item/raw_material/scrap_metal(T)
 				if(prob(32))
@@ -842,9 +847,11 @@
 			for (var/obj/S in locate(point_x,point_y,src.z))
 				if(dam_type == 3 && !istype(S, /obj/critter))
 					leavescan(get_turf(S), 1)
+					fireflash(locate(point_x,point_y,src.z), 0)
 					qdel(S)
 				else if(prob(64) && !istype(S, /obj/critter))
 					leavescan(get_turf(S), 1)
+					fireflash(locate(point_x,point_y,src.z), 0)
 					S.ex_act(1)
 		return
 
