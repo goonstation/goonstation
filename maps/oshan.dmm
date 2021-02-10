@@ -15269,10 +15269,6 @@
 /obj/machinery/light/incandescent/cool,
 /turf/simulated/floor/bluegreen,
 /area/station/medical/medbay/treatment2)
-"aJv" = (
-/obj/railing/orange/reinforced,
-/turf/simulated/floor/grass/leafy,
-/area/station/ranch)
 "aJw" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -15430,6 +15426,9 @@
 /obj/submachine/chicken_feed_grinder,
 /obj/item/reagent_containers/food/snacks/plant/corn,
 /obj/blind_switch/area/south,
+/obj/railing/orange/reinforced{
+	dir = 1
+	},
 /turf/simulated/floor/grasstodirt{
 	dir = 1
 	},
@@ -15912,6 +15911,9 @@
 /obj/landmark/start{
 	name = "Rancher"
 	},
+/obj/railing/orange/reinforced{
+	dir = 4
+	},
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "aLa" = (
@@ -15927,7 +15929,6 @@
 /turf/simulated/floor/black,
 /area/station/engine/inner)
 "aLb" = (
-/obj/railing/orange/reinforced,
 /obj/machinery/firealarm{
 	dir = 4;
 	pixel_x = 24
@@ -47054,6 +47055,9 @@
 /area/station/security/checkpoint/escape)
 "jfB" = (
 /obj/chicken_nesting_box,
+/obj/machinery/light/incandescent/harsh{
+	dir = 1
+	},
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "jfH" = (
@@ -47473,6 +47477,10 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/railing/orange/reinforced{
+	dir = 1
+	},
+/obj/machinery/light/incandescent/blueish,
 /turf/simulated/floor/grasstodirt{
 	dir = 1
 	},
@@ -47630,6 +47638,9 @@
 	icon_state = "4-8"
 	},
 /obj/landmark/gps_waypoint,
+/obj/railing/orange/reinforced{
+	dir = 1
+	},
 /turf/simulated/floor/grasstodirt{
 	dir = 1
 	},
@@ -47794,6 +47805,17 @@
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/specialroom/arcade,
 /area/station/janitor/office)
+"sak" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/railing/orange/reinforced{
+	dir = 1
+	},
+/turf/simulated/floor/grasstodirt{
+	dir = 1
+	},
+/area/station/ranch)
 "sdi" = (
 /obj/machinery/door/airlock/pyro/sci_alt,
 /obj/firedoor_spawn,
@@ -47955,10 +47977,6 @@
 /turf/simulated/floor/plating/random,
 /area/research_outpost)
 "uAB" = (
-/obj/railing/orange/reinforced,
-/obj/railing/orange/reinforced{
-	dir = 8
-	},
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "uBc" = (
@@ -48231,9 +48249,6 @@
 /obj/submachine/chicken_incubator,
 /obj/item/reagent_containers/food/snacks/ingredient/egg{
 	rand_pos = 0
-	},
-/obj/machinery/light/incandescent/harsh{
-	dir = 1
 	},
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
@@ -79486,7 +79501,7 @@ aUD
 bWp
 yiF
 aKA
-aJv
+uAB
 pLy
 aKh
 agY
@@ -79788,8 +79803,8 @@ aUD
 bWp
 jfB
 aKA
-aJv
-nYa
+uAB
+sak
 bWp
 agY
 ubH
