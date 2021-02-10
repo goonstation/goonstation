@@ -1840,6 +1840,16 @@
 	},
 /turf/simulated/floor/specialroom/bar,
 /area/diner/dining)
+"aeA" = (
+/obj/overlay{
+	density = 1;
+	desc = "A networked tape drive.  It looks to be in fairly poor condition.  I bet the vacuum columns don't work worth a damn.";
+	icon = 'icons/obj/networked.dmi';
+	icon_state = "tapedrive-p";
+	name = "broken databank"
+	},
+/turf/simulated/floor/grime,
+/area/abandonedmedicalship/robot_trader)
 "aeB" = (
 /obj/table/reinforced/auto,
 /obj/submachine/mixer,
@@ -4637,6 +4647,16 @@
 	},
 /turf/simulated/floor/carpet/red/fancy/edge/west,
 /area/listeningpost/syndicateassaultvessel)
+"anb" = (
+/obj/table/reinforced/bar/auto,
+/obj/holosign{
+	desc = "... is that Abzu..?";
+	name = "... is that Abzu..?";
+	pixel_y = 8
+	},
+/obj/random_item_spawner/desk_stuff/g_clip_bin_fpen,
+/turf/simulated/floor/carpet/red/fancy,
+/area/listeningpost/syndicateassaultvessel)
 "anc" = (
 /obj/table/reinforced/bar/auto,
 /obj/syndicateholoemitter,
@@ -6489,6 +6509,30 @@
 /obj/machinery/power/seaheater/big,
 /turf/space/fluid/manta,
 /area/mantaSpace)
+"aqR" = (
+/obj/rack,
+/obj/item/storage/box/QM_grenadekit_security,
+/obj/item/storage/box/QM_grenadekit_experimentalweapons,
+/obj/item/storage/box/flaregun,
+/obj/item/gun/flamethrower/assembled/loaded,
+/obj/item/gun/energy/phaser_gun,
+/obj/item/gun/energy/phaser_gun,
+/obj/item/gun/energy/phaser_gun,
+/obj/item/shipcomponent/mainweapon/laser,
+/obj/item/shipcomponent/mainweapon/laser,
+/obj/item/shipcomponent/mainweapon/disruptor_light,
+/obj/item/shipcomponent/mainweapon/disruptor_light,
+/obj/item/ammo/bullets/autocannon/seeker,
+/obj/item/ammo/bullets/autocannon/seeker,
+/obj/machinery/light/incandescent/warm,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/black,
+/area/station/ai_monitored/armory)
 "aqS" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/turret_protected/starboard)
@@ -9131,12 +9175,6 @@
 /obj/disposalpipe/segment,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/engineering/ce)
-"axc" = (
-/obj/cable/colored/white{
-	icon_state = "4-6"
-	},
-/turf/simulated/floor/yellow,
-/area/station/engine/inner)
 "axd" = (
 /obj/decal/tile_edge/line/black{
 	dir = 5;
@@ -9501,20 +9539,6 @@
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/yellow,
 /area/station/engine/engineering/breakroom)
-"axP" = (
-/obj/cable/colored/yellow{
-	icon_state = "6-10"
-	},
-/obj/cable/colored/white{
-	icon_state = "2-8"
-	},
-/obj/cable/colored/yellow{
-	icon_state = "4-10"
-	},
-/turf/simulated/floor/yellow/side{
-	dir = 8
-	},
-/area/station/engine/inner)
 "axQ" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -9804,18 +9828,6 @@
 	icon_state = "fgreen2"
 	},
 /area/station/engine/engineering/ce)
-"ayt" = (
-/obj/cable/colored/yellow{
-	icon_state = "2-8"
-	},
-/obj/cable/colored/yellow{
-	icon_state = "0-2"
-	},
-/obj/cable/colored/yellow{
-	icon_state = "0-8"
-	},
-/turf/simulated/floor,
-/area/station/engine/inner)
 "ayu" = (
 /turf/simulated/floor/yellow/side{
 	dir = 4
@@ -9922,32 +9934,6 @@
 	icon_state = "yellowblack"
 	},
 /area/station/engine/engineering/ce)
-"ayH" = (
-/obj/cable/colored/yellow{
-	icon_state = "5-6"
-	},
-/turf/simulated/floor/yellow,
-/area/station/engine/inner)
-"ayI" = (
-/obj/cable/colored/yellow{
-	icon_state = "6-9"
-	},
-/obj/cable/colored/white{
-	icon_state = "1-9"
-	},
-/turf/simulated/floor/yellow/side{
-	dir = 8
-	},
-/area/station/engine/inner)
-"ayJ" = (
-/obj/cable/colored/yellow{
-	icon_state = "9-10"
-	},
-/obj/cable/colored/yellow{
-	icon_state = "1-10"
-	},
-/turf/simulated/floor,
-/area/station/engine/inner)
 "ayK" = (
 /obj/stool/chair/comfy/yellow{
 	dir = 1
@@ -9969,14 +9955,6 @@
 	icon_state = "green1"
 	},
 /area/station/engine/engineering/ce)
-"ayL" = (
-/obj/cable/colored/yellow{
-	icon_state = "5-9"
-	},
-/turf/simulated/floor/yellow/side{
-	dir = 10
-	},
-/area/station/engine/inner)
 "ayM" = (
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating/random,
@@ -17298,6 +17276,18 @@
 /obj/cable,
 /turf/simulated/floor/longtile/black,
 /area/station/turret_protected/starboard)
+"aPD" = (
+/obj/table/wood/auto,
+/obj/machinery/light/small/floor/warm,
+/obj/item/paper_bin,
+/obj/item/pen,
+/obj/item/clothing/head/rastacap,
+/obj/item/reagent_containers/glass/water_pipe{
+	pixel_x = -1;
+	pixel_y = 9
+	},
+/turf/simulated/floor/grass/random,
+/area/station/hydroponics/bay)
 "aPE" = (
 /turf/simulated/floor/longtile/black,
 /area/station/turret_protected/starboard)
@@ -20707,6 +20697,18 @@
 	name = "astroturf"
 	},
 /area/station/medical/research)
+"aXA" = (
+/obj/overlay{
+	icon = 'icons/misc/beach2.dmi';
+	icon_state = "palm1";
+	layer = 10;
+	name = "palm tree"
+	},
+/obj/machinery/light/incandescent/warm,
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/station/medical/research)
 "aXB" = (
 /obj/decoration/toiletholder{
 	pixel_y = 32
@@ -21303,6 +21305,17 @@
 	name = "astroturf"
 	},
 /area/station/medical/research)
+"aYS" = (
+/obj/overlay{
+	icon = 'icons/misc/beach2.dmi';
+	icon_state = "palm1";
+	layer = 10;
+	name = "palm tree"
+	},
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/station/medical/research)
 "aYT" = (
 /obj/machinery/light/incandescent/warm,
 /turf/simulated/floor/grass{
@@ -21661,21 +21674,6 @@
 	dir = 1
 	},
 /obj/machinery/chem_dispenser/chef,
-/turf/simulated/floor/specialroom/cafeteria,
-/area/station/crew_quarters/kitchen/therustykrab)
-"aZI" = (
-/obj/decal/tile_edge/check{
-	dir = 1;
-	icon_state = "check1"
-	},
-/obj/table/auto,
-/obj/item/kitchen/rollingpin,
-/obj/item/reagent_containers/glass/bottle/icing,
-/obj/machinery/firealarm{
-	pixel_x = 1;
-	pixel_y = 26;
-	text = "NF"
-	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen/therustykrab)
 "aZJ" = (
@@ -31629,6 +31627,24 @@
 /obj/machinery/light/runway_light/delay4,
 /turf/space/fluid/manta,
 /area/mantaSpace)
+"bvu" = (
+/obj/machinery/light/incandescent/netural{
+	dir = 1
+	},
+/obj/juggleplaque/manta,
+/turf/simulated/floor/carpet{
+	dir = 4;
+	icon_state = "fgreen2"
+	},
+/area/station/crew_quarters/cafeteria/the_rising_tide_bar)
+"bvv" = (
+/obj/disposalpipe/segment{
+	dir = 2;
+	icon_state = "pipe-c"
+	},
+/obj/juggleplaque/manta,
+/turf/simulated/floor/plating/random,
+/area/station/maintenance/upperstarboard)
 "bvw" = (
 /obj/storage/crate/bin,
 /obj/item/radio_tape/advertisement/dans_tickets,
@@ -42306,6 +42322,12 @@
 	dir = 8
 	},
 /area/listeningpost/syndicateassaultvessel)
+"ekL" = (
+/obj/cable/yellow{
+	icon_state = "5-6"
+	},
+/turf/simulated/floor/yellow,
+/area/station/engine/inner)
 "eyQ" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -42350,14 +42372,6 @@
 	},
 /turf/simulated/floor/red,
 /area/listeningpost/syndicateassaultvessel)
-"eOU" = (
-/obj/disposalpipe/segment{
-	dir = 2;
-	icon_state = "pipe-c"
-	},
-/obj/juggleplaque/manta,
-/turf/simulated/floor/plating/random,
-/area/station/maintenance/upperstarboard)
 "ePj" = (
 /obj/lattice{
 	dir = 5;
@@ -42619,6 +42633,21 @@
 	},
 /turf/simulated/floor/longtile/black,
 /area/station/turret_protected/ai_upload)
+"gQO" = (
+/obj/decal/tile_edge/check{
+	dir = 1;
+	icon_state = "check1"
+	},
+/obj/table/auto,
+/obj/item/kitchen/rollingpin,
+/obj/item/reagent_containers/food/drinks/drinkingglass/icing,
+/obj/machinery/firealarm{
+	pixel_x = 1;
+	pixel_y = 26;
+	text = "NF"
+	},
+/turf/simulated/floor/specialroom/cafeteria,
+/area/station/crew_quarters/kitchen/therustykrab)
 "gSv" = (
 /turf/simulated/floor/greenblack,
 /area/station/crewquarters/garbagegarbs)
@@ -42647,16 +42676,6 @@
 /obj/window_blinds/cog2/left,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/hor)
-"hgV" = (
-/obj/overlay{
-	density = 1;
-	desc = "A networked tape drive.  It looks to be in fairly poor condition.  I bet the vacuum columns don't work worth a damn.";
-	icon = 'icons/obj/networked.dmi';
-	icon_state = "tapedrive-p";
-	name = "broken databank"
-	},
-/turf/simulated/floor/grime,
-/area/abandonedmedicalship/robot_trader)
 "hhp" = (
 /obj/wingrille_spawn/auto,
 /obj/cable,
@@ -42772,18 +42791,6 @@
 	},
 /turf/simulated/floor/yellow,
 /area/station/engine/inner)
-"hWN" = (
-/obj/table/wood/auto,
-/obj/machinery/light/small/floor/warm,
-/obj/item/paper_bin,
-/obj/item/pen,
-/obj/item/clothing/head/rastacap,
-/obj/item/reagent_containers/glass/water_pipe{
-	pixel_x = -1;
-	pixel_y = 9
-	},
-/turf/simulated/floor/grass/random,
-/area/station/hydroponics/bay)
 "iaS" = (
 /obj/lattice{
 	dir = 1;
@@ -42878,22 +42885,14 @@
 "jtU" = (
 /turf/simulated/floor,
 /area/station/crewquarters/garbagegarbs)
-"jzF" = (
-/obj/stool{
-	desc = "A soft little bed the general size and shape of a space bee.";
-	icon = 'icons/misc/critter.dmi';
-	icon_state = "beebed";
-	name = "heisenbed"
+"jyT" = (
+/obj/cable/yellow{
+	icon_state = "5-9"
 	},
-/obj/critter/domestic_bee/heisenbee,
-/obj/item/storage/briefcase/toxins{
-	pixel_x = -7;
-	pixel_y = 21
+/turf/simulated/floor/yellow/side{
+	dir = 10
 	},
-/turf/simulated/floor/wood/eight{
-	dir = 4
-	},
-/area/station/crew_quarters/hor/horprivate)
+/area/station/engine/inner)
 "jBB" = (
 /obj/machinery/arc_electroplater,
 /turf/simulated/floor/industrial,
@@ -43079,30 +43078,6 @@
 /obj/window_blinds/cog2/left,
 /turf/simulated/floor/plating,
 /area/station/security/hos)
-"lPP" = (
-/obj/rack,
-/obj/item/storage/box/QM_grenadekit_security,
-/obj/item/storage/box/QM_grenadekit_experimentalweapons,
-/obj/item/storage/box/flaregun,
-/obj/item/gun/flamethrower/assembled/loaded,
-/obj/item/gun/energy/phaser_gun,
-/obj/item/gun/energy/phaser_gun,
-/obj/item/gun/energy/phaser_gun,
-/obj/item/shipcomponent/mainweapon/laser,
-/obj/item/shipcomponent/mainweapon/laser,
-/obj/item/shipcomponent/mainweapon/disruptor_light,
-/obj/item/shipcomponent/mainweapon/disruptor_light,
-/obj/item/ammo/bullets/autocannon/seeker,
-/obj/item/ammo/bullets/autocannon/seeker,
-/obj/machinery/light/incandescent/warm,
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/cable{
-	icon_state = "1-8"
-	},
-/turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
 "lSg" = (
 /obj/decal/tile_edge/line/purple{
 	dir = 10;
@@ -43137,6 +43112,20 @@
 /obj/stool/bench/red/auto,
 /turf/simulated/floor,
 /area/station/security/brig/cell1)
+"lYw" = (
+/obj/cable/yellow{
+	icon_state = "6-10"
+	},
+/obj/cable/white{
+	icon_state = "2-8"
+	},
+/obj/cable/yellow{
+	icon_state = "4-10"
+	},
+/turf/simulated/floor/yellow/side{
+	dir = 8
+	},
+/area/station/engine/inner)
 "lYV" = (
 /turf/simulated/floor,
 /area/station/hallway/secondary/construction)
@@ -43220,18 +43209,6 @@
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
-"mNq" = (
-/obj/overlay{
-	icon = 'icons/misc/beach2.dmi';
-	icon_state = "palm1";
-	layer = 10;
-	name = "palm tree"
-	},
-/obj/machinery/light/incandescent/warm,
-/turf/simulated/floor/grass{
-	name = "astroturf"
-	},
-/area/station/medical/research)
 "mPy" = (
 /obj/machinery/disposal/mail/small{
 	dir = 1;
@@ -43320,6 +43297,22 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/portlowerhallway)
+"nDV" = (
+/obj/stool{
+	desc = "A soft little bed the general size and shape of a space bee.";
+	icon = 'icons/misc/critter.dmi';
+	icon_state = "beebed";
+	name = "heisenbed"
+	},
+/obj/critter/domestic_bee/heisenbee,
+/obj/item/storage/briefcase/toxins{
+	pixel_x = -7;
+	pixel_y = 21
+	},
+/turf/simulated/floor/wood/eight{
+	dir = 4
+	},
+/area/station/crew_quarters/hor/horprivate)
 "nHa" = (
 /obj/disposalpipe/segment/mail,
 /obj/machinery/power/apc/autoname_east,
@@ -43418,21 +43411,20 @@
 	dir = 1
 	},
 /area/station/engine/inner)
+"ouH" = (
+/obj/cable/yellow{
+	icon_state = "9-10"
+	},
+/obj/cable/yellow{
+	icon_state = "1-10"
+	},
+/turf/simulated/floor,
+/area/station/engine/inner)
 "ozn" = (
 /obj/wingrille_spawn/auto,
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/diner/hangar)
-"oBS" = (
-/obj/machinery/light/incandescent/netural{
-	dir = 1
-	},
-/obj/juggleplaque/manta,
-/turf/simulated/floor/carpet{
-	dir = 4;
-	icon_state = "fgreen2"
-	},
-/area/station/crew_quarters/cafeteria/the_rising_tide_bar)
 "oGT" = (
 /obj/lattice{
 	icon_state = "lattice-dir"
@@ -43613,6 +43605,17 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/elect)
+"qdv" = (
+/obj/cable/yellow{
+	icon_state = "6-9"
+	},
+/obj/cable/white{
+	icon_state = "1-9"
+	},
+/turf/simulated/floor/yellow/side{
+	dir = 8
+	},
+/area/station/engine/inner)
 "qrl" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -43963,16 +43966,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/security/checkpoint/sec_foyer)
-"vcs" = (
-/obj/table/reinforced/bar/auto,
-/obj/holosign{
-	desc = "... is that Abzu..?";
-	name = "... is that Abzu..?";
-	pixel_y = 8
-	},
-/obj/random_item_spawner/desk_stuff/g_clip_bin_fpen,
-/turf/simulated/floor/carpet/red/fancy,
-/area/listeningpost/syndicateassaultvessel)
 "vdL" = (
 /obj/cable{
 	icon_state = "2-8"
@@ -44010,17 +44003,6 @@
 /obj/machinery/light/runway_light/delay4,
 /turf/space/fluid/manta,
 /area/mantaSpace)
-"vtl" = (
-/obj/overlay{
-	icon = 'icons/misc/beach2.dmi';
-	icon_state = "palm1";
-	layer = 10;
-	name = "palm tree"
-	},
-/turf/simulated/floor/grass{
-	name = "astroturf"
-	},
-/area/station/medical/research)
 "vzA" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -44041,6 +44023,12 @@
 	},
 /turf/simulated/floor/black,
 /area/listeningpost/syndicateassaultvessel)
+"vzS" = (
+/obj/cable/white{
+	icon_state = "4-6"
+	},
+/turf/simulated/floor/yellow,
+/area/station/engine/inner)
 "vDw" = (
 /obj/stool/chair/red{
 	dir = 4
@@ -44220,6 +44208,18 @@
 "xaf" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/hallway/secondary/construction)
+"xba" = (
+/obj/cable/yellow{
+	icon_state = "2-8"
+	},
+/obj/cable/yellow{
+	icon_state = "0-2"
+	},
+/obj/cable/yellow{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor,
+/area/station/engine/inner)
 "xfR" = (
 /obj/item/storage/wall/clothingrack/clothes3{
 	dir = 4
@@ -53225,7 +53225,7 @@ aaa
 aaa
 aaa
 afN
-hgV
+aeA
 aeQ
 aeQ
 afn
@@ -81388,7 +81388,7 @@ biL
 auv
 aPn
 aPv
-hWN
+aPD
 biL
 biK
 bqo
@@ -81979,7 +81979,7 @@ aWY
 aXI
 aYr
 aFw
-aZI
+gQO
 baK
 bbP
 bcO
@@ -85652,8 +85652,8 @@ awX
 awX
 ayn
 azs
-axc
-ayH
+vzS
+ekL
 azt
 azJ
 azJ
@@ -85890,7 +85890,7 @@ aQx
 aFi
 aSj
 oIR
-lPP
+aqR
 aRl
 aSj
 aRr
@@ -85954,9 +85954,9 @@ dZj
 dZj
 dZj
 wBW
-axP
-ayI
-ayL
+lYw
+qdv
+jyT
 azJ
 azJ
 azJ
@@ -86215,7 +86215,7 @@ beb
 bcb
 aCM
 aCM
-oBS
+bvu
 aGf
 aGE
 aDd
@@ -86256,8 +86256,8 @@ axe
 axe
 axe
 axe
-ayt
-ayJ
+xba
+ouH
 aEt
 azJ
 azJ
@@ -87836,7 +87836,7 @@ amr
 amA
 amK
 amT
-vcs
+anb
 amT
 ann
 akH
@@ -95870,7 +95870,7 @@ aWR
 aXz
 aXY
 aYQ
-mNq
+aXA
 baq
 bbp
 bbq
@@ -96169,7 +96169,7 @@ aTi
 aVY
 aUB
 aWR
-mNq
+aXA
 aXZ
 aYR
 aYQ
@@ -96473,7 +96473,7 @@ aWs
 aHA
 aJe
 aYa
-vtl
+aYS
 aYQ
 baq
 bbr
@@ -101326,7 +101326,7 @@ bpH
 bnW
 bsx
 btj
-jzF
+nDV
 bvZ
 bxF
 aOJ
@@ -114916,7 +114916,7 @@ aaa
 act
 aBr
 aBr
-eOU
+bvv
 bOE
 bOM
 btx

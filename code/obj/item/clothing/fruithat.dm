@@ -19,8 +19,6 @@
 				M.nutrition += 20
 				playsound(M.loc,"sound/items/eatfood.ogg", rand(10,50), 1)
 				if (!src.bites)
-					M.visible_message("<span class='alert'>[M] finishes eating [src].</span>",\
-					"<span class='alert'>You finish eating [src].</span>")
 					user.u_equip(src)
 					qdel(src)
 				sleep(rand(10,50))
@@ -43,8 +41,6 @@
 				M.nutrition += 20
 				playsound(M.loc, "sound/items/eatfood.ogg", rand(10,50), 1)
 				if (!src.amount)
-					M.visible_message("<span class='alert'>[M] finishes eating [src].</span>",\
-					"<span class='alert'>You finish eating [src].</span>")
 					user.u_equip(src)
 					qdel(src)
 				sleep(rand(10,50))

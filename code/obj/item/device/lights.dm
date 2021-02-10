@@ -326,6 +326,10 @@
 
 			else if (W.burning)
 				src.light(user, "<span class='alert'><b>[user]</b> lights [src] with [W]. Goddamn.</span>")
+
+			else if (W.firesource)
+				src.light(user, "<span class='alert'><b>[user]</b> lights [src] with [W].</span>")
+				W.firesource_interact()
 		else
 			return ..()
 
@@ -350,6 +354,7 @@
 		if (!src) return
 		if (!src.on)
 			src.on = 1
+			src.firesource = TRUE
 			src.hit_type = DAMAGE_BURN
 			src.force = 3
 			src.icon_state = src.icon_on
@@ -361,6 +366,7 @@
 		if (!src) return
 		if (src.on)
 			src.on = 0
+			src.firesource = FALSE
 			src.hit_type = DAMAGE_BLUNT
 			src.force = 0
 			src.icon_state = src.icon_off

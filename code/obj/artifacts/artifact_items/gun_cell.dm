@@ -53,7 +53,7 @@
 
 /datum/artifact/energyammo
 	associated_object = /obj/item/ammo/power_cell/self_charging/artifact
-	rarity_class = 0
+	rarity_weight = 0
 	validtypes = list("ancient","eldritch","precursor")
 	automatic_activation = 1
 	react_elec = list("equal",0,0)

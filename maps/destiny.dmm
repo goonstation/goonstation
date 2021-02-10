@@ -10254,20 +10254,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/primary/central)
-"asz" = (
-/obj/machinery/door/firedoor/border_only,
-/obj/table/reinforced/auto,
-/obj/window/reinforced/south,
-/obj/machinery/door/window/westleft{
-	req_access_txt = "28"
-	},
-/obj/machinery/cashreg,
-/obj/item/reagent_containers/food/snacks/cake/chocolate{
-	desc = "Holy shit! This cake probably costs more than the gross domestic product of Bulgaria!";
-	name = "Extravagant Chocolate Gateau"
-	},
-/turf/simulated/floor/black,
-/area/station/crew_quarters/kitchen)
 "asA" = (
 /obj/landmark/start{
 	name = "Chef"
@@ -10298,14 +10284,6 @@
 /obj/item/kitchen/utensil/fork,
 /obj/item/plate,
 /obj/item/reagent_containers/food/drinks/bowl,
-/obj/disposalpipe/segment/food,
-/turf/simulated/floor/specialroom/cafeteria,
-/area/station/crew_quarters/kitchen)
-"asE" = (
-/obj/table/reinforced/auto,
-/obj/item/reagent_containers/food/snacks/breadloaf,
-/obj/item/reagent_containers/glass/bottle/icing,
-/obj/item/reagent_containers/glass/bottle/icing,
 /obj/disposalpipe/segment/food,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
@@ -11962,6 +11940,15 @@
 /turf/simulated/floor/blue/side{
 	dir = 8
 	},
+/area/station/hydroponics/bay)
+"avY" = (
+/obj/table/reinforced/auto,
+/obj/item/device/light/lava_lamp,
+/obj/item/reagent_containers/glass/water_pipe{
+	pixel_x = -8;
+	pixel_y = 8
+	},
+/turf/simulated/floor,
 /area/station/hydroponics/bay)
 "avZ" = (
 /obj/decal/tile_edge/line/green{
@@ -20939,6 +20926,22 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/west)
+"aKT" = (
+/obj/item/device/audio_log{
+	pixel_x = -28
+	},
+/obj/overlay{
+	icon = 'icons/misc/beach2.dmi';
+	icon_state = "palm1";
+	layer = 10;
+	name = "palm tree"
+	},
+/obj/landmark{
+	icon_state = "x3";
+	name = "peststart"
+	},
+/turf/simulated/floor/grass/random,
+/area/station/medical/research)
 "aKU" = (
 /obj/landmark/start{
 	name = "Geneticist"
@@ -21986,6 +21989,16 @@
 /area/station/maintenance/west)
 "aMD" = (
 /obj/storage/secure/closet/animal,
+/turf/simulated/floor/grass/random,
+/area/station/medical/research)
+"aME" = (
+/obj/window/reinforced/east,
+/obj/overlay{
+	icon = 'icons/misc/beach2.dmi';
+	icon_state = "palm1";
+	layer = 10;
+	name = "palm tree"
+	},
 /turf/simulated/floor/grass/random,
 /area/station/medical/research)
 "aMF" = (
@@ -45389,15 +45402,17 @@
 	dir = 6
 	},
 /area/space)
-"dOg" = (
+"efg" = (
+/obj/machinery/door/firedoor/border_only,
 /obj/table/reinforced/auto,
-/obj/item/device/light/lava_lamp,
-/obj/item/reagent_containers/glass/water_pipe{
-	pixel_x = -8;
-	pixel_y = 8
+/obj/window/reinforced/south,
+/obj/machinery/door/window/westleft{
+	req_access_txt = "28"
 	},
-/turf/simulated/floor,
-/area/station/hydroponics/bay)
+/obj/machinery/cashreg,
+/obj/item/reagent_containers/food/snacks/cake/chocolate/gateau,
+/turf/simulated/floor/black,
+/area/station/crew_quarters/kitchen)
 "eLW" = (
 /obj/decal/tile_edge/line/purple{
 	dir = 8;
@@ -45412,22 +45427,6 @@
 /obj/machinery/photocopier,
 /turf/simulated/floor,
 /area/station/crew_quarters/lounge/starboard)
-"iKX" = (
-/obj/item/device/audio_log{
-	pixel_x = -28
-	},
-/obj/overlay{
-	icon = 'icons/misc/beach2.dmi';
-	icon_state = "palm1";
-	layer = 10;
-	name = "palm tree"
-	},
-/obj/landmark{
-	icon_state = "x3";
-	name = "peststart"
-	},
-/turf/simulated/floor/grass/random,
-/area/station/medical/research)
 "iWh" = (
 /obj/stool/chair/office/yellow{
 	dir = 4
@@ -45463,7 +45462,40 @@
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
-"nhE" = (
+"ouD" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/landmark/gps_waypoint,
+/turf/simulated/floor,
+/area/station/science/lab)
+"tzx" = (
+/obj/landmark/gps_waypoint,
+/turf/simulated/floor/carpet/arcade,
+/area/station/crew_quarters/arcade)
+"uiY" = (
+/obj/table/reinforced/auto,
+/obj/item/reagent_containers/food/snacks/breadloaf,
+/obj/item/reagent_containers/food/drinks/drinkingglass/icing,
+/obj/item/reagent_containers/food/drinks/drinkingglass/icing,
+/obj/disposalpipe/segment/food,
+/turf/simulated/floor/specialroom/cafeteria,
+/area/station/crew_quarters/kitchen)
+"ukX" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
+/obj/landmark/gps_waypoint,
+/turf/simulated/floor/bluewhite,
+/area/station/medical/medbay/lobby)
+"utc" = (
 /obj/cable{
 	d1 = 1;
 	d2 = 2;
@@ -45483,41 +45515,6 @@
 /area/station/science/research_director{
 	workplace = 1
 	})
-"ouD" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/landmark/gps_waypoint,
-/turf/simulated/floor,
-/area/station/science/lab)
-"twL" = (
-/obj/window/reinforced/east,
-/obj/overlay{
-	icon = 'icons/misc/beach2.dmi';
-	icon_state = "palm1";
-	layer = 10;
-	name = "palm tree"
-	},
-/turf/simulated/floor/grass/random,
-/area/station/medical/research)
-"tzx" = (
-/obj/landmark/gps_waypoint,
-/turf/simulated/floor/carpet/arcade,
-/area/station/crew_quarters/arcade)
-"ukX" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
-/obj/landmark/gps_waypoint,
-/turf/simulated/floor/bluewhite,
-/area/station/medical/medbay/lobby)
 "vMk" = (
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/specialroom/chapel{
@@ -72902,7 +72899,7 @@ ayf
 apR
 aFd
 aIV
-iKX
+aKT
 aMD
 aFd
 aFd
@@ -73507,7 +73504,7 @@ aFc
 aFd
 aIX
 aKV
-twL
+aME
 aOw
 aFd
 aFd
@@ -92208,7 +92205,7 @@ aqY
 art
 anB
 asd
-asz
+efg
 arP
 atr
 atN
@@ -93718,7 +93715,7 @@ ard
 apZ
 arM
 ash
-asE
+uiY
 bBQ
 atu
 atQ
@@ -95235,7 +95232,7 @@ arP
 arP
 auT
 avw
-dOg
+avY
 awA
 axg
 avw
@@ -99482,7 +99479,7 @@ aKl
 aNZ
 aPF
 aRr
-nhE
+utc
 aUs
 aWd
 aXO

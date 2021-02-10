@@ -32,7 +32,7 @@
    stroke: $ring-color;
    stroke-width: 10;
    stroke-dasharray: 100 * $pi;
-   transition: stroke 50ms;
+   transition: stroke 50ms ease-out;
  }
 
  .RoundGauge__needle, .RoundGauge__ringFill {

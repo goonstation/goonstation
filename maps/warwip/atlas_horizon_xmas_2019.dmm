@@ -55799,10 +55799,7 @@
 "cst" = (
 /obj/table/auto,
 /obj/disposalpipe/segment/horizontal,
-/obj/item/reagent_containers/food/snacks/cake/chocolate{
-	desc = "Holy shit! This cake probably costs more than the gross domestic product of Bulgaria!";
-	name = "Extravagant Chocolate Gateau"
-	},
+/obj/item/reagent_containers/food/snacks/cake/chocolate/gateau,
 /turf/simulated/floor/white/checker{
 	dir = 6
 	},

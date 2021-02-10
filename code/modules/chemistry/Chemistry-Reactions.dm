@@ -170,3 +170,18 @@
 	H.bioHolder.mobAppearance.customization_third = "None"
 	H.cust_three_state = customization_styles["None"]
 	H.update_colorful_parts()
+
+/proc/flashpowder_reaction(turf/center, amount)
+	elecflash(center)
+
+	for (var/mob/living/M in all_viewers(5, center))
+		if (isintangible(M))
+			continue
+		var/anim_dur = issilicon(M) ? 30 : 60
+		var/dist = get_dist(M, center)
+		var/stunned = max(0, amount * (3 - dist) * 0.1)
+		var/eye_damage = issilicon(M) ? 0 : max(0, amount * (2 - dist) * 0.1)
+		var/eye_blurry = issilicon(M) ? 0 : max(0, amount * (5 - dist) * 0.2)
+		var/stam_damage = 26 * min(amount, 5)
+
+		M.apply_flash(anim_dur, stunned, stunned, 0, eye_blurry, eye_damage, stamina_damage = stam_damage)

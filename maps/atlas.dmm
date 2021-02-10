@@ -2709,13 +2709,6 @@
 /obj/table/auto,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
-"gU" = (
-/obj/table/auto,
-/obj/item/paper/book/cookbook,
-/obj/item/kitchen/rollingpin,
-/obj/item/reagent_containers/glass/bottle/icing,
-/turf/simulated/floor/black,
-/area/station/crew_quarters/catering)
 "gV" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/kitchen)
@@ -3162,6 +3155,19 @@
 	dir = 4
 	},
 /area/station/chapel/sanctuary)
+"hZ" = (
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	light_type = /obj/item/light/tube/reddish;
+	pixel_y = 21
+	},
+/obj/storage/secure/crate/plasma/armory/anti_biological,
+/obj/item/gun/flamethrower/assembled/loaded,
+/turf/simulated/floor/red/side{
+	dir = 1
+	},
+/area/station/security/main)
 "ia" = (
 /obj/machinery/computer3/generic/secure_data{
 	dir = 4;
@@ -7319,10 +7325,8 @@
 "rG" = (
 /obj/disposalpipe/segment,
 /obj/juggleplaque{
-	desc = {"NCS Atlas, Nanotrasen,  \"Man always kills the thing he loves, and so we the pioneers have killed our wilderness. Some say we had to. Be that as it may, I am glad I shall never be young without wild country to be young in. Of what avail are forty freedoms without a blank spot on the map?  - Aldo Leopold\""};
-	name = "dedication plaque";
-	pixel_y = 25
-	},
+	desc = {"NCS Atlas, Nanotrasen,  \"Man always kills the thing he loves, and so we the pioneers have killed our wilderness. Some say we had to. Be that as it may, I am glad I shall never be young without wild country to be young in. Of what avail are forty freedoms without a blank spot on the map?  - Aldo Leopold\""
+	};name = "dedication plaque";pixel_y = 25},
 /turf/simulated/floor/blueblack,
 /area/station/bridge)
 "rH" = (
@@ -8345,6 +8349,22 @@
 	dir = 8
 	},
 /area/station/turret_protected/Zeta)
+"tK" = (
+/obj/table/auto,
+/obj/item/device/light/lava_lamp,
+/obj/machinery/light{
+	dir = 8;
+	layer = 9.1;
+	pixel_x = -10
+	},
+/obj/item/reagent_containers/glass/water_pipe{
+	pixel_x = 7;
+	pixel_y = 5
+	},
+/turf/simulated/floor/green/side{
+	dir = 8
+	},
+/area/station/hydroponics/bay)
 "tL" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -8934,6 +8954,19 @@
 	dir = 4
 	},
 /area/station/hallway/primary/north)
+"uX" = (
+/obj/storage/secure/closet/command/research_director,
+/obj/item/storage/briefcase/toxins,
+/obj/item/remote/porter/port_a_sci,
+/obj/item/reagent_containers/food/snacks/yellow_cake_uranium_cake{
+	pixel_x = -2
+	},
+/obj/item/stamp/rd,
+/obj/machinery/light{
+	layer = 3
+	},
+/turf/simulated/floor/purple,
+/area/station/science/research_director)
 "va" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -10563,19 +10596,6 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/cloner)
-"zo" = (
-/obj/storage/secure/closet/command/research_director,
-/obj/item/storage/briefcase/toxins,
-/obj/item/remote/porter/port_a_sci,
-/obj/item/reagent_containers/food/snacks/yellow_cake_uranium_cake{
-	pixel_x = -2
-	},
-/obj/item/stamp/rd,
-/obj/machinery/light{
-	layer = 3
-	},
-/turf/simulated/floor/purple,
-/area/station/science/research_director)
 "zq" = (
 /obj/stool/chair/green{
 	dir = 8
@@ -11310,6 +11330,19 @@
 /obj/disposalpipe/junction/right/north,
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
+"Bv" = (
+/obj/table/auto,
+/obj/item/paper_bin{
+	pixel_x = -7
+	},
+/obj/item/clipboard/with_pen{
+	pixel_x = 6
+	},
+/obj/item/pen/fancy,
+/turf/simulated/floor/bluewhite{
+	dir = 8
+	},
+/area/station/medical/medbay)
 "Bw" = (
 /obj/cable{
 	d1 = 1;
@@ -17692,6 +17725,13 @@
 	},
 /turf/simulated/floor/plating,
 /area/space)
+"Ss" = (
+/obj/table/auto,
+/obj/item/paper/book/cookbook,
+/obj/item/kitchen/rollingpin,
+/obj/item/reagent_containers/food/drinks/drinkingglass/icing,
+/turf/simulated/floor/black,
+/area/station/crew_quarters/catering)
 "St" = (
 /obj/machinery/power/smes,
 /obj/cable,
@@ -18681,22 +18721,6 @@
 	icon_state = "3"
 	},
 /area/station/bridge/captain)
-"Wl" = (
-/obj/table/auto,
-/obj/item/device/light/lava_lamp,
-/obj/machinery/light{
-	dir = 8;
-	layer = 9.1;
-	pixel_x = -10
-	},
-/obj/item/reagent_containers/glass/water_pipe{
-	pixel_x = 7;
-	pixel_y = 5
-	},
-/turf/simulated/floor/green/side{
-	dir = 8
-	},
-/area/station/hydroponics/bay)
 "Wn" = (
 /obj/machinery/atmospherics/portables_connector/south,
 /obj/machinery/firealarm{
@@ -19265,19 +19289,6 @@
 /obj/machinery/power/apc/autoname_north,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/east)
-"XU" = (
-/obj/machinery/light{
-	dir = 1;
-	layer = 9.1;
-	light_type = /obj/item/light/tube/reddish;
-	pixel_y = 21
-	},
-/obj/storage/secure/crate/plasma/armory/anti_biological,
-/obj/item/gun/flamethrower/assembled/loaded,
-/turf/simulated/floor/red/side{
-	dir = 1
-	},
-/area/station/security/main)
 "XX" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -19635,19 +19646,6 @@
 	},
 /turf/simulated/floor/white,
 /area/station/science/artifact)
-"YU" = (
-/obj/table/auto,
-/obj/item/paper_bin{
-	pixel_x = -7
-	},
-/obj/item/clipboard/with_pen{
-	pixel_x = 6
-	},
-/obj/item/pen/fancy,
-/turf/simulated/floor/bluewhite{
-	dir = 8
-	},
-/area/station/medical/medbay)
 "YV" = (
 /obj/cable{
 	d1 = 1;
@@ -65129,7 +65127,7 @@ vP
 qn
 rm
 sy
-Wl
+tK
 uQ
 vL
 wK
@@ -67856,7 +67854,7 @@ he
 zU
 AG
 Wx
-YU
+Bv
 CE
 Dm
 DY
@@ -69946,7 +69944,7 @@ dF
 ej
 eX
 fB
-gU
+Ss
 gT
 gT
 jF
@@ -72063,7 +72061,7 @@ ez
 ez
 ez
 hl
-XU
+hZ
 jy
 kx
 lr
@@ -77522,7 +77520,7 @@ WK
 WP
 UW
 ZW
-zo
+uX
 BK
 EZ
 FQ

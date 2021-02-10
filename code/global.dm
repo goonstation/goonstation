@@ -436,7 +436,7 @@ var/global
 	farty_party = 0
 	deep_farting = 0
 
-	turf/unsimulated/wall/titlecard/lobby_titlecard
+	datum/titlecard/lobby_titlecard
 
 	total_souls_sold = 0
 	total_souls_value = 0

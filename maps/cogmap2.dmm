@@ -10492,13 +10492,6 @@
 /obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor/white,
 /area/station/crew_quarters/kitchen)
-"axK" = (
-/obj/table/auto,
-/obj/item/kitchen/rollingpin,
-/obj/item/reagent_containers/glass/bottle/icing,
-/obj/item/reagent_containers/glass/bottle/icing,
-/turf/simulated/floor/white,
-/area/station/crew_quarters/kitchen)
 "axL" = (
 /obj/table/auto,
 /obj/item/satchel/hydro,
@@ -11222,6 +11215,20 @@
 	dir = 1;
 	layer = 9.1;
 	pixel_y = 21
+	},
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/station/hydroponics/bay)
+"azp" = (
+/obj/table/wood/auto,
+/obj/item/device/light/candle/small{
+	desc = "Ugh, is that patchouli?";
+	name = "grody candle"
+	},
+/obj/item/reagent_containers/glass/water_pipe{
+	pixel_x = 6;
+	pixel_y = 5
 	},
 /turf/simulated/floor/grass{
 	name = "astroturf"
@@ -13089,20 +13096,6 @@
 	icon_state = "7"
 	},
 /area/shuttle/arrival/station)
-"aDk" = (
-/obj/table/wood/auto,
-/obj/item/device/light/candle/small{
-	desc = "Ugh, is that patchouli?";
-	name = "grody candle"
-	},
-/obj/item/reagent_containers/glass/water_pipe{
-	pixel_x = 6;
-	pixel_y = 5
-	},
-/turf/simulated/floor/grass{
-	name = "astroturf"
-	},
-/area/station/hydroponics/bay)
 "aDl" = (
 /obj/reagent_dispensers/compostbin,
 /turf/simulated/floor/grass{
@@ -13238,19 +13231,6 @@
 /obj/disposalpipe/segment,
 /obj/disposalpipe/segment/food{
 	dir = 4
-	},
-/turf/simulated/floor/specialroom/cafeteria,
-/area/station/crew_quarters/kitchen)
-"aDB" = (
-/obj/table/auto,
-/obj/item/plate,
-/obj/item/reagent_containers/food/snacks/cake/chocolate{
-	desc = "Holy shit! This cake probably costs more than the gross domestic product of Bulgaria!";
-	name = "Extravagant Chocolate Gateau"
-	},
-/obj/disposalpipe/junction{
-	dir = 4;
-	icon_state = "pipe-j2"
 	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
@@ -24143,6 +24123,19 @@
 	},
 /obj/landmark{
 	name = "blobstart"
+	},
+/turf/simulated/floor/carpet/grime,
+/area/station/crew_quarters/quartersA)
+"bcU" = (
+/obj/stool/chair{
+	dir = 4
+	},
+/obj/overlay{
+	desc = "A portrait of a man wearing a ridiculous merchant hat.  That must be Discount Dan.";
+	icon = 'icons/obj/decals/wallsigns.dmi';
+	icon_state = "portrait";
+	name = "portrait";
+	pixel_y = 28
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/quartersA)
@@ -74270,6 +74263,17 @@
 	name = "astroturf"
 	},
 /area/station/medical/dome)
+"dfl" = (
+/obj/overlay{
+	icon = 'icons/misc/beach2.dmi';
+	icon_state = "palm1";
+	layer = 10;
+	name = "palm tree"
+	},
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/station/medical/dome)
 "dfm" = (
 /obj/shrub{
 	dir = 6
@@ -74279,6 +74283,20 @@
 	name = "peststart"
 	},
 /obj/item/device/radio/beacon,
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/station/medical/dome)
+"dfn" = (
+/obj/overlay{
+	icon = 'icons/misc/beach2.dmi';
+	icon_state = "palm1";
+	layer = 10;
+	name = "palm tree"
+	},
+/obj/landmark/spawner{
+	name = "monkeyspawn_normal"
+	},
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},
@@ -74458,6 +74476,17 @@
 "dfJ" = (
 /obj/landmark/spawner{
 	name = "monkeyspawn_normal"
+	},
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/station/medical/dome)
+"dfK" = (
+/obj/overlay{
+	icon = 'icons/misc/beach2.dmi';
+	icon_state = "palm2";
+	layer = 10;
+	name = "palm tree"
 	},
 /turf/simulated/floor/grass{
 	name = "astroturf"
@@ -74711,6 +74740,20 @@
 /obj/item/clothing/suit/bedsheet,
 /turf/simulated/floor/black,
 /area/station/medical/cdc)
+"dgh" = (
+/obj/overlay{
+	icon = 'icons/misc/beach2.dmi';
+	icon_state = "palm2";
+	layer = 10;
+	name = "palm tree"
+	},
+/obj/landmark/spawner{
+	name = "monkeyspawn_normal"
+	},
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/station/medical/dome)
 "dgi" = (
 /obj/table/auto,
 /obj/item/hand_labeler,
@@ -74722,6 +74765,18 @@
 /area/station/medical/dome)
 "dgj" = (
 /obj/reagent_dispensers/watertank,
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/station/medical/dome)
+"dgk" = (
+/obj/overlay{
+	icon = 'icons/misc/beach2.dmi';
+	icon_state = "palm1";
+	layer = 10;
+	name = "palm tree"
+	},
+/obj/machinery/light,
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},
@@ -79113,18 +79168,6 @@
 /obj/item/paper/book/monster_manual_revised,
 /turf/simulated/wall/asteroid,
 /area/space)
-"kqb" = (
-/obj/overlay{
-	icon = 'icons/misc/beach2.dmi';
-	icon_state = "palm1";
-	layer = 10;
-	name = "palm tree"
-	},
-/obj/machinery/light,
-/turf/simulated/floor/grass{
-	name = "astroturf"
-	},
-/area/station/medical/dome)
 "lAy" = (
 /obj/machinery/light_switch/east,
 /obj/submachine/chicken_feed_grinder,
@@ -79196,17 +79239,6 @@
 	icon_state = "wooden"
 	},
 /area/station/security/detectives_office)
-"nuv" = (
-/obj/overlay{
-	icon = 'icons/misc/beach2.dmi';
-	icon_state = "palm2";
-	layer = 10;
-	name = "palm tree"
-	},
-/turf/simulated/floor/grass{
-	name = "astroturf"
-	},
-/area/station/medical/dome)
 "nCq" = (
 /turf/simulated/floor/stairs{
 	icon_state = "Stairs_wide"
@@ -79230,58 +79262,12 @@
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
-"oUW" = (
-/obj/overlay{
-	icon = 'icons/misc/beach2.dmi';
-	icon_state = "palm2";
-	layer = 10;
-	name = "palm tree"
-	},
-/obj/landmark/spawner{
-	name = "monkeyspawn_normal"
-	},
-/turf/simulated/floor/grass{
-	name = "astroturf"
-	},
-/area/station/medical/dome)
 "pdE" = (
 /obj/machinery/chem_master{
 	dir = 4
 	},
 /turf/simulated/floor/bot,
 /area/station/hydroponics/bay)
-"pyf" = (
-/obj/overlay{
-	icon = 'icons/misc/beach2.dmi';
-	icon_state = "palm1";
-	layer = 10;
-	name = "palm tree"
-	},
-/obj/landmark/spawner{
-	name = "monkeyspawn_normal"
-	},
-/turf/simulated/floor/grass{
-	name = "astroturf"
-	},
-/area/station/medical/dome)
-"pzm" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 1;
-	name = "autoname - SS13";
-	tag = ""
-	},
-/obj/item/storage/briefcase/toxins,
-/turf/simulated/floor/carpet{
-	dir = 10;
-	icon_state = "fpurple2"
-	},
-/area/station/crew_quarters/hor)
 "pFA" = (
 /obj/submachine/weapon_vendor/security,
 /turf/simulated/floor/specialroom/bar,
@@ -79315,6 +79301,13 @@
 	},
 /turf/simulated/floor/green/side,
 /area/station/hydroponics/bay)
+"rsO" = (
+/obj/table/auto,
+/obj/item/kitchen/rollingpin,
+/obj/item/reagent_containers/food/drinks/drinkingglass/icing,
+/obj/item/reagent_containers/food/drinks/drinkingglass/icing,
+/turf/simulated/floor/white,
+/area/station/crew_quarters/kitchen)
 "rBI" = (
 /obj/railing/orange/reinforced,
 /obj/stool/chair/green{
@@ -79333,17 +79326,24 @@
 	dir = 4
 	},
 /area/shuttle/arrival/station)
-"tyD" = (
-/obj/overlay{
-	icon = 'icons/misc/beach2.dmi';
-	icon_state = "palm1";
-	layer = 10;
-	name = "palm tree"
+"sEu" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
-/turf/simulated/floor/grass{
-	name = "astroturf"
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 1;
+	name = "autoname - SS13";
+	tag = ""
 	},
-/area/station/medical/dome)
+/obj/item/storage/briefcase/toxins,
+/turf/simulated/floor/carpet{
+	dir = 10;
+	icon_state = "fpurple2"
+	},
+/area/station/crew_quarters/hor)
 "tyQ" = (
 /obj/storage/secure/closet/civilian/hydro,
 /turf/simulated/floor/grass{
@@ -79379,19 +79379,6 @@
 	},
 /turf/simulated/floor/dirt,
 /area/station/ranch)
-"uBK" = (
-/obj/stool/chair{
-	dir = 4
-	},
-/obj/overlay{
-	desc = "A portrait of a man wearing a ridiculous merchant hat.  That must be Discount Dan.";
-	icon = 'icons/obj/decals/wallsigns.dmi';
-	icon_state = "portrait";
-	name = "portrait";
-	pixel_y = 28
-	},
-/turf/simulated/floor/carpet/grime,
-/area/station/crew_quarters/quartersA)
 "viA" = (
 /obj/chicken_nesting_box,
 /turf/simulated/floor/grass/leafy,
@@ -79413,6 +79400,16 @@
 	icon_state = "fgreen5"
 	},
 /area/station/hydroponics/bay)
+"vyj" = (
+/obj/table/auto,
+/obj/item/plate,
+/obj/item/reagent_containers/food/snacks/cake/chocolate/gateau,
+/obj/disposalpipe/junction{
+	dir = 4;
+	icon_state = "pipe-j2"
+	},
+/turf/simulated/floor/specialroom/cafeteria,
+/area/station/crew_quarters/kitchen)
 "vNO" = (
 /obj/submachine/chef_sink/chem_sink{
 	dir = 4
@@ -105390,7 +105387,7 @@ ckK
 cmz
 coi
 cpV
-pzm
+sEu
 cii
 cta
 cta
@@ -105615,7 +105612,7 @@ apw
 auG
 awf
 axw
-aDk
+azp
 azn
 aCe
 awd
@@ -109842,7 +109839,7 @@ asb
 att
 auP
 awm
-axK
+rsO
 azy
 auT
 aAU
@@ -110752,7 +110749,7 @@ axN
 azB
 auT
 aCo
-aDB
+vyj
 ase
 aFV
 aHD
@@ -118710,7 +118707,7 @@ ddY
 deD
 dfk
 ddd
-oUW
+dgh
 ddg
 cLH
 cuW
@@ -119312,7 +119309,7 @@ cSG
 dfX
 ddd
 deF
-tyD
+dfl
 dfJ
 dgj
 dgy
@@ -119616,7 +119613,7 @@ ddZ
 deE
 dfm
 ddd
-kqb
+dgk
 ddg
 cLH
 cuW
@@ -120219,7 +120216,7 @@ dde
 ddd
 deF
 ddd
-nuv
+dfK
 dfo
 dfo
 cLH
@@ -120520,7 +120517,7 @@ cSC
 ddf
 dea
 deG
-pyf
+dfn
 dfo
 dfo
 cuW
@@ -138856,7 +138853,7 @@ aXf
 aYX
 bat
 aLr
-uBK
+bcU
 bdM
 bev
 aaa
