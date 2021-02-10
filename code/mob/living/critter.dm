@@ -87,7 +87,7 @@
 	var/pull_w_class = 2
 
 	/// What level of grab is needed to pick this critter up?
-	var/pickup_grab_level = MOBCRITTER_GRAB_PASSIVE
+	var/pickup_grab_level = MOBCRITTER_GRAB_KILL
 	/// The critter holding shell used when this critter is picked up and used as an item
 	var/obj/item/critter_shell/metaholder = null
 	/// Stamina the critter removes from the grabber when it struggles for freedom
