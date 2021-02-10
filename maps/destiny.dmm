@@ -32802,6 +32802,7 @@
 /area/station/science/chemistry)
 "bfv" = (
 /obj/machinery/chemicompiler_stationary,
+/obj/machinery/drainage,
 /turf/simulated/floor/white,
 /area/station/science/chemistry)
 "bfw" = (

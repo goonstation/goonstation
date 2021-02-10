@@ -32355,6 +32355,7 @@
 /obj/machinery/light/incandescent/harsh{
 	dir = 1
 	},
+/obj/machinery/drainage,
 /turf/simulated/floor/shuttlebay{
 	name = "test chamber plating"
 	},
@@ -76413,6 +76414,7 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 6
 	},
+/obj/machinery/drainage,
 /turf/simulated/floor/shuttlebay{
 	name = "reinforced plating"
 	},

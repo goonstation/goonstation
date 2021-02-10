@@ -33113,6 +33113,7 @@
 	layer = 9.1;
 	pixel_y = 21
 	},
+/obj/machinery/drainage,
 /turf/simulated/floor/purpleblack,
 /area/station/science/chemistry)
 "bCh" = (

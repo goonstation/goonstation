@@ -64003,6 +64003,7 @@
 /area/station/science/chemistry)
 "cJa" = (
 /obj/machinery/chemicompiler_stationary,
+/obj/machinery/drainage,
 /turf/simulated/floor/purple,
 /area/station/science/chemistry)
 "cJb" = (
@@ -76970,6 +76971,7 @@
 	icon_state = "2-8"
 	},
 /obj/machinery/chemicompiler_stationary,
+/obj/machinery/drainage,
 /turf/simulated/floor/engine{
 	dir = 1;
 	icon_state = "engine_caution_misc"
