@@ -42019,9 +42019,6 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
 	},
-/obj/machinery/light_switch/north{
-	area = "Brig"
-	},
 /turf/simulated/floor/red/side{
 	dir = 1
 	},
@@ -42039,6 +42036,7 @@
 	},
 /obj/machinery/power/apc{
 	areastring = "Brig";
+	dir = 1;
 	name = "Brig APC";
 	pixel_y = 24
 	},
@@ -42100,10 +42098,6 @@
 	},
 /obj/machinery/door_timer/solitary/new_walls/north{
 	layer = 3.1
-	},
-/obj/machinery/light_switch/north{
-	area = "Brig - Solitary Cells";
-	pixel_x = 11
 	},
 /turf/simulated/floor/red/side{
 	dir = 1
@@ -54732,7 +54726,9 @@
 /obj/disposalpipe/segment/transport{
 	dir = 4
 	},
-/turf/simulated/wall/auto/supernorn,
+/turf/simulated/wall/auto/supernorn{
+	icon_state = "3"
+	},
 /area/station/quartermaster/office)
 "lmR" = (
 /obj/storage/secure/closet/command/captain,
