@@ -900,7 +900,7 @@
 				qdel(O)
 			if (istype(O, /obj/machinery/door) || istype(O, /obj/structure/girder) || istype(O, /obj/foamedmetal))
 				qdel(O)
-			if (istype(O, /obj/critter))
+			if (istype(O, /obj/critter) && !istype(O, /obj/critter/gunbot/drone)) // ugly hack to make this not instakill drones and stuff
 				O:CritterDeath()
 			in_bump = 0
 	if (crashhits <= 0)
