@@ -716,18 +716,21 @@ PIPE BOMBS + CONSTRUCTION
 			for (var/x=1, x<=2, x++)
 				if (prob(50))
 					// Single weapon type
-					for (var/y=1, y<=rand(3,6), y++)
+					for (var/y=1, y<=rand(6,9), y++)
 						sleep((rand() * 0.6 + 0.4) SECONDS)
-						playsound(T, shooter1_sound, 100, 1, 8)
+						if (prob(80))
+							playsound(T, shooter1_sound, 100, 1, 8)
 				else
 					// Gun duel
-					for (var/y=1, y<=rand(3,8), y++)
+					for (var/y=1, y<=rand(6,12), y++)
 						sleep((rand() * 0.6 + 0.4) SECONDS)
-						playsound(T, shooter1_sound, 100, 1, 8)
-						sleep((rand() * 0.8 + 0.2) SECONDS)
-						playsound(T, shooter2_sound, 100, 1, 8)
+						if (prob(80))
+							playsound(T, shooter1_sound, 100, 1, 8)
+						if (prob(75))
+							sleep((rand() * 0.8 + 0.2) SECONDS)
+							playsound(T, shooter2_sound, 100, 1, 8)
 				if (x == 1)
-					sleep(pick(3,6,8) SECONDS)
+					sleep(rand(3,7) SECONDS)
 				else
 					sleep(3 SECONDS)
 			detonate()
