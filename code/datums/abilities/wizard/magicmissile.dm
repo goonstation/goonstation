@@ -3,7 +3,7 @@
 	desc = "Attacks nearby foes with stunning projectiles."
 	icon_state = "missile"
 	targeted = 0
-	cooldown = 200
+	cooldown = 0
 	requires_robes = 1
 	offensive = 1
 	voice_grim = "sound/voice/wizard/MagicMissileGrim.ogg"

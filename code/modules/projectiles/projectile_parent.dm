@@ -656,8 +656,7 @@ datum/projectile
 		/// Check if we want to do something before actually hitting the thing we hit
 		/// Return TRUE for it to more or less skip collide()
 		on_pre_hit(atom/hit, angle, var/obj/projectile/O)
-			if(hit == src.last_thing_hit)
-				return TRUE // If we already did something with the thing we're inside of, don't do it again until we pass through it again
+			return
 
 		on_canpass(var/obj/projectile/O, atom/movable/passing_thing)
 			.= 1

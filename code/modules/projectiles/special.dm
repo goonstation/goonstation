@@ -699,34 +699,33 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	var/max_bounce_count = 3 // putting the I in ICEE BEEYEM
 	var/weaken_length = 5 SECONDS
 	var/impact_brute = 5
-	var/bouncy = 0 // A fallback for when a missile is shot without a target
 	var/slam_text = "The magic missile SLAMS into you!"
 	var/hit_sound = 'sound/effects/mag_magmisimpact_bounce.ogg'
 	var/cat_sound = 'sound/voice/animal/cat.ogg'
 	var/last_sound_time = 0
 
 	on_pre_hit(var/atom/hit, var/angle, var/obj/projectile/O)
-		if(..()) return TRUE
-		if(isliving(hit))
-			var/mob/living/M = hit
-			if (iswizard(M) || M.traitHolder?.hasTrait("training_chaplain"))
-				boutput(M, "The magic missile passes right through you!")
+		if(istype(O) && !(hit in O.hitlist))
+			if(ismob(hit))
+				var/mob/M = hit
+				if(iswizard(M) || M.traitHolder?.hasTrait("training_chaplain"))
+					boutput(M, "The magic missile passes right through you!")
+					. = TRUE
+
+			if(isobj(hit) || (isturf(hit) && !hit.density))
 				. = TRUE
 
-		/// Missiles home into their targets until they hit a wall. Then they forget their target and just bounce around
-		else if(src.homing_active && isturf(hit) && hit?.density)
-			src.homing_active = 0
-			src.bouncy = 1
+			if(.)
+				O.hitlist += hit
 
-		if(!src.homing_active && !isturf(hit) && !ismob(hit))
-			. = TRUE
+			/// Missiles home into their targets until they hit a wall. Then they forget their target and just bounce around
+			else if(length(O.targets) && isturf(hit) && hit?.density)
+				O.targets = list()
 
-		if(.)
-			src.last_thing_hit = hit
 
 	on_hit(atom/A, direction, var/obj/projectile/projectile)
 		. = ..()
-		if(isliving(A))
+		if(isliving(A)) // pre_hit should filter out any spacemagic people
 			var/mob/living/M = A
 			M.changeStatus("weakened", src.weaken_length)
 			M.force_laydown_standup()
@@ -735,8 +734,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 			random_brute_damage(M, src.impact_brute)
 			M.lastattacker = src.master?.shooter
 			M.lastattackertime = TIME
-			projectile.die()
-		else if (src.bouncy && projectile.reflectcount < src.max_bounce_count)
+		else if(projectile.reflectcount < src.max_bounce_count)
 			shoot_reflected_bounce(projectile, A, src.max_bounce_count, PROJ_RAPID_HEADON_BOUNCE)
 			var/turf/T = get_turf(A)
 			if(TIME >= last_sound_time + 1 DECI SECOND)
@@ -747,7 +745,6 @@ ABSTRACT_TYPE(/datum/projectile/special)
 					playsound(T, src.hit_sound, 60, 1)
 		else
 			playsound(get_turf(A), 'sound/effects/mag_magmisimpact.ogg', 25, 1, -1)
-			projectile.die()
 
 /datum/projectile/special/homing/magicmissile/weak
 	name = "magic minimissile"
