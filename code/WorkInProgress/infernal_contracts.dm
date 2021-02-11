@@ -320,6 +320,45 @@ proc/is_weak_rollable_contract(type)
 
 ABSTRACT_TYPE(/obj/item/contract)
 
+/*
+
+SO YOU WANT TO MAKE YOUR OWN CONTRACTS:
+
+FOLLOW THIS FORMAT FOR AN EASY AND DIGESTIBLE WAY TO BUILD YOUR OWN NEW CONTRACTS
+
+obj/item/contract/replace_this_with_the_name_of_your_contract
+	desc = "A contract that is full of boilerplate description text but you can shake it up however you like"
+	limiteduse = 0 //OPTIONAL: Defaults to 0. Set this to 1 to make the contract vanish after it's used a certain number of times, otherwise OMIT
+	contractlines = 3 //OPTIONAL: Defaults to 3. does nothing unless limiteduse is set to 1, determines how many times you can use a limiteduse contract before it vanishes
+	strong = 0 //OPTIONAL: Defaults to 0. If set to 1, contract will be added to the pool of strong contracts (1 strong contract per briefcase, 20% chance to roll on vanish, 100% chance to roll on contract purchase)
+	can_roll = 1 //OPTIONAL: Defaults to 1. IF SET TO 0, MAKES CONTRACT ADMIN-SPAWN ONLY.
+	//THERE ARE SOME ADDITIONAL VARS STANDARD TO ALL CONTRACTS, BUT YOU SHOULDN'T EVER REALLY BE SETTING THEM DIRECTLY, SO THEY HAVE BEEN OMITTED FROM THIS EXAMPLE
+	//YOU CAN ADD YOUR OWN VARS TO DO STUFF SPECIFIC TO YOUR CONTRACT (for an example: look at obj/item/contract/greed)
+
+	MagicEffect(var/mob/user as mob, var/mob/badguy as mob)
+		if(!..())
+			return 0
+		SPAWN_DBG(1 DECI SECOND)
+			HERE'S WHERE YOU ACTUALLY DO MOST OF YOUR COOL EFFECTS AND STUFF
+			user is the victim, the one you wanna be doing the cool things TO
+			badguy is the person who owns the contract or who forced the victim to sign
+			user is *always* passed in the arguments, but badguy is occasionally omitted
+			in general, badguy is mostly used for behind-the-scenes code
+			if you DO wind up using badguy in your code, be sure to check that it actually exists and that it's actually the type you expect it to be
+			DON'T WORRY ABOUT HANDLING SOULS, THAT STUFF IS ALL HANDLED ALREADY
+			IF YOU *DO* NEED TO DO SOME CUSTOM STUFF WITH SOULS THEN:
+			total_souls_value is the number of souls CURRENTLY stockpiled (this number can go up OR down)
+			total_souls_sold is the total number of souls that have been sold so far this round (this number can only go up)
+			DO NOT DIRECTLY MODIFY THE VALUES OF THESE TWO VARIABLES. IF YOU NEED TO ADD OR SUBTRACT SOULS, THEN:
+			use souladjust(num) to add num worth of souls to the soul tracking variables. Use a negative value for num to subtract souls.
+		return 1
+
+	You can define additional procs inside your contract if necessary,
+	but all the actual *action* should take place inside the SPAWN_DGB block in MagicEffect
+
+END GUIDE
+*/
+
 /obj/item/contract
 	name = "infernal contract"
 	icon = 'icons/obj/wizard.dmi'
