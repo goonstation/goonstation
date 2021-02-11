@@ -3324,7 +3324,7 @@
 	dir = 1;
 	icon_state = "stairs_middle"
 	},
-/area/station/security/brig)
+/area/station/security/main)
 "aio" = (
 /obj/cable,
 /obj/cable{
@@ -3827,18 +3827,12 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/armory)
-"ajr" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor,
-/area/station/security/brig)
 "ajs" = (
 /obj/storage/secure/closet/brig,
 /turf/simulated/floor/red/side{
 	dir = 1
 	},
-/area/station/security/brig)
+/area/station/security/main)
 "ajt" = (
 /obj/storage/crate{
 	desc = "A crate of confiscated items.";
@@ -3861,7 +3855,7 @@
 /turf/simulated/floor/red/side{
 	dir = 9
 	},
-/area/station/security/brig)
+/area/station/security/main)
 "aju" = (
 /obj/cable{
 	icon_state = "0-2"
@@ -4259,7 +4253,7 @@
 	icon_state = "2-8"
 	},
 /turf/simulated/floor,
-/area/station/security/brig)
+/area/station/security/main)
 "akq" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -4268,7 +4262,7 @@
 	icon_state = "pipe-c"
 	},
 /turf/simulated/floor,
-/area/station/security/brig)
+/area/station/security/main)
 "akr" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -4721,7 +4715,7 @@
 	icon_state = "pipe-c"
 	},
 /turf/simulated/floor,
-/area/station/security/brig)
+/area/station/security/main)
 "alu" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -4730,25 +4724,25 @@
 	dir = 4
 	},
 /turf/simulated/floor,
-/area/station/security/brig)
+/area/station/security/main)
 "alv" = (
 /obj/disposalpipe/segment{
 	dir = 4
 	},
 /obj/disposalpipe/segment/ejection,
 /turf/simulated/floor/red/corner,
-/area/station/security/brig)
+/area/station/security/main)
 "alw" = (
 /obj/disposalpipe/trunk{
 	dir = 8
 	},
 /obj/machinery/disposal,
 /turf/simulated/floor/red/side,
-/area/station/security/brig)
+/area/station/security/main)
 "alx" = (
 /obj/machinery/vending/security,
 /turf/simulated/floor/red/side,
-/area/station/security/brig)
+/area/station/security/main)
 "aly" = (
 /obj/table/auto,
 /obj/item/storage/box/evidence{
@@ -4768,7 +4762,7 @@
 	pixel_y = 5
 	},
 /turf/simulated/floor/red/side,
-/area/station/security/brig)
+/area/station/security/main)
 "alz" = (
 /obj/cable,
 /obj/wingrille_spawn/auto,
@@ -5109,7 +5103,7 @@
 	dir = 1;
 	icon_state = "Stairs_wide"
 	},
-/area/station/security/brig)
+/area/station/security/main)
 "amq" = (
 /obj/securearea{
 	pixel_y = -4
@@ -5136,17 +5130,13 @@
 	dir = 1;
 	icon_state = "stairs_middle"
 	},
-/area/station/security/brig)
-"amu" = (
-/obj/disposalpipe/segment,
-/turf/simulated/floor,
-/area/station/security/brig)
+/area/station/security/main)
 "amv" = (
 /obj/disposalpipe/segment/ejection,
 /turf/simulated/floor/red/side{
 	dir = 4
 	},
-/area/station/security/brig)
+/area/station/security/main)
 "amw" = (
 /obj/cable,
 /obj/cable{
@@ -5721,7 +5711,7 @@
 /turf/simulated/floor/red/side{
 	dir = 9
 	},
-/area/station/security/brig)
+/area/station/security/main)
 "anA" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
@@ -5753,13 +5743,13 @@
 "anC" = (
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
-/area/station/security/brig)
+/area/station/security/main)
 "anD" = (
 /obj/machinery/vending/snack,
 /turf/simulated/floor/red/corner{
 	dir = 1
 	},
-/area/station/security/brig)
+/area/station/security/main)
 "anE" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -5768,7 +5758,7 @@
 	icon_state = "2-4"
 	},
 /turf/simulated/floor,
-/area/station/security/brig)
+/area/station/security/main)
 "anF" = (
 /obj/disposalpipe/segment/ejection,
 /obj/cable{
@@ -5777,7 +5767,7 @@
 /turf/simulated/floor/red/side{
 	dir = 4
 	},
-/area/station/security/brig)
+/area/station/security/main)
 "anH" = (
 /obj/machinery/computer/arcade{
 	desc = "The VR representation of a popular computer game."
@@ -6072,7 +6062,7 @@
 	name = "Security Assistant"
 	},
 /turf/simulated/floor,
-/area/station/security/brig)
+/area/station/security/main)
 "aot" = (
 /obj/machinery/disposal/mail{
 	mail_tag = "kitchen";
@@ -6282,14 +6272,14 @@
 /turf/simulated/floor/red/side{
 	dir = 4
 	},
-/area/station/security/brig)
+/area/station/security/main)
 "aoP" = (
 /obj/disposalpipe/segment/ejection,
 /obj/cable{
 	icon_state = "1-2"
 	},
 /turf/simulated/floor,
-/area/station/security/brig)
+/area/station/security/main)
 "aoQ" = (
 /obj/machinery/light/emergency{
 	dir = 4
@@ -6302,7 +6292,7 @@
 /turf/simulated/floor/red/side{
 	dir = 4
 	},
-/area/station/security/brig)
+/area/station/security/main)
 "aoR" = (
 /obj/cable{
 	icon_state = "0-2"
@@ -6847,7 +6837,7 @@
 /turf/simulated/floor/red/side{
 	dir = 8
 	},
-/area/station/security/brig)
+/area/station/security/main)
 "aqg" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -6856,7 +6846,7 @@
 	icon_state = "2-4"
 	},
 /turf/simulated/floor,
-/area/station/security/brig)
+/area/station/security/main)
 "aqh" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -6867,7 +6857,7 @@
 /turf/simulated/floor/red/corner{
 	dir = 4
 	},
-/area/station/security/brig)
+/area/station/security/main)
 "aqi" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -6875,17 +6865,7 @@
 /turf/simulated/floor/red/side{
 	dir = 1
 	},
-/area/station/security/brig)
-"aqj" = (
-/turf/simulated/floor,
-/area/station/security/brig)
-"aqk" = (
-/obj/disposalpipe/segment,
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor,
-/area/station/security/brig)
+/area/station/security/main)
 "aql" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -6906,7 +6886,7 @@
 	pixel_x = 24
 	},
 /turf/simulated/floor,
-/area/station/security/brig)
+/area/station/security/main)
 "aqm" = (
 /obj/cable,
 /obj/wingrille_spawn/auto,
@@ -7457,7 +7437,7 @@
 /turf/simulated/floor/red/side{
 	dir = 8
 	},
-/area/station/security/brig)
+/area/station/security/main)
 "arD" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 6
@@ -7469,20 +7449,20 @@
 	icon_state = "1-8"
 	},
 /turf/simulated/floor,
-/area/station/security/brig)
+/area/station/security/main)
 "arE" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
 	},
 /turf/simulated/floor,
-/area/station/security/brig)
+/area/station/security/main)
 "arF" = (
 /obj/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
 	},
 /turf/simulated/floor,
-/area/station/security/brig)
+/area/station/security/main)
 "arG" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -7491,7 +7471,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/bot,
-/area/station/security/brig)
+/area/station/security/main)
 "arH" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4;
@@ -7641,7 +7621,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor,
-/area/station/security/brig)
+/area/station/security/main)
 "asb" = (
 /obj/machinery/computer/arcade{
 	icon_state = "arcadeb";
@@ -8062,27 +8042,27 @@
 /turf/simulated/floor/red/side{
 	dir = 8
 	},
-/area/station/security/brig)
+/area/station/security/main)
 "asS" = (
 /obj/machinery/atmospherics/pipe/simple,
 /obj/cable{
 	icon_state = "1-2"
 	},
 /turf/simulated/floor,
-/area/station/security/brig)
+/area/station/security/main)
 "asT" = (
 /obj/disposalpipe/segment/transport{
 	dir = 4;
 	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/red/corner,
-/area/station/security/brig)
+/area/station/security/main)
 "asU" = (
 /obj/disposalpipe/segment/transport{
 	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/red/side,
-/area/station/security/brig)
+/area/station/security/main)
 "asV" = (
 /obj/machinery/door_timer/solitary{
 	pixel_x = -24
@@ -8090,7 +8070,7 @@
 /turf/simulated/floor/red/corner{
 	dir = 8
 	},
-/area/station/security/brig)
+/area/station/security/main)
 "asW" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -8102,7 +8082,7 @@
 	pixel_x = 32
 	},
 /turf/simulated/floor,
-/area/station/security/brig)
+/area/station/security/main)
 "asX" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 5
@@ -8651,7 +8631,7 @@
 	icon_state = "1-8"
 	},
 /turf/simulated/floor,
-/area/station/security/brig)
+/area/station/security/main)
 "auh" = (
 /obj/machinery/disposal{
 	name = "Test Chamber Chute"
@@ -8660,7 +8640,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/delivery,
-/area/station/security/brig)
+/area/station/security/main)
 "aui" = (
 /obj/disposalpipe/segment/transport,
 /obj/wingrille_spawn/auto,
@@ -8673,7 +8653,7 @@
 /turf/simulated/floor/red/side{
 	dir = 8
 	},
-/area/station/security/brig)
+/area/station/security/main)
 "auk" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -8684,7 +8664,7 @@
 /turf/simulated/floor/red/side{
 	dir = 4
 	},
-/area/station/security/brig)
+/area/station/security/main)
 "aul" = (
 /obj/cable{
 	icon_state = "0-2"
@@ -9179,7 +9159,7 @@
 "avq" = (
 /obj/machinery/atmospherics/pipe/simple,
 /turf/simulated/floor,
-/area/station/security/brig)
+/area/station/security/main)
 "avr" = (
 /obj/table/auto,
 /obj/item/storage/box/handcuff_kit{
@@ -9204,14 +9184,14 @@
 /turf/simulated/floor/red/side{
 	dir = 4
 	},
-/area/station/security/brig)
+/area/station/security/main)
 "avs" = (
 /obj/machinery/disposal/brig,
 /obj/disposalpipe/trunk/brig{
 	dir = 4
 	},
 /turf/simulated/floor/delivery,
-/area/station/security/brig)
+/area/station/security/main)
 "avt" = (
 /obj/cable,
 /obj/disposalpipe/segment/brig{
@@ -9887,7 +9867,7 @@
 /turf/simulated/floor/red/side{
 	dir = 8
 	},
-/area/station/security/brig)
+/area/station/security/main)
 "awP" = (
 /obj/machinery/door_control{
 	id = "brig_divide";
@@ -9901,7 +9881,7 @@
 /turf/simulated/floor/red/side{
 	dir = 4
 	},
-/area/station/security/brig)
+/area/station/security/main)
 "awQ" = (
 /obj/machinery/door/poddoor/pyro{
 	density = 0;
@@ -10149,7 +10129,7 @@
 	pixel_y = 3
 	},
 /turf/simulated/floor/bot,
-/area/station/security/brig)
+/area/station/security/main)
 "axo" = (
 /obj/decal/boxingrope{
 	dir = 4
@@ -10561,14 +10541,14 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor,
-/area/station/security/brig)
+/area/station/security/main)
 "ayn" = (
 /obj/disposalpipe/segment,
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
 /turf/simulated/floor,
-/area/station/security/brig)
+/area/station/security/main)
 "ayo" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -10582,7 +10562,7 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor,
-/area/station/security/brig)
+/area/station/security/main)
 "ayp" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -10593,7 +10573,7 @@
 /turf/simulated/floor/red/side{
 	dir = 4
 	},
-/area/station/security/brig)
+/area/station/security/main)
 "ayq" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -11200,7 +11180,7 @@
 /obj/access_spawn/sec_lockers,
 /obj/item/gun/flamethrower/assembled/loaded,
 /turf/simulated/floor/bot,
-/area/station/security/brig)
+/area/station/security/main)
 "azB" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -11299,7 +11279,7 @@
 	pixel_x = -24
 	},
 /turf/simulated/floor,
-/area/station/security/brig)
+/area/station/security/main)
 "azL" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -11310,7 +11290,7 @@
 	},
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor,
-/area/station/security/brig)
+/area/station/security/main)
 "azM" = (
 /obj/disposalpipe/segment/mail{
 	dir = 1;
@@ -12103,7 +12083,7 @@
 	},
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor,
-/area/station/security/brig)
+/area/station/security/main)
 "aBu" = (
 /obj/disposalpipe/segment/brig,
 /obj/cable{
@@ -12748,7 +12728,7 @@
 /turf/simulated/floor/stairs{
 	icon_state = "Stairs_wide"
 	},
-/area/station/security/brig)
+/area/station/security/main)
 "aCF" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -13301,7 +13281,7 @@
 /turf/simulated/floor/red/side{
 	dir = 8
 	},
-/area/station/security/brig)
+/area/station/security/main)
 "aDB" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -13479,18 +13459,18 @@
 	tag = ""
 	},
 /turf/simulated/floor/bot,
-/area/station/security/brig)
+/area/station/security/main)
 "aDX" = (
 /obj/disposalpipe/segment,
 /turf/simulated/floor/delivery,
-/area/station/security/brig)
+/area/station/security/main)
 "aDY" = (
 /obj/disposalpipe/segment/mail,
 /obj/cable{
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/delivery,
-/area/station/security/brig)
+/area/station/security/main)
 "aDZ" = (
 /obj/table/auto,
 /obj/machinery/coffeemaker/security{
@@ -14522,7 +14502,7 @@
 /turf/simulated/floor/red/corner{
 	dir = 1
 	},
-/area/station/security/brig)
+/area/station/security/main)
 "aGk" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -15714,7 +15694,7 @@
 /turf/simulated/floor/red/corner{
 	dir = 8
 	},
-/area/station/security/brig)
+/area/station/security/main)
 "aIN" = (
 /obj/stool/chair/couch{
 	dir = 4
@@ -17283,7 +17263,7 @@
 /turf/simulated/floor/red/side{
 	dir = 8
 	},
-/area/station/security/brig)
+/area/station/security/main)
 "aMl" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -23954,17 +23934,6 @@
 /obj/machinery/power/apc/autoname_east,
 /turf/simulated/floor/black,
 /area/station/teleporter)
-"bam" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 4;
-	name = "autoname - SS13";
-	tag = ""
-	},
-/turf/simulated/floor/red/side{
-	dir = 8
-	},
-/area/station/security/brig)
 "ban" = (
 /obj/machinery/portableowl/attached{
 	name = "an Owl with a chip out of his beak"
@@ -26872,7 +26841,7 @@
 /turf/simulated/floor/red/side{
 	dir = 8
 	},
-/area/station/security/brig)
+/area/station/security/main)
 "bgn" = (
 /obj/machinery/power/data_terminal,
 /obj/machinery/light_switch{
@@ -63029,7 +62998,7 @@
 	dir = 1;
 	icon_state = "Stairs2_wide"
 	},
-/area/station/security/brig)
+/area/station/security/main)
 "ktP" = (
 /obj/item/sheet/steel{
 	amount = 50
@@ -94102,7 +94071,7 @@ fWA
 tzN
 niY
 acV
-aho
+awK
 aho
 aho
 akn
@@ -94417,7 +94386,7 @@ arE
 aIM
 aMk
 aMk
-bam
+aJc
 bgm
 awK
 awK
@@ -94711,18 +94680,18 @@ amt
 aoP
 aym
 alt
-amu
-amu
-amu
-aqk
+aHH
+aHH
+aHH
+aGe
 arF
-amu
-amu
-amu
-amu
+aHH
+aHH
+aHH
+aHH
 ayn
 azK
-amu
+aHH
 aCE
 aDX
 aFg
@@ -95010,18 +94979,18 @@ alP
 acV
 ahq
 ain
-aqj
+aHB
 akp
 alu
-ajr
+aJd
 anE
-ajr
+aJd
 aql
 arG
 asW
 anE
-ajr
-ajr
+aJd
+aJd
 ayo
 azL
 aBt
@@ -95312,7 +95281,7 @@ aji
 ajp
 ako
 amp
-aqj
+aHB
 akq
 alv
 amv
@@ -95612,10 +95581,10 @@ agc
 aim
 afR
 acV
-aho
-aho
+awK
+awK
 ajs
-akr
+avd
 alw
 aho
 aGJ
@@ -95915,9 +95884,9 @@ acV
 afN
 acV
 ahm
-aho
+awK
 ajs
-akr
+avd
 alx
 aho
 anH
@@ -96217,9 +96186,9 @@ vjb
 afS
 agD
 wfU
-aho
+awK
 ajt
-akr
+avd
 aly
 aho
 anI

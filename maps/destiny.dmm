@@ -33767,7 +33767,7 @@
 /obj/item/remote/porter/port_a_brig,
 /obj/window/crystal/reinforced/north,
 /turf/simulated/floor/red,
-/area/station/security/brig)
+/area/station/security/main)
 "bhh" = (
 /obj/machinery/door/window/northright{
 	name = "interior door-'Solitary Cell One'";
@@ -33783,7 +33783,7 @@
 	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/red,
-/area/station/security/brig)
+/area/station/security/main)
 "bhi" = (
 /obj/cable{
 	d1 = 4;
@@ -33820,7 +33820,7 @@
 	name = "Security Assistant"
 	},
 /turf/simulated/floor/red,
-/area/station/security/brig)
+/area/station/security/main)
 "bhj" = (
 /obj/machinery/door/window/northleft{
 	name = "interior door-'Solitary Cell Two'";
@@ -33841,7 +33841,7 @@
 	icon_state = "pipe-j2"
 	},
 /turf/simulated/floor/red,
-/area/station/security/brig)
+/area/station/security/main)
 "bhk" = (
 /obj/cable{
 	d1 = 4;
@@ -33855,7 +33855,7 @@
 /obj/window/crystal/reinforced/north,
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/red,
-/area/station/security/brig)
+/area/station/security/main)
 "bhl" = (
 /obj/machinery/door/firedoor/border_only,
 /obj/machinery/door/airlock/gannets/glass/security/alt{
@@ -33878,7 +33878,7 @@
 	icon_state = "line1"
 	},
 /turf/simulated/floor/red,
-/area/station/security/brig)
+/area/station/security/main)
 "bhm" = (
 /obj/disposalpipe/segment/ejection{
 	dir = 4
@@ -34696,11 +34696,11 @@
 	dir = 4
 	},
 /turf/simulated/floor/red,
-/area/station/security/brig)
+/area/station/security/main)
 "biA" = (
 /obj/window/crystal/reinforced/south,
 /turf/simulated/floor/red,
-/area/station/security/brig)
+/area/station/security/main)
 "biB" = (
 /obj/machinery/door/window/southright{
 	name = "interior door-'Genpop'";
@@ -34713,12 +34713,12 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/red,
-/area/station/security/brig)
+/area/station/security/main)
 "biC" = (
 /obj/window/crystal/reinforced/south,
 /obj/window/crystal/reinforced/south,
 /turf/simulated/floor/red,
-/area/station/security/brig)
+/area/station/security/main)
 "biD" = (
 /obj/machinery/door_timer{
 	id = "genpop";
@@ -34734,12 +34734,12 @@
 /obj/storage/closet/wardrobe/orange,
 /obj/window/crystal/reinforced/south,
 /turf/simulated/floor/red,
-/area/station/security/brig)
+/area/station/security/main)
 "biE" = (
 /obj/window/crystal/reinforced/south,
 /obj/window/crystal/reinforced/south,
 /turf/simulated/wall/auto/gannets,
-/area/station/security/brig)
+/area/station/security/main)
 "biF" = (
 /obj/machinery/disposal/brig,
 /obj/window/crystal/reinforced/south,
@@ -80157,8 +80157,8 @@ bbe
 bcw
 bcw
 bcw
-bhf
-bhf
+bcF
+bcF
 bcw
 bcw
 bcw
