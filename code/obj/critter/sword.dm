@@ -261,7 +261,7 @@
 
 	proc/ability_selection()
 		if(cooldown <= world.time && mode && !current_ability && !changing_modes)
-			cooldown = 2 SECONDS + world.time
+			cooldown = rand(20,30) + world.time
 			if(prob(36) && used_ability)
 				used_ability = 0
 				configuration_swap()
@@ -585,7 +585,6 @@
 		brutevuln = 0.75
 		miscvuln = 0.15
 		current_ability = "destructive_leap"
-//		animate_float(src, -1, 5, 1)
 		playsound(get_center(), "sound/effects/flame.ogg", 80, 1)
 
 		SPAWN_DBG(2)
@@ -675,7 +674,6 @@
 		current_ability = "energy_absorption"
 
 		var/health_before_absorption = health
-		//playsound(get_center(), 'sound/effects/shieldup.ogg', 80, 1)
 		glow = image('icons/misc/retribution/SWORD/abilities_o.dmi', "energyAbsorption")
 		glow.plane = PLANE_SELFILLUM
 		src.UpdateOverlays(glow, "glow")
@@ -713,7 +711,6 @@
 		brutevuln = 0.75
 		miscvuln = 0.15
 		current_ability = "destructive_flight"
-//		animate_float(src, -1, 5, 1)
 		playsound(get_center(), "sound/effects/flame.ogg", 80, 1)
 
 		var/increment

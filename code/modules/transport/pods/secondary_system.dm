@@ -912,7 +912,7 @@
 
 /obj/item/shipcomponent/secondary_system/syndicate_rewind_system
 	name = "Syndicate Rewind System"
-	desc = "An unfinished pod system, the blueprints for which have been plundered from a raid on a now-destroyed Syndicate base."
+	desc = "An unfinished pod system, the blueprints for which have been plundered from a raid on a now-destroyed Syndicate base. Requires a unique power source to function."
 	power_used = 50
 	f_active = 1
 	hud_state = "SRS_icon"

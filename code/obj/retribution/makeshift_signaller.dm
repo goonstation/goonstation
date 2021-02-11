@@ -1,3 +1,4 @@
+#define MINUTES_TO_SWORD_LINK = 30										//Feel free to tweak this number as you see fit. After all, my strong suit is originality, not balance.
 var/sword_summoned_before = false
 
 /obj/item/makeshift_signaller_frame
@@ -18,18 +19,18 @@ var/sword_summoned_before = false
 	stamina_crit_chance = 1
 
 	attackby(obj/item/W as obj, mob/user as mob)
-		if (build_stage >= 3)											//If build_stage is 3 or higher, which shouldn't be possible, alert the player to in turt alert coders.
+		if (build_stage >= 4)														//If build_stage is 4 or higher, which shouldn't be possible, alert the player to in turt alert coders.
 			user.show_message("<span class='notice'>Uh oh, it seems you broke it!</span>", 1)
 			desc = "This doodad is broken. Call a coder."
 			tooltip_rebuild = 1
 			return
-		else if (ispulsingtool(W) && build_stage <= 0)					//Step 1 of construction: Multitool.
+		else if (ispulsingtool(W) && build_stage <= 0)								//Step 1 of construction: Multitool.
 			build_stage = 1
 			user.show_message("<span class='notice'>You rearrange and attune the wiring inside!</span>", 1)
 			desc = "A remote signaller frame with wiring sticking out."
 			tooltip_rebuild = 1
 			return
-		else if (istype(W,/obj/item/sheet) && build_stage == 1)			//Step 2 of construction: Metal.
+		else if (istype(W,/obj/item/sheet) && build_stage == 1)						//Step 2 of construction: Metal Sheet.
 			W.amount -= 1
 			if (W.amount <= 0)
 				qdel(W)
@@ -40,8 +41,14 @@ var/sword_summoned_before = false
 			desc = "A remote signaller frame with a handmade circuit board port slotted loosely into it, connected with wires."
 			tooltip_rebuild = 1
 			return
-		else if (iswrenchingtool(W) && build_stage == 2)				//Step 3 of construction: Wrench.
+		else if (istype(W,/obj/item/circuitboard/secure_data) && build_stage == 2)	//Step 3 of construction: Circuit Board.
+			qdel(W)
 			build_stage = 3
+			user.show_message("<span class='notice'>You put the circuit board in the port!</span>", 1)
+			desc = "A remote signaller frame with a circuit board inside, being held together with a custom port and some wiring."
+			tooltip_rebuild = 1
+		else if (iswrenchingtool(W) && build_stage == 3)							//Step 4 of construction: Wrench.
+			build_stage = 4
 			var/obj/item/makeshift_syndicate_signaller/A = new /obj/item/makeshift_syndicate_signaller
 			user.put_in_hand_or_drop(A)
 			A.add_fingerprint(user)
@@ -75,7 +82,7 @@ var/sword_summoned_before = false
 
 	attack_self(mob/user as mob)
 		if (metadata >= 8 && !is_exploding)								//If all 8 metadata nodes are filled and the item isn't already in it's exploding animation, spawn the Syndicate Retribution event and play the exploding animation, alongside a delayed deletion of the item.
-			if (ticker.round_elapsed_ticks >= 15 MINUTES)
+			if (ticker.round_elapsed_ticks >= MINUTES_TO_SWORD_LINK MINUTES)
 				if (!isrestrictedz(src.z))
 					if (!sword_summoned_before)
 						var/list/nearby_turfs = list()
