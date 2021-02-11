@@ -3369,7 +3369,7 @@
 	dir = 8;
 	icon_state = "catwalk_cross"
 	},
-/area/station/mining)
+/area/station/mining/magnet)
 "aip" = (
 /obj/lattice{
 	dir = 6;
@@ -4922,7 +4922,7 @@
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4
 	},
-/area/station/mining)
+/area/station/mining/magnet)
 "ame" = (
 /obj/table/auto,
 /obj/item/paper_bin,
@@ -5518,7 +5518,7 @@
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4
 	},
-/area/station/mining)
+/area/station/mining/magnet)
 "anA" = (
 /obj/disposalpipe/segment/brig{
 	dir = 8;
@@ -5781,7 +5781,7 @@
 	dir = 4;
 	icon_state = "catwalk_cross"
 	},
-/area/station/mining)
+/area/station/mining/magnet)
 "aoj" = (
 /obj/grille/catwalk{
 	dir = 10;
@@ -5793,7 +5793,7 @@
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 10
 	},
-/area/station/mining)
+/area/station/mining/magnet)
 "aok" = (
 /obj/grille/catwalk{
 	dir = 1;
@@ -5803,7 +5803,7 @@
 	dir = 5;
 	icon_state = "catwalk_cross"
 	},
-/area/station/mining)
+/area/station/mining/magnet)
 "aol" = (
 /turf/simulated/floor/carpet/red/standard/edge/nw,
 /area/station/crew_quarters/radio/news_office)
@@ -6243,11 +6243,11 @@
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 6
 	},
-/area/station/mining)
+/area/station/mining/magnet)
 "app" = (
 /obj/grille/catwalk,
 /turf/simulated/floor/airless/plating/catwalk,
-/area/station/mining)
+/area/station/mining/magnet)
 "apq" = (
 /obj/disposalpipe/segment/brig{
 	dir = 1
@@ -6646,7 +6646,7 @@
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4
 	},
-/area/station/mining)
+/area/station/mining/magnet)
 "aqk" = (
 /turf/simulated/floor/grime,
 /area/station/crew_quarters/utility)
@@ -6834,7 +6834,7 @@
 /turf/simulated/floor/airless/plating/catwalk{
 	icon_state = "catwalk_cross"
 	},
-/area/station/mining)
+/area/station/mining/magnet)
 "aqK" = (
 /obj/machinery/vending/medical_public,
 /turf/simulated/floor/red/side{
@@ -14726,7 +14726,7 @@
 	},
 /obj/access_spawn/mining,
 /turf/simulated/floor/grey,
-/area/station/mining)
+/area/station/mining/magnet)
 "aJe" = (
 /obj/disposalpipe/segment/morgue{
 	dir = 4
@@ -15648,7 +15648,7 @@
 /area/station/mining/refinery)
 "aLt" = (
 /turf/simulated/floor/grey,
-/area/station/mining)
+/area/station/mining/magnet)
 "aLv" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -23667,7 +23667,7 @@
 /area/station/mining/refinery)
 "bfh" = (
 /turf/space,
-/area/station/mining)
+/area/station/mining/magnet)
 "bfi" = (
 /obj/cable{
 	d1 = 1;
@@ -24078,10 +24078,10 @@
 	icon_state = "lattice-dir"
 	},
 /turf/space,
-/area/station/mining)
+/area/station/mining/magnet)
 "bgq" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/mining)
+/area/station/mining/magnet)
 "bgr" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/checkpoint/escape)
@@ -24548,7 +24548,7 @@
 	icon_state = "lattice-dir"
 	},
 /turf/space,
-/area/station/mining)
+/area/station/mining/magnet)
 "bhG" = (
 /obj/wingrille_spawn/auto/crystal,
 /obj/cable{
@@ -24563,7 +24563,7 @@
 	icon_state = "lattice-dir"
 	},
 /turf/space,
-/area/station/mining)
+/area/station/mining/magnet)
 "bhI" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -26138,7 +26138,7 @@
 /turf/simulated/floor/orangeblack/side{
 	dir = 8
 	},
-/area/station/mining)
+/area/station/mining/magnet)
 "blm" = (
 /obj/machinery/computer/magnet,
 /obj/machinery/light{
@@ -26151,7 +26151,7 @@
 	},
 /obj/cable,
 /turf/simulated/floor,
-/area/station/mining)
+/area/station/mining/magnet)
 "bln" = (
 /obj/table/reinforced/auto,
 /obj/machinery/cell_charger,
@@ -26163,7 +26163,7 @@
 /turf/simulated/floor/orangeblack/side{
 	dir = 4
 	},
-/area/station/mining)
+/area/station/mining/magnet)
 "blo" = (
 /obj/rack,
 /obj/item/clothing/mask/breath,
@@ -26180,7 +26180,7 @@
 /turf/simulated/floor/orangeblack/side{
 	dir = 8
 	},
-/area/station/mining)
+/area/station/mining/magnet)
 "blp" = (
 /obj/machinery/door/airlock/pyro{
 	name = "Shower Room"
@@ -26683,7 +26683,7 @@
 /turf/simulated/floor/orangeblack/side{
 	dir = 8
 	},
-/area/station/mining)
+/area/station/mining/magnet)
 "bmE" = (
 /obj/rack,
 /obj/item/clothing/mask/breath,
@@ -26695,7 +26695,7 @@
 /turf/simulated/floor/orangeblack/corner{
 	dir = 4
 	},
-/area/station/mining)
+/area/station/mining/magnet)
 "bmG" = (
 /obj/rack,
 /obj/item/clothing/mask/breath,
@@ -26707,7 +26707,7 @@
 /turf/simulated/floor/orangeblack/corner{
 	dir = 1
 	},
-/area/station/mining)
+/area/station/mining/magnet)
 "bmH" = (
 /turf/simulated/floor,
 /area/station/mining/staff_room)
@@ -27297,10 +27297,10 @@
 /turf/simulated/floor/orangeblack/side{
 	dir = 8
 	},
-/area/station/mining)
+/area/station/mining/magnet)
 "bof" = (
 /turf/simulated/floor/orangeblack/corner,
-/area/station/mining)
+/area/station/mining/magnet)
 "bog" = (
 /obj/machinery/door/airlock/pyro/glass/windoor{
 	dir = 8
@@ -27309,10 +27309,10 @@
 /turf/simulated/floor/orangeblack/side{
 	dir = 4
 	},
-/area/station/mining)
+/area/station/mining/magnet)
 "boh" = (
 /turf/simulated/floor/delivery,
-/area/station/mining)
+/area/station/mining/magnet)
 "boi" = (
 /obj/machinery/cargo_router/kd_mining,
 /obj/plasticflaps{
@@ -27771,21 +27771,21 @@
 /turf/simulated/floor/orangeblack/side{
 	dir = 8
 	},
-/area/station/mining)
+/area/station/mining/magnet)
 "bpq" = (
 /turf/simulated/floor/orangeblack/corner{
 	dir = 1
 	},
-/area/station/mining)
+/area/station/mining/magnet)
 "bpr" = (
 /obj/machinery/ore_cloud_storage_container,
 /turf/simulated/floor/orangeblack/side,
-/area/station/mining)
+/area/station/mining/magnet)
 "bps" = (
 /turf/simulated/floor/orangeblack/corner{
 	dir = 8
 	},
-/area/station/mining)
+/area/station/mining/magnet)
 "bpt" = (
 /obj/machinery/cargo_router/kd_mining_exoflap,
 /turf/simulated/floor/caution/northsouth,
@@ -28220,7 +28220,7 @@
 	icon_state = "2-4"
 	},
 /turf/simulated/floor/orangeblack,
-/area/station/mining)
+/area/station/mining/magnet)
 "bqt" = (
 /obj/disposalpipe/segment/bent/west,
 /obj/cable{
@@ -28234,7 +28234,7 @@
 /turf/simulated/floor/orangeblack/side{
 	dir = 8
 	},
-/area/station/mining)
+/area/station/mining/magnet)
 "bqu" = (
 /obj/stool/chair/yellow{
 	dir = 1
@@ -28245,7 +28245,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor,
-/area/station/mining)
+/area/station/mining/magnet)
 "bqv" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -28253,7 +28253,7 @@
 /turf/simulated/floor/orangeblack/side{
 	dir = 4
 	},
-/area/station/mining)
+/area/station/mining/magnet)
 "bqz" = (
 /obj/disposalpipe/segment/transport,
 /turf/simulated/wall/auto/supernorn,
@@ -28733,19 +28733,19 @@
 /turf/simulated/floor/orangeblack/side{
 	dir = 8
 	},
-/area/station/mining)
+/area/station/mining/magnet)
 "brO" = (
 /obj/stool/chair/yellow,
 /obj/landmark/start{
 	name = "Miner"
 	},
 /turf/simulated/floor,
-/area/station/mining)
+/area/station/mining/magnet)
 "brP" = (
 /turf/simulated/floor/orangeblack/corner{
 	dir = 4
 	},
-/area/station/mining)
+/area/station/mining/magnet)
 "brQ" = (
 /obj/cable{
 	d1 = 1;
@@ -29130,7 +29130,7 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/orangeblack/corner,
-/area/station/mining)
+/area/station/mining/magnet)
 "bsU" = (
 /obj/stool/chair/blue{
 	dir = 4
@@ -29246,7 +29246,7 @@
 /turf/simulated/floor/orangeblack/side{
 	dir = 10
 	},
-/area/station/mining)
+/area/station/mining/magnet)
 "bth" = (
 /obj/table/reinforced/auto,
 /obj/machinery/computer/security/wooden_tv/small{
@@ -29255,7 +29255,7 @@
 /turf/simulated/floor/orangeblack/corner{
 	dir = 8
 	},
-/area/station/mining)
+/area/station/mining/magnet)
 "bti" = (
 /obj/stool/chair/yellow{
 	dir = 8
@@ -29264,7 +29264,7 @@
 	name = "Miner"
 	},
 /turf/simulated/floor,
-/area/station/mining)
+/area/station/mining/magnet)
 "btj" = (
 /obj/cable{
 	d1 = 1;
@@ -29274,7 +29274,7 @@
 /turf/simulated/floor/orangeblack/corner{
 	dir = 1
 	},
-/area/station/mining)
+/area/station/mining/magnet)
 "btl" = (
 /obj/disposalpipe/segment/transport,
 /turf/simulated/floor/plating,
@@ -29790,15 +29790,15 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor,
-/area/station/mining)
+/area/station/mining/magnet)
 "buD" = (
 /obj/machinery/nanofab/refining,
 /turf/simulated/floor,
-/area/station/mining)
+/area/station/mining/magnet)
 "buE" = (
 /obj/machinery/nanofab/mining,
 /turf/simulated/floor,
-/area/station/mining)
+/area/station/mining/magnet)
 "buF" = (
 /obj/wingrille_spawn/auto,
 /obj/machinery/door/poddoor/pyro{
@@ -46527,7 +46527,7 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/plating,
-/area/station/mining)
+/area/station/mining/magnet)
 "cfq" = (
 /obj/wingrille_spawn/auto,
 /obj/cable{
@@ -46542,7 +46542,7 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/plating,
-/area/station/mining)
+/area/station/mining/magnet)
 "cfr" = (
 /obj/machinery/door/airlock/pyro{
 	dir = 4
@@ -50629,7 +50629,7 @@
 /turf/simulated/floor/orangeblack/side{
 	dir = 1
 	},
-/area/station/mining)
+/area/station/mining/magnet)
 "coZ" = (
 /obj/cable{
 	d1 = 1;
@@ -50687,7 +50687,7 @@
 	icon_state = "0-2"
 	},
 /turf/simulated/floor/plating,
-/area/station/mining)
+/area/station/mining/magnet)
 "cph" = (
 /obj/wingrille_spawn/auto,
 /obj/cable,
@@ -50703,7 +50703,7 @@
 /turf/simulated/floor/orangeblack/side{
 	dir = 4
 	},
-/area/station/mining)
+/area/station/mining/magnet)
 "cpj" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -50795,7 +50795,7 @@
 	pixel_y = 32
 	},
 /turf/simulated/floor,
-/area/station/mining)
+/area/station/mining/magnet)
 "cpt" = (
 /obj/storage/secure/closet/medical/medkit,
 /obj/machinery/alarm{
@@ -51059,7 +51059,7 @@
 /turf/simulated/floor/orangeblack/side{
 	dir = 4
 	},
-/area/station/mining)
+/area/station/mining/magnet)
 "cpS" = (
 /obj/cable{
 	d1 = 2;
@@ -51072,7 +51072,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor,
-/area/station/mining)
+/area/station/mining/magnet)
 "cpT" = (
 /obj/cable{
 	d1 = 2;
@@ -51088,7 +51088,7 @@
 	name = "Mining Pad"
 	},
 /turf/simulated/floor/grey,
-/area/station/mining)
+/area/station/mining/magnet)
 "cpU" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -51096,7 +51096,7 @@
 /turf/simulated/floor/orangeblack/side{
 	dir = 8
 	},
-/area/station/mining)
+/area/station/mining/magnet)
 "cpV" = (
 /obj/cable{
 	d1 = 1;
@@ -51106,7 +51106,7 @@
 /turf/simulated/floor/orangeblack/corner{
 	dir = 1
 	},
-/area/station/mining)
+/area/station/mining/magnet)
 "cpW" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -51119,7 +51119,7 @@
 /turf/simulated/floor/orangeblack/side{
 	dir = 4
 	},
-/area/station/mining)
+/area/station/mining/magnet)
 "cpX" = (
 /obj/machinery/firealarm{
 	dir = 4;
@@ -51130,7 +51130,7 @@
 /turf/simulated/floor/orangeblack/side{
 	dir = 4
 	},
-/area/station/mining)
+/area/station/mining/magnet)
 "cpY" = (
 /obj/table/reinforced/auto,
 /obj/machinery/light,
@@ -51139,7 +51139,7 @@
 /turf/simulated/floor/orangeblack/side{
 	dir = 10
 	},
-/area/station/mining)
+/area/station/mining/magnet)
 "cpZ" = (
 /obj/machinery/light{
 	dir = 4;
@@ -51150,7 +51150,7 @@
 /turf/simulated/floor/orangeblack/side{
 	dir = 4
 	},
-/area/station/mining)
+/area/station/mining/magnet)
 "cqa" = (
 /obj/disposalpipe/segment/mail/vertical,
 /obj/disposalpipe/segment/horizontal,
@@ -52223,7 +52223,7 @@
 /area/station/maintenance/south)
 "eFl" = (
 /turf/simulated/wall/auto/reinforced/supernorn/yellow,
-/area/station/mining)
+/area/station/mining/magnet)
 "eGO" = (
 /obj/lattice{
 	dir = 4;
@@ -52389,7 +52389,7 @@
 /obj/wingrille_spawn/auto,
 /obj/cable,
 /turf/simulated/floor/plating,
-/area/station/mining)
+/area/station/mining/magnet)
 "fhN" = (
 /obj/table/auto,
 /obj/item/game_kit,
@@ -53048,7 +53048,7 @@
 /area/station/ai_monitored/armory)
 "gGd" = (
 /turf/simulated/floor,
-/area/station/mining)
+/area/station/mining/magnet)
 "gGg" = (
 /obj/random_item_spawner/junk/one_or_zero,
 /turf/simulated/floor/caution/north,
@@ -56038,7 +56038,7 @@
 	icon_state = "0-4"
 	},
 /turf/simulated/floor/plating,
-/area/station/mining)
+/area/station/mining/magnet)
 "oOz" = (
 /obj/table/auto,
 /obj/machinery/cell_charger,
@@ -56387,7 +56387,7 @@
 	},
 /obj/cable,
 /turf/simulated/floor/plating,
-/area/station/mining)
+/area/station/mining/magnet)
 "pFF" = (
 /obj/table/auto,
 /obj/item/sheet/steel/fullstack,
@@ -56423,7 +56423,7 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/plating,
-/area/station/mining)
+/area/station/mining/magnet)
 "pMS" = (
 /obj/cable{
 	d1 = 4;
@@ -56714,7 +56714,7 @@
 	},
 /obj/machinery/bot/medbot,
 /turf/simulated/floor,
-/area/station/mining)
+/area/station/mining/magnet)
 "qsw" = (
 /obj/table/reinforced/chemistry/auto{
 	name = "prep counter"
@@ -57009,7 +57009,7 @@
 	icon_state = "0-2"
 	},
 /turf/simulated/floor/plating,
-/area/station/mining)
+/area/station/mining/magnet)
 "rbG" = (
 /obj/machinery/light/emergency{
 	dir = 4;
@@ -57293,7 +57293,7 @@
 /turf/simulated/floor/orangeblack/side{
 	dir = 1
 	},
-/area/station/mining)
+/area/station/mining/magnet)
 "rXp" = (
 /turf/simulated/floor/redblack{
 	dir = 1
@@ -58111,7 +58111,7 @@
 /obj/firedoor_spawn,
 /obj/access_spawn/mining,
 /turf/simulated/floor/orangeblack,
-/area/station/mining)
+/area/station/mining/magnet)
 "tPk" = (
 /obj/cable{
 	icon_state = "1-2"
