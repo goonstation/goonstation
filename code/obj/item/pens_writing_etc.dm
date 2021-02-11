@@ -94,6 +94,7 @@
 		if (!t || get_dist(T, user) > 1)
 			src.in_use = 0
 			return
+		phrase_log.log_phrase("floorpen", t)
 		var/obj/decal/cleanable/writing/G = make_cleanable( /obj/decal/cleanable/writing,T)
 		G.artist = user.key
 
@@ -693,6 +694,8 @@
 		tooltip_rebuild = 1
 		var/holder = src.loc
 		var/str = copytext(html_encode(input(usr,"Label text?","Set label","") as null|text), 1, 32)
+		if(str)
+			phrase_log.log_phrase("label", str, no_duplicates=TRUE)
 		if (src.loc != holder)
 			return
 		if(url_regex?.Find(str))

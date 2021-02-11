@@ -749,6 +749,8 @@
 		var/t = input(user, "Enter new robot name", src.name, src.created_name) as null|text
 		if (!t)
 			return
+		if(t && t != src.name && t != src.created_name)
+			phrase_log.log_phrase("bot-med", t)
 		t = strip_html(replacetext(t, "'",""))
 		t = copytext(t, 1, 45)
 		if (!t)

@@ -827,6 +827,8 @@
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/pen) && !src.labeled)
 			var/t = input(user, "Enter label", "Label", src.name) as null|text
+			if(t && t != src.name)
+				phrase_log.log_phrase("bottle", t, no_duplicates=TRUE)
 			t = copytext(strip_html(t), 1, 24)
 			if (isnull(t) || !length(t) || t == " ")
 				return
