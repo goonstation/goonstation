@@ -35,10 +35,10 @@
 /datum/biome/jungle
 	turf_type = /turf/unsimulated/floor/grass/leafy
 	flora_types = list(/obj/tree1/random, /obj/shrub/random, /obj/stone/random, /obj/decal/fakeobjects/rockpile, /obj/decal/fakeobjects/smallrocks)
-	flora_density = 30
+	flora_density = 40
 
 /datum/biome/jungle/deep
-	flora_density = 45
+	flora_density = 65
 
 /datum/biome/wasteland
 	turf_type = /turf/unsimulated/greek/beach
