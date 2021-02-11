@@ -1,4 +1,18 @@
 
+(t)thu feb 11 21
+(u)zjdtmkhzt
+(p)3638
+(e)🆕|feature
+(+)Enabled some new fault types for artifacts and changed distribution of faults a little.
+(t)wed feb 10 21
+(u)Azrun
+(p)3633
+(e)⚖🆕🎨|balance, feature, sprites
+(*)Atmospheric pipes have a new severely damaged state that requires replacement by rods (and then welding).  Reduced chance of removing pipes from explosions in favor of new state.  Can also achieve new state through extreme pressure...
+(u)Anachroniser
+(p)3407
+(e)⚖|balance
+(+)Lashers now do more damage and blooming lashers are a source of booster enzyme, these can be spliced. Good luck growing one.
 (t)sun feb 07 21
 (u)Flappybat
 (p)3578
