@@ -185,7 +185,7 @@ var/global/lastStationNameChange = 0 //timestamp
 			return 0
 
 		#if defined(REVERSED_MAP)
-			name = reverse_text(name)
+		name = reverse_text(name)
 		#endif
 
 		the_station_name = name
