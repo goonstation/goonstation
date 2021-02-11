@@ -179,7 +179,7 @@ var/datum/artifact_controller/artifact_controls
 	New()
 		..()
 		if ("all" in fault_types)
-			fault_types += concrete_typesof(/datum/artifact_fault)
+			fault_types += childrentypesof(/datum/artifact_fault)
 
 	proc/post_setup(obj/artifact)
 		if(prob(25))
