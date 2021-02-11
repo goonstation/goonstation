@@ -683,7 +683,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "magicm"
 	shot_sound = null
-	power = 10
+	power = 15
 	cost = 1
 	damage_type = D_KINETIC
 	dissipation_delay = 0
@@ -698,7 +698,6 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	goes_through_walls = 0 // It'll stop homing when it hits something, then go bouncy
 	var/max_bounce_count = 3 // putting the I in ICEE BEEYEM
 	var/weaken_length = 5 SECONDS
-	var/impact_brute = 5
 	var/slam_text = "The magic missile SLAMS into you!"
 	var/hit_sound = 'sound/effects/mag_magmisimpact_bounce.ogg'
 	var/cat_sound = 'sound/voice/animal/cat.ogg'
@@ -718,10 +717,9 @@ ABSTRACT_TYPE(/datum/projectile/special)
 			if(.)
 				O.hitlist += hit
 
-			/// Missiles home into their targets until they hit a wall. Then they forget their target and just bounce around
+			// Missiles home into their targets until they hit a wall. Then they forget their target and just bounce around
 			else if(length(O.targets) && isturf(hit) && hit?.density)
 				O.targets = list()
-
 
 	on_hit(atom/A, direction, var/obj/projectile/projectile)
 		. = ..()
@@ -731,7 +729,6 @@ ABSTRACT_TYPE(/datum/projectile/special)
 			M.force_laydown_standup()
 			boutput(M, text("<span class='notice'>[slam_text]</span>"))
 			playsound(M.loc, 'sound/effects/mag_magmisimpact.ogg', 25, 1, -1)
-			random_brute_damage(M, src.impact_brute)
 			M.lastattacker = src.master?.shooter
 			M.lastattackertime = TIME
 		else if(projectile.reflectcount < src.max_bounce_count)
@@ -749,8 +746,8 @@ ABSTRACT_TYPE(/datum/projectile/special)
 /datum/projectile/special/homing/magicmissile/weak
 	name = "magic minimissile"
 	sname = "magic minimissile"
-	power = 5
-	projectile_speed = 100
+	power = 10
+	projectile_speed = 15
 	min_speed = 0.1
 	max_speed = 2
 	max_bounce_count = 2 // putting the Y in ICEE BEEYEM
