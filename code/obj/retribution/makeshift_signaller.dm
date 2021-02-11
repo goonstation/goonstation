@@ -1,4 +1,4 @@
-#define MINUTES_TO_SWORD_LINK = 30										//Feel free to tweak this number as you see fit. After all, my strong suit is originality, not balance.
+#define MINUTES_TO_SWORD_LINK 30										//Feel free to tweak this number as you see fit. After all, my strong suit is originality, not balance.
 var/sword_summoned_before = false
 
 /obj/item/makeshift_signaller_frame
