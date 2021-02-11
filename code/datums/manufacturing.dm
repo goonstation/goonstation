@@ -115,6 +115,14 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 	create = 1
 	frame_path = /obj/disposalpipe/loafer
 
+/******************** AI display (temp) *******************/
+
+/datum/manufacture/mechanics/ai_status_display
+	name = "AI display"
+	time = 5 SECONDS
+	create = 1
+	frame_path = /obj/machinery/ai_status_display
+
 /*
 /datum/manufacture/iron
 	// purely a test

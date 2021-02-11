@@ -130,8 +130,6 @@
 		setdead(src)
 		if (src.mind)
 			src.mind.dnr = 0
-		if (src.client)
-			src.client.images.Remove(mob_static_icons)
 
 			var/mob/dead/observer/ghost = src.ghostize()
 			ghost.icon = 'icons/mob/ghost_drone.dmi'

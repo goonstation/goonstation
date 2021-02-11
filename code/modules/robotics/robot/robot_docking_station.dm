@@ -319,6 +319,8 @@
 				boutput(usr, "<span class='notice'><b>Web/BYOND links are not allowed in ingame chat.</b></span>")
 				boutput(usr, "<span class='alert'>&emsp;<b>\"[newname]</b>\"</span>")
 				return
+			if(newname && newname != R.name)
+				phrase_log.log_phrase("name-cyborg", newname, no_duplicates=TRUE)
 			logTheThing("combat", usr, R, "uses a docking station to rename [constructTarget(R,"combat")] to [newname].")
 			R.name = newname
 			if (R.internal_pda)

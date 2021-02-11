@@ -1386,6 +1386,10 @@
 /obj/machinery/vehicle/New()
 	..()
 	name += "[pick(rand(1, 999))]"
+	if(prob(1))
+		var/new_name = phrase_log.random_phrase("vehicle")
+		if(new_name)
+			src.name = html_encode(new_name)
 	setup_ion_trail()
 
 	if (!movement_controller)

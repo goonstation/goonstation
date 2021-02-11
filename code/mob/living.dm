@@ -692,7 +692,7 @@
 		var/mob/living/carbon/human/H = src
 		// If theres no oxygen
 		if (H.oxyloss > 10 || H.losebreath >= 4 || (H.reagents?.has_reagent("capulettium_plus") && H.hasStatus("resting"))) // Perfluorodecalin cap - normal life() depletion - buffer.
-			H.whisper(message)
+			H.whisper(message, forced=TRUE)
 			return
 
 	//Pod coloseum is broken - disable this unnecessary istype
@@ -1057,6 +1057,12 @@
 
 	if (length(heard_b))
 		processed = saylist(messages[2], heard_b, olocs, thickness, italics, processed, 1)
+
+	if(src.client)
+		if(singing)
+			phrase_log.log_phrase("sing", messages[1])
+		else
+			phrase_log.log_phrase("say", messages[1])
 
 	message = src.say_quote(messages[1])
 

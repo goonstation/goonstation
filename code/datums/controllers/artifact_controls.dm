@@ -201,18 +201,26 @@ var/datum/artifact_controller/artifact_controls
 			fault_types += concrete_typesof(/datum/artifact_fault)
 
 	proc/post_setup(obj/artifact)
-		if(prob(25))
+		var/datum/artifact/AD = artifact.artifact
+		var/rarityMod = AD.get_rarity_modifier()
+		if(prob(100*rarityMod))
 			artifact.transform = matrix(artifact.transform, -1, 1, MATRIX_SCALE)
-		if(prob(5))
+		if(prob(20 * rarityMod))
 			artifact.transform = matrix(artifact.transform, 1, -1, MATRIX_SCALE)
 
 	proc/generate_name()
 		return "unknown object"
 
+
 /datum/artifact_origin/ancient
 	name = "ancient"
-	fault_types = list(/datum/artifact_fault/burn,/datum/artifact_fault/irradiate,/datum/artifact_fault/shutdown,
-	/datum/artifact_fault/murder,/datum/artifact_fault/zap)
+	fault_types = list(
+		/datum/artifact_fault/burn = 10,
+		/datum/artifact_fault/irradiate = 10,
+		/datum/artifact_fault/shutdown = 10,
+		/datum/artifact_fault/zap = 10,
+		/datum/artifact_fault/explode = 10,
+		/datum/artifact_fault/messager/ai_laws = 10)
 	activation_sounds = list('sound/machines/ArtifactAnc1.ogg')
 	instrument_sounds = list("sound/musical_instruments/artifact/Artifact_Ancient_1.ogg",
 		"sound/musical_instruments/artifact/Artifact_Ancient_2.ogg",
@@ -234,9 +242,11 @@ var/datum/artifact_controller/artifact_controls
 
 	post_setup(obj/artifact)
 		. = ..()
-		if(prob(5))
+		var/datum/artifact/AD = artifact.artifact
+		var/rarityMod = AD.get_rarity_modifier()
+		if(prob(50 * rarityMod))
 			artifact.transform = matrix(artifact.transform, 1.1, 1.1, MATRIX_SCALE)
-		if(prob(10))
+		if(prob(100 * rarityMod))
 			var/col = rand(160, 230)
 			artifact.color = rgb(col, col, col)
 
@@ -245,7 +255,14 @@ var/datum/artifact_controller/artifact_controls
 
 /datum/artifact_origin/martian
 	name = "martian"
-	fault_types = list(/datum/artifact_fault/shutdown,/datum/artifact_fault/zap,/datum/artifact_fault/poison)
+	fault_types = list(
+		/datum/artifact_fault/shutdown = 10,
+		/datum/artifact_fault/zap = 5,
+		/datum/artifact_fault/poison = 15,
+		/datum/artifact_fault/messager/what_people_said = 5,
+		/datum/artifact_fault/messager/comforting_whispers = 5,
+		/datum/artifact_fault/grow = 8,
+		/datum/artifact_fault/shrink = 8)
 	activation_sounds = list('sound/machines/ArtifactMar1.ogg','sound/machines/ArtifactMar2.ogg')
 	instrument_sounds = list("sound/musical_instruments/artifact/Artifact_Martian_1.ogg",
 		"sound/musical_instruments/artifact/Artifact_Martian_2.ogg",
@@ -270,9 +287,11 @@ var/datum/artifact_controller/artifact_controls
 
 	post_setup(obj/artifact)
 		. = ..()
-		if(prob(5))
+		var/datum/artifact/AD = artifact.artifact
+		var/rarityMod = AD.get_rarity_modifier()
+		if(prob(50 * rarityMod))
 			artifact.transform = matrix(artifact.transform, rand(-10, 10), MATRIX_ROTATE)
-		if(prob(40))
+		if(prob(200 * rarityMod))
 			artifact.color = rgb(rand(240, 255), rand(240, 255), rand(240, 255))
 
 	generate_name()
@@ -284,8 +303,17 @@ var/datum/artifact_controller/artifact_controls
 
 /datum/artifact_origin/wizard
 	name = "wizard"
-	fault_types = list(/datum/artifact_fault/irradiate,/datum/artifact_fault/shutdown,/datum/artifact_fault/murder,
-	/datum/artifact_fault/warp,/datum/artifact_fault/zap,/datum/artifact_fault/messager/creepy_whispers)
+	fault_types = list(
+		/datum/artifact_fault/irradiate = 10,
+		/datum/artifact_fault/shutdown = 10,
+		/datum/artifact_fault/warp = 15,
+		/datum/artifact_fault/zap = 10,
+		/datum/artifact_fault/burn = 10,
+		/datum/artifact_fault/explode = 5,
+		/datum/artifact_fault/messager/creepy_whispers = 5,
+		/datum/artifact_fault/messager/comforting_whispers = 5,
+		/datum/artifact_fault/messager/what_dead_people_said = 5,
+		/datum/artifact_fault/messager/what_people_said = 5)
 	activation_sounds = list('sound/machines/ArtifactWiz1.ogg')
 	instrument_sounds = list("sound/musical_instruments/artifact/Artifact_Wizard_1.ogg",
 		"sound/musical_instruments/artifact/Artifact_Wizard_2.ogg",
@@ -310,15 +338,17 @@ var/datum/artifact_controller/artifact_controls
 
 	post_setup(obj/artifact)
 		. = ..()
-		if(prob(70))
-			var/hue1 = prob(90) ? (55 + rand(-10, 10)) : rand(360)
+		var/datum/artifact/AD = artifact.artifact
+		var/rarityMod = AD.get_rarity_modifier()
+		if(prob(300*rarityMod))
+			var/hue1 = prob(100*rarityMod) ? rand(360) : (55 + rand(-10, 10))
 			var/list/col1
-			if(prob(80))
-				col1 = list(255, 168, 0)
-			else
+			if(prob(150*rarityMod))
 				col1 = hsv2rgblist(hue1, rand() * 0.2 + 0.5, rand() * 0.2 + 0.6)
+			else
+				col1 = list(255, 168, 0)
 			var/hue2 = 180 + hue1 + rand(-135, 135)
-			if(prob(10))
+			if(prob(100*rarityMod))
 				hue2 = rand(360)
 			var/list/col2 = hsv2rgblist(hue2, rand() * 0.3 + 0.7, rand() * 0.1 + 0.9)
 			artifact.color = list(
@@ -332,7 +362,7 @@ var/datum/artifact_controller/artifact_controls
 				0,
 				1
 			)
-		if(prob(5))
+		if(prob(50*rarityMod))
 			artifact.alpha = rand(200, 255)
 
 	generate_name()
@@ -349,6 +379,18 @@ var/datum/artifact_controller/artifact_controls
 		"sound/musical_instruments/artifact/Artifact_Eldritch_2.ogg",
 		"sound/musical_instruments/artifact/Artifact_Eldritch_3.ogg",
 		"sound/musical_instruments/artifact/Artifact_Eldritch_4.ogg")
+	fault_types = list(
+		/datum/artifact_fault/murder = 2,
+		/datum/artifact_fault/messager/creepy_whispers = 5,
+		/datum/artifact_fault/messager/what_dead_people_said = 5,
+		/datum/artifact_fault/poison = 10,
+		/datum/artifact_fault/irradiate = 10,
+		/datum/artifact_fault/shutdown = 5,
+		/datum/artifact_fault/zap = 8,
+		/datum/artifact_fault/explode = 5,
+		/datum/artifact_fault/warp = 15,
+		/datum/artifact_fault/grow = 5,
+		/datum/artifact_fault/shrink = 5)
 	impact_reaction_one = 0.5
 	impact_reaction_two = 0
 	heat_reaction_one = 0.25
@@ -413,6 +455,15 @@ var/datum/artifact_controller/artifact_controls
 		"sound/musical_instruments/artifact/Artifact_Precursor_4.ogg",
 		"sound/musical_instruments/artifact/Artifact_Precursor_5.ogg",
 		"sound/musical_instruments/artifact/Artifact_Precursor_6.ogg")
+	fault_types = list(
+		/datum/artifact_fault/irradiate = 10,
+		/datum/artifact_fault/shutdown = 5,
+		/datum/artifact_fault/zap = 10,
+		/datum/artifact_fault/explode = 5,
+		/datum/artifact_fault/burn = 5,
+		/datum/artifact_fault/warp = 10,
+		/datum/artifact_fault/messager/what_people_said = 10,
+		/datum/artifact_fault/poison = 2)
 	impact_reaction_one = 2
 	impact_reaction_two = 10
 	heat_reaction_one = 2
