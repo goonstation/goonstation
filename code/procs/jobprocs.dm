@@ -409,6 +409,15 @@
 					if (src.mind)
 						src.mind.store_memory("The unlock code to your pod ([V]) is: [V.lock.code]")
 
+			if (src.traitHolder && src.traitHolder.hasTrait("sleepwalker"))
+				if (src.job == "Head of Security")
+					boutput(src, "<span class='notice'>Sleepwalker trait inactive. You can't sleep as long as there is crime!</span>")
+				else
+					//Has the sleepwalking trait - they wake up a in a random area
+					var/list/turfs = get_area_turfs(/area/station/hallway, floors_only=TRUE)
+					var/turf/chosen = pick(turfs)
+					src.set_loc(pick(chosen))
+
 			if (istraitor(src) && src.mind.late_special_role == 1)
 				//put this here because otherwise it's called before they have a PDA
 				equip_traitor(src)
@@ -500,13 +509,25 @@
 		var/obj/item/device/gps/GPSDEVICE = new /obj/item/device/gps(src.loc)
 		src.force_equip(GPSDEVICE, slot_in_backpack)
 
-	if (src.traitHolder?.hasTrait("overslept"))
+	if (src.traitHolder?.hasTrait("sleepwalker") && src.job != "Head of Security")
 		var/obj/item/clothing/under/gimmick/pajamas/PJ = new /obj/item/clothing/under/gimmick/pajamas(src.loc)
 		src.force_equip(PJ, slot_w_uniform)
 		var/obj/item/clothing/shoes/fuzzy/FUZ = new /obj/item/clothing/shoes/fuzzy(src.loc)
 		src.force_equip(FUZ, slot_shoes)
 		var/obj/item/clothing/head/PJC = new /obj/item/clothing/head/pajama_cap(src.loc)
 		src.force_equip(PJC, slot_head)
+
+		// Detect important job equipment and put in backpack
+		if (src.job == "Captain")
+			var/obj/item/clothing/head/caphat/CH = new /obj/item/clothing/head/caphat(src.loc)
+			src.force_equip(CH, slot_in_backpack)
+		else if (src.job == "Chaplain")
+			var/obj/item/clothing/shoes/sandal/SF = new /obj/item/clothing/shoes/sandal(src.loc)
+			src.force_equip(SF, slot_in_backpack)
+		else if (src.job == "Janitor")
+			var/obj/item/clothing/shoes/galoshes/GF = new /obj/item/clothing/shoes/galoshes(src.loc)
+			src.force_equip(GF, slot_in_backpack)
+
 
 	if (JOB.slot_jump)
 		src.equip_new_if_possible(JOB.slot_jump, slot_w_uniform)
