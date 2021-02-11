@@ -1233,18 +1233,20 @@
 		new /obj/item/reagent_containers/food/drinks/coconut(T)
 		pool(src)
 
+	proc/someone_landed_on_us(mob/living/L, datum/thrown_thing/thr)
+		src.UnregisterSignal(L, COMSIG_MOVABLE_THROW_END)
+		if(L.loc == src.loc)
+			L.visible_message("<span class='alert'>[L] lands on the [src] and breaks it!</span>", "<span class='alert'>You land on the [src] and break it!</span>")
+			playsound(src, "sound/impact_sounds/coconut_break.ogg", 70, vary=TRUE)
+			src.split()
+			L.TakeDamage("chest", brute=12)
+
 	HasEntered(atom/movable/AM, atom/OldLoc)
 		. = ..()
 		if(isliving(AM))
 			var/mob/living/L = AM
 			if(L.throwing)
-				for(var/datum/thrown_thing/thr as() in throwing_controller.thrown)
-					if(thr.thing == L && thr.target_x == src.x && thr.target_y == src.y)
-						L.visible_message("<span class='alert'>[L] lands on the [src] and breaks it!</span>", "<span class='alert'>You land on the [src] and break it!</span>")
-						playsound(src, "sound/impact_sounds/coconut_break.ogg", 30, vary=TRUE)
-						src.split()
-						L.TakeDamage("chest", brute=12)
-						return
+				src.RegisterSignal(L, COMSIG_MOVABLE_THROW_END, .proc/someone_landed_on_us)
 
 /obj/item/reagent_containers/food/snacks/plant/coconutmeat/
 	name = "coconut meat"
