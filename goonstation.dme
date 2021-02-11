@@ -1618,7 +1618,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\turf\turf_drawbridge.dm"
 #include "code\turf\turf_flock.dm"
 #include "code\turf\walls.dm"
-#include "code\unused\status_display.dm"
+#include "code\obj\machinery\status_display.dm"
 #include "code\WorkInProgress\AbilityItem.dm"
 #include "code\WorkInProgress\actuallyKeelinsStuff.dm"
 #include "code\WorkInProgress\AnimationLibrary.dm"

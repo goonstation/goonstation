@@ -1,5 +1,10 @@
 
 (t)thu feb 11 21
+(u)BatElite
+(p)3682
+(e)🐛🆕🗺🔄🎨|bug, feature, mapping, rework, sprites
+(*)Engineers have found some dusty AI displays in storage, and upgraded them to better represent out beloved silicon friends! Until NT stations and ships are properly fitted with the displays, mechanics can find some blueprints for them in their lockers.
+(+)Each AI status display now has an "owner", so it's possible to share them between AIs. You can still claim/steal any screen from other AIs by clicking on them.
 (u)BenLubar
 (p)3639
 (e)🐛|bug
