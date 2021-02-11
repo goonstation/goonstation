@@ -1,4 +1,39 @@
 
+(t)wed feb 10 21
+(u)Azrun
+(p)3633
+(e)⚖🆕🎨|balance, feature, sprites
+(*)Atmospheric pipes have a new severely damaged state that requires replacement by rods (and then welding).  Reduced chance of removing pipes from explosions in favor of new state.  Can also achieve new state through extreme pressure...
+(u)Anachroniser
+(p)3407
+(e)⚖|balance
+(+)Lashers now do more damage and blooming lashers are a source of booster enzyme, these can be spliced. Good luck growing one.
+(t)sun feb 07 21
+(u)Flappybat
+(p)3578
+(e)🐛⛔|bug, removal
+(*)Retired lawn darts from the traitor buy list.
+(u)Arthur Holiday
+(p)3628
+(e)|
+(+)Added icing tubes to the kitchen vendor.
+(u)Emily
+(e)⚖|balance
+(*)The cyborg force shield now more consistently drains battery across different sources of damage.
+(*)The cyborg force shield upgrade now has an "overheat" counter, making it less effective if you take rapid, repeated damage.
+(u)Emily
+(e)🆕|feature
+(*)New Chicken Breed! See Minor Changes for a hint.
+(+)This chicken needs a serpent's tail; you'll have to find something close enough. [Gen 3] [From Stone Chickens]
+(t)sat feb 06 21
+(u)zjdtmkhzt
+(p)3571
+(e)🆕|feature
+(*)Heater type artifacts are now more interesting (and more dangerous). Good thing research has air scrubbers ready!
+(u)Emily
+(e)🆕|feature
+(*)New Chicken Breed! See Minor Changes for a hint.
+(+)According to zjdtmkhzt, I always have an ulterior motive. They're right. [Gen 2] [From Cream Coloured Silkies]
 (t)fri feb 05 21
 (u)Sovexe
 (e)🆕🎨|feature, sprites
