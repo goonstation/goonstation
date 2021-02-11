@@ -1,4 +1,9 @@
 
+(t)thu feb 11 21
+(u)zjdtmkhzt
+(p)3638
+(e)🆕|feature
+(+)Enabled some new fault types for artifacts and changed distribution of faults a little.
 (t)wed feb 10 21
 (u)Azrun
 (p)3633
