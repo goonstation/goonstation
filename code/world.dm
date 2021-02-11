@@ -583,11 +583,11 @@ var/f_color_selector_handler/F_Color_Selector
 	makeMiningLevel()
 	#endif
 
-	UPDATE_TITLE_STATUS("Inializing biomes")
+	UPDATE_TITLE_STATUS("Initializing biomes")
 	Z_LOG_DEBUG("World/Init", "Setting up biomes...")
 	initialize_biomes()
 
-	UPDATE_TITLE_STATUS("Generating perlin noise terrain")
+	UPDATE_TITLE_STATUS("Generating terrain")
 	Z_LOG_DEBUG("World/Init", "Setting perlin noise terrain...")
 	for (var/area/map_gen/A in by_type[/area/map_gen])
 		A.generate_perlin_noise_terrain()
