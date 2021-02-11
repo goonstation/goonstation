@@ -47,7 +47,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 			SPAWN_DBG(3 SECONDS)
 				O.ArtifactDeactivated() // lol get rekt spammer
 			return
-			if (explode_delay < 1)
+		if (explode_delay < 1)
 			deploy_payload(O)
 			return
 
