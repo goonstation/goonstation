@@ -9,7 +9,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	"Mad" = "ai_mad",\
 	"BSOD" = "ai_bsod",\
 	"Text" = "ai_text",\
-	"Blank" = "ai_off")
+	"Blank" = "ai_blank")
 
 /mob/living/silicon/ai
 	name = "AI"
@@ -150,6 +150,8 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 
 /mob/living/silicon/ai/disposing()
 	STOP_TRACKING
+	if (light)
+		light.dispose()
 	..()
 
 /mob/living/silicon/ai/New(loc, var/empty = 0)
@@ -1234,10 +1236,25 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	..()
 	update_clothing()
 	src.updateOverlaysClient(src.client) //ov1
+	if (!isdead(src))
+		for (var/obj/machinery/ai_status_display/O in machine_registry[MACHINES_STATUSDISPLAYS]) //change status
+			if (O.owner && O.owner != src)
+				continue
+			O.owner = src
+			O.mode = 1
 	return
 
 /mob/living/silicon/ai/Logout()
 	src.removeOverlaysClient(src.client) //ov1
+	// Only turn off the status displays if we're dead.
+	if (isdead(src))
+		for (var/obj/machinery/ai_status_display/O in machine_registry[MACHINES_STATUSDISPLAYS]) //change status
+			if (O.owner == src)
+				O.mode = 0
+				O.owner = null
+				O.emotion = null
+				O.message = null
+				O.face_color = null
 	..()
 	return
 
@@ -1583,7 +1600,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	var/list/L = custom_emotions ? custom_emotions : ai_emotions	//In case an AI uses the reward, use a local list instead
 
 	var/newEmotion = input("Select a status!", "AI Status", src.faceEmotion) as null|anything in L
-	var/newMessage = scrubbed_input(usr, "Enter a message!", "AI Message", src.status_message)
+	var/newMessage = scrubbed_input(usr, "Enter a message for your status displays!", "AI Message", src.status_message)
 	if (!newEmotion && !newMessage)
 		return
 	if(!(newEmotion in L)) //Ffff
