@@ -382,9 +382,7 @@
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_MULTITOOL
 
 	machine_registry_idx = MACHINES_STATUSDISPLAYS
-	var/mode = 0	// 0 = Blank
-					// 1 = AI emoticon
-					// 2 used to be BSOD for dead AIs but it just turns off now.
+	var/is_on = FALSE //Distinct from being powered
 
 	var/image/face_image = null //AI expression, optionally the entire screen for the red & BSOD faces
 	var/image/back_image = null //The bit that gets coloured
@@ -427,13 +425,14 @@
 			UpdateOverlays(null, "back_img")
 			UpdateOverlays(null, "glow_img")
 			return
-		use_power(200)
 		update()
+		if (is_on)
+			use_power(200)
 
 	proc/update()
 
 
-		if (mode == 0 || !owner) //Blank
+		if (is_on == FALSE || !owner) //Blank
 			UpdateOverlays(null, "emotion_img")
 			UpdateOverlays(null, "back_img")
 			UpdateOverlays(null, "glow_img")
@@ -456,7 +455,7 @@
 			message = owner.status_message
 			name = initial(name) + " ([owner.name])"
 
-		if (mode == 1)	// AI emoticon
+		if (is_on == TRUE)	// AI emoticon
 			if (src.emotion != owner.faceEmotion)
 				src.set_picture(owner.faceEmotion)
 				emotion = owner.faceEmotion
@@ -487,11 +486,5 @@
 			return
 		boutput(user, "<span class='notice'>You tune the display to your core.</span>")
 		owner = A
-		mode = 1
+		is_on = TRUE
 		update()
-
-// I blame Flourish
-/*obj/machinery/ai_status_display
-	New()
-		..()
-		qdel(src)*/

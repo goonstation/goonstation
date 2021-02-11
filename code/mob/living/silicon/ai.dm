@@ -1241,7 +1241,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 			if (O.owner && O.owner != src)
 				continue
 			O.owner = src
-			O.mode = 1
+			O.is_on = TRUE
 	return
 
 /mob/living/silicon/ai/Logout()
@@ -1250,7 +1250,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	if (isdead(src))
 		for (var/obj/machinery/ai_status_display/O in machine_registry[MACHINES_STATUSDISPLAYS]) //change status
 			if (O.owner == src)
-				O.mode = 0
+				O.is_on = FALSE
 				O.owner = null
 				O.emotion = null
 				O.message = null
