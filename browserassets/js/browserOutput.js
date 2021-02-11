@@ -956,22 +956,6 @@ $(function() {
         var filename = "log_" + now.getFullYear() + "-" + (now.getMonth() + 1) + "-" + now.getDate() + "_" + now.getHours() + "-" + now.getMinutes() + ".html";
 
         navigator.msSaveBlob(new Blob([saved], {type : 'text/html'}), filename);
-
-        /*
-        saved = saved.replace(/&/g, '&amp;');
-        saved = saved.replace(/</g, '&lt;');
-
-        var win;
-        try {
-            win = window.open('', 'Chat Log', 'toolbar=no, location=no, directories=no, status=no, menubar=yes, scrollbars=yes, resizable=yes, width=780, height=200, top='+(screen.height-400)+', left='+(screen.width-840));
-        } catch (e) {
-            return;
-        }
-        if (win && win.document && window.document.body) {
-            win.document.body.innerHTML = saved;
-        }
-        output('<span class="internal boldnshit">Manually copypaste the contents of the window to a new html file!</span>');
-        */
       });
 
     $('#highlightTerm').click(function(e) {
