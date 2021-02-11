@@ -162,5 +162,6 @@ var/list/list/by_cat = list()
 #define TR_CAT_TELEPORT_JAMMERS "teleport_jammers"
 #define TR_CAT_OMNIPRESENT_MOBS "omnipresent_mobs"
 #define TR_CAT_CHAPLAINS "chaplains"
+#define TR_CAT_SOUL_TRACKING_ITEMS "soul_tracking_items"
 // powernets? processing_items?
 // mobs? ai-mobs?

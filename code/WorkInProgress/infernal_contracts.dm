@@ -7,8 +7,6 @@ TODO: USE COMPONENTS TO HANDLE SOUL COUNT FOR THE SCALING ITEMS??? (IS THIS NECE
 Whatever, it's been cleaned up a lot and it's no longer quite so awful.
 */
 
-var/global/list/soultrackingitems = list()
-
 
 /proc/soulbuff(var/obj/item/to_buff)
 	if(!to_buff)
@@ -20,11 +18,11 @@ var/global/list/soultrackingitems = list()
 
 /proc/souladjust(var/to_adjust as num)
 	if (!to_adjust)
-		return
+		return 0
 	total_souls_value = max(0, (total_souls_value + to_adjust))
 	total_souls_sold = max(total_souls_sold, (total_souls_sold + to_adjust)) //total souls sold can never go down
-	if (soultrackingitems.len)
-		for (var/obj/item/Q as() in soultrackingitems)
+	if (length(by_cat[TR_CAT_SOUL_TRACKING_ITEMS]))
+		for (var/obj/item/Q as() in by_cat[TR_CAT_SOUL_TRACKING_ITEMS])
 			soulbuff(Q)
 	return 1
 
@@ -199,11 +197,10 @@ var/global/list/soultrackingitems = list()
 
 	New()
 		..()
-		soultrackingitems.Add(src)
+		START_TRACKING_CAT(TR_CAT_SOUL_TRACKING_ITEMS)
 
 	disposing()
-		if (soultrackingitems.Find(src))
-			soultrackingitems.Remove(src)
+		STOP_TRACKING_CAT(TR_CAT_SOUL_TRACKING_ITEMS)
 		..()
 
 	throw_impact(atom/A, datum/thrown_thing/thr)
@@ -277,11 +274,10 @@ var/global/list/soultrackingitems = list()
 
 	New()
 		..()
-		soultrackingitems.Add(src)
+		START_TRACKING_CAT(TR_CAT_SOUL_TRACKING_ITEMS)
 
 	disposing()
-		if (soultrackingitems.Find(src))
-			soultrackingitems.Remove(src)
+		STOP_TRACKING_CAT(TR_CAT_SOUL_TRACKING_ITEMS)
 		..()
 
 	make_my_stuff()
