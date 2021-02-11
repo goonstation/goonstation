@@ -54,6 +54,11 @@
 	density = 1
 	opacity = 0 // this causes some of the super ugly lighting issues too
 
+	random
+		New()
+			. = ..()
+			src.dir = pick(cardinal)
+
 // what the hell is all this and why wasn't it just using a big icon? the lighting system gets all fucked up with this stuff
 
 /*
@@ -111,6 +116,11 @@
 	icon_state = "stone"
 	anchored = 1
 	density=1
+
+	random
+		New()
+			. = ..()
+			src.dir = pick(alldirs)
 
 /obj/shrub
 	name = "shrub"
@@ -206,6 +216,11 @@
 			playsound(src.loc, "sound/impact_sounds/Slimy_Hit_3.ogg", 100, 0)
 			qdel(src)
 			return
+
+	random
+		New()
+			. = ..()
+			src.dir = pick(alldirs)
 
 /obj/shrub/captainshrub
 	name = "\improper Captain's bonsai tree"
