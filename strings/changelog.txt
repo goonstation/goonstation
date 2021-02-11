@@ -1,5 +1,9 @@
 
 (t)thu feb 11 21
+(u)BenLubar
+(p)3639
+(e)🐛|bug
+(+)The network cards in the security records and engine control computers have been upgraded to new models which can transmit PDA messages to distances greater than 0.4 millifurlongs.
 (u)zjdtmkhzt
 (p)3638
 (e)🆕|feature
