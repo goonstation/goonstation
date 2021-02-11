@@ -1028,6 +1028,13 @@ This is basically useless for anyone but miners.
 	desc = "A terrifying grenade containing a potent nerve gas. Try not to get caught in the smoke."
 	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/revolution)
 
+/datum/syndicate_buylist/surplus/xray_specs
+	name = "Xray specs"
+	item = /obj/item/clothing/glasses/xray/syndicate
+	cost = 1
+	desc = "The questionable fashion choice of these glasses conceal advanced surveillance technology letting you see through walls."
+	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/revolution)
+
 /////////////////////////////////////////////// Disabled items /////////////////////////////////////////////////////
 
 /datum/syndicate_buylist/traitor/fogmaster

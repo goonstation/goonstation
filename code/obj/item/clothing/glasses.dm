@@ -599,3 +599,31 @@
 				H.bioHolder.AddEffect("bad_eyesight")
 				SPAWN_DBG(10 SECONDS)
 					H.bioHolder.RemoveEffect("bad_eyesight")
+
+/obj/item/clothing/glasses/xray
+	name = "3D glasses"
+	icon_state = "xray"
+	item_state = "xray"
+	desc = "Woah! It's like everything was 2D before you put these on!"
+
+/obj/item/clothing/glasses/xray/syndicate
+	name = "3D glasses"
+	icon_state = "xray"
+	item_state = "xray"
+	var/existing_gene = null
+
+	equipped(var/mob/user)
+		..()
+		if (ishuman(user))
+			var/mob/living/carbon/human/H = user
+			if (H.bioHolder.HasEffect("xray"))
+				existing_gene = TRUE
+			else
+				existing_gene = FALSE
+			H.bioHolder.AddEffect("xray")
+
+	unequipped(var/mob/user)
+		..()
+		if (ishuman(user) && !existing_gene)
+			var/mob/living/carbon/human/H = user
+			H.bioHolder.RemoveEffect("xray")
