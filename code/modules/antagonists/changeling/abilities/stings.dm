@@ -2,7 +2,7 @@
 	name = "Sting"
 	desc = "Transfer some toxins into your target."
 	var/stealthy = 1
-	var/venom_id = "toxin"
+	var/list/venom_ids = list("toxin")
 	var/inject_amount = 50
 	cooldown = 900
 	targeted = 1
@@ -28,7 +28,7 @@
 					boutput(holder.owner, "<span class='alert'>You break [P]'s tamper-proof seal!</span>")
 					P.medical = 0
 			logTheThing("combat", holder.owner, target, "stings [target] with [name] as a changeling at [log_loc(holder.owner)].")
-			target.reagents.add_reagent(venom_id, inject_amount)
+			target.reagents.add_reagent(venom_ids, inject_amount)
 			holder.owner.show_message(__blue("We stealthily sting [target]."))
 			return 0
 
@@ -53,7 +53,8 @@
 			holder.owner.visible_message(__red("<b>[holder.owner] stings [target]!</b>"))
 		else
 			holder.owner.show_message(__blue("We stealthily sting [target]."))
-		MT.reagents?.add_reagent(venom_id, inject_amount)
+			for(var/venom_id in src.venom_ids)
+				MT.reagents.add_reagent(venom_id, inject_amount)
 
 		if (isliving(MT))
 			MT:was_harmed(holder.owner, special = "ling")
@@ -63,28 +64,36 @@
 		name = "Neurotoxic Sting"
 		desc = "Transfer some neurotoxin into your target."
 		icon_state = "stingneuro"
-		venom_id = "neurotoxin"
+		venom_ids = list("neurotoxin")
 
-	//neuro replacement for RP
-	capulettium
-		name = "Capulettium Sting"
-		desc = "Transfer some capulettium into your target."
+	//neuro replacements for RP
+	//capulettium
+		//name = "Capulettium Sting"
+		//desc = "Transfer some capulettium into your target."
+		//icon_state = "stingneuro"
+		//venom_ids = list("capulettium")
+		//inject_amount = 20
+
+	//alt neuro replacement for RP
+	capulettium_plus
+		name = "Capulettium Plus Sting"
+		desc = "Transfer some capulettium plus and pancuronium into your target."
 		icon_state = "stingneuro"
-		venom_id = "capulettium"
-		inject_amount = 20
+		venom_ids = list("capulettium_plus", "pancuronium")
+		inject_amount = 15
 
 	lsd
 		name = "Hallucinogenic Sting"
 		desc = "Transfer some LSD into your target."
 		icon_state = "stinglsd"
-		venom_id = "LSD"
+		venom_ids = list("LSD")
 		inject_amount = 30
 
 	dna
 		name = "DNA Sting"
 		desc = "Injects stable mutagen and the blood of the selected victim into your target."
 		icon_state = "stingdna"
-		venom_id = "dna_mutagen"
+		venom_ids = list("dna_mutagen")
 		inject_amount = 30
 		pointCost = 4
 		var/datum/targetable/changeling/dna_target_select/targeting = null
@@ -115,7 +124,7 @@
 		name = "Fartonium Sting"
 		desc = "Let someone else let 'er rip"
 		icon_state = "stingfart"
-		venom_id = "fartonium"
+		venom_ids = list("fartonium")
 		inject_amount = 25
 		cooldown = 600
 
@@ -123,7 +132,7 @@
 		name = "Anti-farting sting"
 		desc = "You fartless bastard"
 		icon_state = "stingnofart"
-		venom_id = "anti_fart"
+		venom_ids = list("anti_fart")
 		inject_amount = 25
 		cooldown = 600
 
