@@ -7903,6 +7903,10 @@
 	},
 /turf/simulated/floor/black/grime,
 /area/station/science/storage)
+"bYh" = (
+/obj/machinery/ai_status_display,
+/turf/space,
+/area/space)
 "bYn" = (
 /turf/simulated/floor/dojo/sand/circle,
 /area/station/crew_quarters/captain)
@@ -43208,6 +43212,7 @@
 /obj/disposalpipe/segment/morgue{
 	name = "crematorium pipe"
 	},
+/obj/machinery/ai_status_display,
 /turf/space,
 /area/space)
 "mSX" = (
@@ -54870,14 +54875,6 @@
 	dir = 1
 	},
 /area/station/hallway/primary/west)
-"qmy" = (
-/obj/machinery/ai_status_display,
-/obj/disposalpipe/segment/morgue{
-	dir = 4;
-	name = "crematorium pipe"
-	},
-/turf/simulated/wall/auto/reinforced/jen/red,
-/area/station/turret_protected/AIbaseoutside)
 "qmz" = (
 /obj/decal/mule/dropoff,
 /obj/machinery/door/airlock/pyro/glass,
@@ -66915,7 +66912,6 @@
 	},
 /area/station/science/lab)
 "tNr" = (
-/obj/machinery/ai_status_display,
 /obj/disposalpipe/segment/morgue{
 	dir = 2;
 	icon_state = "pipe-c";
@@ -121950,8 +121946,8 @@ nSh
 nSh
 nSh
 nSh
-qmy
-rdj
+peL
+bYh
 rdj
 abH
 rdj
