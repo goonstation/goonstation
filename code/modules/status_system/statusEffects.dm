@@ -125,12 +125,12 @@
 			. = "Your stamina regen is [change > 0 ? "increased":"reduced"] by [abs(change)]."
 
 		onAdd(optional=null)
-			if(hascall(owner, "add_stam_mod_regen"))
-				owner:add_stam_mod_regen(id, change)
+			var/mob/M = owner
+			APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, id, change)
 
 		onRemove()
-			if(hascall(owner, "remove_stam_mod_regen"))
-				owner:remove_stam_mod_regen(id)
+			var/mob/M = owner
+			REMOVE_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, id)
 
 	maxhealth
 		id = "maxhealth"
@@ -220,7 +220,7 @@
 			. = ..()
 			if(ismob(owner))
 				var/mob/M = owner
-				M.add_stam_mod_regen("stims", 500)
+				APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "stims", 500)
 				M.add_stam_mod_max("stims", 500)
 				M.add_stun_resist_mod("stims", 1000)
 				M.filters += filter(type="displace", icon=icon('icons/effects/distort.dmi', "muscly"), size=0)
@@ -232,7 +232,7 @@
 			. = ..()
 			if(ismob(owner))
 				var/mob/M = owner
-				M.remove_stam_mod_regen("stims")
+				REMOVE_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "stims")
 				M.remove_stam_mod_max("stims")
 				M.remove_stun_resist_mod("stims")
 				animate(filter, size=0, time=1 SECOND, easing=SINE_EASING)
@@ -1085,7 +1085,7 @@
 			H.max_health += max_health
 			health_update_queue |= H
 			H.add_stam_mod_max("ganger_max", max_stam)
-			H.add_stam_mod_regen("ganger_regen", regen_stam)
+			APPLY_MOB_PROPERTY(H, PROP_STAMINA_REGEN_BONUS, "ganger_regen", regen_stam)
 			if (ismob(owner))
 				var/mob/M = owner
 				if (M.mind)
@@ -1095,7 +1095,7 @@
 			H.max_health -= max_health
 			health_update_queue |= H
 			H.remove_stam_mod_max("ganger_max")
-			H.remove_stam_mod_regen("ganger_regen")
+			REMOVE_MOB_PROPERTY(H, PROP_STAMINA_REGEN_BONUS, "ganger_regen")
 			gang = null
 
 		onUpdate(timePassed)
@@ -1218,13 +1218,13 @@
 			H.max_health += max_health
 			health_update_queue |= H
 			H.add_stam_mod_max("mutiny_max", max_stam)
-			H.add_stam_mod_regen("mutiny_regen", regen_stam)
+			APPLY_MOB_PROPERTY(H, PROP_STAMINA_REGEN_BONUS, "mutiny_regen", regen_stam)
 
 		onRemove()
 			H.max_health -= max_health
 			health_update_queue |= H
 			H.remove_stam_mod_max("mutiny_max")
-			H.remove_stam_mod_regen("mutiny_regen")
+			REMOVE_MOB_PROPERTY(H, PROP_STAMINA_REGEN_BONUS, "mutiny_regen")
 
 		getTooltip()
 			. = "Your max health, max stamina, and stamina regen have been increased because of your bossy attitude."
@@ -1250,13 +1250,13 @@
 			H.max_health += max_health
 			health_update_queue |= H
 			H.add_stam_mod_max("revspirit_max", max_stam)
-			H.add_stam_mod_regen("revspirit_regen", regen_stam)
+			APPLY_MOB_PROPERTY(H, PROP_STAMINA_REGEN_BONUS, "revspirit_regen", regen_stam)
 
 		onRemove()
 			H.max_health -= max_health
 			health_update_queue |= H
 			H.remove_stam_mod_max("revspirit_max")
-			H.remove_stam_mod_regen("revspirit_regen")
+			REMOVE_MOB_PROPERTY(H, PROP_STAMINA_REGEN_BONUS, "revspirit_regen")
 
 		getTooltip()
 			. = "Your max stamina and stamina regen have been increased slightly."
