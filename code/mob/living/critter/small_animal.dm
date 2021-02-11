@@ -420,7 +420,7 @@ todo: add more small animals!
 
 	attackby(obj/item/W as obj, mob/living/user as mob)
 		if (istype(W, /obj/item/card/emag))
-			emag_act(usr, W)
+			emag_act(user, W)
 		if (istype(W, /obj/item/card/id/blank_deluxe))
 			if (W.desc == "Some type of microchipped payment card. Looks like it's designed to deal with catcoins.")//Can't change descs
 				if (!swiped && W.stamina_cost == 1)

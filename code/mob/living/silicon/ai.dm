@@ -320,7 +320,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 		if (src.dismantle_stage >= 2)
 			boutput(user, "<span class='alert'>You must close the cover to swipe an ID card.</span>")
 		else
-			if(src.allowed(usr))
+			if(src.allowed(user))
 				if (src.dismantle_stage == 1)
 					src.dismantle_stage = 0
 				else

@@ -1365,7 +1365,7 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 		t = copytext(t, 1, 45)
 		if (!t)
 			return
-		if (!in_interact_range(src, usr) && src.loc != usr)
+		if (!in_interact_range(src, user) && src.loc != user)
 			return
 
 		src.created_name = t

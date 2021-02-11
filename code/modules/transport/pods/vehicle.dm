@@ -1186,8 +1186,8 @@
 		return
 
 	if (src.lock && src.locked)
-		boutput(usr, "<span class='alert'>You can't modify parts while [src] is locked.</span>")
-		lock.show_lock_panel(usr, 0)
+		boutput(user, "<span class='alert'>You can't modify parts while [src] is locked.</span>")
+		lock.show_lock_panel(user, 0)
 		return
 
 	src.add_dialog(user)

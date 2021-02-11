@@ -2298,15 +2298,15 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 
 /obj/vehicle/forklift/MouseDrop_T(atom/movable/A as obj|mob, mob/user as mob)
 
-	if (usr.stat)
+	if (user.stat)
 		return
 
 	//pick up crates with forklift
-	if((istype(A, /obj/storage/crate) || istype(A, /obj/storage/cart)) && get_dist(A, src) <= 1 && src.rider == usr && helditems.len != helditems_maximum && !broken)
+	if((istype(A, /obj/storage/crate) || istype(A, /obj/storage/cart)) && get_dist(A, src) <= 1 && src.rider == user && helditems.len != helditems_maximum && !broken)
 		A.set_loc(src)
 		helditems.Add(A)
 		update_overlays()
-		boutput(usr, "<span class='notice'><B>You pick up the [A.name].</B></span>")
+		boutput(user, "<span class='notice'><B>You pick up the [A.name].</B></span>")
 		for (var/mob/C in AIviewers(src))
 			if(C == rider)
 				continue
@@ -2318,8 +2318,8 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 		boutput(user, "You don't think [src] has enough utensil strength to pick this up.")
 		return
 
-	if(ishuman(A) && get_dist(usr, src) <= 1  && get_dist(A, usr) <= 1 && !rider)
-		if (A == usr)
+	if(ishuman(A) && get_dist(user, src) <= 1  && get_dist(A, user) <= 1 && !rider)
+		if (A == user)
 			boutput(user, "You get into [src].")
 		else
 			boutput(user, "<span class='notice'>You help [A] onto [src]!</span>")
@@ -2383,20 +2383,20 @@ obj/vehicle/forklift/attackby(var/obj/item/I, var/mob/user)
 	if (isscrewingtool(I))
 		if (!openpanel)
 			openpanel = 1
-			boutput(usr, "You unlock [src]'s panel with [I].")
+			boutput(user, "You unlock [src]'s panel with [I].")
 			update_overlays()
 			return
 
 		if (openpanel)
 			openpanel = 0
-			boutput(usr, "You lock [src]'s panel with [I].")
+			boutput(user, "You lock [src]'s panel with [I].")
 			update_overlays()
 			return
 
 	//Breaking the forklift
 	if (issnippingtool(I))
 		if (openpanel && !broken)
-			boutput(usr, "<span class='notice'>You cut [src]'s wires!<span>")
+			boutput(user, "<span class='notice'>You cut [src]'s wires!<span>")
 			new /obj/item/cable_coil/cut/small( src.loc )
 			break_forklift()
 		return
@@ -2406,7 +2406,7 @@ obj/vehicle/forklift/attackby(var/obj/item/I, var/mob/user)
 		if (openpanel && broken)
 			var/obj/item/cable_coil/coil = I
 			coil.use(5)
-			boutput(usr, "<span class='notice'>You replace [src]'s wires!</span>")
+			boutput(user, "<span class='notice'>You replace [src]'s wires!</span>")
 			broken = 0
 			if (helditems_maximum < 4)
 				helditems_maximum = 4

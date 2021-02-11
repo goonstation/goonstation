@@ -8,7 +8,7 @@
 	icon_state= "sec_system"
 
 	proc/Use(mob/user as mob)
-		boutput(usr, "[ship.ship_message("No special function for this ship!")]")
+		boutput(user, "[ship.ship_message("No special function for this ship!")]")
 		return
 
 	proc/Clickdrag_PodToObject(var/mob/living/user,var/atom/A)
@@ -217,7 +217,7 @@
 			boutput(user, "<span class='alert'>That tile is blocked by [O].</span>")
 			return
 
-	var/crate = input(usr, "Choose which cargo to unload..", "Choose cargo")  as null|anything in load
+	var/crate = input(user, "Choose which cargo to unload..", "Choose cargo")  as null|anything in load
 	if(!crate)
 		return
 	unload(crate,T)
@@ -488,7 +488,7 @@
 	hud_state = "abductor"
 
 	Use(mob/user as mob)
-		var/mob/target = input(usr, "Choose Who to Abduct", "Choose Target")  as mob in view(ship.loc)
+		var/mob/target = input(user, "Choose Who to Abduct", "Choose Target")  as mob in view(ship.loc)
 		if(target)
 			boutput(target, "<span class='alert'><B>You have been abducted!</B></span>")
 			showswirl(get_turf(target))

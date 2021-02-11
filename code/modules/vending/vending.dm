@@ -397,7 +397,7 @@
 			src.scan_card(W, user)
 			src.generate_HTML(1)
 			return
-			/*var/amount = input(usr, "How much money would you like to deposit?", "Deposit", 0) as null|num
+			/*var/amount = input(user, "How much money would you like to deposit?", "Deposit", 0) as null|num
 			if(amount <= 0)
 				return
 			if(amount > W:money)

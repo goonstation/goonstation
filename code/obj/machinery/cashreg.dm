@@ -55,7 +55,7 @@
 				return
 
 			boutput(user, "<span class='notice'>The current host ID is [mainaccount.fields["name"]]. Insert a value less than zero to cancel transaction.</span>")
-			var/amount = input(usr, "How much money would you like to send?", "Deposit", 0) as null|num
+			var/amount = input(user, "How much money would you like to send?", "Deposit", 0) as null|num
 			if (amount <= 0)
 				return
 			if (amount > target_account.fields["current_money"])

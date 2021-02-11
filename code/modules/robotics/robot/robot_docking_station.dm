@@ -69,10 +69,10 @@
 
 /obj/machinery/recharge_station/attack_hand(mob/user)
 	if (src.status & BROKEN)
-		boutput(usr, "<span class='alert'>[src] is broken and cannot be used.</span>")
+		boutput(user, "<span class='alert'>[src] is broken and cannot be used.</span>")
 		return
 	if (src.status & NOPOWER)
-		boutput(usr, "<span class='alert'>[src] is out of power and cannot be used.</span>")
+		boutput(user, "<span class='alert'>[src] is out of power and cannot be used.</span>")
 		return
 	if (!src.anchored)
 		user.show_text("You must attach [src]'s floor bolts before the machine will work.", "red")

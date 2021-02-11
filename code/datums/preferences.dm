@@ -174,7 +174,7 @@ datum/preferences
 			return
 
 		if (!AH)
-			boutput(usr, "Your settings are missing an AppearanceHolder. This is a good time to tell a coder.")
+			boutput(user, "Your settings are missing an AppearanceHolder. This is a good time to tell a coder.")
 
 		if (!data_cache)
 			data_cache = list("script" = null,"css" = null,"profile_name" = null,"character_name" = null,"gender" = null,"age_blood" = null,\

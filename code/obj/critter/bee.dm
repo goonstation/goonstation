@@ -1637,7 +1637,7 @@
 			t = copytext(t, 1, 65)
 			if (!t)
 				return
-			if (!in_interact_range(src, usr) && src.loc != usr)
+			if (!in_interact_range(src, user) && src.loc != user)
 				return
 
 			src.bee_name = t

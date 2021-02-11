@@ -1175,7 +1175,7 @@
 			else if (brainexposed)
 				boutput(user, "<span class='alert'>You need to close the head compartment.</span>")
 			else
-				if (src.allowed(usr))
+				if (src.allowed(user))
 					if (src.locking)
 						src.locking = 0
 					locked = !locked

@@ -1011,10 +1011,10 @@
 
 			if (src.autoextract)
 				if (!src.extract_to)
-					boutput(usr, "<span class='alert'>You must first select an extraction target if you want items to be automatically extracted.</span>")
+					boutput(user, "<span class='alert'>You must first select an extraction target if you want items to be automatically extracted.</span>")
 					return
 				if (src.extract_to.reagents.total_volume == src.extract_to.reagents.maximum_volume)
-					boutput(usr, "<span class='alert'>The extraction target is full.</span>")
+					boutput(user, "<span class='alert'>The extraction target is full.</span>")
 					return
 
 			boutput(user, "<span class='notice'>You add [W] to the machine!</span>")

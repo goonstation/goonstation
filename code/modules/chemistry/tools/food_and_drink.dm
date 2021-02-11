@@ -832,7 +832,7 @@
 			t = copytext(strip_html(t), 1, 24)
 			if (isnull(t) || !length(t) || t == " ")
 				return
-			if (!in_interact_range(src, usr) && src.loc != usr)
+			if (!in_interact_range(src, user) && src.loc != user)
 				return
 
 			src.name = t
