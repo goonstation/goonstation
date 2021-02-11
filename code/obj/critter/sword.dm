@@ -32,15 +32,16 @@
 	seekrange = 128							//A perk of being a high-tech prototype - large detection range.
 	var/mode = 0							//0 - Beacon. 1 - Unanchored. 2 - Anchored.
 	var/cooldown = 0						//Used to prevent the SWORD from using abilities all the time.
-	var/transformation_triggered = false	//Used to check if the initial transformation has already been started or not.
-	var/changing_modes = false				//Used to prevent some things during transformation sequences.
-	var/rotation_locked = false				//Used to lock the SWORD's rotation in place.
-	var/current_ability = null				//Used to keep track of what ability the SWORD is currently using.
 	var/used_ability = 0					//Used to only allow transforming after at least one ability has been used.
 	var/current_heat_level = 0				//Used to keep track of the SWORD's heat for Heat Reallocation.
+	var/transformation_triggered = false	//Used to check if the initial transformation has already been started or not.
+	var/rotation_locked = false				//Used to lock the SWORD's rotation in place. Or, at the very least, attempt to.
+	var/changing_modes = false				//Used to prevent some things during transformation sequences.
+	var/died_already = false				//Used to prevent spam-reporting the death of the SWORD.
+	var/past_destructive_rotation = null	//Used to prevent the SWORD from using Destructive Leap/Destructive Flight in the same direction twice in a row, at a 75% efficiency.
+	var/current_ability = null				//Used to keep track of what ability the SWORD is currently using.
 	var/stuck_location = null				//Used to prevent the SWORD from getting stuck too much.
 	var/stuck_timer = null					//Ditto.
-	var/died_already = false				//Used to prevent spam-reporting the death of the SWORD.
 	var/image/glow
 
 	New()
@@ -588,6 +589,8 @@
 		playsound(get_center(), "sound/effects/flame.ogg", 80, 1)
 
 		SPAWN_DBG(2)
+			if(past_destructive_rotation == src.dir)
+				src.dir = pick(1,2,4,8)
 			for(var/i=0, i < 6, i++)
 				step(src, src.dir)
 				if(i < 3)
@@ -605,6 +608,7 @@
 					M.gib()
 				else
 					random_brute_damage(M, 120)
+			past_destructive_rotation = src.dir
 
 		SPAWN_DBG(10)
 			icon = 'icons/misc/retribution/SWORD/base.dmi'
@@ -717,6 +721,8 @@
 		var/turf/T
 
 		SPAWN_DBG(1)
+			if(past_destructive_rotation == src.dir)
+				src.dir = pick(1,2,4,8)
 			for(var/i=0, i < 6, i++)
 				switch (src.dir)
 					if (1)	//N
@@ -750,8 +756,11 @@
 				sleep(0.4)
 			for (var/mob/M in range(3,get_center()))
 				random_brute_damage(M, 60)
+			past_destructive_rotation = src.dir
 
 		SPAWN_DBG(8)
+			if(past_destructive_rotation == src.dir)
+				src.dir = pick(1,2,4,8)
 			walk_towards(src, src.target)
 			walk(src,0)
 			for(var/l=0, l < 6, l++)
@@ -787,6 +796,7 @@
 				sleep(0.1)
 			for (var/mob/O in range(3,get_center()))
 				random_brute_damage(O, 45)
+			past_destructive_rotation = src.dir
 
 		SPAWN_DBG(15)
 			icon = 'icons/misc/retribution/SWORD/base.dmi'
