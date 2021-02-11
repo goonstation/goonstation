@@ -165,14 +165,18 @@
 /datum/targetable/merchant/summon_contract
 	icon_state = "clairvoyance"
 	name = "Summon Contract"
-	desc = "Spend 3 souls to summon a random new contract to your location"
+	desc = "Spend PLACEHOLDER (you shouldn't see this) souls to summon a random new contract to your location"
 	targeted = 0
 	target_nodamage_check = 0
 	max_range = 0
 	cooldown = 0
-	pointCost = 0
+	pointCost = CONTRACT_COST
 	when_stunned = 1
 	not_when_handcuffed = 0
+
+	New()
+		..()
+		desc = "Spend [CONTRACT_COST] souls to summon a random new contract to your location"
 
 	cast(mob/target)
 		if (!holder)

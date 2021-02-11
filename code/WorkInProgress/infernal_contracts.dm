@@ -12,7 +12,7 @@ Whatever, it's been cleaned up a lot and it's no longer quite so awful.
 	if(!to_buff)
 		return 0
 	to_buff.force = (initial(to_buff.force)) + total_souls_value
-	to_buff.throwforce = (initial(to_buff.throwforce)) + total_souls_value
+	to_buff.throwforce = (initial(to_buff.throwforce)) + total_souls_value //these were originally capped at 30, but that seemed arbitrary and pointless in hindsight
 	to_buff.tooltip_rebuild = 1
 	return 1
 
@@ -26,18 +26,21 @@ Whatever, it's been cleaned up a lot and it's no longer quite so awful.
 			soulbuff(Q)
 	return 1
 
+var/list/strongcontracts = filtered_concrete_typesof(/obj/item/contract, /proc/is_strong_rollable_contract)
+var/list/weakcontracts = filtered_concrete_typesof(/obj/item/contract, /proc/is_weak_rollable_contract)
+
+proc/is_strong_rollable_contract(type)
+	var/obj/item/contract/fakeInstance = type
+	return (initial(fakeInstance.strong) && initial(fakeInstance.can_roll))
+
+proc/is_weak_rollable_contract(type)
+	var/obj/item/contract/fakeInstance = type
+	return (!(initial(fakeInstance.strong)) && initial(fakeInstance.can_roll))
+
 
 /proc/spawncontract(var/mob/badguy as mob, var/strong = 0, var/pen = 0) //Used for both the vanish proc and the WIP contract market.
 	if(strong)
-		var/list/replacementcontracts = list(/obj/item/contract/yeti = 40,\
-	/obj/item/contract/genetic/demigod = 40,\
-	/obj/item/contract/vampire = 40,\
-	/obj/item/contract/wrestle = 40,\
-	/obj/item/contract/satan = 40,\
-	/obj/item/contract/horse = 40,\
-	/obj/item/contract/fart = 3)
-
-		var/tempcontract = weighted_pick(replacementcontracts)
+		var/tempcontract = pick(strongcontracts)
 		var/obj/item/contract/U = new tempcontract(badguy)
 		U.merchant = badguy
 		if (!badguy.put_in_hand(U))
@@ -58,18 +61,7 @@ Whatever, it's been cleaned up a lot and it's no longer quite so awful.
 				else
 					badguy.show_text("<h3>And a new pen appears in your other hand!</h3>", "blue")
 	else
-		var/list/replacementcontracts = list(/obj/item/contract/greed,
-												/obj/item/contract/mummy,
-												/obj/item/contract/hair,
-												/obj/item/contract/genetic/demigod,
-												/obj/item/contract/juggle,
-												/obj/item/contract/bee,
-												/obj/item/contract/rested,
-												/obj/item/contract/reversal,
-												/obj/item/contract/chemical,
-												/obj/item/contract/mummy/thorough)
-
-		var/tempcontract = pick(replacementcontracts)
+		var/tempcontract = pick(weakcontracts)
 		var/obj/item/contract/U = new tempcontract(badguy)
 		U.merchant = badguy
 		if (!badguy.put_in_hand(U))
@@ -184,6 +176,8 @@ Whatever, it's been cleaned up a lot and it's no longer quite so awful.
 	SPAWN_DBG(1 SECOND)
 		qdel(src)
 
+
+
 /obj/item/pen/fancy/satan
 	name = "demonic pen"
 	desc = "A pen once owned by Old Nick himself. The point is as sharp as the Devil's wit, so it makes an excellent improvised throwing or stabbing weapon."
@@ -231,15 +225,19 @@ Whatever, it's been cleaned up a lot and it's no longer quite so awful.
 	color = "#FF0000"
 	name = "Paper-'Soul Stealing 101'"
 	burn_possible = 0 //Only makes sense since it's from hell.
-	info = {"<center><b>SO YOU WANT TO STEAL SOULS?</b></center><ul>
+	info = {"<b>You shouldn't be seeing this yet!</b>"}
+
+	New()
+		..()
+		info = {"<center><b>SO YOU WANT TO STEAL SOULS?</b></center><ul>
 			<li>Step One: Grab a complimentary extra-sharp demonic pen and your infernal contract of choice from your devilish briefcase.</li>
 			<li>Step Two: Present your contract to your victim by clicking on them with said contract, but be sure you have your hellish writing utensil handy in your other hand!</li>
-			<li>Step Three: It takes about fifteen seconds for you to force your victim to sign their name, be sure not to move during this process or the ink will smear!</li></ul>
+			<li>Step Three: It takes about four seconds for you to force your victim to sign their name, be sure not to move during this process or the ink will smear!</li></ul>
 			<b>Alternatively, you can just have people sign the contract willingly, but where's the fun in that?</b>
 			<li>Your contracts are written in legalese, so anyone not wearing your lawyer suit is unable to read them!</li>
 			<li>Your lawyer suit, in addition to looking stylish, doubles as a suit of body armor. Similarly, your briefcase is a great bludgeoning tool, and your pens make excellent throwing daggers.</li>
 			<li>As you collect more souls, your briefcase and pens will grow stronger and will gain unique powers.</li>
-			<li>You can expend three collected souls to summon another major contract, but your weapons will weaken as a result.</li>
+			<li>You can expend [CONTRACT_COST] collected souls to summon another major contract, but your weapons will weaken as a result.</li>
 			<li>To do so, click on the Summon Contract ability under the tab labeled Souls. Alternatively, right click on your briefcase while holding it in your hand and then select the option labelled Summon Contract.</li>
 			<b><li>Oh, and if you ever find something that talks about horses, use it in your hand. Just trust your old pal Nick on this one.</li></b>"}
 
@@ -264,13 +262,6 @@ Whatever, it's been cleaned up a lot and it's no longer quite so awful.
 	stamina_crit_chance = 40 //buffed from 25
 	spawn_contents = list(/obj/item/paper/soul_selling_kit, /obj/item/storage/box/evil, /obj/item/clothing/under/misc/lawyer/red/demonic)
 	var/merchant = null
-	var/list/bigcontracts = list(/obj/item/contract/yeti = 40,\
-	/obj/item/contract/genetic/demigod = 40,\
-	/obj/item/contract/vampire = 40,\
-	/obj/item/contract/wrestle = 40,\
-	/obj/item/contract/satan = 40,\
-	/obj/item/contract/horse = 40,\
-	/obj/item/contract/fart = 3)
 
 	New()
 		..()
@@ -285,35 +276,16 @@ Whatever, it's been cleaned up a lot and it's no longer quite so awful.
 		SPAWN_DBG(0.5 SECONDS) //to give the buylist enough time to assign a merchant var to the briefcase
 
 			var/tempcontract = null
-			tempcontract = weighted_pick(src.bigcontracts)
+			tempcontract = pick(strongcontracts)
 			var/obj/item/contract/I = new tempcontract(src)
-			I:merchant = src.merchant
+			I.merchant = src.merchant
 
-			var/smallcontracts = list(/obj/item/contract/greed,
-			/obj/item/contract/mummy,
-			/obj/item/contract/hair,
-			/obj/item/contract/genetic,
-			/obj/item/contract/juggle,
-			/obj/item/contract/bee,
-			/obj/item/contract/rested,
-			/obj/item/contract/reversal,
-			/obj/item/contract/chemical,
-			/obj/item/contract/mummy/thorough)
-
-			tempcontract = pick(smallcontracts)
-			var/obj/item/C = new tempcontract(src)
-			C:merchant = src.merchant
-			smallcontracts -= tempcontract
-
-			tempcontract = pick(smallcontracts)
-			var/obj/item/P = new tempcontract(src)
-			P:merchant = src.merchant
-			smallcontracts -= tempcontract
-
-			tempcontract = pick(smallcontracts)
-			var/obj/item/Z = new tempcontract(src)
-			Z:merchant = src.merchant
-			smallcontracts -= tempcontract
+			var/list/tempweakcontracts = weakcontracts.Copy()
+			for (var/i in 1 to 3)
+				tempcontract = pick(tempweakcontracts)
+				tempweakcontracts.Remove(tempcontract)
+				var/obj/item/contract/T = new tempcontract(src)
+				T.merchant = src.merchant
 
 	attack(mob/M as mob, mob/user as mob, def_zone)
 		..()
@@ -326,7 +298,7 @@ Whatever, it's been cleaned up a lot and it's no longer quite so awful.
 
 /obj/item/storage/briefcase/satan/verb/summon_contract()
 	set name = "Summon Contract"
-	set desc = "Spend three souls to summon another major contract."
+	set desc = "Spend 3 souls to summon another major contract." //HEY, CAN'T USE DEFINES IN VERB DESCS, BUT THE NUMBER IN HERE SHOULD CORRESPOND TO WHATEVER CONTRACT_COST IS. PLEASE UPDATE THIS NUMBER IF YOU CHANGE CONTRACT_COST
 	set category = "Local"
 	set src in usr
 
@@ -366,7 +338,9 @@ ABSTRACT_TYPE(/obj/item/contract)
 	var/inuse = 0 //is someone currently signing this thing?
 	var/used = 0 // how many times a limited use contract has been signed so far
 	var/contractlines = 3 //number of times it can be signed if limiteduse is true
-	var/merchant = null
+	var/strong = 0 //0 if not strong, 1 if strong
+	var/can_roll = 1 //1 if it can be generated by players, 0 if admin-spawn only
+	var/merchant = null //who is *buying* the soul?
 	showTooltipDesc = 0
 
 	New()
@@ -472,6 +446,7 @@ obj/item/contract/satan
 	desc = "A contract that promises to bestow upon whomever signs it near immortality, great power, and some other stuff you can't be bothered to read."
 	limiteduse = 1
 	contractlines = 2 //I'm not sure about this one, might be okay to leave it at 3.
+	strong = 1
 
 	MagicEffect(var/mob/user as mob, var/mob/badguy as mob)
 		if(!..())
@@ -486,6 +461,7 @@ obj/item/contract/macho
 	desc = "A contract that promises to bestow upon whomever signs it everlasting machismo, drugs, and some other stuff you can't be bothered to read."
 	limiteduse = 1 //why was this missing before????
 	contractlines = 1
+	strong = 1
 
 	MagicEffect(var/mob/user as mob, var/mob/badguy as mob)
 		if(!..())
@@ -500,6 +476,7 @@ obj/item/contract/wrestle
 	desc = "A contract that promises to bestow upon whomever signs it athletic prowess, showmanship, and some other stuff you can't be bothered to read."
 	limiteduse = 1
 	contractlines = 2 //addiction is crippling, but surmountable. Should not be 3.
+	strong = 1
 
 	MagicEffect(var/mob/user as mob, var/mob/badguy as mob)
 		if(!..())
@@ -525,6 +502,7 @@ obj/item/contract/yeti
 	desc = "A contract that promises to bestow upon whomever signs it near infinite power, an unending hunger, and some other stuff you can't be bothered to read."
 	limiteduse = 1
 	contractlines = 1 //was originally 3
+	strong = 1
 
 	MagicEffect(var/mob/user as mob, var/mob/badguy as mob)
 		if(!..())
@@ -563,12 +541,14 @@ obj/item/contract/genetic/demigod
 	desc = "A contract that promises to unlock the hidden potential (and more) of whomever signs it."
 	limiteduse = 1
 	contractlines = 2
+	strong = 1
 
 obj/item/contract/horse
 	name = "eldritch tome"
 	desc = "An ancient tome filled with nearly indecipherable scrawl. You can just barely make out something about horses, signatures, and souls. It seems like it might be some kind of bizarre doomsday prophecy."
 	icon_state = "necrobook"
 	item_state = "spellbook"
+	strong = 1
 
 	attack_self(mob/user as mob)
 		if((ishuman(user)) && (isdiabolical(user)))
@@ -631,6 +611,7 @@ obj/item/contract/vampire
 	desc = "A contract that promises to bestow upon whomever signs it near immortality, great power, and some other stuff you can't be bothered to read. There's some warning about not using this one in the chapel written on the back."
 	limiteduse = 1
 	contractlines = 1
+	strong = 1
 
 	MagicEffect(var/mob/user as mob, var/mob/badguy as mob)
 		if(!..())
@@ -656,6 +637,8 @@ obj/item/contract/juggle
 
 obj/item/contract/fart
 	desc = "It's just a piece of paper with the word 'fart' written all over it."
+	strong = 1
+	can_roll = 0 //it probably wasn't a good idea to make this player accessible in the first place. Admin spawn only now.
 
 	MagicEffect(var/mob/user as mob, var/mob/badguy as mob)
 		if(!..())
@@ -729,7 +712,7 @@ obj/item/contract/hair
 
 obj/item/contract/greed
 	desc = "This contract is positively covered in dollar signs."
-	var/number_of_cash_piles = 3
+	var/number_of_cash_piles = 7
 
 	MagicEffect(var/mob/user as mob, var/mob/badguy as mob)
 		if(!..())
