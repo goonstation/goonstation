@@ -752,7 +752,6 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	max_speed = 2
 	max_bounce_count = 2 // putting the Y in ICEE BEEYEM
 	weaken_length = 3 SECONDS
-	impact_brute = 5
 	slam_text = "The magic missile bumps into you!"
 
 /datum/projectile/special/homing/orbiter
