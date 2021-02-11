@@ -214,8 +214,13 @@ var/datum/artifact_controller/artifact_controls
 
 /datum/artifact_origin/ancient
 	name = "ancient"
-	fault_types = list(/datum/artifact_fault/burn,/datum/artifact_fault/irradiate,/datum/artifact_fault/shutdown,
-	/datum/artifact_fault/murder,/datum/artifact_fault/zap)
+	fault_types = list(
+		/datum/artifact_fault/burn = 10,
+		/datum/artifact_fault/irradiate = 10,
+		/datum/artifact_fault/shutdown = 10,
+		/datum/artifact_fault/zap = 10,
+		/datum/artifact_fault/explode = 10,
+		/datum/artifact_fault/messager/ai_laws = 10)
 	activation_sounds = list('sound/machines/ArtifactAnc1.ogg')
 	instrument_sounds = list("sound/musical_instruments/artifact/Artifact_Ancient_1.ogg",
 		"sound/musical_instruments/artifact/Artifact_Ancient_2.ogg",
@@ -250,7 +255,14 @@ var/datum/artifact_controller/artifact_controls
 
 /datum/artifact_origin/martian
 	name = "martian"
-	fault_types = list(/datum/artifact_fault/shutdown,/datum/artifact_fault/zap,/datum/artifact_fault/poison)
+	fault_types = list(
+		/datum/artifact_fault/shutdown = 10,
+		/datum/artifact_fault/zap = 5,
+		/datum/artifact_fault/poison = 15,
+		/datum/artifact_fault/messager/what_people_said = 5,
+		/datum/artifact_fault/messager/comforting_whispers = 5,
+		/datum/artifact_fault/grow = 8,
+		/datum/artifact_fault/shrink = 8)
 	activation_sounds = list('sound/machines/ArtifactMar1.ogg','sound/machines/ArtifactMar2.ogg')
 	instrument_sounds = list("sound/musical_instruments/artifact/Artifact_Martian_1.ogg",
 		"sound/musical_instruments/artifact/Artifact_Martian_2.ogg",
@@ -291,8 +303,17 @@ var/datum/artifact_controller/artifact_controls
 
 /datum/artifact_origin/wizard
 	name = "wizard"
-	fault_types = list(/datum/artifact_fault/irradiate,/datum/artifact_fault/shutdown,/datum/artifact_fault/murder,
-	/datum/artifact_fault/warp,/datum/artifact_fault/zap,/datum/artifact_fault/messager/creepy_whispers)
+	fault_types = list(
+		/datum/artifact_fault/irradiate = 10,
+		/datum/artifact_fault/shutdown = 10,
+		/datum/artifact_fault/warp = 15,
+		/datum/artifact_fault/zap = 10,
+		/datum/artifact_fault/burn = 10,
+		/datum/artifact_fault/explode = 5,
+		/datum/artifact_fault/messager/creepy_whispers = 5,
+		/datum/artifact_fault/messager/comforting_whispers = 5,
+		/datum/artifact_fault/messager/what_dead_people_said = 5,
+		/datum/artifact_fault/messager/what_people_said = 5)
 	activation_sounds = list('sound/machines/ArtifactWiz1.ogg')
 	instrument_sounds = list("sound/musical_instruments/artifact/Artifact_Wizard_1.ogg",
 		"sound/musical_instruments/artifact/Artifact_Wizard_2.ogg",
@@ -358,6 +379,18 @@ var/datum/artifact_controller/artifact_controls
 		"sound/musical_instruments/artifact/Artifact_Eldritch_2.ogg",
 		"sound/musical_instruments/artifact/Artifact_Eldritch_3.ogg",
 		"sound/musical_instruments/artifact/Artifact_Eldritch_4.ogg")
+	fault_types = list(
+		/datum/artifact_fault/murder = 2,
+		/datum/artifact_fault/messager/creepy_whispers = 5,
+		/datum/artifact_fault/messager/what_dead_people_said = 5,
+		/datum/artifact_fault/poison = 10,
+		/datum/artifact_fault/irradiate = 10,
+		/datum/artifact_fault/shutdown = 5,
+		/datum/artifact_fault/zap = 8,
+		/datum/artifact_fault/explode = 5,
+		/datum/artifact_fault/warp = 15,
+		/datum/artifact_fault/grow = 5,
+		/datum/artifact_fault/shrink = 5)
 	impact_reaction_one = 0.5
 	impact_reaction_two = 0
 	heat_reaction_one = 0.25
@@ -422,6 +455,15 @@ var/datum/artifact_controller/artifact_controls
 		"sound/musical_instruments/artifact/Artifact_Precursor_4.ogg",
 		"sound/musical_instruments/artifact/Artifact_Precursor_5.ogg",
 		"sound/musical_instruments/artifact/Artifact_Precursor_6.ogg")
+	fault_types = list(
+		/datum/artifact_fault/irradiate = 10,
+		/datum/artifact_fault/shutdown = 5,
+		/datum/artifact_fault/zap = 10,
+		/datum/artifact_fault/explode = 5,
+		/datum/artifact_fault/burn = 5,
+		/datum/artifact_fault/warp = 10,
+		/datum/artifact_fault/messager/what_people_said = 10,
+		/datum/artifact_fault/poison = 2)
 	impact_reaction_one = 2
 	impact_reaction_two = 10
 	heat_reaction_one = 2
