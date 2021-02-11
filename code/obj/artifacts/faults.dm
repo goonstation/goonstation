@@ -61,6 +61,47 @@ ABSTRACT_TYPE(/datum/artifact_fault/)
 		playsound(T, "sound/effects/mag_warp.ogg", 100, 1)
 		user.set_loc(pick(wormholeturfs))
 
+/datum/artifact_fault/grow
+	// embiggens the artifact
+	trigger_prob = 10
+
+	deploy(var/obj/O,var/mob/living/user)
+		if (..())
+			return
+		if (!isitem(O))
+			return
+		var/obj/item/I = O
+		if(I.w_class > 6)
+			return
+
+		boutput(user, "<span class='alert'>The [I.name] grows in size!</span>")
+		I.transform = matrix(I.transform, 1.1, 1.1, MATRIX_SCALE)
+		I.w_class++
+		if (I.loc == user && I.w_class > 4)
+			boutput(user, "<span class='alert'>You can't maintain a grip due to its excessive girth!</span>")
+			user.u_equip(I)
+			I.set_loc(user.loc)
+
+/datum/artifact_fault/shrink
+	// ensmallens the artifact
+	trigger_prob = 10
+
+	deploy(var/obj/O,var/mob/living/user)
+		if (..())
+			return
+		if (!isitem(O))
+			return
+		var/obj/item/I = O
+
+		boutput(user, "<span class='alert'>The [I.name] shrinks in size!</span>")
+		I.transform = matrix(I.transform, 0.9, 0.9, MATRIX_SCALE)
+		I.w_class--
+		if (I.w_class < 1)
+			boutput(user, "<span class='alert'>The artifact shrinks away into nothingness!</span>")
+			user.u_equip(I)
+			I.set_loc(user.loc)
+			I.invisibility = 100
+
 /datum/artifact_fault/murder
 	// gibs the user
 	trigger_prob = 1
@@ -69,8 +110,8 @@ ABSTRACT_TYPE(/datum/artifact_fault/)
 	deploy(var/obj/O,var/mob/living/user)
 		if (..())
 			return
-		if (isitem(src))
-			var/obj/item/I = src
+		if (isitem(O))
+			var/obj/item/I = O
 			if (I.loc == user)
 				user.u_equip(I)
 				I.dropped()
@@ -89,8 +130,8 @@ ABSTRACT_TYPE(/datum/artifact_fault/)
 			return
 		var/turf/T = get_turf(O)
 		T.visible_message("<span class='alert'>The [O.name] suddenly explodes!</span>")
-		if (isitem(src))
-			var/obj/item/I = src
+		if (isitem(O))
+			var/obj/item/I = O
 			user.u_equip(I)
 			I.dropped()
 		explosion(O, T, 1, 2, 4, 8)
