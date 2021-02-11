@@ -199,15 +199,12 @@
 		if (!W.ArtifactSanityCheck())
 			return
 		var/datum/artifact/A = src.artifact
-		var/datum/artifact/activator_key/K = ACT.artifact
+		var/datum/artifact/K = ACT.artifact
 
 		if (K.activated)
-			if (K.universal || A.artitype == K.artitype)
-				if (K.activator && !A.activated)
+			if (ACT.universal || A.artitype == K.artitype)
+				if (ACT.activator && !A.activated)
 					src.ArtifactActivated()
-					if(K.corrupting && A.faults.len < 10) // there's only so much corrupting you can do ok
-						for(var/i=1,i<rand(1,3),i++)
-							src.ArtifactDevelopFault(100)
 				else if (A.activated)
 					src.ArtifactDeactivated()
 

@@ -1,5 +1,5 @@
 // FAULTS
-ABSTRACT_TYPE(/datum/artifact_fault/)
+
 /datum/artifact_fault
 	// these are booby traps, self-defense mechanisms, hardware faults or just other nasty shit that can fuck you up when you
 	// use the artifact for anything
@@ -111,7 +111,6 @@ ABSTRACT_TYPE(/datum/artifact_fault/)
 		elecflash(user,power = 6, exclude_center = 0)
 		user.stuttering += 30
 
-ABSTRACT_TYPE(/datum/artifact_fault/messager/)
 /datum/artifact_fault/messager
 	trigger_prob = 30
 	var/text_style = null
