@@ -55006,7 +55006,7 @@
 "mlQ" = (
 /obj/machinery/chem_dispenser/chef{
 	desc = "It's covered in a thin layer of slightly greasy dust. The contents were probably expired before they even got here.";
-	dispensable_reagents = list("ketchup","mustard","salt","pepper","gravy","chocolate","chocolate_milk","strawberry_milk");
+	dispensable_reagents = list("ketchup","mustard","salt","pepper","gravy","chocolate","mint","chocolate_milk","strawberry_milk");
 	name = "HAPPY CHEF Dispense-o-Matic"
 	},
 /turf/simulated/floor/black,
