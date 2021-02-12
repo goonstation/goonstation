@@ -674,6 +674,11 @@
 					var/mob/living/L = owner
 					L.force_laydown_standup()
 
+		onAdd()
+			..()
+			if(duration > 1 DECI SECOND)
+				actions.interrupt(owner, INTERRUPT_STUNNED)
+
 		stunned
 			id = "stunned"
 			name = "Stunned"
