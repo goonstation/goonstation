@@ -7,6 +7,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 	validtypes = list("ancient","eldritch","precursor")
 	validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/electric,/datum/artifact_trigger/heat,
 	/datum/artifact_trigger/cold,/datum/artifact_trigger/radiation)
+	applicable_faults = NON_HANDHELD_FAULTS
 	react_xray = list(12,75,30,11,"COMPLEX")
 	var/explode_delay = 600
 	var/dud = 0
@@ -465,9 +466,12 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 							M.setMaterial(mat)
 							for(var/atom/I in M.get_all_items_on_mob())
 								I.setMaterial(mat)
+							O.ArtifactFaultUsed(M)
 						if(MAKE_HUMAN_STATUE)
 							if(distPercent < 40) // only inner 40% of range
-								M.become_statue(mat)
+								O.ArtifactFaultUsed(M)
+								if(M)
+									M.become_statue(mat)
 				else
 					G.setMaterial(mat)
 
