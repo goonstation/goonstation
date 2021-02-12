@@ -152,7 +152,6 @@
 
 				if(MODE_MESSAGE)
 					//Messenger.  Uses Radio.  Is a messenger.
-					// src.master.overlays = null //Remove existing alerts
 					src.master.update_overlay("idle") //Remove existing alerts
 					. += "<h4>SpaceMessenger V4.0.5</h4>"
 

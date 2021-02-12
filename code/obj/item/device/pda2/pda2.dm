@@ -841,8 +841,7 @@
 	proc/update_overlay(mode = null)
 		if (mode)
 			src.current_overlay = mode
-		src.overlays = null
-		src.overlays += src.overlay_images[src.current_overlay]
+		src.UpdateOverlays(src.overlay_images[src.current_overlay], "screen_overlay")
 
 	proc/set_ringtone(var/datum/ringtone/RT, var/temp = 0, var/overrideAlert = 0, var/groupType, var/groupName)
 		if(!istype(RT)) // Invalid ringtone? use the default
@@ -935,9 +934,6 @@
 			//for (var/mob/O in hearers(3, src.loc))
 
 		update_overlay("alert")
-		// src.overlays = null
-		// // src.overlays += image('icons/obj/items/pda.dmi', "pda-r")
-		// src.overlays += src.overlay_images["alert"]
 		return
 
 	proc/display_message(var/message)

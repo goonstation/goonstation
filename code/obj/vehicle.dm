@@ -289,7 +289,6 @@ Contains:
 		rider.throw_at(target, 5, 1)
 		rider.buckled = null
 		rider = null
-		//overlays = null
 		update()
 		return
 	if(selfdismount)
@@ -300,7 +299,6 @@ Contains:
 			C.show_message("<B>[rider]</B> dismounts from \the [src].", 1)
 	rider.buckled = null
 	rider = null
-	//overlays = null
 	update()
 	return
 
@@ -447,7 +445,6 @@ Contains:
 	rider.pixel_x = 0
 	rider.pixel_y = 5
 	src.UpdateOverlays(rider, "rider")
-	//overlays += rider
 	if(rider.restrained() || rider.stat)
 		rider.buckled = src
 
@@ -739,7 +736,6 @@ Contains:
 		rider.throw_at(target, 5, 1)
 		rider.buckled = null
 		rider = null
-		//overlays = null
 		update()
 		return
 	if(selfdismount)
@@ -750,7 +746,6 @@ Contains:
 			C.show_message("<B>[rider]</B> dismounts from \the [src].", 1)
 	rider.buckled = null
 	rider = null
-	//overlays = null
 	update()
 	return
 
@@ -806,7 +801,6 @@ Contains:
 	rider = target
 	rider.pixel_x = 0
 	rider.pixel_y = 10
-	//overlays += rider
 	src.UpdateOverlays(rider, "rider")
 	if(rider.restrained() || rider.stat)
 		rider.buckled = src

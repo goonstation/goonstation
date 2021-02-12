@@ -1897,13 +1897,11 @@
 
 	on_reagent_change()
 		if (src.reagents && src.reagents.total_volume)
-			src.overlays = null
-			for(var/current_id in reagents.reagent_list)
-				var/datum/reagent/current_reagent = reagents.reagent_list[current_id]
-				var/icon/I = icon('icons/obj/foodNdrink/food_snacks.dmi', "tortilla-chip-overlay")
-				I.Blend(rgb(current_reagent.fluid_r, current_reagent.fluid_g, current_reagent.fluid_b,current_reagent.transparency), ICON_ADD)
-				src.overlays += image("icon" = I, "layer" = FLOAT_LAYER)
-		return
+			var/image/dip = image('icons/obj/foodNdrink/food_snacks.dmi', "tortilla-chip-overlay")
+			dip.color = src.reagents.get_average_color().to_rgba()
+			src.UpdateOverlays(dip, "dip")
+		else
+			src.UpdateOverlays(null, "dip")
 
 /obj/item/reagent_containers/food/snacks/wonton_spawner
 	name = "wonton spawner"

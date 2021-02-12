@@ -210,8 +210,7 @@ datum
 						T.create_reagents(volume)
 					if(!T.reagents.has_reagent("thermite"))
 						T.reagents.add_reagent("thermite", volume, null)
-						T.overlays = null
-						T.overlays = image('icons/effects/effects.dmi',icon_state = "thermite")
+						T.UpdateOverlays(image('icons/effects/effects.dmi',icon_state = "thermite"), "thermite")
 						if (T.active_hotspot)
 							T.reagents.temperature_reagents(T.active_hotspot.temperature, T.active_hotspot.volume, 10, 300)
 				return
