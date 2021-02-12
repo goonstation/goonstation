@@ -75,7 +75,7 @@
 			selected_biome = possible_biomes[heat_level][humidity_level]
 		else //Over 0.85; It's a mountain
 			selected_biome = /datum/biome/mountain
-		selected_biome = biomes[selected_biome] //Get the instance of this biome from SSmapping
+		selected_biome = biomes[selected_biome]
 		selected_biome.generate_turf(gen_turf)
 		LAGCHECK(LAG_HIGH)
 
