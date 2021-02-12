@@ -855,12 +855,8 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/item/device/radio/intercom{
-	broadcasting = 0;
-	dir = 1;
-	frequency = 1445;
-	layer = 9.6;
-	name = "Medical Intercom"
+/obj/item/device/radio/intercom/medical{
+	dir = 1
 	},
 /turf/simulated/floor/yellow/checker{
 	dir = 1
@@ -1080,12 +1076,8 @@
 /turf/simulated/floor/grime,
 /area/diner/backroom)
 "acl" = (
-/obj/item/device/radio/intercom{
-	broadcasting = 0;
-	dir = 1;
-	frequency = 1445;
-	layer = 9.6;
-	name = "Medical Intercom"
+/obj/item/device/radio/intercom/medical{
+	dir = 1
 	},
 /turf/simulated/floor/blue,
 /area/station/medical/medbay/lobby)
@@ -4098,11 +4090,8 @@
 /obj/machinery/junctionbox/varianta{
 	pixel_y = 32
 	},
-/obj/item/device/radio/intercom{
-	broadcasting = 0;
-	dir = 8;
-	frequency = 1485;
-	name = "Security Intercom"
+/obj/item/device/radio/intercom/security{
+	dir = 8
 	},
 /turf/simulated/floor/redblack{
 	dir = 5
@@ -6972,13 +6961,9 @@
 	},
 /area/station/quartermaster/cargobay)
 "arW" = (
-/obj/item/device/radio/intercom{
-	broadcasting = 0;
-	frequency = 1455;
-	name = "Supply Intercom"
-	},
 /obj/table/reinforced/auto,
 /obj/machinery/phone,
+/obj/item/device/radio/intercom/cargo,
 /turf/simulated/floor,
 /area/station/quartermaster/cargobay)
 "arX" = (
@@ -10120,11 +10105,7 @@
 	},
 /area/station/security/interrogation)
 "ayX" = (
-/obj/item/device/radio/intercom{
-	broadcasting = 0;
-	frequency = 1485;
-	name = "Security Intercom"
-	},
+/obj/item/device/radio/intercom/security,
 /turf/simulated/floor/red,
 /area/station/crew_quarters/courtroom)
 "ayY" = (
@@ -16373,13 +16354,10 @@
 /turf/simulated/floor,
 /area/station/hallway/portlowerhallway)
 "aNn" = (
-/obj/item/device/radio/intercom{
-	broadcasting = 0;
-	dir = 1;
-	frequency = 1485;
-	name = "Security Intercom"
-	},
 /obj/machinery/light/incandescent/netural,
+/obj/item/device/radio/intercom/security{
+	dir = 1
+	},
 /turf/simulated/floor/darkblue/checker/other,
 /area/station/communications/office)
 "aNo" = (
@@ -19445,26 +19423,20 @@
 /turf/simulated/floor/darkblue/checker/other,
 /area/station/communications/office)
 "aUE" = (
-/obj/item/device/radio/intercom{
-	broadcasting = 0;
-	dir = 1;
-	frequency = 1445;
-	name = "Station Intercom (Medical)"
+/obj/item/device/radio/intercom/medical{
+	dir = 1
 	},
 /turf/simulated/floor/darkblue/checker/other,
 /area/station/communications/office)
 "aUF" = (
-/obj/item/device/radio/intercom{
-	broadcasting = 0;
-	dir = 1;
-	frequency = 1441;
-	name = "Engineering Intercom"
-	},
 /obj/machinery/disposal/small{
 	dir = 8
 	},
 /obj/disposalpipe/trunk{
 	dir = 4
+	},
+/obj/item/device/radio/intercom/engineering{
+	dir = 1
 	},
 /turf/simulated/floor/darkblue/checker/other,
 /area/station/communications/office)
@@ -20645,12 +20617,8 @@
 	dir = 8;
 	icon_state = "pipe-c"
 	},
-/obj/item/device/radio/intercom{
-	broadcasting = 0;
-	dir = 8;
-	frequency = 1445;
-	layer = 9.6;
-	name = "Medical Intercom"
+/obj/item/device/radio/intercom/medical{
+	dir = 8
 	},
 /turf/simulated/floor/blue,
 /area/station/medical/research)
@@ -21834,12 +21802,8 @@
 /turf/simulated/floor/black,
 /area/station/security/secoffquarters)
 "aZS" = (
-/obj/item/device/radio/intercom{
-	broadcasting = 0;
-	dir = 4;
-	frequency = 1445;
-	layer = 9.6;
-	name = "Medical Intercom"
+/obj/item/device/radio/intercom/medical{
+	dir = 4
 	},
 /turf/simulated/floor/stairs/dark/wide,
 /area/station/medical/robotics)
@@ -23537,11 +23501,7 @@
 /obj/landmark/start{
 	name = "Botanist"
 	},
-/obj/item/device/radio/intercom{
-	broadcasting = 0;
-	frequency = 1446;
-	name = "Botany Intercom"
-	},
+/obj/item/device/radio/intercom/botany,
 /turf/simulated/floor,
 /area/station/hydroponics/bay)
 "bdE" = (
@@ -35018,11 +34978,8 @@
 	},
 /area/station/quartermaster/cargooffice)
 "bCW" = (
-/obj/item/device/radio/intercom{
-	broadcasting = 0;
-	dir = 1;
-	frequency = 1455;
-	name = "Supply Intercom"
+/obj/item/device/radio/intercom/cargo{
+	dir = 1
 	},
 /turf/simulated/floor/carpet{
 	icon_state = "red2"
@@ -35112,11 +35069,8 @@
 /obj/table/auto,
 /obj/item/electronics/scanner,
 /obj/item/deconstructor,
-/obj/item/device/radio/intercom{
-	broadcasting = 0;
-	dir = 1;
-	frequency = 1441;
-	name = "Engineering Intercom"
+/obj/item/device/radio/intercom/engineering{
+	dir = 1
 	},
 /turf/simulated/floor/orangeblack,
 /area/station/engine/elect)
@@ -39211,11 +39165,7 @@
 	pixel_x = 10;
 	tag = ""
 	},
-/obj/item/device/radio/intercom{
-	broadcasting = 0;
-	frequency = 1441;
-	name = "Engineering Intercom"
-	},
+/obj/item/device/radio/intercom/engineering,
 /turf/simulated/floor,
 /area/station/construction)
 "bOa" = (
@@ -39555,13 +39505,10 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/crew_quarters/bathroom)
 "bPa" = (
-/obj/item/device/radio/intercom{
-	broadcasting = 0;
-	dir = 4;
-	frequency = 1455;
-	name = "Supply Intercom"
-	},
 /obj/item/storage/wall/mineralshelf,
+/obj/item/device/radio/intercom/cargo{
+	dir = 4
+	},
 /turf/simulated/floor/orange,
 /area/station/mining/staff_room)
 "bPb" = (
@@ -40895,11 +40842,8 @@
 /turf/simulated/floor,
 /area/station/mining/staff_room)
 "bRY" = (
-/obj/item/device/radio/intercom{
-	broadcasting = 0;
-	dir = 4;
-	frequency = 1441;
-	name = "Engineering Intercom"
+/obj/item/device/radio/intercom/engineering{
+	dir = 4
 	},
 /turf/simulated/floor,
 /area/station/engine/storage)
@@ -41596,11 +41540,7 @@
 	},
 /area/station/hangar/mining)
 "bTJ" = (
-/obj/item/device/radio/intercom{
-	broadcasting = 0;
-	frequency = 1441;
-	name = "Engineering Intercom"
-	},
+/obj/item/device/radio/intercom/engineering,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "yellowblack"
@@ -41608,11 +41548,8 @@
 /area/station/engine/monitoring)
 "bTK" = (
 /obj/machinery/light/incandescent/netural,
-/obj/item/device/radio/intercom{
-	broadcasting = 0;
-	dir = 4;
-	frequency = 1455;
-	name = "Supply Intercom"
+/obj/item/device/radio/intercom/cargo{
+	dir = 4
 	},
 /turf/simulated/floor,
 /area/station/mining/staff_room)
@@ -41633,11 +41570,7 @@
 	icon = 'icons/obj/stationobjs.dmi';
 	icon_state = "plant"
 	},
-/obj/item/device/radio/intercom{
-	broadcasting = 0;
-	frequency = 1441;
-	name = "Engineering Intercom"
-	},
+/obj/item/device/radio/intercom/engineering,
 /turf/simulated/floor/orangeblack,
 /area/station/engine/engineering/ce/private)
 "bTN" = (
@@ -41720,11 +41653,8 @@
 /obj/landmark/start{
 	name = "Miner"
 	},
-/obj/item/device/radio/intercom{
-	broadcasting = 0;
-	dir = 8;
-	frequency = 1455;
-	name = "Supply Intercom"
+/obj/item/device/radio/intercom/cargo{
+	dir = 8
 	},
 /turf/simulated/floor/orange,
 /area/station/mining/staff_room)
@@ -41925,11 +41855,8 @@
 /obj/landmark/start{
 	name = "Miner"
 	},
-/obj/item/device/radio/intercom{
-	broadcasting = 0;
-	dir = 4;
-	frequency = 1455;
-	name = "Supply Intercom"
+/obj/item/device/radio/intercom/cargo{
+	dir = 4
 	},
 /turf/simulated/floor/orange,
 /area/station/mining/staff_room)
@@ -42250,14 +42177,11 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/power/apc/autoname_north,
-/obj/item/device/radio/intercom{
-	broadcasting = 0;
-	dir = 8;
-	frequency = 1485;
-	name = "Security Intercom"
-	},
 /obj/cable{
 	icon_state = "0-4"
+	},
+/obj/item/device/radio/intercom/security{
+	dir = 8
 	},
 /turf/simulated/floor/black,
 /area/station/security/checkpoint/sec_foyer)
@@ -44162,11 +44086,8 @@
 /area/station/engine/inner)
 "wCs" = (
 /obj/stool/chair/red,
-/obj/item/device/radio/intercom{
-	broadcasting = 0;
-	dir = 8;
-	frequency = 1485;
-	name = "Security Intercom"
+/obj/item/device/radio/intercom/security{
+	dir = 8
 	},
 /turf/simulated/floor/redblack{
 	dir = 4
