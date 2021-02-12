@@ -51,9 +51,6 @@
 		brutevuln = 0
 		miscvuln = 0
 
-		for (var/turf/simulated/OV in oview(get_center(),2))
-			tile_purge(OV.loc.x,OV.loc.y,2)
-
 		var/increment
 		for(increment = 0; increment <= 14; increment++)
 			SPAWN_DBG(increment)
@@ -107,6 +104,7 @@
 				qdel(src)
 
 	process()
+		anchored = 1
 		if (!src.alive) return 0
 
 		if(sleeping > 0)
@@ -205,10 +203,7 @@
 							
 							if(stuck_timer <= world.time && stuck_location == get_center())
 								cooldown = 4 SECONDS + world.time
-								anchored = 1
 								stuck_timer = null
-								SPAWN_DBG(4 SECONDS)
-									anchored = 0
 								for(var/stuck_increment = 1, stuck_increment <= 3, stuck_increment++)
 									SPAWN_DBG(stuck_increment SECONDS)
 										for (var/turf/simulated/OV in oview(get_center(),stuck_increment))
@@ -296,12 +291,12 @@
 								linear_purge()
 							else
 								gyrating_edge()
+			anchored = 1
 
 
 //-TRANSFORMATIONS-//
 	
 	proc/transformation(var/transformation_id)				//0 - Beacon. 1 - Unanchored. 2 - Anchored.		
-		anchored = 1
 		firevuln = 1.25
 		brutevuln = 1.25
 		miscvuln = 0.25
@@ -367,7 +362,6 @@
 					mode = 2
 
 		SPAWN_DBG(10)
-			anchored = 0
 			firevuln = 1
 			brutevuln = 1
 			miscvuln = 0.2
@@ -400,7 +394,6 @@
 		current_ability = "stifling_vacuum"
 		walk_towards(src, src.target)
 		walk(src,0)
-		anchored = 1
 		glow = image('icons/misc/retribution/SWORD/abilities_o.dmi', "stiflingVacuum")
 		glow.plane = PLANE_SELFILLUM
 		src.UpdateOverlays(glow, "glow")
@@ -452,7 +445,6 @@
 							M.throw_at(T, 3, 1)
 
 		SPAWN_DBG(8)
-			anchored = 0
 			if(mode == 1)
 				glow = image('icons/misc/retribution/SWORD/base_o.dmi', "unanchored")
 			else
@@ -474,7 +466,6 @@
 		walk_towards(src, src.target)
 		walk(src,0)
 		playsound(get_center(), "sound/weapons/heavyioncharge.ogg", 75, 1)
-		anchored = 1
 
 		var/increment
 		var/turf/T
@@ -520,7 +511,6 @@
 			glow.plane = PLANE_SELFILLUM
 			src.UpdateOverlays(glow, "glow")
 			rotation_locked = false
-			anchored = 0
 			firevuln = 1
 			brutevuln = 1
 			miscvuln = 0.2
@@ -529,7 +519,6 @@
 
 	proc/gyrating_edge()									//Spins, dealing mediocre damage to anyone nearby.
 		rotation_locked = true
-		anchored = 1
 		firevuln = 0.5
 		brutevuln = 0.5
 		miscvuln = 0.1
@@ -563,7 +552,6 @@
 			glow.plane = PLANE_SELFILLUM
 			src.UpdateOverlays(glow, "glow")
 			rotation_locked = false
-			anchored = 0
 			firevuln = 1
 			brutevuln = 1
 			miscvuln = 0.2
@@ -620,7 +608,6 @@
 			firevuln = 1
 			brutevuln = 1
 			miscvuln = 0.2
-			anchored = 0
 			current_ability = null
 
 
@@ -628,7 +615,6 @@
 
 	proc/heat_reallocation()								//Sets anyone nearby on fire while dealing increasing burning damage.
 		rotation_locked = true
-		anchored = 1
 		firevuln = 1.25
 		brutevuln = 1.25
 		miscvuln = 0.25
@@ -662,7 +648,6 @@
 			glow.plane = PLANE_SELFILLUM
 			src.UpdateOverlays(glow, "glow")
 			rotation_locked = false
-			anchored = 0
 			firevuln = 1
 			brutevuln = 1
 			miscvuln = 0.2
@@ -671,7 +656,6 @@
 
 	proc/energy_absorption()								//Becomes immune to burn damage for the duration. Creates a snapshot of it's health during activation, returning to it after 1.2 seconds. Increases the heat value by damage taken during the duration.
 		rotation_locked = true
-		anchored = 1
 		firevuln = 0
 		brutevuln = 1.25
 		miscvuln = 0.25
@@ -693,7 +677,6 @@
 			glow.plane = PLANE_SELFILLUM
 			src.UpdateOverlays(glow, "glow")
 			rotation_locked = false
-			anchored = 0
 			firevuln = 1
 			brutevuln = 1
 			miscvuln = 0.2
@@ -808,7 +791,6 @@
 			firevuln = 1
 			brutevuln = 1
 			miscvuln = 0.2
-			anchored = 0
 			current_ability = null
 
 
