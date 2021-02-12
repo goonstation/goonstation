@@ -1572,8 +1572,8 @@ datum
 			var/nonwhitelist_scale = 0.75
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed, var/list/paramslist = 0)
-				/// Perform a reduced version of the on_touch skin penetration of the base
-				//  reaction_mob() for ALL reagents in holder
+				// Perform a reduced version of the on_touch skin penetration of the base
+				// reaction_mob() for ALL reagents in holder
 				var/permeability_mod = 0
 				var/modifier
 				var/flag_combat = FALSE
