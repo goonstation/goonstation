@@ -948,8 +948,8 @@
 	name = "auto edging turf"
 
 	///turf won't draw edges on turfs with higher or equal priority
-	var/const/edge_priority_level = 0
-	var/const/icon_state_edge = null
+	var/edge_priority_level = 0
+	var/icon_state_edge = null
 
 	New()
 		. = ..()
