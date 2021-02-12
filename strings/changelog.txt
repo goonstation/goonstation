@@ -1,5 +1,9 @@
 
 (t)thu feb 11 21
+(u)BatElite
+(p)3456
+(e)🆕|feature
+(+)Surgery trays and kitchen islands now have brakes. Toggle them by clicking the tray/island.
 (u)Tarmunora
 (e)⚖|balance
 (+)Pizza sharpener will slice an unsliced pizza when sharpening, and can now appear in surplus crates
