@@ -1,5 +1,9 @@
 
 (t)fri feb 12 21
+(u)Azrun
+(p)3695
+(e)|
+(+)Removes escalation of pipe rupture.  Too much busy work.
 (u)pali
 (*)Increased cloud save limit for character profiles to 15.
 (t)thu feb 11 21
