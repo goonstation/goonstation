@@ -220,11 +220,11 @@ datum
 			viscosity = 0.80
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
-				src = null
 				if (method == INGEST)
 					boutput(M, "<span class='notice'>Sulfurous, vegative with perhaps a slighty minty afternote.</span>")
 				else
 					boutput(M, "<span class='alert'>It smells gross!  Is this spoiled veggie juice?!</span>")
+				..()
 
 		glycerol
 			name = "glycerol"
