@@ -926,23 +926,9 @@
 
 /////////////////////////////////////////
 
-/turf/unsimulated/floor/swamp
-	name = "swamp"
-	desc = "Who knows what could be hiding in there."
-	icon = 'icons/turf/water.dmi'
-	icon_state = "swamp0"
-
-	New()
-		. = ..()
-		if (prob(3))
-			src.icon_state = "swamp0"
-		else if (prob(10))
-			src.icon_state = "swamp_decor[rand(1, 10)]"
-		else
-			src.icon_state = "swamp[rand(1, 4)]"
-
 #define FLOOR_AUTO_EDGE_PRIORITY_DIRT 50
 #define FLOOR_AUTO_EDGE_PRIORITY_GRASS 100
+#define FLOOR_AUTO_EDGE_PRIORITY_WATER 200
 
 /turf/unsimulated/floor/auto
 	name = "auto edging turf"
@@ -953,6 +939,7 @@
 
 	New()
 		. = ..()
+		src.layer += src.edge_priority_level / 1000
 		SPAWN_DBG(3 SECONDS) //give neighbors a chance to spawn in
 			edge_overlays()
 
@@ -964,9 +951,8 @@
 					continue
 			var/image/edge_overlay = image(src.icon, "[icon_state_edge][get_dir(T,src)]")
 			edge_overlay.appearance_flags = PIXEL_SCALE | TILE_BOUND | RESET_COLOR | RESET_ALPHA
-			edge_overlay.layer = src.layer + 1
+			edge_overlay.layer = src.layer + (src.edge_priority_level / 1000)
 			edge_overlay.plane = PLANE_FLOOR
-			edge_overlay.layer = TURF_EFFECTS_LAYER
 			T.overlays += edge_overlay
 
 /turf/unsimulated/floor/auto/grass/swamp_grass
@@ -997,5 +983,23 @@
 	edge_priority_level = FLOOR_AUTO_EDGE_PRIORITY_DIRT
 	icon_state_edge = "dirtedge"
 
+/turf/unsimulated/floor/auto/swamp
+	name = "swamp"
+	desc = "Who knows what could be hiding in there."
+	icon = 'icons/turf/water.dmi'
+	icon_state = "swamp0"
+	edge_priority_level = FLOOR_AUTO_EDGE_PRIORITY_WATER
+	icon_state_edge = "swampedge"
+
+	New()
+		. = ..()
+		if (prob(3))
+			src.icon_state = "swamp0"
+		else if (prob(10))
+			src.icon_state = "swamp_decor[rand(1, 10)]"
+		else
+			src.icon_state = "swamp[rand(1, 4)]"
+
 #undef FLOOR_AUTO_EDGE_PRIORITY_DIRT
 #undef FLOOR_AUTO_EDGE_PRIORITY_GRASS
+#undef FLOOR_AUTO_EDGE_PRIORITY_WATER

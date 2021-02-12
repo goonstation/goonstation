@@ -44,7 +44,7 @@
 	turf_type = /turf/unsimulated/greek/beach
 
 /datum/biome/water
-	turf_type = /turf/unsimulated/floor/swamp
+	turf_type = /turf/unsimulated/floor/auto/swamp
 
 /datum/biome/mountain
 	turf_type = /turf/simulated/wall/asteroid
