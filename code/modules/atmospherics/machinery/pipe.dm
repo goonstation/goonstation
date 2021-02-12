@@ -344,7 +344,7 @@ obj/machinery/atmospherics/pipe
 
 		proc/rupture(pressure, destroy=FALSE)
 			var/new_rupture
-			if (src.destroyed || destroy || ((pressure > (10*fatigue_pressure)) && prob(1)) )
+			if (src.destroyed || destroy)
 				ruptured = 4
 				src.destroyed = TRUE
 				src.desc = "The remnants of a section of pipe that needs to be replaced.  Perhaps rods would be sufficient?"
