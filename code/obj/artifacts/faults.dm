@@ -155,8 +155,14 @@ ABSTRACT_TYPE(/datum/artifact_fault/)
 ABSTRACT_TYPE(/datum/artifact_fault/messager/)
 /datum/artifact_fault/messager
 	trigger_prob = 30
+	var/say_instead = FALSE
 	var/text_style = null
 	var/list/messages = list()
+
+	New()
+		. = ..()
+		if(prob(25))
+			src.say_instead = TRUE
 
 	proc/generate_message(obj/O, mob/living/user)
 		if(length(messages))
@@ -165,6 +171,9 @@ ABSTRACT_TYPE(/datum/artifact_fault/messager/)
 
 	deploy(var/obj/O,var/mob/living/user)
 		if (..())
+			return
+		if(src.say_instead)
+			user.say(generate_message(O, user))
 			return
 		switch(text_style)
 			if ("small")
