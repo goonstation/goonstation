@@ -8,6 +8,7 @@
 	validtypes = list("wizard","precursor")
 	validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/electric,/datum/artifact_trigger/heat,
 	/datum/artifact_trigger/radiation,/datum/artifact_trigger/carbon_touch)
+	fault_blacklist = list(ITEM_ONLY_FAULTS, /datum/artifact_fault/poison) // can't sting you at range
 	activated = 0
 	activ_text = "activates and begins to warp gravity around it!"
 	deact_text = "shuts down, returning gravity to normal!"
@@ -40,3 +41,4 @@
 				step_away(M,O)
 			else
 				step_towards(M,O)
+			O.ArtifactFaultUsed(M)
