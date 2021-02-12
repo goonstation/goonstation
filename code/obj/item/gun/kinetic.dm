@@ -669,7 +669,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	force = 10
 	contraband = 8
 	caliber = 0.308
-	max_ammo_capacity = 30 // It's magazine-fed (Convair880).
+	max_ammo_capacity = 4 // It's magazine-fed (Convair880).
 	auto_eject = 1
 	can_dual_wield = 0
 	two_handed = 1
@@ -690,7 +690,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	force = 10
 	//contraband = 8
 	caliber = 0.308
-	max_ammo_capacity = 30 // It's magazine-fed (Convair880).
+	max_ammo_capacity = 4 // It's magazine-fed (Convair880).
 	auto_eject = 1
 	can_dual_wield = 0
 	two_handed = 1
