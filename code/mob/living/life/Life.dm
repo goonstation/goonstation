@@ -166,6 +166,7 @@
 	add_lifeprocess(/datum/lifeprocess/stuns_lying)
 	add_lifeprocess(/datum/lifeprocess/blindness)
 	add_lifeprocess(/datum/lifeprocess/robot_oil)
+	add_lifeprocess(/datum/lifeprocess/robot_locks)
 
 
 /mob/living/silicon/drone/New()
@@ -200,9 +201,11 @@
 
 		var/datum/lifeprocess/L
 		for (var/thing in src.lifeprocesses)
-			if (!thing) continue
 			if(src.disposed) return
 			L = src.lifeprocesses[thing]
+			if(!L)
+				logTheThing("debug", src, null, "had lifeprocess [thing] removed during Life() probably.")
+				continue
 			L.process(environment)
 
 		for (var/obj/item/implant/I in src.implant)
@@ -366,7 +369,6 @@
 
 	hud.update()
 	process_killswitch()
-	process_locks()
 
 /mob/living/silicon/hivebot/Life(datum/controller/process/mobs/parent)
 	if (..(parent))

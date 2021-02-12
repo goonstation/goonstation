@@ -89,7 +89,7 @@
 			return
 		if (user.equipped() != P)
 			return
-		if ((!in_range(src, usr) && src.loc != user))
+		if ((!in_interact_range(src, usr) && src.loc != user))
 			return
 		t = copytext(adminscrub(t),1,128)
 		if (t)
@@ -151,7 +151,6 @@
 		playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
 		src.connected.update()
 		add_fingerprint(user)
-		//SN src = null
 		src.set_loc(src.connected)
 		return
 	return
@@ -278,7 +277,7 @@
 			return
 		if (user.equipped() != P)
 			return
-		if ((!in_range(src, usr) > 1 && src.loc != user))
+		if ((!in_interact_range(src, usr) > 1 && src.loc != user))
 			return
 		t = copytext(adminscrub(t),1,128)
 		if (t)
@@ -395,7 +394,6 @@
 		playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
 		src.connected.update()
 		add_fingerprint(user)
-		//SN src = null
 		src.set_loc(src.connected)
 		return
 	return
@@ -526,7 +524,7 @@
 				return
 			if (user.equipped() != P)
 				return
-			if ((!in_range(src, usr) > 1 && src.loc != user))
+			if ((!in_interact_range(src, usr) > 1 && src.loc != user))
 				return
 			t = copytext(adminscrub(t),1,128)
 			if (t)

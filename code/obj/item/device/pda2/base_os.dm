@@ -426,7 +426,7 @@
 						if (!t)
 							return
 
-						if (!src.master?.is_user_in_range(usr))
+						if (!src.master?.is_user_in_interact_range(usr))
 							return
 
 						if(!(src.holder in src.master))
@@ -469,7 +469,7 @@
 						if (!t)
 							return
 
-						if (!src.master?.is_user_in_range(usr))
+						if (!src.master?.is_user_in_interact_range(usr))
 							return
 
 						if(!(src.holder in src.master))
@@ -563,7 +563,7 @@
 						t = copytext(sanitize(strip_html(t)), 1, 16)
 						if (!t)
 							return
-						if (!in_range(src.master, usr) || !(F.holder in src.master))
+						if (!src.master.is_user_in_interact_range(usr))
 							return
 						if(F.holder.read_only)
 							return
@@ -964,7 +964,7 @@
 					. += "<a href='byond://?src=\ref[src.master];eject_id_card=1'>Eject [src.master.ID_card]</a><br>"
 
 		pda_message(var/target_id, var/target_name, var/message, var/is_department_message)
-			if (!src.master || !src.master.is_user_in_range(usr))
+			if (!src.master || !src.master.is_user_in_interact_range(usr))
 				return 1
 
 			if (!target_id || !target_name || !message)
@@ -975,7 +975,9 @@
 
 			message = copytext(adminscrub(message), 1, 257)
 
-			if (findtext(message, "viagra") != 0 || findtext(message, "erect") != 0 || findtext(message, "pharm") != 0 || findtext(message, "girls") != 0 || findtext(message, "scient") != 0 || findtext(message, "luxury") != 0 || findtext(message, "vid") != 0 || findtext(message, "quality") != 0)
+			phrase_log.log_phrase("pda", html_decode(message))
+
+			if (findtext(message, "bitcoin") != 0 || findtext(message, "drug") != 0 || findtext(message, "pharm") != 0 || findtext(message, "lottery") != 0 || findtext(message, "scient") != 0 || findtext(message, "luxury") != 0 || findtext(message, "vid") != 0 || findtext(message, "quality") != 0)
 				usr.unlock_medal("Spamhaus", 1)
 
 			src.master.display_message("<b>To [target_name]:</b> [message]")

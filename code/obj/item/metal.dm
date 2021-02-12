@@ -77,10 +77,9 @@ MATERIAL
 			var/obj/item/sheet/metal/M = new /obj/item/sheet/metal(usr.loc)
 			if(src.material) M.setMaterial(src.material)
 			M.amount = weldinput
-			src.amount -= weldinput * 2
+			src.consume_rods(weldinput * 2)
 
 			user.visible_message("<span class='alert'><B>[user]</B> welds the rods together into metal.</span>")
-			if(src.amount < 1)	qdel(src)
 			return
 		if (istype(W, /obj/item/rods))
 			var/obj/item/rods/R = W
@@ -97,7 +96,6 @@ MATERIAL
 			else
 				R.amount += src.amount
 				boutput(user, "<span class='notice'>You add [R.amount] rods to the stack. It now has [R.amount] rods.</span>")
-				//SN src = null
 				qdel(src)
 				return
 		return
@@ -206,7 +204,6 @@ MATERIAL
 		else
 			W.amount += src.amount
 			boutput(user, "<span class='notice'>You add the metal to the stack. It now has [W.amount] sheets.</span>")
-			//SN src = null
 			qdel(src)
 			return
 		return
@@ -250,7 +247,6 @@ MATERIAL
 				return
 		if (href_list["make"])
 			if (src.amount < 1)
-				//SN src = null
 				qdel(src)
 				return
 			switch(href_list["make"])
@@ -465,7 +461,6 @@ MATERIAL
 			W.amount = src.max_stack
 		else
 			W.amount += src.amount
-			//SN src = null
 			qdel(src)
 			return
 		return
@@ -477,7 +472,6 @@ MATERIAL
 			return
 		if (href_list["make"])
 			if (src.amount < 1)
-				//SN src = null
 				qdel(src)
 				return
 			switch(href_list["make"])

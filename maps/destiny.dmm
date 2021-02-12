@@ -10262,10 +10262,7 @@
 	req_access_txt = "28"
 	},
 /obj/machinery/cashreg,
-/obj/item/reagent_containers/food/snacks/cake/chocolate{
-	desc = "Holy shit! This cake probably costs more than the gross domestic product of Bulgaria!";
-	name = "Extravagant Chocolate Gateau"
-	},
+/obj/item/reagent_containers/food/snacks/cake/chocolate/gateau,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/kitchen)
 "asA" = (
@@ -10304,8 +10301,8 @@
 "asE" = (
 /obj/table/reinforced/auto,
 /obj/item/reagent_containers/food/snacks/breadloaf,
-/obj/item/reagent_containers/glass/bottle/icing,
-/obj/item/reagent_containers/glass/bottle/icing,
+/obj/item/reagent_containers/food/drinks/drinkingglass/icing,
+/obj/item/reagent_containers/food/drinks/drinkingglass/icing,
 /obj/disposalpipe/segment/food,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
@@ -11966,6 +11963,10 @@
 "avY" = (
 /obj/table/reinforced/auto,
 /obj/item/device/light/lava_lamp,
+/obj/item/reagent_containers/glass/water_pipe{
+	pixel_x = -8;
+	pixel_y = 8
+	},
 /turf/simulated/floor,
 /area/station/hydroponics/bay)
 "avZ" = (
@@ -13582,6 +13583,9 @@
 	req_access_txt = "25"
 	},
 /obj/machinery/cashreg,
+/obj/item/clothing/glasses/spectro{
+	pixel_y = 11
+	},
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/bar)
 "aze" = (
@@ -20946,7 +20950,6 @@
 	pixel_x = -28
 	},
 /obj/overlay{
-	anchored = 1;
 	icon = 'icons/misc/beach2.dmi';
 	icon_state = "palm1";
 	layer = 10;
@@ -22010,7 +22013,6 @@
 "aME" = (
 /obj/window/reinforced/east,
 /obj/overlay{
-	anchored = 1;
 	icon = 'icons/misc/beach2.dmi';
 	icon_state = "palm1";
 	layer = 10;
@@ -31213,6 +31215,10 @@
 	dir = 1;
 	icon_state = "line1"
 	},
+/obj/item/device/ticket_writer{
+	pixel_x = 5;
+	pixel_y = 4
+	},
 /turf/simulated/floor,
 /area/station/security/main)
 "bcH" = (
@@ -32249,7 +32255,7 @@
 	dir = 8
 	},
 /obj/landmark/start{
-	name = "Security Officer"
+	name = "Security Assistant"
 	},
 /turf/simulated/floor,
 /area/station/security/main)
@@ -33810,6 +33816,9 @@
 	icon_state = "2-4"
 	},
 /obj/window/crystal/reinforced/north,
+/obj/landmark/start{
+	name = "Security Assistant"
+	},
 /turf/simulated/floor/red,
 /area/station/security/brig)
 "bhj" = (
@@ -36364,7 +36373,7 @@
 	dir = 8
 	},
 /obj/landmark/start{
-	name = "Security Officer"
+	name = "Security Assistant"
 	},
 /turf/simulated/floor/black,
 /area/station/security/main)
@@ -36975,7 +36984,7 @@
 /area/station/security/main)
 "bmw" = (
 /obj/landmark/start{
-	name = "Security Officer"
+	name = "Security Assistant"
 	},
 /turf/simulated/floor/black,
 /area/station/security/main)
@@ -41383,6 +41392,10 @@
 /obj/item/pen/fancy,
 /obj/item/reagent_containers/food/drinks/mug/random_color,
 /obj/item/stamp/hos,
+/obj/item/reagent_containers/food/drinks/mug/HoS{
+	pixel_x = 12;
+	pixel_y = 4
+	},
 /turf/simulated/floor/red/checker{
 	dir = 4
 	},

@@ -163,6 +163,12 @@
 		STOP_TRACKING
 		..()
 
+	initializeBioholder()
+		if (src.name == "monkey" || !src.name)
+			randomize_look(src, 1, 1, 1, 0, 1, 0)
+			src.gender = src.bioHolder?.mobAppearance.gender
+		. = ..()
+
 	ai_action()
 		if(ai_aggressive)
 			return ..()
@@ -210,6 +216,7 @@
 		if(ismonkey(T) && T:ai_active && prob(90))
 			return ..()
 		//src.ai_aggressive = 1
+		var/aggroed = src.ai_state != AI_ATTACKING
 		src.target = T
 		src.ai_state = AI_ATTACKING
 		src.ai_threatened = world.timeofday
@@ -234,6 +241,8 @@
 			pals ++
 			if (prob(40))
 				src.emote("scream")
+		if(aggroed)
+			walk_towards(src, ai_target, ai_movedelay)
 
 	proc/shot_by(var/atom/A as mob|obj)
 		if (src.ai_state == AI_ATTACKING)
@@ -248,7 +257,7 @@
 	proc/done_with_you(var/atom/T as mob|obj)
 		if (!T)
 			return 0
-		if (src.health <= 0 || (get_dist(src, T) >= 7))
+		if (src.health <= 0 || (get_dist(src, T) >= 11))
 			if(src.health <= 0)
 				src.ai_state = AI_FLEEING
 			else
@@ -504,6 +513,7 @@
 	name = "sea monkey"
 	max_health = 150
 	static_type_override = /datum/mutantrace/monkey/seamonkey
+	ai_useitems = FALSE // or they eat all the floor pills and die before anyone visits
 
 	New()
 		..()

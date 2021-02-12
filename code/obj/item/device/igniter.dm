@@ -12,6 +12,7 @@
 	throw_range = 10
 	mats = 2
 	module_research = list("science" = 1, "miniaturization" = 5, "devices" = 3)
+	firesource = TRUE
 
 	//blcok spamming shit because inventory uncaps click speed and kinda makes this an exploit
 	//its still a bit stronger than non-inventory interactions, why not
@@ -153,7 +154,7 @@
 
 /obj/item/device/igniter/examine(mob/user)
 	. = ..()
-	if ((in_range(src, user) || src.loc == user))
+	if ((in_interact_range(src, user) || src.loc == user))
 		if (src.status)
 			. += "The igniter is ready!"
 		else

@@ -1186,6 +1186,12 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	health_burn = 50
 	good_grip = 1
 
+	New()
+		. = ..()
+		src.remove_stam_mod_max("small_animal")
+		src.add_stam_mod_max("wrestledoodle", 30)
+		src.add_stam_mod_regen("wrestledoodle", 5)
+
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
 		if(act == "flip" && istype(src.equipped(), /obj/item/grab))
 			return src.do_suplex(src.equipped())
@@ -2052,11 +2058,11 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			if ("flutter","dance")
 				if (src.emote_check(voluntary, 50)) //copied from moonwalk code
 					SPAWN_DBG(0)
-						for (var/i = 0, i < 4, i++)
-							src.pixel_x+= 2
+						for (var/i in 1 to 4)
+							src.pixel_x += 2
 							sleep(0.2 SECONDS)
-						for (var/i = 0, i < 4, i++)
-							src.pixel_x-= 2
+						for (var/i in 1 to 4)
+							src.pixel_x -= 2
 							sleep(0.2 SECONDS)
 					return "<span class='emote'><b>[src]</b> flutters.</span>"
 		return null
