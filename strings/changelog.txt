@@ -1,5 +1,9 @@
 
 (t)thu feb 11 21
+(u)mbc and Sord
+(p)3418
+(e)⚖|balance
+(*)Added short action bar to power cell swapping
 (u)BatElite
 (p)3456
 (e)🆕|feature
