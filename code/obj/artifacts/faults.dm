@@ -210,6 +210,24 @@ ABSTRACT_TYPE(/datum/artifact_fault/messager/)
 	generate_message(obj/O, mob/living/user)
 		return phrase_log.random_phrase("ailaw")
 
+/datum/artifact_fault/messager/emoji
+	var/list/allowed_emoji = null
+	New()
+		..()
+		if(prob(70))
+			allowed_emoji = list()
+			for(var/i in 1 to rand(10))
+				allowed_emoji += random_emoji()
+
+	generate_message(obj/O, mob/living/user)
+		. = list()
+		for(var/i in 1 to rand(10))
+			if(isnull(src.allowed_emoji) || prob(2))
+				. += random_emoji()
+			else
+				. += pick(src.allowed_emoji)
+		return jointext(., "")
+
 /datum/artifact_fault/poison
 	trigger_prob = 8
 	var/poison_type = "toxin"
