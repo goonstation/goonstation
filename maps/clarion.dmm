@@ -29731,7 +29731,7 @@
 /turf/simulated/floor/redblack{
 	dir = 9
 	},
-/area/station/security/brig)
+/area/station/security/main)
 "bbv" = (
 /obj/stool/bed/brig,
 /obj/item/clothing/glasses/vr{
@@ -29746,7 +29746,7 @@
 /turf/simulated/floor/redblack{
 	dir = 5
 	},
-/area/station/security/brig)
+/area/station/security/main)
 "bbw" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -30464,7 +30464,7 @@
 /turf/simulated/floor/redblack{
 	dir = 10
 	},
-/area/station/security/brig)
+/area/station/security/main)
 "bcL" = (
 /obj/submachine/chef_sink/chem_sink{
 	desc = "A water-filled unit intended for hand-washing purposes.";
@@ -30489,7 +30489,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/red,
-/area/station/security/brig)
+/area/station/security/main)
 "bcN" = (
 /obj/disposalpipe/junction{
 	dir = 1;
@@ -31755,7 +31755,7 @@
 /turf/simulated/floor/redblack{
 	dir = 9
 	},
-/area/station/security/brig)
+/area/station/security/main)
 "beZ" = (
 /obj/submachine/chef_sink/chem_sink{
 	desc = "A water-filled unit intended for hand-washing purposes.";
@@ -31780,7 +31780,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/red,
-/area/station/security/brig)
+/area/station/security/main)
 "bfb" = (
 /obj/cable{
 	d1 = 2;
@@ -32468,7 +32468,7 @@
 /turf/simulated/floor/redblack{
 	dir = 10
 	},
-/area/station/security/brig)
+/area/station/security/main)
 "bgl" = (
 /obj/stool/bed/brig,
 /obj/item/clothing/glasses/vr{
@@ -32477,7 +32477,7 @@
 /turf/simulated/floor/redblack{
 	dir = 6
 	},
-/area/station/security/brig)
+/area/station/security/main)
 "bgm" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -42903,7 +42903,7 @@
 /turf/simulated/floor/redblack{
 	dir = 6
 	},
-/area/station/security/brig)
+/area/station/security/main)
 "byg" = (
 /obj/window/auto/reinforced,
 /obj/grille/steel{
@@ -49680,7 +49680,7 @@
 /turf/simulated/floor/redblack{
 	dir = 5
 	},
-/area/station/security/brig)
+/area/station/security/main)
 "bMw" = (
 /obj/storage/closet/wardrobe/pride,
 /turf/simulated/floor/wood,
@@ -51282,15 +51282,6 @@
 	},
 /turf/simulated/floor/orangeblack,
 /area/station/engine/substation/west)
-"per" = (
-/obj/wingrille_spawn/auto,
-/obj/cable{
-	d2 = 4;
-	dir = 0;
-	icon_state = "0-4"
-	},
-/turf/simulated/floor/plating,
-/area/station/security/brig)
 "poj" = (
 /obj/wingrille_spawn/auto,
 /obj/window_blinds/cog2/right{
@@ -79147,12 +79138,12 @@ aQR
 aQR
 aQR
 aQR
-bhl
-bhl
-bhl
-bhl
-bhl
-bhl
+aQR
+aQR
+aQR
+aQR
+aQR
+aQR
 bhl
 biu
 biu
@@ -79404,10 +79395,10 @@ aVg
 aQR
 bbc
 aZa
-bhl
+aQR
 bbu
 bcK
-bhl
+aQR
 beY
 bgk
 bhl
@@ -79661,10 +79652,10 @@ aVh
 aQR
 aXL
 aQR
-bhl
+aQR
 bbv
 byf
-bhl
+aQR
 bMv
 bgl
 bhl
@@ -79918,12 +79909,12 @@ aVi
 aWA
 aXM
 aZb
-bhl
-per
+aQR
+aWA
 bcM
-bhl
+aQR
 bfa
-per
+aWA
 bhl
 bix
 bjM
