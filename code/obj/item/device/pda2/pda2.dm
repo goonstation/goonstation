@@ -332,7 +332,7 @@
 				src.scan_program = scan
 
 		if(M.client.preferences.pda_ringtone_index != "Two-Beep" && (M.client.preferences.pda_ringtone_index in selectable_ringtones))
-			src.set_ringtone(selectable_ringtones[M.client.preferences.pda_ringtone_index], FALSE, FALSE, "main", null, TRUE)
+			src.set_ringtone(selectable_ringtones[M.client.preferences.pda_ringtone_index], FALSE, FALSE, "main", null, FALSE)
 			var/rtone_program = src.ringtone2program(src.r_tone)
 			if(rtone_program)
 				src.hd.root.add_file(new rtone_program)
