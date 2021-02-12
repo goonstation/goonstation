@@ -56650,6 +56650,11 @@
 	layer = 9.1;
 	pixel_x = -10
 	},
+/obj/item_dispenser/icedispenser{
+	dir = 4;
+	pixel_x = -22;
+	pixel_y = 7
+	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/cafeteria)
 "qsx" = (

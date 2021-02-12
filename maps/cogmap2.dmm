@@ -10555,6 +10555,10 @@
 /obj/item/shaker/ketchup{
 	pixel_x = 6
 	},
+/obj/item_dispenser/icedispenser{
+	dir = 1;
+	pixel_y = 0
+	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/bar)
 "axS" = (

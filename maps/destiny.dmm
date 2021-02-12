@@ -13563,6 +13563,11 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/item_dispenser/icedispenser{
+	dir = 4;
+	pixel_x = -22;
+	pixel_y = 5
+	},
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/bar)
 "azb" = (
