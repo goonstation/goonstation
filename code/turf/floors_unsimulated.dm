@@ -940,3 +940,60 @@
 			src.icon_state = "swamp_decor[rand(1, 10)]"
 		else
 			src.icon_state = "swamp[rand(1, 4)]"
+
+#define FLOOR_AUTO_EDGE_PRIORITY_DIRT 50
+#define FLOOR_AUTO_EDGE_PRIORITY_GRASS 100
+
+/turf/unsimulated/floor/auto
+	name = "auto edging turf"
+	///turf won't draw edges on turfs with higher or equal priority
+	var/edge_priority_level = 0
+	var/icon_state_edge = null
+
+	New()
+		. = ..()
+		SPAWN_DBG(3 SECONDS) //give neighbors a chance to spawn in
+			edge_overlays()
+
+	proc/edge_overlays()
+		for (var/turf/T in orange(src,1))
+			if (istype(T, /turf/unsimulated/floor/auto))
+				var/turf/unsimulated/floor/auto/TA = T
+				if (TA.edge_priority_level >= src.edge_priority_level)
+					continue
+			var/image/edge_overlay = image(src.icon, "[icon_state_edge][get_dir(T,src)]")
+			edge_overlay.appearance_flags = PIXEL_SCALE | TILE_BOUND | RESET_COLOR | RESET_ALPHA
+			edge_overlay.layer = src.layer + 1
+			edge_overlay.plane = PLANE_FLOOR
+			edge_overlay.layer = TURF_EFFECTS_LAYER
+			T.overlays += edge_overlay
+
+/turf/unsimulated/floor/auto/grass/swamp_grass
+	name = "swamp grass"
+	desc = "Grass. In a swamp. Truly fascinating."
+	icon = 'icons/turf/forest.dmi'
+	icon_state = "grass1"
+	edge_priority_level = FLOOR_AUTO_EDGE_PRIORITY_GRASS
+	icon_state_edge = "grassedge"
+
+	New()
+		. = ..()
+		src.icon_state = "grass[rand(1,9)]"
+
+/turf/unsimulated/floor/auto/grass/leafy
+	name = "grass"
+	desc = "some leafy grass."
+	icon = 'icons/turf/outdoors.dmi'
+	icon_state = "grass_leafy"
+	edge_priority_level = FLOOR_AUTO_EDGE_PRIORITY_GRASS - 1
+	icon_state_edge = "grass_leafyedge"
+
+/turf/unsimulated/floor/auto/dirt
+	name = "dirt"
+	icon = 'icons/misc/worlds.dmi'
+	icon_state = "dirt"
+	edge_priority_level = FLOOR_AUTO_EDGE_PRIORITY_DIRT
+	icon_state_edge = "dirtedge"
+
+#undef FLOOR_AUTO_EDGE_PRIORITY_DIRT
+#undef FLOOR_AUTO_EDGE_PRIORITY_GRASS

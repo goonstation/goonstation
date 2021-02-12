@@ -23,17 +23,17 @@
 		new flora(gen_turf)
 
 /datum/biome/mudlands
-	turf_type = /turf/unsimulated/dirt
+	turf_type = /turf/unsimulated/floor/auto/dirt
 	flora_types = list(/obj/stone/random = 100, /obj/decal/fakeobjects/smallrocks = 100)
 	flora_density = 3
 
 /datum/biome/plains
-	turf_type = /turf/unsimulated/floor/setpieces/swampgrass
+	turf_type = /turf/unsimulated/floor/auto/grass/swamp_grass
 	flora_types = list(/obj/tree1/elm_random = 50, /obj/shrub/random = 100, /obj/stone/random = 100, /obj/decal/fakeobjects/smallrocks = 100)
 	flora_density = 15
 
 /datum/biome/jungle
-	turf_type = /turf/unsimulated/floor/grass/leafy
+	turf_type = /turf/unsimulated/floor/auto/grass/leafy
 	flora_types = list(/obj/tree1/elm_random = 50, /obj/shrub/random = 100, /obj/stone/random = 10, /obj/decal/fakeobjects/smallrocks = 10)
 	flora_density = 40
 
