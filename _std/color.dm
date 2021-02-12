@@ -103,12 +103,8 @@
 
 /proc/hex_to_rgb_list(var/hex)
 	var/regex/R = new("^#?(\[a-f\\d\]{2})(\[a-f\\d\]{2})(\[a-f\\d\]{2})", "gi")
-	var/list/L = list()
 	if (R.Find(hex))
-		L["r"] = hex2num(R.group[1])
-		L["g"] = hex2num(R.group[2])
-		L["b"] = hex2num(R.group[3])
-		return L
+		return list(hex2num(R.group[1]), hex2num(R.group[2]), hex2num(R.group[3]))
 	return null
 
 /proc/random_color()
@@ -118,11 +114,11 @@
 // Clamps each of the RGB values between 50 and 190
 /proc/fix_colors(var/hex)
 	var/list/L = hex_to_rgb_list(hex)
-	for (var/i in L)
+	for (var/i in 1 to 3)
 		L[i] = min(L[i], 190)
 		L[i] = max(L[i], 50)
 	if (length(L) == 3)
-		return rgb(L["r"], L["g"], L["b"])
+		return rgb(L[1], L[2], L[3])
 	return rgb(22, 210, 22)
 
 
