@@ -24,17 +24,17 @@
 
 /datum/biome/mudlands
 	turf_type = /turf/unsimulated/dirt
-	flora_types = list(/obj/stone/random, /obj/decal/fakeobjects/rockpile, /obj/decal/fakeobjects/smallrocks)
+	flora_types = list(/obj/stone/random, /obj/decal/fakeobjects/smallrocks)
 	flora_density = 3
 
 /datum/biome/plains
 	turf_type = /turf/unsimulated/floor/setpieces/swampgrass
-	flora_types = list(/obj/tree1/random, /obj/shrub/random, /obj/stone/random, /obj/decal/fakeobjects/rockpile, /obj/decal/fakeobjects/smallrocks)
+	flora_types = list(/obj/tree1/elm_random, /obj/shrub/random, /obj/stone/random, /obj/decal/fakeobjects/smallrocks)
 	flora_density = 15
 
 /datum/biome/jungle
 	turf_type = /turf/unsimulated/floor/grass/leafy
-	flora_types = list(/obj/tree1/random, /obj/shrub/random, /obj/stone/random, /obj/decal/fakeobjects/rockpile, /obj/decal/fakeobjects/smallrocks)
+	flora_types = list(/obj/tree1/elm_random, /obj/shrub/random, /obj/stone/random, /obj/decal/fakeobjects/smallrocks)
 	flora_density = 40
 
 /datum/biome/jungle/deep
@@ -44,7 +44,7 @@
 	turf_type = /turf/unsimulated/greek/beach
 
 /datum/biome/water
-	turf_type = /turf/unsimulated/wall/water
+	turf_type = /turf/unsimulated/floor/swamp
 
 /datum/biome/mountain
 	turf_type = /turf/simulated/wall/asteroid

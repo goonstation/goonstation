@@ -923,3 +923,20 @@
 	allows_vehicles = 1
 	step_material = "step_plating"
 	step_priority = STEP_PRIORITY_MED
+
+/////////////////////////////////////////
+
+/turf/unsimulated/floor/swamp
+	name = "swamp"
+	desc = "Who knows what could be hiding in there."
+	icon = 'icons/turf/water.dmi'
+	icon_state = "swamp0"
+
+	New()
+		. = ..()
+		if (prob(3))
+			src.icon_state = "swamp0"
+		else if (prob(10))
+			src.icon_state = "swamp_decor[rand(1, 10)]"
+		else
+			src.icon_state = "swamp[rand(1, 4)]"

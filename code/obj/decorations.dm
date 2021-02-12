@@ -54,10 +54,10 @@
 	density = 1
 	opacity = 0 // this causes some of the super ugly lighting issues too
 
-	random
+	elm_random
 		New()
 			. = ..()
-			src.dir = pick(cardinal)
+			src.dir = pick(cardinal - SOUTH)
 
 // what the hell is all this and why wasn't it just using a big icon? the lighting system gets all fucked up with this stuff
 
