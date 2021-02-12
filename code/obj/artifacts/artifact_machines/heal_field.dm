@@ -8,6 +8,7 @@
 	validtypes = list("martian","wizard","eldritch","precursor")
 	validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/electric,/datum/artifact_trigger/heat,
 	/datum/artifact_trigger/radiation,/datum/artifact_trigger/carbon_touch)
+	fault_blacklist = list(ITEM_ONLY_FAULTS, /datum/artifact_fault/poison) // can't sting you at range
 	activated = 0
 	activ_text = "begins to radiate a strange energy field!"
 	deact_text = "shuts down, causing the energy field to vanish!"
@@ -42,3 +43,4 @@
 			else
 				M.HealDamage("All", src.field_strength, src.field_strength)
 				boutput(M, "<span class='notice'>Waves of soothing energy wash over you!</span>")
+			O.ArtifactFaultUsed(M)
