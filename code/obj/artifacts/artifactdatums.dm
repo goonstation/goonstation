@@ -30,6 +30,8 @@ ABSTRACT_TYPE(/datum/artifact/)
 
 	var/list/faults = list()      // Automatically handled
 	var/list/fault_types = list() // this is set up based on the artifact's origin type
+	// What kinds of faults can the artifact type have? This will be intersected with the possible faults of the origin to get fault_types. null means no restriction
+	var/static/list/datum/artifact_fault/applicable_faults = null
 
 	var/list/triggers = list()
 	var/validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/electric,/datum/artifact_trigger/heat,

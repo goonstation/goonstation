@@ -102,6 +102,8 @@
 	A.react_heat[1] = AO.heat_reaction_one
 	A.activ_sound = pick(AO.activation_sounds)
 	A.fault_types |= AO.fault_types
+	if(A.applicable_faults)
+		A.fault_types &= A.applicable_faults
 	A.internal_name = AO.generate_name()
 	A.nofx = AO.nofx
 
