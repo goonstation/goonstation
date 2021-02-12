@@ -36132,11 +36132,6 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/ce)
 "bCH" = (
-/obj/item/device/radio/intercom{
-	broadcasting = 0;
-	frequency = 1441;
-	name = "Engineering Intercom"
-	},
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet{
 	bcolor = "yellow";
@@ -36154,6 +36149,7 @@
 	tag = ""
 	},
 /obj/disposalpipe/segment/mail/vertical,
+/obj/item/device/radio/intercom/engineering,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/ce)
 "bCI" = (
@@ -37078,11 +37074,8 @@
 /obj/machinery/atmospherics/portables_connector{
 	dir = 8
 	},
-/obj/item/device/radio/intercom{
-	broadcasting = 0;
-	dir = 8;
-	frequency = 1441;
-	name = "Engineering Intercom"
+/obj/item/device/radio/intercom/engineering{
+	dir = 8
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
@@ -37113,12 +37106,6 @@
 	layer = 9.1;
 	pixel_y = 21
 	},
-/obj/item/device/radio/intercom{
-	broadcasting = 0;
-	dir = 4;
-	frequency = 1441;
-	name = "Engineering Intercom"
-	},
 /obj/item/paper_bin,
 /obj/item/pen/marker,
 /obj/item/pen/marker,
@@ -37128,6 +37115,9 @@
 	name = "autoname - SS13";
 	pixel_x = -10;
 	tag = ""
+	},
+/obj/item/device/radio/intercom/engineering{
+	dir = 4
 	},
 /turf/simulated/floor/delivery,
 /area/station/engine/power{
