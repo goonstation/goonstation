@@ -96,9 +96,12 @@
 				if (src.sharpened)
 					boutput(user, "<span class='alert'>This has already been sharpened.</span>")
 					return
-				boutput(user, "<span class='notice'>You sharpen? the pizza???</span>")
 				src.sharpened = TRUE
-				return
+				if(src.sliced)
+					boutput(user, "<span class='notice'>You sharpen the pizza slice. Somehow.</span>")
+					return
+				else
+					boutput(user, "<span class='notice'>You sharpen the pizza, and start slicing it.</span>")
 		if (istool(W, TOOL_CUTTING | TOOL_SAWING))
 			if (src.sliced)
 				boutput(user, "<span class='alert'>This has already been sliced.</span>")
@@ -106,29 +109,37 @@
 			boutput(user, "<span class='notice'>You cut the pizza into slices.</span>")
 			if (src.name == "cheese keyzza")
 				boutput(user, "<i>You feel as though something of value has been lost...</i>")
-			var/makeslices = src.amount
-			while (makeslices > 0)
-				var/obj/item/reagent_containers/food/snacks/pizza/P = new src.type(get_turf(src))
-				P.topping_holder += src.topping_colors
-				P.overlays.len = 0
-				P.sharpened = src.sharpened
-				P.sliced = TRUE
-				P.amount = 1
-				P.icon_state = "pslice"
-				P.quality = src.quality
-				P.heal_amt += round((src.heal_amt/makeslices))
-				P.topping_color = src.topping_color
-				if(topping)
-					P.name = src.name
-					P.desc = src.desc
-					P.topping = TRUE
-					P.num = src.num
-					P.add_topping(num)
-				src.reagents.trans_to(P, src.reagents.total_volume/makeslices)
-				P.pixel_x = rand(-6, 6)
-				P.pixel_y = rand(-6, 6)
-				makeslices--
-			qdel (src)
+			src.make_slices()
+
+	proc/make_slices()
+		var/makeslices = src.amount
+		. = list()
+		while (makeslices > 0)
+			var/obj/item/reagent_containers/food/snacks/pizza/P = new src.type(get_turf(src))
+			P.topping_holder += src.topping_colors
+			P.overlays.len = 0
+			P.sharpened = src.sharpened
+			P.sliced = TRUE
+			P.amount = 1
+			P.icon_state = "pslice"
+			P.quality = src.quality
+			P.heal_amt += round((src.heal_amt/makeslices))
+			P.topping_color = src.topping_color
+			if(src.sharpened)
+				src.throw_spin = 0
+			if(topping)
+				P.name = src.name
+				P.desc = src.desc
+				P.topping = TRUE
+				P.num = src.num
+				P.add_topping(num)
+			src.reagents.trans_to(P, src.reagents.total_volume/makeslices)
+			P.pixel_x = rand(-6, 6)
+			P.pixel_y = rand(-6, 6)
+			. += P
+			makeslices--
+		qdel(src)
+
 
 	attack(mob/M as mob, mob/user as mob, def_zone)
 		if (sharpened && prob(15))
@@ -177,15 +188,6 @@
 				src.transfer_all_reagents(M)
 			random_brute_damage(M, 11)
 			take_bleeding_damage(M, null, 25, DAMAGE_STAB)
-		else
-			playsound(src.loc, "sound/weapons/slashcut.ogg", 100, 1)
-			if (ishuman(M))
-				var/mob/living/carbon/human/H = M
-				H.changeStatus("weakened", 5 SECONDS)
-				H.TakeDamage("chest", 35, 0, 0, DAMAGE_CUT)
-			else
-				random_brute_damage(M, 35)
-			take_bleeding_damage(M, null, 25, DAMAGE_CUT)
 
 	proc/add_topping(var/num)
 		var/icon/I
