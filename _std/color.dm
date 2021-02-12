@@ -102,9 +102,35 @@
 	return list(outh, outs, outv)
 
 /proc/hex_to_rgb_list(var/hex)
-	var/regex/R = new("^#?(\[a-f\\d\]{2})(\[a-f\\d\]{2})(\[a-f\\d\]{2})", "gi")
-	if (R.Find(hex))
-		return list(hex2num(R.group[1]), hex2num(R.group[2]), hex2num(R.group[3]))
+	if(copytext(hex, 1, 2) != "#")
+		return null
+	switch(length(hex))
+		if(7) // #rrggbb
+			return list(
+				hex2num(copytext(hex, 2, 4)),
+				hex2num(copytext(hex, 4, 6)),
+				hex2num(copytext(hex, 6, 8))
+			)
+		if(4) // #rgb
+			return list(
+				hex2num(copytext(hex, 2, 3)) * 0x11,
+				hex2num(copytext(hex, 3, 4)) * 0x11,
+				hex2num(copytext(hex, 4, 5)) * 0x11
+			)
+		if(9) // #rrggbbaa
+			return list(
+				hex2num(copytext(hex, 2, 4)),
+				hex2num(copytext(hex, 4, 6)),
+				hex2num(copytext(hex, 6, 8)),
+				hex2num(copytext(hex, 8, 10)),
+			)
+		if(5) // #rgba
+			return list(
+				hex2num(copytext(hex, 2, 3)) * 0x11,
+				hex2num(copytext(hex, 3, 4)) * 0x11,
+				hex2num(copytext(hex, 4, 5)) * 0x11,
+				hex2num(copytext(hex, 5, 6)) * 0x11
+			)
 	return null
 
 /proc/random_color()
@@ -201,3 +227,65 @@
 			indexout ++
 	return outlist
 
+/**
+ * Takes a possible value of the `color` var and returns a length 20 color matrix doing the same thing.
+ * Available inputs:
+ *  null, "#rgb", "#rrggbb", "#rgba", "#rrggbbaa", all forms of color matrices
+ */
+/proc/normalize_color_to_matrix(color)
+	if(isnull(color))
+		return list(
+			1, 0, 0, 0,
+			0, 1, 0, 0,
+			0, 0, 1, 0,
+			0, 0, 0, 1,
+			0, 0, 0, 0)
+	if(istext(color))
+		var/list/color_list = hex_to_rgb_list(color)
+		if(length(color_list) == 3)
+			color_list += 255
+		return list(
+			color_list[1] / 255, 0, 0, 0,
+			0, color_list[2] / 255, 0, 0,
+			0, 0, color_list[3] / 255, 0,
+			0, 0, 0, color_list[4] / 255
+		)
+	if(islist(color))
+		if(length(color) == 0)
+			return null
+		if(islist(color[1])) // list of rows
+			while(length(color) < 5)
+				color += null
+			var/list/result = list()
+			var/row_number = 1
+			for(var/list/row in color)
+				if(isnull(row))
+					result += list(
+						list(1, 0, 0, 0),
+						list(0, 1, 0, 0),
+						list(0, 0, 1, 0),
+						list(0, 0, 0, 1),
+						list(0, 0, 0, 0)
+					)[row_number]
+				else
+					result += row // appending
+				row_number += 1
+			return result
+		if(length(color) >= 9 && length(color) <= 12)
+			var/list/long_col = color
+			long_col = long_col.Copy()
+			while(length(long_col) < 12)
+				long_col += 0
+			return list(
+				long_col[1], long_col[2], long_col[3], 0,
+				long_col[4], long_col[5], long_col[6], 0,
+				long_col[7], long_col[8], long_col[9], 0,
+				0, 0, 0, 1,
+				long_col[10], long_col[11], long_col[12], 0)
+		if(length(color) >= 16 && length(color) <= 20)
+			var/list/long_col = color
+			long_col = long_col.Copy()
+			while(length(long_col) < 20)
+				long_col += 0
+			return long_col
+	CRASH("invalid color format")
