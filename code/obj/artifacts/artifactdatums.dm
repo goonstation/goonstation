@@ -164,8 +164,11 @@ ABSTRACT_TYPE(/datum/artifact/art)
 	damage_type = D_PIERCING
 	hit_ground_chance = 90
 	window_pass = 0
+	var/obj/machinery/artifact/turret/turretArt = null
 
 	on_hit(atom/hit)
+		if(turretArt && istype(hit, /mob/living/))
+			turretArt.ArtifactFaultUsed(hit)
 		return
 
 	proc/randomise()

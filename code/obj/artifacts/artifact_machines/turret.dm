@@ -56,6 +56,7 @@
 					cycles_without_target = 0
 					O.ArtifactDeactivated()
 		else
+			bullet.turretArt = O
 			if (target_is_valid(current_target,O) && istype(bullet,/datum/projectile/artifact))
 				shoot_projectile_ST(O, bullet, current_target)
 			else
