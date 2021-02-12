@@ -356,3 +356,25 @@ proc/affine_color_mapping_matrix(list/list/inp, list/list/out)
 		for(var/c in 1 to 3)
 			additive_row[c] -= inp[1][c] * result_inner[(row - 1) * 3 + c]
 	return result_inner + additive_row
+
+/**
+	Generates a color matrix which performs an approximation of the HSV-space transform.
+	Hue is in degrees and is applied additively.
+	Saturation is in a 0-1 range and is applied multiplicatively.
+	Value is in a 0-1 range and is applied multiplicatively.
+*/
+proc/hsv_transform_color_matrix(h=0.0, s=1.0, v=1.0)
+	// Source: http://beesbuzz.biz/code/16-hsv-color-transforms
+	var/vsu = v * s * cos(h)
+	var/vsw = v * s * sin(h)
+	return list(
+		0.299*v + 0.701*vsu + 0.168*vsw,
+		0.299*v - 0.299*vsu - 0.328*vsw,
+		0.299*v - 0.300*vsu + 1.25*vsw,
+		0.587*v - 0.587*vsu + 0.330*vsw,
+		0.587*v + 0.413*vsu + 0.035*vsw,
+		0.587*v - 0.588*vsu - 1.05*vsw,
+		0.114*v - 0.114*vsu - 0.497*vsw,
+		0.114*v - 0.114*vsu + 0.292*vsw,
+		0.114*v + 0.886*vsu - 0.203*vsw
+	)
