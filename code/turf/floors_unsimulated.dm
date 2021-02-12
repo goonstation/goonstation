@@ -946,9 +946,10 @@
 
 /turf/unsimulated/floor/auto
 	name = "auto edging turf"
+
 	///turf won't draw edges on turfs with higher or equal priority
-	var/edge_priority_level = 0
-	var/icon_state_edge = null
+	var/const/edge_priority_level = 0
+	var/const/icon_state_edge = null
 
 	New()
 		. = ..()
@@ -990,6 +991,7 @@
 
 /turf/unsimulated/floor/auto/dirt
 	name = "dirt"
+	desc = "earth."
 	icon = 'icons/misc/worlds.dmi'
 	icon_state = "dirt"
 	edge_priority_level = FLOOR_AUTO_EDGE_PRIORITY_DIRT
