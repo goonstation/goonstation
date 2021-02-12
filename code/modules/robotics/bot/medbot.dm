@@ -53,17 +53,16 @@
 	var/terrifying = 0 // for making the medbots all super fucked up
 	/// List of drugs that terrifying derelist bots will inject
 	var/static/list/terrifying_meds = list("formaldehyde" = 15,
-																				"ketamine" = 5,
+																				"ketamine" = 25,
 																				"pancuronium" = 5,
 																				"haloperidol" = 15,
 																				"morphine" = 20,
 																				"cold_medicine" = 40,
 																				"simethicone" = 10,
 																				"sulfonal" = 5, /* its an oldetimey sedative */
-																				"atropine" = 30,
-																				"methamphetamine" = 20,
+																				"atropine" = 10,
+																				"methamphetamine" = 30,
 																				"ethanol" = 20, /* rubbing alcohol */
-																				"fog" = 20,
 																				"ether" = 10,
 																				"chlorine" = 10, /* disinfectant */
 																				"mercury" = 5)
