@@ -1,4 +1,7 @@
 
+(t)fri feb 12 21
+(u)pali
+(*)Increased cloud save limit for character profiles to 15.
 (t)thu feb 11 21
 (u)mbc and Sord
 (p)3418
