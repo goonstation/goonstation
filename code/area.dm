@@ -143,7 +143,7 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
 	/// Local list of obj/machines found in the area
 	var/list/machines = list()
 
-	///This datum, if set, allows terrain generation behavior to be ran on Initialize()
+	///This datum, if set, allows terrain generation behavior to be ran on world/proc/init()
 	var/datum/map_generator/map_generator
 
 	proc/CanEnter(var/atom/movable/A)
