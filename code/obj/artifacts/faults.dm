@@ -1,5 +1,17 @@
 // these are all faults that work in non-handheld artifacts, for easy adding
-#define NON_HANDHELD_FAULTS list(/datum/artifact_fault/burn,/datum/artifact_fault/irradiate,/datum/artifact_fault/shutdown,/datum/artifact_fault/warp,/datum/artifact_fault/murder,/datum/artifact_fault/explode,/datum/artifact_fault/zap,/datum/artifact_fault/messager,/datum/artifact_fault/poison)
+#define NON_HANDHELD_FAULTS list(/datum/artifact_fault/burn, \
+/datum/artifact_fault/irradiate, \
+/datum/artifact_fault/shutdown, \
+/datum/artifact_fault/warp, \
+/datum/artifact_fault/murder, \
+/datum/artifact_fault/explode, \
+/datum/artifact_fault/zap, \
+/datum/artifact_fault/messager/creepy_whispers, \
+/datum/artifact_fault/messager/comforting_whispers, \
+/datum/artifact_fault/messager/what_people_said, \
+/datum/artifact_fault/messager/what_dead_people_said, \
+/datum/artifact_fault/messager/ai_laws, \
+/datum/artifact_fault/poison)
 
 // FAULTS
 ABSTRACT_TYPE(/datum/artifact_fault/)
