@@ -1877,11 +1877,7 @@
 /obj/stool/chair/yellow{
 	dir = 4
 	},
-/obj/item/device/radio/intercom{
-	broadcasting = 0;
-	frequency = 1441;
-	name = "Engineering Intercom"
-	},
+/obj/item/device/radio/intercom/engineering,
 /turf/simulated/floor/yellowblack{
 	dir = 1
 	},
@@ -7021,11 +7017,8 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
-/obj/item/device/radio/intercom{
-	broadcasting = 0;
-	dir = 8;
-	frequency = 1441;
-	name = "Engineering Intercom"
+/obj/item/device/radio/intercom/engineering{
+	dir = 8
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/engine/engineering)
@@ -12550,11 +12543,8 @@
 /turf/simulated/floor/black,
 /area/station/engine/engineering)
 "dug" = (
-/obj/item/device/radio/intercom{
-	broadcasting = 0;
-	dir = 1;
-	frequency = 1441;
-	name = "Engineering Intercom"
+/obj/item/device/radio/intercom/engineering{
+	dir = 1
 	},
 /turf/simulated/floor/yellowblack,
 /area/station/engine/inner)
@@ -26917,11 +26907,7 @@
 	dir = 1
 	},
 /obj/stool/bench/yellow/auto,
-/obj/item/device/radio/intercom{
-	broadcasting = 0;
-	frequency = 1441;
-	name = "Engineering Intercom"
-	},
+/obj/item/device/radio/intercom/engineering,
 /turf/simulated/floor/yellowblack{
 	dir = 1
 	},
@@ -27103,11 +27089,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/item/device/radio/intercom{
-	broadcasting = 1;
-	frequency = 1447;
-	name = "AI Intercom"
-	},
+/obj/item/device/radio/intercom/AI,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
 "hPr" = (
@@ -29894,13 +29876,10 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/item/device/radio/intercom{
-	broadcasting = 0;
-	dir = 4;
-	frequency = 1485;
-	name = "Security Intercom"
-	},
 /obj/disposalpipe/segment/morgue{
+	dir = 4
+	},
+/obj/item/device/radio/intercom/security{
 	dir = 4
 	},
 /turf/simulated/floor/wood/seven,
@@ -30033,11 +30012,8 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/item/device/radio/intercom{
-	broadcasting = 0;
-	dir = 1;
-	frequency = 1441;
-	name = "Engineering Intercom"
+/obj/item/device/radio/intercom/engineering{
+	dir = 1
 	},
 /turf/simulated/floor/yellowblack,
 /area/station/engine/inner)
@@ -39181,12 +39157,6 @@
 /turf/simulated/grass,
 /area/station/hallway/secondary/exit)
 "lFK" = (
-/obj/item/device/radio/intercom{
-	broadcasting = 0;
-	frequency = 1446;
-	name = "Botany Intercom";
-	pixel_y = 26
-	},
 /obj/table/auto,
 /obj/item/wrench{
 	pixel_x = -8
@@ -39204,6 +39174,7 @@
 	},
 /obj/item/bee_egg_carton,
 /obj/item/bee_egg_carton,
+/obj/item/device/radio/intercom/botany,
 /turf/simulated/floor,
 /area/station/hydroponics/bay)
 "lFQ" = (
@@ -42899,11 +42870,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/item/device/radio/intercom{
-	broadcasting = 1;
-	frequency = 1447;
-	name = "AI Intercom"
-	},
+/obj/item/device/radio/intercom/AI,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
 "mMG" = (
@@ -43065,10 +43032,7 @@
 /area/station/chapel/sanctuary)
 "mQM" = (
 /obj/table/wood/auto,
-/obj/item/device/radio/intercom{
-	broadcasting = 0;
-	frequency = 1485;
-	name = "Security Intercom";
+/obj/item/device/radio/intercom/security{
 	pixel_x = 1
 	},
 /turf/simulated/floor/red,
@@ -45829,11 +45793,7 @@
 /obj/machinery/light/incandescent/warm{
 	dir = 1
 	},
-/obj/item/device/radio/intercom{
-	broadcasting = 0;
-	frequency = 1441;
-	name = "Engineering Intercom"
-	},
+/obj/item/device/radio/intercom/engineering,
 /turf/simulated/floor/yellowblack{
 	dir = 1
 	},
@@ -47040,10 +47000,7 @@
 /area/station/crew_quarters/garden)
 "nYs" = (
 /obj/table/wood/auto,
-/obj/item/device/radio/intercom{
-	broadcasting = 0;
-	frequency = 1489;
-	name = "Brig Intercom";
+/obj/item/device/radio/intercom/brig{
 	pixel_x = 1
 	},
 /turf/simulated/floor/grey/side{
@@ -51865,11 +51822,7 @@
 	dir = 8;
 	icon_state = "line1"
 	},
-/obj/item/device/radio/intercom{
-	broadcasting = 1;
-	frequency = 1447;
-	name = "AI Intercom"
-	},
+/obj/item/device/radio/intercom/AI,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/AIsat)
 "puU" = (
@@ -56333,11 +56286,8 @@
 /turf/simulated/floor/black,
 /area/station/engine/inner)
 "qEV" = (
-/obj/item/device/radio/intercom{
-	broadcasting = 0;
-	dir = 4;
-	frequency = 1441;
-	name = "Engineering Intercom"
+/obj/item/device/radio/intercom/engineering{
+	dir = 4
 	},
 /turf/simulated/floor/yellowblack{
 	dir = 8
@@ -58646,11 +58596,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/item/device/radio/intercom{
-	broadcasting = 0;
-	frequency = 1441;
-	name = "Engineering Intercom"
-	},
+/obj/item/device/radio/intercom/engineering,
 /turf/simulated/floor/yellowblack{
 	dir = 1
 	},
@@ -59285,11 +59231,7 @@
 /turf/simulated/floor/plating/jen,
 /area/station/storage/tech)
 "rwB" = (
-/obj/item/device/radio/intercom{
-	broadcasting = 0;
-	frequency = 1441;
-	name = "Engineering Intercom"
-	},
+/obj/item/device/radio/intercom/engineering,
 /turf/simulated/floor/yellowblack{
 	dir = 1
 	},
@@ -66385,11 +66327,8 @@
 /turf/simulated/floor/white,
 /area/station/crewquarters/fuq3)
 "tFb" = (
-/obj/item/device/radio/intercom{
-	broadcasting = 0;
-	dir = 8;
-	frequency = 1441;
-	name = "Engineering Intercom"
+/obj/item/device/radio/intercom/engineering{
+	dir = 8
 	},
 /turf/simulated/floor/yellowblack{
 	dir = 4
@@ -70650,14 +70589,10 @@
 /obj/machinery/light/incandescent/warm{
 	dir = 8
 	},
-/obj/item/device/radio/intercom{
-	broadcasting = 0;
-	frequency = 1441;
-	name = "Engineering Intercom"
-	},
 /obj/disposalpipe/segment{
 	dir = 4
 	},
+/obj/item/device/radio/intercom/engineering,
 /turf/simulated/floor/yellowblack{
 	dir = 9
 	},
@@ -77091,15 +77026,10 @@
 	dir = 1;
 	icon_state = "line1"
 	},
-/obj/item/device/radio/intercom{
-	broadcasting = 0;
-	frequency = 1446;
-	name = "Botany Intercom";
-	pixel_y = 26
-	},
 /obj/landmark/start{
 	name = "Botanist"
 	},
+/obj/item/device/radio/intercom/botany,
 /turf/simulated/floor/wood/five,
 /area/station/hydroponics/bay)
 "wNh" = (
@@ -78363,14 +78293,10 @@
 /obj/item/storage/belt/utility,
 /obj/item/storage/toolbox/emergency,
 /obj/item/electronics/soldering,
-/obj/item/device/radio/intercom{
-	broadcasting = 0;
-	frequency = 1441;
-	name = "Engineering Intercom"
-	},
 /obj/machinery/light/incandescent/warm{
 	dir = 1
 	},
+/obj/item/device/radio/intercom/engineering,
 /turf/simulated/floor/orangeblack,
 /area/station/engine/elect)
 "xeW" = (
