@@ -289,3 +289,70 @@
 				long_col += 0
 			return long_col
 	CRASH("invalid color format")
+
+/**
+	Takes two lists, inp=list(i1, i2, i3), out=(o1, o2, o3).
+	Creates a color matrix which maps color i1 to o2, i2 to o2, i3 to o3. (Ignores alpha values.)
+	Keep the i1, i2, i3 vectors linearly independent.
+	The colors can be either be color hex strings or lists as returned from hex_to_rgb_list.
+	You need to supply all arguments. If you don't care about the third just set i3 = o3 to something linearly independent of i1 and i2.
+*/
+proc/color_mapping_matrix(list/list/inp, list/list/out)
+	if(length(inp) != 3 || length(out) != 3)
+		CRASH("Incorrect number of colors in the mapping.")
+	inp = inp.Copy() // we don't want to modify the input lists
+	out = out.Copy()
+	for(var/i in 1 to 3)
+		if(istext(inp[i])) inp[i] = hex_to_rgb_list(inp[i])
+		if(istext(out[i])) out[i] = hex_to_rgb_list(out[i])
+		for(var/c in 1 to 3) // color matrices work in the 0-1 range
+			inp[i][c] /= 255
+			out[i][c] /= 255
+	// don't panic, this is essentially just condensed way of writing: inversion of the (i1, i2, i3) matrix multiplied by the (o1, o2, o3) matrix
+	// which essentially means: translate i1 to red, i2 to green, i3 to blue; then translate red to o1, green to o2, blue to o3
+	// see this link (but beware bad variable names): https://www.wolframalpha.com/input/?i=%28invert+%28%28a%2Cb%2Cc%29%2C%28d%2Ce%2Cf%29%2C%28g%2Ch%2Ci%29%29%29%28%28j%2Ck%2Cl%29%2C%28m%2Cn%2Co%29%2C%28p%2Cq%2Cr%29%29
+	var/D = inp[1][1]*inp[2][2]*inp[3][3] - inp[1][1]*inp[2][3]*inp[3][2] - inp[1][2]*inp[2][1]*inp[3][3] + inp[1][2]*inp[2][3]*inp[3][1] + inp[1][3]*inp[2][1]*inp[3][2] - inp[1][3]*inp[2][2]*inp[3][1]
+	return list(
+		( inp[1][2]*inp[2][3]*out[3][1] - inp[1][2]*inp[3][3]*out[2][1] - inp[1][3]*inp[2][2]*out[3][1] + inp[1][3]*inp[3][2]*out[2][1] + inp[2][2]*inp[3][3]*out[1][1] - inp[2][3]*inp[3][2]*out[1][1]) / D,
+		( inp[1][2]*inp[2][3]*out[3][2] - inp[1][2]*inp[3][3]*out[2][2] - inp[1][3]*inp[2][2]*out[3][2] + inp[1][3]*inp[3][2]*out[2][2] + inp[2][2]*inp[3][3]*out[1][2] - inp[2][3]*inp[3][2]*out[1][2]) / D,
+		( inp[1][2]*inp[2][3]*out[3][3] - inp[1][2]*inp[3][3]*out[2][3] - inp[1][3]*inp[2][2]*out[3][3] + inp[1][3]*inp[3][2]*out[2][3] + inp[2][2]*inp[3][3]*out[1][3] - inp[2][3]*inp[3][2]*out[1][3]) / D,
+		(-inp[1][1]*inp[2][3]*out[3][1] + inp[1][1]*inp[3][3]*out[2][1] + inp[1][3]*inp[2][1]*out[3][1] - inp[1][3]*inp[3][1]*out[2][1] - inp[2][1]*inp[3][3]*out[1][1] + inp[2][3]*inp[3][1]*out[1][1]) / D,
+		(-inp[1][1]*inp[2][3]*out[3][2] + inp[1][1]*inp[3][3]*out[2][2] + inp[1][3]*inp[2][1]*out[3][2] - inp[1][3]*inp[3][1]*out[2][2] - inp[2][1]*inp[3][3]*out[1][2] + inp[2][3]*inp[3][1]*out[1][2]) / D,
+		(-inp[1][1]*inp[2][3]*out[3][3] + inp[1][1]*inp[3][3]*out[2][3] + inp[1][3]*inp[2][1]*out[3][3] - inp[1][3]*inp[3][1]*out[2][3] - inp[2][1]*inp[3][3]*out[1][3] + inp[2][3]*inp[3][1]*out[1][3]) / D,
+		( inp[1][1]*inp[2][2]*out[3][1] - inp[1][1]*inp[3][2]*out[2][1] - inp[1][2]*inp[2][1]*out[3][1] + inp[1][2]*inp[3][1]*out[2][1] + inp[2][1]*inp[3][2]*out[1][1] - inp[2][2]*inp[3][1]*out[1][1]) / D,
+		( inp[1][1]*inp[2][2]*out[3][2] - inp[1][1]*inp[3][2]*out[2][2] - inp[1][2]*inp[2][1]*out[3][2] + inp[1][2]*inp[3][1]*out[2][2] + inp[2][1]*inp[3][2]*out[1][2] - inp[2][2]*inp[3][1]*out[1][2]) / D,
+		( inp[1][1]*inp[2][2]*out[3][3] - inp[1][1]*inp[3][2]*out[2][3] - inp[1][2]*inp[2][1]*out[3][3] + inp[1][2]*inp[3][1]*out[2][3] + inp[2][1]*inp[3][2]*out[1][3] - inp[2][2]*inp[3][1]*out[1][3]) / D
+	)
+
+/**
+	The same thing as [proc/color_mapping_matrix] but with 4 mapped colors.
+	The first color is used as the origin in the affine transform.
+*/
+proc/affine_color_mapping_matrix(list/list/inp, list/list/out)
+	if(length(inp) != 4 || length(out) != 4)
+		CRASH("Incorrect number of colors in the mapping.")
+	inp = inp.Copy()
+	out = out.Copy()
+	var/list/list/inp_inner = list()
+	var/list/list/out_inner = list()
+	for(var/i in 1 to 4)
+		if(istext(inp[i]))
+			inp[i] = hex_to_rgb_list(inp[i])
+		if(istext(out[i]))
+			out[i] = hex_to_rgb_list(out[i])
+		if(i > 1) // first color is used at the origin so subtract it from all inputs and outputs
+			inp_inner += list(inp[i])
+			out_inner += list(out[i])
+			for(var/c in 1 to 3)
+				inp_inner[length(inp_inner)][c] -= inp[1][c]
+				out_inner[length(out_inner)][c] -= out[1][c]
+	var/list/result_inner = color_mapping_matrix(inp_inner, out_inner)
+	for(var/c in 1 to 3)
+		inp[1][c] /= 255
+		out[1][c] /= 255
+	// the additive term is out[1] - in[1] * M (where M is the linear transform matrix)
+	var/list/additive_row = out[1].Copy()
+	for(var/row in 1 to 3)
+		for(var/c in 1 to 3)
+			additive_row[c] -= inp[1][c] * result_inner[(row - 1) * 3 + c]
+	return result_inner + additive_row
