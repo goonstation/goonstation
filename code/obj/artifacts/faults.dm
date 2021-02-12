@@ -21,8 +21,8 @@ ABSTRACT_TYPE(/datum/artifact_fault/)
 		if (..())
 			return
 		var/turf/T = get_turf(user)
-		T.visible_message("<span class='alert'>The [O.name] suddenly bursts into flames!</span>")
-		user.update_burning(40)
+		T.visible_message("<span class='alert'>The [O.name] suddenly emits a burst of flame!</span>")
+		T.hotspot_expose(T0C + 300, 400)
 		playsound(T, "sound/effects/bamf.ogg", 100, 1)
 
 /datum/artifact_fault/irradiate
