@@ -32,6 +32,7 @@
 	effect_touch(var/obj/O,var/mob/living/user)
 		if (..())
 			return
+		O.ArtifactFaultUsed(user)
 		if (src.capricious > -1)
 			if (!src.friend || src.capricious)
 				src.friend = user
