@@ -107,7 +107,7 @@
 			if (istype(pcell, /obj/item/ammo/power_cell/self_charging) && !(src in processing_items)) // Again, we want dynamic updates here (Convair880).
 				processing_items.Add(src)
 			if (src.cell)
-				actions.start(new/datum/action/bar/icon/powercellswap(user,pcell,src), user)
+				actions.start(new/datum/action/bar/icon/powercellswap(user, pcell, src), user)
 			else
 				src.cell = pcell
 				user.drop_item()
