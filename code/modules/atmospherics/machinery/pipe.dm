@@ -304,7 +304,7 @@ obj/machinery/atmospherics/pipe
 
 			var/datum/gas_mixture/gas = return_air()
 			var/pressure = MIXTURE_PRESSURE(gas)
-			if(pressure > fatigue_pressure) check_pressure(pressure)
+			if(!ruptured && pressure > fatigue_pressure) check_pressure(pressure)
 
 		proc/leak_gas()
 			var/datum/gas_mixture/gas = return_air()
