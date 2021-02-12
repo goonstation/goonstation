@@ -376,6 +376,28 @@ var/global
 	"Yesteryear",
 	"Zeyada")
 
+	list/selectable_ringtones = list("Two-Beep" = new/datum/ringtone,
+	"Retrospection" = new/datum/ringtone/basic,
+	"Introspection" = new/datum/ringtone/basic/ring1,
+	"Perspection" = new/datum/ringtone/basic/ring2,
+	"Inspection" = new/datum/ringtone/basic/ring3,
+	"Spectrum" = new/datum/ringtone/basic/ring4,
+	"Spectral" = new/datum/ringtone/basic/ring5,
+	"Refraction" = new/datum/ringtone/basic/ring6,
+	"Reboundance" = new/datum/ringtone/basic/ring7,
+	"Reflection" = new/datum/ringtone/basic/ring8,
+	"Relaxation" = new/datum/ringtone/basic/ring9,
+	"Stance" = new/datum/ringtone/basic/ring10,
+	"BEEP 2: The Fourth" = new/datum/ringtone/retkid,
+	"Spacechimes" = new/datum/ringtone/retkid/ring1,
+	"Shy Spacechimes" = new/datum/ringtone/retkid/ring2,
+	"Perky Spacechimes" = new/datum/ringtone/retkid/ring3,
+	"Sedate Spacechimes" = new/datum/ringtone/retkid/ring6,
+	"Focused Spacechimes" = new/datum/ringtone/retkid/ring7,
+	"Moonlit Peahen" = new/datum/ringtone/retkid/ring4,
+	"Plinkoe's Journey" = new/datum/ringtone/retkid/ring5,
+	"Fweeuweeu" = new/datum/ringtone/retkid/ring9)
+
 	//april fools
 	manualbreathing = 0
 	manualblinking = 0
