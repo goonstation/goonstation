@@ -173,7 +173,10 @@ ABSTRACT_TYPE(/datum/artifact_fault/messager/)
 		if (..())
 			return
 		if(src.say_instead)
-			user.say(generate_message(O, user))
+			if(prob(20))
+				user.say(";[generate_message(O, user)]")
+			else
+				user.say(generate_message(O, user))
 			return
 		switch(text_style)
 			if ("small")
