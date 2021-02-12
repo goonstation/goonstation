@@ -1,5 +1,5 @@
 ///All possible biomes in assoc list as type || instance
-var/list/biomes = list()
+var/list/datum/biome/biomes = list()
 
 ///Initialize all biomes, assoc as type || instance
 proc/initialize_biomes()
