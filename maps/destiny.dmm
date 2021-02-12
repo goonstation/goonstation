@@ -30649,12 +30649,8 @@
 	dir = 5;
 	icon_state = "line2"
 	},
-/obj/item/device/radio/intercom{
-	broadcasting = 0;
-	frequency = 1441;
-	name = "Engineering Intercom"
-	},
 /obj/machinery/vending/mechanics,
+/obj/item/device/radio/intercom/engineering,
 /turf/simulated/floor/caution/corner/misc{
 	dir = 10
 	},
@@ -44867,13 +44863,10 @@
 /turf/simulated/floor/black,
 /area/listeningpost)
 "bAE" = (
-/obj/item/device/radio/intercom{
-	broadcasting = 0;
-	dir = 8;
-	frequency = 1485;
-	name = "Security Intercom"
-	},
 /obj/machinery/bot/medbot/no_camera,
+/obj/item/device/radio/intercom/security{
+	dir = 8
+	},
 /turf/simulated/floor/black,
 /area/listeningpost)
 "bAF" = (
@@ -44938,12 +44931,6 @@
 /turf/simulated/floor/black,
 /area/listeningpost)
 "bAL" = (
-/obj/item/device/radio/intercom{
-	broadcasting = 1;
-	dir = 8;
-	frequency = 1489;
-	name = "Brig Intercom"
-	},
 /obj/cable{
 	d2 = 8;
 	icon_state = "0-8"
@@ -44952,6 +44939,9 @@
 /obj/machinery/guardbot_dock,
 /obj/machinery/bot/guardbot/bad{
 	on = 0
+	},
+/obj/item/device/radio/intercom/brig{
+	dir = 8
 	},
 /turf/simulated/floor/black,
 /area/listeningpost)
