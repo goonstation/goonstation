@@ -1,5 +1,9 @@
 
 (t)thu feb 11 21
+(u)Flappybat
+(p)3660
+(e)⚖|balance
+(+)Reduced Old Hunting Rifle and Tranquilizer Rifle to a magazine size of 4.
 (u)pali
 (+)You can now crack coconuts by chairflipping onto them. Sound effect by <a href="https://freesound.org/people/KomradeJack/sounds/136494/">KomradeJack</a>
 (u)BatElite
