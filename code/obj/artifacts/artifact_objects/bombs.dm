@@ -7,7 +7,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 	validtypes = list("ancient","eldritch","precursor")
 	validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/electric,/datum/artifact_trigger/heat,
 	/datum/artifact_trigger/cold,/datum/artifact_trigger/radiation)
-	applicable_faults = NON_HANDHELD_FAULTS
+	fault_blacklist = list(ITEM_ONLY_FAULTS, /datum/artifact_fault/poison) // can't sting you at range
 	react_xray = list(12,75,30,11,"COMPLEX")
 	var/explode_delay = 600
 	var/dud = 0
