@@ -47,7 +47,7 @@
 		if(istype(W, /obj/item/material_piece) && W.material)
 
 			if(src.stack_item(W))
-				boutput(usr, "<span class='notice'>You stack \the [W]!</span>")
+				boutput(user, "<span class='notice'>You stack \the [W]!</span>")
 		return
 
 	MouseDrop(over_object, src_location, over_location) //src dragged onto over_object

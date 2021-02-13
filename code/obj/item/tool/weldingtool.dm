@@ -152,7 +152,7 @@
 		else if (src.welding)
 			use_fuel(0.2)
 			if (get_fuel() <= 0)
-				boutput(usr, "<span class='notice'>Need more fuel!</span>")
+				boutput(user, "<span class='notice'>Need more fuel!</span>")
 				src.welding = 0
 				src.force = 3
 				hit_type = DAMAGE_BLUNT
@@ -163,7 +163,7 @@
 			if (istype(location, /turf))
 				location.hotspot_expose(700, 50, 1)
 			if (O && !ismob(O) && O.reagents)
-				boutput(usr, "<span class='notice'>You heat \the [O.name]</span>")
+				boutput(user, "<span class='notice'>You heat \the [O.name]</span>")
 				O.reagents.temperature_reagents(2500,10)
 		return
 
@@ -259,13 +259,13 @@
 				safety = 1
 		switch (safety)
 			if (1)
-				boutput(usr, "<span class='alert'>Your eyes sting a little.</span>")
+				boutput(user, "<span class='alert'>Your eyes sting a little.</span>")
 				user.take_eye_damage(rand(1, 2))
 			if (0)
-				boutput(usr, "<span class='alert'>Your eyes burn.</span>")
+				boutput(user, "<span class='alert'>Your eyes burn.</span>")
 				user.take_eye_damage(rand(2, 4))
 			if (-1)
-				boutput(usr, "<span class='alert'><b>Your goggles intensify the welder's glow. Your eyes itch and burn severely.</b></span>")
+				boutput(user, "<span class='alert'><b>Your goggles intensify the welder's glow. Your eyes itch and burn severely.</b></span>")
 				user.change_eye_blurry(rand(12, 20))
 				user.take_eye_damage(rand(12, 16))
 

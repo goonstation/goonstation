@@ -185,7 +185,7 @@
 
 	// human interact with machine
 	attack_hand(mob/user as mob)
-		src.add_fingerprint(usr)
+		src.add_fingerprint(user)
 		if (open != 1)
 			return
 		if(status & BROKEN)

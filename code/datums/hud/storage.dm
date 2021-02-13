@@ -68,7 +68,7 @@
 						var/turfd = (isturf(master.loc) && !istype(master, /obj/item/storage/bible))
 
 						var/pixel_y_adjust = 0
-						if (usr && usr.client && usr.client.tg_layout && !turfd)
+						if (user && user.client && user.client.tg_layout && !turfd)
 							pixel_y_adjust = 1
 
 						if (pixel_y_adjust && text2num(py) > 16)

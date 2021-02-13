@@ -7903,6 +7903,10 @@
 	},
 /turf/simulated/floor/black/grime,
 /area/station/science/storage)
+"bYh" = (
+/obj/machinery/ai_status_display,
+/turf/space,
+/area/space)
 "bYn" = (
 /turf/simulated/floor/dojo/sand/circle,
 /area/station/crew_quarters/captain)
@@ -11680,7 +11684,6 @@
 	},
 /obj/chicken_nesting_box,
 /obj/disposalpipe/segment,
-/obj/railing/orange/reinforced,
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "dgA" = (
@@ -15017,6 +15020,9 @@
 /obj/machinery/camera{
 	dir = 5
 	},
+/obj/railing/orange/reinforced{
+	dir = 1
+	},
 /turf/simulated/floor/grasstodirt{
 	dir = 1
 	},
@@ -15836,7 +15842,6 @@
 /obj/machinery/light/incandescent/netural{
 	dir = 8
 	},
-/obj/railing/orange/reinforced,
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "ewf" = (
@@ -28668,10 +28673,6 @@
 	},
 /turf/simulated/floor/red/checker,
 /area/station/security/checkpoint/arrivals)
-"ioV" = (
-/obj/railing/orange/reinforced,
-/turf/simulated/floor/grass/leafy,
-/area/station/ranch)
 "ipb" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/cable{
@@ -32102,6 +32103,9 @@
 	d1 = 1;
 	d2 = 4;
 	icon_state = "1-4"
+	},
+/obj/railing/orange/reinforced{
+	dir = 1
 	},
 /turf/simulated/floor/grasstodirt{
 	dir = 1
@@ -43208,6 +43212,7 @@
 /obj/disposalpipe/segment/morgue{
 	name = "crematorium pipe"
 	},
+/obj/machinery/ai_status_display,
 /turf/space,
 /area/space)
 "mSX" = (
@@ -49476,6 +49481,9 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "oJP" = (
+/obj/railing/orange/reinforced{
+	dir = 1
+	},
 /turf/simulated/floor/grasstodirt{
 	dir = 1
 	},
@@ -54870,14 +54878,6 @@
 	dir = 1
 	},
 /area/station/hallway/primary/west)
-"qmy" = (
-/obj/machinery/ai_status_display,
-/obj/disposalpipe/segment/morgue{
-	dir = 4;
-	name = "crematorium pipe"
-	},
-/turf/simulated/wall/auto/reinforced/jen/red,
-/area/station/turret_protected/AIbaseoutside)
 "qmz" = (
 /obj/decal/mule/dropoff,
 /obj/machinery/door/airlock/pyro/glass,
@@ -66915,7 +66915,6 @@
 	},
 /area/station/science/lab)
 "tNr" = (
-/obj/machinery/ai_status_display,
 /obj/disposalpipe/segment/morgue{
 	dir = 2;
 	icon_state = "pipe-c";
@@ -121950,8 +121949,8 @@ nSh
 nSh
 nSh
 nSh
-qmy
-rdj
+peL
+bYh
 rdj
 abH
 rdj
@@ -129439,7 +129438,7 @@ mBB
 mBB
 mBB
 mBB
-ioV
+mBB
 oJP
 cQf
 sJC
@@ -129741,7 +129740,7 @@ mBB
 mBB
 mBB
 mBB
-ioV
+mBB
 oJP
 kMI
 jLx
@@ -130043,7 +130042,7 @@ mBB
 mBB
 mBB
 mBB
-ioV
+mBB
 oJP
 orn
 sJC
@@ -130345,7 +130344,7 @@ mBB
 mBB
 mBB
 mBB
-ioV
+mBB
 oJP
 ggs
 sJC
@@ -130647,7 +130646,7 @@ xmA
 mBB
 mBB
 mBB
-ioV
+mBB
 oJP
 faq
 mfs

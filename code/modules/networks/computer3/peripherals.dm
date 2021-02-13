@@ -138,6 +138,7 @@
 
 		pda
 			frequency = 1149 //Standard PDA comm frequency.
+			range = 0
 			/*net_mode = 1
 			func_tag = "NET_ADAPTER"*/
 
