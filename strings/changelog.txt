@@ -1,5 +1,8 @@
 
 (t)fri feb 12 21
+(u)tarmunora
+(e)⚖|balance
+(+)RCDs and their ammo are more expensive to manufacture
 (u)Azrun
 (p)3695
 (e)|
