@@ -2225,7 +2225,7 @@ datum
 				..()
 				return
 
-		fooddrink/hibiscus_tea
+		fooddrink/hibiscus_tea //code liver killing
 			name = "hibiscus tea"
 			id = "hibiscus_tea"
 			description = "A crimson beverage that was used to treat heart disease." //actually true!
