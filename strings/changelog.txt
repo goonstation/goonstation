@@ -1,4 +1,9 @@
 
+(t)sat feb 13 21
+(u)pali
+(p)3691
+(e)🆕|feature
+(*)You can now save game logs in the chatlog menu (the cogwheel in the top right corner of the chatlog).<br>You can also enter 5 more words for highlighting, toggle emoji style and toggle deletion of old messages.
 (t)fri feb 12 21
 (u)tarmunora
 (e)⚖|balance
