@@ -515,7 +515,7 @@
 
 		checkRequirements(atom/target, mob/user)
 			var/obj/machinery/vehicle/V = target
-			. = ((user.loc != target) && BOARD_DIST_ALLOWED(user,V) && user.equipped() == null && !isAI(usr))
+			. = ((user.loc != target) && BOARD_DIST_ALLOWED(user,V) && user.equipped() == null && !isAI(user))
 
 		execute(atom/target, mob/user)
 			..()
@@ -529,7 +529,7 @@
 
 		checkRequirements(atom/target, mob/user)
 			var/obj/machinery/vehicle/V = target
-			. = ((user.loc != target) && BOARD_DIST_ALLOWED(user,V) && user.equipped() == null && !isAI(usr))
+			. = ((user.loc != target) && BOARD_DIST_ALLOWED(user,V) && user.equipped() == null && !isAI(user))
 
 		execute(atom/target, mob/user)
 			..()
@@ -544,7 +544,7 @@
 		checkRequirements(atom/target, mob/user)
 			var/obj/machinery/vehicle/V = target
 			if (V.locked && V.lock)
-				. = ((user.loc != target) && BOARD_DIST_ALLOWED(user,V) && user.equipped() == null && !isAI(usr))
+				. = ((user.loc != target) && BOARD_DIST_ALLOWED(user,V) && user.equipped() == null && !isAI(user))
 
 		execute(atom/target, mob/user)
 			..()
@@ -558,7 +558,7 @@
 
 		checkRequirements(atom/target, mob/user)
 			var/obj/machinery/vehicle/V = target
-			. = ((user.loc != target) && BOARD_DIST_ALLOWED(user,V) && user.equipped() == null && !isAI(usr))
+			. = ((user.loc != target) && BOARD_DIST_ALLOWED(user,V) && user.equipped() == null && !isAI(user))
 
 		execute(atom/target, mob/user)
 			..()
@@ -759,7 +759,7 @@
 
 	unstack
 		name = "Remove Layer"
-		desc = "Removes a layer of cake." 
+		desc = "Removes a layer of cake."
 		icon_state = "unstack"
 
 		execute(var/atom/target, var/mob/user)
@@ -781,7 +781,7 @@
 		icon_state = "up_arrow"
 
 		execute(var/atom/target, var/mob/user)
-			var/obj/item/c = target 
+			var/obj/item/c = target
 			user.put_in_hand_or_drop(c)
 
 /*

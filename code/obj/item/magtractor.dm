@@ -109,7 +109,7 @@
 			actions.start(new/datum/action/bar/private/icon/magPicker(target, src), user)
 
 		else if ((src.holding && src.holding.loc != src) || src.holding.disposed) // it's gone!!
-			actions.stopId("magpickerhold", usr)
+			actions.stopId("magpickerhold", user)
 
 		return 1
 
@@ -121,9 +121,9 @@
 
 	dropped(mob/user as mob)
 		..()
-		actions.stopId("magpicker", usr)
+		actions.stopId("magpicker", user)
 		if (src.holding)
-			actions.stopId("magpickerhold", usr)
+			actions.stopId("magpickerhold", user)
 
 	examine()
 		. = ..()

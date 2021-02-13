@@ -155,8 +155,14 @@ ABSTRACT_TYPE(/datum/artifact_fault/)
 ABSTRACT_TYPE(/datum/artifact_fault/messager/)
 /datum/artifact_fault/messager
 	trigger_prob = 30
+	var/say_instead = FALSE
 	var/text_style = null
 	var/list/messages = list()
+
+	New()
+		. = ..()
+		if(prob(25))
+			src.say_instead = TRUE
 
 	proc/generate_message(obj/O, mob/living/user)
 		if(length(messages))
@@ -165,6 +171,12 @@ ABSTRACT_TYPE(/datum/artifact_fault/messager/)
 
 	deploy(var/obj/O,var/mob/living/user)
 		if (..())
+			return
+		if(src.say_instead)
+			if(prob(20))
+				user.say(";[generate_message(O, user)]")
+			else
+				user.say(generate_message(O, user))
 			return
 		switch(text_style)
 			if ("small")
@@ -209,6 +221,24 @@ ABSTRACT_TYPE(/datum/artifact_fault/messager/)
 	text_style = "monospace"
 	generate_message(obj/O, mob/living/user)
 		return phrase_log.random_phrase("ailaw")
+
+/datum/artifact_fault/messager/emoji
+	var/list/allowed_emoji = null
+	New()
+		..()
+		if(prob(70))
+			allowed_emoji = list()
+			for(var/i in 1 to rand(10))
+				allowed_emoji += random_emoji()
+
+	generate_message(obj/O, mob/living/user)
+		. = list()
+		for(var/i in 1 to rand(10))
+			if(isnull(src.allowed_emoji) || prob(2))
+				. += random_emoji()
+			else
+				. += pick(src.allowed_emoji)
+		return jointext(., "")
 
 /datum/artifact_fault/poison
 	trigger_prob = 8

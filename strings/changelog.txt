@@ -1,5 +1,50 @@
 
+(t)sat feb 13 21
+(u)Azrun
+(p)3558
+(e)⚖🗺🎨|balance, mapping, sprites
+(*)Increases "standard" burn chamber temperature and improve Molitz Beta drop chance.  Research Director now has a briefcase with Molitz Beta in their office.
+(u)pali
+(p)3691
+(e)🆕|feature
+(*)You can now save game logs in the chatlog menu (the cogwheel in the top right corner of the chatlog).<br>You can also enter 5 more words for highlighting, toggle emoji style and toggle deletion of old messages.
+(t)fri feb 12 21
+(u)tarmunora
+(e)⚖|balance
+(+)RCDs and their ammo are more expensive to manufacture
+(u)Azrun
+(p)3695
+(e)|
+(+)Removes escalation of pipe rupture.  Too much busy work.
+(u)pali
+(*)Increased cloud save limit for character profiles to 15.
 (t)thu feb 11 21
+(u)mbc and Sord
+(p)3418
+(e)⚖|balance
+(*)Added short action bar to power cell swapping
+(u)BatElite
+(p)3456
+(e)🆕|feature
+(+)Surgery trays and kitchen islands now have brakes. Toggle them by clicking the tray/island.
+(u)Tarmunora
+(e)⚖|balance
+(+)Pizza sharpener will slice an unsliced pizza when sharpening, and can now appear in surplus crates
+(u)Flappybat
+(p)3660
+(e)⚖|balance
+(+)Reduced Old Hunting Rifle and Tranquilizer Rifle to a magazine size of 4.
+(u)pali
+(+)You can now crack coconuts by chairflipping onto them. Sound effect by <a href="https://freesound.org/people/KomradeJack/sounds/136494/">KomradeJack</a>
+(u)BatElite
+(p)3682
+(e)🐛🆕🗺🔄🎨|bug, feature, mapping, rework, sprites
+(*)Engineers have found some dusty AI displays in storage, and upgraded them to better represent out beloved silicon friends! Until NT stations and ships are properly fitted with the displays, mechanics can find some blueprints for them in their lockers.
+(+)Each AI status display now has an "owner", so it's possible to share them between AIs. You can still claim/steal any screen from other AIs by clicking on them.
+(u)BenLubar
+(p)3639
+(e)🐛|bug
+(+)The network cards in the security records and engine control computers have been upgraded to new models which can transmit PDA messages to distances greater than 0.4 millifurlongs.
 (u)zjdtmkhzt
 (p)3638
 (e)🆕|feature

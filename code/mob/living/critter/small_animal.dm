@@ -420,7 +420,7 @@ todo: add more small animals!
 
 	attackby(obj/item/W as obj, mob/living/user as mob)
 		if (istype(W, /obj/item/card/emag))
-			emag_act(usr, W)
+			emag_act(user, W)
 		if (istype(W, /obj/item/card/id/blank_deluxe))
 			if (W.desc == "Some type of microchipped payment card. Looks like it's designed to deal with catcoins.")//Can't change descs
 				if (!swiped && W.stamina_cost == 1)
@@ -1190,7 +1190,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		. = ..()
 		src.remove_stam_mod_max("small_animal")
 		src.add_stam_mod_max("wrestledoodle", 30)
-		src.add_stam_mod_regen("wrestledoodle", 5)
+		APPLY_MOB_PROPERTY(src, PROP_STAMINA_REGEN_BONUS, "wrestledoodle", 5)
 
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
 		if(act == "flip" && istype(src.equipped(), /obj/item/grab))

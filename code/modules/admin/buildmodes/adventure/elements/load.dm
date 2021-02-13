@@ -14,10 +14,10 @@
 				finished = 1
 				return
 			if (T)
-				if (fexists("adventure/ADV_LOAD_[usr.client.ckey]"))
-					fdel("adventure/ADV_LOAD_[usr.client.ckey]")
+				if (fexists("adventure/ADV_LOAD_[user.client.ckey]"))
+					fdel("adventure/ADV_LOAD_[user.client.ckey]")
 				if (pasting)
-					boutput(usr, "<span class='alert'>Already loading.</span>")
+					boutput(user, "<span class='alert'>Already loading.</span>")
 					return
 				pasting = 1
 				var/datum/puzzlewizard/load/this = src
@@ -47,7 +47,7 @@
 				// fuck fuck fuck fuck fuck fuck fuck fuck fuck fuck fuck fuck fuck fuck fuck fuck fuck fuck
 				if (!target)
 					return
-				var/savefile/F = new /savefile("adventure/ADV_LOAD_[usr.client.ckey]")
+				var/savefile/F = new /savefile("adventure/ADV_LOAD_[user.client.ckey]")
 				// fuck you
 				F.dir.len = 0
 				// and fuck you too
@@ -56,7 +56,7 @@
 				F << null
 				F.ImportText("/", file2text(target))
 				if (!F)
-					boutput(usr, "<span class='alert'>Import failed.</span>")
+					boutput(user, "<span class='alert'>Import failed.</span>")
 					pasting = 0
 					return
 				var/basex = T.x
@@ -64,7 +64,7 @@
 				var/w
 				var/h
 				var/cz = T.z
-				var/paster = usr.client.ckey
+				var/paster = user.client.ckey
 				F["w"] >> w
 				F["h"] >> h
 				var/version
@@ -72,19 +72,19 @@
 				if (!version)
 					version = 1
 				if (!w || !h)
-					boutput(usr, "<span class='alert'>Size error: [w]x[h]</span>")
+					boutput(user, "<span class='alert'>Size error: [w]x[h]</span>")
 					return
 				if (T.z == 0)
-					boutput(usr, "<span class='alert'>Spatial error: cannot paste onto Z 0 (how the actual fuck did you manage to get this error???)</span>")
+					boutput(user, "<span class='alert'>Spatial error: cannot paste onto Z 0 (how the actual fuck did you manage to get this error???)</span>")
 					return
 				if (!locate(basex + w, basey + h, T.z))
-					boutput(usr, "<span class='alert'>Spatial error: the pasted area ([w]x[h]) will not fit on the map.</span>")
+					boutput(user, "<span class='alert'>Spatial error: the pasted area ([w]x[h]) will not fit on the map.</span>")
 				if (alert("This action will paste an area of [w]x[h]. Are you sure you wish to proceed?",, "Yes", "No") == "No")
 					this.pasting = 0
-					boutput(usr, "<span class='alert'>Aborting paste.</span>")
+					boutput(user, "<span class='alert'>Aborting paste.</span>")
 					return
-				message_admins("[key_name(usr)] initiated loading an adventure (size: [w]x[h], estimated pasting duration: [w*h/10] seconds).")
-				boutput(usr, "<span class='notice'>Beginning paste. DO NOT TOUCH THE AFFECTED AREA. Or do. Something might go wrong. I don't know. Who cares.</span>")
+				message_admins("[key_name(user)] initiated loading an adventure (size: [w]x[h], estimated pasting duration: [w*h/10] seconds).")
+				boutput(user, "<span class='notice'>Beginning paste. DO NOT TOUCH THE AFFECTED AREA. Or do. Something might go wrong. I don't know. Who cares.</span>")
 				var/datum/sandbox/sandbox = new /datum/sandbox()
 				sandbox.context["version"] = version
 				SPAWN_DBG(0)
@@ -108,7 +108,7 @@
 									F["[base].TURF.dir"] >> Q.dir
 								else
 									correct_path = 0
-									boutput(usr, "<span class='alert'>Error: Invalid turf type [F.ExportText("[base].TURF")] in [base].TURF</span>")
+									boutput(user, "<span class='alert'>Error: Invalid turf type [F.ExportText("[base].TURF")] in [base].TURF</span>")
 							else
 								F["[base].TURF.type"] >> ttype
 								if (ispath(ttype))
@@ -117,7 +117,7 @@
 									Q.deserialize(F, "[base].TURF", sandbox)
 								else
 									correct_path = 0
-									boutput(usr, "<span class='alert'>Error: Invalid turf type [F.ExportText("[base].TURF.type")] in [base].TURF.type</span>")
+									boutput(user, "<span class='alert'>Error: Invalid turf type [F.ExportText("[base].TURF.type")] in [base].TURF.type</span>")
 							if (correct_path)
 								F["[base].TURF.tag"] >> Q.tag
 								if (!Q.dir)
@@ -148,7 +148,7 @@
 										if (result & DESERIALIZE_NEED_POSTPROCESS)
 											PP += O
 								else
-									boutput(usr, "<span class='alert'>Error: Invalid object type [F.ExportText("[base].OBJ.[objid].type")] in [base].OBJ.[objid].type</span>")
+									boutput(user, "<span class='alert'>Error: Invalid object type [F.ExportText("[base].OBJ.[objid].type")] in [base].OBJ.[objid].type</span>")
 							blink(Q)
 							workgroup_curr++
 							if (workgroup_curr >= workgroup_size)
@@ -158,10 +158,10 @@
 						O:deserialize_postprocess()
 					if (this)
 						this.pasting = 0
-					if (usr?.client)
-						boutput(usr, "<span class='notice'>Pasting finished. Fixing lights.</span>")
-						if (fexists("ADV_LOAD_[usr.client.ckey]"))
-							fdel("ADV_LOAD_[usr.client.ckey]")
+					if (user?.client)
+						boutput(user, "<span class='notice'>Pasting finished. Fixing lights.</span>")
+						if (fexists("ADV_LOAD_[user.client.ckey]"))
+							fdel("ADV_LOAD_[user.client.ckey]")
 					message_admins("Adventure/loader: loading initiated by [paster] is finalizing.")
 					del F
 

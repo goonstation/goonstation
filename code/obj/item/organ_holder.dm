@@ -557,7 +557,7 @@
 				var/obj/item/organ/heart/myHeart = src.heart
 				//Commented this out for some reason I forget. I'm sure I'll remember what it is one day. -kyle
 				// if (src.heart.robotic)
-				// 	src.donor.remove_stam_mod_regen("heart")
+				// 	REMOVE_MOB_PROPERTY(src.donor, PROP_STAMINA_REGEN_BONUS, "heart")
 				// 	src.donor.remove_stam_mod_max("heart")
 				myHeart.set_loc(location)
 				myHeart.on_removal()
@@ -926,10 +926,10 @@
 						src.donor.contract_disease(/datum/ailment/malady/flatline,null,null,1)
 					//Like above, I commented this out for a reason I cannot remember. might just be because I changed how that stamina modifier works, I dunno.
 					// if (newHeart.emagged)
-					// 	src.donor.add_stam_mod_regen("heart", 20)
+					// 	APPLY_MOB_PROPERTY(src.donor, PROP_STAMINA_REGEN_BONUS, "heart", 20)
 					// 	src.donor.add_stam_mod_max("heart", 100)
 					// else
-					// 	src.donor.add_stam_mod_regen("heart", 10)
+					// 	APPLY_MOB_PROPERTY(src.donor, PROP_STAMINA_REGEN_BONUS, "heart", 10)
 					// 	src.donor.add_stam_mod_max("heart", 50)
 				newHeart.op_stage = op_stage
 				src.heart = newHeart
@@ -1149,9 +1149,9 @@
 		switch (working_lungs)
 			if (0)
 				if (working_lungs != lungs_changed)
-					donor.remove_stam_mod_regen("single_lung_removal")
+					REMOVE_MOB_PROPERTY(donor, PROP_STAMINA_REGEN_BONUS, "single_lung_removal")
 					donor.remove_stam_mod_max("single_lung_removal")
-					donor.add_stam_mod_regen("double_lung_removal", -6)
+					APPLY_MOB_PROPERTY(donor, PROP_STAMINA_REGEN_BONUS, "double_lung_removal", -6)
 					donor.add_stam_mod_max("double_lung_removal", -150)
 					lungs_changed = 0
 
@@ -1159,9 +1159,9 @@
 				donor.losebreath+=rand(1,5) * mult
 			if (1)
 				if (working_lungs != lungs_changed)
-					donor.remove_stam_mod_regen("double_lung_removal")
+					REMOVE_MOB_PROPERTY(donor, PROP_STAMINA_REGEN_BONUS, "double_lung_removal")
 					donor.remove_stam_mod_max("double_lung_removal")
-					donor.add_stam_mod_regen("single_lung_removal", -3)
+					APPLY_MOB_PROPERTY(donor, PROP_STAMINA_REGEN_BONUS, "single_lung_removal", -3)
 					donor.add_stam_mod_max("single_lung_removal", -75)
 					lungs_changed = 1
 
@@ -1170,9 +1170,9 @@
 					donor.losebreath+=(1 * mult)
 			if (2)
 				if (working_lungs != lungs_changed)
-					donor.remove_stam_mod_regen("single_lung_removal")
+					REMOVE_MOB_PROPERTY(donor, PROP_STAMINA_REGEN_BONUS, "single_lung_removal")
 					donor.remove_stam_mod_max("single_lung_removal")
-					donor.remove_stam_mod_regen("double_lung_removal")
+					REMOVE_MOB_PROPERTY(donor, PROP_STAMINA_REGEN_BONUS, "double_lung_removal")
 					donor.remove_stam_mod_max("double_lung_removal")
 					lungs_changed = 2
 

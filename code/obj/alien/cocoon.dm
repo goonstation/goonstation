@@ -21,7 +21,7 @@ they're trapped
 		if (!ticker)
 			boutput(user, "You can't buckle anyone in before the game starts.")
 			return
-		if ((!( ismob(M) ) || get_dist(src, user) > 1 || user.restrained() || usr.stat))
+		if ((!( ismob(M) ) || get_dist(src, user) > 1 || user.restrained() || user.stat))
 			return
 		for(var/mob/O in viewers(user, null))
 			if ((O.client && !( O.blinded )))

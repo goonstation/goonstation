@@ -33,8 +33,8 @@ var/global/list/bible_contents = list()
 		if (isvampire(M) || iswraith(M) || M.bioHolder.HasEffect("revenant"))
 			M.visible_message("<span class='alert'><B>[M] burns!</span>", 1)
 			var/zone = "chest"
-			if (usr.zone_sel)
-				zone = usr.zone_sel.selecting
+			if (user.zone_sel)
+				zone = user.zone_sel.selecting
 			M.TakeDamage(zone, 0, heal_amt)
 			JOB_XP(user, "Chaplain", 2)
 		else

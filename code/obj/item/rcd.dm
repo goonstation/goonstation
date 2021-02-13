@@ -50,7 +50,7 @@ Broken RCD + Effects
 	w_class = 3.0
 	m_amt = 50000
 
-	mats = 12
+	mats = list("MET-3"=20, "DEN-3" = 10, "CON-2" = 10, "POW-2" = 10)
 	stamina_damage = 15
 	stamina_cost = 15
 	stamina_crit_chance = 5
@@ -447,7 +447,7 @@ Broken RCD + Effects
 	var/door_access = 0
 	var/door_access_name_cache = null
 	var/door_type_name_cache = null
-
+	mats = list("MET-3"=100, "DEN-3" = 50, "CON-2"=50, "POW-3"=50, "starstone"=10)
 	var/static/list/access_names = list() //ditto the above????
 	var/door_type = null
 

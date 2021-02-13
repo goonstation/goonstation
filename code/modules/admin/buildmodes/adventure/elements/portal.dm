@@ -21,7 +21,7 @@
 	build_click(var/mob/user, var/datum/buildmode_holder/holder, var/list/pa, var/atom/object)
 		if ("left" in pa)
 			if (!target)
-				boutput(usr, "<span class='alert'>Select a target first!</span>")
+				boutput(user, "<span class='alert'>Select a target first!</span>")
 			var/turf/T = get_turf(object)
 			if ("ctrl" in pa)
 				finished = 1
@@ -37,7 +37,7 @@
 					target.overlays -= selection
 				target = T
 				target.overlays += selection
-				boutput(usr, "<span class='notice'>Target set.</span>")
+				boutput(user, "<span class='notice'>Target set.</span>")
 
 /obj/perm_portal
 	serialize(var/savefile/F, var/path, var/datum/sandbox/sandbox)
