@@ -450,6 +450,7 @@
 			H.force_equip(suit, SLOT_WEAR_SUIT)
 			H.force_equip(hood, SLOT_HEAD)
 			boutput(H, "<span class='alert'>There's 1 impostor among us.</alert>")
+		qdel(src)
 
 /obj/spawner/amongus_clothing/cursed
 	cursed = TRUE
