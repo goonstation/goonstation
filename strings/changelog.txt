@@ -1,5 +1,9 @@
 
 (t)sat feb 13 21
+(u)Azrun
+(p)3558
+(e)⚖🗺🎨|balance, mapping, sprites
+(*)Increases "standard" burn chamber temperature and improve Molitz Beta drop chance.  Research Director now has a briefcase with Molitz Beta in their office.
 (u)pali
 (p)3691
 (e)🆕|feature
