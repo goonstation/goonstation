@@ -51,7 +51,6 @@ Contains:
 			return null
 
 		var/loc_to_check = istype(src.loc, /obj/item/magtractor) ? src.loc.loc : src.loc
-		src = null
 		for(var/turf/T in range(1, loc_to_check))
 
 			if(T.interesting)
@@ -101,7 +100,6 @@ Contains:
 			return null
 
 		var/loc_to_check = istype(src.loc, /obj/item/magtractor) ? src.loc.loc : src.loc
-		src = null
 		for(var/turf/T in range(2, loc_to_check))
 
 			if(T.interesting)
@@ -415,7 +413,7 @@ that cannot be itched
 	pixelaction(atom/target, params, mob/user, reach)
 		var/turf/T = get_turf(target)
 		if ((analyzer_upgrade == 1) && (get_dist(user, T)>1))
-			usr.visible_message("<span class='notice'><b>[user]</b> takes a distant atmospheric reading of [T].</span>")
+			user.visible_message("<span class='notice'><b>[user]</b> takes a distant atmospheric reading of [T].</span>")
 			boutput(user, scan_atmospheric(T, visible = 1))
 			src.add_fingerprint(user)
 			return
@@ -625,4 +623,63 @@ that cannot be itched
 			boutput(user, "<span class='notice'>you switch the record mode to Incarcerated</span>")
 
 		add_fingerprint(user)
+		return
+
+/obj/item/device/ticket_writer
+	name = "Security TicketWriter 2000"
+	desc = "A device used to issue tickets from the security department."
+	icon_state = "ticketwriter"
+	item_state = "electronic"
+	w_class = 2
+
+	flags = FPRINT | TABLEPASS | ONBELT | CONDUCT
+
+	attack_self(mob/user)
+		var/menuchoice = alert("What would you like to do?",,"Ticket","Nothing")
+		if (menuchoice == "Nothing")
+			return
+		else if (menuchoice == "Ticket")
+			src.ticket(user)
+
+	proc/ticket(mob/user)
+		var/obj/item/card/id/I
+		if (ishuman(user))
+			var/mob/living/carbon/human/H = user
+			I = H.wear_id
+		else if (ismobcritter(user))
+			I = locate(/obj/item/card/id) in user.contents
+		if (!I || !(access_security in I.access))
+			boutput(user, "<span class='alert'>Insufficient access.</span>")
+			return
+		playsound(get_turf(src), "sound/machines/keyboard3.ogg", 30, 1)
+		var/issuer = I.registered
+		var/issuer_job = I.assignment
+		var/ticket_target = input(user, "Ticket recipient:", "Recipient", "Ticket Recipient") as text
+		if (!ticket_target)
+			return
+		ticket_target = copytext(sanitize(html_encode(ticket_target)), 1, MAX_MESSAGE_LEN)
+		var/ticket_reason = input(user, "Ticket reason:", "Reason") as text
+		if (!ticket_reason)
+			return
+		ticket_reason = copytext(sanitize(html_encode(ticket_reason)), 1, MAX_MESSAGE_LEN)
+
+		var/ticket_text = "[ticket_target] has been officially [pick("cautioned","warned","told off","yelled at","berated","sneered at")] by Nanotrasen Corporate Security for [ticket_reason] on [time2text(world.realtime, "DD/MM/53")].<br>Issued by: [issuer] - [issuer_job]<br>"
+
+		var/datum/ticket/T = new /datum/ticket()
+		T.target = ticket_target
+		T.reason = ticket_reason
+		T.issuer = issuer
+		T.issuer_job = issuer_job
+		T.text = ticket_text
+		T.target_byond_key = get_byond_key(T.target)
+		T.issuer_byond_key = user.key
+		data_core.tickets += T
+
+		playsound(get_turf(src), "sound/machines/printer_thermal.ogg", 50, 1)
+		SPAWN_DBG(3 SECONDS)
+			var/obj/item/paper/p = unpool(/obj/item/paper)
+			p.set_loc(get_turf(src))
+			p.name = "Official Caution - [ticket_target]"
+			p.info = ticket_text
+			p.icon_state = "paper_caution"
 		return

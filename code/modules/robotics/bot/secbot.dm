@@ -507,7 +507,7 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 
 			if(SECBOT_HUNT)		// hunting for perp
 
-				if (src.target.hasStatus("handcuffed") || src.frustration >= 8) // if can't reach perp for long enough, go idle
+				if (!src.target || src.target.hasStatus("handcuffed") || src.frustration >= 8) // if can't reach perp for long enough, go idle
 					src.target = null
 					src.last_found = world.time
 					src.frustration = 0
@@ -1329,17 +1329,14 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 				qdel(W)
 
 	else if (istype(W, /obj/item/rods) && src.build_step == 3)
-		if (W.amount < 1)
+		var/obj/item/rods/R = W
+		if (!R.consume_rods(1))
 			boutput(user, "You need a non-zero amount of rods. How did you even do that?")
 		else
 			src.build_step++
 			boutput(user, "You add a rod to [src]'s robot arm!")
 			src.name = "helmet/signaler/prox sensor/robot arm/rod assembly"
 			src.overlays += image('icons/obj/bots/aibots.dmi', "hs_rod")
-			W.amount -= 1
-			if (W.amount < 1)
-				user.u_equip(W)
-				qdel(W)
 
 	else if (istype(W, /obj/item/cable_coil) && src.build_step >= 4)
 		var/obj/item/cable_coil/C = W
@@ -1362,11 +1359,13 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 
 	else if (istype(W, /obj/item/pen))
 		var/t = input(user, "Enter new robot name", src.name, src.created_name) as text
+		if(t && t != src.name && t != src.created_name)
+			phrase_log.log_phrase("bot-sec", t)
 		t = strip_html(replacetext(t, "'",""))
 		t = copytext(t, 1, 45)
 		if (!t)
 			return
-		if (!in_range(src, usr) && src.loc != usr)
+		if (!in_interact_range(src, user) && src.loc != user)
 			return
 
 		src.created_name = t

@@ -183,7 +183,7 @@
 		item_state = "pink"
 //PRIDE
 /obj/item/clothing/under/pride
-	name = "pride jumpsuit"
+	name = "LGBT pride jumpsuit"
 	desc = "A corporate token of inclusivity, made in a sweatshop. It's based off of the LGBT flag."
 	icon = 'icons/obj/clothing/uniforms/item_js_pride.dmi'
 	wear_image_icon = 'icons/mob/jumpsuits/worn_js_pride.dmi'
@@ -417,6 +417,12 @@
 	desc = "Is anyone who wears a jacket like that EVER good?"
 	icon_state = "security"
 	item_state = "security"
+
+	assistant
+		name = "security assistant uniform"
+		desc = "Wait, is that velcro?"
+		icon_state = "security-assistant"
+		item_state = "security-assistant"
 
 	april_fools
 		icon_state = "security-alt"

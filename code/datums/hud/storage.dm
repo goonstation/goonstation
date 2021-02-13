@@ -1,5 +1,5 @@
 /datum/hud/storage
-	var/obj/screen/hud
+	var/atom/movable/screen/hud
 		boxes
 		close
 		sel
@@ -13,7 +13,8 @@
 		src.boxes = create_screen("boxes", "Storage", 'icons/mob/screen1.dmi', "block", ui_storage_area)
 		src.close = create_screen("close", "Close", 'icons/mob/screen1.dmi', "x", ui_storage_close, HUD_LAYER+1)
 		src.sel = create_screen("sel", "sel", 'icons/mob/hud_human_new.dmi', "sel", null, HUD_LAYER+1.2)
-		update()
+		if(src.master)
+			update()
 
 	disposing()
 		src.master = null
@@ -67,7 +68,7 @@
 						var/turfd = (isturf(master.loc) && !istype(master, /obj/item/storage/bible))
 
 						var/pixel_y_adjust = 0
-						if (usr && usr.client && usr.client.tg_layout && !turfd)
+						if (user && user.client && user.client.tg_layout && !turfd)
 							pixel_y_adjust = 1
 
 						if (pixel_y_adjust && text2num(py) > 16)
@@ -92,7 +93,7 @@
 
 	//issue below with th4e way we draw boxes : all boxes are one object drawn multiple tiles using screenloc...
 	//I cannot get specific values for one box or find which item is in which box without some maybe-expensive string parsing. Figure out not-slow fix later
-	MouseEntered(var/obj/screen/hud/H, location, control, params)
+	MouseEntered(var/atom/movable/screen/hud/H, location, control, params)
 		if (!H || H.id != "boxes") return
 		if (usr)
 			var/obj/item/I = usr.equipped()
@@ -100,13 +101,13 @@
 				sel.screen_loc = empty_obj_loc
 
 
-	MouseExited(var/obj/screen/hud/H)
+	MouseExited(var/atom/movable/screen/hud/H)
 		if (!H) return
 		sel.screen_loc = null
 
 //idk if i can even use the params of mousedrop for this
 /*
-	MouseDrop(var/obj/screen/hud/H, atom/over_object, src_location, over_location, over_control, params)
+	MouseDrop(var/atom/movable/screen/hud/H, atom/over_object, src_location, over_location, over_control, params)
 		var/obj/item/I = src.obj_locs[H.screen_loc]
 		if (I)
 			I.MouseDrop(over_object, src_location, over_location, over_control, params)

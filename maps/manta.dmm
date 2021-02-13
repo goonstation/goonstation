@@ -1842,7 +1842,6 @@
 /area/diner/dining)
 "aeA" = (
 /obj/overlay{
-	anchored = 1;
 	density = 1;
 	desc = "A networked tape drive.  It looks to be in fairly poor condition.  I bet the vacuum columns don't work worth a damn.";
 	icon = 'icons/obj/networked.dmi';
@@ -4650,7 +4649,7 @@
 /area/listeningpost/syndicateassaultvessel)
 "anb" = (
 /obj/table/reinforced/bar/auto,
-/obj/holosigntest{
+/obj/holosign{
 	desc = "... is that Abzu..?";
 	name = "... is that Abzu..?";
 	pixel_y = 8
@@ -6007,7 +6006,7 @@
 	icon_state = "1-4"
 	},
 /obj/machinery/drainage/big,
-/turf/simulated/floor/airless/bluewhite/corner{
+/turf/simulated/floor/bluewhite/corner{
 	dir = 4
 	},
 /area/station/medical/medbay/lobby)
@@ -6515,7 +6514,7 @@
 /obj/item/storage/box/QM_grenadekit_security,
 /obj/item/storage/box/QM_grenadekit_experimentalweapons,
 /obj/item/storage/box/flaregun,
-/obj/item/flamethrower/assembled/loaded,
+/obj/item/gun/flamethrower/assembled/loaded,
 /obj/item/gun/energy/phaser_gun,
 /obj/item/gun/energy/phaser_gun,
 /obj/item/gun/energy/phaser_gun,
@@ -9176,12 +9175,6 @@
 /obj/disposalpipe/segment,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/engineering/ce)
-"axc" = (
-/obj/cable/colored/white{
-	icon_state = "4-6"
-	},
-/turf/simulated/floor/yellow,
-/area/station/engine/inner)
 "axd" = (
 /obj/decal/tile_edge/line/black{
 	dir = 5;
@@ -9546,20 +9539,6 @@
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/yellow,
 /area/station/engine/engineering/breakroom)
-"axP" = (
-/obj/cable/colored/yellow{
-	icon_state = "6-10"
-	},
-/obj/cable/colored/white{
-	icon_state = "2-8"
-	},
-/obj/cable/colored/yellow{
-	icon_state = "4-10"
-	},
-/turf/simulated/floor/yellow/side{
-	dir = 8
-	},
-/area/station/engine/inner)
 "axQ" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -9849,18 +9828,6 @@
 	icon_state = "fgreen2"
 	},
 /area/station/engine/engineering/ce)
-"ayt" = (
-/obj/cable/colored/yellow{
-	icon_state = "2-8"
-	},
-/obj/cable/colored/yellow{
-	icon_state = "0-2"
-	},
-/obj/cable/colored/yellow{
-	icon_state = "0-8"
-	},
-/turf/simulated/floor,
-/area/station/engine/inner)
 "ayu" = (
 /turf/simulated/floor/yellow/side{
 	dir = 4
@@ -9967,32 +9934,6 @@
 	icon_state = "yellowblack"
 	},
 /area/station/engine/engineering/ce)
-"ayH" = (
-/obj/cable/colored/yellow{
-	icon_state = "5-6"
-	},
-/turf/simulated/floor/yellow,
-/area/station/engine/inner)
-"ayI" = (
-/obj/cable/colored/yellow{
-	icon_state = "6-9"
-	},
-/obj/cable/colored/white{
-	icon_state = "1-9"
-	},
-/turf/simulated/floor/yellow/side{
-	dir = 8
-	},
-/area/station/engine/inner)
-"ayJ" = (
-/obj/cable/colored/yellow{
-	icon_state = "9-10"
-	},
-/obj/cable/colored/yellow{
-	icon_state = "1-10"
-	},
-/turf/simulated/floor,
-/area/station/engine/inner)
 "ayK" = (
 /obj/stool/chair/comfy/yellow{
 	dir = 1
@@ -10014,14 +9955,6 @@
 	icon_state = "green1"
 	},
 /area/station/engine/engineering/ce)
-"ayL" = (
-/obj/cable/colored/yellow{
-	icon_state = "5-9"
-	},
-/turf/simulated/floor/yellow/side{
-	dir = 10
-	},
-/area/station/engine/inner)
 "ayM" = (
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating/random,
@@ -13528,7 +13461,7 @@
 	nostick = 1
 	},
 /obj/landmark/start{
-	name = "Security Officer"
+	name = "Security Assistant"
 	},
 /turf/simulated/floor/black,
 /area/station/security/brig/cell_block_control)
@@ -14799,6 +14732,10 @@
 /area/station/crew_quarters/kitchen/freezer)
 "aJv" = (
 /obj/machinery/chem_master,
+/obj/item/clothing/glasses/spectro{
+	pixel_x = 1;
+	pixel_y = -4
+	},
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/cafeteria/the_rising_tide_bar)
 "aJw" = (
@@ -17345,6 +17282,10 @@
 /obj/item/paper_bin,
 /obj/item/pen,
 /obj/item/clothing/head/rastacap,
+/obj/item/reagent_containers/glass/water_pipe{
+	pixel_x = -1;
+	pixel_y = 9
+	},
 /turf/simulated/floor/grass/random,
 /area/station/hydroponics/bay)
 "aPE" = (
@@ -18587,6 +18528,10 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
+/obj/item/reagent_containers/food/drinks/mug/HoS{
+	pixel_x = 9;
+	pixel_y = 13
+	},
 /turf/simulated/floor/carpet/red/fancy/edge/nw,
 /area/station/security/hos)
 "aSI" = (
@@ -19792,6 +19737,9 @@
 /obj/machinery/light/emergency{
 	dir = 1
 	},
+/obj/landmark/start{
+	name = "Security Assistant"
+	},
 /turf/simulated/floor/redblack{
 	dir = 1
 	},
@@ -19819,6 +19767,9 @@
 	},
 /obj/machinery/light/emergency{
 	dir = 1
+	},
+/obj/landmark/start{
+	name = "Security Assistant"
 	},
 /turf/simulated/floor/redblack{
 	dir = 1
@@ -20748,7 +20699,6 @@
 /area/station/medical/research)
 "aXA" = (
 /obj/overlay{
-	anchored = 1;
 	icon = 'icons/misc/beach2.dmi';
 	icon_state = "palm1";
 	layer = 10;
@@ -21357,7 +21307,6 @@
 /area/station/medical/research)
 "aYS" = (
 /obj/overlay{
-	anchored = 1;
 	icon = 'icons/misc/beach2.dmi';
 	icon_state = "palm1";
 	layer = 10;
@@ -21725,21 +21674,6 @@
 	dir = 1
 	},
 /obj/machinery/chem_dispenser/chef,
-/turf/simulated/floor/specialroom/cafeteria,
-/area/station/crew_quarters/kitchen/therustykrab)
-"aZI" = (
-/obj/decal/tile_edge/check{
-	dir = 1;
-	icon_state = "check1"
-	},
-/obj/table/auto,
-/obj/item/kitchen/rollingpin,
-/obj/item/reagent_containers/glass/bottle/icing,
-/obj/machinery/firealarm{
-	pixel_x = 1;
-	pixel_y = 26;
-	text = "NF"
-	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen/therustykrab)
 "aZJ" = (
@@ -31382,18 +31316,6 @@
 	dir = 4
 	},
 /area/station/crew_quarters/hor/horprivate)
-"buC" = (
-/obj/stool{
-	desc = "A soft little bed the general size and shape of a space bee.";
-	icon = 'icons/misc/critter.dmi';
-	icon_state = "beebed";
-	name = "heisenbed"
-	},
-/obj/critter/domestic_bee/heisenbee,
-/turf/simulated/floor/wood/eight{
-	dir = 4
-	},
-/area/station/crew_quarters/hor/horprivate)
 "buD" = (
 /obj/disposalpipe/segment,
 /turf/simulated/wall/auto/supernorn,
@@ -31709,11 +31631,7 @@
 /obj/machinery/light/incandescent/netural{
 	dir = 1
 	},
-/obj/juggleplaque{
-	desc = {"Dedicated to Lieutenant Emily Claire for her brave sacrifice aboard NSS Manta  \"May their sacrifice not paint a grim picture of things to come. - Space Commodore J. Ledger\""};
-	name = "dedication plaque";
-	pixel_y = 25
-	},
+/obj/juggleplaque/manta,
 /turf/simulated/floor/carpet{
 	dir = 4;
 	icon_state = "fgreen2"
@@ -31724,11 +31642,7 @@
 	dir = 2;
 	icon_state = "pipe-c"
 	},
-/obj/juggleplaque{
-	desc = {"NCS Atlas, Nanotrasen,  \"Man always kills the thing he loves, and so we the pioneers have killed our wilderness. Some say we had to. Be that as it may, I am glad I shall never be young without wild country to be young in. Of what avail are forty freedoms without a blank spot on the map?  - Aldo Leopold\""};
-	name = "dedication plaque";
-	pixel_y = 25
-	},
+/obj/juggleplaque/manta,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/upperstarboard)
 "bvw" = (
@@ -42408,6 +42322,12 @@
 	dir = 8
 	},
 /area/listeningpost/syndicateassaultvessel)
+"ekL" = (
+/obj/cable/yellow{
+	icon_state = "5-6"
+	},
+/turf/simulated/floor/yellow,
+/area/station/engine/inner)
 "eyQ" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -42713,6 +42633,21 @@
 	},
 /turf/simulated/floor/longtile/black,
 /area/station/turret_protected/ai_upload)
+"gQO" = (
+/obj/decal/tile_edge/check{
+	dir = 1;
+	icon_state = "check1"
+	},
+/obj/table/auto,
+/obj/item/kitchen/rollingpin,
+/obj/item/reagent_containers/food/drinks/drinkingglass/icing,
+/obj/machinery/firealarm{
+	pixel_x = 1;
+	pixel_y = 26;
+	text = "NF"
+	},
+/turf/simulated/floor/specialroom/cafeteria,
+/area/station/crew_quarters/kitchen/therustykrab)
 "gSv" = (
 /turf/simulated/floor/greenblack,
 /area/station/crewquarters/garbagegarbs)
@@ -42950,6 +42885,14 @@
 "jtU" = (
 /turf/simulated/floor,
 /area/station/crewquarters/garbagegarbs)
+"jyT" = (
+/obj/cable/yellow{
+	icon_state = "5-9"
+	},
+/turf/simulated/floor/yellow/side{
+	dir = 10
+	},
+/area/station/engine/inner)
 "jBB" = (
 /obj/machinery/arc_electroplater,
 /turf/simulated/floor/industrial,
@@ -43169,6 +43112,20 @@
 /obj/stool/bench/red/auto,
 /turf/simulated/floor,
 /area/station/security/brig/cell1)
+"lYw" = (
+/obj/cable/yellow{
+	icon_state = "6-10"
+	},
+/obj/cable/white{
+	icon_state = "2-8"
+	},
+/obj/cable/yellow{
+	icon_state = "4-10"
+	},
+/turf/simulated/floor/yellow/side{
+	dir = 8
+	},
+/area/station/engine/inner)
 "lYV" = (
 /turf/simulated/floor,
 /area/station/hallway/secondary/construction)
@@ -43340,6 +43297,22 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/portlowerhallway)
+"nDV" = (
+/obj/stool{
+	desc = "A soft little bed the general size and shape of a space bee.";
+	icon = 'icons/misc/critter.dmi';
+	icon_state = "beebed";
+	name = "heisenbed"
+	},
+/obj/critter/domestic_bee/heisenbee,
+/obj/item/storage/briefcase/toxins{
+	pixel_x = -7;
+	pixel_y = 21
+	},
+/turf/simulated/floor/wood/eight{
+	dir = 4
+	},
+/area/station/crew_quarters/hor/horprivate)
 "nHa" = (
 /obj/disposalpipe/segment/mail,
 /obj/machinery/power/apc/autoname_east,
@@ -43437,6 +43410,15 @@
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
+/area/station/engine/inner)
+"ouH" = (
+/obj/cable/yellow{
+	icon_state = "9-10"
+	},
+/obj/cable/yellow{
+	icon_state = "1-10"
+	},
+/turf/simulated/floor,
 /area/station/engine/inner)
 "ozn" = (
 /obj/wingrille_spawn/auto,
@@ -43623,6 +43605,17 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/elect)
+"qdv" = (
+/obj/cable/yellow{
+	icon_state = "6-9"
+	},
+/obj/cable/white{
+	icon_state = "1-9"
+	},
+/turf/simulated/floor/yellow/side{
+	dir = 8
+	},
+/area/station/engine/inner)
 "qrl" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -43772,14 +43765,14 @@
 /area/station/hallway/portlowerhallway)
 "rWc" = (
 /obj/stool/chair/office/red,
-/obj/landmark/start{
-	name = "Security Officer"
-	},
 /obj/cable{
 	icon_state = "1-8"
 	},
 /obj/cable{
 	icon_state = "1-4"
+	},
+/obj/landmark/start{
+	name = "Security Assistant"
 	},
 /turf/simulated/floor/black,
 /area/station/security/checkpoint/sec_foyer)
@@ -44030,6 +44023,12 @@
 	},
 /turf/simulated/floor/black,
 /area/listeningpost/syndicateassaultvessel)
+"vzS" = (
+/obj/cable/white{
+	icon_state = "4-6"
+	},
+/turf/simulated/floor/yellow,
+/area/station/engine/inner)
 "vDw" = (
 /obj/stool/chair/red{
 	dir = 4
@@ -44209,6 +44208,18 @@
 "xaf" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/hallway/secondary/construction)
+"xba" = (
+/obj/cable/yellow{
+	icon_state = "2-8"
+	},
+/obj/cable/yellow{
+	icon_state = "0-2"
+	},
+/obj/cable/yellow{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor,
+/area/station/engine/inner)
 "xfR" = (
 /obj/item/storage/wall/clothingrack/clothes3{
 	dir = 4
@@ -44288,10 +44299,17 @@
 	icon_state = "1-2"
 	},
 /obj/table/reinforced/auto,
-/obj/item/clothing/head/helmet/camera/security{
-	pixel_y = 8
+/obj/item/kitchen/food_box/donut_box{
+	pixel_y = 2
 	},
-/obj/item/kitchen/food_box/donut_box,
+/obj/item/device/ticket_writer{
+	pixel_x = 5;
+	pixel_y = 4
+	},
+/obj/item/clothing/head/helmet/camera/security{
+	pixel_x = -8;
+	pixel_y = -3
+	},
 /turf/simulated/floor/redblack{
 	dir = 6
 	},
@@ -81961,7 +81979,7 @@ aWY
 aXI
 aYr
 aFw
-aZI
+gQO
 baK
 bbP
 bcO
@@ -85634,8 +85652,8 @@ awX
 awX
 ayn
 azs
-axc
-ayH
+vzS
+ekL
 azt
 azJ
 azJ
@@ -85936,9 +85954,9 @@ dZj
 dZj
 dZj
 wBW
-axP
-ayI
-ayL
+lYw
+qdv
+jyT
 azJ
 azJ
 azJ
@@ -86238,8 +86256,8 @@ axe
 axe
 axe
 axe
-ayt
-ayJ
+xba
+ouH
 aEt
 azJ
 azJ
@@ -101308,7 +101326,7 @@ bpH
 bnW
 bsx
 btj
-buC
+nDV
 bvZ
 bxF
 aOJ

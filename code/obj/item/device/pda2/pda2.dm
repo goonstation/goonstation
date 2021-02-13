@@ -59,7 +59,7 @@
 		// Other
 		MGO_STAFF, MGO_AI, MGO_SILICON, MGO_JANITOR, MGO_ENGINEER, MGO_MINING, MGO_MECHANIC,
 		// Alerts
-		MGA_MAIL, MGA_RADIO, MGA_CHECKPOINT, MGA_ARREST, MGA_DEATH, MGA_MEDCRIT, MGA_CLONER, MGA_ENGINE, MGA_RKIT, MGA_SALES, MGA_SHIPPING, MGA_CARGOREQUEST, MGA_CRISIS,
+		MGA_MAIL, MGA_RADIO, MGA_CHECKPOINT, MGA_ARREST, MGA_DEATH, MGA_MEDCRIT, MGA_CLONER, MGA_ENGINE, MGA_RKIT, MGA_SALES, MGA_SHIPPING, MGA_CARGOREQUEST, MGA_CRISIS, MGA_TRACKING,
 	)
 	var/alertgroups = list(MGA_MAIL, MGA_RADIO) // What mail groups that we're not a member of should we be able to mute?
 	var/bombproof = 0 // can't be destroyed with detomatix
@@ -112,16 +112,18 @@
 	hos
 		icon_state = "pda-hos"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/hos
+		setup_default_module = /obj/item/device/pda_module/alert
 		setup_drive_size = 32
 		mailgroups = list(MGD_SECURITY,MGD_COMMAND,MGD_PARTY)
-		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_CHECKPOINT, MGA_ARREST, MGA_DEATH, MGA_MEDCRIT, MGA_CRISIS)
+		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_CHECKPOINT, MGA_ARREST, MGA_DEATH, MGA_MEDCRIT, MGA_CRISIS, MGA_TRACKING)
 
 	ntso
 		icon_state = "pda-nt"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/hos //hos cart gives access to manifest compared to regular sec cart, useful for NTSO
+		setup_default_module = /obj/item/device/pda_module/alert
 		setup_drive_size = 32
 		mailgroups = list(MGD_SECURITY,MGD_COMMAND,MGD_PARTY)
-		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_CHECKPOINT, MGA_ARREST, MGA_DEATH, MGA_MEDCRIT, MGA_CRISIS)
+		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_CHECKPOINT, MGA_ARREST, MGA_DEATH, MGA_MEDCRIT, MGA_CRISIS, MGA_TRACKING)
 
 	ai
 		icon_state = "pda-h"
@@ -183,14 +185,15 @@
 	security
 		icon_state = "pda-s"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/security
+		setup_default_module = /obj/item/device/pda_module/alert
 		mailgroups = list(MGD_SECURITY,MGD_PARTY)
-		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_CHECKPOINT, MGA_ARREST, MGA_DEATH, MGA_MEDCRIT, MGA_CRISIS)
+		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_CHECKPOINT, MGA_ARREST, MGA_DEATH, MGA_MEDCRIT, MGA_CRISIS, MGA_TRACKING)
 
 	forensic
 		icon_state = "pda-s"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/forensic
 		mailgroups = list(MGD_SECURITY,MGD_PARTY)
-		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_CHECKPOINT, MGA_ARREST, MGA_DEATH, MGA_MEDCRIT, MGA_CRISIS)
+		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_CHECKPOINT, MGA_ARREST, MGA_DEATH, MGA_MEDCRIT, MGA_CRISIS, MGA_TRACKING)
 
 	toxins
 		icon_state = "pda-tox"
@@ -291,7 +294,7 @@
 	if(istype(M) && M.client)
 		src.bg_color = M.client.preferences.PDAcolor
 		var/list/color_vals = hex_to_rgb_list(bg_color)
-		src.linkbg_color = rgb(color_vals["r"] * 0.8, color_vals["g"] * 0.8, color_vals["b"] * 0.8)
+		src.linkbg_color = rgb(color_vals[1] * 0.8, color_vals[2] * 0.8, color_vals[3] * 0.8)
 
 	src.update_colors(src.bg_color, src.linkbg_color)
 
@@ -389,6 +392,8 @@
 	..()
 
 /obj/item/device/pda2/attack_self(mob/user as mob)
+	if(!user.client)
+		return
 	if(!user.literate)
 		boutput(user, "<span class='alert'>You don't know how to read, the screen is meaningless to you.</span>")
 		return
@@ -731,7 +736,7 @@
 		src.bg_color = bg
 		src.linkbg_color = linkbg
 		var/color_list = hex_to_rgb_list(src.linkbg_color)
-		if(max(color_list["r"], color_list["b"], color_list["g"]) <= 50)
+		if(max(color_list[1], color_list[2], color_list[3]) <= 50)
 			src.link_color = "#dddddd"
 		else
 			src.link_color = initial(src.link_color)
@@ -746,8 +751,8 @@
 
 		src.update_overlay()
 
-	proc/is_user_in_range(var/mob/user)
-		return in_range(src, user) || loc == user || isAI(user)
+	proc/is_user_in_interact_range(var/mob/user)
+		return in_interact_range(src, user) || loc == user || isAI(user)
 
 	proc/post_signal(datum/signal/signal,var/newfreq)
 		if(!signal)
@@ -836,8 +841,7 @@
 	proc/update_overlay(mode = null)
 		if (mode)
 			src.current_overlay = mode
-		src.overlays = null
-		src.overlays += src.overlay_images[src.current_overlay]
+		src.UpdateOverlays(src.overlay_images[src.current_overlay], "screen_overlay")
 
 	proc/set_ringtone(var/datum/ringtone/RT, var/temp = 0, var/overrideAlert = 0, var/groupType, var/groupName)
 		if(!istype(RT)) // Invalid ringtone? use the default
@@ -930,9 +934,6 @@
 			//for (var/mob/O in hearers(3, src.loc))
 
 		update_overlay("alert")
-		// src.overlays = null
-		// // src.overlays += image('icons/obj/items/pda.dmi', "pda-r")
-		// src.overlays += src.overlay_images["alert"]
 		return
 
 	proc/display_message(var/message)
@@ -1047,7 +1048,7 @@
 		var/mob/M = ai.deployed_shell
 		M.show_message(message)
 
-/obj/item/device/pda2/ai/is_user_in_range(var/mob/user)
+/obj/item/device/pda2/ai/is_user_in_interact_range(var/mob/user)
 	if (issilicon(user))
 		var/mob/living/silicon/S = user
 		if (S.mainframe && S.mainframe == loc)

@@ -276,21 +276,6 @@ obj/machinery/atmospherics
 
 				target_pressure = amount
 
-	unary/oxygen_generator
-		verb
-			toggle()
-				set src in world
-				set category = "Minor"
-
-				on = !on
-
-				update_icon()
-
-			change_rate(amount as num)
-				set src in world
-				set category = "Minor"
-
-				oxygen_content = amount
 	binary/pump
 		verb
 			DEBUG_MESSAGE()
@@ -400,9 +385,9 @@ turf/simulated
 			overlays = null
 			for(var/direction in cardinal)
 				if(group_border&direction)
-					overlays += icon('icons/turf_analysis.dmi',"red_arrow",direction)
+					overlays += icon('icons/Testing/turf_analysis.dmi',"red_arrow",direction)
 				else if(air_check_directions&direction)
-					overlays += icon('icons/turf_analysis.dmi',"arrow",direction)
+					overlays += icon('icons/Testing/turf_analysis.dmi',"arrow",direction)
 		air_status()
 			set src in world
 			set category = "Minor"
@@ -556,7 +541,7 @@ mob
 				group.marker = 0
 
 			for(var/turf/simulated/floor/S in world)
-				S.icon = 'icons/turf_analysis.dmi'
+				S.icon = 'icons/Testing/turf_analysis.dmi'
 				if(S.parent)
 					if(S.parent.group_processing)
 						if(S.parent.marker == 0)

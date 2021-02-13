@@ -25,6 +25,7 @@
 	var/ai_throw = 0
 	var/ai_attackadmins = 1
 	var/ai_attacknpc = 1
+	var/ai_useitems = 1
 	var/ai_suicidal = 0 //Will it attack itself?
 	var/ai_active = 0
 
@@ -372,14 +373,12 @@
 		var/obj/item/W = src.equipped()
 		if (W && istype(W))
 			W.onMouseDown(object,location,control,params)
-	return
 
 /mob/living/onMouseUp(object,location,control,params)
 	if (!src.restrained() && !is_incapacitated(src))
 		var/obj/item/W = src.equipped()
 		if (W && istype(W))
 			W.onMouseUp(object,location,control,params)
-	return
 
 /mob/living/MouseDrop_T(atom/dropped, mob/dropping_user)
 	if (istype(dropped, /obj/item/organ/) || istype(dropped, /obj/item/clothing/head/butt/) || istype(dropped, /obj/item/skull/))
@@ -398,10 +397,12 @@
 
 /mob/living/hotkey(name)
 	switch (name)
-		if ("togglepoint")
-			src.toggle_point_mode()
-		if ("say_radio")
-			src.say_radio()
+		if ("SHIFT")//bEGIN A SPRINT
+			if (!src.client.tg_controls)
+				start_sprint()
+		if ("SPACE")
+			if (src.client.tg_controls)
+				start_sprint()
 		if ("resist")
 			src.resist()
 		if ("rest")
@@ -411,16 +412,12 @@
 				else
 					src.hasStatus("resting") ? src.delStatus("resting") : src.setStatus("resting", INFINITE_STATUS)
 					src.force_laydown_standup()
-
-		if ("SHIFT")//bEGIN A SPRINT
-			if (!src.client.tg_controls)
-				start_sprint()
-			//else //indicate i am sprinting pls
-		if ("SPACE")
-			if (src.client.tg_controls)
-				start_sprint()
+		if ("togglepoint")
+			src.toggle_point_mode()
+		if ("say_radio")
+			src.say_radio()
 		else
-			return ..()
+			. = ..()
 
 //gross are we tg or something with all of these /s
 // i'd like to hear your suggestion for better searching for procs!!! - cirr
@@ -434,7 +431,8 @@
 			return ..()
 #endif
 		O.insert_observer(src)
-	else return ..()
+	else
+		. = ..()
 
 /mob/living/click(atom/target, params, location, control)
 	. = ..()
@@ -446,12 +444,10 @@
 		return
 
 	if (location != "map")
-//#ifdef MAP_OVERRIDE_DESTINY
 		if (src.hibernating && istype(src.loc, /obj/cryotron))
 			var/obj/cryotron/cryo = src.loc
 			if (cryo.exit_prompt(src))
 				return
-//#endif
 
 		if (src.client && src.client.check_key(KEY_EXAMINE))
 			src.examine_verb(target)
@@ -470,9 +466,9 @@
 
 	actions.interrupt(src, INTERRUPT_ACT)
 
-	if (!src.stat && !hasStatus(list("weakened", "paralysis", "stunned")))
+	if (!src.stat && !is_incapacitated(src))
 		var/obj/item/equipped = src.equipped()
-		var/use_delay = !(target in src.contents) && !istype(target,/obj/screen) && (!disable_next_click || ismob(target) || (target && target.flags & USEDELAY) || (equipped && equipped.flags & USEDELAY))
+		var/use_delay = !(target in src.contents) && !istype(target,/atom/movable/screen) && (!disable_next_click || ismob(target) || (target && target.flags & USEDELAY) || (equipped && equipped.flags & USEDELAY))
 		var/grace_penalty = 0
 		if ((target == equipped || use_delay) && world.time < src.next_click) // if we ignore next_click on attack_self we get... instachoking, so let's not do that
 			var/time_left = src.next_click - world.time
@@ -547,12 +543,11 @@
 			src.next_click += grace_penalty
 
 /mob/living/proc/pre_attack_modify()
-	.=0
+	. = 0
 	var/obj/item/grab/block/G = src.check_block()
 	if (G)
 		qdel(G)
-		.= 1
-
+		. = 1
 
 /mob/living/update_cursor()
 	..()
@@ -568,8 +563,6 @@
 		if (src.client.check_key(KEY_PULL))
 			src.set_cursor('icons/cursors/pull.dmi')
 			return
-
-	//src.set_cursor(null)
 
 /mob/living/key_down(key)
 	if (key == "alt" || key == "ctrl" || key == "shift")
@@ -588,7 +581,7 @@
 	src.update_cursor()
 
 /mob/living/point_at(var/atom/target)
-	if (!isturf(src.loc) || src.stat || src.restrained())
+	if (!isturf(src.loc) || !isalive(src) || src.restrained())
 		return
 
 	if (isghostcritter(src))
@@ -607,28 +600,20 @@
 	else
 		src.visible_message("<span style='font-weight:bold;color:#f00;font-size:120%;'>[src] points \the [G] at [target]!</span>")
 
-	var/obj/decal/point/P = new(get_turf(target))
-	P.pixel_x = target.pixel_x
-	P.pixel_y = target.pixel_y
-	P.color = src.bioHolder.mobAppearance.customization_first_color
-	src = null // required to make sure its deleted
-	SPAWN_DBG(2 SECONDS)
-		P.invisibility = 101
-		qdel(P)
+	make_point(get_turf(target), pixel_x=target.pixel_x, pixel_y=target.pixel_y, color=src.bioHolder.mobAppearance.customization_first_color)
+
 
 /mob/living/proc/set_burning(var/new_value)
 	setStatus("burning", new_value*10)
-	return
 
 /mob/living/proc/update_burning(var/change)
 	changeStatus("burning", change*10)
-	return
 
 /mob/living/proc/update_burning_icon(var/force_remove = 0)
 	return
 
 /mob/living/proc/get_equipped_ore_scoop()
-	return null
+	. = null
 
 /mob/living/proc/talk_into_equipment(var/mode, var/messages, var/param, var/lang_id)
 	switch (mode)
@@ -707,7 +692,7 @@
 		var/mob/living/carbon/human/H = src
 		// If theres no oxygen
 		if (H.oxyloss > 10 || H.losebreath >= 4 || (H.reagents?.has_reagent("capulettium_plus") && H.hasStatus("resting"))) // Perfluorodecalin cap - normal life() depletion - buffer.
-			H.whisper(message)
+			H.whisper(message, forced=TRUE)
 			return
 
 	//Pod coloseum is broken - disable this unnecessary istype
@@ -1073,6 +1058,12 @@
 	if (length(heard_b))
 		processed = saylist(messages[2], heard_b, olocs, thickness, italics, processed, 1)
 
+	if(src.client)
+		if(singing)
+			phrase_log.log_phrase("sing", messages[1])
+		else
+			phrase_log.log_phrase("say", messages[1])
+
 	message = src.say_quote(messages[1])
 
 
@@ -1138,7 +1129,7 @@
 		A.hear_talk(src,messages,heardname,lang_id)
 
 /mob/proc/get_heard_name()
-	return "<span class='name' data-ctx='\ref[src.mind]'>[src.name]</span>"
+	. = "<span class='name' data-ctx='\ref[src.mind]'>[src.name]</span>"
 
 
 /mob/proc/move_callback_trigger(var/obj/move_laying, var/turf/NewLoc, var/oldloc, direct)
@@ -1153,7 +1144,6 @@
 			move_laying.move_callback(src, oldloc, NewLoc)
 
 /mob/living/Move(var/turf/NewLoc, direct)
-
 	var/oldloc = loc
 	. = ..()
 	if (isturf(oldloc) && isturf(loc) && move_laying)
@@ -1179,7 +1169,6 @@
 		return
 
 	src.misstep_chance = max(0,min(misstep_chance + amount,100))
-	return
 
 /mob/living/proc/get_static_image()
 	if (src.disposed)
@@ -1195,7 +1184,7 @@
 			checkpath = H.mutantrace.type
 	if (ispath(checkpath))
 		var/generate_static = 1
-		if (default_mob_static_icons.Find(checkpath))
+		if (checkpath in default_mob_static_icons)
 			if (istype(default_mob_static_icons[checkpath], /image))
 				src.static_image = image(default_mob_static_icons[checkpath])
 				DEBUG_MESSAGE(bicon(src.static_image) + "<br>\ref[src.static_image]")
@@ -1245,13 +1234,13 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 			L.give_to(src)
 
 /mob/living/proc/give_to(var/mob/living/M)
-	if (!M) return
+	if (!M)
+		return
 
 #ifdef TWITCH_BOT_ALLOWED
 	if (IS_TWITCH_CONTROLLED(M))
 		return
 #endif
-
 
 	var/message = null
 
@@ -1294,7 +1283,10 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 						D.desc += " Awarded by the esteemed clown professor [src.name] to [M.name] at [o_clock_time()]."
 			else
 				src.put_in_hand_or_drop(thing)
-				message = "<B>[src]</B> tries to hand [thing] to [M], but [M]'s hands are full!"
+				if (M.has_any_hands())
+					message = "<B>[src]</B> tries to hand [thing] to [M], but [M]'s hands are full!"
+				else
+					message = "<B>[src]</B> tries to hand [thing] to [M], but [M] doesn't have any hands!"
 		else
 			message = "<B>[src]</B> tries to hand [thing] to [M], but [M] declines."
 
@@ -1365,7 +1357,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 
 
 /mob/living/proc/empty_hands()
-	.=0
+	. = 0
 
 /mob/living/proc/update_lying()
 	if (src.buckled)
@@ -1393,12 +1385,12 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 		boutput(M, "You cannot interact with other people before the game has started.")
 		return
 
-	actions.interrupt(src, INTERRUPT_ATTACKED)
 	M.lastattacked = src
 
 	attack_particle(M,src)
 
 	if (M.a_intent != INTENT_HELP)
+		actions.interrupt(src, INTERRUPT_ATTACKED)
 		src.was_harmed(M, intent = M.a_intent)
 
 		if (M.mob_flags & AT_GUNPOINT)
@@ -1535,7 +1527,6 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 
 	. += base_speed
 	. += movement_delay_modifier
-
 
 	var/multiplier = 1 // applied before running multiplier
 	var/health_deficiency_adjustment = 0
@@ -1707,12 +1698,18 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 
 
 /mob/living/proc/was_harmed(var/mob/M as mob, var/obj/item/weapon = 0, var/special = 0, var/intent = null)
+	SHOULD_CALL_PARENT(TRUE)
 	.= 0
 
 //left this here to standardize into living later
 /mob/living/critter/was_harmed(var/mob/M as mob, var/obj/item/weapon = 0, var/special = 0, var/intent = null)
 	if (src.ai)
 		src.ai.was_harmed(weapon,M)
+		if(src.is_hibernating)
+			if (src.registered_area)
+				src.registered_area.wake_critters()
+			else
+				src.wake_from_hibernation()
 	..()
 
 /mob/living/bullet_act(var/obj/projectile/P)
@@ -1845,9 +1842,11 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 					src.stamina_stun()
 
 				src.changeStatus("radiation", damage SECONDS)
-				if (src.add_stam_mod_regen("projectile", -5))
+				var/orig_val = GET_MOB_PROPERTY(src, PROP_STAMINA_REGEN_BONUS)
+				APPLY_MOB_PROPERTY(src, PROP_STAMINA_REGEN_BONUS, "projectile", -5)
+				if(GET_MOB_PROPERTY(src, PROP_STAMINA_REGEN_BONUS) != orig_val)
 					SPAWN_DBG(30 SECONDS)
-						src.remove_stam_mod_regen("projectile")
+						REMOVE_MOB_PROPERTY(src, PROP_STAMINA_REGEN_BONUS, "projectile")
 				if(rangedprot > 1)
 					armor_msg = ", but your armor softens the hit!"
 
@@ -1869,11 +1868,13 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 	if (!P.proj_data.silentshot)
 		src.visible_message("<span class='alert'>[src] is hit by the [P.name]!</span>", "<span class='alert'>You are hit by the [P.name][armor_msg]!</span>")
 
-
+	var/mob/M = null
 	if (ismob(P.shooter))
-		if (P.shooter)
-			src.lastattacker = P.shooter
-			src.lastattackertime = world.time
+		M = P.shooter
+		src.lastattacker = M
+		src.lastattackertime = world.time
+	src.was_harmed(M)
+
 	return 1
 
 /mob/living/attackby(obj/item/W, mob/M)
@@ -1999,9 +2000,8 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 
 /mob/living/proc/check_singing_prefix(var/message)
 	if (isalive(src))
-		// check for "%"
-		if (dd_hasprefix(message, singing_prefix))
+		if (dd_hasprefix(message, singing_prefix)) // check for "%"
 			src.singing = NORMAL_SINGING
 			return copytext(message, 2)
 	src.singing = 0
-	return message
+	. =  message

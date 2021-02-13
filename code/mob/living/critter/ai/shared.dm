@@ -179,3 +179,31 @@
 	minimum_task_ticks = 10
 	maximum_task_ticks = 10
 
+/datum/aiTask/timed/hibernate
+	name = "hibernate"
+	minimum_task_ticks = 1
+	maximum_task_ticks = 1
+	var/min_time_between_hibernations = 20 SECONDS
+	var/hibernation_priority = 100
+
+	evaluate()
+		. = ..()
+		var/mob/living/critter/M = holder.owner
+		if (!M)
+			return -1
+		var/area/A = get_area(M)
+		if (A?.active)
+			return -1
+		if ((M.last_hibernation_wake_tick + min_time_between_hibernations) >= TIME)
+			return -1
+		return hibernation_priority
+
+	on_tick()
+		. = ..()
+		var/mob/living/critter/M = holder.owner
+		if (!M) return
+		holder.enabled = FALSE
+		M.is_hibernating = TRUE
+		M.registered_area = get_area(M)
+		if(M.registered_area)
+			M.registered_area.registered_mob_critters |= M

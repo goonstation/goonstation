@@ -32,9 +32,9 @@
 	//Sound for scans and toggling gene analysis. They need to be the same so you can fake the former with the latter
 	var/sound_ping = 'sound/machines/ping.ogg'
 
-	lr = 1
-	lg = 0.6
-	lb = 1
+	light_r =1
+	light_g = 0.6
+	light_b = 1
 
 	disposing()
 		scanner?.connected = null
@@ -516,7 +516,7 @@ proc/find_ghost_by_key(var/find_key)
 		eject_occupant(user)
 
 	MouseDrop(mob/user as mob)
-		if (can_operate(user))
+		if (istype(user) && can_operate(user))
 			eject_occupant(user)
 		else
 			..()
@@ -593,8 +593,8 @@ proc/find_ghost_by_key(var/find_key)
 	proc/find_pods()
 		if (!islist(src.pods))
 			src.pods = list()
-		if (!isnull(src.id) && genResearch && islist(genResearch.clonepods) && genResearch.clonepods.len)
-			for (var/obj/machinery/clonepod/pod in genResearch.clonepods)
+		if (!isnull(src.id) && genResearch && islist(genResearch.clonepods) && length(genResearch.clonepods))
+			for (var/obj/machinery/clonepod/pod as() in genResearch.clonepods)
 				if (pod.id == src.id && !src.pods.Find(pod))
 					src.pods += pod
 					DEBUG_MESSAGE("[src] adds pod [log_loc(pod)] (ID [src.id]) in genResearch.clonepods")

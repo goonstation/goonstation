@@ -840,7 +840,7 @@ PIPE BOMBS + CONSTRUCTION
 			var/area/t = get_area(M)
 			if(t?.sanctuary) continue
 			SPAWN_DBG(0)
-				M.become_gold_statue()
+				M.become_statue(getMaterial("gold"))
 		..()
 
 
@@ -979,10 +979,10 @@ PIPE BOMBS + CONSTRUCTION
 
 	attackby(obj/A as obj, mob/user as mob) // adapted from iv_drips.dm
 		if (iscuttingtool(A) && !(src.slashed) && !(src.primed))
+			boutput(user, "You carefully cut [src] open and dump out the contents.")
 			src.slashed = TRUE
 			src.name = "empty [src.name]" // its empty now!
 			src.desc = "[src.desc] It has been cut open and emptied out."
-			boutput(user, "You carefully cut [src] open and dump out the contents.")
 
 			make_cleanable(/obj/decal/cleanable/magnesiumpile, get_turf(src.loc)) // create magnesium pile
 			src.reagents.clear_reagents() // remove magnesium from firework

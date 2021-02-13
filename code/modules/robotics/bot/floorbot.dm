@@ -153,7 +153,7 @@ text("<A href='?src=\ref[src];operation=make'>[src.maketiles ? "Yes" : "No"]</A>
 	if (istype(W, /obj/item/device/pda2) && W:ID_card)
 		W = W:ID_card
 	if (istype(W, /obj/item/card/id))
-		if (src.allowed(usr))
+		if (src.allowed(user))
 			src.locked = !src.locked
 			boutput(user, "You [src.locked ? "lock" : "unlock"] the [src] behaviour controls.")
 		else
@@ -281,12 +281,7 @@ text("<A href='?src=\ref[src];operation=make'>[src.maketiles ? "Yes" : "No"]</A>
 		src.search_range = min(src.max_search_range, src.target ? 1 : src.search_range)
 
 		if (src.target)
-			var/obj/decal/point/P = new(get_turf(src.target))
-			P.pixel_x = target.pixel_x
-			P.pixel_y = target.pixel_y
-			SPAWN_DBG(2 SECONDS)
-				P.invisibility = 101
-				qdel(P)
+			make_point(get_turf(target), pixel_x=target.pixel_x, pixel_y=target.pixel_y)
 
 		src.oldtarget = null
 

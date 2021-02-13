@@ -52,7 +52,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 
 /datum/projectile/special/acidspit
 	name = "acid splash"
-	icon_state = "cbbolt"
+	icon_state = "acidspit"
 	power = 0.8
 	dissipation_rate = 20
 	dissipation_delay = 10
@@ -61,6 +61,9 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	hit_mob_sound = 'sound/impact_sounds/burn_sizzle.ogg'
 	hit_object_sound = 'sound/impact_sounds/burn_sizzle.ogg'
 	shot_sound = null
+
+	on_launch(var/obj/projectile/projectile)
+		projectile.Scale(0.5, 0.5)
 
 	on_hit(atom/hit, direction, var/obj/projectile/projectile)
 		..()
@@ -960,3 +963,112 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	on_hit(atom/hit, direction, projectile)
 		explosion_new(projectile, get_turf(hit), explosion_power, 1)
 		..()
+
+/datum/projectile/special/shotchem // how do i shot chem
+	name = "chemical bolt"
+	sname = "chembolt"
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "extinguish"
+	shot_sound = "sound/effects/spray2.ogg"
+	power = 0
+	cost = 1
+	damage_type = D_SPECIAL
+	shot_delay = 1 DECI SECOND
+	dissipation_rate = 0
+	dissipation_delay = 0
+	ks_ratio = 0
+	hit_ground_chance = 0 // burn right over em
+	max_range = 10
+	silentshot = 1 // Mr. Muggles is hit by the chemical bolt x99999
+	fullauto_valid = 0
+
+
+	/// Releases some of the projectile's gas into the turf
+	proc/emit_gas(turf/T, all_of_it = 0)
+		if(!src.master || !src.master.special_data)
+			return
+		var/datum/gas_mixture/airgas = src.master.special_data["airgas"]
+		T?.assume_air(airgas.remove_ratio(all_of_it ? 1 : src.master.special_data["chem_pct_app_tile"]))
+
+	/// Sprays some of the chems in the projectile onto everything on hit's turf
+	/// Try not to pass it something with an organholder, acid-throwers will disintigrate all their organs
+	proc/emit_chems(atom/hit, obj/projectile/O, angle)
+		if(!O.special_data || !length(O.special_data) || !istype(hit) || !O.reagents)
+			return
+
+		var/turf/T = get_turf(hit)
+		var/datum/reagents/chemR = O.reagents
+		var/chem_amt = chemR.total_volume
+		if(chem_amt <= 0)
+			return
+		/// If there's just a little bit left, use the rest of it
+		var/amt_to_emit = (chem_amt <= 0.1) ? chem_amt : (chemR.maximum_volume * O.special_data["chem_pct_app_tile"])
+
+		var/datum/reagents/copied = new/datum/reagents(amt_to_emit)
+		copied = chemR.copy_to(copied, amt_to_emit/chemR.total_volume, copy_temperature = 1)
+
+		if(!T.reagents) // first get the turf
+			T.create_reagents(100)
+		copied.copy_to(T.reagents, 1, copy_temperature = 1)
+		copied.reaction(T, TOUCH, 0, 0)
+		if(O.special_data["IS_LIT"]) // Heat if needed
+			T.reagents?.set_reagent_temp(O.special_data["burn_temp"], TRUE)
+		for(var/atom/A in T.contents) // then all the stuff in the turf
+			if(istype(A, /obj/overlay) || istype(A, /obj/projectile))
+				continue
+			copied.reaction(A, TOUCH, 0, 0)
+		if(O.special_data["IS_LIT"]) // Reduce the temperature per turf crossed
+			O.special_data["burn_temp"] -= O.special_data["burn_temp"] * O.special_data["temp_pct_loss_atom"]
+			O.special_data["burn_temp"] = max(O.special_data["burn_temp"], T0C)
+		chemR.remove_any(amt_to_emit)
+
+	post_setup(obj/projectile/P)
+		var/list/cross2 = list()
+		for(var/turf/T in P.crossing)
+			cross2[T] = P.crossing[T]
+		P.special_data["projcross"] = cross2
+
+	on_launch(obj/projectile/O)
+		if(length(O.special_data))
+			O.internal_speed = src.projectile_speed * O.special_data["speed_mult"]
+			src.color_icon = O.special_data["proj_color"]
+		O.AddComponent(/datum/component/pierce_non_opaque) // Pierce anything that doesn't block LoS - if you can see it you can burn it
+
+	on_hit(atom/hit, angle, var/obj/projectile/O)
+		var/turf/T = get_turf(hit)
+		var/list/cross2 = O.special_data["projcross"]
+		if(T in cross2)
+			cross2 -= T
+			src.emit_chems(T, O)
+			src.emit_gas(T, 1)
+
+	tick(var/obj/projectile/O)
+		var/list/cross2 = O.special_data["projcross"]
+		for (var/i = 1, i < cross2.len, i++)
+			var/turf/T = cross2[i]
+			if (cross2[T] < O.curr_t)
+				src.emit_chems(T, O)
+				src.emit_gas(T, 0)
+				if(O.reagents?.total_volume < 0.01)
+					O.die()
+				cross2.Cut(1,2)
+				i--
+			else
+				break
+
+	on_pointblank(var/obj/projectile/O, var/mob/target)
+		var/turf/T = get_turf(O)
+		src.emit_chems(target, O)
+		src.emit_gas(T, 1)
+	on_end(var/obj/projectile/O)
+		if(O.reagents?.total_volume < 0.01)
+			return
+		var/turf/T = get_turf(O)
+		src.emit_chems(T, O)
+		src.emit_gas(T, 1)
+	on_max_range_die(obj/projectile/O)
+		if(O.reagents?.total_volume < 0.01)
+			return
+		var/turf/T = get_turf(O)
+		src.emit_chems(T, O)
+		src.emit_gas(T, 1)

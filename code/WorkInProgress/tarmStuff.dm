@@ -18,7 +18,7 @@
 	var/datum/projectile/bullet/g11/small/smallproj = new
 
 	New()
-		current_projectile = new/datum/projectile/bullet/g11
+		set_current_projectile(new/datum/projectile/bullet/g11)
 		ammo = new/obj/item/ammo/bullets/g11
 		. = ..()
 
@@ -214,7 +214,7 @@
 
 	New()
 		ammo = new/obj/item/ammo/bullets/gyrojet
-		current_projectile = new/datum/projectile/bullet/gyrojet
+		set_current_projectile(new/datum/projectile/bullet/gyrojet)
 		. = ..()
 
 /obj/item/ammo/bullets/gyrojet
@@ -263,7 +263,7 @@
 	gildable = 1
 
 	New()
-		current_projectile = new/datum/projectile/bullet/deagle50cal
+		set_current_projectile(new/datum/projectile/bullet/deagle50cal)
 		ammo = new/obj/item/ammo/bullets/deagle50cal
 		. = ..()
 
@@ -273,7 +273,7 @@
 		throwforce = 50 //HEAVY pistol
 		New()
 			. = ..()
-			current_projectile = new/datum/projectile/bullet/deagle50cal/decapitation
+			set_current_projectile(new/datum/projectile/bullet/deagle50cal/decapitation)
 			ammo = new/obj/item/ammo/bullets/deagle50cal/decapitation
 
 //.50AE deagle ammo
@@ -423,7 +423,7 @@ obj/item/gun/reagent/syringe/lovefilled
 	/obj/item/reagent_containers/food/snacks/yellow_cake_uranium_cake,\
 	/obj/item/reagent_containers/food/snacks/cake/cream,\
 	/obj/item/reagent_containers/food/snacks/cake/cream,\
-	/obj/item/reagent_containers/food/snacks/cake/chocolate,\
+	/obj/item/reagent_containers/food/snacks/cake/chocolate/gateau,\
 	/obj/item/reagent_containers/food/snacks/cake,\
 )
 

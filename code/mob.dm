@@ -18,8 +18,8 @@
 
 	var/last_move_trigger = 0
 
-	var/obj/screen/internals = null
-	var/obj/screen/stamina_bar/stamina_bar = null
+	var/atom/movable/screen/internals = null
+	var/atom/movable/screen/stamina_bar/stamina_bar = null
 	var/last_overlay_refresh = 1 // In relation to world time. Used for traitor/nuke ops overlays certain mobs can see.
 
 	var/robot_talk_understand = 0
@@ -31,7 +31,7 @@
 
 	var/last_resist = 0
 
-	//var/obj/screen/zone_sel/zone_sel = null
+	//var/atom/movable/screen/zone_sel/zone_sel = null
 	var/datum/hud/zone_sel/zone_sel = null
 
 	var/obj/item/device/energy_shield/energy_shield = null
@@ -277,6 +277,13 @@
 
 	src.closeContextActions()
 
+	src.update_grab_loc()
+
+	if (src.s_active && !(s_active.master in src))
+		src.detach_hud(src.s_active)
+		src.s_active = null
+
+/mob/proc/update_grab_loc()
 	//robust grab : keep em close
 	for (var/obj/item/grab/G in equipped_list(check_for_magtractor = 0))
 		if (G.state < GRAB_NECK) continue
@@ -288,10 +295,6 @@
 		G.affecting.glide_size = src.glide_size
 		G.set_affected_loc()
 		G.affecting.glide_size = src.glide_size
-
-	if (src.s_active && !(s_active.master in src))
-		src.detach_hud(src.s_active)
-		src.s_active = null
 
 /mob/disposing()
 	for(var/mob/dead/target_observer/TO in observers)
@@ -316,15 +319,15 @@
 		bioHolder = null
 
 	for (var/datum/hud/H in huds)
-		for (var/obj/screen/hud/S in H.objects)
+		for (var/atom/movable/screen/hud/S in H.objects)
 			if (S:master == src)
 				S:master = null
 //KYLE: KEELIN, LOOK. Something like this? I dunno, it's so slow too:
-		// for (var/obj/screen/S in H.objects)
-		// 	if (istype(S, /obj/screen/hud))
+		// for (var/atom/movable/screen/S in H.objects)
+		// 	if (istype(S, /atom/movable/screen/hud))
 		// 		if (S:master == src)
 		// 			S:master = null
-		// 	else if (istype(S, /obj/screen/statusEffect))
+		// 	else if (istype(S, /atom/movable/screen/statusEffect))
 		// 		src.delStatus(S:ownerStatus)
 
 		//if (islist(H.objects)) //possibly causing bug where gibbed persons UI persistss on ghosts
@@ -497,8 +500,6 @@
 
 	src.client?.color = src.active_color_matrix
 
-	return
-
 /mob/Logout()
 
 	//logTheThing("diary", src, null, "logged out", "access") <- sometimes shits itself and has been known to out traitors. Disabling for now.
@@ -511,7 +512,7 @@
 
 	..()
 
-	return 1
+	. = 1
 
 /mob/proc/deliver_move_trigger(ev)
 	return
@@ -549,7 +550,9 @@
 	if (ismob(AM))
 		var/mob/tmob = AM
 		if (ishuman(tmob))
-			src:viral_transmission(AM,"Contact",1)
+			if(isliving(src))
+				var/mob/living/L = src
+				L.viral_transmission(AM,"Contact",1)
 
 			if ((tmob.bioHolder.HasEffect("magnets_pos") && src.bioHolder.HasEffect("magnets_pos")) || (tmob.bioHolder.HasEffect("magnets_neg") && src.bioHolder.HasEffect("magnets_neg")))
 				//prevent ping-pong loops by deactivating for a second, as they can crash the server under some circumstances
@@ -648,6 +651,7 @@
 					logTheThing("combat", src, tmob, "trades places with (Help Intent) [constructTarget(tmob,"combat")], pushing them into a fire.")
 				deliver_move_trigger("swap")
 				tmob.deliver_move_trigger("swap")
+				tmob.update_grab_loc()
 				src.now_pushing = 0
 
 				return
@@ -719,7 +723,7 @@
 	return 1
 
 /mob/proc/attach_hud(datum/hud/hud)
-	if (!huds.Find(hud))
+	if (!(hud in huds))
 		huds += hud
 		hud.mobs += src
 		if (src.client)
@@ -1444,6 +1448,9 @@
 
 /mob/proc/update_inhands()
 
+/mob/proc/has_any_hands()
+	. = FALSE
+
 /mob/proc/put_in_hand(obj/item/I, hand)
 	. = 0
 
@@ -1658,18 +1665,19 @@
 	var/list/viral_list = list()
 	for (var/datum/ailment_data/AD in src.ailments)
 		viral_list += AD
-	var/list/ejectables = list()
+	var/list/ejectables = list_ejectables()
+	for(var/obj/item/organ/organ in ejectables)
+		if(organ.donor == src)
+			organ.on_removal()
 	if (!custom_gib_handler)
 		if (iscarbon(src))
-			ejectables = list_ejectables()
 			if (bdna && btype)
-				. = gibs(src.loc, viral_list, ejectables, bdna, btype) // For forensics (Convair880).
+				. = gibs(src.loc, viral_list, ejectables, bdna, btype, source=src) // For forensics (Convair880).
 			else
-				. = gibs(src.loc, viral_list, ejectables)
+				. = gibs(src.loc, viral_list, ejectables, source=src)
 		else
 			. = robogibs(src.loc, viral_list)
 	else
-		ejectables = list_ejectables()
 		. = call(custom_gib_handler)(src.loc, viral_list, ejectables, bdna, btype)
 
 	// splash our fluids around

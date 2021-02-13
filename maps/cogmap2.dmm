@@ -10492,13 +10492,6 @@
 /obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor/white,
 /area/station/crew_quarters/kitchen)
-"axK" = (
-/obj/table/auto,
-/obj/item/kitchen/rollingpin,
-/obj/item/reagent_containers/glass/bottle/icing,
-/obj/item/reagent_containers/glass/bottle/icing,
-/turf/simulated/floor/white,
-/area/station/crew_quarters/kitchen)
 "axL" = (
 /obj/table/auto,
 /obj/item/satchel/hydro,
@@ -11232,6 +11225,10 @@
 /obj/item/device/light/candle/small{
 	desc = "Ugh, is that patchouli?";
 	name = "grody candle"
+	},
+/obj/item/reagent_containers/glass/water_pipe{
+	pixel_x = 6;
+	pixel_y = 5
 	},
 /turf/simulated/floor/grass{
 	name = "astroturf"
@@ -13234,19 +13231,6 @@
 /obj/disposalpipe/segment,
 /obj/disposalpipe/segment/food{
 	dir = 4
-	},
-/turf/simulated/floor/specialroom/cafeteria,
-/area/station/crew_quarters/kitchen)
-"aDB" = (
-/obj/table/auto,
-/obj/item/plate,
-/obj/item/reagent_containers/food/snacks/cake/chocolate{
-	desc = "Holy shit! This cake probably costs more than the gross domestic product of Bulgaria!";
-	name = "Extravagant Chocolate Gateau"
-	},
-/obj/disposalpipe/junction{
-	dir = 4;
-	icon_state = "pipe-j2"
 	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
@@ -18524,7 +18508,6 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/checkpoint/chapel)
 "aQo" = (
-/obj/machinery/vending/security,
 /obj/machinery/door_control{
 	id = "lockdown_checkpoint1";
 	name = "Checkpoint Lockdown";
@@ -18532,6 +18515,8 @@
 	pixel_y = 8
 	},
 /obj/machinery/light_switch/west,
+/obj/table/reinforced/auto,
+/obj/machinery/recharger,
 /turf/simulated/floor/specialroom/bar,
 /area/station/security/checkpoint/chapel)
 "aQp" = (
@@ -18552,7 +18537,11 @@
 /area/station/security/checkpoint/chapel)
 "aQr" = (
 /obj/table/reinforced/auto,
-/obj/machinery/recharger,
+/obj/item/kitchen/food_box/donut_box{
+	desc = "It appears to be a Martian brand of donuts.";
+	name = "Robust Donuts";
+	pixel_y = 10
+	},
 /turf/simulated/floor/specialroom/bar,
 /area/station/security/checkpoint/chapel)
 "aQs" = (
@@ -19557,7 +19546,8 @@
 /turf/simulated/floor/grass/leafy,
 /area/station/garden/owlery)
 "aSS" = (
-/obj/machinery/flasher/portable,
+/obj/table/reinforced/auto,
+/obj/machinery/vending/security,
 /turf/simulated/floor/specialroom/bar,
 /area/station/security/checkpoint/chapel)
 "aST" = (
@@ -24141,7 +24131,6 @@
 	dir = 4
 	},
 /obj/overlay{
-	anchored = 1;
 	desc = "A portrait of a man wearing a ridiculous merchant hat.  That must be Discount Dan.";
 	icon = 'icons/obj/decals/wallsigns.dmi';
 	icon_state = "portrait";
@@ -31026,11 +31015,21 @@
 /obj/table/reinforced/auto,
 /obj/item/kitchen/food_box/donut_box{
 	desc = "It appears to be a Martian brand of donuts.";
-	name = "Robust Donuts"
+	name = "Robust Donuts";
+	pixel_y = 10
 	},
-/obj/item/device/detective_scanner,
-/obj/item/device/detective_scanner,
-/obj/item/device/detective_scanner,
+/obj/item/device/detective_scanner{
+	pixel_x = -5;
+	pixel_y = -5
+	},
+/obj/item/device/detective_scanner{
+	pixel_x = -5;
+	pixel_y = -5
+	},
+/obj/item/device/detective_scanner{
+	pixel_x = -5;
+	pixel_y = -5
+	},
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
@@ -31826,6 +31825,9 @@
 /obj/table/reinforced/auto,
 /obj/machinery/computer3/generic/personal,
 /obj/machinery/power/data_terminal,
+/obj/item/device/ticket_writer{
+	pixel_x = 5
+	},
 /turf/simulated/floor/carpet{
 	icon_state = "fred1"
 	},
@@ -31925,6 +31927,9 @@
 	pixel_y = 3
 	},
 /obj/disposalpipe/segment/transport,
+/obj/item/reagent_containers/food/drinks/mug/HoS{
+	pixel_y = 12
+	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/hos)
 "buw" = (
@@ -38688,6 +38693,9 @@
 	dir = 1;
 	icon_state = "pipe-c"
 	},
+/obj/landmark/start{
+	name = "Security Assistant"
+	},
 /turf/simulated/floor/red/side{
 	dir = 4
 	},
@@ -40982,6 +40990,9 @@
 /obj/disposalpipe/segment/transport{
 	dir = 4;
 	icon_state = "pipe-c"
+	},
+/obj/landmark/start{
+	name = "Security Assistant"
 	},
 /turf/simulated/floor/red/side{
 	dir = 4
@@ -45950,6 +45961,9 @@
 /obj/disposalpipe/segment/ejection{
 	dir = 4
 	},
+/obj/landmark/start{
+	name = "Security Assistant"
+	},
 /turf/simulated/floor,
 /area/station/security/main)
 "bUt" = (
@@ -46654,6 +46668,11 @@
 /area/space)
 "bVT" = (
 /obj/table/wood/round/auto,
+/obj/item/kitchen/food_box/donut_box{
+	desc = "It appears to be a Martian brand of donuts.";
+	name = "Robust Donuts";
+	pixel_y = 10
+	},
 /obj/item/decoration/ashtray,
 /turf/simulated/floor/carpet{
 	dir = 5;
@@ -48049,7 +48068,7 @@
 	dir = 4
 	},
 /obj/landmark/start{
-	name = "Security Officer"
+	name = "Security Assistant"
 	},
 /turf/simulated/floor/carpet{
 	dir = 1;
@@ -49038,7 +49057,7 @@
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4;
 	name = "Security Locker Room";
-	req_access_txt = "38"
+	req_access_txt = "1"
 	},
 /obj/disposalpipe/segment/transport{
 	dir = 4
@@ -56268,23 +56287,6 @@
 	setup_spawn_with_tape = 0
 	},
 /turf/simulated/floor/black,
-/area/station/crew_quarters/hor)
-"crI" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 1;
-	name = "autoname - SS13";
-	tag = ""
-	},
-/turf/simulated/floor/carpet{
-	dir = 10;
-	icon_state = "fpurple2"
-	},
 /area/station/crew_quarters/hor)
 "crJ" = (
 /obj/cable{
@@ -74263,7 +74265,6 @@
 /area/station/medical/dome)
 "dfl" = (
 /obj/overlay{
-	anchored = 1;
 	icon = 'icons/misc/beach2.dmi';
 	icon_state = "palm1";
 	layer = 10;
@@ -74288,7 +74289,6 @@
 /area/station/medical/dome)
 "dfn" = (
 /obj/overlay{
-	anchored = 1;
 	icon = 'icons/misc/beach2.dmi';
 	icon_state = "palm1";
 	layer = 10;
@@ -74483,7 +74483,6 @@
 /area/station/medical/dome)
 "dfK" = (
 /obj/overlay{
-	anchored = 1;
 	icon = 'icons/misc/beach2.dmi';
 	icon_state = "palm2";
 	layer = 10;
@@ -74743,7 +74742,6 @@
 /area/station/medical/cdc)
 "dgh" = (
 /obj/overlay{
-	anchored = 1;
 	icon = 'icons/misc/beach2.dmi';
 	icon_state = "palm2";
 	layer = 10;
@@ -74773,7 +74771,6 @@
 /area/station/medical/dome)
 "dgk" = (
 /obj/overlay{
-	anchored = 1;
 	icon = 'icons/misc/beach2.dmi';
 	icon_state = "palm1";
 	layer = 10;
@@ -79304,6 +79301,13 @@
 	},
 /turf/simulated/floor/green/side,
 /area/station/hydroponics/bay)
+"rsO" = (
+/obj/table/auto,
+/obj/item/kitchen/rollingpin,
+/obj/item/reagent_containers/food/drinks/drinkingglass/icing,
+/obj/item/reagent_containers/food/drinks/drinkingglass/icing,
+/turf/simulated/floor/white,
+/area/station/crew_quarters/kitchen)
 "rBI" = (
 /obj/railing/orange/reinforced,
 /obj/stool/chair/green{
@@ -79322,6 +79326,24 @@
 	dir = 4
 	},
 /area/shuttle/arrival/station)
+"sEu" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 1;
+	name = "autoname - SS13";
+	tag = ""
+	},
+/obj/item/storage/briefcase/toxins,
+/turf/simulated/floor/carpet{
+	dir = 10;
+	icon_state = "fpurple2"
+	},
+/area/station/crew_quarters/hor)
 "tyQ" = (
 /obj/storage/secure/closet/civilian/hydro,
 /turf/simulated/floor/grass{
@@ -79332,6 +79354,10 @@
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/purple,
 /area/station/teleporter)
+"tJa" = (
+/obj/machinery/flasher/portable,
+/turf/simulated/floor/specialroom/bar,
+/area/station/security/checkpoint/chapel)
 "tPC" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
@@ -79374,6 +79400,16 @@
 	icon_state = "fgreen5"
 	},
 /area/station/hydroponics/bay)
+"vyj" = (
+/obj/table/auto,
+/obj/item/plate,
+/obj/item/reagent_containers/food/snacks/cake/chocolate/gateau,
+/obj/disposalpipe/junction{
+	dir = 4;
+	icon_state = "pipe-j2"
+	},
+/turf/simulated/floor/specialroom/cafeteria,
+/area/station/crew_quarters/kitchen)
 "vNO" = (
 /obj/submachine/chef_sink/chem_sink{
 	dir = 4
@@ -105351,7 +105387,7 @@ ckK
 cmz
 coi
 cpV
-crI
+sEu
 cii
 cta
 cta
@@ -109803,7 +109839,7 @@ asb
 att
 auP
 awm
-axK
+rsO
 azy
 auT
 aAU
@@ -110713,7 +110749,7 @@ axN
 azB
 auT
 aCo
-aDB
+vyj
 ase
 aFV
 aHD
@@ -127634,7 +127670,7 @@ aLi
 aMA
 aNP
 aOU
-aNP
+tJa
 aQs
 aRK
 aSQ

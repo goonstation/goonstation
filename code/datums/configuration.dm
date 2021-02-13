@@ -100,6 +100,7 @@
 
 	//Are we limiting connected players to certain ckeys?
 	var/whitelistEnabled = 0
+	var/whitelist_path = "strings/whitelist.txt"
 
 /datum/configuration/New()
 	..()
@@ -359,6 +360,9 @@
 
 			if ("player_notes_auth")
 				config.player_notes_auth = trim(value)
+
+			if ("whitelist_path")
+				config.whitelist_path = trim(value)
 
 			else
 				logDiary("Unknown setting in configuration: '[name]'")

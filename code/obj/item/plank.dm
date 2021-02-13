@@ -21,7 +21,7 @@
 	attack_self(mob/user as mob)
 		var/turf/T = get_turf(user)
 		if (locate(/obj/structure/woodwall) in T)
-			boutput(usr, "<span class='alert'>There's already a barricade here!</span>")
+			boutput(user, "<span class='alert'>There's already a barricade here!</span>")
 			return
 		actions.start(new /datum/action/bar/icon/plank_build(src, 30), user)
 		return
@@ -53,7 +53,7 @@
 				new /obj/machinery/door/unpowered/wood(T)
 				qdel(src)
 				qdel(C)
-			boutput(usr, "<span class='alert'>There's already a door here!</span>")
+			boutput(user, "<span class='alert'>There's already a door here!</span>")
 			return
 		else
 			return

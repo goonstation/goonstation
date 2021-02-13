@@ -806,7 +806,7 @@
 	New()
 		..()
 		default_screen_overlay = image('icons/obj/large_storage.dmi', "gang_overlay_yellow")
-		overlays += default_screen_overlay
+		src.UpdateOverlays(default_screen_overlay, "screen")
 		buyable_items = list(
 			new/datum/gang_item/misc/ratstick,
 			new/datum/gang_item/ninja/throwing_knife,
@@ -948,25 +948,22 @@
 			boutput(user, "<span class='alert'>The locker's screen briefly displays the message \"Access Denied\".</span>")
 			overlay = image('icons/obj/large_storage.dmi', "gang_overlay_red")
 
-		src.overlays -= default_screen_overlay
-		src.overlays += overlay
+		src.UpdateOverlays(overlay, "screen")
 		SPAWN_DBG(1 SECOND)
-			src.overlays -= overlay
-			src.overlays += default_screen_overlay
+			src.UpdateOverlays(default_screen_overlay, "screen")
 
 	proc/update_icon()
-		src.overlays = null
-
 		if(health <= 0)
+			src.UpdateOverlays(null, "light")
+			src.UpdateOverlays(null, "screen")
 			return
 
-		src.overlays += default_screen_overlay
+		src.UpdateOverlays(default_screen_overlay, "screen")
 
 		if(gang.can_be_joined())
-			src.overlays += image('icons/obj/large_storage.dmi', "greenlight")
+			src.UpdateOverlays(image('icons/obj/large_storage.dmi', "greenlight"), "light")
 		else
-			src.overlays += image('icons/obj/large_storage.dmi', "redlight")
-		return
+			src.UpdateOverlays(image('icons/obj/large_storage.dmi', "redlight"), "light")
 
 	proc/insert_item(var/obj/item/item,var/mob/user)
 		if(!user)
@@ -1249,7 +1246,7 @@
 			boutput(target, "<span class='alert'>You're already in a gang, you can't switch sides!</span>")
 			return
 
-		if(target.mind.assigned_role in list("Security Officer","Vice Officer","Part-time Vice Officer","Head of Security","Captain","Head of Personnel","Communications Officer", "Medical Director", "Chief Engineer", "Research Director", "Detective", "Nanotrasen Security Operative"))
+		if(target.mind.assigned_role in list("Security Officer", "Security Assistant", "Vice Officer","Part-time Vice Officer","Head of Security","Captain","Head of Personnel","Communications Officer", "Medical Director", "Chief Engineer", "Research Director", "Detective", "Nanotrasen Security Operative"))
 			boutput(target, "<span class='alert'>You are too responsible to join a gang!</span>")
 			return
 

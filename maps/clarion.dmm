@@ -13762,9 +13762,10 @@
 	},
 /area/station/security/detectives_office)
 "axM" = (
-/obj/machinery/door/airlock/pyro/maintenance/alt{
+/obj/machinery/door/airlock/pyro/security/alt{
 	dir = 4;
-	name = "Detective's Office"
+	name = "Detective's Office";
+	req_access = null
 	},
 /obj/access_spawn/forensics,
 /obj/firedoor_spawn,
@@ -14544,10 +14545,7 @@
 /area/station/crew_quarters/bar)
 "azC" = (
 /obj/table/reinforced/auto,
-/obj/item/reagent_containers/food/snacks/cake/chocolate{
-	desc = "Holy shit! This cake probably costs more than the gross domestic product of Bulgaria!";
-	name = "Extravagant Chocolate Gateau"
-	},
+/obj/item/reagent_containers/food/snacks/cake/chocolate/gateau,
 /obj/disposalpipe/segment/food{
 	dir = 4
 	},
@@ -15421,7 +15419,7 @@
 "aBw" = (
 /obj/table/reinforced/auto,
 /obj/item/reagent_containers/food/snacks/breadloaf,
-/obj/item/reagent_containers/glass/bottle/icing,
+/obj/item/reagent_containers/food/drinks/drinkingglass/icing,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "aBx" = (
@@ -16039,7 +16037,8 @@
 	},
 /obj/machinery/door/airlock/pyro/maintenance/alt{
 	dir = 4;
-	name = "Kitchen"
+	name = "Kitchen";
+	req_access = null
 	},
 /obj/firedoor_spawn,
 /obj/access_spawn/kitchen,
@@ -16608,9 +16607,6 @@
 	name = "autoname  - SS13";
 	pixel_y = 21
 	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/west)
-"aEc" = (
 /obj/reagent_dispensers/heliumtank,
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
@@ -17599,7 +17595,9 @@
 /area/station/maintenance/west)
 "aGd" = (
 /obj/disposalpipe/segment,
-/obj/machinery/door/airlock/pyro/maintenance/alt,
+/obj/machinery/door/airlock/pyro/sci_alt{
+	name = "Pharmacy"
+	},
 /obj/firedoor_spawn,
 /obj/access_spawn/medical,
 /obj/machinery/door/poddoor/blast{
@@ -23286,6 +23284,7 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/door/airlock/pyro/glass/med{
+	id = "medbay_hall";
 	name = "Medbay"
 	},
 /obj/firedoor_spawn,
@@ -23722,6 +23721,7 @@
 	},
 /obj/machinery/door/airlock/pyro/command/alt{
 	dir = 4;
+	id = "medirecdoor";
 	name = "Medical Director's Office"
 	},
 /obj/access_spawn/medical_director,
@@ -25182,16 +25182,12 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "aTA" = (
-/obj/machinery/door/firedoor/border_only,
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/gannets/glass/medical{
-	id = "medbay_hall";
-	name = "glass airlock-'Medbay'"
-	},
 /obj/machinery/door/airlock/pyro/glass/med{
-	dir = 4
+	dir = 4;
+	id = "medbay_hall"
 	},
 /obj/firedoor_spawn,
 /obj/access_spawn/medical,
@@ -25339,6 +25335,9 @@
 	d1 = 1;
 	d2 = 4;
 	icon_state = "1-4"
+	},
+/obj/landmark/start{
+	name = "Security Assistant"
 	},
 /turf/simulated/floor,
 /area/station/security/main)
@@ -26205,6 +26204,9 @@
 /obj/item/wrench,
 /obj/item/clothing/head/helmet/camera/security,
 /obj/item/device/detective_scanner,
+/obj/item/device/ticket_writer{
+	pixel_y = 20
+	},
 /turf/simulated/floor/carpet{
 	icon_state = "fred1"
 	},
@@ -27351,6 +27353,7 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/door/airlock/pyro/glass/med{
+	id = "cryo_door";
 	name = "Cryogenics"
 	},
 /obj/firedoor_spawn,
@@ -27835,6 +27838,7 @@
 	},
 /obj/machinery/door/airlock/pyro/glass/med{
 	dir = 4;
+	id = "medbay_door";
 	name = "Medbay"
 	},
 /obj/firedoor_spawn,
@@ -29648,6 +29652,7 @@
 	},
 /obj/machinery/door/airlock/pyro/glass/med{
 	dir = 4;
+	id = "medbay_hall";
 	name = "Medbay"
 	},
 /obj/firedoor_spawn,
@@ -29806,6 +29811,9 @@
 /obj/stool/chair/red{
 	anchored = 0;
 	dir = 4
+	},
+/obj/landmark/start{
+	name = "Security Assistant"
 	},
 /turf/simulated/floor/red/side,
 /area/station/security/main)
@@ -31837,6 +31845,9 @@
 "bfg" = (
 /obj/stool/chair/red{
 	dir = 8
+	},
+/obj/landmark/start{
+	name = "Security Assistant"
 	},
 /turf/simulated/floor/carpet,
 /area/station/security/main)
@@ -36770,6 +36781,7 @@
 "bny" = (
 /obj/machinery/door/airlock/pyro/medical/alt{
 	dir = 4;
+	id = "Cloning_Door";
 	name = "Cloning"
 	},
 /obj/access_spawn/medical,
@@ -39512,7 +39524,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/engine/elect)
 "bsk" = (
-/obj/machinery/door/airlock/pyro/maintenance/alt{
+/obj/machinery/door/airlock/pyro/engineering/alt{
 	name = "Mechanics"
 	},
 /obj/access_spawn/engineering_mechanic,
@@ -49838,7 +49850,7 @@
 	icon_state = "line1"
 	},
 /obj/storage/secure/crate/plasma/armory/anti_biological,
-/obj/item/flamethrower/assembled/loaded,
+/obj/item/gun/flamethrower/assembled/loaded,
 /turf/simulated/floor/black,
 /area/station/security/armory)
 "bMO" = (
@@ -76024,7 +76036,7 @@ aAb
 aAU
 aAV
 axS
-aEc
+aGS
 aFh
 aEa
 aHb

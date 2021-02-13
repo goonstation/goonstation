@@ -23,6 +23,11 @@
 	var/base_move_delay = 2
 	var/base_walk_delay = 3
 	var/stepsound = null
+	///area where the mob ai is registered when hibernating
+	var/area/registered_area = null
+	///time when mob last awoke from hibernation
+	var/last_hibernation_wake_tick = 0
+	var/is_hibernating = TRUE
 
 	var/can_burn = 1
 	var/can_throw = 0
@@ -162,7 +167,20 @@
 			hh.dispose()
 		healthlist.len = 0
 		healthlist = null
+
+		if (src.is_npc)
+			src.registered_area?.registered_mob_critters -= src
+			src.registered_area = null
 		..()
+
+	///enables mob ai that was disabled by a hibernation task
+	proc/wake_from_hibernation()
+		if(src.is_npc)
+			src.ai?.enabled = TRUE
+			src.last_hibernation_wake_tick = TIME
+			src.registered_area?.registered_mob_critters -= src
+			src.registered_area = null
+			src.is_hibernating = FALSE
 
 	proc/setup_healths()
 		// add_health_holder(/datum/healthHolder/flesh)
@@ -672,6 +690,9 @@
 		if(isitem(I))
 			I.dropped(src)
 
+	has_any_hands()
+		. = length(hands)
+
 	put_in_hand(obj/item/I, t_hand)
 		if (!hands.len)
 			return 0
@@ -731,7 +752,7 @@
 		empty_hands()
 		if (do_drop_equipment)
 			drop_equipment()
-		hud.update_health()
+		hud?.update_health()
 		update_stunned_icon(canmove=1)//force it to go away
 		return ..(gibbed)
 

@@ -68,7 +68,9 @@ MATERIAL
 
 	proc/consume_sheets(var/use_amount)
 		if (!isnum(amount))
-			return
+			return FALSE
+		if (amount < use_amount)
+			return FALSE
 		src.amount = max(0,amount - use_amount)
 		if (amount < 1)
 			if (isliving(src.loc))
@@ -79,7 +81,7 @@ MATERIAL
 			qdel(src)
 		else
 			src.inventory_counter?.update_number(amount)
-		return
+		return TRUE
 
 	proc/set_reinforcement(var/datum/material/M)
 		if (!istype(M))
@@ -114,9 +116,9 @@ MATERIAL
 			if (splitnum >= amount || splitnum < 1)
 				boutput(user, "<span class='alert'>Invalid entry, try again.</span>")
 				return
-			boutput(usr, "<span class='notice'>You take [splitnum] sheets from the stack, leaving [diff] sheets behind.</span>")
+			boutput(user, "<span class='notice'>You take [splitnum] sheets from the stack, leaving [diff] sheets behind.</span>")
 			src.amount = diff
-			var/obj/item/sheet/new_stack = new /obj/item/sheet(get_turf(usr))
+			var/obj/item/sheet/new_stack = new /obj/item/sheet(get_turf(user))
 			if(src.material)
 				new_stack.setMaterial(src.material)
 			if (src.reinforcement)
@@ -136,7 +138,7 @@ MATERIAL
 			if (S.material && src.material && !isSameMaterial(S.material, src.material))
 				// build glass tables
 				if (src.material.material_flags & MATERIAL_METAL && S.material.material_flags & MATERIAL_CRYSTAL) // we're a metal and they're a glass
-					if (src.amount_check(1,usr) && S.amount_check(2,usr))
+					if (src.amount_check(1,user) && S.amount_check(2,user))
 						var/reinf = S.reinforcement ? 1 : 0
 						var/a_type = reinf ? /obj/item/furniture_parts/table/glass/reinforced : /obj/item/furniture_parts/table/glass
 						var/a_icon_state = "[reinf ? "r_" : null]table_parts"
@@ -144,7 +146,7 @@ MATERIAL
 						actions.start(new /datum/action/bar/icon/build(S, a_type, 2, S.material, 1, 'icons/obj/furniture/table_glass.dmi', a_icon_state, a_name, null, src, 1), user)
 					return
 				else if (src.material.material_flags & MATERIAL_CRYSTAL && S.material.material_flags & MATERIAL_METAL) // we're a glass and they're a metal
-					if (src.amount_check(2,usr) && S.amount_check(1,usr))
+					if (src.amount_check(2,user) && S.amount_check(1,user))
 						var/reinf = src.reinforcement ? 1 : 0
 						var/a_type = reinf ? /obj/item/furniture_parts/table/glass/reinforced : /obj/item/furniture_parts/table/glass
 						var/a_icon_state = "[reinf ? "r_" : null]table_parts"
@@ -171,7 +173,6 @@ MATERIAL
 				S.amount += src.amount
 				S.inventory_counter.update_number(S.amount)
 				boutput(user, "<span class='notice'>You add [S] to the stack. It now has [S.amount] sheets.</span>")
-				//SN src = null
 				qdel(src)
 				return
 
@@ -664,9 +665,9 @@ MATERIAL
 			if (splitnum >= amount || splitnum < 1)
 				boutput(user, "<span class='alert'>Invalid entry, try again.</span>")
 				return
-			boutput(usr, "<span class='notice'>You take [splitnum] rods from the stack, leaving [diff] rods behind.</span>")
+			boutput(user, "<span class='notice'>You take [splitnum] rods from the stack, leaving [diff] rods behind.</span>")
 			src.amount = diff
-			var/obj/item/rods/new_stack = new src.type(usr.loc, diff)
+			var/obj/item/rods/new_stack = new src.type(user.loc, diff)
 			if(src.material)
 				new_stack.setMaterial(src.material)
 			new_stack.amount = splitnum
@@ -698,7 +699,7 @@ MATERIAL
 				weldinput = input("How many sheets do you want to make?","Welding",1) as num
 				if (weldinput < 1) return
 				if (weldinput > makemetal) weldinput = makemetal
-			var/obj/item/sheet/M = new /obj/item/sheet/steel(usr.loc)
+			var/obj/item/sheet/M = new /obj/item/sheet/steel(user.loc)
 			if(src.material) M.setMaterial(src.material)
 			M.amount = weldinput
 			src.consume_rods(weldinput * 2)
@@ -724,7 +725,6 @@ MATERIAL
 				R.amount += src.amount
 				boutput(user, "<span class='notice'>You add [R.amount] rods to the stack. It now has [R.amount] rods.</span>")
 				R.update_icon()
-				//SN src = null
 				qdel(src)
 				return
 		if (istype(W, /obj/item/organ/head))
@@ -751,8 +751,8 @@ MATERIAL
 			else // Lances up!
 				user.visible_message("[user] raises a rod as a lance!", "You raise the rod into jousting position.")
 				S.joustingTool = src
-		else if (locate(/obj/grille, usr.loc))
-			for(var/obj/grille/G in usr.loc)
+		else if (locate(/obj/grille, user.loc))
+			for(var/obj/grille/G in user.loc)
 				if (G.ruined)
 					G.health = G.health_max
 					G.set_density(1)
@@ -770,13 +770,13 @@ MATERIAL
 				boutput(user, "<span class='alert'>You need at least two rods to build a grille.</span>")
 				return
 			user.visible_message("<span class='notice'><b>[user]</b> begins building a grille.</span>")
-			var/turf/T = usr.loc
+			var/turf/T = user.loc
 			SPAWN_DBG(1.5 SECONDS)
-				if (T == usr.loc && !usr.getStatusDuration("weakened") && !usr.getStatusDuration("stunned") && src.amount >= 2)
-					var/atom/G = new /obj/grille(usr.loc)
+				if (T == user.loc && !user.getStatusDuration("weakened") && !user.getStatusDuration("stunned") && src.amount >= 2)
+					var/atom/G = new /obj/grille(user.loc)
 					G.setMaterial(src.material)
 					src.consume_rods(2)
-					logTheThing("station", usr, null, "builds a grille (<b>Material:</b> [G.material && G.material.mat_id ? "[G.material.mat_id]" : "*UNKNOWN*"]) at [log_loc(usr)].")
+					logTheThing("station", user, null, "builds a grille (<b>Material:</b> [G.material && G.material.mat_id ? "[G.material.mat_id]" : "*UNKNOWN*"]) at [log_loc(user)].")
 		src.add_fingerprint(user)
 		return
 
@@ -1017,7 +1017,6 @@ MATERIAL
 			user.put_in_hand_or_drop(F)
 			F.inventory_counter?.update_number(F.amount)
 			if (src.amount < 1)
-				//SN src = null
 				qdel(src)
 				return
 			src.inventory_counter?.update_number(src.amount)
@@ -1027,7 +1026,7 @@ MATERIAL
 
 	attack_self(mob/user as mob)
 
-		if (usr.stat)
+		if (user.stat)
 			return
 		var/T = user.loc
 		if (!( istype(T, /turf) ))
@@ -1068,7 +1067,6 @@ MATERIAL
 			W.inventory_counter?.update_number(W.amount)
 			// @TODO Zamu here -- in the future we should probably make this like update_amount,
 			// so we can have multiple icon states for varying stack amounts. Ah well. Not today.
-			//SN src = null
 			qdel(src)
 			return
 		return

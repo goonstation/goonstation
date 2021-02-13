@@ -1,20 +1,20 @@
-//////////////////TABLE OF CONTENTS//////////////////
+//----------------TABLE OF CONTENTS--------------------//
 
-///MANTA RELATED LISTS AND GLOBAL VARIABLES///
-///MANTA RELATED OBJECTS///
-///MANTA RELATED TURFS///
-///MANTA RELATED DATUMS (Mainly related to fixing propellers.)///
-///MANTA RELATED AREAS///
-///MANTA SECRET STUFF///
+//MANTA RELATED LISTS AND GLOBAL VARIABLES//
+//MANTA RELATED OBJECTS//
+//MANTA RELATED TURFS//
+//MANTA RELATED DATUMS (Mainly related to fixing propellers.)//
+//MANTA RELATED AREAS//
+//MANTA SECRET STUFF//
 
-//******************************************** MANTA COMPATIBLE LISTS HERE ********************************************
+//-------------------------------------------- MANTA COMPATIBLE LISTS HERE --------------------------------------------
 
 var/list/mantaPushList = list()
 var/mantaMoving = 1
 var/MagneticTether = 1
 var/obj/manta_speed_lever/mantaLever = null
 
-//******************************************** MANTA COMPATIBLE OBJECTS HERE ********************************************
+//-------------------------------------------- MANTA COMPATIBLE OBJECTS HERE --------------------------------------------
 
 /obj/decal/mantaBubbles
 	density = 0
@@ -444,7 +444,7 @@ var/obj/manta_speed_lever/mantaLever = null
 		return ..()
 
 	attack_hand(mob/user as mob)
-		if (isAI(usr))
+		if (isAI(user))
 			boutput(user, "<span class='alert'>You'd touch the door, if only you had hands.</span>")
 			return
 		if (broken == 1)
@@ -696,7 +696,7 @@ var/obj/manta_speed_lever/mantaLever = null
 
 	attack_hand(mob/user as mob)
 		if(busy) return
-		if(get_dist(usr, src) > 1 || usr.z != src.z) return
+		if(get_dist(user, src) > 1 || user.z != src.z) return
 		src.add_dialog(user)
 		add_fingerprint(user)
 		busy = 1
@@ -913,12 +913,12 @@ var/obj/manta_speed_lever/mantaLever = null
 	database_id = "sea_plant_tubesponge-small"
 
 
-//******************************************** MANTA COMPATIBLE TURFS HERE ********************************************
+//-------------------------------------------- MANTA COMPATIBLE TURFS HERE --------------------------------------------
 
 /turf/space/fluid/manta
 	var/stateOn = ""
 	var/stateOff = ""
-	var/on = 1
+	var/on = TRUE
 	var/list/L = list()
 
 	New()
@@ -927,12 +927,11 @@ var/obj/manta_speed_lever/mantaLever = null
 		stateOff = "manta_sand"
 		stateOn = "[stateOff]_scroll"
 		icon_state = stateOn
-		on = 1
-		return .
+		on = TRUE
 
 	Del()
 		STOP_TRACKING
-		return ..()
+		. = ..()
 
 	ex_act(severity)
 		return
@@ -944,7 +943,6 @@ var/obj/manta_speed_lever/mantaLever = null
 		else
 			icon_state = stateOff
 			on = newOn
-		return
 
 	Entered(atom/movable/Obj,atom/OldLoc)
 		if(isnull(OldLoc)) // hack, remove later pls thx
@@ -967,7 +965,7 @@ var/obj/manta_speed_lever/mantaLever = null
 /turf/space/fluid/manta/nospawn
 	spawningFlags = null
 
-//******************************************** MANTA COMPATIBLE DATUMS HERE ********************************************
+//-------------------------------------------- MANTA COMPATIBLE DATUMS HERE --------------------------------------------
 //REPAIRING:  wrench > screwdriver > crowbar > wires > welder > wrench > screwdriver > sheet > welder
 
 /datum/action/bar/icon/propeller_fix
@@ -1339,7 +1337,7 @@ var/obj/manta_speed_lever/mantaLever = null
 #endif
 
 
-//******************************************** MANTA COMPATIBLE AREAS HERE ********************************************
+//-------------------------------------------- MANTA COMPATIBLE AREAS HERE --------------------------------------------
 //Also ugh, duplicate code.
 
 /area/mantaSpace
@@ -1559,10 +1557,12 @@ var/obj/manta_speed_lever/mantaLever = null
 	registered = "Sgt. Wilkins"
 	assignment = "Sergeant"
 	access = list(access_polariscargo,access_heads)
+	keep_icon = TRUE
 
 /obj/item/card/id/blank_polaris
 	name = "blank Nanotrasen ID"
 	icon_state = "polaris"
+	keep_icon = TRUE
 
 /obj/item/broken_egun
 	name = "broken energy gun"
@@ -1617,7 +1617,7 @@ var/obj/manta_speed_lever/mantaLever = null
 		pitwall
 			icon_state = "pit_wall"
 
-//******************************************** NSS MANTA SECRET VAULT********************************************
+//-------------------------------------------- NSS MANTA SECRET VAULT --------------------------------------------
 
 /obj/vaultdoor
 	name = "vault door"
@@ -1666,5 +1666,3 @@ var/obj/manta_speed_lever/mantaLever = null
 
 /obj/ladder/vaultladder
 	id = "vault"
-
-//RANDOM PROCS//

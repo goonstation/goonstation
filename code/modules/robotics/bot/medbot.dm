@@ -326,9 +326,7 @@
 /obj/machinery/bot/medbot/proc/point(var/mob/living/carbon/target) // I stole this from the chefbot <3 u marq ur a beter codr then me
 	visible_message("<b>[src]</b> points at [target]!")
 	if (iscarbon(target))
-		var/D = new /obj/decal/point(get_turf(target))
-		SPAWN_DBG(2.5 SECONDS)
-			qdel(D)
+		make_point(get_turf(target))
 
 /obj/machinery/bot/medbot/process()
 	if (!src.on)
@@ -751,11 +749,13 @@
 		var/t = input(user, "Enter new robot name", src.name, src.created_name) as null|text
 		if (!t)
 			return
+		if(t && t != src.name && t != src.created_name)
+			phrase_log.log_phrase("bot-med", t)
 		t = strip_html(replacetext(t, "'",""))
 		t = copytext(t, 1, 45)
 		if (!t)
 			return
-		if (!in_range(src, usr) && src.loc != usr)
+		if (!in_interact_range(src, user) && src.loc != user)
 			return
 
 		src.created_name = t

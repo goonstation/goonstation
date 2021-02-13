@@ -153,7 +153,7 @@
 		tag = null
 
 		if(length(src.statusEffects))
-			for(var/datum/statusEffect/effect in src.statusEffects)
+			for(var/datum/statusEffect/effect as() in src.statusEffects)
 				src.delStatus(effect)
 			src.statusEffects = null
 		..()
@@ -533,10 +533,6 @@
 /atom/movable/proc/OnMove(source = null)
 
 /atom/movable/proc/pull()
-	//set name = "Pull"
-	//set src in oview(1)
-	//set category = "Local"
-
 	if (!( usr ))
 		return
 
@@ -597,7 +593,7 @@
 
 /atom/proc/examine(mob/user)
 	RETURN_TYPE(/list)
-	if(src.hiddenFrom?.Find(user.client)) //invislist
+	if(src.hiddenFrom && (user.client in src.hiddenFrom)) //invislist
 		return list()
 
 	var/dist = get_dist(src, user)
@@ -625,7 +621,7 @@
 	else if (src.desc)
 		. += "<br>[src.desc]"
 
-	var/extra = src.get_desc(dist, usr)
+	var/extra = src.get_desc(dist, user)
 	if (extra)
 		. += " [extra]"
 
@@ -1005,7 +1001,7 @@
 
 
 /atom/proc/interact(var/mob/user)
-	if (isdead(user) || (!iscarbon(user) && !ismobcritter(user) && !issilicon(usr)))
+	if (isdead(user) || (!iscarbon(user) && !ismobcritter(user) && !issilicon(user)))
 		return
 
 	if (!isturf(src) && !istype(src.loc, /turf) || is_incapacitated(user) || user.restrained())

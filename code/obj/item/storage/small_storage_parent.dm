@@ -29,7 +29,7 @@
 	buildTooltipContent()
 		. = ..()
 		var/list/L = get_contents()
-		. += "<br>Holding [L.len]/[slots] objects"
+		. += "<br>Holding [length(L)]/[slots] objects"
 		lastTooltipContent = .
 
 	New()
@@ -184,7 +184,7 @@
 
 	MouseDrop(atom/over_object, src_location, over_location)
 		..()
-		var/obj/screen/hud/S = over_object
+		var/atom/movable/screen/hud/S = over_object
 		if (istype(S))
 			playsound(src.loc, "rustle", 50, 1, -5)
 			if (!usr.restrained() && !usr.stat && src.loc == usr)
@@ -198,7 +198,7 @@
 							usr.u_equip(src)
 							usr.put_in_hand(src, 1)
 				return
-		if (over_object == usr && in_range(src, usr) && isliving(usr) && !usr.stat)
+		if (over_object == usr && in_interact_range(src, usr) && isliving(usr) && !usr.stat)
 			if (usr.s_active)
 				usr.detach_hud(usr.s_active)
 				usr.s_active = null
@@ -256,7 +256,7 @@
 			animate_storage_rustle(src)
 		else
 			..()
-			for (var/mob/M in hud.mobs)
+			for (var/mob/M as() in hud.mobs)
 				if (M != user)
 					M.detach_hud(hud)
 			hud.update()
@@ -267,21 +267,20 @@
 
 	proc/get_contents()
 		RETURN_TYPE(/list)
-		var/list/cont = src.contents.Copy()
-		for(var/atom/A in cont)
+		. = src.contents.Copy()
+		for(var/atom/A as() in .)
 			if(!istype(A, /obj/item) || istype(A, /obj/item/grab))
-				cont.Remove(A)
-		return cont
+				. -= A
 
 	proc/add_contents(obj/item/I)
 		I.set_loc(src)
 
 	proc/get_all_contents()
-		var/list/L = list()
-		L += get_contents()
-		for (var/obj/item/storage/S in get_contents())
-			L += S.get_all_contents()
-		return L
+		. = list()
+		var/our_contents = get_contents()
+		. += our_contents
+		for (var/obj/item/storage/S in our_contents)
+			. += S.get_all_contents()
 
 /obj/item/storage/box
 	name = "box"
@@ -346,6 +345,15 @@
 	New()
 		..()
 		BLOCK_SETUP(BLOCK_BOOK)
+
+/obj/item/storage/briefcase/toxins
+	name = "toxins research briefcase"
+	icon_state = "briefcase_rd"
+	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
+	item_state = "rd-case"
+	max_wclass = 4 // parity with secure briefcase
+	desc = "A large briefcase for experimental toxins research."
+	spawn_contents = list(/obj/item/raw_material/molitz_beta = 6)
 
 /obj/item/storage/desk_drawer
 	name = "desk drawer"

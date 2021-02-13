@@ -158,6 +158,7 @@
 /mob/living/carbon/human/proc/ai_process()
 	if(!ai_active) return
 	if(world.time < ai_lastaction + ai_actiondelay) return
+	usr = src
 
 	var/action_delay = 0
 	delStatus("resting")
@@ -182,12 +183,6 @@
 		ai_lastaction = world.time
 		walk_towards(src, null)
 		return
-
-//			var/turf/T = get_turf(src)
-//			if((T.poison > 100000.0 || T.firelevel || T.oxygen < 560000 || T.co2 > 7500.0) && !istype(get_turf(src), /turf/space) )
-//				ai_avoid(T)
-//			else ai_move()
-
 
 	if(!src.restrained() && !src.lying && !src.buckled)
 		ai_action()
@@ -270,7 +265,6 @@
 		ai_state = AI_PASSIVE
 
 /mob/living/carbon/human/proc/ai_action()
-	usr = src
 
 	src.ai_do_hand_stuff()
 
@@ -568,7 +562,7 @@
 					break
 		if(poured || istype(src.equipped(), /obj/item/reagent_containers/glass) && prob(80))
 			// do nothing
-		else if(istype(src.equipped(), /obj/item/reagent_containers/food/snacks) || src.equipped().reagents?.total_volume > 0)
+		else if((istype(src.equipped(), /obj/item/reagent_containers/food/snacks) || src.equipped().reagents?.total_volume > 0) && ai_useitems)
 			src.ai_attack_target(src, src.equipped())
 		else
 			var/obj/item/thing = src.equipped()
@@ -587,7 +581,7 @@
 			src.ai_attack_target(pick(eligible), src.equipped())
 
 	// use
-	if(src.equipped() && prob(ai_state == AI_PASSIVE ? 2 : 7))
+	if(src.equipped() && prob(ai_state == AI_PASSIVE ? 2 : 7) && ai_useitems)
 		src.equipped().attack_self(src)
 
 	// throw
@@ -600,7 +594,7 @@
 	// give
 	if(prob(src.hand ? 5 : 1) && src.equipped() && ai_state != AI_ATTACKING)
 		for(var/mob/living/carbon/human/H in view(1))
-			if(H != src)
+			if(H != src && isalive(H))
 				SPAWN_DBG(0)
 					src.give_to(H)
 				break

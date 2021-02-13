@@ -10,7 +10,7 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 	var/spent_points = list()				//assoc list of ckeys to their spent points.
 	var/maxed_out = 0					//set to 1 if the points get up to MAX_POINTS so we can play the special event/thing
 
-	var/obj/screen/spooktober_meter/meter = new()
+	var/atom/movable/screen/spooktober_meter/meter = new()
 
 	proc/change_points(var/ckey, var/added as num)
 		if (ckey)
@@ -43,7 +43,7 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 		maxed_out = 1
 
 
-/obj/screen/spooktober_meter
+/atom/movable/screen/spooktober_meter
 	icon = 'icons/mob/spooktober_ghost_hud160x32.dmi'
 	icon_state = "empty"
 	name = "Spooktober Spookpoints Meter"
@@ -67,7 +67,7 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 
 #endif
 
-/obj/screen/ability/topBar/ghost_observer
+/atom/movable/screen/ability/topBar/ghost_observer
 	clicked(params)
 		var/datum/targetable/ghost_observer/abil = owner
 		if (!istype(abil))

@@ -1701,7 +1701,10 @@ proc/HYPaddCommut(var/datum/plant/P,var/datum/plantgenes/DNA,var/commut)
 			if(X.type == commut)
 				return
 	// create a new list here (i.e. do not use +=) so as to not affect related seeds/plants
-	DNA.commuts = DNA.commuts + HY_get_strain_from_path(commut)
+	if(DNA.commuts)
+		DNA.commuts = DNA.commuts + HY_get_strain_from_path(commut)
+	else
+		DNA.commuts = list(HY_get_strain_from_path(commut))
 
 proc/HYPmutateDNA(var/datum/plantgenes/DNA,var/severity = 1)
 	// This proc jumbles up the variables in a plant's genes. It's fundamental to breeding.

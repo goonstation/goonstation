@@ -484,12 +484,10 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 		src.update_icon()
 
 	proc/update_icon()
-		//src.overlays = null
 		if (src.on_fire)
 			if (!src.fire_image)
 				src.fire_image = image('icons/effects/160x160.dmi', "xmastree_2014_burning")
 			src.fire_image.icon_state = "xmastree_2014_burning" // it didn't need to change from 2014 to 2015 so I just left it as this one
-			//src.overlays += src.fire_image
 			src.UpdateOverlays(src.fire_image, "fire")
 		else
 			src.UpdateOverlays(null, "fire")
@@ -918,7 +916,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 			src.create_reagents(1000)
 
 		src.set_mutantrace(/datum/mutantrace/krampus)
-		src.reagents.add_reagent("stimulants", 50)
+		src.changeStatus("stimulants", 4 MINUTES)
 		src.gender = "male"
 		bioHolder.AddEffect("loud_voice")
 		bioHolder.AddEffect("cold_resist")

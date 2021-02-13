@@ -481,6 +481,6 @@
 
 	attack_hand(mob/user as mob)
 		for(var/obj/airbridge_controller/C in range(3, src))
-			boutput(usr, "<span class='notice'>[C.toggle_bridge()]</span>")
+			boutput(user, "<span class='notice'>[C.toggle_bridge()]</span>")
 			break
 		return
