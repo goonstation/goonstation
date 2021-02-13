@@ -191,10 +191,8 @@
 	name = "wheat"
 	desc = "Never eat shredded wheat."
 	icon_state = "wheat"
-	wear_image_icon = 'icons/mob/mask.dmi'
 	brewable = 1
 	brew_result = "beer"
-	var/use_bloodoverlay = 0
 
 /obj/item/plant/wheat/durum
 	name = "durum wheat"

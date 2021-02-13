@@ -3871,5 +3871,3 @@ datum
 			alch_strength = 0.3
 			description = "A cocktail from the prohibition era, named after a popular expression."
 			reagent_state = LIQUID
-
-

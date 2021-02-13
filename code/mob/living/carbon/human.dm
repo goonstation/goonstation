@@ -2148,7 +2148,7 @@
 			if (I.flags & ONBACK)
 				return 1
 		if (slot_wear_mask) // It's not pretty, but the mutantrace check will do for the time being (Convair880).
-			if (istype(I, /obj/item/clothing/mask) || istype(I, /obj/item/plant/wheat))
+			if (istype(I, /obj/item/clothing/mask))
 				var/obj/item/clothing/M = I
 				if ((src.mutantrace && !src.mutantrace.uses_human_clothes && !M.compatible_species.Find(src.mutantrace.name)))
 					//DEBUG_MESSAGE("[src] can't wear [I].")
