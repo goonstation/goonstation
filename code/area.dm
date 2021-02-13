@@ -143,6 +143,8 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
 	/// Local list of obj/machines found in the area
 	var/list/machines = list()
 
+	var/list/obj/critter/turtle/sylvesters = list()
+
 	proc/CanEnter(var/atom/movable/A)
 		if( blocked )
 			if( ismob(A) )
@@ -213,6 +215,8 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
 
 		else if(oldloc && !ismob(A) && !CanEnter( A ))
 			A.loc = oldloc
+		else if(istype(A, /obj/critter/turtle))
+			src.sylvesters += A
 		..()
 
 	/// Gets called when a movable atom exits an area.
@@ -248,6 +252,9 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
 								src.active = 0
 
 						//Put whatever you want here. See Entering above.
+
+		if(istype(A, /obj/critter/turtle))
+			src.sylvesters -= A
 
 		..()
 

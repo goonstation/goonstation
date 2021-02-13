@@ -91,6 +91,12 @@
 
 	playsound(get_turf(src), "sound/misc/lightswitch.ogg", 50, 1)
 
+	if(on)
+		for(var/obj/critter/turtle/sylvester/S as() in src.area.sylvesters)
+			if(S.rigged)
+				S.explode()
+
+
 /obj/machinery/light_switch/power_change()
 
 	if(!otherarea)

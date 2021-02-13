@@ -19,6 +19,9 @@
 	crit_text = "rams really hard into"
 	var/shell_count = 0		//Count down to 0. Measured in process cycles. If they are in their shell when this is 0, exit.
 	var/wandering_count = 0		//Make them move less frequently when wandering... They're slow.
+	var/rigged = FALSE
+	var/rigger = null
+	var/exploding = FALSE
 
 	ai_think()
 		if (shell_count > 0)
@@ -83,9 +86,49 @@
 		if (prob(20))
 			enter_shell()
 		..()
+
 	CritterDeath()
 		..()
 		shell_count = 0
+
+	attackby(obj/item/I, mob/living/user)
+		if(istype(I, /obj/item/reagent_containers/syringe))
+			var/obj/item/reagent_containers/syringe/S = I
+
+			boutput(user, "You inject the solution into [src].")
+
+			if(S.reagents.has_reagent("plasma", 1))
+				message_admins("[key_name(user)] rigged [src] to explode in [user.loc.loc], [showCoords(user.x, user.y, user.z)].")
+				logTheThing("combat", user, null, "rigged [src] to explode in [user.loc.loc] ([showCoords(user.x, user.y, user.z)])")
+				rigged = 1
+				rigger = user
+
+			S.reagents.clear_reagents()
+
+			var/area/A = get_area(src)
+			if(A?.lightswitch && A?.power_light)
+				src.explode()
+		else
+			. = ..()
+
+	// explode the turtle
+
+	proc/explode()
+		var/turf/T = get_turf(src.loc)
+		SPAWN_DBG(0)
+			src.rigged = FALSE
+			src.rigger = null
+			enter_shell()	//enter shell first to give a warning
+			src.exploding = TRUE
+			sleep(0.2 SECONDS)
+			explosion(src, T, 0, 1, 2, 2)
+			sleep(4 SECONDS)
+			src.exploding = FALSE
+			var/message = "Check please!"
+			var/chat_text = make_chat_maptext(src, message)
+			for (var/mob/O in all_hearers(7, get_turf(src)))
+				O.show_message("<span class='game say bold'><span class='name'>[src]</span></span> says, <span class='message'>\"[message]\"</span>", 2, assoc_maptext = chat_text)
+			playsound(src.loc, "sound/misc/rimshot.ogg", 50, 1)
 
 	//sets the turtle to sleep inside their shell. Will exit their shell if hit again
 	proc/enter_shell()
@@ -120,7 +163,8 @@
 
 	//Just completely override this to change values of severity. Kinda ugly, but it's what I want!
 	ex_act(severity)
-
+		if(src.exploding)
+			return
 		if (src.shell_count)
 			shell_count = 0
 			on_wake()
