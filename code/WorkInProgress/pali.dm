@@ -423,8 +423,11 @@
 		var/obj/item/clothing/head/bio_hood/hood = new(src.loc)
 		suit.color = col
 		hood.color = col
-		suit.name = "crewperson suit"
-		hood.name = "crewperson hood"
+		var/datum/color/base_color_datum = new
+		base_color_datum.from_hex(suit_color)
+		var/nearest_color_text = get_nearest_color(base_color_datum)
+		suit.name = "[nearest_color_text] suit"
+		hood.name = "[nearest_color_text] hood"
 		suit.desc = "There's 1 impostor among us."
 		hood.desc = "There's 1 impostor among us."
 		if(src.cursed)
