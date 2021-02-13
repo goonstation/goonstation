@@ -35,7 +35,6 @@ area/map_gen
 
 /area/map_gen/jungle
 	name = "planet generation area"
-	icon = 'icons/turf/areas.dmi'
 	map_generator = /datum/map_generator/jungle_generator
 
 /turf/map_gen

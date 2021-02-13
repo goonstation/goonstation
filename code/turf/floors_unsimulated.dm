@@ -993,12 +993,10 @@
 
 	New()
 		. = ..()
-		if (prob(3))
-			src.icon_state = "swamp0"
-		else if (prob(10))
+		if (prob(10))
 			src.icon_state = "swamp_decor[rand(1, 10)]"
 		else
-			src.icon_state = "swamp[rand(1, 4)]"
+			src.icon_state = "swamp0"
 
 #undef FLOOR_AUTO_EDGE_PRIORITY_DIRT
 #undef FLOOR_AUTO_EDGE_PRIORITY_GRASS
