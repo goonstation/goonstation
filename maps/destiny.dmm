@@ -10254,17 +10254,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/primary/central)
-"asz" = (
-/obj/machinery/door/firedoor/border_only,
-/obj/table/reinforced/auto,
-/obj/window/reinforced/south,
-/obj/machinery/door/window/westleft{
-	req_access_txt = "28"
-	},
-/obj/machinery/cashreg,
-/obj/item/reagent_containers/food/snacks/cake/chocolate/gateau,
-/turf/simulated/floor/black,
-/area/station/crew_quarters/kitchen)
 "asA" = (
 /obj/landmark/start{
 	name = "Chef"
@@ -10295,14 +10284,6 @@
 /obj/item/kitchen/utensil/fork,
 /obj/item/plate,
 /obj/item/reagent_containers/food/drinks/bowl,
-/obj/disposalpipe/segment/food,
-/turf/simulated/floor/specialroom/cafeteria,
-/area/station/crew_quarters/kitchen)
-"asE" = (
-/obj/table/reinforced/auto,
-/obj/item/reagent_containers/food/snacks/breadloaf,
-/obj/item/reagent_containers/food/drinks/drinkingglass/icing,
-/obj/item/reagent_containers/food/drinks/drinkingglass/icing,
 /obj/disposalpipe/segment/food,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
@@ -25723,22 +25704,6 @@
 	icon_state = "pipe-c"
 	},
 /turf/simulated/wall/auto/reinforced/gannets,
-/area/station/science/research_director{
-	workplace = 1
-	})
-"aTa" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
-/turf/simulated/floor/carpet{
-	dir = 10;
-	icon_state = "fpurple2"
-	},
 /area/station/science/research_director{
 	workplace = 1
 	})
@@ -45437,6 +45402,17 @@
 	dir = 6
 	},
 /area/space)
+"efg" = (
+/obj/machinery/door/firedoor/border_only,
+/obj/table/reinforced/auto,
+/obj/window/reinforced/south,
+/obj/machinery/door/window/westleft{
+	req_access_txt = "28"
+	},
+/obj/machinery/cashreg,
+/obj/item/reagent_containers/food/snacks/cake/chocolate/gateau,
+/turf/simulated/floor/black,
+/area/station/crew_quarters/kitchen)
 "eLW" = (
 /obj/decal/tile_edge/line/purple{
 	dir = 8;
@@ -45499,6 +45475,14 @@
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade)
+"uiY" = (
+/obj/table/reinforced/auto,
+/obj/item/reagent_containers/food/snacks/breadloaf,
+/obj/item/reagent_containers/food/drinks/drinkingglass/icing,
+/obj/item/reagent_containers/food/drinks/drinkingglass/icing,
+/obj/disposalpipe/segment/food,
+/turf/simulated/floor/specialroom/cafeteria,
+/area/station/crew_quarters/kitchen)
 "ukX" = (
 /obj/cable{
 	d1 = 4;
@@ -45511,6 +45495,26 @@
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay/lobby)
+"utc" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
+/obj/item/storage/briefcase/toxins{
+	pixel_x = -5;
+	pixel_y = 16
+	},
+/turf/simulated/floor/carpet{
+	dir = 10;
+	icon_state = "fpurple2"
+	},
+/area/station/science/research_director{
+	workplace = 1
+	})
 "vMk" = (
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/specialroom/chapel{
@@ -92201,7 +92205,7 @@ aqY
 art
 anB
 asd
-asz
+efg
 arP
 atr
 atN
@@ -93711,7 +93715,7 @@ ard
 apZ
 arM
 ash
-asE
+uiY
 bBQ
 atu
 atQ
@@ -99475,7 +99479,7 @@ aKl
 aNZ
 aPF
 aRr
-aTa
+utc
 aUs
 aWd
 aXO

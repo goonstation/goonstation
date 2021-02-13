@@ -23003,12 +23003,6 @@
 /obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
-"bdt" = (
-/obj/table/auto,
-/obj/item/kitchen/rollingpin,
-/obj/item/reagent_containers/food/drinks/drinkingglass/icing,
-/turf/simulated/floor/specialroom/cafeteria,
-/area/station/crew_quarters/kitchen)
 "bdu" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -24646,18 +24640,6 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/grey,
-/area/station/crew_quarters/catering)
-"bhS" = (
-/obj/table/auto,
-/obj/machinery/light_switch/east,
-/obj/item/device/reagentscanner{
-	pixel_x = -4;
-	pixel_y = 3
-	},
-/obj/item/reagent_containers/food/drinks/drinkingglass/icing{
-	pixel_x = 4
-	},
-/turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "bhT" = (
 /turf/simulated/wall/auto/supernorn,
@@ -51497,6 +51479,12 @@
 	},
 /turf/simulated/floor/yellowblack/corner,
 /area/station/crew_quarters/ce)
+"cNR" = (
+/obj/table/auto,
+/obj/item/kitchen/rollingpin,
+/obj/item/reagent_containers/food/drinks/drinkingglass/icing,
+/turf/simulated/floor/specialroom/cafeteria,
+/area/station/crew_quarters/kitchen)
 "cPy" = (
 /obj/decal/tile_edge/stripe/big{
 	dir = 8
@@ -55428,6 +55416,18 @@
 /obj/firedoor_spawn,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/barber_shop)
+"nuM" = (
+/obj/table/auto,
+/obj/machinery/light_switch/east,
+/obj/item/device/reagentscanner{
+	pixel_x = -4;
+	pixel_y = 3
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/icing{
+	pixel_x = 4
+	},
+/turf/simulated/floor/black,
+/area/station/crew_quarters/catering)
 "nAw" = (
 /obj/wingrille_spawn/auto/crystal,
 /obj/machinery/door/poddoor/pyro{
@@ -55495,6 +55495,19 @@
 /obj/item/stamp/hop,
 /turf/simulated/floor/black,
 /area/station/bridge/hos)
+"nJl" = (
+/obj/machinery/power/apc/autoname_north,
+/obj/table/wood/auto,
+/obj/item/storage/briefcase/toxins{
+	pixel_x = 1;
+	pixel_y = 4
+	},
+/obj/machinery/phone,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/carpet/purple/fancy/edge/ne,
+/area/station/science/research_director)
 "nJC" = (
 /obj/machinery/conveyor{
 	dir = 8;
@@ -59311,15 +59324,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/turret_protected/Zeta)
-"xwx" = (
-/obj/machinery/power/apc/autoname_north,
-/obj/table/wood/auto,
-/obj/machinery/phone,
-/obj/cable{
-	icon_state = "0-2"
-	},
-/turf/simulated/floor/carpet/purple/fancy/edge/ne,
-/area/station/science/research_director)
 "xwP" = (
 /obj/disposalpipe/segment/bent/west,
 /obj/grille/catwalk{
@@ -114177,7 +114181,7 @@ bhT
 bet
 mLt
 pfT
-bhS
+nuM
 rck
 bky
 bft
@@ -115683,7 +115687,7 @@ aUz
 aZT
 fje
 cnR
-bdt
+cNR
 jvp
 bfE
 fje
@@ -122956,7 +122960,7 @@ cGB
 usi
 sun
 bAM
-xwx
+nJl
 gbn
 bKj
 bLz
