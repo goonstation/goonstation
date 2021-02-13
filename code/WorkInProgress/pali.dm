@@ -411,8 +411,8 @@
 	New()
 		. = ..()
 		var/h = rand(360)
-		var/s = 0.9
-		var/v = rand() * 0.2 + 0.8
+		var/s = rand() * 0.2 + 0.8
+		var/v = rand() * 0.5 + 0.5
 		var/suit_color = hsv2rgb(h, s, v)
 		var/boots_color = hsv2rgb(h + rand(-30, 30), s, v * 0.8)
 		var/col = color_mapping_matrix(
