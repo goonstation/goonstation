@@ -1,5 +1,7 @@
 
 (t)sat feb 13 21
+(u)pali
+(*)Building new cloning pods now requires uqill (to make the pod sturdy) and beeswax. Little known lore: NT's cloning pods are actually a technology copied from spacebees and the beeswax is necessary to make the clone heal up!
 (u)Azrun
 (p)3558
 (e)⚖🗺🎨|balance, mapping, sprites
