@@ -255,7 +255,7 @@
 		if (!W) return
 		if (!user) return
 		if (inafterlife(user))
-			boutput(usr, "You can't bring yourself to hurt such a beautiful thing!")
+			boutput(user, "You can't bring yourself to hurt such a beautiful thing!")
 			return
 		if (src.destroyed) return
 		if (user.mind && user.mind.assigned_role == "Captain")
@@ -312,7 +312,7 @@
 		if (!W) return
 		if (!user) return
 		if (inafterlife(user))
-			boutput(usr, "You can't bring yourself to hurt such a beautiful thing!")
+			boutput(user, "You can't bring yourself to hurt such a beautiful thing!")
 			return
 		if (src.destroyed) return
 		if (user.mind && user.mind.assigned_role == "Captain")

@@ -80,7 +80,7 @@
 		if (istype(I, /obj/item/handheld_vacuum))
 			return
 		if (istype(I,/obj/item/satchel/))
-			var/action = input(usr, "What do you want to do with the satchel?") in list("Empty it into the Chute","Place it in the Chute","Never Mind")
+			var/action = input(user, "What do you want to do with the satchel?") in list("Empty it into the Chute","Place it in the Chute","Never Mind")
 			if (!action || action == "Never Mind") return
 			if (get_dist(src,user) > 1)
 				boutput(user, "<span class='alert'>You need to be closer to the chute to do that.</span>")

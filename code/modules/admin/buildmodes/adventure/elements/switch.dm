@@ -64,7 +64,7 @@
 						selected_triggerable_untrigger += object
 						selected_triggerable_untrigger[object] = unact
 					else
-						boutput(usr, "<span class='alert'>ERROR: Missing actions definition for triggerable [object].</span>")
+						boutput(user, "<span class='alert'>ERROR: Missing actions definition for triggerable [object].</span>")
 
 /obj/adventurepuzzle/triggerer/twostate/switch
 	icon = 'icons/obj/randompuzzles.dmi'

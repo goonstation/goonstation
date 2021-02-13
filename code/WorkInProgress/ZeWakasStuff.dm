@@ -14,6 +14,7 @@
 	world.map_cpu hookin (fuck why i delete the old code)
 	enable TILE_MOVEMENT_MODE and see if break
 	time2text timezone stuff for external? wire?
+	particle abuse
 */
 
 
