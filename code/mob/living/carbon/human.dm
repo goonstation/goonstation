@@ -2162,7 +2162,7 @@
 			if (istype(I, /obj/item/clothing/gloves))
 				return 1
 		if (slot_head)
-			if (istype(I, /obj/item/clothing/head ) || istype(I, /obj/item/plant/flower))
+			if (istype(I, /obj/item/clothing/head ) || istype(I, /obj/item/plant/flower)) //allows humans to wear hats and flowers!
 				var/obj/item/clothing/H = I
 				if ((src.mutantrace && !src.mutantrace.uses_human_clothes && !(src.mutantrace.name in H.compatible_species)))
 					//DEBUG_MESSAGE("[src] can't wear [I].")

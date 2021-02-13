@@ -7,49 +7,8 @@
 	burn_possible = 2
 	wear_image_icon = 'icons/mob/head.dmi'
 	var/thorned = 0
-	var/seal_hair = 0
-	var/use_bloodoverlay = 0
-	var/bites = 1
-
-	attack(mob/M as mob, mob/user as mob) //shamlessly yoinking fruit hat code
-		if (M == user)
-			if (!src.bites)
-				boutput(user, "<span class='alert'>No more bites of \the [src] left, oh no!</span>")
-				user.u_equip(src)
-				qdel(src)
-			else
-				M.visible_message("<span class='notice'>[M] takes a bite of [src]!</span>",\
-				"<span class='notice'>You take a bite of [src]!</span>")
-				src.bites--
-				M.nutrition += 20
-				playsound(M.loc,"sound/items/eatfood.ogg", 1)
-				if (!src.bites)
-					M.visible_message("<span class='alert'>[M] finishes eating [src].</span>",\
-					"<span class='alert'>You finish eating [src].</span>")
-					user.u_equip(src)
-					qdel(src)
-		else if(check_target_immunity(M))
-			user.visible_message("<span class='alert'>You try to feed [M] [src], but fail!</span>")
-		else
-			user.tri_message("<span class='alert'><b>[user]</b> tries to feed [M] [src]!</span>",\
-			user, "<span class='alert'>You try to feed [M] [src]!</span>",\
-			M, "<span class='alert'><b>[user]</b> tries to feed you [src]!</span>")
-			if (!do_after(user, 1 SECONDS))
-				boutput(user, "<span class='alert'>You were interrupted!</span>")
-				return ..()
-			else
-				user.tri_message("<span class='alert'><b>[user]</b> feeds [M] [src]!</span>",\
-				user, "<span class='alert'>You feed [M] [src]!</span>",\
-				M, "<span class='alert'><b>[user]</b> feeds you [src]!</span>")
-				src.bites--
-				M.nutrition += 20
-				playsound(M.loc, "sound/items/eatfood.ogg", 1)
-				if (!src.amount)
-					M.visible_message("<span class='alert'>[M] finishes eating [src].</span>",\
-					"<span class='alert'>You finish eating [src].</span>")
-					user.u_equip(src)
-					qdel(src)
-
+	var/seal_hair = 0 //gotta have this to prevent runtimes
+	var/use_bloodoverlay = 0 //this too
 
 /obj/item/plant/flower/rose
 	name = "rose"
@@ -89,15 +48,33 @@
 		return
 
 /obj/item/plant/flower/hibiscus
-	name = "Hibiscus"
+	name = "hibiscus"
 	desc = "A flower that makes up for it's lack of scent with it's beauty."
 	icon_state = "hibiscus"
 
-
 /obj/item/plant/flower/poppy
 	name = "poppy"
-	crop_suffix	= ""
 	desc = "A distinctive red flower."
 	icon_state = "poppy"
 //	module_research = list("vice" = 4)
 //	module_research_type = /obj/item/plant/herb/cannabis
+
+/obj/item/plant/flower/bluebonnet //research the flower
+	name = "blue bonnet"
+	desc = "to-do" //NOTE THIS
+	icon_state = "bbonnet"
+
+/obj/item/plant/flower/daffodil //researchresearch
+	name = "daffodil"
+	desc = "to-do" //NOTE THIS
+	icon_state = "daffodil"
+
+/obj/item/plant/flower/daisy //research it
+	name = "daisy"
+	desc = "Daisy, Daisy..." //give me your answer do...
+	icon_state = "daisy"
+
+/obj/item/plant/flower/morningglory //rereresearch
+	name = "morning glory"
+	desc = "to-do" //NOTE THIS
+	icon_state = "mglory"
