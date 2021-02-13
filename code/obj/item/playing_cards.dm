@@ -33,13 +33,15 @@
 
     //procs that convert the card into the given StG card type
     proc/stg_mob(var/list/possible_card_types,var/list/humans,var/list/borgos,var/list/ai)
-        var/datum/playing_card/griffening/creature/mob/chosen_card_type = pick(possible_card_types)
+        var/path = pick(possible_card_types)
+        var/datum/playing_card/griffening/creature/mob/chosen_card_type = new path
         var/mob/living/chosen_mob
 
         var/icon_state_num
 
         if(istype(chosen_card_type,/datum/playing_card/griffening/creature/mob/cyborg))
-            chosen_mob = pick(borgos) //DEV - condense if possible
+            if(borgos.len)
+                chosen_mob = pick(borgos) //DEV - condense if possible
             if(chosen_mob)
                 name = chosen_mob.name
             else
@@ -47,7 +49,8 @@
             icon_state_num = rand(1,NUMBER_BORG)
             icon_state = "stg-borg-[icon_state_num]"
         else if (istype(chosen_card_type,/datum/playing_card/griffening/creature/mob/ai))
-            chosen_mob = pick(ai)
+            if(ai.len)
+                chosen_mob = pick(ai)
             if(chosen_mob)
                 name = chosen_mob.name
             else
@@ -88,7 +91,8 @@
         desc += "ATK [chosen_card_type.ATK] | DEF [chosen_card_type.DEF]"
 
     proc/stg_friend(var/list/possible_card_types)
-        var/datum/playing_card/griffening/creature/friend/chosen_card_type = pick(possible_card_types)
+        var/path = pick(possible_card_types)
+        var/datum/playing_card/griffening/creature/friend/chosen_card_type = new path
         if(chosen_card_type.LVL)
             name = "LVL [chosen_card_type.LVL] [chosen_card_type.card_name]"
         else
@@ -98,14 +102,16 @@
         icon_state = "stg-general-[pick(1,NUMBER_GENERAL)]"
 
     proc/stg_effect(var/list/possible_card_types)
-        var/datum/playing_card/griffening/effect/chosen_card_type = pick(possible_card_types)
+        var/path = pick(possible_card_types)
+        var/datum/playing_card/griffening/effect/chosen_card_type = new path
 
         name = chosen_card_type.card_name
         desc = chosen_card_type.card_data
         icon_state = "stg-general-[pick(1,NUMBER_GENERAL)]"
 
     proc/stg_area(var/list/possible_card_types)
-        var/datum/playing_card/griffening/area/chosen_card_type = pick(possible_card_types)
+        var/path = pick(possible_card_types)
+        var/datum/playing_card/griffening/area/chosen_card_type = new path
 
         name = chosen_card_type.card_name
         desc = chosen_card_type.card_data
@@ -472,19 +478,19 @@
     proc/update_showcase()
         if(stored_deck)
             var/obj/item/playing_card/chosen_card = pick(stored_deck.contents)
-            UpdateOverlays(image(icon,chosen_card.icon_state),"card")
+            UpdateOverlays(image(icon,chosen_card.icon_state,-1,chosen_card.dir),"card")
             if(chosen_card.foiled)
-                UpdateOverlays(image(icon,"stg-foil"),"foil")
+                UpdateOverlays(image(icon,"stg-foil",-1,chosen_card.dir),"foil")
 
     attack_self(mob/user as mob)
         switch(icon_state)
             if("stg-box")
                 icon_state = "stg-box-open"
-            if("stg-open")
+            if("stg-box-open")
                 icon_state = "stg-box-torn"
 
     attack_hand(mob/user as mob)
-        if((loc == user) && stored_deck)
+        if((loc == user) && stored_deck && ((icon_state =="stg-box-torn") || (icon_state == "stg-blister")))
             if(icon_state == "stg-box-torn")
                 icon_state = "stg-blister"
                 ..()
@@ -494,8 +500,10 @@
                 stored_deck = null
                 name = "discarded blister packaging"
                 ClearAllOverlays()
+        else
+            ..()
 
 /obj/item/stg_box_waste
-    name = "mutilated husk of torn cardboard"
+    name = "mutilated cardboard husk"
     icon = 'icons/obj/items/playing_card.dmi'
     icon_state = "stg-box-empty"
