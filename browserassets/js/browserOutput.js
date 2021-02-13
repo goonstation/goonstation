@@ -35,7 +35,7 @@ var opts = {
     'highlightColor': '#FFFF00', //The color of the highlighted message
     'pingDisabled': false, //Has the user disabled the ping counter
     'twemoji': false, // whether Twemoji are used instead of the default emoji
-		'messageLimitEnabled': true, // whether old messages get deleted
+    'messageLimitEnabled': true, // whether old messages get deleted
 
     //Ping display
     'pingCounter': 0, //seconds counter
@@ -636,7 +636,7 @@ $(function() {
         'shighlightColor': getCookie('highlightcolor'),
         'stheme': getCookie('theme'),
         'stwemoji': getCookie('twemoji'),
-				'smessageLimitEnabled': getCookie('messageLimitEnabled')
+        'smessageLimitEnabled': getCookie('messageLimitEnabled')
     };
 
     if (savedConfig.sfontSize) {
@@ -678,9 +678,9 @@ $(function() {
     if (savedConfig.stwemoji) {
       opts.twemoji = true;
     }
-		if (savedConfig.smessageLimitEnabled) {
-			opts.messageLimitEnabled = savedConfig.smessageLimitEnabled;
-		}
+    if (savedConfig.smessageLimitEnabled) {
+      opts.messageLimitEnabled = savedConfig.smessageLimitEnabled;
+    }
 
     (function() {
         var dataCookie = getCookie('connData');
