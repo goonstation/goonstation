@@ -429,7 +429,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 			return 0
 
 		var/datum/bioEffect/newEffect = bioEffectList[idToAdd]
-		newEffect = new newEffect.type //New new new york
+		newEffect = newEffect.GetCopy()
 		if (istype(newEffect))
 			effectPool[newEffect.id] = newEffect
 			newEffect.holder = src

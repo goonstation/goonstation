@@ -507,7 +507,7 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 
 			if(SECBOT_HUNT)		// hunting for perp
 
-				if (src.target.hasStatus("handcuffed") || src.frustration >= 8) // if can't reach perp for long enough, go idle
+				if (!src.target || src.target.hasStatus("handcuffed") || src.frustration >= 8) // if can't reach perp for long enough, go idle
 					src.target = null
 					src.last_found = world.time
 					src.frustration = 0
@@ -1359,11 +1359,13 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 
 	else if (istype(W, /obj/item/pen))
 		var/t = input(user, "Enter new robot name", src.name, src.created_name) as text
+		if(t && t != src.name && t != src.created_name)
+			phrase_log.log_phrase("bot-sec", t)
 		t = strip_html(replacetext(t, "'",""))
 		t = copytext(t, 1, 45)
 		if (!t)
 			return
-		if (!in_interact_range(src, usr) && src.loc != usr)
+		if (!in_interact_range(src, user) && src.loc != user)
 			return
 
 		src.created_name = t

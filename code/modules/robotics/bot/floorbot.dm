@@ -153,7 +153,7 @@ text("<A href='?src=\ref[src];operation=make'>[src.maketiles ? "Yes" : "No"]</A>
 	if (istype(W, /obj/item/device/pda2) && W:ID_card)
 		W = W:ID_card
 	if (istype(W, /obj/item/card/id))
-		if (src.allowed(usr))
+		if (src.allowed(user))
 			src.locked = !src.locked
 			boutput(user, "You [src.locked ? "lock" : "unlock"] the [src] behaviour controls.")
 		else

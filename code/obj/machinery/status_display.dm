@@ -1,3 +1,7 @@
+//Contains:
+//-Status display (shelved until someone replaces the texticon proc with maptext)
+//-AI status display
+
 // // Status display
 // // (formerly Countdown timer display)
 
@@ -368,71 +372,119 @@
 // 	name = "mining display"
 // 	mode = 6
 
-// /obj/machinery/ai_status_display
-// 	icon = 'icons/obj/status_display.dmi'
-// 	icon_state = "ai_frame"
-// 	name = "\improper AI display"
-// 	anchored = 1
-// 	density = 0
-// 	mats = 14
-// 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_MULTITOOL
-
-// 	machine_registry_idx = MACHINES_STATUSDISPLAYS
-// 	var/mode = 0	// 0 = Blank
-// 					// 1 = AI emoticon
-// 					// 2 = Blue screen of death
-
-// 	var/picture_state	// icon_state of ai picture
-// 	var/image/pic_image = null
-
-// 	var/emotion = "ai_happy"
-// 	var/message = null
-
-// 	New()
-// 		..()
-// 		pic_image = image('icons/obj/status_display.dmi', icon_state = picture_state)
-
-// 	process()
-// 		if (status & NOPOWER)
-// 			UpdateOverlays(null, "emotion_img")
-// 			picture_state = null
-// 			return
-
-// 		use_power(200)
-
-// 		update()
-
-// 	proc/update()
-// 		if (mode == 0) //Blank
-// 			UpdateOverlays(null, "emotion_img")
-// 			picture_state = null
-// 			return
-
-// 		if (mode == 1)	// AI emoticon
-// 			if (src.emotion)
-// 				src.set_picture(src.emotion)
-// 			return
-
-// 		if (mode == 2)	// BSOD
-// 			set_picture("ai_bsod")
-// 			return
-
-// 	proc/set_picture(var/state)
-// 		if (!state || state == picture_state)
-// 			return //Hoooly balls why was this not here before argh
-// 		picture_state = state
-// 		pic_image.icon_state = picture_state
-// 		UpdateOverlays(pic_image, "emotion_img")
-
-// 	get_desc()
-// 		..()
-// 		if (status & NOPOWER)
-// 			return
-// 		if (src.message)
-// 			. += "<br>It says: \"[src.message]\""
-
-// I blame Flourish
 /obj/machinery/ai_status_display
+	icon = 'icons/obj/status_display.dmi'
+	icon_state = "ai_frame"
+	name = "\improper AI display"
+	anchored = 1
+	density = 0
+	mats = list("MET-1"=2, "CON-1"=6, "CRY-1"=6)
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_MULTITOOL
+
+	machine_registry_idx = MACHINES_STATUSDISPLAYS
+	var/is_on = FALSE //Distinct from being powered
+
+	var/image/face_image = null //AI expression, optionally the entire screen for the red & BSOD faces
+	var/image/back_image = null //The bit that gets coloured
+	var/image/glow_image = null //glowy lines
+	var/mob/living/silicon/ai/owner //Let's have AIs play tug-of-war with status screens
+
+	//Variables of our current state, these get checked against variables in the AI to check if anything needs updating
+	var/emotion = null //an icon state
+	var/message = null //displays on examine
+	var/face_color = null
+
+	var/datum/light/screen_glow
+
 	New()
 		..()
-		qdel(src)
+		face_image = image('icons/obj/status_display.dmi', icon_state = "")
+		glow_image = image('icons/obj/status_display.dmi', icon_state = "ai_glow")
+		back_image = image('icons/obj/status_display.dmi', icon_state = "ai_white")
+
+
+
+		if (map_settings.walls ==/turf/simulated/wall/auto/jen)
+			pixel_y = 32
+		else
+			pixel_y = 29
+
+		screen_glow = new /datum/light/point
+		screen_glow.set_brightness(0.45)
+		screen_glow.set_height(0.75)
+		screen_glow.attach(src)
+
+	disposing()
+		if (screen_glow)
+			screen_glow.dispose()
+		..()
+
+	process()
+		if (status & NOPOWER)
+			UpdateOverlays(null, "emotion_img")
+			UpdateOverlays(null, "back_img")
+			UpdateOverlays(null, "glow_img")
+			return
+		update()
+		if (is_on)
+			use_power(200)
+
+	proc/update()
+
+
+		if (is_on == FALSE || !owner) //Blank
+			UpdateOverlays(null, "emotion_img")
+			UpdateOverlays(null, "back_img")
+			UpdateOverlays(null, "glow_img")
+			screen_glow.disable()
+			return
+		else //All the non-face stuff goes in here
+			if (!screen_glow.enabled)
+				screen_glow.enable()
+
+			if (face_color != owner.faceColor)
+				face_color = owner.faceColor
+				back_image.color = face_color
+				UpdateOverlays(back_image, "back_img")
+				UpdateOverlays(glow_image, "glow_img", 1) //forced so it displays on top
+				UpdateOverlays(face_image, "emotion_img", 1) //idem
+
+				var/colors = GetColors(face_color)
+				screen_glow.set_color(colors[1] / 255, colors[2] / 255, colors[3] / 255)
+
+			message = owner.status_message
+			name = initial(name) + " ([owner.name])"
+
+		if (is_on == TRUE)	// AI emoticon
+			if (src.emotion != owner.faceEmotion)
+				src.set_picture(owner.faceEmotion)
+				emotion = owner.faceEmotion
+			return
+
+	proc/set_picture(var/state)
+		if (!state)
+			return //Hoooly balls why was this not here before argh
+		face_image.icon_state = state
+		UpdateOverlays(face_image, "emotion_img")
+
+	get_desc()
+		..()
+		if (status & NOPOWER)
+			return
+		if (src.message)
+			. += "<br>[owner.name] says: \"[src.message]\""
+
+	attack_ai(mob/user as mob) //Captain said it's my turn on the status display
+		if (!isAI(user))
+			boutput(user, "<span class='alert'>Only an AI can claim this.</span>")
+			return
+		var/mob/living/silicon/ai/A = user
+		if (isAIeye(user))
+			var/mob/dead/aieye/AE = user
+			A = AE.mainframe
+		if (owner == A) //no free updates for you
+			return
+		boutput(user, "<span class='notice'>You tune the display to your core.</span>")
+		owner = A
+		is_on = TRUE
+		update()

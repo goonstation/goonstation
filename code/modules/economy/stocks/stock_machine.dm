@@ -5,9 +5,9 @@
 	var/logged_in = null
 	var/vmode = 0
 	deconstruct_flags = DECON_MULTITOOL
-	lr = 1
-	lg = 0.7
-	lb = 0.03
+	light_r =1
+	light_g = 0.7
+	light_b = 0.03
 
 /obj/machinery/computer/stockexchange/proc/balance()
 	if (!logged_in)
@@ -17,7 +17,7 @@
 		return B.fields["current_money"]
 	return "--- account not found ---"
 
-/obj/machinery/computer/stockexchange/attack_hand(var/mob/user)
+/obj/machinery/computer/stockexchange/attack_hand(mob/user)
 	if(..())
 		return
 	src.add_dialog(user)
@@ -58,7 +58,7 @@
 	dat += "<h3>Listed stocks</h3>"
 
 	if (vmode == 0)
-		for (var/datum/stock/ticker/S in stockExchange.stocks)
+		for (var/datum/stock/ticker/S as() in stockExchange.stocks)
 			var/mystocks = 0
 			if (logged_in && (logged_in in S.shareholders))
 				mystocks = S.shareholders[logged_in]
@@ -97,12 +97,12 @@
 			if (logged_in)
 				var/list/LR = stockExchange.last_read[S]
 				var/lrt = LR[logged_in]
-				for (var/datum/article/A in S.articles)
+				for (var/datum/stock/article/A as() in S.articles)
 					if (A.ticks > lrt)
 						news = 1
 						break
 				if (!news)
-					for (var/datum/stock/event/E in S.events)
+					for (var/datum/stock/event/E as() in S.events)
 						if (E.last_change > lrt && !E.hidden)
 							news = 1
 							break
@@ -110,7 +110,7 @@
 	else if (vmode == 1)
 		dat += "<b>Actions:</b> + Buy, - Sell, (A)rchives, (H)istory<br><br>"
 		dat += "<table class='stable'><tr><th>&nbsp;</th><th>Name</th><th>Value</th><th>Owned/Avail</th><th>Actions</th></tr>"
-		for (var/datum/stock/ticker/S in stockExchange.stocks)
+		for (var/datum/stock/ticker/S as() in stockExchange.stocks)
 			var/mystocks = 0
 			if (logged_in && (logged_in in S.shareholders))
 				mystocks = S.shareholders[logged_in]
@@ -122,12 +122,12 @@
 			if (logged_in)
 				var/list/LR = stockExchange.last_read[S]
 				var/lrt = LR[logged_in]
-				for (var/datum/article/A in S.articles)
+				for (var/datum/stock/article/A as() in S.articles)
 					if (A.ticks > lrt)
 						news = 1
 						break
 				if (!news)
-					for (var/datum/stock/event/E in S.events)
+					for (var/datum/stock/event/E as() in S.events)
 						if (E.last_change > lrt && !E.hidden)
 							news = 1
 							break
@@ -143,7 +143,7 @@
 	onclose(user, "computer")
 	return
 
-/obj/machinery/computer/stockexchange/attackby(var/obj/item/I as obj, user as mob)
+/obj/machinery/computer/stockexchange/attackby(obj/item/I as obj, user as mob)
 	if (istype(I, /obj/item/card/id) || (istype(I, /obj/item/device/pda2) && I:ID_card))
 		if (istype(I, /obj/item/device/pda2) && I:ID_card) I = I:ID_card
 		var/obj/item/card/id/ID = I
@@ -164,7 +164,7 @@
 	else src.attack_hand(user)
 	return
 
-/obj/machinery/computer/stockexchange/proc/sell_some_shares(var/datum/stock/ticker/S, var/mob/user)
+/obj/machinery/computer/stockexchange/proc/sell_some_shares(datum/stock/ticker/S, mob/user)
 	if (!user || !S)
 		return
 	var/li = logged_in
@@ -202,7 +202,7 @@
 		return
 	boutput(user, "<span class='notice'>Sold [amt] shares of [S.name] for [total] credits.</span>")
 
-/obj/machinery/computer/stockexchange/proc/buy_some_shares(var/datum/stock/ticker/S, var/mob/user)
+/obj/machinery/computer/stockexchange/proc/buy_some_shares(datum/stock/ticker/S, mob/user)
 	if (!user || !S)
 		return
 	var/li = logged_in
@@ -241,7 +241,7 @@
 		return
 	boutput(user, "<span class='notice'>Bought [amt] shares of [S.name] for [total] credits.</span>")
 
-/obj/machinery/computer/stockexchange/proc/do_borrowing_deal(var/datum/stock/borrow/B, var/mob/user)
+/obj/machinery/computer/stockexchange/proc/do_borrowing_deal(datum/stock/borrow/B, mob/user)
 	if (B.stock.borrow(B, logged_in))
 		boutput(user, "<span class='notice'>You successfully borrowed [B.share_amount] shares. Deposit: [B.deposit].</span>")
 	else
@@ -285,7 +285,7 @@
 		var/dat = "<html><head><title>News feed for [S.name]</title></head><body><h2>News feed for [S.name]</h2><div><a href='?src=\ref[src];archive=\ref[S]'>Refresh</a></div>"
 		dat += "<div><h3>Events</h3>"
 		var/p = 0
-		for (var/datum/stock/event/E in S.events)
+		for (var/datum/stock/event/E as() in S.events)
 			if (E.hidden)
 				continue
 			if (p > 0)
@@ -294,7 +294,7 @@
 			p++
 		dat += "</div><hr><div><h3>Articles</h3>"
 		p = 0
-		for (var/datum/article/A in S.articles)
+		for (var/datum/stock/article/A as() in S.articles)
 			if (p > 0)
 				dat += "<hr>"
 			dat += "<div><b style='font-size:1.25em'>[A.headline]</b><br><i>[A.subtitle]</i><br><br>[A.article]<br>- [A.author], [A.spacetime] (via <i>[A.outlet]</i>)</div>"

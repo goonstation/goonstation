@@ -51,7 +51,6 @@ Contains:
 			return null
 
 		var/loc_to_check = istype(src.loc, /obj/item/magtractor) ? src.loc.loc : src.loc
-		src = null
 		for(var/turf/T in range(1, loc_to_check))
 
 			if(T.interesting)
@@ -101,7 +100,6 @@ Contains:
 			return null
 
 		var/loc_to_check = istype(src.loc, /obj/item/magtractor) ? src.loc.loc : src.loc
-		src = null
 		for(var/turf/T in range(2, loc_to_check))
 
 			if(T.interesting)
@@ -415,7 +413,7 @@ that cannot be itched
 	pixelaction(atom/target, params, mob/user, reach)
 		var/turf/T = get_turf(target)
 		if ((analyzer_upgrade == 1) && (get_dist(user, T)>1))
-			usr.visible_message("<span class='notice'><b>[user]</b> takes a distant atmospheric reading of [T].</span>")
+			user.visible_message("<span class='notice'><b>[user]</b> takes a distant atmospheric reading of [T].</span>")
 			boutput(user, scan_atmospheric(T, visible = 1))
 			src.add_fingerprint(user)
 			return

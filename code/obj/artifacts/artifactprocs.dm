@@ -4,35 +4,19 @@
 	if (!istype(T,/turf/) && !istype(T,/obj/))
 		return
 
-	var/rarityroll = 1
-
-// artifact tweak. rarity 1 now contains garbage artifacts so that it's easier to control how much garbage science sees.
-	switch(rand(1,100))
-		if (36 to 80) 		// 45%. 4% chance for a particular level 2 art.
-			rarityroll = 2
-		if (81 to 95) 		// 15%. With current art list this means 2% chance of a certain level 3 art
-			rarityroll = 3
-		if (96 to 100) 		// 5%. With current art list this means 1% chance of a certain level 4 art. 2 of the 5 are bombs...
-			rarityroll = 4
-		else 							// 35%. 4% chance for a particular garbage level 1 art.
-			rarityroll = 1
-
-	var/list/selection_pool = list()
-
-	if(forceartitype)
-		selection_pool += forceartitype
+	var/list/artifactweights
+	if(forceartiorigin)
+		artifactweights = artifact_controls.artifact_rarities[forceartiorigin]
 	else
-		for (var/datum/artifact/A as() in concrete_typesof(/datum/artifact))
-			if (initial(A.rarity_class) != rarityroll)
-				continue
-			if (istext(forceartiorigin) && !(forceartiorigin in initial(A.validtypes)))
-				continue
-			selection_pool += A
+		artifactweights = artifact_controls.artifact_rarities["all"]
 
-	if (selection_pool.len < 1)
-		return
-
-	var/datum/artifact/picked = pick(selection_pool)
+	var/datum/artifact/picked
+	if(forceartitype)
+		picked = forceartitype
+	else
+		if (artifactweights.len == 0)
+			return
+		picked = weighted_pick(artifactweights)
 
 	var/type = null
 	if(ispath(picked,/datum/artifact/))
@@ -164,13 +148,15 @@
 	if (A.nofx)
 		src.icon_state = src.icon_state + "fx"
 	else
-		src.overlays += A.fx_image
+		src.UpdateOverlays(A.fx_image, "activated")
 	A.effect_activate(src)
 
 /obj/proc/ArtifactDeactivated()
 	if (!src.ArtifactSanityCheck())
 		return
 	var/datum/artifact/A = src.artifact
+	if (!A.activated) // do not deactivate if already deactivated
+		return
 	if (A.deact_sound)
 		playsound(src.loc, A.deact_sound, 100, 1)
 	if (A.deact_text)
@@ -180,7 +166,7 @@
 	if (A.nofx)
 		src.icon_state = src.icon_state - "fx"
 	else
-		src.overlays = null
+		src.UpdateOverlays(null, "activated")
 	A.effect_deactivate(src)
 
 /obj/proc/Artifact_attackby(obj/item/W as obj, mob/user as mob)
@@ -468,7 +454,7 @@
 	faultprob = max(0,min(faultprob,100))
 
 	if (prob(faultprob) && A.fault_types.len)
-		var/new_fault = pick(A.fault_types)
+		var/new_fault = weighted_pick(A.fault_types)
 		if (ispath(new_fault))
 			var/datum/artifact_fault/F = new new_fault(A)
 			F.holder = A

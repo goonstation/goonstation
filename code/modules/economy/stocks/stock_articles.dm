@@ -1,4 +1,4 @@
-/datum/article
+/datum/stock/article
 	var/headline = "Something big is happening"
 	var/subtitle = "Investors panic as stock market collapses"
 	var/article = "God, it's going to be fun to randomly generate this."
@@ -40,6 +40,7 @@
 
 	New()
 		..()
+		// How we add new news outlets, with decreasing probability to add every article.
 		if (!length(news_outlets) || (length(news_outlets) && !prob(100 / (length(news_outlets) + 1))))
 			var/ON = generateOutletName()
 			if (!(ON in news_outlets))
@@ -48,6 +49,7 @@
 		else
 			outlet = pick(news_outlets)
 
+		// How we add new authors for news outlets, with decreasing probability to add every article.
 		var/list/authors = news_outlets[outlet]
 		if (!length(authors) || (length(authors) && !prob(100 / (length(authors) + 1))))
 			var/AN = generateAuthorName()
@@ -58,17 +60,21 @@
 
 		ticks = ticker.round_elapsed_ticks
 
+	/// Returns a random news outlet name
 	proc/generateOutletName()
 		var/list/locations = list("Earth", "Luna", "Mars", "Saturn", "Jupiter", "Uranus", "Pluto", "Europa", "Io", "Phobos", "Deimos", "Space", "Venus", "Neptune", "Mercury", "Kalliope", "Ganymede", "Callisto", "Amalthea", "Himalia")
 		var/list/nouns = list("Post", "Herald", "Sun", "Tribune", "Mail", "Times", "Journal", "Report")
 		var/list/timely = list("Daily", "Hourly", "Weekly", "Biweekly", "Monthly", "Yearly")
 
-		switch(rand(1,2))
+		switch(rand(1,3))
 			if (1)
 				return "The [pick(locations)] [pick(nouns)]"
 			if (2)
 				return "The [pick(timely)] [pick(nouns)]"
+			if (3)
+				return "[pick(locations)] [pick(timely)]"
 
+	/// Returns a random author name
 	proc/generateAuthorName()
 		switch(rand(1,3))
 			if (1)
@@ -89,9 +95,9 @@
 	proc/formatArticle()
 		if (spacetime == "")
 			formatSpacetime()
-		var/output = "<div class='article'><div class='headline'>[headline]</div><div class='subtitle'>[subtitle]</div><div class='article-body'>[article]</div><div class='author'>[author]</div><div class='timestamp'>[spacetime]</div></div>"
-		return output
+		. = "<div class='article'><div class='headline'>[headline]</div><div class='subtitle'>[subtitle]</div><div class='article-body'>[article]</div><div class='author'>[author]</div><div class='timestamp'>[spacetime]</div></div>"
 
+	/// Replaces %tokens% in the string with the various default, industry, or product tokens.
 	proc/detokenize(token_string, list/industry_tokens, list/product_tokens = list())
 		var/list/T_list = default_tokens.Copy()
 		for (var/I in industry_tokens)

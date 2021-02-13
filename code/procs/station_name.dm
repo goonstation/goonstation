@@ -184,8 +184,10 @@ var/global/lastStationNameChange = 0 //timestamp
 		if (!name)
 			return 0
 
+		phrase_log.log_phrase("stationname-[isadmin(user)?"admin":"player"]", name, no_duplicates=TRUE)
+
 		#if defined(REVERSED_MAP)
-			name = reverse_text(name)
+		name = reverse_text(name)
 		#endif
 
 		the_station_name = name
@@ -197,7 +199,7 @@ var/global/lastStationNameChange = 0 //timestamp
 
 			var/ircmsg[] = new()
 			ircmsg["key"] = user.client.key
-			ircmsg["name"] = (user?.real_name) ? user.real_name : "NULL"
+			ircmsg["name"] = (user?.real_name) ? stripTextMacros(user.real_name) : "NULL"
 			ircmsg["msg"] = "changed the station name to [name]"
 			ircbot.export("admin", ircmsg)
 

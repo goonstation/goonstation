@@ -1363,7 +1363,7 @@
 	mat_id = "negativematter"
 	name = "negative matter"
 	desc = "It seems to repel matter."
-	color = "#111111"
+	color = list(-1, 0, 0, 0, -1, 0, 0, 0, -1, 1, 1, 1)
 
 	New()
 		addTrigger(triggersOnAdd, new /datum/materialProc/negative_add())

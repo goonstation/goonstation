@@ -181,6 +181,7 @@
 			var/name = input("Enter voice name:", "Voice name")
 			if(!name)
 				return FALSE
+			phrase_log.log_phrase("voice-radiostation", name, no_duplicates=TRUE)
 			if(length(name) > FULLNAME_MAX)
 				name = copytext(name, 1, FULLNAME_MAX)
 			var/accent = input("Pick an accent:", "Accent") as null|anything in list("none") + src.accents
@@ -255,6 +256,8 @@
 			src.record_inside = W
 			src.has_record = 1
 			var/R = html_encode(input("What is the name of this record?","Record Name") as null|text)
+			if(R)
+				phrase_log.log_phrase("record", R)
 			if (!R)
 				R = record_inside.record_name ? record_inside.record_name : pick("rad tunes","hip jams","cool music","neat sounds","magnificent melodies","fantastic farts")
 			user.client.play_music_radio(record_inside.song, R)

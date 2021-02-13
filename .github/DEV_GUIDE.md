@@ -256,6 +256,10 @@ Changes will be made to the upstream repo and it's a good idea to keep your mast
 
 If you've done everything correctly this should finish without any problems and now your master is in the same state as upstream/master. But you probably also want to sync up your feature branch.
 
+:::warning
+  Resolving icon and map conflicts might be annoying when done manually. You can install an automatic merge driver for these files by running the `tools/hooks/install.bat` file first.
+:::
+
 1. Checkout your feature branch (as above)
 2. Press **Ctrl + Shift + P** and type in "git merge", choose the Git: Merge Branch... command
     ![](https://i.imgur.com/LbH8XB9.png)

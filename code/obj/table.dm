@@ -157,12 +157,10 @@
 	ex_act(severity)
 		switch (severity)
 			if (1.0)
-				//SN src = null
 				qdel(src)
 				return
 			if (2.0)
 				if (prob(50))
-					//SN src = null
 					qdel(src)
 					return
 				else
@@ -304,7 +302,7 @@
 				playsound(src.loc, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 50, 1)
 				if (src.material)
 					src.material.triggerOnAttacked(src, user, user, src)
-				for (var/mob/N in AIviewers(usr, null))
+				for (var/mob/N in AIviewers(user, null))
 					if (N.client)
 						shake_camera(N, 4, 8, 0.5)
 			if(ismonkey(H))
@@ -324,7 +322,7 @@
 			return
 
 		if (ismob(O) && O == user)
-			boutput(usr, "<span class='alert'>This table looks way too intimidating for you to scale on your own! You'll need a partner to help you over.</span>")
+			boutput(user, "<span class='alert'>This table looks way too intimidating for you to scale on your own! You'll need a partner to help you over.</span>")
 			return
 
 		if (!isitem(O))
@@ -334,7 +332,7 @@
 		if (istype(I,/obj/item/satchel))
 			var/obj/item/satchel/S = I
 			if (S.contents.len < 1)
-				boutput(usr, "<span class='alert'>There's nothing in [S]!</span>")
+				boutput(user, "<span class='alert'>There's nothing in [S]!</span>")
 			else
 				user.visible_message("<span class='notice'>[user] dumps out [S]'s contents onto [src]!</span>")
 				for (var/obj/item/thing in S.contents)
@@ -471,7 +469,7 @@
 					src.visible_message("<span class='alert'><b>The [src] collapses!</b></span>")
 					deconstruct()
 				playsound(src.loc, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 50, 1)
-				for (var/mob/N in AIviewers(usr, null))
+				for (var/mob/N in AIviewers(user, null))
 					if (N.client)
 						shake_camera(N, 4, 8, 0.5)
 			else

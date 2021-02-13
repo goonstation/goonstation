@@ -386,7 +386,7 @@ var/global/list/playersSeen = list()
 
 		var/ircmsg[] = new()
 		ircmsg["key"] = (isclient(adminC) && adminC.key ? adminC.key : adminC)
-		ircmsg["name"] = (isclient(adminC) && adminC.mob && adminC.mob.name ? adminC.mob.name : "N/A")
+		ircmsg["name"] = (isclient(adminC) && adminC.mob && adminC.mob.name ? stripTextMacros(adminC.mob.name) : "N/A")
 		ircmsg["msg"] = "edited [target]'s ban. Reason: [row["reason"]]. Duration: [(expiry == 0 ? "Permanent": "[expiry]")]. [serverLogSnippet]."
 		ircbot.export("admin", ircmsg)
 
@@ -519,7 +519,7 @@ var/global/list/playersSeen = list()
 
 		var/ircmsg[] = new()
 		ircmsg["key"] = (isclient(adminC) && adminC.key ? adminC.key : adminC)
-		ircmsg["name"] = (expired ? "\[Expired\]" : "[isclient(adminC) && adminC.mob && adminC.mob.name ? adminC.mob.name : "N/A"]")
+		ircmsg["name"] = (expired ? "\[Expired\]" : "[isclient(adminC) && adminC.mob && adminC.mob.name ? stripTextMacros(adminC.mob.name) : "N/A"]")
 		ircmsg["msg"] = (expired ? "[row["ckey"]]'s ban removed." : "deleted [row["ckey"]]'s ban.")
 		ircbot.export("admin", ircmsg)
 
@@ -590,7 +590,7 @@ var/global/list/playersSeen = list()
 
 		var/ircmsg[] = new()
 		ircmsg["key"] = (isclient(adminC) && adminC.key ? adminC.key : adminC)
-		ircmsg["name"] = (expired ? "\[Expired\]" : "[isclient(adminC) && adminC.mob && adminC.mob.name ? adminC.mob.name : "N/A"]")
+		ircmsg["name"] = (expired ? "\[Expired\]" : "[isclient(adminC) && adminC.mob && adminC.mob.name ? stripTextMacros(adminC.mob.name) : "N/A"]")
 		ircmsg["msg"] = (expired ? "[row["ckey"]]'s ban removed." : "deleted [row["ckey"]]'s ban.")
 		ircbot.export("admin", ircmsg)
 

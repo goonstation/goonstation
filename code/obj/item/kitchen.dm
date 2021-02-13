@@ -424,6 +424,13 @@ TRAYS
 		user.TakeDamage("head", 150, 0)
 		return 1
 
+/obj/item/kitchen/utensil/knife/pizza_cutter/traitor
+	var/sharpener_mode = FALSE
+
+	attack_self(mob/user as mob)
+		sharpener_mode = !sharpener_mode
+		boutput(user, "You flip a hidden switch in the pizza cutter to the [sharpener_mode ? "ON" : "OFF"] position.")
+
 /obj/item/kitchen/food_box // I came in here just to make donut/egg boxes put the things in your hand when you take one out and I end up doing this instead, kill me. -haine
 	name = "food box"
 	desc = "A box that can hold food! Well, not this one, I mean. You shouldn't be able to see this one."
@@ -489,7 +496,7 @@ TRAYS
 
 	MouseDrop(mob/user as mob) // no I ain't even touchin this mess it can keep doin whatever it's doin
 		// I finally came back and touched that mess because it was broke - Haine
-		if(user == usr && !usr.restrained() && !usr.stat && (usr.contents.Find(src) || in_interact_range(src, usr)))
+		if(user == usr && !user.restrained() && !user.stat && (user.contents.Find(src) || in_interact_range(src, user)))
 			if(!user.put_in_hand(src))
 				return ..()
 

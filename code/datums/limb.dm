@@ -1313,7 +1313,7 @@ var/list/ghostcritter_blocked = ghostcritter_blocked_objects()
 				var/can_pickup = 1
 
 				if (issmallanimal(usr))
-					var/mob/living/critter/small_animal/C = usr
+					var/mob/living/critter/small_animal/C = user
 					if (C.ghost_spawned && ghostcritter_blocked[O.type])
 						can_pickup = 0
 
@@ -1332,9 +1332,9 @@ var/list/ghostcritter_blocked = ghostcritter_blocked_objects()
 		return
 
 	help(mob/target, var/mob/living/user)
-		if (issmallanimal(usr) && iscarbon(target))
+		if (issmallanimal(user) && iscarbon(target))
 			user.lastattacked = target
-			var/mob/living/critter/small_animal/C = usr
+			var/mob/living/critter/small_animal/C = user
 			if (C.ghost_spawned)
 				if (max_wclass < 3)
 					user.visible_message("<span class='alert'><b>[user] tries to help [target], but they're worse than useless!</b></span>", "<span class='alert'><b>You try to help [target], but your spectral will can only manage a poke!</b></span>")
@@ -1368,9 +1368,9 @@ var/list/ghostcritter_blocked = ghostcritter_blocked_objects()
 			attack_twitch(src)
 
 	grab(mob/target, var/mob/living/user)
-		if (issmallanimal(usr) && iscarbon(target))
+		if (issmallanimal(user))
 			user.lastattacked = target
-			var/mob/living/critter/small_animal/C = usr
+			var/mob/living/critter/small_animal/C = user
 			if (C.ghost_spawned)
 				if (max_wclass < 3)
 					user.visible_message("<span class='alert'><b>[user] tries to grab [target], but they are too large!</b></span>", "<span class='alert'><b>You try to grab [target], but your spectral will is not strong enough!</b></span>")
@@ -1380,7 +1380,7 @@ var/list/ghostcritter_blocked = ghostcritter_blocked_objects()
 	disarm(mob/target, var/mob/living/user)
 		if (issmallanimal(usr) && iscarbon(target))
 			user.lastattacked = target
-			var/mob/living/critter/small_animal/C = usr
+			var/mob/living/critter/small_animal/C = user
 			if (C.ghost_spawned)
 				if (max_wclass < 3)
 					user.visible_message("<span class='alert'><b>[user] tries to disarm [target], but can only manage a pathetic nudge!</b></span>", "<span class='alert'><b>You try to disarm [target], but your spectral will can only manage a pathetic nudge!</b></span>")

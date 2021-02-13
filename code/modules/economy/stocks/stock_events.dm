@@ -1,4 +1,5 @@
 /// Stock market events that influence the market
+ABSTRACT_TYPE(/datum/stock/event)
 /datum/stock/event
 	var/name = "event"
 	var/next_phase = 0
@@ -6,7 +7,7 @@
 	var/current_title = "A company holding an pangalactic conference in the Seattle Conference Center, Seattle, Earth"
 	var/current_desc = "We will continue to monitor their stocks as the situation unfolds."
 	var/phase_id = 0
-	var/hidden = 0
+	var/hidden = FALSE
 	var/finished = 0
 	var/last_change = 0
 
@@ -19,7 +20,7 @@
 	proc/transition()
 		return
 
-	proc/spacetime(var/ticks)
+	proc/spacetime(ticks)
 		var/seconds = round(ticks / 10)
 		var/minutes = round(seconds / 60)
 		seconds -= minutes * 60
@@ -28,7 +29,7 @@
 /datum/stock/event/product
 	name = "product"
 	var/product_name = ""
-	var/datum/article/product_article = null
+	var/datum/stock/article/product_article = null
 	var/effect = 0
 
 	New(datum/stock/ticker/S)
@@ -48,14 +49,14 @@
 				product_name = company.industry.generateProductName(company.name)
 				current_title = "Product release: [product_name]"
 				current_desc = "[company.name] unveiled their newest product, [product_name], at a conference. Product release is expected to happen at spacetime [spacetime(next_phase)]."
-				var/datum/article/A = company.industry.generateInCharacterProductArticle(product_name, company)
+				var/datum/stock/article/A = company.industry.generateInCharacterProductArticle(product_name, company)
 				product_article = A
 				effect = A.opinion + rand(-1, 1)
 				company.affectPublicOpinion(effect)
 				phase_id = 1
 			if (1)
 				finished = 1
-				hidden = 1
+				hidden = TRUE
 				company.addArticle(product_article)
 				effect += product_article.opinion * 5
 				company.affectPublicOpinion(effect)
@@ -69,7 +70,7 @@
 
 	New(datum/stock/ticker/S)
 		..()
-		hidden = 1
+		hidden = TRUE
 		company = S
 		var/mins = rand(9,60)
 		bailout_millions = rand(70, 190)
@@ -82,14 +83,14 @@
 		switch (phase_id)
 			if (0)
 				next_phase = ticker.round_elapsed_ticks + rand(300, 600) * 10
-				var/datum/article/A = generateBankruptcyArticle()
+				var/datum/stock/article/A = generateBankruptcyArticle()
 				if (!A.opinion)
 					effect = rand(5) * (prob(50) ? -1 : 1)
 				else
 					effect = prob(25) ? -A.opinion * rand(8) : A.opinion * rand(4)
 				company.addArticle(A)
 				company.affectPublicOpinion(rand(-6, -3))
-				hidden = 0
+				hidden = FALSE
 				current_title = "Bailout pending due to bankruptcy"
 				current_desc = "The government prepared a press release, which will occur at spacetime [spacetime(next_phase)]."
 				phase_id = 1
@@ -119,7 +120,7 @@
 				company.generateEvent(type)
 
 	proc/generateBankruptcyArticle()
-		var/datum/article/A = new
+		var/datum/stock/article/A = new
 		var/list/bankrupt_reason = list("investor pessimism", "failure of product lines", "economic recession", "overblown inflation", "overblown deflation", "collapsed pyramid schemes", "a Ponzi scheme", "economic terrorism", "extreme hedonism", "unfavourable economic climate", "rampant government corruption", "cartelling competitors", "some total bullshit", "volatile plans")
 		A.about = company
 		A.headline = pick(	"[company.name] filing for bankruptcy", \
@@ -149,7 +150,7 @@
 
 	New(datum/stock/ticker/S)
 		..()
-		hidden = 1
+		hidden = TRUE
 		company = S
 		var/mins = rand(10, 35)
 		next_phase = mins * 600 + (ticker?.round_elapsed_ticks ? ticker.round_elapsed_ticks : 0)
@@ -179,14 +180,14 @@
 			if (0)
 				tname = "[female ? pick_string_autokey("names/first_female.txt") : pick_string_autokey("names/first_male.txt")] [pick_string_autokey("names/last.txt")]"
 				next_phase = ticker.round_elapsed_ticks + rand(300, 600) * 10
-				var/datum/article/A = generateArrestArticle()
+				var/datum/stock/article/A = generateArrestArticle()
 				if (!A.opinion)
 					effect = rand(5) * (prob(50) ? -1 : 1)
 				else
 					effect = prob(25) ? -A.opinion * rand(5) : A.opinion * rand(3)
 				company.addArticle(A)
 				company.affectPublicOpinion(rand(-3, -1))
-				hidden = 0
+				hidden = FALSE
 				current_title = "Trial of [tname] ([position]) scheduled"
 				current_desc = "[female ? "She": "He"] has been charged with [offenses]; the trial is scheduled to occur at spacetime [spacetime(next_phase)]."
 				phase_id = 1
@@ -202,7 +203,7 @@
 				company.generateEvent(type)
 
 	proc/generateArrestArticle()
-		var/datum/article/A = new
+		var/datum/stock/article/A = new
 		A.about = company
 		A.headline = company.industry.detokenize(pick( \
 							"[tname], [position] of [company.name] arrested", \

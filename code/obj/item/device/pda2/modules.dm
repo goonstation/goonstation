@@ -261,7 +261,6 @@
 			return
 		var/loc_to_check = src.host.loc
 
-		src = null
 		for(var/turf/T in range(1, loc_to_check) )
 
 			if(!T.intact)

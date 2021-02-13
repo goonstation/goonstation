@@ -235,9 +235,6 @@
 				if (src.festivity)
 					modify_christmas_cheer(src.festivity)
 				if (!src.amount)
-					/*M.visible_message("<span class='alert'>[M] finishes eating [src].</span>",\
-					"<span class='alert'>You finish eating [src].</span>")*/
-					boutput(M, "<span class='alert'>You finish eating [src].</span>")
 					if (istype(src, /obj/item/reagent_containers/food/snacks/plant/) && prob(20))
 						var/obj/item/reagent_containers/food/snacks/plant/P = src
 						var/doseed = 1
@@ -312,8 +309,6 @@
 				src.heal(M)
 				playsound(M.loc, "sound/items/eatfood.ogg", rand(10,50), 1)
 				if (!src.amount)
-					M.visible_message("<span class='alert'>[M] finishes eating [src].</span>",\
-					"<span class='alert'>You finish eating [src].</span>")
 					if(src.dropped_item)
 						drop_item(dropped_item)
 					user.u_equip(src)
@@ -662,7 +657,6 @@
 	var/image/fluid_image = null
 
 	on_reagent_change()
-		//src.overlays = null
 		if (reagents.total_volume)
 			ENSURE_IMAGE(src.fluid_image, src.icon, "fluid")
 			//if (!src.fluid_image)
@@ -670,7 +664,6 @@
 			var/datum/color/average = reagents.get_average_color()
 			fluid_image.color = average.to_rgba()
 			src.UpdateOverlays(src.fluid_image, "fluid")
-			//src.overlays += src.fluid_image
 		else
 			src.UpdateOverlays(null, "fluid")
 
@@ -720,7 +713,7 @@
 			S.pixel_x = src.pixel_x
 			S.pixel_y = src.pixel_y
 			L.my_soup = null
-			L.overlays = null
+			L.UpdateOverlays(null, "fluid")
 
 			user.visible_message("<b>[user]</b> pours [L] into [src].", "You pour [L] into [src].")
 
@@ -832,10 +825,12 @@
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/pen) && !src.labeled)
 			var/t = input(user, "Enter label", "Label", src.name) as null|text
+			if(t && t != src.name)
+				phrase_log.log_phrase("bottle", t, no_duplicates=TRUE)
 			t = copytext(strip_html(t), 1, 24)
 			if (isnull(t) || !length(t) || t == " ")
 				return
-			if (!in_interact_range(src, usr) && src.loc != usr)
+			if (!in_interact_range(src, user) && src.loc != user)
 				return
 
 			src.name = t
@@ -1392,6 +1387,45 @@
 	initial_volume = 120
 	shard_amt = 2
 
+/obj/item/reagent_containers/food/drinks/drinkingglass/icing
+	name = "icing tube"
+	desc = "Used to put icing on cakes."
+	icon = 'icons/obj/foodNdrink/food.dmi'
+	icon_state = "icing_tube"
+	initial_volume = 50
+	amount_per_transfer_from_this = 5
+	rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
+	var/image/chem = new /image('icons/obj/foodNdrink/food.dmi',"icing_tube_chem")
+
+	on_reagent_change()
+		src.underlays = null
+		if (reagents.total_volume >= 0)
+			if(reagents.total_volume == 0)
+				src.icon_state = "icing_tube"
+			else
+				src.icon_state = "icing_tube_2"
+			if(length(src.underlays))
+				src.underlays = null
+			var/datum/color/average = reagents.get_average_color()
+			chem.color = average.to_rgba()
+			src.underlays += chem
+		signal_event("icon_updated")
+
+	attackby(obj/item/W as obj, mob/user as mob)
+		return
+
+	attack_self(var/mob/user as mob)
+		return
+
+	update_icon()
+		return
+
+	throw_impact(var/turf/T)
+		return
+
+	ex_act(severity)
+		qdel(src)
+
 /obj/item/reagent_containers/food/drinks/drinkingglass/random_style
 	rand_pos = 1
 	New()
@@ -1504,7 +1538,6 @@
 		src.update_icon()
 
 	proc/update_icon()
-		src.overlays = null
 		if (src.reagents.total_volume == 0)
 			icon_state = "duo"
 		if (src.reagents.total_volume > 0)
@@ -1512,7 +1545,9 @@
 			if (!fluid_image)
 				fluid_image = image(src.icon, "fluid-duo")
 			fluid_image.color = average.to_rgba()
-			src.overlays += src.fluid_image
+			src.UpdateOverlays(src.fluid_image, "fluid")
+		else
+			src.UpdateOverlays(null, "fluid")
 
 /* ============================================== */
 /* -------------------- Misc -------------------- */
@@ -1555,7 +1590,7 @@
 
 	get_desc(var/dist, var/mob/user)
 		if (user.mind?.assigned_role == "Head of Security")
-			. = "Its your favourite mug! It reads 'Galaxy's Number One HoS!' on the front. You remember when you got it last Christmas from a secret admirer."
+			. = "Its your favourite mug! It reads 'Galaxy's Number One HoS!' on the front. You remember when you got it last Spacemas from a secret admirer."
 		else
 			. = "It reads 'Galaxy's Number One HoS!' on the front. You remember finding the receipt for it in disposals when the HoS bought it for themselves last Spacemas."
 
@@ -1593,14 +1628,13 @@
 		src.update_icon()
 
 	proc/update_icon() //updates icon based on fluids inside
-		src.overlays = null
 		icon_state = "[glass_style]"
 
 		var/datum/color/average = reagents.get_average_color()
 		if (!src.fluid_image)
 			src.fluid_image = image('icons/obj/foodNdrink/drinks.dmi', "fluid-[glass_style]", -1)
 		src.fluid_image.color = average.to_rgba()
-		src.overlays += src.fluid_image
+		src.UpdateOverlays(src.fluid_image, "fluid")
 
 /obj/item/reagent_containers/food/drinks/carafe
 	name = "coffee carafe"

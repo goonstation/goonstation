@@ -37,7 +37,7 @@
 	w_class = 2.0
 
 	afterattack(atom/target as mob|obj|turf, mob/user as mob)
-		if(target == usr) return
+		if(target == user) return
 
 		var/atom/target_r = target
 

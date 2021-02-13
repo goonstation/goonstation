@@ -2402,33 +2402,12 @@ datum
 			mix_sound = 'sound/weapons/flashbang.ogg'
 
 			on_reaction(var/datum/reagents/holder, var/created_volume)
-				var/turf/location = 0
 				if (holder?.my_atom)
-					location = get_turf(holder.my_atom)
-					elecflash(location)
-
-					for (var/mob/living/M in all_viewers(5, location))
-						if (isintangible(M))
-							continue
-
-						var/dist = get_dist(M, location)
-						if (issilicon(M))
-							M.apply_flash(30, max(2 * (3 - dist), 0), max(2 * (5 - dist), 0))
-						else
-							M.apply_flash(60, 0, (3 - dist), 0, ((5 - dist) * 2), (2 - dist))
+					flashpowder_reaction(get_turf(holder.my_atom), created_volume)
 				else
 					var/amt = max(1, (holder.covered_cache.len * (created_volume / holder.covered_cache_volume)))
 					for (var/i = 0, i < amt && holder.covered_cache.len, i++)
-						location = pick(holder.covered_cache)
-						holder.covered_cache -= location
-						for (var/mob/living/M in location)
-							if (isintangible(M))
-								continue
-							var/dist = get_dist(M, location)
-							if (issilicon(M))
-								M.apply_flash(30, max(2 * (3 - dist), 0), max(2 * (5 - dist), 0))
-							else
-								M.apply_flash(60, 0, (3 - dist), 0, ((5 - dist) * 2), (2 - dist))
+						flashpowder_reaction(get_turf(pick(holder.covered_cache)), created_volume)
 
 
 
