@@ -69,6 +69,8 @@
 			if(swapSouls && H.mind)
 				H.mind.transfer_to(clone)
 			clone.changeStatus("paralysis", imprison_time) // so they don't ruin the surprise
+			O.ArtifactFaultUsed(H)
+			O.ArtifactFaultUsed(clone)
 
 			if ((ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution)) && ((clone.mind in ticker.mode:revolutionaries) || (clone.mind in ticker.mode:head_revolutionaries)))
 				ticker.mode:update_all_rev_icons() //So the icon actually appears
