@@ -346,15 +346,6 @@
 		..()
 		BLOCK_SETUP(BLOCK_BOOK)
 
-/obj/item/storage/briefcase/toxins
-	name = "toxins research briefcase"
-	icon_state = "briefcase_rd"
-	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
-	item_state = "rd-case"
-	max_wclass = 4 // parity with secure briefcase
-	desc = "A large briefcase for experimental toxins research."
-	spawn_contents = list(/obj/item/raw_material/molitz_beta = 6)
-
 /obj/item/storage/desk_drawer
 	name = "desk drawer"
 	desc = "This fits into a desk and you can store stuff in it! Wow, amazing!!"
