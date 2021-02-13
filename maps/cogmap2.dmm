@@ -10492,6 +10492,13 @@
 /obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor/white,
 /area/station/crew_quarters/kitchen)
+"axK" = (
+/obj/table/auto,
+/obj/item/kitchen/rollingpin,
+/obj/item/reagent_containers/food/drinks/drinkingglass/icing,
+/obj/item/reagent_containers/food/drinks/drinkingglass/icing,
+/turf/simulated/floor/white,
+/area/station/crew_quarters/kitchen)
 "axL" = (
 /obj/table/auto,
 /obj/item/satchel/hydro,
@@ -13231,6 +13238,16 @@
 /obj/disposalpipe/segment,
 /obj/disposalpipe/segment/food{
 	dir = 4
+	},
+/turf/simulated/floor/specialroom/cafeteria,
+/area/station/crew_quarters/kitchen)
+"aDB" = (
+/obj/table/auto,
+/obj/item/plate,
+/obj/item/reagent_containers/food/snacks/cake/chocolate/gateau,
+/obj/disposalpipe/junction{
+	dir = 4;
+	icon_state = "pipe-j2"
 	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
@@ -56288,6 +56305,23 @@
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/hor)
+"crI" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 1;
+	name = "autoname - SS13";
+	tag = ""
+	},
+/turf/simulated/floor/carpet{
+	dir = 10;
+	icon_state = "fpurple2"
+	},
+/area/station/crew_quarters/hor)
 "crJ" = (
 /obj/cable{
 	d1 = 1;
@@ -79301,13 +79335,6 @@
 	},
 /turf/simulated/floor/green/side,
 /area/station/hydroponics/bay)
-"rsO" = (
-/obj/table/auto,
-/obj/item/kitchen/rollingpin,
-/obj/item/reagent_containers/food/drinks/drinkingglass/icing,
-/obj/item/reagent_containers/food/drinks/drinkingglass/icing,
-/turf/simulated/floor/white,
-/area/station/crew_quarters/kitchen)
 "rBI" = (
 /obj/railing/orange/reinforced,
 /obj/stool/chair/green{
@@ -79326,24 +79353,6 @@
 	dir = 4
 	},
 /area/shuttle/arrival/station)
-"sEu" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 1;
-	name = "autoname - SS13";
-	tag = ""
-	},
-/obj/item/storage/briefcase/toxins,
-/turf/simulated/floor/carpet{
-	dir = 10;
-	icon_state = "fpurple2"
-	},
-/area/station/crew_quarters/hor)
 "tyQ" = (
 /obj/storage/secure/closet/civilian/hydro,
 /turf/simulated/floor/grass{
@@ -79400,16 +79409,6 @@
 	icon_state = "fgreen5"
 	},
 /area/station/hydroponics/bay)
-"vyj" = (
-/obj/table/auto,
-/obj/item/plate,
-/obj/item/reagent_containers/food/snacks/cake/chocolate/gateau,
-/obj/disposalpipe/junction{
-	dir = 4;
-	icon_state = "pipe-j2"
-	},
-/turf/simulated/floor/specialroom/cafeteria,
-/area/station/crew_quarters/kitchen)
 "vNO" = (
 /obj/submachine/chef_sink/chem_sink{
 	dir = 4
@@ -105387,7 +105386,7 @@ ckK
 cmz
 coi
 cpV
-sEu
+crI
 cii
 cta
 cta
@@ -109839,7 +109838,7 @@ asb
 att
 auP
 awm
-rsO
+axK
 azy
 auT
 aAU
@@ -110749,7 +110748,7 @@ axN
 azB
 auT
 aCo
-vyj
+aDB
 ase
 aFV
 aHD
