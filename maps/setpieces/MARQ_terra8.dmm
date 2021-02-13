@@ -953,7 +953,7 @@
 /area/bunker/lv2)
 "cv" = (
 /obj/table/round/auto,
-/obj/item/card_box/suit,
+/obj/item/card_box/plain,
 /turf/unsimulated/floor/darkblue/checker,
 /area/terraeight/fog/ground/lv5)
 "cw" = (

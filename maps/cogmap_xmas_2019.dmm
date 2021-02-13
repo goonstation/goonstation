@@ -53165,7 +53165,7 @@
 	dir = 4
 	},
 /obj/table/glass/auto,
-/obj/item/card_box/suit,
+/obj/item/card_box/plain,
 /obj/item/a_gift/festive,
 /turf/simulated/floor/escape,
 /area/station/hallway/secondary/exit)
@@ -54034,7 +54034,7 @@
 /obj/table/reinforced/bar/auto,
 /obj/item/plate,
 /obj/item/kitchen/utensil/spoon,
-/obj/item/card_box/suit,
+/obj/item/card_box/plain,
 /turf/simulated/floor/carpet/purple/fancy/edge/east,
 /area/station/crew_quarters/cafeteria)
 "cjf" = (
@@ -63908,7 +63908,7 @@
 /obj/stool/chair/comfy{
 	dir = 4
 	},
-/obj/item/card_box/suit,
+/obj/item/card_box/plain,
 /turf/simulated/floor/snow,
 /area/station/crew_quarters/jazz)
 "cDu" = (

@@ -11544,7 +11544,7 @@
 /area/station/crew_quarters/bar)
 "avh" = (
 /obj/table/wood/round/auto,
-/obj/item/card_box/suit,
+/obj/item/card_box/plain,
 /turf/simulated/floor/carpet{
 	dir = 6;
 	icon_state = "fpurple5"
@@ -37760,7 +37760,7 @@
 	},
 /obj/table/reinforced/auto,
 /obj/item/instrument/harmonica,
-/obj/item/card_box/suit,
+/obj/item/card_box/plain,
 /turf/simulated/floor/grime,
 /area/station/security/brig)
 "bnL" = (

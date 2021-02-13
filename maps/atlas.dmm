@@ -5560,7 +5560,7 @@
 /area/station/hallway/primary/west)
 "nF" = (
 /obj/table/auto,
-/obj/item/card_box/suit,
+/obj/item/card_box/plain,
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/cafeteria)
 "nG" = (

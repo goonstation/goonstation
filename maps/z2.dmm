@@ -8836,7 +8836,7 @@
 /area/jones/bar)
 "awI" = (
 /obj/table/reinforced/bar/auto,
-/obj/item/card_box/suit,
+/obj/item/card_box/plain,
 /turf/unsimulated/floor/wood,
 /area/jones/bar)
 "awJ" = (
@@ -53049,7 +53049,7 @@
 /obj/table/round,
 /obj/item/decoration/ashtray,
 /obj/item/clothing/mask/cigarette,
-/obj/item/card_box/suit,
+/obj/item/card_box/plain,
 /obj/decal/cleanable/dirt,
 /obj/map/light/screen,
 /turf/unsimulated/floor/red,
@@ -60609,7 +60609,7 @@
 /area/owlery/gangzone)
 "cTu" = (
 /obj/table/auto,
-/obj/item/card_box/suit,
+/obj/item/card_box/plain,
 /turf/unsimulated/floor/yellow,
 /area/owlery/gangzone)
 "cTv" = (
@@ -60785,7 +60785,6 @@
 	},
 /area/owlery/gangzone)
 "cTI" = (
-/obj/item/paper/card_manual,
 /turf/unsimulated/floor/yellowblack{
 	dir = 1
 	},
@@ -65249,7 +65248,7 @@
 /obj/table/reinforced/bar/auto{
 	name = "table"
 	},
-/obj/item/card_box/suit,
+/obj/item/card_box/plain,
 /obj/map/light/brighterwhite,
 /turf/unsimulated/floor/carpet{
 	dir = 8;
@@ -65260,8 +65259,7 @@
 "dcr" = (
 /obj/table/reinforced/bar/auto{
 	name = "table"
-	},
-/obj/item/paper/card_manual,
+	}
 /turf/unsimulated/floor/carpet{
 	dir = 4;
 	icon_state = "fblue2";
@@ -73056,10 +73054,6 @@
 	pixel_x = -6;
 	pixel_y = -3
 	},
-/obj/item/paper/card_manual{
-	pixel_x = -3;
-	pixel_y = 3
-	},
 /obj/item/paper/book/player_piano{
 	pixel_x = 10;
 	pixel_y = 16
@@ -78101,7 +78095,7 @@
 /area/centcom/lounge)
 "dJP" = (
 /obj/table/wood/round/auto,
-/obj/item/card_box/suit,
+/obj/item/card_box/plain,
 /turf/unsimulated/floor/specialroom/bar,
 /area/centcom/lounge)
 "dJQ" = (

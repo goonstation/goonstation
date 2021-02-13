@@ -1832,7 +1832,7 @@
 /area/station/crew_quarters/kitchen)
 "eh" = (
 /obj/table/wood/auto,
-/obj/item/card_box/suit,
+/obj/item/card_box/plain,
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/kitchen)
 "ei" = (

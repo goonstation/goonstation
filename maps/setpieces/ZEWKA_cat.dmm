@@ -2365,7 +2365,7 @@
 /area/jones/bar)
 "fD" = (
 /obj/table/reinforced/bar/auto,
-/obj/item/card_box/suit,
+/obj/item/card_box/plain,
 /turf/unsimulated/floor/wood{
 	dir = 2
 	},

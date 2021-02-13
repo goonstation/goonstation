@@ -1,4 +1,4 @@
-#define HOLDER_ROLE_UNUSED 0
+/*#define HOLDER_ROLE_UNUSED 0
 #define HOLDER_ROLE_CREATURE 1
 #define HOLDER_ROLE_EFFECT 2
 #define HOLDER_ROLE_DISCARD 3
@@ -149,10 +149,10 @@
 					update_game_status("Player [active_player] plays [face_up ? "creature [card.card_name]" : "a creature face down"].")
 		show_informational()
 
-	proc/merge_into(var/obj/griffening_card_holder/holder, var/obj/item/playing_cards/card, var/mob/M)
+	proc/merge_into(var/obj/griffening_card_holder/holder, var/obj/item/playing_card/card, var/mob/M)
 		if (M)
 			M.u_equip(card)
-		var/obj/item/playing_cards/merge_deck = holder.card
+		var/obj/item/playing_card/merge_deck = holder.card
 		if (!merge_deck)
 			holder.card = card
 			merge_deck = holder.card
@@ -160,7 +160,7 @@
 		else
 			merge_deck.add_cards(card)
 
-	proc/register_player(var/playerid, var/mob/M, var/obj/item/playing_cards/deck)
+	proc/register_player(var/playerid, var/mob/M, var/obj/item/card_deck/deck)
 		if (players[playerid])
 			return
 		players[playerid] = M
@@ -171,7 +171,7 @@
 		if (!game_id)
 			game_id = next_game_id
 			next_game_id++
-		for (var/datum/playing_card/griffening/Card in deck.cards)
+		for (var/datum/playing_card/griffening/Card in deck.contents)
 			Card.available_game_id = game_id
 		deck_area.update_overlays()
 		if (players[1] && players[2])
@@ -858,4 +858,4 @@ td, th {
 #undef HOLDER_ROLE_GIBBED
 #undef HOLDER_ROLE_DECK
 #undef HOLDER_ROLE_AREA
-#undef HOLDER_ROLE_UNUSED
+#undef HOLDER_ROLE_UNUSED*/

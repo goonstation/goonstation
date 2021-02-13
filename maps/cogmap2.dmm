@@ -5087,7 +5087,7 @@
 	pixel_x = -24
 	},
 /obj/item/storage/firstaid/toxin,
-/obj/item/card_box/suit,
+/obj/item/card_box/plain,
 /obj/storage/crate,
 /obj/item/reagent_containers/emergency_injector/calomel,
 /obj/item/reagent_containers/emergency_injector/calomel,
@@ -13868,7 +13868,7 @@
 /area/station/crew_quarters/cafeteria)
 "aES" = (
 /obj/table/reinforced/bar/auto,
-/obj/item/card_box/suit,
+/obj/item/card_box/plain,
 /turf/simulated/floor/carpet{
 	icon_state = "fpurple1"
 	},
@@ -17594,7 +17594,7 @@
 /area/station/hallway/secondary/entry)
 "aOf" = (
 /obj/table/auto,
-/obj/item/card_box/suit,
+/obj/item/card_box/plain,
 /turf/simulated/floor/neutral/side,
 /area/station/hallway/secondary/entry)
 "aOg" = (
@@ -26386,7 +26386,7 @@
 /obj/item/mop,
 /obj/item/storage/box/mousetraps,
 /obj/item/storage/box/balloonbox,
-/obj/item/card_box/suit,
+/obj/item/card_box/plain,
 /obj/item/basketball,
 /obj/disposalpipe/segment/mail/bent/south,
 /obj/item/clothing/under/gimmick/yay,
@@ -47970,7 +47970,7 @@
 /area/station/security/brig)
 "bYM" = (
 /obj/table/reinforced/auto,
-/obj/item/card_box/suit,
+/obj/item/card_box/plain,
 /obj/disposalpipe/segment,
 /obj/disposalpipe/segment/brig{
 	dir = 4

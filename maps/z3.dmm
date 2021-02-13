@@ -16949,7 +16949,7 @@
 	pixel_x = 6;
 	pixel_y = 6
 	},
-/obj/item/card_box/suit{
+/obj/item/card_box/plain{
 	pixel_x = -2;
 	pixel_y = 4
 	},

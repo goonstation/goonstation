@@ -4636,7 +4636,7 @@
 /turf/space,
 /area/station/engine/substation/pylon)
 "alI" = (
-/obj/item/card_box/suit,
+/obj/item/card_box/plain,
 /obj/item/crowbar,
 /obj/stool/chair/comfy/shuttle{
 	dir = 8
@@ -43532,7 +43532,7 @@
 /area/station/crew_quarters/quarters_south)
 "bSS" = (
 /obj/table/wood/auto,
-/obj/item/card_box/suit,
+/obj/item/card_box/plain,
 /obj/item/clothing/gloves/black,
 /obj/machinery/light{
 	dir = 1;

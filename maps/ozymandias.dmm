@@ -9805,7 +9805,7 @@
 	name = "speedo"
 	},
 /obj/item/clothing/head/apprentice,
-/obj/item/card_box/suit,
+/obj/item/card_box/plain,
 /obj/machinery/light/small{
 	dir = 1;
 	pixel_y = 21
@@ -13715,7 +13715,7 @@
 "dZM" = (
 /obj/table/wood/auto,
 /obj/item/storage/box/nerd_kit,
-/obj/item/card_box/suit,
+/obj/item/card_box/plain,
 /obj/machinery/light/small{
 	dir = 4;
 	pixel_x = 12
@@ -37599,7 +37599,7 @@
 	},
 /obj/item/dice,
 /obj/item/dice/coin,
-/obj/item/card_box/suit,
+/obj/item/card_box/plain,
 /obj/machinery/light/small{
 	dir = 1;
 	pixel_y = 21
