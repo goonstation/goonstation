@@ -35,8 +35,8 @@
 			else
 				user.show_text("\The [src] already has a cart connected to it!", "red")
 				return
-		
-		if (istype(C, /obj/storage/cart) && in_range(C, src))
+
+		if (istype(C, /obj/storage/cart) && in_interact_range(C, src))
 			var/obj/storage/cart/connecting = C
 			if (src == connecting) //Wire: Fix for mass recursion runtime (carts connected to themselves)
 				return
