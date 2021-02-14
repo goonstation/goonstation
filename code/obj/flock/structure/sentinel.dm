@@ -1,3 +1,7 @@
+#define NOT_CHARGED -1
+#define LOSING_CHARGE 0
+#define CHARGING 1
+#define CHARGED 2
 //
 //Sentinel structure,
 //
@@ -7,7 +11,7 @@
 	icon_state = "sentinel"
 	flock_id = "Sentinel"
 	health = 80
-	var/charge_status = -1 //-1 == not charged,0 == losing charge, 1 == charging, 2 == charged
+	var/charge_status = NOT_CHARGED //-1 == not charged,0 == losing charge, 1 == charging, 2 == charged
 	var/charge = 0 //0-100 charge percent
 	var/powered = 0
 
@@ -39,14 +43,14 @@
 
 	if(powered == 1)
 		switch(charge_status)
-			if(-1)
-				charge_status = 1//begin charging as there is energy available
-			if(0)
-				charge_status = 1//if its losing charge and suddenly theres energy available begin charging
-			if(1)
+			if(NOT_CHARGED)
+				charge_status = CHARGING//begin charging as there is energy available
+			if(LOSING_CHARGE)
+				charge_status = CHARGING//if its losing charge and suddenly theres energy available begin charging
+			if(CHARGING)
 				if(icon_state != "sentinelon") icon_state = "sentinelon"//forgive me
 				src.charge(5)
-			if(2)
+			if(CHARGED)
 				var/mob/m = null
 				var/list/hit = list()
 				for(m in mobs)
@@ -65,21 +69,21 @@
 				charge = 1
 				var/filter = src.filters[length(src.filters)]//force the visual to power down
 				animate(filter, size=((-(cos(180*(3/100))-1)/2)*32), time=1 SECONDS, flags = ANIMATION_PARALLEL)
-				charge_status = 1
+				charge_status = CHARGING
 				return
 	else
 		if(charge > 0)//if theres charge make it decrease with time
-			src.charge_status = 0
+			src.charge_status = LOSING_CHARGE
 			src.charge(-5)
 		else
 			if(icon_state != "sentinel") icon_state = "sentinel"//forgive me again
-			src.charge_status = -1 //out of juice its dead
+			src.charge_status = NOT_CHARGED //out of juice its dead
 
 /obj/flock_structure/sentinel/proc/charge(var/chargeamount = 0)
 	if(charge < 100)
 		src.charge = min(chargeamount + charge, 100)
 	else
-		charge_status = 2
+		charge_status = CHARGED
 
 
 /obj/flock_structure/sentinel/proc/updatefilter()
@@ -88,3 +92,9 @@
 		animate(filter, size=((-(cos(180*(charge/100))-1)/2)*32), time=10 SECONDS, flags = ANIMATION_PARALLEL)
 	else
 		animate(filter, size=((-(cos(180*(3/100))-1)/2)*32), time=10 SECONDS, flags = ANIMATION_PARALLEL)
+
+
+#undef NOT_CHARGED
+#undef LOSING_CHARGE
+#undef CHARGING
+#undef CHARGED
