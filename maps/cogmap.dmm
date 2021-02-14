@@ -44317,8 +44317,13 @@
 	pixel_x = -6;
 	pixel_y = 15
 	},
+/obj/item/pinpointer/teg_semi{
+	pixel_x = 3;
+	pixel_y = 2
+	},
 /obj/item/deconstructor{
-	pixel_y = 3
+	pixel_x = -1;
+	pixel_y = 1
 	},
 /turf/simulated/floor/yellow/side{
 	dir = 8

@@ -2417,9 +2417,13 @@
 	pixel_y = -24
 	},
 /obj/machinery/light/lamp{
-	pixel_x = 4;
-	pixel_y = 3;
+	pixel_x = 6;
+	pixel_y = 1;
 	switchon = 1
+	},
+/obj/item/pinpointer/teg_semi{
+	pixel_x = -3;
+	pixel_y = 6
 	},
 /turf/simulated/floor/carpet{
 	icon_state = "fgreen2"

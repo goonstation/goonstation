@@ -42639,6 +42639,10 @@
 	pixel_y = -1
 	},
 /obj/table/wood/auto,
+/obj/item/pinpointer/teg_semi{
+	pixel_x = -4;
+	pixel_y = 9
+	},
 /obj/item/deconstructor,
 /obj/random_item_spawner/desk_stuff,
 /turf/simulated/floor/black,
