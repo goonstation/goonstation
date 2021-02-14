@@ -1,5 +1,9 @@
 
 (t)sun feb 14 21
+(u)BenLubar
+(p)3381
+(e)⚖|balance
+(+)Attacking someone with a drinking glass while in harm intent now splashes your drink onto them.
 (u)Anachroniser
 (p)3409
 (e)⚖|balance
