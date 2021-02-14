@@ -11,7 +11,7 @@
 	icon_state = "sentinel"
 	flock_id = "Sentinel"
 	health = 80
-	var/charge_status = NOT_CHARGED //-1 == not charged,0 == losing charge, 1 == charging, 2 == charged
+	var/charge_status = NOT_CHARGED
 	var/charge = 0 //0-100 charge percent
 	var/powered = 0
 
