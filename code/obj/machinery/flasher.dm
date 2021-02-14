@@ -239,15 +239,19 @@
 /obj/machinery/flasher/portable/attackby(obj/item/W as obj, mob/user as mob)
 	if (iswrenchingtool(W))
 		add_fingerprint(user)
-		src.anchored = !src.anchored
 
-		if (!src.anchored)
+		if (src.anchored)
 			light.disable()
 			user.show_message(text("<span class='alert'>[src] can now be moved.</span>"))
 			src.UpdateOverlays(null, "anchor")
 
-		else if (src.anchored)
+		else if (!src.anchored)
+			var/obj/shrub/plont = locate(/obj/shrub/) in loc
+			if (plont)
+				boutput(user, "<span class='alert'>[name] refuses to turn on so close to [plont.name]!</span>")
+				return
 			if ( powered() )
 				light.enable()
 			user.show_message(text("<span class='alert'>[src] is now secured.</span>"))
 			src.UpdateOverlays(image(src.icon, "[base_state]-s"), "anchor")
+		src.anchored = !src.anchored
