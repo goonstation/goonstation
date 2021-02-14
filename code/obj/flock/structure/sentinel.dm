@@ -59,7 +59,7 @@
 				if(!m) return//if no target stop
 				arcFlash(src, m, 10000)
 				hit += m
-				for(1 to rand(5,6))
+				for(var/i in 1 to rand(5,6))
 					for(var/mob/nearbymob in range(2, m))//todo: optimize(?) this.
 						if(nearbymob != m && !isflock(nearbymob) && !(nearbymob in hit) && isturf(nearbymob.loc) && src.flock?.isEnemy(nearbymob))
 							arcFlash(m, nearbymob, 10000)
