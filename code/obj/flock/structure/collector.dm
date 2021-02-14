@@ -1,19 +1,25 @@
 //
-//Collector structure
+// # Collector structure
 //
 /obj/flock_structure/collector
 	name = "Some weird lookin' pulsing thing"
 	desc = "Seems to be pulsing."
 	flock_id = "Collector"
 	health = 60
-	var/drawfromgrid = 0 //does it draw from the local apc if its strong enough.
-	var/active = 0 //is it active?
-	var/maxrange = 5 //max range for the thing.
-	var/connected = 0 //amount of tiles "connected" to.
-	var/list/connectedto = list() //the tiles its connected to
+	/// does it draw from the local apc if its strong enough.
+	var/drawfromgrid = 0
+	/// is it active?
+	var/active = 0
+	/// max range for the thing.
+	var/maxrange = 5
+	/// amount of tiles "connected" to.
+	var/connected = 0
+	/// the tiles its connected to
+	var/list/connectedto = list()
 
 	event_handler_flags = USE_CANPASS //needed for passthrough
-	passthrough = 1 //drones can pass through this, might change this later, as balance point
+	/// drones can pass through this, might change this later, as balance point
+	passthrough = 1
 
 	poweruse = 0
 	usesgroups = 1

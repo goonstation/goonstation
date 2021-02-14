@@ -3,7 +3,7 @@
 #define CHARGING 1
 #define CHARGED 2
 //
-//Sentinel structure,
+// # Sentinel structure,
 //
 /obj/flock_structure/sentinel
 	name = "Glowing pylon"
@@ -12,14 +12,18 @@
 	flock_id = "Sentinel"
 	health = 80
 	var/charge_status = NOT_CHARGED
-	var/charge = 0 //0-100 charge percent
+	/// 0-100 charge percent
+	var/charge = 0
 	var/powered = 0
 
 	event_handler_flags = USE_CANPASS
-	passthrough = 1 //drones can pass through this, might change this later, as balance point
+	/// flockdrones can pass through this
+	passthrough = 1
 
 	usesgroups = 1
-	poweruse = 20//debug amount scale up if needed.
+
+	/// debug amount scale up if needed.
+	poweruse = 20
 
 /obj/flock_structure/sentinel/New(var/atom/location, var/datum/flock/F=null)
 	..(location, F)

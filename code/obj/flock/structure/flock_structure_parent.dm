@@ -1,5 +1,5 @@
 /////////////////////////////////////////////////////////////////////////////////
-// FLOCK STRUCTURE PARENT
+// # FLOCK STRUCTURE PARENT
 /////////////////////////////////////////////////////////////////////////////////
 /obj/flock_structure
 	icon = 'icons/misc/featherzone.dmi'
@@ -9,18 +9,25 @@
 	name = "uh oh"
 	desc = "CALL A CODER THIS SHOULDN'T BE SEEN"
 	var/flock_id = "ERROR"
-	var/time_started = 0 // when did we get created?
+	/// when did we get created?
+	var/time_started = 0
 	var/build_time = 6 // in seconds
 	var/health = 30 // fragile little thing
 	var/health_max
 	var/bruteVuln = 1.2
-	var/fireVuln = 0.2 // very flame-retardant
+	/// very flame-retardant
+	var/fireVuln = 0.2
 	var/datum/flock/flock = null
-	var/passthrough = 0 //can flockdrones pass through this akin to a grille? need to set USE_CANPASS to make this work however
-	var/poweruse = 0 //does this use(/how much) power? (negatives mean it makes power)
-	var/usesgroups = 0 //not everything needs a group so dont check for everysingle god damn structure
-	var/datum/flock_tile_group/group = null //what group are we connected to?
-	var/turf/simulated/floor/feather/grouptile = null //the tile which its "connected to" and handles the group
+	/// can flockdrones pass through this akin to a grille? need to set USE_CANPASS to make this work however
+	var/passthrough = 0
+	/// does this use(/how much) power? (negatives mean it makes power)
+	var/poweruse = 0
+	/// not everything needs a group so dont check for everysingle god damn structure
+	var/usesgroups = 0
+	/// what group are we connected to?
+	var/datum/flock_tile_group/group = null
+	/// the tile which its "connected to" and handles the group
+	var/turf/simulated/floor/feather/grouptile = null
 
 /obj/flock_structure/New(var/atom/location, var/datum/flock/F=null)
 	..()
