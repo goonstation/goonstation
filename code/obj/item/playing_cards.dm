@@ -115,7 +115,7 @@
         if(chosen_card_type.LVL)
             name = "LVL [chosen_card_type.LVL] [name]"
         desc = chosen_card_type.card_data
-        desc += "ATK [chosen_card_type.ATK] | DEF [chosen_card_type.DEF]"
+        desc += " ATK [chosen_card_type.ATK] | DEF [chosen_card_type.DEF]"
 
     proc/stg_friend(var/list/possible_card_types)
         var/path = pick(possible_card_types)
@@ -125,7 +125,7 @@
         else
             name = chosen_card_type.card_name
         desc = chosen_card_type.card_data
-        desc += "ATK [chosen_card_type.ATK] | DEF [chosen_card_type.DEF]"
+        desc += " ATK [chosen_card_type.ATK] | DEF [chosen_card_type.DEF]"
         icon_state = "stg-general-[pick(1,NUMBER_GENERAL)]"
 
     proc/stg_effect(var/list/possible_card_types)
@@ -198,6 +198,26 @@
                 top_or_bottom(user,g,"top")
         else
             ..()
+
+    special_desc(dist, mob/user)
+        if(is_hand && in_interact_range(src,user))
+            hand_examine(user,"self")
+        else
+            ..()
+
+    proc/hand_examine(var/mob/user, var/target)
+        var/message = ""
+        for(var/obj/item/playing_card/c in stored_cards)
+            message += "<b>[c.name]:</b><br>"
+            if(c.desc)
+                message += "[c.desc]<br>"
+            else
+                message += "<i>no description</i><br>"
+            message += "-----<br>"
+        if(target == "self")
+            user.show_text(message)
+        else if(target == "all")
+            user.visible_message("<b>[user.name]</b> reveals their hand: <br><br>[message]")
 
     proc/draw_card(var/mob/user,var/obj/item/playing_card/c)
         if(c.facedown)
@@ -325,6 +345,7 @@
             user.visible_message("<b>[user.name]</b> slides a card out of the [src.name].")
 
     proc/reveal(var/mob/user)
+        hand_examine(user,"all")
 
     proc/fan(var/mob/user)
         if(is_hand)
@@ -418,15 +439,15 @@
                 if(card_num == 1)
                     card.name = "Ace of [suit_name]"
                 else if(card_num < 11)
-                    card.name = "[capitalize(num2text(card_num))] of [suit_name]]"
+                    card.name = "[capitalize(num2text(card_num))] of [suit_name]"
                 else
                     switch(card_num)
                         if(11)
-                            card.name = "Jack of [suit_name]]"
+                            card.name = "Jack of [suit_name]"
                         if(12)
-                            card.name = "Queen of [suit_name]]"
+                            card.name = "Queen of [suit_name]"
                         if(13)
-                            card.name = "King of [suit_name]]"
+                            card.name = "King of [suit_name]"
             else
                 if(card_num == 1)
                     card.name = "Red Joker"
