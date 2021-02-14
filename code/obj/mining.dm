@@ -476,7 +476,7 @@
 
 		if (isweldingtool(W))
 			if (src.health < 50)
-				boutput(usr, "<span class='alert'>You need to use wire to fix the cabling first.</span>")
+				boutput(user, "<span class='alert'>You need to use wire to fix the cabling first.</span>")
 				return
 			if(W:try_weld(user, 1))
 				src.damage(-10)
@@ -488,7 +488,7 @@
 		else if (istype(W,/obj/item/cable_coil/))
 			var/obj/item/cable_coil/C = W
 			if (src.health > 50)
-				boutput(usr, "<span class='alert'>The cabling looks fine. Use a welder to repair the rest of the damage.</span>")
+				boutput(user, "<span class='alert'>The cabling looks fine. Use a welder to repair the rest of the damage.</span>")
 				return
 			C.use(1)
 			src.damage(-10)
@@ -688,8 +688,8 @@
 			override_text = "Disable Cooldown Override"
 		dat += "<A href='?src=\ref[src];override_cooldown=1'>[override_text]</A><BR>"
 		dat += "<BR><A href='?action=mach_close&window=computer'>Close</A>"
-		usr.Browse(dat, "window=computer;size=300x400")
-		onclose(usr, "computer")
+		user.Browse(dat, "window=computer;size=300x400")
+		onclose(user, "computer")
 		return null
 
 	Topic(href, href_list)
@@ -2142,16 +2142,16 @@ obj/item/clothing/gloves/concussive
 
 				src.cell = null
 			else if (action == "Change the destination")
-				if (!cargopads.len) boutput(usr, "<span class='alert'>No receivers available.</span>")
+				if (!cargopads.len) boutput(user, "<span class='alert'>No receivers available.</span>")
 				else
 					var/selection = input("Select Cargo Pad Location:", "Cargo Pads", null, null) as null|anything in cargopads
 					if(!selection)
 						return
 					var/turf/T = get_turf(selection)
 					if (!T)
-						boutput(usr, "<span class='alert'>Target not set!</span>")
+						boutput(user, "<span class='alert'>Target not set!</span>")
 						return
-					boutput(usr, "Target set to [T.loc].")
+					boutput(user, "Target set to [T.loc].")
 					src.target = T
 			else if (action == "Flip the power switch")
 				if (!src.active)
@@ -2373,7 +2373,7 @@ var/global/list/cargopads = list()
 	icon_state = "ancient"
 
 	attackby(obj/item/W as obj, mob/user as mob)
-		boutput(usr, "<span class='combat'>You attack [src] with [W] but fail to even make a dent!</span>")
+		boutput(user, "<span class='combat'>You attack [src] with [W] but fail to even make a dent!</span>")
 		return
 
 	ex_act(severity)
@@ -2393,7 +2393,7 @@ var/global/list/cargopads = list()
 	step_priority = STEP_PRIORITY_MED
 
 	attackby(obj/item/W as obj, mob/user as mob)
-		boutput(usr, "<span class='combat'>You attack [src] with [W] but fail to even make a dent!</span>")
+		boutput(user, "<span class='combat'>You attack [src] with [W] but fail to even make a dent!</span>")
 		return
 
 	ex_act(severity)
@@ -2407,7 +2407,7 @@ var/global/list/cargopads = list()
 	step_priority = STEP_PRIORITY_MED
 
 	attackby(obj/item/W as obj, mob/user as mob)
-		boutput(usr, "<span class='combat'>You attack [src] with [W] but fail to even make a dent!</span>")
+		boutput(user, "<span class='combat'>You attack [src] with [W] but fail to even make a dent!</span>")
 		return
 
 	ex_act(severity)

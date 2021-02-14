@@ -38,7 +38,14 @@
 	var/maptext_out = 0
 	var/message = null
 	if (src.mutantrace)
-		message = src.mutantrace.emote(act, voluntary)
+		var/list/mutantrace_emote_stuff = src.mutantrace.emote(act, voluntary)
+		if(!islist(mutantrace_emote_stuff))
+			message = mutantrace_emote_stuff
+		else
+			if(length(mutantrace_emote_stuff) >= 1)
+				message = mutantrace_emote_stuff[1]
+			if(length(mutantrace_emote_stuff) >= 2)
+				maptext_out = mutantrace_emote_stuff[2]
 	if (!message)
 		switch (lowertext(act))
 			// most commonly used emotes first for minor performance improvements
@@ -589,9 +596,10 @@
 						if (thing)
 							message = thing.on_spin_emote(src)
 							maptext_out = "<I>twirls [thing]</I>"
-							animate(thing, transform = turn(matrix(), 120), time = 0.7, loop = 3)
-							animate(transform = turn(matrix(), 240), time = 0.7)
-							animate(transform = null, time = 0.7)
+							var/trans = thing.transform
+							animate(thing, transform = turn(trans, 120), time = 0.7, loop = 3, flags = ANIMATION_PARALLEL)
+							animate(transform = turn(trans, 240), time = 0.7, flags = ANIMATION_PARALLEL)
+							animate(transform = trans, time = 0.7, flags = ANIMATION_PARALLEL)
 						else
 							message = "<B>[src]</B> wiggles [his_or_her(src)] fingers a bit.[prob(10) ? " Weird." : null]"
 							maptext_out = "<I>wiggles [his_or_her(src)] fingers a bit.</I>"

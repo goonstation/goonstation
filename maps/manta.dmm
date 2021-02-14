@@ -9175,12 +9175,6 @@
 /obj/disposalpipe/segment,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/engineering/ce)
-"axc" = (
-/obj/cable/white{
-	icon_state = "4-6"
-	},
-/turf/simulated/floor/yellow,
-/area/station/engine/inner)
 "axd" = (
 /obj/decal/tile_edge/line/black{
 	dir = 5;
@@ -9545,20 +9539,6 @@
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/yellow,
 /area/station/engine/engineering/breakroom)
-"axP" = (
-/obj/cable/yellow{
-	icon_state = "6-10"
-	},
-/obj/cable/white{
-	icon_state = "2-8"
-	},
-/obj/cable/yellow{
-	icon_state = "4-10"
-	},
-/turf/simulated/floor/yellow/side{
-	dir = 8
-	},
-/area/station/engine/inner)
 "axQ" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -9848,18 +9828,6 @@
 	icon_state = "fgreen2"
 	},
 /area/station/engine/engineering/ce)
-"ayt" = (
-/obj/cable/yellow{
-	icon_state = "2-8"
-	},
-/obj/cable/yellow{
-	icon_state = "0-2"
-	},
-/obj/cable/yellow{
-	icon_state = "0-8"
-	},
-/turf/simulated/floor,
-/area/station/engine/inner)
 "ayu" = (
 /turf/simulated/floor/yellow/side{
 	dir = 4
@@ -9966,32 +9934,6 @@
 	icon_state = "yellowblack"
 	},
 /area/station/engine/engineering/ce)
-"ayH" = (
-/obj/cable/yellow{
-	icon_state = "5-6"
-	},
-/turf/simulated/floor/yellow,
-/area/station/engine/inner)
-"ayI" = (
-/obj/cable/yellow{
-	icon_state = "6-9"
-	},
-/obj/cable/white{
-	icon_state = "1-9"
-	},
-/turf/simulated/floor/yellow/side{
-	dir = 8
-	},
-/area/station/engine/inner)
-"ayJ" = (
-/obj/cable/yellow{
-	icon_state = "9-10"
-	},
-/obj/cable/yellow{
-	icon_state = "1-10"
-	},
-/turf/simulated/floor,
-/area/station/engine/inner)
 "ayK" = (
 /obj/stool/chair/comfy/yellow{
 	dir = 1
@@ -10013,14 +9955,6 @@
 	icon_state = "green1"
 	},
 /area/station/engine/engineering/ce)
-"ayL" = (
-/obj/cable/yellow{
-	icon_state = "5-9"
-	},
-/turf/simulated/floor/yellow/side{
-	dir = 10
-	},
-/area/station/engine/inner)
 "ayM" = (
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating/random,
@@ -21745,21 +21679,6 @@
 /obj/machinery/chem_dispenser/chef,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen/therustykrab)
-"aZI" = (
-/obj/decal/tile_edge/check{
-	dir = 1;
-	icon_state = "check1"
-	},
-/obj/table/auto,
-/obj/item/kitchen/rollingpin,
-/obj/item/reagent_containers/food/drinks/drinkingglass/icing,
-/obj/machinery/firealarm{
-	pixel_x = 1;
-	pixel_y = 26;
-	text = "NF"
-	},
-/turf/simulated/floor/specialroom/cafeteria,
-/area/station/crew_quarters/kitchen/therustykrab)
 "aZJ" = (
 /obj/decal/tile_edge/check{
 	dir = 1;
@@ -31396,18 +31315,6 @@
 	dir = 1;
 	pixel_y = 28
 	},
-/turf/simulated/floor/wood/eight{
-	dir = 4
-	},
-/area/station/crew_quarters/hor/horprivate)
-"buC" = (
-/obj/stool{
-	desc = "A soft little bed the general size and shape of a space bee.";
-	icon = 'icons/misc/critter.dmi';
-	icon_state = "beebed";
-	name = "heisenbed"
-	},
-/obj/critter/domestic_bee/heisenbee,
 /turf/simulated/floor/wood/eight{
 	dir = 4
 	},
@@ -42418,6 +42325,12 @@
 	dir = 8
 	},
 /area/listeningpost/syndicateassaultvessel)
+"ekL" = (
+/obj/cable/yellow{
+	icon_state = "5-6"
+	},
+/turf/simulated/floor/yellow,
+/area/station/engine/inner)
 "eyQ" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -42723,6 +42636,21 @@
 	},
 /turf/simulated/floor/longtile/black,
 /area/station/turret_protected/ai_upload)
+"gQO" = (
+/obj/decal/tile_edge/check{
+	dir = 1;
+	icon_state = "check1"
+	},
+/obj/table/auto,
+/obj/item/kitchen/rollingpin,
+/obj/item/reagent_containers/food/drinks/drinkingglass/icing,
+/obj/machinery/firealarm{
+	pixel_x = 1;
+	pixel_y = 26;
+	text = "NF"
+	},
+/turf/simulated/floor/specialroom/cafeteria,
+/area/station/crew_quarters/kitchen/therustykrab)
 "gSv" = (
 /turf/simulated/floor/greenblack,
 /area/station/crewquarters/garbagegarbs)
@@ -42960,6 +42888,14 @@
 "jtU" = (
 /turf/simulated/floor,
 /area/station/crewquarters/garbagegarbs)
+"jyT" = (
+/obj/cable/yellow{
+	icon_state = "5-9"
+	},
+/turf/simulated/floor/yellow/side{
+	dir = 10
+	},
+/area/station/engine/inner)
 "jBB" = (
 /obj/machinery/arc_electroplater,
 /turf/simulated/floor/industrial,
@@ -43179,6 +43115,20 @@
 /obj/stool/bench/red/auto,
 /turf/simulated/floor,
 /area/station/security/brig/cell1)
+"lYw" = (
+/obj/cable/yellow{
+	icon_state = "6-10"
+	},
+/obj/cable/white{
+	icon_state = "2-8"
+	},
+/obj/cable/yellow{
+	icon_state = "4-10"
+	},
+/turf/simulated/floor/yellow/side{
+	dir = 8
+	},
+/area/station/engine/inner)
 "lYV" = (
 /turf/simulated/floor,
 /area/station/hallway/secondary/construction)
@@ -43350,6 +43300,22 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/portlowerhallway)
+"nDV" = (
+/obj/stool{
+	desc = "A soft little bed the general size and shape of a space bee.";
+	icon = 'icons/misc/critter.dmi';
+	icon_state = "beebed";
+	name = "heisenbed"
+	},
+/obj/critter/domestic_bee/heisenbee,
+/obj/item/storage/briefcase/toxins{
+	pixel_x = -7;
+	pixel_y = 21
+	},
+/turf/simulated/floor/wood/eight{
+	dir = 4
+	},
+/area/station/crew_quarters/hor/horprivate)
 "nHa" = (
 /obj/disposalpipe/segment/mail,
 /obj/machinery/power/apc/autoname_east,
@@ -43447,6 +43413,15 @@
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
+/area/station/engine/inner)
+"ouH" = (
+/obj/cable/yellow{
+	icon_state = "9-10"
+	},
+/obj/cable/yellow{
+	icon_state = "1-10"
+	},
+/turf/simulated/floor,
 /area/station/engine/inner)
 "ozn" = (
 /obj/wingrille_spawn/auto,
@@ -43633,6 +43608,17 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/elect)
+"qdv" = (
+/obj/cable/yellow{
+	icon_state = "6-9"
+	},
+/obj/cable/white{
+	icon_state = "1-9"
+	},
+/turf/simulated/floor/yellow/side{
+	dir = 8
+	},
+/area/station/engine/inner)
 "qrl" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -44040,6 +44026,12 @@
 	},
 /turf/simulated/floor/black,
 /area/listeningpost/syndicateassaultvessel)
+"vzS" = (
+/obj/cable/white{
+	icon_state = "4-6"
+	},
+/turf/simulated/floor/yellow,
+/area/station/engine/inner)
 "vDw" = (
 /obj/stool/chair/red{
 	dir = 4
@@ -44219,6 +44211,18 @@
 "xaf" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/hallway/secondary/construction)
+"xba" = (
+/obj/cable/yellow{
+	icon_state = "2-8"
+	},
+/obj/cable/yellow{
+	icon_state = "0-2"
+	},
+/obj/cable/yellow{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor,
+/area/station/engine/inner)
 "xfR" = (
 /obj/item/storage/wall/clothingrack/clothes3{
 	dir = 4
@@ -81978,7 +81982,7 @@ aWY
 aXI
 aYr
 aFw
-aZI
+gQO
 baK
 bbP
 bcO
@@ -85651,8 +85655,8 @@ awX
 awX
 ayn
 azs
-axc
-ayH
+vzS
+ekL
 azt
 azJ
 azJ
@@ -85953,9 +85957,9 @@ dZj
 dZj
 dZj
 wBW
-axP
-ayI
-ayL
+lYw
+qdv
+jyT
 azJ
 azJ
 azJ
@@ -86255,8 +86259,8 @@ axe
 axe
 axe
 axe
-ayt
-ayJ
+xba
+ouH
 aEt
 azJ
 azJ
@@ -101325,7 +101329,7 @@ bpH
 bnW
 bsx
 btj
-buC
+nDV
 bvZ
 bxF
 aOJ

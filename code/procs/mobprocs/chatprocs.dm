@@ -5,7 +5,7 @@
 	return
 
 /mob/verb/whisper_verb(message as text)
-	set name = "say"
+	set name = "whisper"
 	return src.whisper(message)
 
 /mob/verb/say_verb(message as text)

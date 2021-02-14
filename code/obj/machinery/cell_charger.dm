@@ -54,7 +54,7 @@
 		return
 
 	if(charging)
-		if(iscarbon(usr))
+		if(iscarbon(user))
 			user.put_in_hand_or_drop(charging)
 		else
 			charging.set_loc(src.loc)

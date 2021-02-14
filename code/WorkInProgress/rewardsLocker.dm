@@ -741,6 +741,9 @@
 	rewardActivate(var/mob/activator)
 		if (isAI(activator))
 			var/mob/living/silicon/ai/A = activator
+			if (isAIeye(activator))
+				var/mob/dead/aieye/AE = activator
+				A = AE.mainframe
 			A.custom_emotions = ai_emotions | list("ROGUE(reward)" = "ai-red")
 			A.faceEmotion = "ai-red"
 			A.set_color("#EE0000")
