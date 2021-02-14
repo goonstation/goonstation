@@ -37,7 +37,7 @@
 #define TEG_LOW_TEMP (1<<1)
 
 /// TEG Semiconductor Present and Installed
-#define TEG_SEMI_STATE_PRESENT 0
+#define TEG_SEMI_STATE_INSTALLED 0
 /// TEG Semiconductor Cover unscrewed
 #define TEG_SEMI_STATE_UNSCREWED 1
 /// TEG Semiconductor Connected with Extra Wires
@@ -441,7 +441,7 @@
 
 	onUpdate()
 		..()
-		if (circ == null || the_tool == null || owner == null || get_dist(owner, circ) > 1)
+		if (circ == null || the_tool == null || owner == null || !in_interact_range(circ, owner))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		var/mob/source = owner
@@ -566,7 +566,8 @@ datum/pump_ui/circulator_ui
 	var/variant_b = null
 	var/variant_description
 	var/conductor_temp = T20C
-	var/semiconductor_state = TEG_SEMI_STATE_CONNECTED
+	var/semiconductor_state = TEG_SEMI_STATE_INSTALLED
+
 	var/semiconductor_repair
 
 	var/warning_light_desc = null // warning light description
@@ -877,7 +878,7 @@ datum/pump_ui/circulator_ui
 	attackby(obj/item/W as obj, mob/user as mob)
 		// Weld > Crowbar > Rods > Weld
 		switch(semiconductor_state)
-			if(TEG_SEMI_STATE_PRESENT)
+			if(TEG_SEMI_STATE_INSTALLED)
 				if (istool(W, TOOL_SCREWING))
 					actions.start(new /datum/action/bar/icon/teg_semiconductor_removal(src, W, 5 SECONDS), user)
 					return
@@ -1173,7 +1174,7 @@ Present 	Unscrewed  Connected 	Unconnected		Missing
 
 	onUpdate()
 		..()
-		if (generator == null || the_tool == null || owner == null || get_dist(owner, generator) > 1)
+		if (generator == null || the_tool == null || owner == null || !in_interact_range(generator, owner))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		var/mob/source = owner
@@ -1184,7 +1185,7 @@ Present 	Unscrewed  Connected 	Unconnected		Missing
 		..()
 		// SCREW->SNIP->CROW (REMOVAL)
 		switch( generator.semiconductor_state )
-			if (TEG_SEMI_STATE_PRESENT)
+			if (TEG_SEMI_STATE_INSTALLED)
 				owner.visible_message("<span class='notice'>[owner] begins to dismantle \the [generator] to get access to the semiconductor.</span>")
 				playsound(get_turf(generator), "sound/items/Screwdriver.ogg", 50, 1)
 			if (TEG_SEMI_STATE_UNSCREWED)
@@ -1198,7 +1199,7 @@ Present 	Unscrewed  Connected 	Unconnected		Missing
 		..()
 		// SCREW->SNIP->CROW (REMOVAL)
 		switch( generator.semiconductor_state )
-			if (TEG_SEMI_STATE_PRESENT)
+			if (TEG_SEMI_STATE_INSTALLED)
 				generator.semiconductor_state = TEG_SEMI_STATE_UNSCREWED
 				playsound(get_turf(generator), "sound/items/Screwdriver.ogg", 50, 1)
 				owner.visible_message("<span class='notice'>[owner] opens up access to the semiconductor.</span>", "<span class='notice'>You unscrew \the [generator] to gain access to the semiconductor.</span>")
@@ -1248,7 +1249,7 @@ Present 	Unscrewed  Connected 	Unconnected		Missing
 
 	onUpdate()
 		..()
-		if (generator == null || the_tool == null || owner == null || get_dist(owner, generator) > 1)
+		if (generator == null || the_tool == null || owner == null || !in_interact_range(generator, owner))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		var/mob/source = owner
@@ -1312,7 +1313,8 @@ Present 	Unscrewed  Connected 	Unconnected		Missing
 				generator.semiconductor_repair = "The semiconductor is visible and needs to be disconnected from \the [generator] with some wirecutters or closed up with a screwdriver."
 
 			if (TEG_SEMI_STATE_UNSCREWED)
-				generator.semiconductor_state = TEG_SEMI_STATE_PRESENT
+				generator.semiconductor_state = TEG_SEMI_STATE_INSTALLED
+
 				owner.visible_message("<span class='notice'>[owner] closes up access to the semiconductor in \the [generator].</span>", "<span class='notice'>You successfully replaced the semiconductor.</span>")
 				playsound(get_turf(generator), "sound/items/Deconstruct.ogg", 80, 1)
 				generator.semiconductor_repair = null
@@ -1654,7 +1656,7 @@ Present 	Unscrewed  Connected 	Unconnected		Missing
 
 #undef TEG_HIGH_TEMP
 #undef TEG_LOW_TEMP
-#undef TEG_SEMI_STATE_PRESENT
+#undef TEG_SEMI_STATE_INSTALLED
 #undef TEG_SEMI_STATE_UNSCREWED
 #undef TEG_SEMI_STATE_CONNECTED
 #undef TEG_SEMI_STATE_DISCONNECTED
