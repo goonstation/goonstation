@@ -149,7 +149,7 @@
         foiled = TRUE
 
 /obj/item/card_group
-    name = "deck of playing cards"
+    name = "deck of cards"
     icon = 'icons/obj/items/playing_card.dmi'
     dir = NORTH
     var/card_style = "plain"
@@ -159,6 +159,7 @@
     contextLayout = new /datum/contextLayout/instrumental(16)
     var/list/datum/contextAction/cardActions
     var/list/stored_cards = list()
+    var/card_name
 
     attack_hand(mob/user as mob)
         if(!is_hand)
@@ -171,30 +172,47 @@
         if(is_hand)
             update_card_actions("handself")
             user.showContextActions(cardActions, src)
-        //else shuffle
+        else
+            shuffle_list(stored_cards)
+            user.visible_message("<b>[user.name]</b> shuffles the [src.name].")
 
     attackby(obj/item/W as obj, mob/user as mob)
         if(istype(W, /obj/item/playing_card))
             if(is_hand)
-                //add card
-                world.log << ("PLACEHOLDER")
+                var/obj/item/playing_card/c = W
+                if(c.card_style == card_style)
+                    user.u_equip(c)
+                    c.set_loc(src)
+                    stored_cards += c
+                else
+                    user.show_text("These card types don't match, silly!", "red")
             else
                 update_card_actions("card")
                 user.showContextActions(cardActions, src)
         else if(istype(W,/obj/item/card_group))
-            update_card_actions("group")
-            user.showContextActions(cardActions, src)
+            var/obj/item/card_group/g = W
+            if(g.is_hand && !is_hand)
+                update_card_actions("group")
+                user.showContextActions(cardActions, src)
+            else
+                top_or_bottom(user,g,"top")
         else
             ..()
 
+    proc/draw_card(var/mob/user,var/obj/item/playing_card/c)
+        if(c.facedown)
+            c.flip()
+        user.put_in_hand_or_drop(c)
+
+
     proc/handle_draw_last_card(var/mob/user)
         var/obj/item/playing_card/c = stored_cards[1]
-        c.flip()
+        if(c.facedown == FALSE)
+            c.flip()
         if(loc == user)
             user.u_equip(src)
             user.put_in_hand_or_drop(stored_cards[1])
         else
-            c.flip()
             c.set_loc(get_turf(src.loc))
         qdel(src)
 
@@ -216,11 +234,13 @@
                 icon_state = "[card_style]-deck-2"
             else if(cards < total_cards/4)
                 icon_state = "[card_style]-deck-1"
+            name = "deck of [card_name] cards"
         else
             if(cards > 5)
                 icon_state = "[card_style]-hand-5"
             else
                 icon_state = "[card_style]-hand-[cards]"
+            name = "hand of [card_name] cards"
 
     proc/update_card_actions(var/hitby)
         cardActions = list()
@@ -254,46 +274,55 @@
     proc/draw(var/mob/user)
         if(is_hand)
             return
-        user.put_in_hand_or_drop(stored_cards[1])
+        draw_card(user,stored_cards[1])
         stored_cards -= stored_cards[1]
         if(length(stored_cards) == 1)
             handle_draw_last_card(user)
         else
             update_group_sprite()
+        user.visible_message("<b>[user.name]</b> draws a card from the [src.name].")
 
     proc/draw_multiple(var/mob/user)
         if(is_hand)
             return
         var/card_number = input(user, "How many cards would you like to draw?", "[name]")  as null|num
+        if(!card_number)
+            return
         if(card_number > length(stored_cards))
             card_number = length(stored_cards)
         if(in_interact_range(src, user))
             var/obj/item/card_group/hand = new /obj/item/card_group
             hand.is_hand = TRUE
             hand.total_cards = total_cards
+            hand.card_style = card_style
+            hand.card_name = card_name
             for(var/i in 1 to card_number)
                 hand.add_to_group(stored_cards[1])
                 stored_cards -= stored_cards[1]
             hand.update_group_sprite()
             user.put_in_hand_or_drop(hand)
+            user.visible_message("<b>[user.name]</b> draws [card_number] cards from the [src.name].")
             if(length(stored_cards) == 1)
                 handle_draw_last_card(user)
             else if(length(stored_cards) == 0)
                 qdel(src)
             else
-                update_group_sprite()
+                update_group_sprite("user.name")
             
     proc/search(var/mob/user)
+        user.visible_message("<b>[user.name]</b> begins to search through the [src.name]...")
         var/card = input(user, "Which card would you like to draw?", "[name]")  as null|anything in stored_cards
         if(!card)
+            user.visible_message("<b>[user.name]</b> doesn't find what they're looking for.")
             return
         if(in_interact_range(src, user))
-            user.put_in_hand_or_drop(card)
+            draw_card(user,card)
             stored_cards -= card
             if(length(stored_cards) == 1)
                 handle_draw_last_card(user)
             else
                 update_group_sprite()
+            user.visible_message("<b>[user.name]</b> slides a card out of the [src.name].")
 
     proc/reveal(var/mob/user)
 
@@ -303,14 +332,17 @@
         if(length(stored_cards) < max_hand_size)
             is_hand = TRUE
             update_group_sprite()
+            user.visible_message("<b>[user.name]</b> spreads [his_or_her(user)] cards into a neat fan.")
 
     proc/stack(var/mob/user)
         if(!is_hand)
             return
         is_hand = FALSE
         update_group_sprite()
+        user.visible_message("<b>[user.name]</b> gathers [his_or_her(user)] cards into a deck.")
 
     proc/top_or_bottom(var/mob/user,var/W,var/position)
+        var/successful
         if(istype(W,/obj/item/card_group))
             var/obj/item/card_group/G = W
             if(G.card_style == card_style)
@@ -321,15 +353,18 @@
                         c.set_loc(src)
                         stored_cards.Insert(1,c)
                         card_pos--
+                    successful = "top"
                 else
                     for(var/obj/item/c in G.stored_cards)
                         c.set_loc(src)
                         stored_cards += c
+                    successful = "the bottom"
                 user.u_equip(G)
                 qdel(G)
-                /*if(is_hand && (length(stored_cards) > max_hand_size))
+                if(is_hand && (length(stored_cards) > max_hand_size))
                     is_hand = FALSE
-                update_group_sprite()*/
+                update_group_sprite()
+                successful = TRUE
         else if(istype(W,/obj/item/playing_card))
             var/obj/item/playing_card/c = W
             if(c.card_style == card_style)
@@ -337,15 +372,22 @@
                 c.set_loc(src)
                 if(position == "top")
                     stored_cards.Insert(1,c)
+                    successful = "top"
                 else
                     stored_cards += c
+                    successful = "the bottom"
                 update_group_sprite()
+        if(successful)
+            user.visible_message("<b>[user.name]</b> places the [W] on [successful] of the [src.name].")
+        else
+            user.show_text("These card types don't match, silly!", "red")
 
 //Plain playing cards
 //-----------------//
 /obj/item/card_group/plain
     card_style = "plain"
     total_cards = 54
+    card_name = "playing"
 
     New()
         ..()
@@ -406,10 +448,10 @@
 //Tarot cards
 //---------//
 /obj/item/card_group/tarot
-    name = "deck of tarot cards"
     desc = "Whoever drew these probably felt like the nine of swords afterward..."
     card_style = "tarot"
     total_cards = 78
+    card_name = "tarot"
 
     New()
         ..()
@@ -442,19 +484,19 @@
             
             if(minor)
                 if(card_num == 1)
-                    card.name = "Ace of [suit_name]]"
+                    card.name = "Ace of [suit_name]"
                 else if(card_num < 11)
-                    card.name = "[capitalize(num2text(card_num))] of [suit_name]]"
+                    card.name = "[capitalize(num2text(card_num))] of [suit_name]"
                 else
                     switch(card_num)
                         if(11)
-                            card.name = "Page of [suit_name]]"
+                            card.name = "Page of [suit_name]"
                         if(12)
-                            card.name = "Knight of [suit_name]]"
+                            card.name = "Knight of [suit_name]"
                         if(13)
-                            card.name = "Queen of [suit_name]]"
+                            card.name = "Queen of [suit_name]"
                         if(14)
-                            card.name = "King of [suit_name]]"
+                            card.name = "King of [suit_name]"
             else
                 card.name = major[card_num]
 
@@ -476,6 +518,7 @@
     desc = "A deck of Japanese hanafuda."
     card_style = "hanafuda"
     total_cards = 48
+    card_name = "hanafuda"
 
     New()
         ..()
@@ -563,9 +606,10 @@
 //StG
 //-//
 /obj/item/card_group/stg
-    desc = "A deck of Spacemen the Griffening cards."
+    desc = "A bunch of Spacemen the Griffening cards."
     card_style = "stg"
     total_cards = 40
+    card_name = "Spacemen the Griffening"
 
     New()
         ..()
