@@ -1,4 +1,10 @@
 
+(t)sun feb 14 21
+(u)Anachroniser
+(p)3409
+(e)⚖|balance
+(+)Arrow shafts now apply effects while implanted
+(+)Can use organic material in arrows and spears
 (t)sat feb 13 21
 (u)Xyzzy
 (p)3324
