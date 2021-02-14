@@ -318,6 +318,13 @@
 			src.hd.root.add_file(new /datum/computer/file/pda_program/cargo_request(src))
 			if(length(src.default_muted_mailgroups))
 				src.host_program.muted_mailgroups = src.default_muted_mailgroups
+			if(ismob(src.loc))
+				var/mob/mob = src.loc
+				if(mob.client && (mob.client.preferences.pda_ringtone_index in selectable_ringtones) && mob.client?.preferences.pda_ringtone_index != "Two-Beep")
+					src.set_ringtone(selectable_ringtones[mob.client.preferences.pda_ringtone_index], FALSE, FALSE, "main", null, FALSE)
+					var/rtone_program = src.ringtone2program(src.r_tone)
+					if(rtone_program)
+						src.hd.root.add_file(new rtone_program)
 
 		src.net_id = format_net_id("\ref[src]")
 
@@ -330,12 +337,6 @@
 			var/datum/computer/file/pda_program/scan/scan = locate() in src.cartridge.root.contents
 			if (scan && istype(scan))
 				src.scan_program = scan
-
-		if(M.client && (M.client.preferences.pda_ringtone_index in selectable_ringtones) && M.client?.preferences.pda_ringtone_index != "Two-Beep")
-			src.set_ringtone(selectable_ringtones[M.client.preferences.pda_ringtone_index], FALSE, FALSE, "main", null, FALSE)
-			var/rtone_program = src.ringtone2program(src.r_tone)
-			if(rtone_program)
-				src.hd.root.add_file(new rtone_program)
 
 /obj/item/device/pda2/disposing()
 	if (src.cartridge)
