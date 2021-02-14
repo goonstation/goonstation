@@ -251,6 +251,7 @@ MATERIAL
 		if (src?.material.material_flags & MATERIAL_METAL)
 			if (istype(src.reinforcement))
 				L["retable"] = "Reinforced Table Parts (2 Sheets)"
+				L["industrialtable"] = "Industrial Table Parts (2 Sheets)"
 				L["remetal"] = "Remove Reinforcement"
 			else
 				L["fl_tiles"] = "x4 Floor Tile"
@@ -535,6 +536,16 @@ MATERIAL
 					a_icon = 'icons/obj/furniture/table_reinforced.dmi'
 					a_icon_state = "table_parts"
 					a_name = "reinforced table parts"
+
+				if("industrialtable")
+					if (!amount_check(2,usr)) return
+
+					a_type = /obj/item/furniture_parts/table/reinforced/industrial
+					a_amount = 1
+					a_cost = 2
+					a_icon = 'icons/obj/furniture/table_industrial.dmi'
+					a_icon_state = "table_parts"
+					a_name = "industrial table parts"
 
 				if("remetal")
 					// what the fuck is this
