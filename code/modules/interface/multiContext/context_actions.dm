@@ -784,6 +784,121 @@
 			var/obj/item/c = target
 			user.put_in_hand_or_drop(c)
 
+/datum/contextAction/card
+	icon = 'icons/ui/context16x16.dmi'
+	name = "Card action"
+	desc = "You shouldn't be reading this, bug."
+	icon_state = "wrench"
+	
+	checkRequirements(var/atom/target, var/mob/user)
+		return 1
+
+	solitaire
+		name = "solitaire stack"
+		desc = "stacks cards with a slight offset."
+		icon_state = "solitaire"
+
+		execute(var/atom/target, var/mob/user)
+			var/obj/item/playing_card/c = target
+			c.solitaire(user)
+
+	fan
+		name = "fan"
+		desc = "spreads the cards into an easily readable fan."
+		icon_state = "fan"
+
+		execute(var/atom/target, var/mob/user)
+			if(istype(target,/obj/item/playing_card))
+				var/obj/item/playing_card/c = target
+				c.fan(user)
+			else if(istype(target,/obj/item/card_group))
+				var/obj/item/card_group/c = target
+				c.fan(user)
+
+	stack
+		name = "stack"
+		desc = "gather the cards into a deck."
+		icon_state = "stack"
+
+		execute(var/atom/target, var/mob/user)
+			if(istype(target,/obj/item/playing_card))
+				var/obj/item/playing_card/c = target
+				c.stack(user)
+			else if(istype(target,/obj/item/card_group))
+				var/obj/item/card_group/c = target
+				c.stack(user)
+
+	draw
+		name = "draw"
+		desc = "add a card to your hand."
+		icon_state = "draw"
+
+		execute(var/atom/target, var/mob/user)
+			var/obj/item/card_group/c = target
+			c.draw(user)
+
+	draw_multiple
+		name = "draw multiple cards"
+		desc = "add many cards to your hand."
+		icon_state = "multiple"
+
+		execute(var/atom/target, var/mob/user)
+			var/obj/item/card_group/c = target
+			c.draw_multiple(user)
+
+	topdeck
+		name = "add to top of deck"
+		desc = "add cards to the top of the deck."
+		icon_state = "deck_top"
+
+		execute(var/atom/target, var/mob/user)
+			var/obj/item/card_group/c = target
+			c.top_or_bottom(user,user.equipped(),"top")
+
+	bottomdeck
+		name = "add to bottom of deck"
+		desc = "add cards to the top of the deck."
+		icon_state = "deck_bottom"
+
+		execute(var/atom/target, var/mob/user)
+			var/obj/item/card_group/c = target
+			c.top_or_bottom(user,user.equipped(),"bottom")
+
+	search
+		name = "search"
+		desc = "search for a card."
+		icon_state = "search"
+
+		execute(var/atom/target, var/mob/user)
+			var/obj/item/card_group/c = target
+			c.search(user)
+
+	reveal
+		name = "reveal"
+		desc = "reveal the cards to all players nearby."
+		icon_state = "eye"
+
+		execute(var/atom/target, var/mob/user)
+			var/obj/item/card_group/c = target
+			c.reveal(user)
+
+	pickup
+		name = "pick up"
+		desc = "do the thing."
+		icon_state = "up_arrow"
+
+		execute(var/atom/target, var/mob/user)
+			var/obj/item/c = target
+			user.put_in_hand_or_drop(c)
+
+	close
+		name = "close"
+		desc = "close this menu."
+		icon_state = "close"
+
+		execute(var/atom/target, var/mob/user)
+			user.closeContextActions()
+
 /*
 	offered
 		icon = null
