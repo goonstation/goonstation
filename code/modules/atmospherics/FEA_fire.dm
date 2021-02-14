@@ -153,14 +153,14 @@
 		//hello yes now it's ZeWaka with an even more hellcode implementation that makes no sense
 		//scientific reasoning provided by Mokrzycki, Wojciech & Tatol, Maciej. (2011).
 
-		var/R_sr = ((red + light.r*255) /2) //average value of R components in the two compared colors
+		var/red_mean = ((red + light.r*255) /2) // mean of R components in the two compared colors
 
-		var/deltaR2 = abs(red   - (light.r*255))**2
-		var/deltaG2 = abs(blue  - (light.b*255))**2
-		var/deltaB2 = abs(green - (light.g*255))**2
+		var/deltaR2 = (red   - (light.r*255))**2
+		var/deltaG2 = (blue  - (light.b*255))**2
+		var/deltaB2 = (green - (light.g*255))**2
 
 		//this is our weighted euclidean distance function, weights based on red component
-		var/color_delta =( (2+(R_sr/256))*deltaR2 + (4*deltaG2) + (2+((255-R_sr)/256))*deltaB2 )
+		var/color_delta = ( (((512+red_mean)*(deltaR2**2))>>8) + (4*(deltaG2**2)) + (((767-red_mean)*(deltaB2**2))>>8) )
 
 		//DEBUG_MESSAGE("[x],[y]:[temperature], d:[color_delta], [red]|[green]|[blue] vs [light.r*255]|[light.g*255]|[light.b*255]")
 
