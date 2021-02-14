@@ -1,5 +1,9 @@
 
 (t)sat feb 13 21
+(u)Sord
+(p)3413
+(e)⚖🆕|balance, feature
+(*)Reworked Security loadouts in the Security equipment vendors.
 (u)Flappybat
 (p)3584
 (e)🎨|sprites
