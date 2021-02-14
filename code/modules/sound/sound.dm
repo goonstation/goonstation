@@ -228,7 +228,6 @@ var/global/list/default_channel_volumes = list(1, 1, 0.1, 0.5, 0.5, 1)
 			S.y = 0
 
 			C << S
-			return S
 
 
 /mob/proc/playsound_local(var/atom/source, soundin, vol as num, vary, extrarange as num, pitch = 1, ignore_flag = 0, channel = VOLUME_CHANNEL_GAME)
