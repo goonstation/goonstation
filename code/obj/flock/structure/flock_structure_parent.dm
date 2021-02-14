@@ -64,16 +64,16 @@
 /obj/flock_structure/proc/groupcheck() //rechecks if the tile under's group matches its own
 	if(!usesgroups) return
 	if(istype(get_turf(src), /turf/simulated/floor/feather))
-		var/turf/simulated/floor/feather/f = get_turf(src)
-		if(src.grouptile == f && grouptile.group == src.group) return//no changes its all good
-		else if(src.grouptile != f && f.group == src.group)//if the grouptile is different but the groups the same
-			src.grouptile = f//just move the connected tile, this should really rarely happen if the structure is moved somehow
-		else if(src.grouptile != f && f.group != src.group)//if both stuff is different.
-			src.grouptile = f
+		var/turf/simulated/floor/feather/undertile = get_turf(src)
+		if(src.grouptile == undertile && grouptile.group == src.group) return//no changes its all good
+		else if(src.grouptile != undertile && undertile.group == src.group)//if the grouptile is different but the groups the same
+			src.grouptile = undertile//just move the connected tile, this should really rarely happen if the structure is moved somehow
+		else if(src.grouptile != undertile && undertile.group != src.group)//if both stuff is different.
+			src.grouptile = undertile
 			src.group?.removestructure(src)
-			src.group = f.group
+			src.group = undertile.group
 			src.group.addstructure(src)
-		else if(src.grouptile == f && grouptile.group != src.group)//if just the tile's group is different
+		else if(src.grouptile == undertile && grouptile.group != src.group)//if just the tile's group is different
 			src.group?.removestructure(src)
 			src.group = grouptile.group
 			src.group.addstructure(src)
@@ -201,8 +201,8 @@
 	src.visible_message("<span class='alert'>[src] is hit by the blob!/span>")
 
 /obj/flock_structure/CanPass(atom/movable/mover, turf/target)
-	var/mob/living/critter/flock/drone/d = mover
-	if(src.passthrough && istype(d) && !d.floorrunning)
+	var/mob/living/critter/flock/drone/drone = mover
+	if(src.passthrough && istype(drone) && !drone.floorrunning)
 		animate_flock_passthrough(mover)
 		return 1
 	return ..()

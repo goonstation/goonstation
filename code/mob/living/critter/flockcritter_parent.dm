@@ -536,5 +536,5 @@
 		amounttopay = min(F.resources, difference, 10)
 		F.pay_resources(amounttopay)
 		target.currentmats += amounttopay
-		if(F.resources > 0 && F.is_npc == 0) //npc check just to make sure it doesnt interfere with their ai.
+		if(F.resources > 0 && !F.is_npc) //npc check just to make sure it doesnt interfere with their ai.
 			src.onRestart() //restart the action akin to automenders

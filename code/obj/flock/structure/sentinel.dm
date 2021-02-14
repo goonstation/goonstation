@@ -49,24 +49,22 @@
 			if(2)
 				var/mob/m = null
 				var/list/hit = list()
-				for(m in src.flock?.enemies)
-					if(IN_RANGE(m, src, 5) && !isflock(m) && isturf(m.loc))
+				for(m in mobs)
+					if(IN_RANGE(m, src, 5) && !isflock(m) && src.flock?.isEnemy(m) && isturf(m.loc))
 						break//found target
 				if(!m) return//if no target stop
-				var/chain = rand(5, 6)
 				arcFlash(src, m, 10000)
 				hit += m
-				while(chain > 0)
+				for(1 to rand(5,6))
 					for(var/mob/nearbymob in range(2, m))//todo: optimize(?) this.
 						if(nearbymob != m && !isflock(nearbymob) && !(nearbymob in hit) && isturf(nearbymob.loc) && src.flock?.isEnemy(nearbymob))
 							arcFlash(m, nearbymob, 10000)
 							hit += nearbymob
 							m = nearbymob
-						chain--//infinite loop prevention, wouldve been in the if statement otherwise.
 				hit.len = 0//clean up
 				charge = 1
-				var/f = src.filters[length(src.filters)]//force the visual to power down
-				animate(f, size=((-(cos(180*(3/100))-1)/2)*32), time=1 SECONDS, flags = ANIMATION_PARALLEL)
+				var/filter = src.filters[length(src.filters)]//force the visual to power down
+				animate(filter, size=((-(cos(180*(3/100))-1)/2)*32), time=1 SECONDS, flags = ANIMATION_PARALLEL)
 				charge_status = 1
 				return
 	else
@@ -85,9 +83,8 @@
 
 
 /obj/flock_structure/sentinel/proc/updatefilter()
+	var/filter = src.filters[length(src.filters)]
 	if(charge > 2)//else it just makes the sprite invisible, due to floats. this is small enough that it doesnt even showup anyway since its under the sprite
-		var/f = src.filters[length(src.filters)]
-		animate(f, size=((-(cos(180*(charge/100))-1)/2)*32), time=10 SECONDS, flags = ANIMATION_PARALLEL)
+		animate(filter, size=((-(cos(180*(charge/100))-1)/2)*32), time=10 SECONDS, flags = ANIMATION_PARALLEL)
 	else
-		var/f = src.filters[length(src.filters)]
-		animate(f, size=((-(cos(180*(3/100))-1)/2)*32), time=10 SECONDS, flags = ANIMATION_PARALLEL)
+		animate(filter, size=((-(cos(180*(3/100))-1)/2)*32), time=10 SECONDS, flags = ANIMATION_PARALLEL)
