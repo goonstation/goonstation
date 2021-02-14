@@ -108,7 +108,7 @@
 			if(S.reagents.has_reagent("plasma", 1))
 				message_admins("[key_name(user)] rigged [src] to explode in [user.loc.loc], [showCoords(user.x, user.y, user.z)].")
 				logTheThing("combat", user, null, "rigged [src] to explode in [user.loc.loc] ([showCoords(user.x, user.y, user.z)])")
-				rigged = 1
+				rigged = TRUE
 				rigger = user
 
 				S.reagents.clear_reagents()
@@ -214,4 +214,3 @@
 	gender = MALE
 //Starts with the beret on!
 /obj/critter/turtle/sylvester/HoS
-
