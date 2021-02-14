@@ -17,6 +17,30 @@
 		..(gibbed, 0)
 		if (!gibbed)
 			playsound(src.loc, "sound/impact_sounds/Machinery_Break_1.ogg", 50, 1)
+		else
+			// Duplication of /obj/item/old_grenade/stinger explosion
+			var/turf/T = ..()
+			if (T)
+				playsound(T, "sound/weapons/grenade.ogg", 25, 1)
+				explosion(src, T, -1, -1, -0.25, 1)
+				var/obj/overlay/O = new/obj/overlay(get_turf(T))
+				O.anchored = 1
+				O.name = "Explosion"
+				O.layer = NOLIGHT_EFFECTS_LAYER_BASE
+				O.icon = 'icons/effects/64x64.dmi'
+				O.icon_state = "explo_fiery"
+				var/datum/projectile/special/spreader/uniform_burst/circle/PJ = new /datum/projectile/special/spreader/uniform_burst/circle(T)
+				PJ.pellets_to_fire = 20
+				var/targetx = src.y - rand(-5,5)
+				var/targety = src.y - rand(-5,5)
+				var/turf/newtarget = locate(targetx, targety, src.z)
+				shoot_projectile_ST(src, PJ, newtarget)
+				SPAWN_DBG(0.5 SECONDS)
+					qdel(O)
+					qdel(src)
+			else
+				qdel(src)
+			return
 
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
 		switch (act)
@@ -42,3 +66,7 @@
 
 	get_ranged_protection()
 		return 1
+
+	New()
+		..()
+		abilityHolder.addAbility(/datum/targetable/critter/tackle)

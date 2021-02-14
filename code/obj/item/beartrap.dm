@@ -61,7 +61,6 @@
 		if (!src || !src.armed)
 			return
 
-		var/obj/item/affecting = null
 		if (target && ishuman(target))
 			var/mob/living/carbon/human/H = target
 			H.changeStatus("stunned", 4 SECONDS)
