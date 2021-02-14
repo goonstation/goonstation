@@ -56236,8 +56236,9 @@
 /area/station/ai_monitored/armory)
 "ppQ" = (
 /obj/table/reinforced/bar/auto,
-/obj/item/device/radio/beacon,
-/obj/item/clothing/head/cakehat,
+/obj/item_dispenser/icedispenser{
+	pixel_y = 10
+	},
 /turf/simulated/floor/carpet/green/standard/narrow/northsouth,
 /area/station/crew_quarters/cafeteria)
 "pqx" = (
@@ -57395,6 +57396,16 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
+"slG" = (
+/obj/table/reinforced/bar/auto,
+/obj/machinery/computer/security/wooden_tv/small{
+	pixel_y = 8
+	},
+/obj/item/clothing/head/cakehat{
+	pixel_y = -11
+	},
+/turf/simulated/floor/carpet/green/standard/narrow/northsouth,
+/area/station/crew_quarters/cafeteria)
 "sml" = (
 /obj/table/auto,
 /obj/machinery/computer/security/wooden_tv/small{
@@ -58620,6 +58631,10 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
+"vcI" = (
+/obj/item/device/radio/beacon,
+/turf/simulated/floor/specialroom/bar,
+/area/station/crew_quarters/cafeteria)
 "vej" = (
 /obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon18{
 	codes_txt = "patrol;next_patrol=1"
@@ -117325,7 +117340,7 @@ blO
 bex
 bfF
 ppQ
-uMr
+slG
 bje
 bkC
 fbZ
@@ -117625,7 +117640,7 @@ blO
 bcl
 blO
 bey
-blO
+vcI
 bpI
 biN
 bpI
