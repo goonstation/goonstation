@@ -52208,6 +52208,11 @@
 /obj/disposalpipe/junction/left/south,
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
+"eFu" = (
+/obj/stool/bar,
+/obj/item/device/radio/beacon,
+/turf/simulated/floor/specialroom/bar,
+/area/station/crew_quarters/cafeteria)
 "eGO" = (
 /obj/lattice{
 	dir = 4;
@@ -56191,8 +56196,9 @@
 /area/station/ai_monitored/armory)
 "ppQ" = (
 /obj/table/reinforced/bar/auto,
-/obj/item/device/radio/beacon,
-/obj/item/clothing/head/cakehat,
+/obj/item_dispenser/icedispenser{
+	pixel_y = 12
+	},
 /turf/simulated/floor/carpet/green/standard/narrow/northsouth,
 /area/station/crew_quarters/cafeteria)
 "pqx" = (
@@ -56649,11 +56655,6 @@
 	dir = 8;
 	layer = 9.1;
 	pixel_x = -10
-	},
-/obj/item_dispenser/icedispenser{
-	dir = 4;
-	pixel_x = -22;
-	pixel_y = 7
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/cafeteria)
@@ -58020,6 +58021,16 @@
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor,
 /area/station/storage/warehouse)
+"tPL" = (
+/obj/table/reinforced/bar/auto,
+/obj/machinery/computer/security/wooden_tv/small{
+	pixel_y = 8
+	},
+/obj/item/clothing/head/cakehat{
+	pixel_y = -10
+	},
+/turf/simulated/floor/carpet/green/standard/narrow/northsouth,
+/area/station/crew_quarters/cafeteria)
 "tPN" = (
 /obj/table/round/auto,
 /obj/item/gobowl/w,
@@ -117202,7 +117213,7 @@ blO
 bex
 bfF
 ppQ
-uMr
+tPL
 bje
 bkC
 fbZ
@@ -117503,7 +117514,7 @@ bcl
 blO
 bey
 blO
-bpI
+eFu
 biN
 bpI
 bpI

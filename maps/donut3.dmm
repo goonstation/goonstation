@@ -13802,6 +13802,10 @@
 "dPv" = (
 /obj/table/reinforced/bar/auto,
 /obj/firedoor_spawn,
+/obj/item_dispenser/icedispenser{
+	pixel_x = -1;
+	pixel_y = 11
+	},
 /obj/machinery/door/poddoor/pyro{
 	dir = 5;
 	id = "bar_shutter";
@@ -26442,9 +26446,6 @@
 /area/station/crewquarters/fuq3)
 "hFC" = (
 /obj/machinery/chem_heater,
-/obj/item_dispenser/icedispenser{
-	pixel_x = -1
-	},
 /turf/simulated/floor/caution/corner/sw,
 /area/station/crew_quarters/cafeteria)
 "hFD" = (

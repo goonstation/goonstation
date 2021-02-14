@@ -12806,6 +12806,9 @@
 "axE" = (
 /obj/machinery/chem_dispenser,
 /obj/item/reagent_containers/glass/beaker/large,
+/obj/item/clothing/glasses/spectro{
+	pixel_y = -3
+	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/bar)
 "axF" = (
@@ -13563,11 +13566,6 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/item_dispenser/icedispenser{
-	dir = 4;
-	pixel_x = -22;
-	pixel_y = 5
-	},
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/bar)
 "azb" = (
@@ -13587,9 +13585,9 @@
 /obj/machinery/door/window/eastright{
 	req_access_txt = "25"
 	},
-/obj/machinery/cashreg,
-/obj/item/clothing/glasses/spectro{
-	pixel_y = 11
+/obj/item_dispenser/icedispenser{
+	pixel_x = -1;
+	pixel_y = 9
 	},
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/bar)

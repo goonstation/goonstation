@@ -8926,9 +8926,6 @@
 	dir = 8;
 	icon_state = "xtra_bigstripe-edge2"
 	},
-/obj/item_dispenser/icedispenser{
-	pixel_x = -1
-	},
 /turf/simulated/floor,
 /area/station/crew_quarters/cafeteria)
 "auQ" = (
@@ -13760,7 +13757,9 @@
 	dir = 4
 	},
 /obj/table/reinforced/bar/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/item_dispenser/icedispenser{
+	dir = 8;
+	pixel_x = 19;
 	pixel_y = 8
 	},
 /turf/simulated/floor/specialroom/bar/edge{
