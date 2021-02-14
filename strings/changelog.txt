@@ -1,5 +1,9 @@
 
 (t)sun feb 14 21
+(u)Carbadox
+(p)3718
+(e)🐛🎨|bug, sprites
+(+)Added the ability to make industrial table parts with reinforced metal sheets.
 (u)BenLubar
 (p)3381
 (e)⚖|balance
