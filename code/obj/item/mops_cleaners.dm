@@ -1090,7 +1090,8 @@ WET FLOOR SIGN
 							A.throw_at(T == turf_list[1] ? get_turf(master) : turf_list[1], src.throw_range, src.throw_speed)
 							if(ismob(A))
 								var/mob/M = A
-								M.changeStatus("weakened", 0.8 SECONDS)
+								M.changeStatus("weakened", 0.5 SECONDS)
+								M.force_laydown_standup()
 								boutput(M, "<span class='alert'>You are pulled by the force of [user]'s [master].</span>")
 						else
 							var/mob/M = A
