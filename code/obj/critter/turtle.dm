@@ -23,6 +23,14 @@
 	var/rigger = null
 	var/exploding = FALSE
 
+	New(loc)
+		. = ..()
+		START_TRACKING
+
+	disposing()
+		. = ..()
+		STOP_TRACKING
+
 	ai_think()
 		if (shell_count > 0)
 			shell_count--
@@ -103,25 +111,24 @@
 				rigged = 1
 				rigger = user
 
-			S.reagents.clear_reagents()
+				S.reagents.clear_reagents()
 
-			var/area/A = get_area(src)
-			if(A?.lightswitch && A?.power_light)
-				src.explode()
+				var/area/A = get_area(src)
+				if(A?.lightswitch && A?.power_light)
+					src.explode()
 		else
 			. = ..()
 
 	// explode the turtle
 
 	proc/explode()
-		var/turf/T = get_turf(src.loc)
 		SPAWN_DBG(0)
 			src.rigged = FALSE
 			src.rigger = null
 			enter_shell()	//enter shell first to give a warning
 			src.exploding = TRUE
 			sleep(0.2 SECONDS)
-			explosion(src, T, 0, 1, 2, 2)
+			explosion(src, get_turf(src), 0, 1, 2, 2)
 			sleep(4 SECONDS)
 			src.exploding = FALSE
 			var/message = "Check please!"

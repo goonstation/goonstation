@@ -92,8 +92,8 @@
 	playsound(get_turf(src), "sound/misc/lightswitch.ogg", 50, 1)
 
 	if(on)
-		for(var/obj/critter/turtle/sylvester/S as() in src.area.sylvesters)
-			if(S.rigged)
+		for_by_tcl(S, /obj/critter/turtle)
+			if(get_area(S) == src.area && S.rigged)
 				S.explode()
 
 
