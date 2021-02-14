@@ -454,7 +454,7 @@
 
 			if ("help")
 				src.show_text("To use emotes, simply enter 'me (emote)' in the input bar. Certain emotes can be targeted at other characters - to do this, enter 'me (emote) (name of character)' without the brackets.")
-				src.show_text("For a list of all emotes, use 'me list'. For a list of basic emotes, use 'me listbasic'. For a list of emotes that can be targeted, use 'me listtarget'.")
+				src.show_text("For a list of all emotes, use 'me list'. For a list of basic emotes, use 'me listbasic'. For a list of emotes that can be targeted, use 'me listtarget'. For a list of mutant race unqiue emotes, use 'me lizard', 'me roach', 'me skeleton', or 'me cow'.")
 
 			if ("listbasic")
 				src.show_text("smile, grin, smirk, frown, scowl, grimace, sulk, pout, blink, drool, shrug, tremble, quiver, shiver, shudder, shake, \
@@ -466,6 +466,18 @@
 
 			if ("listtarget")
 				src.show_text("salute, bow, hug, wave, glare, stare, look, leer, nod, tweak, flipoff, doubleflip, shakefist, handshake, daps, slap, boggle, highfive")
+
+			if ("lizard")
+				src.show_text("dewlap, headbob, hiss, sniff, sniff, mouth, lick, whip")
+
+			if ("roach")
+				src.show_text("chirp, chirp_t, click, anten, hiss")
+
+			if ("cow")
+				src.show_text("snort, stamp, swish, moo_p, moo_s, moo_h")
+
+			if ("skeleton")
+				src.show_text("rattle")
 
 			if ("suicide")
 				src.show_text("Suicide is a command, not an emote.  Please type 'suicide' in the input bar at the bottom of the game window to kill yourself.", "red")

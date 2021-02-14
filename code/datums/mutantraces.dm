@@ -836,6 +836,38 @@
 			mob.base_body_temp = initial(mob.base_body_temp)
 		. = ..()
 
+	emote(var/act, var/voluntary)
+		switch(act)
+			if ("whip")
+				if (mob.emote_check(voluntary, 50))
+					. = list("<B>[mob]</B> whips their tail", "<i>whips their tail</i>")
+			if ("hiss")
+				if (mob.emote_check(voluntary, 50))
+					. = list("<B>[mob]</B> hisses", "<i>hisses</i>")
+			if ("dewlap")
+				if (mob.emote_check(voluntary, 50))
+					. = list("<B>[mob]</B> extends dewlap proudly", "<i>extends dewlap proudly</i>")
+			if ("tongue")
+				if (mob.emote_check(voluntary, 50))
+					. = list("<B>[mob]</B> flicks tongue out", "<i>flicks tongue out</i>")
+			if ("lick")
+				if (mob.emote_check(voluntary, 50))
+					. = list("<B>[mob]</B> licks their eye", "<i>licks their eye</i>")
+			if ("sniff")
+				if (mob.emote_check(voluntary, 50))
+					. = list("<B>[mob]</B> sniffs the air", "<i>sniffs the air</i>")
+			if ("headbob")
+				if (mob.emote_check(voluntary, 50))
+					. = list("<B>[mob]</B> bobs their head", "<i>bobs their head</i>")
+			if ("puff")
+				if (mob.emote_check(voluntary, 50))
+					. = list("<B>[mob]</B> puffs up", "<i>puffs up</i>")
+			if ("mouth")
+				if (mob.emote_check(voluntary, 50))
+					. = list("<B>[mob]</B> holds mouth open", "<i>holds mouth open</i>")
+			else
+				.= ..()
+
 	say_verb()
 		return "hisses"
 
@@ -1101,6 +1133,14 @@
 	special_head = HEAD_SKELETON
 	decomposes = FALSE
 	race_mutation = /datum/bioEffect/mutantrace/skeleton
+
+	emote(var/act, var/voluntary)
+		switch(act)
+			if ("rattle")
+				if (mob.emote_check(voluntary, 50))
+					. = list("<B>[mob]</B> rattles", "<i>rattles</i>")
+			else
+				.= ..()
 
 	New(var/mob/living/carbon/human/M)
 		..()
@@ -1691,6 +1731,26 @@
 			M.mob_flags |= SHOULD_HAVE_A_TAIL
 		APPLY_MOB_PROPERTY(M, PROP_RADPROT, src, 100)
 
+	emote(var/act, var/voluntary)
+		switch(act)
+			if ("chirp")
+				if (mob.emote_check(voluntary, 50))
+					. = list("<B>[mob]</B> chirps", "<i>chirps</i>")
+			if ("hiss")
+				if (mob.emote_check(voluntary, 50))
+					. = list("<B>[mob]</B> hisses", "<i>hisses</i>")
+			if ("click")
+				if (mob.emote_check(voluntary, 50))
+					. = list("<B>[mob]</B> clicks rythmically", "<i>clicks rythmically</i>")
+			if ("chirp_t")
+				if (mob.emote_check(voluntary, 50))
+					. = list("<B>[mob]</B> chirps threateningly", "<i>chirps threateningly</i>")
+			if ("anten")
+				if (mob.emote_check(voluntary, 50))
+					. = list("<B>[mob]</B> wiggles anetennas", "<i>wiggles antennas</i>")
+			else
+				.= ..()
+
 	say_verb()
 		return "clicks"
 
@@ -2019,6 +2079,25 @@
 			if ("milk")
 				if (mob.emote_check(voluntary))
 					.= release_milk()
+			if ("moo_p")
+				if (mob.emote_check(voluntary, 50))
+					. = list("<B>[mob]</B> moos proudly!", "<i>moos proudly</i>")
+			if ("moo_s")
+				if (mob.emote_check(voluntary, 50))
+					. = list("<B>[mob]</B> moos solemnly", "<i>moos solemnly</i>")
+			if ("moo_h")
+				if (mob.emote_check(voluntary, 50))
+					. = list("<B>[mob]</B> moos heartily", "<i>moos heartily</i>")
+			if ("stamp")
+				if (mob.emote_check(voluntary, 50))
+					. = list("<B>[mob]</B> stamps their hoove!", "<i>stamps their hoove!</i>")
+					playsound(get_turf(mob), "sound/misc/step/step_lattice_1.ogg", 80, 1, channel=VOLUME_CHANNEL_EMOTE)
+			if ("snort")
+				if (mob.emote_check(voluntary, 50))
+					. = list("<B>[mob]</B> snorts!", "<i>snorts</i>") //if anyone wants to add a mist cloud (ciggarette smoke cloud) coming out, that would be great
+			if ("swish")
+				if (mob.emote_check(voluntary, 50))
+					. = list("<B>[mob]</B> swishes their tail", "<i>swishes their tail</i>")
 			else
 				.= ..()
 
