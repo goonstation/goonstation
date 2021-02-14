@@ -186,12 +186,14 @@
 			src.on = !src.on
 
 		if (src.on)
+			src.firesource = TRUE
 			src.force = 10
 			src.hit_type = DAMAGE_BURN
 			src.icon_state = "cakehat1"
 			light.enable()
 			processing_items |= src
 		else
+			src.firesource = FALSE
 			src.force = 3
 			src.hit_type = DAMAGE_BLUNT
 			src.icon_state = "cakehat0"
@@ -218,7 +220,7 @@
 
 	afterattack(atom/target, mob/user as mob)
 		if (src.on && !ismob(target) && target.reagents)
-			boutput(usr, "<span class='notice'>You heat \the [target.name]</span>")
+			boutput(user, "<span class='notice'>You heat \the [target.name]</span>")
 			target.reagents.temperature_reagents(2500,10)
 		return
 

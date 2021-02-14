@@ -520,24 +520,18 @@ datum
 			thirst_value = -0.098
 			pathogen_nutrition = list("sugar")
 			taste = "sweet"
-			var/remove_buff = 0
 			stun_resist = 6
-
-			pooled()
-				..()
-				remove_buff = 0
 
 			on_add()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
-					remove_buff = M.add_stam_mod_regen("r_sugar", 2)
+					APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "r_sugar", 2)
 				..()
 
 			on_remove()
-				if(remove_buff)
-					if(ismob(holder?.my_atom))
-						var/mob/M = holder.my_atom
-						M.remove_stam_mod_regen("r_sugar")
+				if(ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
+					REMOVE_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "r_sugar")
 				..()
 
 			on_mob_life(var/mob/M, var/mult = 1)
@@ -771,7 +765,7 @@ datum
 			reaction_obj(var/obj/item/O, var/volume)
 				if(istype(O))
 					if(O.burning && prob(80))
-						O.burning = 0
+						O.combust_ended()
 					else if(istype(O, /obj/item/toy/sponge_capsule))
 						var/obj/item/toy/sponge_capsule/S = O
 						S.add_water()

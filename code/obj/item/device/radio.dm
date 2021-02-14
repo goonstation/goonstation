@@ -333,9 +333,12 @@ Green Wire: <a href='?src=\ref[src];wires=[WIRE_TRANSMIT]'>[src.wires & WIRE_TRA
 			R.hear_radio(M, messages, lang_id)
 
 	var/list/heard_flock = list() // heard by flockdrones/flockmind
-
+	var/datum/game_mode/conspiracy/N = ticker.mode
+	var/protected_frequency = null
+	if(istype(N))
+		protected_frequency = N.agent_radiofreq //groups conspirator frequency as a traitor one and protects it along with nukies
 	// Don't let them monitor Syndie headsets. You can get the radio_brain bioeffect at the start of the round, basically.
-	if (src.protected_radio != 1 && isnull(src.traitorradio))
+	if (src.protected_radio != 1 && isnull(src.traitorradio) && protected_frequency != display_freq )
 		for (var/mob/living/L in radio_brains)
 			receive += L
 
@@ -343,9 +346,8 @@ Green Wire: <a href='?src=\ref[src];wires=[WIRE_TRANSMIT]'>[src.wires & WIRE_TRA
 			if(z.client)
 				receive += z
 
-
-		// hi it's me cirr here to shoehorn in another thing
-		// flockdrones and flockmind should hear all channels, but with terrible corruption
+	// hi it's me cirr here to shoehorn in another thing
+	// flockdrones and flockmind should hear all channels, but with terrible corruption
 		if(length(flocks))
 			for(var/F in flocks)
 				var/datum/flock/flock = flocks[F]

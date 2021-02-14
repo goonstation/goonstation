@@ -158,6 +158,7 @@
 /mob/living/carbon/human/proc/ai_process()
 	if(!ai_active) return
 	if(world.time < ai_lastaction + ai_actiondelay) return
+	usr = src
 
 	var/action_delay = 0
 	delStatus("resting")
@@ -264,7 +265,6 @@
 		ai_state = AI_PASSIVE
 
 /mob/living/carbon/human/proc/ai_action()
-	usr = src
 
 	src.ai_do_hand_stuff()
 

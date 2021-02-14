@@ -921,6 +921,8 @@ WET FLOOR SIGN
 		if(ON_COOLDOWN(src, "suck", 0.3 SECONDS))
 			return
 		var/turf/T = get_turf(target)
+		if(isnull(T)) // fluids getting disposed or something????
+			return
 		new/obj/effect/suck(T, get_dir(T, user))
 		if(src.suck(T, user))
 			playsound(T, "sound/effects/suck.ogg", 20, TRUE, 0, 1.5)
@@ -1088,6 +1090,7 @@ WET FLOOR SIGN
 							A.throw_at(T == turf_list[1] ? get_turf(master) : turf_list[1], src.throw_range, src.throw_speed)
 							if(ismob(A))
 								var/mob/M = A
+								M.changeStatus("weakened", 0.8 SECONDS)
 								boutput(M, "<span class='alert'>You are pulled by the force of [user]'s [master].</span>")
 						else
 							var/mob/M = A

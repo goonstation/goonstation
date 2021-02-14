@@ -3,10 +3,9 @@
 ABSTRACT_TYPE(/datum/artifact/)
 /datum/artifact/
 	var/associated_object = null
-	var/rarity_class = 0
-	// Bigger rarity means its less likely to show up. Thanks for documenting this, guys. - Azungar
-	// Also note that rarity 0 means the artifact does not randomly spawn.
-	// Tweaked rarity 1 to contain all the uninteresting garbage artifacts. Explosion artifacts still appear at 3/4 because explodey is not boring - Phyvo
+	var/rarity_weight = 0
+	// weighted commonness, so a higher number will make it more likely
+	// 0 should not make it spawn at all, naturally
 
 	var/datum/artifact_origin/artitype = null
 	var/list/validtypes = list("ancient","martian","wizard","eldritch","precursor")
@@ -132,6 +131,9 @@ ABSTRACT_TYPE(/datum/artifact/)
 			if (AT.type == path)
 				return AT
 		return null
+
+	proc/get_rarity_modifier()
+		return src.rarity_weight ? 0.995**src.rarity_weight : 0.2 // ~0.63 for tier 5, ~0.1 for tier 1
 
 // SPECIFIC DATUMS
 

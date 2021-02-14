@@ -928,15 +928,17 @@
 			attacking_item.attackby(pcell, attacker)
 		else return ..()
 
-	swap(var/obj/item/gun/energy/E)
+	swap(var/obj/item/gun/energy/E, var/mob/living/user)
 		if(!istype(E.cell,/obj/item/ammo/power_cell))
 			return 0
 		var/obj/item/ammo/power_cell/swapped_cell = E.cell
 		var/mob/living/M = src.loc
+		if (!ismob(M))
+			M = user
 		var/atom/old_loc = src.loc
 
-		if(istype(M) && src == M.equipped())
-			usr.u_equip(src)
+		if(istype(M) && (src in M.get_all_items_on_mob()))
+			M.u_equip(src)
 
 		src.set_loc(E)
 		E.cell = src
@@ -947,7 +949,7 @@
 			cell_container.hud.remove_item(src)
 			cell_container.hud.update()
 		else
-			usr.put_in_hand_or_drop(swapped_cell)
+			M.put_in_hand_or_drop(swapped_cell)
 
 		src.add_fingerprint(usr)
 
@@ -1196,3 +1198,39 @@
 	ammo_type = new/datum/projectile/special/meowitzer/inert
 
 
+/datum/action/bar/icon/powercellswap
+	duration = 1 SECOND
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ATTACKED
+	id = "powercellswap"
+	icon = 'icons/obj/items/ammo.dmi'
+	icon_state = "power_cell"
+	var/mob/living/user
+	var/obj/item/ammo/power_cell/cell
+	var/obj/item/gun/energy/gun
+
+	New(User, Cell, Gun)
+		user = User
+		cell = Cell
+		gun = Gun
+		..()
+
+	onUpdate()
+		..()
+		if(get_dist(user, gun) > 1 || user == null || cell == null || gun == null || get_turf(gun) != get_turf(cell) )
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+	onStart()
+		..()
+		if(get_dist(user, gun) > 1 || user == null || cell == null || gun == null || get_turf(gun) != get_turf(cell) )
+			interrupt(INTERRUPT_ALWAYS)
+			return
+		return
+
+	onEnd()
+		..()
+		if(get_dist(user, gun) > 1 || user == null || cell == null || gun == null || get_turf(gun) != get_turf(cell) )
+			..()
+			interrupt(INTERRUPT_ALWAYS)
+			return
+		cell.swap(gun,user)

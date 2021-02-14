@@ -396,7 +396,10 @@
 			return
 
 		else if (href_list["createpill"])
-			var/input_name = input(usr, "Name the pill:", "Name", R.get_master_reagent_name()) as null|text
+			var/default = R.get_master_reagent_name()
+			var/input_name = input(usr, "Name the pill:", "Name", default) as null|text
+			if(input_name && input_name != default)
+				phrase_log.log_phrase("pill", input_name, no_duplicates=TRUE)
 			var/pillname = copytext(html_encode(input_name), 1, 32)
 			if (isnull(pillname) || !src.beaker || !R || !length(pillname) || pillname == " " || get_dist(usr, src) > 1)
 				return
@@ -415,8 +418,11 @@
 
 		else if (href_list["multipill"])
 			// get the pill name from the user
-			var/input_pillname = input(usr, "Name the pill:", "Name", R.get_master_reagent_name()) as null|text
+			var/default = R.get_master_reagent_name()
+			var/input_pillname = input(usr, "Name the pill:", "Name", default) as null|text
 			var/pillname = copytext(html_encode(input_pillname), 1, 32)
+			if(input_pillname && input_pillname != default)
+				phrase_log.log_phrase("pill", input_pillname, no_duplicates=TRUE)
 			if (isnull(pillname) || !src.beaker || !R || !length(pillname) || pillname == " " || get_dist(usr, src) > 1)
 				return
 			// get the pill volume from the user
@@ -448,7 +454,10 @@
 			return
 
 		else if (href_list["createbottle"])
-			var/input_name = input(usr, "Name the bottle:", "Name", R.get_master_reagent_name()) as null|text
+			var/default = R.get_master_reagent_name()
+			var/input_name = input(usr, "Name the bottle:", "Name", default) as null|text
+			if(input_name && input_name != default)
+				phrase_log.log_phrase("bottle", input_name, no_duplicates=TRUE)
 			var/bottlename = copytext(html_encode(input_name), 1, 32)
 			if (isnull(bottlename) || !src.beaker || !R || !length(bottlename) || bottlename == " " || get_dist(usr, src) > 1)
 				return
@@ -703,7 +712,7 @@ datum/chemicompiler_core/stationaryCore
 			return
 		src.add_dialog(user)
 		executor.panel()
-		onclose(usr, "chemicompiler")
+		onclose(user, "chemicompiler")
 		return
 
 	attackby(var/obj/item/reagent_containers/glass/B as obj, var/mob/user as mob)

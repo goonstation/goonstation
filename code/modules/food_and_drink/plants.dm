@@ -216,6 +216,18 @@
 	food_color = "#CCFFCC"
 	food_effects = list("food_space_farts")
 
+/obj/item/reagent_containers/food/snacks/plant/peas
+	name = "pea pod"
+	crop_suffix = " pod"
+	desc = "These peas are like peas in a pod. Yeah."
+	planttype = /datum/plant/crop/peas
+	icon_state = "peapod"
+	amount = 1
+	heal_amt = 1
+	throwforce = 0
+	force = 0
+	food_color = "#77AA77"
+
 /obj/item/reagent_containers/food/snacks/plant/soylent
 	name = "soylent chartreuse"
 	crop_suffix = " chartreuse"
@@ -1194,6 +1206,7 @@
 	edible = 0
 	food_color = "#4D2600"
 	validforhat = 1
+	event_handler_flags = USE_FLUID_ENTER | USE_HASENTERED
 
 	make_reagents()
 		..()
@@ -1201,21 +1214,39 @@
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (iscuttingtool(W))
-			var/turf/T = get_turf(src)
 			user.visible_message("[user] cuts [src] into slices.", "You cut [src] into slices.")
-			var/makeslices = 3
-			while (makeslices > 0)
-				var/obj/item/reagent_containers/food/snacks/plant/coconutmeat/P = new(T)
-				P.name = "[src.name] meat"
-				P.transform = src.transform
-				var/datum/plantgenes/DNA = src.plantgenes
-				var/datum/plantgenes/PDNA = P.plantgenes
-				if(DNA)
-					HYPpassplantgenes(DNA,PDNA)
-				makeslices -= 1
-			new /obj/item/reagent_containers/food/drinks/coconut(T)
-			pool (src)
+			src.split()
 		..()
+
+	proc/split()
+		var/turf/T = get_turf(src)
+		var/makeslices = 3
+		while (makeslices > 0)
+			var/obj/item/reagent_containers/food/snacks/plant/coconutmeat/P = new(T)
+			P.name = "[src.name] meat"
+			P.transform = src.transform
+			var/datum/plantgenes/DNA = src.plantgenes
+			var/datum/plantgenes/PDNA = P.plantgenes
+			if(DNA)
+				HYPpassplantgenes(DNA,PDNA)
+			makeslices -= 1
+		new /obj/item/reagent_containers/food/drinks/coconut(T)
+		pool(src)
+
+	proc/someone_landed_on_us(mob/living/L, datum/thrown_thing/thr)
+		src.UnregisterSignal(L, COMSIG_MOVABLE_THROW_END)
+		if(L.loc == src.loc)
+			L.visible_message("<span class='alert'>[L] lands on the [src] and breaks it!</span>", "<span class='alert'>You land on the [src] and break it!</span>")
+			playsound(src, "sound/impact_sounds/coconut_break.ogg", 70, vary=TRUE)
+			src.split()
+			L.TakeDamage("chest", brute=12)
+
+	HasEntered(atom/movable/AM, atom/OldLoc)
+		. = ..()
+		if(isliving(AM))
+			var/mob/living/L = AM
+			if(L.throwing)
+				src.RegisterSignal(L, COMSIG_MOVABLE_THROW_END, .proc/someone_landed_on_us)
 
 /obj/item/reagent_containers/food/snacks/plant/coconutmeat/
 	name = "coconut meat"
