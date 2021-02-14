@@ -1,8 +1,8 @@
 
 //flowers n stuff
 //TO-DO
-//Alterations of each flower type
-//special stuff for each of them
+//Alterations for each flower type
+//special stuff for them
 ABSTRACT_TYPE(/datum/plant/flower)
 /datum/plant/flower
 	plant_icon = 'icons/obj/hydroponics/plants_flower.dmi'
@@ -34,7 +34,7 @@ ABSTRACT_TYPE(/datum/plant/flower)
 	cropsize = 3
 	harvests = 1
 	endurance = 2
-	nectarlevel =  19 //these things literally drip nectar from time to time
+	nectarlevel =  20 //these things literally drip nectar from time to time
 	genome = 11
 	force_seed_on_harvest = 1
 	assoc_reagents = list("hibiscus_petals")
@@ -83,7 +83,7 @@ ABSTRACT_TYPE(/datum/plant/flower)
 	genome = 7
 	force_seed_on_harvest = 1
 
-/datum/plant/flower/daffodil //this one too
+/datum/plant/flower/daffodil //research this one too
 	name = "Daffodil"
 	seedcolor = "#ffca00"
 	crop = /obj/item/plant/flower/daffodil
@@ -97,7 +97,7 @@ ABSTRACT_TYPE(/datum/plant/flower)
 	genome = 7
 	force_seed_on_harvest = 1
 
-/datum/plant/flower/morningglory //no clue how these work
+/datum/plant/flower/morningglory //no clue how these work either
 	name = "Morning Glory"
 	override_icon_state = "Mglory"
 	seedcolor = "#7a27d9"
