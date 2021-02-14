@@ -184,8 +184,10 @@ var/global/lastStationNameChange = 0 //timestamp
 		if (!name)
 			return 0
 
+		phrase_log.log_phrase("stationname-[isadmin(user)?"admin":"player"]", name, no_duplicates=TRUE)
+
 		#if defined(REVERSED_MAP)
-			name = reverse_text(name)
+		name = reverse_text(name)
 		#endif
 
 		the_station_name = name

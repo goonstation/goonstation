@@ -737,7 +737,6 @@ This is basically useless for anyone but miners.
 	cost = 5
 	desc = "Have you ever been making a pizza and thought \"this pizza would be better if I could fatally injure someone by throwing it at them\"? Well think no longer! Because you're sharpening pizzas now. You weirdo."
 	job = list("Chef")
-	not_in_crates = 1
 	blockedmode = list(/datum/game_mode/revolution)
 
 

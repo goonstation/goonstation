@@ -349,7 +349,7 @@
 			amount--
 			var/obj/item/arrow/O = clone(loc)
 			user.put_in_hand_or_drop(O, user.hand)
-			boutput(usr, "<span class='notice'>You take \a [src] from the stack of [src]s. [amount] remaining on the stack.")
+			boutput(user, "<span class='notice'>You take \a [src] from the stack of [src]s. [amount] remaining on the stack.")
 		else
 			..()
 */

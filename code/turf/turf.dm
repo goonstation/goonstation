@@ -969,7 +969,7 @@
 /turf/space/attackby(obj/item/C as obj, mob/user as mob)
 	var/area/A = get_area (user)
 	if (istype(A, /area/supply/spawn_point || /area/supply/delivery_point || /area/supply/sell_point))
-		boutput(usr, "<span class='alert'>You can't build here.</span>")
+		boutput(user, "<span class='alert'>You can't build here.</span>")
 		return
 	var/obj/item/rods/R = C
 	if (istype(R) && R.consume_rods(1))

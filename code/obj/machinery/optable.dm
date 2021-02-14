@@ -39,7 +39,7 @@
 		qdel(src)
 
 /obj/machinery/optable/attack_hand(mob/user as mob)
-	if (usr.is_hulk())
+	if (user.is_hulk())
 		user.visible_message("<span class='alert'>[user] destroys the table.</span>")
 		src.set_density(0)
 		qdel(src)

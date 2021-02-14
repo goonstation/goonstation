@@ -621,7 +621,7 @@
 	else if (src.desc)
 		. += "<br>[src.desc]"
 
-	var/extra = src.get_desc(dist, usr)
+	var/extra = src.get_desc(dist, user)
 	if (extra)
 		. += " [extra]"
 
@@ -1001,7 +1001,7 @@
 
 
 /atom/proc/interact(var/mob/user)
-	if (isdead(user) || (!iscarbon(user) && !ismobcritter(user) && !issilicon(usr)))
+	if (isdead(user) || (!iscarbon(user) && !ismobcritter(user) && !issilicon(user)))
 		return
 
 	if (!isturf(src) && !istype(src.loc, /turf) || is_incapacitated(user) || user.restrained())

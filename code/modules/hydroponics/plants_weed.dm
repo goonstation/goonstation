@@ -77,7 +77,9 @@ ABSTRACT_TYPE(/datum/plant/weed)
 		if (POT.health > src.starthealth / 2)
 			boutput(user, "<span class='alert'>The lasher flails at you violently! You might need to weaken it first...</span>")
 			return 1
-		else return 0
+		else
+			HYPaddCommut(POT.current, POT.plantgenes, /datum/plant_gene_strain/reagent_adder/lasher)
+			return 0
 
 /datum/plant/weed/creeper
 	name = "Creeper"

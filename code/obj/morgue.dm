@@ -89,7 +89,7 @@
 			return
 		if (user.equipped() != P)
 			return
-		if ((!in_interact_range(src, usr) && src.loc != user))
+		if ((!in_interact_range(src, user) && src.loc != user))
 			return
 		t = copytext(adminscrub(t),1,128)
 		if (t)
@@ -277,7 +277,7 @@
 			return
 		if (user.equipped() != P)
 			return
-		if ((!in_interact_range(src, usr) > 1 && src.loc != user))
+		if ((!in_interact_range(src, user) > 1 && src.loc != user))
 			return
 		t = copytext(adminscrub(t),1,128)
 		if (t)
@@ -488,7 +488,7 @@
 
 	attack_hand(mob/user as mob)
 		if (cremating)
-			boutput(usr, "<span class='alert'>It's locked.</span>")
+			boutput(user, "<span class='alert'>It's locked.</span>")
 			return
 		if ((src.connected && src.connected.loc != src) && (src.locked == 0))
 			for(var/atom/movable/A as mob|obj in src.connected.loc)
@@ -524,7 +524,7 @@
 				return
 			if (user.equipped() != P)
 				return
-			if ((!in_interact_range(src, usr) > 1 && src.loc != user))
+			if ((!in_interact_range(src, user) > 1 && src.loc != user))
 				return
 			t = copytext(adminscrub(t),1,128)
 			if (t)
@@ -661,7 +661,7 @@
 		..()
 		if (istype(P, /obj/item/light/tube) && !src.contents.len)
 			var/obj/item/light/tube/G = P
-			boutput(usr, "<span class='notice'>You put \the [G.name] into \the [src.name].</span>")
+			boutput(user, "<span class='notice'>You put \the [G.name] into \the [src.name].</span>")
 			user.drop_item()
 			G.set_loc(src)
 			src.tanningtube = G
@@ -673,7 +673,7 @@
 				light.set_brightness(0.5)
 
 		if (ispryingtool(P) && src.contents.len) //pry out the tube with a crowbar
-			boutput(usr, "<span class='notice'>You pry out \the [src.tanningtube.name] from \the [src.name].</span>")
+			boutput(user, "<span class='notice'>You pry out \the [src.tanningtube.name] from \the [src.name].</span>")
 			src.tanningtube.set_loc(src.loc)
 			src.tanningtube = null
 			generate_overlay_icon() //nulling overlay

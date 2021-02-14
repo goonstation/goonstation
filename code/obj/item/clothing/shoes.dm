@@ -526,11 +526,11 @@
 		switch (action)
 			if ("Toggle")
 				src.on = !(src.on)
-				boutput(usr, "<span class='notice'>The jet boots are now [src.on ? "on" : "off"].</span>")
+				boutput(user, "<span class='notice'>The jet boots are now [src.on ? "on" : "off"].</span>")
 				return
 			if ("Remove Tank")
-				boutput(usr, "<span class='notice'>You eject [src.tank] from [src].</span>")
-				usr.put_in_hand_or_drop(src.tank)
+				boutput(user, "<span class='notice'>You eject [src.tank] from [src].</span>")
+				user.put_in_hand_or_drop(src.tank)
 				src.tank = null
 				return
 		..()

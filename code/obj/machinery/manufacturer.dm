@@ -1921,6 +1921,13 @@
 	blueprint = /datum/manufacture/mechanics/loafer
 
 
+
+/******************** AI Display Blueprints (should be temporary but we know how that goes in coding) *******************/
+
+/obj/item/paper/manufacturer_blueprint/ai_status_display
+	blueprint = /datum/manufacture/mechanics/ai_status_display
+
+
 /******************** Alastor Pattern Thruster Blueprints *******************/
 /obj/item/paper/manufacturer_blueprint/thrusters
 	icon = 'icons/obj/writing.dmi'
@@ -1988,6 +1995,7 @@
 		/datum/manufacture/fluidcanister,
 		/datum/manufacture/patch)
 	hidden = list(/datum/manufacture/RCDammo,
+		/datum/manufacture/RCDammomedium,
 		/datum/manufacture/RCDammolarge,
 		/datum/manufacture/bottle,
 		/datum/manufacture/vuvuzela,
@@ -2209,6 +2217,7 @@
 
 	hidden = list(/datum/manufacture/RCD,
 	/datum/manufacture/RCDammo,
+	/datum/manufacture/RCDammomedium,
 	/datum/manufacture/RCDammolarge)
 
 /obj/machinery/manufacturer/hangar
@@ -2266,6 +2275,7 @@
 	/datum/manufacture/jumpsuit_brown,
 	/datum/manufacture/jumpsuit_black,
 	/datum/manufacture/jumpsuit_orange,
+	/datum/manufacture/pride_lgbt,
 	/datum/manufacture/pride_ace,
 	/datum/manufacture/pride_aro,
 	/datum/manufacture/pride_bi,
@@ -2363,6 +2373,7 @@
 	/datum/manufacture/jumpsuit_brown,
 	/datum/manufacture/jumpsuit_black,
 	/datum/manufacture/jumpsuit_orange,
+	/datum/manufacture/pride_lgbt,
 	/datum/manufacture/pride_ace,
 	/datum/manufacture/pride_aro,
 	/datum/manufacture/pride_bi,

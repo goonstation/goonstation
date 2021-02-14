@@ -181,6 +181,7 @@
 			var/name = input("Enter voice name:", "Voice name")
 			if(!name)
 				return FALSE
+			phrase_log.log_phrase("voice-radiostation", name, no_duplicates=TRUE)
 			if(length(name) > FULLNAME_MAX)
 				name = copytext(name, 1, FULLNAME_MAX)
 			var/accent = input("Pick an accent:", "Accent") as null|anything in list("none") + src.accents

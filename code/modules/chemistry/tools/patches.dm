@@ -498,13 +498,14 @@
 		.= (iscarbon(A) || ismobcritter(A))
 
 	proc/update_icon()
-		src.overlays = null
 		if (reagents.total_volume)
 			if (!src.fluid_image)
 				src.fluid_image = image('icons/obj/chemical.dmi', "mender-fluid", -1)
 			var/datum/color/average = reagents.get_average_color()
 			src.fluid_image.color = average.to_rgba()
-			src.overlays += src.fluid_image
+			src.UpdateOverlays(src.fluid_image, "fluid")
+		else
+			src.UpdateOverlays(null, "fluid")
 		signal_event("icon_updated")
 
 	emag_act(var/mob/user, var/obj/item/card/emag/E)

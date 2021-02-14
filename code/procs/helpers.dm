@@ -2472,9 +2472,9 @@ proc/check_whitelist(var/atom/TA, var/list/whitelist, var/mob/user as mob, var/c
 		else if (ismob(TA.loc))
 			var/mob/M = TA.loc
 			boutput(M, "[custom_message]")
-		else if(ismob(usr))
+		else if(ismob(user))
 			 // some procs don't know user, for instance because they are in on_reagent_change
-			boutput(usr, "[custom_message]")
+			boutput(user, "[custom_message]")
 		else
 			TA.visible_message("[custom_message]")
 

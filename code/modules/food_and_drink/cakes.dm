@@ -94,11 +94,11 @@
 					return list(0,0)
 				else if(src.GetOverlayImage("[sliced_or_cake]-generic[2]"))
 					generic_number = 3
-				else 
+				else
 					generic_number = 2
 				tag = "cake[clayer]-generic[generic_number]"
 				overlay_color = F.food_color
-			
+
 			for(var/food_effect in F.food_effects)
 				src.food_effects |= food_effect
 
@@ -111,7 +111,7 @@
 			return
 		var/frostingtype
 		frostingtype = input("Which frosting style would you like?", "Frosting Style", null) as null|anything in frostingstyles
-		if(frostingtype && (get_dist(src, usr) <= 1))
+		if(frostingtype && (get_dist(src, user) <= 1))
 			var/tag
 			var/datum/color/average = tube.reagents.get_average_color()
 			switch(frostingtype)
@@ -212,7 +212,7 @@
 		qdel(s) //cleaning up the template slice
 		if(deletionqueue)
 			qdel(src)
-			
+
 
 
 	proc/stack_cake(var/obj/item/reagent_containers/food/snacks/cake/c,var/mob/user)
@@ -511,7 +511,7 @@
 			..()
 		else
 			return
-		
+
 
 	attack(mob/M as mob, mob/user as mob, def_zone) //nom nom nom
 		if(!src.sliced)
