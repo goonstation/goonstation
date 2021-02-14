@@ -962,6 +962,7 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 			return
 
 		src.broken = 1
+		src.operating = -1 // set operating to -1 so A* fails on door check
 
 		playsound(src.loc, 'sound/machines/airlock_break_very_temp.ogg', 50, 1)
 		SPAWN_DBG(0)

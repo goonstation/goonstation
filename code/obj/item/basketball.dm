@@ -66,7 +66,7 @@
 		var/obj/item/plutonium_core/P = W
 		src.payload = W
 		if(src.loc == user)
-			P.plutonize(usr.verbs)
+			P.plutonize(user.verbs)
 		return
 	..(W, user)
 	return
@@ -75,7 +75,7 @@
 	..()
 	var/mob/living/carbon/human/H = user
 	if(istype(H) && payload && istype(payload))
-		payload.plutonize(usr.verbs)
+		payload.plutonize(user.verbs)
 	return
 
 /obj/item/basketball/unequipped(var/mob/usr)

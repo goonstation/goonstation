@@ -465,10 +465,10 @@ SYNDICATE DRONE FACTORY AREAS
 		src.special = null
 
 	afterattack(atom/target as mob|obj|turf, mob/user as mob)
-		if(target == usr) return
+		if(target == user) return
 
-		if(get_dist(usr, target) > 5)
-			boutput(usr, "<span class='alert'>That is too far away!</span>")
+		if(get_dist(user, target) > 5)
+			boutput(user, "<span class='alert'>That is too far away!</span>")
 			return
 
 		var/atom/target_r = target
@@ -487,11 +487,11 @@ SYNDICATE DRONE FACTORY AREAS
 			var/turf/T = O.loc
 
 			if(locate(/obj/decal/stalagmite) in T)
-				boutput(usr, "<span class='alert'>You pull yourself to the stalagmite using the whip.</span>")
-				usr.set_loc(T)
+				boutput(user, "<span class='alert'>You pull yourself to the stalagmite using the whip.</span>")
+				user.set_loc(T)
 			else if(locate(/obj/decal/stalagtite) in T)
-				boutput(usr, "<span class='alert'>You pull yourself to the stalagtite using the whip.</span>")
-				usr.set_loc(T)
+				boutput(user, "<span class='alert'>You pull yourself to the stalagtite using the whip.</span>")
+				user.set_loc(T)
 
 			SPAWN_DBG(0.2 SECONDS) pool(O)
 
@@ -838,7 +838,7 @@ SYNDICATE DRONE FACTORY AREAS
 	w_class = 1.0
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
-		if(!in_interact_range(target, usr) && !istype(target, /obj/alchemy/circle))
+		if(!in_interact_range(target, user) && !istype(target, /obj/alchemy/circle))
 			return
 		if(target == loc) return
 		boutput(user, "<span class='notice'>Your sprinkle some powder on \the [target].</span>")
@@ -939,7 +939,7 @@ SYNDICATE DRONE FACTORY AREAS
 			symbol.set_loc(src.loc)
 			symbol = null
 			overlays.Cut()
-			boutput(usr, "<span class='notice'>You remove the Symbol.</span>")
+			boutput(user, "<span class='notice'>You remove the Symbol.</span>")
 		return
 
 	attackby(obj/item/W as obj, mob/user as mob)
@@ -948,7 +948,7 @@ SYNDICATE DRONE FACTORY AREAS
 			symbol = W
 			symbol.set_loc(src)
 			overlays += symbol
-			boutput(usr, "<span class='notice'>You put the Symbol in the Circle.</span>")
+			boutput(user, "<span class='notice'>You put the Symbol in the Circle.</span>")
 		return
 
 /obj/alchemy/circle
