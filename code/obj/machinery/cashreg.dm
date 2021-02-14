@@ -16,6 +16,15 @@
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/device/pda2) && W:ID_card)
 			W = W:ID_card
+		if(istool(W, TOOL_SCREWING))
+			if(!src.anchored)
+				user.visible_message("<b>[user]</b> secures the [src] to the floor!")
+				playsound(src.loc, "sound/items/Screwdriver.ogg", 100, 1)
+				src.anchored = 1
+			else
+				user.visible_message("<b>[user]</b> unbolts the [src] from the floor!")
+				playsound(src.loc, "sound/items/Screwdriver.ogg", 100, 1)
+				src.anchored = 0
 		if (iswrenchingtool(W))
 			user.visible_message("<span class='alert'>[user] smacks [src] with the wrench!</span>")
 			if(prob(33))
