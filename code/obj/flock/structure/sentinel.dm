@@ -1,10 +1,10 @@
-#define NOT_CHARGED -1
-#define LOSING_CHARGE 0
-#define CHARGING 1
-#define CHARGED 2
 //
 // # Sentinel structure,
 //
+#define NOT_CHARGED -1 //! The sentinel is without charge
+#define LOSING_CHARGE 0 //! The sentinel is losing charge
+#define CHARGING 1 //! The sentinel is gaining charge
+#define CHARGED 2 //! The sentinel is charged
 /obj/flock_structure/sentinel
 	name = "Glowing pylon"
 	desc = "A glowing pylon of sorts, faint sparks are jumping inside of it."
