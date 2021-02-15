@@ -6,8 +6,8 @@
 #define NUMBER_BORG 2
 #define NUMBER_AI 2
 
-//General Card Parents
-//------------------//
+//General Card Stuffs
+//-----------------//
 /obj/item/playing_card
     icon = 'icons/obj/items/playing_card.dmi'
     icon_state = "plain-1-1"
@@ -18,34 +18,34 @@
     burn_possible = 2
     health = 10
     var/card_style //what style of card sprite are we using?
-    var/total_cards
-    var/card_name
+    var/total_cards //number of cards in a full deck (used for reference when updating stack size)
+    var/card_name //the overall name of a given card type : used to communicate with card groups (i.e. playing, tarot, hanafuda)
     var/facedown = FALSE
     var/foiled = FALSE
     var/tapped = FALSE
     var/reversed = FALSE
-    var/solitaire_offset = 5
+    var/solitaire_offset = 5 //when solitaire stacking, how far down is the newest card pixel shifted?
 
-    var/list/stored_info
+    var/list/stored_info //vital card information that is referenced when a card flips over
     contextLayout = new /datum/contextLayout/instrumental(16)
     var/list/datum/contextAction/cardActions
 
     attack_hand(mob/user as mob)
         ..()
-        set_dir(NORTH)
+        set_dir(NORTH) //makes sure cards are always upright in the inventory (unless tapped or reversed - see later)
         
 
     attack_self(mob/user as mob)
-        flip()
+        flip() //uno reverse O.O
     
     attackby(obj/item/W as obj, mob/user as mob)
-        if(istype(W,/obj/item/playing_card))
+        if(istype(W,/obj/item/playing_card)) //if a card is hit by a card, open the context menu for the player to decide what happens.
             if(loc != user)
                 update_card_actions(TRUE)
             else
                 update_card_actions()
             user.showContextActions(cardActions, src)
-        else if(istype(W,/obj/item/card_group))
+        else if(istype(W,/obj/item/card_group)) //when a card is hit by a card group, if it's a hand, vacuum up the card, otherwise it's a deck and the card gets sat on.
             var/obj/item/card_group/g = W
             if(g.card_style != card_style)
                 user.show_text("These card types don't match, silly!", "red")
@@ -70,7 +70,7 @@
         else
             ..()
 
-    afterattack(var/atom/A as turf, var/mob/user as mob, reach, params)
+    afterattack(var/atom/A as turf, var/mob/user as mob, reach, params) //handling the ability to place cards on the floor
         if(istype(A,/turf/simulated/floor) || istype(A,/turf/unsimulated/floor))
             user.u_equip(src)
             src.set_loc(A)
@@ -81,14 +81,14 @@
         else
             ..()
 
-    MouseDrop(var/atom/target as obj|mob)
+    MouseDrop(var/atom/target as obj|mob) //r o t a t e
         if(!istype(target,/obj/item/card_group))
             tap_or_reverse(usr)
         else
             ..()
 
 
-    set_dir(var/new_dir)
+    set_dir(var/new_dir) //handing the modification of direction based on if a card is tapped or reversed
         ..()
         if(tapped)
             if(loc == usr)
@@ -119,9 +119,8 @@
         else if(loc == usr)
             dir = NORTH
 
-    proc/update_stored_info()
+    proc/update_stored_info() //builds the stored_info list
         stored_info = list(name,desc,icon_state)
-
 
     proc/flip()
         if(!facedown)
@@ -140,7 +139,7 @@
                 reversed = FALSE
             dir = NORTH
 
-    proc/tap_or_reverse(var/mob/user)
+    proc/tap_or_reverse(var/mob/user) //this is called to handle tapping and reversing of cards
         if(card_style == "tarot")
             if(!reversed)
                 reversed = TRUE
@@ -157,7 +156,7 @@
                 name = stored_info[1]
         set_dir(user.dir)
 
-    proc/update_card_actions(var/card_outside)
+    proc/update_card_actions(var/card_outside) //builds the context actions list when called
         cardActions = list()
         if(card_outside)
             cardActions += new /datum/contextAction/card/solitaire
@@ -165,7 +164,7 @@
         cardActions += new /datum/contextAction/card/stack
         cardActions += new /datum/contextAction/card/close
 
-    proc/deck_or_hand(var/mob/user,var/is_hand)
+    proc/deck_or_hand(var/mob/user,var/is_hand) //used by context actions to handle creating a hand or deck of cards
         if(!istype(user.equipped(),/obj/item/playing_card))
             return
         var/obj/item/playing_card/c = user.equipped()
@@ -194,7 +193,7 @@
         g.update_group_sprite()
         qdel(src)
 
-    proc/solitaire(var/mob/user)
+    proc/solitaire(var/mob/user) //handles solitaire stacking
         if(!istype(user.equipped(),/obj/item/playing_card))
             return
         var/obj/item/playing_card/c = user.equipped()
@@ -298,12 +297,12 @@
         desc = chosen_card_type.card_data
         icon_state = "stg-general-[rand(1,NUMBER_GENERAL)]"
 
-    proc/add_foil()
+    proc/add_foil() //makes the card shiiiiiny
         UpdateOverlays(image(icon,"stg-foil"),"foil")
         foiled = TRUE
         name = "foil [name]"
 
-/obj/item/playing_card/expensive
+/obj/item/playing_card/expensive //(¬‿¬)
     desc = "tap this card and sacrifice one <Yourself> to win target game."
     icon_state = "stg-general-0"
     var/list/prefix1 = list("Incredibly", "Strange", "Mysterious", "Suspicious", "Scary")
@@ -327,7 +326,7 @@
             else
                 user.partygib(1)
 
-/obj/item/card_group
+/obj/item/card_group //since "playing_card"s are singular cards, card_groups handling groups of playing_cards in the form of either a deck or hand 
     name = "deck of cards"
     icon = 'icons/obj/items/playing_card.dmi'
     dir = NORTH
@@ -337,32 +336,32 @@
     burn_possible = 2
     health = 10
     inventory_counter_enabled = 1
-    var/card_style = "plain"
-    var/total_cards
+    var/card_name //same function as playing_card card name
+    var/card_style = "plain" //the type of card back used for this group (references icon_state names in the dmi)
+    var/total_cards //how many cards are in a fully built deck of this type? (54 for plain decks, 78 for tarot, etc.) : used for reference on stack heights
     var/is_hand = FALSE
-    var/max_hand_size = 18
+    var/max_hand_size = 18 //the number of cards you can have in a hand before it automatically becomes a deck
     contextLayout = new /datum/contextLayout/instrumental(16)
     var/list/datum/contextAction/cardActions
     var/list/stored_cards = list()
-    var/card_name
 
-    attack_hand(mob/user as mob)
-        if(!is_hand)
+    attack_hand(mob/user as mob) 
+        if(!is_hand) //handling the player interacting with a deck of cards with an empty hand
             update_card_actions("empty")
             user.showContextActions(cardActions, src)
         else
             ..()
 
     attack_self(mob/user as mob)
-        if(is_hand)
+        if(is_hand) //attack_self with hand to pull up the menu
             update_card_actions("handself")
             user.showContextActions(cardActions, src)
-        else
+        else //attack_self with deck to shuffle
             shuffle_list(stored_cards)
             user.visible_message("<b>[user.name]</b> shuffles the [src.name].")
 
     attackby(obj/item/W as obj, mob/user as mob)
-        if(istype(W, /obj/item/playing_card))
+        if(istype(W, /obj/item/playing_card)) //adding a card to a hand will automatically place it in the hand, while adding a card to a deck will allow the player to decide where it goes
             if(is_hand)
                 var/obj/item/playing_card/c = W
                 if(c.card_style != card_style)
@@ -375,7 +374,7 @@
                 update_card_actions("card")
                 user.showContextActions(cardActions, src)
             update_group_sprite()
-        else if(istype(W,/obj/item/card_group))
+        else if(istype(W,/obj/item/card_group)) //adding a hand to a deck is similar to adding a card to a deck, whereas adding a deck plops it on top
             var/obj/item/card_group/g = W
             if(g.is_hand && !is_hand)
                 update_card_actions("group")
@@ -395,14 +394,14 @@
         else
             ..()
 
-    special_desc(dist, mob/user)
+    special_desc(dist, mob/user) //handles the special chat output for examining hands and decks!
         if(is_hand && in_interact_range(src,user))
             hand_examine(user,"self")
         else
             ..()
             user.show_text ("<b>Contains [length(stored_cards)] cards.</b>" )
 
-    MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
+    MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob) //handles piling cards into a deck or hand
         if(istype(O,/obj/item/playing_card))
             user.visible_message("[user.name] starts scooping cards into the [src.name]...")
             SPAWN_DBG(0.2 SECONDS)
@@ -413,7 +412,7 @@
                     update_group_sprite()
                     sleep(0.2 SECONDS)
 
-    proc/hand_examine(var/mob/user, var/target)
+    proc/hand_examine(var/mob/user, var/target) //builds the examine text players see when a hand is revealed or examined
         var/message = ""
         for(var/obj/item/playing_card/c in stored_cards)
             message += "<b>[c.name]:</b><br>"
@@ -427,14 +426,13 @@
         else if(target == "all")
             user.visible_message("<b>[user.name]</b> reveals their hand: <br><br>[message]")
 
-    proc/draw_card(var/mob/user,var/obj/item/playing_card/c)
+    proc/draw_card(var/mob/user,var/obj/item/playing_card/c) //handles drawing single cards : used in search and draw
         user.put_in_hand_or_drop(c)
         if(c.card_style == "tarot")
             if(prob(50))
                 c.tap_or_reverse(user)
 
-
-    proc/handle_draw_last_card(var/mob/user)
+    proc/handle_draw_last_card(var/mob/user) //when a player draws the second to last card of a group, the group is replaced by the last card in the group for consistency
         var/obj/item/playing_card/c = stored_cards[1]
         if(c.facedown == FALSE)
             c.flip()
@@ -445,7 +443,7 @@
             c.set_loc(get_turf(src.loc))
         qdel(src)
 
-    proc/add_to_group(var/obj/item/playing_card/c,var/insert)
+    proc/add_to_group(var/obj/item/playing_card/c,var/insert) //handles adding cards to card_groups and where they are added
         c.set_loc(src)
         if(c.facedown)
             c.flip()
@@ -464,7 +462,7 @@
             if(length(stored_cards) > max_hand_size)
                 is_hand = FALSE
 
-    proc/update_group_sprite()
+    proc/update_group_sprite() //updates the deck/hand sprite to match how many cards are inside
         var/cards = length(stored_cards)
         if(!is_hand)
             if(cards >= ((total_cards/4 + total_cards/2)))
@@ -484,12 +482,7 @@
             name = "hand of [card_name] cards"
         inventory_counter.update_number(length(stored_cards))
 
-    proc/update_card_information(var/obj/item/playing_card/c)
-        c.total_cards = total_cards
-        c.card_style = card_style
-        c.card_name = card_name
-
-    proc/update_group_information(var/obj/item/card_group/g,var/obj/item/from,var/hand)
+    proc/update_group_information(var/obj/item/card_group/g,var/obj/item/from,var/hand) //the inverse of update_card_information for creating card groups from cards
         if(hand == TRUE)
             g.is_hand = TRUE
         else
@@ -505,7 +498,7 @@
             g.card_style = F.card_style
             g.card_name = F.card_name
 
-    proc/update_card_actions(var/hitby)
+    proc/update_card_actions(var/hitby) //generates card actions based on which interaction is causing the list to be updated
         cardActions = list()
 
         //card to deck
@@ -534,7 +527,7 @@
             cardActions += new /datum/contextAction/card/bottomdeck
             cardActions += new /datum/contextAction/card/close
 
-    proc/draw(var/mob/user)
+    proc/draw(var/mob/user) //the context action proc that handles players drawing a card
         if(is_hand)
             return
         draw_card(user,stored_cards[1])
@@ -545,7 +538,7 @@
             update_group_sprite()
         user.visible_message("<b>[user.name]</b> draws a card from the [src.name].")
 
-    proc/draw_multiple(var/mob/user)
+    proc/draw_multiple(var/mob/user) //the context action proc that handles players drawing multiple cards
         if(is_hand)
             return
         var/card_number = input(user, "How many cards would you like to draw?", "[name]")  as null|num
@@ -569,7 +562,7 @@
             else
                 update_group_sprite("user.name")
             
-    proc/search(var/mob/user)
+    proc/search(var/mob/user) //the context action proc that handles players search a group for a specific card
         user.visible_message("<b>[user.name]</b> begins to search through the [src.name]...")
         var/card = input(user, "Which card would you like to draw?", "[name]")  as null|anything in stored_cards
         if(!card)
@@ -584,10 +577,10 @@
                 update_group_sprite()
             user.visible_message("<b>[user.name]</b> slides a card out of the [src.name].")
 
-    proc/reveal(var/mob/user)
+    proc/reveal(var/mob/user) //the context action proc that handles revealing a hand
         hand_examine(user,"all")
 
-    proc/fan(var/mob/user)
+    proc/fan(var/mob/user) //the context action proc that handles creating a hand from a deck
         if(is_hand)
             return
         if(length(stored_cards) < max_hand_size)
@@ -595,14 +588,14 @@
             update_group_sprite()
             user.visible_message("<b>[user.name]</b> spreads [his_or_her(user)] cards into a neat fan.")
 
-    proc/stack(var/mob/user)
+    proc/stack(var/mob/user) //the opposite of a fan
         if(!is_hand)
             return
         is_hand = FALSE
         update_group_sprite()
         user.visible_message("<b>[user.name]</b> gathers [his_or_her(user)] cards into a deck.")
 
-    proc/top_or_bottom(var/mob/user,var/W,var/position,var/no_message)
+    proc/top_or_bottom(var/mob/user,var/W,var/position,var/no_message) //the context action proc that handles adding cards to the top or bottom of a group
         var/successful
         if(istype(W,/obj/item/card_group))
             var/obj/item/card_group/G = W
@@ -641,7 +634,7 @@
         else
             user.show_text("These card types don't match, silly!", "red")
 
-    proc/build_stg(var/deck)
+    proc/build_stg(var/deck) //proc that handles generating either an stg preconstructed deck or stg booster pack
         var/list/possible_humans = list()
         for(var/mob/living/carbon/human/H in mobs)
             if(isnpcmonkey(H))
@@ -1073,7 +1066,7 @@
             if(chosen_card.foiled)
                 UpdateOverlays(image(icon,"stg-foil",-1,chosen_card.dir),"foil")
 
-    attack_self(mob/user as mob)
+    attack_self(mob/user as mob) //the beginning of the most sadistic unboxing possible...
         switch(icon_state)
             if("stg-box")
                 actions.start(new /datum/action/bar/private/stg_open(user,src),user)
@@ -1104,7 +1097,7 @@
         else
             ..()
 
-/datum/action/bar/private/stg_open
+/datum/action/bar/private/stg_open //more sadism! yay!
     duration = 100
     interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
     var/mob/user
