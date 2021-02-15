@@ -492,8 +492,8 @@
 
 
 /obj/machinery/sim/programcomp/proc/Setup_Vspace(var/icons = "grass",var/network = "none")
-	for(var/turf/simulated/floor/Vspace/V in world)
-		if(istype(V,/turf/simulated/floor/Vspace))
+	for(var/turf/simulated/floor/misc/Vspace/V in world)
+		if(istype(V,/turf/simulated/floor/misc/Vspace))
 			if(V.network != network)	continue
 			if(V.network_ID == src.id)
 				if(icons == "grass")
