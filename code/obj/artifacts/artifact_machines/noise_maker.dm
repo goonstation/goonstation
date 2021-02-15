@@ -8,7 +8,7 @@
 	validtypes = list("ancient","martian","wizard","eldritch","precursor")
 	validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/electric,/datum/artifact_trigger/heat,
 	/datum/artifact_trigger/radiation,/datum/artifact_trigger/carbon_touch,/datum/artifact_trigger/silicon_touch)
-	fault_blacklist = list(ITEM_ONLY_FAULTS, /datum/artifact_fault/poison) // can't sting you at range
+	fault_blacklist = list(ITEM_ONLY_FAULTS, TOUCH_ONLY_FAULTS)
 	activated = 0
 	activ_text = "begins making horrible noises!"
 	deact_text = "shuts down, falling silent. Thank god for that."

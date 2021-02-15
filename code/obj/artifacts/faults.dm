@@ -27,7 +27,7 @@ ABSTRACT_TYPE(/datum/artifact_fault/)
 			return
 		var/turf/T = get_turf(user)
 		T.visible_message("<span class='alert'>The [O.name] suddenly emits a burst of flame!</span>")
-		T.hotspot_expose(T0C + 300, 400)
+		fireflash(T, 0)
 		playsound(T, "sound/effects/bamf.ogg", 100, 1)
 
 /datum/artifact_fault/irradiate
@@ -56,7 +56,7 @@ ABSTRACT_TYPE(/datum/artifact_fault/)
 
 /datum/artifact_fault/warp
 	// warps the user off somewhere random
-	trigger_prob = 15
+	trigger_prob = 0 // TODO: don't forget to put this back to 15 you idiot
 
 	deploy(var/obj/O,var/mob/living/user)
 		if (..())
@@ -139,7 +139,7 @@ ABSTRACT_TYPE(/datum/artifact_fault/)
 			var/obj/item/I = O
 			user.u_equip(I)
 			I.dropped()
-		explosion(O, T, 1, 2, 4, 8)
+		explosion(O, T, 0, 1, 2, 4)
 		O.ArtifactDestroyed()
 
 /datum/artifact_fault/zap

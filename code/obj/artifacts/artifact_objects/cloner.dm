@@ -1,4 +1,3 @@
-
 /obj/artifact/cloner
 	name = "artifact cloner"
 	associated_datum = /datum/artifact/cloner
@@ -111,7 +110,7 @@
 			return
 		for(var/obj/I in O.contents)
 			I.set_loc(get_turf(O))
-		if (clone.loc == O)
+		if (clone?.loc == O)
 			clone.set_loc(get_turf(O))
 			O.visible_message("<span class='alert'><b>[O]</b> releases [clone.name] and shuts down!</span>")
 		else

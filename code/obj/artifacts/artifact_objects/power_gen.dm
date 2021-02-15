@@ -98,7 +98,7 @@
 					O.visible_message("<span class='alert'>[O] sparks violently!</span>")
 					for (var/mob/M in range(min(5,gen_level),T))
 						arcFlash(O, M, gen_rate/2)
-						if(!user.disposed)
-							O.ArtifactFaultUsed(user) // in case you weren't already fucked enough lol
+						if(!M.disposed)
+							O.ArtifactFaultUsed(M) // in case you weren't already fucked enough lol
 		else
 			playsound(O, pick(spark_sounds), 75, 1)

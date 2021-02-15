@@ -29,6 +29,7 @@
 		if (isliving(user))
 			O.visible_message("<span class='alert'><b>[O]</b> suddenly pulls [user.name] inside and slams shut!</span>")
 			user.set_loc(O)
+			O.ArtifactFaultUsed(user)
 			prisoner = user
 			SPAWN_DBG(imprison_time)
 				if (!O.disposed) //ZeWaka: Fix for null.contents
@@ -39,9 +40,8 @@
 			return
 		for(var/obj/I in O.contents)
 			I.set_loc(get_turf(O))
-		if (prisoner.loc == O)
+		if (prisoner?.loc == O)
 			prisoner.set_loc(get_turf(O))
-			O.ArtifactFaultUsed(user)
 			O.visible_message("<span class='alert'><b>[O]</b> releases [prisoner.name] and shuts down!</span>")
 		else
 			O.visible_message("<span class='alert'><b>[O]</b> shuts down strangely!</span>")

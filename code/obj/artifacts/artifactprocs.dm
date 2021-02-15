@@ -277,6 +277,9 @@
 	src.ArtifactHitWith(W, user)
 	return 1
 
+#define FAULT_RESULT_INVALID 2 // artifact can't do faults
+#define FAULT_RESULT_STOP	1		 // we gotta stop, artifact was destroyed or deactivated
+#define FAULT_RESULT_SUCCESS 0 // everything's cool!
 /obj/proc/ArtifactFaultUsed(var/mob/user)
 	// This is for a tool/item artifact that you can use. If it has a fault, whoever is using it is basically rolling the dice
 	// every time the thing is used (a check to see if rand(1,faultcount) hits 1 most of the time) and if they're unlucky, the
@@ -288,9 +291,9 @@
 	var/datum/artifact/A = src.artifact
 
 	if (!A.faults.len)
-		return // no faults, so dont waste any more time
+		return FAULT_RESULT_INVALID // no faults, so dont waste any more time
 	if (!A.activated)
-		return // doesn't make a lot of sense for an inert artifact to go haywire
+		return FAULT_RESULT_INVALID // doesn't make a lot of sense for an inert artifact to go haywire
 	var/halt = 0
 	for (var/datum/artifact_fault/F in A.faults)
 		if (prob(F.trigger_prob))
@@ -298,7 +301,9 @@
 				halt = 1
 			F.deploy(src,user)
 		if (halt)
-			break
+			return FAULT_RESULT_STOP
+	return FAULT_RESULT_SUCCESS
+
 
 /obj/proc/ArtifactStimulus(var/stimtype, var/strength = 0)
 	// This is what will be used for most of the testing equipment stuff. Stimtype is what kind of stimulus the artifact is being
