@@ -56,7 +56,7 @@ ABSTRACT_TYPE(/datum/artifact_fault/)
 
 /datum/artifact_fault/warp
 	// warps the user off somewhere random
-	trigger_prob = 0 // TODO: don't forget to put this back to 15 you idiot
+	trigger_prob = 15
 
 	deploy(var/obj/O,var/mob/living/user,var/atom/cosmeticSource)
 		if (..())
