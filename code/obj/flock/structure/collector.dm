@@ -19,10 +19,10 @@
 
 	event_handler_flags = USE_CANPASS //needed for passthrough
 	/// drones can pass through this, might change this later, as balance point
-	passthrough = 1
+	passthrough = TRUE
 
 	poweruse = 0
-	usesgroups = 1
+	usesgroups = TRUE
 	icon_state = "collector"
 
 /obj/flock_structure/collector/New(var/atom/location, var/datum/flock/F=null)

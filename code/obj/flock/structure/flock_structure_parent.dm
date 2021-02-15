@@ -19,11 +19,11 @@
 	var/fireVuln = 0.2
 	var/datum/flock/flock = null
 	/// can flockdrones pass through this akin to a grille? need to set USE_CANPASS to make this work however
-	var/passthrough = 0
+	var/passthrough = FALSE
 	/// does this use(/how much) power? (negatives mean it makes power)
 	var/poweruse = 0
 	/// not everything needs a group so dont check for everysingle god damn structure
-	var/usesgroups = 0
+	var/usesgroups = FALSE
 	/// what group are we connected to?
 	var/datum/flock_tile_group/group = null
 	/// the tile which its "connected to" and handles the group

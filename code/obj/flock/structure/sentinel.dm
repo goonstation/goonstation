@@ -14,13 +14,13 @@
 	var/charge_status = NOT_CHARGED
 	/// 0-100 charge percent
 	var/charge = 0
-	var/powered = 0
+	var/powered = FALSE
 
 	event_handler_flags = USE_CANPASS
 	/// flockdrones can pass through this
-	passthrough = 1
+	passthrough = TRUE
 
-	usesgroups = 1
+	usesgroups = TRUE
 
 	/// debug amount scale up if needed.
 	poweruse = 20
@@ -39,11 +39,11 @@
 	updatefilter()
 
 	if(!src.group)//if it dont exist it off
-		powered = 0
+		powered = FALSE
 	else if(src.group.powerbalance >= 0)//if it has atleast 0 or more free power, the poweruse is already calculated in the group
-		powered = 1
+		powered = TRUE
 	else//if there isnt enough juice
-		powered = 0
+		powered = FALSE
 
 	if(powered == 1)
 		switch(charge_status)
