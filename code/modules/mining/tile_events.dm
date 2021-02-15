@@ -46,7 +46,7 @@
 		gem_type = /obj/item/raw_material/molitz_beta
 
 	onExcavate(var/turf/simulated/wall/asteroid/AST)
-		var/quantity = rand(1,3)
+		var/quantity = rand(3,5)
 		for(var/i in 1 to quantity)
 			..()
 

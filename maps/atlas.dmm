@@ -2709,13 +2709,6 @@
 /obj/table/auto,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
-"gU" = (
-/obj/table/auto,
-/obj/item/paper/book/cookbook,
-/obj/item/kitchen/rollingpin,
-/obj/item/reagent_containers/food/drinks/drinkingglass/icing,
-/turf/simulated/floor/black,
-/area/station/crew_quarters/catering)
 "gV" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/kitchen)
@@ -7323,9 +7316,7 @@
 /area/station/bridge)
 "rG" = (
 /obj/disposalpipe/segment,
-/obj/juggleplaque{
-	desc = {"NCS Atlas, Nanotrasen,  \"Man always kills the thing he loves, and so we the pioneers have killed our wilderness. Some say we had to. Be that as it may, I am glad I shall never be young without wild country to be young in. Of what avail are forty freedoms without a blank spot on the map?  - Aldo Leopold\""};
-	name = "dedication plaque";
+/obj/atlasplaque{
 	pixel_y = 25
 	},
 /turf/simulated/floor/blueblack,
@@ -8950,6 +8941,19 @@
 	dir = 4
 	},
 /area/station/hallway/primary/north)
+"uX" = (
+/obj/storage/secure/closet/command/research_director,
+/obj/item/storage/briefcase/toxins,
+/obj/item/remote/porter/port_a_sci,
+/obj/item/reagent_containers/food/snacks/yellow_cake_uranium_cake{
+	pixel_x = -2
+	},
+/obj/item/stamp/rd,
+/obj/machinery/light{
+	layer = 3
+	},
+/turf/simulated/floor/purple,
+/area/station/science/research_director)
 "va" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -12012,18 +12016,6 @@
 /obj/item/stamp/md,
 /turf/simulated/floor/white,
 /area/station/medical/head)
-"Dy" = (
-/obj/storage/secure/closet/command/research_director,
-/obj/item/remote/porter/port_a_sci,
-/obj/item/reagent_containers/food/snacks/yellow_cake_uranium_cake{
-	pixel_x = -2
-	},
-/obj/item/stamp/rd,
-/obj/machinery/light{
-	layer = 3
-	},
-/turf/simulated/floor/purple,
-/area/station/science/research_director)
 "Dz" = (
 /obj/decal/poster/wallsign/stencil/left/n,
 /obj/decal/poster/wallsign/stencil/right/c,
@@ -17709,6 +17701,13 @@
 	},
 /turf/simulated/floor/plating,
 /area/space)
+"Ss" = (
+/obj/table/auto,
+/obj/item/paper/book/cookbook,
+/obj/item/kitchen/rollingpin,
+/obj/item/reagent_containers/food/drinks/drinkingglass/icing,
+/turf/simulated/floor/black,
+/area/station/crew_quarters/catering)
 "St" = (
 /obj/machinery/power/smes,
 /obj/cable,
@@ -69907,7 +69906,7 @@ dF
 ej
 eX
 fB
-gU
+Ss
 gT
 gT
 jF
@@ -77483,7 +77482,7 @@ WK
 WP
 UW
 ZW
-Dy
+uX
 BK
 EZ
 FQ

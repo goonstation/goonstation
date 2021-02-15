@@ -470,7 +470,7 @@ var/list/genetek_hair_styles = null
 				. = fix_colors(color)
 			else
 				var/list/L = hex_to_rgb_list(color)
-				. = rgb(L["r"], L["g"], L["b"])
+				. = rgb(L[1], L[2], L[3])
 
 		sanitize_hairstyle(style)
 			. = style

@@ -670,7 +670,6 @@
 
 /obj/item/clothing/head/helmet/space/industrial
 	mats = 7
-	c_flags = BLOCKCHOKE
 #ifdef UNDERWATER_MAP
 	icon_state = "diving_suit-industrial"
 	item_state = "diving_suit-industrial"
@@ -704,7 +703,6 @@
 	icon_state = "mining_combat"
 	item_state = "mining_combat"
 	mats = 10
-	c_flags = BLOCKCHOKE
 
 	setupProperties()
 		..()
@@ -719,7 +717,7 @@
 	icon_state = "buckethelm"
 	item_state = "buckethelm"
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
-	c_flags = BLOCKCHOKE
+	c_flags = COVERSEYES | BLOCKCHOKE
 
 	setupProperties()
 		..()

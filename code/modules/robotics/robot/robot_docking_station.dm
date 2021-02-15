@@ -745,15 +745,18 @@
 				src.build_icon()
 
 /obj/machinery/recharge_station/proc/build_icon()
-	src.overlays = null
+	if (src.occupant)
+		src.UpdateOverlays(image('icons/obj/robot_parts.dmi', "station-occu"), "occupant")
+	else
+		src.UpdateOverlays(null, "occupant")
 	if (src.status & BROKEN)
 		src.icon_state = "station-broke"
+		src.UpdateOverlays(null, "power")
 		return
 	if (src.status & NOPOWER)
+		src.UpdateOverlays(null, "power")
 		return
-	src.overlays += image('icons/obj/robot_parts.dmi', "station-pow")
-	if (src.occupant)
-		src.overlays += image('icons/obj/robot_parts.dmi', "station-occu")
+	src.UpdateOverlays(image('icons/obj/robot_parts.dmi', "station-pow"), "power")
 
 /obj/machinery/recharge_station/proc/process_occupant(mult)
 	if (src.occupant)

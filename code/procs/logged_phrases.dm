@@ -32,10 +32,13 @@ var/global/datum/phrase_log/phrase_log = new
 	var/max_length = 200
 	var/filename = "data/logged_phrases.json"
 	var/list/original_lengths
+	var/list/cached_api_phrases
+	var/api_cache_size = 10
 
 	New()
 		..()
 		src.load()
+		src.cached_api_phrases = list()
 
 	proc/load()
 		if(fexists(src.filename))
@@ -86,3 +89,22 @@ var/global/datum/phrase_log/phrase_log = new
 				src.phrases[category] = phrases.Copy(1, src.max_length + 1)
 		fdel(src.filename)
 		text2file(json_encode(src.phrases), src.filename)
+
+	/// Gets a random phrase from the Goonhub API database, categories are "ai_laws", "tickets", "fines"
+	proc/random_api_phrase(category)
+		if(!length(src.cached_api_phrases[category]))
+			var/list/data = apiHandler.queryAPI("random-entries", list("type"=category, "count"=src.api_cache_size), 1, 1, 1)
+			var/list/new_phrases = list()
+			for(var/list/entry in data["entries"])
+				switch(category)
+					if("ai_laws")
+						new_phrases += entry["law_text"]
+					if("tickets", "fines")
+						new_phrases += entry["reason"]
+			src.cached_api_phrases[category] = new_phrases
+
+		. = pick(src.cached_api_phrases[category])
+		src.cached_api_phrases[category] -= .
+		return
+
+

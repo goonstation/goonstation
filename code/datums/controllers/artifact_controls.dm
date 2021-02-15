@@ -262,7 +262,8 @@ var/datum/artifact_controller/artifact_controls
 		/datum/artifact_fault/messager/what_people_said = 5,
 		/datum/artifact_fault/messager/comforting_whispers = 5,
 		/datum/artifact_fault/grow = 8,
-		/datum/artifact_fault/shrink = 8)
+		/datum/artifact_fault/shrink = 8,
+		/datum/artifact_fault/messager/emoji = 10)
 	activation_sounds = list('sound/machines/ArtifactMar1.ogg','sound/machines/ArtifactMar2.ogg')
 	instrument_sounds = list("sound/musical_instruments/artifact/Artifact_Martian_1.ogg",
 		"sound/musical_instruments/artifact/Artifact_Martian_2.ogg",
@@ -313,7 +314,8 @@ var/datum/artifact_controller/artifact_controls
 		/datum/artifact_fault/messager/creepy_whispers = 5,
 		/datum/artifact_fault/messager/comforting_whispers = 5,
 		/datum/artifact_fault/messager/what_dead_people_said = 5,
-		/datum/artifact_fault/messager/what_people_said = 5)
+		/datum/artifact_fault/messager/what_people_said = 5,
+		/datum/artifact_fault/messager/emoji = 5)
 	activation_sounds = list('sound/machines/ArtifactWiz1.ogg')
 	instrument_sounds = list("sound/musical_instruments/artifact/Artifact_Wizard_1.ogg",
 		"sound/musical_instruments/artifact/Artifact_Wizard_2.ogg",
@@ -351,16 +353,9 @@ var/datum/artifact_controller/artifact_controls
 			if(prob(100*rarityMod))
 				hue2 = rand(360)
 			var/list/col2 = hsv2rgblist(hue2, rand() * 0.3 + 0.7, rand() * 0.1 + 0.9)
-			artifact.color = list(
-				(168 * col2[1] - 35 * col1[1]) / 20307,
-				(168 * col2[2] - 35 * col1[2]) / 20307,
-				(168 * col2[3] - 35 * col1[3]) / 20307,
-				(174 * col1[1] - 255 * col2[1]) / 20307,
-				(174 * col1[2] - 255 * col2[2]) / 20307,
-				(174 * col1[3] - 255 * col2[3]) / 20307,
-				0,
-				0,
-				1
+			artifact.color = affine_color_mapping_matrix(
+				list("#000000", "#ffa800", "#ae2300", "#0000ff"),
+				list(random_color(), col1, col2, "#0000ff")
 			)
 		if(prob(50*rarityMod))
 			artifact.alpha = rand(200, 255)
@@ -390,7 +385,8 @@ var/datum/artifact_controller/artifact_controls
 		/datum/artifact_fault/explode = 5,
 		/datum/artifact_fault/warp = 15,
 		/datum/artifact_fault/grow = 5,
-		/datum/artifact_fault/shrink = 5)
+		/datum/artifact_fault/shrink = 5,
+		/datum/artifact_fault/messager/emoji = 3)
 	impact_reaction_one = 0.5
 	impact_reaction_two = 0
 	heat_reaction_one = 0.25

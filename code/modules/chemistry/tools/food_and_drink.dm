@@ -473,6 +473,17 @@
 			boutput(user, "<span class='alert'>Nothing left in [src], oh no!</span>")
 			return 0
 
+		if (user.a_intent == INTENT_HARM)
+			src.reagents.physical_shock(14)
+			if (src.splash_all_contents)
+				boutput(user, "<span class='notice'>You splash all of the solution onto [M].</span>")
+				M.visible_message("<span class='alert'><b>[user.name]</b> splashes the [src.name]'s contents onto [M.name]!</span>")
+			else
+				boutput(user, "<span class='notice'>You apply [src.amount_per_transfer_from_this] units of the solution to [M].</span>")
+				M.visible_message("<span class='alert'><b>[user.name]</b> applies some of the [src.name]'s contents to [M.name].</span>")
+			logTheThing("combat", user, M, "splashes [src] onto [constructTarget(M,"combat")] [log_reagents(src)] at [log_loc(M)].")
+			return
+
 		if (iscarbon(M) || ismobcritter(M))
 			if (M == user)
 				M.visible_message("<span class='notice'>[M] takes a sip from [src].</span>")
@@ -657,7 +668,6 @@
 	var/image/fluid_image = null
 
 	on_reagent_change()
-		//src.overlays = null
 		if (reagents.total_volume)
 			ENSURE_IMAGE(src.fluid_image, src.icon, "fluid")
 			//if (!src.fluid_image)
@@ -665,7 +675,6 @@
 			var/datum/color/average = reagents.get_average_color()
 			fluid_image.color = average.to_rgba()
 			src.UpdateOverlays(src.fluid_image, "fluid")
-			//src.overlays += src.fluid_image
 		else
 			src.UpdateOverlays(null, "fluid")
 
@@ -715,7 +724,7 @@
 			S.pixel_x = src.pixel_x
 			S.pixel_y = src.pixel_y
 			L.my_soup = null
-			L.overlays = null
+			L.UpdateOverlays(null, "fluid")
 
 			user.visible_message("<b>[user]</b> pours [L] into [src].", "You pour [L] into [src].")
 
@@ -1540,7 +1549,6 @@
 		src.update_icon()
 
 	proc/update_icon()
-		src.overlays = null
 		if (src.reagents.total_volume == 0)
 			icon_state = "duo"
 		if (src.reagents.total_volume > 0)
@@ -1548,7 +1556,9 @@
 			if (!fluid_image)
 				fluid_image = image(src.icon, "fluid-duo")
 			fluid_image.color = average.to_rgba()
-			src.overlays += src.fluid_image
+			src.UpdateOverlays(src.fluid_image, "fluid")
+		else
+			src.UpdateOverlays(null, "fluid")
 
 /* ============================================== */
 /* -------------------- Misc -------------------- */
@@ -1629,14 +1639,13 @@
 		src.update_icon()
 
 	proc/update_icon() //updates icon based on fluids inside
-		src.overlays = null
 		icon_state = "[glass_style]"
 
 		var/datum/color/average = reagents.get_average_color()
 		if (!src.fluid_image)
 			src.fluid_image = image('icons/obj/foodNdrink/drinks.dmi', "fluid-[glass_style]", -1)
 		src.fluid_image.color = average.to_rgba()
-		src.overlays += src.fluid_image
+		src.UpdateOverlays(src.fluid_image, "fluid")
 
 /obj/item/reagent_containers/food/drinks/carafe
 	name = "coffee carafe"
