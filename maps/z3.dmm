@@ -8087,7 +8087,7 @@
 /obj/decal/cleanable/dirt,
 /obj/item/electronics/capacitor,
 /obj/item/light/tube/blacklight,
-/obj/item/playing_cards/trading,
+/obj/item/card_group/stg,
 /obj/storage/crate{
 	name = "Dented Crate"
 	},

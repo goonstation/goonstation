@@ -1633,7 +1633,7 @@
 /area/station/hallway/secondary/entry)
 "adN" = (
 /obj/table/reinforced/auto,
-/obj/item/playing_cards/trading/booster,
+/obj/item/card_group/stg/booster,
 /obj/item/pen,
 /obj/item/device/radio,
 /turf/simulated/floor/grey/whitegrime,
@@ -10007,7 +10007,7 @@
 	pixel_x = -12
 	},
 /obj/table/wood/auto,
-/obj/item/card_box/booster,
+/obj/item/stg_booster,
 /obj/decal/cleanable/cobweb,
 /turf/simulated/floor/grey/blackgrime,
 /area/tech_outpost)
@@ -11858,7 +11858,7 @@
 "aCQ" = (
 /obj/machinery/light_switch/north,
 /obj/table/reinforced/auto,
-/obj/item/card_box/trading,
+/obj/item/stg_box,
 /turf/simulated/floor/black,
 /area/station/storage/emergency{
 	name = "Hilarious Storage A"
@@ -55550,7 +55550,7 @@
 "ctE" = (
 /obj/table/wood/auto,
 /obj/item/reagent_containers/food/drinks/bottle/tequila,
-/obj/item/playing_cards/suit,
+/obj/item/card_group/plain,
 /obj/item/spacecash/hundred,
 /turf/simulated/floor/carpet/red/fancy/edge/north,
 /area/listeningpost/power)

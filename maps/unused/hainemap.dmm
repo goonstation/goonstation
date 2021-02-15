@@ -3072,7 +3072,7 @@
 /area/space)
 "iR" = (
 /obj/table/wood/round/auto,
-/obj/item/playing_cards/suit,
+/obj/item/card_group/plain,
 /turf/simulated/floor/carpet{
 	icon_state = "fgreen2";
 	dir = 2

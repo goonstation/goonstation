@@ -10,6 +10,7 @@
 //------------------//
 /obj/item/playing_card
     icon = 'icons/obj/items/playing_card.dmi'
+    icon_state = "plain-1-1"
     dir = NORTH
     w_class = 1.0
     burn_point = 220
@@ -976,6 +977,7 @@
     name = "deckbox"
     desc = "a box for holding cards."
     icon = 'icons/obj/items/playing_card.dmi'
+    icon_state = "white-box"
     w_class = 1.0
     burn_point = 220
     burn_output = 900

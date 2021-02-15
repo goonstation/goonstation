@@ -9972,7 +9972,7 @@
 /turf/unsimulated/floor/plating/scorched,
 /area/jones)
 "azi" = (
-/obj/item/card_box/booster,
+/obj/item/stg_booster,
 /turf/unsimulated/floor{
 	name = "plating"
 	},
@@ -48004,7 +48004,7 @@
 "cpR" = (
 /obj/table/wood/round/auto,
 /obj/item/storage/photo_album,
-/obj/item/playing_cards/tarot,
+/obj/item/card_group/tarot,
 /turf/unsimulated/floor/wood/two,
 /area/dojo)
 "cpS" = (
@@ -78999,7 +78999,7 @@
 /obj/table/reinforced/bar/auto{
 	name = "table"
 	},
-/obj/item/playing_cards/suit,
+/obj/item/card_group/plain,
 /turf/unsimulated/floor/carpet{
 	icon_state = "fpurple2"
 	},

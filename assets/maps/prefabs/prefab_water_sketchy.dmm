@@ -85,7 +85,7 @@
 "bL" = (/obj/item/implant/health,/turf/simulated/floor/plating/scorched,/area/prefab/sea_sketch)
 "bN" = (/obj/decal/cleanable/fungus,/turf/simulated/floor/plating,/area/prefab/sea_sketch)
 "bO" = (/obj/decal/cleanable/fungus,/turf/simulated/floor/plating/random,/area/prefab/sea_sketch)
-"bP" = (/obj/table/wood/auto,/obj/item/playing_cards/suit,/turf/simulated/floor/damaged2,/area/prefab/sea_sketch)
+"bP" = (/obj/table/wood/auto,/obj/item/card_group/plain,/turf/simulated/floor/damaged2,/area/prefab/sea_sketch)
 "bQ" = (/obj/machinery/door/airlock/pyro/classic{dir = 4; req_access_txt = "12"},/turf/simulated/floor/plating,/area/prefab/sea_sketch)
 "bR" = (/obj/item/reagent_containers/syringe/krokodil,/obj/item/reagent_containers/iv_drip/blood,/turf/simulated/floor/plating,/area/prefab/sea_sketch)
 "bS" = (/obj/item/medical/bruise_pack,/turf/simulated/floor/grime,/area/prefab/sea_sketch)
