@@ -369,4 +369,5 @@ chui/window/security_cameras
 
 	Unsubscribe( client/who )
 		..()
+		who.clearViewportsByType("cameras: Viewport")
 		who.mob.set_eye(null)
