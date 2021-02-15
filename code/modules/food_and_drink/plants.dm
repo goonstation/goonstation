@@ -1238,7 +1238,6 @@
 		if(L.loc == src.loc)
 			L.visible_message("<span class='alert'>[L] lands on the [src] and breaks it!</span>", "<span class='alert'>You land on the [src] and break it!</span>")
 			playsound(src, "sound/impact_sounds/coconut_break.ogg", 70, vary=TRUE)
-			src.split()
 			var/are_there_other_nuts = FALSE
 			for(var/obj/item/reagent_containers/food/snacks/plant/coconut/other_nut in src.loc)
 				if(other_nut != src)
@@ -1246,6 +1245,7 @@
 					break
 			if(!are_there_other_nuts)
 				L.TakeDamage("chest", brute=12)
+			src.split()
 
 	HasEntered(atom/movable/AM, atom/OldLoc)
 		. = ..()
