@@ -294,8 +294,6 @@
 
 	if (!A.faults.len)
 		return FAULT_RESULT_INVALID // no faults, so dont waste any more time
-	if (!A.activated)
-		return FAULT_RESULT_INVALID // doesn't make a lot of sense for an inert artifact to go haywire
 	if (!cosmeticSource)
 		cosmeticSource = src
 	var/halt = 0
