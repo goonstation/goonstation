@@ -168,7 +168,7 @@ ABSTRACT_TYPE(/datum/artifact/art)
 
 	on_hit(atom/hit)
 		if(turretArt && istype(hit, /mob/living/))
-			turretArt.ArtifactFaultUsed(hit)
+			turretArt.ArtifactFaultUsed(hit, src)
 		return
 
 	proc/randomise()

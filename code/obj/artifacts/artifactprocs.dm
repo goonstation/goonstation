@@ -280,11 +280,13 @@
 #define FAULT_RESULT_INVALID 2 // artifact can't do faults
 #define FAULT_RESULT_STOP	1		 // we gotta stop, artifact was destroyed or deactivated
 #define FAULT_RESULT_SUCCESS 0 // everything's cool!
-/obj/proc/ArtifactFaultUsed(var/mob/user)
+/obj/proc/ArtifactFaultUsed(var/mob/user, var/atom/cosmeticSource = null)
 	// This is for a tool/item artifact that you can use. If it has a fault, whoever is using it is basically rolling the dice
 	// every time the thing is used (a check to see if rand(1,faultcount) hits 1 most of the time) and if they're unlucky, the
 	// thing will deliver it's payload onto them.
 	// There's also no reason this can't be used whoever the artifact is being used *ON*, also!
+	// The cosmetic source is just to specify where the effect comes from in the visual message.
+	// So that you can make it come from something like a forcefield or bullet instead of the artifact itself!
 	if (!src.ArtifactSanityCheck())
 		return
 
@@ -294,12 +296,14 @@
 		return FAULT_RESULT_INVALID // no faults, so dont waste any more time
 	if (!A.activated)
 		return FAULT_RESULT_INVALID // doesn't make a lot of sense for an inert artifact to go haywire
+	if (!cosmeticSource)
+		cosmeticSource = src
 	var/halt = 0
 	for (var/datum/artifact_fault/F in A.faults)
 		if (prob(F.trigger_prob))
 			if (F.halt_loop)
 				halt = 1
-			F.deploy(src,user)
+			F.deploy(src,user,cosmeticSource)
 		if (halt)
 			return FAULT_RESULT_STOP
 	return FAULT_RESULT_SUCCESS

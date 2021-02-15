@@ -12,7 +12,7 @@ ABSTRACT_TYPE(/datum/artifact_fault/)
 	var/tmp/datum/artifact/holder = null
 	var/halt_loop = 0
 
-	proc/deploy(var/obj/O,var/mob/living/user)
+	proc/deploy(var/obj/O,var/mob/living/user,var/atom/cosmeticSource)
 		if (!O || !user)
 			return 1
 		return 0
@@ -22,11 +22,11 @@ ABSTRACT_TYPE(/datum/artifact_fault/)
 	trigger_prob = 8
 	var/burn_amount = 40
 
-	deploy(var/obj/O,var/mob/living/user)
+	deploy(var/obj/O,var/mob/living/user,var/atom/cosmeticSource)
 		if (..())
 			return
 		var/turf/T = get_turf(user)
-		T.visible_message("<span class='alert'>The [O.name] suddenly emits a burst of flame!</span>")
+		T.visible_message("<span class='alert'>The [cosmeticSource.name] suddenly emits a burst of flame!</span>")
 		fireflash(T, 0)
 		playsound(T, "sound/effects/bamf.ogg", 100, 1)
 
@@ -35,7 +35,7 @@ ABSTRACT_TYPE(/datum/artifact_fault/)
 	trigger_prob = 8
 	var/rads_amount = 20
 
-	deploy(var/obj/O,var/mob/living/user)
+	deploy(var/obj/O,var/mob/living/user,var/atom/cosmeticSource)
 		if (..())
 			return
 		boutput(user, "<span class='alert'>You feel strange.</span>")
@@ -46,7 +46,7 @@ ABSTRACT_TYPE(/datum/artifact_fault/)
 	trigger_prob = 10
 	halt_loop = 1
 
-	deploy(var/obj/O,var/mob/living/user)
+	deploy(var/obj/O,var/mob/living/user,var/atom/cosmeticSource)
 		if (..())
 			return
 		var/turf/T = get_turf(O)
@@ -58,11 +58,11 @@ ABSTRACT_TYPE(/datum/artifact_fault/)
 	// warps the user off somewhere random
 	trigger_prob = 0 // TODO: don't forget to put this back to 15 you idiot
 
-	deploy(var/obj/O,var/mob/living/user)
+	deploy(var/obj/O,var/mob/living/user,var/atom/cosmeticSource)
 		if (..())
 			return
 		var/turf/T = get_turf(O)
-		T.visible_message("<span class='alert'>The [O.name] warps [user.name] away!</span>")
+		T.visible_message("<span class='alert'>The [cosmeticSource.name] warps [user.name] away!</span>")
 		playsound(T, "sound/effects/mag_warp.ogg", 100, 1)
 		user.set_loc(pick(wormholeturfs))
 
@@ -70,7 +70,7 @@ ABSTRACT_TYPE(/datum/artifact_fault/)
 	// embiggens the artifact
 	trigger_prob = 10
 
-	deploy(var/obj/O,var/mob/living/user)
+	deploy(var/obj/O,var/mob/living/user,var/atom/cosmeticSource)
 		if (..())
 			return
 		if (!isitem(O))
@@ -91,7 +91,7 @@ ABSTRACT_TYPE(/datum/artifact_fault/)
 	// ensmallens the artifact
 	trigger_prob = 10
 
-	deploy(var/obj/O,var/mob/living/user)
+	deploy(var/obj/O,var/mob/living/user,var/atom/cosmeticSource)
 		if (..())
 			return
 		if (!isitem(O))
@@ -112,7 +112,7 @@ ABSTRACT_TYPE(/datum/artifact_fault/)
 	trigger_prob = 1
 	halt_loop = 1
 
-	deploy(var/obj/O,var/mob/living/user)
+	deploy(var/obj/O,var/mob/living/user,var/atom/cosmeticSource)
 		if (..())
 			return
 		if (isitem(O))
@@ -121,7 +121,7 @@ ABSTRACT_TYPE(/datum/artifact_fault/)
 				user.u_equip(I)
 				I.dropped()
 		var/turf/T = get_turf(O)
-		T.visible_message("<span class='alert'><b>The [O.name] utterly annihilates [user.name]!</b></span>")
+		T.visible_message("<span class='alert'><b>The [cosmeticSource.name] utterly annihilates [user.name]!</b></span>")
 		playsound(T, "sound/effects/elec_bigzap.ogg", 100, 1)
 		user.elecgib()
 
@@ -130,11 +130,11 @@ ABSTRACT_TYPE(/datum/artifact_fault/)
 	trigger_prob = 1
 	halt_loop = 1
 
-	deploy(var/obj/O,var/mob/living/user)
+	deploy(var/obj/O,var/mob/living/user,var/atom/cosmeticSource)
 		if (..())
 			return
 		var/turf/T = get_turf(O)
-		T.visible_message("<span class='alert'>The [O.name] suddenly explodes!</span>")
+		T.visible_message("<span class='alert'>The [cosmeticSource.name] suddenly explodes!</span>")
 		if (isitem(O))
 			var/obj/item/I = O
 			user.u_equip(I)
@@ -146,11 +146,11 @@ ABSTRACT_TYPE(/datum/artifact_fault/)
 	// electrocutes the user
 	trigger_prob = 6
 
-	deploy(var/obj/O,var/mob/living/user)
+	deploy(var/obj/O,var/mob/living/user,var/atom/cosmeticSource)
 		if (..())
 			return
 		var/turf/T = get_turf(O)
-		T.visible_message("<span class='alert'><b>[user.name]</b> is shocked by a surge of energy from [O.name]!</span>")
+		T.visible_message("<span class='alert'><b>[user.name]</b> is shocked by a surge of energy from [cosmeticSource.name]!</span>")
 		var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
 		s.set_up(4, 1, user)
 		s.start()
@@ -163,27 +163,27 @@ ABSTRACT_TYPE(/datum/artifact_fault/messager/)
 	var/text_style = null
 	var/list/messages = list()
 
-	proc/generate_message(obj/O, mob/living/user)
+	proc/generate_message(obj/O, mob/living/user,var/atom/cosmeticSource)
 		if(length(messages))
 			return pick(messages)
 		return "😱"
 
-	deploy(var/obj/O,var/mob/living/user)
+	deploy(var/obj/O,var/mob/living/user,var/atom/cosmeticSource)
 		if (..())
 			return
 		switch(text_style)
 			if ("small")
-				boutput(user, "<small>[generate_message(O, user)]</small>")
+				boutput(user, "<small>[generate_message(O, user, cosmeticSource)]</small>")
 			if ("big")
-				boutput(user, "<big>[generate_message(O, user)]</big>")
+				boutput(user, "<big>[generate_message(O, user, cosmeticSource)]</big>")
 			if ("red")
-				boutput(user, "<span class='alert'>[generate_message(O, user)]</span>")
+				boutput(user, "<span class='alert'>[generate_message(O, user, cosmeticSource)]</span>")
 			if ("blue")
-				boutput(user, "<span class='notice'>[generate_message(O, user)]</span>")
+				boutput(user, "<span class='notice'>[generate_message(O, user, cosmeticSource)]</span>")
 			if ("monospace")
-				boutput(user, "<span style='font-family: monospace;'>[generate_message(O, user)]</span>")
+				boutput(user, "<span style='font-family: monospace;'>[generate_message(O, user, cosmeticSource)]</span>")
 			else
-				boutput(user, "[generate_message(O, user)]")
+				boutput(user, "[generate_message(O, user, cosmeticSource)]")
 
 /datum/artifact_fault/messager/creepy_whispers
 	text_style = "small"
@@ -201,18 +201,18 @@ ABSTRACT_TYPE(/datum/artifact_fault/messager/)
 
 /datum/artifact_fault/messager/what_people_said
 	text_style = "small"
-	generate_message(obj/O, mob/living/user)
+	generate_message(obj/O, mob/living/user,var/atom/cosmeticSource)
 		return phrase_log.random_phrase("say")
 
 /datum/artifact_fault/messager/what_dead_people_said
 	text_style = "small"
-	generate_message(obj/O, mob/living/user)
+	generate_message(obj/O, mob/living/user,var/atom/cosmeticSource)
 		return phrase_log.random_phrase("deadsay")
 
 /datum/artifact_fault/messager/ai_laws
 	trigger_prob = 15
 	text_style = "monospace"
-	generate_message(obj/O, mob/living/user)
+	generate_message(obj/O, mob/living/user,var/atom/cosmeticSource)
 		return phrase_log.random_phrase("ailaw")
 
 /datum/artifact_fault/poison
@@ -220,9 +220,9 @@ ABSTRACT_TYPE(/datum/artifact_fault/messager/)
 	var/poison_type = "toxin"
 	var/poison_amount = 10
 
-	deploy(var/obj/O,var/mob/living/user)
+	deploy(var/obj/O,var/mob/living/user,var/atom/cosmeticSource)
 		if (..())
 			return
-		boutput(user, "<span class='alert'>The [O.name] stings you!</span>")
+		boutput(user, "<span class='alert'>The [cosmeticSource.name] stings you!</span>")
 		if (user.reagents)
 			user.reagents.add_reagent(poison_type,poison_amount)
