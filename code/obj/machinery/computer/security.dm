@@ -25,7 +25,8 @@
 		..()
 		if(window)
 			for (var/client/subscriber in window.subscribers)
-				if(get_dist(src,subscriber.mob) > 1 && subscriber.getViewportsByType("cameras: Viewport").len > 0)
+				var/list/viewports = subscriber.getViewportsByType("cameras: Viewport")
+				if(get_dist(src,subscriber.mob) > 1 && viewports.len > 0)
 					boutput(subscriber,"<span class='alert'>You are too far to see the screen.</span>")
 					subscriber.clearViewportsByType("cameras: Viewport")
 
