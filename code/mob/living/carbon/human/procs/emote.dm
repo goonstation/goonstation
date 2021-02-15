@@ -2102,7 +2102,7 @@
 		gas.farts = 1.69
 	else
 		gas.farts = 0.69
-	gas.temperature = src.bodytemperature
+	gas.temperature = max(src.bodytemperature, 1)
 	gas.volume = R_IDEAL_GAS_EQUATION * gas.temperature / 1000
 	if (T)
 		T.assume_air(gas)
