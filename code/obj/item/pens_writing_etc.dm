@@ -40,6 +40,7 @@
 	var/spam_flag_message = 0 // one message appears for every five times you click the pen if you're just sitting there jamming on it
 	var/spam_timer = 20
 	var/symbol_setting = null
+	var/material_uses = 10
 	var/static/list/c_default = list("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z",
 	"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "Exclamation Point", "Question Mark", "Period", "Comma", "Colon", "Semicolon", "Ampersand", "Left Parenthesis", "Right Parenthesis",
 	"Left Bracket", "Right Bracket", "Percent", "Plus", "Minus", "Times", "Divided", "Equals", "Less Than", "Greater Than")
@@ -83,6 +84,16 @@
 				if (src)
 					src.spam_flag_sound = 0
 
+	proc/apply_material_to_drawing(obj/decal/cleanable/writing/drawing, mob/user)
+		if(src.material)
+			drawing.setMaterial(src.material)
+			src.material_uses--
+			if(src.material_uses <= 0)
+				boutput(user, "<span class='notify'>[src.material.name] rubs off of [src].</span>")
+				src.setMaterial(null)
+			return TRUE
+		return FALSE
+
 	proc/write_on_turf(var/turf/T as turf, var/mob/user as mob, params)
 		if (!T || !user || src.in_use || get_dist(T, user) > 1 || isghostdrone(user))
 			return
@@ -102,8 +113,8 @@
 		t = copytext(html_encode(t), 1, MAX_MESSAGE_LEN)
 		if (src.font_color)
 			G.color = src.font_color
-		if (src.material)
-			G.setMaterial(src.material)
+		if(apply_material_to_drawing(G, user))
+			;
 		/* not used because it doesn't work (yet?)
 		if (src.uses_handwriting && user?.mind?.handwriting)
 			G.font = user.mind.handwriting
@@ -127,6 +138,8 @@
 		if (src.color != src.font_color)
 			src.font_color = src.color
 			src.color_name = hex2color_name(src.color)
+		if(src.material)
+			src.material_uses = initial(src.material_uses)
 
 	custom_suicide = 1
 	suicide(var/mob/user as mob)
@@ -494,8 +507,7 @@
 			G.color_name = src.color_name
 			G.real_name = t
 			G.UpdateName()
-		if (src.material)
-			G.setMaterial(src.material)
+		apply_material_to_drawing(G, user)
 		G.words = t
 		if (islist(params) && params["icon-y"] && params["icon-x"])
 			G.pixel_x = text2num(params["icon-x"]) - size / 2
@@ -623,8 +635,8 @@
 		t = copytext(html_encode(t), 1, MAX_MESSAGE_LEN)
 		if (src.font_color)
 			G.color = src.font_color
-		if (src.material)
-			G.setMaterial(src.material)
+		if(apply_material_to_drawing(G, user))
+			;
 		/*if (src.uses_handwriting && user?.mind?.handwriting)
 			G.font = user.mind.handwriting
 			G.webfont = 1

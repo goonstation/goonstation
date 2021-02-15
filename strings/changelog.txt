@@ -1,5 +1,49 @@
 
+(t)sun feb 14 21
+(u)Carbadox
+(p)3718
+(e)🐛🎨|bug, sprites
+(+)Added the ability to make industrial table parts with reinforced metal sheets.
+(u)BenLubar
+(p)3381
+(e)⚖|balance
+(+)Attacking someone with a drinking glass while in harm intent now splashes your drink onto them.
+(u)Anachroniser
+(p)3409
+(e)⚖|balance
+(+)Arrow shafts now apply effects while implanted
+(+)Can use organic material in arrows and spears
+(t)sat feb 13 21
+(u)Xyzzy
+(p)3324
+(e)🆕|feature
+(+)Tugs can now pull wheeled carts.
+(u)Sord
+(p)3413
+(e)⚖🆕|balance, feature
+(*)Reworked Security loadouts in the Security equipment vendors.
+(u)Flappybat
+(p)3584
+(e)🎨|sprites
+(+)Radiation blowout uses the battlestorm effect to show unsafe areas.
+(u)pali
+(*)Building new cloning pods now requires uqill (to make the pod sturdy) and beeswax. Little known lore: NT's cloning pods are actually a technology copied from spacebees and the beeswax is necessary to make the clone heal up!
+(u)BenLubar
+(p)3163
+(e)⚖🆕🗺📄|balance, feature, mapping, tgui
+(*)Cloning consoles can now communicate with up to 3 total cloning pods.
+(u)Azrun
+(p)3558
+(e)⚖🗺🎨|balance, mapping, sprites
+(*)Increases "standard" burn chamber temperature and improve Molitz Beta drop chance.  Research Director now has a briefcase with Molitz Beta in their office.
+(u)pali
+(p)3691
+(e)🆕|feature
+(*)You can now save game logs in the chatlog menu (the cogwheel in the top right corner of the chatlog).<br>You can also enter 5 more words for highlighting, toggle emoji style and toggle deletion of old messages.
 (t)fri feb 12 21
+(u)tarmunora
+(e)⚖|balance
+(+)RCDs and their ammo are more expensive to manufacture
 (u)Azrun
 (p)3695
 (e)|
