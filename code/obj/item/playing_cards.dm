@@ -482,6 +482,11 @@
             name = "hand of [card_name] cards"
         inventory_counter.update_number(length(stored_cards))
 
+    proc/update_card_information(var/obj/item/playing_card/c) //communicates information between card groups and playing_cards during deck creation to keep them in sync
+        c.total_cards = total_cards
+        c.card_style = card_style
+        c.card_name = card_name
+
     proc/update_group_information(var/obj/item/card_group/g,var/obj/item/from,var/hand) //the inverse of update_card_information for creating card groups from cards
         if(hand == TRUE)
             g.is_hand = TRUE
