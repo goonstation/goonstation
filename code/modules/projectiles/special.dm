@@ -999,6 +999,8 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		var/turf/T = get_turf(hit)
 		var/datum/reagents/chemR = O.reagents
 		var/chem_amt = chemR.total_volume
+		if(chem_amt <= 0)
+			return
 		/// If there's just a little bit left, use the rest of it
 		var/amt_to_emit = (chem_amt <= 0.1) ? chem_amt : (chemR.maximum_volume * O.special_data["chem_pct_app_tile"])
 

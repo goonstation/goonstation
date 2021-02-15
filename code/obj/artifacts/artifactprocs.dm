@@ -148,7 +148,7 @@
 	if (A.nofx)
 		src.icon_state = src.icon_state + "fx"
 	else
-		src.overlays += A.fx_image
+		src.UpdateOverlays(A.fx_image, "activated")
 	A.effect_activate(src)
 
 /obj/proc/ArtifactDeactivated()
@@ -166,7 +166,7 @@
 	if (A.nofx)
 		src.icon_state = src.icon_state - "fx"
 	else
-		src.overlays = null
+		src.UpdateOverlays(null, "activated")
 	A.effect_deactivate(src)
 
 /obj/proc/Artifact_attackby(obj/item/W as obj, mob/user as mob)

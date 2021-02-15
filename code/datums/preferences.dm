@@ -1889,7 +1889,7 @@ $(updateCharacterPreviewPos);
 					boutput( user, "<span class='notice'>Savefile saved!</span>" )
 			else if (link_tags["cloudnew"])
 				rebuild_profile = 1
-				if( user.client.player.cloudsaves.len >= SAVEFILE_PROFILES_MAX )
+				if( user.client.player.cloudsaves.len >= SAVEFILE_CLOUD_PROFILES_MAX )
 					alert( user, "You have hit your cloud save limit. Please write over an existing save." )
 				else
 					var/newname = input( user, "What would you like to name the save?", "Save Name" ) as text

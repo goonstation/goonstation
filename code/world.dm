@@ -117,8 +117,10 @@ var/global/mob/twitch_mob = 0
 				admins[m_key] = a_lev
 				logDiary("ADMIN: [m_key] = [a_lev]")
 
-/world/proc/load_whitelist(fileName = "strings/whitelist.txt")
+/world/proc/load_whitelist(fileName = null)
 	set background = 1
+	if(isnull(fileName))
+		fileName = config.whitelist_path
 	var/text = file2text(fileName)
 	if (!text)
 		return

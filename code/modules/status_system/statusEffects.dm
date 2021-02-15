@@ -175,12 +175,14 @@
 		increased
 			id = "maxhealth+"
 			onUpdate(timePassed)
+				..()
 				if(change < 0) //Someone fucked this up; remove effect.
 					duration = 1
 
 		decreased
 			id = "maxhealth-"
 			onUpdate(timePassed)
+				..()
 				if(change > 0) //Someone fucked this up; remove effect.
 					duration = 1
 
