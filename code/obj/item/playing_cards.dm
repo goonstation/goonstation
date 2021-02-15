@@ -32,9 +32,6 @@
     attack_hand(mob/user as mob)
         ..()
         set_dir(NORTH)
-
-    New()
-        ..()
         
 
     attack_self(mob/user as mob)
@@ -84,7 +81,10 @@
             ..()
 
     MouseDrop(var/atom/target as obj|mob)
-        tap_or_reverse(usr)
+        if(!istype(target,/obj/item/card_group))
+            tap_or_reverse(usr)
+        else
+            ..()
 
 
     set_dir(var/new_dir)
@@ -172,7 +172,10 @@
             user.show_text("These card types don't match, silly!", "red")
             return
         var/obj/item/card_group/g = new /obj/item/card_group
-        g.update_group_information(g,src)
+        if(is_hand)
+            g.update_group_information(g,src,TRUE)
+        else
+            g.update_group_information(g,src,FALSE)
         user.u_equip(c)
         g.add_to_group(c)
         if(is_hand)
@@ -226,7 +229,7 @@
                 name = chosen_mob.name
             else
                 name = pick("SHODAN", "GLADOS", "HAL-9000")
-            name += "the AI"
+            name += " the AI"
             icon_state_num = rand(1,NUMBER_AI)
             icon_state = "stg-ai-[icon_state_num]"
         else
@@ -258,9 +261,11 @@
                         icon_state = "stg-N-[icon_state_num]"
         if(chosen_card_type.LVL)
             name = "LVL [chosen_card_type.LVL] [name]"
-        name += " [chosen_card_type.ATK]/[chosen_card_type.DEF]"
+        var/atk = chosen_card_type.randomized_stats?(rand(0, 10) * chosen_card_type.LVL):chosen_card_type.ATK
+        var/def = chosen_card_type.randomized_stats?(rand(0, 10) * chosen_card_type.LVL):chosen_card_type.DEF
+        name += " [atk]/[def]"
         desc = chosen_card_type.card_data
-        desc += " ATK [chosen_card_type.ATK] | DEF [chosen_card_type.DEF]"
+        desc += " ATK [atk] | DEF [def]"
 
     proc/stg_friend(var/list/possible_card_types)
         var/path = pick(possible_card_types)
@@ -269,10 +274,12 @@
             name = "LVL [chosen_card_type.LVL] [chosen_card_type.card_name]"
         else
             name = chosen_card_type.card_name
-        name += " [chosen_card_type.ATK]/[chosen_card_type.DEF]"
+        var/atk = chosen_card_type.randomized_stats?(rand(0, 10) * chosen_card_type.LVL):chosen_card_type.ATK
+        var/def = chosen_card_type.randomized_stats?(rand(0, 10) * chosen_card_type.LVL):chosen_card_type.DEF
+        name += " [atk]/[def]"
         desc = chosen_card_type.card_data
-        desc += " ATK [chosen_card_type.ATK] | DEF [chosen_card_type.DEF]"
-        icon_state = "stg-general-[pick(1,NUMBER_GENERAL)]"
+        desc += " ATK [atk] | DEF [def]"
+        icon_state = "stg-general-[rand(1,NUMBER_GENERAL)]"
 
     proc/stg_effect(var/list/possible_card_types)
         var/path = pick(possible_card_types)
@@ -280,7 +287,7 @@
 
         name = chosen_card_type.card_name
         desc = chosen_card_type.card_data
-        icon_state = "stg-general-[pick(1,NUMBER_GENERAL)]"
+        icon_state = "stg-general-[rand(1,NUMBER_GENERAL)]"
 
     proc/stg_area(var/list/possible_card_types)
         var/path = pick(possible_card_types)
@@ -288,11 +295,36 @@
 
         name = chosen_card_type.card_name
         desc = chosen_card_type.card_data
-        icon_state = "stg-general-[pick(1,NUMBER_GENERAL)]"
+        icon_state = "stg-general-[rand(1,NUMBER_GENERAL)]"
 
     proc/add_foil()
         UpdateOverlays(image(icon,"stg-foil"),"foil")
         foiled = TRUE
+        name = "foil [name]"
+
+/obj/item/playing_card/expensive
+    desc = "tap this card and sacrifice one <Yourself> to win target game."
+    icon_state = "stg-general-0"
+    var/list/prefix1 = list("Incredibly", "Strange", "Mysterious", "Suspicious", "Scary")
+    var/list/prefix2 = list("Rare", "Black", "Dark", "Shadowy", "Expensive", "Fun", "Gamer")
+    var/list/names = list("Flower", "Blossom", "Tulip", "Daisy")
+
+    New()
+        ..()
+        name = "[pick(prefix1)] [pick(prefix2)] [pick(names)]"
+        update_stored_info()
+
+    MouseDrop(var/atom/target as obj|mob)
+        ..()
+        if(tapped)
+            var/mob/user = usr
+            user.deathConfetti()
+            playsound(get_turf(user.loc), 'sound/musical_instruments/Bikehorn_1.ogg', 50)
+            user.visible_message("<span class='combat'><b>[uppertext(user.name)] WINS THE GAME!</b>")
+            if(!foiled)
+                user.take_brain_damage(1000)
+            else
+                user.partygib(1)
 
 /obj/item/card_group
     name = "deck of cards"
@@ -341,6 +373,7 @@
             else
                 update_card_actions("card")
                 user.showContextActions(cardActions, src)
+            update_group_sprite()
         else if(istype(W,/obj/item/card_group))
             var/obj/item/card_group/g = W
             if(g.is_hand && !is_hand)
@@ -367,6 +400,17 @@
         else
             ..()
             user.show_text ("<b>Contains [length(stored_cards)] cards.</b>" )
+
+    MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
+        if(istype(O,/obj/item/playing_card))
+            user.visible_message("[user.name] starts scooping cards into the [src.name]...")
+            SPAWN_DBG(0.2 SECONDS)
+                for(var/obj/item/playing_card/c in range(1, user))
+                    if(c.loc == user)
+                        user.u_equip(c)
+                    add_to_group(c,1)
+                    update_group_sprite()
+                    sleep(0.2 SECONDS)
 
     proc/hand_examine(var/mob/user, var/target)
         var/message = ""
@@ -422,13 +466,13 @@
     proc/update_group_sprite()
         var/cards = length(stored_cards)
         if(!is_hand)
-            if(cards > ((total_cards/4 + total_cards/2)))
+            if(cards >= ((total_cards/4 + total_cards/2)))
                 icon_state = "[card_style]-deck-4"
-            else if(cards > total_cards/2)
+            else if(cards >= total_cards/2)
                 icon_state = "[card_style]-deck-3"
             else if(cards > total_cards/4)
                 icon_state = "[card_style]-deck-2"
-            else if(cards < total_cards/4)
+            else if(cards <= total_cards/4)
                 icon_state = "[card_style]-deck-1"
             name = "deck of [card_name] cards"
         else
@@ -444,18 +488,21 @@
         c.card_style = card_style
         c.card_name = card_name
 
-    proc/update_group_information(var/obj/item/card_group/hand,var/obj/item/from)
-        hand.is_hand = TRUE
+    proc/update_group_information(var/obj/item/card_group/g,var/obj/item/from,var/hand)
+        if(hand == TRUE)
+            g.is_hand = TRUE
+        else
+            g.is_hand = FALSE
         if(istype(from,/obj/item/playing_card))
             var/obj/item/playing_card/F = from
-            hand.total_cards = F.total_cards
-            hand.card_style = F.card_style
-            hand.card_name = F.card_name
+            g.total_cards = F.total_cards
+            g.card_style = F.card_style
+            g.card_name = F.card_name
         else if(istype(from,/obj/item/card_group))
             var/obj/item/card_group/F = from
-            hand.total_cards = F.total_cards
-            hand.card_style = F.card_style
-            hand.card_name = F.card_name
+            g.total_cards = F.total_cards
+            g.card_style = F.card_style
+            g.card_name = F.card_name
 
     proc/update_card_actions(var/hitby)
         cardActions = list()
@@ -507,7 +554,7 @@
             card_number = length(stored_cards)
         if(in_interact_range(src, user))
             var/obj/item/card_group/hand = new /obj/item/card_group
-            update_group_information(hand,src)
+            update_group_information(hand,src,TRUE)
             for(var/i in 1 to card_number)
                 hand.add_to_group(stored_cards[1])
                 stored_cards -= stored_cards[1]
@@ -592,6 +639,81 @@
                 user.visible_message("<b>[user.name]</b> places the [W] on [successful] of the [src.name].")
         else
             user.show_text("These card types don't match, silly!", "red")
+
+    proc/build_stg(var/deck)
+        var/list/possible_humans = list()
+        for(var/mob/living/carbon/human/H in mobs)
+            if(isnpcmonkey(H))
+                continue
+            if(iswizard(H))
+                continue
+            if(isnukeop(H))
+                continue
+            possible_humans += H
+        var/list/possible_borgos = list()
+        for(var/mob/living/silicon/robot/R in mobs)
+            possible_borgos += R
+        var/list/possible_ai = list()
+        for(var/mob/living/silicon/ai/A in mobs)
+            possible_ai += A
+
+        var/list/possible_mobs = childrentypesof(/datum/playing_card/griffening/creature/mob)
+        var/list/possible_friends = childrentypesof(/datum/playing_card/griffening/creature/friend)
+        var/list/possible_effects = childrentypesof(/datum/playing_card/griffening/effect)
+        var/list/possible_areas = childrentypesof(/datum/playing_card/griffening/area)
+        
+
+        var/modified_card_amount
+        if(deck)
+            modified_card_amount = prob(2)?39:40
+        else
+            modified_card_amount = prob(1)?9:10
+
+        for(var/i in 1 to modified_card_amount)
+            var/obj/item/playing_card/card = new /obj/item/playing_card(src)
+            stored_cards += card
+            if(deck)
+                var/card_type = rand(1,4)
+                switch(card_type)
+                    if(1)
+                        card.stg_mob(possible_mobs,possible_humans,possible_borgos,possible_ai)
+                    if(2)
+                        card.stg_friend(possible_friends)
+                    if(3)
+                        card.stg_effect(possible_effects)
+                    if(4)
+                        card.stg_area(possible_areas)
+                if(prob(10))
+                    card.add_foil()
+            else
+                switch(i)
+                    if(1,2,3)
+                        card.stg_mob(possible_mobs,possible_humans,possible_borgos,possible_ai)
+                    if(4,5,6)
+                        card.stg_friend(possible_friends)
+                    if(7,8,9)
+                        card.stg_effect(possible_effects)
+                    if(10)
+                        card.stg_area(possible_areas)
+            update_card_information(card)
+            card.update_stored_info()
+        
+        if((modified_card_amount == 39) || (modified_card_amount == 9))
+            var/obj/item/playing_card/expensive/e = new /obj/item/playing_card/expensive
+            switch(modified_card_amount)
+                if(39)
+                    add_to_group(e,rand(1,39))
+                    if(prob(10))
+                        e.add_foil()
+                if(9)
+                    add_to_group(e)
+
+        if(!deck)
+            shuffle_list(stored_cards)
+            var/obj/item/playing_card/c = pick(stored_cards)
+            c.add_foil()
+
+        update_group_sprite()
 
 //Plain playing cards
 //-----------------//
@@ -826,46 +948,25 @@
 
     New()
         ..()
+        build_stg(1)
 
-        var/list/possible_humans = list()
-        for(var/mob/living/carbon/human/H in mobs)
-            if(isnpcmonkey(H))
-                continue
-            if(iswizard(H))
-                continue
-            if(isnukeop(H))
-                continue
-            possible_humans += H
-        var/list/possible_borgos = list()
-        for(var/mob/living/silicon/robot/R in mobs)
-            possible_borgos += R
-        var/list/possible_ai = list()
-        for(var/mob/living/silicon/ai/A in mobs)
-            possible_ai += A
+//Clow
+//--//
+/obj/item/card_group/clow
+    desc = "A good set if you want to play 52 pickup."
+    card_style = "clow"
+    total_cards = 52
+    card_name = "Clow"
 
-        var/list/possible_mobs = childrentypesof(/datum/playing_card/griffening/creature/mob)
-        var/list/possible_friends = childrentypesof(/datum/playing_card/griffening/creature/friend)
-        var/list/possible_effects = childrentypesof(/datum/playing_card/griffening/effect)
-        var/list/possible_areas = childrentypesof(/datum/playing_card/griffening/area)
-
+    New()
+        ..()
         for(var/i in 1 to total_cards)
             var/obj/item/playing_card/card = new /obj/item/playing_card(src)
             stored_cards += card
-            var/card_type = rand(1,4)
-            switch(card_type)
-                if(1)
-                    card.stg_mob(possible_mobs,possible_humans,possible_borgos,possible_ai)
-                if(2)
-                    card.stg_friend(possible_friends)
-                if(3)
-                    card.stg_effect(possible_effects)
-                if(4)
-                    card.stg_area(possible_areas)
-            if(prob(10))
-                card.add_foil()
+            card.icon_state = "clow-1-1"
+            card.name = "Clow Card"
             update_card_information(card)
             card.update_stored_info()
-
         update_group_sprite()
 
 //Deck Boxes
@@ -941,6 +1042,15 @@
         ..()
         stored_deck = new /obj/item/card_group/hanafuda
 
+/obj/item/card_box/clow
+    name = "\improper Clow Book"
+    desc = "Contents guaranteed to not go flying off in all directions upon opening! Hopefully."
+    box_style = "clow"
+
+    New()
+        ..()
+        stored_deck = new /obj/item/card_group/clow
+
 /obj/item/stg_box
     name = "StG Preconstructed Deck Box"
     desc = "a pick up and play deck of StG cards!"
@@ -964,17 +1074,27 @@
     attack_self(mob/user as mob)
         switch(icon_state)
             if("stg-box")
-                icon_state = "stg-box-open"
+                actions.start(new /datum/action/bar/private/stg_open(user,src),user)
             if("stg-box-open")
-                icon_state = "stg-box-torn"
+                user.show_text("You try to tear the packaging, but it's too strong! You'll need something to cut it...","red")
+            if("stg-box-torn","stg-blister")
+                if(icon_state == "stg-blister" && !stored_deck)
+                    return
+                actions.start(new /datum/action/bar/private/stg_pry(user,src),user)
 
-    attack_hand(mob/user as mob)
-        if((loc == user) && stored_deck && ((icon_state =="stg-box-torn") || (icon_state == "stg-blister")))
+    attackby(obj/item/W as obj, mob/user as mob)
+        if((icon_state == "stg-box-open") && (istool(W,TOOL_CUTTING) || istool(W,TOOL_SNIPPING)))
+            if(loc != user)
+                user.show_text("You need to hold the box if you want enough leverage to rip it to pieces!")
+                return
+            actions.start(new /datum/action/bar/private/stg_tear(user,src),user)
+        else if(istool(user.equipped(),TOOL_PRYING) && (icon_state == "stg-box-torn") || (icon_state == "stg-blister" && stored_deck))
             if(icon_state == "stg-box-torn")
+                user.visible_message("<span class='green'><b>[user.name]</b> quickly dislodges the blister pack!")
                 icon_state = "stg-blister"
-                ..()
                 user.put_in_hand_or_drop(new /obj/item/stg_box_waste)
-            else if(icon_state == "stg-blister")
+            else
+                user.visible_message("<span class='green'><b>[user.name]</b> swiftly splits the [name] in two, retrieving [his_or_her(user)] cards!")
                 user.put_in_hand_or_drop(stored_deck)
                 stored_deck = null
                 name = "discarded blister packaging"
@@ -982,7 +1102,136 @@
         else
             ..()
 
+/datum/action/bar/private/stg_open
+    duration = 100
+    interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
+    var/mob/user
+    var/obj/item/box
+    var/list/messages = list("slips their fingers under the tab of the StG Preconstructed Deck Box and starts prying upward with all their might!",
+    "reverses the StG Preconstructed Deck Box and plants their feet against it, using the muscles of their legs to free the box's tab!",
+    "screams to the heavens as if asking for a divine entity to intervene with righteous assistance to open the infernal construct of a box!",
+    "struggles to begin opening a box...", "attempts to crack the cardboard safe that holds their precious cards.")
+
+    New(User, Box)
+        user = User
+        box = Box
+        ..()
+
+    onStart()
+        ..()
+        user.visible_message("<span class='alert'><b>[user.name]</b> [pick(messages)]")
+
+    onUpdate()
+        ..()
+        if(box.loc != user)
+            user.show_text("You need to hold the box if you want enough leverage to open it!")
+            interrupt(INTERRUPT_ALWAYS)
+
+    onEnd()
+        ..()
+        user.visible_message("<span class='green'><b>[user.name]</b> lets out a sigh of relief as the box's tab is freed from the depths of thin cardboard packaging...")
+        box.icon_state = "stg-box-open"
+
+/datum/action/bar/private/stg_tear
+    duration = 100
+    interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
+    var/mob/user
+    var/obj/item/box
+    var/list/messages = list("brutally hacks at the package's exterior with a sharp object!",
+    "desperately slashes a sharp object against the exterior of the StG Preconstructed Deck Box!",
+    "becomes a blinding blur of motion as they send bits of cardboard packaging into the air like grotesque confetti!",
+    "impales the StG Preconstructed Deck Box, gripping their sharp implement with both hands, forcing the blade down the package as if disembowling it!",
+    "HAcKs aNd slAShES aND hACKs AnD sLAsHEs aNd hACkS AnD SLaSHEs aND HA...")
+
+    New(User, Box)
+        user = User
+        box = Box
+        ..()
+
+    onStart()
+        ..()
+        user.visible_message("<span class='alert'><b>[user.name]</b> [pick(messages)]")
+
+    onUpdate()
+        ..()
+        if(box.loc != user)
+            user.show_text("You need to hold the box if you want enough leverage to rip it to pieces!")
+            interrupt(INTERRUPT_ALWAYS)
+        if(!istool(user.equipped(),TOOL_CUTTING) && !istool(user.equipped(),TOOL_SNIPPING))
+            interrupt(INTERRUPT_ALWAYS)
+
+    onEnd()
+        ..()
+        user.visible_message("<span class='green'><b>[user.name]</b> has thoroughly mutilated the StG Preconstructed Deck Box...")
+        box.icon_state = "stg-box-torn"
+        var/obj/decal/cleanable/generic/decal = make_cleanable(/obj/decal/cleanable/generic,get_turf(user.loc))
+        decal.color = pick("#000000","#6f0a0a","#a0621b")
+
+/datum/action/bar/private/stg_pry
+    duration = 150
+    interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
+    var/mob/user
+    var/obj/item/stg_box/box
+
+    New(User, Box)
+        user = User
+        box = Box
+        ..()
+
+    onStart()
+        ..()
+        if(box.icon_state == "stg-box-torn")
+            user.visible_message("<span class='alert'><b>[user.name]</b> tries to free a blister pack from the [box.name]...")
+        else
+            user.visible_message("<span class='alert'><b>[user.name]</b> awkwardly scoops cards out of the [box.name]...")
+
+    onUpdate()
+        ..()
+        if(box.loc != user)
+            user.show_text("You need to hold the [box.name] if you want enough leverage to pull it apart!")
+            interrupt(INTERRUPT_ALWAYS)
+
+    onEnd()
+        ..()
+        if(box.icon_state == "stg-box-torn")
+            user.visible_message("<span class='green'><b>[user.name]</b> finally dislodges the blister pack! That would have been much easier with some sort of prying tool...")
+            box.icon_state = "stg-blister"
+            user.put_in_hand_or_drop(new /obj/item/stg_box_waste)
+        else
+            user.visible_message("<span class='green'><b>[user.name]</b> has scooped the last card out of the blister pack! That would have been much easier with some sort of prying tool...")
+            user.put_in_hand_or_drop(box.stored_deck)
+            box.stored_deck = null
+            box.name = "discarded blister packaging"
+            box.ClearAllOverlays()
+
 /obj/item/stg_box_waste
     name = "mutilated cardboard husk"
     icon = 'icons/obj/items/playing_card.dmi'
     icon_state = "stg-box-empty"
+
+/obj/item/stg_booster
+    name = "StG Booster Pack"
+    icon = 'icons/obj/items/playing_card.dmi'
+    icon_state = "stg-booster"
+    var/obj/item/card_group/stored_deck
+
+    New()
+        ..()
+        stored_deck = new /obj/item/card_group(src)
+        stored_deck.desc = "A bunch of Spacemen the Griffening cards."
+        stored_deck.total_cards = 40
+        stored_deck.card_style = "stg"
+        stored_deck.card_name = "Spacemen the Griffening"
+        stored_deck.build_stg()
+
+    attack_self(mob/user as mob)
+        if(icon_state == "stg-booster")
+            icon_state = "stg-booster-open"
+
+    attack_hand(mob/user as mob)
+        if(icon_state == "stg-booster-open")
+            icon_state = "stg-booster-empty"
+            user.put_in_hand_or_drop(stored_deck)
+            stored_deck = null
+        else
+            ..()
