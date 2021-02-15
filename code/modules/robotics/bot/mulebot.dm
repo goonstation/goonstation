@@ -278,7 +278,7 @@
 			return
 		if (usr.stat)
 			return
-		if ((in_range(src, usr) && istype(src.loc, /turf)) || (issilicon(usr)))
+		if ((in_interact_range(src, usr) && istype(src.loc, /turf)) || (issilicon(usr)))
 			src.add_dialog(usr)
 
 			switch(href_list["op"])

@@ -1612,6 +1612,13 @@ keeping this here because I want to make something else with it eventually
 		src.attached_objs.Remove(I)
 		UnregisterSignal(I, list(COMSIG_ITEM_PICKUP, COMSIG_MOVABLE_MOVED, COMSIG_PARENT_PRE_DISPOSING))
 
+	attack_hand(mob/user as mob)
+		if (!anchored)
+			boutput(user, "You apply \the [name]'s brake.")
+		else
+			boutput(user, "You release \the [name]'s brake.")
+		anchored = !anchored
+
 /* ---------- Surgery Tray Parts ---------- */
 /obj/item/furniture_parts/surgery_tray
 	name = "tray parts"

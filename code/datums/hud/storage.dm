@@ -13,7 +13,8 @@
 		src.boxes = create_screen("boxes", "Storage", 'icons/mob/screen1.dmi', "block", ui_storage_area)
 		src.close = create_screen("close", "Close", 'icons/mob/screen1.dmi', "x", ui_storage_close, HUD_LAYER+1)
 		src.sel = create_screen("sel", "sel", 'icons/mob/hud_human_new.dmi', "sel", null, HUD_LAYER+1.2)
-		update()
+		if(src.master)
+			update()
 
 	disposing()
 		src.master = null
@@ -67,7 +68,7 @@
 						var/turfd = (isturf(master.loc) && !istype(master, /obj/item/storage/bible))
 
 						var/pixel_y_adjust = 0
-						if (usr && usr.client && usr.client.tg_layout && !turfd)
+						if (user && user.client && user.client.tg_layout && !turfd)
 							pixel_y_adjust = 1
 
 						if (pixel_y_adjust && text2num(py) > 16)

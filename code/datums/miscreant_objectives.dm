@@ -90,7 +90,11 @@ ABSTRACT_TYPE(/datum/objective/miscreant)
 		explanation_text = "Make as much noise as possible."
 
 	bonsai
+#ifdef MAP_OVERRIDE_MANTA
+		explanation_text = "Destroy the Captain's ship in a bottle."
+#else
 		explanation_text = "Destroy the Captain's prized bonsai tree."
+#endif
 
 	reassign
 		explanation_text = "Try to convince as many crew members as possible to reassign to your department."

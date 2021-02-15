@@ -134,6 +134,12 @@
 	var/is_inherent = 0 // Are we a wrestler as opposed to somebody with a wrestling belt?
 	var/fake = 0
 
+	deepCopy()
+		. = ..()
+		var/datum/abilityHolder/wrestler/copy = .
+		if(istype(copy) && src.is_inherent == TRUE)
+			copy.is_inherent = TRUE
+
 /datum/abilityHolder/wrestler/fake
 	fake = 1
 /////////////////////////////////////////////// Wrestler spell parent ////////////////////////////
@@ -254,7 +260,7 @@
 
 		var/CD = src.cooldown
 		var/ST_mod_max = M.get_stam_mod_max()
-		var/ST_mod_regen = M.get_stam_mod_regen()
+		var/ST_mod_regen = GET_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS)
 
 		// Balanced for 200/12 and 200/13 drugs (e.g. epinephrine or meth), so stamina regeneration
 		// buffs are prioritized over total stamina modifiers.

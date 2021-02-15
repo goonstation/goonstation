@@ -312,7 +312,8 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 
 /datum/materialProc/telecrystal_entered
 	execute(var/atom/owner, var/atom/movable/entering)
-		if(prob(50) && owner && isturf(owner) && !isrestrictedz(owner.z))
+		var/turf/T = get_turf(entering)
+		if(prob(50) && owner && isturf(owner) && !isrestrictedz(T.z))
 			. = get_offset_target_turf(get_turf(entering), rand(-2, 2), rand(-2, 2))
 			entering.visible_message("<span class='alert'>[entering] is warped away!</span>")
 			boutput(entering, "<span class='alert'>You suddenly teleport ...</span>")
@@ -322,8 +323,9 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 
 /datum/materialProc/telecrystal_onattack
 	execute(var/obj/item/owner, var/mob/attacker, var/mob/attacked)
+		var/turf/T = get_turf(attacked)
 		if(prob(50))
-			if(istype(attacked) && !isrestrictedz(attacked.z)) // Haine fix for undefined proc or verb /turf/simulated/floor/set loc()
+			if(istype(attacked) && !isrestrictedz(T.z)) // Haine fix for undefined proc or verb /turf/simulated/floor/set loc()
 				. = get_offset_target_turf(get_turf(attacked), rand(-8, 8), rand(-8, 8))
 				attacked.visible_message("<span class='alert'>[attacked] is warped away!</span>")
 				boutput(attacked, "<span class='alert'>You suddenly teleport ...</span>")
@@ -332,7 +334,8 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 
 /datum/materialProc/telecrystal_life
 	execute(var/mob/M, var/obj/item/I, mult)
-		if(prob(percentmult(5, mult)) && M && !isrestrictedz(M.z))
+		var/turf/T = get_turf(M)
+		if(prob(percentmult(5, mult)) && M && !isrestrictedz(T.z))
 			. = get_offset_target_turf(get_turf(M), rand(-8, 8), rand(-8, 8))
 			M.visible_message("<span class='alert'>[M] is warped away!</span>")
 			boutput(M, "<span class='alert'>You suddenly teleport ...</span>")
@@ -370,11 +373,8 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		payload.volume = R_IDEAL_GAS_EQUATION * T20C / 1000
 
 		if(agent_b && temp > 500 && air.toxins > MINIMUM_REACT_QUANTITY )
-			var/datum/gas/oxygen_agent_b/trace_gas = new
-
+			var/datum/gas/oxygen_agent_b/trace_gas = payload.get_or_add_trace_gas_by_type(/datum/gas/oxygen_agent_b)
 			payload.temperature = T0C // Greatly reduce temperature to simulate an endothermic reaction
-			payload.trace_gases = list()
-			payload.trace_gases += trace_gas
 
 			// Itr 1: 0.125 Agent B, 10 Oxy
 			// Itr 2: 0.0605 Agent B

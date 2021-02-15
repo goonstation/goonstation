@@ -2214,7 +2214,7 @@
 				boutput(user, "<span class='alert'>There is already something in the scanner!</span>")
 				return
 
-			usr.drop_item()
+			user.drop_item()
 			W.set_loc(src)
 			scanned_thing = W
 			power_change()
@@ -4460,9 +4460,9 @@
 			use_power(80)
 
 			if (src.temperature < src.temptarget)
-				src.temperature += 5
+				src.temperature += min(5, src.temptarget-src.temperature)
 			else if (src.temperature > src.temptarget)
-				src.temperature -= 5
+				src.temperature -= min(5, src.temperature-src.temptarget)
 
 			if (src.temperature != 310)
 				for (var/obj/M in src.loc.contents)
@@ -4487,7 +4487,7 @@
 	message_interface(var/list/packetData)
 		switch (lowertext(packetData["command"]))
 			if ("info")
-				message_host("command=info&id=[src.setup_test_id]&capability=[setup_capability_value]&status=[src.active ? "1" : "0"]&valuelist=Temptarget,Temperature&readinglist=Target Temperature-K,Current Temperature-K,Artifact Temperature-K,Object Responds to Temperature,Details")
+				message_host("command=info&id=[src.setup_test_id]&capability=[setup_capability_value]&status=[src.active ? "1" : "0"]&valuelist=Temptarget,Temperature&readinglist=Target Temperature-K,Current Temperature-K,Artifact Temperature-K,Temperature Response,Details")
 
 			if ("status")
 				message_host("command=status&data=[src.active ? "1" : "0"]")
@@ -4572,8 +4572,9 @@
 
 			if ("pulse")
 				var/duration = text2num(packetData["duration"])
-				if (isnum(duration))
-					temptarget = duration
+				if (isnum(duration) )
+					if(duration >= 200 && duration <= 400)
+						temptarget = duration
 				else
 					message_host("command=nack")
 					return

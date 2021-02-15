@@ -68,12 +68,12 @@ Important Procedures
 
 		if (src.checkingcanpass > 0)
 			for(var/obj/obstacle as() in src)
-				if(!obstacle.CanPass(mover, target, height, air_group))
+				if((obstacle.event_handler_flags & USE_CANPASS) && !obstacle.CanPass(mover, target, height, air_group))
 					return 0
 
 		if (target?.checkingcanpass > 0)
 			for(var/obj/obstacle as() in target)
-				if(!obstacle.CanPass(mover, src, height, air_group))
+				if((obstacle.event_handler_flags & USE_CANPASS) && !obstacle.CanPass(mover, src, height, air_group))
 					return 0
 
 		return 1
@@ -183,7 +183,7 @@ datum/controller/air_system
 				test.length_space_border = 0
 				for(var/direction in cardinal)
 					var/turf/T = get_step(test,direction)
-					if(T && !members.Find(T) && test.CanPass(null, T, null,1))
+					if(T && !(T in members) && test.CanPass(null, T, null,1))
 						if(istype(T,/turf/simulated))
 							if(!T:parent)
 								possible_members += T

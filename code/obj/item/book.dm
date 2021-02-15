@@ -1120,7 +1120,7 @@ This ruleset is entirely based upon the Quick Quest system, with minor changes. 
 	examine(mob/user)
 		if (!issilicon(user))
 			. = list("What...what is this? It's written entirely in barcodes or something, cripes. You can't make out ANY of this.")
-			var/mob/living/carbon/jerk = usr
+			var/mob/living/carbon/jerk = user
 			if (!istype(jerk))
 				return
 

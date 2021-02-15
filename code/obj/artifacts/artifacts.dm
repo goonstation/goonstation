@@ -123,9 +123,9 @@
 
 		switch (P.proj_data.damage_type)
 			if(D_KINETIC,D_PIERCING,D_SLASHING)
-				src.ArtifactStimulus("force", P.power)
 				for (var/obj/machinery/networked/test_apparatus/impact_pad/I in src.loc.contents)
 					I.impactpad_senseforce_shot(src, P)
+				src.ArtifactStimulus("force", P.power)
 			if(D_ENERGY)
 				src.ArtifactStimulus("elec", P.power * 10)
 			if(D_BURNING)

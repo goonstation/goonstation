@@ -318,7 +318,9 @@
 				D.disrupt(src)
 				src.visible_message("<span class='notice'><b>[src]'s disguiser is disrupted!</b></span>")
 
-	return
+	if (safety)
+		return 0
+	return 1
 
 /mob/proc/hearing_check(var/consciousness_check = 0)
 	return 1

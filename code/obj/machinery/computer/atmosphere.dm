@@ -7,9 +7,9 @@ Atmos alert computer
 /obj/machinery/computer/atmosphere
 	name = "atmos"
 
-	lr = 0.85
-	lg = 0.86
-	lb = 1
+	light_r =0.85
+	light_g = 0.86
+	light_b = 1
 
 /obj/machinery/computer/atmosphere/alerts
 	name = "Alert Computer"
@@ -82,7 +82,7 @@ Atmos alert computer
 
 
 /obj/machinery/computer/atmosphere/alerts/proc/interacted(mob/user)
-	src.add_dialog(usr)
+	src.add_dialog(user)
 	var/dat = "<HEAD><TITLE>Current Station Alerts</TITLE><META HTTP-EQUIV='Refresh' CONTENT='10'></HEAD><BODY><br>"
 	dat += "<A HREF='?action=mach_close&window=alerts'>Close</A><br><br>"
 	for (var/cat in src.alarms)

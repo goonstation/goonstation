@@ -51,7 +51,6 @@ Contains:
 			return null
 
 		var/loc_to_check = istype(src.loc, /obj/item/magtractor) ? src.loc.loc : src.loc
-		src = null
 		for(var/turf/T in range(1, loc_to_check))
 
 			if(T.interesting)
@@ -101,7 +100,6 @@ Contains:
 			return null
 
 		var/loc_to_check = istype(src.loc, /obj/item/magtractor) ? src.loc.loc : src.loc
-		src = null
 		for(var/turf/T in range(2, loc_to_check))
 
 			if(T.interesting)
@@ -415,7 +413,7 @@ that cannot be itched
 	pixelaction(atom/target, params, mob/user, reach)
 		var/turf/T = get_turf(target)
 		if ((analyzer_upgrade == 1) && (get_dist(user, T)>1))
-			usr.visible_message("<span class='notice'><b>[user]</b> takes a distant atmospheric reading of [T].</span>")
+			user.visible_message("<span class='notice'><b>[user]</b> takes a distant atmospheric reading of [T].</span>")
 			boutput(user, scan_atmospheric(T, visible = 1))
 			src.add_fingerprint(user)
 			return
@@ -656,7 +654,7 @@ that cannot be itched
 		playsound(get_turf(src), "sound/machines/keyboard3.ogg", 30, 1)
 		var/issuer = I.registered
 		var/issuer_job = I.assignment
-		var/ticket_target = input(user, "Ticket recipient:", "Recipient", issuer) as text
+		var/ticket_target = input(user, "Ticket recipient:", "Recipient", "Ticket Recipient") as text
 		if (!ticket_target)
 			return
 		ticket_target = copytext(sanitize(html_encode(ticket_target)), 1, MAX_MESSAGE_LEN)

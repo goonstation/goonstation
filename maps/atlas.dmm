@@ -2709,13 +2709,6 @@
 /obj/table/auto,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
-"gU" = (
-/obj/table/auto,
-/obj/item/paper/book/cookbook,
-/obj/item/kitchen/rollingpin,
-/obj/item/reagent_containers/glass/bottle/icing,
-/turf/simulated/floor/black,
-/area/station/crew_quarters/catering)
 "gV" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/kitchen)
@@ -3170,7 +3163,7 @@
 	pixel_y = 21
 	},
 /obj/storage/secure/crate/plasma/armory/anti_biological,
-/obj/item/flamethrower/assembled/loaded,
+/obj/item/gun/flamethrower/assembled/loaded,
 /turf/simulated/floor/red/side{
 	dir = 1
 	},
@@ -3903,11 +3896,6 @@
 	},
 /turf/simulated/floor,
 /area/station/security/main)
-"jH" = (
-/turf/simulated/wall/auto/supernorn{
-	icon_state = "3"
-	},
-/area/station/crew_quarters/kitchen)
 "jI" = (
 /turf/simulated/floor/red/side{
 	dir = 4
@@ -7167,9 +7155,6 @@
 	pixel_y = 32
 	},
 /obj/disposalpipe/trunk,
-/obj/machinery/disposal/small{
-	dir = 8
-	},
 /turf/simulated/floor/grass/random,
 /area/station/hydroponics/bay)
 "ro" = (
@@ -7331,9 +7316,7 @@
 /area/station/bridge)
 "rG" = (
 /obj/disposalpipe/segment,
-/obj/juggleplaque{
-	desc = {"NCS Atlas, Nanotrasen,  \"Man always kills the thing he loves, and so we the pioneers have killed our wilderness. Some say we had to. Be that as it may, I am glad I shall never be young without wild country to be young in. Of what avail are forty freedoms without a blank spot on the map?  - Aldo Leopold\""};
-	name = "dedication plaque";
+/obj/atlasplaque{
 	pixel_y = 25
 	},
 /turf/simulated/floor/blueblack,
@@ -7589,11 +7572,6 @@
 /obj/machinery/atmospherics/portables_connector,
 /turf/simulated/floor/caution/west,
 /area/station/engine/core)
-"sk" = (
-/turf/simulated/wall/auto/supernorn{
-	icon_state = "3"
-	},
-/area/station/chapel/office)
 "sl" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	can_rupture = 0;
@@ -8366,6 +8344,10 @@
 	layer = 9.1;
 	pixel_x = -10
 	},
+/obj/item/reagent_containers/glass/water_pipe{
+	pixel_x = 7;
+	pixel_y = 5
+	},
 /turf/simulated/floor/green/side{
 	dir = 8
 	},
@@ -8959,6 +8941,19 @@
 	dir = 4
 	},
 /area/station/hallway/primary/north)
+"uX" = (
+/obj/storage/secure/closet/command/research_director,
+/obj/item/storage/briefcase/toxins,
+/obj/item/remote/porter/port_a_sci,
+/obj/item/reagent_containers/food/snacks/yellow_cake_uranium_cake{
+	pixel_x = -2
+	},
+/obj/item/stamp/rd,
+/obj/machinery/light{
+	layer = 3
+	},
+/turf/simulated/floor/purple,
+/area/station/science/research_director)
 "va" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -8990,9 +8985,9 @@
 /obj/cable,
 /obj/machinery/power/data_terminal,
 /obj/machinery/networked/printer{
-	name = "Printer - Escape Checkpoint";
+	name = "Printer - Bridge";
 	pixel_y = 5;
-	print_id = "EscapeCheckpoint"
+	print_id = "Bridge"
 	},
 /turf/simulated/floor/carpet{
 	dir = 10;
@@ -10255,7 +10250,7 @@
 "yt" = (
 /obj/lattice,
 /obj/warp_beacon{
-	name = "starboard warp beacon"
+	name = "fore warp beacon"
 	},
 /turf/space,
 /area/space)
@@ -11328,7 +11323,6 @@
 	pixel_x = -7
 	},
 /obj/item/clipboard/with_pen{
-	name = "clipboard";
 	pixel_x = 6
 	},
 /obj/item/pen/fancy,
@@ -12022,18 +12016,6 @@
 /obj/item/stamp/md,
 /turf/simulated/floor/white,
 /area/station/medical/head)
-"Dy" = (
-/obj/storage/secure/closet/command/research_director,
-/obj/item/remote/porter/port_a_sci,
-/obj/item/reagent_containers/food/snacks/yellow_cake_uranium_cake{
-	pixel_x = -2
-	},
-/obj/item/stamp/rd,
-/obj/machinery/light{
-	layer = 3
-	},
-/turf/simulated/floor/purple,
-/area/station/science/research_director)
 "Dz" = (
 /obj/decal/poster/wallsign/stencil/left/n,
 /obj/decal/poster/wallsign/stencil/right/c,
@@ -14006,7 +13988,6 @@
 /turf/simulated/floor/purple,
 /area/station/janitor/office)
 "Ii" = (
-/obj/machinery/power/apc/autoname_east,
 /obj/machinery/power/apc/autoname_east,
 /obj/cable,
 /obj/cable{
@@ -17296,11 +17277,6 @@
 	wet = 2
 	},
 /area/station/crew_quarters/clown)
-"QH" = (
-/turf/simulated/wall/auto/supernorn{
-	icon_state = "12"
-	},
-/area/station/crew_quarters/cafeteria)
 "QJ" = (
 /obj/machinery/power/apc/autoname_east,
 /obj/cable{
@@ -17633,11 +17609,6 @@
 	dir = 8
 	},
 /area/station/mining/staff_room)
-"Se" = (
-/turf/simulated/wall/auto/reinforced/supernorn{
-	icon_state = "R12"
-	},
-/area/station/engine/engineering)
 "Sf" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -17730,6 +17701,13 @@
 	},
 /turf/simulated/floor/plating,
 /area/space)
+"Ss" = (
+/obj/table/auto,
+/obj/item/paper/book/cookbook,
+/obj/item/kitchen/rollingpin,
+/obj/item/reagent_containers/food/drinks/drinkingglass/icing,
+/turf/simulated/floor/black,
+/area/station/crew_quarters/catering)
 "St" = (
 /obj/machinery/power/smes,
 /obj/cable,
@@ -18268,11 +18246,6 @@
 	name = "solar paneling"
 	},
 /area/station/solar/south)
-"UC" = (
-/turf/simulated/wall/auto/supernorn{
-	icon_state = "3"
-	},
-/area/station/hydroponics/bay)
 "UD" = (
 /obj/machinery/power/terminal,
 /obj/cable,
@@ -18567,11 +18540,6 @@
 /obj/marker/supplymarker,
 /turf/simulated/floor/plating/random,
 /area/station/crew_quarters/clown)
-"VI" = (
-/turf/simulated/wall/auto/supernorn{
-	icon_state = "12"
-	},
-/area/station/bridge/captain)
 "VK" = (
 /obj/storage/secure/closet/security/equipment,
 /obj/machinery/light{
@@ -18659,9 +18627,7 @@
 /area/station/crew_quarters/heads)
 "VY" = (
 /obj/disposalpipe/segment,
-/turf/simulated/wall/auto/supernorn{
-	icon_state = "12"
-	},
+/turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/heads)
 "VZ" = (
 /turf/simulated/floor/grass/leafy,
@@ -18714,11 +18680,6 @@
 	dir = 8
 	},
 /area/station/crew_quarters/kitchen)
-"Wk" = (
-/turf/simulated/wall/auto/supernorn{
-	icon_state = "3"
-	},
-/area/station/bridge/captain)
 "Wn" = (
 /obj/machinery/atmospherics/portables_connector/south,
 /obj/machinery/firealarm{
@@ -19470,9 +19431,17 @@
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "Yv" = (
-/obj/landmark/gps_waypoint,
-/turf/simulated/floor/red,
-/area/station/security/brig/genpop)
+/obj/machinery/door/airlock/pyro/glass{
+	name = "Teleporter Pad"
+	},
+/obj/machinery/door/poddoor/pyro{
+	id = "tele";
+	name = "Teleporter Lockdown Shutter"
+	},
+/obj/access_spawn/research,
+/obj/firedoor_spawn,
+/turf/simulated/floor/plating,
+/area/station/science/teleporter)
 "Yw" = (
 /obj/item/sheet/steel/fullstack,
 /obj/table/auto,
@@ -19509,11 +19478,6 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/science/storage)
-"YC" = (
-/turf/simulated/wall/auto/supernorn{
-	icon_state = "3"
-	},
-/area/station/mining/staff_room)
 "YD" = (
 /turf/simulated/floor/black,
 /area/station/crew_quarters/heads)
@@ -58788,7 +58752,7 @@ tn
 uD
 py
 wy
-Se
+np
 zJ
 Az
 Bl
@@ -60006,7 +59970,7 @@ Dc
 DI
 Ey
 Fg
-Dc
+Yv
 GI
 UE
 GG
@@ -60280,7 +60244,7 @@ eF
 fn
 fn
 fn
-YC
+fn
 fn
 fn
 kh
@@ -66634,7 +66598,7 @@ uV
 qK
 qK
 Up
-UC
+vP
 eH
 vP
 qK
@@ -67530,7 +67494,7 @@ gV
 gV
 gV
 gV
-jH
+gV
 gV
 kn
 kn
@@ -69942,7 +69906,7 @@ dF
 ej
 eX
 fB
-gU
+Ss
 gT
 gT
 jF
@@ -70247,7 +70211,7 @@ eX
 eX
 eX
 eX
-QH
+jF
 js
 kt
 kX
@@ -72067,7 +72031,7 @@ mq
 Pk
 oE
 vu
-Yv
+qL
 rL
 uc
 ov
@@ -76282,7 +76246,7 @@ aa
 cz
 dl
 ew
-sk
+ew
 fM
 hi
 hY
@@ -77518,7 +77482,7 @@ WK
 WP
 UW
 ZW
-Dy
+uX
 BK
 EZ
 FQ
@@ -77801,7 +77765,7 @@ iJ
 iJ
 hf
 mu
-Wk
+lu
 lu
 lu
 lu
@@ -79618,7 +79582,7 @@ xu
 xC
 pG
 pG
-VI
+lu
 Rm
 sW
 ug

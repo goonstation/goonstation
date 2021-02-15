@@ -5,9 +5,9 @@
 	anchored = 1.0
 	power_usage = 250
 	var/datum/light/light
-	var/lr = 1
-	var/lg = 1
-	var/lb = 1
+	var/light_r =1
+	var/light_g = 1
+	var/light_b = 1
 /*
 /obj/machinery/computer/airtunnel
 	name = "Air Tunnel Control"
@@ -42,7 +42,7 @@
 	..()
 	light = new/datum/light/point
 	light.set_brightness(0.4)
-	light.set_color(lr,lg,lb)
+	light.set_color(light_r, light_g, light_b)
 	light.attach(src)
 
 /obj/machinery/computer/meteorhit(var/obj/O as obj)

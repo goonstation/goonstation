@@ -1,8 +1,12 @@
 /mob/proc/say()
 	return
 
-/mob/verb/whisper()
+/mob/proc/whisper(message, forced=FALSE)
 	return
+
+/mob/verb/whisper_verb(message as text)
+	set name = "whisper"
+	return src.whisper(message)
 
 /mob/verb/say_verb(message as text)
 	set name = "say"
@@ -672,7 +676,7 @@
 		if (!C.mob) continue
 		var/mob/M = C.mob
 
-		if (recipients.Find(M.client))
+		if (M.client in recipients)
 			continue
 		if (M.client.holder && !M.client.only_local_looc && !M.client.player_mode)
 			recipients += M.client

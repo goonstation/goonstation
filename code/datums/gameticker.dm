@@ -43,7 +43,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 /datum/controller/gameticker/proc/pregame()
 
 	pregame_timeleft = PREGAME_LOBBY_TICKS
-	boutput(world, "<B><FONT style='notice'>Welcome to the pre-game lobby!</FONT></B><br>Please, setup your character and select ready. Game will start in [pregame_timeleft] seconds.")
+	boutput(world, "<b>Welcome to the pre-game lobby!</b><br>Please, setup your character and select ready. Game will start in [pregame_timeleft] seconds.")
 
 	// let's try doing this here, yoloooo
 	// zamu 20200823: idk if this is even getting called...
@@ -51,7 +51,8 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 	//	mining_controls.spawn_mining_z_asteroids()
 
 	if(master_mode == "battle_royale")
-		lobby_titlecard.icon_state += "_battle_royale"
+		lobby_titlecard = new /datum/titlecard/battleroyale()
+		lobby_titlecard.set_pregame_html()
 
 	#ifdef I_DONT_WANNA_WAIT_FOR_THIS_PREGAME_SHIT_JUST_GO
 	for(var/mob/new_player/C in world)
@@ -62,6 +63,8 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 
 
 	var/did_mapvote = 0
+	if (!player_capa)
+		new /obj/overlay/zamujasa/round_start_countdown/encourage()
 	var/obj/overlay/zamujasa/round_start_countdown/timer/title_countdown = new()
 	while (current_state <= GAME_STATE_PREGAME)
 		sleep(1 SECOND)

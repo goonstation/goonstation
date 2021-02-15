@@ -94,6 +94,7 @@
 		if (!t || get_dist(T, user) > 1)
 			src.in_use = 0
 			return
+		phrase_log.log_phrase("floorpen", t)
 		var/obj/decal/cleanable/writing/G = make_cleanable( /obj/decal/cleanable/writing,T)
 		G.artist = user.key
 
@@ -692,21 +693,23 @@
 			return
 		tooltip_rebuild = 1
 		var/holder = src.loc
-		var/str = copytext(html_encode(input(usr,"Label text?","Set label","") as null|text), 1, 32)
+		var/str = copytext(html_encode(input(user,"Label text?","Set label","") as null|text), 1, 32)
+		if(str)
+			phrase_log.log_phrase("label", str, no_duplicates=TRUE)
 		if (src.loc != holder)
 			return
 		if(url_regex?.Find(str))
 			str = null
 		if (!str || !length(str))
-			boutput(usr, "<span class='notice'>Label text cleared.</span>")
+			boutput(user, "<span class='notice'>Label text cleared.</span>")
 			src.label = null
 			return
 		if (length(str) > 30)
-			boutput(usr, "<span class='alert'>Text too long.</span>")
+			boutput(user, "<span class='alert'>Text too long.</span>")
 			return
 		src.label = "[str]"
-		boutput(usr, "<span class='notice'>You set the text to '[str]'.</span>")
-		logTheThing("combat", usr, null, "sets a hand labeler label to \"[str]\".")
+		boutput(user, "<span class='notice'>You set the text to '[str]'.</span>")
+		logTheThing("combat", user, null, "sets a hand labeler label to \"[str]\".")
 
 	proc/RemoveLabel(var/atom/A, var/mob/user, var/no_message = 0)
 		if(!islist(A.name_suffixes))
@@ -870,15 +873,7 @@
 				src.update()
 			src.add_fingerprint(user)
 		else
-			/*
-			if (user.contents.Find(src))
-				SPAWN_DBG( 0 )
-					src.attack_self(user)
-					return
-			else
-			*/
 			return ..()
-		return
 
 	attackby(obj/item/P as obj, mob/user as mob)
 
@@ -1042,7 +1037,7 @@
 
 		user.Browse("<HTML><HEAD><TITLE>[src.name] - [cur_page.name]</TITLE>[font_junk]</HEAD><BODY>Page [page] of [pages.len]<BR><a href='byond://?src=\ref[src];action=first_page'>First Page</a> <a href='byond://?src=\ref[src];action=title_book'>Title Book</a> <a href='byond://?src=\ref[src];action=last_page'>Last Page</a><BR>[prev_page]<a href='byond://?src=\ref[src];action=write;page=[page]'>Write</a> <a href='byond://?src=\ref[src];action=title_page;page=[page]'>Title</a> [next_page]<HR><TT>[.]</TT></BODY></HTML>", "window=[src.name]")
 
-		onclose(usr, "[src.name]")
+		onclose(user, "[src.name]")
 		return null
 
 	attack_self(var/mob/user)
@@ -1094,7 +1089,7 @@
 				src.visible_message("[user] staples [P] at the back of [src].")
 				playsound(user,'sound/impact_sounds/Generic_Snap_1.ogg', 50, 1)
 			else
-				boutput(usr, "<span class='alert'>You need a loaded stapler in hand to add this paper to the booklet.</span>")
+				boutput(user, "<span class='alert'>You need a loaded stapler in hand to add this paper to the booklet.</span>")
 		else
 			..()
 		return

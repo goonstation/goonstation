@@ -471,7 +471,7 @@ toxic - poisons
 	name = "signifer bolt"
 	icon = 'icons/obj/projectiles.dmi'
 	power = 15
-	cost = 25
+	cost = 50
 	sname = "lethal"
 	shot_sound = 'sound/weapons/SigLethal.ogg'
 	hit_ground_chance = 30

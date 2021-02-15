@@ -332,8 +332,8 @@
 				src.reagents.del_reagent(reagent_id)
 				found = 1
 		if (found)
-			if (usr)
-				usr.show_text("[src] identifies and removes a non-smokable substance.", "red")
+			if (user)
+				user.show_text("[src] identifies and removes a non-smokable substance.", "red")
 			else if (ismob(src.loc))
 				var/mob/M = src.loc
 				M.show_text("[src] identifies and removes a non-smokable substance.", "red")

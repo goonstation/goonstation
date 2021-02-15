@@ -305,7 +305,7 @@
 			var/obj/projectile/P = O
 			if(P.proj_data.window_pass)
 				return 1
-		if (get_dir(O.loc, target) == src.dir)
+		if (get_dir(loc, target) == src.dir)
 			return 0
 		return 1
 
@@ -340,8 +340,8 @@
 				playsound(src.loc, src.hitsound, 100, 1)
 				return
 		else
-			if (ishuman(usr))
-				src.visible_message("<span class='alert'><b>[usr]</b> knocks on [src].</span>")
+			if (ishuman(user))
+				src.visible_message("<span class='alert'><b>[user]</b> knocks on [src].</span>")
 				playsound(src.loc, src.hitsound, 100, 1)
 				SPAWN_DBG(-1) //uhhh maybe let's not sleep() an attack_hand. fucky effects up the chain?
 					sleep(0.3 SECONDS)
@@ -392,7 +392,7 @@
 					return
 				update_nearby_tiles(need_rebuild=1) //Compel updates before
 				src.set_dir(turn(src.dir, -90))
-				/*var/action = input(usr,"Rotate it which way?","Window Rotation",null) in list("Clockwise ->","Anticlockwise <-","180 Degrees")
+				/*var/action = input(user,"Rotate it which way?","Window Rotation",null) in list("Clockwise ->","Anticlockwise <-","180 Degrees")
 				if (!action) return*/
 
 				/*switch(action)

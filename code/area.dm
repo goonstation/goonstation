@@ -447,8 +447,9 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
 /area/titlescreen
 	name = "The Title Screen"
 	teleport_blocked = 2
-	force_fullbright = 1
+	force_fullbright = 0
 	expandable = 0
+	ambient_light = rgb(79, 164, 184)
 	// filler_turf = "/turf/unsimulated/floor/setpieces/gauntlet"
 
 /area/cavetiny
@@ -917,10 +918,7 @@ ABSTRACT_TYPE(/area/adventure)
 	Entered(atom/movable/Obj,atom/OldLoc)
 		..()
 		if(ismob(Obj))
-			if (!soundSubscribers:Find(Obj))
-				soundSubscribers += Obj
-
-		return
+			soundSubscribers |= Obj
 
 	core
 		Entered(atom/movable/O)
@@ -1105,6 +1103,7 @@ ABSTRACT_TYPE(/area/prefab)
 /area/prefab
 	name = "Prefab"
 	icon_state = "orange"
+	requires_power = FALSE
 
 /area/prefab/discount_dans_asteroid
 	name = "Discount Dan's Delivery Asteroid"
@@ -1125,6 +1124,12 @@ ABSTRACT_TYPE(/area/prefab)
 /area/prefab/drug_den/party
 	name ="Drug Den"
 	icon_state = "purple"
+
+/area/prefab/sequestered_cloner
+	name = "Sequestered Cloner"
+
+/area/prefab/sequestered_cloner/puzzle
+	requires_power = TRUE
 
 /area/prefab/von_ricken
 	name ="Von Ricken"
@@ -1238,6 +1243,7 @@ ABSTRACT_TYPE(/area/prefab)
 /area/station/turret_protected/sea_crashed //dumb area pathing aRRGHHH
 	name = "Crashed Transport"
 	icon_state = "purple"
+	requires_power = FALSE
 
 /area/prefab/water_treatment
 	name = "Water Treatment Facility"
@@ -3468,18 +3474,16 @@ ABSTRACT_TYPE(/area/mining)
 		src.updateicon()
 		src.mouse_opacity = 0
 		var/list/cameras = list()
-		for (var/obj/machinery/firealarm/F in src)
-			F.icon_state = "fire1"
-			LAGCHECK(LAG_HIGH)
+		for_by_tcl(F, /obj/machinery/firealarm)
+			if(get_area(F) == src)
+				F.icon_state = "fire1"
 		for (var/obj/machinery/camera/C in src)
 			cameras += C
 			LAGCHECK(LAG_HIGH)
 		for_by_tcl(aiPlayer, /mob/living/silicon/ai)
 			aiPlayer.triggerAlarm("Fire", src, cameras, src)
-			LAGCHECK(LAG_HIGH)
 		for (var/obj/machinery/computer/atmosphere/alerts/a as() in machine_registry[MACHINES_ATMOSALERTS])
 			a.triggerAlarm("Fire", src, cameras, src)
-			LAGCHECK(LAG_HIGH)
 
 /**
   * Resets the fire alert in the area. Notifies AIs.
@@ -3490,15 +3494,13 @@ ABSTRACT_TYPE(/area/mining)
 		src.mouse_opacity = 0
 		src.updateicon()
 
-		for (var/obj/machinery/firealarm/F in src)
-			F.icon_state = "fire0"
-			LAGCHECK(LAG_HIGH)
+		for_by_tcl(F, /obj/machinery/firealarm)
+			if(get_area(F) == src)
+				F.icon_state = "fire0"
 		for_by_tcl(aiPlayer, /mob/living/silicon/ai)
 			aiPlayer.cancelAlarm("Fire", src, src)
-			LAGCHECK(LAG_HIGH)
 		for (var/obj/machinery/computer/atmosphere/alerts/a as() in machine_registry[MACHINES_ATMOSALERTS])
 			a.cancelAlarm("Fire", src, src)
-			LAGCHECK(LAG_HIGH)
 
 /**
   * Updates the icon of the area. Mainly used for flashing it red or blue. See: old party lights
