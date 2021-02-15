@@ -810,7 +810,7 @@
 		execute(var/atom/target, var/mob/user)
 			if(istype(target,/obj/item/playing_card))
 				var/obj/item/playing_card/c = target
-				c.fan(user)
+				c.deck_or_hand(user,TRUE)
 			else if(istype(target,/obj/item/card_group))
 				var/obj/item/card_group/c = target
 				c.fan(user)
@@ -823,7 +823,7 @@
 		execute(var/atom/target, var/mob/user)
 			if(istype(target,/obj/item/playing_card))
 				var/obj/item/playing_card/c = target
-				c.stack(user)
+				c.deck_or_hand(user)
 			else if(istype(target,/obj/item/card_group))
 				var/obj/item/card_group/c = target
 				c.stack(user)

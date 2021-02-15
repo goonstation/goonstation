@@ -11,13 +11,31 @@
 /obj/item/playing_card
     icon = 'icons/obj/items/playing_card.dmi'
     dir = NORTH
+    w_class = 1.0
+    burn_point = 220
+    burn_output = 900
+    burn_possible = 2
+    health = 10
     var/card_style //what style of card sprite are we using?
+    var/total_cards
+    var/card_name
     var/facedown = FALSE
     var/foiled = FALSE
+    var/tapped = FALSE
+    var/reversed = FALSE
+    var/solitaire_offset = 5
 
     var/list/stored_info
     contextLayout = new /datum/contextLayout/instrumental(16)
     var/list/datum/contextAction/cardActions
+
+    attack_hand(mob/user as mob)
+        ..()
+        set_dir(NORTH)
+
+    New()
+        ..()
+        
 
     attack_self(mob/user as mob)
         flip()
@@ -29,10 +47,83 @@
             else
                 update_card_actions()
             user.showContextActions(cardActions, src)
+        else if(istype(W,/obj/item/card_group))
+            var/obj/item/card_group/g = W
+            if(g.card_style != card_style)
+                user.show_text("These card types don't match, silly!", "red")
+                return
+            if(src.loc == user)
+                user.u_equip(src)
+                g.add_to_group(src)
+                if(g.is_hand)
+                    user.visible_message("<b>[user.name]</b> adds a card to [his_or_her(user)] [g.name].")
+                else
+                    user.visible_message("<b>[user.name]</b> plops the [g.name] on top of a card.")
+            else
+                if(g.is_hand)
+                    g.add_to_group(src)
+                    user.visible_message("<b>[user.name]</b> adds a card to [his_or_her(user)] [g.name].")
+                else
+                    user.u_equip(g)
+                    g.set_loc(get_turf(src))
+                    g.add_to_group(src)
+                    user.visible_message("<b>[user.name]</b> plops the [g.name] on top of the [src.name].")
+            g.update_group_sprite()
+        else
+            ..()
+
+    afterattack(var/atom/A as turf, var/mob/user as mob, reach, params)
+        if(istype(A,/turf/simulated/floor) || istype(A,/turf/unsimulated/floor))
+            user.u_equip(src)
+            src.set_loc(A)
+            if(islist(params) && params["icon-y"] && params["icon-x"])
+                src.pixel_x = text2num(params["icon-x"]) - 16
+                src.pixel_y = text2num(params["icon-y"]) - 16
+            set_dir(user.dir)
+        else
+            ..()
+
+    MouseDrop(var/atom/target as obj|mob)
+        tap_or_reverse(usr)
+
+
+    set_dir(var/new_dir)
+        ..()
+        if(tapped)
+            if(loc == usr)
+                dir = EAST
+            else
+                switch(dir)
+                    if(NORTH)
+                        dir = EAST
+                    if(SOUTH)
+                        dir = WEST
+                    if(EAST)
+                        dir = SOUTH
+                    if(WEST)
+                        dir = NORTH
+        else if(reversed)
+            if(loc == usr)
+                dir = SOUTH
+            else
+                switch(dir)
+                    if(NORTH)
+                        dir = SOUTH
+                    if(SOUTH)
+                        dir = NORTH
+                    if(EAST)
+                        dir = WEST
+                    if(WEST)
+                        dir = EAST
+        else if(loc == usr)
+            dir = NORTH
+
+    proc/update_stored_info()
+        stored_info = list(name,desc,icon_state)
+
 
     proc/flip()
         if(!facedown)
-            stored_info = list(name,desc,icon_state)
             name = "playing card"
             desc = "a face-down card."
             icon_state = "[card_style]-back"
@@ -41,8 +132,29 @@
             name = stored_info[1]
             desc = stored_info[2]
             icon_state = stored_info[3]
-            stored_info = null
             facedown = FALSE
+            if(tapped)
+                tapped = FALSE
+            if(reversed)
+                reversed = FALSE
+            dir = NORTH
+
+    proc/tap_or_reverse(var/mob/user)
+        if(card_style == "tarot")
+            if(!reversed)
+                reversed = TRUE
+                name += " Reversed"
+            else
+                reversed = FALSE
+                name = stored_info[1]
+        else 
+            if(!tapped)
+                tapped = TRUE
+                name = "tapped [name]"
+            else
+                tapped = FALSE
+                name = stored_info[1]
+        set_dir(user.dir)
 
     proc/update_card_actions(var/card_outside)
         cardActions = list()
@@ -52,11 +164,43 @@
         cardActions += new /datum/contextAction/card/stack
         cardActions += new /datum/contextAction/card/close
 
-    proc/solitaire()
+    proc/deck_or_hand(var/mob/user,var/is_hand)
+        if(!istype(user.equipped(),/obj/item/playing_card))
+            return
+        var/obj/item/playing_card/c = user.equipped()
+        if(c.card_style != card_style)
+            user.show_text("These card types don't match, silly!", "red")
+            return
+        var/obj/item/card_group/g = new /obj/item/card_group
+        g.update_group_information(g,src)
+        user.u_equip(c)
+        g.add_to_group(c)
+        if(is_hand)
+            g.is_hand = TRUE
+            user.visible_message("<b>[user.name]</b> creates a hand of cards.")
+        else
+            user.visible_message("<b>[user.name]</b> creates a deck of cards.")
+        if(loc == user)
+            user.u_equip(src)
+            g.add_to_group(src,1)
+            user.put_in_hand_or_drop(g)
+        else
+            g.set_loc(get_turf(src.loc))
+            g.add_to_group(src,1)
+        g.update_group_sprite()
+        qdel(src)
 
-    proc/stack()
-    
-    proc/fan()
+    proc/solitaire(var/mob/user)
+        if(!istype(user.equipped(),/obj/item/playing_card))
+            return
+        var/obj/item/playing_card/c = user.equipped()
+        if(c.card_style != card_style)
+            user.show_text("These card types don't match, silly!", "red")
+            return
+        user.u_equip(c)
+        c.set_loc(src.loc)
+        c.pixel_x = src.pixel_x
+        c.pixel_y = (src.pixel_y - c.solitaire_offset)
 
     //procs that convert the card into the given StG card type
     proc/stg_mob(var/list/possible_card_types,var/list/humans,var/list/borgos,var/list/ai)
@@ -114,6 +258,7 @@
                         icon_state = "stg-N-[icon_state_num]"
         if(chosen_card_type.LVL)
             name = "LVL [chosen_card_type.LVL] [name]"
+        name += " [chosen_card_type.ATK]/[chosen_card_type.DEF]"
         desc = chosen_card_type.card_data
         desc += " ATK [chosen_card_type.ATK] | DEF [chosen_card_type.DEF]"
 
@@ -124,6 +269,7 @@
             name = "LVL [chosen_card_type.LVL] [chosen_card_type.card_name]"
         else
             name = chosen_card_type.card_name
+        name += " [chosen_card_type.ATK]/[chosen_card_type.DEF]"
         desc = chosen_card_type.card_data
         desc += " ATK [chosen_card_type.ATK] | DEF [chosen_card_type.DEF]"
         icon_state = "stg-general-[pick(1,NUMBER_GENERAL)]"
@@ -152,6 +298,12 @@
     name = "deck of cards"
     icon = 'icons/obj/items/playing_card.dmi'
     dir = NORTH
+    w_class = 1.0
+    burn_point = 220
+    burn_output = 900
+    burn_possible = 2
+    health = 10
+    inventory_counter_enabled = 1
     var/card_style = "plain"
     var/total_cards
     var/is_hand = FALSE
@@ -180,12 +332,12 @@
         if(istype(W, /obj/item/playing_card))
             if(is_hand)
                 var/obj/item/playing_card/c = W
-                if(c.card_style == card_style)
-                    user.u_equip(c)
-                    c.set_loc(src)
-                    stored_cards += c
-                else
+                if(c.card_style != card_style)
                     user.show_text("These card types don't match, silly!", "red")
+                    return
+                user.u_equip(c)
+                add_to_group(c)
+                user.visible_message("<b>[user.name]</b> adds a card to [his_or_her(user)] [src.name]")
             else
                 update_card_actions("card")
                 user.showContextActions(cardActions, src)
@@ -195,7 +347,17 @@
                 update_card_actions("group")
                 user.showContextActions(cardActions, src)
             else
-                top_or_bottom(user,g,"top")
+                top_or_bottom(user,g,"top",1)
+        else
+            ..()
+
+    afterattack(var/atom/A as turf, var/mob/user as mob, reach, params)
+        if(istype(A,/turf/simulated/floor) || istype(A,/turf/unsimulated/floor))
+            user.u_equip(src)
+            src.set_loc(A)
+            if(islist(params) && params["icon-y"] && params["icon-x"])
+                src.pixel_x = text2num(params["icon-x"]) - 16
+                src.pixel_y = text2num(params["icon-y"]) - 16
         else
             ..()
 
@@ -204,6 +366,7 @@
             hand_examine(user,"self")
         else
             ..()
+            user.show_text ("<b>Contains [length(stored_cards)] cards.</b>" )
 
     proc/hand_examine(var/mob/user, var/target)
         var/message = ""
@@ -220,9 +383,10 @@
             user.visible_message("<b>[user.name]</b> reveals their hand: <br><br>[message]")
 
     proc/draw_card(var/mob/user,var/obj/item/playing_card/c)
-        if(c.facedown)
-            c.flip()
         user.put_in_hand_or_drop(c)
+        if(c.card_style == "tarot")
+            if(prob(50))
+                c.tap_or_reverse(user)
 
 
     proc/handle_draw_last_card(var/mob/user)
@@ -236,9 +400,21 @@
             c.set_loc(get_turf(src.loc))
         qdel(src)
 
-    proc/add_to_group(var/obj/item/c)
+    proc/add_to_group(var/obj/item/playing_card/c,var/insert)
         c.set_loc(src)
-        stored_cards += c
+        if(c.facedown)
+            c.flip()
+        if(c.tapped)
+            c.tapped = FALSE
+            c.name = c.stored_info[1]
+        if(c.reversed)
+            c.reversed = FALSE
+            c.name = c.stored_info[1]
+        c.dir = NORTH
+        if(insert)
+            stored_cards.Insert(insert,c)
+        else
+            stored_cards += c
         if(is_hand)
             if(length(stored_cards) > max_hand_size)
                 is_hand = FALSE
@@ -261,6 +437,25 @@
             else
                 icon_state = "[card_style]-hand-[cards]"
             name = "hand of [card_name] cards"
+        inventory_counter.update_number(length(stored_cards))
+
+    proc/update_card_information(var/obj/item/playing_card/c)
+        c.total_cards = total_cards
+        c.card_style = card_style
+        c.card_name = card_name
+
+    proc/update_group_information(var/obj/item/card_group/hand,var/obj/item/from)
+        hand.is_hand = TRUE
+        if(istype(from,/obj/item/playing_card))
+            var/obj/item/playing_card/F = from
+            hand.total_cards = F.total_cards
+            hand.card_style = F.card_style
+            hand.card_name = F.card_name
+        else if(istype(from,/obj/item/card_group))
+            var/obj/item/card_group/F = from
+            hand.total_cards = F.total_cards
+            hand.card_style = F.card_style
+            hand.card_name = F.card_name
 
     proc/update_card_actions(var/hitby)
         cardActions = list()
@@ -312,10 +507,7 @@
             card_number = length(stored_cards)
         if(in_interact_range(src, user))
             var/obj/item/card_group/hand = new /obj/item/card_group
-            hand.is_hand = TRUE
-            hand.total_cards = total_cards
-            hand.card_style = card_style
-            hand.card_name = card_name
+            update_group_information(hand,src)
             for(var/i in 1 to card_number)
                 hand.add_to_group(stored_cards[1])
                 stored_cards -= stored_cards[1]
@@ -362,7 +554,7 @@
         update_group_sprite()
         user.visible_message("<b>[user.name]</b> gathers [his_or_her(user)] cards into a deck.")
 
-    proc/top_or_bottom(var/mob/user,var/W,var/position)
+    proc/top_or_bottom(var/mob/user,var/W,var/position,var/no_message)
         var/successful
         if(istype(W,/obj/item/card_group))
             var/obj/item/card_group/G = W
@@ -371,14 +563,12 @@
                     var/card_pos = length(G.stored_cards)
                     for(var/i in 1 to length(G.stored_cards))
                         var/obj/item/c = G.stored_cards[card_pos]
-                        c.set_loc(src)
-                        stored_cards.Insert(1,c)
+                        add_to_group(c,1)
                         card_pos--
                     successful = "top"
                 else
                     for(var/obj/item/c in G.stored_cards)
-                        c.set_loc(src)
-                        stored_cards += c
+                        add_to_group(c)
                     successful = "the bottom"
                 user.u_equip(G)
                 qdel(G)
@@ -390,16 +580,16 @@
             var/obj/item/playing_card/c = W
             if(c.card_style == card_style)
                 user.u_equip(c)
-                c.set_loc(src)
                 if(position == "top")
-                    stored_cards.Insert(1,c)
+                    add_to_group(c,1)
                     successful = "top"
                 else
-                    stored_cards += c
+                    add_to_group(c)
                     successful = "the bottom"
                 update_group_sprite()
         if(successful)
-            user.visible_message("<b>[user.name]</b> places the [W] on [successful] of the [src.name].")
+            if(!no_message)
+                user.visible_message("<b>[user.name]</b> places the [W] on [successful] of the [src.name].")
         else
             user.show_text("These card types don't match, silly!", "red")
 
@@ -418,7 +608,6 @@
         var/suit_name
         for(var/i in 1 to total_cards)
             var/obj/item/playing_card/card = new /obj/item/playing_card(src)
-            card.card_style = card_style
             stored_cards += card
             switch(suit_num)
                 if(1)
@@ -455,6 +644,8 @@
                     card.name = "Black Joker"
             
             card.icon_state = "[card_style]-[suit_num]-[card_num]"
+            update_card_information(card)
+            card.update_stored_info()
 
             if(plain_suit)
                 if(card_num < 13)
@@ -485,7 +676,6 @@
         "The Devil - XV", "The Tower - XVI", "The Star - XVII", "The Moon - XVIII", "The Sun - XIX", "Judgement - XX", "The World - XXI")
         for(var/i in 1 to total_cards)
             var/obj/item/playing_card/card = new /obj/item/playing_card(src)
-            card.card_style = card_style
             stored_cards += card
             switch(suit_num)
                 if(1)
@@ -522,6 +712,8 @@
                 card.name = major[card_num]
 
             card.icon_state = "[card_style]-[suit_num]-[card_num]"
+            update_card_information(card)
+            card.update_stored_info()
 
             if(minor)
                 if(card_num < 14)
@@ -546,13 +738,11 @@
         var/target_month = 1 //card suit
         var/card_num = 1 //number within the card's suit
         for(var/i in 1 to total_cards)
-            //Card.solitaire_offset = 5
             var/special_second
             var/special_third
             var/special_fourth
 
             var/obj/item/playing_card/card = new /obj/item/playing_card(src)
-            card.card_style = card_style
             stored_cards += card
             switch(target_month)
                 if(1)
@@ -615,6 +805,8 @@
                     card.name += (special_fourth ? special_fourth : "Plain")
 
             card.icon_state = "hanafuda-[target_month]-[card_num]"
+            update_card_information(card)
+            card.update_stored_info()
 
             if(card_num <= 3)
                 card_num++
@@ -658,7 +850,6 @@
 
         for(var/i in 1 to total_cards)
             var/obj/item/playing_card/card = new /obj/item/playing_card(src)
-            card.card_style = card_style
             stored_cards += card
             var/card_type = rand(1,4)
             switch(card_type)
@@ -672,6 +863,8 @@
                     card.stg_area(possible_areas)
             if(prob(10))
                 card.add_foil()
+            update_card_information(card)
+            card.update_stored_info()
 
         update_group_sprite()
 
@@ -682,6 +875,11 @@
     name = "deckbox"
     desc = "a box for holding cards."
     icon = 'icons/obj/items/playing_card.dmi'
+    w_class = 1.0
+    burn_point = 220
+    burn_output = 900
+    burn_possible = 2
+    health = 10
     var/obj/item/card_group/stored_deck
     var/box_style = "white"
 
@@ -748,6 +946,7 @@
     desc = "a pick up and play deck of StG cards!"
     icon = 'icons/obj/items/playing_card.dmi'
     icon_state = "stg-box"
+    w_class = 2.0
     var/obj/item/card_group/stored_deck
 
     New()
