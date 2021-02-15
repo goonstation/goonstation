@@ -49,6 +49,7 @@
 	validtypes = list("ancient","martian","wizard","eldritch","precursor")
 	validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/electric,/datum/artifact_trigger/heat,
 	/datum/artifact_trigger/radiation,/datum/artifact_trigger/carbon_touch,/datum/artifact_trigger/silicon_touch)
+	fault_blacklist = list(ITEM_ONLY_FAULTS)
 	activ_text = "deposits its contents on the ground."
 	deact_text = "ceases functioning."
 	react_xray = list(7,50,40,11,"HOLLOW")

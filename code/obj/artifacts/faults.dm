@@ -1,5 +1,7 @@
 // these are all faults that only work on items
 #define ITEM_ONLY_FAULTS /datum/artifact_fault/grow, /datum/artifact_fault/shrink
+// these are all faults that only make sense on artifacts that people touch
+#define TOUCH_ONLY_FAULTS /datum/artifact_fault/poison
 
 // FAULTS
 ABSTRACT_TYPE(/datum/artifact_fault/)
