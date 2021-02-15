@@ -1029,6 +1029,7 @@
 /obj/item/card_box/tarot
     name = "ornate tarot box"
     box_style = "tarot"
+    w_class = 2
 
     New()
         ..()
