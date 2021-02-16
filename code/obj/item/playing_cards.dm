@@ -535,6 +535,7 @@
         //empty to deck
         else if(hitby == "empty")
             cardActions += new /datum/contextAction/card/draw
+            cardActions += new /datum/contextAction/card/draw_facedown
             cardActions += new /datum/contextAction/card/draw_multiple
             cardActions += new /datum/contextAction/card/search
             if(length(stored_cards) <= max_hand_size)
@@ -553,11 +554,12 @@
             cardActions += new /datum/contextAction/card/bottomdeck
             cardActions += new /datum/contextAction/card/close
 
-    proc/draw(var/mob/user) //the context action proc that handles players drawing a card
-        if(is_hand)
-            return
-        draw_card(user,stored_cards[1])
-        stored_cards -= stored_cards[1]
+    proc/draw(var/mob/user,var/facedown) //the context action proc that handles players drawing a card
+        var/obj/item/playing_card/c = stored_cards[1]
+        if(facedown)
+            c.flip()
+        draw_card(user,c)
+        stored_cards -= c
         if(length(stored_cards) == 1)
             handle_draw_last_card(user)
         else

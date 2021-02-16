@@ -839,6 +839,15 @@
 			var/obj/item/card_group/c = target
 			c.draw(user)
 
+	draw_facedown
+		name = "draw face-down"
+		desc = "add a card to your hand face-down."
+		icon_state = "draw_facedown"
+
+		execute(var/atom/target, var/mob/user)
+			var/obj/item/card_group/c = target
+			c.draw(user,1)
+
 	draw_multiple
 		name = "draw multiple cards"
 		desc = "add many cards to your hand."
