@@ -2749,6 +2749,6 @@ var/global/mirrored_physical_zone_created = FALSE //enables secondary code branc
 				map_generator.generate_terrain(space)
 				logTheThing("admin", src, null, "turned space into a swamp.")
 				logTheThing("diary", src, null, "turned space into a swamp.", "admin")
-				message_admins("[key_name(src)] turned space into a swamp."
+				message_admins("[key_name(src)] turned space into a swamp.")
 	else
 		boutput(src, "You must be at least an Administrator to use this command.")
