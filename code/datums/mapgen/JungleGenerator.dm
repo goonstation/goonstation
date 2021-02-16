@@ -77,6 +77,22 @@
 			selected_biome = /datum/biome/mountain
 		selected_biome = biomes[selected_biome]
 		selected_biome.generate_turf(gen_turf)
-		LAGCHECK(LAG_HIGH)
+		if (current_state >= GAME_STATE_PLAYING)
+			LAGCHECK(LAG_LOW)
+		else
+			LAGCHECK(LAG_HIGH)
 
 
+///for the mapgen mountains, temp until we get something better
+/turf/simulated/wall/asteroid/mountain
+	name = "mountain"
+	desc = "a rocky mountain"
+	fullbright = 0
+
+	destroy_asteroid(var/dropOre=0)
+		src.RL_SetOpacity(0)
+		src.ReplaceWith(/turf/unsimulated/floor/setpieces/Azarak/cavefloor/floor3)
+		src.opacity = 0
+		src.levelupdate()
+
+		return src

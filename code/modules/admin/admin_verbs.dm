@@ -332,6 +332,7 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_crusher_walls,
 		/client/proc/cmd_disco_lights,
 		/client/proc/cmd_blindfold_monkeys,
+		/client/proc/cmd_swampify_station,
 
 		/datum/admins/proc/toggleaprilfools,
 		/client/proc/cmd_admin_pop_off_all_the_limbs_oh_god,
