@@ -261,8 +261,18 @@
                         icon_state = "stg-N-[icon_state_num]"
         if(chosen_card_type.LVL)
             name = "LVL [chosen_card_type.LVL] [name]"
-        var/atk = chosen_card_type.randomized_stats?(rand(0, 10) * chosen_card_type.LVL):chosen_card_type.ATK
-        var/def = chosen_card_type.randomized_stats?(rand(0, 10) * chosen_card_type.LVL):chosen_card_type.DEF
+        var/atk
+        var/def
+        if(chosen_card_type.randomized_stats)
+            atk = rand(0, 10)
+            def = rand(0, 10)
+            if(chosen_card_type.LVL)
+                atk *= chosen_card_type.LVL
+                def *= chosen_card_type.LVL
+        else
+            atk = chosen_card_type.ATK
+            def = chosen_card_type.DEF
+
         name += " [atk]/[def]"
         desc = chosen_card_type.card_data
         desc += " ATK [atk] | DEF [def]"
@@ -274,8 +284,17 @@
             name = "LVL [chosen_card_type.LVL] [chosen_card_type.card_name]"
         else
             name = chosen_card_type.card_name
-        var/atk = chosen_card_type.randomized_stats?(rand(0, 10) * chosen_card_type.LVL):chosen_card_type.ATK
-        var/def = chosen_card_type.randomized_stats?(rand(0, 10) * chosen_card_type.LVL):chosen_card_type.DEF
+        var/atk
+        var/def
+        if(chosen_card_type.randomized_stats)
+            atk = rand(0, 10)
+            def = rand(0, 10)
+            if(chosen_card_type.LVL)
+                atk *= chosen_card_type.LVL
+                def *= chosen_card_type.LVL
+        else
+            atk = chosen_card_type.ATK
+            def = chosen_card_type.DEF
         name += " [atk]/[def]"
         desc = chosen_card_type.card_data
         desc += " ATK [atk] | DEF [def]"
