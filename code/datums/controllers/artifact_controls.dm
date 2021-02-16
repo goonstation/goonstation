@@ -541,7 +541,6 @@ var/datum/artifact_controller/artifact_controls
 						base_pixel_y = rand(-10, 10)
 					ball.pixel_y = do_opposite_y ? 0 : base_pixel_y
 					ball.layer = artifact.layer + eps
-					animate(ball, time=5 SECONDS, flags=ANIMATION_PARALLEL, loop=1)
 					animate(ball,
 						time = time/4,
 						easing = SINE_EASING | EASE_OUT,
