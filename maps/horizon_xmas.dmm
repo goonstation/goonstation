@@ -712,7 +712,7 @@
 "anJ" = (/obj/cable{icon_state = "1-2"},/obj/machinery/door/airlock/pyro,/turf/simulated/floor/black,/area/station/storage/emergency{name = "Hilarious Storage A"})
 "anK" = (/obj/rack,/obj/item/tank/oxygen,/turf/simulated/floor/grey/whitegrime,/area/station/science/gen_storage)
 "anL" = (/obj/machinery/power/apc/autoname_north,/obj/cable{icon_state = "0-2"},/obj/table/reinforced/auto,/obj/item/reagent_containers/food/drinks/fueltank,/obj/item/device/igniter,/turf/simulated/floor/grey/whitegrime,/area/station/science/gen_storage)
-"anM" = (/obj/table/reinforced/auto,/obj/item/card_group/stg/booster,/obj/item/pen,/obj/item/device/radio,/turf/simulated/floor/grey/whitegrime,/area/station/science/gen_storage)
+"anM" = (/obj/table/reinforced/auto,/obj/item/stg_booster,/obj/item/pen,/obj/item/device/radio,/turf/simulated/floor/grey/whitegrime,/area/station/science/gen_storage)
 "anN" = (/obj/cable{icon_state = "2-5"},/turf/simulated/floor/black,/area/station/science/laser{name = "Testing Asteroid"})
 "anO" = (/obj/machinery/light{dir = 4},/turf/simulated/floor/black,/area/station/science/laser{name = "Testing Asteroid"})
 "anP" = (/obj/machinery/power/data_terminal,/obj/cable,/obj/machinery/networked/test_apparatus/gas_sensor{setup_tag = "TESTCHAMB"},/turf/simulated/floor/engine,/area/station/science/construction)

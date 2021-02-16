@@ -5444,7 +5444,7 @@
 /area/station/science/gen_storage)
 "anM" = (
 /obj/table/reinforced/auto,
-/obj/item/card_group/stg/booster,
+/obj/item/stg_booster,
 /obj/item/pen,
 /obj/item/device/radio,
 /turf/simulated/floor/grey/whitegrime,
