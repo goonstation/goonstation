@@ -570,6 +570,8 @@
         var/card_number = input(user, "How many cards would you like to draw?", "[name]")  as null|num
         if(!card_number)
             return
+        if(card_number == 1)
+            card_number = 2
         if(card_number > length(stored_cards))
             card_number = length(stored_cards)
         if(in_interact_range(src, user))
