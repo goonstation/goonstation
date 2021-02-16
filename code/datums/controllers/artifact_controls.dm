@@ -245,9 +245,10 @@ var/datum/artifact_controller/artifact_controls
 		var/datum/artifact/AD = artifact.artifact
 		var/rarityMod = AD.get_rarity_modifier()
 		if(prob(50 * rarityMod))
-			artifact.transform = matrix(artifact.transform, 1.1, 1.1, MATRIX_SCALE)
+			var/scaling = 1.1 + rand() * 0.2
+			artifact.transform = matrix(artifact.transform, scaling, scaling, MATRIX_SCALE)
 		if(prob(100 * rarityMod))
-			var/col = rand(160, 230)
+			var/col = rand(100, 230)
 			artifact.color = rgb(col, col, col)
 
 	generate_name()
@@ -291,9 +292,38 @@ var/datum/artifact_controller/artifact_controls
 		var/datum/artifact/AD = artifact.artifact
 		var/rarityMod = AD.get_rarity_modifier()
 		if(prob(50 * rarityMod))
-			artifact.transform = matrix(artifact.transform, rand(-10, 10), MATRIX_ROTATE)
+			artifact.transform = matrix(artifact.transform, rand(-15, 15), MATRIX_ROTATE)
 		if(prob(200 * rarityMod))
-			artifact.color = rgb(rand(240, 255), rand(240, 255), rand(240, 255))
+			artifact.color = rgb(rand(210, 255), rand(210, 255), rand(210, 255))
+		if(prob(80 * rarityMod))
+			var/icon/distortion_icon = icon('icons/effects/distort.dmi', "martian[rand(1,7)]")
+			if(prob(20))
+				distortion_icon = turn(distortion_icon, rand(360))
+			var/size = rand(4, 6 + 8 * rarityMod) * pick(-1, 1)
+			artifact.filters += filter(
+				type="displace",
+				icon=distortion_icon,
+				size=size)
+			if(prob(80 * rarityMod))
+				var/filter = artifact.filters[length(artifact.filters)]
+				var/anim_time = pick(rand() * 1 SECOND + 1 SECOND, rand() * 5 SECONDS, rand() * 1 MINUTE)
+				var/new_size = size + rand(-8, 8)
+				if(prob(15) || anim_time > 5 SECONDS && prob(70))
+					if(prob(50))
+						new_size = -size
+					else
+						new_size *= 1.5
+				animate(filter,
+					size = new_size,
+					time = anim_time,
+					easing = SINE_EASING,
+					flags = ANIMATION_PARALLEL,
+					loop = -1)
+				animate(
+					size = size,
+					time = anim_time,
+					easing = SINE_EASING,
+					loop = -1)
 
 	generate_name()
 		var/namestring = ""
