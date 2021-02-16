@@ -65259,7 +65259,7 @@
 "dcr" = (
 /obj/table/reinforced/bar/auto{
 	name = "table"
-	}
+	},
 /turf/unsimulated/floor/carpet{
 	dir = 4;
 	icon_state = "fblue2";
