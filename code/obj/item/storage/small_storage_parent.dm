@@ -152,7 +152,7 @@
 		else
 			src.add_contents(W)
 			user.u_equip(W)
-		hud.add_item(W)
+		hud.add_item(W, user)
 		update_icon()
 		add_fingerprint(user)
 		animate_storage_rustle(src)

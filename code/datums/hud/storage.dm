@@ -178,8 +178,8 @@
 			I.tooltip_rebuild = 1
 		master.update_icon()
 
-	proc/add_item(obj/item/I)
-		update()
+	proc/add_item(obj/item/I, mob/user = usr)
+		update(user)
 
 	proc/remove_item(obj/item/I)
 		remove_object(I)
