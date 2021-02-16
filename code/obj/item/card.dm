@@ -83,7 +83,7 @@ GAUNTLET CARDS
 	var/emagged = 0
 	var/datum/reagent_group_account/reagent_account = null
 	/// this determines if the icon_state of the ID changes if it is given a new job
-	var/keep_icon = FALSE 
+	var/keep_icon = FALSE
 
 	// YOU START WITH  NO  CREDITS
 	// WOW
@@ -281,7 +281,15 @@ GAUNTLET CARDS
 	input = jointext(namecheck, " ")
 	return input
 
-/obj/item/card/id/syndicate/commander
+/obj/item/card/id/syndicate/nukeop //sets one's real name too so the funky joke op names show up in the crew credits!
+	attack_self(mob/user as mob)
+		if(!src.registered)
+			..()
+			user.real_name = registered
+		else
+			..()
+
+/obj/item/card/id/syndicate/nukeop/commander
 	name = "commander card"
 	access = list(access_maint_tunnels, access_syndicate_shuttle, access_syndicate_commander)
 

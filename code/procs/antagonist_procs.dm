@@ -272,9 +272,9 @@
 	synd_mob.equip_if_possible(U, synd_mob.slot_r_store)
 */
 
-	var/obj/item/card/id/syndicate/I = new /obj/item/card/id/syndicate(synd_mob) // for whatever reason, this is neccessary
+	var/obj/item/card/id/syndicate/nukeop/I = new /obj/item/card/id/syndicate/nukeop(synd_mob) // for whatever reason, this is neccessary
 	if(leader)
-		I = new /obj/item/card/id/syndicate/commander(synd_mob)
+		I = new /obj/item/card/id/syndicate/nukeop/commander(synd_mob)
 	I.icon_state = "id"
 	I.icon = 'icons/obj/items/card.dmi'
 	synd_mob.equip_if_possible(I, synd_mob.slot_wear_id)
