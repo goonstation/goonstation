@@ -319,11 +319,15 @@ var/datum/artifact_controller/artifact_controls
 					easing = SINE_EASING,
 					flags = ANIMATION_PARALLEL,
 					loop = -1)
+				if(anim_time < 2 SECONDS && prob(35))
+					animate(time = rand() * 1.5 MINUTES)
 				animate(
 					size = size,
 					time = anim_time,
 					easing = SINE_EASING,
 					loop = -1)
+				if(anim_time < 2 SECONDS && prob(35))
+					animate(time = rand() * 1.5 MINUTES)
 
 	generate_name()
 		var/namestring = ""
