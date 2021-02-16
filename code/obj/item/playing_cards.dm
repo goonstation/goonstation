@@ -233,7 +233,8 @@
             icon_state_num = rand(1,NUMBER_AI)
             icon_state = "stg-ai-[icon_state_num]"
         else
-            chosen_mob = pick(humans)
+            if(humans.len)
+                chosen_mob = pick(humans)
             if(chosen_mob)
                 name = "[chosen_card_type.card_name] [chosen_mob.real_name]"
                 switch(his_or_her(chosen_mob))
