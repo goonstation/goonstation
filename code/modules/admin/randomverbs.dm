@@ -2729,7 +2729,7 @@ var/global/mirrored_physical_zone_created = FALSE //enables secondary code branc
 	set name = "Swampify"
 	set desc = "Turns space into a swamp"
 	admin_only
-	var/const/ambient_light = "#555555"
+	var/const/ambient_light = "#222222"
 #ifdef UNDERWATER_MAP
 	//to prevent tremendous lag from the entire map flooding from a single ocean tile.
 	boutput(src, "You cannot use this command on underwater maps. Sorry!")
@@ -2740,13 +2740,13 @@ var/global/mirrored_physical_zone_created = FALSE //enables secondary code branc
 			if("Yes")
 				var/image/I = new /image/ambient
 				var/datum/map_generator/jungle_generator/map_generator = new
-				var/list/turfs = block(locate(1,1, Z_LEVEL_STATION), locate(world.maxx, world.maxy, Z_LEVEL_STATION))
 				var/list/space = list()
-				for(var/turf/space/S in turfs)
+				for(var/turf/space/S in block(locate(1, 1, Z_LEVEL_STATION), locate(world.maxx, world.maxy, Z_LEVEL_STATION)))
 					space += S
-					S.color = ambient_light
-					S.UpdateOverlays(I, "ambient")
 				map_generator.generate_terrain(space)
+				for (var/turf/S in space)
+					I.color = ambient_light
+					S.UpdateOverlays(I, "ambient")
 				logTheThing("admin", src, null, "turned space into a swamp.")
 				logTheThing("diary", src, null, "turned space into a swamp.", "admin")
 				message_admins("[key_name(src)] turned space into a swamp.")
