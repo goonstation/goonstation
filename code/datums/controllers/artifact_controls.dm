@@ -512,6 +512,66 @@ var/datum/artifact_controller/artifact_controls
 	var/list/particles = list("quark","tachyon","neutron","positron","photon","neutrino","lepton","baryon","atom","molecule")
 	var/list/verber = list("stabilizer","synchroniser","generator","coupler","fuser","linker","materializer")
 
+	post_setup(obj/artifact)
+		. = ..()
+		var/datum/artifact/AD = artifact.artifact
+		var/rarityMod = AD.get_rarity_modifier()
+		if(!isitem(artifact) && prob(100 * rarityMod))
+			var/do_opposite_y = prob(50)
+			var/base_pixel_y = rand(-10, 10)
+			var/eps = 0.1 * pick(-1, 1)
+			var/r = rand(10, 26)
+			var/start_dir = pick(-1, 1)
+			var/icon_state = "precursorball[rand(1, 6)]"
+			var/time = rand(4 SECONDS, 18 SECONDS)
+			if(prob(20))
+				time = rand(50 SECONDS, 70 SECONDS)
+			var/n_balls = rand(1, 4) + round(rarityMod * 3)
+			for(var/i = 1 to n_balls)
+				var/delay = (i - 1) * time / n_balls
+				SPAWN_DBG(delay)
+					var/obj/effect/ball = new
+					ball.icon = 'icons/obj/artifacts/artifactEffects.dmi'
+					ball.icon_state = icon_state
+					if(prob(15))
+						ball.icon_state = "precursorball[rand(1, 6)]"
+					ball.mouse_opacity = 0
+					artifact.vis_contents += ball
+					if(!do_opposite_y)
+						base_pixel_y = rand(-10, 10)
+					ball.pixel_y = do_opposite_y ? 0 : base_pixel_y
+					ball.layer = artifact.layer + eps
+					animate(ball, time=5 SECONDS, flags=ANIMATION_PARALLEL, loop=1)
+					animate(ball,
+						time = time/4,
+						easing = SINE_EASING | EASE_OUT,
+						pixel_x = r * start_dir,
+						pixel_y = base_pixel_y,
+						layer = artifact.layer,
+						loop = -1)
+					animate(
+						time = time/4,
+						easing = SINE_EASING | EASE_IN,
+						pixel_x = 0,
+						pixel_y = do_opposite_y ? 0 : base_pixel_y,
+						layer = artifact.layer - eps,
+						loop = -1)
+					animate(
+						time = time/4,
+						easing = SINE_EASING | EASE_OUT,
+						pixel_x = -r * start_dir,
+						pixel_y = do_opposite_y ? -base_pixel_y : base_pixel_y,
+						layer = artifact.layer,
+						loop = -1)
+					animate(
+						time = time/4,
+						easing = SINE_EASING | EASE_IN,
+						pixel_x = 0,
+						pixel_y = do_opposite_y ? 0 : base_pixel_y,
+						layer = artifact.layer + eps,
+						loop = -1)
+
+
 	generate_name()
 		var/namestring = ""
 		if (prob(40))
