@@ -45231,7 +45231,7 @@
 /area/station/maintenance/southwest)
 "cio" = (
 /obj/table/reinforced/auto,
-/obj/item/playing_cards,
+/obj/item/card_group/plain,
 /turf/simulated/floor/carpet/arcade/half,
 /area/station/crew_quarters/clown)
 "cip" = (
