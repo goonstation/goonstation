@@ -571,7 +571,8 @@
         if(!card_number)
             return
         if(card_number == 1)
-            card_number = 2
+            draw(user)
+            return
         if(card_number > length(stored_cards))
             card_number = length(stored_cards)
         if(in_interact_range(src, user))
