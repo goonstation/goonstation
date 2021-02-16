@@ -535,6 +535,8 @@ var/datum/artifact_controller/artifact_controls
 					ball.icon_state = icon_state
 					if(prob(15))
 						ball.icon_state = "precursorball[rand(1, 6)]"
+					if(prob(10))
+						ball.color = list(-1,0,0, 0,-1,0, 0,0,-1, 1,1,1)
 					ball.mouse_opacity = 0
 					artifact.vis_contents += ball
 					if(!do_opposite_y)
