@@ -2734,7 +2734,7 @@ var/global/mirrored_physical_zone_created = FALSE //enables secondary code branc
 	//to prevent tremendous lag from the entire map flooding from a single ocean tile.
 	boutput(src, "You cannot use this command on underwater maps. Sorry!")
 	return
-#endif
+#else
 	if(src.holder.level >= LEVEL_ADMIN)
 		switch(alert("Turn space into a swamp? This is probably going to lag a bunch when it happens and there's no easy undo!",,"Yes","No"))
 			if("Yes")
@@ -2752,3 +2752,4 @@ var/global/mirrored_physical_zone_created = FALSE //enables secondary code branc
 				message_admins("[key_name(src)] turned space into a swamp.")
 	else
 		boutput(src, "You must be at least an Administrator to use this command.")
+#endif
