@@ -947,7 +947,7 @@
 			swapped_cell.set_loc(old_loc)
 			var/obj/item/storage/cell_container = old_loc
 			cell_container.hud.remove_item(src)
-			cell_container.hud.update()
+			cell_container.hud.update(user)
 		else
 			M.put_in_hand_or_drop(swapped_cell)
 
