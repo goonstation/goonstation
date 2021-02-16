@@ -782,6 +782,8 @@
 
 		execute(var/atom/target, var/mob/user)
 			var/obj/item/c = target
+			if(c.loc == user)
+				user.u_equip(c)
 			user.put_in_hand_or_drop(c)
 
 /datum/contextAction/card
@@ -889,6 +891,8 @@
 
 		execute(var/atom/target, var/mob/user)
 			var/obj/item/c = target
+			if(c.loc == user)
+				user.u_equip(c)
 			user.put_in_hand_or_drop(c)
 
 	close
