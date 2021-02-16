@@ -787,7 +787,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 		var/icon/photo_icon
 		var/atom/A = null
 		if (B.organ && B.item)
-			var/obj/item/parts/human_parts/O = B.item
+			var/obj/item/parts/O = B.item
 			if (O.holder)
 				A = O.holder
 			else
