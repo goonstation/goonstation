@@ -1995,6 +1995,7 @@
 		/datum/manufacture/fluidcanister,
 		/datum/manufacture/patch)
 	hidden = list(/datum/manufacture/RCDammo,
+		/datum/manufacture/RCDammomedium,
 		/datum/manufacture/RCDammolarge,
 		/datum/manufacture/bottle,
 		/datum/manufacture/vuvuzela,
@@ -2216,6 +2217,7 @@
 
 	hidden = list(/datum/manufacture/RCD,
 	/datum/manufacture/RCDammo,
+	/datum/manufacture/RCDammomedium,
 	/datum/manufacture/RCDammolarge)
 
 /obj/machinery/manufacturer/hangar

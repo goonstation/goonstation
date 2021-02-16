@@ -155,8 +155,16 @@
 		..()
 		materiel_stock += new/datum/materiel/loadout/standard
 		materiel_stock += new/datum/materiel/loadout/offense
-		materiel_stock += new/datum/materiel/loadout/support
 		materiel_stock += new/datum/materiel/loadout/control
+		materiel_stock += new/datum/materiel/loadout/justabaton
+		materiel_stock += new/datum/materiel/utility/morphineinjectors
+		materiel_stock += new/datum/materiel/utility/donuts
+		materiel_stock += new/datum/materiel/utility/crowdgrenades
+		materiel_stock += new/datum/materiel/utility/detscanner
+		materiel_stock += new/datum/materiel/utility/medcappowercell
+		materiel_stock += new/datum/materiel/utility/firstaidsec
+		materiel_stock += new/datum/materiel/utility/nightvisiongoggles
+		materiel_stock += new/datum/materiel/utility/riotrounds
 		materiel_stock += new/datum/materiel/assistant
 
 	vended(var/atom/A)
@@ -177,6 +185,8 @@
 			src.credits["Assistant"]++
 		else
 			src.credits["Loadout"]++
+			src.credits["Utility"]++
+			src.credits["Utility"]++
 		..()
 
 /obj/submachine/weapon_vendor/syndicate
@@ -252,13 +262,13 @@
 	name = "Standard"
 	path = /obj/item/storage/belt/security/standard
 	category = "Loadout"
-	description = "One belt containing a taser and a baton. Classic!"
+	description = "One belt containing a taser, a baton, and a barrier. Classic!"
 
 /datum/materiel/loadout/offense
 	name = "Offense"
 	path = /obj/item/storage/belt/security/offense
 	category = "Loadout"
-	description = "One belt containing a wavegun and a baton."
+	description = "One belt containing a wavegun, a baton, and a barrier."
 
 /datum/materiel/loadout/support
 	name = "Support"
@@ -270,7 +280,61 @@
 	name = "Control"
 	path = /obj/item/storage/belt/security/control
 	category = "Loadout"
-	description = "One belt containing a taser shotgun, crowd dispersal grenades, and a baton."
+	description = "One belt containing a taser shotgun, a baton, and a barrier."
+
+/datum/materiel/loadout/justabaton
+	name = "Just a Baton"
+	path = /obj/item/storage/belt/security/baton
+	category = "Loadout"
+	description = "One belt containing a baton and barrier. Does NOT come with a ranged weapon. Only for officers who DO NOT want a ranged weapon!"
+
+/datum/materiel/utility/morphineinjectors
+	name = "Morphine Autoinjectors"
+	path = /obj/item/storage/box/morphineinjectors
+	category = "Utility"
+	description = "Four Morphine Autoinjectors, capable of ensuring you move at the best possible speed while injured without slowdowns...or used as a makeshift tranquilizer if overdosed."
+
+/datum/materiel/utility/donuts
+	name = "Robust Donuts"
+	path = /obj/item/storage/box/robustdonuts
+	category = "Utility"
+	description = "Two Robust Donuts, which are loaded with helpful chemicals which heals you and helps you resist stuns!"
+
+/datum/materiel/utility/crowdgrenades
+	name = "Crowd Dispersal Grenades"
+	path = /obj/item/storage/box/crowdgrenades
+	category = "Utility"
+	description = "Four 'Crowd Dispersal' pepper gas grenades, capable of clearing out riots. Also seasons food quite well! "
+
+/datum/materiel/utility/detscanner
+	name = "Forensics Scanner"
+	path = /obj/item/device/detective_scanner
+	category = "Utility"
+	description = "A scanner capable of reading fingerprints on objects and looking up the records in real time. A favorite of investigators."
+
+/datum/materiel/utility/firstaidsec
+	name = "First Aid Kit"
+	path = /obj/item/storage/firstaid/regular/doctor_spawn
+	category = "Utility"
+	description = "An advanced first aid kit, typically used in first responder scenarios before doctors arrive"
+
+/datum/materiel/utility/medcappowercell
+	name = "Spare Power Cell"
+	path = /obj/item/ammo/power_cell/high_power
+	category = "Utility"
+	description = "An additional high capacity power cell for your weapons. Note: Security Officers already spawn with one in their Security Pouch"
+
+/datum/materiel/utility/nightvisiongoggles
+	name = "Night Vision Goggles"
+	path = /obj/item/clothing/glasses/nightvision
+	category = "Utility"
+	description = "A pair of Night Vision Goggles. Helps you see in the dark, but doesn't give you any protection from flashes or a SecHud."
+
+/datum/materiel/utility/riotrounds
+	name = "40mm Riot Rounds"
+	path = /obj/item/storage/box/riotrounds
+	category = "Utility"
+	description = "Two boxes of 40mm Riot Rounds, totalling 4 shots, for the Riot Launcher."
 
 /datum/materiel/assistant
 	name = "Assistant"
