@@ -37,6 +37,7 @@
 	attack_self(mob/user as mob)
 		..()
 		src.play(user)
+		src.ArtifactFaultUsed(user)
 
 /datum/artifact/instrument
 	associated_object = /obj/item/artifact/instrument

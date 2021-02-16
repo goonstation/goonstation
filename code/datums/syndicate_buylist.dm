@@ -737,7 +737,6 @@ This is basically useless for anyone but miners.
 	cost = 5
 	desc = "Have you ever been making a pizza and thought \"this pizza would be better if I could fatally injure someone by throwing it at them\"? Well think no longer! Because you're sharpening pizzas now. You weirdo."
 	job = list("Chef")
-	not_in_crates = 1
 	blockedmode = list(/datum/game_mode/revolution)
 
 
@@ -854,14 +853,6 @@ This is basically useless for anyone but miners.
 	cost = 7
 	desc = "An experimental torture chamber that will make any human placed inside puke until they die!"
 	job = list("Janitor")
-	blockedmode = list(/datum/game_mode/revolution)
-
-/datum/syndicate_buylist/traitor/lawndarts
-	name = "Lawn Darts"
-	item = /obj/item/storage/box/lawndart_kit
-	cost = 4
-	desc = "Three deadly throwing darts that embed themselves into your target."
-	job = list("Assistant","Technical Assistant","Medical Assistant","Staff Assistant","Bartender","Clown")
 	blockedmode = list(/datum/game_mode/revolution)
 
 /datum/syndicate_buylist/traitor/monkey_barrel
@@ -1056,6 +1047,13 @@ This is basically useless for anyone but miners.
 	vr_allowed = 0
 	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/revolution)
 
+/datum/syndicate_buylist/traitor/lawndarts
+	name = "Lawn Darts"
+	item = /obj/item/storage/box/lawndart_kit
+	cost = 0 // 20 brute damage, 10 bleed throwing weapon. Embed is nice but rad poison bow is stealthier and more effective
+	desc = "Three deadly throwing darts that embed themselves into your target."
+	job = list("Assistant","Technical Assistant","Medical Assistant","Staff Assistant","Bartender","Clown")
+	blockedmode = list(/datum/game_mode/revolution)
 
 // round specific
 

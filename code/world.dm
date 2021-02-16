@@ -117,8 +117,10 @@ var/global/mob/twitch_mob = 0
 				admins[m_key] = a_lev
 				logDiary("ADMIN: [m_key] = [a_lev]")
 
-/world/proc/load_whitelist(fileName = "strings/whitelist.txt")
+/world/proc/load_whitelist(fileName = null)
 	set background = 1
+	if(isnull(fileName))
+		fileName = config.whitelist_path
 	var/text = file2text(fileName)
 	if (!text)
 		return
@@ -393,6 +395,11 @@ var/f_color_selector_handler/F_Color_Selector
 	TgsNew(new /datum/tgs_event_handler/impl, TGS_SECURITY_TRUSTED)
 	tick_lag = MIN_TICKLAG//0.4//0.25
 //	loop_checks = 0
+
+	// Load in the current commit SHA from TGS...
+	if(TgsAvailable())
+		var/datum/tgs_revision_information/rev = TgsRevision()
+		vcs_revision = rev.commit
 
 	if(world.load_intra_round_value("heisenbee_tier") >= 15 && prob(50) || prob(3))
 		lobby_titlecard = new /datum/titlecard/heisenbee()
@@ -673,6 +680,7 @@ var/f_color_selector_handler/F_Color_Selector
 	processScheduler.stop()
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_REBOOT)
 	save_intraround_jars()
+	global.phrase_log.save()
 	save_tetris_highscores()
 	if (current_state < GAME_STATE_FINISHED)
 		current_state = GAME_STATE_FINISHED

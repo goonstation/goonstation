@@ -158,7 +158,7 @@
 				return
 
 			if (src.locked)
-				boutput(usr, "<span class='alert'><B>You need to unlock the scanner first.</B></span>")
+				boutput(user, "<span class='alert'><B>You need to unlock the scanner first.</B></span>")
 				return
 
 			if(!iscarbon(G.affecting))

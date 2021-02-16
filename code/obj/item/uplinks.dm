@@ -888,10 +888,10 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 			user.abilityHolder.addAbility(src.assoc_spell)
 			user.abilityHolder.updateButtons()
 		if (src.assoc_item)
-			var/obj/item/I = new src.assoc_item(usr.loc)
-			if (istype(I, /obj/item/staff) && usr.mind)
+			var/obj/item/I = new src.assoc_item(user.loc)
+			if (istype(I, /obj/item/staff) && user.mind)
 				var/obj/item/staff/S = I
-				S.wizard_key = usr.mind.key
+				S.wizard_key = user.mind.key
 		book.uses -= src.cost
 
 /datum/SWFuplinkspell/soulguard

@@ -89,7 +89,7 @@
 				return
 		..()
 
-	whisper(message as text)
+	whisper(message as text, forced=FALSE)
 		if (isghost)
 			boutput(usr, "You may not use that emote as a Virtual Spectre.")
 			return

@@ -21,6 +21,8 @@ A Flamethrower in various states of assembly
 #define FLAMER_MODE_SINGLE 3
 #define FLAMER_MODE_BACKTANK 4
 
+#define MODE_TO_STRING(mode) mode == FLAMER_MODE_AUTO ? "auto" : mode == FLAMER_MODE_BURST ? "burst" :  mode == FLAMER_MODE_SINGLE ? "single" :  mode == FLAMER_MODE_BACKTANK ? "backtank" : "error"
+
 /obj/item/gun/flamethrower/
 	name = "flamethrower"
 	icon = 'icons/obj/items/weapons.dmi'
@@ -63,7 +65,6 @@ A Flamethrower in various states of assembly
 	stamina_cost = 15
 	stamina_crit_chance = 1
 	move_triggered = 1
-	suppress_fire_msg = 1 // you fire Flamethrower at the steel floor x99999
 	spread_angle = 0
 	shoot_delay = 1 SECOND
 
@@ -79,6 +80,8 @@ A Flamethrower in various states of assembly
 		if(istype(src.gastank) && src.gastank.air_contents && istype(src.fueltank) && src.fueltank.reagents)
 			return TRUE
 
+	log_shoot(mob/user, turf/T, obj/projectile/P)
+		logTheThing("combat", user, null, "fires \a [src] ([lit ? "lit, " : ""][MODE_TO_STRING(mode)]) from [log_loc(user)], vector: ([T.x - user.x], [T.y - user.y]), dir: <I>[dir2text(get_dir(user, T))]</I>, reagents: [log_reagents(src.fueltank)] with chamber volume [amt_chem]")
 
 	/// allow refilling the fuel tank by simply clicking the reagent dispensers
 	afterattack(atom/target, mob/user, flag)

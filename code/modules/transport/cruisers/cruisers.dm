@@ -779,7 +779,7 @@
 				unsubscribe_interior(user)
 				user.set_eye(user)
 		else
-			boutput(usr, "<span class='alert'>The exit is blocked.</span>")
+			boutput(user, "<span class='alert'>The exit is blocked.</span>")
 		return
 
 	proc/enterShip(atom/movable/O as obj, mob/user as mob)

@@ -353,11 +353,13 @@
 			var/t = input(user, "Enter new robot name", src.name, src.created_name) as null|text
 			if (!t)
 				return
+			if(t && t != src.name && t != src.created_name)
+				phrase_log.log_phrase("bot-camera", t)
 			t = strip_html(replacetext(t, "'",""))
 			t = copytext(t, 1, 45)
 			if (!t)
 				return
-			if (!in_interact_range(src, usr) && src.loc != usr)
+			if (!in_interact_range(src, user) && src.loc != user)
 				return
 			src.created_name = t
 
