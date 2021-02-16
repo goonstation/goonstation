@@ -2454,6 +2454,7 @@ ABSTRACT_TYPE(/area/station/security)
 	icon_state = "brigcell"
 	sound_environment = 3
 	teleport_blocked = 0
+	do_not_irradiate = 1
 
 /area/station/security/brig/cell_block_control
 		name = "Cell Block Control"
