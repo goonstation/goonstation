@@ -898,6 +898,33 @@
 /turf/unsimulated/wall/solidcolor/black
 	icon_state = "black"
 
+///old title card turf
+/turf/unsimulated/wall/titlecard
+	appearance_flags = TILE_BOUND
+	fullbright = 1
+	icon = 'icons/misc/widescreen.dmi' //fullscreen.dmi
+	icon_state = "title_main"
+	layer = 60
+	name = "Space Station 13"
+	desc = "The title card for it, at least."
+	plane = PLANE_OVERLAY_EFFECTS
+	pixel_x = -96
+
+	New()
+		..()
+	#if defined(MAP_OVERRIDE_OSHAN)
+		icon_state = "title_oshan"
+		name = "Oshan Laboratory"
+		desc = "An underwater laboratory on the planet Abzu."
+	#elif defined(MAP_OVERRIDE_MANTA)
+		icon_state = "title_manta"
+		name = "The NSS Manta"
+		desc = "Some fancy comic about the NSS Manta and its travels on the planet Abzu."
+	#endif
+	#if defined(REVERSED_MAP)
+		transform = list(-1, 0, 0, 0, 1, 0)
+	#endif
+
 /turf/unsimulated/wall/other
 	icon_state = "r_wall"
 
