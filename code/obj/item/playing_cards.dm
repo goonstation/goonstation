@@ -425,6 +425,8 @@
             user.visible_message("[user.name] starts scooping cards into the [src.name]...")
             SPAWN_DBG(0.2 SECONDS)
                 for(var/obj/item/playing_card/c in range(1, user))
+                    if(c.card_style != card_style)
+                        continue
                     if(c.loc == user)
                         user.u_equip(c)
                     add_to_group(c,1)
