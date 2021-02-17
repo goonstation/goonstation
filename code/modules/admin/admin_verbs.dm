@@ -1813,7 +1813,11 @@ var/list/fun_images = list()
 					if(C)
 						winshow(C, "pregameBrowser", 0)
 				catch()
-
+			var/turf/T = landmarks[LANDMARK_LOBBY_LEFTSIDE][1]
+			T = locate(T.x + 3, T.y, T.z)
+			if (locate(/obj/titlecard) in T) return
+			if (alert("Replace with a title card turf?",, "Yes", "No") == "Yes")
+				new /obj/titlecard(T)
 			return
 	var/newHTML = null
 	if(alert("Do you want to upload an HTML file, or type it in?", "HTML Source", "Here", "Upload") == "Here")
