@@ -696,6 +696,11 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 		icon_state = "neoxzilon"
 		ckey = "retrino"
 
+	hazel
+		name = "\improper Hazel Adenine"
+		icon_state = "hazel"
+		ckey = "hazelmaecry"
+
 /obj/item/item_box/figure_capsule
 	name = "capsule"
 	desc = "A little plastic ball for keeping stuff in. Woah! We're truly in the future with technology like this."
