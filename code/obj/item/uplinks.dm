@@ -779,7 +779,6 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 		if (TIME <= src.last_photo_print + 5 SECONDS)
 			boutput(user, "<span class='alert'>The photo printer is recharging!</span>")
 			return
-		last_photo_print = TIME
 
 		var/title = null
 		var/detail = null
@@ -797,6 +796,10 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 
 		if (ismob(A))
 			var/mob/M = A
+			var/list/trackable_mobs = get_mobs_trackable_by_AI()
+			if (!(((M.name in trackable_mobs) && (trackable_mobs[M.name] == M)) || (M == user)))
+				boutput(user, "<span class='alert'>Unable to locate target within the station camera network!</span>")
+				return
 			photo_image = image(A.icon, null, A.icon_state, null, SOUTH)
 			photo_image.overlays = A.overlays
 			photo_image.underlays = A.underlays
@@ -827,9 +830,10 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 			title = "photo of \a [A]"
 			detail = "You can see \a [A]."
 
-		var/obj/item/photo/P = new(get_turf(src), photo_image, photo_icon, title, detail)
+		var/obj/item/photo/P = new(src, photo_image, photo_icon, title, detail)
 		user.put_in_hand_or_drop(P)
 		playsound(get_turf(src), "sound/machines/scan.ogg", 10, 1)
+		last_photo_print = TIME
 
 	generate_menu()
 		src.menu_message = "<B>Spy Console:</B> Current location: [get_area(src)]<BR>"
