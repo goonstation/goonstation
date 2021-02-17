@@ -58,7 +58,7 @@
 			if (owner.find_ailment_by_type(/datum/ailment/disability/blind))
 				showmessages = 0
 
-			src.blinktimer++
+			src.blinktimer += mult
 			switch(src.blinktimer)
 				if (20)
 					if (showmessages) boutput(owner, "<span class='alert'>Your eyes feel slightly uncomfortable!</span>")
@@ -81,23 +81,23 @@
 			if (src.blinkstate) owner.take_eye_damage(max(0, min(1, 1 - tempblind)), 1)
 
 		if (owner.get_eye_damage(1)) // Temporary blindness.
-			owner.take_eye_damage(-1, 1)
+			owner.take_eye_damage(-mult, 1)
 			owner.blinded = 1
 
 		if (owner.stuttering)
-			owner.stuttering--
+			owner.stuttering -= mult
 
 		if (owner.get_ear_damage(1)) // Temporary deafness.
-			owner.take_ear_damage(-1, 1)
+			owner.take_ear_damage(-mult, 1)
 
 		if (owner.get_ear_damage() && (owner.get_ear_damage() <= owner.get_ear_damage_natural_healing_threshold()))
-			owner.take_ear_damage(-0.05)
+			owner.take_ear_damage(-0.05*mult)
 
 		if (owner.get_eye_blurry())
-			owner.change_eye_blurry(-1)
+			owner.change_eye_blurry(-mult)
 
 		if (owner.druggy)
-			owner.druggy = max(owner.druggy-1, 0)
+			owner.druggy = max(owner.druggy-mult, 0)
 
 		if (owner.nodamage)
 			owner.HealDamage("All", 10000, 10000)
