@@ -39,7 +39,6 @@ export const CyborgModuleRewriter = (props, context) => {
     <Window
       width={670}
       height={640}
-      resizable
     >
       <Window.Content className={styles.Block} scrollable>
         <ModuleView

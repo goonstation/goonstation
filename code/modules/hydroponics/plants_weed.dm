@@ -48,7 +48,7 @@ ABSTRACT_TYPE(/datum/plant/weed)
 		if (POT.growth > (P.growtime + DNA.growtime) && prob(33))
 			for (var/mob/living/M in range(1,POT))
 				if (POT.health > P.starthealth / 2)
-					random_brute_damage(M, 3, 1)//slight bump to damage to account for everyone having 1 armor from jumpsuit
+					random_brute_damage(M, 8, 1)//slight bump to damage to account for everyone having 1 armor from jumpsuit, further bump to damage to make blooming lasher more difficult to cultivate
 					if (prob(20)) M.changeStatus("weakened", 3 SECONDS)
 
 				if (POT.health <= P.starthealth / 2) POT.visible_message("<span class='alert'><b>[POT.name]</b> weakly slaps [M] with a vine!</span>")
@@ -64,7 +64,7 @@ ABSTRACT_TYPE(/datum/plant/weed)
 		// It's not big enough to be violent yet, so nothing happens
 
 		POT.visible_message("<span class='alert'><b>[POT.name]</b> violently retaliates against [user.name]!</span>")
-		random_brute_damage(user, 4, 1)//see above
+		random_brute_damage(user, 10, 1)//see above
 		if (W && prob(50))
 			boutput(user, "<span class='alert'>The lasher grabs and smashes your [W]!</span>")
 			W.dropped()
@@ -77,7 +77,9 @@ ABSTRACT_TYPE(/datum/plant/weed)
 		if (POT.health > src.starthealth / 2)
 			boutput(user, "<span class='alert'>The lasher flails at you violently! You might need to weaken it first...</span>")
 			return 1
-		else return 0
+		else
+			HYPaddCommut(POT.current, POT.plantgenes, /datum/plant_gene_strain/reagent_adder/lasher)
+			return 0
 
 /datum/plant/weed/creeper
 	name = "Creeper"

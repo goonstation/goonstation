@@ -50,11 +50,11 @@
 		for (var/datum/stock/event/type in concrete_typesof(/datum/stock/event))
 			generateEvent(type)
 
-	proc/generateEvent(var/datum/stock/event/type)
+	proc/generateEvent(datum/stock/event/type)
 		var/datum/stock/event/E = new type(src)
 		addEvent(E)
 
-	proc/affectPublicOpinion(var/boost)
+	proc/affectPublicOpinion(boost)
 		optimism += rand(0, 500) / 500 * boost
 		average_optimism += rand(0, 150) / 5000 * boost
 		speculation += rand(-5, 25) / 10 * boost

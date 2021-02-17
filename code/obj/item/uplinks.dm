@@ -204,12 +204,12 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 		if (src.use_default_GUI == 0)
 			return
 
-		var/dat
+		var/list/dat = list()
 		if (src.selfdestruct)
-			dat = "Self Destructing..."
+			dat += "Self Destructing..."
 
 		else if (src.locked && !isnull(src.lock_code))
-			dat = "The uplink is locked. <A href='byond://?src=\ref[src];unlock=1'>Enter password</A>.<BR>"
+			dat += "The uplink is locked. <A href='byond://?src=\ref[src];unlock=1'>Enter password</A>.<BR>"
 
 		else if (reading_about)
 			var/item_about = "<b>Error:</b> We're sorry, but there is no current entry for this item!<br>For full information on Syndicate Tools, call 1-555-SYN-DKIT."
@@ -218,15 +218,15 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 
 		else
 			if (src.temp)
-				dat = "[src.temp]<BR><BR><A href='byond://?src=\ref[src];temp=1'>Clear</A>"
+				dat += "[src.temp]<BR><BR><A href='byond://?src=\ref[src];temp=1'>Clear</A>"
 			else
 				if (src.is_VR_uplink)
-					dat = "<B><U>Syndicate Simulator 2053!</U></B><BR>"
+					dat += "<B><U>Syndicate Simulator 2053!</U></B><BR>"
 					dat += "Buy the Cat Armor DLC today! Only 250 Credits!"
 					dat += "<HR>"
 					dat += "<B>Sandbox mode - Spawn item:</B><BR><table cellspacing=5>"
 				else
-					dat = "<B>Syndicate Uplink Console:</B><BR>"
+					dat += "<B>Syndicate Uplink Console:</B><BR>"
 					dat += "[syndicate_currency] left: [src.uses]<BR>"
 					dat += "<HR>"
 					dat += "<B>Request item:</B><BR>"
@@ -261,7 +261,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 				if (src.can_selfdestruct == 1)
 					dat += "[do_divider == 1 ? "<HR>" : ""]<A href='byond://?src=\ref[src];selfdestruct=1'>Self-Destruct</A>"
 
-		usr.Browse(dat, "window=radio")
+		usr.Browse(jointext(dat, ""), "window=radio")
 		onclose(usr, "radio")
 		return
 
@@ -888,10 +888,10 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 			user.abilityHolder.addAbility(src.assoc_spell)
 			user.abilityHolder.updateButtons()
 		if (src.assoc_item)
-			var/obj/item/I = new src.assoc_item(usr.loc)
-			if (istype(I, /obj/item/staff) && usr.mind)
+			var/obj/item/I = new src.assoc_item(user.loc)
+			if (istype(I, /obj/item/staff) && user.mind)
 				var/obj/item/staff/S = I
-				S.wizard_key = usr.mind.key
+				S.wizard_key = user.mind.key
 		book.uses -= src.cost
 
 /datum/SWFuplinkspell/soulguard

@@ -59,7 +59,7 @@
 			return TRUE
 
 	if(cache.Find("Security Department") || cache.Find("Security Officer"))
-		if(rank in list("Security Officer","Security Assistant","Vice Officer","Detective"))
+		if(rank in list("Security Officer","Security Assistant","Vice Officer","Part-time Vice Officer","Detective"))
 			return TRUE
 
 	if(cache.Find("Heads of Staff"))

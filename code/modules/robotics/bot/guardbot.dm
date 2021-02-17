@@ -1899,6 +1899,8 @@
 
 			src.add_task(src.model_task.copy_file(),1)
 
+		if(src.task?.disposed || src.task.master != src)
+			src.task = null
 		if(istype(src.task))
 			src.task.task_act()
 
@@ -4034,10 +4036,12 @@
 				return
 
 			var/t = input(user, "Enter new robot name", src.name, src.created_name) as text
+			if(t && t != src.name && t != src.created_name)
+				phrase_log.log_phrase("bot-guard", t)
 			t = copytext(html_encode(t), 1, MAX_MESSAGE_LEN)
 			if (!t)
 				return
-			if (!in_interact_range(src, usr) && src.loc != usr)
+			if (!in_interact_range(src, user) && src.loc != user)
 				return
 
 			src.created_name = t

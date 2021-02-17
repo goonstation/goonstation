@@ -88,12 +88,12 @@
 				user.suiciding = 0
 		return
 	attack_self(mob/user as mob)
-		if(!(usr in src.users) && istype(user))
-			src.users+=usr
+		if(!(user in src.users) && istype(user))
+			src.users+=user
 		return ..()
 	attack_hand(mob/user as mob)
-		if(!(usr in src.users) && istype(user))
-			src.users+=usr
+		if(!(user in src.users) && istype(user))
+			src.users+=user
 		return ..()
 
 	attackby(obj/item/W as obj, mob/user as mob)
@@ -274,8 +274,8 @@
 			return true
 		attack_self(mob/user as mob)
 			if(src.open)
-				if(!(usr in src.users))
-					src.users+=usr
+				if(!(user in src.users))
+					src.users+=user
 				return ..() // you can just use the trigger manually from the UI
 			if(src.find_trigger() && !src.open && src.loc==user)
 				return src.the_trigger.attack_hand(user)
@@ -350,10 +350,10 @@
 	var/can_rotate = 0
 	var/cooldown_time = 3 SECONDS
 	var/when_next_ready = 0
-	var/list/particles
+	var/list/particle_list
 
 	New()
-		particles = new/list()
+		particle_list = new/list()
 		AddComponent(/datum/component/mechanics_holder)
 		processing_items |= src
 		return ..()
@@ -367,10 +367,10 @@
 	proc
 
 		cutParticles()
-			if(length(particles))
-				for(var/datum/particleSystem/mechanic/M in particles)
+			if(length(particle_list))
+				for(var/datum/particleSystem/mechanic/M in particle_list)
 					M.Die()
-				particles.Cut()
+				particle_list.Cut()
 			return
 		light_up_housing( ) // are we in a housing? if so, tell it to light up
 			var/obj/item/storage/mechanics/the_container = src.loc
@@ -385,10 +385,10 @@
 		var/pointer_container[1] //A list of size 1, to store the address of the list we want
 		SEND_SIGNAL(src, _COMSIG_MECHCOMP_GET_OUTGOING, pointer_container)
 		var/list/connected_outgoing = pointer_container[1]
-		if(length(particles) != length(connected_outgoing))
+		if(length(particle_list) != length(connected_outgoing))
 			cutParticles()
 			for(var/atom/X in connected_outgoing)
-				particles.Add(particleMaster.SpawnSystem(new /datum/particleSystem/mechanic(src.loc, X.loc)))
+				particle_list.Add(particleMaster.SpawnSystem(new /datum/particleSystem/mechanic(src.loc, X.loc)))
 
 		return
 
@@ -417,24 +417,24 @@
 			switch(level)
 				if(1) //Level 1 = wrenched into place
 					boutput(user, "You detach the [src] from the [istype(src.loc,/obj/item/storage/mechanics) ? "housing" : "underfloor"] and deactivate it.")
-					logTheThing("station", usr, null, "detaches a <b>[src]</b> from the [istype(src.loc,/obj/item/storage/mechanics) ? "housing" : "underfloor"] and deactivates it at [log_loc(src)].")
+					logTheThing("station", user, null, "detaches a <b>[src]</b> from the [istype(src.loc,/obj/item/storage/mechanics) ? "housing" : "underfloor"] and deactivates it at [log_loc(src)].")
 					level = 2
 					anchored = 0
 					loosen()
 				if(2) //Level 2 = loose
 					if(!isturf(src.loc) && !(IN_CABINET)) // allow items to be deployed inside housings, but not in other stuff like toolboxes
-						boutput(usr, "<span class='alert'>[src] needs to be on the ground  [src.cabinet_banned ? "" : "or in a component housing"] for that to work.</span>")
+						boutput(user, "<span class='alert'>[src] needs to be on the ground  [src.cabinet_banned ? "" : "or in a component housing"] for that to work.</span>")
 						return 0
 					if(IN_CABINET && src.cabinet_banned)
-						boutput(usr,"<span class='alert'>[src] is not allowed in component housings.</span>")
+						boutput(user,"<span class='alert'>[src] is not allowed in component housings.</span>")
 						return
 					if(src.one_per_tile)
 						for(var/obj/item/mechanics/Z in src.loc)
 							if (Z.type == src.type && Z.level == 1)
-								boutput(usr,"<span class='alert'>No matter how hard you try, you are not able to think of a way to fit more than one [src] on a single tile.</span>")
+								boutput(user,"<span class='alert'>No matter how hard you try, you are not able to think of a way to fit more than one [src] on a single tile.</span>")
 								return
 					boutput(user, "You attach the [src] to the [istype(src.loc,/obj/item/storage/mechanics) ? "housing" : "underfloor"] and activate it.")
-					logTheThing("station", usr, null, "attaches a <b>[src]</b> to the [istype(src.loc,/obj/item/storage/mechanics) ? "housing" : "underfloor"]  at [log_loc(src)].")
+					logTheThing("station", user, null, "attaches a <b>[src]</b> to the [istype(src.loc,/obj/item/storage/mechanics) ? "housing" : "underfloor"]  at [log_loc(src)].")
 					level = 1
 					anchored = 1
 					secure()
@@ -598,7 +598,7 @@
 				tooltip_rebuild = 1
 				current_buffer = 0
 
-				usr.drop_item()
+				user.drop_item()
 				pool(W)
 
 				SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_DEFAULT_MSG, null)
@@ -2662,14 +2662,14 @@
 	attack_hand(mob/user as mob)
 		if (level == 1)
 			if (length(src.active_buttons))
-				var/selected_button = input(usr, "Press a button", "Button Panel") in src.active_buttons + "*CANCEL*"
-				if (!selected_button || selected_button == "*CANCEL*" || !in_interact_range(src, usr)) return
+				var/selected_button = input(user, "Press a button", "Button Panel") in src.active_buttons + "*CANCEL*"
+				if (!selected_button || selected_button == "*CANCEL*" || !in_interact_range(src, user)) return
 				LIGHT_UP_HOUSING
 				flick(icon_down, src)
 				SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL, src.active_buttons[selected_button])
 				return 1
 			else
-				boutput(usr, "<span class='alert'>[src] has no active buttons - there's nothing to press!</span>")
+				boutput(user, "<span class='alert'>[src] has no active buttons - there's nothing to press!</span>")
 		else return ..(user)
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
@@ -2722,15 +2722,15 @@
 
 		if(gun_fits)
 			if(!Gun)
-				boutput(usr, "You put the [W] inside the [src].")
-				logTheThing("station", usr, null, "adds [W] to [src] at [log_loc(src)].")
-				usr.drop_item()
+				boutput(user, "You put the [W] inside the [src].")
+				logTheThing("station", user, null, "adds [W] to [src] at [log_loc(src)].")
+				user.drop_item()
 				Gun = W
 				Gun.set_loc(src)
 				tooltip_flags |= REBUILD_ALWAYS
 				return 1
 			else
-				boutput(usr, "There is already a [Gun] inside the [src]")
+				boutput(user, "There is already a [Gun] inside the [src]")
 		else
 			user.show_text("The [W.name] isn't compatible with this component.", "red")
 		return 0
@@ -2866,7 +2866,7 @@
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (..(W, user)) return 1
 		else if (instrument) // Already got one, chief!
-			boutput(usr, "There is already \a [instrument] inside the [src].")
+			boutput(user, "There is already \a [instrument] inside the [src].")
 			return 0
 		else if (istype(W, /obj/item/instrument)) //BLUH these aren't consolidated under any combined type hello elseif chain // i fix - haine
 			var/obj/item/instrument/I = W
@@ -2894,9 +2894,9 @@
 			user.show_text("\The [W] isn't compatible with this component.", "red")
 
 		if (instrument) // You did it, boss. Now log it because someone will figure out a way to abuse it
-			boutput(usr, "You put [W] inside [src].")
-			logTheThing("station", usr, null, "adds [W] to [src] at [log_loc(src)].")
-			usr.drop_item()
+			boutput(user, "You put [W] inside [src].")
+			logTheThing("station", user, null, "adds [W] to [src] at [log_loc(src)].")
+			user.drop_item()
 			instrument.set_loc(src)
 			tooltip_rebuild = 1
 			return 1

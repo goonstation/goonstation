@@ -20,7 +20,7 @@ ABSTRACT_TYPE(/datum/stock/event)
 	proc/transition()
 		return
 
-	proc/spacetime(var/ticks)
+	proc/spacetime(ticks)
 		var/seconds = round(ticks / 10)
 		var/minutes = round(seconds / 60)
 		seconds -= minutes * 60

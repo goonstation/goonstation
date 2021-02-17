@@ -201,9 +201,11 @@
 
 		var/datum/lifeprocess/L
 		for (var/thing in src.lifeprocesses)
-			if (!thing) continue
 			if(src.disposed) return
 			L = src.lifeprocesses[thing]
+			if(!L)
+				logTheThing("debug", src, null, "had lifeprocess [thing] removed during Life() probably.")
+				continue
 			L.process(environment)
 
 		for (var/obj/item/implant/I in src.implant)
@@ -565,7 +567,7 @@
 		//Modify stamina.
 		var/stam_time_passed = max(tick_spacing, TIME - last_stam_change)
 
-		var/final_mod = (src.stamina_regen + src.get_stam_mod_regen()) * (stam_time_passed / tick_spacing)
+		var/final_mod = (src.stamina_regen + GET_MOB_PROPERTY(src, PROP_STAMINA_REGEN_BONUS)) * (stam_time_passed / tick_spacing)
 		if (final_mod > 0)
 			src.add_stamina(abs(final_mod))
 		else if (final_mod < 0)

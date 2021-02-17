@@ -68,12 +68,12 @@ Important Procedures
 
 		if (src.checkingcanpass > 0)
 			for(var/obj/obstacle as() in src)
-				if(!obstacle.CanPass(mover, target, height, air_group))
+				if((obstacle.event_handler_flags & USE_CANPASS) && !obstacle.CanPass(mover, target, height, air_group))
 					return 0
 
 		if (target?.checkingcanpass > 0)
 			for(var/obj/obstacle as() in target)
-				if(!obstacle.CanPass(mover, src, height, air_group))
+				if((obstacle.event_handler_flags & USE_CANPASS) && !obstacle.CanPass(mover, src, height, air_group))
 					return 0
 
 		return 1

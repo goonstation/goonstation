@@ -712,7 +712,7 @@ toxic - poisons
 					var/mob/living/carbon/human/H = M
 					var/targetorgan
 					for (var/i in 1 to 3)
-						targetorgan = pick("left_lung", "heart", "right_lung", "left_kidney", "right_kidney", "liver", "stomach", "intestines", "spleen", "pancreas", "appendix")
+						targetorgan = pick("left_lung", "heart", "right_lung", "left_kidney", "right_kidney", "liver", "stomach", "intestines", "spleen", "pancreas", "appendix", "tail")
 						H.organHolder.damage_organ(proj.power/H.get_ranged_protection(), 0, 0,  targetorgan)
 				M.ex_act(impact)
 
@@ -813,7 +813,7 @@ toxic - poisons
 		precalculated = 0
 		disruption = INFINITY //distrupt every system at once
 		on_hit(atom/hit, angle, var/obj/projectile/P)
-			if (P.data || prob(10))
+			if (P.data)
 				..()
 			else
 				new /obj/effects/rendersparks(hit.loc)

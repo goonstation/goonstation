@@ -4881,7 +4881,6 @@
 	name = "monkeyspawn_normal"
 	},
 /obj/overlay{
-	anchored = 1;
 	icon = 'icons/misc/beach2.dmi';
 	icon_state = "palm1";
 	layer = 10;
@@ -5773,7 +5772,6 @@
 /area/station/medical/medbay/treatment1)
 "ang" = (
 /obj/overlay{
-	anchored = 1;
 	icon = 'icons/misc/beach2.dmi';
 	icon_state = "palm1";
 	layer = 10;
@@ -15271,10 +15269,6 @@
 /obj/machinery/light/incandescent/cool,
 /turf/simulated/floor/bluegreen,
 /area/station/medical/medbay/treatment2)
-"aJv" = (
-/obj/railing/orange/reinforced,
-/turf/simulated/floor/grass/leafy,
-/area/station/ranch)
 "aJw" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -15432,6 +15426,9 @@
 /obj/submachine/chicken_feed_grinder,
 /obj/item/reagent_containers/food/snacks/plant/corn,
 /obj/blind_switch/area/south,
+/obj/railing/orange/reinforced{
+	dir = 1
+	},
 /turf/simulated/floor/grasstodirt{
 	dir = 1
 	},
@@ -15914,6 +15911,9 @@
 /obj/landmark/start{
 	name = "Rancher"
 	},
+/obj/railing/orange/reinforced{
+	dir = 4
+	},
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "aLa" = (
@@ -15929,7 +15929,6 @@
 /turf/simulated/floor/black,
 /area/station/engine/inner)
 "aLb" = (
-/obj/railing/orange/reinforced,
 /obj/machinery/firealarm{
 	dir = 4;
 	pixel_x = 24
@@ -19401,7 +19400,6 @@
 /area/space)
 "aTy" = (
 /obj/overlay{
-	anchored = 1;
 	icon = 'icons/misc/beach2.dmi';
 	icon_state = "palm1";
 	layer = 10;
@@ -19411,7 +19409,6 @@
 /area/space)
 "aTz" = (
 /obj/overlay{
-	anchored = 1;
 	icon = 'icons/misc/beach2.dmi';
 	icon_state = "palm2";
 	layer = 10;
@@ -19645,7 +19642,6 @@
 /area/space)
 "aUq" = (
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 1;
 	icon = 'icons/turf/martian.dmi';
@@ -19656,7 +19652,6 @@
 /area/space)
 "aUr" = (
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 8;
 	icon = 'icons/turf/martian.dmi';
@@ -19695,7 +19690,6 @@
 "aUx" = (
 /obj/storage/crate,
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	icon = 'icons/turf/martian.dmi';
 	icon_state = "sideWall";
@@ -19713,7 +19707,6 @@
 	pixel_y = 32
 	},
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	icon = 'icons/turf/martian.dmi';
 	icon_state = "sideWall";
@@ -19727,7 +19720,6 @@
 	pixel_y = 30
 	},
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	icon = 'icons/turf/martian.dmi';
 	icon_state = "sideWall";
@@ -19806,7 +19798,6 @@
 /area/iss)
 "aUM" = (
 /obj/overlay{
-	anchored = 1;
 	density = 1;
 	desc = "A networked tape drive.  It looks to be in fairly poor condition.  I bet the vacuum columns don't work worth a damn.";
 	icon = 'icons/obj/networked.dmi';
@@ -19817,7 +19808,6 @@
 /area/iss)
 "aUN" = (
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	icon = 'icons/turf/martian.dmi';
 	icon_state = "sideWall";
@@ -19913,7 +19903,6 @@
 "aVc" = (
 /obj/decal/woodclutter,
 /obj/overlay{
-	anchored = 1;
 	icon = 'icons/misc/beach.dmi';
 	icon_state = "crab";
 	name = "crab"
@@ -20025,7 +20014,6 @@
 /area/iss)
 "aVv" = (
 /obj/overlay{
-	anchored = 1;
 	density = 1;
 	desc = "Looks like a big jet turbine.";
 	icon = 'icons/obj/atmospherics/pipes.dmi';
@@ -20033,7 +20021,6 @@
 	name = "old busted turbine thingy"
 	},
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 8;
 	icon = 'icons/turf/martian.dmi';
@@ -20286,7 +20273,6 @@
 /area/iss)
 "aWn" = (
 /obj/overlay{
-	anchored = 1;
 	density = 1;
 	desc = "";
 	dir = 4;
@@ -20320,7 +20306,6 @@
 /area/space)
 "aWr" = (
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 8;
 	icon = 'icons/turf/martian.dmi';
@@ -20341,14 +20326,12 @@
 	pixel_y = 30
 	},
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	icon = 'icons/turf/martian.dmi';
 	icon_state = "sideWall";
 	name = "organic wall"
 	},
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 8;
 	icon = 'icons/turf/martian.dmi';
@@ -20363,7 +20346,6 @@
 /area/space)
 "aWu" = (
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 4;
 	icon = 'icons/turf/martian.dmi';
@@ -20390,7 +20372,6 @@
 	pixel_x = 32
 	},
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 8;
 	icon = 'icons/turf/martian.dmi';
@@ -20424,7 +20405,6 @@
 /area/evilreaver/genetics)
 "aWD" = (
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 8;
 	icon = 'icons/turf/martian.dmi';
@@ -20439,7 +20419,6 @@
 /area/space)
 "aWE" = (
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 4;
 	icon = 'icons/turf/martian.dmi';
@@ -20447,14 +20426,12 @@
 	name = "organic wall"
 	},
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	icon = 'icons/turf/martian.dmi';
 	icon_state = "sideWall";
 	name = "organic wall"
 	},
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 1;
 	icon = 'icons/turf/martian.dmi';
@@ -20465,7 +20442,6 @@
 /area/space)
 "aWF" = (
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 1;
 	icon = 'icons/turf/martian.dmi';
@@ -20476,7 +20452,6 @@
 /area/space)
 "aWG" = (
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 8;
 	icon = 'icons/turf/martian.dmi';
@@ -20484,7 +20459,6 @@
 	name = "organic wall"
 	},
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 1;
 	icon = 'icons/turf/martian.dmi';
@@ -20546,7 +20520,6 @@
 /area/evilreaver/genetics)
 "aWQ" = (
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 4;
 	icon = 'icons/turf/martian.dmi';
@@ -20557,7 +20530,6 @@
 /area/space)
 "aWR" = (
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 1;
 	icon = 'icons/turf/martian.dmi';
@@ -20575,7 +20547,6 @@
 	pixel_x = -32
 	},
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 4;
 	icon = 'icons/turf/martian.dmi';
@@ -20592,14 +20563,12 @@
 /area/space)
 "aWU" = (
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	icon = 'icons/turf/martian.dmi';
 	icon_state = "sideWall";
 	name = "organic wall"
 	},
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 1;
 	icon = 'icons/turf/martian.dmi';
@@ -20698,7 +20667,6 @@
 	name = "martian machine"
 	},
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 1;
 	icon = 'icons/turf/martian.dmi';
@@ -20728,7 +20696,6 @@
 	pixel_x = -30
 	},
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 4;
 	icon = 'icons/turf/martian.dmi';
@@ -20743,7 +20710,6 @@
 /area/space)
 "aXj" = (
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 8;
 	icon = 'icons/turf/martian.dmi';
@@ -20871,7 +20837,6 @@
 /area/evilreaver/genetics)
 "aXF" = (
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	icon = 'icons/turf/martian.dmi';
 	icon_state = "sideWall";
@@ -20900,7 +20865,6 @@
 /area/flock_trader)
 "aXJ" = (
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	icon = 'icons/turf/martian.dmi';
 	icon_state = "sideWall";
@@ -20928,7 +20892,6 @@
 	dir = 4
 	},
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 4;
 	icon = 'icons/turf/martian.dmi';
@@ -20987,7 +20950,6 @@
 /area/evilreaver/storage/tools)
 "aXV" = (
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	icon = 'icons/turf/martian.dmi';
 	icon_state = "sideWall";
@@ -21000,7 +20962,6 @@
 /area/evilreaver/storage/tools)
 "aXX" = (
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 8;
 	icon = 'icons/turf/martian.dmi';
@@ -21015,7 +20976,6 @@
 	pixel_y = -30
 	},
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 4;
 	icon = 'icons/turf/martian.dmi';
@@ -21023,7 +20983,6 @@
 	name = "organic wall"
 	},
 /obj/overlay{
-	anchored = 1;
 	density = 1;
 	desc = "";
 	dir = 4;
@@ -21033,7 +20992,6 @@
 	name = "broken clown car"
 	},
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 1;
 	icon = 'icons/turf/martian.dmi';
@@ -21044,7 +21002,6 @@
 /area/evilreaver/storage/tools)
 "aXZ" = (
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 1;
 	icon = 'icons/turf/martian.dmi';
@@ -21075,7 +21032,6 @@
 	pixel_x = -28
 	},
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 4;
 	icon = 'icons/turf/martian.dmi';
@@ -21113,7 +21069,6 @@
 	pixel_x = -28
 	},
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 4;
 	icon = 'icons/turf/martian.dmi';
@@ -21181,7 +21136,6 @@
 /obj/decal/fakeobjects/oldcanister,
 /obj/lattice,
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 8;
 	icon = 'icons/turf/martian.dmi';
@@ -21192,7 +21146,6 @@
 /area/evilreaver/atmospherics)
 "aYv" = (
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 4;
 	icon = 'icons/turf/martian.dmi';
@@ -21204,7 +21157,6 @@
 	icon_state = "coil1"
 	},
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 1;
 	icon = 'icons/turf/martian.dmi';
@@ -21215,7 +21167,6 @@
 /area/evilreaver/storage/tools)
 "aYw" = (
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 1;
 	icon = 'icons/turf/martian.dmi';
@@ -21245,7 +21196,6 @@
 /area/evilreaver/storage/tools)
 "aYA" = (
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	icon = 'icons/turf/martian.dmi';
 	icon_state = "sideWall";
@@ -21258,7 +21208,6 @@
 "aYB" = (
 /obj/lattice,
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	icon = 'icons/turf/martian.dmi';
 	icon_state = "sideWall";
@@ -21290,7 +21239,6 @@
 /area/evilreaver/atmospherics)
 "aYG" = (
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 8;
 	icon = 'icons/turf/martian.dmi';
@@ -21364,7 +21312,6 @@
 	dir = 4
 	},
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	icon = 'icons/turf/martian.dmi';
 	icon_state = "sideWall";
@@ -21374,7 +21321,6 @@
 /area/evilreaver/storage/tools)
 "aYS" = (
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	icon = 'icons/turf/martian.dmi';
 	icon_state = "sideWall";
@@ -21446,7 +21392,6 @@
 /area/evilreaver/atmospherics)
 "aZa" = (
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 8;
 	icon = 'icons/turf/martian.dmi';
@@ -21461,7 +21406,6 @@
 /area/evilreaver/atmospherics)
 "aZb" = (
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 4;
 	icon = 'icons/turf/martian.dmi';
@@ -21469,7 +21413,6 @@
 	name = "organic wall"
 	},
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	icon = 'icons/turf/martian.dmi';
 	icon_state = "sideWall";
@@ -21487,7 +21430,6 @@
 /area/evilreaver/storage/tools)
 "aZe" = (
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 1;
 	icon = 'icons/turf/martian.dmi';
@@ -21495,7 +21437,6 @@
 	name = "organic wall"
 	},
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 8;
 	icon = 'icons/turf/martian.dmi';
@@ -21511,7 +21452,6 @@
 /area/evilreaver/atmospherics)
 "aZg" = (
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 1;
 	icon = 'icons/turf/martian.dmi';
@@ -21519,7 +21459,6 @@
 	name = "organic wall"
 	},
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 4;
 	icon = 'icons/turf/martian.dmi';
@@ -21561,7 +21500,6 @@
 /area/evilreaver/atmospherics)
 "aZl" = (
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	icon = 'icons/turf/martian.dmi';
 	icon_state = "sideWall";
@@ -21576,7 +21514,6 @@
 	pixel_y = 30
 	},
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	icon = 'icons/turf/martian.dmi';
 	icon_state = "sideWall";
@@ -21658,7 +21595,6 @@
 /area/evilreaver/security)
 "aZC" = (
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 1;
 	icon = 'icons/turf/martian.dmi';
@@ -21672,7 +21608,6 @@
 /area/evilreaver/chapel)
 "aZD" = (
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 1;
 	icon = 'icons/turf/martian.dmi';
@@ -21702,7 +21637,6 @@
 	name = "martian machine"
 	},
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 1;
 	icon = 'icons/turf/martian.dmi';
@@ -21722,7 +21656,6 @@
 	},
 /obj/table/auto,
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	icon = 'icons/turf/martian.dmi';
 	icon_state = "sideWall";
@@ -21750,7 +21683,6 @@
 	name = "paper- 'A Crash Course in Legal SOP"
 	},
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 8;
 	icon = 'icons/turf/martian.dmi';
@@ -21788,7 +21720,6 @@
 /area/evilreaver/chapel)
 "aZR" = (
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 4;
 	icon = 'icons/turf/martian.dmi';
@@ -21818,7 +21749,6 @@
 /area/evilreaver/security)
 "aZW" = (
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	icon = 'icons/turf/martian.dmi';
 	icon_state = "sideWall";
@@ -21833,7 +21763,6 @@
 	pixel_y = 30
 	},
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	icon = 'icons/turf/martian.dmi';
 	icon_state = "sideWall";
@@ -21857,7 +21786,6 @@
 /area/evilreaver/bridge)
 "baa" = (
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	icon = 'icons/turf/martian.dmi';
 	icon_state = "sideWall";
@@ -21869,7 +21797,6 @@
 /area/evilreaver/bridge)
 "bab" = (
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	icon = 'icons/turf/martian.dmi';
 	icon_state = "sideWall";
@@ -21881,7 +21808,6 @@
 /area/evilreaver/bridge)
 "bac" = (
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	icon = 'icons/turf/martian.dmi';
 	icon_state = "sideWall";
@@ -21893,7 +21819,6 @@
 /area/evilreaver/bridge)
 "bad" = (
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	icon = 'icons/turf/martian.dmi';
 	icon_state = "sideWall";
@@ -21911,7 +21836,6 @@
 /area/evilreaver/bar)
 "baf" = (
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 1;
 	icon = 'icons/turf/martian.dmi';
@@ -21922,7 +21846,6 @@
 /area/evilreaver/chapel)
 "bag" = (
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 1;
 	icon = 'icons/turf/martian.dmi';
@@ -21938,7 +21861,6 @@
 /area/station/science/restroom)
 "bai" = (
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 1;
 	icon = 'icons/turf/martian.dmi';
@@ -21957,7 +21879,6 @@
 	name = "martian machine"
 	},
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 1;
 	icon = 'icons/turf/martian.dmi';
@@ -22006,7 +21927,6 @@
 	name = "martian machine"
 	},
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 1;
 	icon = 'icons/turf/martian.dmi';
@@ -22037,7 +21957,6 @@
 /area/evilreaver/bar)
 "bav" = (
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 4;
 	icon = 'icons/turf/martian.dmi';
@@ -22060,14 +21979,12 @@
 /area/evilreaver/bar)
 "bax" = (
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	icon = 'icons/turf/martian.dmi';
 	icon_state = "sideWall";
 	name = "organic wall"
 	},
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 8;
 	icon = 'icons/turf/martian.dmi';
@@ -22084,7 +22001,6 @@
 	pixel_x = -28
 	},
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 4;
 	icon = 'icons/turf/martian.dmi';
@@ -23019,6 +22935,12 @@
 /turf/simulated/floor/shuttle/flock,
 /area/flock_trader)
 "bdN" = (
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/data_terminal,
+/obj/table/auto,
+/obj/machinery/networked/storage/scanner,
 /turf/simulated/floor/plating/random,
 /area/research_outpost/maint)
 "bdO" = (
@@ -23628,7 +23550,6 @@
 /area/station/hallway/primary/east)
 "bfv" = (
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 8;
 	icon = 'icons/turf/martian.dmi';
@@ -23930,7 +23851,6 @@
 	pixel_x = -28
 	},
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 4;
 	icon = 'icons/turf/martian.dmi';
@@ -24028,7 +23948,6 @@
 /area/station/hydroponics/bay)
 "bgs" = (
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 4;
 	icon = 'icons/turf/martian.dmi';
@@ -24036,7 +23955,6 @@
 	name = "organic wall"
 	},
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	icon = 'icons/turf/martian.dmi';
 	icon_state = "sideWall";
@@ -24284,7 +24202,6 @@
 "bgX" = (
 /obj/lattice,
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 8;
 	icon = 'icons/turf/martian.dmi';
@@ -24334,7 +24251,6 @@
 /area/evilreaver/bridge)
 "bhf" = (
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 4;
 	icon = 'icons/turf/martian.dmi';
@@ -24426,7 +24342,6 @@
 /area/station/storage/emergency)
 "bhq" = (
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	icon = 'icons/turf/martian.dmi';
 	icon_state = "sideWall";
@@ -24519,7 +24434,6 @@
 /area/evilreaver/bridge)
 "bhF" = (
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 4;
 	icon = 'icons/turf/martian.dmi';
@@ -24747,14 +24661,12 @@
 /area/station/hangar/engine)
 "big" = (
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	icon = 'icons/turf/martian.dmi';
 	icon_state = "sideWall";
 	name = "organic wall"
 	},
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 4;
 	icon = 'icons/turf/martian.dmi';
@@ -24767,7 +24679,6 @@
 "bih" = (
 /obj/lattice,
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	icon = 'icons/turf/martian.dmi';
 	icon_state = "sideWall";
@@ -24782,7 +24693,6 @@
 /area/evilreaver/security)
 "bij" = (
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 8;
 	icon = 'icons/turf/martian.dmi';
@@ -24972,7 +24882,6 @@
 /area/station/engine/engineering)
 "biM" = (
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 4;
 	icon = 'icons/turf/martian.dmi';
@@ -25072,10 +24981,7 @@
 "biZ" = (
 /obj/table/reinforced/bar/auto,
 /obj/machinery/light/incandescent/warm,
-/obj/item/reagent_containers/food/snacks/cake/chocolate{
-	desc = "Holy shit! This cake probably costs more than the gross domestic product of Bulgaria!";
-	name = "Extravagant Chocolate Gateau"
-	},
+/obj/item/reagent_containers/food/snacks/cake/chocolate/gateau,
 /turf/simulated/floor/carpet/blue/fancy/narrow/nw,
 /area/station/crew_quarters/bar)
 "bja" = (
@@ -25201,7 +25107,6 @@
 "bjq" = (
 /obj/table/auto,
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 4;
 	icon = 'icons/turf/martian.dmi';
@@ -25283,7 +25188,6 @@
 /area/evilreaver/security)
 "bjC" = (
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 8;
 	icon = 'icons/turf/martian.dmi';
@@ -25300,7 +25204,6 @@
 /area/evilreaver/security)
 "bjE" = (
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 1;
 	icon = 'icons/turf/martian.dmi';
@@ -25308,14 +25211,12 @@
 	name = "organic wall"
 	},
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	icon = 'icons/turf/martian.dmi';
 	icon_state = "sideWall";
 	name = "organic wall"
 	},
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 8;
 	icon = 'icons/turf/martian.dmi';
@@ -25323,7 +25224,6 @@
 	name = "organic wall"
 	},
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 4;
 	icon = 'icons/turf/martian.dmi';
@@ -25401,7 +25301,6 @@
 "bjM" = (
 /obj/lattice,
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 4;
 	icon = 'icons/turf/martian.dmi';
@@ -25720,7 +25619,6 @@
 /area/evilreaver/bar)
 "bkA" = (
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	icon = 'icons/turf/martian.dmi';
 	icon_state = "sideWall";
@@ -25751,7 +25649,6 @@
 /obj/item/paper/sop,
 /obj/decal/cleanable/dirt,
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 4;
 	icon = 'icons/turf/martian.dmi';
@@ -26035,7 +25932,6 @@
 	name = "martian machine"
 	},
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 1;
 	icon = 'icons/turf/martian.dmi';
@@ -26052,7 +25948,6 @@
 /area/station/engine/engineering)
 "blk" = (
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 1;
 	icon = 'icons/turf/martian.dmi';
@@ -26061,7 +25956,6 @@
 	},
 /obj/table/auto,
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 1;
 	icon = 'icons/turf/martian.dmi';
@@ -26098,6 +25992,9 @@
 /obj/item/device/light/lava_lamp,
 /obj/item/clothing/glasses/sunglasses,
 /obj/machinery/light/incandescent/harsh,
+/obj/item/reagent_containers/glass/water_pipe{
+	pixel_y = 4
+	},
 /turf/simulated/floor/grass,
 /area/station/hydroponics/bay)
 "blp" = (
@@ -26115,7 +26012,7 @@
 /area/station/crew_quarters/kitchen)
 "blr" = (
 /obj/table/auto,
-/obj/item/reagent_containers/glass/bottle/icing,
+/obj/item/reagent_containers/food/drinks/drinkingglass/icing,
 /turf/simulated/floor/white,
 /area/station/crew_quarters/kitchen)
 "bls" = (
@@ -46841,6 +46738,9 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/black,
 /area/research_outpost)
 "fsJ" = (
@@ -47135,6 +47035,12 @@
 	},
 /turf/space/fluid,
 /area/space)
+"iMs" = (
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/black,
+/area/research_outpost)
 "iPj" = (
 /obj/item/kitchen/food_box/donut_box{
 	pixel_x = -3;
@@ -47164,6 +47070,9 @@
 /area/station/security/checkpoint/escape)
 "jfB" = (
 /obj/chicken_nesting_box,
+/obj/machinery/light/incandescent/harsh{
+	dir = 1
+	},
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "jfH" = (
@@ -47196,6 +47105,12 @@
 /obj/disposalpipe/segment/mail,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hangar/sec)
+"jwF" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/black,
+/area/research_outpost)
 "jxG" = (
 /obj/machinery/light/incandescent/netural,
 /obj/cabinet/pathology,
@@ -47453,12 +47368,6 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northwest)
-"mVv" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/plating/random,
-/area/research_outpost/maint)
 "mYN" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -47583,6 +47492,10 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/railing/orange/reinforced{
+	dir = 1
+	},
+/obj/machinery/light/incandescent/blueish,
 /turf/simulated/floor/grasstodirt{
 	dir = 1
 	},
@@ -47661,6 +47574,8 @@
 /area/research_outpost)
 "oWv" = (
 /obj/machinery/communications_dish,
+/obj/cable,
+/obj/machinery/power/data_terminal,
 /turf/simulated/floor/plating/airless,
 /area/station/com_dish/research_outpost)
 "oXf" = (
@@ -47740,6 +47655,9 @@
 	icon_state = "4-8"
 	},
 /obj/landmark/gps_waypoint,
+/obj/railing/orange/reinforced{
+	dir = 1
+	},
 /turf/simulated/floor/grasstodirt{
 	dir = 1
 	},
@@ -47904,6 +47822,17 @@
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/specialroom/arcade,
 /area/station/janitor/office)
+"sak" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/railing/orange/reinforced{
+	dir = 1
+	},
+/turf/simulated/floor/grasstodirt{
+	dir = 1
+	},
+/area/station/ranch)
 "sdi" = (
 /obj/machinery/door/airlock/pyro/sci_alt,
 /obj/firedoor_spawn,
@@ -47927,6 +47856,9 @@
 	dir = 4
 	},
 /obj/firedoor_spawn,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/plating/random,
 /area/research_outpost/maint)
 "sRT" = (
@@ -48065,10 +47997,6 @@
 /turf/simulated/floor/plating/random,
 /area/research_outpost)
 "uAB" = (
-/obj/railing/orange/reinforced,
-/obj/railing/orange/reinforced{
-	dir = 8
-	},
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "uBc" = (
@@ -48169,6 +48097,13 @@
 	},
 /turf/simulated/floor/grime,
 /area/station/maintenance/inner/central)
+"vLl" = (
+/obj/wingrille_spawn/auto/crystal,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating/random,
+/area/research_outpost)
 "vLB" = (
 /obj/rack,
 /obj/item/device/radio/electropack,
@@ -48341,9 +48276,6 @@
 /obj/submachine/chicken_incubator,
 /obj/item/reagent_containers/food/snacks/ingredient/egg{
 	rand_pos = 0
-	},
-/obj/machinery/light/incandescent/harsh{
-	dir = 1
 	},
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
@@ -79596,7 +79528,7 @@ aUD
 bWp
 yiF
 aKA
-aJv
+uAB
 pLy
 aKh
 agY
@@ -79898,8 +79830,8 @@ aUD
 bWp
 jfB
 aKA
-aJv
-nYa
+uAB
+sak
 bWp
 agY
 ubH
@@ -131819,9 +131751,9 @@ aqn
 aeB
 bbg
 oFy
-ksg
+iMs
 fkH
-aSP
+vLl
 gKC
 gKC
 gKC
@@ -132121,7 +132053,7 @@ hBQ
 hBQ
 bbg
 ksg
-ksg
+jwF
 bec
 mZL
 aqn
@@ -132725,7 +132657,7 @@ xFh
 ljO
 bdt
 ggG
-gaJ
+eXS
 bee
 bdt
 aqn
@@ -133329,7 +133261,7 @@ xFh
 duw
 bdt
 bdN
-mVv
+prZ
 oqx
 bdt
 aqn

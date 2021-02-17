@@ -130,7 +130,7 @@ export const Sleeper = (props, context) => {
                 Inject
               </Button>
             }>
-            <Section height={10} level={2} scrollable>
+            <Section height={10} scrollable>
               {!rejuvinators.length ? "No rejuvinators detected in occupant's bloodstream." : (
                 <LabeledList>
                   {rejuvinators.map(r => (

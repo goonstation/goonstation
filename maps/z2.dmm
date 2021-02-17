@@ -39025,7 +39025,7 @@
 	},
 /area/crypt/sigma)
 "bSb" = (
-/obj/storage/secure/closet/command/hos,
+/obj/storage/closet/command/ruined/hos,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -39629,11 +39629,6 @@
 /obj/machinery/light/small/floor/netural,
 /turf/unsimulated/floor/grass/random,
 /area/afterlife/heaven/hydroponics)
-"bTQ" = (
-/turf/unsimulated/wall/titlecard{
-	tag = "the_ss13_screen"
-	},
-/area/titlescreen)
 "bTR" = (
 /obj/pool/perspective{
 	density = 0;
@@ -83209,6 +83204,13 @@
 "hnO" = (
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/mrfishstick)
+"hoh" = (
+/turf/unsimulated/wall/auto/sengoku{
+	icon_state = "9";
+	name = "wall";
+	opacity = 0
+	},
+/area/titlescreen)
 "hqg" = (
 /obj/decal/fakeobjects/dreambeach/mercury,
 /turf/unsimulated/floor/dream/beach,
@@ -83757,6 +83759,13 @@
 "jwi" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-42"
+	},
+/area/titlescreen)
+"jxX" = (
+/turf/unsimulated/wall/auto/sengoku{
+	icon_state = "1";
+	name = "wall";
+	opacity = 0
 	},
 /area/titlescreen)
 "jBr" = (
@@ -85149,6 +85158,14 @@
 	icon_state = "shore-36"
 	},
 /area/titlescreen)
+"oju" = (
+/obj/landmark{
+	name = "lobby_leftside"
+	},
+/turf/unsimulated/floor/dream/beach{
+	icon_state = "space-1"
+	},
+/area/titlescreen)
 "onw" = (
 /obj/indestructible/shuttle_corner{
 	dir = 8;
@@ -85679,6 +85696,13 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/merchant_shuttle/right_centcom/cogmap)
+"qgO" = (
+/turf/unsimulated/wall/auto/sengoku{
+	icon_state = "5";
+	name = "wall";
+	opacity = 0
+	},
+/area/titlescreen)
 "qhR" = (
 /obj/wingrille_spawn/auto,
 /turf/unsimulated/floor/engine,
@@ -85948,6 +85972,13 @@
 /turf/space,
 /turf/unsimulated/floor/caution/east,
 /area/hospital/samostrel)
+"rgr" = (
+/turf/unsimulated/wall/auto/sengoku{
+	icon_state = "12";
+	name = "wall";
+	opacity = 0
+	},
+/area/titlescreen)
 "riq" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 4
@@ -86848,6 +86879,14 @@
 /area/centcom/offices{
 	icon_state = "blue"
 	})
+"uEj" = (
+/obj/landmark{
+	name = "lobby_status"
+	},
+/turf/unsimulated/floor/dream/beach{
+	icon_state = "space-1"
+	},
+/area/titlescreen)
 "uFz" = (
 /obj/lattice{
 	dir = 5;
@@ -86880,6 +86919,14 @@
 /area/centcom/offices{
 	icon_state = "blue"
 	})
+"uOU" = (
+/obj/landmark{
+	name = "lobby_timer"
+	},
+/turf/unsimulated/floor/dream/beach{
+	icon_state = "space-1"
+	},
+/area/titlescreen)
 "uTj" = (
 /obj/table/wood/auto/desk,
 /obj/machinery/computer3/generic/personal,
@@ -87205,6 +87252,13 @@
 	dir = 4
 	},
 /area/centcom/offices/adhara)
+"wnu" = (
+/turf/unsimulated/wall/auto/sengoku{
+	icon_state = "10";
+	name = "wall";
+	opacity = 0
+	},
+/area/titlescreen)
 "woz" = (
 /obj/machinery/light{
 	dir = 4;
@@ -87284,6 +87338,7 @@
 /area/centcom/offices/enakai)
 "wCN" = (
 /turf/unsimulated/wall/auto/sengoku{
+	icon_state = "6";
 	name = "wall";
 	opacity = 0
 	},
@@ -87690,6 +87745,13 @@
 /area/centcom/offices{
 	icon_state = "blue"
 	})
+"xZJ" = (
+/turf/unsimulated/wall/auto/sengoku{
+	icon_state = "3";
+	name = "wall";
+	opacity = 0
+	},
+/area/titlescreen)
 "ybJ" = (
 /turf/unsimulated/floor/dojo/stone,
 /area/titlescreen)
@@ -171692,7 +171754,7 @@ daz
 daz
 daz
 daz
-daz
+oju
 ajg
 aaa
 ciG
@@ -172598,7 +172660,7 @@ eZW
 gLs
 ukK
 daz
-bTQ
+daz
 ajg
 aaa
 ciG
@@ -173796,11 +173858,11 @@ smg
 qcZ
 ozw
 wCN
-wCN
-wCN
-wCN
-wCN
-wCN
+xZJ
+xZJ
+xZJ
+xZJ
+qgO
 hRD
 ozw
 ozw
@@ -174097,13 +174159,13 @@ ajg
 smg
 qcZ
 mLT
-wCN
+rgr
 ybJ
 rQC
 eso
 eso
-wCN
-wCN
+wnu
+jxX
 ozw
 ozw
 ozw
@@ -174399,7 +174461,7 @@ ajg
 smg
 qcZ
 ozw
-wCN
+rgr
 qDa
 ybJ
 iEd
@@ -174701,7 +174763,7 @@ ajg
 smg
 qcZ
 ozw
-wCN
+rgr
 tED
 ybJ
 nAf
@@ -175003,7 +175065,7 @@ ajg
 smg
 qcZ
 hNS
-wCN
+rgr
 xgE
 ybJ
 iEd
@@ -175305,13 +175367,13 @@ ajg
 smg
 qcZ
 ozw
-wCN
+rgr
 ybJ
 rQC
 jru
 jru
 wCN
-wCN
+jxX
 ozw
 ozw
 ozw
@@ -175607,12 +175669,12 @@ ajg
 smg
 qcZ
 ozw
-wCN
-wCN
-wCN
-wCN
-wCN
-wCN
+wnu
+xZJ
+xZJ
+xZJ
+xZJ
+hoh
 hRD
 ozw
 ozw
@@ -176825,8 +176887,8 @@ ozw
 eZW
 kCH
 nCt
-daz
-daz
+uOU
+uEj
 ajg
 aaa
 cbF

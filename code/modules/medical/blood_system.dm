@@ -381,22 +381,22 @@ this is already used where it needs to be used, you can probably ignore it.
 
 	var/mob/living/H = some_idiot
 
+	var/blood_color_to_pass = DEFAULT_BLOOD_COLOR
+
+	if (istype(H))
+		blood_color_to_pass = H.blood_color
+
+	if (some_idiot.blood_id && (some_idiot.blood_id != "blood" && some_idiot.blood_id != "bloodc"))
+		var/datum/reagent/current_reagent= reagents_cache[some_idiot.blood_id]
+		blood_color_to_pass = rgb(current_reagent.fluid_r, current_reagent.fluid_g, current_reagent.fluid_b, max(current_reagent.transparency,255))
+
 	if (!blood_system) // we're here because we want to create a decal, so create it anyway
 		var/obj/decal/cleanable/blood/dynamic/B = null
 		if (T.messy > 0)
 			B = locate(/obj/decal/cleanable/blood/dynamic) in T
-		var/blood_color_to_pass = DEFAULT_BLOOD_COLOR
-
-		if (some_idiot.blood_id && (some_idiot.blood_id != "blood" && some_idiot.blood_id != "bloodc"))
-			var/datum/reagent/current_reagent= reagents_cache[some_idiot.blood_id]
-			blood_color_to_pass = rgb(current_reagent.fluid_r, current_reagent.fluid_g, current_reagent.fluid_b, max(current_reagent.transparency,255))
-
-		if (istype(H))
-			blood_color_to_pass = H.blood_color
 
 		if (!B) // look for an existing dynamic blood decal and add to it if you find one
 			B = make_cleanable( /obj/decal/cleanable/blood/dynamic,T)
-			B.color = blood_color_to_pass
 
 		if (ischangeling(H))
 			B.ling_blood = 1
@@ -437,9 +437,9 @@ this is already used where it needs to be used, you can probably ignore it.
 		if (!B) // look for an existing dynamic blood decal and add to it if you find one
 			B = make_cleanable( /obj/decal/cleanable/blood/dynamic,T)
 			if (H.blood_id)
-				B.set_sample_reagent_custom(H.blood_id,0)
-			if (H.blood_color)
-				B.color = H.blood_color
+				B.set_sample_reagent_custom(H.blood_id, 0)
+			else if (H.blood_color)
+				B.color = blood_color_to_pass
 
 		if (ischangeling(H))
 			B.ling_blood = 1
@@ -458,7 +458,7 @@ this is already used where it needs to be used, you can probably ignore it.
 				H.blood_volume = 0
 				//BLOOD_DEBUG("[H]'s blood volume dropped below 0 and was reset to 0")
 
-		B.add_volume(H.blood_color, H.blood_id, num_amount, vis_amount)
+		B.add_volume(blood_color_to_pass, H.blood_id, num_amount, vis_amount)
 		//BLOOD_DEBUG("[H] adds volume to existing blood decal")
 
 		if (B.reagents && H.reagents?.total_volume)

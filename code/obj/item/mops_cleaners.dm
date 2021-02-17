@@ -777,7 +777,7 @@ WET FLOOR SIGN
 	anchored = 1
 	layer = EFFECTS_LAYER_BASE
 	var/datum/light/light
-	var/obj/holoparticles/particles
+	var/obj/holoparticles/holoparticles
 
 	New(var/_loc)
 		set_loc(_loc)
@@ -794,14 +794,15 @@ WET FLOOR SIGN
 			animate(src, pixel_y=10, time=15, flags=ANIMATION_PARALLEL, easing=SINE_EASING, loop=-1)
 			animate(pixel_y=16, easing=SINE_EASING, time=15)
 
-		particles = new/obj/holoparticles(src.loc)
-		attached_objs = list(particles)
+		holoparticles = new/obj/holoparticles(src.loc)
+		attached_objs = list(holoparticles)
 		..(_loc)
 
 	disposing()
-		if(particles)
-			particles.invisibility = 101
-			qdel(particles)
+		if(holoparticles)
+			holoparticles.invisibility = 101
+			qdel(holoparticles)
+			holoparticles = null
 		..()
 
 /obj/holoparticles
@@ -920,6 +921,8 @@ WET FLOOR SIGN
 		if(ON_COOLDOWN(src, "suck", 0.3 SECONDS))
 			return
 		var/turf/T = get_turf(target)
+		if(isnull(T)) // fluids getting disposed or something????
+			return
 		new/obj/effect/suck(T, get_dir(T, user))
 		if(src.suck(T, user))
 			playsound(T, "sound/effects/suck.ogg", 20, TRUE, 0, 1.5)
@@ -1087,6 +1090,8 @@ WET FLOOR SIGN
 							A.throw_at(T == turf_list[1] ? get_turf(master) : turf_list[1], src.throw_range, src.throw_speed)
 							if(ismob(A))
 								var/mob/M = A
+								M.changeStatus("weakened", 0.9 SECONDS)
+								M.force_laydown_standup()
 								boutput(M, "<span class='alert'>You are pulled by the force of [user]'s [master].</span>")
 						else
 							var/mob/M = A

@@ -59,12 +59,13 @@
 		var/ircmsg[] = new()
 		ircmsg["key"] = "Loggo"
 		ircmsg["name"] = "First Adminhelp Notice"
-		ircmsg["msg"] = "Logs for this round can be found here: https://mini.xkeeper.net/ss13/admin/log-get.php?id=[config.server_id]&date=[roundLog_date]"
+		// ircmsg["msg"] = "Logs for this round can be found here: https://mini.xkeeper.net/ss13/admin/log-get.php?id=[config.server_id]&date=[roundLog_date]"
+		ircmsg["msg"] = "Logs for this round can be found here: https://mini.xkeeper.net/ss13/admin/log-viewer.php?server=[config.server_id]&redownload=1&view=[roundLog_date].html"
 		ircbot.export("help", ircmsg)
 
 	var/ircmsg[] = new()
 	ircmsg["key"] = client.key
-	ircmsg["name"] = client.mob.real_name
+	ircmsg["name"] = stripTextMacros(client.mob.real_name)
 	ircmsg["msg"] = html_decode(msg)
 	ircbot.export("help", ircmsg)
 
@@ -135,7 +136,7 @@
 	var/dead = isdead(client.mob) ? "Dead" : ""
 	var/ircmsg[] = new()
 	ircmsg["key"] = client.key
-	ircmsg["name"] = client.mob.job ? "[client.mob.real_name] \[[dead] [client.mob.job]]" : (dead ? "[client.mob.real_name] \[[dead]\]" : client.mob.real_name)
+	ircmsg["name"] = client.mob.job ? "[stripTextMacros(client.mob.real_name)] \[[dead] [client.mob.job]]" : (dead ? "[stripTextMacros(client.mob.real_name)] \[[dead]\]" : stripTextMacros(client.mob.real_name))
 	ircmsg["msg"] = html_decode(msg)
 	ircbot.export("mentorhelp", ircmsg)
 
@@ -166,6 +167,9 @@
 
 	if(!msg)
 		msg = input("Please enter your prayer to any gods that may be listening - be careful what you wish for as the gods may be the vengeful sort!") as null|text
+
+	if(msg)
+		phrase_log.log_phrase("prayer", msg)
 
 	msg = copytext(strip_html(msg), 1, MAX_MESSAGE_LEN)
 
@@ -264,9 +268,9 @@
 
 		var/ircmsg[] = new()
 		ircmsg["key"] = user?.client ? user.client.key : ""
-		ircmsg["name"] = user.real_name
+		ircmsg["name"] = stripTextMacros(user.real_name)
 		ircmsg["key2"] = (M != null && M.client != null && M.client.key != null) ? M.client.key : ""
-		ircmsg["name2"] = (M != null && M.real_name != null) ? M.real_name : ""
+		ircmsg["name2"] = (M != null && M.real_name != null) ? stripTextMacros(M.real_name) : ""
 		ircmsg["msg"] = html_decode(t)
 		ircbot.export("pm", ircmsg)
 

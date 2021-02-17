@@ -112,7 +112,7 @@ var/global/list/chem_whitelist = list("antihol", "charcoal", "epinephrine", "ins
 		if (user)
 			user.show_text("[src]'s safeties have been reactivated.", "blue")
 		safe = 1
-		src.overlays = null
+		src.UpdateOverlays(null, "emagged")
 		src.update_icon()
 		return 1
 

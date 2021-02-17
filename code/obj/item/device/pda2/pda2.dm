@@ -294,7 +294,7 @@
 	if(istype(M) && M.client)
 		src.bg_color = M.client.preferences.PDAcolor
 		var/list/color_vals = hex_to_rgb_list(bg_color)
-		src.linkbg_color = rgb(color_vals["r"] * 0.8, color_vals["g"] * 0.8, color_vals["b"] * 0.8)
+		src.linkbg_color = rgb(color_vals[1] * 0.8, color_vals[2] * 0.8, color_vals[3] * 0.8)
 
 	src.update_colors(src.bg_color, src.linkbg_color)
 
@@ -736,7 +736,7 @@
 		src.bg_color = bg
 		src.linkbg_color = linkbg
 		var/color_list = hex_to_rgb_list(src.linkbg_color)
-		if(max(color_list["r"], color_list["b"], color_list["g"]) <= 50)
+		if(max(color_list[1], color_list[2], color_list[3]) <= 50)
 			src.link_color = "#dddddd"
 		else
 			src.link_color = initial(src.link_color)
@@ -841,8 +841,7 @@
 	proc/update_overlay(mode = null)
 		if (mode)
 			src.current_overlay = mode
-		src.overlays = null
-		src.overlays += src.overlay_images[src.current_overlay]
+		src.UpdateOverlays(src.overlay_images[src.current_overlay], "screen_overlay")
 
 	proc/set_ringtone(var/datum/ringtone/RT, var/temp = 0, var/overrideAlert = 0, var/groupType, var/groupName)
 		if(!istype(RT)) // Invalid ringtone? use the default
@@ -935,9 +934,6 @@
 			//for (var/mob/O in hearers(3, src.loc))
 
 		update_overlay("alert")
-		// src.overlays = null
-		// // src.overlays += image('icons/obj/items/pda.dmi', "pda-r")
-		// src.overlays += src.overlay_images["alert"]
 		return
 
 	proc/display_message(var/message)

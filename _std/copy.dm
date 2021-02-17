@@ -79,6 +79,8 @@ proc/semi_deep_copy(orig, new_arg=null, list/environment=null, root=null, copy_f
 	else if(istype(orig_datum, /datum/hud) && hasvar(orig_datum, "master"))
 		var/datum/hud/orig_hud = orig
 		result = new type(_SEMI_DEEP_COPY(orig_hud:master))
+	else if(istype(orig_datum, /datum) && hasvar(orig_datum, "holder"))
+		result = new type(_SEMI_DEEP_COPY(orig:holder))
 	else
 		result = new type
 	environment[orig_datum] = result
