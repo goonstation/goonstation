@@ -15518,7 +15518,7 @@
 /area/station/storage/warehouse)
 "bfX" = (
 /obj/table/auto,
-/obj/item/camera_test,
+/obj/item/camera,
 /turf/simulated/floor/grime,
 /area/station/storage/warehouse)
 "bfY" = (
@@ -26963,7 +26963,7 @@
 /obj/item/storage/photo_album{
 	pixel_y = -10
 	},
-/obj/item/camera_test,
+/obj/item/camera,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -29891,7 +29891,7 @@
 /area/station/engine/proto)
 "oWn" = (
 /obj/table/wood/auto,
-/obj/item/camera_test{
+/obj/item/camera{
 	desc = "A one use - polaroid camera. 30 photos left.";
 	name = "detectives camera";
 	pictures_left = 30
@@ -32780,8 +32780,8 @@
 /area/station/crew_quarters/quarters)
 "sge" = (
 /obj/rack,
-/obj/item/camera_test,
-/obj/item/camera_test,
+/obj/item/camera,
+/obj/item/camera,
 /obj/item/item_box/assorted/stickers/stickers_limited,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/quarters)
@@ -36679,9 +36679,9 @@
 /obj/item/tank/air,
 /obj/item/device/light/flashlight,
 /obj/item/device/audio_log,
-/obj/item/camera_test,
+/obj/item/camera,
 /obj/item/device/radio/headset/multifreq,
-/obj/item/camera_test,
+/obj/item/camera,
 /turf/simulated/floor/purple/side{
 	dir = 4
 	},
@@ -37477,8 +37477,8 @@
 /obj/item/device/camera_viewer{
 	network = "Zeta"
 	},
-/obj/item/camera_test,
-/obj/item/camera_test,
+/obj/item/camera,
+/obj/item/camera,
 /obj/storage/crate,
 /turf/simulated/floor/purple,
 /area/station/science/teleporter)
@@ -37594,9 +37594,9 @@
 /obj/item/tank/air,
 /obj/item/device/light/flashlight,
 /obj/item/device/audio_log,
-/obj/item/camera_test,
+/obj/item/camera,
 /obj/item/device/radio/headset/multifreq,
-/obj/item/camera_test,
+/obj/item/camera,
 /turf/simulated/floor/purple/side{
 	dir = 6
 	},

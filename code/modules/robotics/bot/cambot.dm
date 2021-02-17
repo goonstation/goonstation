@@ -27,7 +27,7 @@
 	var/idle = 1 // In relation to world time. In case there aren't any valid targets nearby.
 	var/idle_delay = 300 // For how long?
 
-	var/obj/item/camera_test/camera = null
+	var/obj/item/camera/camera = null
 	var/photographing = 0 // Are we currently photographing something?
 	var/list/photographed = null // what we've already photographed
 
@@ -38,7 +38,7 @@
 		if (src)
 			src.botcard = new /obj/item/card/id(src)
 			src.botcard.access = get_access(src.access_lookup)
-			src.camera = new /obj/item/camera_test(src)
+			src.camera = new /obj/item/camera(src)
 			src.icon_state = "cambot[src.on]"
 
 /obj/machinery/bot/cambot/emag_act(var/mob/user, var/obj/item/card/emag/E)
@@ -112,7 +112,7 @@
 
 	var/turf/T = get_turf(src)
 	if (T && isturf(T))
-		new /obj/item/camera_test(T)
+		new /obj/item/camera(T)
 		new /obj/item/device/prox_sensor(T)
 		if (prob(50))
 			new /obj/item/parts/robot_parts/arm/left(T)

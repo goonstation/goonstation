@@ -796,7 +796,7 @@
 /obj/map/light/green,
 /obj/table/reinforced/auto,
 /obj/item/toolbox_arm,
-/obj/item/camera_test,
+/obj/item/camera,
 /turf/unsimulated/floor/concrete,
 /area/jones/radiation)
 "bV" = (

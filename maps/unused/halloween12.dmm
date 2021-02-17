@@ -15474,7 +15474,7 @@
 	d2 = 8
 	},
 /obj/table/woodentable,
-/obj/item/camera_test{
+/obj/item/camera{
 	desc = "A one use - polaroid camera. 30 photos left.";
 	name = "detectives camera";
 	pictures_left = 30
@@ -16094,7 +16094,7 @@
 /obj/item/storage/photo_album{
 	pixel_y = -10
 	},
-/obj/item/camera_test,
+/obj/item/camera,
 /turf/simulated/floor,
 /area/station/crew_quarters/captain)
 "aFN" = (

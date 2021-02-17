@@ -26159,7 +26159,7 @@
 /area/station/security/detectives_office)
 "aXu" = (
 /obj/table/wood,
-/obj/item/camera_test{
+/obj/item/camera{
 	desc = "A one use - polaroid camera. 30 photos left.";
 	name = "detectives camera";
 	pictures_left = 30
@@ -32782,7 +32782,7 @@
 /obj/item/storage/photo_album{
 	pixel_y = -10
 	},
-/obj/item/camera_test,
+/obj/item/camera,
 /turf/simulated/floor/blue,
 /area/station/crew_quarters/captain)
 "bjr" = (

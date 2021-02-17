@@ -11,7 +11,7 @@
 
 	return ..()
 
-/obj/item/camera_test
+/obj/item/camera
 	name = "camera"
 	icon = 'icons/obj/items/device.dmi'
 	desc = "A reusable polaroid camera."
@@ -76,7 +76,7 @@
 			..()
 		return
 
-/obj/item/camera_test/voodoo //kubius: voodoo cam subtyped for cleanliness
+/obj/item/camera/voodoo //kubius: voodoo cam subtyped for cleanliness
 	desc = "There's some sort of faint writing etched into the casing."
 	takes_voodoo_pics = 1
 
@@ -84,6 +84,49 @@
 		name = "soul-binding camera"
 		desc = "No one cam should have all this power."
 		takes_voodoo_pics = 2
+
+/obj/item/camera/spy
+	var/flash_mode = 0
+
+	attack_self(mob/user)
+		if (user.mind.special_role == "spy_thief")
+			if (user.find_in_hand(src))
+				if (!src.flash_mode)
+					user.show_text("You use the secret switch to set the camera to flash mode.", "blue")
+				else
+					user.show_text("You use the secret switch to set the camera to take photos.", "blue")
+				src.flash_mode =! src.flash_mode
+
+/obj/item/camera/spy/attack(atom/target, mob/user, flag)
+	if (!ismob(target))
+		return
+	if (src.flash_mode)
+		var/turf/T = get_turf(target.loc)
+		if (T.loc:sanctuary)
+			user.visible_message("<span class='alert'><b>[user]</b> tries to use [src], cannot quite comprehend the forces at play!</span>")
+			return
+		// Generic flash
+		var/mob/M = target
+		var/blind_success = M.apply_flash(30, 8, 0, 0, 0, rand(0, 1), 0, 0, 100, 70, disorient_time = 30)
+		playsound(get_turf(src), "sound/weapons/flash.ogg", 100, 1)
+		// Log entry.
+		var/blind_msg_target = "!"
+		var/blind_msg_others = "!"
+		if (!blind_success)
+			blind_msg_target = " but your eyes are protected!"
+			blind_msg_others = " but [his_or_her(M)] eyes are protected!"
+		M.visible_message("<span class='alert'>[user] blinds [M] with the flash[blind_msg_others]</span>", "<span class='alert'>You are blinded by the flash[blind_msg_target]</span>") // Pretend to be a flash
+		logTheThing("combat", user, M, "blinds [constructTarget(M,"combat")] with spy [src] at [log_loc(user)].")
+	else
+		. = ..()
+
+/obj/item/camera/spy/afterattack(atom/target, mob/user, flag)
+	if (!can_use || ismob(target.loc))
+		return
+	if (src.flash_mode)
+		return
+	else
+		. = ..() 	// Call /obj/item/camera/spy/afterattack() for photo mode
 
 /obj/item/camera_film
 	name = "film cartridge"
@@ -213,7 +256,7 @@
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
-/*/obj/item/camera_test*/
+/*/obj/item/camera*/
 /proc/build_composite_icon(var/atom/C)
 	if (!C)
 		return
@@ -225,10 +268,10 @@
 	composite.underlays = C.underlays
 	return composite
 //////////////////////////////////////////////////////////////////////////////////////////////////
-/obj/item/camera_test/attack(mob/living/carbon/human/M as mob, mob/user as mob)
+/obj/item/camera/attack(mob/living/carbon/human/M as mob, mob/user as mob)
 	return
 
-/obj/item/camera_test/afterattack(atom/target as mob|obj|turf|area, mob/user as mob, flag)
+/obj/item/camera/afterattack(atom/target as mob|obj|turf|area, mob/user as mob, flag)
 	if (!can_use || ismob(target.loc)) return
 	if (src.pictures_left == 0 && user)
 		user.show_text("The film cartridge is used up. You have to replace it first.", "red")
@@ -246,7 +289,7 @@
 		if (src)
 			src.can_use = 1
 
-/obj/item/camera_test/proc/create_photo(var/atom/target, var/powerflash = 0)
+/obj/item/camera/proc/create_photo(var/atom/target, var/powerflash = 0)
 	if (!target)
 		return 0
 	var/turf/the_turf = get_turf(target)

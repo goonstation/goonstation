@@ -24699,7 +24699,7 @@
 /obj/item/tank/air,
 /obj/item/device/light/flashlight,
 /obj/item/device/audio_log,
-/obj/item/camera_test,
+/obj/item/camera,
 /obj/item/device/radio/headset/multifreq,
 /obj/cable{
 	d1 = 4;
@@ -25035,7 +25035,7 @@
 /obj/item/tank/air,
 /obj/item/device/light/flashlight,
 /obj/item/device/audio_log,
-/obj/item/camera_test,
+/obj/item/camera,
 /obj/item/device/radio/headset/multifreq,
 /obj/cable{
 	d1 = 4;
@@ -39874,7 +39874,7 @@
 "bKA" = (
 /obj/table/wood/auto,
 /obj/item/device/camera_viewer,
-/obj/item/camera_test,
+/obj/item/camera,
 /obj/item/device/audio_log,
 /obj/item/device/detective_scanner,
 /obj/item/spraybottle/cleaner,

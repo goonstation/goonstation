@@ -2676,7 +2676,7 @@
 	dir = 4
 	},
 /obj/item/pen/marker,
-/obj/item/camera_test{
+/obj/item/camera{
 	pixel_y = -10
 	},
 /turf/simulated/floor/blue/side{
@@ -21424,7 +21424,7 @@
 /obj/table/wood/auto,
 /obj/item/storage/secure/sbriefcase,
 /obj/item/device/camera_viewer,
-/obj/item/camera_test,
+/obj/item/camera,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "aTA" = (
@@ -28221,7 +28221,7 @@
 /obj/disposalpipe/segment/ejection{
 	dir = 4
 	},
-/obj/item/camera_test,
+/obj/item/camera,
 /turf/simulated/floor/caution/south,
 /area/station/maintenance/disposal)
 "bgJ" = (
@@ -29058,7 +29058,7 @@
 /obj/item/storage/photo_album{
 	pixel_y = -10
 	},
-/obj/item/camera_test,
+/obj/item/camera,
 /obj/cable{
 	d1 = 1;
 	d2 = 4;
@@ -34970,7 +34970,7 @@
 /obj/table/wood/auto,
 /obj/item/paper_bin,
 /obj/item/pen,
-/obj/item/camera_test,
+/obj/item/camera,
 /turf/simulated/floor,
 /area/station/crew_quarters/info)
 "buj" = (
@@ -42985,7 +42985,7 @@
 	name = "Adventure Crate"
 	},
 /obj/item/device/audio_log,
-/obj/item/camera_test,
+/obj/item/camera,
 /obj/item/device/light/flashlight,
 /obj/item/device/light/flashlight,
 /obj/item/reagent_containers/food/drinks/milk,
@@ -45234,7 +45234,7 @@
 /obj/item/device/radio/signaler,
 /obj/item/device/radio/signaler,
 /obj/item/device/audio_log,
-/obj/item/camera_test,
+/obj/item/camera,
 /obj/item/device/gps,
 /obj/item/device/gps,
 /obj/item/device/gps,

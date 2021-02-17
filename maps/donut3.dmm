@@ -20472,7 +20472,7 @@
 /area/station/science/bot_storage)
 "fMy" = (
 /obj/table/wood/auto,
-/obj/item/camera_test{
+/obj/item/camera{
 	pixel_x = 3;
 	pixel_y = 2
 	},
@@ -49587,7 +49587,7 @@
 	pixel_x = -1;
 	pixel_y = -4
 	},
-/obj/item/camera_test{
+/obj/item/camera{
 	pixel_y = 11
 	},
 /turf/simulated/floor/white,

@@ -8261,7 +8261,7 @@
 /area/station/security/detectives_office)
 "asW" = (
 /obj/table/wood/auto,
-/obj/item/camera_test{
+/obj/item/camera{
 	desc = "A one use - polaroid camera. 30 photos left.";
 	name = "detectives camera";
 	pictures_left = 30
@@ -30309,7 +30309,7 @@
 	name = "Adventure Crate"
 	},
 /obj/item/device/audio_log,
-/obj/item/camera_test,
+/obj/item/camera,
 /obj/item/device/light/flashlight,
 /obj/item/device/light/flashlight,
 /obj/item/reagent_containers/food/drinks/milk,
@@ -31531,7 +31531,7 @@
 	icon_state = "s_teleport";
 	dir = 4
 	},
-/obj/item/camera_test,
+/obj/item/camera,
 /obj/machinery/power/data_terminal,
 /obj/cable,
 /turf/simulated/floor,
@@ -34016,7 +34016,7 @@
 /area/station/bridge/captain)
 "bAo" = (
 /obj/table/auto,
-/obj/item/camera_test,
+/obj/item/camera,
 /obj/item/storage/photo_album,
 /turf/simulated/floor/blue,
 /area/station/bridge/captain)

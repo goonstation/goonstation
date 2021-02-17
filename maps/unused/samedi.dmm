@@ -10964,7 +10964,7 @@
 "ayf" = (
 /obj/table/wood/auto,
 /obj/item/device/camera_viewer,
-/obj/item/camera_test,
+/obj/item/camera,
 /obj/item/device/audio_log,
 /obj/item/device/detective_scanner,
 /obj/item/pen,
@@ -37711,7 +37711,7 @@
 /obj/item/tank/air,
 /obj/item/device/light/flashlight,
 /obj/item/device/audio_log,
-/obj/item/camera_test,
+/obj/item/camera,
 /obj/item/device/radio/headset/multifreq,
 /obj/machinery/light{
 	dir = 8;
@@ -37749,7 +37749,7 @@
 /obj/item/device/radio/signaler,
 /obj/item/device/radio/signaler,
 /obj/item/device/audio_log,
-/obj/item/camera_test,
+/obj/item/camera,
 /obj/item/device/gps,
 /obj/item/device/gps,
 /obj/item/device/gps,
@@ -38095,7 +38095,7 @@
 /obj/item/tank/air,
 /obj/item/device/light/flashlight,
 /obj/item/device/audio_log,
-/obj/item/camera_test,
+/obj/item/camera,
 /obj/item/device/radio/headset/multifreq,
 /turf/simulated/floor/purplewhite{
 	dir = 8
@@ -38784,7 +38784,7 @@
 /obj/item/tank/air,
 /obj/item/device/light/flashlight,
 /obj/item/device/audio_log,
-/obj/item/camera_test,
+/obj/item/camera,
 /obj/item/device/radio/headset/multifreq,
 /obj/machinery/light_switch{
 	name = "W light switch";
@@ -38811,7 +38811,7 @@
 	name = "Adventure Crate"
 	},
 /obj/item/device/audio_log,
-/obj/item/camera_test,
+/obj/item/camera,
 /obj/item/device/light/flashlight,
 /obj/item/device/light/flashlight,
 /obj/item/reagent_containers/food/drinks/milk,

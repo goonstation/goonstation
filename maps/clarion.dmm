@@ -13335,7 +13335,7 @@
 /area/station/security/detectives_office)
 "awS" = (
 /obj/table/wood/auto,
-/obj/item/camera_test,
+/obj/item/camera,
 /obj/item/storage/box/evidence,
 /obj/item/storage/box/evidence,
 /obj/item/storage/secure/sbriefcase,
@@ -30822,7 +30822,7 @@
 	pixel_y = -10
 	},
 /obj/item/pinpointer,
-/obj/item/camera_test{
+/obj/item/camera{
 	pixel_y = 6
 	},
 /obj/item/hand_tele,

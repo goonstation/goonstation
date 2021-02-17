@@ -11408,7 +11408,7 @@
 	name = "Adventure Crate"
 	},
 /obj/item/device/audio_log,
-/obj/item/camera_test,
+/obj/item/camera,
 /obj/item/device/light/flashlight,
 /obj/item/device/light/flashlight,
 /obj/item/reagent_containers/food/drinks/milk,

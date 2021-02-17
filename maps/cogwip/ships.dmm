@@ -58,7 +58,7 @@
 "bj" = (/obj/table/reinforced/auto,/obj/item/baton/cane,/turf/simulated/floor/shuttle{icon_state = "floor4"},/area/space)
 "bk" = (/obj/machinery/vending/medical,/turf/simulated/floor/black,/area/space)
 "bl" = (/obj/table/reinforced/auto,/turf/simulated/floor/shuttle{icon_state = "floor4"},/area/space)
-"bn" = (/obj/table/reinforced/auto,/obj/item/camera_test/large,/turf/simulated/floor/shuttle{icon_state = "floor4"},/area/space)
+"bn" = (/obj/table/reinforced/auto,/obj/item/camera/large,/turf/simulated/floor/shuttle{icon_state = "floor4"},/area/space)
 "bp" = (/obj/machinery/sleeper/port_a_medbay,/turf/simulated/floor/black,/area/space)
 "bq" = (/obj/machinery/light/small,/obj/decal/tile_edge/line/grey{dir = 8; icon_state = "line-broken1"},/turf/simulated/floor/shuttle{icon_state = "floor4"},/area/space)
 "br" = (/obj/machinery/light/small,/obj/decal/tile_edge/line/grey{dir = 4; icon_state = "line-broken1"},/turf/simulated/floor/shuttle{icon_state = "floor4"},/area/space)

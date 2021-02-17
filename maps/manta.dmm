@@ -504,7 +504,7 @@
 /obj/item/storage/photo_album{
 	pixel_y = -10
 	},
-/obj/item/camera_test,
+/obj/item/camera,
 /obj/machinery/light/incandescent/warm{
 	dir = 1;
 	nostick = 1
@@ -18597,7 +18597,7 @@
 /obj/item/audio_tape{
 	pixel_y = 5
 	},
-/obj/item/camera_test,
+/obj/item/camera,
 /obj/decoration/clock{
 	pixel_y = 32
 	},
@@ -19051,7 +19051,7 @@
 /obj/table/wood/auto,
 /obj/item/paper_bin,
 /obj/item/pen,
-/obj/item/camera_test,
+/obj/item/camera,
 /turf/simulated/floor/darkblue/checker/other,
 /area/station/communications/office)
 "aTV" = (

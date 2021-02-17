@@ -1202,11 +1202,11 @@
 /area/station/science/teleporter)
 "adc" = (
 /obj/rack,
-/obj/item/camera_test,
-/obj/item/camera_test,
-/obj/item/camera_test,
-/obj/item/camera_test,
-/obj/item/camera_test,
+/obj/item/camera,
+/obj/item/camera,
+/obj/item/camera,
+/obj/item/camera,
+/obj/item/camera,
 /turf/simulated/floor/orangeblack/side/white,
 /area/station/science/teleporter)
 "add" = (
@@ -12675,10 +12675,10 @@
 "aCl" = (
 /obj/table/auto,
 /obj/machinery/light/lamp,
-/obj/item/camera_test,
-/obj/item/camera_test,
-/obj/item/camera_test,
-/obj/item/camera_test,
+/obj/item/camera,
+/obj/item/camera,
+/obj/item/camera,
+/obj/item/camera,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/quarters)
 "aCm" = (
@@ -19112,7 +19112,7 @@
 	icon_state = "2-8"
 	},
 /obj/table/wood/auto,
-/obj/item/camera_test{
+/obj/item/camera{
 	desc = "A one use - polaroid camera. 30 photos left.";
 	name = "detectives camera";
 	pictures_left = 30
@@ -20149,7 +20149,7 @@
 /obj/item/storage/photo_album{
 	pixel_y = -10
 	},
-/obj/item/camera_test,
+/obj/item/camera,
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/captain)
 "aRK" = (

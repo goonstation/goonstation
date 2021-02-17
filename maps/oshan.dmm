@@ -7782,8 +7782,8 @@
 /area/station/crew_quarters/quartersA)
 "arQ" = (
 /obj/table/auto,
-/obj/item/camera_test,
-/obj/item/camera_test,
+/obj/item/camera,
+/obj/item/camera,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -27214,7 +27214,7 @@
 	name = "Security Records"
 	},
 /obj/item/device/camera_viewer,
-/obj/item/camera_test,
+/obj/item/camera,
 /obj/machinery/power/data_terminal,
 /obj/cable{
 	d2 = 4;
@@ -30563,13 +30563,13 @@
 /area/station/bridge/hos)
 "bwt" = (
 /obj/table/wood/auto,
-/obj/item/camera_test{
+/obj/item/camera{
 	pixel_y = 8
 	},
-/obj/item/camera_test{
+/obj/item/camera{
 	pixel_y = 4
 	},
-/obj/item/camera_test,
+/obj/item/camera,
 /obj/machinery/light/incandescent/warm,
 /turf/simulated/floor,
 /area/station/crew_quarters/info)
@@ -31179,7 +31179,7 @@
 /obj/item/storage/photo_album{
 	pixel_y = -10
 	},
-/obj/item/camera_test,
+/obj/item/camera,
 /obj/item/stamp/cap,
 /turf/simulated/floor/carpet/purple/standard/narrow/T_south,
 /area/station/crew_quarters/captain)

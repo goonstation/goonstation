@@ -22090,7 +22090,7 @@
 /obj/table/wood/auto,
 /obj/item/storage/secure/sbriefcase,
 /obj/item/device/camera_viewer,
-/obj/item/camera_test,
+/obj/item/camera,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "aUY" = (
@@ -29846,7 +29846,7 @@
 /obj/item/storage/photo_album{
 	pixel_y = -10
 	},
-/obj/item/camera_test,
+/obj/item/camera,
 /obj/cable{
 	d1 = 1;
 	d2 = 4;
@@ -35950,7 +35950,7 @@
 /obj/table/wood/auto,
 /obj/item/paper_bin,
 /obj/item/pen,
-/obj/item/camera_test,
+/obj/item/camera,
 /turf/simulated/floor,
 /area/station/crew_quarters/info)
 "bvX" = (
@@ -43772,7 +43772,7 @@
 	name = "Adventure Crate"
 	},
 /obj/item/device/audio_log,
-/obj/item/camera_test,
+/obj/item/camera,
 /obj/item/device/light/flashlight,
 /obj/item/device/light/flashlight,
 /obj/item/reagent_containers/food/drinks/milk,
@@ -46029,7 +46029,7 @@
 /obj/item/device/radio/signaler,
 /obj/item/device/radio/signaler,
 /obj/item/device/audio_log,
-/obj/item/camera_test,
+/obj/item/camera,
 /obj/item/device/gps,
 /obj/item/device/gps,
 /obj/item/device/gps,

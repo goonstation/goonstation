@@ -3440,7 +3440,7 @@
 /obj/item/storage/photo_album{
 	pixel_y = -10
 	},
-/obj/item/camera_test,
+/obj/item/camera,
 /turf/simulated/floor,
 /area/crew_quarters/captain)
 "hA" = (

@@ -1038,7 +1038,7 @@
 /obj/item/storage/photo_album{
 	pixel_y = -10
 	},
-/obj/item/camera_test{
+/obj/item/camera{
 	pixel_y = 6
 	},
 /obj/item/pinpointer,
@@ -12653,7 +12653,7 @@
 "axq" = (
 /obj/table/wood/auto,
 /obj/item/device/camera_viewer,
-/obj/item/camera_test,
+/obj/item/camera,
 /obj/machinery/light{
 	dir = 8
 	},

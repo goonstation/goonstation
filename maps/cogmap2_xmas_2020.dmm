@@ -5793,7 +5793,7 @@
 	pixel_y = 1
 	},
 /obj/item/device/camera_viewer,
-/obj/item/camera_test,
+/obj/item/camera,
 /obj/item/device/audio_log,
 /obj/item/device/detective_scanner,
 /obj/disposalpipe/segment/mail/vertical,
@@ -19633,7 +19633,7 @@
 	},
 /obj/table/auto,
 /obj/random_item_spawner/desk_stuff,
-/obj/item/camera_test,
+/obj/item/camera,
 /obj/item/paper/book/critter_compendium,
 /obj/decal/cleanable/gangtag{
 	pixel_y = 28
@@ -57463,8 +57463,8 @@
 /obj/item/device/camera_viewer{
 	network = "Zeta"
 	},
-/obj/item/camera_test,
-/obj/item/camera_test,
+/obj/item/camera,
+/obj/item/camera,
 /obj/storage/crate,
 /turf/simulated/floor/specialroom/arcade,
 /area/station/science/teleporter)
@@ -57508,7 +57508,7 @@
 /obj/item/tank/air,
 /obj/item/device/light/flashlight,
 /obj/item/device/audio_log,
-/obj/item/camera_test,
+/obj/item/camera,
 /obj/item/device/radio/headset/multifreq,
 /obj/cable{
 	d2 = 8;
@@ -58132,7 +58132,7 @@
 /obj/item/tank/air,
 /obj/item/device/light/flashlight,
 /obj/item/device/audio_log,
-/obj/item/camera_test,
+/obj/item/camera,
 /obj/item/device/radio/headset/multifreq,
 /turf/simulated/floor/bot,
 /area/station/science/teleporter)
@@ -59421,7 +59421,7 @@
 /obj/item/device/radio/headset/multifreq,
 /obj/item/device/radio/headset/multifreq,
 /obj/item/device/audio_log,
-/obj/item/camera_test,
+/obj/item/camera,
 /obj/item/device/light/flashlight,
 /obj/item/device/light/flashlight,
 /obj/item/reagent_containers/food/drinks/milk,
@@ -59457,7 +59457,7 @@
 /obj/item/tank/air,
 /obj/item/device/light/flashlight,
 /obj/item/device/audio_log,
-/obj/item/camera_test,
+/obj/item/camera,
 /obj/item/device/radio/headset/multifreq,
 /obj/disposalpipe/segment/transport{
 	dir = 4

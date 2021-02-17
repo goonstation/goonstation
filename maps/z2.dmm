@@ -3033,7 +3033,7 @@
 /obj/map/light/green,
 /obj/table/reinforced/auto,
 /obj/item/toolbox_arm,
-/obj/item/camera_test,
+/obj/item/camera,
 /turf/unsimulated/floor/concrete,
 /area/jones/radiation)
 "aiV" = (
@@ -12390,7 +12390,7 @@
 	desc = "You would expect them to take this out before starting construction work, but..."
 	},
 /obj/item/device/audio_log/lunar_01,
-/obj/item/camera_test,
+/obj/item/camera,
 /turf/unsimulated/floor/red/side{
 	dir = 1
 	},
@@ -37830,7 +37830,7 @@
 /area/crater)
 "bOX" = (
 /obj/table/reinforced/auto,
-/obj/item/camera_test,
+/obj/item/camera,
 /turf/unsimulated/floor/white/grime,
 /area/crypt/sigma/lab)
 "bOY" = (
@@ -79821,7 +79821,7 @@
 	pixel_x = -8;
 	pixel_y = 8
 	},
-/obj/item/camera_test/large,
+/obj/item/camera/large,
 /turf/unsimulated/floor/carpet{
 	icon_state = "fblue3"
 	},
@@ -83887,7 +83887,7 @@
 	pixel_x = -6;
 	pixel_y = -5
 	},
-/obj/item/camera_test/large{
+/obj/item/camera/large{
 	pixel_x = 4;
 	pixel_y = 7
 	},

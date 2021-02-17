@@ -17043,7 +17043,7 @@
 /area/derelict_ai_sat)
 "aRR" = (
 /obj/table/auto,
-/obj/item/camera_test{
+/obj/item/camera{
 	pixel_y = 6
 	},
 /turf/simulated/floor/white/grime,
