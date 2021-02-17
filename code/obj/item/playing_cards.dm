@@ -323,7 +323,7 @@
         name = "foil [name]"
 
 /obj/item/playing_card/expensive //(¬‿¬)
-    desc = "tap this card and sacrifice one Yourself to win target game."
+    desc = "Tap this card and sacrifice one Yourself to win target game."
     icon_state = "stg-general-0"
     var/list/prefix1 = list("Incredibly", "Strange", "Mysterious", "Suspicious", "Scary")
     var/list/prefix2 = list("Rare", "Black", "Dark", "Shadowy", "Expensive", "Fun", "Gamer")
