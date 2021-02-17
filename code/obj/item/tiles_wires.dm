@@ -51,7 +51,7 @@ TILES
 
 	attack_self(mob/user as mob)
 
-		if (usr.stat)
+		if (user.stat)
 			return
 		var/T = user.loc
 		if (!( istype(T, /turf) ))

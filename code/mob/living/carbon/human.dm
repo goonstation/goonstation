@@ -1616,7 +1616,7 @@
 
 	message = messages[1]
 	if(src.client && !forced)
-		phrase_log.log_phrase("whisper", html_decode(message))
+		phrase_log.log_phrase("whisper", message)
 	for (var/mob/M in eavesdropping)
 		if (M.say_understands(src, lang_id))
 			var/message_c = stars(message)

@@ -1498,6 +1498,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves/ring)
 	name = "rollerskates"
 	desc = "A pair of rollerskates, invented when experimental teleportation technology fused a pair of tacky boots and a shopping cart."
 	c_flags = NOSLIP
+	icon_state = "rollerskates"
 
 /obj/item/clothing/under/gimmick/itsyourcousin
 	name = "tacky shirt and slacks"

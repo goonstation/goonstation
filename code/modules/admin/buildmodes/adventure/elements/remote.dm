@@ -49,7 +49,7 @@
 						selected_triggerable += object
 						selected_triggerable[object] = act
 					else
-						boutput(usr, "<span class='alert'>ERROR: Missing actions definition for triggerable [object].</span>")
+						boutput(user, "<span class='alert'>ERROR: Missing actions definition for triggerable [object].</span>")
 
 /obj/item/adventurepuzzle/triggerer/remotecontrol
 	name = "remote control"

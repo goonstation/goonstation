@@ -55,7 +55,7 @@
 						selected_triggerable += object
 						selected_triggerable[object] = act
 					else
-						boutput(usr, "<span class='alert'>ERROR: Missing actions definition for triggerable [object].</span>")
+						boutput(user, "<span class='alert'>ERROR: Missing actions definition for triggerable [object].</span>")
 
 /obj/item/adventurepuzzle/triggerer/key
 	name = "key"
@@ -78,9 +78,9 @@
 			return
 		if (istype(target, /obj/adventurepuzzle/triggerable))
 			if (target in src.triggered)
-				boutput(usr, "<span class='notice'>The key slides into [target]!</span>")
+				boutput(user, "<span class='notice'>The key slides into [target]!</span>")
 				target:trigger(src.triggered[target])
 				if (oneshot)
 					qdel(src)
 			else
-				boutput(usr, "<span class='alert'>The key won't fit into [target]!</span>")
+				boutput(user, "<span class='alert'>The key won't fit into [target]!</span>")

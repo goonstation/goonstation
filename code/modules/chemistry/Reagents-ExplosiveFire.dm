@@ -210,8 +210,7 @@ datum
 						T.create_reagents(volume)
 					if(!T.reagents.has_reagent("thermite"))
 						T.reagents.add_reagent("thermite", volume, null)
-						T.overlays = null
-						T.overlays = image('icons/effects/effects.dmi',icon_state = "thermite")
+						T.UpdateOverlays(image('icons/effects/effects.dmi',icon_state = "thermite"), "thermite")
 						if (T.active_hotspot)
 							T.reagents.temperature_reagents(T.active_hotspot.temperature, T.active_hotspot.volume, 10, 300)
 				return
@@ -556,15 +555,7 @@ datum
 
 			reaction_temperature(exposed_temperature, exposed_volume)
 				if(!src.reacting)
-					src.reacting = 1
-					var/list/covered = holder.covered_turf()
-					for(var/atom/source in covered)
-						new/obj/decal/shockwave(source)
-						playsound(source, "sound/weapons/flashbang.ogg", 25, 1)
-						for(var/atom/movable/M in view(2 + (volume/covered.len > 30 ? 1:0), source))
-							if(M.anchored || M == source || M.throwing) continue
-							M.throw_at(get_edge_cheap(source, get_dir(source, M)), 20 + round(((volume/covered.len) * 2)), 1 + round((volume/covered.len) / 10))
-				holder?.del_reagent(id)
+					src.reacting = sorium_reaction(holder, volume, id)
 
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
@@ -590,8 +581,7 @@ datum
 					if (covered.len > 1 && (exposed_volume/covered.len) > 0.5)
 						return
 
-				src.reacting = 1
-				ldmatter_reaction(holder, volume, id)
+					src.reacting = ldmatter_reaction(holder, volume, id)
 
 
 			//Comment this out if you notice a lot of crashes. (It's probably a really bad idea to have this in)

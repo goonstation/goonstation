@@ -148,7 +148,7 @@
 	if (A.nofx)
 		src.icon_state = src.icon_state + "fx"
 	else
-		src.overlays += A.fx_image
+		src.UpdateOverlays(A.fx_image, "activated")
 	A.effect_activate(src)
 
 /obj/proc/ArtifactDeactivated()
@@ -166,7 +166,7 @@
 	if (A.nofx)
 		src.icon_state = src.icon_state - "fx"
 	else
-		src.overlays = null
+		src.UpdateOverlays(null, "activated")
 	A.effect_deactivate(src)
 
 /obj/proc/Artifact_attackby(obj/item/W as obj, mob/user as mob)
@@ -454,7 +454,7 @@
 	faultprob = max(0,min(faultprob,100))
 
 	if (prob(faultprob) && A.fault_types.len)
-		var/new_fault = pick(A.fault_types)
+		var/new_fault = weighted_pick(A.fault_types)
 		if (ispath(new_fault))
 			var/datum/artifact_fault/F = new new_fault(A)
 			F.holder = A

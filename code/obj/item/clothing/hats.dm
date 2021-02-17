@@ -220,7 +220,7 @@
 
 	afterattack(atom/target, mob/user as mob)
 		if (src.on && !ismob(target) && target.reagents)
-			boutput(usr, "<span class='notice'>You heat \the [target.name]</span>")
+			boutput(user, "<span class='notice'>You heat \the [target.name]</span>")
 			target.reagents.temperature_reagents(2500,10)
 		return
 

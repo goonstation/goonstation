@@ -183,7 +183,7 @@
 		item_state = "pink"
 //PRIDE
 /obj/item/clothing/under/pride
-	name = "pride jumpsuit"
+	name = "LGBT pride jumpsuit"
 	desc = "A corporate token of inclusivity, made in a sweatshop. It's based off of the LGBT flag."
 	icon = 'icons/obj/clothing/uniforms/item_js_pride.dmi'
 	wear_image_icon = 'icons/mob/jumpsuits/worn_js_pride.dmi'
