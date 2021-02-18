@@ -1761,33 +1761,13 @@ $(updateCharacterPreviewPos);
 			rebuild_data["popups"] = 1
 			src.view_tickets = !(src.view_tickets)
 
-		if (link_tags["b_revhead"])
-			src.be_revhead = !( src.be_revhead )
-			src.SetChoices(user)
-			return
-
-		if (link_tags["b_syndicate"])
-			src.be_syndicate = !( src.be_syndicate )
-			src.SetChoices(user)
-			return
-
-		if (link_tags["b_wizard"])
-			src.be_wizard = !( src.be_wizard)
-			src.SetChoices(user)
-			return
-
 		if (link_tags["b_traitor"])
 			src.be_traitor = !( src.be_traitor)
 			src.SetChoices(user)
 			return
 
-		if (link_tags["b_werewolf"])
-			src.be_werewolf = !( src.be_werewolf)
-			src.SetChoices(user)
-			return
-
-		if (link_tags["b_vampire"])
-			src.be_vampire = !( src.be_vampire)
+		if (link_tags["b_syndicate"])
+			src.be_syndicate = !( src.be_syndicate )
 			src.SetChoices(user)
 			return
 
@@ -1798,6 +1778,31 @@ $(updateCharacterPreviewPos);
 
 		if (link_tags["b_gangleader"])
 			src.be_gangleader = !( src.be_gangleader)
+			src.SetChoices(user)
+			return
+
+		if (link_tags["b_revhead"])
+			src.be_revhead = !( src.be_revhead )
+			src.SetChoices(user)
+			return
+
+		if (link_tags["b_changeling"])
+			src.be_changleing = !( src.be_changeling )
+			src.SetChoices(user)
+			return
+
+		if (link_tags["b_wizard"])
+			src.be_wizard = !( src.be_wizard)
+			src.SetChoices(user)
+			return
+
+		if (link_tags["b_werewolf"])
+			src.be_werewolf = !( src.be_werewolf)
+			src.SetChoices(user)
+			return
+
+		if (link_tags["b_vampire"])
+			src.be_vampire = !( src.be_vampire)
 			src.SetChoices(user)
 			return
 
