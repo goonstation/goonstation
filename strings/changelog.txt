@@ -1,5 +1,9 @@
 
 (t)thu feb 18 21
+(u)TTerc
+(p)3627
+(e)⚖🆕|balance, feature
+(+)You can now refill the flamethrowers by simply clicking the large tanks with them.
 (u)Flappybat
 (p)3651
 (e)⚖|balance
