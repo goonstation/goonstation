@@ -680,7 +680,7 @@ TRAYS
 		if(ordered_contents.len == max_food)
 			boutput(user, "That won't fit, \the [src] is too full!")
 			return
-		if(W.w_class < 3)
+		if(W.w_class > 3)
 			boutput(user, "You try to think of a way to put [W] on \the [src] but it's not possible! It's too large!")
 			return
 		user.drop_item()
