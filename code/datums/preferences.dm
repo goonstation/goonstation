@@ -24,6 +24,7 @@ datum/preferences
 	var/employment_note
 
 
+	var/be_conspirator = 0
 	var/be_changeling = 0
 	var/be_revhead = 0
 	var/be_syndicate = 0
@@ -1161,6 +1162,7 @@ $(updateCharacterPreviewPos);
 
 		if (jobban_isbanned(user, "Syndicate"))
 			HTML += "You are banned from playing antagonist roles."
+			src.be_conspirator = 0
 			src.be_changeling = 0
 			src.be_revhead = 0
 			src.be_syndicate = 0
@@ -1176,6 +1178,7 @@ $(updateCharacterPreviewPos);
 		else
 
 			HTML += {"
+			<a href="byond://?src=\ref[src];preferences=1;b_conspirator=1" class="[src.be_conspirator ? "yup" : "nope"]">[crap_checkbox(src.be_conspirator)] Conspirator</a>
 			<a href="byond://?src=\ref[src];preferences=1;b_traitor=1" class="[src.be_traitor ? "yup" : "nope"]">[crap_checkbox(src.be_traitor)] Traitor</a>
 			<a href="byond://?src=\ref[src];preferences=1;b_syndicate=1" class="[src.be_syndicate ? "yup" : "nope"]">[crap_checkbox(src.be_syndicate)] Nuclear Operative</a>
 			<a href="byond://?src=\ref[src];preferences=1;b_spy=1" class="[src.be_spy ? "yup" : "nope"]">[crap_checkbox(src.be_spy)] Spy/Thief</a>
@@ -1759,6 +1762,11 @@ $(updateCharacterPreviewPos);
 			rebuild_data["popups"] = 1
 			src.view_tickets = !(src.view_tickets)
 
+		if (link_tags["b_conspirator"])
+			src.be_conspirator = !( src.be_conspirator )
+			src.SetChoices(user)
+			return
+
 		if (link_tags["b_changeling"])
 			src.be_changeling = !( src.be_changeling )
 			src.SetChoices(user)
@@ -1969,6 +1977,7 @@ $(updateCharacterPreviewPos);
 			admin_music_volume = 50
 			radio_music_volume = 50
 			use_click_buffer = 0
+			be_conspirator = 0
 			be_changeling = 0
 			be_revhead = 0
 			be_syndicate = 0

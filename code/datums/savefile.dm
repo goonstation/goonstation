@@ -81,6 +81,7 @@
 		F["[profileNum]_job_prefs_2"] << src.jobs_med_priority
 		F["[profileNum]_job_prefs_3"] << src.jobs_low_priority
 		F["[profileNum]_job_prefs_4"] << src.jobs_unwanted
+		F["[profileNum]_be_changeling"] << src.be_conspirator
 		F["[profileNum]_be_changeling"] << src.be_changeling
 		F["[profileNum]_be_revhead"] << src.be_revhead
 		F["[profileNum]_be_syndicate"] << src.be_syndicate
@@ -243,6 +244,7 @@
 		F["[profileNum]_job_prefs_2"] >> src.jobs_med_priority
 		F["[profileNum]_job_prefs_3"] >> src.jobs_low_priority
 		F["[profileNum]_job_prefs_4"] >> src.jobs_unwanted
+		F["[profileNum]_be_changeling"] >> src.be_conspirator
 		F["[profileNum]_be_changeling"] >> src.be_changeling
 		F["[profileNum]_be_revhead"] >> src.be_revhead
 		F["[profileNum]_be_syndicate"] >> src.be_syndicate
