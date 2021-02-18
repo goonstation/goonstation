@@ -1,5 +1,14 @@
 
 (t)thu feb 18 21
+(u)Superlagg
+(p)3276
+(e)⚖🆕🔄|balance, feature, rework
+(*)Upgraded bot AI to be more responsive in general.
+(*)Buddy combat AI has been upgraded to allow them to move *and* shoot.
+(+)Secbots can be ordered to guard and lockdown specific areas.
+(+)Floorbots now eat loose floor metal by default.
+(+)Added actionbars to most times bot actions, like repairing floors and injecting people with drugs.
+(+)Ammofab now costs 1 TC.
 (u)Flappybat
 (p)3580
 (e)⚖🐛|balance, bug
