@@ -23,19 +23,18 @@ datum/preferences
 	var/medical_note
 	var/employment_note
 
-
-	var/be_conspirator = 0
-	var/be_changeling = 0
-	var/be_revhead = 0
-	var/be_syndicate = 0
-	var/be_wizard = 0
 	var/be_traitor = 0
-	var/be_werewolf = 0
-	var/be_vampire = 0
+	var/be_syndicate = 0
 	var/be_spy = 0
 	var/be_gangleader = 0
+	var/be_revhead = 0
+	var/be_changeling = 0
+	var/be_wizard = 0
+	var/be_werewolf = 0
+	var/be_vampire = 0
 	var/be_wraith = 0
 	var/be_blob = 0
+	var/be_conspirator = 0
 	var/be_flock = 0
 	var/be_misc = 0
 
@@ -1162,23 +1161,22 @@ $(updateCharacterPreviewPos);
 
 		if (jobban_isbanned(user, "Syndicate"))
 			HTML += "You are banned from playing antagonist roles."
-			src.be_conspirator = 0
-			src.be_changeling = 0
-			src.be_revhead = 0
-			src.be_syndicate = 0
-			src.be_wizard = 0
 			src.be_traitor = 0
-			src.be_werewolf = 0
-			src.be_vampire = 0
+			src.be_syndicate = 0
 			src.be_spy = 0
 			src.be_gangleader = 0
+			src.be_revhead = 0
+			src.be_changeling = 0
+			src.be_wizard = 0
+			src.be_werewolf = 0
+			src.be_vampire = 0
 			src.be_wraith = 0
 			src.be_blob = 0
+			src.be_conspirator = 0
 			src.be_flock = 0
 		else
 
 			HTML += {"
-			<a href="byond://?src=\ref[src];preferences=1;b_conspirator=1" class="[src.be_conspirator ? "yup" : "nope"]">[crap_checkbox(src.be_conspirator)] Conspirator</a>
 			<a href="byond://?src=\ref[src];preferences=1;b_traitor=1" class="[src.be_traitor ? "yup" : "nope"]">[crap_checkbox(src.be_traitor)] Traitor</a>
 			<a href="byond://?src=\ref[src];preferences=1;b_syndicate=1" class="[src.be_syndicate ? "yup" : "nope"]">[crap_checkbox(src.be_syndicate)] Nuclear Operative</a>
 			<a href="byond://?src=\ref[src];preferences=1;b_spy=1" class="[src.be_spy ? "yup" : "nope"]">[crap_checkbox(src.be_spy)] Spy/Thief</a>
@@ -1190,6 +1188,7 @@ $(updateCharacterPreviewPos);
 			<a href="byond://?src=\ref[src];preferences=1;b_vampire=1" class="[src.be_vampire ? "yup" : "nope"]">[crap_checkbox(src.be_vampire)] Vampire</a>
 			<a href="byond://?src=\ref[src];preferences=1;b_wraith=1" class="[src.be_wraith ? "yup" : "nope"]">[crap_checkbox(src.be_wraith)] Wraith</a>
 			<a href="byond://?src=\ref[src];preferences=1;b_blob=1" class="[src.be_blob ? "yup" : "nope"]">[crap_checkbox(src.be_blob)] Blob</a>
+			<a href="byond://?src=\ref[src];preferences=1;b_conspirator=1" class="[src.be_conspirator ? "yup" : "nope"]">[crap_checkbox(src.be_conspirator)] Conspirator</a>
 			<a href="byond://?src=\ref[src];preferences=1;b_flock=1" class="[src.be_flock ? "yup" : "nope"]">[crap_checkbox(src.be_flock)] Flockmind</a>
 			<a href="byond://?src=\ref[src];preferences=1;b_misc=1" class="[src.be_misc ? "yup" : "nope"]">[crap_checkbox(src.be_misc)] Other Foes</a>
 		"}
@@ -1762,16 +1761,6 @@ $(updateCharacterPreviewPos);
 			rebuild_data["popups"] = 1
 			src.view_tickets = !(src.view_tickets)
 
-		if (link_tags["b_conspirator"])
-			src.be_conspirator = !( src.be_conspirator )
-			src.SetChoices(user)
-			return
-
-		if (link_tags["b_changeling"])
-			src.be_changeling = !( src.be_changeling )
-			src.SetChoices(user)
-			return
-
 		if (link_tags["b_revhead"])
 			src.be_revhead = !( src.be_revhead )
 			src.SetChoices(user)
@@ -1821,6 +1810,12 @@ $(updateCharacterPreviewPos);
 			src.be_blob = !( src.be_blob)
 			src.SetChoices(user)
 			return
+
+		if (link_tags["b_conspirator"])
+			src.be_conspirator = !( src.be_conspirator )
+			src.SetChoices(user)
+			return
+
 		if (link_tags["b_flock"])
 			src.be_flock = !( src.be_flock)
 			src.SetChoices(user)
@@ -1977,20 +1972,20 @@ $(updateCharacterPreviewPos);
 			admin_music_volume = 50
 			radio_music_volume = 50
 			use_click_buffer = 0
-			be_conspirator = 0
-			be_changeling = 0
-			be_revhead = 0
-			be_syndicate = 0
-			be_wizard = 0
-			be_wraith = 0
-			be_blob = 0
-			be_flock = 0
-			be_misc = 0
 			be_traitor = 0
-			be_werewolf = 0
-			be_vampire = 0
+			be_syndicate = 0
 			be_spy = 0
 			be_gangleader = 0
+			be_revhead = 0
+			be_changeling = 0
+			be_wizard = 0
+			be_werewolf = 0
+			be_vampire = 0
+			be_wraith = 0
+			be_blob = 0
+			be_conspirator = 0
+			be_flock = 0
+			be_misc = 0
 			tooltip_option = TOOLTIP_ALWAYS
 			tgui_fancy = TRUE
 			tgui_lock = FALSE
