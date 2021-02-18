@@ -1787,9 +1787,8 @@ $(updateCharacterPreviewPos);
 			return
 
 		if (link_tags["b_changeling"])
-			src.be_changleing = !( src.be_changeling )
+			src.be_changeling = !( src.be_changeling )
 			src.SetChoices(user)
-			return
 
 		if (link_tags["b_wizard"])
 			src.be_wizard = !( src.be_wizard)
@@ -1816,7 +1815,7 @@ $(updateCharacterPreviewPos);
 			src.SetChoices(user)
 			return
 
-		if (link_tags["b_conspirator"])
+		if (link_tags["b_conspirato"])
 			src.be_conspirator = !( src.be_conspirator )
 			src.SetChoices(user)
 			return
