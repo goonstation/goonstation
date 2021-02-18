@@ -18,6 +18,8 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 	var/max_generations = 2
 	/// Optional simple sentence that describes how the traits appears on the material. i.e. "It is shiny."
 	var/desc = ""
+	/// The material that owns this trigger
+	var/datum/material/owner = null
 
 	proc/execute()
 		return
@@ -350,7 +352,17 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		return
 
 /datum/materialProc/plasmastone
+	var/total_plasma = 500
+
 	execute(var/location) //exp and temp both have the location as first argument so i can use this for both.
+		var/turf/T = get_turf(location)
+		if(T.density)
+			return
+		if(total_plasma <= 0)
+			if(prob(2))
+				src.owner.owner.visible_message("<span class='alert>[src.owner.owner] dissipates.</span>")
+				qdel(src.owner.owner)
+			return
 		for (var/turf/simulated/floor/target in range(1,location))
 			if(ON_COOLDOWN(target, "plasmastone_plasma_generate", 10 SECONDS)) continue
 			if(!target.blocks_air && target.air)
@@ -359,6 +371,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 
 				var/datum/gas_mixture/payload = unpool(/datum/gas_mixture)
 				payload.toxins = 25
+				total_plasma -= payload.toxins
 				payload.temperature = T20C
 				payload.volume = R_IDEAL_GAS_EQUATION * T20C / 1000
 				target.air.merge(payload)

@@ -211,7 +211,7 @@
 		if (!src || !istype(src))
 			return 0
 
-		if (src.stamina_based_stun != 0 && src.cell && can_stun())
+		if (src.stamina_based_stun != 0 && (src.cell || src.uses_electricity == 0) && can_stun())
 			src.stamina_damage = src.stamina_based_stun_amount
 			return 1
 		else
@@ -258,7 +258,7 @@
 				logTheThing("combat", user, victim, "stuns [constructTarget(victim,"combat")] with the [src.name] at [log_loc(victim)].")
 				JOB_XP(victim, "Clown", 3)
 				if (type == "stun_classic")
-					playsound(get_turf(src), "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1, -1)
+					playsound(get_turf(src), "swing_hit", 50, 1, -1)
 				else
 					flick(flick_baton_active, src)
 					playsound(get_turf(src), "sound/impact_sounds/Energy_Hit_3.ogg", 50, 1, -1)
@@ -431,6 +431,8 @@
 		..()
 
 	proc/do_flip_stuff(var/mob/user, var/intent)
+		if (src.uses_electricity == 0)
+			return
 		if (intent == INTENT_HARM)
 			if (src.flipped) //swapping hands triggers the intent switch too, so we dont wanna spam that
 				return
@@ -489,17 +491,18 @@
 	desc = "A wooden truncheon for beating criminal scum."
 	icon_state = "baton"
 	item_state = "classic_baton"
-	force = 10
+	force = 15
 	mats = 0
 	contraband = 6
 	icon_on = "baton"
 	icon_off = "baton"
 	uses_charges = 0
 	uses_electricity = 0
+	stamina_damage = 105
+	stamina_cost = 25
 	stun_normal_weakened = 8
 	stun_normal_stuttering = 8
-	instant_harmbaton_stun = 1
-	stamina_based_stun_amount = 90
+	stamina_based_stun_amount = 105
 	item_function_flags = 0
 
 	New()

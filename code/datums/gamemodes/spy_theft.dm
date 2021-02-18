@@ -304,7 +304,7 @@
 		if (isvirtual(H) || istype(get_area(H),/area/afterlife))
 			continue
 
-		if (istype(H.loc, /obj/cryotron_spawner))
+		if (istype(H.loc, /obj/cryotron))
 			continue
 
 		var/turf/T = get_turf(H)
