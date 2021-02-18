@@ -12,6 +12,8 @@ Contains:
 #define SINGULARITY_MAX_DIMENSION 11//defines the maximum dimension possible by a player created singularity.
 #define MIN_TO_CONTAIN 4
 #define DEFAULT_AREA 25
+#define EVENT_GROWTH 3//the rate at which the event proc radius is scaled relative to the radius of the singularity
+#define EVENT_MINIMUM 5//the base value added to the event proc radius, serves as the radius of a 1x1
 
 // I'm sorry
 //////////////////////////////////////////////////// Singularity generator /////////////////////
@@ -337,7 +339,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 
 /obj/machinery/the_singularity/proc/Toxmob()
 
-	for (var/mob/living/carbon/M in orange(radius*3+4, src.get_center()))
+	for (var/mob/living/carbon/M in orange(radius*EVENT_GROWTH+EVENT_MINIMUM, src.get_center()))
 		if (ishuman(M))
 			var/mob/living/carbon/human/H = M
 			if (H.wear_suit)
@@ -348,7 +350,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 
 /obj/machinery/the_singularity/proc/Mezzer()
 
-	for (var/mob/living/carbon/M in oviewers(radius*4+6, src.get_center()))
+	for (var/mob/living/carbon/M in oviewers(radius*EVENT_GROWTH+EVENT_MINIMUM, src.get_center()))
 		if (ishuman(M))
 			var/mob/living/carbon/human/H = M
 			if (istype(H.glasses,/obj/item/clothing/glasses/meson))
@@ -360,7 +362,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 
 /obj/machinery/the_singularity/proc/BHolerip()
 
-	for (var/turf/T in orange(radius*4+4, src.get_center()))
+	for (var/turf/T in orange(radius*EVENT_GROWTH+EVENT_MINIMUM, src.get_center()))
 		LAGCHECK(LAG_LOW)
 		if (prob(70))
 			continue
