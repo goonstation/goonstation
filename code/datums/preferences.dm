@@ -1815,7 +1815,7 @@ $(updateCharacterPreviewPos);
 			src.SetChoices(user)
 			return
 
-		if (link_tags["b_conspirato"])
+		if (link_tags["b_conspirator"])
 			src.be_conspirator = !( src.be_conspirator )
 			src.SetChoices(user)
 			return
