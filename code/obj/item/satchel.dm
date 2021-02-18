@@ -19,7 +19,7 @@
 	attackby(obj/item/W as obj, mob/user as mob)
 		var/proceed = 0
 		for(var/check_path in src.allowed)
-			if(istype(W, check_path))
+			if(istype(W, check_path) && W.w_class < 4)
 				proceed = 1
 				break
 		if (!proceed)
@@ -112,8 +112,9 @@
 
 	MouseDrop_T(atom/movable/O as obj, mob/user as mob)
 		var/proceed = 0
+		var/obj/item/W = O
 		for(var/check_path in src.allowed)
-			if(istype(O, check_path))
+			if(istype(O, check_path) && W.w_class < 4)
 				proceed = 1
 				break
 		if (!proceed)
