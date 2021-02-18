@@ -329,10 +329,8 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		if(prob(33))
 			if(istype(attacked) && !isrestrictedz(T.z)) // Haine fix for undefined proc or verb /turf/simulated/floor/set loc()
 				. = get_offset_target_turf(get_turf(attacked), rand(-8, 8), rand(-8, 8))
-				var/failure = 0
 				var/fail_msg = ""
 				if (prob(25))
-					failure = 1
 					fail_msg = " but you lose [owner]!"
 					attacker.drop_item(owner)
 					playsound(attacker.loc, "sound/impact_sounds/Flesh_Tear_3.ogg", 40)
