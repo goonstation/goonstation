@@ -331,10 +331,10 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 				. = get_offset_target_turf(get_turf(attacked), rand(-8, 8), rand(-8, 8))
 				var/failure = 0
 				var/fail_msg = ""
-				if ((attacker == attacked) && prob(33))
+				if (prob(25))
 					failure = 1
-					fail_msg = " but not all of you makes it! Ouch!"
-					random_brute_damage(attacker, 30, 0)
+					fail_msg = " but you lose [owner]!"
+					attacker.drop_item(owner)
 					playsound(attacker.loc, "sound/impact_sounds/Flesh_Tear_3.ogg", 40)
 				attacked.visible_message("<span class='alert'>[attacked] is warped away!</span>")
 				boutput(attacked, "<span class='alert'>You suddenly teleport... [fail_msg]</span>")
