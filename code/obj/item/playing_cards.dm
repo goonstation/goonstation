@@ -340,7 +340,7 @@
             var/mob/user = usr
             user.deathConfetti()
             playsound(get_turf(user.loc), 'sound/musical_instruments/Bikehorn_1.ogg', 50)
-            user.visible_message("<span class='combat'><b>[uppertext(user.name)] WINS THE GAME!</b>")
+            user.visible_message("<span class='combat'><b>[uppertext(user.name)] WINS THE GAME!</b></span>")
             if(!foiled)
                 user.take_brain_damage(1000)
             else
@@ -1113,16 +1113,16 @@
     attackby(obj/item/W as obj, mob/user as mob)
         if((icon_state == "stg-box-open") && (istool(W,TOOL_CUTTING) || istool(W,TOOL_SNIPPING)))
             if(loc != user)
-                user.show_text("You need to hold the box if you want enough leverage to rip it to pieces!")
+                user.show_text("You need to hold the box if you want enough leverage to rip it to pieces!","red")
                 return
             actions.start(new /datum/action/bar/private/stg_tear(user,src),user)
         else if(istool(user.equipped(),TOOL_PRYING) && (icon_state == "stg-box-torn") || (icon_state == "stg-blister" && stored_deck))
             if(icon_state == "stg-box-torn")
-                user.visible_message("<span class='green'><b>[user.name]</b> quickly dislodges the blister pack!")
+                user.visible_message("<span class='green'><b>[user.name]</b> quickly dislodges the blister pack!</span>")
                 icon_state = "stg-blister"
                 user.put_in_hand_or_drop(new /obj/item/stg_box_waste)
             else
-                user.visible_message("<span class='green'><b>[user.name]</b> swiftly splits the [name] in two, retrieving [his_or_her(user)] cards!")
+                user.visible_message("<span class='green'><b>[user.name]</b> swiftly splits the [name] in two, retrieving [his_or_her(user)] cards!</span>")
                 user.put_in_hand_or_drop(stored_deck)
                 stored_deck = null
                 name = "discarded blister packaging"
@@ -1147,17 +1147,17 @@
 
     onStart()
         ..()
-        user.visible_message("<span class='alert'><b>[user.name]</b> [pick(messages)]")
+        user.visible_message("<span class='alert'><b>[user.name]</b> [pick(messages)]</span>")
 
     onUpdate()
         ..()
         if(box.loc != user)
-            user.show_text("You need to hold the box if you want enough leverage to open it!")
+            user.show_text("You need to hold the box if you want enough leverage to open it!","red")
             interrupt(INTERRUPT_ALWAYS)
 
     onEnd()
         ..()
-        user.visible_message("<span class='green'><b>[user.name]</b> lets out a sigh of relief as the box's tab is freed from the depths of thin cardboard packaging...")
+        user.visible_message("<span class='green'><b>[user.name]</b> lets out a sigh of relief as the box's tab is freed from the depths of thin cardboard packaging...</span>")
         box.icon_state = "stg-box-open"
 
 /datum/action/bar/private/stg_tear
@@ -1178,19 +1178,19 @@
 
     onStart()
         ..()
-        user.visible_message("<span class='alert'><b>[user.name]</b> [pick(messages)]")
+        user.visible_message("<span class='alert'><b>[user.name]</b> [pick(messages)]</span>")
 
     onUpdate()
         ..()
         if(box.loc != user)
-            user.show_text("You need to hold the box if you want enough leverage to rip it to pieces!")
+            user.show_text("You need to hold the box if you want enough leverage to rip it to pieces!","red")
             interrupt(INTERRUPT_ALWAYS)
         if(!istool(user.equipped(),TOOL_CUTTING) && !istool(user.equipped(),TOOL_SNIPPING))
             interrupt(INTERRUPT_ALWAYS)
 
     onEnd()
         ..()
-        user.visible_message("<span class='green'><b>[user.name]</b> has thoroughly mutilated the StG Preconstructed Deck Box...")
+        user.visible_message("<span class='green'><b>[user.name]</b> has thoroughly mutilated the StG Preconstructed Deck Box...</span>")
         box.icon_state = "stg-box-torn"
         var/obj/decal/cleanable/generic/decal = make_cleanable(/obj/decal/cleanable/generic,get_turf(user.loc))
         decal.color = pick("#000000","#6f0a0a","#a0621b")
@@ -1209,24 +1209,24 @@
     onStart()
         ..()
         if(box.icon_state == "stg-box-torn")
-            user.visible_message("<span class='alert'><b>[user.name]</b> tries to free a blister pack from the [box.name]...")
+            user.visible_message("<span class='alert'><b>[user.name]</b> tries to free a blister pack from the [box.name]...</span>")
         else
-            user.visible_message("<span class='alert'><b>[user.name]</b> awkwardly scoops cards out of the [box.name]...")
+            user.visible_message("<span class='alert'><b>[user.name]</b> awkwardly scoops cards out of the [box.name]...</span>")
 
     onUpdate()
         ..()
         if(box.loc != user)
-            user.show_text("You need to hold the [box.name] if you want enough leverage to pull it apart!")
+            user.show_text("You need to hold the [box.name] if you want enough leverage to pull it apart!","red")
             interrupt(INTERRUPT_ALWAYS)
 
     onEnd()
         ..()
         if(box.icon_state == "stg-box-torn")
-            user.visible_message("<span class='green'><b>[user.name]</b> finally dislodges the blister pack! That would have been much easier with some sort of prying tool...")
+            user.visible_message("<span class='green'><b>[user.name]</b> finally dislodges the blister pack! That would have been much easier with some sort of prying tool...</span>")
             box.icon_state = "stg-blister"
             user.put_in_hand_or_drop(new /obj/item/stg_box_waste)
         else
-            user.visible_message("<span class='green'><b>[user.name]</b> has scooped the last card out of the blister pack! That would have been much easier with some sort of prying tool...")
+            user.visible_message("<span class='green'><b>[user.name]</b> has scooped the last card out of the blister pack! That would have been much easier with some sort of prying tool...</span>")
             user.put_in_hand_or_drop(box.stored_deck)
             box.stored_deck = null
             box.name = "discarded blister packaging"
