@@ -2299,15 +2299,16 @@
 		if(length(destinations))
 			var/atom/picked = pick(destinations)
 			var/count_sent = 0
-			particleMaster.SpawnSystem(new /datum/particleSystem/tpbeam(get_turf(picked.loc)))
-			for(var/atom/movable/M in src.loc)
-				if(M == src || M.invisibility || M.anchored) continue
-				M.set_loc(get_turf(picked.loc))
-				count_sent++
-			input.signal = count_sent
-			SPAWN_DBG(0)
-				SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_MSG,input)
-				SEND_SIGNAL(picked,COMSIG_MECHCOMP_TRANSMIT_MSG,input)
+			SPAWN_DBG(1 SECOND)
+				particleMaster.SpawnSystem(new /datum/particleSystem/tpbeam(get_turf(picked.loc)))
+				for(var/atom/movable/M in src.loc)
+					if(M == src || M.invisibility || M.anchored) continue
+					M.set_loc(get_turf(picked.loc))
+					count_sent++
+				input.signal = count_sent
+				SPAWN_DBG(0)
+					SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_MSG,input)
+					SEND_SIGNAL(picked,COMSIG_MECHCOMP_TRANSMIT_MSG,input)
 		return
 
 	updateIcon()
