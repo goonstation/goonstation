@@ -1,4 +1,9 @@
 
+(t)thu feb 18 21
+(u)Flappybat
+(p)3580
+(e)⚖🐛|balance, bug
+(*)Syndicate riot baton now deals stamina damage instead of instant stun, two hits are required to knockdown. Now functions like an infinite ammo stun baton with extra blunt damage on harm intent.
 (t)wed feb 17 21
 (u)Sovexe
 (p)3746
