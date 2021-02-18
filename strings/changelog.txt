@@ -1,5 +1,9 @@
 
 (t)thu feb 18 21
+(u)virvatuli
+(p)3736
+(e)|
+(+)Added a new and unique pulse rifle/lawbringer pulse firing sound!
 (u)TTerc
 (p)3627
 (e)⚖🆕|balance, feature
