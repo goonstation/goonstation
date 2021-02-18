@@ -18104,6 +18104,9 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
+/obj/decal/poster/wallsign/medal{
+	pixel_y = 27
+	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/hos)
 "aNQ" = (
@@ -30168,10 +30171,6 @@
 /obj/machinery/drainage,
 /turf/simulated/floor/specialroom/chapel,
 /area/station/chapel/sanctuary)
-"bnu" = (
-/obj/decal/poster/wallsign/medal,
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/security/hos)
 "bnv" = (
 /obj/grille/catwalk{
 	dir = 9
@@ -92319,7 +92318,7 @@ aGx
 aIZ
 aGx
 aGx
-bnu
+aME
 aNP
 aOQ
 aSZ
