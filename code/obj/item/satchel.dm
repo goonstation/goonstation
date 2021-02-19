@@ -177,7 +177,7 @@
 		icon_state = "hydrosatchel"
 		allowed = list(/obj/item/seed,
 		/obj/item/plant,
-		/obj/item/reagent_containers/food,
+		/obj/item/reagent_containers/food/snacks,
 		/obj/item/organ,
 		/obj/item/clothing/head/butt,
 		/obj/item/parts/human_parts/arm,
