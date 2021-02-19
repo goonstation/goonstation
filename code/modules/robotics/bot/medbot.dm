@@ -576,7 +576,7 @@
 		src.path = null
 
 /datum/action/bar/icon/medbot_inject
-	duration = 30 SECONDS
+	duration = 3 SECONDS
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	id = "medbot_inject"
 	icon = 'icons/obj/syringe.dmi'
