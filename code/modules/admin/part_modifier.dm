@@ -214,7 +214,7 @@ var/list/default_limb_paths = list("l_arm" = /obj/item/parts/human_parts/arm/lef
 			var/client/C = user
 			if (C.holder?.level >= LEVEL_PA)
 				see_vars = 1
-		else if (usr?.client?.holder?.level >= LEVEL_PA) // ONE OF YOU HAS TO EXIST
+		else if (user?.client?.holder?.level >= LEVEL_PA) // ONE OF YOU HAS TO EXIST
 			see_vars = 1
 
 		var/HTML = {"<head><style>

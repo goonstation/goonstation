@@ -29,12 +29,6 @@
 		else
 			on_inactive()
 
-		//src.overlays = null
-		//if (src.active) src.overlays += image('icons/obj/power.dmi', "furn-burn")
-		//if (fuelperc >= 20) src.overlays += image('icons/obj/power.dmi', "furn-c1")
-		//if (fuelperc >= 40) src.overlays += image('icons/obj/power.dmi', "furn-c2")
-		//if (fuelperc >= 60) src.overlays += image('icons/obj/power.dmi', "furn-c3")
-		//if (fuelperc >= 80) src.overlays += image('icons/obj/power.dmi', "furn-c4")
 		update_icon()
 
 	proc/on_burn()

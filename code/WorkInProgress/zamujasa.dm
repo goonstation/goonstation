@@ -154,16 +154,16 @@
 	var/list/affecting = list()
 
 	attack_hand(mob/user as mob)
-		boutput(usr, "rotating mirror...")
+		boutput(user, "rotating mirror...")
 		facing = 1 - facing
 		for (var/obj/machinery/power/pt_laser/PTL in affecting)
 			//
-			boutput(usr, "[PTL] would be notified")
+			boutput(user, "[PTL] would be notified")
 
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (iswrenchingtool(W))
-			boutput(usr, "this would deconstruct it.")
+			boutput(user, "this would deconstruct it.")
 			return
 
 		..()

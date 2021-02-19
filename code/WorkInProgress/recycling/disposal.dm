@@ -1500,9 +1500,9 @@
 	attackby(obj/item/W as obj, mob/user as mob)
 		if(..(W, user)) return
 		else if(ispulsingtool(W))
-			. = alert(usr, "What should trigger the sensor?","Disposal Sensor", "Creatures", "Anything", "A mail tag")
+			. = alert(user, "What should trigger the sensor?","Disposal Sensor", "Creatures", "Anything", "A mail tag")
 			if (.)
-				if (get_dist(usr, src) > 1 || usr.stat)
+				if (get_dist(user, src) > 1 || user.stat)
 					return
 
 				switch (.)
@@ -1513,8 +1513,8 @@
 						sense_mode = SENSE_OBJECT
 
 					if ("A mail tag")
-						. = copytext(ckeyEx(input(usr, "What should the tag be?", "What?")), 1, 33)
-						if (. && get_dist(usr, src) < 2 && !usr.stat)
+						. = copytext(ckeyEx(input(user, "What should the tag be?", "What?")), 1, 33)
+						if (. && get_dist(user, src) < 2 && !user.stat)
 							sense_mode = SENSE_TAG
 							sense_tag_filter = .
 

@@ -245,6 +245,7 @@
 		incidence = 0
 		special_data.len = 0
 		overlays = null
+		overlay_refs = null
 		hitlist.len = 0
 		transform = null
 		internal_speed = null

@@ -54,7 +54,7 @@
 				PDA.eject_id_card()
 			ID.set_loc(src)
 			src.user_id = ID
-			update_static_data(usr)
+			update_static_data(user)
 			tgui_process.update_uis(src)
 			return
 

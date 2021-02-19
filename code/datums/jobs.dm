@@ -134,8 +134,9 @@
 			if (src.change_name_on_spawn && !jobban_isbanned(M, "Custom Names"))
 				//if (ishuman(M)) //yyeah this doesn't work with critters fix later
 				var/default = M.real_name + " the " + src.name
+				var/orig_real = M.real_name
 				M.choose_name(3, src.name, default)
-				if(M.real_name != default)
+				if(M.real_name != default && M.real_name != orig_real)
 					phrase_log.log_phrase("name-[ckey(src.name)]", M.real_name, no_duplicates=TRUE)
 
 			if (M.traitHolder && !M.traitHolder.hasTrait("loyalist"))
