@@ -10254,6 +10254,17 @@
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/primary/central)
+"asz" = (
+/obj/machinery/door/firedoor/border_only,
+/obj/table/reinforced/auto,
+/obj/window/reinforced/south,
+/obj/machinery/door/window/westleft{
+	req_access_txt = "28"
+	},
+/obj/machinery/cashreg,
+/obj/item/reagent_containers/food/snacks/cake/chocolate/gateau,
+/turf/simulated/floor/black,
+/area/station/crew_quarters/kitchen)
 "asA" = (
 /obj/landmark/start{
 	name = "Chef"
@@ -10284,6 +10295,14 @@
 /obj/item/kitchen/utensil/fork,
 /obj/item/plate,
 /obj/item/reagent_containers/food/drinks/bowl,
+/obj/disposalpipe/segment/food,
+/turf/simulated/floor/specialroom/cafeteria,
+/area/station/crew_quarters/kitchen)
+"asE" = (
+/obj/table/reinforced/auto,
+/obj/item/reagent_containers/food/snacks/breadloaf,
+/obj/item/reagent_containers/food/drinks/drinkingglass/icing,
+/obj/item/reagent_containers/food/drinks/drinkingglass/icing,
 /obj/disposalpipe/segment/food,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
@@ -24671,6 +24690,20 @@
 /obj/item/deconstructor,
 /obj/item/device/radio/headset/engineer,
 /obj/item/device/radio/headset/engineer,
+/turf/simulated/floor/yellow,
+/area/station/engine/engineering/ce)
+"aRh" = (
+/obj/table/reinforced/auto,
+/obj/machinery/light/lamp/green{
+	pixel_x = -6;
+	pixel_y = 4;
+	switchon = 1
+	},
+/obj/item/pinpointer/teg_semi{
+	pixel_x = 3;
+	pixel_y = 1
+	},
+/obj/item/paper/engine,
 /turf/simulated/floor/yellow,
 /area/station/engine/engineering/ce)
 "aRi" = (
@@ -45216,32 +45249,7 @@
 	dir = 6
 	},
 /area/space)
-"efg" = (
-/obj/machinery/door/firedoor/border_only,
-/obj/table/reinforced/auto,
-/obj/window/reinforced/south,
-/obj/machinery/door/window/westleft{
-	req_access_txt = "28"
-	},
-/obj/machinery/cashreg,
-/obj/item/reagent_containers/food/snacks/cake/chocolate/gateau,
-/turf/simulated/floor/black,
-/area/station/crew_quarters/kitchen)
-"eLW" = (
-/obj/decal/tile_edge/line/purple{
-	dir = 8;
-	icon_state = "line1"
-	},
-/obj/blind_switch/area/west,
-/obj/machinery/vending/janitor,
-/turf/simulated/floor,
-/area/station/janitor/office)
-"gly" = (
-/obj/cable,
-/obj/machinery/photocopier,
-/turf/simulated/floor,
-/area/station/crew_quarters/lounge/starboard)
-"gUy" = (
+"cDB" = (
 /obj/machinery/door/window/southright{
 	name = "interior door-'Genpop'";
 	req_access_txt = "1"
@@ -45254,31 +45262,16 @@
 	},
 /turf/simulated/floor/red,
 /area/station/security/main)
-"iiy" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+"eLW" = (
+/obj/decal/tile_edge/line/purple{
+	dir = 8;
+	icon_state = "line1"
 	},
-/obj/window/crystal/reinforced/north,
-/obj/disposalpipe/segment/ejection{
-	dir = 4
-	},
-/obj/window/crystal/reinforced/north,
-/obj/landmark/gps_waypoint,
-/turf/simulated/floor/red,
-/area/station/security/main)
-"iWh" = (
-/obj/stool/chair/office/yellow{
-	dir = 4
-	},
-/obj/landmark/start{
-	name = "Engineer"
-	},
-/obj/landmark/gps_waypoint,
-/turf/simulated/floor/yellow,
-/area/station/engine/engineering)
-"jcZ" = (
+/obj/blind_switch/area/west,
+/obj/machinery/vending/janitor,
+/turf/simulated/floor,
+/area/station/janitor/office)
+"fjL" = (
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
@@ -45315,19 +45308,32 @@
 	},
 /turf/simulated/floor/red,
 /area/station/security/main)
-"jor" = (
+"fIe" = (
 /obj/cable{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/item/device/radio/intercom/AI{
-	broadcasting = 0;
-	dir = 8
+/obj/disposalpipe/segment/mail{
+	dir = 4
 	},
-/turf/simulated/floor/circuit,
-/area/station/turret_protected/ai)
-"kzG" = (
+/obj/item/storage/briefcase/toxins{
+	pixel_x = -5;
+	pixel_y = 16
+	},
+/turf/simulated/floor/carpet{
+	dir = 10;
+	icon_state = "fpurple2"
+	},
+/area/station/science/research_director{
+	workplace = 1
+	})
+"gly" = (
+/obj/cable,
+/obj/machinery/photocopier,
+/turf/simulated/floor,
+/area/station/crew_quarters/lounge/starboard)
+"iUK" = (
 /obj/machinery/door_timer{
 	id = "genpop";
 	name = "door timer (GenPop)";
@@ -45343,22 +45349,56 @@
 /obj/window/crystal/reinforced/south,
 /turf/simulated/floor/red,
 /area/station/security/main)
-"mru" = (
-/obj/table/reinforced/auto,
-/obj/machinery/light/lamp/green{
-	pixel_x = -6;
-	pixel_y = 4;
-	switchon = 1
+"iWh" = (
+/obj/stool/chair/office/yellow{
+	dir = 4
 	},
-/obj/item/pinpointer/teg_semi{
-	pixel_x = 3;
-	pixel_y = 1
+/obj/landmark/start{
+	name = "Engineer"
 	},
-/obj/item/paper/engine{
-	pixel_x = 4
-	},
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/yellow,
-/area/station/engine/engineering/ce)
+/area/station/engine/engineering)
+"jbi" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/window/crystal/reinforced/north,
+/obj/disposalpipe/segment/ejection{
+	dir = 4
+	},
+/obj/window/crystal/reinforced/north,
+/obj/landmark/gps_waypoint,
+/turf/simulated/floor/red,
+/area/station/security/main)
+"jor" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/item/device/radio/intercom/AI{
+	broadcasting = 0;
+	dir = 8
+	},
+/turf/simulated/floor/circuit,
+/area/station/turret_protected/ai)
+"jxT" = (
+/obj/window/crystal/reinforced/south,
+/obj/window/crystal/reinforced/south,
+/turf/simulated/wall/auto/gannets,
+/area/station/security/main)
+"mkG" = (
+/obj/machinery/port_a_brig,
+/obj/window/crystal/reinforced/south,
+/obj/item/device/radio/intercom/brig{
+	broadcasting = 1;
+	dir = 4
+	},
+/turf/simulated/floor/red,
+/area/station/security/main)
 "mMk" = (
 /obj/cable{
 	d1 = 4;
@@ -45372,20 +45412,20 @@
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
-"ouD" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+"mOW" = (
+/obj/table/reinforced/auto,
+/obj/window/crystal/reinforced/north,
+/obj/machinery/light_switch/west,
+/obj/machinery/defib_mount{
+	pixel_x = 2;
+	pixel_y = -4
 	},
-/obj/landmark/gps_waypoint,
-/turf/simulated/floor,
-/area/station/science/lab)
-"qdX" = (
-/obj/window/crystal/reinforced/south,
+/obj/item/paper/Port_A_Brig,
+/obj/item/remote/porter/port_a_brig,
+/obj/window/crystal/reinforced/north,
 /turf/simulated/floor/red,
 /area/station/security/main)
-"qhY" = (
+"nbi" = (
 /obj/machinery/door/firedoor/border_only,
 /obj/machinery/door/airlock/gannets/glass/security/alt{
 	name = "glass airlock-'Brig'"
@@ -45408,28 +45448,25 @@
 	},
 /turf/simulated/floor/red,
 /area/station/security/main)
-"qHB" = (
-/obj/machinery/door/window/northright{
-	name = "interior door-'Solitary Cell One'";
-	req_access_txt = "1"
-	},
+"ouD" = (
 /obj/cable{
 	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
+	d2 = 2;
+	icon_state = "1-2"
 	},
-/obj/disposalpipe/segment/ejection{
-	dir = 1;
-	icon_state = "pipe-c"
-	},
+/obj/landmark/gps_waypoint,
+/turf/simulated/floor,
+/area/station/science/lab)
+"oMb" = (
+/obj/window/crystal/reinforced/south,
 /turf/simulated/floor/red,
 /area/station/security/main)
-"sxR" = (
+"qHq" = (
 /obj/window/crystal/reinforced/south,
 /obj/window/crystal/reinforced/south,
 /turf/simulated/floor/red,
 /area/station/security/main)
-"sLo" = (
+"sNg" = (
 /obj/machinery/door/window/northleft{
 	name = "interior door-'Solitary Cell Two'";
 	req_access_txt = "1"
@@ -45454,19 +45491,6 @@
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade)
-"tYZ" = (
-/obj/window/crystal/reinforced/south,
-/obj/window/crystal/reinforced/south,
-/turf/simulated/wall/auto/gannets,
-/area/station/security/main)
-"uiY" = (
-/obj/table/reinforced/auto,
-/obj/item/reagent_containers/food/snacks/breadloaf,
-/obj/item/reagent_containers/food/drinks/drinkingglass/icing,
-/obj/item/reagent_containers/food/drinks/drinkingglass/icing,
-/obj/disposalpipe/segment/food,
-/turf/simulated/floor/specialroom/cafeteria,
-/area/station/crew_quarters/kitchen)
 "ukX" = (
 /obj/cable{
 	d1 = 4;
@@ -45479,54 +45503,28 @@
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay/lobby)
-"utc" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
-/obj/item/storage/briefcase/toxins{
-	pixel_x = -5;
-	pixel_y = 16
-	},
-/turf/simulated/floor/carpet{
-	dir = 10;
-	icon_state = "fpurple2"
-	},
-/area/station/science/research_director{
-	workplace = 1
-	})
-"uwx" = (
-/obj/table/reinforced/auto,
-/obj/window/crystal/reinforced/north,
-/obj/machinery/light_switch/west,
-/obj/machinery/defib_mount{
-	pixel_x = 2;
-	pixel_y = -4
-	},
-/obj/item/paper/Port_A_Brig,
-/obj/item/remote/porter/port_a_brig,
-/obj/window/crystal/reinforced/north,
-/turf/simulated/floor/red,
-/area/station/security/main)
-"vGI" = (
-/obj/machinery/port_a_brig,
-/obj/window/crystal/reinforced/south,
-/obj/item/device/radio/intercom/brig{
-	broadcasting = 1;
-	dir = 4
-	},
-/turf/simulated/floor/red,
-/area/station/security/main)
 "vMk" = (
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/specialroom/chapel{
 	dir = 4
 	},
 /area/station/chapel/sanctuary)
+"xym" = (
+/obj/machinery/door/window/northright{
+	name = "interior door-'Solitary Cell One'";
+	req_access_txt = "1"
+	},
+/obj/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/obj/disposalpipe/segment/ejection{
+	dir = 1;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/floor/red,
+/area/station/security/main)
 
 (1,1,1) = {"
 aaa
@@ -80469,8 +80467,8 @@ bbe
 bcx
 beo
 bfO
-uwx
-vGI
+mOW
+mkG
 bhf
 blg
 bmo
@@ -80771,8 +80769,8 @@ bbe
 bcy
 bep
 bfP
-qHB
-qdX
+xym
+oMb
 bjS
 blh
 bmp
@@ -81073,8 +81071,8 @@ bbe
 bcw
 bcw
 bcw
-jcZ
-gUy
+fjL
+cDB
 bjT
 bep
 bmq
@@ -81375,8 +81373,8 @@ bbe
 bcz
 beq
 bfQ
-sLo
-sxR
+sNg
+qHq
 bjU
 bli
 bmr
@@ -81677,8 +81675,8 @@ bbe
 bcA
 ber
 bfO
-iiy
-kzG
+jbi
+iUK
 bjV
 blj
 bms
@@ -81979,8 +81977,8 @@ bbe
 bcw
 bcw
 bcw
-qhY
-tYZ
+nbi
+jxT
 bjW
 blk
 blj
@@ -92211,7 +92209,7 @@ aqY
 art
 anB
 asd
-efg
+asz
 arP
 atr
 atN
@@ -93721,7 +93719,7 @@ ard
 apZ
 arM
 ash
-uiY
+asE
 bBQ
 atu
 atQ
@@ -94652,7 +94650,7 @@ aJU
 aLV
 aNM
 aPu
-mru
+aRh
 aSO
 aLT
 aVV
@@ -99485,7 +99483,7 @@ aKl
 aNZ
 aPF
 aRr
-utc
+fIe
 aUs
 aWd
 aXO
