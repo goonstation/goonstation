@@ -166,7 +166,6 @@ datum/teg_transformation
 		src.teg.circ1.setMaterial(getMaterial(initial(src.mat_id)))
 		src.teg.circ2.setMaterial(getMaterial(initial(src.mat_id)))
 		qdel(src.teg.active_form)
-		src.teg.active_form = null
 
   //                    //
   // TEG TRANFORMATIONS //
