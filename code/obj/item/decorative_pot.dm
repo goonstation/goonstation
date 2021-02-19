@@ -28,7 +28,7 @@
 						t.plantyboi = null
 						t.icon_state = "trowel"
 						return
-				if(/obj/item/seed)
+				if(istype(weapon,/obj/item/seed))
 						user.visible_message("It's an empty pot, there's nowhere to plant the seed! Maybe you need to use a trowel and place an existing plant into it?")
 				else
 						..()
