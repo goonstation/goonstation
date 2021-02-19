@@ -304,6 +304,9 @@
 	},
 /area/space)
 "aau" = (
+/obj/grille/catwalk{
+	dir = 4
+	},
 /obj/landmark/magnet_shield,
 /obj/securearea{
 	desc = "A warning that demarcates where the magnetic area begins.";
@@ -311,15 +314,9 @@
 	icon_state = "magwarning";
 	name = "Magnet Area Boundary"
 	},
-/obj/grille/catwalk{
-	dir = 10
-	},
+/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
-	dir = 8
-	},
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 1;
-	icon_state = "catwalk_cross"
+	dir = 4
 	},
 /area/mining/magnet)
 "aav" = (
@@ -327,12 +324,13 @@
 /area/station/maintenance/inner/nw)
 "aaw" = (
 /obj/grille/catwalk{
-	dir = 5;
+	dir = 9;
 	icon_state = "catwalk_cross"
 	},
 /obj/landmark/magnet_shield,
 /obj/securearea{
 	desc = "A warning that demarcates where the magnetic area begins.";
+	dir = 1;
 	icon_state = "magwarning";
 	name = "Magnet Area Boundary"
 	},
@@ -344,7 +342,7 @@
 	},
 /obj/securearea{
 	desc = "A warning that demarcates where the magnetic area begins.";
-	dir = 5;
+	dir = 9;
 	icon_state = "magwarning";
 	name = "Magnet Area Boundary"
 	},
@@ -354,7 +352,7 @@
 	name = "ACTIVE MAGNET AREA"
 	},
 /turf/simulated/floor/airless/plating/catwalk{
-	dir = 5
+	dir = 9
 	},
 /area/mining/magnet)
 "aax" = (
@@ -4650,6 +4648,16 @@
 "aZz" = (
 /turf/simulated/wall/auto/reinforced/jen/purple,
 /area/station/science/testchamber)
+"aZB" = (
+/obj/grille/catwalk,
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 4;
+	icon_state = "catwalk_cross"
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 1
+	},
+/area/space)
 "aZQ" = (
 /obj/wingrille_spawn/auto/crystal,
 /obj/cable{
@@ -31686,13 +31694,12 @@
 /area/station/security/main)
 "jny" = (
 /obj/grille/catwalk{
-	dir = 9;
+	dir = 5;
 	icon_state = "catwalk_cross"
 	},
 /obj/landmark/magnet_shield,
 /obj/securearea{
 	desc = "A warning that demarcates where the magnetic area begins.";
-	dir = 1;
 	icon_state = "magwarning";
 	name = "Magnet Area Boundary"
 	},
@@ -31704,7 +31711,7 @@
 	},
 /obj/securearea{
 	desc = "A warning that demarcates where the magnetic area begins.";
-	dir = 9;
+	dir = 5;
 	icon_state = "magwarning";
 	name = "Magnet Area Boundary"
 	},
@@ -31714,7 +31721,7 @@
 	name = "ACTIVE MAGNET AREA"
 	},
 /turf/simulated/floor/airless/plating/catwalk{
-	dir = 9
+	dir = 5
 	},
 /area/mining/magnet)
 "jnz" = (
@@ -55532,37 +55539,8 @@
 /turf/simulated/floor/darkblue,
 /area/station/ai_monitored/storage/eva)
 "qtm" = (
-/obj/grille/catwalk{
-	dir = 10;
-	icon_state = "catwalk_cross"
-	},
-/obj/landmark/magnet_shield,
-/obj/securearea{
-	desc = "A warning that demarcates where the magnetic area begins.";
-	dir = 1;
-	icon_state = "magwarning";
-	name = "Magnet Area Boundary"
-	},
-/obj/securearea{
-	desc = "A warning that demarcates where the magnetic area begins.";
-	dir = 8;
-	icon_state = "magwarning";
-	name = "Magnet Area Boundary"
-	},
-/obj/securearea{
-	desc = "A warning that demarcates where the magnetic area begins.";
-	dir = 10;
-	icon_state = "magwarning";
-	name = "Magnet Area Boundary"
-	},
-/obj/securearea{
-	desc = "A warning sign. I guess this area is dangerous.";
-	icon_state = "magwarning2";
-	name = "ACTIVE MAGNET AREA"
-	},
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 10
-	},
+/obj/landmark/magnet_center,
+/turf/space,
 /area/mining/magnet)
 "qts" = (
 /obj/cable{
@@ -64984,6 +64962,21 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/south)
+"tkx" = (
+/obj/landmark/magnet_shield,
+/obj/securearea{
+	desc = "A warning that demarcates where the magnetic area begins.";
+	dir = 8;
+	icon_state = "magwarning";
+	name = "Magnet Area Boundary"
+	},
+/obj/grille/catwalk{
+	dir = 4
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 8
+	},
+/area/mining/magnet)
 "tkQ" = (
 /obj/machinery/door/airlock/pyro/glass/engineering{
 	dir = 8;
@@ -72064,8 +72057,37 @@
 /turf/simulated/floor/plating/jen,
 /area/station/science/lobby)
 "vob" = (
-/obj/landmark/magnet_center,
-/turf/space,
+/obj/grille/catwalk{
+	dir = 10;
+	icon_state = "catwalk_cross"
+	},
+/obj/landmark/magnet_shield,
+/obj/securearea{
+	desc = "A warning that demarcates where the magnetic area begins.";
+	dir = 1;
+	icon_state = "magwarning";
+	name = "Magnet Area Boundary"
+	},
+/obj/securearea{
+	desc = "A warning that demarcates where the magnetic area begins.";
+	dir = 8;
+	icon_state = "magwarning";
+	name = "Magnet Area Boundary"
+	},
+/obj/securearea{
+	desc = "A warning that demarcates where the magnetic area begins.";
+	dir = 10;
+	icon_state = "magwarning";
+	name = "Magnet Area Boundary"
+	},
+/obj/securearea{
+	desc = "A warning sign. I guess this area is dangerous.";
+	icon_state = "magwarning2";
+	name = "ACTIVE MAGNET AREA"
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 10
+	},
 /area/mining/magnet)
 "voc" = (
 /obj/cable{
@@ -131298,19 +131320,19 @@ hka
 vyr
 rdj
 rdj
-rdj
-rdj
-rdj
-rdj
-vVp
-rdj
-rdj
-rdj
-rdj
-rdj
-rdj
-tXv
-rdj
+aaw
+lmX
+lmX
+lmX
+lmX
+lmX
+lmX
+lmX
+lmX
+lmX
+lmX
+lmX
+vob
 aLY
 ppP
 xFO
@@ -131600,19 +131622,19 @@ abG
 vyr
 rdj
 rdj
-rdj
-rdj
-rdj
-rdj
-vVp
-rdj
-rdj
-rdj
-rdj
-rdj
-rdj
-rdj
-rdj
+iAZ
+yli
+yli
+yli
+yli
+yli
+yli
+yli
+yli
+yli
+yli
+yli
+npG
 aLY
 ppP
 dFX
@@ -131902,19 +131924,19 @@ ePG
 vyr
 rdj
 rdj
-rdj
-rdj
-jny
-lmX
-lmX
-lmX
-lmX
-lmX
-lmX
-lmX
-lmX
-lmX
-qtm
+iAZ
+yli
+yli
+yli
+yli
+yli
+yli
+yli
+yli
+yli
+yli
+yli
+npG
 kuM
 cjG
 dFX
@@ -132204,8 +132226,6 @@ koX
 rAX
 cNV
 cNV
-cNV
-cNV
 iAZ
 yli
 yli
@@ -132216,7 +132236,9 @@ yli
 yli
 yli
 yli
-npG
+yli
+yli
+tkx
 kuM
 qYR
 dFX
@@ -132506,8 +132528,6 @@ jFv
 rAX
 rdj
 rdj
-rdj
-rdj
 iAZ
 yli
 yli
@@ -132518,7 +132538,9 @@ yli
 yli
 yli
 yli
-npG
+yli
+yli
+tkx
 kuM
 hRr
 dFX
@@ -132808,8 +132830,6 @@ sRc
 vyr
 rdj
 rdj
-rdj
-rdj
 iAZ
 yli
 yli
@@ -132820,8 +132840,10 @@ yli
 yli
 yli
 yli
+yli
+yli
 aau
-gGu
+aZB
 aat
 aaG
 aaL
@@ -133110,20 +133132,20 @@ pir
 vyr
 rdj
 rdj
-rdj
-rdj
 iAZ
 yli
 yli
 yli
 yli
 yli
+qtm
+yli
 yli
 yli
 yli
 yli
 aau
-gGu
+aZB
 gGu
 aaG
 aaL
@@ -133412,14 +133434,14 @@ nxP
 vyr
 rdj
 rdj
-rdj
-rdj
 iAZ
 yli
 yli
 yli
 yli
-vob
+yli
+yli
+yli
 yli
 yli
 yli
@@ -133714,9 +133736,9 @@ gfv
 vyr
 rdj
 rdj
-rdj
-rdj
 iAZ
+yli
+yli
 yli
 yli
 yli
@@ -134016,9 +134038,9 @@ wTu
 mTj
 rdj
 rdj
-rdj
-rdj
 iAZ
+yli
+yli
 yli
 yli
 yli
@@ -134318,9 +134340,9 @@ llt
 mTj
 rdj
 rdj
-tXv
-rdj
 iAZ
+yli
+yli
 yli
 yli
 yli
@@ -134620,9 +134642,9 @@ raj
 mTj
 cNV
 cNV
-cNV
-cNV
 iAZ
+yli
+yli
 yli
 yli
 yli
@@ -134922,9 +134944,9 @@ xdq
 mTj
 rdj
 rdj
-rdj
-rdj
-aaw
+jny
+iIL
+iIL
 iIL
 iIL
 iIL
