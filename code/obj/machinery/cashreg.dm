@@ -17,14 +17,9 @@
 		if (istype(W, /obj/item/device/pda2) && W:ID_card)
 			W = W:ID_card
 		if(istool(W, TOOL_SCREWING | TOOL_WRENCHING))
-			if(!src.anchored)
-				user.visible_message("<b>[user]</b> secures the [src] to the floor!")
-				playsound(src.loc, "sound/items/Screwdriver.ogg", 100, 1)
-				src.anchored = 1
-			else
-				user.visible_message("<b>[user]</b> unbolts the [src] from the floor!")
-				playsound(src.loc, "sound/items/Screwdriver.ogg", 100, 1)
-				src.anchored = 0
+			user.visible_message("<b>[user]</b> [anchored ? "unbolts the [src] from" : "secures the [src] to"] the floor.")
+			playsound(src.loc, "sound/items/Screwdriver.ogg", 80, 1)
+			src.anchored = !src.anchored
 		if (istype(W, /obj/item/card/id))
 			var/obj/item/card/id/card = W
 			if (!mainaccount)
