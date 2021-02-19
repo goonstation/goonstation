@@ -105,6 +105,7 @@
 		if (!src.cant_withdraw && src.amount >= 1)
 			playsound(src.loc, "sound/machines/printer_dotmatrix.ogg", 25, 1)
 		..()
+
 /obj/item_dispenser/icedispenser
 	name = "ice dispenser"
 	desc = "It's a small freezer unit that produces ice. Looks like it's hooked into the station water mains."
