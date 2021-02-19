@@ -245,9 +245,10 @@ var/datum/artifact_controller/artifact_controls
 		var/datum/artifact/AD = artifact.artifact
 		var/rarityMod = AD.get_rarity_modifier()
 		if(prob(50 * rarityMod))
-			artifact.transform = matrix(artifact.transform, 1.1, 1.1, MATRIX_SCALE)
+			var/scaling = 1.1 + rand() * 0.2
+			artifact.transform = matrix(artifact.transform, scaling, scaling, MATRIX_SCALE)
 		if(prob(100 * rarityMod))
-			var/col = rand(160, 230)
+			var/col = rand(100, 230)
 			artifact.color = rgb(col, col, col)
 
 	generate_name()
@@ -291,9 +292,42 @@ var/datum/artifact_controller/artifact_controls
 		var/datum/artifact/AD = artifact.artifact
 		var/rarityMod = AD.get_rarity_modifier()
 		if(prob(50 * rarityMod))
-			artifact.transform = matrix(artifact.transform, rand(-10, 10), MATRIX_ROTATE)
+			artifact.transform = matrix(artifact.transform, rand(-15, 15), MATRIX_ROTATE)
 		if(prob(200 * rarityMod))
-			artifact.color = rgb(rand(240, 255), rand(240, 255), rand(240, 255))
+			artifact.color = rgb(rand(210, 255), rand(210, 255), rand(210, 255))
+		if(prob(80 * rarityMod))
+			var/icon/distortion_icon = icon('icons/effects/distort.dmi', "martian[rand(1,7)]")
+			if(prob(20))
+				distortion_icon = turn(distortion_icon, rand(360))
+			var/size = rand(4, 6 + 8 * rarityMod) * pick(-1, 1)
+			artifact.filters += filter(
+				type="displace",
+				icon=distortion_icon,
+				size=size)
+			if(prob(80 * rarityMod))
+				var/filter = artifact.filters[length(artifact.filters)]
+				var/anim_time = pick(rand() * 1 SECOND + 1 SECOND, rand() * 5 SECONDS, rand() * 1 MINUTE)
+				var/new_size = size + rand(-8, 8)
+				if(prob(15) || anim_time > 5 SECONDS && prob(70))
+					if(prob(50))
+						new_size = -size
+					else
+						new_size *= 1.5
+				animate(filter,
+					size = new_size,
+					time = anim_time,
+					easing = SINE_EASING,
+					flags = ANIMATION_PARALLEL,
+					loop = -1)
+				if(anim_time < 2 SECONDS && prob(35))
+					animate(time = rand() * 1.5 MINUTES)
+				animate(
+					size = size,
+					time = anim_time,
+					easing = SINE_EASING,
+					loop = -1)
+				if(anim_time < 2 SECONDS && prob(35))
+					animate(time = rand() * 1.5 MINUTES)
 
 	generate_name()
 		var/namestring = ""
@@ -477,6 +511,67 @@ var/datum/artifact_controller/artifact_controls
 	var/list/prefixes = list("meta","poly","anti","hyper","hypo","nano","mega","infra","ultra","trans","micro","macro")
 	var/list/particles = list("quark","tachyon","neutron","positron","photon","neutrino","lepton","baryon","atom","molecule")
 	var/list/verber = list("stabilizer","synchroniser","generator","coupler","fuser","linker","materializer")
+
+	post_setup(obj/artifact)
+		. = ..()
+		var/datum/artifact/AD = artifact.artifact
+		var/rarityMod = AD.get_rarity_modifier()
+		if(!isitem(artifact) && prob(100 * rarityMod))
+			var/do_opposite_y = prob(50)
+			var/base_pixel_y = rand(-10, 10)
+			var/eps = 0.1 * pick(-1, 1)
+			var/r = rand(10, 26)
+			var/start_dir = pick(-1, 1)
+			var/icon_state = "precursorball[rand(1, 6)]"
+			var/time = rand(4 SECONDS, 18 SECONDS)
+			if(prob(20))
+				time = rand(50 SECONDS, 70 SECONDS)
+			var/n_balls = rand(1, 4) + round(rarityMod * 3)
+			for(var/i = 1 to n_balls)
+				var/delay = (i - 1) * time / n_balls
+				SPAWN_DBG(delay)
+					var/obj/effect/ball = new
+					ball.icon = 'icons/obj/artifacts/artifactEffects.dmi'
+					ball.icon_state = icon_state
+					if(prob(15))
+						ball.icon_state = "precursorball[rand(1, 6)]"
+					if(prob(10))
+						ball.color = list(-1,0,0, 0,-1,0, 0,0,-1, 1,1,1)
+					ball.mouse_opacity = 0
+					artifact.vis_contents += ball
+					if(!do_opposite_y)
+						base_pixel_y = rand(-10, 10)
+					ball.pixel_y = do_opposite_y ? 0 : base_pixel_y
+					ball.layer = artifact.layer + eps
+					animate(ball,
+						time = time/4,
+						easing = SINE_EASING | EASE_OUT,
+						pixel_x = r * start_dir,
+						pixel_y = base_pixel_y,
+						layer = artifact.layer,
+						loop = -1)
+					animate(
+						time = time/4,
+						easing = SINE_EASING | EASE_IN,
+						pixel_x = 0,
+						pixel_y = do_opposite_y ? 0 : base_pixel_y,
+						layer = artifact.layer - eps,
+						loop = -1)
+					animate(
+						time = time/4,
+						easing = SINE_EASING | EASE_OUT,
+						pixel_x = -r * start_dir,
+						pixel_y = do_opposite_y ? -base_pixel_y : base_pixel_y,
+						layer = artifact.layer,
+						loop = -1)
+					animate(
+						time = time/4,
+						easing = SINE_EASING | EASE_IN,
+						pixel_x = 0,
+						pixel_y = do_opposite_y ? 0 : base_pixel_y,
+						layer = artifact.layer + eps,
+						loop = -1)
+
 
 	generate_name()
 		var/namestring = ""

@@ -51375,22 +51375,6 @@
 /obj/warp_beacon/security,
 /turf/space,
 /area/space)
-"cjr" = (
-/obj/item/pinpointer/teg_semi{
-	pixel_y = -7
-	},
-/obj/stool/bed,
-/obj/item/clothing/suit/bedsheet{
-	bcolor = "yellow";
-	icon_state = "bedsheet-yellow"
-	},
-/obj/landmark/start{
-	name = "Chief Engineer"
-	},
-/turf/simulated/floor/yellowblack{
-	dir = 10
-	},
-/area/station/crew_quarters/ce)
 "cjs" = (
 /obj/storage/crate/rcd,
 /obj/item/clothing/shoes/magnetic,
@@ -53790,15 +53774,6 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/crew_quarters/barber_shop)
-"coy" = (
-/obj/grille/steel,
-/obj/window/auto/reinforced,
-/obj/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/turf/simulated/floor/plating/random,
-/area/station/crew_quarters/barber_shop)
 "coz" = (
 /obj/item/clothing/mask/clown_hat,
 /turf/simulated/floor/caution/westeast,
@@ -54204,14 +54179,6 @@
 	name = "industrial loading chute - cargo"
 	},
 /obj/disposalpipe/trunk{
-	dir = 4
-	},
-/turf/simulated/floor/plating,
-/area/station/quartermaster/storage)
-"cpJ" = (
-/obj/grille/steel,
-/obj/window/auto/reinforced,
-/obj/disposalpipe/segment/transport{
 	dir = 4
 	},
 /turf/simulated/floor/plating,
@@ -59160,6 +59127,22 @@
 	},
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
+"dqS" = (
+/obj/item/pinpointer/teg_semi{
+	pixel_y = -7
+	},
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet{
+	bcolor = "yellow";
+	icon_state = "bedsheet-yellow"
+	},
+/obj/landmark/start{
+	name = "Chief Engineer"
+	},
+/turf/simulated/floor/yellowblack{
+	dir = 10
+	},
+/area/station/crew_quarters/ce)
 "dzg" = (
 /obj/lattice{
 	dir = 4;
@@ -59259,6 +59242,10 @@
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/dirt,
 /area/station/ranch)
+"hSh" = (
+/obj/structure/girder/reinforced,
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/barber_shop)
 "igR" = (
 /obj/machinery/door/airlock/pyro/glass,
 /obj/access_spawn/rancher,
@@ -59394,6 +59381,14 @@
 	dir = 8
 	},
 /area/station/ranch)
+"nKS" = (
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/structure/girder/reinforced,
+/turf/simulated/floor/plating/random,
+/area/station/crew_quarters/barber_shop)
 "nTp" = (
 /obj/cable{
 	d1 = 1;
@@ -59402,6 +59397,13 @@
 	},
 /turf/simulated/floor/dirt,
 /area/station/ranch)
+"nYP" = (
+/obj/disposalpipe/segment/transport{
+	dir = 4
+	},
+/obj/structure/girder/reinforced,
+/turf/simulated/floor/plating,
+/area/station/quartermaster/storage)
 "plf" = (
 /obj/table/reinforced/auto,
 /obj/item/device/transfer_valve{
@@ -97517,8 +97519,8 @@ adb
 aaa
 clP
 cmB
-clO
-coy
+hSh
+nKS
 cps
 cqo
 clP
@@ -117451,7 +117453,7 @@ clg
 bGD
 bGF
 clS
-cpJ
+nYP
 cqv
 clg
 clg
@@ -129825,7 +129827,7 @@ chj
 chR
 cip
 ciV
-cjr
+dqS
 cjX
 aaa
 aaa

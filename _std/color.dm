@@ -66,40 +66,11 @@
 		else
 			return list(val*255, p*255, q*255)
 
-/proc/rgb2hsv(var/r, var/g, var/b)
-	var/min
-	var/max
-	var/dt
-
-	var/outh
-	var/outs
-	var/outv
-	r/=255;g/=255;b/=255
-	min = r < g ? r : g
-	min = min < b ? min : b
-
-	max = r > g ? r : g
-	max = max > b ? max : b
-
-	outv = max
-	dt = max-min
-	if(dt < 0.00001)
-		return list(0, 0, outv)
-	if(max > 0)
-		outs = dt/max
-	else
-		return list(0, 0, outv)
-	if(r >= max)
-		outh = (g-b)/dt//y&mg
-	else if(g >= max)
-		outh = 2 + (b-r)/dt//cy/y
-	else
-		outh = 4 + (r-g)/dt//mg/cy
-
-	outh *= 60
-	if(outh < 0)
-		outh += 360
-	return list(outh, outs, outv)
+/proc/rgb2hsv(r, g, b)
+	var/value = max(r,g,b)
+	var/minc = value - min(r,g,b)
+	var/hue = minc && ( (value==r) ? (g-b)/minc : ( (value==g) ? 2+(b-r)/minc : 4+(r-g)/minc ) )
+	. = list(60*(hue<0 ? hue+6 : hue), value && minc/value, value)
 
 /proc/hex_to_rgb_list(var/hex)
 	if(copytext(hex, 1, 2) != "#")

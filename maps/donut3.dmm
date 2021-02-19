@@ -5867,6 +5867,13 @@
 /obj/fitness/speedbag/wizard,
 /turf/simulated/floor/bot,
 /area/station/crew_quarters/fitness)
+"buz" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/listeningpost)
 "buA" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging,
 /turf/space,
@@ -23026,6 +23033,9 @@
 	icon_state = "wooden"
 	},
 /area/station/crew_quarters/barber_shop)
+"gBe" = (
+/turf/space,
+/area/listeningpost)
 "gBK" = (
 /obj/cable{
 	d2 = 4;
@@ -23622,7 +23632,7 @@
 /obj/machinery/power/data_terminal,
 /obj/machinery/communications_dish,
 /turf/simulated/floor/plating/airless,
-/area/space)
+/area/listeningpost)
 "gMu" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
@@ -26794,6 +26804,12 @@
 	},
 /turf/simulated/floor,
 /area/station/ai_monitored/armory)
+"hJz" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/listeningpost)
 "hJC" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/grille/catwalk/jen/side{
@@ -68444,7 +68460,7 @@
 	icon_state = "4-8"
 	},
 /turf/space,
-/area/space)
+/area/listeningpost)
 "unp" = (
 /obj/machinery/light/incandescent/netural,
 /turf/simulated/floor/wood/seven,
@@ -163117,9 +163133,9 @@ vLQ
 wLK
 spW
 spW
-rdj
+gBe
 unc
-rdj
+gBe
 spW
 spW
 sxd
@@ -163418,11 +163434,11 @@ utC
 rHh
 gnA
 spW
-rdj
-rdj
+gBe
+gBe
 unc
-rdj
-rdj
+gBe
+gBe
 spW
 sxd
 sxd
@@ -163720,11 +163736,11 @@ sYL
 dWL
 nFB
 spW
-cNV
-cNV
+hJz
+hJz
 gMq
-cNV
-cNV
+hJz
+hJz
 spW
 vGb
 sxd
@@ -164022,11 +164038,11 @@ utC
 mQM
 nYs
 spW
-rdj
-rdj
-vVp
-rdj
-rdj
+gBe
+gBe
+buz
+gBe
+gBe
 spW
 mYL
 sxd
@@ -164325,9 +164341,9 @@ oWJ
 hMR
 spW
 spW
-rdj
-vVp
-rdj
+gBe
+buz
+gBe
 spW
 spW
 kRy

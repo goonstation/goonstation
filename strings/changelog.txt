@@ -1,4 +1,53 @@
 
+(t)thu feb 18 21
+(u)Sord
+(p)3726
+(e)🆕|feature
+(+)New taser smg security loadout. Sprites by Matheus
+(u)virvatuli
+(p)3736
+(e)|
+(+)Added a new and unique pulse rifle/lawbringer pulse firing sound!
+(u)TTerc
+(p)3627
+(e)⚖🆕|balance, feature
+(+)You can now refill the flamethrowers by simply clicking the large tanks with them.
+(u)Flappybat
+(p)3651
+(e)⚖|balance
+(*)Blocks MRPT rocket ammo from being loaded into the zip gun.
+(u)Superlagg
+(p)3276
+(e)⚖🆕🔄|balance, feature, rework
+(*)Upgraded bot AI to be more responsive in general.
+(*)Buddy combat AI has been upgraded to allow them to move *and* shoot.
+(+)Secbots can be ordered to guard and lockdown specific areas.
+(+)Floorbots now eat loose floor metal by default.
+(+)Added actionbars to most times bot actions, like repairing floors and injecting people with drugs.
+(+)Ammofab now costs 1 TC.
+(u)Flappybat
+(p)3580
+(e)⚖🐛|balance, bug
+(*)Syndicate riot baton now deals stamina damage instead of instant stun, two hits are required to knockdown. Now functions like an infinite ammo stun baton with extra blunt damage on harm intent.
+(t)wed feb 17 21
+(u)Sovexe
+(p)3746
+(e)🆕|feature
+(*)Spy Thieves can now print pictures of their targets out from their PDA!
+(t)sun feb 14 21
+(u)Carbadox
+(p)3718
+(e)🐛🎨|bug, sprites
+(+)Added the ability to make industrial table parts with reinforced metal sheets.
+(u)BenLubar
+(p)3381
+(e)⚖|balance
+(+)Attacking someone with a drinking glass while in harm intent now splashes your drink onto them.
+(u)Anachroniser
+(p)3409
+(e)⚖|balance
+(+)Arrow shafts now apply effects while implanted
+(+)Can use organic material in arrows and spears
 (t)sat feb 13 21
 (u)Xyzzy
 (p)3324
