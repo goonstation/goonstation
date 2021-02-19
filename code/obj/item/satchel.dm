@@ -112,8 +112,8 @@
 
 	MouseDrop_T(atom/movable/O as obj, mob/user as mob)
 		var/proceed = 0
-		var/obj/item/W = O
 		for(var/check_path in src.allowed)
+			var/obj/item/W = O
 			if(istype(O, check_path) && W.w_class < 4)
 				proceed = 1
 				break
