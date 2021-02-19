@@ -70,7 +70,7 @@
 		M.set_loc(src)
 		src.occupant = M
 		var/turf/T = src.loc
-		T.fluid_react_single("blood",100)
+		T.fluid_react_single(G.affecting.blood_id,100)
 		playsound(src.loc, "sound/impact_sounds/Flesh_Break_2.ogg", 75, 1)
 		qdel(G)
 
