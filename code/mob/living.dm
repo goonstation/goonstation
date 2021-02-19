@@ -79,10 +79,8 @@
 
 	var/throws_can_hit_me = 1
 
-	var/obj/chat_maptext_holder/chat_text = new
 	var/last_heard_name = null
 	var/last_chat_color = null
-
 
 	var/list/random_emotes
 

@@ -2035,9 +2035,7 @@
 
 	//copy paste lol
 
-	if (maptext_out)
-		if(src.emote_allowed) // if no emote cooldowns triggered let's trigger one now (no spamming maptext emotes!)
-			src.emote_check(voluntary, 0.5 SECONDS)
+	if (maptext_out && !ON_COOLDOWN(src, "emote maptext", 0.5 SECONDS))
 		var/image/chat_maptext/chat_text = null
 		SPAWN_DBG(0) //blind stab at a life() hang - REMOVE LATER
 			if (speechpopups && src.chat_text)

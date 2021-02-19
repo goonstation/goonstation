@@ -156,6 +156,7 @@
 		materiel_stock += new/datum/materiel/loadout/standard
 		materiel_stock += new/datum/materiel/loadout/offense
 		materiel_stock += new/datum/materiel/loadout/control
+		materiel_stock += new/datum/materiel/loadout/suppression
 		materiel_stock += new/datum/materiel/loadout/justabaton
 		materiel_stock += new/datum/materiel/utility/morphineinjectors
 		materiel_stock += new/datum/materiel/utility/donuts
@@ -281,6 +282,12 @@
 	path = /obj/item/storage/belt/security/control
 	category = "Loadout"
 	description = "One belt containing a taser shotgun, a baton, and a barrier."
+
+/datum/materiel/loadout/suppression
+	name = "Suppression"
+	path = /obj/item/storage/belt/security/tasersmg
+	category = "Loadout"
+	description = "One belt containing a taser SMG, a baton, and a barrier."
 
 /datum/materiel/loadout/justabaton
 	name = "Just a Baton"

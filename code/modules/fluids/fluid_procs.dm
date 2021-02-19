@@ -27,6 +27,7 @@ turf/simulated/floor/plating/airless/ocean_canpass()
 		///HEY HEY LOOK AT ME TODO : This is kind of a band-aid. I'm not sure why, but tilenotify() doesn't trigger when it should sometimes. do this to be absolutely sure!
 		for (var/dir in cardinal)
 			var/turf/T = get_step(src, dir)
+			if (!T) continue
 			if(T.active_liquid)
 				T.active_liquid.blocked_dirs = 0
 				if (T.active_liquid.group && !T.active_liquid.group.updating)

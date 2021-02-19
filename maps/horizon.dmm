@@ -53791,12 +53791,11 @@
 /turf/simulated/floor/plating/random,
 /area/station/crew_quarters/barber_shop)
 "coy" = (
-/obj/grille/steel,
-/obj/window/auto/reinforced,
 /obj/cable{
 	d2 = 8;
 	icon_state = "0-8"
 	},
+/obj/structure/girder/reinforced,
 /turf/simulated/floor/plating/random,
 /area/station/crew_quarters/barber_shop)
 "coz" = (
@@ -54209,11 +54208,10 @@
 /turf/simulated/floor/plating,
 /area/station/quartermaster/storage)
 "cpJ" = (
-/obj/grille/steel,
-/obj/window/auto/reinforced,
 /obj/disposalpipe/segment/transport{
 	dir = 4
 	},
+/obj/structure/girder/reinforced,
 /turf/simulated/floor/plating,
 /area/station/quartermaster/storage)
 "cpU" = (
@@ -59492,6 +59490,10 @@
 "rxZ" = (
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
+"rEe" = (
+/obj/structure/girder/reinforced,
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/barber_shop)
 "rHh" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "wall_space"
@@ -97517,7 +97519,7 @@ adb
 aaa
 clP
 cmB
-clO
+rEe
 coy
 cps
 cqo
