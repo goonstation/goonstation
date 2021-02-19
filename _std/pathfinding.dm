@@ -2,7 +2,7 @@
 	if(isnull(end) || isnull(start))
 		return
 	var/list/open = list(start), list/nodeG = list(), list/nodeParent = list(), P = 0
-	while (P++ < open.len)
+	while (P++ < length(open))
 		var/T = open[P], TG = nodeG[T]
 		if (T == end)
 			var/list/R = list()
@@ -14,8 +14,8 @@
 		for (var/next in other)
 			if ((next in open) || next == exclude) continue
 			var/G = TG + other[next], F = G + call(next, heuristic)(end)
-			for (var/i = P; i <= open.len;)
-				if (i++ == open.len || open[open[i]] >= F)
+			for (var/i = P; i <= length(open);)
+				if (i++ == length(open) || open[open[i]] >= F)
 					open.Insert(i, next)
 					open[next] = F
 					break
@@ -28,14 +28,14 @@
 
 //#define DEBUG_ASTAR
 
-/proc/cirrAstar(turf/start, turf/goal, var/min_dist=0, adjacent, heuristic, maxtraverse = 30, adjacent_param = null, exclude = null)
+/proc/cirrAstar(turf/start, turf/goal, min_dist=0, adjacent, heuristic, maxtraverse = 30, adjacent_param = null, exclude = null)
 	#ifdef DEBUG_ASTAR
 	clearAstarViz()
 	#endif
 
-	var/list/closedSet = list()
-	var/list/openSet = list(start)
-	var/list/cameFrom = list()
+	var/list/turf/closedSet = list()
+	var/list/turf/openSet = list(start)
+	var/list/turf/cameFrom = list()
 
 	var/list/gScore = list()
 	var/list/fScore = list()
@@ -43,15 +43,15 @@
 	fScore[start] = heuristic(start, goal)
 	var/traverse = 0
 
-	while(openSet.len > 0)
+	while(length(openSet))
 		var/current = pickLowest(openSet, fScore)
 		if(distance(current, goal) <= min_dist)
 			return reconstructPath(cameFrom, current)
 
 		openSet -= current
 		closedSet += current
-		var/list/neighbors = getNeighbors(current, alldirs)
-		for(var/neighbor in neighbors)
+		var/list/turf/neighbors = getNeighbors(current, alldirs)
+		for(var/turf/neighbor as() in neighbors)
 			if(neighbor in closedSet)
 				continue // already checked this one
 			var/tentativeGScore = gScore[current] + distance(current, neighbor)
@@ -84,7 +84,7 @@
 	return sqrt(dx*dx + dy*dy)
 
 /proc/pickLowest(list/options, list/values)
-	if(options.len == 0)
+	if(!length(options))
 		return null // you idiot
 	var/lowestScore = 1.#INF
 	for(var/option in options)
@@ -101,7 +101,7 @@
 		totalPath += current
 	// reverse the path
 	. = list()
-	for(var/i = totalPath.len to 1 step -1)
+	for(var/i = length(totalPath) to 1 step -1)
 		. += totalPath[i]
 	#ifdef DEBUG_ASTAR
 	addAstarViz(.)
@@ -187,66 +187,58 @@
 // Navigation procs
 // Used for A-star pathfinding
 
-// Returns the surrounding cardinal turfs with open links
-// Including through doors openable with the ID
-/turf/proc/CardinalTurfsWithAccess(var/obj/item/card/id/ID)
-	var/L[] = new()
-
-	//	for(var/turf/simulated/t in oview(src,1))
+/// Returns the surrounding cardinal turfs with open links
+/// Including through doors openable with the ID
+/turf/proc/CardinalTurfsWithAccess(obj/item/card/id/ID)
+	. = list()
 
 	for(var/d in cardinal)
 		var/turf/simulated/T = get_step(src, d)
-		//if(istype(T) && !T.density)
 		if (T?.pathable && !T.density)
 			if(!LinkBlockedWithAccess(src, T, ID))
-				L.Add(T)
-	return L
+				. += T
 
-/turf/proc/AllDirsTurfsWithAccess(var/obj/item/card/id/ID)
-	var/L[] = new()
-
-	//	for(var/turf/simulated/t in oview(src,1))
+/// Returns surrounding card+ord turfs with open links
+/turf/proc/AllDirsTurfsWithAccess(obj/item/card/id/ID)
+	. = list()
 
 	for(var/d in alldirs)
 		var/turf/simulated/T = get_step(src, d)
 		//if(istype(T) && !T.density)
 		if (T?.pathable && !T.density)
 			if(!LinkBlockedWithAccess(src, T, ID))
-				L.Add(T)
-	return L
+				. += T
 
-/// Fixes floorbots being terrified of space
-turf/proc/CardinalTurfsAndSpaceWithAccess(var/obj/item/card/id/ID)
-	var/L[] = new()
+// Fixes floorbots being terrified of space
+turf/proc/CardinalTurfsAndSpaceWithAccess(obj/item/card/id/ID)
+	. = list()
 
 	for(var/d in cardinal)
 		var/turf/T = get_step(src, d)
 		if (T && (T.pathable || istype(T, /turf/space)) && !T.density)
 			if(!LinkBlockedWithAccess(src, T, ID))
-				L.Add(T)
-	return L
+				. += T
 
-var/static/obj/item/card/id/AA = new /obj/item/card/id/captains_spare()
+var/static/obj/item/card/id/ALL_ACCESS_CARD = new /obj/item/card/id/captains_spare()
 
 /turf/proc/AllDirsTurfsWithAllAccess()
-	return AllDirsTurfsWithAccess(AA)
+	return AllDirsTurfsWithAccess(ALL_ACCESS_CARD)
 
 /turf/proc/CardinalTurfsSpace()
-	var/L[] = new()
+	. = list()
 
 	for (var/d in cardinal)
 		var/turf/T = get_step(src, d)
 		if (T && (T.pathable || istype(T, /turf/space)) && !T.density)
 			if (!LinkBlockedWithAccess(src, T))
-				L.Add(T)
-
-	return L
+				. += T
 
 // Returns true if a link between A and B is blocked
 // Movement through doors allowed if ID has access
 /proc/LinkBlockedWithAccess(turf/A, turf/B, obj/item/card/id/ID)
-
-	if(A == null || B == null) return 1
+	. = FALSE
+	if(A == null || B == null)
+		return 1
 	var/adir = get_dir(A,B)
 	var/rdir = get_dir(B,A)
 	if((adir & (NORTH|SOUTH)) && (adir & (EAST|WEST)))	//	diagonal
@@ -283,13 +275,11 @@ var/static/obj/item/card/id/AA = new /obj/item/card/id/captains_spare()
 			else
 				return 1
 
-	return 0
-
 // Returns true if direction is accessible from loc
 // If we found a door we could open, return 2 instead of 1.
 // Checks doors against access with given ID
 /proc/DirWalkableWithAccess(turf/loc,var/dir,var/obj/item/card/id/ID, var/exiting_this_tile = 0)
-	.= 1
+	. = TRUE
 	for (var/obj/O in loc)
 		if (O.density)
 			if (O.object_flags & BOTS_DIRBLOCK)
@@ -338,37 +328,19 @@ var/static/obj/item/card/id/AA = new /obj/item/card/id/captains_spare()
 
 /turf/proc
 	AdjacentTurfs()
-		var/L[] = new()
+		. = list()
 		for(var/turf/simulated/t in oview(src,1))
 			if(!t.density)
 				if(!LinkBlocked(src, t) && !TurfBlockedNonWindow(t))
-					L.Add(t)
-		return L
-	Distance(turf/t)
-		return sqrt((src.x - t.x) ** 2 + (src.y - t.y) ** 2)
+					. += t
 
-		// pathweight is never set and this creates a bizarre/stupid distance calc:
-		//
-		//  3333333
-		//  3222223
-		//  3221223
-		//  321*123 <-- note how the immediate diagonals count as 2
-		//  3221223     but only for the immediate ones, not further ones
-		//  3222223
-		//  3333333  i'm sure this made sense to someone at some point.
-		//
-		// if(get_dist(src,t) == 1)
-		// 	var/cost = (src.x - t.x) * (src.x - t.x) + (src.y - t.y) * (src.y - t.y)
-		// 	cost *= (pathweight+t.pathweight)/2
-		// 	return cost
-		// else
-		// 	return get_dist(src,t)
 	AdjacentTurfsSpace()
-		var/L[] = new()
+		. = list()
 		for(var/turf/t in oview(src,1))
 			if(!t.density)
 				if(!LinkBlocked(src, t) && !TurfBlockedNonWindow(t))
-					L.Add(t)
-		return L
+					. += t
 
+	Distance(turf/t)
+		return sqrt((src.x - t.x) ** 2 + (src.y - t.y) ** 2)
 
