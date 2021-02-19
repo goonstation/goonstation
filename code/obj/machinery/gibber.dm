@@ -56,7 +56,9 @@
 	if (!( istype(G, /obj/item/grab)) || !(ishuman(G.affecting)))
 		boutput(user, "<span class='alert'>This item is not suitable for the gibber!</span>")
 		return
-
+	if (!isdead(G.affecting))
+		boutput(user, "<span class='alert'>You can't force a living person into the gibber!</span>")
+		return
 	user.visible_message("<span class='alert'>[user] starts to put [G.affecting] into the gibber!</span>")
 	src.add_fingerprint(user)
 	sleep(3 SECONDS)
@@ -67,6 +69,9 @@
 		var/mob/M = G.affecting
 		M.set_loc(src)
 		src.occupant = M
+		var/turf/T = src.loc
+		T.fluid_react_single("blood",100)
+		playsound(src.loc, "sound/impact_sounds/Flesh_Break_2.ogg", 75, 1)
 		qdel(G)
 
 /obj/machinery/gibber/verb/eject()
