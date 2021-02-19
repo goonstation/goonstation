@@ -1,5 +1,9 @@
 
 (t)thu feb 18 21
+(u)Sord
+(p)3726
+(e)🆕|feature
+(+)New taser smg security loadout. Sprites by Matheus
 (u)virvatuli
 (p)3736
 (e)|
