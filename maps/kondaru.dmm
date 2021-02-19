@@ -56578,38 +56578,12 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
-<<<<<<< HEAD
-"slG" = (
-/obj/table/reinforced/bar/auto,
-/obj/machinery/computer/security/wooden_tv/small{
-	pixel_y = 8
-	},
-/obj/item/clothing/head/cakehat{
-	pixel_y = -11
-	},
-/turf/simulated/floor/carpet/green/standard/narrow/northsouth,
-/area/station/crew_quarters/cafeteria)
-=======
-"shZ" = (
-/obj/stool/chair/red{
-	dir = 1
-	},
-/turf/simulated/floor/red/side,
-/area/station/security/secwing)
->>>>>>> b34973b85298c9f6f84470dba947137fbfdc2b3d
-"sml" = (
-/obj/table/auto,
-/obj/machinery/computer/security/wooden_tv/small{
-	pixel_y = 8
-	},
-/turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/cafeteria)
 "snN" = (
 /obj/cable{
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/carpet/arcade,
-/area/station/bridge/captain)
 "soA" = (
 /obj/table/reinforced/auto,
 /obj/disposaloutlet/west,
