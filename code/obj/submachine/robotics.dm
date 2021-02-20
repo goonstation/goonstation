@@ -51,11 +51,15 @@
 	var/max_ammo = 20
 	var/load_interval = 5
 
+	//These costs are in borg cell charge
 	var/cost_broken = 50 //For broken/burned lamps (the old lamp gets recycled in the tool)
 	var/cost_empty = 75
+	var/cost_fitting = 200 // putting a new fitting on a turf
 	var/setting = "white"
 	var/dispensing_tube = /obj/item/light/tube
 	var/dispensing_bulb = /obj/item/light/bulb
+	//can be obj/machinery/light for wall tubes, obj/machinery/light/small for wall bulbs. Either mode does floor fittings because there's only one type of those
+	var/dispensing_fitting = /obj/machinery/light
 
 	attack_self(var/mob/user as mob)
 		switch (src.setting) //This should be relatively easily expandable I think
@@ -98,6 +102,30 @@
 	get_desc()
 		. = "It is currently set to dispense [setting] lamps."
 
+	afterattack(atom/A, mob/user as mob)
+		if (!istype(A, /turf/simulated) || !istype(A, /obj/window))
+			..()
+			return
+
+		if (istype(A, /turf/simulated/floor))
+			boutput(user, "<span class='notice'>Installing a floor bulb...</span>")
+			playsound(src, "sound/machines/click.ogg", 50, 1)
+			if(do_after(user, 3 SECONDS))
+				var/obj/machinery/light/newfitting = new /obj/machinery/light/small/floor(A)
+				newfitting.attackby(src, user) //plop in an appropriate colour lamp
+
+		else if (istype(A, /turf/simulated/wall))
+			A = get_adjacent_floor(A, user)
+			if (!A)
+				return
+			boutput(user, "<span class='notice'>Installing a wall [dispensing_fitting ? "bulb" : "tube"]...</span>")
+			playsound(src, "sound/machines/click.ogg", 50, 1)
+			if(do_after(user, 3 SECONDS))
+				var/obj/machinery/light/newfitting = new dispensing_fitting(A)
+				newfitting.nostick = 0
+				newfitting.autoposition() //Imagine if tube fittings had sticky variants, we wouldn't need this
+				newfitting.attackby(src, user) //plop in an appropriate colour lamp
+
 /obj/item/lamp_manufacturer/attackby(obj/item/W, mob/user)
 	if (issilicon(user))
 		boutput(user,"You don't have to load this, you're a robot! It uses power instead.")
@@ -124,6 +152,20 @@
 				boutput(user, "You can't load that! You need metal sheets.")
 		else
 			..()
+
+/obj/item/lamp_manufacturer/proc/check_cost(obj/item/W, mob/user)
+
+/*
+This proc is where we find the appropriate floor turf for a wall fitting (since they don't go on walls themselves)
+it's where all the awkward crap goes because it's both dependent on the direction we're approaching from and the
+For example, if we attack a south end wall from the east, we shouldn't be able to put a fitting on the far side. (2 turfs distance)
+
+*/
+
+/obj/item/lamp_manufacturer/proc/get_adjacent_floor(/turf/simulated/wall/W, mob/user)
+	var/dir_temp = get_dir(user, W)
+	switch
+
 
 /obj/item/robot_chemaster
 	name = "mini-ChemMaster"
