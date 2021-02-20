@@ -75,10 +75,20 @@
 
 		..()
 
-		A.ReduceHealth(src)
+		if(prob(5))
+			src.ArtifactTakeDamage(rand(5,30))
+
+		O.visible_message("<span class='alert'>[O] emits a terrible cracking noise.</span>")
 
 		src.ArtifactFaultUsed(user)
 		return
+
+	ArtifactDestroyed()
+		var/turf/T = get_turf(src)
+		if(T)
+			cell.set_loc(T)
+		. = ..()
+
 
 /datum/artifact/energygun
 	associated_object = /obj/item/gun/energy/artifact
@@ -86,8 +96,6 @@
 	validtypes = list("ancient","eldritch","precursor")
 	react_elec = list(0.02,0,5)
 	react_xray = list(10,75,100,11,"CAVITY")
-	var/integrity = 100
-	var/integrity_loss = 5
 	var/datum/projectile/artifact/bullet = null
 	examine_hint = "It seems to have a handle you're supposed to hold it by."
 	module_research = list("weapons" = 8, "energy" = 8)
@@ -98,21 +106,8 @@
 		bullet = new/datum/projectile/artifact
 		bullet.randomise()
 		// artifact tweak buff, people said guns were useless compared to their cells
-		// the next 3 lines override the randomize(). Doing this instead of editting randomize to avoid changing prismatic spray.
+		// the next 3 lines override the randomize(). Doing this instead of editing randomize to avoid changing prismatic spray.
 		bullet.power = rand(15,35) // randomise puts it between 2 and 50, let's make it less variable
 		bullet.dissipation_rate = rand(1,bullet.power)
 		bullet.cost = rand(35,100) // randomise puts it at 50-150
 
-		integrity = rand(50, 100)
-		integrity_loss = rand(1, 3) // was rand(1,7)
-		react_xray[3] = integrity
-
-	proc/ReduceHealth(var/obj/item/gun/energy/artifact/O)
-		var/prev_health = integrity
-		integrity -= integrity_loss
-		if (integrity <= 20 && prev_health > 20)
-			O.visible_message("<span class='alert'>[O] emits a terrible cracking noise.</span>")
-		if (integrity <= 0)
-			O.visible_message("<span class='alert'>[O] crumbles into nothingness.</span>")
-			O.ArtifactDestroyed()
-		react_xray[3] = integrity
