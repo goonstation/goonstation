@@ -93,9 +93,21 @@
 			if (user.find_in_hand(src))
 				if (!src.flash_mode)
 					user.show_text("You use the secret switch to set the camera to flash mode.", "blue")
+					playsound(user, "sound/items/pickup_defib.ogg", 100, 1)
+					icon_state = "camera_flash"
 				else
 					user.show_text("You use the secret switch to set the camera to take photos.", "blue")
+					playsound(user, "sound/items/putback_defib.ogg", 100, 1)
+					icon_state = "camera"
 				src.flash_mode =! src.flash_mode
+
+/obj/item/camera/spy/pickup(mob/user)
+	if (user.mind.special_role != "spy_thief" && src.flash_mode)
+		user.show_text("[src] buzzes at you!", "blue")
+		playsound(user, "sound/items/putback_defib.ogg", 100, 1)
+		icon_state = "camera"
+		src.flash_mode =! src.flash_mode
+	. = ..()
 
 /obj/item/camera/spy/attack(atom/target, mob/user, flag)
 	if (!ismob(target))
@@ -109,6 +121,7 @@
 		var/mob/M = target
 		var/blind_success = M.apply_flash(30, 8, 0, 0, 0, rand(0, 1), 0, 0, 100, 70, disorient_time = 30)
 		playsound(get_turf(src), "sound/weapons/flash.ogg", 100, 1)
+		flick("camera_flash-anim", src)
 		// Log entry.
 		var/blind_msg_target = "!"
 		var/blind_msg_others = "!"
