@@ -1529,7 +1529,6 @@
 
 	get_desc(var/dist, var/mob/user)
 		if (user.mind?.assigned_role == "Head of Security")
-			. = "It is your war medal, you remember when you got this for saving a man's life during the war."
+			. = "It's your war medal, you remember when you got this for saving a man's life during the war."
 		else
-			. = "It is the HoS's old war medal, you heard they got it for their acts in the war."
-
+			. = "It's the HoS's old war medal, you heard they got it for their acts of heroism in the war."
