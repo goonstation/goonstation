@@ -390,15 +390,15 @@
 		purge.plane = PLANE_SELFILLUM
 		ship.UpdateOverlays(purge, "purge")
 
-		spawn(12)
+		SPAWN_DBG(12)
 			var/destruction_point_x
 			var/destruction_point_y
-			spawn(8)
+			SPAWN_DBG(8)
 				ship.UpdateOverlays(null, "purge")
 			playsound(ship.loc, 'sound/weapons/laserultra.ogg', 100, 1)
 			switch (ship.dir)
 				if (1)	//N
-					for (increment=1; increment<=4; increment++)
+					for (increment in 1 to 4)
 						destruction_point_x = ship.loc.x
 						destruction_point_y = ship.loc.y + increment
 						if(pod_is_large)
@@ -408,7 +408,7 @@
 						purge_sps(destruction_point_x, destruction_point_y)
 
 				if (4)	//E
-					for (increment=1; increment<=4; increment++)
+					for(increment in 1 to 4)
 						destruction_point_x = ship.loc.x + increment
 						destruction_point_y = ship.loc.y
 						if(pod_is_large)
@@ -418,7 +418,7 @@
 						purge_sps(destruction_point_x, destruction_point_y)
 
 				if (2)	//S
-					for (increment=1; increment<=4; increment++)
+					for (increment in 1 to 4)
 						destruction_point_x = ship.loc.x
 						destruction_point_y = ship.loc.y - increment
 						if(pod_is_large)
@@ -427,7 +427,7 @@
 						purge_sps(destruction_point_x, destruction_point_y)
 
 				if (8)	//W
-					for (increment=1; increment<=4; increment++)
+					for (increment in 1 to 4)
 						destruction_point_x = ship.loc.x - increment
 						destruction_point_y = ship.loc.y
 						if(pod_is_large)

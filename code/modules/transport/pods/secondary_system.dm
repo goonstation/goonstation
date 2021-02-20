@@ -934,13 +934,13 @@
 		if(!core_inserted)
 			boutput(ship.pilot, "<span class='alert'><B>The system requires a unique power source to function!</B></span>")
 			return
-		else if(cooldown > world.time)
+		else if(cooldown > TIME)
 			boutput(ship.pilot, "<span class='alert'><B>The system is still recharging!</B></span>")
 			return
 		else
 			boutput(ship.pilot, "<span class='alert'><B>Snapshot created!</B></span>")
 			playsound(ship.loc, 'sound/machines/reprog.ogg', 75, 1)
-			cooldown = 20 SECONDS + world.time
+			cooldown = 20 SECONDS + TIME
 			health_snapshot = ship.health
 			if(ship.capacity == 1 || istype(/obj/machinery/vehicle/miniputt, ship) || istype(/obj/machinery/vehicle/recon, ship) || istype(/obj/machinery/vehicle/cargo, ship))
 				rewind = image('icons/misc/retribution/SWORD_loot.dmi', "SRS_o_small", "layer" = EFFECTS_LAYER_4)

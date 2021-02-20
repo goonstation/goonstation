@@ -52,7 +52,7 @@
 		miscvuln = 0
 
 		var/increment
-		for(increment = 0; increment <= 14; increment++)
+		for(increment in 0 to 14)
 			SPAWN_DBG(increment)
 				src.alpha += 17
 
@@ -184,7 +184,7 @@
 				if("chasing")
 					if (src.frustration >= rand(16,32))
 						src.target = null
-						src.last_found = world.time
+						src.last_found = TIME
 						src.frustration = 0
 						src.task = "thinking"
 						walk_to(src,0)
@@ -198,13 +198,13 @@
 
 						else
 							if(!stuck_timer)
-								stuck_timer = 12 SECONDS + world.time
+								stuck_timer = 12 SECONDS + TIME
 								stuck_location = get_center()
 							
-							if(stuck_timer <= world.time && stuck_location == get_center())
-								cooldown = 4 SECONDS + world.time
+							if(stuck_timer <= TIME && stuck_location == get_center())
+								cooldown = 4 SECONDS + TIME
 								stuck_timer = null
-								for(var/stuck_increment = 1, stuck_increment <= 3, stuck_increment++)
+								for(var/stuck_increment in 1 to 3)
 									SPAWN_DBG(stuck_increment SECONDS)
 										for (var/turf/simulated/OV in oview(get_center(),stuck_increment))
 											tile_purge(OV.loc.x,OV.loc.y,3)
@@ -240,7 +240,7 @@
 								if (M.health <= 0)
 									src.task = "thinking"
 									src.target = null
-									src.last_found = world.time
+									src.last_found = TIME
 									src.frustration = 0
 									src.attacking = 0
 								else
@@ -256,8 +256,8 @@
 //-ABILITY SELECTION-//
 
 	proc/ability_selection()
-		if(cooldown <= world.time && mode && !current_ability && !changing_modes)
-			cooldown = rand(20,30) + world.time
+		if(cooldown <= TIME && mode && !current_ability && !changing_modes)
+			cooldown = rand(20,30) + TIME
 			if(prob(36) && used_ability)
 				used_ability = 0
 				configuration_swap()
@@ -472,7 +472,7 @@
 
 		switch (src.dir)
 			if (1)	//N
-				for(increment = 2; increment <= 9; increment++)
+				for(increment in 2 to 9)
 					T = locate(src.loc.x,src.loc.y + increment,src.loc.z)
 					leavepurge(T, increment, src.dir)
 					SPAWN_DBG(15)
@@ -480,7 +480,7 @@
 						tile_purge(src.loc.x + 1,src.loc.y + 1 + increment,0)
 
 			if (4)	//E
-				for(increment = 2; increment <= 9; increment++)
+				for(increment in 2 to 9)
 					T = locate(src.loc.x + increment,src.loc.y,src.loc.z)
 					leavepurge(T, increment, src.dir)
 					SPAWN_DBG(15)
@@ -488,7 +488,7 @@
 						tile_purge(src.loc.x + 1 + increment,src.loc.y + 1,0)
 
 			if (2)	//S
-				for(increment = 2; increment <= 9; increment++)
+				for(increment in 2 to 9)
 					T = locate(src.loc.x,src.loc.y - increment,src.loc.z)
 					leavepurge(T, increment, src.dir)
 					SPAWN_DBG(15)
@@ -496,7 +496,7 @@
 						tile_purge(src.loc.x + 1,src.loc.y + 1 - increment,0)
 
 			if (8)	//W
-				for(increment = 2; increment <= 9; increment++)
+				for(increment in 2 to 9)
 					T = locate(src.loc.x - increment,src.loc.y,src.loc.z)
 					leavepurge(T, increment, src.dir)
 					SPAWN_DBG(15)
@@ -579,7 +579,7 @@
 		SPAWN_DBG(2)
 			if(past_destructive_rotation == src.dir)
 				src.dir = pick(1,2,4,8)
-			for(var/i=0, i < 6, i++)
+			for(var/i in 0 to 7)
 				step(src, src.dir)
 				if(i < 3)
 					src.alpha -= 17
@@ -706,31 +706,31 @@
 		SPAWN_DBG(1)
 			if(past_destructive_rotation == src.dir)
 				src.dir = pick(1,2,4,8)
-			for(var/i=0, i < 6, i++)
+			for(var/i in 0 to 7)
 				switch (src.dir)
 					if (1)	//N
-						for(increment = -1; increment <= 1; increment++)
+						for(increment in -1 to 1)
 							T = locate(src.loc.x + 1 + increment,src.loc.y + 3,src.loc.z)
 							if(T && prob(33))
 								playsound(get_center(), 'sound/effects/smoke_tile_spread.ogg', 70, 1)
 								tile_purge(src.loc.x + 1 + increment,src.loc.y + 3,0)
 
 					if (4)	//E
-						for(increment = -1; increment <= 1; increment++)
+						for(increment in -1 to 1)
 							T = locate(src.loc.x + 3,src.loc.y + 1 + increment,src.loc.z)
 							if(T && prob(33))
 								playsound(get_center(), 'sound/effects/smoke_tile_spread.ogg', 70, 1)
 								tile_purge(src.loc.x + 3,src.loc.y + 1 + increment,0)
 
 					if (2)	//S
-						for(increment = -1; increment <= 1; increment++)
+						for(increment in -1 to 1)
 							T = locate(src.loc.x + 1 + increment,src.loc.y - 1,src.loc.z)
 							if(T && prob(33))
 								playsound(get_center(), 'sound/effects/smoke_tile_spread.ogg', 70, 1)
 								tile_purge(src.loc.x + 1 + increment,src.loc.y - 1,0)
 
 					if (8)	//W
-						for(increment = -1; increment <= 1; increment++)
+						for(increment in -1 to 1)
 							T = locate(src.loc.x - 1,src.loc.y + 1 + increment,src.loc.z)
 							if(T && prob(33))
 								playsound(get_center(), 'sound/effects/smoke_tile_spread.ogg', 70, 1)
@@ -746,31 +746,31 @@
 				src.dir = pick(1,2,4,8)
 			walk_towards(src, src.target)
 			walk(src,0)
-			for(var/l=0, l < 6, l++)
+			for(var/l in 0 to 7)
 				switch (src.dir)
 					if (1)	//N
-						for(increment = -1; increment <= 1; increment++)
+						for(increment in -1 to 1)
 							T = locate(src.loc.x + 1,src.loc.y + 3,src.loc.z)
 							if(T)
 								playsound(get_center(), 'sound/effects/smoke_tile_spread.ogg', 70, 1)
 								tile_purge(src.loc.x + 1 + increment,src.loc.y + 3,0)
 
 					if (4)	//E
-						for(increment = -1; increment <= 1; increment++)
+						for(increment in -1 to 1)
 							T = locate(src.loc.x + 3,src.loc.y + 1,src.loc.z)
 							if(T)
 								playsound(get_center(), 'sound/effects/smoke_tile_spread.ogg', 70, 1)
 								tile_purge(src.loc.x + 3,src.loc.y + 1 + increment,0)
 
 					if (2)	//S
-						for(increment = -1; increment <= 1; increment++)
+						for(increment in -1 to 1)
 							T = locate(src.loc.x + 1,src.loc.y - 1,src.loc.z)
 							if(T)
 								playsound(get_center(), 'sound/effects/smoke_tile_spread.ogg', 70, 1)
 								tile_purge(src.loc.x + 1 + increment,src.loc.y - 1,0)
 
 					if (8)	//W
-						for(increment = -1; increment <= 1; increment++)
+						for(increment in -1 to 1)
 							T = locate(src.loc.x - 1,src.loc.y + 1,src.loc.z)
 							if(T)
 								playsound(get_center(), 'sound/effects/smoke_tile_spread.ogg', 70, 1)
