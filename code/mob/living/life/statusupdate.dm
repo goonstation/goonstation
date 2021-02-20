@@ -85,7 +85,7 @@
 			owner.blinded = 1
 
 		if (owner.stuttering)
-			owner.stuttering -= mult
+			owner.stuttering = max(owner.stuttering - mult, 0)
 
 		if (owner.get_ear_damage(1)) // Temporary deafness.
 			owner.take_ear_damage(-mult, 1)
