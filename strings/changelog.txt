@@ -1,5 +1,9 @@
 
 (t)fri feb 19 21
+(u)zjdtmkhzt
+(p)3731
+(e)⚖🆕|balance, feature
+(*)Lots of non-handheld artifact types now actually trigger the faults they might get, so artifact use may have some unintended side effects now. Stay safe, everyone!
 (u)BatElite
 (p)3739
 (e)🎨|sprites
