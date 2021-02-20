@@ -2887,6 +2887,8 @@
 /mob/proc/sell_soul(var/amount, var/reduce_health=1, var/allow_overflow=0)
 	if(!src.mind)
 		return 0
+	if(isnpcmonkey(src))
+		return 0
 	if(allow_overflow)
 		amount = max(1, min(src.mind.soul, amount)) // can't sell less than 1
 	if (isdiabolical(src))
