@@ -22,6 +22,8 @@
 
 	var/interesting = ""
 	var/stops_space_move = 0
+	/// Anything can speak... if it can speak
+	var/obj/chat_maptext_holder/chat_text
 
 	/// Gets the atoms name with all the ugly prefixes things remove
 	proc/clean_name()
@@ -392,6 +394,7 @@
 		src.loc.Entered(src, null)
 		if(isturf(src.loc)) // call it on the area too
 			src.loc.loc.Entered(src, null)
+
 
 /atom/movable/disposing()
 	if (temp_flags & MANTA_PUSHING)

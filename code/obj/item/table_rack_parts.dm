@@ -200,7 +200,7 @@ RACK PARTS
 	name = "industrial table parts"
 	desc = "A collection of parts that can be used to make an industrial looking table."
 	icon = 'icons/obj/furniture/table_industrial.dmi'
-	furniture_type = /obj/table/round/auto
+	furniture_type = /obj/table/reinforced/industrial
 
 /obj/item/furniture_parts/table/reinforced/bar
 	name = "bar table parts"
