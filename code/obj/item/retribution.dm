@@ -126,7 +126,7 @@
 			for (increment_y = -1; increment_y <= 1; increment_y++)
 				for (increment_x = -1; increment_x <= 1; increment_x++)
 					if (increment_x == 0 && increment_y == 0)
-						playsound(user.loc, 'sound/effects/shielddown.ogg', 50, 1)
+						playsound(user.loc, "sound/effects/shielddown.ogg", 50, 1)
 					else
 						destruction_point_x = scan_center_x + increment_x
 						destruction_point_y = scan_center_y + increment_y

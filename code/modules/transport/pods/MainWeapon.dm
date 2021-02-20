@@ -395,7 +395,7 @@
 			var/destruction_point_y
 			SPAWN_DBG(8)
 				ship.UpdateOverlays(null, "purge")
-			playsound(ship.loc, 'sound/weapons/laserultra.ogg', 100, 1)
+			playsound(ship.loc, "sound/weapons/laserultra.ogg", 100, 1)
 			switch (ship.dir)
 				if (1)	//N
 					for (increment in 1 to 4)

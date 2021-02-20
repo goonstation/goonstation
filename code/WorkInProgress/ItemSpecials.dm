@@ -615,9 +615,9 @@
 				afterUse(user)
 				if (!hit)
 					if (!ignition)
-						playsound(get_turf(master), 'sound/effects/swoosh.ogg', 50, 0)
+						playsound(get_turf(master), "sound/effects/swoosh.ogg", 50, 0)
 					else
-						playsound(get_turf(master), 'sound/effects/flame.ogg', 50, 0)
+						playsound(get_turf(master), "sound/effects/flame.ogg", 50, 0)
 			return
 
 		csaber //no stun and less damage than normal csaber hit ( see sword/attack() )

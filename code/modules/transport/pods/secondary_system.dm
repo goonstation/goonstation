@@ -939,7 +939,7 @@
 			return
 		else
 			boutput(ship.pilot, "<span class='alert'><B>Snapshot created!</B></span>")
-			playsound(ship.loc, 'sound/machines/reprog.ogg', 75, 1)
+			playsound(ship.loc, "sound/machines/reprog.ogg", 75, 1)
 			cooldown = 20 SECONDS + TIME
 			health_snapshot = ship.health
 			if(ship.capacity == 1 || istype(/obj/machinery/vehicle/miniputt, ship) || istype(/obj/machinery/vehicle/recon, ship) || istype(/obj/machinery/vehicle/cargo, ship))
@@ -952,7 +952,7 @@
 			spawn(5 SECONDS)
 				spawn(1 SECONDS)
 					src.ship.UpdateOverlays(null, "rewind")
-				playsound(ship.loc, 'sound/machines/bweep.ogg', 75, 1)
+				playsound(ship.loc, "sound/machines/bweep.ogg", 75, 1)
 				if(ship.health < health_snapshot)
 					ship.health = health_snapshot
 					boutput(ship.pilot, "<span class='alert'><B>Snapshot applied!</B></span>")

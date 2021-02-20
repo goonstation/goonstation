@@ -476,7 +476,7 @@
 					T = locate(src.loc.x,src.loc.y + increment,src.loc.z)
 					leavepurge(T, increment, src.dir)
 					SPAWN_DBG(15)
-						playsound(get_center(), 'sound/weapons/laserultra.ogg', 100, 1)
+						playsound(get_center(), "sound/weapons/laserultra.ogg", 100, 1)
 						tile_purge(src.loc.x + 1,src.loc.y + 1 + increment,0)
 
 			if (4)	//E
@@ -484,7 +484,7 @@
 					T = locate(src.loc.x + increment,src.loc.y,src.loc.z)
 					leavepurge(T, increment, src.dir)
 					SPAWN_DBG(15)
-						playsound(get_center(), 'sound/weapons/laserultra.ogg', 100, 1)
+						playsound(get_center(), "sound/weapons/laserultra.ogg", 100, 1)
 						tile_purge(src.loc.x + 1 + increment,src.loc.y + 1,0)
 
 			if (2)	//S
@@ -492,7 +492,7 @@
 					T = locate(src.loc.x,src.loc.y - increment,src.loc.z)
 					leavepurge(T, increment, src.dir)
 					SPAWN_DBG(15)
-						playsound(get_center(), 'sound/weapons/laserultra.ogg', 100, 1)
+						playsound(get_center(), "sound/weapons/laserultra.ogg", 100, 1)
 						tile_purge(src.loc.x + 1,src.loc.y + 1 - increment,0)
 
 			if (8)	//W
@@ -500,7 +500,7 @@
 					T = locate(src.loc.x - increment,src.loc.y,src.loc.z)
 					leavepurge(T, increment, src.dir)
 					SPAWN_DBG(15)
-						playsound(get_center(), 'sound/weapons/laserultra.ogg', 100, 1)
+						playsound(get_center(), "sound/weapons/laserultra.ogg", 100, 1)
 						tile_purge(src.loc.x + 1 - increment,src.loc.y + 1,0)
 
 		SPAWN_DBG(10)
@@ -712,28 +712,28 @@
 						for(increment in -1 to 1)
 							T = locate(src.loc.x + 1 + increment,src.loc.y + 3,src.loc.z)
 							if(T && prob(33))
-								playsound(get_center(), 'sound/effects/smoke_tile_spread.ogg', 70, 1)
+								playsound(get_center(), "sound/effects/smoke_tile_spread.ogg", 70, 1)
 								tile_purge(src.loc.x + 1 + increment,src.loc.y + 3,0)
 
 					if (4)	//E
 						for(increment in -1 to 1)
 							T = locate(src.loc.x + 3,src.loc.y + 1 + increment,src.loc.z)
 							if(T && prob(33))
-								playsound(get_center(), 'sound/effects/smoke_tile_spread.ogg', 70, 1)
+								playsound(get_center(), "sound/effects/smoke_tile_spread.ogg", 70, 1)
 								tile_purge(src.loc.x + 3,src.loc.y + 1 + increment,0)
 
 					if (2)	//S
 						for(increment in -1 to 1)
 							T = locate(src.loc.x + 1 + increment,src.loc.y - 1,src.loc.z)
 							if(T && prob(33))
-								playsound(get_center(), 'sound/effects/smoke_tile_spread.ogg', 70, 1)
+								playsound(get_center(), "sound/effects/smoke_tile_spread.ogg", 70, 1)
 								tile_purge(src.loc.x + 1 + increment,src.loc.y - 1,0)
 
 					if (8)	//W
 						for(increment in -1 to 1)
 							T = locate(src.loc.x - 1,src.loc.y + 1 + increment,src.loc.z)
 							if(T && prob(33))
-								playsound(get_center(), 'sound/effects/smoke_tile_spread.ogg', 70, 1)
+								playsound(get_center(), "sound/effects/smoke_tile_spread.ogg", 70, 1)
 								tile_purge(src.loc.x - 1,src.loc.y + 1 + increment,0)
 				step(src, src.dir)
 				sleep(0.4)
@@ -752,28 +752,28 @@
 						for(increment in -1 to 1)
 							T = locate(src.loc.x + 1,src.loc.y + 3,src.loc.z)
 							if(T)
-								playsound(get_center(), 'sound/effects/smoke_tile_spread.ogg', 70, 1)
+								playsound(get_center(), "sound/effects/smoke_tile_spread.ogg", 70, 1)
 								tile_purge(src.loc.x + 1 + increment,src.loc.y + 3,0)
 
 					if (4)	//E
 						for(increment in -1 to 1)
 							T = locate(src.loc.x + 3,src.loc.y + 1,src.loc.z)
 							if(T)
-								playsound(get_center(), 'sound/effects/smoke_tile_spread.ogg', 70, 1)
+								playsound(get_center(), "sound/effects/smoke_tile_spread.ogg", 70, 1)
 								tile_purge(src.loc.x + 3,src.loc.y + 1 + increment,0)
 
 					if (2)	//S
 						for(increment in -1 to 1)
 							T = locate(src.loc.x + 1,src.loc.y - 1,src.loc.z)
 							if(T)
-								playsound(get_center(), 'sound/effects/smoke_tile_spread.ogg', 70, 1)
+								playsound(get_center(), "sound/effects/smoke_tile_spread.ogg", 70, 1)
 								tile_purge(src.loc.x + 1 + increment,src.loc.y - 1,0)
 
 					if (8)	//W
 						for(increment in -1 to 1)
 							T = locate(src.loc.x - 1,src.loc.y + 1,src.loc.z)
 							if(T)
-								playsound(get_center(), 'sound/effects/smoke_tile_spread.ogg', 70, 1)
+								playsound(get_center(), "sound/effects/smoke_tile_spread.ogg", 70, 1)
 								tile_purge(src.loc.x - 1,src.loc.y + 1 + increment,0)
 				step(src, src.dir)
 				sleep(0.1)
