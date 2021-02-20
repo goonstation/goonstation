@@ -1,4 +1,9 @@
 
+(t)sat feb 20 21
+(u)Batelite
+(p)3768
+(e)🎨|sprites
+(+)Health analyzer screens now indicate what they're scanning
 (t)fri feb 19 21
 (u)zjdtmkhzt
 (p)3731
