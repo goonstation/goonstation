@@ -91,6 +91,7 @@
 	dir = 4;
 	name = "autoname - Mining";
 	network = "Mining";
+	pixel_x = -10;
 	tag = ""
 	},
 /turf/simulated/floor/longtile,
@@ -106,7 +107,8 @@
 /obj/machinery/computer/security/console_upper,
 /obj/machinery/light/incandescent/cool{
 	dir = 1;
-	nostick = 1
+	nostick = 1;
+	pixel_y = 20
 	},
 /turf/simulated/floor/longtile,
 /area/station/bridge)
@@ -190,7 +192,8 @@
 /obj/machinery/power/monitor/console_upper,
 /obj/machinery/light/incandescent/cool{
 	dir = 1;
-	nostick = 1
+	nostick = 1;
+	pixel_y = 20
 	},
 /turf/simulated/floor/longtile,
 /area/station/bridge)
@@ -217,7 +220,8 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/light/emergency{
-	dir = 8
+	dir = 8;
+	pixel_x = -10
 	},
 /obj/machinery/computer3/terminal/zeta/console_lower{
 	dir = 4
@@ -269,7 +273,8 @@
 	desc = "This light might be broken.  It's probably not wired up, though.";
 	dir = 8;
 	icon_state = "tube0";
-	name = "inactive light tube"
+	name = "inactive light tube";
+	pixel_x = -10
 	},
 /turf/simulated/floor/grime,
 /area/diner/backroom)
@@ -329,7 +334,8 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/light/emergency{
-	dir = 4
+	dir = 4;
+	pixel_x = 10
 	},
 /obj/machinery/computer/card/console_lower{
 	dir = 8
@@ -359,14 +365,17 @@
 	dir = 4;
 	icon_state = "tube0";
 	layer = 4;
-	name = "inactive light tube"
+	name = "inactive light tube";
+	pixel_x = 10
 	},
 /turf/simulated/floor/grime,
 /area/diner/backroom)
 "aaH" = (
 /obj/machinery/light/incandescent/cool{
 	dir = 8;
-	nostick = 1
+	nostick = 1;
+	pixel_x = -10;
+	pixel_y = 10
 	},
 /obj/cable{
 	icon_state = "2-4"
@@ -378,7 +387,8 @@
 /area/station/bridge)
 "aaJ" = (
 /obj/machinery/light/emergency{
-	dir = 1
+	dir = 1;
+	pixel_y = 16
 	},
 /turf/simulated/floor/longtile,
 /area/station/bridge)
@@ -407,6 +417,11 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/computer3/generic/communications,
+/obj/machinery/light/incandescent/warm{
+	dir = 1;
+	nostick = 1;
+	pixel_y = 20
+	},
 /turf/simulated/floor/wood/two,
 /area/station/captain)
 "aaN" = (
@@ -429,7 +444,8 @@
 	name = "Captain"
 	},
 /obj/machinery/light/small/cool{
-	dir = 4
+	dir = 4;
+	pixel_x = 10
 	},
 /obj/machinery/phone/wall{
 	pixel_y = 32
@@ -505,10 +521,6 @@
 	pixel_y = -10
 	},
 /obj/item/camera_test,
-/obj/machinery/light/incandescent/warm{
-	dir = 1;
-	nostick = 1
-	},
 /obj/decoration/vent{
 	pixel_y = 32
 	},
@@ -581,6 +593,11 @@
 "abg" = (
 /obj/table/reinforced/auto,
 /obj/item/storage/toolbox/mechanical,
+/obj/machinery/light/incandescent/netural{
+	dir = 4;
+	nostick = 1;
+	pixel_x = 10
+	},
 /turf/simulated/floor,
 /area/station/security/starboardtorpedoes)
 "abh" = (
@@ -749,7 +766,9 @@
 "abD" = (
 /obj/machinery/light/incandescent/cool{
 	dir = 4;
-	nostick = 1
+	nostick = 1;
+	pixel_x = 10;
+	pixel_y = 10
 	},
 /obj/cable{
 	icon_state = "2-8"
@@ -800,7 +819,8 @@
 	},
 /obj/machinery/light/incandescent/cool{
 	dir = 8;
-	nostick = 1
+	nostick = 1;
+	pixel_x = -10
 	},
 /turf/simulated/floor/black,
 /area/station/bridge)
@@ -874,7 +894,8 @@
 	},
 /obj/machinery/light/incandescent/cool{
 	dir = 4;
-	nostick = 1
+	nostick = 1;
+	pixel_x = 10
 	},
 /turf/simulated/floor/black,
 /area/station/bridge)
@@ -949,7 +970,8 @@
 "abV" = (
 /obj/machinery/light/incandescent/cool{
 	dir = 1;
-	nostick = 1
+	nostick = 1;
+	pixel_y = 20
 	},
 /obj/rack,
 /obj/item/clothing/shoes/flippers,
@@ -1021,7 +1043,8 @@
 "acb" = (
 /obj/storage/closet/emergency,
 /obj/machinery/light/incandescent/netural{
-	dir = 1
+	dir = 1;
+	pixel_y = 20
 	},
 /turf/simulated/floor,
 /area/station/hangar/starboard)
@@ -1119,6 +1142,7 @@
 	c_tag = "autotag";
 	dir = 4;
 	name = "autoname - SS13";
+	pixel_x = -10;
 	tag = ""
 	},
 /turf/simulated/floor,
@@ -1134,7 +1158,8 @@
 /obj/table/auto,
 /obj/item/storage/toolbox/mechanical,
 /obj/machinery/light/incandescent/netural{
-	dir = 1
+	dir = 1;
+	pixel_y = 20
 	},
 /turf/simulated/floor,
 /area/station/hangar/mining)
@@ -1157,7 +1182,8 @@
 	},
 /obj/machinery/light/incandescent/netural{
 	dir = 4;
-	nostick = 1
+	nostick = 1;
+	pixel_x = 10
 	},
 /turf/simulated/floor,
 /area/station/hangar/mining)
@@ -1198,7 +1224,8 @@
 	},
 /obj/machinery/light/incandescent/netural{
 	dir = 4;
-	nostick = 1
+	nostick = 1;
+	pixel_x = 10
 	},
 /turf/simulated/floor,
 /area/station/hallway/portupperhallway)
@@ -1240,7 +1267,8 @@
 	rand_pos = 0
 	},
 /obj/machinery/light/incandescent/netural{
-	dir = 8
+	dir = 8;
+	pixel_x = -10
 	},
 /turf/simulated/floor,
 /area/station/hallway/starboardupperhallway)
@@ -1314,13 +1342,15 @@
 "acM" = (
 /obj/storage/closet/emergency,
 /obj/machinery/light/incandescent/netural{
-	dir = 1
+	dir = 1;
+	pixel_y = 20
 	},
 /turf/simulated/floor,
 /area/station/hangar/port)
 "acN" = (
 /obj/machinery/light/incandescent/netural{
-	dir = 8
+	dir = 8;
+	pixel_x = -10
 	},
 /obj/torpedo_tray/explosive_loaded{
 	dir = 8
@@ -1335,7 +1365,8 @@
 	dir = 4
 	},
 /obj/machinery/light/incandescent/netural{
-	dir = 4
+	dir = 4;
+	pixel_x = 10
 	},
 /turf/simulated/floor/grime,
 /area/skeleton_trader)
@@ -1374,7 +1405,8 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/light/incandescent/netural{
-	dir = 8
+	dir = 8;
+	pixel_x = -10
 	},
 /obj/item/constructioncone,
 /turf/simulated/floor,
@@ -1484,13 +1516,15 @@
 "adt" = (
 /obj/machinery/light/incandescent/warm{
 	dir = 8;
-	nostick = 1
+	nostick = 1;
+	pixel_x = -10
 	},
 /turf/simulated/floor/specialroom/bar,
 /area/diner/dining)
 "adu" = (
 /obj/machinery/light/incandescent/warm{
-	dir = 8
+	dir = 8;
+	pixel_x = -10
 	},
 /turf/simulated/floor/specialroom/bar,
 /area/diner/dining)
@@ -1634,7 +1668,8 @@
 "adQ" = (
 /obj/marker/supplymarker,
 /obj/machinery/light/incandescent/netural{
-	dir = 4
+	dir = 4;
+	pixel_x = 10
 	},
 /turf/simulated/floor/shuttle{
 	icon_state = "floor2"
@@ -1647,7 +1682,8 @@
 "adS" = (
 /obj/stool/chair/wooden,
 /obj/machinery/light/incandescent/warm{
-	dir = 1
+	dir = 1;
+	pixel_y = 20
 	},
 /turf/simulated/floor/specialroom/bar,
 /area/diner/dining)
@@ -1792,7 +1828,8 @@
 	pixel_y = 32
 	},
 /obj/machinery/light/incandescent/netural{
-	dir = 8
+	dir = 8;
+	pixel_x = -10
 	},
 /turf/simulated/floor,
 /area/station/security/brig/cell1)
@@ -1810,7 +1847,8 @@
 /area/diner/kitchen)
 "aew" = (
 /obj/machinery/light/incandescent/warm{
-	dir = 8
+	dir = 8;
+	pixel_x = -10
 	},
 /obj/decal/cleanable/dirt/dirt4,
 /obj/stove,
@@ -2049,6 +2087,10 @@
 	dir = 9;
 	icon_state = "line1"
 	},
+/obj/machinery/light/incandescent/netural{
+	dir = 1;
+	pixel_y = 20
+	},
 /turf/simulated/floor,
 /area/station/hallway/portupperhallway)
 "afi" = (
@@ -2145,7 +2187,8 @@
 /area/station/medical/morgue)
 "afC" = (
 /obj/machinery/light/incandescent/netural{
-	dir = 8
+	dir = 8;
+	pixel_x = -10
 	},
 /obj/item/cigbutt,
 /turf/simulated/floor/grime,
@@ -2168,7 +2211,8 @@
 /area/diner/dining)
 "afG" = (
 /obj/machinery/light/incandescent/netural{
-	dir = 4
+	dir = 4;
+	pixel_x = 10
 	},
 /obj/decal/cleanable/dirt/dirt4,
 /turf/simulated/floor/specialroom/bar,
@@ -2331,7 +2375,8 @@
 /obj/machinery/vending/snack,
 /obj/machinery/light/incandescent/warm{
 	dir = 8;
-	nostick = 1
+	nostick = 1;
+	pixel_x = -10
 	},
 /turf/simulated/floor/grime,
 /area/diner/dining)
@@ -2365,7 +2410,9 @@
 "agr" = (
 /obj/machinery/light/incandescent/cool{
 	dir = 4;
-	nostick = 1
+	nostick = 1;
+	pixel_x = 10;
+	pixel_y = 10
 	},
 /obj/machinery/power/data_terminal,
 /obj/table/wood/round/auto,
@@ -2451,7 +2498,8 @@
 /obj/machinery/vending/coffee,
 /obj/machinery/light/incandescent/warm{
 	dir = 4;
-	nostick = 1
+	nostick = 1;
+	pixel_x = 10
 	},
 /turf/simulated/floor/grime,
 /area/diner/dining)
@@ -2467,6 +2515,10 @@
 /obj/decal/tile_edge/line/red{
 	dir = 5;
 	icon_state = "line1"
+	},
+/obj/machinery/light/incandescent/netural{
+	dir = 1;
+	pixel_y = 20
 	},
 /turf/simulated/floor,
 /area/station/hallway/starboardupperhallway)
@@ -2495,7 +2547,8 @@
 "agI" = (
 /obj/machinery/manufacturer/hangar,
 /obj/machinery/light/incandescent/warm{
-	dir = 1
+	dir = 1;
+	pixel_y = 20
 	},
 /turf/simulated/floor/caution/south,
 /area/diner/hangar)
@@ -2600,7 +2653,8 @@
 /area/diner/hangar)
 "ahi" = (
 /obj/machinery/light/incandescent/warm{
-	dir = 1
+	dir = 1;
+	pixel_y = 20
 	},
 /obj/stool/chair/couch/blue{
 	dir = 8
@@ -2648,7 +2702,8 @@
 /obj/table/auto,
 /obj/item/storage/toolbox/mechanical,
 /obj/machinery/light/incandescent/warm{
-	dir = 8
+	dir = 8;
+	pixel_x = -10
 	},
 /turf/simulated/floor/plating,
 /area/diner/hangar)
@@ -2659,7 +2714,8 @@
 "ahs" = (
 /obj/machinery/teleport/portal_generator,
 /obj/machinery/light/incandescent/netural{
-	dir = 4
+	dir = 4;
+	pixel_x = 10
 	},
 /turf/simulated/floor/plating,
 /area/diner/hangar)
@@ -2801,7 +2857,8 @@
 "aif" = (
 /obj/machinery/light/incandescent/blueish{
 	dir = 4;
-	nostick = 1
+	nostick = 1;
+	pixel_x = 10
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/upperport)
@@ -2847,18 +2904,25 @@
 /turf/simulated/floor/plating/random,
 /area/station/medical/robotics)
 "aij" = (
+/obj/decal/cleanable/cobweb{
+	icon_state = "cobweb2"
+	},
+/obj/machinery/light/incandescent/blueish{
+	dir = 1;
+	nostick = 1;
+	pixel_y = 20
+	},
+/turf/simulated/floor/plating/random,
+/area/station/maintenance/upperstarboard)
+"aik" = (
+/obj/disposalpipe/segment,
 /obj/machinery/light/incandescent/netural{
 	dir = 4;
-	nostick = 1
+	nostick = 1;
+	pixel_x = 10
 	},
-/turf/simulated/floor,
-/area/station/hallway/portupperhallway)
-"aik" = (
-/obj/machinery/light/incandescent/netural{
-	dir = 8
-	},
-/turf/simulated/floor,
-/area/station/hallway/starboardupperhallway)
+/turf/simulated/floor/carpet/grime,
+/area/station/communications/bedroom)
 "ail" = (
 /obj/decal/stage_edge/alt,
 /obj/item/device/radio/intercom/cargo{
@@ -2915,6 +2979,7 @@
 	c_tag = "autotag";
 	dir = 4;
 	name = "autoname - SS13";
+	pixel_x = -10;
 	tag = ""
 	},
 /turf/simulated/floor/plating/random,
@@ -3016,6 +3081,7 @@
 	c_tag = "autotag";
 	dir = 4;
 	name = "autoname - SS13";
+	pixel_x = -10;
 	tag = ""
 	},
 /turf/simulated/floor/circuit,
@@ -3228,7 +3294,8 @@
 	trader_area = "/area/station/crew_quarters/clown"
 	},
 /obj/machinery/light/incandescent/warm{
-	dir = 1
+	dir = 1;
+	pixel_y = 20
 	},
 /turf/simulated/floor/specialroom/clown,
 /area/station/crew_quarters/clown)
@@ -4045,7 +4112,8 @@
 /area/listeningpost/syndicateassaultvessel)
 "alA" = (
 /obj/machinery/light/incandescent/netural{
-	dir = 8
+	dir = 8;
+	pixel_x = -10
 	},
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/starboard)
@@ -4400,7 +4468,8 @@
 	tag = "OTHER_MAINFRAME"
 	},
 /obj/machinery/light/incandescent/warm{
-	dir = 1
+	dir = 1;
+	pixel_y = 20
 	},
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -4935,7 +5004,8 @@
 	},
 /obj/machinery/light/incandescent/cool{
 	dir = 1;
-	nostick = 1
+	nostick = 1;
+	pixel_y = 20
 	},
 /obj/manta_speed_lever,
 /turf/simulated/floor/longtile,
@@ -5007,7 +5077,8 @@
 "anU" = (
 /obj/machinery/light/incandescent/blueish{
 	dir = 8;
-	nostick = 1
+	nostick = 1;
+	pixel_x = -10
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/upperport)
@@ -5205,6 +5276,11 @@
 /obj/item/hemostat,
 /obj/item/bandage,
 /obj/item/staple_gun,
+/obj/machinery/light/incandescent/cool{
+	dir = 4;
+	nostick = 1;
+	pixel_x = 10
+	},
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "aoq" = (
@@ -5341,7 +5417,8 @@
 	},
 /obj/machinery/light/incandescent/netural{
 	dir = 4;
-	nostick = 1
+	nostick = 1;
+	pixel_x = 10
 	},
 /turf/simulated/floor,
 /area/station/hallway/portupperhallway)
@@ -5352,7 +5429,8 @@
 	icon_state = "line1"
 	},
 /obj/machinery/light/incandescent/netural{
-	dir = 8
+	dir = 8;
+	pixel_x = -10
 	},
 /turf/simulated/floor,
 /area/station/hallway/starboardupperhallway)
@@ -5590,6 +5668,7 @@
 	c_tag = "autotag";
 	dir = 4;
 	name = "autoname - SS13";
+	pixel_x = -10;
 	tag = ""
 	},
 /turf/simulated/floor/sanitary,
@@ -5765,9 +5844,6 @@
 	pixel_x = 2;
 	pixel_y = 2
 	},
-/obj/machinery/light/incandescent/netural{
-	dir = 1
-	},
 /obj/cable{
 	icon_state = "0-4"
 	},
@@ -5814,7 +5890,8 @@
 	},
 /obj/machinery/light/incandescent/blueish{
 	dir = 4;
-	nostick = 1
+	nostick = 1;
+	pixel_x = 10
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/upperport)
@@ -5920,7 +5997,8 @@
 	pixel_y = -12
 	},
 /obj/machinery/light/incandescent/netural{
-	dir = 8
+	dir = 8;
+	pixel_x = -10
 	},
 /turf/simulated/floor/bot/blue,
 /area/station/ai_monitored/storage/eva)
@@ -5965,7 +6043,8 @@
 	icon_state = "line1"
 	},
 /obj/machinery/light/incandescent/netural{
-	dir = 4
+	dir = 4;
+	pixel_x = 10
 	},
 /turf/simulated/floor,
 /area/station/hallway/portupperhallway)
@@ -6020,7 +6099,8 @@
 	icon_state = "line1"
 	},
 /obj/machinery/light/incandescent/netural{
-	dir = 8
+	dir = 8;
+	pixel_x = -10
 	},
 /turf/simulated/floor,
 /area/station/hallway/starboardupperhallway)
@@ -6276,7 +6356,8 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/light/incandescent/netural{
-	dir = 4
+	dir = 4;
+	pixel_x = 10
 	},
 /turf/simulated/floor,
 /area/station/science/artifact)
@@ -6291,7 +6372,8 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/light/incandescent/netural{
-	dir = 8
+	dir = 8;
+	pixel_x = -10
 	},
 /turf/simulated/floor,
 /area/station/science/artifact)
@@ -6364,7 +6446,8 @@
 /obj/machinery/power/data_terminal,
 /obj/cable,
 /obj/machinery/light/incandescent/netural{
-	dir = 8
+	dir = 8;
+	pixel_x = -10
 	},
 /turf/simulated/floor,
 /area/station/science/artifact)
@@ -6385,7 +6468,8 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/light/incandescent/netural{
-	dir = 8
+	dir = 8;
+	pixel_x = -10
 	},
 /obj/disposalpipe/segment/mail{
 	dir = 4;
@@ -6395,14 +6479,16 @@
 /area/station/science/artifact)
 "aqB" = (
 /obj/machinery/light/incandescent/netural{
-	dir = 4
+	dir = 4;
+	pixel_x = 10
 	},
 /turf/simulated/floor,
 /area/station/science/artifact)
 "aqC" = (
 /obj/stool/bench/green,
 /obj/machinery/light/incandescent/netural{
-	dir = 1
+	dir = 1;
+	pixel_y = 20
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/lobby)
@@ -6961,7 +7047,8 @@
 /area/station/crewquarters/garbagegarbs)
 "arV" = (
 /obj/machinery/light/incandescent/netural{
-	dir = 1
+	dir = 1;
+	pixel_y = 20
 	},
 /obj/machinery/light_switch/auto{
 	pixel_y = 24
@@ -7019,7 +7106,8 @@
 /area/station/quartermaster/cargobay)
 "asb" = (
 /obj/machinery/light/emergency{
-	dir = 4
+	dir = 4;
+	pixel_x = 10
 	},
 /turf/simulated/floor/delivery,
 /area/station/quartermaster/cargobay)
@@ -7050,7 +7138,8 @@
 /area/station/construction/under_construction)
 "asf" = (
 /obj/machinery/light/incandescent/netural{
-	dir = 1
+	dir = 1;
+	pixel_y = 20
 	},
 /turf/simulated/floor/arrival{
 	dir = 1
@@ -7069,7 +7158,8 @@
 	},
 /obj/machinery/light/incandescent/netural{
 	dir = 8;
-	nostick = 1
+	nostick = 1;
+	pixel_x = -10
 	},
 /obj/stool/chair/blue{
 	anchored = 0;
@@ -7133,7 +7223,8 @@
 	},
 /obj/machinery/light/incandescent/blueish{
 	dir = 4;
-	nostick = 1
+	nostick = 1;
+	pixel_x = 10
 	},
 /obj/machinery/fluid_canister,
 /turf/simulated/floor/plating/random,
@@ -7197,7 +7288,11 @@
 /area/station/quartermaster/cargooffice)
 "asw" = (
 /obj/submachine/cargopad/robotics,
-/obj/machinery/light/incandescent/cool,
+/obj/machinery/light/incandescent/cool{
+	dir = 8;
+	nostick = 1;
+	pixel_x = -10
+	},
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "asx" = (
@@ -7292,7 +7387,8 @@
 /area/abandonedship)
 "asJ" = (
 /obj/machinery/light/incandescent/warm{
-	dir = 8
+	dir = 8;
+	pixel_x = -10
 	},
 /turf/simulated/floor,
 /area/abandonedship)
@@ -7320,7 +7416,8 @@
 /obj/decal/cleanable/dirt/dirt3,
 /obj/machinery/light/incandescent/warm{
 	dir = 4;
-	nostick = 1
+	nostick = 1;
+	pixel_x = 10
 	},
 /turf/simulated/floor,
 /area/abandonedship)
@@ -7355,7 +7452,8 @@
 /area/abandonedship)
 "asT" = (
 /obj/machinery/light/incandescent/warm{
-	dir = 1
+	dir = 1;
+	pixel_y = 20
 	},
 /turf/simulated/floor,
 /area/abandonedship)
@@ -7436,7 +7534,8 @@
 	},
 /obj/machinery/light/incandescent/warm{
 	dir = 4;
-	nostick = 1
+	nostick = 1;
+	pixel_x = 10
 	},
 /turf/simulated/floor{
 	icon_state = "floorgrime-w"
@@ -7489,7 +7588,8 @@
 "ato" = (
 /obj/machinery/light/incandescent/warm{
 	dir = 4;
-	nostick = 1
+	nostick = 1;
+	pixel_x = 10
 	},
 /turf/simulated/floor,
 /area/abandonedship)
@@ -7606,7 +7706,8 @@
 /obj/item/tank/emergency_oxygen,
 /obj/machinery/light/incandescent/netural{
 	dir = 4;
-	nostick = 1
+	nostick = 1;
+	pixel_x = 10
 	},
 /turf/simulated/floor/bot/blue,
 /area/station/ai_monitored/storage/eva)
@@ -7803,7 +7904,8 @@
 "auc" = (
 /obj/machinery/light/incandescent/blueish{
 	dir = 1;
-	nostick = 1
+	nostick = 1;
+	pixel_y = 20
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/upperport)
@@ -7814,7 +7916,8 @@
 "aue" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 4;
-	nostick = 1
+	nostick = 1;
+	pixel_x = 10
 	},
 /obj/bookshelf/persistent,
 /turf/simulated/floor,
@@ -7854,7 +7957,8 @@
 	dir = 4
 	},
 /obj/machinery/light/incandescent/netural{
-	dir = 4
+	dir = 4;
+	pixel_x = 10
 	},
 /turf/simulated/floor,
 /area/station/hallway/portupperhallway)
@@ -7895,7 +7999,8 @@
 /obj/item/clothing/under/shorts/blue,
 /obj/item/clothing/under/shorts/black,
 /obj/machinery/light/incandescent/netural{
-	dir = 8
+	dir = 8;
+	pixel_x = -10
 	},
 /obj/item/clothing/suit/bathrobe,
 /turf/simulated/floor/sanitary,
@@ -7955,7 +8060,8 @@
 	pixel_x = 8
 	},
 /obj/machinery/light/incandescent/netural{
-	dir = 8
+	dir = 8;
+	pixel_x = -10
 	},
 /turf/simulated/floor/bot,
 /area/station/engine/storage)
@@ -8258,6 +8364,11 @@
 /obj/storage/secure/closet/fridge,
 /obj/item/reagent_containers/food/drinks/milk,
 /obj/item/reagent_containers/food/snacks/pizza,
+/obj/machinery/light/incandescent/netural{
+	dir = 4;
+	nostick = 1;
+	pixel_x = 10
+	},
 /turf/simulated/floor/black,
 /area/station/engine/engineering/breakroom)
 "avh" = (
@@ -8307,11 +8418,13 @@
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 8;
-	name = "autoname  - SS13"
+	name = "autoname  - SS13";
+	pixel_x = 10
 	},
 /obj/machinery/light/incandescent/netural{
 	dir = 4;
-	nostick = 1
+	nostick = 1;
+	pixel_x = 10
 	},
 /turf/simulated/floor/bot,
 /area/station/engine/storage)
@@ -8407,7 +8520,8 @@
 	dir = 8
 	},
 /obj/machinery/light/incandescent/netural{
-	dir = 1
+	dir = 1;
+	pixel_y = 20
 	},
 /turf/simulated/floor{
 	icon_state = "yellowblack"
@@ -8434,6 +8548,7 @@
 	c_tag = "autotag";
 	dir = 4;
 	name = "autoname - SS13";
+	pixel_x = -10;
 	tag = ""
 	},
 /turf/simulated/floor,
@@ -8513,7 +8628,8 @@
 /area/station/engine/engineering/ce)
 "avH" = (
 /obj/machinery/light/incandescent/netural{
-	dir = 1
+	dir = 1;
+	pixel_y = 20
 	},
 /turf/simulated/floor,
 /area/station/engine/storage)
@@ -8682,10 +8798,8 @@
 	},
 /obj/machinery/firealarm{
 	dir = 8;
-	pixel_x = -24
-	},
-/obj/machinery/light/incandescent/netural{
-	dir = 8
+	pixel_x = -24;
+	pixel_y = 10
 	},
 /turf/simulated/floor/yellow,
 /area/station/engine/engineering/private)
@@ -8707,7 +8821,8 @@
 /area/station/engine/storage)
 "awd" = (
 /obj/machinery/light/incandescent/netural{
-	dir = 1
+	dir = 1;
+	pixel_y = 20
 	},
 /turf/simulated/floor{
 	dir = 9;
@@ -8843,7 +8958,8 @@
 	icon_state = "line1"
 	},
 /obj/machinery/light/incandescent/netural{
-	dir = 4
+	dir = 4;
+	pixel_x = 10
 	},
 /turf/simulated/floor/yellow,
 /area/station/engine/engineering/private)
@@ -8902,7 +9018,8 @@
 /area/station/engine/storage)
 "awz" = (
 /obj/machinery/light/incandescent/netural{
-	dir = 1
+	dir = 1;
+	pixel_y = 20
 	},
 /turf/simulated/floor,
 /area/station/engine/inner)
@@ -8978,7 +9095,8 @@
 /obj/machinery/manufacturer/general,
 /obj/machinery/light/incandescent/netural{
 	dir = 4;
-	nostick = 1
+	nostick = 1;
+	pixel_x = 10
 	},
 /turf/simulated/floor/bot,
 /area/station/engine/storage)
@@ -9281,6 +9399,10 @@
 	dir = 9;
 	icon_state = "line2"
 	},
+/obj/machinery/light/incandescent/netural{
+	dir = 8;
+	pixel_x = -10
+	},
 /turf/simulated/floor/yellow,
 /area/station/engine/engineering/private)
 "axr" = (
@@ -9353,7 +9475,8 @@
 /obj/machinery/field_generator,
 /obj/machinery/light/incandescent/netural{
 	dir = 8;
-	nostick = 1
+	nostick = 1;
+	pixel_x = -10
 	},
 /turf/simulated/floor/engine/glow/blue,
 /area/station/engine/singcore)
@@ -9421,28 +9544,13 @@
 	},
 /turf/simulated/floor/bot/blue,
 /area/station/ai_monitored/storage/eva)
-"axG" = (
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
-/obj/machinery/firealarm{
-	pixel_x = 1;
-	pixel_y = 26;
-	text = "NF"
-	},
-/obj/machinery/light/incandescent/netural{
-	dir = 1
-	},
-/turf/simulated/floor/yellow/side{
-	dir = 1
-	},
-/area/station/engine/inner)
 "axH" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
 /obj/machinery/light/incandescent/netural{
-	dir = 1
+	dir = 1;
+	pixel_y = 20
 	},
 /turf/simulated/floor/yellow/side{
 	dir = 1
@@ -9456,7 +9564,8 @@
 /obj/machinery/field_generator,
 /obj/machinery/light/incandescent/netural{
 	dir = 4;
-	nostick = 1
+	nostick = 1;
+	pixel_x = 10
 	},
 /turf/simulated/floor/engine/glow/blue,
 /area/station/engine/singcore)
@@ -9466,7 +9575,8 @@
 	icon_state = "pipe-c"
 	},
 /obj/machinery/light/incandescent/netural{
-	dir = 1
+	dir = 1;
+	pixel_y = 20
 	},
 /turf/simulated/floor/yellow/side{
 	dir = 5
@@ -9491,11 +9601,13 @@
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 8;
-	name = "autoname  - SS13"
+	name = "autoname  - SS13";
+	pixel_x = 10
 	},
 /obj/machinery/light/incandescent/netural{
 	dir = 4;
-	nostick = 1
+	nostick = 1;
+	pixel_x = 10
 	},
 /turf/simulated/floor/bot,
 /area/station/engine/storage)
@@ -9506,7 +9618,8 @@
 	icon_state = "line1"
 	},
 /obj/machinery/light/incandescent/netural{
-	dir = 8
+	dir = 8;
+	pixel_x = -10
 	},
 /turf/simulated/floor/yellow,
 /area/station/engine/engineering/private)
@@ -9562,7 +9675,8 @@
 /obj/item/clothing/head/helmet/space/engineer/diving/security,
 /obj/item/clothing/mask/breath,
 /obj/machinery/light/incandescent/netural{
-	dir = 8
+	dir = 8;
+	pixel_x = -10
 	},
 /obj/item/tank/emergency_oxygen,
 /obj/item/tank/jetpack,
@@ -9752,7 +9866,8 @@
 /obj/disposalpipe/segment,
 /obj/machinery/light/incandescent/netural{
 	dir = 4;
-	nostick = 1
+	nostick = 1;
+	pixel_x = 10
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -9772,7 +9887,8 @@
 /obj/item/extinguisher,
 /obj/item/clothing/suit/fire/heavy,
 /obj/machinery/light/incandescent/netural{
-	dir = 8
+	dir = 8;
+	pixel_x = -10
 	},
 /turf/simulated/floor,
 /area/station/engine/storage)
@@ -9784,9 +9900,6 @@
 /obj/item/wrench,
 /obj/item/clothing/glasses/meson,
 /obj/item/clothing/shoes/magnetic,
-/obj/machinery/light/incandescent/netural{
-	dir = 1
-	},
 /turf/simulated/floor/yellow,
 /area/station/engine/inner)
 "ayo" = (
@@ -10039,12 +10152,6 @@
 /turf/simulated/floor/engine/glow/blue,
 /area/station/engine/singcore)
 "ayW" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 4;
-	name = "autoname - SS13";
-	tag = ""
-	},
 /obj/machinery/computer/riotgear{
 	dir = 4;
 	pixel_x = -28
@@ -10109,7 +10216,8 @@
 /area/station/engine/engineering/ce)
 "azb" = (
 /obj/machinery/light/incandescent/netural{
-	dir = 1
+	dir = 1;
+	pixel_y = 20
 	},
 /turf/simulated/floor/orangeblack,
 /area/station/engine/engineering/ce/private)
@@ -10130,6 +10238,10 @@
 /obj/item/wrench,
 /obj/item/clothing/glasses/meson,
 /obj/item/clothing/shoes/magnetic,
+/obj/machinery/light/incandescent/netural{
+	dir = 1;
+	pixel_y = 20
+	},
 /turf/simulated/floor/yellow,
 /area/station/engine/inner)
 "azg" = (
@@ -10359,7 +10471,8 @@
 	},
 /obj/machinery/light/incandescent/cool{
 	dir = 8;
-	nostick = 1
+	nostick = 1;
+	pixel_x = -10
 	},
 /turf/simulated/floor/longtile/black,
 /area/station/turret_protected/port)
@@ -10417,7 +10530,8 @@
 	},
 /obj/machinery/light/incandescent/netural{
 	dir = 4;
-	nostick = 1
+	nostick = 1;
+	pixel_x = 10
 	},
 /turf/simulated/floor/yellow/side{
 	dir = 4
@@ -10663,7 +10777,8 @@
 /area/station/engine/power)
 "aAu" = (
 /obj/machinery/light/incandescent/netural{
-	dir = 1
+	dir = 1;
+	pixel_y = 20
 	},
 /obj/cable{
 	icon_state = "4-8"
@@ -10835,7 +10950,8 @@
 	},
 /obj/machinery/light/incandescent/cool{
 	dir = 4;
-	nostick = 1
+	nostick = 1;
+	pixel_x = 10
 	},
 /turf/simulated/floor/longtile/black,
 /area/station/turret_protected/starboard)
@@ -10855,7 +10971,8 @@
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 8;
-	name = "autoname  - SS13"
+	name = "autoname  - SS13";
+	pixel_x = 10
 	},
 /turf/simulated/floor,
 /area/station/engine/power)
@@ -10994,7 +11111,8 @@
 "aBg" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 4;
-	nostick = 1
+	nostick = 1;
+	pixel_x = 10
 	},
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/starboard)
@@ -11020,6 +11138,7 @@
 	dir = 4;
 	name = "autoname - SS13";
 	pixel_x = -10;
+	pixel_y = -10;
 	tag = ""
 	},
 /turf/simulated/floor,
@@ -11065,6 +11184,7 @@
 	c_tag = "autotag";
 	dir = 4;
 	name = "autoname - SS13";
+	pixel_x = -10;
 	tag = ""
 	},
 /turf/simulated/floor/plating/random,
@@ -11106,7 +11226,9 @@
 "aBt" = (
 /obj/machinery/light/incandescent/cool{
 	dir = 8;
-	nostick = 1
+	nostick = 1;
+	pixel_x = -10;
+	pixel_y = 10
 	},
 /obj/machinery/power/data_terminal,
 /obj/table/wood/round/auto,
@@ -11283,7 +11405,8 @@
 "aBJ" = (
 /obj/machinery/light/incandescent/cool{
 	dir = 8;
-	nostick = 1
+	nostick = 1;
+	pixel_x = -10
 	},
 /turf/simulated/floor/darkblue,
 /area/station/bridge)
@@ -11312,7 +11435,8 @@
 /area/station/security/visitation)
 "aBN" = (
 /obj/machinery/light/incandescent/netural{
-	dir = 1
+	dir = 1;
+	pixel_y = 20
 	},
 /turf/simulated/floor,
 /area/station/hallway/starboardupperhallway)
@@ -11350,14 +11474,16 @@
 "aBS" = (
 /obj/machinery/light/incandescent/cool{
 	dir = 4;
-	nostick = 1
+	nostick = 1;
+	pixel_x = 10
 	},
 /turf/simulated/floor/darkblue,
 /area/station/bridge)
 "aBT" = (
 /obj/machinery/chem_dispenser/soda,
 /obj/machinery/light/emergency{
-	dir = 8
+	dir = 8;
+	pixel_x = -10
 	},
 /turf/simulated/floor/darkblue,
 /area/station/bridge)
@@ -11366,7 +11492,8 @@
 	dir = 4
 	},
 /obj/machinery/light/incandescent/warm{
-	dir = 8
+	dir = 8;
+	pixel_x = -10
 	},
 /turf/simulated/floor/wood/two,
 /area/station/captain)
@@ -11407,7 +11534,8 @@
 /obj/machinery/bot/guardbot/safety,
 /obj/machinery/light/incandescent/netural{
 	dir = 4;
-	nostick = 1
+	nostick = 1;
+	pixel_x = 10
 	},
 /turf/simulated/floor{
 	dir = 6;
@@ -11514,7 +11642,8 @@
 	pixel_y = -24
 	},
 /obj/machinery/light/incandescent/warm{
-	dir = 1
+	dir = 1;
+	pixel_y = 20
 	},
 /turf/simulated/floor,
 /area/station/security/visitation)
@@ -11608,7 +11737,8 @@
 	icon_state = "line1"
 	},
 /obj/machinery/light/incandescent/netural{
-	dir = 8
+	dir = 8;
+	pixel_x = -10
 	},
 /turf/simulated/floor,
 /area/station/hallway/portupperhallway)
@@ -11646,7 +11776,8 @@
 "aCy" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 4;
-	nostick = 1
+	nostick = 1;
+	pixel_x = 10
 	},
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/port)
@@ -11658,7 +11789,8 @@
 	name = "Ore cart port - to QM"
 	},
 /obj/machinery/light/incandescent/netural{
-	dir = 8
+	dir = 8;
+	pixel_x = -10
 	},
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/mining)
@@ -11668,13 +11800,15 @@
 	},
 /obj/machinery/light/incandescent/netural{
 	dir = 4;
-	nostick = 1
+	nostick = 1;
+	pixel_x = 10
 	},
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/mining)
 "aCB" = (
 /obj/machinery/light/incandescent/netural{
-	dir = 1
+	dir = 1;
+	pixel_y = 20
 	},
 /turf/simulated/floor,
 /area/station/hallway/portupperhallway)
@@ -11693,7 +11827,8 @@
 /area/station/crew_quarters/kitchen/therustykrab)
 "aCD" = (
 /obj/machinery/light/incandescent/netural{
-	dir = 8
+	dir = 8;
+	pixel_x = -10
 	},
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/port)
@@ -11740,7 +11875,8 @@
 	},
 /obj/machinery/light/incandescent/netural{
 	dir = 4;
-	nostick = 1
+	nostick = 1;
+	pixel_x = 10
 	},
 /turf/simulated/floor,
 /area/station/hallway/starboardupperhallway)
@@ -11748,12 +11884,13 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/cafeteria/the_rising_tide_bar)
 "aCN" = (
+/obj/vehicle/forklift,
 /obj/machinery/light/incandescent/netural{
-	dir = 4;
-	nostick = 1
+	dir = 8;
+	pixel_x = -10
 	},
-/turf/simulated/floor,
-/area/station/security/starboardtorpedoes)
+/turf/simulated/floor/bot,
+/area/station/quartermaster/cargobay)
 "aCO" = (
 /obj/decal/fakeobjects{
 	desc = "Under construction";
@@ -11780,7 +11917,8 @@
 /area/station/crew_quarters/captain)
 "aCQ" = (
 /obj/machinery/light/incandescent/warm{
-	dir = 8
+	dir = 8;
+	pixel_x = -10
 	},
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/captain)
@@ -11822,7 +11960,8 @@
 "aCV" = (
 /obj/machinery/light/incandescent/blueish{
 	dir = 4;
-	nostick = 1
+	nostick = 1;
+	pixel_x = 10
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/upperstarboard)
@@ -11904,13 +12043,15 @@
 /area/station/crew_quarters/cafeteria/the_rising_tide_bar)
 "aDh" = (
 /obj/machinery/light/incandescent/netural{
-	dir = 8
+	dir = 8;
+	pixel_x = -10
 	},
 /turf/simulated/floor/wood/seven,
 /area/station/crew_quarters/cafeteria/the_rising_tide_bar)
 "aDi" = (
 /obj/machinery/light/incandescent/netural{
-	dir = 8
+	dir = 8;
+	pixel_x = -10
 	},
 /obj/machinery/firealarm{
 	pixel_x = 1;
@@ -12003,7 +12144,8 @@
 /obj/machinery/field_generator,
 /obj/machinery/light/incandescent/netural{
 	dir = 8;
-	nostick = 1
+	nostick = 1;
+	pixel_x = -10
 	},
 /turf/simulated/floor/engine/glow/blue,
 /area/station/engine/singcore)
@@ -12019,7 +12161,8 @@
 "aDv" = (
 /obj/storage/closet/welding_supply,
 /obj/machinery/light/incandescent/netural{
-	dir = 8
+	dir = 8;
+	pixel_x = -10
 	},
 /turf/simulated/floor/yellow,
 /area/station/engine/inner)
@@ -12035,7 +12178,8 @@
 	},
 /obj/item/clothing/head/helmet/space/santahat,
 /obj/machinery/light/incandescent/netural{
-	dir = 1
+	dir = 1;
+	pixel_y = 20
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/bar)
@@ -12048,7 +12192,8 @@
 	},
 /obj/machinery/light/incandescent/netural{
 	dir = 4;
-	nostick = 1
+	nostick = 1;
+	pixel_x = 10
 	},
 /turf/simulated/floor/wood/seven,
 /area/station/crew_quarters/cafeteria/the_rising_tide_bar)
@@ -12165,7 +12310,8 @@
 /obj/machinery/field_generator,
 /obj/machinery/light/incandescent/netural{
 	dir = 4;
-	nostick = 1
+	nostick = 1;
+	pixel_x = 10
 	},
 /turf/simulated/floor/engine/glow/blue,
 /area/station/engine/singcore)
@@ -12188,7 +12334,8 @@
 "aDP" = (
 /obj/machinery/light/incandescent/blueish{
 	dir = 8;
-	nostick = 1
+	nostick = 1;
+	pixel_x = -10
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/upperstarboard)
@@ -12354,7 +12501,8 @@
 "aEk" = (
 /obj/storage/closet/welding_supply,
 /obj/machinery/light/incandescent/netural{
-	dir = 4
+	dir = 4;
+	pixel_x = 10
 	},
 /turf/simulated/floor/yellow,
 /area/station/engine/inner)
@@ -12410,7 +12558,8 @@
 	},
 /obj/machinery/light/incandescent/netural{
 	dir = 4;
-	nostick = 1
+	nostick = 1;
+	pixel_x = 10
 	},
 /turf/simulated/floor/carpet{
 	dir = 4;
@@ -12577,7 +12726,8 @@
 	},
 /obj/machinery/light/incandescent/netural{
 	dir = 8;
-	nostick = 1
+	nostick = 1;
+	pixel_x = -10
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/power)
@@ -12602,7 +12752,8 @@
 	},
 /obj/machinery/light/incandescent/netural{
 	dir = 4;
-	nostick = 1
+	nostick = 1;
+	pixel_x = 10
 	},
 /turf/simulated/floor/carpet{
 	dir = 4;
@@ -12634,7 +12785,8 @@
 /area/station/ranch)
 "aES" = (
 /obj/machinery/light/incandescent/blueish{
-	dir = 1
+	dir = 1;
+	pixel_y = 20
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/upperport)
@@ -12679,7 +12831,8 @@
 /obj/item/game_kit,
 /obj/item/storage/box/donkpocket_kit,
 /obj/machinery/light/incandescent/netural{
-	dir = 1
+	dir = 1;
+	pixel_y = 20
 	},
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/quarters)
@@ -12748,7 +12901,8 @@
 /obj/item/clothing/gloves/fingerless,
 /obj/machinery/light/incandescent/netural{
 	dir = 8;
-	nostick = 1
+	nostick = 1;
+	pixel_x = -10
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/quarters)
@@ -12813,7 +12967,8 @@
 	},
 /obj/machinery/light/incandescent/netural{
 	dir = 4;
-	nostick = 1
+	nostick = 1;
+	pixel_x = 10
 	},
 /turf/simulated/floor,
 /area/station/hallway/portupperhallway)
@@ -12865,7 +13020,8 @@
 	icon_state = "line1"
 	},
 /obj/machinery/light/incandescent/netural{
-	dir = 8
+	dir = 8;
+	pixel_x = -10
 	},
 /turf/simulated/floor,
 /area/station/hallway/starboardupperhallway)
@@ -12916,7 +13072,8 @@
 	},
 /obj/machinery/light/incandescent/netural{
 	dir = 4;
-	nostick = 1
+	nostick = 1;
+	pixel_x = 10
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/power)
@@ -13200,7 +13357,8 @@
 	icon_state = "check1"
 	},
 /obj/machinery/light/incandescent/netural{
-	dir = 1
+	dir = 1;
+	pixel_y = 20
 	},
 /obj/table/auto,
 /obj/item/reagent_containers/food/snacks/breadloaf,
@@ -13274,7 +13432,8 @@
 /obj/item/storage/box/lightbox/tubes,
 /obj/machinery/light/incandescent/netural{
 	dir = 8;
-	nostick = 1
+	nostick = 1;
+	pixel_x = -10
 	},
 /turf/simulated/floor/orangeblack,
 /area/station/engine/elect)
@@ -13458,7 +13617,8 @@
 	},
 /obj/machinery/light/incandescent/netural{
 	dir = 8;
-	nostick = 1
+	nostick = 1;
+	pixel_x = -10
 	},
 /obj/landmark/start{
 	name = "Security Assistant"
@@ -13530,12 +13690,12 @@
 /obj/item/cell/supercell/charged,
 /obj/item/cell/supercell/charged,
 /obj/item/cell/supercell/charged,
-/obj/machinery/light/incandescent/netural{
-	dir = 4;
-	nostick = 1
-	},
 /obj/disposalpipe/segment,
 /obj/item/paper/book/mechanicbook,
+/obj/machinery/light/incandescent/netural{
+	dir = 1;
+	pixel_y = 20
+	},
 /turf/simulated/floor/orangeblack,
 /area/station/engine/elect)
 "aGU" = (
@@ -13655,7 +13815,8 @@
 /area/station/crewquarters/cryotron)
 "aHi" = (
 /obj/machinery/light/incandescent/netural{
-	dir = 1
+	dir = 1;
+	pixel_y = 20
 	},
 /obj/machinery/light_switch/auto{
 	pixel_y = 24
@@ -13701,6 +13862,7 @@
 	c_tag = "autotag";
 	dir = 4;
 	name = "autoname - SS13";
+	pixel_x = -10;
 	tag = ""
 	},
 /turf/simulated/floor,
@@ -13881,7 +14043,8 @@
 "aHF" = (
 /obj/machinery/light/incandescent/blueish{
 	dir = 1;
-	nostick = 1
+	nostick = 1;
+	pixel_y = 20
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/disposal)
@@ -14022,7 +14185,8 @@
 	},
 /obj/machinery/light/incandescent/blueish{
 	dir = 8;
-	nostick = 1
+	nostick = 1;
+	pixel_x = -10
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/upperstarboard)
@@ -14193,7 +14357,8 @@
 	name = "Active Particle Phase Matrix"
 	},
 /obj/machinery/light/incandescent/netural{
-	dir = 1
+	dir = 1;
+	pixel_y = 20
 	},
 /turf/simulated/floor/orangeblack/side/white{
 	dir = 1
@@ -14279,7 +14444,8 @@
 "aIx" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 8;
-	nostick = 1
+	nostick = 1;
+	pixel_x = -10
 	},
 /obj/cable{
 	icon_state = "1-2"
@@ -14367,7 +14533,9 @@
 /area/station/engine/elect)
 "aIE" = (
 /obj/machinery/light/incandescent/warm{
-	dir = 1
+	dir = 1;
+	pixel_x = -10;
+	pixel_y = 20
 	},
 /turf/simulated/floor/darkblue/checker/other,
 /area/station/communications/office)
@@ -14489,7 +14657,8 @@
 "aIU" = (
 /obj/reagent_dispensers/watertank/fountain,
 /obj/machinery/light/incandescent/netural{
-	dir = 8
+	dir = 8;
+	pixel_x = -10
 	},
 /obj/disposalpipe/segment{
 	dir = 4
@@ -14512,7 +14681,8 @@
 	},
 /obj/machinery/light/incandescent/netural{
 	dir = 4;
-	nostick = 1
+	nostick = 1;
+	pixel_x = 10
 	},
 /turf/simulated/floor/blackwhite{
 	dir = 8
@@ -14524,7 +14694,8 @@
 	},
 /obj/machinery/light/incandescent/netural{
 	dir = 4;
-	nostick = 1
+	nostick = 1;
+	pixel_x = 10
 	},
 /turf/simulated/floor/wood/two,
 /area/station/communications/bedroom)
@@ -14589,7 +14760,8 @@
 /obj/disposalpipe/segment,
 /obj/machinery/light/incandescent/netural{
 	dir = 8;
-	nostick = 1
+	nostick = 1;
+	pixel_x = -10
 	},
 /turf/simulated/floor,
 /area/station/hallway/portupperhallway)
@@ -14616,15 +14788,12 @@
 	c_tag = "autotag";
 	dir = 4;
 	name = "autoname - SS13";
+	pixel_x = -10;
 	tag = ""
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/quarters)
 "aJk" = (
-/obj/machinery/light/incandescent/netural{
-	dir = 4;
-	nostick = 1
-	},
 /obj/machinery/firealarm{
 	dir = 4;
 	pixel_x = 24
@@ -14646,7 +14815,8 @@
 	pixel_x = -26
 	},
 /obj/machinery/light/incandescent/warm{
-	dir = 1
+	dir = 1;
+	pixel_y = 20
 	},
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/cafeteria/the_rising_tide_bar)
@@ -14673,6 +14843,7 @@
 	c_tag = "autotag";
 	dir = 4;
 	name = "autoname - SS13";
+	pixel_x = -10;
 	tag = ""
 	},
 /turf/simulated/floor/redblack{
@@ -14682,7 +14853,8 @@
 "aJo" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 4;
-	nostick = 1
+	nostick = 1;
+	pixel_x = 10
 	},
 /obj/disposalpipe/junction{
 	icon_state = "pipe-j2"
@@ -14806,7 +14978,8 @@
 /obj/item/sheet/glass/fullstack,
 /obj/machinery/light/incandescent/netural{
 	dir = 8;
-	nostick = 1
+	nostick = 1;
+	pixel_x = -10
 	},
 /turf/simulated/floor,
 /area/station/engine/power)
@@ -14821,7 +14994,8 @@
 /obj/item/sheet/steel/fullstack,
 /obj/machinery/light/incandescent/netural{
 	dir = 4;
-	nostick = 1
+	nostick = 1;
+	pixel_x = 10
 	},
 /turf/simulated/floor,
 /area/station/engine/power)
@@ -14831,6 +15005,7 @@
 	c_tag = "autotag";
 	dir = 4;
 	name = "autoname - SS13";
+	pixel_x = -10;
 	tag = ""
 	},
 /turf/simulated/floor/darkblue,
@@ -14848,7 +15023,8 @@
 "aJH" = (
 /obj/machinery/light/incandescent/blueish{
 	dir = 1;
-	nostick = 1
+	nostick = 1;
+	pixel_y = 20
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/upperstarboard)
@@ -14955,19 +15131,19 @@
 /area/station/crew_quarters/quarters)
 "aJS" = (
 /obj/machinery/light/incandescent/netural{
-	dir = 4
+	dir = 4;
+	pixel_x = 10
 	},
 /turf/simulated/floor/wood/five,
 /area/station/chapel/sanctuary)
 "aJT" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
+/obj/machinery/light/incandescent/netural{
 	dir = 4;
-	name = "autoname - SS13";
-	tag = ""
+	nostick = 1;
+	pixel_x = 10
 	},
-/turf/simulated/floor/plating/random,
-/area/station/maintenance/upperport)
+/turf/simulated/floor/blue,
+/area/station/medical/medbay/lobby)
 "aJU" = (
 /obj/stool/chair{
 	dir = 4
@@ -14995,7 +15171,8 @@
 	},
 /obj/item/device/reagentscanner,
 /obj/machinery/light/incandescent/warm{
-	dir = 1
+	dir = 1;
+	pixel_y = 20
 	},
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/cafeteria/the_rising_tide_bar)
@@ -15014,7 +15191,8 @@
 /obj/machinery/portable_reclaimer,
 /obj/machinery/light/incandescent/netural{
 	dir = 8;
-	nostick = 1
+	nostick = 1;
+	pixel_x = -10
 	},
 /obj/machinery/disposal/small,
 /obj/disposalpipe/trunk{
@@ -15185,7 +15363,8 @@
 /obj/machinery/rkit,
 /obj/machinery/light/incandescent/netural{
 	dir = 4;
-	nostick = 1
+	nostick = 1;
+	pixel_x = 10
 	},
 /turf/simulated/floor/orangeblack,
 /area/station/engine/elect)
@@ -15289,7 +15468,8 @@
 	},
 /obj/machinery/light/incandescent/harsh{
 	dir = 8;
-	nostick = 1
+	nostick = 1;
+	pixel_x = -10
 	},
 /turf/simulated/floor/plating/random,
 /area/station/engine/elect)
@@ -15454,7 +15634,8 @@
 /area/station/crew_quarters/quartersA)
 "aLf" = (
 /obj/machinery/light/incandescent/netural{
-	dir = 1
+	dir = 1;
+	pixel_y = 20
 	},
 /obj/machinery/light_switch/auto{
 	pixel_y = 24
@@ -15512,7 +15693,8 @@
 "aLm" = (
 /obj/storage/secure/closet/personal,
 /obj/machinery/light/incandescent/netural{
-	dir = 1
+	dir = 1;
+	pixel_y = 20
 	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
@@ -15528,6 +15710,7 @@
 	c_tag = "autotag";
 	dir = 4;
 	name = "autoname - SS13";
+	pixel_x = -10;
 	tag = ""
 	},
 /turf/simulated/floor/bot/blue,
@@ -15726,7 +15909,8 @@
 	},
 /obj/machinery/light/incandescent/blueish{
 	dir = 8;
-	nostick = 1
+	nostick = 1;
+	pixel_x = -10
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/disposal)
@@ -15782,7 +15966,8 @@
 	},
 /obj/machinery/light/incandescent/blueish{
 	dir = 1;
-	nostick = 1
+	nostick = 1;
+	pixel_y = 20
 	},
 /obj/machinery/drainage/big,
 /turf/simulated/floor/plating/random,
@@ -15801,7 +15986,8 @@
 	dir = 8
 	},
 /obj/machinery/light/incandescent/netural{
-	dir = 4
+	dir = 4;
+	pixel_x = 10
 	},
 /turf/simulated/floor/wood/five,
 /area/station/chapel/sanctuary)
@@ -15859,7 +16045,8 @@
 /area/station/crew_quarters/bathroom)
 "aMb" = (
 /obj/machinery/light/incandescent/netural{
-	dir = 8
+	dir = 8;
+	pixel_x = -10
 	},
 /turf/simulated/floor/blue,
 /area/station/ai_monitored/storage/eva)
@@ -15962,10 +16149,12 @@
 /obj/machinery/camera{
 	c_tag = "autotag";
 	name = "autoname - Entertainment";
-	network = "Zeta"
+	network = "Zeta";
+	pixel_y = 20
 	},
 /obj/machinery/light/incandescent/netural{
-	dir = 1
+	dir = 1;
+	pixel_y = 20
 	},
 /turf/simulated/floor,
 /area/station/engine/gas)
@@ -15987,7 +16176,8 @@
 "aMt" = (
 /obj/machinery/portable_atmospherics/canister/air/large,
 /obj/machinery/light/incandescent/netural{
-	dir = 8
+	dir = 8;
+	pixel_x = -10
 	},
 /turf/simulated/floor,
 /area/station/engine/gas)
@@ -15995,7 +16185,8 @@
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/machinery/light/incandescent/netural{
 	dir = 4;
-	nostick = 1
+	nostick = 1;
+	pixel_x = 10
 	},
 /turf/simulated/floor,
 /area/station/engine/gas)
@@ -16039,7 +16230,8 @@
 /obj/disposalpipe/segment,
 /obj/machinery/light/incandescent/netural{
 	dir = 8;
-	nostick = 1
+	nostick = 1;
+	pixel_x = -10
 	},
 /turf/simulated/floor/special/bridgeup,
 /area/station/hallway/portupperhallway)
@@ -16127,7 +16319,8 @@
 /obj/disposalpipe/segment,
 /obj/machinery/light/incandescent/netural{
 	dir = 4;
-	nostick = 1
+	nostick = 1;
+	pixel_x = 10
 	},
 /turf/simulated/floor/special/bridgeup,
 /area/station/hallway/starboardupperhallway)
@@ -16166,6 +16359,7 @@
 	c_tag = "autotag";
 	dir = 4;
 	name = "autoname - SS13";
+	pixel_x = -10;
 	tag = ""
 	},
 /turf/simulated/floor/specialroom/freezer,
@@ -16295,6 +16489,7 @@
 	c_tag = "autotag";
 	dir = 4;
 	name = "autoname - SS13";
+	pixel_x = -10;
 	tag = ""
 	},
 /turf/simulated/floor/plating/random,
@@ -16322,7 +16517,8 @@
 /area/station/crew_quarters/cafeteria/the_rising_tide_bar)
 "aNp" = (
 /obj/machinery/light/incandescent/blueish{
-	dir = 1
+	dir = 1;
+	pixel_y = 20
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/lowerport)
@@ -16364,7 +16560,8 @@
 	dir = 4
 	},
 /obj/machinery/light/incandescent/warm{
-	dir = 1
+	dir = 1;
+	pixel_y = 20
 	},
 /obj/cable{
 	icon_state = "2-8"
@@ -16469,7 +16666,8 @@
 	icon_state = "xtra_bigstripe-edge"
 	},
 /obj/machinery/light/incandescent/cool{
-	dir = 1
+	dir = 1;
+	pixel_y = 20
 	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
@@ -16480,7 +16678,8 @@
 	pixel_x = 2
 	},
 /obj/machinery/light/small{
-	dir = 8
+	dir = 8;
+	pixel_x = -10
 	},
 /turf/simulated/floor/sanitary,
 /area/station/communications/office)
@@ -16508,7 +16707,8 @@
 /area/station/communications/bedroom)
 "aNK" = (
 /obj/machinery/light/incandescent/cool{
-	dir = 1
+	dir = 1;
+	pixel_y = 20
 	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
@@ -16534,7 +16734,8 @@
 	icon_state = "xtra_bigstripe-edge"
 	},
 /obj/machinery/light/incandescent/cool{
-	dir = 1
+	dir = 1;
+	pixel_y = 20
 	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
@@ -16545,7 +16746,8 @@
 	icon_state = "check1"
 	},
 /obj/machinery/light/incandescent/netural{
-	dir = 1
+	dir = 1;
+	pixel_y = 20
 	},
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade)
@@ -16575,7 +16777,8 @@
 "aNR" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 8;
-	nostick = 1
+	nostick = 1;
+	pixel_x = -10
 	},
 /turf/simulated/floor/carpet/purple/fancy/narrow/T_west,
 /area/station/communications/bedroom)
@@ -16597,12 +16800,12 @@
 /turf/simulated/floor/wood/two,
 /area/station/communications/bedroom)
 "aNU" = (
-/obj/machinery/light/incandescent/cool/very,
 /obj/machinery/camera{
 	c_tag = "NT/SCI #41903";
 	desc = "";
 	invisibility = 100;
-	network = "Minerva5"
+	network = "Minerva5";
+	pixel_y = 20
 	},
 /obj/storage/secure/crate/weapon,
 /obj/item/ammo/bullets/tranq_darts/anti_mutant,
@@ -16610,6 +16813,11 @@
 /obj/item/ammo/bullets/tranq_darts,
 /obj/item/ammo/bullets/tranq_darts,
 /obj/access_spawn/medical_director,
+/obj/machinery/light/incandescent/cool/very{
+	dir = 1;
+	nostick = 1;
+	pixel_y = 20
+	},
 /turf/simulated/floor/black,
 /area/station/medical/head)
 "aNV" = (
@@ -16622,7 +16830,8 @@
 /area/station/hallway/portlowerhallway)
 "aNW" = (
 /obj/machinery/light/incandescent/warm{
-	dir = 1
+	dir = 1;
+	pixel_y = 20
 	},
 /turf/simulated/floor/redblack,
 /area/station/security/hos)
@@ -16679,7 +16888,8 @@
 "aOd" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 4;
-	nostick = 1
+	nostick = 1;
+	pixel_x = 10
 	},
 /turf/simulated/floor/darkblue/checker/other,
 /area/station/communications/office)
@@ -16691,7 +16901,8 @@
 	},
 /obj/machinery/light/incandescent/blueish{
 	dir = 4;
-	nostick = 1
+	nostick = 1;
+	pixel_x = 10
 	},
 /obj/machinery/drainage/big,
 /turf/simulated/floor/plating/random,
@@ -16789,7 +17000,8 @@
 /obj/item/clothing/suit/bedsheet,
 /obj/machinery/light/incandescent/cool{
 	dir = 8;
-	nostick = 1
+	nostick = 1;
+	pixel_x = -10
 	},
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
@@ -16912,10 +17124,12 @@
 	},
 /area/station/medical/head)
 "aOE" = (
-/obj/machinery/light/incandescent/netural{
-	dir = 1
-	},
 /obj/machinery/vending/medical_public,
+/obj/machinery/light/incandescent/netural{
+	dir = 8;
+	nostick = 1;
+	pixel_x = -10
+	},
 /turf/simulated/floor/bluewhite{
 	dir = 8
 	},
@@ -16923,7 +17137,8 @@
 "aOF" = (
 /obj/machinery/light/incandescent/blueish{
 	dir = 4;
-	nostick = 1
+	nostick = 1;
+	pixel_x = 10
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/lowerstarboard)
@@ -16973,7 +17188,8 @@
 /area/station/hallway/starboardlowerhallway)
 "aON" = (
 /obj/machinery/light/incandescent/netural{
-	dir = 8
+	dir = 8;
+	pixel_x = -10
 	},
 /turf/simulated/floor,
 /area/station/security/starboardtorpedoes)
@@ -17129,7 +17345,8 @@
 /area/station/bridge)
 "aPk" = (
 /obj/machinery/light/emergency{
-	dir = 4
+	dir = 4;
+	pixel_x = 10
 	},
 /obj/machinery/light_switch/east,
 /obj/table/reinforced/bar/auto,
@@ -17156,7 +17373,8 @@
 /area/station/hydroponics/bay)
 "aPo" = (
 /obj/machinery/light/incandescent/cool{
-	dir = 1
+	dir = 1;
+	pixel_y = 20
 	},
 /obj/item/device/radio/beacon,
 /obj/machinery/camera{
@@ -17317,7 +17535,8 @@
 	icon_state = "xtra_bigstripe-edge"
 	},
 /obj/machinery/light/emergency{
-	dir = 1
+	dir = 1;
+	pixel_y = 16
 	},
 /turf/simulated/floor/longtile/black,
 /area/station/turret_protected/ai_upload)
@@ -17448,7 +17667,8 @@
 	},
 /obj/machinery/light/incandescent/netural{
 	dir = 4;
-	nostick = 1
+	nostick = 1;
+	pixel_x = 10
 	},
 /turf/simulated/floor,
 /area/station/hallway/starboardlowerhallway)
@@ -17526,7 +17746,8 @@
 "aQj" = (
 /obj/machinery/teleport/portal_generator,
 /obj/machinery/light/incandescent/warm{
-	dir = 1
+	dir = 1;
+	pixel_y = 20
 	},
 /turf/simulated/floor/black,
 /area/station/teleporter)
@@ -17584,7 +17805,8 @@
 	},
 /obj/machinery/light/incandescent/blueish{
 	dir = 8;
-	nostick = 1
+	nostick = 1;
+	pixel_x = -10
 	},
 /obj/machinery/fluid_canister,
 /turf/simulated/floor/plating/random,
@@ -17666,6 +17888,7 @@
 	c_tag = "autotag";
 	dir = 4;
 	name = "autoname - SS13";
+	pixel_x = -10;
 	tag = ""
 	},
 /turf/simulated/floor,
@@ -17704,7 +17927,8 @@
 	},
 /obj/machinery/light/incandescent/netural{
 	dir = 4;
-	nostick = 1
+	nostick = 1;
+	pixel_x = 10
 	},
 /turf/simulated/floor,
 /area/station/hallway/portlowerhallway)
@@ -17714,7 +17938,8 @@
 	},
 /obj/machinery/light/incandescent/netural{
 	dir = 8;
-	nostick = 1
+	nostick = 1;
+	pixel_x = -10
 	},
 /turf/simulated/floor,
 /area/station/hallway/starboardlowerhallway)
@@ -17781,6 +18006,7 @@
 	c_tag = "autotag";
 	dir = 4;
 	name = "autoname - SS13";
+	pixel_x = -10;
 	tag = ""
 	},
 /turf/simulated/floor/carpet/purple/fancy/narrow/nw,
@@ -17799,7 +18025,8 @@
 "aRc" = (
 /obj/machinery/networked/nuclear_charge,
 /obj/machinery/light/incandescent/warm{
-	dir = 4
+	dir = 4;
+	pixel_x = 10
 	},
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
@@ -17813,6 +18040,7 @@
 	c_tag = "autotag";
 	dir = 4;
 	name = "autoname - SS13";
+	pixel_x = -10;
 	tag = ""
 	},
 /turf/simulated/floor/plating/random,
@@ -17904,7 +18132,8 @@
 /obj/decal/cleanable/blood,
 /obj/decal/cleanable/dirt/dirt4,
 /obj/decal/fakeobjects/lightbulb_broken{
-	dir = 8
+	dir = 8;
+	pixel_x = -10
 	},
 /turf/simulated/floor/plating/random,
 /area/station/security/brig/solitary)
@@ -17927,10 +18156,12 @@
 	},
 /obj/machinery/light/incandescent/netural{
 	dir = 8;
-	nostick = 1
+	nostick = 1;
+	pixel_x = -10
 	},
 /obj/machinery/light_switch/auto{
-	pixel_x = -24
+	pixel_x = -24;
+	pixel_y = -18
 	},
 /obj/cable{
 	icon_state = "1-2"
@@ -18029,7 +18260,8 @@
 /obj/machinery/phone,
 /obj/machinery/light/incandescent/netural{
 	dir = 4;
-	nostick = 1
+	nostick = 1;
+	pixel_x = 10
 	},
 /turf/simulated/floor,
 /area/station/security/brig/genpop)
@@ -18070,6 +18302,7 @@
 	c_tag = "autotag";
 	dir = 4;
 	name = "autoname - SS13";
+	pixel_x = -10;
 	tag = ""
 	},
 /turf/simulated/floor/carpet/arcade,
@@ -18217,6 +18450,7 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/phone,
+/obj/machinery/light/incandescent/warm,
 /turf/simulated/floor/carpet{
 	icon_state = "fblue2"
 	},
@@ -18225,7 +18459,6 @@
 /obj/machinery/light_switch/auto{
 	pixel_y = -24
 	},
-/obj/machinery/light/incandescent/warm,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -18283,6 +18516,7 @@
 	c_tag = "autotag";
 	dir = 4;
 	name = "autoname - SS13";
+	pixel_x = -10;
 	tag = ""
 	},
 /turf/simulated/floor/darkblue/checker/other,
@@ -18339,7 +18573,8 @@
 /obj/item/device/radio/intercom/security,
 /obj/machinery/light/incandescent/warm{
 	dir = 1;
-	nostick = 1
+	nostick = 1;
+	pixel_y = 20
 	},
 /turf/simulated/floor/redblack/corner,
 /area/station/security/hos)
@@ -18479,7 +18714,8 @@
 	},
 /obj/machinery/light/incandescent/blueish{
 	dir = 8;
-	nostick = 1
+	nostick = 1;
+	pixel_x = -10
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/upperstarboard)
@@ -18526,6 +18762,7 @@
 	c_tag = "autotag";
 	dir = 4;
 	name = "autoname - SS13";
+	pixel_x = -10;
 	tag = ""
 	},
 /obj/item/reagent_containers/food/drinks/mug/HoS{
@@ -18708,7 +18945,8 @@
 /obj/decoration/decorativeplant/plant5,
 /obj/machinery/light/incandescent/warm{
 	dir = 1;
-	nostick = 1
+	nostick = 1;
+	pixel_y = 20
 	},
 /turf/simulated/floor/wood,
 /area/station/hos)
@@ -18803,7 +19041,15 @@
 /obj/item/paper/Port_A_Brig,
 /obj/item/remote/porter/port_a_brig,
 /obj/machinery/light/incandescent/netural{
-	dir = 8
+	dir = 8;
+	pixel_x = -10
+	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 4;
+	name = "autoname - SS13";
+	pixel_x = -10;
+	tag = ""
 	},
 /turf/simulated/floor/redblack{
 	dir = 8
@@ -18820,7 +19066,8 @@
 	dir = 8
 	},
 /obj/machinery/light/incandescent/netural{
-	dir = 4
+	dir = 4;
+	pixel_x = 10
 	},
 /turf/simulated/floor/redblack{
 	dir = 4
@@ -18989,7 +19236,8 @@
 	},
 /obj/machinery/light/incandescent/warm{
 	dir = 1;
-	nostick = 1
+	nostick = 1;
+	pixel_y = 20
 	},
 /obj/machinery/firealarm{
 	pixel_x = 1;
@@ -19043,7 +19291,8 @@
 /area/station/maintenance/upperstarboard)
 "aTT" = (
 /obj/machinery/light/incandescent/blueish{
-	dir = 1
+	dir = 1;
+	pixel_y = 20
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/upperstarboard)
@@ -19187,7 +19436,8 @@
 	tag = "icon-sink (NORTH)"
 	},
 /obj/machinery/light/small/cool{
-	dir = 1
+	dir = 1;
+	pixel_y = 20
 	},
 /turf/simulated/floor{
 	icon_state = "floorgrime-w"
@@ -19225,7 +19475,8 @@
 "aUq" = (
 /obj/machinery/genetics_scanner,
 /obj/machinery/light/incandescent/netural{
-	dir = 1
+	dir = 1;
+	pixel_y = 20
 	},
 /obj/disposalpipe/segment{
 	dir = 4
@@ -19262,7 +19513,8 @@
 /area/station/medical/research)
 "aUt" = (
 /obj/machinery/light/incandescent/netural{
-	dir = 1
+	dir = 1;
+	pixel_y = 20
 	},
 /obj/disposalpipe/segment{
 	dir = 4
@@ -19313,7 +19565,8 @@
 /area/station/hos)
 "aUx" = (
 /obj/machinery/light/incandescent/warm{
-	dir = 8
+	dir = 8;
+	pixel_x = -10
 	},
 /turf/simulated/floor/wood,
 /area/station/hos/quarter)
@@ -19328,7 +19581,8 @@
 /obj/item/clothing/head/helmet/space/engineer/diving/command,
 /obj/machinery/light/incandescent/warm{
 	dir = 4;
-	nostick = 1
+	nostick = 1;
+	pixel_x = 10
 	},
 /turf/simulated/floor/wood,
 /area/station/hos/quarter)
@@ -19349,7 +19603,8 @@
 	name = "Old Beret"
 	},
 /obj/machinery/light/incandescent/netural{
-	dir = 1
+	dir = 1;
+	pixel_y = 20
 	},
 /turf/simulated/floor/red,
 /area/station/security/beepsky)
@@ -19523,7 +19778,6 @@
 /obj/item/storage/firstaid/regular{
 	pixel_y = 3
 	},
-/obj/machinery/light/incandescent/cool,
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "aUT" = (
@@ -19735,7 +19989,8 @@
 	dir = 4
 	},
 /obj/machinery/light/emergency{
-	dir = 1
+	dir = 1;
+	pixel_y = 16
 	},
 /obj/landmark/start{
 	name = "Security Assistant"
@@ -19751,7 +20006,8 @@
 	pixel_y = 28
 	},
 /obj/machinery/light/incandescent/warm{
-	dir = 1
+	dir = 1;
+	pixel_y = 20
 	},
 /obj/machinery/phone,
 /obj/item/device/detective_scanner{
@@ -19766,7 +20022,8 @@
 	dir = 8
 	},
 /obj/machinery/light/emergency{
-	dir = 1
+	dir = 1;
+	pixel_y = 16
 	},
 /obj/landmark/start{
 	name = "Security Assistant"
@@ -20080,6 +20337,7 @@
 	c_tag = "autotag";
 	dir = 4;
 	name = "autoname - SS13";
+	pixel_x = -10;
 	tag = ""
 	},
 /turf/simulated/floor/plating/random,
@@ -20091,7 +20349,8 @@
 	},
 /obj/machinery/light/incandescent/blueish{
 	dir = 4;
-	nostick = 1
+	nostick = 1;
+	pixel_x = 10
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/upperport)
@@ -20162,7 +20421,8 @@
 	},
 /obj/machinery/light/incandescent/netural{
 	dir = 8;
-	nostick = 1
+	nostick = 1;
+	pixel_x = -10
 	},
 /obj/disposalpipe/junction{
 	icon_state = "pipe-j2"
@@ -20205,7 +20465,8 @@
 /area/station/security/secoffquarters)
 "aWk" = (
 /obj/machinery/light/incandescent/warm{
-	dir = 8
+	dir = 8;
+	pixel_x = -10
 	},
 /turf/simulated/floor/redblack{
 	dir = 8
@@ -20241,7 +20502,8 @@
 "aWq" = (
 /obj/machinery/light/incandescent/warm{
 	dir = 4;
-	nostick = 1
+	nostick = 1;
+	pixel_x = 10
 	},
 /turf/simulated/floor/redblack{
 	dir = 4
@@ -20338,7 +20600,8 @@
 "aWE" = (
 /obj/machinery/vending/security,
 /obj/machinery/light/incandescent/warm{
-	dir = 1
+	dir = 1;
+	pixel_y = 20
 	},
 /turf/simulated/floor/redblack{
 	dir = 1
@@ -20397,7 +20660,8 @@
 /obj/item/reagent_containers/food/drinks/water,
 /obj/machinery/light/incandescent/warm{
 	dir = 1;
-	nostick = 1
+	nostick = 1;
+	pixel_y = 20
 	},
 /turf/simulated/floor/red,
 /area/station/crew_quarters/courtroom)
@@ -20426,7 +20690,8 @@
 /area/station/crew_quarters/courtroom)
 "aWQ" = (
 /obj/machinery/light/incandescent/warm{
-	dir = 1
+	dir = 1;
+	pixel_y = 20
 	},
 /obj/disposalpipe/segment{
 	dir = 4
@@ -20529,7 +20794,8 @@
 "aXc" = (
 /obj/storage/secure/closet/security/equipment,
 /obj/machinery/light/incandescent/netural{
-	dir = 8
+	dir = 8;
+	pixel_x = -10
 	},
 /turf/simulated/floor/redblack{
 	dir = 8
@@ -20829,7 +21095,8 @@
 	},
 /obj/machinery/light/incandescent/netural{
 	dir = 8;
-	nostick = 1
+	nostick = 1;
+	pixel_x = -10
 	},
 /turf/simulated/floor/black,
 /area/station/security/checkpoint/sec_foyer)
@@ -21012,7 +21279,8 @@
 /area/station/medical/robotics)
 "aYi" = (
 /obj/machinery/light/incandescent/netural{
-	dir = 1
+	dir = 1;
+	pixel_y = 20
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/upperstarboard)
@@ -21036,7 +21304,8 @@
 /area/station/crew_quarters/quarters)
 "aYl" = (
 /obj/machinery/light/incandescent/netural{
-	dir = 1
+	dir = 1;
+	pixel_y = 20
 	},
 /obj/machinery/light_switch/auto{
 	pixel_y = 24
@@ -21182,7 +21451,8 @@
 "aYz" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 8;
-	nostick = 1
+	nostick = 1;
+	pixel_x = -10
 	},
 /turf/simulated/floor/redblack{
 	dir = 8
@@ -21191,7 +21461,8 @@
 "aYD" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 4;
-	nostick = 1
+	nostick = 1;
+	pixel_x = 10
 	},
 /turf/simulated/floor/redblack{
 	dir = 4
@@ -21242,6 +21513,7 @@
 	icon_state = "line1"
 	},
 /obj/submachine/ATM/atm_alt{
+	pixel_x = 10;
 	pixel_y = 32
 	},
 /turf/simulated/floor,
@@ -21281,6 +21553,11 @@
 /area/station/medical/research)
 "aYO" = (
 /obj/disposalpipe/segment/mail,
+/obj/machinery/light/incandescent/netural{
+	dir = 4;
+	nostick = 1;
+	pixel_x = 10
+	},
 /turf/simulated/floor/blue,
 /area/station/medical/research)
 "aYP" = (
@@ -21521,9 +21798,6 @@
 /turf/simulated/floor/green,
 /area/station/medical/research)
 "aZr" = (
-/obj/machinery/light/incandescent/netural{
-	dir = 1
-	},
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/green,
 /area/station/medical/research)
@@ -21576,7 +21850,11 @@
 /area/station/medical/robotics)
 "aZx" = (
 /obj/machinery/portable_reclaimer,
-/obj/machinery/light/incandescent/cool,
+/obj/machinery/light/incandescent/cool{
+	dir = 1;
+	nostick = 1;
+	pixel_y = 20
+	},
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "aZz" = (
@@ -21638,6 +21916,7 @@
 	c_tag = "autotag";
 	dir = 4;
 	name = "autoname - SS13";
+	pixel_x = -10;
 	tag = ""
 	},
 /turf/simulated/floor/specialroom/cafeteria,
@@ -21671,7 +21950,8 @@
 	icon_state = "check1"
 	},
 /obj/machinery/light/incandescent/netural{
-	dir = 1
+	dir = 1;
+	pixel_y = 20
 	},
 /obj/machinery/chem_dispenser/chef,
 /turf/simulated/floor/specialroom/cafeteria,
@@ -21692,7 +21972,8 @@
 /area/station/crew_quarters/kitchen/therustykrab)
 "aZK" = (
 /obj/machinery/light/emergency{
-	dir = 4
+	dir = 4;
+	pixel_x = 10
 	},
 /obj/table,
 /obj/machinery/phone,
@@ -21765,7 +22046,8 @@
 "aZT" = (
 /obj/machinery/vending/snack,
 /obj/machinery/light/emergency{
-	dir = 1
+	dir = 1;
+	pixel_y = 16
 	},
 /obj/decal/tile_edge/line/red{
 	dir = 9;
@@ -21855,7 +22137,8 @@
 "bab" = (
 /obj/machinery/vending/cigarette,
 /obj/machinery/light/emergency{
-	dir = 1
+	dir = 1;
+	pixel_y = 16
 	},
 /obj/decal/tile_edge/line/red{
 	dir = 5;
@@ -21869,7 +22152,8 @@
 /obj/item/clothing/suit/judgerobe,
 /obj/machinery/light/incandescent/warm{
 	dir = 8;
-	nostick = 1
+	nostick = 1;
+	pixel_x = -10
 	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/courtroom)
@@ -21891,7 +22175,8 @@
 	},
 /obj/machinery/light/incandescent/warm{
 	dir = 4;
-	nostick = 1
+	nostick = 1;
+	pixel_x = 10
 	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/courtroom)
@@ -21900,6 +22185,7 @@
 	c_tag = "autotag";
 	dir = 4;
 	name = "autoname - SS13";
+	pixel_x = -10;
 	tag = ""
 	},
 /obj/machinery/junctionbox/variantb{
@@ -21928,15 +22214,13 @@
 /turf/simulated/floor/green,
 /area/station/medical/research)
 "bal" = (
-/obj/machinery/light/incandescent/netural{
-	dir = 1
-	},
 /obj/cable{
 	icon_state = "4-8"
 	},
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
+/obj/machinery/light/incandescent/netural,
 /turf/simulated/floor/blue,
 /area/station/medical/research)
 "bam" = (
@@ -21990,7 +22274,8 @@
 /area/station/medical/medbay/surgery)
 "bau" = (
 /obj/machinery/light/incandescent/netural{
-	dir = 1
+	dir = 1;
+	pixel_y = 20
 	},
 /turf/simulated/floor/redwhite{
 	dir = 1
@@ -22051,6 +22336,7 @@
 	c_tag = "autotag";
 	dir = 4;
 	name = "autoname - SS13";
+	pixel_x = -10;
 	tag = ""
 	},
 /turf/simulated/floor/black,
@@ -22138,7 +22424,8 @@
 	},
 /obj/machinery/light/incandescent/netural{
 	dir = 4;
-	nostick = 1
+	nostick = 1;
+	pixel_x = 10
 	},
 /obj/cable{
 	icon_state = "1-2"
@@ -22174,7 +22461,8 @@
 	tag = "icon-sink (NORTH)"
 	},
 /obj/machinery/light/small/cool{
-	dir = 8
+	dir = 8;
+	pixel_x = -10
 	},
 /turf/simulated/floor{
 	icon_state = "floorgrime-w"
@@ -22225,7 +22513,8 @@
 	icon_state = "line1"
 	},
 /obj/machinery/light/incandescent/warm{
-	dir = 8
+	dir = 8;
+	pixel_x = -10
 	},
 /turf/simulated/floor,
 /area/station/hallway/centralhallway)
@@ -22272,7 +22561,8 @@
 	icon_state = "line1"
 	},
 /obj/machinery/light/incandescent/warm{
-	dir = 4
+	dir = 4;
+	pixel_x = 10
 	},
 /turf/simulated/floor,
 /area/station/hallway/centralhallway)
@@ -22344,7 +22634,11 @@
 /obj/morgue{
 	dir = 2
 	},
-/obj/machinery/light/incandescent/cool/very,
+/obj/machinery/light/incandescent/cool/very{
+	dir = 1;
+	nostick = 1;
+	pixel_y = 20
+	},
 /turf/simulated/floor/sanitary,
 /area/station/medical/morgue)
 "bbp" = (
@@ -22376,7 +22670,11 @@
 /obj/item/clothing/gloves/latex,
 /obj/item/clothing/mask/surgical,
 /obj/item/device/analyzer/healthanalyzer,
-/obj/machinery/light/incandescent/cool/very,
+/obj/machinery/light/incandescent/cool/very{
+	dir = 1;
+	nostick = 1;
+	pixel_y = 20
+	},
 /turf/simulated/floor/sanitary,
 /area/station/medical/morgue)
 "bbt" = (
@@ -22417,7 +22715,8 @@
 /area/station/medical/medbay/surgery)
 "bbz" = (
 /obj/machinery/light/incandescent/netural{
-	dir = 1
+	dir = 1;
+	pixel_y = 20
 	},
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -22480,7 +22779,8 @@
 /obj/item/clothing/suit/witchfinder,
 /obj/machinery/light/incandescent/harsh{
 	dir = 8;
-	nostick = 1
+	nostick = 1;
+	pixel_x = -10
 	},
 /obj/cable{
 	icon_state = "2-4"
@@ -22543,7 +22843,8 @@
 /obj/item/card_box/tarot,
 /obj/machinery/light/incandescent/harsh{
 	dir = 4;
-	nostick = 1
+	nostick = 1;
+	pixel_x = 10
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/chapel/office)
@@ -22608,7 +22909,8 @@
 	icon_state = "line2"
 	},
 /obj/machinery/light/incandescent/netural{
-	dir = 8
+	dir = 8;
+	pixel_x = -10
 	},
 /turf/simulated/floor,
 /area/station/hallway/portlowerhallway)
@@ -22904,7 +23206,8 @@
 "bcz" = (
 /obj/storage/secure/closet/personal,
 /obj/machinery/light/incandescent/netural{
-	dir = 8
+	dir = 8;
+	pixel_x = -10
 	},
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/wood,
@@ -22917,7 +23220,8 @@
 /obj/fitness/speedbag/syndie,
 /obj/machinery/light/incandescent/netural{
 	dir = 4;
-	nostick = 1
+	nostick = 1;
+	pixel_x = 10
 	},
 /turf/simulated/floor/bot,
 /area/station/crew_quarters/fitness)
@@ -23010,7 +23314,8 @@
 	},
 /obj/machinery/light/incandescent/netural{
 	dir = 8;
-	nostick = 1
+	nostick = 1;
+	pixel_x = -10
 	},
 /obj/storage/secure/closet/civilian/kitchen,
 /turf/simulated/floor/specialroom/cafeteria,
@@ -23109,6 +23414,7 @@
 	c_tag = "autotag";
 	dir = 4;
 	name = "autoname - SS13";
+	pixel_x = -10;
 	tag = ""
 	},
 /turf/simulated/floor,
@@ -23499,6 +23805,7 @@
 	c_tag = "autotag";
 	dir = 4;
 	name = "autoname - SS13";
+	pixel_x = -10;
 	tag = ""
 	},
 /turf/simulated/floor/wood,
@@ -23648,7 +23955,8 @@
 	dir = 4
 	},
 /obj/machinery/light/incandescent/netural{
-	dir = 1
+	dir = 1;
+	pixel_y = 20
 	},
 /turf/simulated/floor,
 /area/station/hallway/centralhallway)
@@ -23818,7 +24126,8 @@
 	icon_state = "line1"
 	},
 /obj/machinery/light/incandescent/netural{
-	dir = 1
+	dir = 1;
+	pixel_y = 20
 	},
 /turf/simulated/floor,
 /area/station/hallway/centralhallway)
@@ -23850,7 +24159,8 @@
 	mail_tag = "Janitor"
 	},
 /obj/machinery/light/incandescent/netural{
-	dir = 1
+	dir = 1;
+	pixel_y = 20
 	},
 /turf/simulated/floor,
 /area/station/hallway/portlowerhallway)
@@ -23939,7 +24249,6 @@
 /turf/simulated/floor/sanitary,
 /area/station/medical/morgue)
 "beD" = (
-/obj/machinery/light/incandescent/cool/very,
 /obj/machinery/disposal/small/east{
 	dir = 8;
 	name = "To Crematorium"
@@ -23974,8 +24283,8 @@
 /turf/simulated/floor/redwhite/corner,
 /area/station/medical/medbay/surgery)
 "beI" = (
-/obj/machinery/light/incandescent/netural{
-	dir = 1
+/obj/machinery/light/incandescent/cool{
+	nostick = 1
 	},
 /turf/simulated/floor/redwhite,
 /area/station/medical/medbay/surgery)
@@ -24055,7 +24364,11 @@
 	pixel_x = -7;
 	pixel_y = 1
 	},
-/obj/machinery/light/incandescent/cool,
+/obj/machinery/light/incandescent/cool{
+	dir = 1;
+	nostick = 1;
+	pixel_y = 20
+	},
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "beP" = (
@@ -24080,7 +24393,6 @@
 	dir = 8;
 	setup_os_string = "ZETA_MAINFRAME"
 	},
-/obj/machinery/light/incandescent/cool,
 /obj/machinery/power/data_terminal,
 /obj/cable{
 	icon_state = "0-8"
@@ -24091,6 +24403,11 @@
 	name = "autoname - SS13";
 	pixel_x = 10;
 	tag = ""
+	},
+/obj/machinery/light/incandescent/cool{
+	dir = 4;
+	nostick = 1;
+	pixel_x = 10
 	},
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
@@ -24226,7 +24543,8 @@
 /obj/submachine/ice_cream_dispenser,
 /obj/machinery/light/incandescent/netural{
 	dir = 8;
-	nostick = 1
+	nostick = 1;
+	pixel_x = -10
 	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen/therustykrab)
@@ -24249,7 +24567,8 @@
 	},
 /obj/machinery/light/incandescent/netural{
 	dir = 4;
-	nostick = 1
+	nostick = 1;
+	pixel_x = 10
 	},
 /obj/cable{
 	icon_state = "2-8"
@@ -24316,7 +24635,8 @@
 	dir = 4
 	},
 /obj/machinery/light/incandescent/netural{
-	dir = 1
+	dir = 1;
+	pixel_y = 20
 	},
 /turf/simulated/floor,
 /area/station/hallway/portlowerhallway)
@@ -24433,11 +24753,9 @@
 /turf/simulated/floor/sanitary,
 /area/station/medical/morgue)
 "bfE" = (
-/obj/machinery/light/incandescent/netural{
-	dir = 1
-	},
 /obj/disposalpipe/segment,
 /obj/storage/secure/closet/medical/uniforms,
+/obj/machinery/light/incandescent/netural,
 /turf/simulated/floor/blue,
 /area/station/medical/medbay/lobby)
 "bfF" = (
@@ -24630,7 +24948,8 @@
 "bga" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 4;
-	nostick = 1
+	nostick = 1;
+	pixel_x = 10
 	},
 /turf/simulated/floor/caution/east{
 	dir = 8
@@ -24841,7 +25160,8 @@
 "bgv" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 4;
-	nostick = 1
+	nostick = 1;
+	pixel_x = 10
 	},
 /turf/simulated/floor,
 /area/station/hallway/centralhallway)
@@ -24858,7 +25178,8 @@
 /area/station/crew_quarters/cafeteria/the_rising_tide_bar)
 "bgx" = (
 /obj/machinery/light/incandescent/netural{
-	dir = 8
+	dir = 8;
+	pixel_x = -10
 	},
 /turf/simulated/floor,
 /area/station/hallway/centralhallway)
@@ -24988,7 +25309,8 @@
 /obj/item/clothing/mask/surgical_shield,
 /obj/item/clothing/under/scrub/flower,
 /obj/machinery/light/incandescent/netural{
-	dir = 1
+	dir = 1;
+	pixel_y = 20
 	},
 /turf/simulated/floor/red,
 /area/station/medical/medbay/surgery)
@@ -25047,6 +25369,7 @@
 	c_tag = "autotag";
 	dir = 4;
 	name = "autoname - SS13";
+	pixel_x = -10;
 	tag = ""
 	},
 /turf/simulated/floor/yellow/checker{
@@ -25137,7 +25460,8 @@
 	},
 /obj/machinery/light/incandescent/cool{
 	dir = 1;
-	nostick = 1
+	nostick = 1;
+	pixel_y = 20
 	},
 /turf/simulated/floor/sanitary/blue,
 /area/station/crew_quarters/bathroom)
@@ -25155,7 +25479,8 @@
 "bhc" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 8;
-	nostick = 1
+	nostick = 1;
+	pixel_x = -10
 	},
 /obj/cable{
 	icon_state = "1-2"
@@ -25283,6 +25608,11 @@
 /obj/item/storage/wall/medical{
 	pixel_y = 32
 	},
+/obj/machinery/light/incandescent/netural{
+	dir = 8;
+	nostick = 1;
+	pixel_x = -10
+	},
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay/lobby)
 "bhs" = (
@@ -25306,7 +25636,8 @@
 /obj/item/robodefibrillator,
 /obj/item/gun/implanter,
 /obj/machinery/light/incandescent/netural{
-	dir = 1
+	dir = 1;
+	pixel_y = 20
 	},
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -25346,7 +25677,8 @@
 	icon_state = "line4"
 	},
 /obj/machinery/light/incandescent/netural{
-	dir = 1
+	dir = 1;
+	pixel_y = 20
 	},
 /turf/simulated/floor/bluewhite{
 	dir = 5
@@ -25573,14 +25905,16 @@
 	},
 /obj/machinery/light/incandescent/netural{
 	dir = 8;
-	nostick = 1
+	nostick = 1;
+	pixel_x = -10
 	},
 /turf/simulated/floor,
 /area/station/hydroponics/bay)
 "bia" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 4;
-	nostick = 1
+	nostick = 1;
+	pixel_x = 10
 	},
 /obj/table/reinforced/industrial/auto,
 /obj/item/sheet/steel/fullstack{
@@ -25612,7 +25946,8 @@
 	dir = 4
 	},
 /obj/machinery/light/incandescent/netural{
-	dir = 1
+	dir = 1;
+	pixel_y = 20
 	},
 /obj/submachine/chicken_feed_grinder,
 /obj/item/reagent_containers/food/snacks/plant/corn,
@@ -25628,7 +25963,9 @@
 	},
 /obj/machinery/light/incandescent/netural{
 	dir = 4;
-	nostick = 1
+	nostick = 1;
+	pixel_x = 10;
+	pixel_y = 10
 	},
 /turf/simulated/floor/green,
 /area/station/hydroponics/bay)
@@ -25694,9 +26031,6 @@
 /obj/submachine/chem_extractor{
 	dir = 4;
 	pixel_x = -4
-	},
-/obj/machinery/light/incandescent/netural{
-	dir = 1
 	},
 /obj/machinery/power/data_terminal,
 /obj/cable{
@@ -25840,11 +26174,11 @@
 /obj/stool/chair{
 	dir = 4
 	},
-/obj/machinery/light/incandescent/netural{
-	dir = 8;
-	nostick = 1
-	},
 /obj/disposalpipe/segment/mail,
+/obj/machinery/light/incandescent/netural{
+	dir = 1;
+	pixel_y = 20
+	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "biD" = (
@@ -25857,8 +26191,8 @@
 "biE" = (
 /obj/loudspeaker,
 /obj/machinery/light/incandescent/netural{
-	dir = 4;
-	nostick = 1
+	dir = 1;
+	pixel_y = 20
 	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
@@ -25951,7 +26285,9 @@
 /area/station/crew_quarters/bar)
 "biQ" = (
 /obj/machinery/light/incandescent/netural{
-	dir = 1
+	dir = 8;
+	nostick = 1;
+	pixel_x = -10
 	},
 /turf/simulated/floor/bluewhite{
 	dir = 8
@@ -26066,7 +26402,8 @@
 	icon_state = "line3"
 	},
 /obj/machinery/light/incandescent/netural{
-	dir = 1
+	dir = 1;
+	pixel_y = 20
 	},
 /turf/simulated/floor/bluewhite{
 	dir = 1
@@ -26099,7 +26436,8 @@
 /area/station/medical/medbay/lobby)
 "bjg" = (
 /obj/machinery/light/incandescent/netural{
-	dir = 1
+	dir = 1;
+	pixel_y = 20
 	},
 /turf/simulated/floor/blue,
 /area/station/medical/medbay/lobby)
@@ -26140,7 +26478,8 @@
 "bjm" = (
 /obj/decoration/decorativeplant/plant5,
 /obj/machinery/light/incandescent/netural{
-	dir = 1
+	dir = 1;
+	pixel_y = 20
 	},
 /turf/simulated/floor/blue,
 /area/station/medical/medbay/lobby)
@@ -26181,7 +26520,8 @@
 	},
 /obj/item/toy/plush,
 /obj/machinery/light/incandescent/netural{
-	dir = 1
+	dir = 1;
+	pixel_y = 20
 	},
 /turf/simulated/floor/blue,
 /area/station/medical/medbay/lobby)
@@ -26259,14 +26599,16 @@
 	icon_state = "check1"
 	},
 /obj/machinery/light/incandescent/netural{
-	dir = 1
+	dir = 1;
+	pixel_y = 20
 	},
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade)
 "bjz" = (
 /obj/submachine/laundry_machine,
 /obj/machinery/light/incandescent/netural{
-	dir = 8
+	dir = 8;
+	pixel_x = -10
 	},
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/bathroom)
@@ -26314,7 +26656,8 @@
 	},
 /obj/machinery/light/incandescent/netural{
 	dir = 8;
-	nostick = 1
+	nostick = 1;
+	pixel_x = -10
 	},
 /obj/cable{
 	icon_state = "1-2"
@@ -26684,6 +27027,7 @@
 	c_tag = "autotag";
 	dir = 4;
 	name = "autoname - SS13";
+	pixel_x = -10;
 	tag = ""
 	},
 /turf/simulated/floor/sanitary,
@@ -26743,7 +27087,8 @@
 /obj/item/clothing/glasses/sunglasses,
 /obj/machinery/light/incandescent/netural{
 	dir = 8;
-	nostick = 1
+	nostick = 1;
+	pixel_x = -10
 	},
 /turf/simulated/floor,
 /area/station/hydroponics/bay)
@@ -26885,12 +27230,14 @@
 	name = "Medical Announcement Computer";
 	req_access_txt = "19"
 	},
-/obj/machinery/light/incandescent/netural{
-	dir = 1
-	},
 /obj/machinery/power/data_terminal,
 /obj/cable{
 	icon_state = "0-8"
+	},
+/obj/machinery/light/incandescent/netural{
+	dir = 4;
+	nostick = 1;
+	pixel_x = 10
 	},
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay/lobby)
@@ -26991,7 +27338,8 @@
 	pixel_y = 5
 	},
 /obj/machinery/light/incandescent/netural{
-	dir = 1
+	dir = 1;
+	pixel_y = 20
 	},
 /obj/machinery/power/data_terminal,
 /obj/cable{
@@ -27196,7 +27544,8 @@
 	},
 /obj/machinery/light/incandescent/netural{
 	dir = 4;
-	nostick = 1
+	nostick = 1;
+	pixel_x = 10
 	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
@@ -27324,7 +27673,8 @@
 /area/station/crew_quarters/cafeteria/the_rising_tide_bar)
 "blO" = (
 /obj/machinery/light/incandescent/netural{
-	dir = 1
+	dir = 1;
+	pixel_y = 20
 	},
 /turf/simulated/floor/carpet{
 	icon_state = "green1"
@@ -27338,6 +27688,7 @@
 	c_tag = "autotag";
 	dir = 4;
 	name = "autoname - SS13";
+	pixel_x = -10;
 	tag = ""
 	},
 /turf/simulated/floor,
@@ -27571,7 +27922,8 @@
 /area/station/medical/medbay/lobby)
 "bmk" = (
 /obj/machinery/light/incandescent/netural{
-	dir = 1
+	dir = 1;
+	pixel_y = 20
 	},
 /obj/cable{
 	icon_state = "4-8"
@@ -27636,7 +27988,8 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/light/incandescent/netural{
-	dir = 8
+	dir = 8;
+	pixel_x = -10
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/upperstarboard)
@@ -27733,7 +28086,8 @@
 	network = "arcadevr"
 	},
 /obj/machinery/light/incandescent/netural{
-	dir = 8
+	dir = 8;
+	pixel_x = -10
 	},
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade)
@@ -27754,7 +28108,8 @@
 	network = "arcadevr"
 	},
 /obj/machinery/light/incandescent/netural{
-	dir = 4
+	dir = 4;
+	pixel_x = 10
 	},
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade)
@@ -27970,7 +28325,8 @@
 /obj/stool/bed/moveable,
 /obj/item/clothing/suit/bedsheet,
 /obj/machinery/light/incandescent/netural{
-	dir = 1
+	dir = 1;
+	pixel_y = 20
 	},
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/bluewhite{
@@ -27984,6 +28340,10 @@
 /obj/machinery/power/apc/autoname_west,
 /obj/cable{
 	icon_state = "0-4"
+	},
+/obj/machinery/light/incandescent/netural{
+	dir = 1;
+	pixel_y = 20
 	},
 /turf/simulated/floor/red/checker,
 /area/station/medical/medbay/treatment1)
@@ -28007,6 +28367,10 @@
 "bne" = (
 /obj/stool/bed/moveable,
 /obj/item/clothing/suit/bedsheet/blue,
+/obj/machinery/light/incandescent/netural{
+	dir = 1;
+	pixel_y = 20
+	},
 /turf/simulated/floor/red/checker,
 /area/station/medical/medbay/treatment2)
 "bnf" = (
@@ -28144,6 +28508,7 @@
 	c_tag = "autotag";
 	dir = 0;
 	name = "autoname - SS13";
+	pixel_x = 10;
 	pixel_y = 20;
 	tag = ""
 	},
@@ -28342,7 +28707,8 @@
 "bnR" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 8;
-	nostick = 1
+	nostick = 1;
+	pixel_x = -10
 	},
 /obj/submachine/chicken_incubator,
 /obj/item/reagent_containers/food/snacks/ingredient/egg,
@@ -28440,7 +28806,8 @@
 	dir = 4
 	},
 /obj/machinery/light/incandescent/netural{
-	dir = 1
+	dir = 1;
+	pixel_y = 20
 	},
 /turf/simulated/floor,
 /area/station/hallway/starboardlowerhallway)
@@ -28501,12 +28868,10 @@
 /obj/decal/tile_edge/line/blue{
 	icon_state = "line3"
 	},
-/obj/machinery/light/incandescent/netural{
-	dir = 1
-	},
 /obj/cable{
 	icon_state = "1-8"
 	},
+/obj/machinery/light/incandescent/netural,
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay/lobby)
 "bok" = (
@@ -28559,14 +28924,17 @@
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay/lobby)
 "boq" = (
-/obj/decal/tile_edge/line/blue{
-	icon_state = "line3"
+/obj/cable{
+	icon_state = "1-2"
 	},
 /obj/machinery/light/incandescent/netural{
-	dir = 1
+	dir = 8;
+	nostick = 1;
+	pixel_x = -10;
+	pixel_y = 10
 	},
-/turf/simulated/floor/bluewhite,
-/area/station/medical/medbay/lobby)
+/turf/simulated/floor,
+/area/station/hallway/starboardlowerhallway)
 "bor" = (
 /obj/decal/tile_edge/line/blue{
 	icon_state = "line3"
@@ -28587,6 +28955,7 @@
 	dir = 2;
 	icon_state = "pipe-c"
 	},
+/obj/machinery/light/incandescent/netural,
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay/lobby)
 "bot" = (
@@ -28635,9 +29004,6 @@
 	pixel_y = 12
 	},
 /obj/item/reagent_containers/food/snacks/candy/candyheart,
-/obj/machinery/light/incandescent/netural{
-	dir = 1
-	},
 /turf/simulated/floor/red/checker,
 /area/station/medical/medbay/treatment2)
 "box" = (
@@ -28700,15 +29066,13 @@
 /turf/simulated/floor/carpet/blue/fancy/edge/south,
 /area/station/medical/head)
 "boE" = (
-/obj/machinery/light/incandescent/netural{
-	dir = 1
-	},
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 1;
 	name = "autoname - SS13";
 	tag = ""
 	},
+/obj/machinery/light/incandescent/netural,
 /turf/simulated/floor/carpet/blue/fancy/edge/south,
 /area/station/medical/head)
 "boF" = (
@@ -28737,9 +29101,6 @@
 /turf/simulated/floor/carpet/blue/fancy/edge/south,
 /area/station/medical/head)
 "boH" = (
-/obj/machinery/light/incandescent/netural{
-	dir = 1
-	},
 /obj/machinery/light_switch/auto{
 	pixel_x = 5;
 	pixel_y = -24
@@ -28757,6 +29118,7 @@
 	name = "mail chute-'Medical Director'"
 	},
 /obj/disposalpipe/trunk/mail,
+/obj/machinery/light/incandescent/netural,
 /turf/simulated/floor/carpet/blue/fancy/edge/se,
 /area/station/medical/head)
 "boI" = (
@@ -28774,9 +29136,7 @@
 	},
 /area/station/medical/head/private)
 "boK" = (
-/obj/machinery/light/incandescent/netural{
-	dir = 1
-	},
+/obj/machinery/light/incandescent/netural,
 /turf/simulated/floor/wood/eight{
 	dir = 4
 	},
@@ -28899,7 +29259,8 @@
 /obj/disposalpipe/segment,
 /obj/machinery/light/incandescent/netural{
 	dir = 8;
-	nostick = 1
+	nostick = 1;
+	pixel_x = -10
 	},
 /turf/simulated/floor/grass/random,
 /area/station/hydroponics/bay)
@@ -29057,13 +29418,11 @@
 	icon_state = "plant";
 	tag = "icon-plant (NORTH)"
 	},
-/obj/machinery/light/incandescent/netural{
-	dir = 1
-	},
 /obj/disposalpipe/segment/mail{
 	dir = 4;
 	icon_state = "pipe-c"
 	},
+/obj/machinery/light/incandescent/netural,
 /turf/simulated/floor/bluewhite{
 	dir = 10
 	},
@@ -29105,9 +29464,6 @@
 /obj/machinery/sleep_console{
 	dir = 4
 	},
-/obj/machinery/light/incandescent/netural{
-	dir = 1
-	},
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
@@ -29140,6 +29496,7 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
+/obj/machinery/light/incandescent/netural,
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay/lobby)
 "bpz" = (
@@ -29275,7 +29632,8 @@
 /area/station/hallway/starboardlowerhallway)
 "bpS" = (
 /obj/machinery/light/incandescent/netural{
-	dir = 1
+	dir = 1;
+	pixel_y = 20
 	},
 /turf/simulated/floor,
 /area/station/hallway/starboardlowerhallway)
@@ -29550,7 +29908,8 @@
 	icon_state = "2-4"
 	},
 /obj/machinery/light/incandescent/netural{
-	dir = 1
+	dir = 1;
+	pixel_y = 20
 	},
 /turf/simulated/floor,
 /area/station/hallway/portlowerhallway)
@@ -29792,7 +30151,8 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/light/incandescent/netural{
-	dir = 1
+	dir = 1;
+	pixel_y = 20
 	},
 /turf/simulated/floor,
 /area/station/hallway/starboardlowerhallway)
@@ -29835,7 +30195,8 @@
 /area/station/engine/gas)
 "bqV" = (
 /obj/machinery/light/incandescent/netural{
-	dir = 1
+	dir = 1;
+	pixel_y = 20
 	},
 /turf/simulated/floor,
 /area/station/hallway/portlowerhallway)
@@ -29859,6 +30220,7 @@
 	c_tag = "autotag";
 	dir = 3;
 	name = "autoname - SS13";
+	pixel_x = 10;
 	pixel_y = 20;
 	tag = ""
 	},
@@ -30136,7 +30498,8 @@
 	},
 /obj/machinery/light/incandescent/netural{
 	dir = 4;
-	nostick = 1
+	nostick = 1;
+	pixel_x = 10
 	},
 /turf/simulated/floor,
 /area/station/hallway/portlowerhallway)
@@ -30498,14 +30861,16 @@
 	dir = 4
 	},
 /obj/machinery/light/incandescent/netural{
-	dir = 8
+	dir = 8;
+	pixel_x = -10
 	},
 /turf/simulated/floor,
 /area/station/quartermaster/cargobay)
 "bsA" = (
 /obj/disposalpipe/junction/right/west,
 /obj/machinery/light/incandescent/netural{
-	dir = 1
+	dir = 1;
+	pixel_y = 20
 	},
 /obj/cable{
 	icon_state = "4-8"
@@ -30514,9 +30879,6 @@
 /area/station/hallway/starboardlowerhallway)
 "bsB" = (
 /obj/machinery/portable_reclaimer,
-/obj/machinery/light/incandescent/netural{
-	dir = 8
-	},
 /turf/simulated/floor,
 /area/station/quartermaster/cargobay)
 "bsC" = (
@@ -30524,14 +30886,16 @@
 	id = "qmdelivery"
 	},
 /obj/machinery/light/incandescent/netural{
-	dir = 4
+	dir = 4;
+	pixel_x = 10
 	},
 /turf/simulated/floor,
 /area/station/quartermaster/cargobay)
 "bsD" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 8;
-	nostick = 1
+	nostick = 1;
+	pixel_x = -10
 	},
 /obj/item/constructioncone,
 /obj/item/constructioncone,
@@ -30565,7 +30929,8 @@
 "bsN" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 8;
-	nostick = 1
+	nostick = 1;
+	pixel_x = -10
 	},
 /turf/simulated/floor/greenblack{
 	dir = 4
@@ -30667,7 +31032,8 @@
 /obj/disposalpipe/segment,
 /obj/machinery/light/incandescent/netural{
 	dir = 8;
-	nostick = 1
+	nostick = 1;
+	pixel_x = -10
 	},
 /turf/simulated/floor,
 /area/station/hallway/portlowerhallway)
@@ -30707,7 +31073,6 @@
 	c_tag = "autotag";
 	dir = 8;
 	name = "autoname - SS13";
-	pixel_x = 10;
 	tag = ""
 	},
 /turf/simulated/floor,
@@ -30930,7 +31295,8 @@
 	icon_state = "line2"
 	},
 /obj/machinery/light/incandescent/netural{
-	dir = 8
+	dir = 8;
+	pixel_x = -10
 	},
 /turf/simulated/floor,
 /area/station/hallway/portlowerhallway)
@@ -30975,7 +31341,8 @@
 /area/station/quartermaster/cargobay)
 "btL" = (
 /obj/machinery/light/incandescent/netural{
-	dir = 1
+	dir = 1;
+	pixel_y = 20
 	},
 /obj/storage/secure/closet/engineering/cargo,
 /turf/simulated/floor,
@@ -31006,7 +31373,8 @@
 "btQ" = (
 /obj/machinery/manufacturer/robotics,
 /obj/machinery/light/incandescent/netural{
-	dir = 1
+	dir = 1;
+	pixel_y = 20
 	},
 /turf/simulated/floor/bot,
 /area/station/quartermaster/cargobay)
@@ -31106,6 +31474,7 @@
 	c_tag = "autotag";
 	dir = 4;
 	name = "autoname - SS13";
+	pixel_x = -10;
 	tag = ""
 	},
 /obj/item/constructioncone,
@@ -31160,7 +31529,8 @@
 	icon_state = "2-8"
 	},
 /obj/machinery/light/incandescent/netural{
-	dir = 1
+	dir = 1;
+	pixel_y = 20
 	},
 /obj/machinery/vending/pizza,
 /turf/simulated/floor,
@@ -31169,7 +31539,8 @@
 /obj/submachine/chicken_feed_grinder,
 /obj/item/reagent_containers/food/snacks/plant/corn,
 /obj/machinery/light/incandescent/netural{
-	dir = 8
+	dir = 8;
+	pixel_x = -10
 	},
 /turf/simulated/floor/dirt,
 /area/station/ranch)
@@ -31218,7 +31589,8 @@
 	icon_state = "2-4"
 	},
 /obj/machinery/light/incandescent/netural{
-	dir = 1
+	dir = 1;
+	pixel_y = 20
 	},
 /obj/machinery/vending/coffee,
 /turf/simulated/floor,
@@ -31242,7 +31614,8 @@
 /area/station/hallway/starboardlowerhallway)
 "bur" = (
 /obj/machinery/light/incandescent/netural{
-	dir = 8
+	dir = 8;
+	pixel_x = -10
 	},
 /turf/simulated/floor,
 /area/station/hallway/starboardlowerhallway)
@@ -31367,7 +31740,8 @@
 	},
 /obj/machinery/light/incandescent/cool{
 	dir = 1;
-	nostick = 1
+	nostick = 1;
+	pixel_y = 20
 	},
 /obj/machinery/incubator{
 	dir = 1
@@ -31434,7 +31808,8 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/light/incandescent/netural{
-	dir = 1
+	dir = 1;
+	pixel_y = 20
 	},
 /turf/simulated/floor,
 /area/station/hangar/port)
@@ -31561,6 +31936,7 @@
 /turf/simulated/floor,
 /area/station/quartermaster/cargobay)
 "bvl" = (
+/obj/machinery/light/incandescent/netural,
 /turf/simulated/floor/stairs{
 	dir = 4;
 	icon_state = "Stairs2_wide"
@@ -31629,7 +32005,8 @@
 /area/mantaSpace)
 "bvu" = (
 /obj/machinery/light/incandescent/netural{
-	dir = 1
+	dir = 1;
+	pixel_y = 20
 	},
 /obj/juggleplaque/manta,
 /turf/simulated/floor/carpet{
@@ -31668,7 +32045,8 @@
 	},
 /obj/machinery/light/incandescent/netural{
 	dir = 8;
-	nostick = 1
+	nostick = 1;
+	pixel_x = -10
 	},
 /obj/item/radio_tape/advertisement/pope_crunch{
 	pixel_x = -6;
@@ -31790,7 +32168,8 @@
 /obj/machinery/manufacturer/hangar,
 /obj/machinery/power/apc/autoname_north,
 /obj/machinery/light/incandescent/netural{
-	dir = 1
+	dir = 1;
+	pixel_y = 20
 	},
 /turf/simulated/floor,
 /area/station/hangar/starboard)
@@ -31811,7 +32190,8 @@
 /obj/item/reagent_containers/food/drinks/fueltank,
 /obj/machinery/firealarm{
 	dir = 8;
-	pixel_x = -24
+	pixel_x = -24;
+	pixel_y = 10
 	},
 /turf/simulated/floor,
 /area/station/hangar/port)
@@ -31882,7 +32262,8 @@
 /obj/item/reagent_containers/food/snacks/beefood,
 /obj/machinery/light/incandescent/warm{
 	dir = 4;
-	nostick = 1
+	nostick = 1;
+	pixel_x = 10
 	},
 /turf/simulated/floor/wood/eight{
 	dir = 4
@@ -31891,7 +32272,8 @@
 "bwa" = (
 /obj/machinery/light/incandescent/warm{
 	dir = 8;
-	nostick = 1
+	nostick = 1;
+	pixel_x = -10
 	},
 /turf/simulated/floor/carpet/purple/fancy/edge/west,
 /area/station/crew_quarters/hor)
@@ -31924,7 +32306,8 @@
 /obj/machinery/guardbot_dock,
 /obj/machinery/bot/guardbot/gunner,
 /obj/machinery/light/incandescent/netural{
-	dir = 8
+	dir = 8;
+	pixel_x = -10
 	},
 /obj/cable{
 	icon_state = "0-4"
@@ -32230,12 +32613,9 @@
 /turf/simulated/floor,
 /area/station/quartermaster/cargobay)
 "bwO" = (
-/obj/machinery/light/incandescent/netural{
-	dir = 4;
-	nostick = 1
-	},
-/turf/simulated/floor,
-/area/station/quartermaster/cargobay)
+/obj/machinery/light/incandescent/netural,
+/turf/simulated/floor/blue,
+/area/station/medical/medbay/lobby)
 "bwP" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/quartermaster/cargobay)
@@ -32266,7 +32646,8 @@
 "bwS" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 4;
-	nostick = 1
+	nostick = 1;
+	pixel_x = 10
 	},
 /turf/simulated/floor/stairs{
 	icon_state = "Stairs2_wide"
@@ -32317,7 +32698,8 @@
 /obj/machinery/power/monitor/console_upper,
 /obj/machinery/light/incandescent/cool{
 	dir = 1;
-	nostick = 1
+	nostick = 1;
+	pixel_y = 20
 	},
 /obj/cable{
 	icon_state = "2-4"
@@ -32447,6 +32829,7 @@
 	c_tag = "autotag";
 	dir = 4;
 	name = "autoname - SS13";
+	pixel_x = -10;
 	tag = ""
 	},
 /turf/simulated/floor/engine/caution/westeast,
@@ -32707,7 +33090,8 @@
 /obj/machinery/autoclave,
 /obj/machinery/light/incandescent/cool{
 	dir = 4;
-	nostick = 1
+	nostick = 1;
+	pixel_x = 10
 	},
 /turf/simulated/floor/greenwhite{
 	dir = 8
@@ -32721,6 +33105,7 @@
 	c_tag = "autotag";
 	dir = 4;
 	name = "autoname - SS13";
+	pixel_x = -10;
 	tag = ""
 	},
 /turf/simulated/floor/plating/random,
@@ -32790,7 +33175,8 @@
 "byd" = (
 /obj/item/device/multitool,
 /obj/machinery/light/incandescent/netural{
-	dir = 8
+	dir = 8;
+	pixel_x = -10
 	},
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/starboard)
@@ -32900,7 +33286,8 @@
 	icon_state = "1-4"
 	},
 /obj/machinery/light/emergency{
-	dir = 8
+	dir = 8;
+	pixel_x = -10
 	},
 /turf/simulated/floor,
 /area/station/quartermaster/cargobay)
@@ -32999,7 +33386,8 @@
 /area/station/hallway/seaturtlehallway)
 "byJ" = (
 /obj/machinery/light/incandescent/warm{
-	dir = 4
+	dir = 4;
+	pixel_x = 10
 	},
 /obj/disposalpipe/segment{
 	dir = 2;
@@ -33073,7 +33461,8 @@
 /area/station/science/teleporter)
 "byU" = (
 /obj/machinery/light/incandescent/netural{
-	dir = 8
+	dir = 8;
+	pixel_x = -10
 	},
 /turf/simulated/floor/engine/caution/corner,
 /area/station/science/teleporter)
@@ -33164,7 +33553,8 @@
 /obj/item/clothing/mask/breath,
 /obj/item/tank/emergency_oxygen,
 /obj/machinery/light/incandescent/netural{
-	dir = 4
+	dir = 4;
+	pixel_x = 10
 	},
 /turf/simulated/floor/orangeblack/side/white{
 	dir = 4
@@ -33272,7 +33662,8 @@
 /area/station/crew_quarters/hor)
 "bzr" = (
 /obj/machinery/light/incandescent/warm{
-	dir = 4
+	dir = 4;
+	pixel_x = 10
 	},
 /turf/simulated/floor/carpet/purple/fancy/edge/east,
 /area/station/crew_quarters/hor)
@@ -33435,6 +33826,7 @@
 	c_tag = "autotag";
 	dir = 4;
 	name = "autoname - SS13";
+	pixel_x = -10;
 	tag = ""
 	},
 /turf/simulated/floor/shuttlebay,
@@ -33492,7 +33884,8 @@
 /area/station/hangar/mining)
 "bzS" = (
 /obj/machinery/light/incandescent/netural{
-	dir = 8
+	dir = 8;
+	pixel_x = -10
 	},
 /obj/cable{
 	icon_state = "1-2"
@@ -33694,7 +34087,8 @@
 	icon_state = "line1"
 	},
 /obj/machinery/light/incandescent/netural{
-	dir = 8
+	dir = 8;
+	pixel_x = -10
 	},
 /turf/simulated/floor,
 /area/station/hallway/portlowerhallway)
@@ -33976,7 +34370,8 @@
 	},
 /obj/machinery/light/incandescent/cool{
 	dir = 8;
-	nostick = 1
+	nostick = 1;
+	pixel_x = -10
 	},
 /turf/simulated/floor/greenwhite{
 	dir = 4
@@ -34054,7 +34449,8 @@
 /area/station/hangar/security)
 "bBb" = (
 /obj/machinery/light/incandescent/netural{
-	dir = 8
+	dir = 8;
+	pixel_x = -10
 	},
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/security)
@@ -34068,7 +34464,8 @@
 "bBe" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 4;
-	nostick = 1
+	nostick = 1;
+	pixel_x = 10
 	},
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/security)
@@ -34096,14 +34493,16 @@
 	mail_tag = "Artifact Lab"
 	},
 /obj/machinery/light/incandescent/netural{
-	dir = 8
+	dir = 8;
+	pixel_x = -10
 	},
 /turf/simulated/floor,
 /area/station/hallway/starboardlowerhallway)
 "bBj" = (
 /obj/submachine/seed_vendor,
 /obj/machinery/light/incandescent/blueish{
-	dir = 1
+	dir = 1;
+	pixel_y = 20
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/upperstarboard)
@@ -34320,7 +34719,8 @@
 /obj/item/disk/data/floppy/read_only/terminal_os,
 /obj/disposalpipe/segment,
 /obj/machinery/light/incandescent/netural{
-	dir = 4
+	dir = 4;
+	pixel_x = 10
 	},
 /obj/item/toy/gooncode,
 /turf/simulated/floor,
@@ -34335,7 +34735,8 @@
 	},
 /obj/machinery/light/incandescent/blueish{
 	dir = 4;
-	nostick = 1
+	nostick = 1;
+	pixel_x = 10
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/upperport)
@@ -34369,13 +34770,15 @@
 /area/station/engine/elect)
 "bBP" = (
 /obj/machinery/light/incandescent/netural{
-	dir = 8
+	dir = 8;
+	pixel_x = -10
 	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/construction)
 "bBQ" = (
 /obj/machinery/light/incandescent/netural{
-	dir = 4
+	dir = 4;
+	pixel_x = 10
 	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/construction)
@@ -34553,7 +34956,8 @@
 	},
 /obj/machinery/light/incandescent/warm{
 	dir = 8;
-	nostick = 1
+	nostick = 1;
+	pixel_x = -10
 	},
 /obj/machinery/power/data_terminal,
 /obj/cable{
@@ -34661,7 +35065,8 @@
 /area/station/science/lobby)
 "bCu" = (
 /obj/machinery/light/incandescent/netural{
-	dir = 1
+	dir = 1;
+	pixel_y = 20
 	},
 /obj/cable{
 	icon_state = "4-8"
@@ -34852,19 +35257,22 @@
 /area/station/maintenance/upperstarboard)
 "bCM" = (
 /obj/machinery/light/emergency{
-	dir = 8
+	dir = 8;
+	pixel_x = -10
 	},
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/starboard)
 "bCN" = (
 /obj/machinery/light/emergency{
-	dir = 4
+	dir = 4;
+	pixel_x = 10
 	},
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/starboard)
 "bCO" = (
 /obj/machinery/light/emergency{
-	dir = 8
+	dir = 8;
+	pixel_x = -10
 	},
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/mining)
@@ -34877,7 +35285,8 @@
 /area/station/hangar/mining)
 "bCR" = (
 /obj/machinery/light/emergency{
-	dir = 4
+	dir = 4;
+	pixel_x = 10
 	},
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/mining)
@@ -35199,7 +35608,8 @@
 /area/station/science/lobby)
 "bDE" = (
 /obj/machinery/light/incandescent/netural{
-	dir = 4
+	dir = 4;
+	pixel_x = 10
 	},
 /turf/simulated/floor/purpleblack,
 /area/station/science/lobby)
@@ -35350,19 +35760,22 @@
 /area/station/hangar/security)
 "bDV" = (
 /obj/machinery/light/emergency{
-	dir = 8
+	dir = 8;
+	pixel_x = -10
 	},
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/security)
 "bDY" = (
 /obj/machinery/light/emergency{
-	dir = 4
+	dir = 4;
+	pixel_x = 10
 	},
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/security)
 "bDZ" = (
 /obj/machinery/light/emergency{
-	dir = 8
+	dir = 8;
+	pixel_x = -10
 	},
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/port)
@@ -35385,7 +35798,8 @@
 /area/station/hangar/port)
 "bEc" = (
 /obj/machinery/light/emergency{
-	dir = 4
+	dir = 4;
+	pixel_x = 10
 	},
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/port)
@@ -35576,7 +35990,8 @@
 /area/station/science/lobby)
 "bEL" = (
 /obj/machinery/light/emergency{
-	dir = 1
+	dir = 1;
+	pixel_y = 16
 	},
 /obj/cable{
 	icon_state = "4-8"
@@ -35605,7 +36020,8 @@
 /area/station/science/lobby)
 "bEP" = (
 /obj/machinery/light/emergency{
-	dir = 1
+	dir = 1;
+	pixel_y = 16
 	},
 /obj/cable{
 	icon_state = "4-8"
@@ -35630,7 +36046,8 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/light/incandescent/netural{
-	dir = 1
+	dir = 1;
+	pixel_y = 20
 	},
 /turf/simulated/floor/purple,
 /area/station/science/lobby)
@@ -35679,7 +36096,8 @@
 "bEZ" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 4;
-	nostick = 1
+	nostick = 1;
+	pixel_x = 10
 	},
 /turf/simulated/floor/purple,
 /area/station/science/lobby)
@@ -35701,13 +36119,13 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/upperstarboard)
 "bFd" = (
-/obj/machinery/plantpot,
 /obj/machinery/light/incandescent/blueish{
-	dir = 4;
-	nostick = 1
+	dir = 1;
+	nostick = 1;
+	pixel_y = 20
 	},
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/upperstarboard)
+/area/station/maintenance/lowerport)
 "bFe" = (
 /obj/decal/tile_edge/carpet/fancy{
 	dir = 6;
@@ -35746,7 +36164,8 @@
 	},
 /obj/disposalpipe/segment/mail,
 /obj/machinery/light/incandescent/netural{
-	dir = 4
+	dir = 4;
+	pixel_x = 10
 	},
 /turf/simulated/floor,
 /area/station/hallway/portlowerhallway)
@@ -35876,7 +36295,8 @@
 /obj/item/device/multitool,
 /obj/machinery/light/incandescent/harsh{
 	dir = 4;
-	nostick = 1
+	nostick = 1;
+	pixel_x = 10
 	},
 /obj/item/storage/toolbox/electrical{
 	pixel_y = 6
@@ -35956,8 +36376,9 @@
 /area/station/maintenance/lowerport)
 "bFT" = (
 /obj/machinery/light/incandescent/blueish{
-	dir = 1;
-	nostick = 1
+	dir = 8;
+	nostick = 1;
+	pixel_x = -10
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/lowerport)
@@ -36267,7 +36688,8 @@
 /area/station/hangar/mining)
 "bGI" = (
 /obj/machinery/light/incandescent/blueish{
-	dir = 1
+	dir = 1;
+	pixel_y = 20
 	},
 /obj/machinery/fluid_canister,
 /turf/simulated/floor/plating/random,
@@ -36319,7 +36741,8 @@
 "bGR" = (
 /obj/storage/crate/wooden,
 /obj/machinery/light/incandescent/netural{
-	dir = 4
+	dir = 4;
+	pixel_x = 10
 	},
 /turf/simulated/floor/bot,
 /area/station/quartermaster/cargobay)
@@ -36604,7 +37027,8 @@
 "bIb" = (
 /obj/machinery/light/incandescent/blueish{
 	dir = 1;
-	nostick = 1
+	nostick = 1;
+	pixel_y = 20
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/lowerstarboard)
@@ -36673,7 +37097,8 @@
 /obj/machinery/vending/coffee,
 /obj/machinery/light/incandescent/netural{
 	dir = 8;
-	nostick = 1
+	nostick = 1;
+	pixel_x = -10
 	},
 /obj/machinery/firealarm{
 	pixel_x = 1;
@@ -36710,7 +37135,8 @@
 	},
 /obj/machinery/light/incandescent/netural{
 	dir = 4;
-	nostick = 1
+	nostick = 1;
+	pixel_x = 10
 	},
 /turf/simulated/floor/carpet{
 	dir = 5;
@@ -36722,7 +37148,8 @@
 /obj/item_dispenser/latex_gloves,
 /obj/machinery/light/incandescent/purpleish{
 	dir = 8;
-	nostick = 1
+	nostick = 1;
+	pixel_x = -10
 	},
 /turf/simulated/floor/engine,
 /area/station/science/testchamber)
@@ -36753,7 +37180,8 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/light/incandescent/netural{
-	dir = 1
+	dir = 1;
+	pixel_y = 20
 	},
 /obj/machinery/firealarm{
 	pixel_x = 1;
@@ -36773,7 +37201,8 @@
 "bIw" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 4;
-	nostick = 1
+	nostick = 1;
+	pixel_x = 10
 	},
 /obj/cable{
 	icon_state = "1-8"
@@ -36789,7 +37218,8 @@
 /area/station/science/testchamber)
 "bIx" = (
 /obj/machinery/light/incandescent/netural{
-	dir = 4
+	dir = 4;
+	pixel_x = 10
 	},
 /obj/item/constructioncone,
 /turf/simulated/floor,
@@ -36836,7 +37266,8 @@
 	pixel_y = 12
 	},
 /obj/machinery/light/emergency{
-	dir = 8
+	dir = 8;
+	pixel_x = -10
 	},
 /turf/simulated/floor,
 /area/station/seaturtlebridge)
@@ -36855,7 +37286,8 @@
 	name = "grubby old ashtray"
 	},
 /obj/machinery/light/emergency{
-	dir = 4
+	dir = 4;
+	pixel_x = 10
 	},
 /turf/simulated/floor,
 /area/station/seaturtlebridge)
@@ -36904,7 +37336,8 @@
 "bIN" = (
 /obj/item/constructioncone,
 /obj/machinery/light/incandescent/netural{
-	dir = 1
+	dir = 1;
+	pixel_y = 20
 	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/construction2)
@@ -37093,7 +37526,8 @@
 	},
 /obj/machinery/light/incandescent/purpleish{
 	dir = 8;
-	nostick = 1
+	nostick = 1;
+	pixel_x = -10
 	},
 /obj/item/device/radio/intercom/science,
 /obj/disposalpipe/segment/mail{
@@ -37184,7 +37618,8 @@
 /area/station/hallway/portlowerhallway)
 "bJx" = (
 /obj/machinery/light/incandescent/blueish{
-	dir = 1
+	dir = 1;
+	pixel_y = 20
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/lowerstarboard)
@@ -37221,7 +37656,8 @@
 	icon_state = "pipe-c"
 	},
 /obj/machinery/light/incandescent/netural{
-	dir = 8
+	dir = 8;
+	pixel_x = -10
 	},
 /turf/simulated/floor,
 /area/station/hallway/starboardlowerhallway)
@@ -37304,7 +37740,8 @@
 /area/station/science/artifact)
 "bJJ" = (
 /obj/machinery/light/emergency{
-	dir = 8
+	dir = 8;
+	pixel_x = -10
 	},
 /obj/reagent_dispensers/watertank/fountain,
 /turf/simulated/floor/carpet{
@@ -37419,7 +37856,8 @@
 "bJY" = (
 /obj/machinery/light/incandescent/warm{
 	dir = 1;
-	nostick = 1
+	nostick = 1;
+	pixel_y = 20
 	},
 /turf/simulated/floor/wood/six,
 /area/station/security/detectives_office_manta)
@@ -37580,7 +38018,8 @@
 /area/station/science/restroom)
 "bKp" = (
 /obj/machinery/light/emergency{
-	dir = 4
+	dir = 4;
+	pixel_x = 10
 	},
 /obj/table/reinforced/auto,
 /obj/item/device/radio/intercom/science{
@@ -37681,7 +38120,8 @@
 /area/station/security/detectives_office_manta)
 "bKA" = (
 /obj/machinery/light/incandescent/warm{
-	dir = 4
+	dir = 4;
+	pixel_x = 10
 	},
 /turf/simulated/floor/wood/six,
 /area/station/security/detectives_office_manta)
@@ -37730,7 +38170,8 @@
 	},
 /obj/machinery/light/incandescent/netural{
 	dir = 4;
-	nostick = 1
+	nostick = 1;
+	pixel_x = 10
 	},
 /turf/simulated/floor/carpet{
 	dir = 6;
@@ -37892,7 +38333,8 @@
 /area/station/science/restroom)
 "bLa" = (
 /obj/machinery/light/small/cool{
-	dir = 1
+	dir = 1;
+	pixel_y = 20
 	},
 /turf/simulated/floor/sanitary,
 /area/station/science/restroom)
@@ -38101,7 +38543,8 @@
 "bLD" = (
 /obj/machinery/light/incandescent/blueish{
 	dir = 4;
-	nostick = 1
+	nostick = 1;
+	pixel_x = 10
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/lowerport)
@@ -38119,7 +38562,8 @@
 /obj/item/peripheral/sound_card,
 /obj/item/peripheral/printer,
 /obj/machinery/light/incandescent/netural{
-	dir = 1
+	dir = 1;
+	pixel_y = 20
 	},
 /obj/machinery/computer3/luggable,
 /turf/simulated/floor,
@@ -38589,7 +39033,8 @@
 	},
 /obj/machinery/light/incandescent/blueish{
 	dir = 4;
-	nostick = 1
+	nostick = 1;
+	pixel_x = 10
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/lowerport)
@@ -38650,6 +39095,7 @@
 	c_tag = "autotag";
 	dir = 4;
 	name = "autoname - SS13";
+	pixel_x = -10;
 	tag = ""
 	},
 /obj/machinery/drainage/big,
@@ -38754,7 +39200,8 @@
 "bNd" = (
 /obj/machinery/light/incandescent/blueish{
 	dir = 8;
-	nostick = 1
+	nostick = 1;
+	pixel_x = -10
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/lowerstarboard)
@@ -38767,16 +39214,24 @@
 "bNf" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 4;
-	nostick = 1
+	nostick = 1;
+	pixel_x = 10
 	},
 /turf/simulated/floor,
 /area/station/security/porttorpedoes)
 "bNg" = (
-/obj/machinery/light/incandescent/netural{
-	dir = 8
+/obj/disposalpipe/segment/mail{
+	dir = 4
 	},
-/turf/simulated/floor,
-/area/station/security/porttorpedoes)
+/obj/machinery/firealarm{
+	pixel_x = 1;
+	pixel_y = 26;
+	text = "NF"
+	},
+/turf/simulated/floor/yellow/side{
+	dir = 1
+	},
+/area/station/engine/inner)
 "bNh" = (
 /obj/torpedo_tray/hiexp_loaded{
 	dir = 8
@@ -38786,6 +39241,10 @@
 "bNi" = (
 /obj/table/reinforced/auto,
 /obj/item/storage/toolbox/mechanical,
+/obj/machinery/light/incandescent/netural{
+	dir = 8;
+	pixel_x = -10
+	},
 /turf/simulated/floor,
 /area/station/security/porttorpedoes)
 "bNj" = (
@@ -38848,7 +39307,8 @@
 "bNs" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 4;
-	nostick = 1
+	nostick = 1;
+	pixel_x = 10
 	},
 /obj/torpedo_tray/explosive_loaded{
 	dir = 8
@@ -39145,7 +39605,8 @@
 /area/station/mining/staff_room)
 "bOc" = (
 /obj/machinery/light/incandescent/blueish{
-	dir = 1
+	dir = 1;
+	pixel_y = 20
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/seaturtle)
@@ -39195,7 +39656,8 @@
 "bOl" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 4;
-	nostick = 1
+	nostick = 1;
+	pixel_x = 10
 	},
 /turf/simulated/floor,
 /area/station/seaturtlebridge)
@@ -39205,7 +39667,8 @@
 "bOn" = (
 /obj/machinery/light/incandescent/blueish{
 	dir = 1;
-	nostick = 1
+	nostick = 1;
+	pixel_y = 20
 	},
 /obj/disposalpipe/segment{
 	dir = 2;
@@ -39225,7 +39688,8 @@
 "bOp" = (
 /obj/machinery/processor,
 /obj/machinery/light/incandescent/netural{
-	dir = 1
+	dir = 1;
+	pixel_y = 20
 	},
 /turf/simulated/floor/industrial,
 /area/station/mining/staff_room)
@@ -39275,7 +39739,8 @@
 /area/station/construction)
 "bOz" = (
 /obj/machinery/light/incandescent/netural{
-	dir = 8
+	dir = 8;
+	pixel_x = -10
 	},
 /turf/simulated/floor/industrial,
 /area/station/mining/staff_room)
@@ -39390,6 +39855,7 @@
 	c_tag = "autotag";
 	dir = 4;
 	name = "autoname - SS13";
+	pixel_x = -10;
 	tag = ""
 	},
 /turf/simulated/floor/plating/random,
@@ -39407,7 +39873,8 @@
 "bOR" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 8;
-	nostick = 1
+	nostick = 1;
+	pixel_x = -10
 	},
 /turf/simulated/floor,
 /area/station/construction)
@@ -39417,7 +39884,8 @@
 "bOT" = (
 /obj/decal/tile_edge/stripe/extra_big,
 /obj/machinery/light/incandescent/netural{
-	dir = 8
+	dir = 8;
+	pixel_x = -10
 	},
 /turf/simulated/floor/industrial,
 /area/station/mining/staff_room)
@@ -39451,7 +39919,8 @@
 "bOX" = (
 /obj/storage/crate/abcumarker,
 /obj/machinery/light/incandescent/netural{
-	dir = 4
+	dir = 4;
+	pixel_x = 10
 	},
 /turf/simulated/floor,
 /area/station/construction)
@@ -39473,7 +39942,8 @@
 /area/station/mining/staff_room)
 "bPb" = (
 /obj/machinery/light/incandescent/netural{
-	dir = 4
+	dir = 4;
+	pixel_x = 10
 	},
 /turf/simulated/floor/orange,
 /area/station/mining/staff_room)
@@ -39486,7 +39956,8 @@
 "bPd" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 4;
-	nostick = 1
+	nostick = 1;
+	pixel_x = 10
 	},
 /turf/simulated/floor/stairs{
 	dir = 1;
@@ -39506,7 +39977,8 @@
 	},
 /obj/machinery/light/incandescent/netural{
 	dir = 4;
-	nostick = 1
+	nostick = 1;
+	pixel_x = 10
 	},
 /turf/simulated/floor,
 /area/station/hallway/seaturtlehallway)
@@ -39516,7 +39988,8 @@
 /area/station/crew_quarters/bathroom)
 "bPh" = (
 /obj/machinery/light/incandescent/netural{
-	dir = 8
+	dir = 8;
+	pixel_x = -10
 	},
 /turf/simulated/floor/orange,
 /area/station/mining/staff_room)
@@ -39711,7 +40184,8 @@
 	icon_state = "line1"
 	},
 /obj/machinery/light/incandescent/netural{
-	dir = 8
+	dir = 8;
+	pixel_x = -10
 	},
 /obj/disposalpipe/junction/right/south,
 /turf/simulated/floor,
@@ -39929,7 +40403,8 @@
 /area/station/crew_quarters/bathroom)
 "bQe" = (
 /obj/machinery/light/incandescent/netural{
-	dir = 1
+	dir = 1;
+	pixel_y = 20
 	},
 /turf/simulated/floor,
 /area/station/hallway/seaturtlehallway)
@@ -39960,7 +40435,8 @@
 	icon_state = "line1"
 	},
 /obj/machinery/light/incandescent/netural{
-	dir = 1
+	dir = 1;
+	pixel_y = 20
 	},
 /turf/simulated/floor,
 /area/station/hallway/seaturtlehallway)
@@ -40067,7 +40543,8 @@
 	icon_state = "line1"
 	},
 /obj/machinery/light/incandescent/netural{
-	dir = 1
+	dir = 1;
+	pixel_y = 20
 	},
 /obj/decal/tile_edge/line/red{
 	color = "#ba9a65";
@@ -40289,7 +40766,8 @@
 	name = "Gary the rockworm"
 	},
 /obj/machinery/light/incandescent/netural{
-	dir = 1
+	dir = 1;
+	pixel_y = 20
 	},
 /turf/simulated/floor/plating/airless/asteroid,
 /area/station/mining/staff_room)
@@ -40348,14 +40826,16 @@
 	},
 /obj/machinery/light/incandescent/netural{
 	dir = 4;
-	nostick = 1
+	nostick = 1;
+	pixel_x = 10
 	},
 /turf/simulated/floor,
 /area/station/hallway/seaturtlehallway)
 "bQZ" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/machinery/light/incandescent/netural{
-	dir = 1
+	dir = 1;
+	pixel_y = 20
 	},
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/mining)
@@ -40366,21 +40846,24 @@
 "bRb" = (
 /obj/reagent_dispensers/fueltank,
 /obj/machinery/light/incandescent/netural{
-	dir = 1
+	dir = 1;
+	pixel_y = 20
 	},
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/mining)
 "bRc" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 8;
-	nostick = 1
+	nostick = 1;
+	pixel_x = -10
 	},
 /turf/simulated/floor/orange,
 /area/station/mining/staff_room)
 "bRd" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 4;
-	nostick = 1
+	nostick = 1;
+	pixel_x = 10
 	},
 /turf/simulated/floor/orange,
 /area/station/mining/staff_room)
@@ -40388,7 +40871,8 @@
 /obj/item/raw_material/rock,
 /obj/machinery/light/incandescent/netural{
 	dir = 8;
-	nostick = 1
+	nostick = 1;
+	pixel_x = -10
 	},
 /turf/simulated/floor/plating/airless/asteroid,
 /area/station/mining/staff_room)
@@ -40502,7 +40986,8 @@
 /obj/machinery/manufacturer/hangar,
 /obj/machinery/light/incandescent/netural{
 	dir = 8;
-	nostick = 1
+	nostick = 1;
+	pixel_x = -10
 	},
 /turf/simulated/floor,
 /area/station/hangar/mining)
@@ -40797,7 +41282,8 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/light/incandescent/netural{
-	dir = 4
+	dir = 4;
+	pixel_x = 10
 	},
 /turf/simulated/floor,
 /area/station/mining/staff_room)
@@ -40843,7 +41329,8 @@
 "bSc" = (
 /obj/machinery/light/incandescent/blueish{
 	dir = 8;
-	nostick = 1
+	nostick = 1;
+	pixel_x = -10
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/seaturtle)
@@ -40851,7 +41338,8 @@
 /obj/item/storage/wall/mining,
 /obj/machinery/light/incandescent/netural{
 	dir = 8;
-	nostick = 1
+	nostick = 1;
+	pixel_x = -10
 	},
 /turf/simulated/floor/orange,
 /area/station/mining/staff_room)
@@ -40914,7 +41402,8 @@
 "bSn" = (
 /obj/machinery/light/incandescent/blueish{
 	dir = 4;
-	nostick = 1
+	nostick = 1;
+	pixel_x = 10
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/seaturtle)
@@ -41024,7 +41513,8 @@
 /area/station/maintenance/seaturtle/boiler)
 "bSE" = (
 /obj/machinery/light/incandescent/netural{
-	dir = 1
+	dir = 1;
+	pixel_y = 20
 	},
 /turf/simulated/floor,
 /area/station/maintenance/seaturtle/boiler)
@@ -41034,7 +41524,8 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/light/incandescent/netural{
-	dir = 1
+	dir = 1;
+	pixel_y = 20
 	},
 /turf/simulated/floor,
 /area/station/maintenance/seaturtle/boiler)
@@ -41331,6 +41822,7 @@
 	c_tag = "autotag";
 	dir = 4;
 	name = "autoname - SS13";
+	pixel_x = -10;
 	tag = ""
 	},
 /turf/simulated/floor/orange,
@@ -41340,6 +41832,7 @@
 	c_tag = "autotag";
 	dir = 4;
 	name = "autoname - SS13";
+	pixel_x = -10;
 	tag = ""
 	},
 /turf/simulated/floor/plating/airless/asteroid,
@@ -41355,10 +41848,6 @@
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/mining)
 "bTu" = (
-/obj/machinery/light/incandescent/blueish{
-	dir = 4;
-	nostick = 1
-	},
 /turf/simulated/floor/plating/random,
 /area/station/hangar/mining)
 "bTv" = (
@@ -41380,6 +41869,7 @@
 	c_tag = "autotag";
 	dir = 4;
 	name = "autoname - SS13";
+	pixel_x = -10;
 	tag = ""
 	},
 /turf/simulated/floor,
@@ -41410,6 +41900,7 @@
 	c_tag = "autotag";
 	dir = 4;
 	name = "autoname - SS13";
+	pixel_x = -10;
 	tag = ""
 	},
 /turf/simulated/floor,
@@ -41422,6 +41913,7 @@
 	c_tag = "autotag";
 	dir = 4;
 	name = "autoname - SS13";
+	pixel_x = -10;
 	tag = ""
 	},
 /turf/simulated/floor,
@@ -41452,7 +41944,8 @@
 /area/station/hallway/seaturtlehallway)
 "bTD" = (
 /obj/machinery/light/incandescent/netural{
-	dir = 8
+	dir = 8;
+	pixel_x = -10
 	},
 /turf/simulated/floor,
 /area/station/hallway/seaturtlehallway)
@@ -41461,7 +41954,8 @@
 /obj/machinery/coffeemaker,
 /obj/machinery/light/incandescent/netural{
 	dir = 8;
-	nostick = 1
+	nostick = 1;
+	pixel_x = -10
 	},
 /obj/mug_rack{
 	pixel_y = 32
@@ -41662,7 +42156,8 @@
 	},
 /obj/machinery/light/incandescent/netural{
 	dir = 4;
-	nostick = 1
+	nostick = 1;
+	pixel_x = 10
 	},
 /obj/disposalpipe/segment,
 /turf/simulated/floor,
@@ -41818,7 +42313,8 @@
 	},
 /obj/machinery/light/incandescent/netural{
 	dir = 4;
-	nostick = 1
+	nostick = 1;
+	pixel_x = 10
 	},
 /obj/disposalpipe/segment,
 /turf/simulated/floor,
@@ -41866,7 +42362,8 @@
 "bUr" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 4;
-	nostick = 1
+	nostick = 1;
+	pixel_x = 10
 	},
 /obj/disposalpipe/segment,
 /turf/simulated/floor,
@@ -42127,10 +42624,6 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/obj/machinery/light/incandescent/netural{
-	dir = 4;
-	nostick = 1
-	},
 /obj/cable{
 	icon_state = "2-8"
 	},
@@ -42139,6 +42632,15 @@
 	icon_state = "yellowblack"
 	},
 /area/station/engine/engineering/breakroom)
+"cXj" = (
+/obj/machinery/plantpot,
+/obj/machinery/light/incandescent/blueish{
+	dir = 1;
+	nostick = 1;
+	pixel_y = 20
+	},
+/turf/simulated/floor/plating/random,
+/area/station/maintenance/upperstarboard)
 "cYe" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hallway/portlowerhallway)
@@ -42245,6 +42747,21 @@
 	},
 /turf/simulated/floor/green,
 /area/station/crewquarters/garbagegarbs)
+"dWk" = (
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 4;
+	name = "autoname - SS13";
+	pixel_x = -10;
+	tag = ""
+	},
+/obj/machinery/light/incandescent/blueish{
+	dir = 4;
+	nostick = 1;
+	pixel_x = 10
+	},
+/turf/simulated/floor/plating/random,
+/area/station/maintenance/seaturtle)
 "dWm" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -42333,6 +42850,7 @@
 	c_tag = "autotag";
 	dir = 0;
 	name = "autoname - SS13";
+	pixel_x = 10;
 	pixel_y = 20;
 	tag = ""
 	},
@@ -42392,7 +42910,8 @@
 "fbs" = (
 /obj/machinery/manufacturer/uniform,
 /obj/machinery/light/incandescent/netural{
-	dir = 8
+	dir = 8;
+	pixel_x = -10
 	},
 /turf/simulated/floor,
 /area/station/crewquarters/garbagegarbs)
@@ -42629,7 +43148,8 @@
 	icon_state = "xtra_bigstripe-edge"
 	},
 /obj/machinery/light/emergency{
-	dir = 1
+	dir = 1;
+	pixel_y = 16
 	},
 /turf/simulated/floor/longtile/black,
 /area/station/turret_protected/ai_upload)
@@ -43015,6 +43535,7 @@
 	c_tag = "autotag";
 	dir = 4;
 	name = "autoname - SS13";
+	pixel_x = -10;
 	tag = ""
 	},
 /obj/cable{
@@ -43376,7 +43897,8 @@
 /area/diner/hangar)
 "ois" = (
 /obj/machinery/light/incandescent/netural{
-	dir = 1
+	dir = 1;
+	pixel_y = 20
 	},
 /turf/simulated/floor/greenblack,
 /area/station/crewquarters/garbagegarbs)
@@ -43522,6 +44044,7 @@
 	c_tag = "autotag";
 	dir = 4;
 	name = "autoname - SS13";
+	pixel_x = -10;
 	tag = ""
 	},
 /turf/simulated/floor,
@@ -43639,7 +44162,8 @@
 "qCB" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 4;
-	nostick = 1
+	nostick = 1;
+	pixel_x = 10
 	},
 /obj/machinery/recharge_station,
 /turf/simulated/floor,
@@ -43743,7 +44267,8 @@
 /obj/railing/orange/reinforced,
 /obj/machinery/light/incandescent/netural{
 	dir = 4;
-	nostick = 1
+	nostick = 1;
+	pixel_x = 10
 	},
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
@@ -43804,7 +44329,8 @@
 /area/station/engine/engineering/ce)
 "swZ" = (
 /obj/machinery/light/incandescent/netural{
-	dir = 8
+	dir = 8;
+	pixel_x = -10
 	},
 /obj/cable{
 	icon_state = "1-2"
@@ -43875,7 +44401,8 @@
 	dir = 4
 	},
 /obj/machinery/light/incandescent/netural{
-	dir = 1
+	dir = 1;
+	pixel_y = 20
 	},
 /obj/cable{
 	icon_state = "4-8"
@@ -43912,7 +44439,8 @@
 "uti" = (
 /obj/stool/bench/auto,
 /obj/machinery/light/incandescent/netural{
-	dir = 4
+	dir = 4;
+	pixel_x = 10
 	},
 /turf/simulated/floor/green,
 /area/station/crewquarters/garbagegarbs)
@@ -44043,7 +44571,8 @@
 "vKM" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 8;
-	nostick = 1
+	nostick = 1;
+	pixel_x = -10
 	},
 /turf/simulated/floor/greenblack/corner{
 	dir = 8
@@ -44089,7 +44618,8 @@
 	tag = ""
 	},
 /obj/machinery/light/incandescent/warm{
-	dir = 4
+	dir = 4;
+	pixel_x = 10
 	},
 /turf/simulated/floor/redblack{
 	dir = 4
@@ -44188,7 +44718,8 @@
 	icon_state = "pipe-c"
 	},
 /obj/machinery/light/incandescent/netural{
-	dir = 1
+	dir = 1;
+	pixel_y = 20
 	},
 /obj/cable{
 	icon_state = "2-4"
@@ -59355,7 +59886,7 @@ act
 act
 acO
 acO
-anU
+ait
 bDr
 ait
 bGj
@@ -59656,7 +60187,7 @@ act
 act
 acO
 acO
-ait
+auc
 bAA
 bDr
 ait
@@ -69604,7 +70135,7 @@ aaa
 act
 act
 acO
-aJT
+aim
 aoJ
 apD
 aLF
@@ -70527,7 +71058,7 @@ bvj
 bwK
 byx
 bsB
-bBy
+aCN
 bBy
 bEi
 bFv
@@ -72336,7 +72867,7 @@ bpY
 aKs
 bvk
 bvk
-bwO
+bvk
 byy
 bvk
 bBA
@@ -73823,7 +74354,7 @@ act
 act
 acO
 acO
-aJT
+aim
 aoJ
 apD
 baG
@@ -76275,7 +76806,7 @@ slL
 arU
 fbs
 arU
-bFT
+bFd
 bHm
 bMq
 bEF
@@ -79300,7 +79831,7 @@ bJD
 bLh
 aLa
 bKT
-bFT
+bFd
 bHm
 bMq
 bEF
@@ -80750,7 +81281,7 @@ aaa
 act
 act
 acO
-anU
+auc
 aoJ
 apD
 atP
@@ -81717,7 +82248,7 @@ bHD
 bHD
 bMK
 bHD
-bHD
+bFT
 bHD
 bHD
 bHD
@@ -81955,7 +82486,7 @@ act
 act
 acO
 acO
-anU
+ait
 ait
 aoJ
 bpc
@@ -82008,8 +82539,8 @@ bDk
 aFc
 aFc
 aFc
-bFT
 bHD
+bFT
 bHD
 bHF
 bLf
@@ -82256,7 +82787,7 @@ act
 act
 acO
 acO
-ait
+auc
 ait
 aoJ
 apD
@@ -82572,7 +83103,7 @@ aIX
 acE
 aEU
 aJk
-aMO
+aik
 aMO
 aUJ
 avP
@@ -83157,8 +83688,8 @@ acO
 ahc
 aim
 bAA
-ait
 anU
+ait
 ait
 ait
 aoJ
@@ -83752,7 +84283,7 @@ aaa
 alj
 alj
 aOX
-bNg
+aOQ
 aOQ
 bNl
 bNp
@@ -84664,7 +85195,7 @@ bNn
 bNs
 alj
 afh
-aij
+abk
 alV
 acU
 anM
@@ -87151,7 +87682,7 @@ bxo
 bKe
 avp
 avp
-axG
+axH
 awP
 axg
 axz
@@ -87453,7 +87984,7 @@ bxp
 bxp
 bKe
 avp
-awB
+bNg
 awP
 axg
 ayV
@@ -91308,7 +91839,7 @@ aOR
 acN
 aci
 agC
-aik
+aEA
 aEA
 anK
 anN
@@ -92208,7 +92739,7 @@ aaa
 aci
 aci
 aaF
-aCN
+aOL
 aOL
 aOP
 aOV
@@ -92259,7 +92790,7 @@ aSf
 bfn
 bfn
 bex
-aQK
+boq
 bfn
 bfn
 bdi
@@ -92821,8 +93352,8 @@ aBr
 aEd
 aPd
 aBw
-aBw
 aCV
+aBw
 aBw
 aBw
 aWe
@@ -93732,7 +94263,7 @@ act
 act
 aBr
 aBr
-aof
+aij
 bAB
 aWe
 aPs
@@ -94035,7 +94566,7 @@ act
 act
 aBr
 aBr
-aCV
+aBw
 aBw
 aWe
 aWs
@@ -94088,7 +94619,7 @@ bDx
 bEG
 bAq
 bAq
-bIb
+aOF
 bFt
 bFt
 bJW
@@ -94393,7 +94924,7 @@ bHo
 bHo
 bHo
 bHo
-bIb
+aOF
 bFt
 bFt
 bFt
@@ -94401,8 +94932,8 @@ bFt
 aOF
 bHk
 bFt
-bFt
 aOF
+bFt
 bFt
 bFt
 bHa
@@ -95246,7 +95777,7 @@ aaa
 act
 act
 aBr
-aCV
+aJH
 aWe
 aPs
 aQW
@@ -96782,7 +97313,7 @@ bbs
 bcp
 bdu
 beD
-bfC
+bfD
 bgF
 bhv
 bip
@@ -99207,7 +99738,7 @@ bkh
 biq
 biq
 bkh
-boq
+bok
 bhp
 bkN
 brd
@@ -101922,7 +102453,7 @@ aYV
 bgD
 bjl
 bkj
-bjg
+aJT
 bmc
 bne
 bow
@@ -103435,7 +103966,7 @@ bkn
 biq
 bmg
 apL
-bjg
+bwO
 bpL
 bkN
 bsx
@@ -104639,8 +105170,8 @@ bbD
 bbD
 bgD
 bjt
+aJT
 bkq
-bjg
 bkj
 bnl
 boB
@@ -117037,7 +117568,7 @@ act
 act
 aBr
 aBr
-bFd
+cXj
 bFf
 aBw
 bQy
@@ -129426,14 +129957,14 @@ bON
 bON
 bON
 bPT
-bOd
+bSn
 bTu
 bCP
 apU
 apU
 bCP
-bSn
-bOO
+bOd
+dWk
 bOd
 bSL
 bNX
