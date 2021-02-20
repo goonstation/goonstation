@@ -127,9 +127,9 @@
 	/// So we dont try to cuff someone while we're cuffing someone
 	var/cuffing
 	/// How much of a threat does something have to be for us to actually cuff them?
-	var/cuff_threat_threshold = 7
+	var/cuff_threat_threshold = 5
 	/// Obey the threat threshold. Otherwise, just cuff em
-	var/warn_minor_crime = 1
+	var/warn_minor_crime = 0
 
 	/// Set a bot to guard an area, and they'll go there and mill around
 	var/area/guard_area
@@ -775,7 +775,7 @@
 			if (IN_RANGE(src, src.target, 1))
 				/// Are they good and downed, and are we allowed to cuff em?
 				if(!src.arrest_type && src.target?.getStatusDuration("weakened") >= 3 SECONDS)
-					if(!src.warn_minor_crime || (src.warn_minor_crime && src.threatlevel >= src.cuff_threat_threshold))
+					if(!src.warn_minor_crime || ((src.warn_minor_crime || src.guard_area_lockdown) && src.threatlevel >= src.cuff_threat_threshold))
 						actions.start(new/datum/action/bar/icon/secbot_cuff(src, kpagu), src)
 					else
 						src.arrest_gloat()
