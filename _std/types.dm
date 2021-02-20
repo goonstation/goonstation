@@ -160,6 +160,8 @@ var/list/list/by_cat = list()
 #define TR_CAT_JOHNBILLS "johnbills"
 #define TR_CAT_OTHERBILLS "otherbills"
 #define TR_CAT_TELEPORT_JAMMERS "teleport_jammers"
+#define TR_CAT_BURNING_MOBS "dudes_on_fire"
+#define TR_CAT_BURNING_ITEMS "items_on_fire"
 #define TR_CAT_OMNIPRESENT_MOBS "omnipresent_mobs"
 #define TR_CAT_CHAPLAINS "chaplains"
 #define TR_CAT_SOUL_TRACKING_ITEMS "soul_tracking_items"

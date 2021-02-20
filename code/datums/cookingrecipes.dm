@@ -1217,7 +1217,7 @@
 	item1 = /obj/item/reagent_containers/food/snacks/cake_batter
 	item2 = /obj/item/reagent_containers/food/snacks/candy
 	cookbonus = 14
-	output = /obj/item/reagent_containers/food/snacks/cake/chocolate/gateau
+	output = /obj/item/reagent_containers/food/snacks/cake/chocolate
 
 /datum/cookingrecipe/cake_meat
 	item1 = /obj/item/reagent_containers/food/snacks/cake_batter

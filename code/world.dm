@@ -117,8 +117,10 @@ var/global/mob/twitch_mob = 0
 				admins[m_key] = a_lev
 				logDiary("ADMIN: [m_key] = [a_lev]")
 
-/world/proc/load_whitelist(fileName = "strings/whitelist.txt")
+/world/proc/load_whitelist(fileName = null)
 	set background = 1
+	if(isnull(fileName))
+		fileName = config.whitelist_path
 	var/text = file2text(fileName)
 	if (!text)
 		return
@@ -587,6 +589,15 @@ var/f_color_selector_handler/F_Color_Selector
 	Z_LOG_DEBUG("World/Init", "Setting up mining level...")
 	makeMiningLevel()
 	#endif
+
+	UPDATE_TITLE_STATUS("Initializing biomes")
+	Z_LOG_DEBUG("World/Init", "Setting up biomes...")
+	initialize_biomes()
+
+	UPDATE_TITLE_STATUS("Generating terrain")
+	Z_LOG_DEBUG("World/Init", "Setting perlin noise terrain...")
+	for (var/area/map_gen/A in by_type[/area/map_gen])
+		A.generate_perlin_noise_terrain()
 
 	UPDATE_TITLE_STATUS("Calculating cameras")
 	Z_LOG_DEBUG("World/Init", "Updating camera visibility...")

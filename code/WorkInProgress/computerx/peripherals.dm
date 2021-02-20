@@ -549,7 +549,7 @@
 
 	proc/vend_prize()
 		var/obj/item/prize
-		var/prizeselect = rand(1,4)
+		var/prizeselect = rand(1,8)
 		var/turf/prize_location = null
 
 		if(src.host)

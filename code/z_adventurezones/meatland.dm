@@ -1641,7 +1641,7 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 
 		if((last_shot + 15) <= world.time)
 			if (user.health <= 0)
-				boutput(usr, "<span class='alert'>You try to fire, but just feel woozy, bolts of pain shooting up your arm.</span>")
+				boutput(user, "<span class='alert'>You try to fire, but just feel woozy, bolts of pain shooting up your arm.</span>")
 				return
 
 			last_shot = world.time

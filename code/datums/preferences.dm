@@ -174,7 +174,7 @@ datum/preferences
 			return
 
 		if (!AH)
-			boutput(usr, "Your settings are missing an AppearanceHolder. This is a good time to tell a coder.")
+			boutput(user, "Your settings are missing an AppearanceHolder. This is a good time to tell a coder.")
 
 		if (!data_cache)
 			data_cache = list("script" = null,"css" = null,"profile_name" = null,"character_name" = null,"gender" = null,"age_blood" = null,\
@@ -1889,7 +1889,7 @@ $(updateCharacterPreviewPos);
 					boutput( user, "<span class='notice'>Savefile saved!</span>" )
 			else if (link_tags["cloudnew"])
 				rebuild_profile = 1
-				if( user.client.player.cloudsaves.len >= SAVEFILE_PROFILES_MAX )
+				if( user.client.player.cloudsaves.len >= SAVEFILE_CLOUD_PROFILES_MAX )
 					alert( user, "You have hit your cloud save limit. Please write over an existing save." )
 				else
 					var/newname = input( user, "What would you like to name the save?", "Save Name" ) as text

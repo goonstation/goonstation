@@ -2214,7 +2214,7 @@
 				boutput(user, "<span class='alert'>There is already something in the scanner!</span>")
 				return
 
-			usr.drop_item()
+			user.drop_item()
 			W.set_loc(src)
 			scanned_thing = W
 			power_change()

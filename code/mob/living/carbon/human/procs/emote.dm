@@ -38,7 +38,14 @@
 	var/maptext_out = 0
 	var/message = null
 	if (src.mutantrace)
-		message = src.mutantrace.emote(act, voluntary)
+		var/list/mutantrace_emote_stuff = src.mutantrace.emote(act, voluntary)
+		if(!islist(mutantrace_emote_stuff))
+			message = mutantrace_emote_stuff
+		else
+			if(length(mutantrace_emote_stuff) >= 1)
+				message = mutantrace_emote_stuff[1]
+			if(length(mutantrace_emote_stuff) >= 2)
+				maptext_out = mutantrace_emote_stuff[2]
 	if (!message)
 		switch (lowertext(act))
 			// most commonly used emotes first for minor performance improvements
@@ -2028,9 +2035,7 @@
 
 	//copy paste lol
 
-	if (maptext_out)
-		if(src.emote_allowed) // if no emote cooldowns triggered let's trigger one now (no spamming maptext emotes!)
-			src.emote_check(voluntary, 0.5 SECONDS)
+	if (maptext_out && !ON_COOLDOWN(src, "emote maptext", 0.5 SECONDS))
 		var/image/chat_maptext/chat_text = null
 		SPAWN_DBG(0) //blind stab at a life() hang - REMOVE LATER
 			if (speechpopups && src.chat_text)

@@ -135,7 +135,7 @@
 				src.reagents.reaction(U)
 				src.create_reagents(0)
 				src.update_icon()
-			var/new_name = input(usr, "Enter new name for [O]", "Rename [O]", O.name) as null|text
+			var/new_name = input(user, "Enter new name for [O]", "Rename [O]", O.name) as null|text
 			if (isnull(new_name) || !length(new_name) || new_name == " ")
 				return
 			phrase_log.log_phrase("vehicle", new_name, no_duplicates=TRUE)

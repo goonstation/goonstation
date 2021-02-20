@@ -5115,6 +5115,9 @@
 	},
 /obj/grille/steel,
 /obj/wingrille_spawn/auto/crystal,
+/obj/cable{
+	icon_state = "0-2"
+	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
 "alF" = (
@@ -5959,6 +5962,9 @@
 	},
 /obj/grille/steel,
 /obj/wingrille_spawn/auto/crystal,
+/obj/cable{
+	icon_state = "0-8"
+	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
 "anD" = (
@@ -22935,6 +22941,12 @@
 /turf/simulated/floor/shuttle/flock,
 /area/flock_trader)
 "bdN" = (
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/data_terminal,
+/obj/table/auto,
+/obj/machinery/networked/storage/scanner,
 /turf/simulated/floor/plating/random,
 /area/research_outpost/maint)
 "bdO" = (
@@ -47362,12 +47374,6 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northwest)
-"mVv" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/plating/random,
-/area/research_outpost/maint)
 "mYN" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -133261,7 +133267,7 @@ xFh
 duw
 bdt
 bdN
-mVv
+prZ
 oqx
 bdt
 aqn
