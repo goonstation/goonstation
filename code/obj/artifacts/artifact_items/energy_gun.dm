@@ -114,5 +114,5 @@
 			O.visible_message("<span class='alert'>[O] emits a terrible cracking noise.</span>")
 		if (integrity <= 0)
 			O.visible_message("<span class='alert'>[O] crumbles into nothingness.</span>")
-			qdel(O)
+			O.ArtifactDestroyed()
 		react_xray[3] = integrity
