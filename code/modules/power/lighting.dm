@@ -19,6 +19,14 @@
 	var/light_type = /obj/item/light/tube
 	var/fitting = "tube"
 
+	MouseDrop(atom/over_object, src_location, over_location, over_control, params)
+		if(istype(over_object, /turf/simulated/wall) && istype(usr, /mob))
+			var/turf/simulated/wall/T = over_object
+			T.attach_light_fixture_parts(usr, src)
+		else
+			. = ..()
+
+
 // For metal sheets. Can't easily change an item's vars the way it's set up (Convair880).
 /obj/item/light_parts/bulb
 	icon_state = "bulb-fixture"
@@ -35,6 +43,13 @@
 	installed_base_state = "floor"
 	fitting = "floor"
 	light_type = /obj/item/light/bulb
+
+	MouseDrop(atom/over_object, src_location, over_location, over_control, params)
+		if(istype(over_object, /turf/simulated/floor) && istype(usr, /mob))
+			var/turf/simulated/floor/T = over_object
+			T.attach_light_fixture_parts(usr, src)
+		else
+			. = ..()
 
 /obj/item/light_parts/proc/copy_light(obj/machinery/light/target)
 	installed_icon_state = target.icon_state
