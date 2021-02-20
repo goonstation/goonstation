@@ -596,11 +596,11 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 	tour0
 		name = "tour beacon - start"
 		location = "tour0"
-		codes_txt = "tour;next_tour=tour1;desc=Oh, hello!  I apologize, I wasn't expecting guests before the renovations were done!  Welcome to the Museum of Lunar History!\nBefore we begin, there is a request that all guests from Soviet bloc countries move down the hall to my right for special screening.\nThis, um, includes those from Zvezda.  Even if you have a day pass.  I'm sorry, I hope this isn't too much of a bother!"
+		codes_txt = "tour;next_tour=tour1;desc=Oh, hello!  I apologize, I wasn't expecting guests before the renovations were done!  Welcome to the Museum of Lunar History!  Before we begin, there is a request that all guests from Soviet bloc countries move down the hall to my right for special screening.  This, um, includes those from Zvezda.  Even if you have a day pass.  I'm sorry, I hope this isn't too much of a bother!"
 
 	tour1
 		location = "tour1"
-		codes_txt = "tour;next_tour=tour2;desc=FAAE or, as it is commonly called, Plasma, was first discovered here on the moon in 1969.\nIt's not actually native to the moon, though!  It was discovered embedded in the site of a meteorite impact, extending down really far, almost like it grew outward!|pBut it didn't, because plasma crystals can't grow, ha ha..|pIt makes sense that more plasma was found in the asteroid belt.  Oh, and through the Channel, um, as much as weird holes in space time make sense."
+		codes_txt = "tour;next_tour=tour2;desc=FAAE or, as it is commonly called, Plasma, was first discovered here on the moon in 1969.  It's not actually native to the moon, though!  It was discovered embedded in the site of a meteorite impact, extending down really far, almost like it grew outward!|pBut it didn't, because plasma crystals can't grow, ha ha..|pIt makes sense that more plasma was found in the asteroid belt.  Oh, and through the Channel, um, as much as weird holes in space time make sense."
 
 	tour2
 		location = "tour2"
@@ -702,13 +702,13 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 				SPAWN_DBG(5 SECOND)
 					if (master)
 						master.speak("I guess I could narrate?  I um, haven't ever been in the tunnels before.")
-				src.distracted = FALSE
+					src.distracted = FALSE
 
 			if (!(neat_things_underground & NT_HEMERA) && istype(ourArea, /area/moon/underground/hemera))
 				src.distracted = TRUE
 				neat_things_underground |= NT_HEMERA
 
-				master.speak("Oh, this is an office building, um...Hemera!  Oh man, these guys used to do all kind of secret science stuff. Before Nanotrasen drove them out of business, I mean.")
+				speak_with_maptext("Oh, this is an office building, um...Hemera!  Oh man, these guys used to do all kind of secret science stuff. Before Nanotrasen drove them out of business, I mean.")
 				src.distracted = FALSE
 				return
 
@@ -741,7 +741,7 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 			if (prob(25))
 				SPAWN_DBG(5 SECOND)
 					if (master)
-						master.speak("I, um, am going to need to go back to work.  My shift isn't over yet.")
+						speak_with_maptext("I, um, am going to need to go back to work.  My shift isn't over yet.")
 					src.distracted = FALSE
 			else
 				src.distracted = FALSE
@@ -752,33 +752,32 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 				var/mob/living/carbon/human/H = AM
 				if (!(src.neat_things & NT_BILL) && cmptext(H.real_name, "shitty bill"))
 					FOUND_NEAT(NT_BILL)
-
 					master.visible_message("<b>[master]</b> points at [H].")
-					master.speak("Oh no, not you again.  Uh, I mean...hey...guyyy.")
+					speak_with_maptext("Oh no, not you again.  Uh, I mean...hey...guyyy.")
 					src.distracted = FALSE
 
 				if (!(src.neat_things & NT_DISCOUNT) && !isdead(H) && (istype(H.wear_id, /obj/item/card/id) || (istype(H.wear_id, /obj/item/device/pda2) && H.wear_id:ID_card)))
 					FOUND_NEAT(NT_DISCOUNT)
 
-					master.speak("Nanotrasen employees may be eligible for an employee discount.  Now checking Museum Central, please hold...")
+					speak_with_maptext("Nanotrasen employees may be eligible for an employee discount.  Now checking Museum Central, please hold...")
 					SPAWN_DBG(5.5 SECONDS)
 						if (master)
-							master.speak("Oh, I'm sorry.  Your position is not eligible.  Actually, um, well this is weird.")
+							speak_with_maptext("Oh, I'm sorry.  Your position is not eligible.  Actually, um, well this is weird.")
 						sleep(5.8 SECONDS)
 						if (master)
-							master.speak("There is a log indicating that all employees of Research Station #13 are to be charged 10% extra.  I've never seen that before.  Huh.")
-
+							speak_with_maptext("There is a log indicating that all employees of Research Station #13 are to be charged 10% extra.  I've never seen that before.  Huh.")
+						src.distracted = FALSE
 					return
 
 				if (!(src.neat_things & NT_CLOAKER) && H.invisibility > 0)
 					FOUND_NEAT(NT_CLOAKER)
+					speak_with_maptext("This is a reminder that cloaking technology is illegal within the inner solar system.  Please remain opaque to the visible spectrum as a courtesy to your fellow guests.  Thanks!")
 					src.distracted = FALSE
-					src.master.speak("This is a reminder that cloaking technology is illegal within the inner solar system.  Please remain opaque to the visible spectrum as a courtesy to your fellow guests.  Thanks!")
 					return
 
 				if (!(src.neat_things & NT_PONZI) && (locate(/obj/item/spacecash/buttcoin) in AM.contents))
 					FOUND_NEAT(NT_PONZI)
-					src.master.speak("Um, I'm sorry [AM], we do not accept blockchain-based cryptocurrency as payment.  You aren't one of those guys who yell about gold on the apollo flag or something, right?")
+					speak_with_maptext("Um, I'm sorry [AM], we do not accept blockchain-based cryptocurrency as payment.  You aren't one of those guys who yell about gold on the apollo flag or something, right?")
 					H.unlock_medal("To the Moon!",1)
 					src.distracted = FALSE
 					return
@@ -797,7 +796,7 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 
 				if (istype(AM, /obj/machinery/bot/guardbot/soviet) && !(src.neat_things & NT_SOVBUDDY))
 					FOUND_NEAT(NT_SOVBUDDY)
-					src.master.speak("Oh, um, hi.  So are you one of those Russian robuddies?  Nice to meet you..?")
+					speak_with_maptext("Oh, um, hi.  So are you one of those Russian robuddies?  Nice to meet you..?")
 					SPAWN_DBG(1 SECOND)
 						if (src.master)
 							var/area/masterArea = get_area(src.master)
@@ -807,33 +806,33 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 								src.master.speak("You um, don't have to visit the security annex.  That's for humans.  Oh, also fruit.  If you have any fruit or seeds you need to check that in.")
 							else
 								src.master.speak("Is this one of those \"Khrushchev in a supermarket\" things?")
+						src.distracted = FALSE
 					return
 
 			if (istype(AM, /obj/critter/moonspy) && !(src.neat_things & NT_SPY))
 				FOUND_NEAT(NT_SPY)
 				master.visible_message("<b>[master]</b> points at [AM].")
-				src.master.speak("Attention guests, there appears to be a coat rack or something available if needed.")
+				speak_with_maptext("Attention guests, there appears to be a coat rack or something available if needed.")
 				SPAWN_DBG(5 SECOND)
 					if (src.master)
-						src.master.speak("You know, because of all the coats that you are clearly wearing.")
+						speak_with_maptext("You know, because of all the coats that you are clearly wearing.")
 					src.distracted = FALSE
-
 				return
 
 			if (istype(AM, /obj/critter/domestic_bee) && !(src.neat_things & NT_BEE))
 				FOUND_NEAT(NT_BEE)
 				master.visible_message("<b>[master]</b> points at [AM].")
-				src.master.speak("Ah, a space bee!  Space bees count as minors under 12 for the purposes of ticket pricing.")
+				speak_with_maptext("Ah, a space bee!  Space bees count as minors under 12 for the purposes of ticket pricing.")
 				src.distracted = FALSE
 
 				return
 
 			if ((istype(AM, /obj/item/luggable_computer/cheget) || istype(AM, /obj/machinery/computer3/luggable/cheget)) && !(src.neat_things & NT_CHEGET))
 				FOUND_NEAT(NT_CHEGET)
-				src.master.speak("Huh, what's with the briefcase?  Did that come out of the security annex?  Somebody should probably call security or the embassy or something.")
+				speak_with_maptext("Huh, what's with the briefcase?  Did that come out of the security annex?  Somebody should probably call security or the embassy or something.")
 				SPAWN_DBG(5.5 SECONDS)
 					if (src.master)
-						src.master.speak("I think they dealt with some kind of briefcase key the week before renovations started?  There's some sad office worker out there right now.")
+						speak_with_maptext("I think they dealt with some kind of briefcase key the week before renovations started?  There's some sad office worker out there right now.")
 						src.distracted = FALSE
 				return
 
@@ -850,12 +849,13 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 				src.master.mover.master = null //master mover master mover master mover help HELP
 				src.master.mover = null
 			master.moving = 0
+			src.awaiting_beacon = 2
 
-			sleep(1 SECOND)
-			src.master.speak("Uh.  That isn't supposed to happen.")
-			src.state = 0	//Yeah, let's find that route.
+			SPAWN_DBG(1 SECOND)
+				src.master.speak("Uh.  That isn't supposed to happen.")
+				src.state = 0	//Yeah, let's find that route.
 
-			SPAWN_DBG(5.5 SECOND)
+				sleep(5.5 SECOND)
 				if (src.master)
 					src.master.speak("I guess we need to take another route.  Please follow me.")
 					src.state = 0
