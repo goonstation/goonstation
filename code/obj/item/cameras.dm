@@ -86,7 +86,10 @@
 		takes_voodoo_pics = 2
 
 /obj/item/camera/spy
+	inventory_counter_enabled = 1
+	var/obj/item/ammo/power_cell/self_charging/cell = null
 	var/flash_mode = 0
+	var/wait_cycle = 0
 
 	attack_self(mob/user)
 		if (user.mind.special_role == "spy_thief")
@@ -94,29 +97,70 @@
 				if (!src.flash_mode)
 					user.show_text("You use the secret switch to set the camera to flash mode.", "blue")
 					playsound(user, "sound/items/pickup_defib.ogg", 100, 1)
-					icon_state = "camera_flash"
+					src.icon_state = "camera_flash"
 				else
 					user.show_text("You use the secret switch to set the camera to take photos.", "blue")
 					playsound(user, "sound/items/putback_defib.ogg", 100, 1)
-					icon_state = "camera"
+					src.icon_state = "camera"
 				src.flash_mode =! src.flash_mode
+				src.update_icon()
 
-/obj/item/camera/spy/pickup(mob/user)
-	if (user.mind.special_role != "spy_thief" && src.flash_mode)
-		user.show_text("[src] buzzes at you!", "blue")
-		playsound(user, "sound/items/putback_defib.ogg", 100, 1)
-		icon_state = "camera"
-		src.flash_mode =! src.flash_mode
-	. = ..()
+	New()
+		if (!cell)
+			cell = new/obj/item/ammo/power_cell/self_charging/
+			cell.max_charge = 200
+			cell.charge = 200
+			cell.recharge_rate = 10.0
+		if (!(src in processing_items)) // No self-charging cell? Will be kicked out after the first tick (Convair880).
+			processing_items.Add(src)
+		..()
+		update_icon()
+
+	proc/update_icon()
+		if (!src.flash_mode)
+			inventory_counter.update_text("")
+		else if (src.cell)
+			inventory_counter.update_percent(src.cell.charge, src.cell.max_charge)
+		else
+			inventory_counter.update_text("-")
+		return 0
+
+	disposing()
+		processing_items -= src
+		..()
+
+	process()
+		src.wait_cycle = !src.wait_cycle // Self-charging cells recharge every other tick
+		if (src.wait_cycle)
+			return
+
+		if (!(src in processing_items))
+			logTheThing("debug", null, null, "Process() was called for a spy ([src]) that wasn't in the item loop. Last touched by: [src.fingerprintslast]")
+			processing_items.Add(src)
+			return
+		if (!src.cell)
+			processing_items.Remove(src)
+			return
+		if (src.cell.charge == src.cell.max_charge)
+			return
+
+		src.update_icon()
+		return
 
 /obj/item/camera/spy/attack(atom/target, mob/user, flag)
 	if (!ismob(target))
 		return
 	if (src.flash_mode)
+		if(src.cell && (src.cell:charge < 25))
+			user.show_text("[src] doesn't have enough battery power!", "red")
+			return 0
 		var/turf/T = get_turf(target.loc)
 		if (T.loc:sanctuary)
 			user.visible_message("<span class='alert'><b>[user]</b> tries to use [src], cannot quite comprehend the forces at play!</span>")
 			return
+		// Use cell charge
+		src.cell.use(25)
+		src.update_icon()
 		// Generic flash
 		var/mob/M = target
 		var/blind_success = M.apply_flash(30, 8, 0, 0, 0, rand(0, 1), 0, 0, 100, 70, disorient_time = 30)
