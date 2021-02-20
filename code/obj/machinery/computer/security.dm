@@ -78,13 +78,17 @@
 			playsound(src.loc, "sound/machines/buzz-sigh.ogg", 10, 0)
 			return
 		if (src.using_viewport)
-			var/datum/viewport/vp = clint.getViewportsByType("cameras: Viewport")[1]
-			var/turf/T = get_turf(closest)
-			var/turf/closestPos = null
-			for(var/i = 4, i >= 0 || !closestPos, i--)
-				closestPos = locate(T.x - i, T.y + i, T.z)
-				if(closestPos) break
-			vp.SetViewport(closestPos, 8, 8)
+			if (length(clint.getViewportsByType("cameras: Viewport")) < 1)
+				src.using_viewport = 0
+				switchCamera(user, closest)
+			else
+				var/datum/viewport/vp = clint.getViewportsByType("cameras: Viewport")[1]
+				var/turf/T = get_turf(closest)
+				var/turf/closestPos = null
+				for(var/i = 4, i >= 0 || !closestPos, i--)
+					closestPos = locate(T.x - i, T.y + i, T.z)
+					if(closestPos) break
+				vp.SetViewport(closestPos, 8, 8)
 		else
 			switchCamera(user, closest)
 
