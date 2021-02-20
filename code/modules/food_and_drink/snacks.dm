@@ -1190,7 +1190,7 @@
 	var/can_add_frosting = TRUE
 	var/list/styles = list("icing", "sprinkles")
 	var/list/style_tags = list("icing" = "icing", "sprinkles" = "sprinkles")
-	var/list/style_step = 1
+	var/style_step = 1
 
 	heal(var/mob/M)
 		if(ishuman(M) && (M.job in list("Security Officer", "Head of Security", "Detective")))
@@ -1215,7 +1215,7 @@
 
 		// When a user also fills the donut with a syringe it can get a bit crowded in the donut.
 		if (src.reagents.is_full())
-			user.show_text("It feels like adding anything more to [src] would overfill it?", "red")
+			user.show_text("It feels like adding anything more to [src] would overfill it.", "red")
 			return
 
 		var/style = src.styles[src.style_step]
@@ -1233,6 +1233,8 @@
 		if (istype(I, /obj/item/reagent_containers/food/drinks/drinkingglass/icing))
 			src.add_frosting(I, user)
 			return
+		else
+			. = ..()
 
 	custom
 		icon = 'icons/obj/foodNdrink/food_snacks.dmi'
