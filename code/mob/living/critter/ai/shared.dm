@@ -63,7 +63,7 @@
 		if(M && !M.move_target)
 			var/target_turf = get_turf(holder.target)
 			if(can_be_adjacent_to_target)
-				var/list/tempPath = cirrAstar(get_turf(holder.owner), target_turf, 1, null, /proc/heuristic, 40)
+				var/list/tempPath = cirrAstar(get_turf(holder.owner), target_turf, 1, null, 40)
 				if(tempPath.len > 0) // fix runtime Cannot read null.len
 					M.move_target = tempPath[tempPath.len]
 					if(M.move_target)
@@ -136,7 +136,7 @@
 	if(!move_target)
 		fails++
 		return
-	src.found_path = cirrAstar(get_turf(holder.owner), get_turf(move_target), 0, null, /proc/heuristic, 60)
+	src.found_path = cirrAstar(get_turf(holder.owner), get_turf(move_target), 0, null, 60)
 	if(!src.found_path) // no path :C
 		fails++
 

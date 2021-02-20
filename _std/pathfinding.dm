@@ -27,8 +27,9 @@
 
 
 //#define DEBUG_ASTAR
+#define dist_heuristic(start, goal) ((!start || !goal) ? null : GET_MANHATTAN_DIST(start, goal))
 
-/proc/cirrAstar(turf/start, turf/goal, min_dist=0, adjacent, heuristic, maxtraverse = 30, adjacent_param = null, exclude = null)
+/proc/cirrAstar(turf/start, turf/goal, min_dist=0, adjacent, maxtraverse = 30, adjacent_param = null, exclude = null)
 	#ifdef DEBUG_ASTAR
 	clearAstarViz()
 	#endif
@@ -40,7 +41,7 @@
 	var/list/gScore = list()
 	var/list/fScore = list()
 	gScore[start] = 0
-	fScore[start] = heuristic(start, goal)
+	fScore[start] = dist_heuristic(start, goal)
 	var/traverse = 0
 
 	while(length(openSet))
@@ -62,19 +63,15 @@
 
 			cameFrom[neighbor] = current
 			gScore[neighbor] = tentativeGScore
-			fScore[neighbor] = gScore[neighbor] + heuristic(neighbor, goal)
+			fScore[neighbor] = gScore[neighbor] + dist_heuristic(neighbor, goal)
 		traverse += 1
 		if(traverse > maxtraverse)
 			return null // it's taking too long, abandon
 		LAGCHECK(LAG_LOW)
 	return null // if we reach this part, there's no more nodes left to explore
 
+#undef dist_heuristic
 
-
-/proc/heuristic(turf/start, turf/goal)
-	if(!start || !goal)
-		return null // yes, null, not a number, i need to track down why nulls are being passed in as turfs so i'm throwing this up the stack
-	return GET_MANHATTAN_DIST(start, goal)
 
 /proc/distance(turf/start, turf/goal) //get_dist??
 	if(!start || !goal)
