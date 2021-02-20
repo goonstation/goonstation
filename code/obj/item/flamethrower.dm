@@ -83,6 +83,19 @@ A Flamethrower in various states of assembly
 	log_shoot(mob/user, turf/T, obj/projectile/P)
 		logTheThing("combat", user, null, "fires \a [src] ([lit ? "lit, " : ""][MODE_TO_STRING(mode)]) from [log_loc(user)], vector: ([T.x - user.x], [T.y - user.y]), dir: <I>[dir2text(get_dir(user, T))]</I>, reagents: [log_reagents(src.fueltank)] with chamber volume [amt_chem]")
 
+	/// allow refilling the fuel tank by simply clicking the reagent dispensers
+	afterattack(atom/target, mob/user, flag)
+		if(istype(target, /obj/reagent_dispensers) && in_interact_range(src,target))
+			if(src.fueltank?.reagents)
+				var/obj/tank = target
+				tank.reagents.trans_to(src.fueltank, (src.fueltank.reagents.maximum_volume - (src.fueltank.reagents.total_volume)))
+				inventory_counter.update_percent(src.fueltank.reagents.total_volume, src.fueltank.reagents.maximum_volume)
+				boutput(user, "<span class='notice'>You refill the flamethrower's fuel tank.</span>")
+				playsound(src.loc, "sound/effects/zzzt.ogg", 50, 1, -6)
+				user.lastattacked = target
+			else
+				boutput(user, "<span class='notice'>Load the fuel tank first!</span>")
+
 	/// check for tank, pressure in tank, fuelltank, fuel in tank, and... then dump the stuff into it!
 	process_ammo(var/mob/user)
 		var/turf/T = get_turf(src)
