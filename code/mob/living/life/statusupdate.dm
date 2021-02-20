@@ -19,7 +19,7 @@
 			if (owner.hasStatus("resting"))
 				owner.sleeping = 2
 			else
-				owner.sleeping--
+				owner.sleeping = max(owner.sleeping - mult, 0)
 			owner.changeStatus("paralysis", 3 SECONDS * mult)
 			if (prob(10) && (owner.health > 0))
 				owner.emote("snore")
