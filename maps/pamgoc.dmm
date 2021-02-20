@@ -18532,7 +18532,7 @@
 	pixel_x = 6;
 	pixel_y = 8
 	},
-/obj/item/reagent_containers/food/snacks/donut/frosted{
+/obj/item/reagent_containers/food/snacks/donut/custom/frosted{
 	pixel_x = -7;
 	pixel_y = -6
 	},

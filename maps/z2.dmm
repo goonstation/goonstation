@@ -86964,7 +86964,7 @@
 	name = "stained tacticool pouch";
 	pixel_x = 5;
 	pixel_y = -5;
-	spawn_contents = list(/obj/item/handcuffs = 1, /obj/item/device/flash, /obj/item/ammo/power_cell/self_charging/potato = 1, /obj/item/reagent_containers/food/snacks/donut/robust = 1, /obj/item/reagent_containers/food/snacks/candy/candyheart)
+	spawn_contents = list(/obj/item/handcuffs = 1, /obj/item/device/flash, /obj/item/ammo/power_cell/self_charging/potato = 1, /obj/item/reagent_containers/food/snacks/donut/custom/robust = 1, /obj/item/reagent_containers/food/snacks/candy/candyheart)
 	},
 /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat{
 	desc = "Incredibly stinky.";
@@ -87792,7 +87792,7 @@
 	},
 /area/hospital/samostrel)
 "yiq" = (
-/obj/item/reagent_containers/food/snacks/donut/frosted{
+/obj/item/reagent_containers/food/snacks/donut/custom/frosted{
 	desc = "IT HIM, IT REALLY HIM";
 	name = "smol donut"
 	},

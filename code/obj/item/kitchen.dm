@@ -440,7 +440,7 @@ TRAYS
 	amount = 6
 	var/max_amount = 6
 	var/box_type = "donutbox"
-	var/contained_food = /obj/item/reagent_containers/food/snacks/donut/random
+	var/contained_food = /obj/item/reagent_containers/food/snacks/donut/custom/random
 	var/contained_food_name = "donut"
 	tooltip_flags = REBUILD_DIST
 

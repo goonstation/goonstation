@@ -7,7 +7,7 @@
 "aab" = (
 /obj/table/glass/reinforced/auto,
 /obj/item/plate,
-/obj/item/reagent_containers/food/snacks/donut/cinnamon,
+/obj/item/reagent_containers/food/snacks/donut/custom/cinnamon,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/south)
 "aac" = (
@@ -42034,7 +42034,7 @@
 /turf/simulated/floor/plating/random,
 /area/research_outpost/toxins)
 "bYt" = (
-/obj/item/reagent_containers/food/snacks/donut/robust{
+/obj/item/reagent_containers/food/snacks/donut/custom/robust{
 	pixel_y = 4;
 	rand_pos = 0
 	},
