@@ -304,15 +304,15 @@
 	},
 /area/space)
 "aau" = (
-/obj/grille/catwalk{
-	dir = 4
-	},
 /obj/landmark/magnet_shield,
 /obj/securearea{
 	desc = "A warning that demarcates where the magnetic area begins.";
 	dir = 8;
 	icon_state = "magwarning";
 	name = "Magnet Area Boundary"
+	},
+/obj/grille/catwalk{
+	dir = 9
 	},
 /turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
