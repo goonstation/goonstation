@@ -14139,6 +14139,9 @@
 	dir = 8;
 	name = "Station Intercom"
 	},
+/obj/stool/chair/moveable{
+	dir = 8
+	},
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
@@ -27505,11 +27508,11 @@
 	},
 /area/station/security/main)
 "gcv" = (
-/obj/table/reinforced/bar,
 /obj/item/paper_bin{
 	pixel_y = 3
 	},
 /obj/item/pen,
+/obj/table/reinforced/bar/auto,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/barber_shop)
 "gcw" = (
@@ -37572,6 +37575,10 @@
 /obj/machinery/alarm{
 	dir = 8;
 	pixel_x = 20
+	},
+/obj/table/wood/round/auto,
+/obj/machinery/light/lamp/bright{
+	pixel_y = 5
 	},
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
@@ -51683,8 +51690,8 @@
 /turf/simulated/floor/grime,
 /area/station/security/brig)
 "vgb" = (
-/obj/table/reinforced/bar,
 /obj/machinery/cashreg,
+/obj/table/reinforced/bar/auto,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/barber_shop)
 "vgf" = (
