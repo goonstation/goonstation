@@ -1,5 +1,36 @@
 
+(t)sun feb 21 21
+(u)Chickenish
+(p)3775
+(e)🆕|feature
+(+)Added an Implanter to the Security vendor.
+(u)Tarmunora
+(p)3760
+(e)⚖|balance
+(+)Raised costs of power cells and 40mmPBR rounds in the sec loadout vendor.
+(t)sat feb 20 21
+(u)TTerc
+(p)3563
+(e)🗺|mapping
+(+)Cog1: Added extra purge pumps to the TEG and moved the reactor statistics computer to the engine control room.
+(u)Batelite
+(p)3768
+(e)🎨|sprites
+(+)Health analyzer screens now indicate what they're scanning
+(t)fri feb 19 21
+(u)zjdtmkhzt
+(p)3731
+(e)⚖🆕|balance, feature
+(*)Lots of non-handheld artifact types now actually trigger the faults they might get, so artifact use may have some unintended side effects now. Stay safe, everyone!
+(u)BatElite
+(p)3739
+(e)🎨|sprites
+(+)Rechargers have new sprites!
 (t)thu feb 18 21
+(u)Sord
+(p)3726
+(e)🆕|feature
+(+)New taser smg security loadout. Sprites by Matheus
 (u)virvatuli
 (p)3736
 (e)|
