@@ -6,12 +6,11 @@ chui/window/security_cameras
 	flags = CHUI_FLAG_MOVABLE | CHUI_FLAG_CLOSABLE
 
 	proc/create_viewport(client/target_client, turf/T)
-
 		if(get_dist(owner,target_client.mob) > 1)
 			boutput(target_client,"<span class='alert'>You are too far to see the screen.</span>")
 		else
 			var/list/viewports = target_client.getViewportsByType("cameras: Viewport")
-			if(viewports.len >= 1)
+			if(length(viewports))
 				boutput( target_client, "<b>You can only have 1 active viewport. Close the existing viewport to create another.</b>" )
 				return
 
@@ -322,9 +321,12 @@ chui/window/security_cameras
 				return
 
 			else
-				owner.current = C
-				user.set_eye(C)
 				owner.use_power(50)
+				if (length(clint.getViewportsByType("cameras: Viewport")))
+					owner.move_viewport_to_camera(C, clint)
+				else
+					owner.current = C
+					user.set_eye(C)
 
 		else if (href_list["save"])
 			var/obj/machinery/camera/C = locate(href_list["save"])
@@ -339,9 +341,8 @@ chui/window/security_cameras
 
 		else if (href_list["viewport"])
 			if (!owner.current)
-				boutput( clint, "<b>You need to select a camera before creating a viewport.</b>" )
+				boutput(clint, "<b>You need to select a camera before creating a viewport.</b>")
 			else
-				owner.using_viewport = 1
 				create_viewport(clint, get_turf(owner.current))
 				clint.mob.set_eye(null)
 

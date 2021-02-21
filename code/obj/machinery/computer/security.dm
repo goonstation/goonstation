@@ -2,7 +2,6 @@
 	name = "Security Cameras"
 	icon_state = "security"
 	var/obj/machinery/camera/current = null
-	var/using_viewport = 0
 	var/list/obj/machinery/camera/favorites = list()
 	var/const/favorites_Max = 8
 	var/network = "SS13"
@@ -26,7 +25,7 @@
 		if(window)
 			for (var/client/subscriber in window.subscribers)
 				var/list/viewports = subscriber.getViewportsByType("cameras: Viewport")
-				if(get_dist(src,subscriber.mob) > 1 && viewports.len > 0)
+				if(get_dist(src,subscriber.mob) > 1 && length(viewports))
 					boutput(subscriber,"<span class='alert'>You are too far to see the screen.</span>")
 					subscriber.clearViewportsByType("cameras: Viewport")
 
@@ -44,9 +43,18 @@
 		user.set_eye(C)
 		return 1
 
+	proc/move_viewport_to_camera(var/obj/machinery/camera/C, client/clint)
+		var/datum/viewport/vp = clint.getViewportsByType("cameras: Viewport")[1]
+		var/turf/T = get_turf(C)
+		var/turf/closestPos = null
+		for(var/i = 4, i >= 0 || !closestPos, i--)
+			closestPos = locate(T.x - i, T.y + i, T.z)
+			if(closestPos) break
+		vp.SetViewport(closestPos, 8, 8)
+
 	//moved out of global to only be used in sec computers
-	proc/move_security_camera(/*n,*/direct,client/clint)
-		var/mob/living/carbon/user = clint.mob
+	proc/move_security_camera(direct, client/clint)
+		var/mob/user = clint.mob
 		if(!user) return
 
 		//pretty sure this should never happen since I'm adding the first camera found to be the current, but just in cases
@@ -77,18 +85,8 @@
 			boutput(user, "<span class='alert'>ERROR. Cannot connect to camera.</span>")
 			playsound(src.loc, "sound/machines/buzz-sigh.ogg", 10, 0)
 			return
-		if (src.using_viewport)
-			if (length(clint.getViewportsByType("cameras: Viewport")) < 1)
-				src.using_viewport = 0
-				switchCamera(user, closest)
-			else
-				var/datum/viewport/vp = clint.getViewportsByType("cameras: Viewport")[1]
-				var/turf/T = get_turf(closest)
-				var/turf/closestPos = null
-				for(var/i = 4, i >= 0 || !closestPos, i--)
-					closestPos = locate(T.x - i, T.y + i, T.z)
-					if(closestPos) break
-				vp.SetViewport(closestPos, 8, 8)
+		if (length(clint.getViewportsByType("cameras: Viewport")))
+			move_viewport_to_camera(closest, clint)
 		else
 			switchCamera(user, closest)
 
@@ -140,7 +138,6 @@
 	//winset(user, "camera_console.exitbutton", "command=\".windowclose \ref[src]\"")
 	//winshow(user, "camera_console", 1)
 
-	src.using_viewport = 0
 	window.Subscribe( user.client )
 
 /obj/machinery/computer/security/Topic(href, href_list)
