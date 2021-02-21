@@ -615,12 +615,13 @@
 /obj/machinery/light/attackby(obj/item/W, mob/user)
 
 	if (istype(W, /obj/item/lamp_manufacturer)) //deliberately placed above the borg check
-
+		var/obj/item/lamp_manufacturer/M = W
+		if (M.removing_toggled)
+			return //This stuff gets handled in the manufacturer's after_attack
 		if (removable_bulb == 0)
 			boutput(user, "This fitting isn't user-serviceable.")
 			return
 
-		var/obj/item/lamp_manufacturer/M = W
 		var/obj/item/light/L = null
 
 		if (issilicon(user))

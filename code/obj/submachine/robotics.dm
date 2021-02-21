@@ -51,18 +51,33 @@
 	var/max_ammo = 20
 	var/load_interval = 5
 
-	//These costs are in borg cell charge
+	//These costs are in terms of borg cell charge. For crew every action takes 1 sheet (except a fitting gets its lamp immediately replaced making it 2 in total)
 	var/cost_broken = 50 //For broken/burned lamps (the old lamp gets recycled in the tool)
 	var/cost_empty = 75
-	var/cost_fitting = 200 // putting a new fitting on a turf
+	var/cost_fitting = 200 //Putting a new fitting on a turf
+	var/cost_removal = 400 //Eating a fitting
+	var/removing_toggled = FALSE
 	var/setting = "white"
 	var/dispensing_tube = /obj/item/light/tube
 	var/dispensing_bulb = /obj/item/light/bulb
 	//can be obj/machinery/light for wall tubes, obj/machinery/light/small for wall bulbs. Either mode does floor fittings because there's only one type of those
 	var/dispensing_fitting = /obj/machinery/light
+	var/list/setting_context_actions
+	contextLayout = new /datum/contextLayout/experimentalcircle
+
+	//proc/show_settings_context()
+
+
+	New()
+		..()
+		setting_context_actions = list()
+		for(var/actionType in childrentypesof(/datum/contextAction/lamp_manufacturer)) //see context_actions.dm for those
+			var/datum/contextAction/lamp_manufacturer/action = new actionType(src)
+			setting_context_actions += action
 
 	attack_self(var/mob/user as mob)
-		switch (src.setting) //This should be relatively easily expandable I think
+		user.showContextActions(setting_context_actions, src, contextLayout)
+		/*switch (src.setting) //This should be relatively easily expandable I think
 			if ("white")
 				setting = "red"
 				dispensing_tube = /obj/item/light/tube/red
@@ -96,13 +111,32 @@
 				dispensing_tube = /obj/item/light/tube
 				dispensing_bulb = /obj/item/light/bulb
 		set_icon_state("[prefix]-[setting]")
-		tooltip_rebuild = 1
+		tooltip_rebuild = 1*/
 
 
 	get_desc()
-		. = "It is currently set to dispense [setting] lamps."
+
+		. = {"It is currently set to [removing_toggled == TRUE ? "remove fittings" : "to dispense [setting] lamps"].<br>
+		It will build new [dispensing_fitting == /obj/machinery/light/small ? "bulb" : "tube"] fittings."}
+
 
 	afterattack(atom/A, mob/user as mob, reach, params)
+		if (removing_toggled)
+			if (!istype(A, /obj/machinery/light))
+				return
+			var/obj/machinery/light/lomp = A
+			if (lomp.removable_bulb == 0)
+				boutput(user, "This fitting isn't user-serviceable.")
+				return
+			boutput(user, "<span class='notice'>Removing fitting...</span>")
+			playsound(src, "sound/machines/click.ogg", 50, 1)
+			if(do_after(user, 3 SECONDS))
+				//var/obj/machinery/light/newfitting = new dispensing_fitting(B)
+				qdel(A) //RIP
+				if (!isghostdrone(user))
+					elecflash(user)
+				return
+
 		if (!istype(A, /turf/simulated) && !istype(A, /obj/window))
 			..()
 			return
@@ -113,6 +147,9 @@
 			if(do_after(user, 3 SECONDS))
 				var/obj/machinery/light/newfitting = new /obj/machinery/light/small/floor(A)
 				newfitting.attackby(src, user) //plop in an appropriate colour lamp
+				if (!isghostdrone(user))
+					elecflash(user)
+
 
 		else if (istype(A, /turf/simulated/wall) || istype(A, /obj/window))
 			if (!(islist(params) && params["icon-y"] && params["icon-x"]))
@@ -127,9 +164,12 @@
 			playsound(src, "sound/machines/click.ogg", 50, 1)
 			if(do_after(user, 3 SECONDS))
 				var/obj/machinery/light/newfitting = new dispensing_fitting(B)
-				newfitting.nostick = 0 //Imagine if tube fittings had sticky variants, we wouldn't need this
+				newfitting.nostick = 0 //regular tube lights don't do autoposition for some reason.
 				newfitting.autoposition(get_dir(B,A)) //Also this might
 				newfitting.attackby(src, user) //plop in an appropriate colour lamp
+				if (!isghostdrone(user))
+					elecflash(user)
+
 
 /obj/item/lamp_manufacturer/attackby(obj/item/W, mob/user)
 	if (issilicon(user))
@@ -158,18 +198,15 @@
 		else
 			..()
 
-/obj/item/lamp_manufacturer/proc/check_cost(obj/item/W, mob/user)
+///obj/item/lamp_manufacturer/proc/check_cost(obj/item/W, mob/user)
 
 /*
-This proc is where we find the appropriate floor turf for a wall fitting (since they don't go on walls themselves)
-it's where all the awkward crap goes because it's both dependent on the direction we're approaching from and the
-For example, if we attack a south end wall from the east, we shouldn't be able to put a fitting on the far side. (2 turfs distance)
-
+Returns the turf facing the fab for cardinal directions (which should also be the user's turf), but for diagonals it returns a neighbouring turf depending on where you click
+Just in case you're attacking a corner diagonally.
 */
-
 /obj/item/lamp_manufacturer/proc/get_adjacent_floor(atom/W, mob/user, px, py)
-	var/dir_temp = get_dir(user, W)
-	//These two expressions divide the 32*32 into
+	var/dir_temp = get_dir(user, W) //Our W is to the ___ of the user
+	//These two expressions divide a 32*32 turf into diagonal halves
 	var/diag1 = (px > py) //up-left vs down-right
 	var/diag2 = ((px + py) > 32) //up-right vs down-left
 	switch(dir_temp)
@@ -197,16 +234,6 @@ For example, if we attack a south end wall from the east, we shouldn't be able t
 			if (diag2)
 				return get_turf(get_step(W,EAST))
 			return get_turf(get_step(W,SOUTH))
-	/*
-	if (diag1 && diag2)
-		return get_turf(get_step(W,EAST))
-	if (diag1 && !diag2)
-		return get_turf(get_step(W,SOUTH))
-	if (!diag1 && diag2)
-		return get_turf(get_step(W,NORTH))
-	if (!diag1 && !diag2)
-		return get_turf(get_step(W,WEST))
-	*/
 
 
 /obj/item/robot_chemaster
