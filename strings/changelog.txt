@@ -1,5 +1,9 @@
 
 (t)sun feb 21 21
+(u)Chickenish
+(p)3775
+(e)🆕|feature
+(+)Added an Implanter to the Security vendor.
 (u)Tarmunora
 (p)3760
 (e)⚖|balance
