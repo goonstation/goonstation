@@ -46620,6 +46620,12 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/southwest)
+"sio" = (
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	dir = 4
+	},
+/turf/simulated/wall/auto/reinforced/gannets,
+/area/station/maintenance/southeast)
 "siI" = (
 /obj/disposalpipe/segment{
 	dir = 1;
@@ -122365,7 +122371,7 @@ xWk
 xWk
 xWk
 xUA
-skY
+sio
 skY
 aaa
 aaa
