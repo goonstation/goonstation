@@ -1,4 +1,9 @@
 
+(t)sun feb 21 21
+(u)Tarmunora
+(p)3760
+(e)⚖|balance
+(+)Raised costs of power cells and 40mmPBR rounds in the sec loadout vendor.
 (t)sat feb 20 21
 (u)TTerc
 (p)3563
