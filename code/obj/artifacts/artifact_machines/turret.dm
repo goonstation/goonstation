@@ -4,7 +4,7 @@
 
 	ArtifactDestroyed()
 		var/datum/artifact/turret/A = src.artifact
-		var/obj/item/gun/energy/artifact/newgun = new /obj/item/gun/energy/artifact(get_turf(src), A.artitype.name, list(A.bullet))
+		new /obj/item/gun/energy/artifact(get_turf(src), A.artitype.name, list(A.bullet))
 		. = ..()
 
 
