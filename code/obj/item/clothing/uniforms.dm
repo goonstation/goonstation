@@ -1431,3 +1431,93 @@
     desc = "Outfit of a not-so-funny-clown."
     icon_state = "jester"
     item_state = "jester"
+
+// WALPVRGIS fashion
+
+/obj/item/clothing/under/misc/casdressblack
+    name = "Black Tshirt Dress"
+    desc = "From the Spring/Summer 2053 collection."
+    icon_state = "casdress_black"
+    item_state = "casdress_black"
+    icon = 'icons/obj/clothing/uniforms/item_js_misc.dmi'
+    wear_image_icon = 'icons/mob/jumpsuits/worn_js_misc.dmi'
+
+/obj/item/clothing/under/misc/casdressblue
+    name = "Blue Tshirt Dress"
+    desc = "From the Spring/Summer 2053 collection."
+    icon_state = "casdress_blue"
+    item_state = "casdress_blue"
+    icon = 'icons/obj/clothing/uniforms/item_js_misc.dmi'
+    wear_image_icon = 'icons/mob/jumpsuits/worn_js_misc.dmi'
+
+/obj/item/clothing/under/misc/casdressgreen
+    name = "Green Tshirt Dress"
+    desc = "From the Spring/Summer 2053 collection."
+    icon_state = "casdress_green"
+    item_state = "casdress_green"
+    icon = 'icons/obj/clothing/uniforms/item_js_misc.dmi'
+    wear_image_icon = 'icons/mob/jumpsuits/worn_js_misc.dmi'
+
+/obj/item/clothing/under/misc/casdresspink
+    name = "Pink Tshirt Dress"
+    desc = "From the Spring/Summer 2053 collection."
+    icon_state = "casdress_pink"
+    item_state = "casdress_pink"
+    icon = 'icons/obj/clothing/uniforms/item_js_misc.dmi'
+    wear_image_icon = 'icons/mob/jumpsuits/worn_js_misc.dmi'
+
+/obj/item/clothing/under/misc/casdresswhite
+    name = "Pink Tshirt Dress"
+    desc = "From the Spring/Summer 2053 collection."
+    icon_state = "casdress_pink"
+    item_state = "casdress_pink"
+    icon = 'icons/obj/clothing/uniforms/item_js_misc.dmi'
+    wear_image_icon = 'icons/mob/jumpsuits/worn_js_misc.dmi'
+
+/obj/item/clothing/under/misc/tshirtdress
+    name = "Black Tshirt Dress"
+    desc = "From the Spring/Summer 2053 collection."
+    icon_state = "casdress_black"
+    item_state = "casdress_black"
+    icon = 'icons/obj/clothing/uniforms/item_js_misc.dmi'
+    wear_image_icon = 'icons/mob/jumpsuits/worn_js_misc.dmi'
+
+	blue
+		name = "Blue Tshirt Dress"
+		icon_state ="casdress_blue"
+		item_state = "casdress_blue"
+
+	green
+		name = "Green Tshirt Dress"
+		icon_state ="casdress_green"
+		item_state = "casdress_green"
+
+	pink
+		name = "Pink Tshirt Dress"
+		icon_state ="ace"
+		item_state = "ace"
+
+	white
+		name = "White Tshirt Dress"
+		icon_state ="aro"
+		item_state = "aro"
+
+	boltp
+		name = "Purple Bolt Tshirt Dress"
+		icon_state ="ace"
+		item_state = "ace"
+
+	boltb
+		name = "Bolt Tshirt Dress"
+		icon_state ="aro"
+		item_state = "aro"
+
+	leoy
+		name = "Leopard Print Tshirt Dress"
+		icon_state ="ace"
+		item_state = "ace"
+
+	leop
+		name = "Pink Leopard Tshirt Dress"
+		icon_state ="aro"
+		item_state = "aro"
