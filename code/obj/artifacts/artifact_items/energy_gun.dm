@@ -86,10 +86,10 @@
 
 		if(prob(20))
 			src.ArtifactDevelopFault(100)
-			src.visible_message("<span class='alert'>[src] emits \a [pick("ominous", "portentous", "sinister")] sound.</span>")
+			user.visible_message("<span class='alert'>[src] emits \a [pick("ominous", "portentous", "sinister")] sound.</span>")
 		else if(prob(20))
 			src.ArtifactTakeDamage(20)
-			src.visible_message("<span class='alert'>[src] emits a terrible cracking noise.</span>")
+			user.visible_message("<span class='alert'>[src] emits a terrible cracking noise.</span>")
 
 		return
 
