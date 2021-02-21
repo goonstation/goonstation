@@ -80,7 +80,7 @@
 		desc = "Transfer some capulettium plus and pancuronium into your target."
 		icon_state = "stingneuro"
 		venom_ids = list("capulettium_plus", "pancuronium")
-		inject_amount = 15
+		inject_amount = 20
 
 	lsd
 		name = "Hallucinogenic Sting"
