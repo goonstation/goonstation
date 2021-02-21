@@ -18058,6 +18058,8 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "TT" = (
+/obj/rack,
+/obj/item/pen/crayon/golden,
 /turf/simulated/floor/blue,
 /area/station/crew_quarters/heads)
 "TV" = (

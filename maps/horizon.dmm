@@ -22101,6 +22101,7 @@
 	dir = 4
 	},
 /obj/item/device/radio/intercom/cargo,
+/obj/item/pen/crayon/golden,
 /turf/simulated/floor,
 /area/station/bridge/hos)
 "aZv" = (

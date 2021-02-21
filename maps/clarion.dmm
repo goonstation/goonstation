@@ -27664,14 +27664,15 @@
 "aYe" = (
 /obj/machinery/light_switch/north,
 /obj/table/wood/auto,
+/obj/machinery/firealarm{
+	layer = 3.5;
+	pixel_y = 24
+	},
+/obj/item/pen/crayon/golden,
 /obj/machinery/light/lamp/green{
 	pixel_x = -6;
 	pixel_y = 4;
 	switchon = 1
-	},
-/obj/machinery/firealarm{
-	layer = 3.5;
-	pixel_y = 24
 	},
 /turf/simulated/floor/carpet{
 	dir = 9;

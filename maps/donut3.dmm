@@ -39106,6 +39106,7 @@
 /obj/table/wood/auto,
 /obj/bedsheetbin,
 /obj/machinery/light/incandescent/cool,
+/obj/item/pen/crayon/golden,
 /turf/simulated/floor/carpet/red/fancy/narrow{
 	dir = 6
 	},

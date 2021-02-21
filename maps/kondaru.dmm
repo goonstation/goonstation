@@ -53086,6 +53086,7 @@
 "lpn" = (
 /obj/table/wood/auto,
 /obj/machinery/phone,
+/obj/item/pen/crayon/golden,
 /turf/simulated/floor/black,
 /area/station/bridge/hos)
 "lpu" = (
