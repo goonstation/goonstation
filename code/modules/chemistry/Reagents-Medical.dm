@@ -109,7 +109,6 @@ datum
 						M.setStatus("paralysis", max(M.getStatusDuration("paralysis"), 30 * mult))
 						M.drowsyness  = max(M.drowsyness, 20)
 
-
 				..()
 				return
 
