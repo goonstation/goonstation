@@ -97,6 +97,8 @@ datum
 				if(!M) M = holder.my_atom
 				if(!counter) counter = 1
 				M.jitteriness = max(M.jitteriness-25,0)
+				if(M.hasStatus("stimulants"))
+					M.changeStatus("stimulants", -7.5 SECONDS * mult)
 
 				switch(counter += 1 * mult)
 					if(1 to 15)
@@ -106,6 +108,7 @@ datum
 					if(36 to INFINITY)
 						M.setStatus("paralysis", max(M.getStatusDuration("paralysis"), 30 * mult))
 						M.drowsyness  = max(M.drowsyness, 20)
+
 
 				..()
 				return
