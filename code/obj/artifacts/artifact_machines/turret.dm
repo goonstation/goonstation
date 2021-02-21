@@ -2,6 +2,12 @@
 	name = "artifact turret"
 	associated_datum = /datum/artifact/turret
 
+	ArtifactDestroyed()
+		var/datum/artifact/turret/A = src.artifact
+		var/obj/item/gun/energy/artifact/newgun = new /obj/item/gun/energy/artifact(get_turf(src), A.artitype.name, list(A.bullet))
+		. = ..()
+
+
 /datum/artifact/turret
 	associated_object = /obj/machinery/artifact/turret
 	rarity_weight = 200
