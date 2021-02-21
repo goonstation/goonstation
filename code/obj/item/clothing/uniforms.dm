@@ -1434,53 +1434,13 @@
 
 // WALPVRGIS fashion
 
-/obj/item/clothing/under/misc/tshirtdress
+/obj/item/clothing/under/misc/tshirtdressblk
     name = "Black Tshirt Dress"
     desc = "From the Spring/Summer 2053 collection."
     icon_state = "casdress_black"
     item_state = "casdress_black"
     icon = 'icons/obj/clothing/uniforms/item_js_misc.dmi'
     wear_image_icon = 'icons/mob/jumpsuits/worn_js_misc.dmi'
-
-blue
-		name = "Blue Tshirt Dress"
-		icon_state = "casdress_blue"
-		item_state = "casdress_blue"
-
-green
-		name = "Green Tshirt Dress"
-		icon_state = "casdress_green"
-		item_state = "casdress_green"
-
-pink
-		name = "Pink Tshirt Dress"
-		icon_state = "casdress_pink"
-		item_state = "casdress_pink"
-
-white
-		name = "White Tshirt Dress"
-		icon_state = "casdress_white"
-		item_state = "casdress_white"
-
-boltp
-		name = "Purple Bolt Tshirt Dress"
-		icon_state = "casdress_prpbolt"
-		item_state = "casdress_prpbolt"
-
-boltb
-		name = "Bolt Tshirt Dress"
-		icon_state = "casdress_ylwbolt"
-		item_state = "casdress_ylwbolt"
-
-leoy
-		name = "Leopard Print Tshirt Dress"
-		icon_state = "casdress_ylwleo"
-		item_state = "casdress_ylwleo"
-
-leop
-		name = "Pink Leopard Tshirt Dress"
-		icon_state = "casdress_pnkleo"
-		item_state = "casdress_pnkleo"
 
 /obj/item/clothing/under/misc/skirtdress
     name = "Red and Black Skirt Dress"
@@ -1490,22 +1450,7 @@ leop
     icon = 'icons/obj/clothing/uniforms/item_js_misc.dmi'
     wear_image_icon = 'icons/mob/jumpsuits/worn_js_misc.dmi'
 
-sktdresspurple
-		name = "Purple and Black Skirt Dress"
-		icon_state = "sktdress_purple"
-		item_state = "sktdress_purple"
-
-sktdressblue
-		name = "Blue and Black Skirt Dress"
-		icon_state = "sktdress_blue"
-		item_state = "sktdress_blue"
-
-sktdressgold
-		name = "Gold and Black Skirt Dress"
-		icon_state = "sktdress_gold"
-		item_state = "sktdress_gold"
-
-/obj/item/clothing/under/misc/sfjumpsuit
+/obj/item/clothing/under/misc/sfjumpsuitbp
     name = "Black and Purple Sci-Fi Jumpsuit"
     desc = "Wear this to immediately become the ultimate hacker."
     icon_state = "scifi_jump_pb"
@@ -1513,22 +1458,31 @@ sktdressgold
     icon = 'icons/obj/clothing/uniforms/item_js_misc.dmi'
     wear_image_icon = 'icons/mob/jumpsuits/worn_js_misc.dmi'
 
-sfjumpbr
-		name = "Black and Red Sci-Fi Jumpsuit"
-		icon_state = "scifi_jump_rb"
-		item_state = "scifi_jump_rb"
+/obj/item/clothing/under/misc/sfjumpsuitrb
+    name = "Black and Red Sci-Fi Jumpsuit"
+    desc = "Wear this to immediately become the ultimate hacker."
+    icon_state = "scifi_jump_rb"
+    item_state = "scifi_jump_rb"
+    icon = 'icons/obj/clothing/uniforms/item_js_misc.dmi'
+    wear_image_icon = 'icons/mob/jumpsuits/worn_js_misc.dmi'
 
-sfjumppnk
-		name = "Pink and Blue Sci-Fi Jumpsuit"
-		icon_state = "scifi_jump_pnk"
-		item_state = "scifi_jump_pnk"
+/obj/item/clothing/under/misc/sfjumpsuitpnk
+    name = "Pink and Blue Sci-Fi Jumpsuit"
+    desc = "Wear this to immediately become the ultimate hacker."
+    icon_state = "scifi_jump_pnk"
+    item_state = "scifi_jump_pnk"
+    icon = 'icons/obj/clothing/uniforms/item_js_misc.dmi'
+    wear_image_icon = 'icons/mob/jumpsuits/worn_js_misc.dmi'
 
-sfjumpbee
-		name = "Bee Sci-Fi Jumpsuit"
-		icon_state = "scifi_jump_yb"
-		item_state = "scifi_jump_yb"
+/obj/item/clothing/under/misc/sfjumpsuitbee
+    name = "Bee Sci-Fi Jumpsuit"
+    desc = "Wear this to immediately become the ultimate hacker."
+    icon_state = "scifi_jump_yb"
+    item_state = "scifi_jump_yb"
+    icon = 'icons/obj/clothing/uniforms/item_js_misc.dmi'
+    wear_image_icon = 'icons/mob/jumpsuits/worn_js_misc.dmi'
 
-/obj/item/clothing/under/misc/casualjeans
+/obj/item/clothing/under/misc/casualjeanswb
     name = "White Shirt and Jeans"
     desc = "Look at those knee tears! You're too cool for school!"
     icon_state = "casual_jeans_wb"
@@ -1536,22 +1490,34 @@ sfjumpbee
     icon = 'icons/obj/clothing/uniforms/item_js_misc.dmi'
     wear_image_icon = 'icons/mob/jumpsuits/worn_js_misc.dmi'
 
-casualjeans2
-		name = "Red Skull Shirt and Jeans"
-		icon_state = "casual_jeans_skullr"
-		item_state = "casual_jeans_skullr"
+/obj/item/clothing/under/misc/casualjeansskr
+    name = "Red Skull Shirt and Jeans"
+    desc = "You're not evil, just misunderstood."
+    icon_state = "casual_jeans_skullr"
+    item_state = "casual_jeans_skullr"
+    icon = 'icons/obj/clothing/uniforms/item_js_misc.dmi'
+    wear_image_icon = 'icons/mob/jumpsuits/worn_js_misc.dmi'
 
-casualjeans3
-		name = "Black Skull Shirt and Jeans"
-		icon_state = "casual_jeans_skullb"
-		item_state = "casual_jeans_skullb"
+/obj/item/clothing/under/misc/casualjeansskb
+    name = "Black Skull Shirt and Jeans"
+    desc = "You're not evil, just misunderstood."
+    icon_state = "casual_jeans_skullb"
+    item_state = "casual_jeans_skullb"
+    icon = 'icons/obj/clothing/uniforms/item_js_misc.dmi'
+    wear_image_icon = 'icons/mob/jumpsuits/worn_js_misc.dmi'
 
-casualjeans4
-		name = "Yellow Shirt and Jeans"
-		icon_state = "casual_jeans_yshirt"
-		item_state = "casual_jeans_yshirt"
+/obj/item/clothing/under/misc/casualjeansyel
+    name = "Yellow Shirt and Jeans"
+    desc = "For when you want to be both a ray of sunshine, and also grunge."
+    icon_state = "casual_jeans_yshirt"
+    item_state = "casual_jeans_yshirt"
+    icon = 'icons/obj/clothing/uniforms/item_js_misc.dmi'
+    wear_image_icon = 'icons/mob/jumpsuits/worn_js_misc.dmi'
 
-casualjeans5
-		name = "Skull Shirt and Acid Wash Jeans"
-		icon_state = "casual_jeans_skullbshort"
-		item_state = "casual_jeans_skullbshort"
+/obj/item/clothing/under/misc/casualjeansacid
+    name = "Skull Shirt and Acid Wash Jeans"
+    desc = "It's 1993 and you're dressed to start your new grunge garage band."
+    icon_state = "casual_jeans_skullbshort"
+    item_state = "casual_jeans_skullbshort"
+    icon = 'icons/obj/clothing/uniforms/item_js_misc.dmi'
+    wear_image_icon = 'icons/mob/jumpsuits/worn_js_misc.dmi'
