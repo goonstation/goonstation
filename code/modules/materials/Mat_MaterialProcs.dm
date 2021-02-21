@@ -331,17 +331,10 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 			if(istype(attacked) && !isrestrictedz(T.z)) // Haine fix for undefined proc or verb /turf/simulated/floor/set loc()
 				. = get_offset_target_turf(get_turf(attacked), rand(-8, 8), rand(-8, 8))
 				var/fail_msg = ""
-				if (prob(25))
-					if (attacker.is_in_hands(owner))
-						attacker.visible_message("<span class='alert'>[owner] is warped away out of [attacker]'s hands!</span>")
-						playsound(attacker.loc, "sound/effects/poof.ogg", 90)
-						attacker.drop_item(owner)
-						owner.set_loc(.)
-						return
-					else if (attacker == attacked)
-						fail_msg = " but you lose [owner]!"
-						attacker.drop_item(owner)
-						playsound(attacker.loc, "sound/effects/poof.ogg", 90)
+				if (prob(25) && attacker == attacked)
+					fail_msg = " but you lose [owner]!"
+					attacker.drop_item(owner)
+					playsound(attacker.loc, "sound/effects/poof.ogg", 90)
 				else
 					playsound(attacker.loc, "warp", 50)
 				attacked.visible_message("<span class='alert'>[attacked] is warped away!</span>")
