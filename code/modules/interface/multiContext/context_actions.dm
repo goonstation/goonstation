@@ -794,7 +794,7 @@
 	execute(var/atom/target, var/mob/user)
 		var/obj/item/lamp_manufacturer/M = target
 		if (M.removing_toggled)
-			M.set_icon_state("[M.prefix]-[remove]")
+			M.set_icon_state("[M.prefix]-remove")
 		else
 			M.set_icon_state("[M.prefix]-[M.setting]")
 		M.tooltip_rebuild = 1

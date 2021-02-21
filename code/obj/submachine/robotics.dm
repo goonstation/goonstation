@@ -65,9 +65,6 @@
 	var/list/setting_context_actions
 	contextLayout = new /datum/contextLayout/experimentalcircle
 
-	//proc/show_settings_context()
-
-
 	New()
 		..()
 		setting_context_actions = list()
@@ -77,91 +74,56 @@
 
 	attack_self(var/mob/user as mob)
 		user.showContextActions(setting_context_actions, src, contextLayout)
-		/*switch (src.setting) //This should be relatively easily expandable I think
-			if ("white")
-				setting = "red"
-				dispensing_tube = /obj/item/light/tube/red
-				dispensing_bulb = /obj/item/light/bulb/red
-			if ("red")
-				setting = "yellow"
-				dispensing_tube = /obj/item/light/tube/yellow
-				dispensing_bulb = /obj/item/light/bulb/yellow
-			if ("yellow")
-				setting = "green"
-				dispensing_tube = /obj/item/light/tube/green
-				dispensing_bulb = /obj/item/light/bulb/green
-			if ("green")
-				setting = "cyan"
-				dispensing_tube = /obj/item/light/tube/cyan
-				dispensing_bulb = /obj/item/light/bulb/cyan
-			if ("cyan")
-				setting = "blue"
-				dispensing_tube = /obj/item/light/tube/blue
-				dispensing_bulb = /obj/item/light/bulb/blue
-			if ("blue")
-				setting = "purple"
-				dispensing_tube = /obj/item/light/tube/purple
-				dispensing_bulb = /obj/item/light/bulb/purple
-			if ("purple")
-				setting = "blacklight"
-				dispensing_tube = /obj/item/light/tube/blacklight
-				dispensing_bulb = /obj/item/light/bulb/blacklight
-			if ("blacklight")
-				setting = "white"
-				dispensing_tube = /obj/item/light/tube
-				dispensing_bulb = /obj/item/light/bulb
-		set_icon_state("[prefix]-[setting]")
-		tooltip_rebuild = 1*/
-
 
 	get_desc()
 
 		. = {"It is currently set to [removing_toggled == TRUE ? "remove fittings" : "to dispense [setting] lamps"].<br>
 		It will build new [dispensing_fitting == /obj/machinery/light/small ? "bulb" : "tube"] fittings."}
 
-
 	afterattack(atom/A, mob/user as mob, reach, params)
 		if (removing_toggled)
 			if (!istype(A, /obj/machinery/light))
+				return
+			if (!check_ammo(user, cost_removal))
 				return
 			var/obj/machinery/light/lomp = A
 			if (lomp.removable_bulb == 0)
 				boutput(user, "This fitting isn't user-serviceable.")
 				return
 			boutput(user, "<span class='notice'>Removing fitting...</span>")
-			playsound(src, "sound/machines/click.ogg", 50, 1)
+			playsound(user, "sound/machines/click.ogg", 50, 1)
 			if(do_after(user, 3 SECONDS))
-				//var/obj/machinery/light/newfitting = new dispensing_fitting(B)
 				qdel(A) //RIP
 				if (!isghostdrone(user))
 					elecflash(user)
+				take_ammo(user, cost_removal)
 				return
 
-		if (!istype(A, /turf/simulated) && !istype(A, /obj/window))
+		if (!istype(A, /turf/simulated) && !istype(A, /obj/window) || !check_ammo(user, cost_fitting))
 			..()
 			return
 
 		if (istype(A, /turf/simulated/floor))
 			boutput(user, "<span class='notice'>Installing a floor bulb...</span>")
-			playsound(src, "sound/machines/click.ogg", 50, 1)
+			playsound(user, "sound/machines/click.ogg", 50, 1)
 			if(do_after(user, 3 SECONDS))
 				var/obj/machinery/light/newfitting = new /obj/machinery/light/small/floor(A)
 				newfitting.attackby(src, user) //plop in an appropriate colour lamp
 				if (!isghostdrone(user))
 					elecflash(user)
+				take_ammo(user, cost_fitting)
 
 
 		else if (istype(A, /turf/simulated/wall) || istype(A, /obj/window))
 			if (!(islist(params) && params["icon-y"] && params["icon-x"]))
 				return
-			//var/list/P = params2list(params)
 			var/atom/B = get_adjacent_floor(A, user, text2num(params["icon-x"]), text2num(params["icon-y"]))
 			if (!istype(B, /turf/simulated/floor) && !istype(B, /turf/space))
 				return
 			if (locate(/obj/window) in B)
 				return
 			boutput(user, "<span class='notice'>Installing a wall [dispensing_fitting == /obj/machinery/light/small ? "bulb" : "tube"]...</span>")
-			playsound(src, "sound/machines/click.ogg", 50, 1)
+			playsound(user, "sound/machines/click.ogg", 50, 1)
 			if(do_after(user, 3 SECONDS))
 				var/obj/machinery/light/newfitting = new dispensing_fitting(B)
 				newfitting.nostick = 0 //regular tube lights don't do autoposition for some reason.
@@ -169,6 +131,7 @@
 				newfitting.attackby(src, user) //plop in an appropriate colour lamp
 				if (!isghostdrone(user))
 					elecflash(user)
+				take_ammo(user, cost_fitting)
 
 
 /obj/item/lamp_manufacturer/attackby(obj/item/W, mob/user)
@@ -198,12 +161,8 @@
 		else
 			..()
 
-///obj/item/lamp_manufacturer/proc/check_cost(obj/item/W, mob/user)
-
-/*
-Returns the turf facing the fab for cardinal directions (which should also be the user's turf), but for diagonals it returns a neighbouring turf depending on where you click
-Just in case you're attacking a corner diagonally.
-*/
+//Returns the turf facing the fab for cardinal directions (which should also be the user's turf), but for diagonals it returns a neighbouring turf depending on where you click
+//Just in case you're attacking a corner diagonally.
 /obj/item/lamp_manufacturer/proc/get_adjacent_floor(atom/W, mob/user, px, py)
 	var/dir_temp = get_dir(user, W) //Our W is to the ___ of the user
 	//These two expressions divide a 32*32 turf into diagonal halves
@@ -234,6 +193,36 @@ Just in case you're attacking a corner diagonally.
 			if (diag2)
 				return get_turf(get_step(W,EAST))
 			return get_turf(get_step(W,SOUTH))
+
+/obj/item/lamp_manufacturer/proc/check_ammo(mob/user, cost)
+	if (issilicon(user))
+		var/mob/living/silicon/S = user
+		if (S.cell)
+			if (S.cell.charge >= cost)
+				return 1
+			else
+				boutput(user, "Not enough cell charge.")
+			return 0
+	else
+		if (cost == cost_fitting) //hacky but placing fixtures is the only thing that takes 2 in total
+			if (metal_ammo > 1)
+				return 1
+		else
+			if (metal_ammo > 0)
+				return 1
+		boutput(user, "You need to load up more metal sheets.")
+		return 0
+
+/obj/item/lamp_manufacturer/proc/take_ammo(mob/user, cost) //Cost is in cell charge, everything costs 1 sheet
+	if (issilicon(user))
+		var/mob/living/silicon/S = user
+		if (S.cell)
+			S.cell.charge -= cost
+	else
+		if (metal_ammo > 0) //shouldn't be possible to fail
+			metal_ammo--
+			inventory_counter.update_number(metal_ammo)
+
 
 
 /obj/item/robot_chemaster

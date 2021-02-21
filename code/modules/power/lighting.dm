@@ -622,22 +622,15 @@
 			boutput(user, "This fitting isn't user-serviceable.")
 			return
 
-		var/obj/item/light/L = null
-
-		if (issilicon(user))
-			var/mob/living/silicon/S = user
-			if (S.cell)
-				if (!inserted_lamp)
-					S.cell.charge -= M.cost_empty
-				else
-					S.cell.charge -= M.cost_broken
+		if (!inserted_lamp) //Taking charge/sheets
+			if (!M.check_ammo(user, M.cost_empty))
+				return
+			M.take_ammo(user, M.cost_empty)
 		else
-			if (M.metal_ammo > 0)
-				M.metal_ammo--
-				M.inventory_counter.update_number(M.metal_ammo)
-			else
-				boutput(user, "You need to load up some metal sheets.")
-				return // Stop lights from being made if a human user lacks materials.
+			if (!M.check_ammo(user, M.cost_broken))
+				return
+			M.take_ammo(user, M.cost_broken)
+		var/obj/item/light/L = null
 
 		if (fitting == "tube")
 			L = new M.dispensing_tube()
