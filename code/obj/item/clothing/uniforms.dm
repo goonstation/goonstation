@@ -1442,42 +1442,42 @@
     icon = 'icons/obj/clothing/uniforms/item_js_misc.dmi'
     wear_image_icon = 'icons/mob/jumpsuits/worn_js_misc.dmi'
 
-	blue
+blue
 		name = "Blue Tshirt Dress"
 		icon_state = "casdress_blue"
 		item_state = "casdress_blue"
 
-	green
+green
 		name = "Green Tshirt Dress"
 		icon_state = "casdress_green"
 		item_state = "casdress_green"
 
-	pink
+pink
 		name = "Pink Tshirt Dress"
 		icon_state = "casdress_pink"
 		item_state = "casdress_pink"
 
-	white
+white
 		name = "White Tshirt Dress"
 		icon_state = "casdress_white"
 		item_state = "casdress_white"
 
-	boltp
+boltp
 		name = "Purple Bolt Tshirt Dress"
 		icon_state = "casdress_prpbolt"
 		item_state = "casdress_prpbolt"
 
-	boltb
+boltb
 		name = "Bolt Tshirt Dress"
 		icon_state = "casdress_ylwbolt"
 		item_state = "casdress_ylwbolt"
 
-	leoy
+leoy
 		name = "Leopard Print Tshirt Dress"
 		icon_state = "casdress_ylwleo"
 		item_state = "casdress_ylwleo"
 
-	leop
+leop
 		name = "Pink Leopard Tshirt Dress"
 		icon_state = "casdress_pnkleo"
 		item_state = "casdress_pnkleo"
@@ -1490,17 +1490,17 @@
     icon = 'icons/obj/clothing/uniforms/item_js_misc.dmi'
     wear_image_icon = 'icons/mob/jumpsuits/worn_js_misc.dmi'
 
-	sktdresspurple
+sktdresspurple
 		name = "Purple and Black Skirt Dress"
 		icon_state = "sktdress_purple"
 		item_state = "sktdress_purple"
 
-	sktdressblue
+sktdressblue
 		name = "Blue and Black Skirt Dress"
 		icon_state = "sktdress_blue"
 		item_state = "sktdress_blue"
 
-	sktdressgold
+sktdressgold
 		name = "Gold and Black Skirt Dress"
 		icon_state = "sktdress_gold"
 		item_state = "sktdress_gold"
@@ -1513,17 +1513,17 @@
     icon = 'icons/obj/clothing/uniforms/item_js_misc.dmi'
     wear_image_icon = 'icons/mob/jumpsuits/worn_js_misc.dmi'
 
-	sfjumpbr
+sfjumpbr
 		name = "Black and Red Sci-Fi Jumpsuit"
 		icon_state = "scifi_jump_rb"
 		item_state = "scifi_jump_rb"
 
-	sfjumppnk
+sfjumppnk
 		name = "Pink and Blue Sci-Fi Jumpsuit"
 		icon_state = "scifi_jump_pnk"
 		item_state = "scifi_jump_pnk"
 
-	sfjumpbee
+sfjumpbee
 		name = "Bee Sci-Fi Jumpsuit"
 		icon_state = "scifi_jump_yb"
 		item_state = "scifi_jump_yb"
@@ -1536,22 +1536,22 @@
     icon = 'icons/obj/clothing/uniforms/item_js_misc.dmi'
     wear_image_icon = 'icons/mob/jumpsuits/worn_js_misc.dmi'
 
-	casualjeans2
+casualjeans2
 		name = "Red Skull Shirt and Jeans"
 		icon_state = "casual_jeans_skullr"
 		item_state = "casual_jeans_skullr"
 
-	casualjeans3
+casualjeans3
 		name = "Black Skull Shirt and Jeans"
 		icon_state = "casual_jeans_skullb"
 		item_state = "casual_jeans_skullb"
 
-	casualjeans4
+casualjeans4
 		name = "Yellow Shirt and Jeans"
 		icon_state = "casual_jeans_yshirt"
 		item_state = "casual_jeans_yshirt"
 
-	casualjeans5
+casualjeans5
 		name = "Skull Shirt and Acid Wash Jeans"
 		icon_state = "casual_jeans_skullbshort"
 		item_state = "casual_jeans_skullbshort"
