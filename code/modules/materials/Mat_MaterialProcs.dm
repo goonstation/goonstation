@@ -529,7 +529,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 /datum/materialProc/soulsteel_entered
 	var/lastTrigger = 0
 	execute(var/obj/item/owner, var/atom/movable/entering)
-		if (!isobj(owner)) return
+		if (!isobj(owner) && !ismob(owner)) return
 		if (istype(entering, /mob/dead/observer) && prob(33))
 			var/mob/dead/observer/O = entering
 			if(O.observe_round) return
@@ -539,11 +539,19 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 			lastTrigger = world.time
 			var/mob/mobenter = entering
 			if(mobenter.client)
-				var/mob/living/object/OB = new/mob/living/object(owner, mobenter)
-				OB.health = 8
-				OB.max_health = 8
-				OB.canspeak = 0
-				SHOW_SOULSTEEL_TIPS(OB)
+				if(isobj(owner))
+					var/mob/living/object/OB = new/mob/living/object(owner, mobenter)
+					OB.health = 8
+					OB.max_health = 8
+					OB.canspeak = 0
+					SHOW_SOULSTEEL_TIPS(OB)
+				else if(ismob(owner))
+					var/mob/MO = owner
+					if(MO.mind)
+						boutput(entering, "<span class='alert'>[owner] already has a soul controlling it!</span>")
+						return
+					boutput(entering, "<span class='alert'>You possess [owner]! Keep in mind you are not an antagonist!</span>")
+					O.mind.transfer_to(MO)
 		return
 
 /datum/materialProc/reflective_onbullet
