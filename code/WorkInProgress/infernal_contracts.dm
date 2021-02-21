@@ -715,6 +715,7 @@ obj/item/contract/reversal
 	desc = "This contract promises to make the strong weak and the weak strong."
 	limiteduse = 1
 	contractlines = 1
+	can_roll = 0 //BROKEN AS SHIT, HEALTH CODE MAKES ME WANT TO DIE, TRIED TO CLEAN IT UP FOR HOURS, DIDN'T WORK, FUCK IT, SAVE IT FOR A DUMB GIMMICK OR SMTH
 
 	MagicEffect(var/mob/user as mob, var/mob/badguy as mob)
 		if(!..())
@@ -724,6 +725,21 @@ obj/item/contract/reversal
 			user.traitHolder.addTrait("reversal")
 			boutput(user, "<span class='notice'>You feel like you could take a shotgun blast to the face without getting a scratch on you!</span>")
 
+		return 1
+
+obj/item/contract/krampus
+	desc = "This contract smells of meat and ghosts"
+	limiteduse = 1
+	contractlines = 1
+	strong = 1
+
+	MagicEffect(var/mob/user as mob, var/mob/badguy as mob)
+		if(!..())
+			return 0
+		SPAWN_DBG(1 DECI SECOND)
+			boutput(user, "<span class='notice'>YOU CRUNCHIFY! OH GOD! </span>")
+			boutput(user, "<span style=\"color:red; font-size:150%\"><b>Note that you are not an antagonist (unless you were already one), you simply have some of the powers of one. (try click dragging some distant items)</b></span>")
+			user.make_cube(/mob/living/carbon/cube/meat/krampus/telekinetic, INFINITY, get_turf(user))
 		return 1
 
 obj/item/contract/chemical
