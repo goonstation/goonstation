@@ -423,6 +423,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 			H.gunshot_residue = 1
 
 	src.update_icon()
+	return TRUE
 
 /obj/item/gun/proc/canshoot()
 	return 0
