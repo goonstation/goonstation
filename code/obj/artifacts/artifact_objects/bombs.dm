@@ -7,6 +7,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 	validtypes = list("ancient","eldritch","precursor")
 	validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/electric,/datum/artifact_trigger/heat,
 	/datum/artifact_trigger/cold,/datum/artifact_trigger/radiation)
+	fault_blacklist = list(ITEM_ONLY_FAULTS, TOUCH_ONLY_FAULTS) // can't sting you at range
 	react_xray = list(12,75,30,11,"COMPLEX")
 	var/explode_delay = 600
 	var/dud = 0
@@ -318,6 +319,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 /datum/artifact/bomb/transmute
 	associated_object = /obj/machinery/artifact/bomb/transmute
 	validtypes = list("wizard","eldritch","martian","ancient","precursor")
+	fault_blacklist = list(ITEM_ONLY_FAULTS, TOUCH_ONLY_FAULTS)
 	rarity_weight = 90
 	react_xray = list(17,95,95,3,"ANOMALOUS")
 	warning_initial = ""
@@ -448,7 +450,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 			var/range_squared = range**2
 			var/turf/T = get_turf(O)
 			for(var/atom/G in range(range, T))
-				if(istype(G, /obj/overlay) || istype(G, /obj/effects))
+				if(istype(G, /obj/overlay) || istype(G, /obj/effects) || istype(G, /turf/space))
 					continue
 				var/dist = GET_SQUARED_EUCLIDEAN_DIST(O, G)
 				var/distPercent = (dist/range_squared)*100
@@ -465,9 +467,12 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 							M.setMaterial(mat)
 							for(var/atom/I in M.get_all_items_on_mob())
 								I.setMaterial(mat)
+							O.ArtifactFaultUsed(M)
 						if(MAKE_HUMAN_STATUE)
 							if(distPercent < 40) // only inner 40% of range
-								M.become_statue(mat)
+								O.ArtifactFaultUsed(M)
+								if(M)
+									M.become_statue(mat)
 				else
 					G.setMaterial(mat)
 

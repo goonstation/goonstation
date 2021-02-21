@@ -885,7 +885,7 @@ This is basically useless for anyone but miners.
 /datum/syndicate_buylist/traitor/buddy_ammofab
 	name = "Guardbuddy Ammo Replicator"
 	item = /obj/item/device/guardbot_module/ammofab
-	cost = 4
+	cost = 1
 	vr_allowed = 0
 	desc = "A device that allows PR-6S Guardbuddy units to use their internal charge to replenish kinetic ammunition."
 	job = list("Research Director")

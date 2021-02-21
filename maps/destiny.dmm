@@ -25726,22 +25726,6 @@
 /area/station/science/research_director{
 	workplace = 1
 	})
-"aTa" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
-/turf/simulated/floor/carpet{
-	dir = 10;
-	icon_state = "fpurple2"
-	},
-/area/station/science/research_director{
-	workplace = 1
-	})
 "aTb" = (
 /obj/stool/chair/moveable{
 	dir = 1
@@ -30641,20 +30625,6 @@
 	},
 /turf/simulated/floor/caution/south,
 /area/station/engine/elect)
-"bbO" = (
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
-/obj/decal/tile_edge/line/black{
-	dir = 5;
-	icon_state = "line2"
-	},
-/obj/machinery/vending/mechanics,
-/obj/item/device/radio/intercom/engineering,
-/turf/simulated/floor/caution/corner/misc{
-	dir = 10
-	},
-/area/station/engine/elect)
 "bbP" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -33751,130 +33721,6 @@
 "bhf" = (
 /turf/simulated/wall/auto/gannets,
 /area/station/security/brig)
-"bhg" = (
-/obj/table/reinforced/auto,
-/obj/window/crystal/reinforced/north,
-/obj/machinery/light_switch/west,
-/obj/machinery/defib_mount{
-	pixel_x = 2;
-	pixel_y = -4
-	},
-/obj/item/paper/Port_A_Brig,
-/obj/item/remote/porter/port_a_brig,
-/obj/window/crystal/reinforced/north,
-/turf/simulated/floor/red,
-/area/station/security/brig)
-"bhh" = (
-/obj/machinery/door/window/northright{
-	name = "interior door-'Solitary Cell One'";
-	req_access_txt = "1"
-	},
-/obj/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
-	},
-/obj/disposalpipe/segment/ejection{
-	dir = 1;
-	icon_state = "pipe-c"
-	},
-/turf/simulated/floor/red,
-/area/station/security/brig)
-"bhi" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/disposalpipe/junction{
-	dir = 4
-	},
-/obj/machinery/door_timer{
-	id = "solitary_w";
-	name = "door timer (West Solitary)";
-	pixel_x = -8;
-	pixel_y = 24
-	},
-/obj/machinery/door_timer{
-	id = "solitary_e";
-	name = "door timer (East Solitary)";
-	pixel_x = 8;
-	pixel_y = 24
-	},
-/obj/window/crystal/reinforced/north,
-/obj/machinery/light{
-	dir = 1;
-	pixel_x = -1
-	},
-/obj/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
-	},
-/obj/window/crystal/reinforced/north,
-/obj/landmark/start{
-	name = "Security Assistant"
-	},
-/turf/simulated/floor/red,
-/area/station/security/brig)
-"bhj" = (
-/obj/machinery/door/window/northleft{
-	name = "interior door-'Solitary Cell Two'";
-	req_access_txt = "1"
-	},
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
-	},
-/obj/disposalpipe/junction{
-	dir = 4;
-	icon_state = "pipe-j2"
-	},
-/turf/simulated/floor/red,
-/area/station/security/brig)
-"bhk" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/window/crystal/reinforced/north,
-/obj/disposalpipe/segment/ejection{
-	dir = 4
-	},
-/obj/window/crystal/reinforced/north,
-/obj/landmark/gps_waypoint,
-/turf/simulated/floor/red,
-/area/station/security/brig)
-"bhl" = (
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/gannets/glass/security/alt{
-	name = "glass airlock-'Brig'"
-	},
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/secscanner{
-	dir = 4;
-	icon_state = "scanner_off"
-	},
-/obj/disposalpipe/segment/ejection{
-	dir = 4
-	},
-/obj/decal/tile_edge/line/black{
-	dir = 5;
-	icon_state = "line1"
-	},
-/turf/simulated/floor/red,
-/area/station/security/brig)
 "bhm" = (
 /obj/disposalpipe/segment/ejection{
 	dir = 4
@@ -34684,58 +34530,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/medical/morgue)
-"biz" = (
-/obj/machinery/port_a_brig,
-/obj/window/crystal/reinforced/south,
-/obj/item/device/radio/intercom/brig{
-	broadcasting = 1;
-	dir = 4
-	},
-/turf/simulated/floor/red,
-/area/station/security/brig)
-"biA" = (
-/obj/window/crystal/reinforced/south,
-/turf/simulated/floor/red,
-/area/station/security/brig)
-"biB" = (
-/obj/machinery/door/window/southright{
-	name = "interior door-'Genpop'";
-	req_access_txt = "1"
-	},
-/obj/disposalpipe/segment/ejection,
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/red,
-/area/station/security/brig)
-"biC" = (
-/obj/window/crystal/reinforced/south,
-/obj/window/crystal/reinforced/south,
-/turf/simulated/floor/red,
-/area/station/security/brig)
-"biD" = (
-/obj/machinery/door_timer{
-	id = "genpop";
-	name = "door timer (GenPop)";
-	pixel_x = 24
-	},
-/obj/window/crystal/reinforced/south,
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 8;
-	name = "autoname  - SS13"
-	},
-/obj/storage/closet/wardrobe/orange,
-/obj/window/crystal/reinforced/south,
-/turf/simulated/floor/red,
-/area/station/security/brig)
-"biE" = (
-/obj/window/crystal/reinforced/south,
-/obj/window/crystal/reinforced/south,
-/turf/simulated/wall/auto/gannets,
-/area/station/security/brig)
 "biF" = (
 /obj/machinery/disposal/brig,
 /obj/window/crystal/reinforced/south,
@@ -44862,13 +44656,6 @@
 "bAD" = (
 /turf/simulated/floor/black,
 /area/listeningpost)
-"bAE" = (
-/obj/machinery/bot/medbot/no_camera,
-/obj/item/device/radio/intercom/security{
-	dir = 8
-	},
-/turf/simulated/floor/black,
-/area/listeningpost)
 "bAF" = (
 /obj/table/wood/auto,
 /obj/machinery/cell_charger,
@@ -44927,21 +44714,6 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
-	},
-/turf/simulated/floor/black,
-/area/listeningpost)
-"bAL" = (
-/obj/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/obj/machinery/power/data_terminal,
-/obj/machinery/guardbot_dock,
-/obj/machinery/bot/guardbot/bad{
-	on = 0
-	},
-/obj/item/device/radio/intercom/brig{
-	dir = 8
 	},
 /turf/simulated/floor/black,
 /area/listeningpost)
@@ -45436,11 +45208,87 @@
 /obj/machinery/vending/janitor,
 /turf/simulated/floor,
 /area/station/janitor/office)
+"eOr" = (
+/obj/table/reinforced/auto,
+/obj/window/crystal/reinforced/north,
+/obj/machinery/light_switch/west,
+/obj/machinery/defib_mount{
+	pixel_x = 2;
+	pixel_y = -4
+	},
+/obj/item/paper/Port_A_Brig,
+/obj/item/remote/porter/port_a_brig,
+/obj/window/crystal/reinforced/north,
+/turf/simulated/floor/red,
+/area/station/security/main)
+"fuV" = (
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
+/obj/decal/tile_edge/line/black{
+	dir = 5;
+	icon_state = "line2"
+	},
+/obj/machinery/vending/mechanics,
+/obj/item/device/radio/intercom/engineering,
+/turf/simulated/floor/caution/corner/misc{
+	dir = 10
+	},
+/area/station/engine/elect)
 "gly" = (
 /obj/cable,
 /obj/machinery/photocopier,
 /turf/simulated/floor,
 /area/station/crew_quarters/lounge/starboard)
+"gnW" = (
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/machinery/power/data_terminal,
+/obj/machinery/guardbot_dock,
+/obj/machinery/bot/guardbot/bad{
+	on = 0
+	},
+/obj/item/device/radio/intercom/brig{
+	dir = 8
+	},
+/turf/simulated/floor/black,
+/area/listeningpost)
+"hgW" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/window/crystal/reinforced/north,
+/obj/disposalpipe/segment/ejection{
+	dir = 4
+	},
+/obj/window/crystal/reinforced/north,
+/obj/landmark/gps_waypoint,
+/turf/simulated/floor/red,
+/area/station/security/main)
+"iTK" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
+/obj/item/storage/briefcase/toxins{
+	pixel_x = -5;
+	pixel_y = 16
+	},
+/turf/simulated/floor/carpet{
+	dir = 10;
+	icon_state = "fpurple2"
+	},
+/area/station/science/research_director{
+	workplace = 1
+	})
 "iWh" = (
 /obj/stool/chair/office/yellow{
 	dir = 4
@@ -45463,6 +45311,66 @@
 	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
+"jZT" = (
+/obj/window/crystal/reinforced/south,
+/turf/simulated/floor/red,
+/area/station/security/main)
+"kqP" = (
+/obj/window/crystal/reinforced/south,
+/obj/window/crystal/reinforced/south,
+/turf/simulated/wall/auto/gannets,
+/area/station/security/main)
+"kxw" = (
+/obj/machinery/door/window/northleft{
+	name = "interior door-'Solitary Cell Two'";
+	req_access_txt = "1"
+	},
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/obj/disposalpipe/junction{
+	dir = 4;
+	icon_state = "pipe-j2"
+	},
+/turf/simulated/floor/red,
+/area/station/security/main)
+"lwn" = (
+/obj/machinery/door/firedoor/border_only,
+/obj/machinery/door/airlock/gannets/glass/security/alt{
+	name = "glass airlock-'Brig'"
+	},
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/secscanner{
+	dir = 4;
+	icon_state = "scanner_off"
+	},
+/obj/disposalpipe/segment/ejection{
+	dir = 4
+	},
+/obj/decal/tile_edge/line/black{
+	dir = 5;
+	icon_state = "line1"
+	},
+/turf/simulated/floor/red,
+/area/station/security/main)
+"lJC" = (
+/obj/machinery/bot/medbot/no_camera,
+/obj/item/device/radio/intercom/security{
+	dir = 8
+	},
+/turf/simulated/floor/black,
+/area/listeningpost)
 "mMk" = (
 /obj/cable{
 	d1 = 4;
@@ -45476,6 +45384,31 @@
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
+"mOl" = (
+/obj/machinery/port_a_brig,
+/obj/window/crystal/reinforced/south,
+/obj/item/device/radio/intercom/brig{
+	broadcasting = 1;
+	dir = 4
+	},
+/turf/simulated/floor/red,
+/area/station/security/main)
+"nMC" = (
+/obj/machinery/door_timer{
+	id = "genpop";
+	name = "door timer (GenPop)";
+	pixel_x = 24
+	},
+/obj/window/crystal/reinforced/south,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 8;
+	name = "autoname  - SS13"
+	},
+/obj/storage/closet/wardrobe/orange,
+/obj/window/crystal/reinforced/south,
+/turf/simulated/floor/red,
+/area/station/security/main)
 "ouD" = (
 /obj/cable{
 	d1 = 1;
@@ -45485,6 +45418,22 @@
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor,
 /area/station/science/lab)
+"sRw" = (
+/obj/machinery/door/window/northright{
+	name = "interior door-'Solitary Cell One'";
+	req_access_txt = "1"
+	},
+/obj/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/obj/disposalpipe/segment/ejection{
+	dir = 1;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/floor/red,
+/area/station/security/main)
 "tzx" = (
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/carpet/arcade,
@@ -45501,12 +45450,67 @@
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay/lobby)
+"ulB" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/junction{
+	dir = 4
+	},
+/obj/machinery/door_timer{
+	id = "solitary_w";
+	name = "door timer (West Solitary)";
+	pixel_x = -8;
+	pixel_y = 24
+	},
+/obj/machinery/door_timer{
+	id = "solitary_e";
+	name = "door timer (East Solitary)";
+	pixel_x = 8;
+	pixel_y = 24
+	},
+/obj/window/crystal/reinforced/north,
+/obj/machinery/light{
+	dir = 1;
+	pixel_x = -1
+	},
+/obj/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/obj/window/crystal/reinforced/north,
+/obj/landmark/start{
+	name = "Security Assistant"
+	},
+/turf/simulated/floor/red,
+/area/station/security/main)
 "vMk" = (
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/specialroom/chapel{
 	dir = 4
 	},
 /area/station/chapel/sanctuary)
+"wiM" = (
+/obj/machinery/door/window/southright{
+	name = "interior door-'Genpop'";
+	req_access_txt = "1"
+	},
+/obj/disposalpipe/segment/ejection,
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/red,
+/area/station/security/main)
+"xTm" = (
+/obj/window/crystal/reinforced/south,
+/obj/window/crystal/reinforced/south,
+/turf/simulated/floor/red,
+/area/station/security/main)
 
 (1,1,1) = {"
 aaa
@@ -61184,8 +61188,8 @@ byX
 byX
 bzK
 bAx
-bAE
-bAL
+lJC
+gnW
 bAT
 bzK
 bzK
@@ -80147,8 +80151,8 @@ bbe
 bcw
 bcw
 bcw
-bhf
-bhf
+bcF
+bcF
 bcw
 bcw
 bcw
@@ -80449,8 +80453,8 @@ bbe
 bcx
 beo
 bfO
-bhg
-biz
+eOr
+mOl
 bhf
 blg
 bmo
@@ -80751,8 +80755,8 @@ bbe
 bcy
 bep
 bfP
-bhh
-biA
+sRw
+jZT
 bjS
 blh
 bmp
@@ -81053,8 +81057,8 @@ bbe
 bcw
 bcw
 bcw
-bhi
-biB
+ulB
+wiM
 bjT
 bep
 bmq
@@ -81355,8 +81359,8 @@ bbe
 bcz
 beq
 bfQ
-bhj
-biC
+kxw
+xTm
 bjU
 bli
 bmr
@@ -81657,8 +81661,8 @@ bbe
 bcA
 ber
 bfO
-bhk
-biD
+hgW
+nMC
 bjV
 blj
 bms
@@ -81959,8 +81963,8 @@ bbe
 bcw
 bcw
 bcw
-bhl
-biE
+lwn
+kqP
 bjW
 blk
 blj
@@ -97961,7 +97965,7 @@ aWb
 aXL
 aYY
 bau
-bbO
+fuV
 bdu
 bfe
 bgx
@@ -99465,7 +99469,7 @@ aKl
 aNZ
 aPF
 aRr
-aTa
+iTK
 aUs
 aWd
 aXO
