@@ -46,23 +46,44 @@
 	cost = PAY_TRADESMAN/3
 
 //Casual
-/datum/clothingbooth_item/hawaiian
-	name = "Hawaiian Dress"
-	path = /obj/item/clothing/under/misc/dress/hawaiian
+/datum/clothingbooth_item/casualjeanswb
+	name = "White Shirt and Jeans"
+	path = /obj/item/clothing/under/misc/casualjeans
 	slot = SLOT_W_UNIFORM
 	category = "Casual"
-	cost = PAY_DOCTORATE/3
+	cost = PAY_UNTRAINED/3
+
+/datum/clothingbooth_item/casualjeansrs
+	name = "Red Skull Shirt and Jeans"
+	path = /obj/item/clothing/under/misc/casualjeans/casualjeans2
+	slot = SLOT_W_UNIFORM
+	category = "Casual"
+	cost = PAY_UNTRAINED/3
+
+/datum/clothingbooth_item/casualjeansbs
+	name = "Black Skull Shirt and Jeans"
+	path = /obj/item/clothing/under/misc/casualjeans/casualjeans3
+	slot = SLOT_W_UNIFORM
+	category = "Casual"
+	cost = PAY_UNTRAINED/3
+
+/datum/clothingbooth_item/casualjeansyb
+	name = "Yellow Shirt and Jeans"
+	path = /obj/item/clothing/under/misc/casualjeans/casualjeans4
+	slot = SLOT_W_UNIFORM
+	category = "Casual"
+	cost = PAY_UNTRAINED/3
+
+/datum/clothingbooth_item/casualjeansbs2
+	name = "Skull Shirt and Acid Wash Jeans"
+	path = /obj/item/clothing/under/misc/casualjeans/casualjeans5
+	slot = SLOT_W_UNIFORM
+	category = "Casual"
+	cost = PAY_UNTRAINED/3
 
 /datum/clothingbooth_item/lshirt
 	name = "Long Sleeved Shirt"
 	path = /obj/item/clothing/suit/lshirt
-	slot = SLOT_WEAR_SUIT
-	category = "Casual"
-	cost = PAY_UNTRAINED/3
-
-/datum/clothingbooth_item/poncho
-	name = "Poncho"
-	path = /obj/item/clothing/suit/poncho
 	slot = SLOT_WEAR_SUIT
 	category = "Casual"
 	cost = PAY_UNTRAINED/3
@@ -103,65 +124,106 @@
 	category = "Casual"
 	cost = PAY_UNTRAINED/3
 
-/datum/clothingbooth_item/orangehoodie
-	name = "Orange Hoodie"
-	path = /obj/item/clothing/suit/hoodie
-	slot = SLOT_WEAR_SUIT
-	category = "Casual"
-	cost = PAY_UNTRAINED/3
-
-/datum/clothingbooth_item/bluehoodie
-	name = "Blue Hoodie"
-	path = /obj/item/clothing/suit/hoodie/blue
-	slot = SLOT_WEAR_SUIT
-	category = "Casual"
-	cost = PAY_UNTRAINED/3
-
-//Costumes
-/datum/clothingbooth_item/rando
-	name = "Skull Mask and Cloak"
-	path = /obj/item/clothing/suit/rando
-	slot = SLOT_WEAR_SUIT
-	category = "Costumes"
-	cost = PAY_TRADESMAN/2
-	hidden = 1
-
-/datum/clothingbooth_item/offbrandlabcoat
-	name = "Off-Brand Lab Coat"
-	path = /obj/item/clothing/suit/labcoatlong
-	slot = SLOT_WEAR_SUIT
-	category = "Costumes"
+//Dresses
+/datum/clothingbooth_item/hawaiian
+	name = "Hawaiian Dress"
+	path = /obj/item/clothing/under/misc/dress/hawaiian
+	slot = SLOT_W_UNIFORM
+	category = "Dresses"
 	cost = PAY_DOCTORATE/3
 
-/datum/clothingbooth_item/russsianmob
-	name = "Russian Mobster Suit"
-	path = /obj/item/clothing/under/misc/rusmob
+/datum/clothingbooth_item/tshirtdressblack
+	name = "Black Tshirt Dress"
+	path = /obj/item/clothing/under/misc/tshirtdress
 	slot = SLOT_W_UNIFORM
-	category = "Costumes"
+	category = "Dresses"
+	cost = PAY_UNTRAINED/3
+
+/datum/clothingbooth_item/tshirtdressblue
+	name = "Blue Tshirt Dress"
+	path = /obj/item/clothing/under/misc/tshirtdress/blue
+	slot = SLOT_W_UNIFORM
+	category = "Dresses"
+	cost = PAY_UNTRAINED/3
+
+/datum/clothingbooth_item/tshirtdresspink
+	name = "Pink Tshirt Dress"
+	path = /obj/item/clothing/under/misc/tshirtdress/pink
+	slot = SLOT_W_UNIFORM
+	category = "Dresses"
+	cost = PAY_UNTRAINED/3
+
+/datum/clothingbooth_item/tshirtdressgreen
+	name = "Green Tshirt Dress"
+	path = /obj/item/clothing/under/misc/tshirtdress/green
+	slot = SLOT_W_UNIFORM
+	category = "Dresses"
+	cost = PAY_UNTRAINED/3
+
+/datum/clothingbooth_item/tshirtdresswhite
+	name = "White Tshirt Dress"
+	path = /obj/item/clothing/under/misc/tshirtdress/white
+	slot = SLOT_W_UNIFORM
+	category = "Dresses"
+	cost = PAY_UNTRAINED/3
+
+/datum/clothingbooth_item/tshirtdressboltp
+	name = "Purple Bolt Tshirt Dress"
+	path = /obj/item/clothing/under/misc/tshirtdress/boltp
+	slot = SLOT_W_UNIFORM
+	category = "Dresses"
+	cost = PAY_UNTRAINED/3
+
+/datum/clothingbooth_item/tshirtdressboltb
+	name = "Bolt Tshirt Dress"
+	path = /obj/item/clothing/under/misc/tshirtdress/boltb
+	slot = SLOT_W_UNIFORM
+	category = "Dresses"
+	cost = PAY_UNTRAINED/3
+
+/datum/clothingbooth_item/tshirtdressleoy
+	name = "Leopard Print Tshirt Dress"
+	path = /obj/item/clothing/under/misc/tshirtdress/leoy
+	slot = SLOT_W_UNIFORM
+	category = "Dresses"
+	cost = PAY_UNTRAINED/3
+
+/datum/clothingbooth_item/tshirtdressleop
+	name = "Pink Leopard Tshirt Dress"
+	path = /obj/item/clothing/under/misc/tshirtdress/leop
+	slot = SLOT_W_UNIFORM
+	category = "Dresses"
+	cost = PAY_UNTRAINED/3
+
+/datum/clothingbooth_item/skirtdressrb
+	name = "Red and Black Skirt Dress"
+	path = /obj/item/clothing/under/misc/skirtdress
+	slot = SLOT_W_UNIFORM
+	category = "Dresses"
 	cost = PAY_TRADESMAN/3
 
-/datum/clothingbooth_item/columbianmob
-	name = "Columbian Mobster Suit"
-	path = /obj/item/clothing/under/misc/colmob
+/datum/clothingbooth_item/skirtdresspb
+	name = "Purple and Black Skirt Dress"
+	path = /obj/item/clothing/under/misc/skirtdress/sktdresspurple
 	slot = SLOT_W_UNIFORM
-	category = "Costumes"
+	category = "Dresses"
 	cost = PAY_TRADESMAN/3
 
-/datum/clothingbooth_item/mobilesuit
-	name = "Mobile Robot Suit"
-	path = /obj/item/clothing/under/gimmick/mobile_suit
+/datum/clothingbooth_item/skirtdressbb
+	name = "Blue and Black Skirt Dress"
+	path = /obj/item/clothing/under/misc/skirtdress/sktdressblue
 	slot = SLOT_W_UNIFORM
-	category = "Costumes"
-	cost = PAY_EXECUTIVE
+	category = "Dresses"
+	cost = PAY_TRADESMAN/3
 
-/datum/clothingbooth_item/mobilesuithelmet
-	name = "Mobile Robot Helmet"
-	path = /obj/item/clothing/head/mobile_suit
-	slot = SLOT_HEAD
-	category = "Costumes"
-	cost = PAY_EXECUTIVE/2
+/datum/clothingbooth_item/skirtdressgb
+	name = "Gold and Black Skirt Dress"
+	path = /obj/item/clothing/under/misc/skirtdress/sktdressgold
+	slot = SLOT_W_UNIFORM
+	category = "Dresses"
+	cost = PAY_TRADESMAN/3
 
-//Formal
+//Formalwear
 
 /datum/clothingbooth_item/shirtandpantsblack
 	name = "Shirt and Black Pants"
@@ -313,7 +375,15 @@
 	cost = PAY_IMPORTANT
 	hidden = 1
 
-//Jackets
+/datum/clothingbooth_item/dressb
+	name = "Black Sun Dress"
+	path = /obj/item/clothing/suit/dressb
+	slot = SLOT_WEAR_SUIT
+	category = "Formal"
+	amount = 2
+	cost = PAY_DOCTORATE/3
+
+//Outerwear
 
 /datum/clothingbooth_item/cerulean
 	name = "Cerulean Jacket"
@@ -370,6 +440,27 @@
 	slot = SLOT_WEAR_SUIT
 	category = "Jackets"
 	cost = PAY_TRADESMAN/3
+
+/datum/clothingbooth_item/orangehoodie
+	name = "Orange Hoodie"
+	path = /obj/item/clothing/suit/hoodie
+	slot = SLOT_WEAR_SUIT
+	category = "Jackets"
+	cost = PAY_UNTRAINED/3
+
+/datum/clothingbooth_item/bluehoodie
+	name = "Blue Hoodie"
+	path = /obj/item/clothing/suit/hoodie/blue
+	slot = SLOT_WEAR_SUIT
+	category = "Jackets"
+	cost = PAY_UNTRAINED/3
+
+/datum/clothingbooth_item/poncho
+	name = "Poncho"
+	path = /obj/item/clothing/suit/poncho
+	slot = SLOT_WEAR_SUIT
+	category = "Casual"
+	cost = PAY_UNTRAINED/3
 
 /datum/clothingbooth_item/loosejacket
 	name = "Loose Jacket"
@@ -430,6 +521,34 @@
 	cost = PAY_DOCTORATE/3
 
 //Sci-Fi
+/datum/clothingbooth_item/sfjumppb
+	name = "Black and Purple Sci-Fi Jumpsuit"
+	path = /obj/item/clothing/under/misc/sfjumpsuit
+	slot = SLOT_W_UNIFORM
+	category = "Sci-Fi"
+	cost = PAY_TRADESMAN/3
+
+/datum/clothingbooth_item/sfjumpbr
+	name = "Black and Red Sci-Fi Jumpsuit"
+	path = /obj/item/clothing/under/misc/sfjumpsuit/sfjumpbr
+	slot = SLOT_W_UNIFORM
+	category = "Sci-Fi"
+	cost = PAY_TRADESMAN/3
+
+/datum/clothingbooth_item/sfjumppnk
+	name = "Pink and Blue Sci-Fi Jumpsuit"
+	path = /obj/item/clothing/under/misc/sfjumpsuit/sfjumppnk
+	slot = SLOT_W_UNIFORM
+	category = "Sci-Fi"
+	cost = PAY_TRADESMAN/3
+
+/datum/clothingbooth_item/sfjumpbee
+	name = "Bee Sci-Fi Jumpsuit"
+	path = /obj/item/clothing/under/misc/sfjumpsuit/sfjumpbee
+	slot = SLOT_W_UNIFORM
+	category = "Sci-Fi"
+	cost = PAY_TRADESMAN/3
+
 /datum/clothingbooth_item/cwhat
 	name = "Moebius-Brand Headwear"
 	path = /obj/item/clothing/head/cwhat
@@ -567,18 +686,6 @@
 	category = "Summer"
 	cost = PAY_TRADESMAN/3
 
-
-
-// stuff from clothing vendor
-
-/datum/clothingbooth_item/dressb
-	name = "Black Sun Dress"
-	path = /obj/item/clothing/suit/dressb
-	slot = SLOT_WEAR_SUIT
-	category = "Formal"
-	amount = 2
-	cost = PAY_DOCTORATE/3
-
 //Headwear
 /datum/clothingbooth_item/catears_white
 	name = "White Cat Ears"
@@ -667,7 +774,6 @@
 	category = "Headwear"
 	cost = PAY_TRADESMAN/5
 
-
 /datum/clothingbooth_item/brownfedora
 	name = "Brown Fedora"
 	path = /obj/item/clothing/head/det_hat
@@ -707,12 +813,58 @@
 	name = "Green Visor"
 	path = /obj/item/clothing/head/pokervisor
 	slot = SLOT_HEAD
-	category = "Accessories"
+	category = "Headwear"
 	cost = PAY_TRADESMAN/5
 
 /datum/clothingbooth_item/antlers
 	name = "Antlers"
 	path = /obj/item/clothing/head/antlers
 	slot = SLOT_HEAD
+	category = "Headwear"
 	amount = 3
 	cost = PAY_TRADESMAN/2
+
+
+//Costumes
+/datum/clothingbooth_item/rando
+	name = "Skull Mask and Cloak"
+	path = /obj/item/clothing/suit/rando
+	slot = SLOT_WEAR_SUIT
+	category = "Costumes"
+	cost = PAY_TRADESMAN/2
+	hidden = 1
+
+/datum/clothingbooth_item/offbrandlabcoat
+	name = "Off-Brand Lab Coat"
+	path = /obj/item/clothing/suit/labcoatlong
+	slot = SLOT_WEAR_SUIT
+	category = "Costumes"
+	cost = PAY_DOCTORATE/3
+
+/datum/clothingbooth_item/russsianmob
+	name = "Russian Mobster Suit"
+	path = /obj/item/clothing/under/misc/rusmob
+	slot = SLOT_W_UNIFORM
+	category = "Costumes"
+	cost = PAY_TRADESMAN/3
+
+/datum/clothingbooth_item/columbianmob
+	name = "Columbian Mobster Suit"
+	path = /obj/item/clothing/under/misc/colmob
+	slot = SLOT_W_UNIFORM
+	category = "Costumes"
+	cost = PAY_TRADESMAN/3
+
+/datum/clothingbooth_item/mobilesuit
+	name = "Mobile Robot Suit"
+	path = /obj/item/clothing/under/gimmick/mobile_suit
+	slot = SLOT_W_UNIFORM
+	category = "Costumes"
+	cost = PAY_EXECUTIVE
+
+/datum/clothingbooth_item/mobilesuithelmet
+	name = "Mobile Robot Helmet"
+	path = /obj/item/clothing/head/mobile_suit
+	slot = SLOT_HEAD
+	category = "Costumes"
+	cost = PAY_EXECUTIVE/2
