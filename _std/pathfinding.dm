@@ -27,7 +27,6 @@
 
 
 //#define DEBUG_ASTAR
-#define dist_heuristic(start, goal) ((!start || !goal) ? null : GET_MANHATTAN_DIST(start, goal))
 
 /proc/cirrAstar(turf/start, turf/goal, min_dist=0, adjacent, maxtraverse = 30, adjacent_param = null, exclude = null)
 	#ifdef DEBUG_ASTAR
@@ -41,12 +40,12 @@
 	var/list/gScore = list()
 	var/list/fScore = list()
 	gScore[start] = 0
-	fScore[start] = dist_heuristic(start, goal)
+	fScore[start] = GET_MANHATTAN_DIST(start, goal)
 	var/traverse = 0
 
 	while(length(openSet))
-		var/current = pickLowest(openSet, fScore)
-		if(distance(current, goal) <= min_dist)
+		var/turf/current = pickLowest(openSet, fScore)
+		if(GET_MANHATTAN_DIST(current, goal) <= min_dist)
 			return reconstructPath(cameFrom, current)
 
 		openSet -= current
@@ -55,7 +54,7 @@
 		for(var/turf/neighbor as() in neighbors)
 			if(neighbor in closedSet)
 				continue // already checked this one
-			var/tentativeGScore = gScore[current] + distance(current, neighbor)
+			var/tentativeGScore = gScore[current] + GET_MANHATTAN_DIST(current, neighbor)
 			if(!(neighbor in openSet))
 				openSet += neighbor
 			else if(tentativeGScore >= (gScore[neighbor] || 1.#INF))
@@ -63,22 +62,13 @@
 
 			cameFrom[neighbor] = current
 			gScore[neighbor] = tentativeGScore
-			fScore[neighbor] = gScore[neighbor] + dist_heuristic(neighbor, goal)
+			fScore[neighbor] = gScore[neighbor] + GET_MANHATTAN_DIST(neighbor, goal)
 		traverse += 1
 		if(traverse > maxtraverse)
 			return null // it's taking too long, abandon
 		LAGCHECK(LAG_LOW)
 	return null // if we reach this part, there's no more nodes left to explore
 
-#undef dist_heuristic
-
-
-/proc/distance(turf/start, turf/goal) //get_dist??
-	if(!start || !goal)
-		return null
-	var/dx = goal.x - start.x
-	var/dy = goal.y - start.y
-	return sqrt(dx*dx + dy*dy)
 
 /proc/pickLowest(list/options, list/values)
 	if(!length(options))
