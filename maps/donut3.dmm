@@ -315,7 +315,7 @@
 	name = "Magnet Area Boundary"
 	},
 /obj/grille/catwalk{
-	dir = 9
+	dir = 10
 	},
 /turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
@@ -26374,7 +26374,7 @@
 	name = "Magnet Area Boundary"
 	},
 /obj/grille/catwalk{
-	dir = 9
+	dir = 10
 	},
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 8
@@ -56898,7 +56898,7 @@
 /area/station/science/lab)
 "qNy" = (
 /obj/grille/catwalk{
-	dir = 6
+	icon_state = "catwalk_cross"
 	},
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 1;
