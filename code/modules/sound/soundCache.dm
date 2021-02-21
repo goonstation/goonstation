@@ -317,6 +317,7 @@ var/global/list/soundCache = list(
  	"sound/effects/valve_creak.ogg" = 'sound/effects/valve_creak.ogg',\
  	"sound/effects/warp1.ogg" = 'sound/effects/warp1.ogg',\
  	"sound/effects/warp2.ogg" = 'sound/effects/warp2.ogg',\
+	"sound/effects/welder_ignite.ogg" = 'sound/effects/welder_ignite.ogg',\
  	"sound/effects/zzzt.ogg" = 'sound/effects/zzzt.ogg',\
  	"sound/impact_sounds/Blade_Small.ogg" = 'sound/impact_sounds/Blade_Small.ogg',\
  	"sound/impact_sounds/Blade_Small_Bloody.ogg" = 'sound/impact_sounds/Blade_Small_Bloody.ogg',\
