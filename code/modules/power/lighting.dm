@@ -128,12 +128,17 @@
 			light.dispose()
 		..()
 
-	proc/autoposition()
+	proc/autoposition(setdir = null)
 		//auto position these lights so i don't have to mess with dirs in the map editor that's annoying!!!
 		if (nostick == 0) // unless nostick is set to true in which case... dont
 			SPAWN_DBG(1 DECI SECOND) //wait for the wingrille spawners to complete when map is loading (ugly i am sorry)
 				var/turf/T = null
-				for (var/dir in cardinal)
+				var/list/directions = null
+				if (setdir)
+					directions = list(setdir)
+				else
+					directions = cardinal
+				for (var/dir in directions)
 					T = get_step(src,dir)
 					if (istype(T,/turf/simulated/wall) || (locate(/obj/wingrille_spawn) in T) || (locate(/obj/window) in T))
 						var/is_jen_wall = 0 // jen walls' ceilings are narrower, so let's move the lights a bit further inward!

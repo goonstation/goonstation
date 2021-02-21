@@ -102,8 +102,8 @@
 	get_desc()
 		. = "It is currently set to dispense [setting] lamps."
 
-	afterattack(atom/A, mob/user as mob)
-		if (!istype(A, /turf/simulated) || !istype(A, /obj/window))
+	afterattack(atom/A, mob/user as mob, reach, params)
+		if (!istype(A, /turf/simulated) && !istype(A, /obj/window))
 			..()
 			return
 
@@ -114,16 +114,21 @@
 				var/obj/machinery/light/newfitting = new /obj/machinery/light/small/floor(A)
 				newfitting.attackby(src, user) //plop in an appropriate colour lamp
 
-		else if (istype(A, /turf/simulated/wall))
-			A = get_adjacent_floor(A, user)
-			if (!A)
+		else if (istype(A, /turf/simulated/wall) || istype(A, /obj/window))
+			if (!(islist(params) && params["icon-y"] && params["icon-x"]))
 				return
-			boutput(user, "<span class='notice'>Installing a wall [dispensing_fitting ? "bulb" : "tube"]...</span>")
+			//var/list/P = params2list(params)
+			var/atom/B = get_adjacent_floor(A, user, text2num(params["icon-x"]), text2num(params["icon-y"]))
+			if (!istype(B, /turf/simulated/floor) && !istype(B, /turf/space))
+				return
+			if (locate(/obj/window) in B)
+				return
+			boutput(user, "<span class='notice'>Installing a wall [dispensing_fitting == /obj/machinery/light/small ? "bulb" : "tube"]...</span>")
 			playsound(src, "sound/machines/click.ogg", 50, 1)
 			if(do_after(user, 3 SECONDS))
-				var/obj/machinery/light/newfitting = new dispensing_fitting(A)
-				newfitting.nostick = 0
-				newfitting.autoposition() //Imagine if tube fittings had sticky variants, we wouldn't need this
+				var/obj/machinery/light/newfitting = new dispensing_fitting(B)
+				newfitting.nostick = 0 //Imagine if tube fittings had sticky variants, we wouldn't need this
+				newfitting.autoposition(get_dir(B,A)) //Also this might
 				newfitting.attackby(src, user) //plop in an appropriate colour lamp
 
 /obj/item/lamp_manufacturer/attackby(obj/item/W, mob/user)
@@ -162,9 +167,46 @@ For example, if we attack a south end wall from the east, we shouldn't be able t
 
 */
 
-/obj/item/lamp_manufacturer/proc/get_adjacent_floor(/turf/simulated/wall/W, mob/user)
+/obj/item/lamp_manufacturer/proc/get_adjacent_floor(atom/W, mob/user, px, py)
 	var/dir_temp = get_dir(user, W)
-	switch
+	//These two expressions divide the 32*32 into
+	var/diag1 = (px > py) //up-left vs down-right
+	var/diag2 = ((px + py) > 32) //up-right vs down-left
+	switch(dir_temp)
+		if (NORTH)
+			return get_turf(get_step(W,SOUTH))
+		if (NORTHEAST)
+			if (diag1)
+				return get_turf(get_step(W,SOUTH))
+			return get_turf(get_step(W,WEST))
+		if (EAST)
+			return get_turf(get_step(W,WEST))
+		if (SOUTHEAST)
+			if (diag2)
+				return get_turf(get_step(W,NORTH))
+			return get_turf(get_step(W,WEST))
+		if (SOUTH)
+			return get_turf(get_step(W,NORTH))
+		if (SOUTHWEST)
+			if (diag1)
+				return get_turf(get_step(W,EAST))
+			return get_turf(get_step(W,NORTH))
+		if (WEST)
+			return get_turf(get_step(W,EAST))
+		if (NORTHWEST)
+			if (diag2)
+				return get_turf(get_step(W,EAST))
+			return get_turf(get_step(W,SOUTH))
+	/*
+	if (diag1 && diag2)
+		return get_turf(get_step(W,EAST))
+	if (diag1 && !diag2)
+		return get_turf(get_step(W,SOUTH))
+	if (!diag1 && diag2)
+		return get_turf(get_step(W,NORTH))
+	if (!diag1 && !diag2)
+		return get_turf(get_step(W,WEST))
+	*/
 
 
 /obj/item/robot_chemaster
