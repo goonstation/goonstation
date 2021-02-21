@@ -1222,6 +1222,8 @@
 		if(O.mind && (ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution)))
 			if ((O.mind in ticker.mode:revolutionaries) || (O.mind in ticker.mode:head_revolutionaries))
 				ticker.mode:update_all_rev_icons() //So the icon actually appears
+		if(src.material)
+			O.setMaterial(src.material)
 		O.update_appearance()
 
 		qdel(src)
