@@ -12,6 +12,51 @@
 //I have opted for a different path for each object due to the fact that carpet icons
 //are split across multiple icon states in a way that makes them irritating to expand
 
+//hi im putting the root /carpet stuff here ~ f191
+/turf/simulated/floor/carpet
+	name = "carpet"
+	icon = 'icons/turf/carpet.dmi'
+	icon_state = "red1"
+	mat_appearances_to_ignore = list("cloth")
+	mat_changename = 0
+	step_material = "step_carpet"
+	step_priority = STEP_PRIORITY_MED
+
+	New()
+		..()
+		setMaterial(getMaterial("cloth"))
+
+	break_tile()
+		..()
+		icon = 'icons/turf/floors.dmi'
+
+	burn_tile()
+		..()
+		icon = 'icons/turf/floors.dmi'
+
+/turf/simulated/floor/carpet/grime
+	name = "cheap carpet"
+	icon = 'icons/turf/floors.dmi'
+	icon_state = "grimy"
+
+/turf/simulated/floor/carpet/arcade
+	icon = 'icons/turf/floors.dmi'
+	icon_state = "arcade_carpet"
+
+/turf/simulated/floor/carpet/arcade/half
+	icon_state = "arcade_carpet_half"
+
+/turf/simulated/floor/carpet/arcade/blank
+	icon_state = "arcade_carpet_blank"
+
+/turf/simulated/floor/carpet/office
+	icon = 'icons/turf/floors.dmi'
+	icon_state = "office_carpet"
+
+/turf/simulated/floor/carpet/office/other
+	icon = 'icons/turf/floors.dmi'
+	icon_state = "office_carpet2"
+//
 /turf/simulated/floor/carpet/red
 	icon_state = "red1"
 /turf/simulated/floor/carpet/blue
