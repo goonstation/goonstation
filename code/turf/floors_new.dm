@@ -45,6 +45,12 @@
 DEFINE_FLOORS_SIMMED_UNSIMMED(pattern,
 	icon_state = "")
 
+DEFINE_FLOORS_SIMMED_UNSIMMED(pattern/checker/
+	icon_state = "")
+
+DEFINE_FLOORS_SIMMED_UNSIMMED(pattern/checker/whiteblue,
+	icon_state = "bluechecker")
+
 ////////////	Decal pattern floors
 
 DEFINE_FLOORS_SIMMED_UNSIMMED(decal,
