@@ -55,6 +55,10 @@ DEFINE_FLOORS_SIMMED_UNSIMMED(decal,
 DEFINE_FLOORS_SIMMED_UNSIMMED(full,
 	icon_state = "")
 
+DEFINE_FLOORS_SIMMED_UNSIMMED(full/black, //Okay so 'dark' is darker than 'black', So 'dark' will be named black and 'black' named grey.
+	icon_state = "dark")
+
+
 ////////////	Random misc floors
 
 DEFINE_FLOORS_SIMMED_UNSIMMED(misc,
@@ -75,3 +79,9 @@ DEFINE_FLOORS_SIMMED_UNSIMMED(side/arrival,
 
 DEFINE_FLOORS_SIMMED_UNSIMMED(side/arrival/corner,
 	icon_state = "arrivalcorner")
+
+DEFINE_FLOORS_SIMMED_UNSIMMED(side/black,
+	icon_state = "greyblack")
+
+DEFINE_FLOORS_SIMMED_UNSIMMED(side/black/corner,
+	icon_state = "greyblackcorner")
