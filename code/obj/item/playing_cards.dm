@@ -46,27 +46,27 @@
                 update_card_actions()
             user.showContextActions(cardActions, src)
         else if(istype(W,/obj/item/card_group)) //when a card is hit by a card group, if it's a hand, vacuum up the card, otherwise it's a deck and the card gets sat on.
-            var/obj/item/card_group/g = W
-            if(g.card_style != card_style)
+            var/obj/item/card_group/group = W
+            if(group.card_style != card_style)
                 user.show_text("These card types don't match, silly!", "red")
                 return
             if(src.loc == user)
                 user.u_equip(src)
-                g.add_to_group(src)
-                if(g.is_hand)
-                    user.visible_message("<b>[user.name]</b> adds a card to [his_or_her(user)] [g.name].")
+                group.add_to_group(src)
+                if(group.is_hand)
+                    user.visible_message("<b>[user.name]</b> adds a card to [his_or_her(user)] [group.name].")
                 else
-                    user.visible_message("<b>[user.name]</b> plops the [g.name] on top of a card.")
+                    user.visible_message("<b>[user.name]</b> plops the [group.name] on top of a card.")
             else
-                if(g.is_hand)
-                    g.add_to_group(src)
-                    user.visible_message("<b>[user.name]</b> adds a card to [his_or_her(user)] [g.name].")
+                if(group.is_hand)
+                    group.add_to_group(src)
+                    user.visible_message("<b>[user.name]</b> adds a card to [his_or_her(user)] [group.name].")
                 else
-                    user.u_equip(g)
-                    g.set_loc(get_turf(src))
-                    g.add_to_group(src)
-                    user.visible_message("<b>[user.name]</b> plops the [g.name] on top of the [src.name].")
-            g.update_group_sprite()
+                    user.u_equip(group)
+                    group.set_loc(get_turf(src))
+                    group.add_to_group(src)
+                    user.visible_message("<b>[user.name]</b> plops the [group.name] on top of the [src.name].")
+            group.update_group_sprite()
         else
             ..()
 
@@ -171,26 +171,26 @@
         if(card.card_style != card_style)
             user.show_text("These card types don't match, silly!", "red")
             return
-        var/obj/item/card_group/g = new /obj/item/card_group
+        var/obj/item/card_group/group = new /obj/item/card_group
         if(is_hand)
-            g.update_group_information(g,src,TRUE)
+            group.update_group_information(group,src,TRUE)
         else
-            g.update_group_information(g,src,FALSE)
+            group.update_group_information(group,src,FALSE)
         user.u_equip(card)
-        g.add_to_group(card)
+        group.add_to_group(card)
         if(is_hand)
-            g.is_hand = TRUE
+            group.is_hand = TRUE
             user.visible_message("<b>[user.name]</b> creates a hand of cards.")
         else
             user.visible_message("<b>[user.name]</b> creates a deck of cards.")
         if(loc == user)
             user.u_equip(src)
-            g.add_to_group(src,1)
-            user.put_in_hand_or_drop(g)
+            group.add_to_group(src,1)
+            user.put_in_hand_or_drop(group)
         else
-            g.set_loc(get_turf(src.loc))
-            g.add_to_group(src,1)
-        g.update_group_sprite()
+            group.set_loc(get_turf(src.loc))
+            group.add_to_group(src,1)
+        group.update_group_sprite()
         qdel(src)
 
     proc/solitaire(var/mob/user) //handles solitaire stacking
@@ -214,7 +214,7 @@
         var/icon_state_num
 
         if(istype(chosen_card_type,/datum/playing_card/griffening/creature/mob/cyborg))
-            if(borgos.len)
+            if(length(borgos))
                 chosen_mob = pick(borgos) //DEV - condense if possible
             if(chosen_mob)
                 name = chosen_mob.name
@@ -223,7 +223,7 @@
             icon_state_num = rand(1,NUMBER_BORG)
             icon_state = "stg-borg-[icon_state_num]"
         else if (istype(chosen_card_type,/datum/playing_card/griffening/creature/mob/ai))
-            if(ai.len)
+            if(length(ai))
                 chosen_mob = pick(ai)
             if(chosen_mob)
                 name = chosen_mob.name
@@ -233,7 +233,7 @@
             icon_state_num = rand(1,NUMBER_AI)
             icon_state = "stg-ai-[icon_state_num]"
         else
-            if(humans.len)
+            if(length(humans))
                 chosen_mob = pick(humans)
             if(chosen_mob)
                 name = "[chosen_card_type.card_name] [chosen_mob.real_name]"
@@ -395,12 +395,12 @@
                 user.showContextActions(cardActions, src)
             update_group_sprite()
         else if(istype(W,/obj/item/card_group)) //adding a hand to a deck is similar to adding a card to a deck, whereas adding a deck plops it on top
-            var/obj/item/card_group/g = W
-            if(g.is_hand && !is_hand)
+            var/obj/item/card_group/group = W
+            if(group.is_hand && !is_hand)
                 update_card_actions("group")
                 user.showContextActions(cardActions, src)
             else
-                top_or_bottom(user,g,"top",1)
+                top_or_bottom(user,group,"top",1)
         else
             ..()
 
@@ -509,21 +509,21 @@
         card.card_style = card_style
         card.card_name = card_name
 
-    proc/update_group_information(var/obj/item/card_group/g,var/obj/item/from,var/hand) //the inverse of update_card_information for creating card groups from cards
+    proc/update_group_information(var/obj/item/card_group/group,var/obj/item/from,var/hand) //the inverse of update_card_information for creating card groups from cards
         if(hand == TRUE)
-            g.is_hand = TRUE
+            group.is_hand = TRUE
         else
-            g.is_hand = FALSE
+            group.is_hand = FALSE
         if(istype(from,/obj/item/playing_card))
             var/obj/item/playing_card/F = from
-            g.total_cards = F.total_cards
-            g.card_style = F.card_style
-            g.card_name = F.card_name
+            group.total_cards = F.total_cards
+            group.card_style = F.card_style
+            group.card_name = F.card_name
         else if(istype(from,/obj/item/card_group))
             var/obj/item/card_group/F = from
-            g.total_cards = F.total_cards
-            g.card_style = F.card_style
-            g.card_name = F.card_name
+            group.total_cards = F.total_cards
+            group.card_style = F.card_style
+            group.card_name = F.card_name
 
     proc/update_card_actions(var/hitby) //generates card actions based on which interaction is causing the list to be updated
         cardActions = list()
@@ -589,7 +589,7 @@
             user.visible_message("<b>[user.name]</b> draws [card_number] cards from the [src.name].")
             if(length(stored_cards) == 1)
                 handle_draw_last_card(user)
-            else if(length(stored_cards) == 0)
+            else if(!length(stored_cards))
                 qdel(src)
             else
                 update_group_sprite("user.name")
@@ -630,21 +630,21 @@
     proc/top_or_bottom(var/mob/user,var/W,var/position,var/no_message) //the context action proc that handles adding cards to the top or bottom of a group
         var/successful
         if(istype(W,/obj/item/card_group))
-            var/obj/item/card_group/G = W
-            if(G.card_style == card_style)
+            var/obj/item/card_group/group = W
+            if(group.card_style == card_style)
                 if(position == "top")
-                    var/card_pos = length(G.stored_cards)
-                    for(var/i in 1 to length(G.stored_cards))
-                        var/obj/item/card = G.stored_cards[card_pos]
+                    var/card_pos = length(group.stored_cards)
+                    for(var/i in 1 to length(group.stored_cards))
+                        var/obj/item/card = group.stored_cards[card_pos]
                         add_to_group(card,1)
                         card_pos--
                     successful = "top"
                 else
-                    for(var/obj/item/card in G.stored_cards)
+                    for(var/obj/item/card in group.stored_cards)
                         add_to_group(card)
                     successful = "the bottom"
-                user.u_equip(G)
-                qdel(G)
+                user.u_equip(group)
+                qdel(group)
                 if(is_hand && (length(stored_cards) > max_hand_size))
                     is_hand = FALSE
                 update_group_sprite()
@@ -1131,7 +1131,7 @@
             ..()
 
 /datum/action/bar/private/stg_open //more sadism! yay!
-    duration = 100
+    duration = 10 SECONDS
     interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
     var/mob/user
     var/obj/item/box
@@ -1161,7 +1161,7 @@
         box.icon_state = "stg-box-open"
 
 /datum/action/bar/private/stg_tear
-    duration = 100
+    duration = 10 SECONDS
     interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
     var/mob/user
     var/obj/item/box
@@ -1196,7 +1196,7 @@
         decal.color = pick("#000000","#6f0a0a","#a0621b")
 
 /datum/action/bar/private/stg_pry
-    duration = 150
+    duration = 15 SECONDS
     interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
     var/mob/user
     var/obj/item/stg_box/box
