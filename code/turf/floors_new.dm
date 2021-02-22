@@ -73,5 +73,5 @@ DEFINE_FLOORS_SIMMED_UNSIMMED(side,
 DEFINE_FLOORS_SIMMED_UNSIMMED(side/arrival,
 	icon_state = "arrival")
 
-DEFINE_FLOORS_SIMMED_UNSIMMED(side/corner,
+DEFINE_FLOORS_SIMMED_UNSIMMED(side/arrival/corner,
 	icon_state = "arrivalcorner")
