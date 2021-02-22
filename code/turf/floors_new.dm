@@ -1,18 +1,13 @@
 /*
-	here i will organise the floors
-	the current organisation, while it works well enough for coders, yes, is fucking
-	horribly, horrendously, painful to use. to the point where I- a MAPPER am fucking organising it.
-	now, WHY change it this much? because its easier to add organise this way
-	- f191
+	Don't forget to use the generate_turf macro on any new turfs you add!
 
-	simulated/floor		setting the variables for other floors
-	floor/checker			this was painful. never again.
-	floor/decal				jesus FUCKING CHRIST why why WHY are these turfs and not decals?? why were these not organised??
-	floor/full				these should have an actual path rather then just /floor/black, floor/blue ect
-	floor/misc				this will contain random shit that was just randomly added as a turf
-	floor/setpeice		please. please god seperate adventure shit from actual shit adjjkjjkjdi
-	floor/side				having these sometimes be children of random turfs was painful. no, just no
-		this is all alphabetical because its easier to organise to use in a mapeditor . . .
+	simulated/floor		The inital floor turf, required to set variables for the others
+	floor/pattern			Pattern floors, like the checkers you see around the station or in the chapel
+	floor/decal				Decal pattern floors, ie the big sign outside manta's security
+	floor/full				Fully-Coloured floors, think stuff like the white tiles in medical bag
+	floor/misc				Random misc floors, such as the blob's floor
+	floor/setpeice		Setpeice & azone floors. Cause we have some of those simulated?
+	floor/side				The side turf floors, think what you see outside arrivals
 */
 ////////////	Inital floor turf
 
@@ -45,33 +40,38 @@
 				src.set_dir(pdir)
 			qdel(P)
 
-////////////	Checker pattern floors
+////////////	Pattern floors
 
-/turf/simulated/floor/checker
-	name = "Checkered Floors"
+/turf/simulated/floor/pattern
+	name = "Pattern Floors"
+	icon_state = ""
 
-//////////// Decal pattern floors (ie the big sign outside manta's security)
+////////////	Decal pattern floors
 
 /turf/simulated/floor/decal
 	name = "Decal Floors"
+	icon_state = ""
 
-////////////	Fully-Coloured Floors (Think stuff like the white tiles in medical bay)
+////////////	Fully-Coloured floors
 
 /turf/simulated/floor/full
 	name = "Fully-Coloured Floors"
+	icon_state = ""
 
-////////////	Random misc floors, like the blob's floor
+////////////	Random misc floors
 
 /turf/simulated/floor/misc
 	name = "Miscellaneous Floors"
+	icon_state = ""
 
-
-////////////	Setpeice & azone floors. Cause we have some of those simulated????
+////////////	Setpeice & azone floors
 
 /turf/simulated/floor/setpeice
 	name = "Setpeice/Azone floors"
+	icon_state = ""
 
-////////////	the side turf files, thin what you see outside arrivals
+////////////	The side turf floors
 
 /turf/simulated/floor/side
 	name = "Floor edges"
+	icon_state = ""
