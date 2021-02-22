@@ -2367,7 +2367,7 @@ var/global/list/cargopads = list()
 				return
 		else return
 
-/turf/simulated/floor/ancient
+/turf/simulated/floor/setpeice/ancient
 	name = "strange surface"
 	desc = "A strange jet black metal floor. There are odd lines carved into it."
 	icon_state = "ancient"
