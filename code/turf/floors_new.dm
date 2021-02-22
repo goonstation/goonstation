@@ -124,6 +124,7 @@ DEFINE_FLOORS_SIMMED_UNSIMMED(side/bluegreen,
 	icon_state = "blugreencorner")
 
 DEFINE_FLOORS_SIMMED_UNSIMMED(side/bluegreen/corner,
+	icon_state = "blugreencorner")
 
 ////////////////////////
 ////////////////////////		~~~~~~~AAAAAAAAAAAAAAAAAAAA
