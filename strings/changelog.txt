@@ -1,5 +1,9 @@
 
 (t)sun feb 21 21
+(u)Luxizzle
+(p)3794
+(e)|
+(+)Weapon vendor now shows the cost of a loadout option.
 (u)virvatuli
 (p)3787
 (e)|
