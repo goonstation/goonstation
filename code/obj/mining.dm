@@ -2367,7 +2367,7 @@ var/global/list/cargopads = list()
 				return
 		else return
 
-/turf/simulated/floor/setpeice/ancient
+/turf/simulated/floor/setpeices/ancient
 	name = "strange surface"
 	desc = "A strange jet black metal floor. There are odd lines carved into it."
 	icon_state = "ancient"
@@ -2381,7 +2381,7 @@ var/global/list/cargopads = list()
 	ex_act(severity)
 		return
 
-/turf/unsimulated/floor/ancient
+/turf/unsimulated/floor/setpeices/ancient
 	name = "strange surface"
 	desc = "A strange jet black metal floor. There are odd lines carved into it."
 	icon_state = "ancient"
