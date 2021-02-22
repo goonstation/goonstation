@@ -85,6 +85,22 @@ DEFINE_FLOORS_SIMMED_UNSIMMED(decal/delivery/caution,
 	icon_state = "deliverycaution")
 
 //
+DEFINE_FLOORS_SIMMED_UNSIMMED(decal/floorhazard,
+	icon_state = "floor_hazard")
+
+DEFINE_FLOORS_SIMMED_UNSIMMED(decal/floorhazard/northsouth,
+	icon_state = "floor_hazard_ns")
+
+DEFINE_FLOORS_SIMMED_UNSIMMED(decal/floorhazard/westeast,
+	icon_state = "floor_hazard_we")
+
+DEFINE_FLOORS_SIMMED_UNSIMMED(decal/floorhazard/corners,
+	icon_state = "floor_hazard_corners")
+
+DEFINE_FLOORS_SIMMED_UNSIMMED(decal/floorhazard/misc,
+	icon_state = "floor_hazard_misc")
+
+//
 ////////////	Fully-Coloured floors
 
 DEFINE_FLOORS_SIMMED_UNSIMMED(full,
