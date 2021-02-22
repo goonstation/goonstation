@@ -13,7 +13,7 @@
 //are split across multiple icon states in a way that makes them irritating to expand
 
 //hi im putting the root /carpet stuff here ~ f191
-/turf/simulated/floor/carpet
+/turf/simulated/floor/pattern/carpet
 	name = "carpet"
 	icon = 'icons/turf/carpet.dmi'
 	icon_state = "red1"
@@ -34,48 +34,48 @@
 		..()
 		icon = 'icons/turf/floors.dmi'
 
-/turf/simulated/floor/carpet/grime
+/turf/simulated/floor/pattern/carpet/grime
 	name = "cheap carpet"
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "grimy"
 
-/turf/simulated/floor/carpet/arcade
+/turf/simulated/floor/pattern/carpet/arcade
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "arcade_carpet"
 
-/turf/simulated/floor/carpet/arcade/half
+/turf/simulated/floor/pattern/carpet/arcade/half
 	icon_state = "arcade_carpet_half"
 
-/turf/simulated/floor/carpet/arcade/blank
+/turf/simulated/floor/pattern/carpet/arcade/blank
 	icon_state = "arcade_carpet_blank"
 
-/turf/simulated/floor/carpet/office
+/turf/simulated/floor/pattern/carpet/office
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "office_carpet"
 
-/turf/simulated/floor/carpet/office/other
+/turf/simulated/floor/pattern/carpet/office/other
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "office_carpet2"
 //
-/turf/simulated/floor/carpet/red
+/turf/simulated/floor/pattern/carpet/red
 	icon_state = "red1"
-/turf/simulated/floor/carpet/blue
+/turf/simulated/floor/pattern/carpet/blue
 	icon_state = "blue1"
-/turf/simulated/floor/carpet/green
+/turf/simulated/floor/pattern/carpet/green
 	icon_state = "green1"
-/turf/simulated/floor/carpet/purple
+/turf/simulated/floor/pattern/carpet/purple
 	icon_state = "purple1"
 
 //red carpet/////////////////////////////
 
-/turf/simulated/floor/carpet/red/decal
+/turf/simulated/floor/pattern/carpet/red/decal
 	icon_state = "fred1"
 	innercross
 		dir = 1
 	outercross
 		dir = 4
 
-/turf/simulated/floor/carpet/red/standard/edge
+/turf/simulated/floor/pattern/carpet/red/standard/edge
 	icon_state = "red2"
 
 	north
@@ -95,7 +95,7 @@
 	sw
 		dir = 10
 
-/turf/simulated/floor/carpet/red/standard/innercorner
+/turf/simulated/floor/pattern/carpet/red/standard/innercorner
 	icon_state = "red3"
 
 	ne
@@ -136,7 +136,7 @@
 		icon_state = "red1"
 		dir = 8
 
-/turf/simulated/floor/carpet/red/standard/narrow
+/turf/simulated/floor/pattern/carpet/red/standard/narrow
 	icon_state = "red6"
 
 	ne
@@ -177,7 +177,7 @@
 		icon_state = "red1"
 		dir = 10
 
-/turf/simulated/floor/carpet/red/standard/junction
+/turf/simulated/floor/pattern/carpet/red/standard/junction
 	icon_state = "red5"
 
 	sw_e
@@ -199,7 +199,7 @@
 
 //fancy subvariant///////////////////////
 
-/turf/simulated/floor/carpet/red/fancy/edge
+/turf/simulated/floor/pattern/carpet/red/fancy/edge
 	icon_state = "fred2"
 
 	north
@@ -219,7 +219,7 @@
 	sw
 		dir = 10
 
-/turf/simulated/floor/carpet/red/fancy/innercorner
+/turf/simulated/floor/pattern/carpet/red/fancy/innercorner
 	icon_state = "fred3"
 
 	ne
@@ -260,7 +260,7 @@
 		icon_state = "fred1"
 		dir = 8
 
-/turf/simulated/floor/carpet/red/fancy/narrow
+/turf/simulated/floor/pattern/carpet/red/fancy/narrow
 	icon_state = "fred6"
 
 	ne
@@ -298,7 +298,7 @@
 		icon_state = "fred1"
 		dir = 10
 
-/turf/simulated/floor/carpet/red/fancy/junction
+/turf/simulated/floor/pattern/carpet/red/fancy/junction
 	icon_state = "fred5"
 
 	sw_e
@@ -320,14 +320,14 @@
 
 //blue carpet/////////////////////////////
 
-/turf/simulated/floor/carpet/blue/decal
+/turf/simulated/floor/pattern/carpet/blue/decal
 	icon_state = "fblue1"
 	innercross
 		dir = 1
 	outercross
 		dir = 4
 
-/turf/simulated/floor/carpet/blue/standard/edge
+/turf/simulated/floor/pattern/carpet/blue/standard/edge
 	icon_state = "blue2"
 
 	north
@@ -347,7 +347,7 @@
 	sw
 		dir = 10
 
-/turf/simulated/floor/carpet/blue/standard/innercorner
+/turf/simulated/floor/pattern/carpet/blue/standard/innercorner
 	icon_state = "blue3"
 
 	ne
@@ -388,7 +388,7 @@
 		icon_state = "blue1"
 		dir = 8
 
-/turf/simulated/floor/carpet/blue/standard/narrow
+/turf/simulated/floor/pattern/carpet/blue/standard/narrow
 	icon_state = "blue6"
 
 	ne
@@ -429,7 +429,7 @@
 		icon_state = "blue1"
 		dir = 10
 
-/turf/simulated/floor/carpet/blue/standard/junction
+/turf/simulated/floor/pattern/carpet/blue/standard/junction
 	icon_state = "blue5"
 
 	sw_e
@@ -451,7 +451,7 @@
 
 //fancy subvariant///////////////////////
 
-/turf/simulated/floor/carpet/blue/fancy/edge
+/turf/simulated/floor/pattern/carpet/blue/fancy/edge
 	icon_state = "fblue2"
 
 	north
@@ -471,7 +471,7 @@
 	sw
 		dir = 10
 
-/turf/simulated/floor/carpet/blue/fancy/innercorner
+/turf/simulated/floor/pattern/carpet/blue/fancy/innercorner
 	icon_state = "fblue3"
 
 	ne
@@ -512,7 +512,7 @@
 		icon_state = "fblue1"
 		dir = 8
 
-/turf/simulated/floor/carpet/blue/fancy/narrow
+/turf/simulated/floor/pattern/carpet/blue/fancy/narrow
 	icon_state = "fblue6"
 
 	ne
@@ -550,7 +550,7 @@
 		icon_state = "fblue1"
 		dir = 10
 
-/turf/simulated/floor/carpet/blue/fancy/junction
+/turf/simulated/floor/pattern/carpet/blue/fancy/junction
 	icon_state = "fblue5"
 
 	sw_e
@@ -572,14 +572,14 @@
 
 //purple carpet/////////////////////////////
 
-/turf/simulated/floor/carpet/purple/decal
+/turf/simulated/floor/pattern/carpet/purple/decal
 	icon_state = "fpurple1"
 	innercross
 		dir = 1
 	outercross
 		dir = 4
 
-/turf/simulated/floor/carpet/purple/standard/edge
+/turf/simulated/floor/pattern/carpet/purple/standard/edge
 	icon_state = "purple2"
 
 	north
@@ -599,7 +599,7 @@
 	sw
 		dir = 10
 
-/turf/simulated/floor/carpet/purple/standard/innercorner
+/turf/simulated/floor/pattern/carpet/purple/standard/innercorner
 	icon_state = "purple3"
 
 	ne
@@ -640,7 +640,7 @@
 		icon_state = "purple1"
 		dir = 8
 
-/turf/simulated/floor/carpet/purple/standard/narrow
+/turf/simulated/floor/pattern/carpet/purple/standard/narrow
 	icon_state = "purple6"
 
 	ne
@@ -681,7 +681,7 @@
 		icon_state = "purple1"
 		dir = 10
 
-/turf/simulated/floor/carpet/purple/standard/junction
+/turf/simulated/floor/pattern/carpet/purple/standard/junction
 	icon_state = "purple5"
 
 	sw_e
@@ -703,7 +703,7 @@
 
 //fancy subvariant///////////////////////
 
-/turf/simulated/floor/carpet/purple/fancy/edge
+/turf/simulated/floor/pattern/carpet/purple/fancy/edge
 	icon_state = "fpurple2"
 
 	north
@@ -723,7 +723,7 @@
 	sw
 		dir = 10
 
-/turf/simulated/floor/carpet/purple/fancy/innercorner
+/turf/simulated/floor/pattern/carpet/purple/fancy/innercorner
 	icon_state = "fpurple3"
 
 	ne
@@ -764,7 +764,7 @@
 		icon_state = "fpurple1"
 		dir = 8
 
-/turf/simulated/floor/carpet/purple/fancy/narrow
+/turf/simulated/floor/pattern/carpet/purple/fancy/narrow
 	icon_state = "fpurple6"
 
 	ne
@@ -802,7 +802,7 @@
 		icon_state = "fpurple1"
 		dir = 10
 
-/turf/simulated/floor/carpet/purple/fancy/junction
+/turf/simulated/floor/pattern/carpet/purple/fancy/junction
 	icon_state = "fpurple5"
 
 	sw_e
@@ -824,14 +824,14 @@
 
 //green carpet/////////////////////////////
 
-/turf/simulated/floor/carpet/green/decal
+/turf/simulated/floor/pattern/carpet/green/decal
 	icon_state = "fgreen1"
 	innercross
 		dir = 1
 	outercross
 		dir = 4
 
-/turf/simulated/floor/carpet/green/standard/edge
+/turf/simulated/floor/pattern/carpet/green/standard/edge
 	icon_state = "green2"
 
 	north
@@ -851,7 +851,7 @@
 	sw
 		dir = 10
 
-/turf/simulated/floor/carpet/green/standard/innercorner
+/turf/simulated/floor/pattern/carpet/green/standard/innercorner
 	icon_state = "green3"
 
 	ne
@@ -892,7 +892,7 @@
 		icon_state = "green1"
 		dir = 8
 
-/turf/simulated/floor/carpet/green/standard/narrow
+/turf/simulated/floor/pattern/carpet/green/standard/narrow
 	icon_state = "green6"
 
 	ne
@@ -933,7 +933,7 @@
 		icon_state = "green1"
 		dir = 10
 
-/turf/simulated/floor/carpet/green/standard/junction
+/turf/simulated/floor/pattern/carpet/green/standard/junction
 	icon_state = "green5"
 
 	sw_e
@@ -955,7 +955,7 @@
 
 //fancy subvariant///////////////////////
 
-/turf/simulated/floor/carpet/green/fancy/edge
+/turf/simulated/floor/pattern/carpet/green/fancy/edge
 	icon_state = "fgreen2"
 
 	north
@@ -975,7 +975,7 @@
 	sw
 		dir = 10
 
-/turf/simulated/floor/carpet/green/fancy/innercorner
+/turf/simulated/floor/pattern/carpet/green/fancy/innercorner
 	icon_state = "fgreen3"
 
 	ne
@@ -1016,7 +1016,7 @@
 		icon_state = "fgreen1"
 		dir = 8
 
-/turf/simulated/floor/carpet/green/fancy/narrow
+/turf/simulated/floor/pattern/carpet/green/fancy/narrow
 	icon_state = "fgreen6"
 
 	ne
@@ -1054,7 +1054,7 @@
 		icon_state = "fgreen1"
 		dir = 10
 
-/turf/simulated/floor/carpet/green/fancy/junction
+/turf/simulated/floor/pattern/carpet/green/fancy/junction
 	icon_state = "fgreen5"
 
 	sw_e
@@ -1075,17 +1075,17 @@
 		dir = 10
 
 //UNSIMULATED GREEN CARPET//
-/turf/unsimulated/floor/carpet/green
+/turf/unsimulated/floor/pattern/carpet/green
 	icon_state = "green1"
 
-/turf/unsimulated/floor/carpet/green/decal
+/turf/unsimulated/floor/pattern/carpet/green/decal
 	icon_state = "fgreen1"
 	innercross
 		dir = 1
 	outercross
 		dir = 4
 
-/turf/unsimulated/floor/carpet/green/standard/edge
+/turf/unsimulated/floor/pattern/carpet/green/standard/edge
 	icon_state = "green2"
 
 	north
@@ -1105,7 +1105,7 @@
 	sw
 		dir = 10
 
-/turf/unsimulated/floor/carpet/green/standard/innercorner
+/turf/unsimulated/floor/pattern/carpet/green/standard/innercorner
 	icon_state = "green3"
 
 	ne
@@ -1146,7 +1146,7 @@
 		icon_state = "green1"
 		dir = 8
 
-/turf/unsimulated/floor/carpet/green/standard/narrow
+/turf/unsimulated/floor/pattern/carpet/green/standard/narrow
 	icon_state = "green6"
 
 	ne
@@ -1187,7 +1187,7 @@
 		icon_state = "green1"
 		dir = 10
 
-/turf/unsimulated/floor/carpet/green/standard/junction
+/turf/unsimulated/floor/pattern/carpet/green/standard/junction
 	icon_state = "green5"
 
 	sw_e
@@ -1209,7 +1209,7 @@
 
 //fancy subvariant///////////////////////
 
-/turf/unsimulated/floor/carpet/green/fancy/edge
+/turf/unsimulated/floor/pattern/carpet/green/fancy/edge
 	icon_state = "fgreen2"
 
 	north
@@ -1229,7 +1229,7 @@
 	sw
 		dir = 10
 
-/turf/unsimulated/floor/carpet/green/fancy/innercorner
+/turf/unsimulated/floor/pattern/carpet/green/fancy/innercorner
 	icon_state = "fgreen3"
 
 	ne
@@ -1270,7 +1270,7 @@
 		icon_state = "fgreen1"
 		dir = 8
 
-/turf/unsimulated/floor/carpet/green/fancy/narrow
+/turf/unsimulated/floor/pattern/carpet/green/fancy/narrow
 	icon_state = "fgreen6"
 
 	ne
@@ -1308,7 +1308,7 @@
 		icon_state = "fgreen1"
 		dir = 10
 
-/turf/unsimulated/floor/carpet/green/fancy/junction
+/turf/unsimulated/floor/pattern/carpet/green/fancy/junction
 	icon_state = "fgreen5"
 
 	sw_e
@@ -1330,18 +1330,18 @@
 
 //UNSIMULATED RED CARPET//
 
-/turf/unsimulated/floor/carpet/red
+/turf/unsimulated/floor/pattern/carpet/red
 	icon_state = "red1"
 
 
-/turf/unsimulated/floor/carpet/red/decal
+/turf/unsimulated/floor/pattern/carpet/red/decal
 	icon_state = "fred1"
 	innercross
 		dir = 1
 	outercross
 		dir = 4
 
-/turf/unsimulated/floor/carpet/red/standard/edge
+/turf/unsimulated/floor/pattern/carpet/red/standard/edge
 	icon_state = "red2"
 
 	north
@@ -1361,7 +1361,7 @@
 	sw
 		dir = 10
 
-/turf/unsimulated/floor/carpet/red/standard/innercorner
+/turf/unsimulated/floor/pattern/carpet/red/standard/innercorner
 	icon_state = "red3"
 
 	ne
@@ -1402,7 +1402,7 @@
 		icon_state = "red1"
 		dir = 8
 
-/turf/unsimulated/floor/carpet/red/standard/narrow
+/turf/unsimulated/floor/pattern/carpet/red/standard/narrow
 	icon_state = "red6"
 
 	ne
@@ -1443,7 +1443,7 @@
 		icon_state = "red1"
 		dir = 10
 
-/turf/unsimulated/floor/carpet/red/standard/junction
+/turf/unsimulated/floor/pattern/carpet/red/standard/junction
 	icon_state = "red5"
 
 	sw_e
@@ -1465,7 +1465,7 @@
 
 //fancy subvariant///////////////////////
 
-/turf/unsimulated/floor/carpet/red/fancy/edge
+/turf/unsimulated/floor/pattern/carpet/red/fancy/edge
 	icon_state = "fred2"
 
 	north
@@ -1485,7 +1485,7 @@
 	sw
 		dir = 10
 
-/turf/unsimulated/floor/carpet/red/fancy/innercorner
+/turf/unsimulated/floor/pattern/carpet/red/fancy/innercorner
 	icon_state = "fred3"
 
 	ne
@@ -1526,7 +1526,7 @@
 		icon_state = "fred1"
 		dir = 8
 
-/turf/unsimulated/floor/carpet/red/fancy/narrow
+/turf/unsimulated/floor/pattern/carpet/red/fancy/narrow
 	icon_state = "fred6"
 
 	ne
@@ -1564,7 +1564,7 @@
 		icon_state = "fred1"
 		dir = 10
 
-/turf/unsimulated/floor/carpet/red/fancy/junction
+/turf/unsimulated/floor/pattern/carpet/red/fancy/junction
 	icon_state = "fred5"
 
 	sw_e
