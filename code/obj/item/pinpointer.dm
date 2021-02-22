@@ -260,7 +260,6 @@
 
 /obj/item/pinpointer/secweapons
 	name = "security weapon pinpointer"
-	icon = 'icons/obj/items/device.dmi'
 	icon_state = "sec_pinoff"
 	icon_type = "sec"
 	var/list/itemrefs
