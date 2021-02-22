@@ -59,6 +59,32 @@ DEFINE_FLOORS_SIMMED_UNSIMMED(pattern/checker/bluegreen,
 DEFINE_FLOORS_SIMMED_UNSIMMED(decal,
 	icon_state = "")
 
+//
+DEFINE_FLOORS_SIMMED_UNSIMMED(decal/bot,
+	icon_state = "bot")
+
+DEFINE_FLOORS_SIMMED_UNSIMMED(decal/bot/white,
+	icon_state = "bot_white")
+
+DEFINE_FLOORS_SIMMED_UNSIMMED(decal/bot/blue,
+	icon_state = "bot_blue")
+
+DEFINE_FLOORS_SIMMED_UNSIMMED(decal/bot/darkpurple,
+	icon_state = "bot_dpurple")
+
+DEFINE_FLOORS_SIMMED_UNSIMMED(decal/bot/caution,
+	icon_state = "botcaution")
+//
+DEFINE_FLOORS_SIMMED_UNSIMMED(decal/delivery,
+	icon_state = "delivery")
+
+DEFINE_FLOORS_SIMMED_UNSIMMED(decal/delivery/white,
+	icon_state = "delivery_white")
+
+DEFINE_FLOORS_SIMMED_UNSIMMED(decal/delivery/caution,
+	icon_state = "deliverycaution")
+
+//
 ////////////	Fully-Coloured floors
 
 DEFINE_FLOORS_SIMMED_UNSIMMED(full,
