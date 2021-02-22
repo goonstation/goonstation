@@ -623,7 +623,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	name = "Riot Shotgun"
 	desc = "A police-issue shotgun meant for suppressing riots."
 	icon = 'icons/obj/48x32.dmi'
-	icon_state = "shotty"
+	icon_state = "shotty-empty"
 	item_state = "shotty"
 	force = 15.0
 	contraband = 5
@@ -634,11 +634,38 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	two_handed = 1
 	has_empty_state = 1
 	gildable = 1
+	var/racked_slide = 0
 
 	New()
 		ammo = new/obj/item/ammo/bullets/abg
 		set_current_projectile(new/datum/projectile/bullet/abg)
 		..()
+
+	update_icon()
+		. = ..()
+		if(src.racked_slide)
+			src.icon_state = "shotty"
+		else
+			src.icon_state = "shotty-empty"
+
+	canshoot()
+		if (racked_slide)
+			return ..()
+		else
+			//boutput(user, "<span class='notice'>You need to rack the slide before you can fire!</span>")
+			return 0
+	shoot(var/target,var/start ,var/mob/user)
+		..()
+		src.racked_slide = FALSE
+		src.update_icon()
+
+	attack_self(mob/user as mob)
+		..()
+		if (!racked_slide)
+			racked_slide = 1
+			icon_state = "shotty"
+			boutput(user, "<span class='notice'>You rack the slide of the shotgun!</span>")
+			//playsound(user.loc, )  add sound here
 
 /obj/item/gun/kinetic/ak47
 	name = "AK-744 Rifle"
