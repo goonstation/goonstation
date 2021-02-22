@@ -54,7 +54,7 @@ DEFINE_FLOORS_SIMMED_UNSIMMED(pattern/checker/whiteblue,
 DEFINE_FLOORS_SIMMED_UNSIMMED(pattern/checker/bluegreen,
 	icon_state = "blugreenfull")
 //	Macro doesn't work for these, so these need manually mirroring
-/turf/simulated/floor/circuit
+/turf/simulated/floor/pattern/circuit
 	name = "transduction matrix"
 	desc = "An elaborate, faintly glowing matrix of isolinear circuitry."
 	icon_state = "circuit"
