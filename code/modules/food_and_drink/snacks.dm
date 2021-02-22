@@ -1189,7 +1189,6 @@
 	food_effects = list("food_energized")
 	var/can_add_frosting = TRUE
 	var/list/styles = list("icing", "sprinkles")
-	var/list/style_tags = list("icing" = "icing", "sprinkles" = "sprinkles")
 	var/style_step = 1
 
 	heal(var/mob/M)
@@ -1219,12 +1218,11 @@
 			return
 
 		var/style = src.styles[src.style_step]
-		var/tag = src.style_tags[style]
 
 		var/datum/color/average_color = tube.reagents.get_average_color()
-		var/image/overlay = new(src.icon, tag)
+		var/image/overlay = new(src.icon, style)
 		overlay.color = average_color.to_rgba()
-		src.UpdateOverlays(overlay, tag)
+		src.UpdateOverlays(overlay, style)
 		tube.reagents.trans_to(src, 15)
 		user.show_text("You add some [style] to [src]", "red")
 		src.style_step += 1
