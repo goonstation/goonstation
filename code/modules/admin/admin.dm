@@ -2877,7 +2877,7 @@ var/global/noir = 0
 									return
 								if (F.z != 1)
 									break
-								if (istype(F, /turf/simulated/floor/carpet))
+								if (istype(F, /turf/simulated/floor/pattern/carpet))
 									continue
 								if (F.icon_state != "wooden")
 									F.icon_state = "wooden"
