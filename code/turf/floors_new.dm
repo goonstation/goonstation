@@ -97,10 +97,12 @@ DEFINE_FLOORS_SIMMED_UNSIMMED(side/whiteblack/corner,
 DEFINE_FLOORS_SIMMED_UNSIMMED(side/blue,
 	icon_state = "blue")
 
-DEFINE_FLOORS_SIMMED_UNSIMMED(/side/blue/corner,
+DEFINE_FLOORS_SIMMED_UNSIMMED(side/blue/corner,
 	icon_state = "bluecorner")
 
-////////////////////////	This is the misc shit that'll be sorted later
+////////////////////////
+////////////////////////		~~~~~~~AAAAAAAAAAAAAAAAAAAA
+////////////////////////
 
 /turf/simulated/floor/plating/airless
 	name = "airless plating"
