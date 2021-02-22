@@ -61,13 +61,13 @@
 	var/card_desc = "A card, for playing some kinda game with."
 	var/card_face = "blank"
 	var/card_back = "suit"
-	var/card_foil = 0
+	var/card_foil = TRUE
 	var/card_data = null
-	var/card_reversible = 0 // can the card be drawn reversed? ie for tarot
-	var/card_reversed = 0 // IS it reversed?
-	var/card_tappable = 1 // tap 2 islands for mana
-	var/card_tapped = 0 // summon Fog Bank, laugh
-	var/card_spooky = 0
+	var/card_reversible = FALSE // can the card be drawn reversed? ie for tarot
+	var/card_reversed = FALSE // IS it reversed?
+	var/card_tappable = TRUE // tap 2 islands for mana
+	var/card_tapped = FALSE // summon Fog Bank, laugh
+	var/card_spooky = FALSE
 	var/solitaire_offset = 3
 
 	New(cardname, carddesc, cardback, cardface, cardfoil, carddata, cardreversible, cardreversed, cardtappable, cardtapped, cardspooky, cardsolitaire)
@@ -89,27 +89,8 @@
 		return card_data
 
 /datum/playing_card/griffening
-	/*proc/enter_play(var/datum/griffening_controller/field_data, var/active_player)
-	proc/card_activated(var/datum/griffening_controller/field_data, var/datum/playing_card/griffening/C, var/owner)
-	proc/card_destroyed(var/datum/griffening_controller/field_data, var/datum/playing_card/griffening/C, var/owner)
-	proc/begin_turn(var/datum/griffening_controller/field_data, var/active_player)
-	proc/end_turn(var/datum/griffening_controller/field_data, var/active_player)
-	proc/exit_play(var/datum/griffening_controller/field_data, var/active_player)
-
-	// Called during own turn, to check if a card can be played.
-	proc/can_play(var/datum/griffening_controller/field_data, var/face_up, var/active_player)
-		return 1
-
-	proc/before_play(var/datum/griffening_controller/field_data, var/face_up, var/active_player, var/mob/M)
-		return 1
-
-	proc/can_respond(var/datum/griffening_controller/field_data, var/datum/playing_card/griffening/triggering_card, var/action, var/active_player)
-		return 0
-
-	var/available_game_id = 0*/
-
 	creature
-		var/randomized_stats = 0
+		var/randomized_stats = FALSE
 		var/LVL = 0
 		var/ATK = 0
 		var/DEF = 0
@@ -362,7 +343,7 @@
 				card_data = "Medical Doctors provide the station with state of the art textbook medicine. Unfortunately, the textbook was state of the art at the beginning of the century."
 
 			lich
-				randomized_stats = 0
+				randomized_stats = FALSE
 				LVL = 10
 				ATK = 90
 				DEF = 90
@@ -370,7 +351,7 @@
 				card_data = "This card cannot be played normally. Lich cannot be incapacitated."
 
 		friend
-			randomized_stats = 1
+			randomized_stats = TRUE
 			attributes = GRIFFENING_ATTRIBUTE_NONE
 
 			george_melons
@@ -421,7 +402,7 @@
 				card_data = "A fearsome creature, living in the shadows of plains and caverns of ice."
 
 				king
-					randomized_stats = 0
+					randomized_stats = FALSE
 					LVL = 8
 					ATK = 75
 					DEF = 60
