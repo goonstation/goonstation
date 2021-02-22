@@ -9945,7 +9945,10 @@
 /turf/simulated/floor/plating/damaged3,
 /area/martian_trader)
 "aAa" = (
-/obj/item/ammo/bullets/rifle_3006,
+/obj/item/paper/thermal{
+	info = "Leslie, what the hell were you thinking, leaving the ammo out like that?  Do you actually want the rifle to shoot rather than blow up in your face? Instead of leaving it under a pile of rusted scrap, I put it away where the humidity won't ruin the cartridges. I'll show you where after the next pizza run.";
+	name = "scribbled note"
+	},
 /obj/decal/fakeobjects/robot,
 /obj/decal/cleanable/oil,
 /turf/simulated/floor/plating/damaged3,
@@ -15639,11 +15642,15 @@
 	icon_state = "husk_l";
 	name = "dessicated husk"
 	},
-/turf/simulated/floor/plating/airless/asteroid,
+/turf/simulated/floor/plating/airless/asteroid{
+	stone_color = "#D1E6FF"
+	},
 /area/space)
 "aOw" = (
 /obj/landmark/artifact,
-/turf/simulated/floor/plating/airless/asteroid,
+/turf/simulated/floor/plating/airless/asteroid{
+	stone_color = "#D1E6FF"
+	},
 /area/space)
 "aOx" = (
 /obj/map/light/cyan,
@@ -19770,8 +19777,10 @@
 /area/iss)
 "aYw" = (
 /obj/structure/woodwall{
+	color = "#CCCCCC";
 	icon = 'icons/turf/fake_woodwall.dmi';
-	name = "odd asteroid wall"
+	name = "odd asteroid wall";
+	plane = -105
 	},
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
@@ -24640,7 +24649,7 @@
 	},
 /area/spyshack)
 "bkX" = (
-/obj/grille,
+/obj/grille/steel,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "bkY" = (
@@ -25425,10 +25434,32 @@
 	},
 /turf/simulated/floor/black,
 /area/mining/quarters)
+"rzX" = (
+/turf/simulated/floor/plating/airless/asteroid{
+	stone_color = "#575A5E"
+	},
+/area/space)
+"uGt" = (
+/obj/item/storage/secure/ssafe{
+	configure_mode = 0;
+	desc = "A tough, airtight safe.";
+	name = "hermetically-sealed safe";
+	pixel_x = -4;
+	pixel_y = 30;
+	random_code = 1;
+	spawn_contents = list(/obj/item/ammo/bullets/rifle_3006, /obj/item/reagent_containers/food/snacks/pizza/mushroom, /obj/item/reagent_containers/food/snacks/pizza/pepperoni)
+	},
+/turf/simulated/martian/floor,
+/area/evilreaver/bridge)
 "vrI" = (
 /obj/stool/chair,
 /turf/simulated/floor/black,
 /area/mining/quarters)
+"xOl" = (
+/turf/simulated/floor/plating/airless/asteroid{
+	stone_color = "#D1E6FF"
+	},
+/area/space)
 
 (1,1,1) = {"
 aaa
@@ -46410,7 +46441,7 @@ aCh
 aCh
 aCF
 aCF
-aDo
+uGt
 aDM
 aDp
 aCF
@@ -49251,7 +49282,7 @@ aHr
 aHr
 aHr
 aHr
-aau
+aHr
 aaa
 aaa
 aaa
@@ -49553,7 +49584,7 @@ aHr
 aHr
 aHr
 aHr
-aab
+aHr
 aaa
 aaa
 aaa
@@ -49855,7 +49886,7 @@ aHr
 aHr
 aHr
 aHr
-aab
+aHr
 aaa
 aaa
 aaa
@@ -50460,7 +50491,7 @@ aHr
 aHr
 aHr
 aHr
-aac
+rzX
 aaa
 aaa
 aaa
@@ -51364,7 +51395,7 @@ aaa
 aHr
 aHr
 aHr
-aac
+rzX
 aad
 aaa
 aaa
@@ -51665,7 +51696,7 @@ aaa
 aaa
 aaa
 aHr
-aac
+rzX
 aHA
 aHU
 aMm
@@ -78169,7 +78200,7 @@ aaa
 aaa
 aaa
 aaa
-aab
+aHr
 aHr
 aHr
 aac
@@ -78471,9 +78502,9 @@ aaa
 aaa
 aaa
 aaa
-aab
 aHr
-aac
+aHr
+rzX
 aac
 aac
 aac
@@ -78774,7 +78805,7 @@ aaa
 aaa
 aHr
 aHr
-aab
+aHr
 aac
 bjk
 bjk
@@ -79076,7 +79107,7 @@ aaa
 aaa
 aHr
 aHr
-aab
+aHr
 bjk
 bjk
 bjq
@@ -79377,8 +79408,8 @@ aaa
 aaa
 aaa
 aHr
-aab
-aab
+aHr
+aHr
 bjk
 bjr
 bjq
@@ -79679,8 +79710,8 @@ aaa
 aaa
 aaa
 aaa
-aab
-aab
+aHr
+aHr
 bjk
 bjm
 bjq
@@ -79981,7 +80012,7 @@ aaa
 aaa
 aaa
 aaa
-aab
+aHr
 aHr
 bjk
 bjk
@@ -80283,7 +80314,7 @@ aaa
 aaa
 aaa
 aaa
-aab
+aHr
 aHr
 aHr
 bjk
@@ -88143,9 +88174,9 @@ aIL
 aIL
 aIL
 aIL
-aac
+xOl
 aIL
-aac
+xOl
 aIL
 aIL
 aIL
@@ -88444,12 +88475,12 @@ aIL
 aIL
 aIL
 aIL
-aac
-aac
-aac
-aac
-aac
-aac
+xOl
+xOl
+xOl
+xOl
+xOl
+xOl
 aIL
 aIL
 aIL
@@ -88742,17 +88773,17 @@ aaa
 aaa
 aaa
 aaa
-aac
-aac
-aac
+xOl
+xOl
+xOl
 aIL
-aac
-aIL
-aIL
+xOl
 aIL
 aIL
-aac
-aac
+aIL
+aIL
+xOl
+xOl
 aIL
 aIL
 aIL
@@ -89045,15 +89076,15 @@ aaa
 aaa
 aaa
 aIL
-aac
-aac
+xOl
+xOl
 aIL
 aIL
 aIL
 aIL
 aIL
-aac
-aac
+xOl
+xOl
 aIL
 aIL
 aIL
@@ -89347,20 +89378,20 @@ aaa
 aaa
 aIL
 aIL
-aac
-aac
-aac
-aac
+xOl
+xOl
+xOl
+xOl
 aIL
-aac
-aIL
-aIL
-aac
-aac
+xOl
 aIL
 aIL
-aac
-aac
+xOl
+xOl
+aIL
+aIL
+xOl
+xOl
 aaa
 aaa
 aaa
@@ -89649,19 +89680,19 @@ aaa
 aaa
 aIL
 aIL
-aac
+xOl
 aIL
 aIL
-aac
+xOl
 aIL
-aac
+xOl
 aIL
-aac
-aac
-aac
-aac
-aac
-aac
+xOl
+xOl
+xOl
+xOl
+xOl
+xOl
 aIL
 aaa
 aaa
@@ -89954,16 +89985,16 @@ aIL
 aIL
 aIL
 aIL
-aac
-aac
-aac
+xOl
+xOl
+xOl
 aIL
 aIL
 aIL
-aac
+xOl
 aIL
-aac
-aac
+xOl
+xOl
 aIL
 aIL
 aaa
@@ -90256,13 +90287,13 @@ aIL
 aIL
 aIL
 aIL
-aac
+xOl
 aIL
 aIL
 aIL
-aac
-aac
-aac
+xOl
+xOl
+xOl
 aIL
 aIL
 aIL
@@ -90556,13 +90587,13 @@ aaa
 aaa
 aIL
 aIL
-aac
-aac
-aac
+xOl
+xOl
+xOl
 aIL
-aac
-aac
-aac
+xOl
+xOl
+xOl
 aIL
 aIL
 aIL
@@ -90857,19 +90888,19 @@ aaa
 aaa
 aaa
 aIL
-aac
-aac
+xOl
+xOl
 aIL
 aIL
 aIL
-aac
-aac
-aac
+xOl
+xOl
+xOl
 aIL
-aac
-aac
-aac
-aac
+xOl
+xOl
+xOl
+xOl
 aIL
 aaa
 aaa
@@ -91160,18 +91191,18 @@ aaa
 aIL
 aIL
 aIL
-aac
+xOl
 aIL
-aac
-aac
-aac
+xOl
+xOl
+xOl
 aIL
-aac
-aac
-aac
+xOl
+xOl
+xOl
 aIL
 aIL
-aac
+xOl
 aIL
 aaa
 aaa
@@ -91462,18 +91493,18 @@ aIL
 aIL
 aIL
 aIL
-aac
-aac
-aac
-aac
-aac
+xOl
+xOl
+xOl
+xOl
+xOl
 aIL
 aIL
 aIL
 aIL
 aIL
-aac
-aac
+xOl
+xOl
 aIL
 aaa
 aaa
@@ -91763,14 +91794,14 @@ aaa
 aIL
 aIL
 aIL
-aac
-aac
+xOl
+xOl
 aIL
-aac
+xOl
 aIL
-aac
+xOl
 aIL
-aac
+xOl
 aIL
 aIL
 aIL
@@ -92063,16 +92094,16 @@ aaa
 aaa
 aaa
 aIL
-aac
-aac
-aac
+xOl
+xOl
+xOl
 aIL
 aIL
 aIL
 aIL
-aac
+xOl
 aIL
-aac
+xOl
 aIL
 aIL
 aIL
@@ -92367,16 +92398,16 @@ aaa
 aIL
 aIL
 aIL
-aac
+xOl
 aIL
 aIL
 aIL
-aac
-aac
-aac
-aac
+xOl
+xOl
+xOl
+xOl
 aIL
-aac
+xOl
 aIL
 aIL
 aaa
@@ -92673,12 +92704,12 @@ aIL
 aIL
 aIL
 aOv
-aac
+xOl
 aIL
 aIL
-aac
-aac
-aac
+xOl
+xOl
+xOl
 aIL
 aIL
 aaa
@@ -92975,13 +93006,13 @@ aIL
 aIL
 aIL
 aIL
-aac
+xOl
 aIL
 aIL
-aac
+xOl
 aIL
-aac
-aac
+xOl
+xOl
 aIL
 aaa
 aaa
@@ -93275,15 +93306,15 @@ aaa
 aIL
 aIL
 aIL
-aac
-aac
-aac
+xOl
+xOl
+xOl
 aIL
 aIL
 aIL
 aIL
 aIL
-aac
+xOl
 aIL
 aaa
 aaa
@@ -103908,7 +103939,7 @@ aab
 aab
 aab
 aab
-aIL
+aab
 aab
 aab
 aab
@@ -104210,9 +104241,9 @@ aUz
 aUz
 aUz
 aUz
-aIL
-aIL
-aIL
+aab
+aab
+aab
 aab
 aab
 aab

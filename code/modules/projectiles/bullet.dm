@@ -185,6 +185,7 @@ toxic - poisons
 	sname = "burst fire"
 
 /datum/projectile/bullet/nine_mm_NATO/auto
+	fullauto_valid = 1
 	shot_number = 1
 	cost = 1
 	shot_volume = 66
@@ -527,6 +528,7 @@ toxic - poisons
 			M.changeStatus("staggered", clamp(P.power/8, 5, 1) SECONDS)
 
 	auto
+		fullauto_valid = 1
 		sname = "full auto"
 		shot_volume = 66
 		cost = 1
@@ -710,7 +712,7 @@ toxic - poisons
 					var/mob/living/carbon/human/H = M
 					var/targetorgan
 					for (var/i in 1 to 3)
-						targetorgan = pick("left_lung", "heart", "right_lung", "left_kidney", "right_kidney", "liver", "stomach", "intestines", "spleen", "pancreas", "appendix")
+						targetorgan = pick("left_lung", "heart", "right_lung", "left_kidney", "right_kidney", "liver", "stomach", "intestines", "spleen", "pancreas", "appendix", "tail")
 						H.organHolder.damage_organ(proj.power/H.get_ranged_protection(), 0, 0,  targetorgan)
 				M.ex_act(impact)
 
@@ -811,7 +813,7 @@ toxic - poisons
 		precalculated = 0
 		disruption = INFINITY //distrupt every system at once
 		on_hit(atom/hit, angle, var/obj/projectile/P)
-			if (P.data || prob(10))
+			if (P.data)
 				..()
 			else
 				new /obj/effects/rendersparks(hit.loc)

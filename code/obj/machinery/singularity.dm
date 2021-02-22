@@ -1562,7 +1562,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	..()
 	if (usr.stat || usr.restrained() || usr.lying)
 		return
-	if ((in_range(src, usr) && istype(src.loc, /turf)))
+	if ((in_interact_range(src, usr) && istype(src.loc, /turf)))
 		src.add_dialog(usr)
 		switch(href_list["action"]) //Yeah, this is weirdly set up. Planning to expand it later.
 			if("trigger")

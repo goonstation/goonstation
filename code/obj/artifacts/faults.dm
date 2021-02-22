@@ -1,5 +1,10 @@
-// FAULTS
+// these are all faults that only work on items
+#define ITEM_ONLY_FAULTS /datum/artifact_fault/grow, /datum/artifact_fault/shrink
+// these are all faults that only make sense on artifacts that people touch
+#define TOUCH_ONLY_FAULTS /datum/artifact_fault/poison
 
+// FAULTS
+ABSTRACT_TYPE(/datum/artifact_fault/)
 /datum/artifact_fault
 	// these are booby traps, self-defense mechanisms, hardware faults or just other nasty shit that can fuck you up when you
 	// use the artifact for anything
@@ -7,7 +12,7 @@
 	var/tmp/datum/artifact/holder = null
 	var/halt_loop = 0
 
-	proc/deploy(var/obj/O,var/mob/living/user)
+	proc/deploy(var/obj/O,var/mob/living/user,var/atom/cosmeticSource)
 		if (!O || !user)
 			return 1
 		return 0
@@ -17,12 +22,12 @@
 	trigger_prob = 8
 	var/burn_amount = 40
 
-	deploy(var/obj/O,var/mob/living/user)
+	deploy(var/obj/O,var/mob/living/user,var/atom/cosmeticSource)
 		if (..())
 			return
 		var/turf/T = get_turf(user)
-		T.visible_message("<span class='alert'>The [O.name] suddenly bursts into flames!</span>")
-		user.update_burning(40)
+		T.visible_message("<span class='alert'>The [cosmeticSource.name] suddenly emits a burst of flame!</span>")
+		fireflash(T, 0)
 		playsound(T, "sound/effects/bamf.ogg", 100, 1)
 
 /datum/artifact_fault/irradiate
@@ -30,7 +35,7 @@
 	trigger_prob = 8
 	var/rads_amount = 20
 
-	deploy(var/obj/O,var/mob/living/user)
+	deploy(var/obj/O,var/mob/living/user,var/atom/cosmeticSource)
 		if (..())
 			return
 		boutput(user, "<span class='alert'>You feel strange.</span>")
@@ -41,7 +46,7 @@
 	trigger_prob = 10
 	halt_loop = 1
 
-	deploy(var/obj/O,var/mob/living/user)
+	deploy(var/obj/O,var/mob/living/user,var/atom/cosmeticSource)
 		if (..())
 			return
 		var/turf/T = get_turf(O)
@@ -53,29 +58,70 @@
 	// warps the user off somewhere random
 	trigger_prob = 15
 
-	deploy(var/obj/O,var/mob/living/user)
+	deploy(var/obj/O,var/mob/living/user,var/atom/cosmeticSource)
 		if (..())
 			return
 		var/turf/T = get_turf(O)
-		T.visible_message("<span class='alert'>The [O.name] warps [user.name] away!</span>")
+		T.visible_message("<span class='alert'>The [cosmeticSource.name] warps [user.name] away!</span>")
 		playsound(T, "sound/effects/mag_warp.ogg", 100, 1)
 		user.set_loc(pick(wormholeturfs))
+
+/datum/artifact_fault/grow
+	// embiggens the artifact
+	trigger_prob = 10
+
+	deploy(var/obj/O,var/mob/living/user,var/atom/cosmeticSource)
+		if (..())
+			return
+		if (!isitem(O))
+			return
+		var/obj/item/I = O
+		if(I.w_class > 6)
+			return
+
+		boutput(user, "<span class='alert'>The [I.name] grows in size!</span>")
+		I.transform = matrix(I.transform, 1.1, 1.1, MATRIX_SCALE)
+		I.w_class++
+		if (I.loc == user && I.w_class > 4)
+			boutput(user, "<span class='alert'>You can't maintain a grip due to its excessive girth!</span>")
+			user.u_equip(I)
+			I.set_loc(user.loc)
+
+/datum/artifact_fault/shrink
+	// ensmallens the artifact
+	trigger_prob = 10
+
+	deploy(var/obj/O,var/mob/living/user,var/atom/cosmeticSource)
+		if (..())
+			return
+		if (!isitem(O))
+			return
+		var/obj/item/I = O
+
+		boutput(user, "<span class='alert'>The [I.name] shrinks in size!</span>")
+		I.transform = matrix(I.transform, 0.9, 0.9, MATRIX_SCALE)
+		I.w_class--
+		if (I.w_class < 1)
+			boutput(user, "<span class='alert'>The artifact shrinks away into nothingness!</span>")
+			user.u_equip(I)
+			I.set_loc(user.loc)
+			I.invisibility = 100
 
 /datum/artifact_fault/murder
 	// gibs the user
 	trigger_prob = 1
 	halt_loop = 1
 
-	deploy(var/obj/O,var/mob/living/user)
+	deploy(var/obj/O,var/mob/living/user,var/atom/cosmeticSource)
 		if (..())
 			return
-		if (isitem(src))
-			var/obj/item/I = src
+		if (isitem(O))
+			var/obj/item/I = O
 			if (I.loc == user)
 				user.u_equip(I)
 				I.dropped()
 		var/turf/T = get_turf(O)
-		T.visible_message("<span class='alert'><b>The [O.name] utterly annihilates [user.name]!</b></span>")
+		T.visible_message("<span class='alert'><b>The [cosmeticSource.name] utterly annihilates [user.name]!</b></span>")
 		playsound(T, "sound/effects/elec_bigzap.ogg", 100, 1)
 		user.elecgib()
 
@@ -84,54 +130,72 @@
 	trigger_prob = 1
 	halt_loop = 1
 
-	deploy(var/obj/O,var/mob/living/user)
+	deploy(var/obj/O,var/mob/living/user,var/atom/cosmeticSource)
 		if (..())
 			return
 		var/turf/T = get_turf(O)
-		T.visible_message("<span class='alert'>The [O.name] suddenly explodes!</span>")
-		if (isitem(src))
-			var/obj/item/I = src
+		T.visible_message("<span class='alert'>The [cosmeticSource.name] suddenly explodes!</span>")
+		if (isitem(O))
+			var/obj/item/I = O
 			user.u_equip(I)
 			I.dropped()
-		explosion(O, T, 1, 2, 4, 8)
+		explosion(O, T, 0, 1, 2, 4)
 		O.ArtifactDestroyed()
 
 /datum/artifact_fault/zap
 	// electrocutes the user
 	trigger_prob = 6
 
-	deploy(var/obj/O,var/mob/living/user)
+	deploy(var/obj/O,var/mob/living/user,var/atom/cosmeticSource)
 		if (..())
 			return
 		var/turf/T = get_turf(O)
-		T.visible_message("<span class='alert'><b>[user.name]</b> is shocked by a surge of energy from [O.name]!</span>")
+		T.visible_message("<span class='alert'><b>[user.name]</b> is shocked by a surge of energy from [cosmeticSource.name]!</span>")
 		var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
 		s.set_up(4, 1, user)
 		s.start()
 		elecflash(user,power = 6, exclude_center = 0)
 		user.stuttering += 30
 
+ABSTRACT_TYPE(/datum/artifact_fault/messager/)
 /datum/artifact_fault/messager
 	trigger_prob = 30
+	var/say_instead = FALSE
 	var/text_style = null
 	var/list/messages = list()
 
-	deploy(var/obj/O,var/mob/living/user)
+	New()
+		. = ..()
+		if(prob(25))
+			src.say_instead = TRUE
+
+	proc/generate_message(obj/O, mob/living/user,var/atom/cosmeticSource)
+		if(length(messages))
+			return pick(messages)
+		return "😱"
+
+	deploy(var/obj/O,var/mob/living/user,var/atom/cosmeticSource)
 		if (..())
 			return
-		if (messages.len < 1)
+		if(src.say_instead)
+			if(prob(20))
+				user.say(";[generate_message(O, user)]")
+			else
+				user.say(generate_message(O, user))
 			return
 		switch(text_style)
 			if ("small")
-				boutput(user, "<small>[pick(messages)]</small>")
+				boutput(user, "<small>[generate_message(O, user, cosmeticSource)]</small>")
 			if ("big")
-				boutput(user, "<big>[pick(messages)]</big>")
+				boutput(user, "<big>[generate_message(O, user, cosmeticSource)]</big>")
 			if ("red")
-				boutput(user, "<span class='alert'>[pick(messages)]</span>")
+				boutput(user, "<span class='alert'>[generate_message(O, user, cosmeticSource)]</span>")
 			if ("blue")
-				boutput(user, "<span class='notice'>[pick(messages)]</span>")
+				boutput(user, "<span class='notice'>[generate_message(O, user, cosmeticSource)]</span>")
+			if ("monospace")
+				boutput(user, "<span style='font-family: monospace;'>[generate_message(O, user, cosmeticSource)]</span>")
 			else
-				boutput(user, "[pick(messages)]")
+				boutput(user, "[generate_message(O, user, cosmeticSource)]")
 
 /datum/artifact_fault/messager/creepy_whispers
 	text_style = "small"
@@ -140,14 +204,55 @@
 	"surrender","its hopeless","you are in hell","its all lies","hate","there is only despair","your heart will stop",
 	"they will all forget you","they have abandoned you","please stop","no one will mourn you")
 
+/datum/artifact_fault/messager/comforting_whispers
+	text_style = "small"
+	messages = list("it's not your fault", "believe in yourself", "you are strong", "you can do it!", "keep on trying",
+	"life is beautiful", "you are important", "this station relies on you", "you can do anything", "follow your dreams",
+	"success awaits", "your friends think you are very cool", "be yourself", "everything is fine", "there's still hope",
+	"nothing is impossible", "don't stop trying", "you are smart", "love", "today is your lucky day", "I'll always be there for you")
+
+/datum/artifact_fault/messager/what_people_said
+	text_style = "small"
+	generate_message(obj/O, mob/living/user,var/atom/cosmeticSource)
+		return phrase_log.random_phrase("say")
+
+/datum/artifact_fault/messager/what_dead_people_said
+	text_style = "small"
+	generate_message(obj/O, mob/living/user,var/atom/cosmeticSource)
+		return phrase_log.random_phrase("deadsay")
+
+/datum/artifact_fault/messager/ai_laws
+	trigger_prob = 15
+	text_style = "monospace"
+	generate_message(obj/O, mob/living/user,var/atom/cosmeticSource)
+		return phrase_log.random_phrase("ailaw")
+
+/datum/artifact_fault/messager/emoji
+	var/list/allowed_emoji = null
+	New()
+		..()
+		if(prob(70))
+			allowed_emoji = list()
+			for(var/i in 1 to rand(10))
+				allowed_emoji += random_emoji()
+
+	generate_message(obj/O, mob/living/user)
+		. = list()
+		for(var/i in 1 to rand(10))
+			if(isnull(src.allowed_emoji) || prob(2))
+				. += random_emoji()
+			else
+				. += pick(src.allowed_emoji)
+		return jointext(., "")
+
 /datum/artifact_fault/poison
 	trigger_prob = 8
 	var/poison_type = "toxin"
 	var/poison_amount = 10
 
-	deploy(var/obj/O,var/mob/living/user)
+	deploy(var/obj/O,var/mob/living/user,var/atom/cosmeticSource)
 		if (..())
 			return
-		boutput(user, "<span class='alert'>The [O.name] stings you!</span>")
+		boutput(user, "<span class='alert'>The [cosmeticSource.name] stings you!</span>")
 		if (user.reagents)
 			user.reagents.add_reagent(poison_type,poison_amount)

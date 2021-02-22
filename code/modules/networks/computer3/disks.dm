@@ -140,7 +140,7 @@
 		if (istype(W, /obj/item/pen))
 			var/t = input(user, "Enter new tape label", src.name, null) as text
 			t = copytext(strip_html(t), 1, 36)
-			if (!in_range(src, usr) && src.loc != usr)
+			if (!in_interact_range(src, user) && src.loc != user)
 				return
 			if (!t)
 				src.name = "ThinkTape"

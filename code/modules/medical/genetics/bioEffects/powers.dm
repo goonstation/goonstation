@@ -294,6 +294,9 @@
 			boutput(usr, "<span class='alert'>You can't jump right now!</span>")
 			return 1
 
+		//store both x and y as transforms mid jump can cause unwanted pixel offsetting
+		var/original_x_offset = owner.pixel_x
+		var/original_y_offset = owner.pixel_y
 		var/jump_tiles = 10
 		var/pixel_move = 8
 		var/sleep_time = 1
@@ -317,9 +320,9 @@
 						owner.pixel_y -= pixel_move
 					sleep(sleep_time)
 
-			usr.pixel_y = 0
-
-			owner.layer = prevLayer
+				owner.pixel_x = original_x_offset
+				owner.pixel_y = original_y_offset
+				owner.layer = prevLayer
 
 		if (istype(owner.loc,/obj/))
 			var/obj/container = owner.loc
@@ -348,6 +351,9 @@
 			boutput(usr, "<span class='alert'>You can't jump right now!</span>")
 			return 1
 
+		//store both x and y as transforms mid jump can cause unwanted pixel offsetting
+		var/original_x_offset = owner.pixel_x
+		var/original_y_offset = owner.pixel_y
 		var/jump_tiles = 10
 		var/pixel_move = 8
 		var/sleep_time = 0.5
@@ -373,9 +379,9 @@
 						owner.pixel_y -= pixel_move
 					sleep(sleep_time)
 
-			usr.pixel_y = 0
-
-			owner.layer = prevLayer
+				owner.pixel_x = original_x_offset
+				owner.pixel_y = original_y_offset
+				owner.layer = prevLayer
 
 		if (istype(owner.loc,/obj/))
 			var/obj/container = owner.loc
@@ -588,6 +594,7 @@
 		var/msg = copytext( adminscrub(input(usr, "Message to [recipient.name]:","Telepathy") as text), 1, MAX_MESSAGE_LEN)
 		if (!msg)
 			return 1
+		phrase_log.log_phrase("telepathy", msg)
 
 		var/psyname = "A psychic voice"
 		if (recipient.bioHolder.HasOneOfTheseEffects("telepathy","empath"))
@@ -631,6 +638,7 @@
 		var/msg = copytext( adminscrub(input(usr, "Message to [recipient.name]:","Telepathy") as text), 1, MAX_MESSAGE_LEN)
 		if (!msg)
 			return 1
+		phrase_log.log_phrase("telepathy", msg)
 		msg = uppertext(msg)
 
 		owner.visible_message("<span class='alert'><b>[owner]</b> puts their fingers to their temples and stares at [target] really hard.</span>")

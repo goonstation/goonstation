@@ -777,7 +777,7 @@ WET FLOOR SIGN
 	anchored = 1
 	layer = EFFECTS_LAYER_BASE
 	var/datum/light/light
-	var/obj/holoparticles/particles
+	var/obj/holoparticles/holoparticles
 
 	New(var/_loc)
 		set_loc(_loc)
@@ -794,14 +794,15 @@ WET FLOOR SIGN
 			animate(src, pixel_y=10, time=15, flags=ANIMATION_PARALLEL, easing=SINE_EASING, loop=-1)
 			animate(pixel_y=16, easing=SINE_EASING, time=15)
 
-		particles = new/obj/holoparticles(src.loc)
-		attached_objs = list(particles)
+		holoparticles = new/obj/holoparticles(src.loc)
+		attached_objs = list(holoparticles)
 		..(_loc)
 
 	disposing()
-		if(particles)
-			particles.invisibility = 101
-			qdel(particles)
+		if(holoparticles)
+			holoparticles.invisibility = 101
+			qdel(holoparticles)
+			holoparticles = null
 		..()
 
 /obj/holoparticles
@@ -920,6 +921,8 @@ WET FLOOR SIGN
 		if(ON_COOLDOWN(src, "suck", 0.3 SECONDS))
 			return
 		var/turf/T = get_turf(target)
+		if(isnull(T)) // fluids getting disposed or something????
+			return
 		new/obj/effect/suck(T, get_dir(T, user))
 		if(src.suck(T, user))
 			playsound(T, "sound/effects/suck.ogg", 20, TRUE, 0, 1.5)
@@ -944,6 +947,19 @@ WET FLOOR SIGN
 				F.group.drain(F, amt / F.group.amt_per_tile, src.bucket)
 				if(src.bucket.reagents.is_full())
 					boutput(user, "<span class='notice'>[src]'s [src.bucket] is now full.</span>")
+				success = TRUE
+
+		var/obj/reagent_dispensers/cleanable/ants/ants = locate(/obj/reagent_dispensers/cleanable/ants) in T
+		if(ants)
+			if(isnull(src.bucket))
+				boutput(user, "<span class='alert'>\The [src] tries to suck up the ants but has no bucket!</span>")
+				. = FALSE
+			else if(src.bucket.reagents.is_full())
+				boutput(user, "<span class='alert'>\The [src] tries to suck up the ants but its bucket is full!</span>")
+				. = FALSE
+			else
+				qdel(ants)
+				src.bucket.reagents.add_reagent("ants", 5)
 				success = TRUE
 
 		var/list/obj/item/items_to_suck = list()
@@ -1074,15 +1090,18 @@ WET FLOOR SIGN
 							A.throw_at(T == turf_list[1] ? get_turf(master) : turf_list[1], src.throw_range, src.throw_speed)
 							if(ismob(A))
 								var/mob/M = A
+								M.changeStatus("weakened", 0.9 SECONDS)
+								M.force_laydown_standup()
 								boutput(M, "<span class='alert'>You are pulled by the force of [user]'s [master].</span>")
 						else
 							var/mob/M = A
-							if(M.equipped() && prob(25))
+							if(!issilicon(M) && M.equipped() && prob(25))
 								var/obj/item/I = M.equipped()
-								I.set_loc(M.loc)
-								M.u_equip(I)
-								I.dropped()
-								boutput(M, "<span class='alert'>Your [I] is pulled from your hands by the force of [user]'s [master].</span>")
+								if(!I.cant_drop)
+									I.set_loc(M.loc)
+									M.u_equip(I)
+									I.dropped()
+									boutput(M, "<span class='alert'>Your [I] is pulled from your hands by the force of [user]'s [master].</span>")
 				new/obj/effect/suck(T, get_dir(T, last))
 				last = T
 				if(end_now)

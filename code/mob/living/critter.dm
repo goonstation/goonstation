@@ -690,6 +690,9 @@
 		if(isitem(I))
 			I.dropped(src)
 
+	has_any_hands()
+		. = length(hands)
+
 	put_in_hand(obj/item/I, t_hand)
 		if (!hands.len)
 			return 0
@@ -749,7 +752,7 @@
 		empty_hands()
 		if (do_drop_equipment)
 			drop_equipment()
-		hud.update_health()
+		hud?.update_health()
 		update_stunned_icon(canmove=1)//force it to go away
 		return ..(gibbed)
 

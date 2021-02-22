@@ -96,15 +96,16 @@
 	ArtifactActivated()
 		. = ..()
 		src.maxcharge = src.chargeCap
+		processing_items |= src				// in case someone decides to make big cells work like small cells
 
 	ArtifactDeactivated()
 		. = ..()
-		src.maxcharge = 0
-		src.charge = 0
+		src.maxcharge = 1
+		src.charge = 1
 
 /datum/artifact/powercell
 	associated_object = /obj/item/cell/artifact
-	rarity_class = 2 // modified from 1 as part of art tweak
+	rarity_weight = 350
 	validtypes = list("ancient","martian","wizard","precursor")
 	automatic_activation = 1
 	react_elec = list("equal",0,10)

@@ -270,6 +270,7 @@ var/list/admin_verbs = list(
 		/client/proc/show_admin_lag_hacks,
 		/client/proc/spawn_survival_shit,
 		/client/proc/respawn_heavenly,
+		/client/proc/respawn_demonically,
 		/datum/admins/proc/spawn_atom,
 		/datum/admins/proc/heavenly_spawn_obj,
 		/datum/admins/proc/supplydrop_spawn_obj,
@@ -331,6 +332,8 @@ var/list/admin_verbs = list(
 		/client/proc/implant_all,
 		/client/proc/cmd_crusher_walls,
 		/client/proc/cmd_disco_lights,
+		/client/proc/cmd_blindfold_monkeys,
+		/client/proc/cmd_swampify_station,
 
 		/datum/admins/proc/toggleaprilfools,
 		/client/proc/cmd_admin_pop_off_all_the_limbs_oh_god,
@@ -581,7 +584,7 @@ var/list/special_pa_observing_verbs = list(
 	src.verbs -= special_admin_observing_verbs
 	src.verbs -= special_pa_observing_verbs
 
-	src.buildmode = 0
+	src.buildmode = null
 	src.show_popup_menus = 1
 
 	if (widescreen)
@@ -729,7 +732,7 @@ var/list/special_pa_observing_verbs = list(
 	if (src.owner:stealth)
 		var/ircmsg[] = new()
 		ircmsg["key"] = src.owner:key
-		ircmsg["name"] = (usr?.real_name) ? usr.real_name : "NULL"
+		ircmsg["name"] = (usr?.real_name) ? stripTextMacros(usr.real_name) : "NULL"
 		ircmsg["msg"] = "Has enabled stealth mode as ([src.owner:fakekey])"
 		ircbot.export("admin", ircmsg)
 
@@ -772,7 +775,7 @@ var/list/special_pa_observing_verbs = list(
 	if (src.alt_key)
 		var/ircmsg[] = new()
 		ircmsg["key"] = src.owner:key
-		ircmsg["name"] = (usr?.real_name) ? usr.real_name : "NULL"
+		ircmsg["name"] = (usr?.real_name) ? stripTextMacros(usr.real_name) : "NULL"
 		ircmsg["msg"] = "Has set their displayed key to ([src.owner:fakekey])"
 		ircbot.export("admin", ircmsg)
 */
@@ -898,6 +901,19 @@ var/list/fun_images = list()
 	var/mob/M = src.mob
 	M.UpdateOverlays(image('icons/misc/32x64.dmi',"halo"), "halo")
 	heavenly_spawn(M)
+
+/client/proc/respawn_demonically()
+	set name = "Respawn Demonically"
+	SET_ADMIN_CAT(ADMIN_CAT_SELF)
+	set desc = "Respawn yourself from the depths of the underfloor."
+	set popup_menu = 0
+	admin_only
+
+	src.respawn_as_self()
+
+	var/mob/living/carbon/human/M = src.mob
+	M.bioHolder.AddEffect("hell_fire", magical = 1)
+	demonic_spawn(M)
 
 /client/proc/respawn_as(var/client/cli in clients)
 	set name = "Respawn As"
@@ -1811,7 +1827,11 @@ var/list/fun_images = list()
 					if(C)
 						winshow(C, "pregameBrowser", 0)
 				catch()
-
+			var/turf/T = landmarks[LANDMARK_LOBBY_LEFTSIDE][1]
+			T = locate(T.x + 3, T.y, T.z)
+			if (locate(/obj/titlecard) in T) return
+			if (alert("Replace with a title card turf?",, "Yes", "No") == "Yes")
+				new /obj/titlecard(T)
 			return
 	var/newHTML = null
 	if(alert("Do you want to upload an HTML file, or type it in?", "HTML Source", "Here", "Upload") == "Here")
@@ -1945,6 +1965,8 @@ var/list/fun_images = list()
 			C.view_fingerprints(A)
 		if("Delete")
 			C.cmd_admin_delete(A)
+		if("Copy Here")
+			semi_deep_copy(A, src.loc)
 
 		if("Player Options")
 			C.cmd_admin_playeropt(A)

@@ -120,6 +120,7 @@
 	proc/addTrigger(var/list/L, var/datum/materialProc/D)
 		for(var/datum/materialProc/P in L)
 			if(P.type == D.type) return 0
+		D.owner = src
 		L.Add(D)
 		L[D] = 0
 		return
@@ -506,7 +507,7 @@
 		mat_id = "molitz_b"
 		name = "molitz beta"
 		color = "#ff2288"
-		desc = "A rare form of Molitz an otherwise common crystalline substance."
+		desc = "A rare form of Molitz. When heated produces a powerful plasma fire catalyst."
 
 		New()
 			..()
@@ -1363,7 +1364,7 @@
 	mat_id = "negativematter"
 	name = "negative matter"
 	desc = "It seems to repel matter."
-	color = "#111111"
+	color = list(-1, 0, 0, 0, -1, 0, 0, 0, -1, 1, 1, 1)
 
 	New()
 		addTrigger(triggersOnAdd, new /datum/materialProc/negative_add())

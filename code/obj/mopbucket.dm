@@ -52,7 +52,7 @@
 	src.transfer_all_reagents(over_object, usr)
 
 /obj/mopbucket/MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
-	if (!in_range(user, src) || user.restrained() || user.getStatusDuration("paralysis") || user.sleeping || user.stat || user.lying || user.buckled)
+	if (!in_interact_range(user, src) || user.restrained() || user.getStatusDuration("paralysis") || user.sleeping || user.stat || user.lying || user.buckled)
 		return
 
 	if (O == user)

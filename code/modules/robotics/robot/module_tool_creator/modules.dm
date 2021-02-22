@@ -70,7 +70,7 @@
 		/obj/item/kitchen/utensil/knife/bread,
 		/obj/item/ladle,
 		/obj/item/kitchen/rollingpin/light,
-		/obj/item/reagent_containers/glass/bottle/icing,
+		/obj/item/reagent_containers/food/drinks/drinkingglass/icing,
 	)
 
 /datum/robot/module_tool_creator/recursive/module/common

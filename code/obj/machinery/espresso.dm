@@ -88,7 +88,7 @@
 										playsound(src.loc, 'sound/misc/pourdrink.ogg', 50, 1)
 									return
 						if ("Remove cup")
-							if (get_dist(src, usr) > 1 || isAI(user))
+							if (get_dist(src, user) > 1 || isAI(user))
 								user.show_text("You can not do that remotely.")
 								return
 							src.cupinside = 0

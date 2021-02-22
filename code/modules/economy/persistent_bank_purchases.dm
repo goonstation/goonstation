@@ -394,7 +394,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 		carries_over = 0
 
 		Create(var/mob/living/M)
-			setdead(M)
+			M.death(FALSE)
 			boutput(M, "<span class='notice'><b>You magically keel over and die! Oh, no!</b></span>")
 			return 1
 
@@ -438,7 +438,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 			if(istype(M.back, /obj/item/storage))
 				var/obj/item/storage/backpack = M.back
 				new /obj/item/tank/emergency_oxygen(backpack) // oh boy they'll need this if they are unlucky
-				backpack.hud.update()
+				backpack.hud.update(M)
 			var/mob/living/carbon/human/H = M
 			if(istype(H))
 				H.equip_new_if_possible(/obj/item/clothing/mask/breath, SLOT_WEAR_MASK)
@@ -613,4 +613,3 @@ var/global/list/persistent_bank_purchaseables =	list(\
 				A.set_hat(new picked())
 				return 1
 			return 0
-

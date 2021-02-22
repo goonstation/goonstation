@@ -21,9 +21,9 @@
 		..()
 
 	build_click(var/mob/user, var/datum/buildmode_holder/holder, var/list/pa, var/atom/object)
-		if (pa.Find("left"))
+		if ("left" in pa)
 			var/turf/T = get_turf(object)
-			if (pa.Find("ctrl"))
+			if ("ctrl" in pa)
 				finished = 1
 				clear_selections()
 				return
@@ -32,7 +32,7 @@
 				trigger.icon_state = "trigger"
 				trigger.triggered = selected_triggerable.Copy()
 				trigger.trigger_count = trigger_count
-		else if (pa.Find("right"))
+		else if ("right" in pa)
 			if (istype(object, /obj/adventurepuzzle/triggerable))
 				if (object in selected_triggerable)
 					object.overlays -= selection
@@ -46,7 +46,7 @@
 						selected_triggerable += object
 						selected_triggerable[object] = act
 					else
-						boutput(usr, "<span class='alert'>ERROR: Missing actions definition for triggerable [object].</span>")
+						boutput(user, "<span class='alert'>ERROR: Missing actions definition for triggerable [object].</span>")
 
 /obj/adventurepuzzle/triggerer/trigger
 	name = "invisible trigger"

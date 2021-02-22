@@ -232,11 +232,10 @@
 			return examine_list.Join("\n")
 
 	proc/update_icon()
-		src.overlays = null
 		if (!src.IV)
 			src.icon_state = "IVstand"
 			src.name = "\improper IV stand"
-			return
+			src.UpdateOverlays(null, "fluid")
 		else
 			src.icon_state = "IVstand1"
 			src.name = "\improper IV stand ([src.IV])"
@@ -246,8 +245,9 @@
 				src.fluid_image.icon_state = "IVstand1-fluid"
 				var/datum/color/average = src.IV.reagents.get_average_color()
 				src.fluid_image.color = average.to_rgba()
-				src.overlays += src.fluid_image
-			return
+				src.UpdateOverlays(src.fluid_image, "fluid")
+			else
+				src.UpdateOverlays(null, "fluid")
 
 	attackby(obj/item/W, mob/user)
 		if (iswrenchingtool(W))
@@ -287,7 +287,7 @@
 
 	MouseDrop(atom/over_object as mob|obj)
 		var/atom/movable/A = over_object
-		if (usr && !usr.restrained() && !usr.stat && in_range(src, usr) && in_range(over_object, usr) && istype(A))
+		if (usr && !usr.restrained() && !usr.stat && in_interact_range(src, usr) && in_interact_range(over_object, usr) && istype(A))
 			if (src.IV && ishuman(over_object))
 				src.IV.attack(over_object, usr)
 				return

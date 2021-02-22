@@ -901,17 +901,17 @@ var/global/curr_day = null
 	var/serverURL
 	var/serverName
 	switch (server)
-		if (1, "rp")
-			serverName = "Goonstation Roleplay"
+		if (1, "main1")
+			serverName = "Goonstation 1 Classic: Heisenbee"
 			serverURL = "byond://goon1.goonhub.com:26100"
-		if (2, "main")
-			serverName = "Goonstation"
+		if (2, "main2")
+			serverName = "Goonstation 2 Classic: Bombini"
 			serverURL = "byond://goon2.goonhub.com:26200"
-		if (3, "main2")
-			serverName = "Goonstation Roleplay Overflow"
+		if (3, "main3")
+			serverName = "Goonstation 3 Roleplay: Morty"
 			serverURL = "byond://goon3.goonhub.com:26300"
-		if (4, "main3")
-			serverName = "Goonstation Overflow"
+		if (4, "main4")
+			serverName = "Goonstation 4 Roleplay: Sylvester"
 			serverURL = "byond://goon4.goonhub.com:26400"
 
 	if (serverURL)
@@ -974,7 +974,7 @@ var/global/curr_day = null
 
 			var/ircmsg[] = new()
 			ircmsg["key"] = src.mob && src ? src.key : ""
-			ircmsg["name"] = src.mob.real_name
+			ircmsg["name"] = stripTextMacros(src.mob.real_name)
 			ircmsg["key2"] = target
 			ircmsg["name2"] = "Discord"
 			ircmsg["msg"] = html_decode(t)
@@ -1008,7 +1008,7 @@ var/global/curr_day = null
 
 			var/ircmsg[] = new()
 			ircmsg["key"] = src.mob && src ? src.key : ""
-			ircmsg["name"] = src.mob.real_name
+			ircmsg["name"] = stripTextMacros(src.mob.real_name)
 			ircmsg["key2"] = target
 			ircmsg["name2"] = "Discord"
 			ircmsg["msg"] = html_decode(t)
@@ -1058,9 +1058,9 @@ var/global/curr_day = null
 
 				var/ircmsg[] = new()
 				ircmsg["key"] = src.mob && src ? src.key : ""
-				ircmsg["name"] = src.mob.real_name
+				ircmsg["name"] = stripTextMacros(src.mob.real_name)
 				ircmsg["key2"] = (M != null && M.client != null && M.client.key != null) ? M.client.key : ""
-				ircmsg["name2"] = (M != null && M.real_name != null) ? M.real_name : ""
+				ircmsg["name2"] = (M != null && M.real_name != null) ? stripTextMacros(M.real_name) : ""
 				ircmsg["msg"] = html_decode(t)
 				ircbot.export("mentorpm", ircmsg)
 
@@ -1454,7 +1454,7 @@ var/global/curr_day = null
 </head>
 <body>
 <video autoplay style="position:fixed;top:0px;right:0px;left:0px;bottom:0px">
-<source src="http://cdn.goonhub.com/misc/cinematics/[name].mp4" type="video/mp4">
+<source src="[config.cdn]/misc/cinematics/[name].mp4" type="video/mp4">
 </video>
 
 <script type="text/javascript">

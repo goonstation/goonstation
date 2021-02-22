@@ -175,7 +175,7 @@
 	icon_state = "placeholder"
 	fullbright = 1
 #ifndef HALLOWEEN
-	color = "#BBBBBB"
+	color = "#898989"
 #endif
 	temperature = TCMB
 	thermal_conductivity = OPEN_HEAT_TRANSFER_COEFFICIENT
@@ -898,72 +898,6 @@
 /turf/unsimulated/wall/solidcolor/black
 	icon_state = "black"
 
-/turf/unsimulated/wall/titlecard
-	appearance_flags = TILE_BOUND
-	fullbright = 1
-	icon = 'icons/misc/widescreen.dmi' //fullscreen.dmi
-	icon_state = "title_main"
-	layer = 60
-	name = "Space Station 13"
-	desc = "The title card for it, at least."
-	plane = PLANE_OVERLAY_EFFECTS
-	pixel_x = -96
-
-	New()
-		..()
-	// ifdef doesn't have an elifdef (or if it does it isn't listed) so... these are functionally equivalent
-	#if defined(MAP_OVERRIDE_OSHAN)
-		icon_state = "title_oshan"
-		name = "Oshan Laboratory"
-		desc = "An underwater laboratory on the planet Abzu."
-	#elif defined(MAP_OVERRIDE_MANTA)
-		icon_state = "title_manta"
-		name = "The NSS Manta"
-		desc = "Some fancy comic about the NSS Manta and its travels on the planet Abzu."
-	#endif
-	#if defined(REVERSED_MAP)
-		transform = list(-1, 0, 0, 0, 1, 0)
-	#endif
-		lobby_titlecard = src
-
-		if (!player_capa)
-			encourage()
-
-	proc/encourage()
-		var/obj/overlay/clickable = new/obj/overlay(src)
-
-		// This is gross. I'm sorry.
-		var/list/servers = list()
-		servers["main"]		= {"<a style='color: #88f;' href='byond://winset?command=Change-Server "main'>Goonstation</a>"}
-		servers["main3"]	= {"<a style='color: #88f;' href='byond://winset?command=Change-Server "main3'>Goonstation Overflow</a>"}
-		servers["rp"]		= {"<a style='color: #88f;' href='byond://winset?command=Change-Server "rp'>Goonstation Roleplay</a>"}
-		servers["main2"]	= {"<a style='color: #88f;' href='byond://winset?command=Change-Server "main2'>Goonstation Roleplay Overflow</a></span>"}
-
-		var/serverList = ""
-		for (var/serverId in servers)
-			if (serverId == config.server_id)
-				continue
-			serverList += "\n[servers[serverId]]"
-
-		clickable.maptext = {"<span class='ol vga'>
-Welcome to Goonstation!
-New? <a style='color: #88f;' href="https://mini.xkeeper.net/ss13/tutorial/">Check the tutorial</a>!
-Have questions? Ask mentors with \[F3]!
-Need an admin? Message us with \[F1].
-
-Other Goonstation servers:[serverList]"}
-		clickable.maptext_width = 600
-		clickable.maptext_height = 400
-		clickable.plane = 100
-		clickable.layer = src.layer + 1
-		clickable.x -= 3
-
-
-	proc/educate()
-		maptext = "<span class='ol c ps2p'>Hello! Press F3 to ask for help. You can change game settings using the file menu on the top left, and see our wiki + maps by clicking the buttons on the top right.</span>"
-		maptext_width = 300
-		maptext_height = 300
-
 /turf/unsimulated/wall/other
 	icon_state = "r_wall"
 
@@ -1035,19 +969,15 @@ Other Goonstation servers:[serverList]"}
 /turf/space/attackby(obj/item/C as obj, mob/user as mob)
 	var/area/A = get_area (user)
 	if (istype(A, /area/supply/spawn_point || /area/supply/delivery_point || /area/supply/sell_point))
-		boutput(usr, "<span class='alert'>You can't build here.</span>")
+		boutput(user, "<span class='alert'>You can't build here.</span>")
 		return
-	if (istype(C, /obj/item/rods))
+	var/obj/item/rods/R = C
+	if (istype(R) && R.consume_rods(1))
 		boutput(user, "<span class='notice'>Constructing support lattice ...</span>")
 		playsound(src, "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
 		ReplaceWithLattice()
-		if(C.material) src.setMaterial(C.material)
-		C:amount--
-
-		if (C:amount < 1)
-			user.u_equip(C)
-			qdel(C)
-			return
+		if (R.material)
+			src.setMaterial(C.material)
 		return
 
 	if (istype(C, /obj/item/tile))

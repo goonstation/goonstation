@@ -28,7 +28,7 @@
 		if(!src.host || src.loc != src.host)
 			return 1
 
-		if ((!usr.contents.Find(src.host) && (!in_range(src.host, usr) || !istype(src.host.loc, /turf))) && (!issilicon(usr)))
+		if ((!usr.contents.Find(src.host) && (!in_interact_range(src.host, usr) || !istype(src.host.loc, /turf))) && (!issilicon(usr)))
 			return 1
 
 		if(usr.stat || usr.restrained())
@@ -261,7 +261,6 @@
 			return
 		var/loc_to_check = src.host.loc
 
-		src = null
 		for(var/turf/T in range(1, loc_to_check) )
 
 			if(!T.intact)

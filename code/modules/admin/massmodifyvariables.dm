@@ -150,7 +150,9 @@
 			O.vars[variable] = initial(O.vars[variable])
 
 		if("json")
-			O.vars[variable] = json_decode(input("Enter json:") as text|null)
+			var/newval = input("Enter json:", "JSON", json_encode(O.vars[variable])) as text|null
+			if(!isnull(newval))
+				O.vars[variable] = json_decode(newval)
 
 		if("ref")
 			O.vars[variable] = locate(input("Enter ref:") as text|null)

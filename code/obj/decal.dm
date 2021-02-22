@@ -454,7 +454,7 @@ obj/decal/fakeobjects/teleport_pad
 	can_buckle(var/mob/M as mob, var/mob/user as mob)
 		if (M != user)
 			return 0
-		if ((!( iscarbon(M) ) || get_dist(src, user) > 1 || user.restrained() || usr.stat || !user.canmove))
+		if ((!( iscarbon(M) ) || get_dist(src, user) > 1 || user.restrained() || user.stat || !user.canmove))
 			return 0
 		return 1
 
@@ -537,7 +537,7 @@ obj/decal/fakeobjects/teleport_pad
 		var/mob/M =	AM
 		// drsingh fix for undefined variable mob/living/carbon/monkey/var/shoes
 
-		if (M.getStatusDuration("weakened") || M.getStatusDuration("stunned"))
+		if (M.getStatusDuration("weakened") || M.getStatusDuration("stunned") || M.getStatusDuration("frozen"))
 			return
 
 		if (M.slip(0))

@@ -28,7 +28,7 @@
 
 /datum/artifact/telewand
 	associated_object = /obj/item/artifact/teleport_wand
-	rarity_class = 3
+	rarity_weight = 200
 	validtypes = list("wizard","eldritch","precursor")
 	react_xray = list(10,75,90,11,"ANOMALOUS")
 	var/sound/wand_sound = 'sound/effects/mag_warp.ogg'

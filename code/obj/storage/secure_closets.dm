@@ -70,7 +70,6 @@
 	/obj/item/stamp/hos,
 	/obj/item/device/radio/headset/command/hos,
 	/obj/item/clothing/shoes/swat/heavy,
-
 	/obj/item/barrier)
 
 /obj/storage/secure/closet/command/hop
@@ -522,7 +521,8 @@
 	/obj/item/electronics/soldering,
 	/obj/item/deconstructor,
 	/obj/item/electronics/frame/mech_cabinet=2,
-	/obj/item/storage/mechanics/housing_handheld=1)
+	/obj/item/storage/mechanics/housing_handheld=1,
+	/obj/item/paper/manufacturer_blueprint/ai_status_display)
 
 /obj/storage/secure/closet/engineering/atmos
 	name = "\improper Atmospheric Technician's locker"
@@ -666,7 +666,7 @@
 		toggle()
 
 /obj/storage/secure/closet/fridge/kitchen
-	spawn_contents = list(/obj/item/reagent_containers/food/drinks/milk = 5,/obj/item/storage/box/cookie_tin)
+	spawn_contents = list(/obj/item/reagent_containers/food/drinks/milk = 5,/obj/item/reagent_containers/food/snacks/condiment/syrup = 3,/obj/item/storage/box/cookie_tin,/obj/item/storage/box/stroopwafel_tin)
 	make_my_stuff()
 		if (..()) // make_my_stuff is called multiple times due to lazy init, so the parent returns 1 if it actually fired and 0 if it already has
 			var/obj/item/storage/box/donkpocket_kit/dp = new(src)

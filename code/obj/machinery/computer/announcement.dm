@@ -22,9 +22,9 @@
 	req_access = list(access_heads)
 	object_flags = CAN_REPROGRAM_ACCESS
 
-	lr = 0.6
-	lg = 1
-	lb = 0.1
+	light_r =0.6
+	light_g = 1
+	light_b = 0.1
 
 	New()
 		..()
@@ -60,7 +60,7 @@
 			if (src.ID)
 				src.ID.set_loc(src.loc)
 				boutput(user, "<span class='notice'>[src.ID] is ejected from the ID scanner.</span>")
-			usr.drop_item()
+			user.drop_item()
 			W.set_loc(src)
 			src.ID = W
 			src.unlocked = check_access(ID, 1)

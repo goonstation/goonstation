@@ -67,9 +67,10 @@
 	icon_state = "pizza_p"
 	amount = 6
 	heal_amt = 3
-	var/topping_color = null
-	var/sliced = 0
-	var/topping = 0
+	var/topping_color = "#ff0000"
+	var/sharpened = FALSE
+	var/sliced = FALSE
+	var/topping = FALSE
 	var/num = 0
 	var/list/topping_colors = list()
 	var/list/topping_holder = list()
@@ -89,36 +90,61 @@
 				src.visible_message("<b>[src]</b> <i>says, \"I'm pizza.\"</i>")
 
 	attackby(obj/item/W as obj, mob/user as mob)
+		if (istype(W, /obj/item/kitchen/utensil/knife/pizza_cutter/traitor))
+			var/obj/item/kitchen/utensil/knife/pizza_cutter/traitor/cutter = W
+			if (cutter.sharpener_mode)
+				if (src.sharpened)
+					boutput(user, "<span class='alert'>This has already been sharpened.</span>")
+					return
+				src.sharpened = TRUE
+				if(src.sliced)
+					boutput(user, "<span class='notice'>You sharpen the pizza slice. Somehow.</span>")
+					return
+				else
+					boutput(user, "<span class='notice'>You sharpen the pizza, and start slicing it.</span>")
 		if (istool(W, TOOL_CUTTING | TOOL_SAWING))
-			if (src.sliced == 1)
+			if (src.sliced)
 				boutput(user, "<span class='alert'>This has already been sliced.</span>")
 				return
 			boutput(user, "<span class='notice'>You cut the pizza into slices.</span>")
 			if (src.name == "cheese keyzza")
 				boutput(user, "<i>You feel as though something of value has been lost...</i>")
-			var/makeslices = src.amount
-			while (makeslices > 0)
-				var/obj/item/reagent_containers/food/snacks/pizza/P = new src.type(get_turf(src))
-				P.topping_holder += src.topping_colors
-				P.overlays.len = 0
-				P.sliced = 1
-				P.amount = 1
-				P.icon_state = "pslice"
-				P.quality = src.quality
-				P.heal_amt += round((src.heal_amt/makeslices))
-				if(topping)
-					P.name = src.name
-					P.desc = src.desc
-					P.topping = 1
-					P.num = src.num
-					P.add_topping(num)
-				src.reagents.trans_to(P, src.reagents.total_volume/makeslices)
-				P.pixel_x = rand(-6, 6)
-				P.pixel_y = rand(-6, 6)
-				makeslices--
-			qdel (src)
+			src.make_slices()
+
+	proc/make_slices()
+		var/makeslices = src.amount
+		. = list()
+		while (makeslices > 0)
+			var/obj/item/reagent_containers/food/snacks/pizza/P = new src.type(get_turf(src))
+			P.topping_holder += src.topping_colors
+			P.overlays.len = 0
+			P.sharpened = src.sharpened
+			P.sliced = TRUE
+			P.amount = 1
+			P.icon_state = "pslice"
+			P.quality = src.quality
+			P.heal_amt += round((src.heal_amt/makeslices))
+			P.topping_color = src.topping_color
+			if(src.sharpened)
+				src.throw_spin = 0
+			if(topping)
+				P.name = src.name
+				P.desc = src.desc
+				P.topping = TRUE
+				P.num = src.num
+				P.add_topping(num)
+			src.reagents.trans_to(P, src.reagents.total_volume/makeslices)
+			P.pixel_x = rand(-6, 6)
+			P.pixel_y = rand(-6, 6)
+			. += P
+			makeslices--
+		qdel(src)
+
 
 	attack(mob/M as mob, mob/user as mob, def_zone)
+		if (sharpened && prob(15))
+			boutput(M, "<span class='alert'>That pizza was sharp!</span>")
+			take_bleeding_damage(user, null, 15, DAMAGE_CUT)
 		if (!src.sliced)
 			if (user == M)
 				boutput(user, "<span class='alert'>You can't just cram that in your mouth, you greedy beast!</span>")
@@ -128,11 +154,44 @@
 				user.visible_message("<span class='alert'><b>[user]</b> futilely attempts to shove [src] into [M]'s mouth!</span>")
 				return
 		else
+			if (sharpened)
+				boutput(M, "<span class='alert'>The pizza was too pointy!</span>")
+				take_bleeding_damage(M, user, 50, DAMAGE_CUT)
 			..()
+
+	attack_self(var/mob/user as mob)
+		if (sharpened && prob(15))
+			boutput(user, "<span class='alert'>The pizza was sharp!</span>")
+			take_bleeding_damage(user, null, 15, DAMAGE_CUT)
+		if (!src.sliced)
+			boutput(user, "<span class='alert'>You can't just cram that in your mouth, you greedy beast!</span>")
+			user.visible_message("<b>[user]</b> stares at [src] in a confused manner.")
+			return
+		else
+			if (sharpened)
+				boutput(user, "<span class='alert'>The pizza was too pointy!</span>")
+				take_bleeding_damage(user, user, 50, DAMAGE_CUT)
+			..()
+
+	throw_impact(M)
+		..()
+		if (!sharpened || isnull(M))
+			return
+		if (sliced)
+			if (ishuman(M))
+				var/mob/living/carbon/human/H = M
+				H.implant.Add(src)
+				src.visible_message("<span class='alert'>[src] gets embedded in [M]!</span>")
+				playsound(src.loc, "sound/weapons/slashcut.ogg", 100, 1)
+				H.changeStatus("weakened", 2 SECONDS)
+				src.set_loc(M)
+				src.transfer_all_reagents(M)
+			random_brute_damage(M, 11)
+			take_bleeding_damage(M, null, 25, DAMAGE_STAB)
 
 	proc/add_topping(var/num)
 		var/icon/I
-		if (sliced == 0)
+		if (!sliced)
 			I = new /icon('icons/obj/foodNdrink/food_meals.dmi',"pizza_topping_1")
 			I.Blend(topping_color, ICON_ADD)
 			src.overlays += I
@@ -152,7 +211,7 @@
 /obj/item/reagent_containers/food/snacks/pizza/pepperoni
 	name = "pepperoni pizza"
 	desc = "A typical pepperoni pizza."
-	topping = 1
+	topping = TRUE
 	topping_color = "#C90E0E"
 
 	New()
@@ -162,7 +221,7 @@
 /obj/item/reagent_containers/food/snacks/pizza/meatball
 	name = "meatball pizza"
 	desc = "A typical meatball pizza."
-	topping = 1
+	topping = TRUE
 	topping_color = "#663300"
 
 	New()
@@ -172,7 +231,7 @@
 /obj/item/reagent_containers/food/snacks/pizza/mushroom
 	name = "mushroom pizza"
 	desc = "A typical mushroom pizza."
-	topping = 1
+	topping = TRUE
 	topping_color = "#CFCFCF"
 	food_effects = list("food_disease_resist")
 
@@ -183,12 +242,21 @@
 /obj/item/reagent_containers/food/snacks/pizza/xmas
 	name = "\improper Spacemas pizza"
 	desc = "A traditional Spacemas pizza! It has ham, mashed potatoes, gingerbread and candy canes on it, with eggnog sauce and a fruitcake crust! Yum!"
-	topping = 1
+	topping = TRUE
 	topping_color = "#3CFF00"
 
 	New()
 		..()
 		src.add_topping(0)
+
+/obj/item/reagent_containers/food/snacks/stroopwafel
+	name = "stroopwafel"
+	desc = "A traditional cookie from Holland. Doesn't this need to go into the microwave?"
+	icon = 'icons/obj/foodNdrink/food_snacks.dmi'
+	icon_state = "stroopwafel"
+	amount = 2
+	heal_amt = 2
+	food_effects = list("food_refreshed")
 
 /obj/item/reagent_containers/food/snacks/cookie
 	name = "sugar cookie"
@@ -1829,13 +1897,11 @@
 
 	on_reagent_change()
 		if (src.reagents && src.reagents.total_volume)
-			src.overlays = null
-			for(var/current_id in reagents.reagent_list)
-				var/datum/reagent/current_reagent = reagents.reagent_list[current_id]
-				var/icon/I = icon('icons/obj/foodNdrink/food_snacks.dmi', "tortilla-chip-overlay")
-				I.Blend(rgb(current_reagent.fluid_r, current_reagent.fluid_g, current_reagent.fluid_b,current_reagent.transparency), ICON_ADD)
-				src.overlays += image("icon" = I, "layer" = FLOAT_LAYER)
-		return
+			var/image/dip = image('icons/obj/foodNdrink/food_snacks.dmi', "tortilla-chip-overlay")
+			dip.color = src.reagents.get_average_color().to_rgba()
+			src.UpdateOverlays(dip, "dip")
+		else
+			src.UpdateOverlays(null, "dip")
 
 /obj/item/reagent_containers/food/snacks/wonton_spawner
 	name = "wonton spawner"

@@ -11,8 +11,12 @@
 
 	infra_luminosity = 4
 
+/mob/living/carbon/New()
+	START_TRACKING
+	. = ..()
 
 /mob/living/carbon/disposing()
+	STOP_TRACKING
 	stomach_contents = null
 	..()
 
