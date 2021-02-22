@@ -57,7 +57,7 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/obj/item/fish/red_herring = 5)
 
 /datum/fishing_spot/test
-	fishing_atom_type = /turf/simulated/floor/serpeices/ancient
+	fishing_atom_type = /turf/simulated/floor/serpieces/ancient
 	fish_available = list(/obj/item/fish/carp = 40,\
 	/obj/item/fish/bass = 30,\
 	/obj/item/fish/salmon = 20,\
