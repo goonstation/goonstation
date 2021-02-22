@@ -45,7 +45,7 @@
 DEFINE_FLOORS_SIMMED_UNSIMMED(pattern,
 	icon_state = "")
 
-DEFINE_FLOORS_SIMMED_UNSIMMED(pattern/checker/
+DEFINE_FLOORS_SIMMED_UNSIMMED(pattern/checker/,
 	icon_state = "")
 
 DEFINE_FLOORS_SIMMED_UNSIMMED(pattern/checker/whiteblue,
@@ -109,6 +109,13 @@ DEFINE_FLOORS_SIMMED_UNSIMMED(side/blue,
 
 DEFINE_FLOORS_SIMMED_UNSIMMED(side/blue/corner,
 	icon_state = "bluecorner")
+
+//
+DEFINE_FLOORS_SIMMED_UNSIMMED(side/blueblack,
+	icon_state = "blueblack")
+
+DEFINE_FLOORS_SIMMED_UNSIMMED(side/blueblack/corner,
+	icon_state = "blueblackcorner")
 
 ////////////////////////
 ////////////////////////		~~~~~~~AAAAAAAAAAAAAAAAAAAA
