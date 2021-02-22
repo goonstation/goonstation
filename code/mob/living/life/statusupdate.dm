@@ -2,6 +2,8 @@
 /datum/lifeprocess/statusupdate
 	//april fools stuff
 	var/blinktimer = 0
+	var/blinktimerstage = 0
+	var/blinktimernotifredundant = 0
 	var/blinkstate = 0
 
 	process(var/datum/gas_mixture/environment)
@@ -60,23 +62,46 @@
 
 			src.blinktimer += mult
 			switch(src.blinktimer)
-				if (20)
-					if (showmessages) boutput(owner, "<span class='alert'>Your eyes feel slightly uncomfortable!</span>")
-				if (30)
-					if (showmessages) boutput(owner, "<span class='alert'>Your eyes feel quite dry!</span>")
-				if (40)
-					if (showmessages) boutput(owner, "<span class='alert'>Your eyes feel very dry and uncomfortable, it's getting difficult to see!</span>")
+				if (0 to 20)
+					src.blinktimerstage = 0
+					src.blinktimernotifredundant = 0
+				if (20 to 30)
+					if (src.blinktimernotifredundant < 1)
+						src.blinktimerstage = 1
+				if (30 to 40)
+					if (src.blinktimernotifredundant < 2)
+						src.blinktimerstage = 2
+				if (40 to 60)
 					owner.change_eye_blurry(3, 3)
-				if (41 to 59)
-					owner.change_eye_blurry(3, 3)
-				if (60)
-					if (showmessages) boutput(owner, "<span class='alert'>Your eyes are so dry that you can't see a thing!</span>")
+					if (src.blinktimernotifredundant < 3)
+						src.blinktimerstage = 3
+				if (60 to 100)
 					owner.take_eye_damage(max(0, min(3, 3 - tempblind)), 1)
-				if (61 to 99)
-					owner.take_eye_damage(max(0, min(3, 3 - tempblind)), 1)
-				if (100) //blinking won't save you now, buddy
-					if (showmessages) boutput(owner, "<span class='alert'>You feel a horrible pain in your eyes. That can't be good.</span>")
+					if (src.blinktimernotifredundant < 4)
+						src.blinktimerstage = 4
+				if (100 to INFINITY && src.blinktimernotifredundant < 5)
 					owner.contract_disease(/datum/ailment/disability/blind,null,null,1)
+					src.blinktimerstage = 5
+			switch(src.blinktimerstage)
+				if (0)
+					// this statement is intentionally left blank
+				if (1)
+					if (showmessages) boutput(owner, "<span class='alert'>Your eyes feel slightly uncomfortable!</span>")
+					src.blinktimernotifredundant = 1
+				if (2)
+					if (showmessages) boutput(owner, "<span class='alert'>Your eyes feel quite dry!</span>")
+					src.blinktimernotifredundant = 2
+				if (3)
+					if (showmessages) boutput(owner, "<span class='alert'>Your eyes feel very dry and uncomfortable, it's getting difficult to see!</span>")
+					src.blinktimernotifredundant = 3
+				if (4)
+					if (showmessages) boutput(owner, "<span class='alert'>Your eyes are so dry that you can't see a thing!</span>")
+					src.blinktimernotifredundant = 4
+				if (5) //blinking won't save you now, buddy
+					if (showmessages) boutput(owner, "<span class='alert'>You feel a horrible pain in your eyes. That can't be good.</span>")
+					src.blinktimernotifredundant = 5
+			if (src.blinktimernotifredundant)
+				src.blinktimerstage = 0
 
 			if (src.blinkstate) owner.take_eye_damage(max(0, min(1, 1 - tempblind)), 1)
 
