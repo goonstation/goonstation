@@ -755,7 +755,7 @@
 	icon_state = "wrench"
 
 	checkRequirements(var/atom/target, var/mob/user)
-		return 1
+		return TRUE
 
 	unstack
 		name = "Remove Layer"
@@ -793,7 +793,7 @@
 	icon_state = "wrench"
 	
 	checkRequirements(var/atom/target, var/mob/user)
-		return 1
+		return TRUE
 
 	solitaire
 		name = "solitaire stack"

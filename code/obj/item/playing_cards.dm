@@ -167,8 +167,8 @@
     proc/deck_or_hand(var/mob/user,var/is_hand) //used by context actions to handle creating a hand or deck of cards
         if(!istype(user.equipped(),/obj/item/playing_card))
             return
-        var/obj/item/playing_card/c = user.equipped()
-        if(c.card_style != card_style)
+        var/obj/item/playing_card/card = user.equipped()
+        if(card.card_style != card_style)
             user.show_text("These card types don't match, silly!", "red")
             return
         var/obj/item/card_group/g = new /obj/item/card_group
@@ -176,8 +176,8 @@
             g.update_group_information(g,src,TRUE)
         else
             g.update_group_information(g,src,FALSE)
-        user.u_equip(c)
-        g.add_to_group(c)
+        user.u_equip(card)
+        g.add_to_group(card)
         if(is_hand)
             g.is_hand = TRUE
             user.visible_message("<b>[user.name]</b> creates a hand of cards.")
@@ -196,14 +196,14 @@
     proc/solitaire(var/mob/user) //handles solitaire stacking
         if(!istype(user.equipped(),/obj/item/playing_card))
             return
-        var/obj/item/playing_card/c = user.equipped()
-        if(c.card_style != card_style)
+        var/obj/item/playing_card/card = user.equipped()
+        if(card.card_style != card_style)
             user.show_text("These card types don't match, silly!", "red")
             return
-        user.u_equip(c)
-        c.set_loc(src.loc)
-        c.pixel_x = src.pixel_x
-        c.pixel_y = (src.pixel_y - c.solitaire_offset)
+        user.u_equip(card)
+        card.set_loc(src.loc)
+        card.pixel_x = src.pixel_x
+        card.pixel_y = (src.pixel_y - card.solitaire_offset)
 
     //procs that convert the card into the given StG card type
     proc/stg_mob(var/list/possible_card_types,var/list/humans,var/list/borgos,var/list/ai)
@@ -383,12 +383,12 @@
     attackby(obj/item/W as obj, mob/user as mob)
         if(istype(W, /obj/item/playing_card)) //adding a card to a hand will automatically place it in the hand, while adding a card to a deck will allow the player to decide where it goes
             if(is_hand)
-                var/obj/item/playing_card/c = W
-                if(c.card_style != card_style)
+                var/obj/item/playing_card/card = W
+                if(card.card_style != card_style)
                     user.show_text("These card types don't match, silly!", "red")
                     return
-                user.u_equip(c)
-                add_to_group(c)
+                user.u_equip(card)
+                add_to_group(card)
                 user.visible_message("<b>[user.name]</b> adds a card to [his_or_her(user)] [src.name]")
             else
                 update_card_actions("card")
@@ -425,21 +425,21 @@
         if(istype(O,/obj/item/playing_card))
             user.visible_message("[user.name] starts scooping cards into the [src.name]...")
             SPAWN_DBG(0.2 SECONDS)
-                for(var/obj/item/playing_card/c in range(1, user))
-                    if(c.card_style != card_style)
+                for(var/obj/item/playing_card/card in range(1, user))
+                    if(card.card_style != card_style)
                         continue
-                    if(c.loc == user)
-                        user.u_equip(c)
-                    add_to_group(c,1)
+                    if(card.loc == user)
+                        user.u_equip(card)
+                    add_to_group(card,1)
                     update_group_sprite()
                     sleep(0.2 SECONDS)
 
     proc/hand_examine(var/mob/user, var/target) //builds the examine text players see when a hand is revealed or examined
         var/message = ""
-        for(var/obj/item/playing_card/c in stored_cards)
-            message += "<b>[c.name]:</b><br>"
-            if(c.desc)
-                message += "[c.desc]<br>"
+        for(var/obj/item/playing_card/card in stored_cards)
+            message += "<b>[card.name]:</b><br>"
+            if(card.desc)
+                message += "[card.desc]<br>"
             else
                 message += "<i>no description</i><br>"
             message += "-----<br>"
@@ -448,38 +448,38 @@
         else if(target == "all")
             user.visible_message("<b>[user.name]</b> reveals their hand: <br><br>[message]")
 
-    proc/draw_card(var/mob/user,var/obj/item/playing_card/c) //handles drawing single cards : used in search and draw
-        user.put_in_hand_or_drop(c)
-        if(c.card_style == "tarot")
+    proc/draw_card(var/mob/user,var/obj/item/playing_card/card) //handles drawing single cards : used in search and draw
+        user.put_in_hand_or_drop(card)
+        if(card.card_style == "tarot")
             if(prob(50))
-                c.tap_or_reverse(user)
+                card.tap_or_reverse(user)
 
     proc/handle_draw_last_card(var/mob/user) //when a player draws the second to last card of a group, the group is replaced by the last card in the group for consistency
-        var/obj/item/playing_card/c = stored_cards[1]
-        if(c.facedown == FALSE)
-            c.flip()
+        var/obj/item/playing_card/card = stored_cards[1]
+        if(card.facedown == FALSE)
+            card.flip()
         if(loc == user)
             user.u_equip(src)
             user.put_in_hand_or_drop(stored_cards[1])
         else
-            c.set_loc(get_turf(src.loc))
+            card.set_loc(get_turf(src.loc))
         qdel(src)
 
-    proc/add_to_group(var/obj/item/playing_card/c,var/insert) //handles adding cards to card_groups and where they are added
-        c.set_loc(src)
-        if(c.facedown)
-            c.flip()
-        if(c.tapped)
-            c.tapped = FALSE
-            c.name = c.stored_info[1]
-        if(c.reversed)
-            c.reversed = FALSE
-            c.name = c.stored_info[1]
-        c.dir = NORTH
+    proc/add_to_group(var/obj/item/playing_card/card,var/insert) //handles adding cards to card_groups and where they are added
+        card.set_loc(src)
+        if(card.facedown)
+            card.flip()
+        if(card.tapped)
+            card.tapped = FALSE
+            card.name = card.stored_info[1]
+        if(card.reversed)
+            card.reversed = FALSE
+            card.name = card.stored_info[1]
+        card.dir = NORTH
         if(insert)
-            stored_cards.Insert(insert,c)
+            stored_cards.Insert(insert,card)
         else
-            stored_cards += c
+            stored_cards += card
         if(is_hand)
             if(length(stored_cards) > max_hand_size)
                 is_hand = FALSE
@@ -504,10 +504,10 @@
             name = "hand of [card_name] cards"
         inventory_counter.update_number(length(stored_cards))
 
-    proc/update_card_information(var/obj/item/playing_card/c) //communicates information between card groups and playing_cards during deck creation to keep them in sync
-        c.total_cards = total_cards
-        c.card_style = card_style
-        c.card_name = card_name
+    proc/update_card_information(var/obj/item/playing_card/card) //communicates information between card groups and playing_cards during deck creation to keep them in sync
+        card.total_cards = total_cards
+        card.card_style = card_style
+        card.card_name = card_name
 
     proc/update_group_information(var/obj/item/card_group/g,var/obj/item/from,var/hand) //the inverse of update_card_information for creating card groups from cards
         if(hand == TRUE)
@@ -556,11 +556,11 @@
             cardActions += new /datum/contextAction/card/close
 
     proc/draw(var/mob/user,var/facedown) //the context action proc that handles players drawing a card
-        var/obj/item/playing_card/c = stored_cards[1]
+        var/obj/item/playing_card/card = stored_cards[1]
         if(facedown)
-            c.flip()
-        draw_card(user,c)
-        stored_cards -= c
+            card.flip()
+        draw_card(user,card)
+        stored_cards -= card
         if(length(stored_cards) == 1)
             handle_draw_last_card(user)
         else
@@ -635,13 +635,13 @@
                 if(position == "top")
                     var/card_pos = length(G.stored_cards)
                     for(var/i in 1 to length(G.stored_cards))
-                        var/obj/item/c = G.stored_cards[card_pos]
-                        add_to_group(c,1)
+                        var/obj/item/card = G.stored_cards[card_pos]
+                        add_to_group(card,1)
                         card_pos--
                     successful = "top"
                 else
-                    for(var/obj/item/c in G.stored_cards)
-                        add_to_group(c)
+                    for(var/obj/item/card in G.stored_cards)
+                        add_to_group(card)
                     successful = "the bottom"
                 user.u_equip(G)
                 qdel(G)
@@ -650,14 +650,14 @@
                 update_group_sprite()
                 successful = TRUE
         else if(istype(W,/obj/item/playing_card))
-            var/obj/item/playing_card/c = W
-            if(c.card_style == card_style)
-                user.u_equip(c)
+            var/obj/item/playing_card/card = W
+            if(card.card_style == card_style)
+                user.u_equip(card)
                 if(position == "top")
-                    add_to_group(c,1)
+                    add_to_group(card,1)
                     successful = "top"
                 else
-                    add_to_group(c)
+                    add_to_group(card)
                     successful = "the bottom"
                 update_group_sprite()
         if(successful)
@@ -736,8 +736,8 @@
 
         if(!deck)
             shuffle_list(stored_cards)
-            var/obj/item/playing_card/c = pick(stored_cards)
-            c.add_foil()
+            var/obj/item/playing_card/card = pick(stored_cards)
+            card.add_foil()
 
         update_group_sprite()
 

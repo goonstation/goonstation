@@ -109,19 +109,6 @@
 				card_name = "Captain"
 				card_data = "Captain cannot be played if any Nuclear Operatives are on the same side of the field, or if a Captain is already face up on the field. Captain can only be played while the Bridge area is active. When Captain enters play, you may immediately equip an Energy Gun card from your deck. When Captain enters play, all face down Captains must be discarded."
 
-				/*can_play(var/datum/griffening_controller/field_data, var/face_up, var/active_player)
-					if (field_data.player_has_card(/datum/playing_card/griffening/creature/mob/nukeop, active_player))
-						return 0
-					if (field_data.player_has_card_face_up(type) || field_data.opponent_has_card_face_up(type))
-						return 0
-					var/datum/playing_card/griffening/area/A = field_data.get_face_up_area_card()
-					if (!istype(A, /datum/playing_card/griffening/area/bridge))
-						return 0
-					return 1
-
-				enter_play(var/datum/griffening_controller/field_data, var/active_player)
-					field_data.retrieve_card_type_from_player_deck(/datum/playing_card/griffening/effect/energy_gun, active_player, 0)*/
-
 			head_of_personnel
 				attributes = GRIFFENING_ATTRIBUTE_DEFAULT | GRIFFENING_ATTRIBUTE_HEAD
 				LVL = 7
@@ -418,50 +405,17 @@
 		var/card_type = null
 		var/targeting = null
 
-		/*can_play(var/datum/griffening_controller/field_data, var/face_up, var/active_player)
-			if (card_type & GRIFFENING_TYPE_RESPONSE)
-				if (card_type == GRIFFENING_TYPE_RESPONSE)
-					if (face_up)
-						return 0
-					else
-						return 1
-			if (targeting == GRIFFENING_TARGET_NONE)
-				return 1
-			if (!face_up && !(card_type & GRIFFENING_TYPE_EQUIP))
-				return 1
-			var/list/targets = field_data.locate_viable_targets(targeting, active_player)
-			if (targets.len)
-				return 1
-			return 0*/
-
 		bolts
 			card_type = GRIFFENING_TYPE_RESPONSE | GRIFFENING_TYPE_CONTINUOUS
 			targeting = GRIFFENING_TARGET_NONE
 			card_name = "Door Bolts"
 			card_data = "While this card is in play, no area cards may be played. If this card is played face down, you may activate it when the opponent plays an area card to prevent it."
 
-			/*can_play(var/datum/griffening_controller/field_data, var/face_up, var/active_player)
-				return 1
-
-			can_respond(var/datum/griffening_controller/field_data, var/datum/playing_card/griffening/triggering_card, var/action, var/active_player)
-				if (istype(triggering_card, /datum/playing_card/griffening/area))
-					return 1
-				return 0*/
-
 		reagent
 			card_type = GRIFFENING_TYPE_INSTANT
 			targeting = GRIFFENING_TARGET_ANY_PLAYER | GRIFFENING_TARGET_DISCARDED | GRIFFENING_TARGET_ORGANIC
 			card_name = "Strange Reagent"
 			card_data = "When used, you may retrieve a killed organic from either player and instantly play it. Gibbed humans cannot be revived this way. This does not count towards the played mob limit."
-
-			/*can_play(var/datum/griffening_controller/field_data, var/face_up, var/active_player)
-				var/list/organics = field_data.player_discarded_creatures_with_attribute(GRIFFENING_ATTRIBUTE_ORGANIC, active_player) + field_data.opponent_discarded_creatures_with_attribute(GRIFFENING_ATTRIBUTE_ORGANIC, active_player)
-				if (organics.len)
-					return 1
-				return 0
-
-			enter_play(var/datum/griffening_controller/field_data, var/active_player)
-				return*/
 
 		hull_breach
 			card_type = GRIFFENING_TYPE_CONTINUOUS
