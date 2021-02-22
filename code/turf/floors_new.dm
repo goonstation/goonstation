@@ -54,52 +54,52 @@ DEFINE_FLOORS_SIMMED_UNSIMMED(pattern/checker/whiteblue,
 DEFINE_FLOORS_SIMMED_UNSIMMED(pattern/checker/bluegreen,
 	icon_state = "blugreenfull")
 //
-DEFINE_FLOORS_SIMMED_UNSIMMED(pattern/circuit,
+DEFINE_FLOORS_SIMMED_UNSIMMED(pattern/circuit,\
 	name = "transduction matrix";\
 	desc = "An elaborate, faintly glowing matrix of isolinear circuitry.";\
 	icon_state = "circuit";\
 	RL_LumR = 0;\
-	RL_LumG = 0;\   //Corresponds to color of the icon_state.
+	RL_LumG = 0;\
 	RL_LumB = 0.3;\
 	mat_appearances_to_ignore = list("pharosium");\
 	step_material = "step_plating";\
 	step_priority = STEP_PRIORITY_MED;\
-
+\
 	New();\
 		..();\
 		setMaterial(getMaterial("pharosium")))
 
-DEFINE_FLOORS_SIMMED_UNSIMMED(pattern/circuit/green,
+DEFINE_FLOORS_SIMMED_UNSIMMED(pattern/circuit/green,\
 	icon_state = "circuit-green";\
 	RL_LumR = 0;\
 	RL_LumG = 0.3;\
 	RL_LumB = 0)
 
-DEFINE_FLOORS_SIMMED_UNSIMMED(pattern/circuit/white,
+DEFINE_FLOORS_SIMMED_UNSIMMED(pattern/circuit/white,\
 	icon_state = "circuit-white";\
 	RL_LumR = 0.2;\
 	RL_LumG = 0.2;\
 	RL_LumB = 0.2)
 
-DEFINE_FLOORS_SIMMED_UNSIMMED(pattern/circuit/purple,
+DEFINE_FLOORS_SIMMED_UNSIMMED(pattern/circuit/purple,\
 	icon_state = "circuit-purple";\
 	RL_LumR = 0.1;\
 	RL_LumG = 0;\
 	RL_LumB = 0.2)
 
-DEFINE_FLOORS_SIMMED_UNSIMMED(pattern/circuit/red,
+DEFINE_FLOORS_SIMMED_UNSIMMED(pattern/circuit/red,\
 	icon_state = "circuit-red";\
 	RL_LumR = 0.3;\
 	RL_LumG = 0;\
 	RL_LumB = 0)
 
-DEFINE_FLOORS_SIMMED_UNSIMMED(pattern/circuit/vintage,
+DEFINE_FLOORS_SIMMED_UNSIMMED(pattern/circuit/vintage,\
 	icon_state = "circuit-vint1";\
 	RL_LumR = 0.1;\
 	RL_LumG = 0.1;\
 	RL_LumB = 0.1)
 
-DEFINE_FLOORS_SIMMED_UNSIMMED(pattern/circuit/off,
+DEFINE_FLOORS_SIMMED_UNSIMMED(pattern/circuit/off,\
 	icon_state = "circuitoff";\
 	RL_LumR = 0;\
 	RL_LumG = 0;\
@@ -157,7 +157,8 @@ DEFINE_FLOORS_SIMMED_UNSIMMED(decal/floorhazard/misc,
 DEFINE_FLOORS_SIMMED_UNSIMMED(full,
 	icon_state = "")
 
-DEFINE_FLOORS_SIMMED_UNSIMMED(full/black, //Okay so 'dark' is darker than 'black', So 'dark' will be named black and 'black' named grey.
+//	Okay so 'dark' is darker than 'black', So 'dark' will be named black and 'black' named grey.
+DEFINE_FLOORS_SIMMED_UNSIMMED(full/black,
 	icon_state = "dark")
 
 DEFINE_FLOORS_SIMMED_UNSIMMED(full/blue,
