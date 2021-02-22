@@ -43,35 +43,35 @@
 ////////////	Pattern floors
 
 DEFINE_FLOORS_SIMMED_UNSIMMED(pattern,
-	name = "Pattern Floors";\
 	icon_state = "")
 
 ////////////	Decal pattern floors
 
 DEFINE_FLOORS_SIMMED_UNSIMMED(decal,
-	name = "Decal Floors";\
 	icon_state = "")
 
 ////////////	Fully-Coloured floors
 
 DEFINE_FLOORS_SIMMED_UNSIMMED(full,
-	name = "Fully-Coloured Floors";\
 	icon_state = "")
 
 ////////////	Random misc floors
 
 DEFINE_FLOORS_SIMMED_UNSIMMED(misc,
-	name = "Miscellaneous Floors";\
 	icon_state = "")
 
 ////////////	Setpeice & azone floors
 
 DEFINE_FLOORS_SIMMED_UNSIMMED(setpieces,
-	name = "Setpieces/Azone floors";\
 	icon_state = "")
 
 ////////////	The side turf floors
 
 DEFINE_FLOORS_SIMMED_UNSIMMED(side,
-	name = "Floor edges";\
 	icon_state = "")
+
+DEFINE_FLOORS_SIMMED_UNSIMMED(side/arrival,
+	icon_state = "arrival")
+
+DEFINE_FLOORS_SIMMED_UNSIMMED(side/corner,
+	icon_state = "arrivalcorner")
