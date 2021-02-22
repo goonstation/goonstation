@@ -79,10 +79,10 @@
 		</style>"}
 
 		src.temp += "<table border=1>"
-		src.temp += "<tr><th>Materiel</th><th>Category</th><th>Description</th></tr>"
+		src.temp += "<tr><th>Materiel</th><th>Category</th><th>Cost</th><th>Description</th></tr>"
 
 		for (var/datum/materiel/M in materiel_stock)
-			src.temp += "<tr style=\"color:[(M.cost > src.credits[M.category]) ? "red" : "black"]\"><td><a href='?src=\ref[src];buy=\ref[M]'><b><u>[M.name]</u></b></a></td><td>[M.category]</td><td>[M.description]</td></tr>"
+			src.temp += "<tr style=\"color:[(M.cost > src.credits[M.category]) ? "red" : "black"]\"><td><a href='?src=\ref[src];buy=\ref[M]'><b><u>[M.name]</u></b></a></td><td>[M.category]</td><td>[M.cost]</td><td>[M.description]</td></tr>"
 
 		src.temp += "</table></div>"
 		src.temp = jointext(src.temp, "")
@@ -330,6 +330,7 @@
 	path = /obj/item/ammo/power_cell/high_power
 	category = "Utility"
 	description = "An additional high capacity power cell for your weapons. Note: Security Officers already spawn with one in their Security Pouch"
+	cost = 2
 
 /datum/materiel/utility/nightvisiongoggles
 	name = "Night Vision Goggles"
@@ -339,9 +340,9 @@
 
 /datum/materiel/utility/riotrounds
 	name = "40mm Riot Rounds"
-	path = /obj/item/storage/box/riotrounds
+	path = /obj/item/ammo/bullets/pbr
 	category = "Utility"
-	description = "Two boxes of 40mm Riot Rounds, totalling 4 shots, for the Riot Launcher."
+	description = "One case of 40mm Riot Rounds, totalling 2 shots, for the Riot Launcher."
 
 /datum/materiel/assistant
 	name = "Assistant"
