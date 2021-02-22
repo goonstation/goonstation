@@ -645,6 +645,8 @@ datum
 					holder.remove_reagent("neurotoxin", 3 * mult)
 				if(holder.has_reagent("capulettium"))
 					holder.remove_reagent("capulettium", 3 * mult)
+				if(holder.has_reagent("namium"))
+					holder.remove_reagent("namium", 3 * mult)
 				if(holder.has_reagent("sulfonal"))
 					holder.remove_reagent("sulfonal", 3 * mult)
 				if(holder.has_reagent("ketamine"))

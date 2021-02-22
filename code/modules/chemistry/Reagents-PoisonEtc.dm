@@ -927,6 +927,50 @@ datum
 				..()
 				return
 
+		namium
+			name = "namium"
+			id = "namium"
+			description = "It has a name." //dead appearance handled in human.dm
+			reagent_state = LIQUID
+			fluid_r = 201
+			fluid_g = 232
+			fluid_b = 93
+			viscosity = 0.17
+			var/counter = 1
+			var/fakedeathed = 0
+
+			pooled()
+				..()
+				counter = 1
+				fakedeathed = 0
+
+			on_mob_life(var/mob/M, var/mult = 1)
+				if (!M) M = holder.my_atom
+				if (!counter) counter = 1
+				switch(counter += (1 * mult))
+					if (1 to 9)
+						M.change_eye_blurry(10, 10)
+					if (10 to 18)
+						M.drowsyness  = max(M.drowsyness, 10)
+					if (19 to INFINITY)
+						M.changeStatus("weakened", 30 * mult)
+						M.drowsyness  = max(M.drowsyness, 10)
+						M.emote_allowed = FALSE
+				if (counter >= 19 && !fakedeathed)
+					M.setStatus("weakened", max(M.getStatusDuration("weakened"), 300 * mult))
+					M.visible_message("<B>[M]</B> seizes up and falls limp, [his_or_her(M)] eyes dead and lifeless...")
+					playsound(get_turf(M), "sound/voice/death_[pick(1,2)].ogg", 40, 0, 0, M.get_age_pitch())
+					fakedeathed = 1
+					M.changeStatus("blinded", 160 SECONDS)
+				..()
+				return
+			on_remove()
+				if (ismob(holder.my_atom))
+					var/mob/M = holder.my_atom
+					M.emote_allowed = TRUE
+					M.change_eye_blurry(0, 10)
+				..()
+
 		harmful/polonium
 			name = "polonium"
 			id = "polonium"

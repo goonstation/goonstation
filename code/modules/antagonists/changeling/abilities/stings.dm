@@ -75,12 +75,12 @@
 		//inject_amount = 20
 
 	//alt neuro replacement for RP
-	capulettium_plus
-		name = "Capulettium Plus Sting"
-		desc = "Transfer some capulettium plus and pancuronium into your target."
+	namium
+		name = "Namium Sting"
+		desc = "Transfer some Namium into your target."
 		icon_state = "stingneuro"
-		venom_ids = list("capulettium_plus", "pancuronium")
-		inject_amount = 20
+		venom_ids = list("namium")
+		inject_amount = 40
 
 	lsd
 		name = "Hallucinogenic Sting"

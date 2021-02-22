@@ -694,6 +694,10 @@
 		if (H.oxyloss > 10 || H.losebreath >= 4 || (H.reagents?.has_reagent("capulettium_plus") && H.hasStatus("resting"))) // Perfluorodecalin cap - normal life() depletion - buffer.
 			H.whisper(message, forced=TRUE)
 			return
+		if (H.oxyloss > 10 || H.losebreath >= 4 || (H.reagents?.has_reagent("namium") && H.hasStatus("weakened"))) // Perfluorodecalin cap - normal life() depletion - buffer.
+			H.whisper(message, forced=TRUE)
+			H.emote_allowed = FALSE
+			return
 
 	//Pod coloseum is broken - disable this unnecessary istype
 	/*
