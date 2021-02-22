@@ -1593,6 +1593,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\turf\floors.dm"
 #include "code\turf\floors_airless.dm"
 #include "code\turf\floors_carpet.dm"
+#include "code\turf\floors_new.dm"
 #include "code\turf\floors_unsimulated.dm"
 #include "code\turf\turf.dm"
 #include "code\turf\turf_autoalign.dm"
