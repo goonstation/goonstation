@@ -58,7 +58,6 @@ DEFINE_FLOORS_SIMMED_UNSIMMED(full,
 DEFINE_FLOORS_SIMMED_UNSIMMED(full/black, //Okay so 'dark' is darker than 'black', So 'dark' will be named black and 'black' named grey.
 	icon_state = "dark")
 
-
 ////////////	Random misc floors
 
 DEFINE_FLOORS_SIMMED_UNSIMMED(misc,
@@ -85,3 +84,9 @@ DEFINE_FLOORS_SIMMED_UNSIMMED(side/black,
 
 DEFINE_FLOORS_SIMMED_UNSIMMED(side/black/corner,
 	icon_state = "greyblackcorner")
+
+DEFINE_FLOORS_SIMMED_UNSIMMED(/side/whiteblack,
+	icon_state = "darkwhite")
+
+DEFINE_FLOORS_SIMMED_UNSIMMED(/side/whiteblack/corner,
+	icon_state = "darkwhitecorner")
