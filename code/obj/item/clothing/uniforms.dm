@@ -1434,11 +1434,75 @@
 
 // WALPVRGIS fashion
 
-/obj/item/clothing/under/misc/tshirtdressblk
+/obj/item/clothing/under/misc/casdressblk
     name = "Black Tshirt Dress"
     desc = "From the Spring/Summer 2053 collection."
     icon_state = "casdress_black"
     item_state = "casdress_black"
+    icon = 'icons/obj/clothing/uniforms/item_js_misc.dmi'
+    wear_image_icon = 'icons/mob/jumpsuits/worn_js_misc.dmi'
+
+/obj/item/clothing/under/misc/casdressblu
+    name = "Black Tshirt Dress"
+    desc = "From the Spring/Summer 2053 collection."
+    icon_state = "casdress_blue"
+    item_state = "casdress_blue"
+    icon = 'icons/obj/clothing/uniforms/item_js_misc.dmi'
+    wear_image_icon = 'icons/mob/jumpsuits/worn_js_misc.dmi'
+
+/obj/item/clothing/under/misc/casdressgrn
+    name = "Black Tshirt Dress"
+    desc = "From the Spring/Summer 2053 collection."
+    icon_state = "casdress_green"
+    item_state = "casdress_green"
+    icon = 'icons/obj/clothing/uniforms/item_js_misc.dmi'
+    wear_image_icon = 'icons/mob/jumpsuits/worn_js_misc.dmi'
+
+/obj/item/clothing/under/misc/casdresspnk
+    name = "Black Tshirt Dress"
+    desc = "From the Spring/Summer 2053 collection."
+    icon_state = "casdress_pink"
+    item_state = "casdress_pink"
+    icon = 'icons/obj/clothing/uniforms/item_js_misc.dmi'
+    wear_image_icon = 'icons/mob/jumpsuits/worn_js_misc.dmi'
+
+/obj/item/clothing/under/misc/casdresswht
+    name = "Black Tshirt Dress"
+    desc = "From the Spring/Summer 2053 collection."
+    icon_state = "casdress_white"
+    item_state = "casdress_white"
+    icon = 'icons/obj/clothing/uniforms/item_js_misc.dmi'
+    wear_image_icon = 'icons/mob/jumpsuits/worn_js_misc.dmi'
+
+/obj/item/clothing/under/misc/casdressbolty
+    name = "Black Tshirt Dress"
+    desc = "From the Spring/Summer 2053 collection."
+    icon_state = "casdress_bolty"
+    item_state = "casdress_bolty"
+    icon = 'icons/obj/clothing/uniforms/item_js_misc.dmi'
+    wear_image_icon = 'icons/mob/jumpsuits/worn_js_misc.dmi'
+
+/obj/item/clothing/under/misc/casdressboltp
+    name = "Black Tshirt Dress"
+    desc = "From the Spring/Summer 2053 collection."
+    icon_state = "casdress_boltp"
+    item_state = "casdress_boltp"
+    icon = 'icons/obj/clothing/uniforms/item_js_misc.dmi'
+    wear_image_icon = 'icons/mob/jumpsuits/worn_js_misc.dmi'
+
+/obj/item/clothing/under/misc/casdressleoy
+    name = "Black Tshirt Dress"
+    desc = "From the Spring/Summer 2053 collection."
+    icon_state = "casdress_leoy"
+    item_state = "casdress_leoy"
+    icon = 'icons/obj/clothing/uniforms/item_js_misc.dmi'
+    wear_image_icon = 'icons/mob/jumpsuits/worn_js_misc.dmi'
+
+/obj/item/clothing/under/misc/casdressleop
+    name = "Black Tshirt Dress"
+    desc = "From the Spring/Summer 2053 collection."
+    icon_state = "casdress_leop"
+    item_state = "casdress_leop"
     icon = 'icons/obj/clothing/uniforms/item_js_misc.dmi'
     wear_image_icon = 'icons/mob/jumpsuits/worn_js_misc.dmi'
 
