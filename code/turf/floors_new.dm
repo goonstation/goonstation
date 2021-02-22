@@ -65,17 +65,6 @@
 /turf/simulated/floor/misc
 	name = "Miscellaneous Floors"
 
-/turf/simulated/floor/misc/Vspace
-	name = "Vspace"
-	icon_state = "flashyblue"
-	var/network = "none"
-	var/network_ID = "none"
-	fullbright = 1
-
-/turf/simulated/floor/misc/Vspace/brig
-	name = "Brig"
-	icon_state = "floor"
-	network = "prison"
 
 ////////////	Setpeice & azone floors. Cause we have some of those simulated????
 

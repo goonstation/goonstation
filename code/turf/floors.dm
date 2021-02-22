@@ -888,18 +888,6 @@
 
 /////////////////////////////////////////
 
-/turf/simulated/floor/Vspace
-	name = "Vspace"
-	icon_state = "flashyblue"
-	var/network = "none"
-	var/network_ID = "none"
-	fullbright = 1
-
-/turf/simulated/floor/Vspace/brig
-	name = "Brig"
-	icon_state = "floor"
-	network = "prison"
-
 /turf/unsimulated/floor/vr
 	icon_state = "vrfloor"
 
