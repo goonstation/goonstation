@@ -65,7 +65,7 @@ DEFINE_FLOORS_SIMMED_UNSIMMED(full/black, //Okay so 'dark' is darker than 'black
 	icon_state = "dark")
 
 DEFINE_FLOORS_SIMMED_UNSIMMED(full/blue,
-	icon_state = "fullblue"
+	icon_state = "fullblue")
 
 ////////////	Random misc floors
 
