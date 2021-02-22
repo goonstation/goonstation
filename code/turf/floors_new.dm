@@ -82,24 +82,28 @@ DEFINE_FLOORS_SIMMED_UNSIMMED(setpieces,
 DEFINE_FLOORS_SIMMED_UNSIMMED(side,
 	icon_state = "")
 
+//
 DEFINE_FLOORS_SIMMED_UNSIMMED(side/arrival,
 	icon_state = "arrival")
 
 DEFINE_FLOORS_SIMMED_UNSIMMED(side/arrival/corner,
 	icon_state = "arrivalcorner")
 
+//
 DEFINE_FLOORS_SIMMED_UNSIMMED(side/black,
 	icon_state = "greyblack")
 
 DEFINE_FLOORS_SIMMED_UNSIMMED(side/black/corner,
 	icon_state = "greyblackcorner")
 
+//
 DEFINE_FLOORS_SIMMED_UNSIMMED(side/whiteblack,
 	icon_state = "darkwhite")
 
 DEFINE_FLOORS_SIMMED_UNSIMMED(side/whiteblack/corner,
 	icon_state = "darkwhitecorner")
 
+//
 DEFINE_FLOORS_SIMMED_UNSIMMED(side/blue,
 	icon_state = "blue")
 
