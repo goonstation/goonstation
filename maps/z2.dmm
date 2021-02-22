@@ -39025,7 +39025,7 @@
 	},
 /area/crypt/sigma)
 "bSb" = (
-/obj/storage/secure/closet/command/hos,
+/obj/storage/closet/command/ruined/hos,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -44215,7 +44215,7 @@
 	dir = 4;
 	icon_state = "datasec";
 	name = "Commander's Announcement Computer";
-	req_access_txt = null
+	req_access_txt = "76"
 	},
 /turf/unsimulated/floor/carpet/red/fancy/edge/sw,
 /area/syndicate_station/battlecruiser)

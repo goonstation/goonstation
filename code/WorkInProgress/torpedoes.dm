@@ -366,12 +366,12 @@
 		return
 
 	MouseDrop_T(atom/target, mob/user)
-		if(ismob(target) && get_dist(src,target) <= 1 && can_act(usr) && can_reach(usr, src) && can_reach(usr, target))
-			if (istype(target, /obj/storage/closet) && get_dist(src,target) <= 1 && can_act(usr) && can_reach(usr, src) && can_reach(usr, target))
+		if(ismob(target) && get_dist(src,target) <= 1 && can_act(user) && can_reach(user, src) && can_reach(user, target))
+			if (istype(target, /obj/storage/closet) && get_dist(src,target) <= 1 && can_act(user) && can_reach(user, src) && can_reach(user, target))
 				var/obj/storage/closet/O = target
 				O.set_loc(src.loc)
-				logTheThing("combat", usr, null, " loads \a [O] into \the [src] at [showCoords(src.x, src.y, src.z)]")
-				logTheThing("diary", usr, null, " loads \a [O] into \the [src] at [showCoords(src.x, src.y, src.z)]", "combat")
+				logTheThing("combat", user, null, " loads \a [O] into \the [src] at [showCoords(src.x, src.y, src.z)]")
+				logTheThing("diary", user, null, " loads \a [O] into \the [src] at [showCoords(src.x, src.y, src.z)]", "combat")
 			var/mob/M = target
 			if (ishuman(M))
 				M.setStatus("resting", INFINITE_STATUS)
@@ -382,8 +382,8 @@
 				user.visible_message("<span class='alert'><b>[user.name] shoves [target.name] onto [src]!</b></span>")
 			else
 				M.set_loc(src.loc)
-				logTheThing("combat", usr, target, " loads [constructTarget(target,"combat")] into \the [src] at [showCoords(src.x, src.y, src.z)]")
-				logTheThing("diary", usr, target, " loads [constructTarget(target,"diary")] into \the [src] at [showCoords(src.x, src.y, src.z)]", "combat")
+				logTheThing("combat", user, target, " loads [constructTarget(target,"combat")] into \the [src] at [showCoords(src.x, src.y, src.z)]")
+				logTheThing("diary", user, target, " loads [constructTarget(target,"diary")] into \the [src] at [showCoords(src.x, src.y, src.z)]", "combat")
 				user.visible_message("<span class='alert'><b>[user.name] shoves [target.name] onto \the [src]!</b></span>")
 				return
 
@@ -396,8 +396,8 @@
 				GM.setStatus("resting", INFINITE_STATUS)
 				GM.force_laydown_standup()
 				user.visible_message("<span class='alert'><b>[user.name] shoves [GM.name] onto [src]!</b></span>")
-				logTheThing("combat", usr, GM, " loads [constructTarget(GM,"combat")] into \the [src] at [showCoords(src.x, src.y, src.z)]")
-				logTheThing("diary", usr, GM, " loads [constructTarget(GM,"diary")] into \the [src] at [showCoords(src.x, src.y, src.z)]", "combat")
+				logTheThing("combat", user, GM, " loads [constructTarget(GM,"combat")] into \the [src] at [showCoords(src.x, src.y, src.z)]")
+				logTheThing("diary", user, GM, " loads [constructTarget(GM,"diary")] into \the [src] at [showCoords(src.x, src.y, src.z)]", "combat")
 				qdel(G)
 		else
 			return ..(I,user)

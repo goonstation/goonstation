@@ -597,7 +597,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	suicide(var/mob/living/carbon/human/user as mob)
 		if (!src.user_can_suicide(user))
 			return 0
-		if (!istype(user) || !src.canshoot())//!hasvar(usr,"organHolder")) STOP IT STOP IT HOLY SHIT STOP WHY DO YOU USE HASVAR FOR THIS, ONLY HUMANS HAVE ORGANHOLDERS
+		if (!istype(user) || !src.canshoot())//!hasvar(user,"organHolder")) STOP IT STOP IT HOLY SHIT STOP WHY DO YOU USE HASVAR FOR THIS, ONLY HUMANS HAVE ORGANHOLDERS
 			return 0
 
 		src.process_ammo(user)
@@ -669,7 +669,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	force = 10
 	contraband = 8
 	caliber = 0.308
-	max_ammo_capacity = 30 // It's magazine-fed (Convair880).
+	max_ammo_capacity = 4 // It's magazine-fed (Convair880).
 	auto_eject = 1
 	can_dual_wield = 0
 	two_handed = 1
@@ -690,7 +690,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	force = 10
 	//contraband = 8
 	caliber = 0.308
-	max_ammo_capacity = 30 // It's magazine-fed (Convair880).
+	max_ammo_capacity = 4 // It's magazine-fed (Convair880).
 	auto_eject = 1
 	can_dual_wield = 0
 	two_handed = 1
@@ -946,15 +946,15 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 
 /obj/item/gun/kinetic/tranq_pistol
 	name = "Gwydion tranquilizer pistol"
-	desc = "A silenced tranquilizer pistol chambered in .308 caliber, developed by Mabinogi Firearms Company."
+	desc = "A silenced 9mm tranquilizer pistol, developed by Mabinogi Firearms Company."
 	icon_state = "tranq_pistol"
 	item_state = "tranq_pistol"
 	w_class = 2
 	force = 3
 	contraband = 4
 	caliber = 0.355
-	max_ammo_capacity = 30
-	auto_eject = 0
+	max_ammo_capacity = 15
+	auto_eject = 1
 	hide_attack = 1
 	muzzle_flash = null
 
@@ -1577,7 +1577,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 					return
 				if (src.casings_to_eject > 0 && src.current_projectile.casing)
 					if (!src.sanitycheck(1, 0))
-						logTheThing("debug", usr, null, "<b>Convair880</b>: [user]'s gun ([src]) ran into the casings_to_eject cap, aborting.")
+						logTheThing("debug", user, null, "<b>Convair880</b>: [user]'s gun ([src]) ran into the casings_to_eject cap, aborting.")
 						src.casings_to_eject = 0
 						return
 					else

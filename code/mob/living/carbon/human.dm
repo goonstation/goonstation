@@ -234,6 +234,7 @@
 	src.update_body()
 	src.update_face()
 	src.UpdateDamageIcon()
+	START_TRACKING
 
 	// for pope
 	if (microbombs_4_everyone)
@@ -488,6 +489,7 @@
 		hud.inventory_bg = null
 		hud.inventory_items = null
 		qdel(hud)
+	STOP_TRACKING
 
 
 	for(var/obj/item/implant/imp in src.implant)
@@ -1616,7 +1618,7 @@
 
 	message = messages[1]
 	if(src.client && !forced)
-		phrase_log.log_phrase("whisper", html_decode(message))
+		phrase_log.log_phrase("whisper", message)
 	for (var/mob/M in eavesdropping)
 		if (M.say_understands(src, lang_id))
 			var/message_c = stars(message)

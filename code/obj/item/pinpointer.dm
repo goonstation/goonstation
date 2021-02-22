@@ -134,7 +134,7 @@
 	attack_hand(mob/user as mob)
 		..(user)
 		if (!user.mind || user.mind.special_role != "spy_thief")
-			boutput(usr, "<span class='alert'>The target locator emits a sorrowful ping!</span>")
+			boutput(user, "<span class='alert'>The target locator emits a sorrowful ping!</span>")
 
 			//B LARGHHHHJHH
 			active = 0
@@ -191,7 +191,7 @@
 		if(!active && istype(A, /obj/decal/cleanable/blood))
 			var/obj/decal/cleanable/blood/B = A
 			if(B.dry > 0) //Fresh blood is -1
-				boutput(usr, "<span class='alert'>Targeted blood is too dry to be useful!</span>")
+				boutput(user, "<span class='alert'>Targeted blood is too dry to be useful!</span>")
 				return
 			for(var/mob/living/carbon/human/H in mobs)
 				if(B.blood_DNA == H.bioHolder.Uid)

@@ -68,7 +68,7 @@
 						var/turfd = (isturf(master.loc) && !istype(master, /obj/item/storage/bible))
 
 						var/pixel_y_adjust = 0
-						if (usr && usr.client && usr.client.tg_layout && !turfd)
+						if (user && user.client && user.client.tg_layout && !turfd)
 							pixel_y_adjust = 1
 
 						if (pixel_y_adjust && text2num(py) > 16)
@@ -112,7 +112,7 @@
 		if (I)
 			I.MouseDrop(over_object, src_location, over_location, over_control, params)
 */
-	proc/update()
+	proc/update(mob/user = usr)
 		var x = 1
 		var y = 1 + master.slots
 		var sx = 1
@@ -127,8 +127,8 @@
 
 			turfd = 1
 
-		if (istype(usr,/mob/living/carbon/human))
-			if (usr.client && usr.client.tg_layout) //MBC TG OVERRIDE IM SORTY
+		if (istype(user,/mob/living/carbon/human))
+			if (user.client && user.client.tg_layout) //MBC TG OVERRIDE IM SORTY
 				x = 11 - round(master.slots / 2)
 				y = 3
 				sx = master.slots + 1
@@ -142,14 +142,14 @@
 
 		if (!boxes)
 			return
-		if (ishuman(usr))
-			var/mob/living/carbon/human/player = usr
+		if (ishuman(user))
+			var/mob/living/carbon/human/player = user
 			var/icon/hud_style = hud_style_selection[get_hud_style(player)]
 			if (isicon(hud_style) && boxes.icon != hud_style)
 				boxes.icon = hud_style
 
 		var/pixel_y_adjust = 0
-		if (usr && usr.client && usr.client.tg_layout && !turfd)
+		if (user && user.client && user.client.tg_layout && !turfd)
 			pixel_y_adjust = -16
 
 		boxes.screen_loc = "[x],[y]:[pixel_y_adjust] to [x+sx-1],[y-sy+1]:[pixel_y_adjust]"
@@ -157,8 +157,8 @@
 			src.close = create_screen("close", "Close", 'icons/mob/screen1.dmi', "x", ui_storage_close, HUD_LAYER+1)
 		close.screen_loc = "[x+sx-1]:[pixel_y_adjust],[y-sy+1]:[pixel_y_adjust]"
 
-		if (!turfd && istype(usr,/mob/living/carbon/human))
-			if (usr && usr.client?.tg_layout) //MBC TG OVERRIDE IM SORTY
+		if (!turfd && istype(user,/mob/living/carbon/human))
+			if (user && user.client?.tg_layout) //MBC TG OVERRIDE IM SORTY
 				boxes.screen_loc = "[x-1],[y]:[pixel_y_adjust] to [x+sx-2],[y-sy+1]:[pixel_y_adjust]"
 				close.screen_loc = "[x-1],[y-sy+1]:[pixel_y_adjust]"
 
@@ -178,8 +178,8 @@
 			I.tooltip_rebuild = 1
 		master.update_icon()
 
-	proc/add_item(obj/item/I)
-		update()
+	proc/add_item(obj/item/I, mob/user = usr)
+		update(user)
 
 	proc/remove_item(obj/item/I)
 		remove_object(I)

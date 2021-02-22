@@ -397,7 +397,7 @@
 			src.scan_card(W, user)
 			src.generate_HTML(1)
 			return
-			/*var/amount = input(usr, "How much money would you like to deposit?", "Deposit", 0) as null|num
+			/*var/amount = input(user, "How much money would you like to deposit?", "Deposit", 0) as null|num
 			if(amount <= 0)
 				return
 			if(amount > W:money)
@@ -1213,6 +1213,7 @@
 		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/a38/stun, 2)
 		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/nine_mm_NATO, 2)
 		product_list += new/datum/data/vending_product(/obj/item/implantcase/antirev, 3)
+		product_list += new/datum/data/vending_product(/obj/item/implanter, 1)
 #ifdef RP_MODE
 		product_list += new/datum/data/vending_product(/obj/item/paper/book/space_law, 1)
 #endif
@@ -1645,8 +1646,7 @@
 					icon_state = "pizza-vend"
 					src.generate_HTML(1)
 					updateUsrDialog()
-					if (!src.sharpen)
-						sleep(20 SECONDS)
+					sleep(20 SECONDS)
 					playsound(src.loc, 'sound/machines/ding.ogg', 50, 1, -1)
 					var/obj/item/reagent_containers/food/snacks/pizza/P = new /obj/item/reagent_containers/food/snacks/pizza(src.loc)
 					P.quality = 0.6
@@ -1654,8 +1654,6 @@
 					P.sharpened = src.sharpen
 					P.desc = "A typical [piztopping] pizza."
 					P.name = "[piztopping] pizza"
-					if (src.sharpen)
-						P.throw_at(usr, 16, 3)
 					sleep(0.2)
 					if(piztopping != "plain")
 						switch(piztopping)
@@ -1666,7 +1664,9 @@
 						P.add_topping(0)
 
 					if (src.sharpen)
-						sleep(20 SECONDS)
+						var/list/slices = P.make_slices()
+						for(var/obj/item/reagent_containers/food/snacks/pizza/slice in slices)
+							slice.throw_at(usr, 16, 3)
 
 					if (!(status & (NOPOWER|BROKEN)))
 						icon_state = "pizza"

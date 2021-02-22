@@ -813,7 +813,7 @@ toxic - poisons
 		precalculated = 0
 		disruption = INFINITY //distrupt every system at once
 		on_hit(atom/hit, angle, var/obj/projectile/P)
-			if (P.data || prob(10))
+			if (P.data)
 				..()
 			else
 				new /obj/effects/rendersparks(hit.loc)

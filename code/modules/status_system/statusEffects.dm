@@ -26,6 +26,8 @@
 	var/move_triggered = 0
 	/// Has a movement-modifying effect
 	var/datum/movement_modifier/movement_modifier
+	/// Put a label here to track anyone with this effect into this category
+	var/track_cat
 
 
 	/**
@@ -48,6 +50,8 @@
 		if (movement_modifier && ismob(owner))
 			var/mob/mob_owner = owner
 			APPLY_MOVEMENT_MODIFIER(mob_owner, movement_modifier, src.type)
+		if(src.track_cat && src.owner )
+			OTHER_START_TRACKING_CAT(src.owner, src.track_cat)
 
 	/**
 		* Called when the status is removed from the object. owner is still set at this point.
@@ -56,6 +60,8 @@
 		if (movement_modifier && ismob(owner))
 			var/mob/mob_owner = owner
 			REMOVE_MOVEMENT_MODIFIER(mob_owner, movement_modifier, src.type)
+		if(src.track_cat && src.owner)
+			OTHER_STOP_TRACKING_CAT(src.owner, src.track_cat)
 
 	/**
 		* Called every tick by the status controller.
@@ -125,12 +131,12 @@
 			. = "Your stamina regen is [change > 0 ? "increased":"reduced"] by [abs(change)]."
 
 		onAdd(optional=null)
-			if(hascall(owner, "add_stam_mod_regen"))
-				owner:add_stam_mod_regen(id, change)
+			var/mob/M = owner
+			APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, id, change)
 
 		onRemove()
-			if(hascall(owner, "remove_stam_mod_regen"))
-				owner:remove_stam_mod_regen(id)
+			var/mob/M = owner
+			REMOVE_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, id)
 
 	maxhealth
 		id = "maxhealth"
@@ -175,12 +181,14 @@
 		increased
 			id = "maxhealth+"
 			onUpdate(timePassed)
+				..()
 				if(change < 0) //Someone fucked this up; remove effect.
 					duration = 1
 
 		decreased
 			id = "maxhealth-"
 			onUpdate(timePassed)
+				..()
 				if(change > 0) //Someone fucked this up; remove effect.
 					duration = 1
 
@@ -220,7 +228,7 @@
 			. = ..()
 			if(ismob(owner))
 				var/mob/M = owner
-				M.add_stam_mod_regen("stims", 500)
+				APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "stims", 500)
 				M.add_stam_mod_max("stims", 500)
 				M.add_stun_resist_mod("stims", 1000)
 				M.filters += filter(type="displace", icon=icon('icons/effects/distort.dmi', "muscly"), size=0)
@@ -232,7 +240,7 @@
 			. = ..()
 			if(ismob(owner))
 				var/mob/M = owner
-				M.remove_stam_mod_regen("stims")
+				REMOVE_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "stims")
 				M.remove_stam_mod_max("stims")
 				M.remove_stun_resist_mod("stims")
 				animate(filter, size=0, time=1 SECOND, easing=SINE_EASING)
@@ -300,6 +308,7 @@
 				. = 0
 
 		onAdd(optional=null)
+			. = ..()
 			if(!isnull(optional) && optional >= stage)
 				stage = optional
 			else
@@ -434,6 +443,7 @@
 
 
 		onAdd(optional=null)
+			. = ..()
 			if(!isnull(optional) && optional >= stage)
 				stage = optional
 			else
@@ -534,6 +544,7 @@
 
 		damage_burn = 1
 		damage_type = DAMAGE_BURN
+		track_cat = TR_CAT_BURNING_MOBS
 
 		var/howMuch = ""
 		var/stage = -1
@@ -555,6 +566,7 @@
 				. = 0
 
 		onAdd(optional = BURNING_LV1)
+			. = ..()
 			if(!isnull(optional) && optional >= stage)
 				counter = optional
 
@@ -673,6 +685,11 @@
 				if (isliving(owner))
 					var/mob/living/L = owner
 					L.force_laydown_standup()
+
+		onAdd()
+			..()
+			if(duration > 1 DECI SECOND)
+				actions.interrupt(owner, INTERRUPT_STUNNED)
 
 		stunned
 			id = "stunned"
@@ -930,6 +947,7 @@
 		var/wait = 0
 
 		onAdd(optional=null)
+			. = ..()
 			animate(owner, alpha=30, flags=ANIMATION_PARALLEL, time=30)
 
 		onRemove()
@@ -965,6 +983,7 @@
 			. = "Your stamina max is increased by [change]."
 
 		onAdd(optional=null)
+			. = ..()
 			if(hascall(owner, "add_stam_mod_max"))
 				owner:add_stam_mod_max("fitness_max", change)
 
@@ -983,6 +1002,7 @@
 		var/mob/living/carbon/human/H
 
 		onAdd(optional=null)
+			. = ..()
 			if (ishuman(owner))
 				H = owner
 			else
@@ -1006,6 +1026,7 @@
 		var/sleepcount = 5 SECONDS
 
 		onAdd(optional=null)
+			. = ..()
 			if (ishuman(owner))
 				H = owner
 				sleepcount = 5 SECONDS
@@ -1042,6 +1063,7 @@
 		var/mob/living/L
 
 		onAdd(optional=null)
+			. = ..()
 			if (isliving(owner))
 				L = owner
 				if (L.getStatusDuration("burning"))
@@ -1078,6 +1100,7 @@
 		var/on_turf = 0
 
 		onAdd(optional=null)
+			. = ..()
 			if (ishuman(owner))
 				H = owner
 			else
@@ -1085,7 +1108,7 @@
 			H.max_health += max_health
 			health_update_queue |= H
 			H.add_stam_mod_max("ganger_max", max_stam)
-			H.add_stam_mod_regen("ganger_regen", regen_stam)
+			APPLY_MOB_PROPERTY(H, PROP_STAMINA_REGEN_BONUS, "ganger_regen", regen_stam)
 			if (ismob(owner))
 				var/mob/M = owner
 				if (M.mind)
@@ -1095,7 +1118,7 @@
 			H.max_health -= max_health
 			health_update_queue |= H
 			H.remove_stam_mod_max("ganger_max")
-			H.remove_stam_mod_regen("ganger_regen")
+			REMOVE_MOB_PROPERTY(H, PROP_STAMINA_REGEN_BONUS, "ganger_regen")
 			gang = null
 
 		onUpdate(timePassed)
@@ -1143,6 +1166,7 @@
 		var/change = 1 //Effective change to maxHealth
 
 		onAdd(optional=null) //Optional is change.
+			. = ..()
 			if(ismob(owner))
 				owner.delStatus("janktank_withdrawl")
 				var/mob/M = owner
@@ -1183,6 +1207,7 @@
 		var/change = 1 //Effective change to maxHealth
 
 		onAdd(optional=null) //Optional is change.
+			. = ..()
 			if(ismob(owner) && optional != 0)
 				change = optional
 
@@ -1211,6 +1236,7 @@
 		var/mob/living/carbon/human/H
 
 		onAdd(optional=null)
+			. = ..()
 			if (ishuman(owner))
 				H = owner
 			else
@@ -1218,13 +1244,13 @@
 			H.max_health += max_health
 			health_update_queue |= H
 			H.add_stam_mod_max("mutiny_max", max_stam)
-			H.add_stam_mod_regen("mutiny_regen", regen_stam)
+			APPLY_MOB_PROPERTY(H, PROP_STAMINA_REGEN_BONUS, "mutiny_regen", regen_stam)
 
 		onRemove()
 			H.max_health -= max_health
 			health_update_queue |= H
 			H.remove_stam_mod_max("mutiny_max")
-			H.remove_stam_mod_regen("mutiny_regen")
+			REMOVE_MOB_PROPERTY(H, PROP_STAMINA_REGEN_BONUS, "mutiny_regen")
 
 		getTooltip()
 			. = "Your max health, max stamina, and stamina regen have been increased because of your bossy attitude."
@@ -1243,6 +1269,7 @@
 		var/mob/living/carbon/human/H
 
 		onAdd(optional=null)
+			. = ..()
 			if (ishuman(owner))
 				H = owner
 			else
@@ -1250,13 +1277,13 @@
 			H.max_health += max_health
 			health_update_queue |= H
 			H.add_stam_mod_max("revspirit_max", max_stam)
-			H.add_stam_mod_regen("revspirit_regen", regen_stam)
+			APPLY_MOB_PROPERTY(H, PROP_STAMINA_REGEN_BONUS, "revspirit_regen", regen_stam)
 
 		onRemove()
 			H.max_health -= max_health
 			health_update_queue |= H
 			H.remove_stam_mod_max("revspirit_max")
-			H.remove_stam_mod_regen("revspirit_regen")
+			REMOVE_MOB_PROPERTY(H, PROP_STAMINA_REGEN_BONUS, "revspirit_regen")
 
 		getTooltip()
 			. = "Your max stamina and stamina regen have been increased slightly."
@@ -1272,6 +1299,7 @@
 		var/endCount = 0
 
 		onAdd(optional)
+			. = ..()
 			src.oxygenAmount = optional
 			if(iscarbon(owner))
 				H = owner
@@ -1301,6 +1329,7 @@
 		var/efficiency = 1
 
 		onAdd(optional)
+			. = ..()
 			src.efficiency = optional
 			..()
 			if(H)
@@ -1344,6 +1373,7 @@
 			. = 0
 
 	onAdd(optional=null)
+		. = ..()
 		if (ishuman(owner))
 			H = owner
 		else

@@ -409,23 +409,17 @@ datum
 			fluid_g = 16
 			fluid_b = 192
 			transparency = 255
-			var/remove_buff = 0
-
-			pooled()
-				..()
-				remove_buff = 0
 
 			on_add()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
-					remove_buff = M.add_stam_mod_regen("r_initropidril", 33)
+					APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "r_initropidril", 33)
 				return
 
 			on_remove()
-				if (remove_buff)
-					if(ismob(holder?.my_atom))
-						var/mob/M = holder.my_atom
-						M.remove_stam_mod_regen("r_initropidril")
+				if(ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
+					REMOVE_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "r_initropidril")
 				return
 
 			on_mob_life(var/mob/living/M, var/mult = 1)
@@ -565,7 +559,7 @@ datum
 
 								if (H.organHolder.heart.robotic)
 									B = new/obj/critter/domestic_bee/buddy(H.loc)
-									H.remove_stam_mod_regen("heart")
+									REMOVE_MOB_PROPERTY(H, PROP_STAMINA_REGEN_BONUS, "heart")
 									H.remove_stam_mod_max("heart")
 
 								else
@@ -1744,7 +1738,7 @@ datum
 					//POWER UP!!
 				if (t7 && data >= t7)
 					t6 = 0
-					H.add_stam_mod_regen(src.id, 100) //Buff
+					APPLY_MOB_PROPERTY(H, PROP_STAMINA_REGEN_BONUS, src.id, 100) //Buff
 					H.show_text("You feel very buff!", "red")
 
 				if (t8 && data >= t8)
@@ -1806,7 +1800,7 @@ datum
 					H.ai_calm_down = initial(H.ai_calm_down)
 					H.ai_suicidal = 0
 					if (data >= 30)
-						H.remove_stam_mod_regen(src.id) //Not so buff
+						REMOVE_MOB_PROPERTY(H, PROP_STAMINA_REGEN_BONUS, src.id) //Not so buff
 						logTheThing("combat", H, null, "has their AI disabled by [src.id]")
 						H.show_text("It's okay... it's okay... breathe... calm... it's okay...", "blue")
 				..()
@@ -1840,7 +1834,7 @@ datum
 					if(25)
 						H.remove_stam_mod_max(src.id)
 						H.add_stam_mod_max(src.id, -50)
-						H.add_stam_mod_regen(src.id, -2)
+						APPLY_MOB_PROPERTY(H, PROP_STAMINA_REGEN_BONUS, src.id, -2)
 					if(26 to 35)
 						if(prob(30)) do_stuff(2, H, mult)
 					if(36 to INFINITY)
@@ -1854,7 +1848,7 @@ datum
 				var/mob/living/carbon/human/H = holder.my_atom
 				if (!istype(H)) return
 				H.remove_stam_mod_max(src.id)
-				H.remove_stam_mod_regen(src.id)
+				REMOVE_MOB_PROPERTY(H, PROP_STAMINA_REGEN_BONUS, src.id)
 
 
 			proc/do_stuff(var/severity, var/mob/living/carbon/human/H, var/mult = 1)
