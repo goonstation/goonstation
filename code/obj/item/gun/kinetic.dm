@@ -629,7 +629,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	contraband = 5
 	caliber = 0.72
 	max_ammo_capacity = 8
-	auto_eject = 1
+	auto_eject = 0
 	can_dual_wield = 0
 	two_handed = 1
 	has_empty_state = 1
@@ -659,10 +659,11 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		..()
 		src.racked_slide = FALSE
 		src.update_icon()
+		src.casings_to_eject = 0 //This probably works
 
 	attack_self(mob/user as mob)
 		..()
-		if (!racked_slide)
+		if (!racked_slide) //Are we racked?
 			if (src.ammo.amount_left == 0)
 				boutput(user, "<span class ='notice'>You are out of shells!</span>")
 				icon_state = "shotty-empty"
@@ -671,6 +672,13 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 				icon_state = "shotty"
 				boutput(user, "<span class='notice'>You rack the slide of the shotgun!</span>")
 				playsound(user.loc, "sound/weapons/pump_action.ogg", 50, 1)
+				if (src.ammo.amount_left < 8) // Do not eject shells if you're racking a full "clip"
+					var/turf/T = get_turf(src)
+					if (T) // Eject shells on rack instead of on shoot()
+						var/obj/item/casing/C = new src.current_projectile.casing(T)
+						C.forensic_ID = src.forensic_ID
+						C.set_loc(T)
+
 
 /obj/item/gun/kinetic/ak47
 	name = "AK-744 Rifle"
