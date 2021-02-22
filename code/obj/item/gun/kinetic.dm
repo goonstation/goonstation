@@ -652,8 +652,9 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		if (racked_slide)
 			return ..()
 		else
-			//boutput(user, "<span class='notice'>You need to rack the slide before you can fire!</span>")
+			boutput(usr, "<span class='notice'>You need to rack the slide before you can fire!</span>") //Pain
 			return 0
+
 	shoot(var/target,var/start ,var/mob/user)
 		..()
 		src.racked_slide = FALSE
@@ -662,10 +663,14 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	attack_self(mob/user as mob)
 		..()
 		if (!racked_slide)
-			racked_slide = 1
-			icon_state = "shotty"
-			boutput(user, "<span class='notice'>You rack the slide of the shotgun!</span>")
-			//playsound(user.loc, )  add sound here
+			if (src.ammo.amount_left == 0)
+				boutput(user, "<span class ='notice'>You are out of shells!</span>")
+				icon_state = "shotty-empty"
+			else
+				racked_slide = 1
+				icon_state = "shotty"
+				boutput(user, "<span class='notice'>You rack the slide of the shotgun!</span>")
+				playsound(user.loc, "sound/weapons/pump_action.ogg", 50, 1)
 
 /obj/item/gun/kinetic/ak47
 	name = "AK-744 Rifle"
