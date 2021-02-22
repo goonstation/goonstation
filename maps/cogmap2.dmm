@@ -10492,6 +10492,13 @@
 /obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor/white,
 /area/station/crew_quarters/kitchen)
+"axK" = (
+/obj/table/auto,
+/obj/item/kitchen/rollingpin,
+/obj/item/reagent_containers/food/drinks/drinkingglass/icing,
+/obj/item/reagent_containers/food/drinks/drinkingglass/icing,
+/turf/simulated/floor/white,
+/area/station/crew_quarters/kitchen)
 "axL" = (
 /obj/table/auto,
 /obj/item/satchel/hydro,
@@ -13231,6 +13238,16 @@
 /obj/disposalpipe/segment,
 /obj/disposalpipe/segment/food{
 	dir = 4
+	},
+/turf/simulated/floor/specialroom/cafeteria,
+/area/station/crew_quarters/kitchen)
+"aDB" = (
+/obj/table/auto,
+/obj/item/plate,
+/obj/item/reagent_containers/food/snacks/cake/chocolate/gateau,
+/obj/disposalpipe/junction{
+	dir = 4;
+	icon_state = "pipe-j2"
 	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
@@ -36114,31 +36131,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/ce)
-"bCH" = (
-/obj/item/device/radio/intercom{
-	broadcasting = 0;
-	frequency = 1441;
-	name = "Engineering Intercom"
-	},
-/obj/stool/bed,
-/obj/item/clothing/suit/bedsheet{
-	bcolor = "yellow";
-	icon_state = "bedsheet-yellow"
-	},
-/obj/blind_switch/area{
-	pixel_x = 22;
-	pixel_y = 1
-	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 9;
-	name = "autoname - SS13";
-	pixel_x = 10;
-	tag = ""
-	},
-/obj/disposalpipe/segment/mail/vertical,
-/turf/simulated/floor/black,
-/area/station/crew_quarters/ce)
 "bCI" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	can_rupture = 0;
@@ -37052,23 +37044,6 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
-"bEo" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/portables_connector{
-	dir = 8
-	},
-/obj/item/device/radio/intercom{
-	broadcasting = 0;
-	dir = 8;
-	frequency = 1441;
-	name = "Engineering Intercom"
-	},
-/turf/simulated/floor/engine,
-/area/station/engine/core)
 "bEp" = (
 /obj/cable{
 	d1 = 4;
@@ -37081,38 +37056,6 @@
 	icon_state = "2-8"
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/engine/power{
-	name = "Engineering Control Room"
-	})
-"bEq" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/surgery_tray,
-/obj/machinery/light{
-	dir = 1;
-	layer = 9.1;
-	pixel_y = 21
-	},
-/obj/item/device/radio/intercom{
-	broadcasting = 0;
-	dir = 4;
-	frequency = 1441;
-	name = "Engineering Intercom"
-	},
-/obj/item/paper_bin,
-/obj/item/pen/marker,
-/obj/item/pen/marker,
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 4;
-	name = "autoname - SS13";
-	pixel_x = -10;
-	tag = ""
-	},
-/turf/simulated/floor/delivery,
 /area/station/engine/power{
 	name = "Engineering Control Room"
 	})
@@ -79120,6 +79063,24 @@
 	icon_state = "fgreen2"
 	},
 /area/station/hydroponics/bay)
+"ikl" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 1;
+	name = "autoname - SS13";
+	tag = ""
+	},
+/obj/item/storage/briefcase/toxins,
+/turf/simulated/floor/carpet{
+	dir = 10;
+	icon_state = "fpurple2"
+	},
+/area/station/crew_quarters/hor)
 "iko" = (
 /obj/submachine/chem_extractor{
 	dir = 4;
@@ -79253,6 +79214,41 @@
 	dir = 10
 	},
 /area/station/ranch)
+"nXx" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/portables_connector{
+	dir = 8
+	},
+/obj/item/device/radio/intercom/engineering{
+	dir = 8
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core)
+"ogG" = (
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet{
+	bcolor = "yellow";
+	icon_state = "bedsheet-yellow"
+	},
+/obj/blind_switch/area{
+	pixel_x = 22;
+	pixel_y = 1
+	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 9;
+	name = "autoname - SS13";
+	pixel_x = 10;
+	tag = ""
+	},
+/obj/disposalpipe/segment/mail/vertical,
+/obj/item/device/radio/intercom/engineering,
+/turf/simulated/floor/black,
+/area/station/crew_quarters/ce)
 "oxp" = (
 /turf/simulated/floor/grasstodirt{
 	dir = 9
@@ -79295,19 +79291,41 @@
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/science/lab)
+"qSD" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/surgery_tray,
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 21
+	},
+/obj/item/paper_bin,
+/obj/item/pen/marker,
+/obj/item/pen/marker,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 4;
+	name = "autoname - SS13";
+	pixel_x = -10;
+	tag = ""
+	},
+/obj/item/device/radio/intercom/engineering{
+	dir = 4
+	},
+/turf/simulated/floor/delivery,
+/area/station/engine/power{
+	name = "Engineering Control Room"
+	})
 "rsz" = (
 /obj/cable{
 	icon_state = "2-8"
 	},
 /turf/simulated/floor/green/side,
 /area/station/hydroponics/bay)
-"rsO" = (
-/obj/table/auto,
-/obj/item/kitchen/rollingpin,
-/obj/item/reagent_containers/food/drinks/drinkingglass/icing,
-/obj/item/reagent_containers/food/drinks/drinkingglass/icing,
-/turf/simulated/floor/white,
-/area/station/crew_quarters/kitchen)
 "rBI" = (
 /obj/railing/orange/reinforced,
 /obj/stool/chair/green{
@@ -79326,24 +79344,6 @@
 	dir = 4
 	},
 /area/shuttle/arrival/station)
-"sEu" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 1;
-	name = "autoname - SS13";
-	tag = ""
-	},
-/obj/item/storage/briefcase/toxins,
-/turf/simulated/floor/carpet{
-	dir = 10;
-	icon_state = "fpurple2"
-	},
-/area/station/crew_quarters/hor)
 "tyQ" = (
 /obj/storage/secure/closet/civilian/hydro,
 /turf/simulated/floor/grass{
@@ -79400,16 +79400,6 @@
 	icon_state = "fgreen5"
 	},
 /area/station/hydroponics/bay)
-"vyj" = (
-/obj/table/auto,
-/obj/item/plate,
-/obj/item/reagent_containers/food/snacks/cake/chocolate/gateau,
-/obj/disposalpipe/junction{
-	dir = 4;
-	icon_state = "pipe-j2"
-	},
-/turf/simulated/floor/specialroom/cafeteria,
-/area/station/crew_quarters/kitchen)
 "vNO" = (
 /obj/submachine/chef_sink/chem_sink{
 	dir = 4
@@ -105387,7 +105377,7 @@ ckK
 cmz
 coi
 cpV
-sEu
+ikl
 cii
 cta
 cta
@@ -109839,7 +109829,7 @@ asb
 att
 auP
 awm
-rsO
+axK
 azy
 auT
 aAU
@@ -110749,7 +110739,7 @@ axN
 azB
 auT
 aCo
-vyj
+aDB
 ase
 aFV
 aHD
@@ -118944,7 +118934,7 @@ bxo
 bzb
 bAI
 bCx
-bEo
+nXx
 bGi
 bIf
 bKa
@@ -119548,7 +119538,7 @@ bxq
 byZ
 bAK
 bCy
-bEq
+qSD
 bGk
 bIh
 bKc
@@ -124077,7 +124067,7 @@ bvr
 bqh
 bzl
 bAR
-bCH
+ogG
 bEF
 bGx
 bIw
