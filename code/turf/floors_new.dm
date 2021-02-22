@@ -42,36 +42,36 @@
 
 ////////////	Pattern floors
 
-/turf/simulated/floor/pattern
-	name = "Pattern Floors"
-	icon_state = ""
+DEFINE_FLOORS_SIMMED_UNSIMMED(pattern,
+	name = "Pattern Floors";\
+	icon_state = "")
 
 ////////////	Decal pattern floors
 
-/turf/simulated/floor/decal
-	name = "Decal Floors"
-	icon_state = ""
+DEFINE_FLOORS_SIMMED_UNSIMMED(decal,
+	name = "Decal Floors";\
+	icon_state = "")
 
 ////////////	Fully-Coloured floors
 
-/turf/simulated/floor/full
-	name = "Fully-Coloured Floors"
-	icon_state = ""
+DEFINE_FLOORS_SIMMED_UNSIMMED(full,
+	name = "Fully-Coloured Floors";\
+	icon_state = "")
 
 ////////////	Random misc floors
 
-/turf/simulated/floor/misc
-	name = "Miscellaneous Floors"
-	icon_state = ""
+DEFINE_FLOORS_SIMMED_UNSIMMED(misc,
+	name = "Miscellaneous Floors";\
+	icon_state = "")
 
 ////////////	Setpeice & azone floors
 
-/turf/simulated/floor/setpeice
-	name = "Setpeice/Azone floors"
-	icon_state = ""
+DEFINE_FLOORS_SIMMED_UNSIMMED(setpieces,
+	name = "Setpieces/Azone floors";\
+	icon_state = "")
 
 ////////////	The side turf floors
 
-/turf/simulated/floor/side
-	name = "Floor edges"
-	icon_state = ""
+DEFINE_FLOORS_SIMMED_UNSIMMED(side,
+	name = "Floor edges";\
+	icon_state = "")
