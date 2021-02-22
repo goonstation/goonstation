@@ -546,7 +546,7 @@
 		if ("EngineFloor")
 			new_turf = new /turf/simulated/floor/engine(src)
 		if ("Circuit")
-			new_turf = new /turf/simulated/floor/circuit(src)
+			new_turf = new /turf/simulated/floor/pattern/circuit(src)
 		if ("RWall")
 			if (map_settings)
 				new_turf = new map_settings.rwalls (src)
