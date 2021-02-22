@@ -241,7 +241,7 @@
 
 /obj/item/reagent_containers/food/snacks/life_brownie
 	name = "lifeweed brownie"
-	desc = "Let's be honest, this one of the more usefull things the chef could make."
+	desc = "Let's be honest, this one of the more useful things the chef could make."
 	icon = 'icons/obj/foodNdrink/food_dessert.dmi'
 	icon_state = "life_brownie"
 	amount = 3
