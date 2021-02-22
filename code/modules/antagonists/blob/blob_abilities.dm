@@ -788,7 +788,7 @@
 		if (!tutorial_check("bridge", T))
 			return 1
 
-		var/turf/simulated/floor/blob/B = T.ReplaceWith(/turf/simulated/floor/blob, FALSE, TRUE, FALSE)
+		var/turf/simulated/floor/misc/blob/B = T.ReplaceWith(/turf/simulated/floor/misc/blob, FALSE, TRUE, FALSE)
 		B.setOvermind(owner)
 		src.deduct_bio_points()
 		src.do_cooldown()
