@@ -1,5 +1,5 @@
 /*
-	Don't forget to use the generate_turf macro on any new turfs you add!
+	Don't forget to use the [DEFINE_FLOORS] macro on any new turfs you add!
 
 	simulated/floor		The inital floor turf, required to set variables for the others
 	floor/pattern			Pattern floors, like the checkers you see around the station or in the chapel
