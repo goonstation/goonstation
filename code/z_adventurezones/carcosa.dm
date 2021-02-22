@@ -151,7 +151,7 @@ Dirt
 /obj/decal/fakeobjects/carcosa/carcosa_plant/six
 	icon_state = "aplant6"
 
-/turf/simulated/floor/carcosa/carcosa_dirt
+/turf/simulated/floor/setpieces/carcosa/carcosa_dirt
 	name = "dirt"
 	desc = "It's just some odd looking dirt."
 	icon = 'icons/misc/exploration.dmi'
@@ -162,7 +162,7 @@ Dirt
 	ex_act(severity)
 		return
 
-/turf/simulated/floor/carcosa/carcosa_dirt_inner
+/turf/simulated/floor/setpieces/carcosa/carcosa_dirt_inner
 	name = "dirt"
 	desc = "It's just some odd looking dirt."
 	icon = 'icons/misc/exploration.dmi'
