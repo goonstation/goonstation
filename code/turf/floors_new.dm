@@ -63,10 +63,10 @@ DEFINE_FLOORS_SIMMED_UNSIMMED(pattern/circuit,
 	RL_LumB = 0.3;\
 	mat_appearances_to_ignore = list("pharosium");\
 	step_material = "step_plating";\
-	step_priority = STEP_PRIORITY_MED
+	step_priority = STEP_PRIORITY_MED;\
 
-	New()
-		..()
+	New();\
+		..();\
 		setMaterial(getMaterial("pharosium")))
 
 DEFINE_FLOORS_SIMMED_UNSIMMED(pattern/circuit/green,
