@@ -625,7 +625,7 @@
 		var/area/end_location = locate(/area/shuttle/icebase_elevator/lower)
 		for(var/mob/M in end_location) // oh dear, stay behind the yellow line kids
 			SPAWN_DBG(1 DECI SECOND) M.gib()
-		start_location.move_contents_to(end_location, /turf/simulated/floor/arctic_elevator_shaft)
+		start_location.move_contents_to(end_location, /turf/simulated/floor/setpieces/arctic_elevator_shaft)
 		location = 0
 
 	for(var/obj/machinery/computer/icebase_elevator/C in machine_registry[MACHINES_ELEVATORCOMPS])

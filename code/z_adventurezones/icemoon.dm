@@ -11,7 +11,7 @@ Contents:
 		Cliff Edges
 **/
 
-/turf/simulated/floor/arctic_elevator_shaft
+/turf/simulated/floor/setpieces/arctic_elevator_shaft
 	name = "elevator shaft"
 	desc = "It looks like it goes down a long ways."
 	icon_state = "void_gray"
