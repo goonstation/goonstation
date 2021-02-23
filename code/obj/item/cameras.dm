@@ -102,7 +102,7 @@
 					user.show_text("You use the secret switch to set the camera to take photos.", "blue")
 					playsound(user, "sound/items/putback_defib.ogg", 100, 1)
 					src.icon_state = "camera"
-				src.flash_mode =! src.flash_mode
+				src.flash_mode = !src.flash_mode
 				src.update_icon()
 
 	New()
