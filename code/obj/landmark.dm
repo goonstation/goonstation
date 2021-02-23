@@ -237,7 +237,6 @@ var/global/list/job_start_locations = list()
 		if(novis)
 			var/turf/W = locate(src.x + xOffset, src.y + yOffset, src.targetZ)
 			W.warptarget = T
-			boutput(world, "novis warp from landmark on [T] targeting [W]")
 		else
 			T.appearance_flags |= KEEP_TOGETHER
 			T.vistarget = locate(src.x + xOffset, src.y + yOffset, src.targetZ)
