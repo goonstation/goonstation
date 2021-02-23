@@ -151,7 +151,7 @@
 	if (!ismob(target))
 		return
 	if (src.flash_mode)
-		if(src.cell && (src.cell:charge < 25))
+		if (src.cell?.charge < 25)
 			user.show_text("[src] doesn't have enough battery power!", "red")
 			return 0
 		var/turf/T = get_turf(target.loc)
