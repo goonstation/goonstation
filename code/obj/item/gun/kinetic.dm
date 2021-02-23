@@ -992,15 +992,15 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 
 /obj/item/gun/kinetic/tranq_pistol
 	name = "Gwydion tranquilizer pistol"
-	desc = "A silenced tranquilizer pistol chambered in .308 caliber, developed by Mabinogi Firearms Company."
+	desc = "A silenced 9mm tranquilizer pistol, developed by Mabinogi Firearms Company."
 	icon_state = "tranq_pistol"
 	item_state = "tranq_pistol"
 	w_class = 2
 	force = 3
 	contraband = 4
 	caliber = 0.355
-	max_ammo_capacity = 30
-	auto_eject = 0
+	max_ammo_capacity = 15
+	auto_eject = 1
 	hide_attack = 1
 	muzzle_flash = null
 

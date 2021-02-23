@@ -1,4 +1,77 @@
 
+(t)sun feb 21 21
+(u)TTerc
+(p)3772
+(e)🗺|mapping
+(+)Donut 3: Made mineral magnet area larger, tweaked the mining office layout.
+(u)Luxizzle
+(p)3794
+(e)|
+(+)Weapon vendor now shows the cost of a loadout option.
+(u)virvatuli
+(p)3787
+(e)|
+(+)Added new welding tool audio to signal that it's been ignited!
+(u)Flappybat
+(p)3669
+(e)⚖|balance
+(+)Telecrystal materials are less likely to warp when used on yourself/others. Self teleporting due to attacks has a 25% chance of dropping the item at the location you warped from.
+(u)Chickenish
+(p)3775
+(e)🆕|feature
+(+)Added an Implanter to the Security vendor.
+(u)Tarmunora
+(p)3760
+(e)⚖|balance
+(+)Raised costs of power cells and 40mmPBR rounds in the sec loadout vendor.
+(t)sat feb 20 21
+(u)TTerc
+(p)3563
+(e)🗺|mapping
+(+)Cog1: Added extra purge pumps to the TEG and moved the reactor statistics computer to the engine control room.
+(u)Batelite
+(p)3768
+(e)🎨|sprites
+(+)Health analyzer screens now indicate what they're scanning
+(t)fri feb 19 21
+(u)zjdtmkhzt
+(p)3731
+(e)⚖🆕|balance, feature
+(*)Lots of non-handheld artifact types now actually trigger the faults they might get, so artifact use may have some unintended side effects now. Stay safe, everyone!
+(u)BatElite
+(p)3739
+(e)🎨|sprites
+(+)Rechargers have new sprites!
+(t)thu feb 18 21
+(u)Sord
+(p)3726
+(e)🆕|feature
+(+)New taser smg security loadout. Sprites by Matheus
+(u)virvatuli
+(p)3736
+(e)|
+(+)Added a new and unique pulse rifle/lawbringer pulse firing sound!
+(u)TTerc
+(p)3627
+(e)⚖🆕|balance, feature
+(+)You can now refill the flamethrowers by simply clicking the large tanks with them.
+(u)Flappybat
+(p)3651
+(e)⚖|balance
+(*)Blocks MRPT rocket ammo from being loaded into the zip gun.
+(u)Superlagg
+(p)3276
+(e)⚖🆕🔄|balance, feature, rework
+(*)Upgraded bot AI to be more responsive in general.
+(*)Buddy combat AI has been upgraded to allow them to move *and* shoot.
+(+)Secbots can be ordered to guard and lockdown specific areas.
+(+)Floorbots now eat loose floor metal by default.
+(+)Added actionbars to most times bot actions, like repairing floors and injecting people with drugs.
+(+)Ammofab now costs 1 TC.
+(u)Flappybat
+(p)3580
+(e)⚖🐛|balance, bug
+(*)Syndicate riot baton now deals stamina damage instead of instant stun, two hits are required to knockdown. Now functions like an infinite ammo stun baton with extra blunt damage on harm intent.
 (t)wed feb 17 21
 (u)Sovexe
 (p)3746

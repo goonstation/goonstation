@@ -16,7 +16,6 @@
 	var/turf/target
 	var/turf/oldtarget
 	var/oldloc = null
-	var/list/path = null
 	var/list/digbottargets = list()
 	var/lumlevel = 0.2
 	var/use_medium_light = 1

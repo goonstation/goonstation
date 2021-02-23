@@ -1783,6 +1783,19 @@ DEFINE_FLOORS_SIMMED_UNSIMMED(racing/rainbow_road,
 					bioele_accident()
 				return ..()
 
+		hole_xy
+			name = "deep pit"
+			target_landmark = LANDMARK_FALL_DEBUG
+			Entered(atom/A as mob|obj)
+				if (isobserver(A) || (istype(A, /obj/critter) && A:flying))
+					return ..()
+
+				if(warptarget)
+					fall_to(warptarget, A)
+					return
+				else ..()
+
+
 	bloodfloor
 		name = "bloody floor"
 		desc = "Yuck."

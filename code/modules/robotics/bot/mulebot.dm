@@ -27,7 +27,6 @@
 	var/destination = ""		// destination description
 	var/home_destination = "" 	// tag of home beacon
 	req_access = list(access_cargo)
-	var/list/path = null
 
 	var/mode = 0		//0 = idle/ready
 						//1 = loading/unloading
@@ -494,6 +493,7 @@
 	var/last_process_time
 
 	process()
+		. = ..()
 		var/time_since_last = TIME - last_process_time
 		last_process_time = TIME
 		if(!has_power())

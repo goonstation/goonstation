@@ -121,12 +121,6 @@
 	spawn_contents = list(/obj/item/gun/kinetic/flaregun,\
 	/obj/item/ammo/bullets/flare)
 
-/obj/item/storage/box/riotrounds
-	name = "40mm riot rounds"
-	icon_state = "revolver"
-	desc = "A box containing two boxes of 40mm riot rounds"
-	spawn_contents = list(/obj/item/ammo/bullets/pbr = 2)
-
 /* -------------------- Grenades -------------------- */
 
 /obj/item/storage/box/flashbang_kit
