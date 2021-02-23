@@ -39,6 +39,10 @@
 
 	proc/replace_eye(var/target, var/mob/living/carbon/human/H)
 		message_admins("replace eye!")
+		if(!H.can_equip(src, SLOT_GLASSES))
+			boutput(source, "<span class='alert'>You need to remove your eyewear first.</span>")
+			return
+		//
 		var/turf/T = src.loc
 		working = 1
 		var/list/parts_to_remove = list()
