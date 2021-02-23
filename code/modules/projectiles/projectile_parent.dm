@@ -100,6 +100,8 @@
 		if (!A) return // you never know ok??
 		if (disposed || pooled) return // if disposed = true, pooled or set for garbage collection and shouldn't process bumps
 		if (!proj_data) return // this apparently happens sometimes!! (more than you think!)
+		if (proj_data?.on_pre_hit(A, src.angle, src))
+			return // Our bullet doesnt want to hit this
 		if (A in hitlist)
 			return
 		else
@@ -377,15 +379,11 @@
 		src.was_setup = 1
 
 	Bump(var/atom/A)
-		if (proj_data?.on_pre_hit(A, src.angle, src))
-			return // Our bullet doesnt want to hit this
 		src.collide(A)
 
 	Crossed(var/atom/movable/A)
 		if (!istype(A))
 			return // can't happen will happen
-		if (proj_data?.on_pre_hit(A, src.angle, src))
-			return // Our bullet doesnt want to hit this
 		if (!A.CanPass(src, get_step(src, A.dir), 1, 0))
 			src.collide(A)
 
@@ -399,7 +397,6 @@
 		for(var/thing as mob|obj|turf|area in T)
 			var/atom/A = thing
 			if (A == src) continue
-			if (proj_data.on_pre_hit(A, src.angle, src)) continue
 			if (!A.CanPass(src, get_step(src, A.dir), 1, 0))
 				src.collide(A)
 

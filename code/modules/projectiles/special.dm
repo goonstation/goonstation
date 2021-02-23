@@ -690,11 +690,11 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	dissipation_rate = 0
 	ks_ratio = 1
 	brightness = 2
-	projectile_speed = 2
+	projectile_speed = 1.5
 	is_magical = 1 // It passes right through them, but just for consistency
 	auto_find_targets = 0
-	min_speed = 0.1
-	max_speed = 1
+	min_speed = 2
+	max_speed = 2
 	goes_through_walls = 0 // It'll stop homing when it hits something, then go bouncy
 	var/max_bounce_count = 3 // putting the I in ICEE BEEYEM
 	var/weaken_length = 5 SECONDS
@@ -747,9 +747,9 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	name = "magic minimissile"
 	sname = "magic minimissile"
 	power = 10
-	projectile_speed = 3
-	min_speed = 0.1
-	max_speed = 1
+	projectile_speed = 1
+	min_speed = 2
+	max_speed = 2
 	max_bounce_count = 2 // putting the Y in ICEE BEEYEM
 	weaken_length = 3 SECONDS
 	slam_text = "The magic missile bumps into you!"
