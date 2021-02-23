@@ -801,8 +801,8 @@
 		icon_state = "solitaire"
 
 		execute(var/atom/target, var/mob/user)
-			var/obj/item/playing_card/c = target
-			c.solitaire(user)
+			var/obj/item/playing_card/card = target
+			card.solitaire(user)
 
 	fan
 		name = "fan"
@@ -811,11 +811,11 @@
 
 		execute(var/atom/target, var/mob/user)
 			if(istype(target,/obj/item/playing_card))
-				var/obj/item/playing_card/c = target
-				c.deck_or_hand(user,TRUE)
+				var/obj/item/playing_card/card = target
+				card.deck_or_hand(user,TRUE)
 			else if(istype(target,/obj/item/card_group))
-				var/obj/item/card_group/c = target
-				c.fan(user)
+				var/obj/item/card_group/group = target
+				group.fan(user)
 
 	stack
 		name = "stack"
@@ -824,11 +824,11 @@
 
 		execute(var/atom/target, var/mob/user)
 			if(istype(target,/obj/item/playing_card))
-				var/obj/item/playing_card/c = target
-				c.deck_or_hand(user)
+				var/obj/item/playing_card/card = target
+				card.deck_or_hand(user)
 			else if(istype(target,/obj/item/card_group))
-				var/obj/item/card_group/c = target
-				c.stack(user)
+				var/obj/item/card_group/group = target
+				group.stack(user)
 
 	draw
 		name = "draw"
@@ -836,8 +836,8 @@
 		icon_state = "draw"
 
 		execute(var/atom/target, var/mob/user)
-			var/obj/item/card_group/c = target
-			c.draw(user)
+			var/obj/item/card_group/card = target
+			card.draw(user)
 
 	draw_facedown
 		name = "draw face-down"
@@ -845,8 +845,8 @@
 		icon_state = "draw_facedown"
 
 		execute(var/atom/target, var/mob/user)
-			var/obj/item/card_group/c = target
-			c.draw(user,1)
+			var/obj/item/card_group/card = target
+			card.draw(user,1)
 
 	draw_multiple
 		name = "draw multiple cards"
@@ -854,8 +854,8 @@
 		icon_state = "multiple"
 
 		execute(var/atom/target, var/mob/user)
-			var/obj/item/card_group/c = target
-			c.draw_multiple(user)
+			var/obj/item/card_group/card = target
+			card.draw_multiple(user)
 
 	topdeck
 		name = "add to top of deck"
@@ -863,8 +863,8 @@
 		icon_state = "deck_top"
 
 		execute(var/atom/target, var/mob/user)
-			var/obj/item/card_group/c = target
-			c.top_or_bottom(user,user.equipped(),"top")
+			var/obj/item/card_group/group = target
+			group.top_or_bottom(user,user.equipped(),"top")
 
 	bottomdeck
 		name = "add to bottom of deck"
@@ -872,8 +872,8 @@
 		icon_state = "deck_bottom"
 
 		execute(var/atom/target, var/mob/user)
-			var/obj/item/card_group/c = target
-			c.top_or_bottom(user,user.equipped(),"bottom")
+			var/obj/item/card_group/card = target
+			card.top_or_bottom(user,user.equipped(),"bottom")
 
 	search
 		name = "search"
@@ -881,8 +881,8 @@
 		icon_state = "search"
 
 		execute(var/atom/target, var/mob/user)
-			var/obj/item/card_group/c = target
-			c.search(user)
+			var/obj/item/card_group/group = target
+			group.search(user)
 
 	reveal
 		name = "reveal"
@@ -890,8 +890,8 @@
 		icon_state = "eye"
 
 		execute(var/atom/target, var/mob/user)
-			var/obj/item/card_group/c = target
-			c.reveal(user)
+			var/obj/item/card_group/group = target
+			group.reveal(user)
 
 	pickup
 		name = "pick up"
@@ -899,10 +899,10 @@
 		icon_state = "up_arrow"
 
 		execute(var/atom/target, var/mob/user)
-			var/obj/item/c = target
-			if(c.loc == user)
-				user.u_equip(c)
-			user.put_in_hand_or_drop(c)
+			var/obj/item/cards = target
+			if(cards.loc == user)
+				return
+			user.put_in_hand_or_drop(cards)
 
 	close
 		name = "close"
