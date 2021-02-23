@@ -767,6 +767,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\events\solar_flare.dm"
 #include "code\modules\events\spatial_tear.dm"
 #include "code\modules\events\supply_drop.dm"
+#include "code\modules\events\syndicate_retribution.dm"
 #include "code\modules\events\wormholes.dm"
 #include "code\modules\events\gimmick\bigfart.dm"
 #include "code\modules\events\gimmick\halloween.dm"
