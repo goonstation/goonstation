@@ -66,7 +66,7 @@
 					src.blinktimerstage = 0
 					src.blinktimernotifredundant = 0
 				if (20 to 30)
-					if (src.blinktimernotifredundant < 1)
+					if (!src.blinktimernotifredundant)
 						src.blinktimerstage = 1
 				if (30 to 40)
 					if (src.blinktimernotifredundant < 2)
@@ -79,9 +79,10 @@
 					owner.take_eye_damage(max(0, min(3, 3 - tempblind)), 1)
 					if (src.blinktimernotifredundant < 4)
 						src.blinktimerstage = 4
-				if (100 to INFINITY && src.blinktimernotifredundant < 5)
+				if (100 to INFINITY)
 					owner.contract_disease(/datum/ailment/disability/blind,null,null,1)
-					src.blinktimerstage = 5
+					if (src.blinktimernotifredundant < 5)
+						src.blinktimerstage = 5
 			switch(src.blinktimerstage)
 				if (0)
 					// this statement is intentionally left blank
@@ -100,8 +101,7 @@
 				if (5) //blinking won't save you now, buddy
 					if (showmessages) boutput(owner, "<span class='alert'>You feel a horrible pain in your eyes. That can't be good.</span>")
 					src.blinktimernotifredundant = 5
-			if (src.blinktimernotifredundant)
-				src.blinktimerstage = 0
+			src.blinktimerstage = 0
 
 			if (src.blinkstate) owner.take_eye_damage(max(0, min(1, 1 - tempblind)), 1)
 
