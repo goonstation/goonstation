@@ -34078,10 +34078,10 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
+/obj/stool,
 /obj/landmark/start{
 	name = "Janitor"
 	},
-/obj/stool,
 /turf/simulated/floor/purple/checker{
 	dir = 8
 	},
