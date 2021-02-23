@@ -17,16 +17,20 @@
     burn_output = 900
     burn_possible = 2
     health = 10
-    var/card_style //what style of card sprite are we using?
-    var/total_cards //number of cards in a full deck (used for reference when updating stack size)
-    var/card_name //the overall name of a given card type : used to communicate with card groups (i.e. playing, tarot, hanafuda)
+    ///what style of card sprite are we using?
+    var/card_style
+    ///number of cards in a full deck (used for reference when updating stack size)
+    var/total_cards
+    ///the overall name of a given card type : used to communicate with card groups (i.e. playing, tarot, hanafuda)
+    var/card_name
     var/facedown = FALSE
     var/foiled = FALSE
     var/tapped = FALSE
     var/reversed = FALSE
-    var/solitaire_offset = 5 //when solitaire stacking, how far down is the newest card pixel shifted?
-
-    var/list/stored_info //vital card information that is referenced when a card flips over
+    ///when solitaire stacking, how far down is the newest card pixel shifted?
+    var/solitaire_offset = 5
+    ///vital card information that is referenced when a card flips over
+    var/list/stored_info
     contextLayout = new /datum/contextLayout/instrumental(16)
     var/list/datum/contextAction/cardActions
 
@@ -356,11 +360,15 @@
     burn_possible = 2
     health = 10
     inventory_counter_enabled = 1
-    var/card_name //same function as playing_card card name
-    var/card_style = "plain" //the type of card back used for this group (references icon_state names in the dmi)
-    var/total_cards //how many cards are in a fully built deck of this type? (54 for plain decks, 78 for tarot, etc.) : used for reference on stack heights
+    /// same function as playing_card card name
+    var/card_name
+    ///the type of card back used for this group (references icon_state names in the dmi)
+    var/card_style = "plain" 
+    ///how many cards are in a fully built deck of this type? (54 for plain decks, 78 for tarot, etc.) : used for reference on stack heights
+    var/total_cards
     var/is_hand = FALSE
-    var/max_hand_size = 18 //the number of cards you can have in a hand before it automatically becomes a deck
+    ///the number of cards you can have in a hand before it automatically becomes a deck
+    var/max_hand_size = 18
     contextLayout = new /datum/contextLayout/instrumental(16)
     var/list/datum/contextAction/cardActions
     var/list/stored_cards = list()
