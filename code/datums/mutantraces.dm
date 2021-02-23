@@ -1125,7 +1125,10 @@
 		switch(act)
 			if ("rattle")
 				if (mob.emote_check(voluntary, 50))
-					. = list("<B>[mob]</B> rattles", "<i>rattles</i>")
+					if (!prob(0.1))
+						. = list("<B>[mob]</B> rattles", "<i>rattles</i>")
+					else
+						. = list("<B>[mob]</B> rattles they bones", "<i>rattles they bones</i>")
 					playsound(get_turf(mob), "sound/misc/talk/skelly.ogg", 50, 0, 0, mob.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
 			else
 				.= ..()
