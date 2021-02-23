@@ -634,7 +634,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	two_handed = 1
 	has_empty_state = 1
 	gildable = 1
-	var/racked_slide = 0
+	var/racked_slide = FALSE
 
 	New()
 		ammo = new/obj/item/ammo/bullets/abg
@@ -669,7 +669,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 				boutput(user, "<span class ='notice'>You are out of shells!</span>")
 				icon_state = "shotty-empty"
 			else
-				racked_slide = 1
+				racked_slide = TRUE
 				if (icon_state == "shotty") //"animated" racking
 					icon_state = "shotty-empty"
 					SPAWN_DBG(2) //FORGIVE ME ZEWAKA
@@ -677,7 +677,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 				else
 					icon_state = "shotty" // Slide already open? Just close the slide
 				boutput(user, "<span class='notice'>You rack the slide of the shotgun!</span>")
-				playsound(user.loc, "sound/weapons/pump_action.ogg", 50, 1)
+				playsound(user.loc, "sound/weapons/shotgunpump.ogg", 50, 1)
 				if (src.ammo.amount_left < 8) // Do not eject shells if you're racking a full "clip"
 					var/turf/T = get_turf(src)
 					if (T) // Eject shells on rack instead of on shoot()
