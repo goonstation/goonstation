@@ -155,7 +155,7 @@
 			user.show_text("[src] doesn't have enough battery power!", "red")
 			return 0
 		var/turf/T = get_turf(target.loc)
-		if (T.loc:sanctuary)
+		if (T.is_sanctuary())
 			user.visible_message("<span class='alert'><b>[user]</b> tries to use [src], cannot quite comprehend the forces at play!</span>")
 			return
 		// Use cell charge
