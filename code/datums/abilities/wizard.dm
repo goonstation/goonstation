@@ -299,7 +299,7 @@
 		object.owner = src
 
 	castcheck()
-		return !istype(src, /datum/targetable/spell/prismatic_spray/admin) && holder.owner.wizard_castcheck(src)
+		return holder.owner.wizard_castcheck(src)
 
 	cast(atom/target)
 		if(ishuman(holder.owner))

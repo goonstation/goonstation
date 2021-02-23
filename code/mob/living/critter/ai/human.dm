@@ -233,32 +233,36 @@
 
 		..()
 
-/*
- * Chicken man
- */
-/mob/living/carbon/human/chicken
-	name = "chicken man"
-	real_name = "chicken man"
-	desc = "half man, half BWAHCAWCK!"
-#ifdef IN_MAP_EDITOR
-	icon_state = "m-none"
-#endif
-	New()
-		. = ..()
-		SPAWN_DBG(0.5 SECONDS)
-			if (!src.disposed)
-				src.bioHolder.AddEffect("chicken", 0, 0, 1)
+/datum/aiTask/timed/targeted/human/charge
+	name = "charge"
+	minimum_task_ticks = 7
+	maximum_task_ticks = 16
+	target_range = 8
+	frustration_threshold = 2
+	var/last_seek = 0
 
-/mob/living/carbon/human/chicken/ai_controlled
-	is_npc = TRUE
-	uses_mobai = TRUE
-	New()
-		. = ..()
-		src.ai = new /datum/aiHolder/wanderer(src)
+	on_tick()
+		if (HAS_MOB_PROPERTY(holder.ownhuman, PROP_CANTMOVE) || !isalive(holder.ownhuman))
+			return
 
-/datum/aiHolder/wanderer
-	New()
-		. = ..()
-		var/datum/aiTask/timed/wander/W =  get_instance(/datum/aiTask/timed/wander, list(src))
-		W.transition_task = W
-		default_task = W
+		if(!holder.target)
+			if (world.time > last_seek + 4 SECONDS)
+				last_seek = world.time
+				var/list/possible = get_targets()
+				if (possible.len)
+					holder.target = pick(possible)
+		if(holder.target && holder.target.z == holder.ownhuman.z)
+			var/dist = get_dist(holder.ownhuman, holder.target)
+			holder.ownhuman.a_intent = INTENT_GRAB
+			if (dist >= 1)
+				if (prob(80))
+					holder.move_to(holder.target,0)
+				else
+					holder.move_circ(holder.target)
+			else
+				holder.stop_move()
+			if (dist <= 1)
+				holder.ownhuman.Bump(holder.target)
+				frustration++
+
+

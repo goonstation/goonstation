@@ -270,6 +270,7 @@ var/list/admin_verbs = list(
 		/client/proc/show_admin_lag_hacks,
 		/client/proc/spawn_survival_shit,
 		/client/proc/respawn_heavenly,
+		/client/proc/respawn_demonically,
 		/datum/admins/proc/spawn_atom,
 		/datum/admins/proc/heavenly_spawn_obj,
 		/datum/admins/proc/supplydrop_spawn_obj,
@@ -900,6 +901,19 @@ var/list/fun_images = list()
 	var/mob/M = src.mob
 	M.UpdateOverlays(image('icons/misc/32x64.dmi',"halo"), "halo")
 	heavenly_spawn(M)
+
+/client/proc/respawn_demonically()
+	set name = "Respawn Demonically"
+	SET_ADMIN_CAT(ADMIN_CAT_SELF)
+	set desc = "Respawn yourself from the depths of the underfloor."
+	set popup_menu = 0
+	admin_only
+
+	src.respawn_as_self()
+
+	var/mob/living/carbon/human/M = src.mob
+	M.bioHolder.AddEffect("hell_fire", magical = 1)
+	demonic_spawn(M)
 
 /client/proc/respawn_as(var/client/cli in clients)
 	set name = "Respawn As"

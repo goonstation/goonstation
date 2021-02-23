@@ -1,4 +1,3 @@
-
 /obj/artifact/cloner
 	name = "artifact cloner"
 	associated_datum = /datum/artifact/cloner
@@ -9,6 +8,7 @@
 	min_triggers = 2
 	max_triggers = 2
 	validtriggers = list(/datum/artifact_trigger/carbon_touch,/datum/artifact_trigger/silicon_touch)
+	fault_blacklist = list(ITEM_ONLY_FAULTS)
 	react_xray = list(15,90,90,11,"HOLLOW")
 	validtypes = list("wizard","eldritch")
 	touch_descriptors = list("You seem to have a little difficulty taking your hand off its surface.")
@@ -69,6 +69,8 @@
 			if(swapSouls && H.mind)
 				H.mind.transfer_to(clone)
 			clone.changeStatus("paralysis", imprison_time) // so they don't ruin the surprise
+			O.ArtifactFaultUsed(H)
+			O.ArtifactFaultUsed(clone)
 
 			if ((ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution)) && ((clone.mind in ticker.mode:revolutionaries) || (clone.mind in ticker.mode:head_revolutionaries)))
 				ticker.mode:update_all_rev_icons() //So the icon actually appears
@@ -108,7 +110,7 @@
 			return
 		for(var/obj/I in O.contents)
 			I.set_loc(get_turf(O))
-		if (clone.loc == O)
+		if (clone?.loc == O)
 			clone.set_loc(get_turf(O))
 			O.visible_message("<span class='alert'><b>[O]</b> releases [clone.name] and shuts down!</span>")
 		else

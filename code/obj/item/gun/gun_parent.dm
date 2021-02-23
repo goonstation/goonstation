@@ -295,7 +295,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 			if (O.client)
 				O.show_message("<span class='alert'><B>[user] shoots [user == M ? "[him_or_her(user)]self" : M] point-blank with [src]!</B></span>")
 	else
-		boutput(user, "<span class='alert'>You silently shoot [user == M ? "yourself" : M] point-blank with [src]!</span>") // Was non-functional (Convair880).
+		boutput(user, "<span class='alert'>You silently shoot [user == M ? "yourself" : M] point-blank with [src]!</span>")
 
 	if (!process_ammo(user))
 		return FALSE
