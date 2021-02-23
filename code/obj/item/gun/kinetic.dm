@@ -672,8 +672,8 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 				racked_slide = TRUE
 				if (icon_state == "shotty") //"animated" racking
 					icon_state = "shotty-empty"
-					SPAWN_DBG(2) //FORGIVE ME ZEWAKA
-					icon_state = "shotty"
+					animate(src, time = 0.2 SECONDS) //thank you pali for telling me about animate
+					animate(icon_state = "shotty")
 				else
 					icon_state = "shotty" // Slide already open? Just close the slide
 				boutput(user, "<span class='notice'>You rack the slide of the shotgun!</span>")
