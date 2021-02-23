@@ -66,6 +66,13 @@
 	icon_type = "disk"
 	target_criteria = /obj/item/disk/data/floppy/read_only/authentication
 
+/obj/item/pinpointer/teg_semi
+	name = "pinpointer (prototype semiconductor)"
+	desc = "Points in the direction of the NT Prototype Semiconductor."
+	icon_state = "semi_pinoff"
+	icon_type = "semi"
+	target_criteria = /obj/item/teg_semiconductor
+
 /obj/item/idtracker
 	name = "ID tracker"
 	icon = 'icons/obj/items/device.dmi'
