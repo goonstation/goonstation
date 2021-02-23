@@ -1,5 +1,6 @@
 #define EYE_LEFT 1
 #define EYE_RIGHT 2
+#define EYE_BOTH 4
 
 /obj/item/device/ocular_implanter
 	name = "eye implanter"
@@ -9,49 +10,44 @@
 	is_syndicate = 1
 	var/implant = /obj/item/organ/eye/cyber/sechud
 	var/implants_available = EYE_LEFT | EYE_RIGHT
-	var/working = 0
+	var/list/parts_to_remove = list()
+	var/list/parts_to_add = list()
 
 	attack_self(mob/user as mob)
 		if (ishuman(user))
 			var/mob/living/carbon/human/H = user
 			src.add_fingerprint(H)
-			if (working)
-				return
 			switch (alert("Which eye would you like to operate on with [src]?","Both Eyes","Left Eye","Right Eye","Cancel"))
 				if ("Cancel")
 					return
 				if ("Both Eyes")
 					if ((implants_available & EYE_LEFT) && (implants_available & EYE_RIGHT))
-						replace_eye(3, H)
+						start_replace_eye(EYE_BOTH, H)
 					else
 						user.show_text("This implanter doesn't contain both implants.")
 				if ("Right Eye")
 					if (implants_available & EYE_RIGHT)
-						replace_eye(2, H)
+						start_replace_eye(EYE_RIGHT, H)
 					else
 						user.show_text("This implanter doesn't contain the right eye implant.")
 				if ("Left Eye")
 					if (implants_available & EYE_LEFT)
-						replace_eye(1, H)
+						start_replace_eye(EYE_LEFT, H)
 					else
 						user.show_text("This implanter doesn't contain the left eye implant.")
 
 
-	proc/replace_eye(var/target, var/mob/living/carbon/human/H)
+	proc/start_replace_eye(var/target, var/mob/living/carbon/human/H)
 		message_admins("replace eye!")
 		if(!H.can_equip(src, SLOT_GLASSES))
-			boutput(source, "<span class='alert'>You need to remove your eyewear first.</span>")
+			boutput(src, "<span class='alert'>You need to remove your eyewear first.</span>")
 			return
 		//
-		var/turf/T = src.loc
-		working = 1
-		var/list/parts_to_remove = list()
-		var/list/parts_to_add = list()
-		if (target == 3)
+		if (target == EYE_BOTH)
 			parts_to_add += "right_eye"
 			parts_to_add += "left_eye"
 			implants_available = 0
-		else if (target == 2)
+		else if (target == EYE_RIGHT)
 			parts_to_add += "right_eye"
 			implants_available = implants_available ^ EYE_RIGHT
 		else
@@ -62,22 +58,21 @@
 			bodypart = H.get_organ(part_loc)
 			if(!bodypart)
 				parts_to_remove += part_loc
-		H.changeStatus("paralysis", 40)
+		SETUP_GENERIC_ACTIONBAR(H, src, 5 SECONDS, /obj/item/device/ocular_implanter/proc/end_replace_eye, src.icon, src.icon_state,"[src] finishes working")
+
+	proc/end_replace_eye()
 		//playsound(H.loc, ""pick(work_sounds)"", 50, 1, -1)
-		random_brute_damage(H, 10)
+		var/mob/living/carbon/human/H = src
+		var/turf/T = src.loc
 		for(var/part_loc in parts_to_remove)
 			message_admins("removing [part_loc]")
 			if (T)
 				H.drop_organ(part_loc, T)
 				H.update_body()
-			//playsound(H.loc, ""pick(work_sounds)"", 50, 1, -1)
-			sleep(1 SECOND)
 		for(var/part_loc in parts_to_add)
 			message_admins("adding [part_loc]")
 			H.receive_organ(new implant, part_loc, 0, 1)
 			H.update_body()
-			//playsound(H.loc, pick(work_sounds), 50, 1, -1)
-			sleep(1 SECOND)
 		boutput(H, "<span class='alert'><b>[pick("IT HURTS!", "OH GOD!", "JESUS FUCK!")]</b></span>")
 		H.emote("scream")
 		bleed(H, 5, 5)
@@ -87,4 +82,5 @@
 			icon_state = "ocular_implanter-L"
 		else
 			icon_state = "ocular_implanter-LR"
-		working = 0
+		parts_to_remove = list()
+		parts_to_add = list()
