@@ -646,9 +646,7 @@ export const PaperSheet = (props, context) => {
   );
 };
 
-const HelpToolip = (props, context) => {
-  const { data } = useBackend(context);
-
+const HelpToolip = () => {
   return (
     <Box
       position="absolute"
@@ -656,7 +654,7 @@ const HelpToolip = (props, context) => {
       top="25px"
       width="300px"
       height="350px"
-      backgroundColor={data.paperColor}
+      backgroundColor="#E8E4C9" // offset from paper color
       textAlign="center">
       <h3>
         Markdown Syntax
