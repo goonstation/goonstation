@@ -28,7 +28,7 @@
 
 //#define DEBUG_ASTAR
 
-/proc/cirrAstar(turf/start, turf/goal, min_dist=0, adjacent, maxtraverse = 30, adjacent_param = null, exclude = null)
+/proc/cirrAstar(turf/start, atom/goal, min_dist=0, maxtraverse=30, heuristic=null, heuristic_args=null)
 	#ifdef DEBUG_ASTAR
 	clearAstarViz()
 	#endif
@@ -45,16 +45,16 @@
 
 	while(length(openSet))
 		var/turf/current = pickLowest(openSet, fScore)
-		if(GET_MANHATTAN_DIST(current, goal) <= min_dist)
+		if(get_dist(current, goal) <= min_dist)
 			return reconstructPath(cameFrom, current)
 
 		openSet -= current
 		closedSet += current
-		var/list/turf/neighbors = getNeighbors(current, alldirs)
+		var/list/turf/neighbors = getNeighbors(current, alldirs, heuristic, heuristic_args)
 		for(var/turf/neighbor as() in neighbors)
 			if(neighbor in closedSet)
 				continue // already checked this one
-			var/tentativeGScore = gScore[current] + GET_MANHATTAN_DIST(current, neighbor)
+			var/tentativeGScore = gScore[current] + get_dist(current, neighbor)
 			if(!(neighbor in openSet))
 				openSet += neighbor
 			else if(tentativeGScore >= (gScore[neighbor] || 1.#INF))
@@ -62,7 +62,7 @@
 
 			cameFrom[neighbor] = current
 			gScore[neighbor] = tentativeGScore
-			fScore[neighbor] = gScore[neighbor] + GET_MANHATTAN_DIST(neighbor, goal)
+			fScore[neighbor] = gScore[neighbor] + get_dist(neighbor, goal)
 		traverse += 1
 		if(traverse > maxtraverse)
 			return null // it's taking too long, abandon
@@ -95,7 +95,7 @@
 	#endif
 	return .
 
-/proc/getNeighbors(turf/current, list/directions)
+/proc/getNeighbors(turf/current, list/directions, heuristic, heuristic_args)
 	. = list()
 	// handle cardinals straightforwardly
 	var/list/cardinalTurfs = list()
@@ -103,14 +103,14 @@
 		if(direction in directions)
 			var/turf/T = get_step(current, direction)
 			cardinalTurfs["[direction]"] = 0 // can't pass
-			if(T && checkTurfPassable(T))
+			if(T && checkTurfPassable(T, heuristic, heuristic_args))
 				. += T
 				cardinalTurfs["[direction]"] = 1 // can pass
 	 //diagonals need to avoid the leaking problem
 	for(var/direction in ordinal)
 		if(direction in directions)
 			var/turf/T = get_step(current, direction)
-			if(T && checkTurfPassable(T))
+			if(T && checkTurfPassable(T, heuristic, heuristic_args))
 				// check relevant cardinals
 				var/clear = 1
 				for(var/cardinal in cardinal)
@@ -121,27 +121,38 @@
 				if(clear)
 					. += T
 
-// shamelessly stolen from further down and modified
-/proc/checkTurfPassable(turf/T)
-	if(!T)
-		return 0 // can't go on a turf that doesn't exist!!
-	if(T.density) // simplest case
-		return 0
-	for(var/atom/O in T.contents)
-		if (O.density) // && !(O.flags & ON_BORDER)) -- fuck you, windows, you're dead to me
-			// @FIXME this entire block of code does nothing
-			// if (istype(O, /obj/machinery/door))
-			// 	var/obj/machinery/door/D = O
-			// 	if (D.isblocked())
-			// 		return 0 // a blocked door is a blocking door
-			// if (ismob(O))
-			// 	var/mob/M = O
-			// 	if (M.anchored)
-			// 		return 0 // an anchored mob is a blocking mob
-			// 	else
-			return 0 // not a special case, so this is a blocking object
-	return 1
+/// Returns false if there is a dense atom on the turf, unless a custom hueristic is passed.
+/proc/checkTurfPassable(turf/T, heuristic = null, heuristic_args = null)
+	. = TRUE
+	if(T.density || !T.pathable) // simplest case
+		return FALSE
+	for(var/atom/A in T.contents)
+		if (istype(A, /obj/overlay) || istype(A, /obj/effects)) continue
+		if (heuristic) // Only use a custom hueristic if we were passed one
+			. = min(., call(heuristic)(A, heuristic_args))
+			if (!.) // early return if we encountered a failing atom
+				return
+		else if (A.density)
+			return FALSE // not a special case, so this is a blocking object
 
+/proc/hueristic_IsPassableMob(atom/A, mob/M)
+	. = FALSE
+	if (!A.density) // Not dense? Don't care!
+		return TRUE
+
+	if (isobj(A))
+		var/obj/O = A
+		. = !O.density //lots of objects are dense and will stop you
+		if (O.object_flags & BOTS_DIRBLOCK) //NEW - are we a door-like-openable-thing?
+			if (O.has_access_requirements()) //are we a door w/ access?
+				if (O.allowed(M) == 2) // do you have explicit access
+					return TRUE
+				else
+					return FALSE
+			else //we must be a public door
+				return TRUE
+	else if (ismob(A)) //We can pass by mobs, who cares if they're dense.
+		return TRUE
 
 
 #ifdef DEBUG_ASTAR
