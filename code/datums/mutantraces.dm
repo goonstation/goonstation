@@ -2066,7 +2066,7 @@
 					.= release_milk()
 			if ("stamp")
 				if (mob.emote_check(voluntary, 50))
-					. = list("<B>[mob]</B> stamps their hoove!", "<i>stamps their hoove!</i>")
+					. = list("<B>[mob]</B> stamps their hooves!", "<i>stamps their hooves!</i>")
 					playsound(get_turf(mob), "sound/misc/step/step_lattice_1.ogg", 80, 1, channel=VOLUME_CHANNEL_EMOTE)
 			if ("snort")
 				if (mob.emote_check(voluntary, 50))
