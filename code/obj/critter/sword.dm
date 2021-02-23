@@ -51,6 +51,10 @@
 		brutevuln = 0
 		miscvuln = 0
 
+		src.loc.x--							//Correcting spawn location, as src.loc is the location of the SWORD's southwestern tile, rather than the central tile.
+		src.loc.y--							//Ditto.
+		src.dir = pick(1,2,4,8)				//Some randomness for the initial direction the SWORD spawns facing.
+
 		var/increment
 		for(increment in 0 to 14)
 			SPAWN_DBG(increment)
