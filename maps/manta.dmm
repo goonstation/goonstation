@@ -28952,6 +28952,7 @@
 	pixel_y = 20;
 	tag = ""
 	},
+/obj/item/sponge,
 /turf/simulated/floor/purple/checker{
 	dir = 8
 	},
@@ -28959,10 +28960,9 @@
 "bzZ" = (
 /obj/machinery/power/apc/autoname_south,
 /obj/cable,
-/obj/stool,
-/obj/landmark/start{
-	name = "Janitor"
-	},
+/obj/storage/secure/closet/civilian/janitor,
+/obj/item/chem_grenade/cleaner,
+/obj/item/chem_grenade/cleaner,
 /turf/simulated/floor/purple/checker{
 	dir = 8
 	},
@@ -34078,7 +34078,10 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
-/obj/item/sponge,
+/obj/landmark/start{
+	name = "Janitor"
+	},
+/obj/stool,
 /turf/simulated/floor/purple/checker{
 	dir = 8
 	},
