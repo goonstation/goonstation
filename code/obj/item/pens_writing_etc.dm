@@ -90,7 +90,7 @@
 			src.material_uses--
 			if(src.material_uses <= 0)
 				boutput(user, "<span class='notify'>[src.material.name] rubs off of [src].</span>")
-				src.setMaterial(null)
+				src.removeMaterial()
 			return TRUE
 		return FALSE
 

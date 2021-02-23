@@ -143,6 +143,9 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
 	/// Local list of obj/machines found in the area
 	var/list/machines = list()
 
+	///This datum, if set, allows terrain generation behavior to be ran on world/proc/init()
+	var/datum/map_generator/map_generator
+
 	proc/CanEnter(var/atom/movable/A)
 		if( blocked )
 			if( ismob(A) )
@@ -3399,6 +3402,7 @@ ABSTRACT_TYPE(/area/mining)
 
 	proc/SetName(var/name)
 		src.name = name
+		global.area_list_is_up_to_date = 0 // our area cache could no longer be accurate!
 		for(var/obj/machinery/power/apc/apc in src)
 			apc.name = "[name] APC"
 			apc.area = src
@@ -3442,6 +3446,7 @@ ABSTRACT_TYPE(/area/mining)
 		power_environ = 1
 	else
 		luminosity = 0
+	global.area_list_is_up_to_date = 0
 
 	SPAWN_DBG(1.5 SECONDS)
 		src.power_change()		// all machines set to current power level, also updates lighting icon

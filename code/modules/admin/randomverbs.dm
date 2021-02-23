@@ -2722,3 +2722,34 @@ var/global/mirrored_physical_zone_created = FALSE //enables secondary code branc
 				return
 	else
 		boutput(src, "You must be at least an Administrator to use this command.")
+
+
+/client/proc/cmd_swampify_station()
+	SET_ADMIN_CAT(ADMIN_CAT_FUN)
+	set name = "Swampify"
+	set desc = "Turns space into a swamp"
+	admin_only
+	var/const/ambient_light = "#222222"
+#ifdef UNDERWATER_MAP
+	//to prevent tremendous lag from the entire map flooding from a single ocean tile.
+	boutput(src, "You cannot use this command on underwater maps. Sorry!")
+	return
+#else
+	if(src.holder.level >= LEVEL_ADMIN)
+		switch(alert("Turn space into a swamp? This is probably going to lag a bunch when it happens and there's no easy undo!",,"Yes","No"))
+			if("Yes")
+				var/image/I = new /image/ambient
+				var/datum/map_generator/jungle_generator/map_generator = new
+				var/list/space = list()
+				for(var/turf/space/S in block(locate(1, 1, Z_LEVEL_STATION), locate(world.maxx, world.maxy, Z_LEVEL_STATION)))
+					space += S
+				map_generator.generate_terrain(space)
+				for (var/turf/S in space)
+					I.color = ambient_light
+					S.UpdateOverlays(I, "ambient")
+				logTheThing("admin", src, null, "turned space into a swamp.")
+				logTheThing("diary", src, null, "turned space into a swamp.", "admin")
+				message_admins("[key_name(src)] turned space into a swamp.")
+	else
+		boutput(src, "You must be at least an Administrator to use this command.")
+#endif

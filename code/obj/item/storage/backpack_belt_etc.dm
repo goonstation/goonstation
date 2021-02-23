@@ -430,6 +430,9 @@
 	baton
 		spawn_contents = list(/obj/item/baton, /obj/item/barrier)
 
+	tasersmg
+		spawn_contents = list(/obj/item/gun/energy/tasersmg, /obj/item/baton, /obj/item/barrier)
+
 //////////////////////////////
 // ~Nuke Ops Class Storage~ //
 //////////////////////////////

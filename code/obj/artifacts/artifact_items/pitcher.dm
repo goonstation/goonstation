@@ -133,6 +133,11 @@
 		if (src.Artifact_attackby(W,user))
 			..()
 
+	attack(mob/M, mob/user, def_zone)
+		. = ..()
+		if(.) // successfully made person drink
+			src.ArtifactFaultUsed(M)
+
 	examine()
 		return list(desc)
 
