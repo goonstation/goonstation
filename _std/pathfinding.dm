@@ -1,29 +1,38 @@
 /proc/AStar(start, end, adjacent, heuristic, maxtraverse = 30, adjacent_param = null, exclude = null)
 	if(isnull(end) || isnull(start))
 		return
-	var/list/open = list(start), list/nodeG = list(), list/nodeParent = list(), P = 0
-	while (P++ < length(open))
-		var/T = open[P], TG = nodeG[T]
-		if (T == end)
-			var/list/R = list()
-			while (T)
-				R.Insert(1, T)
-				T = nodeParent[T]
-			return R
-		var/list/other = call(T, adjacent)(adjacent_param)
-		for (var/next in other)
-			if ((next in open) || next == exclude) continue
-			var/G = TG + other[next], F = G + call(next, heuristic)(end)
-			for (var/i = P; i <= length(open);)
-				if (i++ == length(open) || open[open[i]] >= F)
-					open.Insert(i, next)
-					open[next] = F
-					break
-			nodeG[next] = G
-			nodeParent[next] = T
+	var/list/turf/open = list(start)
+	var/list/turf/nodeParent = list()
+	var/list/nodeGcost = list()
 
-		if (P > maxtraverse)
-			return
+	var/traverseNum = 0
+	while (traverseNum++ < length(open))
+		var/turf/current = open[traverseNum]
+		var/tentativeGScore = nodeGcost[current]
+		if (current == end)
+			var/list/reconstructed_path = list()
+			while (current)
+				reconstructed_path.Insert(1, current)
+				current = nodeParent[current]
+			return reconstructed_path
+
+		var/list/neighbors = call(current, adjacent)(adjacent_param)
+		for (var/neighbor in neighbors)
+			if ((neighbor in open) || neighbor == exclude)
+				continue
+			var/gScore = tentativeGScore + neighbors[neighbor]
+			var/fScore = gScore + call(neighbor, heuristic)(end)
+
+			for (var/i = traverseNum; i <= length(open);)
+				if (i++ == length(open) || open[open[i]] >= fScore)
+					open.Insert(i, neighbor)
+					open[neighbor] = fScore
+					break
+			nodeGcost[neighbor] = gScore
+			nodeParent[neighbor] = current
+
+		if (traverseNum > maxtraverse)
+			return null // if we reach this part, there's no more nodes left to explore
 
 
 //#define DEBUG_ASTAR
