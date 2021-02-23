@@ -540,6 +540,7 @@
 
 	big_station_bounties[/obj/machinery/crusher] = 3
 	big_station_bounties[/obj/machinery/communications_dish] = 2
+	big_station_bounties[/obj/item/teg_semiconductor] = 2
 
 	active_bounties.len = 0
 

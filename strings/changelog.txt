@@ -1,4 +1,14 @@
 
+(t)tue feb 23 21
+(u)Azrun
+(p)3191
+(e)🆕🗺🎨|feature, mapping, sprites
+(*)Material science interactions with TEG! The prototype semiconductor can be removed from TEG via screwdriver-> wirecutter -> crowbar and brought to an Arc Plater near you! Re-install by reinserting -> adding wire -> snipping excess -> screwing it back in place.
+(+)TEG Semiconductor added as High Priority bounty to SpyThief.
+(u)Sovexe
+(p)3745
+(e)🔄|rework
+(+)Reworked clown shoes to have shorter slip durations. Fixed a bug where slipping as a clown didn't actually make you fall over.
 (t)sun feb 21 21
 (u)TTerc
 (p)3772
