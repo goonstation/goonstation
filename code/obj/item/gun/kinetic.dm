@@ -658,7 +658,8 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	shoot(var/target,var/start ,var/mob/user)
 		..()
 		src.racked_slide = FALSE
-		src.update_icon()
+		if (src.ammo.amount_left == 0) // change icon_state to empty if 0 shells left
+			src.update_icon()
 		src.casings_to_eject = 0 //This probably works
 
 	attack_self(mob/user as mob)
@@ -669,7 +670,12 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 				icon_state = "shotty-empty"
 			else
 				racked_slide = 1
-				icon_state = "shotty"
+				if (icon_state == "shotty") //"animated" racking
+					icon_state = "shotty-empty"
+					SPAWN_DBG(2) //FORGIVE ME ZEWAKA
+					icon_state = "shotty"
+				else
+					icon_state = "shotty" // Slide already open? Just close the slide
 				boutput(user, "<span class='notice'>You rack the slide of the shotgun!</span>")
 				playsound(user.loc, "sound/weapons/pump_action.ogg", 50, 1)
 				if (src.ammo.amount_left < 8) // Do not eject shells if you're racking a full "clip"
