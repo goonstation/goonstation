@@ -1,5 +1,9 @@
 
 (t)wed feb 24 21
+(u)Superlagg
+(p)2921
+(e)🆕|feature
+(*)The RCD can now build light bulb and light tube fixtures.
 (u)Borkatator
 (p)3728
 (e)⚖🆕|balance, feature
