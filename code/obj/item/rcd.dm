@@ -106,7 +106,7 @@ Broken RCD + Effects
 				. += "Pod Doors"
 			else
 				. += "???"
-		. += "mode."
+		. += " mode."
 
 	New()
 		..()
