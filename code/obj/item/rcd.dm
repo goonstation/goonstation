@@ -148,7 +148,7 @@ Broken RCD + Effects
 				. += "Light Tube Fixture"
 			else
 				. += "???"
-		. += "mode."
+		. += " mode."
 
 	New()
 		..()
