@@ -1,5 +1,5 @@
 //
-// # Sentinel structure,
+/// # Sentinel structure,
 //
 #define NOT_CHARGED -1 //! The sentinel is without charge
 #define LOSING_CHARGE 0 //! The sentinel is losing charge
@@ -55,20 +55,22 @@
 				if(icon_state != "sentinelon") icon_state = "sentinelon"//forgive me
 				src.charge(5)
 			if(CHARGED)
-				var/mob/m = null
+				var/mob/loopmob = null
 				var/list/hit = list()
-				for(m in mobs)
-					if(IN_RANGE(m, src, 5) && !isflock(m) && src.flock?.isEnemy(m) && isturf(m.loc))
+				var/mob/mobtohit = null
+				for(loopmob in mobs)
+					if(IN_RANGE(loopmob, src, 5) && !isflock(loopmob) && src.flock?.isEnemy(loopmob) && isturf(loopmob.loc))
+						mobtohit = loopmob
 						break//found target
-				if(!m) return//if no target stop
-				arcFlash(src, m, 10000)
-				hit += m
-				for(var/i in 1 to rand(5,6))
-					for(var/mob/nearbymob in range(2, m))//todo: optimize(?) this.
-						if(nearbymob != m && !isflock(nearbymob) && !(nearbymob in hit) && isturf(nearbymob.loc) && src.flock?.isEnemy(nearbymob))
-							arcFlash(m, nearbymob, 10000)
+				if(!mobtohit) return//if no target stop
+				arcFlash(src, mobtohit, 10000)
+				hit += mobtohit
+				for(var/i in 1 to rand(5,6))//this facilitates chaining. legally distinct from the loop above
+					for(var/mob/nearbymob in range(2, mobtohit))//todo: optimize(?) this.
+						if(nearbymob != mobtohit && !isflock(nearbymob) && !(nearbymob in hit) && isturf(nearbymob.loc) && src.flock?.isEnemy(nearbymob))
+							arcFlash(mobtohit, nearbymob, 10000)
 							hit += nearbymob
-							m = nearbymob
+							mobtohit = nearbymob
 				hit.len = 0//clean up
 				charge = 1
 				var/filter = src.filters[length(src.filters)]//force the visual to power down
