@@ -796,7 +796,7 @@
 				if (src.ding_on_change)
 					playsound(src, src.ding_sound, 33, 0)
 		catch(var/exception/e)
-			src.maptext = "(Err: [e])"
+			src.maptext = "<span class='c pixel sh'>(Err: [e])</span>"
 
 
 	proc/get_value()
@@ -858,10 +858,25 @@
 			maptext_prefix = "<span class='c pixel sh'>Deaths:\n<span class='vga'>"
 			ding_sound = "sound/misc/lose.ogg"
 
+			players
+				monitored_var = "playerdeaths"
+				maptext_prefix = "<span class='c pixel sh'>Deaths:\n<span class='vga'>"
+				ding_sound = "sound/misc/lose.ogg"
+
 		adminhelps
 			monitored_var = "adminhelps"
 			maptext_prefix = "<span class='c pixel sh'>Adminhelps:\n<span class='vga'>"
 			ding_sound = "sound/voice/screams/mascream6.ogg"
+
+		mentorhelps
+			monitored_var = "mentorhelps"
+			maptext_prefix = "<span class='c pixel sh'>Mentorhelps:\n<span class='vga'>"
+			ding_sound = "sound/voice/animal/mouse_squeak.ogg"
+
+		violence
+			monitored_var = "violence"
+			maptext_prefix = "<span class='c pixel sh'>Acts of violence:\n<span class='vga'>"
+			update_delay = 1 SECOND
 
 	budget
 		New()
@@ -889,6 +904,49 @@
 		get_value()
 			. = total_clients()
 
+	players
+		maptext_prefix = "<span class='c pixel sh'>Players:\n<span class='vga'>"
+		var/what_group = "total"
+		validate_monitored()
+			return 1
+		get_value()
+			. = get_crew_stats()[what_group]
+
+		alive
+			maptext_prefix = "<span class='c pixel sh'>Living players:\n<span class='vga'>"
+			what_group = "alive"
+		dead
+			maptext_prefix = "<span class='c pixel sh'>Dead players:\n<span class='vga'>"
+			what_group = "dead"
+		observers
+			maptext_prefix = "<span class='c pixel sh'>Observers:\n<span class='vga'>"
+			what_group = "observer"
+
+
+
+		// shamefully stolen from get_dead_crew_percentage()
+		proc/get_crew_stats()
+			var/list/results = list()
+			results["total"] = 0
+			results["alive"] = 0
+			results["dead"] = 0
+			results["observer"] = 0
+
+			for(var/client/C)
+				var/mob/M = C.mob
+				if(!M || isnewplayer(M)) continue
+				if (isdead(M) && !isliving(M))
+					if (M.mind?.joined_observer)
+						results["observer"]++
+					else
+						results["dead"]++
+				else
+					results["alive"]++
+				results["total"]++
+
+			return results
+
+
 	load
 		maptext_prefix = "<span class='c pixel sh'>Server Load:\n<span class='vga'>"
 		update_delay = 1 SECOND
@@ -907,7 +965,7 @@
 				if (0.8 to INFINITY)
 					lagc = "#ff0000; -dm-text-outline: 1px #000000 solid"
 
-			. = "<span style='color: [lagc];'>[world.cpu]% @ [world.tick_lag]s</span>"
+			. = "<span style='color: [lagc];'>[world.cpu]% @ [world.tick_lag / 10]s</span>"
 
 
 /obj/overlay/zamujasa/football_wave_timer
