@@ -91,7 +91,6 @@
 		. = list(
 			"allArtifactOrigins" = artifact_controls.artifact_origin_names,
 			"allArtifactTypes" = artifact_controls.artifact_type_names,
-			"allArtifactFaults" = artifact_controls.artifact_fault_names,
 			"allArtifactTriggers" = artifact_controls.artifact_trigger_names
 		)
 
