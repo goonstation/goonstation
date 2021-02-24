@@ -154,11 +154,13 @@ datum/teg_transformation
 
 	/// Base transformation to assign material
 	proc/on_transform(obj/machinery/power/generatorTemp/teg)
+		var/datum/material/M
 		src.teg = teg
 		if(src.mat_id)
-			teg.setMaterial(getMaterial(src.mat_id))
-			teg.circ1.setMaterial(getMaterial(src.mat_id))
-			teg.circ2.setMaterial(getMaterial(src.mat_id))
+			M = copyMaterial(src.teg.semiconductor.material)
+			teg.setMaterial(M)
+			teg.circ1.setMaterial(M)
+			teg.circ2.setMaterial(M)
 
 	/// Revert material back to initial values
 	proc/on_revert()
