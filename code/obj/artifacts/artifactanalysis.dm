@@ -113,7 +113,7 @@
 			"artifactTriggers" = artifactTriggers,
 			"artifactFaults" = artifactFaults,
 			"artifactDetails" = artifactDetails,
-			"hasPen" = P?TRUE:FALSE
+			"hasPen" = (P?TRUE:FALSE)
 		)
 
 /obj/artifact_paper_dispenser
