@@ -418,7 +418,7 @@
 /obj/machinery/computer/barcode/qm/donut3
 	name = "Barcode Computer"
 	desc = "Used to print barcode stickers for the off-station merchants."
-	destinations = list()
+	destinations = list("Shipping Market")
 
 /obj/item/sticker/barcode
 	name = "barcode sticker"
