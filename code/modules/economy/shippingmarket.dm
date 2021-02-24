@@ -124,7 +124,7 @@
 		var/price = 0
 		var/modifier = sell_art_datum.get_rarity_modifier()
 
-		price = modifier * 10000
+		price = modifier*modifier * 10000
 		var/obj/item/sticker/postit/artifact_paper/pap = locate(/obj/item/sticker/postit/artifact_paper/) in sell_art.vis_contents
 		if(pap?.lastAnalysis)
 			price *= pap.lastAnalysis
