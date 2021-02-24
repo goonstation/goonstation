@@ -644,10 +644,10 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 
 	update_icon()
 		. = ..()
-		icon_state = "shotty" + (gilded ? "-golden" : "") + (racked_slide ? "" : "-empty" )
+		src.icon_state = "shotty" + (gilded ? "-golden" : "") + (racked_slide ? "" : "-empty" ) //Ternaries are EPIC
 
 	canshoot()
-		if (racked_slide)
+		if (src.racked_slide)
 			return ..()
 		else
 			boutput(usr, "<span class='notice'>You need to rack the slide before you can fire!</span>") //Pain
@@ -662,18 +662,18 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 
 	attack_self(mob/user as mob)
 		..()
-		if (!racked_slide) //Are we racked?
+		if (!src.racked_slide) //Are we racked?
 			if (src.ammo.amount_left == 0)
 				boutput(user, "<span class ='notice'>You are out of shells!</span>")
-				icon_state = "shotty" + (gilded ? "-golden-empty" : "-empty")
+				src.icon_state = "shotty" + (src.gilded ? "-golden-empty" : "-empty")
 			else
-				racked_slide = TRUE
-				if (icon_state == "shotty[gilded ? "-golden" : ""]") //"animated" racking
-					icon_state = "shotty[gilded ? "-golden-empty" : "-empty"]"
+				src.racked_slide = TRUE
+				if (src.icon_state == "shotty[src.gilded ? "-golden" : ""]") //"animated" racking
+					src.icon_state = "shotty[src.gilded ? "-golden-empty" : "-empty"]"
 					animate(src, time = 0.2 SECONDS) //thank you pali for telling me about animate
 					animate(icon_state = "shotty[gilded ? "-golden" : ""]")
 				else
-					icon_state = "shotty[gilded ? "-golden" : ""]" // Slide already open? Just close the slide
+					src.icon_state = "shotty[gilded ? "-golden" : ""]" // Slide already open? Just close the slide
 				boutput(user, "<span class='notice'>You rack the slide of the shotgun!</span>")
 				playsound(user.loc, "sound/weapons/shotgunpump.ogg", 50, 1)
 				if (src.ammo.amount_left < 8) // Do not eject shells if you're racking a full "clip"
