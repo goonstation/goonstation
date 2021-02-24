@@ -13,7 +13,7 @@
 	/// amount of tiles "connected" to.
 	var/connected = 0
 	/// the tiles its connected to
-	var/list/connectedto = list()
+	var/list/turf/simulated/floor/feather/connectedto = list()
 
 	event_handler_flags = USE_CANPASS //needed for passthrough
 	// drones can pass through this, might change this later, as balance point
@@ -46,7 +46,7 @@
 	..()
 
 /obj/flock_structure/collector/proc/calcconnected()
-	for(var/turf/simulated/floor/feather/f in connectedto)
+	for(var/turf/simulated/floor/feather/f as() in connectedto)
 		f.off()
 		f.connected = 0
 	connectedto.len = 0
@@ -70,7 +70,7 @@
 			distance++
 			connectedto |= floor
 
-	for(var/turf/simulated/floor/feather/f in connectedto)
+	for(var/turf/simulated/floor/feather/f as() in connectedto)
 		f.connected = 1
 		f.on() //make it glo
 
