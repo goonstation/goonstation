@@ -1,6 +1,4 @@
-/////////////////////////////////////////////////////////////////////////////////
-// # FLOCK STRUCTURE PARENT
-/////////////////////////////////////////////////////////////////////////////////
+/// # Flock Structure Parent
 /obj/flock_structure
 	icon = 'icons/misc/featherzone.dmi'
 	icon_state = "egg"
@@ -208,8 +206,8 @@
 	src.visible_message("<span class='alert'>[src] is hit by the blob!/span>")
 
 /obj/flock_structure/CanPass(atom/movable/mover, turf/target)
+	. = ..()
 	var/mob/living/critter/flock/drone/drone = mover
 	if(src.passthrough && istype(drone) && !drone.floorrunning)
 		animate_flock_passthrough(mover)
-		return 1
-	return ..()
+		. = TRUE
