@@ -1,5 +1,4 @@
 /// # Flock Structure Parent
-/////////////////////////////////////////////////////////////////////////////////
 /obj/flock_structure
 	icon = 'icons/misc/featherzone.dmi'
 	icon_state = "egg"
