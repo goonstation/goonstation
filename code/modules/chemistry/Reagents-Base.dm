@@ -164,7 +164,7 @@ datum
 							if (H.canmove && isturf(H.loc) && probmult(10))
 								step(H, pick(cardinal))
 							if (prob(20)) H.make_dizzy(rand(3,5) * mult)
-						if (ethanol_amt >= 25)
+						if (ethanol_amt >= 15)
 							liver_damage = 0.25
 							if(probmult(10)) H.emote(pick("hiccup", "burp"))
 							if (probmult(10)) H.stuttering += rand(1,10)
@@ -176,7 +176,7 @@ datum
 							if (H.canmove && isturf(H.loc) && probmult(8))
 								step(H, pick(cardinal))
 						if (ethanol_amt >= 55)
-							liver_damage = 0.5
+							liver_damage = 0.4
 							if(probmult(10))
 								H.emote(pick("hiccup", "fart", "mumble", "grumble"))
 							H.stuttering += 1
