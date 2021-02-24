@@ -75,6 +75,13 @@
 			ui = new(user, src, "ArtifactPaper")
 			ui.open()
 
+	ui_static_data(mob/user)
+		. = list(
+			"allArtifactOrigins" = artifact_controls.artifact_origin_names,
+			"allArtifactTypes" = artifact_controls.artifact_type_names,
+			"allArtifactTriggers" = artifact_controls.artifact_trigger_names
+		)
+
 	ui_data(mob/user)
 		var/obj/item/pen/P = user.find_type_in_hand(/obj/item/pen)
 		. = list(
@@ -85,13 +92,6 @@
 			"artifactFaults" = artifactFaults,
 			"artifactDetails" = artifactDetails,
 			"hasPen" = P?TRUE:FALSE
-		)
-
-	ui_static_data(mob/user)
-		. = list(
-			"allArtifactOrigins" = artifact_controls.artifact_origin_names,
-			"allArtifactTypes" = artifact_controls.artifact_type_names,
-			"allArtifactTriggers" = artifact_controls.artifact_trigger_names
 		)
 
 	ui_act(action, params)
