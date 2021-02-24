@@ -296,7 +296,7 @@
 			var/turf/simulated/floor/F = T
 			//F.health	= 100
 			F.burnt	= 1
-			F.intact	= 0
+			F.setIntact(FALSE)
 			F.levelupdate()
 			new /obj/item/tile/steel(H)	// add to holder so it will be thrown with other stuff
 			F.icon_state = "[F.burnt ? "panelscorched" : "plating"]"
@@ -1500,9 +1500,9 @@
 	attackby(obj/item/W as obj, mob/user as mob)
 		if(..(W, user)) return
 		else if(ispulsingtool(W))
-			. = alert(usr, "What should trigger the sensor?","Disposal Sensor", "Creatures", "Anything", "A mail tag")
+			. = alert(user, "What should trigger the sensor?","Disposal Sensor", "Creatures", "Anything", "A mail tag")
 			if (.)
-				if (get_dist(usr, src) > 1 || usr.stat)
+				if (get_dist(user, src) > 1 || user.stat)
 					return
 
 				switch (.)
@@ -1513,8 +1513,8 @@
 						sense_mode = SENSE_OBJECT
 
 					if ("A mail tag")
-						. = copytext(ckeyEx(input(usr, "What should the tag be?", "What?")), 1, 33)
-						if (. && get_dist(usr, src) < 2 && !usr.stat)
+						. = copytext(ckeyEx(input(user, "What should the tag be?", "What?")), 1, 33)
+						if (. && get_dist(user, src) < 2 && !user.stat)
 							sense_mode = SENSE_TAG
 							sense_tag_filter = .
 
@@ -1736,6 +1736,7 @@
 	var/net_id = null
 	var/frequency = 1149
 	var/datum/radio_frequency/radio_connection
+	throw_speed = 1
 
 	ex_act(var/severity)
 		switch(severity)
@@ -1779,30 +1780,22 @@
 	// expel the contents of the holder object, then delete it
 	// called when the holder exits the outlet
 	proc/expel(var/obj/disposalholder/H)
-		if (message && mailgroup && radio_connection)
+		if (message && (mailgroup || mailgroup2) && radio_connection)
+			var/groups = list()
+			if (mailgroup)
+				groups += mailgroup
+			if (mailgroup2)
+				groups += mailgroup2
+			groups += MGA_MAIL
+
 			var/datum/signal/newsignal = get_free_signal()
 			newsignal.source = src
 			newsignal.transmission_method = TRANSMISSION_RADIO
 			newsignal.data["command"] = "text_message"
 			newsignal.data["sender_name"] = "CHUTE-MAILBOT"
 			newsignal.data["message"] = "[message]"
-
 			newsignal.data["address_1"] = "00000000"
-			newsignal.data["group"] = mailgroup
-			newsignal.data["sender"] = src.net_id
-
-			radio_connection.post_signal(src, newsignal)
-
-		if (message && mailgroup2 && radio_connection)
-			var/datum/signal/newsignal = get_free_signal()
-			newsignal.source = src
-			newsignal.transmission_method = TRANSMISSION_RADIO
-			newsignal.data["command"] = "text_message"
-			newsignal.data["sender_name"] = "CHUTE-MAILBOT"
-			newsignal.data["message"] = "[message]"
-
-			newsignal.data["address_1"] = "00000000"
-			newsignal.data["group"] = mailgroup2
+			newsignal.data["group"] = groups
 			newsignal.data["sender"] = src.net_id
 
 			radio_connection.post_signal(src, newsignal)
@@ -1817,7 +1810,7 @@
 		for(var/atom/movable/AM in H)
 			AM.set_loc(src.loc)
 			AM.pipe_eject(dir)
-			AM.throw_at(target, src.throw_range, 1)
+			AM.throw_at(target, src.throw_range, src.throw_speed)
 		H.vent_gas(src.loc)
 		pool(H)
 
@@ -1836,71 +1829,29 @@
 
 /obj/decal/cleanable/blood/gibs/pipe_eject(var/direction)
 	var/list/dirs
-	if(direction)
-		dirs = list( direction, turn(direction, -45), turn(direction, 45))
+	if(direction in cardinal)
+		dirs = direction
 	else
-		dirs = alldirs.Copy()
+		dirs = cardinal.Copy()
 
-	src.streak(dirs)
+	src.streak_cleanable(dirs)
 
 /obj/decal/cleanable/robot_debris/gib/pipe_eject(var/direction)
 	var/list/dirs
-	if(direction)
-		dirs = list( direction, turn(direction, -45), turn(direction, 45))
+	if(direction in cardinal)
+		dirs = direction
 	else
-		dirs = alldirs.Copy()
+		dirs = cardinal.Copy()
 
-	src.streak(dirs)
+	src.streak_cleanable(dirs)
 
 
 
 
 /obj/disposaloutlet/artifact
+	throw_range = 10
+	throw_speed = 10
 
-	expel(var/obj/disposalholder/H)
-		if (message && mailgroup && radio_connection)
-			var/datum/signal/newsignal = get_free_signal()
-			newsignal.source = src
-			newsignal.transmission_method = TRANSMISSION_RADIO
-			newsignal.data["command"] = "text_message"
-			newsignal.data["sender_name"] = "CHUTE-MAILBOT"
-			newsignal.data["message"] = "[message]"
-
-			newsignal.data["address_1"] = "00000000"
-			newsignal.data["group"] = mailgroup
-			newsignal.data["sender"] = src.net_id
-
-			radio_connection.post_signal(src, newsignal)
-
-		if (message && mailgroup2 && radio_connection)
-			var/datum/signal/newsignal = get_free_signal()
-			newsignal.source = src
-			newsignal.transmission_method = TRANSMISSION_RADIO
-			newsignal.data["command"] = "text_message"
-			newsignal.data["sender_name"] = "CHUTE-MAILBOT"
-			newsignal.data["message"] = "[message]"
-
-			newsignal.data["address_1"] = "00000000"
-			newsignal.data["group"] = mailgroup2
-			newsignal.data["sender"] = src.net_id
-
-			radio_connection.post_signal(src, newsignal)
-
-		flick("outlet-open", src)
-		playsound(src, "sound/machines/warning-buzzer.ogg", 50, 0, 0)
-
-		sleep(2 SECONDS)	//wait until correct animation frame
-		playsound(src, "sound/machines/hiss.ogg", 50, 0, 0)
-
-
-		for(var/atom/movable/AM in H)
-			AM.set_loc(src.loc)
-			AM.pipe_eject(dir)
-			AM.throw_at(target, 10, 10) //This is literally the only thing that was changed in this, otherwise it booted them way too close.
-		H.vent_gas(src.loc)
-		pool(H)
-
-		return
 // -------------------- VR --------------------
 /obj/disposaloutlet/virtual
 	name = "gauntlet outlet"

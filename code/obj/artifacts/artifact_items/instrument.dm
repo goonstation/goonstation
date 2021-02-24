@@ -37,10 +37,11 @@
 	attack_self(mob/user as mob)
 		..()
 		src.play(user)
+		src.ArtifactFaultUsed(user)
 
 /datum/artifact/instrument
 	associated_object = /obj/item/artifact/instrument
 	automatic_activation = 1
-	rarity_class = 1
+	rarity_weight = 450
 	validtypes = list("wizard","eldritch","precursor","martian","ancient")
 	react_xray = list(10,65,95,9,"TUBULAR")

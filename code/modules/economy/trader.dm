@@ -1,7 +1,15 @@
+/proc/most_applicable_trade(var/list/datum/commodity/goods_buy, var/obj/item/sell_item)
+	var/list/goods_buy_types = new /list(0)
+	for(var/datum/commodity/N as() in goods_buy)
+		if (istype(sell_item, N.comtype))
+			goods_buy_types[N.comtype] = N
+	return goods_buy_types[maximal_subtype(goods_buy_types)]
+
+
 /obj/npc/trader
 	name="Trader"
 	layer = 4  //Same layer as most mobs, should stop them from sometimes being drawn under their shuttle chairs out of sight
-	var/bullshit =0
+	var/bullshit = 0
 	var/hiketolerance = 20 //How much they will tolerate price hike
 	var/list/droplist = null //What the merchant will drop upon their death
 	var/list/goods_sell = new/list() //What products the trader sells
@@ -105,7 +113,7 @@
 		if(..())
 			return
 
-		if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
+		if ((usr.contents.Find(src) || (in_interact_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
 			src.add_dialog(usr)
 		///////////////////////////////
 		///////Generate Purchase List//
@@ -275,13 +283,8 @@
 							<BR><A href='?src=\ref[src];sell=1'>OK</A>"}
 				src.updateUsrDialog()
 				return
-			var/list/goods_buy_types
-			goods_buy_types = new /list(0)
-			for(var/datum/commodity/N in goods_buy)
-				if (istype(src.sellitem, N.comtype))
-					goods_buy_types[N.comtype] = N.price
-			if (goods_buy_types.len >= 1)
-				var/goods_type = maximal_subtype(goods_buy_types)
+			var/datum/commodity/tradetype = most_applicable_trade(src.goods_buy, src.sellitem)
+			if(tradetype)
 				var/datum/data/record/account = null
 				account = FindBankAccountByName(src.scan.registered)
 				if (!account)
@@ -296,7 +299,7 @@
 					src.temp += "<BR><A href='?src=\ref[src];sell=1'>OK</A>"
 					qdel (src.sellitem)
 					src.sellitem = null
-					account.fields["current_money"] += goods_buy_types[goods_type]
+					account.fields["current_money"] += tradetype.price
 					src.add_fingerprint(usr)
 					src.updateUsrDialog()
 					doing_a_thing = 0
@@ -514,17 +517,11 @@
 				user.visible_message("<span class='notice'>[src] rummages through [user]'s [O].</span>")
 				playsound(src.loc, "rustle", 60, 1)
 				var/cratevalue = null
-				for (var/obj/M in O.contents)
-					//boutput(world, "<span class='notice'>HELLO I AM [M]</span>")
-					//boutput(world, "<span class='notice'>AND MY TYPE PATH IS [M.type]</span>")
-					for(var/datum/commodity/N in src.goods_buy)
-						if(M) // fuck the hell off you dirty null.type errors
-							if(N.comtype == M.type)
-								//boutput(world, "<b>MY ASSOCIATED DATUM IS [N]</b>")
-								//boutput(world, "<span class='notice'>[M] IS GOING TO SELL FOR [N.price] HOT BALLS</span>")
-								//boutput(world, "<span class='notice'>UPDATING CRATE VALUE TO [cratevalue] OR FUCKING ELSE</span>")
-								cratevalue += N.price
-								qdel( M )
+				for (var/obj/sellitem in O.contents)
+					var/datum/commodity/tradetype = most_applicable_trade(src.goods_buy, sellitem)
+					if(tradetype)
+						cratevalue += tradetype.price
+						qdel(sellitem)
 				if(cratevalue)
 					boutput(user, "<span class='notice'>[src] takes what they want from [O]. [cratevalue] credits have been transferred to your account.</span>")
 					account.fields["current_money"] += cratevalue
@@ -1037,6 +1034,8 @@
 		src.goods_sell += new /datum/commodity/costume/werewolf(src)
 		src.goods_sell += new /datum/commodity/costume/abomination(src)
 		src.goods_sell += new /datum/commodity/costume/hotdog(src)
+		src.goods_sell += new /datum/commodity/costume/mime(src)
+		src.goods_sell += new /datum/commodity/costume/mime/alt(src) //suspenders and such
 		src.goods_sell += new /datum/commodity/balloons(src)
 		src.goods_sell += new /datum/commodity/crayons(src)
 		src.goods_sell += new /datum/commodity/junk/circus_board(src)

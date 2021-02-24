@@ -297,7 +297,7 @@
 			boutput(usr, "If a direction, direction is: [dir]")
 
 	var/class = input("What kind of variable?","Variable Type",default) as null|anything in list("text",
-		"num","type","reference","mob reference","turf by coordinates","reference picker","new instance of a type", "icon","file","color","list","edit referenced object", default == "associated" ? "associated" : null, "(DELETE FROM LIST)","restore to default")
+		"num","type","reference","mob reference","turf by coordinates","reference picker","new instance of a type", "icon","file","color","list","number","edit referenced object", default == "associated" ? "associated" : null, "(DELETE FROM LIST)","restore to default")
 
 	if(!class)
 		return
@@ -388,6 +388,7 @@
 		if("color")
 			L[variable_index] = input("Pick color:","Color",variable) \
 				as color
+
 
 /datum/targetable/addtolistrefpicker
 	var/list/target = null
@@ -556,7 +557,7 @@
 			boutput(usr, "If a direction, direction is: [dir]")
 
 	var/class = input("What kind of variable?","Variable Type",default) as null|anything in list("text",
-		"num","type","reference","mob reference","turf by coordinates","reference picker","new instance of a type","icon","file","color","list","edit referenced object","create new list","restore to default")
+		"num","type","reference","mob reference","turf by coordinates","reference picker","new instance of a type","icon","file","color","list","json","edit referenced object","create new list","restore to default")
 
 	if(!class)
 		return
@@ -573,6 +574,12 @@
 
 		if("list")
 			mod_list(O.vars[variable])
+			return
+
+		if("json")
+			var/newval = input("Enter json:", "JSON", json_encode(O.vars[variable])) as text|null
+			if(!isnull(newval))
+				O.vars[variable] = json_decode(newval)
 			return
 
 		if("restore to default")

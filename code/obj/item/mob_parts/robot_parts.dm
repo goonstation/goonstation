@@ -14,6 +14,7 @@
 	skintoned = 0
 	/// Robot limbs shouldn't get replaced through mutant race changes
 	limb_is_unnatural = TRUE
+	kind_of_limb = (LIMB_ROBOT)
 
 	decomp_affected = 0
 	var/robot_movement_modifier
@@ -168,6 +169,9 @@
 	var/visible_eyes = 1
 	var/wires_exposed = 0
 
+		// Screen head specific
+	var/mode = "lod" // lod (light-on-dark) or dol (dark-on-light)
+	var/face = "happy"
 
 	examine()
 		. = ..()
@@ -299,6 +303,7 @@
 	icon_state = "head-sturdy"
 	max_health = 225
 	weight = 0.2
+	kind_of_limb = (LIMB_ROBOT | LIMB_HEAVY) // shush
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W,/obj/item/sheet) && (src.type == /obj/item/parts/robot_parts/head/sturdy))
@@ -353,6 +358,7 @@
 	icon_state = "head-heavy"
 	max_health = 350
 	weight = 0.4
+	kind_of_limb = (LIMB_ROBOT | LIMB_HEAVIER)
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (isweldingtool(W))
@@ -382,6 +388,7 @@
 	icon_state = "head-light"
 	max_health = 50
 	robot_movement_modifier = /datum/movement_modifier/robot_part/head
+	kind_of_limb = (LIMB_ROBOT | LIMB_LIGHT)
 
 /obj/item/parts/robot_parts/head/antique
 	name = "antique cyborg head"
@@ -391,6 +398,14 @@
 	max_health = 150
 	visible_eyes = 0
 	robot_movement_modifier = /datum/movement_modifier/robot_part/head
+
+/obj/item/parts/robot_parts/head/screen
+	name = "cyborg screen head"
+	desc = "A somewhat fragile head unit with a screen addressable by the cyborg."
+	appearanceString = "screen"
+	icon_state = "head-screen"
+	max_health = 90
+	var/list/expressions = list("happy", "veryhappy", "neutral", "sad", "angry", "curious", "surprised", "unsure", "content", "tired", "cheeky")
 
 /obj/item/parts/robot_parts/chest
 	name = "standard cyborg chest"
@@ -480,6 +495,7 @@
 	appearanceString = "light"
 	icon_state = "body-light"
 	max_health = 75
+	kind_of_limb = (LIMB_ROBOT | LIMB_LIGHT) // hush
 
 /obj/item/parts/robot_parts/arm
 	name = "placeholder item (don't use this!)"
@@ -579,6 +595,7 @@
 	icon_state = "l_arm-sturdy"
 	max_health = 100
 	weight = 0.2
+	kind_of_limb = (LIMB_ROBOT | LIMB_HEAVY)
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if(istype(W,/obj/item/sheet) && (src.type == /obj/item/parts/robot_parts/arm/left/sturdy))
@@ -607,6 +624,7 @@
 	icon_state = "l_arm-heavy"
 	max_health = 175
 	weight = 0.4
+	kind_of_limb = (LIMB_ROBOT | LIMB_HEAVIER)
 
 /obj/item/parts/robot_parts/arm/left/light
 	name = "light cyborg left arm"
@@ -615,6 +633,7 @@
 	max_health = 25
 	handlistPart = "armL-light"
 	robot_movement_modifier = /datum/movement_modifier/robot_part/arm_left
+	kind_of_limb = (LIMB_ROBOT | LIMB_LIGHT)
 
 /obj/item/parts/robot_parts/arm/right
 	name = "standard cyborg right arm"
@@ -648,6 +667,7 @@
 	icon_state = "r_arm-sturdy"
 	max_health = 100
 	weight = 0.2
+	kind_of_limb = (LIMB_ROBOT | LIMB_HEAVY)
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if(istype(W,/obj/item/sheet) && (src.type == /obj/item/parts/robot_parts/arm/right/sturdy))
@@ -676,6 +696,7 @@
 	icon_state = "r_arm-heavy"
 	max_health = 175
 	weight = 0.4
+	kind_of_limb = (LIMB_ROBOT | LIMB_HEAVIER)
 
 /obj/item/parts/robot_parts/arm/right/light
 	name = "light cyborg right arm"
@@ -684,6 +705,7 @@
 	max_health = 25
 	handlistPart = "armR-light"
 	robot_movement_modifier = /datum/movement_modifier/robot_part/arm_right
+	kind_of_limb = (LIMB_ROBOT | LIMB_LIGHT)
 
 /obj/item/parts/robot_parts/leg
 	name = "placeholder item (don't use this!)"
@@ -718,11 +740,7 @@
 		if(src.appearanceString == "sturdy" || src.appearanceString == "heavy" || src.appearanceString == "thruster")
 			boutput(user, "<span class='alert'>That leg is too big to fit on [H]'s body!</span>")
 			return
-/*
-		if(src.appearanceString == "treads" && (H.limbs.l_leg || H.limbs.r_leg))
-			boutput(user, "<span class='alert'>Both of [H]'s legs must be removed to fit them with treads!</span>")
-			return
-*/
+
 		attach(H,user)
 
 		return
@@ -792,7 +810,7 @@
 	handlistPart = "legL-light"
 	max_health = 25
 	robot_movement_modifier = /datum/movement_modifier/robotleg_left
-
+	kind_of_limb = (LIMB_ROBOT | LIMB_LIGHT)
 
 /obj/item/parts/robot_parts/leg/left/treads
 	name = "left cyborg tread"
@@ -805,6 +823,7 @@
 	step_image_state = "tracksL"
 	movement_modifier = /datum/movement_modifier/robottread_left
 	robot_movement_modifier = /datum/movement_modifier/robot_part/tread_left
+	kind_of_limb = (LIMB_ROBOT | LIMB_TREADS)
 
 /obj/item/parts/robot_parts/leg/right
 	name = "standard cyborg right leg"
@@ -822,6 +841,7 @@
 	handlistPart = "legR-light"
 	max_health = 25
 	robot_movement_modifier = /datum/movement_modifier/robotleg_right
+	kind_of_limb = (LIMB_ROBOT | LIMB_LIGHT)
 
 /obj/item/parts/robot_parts/leg/right/treads
 	name = "right cyborg tread"
@@ -834,6 +854,7 @@
 	step_image_state = "tracksR"
 	movement_modifier = /datum/movement_modifier/robottread_right
 	robot_movement_modifier = /datum/movement_modifier/robot_part/tread_right
+	kind_of_limb = (LIMB_ROBOT | LIMB_TREADS)
 
 /obj/item/parts/robot_parts/leg/treads
 	name = "cyborg treads"
@@ -846,7 +867,7 @@
 	step_image_state = "tracks-w"
 	movement_modifier = /datum/movement_modifier/robotleg_right // only one of these? if it replaces both it doesn't matter which one we put here.
 	robot_movement_modifier = /datum/movement_modifier/robot_part/tread_right
-
+	kind_of_limb = (LIMB_ROBOT | LIMB_TREADS)
 
 /obj/item/parts/robot_parts/leg/thruster
 	name = "Alastor pattern thruster"
@@ -858,6 +879,7 @@
 	powerdrain = 5
 	step_image_state = null //It's flying so no need for this.
 	robot_movement_modifier = /datum/movement_modifier/robot_part/thruster_right
+	kind_of_limb = (LIMB_ROBOT | LIMB_TREADS | LIMB_LIGHT)
 
 /obj/item/parts/robot_parts/leg/left/thruster
 	name = "left thruster assembly"
@@ -868,7 +890,7 @@
 	powerdrain = 5
 	step_image_state = null //It's flying so no need for this.
 	robot_movement_modifier = /datum/movement_modifier/robot_part/thruster_left
-
+	kind_of_limb = (LIMB_ROBOT | LIMB_TREADS | LIMB_LIGHT)
 
 /obj/item/parts/robot_parts/leg/right/thruster
 	name = "right thruster assembly"
@@ -879,6 +901,7 @@
 	powerdrain = 5
 	step_image_state = null //It's flying so no need for this.
 	robot_movement_modifier = /datum/movement_modifier/robot_part/thruster_right
+	kind_of_limb = (LIMB_ROBOT | LIMB_TREADS | LIMB_LIGHT)
 
 /obj/item/parts/robot_parts/robot_frame
 	name = "robot frame"
@@ -1134,7 +1157,7 @@
 				O.gender = O.brain.owner.current.gender
 				if(O.brain.owner.current.client)
 					O.lastKnownIP = O.brain.owner.current.client.address
-			var/mob/M = find_ghost_by_key(O.brain.owner.ckey)
+			var/mob/M = find_ghost_by_key(O.brain.owner.key)
 			if (!M) // if we couldn't find them (i.e. they're still alive), don't pull them into this borg
 				src.visible_message("<span class='alert'><b>[src]</b> remains inactive.</span>")
 				O.collapse_to_pieces()
@@ -1143,10 +1166,12 @@
 			if (!isdead(M)) // so if they're in VR, the afterlife bar, or a ghostcritter
 				boutput(M, "<span class='notice'>You feel yourself being pulled out of your current plane of existence!</span>")
 				O.brain.owner = M.ghostize()?.mind
+				qdel(M)
 			else
 				boutput(M, "<span class='alert'>You feel yourself being dragged out of the afterlife!</span>")
-			qdel(M)
 			O.brain.owner.transfer_to(O)
+			if (isdead(M) && !isliving(M))
+				qdel(M)
 		else if (O.ai_interface)
 			if (!(O in available_ai_shells))
 				available_ai_shells += O

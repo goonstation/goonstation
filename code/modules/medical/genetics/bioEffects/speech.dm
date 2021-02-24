@@ -193,7 +193,7 @@
 
 /datum/bioEffect/speech/comic
 	name = "Frontal Gyrus Alteration Type-CS"
-	desc = "Causes the speech center of the subject's brain to become, uh. Well, <i>something</i> happens to it."
+	desc = "Causes the speech center of the subject's brain to become, uh. Well, SOMETHING happens to it."
 	id = "accent_comic"
 	effectType = EFFECT_TYPE_DISABILITY
 	isBad = 1
@@ -600,6 +600,8 @@
 	isBad = 1
 	msgGain = "Oh nyo. uwu"
 	msgLose = "Nyo more funny talking."
+	occur_in_genepools = 0
+	acceptable_in_mutini = 0
 	probability = 0 // Should not be player accessible
 	reclaim_fail = 10
 	lockProb = 25

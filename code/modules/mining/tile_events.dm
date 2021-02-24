@@ -36,6 +36,21 @@
 		I.quality = AST.quality + rand(-50,50)
 		I.name = "[getGemQualityName(I.quality)] [I.name]"
 
+/datum/ore/event/gem/molitz_b
+	analysis_string = "Small unusual crystalline deposit detected."
+	excavation_string = "Something unusual tumbles out of the collapsing rock!"
+
+	set_up(var/datum/ore/parent)
+		if (..())
+			return
+		gem_type = /obj/item/raw_material/molitz_beta
+
+	onExcavate(var/turf/simulated/wall/asteroid/AST)
+		var/quantity = rand(3,5)
+		for(var/i in 1 to quantity)
+			..()
+
+
 /datum/ore/event/rock_worm
 	analysis_string = "Caution! Life signs detected!"
 	excavation_string = "A rock worm jumps out of the collapsing rock!"

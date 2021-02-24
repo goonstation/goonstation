@@ -40,6 +40,7 @@
 	item = /obj/item/kudzuseed
 	cost = 4
 	desc = "Syndikudzu. Interesting. Plant on the floor to grow."
+	vr_allowed = 0
 	job = list("Botanist", "Staff Assistant")
 	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/revolution)
 
@@ -343,8 +344,9 @@
 	base_state = "avine"
 	vinepath = /obj/spacevine/alien/living
 	aggressive = 1
-	New()
-		if (..())
+
+	New(turf/loc, var/to_spread = KUDZU_TO_SPREAD_INITIAL)
+		if (..(loc, to_spread))
 			return 1
 		SPAWN_DBG(0)
 			if (prob(20) && !locate(/obj/spacevine/alien/flower) in get_turf(src))

@@ -1,8 +1,8 @@
 /**
-* @file
-* @copyright 2020 Aleksej Komarov
-* @license MIT
-*/
+ * @file
+ * @copyright 2020 Aleksej Komarov
+ * @license MIT
+ */
 
 import { canRender, classes } from 'common/react';
 import { Component, createRef } from 'inferno';
@@ -12,19 +12,19 @@ import { computeBoxClassName, computeBoxProps } from './Box';
 export class Section extends Component {
   constructor(props) {
     super(props);
-    this.ref = createRef();
+    this.scrollableRef = createRef();
     this.scrollable = props.scrollable;
   }
 
   componentDidMount() {
     if (this.scrollable) {
-      addScrollableNode(this.ref.current);
+      addScrollableNode(this.scrollableRef.current);
     }
   }
 
   componentWillUnmount() {
     if (this.scrollable) {
-      removeScrollableNode(this.ref.current);
+      removeScrollableNode(this.scrollableRef.current);
     }
   }
 
@@ -32,7 +32,6 @@ export class Section extends Component {
     const {
       className,
       title,
-      level = 1,
       buttons,
       fill,
       fitted,
@@ -41,13 +40,10 @@ export class Section extends Component {
       ...rest
     } = this.props;
     const hasTitle = canRender(title) || canRender(buttons);
-    const hasContent = canRender(children);
     return (
       <div
-        ref={this.ref}
         className={classes([
           'Section',
-          'Section--level--' + level,
           Byond.IS_LTE_IE8 && 'Section--iefix',
           fill && 'Section--fill',
           fitted && 'Section--fitted',
@@ -66,12 +62,11 @@ export class Section extends Component {
             </div>
           </div>
         )}
-        {fitted && children
-          || hasContent && (
-            <div className="Section__content">
-              {children}
-            </div>
-          )}
+        <div className="Section__rest">
+          <div ref={this.scrollableRef} className="Section__content">
+            {children}
+          </div>
+        </div>
       </div>
     );
   }

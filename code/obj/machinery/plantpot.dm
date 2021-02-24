@@ -738,7 +738,7 @@
 		return
 
 	MouseDrop_T(atom/over_object as obj, mob/user as mob) // ty to Razage for the initial code
-		if(get_dist(user, src) > 1 || get_dist(user, over_object) > 1 || user.stat || user.getStatusDuration("paralysis") || user.getStatusDuration("stunned") || user.getStatusDuration("weakened") || isAI(user))
+		if(get_dist(user, src) > 1 || get_dist(user, over_object) > 1 || is_incapacitated(user) || isAI(user))
 			return
 		if(istype(over_object, /obj/item/seed))  // Checks to make sure it's a seed being dragged onto the tray.
 			if(get_dist(user, src) > 1)
@@ -838,8 +838,6 @@
 				UpdateOverlays(null, "health_display")
 
 		var/planticon = null
-		if(growing.sprite)
-			planticon = "[growing.sprite]-G[src.grow_level]"
 		if(MUT?.iconmod)
 			planticon = "[MUT.iconmod]-G[src.grow_level]"
 		else if(growing.sprite)
@@ -1703,7 +1701,10 @@ proc/HYPaddCommut(var/datum/plant/P,var/datum/plantgenes/DNA,var/commut)
 			if(X.type == commut)
 				return
 	// create a new list here (i.e. do not use +=) so as to not affect related seeds/plants
-	DNA.commuts = DNA.commuts + HY_get_strain_from_path(commut)
+	if(DNA.commuts)
+		DNA.commuts = DNA.commuts + HY_get_strain_from_path(commut)
+	else
+		DNA.commuts = list(HY_get_strain_from_path(commut))
 
 proc/HYPmutateDNA(var/datum/plantgenes/DNA,var/severity = 1)
 	// This proc jumbles up the variables in a plant's genes. It's fundamental to breeding.

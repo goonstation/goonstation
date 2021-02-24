@@ -42,6 +42,7 @@
 
 		if (src.on) //if we spawned lit, do something about it!
 			src.on = 0
+			src.firesource = FALSE
 			src.light()
 
 		if (src.exploding)
@@ -98,6 +99,7 @@
 	proc/light(var/mob/user as mob, var/message as text)
 		if (src.on == 0)
 			src.on = 1
+			src.firesource = TRUE
 			src.hit_type = DAMAGE_BURN
 			src.force = 3
 			src.icon_state = litstate
@@ -116,6 +118,7 @@
 	proc/put_out(var/mob/user as mob, var/message as text)
 		if (src.on == 1)
 			src.on = -1
+			src.firesource = FALSE
 			src.hit_type = DAMAGE_BLUNT
 			src.force = 0
 			src.icon_state = buttstate
@@ -166,6 +169,10 @@
 				return
 			else if (W.burning)
 				src.light(user, "<span class='alert'><b>[user]</b> lights [src] with [W]. Goddamn.</span>")
+				return
+			else if (W.firesource)
+				src.light(user, "<span class='alert'><b>[user]</b> lights [src] with [W].</span>")
+				W.firesource_interact()
 				return
 			else
 				return ..()
@@ -268,6 +275,8 @@
 					if(H.traitHolder && H.traitHolder.hasTrait("smoker") || !((src in H.get_equipped_items()) || ((H.l_store==src||H.r_store==src) && !(H.wear_mask && (H.wear_mask.c_flags & BLOCKSMOKE || (H.wear_mask.c_flags & MASKINTERNALS && H.internal))))))
 						src.reagents.remove_any(puffrate)
 					else
+						if(H.bodytemperature < H.base_body_temp)
+							H.bodytemperature += 1
 						if (prob(1))
 							H.contract_disease(/datum/ailment/malady/heartdisease,null,null,1)
 						src.reagents.trans_to(M, puffrate)
@@ -356,7 +365,7 @@
 
 	New()
 		if (all_functional_reagent_ids.len > 0)
-			var/list/chem_choices = all_functional_reagent_ids - list("big_bang_precursor", "big_bang", "nitrotri_parent", "nitrotri_wet", "nitrotri_dry", "rat_venom")
+			var/list/chem_choices = all_functional_reagent_ids
 			src.flavor = pick(chem_choices)
 		else
 			src.flavor = "nicotine"
@@ -906,6 +915,7 @@
 
 	proc/light(var/mob/user as mob)
 		src.on = 1
+		src.firesource = TRUE
 		src.icon_state = "match-lit"
 
 		playsound(get_turf(user), "sound/items/matchstick_light.ogg", 50, 1)
@@ -915,6 +925,7 @@
 
 	proc/put_out(var/mob/user as mob, var/break_it = 0)
 		src.on = -1
+		src.firesource = FALSE
 		src.life_timer = 0
 		if (break_it)
 			src.icon_state = "match-broken"
@@ -1056,7 +1067,8 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
 	w_class = 1
 	throwforce = 4
-	flags = FPRINT | ONBELT | TABLEPASS | CONDUCT
+	flags = FPRINT | ONBELT | TABLEPASS | CONDUCT | ATTACK_SELF_DELAY
+	click_delay = 0.7 SECONDS
 	stamina_damage = 5
 	stamina_cost = 5
 	stamina_crit_chance = 5
@@ -1085,6 +1097,7 @@
 					user.show_text("Out of fuel.", "red")
 					return
 				src.on = 1
+				src.firesource = TRUE
 				set_icon_state(src.icon_on)
 				src.item_state = "zippoon"
 				user.visible_message("<span class='alert'>Without even breaking stride, [user] flips open and lights [src] in one smooth movement.</span>")
@@ -1094,6 +1107,7 @@
 				processing_items |= src
 			else
 				src.on = 0
+				src.firesource = FALSE
 				set_icon_state(src.icon_off)
 				src.item_state = "zippo"
 				user.visible_message("<span class='alert'>You hear a quiet click, as [user] shuts off [src] without even looking what they're doing. Wow.</span>")
@@ -1199,6 +1213,10 @@
 		if (exposed_temperature > 1000)
 			return ..()
 		return
+
+	firesource_interact()
+		if (!infinite_fuel && reagents.get_reagent_amount("fuel"))
+			reagents.remove_reagent("fuel", 1)
 
 	custom_suicide = 1
 	suicide(var/mob/user as mob)

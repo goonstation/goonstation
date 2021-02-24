@@ -1,13 +1,13 @@
 
 /datum/hud/zone_sel
-	var/obj/screen/hud/background
-	var/obj/screen/hud/head
-	var/obj/screen/hud/chest
-	var/obj/screen/hud/l_arm
-	var/obj/screen/hud/r_arm
-	var/obj/screen/hud/l_leg
-	var/obj/screen/hud/r_leg
-	var/obj/screen/hud/selection
+	var/atom/movable/screen/hud/background
+	var/atom/movable/screen/hud/head
+	var/atom/movable/screen/hud/chest
+	var/atom/movable/screen/hud/l_arm
+	var/atom/movable/screen/hud/r_arm
+	var/atom/movable/screen/hud/l_leg
+	var/atom/movable/screen/hud/r_leg
+	var/atom/movable/screen/hud/selection
 
 	var/slocation = ui_zone_sel
 

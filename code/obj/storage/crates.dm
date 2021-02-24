@@ -343,6 +343,38 @@
 	desc = "A small, cuboid object with a hinged top and loot filled interior."
 	spawn_contents = list(/obj/random_item_spawner/loot_crate/surplus)
 
+/obj/storage/crate/chest
+	name = "treasure chest"
+	desc = "Glittering gold, trinkets and baubles, paid for in blood."
+	icon = 'icons/obj/32x48.dmi'
+	icon_state = "chest"
+	icon_opened = "chest-open"
+	icon_closed = "chest"
+
+	New()
+		..()
+		src.setMaterial(getMaterial("wood"), appearance = 0, setname = 0)
+
+/obj/storage/crate/chest/coins
+	var/coins_count_min = 5
+	var/coins_count_max = 50
+	New()
+		..()
+		var/coins_count = rand(coins_count_min, coins_count_max)
+		for(var/i in 1 to coins_count)
+			var/obj/item/coin/coin = new(src)
+			coin.pixel_x = rand(-9, 9)
+			coin.pixel_y = rand(0, 6)
+
+/obj/storage/crate/chest/spacebux
+	New()
+		..()
+		var/bux_count = rand(3, 10)
+		for(var/i in 1 to bux_count)
+			var/obj/item/spacebux/bux = new(src, pick(10, 20, 50, 100, 200, 500))
+			bux.pixel_x = rand(-9, 9)
+			bux.pixel_y = rand(0, 6)
+
 // Gannets' Nuke Ops Specialist Class Crates
 
 /obj/storage/crate/classcrate
@@ -420,6 +452,17 @@
 		/obj/item/clothing/suit/space/syndicate/specialist/medic,
 		/obj/item/clothing/head/helmet/space/syndicate/specialist/medic)
 
+	medic_rework
+		name = "Class Crate - Field Medic"
+		desc = "A crate containing a Specialist Operative loadout. This one is packed with medical supplies."
+		spawn_contents = list(/obj/item/clothing/glasses/healthgoggles/upgraded,
+		/obj/item/device/analyzer/healthanalyzer/borg,
+		/obj/item/storage/medical_pouch,
+		/obj/item/storage/belt/syndicate_medic_belt,
+		/obj/item/storage/backpack/satchel/syndie/syndicate_medic_satchel,
+		/obj/item/clothing/suit/space/syndicate/specialist/medic,
+		/obj/item/clothing/head/helmet/space/syndicate/specialist/medic)
+
 	engineer
 		name = "Class Crate - Combat Engineer"
 		desc = "A crate containing a Specialist Operative loadout."
@@ -437,7 +480,7 @@
 	pyro
 		name = "Class Crate - Firebrand"
 		desc = "A crate containing a Specialist Operative loadout."
-		spawn_contents = list(/obj/item/flamethrower/backtank/napalm,
+		spawn_contents = list(/obj/item/gun/flamethrower/backtank/napalm,
 		/obj/item/fireaxe,
 		/obj/item/storage/grenade_pouch/incendiary,
 		/obj/item/clothing/suit/space/syndicate/specialist/firebrand,

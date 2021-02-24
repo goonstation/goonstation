@@ -227,8 +227,8 @@
 			boutput(usr, "<span class='alert'>You're too far from [src] to draw a card!</span>")
 			return
 		if (get_dist(usr, target) > 1)
-			if (istype(target, /obj/screen/hud))
-				var/obj/screen/hud/hud = target
+			if (istype(target, /atom/movable/screen/hud))
+				var/atom/movable/screen/hud/hud = target
 				if (istype(hud.master, /datum/hud/human))
 					var/datum/hud/human/h_hud = hud.master // all this just to see if you're trying to deal to someone's hand, ffs
 					if (h_hud.master && h_hud.master == usr) // or their face, I guess.  it'll apply to any attempts to deal to your hud
@@ -337,12 +337,12 @@
 							break
 					if (!cardToGive)
 						return
-					user.visible_message("<span class='notice'><b>[usr]</b> draws a card from [src].</span>",\
+					user.visible_message("<span class='notice'><b>[user]</b> draws a card from [src].</span>",\
 					"<span class='notice'>You draw \an [chosenCard] from [src].</span>")
 					src.draw_card(null, user, draw_face_up, cardToGive)
 				else
 					var/datum/playing_card/Card = src.cards[1]
-					user.visible_message("<span class='notice'><b>[usr]</b> draws [draw_face_up ? "\an [Card.card_name]" : "a card"] from [src].</span>",\
+					user.visible_message("<span class='notice'><b>[user]</b> draws [draw_face_up ? "\an [Card.card_name]" : "a card"] from [src].</span>",\
 					"<span class='notice'>You draw [draw_face_up ? "\an [Card.card_name]" : "a card"] from [src].</span>")
 					src.draw_card(null, user, draw_face_up)
 			else return ..(user)

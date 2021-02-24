@@ -59,12 +59,9 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 				process()
 
 	Entered(atom/movable/Obj,atom/OldLoc)
-		..()
+		. = ..()
 		if(ambientSound && ismob(Obj))
-			if (!soundSubscribers:Find(Obj))
-				soundSubscribers += Obj
-
-		return
+			soundSubscribers |= Obj
 
 	proc/process()
 		if (!soundSubscribers)
@@ -894,15 +891,15 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 			src.operating = 1
 		flick("bdoor[doordir]c0", src)
 		src.icon_state = "bdoor[doordir]0"
-		sleep(1 SECOND)
-		src.set_density(0)
-		src.RL_SetOpacity(0)
-		update_nearby_tiles()
+		SPAWN_DBG(1 SECOND)
+			src.set_density(0)
+			src.RL_SetOpacity(0)
+			update_nearby_tiles()
 
-		if(operating == 1) //emag again
-			src.operating = 0
-		if(autoclose)
-			SPAWN_DBG(15 SECONDS)
+			if(operating == 1) //emag again
+				src.operating = 0
+			if(autoclose)
+				sleep(15 SECONDS)
 				autoclose()
 		return 1
 
@@ -965,6 +962,7 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 			return
 
 		src.broken = 1
+		src.operating = -1 // set operating to -1 so A* fails on door check
 
 		playsound(src.loc, 'sound/machines/airlock_break_very_temp.ogg', 50, 1)
 		SPAWN_DBG(0)

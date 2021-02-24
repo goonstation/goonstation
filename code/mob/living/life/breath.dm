@@ -107,6 +107,8 @@
 		if (underwater)
 			if (human_owner?.mutantrace && human_owner?.mutantrace.aquatic)
 				return
+			if(human_owner?.hasStatus("aquabreath"))
+				return
 			if (prob(25) && owner.losebreath > 0)
 				boutput(owner, "<span class='alert'>You are drowning!</span>")
 
@@ -160,15 +162,15 @@
 
 
 	proc/get_breath_grabbed_by(volume_needed)
-		.= null
+		. = null
 		for(var/obj/item/grab/force_mask/G in owner.grabbed_by)
-			.= G.get_breath(volume_needed)
+			. = G.get_breath(volume_needed)
 			if (.)
 				break
 
 	proc/get_breath_from_internal(volume_needed)
 		if (human_owner?.internal)
-			if (!owner.contents.Find(human_owner.internal))
+			if (!(human_owner.internal in owner.contents))
 				human_owner?.internal = null
 			if (!human_owner?.wear_mask || !(human_owner?.wear_mask.c_flags & MASKINTERNALS) )
 				human_owner?.internal = null
@@ -285,7 +287,8 @@
 			update_toxy(0)
 
 		if (length(breath.trace_gases))	// If there's some other shit in the air lets deal with it here.
-			for (var/datum/gas/sleeping_agent/SA in breath.trace_gases)
+			var/datum/gas/sleeping_agent/SA = breath.get_trace_gas_by_type(/datum/gas/sleeping_agent)
+			if(SA)
 				var/SA_pp = (SA.moles/TOTAL_MOLES(breath))*breath_pressure
 				if (SA_pp > SA_para_min) // Enough to make us paralysed for a bit
 					owner.changeStatus("paralysis", 5 SECONDS)
@@ -311,10 +314,11 @@
 
 			//cyber lungs beat radiation. Is there anything they can't do?
 			if (!has_cyberlungs)
-				for (var/datum/gas/rad_particles/RV in breath.trace_gases)
+				var/datum/gas/rad_particles/RV = breath.get_trace_gas_by_type(/datum/gas/rad_particles)
+				if (RV)
 					owner.changeStatus("radiation", RV.moles, 2 SECONDS)
 
-		if (human_owner)
+		if (human_owner?.organHolder)
 			if (breath.temperature > min(human_owner.organHolder.left_lung ? human_owner.organHolder.left_lung.temp_tolerance : INFINITY, human_owner.organHolder.right_lung ? human_owner.organHolder.right_lung.temp_tolerance : INFINITY) && !human_owner.is_heat_resistant()) // Hot air hurts :(
 				//checks the temperature threshold for each lung, ignoring missing ones. the case of having no lungs is handled in handle_breath.
 				var/lung_burn_left = min(max(breath.temperature - human_owner.organHolder.left_lung?.temp_tolerance, 0) / 3, 10)

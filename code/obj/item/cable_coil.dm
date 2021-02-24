@@ -246,7 +246,7 @@ obj/item/cable_coil/abilities = list(/obj/ability_button/cable_toggle)
 
 	else if (istype(W, /obj/item/cable_coil))
 		var/obj/item/cable_coil/C = W
-		if (C.conductor.mat_id != src.conductor.mat_id || C.insulator.mat_id != src.insulator.mat_id)
+		if(!isSameMaterial(C.conductor, src.conductor) || !isSameMaterial(C.insulator, src.insulator))
 			boutput(user, "You cannot link together cables made from different materials. That would be silly.")
 			return
 

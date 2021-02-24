@@ -1,3 +1,25 @@
+(t)mon feb 01 21
+(u)pali
+(*)Build mode now has a numberic keybind bar! Middle-clicking current mode or pressing shift+number will add a copy of the current mode to the hotbar. Middleclicking the hotbar removes a mode. Pressing the number key on your keyboard switches to the mode. You can even have multiple copies of the same mode, each with different settings.
+(t)wed jan 27 21
+(u)pali
+(*)The admin interact menu (~ + click) now has a Copy Here option which makes a deep copy of the object or mob on your tile. This is experimental and there might be bugs. Build mode tool coming soon™.
+(*)The copy paste thing is now also in Build Mode. It can also give a copy of a thing to every living player.
+(t)tue jan 26 21
+(u)pali
+(*)You can now ban people from praying in the Chat Bans menu.
+(t)tue jan 19 21
+(u)Sovexe
+(*)New admin verb, Disco Lights. Sets every light on the station to a random color.
+(t)tue jan 10 21
+(u)Sovexe
+(*)Add new buildmode tool, maze. Spawns in a maze of your desired turfs and lighting. Works best in larger areas.
+(t)sat jan 09 21
+(u)pali
+(*)New verb give-player-pets which is like give-pets but only for living mobs which have connected clients. Also both of the verbs now accept the path as an argument in the command bar.
+(*)Moved "Force Say" in the player panel to the Common category. Now available for NPCs. (Very useful for shenanigans.)
+(u)Flourish
+(*)New verb beepsay which makes Beepsky say stuff. Also in general you can call the "speak" proc on any bot with a text argument to make them say the text.
 (t)wed dec 09 20
 (u)Flourish
 (*)Adds a new verb, whodead. Gives you a list of everyone who's dead so you don't have to manually go through the player panel.

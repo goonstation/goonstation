@@ -113,6 +113,14 @@
 		if(!(I.material.material_flags & MATERIAL_CRYSTAL || I.material.material_flags & MATERIAL_METAL)) return 0
 		return ..()
 
+/datum/matfab_part/metalorcrystalororganic
+	name = "Metal or Crystal or Organic"
+	checkMatch(var/obj/item/I)
+		if(!I.material) return 0
+		if(!istype(I, /obj/item/material_piece) && !istype(I, /obj/item/raw_material)) return 0
+		if(!(I.material.material_flags & MATERIAL_CRYSTAL || I.material.material_flags & MATERIAL_METAL||I.material.material_flags & MATERIAL_ORGANIC)) return 0
+		return ..()
+
 /datum/matfab_part/clothororganic
 	name = "Cloth or Organic"
 	checkMatch(var/obj/item/I)
@@ -155,9 +163,9 @@
 /datum/matfab_part/anymat_canmix
 	name = "Unprocessed Material"
 	checkMatch(var/obj/item/I)
+		if(!I.material) return 0
 		if(!I.material.canMix) return 0
 		if(!istype(I, /obj/item/material_piece) && !istype(I, /obj/item/raw_material)) return 0
-		if(!I.material) return 0
 		return ..()
 
 /datum/matfab_part/lens

@@ -42,6 +42,7 @@
 
 	New()
 		..()
+		START_TRACKING
 		if (!poisoned_image)
 			poisoned_image = image('icons/mob/blob.dmi', "poison")
 		src.update_icon()
@@ -69,13 +70,13 @@
 				playsound(src.loc, "sound/voice/blob/blobsucc[rand(1, 3)].ogg", 10, 1)
 
 	proc/right_click_action()
-		usr.examine_verb()
+		usr.examine_verb(src)
 
 	Click(location, control, params)
 		if (usr != overmind)
 			return
 		var/list/pa = params2list(params)
-		if (pa.Find("right"))
+		if ("right" in pa)
 			right_click_action()
 		else
 			..()
@@ -152,6 +153,7 @@
 	disposing()
 		if (qdeled || in_disposing)
 			return
+		STOP_TRACKING
 		in_disposing = 1
 		var/datum/controller/process/blob/B = get_master_blob_controller()
 		B.blobs -= src
@@ -230,7 +232,7 @@
 		if(temp_difference > tolerance)
 			temp_difference = abs(temp_difference - tolerance)
 
-			src.take_damage(temp_difference / heat_divisor, 1, "burn")
+			src.take_damage(temp_difference / heat_divisor * volume / CELL_VOLUME, 1, "burn")
 
 	attack_hand(var/mob/user)
 		user.lastattacked = src

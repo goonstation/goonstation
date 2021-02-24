@@ -12,7 +12,7 @@
 			return R
 		var/list/other = call(T, adjacent)(adjacent_param)
 		for (var/next in other)
-			if (open.Find(next) || next == exclude) continue
+			if ((next in open) || next == exclude) continue
 			var/G = TG + other[next], F = G + call(next, heuristic)(end)
 			for (var/i = P; i <= open.len;)
 				if (i++ == open.len || open[open[i]] >= F)
@@ -211,6 +211,17 @@
 		var/turf/simulated/T = get_step(src, d)
 		//if(istype(T) && !T.density)
 		if (T?.pathable && !T.density)
+			if(!LinkBlockedWithAccess(src, T, ID))
+				L.Add(T)
+	return L
+
+/// Fixes floorbots being terrified of space
+turf/proc/CardinalTurfsAndSpaceWithAccess(var/obj/item/card/id/ID)
+	var/L[] = new()
+
+	for(var/d in cardinal)
+		var/turf/T = get_step(src, d)
+		if (T && (T.pathable || istype(T, /turf/space)) && !T.density)
 			if(!LinkBlockedWithAccess(src, T, ID))
 				L.Add(T)
 	return L

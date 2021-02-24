@@ -57,7 +57,7 @@
 			return
 		..()
 
-	streak(var/list/directions)
+	streak_object(var/list/directions)
 		SPAWN_DBG(0)
 			var/direction = pick(directions)
 			for (var/i = 0, i < pick(1, 200; 2, 150; 3, 50; 4), i++)
@@ -215,6 +215,18 @@
 	plant_reagent = "nitrogen"
 	food_color = "#CCFFCC"
 	food_effects = list("food_space_farts")
+
+/obj/item/reagent_containers/food/snacks/plant/peas
+	name = "pea pod"
+	crop_suffix = " pod"
+	desc = "These peas are like peas in a pod. Yeah."
+	planttype = /datum/plant/crop/peas
+	icon_state = "peapod"
+	amount = 1
+	heal_amt = 1
+	throwforce = 0
+	force = 0
+	food_color = "#77AA77"
 
 /obj/item/reagent_containers/food/snacks/plant/soylent
 	name = "soylent chartreuse"
@@ -1094,24 +1106,21 @@
 				new /obj/item/reagent_containers/food/snacks/ingredient/chips(get_turf(src))
 				pool (src)
 				qdel(src)
-		if (istype(W, /obj/item/cable_coil)) //kubius potato battery: creation operation
-			if (src.icon_state == "potato")
+		var/obj/item/cable_coil/C = W
+		if (istype(C)) //kubius potato battery: creation operation
+			if (src.icon_state == "potato" && C.use(1))
 				user.visible_message("[user] sticks some wire into [src].", "You stick some wire into [src], creating a makeshift power cell.")
 				var/datum/plantgenes/DNA = src.plantgenes
 				var/obj/item/cell/potato/P = new /obj/item/cell/potato(get_turf(src),DNA.potency,DNA.endurance)
 				P.name = "[src.name] battery"
 				P.transform = src.transform
-				W:amount -= 1
-				W:updateicon()
 				qdel (src)
-			else if (src.icon_state == "potato-peeled")
+			else if (src.icon_state == "potato-peeled" && C.use(1))
 				user.visible_message("[user] sticks some wire into [src].", "You stick some wire into [src], creating a makeshift battery.")
 				var/datum/plantgenes/DNA = src.plantgenes
 				var/obj/item/ammo/power_cell/self_charging/potato/P = new /obj/item/ammo/power_cell/self_charging/potato(get_turf(src),DNA.potency,DNA.endurance)
 				P.name = "[src.name] battery"
 				P.transform = src.transform
-				W:amount -= 1
-				W:updateicon()
 				qdel (src)
 		else ..()
 
@@ -1197,6 +1206,7 @@
 	edible = 0
 	food_color = "#4D2600"
 	validforhat = 1
+	event_handler_flags = USE_FLUID_ENTER | USE_HASENTERED
 
 	make_reagents()
 		..()
@@ -1204,21 +1214,45 @@
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (iscuttingtool(W))
-			var/turf/T = get_turf(src)
 			user.visible_message("[user] cuts [src] into slices.", "You cut [src] into slices.")
-			var/makeslices = 3
-			while (makeslices > 0)
-				var/obj/item/reagent_containers/food/snacks/plant/coconutmeat/P = new(T)
-				P.name = "[src.name] meat"
-				P.transform = src.transform
-				var/datum/plantgenes/DNA = src.plantgenes
-				var/datum/plantgenes/PDNA = P.plantgenes
-				if(DNA)
-					HYPpassplantgenes(DNA,PDNA)
-				makeslices -= 1
-			new /obj/item/reagent_containers/food/drinks/coconut(T)
-			pool (src)
+			src.split()
 		..()
+
+	proc/split()
+		var/turf/T = get_turf(src)
+		var/makeslices = 3
+		while (makeslices > 0)
+			var/obj/item/reagent_containers/food/snacks/plant/coconutmeat/P = new(T)
+			P.name = "[src.name] meat"
+			P.transform = src.transform
+			var/datum/plantgenes/DNA = src.plantgenes
+			var/datum/plantgenes/PDNA = P.plantgenes
+			if(DNA)
+				HYPpassplantgenes(DNA,PDNA)
+			makeslices -= 1
+		new /obj/item/reagent_containers/food/drinks/coconut(T)
+		pool(src)
+
+	proc/someone_landed_on_us(mob/living/L, datum/thrown_thing/thr)
+		src.UnregisterSignal(L, COMSIG_MOVABLE_THROW_END)
+		if(L.loc == src.loc)
+			L.visible_message("<span class='alert'>[L] lands on the [src] and breaks it!</span>", "<span class='alert'>You land on the [src] and break it!</span>")
+			playsound(src, "sound/impact_sounds/coconut_break.ogg", 70, vary=TRUE)
+			var/are_there_other_nuts = FALSE
+			for(var/obj/item/reagent_containers/food/snacks/plant/coconut/other_nut in src.loc)
+				if(other_nut != src)
+					are_there_other_nuts = TRUE
+					break
+			if(!are_there_other_nuts)
+				L.TakeDamage("chest", brute=12)
+			src.split()
+
+	HasEntered(atom/movable/AM, atom/OldLoc)
+		. = ..()
+		if(isliving(AM))
+			var/mob/living/L = AM
+			if(L.throwing)
+				src.RegisterSignal(L, COMSIG_MOVABLE_THROW_END, .proc/someone_landed_on_us)
 
 /obj/item/reagent_containers/food/snacks/plant/coconutmeat/
 	name = "coconut meat"
@@ -1350,3 +1384,8 @@
 	food_color = "#ccccff"
 	validforhat = 1
 	var/datum/light/light
+
+	spawnable
+		make_reagents()
+			..()
+			reagents.add_reagent("omnizine", 10)

@@ -1,11 +1,11 @@
 /datum/datacore
 	var/name = "datacore"
-	var/list/medical = list(  )
-	var/list/general = list(  )
-	var/list/security = list(  )
-	var/list/bank = list (  )
-	var/list/fines = list (  )
-	var/list/tickets = list (  )
+	var/list/datum/data/record/medical = list(  )
+	var/list/datum/data/record/general = list(  )
+	var/list/datum/data/record/security = list(  )
+	var/list/datum/data/record/bank = list (  )
+	var/list/datum/fine/fines = list (  )
+	var/list/datum/ticket/tickets = list (  )
 	var/obj/machinery/networked/mainframe/mainframe = null
 
 /datum/datacore/proc/addManifest(var/mob/living/carbon/human/H as mob, var/sec_note = "", var/med_note = "")
@@ -86,10 +86,11 @@
 			else traitStr = T.cleanName
 			if (istype(T, /obj/trait/random_allergy))
 				var/obj/trait/random_allergy/AT = T
-				if (M.fields["notes"] == "No notes.") //is it in its default state?
-					M.fields["notes"] = "[G.fields["name"]] has an allergy to [AT.allergic_players[H]]."
+				if (M.fields["alg"] == "None") //is it in its default state?
+					M.fields["alg"] = reagent_id_to_name(AT.allergic_players[H])
+					M.fields["alg_d"] = "Allergy information imported from CentCom database."
 				else
-					M.fields["notes"] += " [G.fields["name"]] has an allergy to [AT.allergic_players[H]]."
+					M.fields["alg"] += ", [reagent_id_to_name(AT.allergic_players[H])]"
 
 	M.fields["traits"] = traitStr
 
