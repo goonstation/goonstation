@@ -1,5 +1,9 @@
 
 (t)wed feb 24 21
+(u)Borkatator
+(p)3728
+(e)⚖🆕|balance, feature
+(*)You can now create a viewport window when watching camera feeds
 (u)Azrun
 (p)3815
 (e)🐛|bug
