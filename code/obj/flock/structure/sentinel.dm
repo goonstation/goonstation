@@ -17,12 +17,12 @@
 	var/powered = FALSE
 
 	event_handler_flags = USE_CANPASS
-	/// flockdrones can pass through this
+	// flockdrones can pass through this
 	passthrough = TRUE
 
 	usesgroups = TRUE
 
-	/// debug amount scale up if needed.
+	// debug amount scale up if needed.
 	poweruse = 20
 
 /obj/flock_structure/sentinel/New(var/atom/location, var/datum/flock/F=null)

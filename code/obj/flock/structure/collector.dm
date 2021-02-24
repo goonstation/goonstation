@@ -1,6 +1,4 @@
-//
-// # Collector structure
-//
+/// # Collector structure
 /obj/flock_structure/collector
 	name = "Some weird lookin' pulsing thing"
 	desc = "Seems to be pulsing."
@@ -18,7 +16,7 @@
 	var/list/connectedto = list()
 
 	event_handler_flags = USE_CANPASS //needed for passthrough
-	/// drones can pass through this, might change this later, as balance point
+	// drones can pass through this, might change this later, as balance point
 	passthrough = TRUE
 
 	poweruse = 0
@@ -77,5 +75,4 @@
 		f.on() //make it glo
 
 	connected = length(connectedto)
-
 

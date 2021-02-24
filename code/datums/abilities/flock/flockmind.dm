@@ -214,7 +214,7 @@
 			// skip this one
 			continue
 		var/obj/item/device/radio/R = M.ears
-		if(istype(R) && R?.listening)
+		if(istype(R) && R.listening)
 			// your headset's on, you're fair game!!
 			targets += M
 	if(targets.len >= 1)
@@ -317,11 +317,11 @@
 /datum/targetable/flockmindAbility/createStructure/cast()
 	var/resourcecost = null
 	var/structurewantedtype = null
-	var/turf/t = get_turf(holder.owner)
-	if(!istype(t, /turf/simulated/floor/feather))
+	var/turf/T = get_turf(holder.owner)
+	if(!istype(T, /turf/simulated/floor/feather))
 		boutput(holder.owner, "<span class='alert'>You aren't above a flocktile.</span>")//todo maybe make this flock themed?
 		return 1
-	if(locate(/obj/flock_structure) in t)
+	if(locate(/obj/flock_structure) in T)
 		boutput(holder.owner, "<span class='alert'>There is already a flock structure on this flocktile!</span>")
 		return 1
 	var/structurewanted = input("Select which structure you would like to create", "Tealprint Selection", "cancel") as null|anything in list("Collector", "Sentinel")
