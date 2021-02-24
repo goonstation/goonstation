@@ -578,7 +578,7 @@
     proc/draw_multiple(var/mob/user) //the context action proc that handles players drawing multiple cards
         if(is_hand)
             return
-        var/card_number = input(user, "How many cards would you like to draw?", "[name]")  as null|num
+        var/card_number = round(input(user, "How many cards would you like to draw?", "[name]")  as null|num)
         if(!card_number)
             return
         if(card_number == 1)
