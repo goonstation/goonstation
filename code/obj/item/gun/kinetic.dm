@@ -9,7 +9,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	var/caliber = null // Can be a list too. The .357 Mag revolver can also chamber .38 Spc rounds, for instance (Convair880).
 	var/has_empty_state = 0 //does this gun have a special icon state for having no ammo lefT?
 	var/gildable = 0 //can this gun be affected by the [Helios] medal reward?
-
+	var/gilded = FALSE //Currently used for handling gilded shotguns, if we ever want to gild the Colt SAA, its here
 	var/auto_eject = 0 // Do we eject casings on firing, or on reload?
 	var/casings_to_eject = 0 // If we don't automatically ejected them, we need to keep track (Convair880).
 
@@ -636,6 +636,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	gildable = 1
 	var/racked_slide = FALSE
 
+
 	New()
 		ammo = new/obj/item/ammo/bullets/abg
 		set_current_projectile(new/datum/projectile/bullet/abg)
@@ -643,10 +644,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 
 	update_icon()
 		. = ..()
-		if(src.racked_slide)
-			src.icon_state = "shotty"
-		else
-			src.icon_state = "shotty-empty"
+		icon_state = "shotty" + (gilded ? "-golden" : "") + (racked_slide ? "" : "-empty" )
 
 	canshoot()
 		if (racked_slide)
@@ -665,17 +663,31 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	attack_self(mob/user as mob)
 		..()
 		if (!racked_slide) //Are we racked?
-			if (src.ammo.amount_left == 0)
-				boutput(user, "<span class ='notice'>You are out of shells!</span>")
-				icon_state = "shotty-empty"
-			else
-				racked_slide = TRUE
-				if (icon_state == "shotty") //"animated" racking
+			if(!gilded) //Golden gun?
+				if (src.ammo.amount_left == 0)
+					boutput(user, "<span class ='notice'>You are out of shells!</span>")
 					icon_state = "shotty-empty"
-					animate(src, time = 0.2 SECONDS) //thank you pali for telling me about animate
-					animate(icon_state = "shotty")
 				else
-					icon_state = "shotty" // Slide already open? Just close the slide
+					racked_slide = TRUE
+					if (icon_state == "shotty") //"animated" racking
+						icon_state = "shotty-empty"
+						animate(src, time = 0.2 SECONDS) //thank you pali for telling me about animate
+						animate(icon_state = "shotty")
+					else
+						icon_state = "shotty" // Slide already open? Just close the slide
+			else
+				if (src.ammo.amount_left == 0)
+					boutput(user, "<span class ='notice'>You are out of shells!</span>")
+					icon_state = "shotty-golden-empty"
+				else
+					racked_slide = TRUE
+					if (icon_state == "shotty-golden")
+						icon_state = "shotty-golden-empty"
+						animate(src, time = 0.2 SECONDS)
+						animate(icon_state = "shotty-golden")
+					else
+						icon_state = "shotty-golden"
+			if (src.ammo.amount_left > 0)
 				boutput(user, "<span class='notice'>You rack the slide of the shotgun!</span>")
 				playsound(user.loc, "sound/weapons/shotgunpump.ogg", 50, 1)
 				if (src.ammo.amount_left < 8) // Do not eject shells if you're racking a full "clip"
