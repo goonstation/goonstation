@@ -2,9 +2,14 @@ var/datum/artifact_controller/artifact_controls
 
 /datum/artifact_controller
 	var/list/artifacts = list()
-	var/list/artifact_types = list()
+	var/list/datum/artifact/artifact_types = list()
 	var/list/artifact_rarities = list()
 	var/list/artifact_origins = list()
+
+	var/list/artifact_origin_names = list()
+	var/list/artifact_type_names = list()
+	var/list/artifact_fault_names = list()
+	var/list/artifact_trigger_names = list()
 	var/spawner_type = null
 	var/spawner_cine = 0
 
@@ -16,6 +21,7 @@ var/datum/artifact_controller/artifact_controls
 		for (var/X in childrentypesof(/datum/artifact_origin))
 			var/datum/artifact_origin/AO = new X
 			artifact_origins += AO
+			artifact_origin_names += AO.type_name
 			artifact_rarities[AO.name] = list()
 
 		// type list
@@ -26,11 +32,23 @@ var/datum/artifact_controller/artifact_controls
 		for (var/A in concrete_typesof(/datum/artifact))
 			var/datum/artifact/AI = new A
 			artifact_types += AI
+			artifact_type_names += AI.type_name
 
 			artifact_rarities["all"][A] = AI.rarity_weight
 			for (var/origin in artifact_rarities)
 				if(origin in AI.validtypes)
 					artifact_rarities[origin][A] = AI.rarity_weight
+
+		// fault list
+		for (var/X in concrete_typesof(/datum/artifact_fault))
+			var/datum/artifact_fault/AF = new X
+			artifact_fault_names += AF.type_name
+
+		// trigger list
+		for (var/X in concrete_typesof(/datum/artifact_trigger))
+			var/datum/artifact_trigger/AT = new X
+			if(AT.used)
+				artifact_trigger_names += AT.type_name
 
 	proc/get_origin_from_string(var/string)
 		if (!istext(string))
