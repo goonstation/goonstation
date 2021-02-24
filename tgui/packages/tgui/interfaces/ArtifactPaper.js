@@ -22,11 +22,11 @@ export const ArtifactPaper = (props, context) => {
       title="Nanotrasen Alien Artifact Analysis Form"
       theme="paper"
       width={800}
-      height={830}
+      height={825}
     >
-      <Section title="Artifact Data">
+      <Section>
         <h3>Artifact Name</h3>
-        <span height={500}>{artifactName}</span>
+        <h4>{artifactName===""?"unknown":artifactName}</h4>
         <h3>Artifact Origin</h3>
         <Flex direction={"column"} wrap={"wrap"} height={3}>
           {allArtifactOrigins.map(x => (
