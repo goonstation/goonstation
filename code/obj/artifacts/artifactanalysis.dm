@@ -82,18 +82,6 @@
 			"allArtifactTriggers" = artifact_controls.artifact_trigger_names
 		)
 
-	ui_data(mob/user)
-		var/obj/item/pen/P = user.find_type_in_hand(/obj/item/pen)
-		. = list(
-			"artifactName" = artifactName,
-			"artifactOrigin" = artifactOrigin,
-			"artifactType" = artifactType,
-			"artifactTriggers" = artifactTriggers,
-			"artifactFaults" = artifactFaults,
-			"artifactDetails" = artifactDetails,
-			"hasPen" = P?TRUE:FALSE
-		)
-
 	ui_act(action, params)
 		. = ..()
 		if (.)
@@ -115,6 +103,18 @@
 		. = TRUE
 		if(isobj(src.loc))
 			src.checkArtifactVars(src.loc)
+
+	ui_data(mob/user)
+		var/obj/item/pen/P = user.find_type_in_hand(/obj/item/pen)
+		. = list(
+			"artifactName" = artifactName,
+			"artifactOrigin" = artifactOrigin,
+			"artifactType" = artifactType,
+			"artifactTriggers" = artifactTriggers,
+			"artifactFaults" = artifactFaults,
+			"artifactDetails" = artifactDetails,
+			"hasPen" = P?TRUE:FALSE
+		)
 
 /obj/artifact_paper_dispenser
 	name = "artifact analysis form tray"
