@@ -644,7 +644,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 
 	update_icon()
 		. = ..()
-		src.icon_state = "shotty" + (gilded ? "-golden" : "") + (racked_slide ? "" : "-empty" ) //Ternaries are EPIC
+		src.icon_state = "shotty" + (gilded ? "-golden" : "") + (racked_slide ? "" : "-empty" )
 
 	canshoot()
 		if (src.racked_slide)
