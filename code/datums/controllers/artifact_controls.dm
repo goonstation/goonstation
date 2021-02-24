@@ -174,6 +174,7 @@ var/datum/artifact_controller/artifact_controls
 // Origins
 
 /datum/artifact_origin
+	var/type_name = "bad artifact code"
 	var/name = "unknown"
 	var/max_sprites = 7
 	var/impact_reaction_one = 0
@@ -213,6 +214,7 @@ var/datum/artifact_controller/artifact_controls
 
 
 /datum/artifact_origin/ancient
+	type_name = "Silicon"
 	name = "ancient"
 	fault_types = list(
 		/datum/artifact_fault/burn = 10,
@@ -255,6 +257,7 @@ var/datum/artifact_controller/artifact_controls
 		return "unit [pick("alpha","sigma","tau","phi","gamma","epsilon")]-[pick("x","z","d","e","k")] [rand(100,999)]"
 
 /datum/artifact_origin/martian
+	type_name = "Martian"
 	name = "martian"
 	fault_types = list(
 		/datum/artifact_fault/shutdown = 10,
@@ -337,6 +340,7 @@ var/datum/artifact_controller/artifact_controls
 		return namestring
 
 /datum/artifact_origin/wizard
+	type_name = "Wizard"
 	name = "wizard"
 	fault_types = list(
 		/datum/artifact_fault/irradiate = 10,
@@ -402,6 +406,7 @@ var/datum/artifact_controller/artifact_controls
 		return namestring
 
 /datum/artifact_origin/eldritch
+	type_name = "Eldritch"
 	name = "eldritch"
 	activation_sounds = list('sound/machines/ArtifactEld1.ogg','sound/machines/ArtifactEld2.ogg')
 	instrument_sounds = list("sound/musical_instruments/artifact/Artifact_Eldritch_1.ogg",
@@ -477,6 +482,7 @@ var/datum/artifact_controller/artifact_controls
 		return fthagn // ia ia
 
 /datum/artifact_origin/precursor
+	type_name = "Precursor"
 	name = "precursor"
 	activation_sounds = list('sound/machines/ArtifactPre1.ogg')
 	instrument_sounds = list("sound/musical_instruments/artifact/Artifact_Precursor_1.ogg",

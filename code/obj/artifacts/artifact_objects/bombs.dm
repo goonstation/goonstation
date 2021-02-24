@@ -137,6 +137,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 
 /datum/artifact/bomb/explosive
 	associated_object = /obj/machinery/artifact/bomb
+	type_name = "Bomb (explosive)"
 	rarity_weight = 200
 	var/exp_deva = 1
 	var/exp_hevy = 2
@@ -165,6 +166,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 
 /datum/artifact/bomb/explosive/devastating
 	associated_object = /obj/machinery/artifact/bomb/devastating
+	type_name = "Bomb (explosive, devastating)"
 	rarity_weight = 90
 	doAlert = 1
 	recharge_delay = 10 MINUTES
@@ -185,6 +187,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 
 /datum/artifact/bomb/blackhole
 	associated_object = /obj/machinery/artifact/bomb/blackhole
+	type_name = "Bomb (black hole)"
 	rarity_weight = 90
 	react_xray = list(12,75,30,11,"ULTRADENSE")
 	warning_initial = "begins intensifying its own gravity!"
@@ -212,6 +215,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 
 /datum/artifact/bomb/chemical
 	associated_object = /obj/machinery/artifact/bomb/chemical
+	type_name = "Bomb (chemical)"
 	rarity_weight = 350
 	explode_delay = 0
 	alarm_initial = null
@@ -318,6 +322,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 
 /datum/artifact/bomb/transmute
 	associated_object = /obj/machinery/artifact/bomb/transmute
+	type_name = "Bomb (material transmutation)"
 	validtypes = list("wizard","eldritch","martian","ancient","precursor")
 	fault_blacklist = list(ITEM_ONLY_FAULTS, TOUCH_ONLY_FAULTS)
 	rarity_weight = 90
