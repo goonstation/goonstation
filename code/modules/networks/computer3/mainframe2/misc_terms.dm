@@ -3470,16 +3470,26 @@
 		else return
 
 	MouseDrop(obj/over_object as obj, src_location, over_location)
-		var/mob/M = usr
-		if (!istype(over_object, /turf/)) return
+		ejectContents(usr, over_object)
+
+	verb/eject()
+		set name = "Eject"
+		set src in oview(1)
+		set category = "Local"
+
+		ejectContents(usr, get_turf(src))
+		return
+
+	proc/ejectContents(var/mob/unloader, var/target_location)
+		if (!istype(target_location, /turf/)) return
 		if (!src.dragload) return
-		if (get_dist(src,over_object) > 1) return
-		if ((get_dist(src, M) > 1) || M.stat) return
+		if (get_dist(src,target_location) > 1) return
+		if ((get_dist(src, unloader) > 1) || unloader.stat) return
 		if (src.active)
-			boutput(usr, "<span class='alert'>You can't unload it while it's active!</span>")
+			boutput(unloader, "<span class='alert'>You can't unload it while it's active!</span>")
 			return
-		for (var/atom/movable/O in src.contents) O.set_loc(over_object)
-		src.visible_message("<b>[M.name]</b> unloads [src.name]!")
+		for (var/atom/movable/O in src.contents) O.set_loc(target_location)
+		src.visible_message("<b>[unloader.name]</b> unloads [src.name]!")
 		src.update_icon()
 
 	Topic(href, href_list)
