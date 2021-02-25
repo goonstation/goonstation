@@ -1,5 +1,7 @@
 
 (t)wed feb 24 21
+(u)kyle
+(+)Ethanol is now a good bit more forgiving in terms of liver damage.
 (u)Superlagg
 (p)2921
 (e)🆕|feature
