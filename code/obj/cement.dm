@@ -6,7 +6,7 @@
 	density = 0
 	layer = OBJ_LAYER + 0.9
 	event_handler_flags = USE_CANPASS
-	var/const/initial_health = 4
+	var/const/initial_health = 10
 	_health = initial_health
 	_max_health = initial_health
 	var/c_quality = 0
