@@ -742,7 +742,7 @@
 
 					if (1)
 						playsound(src.loc, "sound/machines/click.ogg", 50, 1)
-						var/obj/item/hosmedal/M = new /obj/item/hosmedal()
+						var/obj/item/clothing/suit/hosmedal/M = new /obj/item/clothing/suit/hosmedal()
 						M.desc = src.desc
 						user.put_in_hand_or_drop(M)
 						user.visible_message("[user] takes the medal from the frame.", "You take the medal out of the frame.")
@@ -762,7 +762,7 @@
 					qdel(W)
 
 				if (src.usageState == 2)
-					if (istype(W, /obj/item/hosmedal))
+					if (istype(W, /obj/item/clothing/suit/hosmedal))
 						playsound(src.loc, "sound/machines/click.ogg", 50, 1)
 						user.u_equip(W)
 						qdel(W)

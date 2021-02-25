@@ -133,6 +133,9 @@
 	boutput(client.mob, "<span class='mhelp'><b>MENTORHELP: You</b>: [msg]</span>")
 	logTheThing("mentor_help", client.mob, null, "MENTORHELP: [msg]")
 	logTheThing("diary", client.mob, null, "MENTORHELP: [msg]", "mhelp")
+#ifdef DATALOGGER
+	game_stats.Increment("mentorhelps")
+#endif
 	var/dead = isdead(client.mob) ? "Dead" : ""
 	var/ircmsg[] = new()
 	ircmsg["key"] = client.key
@@ -192,6 +195,11 @@
 		boutput(client.mob, "<B>You whisper a silent prayer,</B> <I>\"[msg]\"</I>")
 		logTheThing("admin_help", client.mob, null, "PRAYER: [msg]")
 		logTheThing("diary", client.mob, null, "PRAYER: [msg]", "ahelp")
+
+#ifdef DATALOGGER
+	game_stats.Increment("prayers")
+#endif
+
 	var/audio
 
 	for (var/client/C)

@@ -51379,6 +51379,9 @@
 /turf/space,
 /area/space)
 "cjr" = (
+/obj/item/pinpointer/teg_semi{
+	pixel_y = -7
+	},	
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet{
 	bcolor = "yellow";

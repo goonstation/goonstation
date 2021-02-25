@@ -148,7 +148,7 @@
 	spawn_contents = list(/obj/item/handcuffs = 2,\
 	/obj/item/device/flash = 2,\
 	/obj/item/instrument/whistle,\
-	/obj/item/reagent_containers/food/snacks/donut/frosted)
+	/obj/item/reagent_containers/food/snacks/donut/custom/frosted)
 
 /obj/item/storage/ntso_pouch
 	name = "tacticool pouch"

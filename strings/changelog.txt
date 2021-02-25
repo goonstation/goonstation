@@ -1,5 +1,73 @@
 
+(t)thu feb 25 21
+(u)Luxizzle
+(p)3777
+(e)🆕🗺🎨|feature, mapping, sprites
+(*)You can now frost donuts with an icing tube!
+(t)wed feb 24 21
+(u)kyle
+(+)Ethanol is now a good bit more forgiving in terms of liver damage.
+(u)Superlagg
+(p)2921
+(e)🆕|feature
+(*)The RCD can now build light bulb and light tube fixtures.
+(u)Borkatator
+(p)3728
+(e)⚖🆕|balance, feature
+(*)You can now create a viewport window when watching camera feeds
+(u)Azrun
+(p)3815
+(e)🐛|bug
+(+)Resolve issue with alloys in TEG Semiconductor.  Mix and match your favorite flavors!
+(t)tue feb 23 21
+(u)Azrun
+(p)3191
+(e)🆕🗺🎨|feature, mapping, sprites
+(*)Material science interactions with TEG! The prototype semiconductor can be removed from TEG via screwdriver-> wirecutter -> crowbar and brought to an Arc Plater near you! Re-install by reinserting -> adding wire -> snipping excess -> screwing it back in place.
+(+)TEG Semiconductor added as High Priority bounty to SpyThief.
+(u)Sovexe
+(p)3745
+(e)🔄|rework
+(+)Reworked clown shoes to have shorter slip durations. Fixed a bug where slipping as a clown didn't actually make you fall over.
+(t)sun feb 21 21
+(u)TTerc
+(p)3772
+(e)🗺|mapping
+(+)Donut 3: Made mineral magnet area larger, tweaked the mining office layout.
+(u)Luxizzle
+(p)3794
+(e)|
+(+)Weapon vendor now shows the cost of a loadout option.
+(u)virvatuli
+(p)3787
+(e)|
+(+)Added new welding tool audio to signal that it's been ignited!
+(u)Flappybat
+(p)3669
+(e)⚖|balance
+(+)Telecrystal materials are less likely to warp when used on yourself/others. Self teleporting due to attacks has a 25% chance of dropping the item at the location you warped from.
+(u)Chickenish
+(p)3775
+(e)🆕|feature
+(+)Added an Implanter to the Security vendor.
+(u)Tarmunora
+(p)3760
+(e)⚖|balance
+(+)Raised costs of power cells and 40mmPBR rounds in the sec loadout vendor.
+(t)sat feb 20 21
+(u)TTerc
+(p)3563
+(e)🗺|mapping
+(+)Cog1: Added extra purge pumps to the TEG and moved the reactor statistics computer to the engine control room.
+(u)Batelite
+(p)3768
+(e)🎨|sprites
+(+)Health analyzer screens now indicate what they're scanning
 (t)fri feb 19 21
+(u)zjdtmkhzt
+(p)3731
+(e)⚖🆕|balance, feature
+(*)Lots of non-handheld artifact types now actually trigger the faults they might get, so artifact use may have some unintended side effects now. Stay safe, everyone!
 (u)BatElite
 (p)3739
 (e)🎨|sprites
