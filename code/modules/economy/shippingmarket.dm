@@ -131,7 +131,7 @@
 		price += rand(-50,50)
 		price = round(price, 5)
 
-		if(prob(modifier*100))
+		if(prob(modifier*40*pap.lastAnalysis)) // range from 0% to ~78% for fully researched t4 artifact
 			SPAWN_DBG(rand(3,8) MINUTES)
 				var/obj/storage/crate/artcrate = new /obj/storage/crate()
 				artcrate.name = "Artifact Resupply Crate"
