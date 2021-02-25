@@ -124,6 +124,82 @@
 						  "or",
 						  "#prman upload bot_id bodyguard -f demo_conf")
 
+// things to shorten artlab work
+// so people misspell gptio less often
+
+/datum/computer/file/record/artlab_activate
+	name = "activ"
+
+	New()
+		..()
+		src.fields = list("#!",
+						  "if $argc 1 lt | echo Error: Please specify equipment to activate! | break",
+						  "gptio activate $arg0")
+
+/datum/computer/file/record/artlab_deactivate
+	name = "deact"
+
+	New()
+		..()
+		src.fields = list("#!",
+						  "if $argc 1 lt | echo Error: Please specify equipment to deactivate! | break",
+						  "gptio deactivate $arg0")
+
+/datum/computer/file/record/artlab_read
+	name = "read"
+
+	New()
+		..()
+		src.fields = list("#!",
+						  "if $argc 1 lt | echo Error: Please specify equipment to read test results from! | break",
+						  "gptio read $arg0")
+
+/datum/computer/file/record/artlab_xray
+	name = "xray"
+
+	New()
+		..()
+		src.fields = list("#!",
+						  "if $argc 1 lt | echo Error: Please specify radiation strength to set! | break",
+						  "gptio poke xray radstrength $arg0")
+
+/datum/computer/file/record/artlab_heater
+	name = "heat"
+
+	New()
+		..()
+		src.fields = list("#!",
+						  "if $argc 1 lt | echo Error: Please specify temperature to set! | break",
+						  "gptio poke heater temptarget $arg0")
+
+/datum/computer/file/record/artlab_elecbox
+	name = "elec"
+
+	New()
+		..()
+		src.fields = list("#!",
+						  "if $argc 2 lt | echo Error: Please specify voltage and wattage to set! | break",
+						  "gptio poke elecbox voltage $arg0",
+							"gptio poke elecbox wattage $arg1")
+
+/datum/computer/file/record/artlab_pitcher
+	name = "pitch"
+
+	New()
+		..()
+		src.fields = list("#!",
+						  "if $argc 1 lt | echo Error: Please specify pitcher power to set! | break",
+						  "gptio poke pitcher power $arg0")
+
+/datum/computer/file/record/artlab_impactpad
+	name = "stand"
+
+	New()
+		..()
+		src.fields = list("#!",
+						  "if $argc 1 lt | echo Error: Please specify stand status to set! | break",
+						  "gptio poke impactpad stand $arg0")
+
 /*
  *		Emails!!
  */
