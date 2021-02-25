@@ -257,6 +257,7 @@
 		src.root.add_file( new /datum/computer/file/record/artlab_activate(src))
 		src.root.add_file( new /datum/computer/file/record/artlab_deactivate(src))
 		src.root.add_file( new /datum/computer/file/record/artlab_read(src))
+		src.root.add_file( new /datum/computer/file/record/artlab_info(src))
 		src.root.add_file( new /datum/computer/file/record/artlab_xray(src))
 		src.root.add_file( new /datum/computer/file/record/artlab_heater(src))
 		src.root.add_file( new /datum/computer/file/record/artlab_elecbox(src))

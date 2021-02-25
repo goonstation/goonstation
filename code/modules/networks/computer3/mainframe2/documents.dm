@@ -152,7 +152,15 @@
 		..()
 		src.fields = list("#!",
 						  "if $argc 1 lt | echo Error: Please specify equipment to read test results from! | break",
-						  "gptio read $arg0")
+
+/datum/computer/file/record/artlab_info
+	name = "info"
+
+	New()
+		..()
+		src.fields = list("#!",
+						  "if $argc 1 lt | echo Error: Please specify equipment to get information on! | break",
+						  "gptio info $arg0")
 
 /datum/computer/file/record/artlab_xray
 	name = "xray"
@@ -160,7 +168,7 @@
 	New()
 		..()
 		src.fields = list("#!",
-						  "if $argc 1 lt | echo Error: Please specify radiation strength to set! | break",
+						  "if $argc 1 lt | gptio peek xray radstrength | break",
 						  "gptio poke xray radstrength $arg0")
 
 /datum/computer/file/record/artlab_heater
@@ -169,7 +177,7 @@
 	New()
 		..()
 		src.fields = list("#!",
-						  "if $argc 1 lt | echo Error: Please specify temperature to set! | break",
+						  "if $argc 1 lt | gptio peek heater temptarget | break",
 						  "gptio poke heater temptarget $arg0")
 
 /datum/computer/file/record/artlab_elecbox
@@ -178,7 +186,8 @@
 	New()
 		..()
 		src.fields = list("#!",
-						  "if $argc 2 lt | echo Error: Please specify voltage and wattage to set! | break",
+						  "if $argc 1 lt | gptio peek elecbox voltage | gptio peek elecbox wattage | break",
+						  "if $argc 2 lt | gptio poke elecbox voltage $arg0 | break",
 						  "gptio poke elecbox voltage $arg0",
 							"gptio poke elecbox wattage $arg1")
 
@@ -188,7 +197,7 @@
 	New()
 		..()
 		src.fields = list("#!",
-						  "if $argc 1 lt | echo Error: Please specify pitcher power to set! | break",
+						  "if $argc 1 lt | gptio peek pitcher power | break",
 						  "gptio poke pitcher power $arg0")
 
 /datum/computer/file/record/artlab_impactpad
@@ -197,7 +206,7 @@
 	New()
 		..()
 		src.fields = list("#!",
-						  "if $argc 1 lt | echo Error: Please specify stand status to set! | break",
+						  "if $argc 1 lt | gptio peek impactpad stand | break",
 						  "gptio poke impactpad stand $arg0")
 
 /*
