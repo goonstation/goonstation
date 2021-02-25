@@ -312,7 +312,7 @@
 								if("blowkiss")
 									action_phrase = "to whom you'll blow a [prob(1) ? "smooch" : "kiss"]"
 							M = tgui_input_list(src, "Pick something to [action_phrase]!", "EmotiConsole v1.1.3", target_list, 0)
-							if (M && !IN_RANGE(get_turf(src), get_turf(M), range))
+							if (M && (range > 1 && !IN_RANGE(get_turf(src), get_turf(M), range)) || (range == 1 && !in_interact_range(src, M)) )
 								var/inaction_phrase = "emote upon"
 								switch(act)
 									if("salute")
@@ -1218,7 +1218,7 @@
 						var/list/target_list = src.get_targets(1, "mob") // Bobby Boblord shakes hands with grody spacemouse!
 						if(length(target_list))
 							M = tgui_input_list(src, "Pick someone with whom to shake hands!", "EmotiConsole v1.1.3", target_list, 0)
-							if (M && !IN_RANGE(get_turf(src), get_turf(M), 1))
+							if (M && !in_interact_range(src, M))
 								boutput(src, "<span class='emote'><B>[M]</B> is out of reach!</span>")
 								return
 
@@ -1243,7 +1243,7 @@
 						var/list/target_list = src.get_targets(1, "mob")
 						if(length(target_list))
 							M = tgui_input_list(src, "Pick someone to dap!", "EmotiConsole v1.1.3", target_list, 0)
-							if (M && !IN_RANGE(get_turf(src), get_turf(M), 1))
+							if (M && !in_interact_range(src, M))
 								boutput(src, "<span class='emote'><B>[M]</B> is not in dapping distance!</span>")
 								return
 
@@ -1273,7 +1273,7 @@
 							var/list/target_list = src.get_targets(1, "mob") // Funche Arnchlnm slaps shambling abomination across the face!
 							if(length(target_list))
 								M = tgui_input_list(src, "Pick someone to smack!", "EmotiConsole v1.1.3", target_list, 0)
-								if (M && !IN_RANGE(get_turf(src), get_turf(M), 1))
+								if (M && !in_interact_range(src, M))
 									boutput(src, "<span class='emote'><B>[M]</B> is out of reach!</span>")
 									return
 
@@ -1307,7 +1307,7 @@
 							var/list/target_list = src.get_targets(1, "mob") // Chrunb Erbrbt and Scales To Lizard highfive!
 							if(length(target_list))
 								M = tgui_input_list(src, "Pick someone to high-five!", "EmotiConsole v1.1.3", target_list, 0)
-								if (M && !IN_RANGE(get_turf(src), get_turf(M), 1))
+								if (M && !in_interact_range(src, M))
 									boutput(src, "<span class='emote'><B>[M]</B> is out of reach!</span>")
 									return
 
@@ -2345,16 +2345,25 @@
 /mob/living/proc/get_targets(range = 1, kind_of_target = "mob")
 	if(!isturf(get_turf(src))) return
 
-	. = list()
+	var/list/everything_around = list()
 
-	if(kind_of_target == "mob" || kind_of_target == "both")
-		for(var/mob/M in view(range, get_turf(src)))
-			if(M == src)
-				continue
-			. |= M
+	for(var/atom/movable/AM in view(range, get_turf(src)))
+		if(AM == src)
+			continue
+		everything_around |= AM
 
-	if(kind_of_target == "obj" || kind_of_target == "both")
-		for(var/obj/O in view(range, get_turf(src)))
-			if(O == src)
-				continue
-			. |= O
+	switch(kind_of_target)
+		if("both")
+			return everything_around
+		if("mob")
+			. = list()
+			for(var/mob/M in everything_around)
+				if(M == src)
+					continue
+				. |= M
+		if("obj")
+			. = list()
+			for(var/obj/O in everything_around)
+				if(O == src)
+					continue
+				. |= O
