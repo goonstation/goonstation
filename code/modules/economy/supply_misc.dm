@@ -29,8 +29,8 @@
 		..()
 		var/datum/artifact/art = null
 		if(isobj(AM))
-			var/obj/AMO = AM
-			art = AMO.artifact
+			var/obj/O = AM
+			art = O.artifact
 		if(art)
 			shippingmarket.sell_artifact(AM, art)
 		else if (istype(AM, /obj/storage/crate/biohazard/cdc))

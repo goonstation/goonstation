@@ -16,6 +16,7 @@ export const ArtifactPaper = (props, context) => {
     allArtifactTriggers,
     hasPen,
   } = data;
+  
   return (
     <Window
       title="Nanotrasen Alien Artifact Analysis Form"
