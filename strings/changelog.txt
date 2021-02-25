@@ -1,5 +1,9 @@
 
 (t)thu feb 25 21
+(u)Azrun
+(p)3807
+(e)|
+(*)Multitools now provide encoded information about the network a powered cable is connected to.
 (u)Ludolf
 (p)3827
 (e)🎨|sprites
