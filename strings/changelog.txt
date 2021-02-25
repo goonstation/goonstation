@@ -1,5 +1,9 @@
 
 (t)thu feb 25 21
+(u)Anachroniser
+(p)3423
+(e)⚖🆕|balance, feature
+(*)Singularities now come in variable sizes and can generate more power as they grow. Keep in mind the risks of a giant singularity.
 (u)Luxizzle
 (p)3777
 (e)🆕🗺🎨|feature, mapping, sprites
