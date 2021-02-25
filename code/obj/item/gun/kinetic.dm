@@ -651,7 +651,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 			return ..()
 		else
 			boutput(usr, "<span class='notice'>You need to rack the slide before you can fire!</span>") //Pain
-			return 0
+			return FALSE
 
 	shoot(var/target,var/start ,var/mob/user)
 		..()
