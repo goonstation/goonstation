@@ -33,7 +33,7 @@
 				lastAnalysis++
 				break
 		// if a trigger would e redundant, let's just say it's cool!
-		if(length(A.triggers) == 0 || A.automatic_activation)
+		if(!length(A.triggers) || A.automatic_activation)
 			lastAnalysis++
 
 		if(lastAnalysis < 3)

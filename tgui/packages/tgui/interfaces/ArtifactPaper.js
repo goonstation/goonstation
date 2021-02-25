@@ -26,7 +26,7 @@ export const ArtifactPaper = (props, context) => {
     >
       <Section>
         <h3>Artifact Name</h3>
-        <h4>{artifactName===""?"unknown":artifactName}</h4>
+        <h4>{ artifactName === "" ? "unknown" : artifactName }</h4>
         <h3>Artifact Origin</h3>
         <Flex direction={"column"} wrap={"wrap"} height={3}>
           {allArtifactOrigins.map(x => (
@@ -66,7 +66,6 @@ export const ArtifactPaper = (props, context) => {
         <h3>Artifact Faults</h3>
         <TextArea
           value={artifactFaults}
-          backgroundColor="#DDDDDD"
           fluid
           height={5}
           onChange={(_, x) => act("fault", { newFaults: x, hasPen: hasPen })} />
@@ -74,7 +73,6 @@ export const ArtifactPaper = (props, context) => {
         <h3>Additional Information</h3>
         <TextArea
           value={artifactDetails}
-          backgroundColor="#DDDDDD"
           fluid
           height={10}
           onChange={(_, x) => act("detail", { newDetail: x, hasPen: hasPen })} />
