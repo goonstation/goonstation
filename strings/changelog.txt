@@ -1,5 +1,9 @@
 
 (t)thu feb 25 21
+(u)Ludolf
+(p)3827
+(e)🎨|sprites
+(+)New sprite for soldering irons.
 (u)Anachroniser
 (p)3423
 (e)⚖🆕|balance, feature
