@@ -36422,9 +36422,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/asylum/main)
 "kOm" = (
-/obj/access_spawn/tech_storage{
-	req_access = null
-	},
+/obj/access_spawn/tech_storage,
 /obj/firedoor_spawn,
 /obj/cable{
 	d1 = 1;
