@@ -214,7 +214,8 @@
 				break
 
 	//if((istype(tmploc,/area/wizard_station)) || (istype(tmploc,/area/syndicate_station)))
-	if ((istype(tmploc.loc, /area) && tmploc.loc:teleport_blocked) || m_blocked)
+	var/area/myArea = get_area(tmploc)
+	if (myArea?.teleport_blocked || m_blocked)
 		if(use_teleblocks)
 			if(isliving(M))
 				boutput(M, "<span class='alert'><b>Teleportation failed!</b></span>")

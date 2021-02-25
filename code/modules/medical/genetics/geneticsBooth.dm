@@ -40,7 +40,7 @@
 	anchored = 1
 	density = 1
 	event_handler_flags = USE_FLUID_ENTER | USE_CANPASS
-	appearance_flags = TILE_BOUND
+	appearance_flags = TILE_BOUND | PIXEL_SCALE | LONG_GLIDE
 
 	var/letgo_hp = 50
 	var/mob/living/carbon/human/occupant = null
@@ -96,8 +96,10 @@
 
 	disposing()
 		STOP_TRACKING
+		if(occupant)
+			occupant.set_loc(get_turf(src.loc))
+			occupant = null
 		..()
-
 
 	process()
 		if (occupant)
@@ -126,7 +128,7 @@
 			user.show_text("[src] is currently occupied. Wait until it's done.", "blue")
 			return
 
-		if (offered_genes && offered_genes.len)
+		if (length(offered_genes))
 			user.show_text("Something went wrong, showing backup menu...", "blue")
 			var/list/names = list()
 
@@ -193,11 +195,11 @@
 			ClearSpecificOverlays("screen")
 
 
-	proc/eject_occupant(var/add_power = 1,var/do_throwing = 1)
+	proc/eject_occupant(var/add_power = 1,var/do_throwing = 1, var/override_dir = null)
 		if (occupant)
 
 			if (add_power)
-				if(selected_product && selected_product.BE)
+				if(selected_product?.BE)
 
 					var/datum/bioEffect/NEW = new selected_product.BE.type()
 					copy_datum_vars(selected_product.BE,NEW)
@@ -223,7 +225,7 @@
 			updateicon()
 
 		started = 0
-		var/turf/dispense = get_step(src.loc,eject_dir)
+		var/turf/dispense = (override_dir ? get_step(src.loc, override_dir) : get_step(src.loc, eject_dir))
 		for (var/atom in src)
 			var/atom/movable/A = atom
 			A.set_loc(dispense)
@@ -336,10 +338,9 @@
 
 	relaymove(mob/user, direction)
 		if (direction != eject_dir)
-			if (direction & WEST || direction & EAST)
+			if (direction == WEST || direction == EAST)
 				if (occupant == user && !(started>1))
-					src.eject_occupant(0,0)
-					step(user,direction)
+					src.eject_occupant(0,0, direction)
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		user.lastattacked = src

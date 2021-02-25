@@ -166,8 +166,7 @@
 					for(var/datum/objectProperty/P in B.properties)
 						if(!P.hidden)
 							. += "<br><img style=\"display:inline;margin:0\" width=\"12\" height=\"12\" /><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/[P.tooltipImg]")]\" width=\"12\" height=\"12\" /> [P.name]: [P.getTooltipDesc(B, B.properties[P])]"
-			for (var/datum/component/C in src.GetComponents(/datum/component/itemblock))
-				. += jointext(C.getTooltipDesc(), "")
+			SEND_SIGNAL(src, COMSIG_TOOLTIP_BLOCKING_APPEND, .)
 		else if(src.c_flags & BLOCK_TOOLTIP)
 			. += "<br><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/prot.png")]\" width=\"12\" height=\"12\" /> Block+: RESIST with this item for more info"
 
@@ -397,13 +396,14 @@
 
 		if (src.reagents && src.reagents.total_volume)
 			src.reagents.reaction(M, INGEST)
-			SPAWN_DBG (5) // Necessary.
+			SPAWN_DBG(0.5 SECONDS) // Necessary.
 				src.reagents.trans_to(M, src.reagents.total_volume/src.amount)
 
 		playsound(M.loc,"sound/items/eatfood.ogg", rand(10, 50), 1)
-		SPAWN_DBG (10)
+		eat_twitch(M)
+		SPAWN_DBG(1 SECOND)
 			if (!src || !M || !user)
-				return 0
+				return
 			M.visible_message("<span class='alert'>[M] finishes eating [src].</span>",\
 			"<span class='alert'>You finish eating [src].</span>")
 			SEND_SIGNAL(M, COMSIG_ITEM_CONSUMED, user, src)
@@ -412,9 +412,6 @@
 		return 1
 
 	else
-		if(M.mob_flags & IS_RELIQUARY)
-			boutput(user, "<span class='alert'>They don't come equipped with a digestive system, so there is no point in trying to feed them.</span>")
-			return 0
 		user.tri_message("<span class='alert'><b>[user]</b> tries to feed [M] [src]!</span>",\
 		user, "<span class='alert'>You try to feed [M] [src]!</span>",\
 		M, "<span class='alert'><b>[user]</b> tries to feed you [src]!</span>")
@@ -435,14 +432,14 @@
 
 		if (src.reagents && src.reagents.total_volume)
 			src.reagents.reaction(M, INGEST)
-			SPAWN_DBG (5) // Necessary.
+			SPAWN_DBG(0.5 SECONDS) // Necessary.
 				src.reagents.trans_to(M, src.reagents.total_volume)
 
 		playsound(M.loc, "sound/items/eatfood.ogg", rand(10, 50), 1)
-		SPAWN_DBG (10)
+		eat_twitch(M)
+		SPAWN_DBG(1 SECOND)
 			if (!src || !M || !user)
-				return 0
-
+				return
 			M.visible_message("<span class='alert'>[M] finishes eating [src].</span>",\
 			"<span class='alert'>You finish eating [src].</span>")
 			SEND_SIGNAL(M, COMSIG_ITEM_CONSUMED, user, src)
@@ -477,12 +474,7 @@
 		else
 			src.overlays += image('icons/effects/fire.dmi', "1old")
 		processing_items.Add(src)
-#if ASS_JAM
-		if(src.reagents)
-			SPAWN_DBG(3 SECONDS)
-				if(src.reagents)
-					smoke_reaction(src.reagents, 0, get_turf(src), do_sfx=FALSE) // bring back infinicheese 2020
-#endif
+
 		/*if (src.reagents && src.reagents.reagent_list && src.reagents.reagent_list.len)
 
 			//boutput(world, "<span class='alert'><b>[src] is releasing chemsmoke!</b></span>")
@@ -697,7 +689,8 @@
 			if (!(in_range(src,user) && in_range(storage,user)))
 				return
 
-		var/succ = src.try_put_hand_mousedrop(user, storage)
+		src.pick_up_by(user)
+		var/succ = user.is_in_hands(src)
 		if (succ)
 			SPAWN_DBG(1 DECI SECOND)
 				if (user.is_in_hands(src))
@@ -708,7 +701,9 @@
 		if (src.cant_self_remove)
 			return
 		if ( !user.restrained() && !user.stat )
-			var/succ = src.try_put_hand_mousedrop(user)
+
+			src.pick_up_by(user)
+			var/succ = user.is_in_hands(src)
 			if (succ)
 				SPAWN_DBG(1 DECI SECOND)
 					if (user.is_in_hands(src))
@@ -784,10 +779,11 @@
 		if (prob(7))
 			elecflash(src)
 		if (prob(7))
-			var/datum/effects/system/bad_smoke_spread/smoke = new /datum/effects/system/bad_smoke_spread()
-			smoke.set_up(1, 0, src.loc)
-			smoke.attach(src)
-			smoke.start()
+			if(!(src.item_function_flags & SMOKELESS))// maybe a better way to make this if no?
+				var/datum/effects/system/bad_smoke_spread/smoke = new /datum/effects/system/bad_smoke_spread()
+				smoke.set_up(1, 0, src.loc)
+				smoke.attach(src)
+				smoke.start()
 		if (prob(7))
 			fireflash(src, 0)
 
@@ -840,8 +836,7 @@
 
 	SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_SELF, user)
 
-	if(chokehold)
-		chokehold.attack_self(user)
+	chokehold?.attack_self(user)
 
 	return
 
@@ -910,19 +905,7 @@
 
 /obj/item/ex_act(severity)
 	switch(severity)
-		if (1.0)
-			if (istype(src,/obj/item/parts/human_parts))
-				src:holder = null
-			qdel(src)
-			return
 		if (2.0)
-			if (prob(50))
-
-				if (istype(src,/obj/item/parts/human_parts))
-					src:holder = null
-
-				qdel(src)
-				return
 			if (src.material)
 				src.material.triggerTemp(src ,7500)
 			if (src.burn_possible && !src.burning && src.burn_point <= 7500)
@@ -932,13 +915,6 @@
 				src.ArtifactStimulus("force", 75)
 				src.ArtifactStimulus("heat", 450)
 		if (3.0)
-			if (prob(5))
-
-				if (istype(src,/obj/item/parts/human_parts))
-					src:holder = null
-
-				qdel(src)
-				return
 			if (src.material)
 				src.material.triggerTemp(src, 3500)
 			if (src.burn_possible && !src.burning && src.burn_point <= 3500)
@@ -948,7 +924,7 @@
 				src.ArtifactStimulus("force", 25)
 				src.ArtifactStimulus("heat", 380)
 		else
-	return
+	return ..()
 
 /obj/item/blob_act(var/power)
 	if (src.artifact)
@@ -981,6 +957,7 @@
 		src.pick_up_by(user)
 
 /obj/item/proc/pick_up_by(var/mob/M)
+
 	if (world.time < M.next_click)
 		return //fuck youuuuu
 
@@ -1030,7 +1007,7 @@
 		if (4.0) t = "bulky"
 		if (5.0 to INFINITY) t = "huge"
 		else
-	if (usr && usr.bioHolder && usr.bioHolder.HasEffect("clumsy") && prob(50)) t = "funny-looking"
+	if (usr?.bioHolder?.HasEffect("clumsy") && prob(50)) t = "funny-looking"
 	return "It is \an [t] item."
 
 /obj/item/attack_hand(mob/user as mob)
@@ -1086,7 +1063,7 @@
 		oldloc_sfx = oldloc.loc
 	if (src in bible_contents)
 		bible_contents.Remove(src) // UNF
-		for (var/obj/item/storage/bible/bible in by_type[/obj/item/storage/bible])
+		for_by_tcl(bible, /obj/item/storage/bible)
 			bible.hud.remove_item(src)
 	user.put_in_hand_or_drop(src)
 
@@ -1137,19 +1114,8 @@
 			return
 
 	var/obj/item/affecting = M.get_affecting(user, def_zone)
-	var/hit_area
-	var/d_zone
-	if (istype(affecting, /obj/item/organ))
-		var/obj/item/organ/O = affecting
-		hit_area = parse_zone(O.organ_name)
-		d_zone = O.organ_name
-	else if (istype(affecting, /obj/item/parts))
-		var/obj/item/parts/P = affecting
-		hit_area = parse_zone(P.slot)
-		d_zone = P.slot
-	else
-		hit_area = parse_zone(affecting)
-		d_zone = affecting
+	var/hit_area = parse_zone(affecting)
+	var/d_zone = affecting
 
 	if (!M.melee_attack_test(user, src, d_zone))
 		logTheThing("combat", user, M, "attacks [constructTarget(M,"combat")] with [src] ([type], object name: [initial(name)]) but the attack is blocked!")
@@ -1199,12 +1165,6 @@
 		//moved to item_attack_message
 		//msgs.visible_message_target("<span class='alert'><B><I>... and lands a devastating hit!</B></I></span>")
 
-	if (can_disarm)
-		msgs = user.calculate_disarm_attack(M, M.get_affecting(user), 0, 0, 0, is_shove = 1, disarming_item = src)
-	else
-		msgs.msg_group = "[usr]_attacks_[M]_with_[src]"
-		msgs.visible_message_target(user.item_attack_message(M, src, hit_area, msgs.stamina_crit))
-
 	msgs.played_sound = src.hitsound
 
 	var/power = src.force + src.getProperty("searing")
@@ -1251,7 +1211,31 @@
 	if(user.is_hulk())
 		power *= 1.5
 
+	var/pre_armor_power = power
 	power -= armor_mod
+
+	var/armor_blocked = 0
+
+	if(pre_armor_power > 0 && power/pre_armor_power <= 0.66)
+		block_spark(M,armor=1)
+		switch(hit_type)
+			if (DAMAGE_BLUNT)
+				playsound(get_turf(M), 'sound/impact_sounds/block_blunt.ogg', 50, 1, -1, pitch=1.5)
+			if (DAMAGE_CUT)
+				playsound(get_turf(M), 'sound/impact_sounds/block_cut.ogg', 50, 1, -1, pitch=1.5)
+			if (DAMAGE_STAB)
+				playsound(get_turf(M), 'sound/impact_sounds/block_stab.ogg', 50, 1, -1, pitch=1.5)
+			if (DAMAGE_BURN)
+				playsound(get_turf(M), 'sound/impact_sounds/block_burn.ogg', 50, 1, -1, pitch=1.5)
+		if(power <= 0)
+			fuckup_attack_particle(user)
+			armor_blocked = 1
+
+	if (can_disarm)
+		msgs = user.calculate_disarm_attack(M, M.get_affecting(user), 0, 0, 0, is_shove = 1, disarming_item = src)
+	else
+		msgs.msg_group = "[usr]_attacks_[M]_with_[src]"
+		msgs.visible_message_target(user.item_attack_message(M, src, hit_area, msgs.stamina_crit, armor_blocked))
 
 	if (w_class > STAMINA_MIN_WEIGHT_CLASS)
 		var/stam_power = stamina_damage
@@ -1336,10 +1320,10 @@
 	if (attacher.zone_sel.selecting == "l_arm")
 		new_arm = new /obj/item/parts/human_parts/arm/left/item(attachee)
 		attachee.limbs.l_arm = new_arm
-	else
+	else if (attacher.zone_sel.selecting == "r_arm")
 		new_arm = new /obj/item/parts/human_parts/arm/right/item(attachee)
 		attachee.limbs.r_arm = new_arm
-	if (!new_arm) return //who knows
+	if (!new_arm) return //who knows - or they aren't targetting an arm!
 
 	new_arm.holder = attachee
 	attacher.remove_item(src)
@@ -1466,7 +1450,7 @@
 
 /obj/item/proc/dropped(mob/user)
 	if (user)
-		src.dir = user.dir
+		src.set_dir(user.dir)
 		#ifdef COMSIG_MOB_DROPPED
 		SEND_SIGNAL(user, COMSIG_MOB_DROPPED, src)
 		#endif
@@ -1495,8 +1479,7 @@
 	#ifdef COMSIG_MOB_PICKUP
 	SEND_SIGNAL(user, COMSIG_MOB_PICKUP, src)
 	#endif
-	if(src.material)
-		src.material.triggerPickup(user, src)
+	src.material?.triggerPickup(user, src)
 	set_mob(user)
 	show_buttons()
 	if (src.inventory_counter)

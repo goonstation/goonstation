@@ -324,7 +324,7 @@
 		if (src.uses_electricity == 0)
 			return
 
-		if (!src.cell.charge || src.cell.charge - src.cost_normal <= 0)
+		if (!src?.cell?.charge || src.cell.charge - src.cost_normal <= 0)
 			boutput(user, "<span class='alert'>The [src.name] doesn't have enough power to be turned on.</span>")
 			return
 
@@ -500,7 +500,7 @@
 	stun_normal_stuttering = 8
 	instant_harmbaton_stun = 1
 	stamina_based_stun_amount = 90
-	item_function_flags = null
+	item_function_flags = 0
 
 	New()
 		..()
@@ -525,7 +525,7 @@
 	// stamina_based_stun_amount = 110
 	cost_normal = 25 // Cost in PU. Doesn't apply to cyborgs.
 	cell_type = /obj/item/ammo/power_cell/self_charging/ntso_baton
-	item_function_flags = null
+	item_function_flags = 0
 	//bascially overriding status, but it's kinda hacky in that they both are used jointly
 	var/state = CLOSED_AND_OFF
 

@@ -6,7 +6,7 @@
 
 	if(istype(/atom, .))
 		return . //meatshielded
-	
+
 	var/damage = 0
 	if (P.proj_data)  //ZeWaka: Fix for null.ks_ratio
 		damage = round((P.power*P.proj_data.ks_ratio), 1.0)
@@ -15,7 +15,7 @@
 
 	if (!(client && client.hellbanned))
 		armor_value_bullet = get_ranged_protection()
-	var/target_organ = pick("left_lung", "right_lung", "left_kidney", "right_kidney", "liver", "stomach", "intestines", "spleen", "pancreas", "appendix")
+	var/target_organ = pick("left_lung", "right_lung", "left_kidney", "right_kidney", "liver", "stomach", "intestines", "spleen", "pancreas", "appendix", "tail")
 	if (P.proj_data) //Wire: Fix for: Cannot read null.damage_type
 		switch(P.proj_data.damage_type)
 			if (D_KINETIC)
@@ -155,6 +155,7 @@
 
 	else if (isdead(src) && !src.client)
 		var/list/virus = src.ailments
+		var/atom/A = src.loc
 
 		var/bdna = null // For forensics (Convair880).
 		var/btype = null
@@ -162,7 +163,7 @@
 			bdna = src.bioHolder.Uid
 			btype = src.bioHolder.bloodType
 		SPAWN_DBG(0)
-			gibs(src.loc, virus, null, bdna, btype)
+			gibs(A, virus, null, bdna, btype)
 
 		qdel(src)
 		return
@@ -337,7 +338,20 @@
 		burn *= 2
 		//tox *= 2
 
+	if(src.traitHolder?.hasTrait("athletic"))
+		brute *=1.33
+
 	if (src.mutantrace)
+		var/typemult
+		if(islist(src.mutantrace.typevulns))
+			typemult = src.mutantrace.typevulns[DAMAGE_TYPE_TO_STRING(damage_type)]
+		if(!typemult)
+			typemult = 1
+		if(damage_type == DAMAGE_BURN)
+			burn *= typemult
+		else
+			brute *= typemult
+
 		brute *= src.mutantrace.brutevuln
 		burn *= src.mutantrace.firevuln
 		tox *= src.mutantrace.toxvuln
@@ -347,12 +361,7 @@
 
 	//if (src.bioHolder && src.bioHolder.HasEffect("resist_toxic"))
 		//tox = 0
-#if ASS_JAM //pausing damage in timestop
-	if (src.paused)
-		src.pausedburn = max(0, src.pausedburn + burn)
-		src.pausedbrute = max(0, src.pausedbrute + brute)
-		return
-#endif
+
 	brute = max(0, brute)
 	burn = max(0, burn)
 	//tox = max(0, burn)
@@ -388,7 +397,12 @@
 			src.UpdateDamageIcon()
 			health_update_queue |= src
 	else
-		var/obj/item/E = src.organs[zone]
+		var/obj/item/E = null
+		try
+			E = src.organs[zone]
+		catch
+			logTheThing("debug", null, null, "<b>ORGAN/INDEX_DMG</b> Invalid index: [zone]")
+			return 0
 		if (isitem(E))
 			if (E.take_damage(brute, burn, 0/*tox*/, damage_type))
 				src.UpdateDamageIcon()

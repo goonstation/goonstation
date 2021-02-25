@@ -142,7 +142,7 @@
 		onLife()
 
 	proc/mayStandardDeplete()
-		if (holder && holder.owner && (holder.owner.nodamage || holder.owner.hibernating))
+		if (holder?.owner && (holder.owner.nodamage || holder.owner.hibernating))
 			value = 100
 			return 0
 		return 1
@@ -756,7 +756,7 @@ var/global/datum/simsControl/simsController = new()
 			base_mood_value = 1
 		var/color_t = getMoodActionMultiplier() / base_mood_value
 
-		if(simsController && simsController.provide_plumbobs)
+		if(simsController?.provide_plumbobs)
 			if (!plumbob)
 				attach_plum(owner)
 

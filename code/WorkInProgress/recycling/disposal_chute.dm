@@ -74,7 +74,7 @@
 	attackby(var/obj/item/I, var/mob/user)
 		if(status & BROKEN)
 			return
-		if (istype(I,/obj/item/electronics/scanner))
+		if (istype(I,/obj/item/electronics/scanner) || istype(I,/obj/item/deconstructor))
 			user.visible_message("<span class='alert'><B>[user] hits [src] with [I]!</B></span>")
 			return
 		if (istype(I,/obj/item/satchel/))
@@ -255,15 +255,16 @@
 			ui.open()
 
 	ui_data(mob/user)
-		var/list/data = list()
-		data["flush"] = src.flush
-		data["mode"] = src.mode
-		data["name"] = src.name
-		data["pressure"] = MIXTURE_PRESSURE(air_contents) / (2*ONE_ATMOSPHERE)
-		return data
+		. = list(
+			"flush" = src.flush,
+			"mode" = src.mode,
+			"name" = src.name,
+			"pressure" = MIXTURE_PRESSURE(air_contents) / (2*ONE_ATMOSPHERE),
+		)
 
 	ui_act(action, params)
-		if(..())
+		. = ..()
+		if (.)
 			return
 		switch(action)
 			if("eject")

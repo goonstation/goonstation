@@ -106,7 +106,7 @@
 		if(81 to 100)
 			speed_delay = 0
 
-	if(runningAction && runningAction.bar)
+	if(runningAction?.bar)
 		if(sickness >= 60)
 			runningAction.bar.color = "#00DD00"
 		else
@@ -208,8 +208,7 @@
 		SPAWN_DBG(0.4 SECONDS)
 			input_lockout -= 1
 
-	if(runningAction)
-		runningAction.sCurr = sickness
+	runningAction?.sCurr = sickness
 
 	update()
 	in_bump = 0

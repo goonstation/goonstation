@@ -522,7 +522,7 @@
 			icon_state = "ptoe"
 
 		poster_y4nt
-			name = "\improper NanoTrasen poster"
+			name = "\improper NanoTrasen recruitment poster"
 			desc = "A huge poster that reads 'I want YOU for NT!'"
 			icon = 'icons/obj/decals/posters.dmi'
 			icon_state = "you_4_nt"
@@ -783,10 +783,10 @@
 
 			proc/get_award_text(var/datum/mind/M)
 				var/hosname = "Anonymous"
-				if(M && M.current && M.current.client && M.current.client.preferences && M.current.client.preferences.name_last)
+				if(M?.current?.client?.preferences?.name_last)
 					hosname = M.current.client.preferences.name_last
 				var/hosage = 50
-				if(M && M.current && M.current.bioHolder && M.current.bioHolder.age)
+				if(M?.current?.bioHolder?.age)
 					hosage = M.current.bioHolder.age
 				. = "Awarded to [pick("Pvt.","Sgt","Cpl.","Maj.","Cpt.","Col.","Gen.")] "
 				. += "[hosname] for [pick("Outstanding","Astounding","Incredible")] "
@@ -864,7 +864,7 @@
 
 			proc/get_award_text_hop(var/datum/mind/M)
 				var/hopname = "Anonymous"
-				if(M && M.current && M.current.client && M.current.client.preferences && M.current.client.preferences.name_last)
+				if(M?.current?.client?.preferences?.name_last)
 					hopname = M.current.client.preferences.name_last
 				. = "The first [pick("Space","NT", "Golden","Silver")] "
 				. += "[pick("Dollar","Doubloon","Buck","Peso","Credit")] earned by [hopname]"
@@ -944,7 +944,7 @@
 
 			proc/get_award_text_rd(var/datum/mind/M)
 				var/rdname = "Anonymous"
-				if(M && M.current && M.current.client && M.current.client.preferences && M.current.client.preferences.name_last)
+				if(M?.current?.client?.preferences?.name_last)
 					rdname = M.current.client.preferences.name_last
 				. += "It says \ [rdname] has been awarded the degree of [pick("Associate", "Bachelor")] of [pick("arts","science")]"
 				. += "Master of [pick("arts","science")],"

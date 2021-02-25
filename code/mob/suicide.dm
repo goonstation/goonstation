@@ -21,7 +21,7 @@
 // the suiciding var is already at the mob level for fuck's sakes
 /mob/verb/suicide()
 
-	if (!isliving(src) || isdead(src))
+	if ((!isliving(src) || isdead(src)) && !istype(src, /mob/dead/aieye))
 		boutput(src, "You're already dead!")
 		return
 
@@ -37,6 +37,9 @@
 		boutput(src,"<span class='alert'>You can't suicide. You're already in hell!</span>")
 		return
 
+	if(src.is_zombie)
+		boutput(src,"<span class='alert'>You can't suicide. Brains...</span>")
+		return
 
 	if (!ticker)
 		boutput(src, "You can't commit suicide before the game starts!")
@@ -154,6 +157,10 @@
 					src.suiciding = 0
 			return
 	return
+
+/mob/dead/aieye/do_suicide()
+	src.return_mainframe()
+	src.mainframe.do_suicide()
 
 /mob/living/silicon/ai/do_suicide()
 	src.visible_message("<span class='alert'><b>[src] is powering down. It looks like \he's trying to commit suicide.</b></span>")

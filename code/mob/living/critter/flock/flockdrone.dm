@@ -74,8 +74,7 @@
 
 /mob/living/critter/flock/drone/Login()
 	..()
-	if(src.client)
-		src.client.color = null
+	src.client?.color = null
 	if(isnull(controller)) // finally i can just use swap bodies again
 		// make a new controller
 		controller = new/mob/living/intangible/flock/trace(src, src.flock)
@@ -101,19 +100,18 @@
 			var/key = pilot.client.key
 			pilot.client.mob = src
 			src.mind = new /datum/mind()
+			src.mind.ckey = ckey
 			src.mind.key = key
 			src.mind.current = src
 			ticker.minds += src.mind
 	// move controller into ourselves
 	pilot.set_loc(src)
 	controller = pilot
-	if(src.client)
-		src.client.color = null // stop being all fucked up and weird aaaagh
+	src.client?.color = null // stop being all fucked up and weird aaaagh
 	boutput(src, "<span class='flocksay'><b>\[SYSTEM: Control of drone [src.real_name] established.\]</b></span>")
 
 /mob/living/critter/flock/drone/proc/release_control()
-	if(src.flock)
-		src.flock.hideAnnotations(src)
+	src.flock?.hideAnnotations(src)
 	src.is_npc = 1
 	emote("beep")
 	say(pick_string("flockmind.txt", "flockdrone_player_kicked"))
@@ -132,6 +130,7 @@
 				var/key = src.client.key
 				src.client.mob = controller
 				controller.mind = new /datum/mind()
+				controller.mind.ckey = ckey
 				controller.mind.key = key
 				controller.mind.current = controller
 				ticker.minds += controller.mind
@@ -170,23 +169,21 @@
 			special_desc += "<br><span class='bold'>ID:</span> <b>[src.controller.real_name]</b> controlling [src.real_name])"
 		else
 			special_desc += "<br><span class='bold'>ID:</span> [src.real_name]"
-		special_desc += "<br><span class='bold'>Flock:</span> [src.flock ? src.flock.name : "none"]"
-		special_desc += "<br><span class='bold'>Resources:</span> [src.resources]"
-		special_desc += "<br><span class='bold'>System Integrity:</span> [round(src.get_health_percentage()*100)]%"
-		special_desc += "<br><span class='bold'>Cognition:</span> [src.is_npc ? "TORPID" : "SAPIENT"]"
-		special_desc += "<br><span class='bold'>###=-</span></span>"
+		special_desc += {"<br><span class='bold'>Flock:</span> [src.flock ? src.flock.name : "none"]
+		<br><span class='bold'>Resources:</span> [src.resources]
+		<br><span class='bold'>System Integrity:</span> [round(src.get_health_percentage()*100)]%
+		<br><span class='bold'>Cognition:</span> [src.is_npc ? "TORPID" : "SAPIENT"]
+		<br><span class='bold'>###=-</span></span>"}
 		return special_desc
 	else
 		return null // give the standard description
 
 /mob/living/critter/flock/drone/proc/changeFlock(var/flockName)
-	if(src.flock)
-		src.flock.removeDrone(src)
+	src.flock?.removeDrone(src)
 	if(flocks[flockName])
 		src.flock = flocks[flockName]
 		src.flock.registerUnit(src) // for the sake of the flockmind
-	if(controller)
-		controller.flock = flocks[flockName]
+	controller?.flock = flocks[flockName]
 	boutput(src, "<span class='notice'>You are now part of the <span class='bold'>[src.flock.name]</span> flock.</span>")
 
 /mob/living/critter/flock/drone/Login()
@@ -289,8 +286,11 @@
 		if ("fart") // i cannot ignore my heritage any longer
 			if (src.emote_check(voluntary, 50))
 				var/fart_message = pick_string("flockmind.txt", "flockdrone_fart")
-				playsound(get_turf(src), "sound/misc/flockmind/flockdrone_fart.ogg", 60, 1)
+				playsound(get_turf(src), "sound/misc/flockmind/flockdrone_fart.ogg", 60, 1, channel=VOLUME_CHANNEL_EMOTE)
 				return "<b>[src]</b> [fart_message]"
+		if ("laugh") //no good sound for it - moon
+			if (src.emote_check(voluntary, 50))
+				return "<b>[src]</b> caws heartily!"
 	return null
 
 /mob/living/critter/flock/drone/specific_emote_type(var/act)
@@ -398,7 +398,7 @@
 	if(floorrunning)
 		// do our custom MOVE THROUGH ANYTHING stuff
 		// copypasted from intangible.dm
-		src.dir = get_dir(src, NewLoc)
+		src.set_dir(get_dir(src, NewLoc))
 		if(!isturf(src.loc))
 			src.set_loc(get_turf(src))
 		if(NewLoc)
@@ -527,8 +527,7 @@
 		src.resources = 0 // just in case any weirdness happens let's pre-empt the dupe bug
 	if(src.controller)
 		src.release_control()
-	if(src.flock)
-		src.flock.removeDrone(src)
+	src.flock?.removeDrone(src)
 	..()
 	src.icon_state = "drone-dead"
 	playsound(get_turf(src), "sound/impact_sounds/Glass_Shatter_3.ogg", 50, 1)
@@ -573,14 +572,12 @@
 	walk(src, 0)
 	if(src.floorrunning)
 		src.end_floorrunning()
-	if(src.ai)
-		src.ai.die()
+	src.ai?.die()
 	emote("scream")
 	say("\[System notification: drone diffracting.\]")
 	if(src.controller)
 		src.release_control()
-	if(src.flock)
-		src.flock.removeDrone(src)
+	src.flock?.removeDrone(src)
 	// create the flockbits
 	animate_flock_drone_split(src)
 	var/mob/living/critter/flock/bit/B
@@ -589,8 +586,7 @@
 	var/list/candidate_turfs = getNeighbors(T, alldirs)
 	for(var/i=1 to num_bits)
 		B = new(get_turf(src), F = src.flock)
-		if(src.flock)
-			src.flock.registerUnit(B)
+		src.flock?.registerUnit(B)
 		SPAWN_DBG(0.2 SECONDS)
 			B.set_loc(pick(candidate_turfs))
 	sleep(0.1 SECONDS) // make sure the animation finishes
@@ -717,7 +713,7 @@
 	if (user.floorrunning)
 		return // you'll need to be out of the floor to do anything
 	// CONVERT TURF
-	if(!isturf(target) && !(istype(target, /obj/storage/closet/flock) || istype(target, /obj/table/flock) || istype(target, /obj/structure/girder) || istype(target, /obj/machinery/door/feather)))
+	if(!isturf(target) && !(istype(target, /obj/storage/closet/flock) || istype(target, /obj/table/flock) || istype(target, /obj/structure/girder) || istype(target, /obj/machinery/door/feather) || istype(target, /obj/flock_structure/ghost)))
 		target = get_turf(target)
 
 	if(istype(target, /turf) && !istype(target, /turf/simulated) && !istype(target, /turf/space))
@@ -765,14 +761,16 @@
 				..()
 //help intent actions
 	else if(user.a_intent == INTENT_HELP)
-		if(istype(target, /obj/machinery/door/feather))
-			var/obj/machinery/door/feather/F = target
-			if(F.broken || (F.health > F.health_max))
-				if(user.resources < 10)
-					boutput(user, "<span class='alert'>Not enough resources to repair (you need 10).</span>")
-				else
-					actions.start(new/datum/action/bar/flock_repair(F), user)
-
+		switch(target.type)//making this into switches for easy of expansion later
+			if(/obj/machinery/door/feather)
+				var/obj/machinery/door/feather/F = target
+				if(F.broken || (F.health < F.health_max))
+					if(user.resources < 10)
+						boutput(user, "<span class='alert'>Not enough resources to repair (you need 10).</span>")
+					else
+						actions.start(new/datum/action/bar/flock_repair(F), user)
+			if(/obj/flock_structure/ghost)
+				actions.start(new /datum/action/bar/flock_deposit(target), user)
 
 /datum/limb/flock_converter/help(mob/target, var/mob/living/critter/flock/drone/user)
 	if(!target || !user)

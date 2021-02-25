@@ -284,6 +284,8 @@
 		open = 1
 		flick("floorflush_a", src)
 		src.icon_state = "floorflush_o"
+		for(var/atom/movable/AM in src.loc)
+			src.HasEntered(AM) // try to flush them
 
 	proc/closeup()
 		open = 0
@@ -315,7 +317,7 @@
 
 	New()
 		..()
-		SPAWN_DBG (10)
+		SPAWN_DBG(1 SECOND)
 			openup()
 
 	Crossed(atom/movable/AM)

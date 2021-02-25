@@ -157,7 +157,7 @@
 		close.screen_loc = "[x+sx-1]:[pixel_y_adjust],[y-sy+1]:[pixel_y_adjust]"
 
 		if (!turfd && istype(usr,/mob/living/carbon/human))
-			if (usr && usr.client && usr.client.tg_layout) //MBC TG OVERRIDE IM SORTY
+			if (usr && usr.client?.tg_layout) //MBC TG OVERRIDE IM SORTY
 				boxes.screen_loc = "[x-1],[y]:[pixel_y_adjust] to [x+sx-2],[y-sy+1]:[pixel_y_adjust]"
 				close.screen_loc = "[x-1],[y-sy+1]:[pixel_y_adjust]"
 

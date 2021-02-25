@@ -523,6 +523,7 @@ var/global/list/statusGroupLimits = list("Food"=4)
 		desc = ""
 		icon_state = "radiation1"
 		unique = 1
+		visible = 0
 
 		tickSpacing = 3 SECONDS
 
@@ -558,15 +559,29 @@ var/global/list/statusGroupLimits = list("Food"=4)
 			return
 
 		onUpdate(var/timePassed)
+			if(locate(/obj/item/implant/health) in owner)
+				src.visible = 1
+			else
+				src.visible = 0
+
 			counter += timePassed
 			if(counter >= stageTime)
 				counter -= stageTime
 				stage = max(stage-1, 1)
 
+			var/mob/M = null
+			if(ismob(owner))
+				M = owner
+				SEND_SIGNAL(M, COMSIG_MOB_GEIGER_TICK, stage)
+				if(locate(/obj/item/implant/health) in M)
+					src.visible = 1
+				else
+					src.visible = 0
+
 			var/prot = 1
-			if(istype(owner, /mob/living/carbon/human))
-				var/mob/living/carbon/human/H = owner
-				prot = (1 - (H.get_rad_protection() / 100))
+			if(istype(owner, /mob/living))
+				var/mob/living/L = owner
+				prot = (1 - (L.get_rad_protection() / 100))
 
 			switch(stage)
 				if(1)
@@ -577,8 +592,7 @@ var/global/list/statusGroupLimits = list("Food"=4)
 					damage_tox = (2 * prot)
 					howMuch = "significantly "
 					var/chance = (2 * prot)
-					if(prob(chance) && ismob(owner))
-						var/mob/M = owner
+					if(prob(chance) && M)
 						if (M.bioHolder && !M.bioHolder.HasEffect("revenant"))
 							M.changeStatus("weakened", 3 SECONDS)
 							boutput(M, "<span class='alert'>You feel weak.</span>")
@@ -586,58 +600,56 @@ var/global/list/statusGroupLimits = list("Food"=4)
 				if(3)
 					damage_tox = (3 * prot)
 					howMuch = "very much "
-					if (ismob(owner))
-						var/mob/M = owner
+					if (M)
 						var/mutChance = (1 * prot)
 
-						if (M.traitHolder && M.traitHolder.hasTrait("stablegenes"))
+						if (M.traitHolder?.hasTrait("stablegenes"))
 							mutChance = 0
 						if (mutChance < 1) mutChance = 0
 
 						if (prob(mutChance) && (M.bioHolder && !M.bioHolder.HasEffect("revenant")))
 							boutput(M, "<span class='alert'>You mutate!</span>")
-							M:bioHolder:RandomEffect("either")
+							M.bioHolder.RandomEffect("either")
 				if(4)
 					damage_tox = (4 * prot)
 					howMuch = "extremely "
-					if (ismob(owner))
-						var/mob/M = owner
+					if (M)
 						var/mutChance = (2 * prot)
 
-						if (M.traitHolder && M.traitHolder.hasTrait("stablegenes"))
+						if (M.traitHolder?.hasTrait("stablegenes"))
 							mutChance = (1 * prot)
 						if (mutChance < 1) mutChance = 0
 
 						if (prob(mutChance) && (M.bioHolder && !M.bioHolder.HasEffect("revenant")))
 							boutput(M, "<span class='alert'>You mutate!</span>")
-							M:bioHolder:RandomEffect("either")
+							M.bioHolder.RandomEffect("either")
 				if(5)
 					damage_tox = (4.5 * prot)
 					howMuch = "horribly "
-					if (ismob(owner))
-						var/mob/M = owner
+					if (M)
 						var/mutChance = (3 * prot)
 
-						if (M.traitHolder && M.traitHolder.hasTrait("stablegenes"))
+						if (M.traitHolder?.hasTrait("stablegenes"))
 							mutChance = (2 * prot)
 						if (mutChance < 1) mutChance = 0
 
 						if (prob(mutChance) && (M.bioHolder && !M.bioHolder.HasEffect("revenant")))
 							boutput(M, "<span class='alert'>You mutate!</span>")
-							M:bioHolder:RandomEffect("either")
+							M.bioHolder.RandomEffect("either")
 
 			icon_state = "radiation[stage]"
 
 			return ..(timePassed)
 
 	simpledot/n_radiation
-		id = "neutron_radiation"
+		id = "n_radiation"
 		name = "Neutron Irradiated"
 		desc = ""
-		icon_state = "radiation1"
+		icon_state = "nradiation1"
 		unique = 1
+		visible = 0
 
-		tickSpacing = 1.5 SECONDS
+		tickSpacing = 2 SECONDS
 
 		damage_tox = 2
 		damage_brute = 2
@@ -646,68 +658,114 @@ var/global/list/statusGroupLimits = list("Food"=4)
 		var/howMuch = ""
 		var/stage = 0
 		var/counter = 0
-		var/stageTime = 10 SECONDS
+		var/stageTime = 20 SECONDS
 
 		getTooltip()
-			return "You are [howMuch]irradiated by neutrons.<br>Taking [damage_tox] toxin damage every [tickSpacing/(1 SECOND)] sec and [damage_brute] brute damage every [tickSpacing/(1 SECOND)] sec."
+			return "You are [howMuch]irradiated by neutrons.<br>Taking [damage_tox] toxin damage every [tickSpacing/(1 SECOND)] sec and [damage_brute] brute damage every [tickSpacing/(1 SECOND)] sec.<br>Damage reduced by radiation resistance on gear."
 
 		preCheck(var/atom/A)
-			if(isobserver(A) || isintangible(A)) return 0
+			if(issilicon(A) || isobserver(A) || isintangible(A)) return 0
 			return 1
+
+		proc/update_lights(add = 1)
+			owner.remove_simple_light("neutron_rad")
+			owner.remove_medium_light("neutron_rad")
+			if(add)
+				if(stage < 4)
+					owner.add_simple_light("neutron_rad", list(4, 62, 155, stage * 50))
+				else
+					owner.add_medium_light("neutron_rad", list(4, 62, 155, stage * 50))
+
 
 		onAdd(var/optional=null)
 			if(!isnull(optional) && optional >= stage)
 				stage = optional
 			else
 				stage = 5
-			icon_state = "radiation[stage]"
+			update_lights()
 			return
+
+		onRemove()
+			update_lights(0)
+			. = ..()
 
 		onChange(var/optional=null)
 			if(!isnull(optional) && optional >= stage)
 				stage = optional
 			else
 				stage = 5
-			icon_state = "radiation[stage]"
+			icon_state = "nradiation[stage]"
+			update_lights()
 			return
 
 		onUpdate(var/timePassed)
 			counter += timePassed
+
 			if(counter >= stageTime)
 				counter -= stageTime
 				stage = max(stage-1, 1)
+				update_lights()
+
+			var/mob/M = null
+			if(ismob(owner))
+				M = owner
+				SEND_SIGNAL(M, COMSIG_MOB_GEIGER_TICK, stage)
+				if(locate(/obj/item/implant/health) in M)
+					src.visible = 1
+				else
+					src.visible = 0
 
 			var/prot = 1
-			if(istype(owner, /mob/living/carbon/human))
-				prot = (1 - (0 / 100))
+			if(istype(owner, /mob/living))
+				var/mob/living/L = owner
+				prot = (1 - (L.get_rad_protection() / 100))
+
+			damage_tox = (stage * prot)
+			damage_brute = ((stage/2) * prot)
 
 			switch(stage)
 				if(1)
-					damage_tox = (1 * prot)
-					damage_brute = (1 * prot)
 					howMuch = ""
-
 				if(2)
-					damage_tox = (2 * prot)
-					damage_brute = (2 * prot)
 					howMuch = "significantly "
-
+					var/chance = (2 * prot)
+					if(prob(chance) && M)
+						if (M.bioHolder && !M.bioHolder.HasEffect("revenant"))
+							M.changeStatus("weakened", 5 SECONDS)
+							boutput(M, "<span class='alert'>You feel weak.</span>")
+							M.emote("collapse")
 				if(3)
-					damage_tox = (3 * prot)
-					damage_brute = (3 * prot)
 					howMuch = "very much "
-
+					if (M)
+						var/mutChance = (3 * prot)
+						if (M.traitHolder?.hasTrait("stablegenes"))
+							mutChance = 0
+						if (mutChance < 1) mutChance = 0
+						if (prob(mutChance) && (M.bioHolder && !M.bioHolder.HasEffect("revenant")))
+							boutput(M, "<span class='alert'>You mutate!</span>")
+							M.bioHolder.RandomEffect("either")
 				if(4)
-					damage_tox = (4 * prot)
-					damage_brute = (4 * prot)
 					howMuch = "extremely "
-
+					if (M)
+						var/mutChance = (4 * prot)
+						if (M.traitHolder?.hasTrait("stablegenes"))
+							mutChance = (3 * prot)
+						if (mutChance < 1) mutChance = 0
+						if (prob(mutChance) && (M.bioHolder && !M.bioHolder.HasEffect("revenant")))
+							boutput(M, "<span class='alert'>You mutate!</span>")
+							M.bioHolder.RandomEffect("either")
 				if(5)
-					damage_tox = (5 * prot)
-					damage_brute = (5 * prot)
 					howMuch = "horribly "
+					if (M)
+						var/mutChance = (5 * prot)
+						if (M.traitHolder?.hasTrait("stablegenes"))
+							mutChance = (4 * prot)
+						if (mutChance < 1) mutChance = 0
+						if (prob(mutChance) && (M.bioHolder && !M.bioHolder.HasEffect("revenant")))
+							boutput(M, "<span class='alert'>You mutate!</span>")
+							M.bioHolder.RandomEffect("either")
 
-			icon_state = "radiation[stage]"
+			icon_state = "nradiation[stage]"
 
 			return ..(timePassed)
 
@@ -745,6 +803,7 @@ var/global/list/statusGroupLimits = list("Food"=4)
 				counter = optional
 
 			switchStage(getStage())
+			owner.delStatus("shivering")
 
 			if(istype(owner, /mob/living))
 				var/mob/living/L = owner
@@ -1022,6 +1081,27 @@ var/global/list/statusGroupLimits = list("Food"=4)
 		onUpdate(var/timePassed)
 			counter += timePassed
 			if (counter >= count && owner && !owner.hasStatus(list("weakened", "paralysis")) )
+				counter -= count
+				playsound(get_turf(owner), sound, 17, 1, 0.4, 1.6)
+				violent_twitch(owner)
+			.=..(timePassed)
+
+	// Basically disorient, but only does the animation and its maxDuration is
+	// upped a bit to synchronize with other stuns.
+	cyborg_disorient
+		id = "cyborg-disorient"
+		name = "Disoriented"
+		icon_state = "disorient"
+		visible = 0
+		unique = 1
+		maxDuration = 30 SECONDS
+		var/counter = 0
+		var/sound = "sound/effects/electric_shock_short.ogg"
+		var/count = 7
+
+		onUpdate(var/timePassed)
+			counter += timePassed
+			if (counter >= count && owner)
 				counter -= count
 				playsound(get_turf(owner), sound, 17, 1, 0.4, 1.6)
 				violent_twitch(owner)
@@ -1443,6 +1523,67 @@ var/global/list/statusGroupLimits = list("Food"=4)
 		getTooltip()
 			return "Your max stamina and stamina regen have been increased slightly."
 
+	patho_oxy_speed
+		id = "patho_oxy_speed"
+		name = "Oxygen Storage"
+		icon_state = "patho_oxy_speed"
+		unique = 1
+		movement_modifier = /datum/movement_modifier/patho_oxygen
+		var/oxygenAmount = 100
+		var/mob/living/carbon/human/H
+		var/endCount = 0
+
+		onAdd(optional)
+			src.oxygenAmount = optional
+			if(iscarbon(owner))
+				H = owner
+			else
+				owner.delStatus(src.id)
+
+		getTooltip()
+			return "You are tapping your oxygen storage to breathe and move faster. Oxygen Storage at [oxygenAmount]% capacity!"
+
+		onUpdate(timePassed)
+			var/oxy_damage = min(20, H.get_oxygen_deprivation(), oxygenAmount)
+			if(oxy_damage <= 0)											// If no oxy damage for 8 seconds, remove the status
+				endCount += timePassed
+			else
+				endCount = 0
+			if(endCount > 8 SECONDS)
+				owner.delStatus(src.id)
+			if (H.oxyloss)
+				H.take_oxygen_deprivation(-oxy_damage)
+				oxygenAmount -= oxy_damage
+				H.losebreath = 0
+
+	patho_oxy_speed/bad
+		id = "patho_oxy_speed_bad"
+		name = "Oxygen Conversion"
+		icon_state = "patho_oxy_speed_bad"
+		var/efficiency = 1
+
+		onAdd(optional)
+			src.efficiency = optional
+			..()
+			if(H)
+				H.show_message("<span class='alert'>You feel your body deteriorating as you breathe on.</span>")
+
+		onUpdate(timePassed)
+			var/oxy_damage = min(20, H.get_oxygen_deprivation())
+			if(oxy_damage <= 0)											// If no oxy damage for 8 seconds, remove the status
+				endCount += timePassed
+			else
+				endCount = 0
+			if(endCount > 8 SECONDS)
+				owner.delStatus(src.id)
+			if (H.oxyloss)
+				H.take_oxygen_deprivation(-oxy_damage)
+				H.TakeDamage("chest", oxy_damage/efficiency, 0)
+				H.losebreath = 0
+
+		getTooltip()
+			return "Your flesh is being converted into oxygen! But you are moving slightly faster."
+
 
 
 /datum/statusEffect/bloodcurse
@@ -1480,7 +1621,6 @@ var/global/list/statusGroupLimits = list("Food"=4)
 			H.TakeDamage(zone="All", brute=damage)
 			bleed(H, damage, bleed)
 
-
 /datum/statusEffect/mentor_mouse
 	id = "mentor_mouse"
 	name = "Mentor Mouse"
@@ -1517,4 +1657,28 @@ var/global/list/statusGroupLimits = list("Food"=4)
 	onUpdate()
 		if (src.owner && !(locate(/mob/dead/target_observer/mentor_mouse_observer) in src.owner))
 			owner.delStatus("admin_mouse")
+		. = ..()
+
+/datum/statusEffect/signified
+	id = "signified"
+	name = "Signified"
+	desc = "A Signifier bolt has made you vulnerable! Also you should never be seeing this!"
+	icon_state = null
+	duration = 0.5 SECONDS
+	visible = 0
+
+/datum/statusEffect/shivering
+	id = "shivering"
+	name = "Shivering"
+	desc = "You're very cold!"
+	icon_state = "shivering"
+	duration = 2 SECONDS
+	maxDuration = 30 SECONDS
+	visible = 1
+	movement_modifier = /datum/movement_modifier/shiver
+
+	onAdd(var/optional=null)
+		var/mob/M = owner
+		if(istype(M))
+			M.emote("shiver")
 		. = ..()

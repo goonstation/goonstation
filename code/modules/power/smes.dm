@@ -40,12 +40,12 @@
 	New(var/turf/iloc, var/idir = 2)
 		if (!isturf(iloc))
 			qdel(src)
-		dir = idir
+		set_dir(idir)
 		var/turf/Q = get_step(iloc, idir)
 		if (!Q)
 			qdel(src)
 			var/obj/machinery/power/terminal/term = new /obj/machinery/power/terminal(Q)
-			term.dir = get_dir(Q, iloc)
+			term.set_dir(get_dir(Q, iloc))
 		..()
 
 /obj/machinery/power/smes/emp_act()
@@ -70,7 +70,7 @@
 			for(var/d in cardinal)
 				var/turf/T = get_step(src, d)
 				for(var/obj/machinery/power/terminal/term in T)
-					if (term && term.dir == turn(d, 180))
+					if (term?.dir == turn(d, 180))
 						terminal = term
 						break dir_loop
 
@@ -200,11 +200,11 @@
 
 
 ///obj/machinery/power/smes/add_avail(var/amount)
-//	if (terminal && terminal.powernet)
+//	if (terminal?.powernet)
 //		terminal.powernet.newavail += amount
 
 /obj/machinery/power/smes/add_load(var/amount)
-	if (terminal && terminal.powernet)
+	if (terminal?.powernet)
 		terminal.powernet.newload += amount
 
 /obj/machinery/power/smes/ui_state(mob/user)
@@ -223,23 +223,30 @@
 		ui = new(user, src, "Smes", src.name)
 		ui.open()
 
+/obj/machinery/power/smes/ui_static_data(mob/user)
+	. = list(
+		"inputLevelMax" = SMESMAXCHARGELEVEL,
+		"outputLevelMax" = SMESMAXOUTPUT,
+	)
+
 /obj/machinery/power/smes/ui_data(mob/user)
-	var/list/data = list()
-	data["capacity"] = src.capacity
-	data["charge"] = src.charge
-	data["inputAttempt"] = src.chargemode
-	data["inputting"] = src.charging
-	data["inputLevel"] = src.chargelevel
-	data["inputLevelMax"] = SMESMAXCHARGELEVEL
-	data["inputAvailable"] = src.lastexcess
-	data["outputAttempt"] = src.online
-	data["outputting"] = src.loaddemand
-	data["outputLevel"] = src.output
-	data["outputLevelMax"] = SMESMAXOUTPUT
-	return data
+	. = list(
+		"capacity" = src.capacity,
+		"charge" = src.charge,
+
+		"inputAttempt" = src.chargemode,
+		"inputting" = src.charging,
+		"inputLevel" = src.chargelevel,
+		"inputAvailable" = src.lastexcess,
+
+		"outputAttempt" = src.online,
+		"outputting" = src.loaddemand,
+		"outputLevel" = src.output,
+	)
 
 /obj/machinery/power/smes/ui_act(action, params)
-	if(..())
+	. = ..()
+	if (.)
 		return
 	switch(action)
 		if("toggle-input")

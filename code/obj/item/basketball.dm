@@ -139,7 +139,7 @@
 					src.set_loc(get_turf(user))
 					src.mounted = 1
 					src.anchored = 1
-					src.dir = get_dir(src, target)
+					src.set_dir(get_dir(src, target))
 					switch (src.dir)
 						if (NORTH)
 							src.pixel_y = 20

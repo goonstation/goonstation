@@ -48,7 +48,7 @@
 			for(var/d in cardinal)
 				var/turf/T = get_step(origin, d)
 				for(var/obj/machinery/power/terminal/term in T)
-					if(term && term.dir == turn(d, 180))
+					if(term?.dir == turn(d, 180))
 						terminal = term
 						break dir_loop
 
@@ -257,7 +257,7 @@
 		T = get_step(T, dir)
 		if(!T) break //edge of the map
 		var/obj/lpt_laser/laser = new/obj/lpt_laser(T)
-		laser.dir = dir
+		laser.set_dir(dir)
 		laser.power = round(abs(output)*PTLEFFICIENCY)
 		laser.source = src
 		laser.active = 0
@@ -306,7 +306,7 @@
 	for(var/obj/lpt_laser/L in laser_parts)
 		if(counter <= active_num)
 			L.invisibility = 0 //make it visible
-			L.alpha = max(50,min(255,L.power/39e7)) //255 (max) alpha at 1e11 power, the point at which the laser's most deadly effect happens
+			L.alpha = clamp(((log(10, L.power) - 5) * (255 / 5)), 50, 255) //50 at ~1e7 255 at 1e11 power, the point at which the laser's most deadly effect happens
 			L.active = 1
 			L.light.enable()
 			L.burn_all_living_contents()
@@ -328,7 +328,7 @@
 			qdel(O)
 
 /obj/machinery/power/pt_laser/add_load(var/amount)
-	if(terminal && terminal.powernet)
+	if(terminal?.powernet)
 		terminal.powernet.newload += amount
 
 /obj/machinery/power/pt_laser/proc/update_laser_power()
@@ -338,7 +338,7 @@
 
 	for(var/obj/lpt_laser/L in laser_parts)
 		L.power = round(abs(src.output)*PTLEFFICIENCY)
-		L.alpha = max(50,min(255,L.power/39e7)) //255 (max) alpha at 1e11 power, the point at which the laser's most deadly effect happens
+		L.alpha = clamp(((log(10, L.power) - 5) * (255 / 5)), 50, 255) //50 at ~1e7 255 at 1e11 power, the point at which the laser's most deadly effect happens
 
 /obj/machinery/power/pt_laser/ui_state(mob/user)
 	return tgui_default_state
@@ -357,29 +357,30 @@
 		ui.open()
 
 /obj/machinery/power/pt_laser/ui_data(mob/user)
-	var/list/data = list()
-	data["capacity"] = src.capacity
-	data["charge"] = src.charge
-	data["isEmagged"] = src.emagged
-	data["isChargingEnabled"] = src.charging
-	data["excessPower"] = src.excess
-	data["gridLoad"] = src.terminal?.powernet.load
-	data["inputLevel"] = src.chargelevel
-	data["inputMultiplier"] = src.input_multi
-	data["inputNumber"] = src.input_number
-	data["isCharging"] = src.is_charging
-	data["isFiring"] = src.firing
-	data["isLaserEnabled"] = src.online
-	data["lifetimeEarnings"] = src.lifetime_earnings
-	data["name"] = src.name
-	data["outputLevel"] = src.output
-	data["outputMultiplier"] = src.output_multi
-	data["outputNumber"] = src.output_number
-	data["totalGridPower"] = src.terminal?.powernet.avail
-	return data
+	. = list(
+		"capacity" = src.capacity,
+		"charge" = src.charge,
+		"isEmagged" = src.emagged,
+		"isChargingEnabled" = src.charging,
+		"excessPower" = src.excess,
+		"gridLoad" = src.terminal?.powernet.load,
+		"inputLevel" = src.chargelevel,
+		"inputMultiplier" = src.input_multi,
+		"inputNumber" = src.input_number,
+		"isCharging" = src.is_charging,
+		"isFiring" = src.firing,
+		"isLaserEnabled" = src.online,
+		"lifetimeEarnings" = src.lifetime_earnings,
+		"name" = src.name,
+		"outputLevel" = src.output,
+		"outputMultiplier" = src.output_multi,
+		"outputNumber" = src.output_number,
+		"totalGridPower" = src.terminal?.powernet.avail,
+	)
 
 /obj/machinery/power/pt_laser/ui_act(action, params)
-	if(..())
+	. = ..()
+	if (.)
 		return
 	switch(action)
 		//Input controls
@@ -492,7 +493,7 @@
 	light.enable()
 
 	SPAWN_DBG(0)
-		alpha = max(50,min(255,power/39e7)) //255 (max) alpha at 1e11 power, the point at which the laser's most deadly effect happens
+		alpha = clamp(((log(10, src.power) - 5) * (255 / 5)), 50, 255) //50 at ~1e7 255 at 1e11 power, the point at which the laser's most deadly effect happens
 		if(active)
 			if(istype(src.loc, /turf) && power > 5e7)
 				src.loc:hotspot_expose(power/1e5,5) //1000K at 100MW
@@ -530,7 +531,8 @@
 	if(power < 10) return
 	if(isintangible(L)) return // somehow flocktraces are still getting destroyed by the laser. maybe this will fix it
 
-	if(prob(min(power/1e5,50))) L.emote("scream") //might be spammy if they stand in it for ages, idk
+	if(prob(min(power/1e5,50)))
+		INVOKE_ASYNC(L, /mob/living.proc/emote, "scream") //might be spammy if they stand in it for ages, idk
 
 	if(L.dir == turn(src.dir,180) && ishuman(L)) //they're looking into the beam!
 		var/safety = 1

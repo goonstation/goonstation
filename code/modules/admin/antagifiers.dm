@@ -18,7 +18,7 @@
 			boutput(M, "Don't be greedy.")
 			return
 		*/
-		if (M && M.mind && !M.mind.special_role)
+		if (M?.mind && !M.mind.special_role)
 			makeAntag(M)
 			var/datum/objective/newObj = new /datum/objective(attachedObjective)
 			newObj.owner = M.mind

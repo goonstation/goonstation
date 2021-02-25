@@ -94,8 +94,7 @@
 		if(connected?.scanner?.pods)
 			connected?.scanner?.pods -= src
 		connected = null
-		if(occupant)
-			occupant.set_loc(src.loc)
+		occupant?.set_loc(get_turf(src.loc))
 		occupant = null
 		..()
 
@@ -205,12 +204,12 @@
 			return 0
 
 		if (ghost.mind.dnr)
-			src.connected_message("Ephemereal conscience detected, seance protocols reveal this corpse cannot be cloned.")
+			src.connected_message("Ephemereal conscience detected, seance protocols reveal this corpse cannot be cloned.", "warning")
 			return 0
 
 		//if (src.meat_level < MEAT_NEEDED_TO_CLONE)
 		if (!src.start_clone(1))
-			src.connected_message("Insufficient biomatter to begin.")
+			src.connected_message("Insufficient biomatter to begin.", "warning")
 			return 0
 
 		src.attempting = 1 //One at a time!!
@@ -225,6 +224,10 @@
 		if (istype(oldholder))
 			oldholder.clone_generation++
 			src.occupant.bioHolder.CopyOther(oldholder, copyActiveEffects = gen_analysis)
+			src.occupant?.set_mutantrace(oldholder?.mobAppearance?.mutant_race?.type)
+			if(ishuman(src.occupant))
+				var/mob/living/carbon/human/H = src.occupant
+				H.update_colorful_parts()
 		else
 			logTheThing("debug", null, null, "<b>Cloning:</b> growclone([english_list(args)]) with invalid holder.")
 
@@ -235,7 +238,10 @@
 			src.occupant.abilityHolder.transferOwnership(src.occupant) //mbc : fixed clone removing abilities bug!
 			src.occupant.abilityHolder.remove_unlocks()
 
-		ghost.client.mob = src.occupant
+		ghost.mind.transfer_to(src.occupant)
+
+		if(src.occupant.client) // gross hack for resetting tg layout bleh bluh
+			src.occupant.client.set_layout(src.occupant.client.tg_layout)
 
 		if(src.occupant.bioHolder.clone_generation > 1)
 			var/health_penalty = (src.occupant.bioHolder.clone_generation - 1) * 15
@@ -244,7 +250,7 @@
 				src.occupant.unlock_medal("Quit Cloning Around")
 
 		src.mess = 0
-		if (traits && traits.len && src.occupant.traitHolder)
+		if (length(traits) && src.occupant.traitHolder)
 			src.occupant.traitHolder.traits = traits
 			if (src.occupant.traitHolder.hasTrait("puritan"))
 				src.mess = 1
@@ -288,13 +294,14 @@
 		else //welp
 			logTheThing("debug", null, null, "<b>Mind</b> Clonepod forced to create new mind for key \[[src.occupant.key ? src.occupant.key : "INVALID KEY"]]")
 			src.occupant.mind = new /datum/mind(  )
+			src.occupant.mind.ckey = src.occupant.ckey
 			src.occupant.mind.key = src.occupant.key
 			src.occupant.mind.transfer_to(src.occupant)
 			ticker.minds += src.occupant.mind
 
 		// -- Mode/mind specific stuff goes here
 
-			if ((ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/revolution)) && ((src.occupant.mind in ticker.mode:revolutionaries) || (src.occupant.mind in ticker.mode:head_revolutionaries)))
+			if ((ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution)) && ((src.occupant.mind in ticker.mode:revolutionaries) || (src.occupant.mind in ticker.mode:head_revolutionaries)))
 				ticker.mode:update_all_rev_icons() //So the icon actually appears
 
 		// -- End mode specific stuff
@@ -365,7 +372,7 @@
 			if (src.occupant.traitHolder && src.occupant.traitHolder.hasTrait("puritan"))
 				// puritans get punted out immediately
 				src.go_out(1)
-				src.connected_message("Clone Aborted: Genetic Structure Incompatible.")
+				src.connected_message("Clone Aborted: Genetic Structure Incompatible.", "warning")
 				src.send_pda_message("Clone Aborted: Genetic Structure Incompatible")
 				power_usage = 200
 				return ..()
@@ -378,7 +385,7 @@
 			if (isdead(src.occupant) || src.occupant.suiciding)  //Autoeject corpses and suiciding dudes.
 				// Dead or suiciding people are ejected.
 				src.go_out(1)
-				src.connected_message("Clone Rejected: Deceased.")
+				src.connected_message("Clone Rejected: Deceased.", "danger")
 				src.send_pda_message("Clone Rejected: Deceased")
 				power_usage = 200
 				return ..()
@@ -386,7 +393,7 @@
 			else if (src.failed_tick_counter >= MAX_FAILED_CLONE_TICKS) // you been in there too long, get out
 				// If we've failed to progress the clone for a while, they get ejected too.
 				src.go_out(1)
-				src.connected_message("Clone Ejected: Low Biomatter.")
+				src.connected_message("Clone Ejected: Low Biomatter.", "danger")
 				src.send_pda_message("Clone Ejected: Low Biomatter")
 				power_usage = 200
 				return ..()
@@ -441,7 +448,7 @@
 
 				src.meat_level = max( 0, src.meat_level - meat_used_per_tick * mult )
 				if (!src.meat_level)
-					src.connected_message("Additional biomatter required to continue.")
+					src.connected_message("Additional biomatter required to continue.", "warning")
 					src.send_pda_message("Low Biomatter")
 					src.visible_message("<span class='alert'>[src] emits an urgent boop!</span>")
 					playsound(src.loc, "sound/machines/buzz-two.ogg", 50, 0)
@@ -457,7 +464,7 @@
 				if ((src.occupant.health + (100 - src.occupant.max_health)) > 50 && src.failed_tick_counter >= 2 && (src.time_started + eject_wait < TIME))
 					// Wait a few ticks to see if they stop gaining health.
 					// Once that's the case, boot em
-					src.connected_message("Cloning Process Complete.")
+					src.connected_message("Cloning Process Complete.", "success")
 					src.send_pda_message("Cloning Process Complete")
 					src.go_out(1)
 				else // go_out() updates icon too, so vOv
@@ -472,7 +479,7 @@
 				if (src.attempting && (src.time_started + eject_wait < TIME))
 					// If this body has an actual mind in it, they're done.
 					// Sure hope the outside is safe for ya.
-					src.connected_message("Cloning Process Complete.")
+					src.connected_message("Cloning Process Complete.", "success")
 					src.send_pda_message("Cloning Process Complete")
 					// literally ding like a microwave
 					playsound(src.loc, "sound/machines/ding.ogg", 50, 1)
@@ -618,15 +625,19 @@
 			src.reagents.trans_to(src.occupant, 1000)
 
 	//Put messages in the connected computer's temp var for display.
-	proc/connected_message(var/msg)
+	proc/connected_message(var/message, status)
 		if ((isnull(src.connected)) || (!istype(src.connected, /obj/machinery/computer/cloning)))
 			return 0
-		if (!msg)
+		if (!message)
 			return 0
-
-		src.connected.temp = msg
-		src.connected.updateUsrDialog()
-		return 1
+		src.connected.currentStatusMessage["text"] = message
+		src.connected.currentStatusMessage["status"] = status
+		tgui_process.update_uis(src)
+		SPAWN_DBG(5 SECONDS)
+			if(src.connected.currentStatusMessage == message)
+				src.connected.currentStatusMessage["text"] = ""
+				src.connected.currentStatusMessage["status"] = ""
+				tgui_process.update_uis(src)
 
 	verb/eject()
 		set src in oview(1)
@@ -702,7 +713,7 @@
 
 	proc/malfunction()
 		if (src.occupant)
-			src.connected_message("Critical Error!")
+			src.connected_message("Critical Error!", "danger")
 			src.send_pda_message("Critical Error")
 			src.mess = 1
 			src.failed_tick_counter = 0
@@ -795,6 +806,12 @@
 		src.update_icon(1)
 		SPAWN_DBG(0)
 			src.find_pods()
+
+	disposing()
+		occupant?.set_loc(get_turf(src.loc))
+		occupant = null
+		..()
+
 
 	proc/find_pods()
 		if (!islist(src.pods))
@@ -1031,7 +1048,7 @@
 			boutput(user, "<span class='alert'>There is already somebody in there.</span>")
 			return
 
-		else if (G && G.affecting && !src.emagged && !isdead(G.affecting) && !ismonkey(G.affecting))
+		else if (G?.affecting && !src.emagged && !isdead(G.affecting) && !ismonkey(G.affecting))
 			user.visible_message("<span class='alert'>[user] tries to stuff [G.affecting] into [src], but it beeps angrily as the safety overrides engage!</span>")
 			return
 
@@ -1139,6 +1156,17 @@
 			message_admins("[key_name(owner)] forced [key_name(target, 1)] ([target == 2 ? "dead" : "alive"]) into \an [grinder] at [log_loc(grinder)].")
 		if (grinder.auto_strip && !grinder.emagged)
 			target.unequip_all()
+			if (length(target.implant))
+				for (var/obj/item/implant/I in target.implant)
+					if (istype(I,/obj/item/implant/projectile))
+						continue
+					var/obj/item/implantcase/newcase = new /obj/item/implantcase(target.loc)
+					newcase.imp = I
+					I.on_remove(target)
+					target.implant.Remove(I)
+					I.set_loc(newcase)
+					newcase.icon_state = "implantcase-b"
+
 		target.set_loc(grinder)
 		grinder.occupant = target
 		qdel(grab)
@@ -1148,3 +1176,33 @@
 #undef DEFAULT_MEAT_USED_PER_TICK
 #undef DEFAULT_SPEED_BONUS
 #undef MEAT_LOW_LEVEL
+
+/obj/machinery/clonepod/automatic
+	name = "Cloning Pod Deluxe"
+	meat_level = 1.#INF
+	var/last_check = 0
+	var/check_delay = 10 SECONDS
+
+/obj/machinery/clonepod/automatic/process()
+	if(!src.attempting)
+		if (world.time - last_check >= check_delay)
+			last_check = world.time
+			INVOKE_ASYNC(src, /obj/machinery/clonepod/automatic.proc/growclone_a_ghost)
+	return..()
+
+/obj/machinery/clonepod/automatic/New()
+	..()
+	animate_rainbow_glow(src) // rgb shit cause it looks cool
+	SubscribeToProcess()
+	last_check = world.time
+
+/obj/machinery/clonepod/automatic/disposing()
+	..()
+	UnsubscribeProcess()
+
+/obj/machinery/clonepod/automatic/proc/growclone_a_ghost()
+	for(var/mob/dead/observer/ghost in mobs)
+		var/datum/mind/ghost_mind = ghost.mind
+		if(ghost.client && !ghost_mind.dnr)
+			growclone(ghost, ghost.real_name, ghost_mind)
+			break

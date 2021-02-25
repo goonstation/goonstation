@@ -53,7 +53,7 @@
 
 	MouseDrop_T(atom/movable/O as obj, mob/user as mob)
 		if (master && (!master.click_check || (usr in master.mobs)))
-			master.scrolled(src, O, user)
+			master.MouseDrop_T(src, O, user)
 
 
 /datum/hud
@@ -112,7 +112,7 @@
 		S.icon_state = state
 		S.screen_loc = loc
 		S.layer = layer
-		S.dir = dir
+		S.set_dir(dir)
 		S.tooltipTheme = tooltipTheme
 		src.objects += S
 
@@ -179,7 +179,7 @@
 		return null
 
 	proc/clicked(id)
-	proc/scrolled(id, dx, dy, usr, parms)
+	proc/scrolled(id, dx, dy, user, parms)
 	proc/MouseEntered(id,location, control, params)
 	proc/MouseExited(id)
 	proc/MouseDrop(var/obj/screen/hud/H, atom/over_object, src_location, over_location, over_control, params)

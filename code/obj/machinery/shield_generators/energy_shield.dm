@@ -21,12 +21,12 @@
 	get_desc(dist, mob/user)
 		. = ..()
 		var/charge_percentage = 0
-		if (PCEL && PCEL.charge > 0 && PCEL.maxcharge > 0)
+		if (PCEL?.charge > 0 && PCEL.maxcharge > 0)
 			charge_percentage = round((PCEL.charge/PCEL.maxcharge)*100)
 			. += "It has [PCEL.charge]/[PCEL.maxcharge] ([charge_percentage]%) battery power left."
 		else
 			. += "It seems to be missing a usable battery."
-		. += "The unit will consume [30 * src.range * (src.power_level * src.power_level)] power a second."
+		. += "The unit will consume [10 * src.range * (src.power_level * src.power_level)] power a second."
 		. += "The range setting is set to [src.range]."
 		. += "The power setting is set to [src.power_level]."
 
@@ -36,7 +36,7 @@
 				src.power_usage = 0
 				return
 			else //no power cell, not connected to grid: power down if active, do nothing otherwise
-				src.power_usage = 30 * (src.range + 1) * (power_level * power_level)
+				src.power_usage = 10 * (src.range) * (power_level * power_level)
 				generate_shield()
 				return
 		else
@@ -113,17 +113,17 @@
 		var/obj/forcefield/energyshield/S = new /obj/forcefield/energyshield (locate((src.x + xa),(src.y + ya),src.z), src, 1 ) //1 update tiles
 		S.layer = 2
 		if (xa == -range)
-			S.dir = SOUTHWEST
+			S.set_dir(SOUTHWEST)
 		else if (xa == range)
-			S.dir = SOUTHEAST
+			S.set_dir(SOUTHEAST)
 		else if (ya == -range)
-			S.dir = NORTHWEST
+			S.set_dir(NORTHWEST)
 		else if (ya == range)
-			S.dir = NORTHEAST
+			S.set_dir(NORTHEAST)
 		else if (orientation)
-			S.dir = NORTH
+			S.set_dir(NORTH)
 		else if (!orientation)
-			S.dir = EAST
+			S.set_dir(EAST)
 
 		src.deployed_shields += S
 

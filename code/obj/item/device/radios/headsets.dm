@@ -270,6 +270,19 @@
 		)
 	icon_override = "qm"
 
+/obj/item/device/radio/headset/mail
+	name = "Mailman's Headset"
+	desc = "A radio headset that is also capable of communicating over the Engineering and Command channels."
+	icon_state = "command headset"
+	secure_frequencies = list(
+	"h" = R_FREQ_COMMAND,
+	"e" = R_FREQ_ENGINEERING)
+	secure_classes = list(
+		"h" = RADIOCL_COMMAND,
+		"e" = RADIOCL_ENGINEERING,
+		)
+	icon_override = "mail"
+
 /obj/item/device/radio/headset/clown
 	name = "Clown's Headset"
 	desc = "A standard-issue device that can be worn on a crewmember's ear to allow hands-free communication with the rest of the crew. Anybody using this one is unlikely to be taken seriously."

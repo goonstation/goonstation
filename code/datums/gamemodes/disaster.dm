@@ -98,11 +98,11 @@
 				H.change_misstep_chance(5)
 
 		SPAWN_DBG(20 SECONDS)
-			if(scarysounds && scarysounds.len)
+			if(length(scarysounds))
 				world << sound(pick(scarysounds))
 
 		SPAWN_DBG(30 SECONDS)
-			if(scarysounds && scarysounds.len)
+			if(length(scarysounds))
 				world << sound(pick(scarysounds))
 
 		SPAWN_DBG(40 SECONDS)
@@ -118,7 +118,7 @@
 				H.change_misstep_chance(5)
 
 		SPAWN_DBG(80 SECONDS)
-			if(scarysounds && scarysounds.len)
+			if(length(scarysounds))
 				world << sound(pick(scarysounds))
 
 	return
@@ -182,7 +182,7 @@
 			SPAWN_DBG(50+rand(0,6250))
 				var/obj/vortex/P = new /obj/vortex( T )
 				P.name = disaster_name
-				if(prob(6) && scarysounds && scarysounds.len)
+				if(prob(6) && length(scarysounds))
 					world << sound(pick(scarysounds))
 		LAGCHECK(LAG_LOW)
 

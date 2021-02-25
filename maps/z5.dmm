@@ -1,4 +1,4 @@
-"aa" = (/turf/space,/area)
+"aa" = (/turf/space,/area/space)
 "ab" = (/turf/space,/area/noGenerate)
 "ac" = (/obj/lattice{icon_state = "lattice-dir-b"},/turf/space,/area/noGenerate)
 "ad" = (/turf/space,/turf/simulated/shuttle/wall{dir = 8; icon_state = "diagonalWall3"},/area/diner/tug)

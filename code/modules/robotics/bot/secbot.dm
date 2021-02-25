@@ -19,6 +19,9 @@
 #define BATON_INITIAL_DELAY (0.3 SECONDS)
 #define BATON_DELAY_PER_STUN (0.2 SECONDS)
 
+#define BATON_CHARGE_DURATION (3 SECONDS)
+#define BATON_CHARGE_DURATION_BEEPSKY (6 SECONDS)
+
 /obj/machinery/bot/secbot
 	name = "Securitron"
 #ifdef HALLOWEEN
@@ -93,6 +96,14 @@
 
 	var/last_attack = 0
 	var/attack_per_step = 0 // Tries to attack every step. 1 = 75% chance to attack, 2 = 25% chance to attack
+	/// One WEEOOWEEOO at a time, please
+	var/weeooing
+	/// Set by the stun action bar if the target isnt in range, grants a brief window for a free zap next time they try to attack
+	var/baton_charged
+	/// How long these batons hold a charge
+	var/baton_charge_duration = BATON_CHARGE_DURATION
+	/// So we dont try to cuff someone while we're cuffing someone
+	var/cuffing
 
 	disposing()
 		if(mover)
@@ -119,6 +130,7 @@
 	move_arrest_delay_mult = 0.9 // beepsky has some experience chasing crimers
 	loot_baton_type = /obj/item/baton/beepsky
 	is_beepsky = IS_BEEPSKY_AND_HAS_HIS_SPECIAL_BATON
+	baton_charge_duration = BATON_CHARGE_DURATION_BEEPSKY
 	hat = "nt"
 
 	New()
@@ -190,11 +202,7 @@
 		src.icon_state = "secbot[src.on]"
 		if (!src.our_baton || !istype(src.our_baton))
 			src.our_baton = new our_baton_type(src)
-		#if ASS_JAM
-		src.emag_stages = 3
-		src.tacticool = 1
-		src.report_arrests = 1
-		#endif
+
 
 		if (src.tacticool)
 			make_tacticool()
@@ -304,14 +312,14 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 			mode = SECBOT_IDLE
 			src.target = null
 
-			#if ASS_JAM
+
 			if(src.emagged >= 3)
 				src.stun_type = "harm_classic"
 				processing_bucket = 1
 				processing_tier = PROCESSING_FULL
 				current_processing_tier = PROCESSING_FULL
 				playsound(src.loc, 'sound/effects/elec_bzzz.ogg', 99, 1, 0.1, 0.7)
-			#endif
+
 
 			if(user)
 				src.oldtarget_name = user.name
@@ -419,62 +427,71 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 
 		return 0
 
-	proc/baton_attack(var/mob/living/carbon/M)
-		sleep(BATON_INITIAL_DELAY)
-		if(!IN_RANGE(src, src.target, 1))
-			return
+	proc/charge_baton()
+		src.baton_charged = TRUE
+		src.overlays += image('icons/effects/electile.dmi', "6c")
+		SPAWN_DBG(src.baton_charge_duration)
+			src.baton_charged = FALSE
+			src.overlays -= image('icons/effects/electile.dmi', "6c")
 
-		src.icon_state = "secbot-c[src.emagged >= 2 ? "-wild" : null]"
-		var/maxstuns = 4
-		var/stuncount = (src.emagged >= 2) ? rand(5,10) : 1
+	proc/baton_attack(var/mob/living/carbon/M, var/force_attack = 0)
+		if(force_attack || baton_charged)
+			src.icon_state = "secbot-c[src.emagged >= 2 ? "-wild" : null]"
+			var/maxstuns = 4
+			var/stuncount = (src.emagged >= 2) ? rand(5,10) : 1
 
-		last_attack = world.time
+			src.last_attack = world.time
 
-		// No need for unnecessary hassle, just make it ignore charges entirely for the time being.
-		if (src.our_baton && istype(src.our_baton))
-			if (src.our_baton.uses_electricity == 0)
-				src.our_baton.uses_electricity = 1
-			if (src.our_baton.uses_charges != 0)
-				src.our_baton.uses_charges = 0
-		else
-			src.our_baton = new our_baton_type(src)
+			// No need for unnecessary hassle, just make it ignore charges entirely for the time being.
+			if (src.our_baton && istype(src.our_baton))
+				if (src.our_baton.uses_electricity == 0)
+					src.our_baton.uses_electricity = 1
+				if (src.our_baton.uses_charges != 0)
+					src.our_baton.uses_charges = 0
+			else
+				src.our_baton = new src.our_baton_type(src)
 
-		while (stuncount > 0 && src.target)
-			// they moved while we were sleeping, abort
-			if(!IN_RANGE(src, src.target, 1))
+			while (stuncount > 0 && src.target)
+				// they moved while we were sleeping, abort
+				if(!IN_RANGE(src, src.target, 1))
+					src.icon_state = "secbot[src.on][(src.on && src.emagged >= 2) ? "-wild" : null]"
+					src.weeoo()
+					src.process()
+					return
+
+				stuncount--
+				src.our_baton.do_stun(src, M, src.stun_type, 2)
+				if (!stuncount && maxstuns-- <= 0)
+					src.target = null
+				if (stuncount > 0)
+					sleep(BATON_DELAY_PER_STUN)
+
+			SPAWN_DBG(0.2 SECONDS)
 				src.icon_state = "secbot[src.on][(src.on && src.emagged >= 2) ? "-wild" : null]"
-				return
+			if (src.target.getStatusDuration("weakened"))
+				src.mode = SECBOT_PREP_ARREST
+				src.anchored = 1
+				src.target_lastloc = M.loc
+				src.moving = 0
 
-			stuncount--
-			src.our_baton.do_stun(src, M, src.stun_type, 2)
-			if (!stuncount && maxstuns-- <= 0)
-				target = null
-			if (stuncount > 0)
-				sleep(BATON_DELAY_PER_STUN)
+				if (src.mover)
+					src.mover.master = null
+					src.mover = null
+				src.frustration = 0
+			return
+		else
+			actions.start(new/datum/action/bar/icon/secbot_stun(src, src.target, M, src), src)
 
-		SPAWN_DBG(0.2 SECONDS)
-			src.icon_state = "secbot[src.on][(src.on && src.emagged >= 2) ? "-wild" : null]"
-		if (src.target.getStatusDuration("weakened"))
-			mode = SECBOT_PREP_ARREST
-			src.anchored = 1
-			src.target_lastloc = M.loc
-			moving = 0
 
-			//qdel(src.mover)
-			if (src.mover)
-				src.mover.master = null
-				src.mover = null
-			src.frustration = 0
-		return
 
 	Move(var/turf/NewLoc, direct)
 		var/oldloc = src.loc
-		..()
+		. = ..()
 		if (src.attack_per_step && prob(src.attack_per_step == 2 ? 25 : 75))
 			if (oldloc != NewLoc && world.time != last_attack)
 				if (mode == SECBOT_HUNT && target)
 					if (IN_RANGE(src, src.target, 1))
-						src.baton_attack(src.target)
+						src.baton_attack(src.target, 1)
 
 	process()
 		if (!src.on)
@@ -504,6 +521,7 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 					if (!IN_RANGE(src, src.target, 1))
 						src.moving = 0
 						navigate_to(src.target, ARREST_SPEED * move_arrest_delay_mult, max_dist = 18)
+						weeoo()
 						return
 					else
 						SPAWN_DBG(0)
@@ -763,37 +781,29 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 				playsound(src.loc, pick('sound/voice/bcriminal.ogg', 'sound/voice/bjustice.ogg', 'sound/voice/bfreeze.ogg'), 50, 0)
 				src.visible_message("<b>[src]</b> points at [C.name]!")
 				mode = SECBOT_HUNT
+				weeoo()
 				process()	// ensure bot quickly responds to a perp
-				// sorry for making a mess here i will clean it up later i promise xoxoxo -drsingh
-				SPAWN_DBG(0)
-					var/weeoo = 10
-					playsound(src.loc, "sound/machines/siren_police.ogg", 50, 1)
-
-					while (weeoo)
-						add_simple_light("secbot", list(255 * 0.9, 255 * 0.1, 255 * 0.1, 0.8 * 255))
-						sleep(0.3 SECONDS)
-						add_simple_light("secbot", list(255 * 0.1, 255 * 0.1, 255 * 0.9, 0.8 * 255))
-						sleep(0.3 SECONDS)
-						weeoo--
-
-					//old one in case we still want that
-					/*
-					light.set_brightness(0.8)
-					while (weeoo)
-						light.set_color(0.9, 0.1, 0.1)
-						sleep(0.3 SECONDS)
-						light.set_color(0.1, 0.1, 0.9)
-						sleep(0.3 SECONDS)
-						weeoo--
-					light.set_brightness(0.4)
-					light.set_color(1, 1, 1)
-					*/
-
-					add_simple_light("secbot", list(255, 255, 255, 0.4 * 255))
 				break
 			else
 				continue
 
+	proc/weeoo()
+		if(weeooing)
+			return
+		SPAWN_DBG(0)
+			weeooing = 1
+			var/weeoo = 10
+			playsound(src.loc, "sound/machines/siren_police.ogg", 50, 1)
+
+			while (weeoo)
+				add_simple_light("secbot", list(255 * 0.9, 255 * 0.1, 255 * 0.1, 0.8 * 255))
+				sleep(0.3 SECONDS)
+				add_simple_light("secbot", list(255 * 0.1, 255 * 0.1, 255 * 0.9, 0.8 * 255))
+				sleep(0.3 SECONDS)
+				weeoo--
+
+			add_simple_light("secbot", list(255, 255, 255, 0.4 * 255))
+			weeooing = 0
 
 //If the security records say to arrest them, arrest them
 //Or if they have weapons and aren't security, arrest them.
@@ -888,11 +898,9 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 
 			var/perpname = see_face ? perp.real_name : perp.name
 
-			for (var/i in data_core.general)
-				var/datum/data/record/E = i
+			for (var/datum/data/record/E as() in data_core.general)
 				if (E.fields["name"] == perpname)
-					for (var/j in data_core.security)
-						var/datum/data/record/R = j
+					for (var/datum/data/record/R as() in data_core.security)
 						if ((R.fields["id"] == E.fields["id"]) && (R.fields["criminal"] == "*Arrest*"))
 							threatcount = 4
 							break
@@ -1042,11 +1050,11 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 				master.frustration = INFINITY
 				master.mover = null
 				master = null
-				return 1
+				return
 
 			master.moving = 1
 
-			while(master && master.path && master.path.len && target_turf)
+			while(length(master?.path) && target_turf)
 				if(compare_movepath != current_movepath) break
 				if(!master.on)
 					master.frustration = 0
@@ -1056,8 +1064,7 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 					master.look_for_perp()
 
 				if(master?.mode == SECBOT_HUNT && master.target && IN_RANGE(master, master.target, 1))
-					master.baton_attack(master.target)
-					break
+					break	// We're here!
 
 				if(master?.path)
 					step_to(master, master.path[1])
@@ -1073,19 +1080,26 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 			if (master)
 				master.moving = 0
 				master.mover = null
-				if(master.mode == SECBOT_HUNT && master.target && master.frustration < 8 && !IN_RANGE(master, master.target, 1))
-					master.navigate_to(master.target, ARREST_SPEED * master.move_arrest_delay_mult, max_dist = max_dist)
+				master.process() // responsive, robust AI = calling process() a million zillion times
 				master = null
 
 
 //secbot handcuff bar thing
 /datum/action/bar/icon/secbot_cuff
-	duration = 60
+	duration = 40
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	id = "secbot_cuff"
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "handcuff"
 	var/obj/machinery/bot/secbot/master
+	var/list/voice_lines = list(
+			'sound/voice/bgod.ogg'
+		, 'sound/voice/biamthelaw.ogg'
+		, 'sound/voice/bsecureday.ogg'
+		, 'sound/voice/bradio.ogg'
+		//, 'sound/voice/binsult.ogg'
+		, 'sound/voice/bcreep.ogg'
+		)
 
 	New(var/the_bot)
 		src.master = the_bot
@@ -1093,24 +1107,39 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 
 	onUpdate()
 		..()
-		if (!IN_RANGE(master, master.target, 1) || !master.target || master.target.hasStatus("handcuffed"))
-			interrupt(INTERRUPT_ALWAYS)
+		if (!IN_RANGE(master, master.target, 1) || !master.target || master.target.hasStatus("handcuffed") || master.moving)
+			master.weeoo()
 			master.process()
+			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onStart()
 		..()
-		if (!IN_RANGE(master, master.target, 1) || !master.target || master.target.hasStatus("handcuffed"))
-			interrupt(INTERRUPT_ALWAYS)
+		master.cuffing = 1
+		if (!IN_RANGE(master, master.target, 1) || !master.target || master.target.hasStatus("handcuffed") || master.moving)
+			master.weeoo()
 			master.process()
+			interrupt(INTERRUPT_ALWAYS)
 			return
 
 		playsound(master, "sound/weapons/handcuffs.ogg", 30, 1, -2)
 		master.mode = SECBOT_ARREST
 		master.visible_message("<span class='alert'><B>[master] is trying to put handcuffs on [master.target]!</B></span>")
+		if(master.is_beepsky == IS_BEEPSKY_AND_HAS_HIS_SPECIAL_BATON || master.is_beepsky == IS_BEEPSKY_BUT_HAS_SOME_GENERIC_BATON)
+			duration = round(duration * 0.75)
+			master.visible_message("<span class='alert'><B>...vigorously!</B></span>")
+			playsound(master, "sound/misc/winding.ogg", 30, 1, -2)
+
+	onInterrupt()
+		..()
+		master.cuffing = 0
 
 	onEnd()
 		..()
+		if(!master.cuffing)
+			return
+
+		master.cuffing = 0
 
 		if (get_dist(master, master.target) <= 1)
 			if (!master.target || master.target.hasStatus("handcuffed"))
@@ -1130,7 +1159,7 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 				master.target.setStatus("handcuffed", duration = INFINITE_STATUS)
 
 			if(!uncuffable)
-				playsound(master.loc, pick('sound/voice/bgod.ogg', 'sound/voice/biamthelaw.ogg', 'sound/voice/bsecureday.ogg', 'sound/voice/bradio.ogg', 'sound/voice/binsult.ogg', 'sound/voice/bcreep.ogg'), 50, 0, 0, 1)
+				playsound(master.loc, pick(src.voice_lines), 50, 0, 0, 1)
 			if (master.report_arrests && !uncuffable)
 				var/bot_location = get_area(master)
 				var/last_target = master.target
@@ -1161,6 +1190,57 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 			master.frustration = 0
 
 		return
+
+//secbot stunner bar thing
+/datum/action/bar/icon/secbot_stun
+	duration = 10
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
+	id = "secbot_cuff"
+	icon = 'icons/obj/items/weapons.dmi'
+	icon_state = "stunbaton_active"
+	var/obj/machinery/bot/secbot/master
+	var/can_stun = 1 // Please please stop stunning me immediately after you get interrupted, cheating is illegal
+
+	New(var/the_bot, var/M)
+		src.master = the_bot
+		..()
+
+	onUpdate()
+		..()
+		if (!master.on)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+	onStart()
+		..()
+		if (!master.on)
+			can_stun = 0
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+		master.visible_message("<span class='alert'><B>[master] is energizing its prod, preparing to zap [master.target]!</B></span>")
+		if(master.is_beepsky == IS_BEEPSKY_AND_HAS_HIS_SPECIAL_BATON || master.is_beepsky == IS_BEEPSKY_BUT_HAS_SOME_GENERIC_BATON || master.emagged >= 2)
+			playsound(master, "sound/machines/ArtifactBee2.ogg", 30, 1, -2)
+			duration = round(duration * 0.60)
+		else
+			playsound(master, "sound/effects/electric_shock_short.ogg", 30, 1, -2)
+
+	onEnd()
+		..()
+		if(IN_RANGE(master, master.target, 1))
+			master.baton_attack(master.target, 1)
+			SPAWN_DBG(0)
+				master.weeoo()
+				master.process()
+			return
+		else
+			master.charge_baton()
+			SPAWN_DBG(0)
+				master.weeoo()
+				master.process()
+			return
+
+
 
 //Secbot Construction
 

@@ -63,11 +63,7 @@
 			setup_starting_peripheral2 = /obj/item/peripheral/printer
 			setup_starting_program = /datum/computer/file/terminal_program/medical_records
 
-#if ASS_JAM
-			New()
-				. = ..()
-				ADD_MORTY(6, 13, 9, 9)
-#endif
+
 
 			console_upper
 				icon = 'icons/obj/computerpanel.dmi'
@@ -666,7 +662,7 @@ function lineEnter (ev)
 
 	else if (isscrewingtool(W))
 		playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
-		if(do_after(user, 20))
+		if(do_after(user, 2 SECONDS))
 			if(!ispath(setup_frame_type, /obj/computer3frame))
 				src.setup_frame_type = /obj/computer3frame
 			var/obj/computer3frame/A = new setup_frame_type( src.loc )
@@ -877,8 +873,7 @@ function lineEnter (ev)
 			return
 		src.restarting = 1
 		src.active_program = null
-		if(src.host_program)
-			src.host_program.restart()
+		src.host_program?.restart()
 		src.host_program = null
 		src.processing_programs = new
 		src.temp = null

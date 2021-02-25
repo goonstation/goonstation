@@ -81,7 +81,7 @@
 
 	attack_self(mob/user as mob)
 		if(last_laugh + 50 < world.time)
-			user.visible_message("<span class='notice'><b>[user]</b> hugs Gnome Chompski!</span>","<span class='notice'>You hug Gnome Chompski!</span>")
+			user.visible_message("<span class='notice'><b>[user]</b> hugs [src]!</span>","<span class='notice'>You hug [src]!</span>")
 			playsound(src.loc,"sound/misc/gnomechuckle.ogg" ,50,1)
 			last_laugh = world.time
 
@@ -167,30 +167,6 @@
 	flags = TABLEPASS
 	burn_possible = 0
 
-/*
-/obj/item/flasks
-	name = "flask"
-	icon = 'icons/obj/Cryogenic2.dmi'
-	var/oxygen = 0.0
-	var/plasma = 0.0
-	var/coolant = 0.0
-
-/obj/item/flasks/coolant
-	name = "light blue flask"
-	icon_state = "coolant-c"
-	coolant = 1000.0
-
-/obj/item/flasks/oxygen
-	name = "blue flask"
-	icon_state = "oxygen-c"
-	oxygen = 500.0
-
-/obj/item/flasks/plasma
-	name = "orange flask"
-	icon_state = "plasma-c"
-	plasma = 500.0
-*/
-
 /obj/item/rubber_chicken
 	name = "Rubber Chicken"
 	desc = "A rubber chicken, isn't that hilarious?"
@@ -249,228 +225,12 @@
 	stamina_damage = 40
 	stamina_cost = 20
 	stamina_crit_chance = 5
-/*
-/obj/item/saxophone
-	name = "saxophone"
-	desc = "NEVER GONNA DANCE AGAIN, GUILTY FEET HAVE GOT NO RHYTHM"
-	icon = 'icons/obj/instruments.dmi'
-	icon_state = "sax" // temp
-	item_state = "sax"
-	w_class = 3
-	force = 1
-	throwforce = 5
-	var/spam_flag = 0
-	var/list/sounds_sax = list('sound/musical_instruments/Saxophone_CarelessWhisper.ogg', 'sound/musical_instruments/Saxophone_RunAway.ogg','sound/musical_instruments/Saxophone_BakerStreet.ogg','sound/musical_instruments/Saxophone_ComeSunday.ogg','sound/musical_instruments/Saxophone_GodOnlyKnows.ogg')
-	stamina_damage = 10
-	stamina_cost = 10
-	stamina_crit_chance = 5
-	module_research = list("audio" = 7, "metals" = 3)
 
-/obj/item/saxophone/attack_self(mob/user as mob)
-	if (spam_flag == 0)
-		spam_flag = 1
-		if (ishuman(user))
-			var/mob/living/carbon/human/H = user
-			if (H.sims)
-				H.sims.affectMotive("fun", 5)
-		user.visible_message("<B>[user]</B> lays down a [pick("sexy", "sensuous", "libidinous","spicy","flirtatious","salacious","sizzling","carnal","hedonistic")] riff on \his saxophone!")
-		playsound(get_turf(src), pick(src.sounds_sax), 50, 1)
-		for (var/obj/critter/dog/george/G in range(user,6))
-			if (prob(60))
-				G.howl()
-		src.add_fingerprint(user)
-		SPAWN_DBG(10 SECONDS)
-			spam_flag = 0
-	return
-
-
-/obj/item/bagpipe
-	name = "bagpipe"
-	desc = "Almost as much of a windbag as the Captain."
-	icon = 'icons/obj/instruments.dmi'
-	icon_state = "bagpipe" // temp
-	item_state = "bagpipe"
-	w_class = 3
-	force = 1
-	throwforce = 5
-	var/spam_flag = 0
-	var/list/sounds_bagpipe = list('sound/musical_instruments/Bagpipes_1.ogg', 'sound/musical_instruments/Bagpipes_2.ogg','sound/musical_instruments/Bagpipes_3.ogg')
-	stamina_damage = 10
-	stamina_cost = 10
-	stamina_crit_chance = 5
-	module_research = list("audio" = 7, "metals" = 3)
-
-/obj/item/bagpipe/attack_self(mob/user as mob)
-	if (spam_flag == 0)
-		spam_flag = 1
-		if (ishuman(user))
-			var/mob/living/carbon/human/H = user
-			if (H.sims)
-				H.sims.affectMotive("fun", 5)
-		user.visible_message("<B>[user]</B> plays a [pick("patriotic", "rowdy", "wee","grand","free","Glaswegian","sizzling","carnal","hedonistic")] tune on \his bagpipe!")
-		playsound(get_turf(src), pick(src.sounds_bagpipe), 50, 1)
-		for(var/obj/critter/dog/george/G in range(user,6))
-			if (prob(60))
-				G.howl()
-		src.add_fingerprint(user)
-		SPAWN_DBG(10 SECONDS)
-			spam_flag = 0
-	return
-
-#define CHARGE_REQUIRED 10
-
-/obj/item/fiddle
-	name = "fiddle"
-	icon = 'icons/obj/instruments.dmi'
-	icon_state = "fiddle"
-	item_state = "fiddle"
-	w_class = 3
-	var/charge = 0 //A certain level of UNHOLY ENERGY is required to knock out a soul, ok.
-	var/fiddling = 0
-
-	attack(mob/M as mob, mob/user as mob)
-		src.add_fingerprint(user)
-
-		playsound(src.loc, "swing_hit", 50, 1, -1)
-		..()
-
-		satanic_home_run(M)
-
-	attack_self(mob/user as mob) //Charge it by FIDDLING IN A SICK MANNER
-		if (!fiddling)
-			fiddling++
-			user.visible_message("<B>[user]</B> lays down a [pick("devilish","hellish","satanic", "enviable")] tune on \his fiddle!")
-			//playsound(src.loc, pick(src.sounds_fiddle), 50, 1)
-			for(var/obj/critter/dog/george/G in range(user,6))
-				if (prob(60))
-					G.howl()
-			src.add_fingerprint(user)
-			SPAWN_DBG(10 SECONDS)
-				fiddling = 0
-
-	proc/satanic_home_run(var/mob/living/some_poor_fucker)
-		if (!istype(some_poor_fucker) || !some_poor_fucker.mind || charge < CHARGE_REQUIRED)
-			return
-
-		charge = 0
-		src.icon_state = "fiddle"
-		. = get_edge_target_turf(usr, get_dir(usr, some_poor_fucker))
-		var/mob/dead/observer/ghost_to_toss = some_poor_fucker.ghostize()
-		var/obj/item/reagent_containers/food/snacks/ectoplasm/soul_stuff = new (some_poor_fucker.loc)
-
-
-		if (istype(ghost_to_toss))
-			ghost_to_toss.set_loc(soul_stuff)
-
-		soul_stuff.throw_at(., 10, 1)
-		SPAWN_DBG (10)
-			if (soul_stuff && ghost_to_toss)
-				ghost_to_toss.set_loc(soul_stuff.loc)
-
-		some_poor_fucker.throw_at(., 1, 1)
-		some_poor_fucker.weakened += 2
-
-#undef CHARGE_REQUIRED
-
-/obj/item/trumpet
-	name = "trumpet"
-	desc = "There can be only one first chair."
-	icon = 'icons/obj/instruments.dmi'
-	icon_state = "trumpet"
-	item_state = "trumpet"
-	w_class = 3
-	force = 1
-	throwforce = 5
-	var/spam_flag = 0
-//	var/list/sounds_trumpet = list('sound/items/trumpet.ogg', 'sound/musical_instruments/Trumpet_2.ogg','sound/musical_instruments/Trumpet_3.ogg','sound/musical_instruments/Trumpet_4.ogg','sound/items/trumpet5.ogg')
-	stamina_damage = 10
-	stamina_cost = 10
-	stamina_crit_chance = 5
-	module_research = list("audio" = 7, "metals" = 3)
-
-	attack_self(mob/user as mob)
-		if (spam_flag == 1)
-			return
-		else
-			spam_flag = 1
-			if (ishuman(user))
-				var/mob/living/carbon/human/H = user
-				if (H.sims)
-					H.sims.affectMotive("fun", 5)
-			user.visible_message("<B>[user]</B> plays a [pick("slick", "egotistical", "snazzy", "technical", "impressive")] [pick("riff", "jam", "bar", "tune")] on \his trumpet!")
-//			playsound(src.loc, pick(src.sounds_trumpet), 50, 1)
-			for(var/obj/critter/dog/george/G in range(user,6))
-				if (prob(60))
-					G.howl()
-			src.add_fingerprint(user)
-			SPAWN_DBG(10 SECONDS)
-				spam_flag = 0
-		return
-
-/obj/item/trumpet/dootdoot
-	name = "spooky trumpet"
-	desc= "Talk dooty to me."
-	icon_state = "doot"
-	item_state = "doot"
-
-/obj/item/trumpet/dootdoot/proc/dootize(var/mob/living/carbon/human/S)
-	if (istype(S.mutantrace, /datum/mutantrace/skeleton))
-		S.visible_message("<span class='notice'><b>[S.name]</b> claks in appreciation!</span>")
-		playsound(S.loc, "sound/items/Scissor.ogg", 50, 0)
-		return
-	else
-		S.visible_message("<span class='alert'><b>[S.name]'s skeleton rips itself free upon hearing the song of its people!</b></span>")
-		if (S.gender == "female")
-			playsound(get_turf(S), 'sound/voice/screams/female_scream.ogg', 50, 0)
-		else
-			playsound(get_turf(S), 'sound/voice/screams/male_scream.ogg', 50, 0)
-		playsound(get_turf(S), 'sound/effects/bubbles.ogg', 50, 0)
-		playsound(get_turf(S), 'sound/impact_sounds/Flesh_Tear_2.ogg', 50, 0)
-		var/bdna = null // For forensics (Convair880).
-		var/btype = null
-		if (S.bioHolder.Uid && S.bioHolder.bloodType)
-			bdna = S.bioHolder.Uid
-			btype = S.bioHolder.bloodType
-		gibs(S.loc, null, null, bdna, btype)
-
-		S.set_mutantrace(/datum/mutantrace/skeleton)
-		S.real_name = "[S.name]'s skeleton"
-		S.name = S.real_name
-		S.update_body()
-		S.UpdateName()
-		return
-
-/obj/item/trumpet/dootdoot/attack_self(var/mob/living/carbon/human/user as mob)
-	if (spam_flag == 1)
-		boutput(user, "<span class='alert'>The trumpet needs time to recharge its spooky strength!</span>")
-		return
-	else
-		spam_flag = 1
-		if (ishuman(user))
-			var/mob/living/carbon/human/H = user
-			if (H.sims)
-				H.sims.affectMotive("fun", 200) //because come on this shit's hilarious
-		user.visible_message("<B>[user]</B> doots a [pick("spooky", "scary", "boney", "creepy", "squawking", "squeaky", "low-quality", "compressed")] tune on \his trumpet!")
-		playsound(get_turf(src), 'sound/musical_instruments/Bikehorn_2.ogg', 50, 1)
-		for(var/obj/critter/dog/george/G in range(user,6))
-			if (prob(60))
-				G.howl()
-		src.add_fingerprint(user)
-		SPAWN_DBG (5)
-		for(var/mob/living/carbon/L in viewers(user, null))
-			if (L == user)
-				continue
-			else
-				src.dootize(L)
-		SPAWN_DBG(10 SECONDS)
-			spam_flag = 0
-	return
-*/
 /obj/item/emeter
 	name = "E-Meter"
 	desc = "A device for measuring Body Thetan levels."
 	icon = 'icons/obj/items/device.dmi'
-	icon_state = "forensic0"
+	icon_state = "securotronOld"
 
 	attack(mob/M as mob, mob/user as mob, def_zone)
 		if (ismob(M))
@@ -479,50 +239,7 @@
 			return
 		else
 			return ..()
-/*
-/obj/head_surgeon
-	name = "cardboard box - 'Head Surgeon'"
-	desc = "The HS looks a lot different today!"
-	icon = 'icons/obj/stationobjs.dmi'
-	icon_state = "head_surgeon"
-	density = 1
-	var/text2speech = 1
 
-	attack_hand(mob/user as mob)
-		user.visible_message("<span class='notice'>[user] taps [src].</span>")
-
-	New()
-		..()
-		if (prob(50))
-			new /obj/machinery/bot/medbot/head_surgeon(src.loc)
-			qdel(src)
-
-	proc/speak(var/message)
-		if (!message)
-			return
-		for (var/mob/O in hearers(src, null))
-			O.show_message("<span class='game say'><span class='name'>[src]</span> [pick("rustles", "folds", "womps", "boxes", "foffs", "flaps")], \"[message]\"",2)
-		if (src.text2speech)
-			var/audio = dectalk("\[:nk\][message]")
-			if (audio["audio"])
-				for (var/mob/O in hearers(src, null))
-					if (!O.client)
-						continue
-					ehjax.send(O.client, "browseroutput", list("dectalk" = audio["audio"]))
-				return 1
-			else
-				return 0
-		return
-
-/obj/box_captain
-	name = "cardboard box - 'Captain'"
-	desc = "The Captain looks a lot different today!"
-	icon = 'icons/obj/stationobjs.dmi'
-	icon_state = "box_captain"
-
-	attack_hand(mob/user as mob)
-		user.visible_message("<span class='notice'>[user] taps [src].</span>")
-*/
 /obj/item/hell_horn
 	name = "decrepit instrument"
 	desc = "It appears to be a musical instrument of some sort."
@@ -597,10 +314,9 @@
 
 	New()
 		..()
-		if (usr && usr.loc)
-			src.smoke = new /datum/effects/system/bad_smoke_spread/
-			src.smoke.attach(src)
-			src.smoke.set_up(1, 0, usr.loc)
+		src.smoke = new /datum/effects/system/bad_smoke_spread/
+		src.smoke.attach(src)
+		src.smoke.set_up(1, 0, src.loc)
 		if (prob(5))
 			src.reagents.clear_reagents()
 			src.reagents.add_reagent("THC", 50) //blaze it
@@ -673,7 +389,7 @@
 			R.my_atom = src
 			src.reagents.trans_to(usr, 5)
 			src.reagents.trans_to_direct(R, 5)
-			if(PH && PH.parent.linked && PH.parent.linked.handset && PH.parent.linked.handset.holder)
+			if(PH?.parent.linked?.handset?.holder)
 				smoke_reaction(R, range, get_turf(PH.parent.linked.handset.holder))
 			else
 				smoke_reaction(R, range, get_turf(usr))
@@ -684,7 +400,7 @@
 			usr.restrain_time = TIME + 40
 			src.smoke.set_up(1, 0, target_loc,null,R.get_average_color())
 			src.smoke.attach(target_loc)
-			SPAWN_DBG (0) //vape is just the best for not annoying crowds I swear
+			SPAWN_DBG(0) //vape is just the best for not annoying crowds I swear
 				src.smoke.start()
 				sleep(1 SECOND)
 
@@ -810,7 +526,7 @@
 	pickup(mob/user as mob)
 		if(user != owner)
 			user.bioHolder.AddEffect("fire_resist")
-			if(owner && owner.bioHolder.HasEffect("fire_resist"))
+			if(owner?.bioHolder.HasEffect("fire_resist"))
 				owner.bioHolder.RemoveEffect("fire_resist")
 			pickup_time = world.time
 			boutput(user, "<h3><span class='alert'>You have captured [src.name]!</span></h3>")
@@ -833,7 +549,7 @@
 		if(!owner) return
 		if(world.time - pickup_time >= 300)
 			boutput(owner, "<h3><span class='alert'>You have held [src.name] long enough! Good job!</span></h3>")
-			if(owner && owner.client)
+			if(owner?.client)
 				src.set_loc(pick_landmark(LANDMARK_ASS_ARENA_SPAWN))
 				owner.client.respawn_target(owner,1)
 				DEBUG_MESSAGE("[owner.name] has been ass arena respawned!")
@@ -842,7 +558,7 @@
 
 
 	disposing()
-		if(owner && owner.bioHolder.HasEffect("fire_resist"))
+		if(owner?.bioHolder.HasEffect("fire_resist"))
 			owner.bioHolder.RemoveEffect("fire_resist")
 		DEBUG_MESSAGE("Heck someone broke the artifact")
 		var/obj/item/ass_day_artifact/next_artifact

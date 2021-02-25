@@ -401,7 +401,7 @@ datum
 			fluid_b = 177
 			transparency = 0
 			disease = /datum/ailment/malady/heartfailure
-		#if ASS_JAM
+
 		disease/toomuch // High Fever
 			name = "too much" //your'e
 			id = "too much"
@@ -413,7 +413,7 @@ datum
 			transparency = 255
 			disease = /datum/ailment/disease/high_fever
 
-		#endif
+
 
 		disease/heartworms // please do not give a recipe, just a thing for testing heart-related things atm
 			name = "space heartworms"
@@ -483,7 +483,7 @@ datum
 			fluid_g = 180
 			transparency = 200
 			depletion_rate = 0.8
-			smoke_spread_mod = 5
+			smoke_spread_mod = 10
 
 			reaction_turf(var/turf/T, var/volume)
 				return

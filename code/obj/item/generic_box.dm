@@ -120,7 +120,7 @@
 			desc = "Oh my god.. ALL THE STICKERS! ALL IN ONE PLACE? WHAT CAN THIS MEAN!!!"
 
 			set_contained_items()
-				contained_items = childrentypesof( /obj/item/sticker/ ) - /obj/item/sticker/spy
+				contained_items = childrentypesof( /obj/item/sticker/ ) - /obj/item/sticker/spy - childrentypesof( /obj/item/sticker/barcode )
 
 			robot//this type sticks things by clicking on them with a cooldown
 				name = "box shaped sticker dispenser"
@@ -151,7 +151,7 @@
 				max_item_amount = 10
 
 				set_contained_items()
-					contained_items = childrentypesof( /obj/item/sticker/ ) - /obj/item/sticker/spy - /obj/item/sticker/ribbon/first_place - /obj/item/sticker/ribbon/second_place - /obj/item/sticker/ribbon/third_place
+					contained_items = childrentypesof( /obj/item/sticker/ ) - childrentypesof( /obj/item/sticker/barcode ) - /obj/item/sticker/spy - /obj/item/sticker/ribbon/first_place - /obj/item/sticker/ribbon/second_place - /obj/item/sticker/ribbon/third_place
 
 		ornaments
 			name = "box of assorted ornaments"
@@ -188,11 +188,7 @@
 		icon_open = "patchbox-med-open"
 		icon_empty = "patchbox-med-empty"
 
-#if ASS_JAM
-		New()
-			. = ..()
-			ADD_MORTY(13, 11, 7, 7)
-#endif
+
 
 		attack(mob/M as mob, mob/user as mob)
 			if (src.open)
@@ -262,6 +258,7 @@
 			src.inventory_counter.update_number(src.item_amount)
 		else
 			SPAWN_DBG(1 SECOND)
+				if (QDELETED(src)) return
 				if (!ispath(src.contained_item))
 					logTheThing("debug", src, null, "has a non-path contained_item, \"[src.contained_item]\", and is being disposed of to prevent errors")
 					qdel(src)
@@ -315,7 +312,7 @@
 
 	MouseDrop(atom/over_object, src_location, over_location)
 		..()
-		if (usr && usr.is_in_hands(src))
+		if (usr?.is_in_hands(src))
 			if (!src.open)
 				boutput(usr, "<span class='alert'>[src] isn't open, you goof!</span>")
 				return

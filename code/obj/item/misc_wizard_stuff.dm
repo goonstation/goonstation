@@ -189,6 +189,7 @@
 			if (M?.traitHolder?.hasTrait("training_chaplain"))
 				M.visible_message("<spab class='alert'>A divine light shields [M] from harm!</span>")
 				playsound(M, "sound/impact_sounds/Energy_Hit_1.ogg", 40, 1)
+				JOB_XP(M, "Chaplain", 2)
 				return
 
 			if (prob(20))
@@ -232,7 +233,7 @@
 
 		// Teamwork, perhaps? The M.is_target check that used to be here doesn't cut it in the mixed game mode (Convair880).
 		for (var/datum/mind/M in ticker.minds)
-			if (M && M.special_role == "wizard" && M.current)
+			if (M?.special_role == "wizard" && M.current)
 				W_count++
 				T += "<hr>"
 				T += "<b>[M.current.real_name]'s objectives:</b>"

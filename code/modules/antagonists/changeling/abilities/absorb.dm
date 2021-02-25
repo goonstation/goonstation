@@ -78,7 +78,7 @@
 		if (!istype(T))
 			boutput(C, "<span class='alert'>This creature is not compatible with our biology.</span>")
 			return 1
-		if (ismonkey(T))
+		if (isnpcmonkey(T))
 			boutput(C, "<span class='alert'>Our hunger will not be satisfied by this lesser being.</span>")
 			return 1
 		if (T.bioHolder.HasEffect("husk"))
@@ -192,7 +192,7 @@
 		if (!istype(T))
 			boutput(C, "<span class='alert'>This creature is not compatible with our biology.</span>")
 			return 1
-		if (ismonkey(T))
+		if (isnpcmonkey(T))
 			boutput(C, "<span class='alert'>Our hunger will not be satisfied by this lesser being.</span>")
 			return 1
 		if (T.bioHolder.HasEffect("husk"))

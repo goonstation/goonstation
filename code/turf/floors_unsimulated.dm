@@ -1,6 +1,6 @@
 /*
  * Hey! You!
- * Remember to mirror your changes!
+ * Remember to mirror your changes (unless you use the [DEFINE_FLOORS] macro)
  * floors.dm & floors_airless.dm
  */
 
@@ -688,6 +688,18 @@
 /turf/unsimulated/floor/wood/four
 	icon_state = "wooden-4"
 
+/turf/unsimulated/floor/wood/five
+	icon_state = "wooden-5"
+
+/turf/unsimulated/floor/wood/six
+	icon_state = "wooden-6"
+
+/turf/unsimulated/floor/wood/seven
+	icon_state = "wooden-7"
+
+/turf/unsimulated/floor/wood/eight
+	icon_state = "wooden-8"
+
 /////////////////////////////////////////
 
 /turf/unsimulated/floor/sandytile
@@ -847,7 +859,7 @@
 			icon_state = "snow3"
 		else if (prob(5))
 			icon_state = "snow4"
-		src.dir = pick(cardinal)
+		src.set_dir(pick(cardinal))
 
 /turf/unsimulated/floor/snow/green
 	name = "snow-covered floor"
@@ -866,7 +878,7 @@
 
 	New()
 		..()
-		src.dir = pick(cardinal)
+		src.set_dir(pick(cardinal))
 
 /////////////////////////////////////////
 
@@ -888,7 +900,7 @@
 /turf/unsimulated/floor/grass/random
 	New()
 		..()
-		src.dir = pick(cardinal)
+		src.set_dir(pick(cardinal))
 
 /turf/unsimulated/floor/grass/random/alt
 	icon_state = "grass_eh"

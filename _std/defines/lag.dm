@@ -20,6 +20,9 @@
 #define LAG_HIGH 40
 #define LAG_REALTIME 66
 
+/// Waits until a given condition is true, tg-style async
+#define UNTIL(X) while(!(X)) sleep(1)
+
 //ticklag stuff
 #define TIME_DILATION_ENABLED 1
 /// min value ticklag can be

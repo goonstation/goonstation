@@ -50,6 +50,11 @@
 			if (W.reagents)
 				W.reagents.clear_reagents()		// avoid null error
 
+	MouseDrop_T(obj/item/W as obj, mob/user as mob)
+		if (istype(W) && in_range(W, user) && in_range(src, user))
+			return src.attackby(W, user)
+		return ..()
+
 	attack_hand(var/mob/user as mob)
 		src.add_fingerprint(user)
 		user.lastattacked = src
@@ -181,6 +186,10 @@
 		return
 
 	attackby(obj/item/W as obj, mob/user as mob)
+		if (W.cant_drop) // For borg held items
+			boutput(user, "<span class='alert'>You can't put that in \the [src] when it's attached to you!</span>")
+			return
+
 		if (istype(W, /obj/item/reagent_containers/food/snacks/ice_cream_cone))
 			if(src.cone)
 				boutput(user, "There is already a cone loaded.")
@@ -207,6 +216,11 @@
 			src.update_icon()
 			src.updateUsrDialog()
 		else ..()
+
+	MouseDrop_T(obj/item/W as obj, mob/user as mob)
+		if ((istype(W, /obj/item/reagent_containers/food/snacks/ice_cream_cone) || istype(W, /obj/item/reagent_containers/glass/) || istype(W, /obj/item/reagent_containers/food/drinks/)) && in_range(W, user) && in_range(src, user))
+			return src.attackby(W, user)
+		return ..()
 
 	proc/update_icon()
 		if(src.beaker)
@@ -393,6 +407,8 @@ table#cooktime a#start {
 			src.recipes += new /datum/cookingrecipe/monkeyburger(src)
 			src.recipes += new /datum/cookingrecipe/synthburger(src)
 			src.recipes += new /datum/cookingrecipe/baconburger(src)
+			src.recipes += new /datum/cookingrecipe/spicychickensandwich(src)
+			src.recipes += new /datum/cookingrecipe/chickensandwich(src)
 			src.recipes += new /datum/cookingrecipe/mysteryburger(src)
 			src.recipes += new /datum/cookingrecipe/buttburger(src)
 			src.recipes += new /datum/cookingrecipe/heartburger(src)
@@ -464,7 +480,6 @@ table#cooktime a#start {
 			src.recipes += new /datum/cookingrecipe/candy_apple_poison(src)
 			src.recipes += new /datum/cookingrecipe/candy_apple(src)
 			src.recipes += new /datum/cookingrecipe/cake_bacon(src)
-			src.recipes += new /datum/cookingrecipe/cake_downs(src)
 			src.recipes += new /datum/cookingrecipe/cake_meat(src)
 			src.recipes += new /datum/cookingrecipe/cake_chocolate(src)
 			src.recipes += new /datum/cookingrecipe/cake_cream(src)
@@ -659,8 +674,12 @@ table#cooktime a#start {
 						for (var/obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat/M in src.contents)
 							F.name = "[M.subjectname] [foodname]"
 							F.desc += " It sort of smells like [M.subjectjob ? M.subjectjob : "pig"]s."
-							if (M.subjectjob && M.subjectjob == "Clown" && isnull(F.unlock_medal_when_eaten))
+							if(!isnull(F.unlock_medal_when_eaten))
+								continue
+							else if (M.subjectjob && M.subjectjob == "Clown")
 								F.unlock_medal_when_eaten = "That tasted funny"
+							else
+								F.unlock_medal_when_eaten = "Space Ham" //replace the old fat person method
 				src.icon_state = "oven_off"
 				src.working = 0
 				playsound(src.loc, "sound/machines/ding.ogg", 50, 1)
@@ -715,7 +734,7 @@ table#cooktime a#start {
 			boutput(usr, "<span class='alert'>\The [src] refuses to interface with you, as you are not a properly trained chef!</span>")
 			return
 		if (W.cant_drop) //For borg held items
-			user.show_text("You can't put that in [src] when it's attached to you!", "red")
+			boutput(user, "<span class='alert'>You can't put that in [src] when it's attached to you!</span>")
 			return
 		if (src.working)
 			boutput(usr, "<span class='alert'>It's already on! Putting a new thing in could result in a collapse of the cooking waveform into a really lousy eigenstate, like a vending machine chili dog.</span>")
@@ -746,6 +765,11 @@ table#cooktime a#start {
 		W.set_loc(src)
 		W.dropped()
 		src.updateUsrDialog()
+
+	MouseDrop_T(obj/item/W as obj, mob/user as mob)
+		if (istype(W) && in_range(W, user) && in_range(src, user))
+			return src.attackby(W, user)
+		return ..()
 
 	proc/OVEN_checkitem(var/recipeitem, var/recipecount)
 		if (!locate(recipeitem) in src.contents) return 0
@@ -1068,6 +1092,11 @@ var/list/mixer_recipes = list()
 	attack_ai(var/mob/user as mob)
 		return attack_hand(user)
 
+	MouseDrop_T(obj/item/W as obj, mob/user as mob)
+		if (istype(W) && in_range(W, user) && in_range(src, user))
+			return src.attackby(W, user)
+		return ..()
+
 	Topic(href, href_list)
 		if ((get_dist(src, usr) > 1 && (!issilicon(usr) && !isAI(usr))) || !isliving(usr) || iswraith(usr) || isintangible(usr))
 			return
@@ -1139,8 +1168,12 @@ var/list/mixer_recipes = list()
 					for (var/obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat/M in src.contents)
 						F.name = "[M.subjectname] [foodname]"
 						F.desc += " It sort of smells like [M.subjectjob ? M.subjectjob : "pig"]s."
-						if (M.subjectjob && M.subjectjob == "Clown" && isnull(F.unlock_medal_when_eaten))
+						if(!isnull(F.unlock_medal_when_eaten))
+							continue
+						else if (M.subjectjob && M.subjectjob == "Clown")
 							F.unlock_medal_when_eaten = "That tasted funny"
+						else
+							F.unlock_medal_when_eaten = "Space Ham" //replace the old fat person method
 				for (var/obj/item/I in to_remove)
 					qdel(I)
 				to_remove.len = 0

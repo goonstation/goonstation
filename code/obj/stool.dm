@@ -404,7 +404,7 @@
 				somebody = src.buckled_guy
 			else
 				somebody = locate(/mob/living/carbon) in get_turf(src)
-			if (somebody && somebody.lying)
+			if (somebody?.lying)
 				user.tri_message("<span class='notice'><b>[user]</b> tucks [somebody == user ? "[him_or_her(user)]self" : "[somebody]"] into bed.</span>",\
 				user, "<span class='notice'>You tuck [somebody == user ? "yourself" : "[somebody]"] into bed.</span>",\
 				somebody, "<span class='notice'>[somebody == user ? "You tuck yourself" : "<b>[user]</b> tucks you"] into bed.</span>")
@@ -427,7 +427,7 @@
 				somebody = src.buckled_guy
 			else
 				somebody = locate(/mob/living/carbon) in get_turf(src)
-			if (somebody && somebody.lying)
+			if (somebody?.lying)
 				user.tri_message("<span class='notice'><b>[user]</b> untucks [somebody == user ? "[him_or_her(user)]self" : "[somebody]"] from bed.</span>",\
 				user, "<span class='notice'>You untuck [somebody == user ? "yourself" : "[somebody]"] from bed.</span>",\
 				somebody, "<span class='notice'>[somebody == user ? "You untuck yourself" : "<b>[user]</b> untucks you"] from bed.</span>")
@@ -456,7 +456,7 @@
 		else if (ismob(A))
 			src.buckle_in(A, user)
 			var/mob/M = A
-			if (isdead(M) && M != user && emergency_shuttle && emergency_shuttle.location == SHUTTLE_LOC_STATION) // 1 should be SHUTTLE_LOC_STATION
+			if (isdead(M) && M != user && emergency_shuttle?.location == SHUTTLE_LOC_STATION) // 1 should be SHUTTLE_LOC_STATION
 				var/area/shuttle/escape/station/area = get_area(M)
 				if (istype(area))
 					user.unlock_medal("Leave no man behind!", 1)
@@ -559,7 +559,7 @@
 			if (src.material)
 				E.setMaterial(src.material)
 			playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
-			E.dir = src.dir
+			E.set_dir(src.dir)
 			E.part1 = W
 			W.set_loc(E)
 			W.master = E
@@ -640,7 +640,7 @@
 				buckle_in(M,user)
 		else
 			buckle_in(M,user)
-			if (isdead(M) && M != user && emergency_shuttle && emergency_shuttle.location == SHUTTLE_LOC_STATION) // 1 should be SHUTTLE_LOC_STATION
+			if (isdead(M) && M != user && emergency_shuttle?.location == SHUTTLE_LOC_STATION) // 1 should be SHUTTLE_LOC_STATION
 				var/area/shuttle/escape/station/A = get_area(M)
 				if (istype(A))
 					user.unlock_medal("Leave no man behind!", 1)
@@ -715,7 +715,7 @@
 			M.buckled = null
 			buckled_guy.force_laydown_standup()
 			src.buckled_guy = null
-			SPAWN_DBG (5)
+			SPAWN_DBG(0.5 SECONDS)
 				H.on_chair = 0
 				src.buckledIn = 0
 		else if ((M.buckled))
@@ -723,7 +723,7 @@
 			M.buckled = null
 			buckled_guy.force_laydown_standup()
 			src.buckled_guy = null
-			SPAWN_DBG (5)
+			SPAWN_DBG(0.5 SECONDS)
 				src.buckledIn = 0
 
 		playsound(get_turf(src), "sound/misc/belt_click.ogg", 50, 1)
@@ -778,9 +778,9 @@
 	proc/rotate(var/face_dir = 0)
 		if (rotatable)
 			if (!face_dir)
-				src.dir = turn(src.dir, 90)
+				src.set_dir(turn(src.dir, 90))
 			else
-				src.dir = face_dir
+				src.set_dir(face_dir)
 
 			if (src.dir == NORTH)
 				src.layer = FLY_LAYER+1
@@ -788,7 +788,7 @@
 				src.layer = OBJ_LAYER
 			if (buckled_guy)
 				var/mob/living/carbon/C = src.buckled_guy
-				C.dir = dir
+				C.set_dir(dir)
 		return
 
 	blue
@@ -852,7 +852,7 @@
 			C.setMaterial(src.material)
 		if (src.c_color)
 			C.icon_state = src.c_color
-		C.dir = user.dir
+		C.set_dir(user.dir)
 		boutput(user, "You unfold [C].")
 		user.drop_item()
 		qdel(src)
@@ -895,18 +895,18 @@
 		src.overl.layer = 6// TODO Layer wtf
 		src.overl.name = "chair arm"
 		src.overl.master = src
-		src.overl.dir = src.dir
+		src.overl.set_dir(src.dir)
 */
 	rotate()
 		set src in oview(1)
 		set category = "Local"
 
-		src.dir = turn(src.dir, 90)
-//		src.overl.dir = src.dir
+		src.set_dir(turn(src.dir, 90))
+//		src.overl.set_dir(src.dir)
 		src.update_icon()
 		if (buckled_guy)
 			var/mob/living/carbon/C = src.buckled_guy
-			C.dir = dir
+			C.set_dir(dir)
 		return
 
 	proc/update_icon()
@@ -1282,7 +1282,7 @@
 
 	New()
 		..()
-		SPAWN_DBG (20)
+		SPAWN_DBG(2 SECONDS)
 			if (src)
 				if (!(src.part1 && istype(src.part1)))
 					src.part1 = new /obj/item/assembly/shock_kit(src)
@@ -1296,7 +1296,7 @@
 			if (src.material)
 				C.setMaterial(src.material)
 			playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
-			C.dir = src.dir
+			C.set_dir(src.dir)
 			if (src.part1)
 				src.part1.set_loc(get_turf(src))
 				src.part1.master = null
@@ -1428,7 +1428,7 @@
 				H.shock(src, 2500, "chest", 1, 1)
 				H.changeStatus("stunned", 10 SECONDS)
 
-			if (ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/revolution))
+			if (ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution))
 				if ((H.mind in ticker.mode:revolutionaries) && !(H.mind in ticker.mode:head_revolutionaries) && prob(66))
 					ticker.mode:remove_revolutionary(H.mind)
 

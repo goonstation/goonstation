@@ -405,13 +405,33 @@ menu "menu"
 		command = ""
 		saved-params = "is-checked"
 	elem
+		name = "&Adjust Master Volume"
+		command = "change-volume master"
+		category = "&Audio"
+		saved-params = "is-checked"
+	elem
+		name = "&Adjust Game Volume"
+		command = "change-volume game"
+		category = "&Audio"
+		saved-params = "is-checked"
+	elem
+		name = "&Adjust Ambient Volume"
+		command = "change-volume ambient"
+		category = "&Audio"
+		saved-params = "is-checked"
+	elem
 		name = "&Adjust Radio Music Volume"
-		command = "Alter-Radio-Volume"
+		command = "change-volume radio"
 		category = "&Audio"
 		saved-params = "is-checked"
 	elem
 		name = "&Adjust Admin Music Volume"
-		command = "Alter-Music-Volume"
+		command = "change-volume admin"
+		category = "&Audio"
+		saved-params = "is-checked"
+	elem
+		name = "&Adjust Emote Volume"
+		command = "change-volume emote"
 		category = "&Audio"
 		saved-params = "is-checked"
 	elem
@@ -1502,45 +1522,55 @@ window "rpane"
 		saved-params = "is-checked"
 		text = "Menu"
 		command = ".winset \"mainwindow.menu='menu'; hide_menu.is-checked=false; menub.is-visible = false\""
-	elem "bugreportb"
-		type = BUTTON
-		pos = 380,5
-		size = 60x20
-		anchor1 = none
-		anchor2 = 100,0
-		saved-params = "is-checked"
-		text = "Bug Report"
-		command = "bugreport"
-		group = "rpaneutil"
-	elem "wikib"
-		type = BUTTON
-		pos = 445,5
-		size = 60x20
-		anchor1 = none
-		anchor2 = 100,0
-		saved-params = "is-checked"
-		text = "Wiki"
-		command = "wiki"
-		group = "rpaneutil"
 	elem "mapb"
 		type = BUTTON
-		pos = 510,5
+		pos = 315,5
 		size = 60x20
-		anchor1 = none
-		anchor2 = 100,0
+		anchor1 = 100,0
+		anchor2 = none
 		saved-params = "is-checked"
 		text = "Map"
 		command = "map"
 		group = "rpaneutil"
+	elem "wikib"
+		type = BUTTON
+		pos = 380,5
+		size = 60x20
+		anchor1 = 100,0
+		anchor2 = none
+		saved-params = "is-checked"
+		text = "Wiki"
+		command = "wiki"
+		group = "rpaneutil"
+	elem "githubb"
+		type = BUTTON
+		pos = 445,5
+		size = 60x20
+		anchor1 = 100,0
+		anchor2 = none
+		saved-params = "is-checked"
+		text = "GitHub"
+		command = "github"
+		group = "rpaneutil"
 	elem "forumb"
 		type = BUTTON
-		pos = 575,5
+		pos = 510,5
 		size = 60x20
-		anchor1 = none
-		anchor2 = 100,0
+		anchor1 = 100,0
+		anchor2 = none
 		saved-params = "is-checked"
 		text = "Forum"
 		command = "forum"
+		group = "rpaneutil"
+	elem "bugreportb"
+		type = BUTTON
+		pos = 575,5
+		size = 60x20
+		anchor1 = 100,0
+		anchor2 = none
+		saved-params = "is-checked"
+		text = "Bug Report"
+		command = "bugreport"
 		group = "rpaneutil"
 
 window "browserwindow"

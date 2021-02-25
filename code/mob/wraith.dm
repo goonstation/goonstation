@@ -6,7 +6,11 @@
 	real_name = "Wraith" //todo: construct name from a user input (e.g. <x> the Impaler)
 	desc = "Jesus Christ, how spooky."
 	icon = 'icons/mob/mob.dmi'
+#if defined(XMAS) || (BUILD_TIME_MONTH == 2 && BUILD_TIME_DAY == 14)
+	icon_state = "wraith-love"
+#else
 	icon_state = "wraith"
+#endif
 	layer = NOLIGHT_EFFECTS_LAYER_BASE
 	density = 0
 	canmove = 1
@@ -28,7 +32,7 @@
 	var/last_life_update = 0
 	var/const/life_tick_spacing = 20
 	var/haunt_duration = 300
-	var/death_icon_state = "wraithdie"
+	var/death_icon_state = "wraith-die"
 	//////////////
 	// Wraith Overrides
 	//////////////
@@ -315,7 +319,7 @@
 				if (istype(A)) salted = 1
 				if (salted) break
 
-			dir = get_dir(loc, NewLoc)
+			src.set_dir(get_dir(loc, NewLoc))
 			src.set_loc(NewLoc)
 			OnMove()
 			NewLoc.HasEntered(src)
@@ -593,6 +597,7 @@
 			if (src.client)
 				src.client.mob = W
 			W.mind = new /datum/mind()
+			W.mind.ckey = ckey
 			W.mind.key = key
 			W.mind.current = W
 			ticker.minds += W.mind

@@ -110,7 +110,7 @@
 	playsound(src, "sound/items/Screwdriver.ogg", 50, 1)
 	boutput(user, "You begin to attach the light fixture to [src]...")
 
-	if (!do_after(user, 40))
+	if (!do_after(user, 4 SECONDS))
 		user.show_text("You were interrupted!", "red")
 		return
 
@@ -121,7 +121,7 @@
 	boutput(user, "You attach the light fixture to [src].")
 
 	var/obj/machinery/light/newlight = new parts.fixture_type(source)
-	newlight.dir = dir
+	newlight.set_dir(dir)
 	newlight.icon_state = parts.installed_icon_state
 	newlight.base_state = parts.installed_base_state
 	newlight.fitting = parts.fitting
@@ -289,6 +289,7 @@
 					shake_camera(N, 4, 8, 0.5)
 		if (prob(40))
 			boutput(user, text("<span class='notice'>You smash through the [src.name].</span>"))
+			logTheThing("combat", usr, null, "uses hulk to smash a wall at [log_loc(src)].")
 			dismantle_wall(1)
 			return
 		else
@@ -336,11 +337,9 @@
 
 		sleep(10 SECONDS)
 
-		if ((user.loc == T && user.equipped() == W))
+		if (user.loc == T && (user.equipped() == W || isrobot(user)))
 			boutput(user, "<span class='notice'>You disassembled the outer wall plating.</span>")
-			dismantle_wall()
-		else if((isrobot(user) && (user.loc == T)))
-			boutput(user, "<span class='notice'>You disassembled the outer wall plating.</span>")
+			logTheThing("station", user, null, "deconstructed a wall ([src.name]) using \a [W] at [get_area(user)] ([showCoords(user.x, user.y, user.z)])")
 			dismantle_wall()
 
 //Spooky halloween key

@@ -36,7 +36,7 @@ rcd light flash thingy on matter drain
 /client/proc/fireproof_core()
 	set category = "AI Modules"
 	set name = "Fireproof Core"
-	for(var/mob/living/silicon/ai/ai in by_type[/mob/living/silicon/ai])
+	for_by_tcl(ai, /mob/living/silicon/ai)
 		ai.fire_res_on_core = 1
 	usr.verbs -= /client/proc/fireproof_core
 	boutput(usr, "<span class='alert'>Core fireproofed.</span>")
@@ -49,7 +49,7 @@ rcd light flash thingy on matter drain
 	set category = "AI Modules"
 	set name = "Upgrade Turrets"
 	usr.verbs -= /client/proc/upgrade_turrets
-	for(var/obj/machinery/turret/turret in machine_registry[MACHINES_TURRETS])
+	for(var/obj/machinery/turret/turret as() in machine_registry[MACHINES_TURRETS])
 		turret.health += 30
 		turret.shot_delay = 20
 

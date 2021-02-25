@@ -1,5 +1,5 @@
 
-/turf/var/obj/fluid/active_airborne_liquid = 0
+/turf/var/obj/fluid/active_airborne_liquid = null
 
 var/list/ban_from_airborne_fluid = list()
 
@@ -41,7 +41,7 @@ var/list/ban_from_airborne_fluid = list()
 
 		set_loc(newloc)
 		src.loc = newloc
-		src.loc:active_airborne_liquid = src//the dreaded :
+		src.loc:active_airborne_liquid = src //the dreaded :
 
 	done_init()
 		var/i = 0
@@ -66,7 +66,7 @@ var/list/ban_from_airborne_fluid = list()
 		opacity = 0
 
 		if (isturf(src.loc))
-			src.loc:active_airborne_liquid = 0
+			src.loc:active_airborne_liquid = null
 
 		name = "cloud"
 		icon_state = "airborne"
@@ -94,7 +94,7 @@ var/list/ban_from_airborne_fluid = list()
 	unpooled()
 		if (isturf(src.loc))
 			var/turf/T = src.loc
-			T.active_airborne_liquid = 0
+			T.active_airborne_liquid = null
 		..()
 
 		src.step_sound = 0
@@ -376,7 +376,7 @@ var/list/ban_from_airborne_fluid = list()
 
 	var/turf/T = get_turf(oldloc)
 	var/turf/currentloc = get_turf(src)
-	if (currentloc != T && T && T.active_airborne_liquid)
+	if (currentloc != T && T?.active_airborne_liquid)
 		entered_group = 0
 
 	if (entered_group)
@@ -388,7 +388,7 @@ var/list/ban_from_airborne_fluid = list()
 
 	var/turf/T = get_turf(oldloc)
 	var/turf/currentloc = get_turf(src)
-	if (currentloc != T && T && T.active_airborne_liquid)
+	if (currentloc != T && T?.active_airborne_liquid)
 		entered_group = 0
 
 	if (entered_group)

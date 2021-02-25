@@ -126,7 +126,7 @@
 				remove_screen(G)
 
 			for(var/datum/statusEffect/S in src.statusUiElements) //Remove stray effects.
-				if(!master.statusEffects || !(S in master.statusEffects) || !S.visible)
+				if(!master.statusEffects || !(S in master.statusEffects) )
 					pool(statusUiElements[S])
 					src.statusUiElements.Remove(S)
 					qdel(S)

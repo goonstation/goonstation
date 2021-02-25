@@ -226,7 +226,7 @@
 
 
 /obj/machinery/bot/medbot/Move(var/turf/NewLoc, direct)
-	..()
+	. = ..()
 	if (src.patient && (get_dist(src,src.patient) <= 1))
 		if (!src.currently_healing)
 			src.currently_healing = 1

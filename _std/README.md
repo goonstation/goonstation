@@ -1,3 +1,5 @@
+Holds standard macros and defines for Goonstation. First in the compile order. See __std.dme for details on compilation.
+
 if your file is BROADLY meant to just be a list of defines for value replacement, put it in the defines folder.
 even if it has a few macros or a global list, the purpse of the file is more important for organisation!
 if it doesnt fit in either, then leave it in the _std folder. (*scream)

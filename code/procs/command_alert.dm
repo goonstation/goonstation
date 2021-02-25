@@ -41,7 +41,7 @@
 				var/mob/M = C.mob
 				var/client/rand_client_mult = pick(clients)
 				var/mob/rand_mob_mult
-				if (rand_client_mult && rand_client_mult.mob) //ZeWaka: Fix for null.mob
+				if (rand_client_mult?.mob) //ZeWaka: Fix for null.mob
 					rand_mob_mult = rand_client_mult.mob //A randomly selected player that's different to each viewer
 
 

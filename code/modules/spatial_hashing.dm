@@ -10,13 +10,15 @@ var/cellposition = CELL_POSITION(X,Y);\
 buckets_holding_atom[cellposition] = 1;\
 } while (false)
 
-var/global/list/datum/spatial_hashmap/spatial_z_maps
+var/global/list/datum/spatial_hashmap/spatial_z_maps = init_spatial_maps()
 
-/proc/init_spatial_map()
-	spatial_z_maps = list()
-	spatial_z_maps.len = world.maxz
+/proc/init_spatial_maps()
+	. = new /list(world.maxz)
 	for (var/zlevel = 1; zlevel <= world.maxz; zlevel++)
-		spatial_z_maps[zlevel] = new/datum/spatial_hashmap(world.maxx,world.maxy,60,zlevel)
+		.[zlevel] = new/datum/spatial_hashmap(world.maxx,world.maxy,60,zlevel)
+
+/proc/init_spatial_map(zlevel)
+	spatial_z_maps[zlevel] = new/datum/spatial_hashmap(world.maxx,world.maxy,60,zlevel)
 
 /datum/spatial_hashmap
 	var/list/list/hashmap

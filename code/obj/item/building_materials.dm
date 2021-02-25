@@ -19,7 +19,7 @@ MATERIAL
 			W = new /obj/window/reinforced(usr.loc)
 
 /proc/window_reinforce_full_callback(var/datum/action/bar/icon/build/B, var/obj/window/reinforced/W)
-	W.dir = SOUTHWEST
+	W.set_dir(SOUTHWEST)
 	W.ini_dir = SOUTHWEST
 	if (!istype(W))
 		return
@@ -772,7 +772,7 @@ MATERIAL
 			user.visible_message("<span class='notice'><b>[user]</b> begins building a grille.</span>")
 			var/turf/T = usr.loc
 			SPAWN_DBG(1.5 SECONDS)
-				if (T == usr.loc && !usr.getStatusDuration("weakened") && !usr.getStatusDuration("stunned"))
+				if (T == usr.loc && !usr.getStatusDuration("weakened") && !usr.getStatusDuration("stunned") && src.amount >= 2)
 					var/atom/G = new /obj/grille(usr.loc)
 					G.setMaterial(src.material)
 					src.consume_rods(2)
@@ -781,9 +781,16 @@ MATERIAL
 		return
 
 	proc/consume_rods(var/use_amount)
+		. = 0
 		if (!isnum(amount))
-			return
-		src.amount = max(0,amount - use_amount)
+			return 0
+		if(amount < 1)
+			return 0
+		if(amount < use_amount)
+			. = 0
+		else
+			src.amount = max(0,amount - use_amount)
+			. = 1
 		if (amount < 1)
 			if (isliving(src.loc))
 				var/mob/living/L = src.loc
@@ -791,7 +798,6 @@ MATERIAL
 			qdel(src)
 		else
 			update_icon()
-		return
 
 /obj/head_on_spike
 	name = "head on a spike"
@@ -902,7 +908,7 @@ MATERIAL
 				H.pixel_x = 0
 				H.pixel_y = pixely
 				pixely += 8
-				H.dir = SOUTH
+				H.set_dir(SOUTH)
 				src.overlays += H
 
 			src.overlays += image('icons/obj/metal.dmi',"head_spike_flies")

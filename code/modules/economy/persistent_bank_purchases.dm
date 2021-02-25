@@ -26,10 +26,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 	new /datum/bank_purchaseable/bp_randoseru,\
 	new /datum/bank_purchaseable/bp_anello,\
 	new /datum/bank_purchaseable/nt_backpack,\
-	new /datum/bank_purchaseable/lizard,\
-	new /datum/bank_purchaseable/cow,\
-	new /datum/bank_purchaseable/skeleton,\
-	new /datum/bank_purchaseable/roach,\
+
 	new /datum/bank_purchaseable/limbless,\
 	new /datum/bank_purchaseable/corpse,\
 	new /datum/bank_purchaseable/space_diner,\
@@ -253,7 +250,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 
 			Create(var/mob/living/M)
 				..(M)
-				if(M && M.mind)
+				if(M?.mind)
 					battle_pass_holders.Add(M.mind)
 				return 1
 
@@ -335,54 +332,6 @@ var/global/list/persistent_bank_purchaseables =	list(\
 
 			return 0
 
-	lizard
-		name = "Reptillian"
-		cost = 3000
-
-		Create(var/mob/living/M)
-			if (ishuman(M))
-				var/mob/living/carbon/human/H = M
-				if (H.bioHolder)
-					H.bioHolder.AddEffect("lizard")
-					return 1
-			return 0
-
-	cow
-		name = "Cow"
-		cost = 4000
-
-		Create(var/mob/living/M)
-			if (ishuman(M))
-				var/mob/living/carbon/human/H = M
-				if (H.bioHolder)
-					H.bioHolder.AddEffect("cow")
-					return 1
-			return 0
-
-	skeleton
-		name = "Skeleton"
-		cost = 5000
-
-		Create(var/mob/living/M)
-			if (ishuman(M))
-				var/mob/living/carbon/human/H = M
-				if (H.bioHolder)
-					H.bioHolder.AddEffect("skeleton")
-					return 1
-			return 0
-
-	roach
-		name = "Roach"
-		cost = 5000
-
-		Create(var/mob/living/M)
-			if (ishuman(M))
-				var/mob/living/carbon/human/H = M
-				if (H.bioHolder)
-					H.bioHolder.AddEffect("roach")
-					return 1
-			return 0
-
 	limbless
 		name = "No Limbs"
 		cost = 10000
@@ -441,10 +390,10 @@ var/global/list/persistent_bank_purchaseables =	list(\
 			if (istype(M.loc, /obj/storage)) // also for stowaways; we really should have a system for integrating this stuff
 				S = M.loc
 			else
-				S = new /obj/storage/crate/packing(get_turf(M))
+				S = new /obj/storage/crate/packing()
 				M.set_loc(S)
-				shippingmarket.receive_crate(S)
-				return 1
+			shippingmarket.receive_crate(S)
+			return 1
 
 	missile_arrival
 		name = "Missile Arrival"

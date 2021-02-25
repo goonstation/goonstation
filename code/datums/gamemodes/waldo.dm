@@ -284,7 +284,7 @@
 	for(var/A in possible_modes)
 		intercepttext += i_text.build(A, pick(waldos))
 /*
-	for (var/obj/machinery/computer/communications/comm in machine_registry[MACHINES_COMMSCONSOLES])
+	for (var/obj/machinery/computer/communications/comm as() in machine_registry[MACHINES_COMMSCONSOLES])
 		if (!(comm.status & (BROKEN | NOPOWER)) && comm.prints_intercept)
 			var/obj/item/paper/intercept = new /obj/item/paper( comm.loc )
 			intercept.name = "paper- 'Cent. Com. Status Summary'"
@@ -293,7 +293,7 @@
 			comm.messagetitle.Add("Cent. Com. Status Summary")
 			comm.messagetext.Add(intercepttext)
 */
-	for (var/obj/machinery/communications_dish/C in by_type[/obj/machinery/communications_dish])
+	for_by_tcl(C, /obj/machinery/communications_dish)
 		if(! (C.status & (BROKEN|NOPOWER) ) )
 			C.messagetitle.Add("Cent. Com. Status Summary")
 			C.messagetext.Add(intercepttext)

@@ -12,6 +12,7 @@
 		pda
 		laws
 		viewport
+		hologram
 		killswitch
 
 	var/list/spinner = list("/", "-", "\\", "|")
@@ -61,6 +62,9 @@
 
 		viewport = create_screen("viewport", "Create Viewport", 'icons/mob/hud_ai.dmi', "viewport", "WEST, NORTH-2.5", HUD_LAYER)
 		viewport.underlays += "button"
+
+		hologram = create_screen("hologram", "Create Hologram", 'icons/mob/hud_ai.dmi', "hologram", "WEST, NORTH-3", HUD_LAYER)
+		hologram.underlays += "button"
 
 		tracking = create_screen("tracking", "Tracking", 'icons/mob/hud_ai.dmi', "track", "WEST, SOUTH", HUD_LAYER)
 		tracking.underlays += "button"
@@ -164,3 +168,8 @@
 					master.eyecam.create_viewport()
 				else
 					boutput(master, "Deploy to an AI Eye first to create a viewport.")
+			if ("hologram")
+				if(master.deployed_to_eyecam)
+					master.create_hologram()
+				else
+					boutput(master, "Deploy to an AI Eye first to create a hologram.")

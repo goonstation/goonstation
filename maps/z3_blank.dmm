@@ -1,13 +1,13 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
 /turf/space/fluid/nospawn,
-/area)
+/area/space)
 "ab" = (
 /turf/cordon,
 /area/cordon)
 "ac" = (
 /turf/space/fluid/manta,
-/area)
+/area/space)
 "ad" = (
 /turf/simulated/martian/wall,
 /area/evilreaver/security)
@@ -114,7 +114,7 @@
 /area/evilreaver/security)
 "ax" = (
 /turf/cordon,
-/area)
+/area/space)
 "ay" = (
 /turf/simulated/martian/floor,
 /turf/simulated/martian/wall{
@@ -270,7 +270,7 @@
 /area/evilreaver/security)
 "aS" = (
 /turf/unsimulated/wall/trench,
-/area)
+/area/space)
 "aT" = (
 /obj/overlay{
 	anchored = 1;
@@ -293,7 +293,7 @@
 /area/evilreaver/security)
 "aW" = (
 /turf/unsimulated/wall/trench/side,
-/area)
+/area/space)
 "aX" = (
 /obj/overlay{
 	anchored = 1;
@@ -422,8 +422,8 @@
 /area/wrecknsspolaris/outside/back)
 "bz" = (
 /obj/decal/fakeobjects/lighttube_broken{
-	icon_state = "tube-broken";
-	dir = 8
+	dir = 8;
+	icon_state = "tube-broken"
 	},
 /obj/decal/cleanable/dirt,
 /obj/decal/cleanable/machine_debris{
@@ -441,8 +441,8 @@
 "bB" = (
 /obj/shrub/dead,
 /obj/decal/fakeobjects/lighttube_broken{
-	icon_state = "tube-broken";
-	dir = 8
+	dir = 8;
+	icon_state = "tube-broken"
 	},
 /turf/unsimulated/floor/black,
 /area/wrecknsspolaris)
@@ -453,8 +453,8 @@
 "bD" = (
 /obj/item/pen/fancy,
 /obj/decal/fakeobjects/lighttube_broken{
-	icon_state = "tube-broken";
-	dir = 8
+	dir = 8;
+	icon_state = "tube-broken"
 	},
 /turf/unsimulated/floor/wood/two,
 /area/wrecknsspolaris)
@@ -522,9 +522,9 @@
 /area/wrecknsspolaris)
 "bO" = (
 /obj/stool/chair/comfy/blue{
-	tag = "icon-chair_comfy-blue (EAST)";
+	dir = 4;
 	icon_state = "chair_comfy-blue";
-	dir = 4
+	tag = "icon-chair_comfy-blue (EAST)"
 	},
 /turf/unsimulated/floor/black,
 /area/wrecknsspolaris)
@@ -545,27 +545,27 @@
 /area/wrecknsspolaris)
 "bS" = (
 /obj/decal/fakeobjects/lighttube_broken{
-	icon_state = "tube-broken";
-	dir = 8
+	dir = 8;
+	icon_state = "tube-broken"
 	},
 /obj/item/storage/secure/ssafe/polaris{
 	name = "sergeant's lockbox";
 	pixel_y = 32
 	},
 /turf/simulated/floor/carpet{
-	icon_state = "fblue6";
-	dir = 9
+	dir = 9;
+	icon_state = "fblue6"
 	},
 /area/wrecknsspolaris)
 "bT" = (
 /obj/stool/chair/comfy/blue{
-	tag = "icon-chair_comfy-blue (EAST)";
+	dir = 4;
 	icon_state = "chair_comfy-blue";
-	dir = 4
+	tag = "icon-chair_comfy-blue (EAST)"
 	},
 /turf/simulated/floor/carpet{
-	icon_state = "fblue2";
-	dir = 1
+	dir = 1;
+	icon_state = "fblue2"
 	},
 /area/wrecknsspolaris)
 "bU" = (
@@ -579,8 +579,8 @@
 	switchon = 1
 	},
 /turf/simulated/floor/carpet{
-	icon_state = "fblue6";
-	dir = 5
+	dir = 5;
+	icon_state = "fblue6"
 	},
 /area/wrecknsspolaris)
 "bV" = (
@@ -589,8 +589,8 @@
 /area/wrecknsspolaris)
 "bW" = (
 /obj/decal/cleanable/blood/tracks{
-	icon_state = "tracks";
-	dir = 9
+	dir = 9;
+	icon_state = "tracks"
 	},
 /turf/unsimulated/floor/carpet/arcade,
 /area/wrecknsspolaris)
@@ -601,8 +601,8 @@
 /area/wrecknsspolaris)
 "bY" = (
 /obj/decal/fakeobjects/lighttube_broken{
-	icon_state = "tube-broken";
-	dir = 8
+	dir = 8;
+	icon_state = "tube-broken"
 	},
 /obj/fluid_spawner/shortdelaybig,
 /obj/decoration/bullethole{
@@ -633,8 +633,8 @@
 /area/wrecknsspolaris)
 "cb" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fblue6";
-	dir = 10
+	dir = 10;
+	icon_state = "fblue6"
 	},
 /area/wrecknsspolaris)
 "cc" = (
@@ -646,8 +646,8 @@
 	pixel_y = -24
 	},
 /turf/simulated/floor/carpet{
-	icon_state = "fblue2";
-	dir = 2
+	dir = 2;
+	icon_state = "fblue2"
 	},
 /area/wrecknsspolaris)
 "cd" = (
@@ -740,10 +740,10 @@
 	pixel_x = 8
 	},
 /obj/decal/fakeobjects/lighttube_broken{
-	name = "inactive light tube";
 	desc = "This light might be broken.  It's probably not wired up, though.";
+	dir = 2;
 	icon_state = "tube0";
-	dir = 2
+	name = "inactive light tube"
 	},
 /turf/unsimulated/floor/sanitary/blue,
 /area/wrecknsspolaris)
@@ -821,10 +821,10 @@
 /area/wrecknsspolaris)
 "cB" = (
 /obj/decal/fakeobjects{
-	name = "broken vending machine";
 	desc = "The goods inside the machine probably expired before you were even born.";
 	icon = 'icons/obj/vending.dmi';
-	icon_state = "snack-broken"
+	icon_state = "snack-broken";
+	name = "broken vending machine"
 	},
 /obj/fluid_spawner/shortdelaybig,
 /turf/unsimulated/floor{
@@ -910,8 +910,8 @@
 	name = "security camera"
 	},
 /turf/simulated/floor/carpet{
-	icon_state = "fblue6";
-	dir = 6
+	dir = 6;
+	icon_state = "fblue6"
 	},
 /area/wrecknsspolaris)
 "cN" = (
@@ -1016,25 +1016,25 @@
 /area/wrecknsspolaris)
 "cY" = (
 /obj/decal/fakeobjects{
-	tag = "icon-conduit (NORTHWEST)";
-	name = "power conduit";
+	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
+	dir = 9;
 	icon = 'icons/obj/power_cond.dmi';
 	icon_state = "conduit";
-	dir = 9;
 	layer = 2.5;
-	anchored = 1
+	name = "power conduit";
+	tag = "icon-conduit (NORTHWEST)"
 	},
 /turf/unsimulated/floor/plating,
 /area/wrecknsspolaris)
 "cZ" = (
 /obj/decal/fakeobjects{
-	name = "power conduit";
+	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
+	dir = 9;
 	icon = 'icons/obj/power_cond.dmi';
 	icon_state = "conduit";
-	dir = 9;
-	anchored = 1
+	name = "power conduit"
 	},
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -1067,42 +1067,42 @@
 	tag = "icon-conduit (EAST)"
 	},
 /obj/decal/fakeobjects{
-	name = "power conduit";
+	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
+	dir = 9;
 	icon = 'icons/obj/power_cond.dmi';
 	icon_state = "conduit";
-	dir = 9;
-	anchored = 1
+	name = "power conduit"
 	},
 /obj/decal/fakeobjects{
-	name = "power conduit";
+	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
+	dir = 6;
 	icon = 'icons/obj/power_cond.dmi';
 	icon_state = "conduit";
-	dir = 6;
 	layer = 2.5;
-	anchored = 1
+	name = "power conduit"
 	},
 /turf/unsimulated/floor/plating,
 /area/wrecknsspolaris)
 "dc" = (
 /obj/decal/fakeobjects{
-	name = "power conduit";
+	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
+	dir = 8;
 	icon = 'icons/obj/power_cond.dmi';
 	icon_state = "conduit";
-	dir = 8;
 	layer = 2.5;
-	anchored = 1
+	name = "power conduit"
 	},
 /obj/decal/fakeobjects{
-	name = "power conduit";
+	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
+	dir = 6;
 	icon = 'icons/obj/power_cond.dmi';
 	icon_state = "conduit";
-	dir = 6;
 	layer = 2.5;
-	anchored = 1
+	name = "power conduit"
 	},
 /turf/unsimulated/floor/plating,
 /area/wrecknsspolaris)
@@ -1116,13 +1116,13 @@
 /area/wrecknsspolaris)
 "de" = (
 /obj/decal/fakeobjects{
-	name = "power conduit";
+	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
+	dir = 8;
 	icon = 'icons/obj/power_cond.dmi';
 	icon_state = "conduit";
-	dir = 8;
 	layer = 2.5;
-	anchored = 1
+	name = "power conduit"
 	},
 /turf/unsimulated/floor/plating,
 /area/wrecknsspolaris)
@@ -1140,13 +1140,13 @@
 /area/wrecknsspolaris)
 "dg" = (
 /obj/decal/fakeobjects{
-	name = "power conduit";
+	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
+	dir = 8;
 	icon = 'icons/obj/power_cond.dmi';
 	icon_state = "conduit";
-	dir = 8;
 	layer = 2.5;
-	anchored = 1
+	name = "power conduit"
 	},
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -1161,22 +1161,22 @@
 /area/wrecknsspolaris)
 "dh" = (
 /obj/decal/fakeobjects{
-	tag = "icon-conduit (NORTHEAST)";
-	name = "power conduit";
+	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
+	dir = 5;
 	icon = 'icons/obj/power_cond.dmi';
 	icon_state = "conduit";
-	dir = 5;
-	anchored = 1
+	name = "power conduit";
+	tag = "icon-conduit (NORTHEAST)"
 	},
 /obj/decal/fakeobjects{
-	name = "power conduit";
+	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
+	dir = 8;
 	icon = 'icons/obj/power_cond.dmi';
 	icon_state = "conduit";
-	dir = 8;
 	layer = 2.5;
-	anchored = 1
+	name = "power conduit"
 	},
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -1191,43 +1191,43 @@
 /area/wrecknsspolaris)
 "di" = (
 /obj/decal/fakeobjects{
-	tag = "icon-conduit (NORTHEAST)";
-	name = "power conduit";
+	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
-	icon = 'icons/obj/power_cond.dmi';
-	icon_state = "conduit";
 	dir = 5;
-	anchored = 1
-	},
-/obj/decal/fakeobjects{
-	name = "power conduit";
-	desc = "Like conventional cables, but more burly.";
 	icon = 'icons/obj/power_cond.dmi';
 	icon_state = "conduit";
-	dir = 8;
-	layer = 2.5;
-	anchored = 1
+	name = "power conduit";
+	tag = "icon-conduit (NORTHEAST)"
 	},
 /obj/decal/fakeobjects{
-	name = "power conduit";
+	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
+	dir = 8;
 	icon = 'icons/obj/power_cond.dmi';
 	icon_state = "conduit";
-	dir = 8;
 	layer = 2.5;
-	anchored = 1
+	name = "power conduit"
+	},
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 8;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2.5;
+	name = "power conduit"
 	},
 /turf/unsimulated/floor/plating,
 /area/wrecknsspolaris)
 "dj" = (
 /obj/decal/fakeobjects{
-	tag = "icon-conduit (NORTHEAST)";
-	name = "power conduit";
+	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
+	dir = 5;
 	icon = 'icons/obj/power_cond.dmi';
 	icon_state = "conduit";
-	dir = 5;
-	anchored = 1
+	name = "power conduit";
+	tag = "icon-conduit (NORTHEAST)"
 	},
 /turf/unsimulated/floor/plating,
 /area/wrecknsspolaris)
@@ -1245,8 +1245,8 @@
 /area/wrecknsspolaris)
 "dm" = (
 /obj/decal/fakeobjects/lighttube_broken{
-	icon_state = "tube-broken";
-	dir = 8
+	dir = 8;
+	icon_state = "tube-broken"
 	},
 /turf/unsimulated/floor{
 	icon = 'icons/turf/floors.dmi';
@@ -1289,8 +1289,8 @@
 	icon_state = "floattiles2"
 	},
 /obj/decal/fakeobjects/lighttube_broken{
-	icon_state = "tube-broken";
-	dir = 4
+	dir = 4;
+	icon_state = "tube-broken"
 	},
 /turf/space/fluid/noexplosion/nospawn,
 /area/wrecknsspolaris/outside/back)
@@ -1352,8 +1352,8 @@
 "dF" = (
 /obj/lattice,
 /obj/decal/floatingtiles{
-	icon_state = "floattiles4";
-	dir = 2
+	dir = 2;
+	icon_state = "floattiles4"
 	},
 /turf/space/fluid/noexplosion/nospawn,
 /area/wrecknsspolaris/outside/back)
@@ -1431,10 +1431,10 @@
 /area/wrecknsspolaris)
 "dQ" = (
 /obj/decal/fakeobjects/lighttube_broken{
-	name = "inactive light tube";
 	desc = "This light might be broken.  It's probably not wired up, though.";
+	dir = 2;
 	icon_state = "tube0";
-	dir = 2
+	name = "inactive light tube"
 	},
 /turf/unsimulated/floor{
 	icon = 'icons/turf/floors.dmi';
@@ -1491,8 +1491,8 @@
 /obj/stool/bench,
 /obj/fluid_spawner/shortdelaybig,
 /obj/decal/fakeobjects/lighttube_broken{
-	icon_state = "tube-broken";
-	dir = 4
+	dir = 4;
+	icon_state = "tube-broken"
 	},
 /turf/unsimulated/floor{
 	icon = 'icons/turf/floors.dmi';
@@ -1693,8 +1693,8 @@
 /area/wrecknsspolaris)
 "et" = (
 /obj/decal/fakeobjects/lighttube_broken{
-	icon_state = "tube-broken";
-	dir = 8
+	dir = 8;
+	icon_state = "tube-broken"
 	},
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 5;
@@ -1745,12 +1745,12 @@
 	pixel_x = 32
 	},
 /obj/decal/fakeobjects/lighttube_broken{
-	icon_state = "tube-broken";
-	dir = 4
+	dir = 4;
+	icon_state = "tube-broken"
 	},
 /obj/decal/tile_edge/stripe/extra_big{
-	icon_state = "xtra_bigstripe-corner2";
-	dir = 9
+	dir = 9;
+	icon_state = "xtra_bigstripe-corner2"
 	},
 /obj/dialogueobj/syndiecorpse8,
 /turf/unsimulated/floor/yellow,
@@ -1761,8 +1761,8 @@
 /area/wrecknsspolaris)
 "eA" = (
 /obj/stool/chair{
-	icon_state = "chair";
-	dir = 4
+	dir = 4;
+	icon_state = "chair"
 	},
 /turf/unsimulated/floor/yellow,
 /area/wrecknsspolaris)
@@ -1797,8 +1797,8 @@
 /area/wrecknsspolaris)
 "eG" = (
 /obj/stool/chair{
-	icon_state = "chair";
-	dir = 8
+	dir = 8;
+	icon_state = "chair"
 	},
 /turf/unsimulated/floor/yellow,
 /area/wrecknsspolaris)
@@ -1864,13 +1864,13 @@
 /area/wrecknsspolaris)
 "eP" = (
 /obj/decal/fakeobjects{
-	name = "power conduit";
+	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
+	dir = 8;
 	icon = 'icons/obj/power_cond.dmi';
 	icon_state = "conduit";
-	dir = 8;
 	layer = 2.5;
-	anchored = 1
+	name = "power conduit"
 	},
 /obj/decal/cleanable/dirt/dirt2,
 /turf/unsimulated/floor/plating,
@@ -2023,31 +2023,31 @@
 	pixel_x = -32
 	},
 /obj/decal/fakeobjects/lighttube_broken{
-	icon_state = "tube-broken";
-	dir = 8
+	dir = 8;
+	icon_state = "tube-broken"
 	},
 /obj/item/raw_material/scrap_metal,
 /turf/unsimulated/floor/yellow,
 /area/wrecknsspolaris)
 "fp" = (
 /obj/grille/catwalk{
-	icon_state = "catwalk_cross";
-	dir = 2
+	dir = 2;
+	icon_state = "catwalk_cross"
 	},
 /turf/space/fluid/noexplosion,
 /area/wrecknsspolaris/outside/back)
 "fq" = (
 /obj/grille/catwalk{
-	icon_state = "catwalk_cross";
-	dir = 5
+	dir = 5;
+	icon_state = "catwalk_cross"
 	},
 /turf/space/fluid/noexplosion,
 /area/wrecknsspolaris/outside/back)
 "fr" = (
 /obj/decal/cleanable/dirt/dirt5,
 /obj/decal/cleanable/blood/tracks{
-	icon_state = "tracks";
-	dir = 5
+	dir = 5;
+	icon_state = "tracks"
 	},
 /turf/unsimulated/floor/black,
 /area/wrecknsspolaris/vault)
@@ -2165,7 +2165,6 @@
 /area/wrecknsspolaris)
 "fK" = (
 /obj/decal/cleanable/dirt/dirt5,
-/obj/machinery/reliquaryscout,
 /obj/item/parts/human_parts/arm/right/polaris,
 /turf/unsimulated/floor{
 	icon = 'icons/turf/floors.dmi';
@@ -2500,5874 +2499,5888 @@
 /area/mantavault)
 "gJ" = (
 /turf/unsimulated/wall/auto/reinforced/supernorn,
-/area)
+/area/space)
 "gK" = (
 /obj/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
-/area)
+/area/space)
 "gL" = (
 /turf/unsimulated/floor/plating,
-/area)
+/area/space)
 "gM" = (
 /obj/map/light/green,
 /turf/space/fluid/manta,
 /area/mantavault)
+"gN" = (
+/obj/decal/cleanable/dirt,
+/turf/unsimulated/floor/black/grime,
+/area/dank_trench)
 "gP" = (
 /obj/indestructible/invisible_block/opaque,
 /turf/unsimulated/floor/longtile/black,
 /area/mantavault)
 "gQ" = (
 /turf/space/fluid/noexplosion,
-/area)
+/area/space)
 "gR" = (
 /turf/unsimulated/floor/stairs/wide{
 	dir = 4
 	},
-/area)
+/area/space)
 "gS" = (
 /turf/unsimulated/floor{
 	icon = 'icons/turf/floors.dmi';
 	icon_state = "floor"
 	},
-/area)
+/area/space)
 "gT" = (
 /turf/unsimulated/floor/stairs/wide/middle{
 	dir = 4
 	},
-/area)
+/area/space)
 "gU" = (
 /turf/unsimulated/floor/stairs/wide/other{
 	dir = 4
 	},
-/area)
+/area/space)
+"gV" = (
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet/black,
+/obj/random_item_spawner/junk/one_or_zero,
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
+	},
+/turf/unsimulated/floor/grime,
+/area/dank_trench)
 "gW" = (
 /turf/space,
-/area)
+/area/space)
 "gX" = (
 /turf/simulated/floor/white,
-/area)
+/area/space)
 "gY" = (
 /obj/decal/tile_edge/line/black{
-	icon_state = "line4";
-	dir = 1
+	dir = 1;
+	icon_state = "line4"
 	},
 /obj/decal/tile_edge/line/black{
 	dir = 1;
 	icon_state = "line2"
 	},
 /turf/simulated/floor/darkblue/checker/other,
-/area)
+/area/space)
 "gZ" = (
 /turf/simulated/floor/carpet{
-	icon_state = "green5";
-	dir = 9
+	dir = 9;
+	icon_state = "green5"
 	},
-/area)
+/area/space)
 "ha" = (
 /turf/simulated/floor/carpet{
-	icon_state = "green5";
-	dir = 4
+	dir = 4;
+	icon_state = "green5"
 	},
-/area)
+/area/space)
 "hb" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fgreen5";
-	dir = 9
+	dir = 9;
+	icon_state = "fgreen5"
 	},
-/area)
+/area/space)
 "hc" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fgreen5";
-	dir = 4
+	dir = 4;
+	icon_state = "fgreen5"
 	},
-/area)
+/area/space)
 "hd" = (
 /turf/simulated/floor/carpet{
-	icon_state = "purple5";
-	dir = 9
+	dir = 9;
+	icon_state = "purple5"
 	},
-/area)
+/area/space)
 "he" = (
 /turf/simulated/floor/carpet{
-	icon_state = "purple5";
-	dir = 4
+	dir = 4;
+	icon_state = "purple5"
 	},
-/area)
+/area/space)
 "hf" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fpurple5";
-	dir = 9
+	dir = 9;
+	icon_state = "fpurple5"
 	},
-/area)
+/area/space)
 "hg" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fpurple5";
-	dir = 4
+	dir = 4;
+	icon_state = "fpurple5"
 	},
-/area)
+/area/space)
 "hh" = (
 /obj/decal/tile_edge/line/black{
-	icon_state = "line4";
-	dir = 8
+	dir = 8;
+	icon_state = "line4"
 	},
 /obj/decal/tile_edge/line/black{
-	icon_state = "line2";
-	dir = 8
+	dir = 8;
+	icon_state = "line2"
 	},
 /turf/simulated/floor/specialroom/arcade,
-/area)
+/area/space)
 "hi" = (
 /obj/decal/tile_edge/line/black{
-	icon_state = "line3";
-	dir = 4
+	dir = 4;
+	icon_state = "line3"
 	},
 /obj/decal/tile_edge/line/black{
-	icon_state = "line1";
-	dir = 9
+	dir = 9;
+	icon_state = "line1"
 	},
 /obj/decal/tile_edge/line/black{
-	icon_state = "line1";
-	dir = 5
+	dir = 5;
+	icon_state = "line1"
 	},
 /obj/decal/tile_edge/line/black{
-	icon_state = "line1";
-	dir = 6
+	dir = 6;
+	icon_state = "line1"
 	},
 /obj/decal/tile_edge/line/black{
-	icon_state = "line1";
-	dir = 10
+	dir = 10;
+	icon_state = "line1"
 	},
 /turf/simulated/floor/specialroom/bar,
-/area)
+/area/space)
 "hj" = (
 /obj/decal/tile_edge/line/black{
-	icon_state = "line4";
-	dir = 4
+	dir = 4;
+	icon_state = "line4"
 	},
 /obj/decal/tile_edge/line/black{
-	icon_state = "line2";
-	dir = 4
+	dir = 4;
+	icon_state = "line2"
 	},
 /turf/simulated/floor/orangeblack,
-/area)
+/area/space)
 "hk" = (
 /turf/simulated/floor/carpet{
 	icon_state = "green3"
 	},
-/area)
+/area/space)
 "hl" = (
 /turf/simulated/floor/carpet{
-	icon_state = "green5";
-	dir = 8
+	dir = 8;
+	icon_state = "green5"
 	},
-/area)
+/area/space)
 "hm" = (
 /turf/simulated/floor/carpet{
-	icon_state = "green5";
-	dir = 5
+	dir = 5;
+	icon_state = "green5"
 	},
-/area)
+/area/space)
 "hn" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fgreen5";
-	dir = 8
+	dir = 8;
+	icon_state = "fgreen5"
 	},
-/area)
+/area/space)
 "ho" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fgreen5";
-	dir = 5
+	dir = 5;
+	icon_state = "fgreen5"
 	},
-/area)
+/area/space)
 "hp" = (
 /turf/simulated/floor/carpet{
 	icon_state = "fgreen3"
 	},
-/area)
+/area/space)
 "hq" = (
 /turf/simulated/floor/carpet{
 	icon_state = "purple3"
 	},
-/area)
+/area/space)
 "hr" = (
 /turf/simulated/floor/carpet{
-	icon_state = "purple5";
-	dir = 8
+	dir = 8;
+	icon_state = "purple5"
 	},
-/area)
+/area/space)
 "hs" = (
 /turf/simulated/floor/carpet{
-	icon_state = "purple5";
-	dir = 5
+	dir = 5;
+	icon_state = "purple5"
 	},
-/area)
+/area/space)
 "ht" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fpurple5";
-	dir = 8
+	dir = 8;
+	icon_state = "fpurple5"
 	},
-/area)
+/area/space)
 "hu" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fpurple5";
-	dir = 5
+	dir = 5;
+	icon_state = "fpurple5"
 	},
-/area)
+/area/space)
 "hv" = (
 /turf/simulated/floor/carpet{
 	icon_state = "fpurple3"
 	},
-/area)
+/area/space)
 "hw" = (
 /obj/decal/tile_edge/line/black{
-	icon_state = "line4";
-	dir = 2
+	dir = 2;
+	icon_state = "line4"
 	},
 /obj/decal/tile_edge/line/black{
-	icon_state = "line2";
-	dir = 2
+	dir = 2;
+	icon_state = "line2"
 	},
 /turf/simulated/floor/bluegreen,
-/area)
+/area/space)
 "hx" = (
 /turf/simulated/floor/carpet{
-	icon_state = "green3";
-	dir = 1
+	dir = 1;
+	icon_state = "green3"
 	},
-/area)
+/area/space)
 "hy" = (
 /turf/simulated/floor/carpet{
-	icon_state = "green5";
-	dir = 1
+	dir = 1;
+	icon_state = "green5"
 	},
-/area)
+/area/space)
 "hz" = (
 /turf/simulated/floor/carpet{
-	icon_state = "green5";
-	dir = 10
+	dir = 10;
+	icon_state = "green5"
 	},
-/area)
+/area/space)
 "hA" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fgreen5";
-	dir = 1
+	dir = 1;
+	icon_state = "fgreen5"
 	},
-/area)
+/area/space)
 "hB" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fgreen5";
-	dir = 10
+	dir = 10;
+	icon_state = "fgreen5"
 	},
-/area)
+/area/space)
 "hC" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fgreen3";
-	dir = 1
+	dir = 1;
+	icon_state = "fgreen3"
 	},
-/area)
+/area/space)
 "hD" = (
 /turf/simulated/floor/carpet{
-	icon_state = "purple3";
-	dir = 1
+	dir = 1;
+	icon_state = "purple3"
 	},
-/area)
+/area/space)
 "hE" = (
 /turf/simulated/floor/carpet{
-	icon_state = "purple5";
-	dir = 1
+	dir = 1;
+	icon_state = "purple5"
 	},
-/area)
+/area/space)
 "hF" = (
 /turf/simulated/floor/carpet{
-	icon_state = "purple5";
-	dir = 10
+	dir = 10;
+	icon_state = "purple5"
 	},
-/area)
+/area/space)
 "hG" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fpurple5";
-	dir = 1
+	dir = 1;
+	icon_state = "fpurple5"
 	},
-/area)
+/area/space)
 "hH" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fpurple5";
-	dir = 10
+	dir = 10;
+	icon_state = "fpurple5"
 	},
-/area)
+/area/space)
 "hI" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fpurple3";
-	dir = 1
+	dir = 1;
+	icon_state = "fpurple3"
 	},
-/area)
+/area/space)
 "hJ" = (
 /turf/simulated/floor{
 	icon_state = "blugreen"
 	},
-/area)
+/area/space)
 "hK" = (
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "blugreen"
 	},
-/area)
+/area/space)
 "hL" = (
 /turf/simulated/floor{
 	icon_state = "blugreencorner"
 	},
-/area)
+/area/space)
 "hM" = (
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "blugreencorner"
 	},
-/area)
+/area/space)
 "hN" = (
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "blugreen"
 	},
-/area)
+/area/space)
 "hO" = (
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "blugreen"
 	},
-/area)
+/area/space)
 "hP" = (
 /turf/simulated/floor/carpet{
-	icon_state = "green3";
-	dir = 4
+	dir = 4;
+	icon_state = "green3"
 	},
-/area)
+/area/space)
 "hQ" = (
 /turf/simulated/floor/carpet{
-	icon_state = "green5";
-	dir = 6
+	dir = 6;
+	icon_state = "green5"
 	},
-/area)
+/area/space)
 "hR" = (
 /turf/simulated/floor/carpet{
 	icon_state = "green5"
 	},
-/area)
+/area/space)
 "hS" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fgreen5";
-	dir = 6
+	dir = 6;
+	icon_state = "fgreen5"
 	},
-/area)
+/area/space)
 "hT" = (
 /turf/simulated/floor/carpet{
 	icon_state = "fgreen5"
 	},
-/area)
+/area/space)
 "hU" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fgreen3";
-	dir = 4
+	dir = 4;
+	icon_state = "fgreen3"
 	},
-/area)
+/area/space)
 "hV" = (
 /turf/simulated/floor/carpet{
-	icon_state = "purple3";
-	dir = 4
+	dir = 4;
+	icon_state = "purple3"
 	},
-/area)
+/area/space)
 "hW" = (
 /turf/simulated/floor/carpet{
-	icon_state = "purple5";
-	dir = 6
+	dir = 6;
+	icon_state = "purple5"
 	},
-/area)
+/area/space)
 "hX" = (
 /turf/simulated/floor/carpet{
 	icon_state = "purple5"
 	},
-/area)
+/area/space)
 "hY" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fpurple5";
-	dir = 6
+	dir = 6;
+	icon_state = "fpurple5"
 	},
-/area)
+/area/space)
 "hZ" = (
 /turf/simulated/floor/carpet{
 	icon_state = "fpurple5"
 	},
-/area)
+/area/space)
 "ia" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fpurple3";
-	dir = 4
+	dir = 4;
+	icon_state = "fpurple3"
 	},
-/area)
+/area/space)
 "ib" = (
 /turf/simulated/floor{
 	icon_state = "blugreenfull"
 	},
-/area)
+/area/space)
 "ic" = (
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "blugreen"
 	},
-/area)
+/area/space)
 "id" = (
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "blugreen"
 	},
-/area)
+/area/space)
 "ie" = (
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "blugreencorner"
 	},
-/area)
+/area/space)
 "if" = (
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "blugreencorner"
 	},
-/area)
+/area/space)
 "ig" = (
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "blugreen"
 	},
-/area)
+/area/space)
 "ih" = (
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "blugreen"
 	},
-/area)
+/area/space)
 "ii" = (
 /turf/simulated/floor/carpet{
-	icon_state = "green4";
-	dir = 9
+	dir = 9;
+	icon_state = "green4"
 	},
-/area)
+/area/space)
 "ij" = (
 /turf/simulated/floor/carpet{
-	icon_state = "green4";
-	dir = 5
+	dir = 5;
+	icon_state = "green4"
 	},
-/area)
+/area/space)
 "ik" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fgreen4";
-	dir = 9
+	dir = 9;
+	icon_state = "fgreen4"
 	},
-/area)
+/area/space)
 "il" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fgreen4";
-	dir = 5
+	dir = 5;
+	icon_state = "fgreen4"
 	},
-/area)
+/area/space)
 "im" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fgreen3";
-	dir = 8
+	dir = 8;
+	icon_state = "fgreen3"
 	},
-/area)
+/area/space)
 "in" = (
 /turf/simulated/floor/carpet{
-	icon_state = "purple4";
-	dir = 9
+	dir = 9;
+	icon_state = "purple4"
 	},
-/area)
+/area/space)
 "io" = (
 /turf/simulated/floor/carpet{
-	icon_state = "purple4";
-	dir = 5
+	dir = 5;
+	icon_state = "purple4"
 	},
-/area)
+/area/space)
 "ip" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fpurple4";
-	dir = 9
+	dir = 9;
+	icon_state = "fpurple4"
 	},
-/area)
+/area/space)
 "iq" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fpurple4";
-	dir = 5
+	dir = 5;
+	icon_state = "fpurple4"
 	},
-/area)
+/area/space)
 "ir" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fpurple3";
-	dir = 8
+	dir = 8;
+	icon_state = "fpurple3"
 	},
-/area)
+/area/space)
 "is" = (
 /turf/simulated/floor{
 	icon_state = "toxshuttle"
 	},
-/area)
+/area/space)
 "it" = (
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "toxshuttle"
 	},
-/area)
+/area/space)
 "iu" = (
 /turf/simulated/floor{
 	icon_state = "toxshuttlecorner"
 	},
-/area)
+/area/space)
 "iv" = (
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "toxshuttlecorner"
 	},
-/area)
+/area/space)
 "iw" = (
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "toxshuttle"
 	},
-/area)
+/area/space)
 "ix" = (
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "toxshuttle"
 	},
-/area)
+/area/space)
 "iy" = (
 /turf/simulated/floor/carpet{
-	icon_state = "green4";
-	dir = 10
+	dir = 10;
+	icon_state = "green4"
 	},
-/area)
+/area/space)
 "iz" = (
 /turf/simulated/floor/carpet{
-	icon_state = "green4";
-	dir = 6
+	dir = 6;
+	icon_state = "green4"
 	},
-/area)
+/area/space)
 "iA" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fgreen4";
-	dir = 10
+	dir = 10;
+	icon_state = "fgreen4"
 	},
-/area)
+/area/space)
 "iB" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fgreen4";
-	dir = 6
+	dir = 6;
+	icon_state = "fgreen4"
 	},
-/area)
+/area/space)
 "iC" = (
 /turf/simulated/floor/carpet{
-	icon_state = "purple4";
-	dir = 10
+	dir = 10;
+	icon_state = "purple4"
 	},
-/area)
+/area/space)
 "iD" = (
 /turf/simulated/floor/carpet{
-	icon_state = "purple4";
-	dir = 6
+	dir = 6;
+	icon_state = "purple4"
 	},
-/area)
+/area/space)
 "iE" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fpurple4";
-	dir = 10
+	dir = 10;
+	icon_state = "fpurple4"
 	},
-/area)
+/area/space)
 "iF" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fpurple4";
-	dir = 6
+	dir = 6;
+	icon_state = "fpurple4"
 	},
-/area)
+/area/space)
 "iG" = (
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "toxshuttle"
 	},
-/area)
+/area/space)
 "iH" = (
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "toxshuttle"
 	},
-/area)
+/area/space)
 "iI" = (
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "toxshuttlecorner"
 	},
-/area)
+/area/space)
 "iJ" = (
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "toxshuttlecorner"
 	},
-/area)
+/area/space)
 "iK" = (
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "toxshuttle"
 	},
-/area)
+/area/space)
 "iL" = (
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "toxshuttle"
 	},
-/area)
+/area/space)
 "iM" = (
 /turf/simulated/floor/carpet{
-	icon_state = "green1";
-	dir = 9
+	dir = 9;
+	icon_state = "green1"
 	},
-/area)
+/area/space)
 "iN" = (
 /turf/simulated/floor/carpet{
-	icon_state = "green3";
-	dir = 6
+	dir = 6;
+	icon_state = "green3"
 	},
-/area)
+/area/space)
 "iO" = (
 /turf/simulated/floor/carpet{
-	icon_state = "green3";
-	dir = 10
+	dir = 10;
+	icon_state = "green3"
 	},
-/area)
+/area/space)
 "iP" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fgreen3";
-	dir = 6
+	dir = 6;
+	icon_state = "fgreen3"
 	},
-/area)
+/area/space)
 "iQ" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fgreen3";
-	dir = 10
+	dir = 10;
+	icon_state = "fgreen3"
 	},
-/area)
+/area/space)
 "iR" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fgreen1";
-	dir = 5
+	dir = 5;
+	icon_state = "fgreen1"
 	},
-/area)
+/area/space)
 "iS" = (
 /turf/simulated/floor/carpet{
-	icon_state = "purple1";
-	dir = 9
+	dir = 9;
+	icon_state = "purple1"
 	},
-/area)
+/area/space)
 "iT" = (
 /turf/simulated/floor/carpet{
-	icon_state = "purple3";
-	dir = 6
+	dir = 6;
+	icon_state = "purple3"
 	},
-/area)
+/area/space)
 "iU" = (
 /turf/simulated/floor/carpet{
-	icon_state = "purple3";
-	dir = 10
+	dir = 10;
+	icon_state = "purple3"
 	},
-/area)
+/area/space)
 "iV" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fpurple3";
-	dir = 6
+	dir = 6;
+	icon_state = "fpurple3"
 	},
-/area)
+/area/space)
 "iW" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fpurple3";
-	dir = 10
+	dir = 10;
+	icon_state = "fpurple3"
 	},
-/area)
+/area/space)
 "iX" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fpurple1";
-	dir = 5
+	dir = 5;
+	icon_state = "fpurple1"
 	},
-/area)
+/area/space)
 "iY" = (
 /turf/simulated/floor{
 	icon_state = "escape"
 	},
-/area)
+/area/space)
 "iZ" = (
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "escape"
 	},
-/area)
+/area/space)
 "ja" = (
 /turf/simulated/floor{
 	icon_state = "escapecorner"
 	},
-/area)
+/area/space)
 "jb" = (
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "escapecorner"
 	},
-/area)
+/area/space)
 "jc" = (
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "escape"
 	},
-/area)
+/area/space)
 "jd" = (
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "escape"
 	},
-/area)
+/area/space)
 "je" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fgreen1";
-	dir = 4
+	dir = 4;
+	icon_state = "fgreen1"
 	},
-/area)
+/area/space)
 "jf" = (
 /turf/simulated/floor/carpet{
-	icon_state = "green1";
-	dir = 5
+	dir = 5;
+	icon_state = "green1"
 	},
-/area)
+/area/space)
 "jg" = (
 /turf/simulated/floor/carpet{
-	icon_state = "green3";
-	dir = 5
+	dir = 5;
+	icon_state = "green3"
 	},
-/area)
+/area/space)
 "jh" = (
 /turf/simulated/floor/carpet{
-	icon_state = "green3";
-	dir = 9
+	dir = 9;
+	icon_state = "green3"
 	},
-/area)
+/area/space)
 "ji" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fgreen3";
-	dir = 5
+	dir = 5;
+	icon_state = "fgreen3"
 	},
-/area)
+/area/space)
 "jj" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fgreen3";
-	dir = 9
+	dir = 9;
+	icon_state = "fgreen3"
 	},
-/area)
+/area/space)
 "jk" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fgreen1";
-	dir = 9
+	dir = 9;
+	icon_state = "fgreen1"
 	},
-/area)
+/area/space)
 "jl" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fpurple1";
-	dir = 4
+	dir = 4;
+	icon_state = "fpurple1"
 	},
-/area)
+/area/space)
 "jm" = (
 /turf/simulated/floor/carpet{
-	icon_state = "purple1";
-	dir = 5
+	dir = 5;
+	icon_state = "purple1"
 	},
-/area)
+/area/space)
 "jn" = (
 /turf/simulated/floor/carpet{
-	icon_state = "purple3";
-	dir = 5
+	dir = 5;
+	icon_state = "purple3"
 	},
-/area)
+/area/space)
 "jo" = (
 /turf/simulated/floor/carpet{
-	icon_state = "purple3";
-	dir = 9
+	dir = 9;
+	icon_state = "purple3"
 	},
-/area)
+/area/space)
 "jp" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fpurple3";
-	dir = 5
+	dir = 5;
+	icon_state = "fpurple3"
 	},
-/area)
+/area/space)
 "jq" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fpurple3";
-	dir = 9
+	dir = 9;
+	icon_state = "fpurple3"
 	},
-/area)
+/area/space)
 "jr" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fpurple1";
-	dir = 9
+	dir = 9;
+	icon_state = "fpurple1"
 	},
-/area)
+/area/space)
 "js" = (
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "escape"
 	},
-/area)
+/area/space)
 "jt" = (
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "escape"
 	},
-/area)
+/area/space)
 "ju" = (
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "escapecorner"
 	},
-/area)
+/area/space)
 "jv" = (
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "escapecorner"
 	},
-/area)
+/area/space)
 "jw" = (
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "escape"
 	},
-/area)
+/area/space)
 "jx" = (
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "escape"
 	},
-/area)
+/area/space)
 "jy" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fgreen4";
-	dir = 1
+	dir = 1;
+	icon_state = "fgreen4"
 	},
-/area)
+/area/space)
 "jz" = (
 /turf/simulated/floor/carpet{
-	icon_state = "green4";
-	dir = 8
+	dir = 8;
+	icon_state = "green4"
 	},
-/area)
+/area/space)
 "jA" = (
 /turf/simulated/floor/carpet{
-	icon_state = "green1";
-	dir = 10
+	dir = 10;
+	icon_state = "green1"
 	},
-/area)
+/area/space)
 "jB" = (
 /turf/simulated/floor/carpet{
-	icon_state = "green4";
-	dir = 4
+	dir = 4;
+	icon_state = "green4"
 	},
-/area)
+/area/space)
 "jC" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fgreen4";
-	dir = 8
+	dir = 8;
+	icon_state = "fgreen4"
 	},
-/area)
+/area/space)
 "jD" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fgreen1";
-	dir = 10
+	dir = 10;
+	icon_state = "fgreen1"
 	},
-/area)
+/area/space)
 "jE" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fgreen4";
-	dir = 4
+	dir = 4;
+	icon_state = "fgreen4"
 	},
-/area)
+/area/space)
 "jF" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fpurple4";
-	dir = 1
+	dir = 1;
+	icon_state = "fpurple4"
 	},
-/area)
+/area/space)
 "jG" = (
 /turf/simulated/floor/carpet{
-	icon_state = "purple4";
-	dir = 8
+	dir = 8;
+	icon_state = "purple4"
 	},
-/area)
+/area/space)
 "jH" = (
 /turf/simulated/floor/carpet{
-	icon_state = "purple1";
-	dir = 10
+	dir = 10;
+	icon_state = "purple1"
 	},
-/area)
+/area/space)
 "jI" = (
 /turf/simulated/floor/carpet{
-	icon_state = "purple4";
-	dir = 4
+	dir = 4;
+	icon_state = "purple4"
 	},
-/area)
+/area/space)
 "jJ" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fpurple4";
-	dir = 8
+	dir = 8;
+	icon_state = "fpurple4"
 	},
-/area)
+/area/space)
 "jK" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fpurple1";
-	dir = 10
+	dir = 10;
+	icon_state = "fpurple1"
 	},
-/area)
+/area/space)
 "jL" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fpurple4";
-	dir = 4
+	dir = 4;
+	icon_state = "fpurple4"
 	},
-/area)
+/area/space)
 "jM" = (
 /turf/simulated/floor{
 	icon_state = "arrival"
 	},
-/area)
+/area/space)
 "jN" = (
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "arrival"
 	},
-/area)
+/area/space)
 "jO" = (
 /turf/simulated/floor{
 	icon_state = "arrivalcorner"
 	},
-/area)
+/area/space)
 "jP" = (
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "arrivalcorner"
 	},
-/area)
+/area/space)
 "jQ" = (
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "arrival"
 	},
-/area)
+/area/space)
 "jR" = (
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "arrival"
 	},
-/area)
+/area/space)
 "jS" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fgreen1";
-	dir = 6
+	dir = 6;
+	icon_state = "fgreen1"
 	},
-/area)
+/area/space)
 "jT" = (
 /turf/simulated/floor/carpet{
-	icon_state = "green6";
-	dir = 9
+	dir = 9;
+	icon_state = "green6"
 	},
-/area)
+/area/space)
 "jU" = (
 /turf/simulated/floor/carpet{
-	icon_state = "green6";
-	dir = 1
+	dir = 1;
+	icon_state = "green6"
 	},
-/area)
+/area/space)
 "jV" = (
 /turf/simulated/floor/carpet{
-	icon_state = "green6";
-	dir = 5
+	dir = 5;
+	icon_state = "green6"
 	},
-/area)
+/area/space)
 "jW" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fgreen6";
-	dir = 9
+	dir = 9;
+	icon_state = "fgreen6"
 	},
-/area)
+/area/space)
 "jX" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fgreen6";
-	dir = 1
+	dir = 1;
+	icon_state = "fgreen6"
 	},
-/area)
+/area/space)
 "jY" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fgreen6";
-	dir = 5
+	dir = 5;
+	icon_state = "fgreen6"
 	},
-/area)
+/area/space)
 "jZ" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fpurple1";
-	dir = 6
+	dir = 6;
+	icon_state = "fpurple1"
 	},
-/area)
+/area/space)
 "ka" = (
 /turf/simulated/floor/carpet{
-	icon_state = "purple6";
-	dir = 9
+	dir = 9;
+	icon_state = "purple6"
 	},
-/area)
+/area/space)
 "kb" = (
 /turf/simulated/floor/carpet{
-	icon_state = "purple6";
-	dir = 1
+	dir = 1;
+	icon_state = "purple6"
 	},
-/area)
+/area/space)
 "kc" = (
 /turf/simulated/floor/carpet{
-	icon_state = "purple6";
-	dir = 5
+	dir = 5;
+	icon_state = "purple6"
 	},
-/area)
+/area/space)
 "kd" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fpurple6";
-	dir = 9
+	dir = 9;
+	icon_state = "fpurple6"
 	},
-/area)
+/area/space)
 "ke" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fpurple6";
-	dir = 1
+	dir = 1;
+	icon_state = "fpurple6"
 	},
-/area)
+/area/space)
 "kf" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fpurple6";
-	dir = 5
+	dir = 5;
+	icon_state = "fpurple6"
 	},
-/area)
+/area/space)
 "kg" = (
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "arrival"
 	},
-/area)
+/area/space)
 "kh" = (
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "arrival"
 	},
-/area)
+/area/space)
 "ki" = (
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "arrivalcorner"
 	},
-/area)
+/area/space)
 "kj" = (
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "arrivalcorner"
 	},
-/area)
+/area/space)
 "kk" = (
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "arrival"
 	},
-/area)
+/area/space)
 "kl" = (
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "arrival"
 	},
-/area)
+/area/space)
 "km" = (
 /turf/simulated/floor/carpet{
 	icon_state = "fgreen4"
 	},
-/area)
+/area/space)
 "kn" = (
 /turf/simulated/floor/carpet{
-	icon_state = "green6";
-	dir = 8
+	dir = 8;
+	icon_state = "green6"
 	},
-/area)
+/area/space)
 "ko" = (
 /turf/simulated/floor/carpet{
-	icon_state = "green1";
-	dir = 8
+	dir = 8;
+	icon_state = "green1"
 	},
-/area)
+/area/space)
 "kp" = (
 /turf/simulated/floor/carpet{
-	icon_state = "green6";
-	dir = 4
+	dir = 4;
+	icon_state = "green6"
 	},
-/area)
+/area/space)
 "kq" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fgreen6";
-	dir = 8
+	dir = 8;
+	icon_state = "fgreen6"
 	},
-/area)
+/area/space)
 "kr" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fgreen1";
-	dir = 8
+	dir = 8;
+	icon_state = "fgreen1"
 	},
-/area)
+/area/space)
 "ks" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fgreen6";
-	dir = 4
+	dir = 4;
+	icon_state = "fgreen6"
 	},
-/area)
+/area/space)
 "kt" = (
 /turf/simulated/floor/carpet{
 	icon_state = "fpurple4"
 	},
-/area)
+/area/space)
 "ku" = (
 /turf/simulated/floor/carpet{
-	icon_state = "purple6";
-	dir = 8
+	dir = 8;
+	icon_state = "purple6"
 	},
-/area)
+/area/space)
 "kv" = (
 /turf/simulated/floor/carpet{
-	icon_state = "purple1";
-	dir = 8
+	dir = 8;
+	icon_state = "purple1"
 	},
-/area)
+/area/space)
 "kw" = (
 /turf/simulated/floor/carpet{
-	icon_state = "purple6";
-	dir = 4
+	dir = 4;
+	icon_state = "purple6"
 	},
-/area)
+/area/space)
 "kx" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fpurple6";
-	dir = 8
+	dir = 8;
+	icon_state = "fpurple6"
 	},
-/area)
+/area/space)
 "ky" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fpurple1";
-	dir = 8
+	dir = 8;
+	icon_state = "fpurple1"
 	},
-/area)
+/area/space)
 "kz" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fpurple6";
-	dir = 4
+	dir = 4;
+	icon_state = "fpurple6"
 	},
-/area)
+/area/space)
 "kA" = (
 /turf/simulated/floor{
 	icon_state = "caution"
 	},
-/area)
+/area/space)
 "kB" = (
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "caution"
 	},
-/area)
+/area/space)
 "kC" = (
 /turf/simulated/floor{
 	icon_state = "cautioncorner"
 	},
-/area)
+/area/space)
 "kD" = (
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "cautioncorner"
 	},
-/area)
+/area/space)
 "kE" = (
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "caution"
 	},
-/area)
+/area/space)
 "kF" = (
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "caution"
 	},
-/area)
+/area/space)
 "kG" = (
 /turf/simulated/floor{
 	icon_state = "cautionwhite"
 	},
-/area)
+/area/space)
 "kH" = (
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "cautionwhite"
 	},
-/area)
+/area/space)
 "kI" = (
 /turf/simulated/floor{
 	icon_state = "cautionwhitecorner"
 	},
-/area)
+/area/space)
 "kJ" = (
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "cautionwhitecorner"
 	},
-/area)
+/area/space)
 "kK" = (
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "cautionwhite"
 	},
-/area)
+/area/space)
 "kL" = (
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cautionwhite"
 	},
-/area)
+/area/space)
 "kM" = (
 /turf/simulated/floor/carpet{
 	icon_state = "white"
 	},
-/area)
+/area/space)
 "kN" = (
 /turf/simulated/floor{
 	icon_state = "nt_logo"
 	},
-/area)
+/area/space)
 "kO" = (
 /turf/simulated/floor/carpet{
-	icon_state = "green1";
-	dir = 4
+	dir = 4;
+	icon_state = "green1"
 	},
-/area)
+/area/space)
 "kP" = (
 /turf/simulated/floor/carpet{
-	icon_state = "green6";
-	dir = 10
+	dir = 10;
+	icon_state = "green6"
 	},
-/area)
+/area/space)
 "kQ" = (
 /turf/simulated/floor/carpet{
 	icon_state = "green6"
 	},
-/area)
+/area/space)
 "kR" = (
 /turf/simulated/floor/carpet{
-	icon_state = "green6";
-	dir = 6
+	dir = 6;
+	icon_state = "green6"
 	},
-/area)
+/area/space)
 "kS" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fgreen6";
-	dir = 10
+	dir = 10;
+	icon_state = "fgreen6"
 	},
-/area)
+/area/space)
 "kT" = (
 /turf/simulated/floor/carpet{
 	icon_state = "fgreen6"
 	},
-/area)
+/area/space)
 "kU" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fgreen6";
-	dir = 6
+	dir = 6;
+	icon_state = "fgreen6"
 	},
-/area)
+/area/space)
 "kV" = (
 /turf/simulated/floor/carpet{
-	icon_state = "purple1";
-	dir = 4
+	dir = 4;
+	icon_state = "purple1"
 	},
-/area)
+/area/space)
 "kW" = (
 /turf/simulated/floor/carpet{
-	icon_state = "purple6";
-	dir = 10
+	dir = 10;
+	icon_state = "purple6"
 	},
-/area)
+/area/space)
 "kX" = (
 /turf/simulated/floor/carpet{
 	icon_state = "purple6"
 	},
-/area)
+/area/space)
 "kY" = (
 /turf/simulated/floor/carpet{
-	icon_state = "purple6";
-	dir = 6
+	dir = 6;
+	icon_state = "purple6"
 	},
-/area)
+/area/space)
 "kZ" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fpurple6";
-	dir = 10
+	dir = 10;
+	icon_state = "fpurple6"
 	},
-/area)
+/area/space)
 "la" = (
 /turf/simulated/floor/carpet{
 	icon_state = "fpurple6"
 	},
-/area)
+/area/space)
 "lb" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fpurple6";
-	dir = 6
+	dir = 6;
+	icon_state = "fpurple6"
 	},
-/area)
+/area/space)
 "lc" = (
 /turf/simulated/floor{
 	icon_state = "fullcaution"
 	},
-/area)
+/area/space)
 "ld" = (
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "caution"
 	},
-/area)
+/area/space)
 "le" = (
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "caution"
 	},
-/area)
+/area/space)
 "lf" = (
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "cautioncorner"
 	},
-/area)
+/area/space)
 "lg" = (
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "cautioncorner"
 	},
-/area)
+/area/space)
 "lh" = (
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "caution"
 	},
-/area)
+/area/space)
 "li" = (
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "caution"
 	},
-/area)
+/area/space)
 "lj" = (
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "cautionwhite"
 	},
-/area)
+/area/space)
 "lk" = (
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "cautionwhite"
 	},
-/area)
+/area/space)
 "ll" = (
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "cautionwhitecorner"
 	},
-/area)
+/area/space)
 "lm" = (
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "cautionwhitecorner"
 	},
-/area)
+/area/space)
 "ln" = (
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "cautionwhite"
 	},
-/area)
+/area/space)
 "lo" = (
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "cautionwhite"
 	},
-/area)
+/area/space)
 "lp" = (
 /turf/simulated/floor/carpet{
-	icon_state = "green4";
-	dir = 1
+	dir = 1;
+	icon_state = "green4"
 	},
-/area)
+/area/space)
 "lq" = (
 /turf/simulated/floor/carpet{
-	icon_state = "green2";
-	dir = 9
+	dir = 9;
+	icon_state = "green2"
 	},
-/area)
+/area/space)
 "lr" = (
 /turf/simulated/floor/carpet{
-	icon_state = "green2";
-	dir = 1
+	dir = 1;
+	icon_state = "green2"
 	},
-/area)
+/area/space)
 "ls" = (
 /turf/simulated/floor/carpet{
-	icon_state = "green2";
-	dir = 5
+	dir = 5;
+	icon_state = "green2"
 	},
-/area)
+/area/space)
 "lt" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fgreen2";
-	dir = 9
+	dir = 9;
+	icon_state = "fgreen2"
 	},
-/area)
+/area/space)
 "lu" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fgreen2";
-	dir = 1
+	dir = 1;
+	icon_state = "fgreen2"
 	},
-/area)
+/area/space)
 "lv" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fgreen2";
-	dir = 5
+	dir = 5;
+	icon_state = "fgreen2"
 	},
-/area)
+/area/space)
 "lw" = (
 /turf/simulated/floor/carpet{
-	icon_state = "purple4";
-	dir = 1
+	dir = 1;
+	icon_state = "purple4"
 	},
-/area)
+/area/space)
 "lx" = (
 /turf/simulated/floor/carpet{
-	icon_state = "purple2";
-	dir = 9
+	dir = 9;
+	icon_state = "purple2"
 	},
-/area)
+/area/space)
 "ly" = (
 /turf/simulated/floor/carpet{
-	icon_state = "purple2";
-	dir = 1
+	dir = 1;
+	icon_state = "purple2"
 	},
-/area)
+/area/space)
 "lz" = (
 /turf/simulated/floor/carpet{
-	icon_state = "purple2";
-	dir = 5
+	dir = 5;
+	icon_state = "purple2"
 	},
-/area)
+/area/space)
 "lA" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fpurple2";
-	dir = 9
+	dir = 9;
+	icon_state = "fpurple2"
 	},
-/area)
+/area/space)
 "lB" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fpurple2";
-	dir = 1
+	dir = 1;
+	icon_state = "fpurple2"
 	},
-/area)
+/area/space)
 "lC" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fpurple2";
-	dir = 5
+	dir = 5;
+	icon_state = "fpurple2"
 	},
-/area)
+/area/space)
 "lD" = (
 /turf/simulated/floor{
 	icon_state = "purple"
 	},
-/area)
+/area/space)
 "lE" = (
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "purple"
 	},
-/area)
+/area/space)
 "lF" = (
 /turf/simulated/floor{
 	icon_state = "purplecorner"
 	},
-/area)
+/area/space)
 "lG" = (
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "purplecorner"
 	},
-/area)
+/area/space)
 "lH" = (
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "purple"
 	},
-/area)
+/area/space)
 "lI" = (
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "purple"
 	},
-/area)
+/area/space)
 "lJ" = (
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "whitecheck"
 	},
-/area)
+/area/space)
 "lK" = (
 /turf/simulated/floor{
 	icon_state = "purplewhite"
 	},
-/area)
+/area/space)
 "lL" = (
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "purplewhite"
 	},
-/area)
+/area/space)
 "lM" = (
 /turf/simulated/floor{
 	icon_state = "purplewhitecorner"
 	},
-/area)
+/area/space)
 "lN" = (
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "purplewhitecorner"
 	},
-/area)
+/area/space)
 "lO" = (
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "purplewhite"
 	},
-/area)
+/area/space)
 "lP" = (
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "purplewhite"
 	},
-/area)
+/area/space)
 "lQ" = (
 /turf/simulated/floor{
 	icon_state = "purpleblack"
 	},
-/area)
+/area/space)
 "lR" = (
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "purpleblack"
 	},
-/area)
+/area/space)
 "lS" = (
 /turf/simulated/floor{
 	icon_state = "purpleblackcorner"
 	},
-/area)
+/area/space)
 "lT" = (
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "purpleblackcorner"
 	},
-/area)
+/area/space)
 "lU" = (
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "purpleblack"
 	},
-/area)
+/area/space)
 "lV" = (
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "purpleblack"
 	},
-/area)
+/area/space)
 "lW" = (
 /turf/simulated/floor/carpet{
-	icon_state = "green1";
-	dir = 6
+	dir = 6;
+	icon_state = "green1"
 	},
-/area)
+/area/space)
 "lX" = (
 /turf/simulated/floor/carpet{
-	icon_state = "green2";
-	dir = 8
+	dir = 8;
+	icon_state = "green2"
 	},
-/area)
+/area/space)
 "lY" = (
 /turf/simulated/floor/carpet{
 	icon_state = "green1"
 	},
-/area)
+/area/space)
 "lZ" = (
 /turf/simulated/floor/carpet{
-	icon_state = "green2";
-	dir = 4
+	dir = 4;
+	icon_state = "green2"
 	},
-/area)
+/area/space)
 "ma" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fgreen2";
-	dir = 8
+	dir = 8;
+	icon_state = "fgreen2"
 	},
-/area)
+/area/space)
 "mb" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fgreen1";
-	dir = 1
+	dir = 1;
+	icon_state = "fgreen1"
 	},
-/area)
+/area/space)
 "mc" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fgreen2";
-	dir = 4
+	dir = 4;
+	icon_state = "fgreen2"
 	},
-/area)
+/area/space)
 "md" = (
 /turf/simulated/floor/carpet{
-	icon_state = "purple1";
-	dir = 6
+	dir = 6;
+	icon_state = "purple1"
 	},
-/area)
+/area/space)
 "me" = (
 /turf/simulated/floor/carpet{
-	icon_state = "purple2";
-	dir = 8
+	dir = 8;
+	icon_state = "purple2"
 	},
-/area)
+/area/space)
 "mf" = (
 /turf/simulated/floor/carpet{
 	icon_state = "purple1"
 	},
-/area)
+/area/space)
 "mg" = (
 /turf/simulated/floor/carpet{
-	icon_state = "purple2";
-	dir = 4
+	dir = 4;
+	icon_state = "purple2"
 	},
-/area)
+/area/space)
 "mh" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fpurple2";
-	dir = 8
+	dir = 8;
+	icon_state = "fpurple2"
 	},
-/area)
+/area/space)
 "mi" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fpurple1";
-	dir = 1
+	dir = 1;
+	icon_state = "fpurple1"
 	},
-/area)
+/area/space)
 "mj" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fpurple2";
-	dir = 4
+	dir = 4;
+	icon_state = "fpurple2"
 	},
-/area)
+/area/space)
 "mk" = (
 /turf/simulated/floor{
 	icon_state = "fullpurple"
 	},
-/area)
+/area/space)
 "ml" = (
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "purple"
 	},
-/area)
+/area/space)
 "mm" = (
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "purple"
 	},
-/area)
+/area/space)
 "mn" = (
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "purplecorner"
 	},
-/area)
+/area/space)
 "mo" = (
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "purplecorner"
 	},
-/area)
+/area/space)
 "mp" = (
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "purple"
 	},
-/area)
+/area/space)
 "mq" = (
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "purple"
 	},
-/area)
+/area/space)
 "mr" = (
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "whitecheck"
 	},
-/area)
+/area/space)
 "ms" = (
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "purplewhite"
 	},
-/area)
+/area/space)
 "mt" = (
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "purplewhite"
 	},
-/area)
+/area/space)
 "mu" = (
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "purplewhitecorner"
 	},
-/area)
+/area/space)
 "mv" = (
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "purplewhitecorner"
 	},
-/area)
+/area/space)
 "mw" = (
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "purplewhite"
 	},
-/area)
+/area/space)
 "mx" = (
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "purplewhite"
 	},
-/area)
+/area/space)
 "my" = (
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "purpleblack"
 	},
-/area)
+/area/space)
 "mz" = (
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "purpleblack"
 	},
-/area)
+/area/space)
 "mA" = (
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "purpleblackcorner"
 	},
-/area)
+/area/space)
 "mB" = (
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "purpleblackcorner"
 	},
-/area)
+/area/space)
 "mC" = (
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "purpleblack"
 	},
-/area)
+/area/space)
 "mD" = (
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "purpleblack"
 	},
-/area)
+/area/space)
 "mE" = (
 /turf/simulated/floor/carpet{
 	icon_state = "green4"
 	},
-/area)
+/area/space)
 "mF" = (
 /turf/simulated/floor/carpet{
-	icon_state = "green2";
-	dir = 10
+	dir = 10;
+	icon_state = "green2"
 	},
-/area)
+/area/space)
 "mG" = (
 /turf/simulated/floor/carpet{
-	icon_state = "green2";
-	dir = 2
+	dir = 2;
+	icon_state = "green2"
 	},
-/area)
+/area/space)
 "mH" = (
 /turf/simulated/floor/carpet{
-	icon_state = "green2";
-	dir = 6
+	dir = 6;
+	icon_state = "green2"
 	},
-/area)
+/area/space)
 "mI" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fgreen2";
-	dir = 10
+	dir = 10;
+	icon_state = "fgreen2"
 	},
-/area)
+/area/space)
 "mJ" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fgreen2";
-	dir = 2
+	dir = 2;
+	icon_state = "fgreen2"
 	},
-/area)
+/area/space)
 "mK" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fgreen2";
-	dir = 6
+	dir = 6;
+	icon_state = "fgreen2"
 	},
-/area)
+/area/space)
 "mL" = (
 /turf/simulated/floor/carpet{
 	icon_state = "purple4"
 	},
-/area)
+/area/space)
 "mM" = (
 /turf/simulated/floor/carpet{
-	icon_state = "purple2";
-	dir = 10
+	dir = 10;
+	icon_state = "purple2"
 	},
-/area)
+/area/space)
 "mN" = (
 /turf/simulated/floor/carpet{
-	icon_state = "purple2";
-	dir = 2
+	dir = 2;
+	icon_state = "purple2"
 	},
-/area)
+/area/space)
 "mO" = (
 /turf/simulated/floor/carpet{
-	icon_state = "purple2";
-	dir = 6
+	dir = 6;
+	icon_state = "purple2"
 	},
-/area)
+/area/space)
 "mP" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fpurple2";
-	dir = 10
+	dir = 10;
+	icon_state = "fpurple2"
 	},
-/area)
+/area/space)
 "mQ" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fpurple2";
-	dir = 2
+	dir = 2;
+	icon_state = "fpurple2"
 	},
-/area)
+/area/space)
 "mR" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fpurple2";
-	dir = 6
+	dir = 6;
+	icon_state = "fpurple2"
 	},
-/area)
+/area/space)
 "mS" = (
 /turf/simulated/floor{
 	icon_state = "orange"
 	},
-/area)
+/area/space)
 "mT" = (
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "orange"
 	},
-/area)
+/area/space)
 "mU" = (
 /turf/simulated/floor{
 	icon_state = "orangecorner"
 	},
-/area)
+/area/space)
 "mV" = (
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "orangecorner"
 	},
-/area)
+/area/space)
 "mW" = (
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "orange"
 	},
-/area)
+/area/space)
 "mX" = (
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "orange"
 	},
-/area)
+/area/space)
 "mY" = (
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "whitecheck2"
 	},
-/area)
+/area/space)
 "mZ" = (
 /turf/simulated/floor/stairs{
 	dir = 10;
 	icon_state = "quiltystair2"
 	},
-/area)
+/area/space)
 "na" = (
 /turf/simulated/floor/stairs{
 	dir = 10;
 	icon_state = "quiltystair"
 	},
-/area)
+/area/space)
 "nb" = (
 /turf/simulated/floor/stairs{
 	dir = 1;
 	icon_state = "quiltystair2"
 	},
-/area)
+/area/space)
 "nc" = (
 /turf/simulated/floor/stairs{
 	dir = 10;
 	icon_state = "dark_stairs2"
 	},
-/area)
+/area/space)
 "nd" = (
 /turf/simulated/floor/stairs{
 	dir = 10;
 	icon_state = "dark_stairs"
 	},
-/area)
+/area/space)
 "ne" = (
 /turf/simulated/floor/stairs{
 	dir = 1;
 	icon_state = "dark_stairs2"
 	},
-/area)
+/area/space)
 "nf" = (
 /turf/simulated/floor/carpet{
-	icon_state = "red5";
-	dir = 9
+	dir = 9;
+	icon_state = "red5"
 	},
-/area)
+/area/space)
 "ng" = (
 /turf/simulated/floor/carpet{
-	icon_state = "red5";
-	dir = 4
+	dir = 4;
+	icon_state = "red5"
 	},
-/area)
+/area/space)
 "nh" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fred5";
-	dir = 9
+	dir = 9;
+	icon_state = "fred5"
 	},
-/area)
+/area/space)
 "ni" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fred5";
-	dir = 4
+	dir = 4;
+	icon_state = "fred5"
 	},
-/area)
+/area/space)
 "nj" = (
 /turf/simulated/floor/carpet{
-	icon_state = "blue5";
-	dir = 9
+	dir = 9;
+	icon_state = "blue5"
 	},
-/area)
+/area/space)
 "nk" = (
 /turf/simulated/floor/carpet{
-	icon_state = "blue5";
-	dir = 4
+	dir = 4;
+	icon_state = "blue5"
 	},
-/area)
+/area/space)
 "nl" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fblue5";
-	dir = 9
+	dir = 9;
+	icon_state = "fblue5"
 	},
-/area)
+/area/space)
 "nm" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fblue5";
-	dir = 4
+	dir = 4;
+	icon_state = "fblue5"
 	},
-/area)
+/area/space)
 "nn" = (
 /turf/simulated/floor{
 	icon_state = "fullorange"
 	},
-/area)
+/area/space)
 "no" = (
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "orange"
 	},
-/area)
+/area/space)
 "np" = (
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "orange"
 	},
-/area)
+/area/space)
 "nq" = (
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "orangecorner"
 	},
-/area)
+/area/space)
 "nr" = (
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "orangecorner"
 	},
-/area)
+/area/space)
 "ns" = (
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "orange"
 	},
-/area)
+/area/space)
 "nt" = (
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "orange"
 	},
-/area)
+/area/space)
 "nu" = (
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "whitecheck2"
 	},
-/area)
+/area/space)
 "nv" = (
 /turf/simulated/floor/stairs{
 	dir = 9;
 	icon_state = "quiltystair2"
 	},
-/area)
+/area/space)
 "nw" = (
 /turf/simulated/floor/stairs{
 	dir = 1;
 	icon_state = "quiltystair"
 	},
-/area)
+/area/space)
 "nx" = (
 /turf/simulated/floor/stairs{
 	dir = 5;
 	icon_state = "quiltystair2"
 	},
-/area)
+/area/space)
 "ny" = (
 /turf/simulated/floor/stairs{
 	dir = 4;
 	icon_state = "dark_stairs2"
 	},
-/area)
+/area/space)
 "nz" = (
 /turf/simulated/floor/stairs{
 	dir = 1;
 	icon_state = "dark_stairs"
 	},
-/area)
+/area/space)
 "nA" = (
 /turf/simulated/floor/stairs{
 	dir = 9;
 	icon_state = "dark_stairs2"
 	},
-/area)
+/area/space)
 "nB" = (
 /turf/simulated/floor/carpet{
 	icon_state = "red3"
 	},
-/area)
+/area/space)
 "nC" = (
 /turf/simulated/floor/carpet{
-	icon_state = "red5";
-	dir = 8
+	dir = 8;
+	icon_state = "red5"
 	},
-/area)
+/area/space)
 "nD" = (
 /turf/simulated/floor/carpet{
-	icon_state = "red5";
-	dir = 5
+	dir = 5;
+	icon_state = "red5"
 	},
-/area)
+/area/space)
 "nE" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fred5";
-	dir = 8
+	dir = 8;
+	icon_state = "fred5"
 	},
-/area)
+/area/space)
 "nF" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fred5";
-	dir = 5
+	dir = 5;
+	icon_state = "fred5"
 	},
-/area)
+/area/space)
 "nG" = (
 /turf/simulated/floor/carpet{
 	icon_state = "fred3"
 	},
-/area)
+/area/space)
 "nH" = (
 /turf/simulated/floor/carpet{
 	icon_state = "blue3"
 	},
-/area)
+/area/space)
 "nI" = (
 /turf/simulated/floor/carpet{
-	icon_state = "blue5";
-	dir = 8
+	dir = 8;
+	icon_state = "blue5"
 	},
-/area)
+/area/space)
 "nJ" = (
 /turf/simulated/floor/carpet{
-	icon_state = "blue5";
-	dir = 5
+	dir = 5;
+	icon_state = "blue5"
 	},
-/area)
+/area/space)
 "nK" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fblue5";
-	dir = 8
+	dir = 8;
+	icon_state = "fblue5"
 	},
-/area)
+/area/space)
 "nL" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fblue5";
-	dir = 5
+	dir = 5;
+	icon_state = "fblue5"
 	},
-/area)
+/area/space)
 "nM" = (
 /turf/simulated/floor/carpet{
 	icon_state = "fblue3"
 	},
-/area)
+/area/space)
 "nN" = (
 /turf/simulated/floor{
 	icon_state = "yellow"
 	},
-/area)
+/area/space)
 "nO" = (
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "yellow"
 	},
-/area)
+/area/space)
 "nP" = (
 /turf/simulated/floor{
 	icon_state = "yellowcorner"
 	},
-/area)
+/area/space)
 "nQ" = (
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "yellowcorner"
 	},
-/area)
+/area/space)
 "nR" = (
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "yellow"
 	},
-/area)
+/area/space)
 "nS" = (
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "yellow"
 	},
-/area)
+/area/space)
 "nT" = (
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "whitecheck2"
 	},
-/area)
+/area/space)
 "nU" = (
 /turf/simulated/floor{
 	icon_state = "yellowblack"
 	},
-/area)
+/area/space)
 "nV" = (
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "yellowblack"
 	},
-/area)
+/area/space)
 "nW" = (
 /turf/simulated/floor{
 	icon_state = "yellowblackcorner"
 	},
-/area)
+/area/space)
 "nX" = (
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "yellowblackcorner"
 	},
-/area)
+/area/space)
 "nY" = (
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "yellowblack"
 	},
-/area)
+/area/space)
 "nZ" = (
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "yellowblack"
 	},
-/area)
+/area/space)
 "oa" = (
 /turf/simulated/floor/stairs{
 	dir = 9;
 	icon_state = "quiltystair"
 	},
-/area)
+/area/space)
 "ob" = (
 /turf/simulated/floor/stairs{
 	dir = 8;
 	icon_state = "quiltystair"
 	},
-/area)
+/area/space)
 "oc" = (
 /turf/simulated/floor/stairs{
 	dir = 4;
 	icon_state = "quiltystair"
 	},
-/area)
+/area/space)
 "od" = (
 /turf/simulated/floor/stairs{
 	dir = 5;
 	icon_state = "quiltystair"
 	},
-/area)
+/area/space)
 "oe" = (
 /turf/simulated/floor/stairs{
 	dir = 5;
 	icon_state = "dark_stairs"
 	},
-/area)
+/area/space)
 "of" = (
 /turf/simulated/floor/stairs{
 	dir = 4;
 	icon_state = "dark_stairs"
 	},
-/area)
+/area/space)
 "og" = (
 /turf/simulated/floor/stairs{
 	dir = 8;
 	icon_state = "dark_stairs"
 	},
-/area)
+/area/space)
 "oh" = (
 /turf/simulated/floor/stairs{
 	dir = 9;
 	icon_state = "dark_stairs"
 	},
-/area)
+/area/space)
 "oi" = (
 /turf/simulated/floor/carpet{
-	icon_state = "red3";
-	dir = 1
+	dir = 1;
+	icon_state = "red3"
 	},
-/area)
+/area/space)
 "oj" = (
 /turf/simulated/floor/carpet{
-	icon_state = "red5";
-	dir = 1
+	dir = 1;
+	icon_state = "red5"
 	},
-/area)
+/area/space)
 "ok" = (
 /turf/simulated/floor/carpet{
-	icon_state = "red5";
-	dir = 10
+	dir = 10;
+	icon_state = "red5"
 	},
-/area)
+/area/space)
 "ol" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fred5";
-	dir = 1
+	dir = 1;
+	icon_state = "fred5"
 	},
-/area)
+/area/space)
 "om" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fred5";
-	dir = 10
+	dir = 10;
+	icon_state = "fred5"
 	},
-/area)
+/area/space)
 "on" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fred3";
-	dir = 1
+	dir = 1;
+	icon_state = "fred3"
 	},
-/area)
+/area/space)
 "oo" = (
 /turf/simulated/floor/carpet{
-	icon_state = "blue3";
-	dir = 1
+	dir = 1;
+	icon_state = "blue3"
 	},
-/area)
+/area/space)
 "op" = (
 /turf/simulated/floor/carpet{
-	icon_state = "blue5";
-	dir = 1
+	dir = 1;
+	icon_state = "blue5"
 	},
-/area)
+/area/space)
 "oq" = (
 /turf/simulated/floor/carpet{
-	icon_state = "blue5";
-	dir = 10
+	dir = 10;
+	icon_state = "blue5"
 	},
-/area)
+/area/space)
 "or" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fblue5";
-	dir = 1
+	dir = 1;
+	icon_state = "fblue5"
 	},
-/area)
+/area/space)
 "os" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fblue5";
-	dir = 10
+	dir = 10;
+	icon_state = "fblue5"
 	},
-/area)
+/area/space)
 "ot" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fblue3";
-	dir = 1
+	dir = 1;
+	icon_state = "fblue3"
 	},
-/area)
+/area/space)
 "ou" = (
 /turf/simulated/floor{
 	icon_state = "fullyellow"
 	},
-/area)
+/area/space)
 "ov" = (
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "yellow"
 	},
-/area)
+/area/space)
 "ow" = (
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "yellow"
 	},
-/area)
+/area/space)
 "ox" = (
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "yellowcorner"
 	},
-/area)
+/area/space)
 "oy" = (
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "yellowcorner"
 	},
-/area)
+/area/space)
 "oz" = (
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "yellow"
 	},
-/area)
+/area/space)
 "oA" = (
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "yellow"
 	},
-/area)
+/area/space)
 "oB" = (
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "whitecheck2"
 	},
-/area)
+/area/space)
 "oC" = (
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "yellowblack"
 	},
-/area)
+/area/space)
 "oD" = (
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "yellowblack"
 	},
-/area)
+/area/space)
 "oE" = (
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "yellowblackcorner"
 	},
-/area)
+/area/space)
 "oF" = (
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "yellowblackcorner"
 	},
-/area)
+/area/space)
 "oG" = (
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "yellowblack"
 	},
-/area)
+/area/space)
 "oH" = (
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "yellowblack"
 	},
-/area)
+/area/space)
 "oI" = (
 /turf/simulated/floor/stairs{
 	dir = 8;
 	icon_state = "quiltystair2"
 	},
-/area)
+/area/space)
 "oJ" = (
 /turf/simulated/floor/stairs{
 	icon_state = "quiltystair"
 	},
-/area)
+/area/space)
 "oK" = (
 /turf/simulated/floor/stairs{
 	dir = 4;
 	icon_state = "quiltystair2"
 	},
-/area)
+/area/space)
 "oL" = (
 /turf/simulated/floor/stairs{
 	dir = 5;
 	icon_state = "dark_stairs2"
 	},
-/area)
+/area/space)
 "oM" = (
 /turf/simulated/floor/stairs{
 	icon_state = "dark_stairs"
 	},
-/area)
+/area/space)
 "oN" = (
 /turf/simulated/floor/stairs{
 	dir = 8;
 	icon_state = "dark_stairs2"
 	},
-/area)
+/area/space)
 "oO" = (
 /turf/simulated/floor/carpet{
-	icon_state = "red3";
-	dir = 4
+	dir = 4;
+	icon_state = "red3"
 	},
-/area)
+/area/space)
 "oP" = (
 /turf/simulated/floor/carpet{
-	icon_state = "red5";
-	dir = 6
+	dir = 6;
+	icon_state = "red5"
 	},
-/area)
+/area/space)
 "oQ" = (
 /turf/simulated/floor/carpet{
 	icon_state = "red5"
 	},
-/area)
+/area/space)
 "oR" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fred5";
-	dir = 6
+	dir = 6;
+	icon_state = "fred5"
 	},
-/area)
+/area/space)
 "oS" = (
 /turf/simulated/floor/carpet{
 	icon_state = "fred5"
 	},
-/area)
+/area/space)
 "oT" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fred3";
-	dir = 4
+	dir = 4;
+	icon_state = "fred3"
 	},
-/area)
+/area/space)
 "oU" = (
 /turf/simulated/floor/carpet{
-	icon_state = "blue3";
-	dir = 4
+	dir = 4;
+	icon_state = "blue3"
 	},
-/area)
+/area/space)
 "oV" = (
 /turf/simulated/floor/carpet{
-	icon_state = "blue5";
-	dir = 6
+	dir = 6;
+	icon_state = "blue5"
 	},
-/area)
+/area/space)
 "oW" = (
 /turf/simulated/floor/carpet{
 	icon_state = "blue5"
 	},
-/area)
+/area/space)
 "oX" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fblue5";
-	dir = 6
+	dir = 6;
+	icon_state = "fblue5"
 	},
-/area)
+/area/space)
 "oY" = (
 /turf/simulated/floor/carpet{
 	icon_state = "fblue5"
 	},
-/area)
+/area/space)
 "oZ" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fblue3";
-	dir = 4
+	dir = 4;
+	icon_state = "fblue3"
 	},
-/area)
+/area/space)
 "pa" = (
 /turf/simulated/floor{
 	icon_state = "green"
 	},
-/area)
+/area/space)
 "pb" = (
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "green"
 	},
-/area)
+/area/space)
 "pc" = (
 /turf/simulated/floor{
 	icon_state = "greencorner"
 	},
-/area)
+/area/space)
 "pd" = (
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "greencorner"
 	},
-/area)
+/area/space)
 "pe" = (
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "green"
 	},
-/area)
+/area/space)
 "pf" = (
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "green"
 	},
-/area)
+/area/space)
 "pg" = (
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "whitecheck2"
 	},
-/area)
+/area/space)
 "ph" = (
 /turf/simulated/floor{
 	icon_state = "greenwhite"
 	},
-/area)
+/area/space)
 "pi" = (
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "greenwhite"
 	},
-/area)
+/area/space)
 "pj" = (
 /turf/simulated/floor{
 	icon_state = "greenwhitecorner"
 	},
-/area)
+/area/space)
 "pk" = (
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "greenwhitecorner"
 	},
-/area)
+/area/space)
 "pl" = (
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "greenwhite"
 	},
-/area)
+/area/space)
 "pm" = (
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "greenwhite"
 	},
-/area)
+/area/space)
 "pn" = (
 /turf/simulated/floor{
 	icon_state = "greenblack"
 	},
-/area)
+/area/space)
 "po" = (
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "greenblack"
 	},
-/area)
+/area/space)
 "pp" = (
 /turf/simulated/floor{
 	icon_state = "greenblackcorner"
 	},
-/area)
+/area/space)
 "pq" = (
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "greenblackcorner"
 	},
-/area)
+/area/space)
 "pr" = (
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "greenblack"
 	},
-/area)
+/area/space)
 "ps" = (
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "greenblack"
 	},
-/area)
+/area/space)
 "pt" = (
 /turf/simulated/floor/stairs{
 	icon_state = "quiltystair2"
 	},
-/area)
+/area/space)
 "pu" = (
 /turf/simulated/floor/stairs{
 	dir = 6;
 	icon_state = "quiltystair"
 	},
-/area)
+/area/space)
 "pv" = (
 /turf/simulated/floor/stairs{
 	dir = 6;
 	icon_state = "quiltystair2"
 	},
-/area)
+/area/space)
 "pw" = (
 /turf/simulated/floor/stairs{
 	icon_state = "dark_stairs2"
 	},
-/area)
+/area/space)
 "px" = (
 /turf/simulated/floor/stairs{
 	dir = 6;
 	icon_state = "dark_stairs"
 	},
-/area)
+/area/space)
 "py" = (
 /turf/simulated/floor/stairs{
 	dir = 6;
 	icon_state = "dark_stairs2"
 	},
-/area)
+/area/space)
 "pz" = (
 /turf/simulated/floor/carpet{
-	icon_state = "red4";
-	dir = 9
+	dir = 9;
+	icon_state = "red4"
 	},
-/area)
+/area/space)
 "pA" = (
 /turf/simulated/floor/carpet{
-	icon_state = "red4";
-	dir = 5
+	dir = 5;
+	icon_state = "red4"
 	},
-/area)
+/area/space)
 "pB" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fred4";
-	dir = 9
+	dir = 9;
+	icon_state = "fred4"
 	},
-/area)
+/area/space)
 "pC" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fred4";
-	dir = 5
+	dir = 5;
+	icon_state = "fred4"
 	},
-/area)
+/area/space)
 "pD" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fred3";
-	dir = 8
+	dir = 8;
+	icon_state = "fred3"
 	},
-/area)
+/area/space)
 "pE" = (
 /turf/simulated/floor/carpet{
-	icon_state = "blue4";
-	dir = 9
+	dir = 9;
+	icon_state = "blue4"
 	},
-/area)
+/area/space)
 "pF" = (
 /turf/simulated/floor/carpet{
-	icon_state = "blue4";
-	dir = 5
+	dir = 5;
+	icon_state = "blue4"
 	},
-/area)
+/area/space)
 "pG" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fblue4";
-	dir = 9
+	dir = 9;
+	icon_state = "fblue4"
 	},
-/area)
+/area/space)
 "pH" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fblue4";
-	dir = 5
+	dir = 5;
+	icon_state = "fblue4"
 	},
-/area)
+/area/space)
 "pI" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fblue3";
-	dir = 8
+	dir = 8;
+	icon_state = "fblue3"
 	},
-/area)
+/area/space)
 "pJ" = (
 /turf/simulated/floor{
 	icon_state = "fullgreen"
 	},
-/area)
+/area/space)
 "pK" = (
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "green"
 	},
-/area)
+/area/space)
 "pL" = (
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "green"
 	},
-/area)
+/area/space)
 "pM" = (
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "greencorner"
 	},
-/area)
+/area/space)
 "pN" = (
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "greencorner"
 	},
-/area)
+/area/space)
 "pO" = (
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "green"
 	},
-/area)
+/area/space)
 "pP" = (
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "green"
 	},
-/area)
+/area/space)
 "pQ" = (
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "whitecheck2"
 	},
-/area)
+/area/space)
 "pR" = (
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "greenwhite"
 	},
-/area)
+/area/space)
 "pS" = (
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "greenwhite"
 	},
-/area)
+/area/space)
 "pT" = (
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "greenwhitecorner"
 	},
-/area)
+/area/space)
 "pU" = (
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "greenwhitecorner"
 	},
-/area)
+/area/space)
 "pV" = (
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "greenwhite"
 	},
-/area)
+/area/space)
 "pW" = (
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "greenwhite"
 	},
-/area)
+/area/space)
 "pX" = (
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "greenblack"
 	},
-/area)
+/area/space)
 "pY" = (
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "greenblack"
 	},
-/area)
+/area/space)
 "pZ" = (
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "greenblackcorner"
 	},
-/area)
+/area/space)
 "qa" = (
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "greenblackcorner"
 	},
-/area)
+/area/space)
 "qb" = (
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "greenblack"
 	},
-/area)
+/area/space)
 "qc" = (
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "greenblack"
 	},
-/area)
+/area/space)
 "qd" = (
 /turf/simulated/floor/stairs{
 	dir = 10;
 	icon_state = "wood2_stairs2"
 	},
-/area)
+/area/space)
 "qe" = (
 /turf/simulated/floor/stairs{
 	dir = 10;
 	icon_state = "wood2_stairs"
 	},
-/area)
+/area/space)
 "qf" = (
 /turf/simulated/floor/stairs{
 	dir = 1;
 	icon_state = "wood2_stairs2"
 	},
-/area)
+/area/space)
 "qg" = (
 /turf/simulated/floor/stairs{
 	dir = 10;
 	icon_state = "wood_stairs2"
 	},
-/area)
+/area/space)
 "qh" = (
 /turf/simulated/floor/stairs{
 	dir = 10;
 	icon_state = "wood_stairs"
 	},
-/area)
+/area/space)
 "qi" = (
 /turf/simulated/floor/stairs{
 	dir = 1;
 	icon_state = "wood_stairs2"
 	},
-/area)
+/area/space)
 "qj" = (
 /turf/simulated/floor/carpet{
-	icon_state = "red4";
-	dir = 10
+	dir = 10;
+	icon_state = "red4"
 	},
-/area)
+/area/space)
 "qk" = (
 /turf/simulated/floor/carpet{
-	icon_state = "red4";
-	dir = 6
+	dir = 6;
+	icon_state = "red4"
 	},
-/area)
+/area/space)
 "ql" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fred4";
-	dir = 10
+	dir = 10;
+	icon_state = "fred4"
 	},
-/area)
+/area/space)
 "qm" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fred4";
-	dir = 6
+	dir = 6;
+	icon_state = "fred4"
 	},
-/area)
+/area/space)
 "qn" = (
 /turf/simulated/floor/carpet{
-	icon_state = "blue4";
-	dir = 10
+	dir = 10;
+	icon_state = "blue4"
 	},
-/area)
+/area/space)
 "qo" = (
 /turf/simulated/floor/carpet{
-	icon_state = "blue4";
-	dir = 6
+	dir = 6;
+	icon_state = "blue4"
 	},
-/area)
+/area/space)
 "qp" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fblue4";
-	dir = 10
+	dir = 10;
+	icon_state = "fblue4"
 	},
-/area)
+/area/space)
 "qq" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fblue4";
-	dir = 6
+	dir = 6;
+	icon_state = "fblue4"
 	},
-/area)
+/area/space)
 "qr" = (
 /turf/simulated/floor{
 	icon_state = "blue"
 	},
-/area)
+/area/space)
 "qs" = (
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "blue"
 	},
-/area)
+/area/space)
 "qt" = (
 /turf/simulated/floor{
 	icon_state = "bluecorner"
 	},
-/area)
+/area/space)
 "qu" = (
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "bluecorner"
 	},
-/area)
+/area/space)
 "qv" = (
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "blue"
 	},
-/area)
+/area/space)
 "qw" = (
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "blue"
 	},
-/area)
+/area/space)
 "qx" = (
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "whitecheck"
 	},
-/area)
+/area/space)
 "qy" = (
 /turf/simulated/floor{
 	icon_state = "bluewhite"
 	},
-/area)
+/area/space)
 "qz" = (
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "bluewhite"
 	},
-/area)
+/area/space)
 "qA" = (
 /turf/simulated/floor{
 	icon_state = "bluewhitecorner"
 	},
-/area)
+/area/space)
 "qB" = (
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "bluewhitecorner"
 	},
-/area)
+/area/space)
 "qC" = (
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "bluewhite"
 	},
-/area)
+/area/space)
 "qD" = (
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "bluewhite"
 	},
-/area)
+/area/space)
 "qE" = (
 /turf/simulated/floor{
 	icon_state = "blueblack"
 	},
-/area)
+/area/space)
 "qF" = (
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "blueblack"
 	},
-/area)
+/area/space)
 "qG" = (
 /turf/simulated/floor{
 	icon_state = "blueblackcorner"
 	},
-/area)
+/area/space)
 "qH" = (
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "blueblackcorner"
 	},
-/area)
+/area/space)
 "qI" = (
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "blueblack"
 	},
-/area)
+/area/space)
 "qJ" = (
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "blueblack"
 	},
-/area)
+/area/space)
 "qK" = (
 /turf/simulated/floor/stairs{
 	dir = 4;
 	icon_state = "wood2_stairs2"
 	},
-/area)
+/area/space)
 "qL" = (
 /turf/simulated/floor/stairs{
 	dir = 1;
 	icon_state = "wood2_stairs"
 	},
-/area)
+/area/space)
 "qM" = (
 /turf/simulated/floor/stairs{
 	dir = 9;
 	icon_state = "wood2_stairs2"
 	},
-/area)
+/area/space)
 "qN" = (
 /turf/simulated/floor/stairs{
 	dir = 4;
 	icon_state = "wood_stairs2"
 	},
-/area)
+/area/space)
 "qO" = (
 /turf/simulated/floor/stairs{
 	dir = 1;
 	icon_state = "wood_stairs"
 	},
-/area)
+/area/space)
 "qP" = (
 /turf/simulated/floor/stairs{
 	dir = 9;
 	icon_state = "wood_stairs2"
 	},
-/area)
+/area/space)
 "qQ" = (
 /turf/simulated/floor/carpet{
-	icon_state = "red1";
-	dir = 9
+	dir = 9;
+	icon_state = "red1"
 	},
-/area)
+/area/space)
 "qR" = (
 /turf/simulated/floor/carpet{
-	icon_state = "red3";
-	dir = 6
+	dir = 6;
+	icon_state = "red3"
 	},
-/area)
+/area/space)
 "qS" = (
 /turf/simulated/floor/carpet{
-	icon_state = "red3";
-	dir = 10
+	dir = 10;
+	icon_state = "red3"
 	},
-/area)
+/area/space)
 "qT" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fred3";
-	dir = 6
+	dir = 6;
+	icon_state = "fred3"
 	},
-/area)
+/area/space)
 "qU" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fred3";
-	dir = 10
+	dir = 10;
+	icon_state = "fred3"
 	},
-/area)
+/area/space)
 "qV" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fred1";
-	dir = 5
+	dir = 5;
+	icon_state = "fred1"
 	},
-/area)
+/area/space)
 "qW" = (
 /turf/simulated/floor/carpet{
-	icon_state = "blue1";
-	dir = 9
+	dir = 9;
+	icon_state = "blue1"
 	},
-/area)
+/area/space)
 "qX" = (
 /turf/simulated/floor/carpet{
-	icon_state = "blue3";
-	dir = 6
+	dir = 6;
+	icon_state = "blue3"
 	},
-/area)
+/area/space)
 "qY" = (
 /turf/simulated/floor/carpet{
-	icon_state = "blue3";
-	dir = 10
+	dir = 10;
+	icon_state = "blue3"
 	},
-/area)
+/area/space)
 "qZ" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fblue3";
-	dir = 6
+	dir = 6;
+	icon_state = "fblue3"
 	},
-/area)
+/area/space)
 "ra" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fblue3";
-	dir = 10
+	dir = 10;
+	icon_state = "fblue3"
 	},
-/area)
+/area/space)
 "rb" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fblue1";
-	dir = 5
+	dir = 5;
+	icon_state = "fblue1"
 	},
-/area)
+/area/space)
 "rc" = (
 /turf/simulated/floor{
 	icon_state = "fullblue"
 	},
-/area)
+/area/space)
 "rd" = (
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "blue"
 	},
-/area)
+/area/space)
 "re" = (
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "blue"
 	},
-/area)
+/area/space)
 "rf" = (
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "bluecorner"
 	},
-/area)
+/area/space)
 "rg" = (
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "bluecorner"
 	},
-/area)
+/area/space)
 "rh" = (
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "blue"
 	},
-/area)
+/area/space)
 "ri" = (
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "blue"
 	},
-/area)
+/area/space)
 "rj" = (
 /turf/simulated/floor{
 	icon_state = "whitecheck"
 	},
-/area)
+/area/space)
 "rk" = (
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "bluewhite"
 	},
-/area)
+/area/space)
 "rl" = (
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "bluewhite"
 	},
-/area)
+/area/space)
 "rm" = (
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "bluewhitecorner"
 	},
-/area)
+/area/space)
 "rn" = (
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "bluewhitecorner"
 	},
-/area)
+/area/space)
 "ro" = (
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "bluewhite"
 	},
-/area)
+/area/space)
 "rp" = (
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "bluewhite"
 	},
-/area)
+/area/space)
 "rq" = (
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "blueblack"
 	},
-/area)
+/area/space)
 "rr" = (
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "blueblack"
 	},
-/area)
+/area/space)
 "rs" = (
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "blueblackcorner"
 	},
-/area)
+/area/space)
 "rt" = (
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "blueblackcorner"
 	},
-/area)
+/area/space)
 "ru" = (
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "blueblack"
 	},
-/area)
+/area/space)
 "rv" = (
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "blueblack"
 	},
-/area)
+/area/space)
 "rw" = (
 /turf/simulated/floor/stairs{
 	dir = 5;
 	icon_state = "wood2_stairs"
 	},
-/area)
+/area/space)
 "rx" = (
 /turf/simulated/floor/stairs{
 	dir = 4;
 	icon_state = "wood2_stairs"
 	},
-/area)
+/area/space)
 "ry" = (
 /turf/simulated/floor/stairs{
 	dir = 8;
 	icon_state = "wood2_stairs"
 	},
-/area)
+/area/space)
 "rz" = (
 /turf/simulated/floor/stairs{
 	dir = 9;
 	icon_state = "wood2_stairs"
 	},
-/area)
+/area/space)
 "rA" = (
 /turf/simulated/floor/stairs{
 	dir = 5;
 	icon_state = "wood_stairs"
 	},
-/area)
+/area/space)
 "rB" = (
 /turf/simulated/floor/stairs{
 	dir = 4;
 	icon_state = "wood_stairs"
 	},
-/area)
+/area/space)
 "rC" = (
 /turf/simulated/floor/stairs{
 	dir = 8;
 	icon_state = "wood_stairs"
 	},
-/area)
+/area/space)
 "rD" = (
 /turf/simulated/floor/stairs{
 	dir = 9;
 	icon_state = "wood_stairs"
 	},
-/area)
+/area/space)
 "rE" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fred1";
-	dir = 4
+	dir = 4;
+	icon_state = "fred1"
 	},
-/area)
+/area/space)
 "rF" = (
 /turf/simulated/floor/carpet{
-	icon_state = "red1";
-	dir = 5
+	dir = 5;
+	icon_state = "red1"
 	},
-/area)
+/area/space)
 "rG" = (
 /turf/simulated/floor/carpet{
-	icon_state = "red3";
-	dir = 5
+	dir = 5;
+	icon_state = "red3"
 	},
-/area)
+/area/space)
 "rH" = (
 /turf/simulated/floor/carpet{
-	icon_state = "red3";
-	dir = 9
+	dir = 9;
+	icon_state = "red3"
 	},
-/area)
+/area/space)
 "rI" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fred3";
-	dir = 5
+	dir = 5;
+	icon_state = "fred3"
 	},
-/area)
+/area/space)
 "rJ" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fred3";
-	dir = 9
+	dir = 9;
+	icon_state = "fred3"
 	},
-/area)
+/area/space)
 "rK" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fred1";
-	dir = 9
+	dir = 9;
+	icon_state = "fred1"
 	},
-/area)
+/area/space)
 "rL" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fblue1";
-	dir = 4
+	dir = 4;
+	icon_state = "fblue1"
 	},
-/area)
+/area/space)
 "rM" = (
 /turf/simulated/floor/carpet{
-	icon_state = "blue1";
-	dir = 5
+	dir = 5;
+	icon_state = "blue1"
 	},
-/area)
+/area/space)
 "rN" = (
 /turf/simulated/floor/carpet{
-	icon_state = "blue3";
-	dir = 5
+	dir = 5;
+	icon_state = "blue3"
 	},
-/area)
+/area/space)
 "rO" = (
 /turf/simulated/floor/carpet{
-	icon_state = "blue3";
-	dir = 9
+	dir = 9;
+	icon_state = "blue3"
 	},
-/area)
+/area/space)
 "rP" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fblue3";
-	dir = 5
+	dir = 5;
+	icon_state = "fblue3"
 	},
-/area)
+/area/space)
 "rQ" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fblue3";
-	dir = 9
+	dir = 9;
+	icon_state = "fblue3"
 	},
-/area)
+/area/space)
 "rR" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fblue1";
-	dir = 9
+	dir = 9;
+	icon_state = "fblue1"
 	},
-/area)
+/area/space)
 "rS" = (
 /turf/simulated/floor{
 	icon_state = "red"
 	},
-/area)
+/area/space)
 "rT" = (
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "red"
 	},
-/area)
+/area/space)
 "rU" = (
 /turf/simulated/floor{
 	icon_state = "redcorner"
 	},
-/area)
+/area/space)
 "rV" = (
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "redcorner"
 	},
-/area)
+/area/space)
 "rW" = (
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "red"
 	},
-/area)
+/area/space)
 "rX" = (
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "red"
 	},
-/area)
+/area/space)
 "rY" = (
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "whitecheck"
 	},
-/area)
+/area/space)
 "rZ" = (
 /turf/simulated/floor{
 	icon_state = "redwhite"
 	},
-/area)
+/area/space)
 "sa" = (
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "redwhite"
 	},
-/area)
+/area/space)
 "sb" = (
 /turf/simulated/floor{
 	icon_state = "redwhitecorner"
 	},
-/area)
+/area/space)
 "sc" = (
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "redwhitecorner"
 	},
-/area)
+/area/space)
 "sd" = (
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "redwhite"
 	},
-/area)
+/area/space)
 "se" = (
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "redwhite"
 	},
-/area)
+/area/space)
 "sf" = (
 /turf/simulated/floor{
 	icon_state = "redblack"
 	},
-/area)
+/area/space)
 "sg" = (
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "redblack"
 	},
-/area)
+/area/space)
 "sh" = (
 /turf/simulated/floor{
 	icon_state = "redblackcorner"
 	},
-/area)
+/area/space)
 "si" = (
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "redblackcorner"
 	},
-/area)
+/area/space)
 "sj" = (
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "redblack"
 	},
-/area)
+/area/space)
 "sk" = (
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "redblack"
 	},
-/area)
+/area/space)
 "sl" = (
 /turf/simulated/floor/stairs{
 	dir = 5;
 	icon_state = "wood2_stairs2"
 	},
-/area)
+/area/space)
 "sm" = (
 /turf/simulated/floor/stairs{
 	icon_state = "wood2_stairs"
 	},
-/area)
+/area/space)
 "sn" = (
 /turf/simulated/floor/stairs{
 	dir = 8;
 	icon_state = "wood2_stairs2"
 	},
-/area)
+/area/space)
 "so" = (
 /turf/simulated/floor/stairs{
 	dir = 5;
 	icon_state = "wood_stairs2"
 	},
-/area)
+/area/space)
 "sp" = (
 /turf/simulated/floor/stairs{
 	icon_state = "wood_stairs"
 	},
-/area)
+/area/space)
 "sq" = (
 /turf/simulated/floor/stairs{
 	dir = 8;
 	icon_state = "wood_stairs2"
 	},
-/area)
+/area/space)
 "sr" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fred4";
-	dir = 1
+	dir = 1;
+	icon_state = "fred4"
 	},
-/area)
+/area/space)
 "ss" = (
 /turf/simulated/floor/carpet{
-	icon_state = "red4";
-	dir = 8
+	dir = 8;
+	icon_state = "red4"
 	},
-/area)
+/area/space)
 "st" = (
 /turf/simulated/floor/carpet{
-	icon_state = "red1";
-	dir = 10
+	dir = 10;
+	icon_state = "red1"
 	},
-/area)
+/area/space)
 "su" = (
 /turf/simulated/floor/carpet{
-	icon_state = "red4";
-	dir = 4
+	dir = 4;
+	icon_state = "red4"
 	},
-/area)
+/area/space)
 "sv" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fred4";
-	dir = 8
+	dir = 8;
+	icon_state = "fred4"
 	},
-/area)
+/area/space)
 "sw" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fred1";
-	dir = 10
+	dir = 10;
+	icon_state = "fred1"
 	},
-/area)
+/area/space)
 "sx" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fred4";
-	dir = 4
+	dir = 4;
+	icon_state = "fred4"
 	},
-/area)
+/area/space)
 "sy" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fblue4";
-	dir = 1
+	dir = 1;
+	icon_state = "fblue4"
 	},
-/area)
+/area/space)
 "sz" = (
 /turf/simulated/floor/carpet{
-	icon_state = "blue4";
-	dir = 8
+	dir = 8;
+	icon_state = "blue4"
 	},
-/area)
+/area/space)
 "sA" = (
 /turf/simulated/floor/carpet{
-	icon_state = "blue1";
-	dir = 10
+	dir = 10;
+	icon_state = "blue1"
 	},
-/area)
+/area/space)
 "sB" = (
 /turf/simulated/floor/carpet{
-	icon_state = "blue4";
-	dir = 4
+	dir = 4;
+	icon_state = "blue4"
 	},
-/area)
+/area/space)
 "sC" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fblue4";
-	dir = 8
+	dir = 8;
+	icon_state = "fblue4"
 	},
-/area)
+/area/space)
 "sD" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fblue1";
-	dir = 10
+	dir = 10;
+	icon_state = "fblue1"
 	},
-/area)
+/area/space)
 "sE" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fblue4";
-	dir = 4
+	dir = 4;
+	icon_state = "fblue4"
 	},
-/area)
+/area/space)
 "sF" = (
 /turf/simulated/floor{
 	icon_state = "fullred"
 	},
-/area)
+/area/space)
 "sG" = (
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "red"
 	},
-/area)
+/area/space)
 "sH" = (
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "red"
 	},
-/area)
+/area/space)
 "sI" = (
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "redcorner"
 	},
-/area)
+/area/space)
 "sJ" = (
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "redcorner"
 	},
-/area)
+/area/space)
 "sK" = (
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "red"
 	},
-/area)
+/area/space)
 "sL" = (
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "red"
 	},
-/area)
+/area/space)
 "sM" = (
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "whitecheck"
 	},
-/area)
+/area/space)
 "sN" = (
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "redwhite"
 	},
-/area)
+/area/space)
 "sO" = (
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "redwhite"
 	},
-/area)
+/area/space)
 "sP" = (
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "redwhitecorner"
 	},
-/area)
+/area/space)
 "sQ" = (
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "redwhitecorner"
 	},
-/area)
+/area/space)
 "sR" = (
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "redwhite"
 	},
-/area)
+/area/space)
 "sS" = (
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "redwhite"
 	},
-/area)
+/area/space)
 "sT" = (
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "redblack"
 	},
-/area)
+/area/space)
 "sU" = (
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "redblack"
 	},
-/area)
+/area/space)
 "sV" = (
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "redblackcorner"
 	},
-/area)
+/area/space)
 "sW" = (
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "redblackcorner"
 	},
-/area)
+/area/space)
 "sX" = (
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "redblack"
 	},
-/area)
+/area/space)
 "sY" = (
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "redblack"
 	},
-/area)
+/area/space)
 "sZ" = (
 /turf/simulated/floor/stairs{
 	icon_state = "wood2_stairs2"
 	},
-/area)
+/area/space)
 "ta" = (
 /turf/simulated/floor/stairs{
 	dir = 6;
 	icon_state = "wood2_stairs"
 	},
-/area)
+/area/space)
 "tb" = (
 /turf/simulated/floor/stairs{
 	dir = 6;
 	icon_state = "wood2_stairs2"
 	},
-/area)
+/area/space)
 "tc" = (
 /turf/simulated/floor/stairs{
 	icon_state = "wood_stairs2"
 	},
-/area)
+/area/space)
 "td" = (
 /turf/simulated/floor/stairs{
 	dir = 6;
 	icon_state = "wood_stairs"
 	},
-/area)
+/area/space)
 "te" = (
 /turf/simulated/floor/stairs{
 	dir = 6;
 	icon_state = "wood_stairs2"
 	},
-/area)
+/area/space)
 "tf" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fred1";
-	dir = 6
+	dir = 6;
+	icon_state = "fred1"
 	},
-/area)
+/area/space)
 "tg" = (
 /turf/simulated/floor/carpet{
-	icon_state = "red6";
-	dir = 9
+	dir = 9;
+	icon_state = "red6"
 	},
-/area)
+/area/space)
 "th" = (
 /turf/simulated/floor/carpet{
-	icon_state = "red6";
-	dir = 1
+	dir = 1;
+	icon_state = "red6"
 	},
-/area)
+/area/space)
 "ti" = (
 /turf/simulated/floor/carpet{
-	icon_state = "red6";
-	dir = 5
+	dir = 5;
+	icon_state = "red6"
 	},
-/area)
+/area/space)
 "tj" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fred6";
-	dir = 9
+	dir = 9;
+	icon_state = "fred6"
 	},
-/area)
+/area/space)
 "tk" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fred6";
-	dir = 1
+	dir = 1;
+	icon_state = "fred6"
 	},
-/area)
+/area/space)
 "tl" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fred6";
-	dir = 5
+	dir = 5;
+	icon_state = "fred6"
 	},
-/area)
+/area/space)
 "tm" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fblue1";
-	dir = 6
+	dir = 6;
+	icon_state = "fblue1"
 	},
-/area)
+/area/space)
 "tn" = (
 /turf/simulated/floor/carpet{
-	icon_state = "blue6";
-	dir = 9
+	dir = 9;
+	icon_state = "blue6"
 	},
-/area)
+/area/space)
 "to" = (
 /turf/simulated/floor/carpet{
-	icon_state = "blue6";
-	dir = 1
+	dir = 1;
+	icon_state = "blue6"
 	},
-/area)
+/area/space)
 "tp" = (
 /turf/simulated/floor/carpet{
-	icon_state = "blue6";
-	dir = 5
+	dir = 5;
+	icon_state = "blue6"
 	},
-/area)
+/area/space)
 "tq" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fblue6";
-	dir = 9
+	dir = 9;
+	icon_state = "fblue6"
 	},
-/area)
+/area/space)
 "tr" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fblue6";
-	dir = 1
+	dir = 1;
+	icon_state = "fblue6"
 	},
-/area)
+/area/space)
 "ts" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fblue6";
-	dir = 5
+	dir = 5;
+	icon_state = "fblue6"
 	},
-/area)
+/area/space)
 "tt" = (
 /turf/simulated/floor{
 	icon_state = "black"
 	},
-/area)
+/area/space)
 "tu" = (
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "black"
 	},
-/area)
+/area/space)
 "tv" = (
 /turf/simulated/floor{
 	icon_state = "blackcorner"
 	},
-/area)
+/area/space)
 "tw" = (
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "blackcorner"
 	},
-/area)
+/area/space)
 "tx" = (
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "black"
 	},
-/area)
+/area/space)
 "ty" = (
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "black"
 	},
-/area)
+/area/space)
 "tz" = (
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "whitecheck2"
 	},
-/area)
+/area/space)
 "tA" = (
 /turf/simulated/floor{
 	icon_state = "darkwhite"
 	},
-/area)
+/area/space)
 "tB" = (
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "darkwhite"
 	},
-/area)
+/area/space)
 "tC" = (
 /turf/simulated/floor{
 	icon_state = "darkwhitecorner"
 	},
-/area)
+/area/space)
 "tD" = (
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "darkwhitecorner"
 	},
-/area)
+/area/space)
 "tE" = (
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "darkwhite"
 	},
-/area)
+/area/space)
 "tF" = (
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "darkwhite"
 	},
-/area)
+/area/space)
 "tG" = (
 /turf/simulated/floor{
 	icon_state = "greyblack"
 	},
-/area)
+/area/space)
 "tH" = (
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "greyblack"
 	},
-/area)
+/area/space)
 "tI" = (
 /turf/simulated/floor{
 	icon_state = "greyblackcorner"
 	},
-/area)
+/area/space)
 "tJ" = (
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "greyblackcorner"
 	},
-/area)
+/area/space)
 "tK" = (
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "greyblack"
 	},
-/area)
+/area/space)
 "tL" = (
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "greyblack"
 	},
-/area)
+/area/space)
 "tM" = (
 /turf/simulated/floor/stairs{
 	dir = 1;
 	icon_state = "Stairs2_wide"
 	},
-/area)
+/area/space)
 "tN" = (
 /turf/simulated/floor/stairs{
 	dir = 1;
 	icon_state = "stairs_middle"
 	},
-/area)
+/area/space)
 "tO" = (
 /turf/simulated/floor/stairs{
 	dir = 1;
 	icon_state = "Stairs_wide"
 	},
-/area)
+/area/space)
 "tP" = (
 /turf/simulated/floor/stairs{
 	dir = 1;
 	icon_state = "medstairs_wide"
 	},
-/area)
+/area/space)
 "tQ" = (
 /turf/simulated/floor/stairs{
 	dir = 1;
 	icon_state = "medstairs_middle"
 	},
-/area)
+/area/space)
 "tR" = (
 /turf/simulated/floor/stairs{
 	dir = 1;
 	icon_state = "medstairs2_wide"
 	},
-/area)
+/area/space)
 "tS" = (
 /turf/simulated/floor/carpet{
 	icon_state = "fred4"
 	},
-/area)
+/area/space)
 "tT" = (
 /turf/simulated/floor/carpet{
-	icon_state = "red6";
-	dir = 8
+	dir = 8;
+	icon_state = "red6"
 	},
-/area)
+/area/space)
 "tU" = (
 /turf/simulated/floor/carpet{
-	icon_state = "red1";
-	dir = 8
+	dir = 8;
+	icon_state = "red1"
 	},
-/area)
+/area/space)
 "tV" = (
 /turf/simulated/floor/carpet{
-	icon_state = "red6";
-	dir = 4
+	dir = 4;
+	icon_state = "red6"
 	},
-/area)
+/area/space)
 "tW" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fred6";
-	dir = 8
+	dir = 8;
+	icon_state = "fred6"
 	},
-/area)
+/area/space)
 "tX" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fred1";
-	dir = 8
+	dir = 8;
+	icon_state = "fred1"
 	},
-/area)
+/area/space)
 "tY" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fred6";
-	dir = 4
+	dir = 4;
+	icon_state = "fred6"
 	},
-/area)
+/area/space)
 "tZ" = (
 /turf/simulated/floor/carpet{
 	icon_state = "fblue4"
 	},
-/area)
+/area/space)
 "ua" = (
 /turf/simulated/floor/carpet{
-	icon_state = "blue6";
-	dir = 8
+	dir = 8;
+	icon_state = "blue6"
 	},
-/area)
+/area/space)
 "ub" = (
 /turf/simulated/floor/carpet{
-	icon_state = "blue1";
-	dir = 8
+	dir = 8;
+	icon_state = "blue1"
 	},
-/area)
+/area/space)
 "uc" = (
 /turf/simulated/floor/carpet{
-	icon_state = "blue6";
-	dir = 4
+	dir = 4;
+	icon_state = "blue6"
 	},
-/area)
+/area/space)
 "ud" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fblue6";
-	dir = 8
+	dir = 8;
+	icon_state = "fblue6"
 	},
-/area)
+/area/space)
 "ue" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fblue1";
-	dir = 8
+	dir = 8;
+	icon_state = "fblue1"
 	},
-/area)
+/area/space)
 "uf" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fblue6";
-	dir = 4
+	dir = 4;
+	icon_state = "fblue6"
 	},
-/area)
+/area/space)
 "ug" = (
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area)
+/area/space)
 "uh" = (
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "black"
 	},
-/area)
+/area/space)
 "ui" = (
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "black"
 	},
-/area)
+/area/space)
 "uj" = (
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "blackcorner"
 	},
-/area)
+/area/space)
 "uk" = (
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "blackcorner"
 	},
-/area)
+/area/space)
 "ul" = (
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "black"
 	},
-/area)
+/area/space)
 "um" = (
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "black"
 	},
-/area)
+/area/space)
 "un" = (
 /turf/simulated/floor{
 	dir = 2;
 	icon_state = "whitecheck2"
 	},
-/area)
+/area/space)
 "uo" = (
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "darkwhite"
 	},
-/area)
+/area/space)
 "up" = (
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "darkwhite"
 	},
-/area)
+/area/space)
 "uq" = (
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "darkwhitecorner"
 	},
-/area)
+/area/space)
 "ur" = (
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "darkwhitecorner"
 	},
-/area)
+/area/space)
 "us" = (
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "darkwhite"
 	},
-/area)
+/area/space)
 "ut" = (
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "darkwhite"
 	},
-/area)
+/area/space)
 "uu" = (
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "greyblack"
 	},
-/area)
+/area/space)
 "uv" = (
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "greyblack"
 	},
-/area)
+/area/space)
 "uw" = (
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "greyblackcorner"
 	},
-/area)
+/area/space)
 "ux" = (
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "greyblackcorner"
 	},
-/area)
+/area/space)
 "uy" = (
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "greyblack"
 	},
-/area)
+/area/space)
 "uz" = (
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "greyblack"
 	},
-/area)
+/area/space)
 "uA" = (
 /turf/simulated/floor/stairs{
 	dir = 4;
 	icon_state = "Stairs_wide"
 	},
-/area)
+/area/space)
 "uB" = (
 /turf/simulated/floor/stairs{
 	dir = 1
 	},
-/area)
+/area/space)
 "uC" = (
 /turf/simulated/floor/stairs{
 	dir = 8;
 	icon_state = "Stairs2_wide"
 	},
-/area)
+/area/space)
 "uD" = (
 /turf/simulated/floor/stairs{
 	dir = 4;
 	icon_state = "medstairs_wide"
 	},
-/area)
+/area/space)
 "uE" = (
 /turf/simulated/floor/stairs{
 	dir = 1;
 	icon_state = "medstairs_alone"
 	},
-/area)
+/area/space)
 "uF" = (
 /turf/simulated/floor/stairs{
 	dir = 8;
 	icon_state = "medstairs2_wide"
 	},
-/area)
+/area/space)
 "uG" = (
 /turf/simulated/floor/carpet{
-	icon_state = "red1";
-	dir = 4
+	dir = 4;
+	icon_state = "red1"
 	},
-/area)
+/area/space)
 "uH" = (
 /turf/simulated/floor/carpet{
-	icon_state = "red6";
-	dir = 10
+	dir = 10;
+	icon_state = "red6"
 	},
-/area)
+/area/space)
 "uI" = (
 /turf/simulated/floor/carpet{
 	icon_state = "red6"
 	},
-/area)
+/area/space)
 "uJ" = (
 /turf/simulated/floor/carpet{
-	icon_state = "red6";
-	dir = 6
+	dir = 6;
+	icon_state = "red6"
 	},
-/area)
+/area/space)
 "uK" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fred6";
-	dir = 10
+	dir = 10;
+	icon_state = "fred6"
 	},
-/area)
+/area/space)
 "uL" = (
 /turf/simulated/floor/carpet{
 	icon_state = "fred6"
 	},
-/area)
+/area/space)
 "uM" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fred6";
-	dir = 6
+	dir = 6;
+	icon_state = "fred6"
 	},
-/area)
+/area/space)
 "uN" = (
 /turf/simulated/floor/carpet{
-	icon_state = "blue1";
-	dir = 4
+	dir = 4;
+	icon_state = "blue1"
 	},
-/area)
+/area/space)
 "uO" = (
 /turf/simulated/floor/carpet{
-	icon_state = "blue6";
-	dir = 10
+	dir = 10;
+	icon_state = "blue6"
 	},
-/area)
+/area/space)
 "uP" = (
 /turf/simulated/floor/carpet{
 	icon_state = "blue6"
 	},
-/area)
+/area/space)
 "uQ" = (
 /turf/simulated/floor/carpet{
-	icon_state = "blue6";
-	dir = 6
+	dir = 6;
+	icon_state = "blue6"
 	},
-/area)
+/area/space)
 "uR" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fblue6";
-	dir = 10
+	dir = 10;
+	icon_state = "fblue6"
 	},
-/area)
+/area/space)
 "uS" = (
 /turf/simulated/floor/carpet{
 	icon_state = "fblue6"
 	},
-/area)
+/area/space)
 "uT" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fblue6";
-	dir = 6
+	dir = 6;
+	icon_state = "fblue6"
 	},
-/area)
+/area/space)
 "uU" = (
 /turf/simulated/floor{
 	icon_state = "neutral"
 	},
-/area)
+/area/space)
 "uV" = (
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "neutral"
 	},
-/area)
+/area/space)
 "uW" = (
 /turf/simulated/floor{
 	icon_state = "neutralcorner"
 	},
-/area)
+/area/space)
 "uX" = (
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "neutralcorner"
 	},
-/area)
+/area/space)
 "uY" = (
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "neutral"
 	},
-/area)
+/area/space)
 "uZ" = (
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "neutral"
 	},
-/area)
+/area/space)
 "va" = (
 /turf/simulated/floor/stairs{
 	dir = 4;
 	icon_state = "stairs_middle"
 	},
-/area)
+/area/space)
 "vb" = (
 /turf/simulated/floor/stairs{
 	dir = 4
 	},
-/area)
+/area/space)
 "vc" = (
 /turf/simulated/floor/stairs{
 	dir = 8
 	},
-/area)
+/area/space)
 "vd" = (
 /turf/simulated/floor/stairs{
 	dir = 8;
 	icon_state = "stairs_middle"
 	},
-/area)
+/area/space)
 "ve" = (
 /turf/simulated/floor/stairs{
 	dir = 4;
 	icon_state = "medstairs_middle"
 	},
-/area)
+/area/space)
 "vf" = (
 /turf/simulated/floor/stairs{
 	dir = 4;
 	icon_state = "medstairs_alone"
 	},
-/area)
+/area/space)
 "vg" = (
 /turf/simulated/floor/stairs{
 	dir = 8;
 	icon_state = "medstairs_alone"
 	},
-/area)
+/area/space)
 "vh" = (
 /turf/simulated/floor/stairs{
 	dir = 8;
 	icon_state = "medstairs_middle"
 	},
-/area)
+/area/space)
 "vi" = (
 /turf/simulated/floor/carpet{
-	icon_state = "red4";
-	dir = 1
+	dir = 1;
+	icon_state = "red4"
 	},
-/area)
+/area/space)
 "vj" = (
 /turf/simulated/floor/carpet{
-	icon_state = "red2";
-	dir = 9
+	dir = 9;
+	icon_state = "red2"
 	},
-/area)
+/area/space)
 "vk" = (
 /turf/simulated/floor/carpet{
-	icon_state = "red2";
-	dir = 1
+	dir = 1;
+	icon_state = "red2"
 	},
-/area)
+/area/space)
 "vl" = (
 /turf/simulated/floor/carpet{
-	icon_state = "red2";
-	dir = 5
+	dir = 5;
+	icon_state = "red2"
 	},
-/area)
+/area/space)
 "vm" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fred2";
-	dir = 9
+	dir = 9;
+	icon_state = "fred2"
 	},
-/area)
+/area/space)
 "vn" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fred2";
-	dir = 1
+	dir = 1;
+	icon_state = "fred2"
 	},
-/area)
+/area/space)
 "vo" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fred2";
-	dir = 5
+	dir = 5;
+	icon_state = "fred2"
 	},
-/area)
+/area/space)
 "vp" = (
 /turf/simulated/floor/carpet{
-	icon_state = "blue4";
-	dir = 1
+	dir = 1;
+	icon_state = "blue4"
 	},
-/area)
+/area/space)
 "vq" = (
 /turf/simulated/floor/carpet{
-	icon_state = "blue2";
-	dir = 9
+	dir = 9;
+	icon_state = "blue2"
 	},
-/area)
+/area/space)
 "vr" = (
 /turf/simulated/floor/carpet{
-	icon_state = "blue2";
-	dir = 1
+	dir = 1;
+	icon_state = "blue2"
 	},
-/area)
+/area/space)
 "vs" = (
 /turf/simulated/floor/carpet{
-	icon_state = "blue2";
-	dir = 5
+	dir = 5;
+	icon_state = "blue2"
 	},
-/area)
+/area/space)
 "vt" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fblue2";
-	dir = 9
+	dir = 9;
+	icon_state = "fblue2"
 	},
-/area)
+/area/space)
 "vu" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fblue2";
-	dir = 1
+	dir = 1;
+	icon_state = "fblue2"
 	},
-/area)
+/area/space)
 "vv" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fblue2";
-	dir = 5
+	dir = 5;
+	icon_state = "fblue2"
 	},
-/area)
+/area/space)
 "vw" = (
 /turf/simulated/floor{
 	icon_state = "fullneutral"
 	},
-/area)
+/area/space)
 "vx" = (
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "neutral"
 	},
-/area)
+/area/space)
 "vy" = (
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "neutral"
 	},
-/area)
+/area/space)
 "vz" = (
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "neutralcorner"
 	},
-/area)
+/area/space)
 "vA" = (
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "neutralcorner"
 	},
-/area)
+/area/space)
 "vB" = (
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "neutral"
 	},
-/area)
+/area/space)
 "vC" = (
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "neutral"
 	},
-/area)
+/area/space)
 "vD" = (
 /turf/simulated/floor/stairs{
 	dir = 4;
 	icon_state = "Stairs2_wide"
 	},
-/area)
+/area/space)
 "vE" = (
 /turf/simulated/floor/stairs,
-/area)
+/area/space)
 "vF" = (
 /turf/simulated/floor/stairs{
 	dir = 8;
 	icon_state = "Stairs_wide"
 	},
-/area)
+/area/space)
 "vG" = (
 /turf/simulated/floor/stairs{
 	dir = 4;
 	icon_state = "medstairs2_wide"
 	},
-/area)
+/area/space)
 "vH" = (
 /turf/simulated/floor/stairs{
 	icon_state = "medstairs_alone"
 	},
-/area)
+/area/space)
 "vI" = (
 /turf/simulated/floor/stairs{
 	dir = 8;
 	icon_state = "medstairs_wide"
 	},
-/area)
+/area/space)
 "vJ" = (
 /turf/simulated/floor/carpet{
-	icon_state = "red1";
-	dir = 6
+	dir = 6;
+	icon_state = "red1"
 	},
-/area)
+/area/space)
 "vK" = (
 /turf/simulated/floor/carpet{
-	icon_state = "red2";
-	dir = 8
+	dir = 8;
+	icon_state = "red2"
 	},
-/area)
+/area/space)
 "vL" = (
 /turf/simulated/floor/carpet,
-/area)
+/area/space)
 "vM" = (
 /turf/simulated/floor/carpet{
-	icon_state = "red2";
-	dir = 4
+	dir = 4;
+	icon_state = "red2"
 	},
-/area)
+/area/space)
 "vN" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fred2";
-	dir = 8
+	dir = 8;
+	icon_state = "fred2"
 	},
-/area)
+/area/space)
 "vO" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fred1";
-	dir = 1
+	dir = 1;
+	icon_state = "fred1"
 	},
-/area)
+/area/space)
 "vP" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fred2";
-	dir = 4
+	dir = 4;
+	icon_state = "fred2"
 	},
-/area)
+/area/space)
 "vQ" = (
 /turf/simulated/floor/carpet{
-	icon_state = "blue1";
-	dir = 6
+	dir = 6;
+	icon_state = "blue1"
 	},
-/area)
+/area/space)
 "vR" = (
 /turf/simulated/floor/carpet{
-	icon_state = "blue2";
-	dir = 8
+	dir = 8;
+	icon_state = "blue2"
 	},
-/area)
+/area/space)
 "vS" = (
 /turf/simulated/floor/carpet{
 	icon_state = "blue1"
 	},
-/area)
+/area/space)
 "vT" = (
 /turf/simulated/floor/carpet{
-	icon_state = "blue2";
-	dir = 4
+	dir = 4;
+	icon_state = "blue2"
 	},
-/area)
+/area/space)
 "vU" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fblue2";
-	dir = 8
+	dir = 8;
+	icon_state = "fblue2"
 	},
-/area)
+/area/space)
 "vV" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fblue1";
-	dir = 1
+	dir = 1;
+	icon_state = "fblue1"
 	},
-/area)
+/area/space)
 "vW" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fblue2";
-	dir = 4
+	dir = 4;
+	icon_state = "fblue2"
 	},
-/area)
+/area/space)
 "vX" = (
 /turf/simulated/floor{
 	icon_state = "whitehall"
 	},
-/area)
+/area/space)
 "vY" = (
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "whitehall"
 	},
-/area)
+/area/space)
 "vZ" = (
 /turf/simulated/floor{
 	icon_state = "whitecorner"
 	},
-/area)
+/area/space)
 "wa" = (
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "whitecorner"
 	},
-/area)
+/area/space)
 "wb" = (
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "whitehall"
 	},
-/area)
+/area/space)
 "wc" = (
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "whitehall"
 	},
-/area)
+/area/space)
 "wd" = (
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "whitecheck"
 	},
-/area)
+/area/space)
 "we" = (
 /turf/simulated/floor/stairs{
 	icon_state = "Stairs_wide"
 	},
-/area)
+/area/space)
 "wf" = (
 /turf/simulated/floor/stairs{
 	icon_state = "stairs_middle"
 	},
-/area)
+/area/space)
 "wg" = (
 /turf/simulated/floor/stairs{
 	icon_state = "Stairs2_wide"
 	},
-/area)
+/area/space)
 "wh" = (
 /turf/simulated/floor/stairs{
 	icon_state = "medstairs_wide"
 	},
-/area)
+/area/space)
 "wi" = (
 /turf/simulated/floor/stairs{
 	icon_state = "medstairs_middle"
 	},
-/area)
+/area/space)
 "wj" = (
 /turf/simulated/floor/stairs{
 	icon_state = "medstairs2_wide"
 	},
-/area)
+/area/space)
 "wk" = (
 /turf/simulated/floor/carpet{
 	icon_state = "red4"
 	},
-/area)
+/area/space)
 "wl" = (
 /turf/simulated/floor/carpet{
-	icon_state = "red2";
-	dir = 10
+	dir = 10;
+	icon_state = "red2"
 	},
-/area)
+/area/space)
 "wm" = (
 /turf/simulated/floor/carpet{
-	icon_state = "red2";
-	dir = 2
+	dir = 2;
+	icon_state = "red2"
 	},
-/area)
+/area/space)
 "wn" = (
 /turf/simulated/floor/carpet{
-	icon_state = "red2";
-	dir = 6
+	dir = 6;
+	icon_state = "red2"
 	},
-/area)
+/area/space)
 "wo" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fred2";
-	dir = 10
+	dir = 10;
+	icon_state = "fred2"
 	},
-/area)
+/area/space)
 "wp" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fred2";
-	dir = 2
+	dir = 2;
+	icon_state = "fred2"
 	},
-/area)
+/area/space)
 "wq" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fred2";
-	dir = 6
+	dir = 6;
+	icon_state = "fred2"
 	},
-/area)
+/area/space)
 "wr" = (
 /turf/simulated/floor/carpet{
 	icon_state = "blue4"
 	},
-/area)
+/area/space)
 "ws" = (
 /turf/simulated/floor/carpet{
-	icon_state = "blue2";
-	dir = 10
+	dir = 10;
+	icon_state = "blue2"
 	},
-/area)
+/area/space)
 "wt" = (
 /turf/simulated/floor/carpet{
-	icon_state = "blue2";
-	dir = 2
+	dir = 2;
+	icon_state = "blue2"
 	},
-/area)
+/area/space)
 "wu" = (
 /turf/simulated/floor/carpet{
-	icon_state = "blue2";
-	dir = 6
+	dir = 6;
+	icon_state = "blue2"
 	},
-/area)
+/area/space)
 "wv" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fblue2";
-	dir = 10
+	dir = 10;
+	icon_state = "fblue2"
 	},
-/area)
+/area/space)
 "ww" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fblue2";
-	dir = 2
+	dir = 2;
+	icon_state = "fblue2"
 	},
-/area)
+/area/space)
 "wx" = (
 /turf/simulated/floor/carpet{
-	icon_state = "fblue2";
-	dir = 6
+	dir = 6;
+	icon_state = "fblue2"
 	},
-/area)
+/area/space)
 "wy" = (
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area)
+/area/space)
 "wz" = (
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "whitehall"
 	},
-/area)
+/area/space)
 "wA" = (
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "whitehall"
 	},
-/area)
+/area/space)
 "wB" = (
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "whitecorner"
 	},
-/area)
+/area/space)
 "wC" = (
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "whitecorner"
 	},
-/area)
+/area/space)
 "wD" = (
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "whitehall"
 	},
-/area)
+/area/space)
 "wE" = (
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "whitehall"
 	},
-/area)
+/area/space)
 "wF" = (
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "whitecheck"
 	},
-/area)
+/area/space)
 "wG" = (
 /obj/decal/tile_edge/line/white,
 /obj/decal/tile_edge/line/white{
-	icon_state = "line1";
-	dir = 10
+	dir = 10;
+	icon_state = "line1"
 	},
 /obj/decal/tile_edge/line/white{
-	icon_state = "line1";
-	dir = 9
+	dir = 9;
+	icon_state = "line1"
 	},
 /obj/decal/tile_edge/line/white{
 	dir = 5;
 	icon_state = "line1"
 	},
 /obj/decal/tile_edge/line/white{
-	icon_state = "line1";
-	dir = 6
+	dir = 6;
+	icon_state = "line1"
 	},
 /obj/decal/tile_edge/line/white{
-	icon_state = "line2";
-	dir = 10
+	dir = 10;
+	icon_state = "line2"
 	},
 /obj/decal/tile_edge/line/white{
-	icon_state = "line2";
-	dir = 6
+	dir = 6;
+	icon_state = "line2"
 	},
 /obj/decal/tile_edge/line/white{
-	icon_state = "line2";
-	dir = 9
+	dir = 9;
+	icon_state = "line2"
 	},
 /obj/decal/tile_edge/line/white{
-	icon_state = "line2";
-	dir = 5
+	dir = 5;
+	icon_state = "line2"
 	},
 /obj/decal/tile_edge/line/white{
-	icon_state = "line3";
-	dir = 4
+	dir = 4;
+	icon_state = "line3"
 	},
 /obj/decal/tile_edge/line/white{
-	icon_state = "line3";
-	dir = 1
+	dir = 1;
+	icon_state = "line3"
 	},
 /obj/decal/tile_edge/line/white{
 	icon_state = "line3"
 	},
 /obj/decal/tile_edge/line/white{
-	icon_state = "line1";
-	dir = 4
+	dir = 4;
+	icon_state = "line1"
 	},
 /obj/decal/tile_edge/line/white{
-	icon_state = "line1";
-	dir = 1
+	dir = 1;
+	icon_state = "line1"
 	},
 /obj/decal/tile_edge/line/white{
 	icon_state = "line1"
 	},
 /obj/decal/tile_edge/line/white{
-	icon_state = "line1";
-	dir = 8
+	dir = 8;
+	icon_state = "line1"
 	},
 /obj/decal/tile_edge/line/white{
-	icon_state = "line2";
-	dir = 1
+	dir = 1;
+	icon_state = "line2"
 	},
 /obj/decal/tile_edge/line/white{
-	icon_state = "line2";
-	dir = 2
+	dir = 2;
+	icon_state = "line2"
 	},
 /obj/decal/tile_edge/line/white{
-	icon_state = "line2";
-	dir = 4
+	dir = 4;
+	icon_state = "line2"
 	},
 /obj/decal/tile_edge/line/white{
-	icon_state = "line2";
-	dir = 8
+	dir = 8;
+	icon_state = "line2"
 	},
 /obj/decal/tile_edge/line/white{
-	icon_state = "line3";
-	dir = 8
+	dir = 8;
+	icon_state = "line3"
 	},
 /obj/decal/tile_edge/line/white{
-	icon_state = "line4";
-	dir = 2
+	dir = 2;
+	icon_state = "line4"
 	},
 /obj/decal/tile_edge/line/white{
-	icon_state = "line4";
-	dir = 4
+	dir = 4;
+	icon_state = "line4"
 	},
 /obj/decal/tile_edge/line/white{
-	icon_state = "line4";
-	dir = 1
+	dir = 1;
+	icon_state = "line4"
 	},
 /obj/decal/tile_edge/line/white{
-	icon_state = "line4";
-	dir = 8
+	dir = 8;
+	icon_state = "line4"
 	},
 /obj/decal/tile_edge/line/white{
-	icon_state = "line4";
-	dir = 5
+	dir = 5;
+	icon_state = "line4"
 	},
 /obj/decal/tile_edge/line/white{
-	icon_state = "line4";
-	dir = 9
+	dir = 9;
+	icon_state = "line4"
 	},
 /obj/decal/tile_edge/line/white{
-	icon_state = "line4";
-	dir = 6
+	dir = 6;
+	icon_state = "line4"
 	},
 /obj/decal/tile_edge/line/white{
-	icon_state = "line4";
-	dir = 10
+	dir = 10;
+	icon_state = "line4"
 	},
 /turf/space,
-/area)
+/area/space)
 "wH" = (
 /obj/decal/tile_edge/line/black,
 /obj/decal/tile_edge/line/black{
-	icon_state = "line1";
-	dir = 10
+	dir = 10;
+	icon_state = "line1"
 	},
 /obj/decal/tile_edge/line/black{
-	icon_state = "line1";
-	dir = 9
+	dir = 9;
+	icon_state = "line1"
 	},
 /obj/decal/tile_edge/line/black{
 	dir = 5;
 	icon_state = "line1"
 	},
 /obj/decal/tile_edge/line/black{
-	icon_state = "line1";
-	dir = 6
+	dir = 6;
+	icon_state = "line1"
 	},
 /obj/decal/tile_edge/line/black{
-	icon_state = "line2";
-	dir = 10
+	dir = 10;
+	icon_state = "line2"
 	},
 /obj/decal/tile_edge/line/black{
-	icon_state = "line2";
-	dir = 6
+	dir = 6;
+	icon_state = "line2"
 	},
 /obj/decal/tile_edge/line/black{
-	icon_state = "line2";
-	dir = 9
+	dir = 9;
+	icon_state = "line2"
 	},
 /obj/decal/tile_edge/line/black{
-	icon_state = "line2";
-	dir = 5
+	dir = 5;
+	icon_state = "line2"
 	},
 /obj/decal/tile_edge/line/black{
-	icon_state = "line3";
-	dir = 4
+	dir = 4;
+	icon_state = "line3"
 	},
 /obj/decal/tile_edge/line/black{
-	icon_state = "line3";
-	dir = 1
+	dir = 1;
+	icon_state = "line3"
 	},
 /obj/decal/tile_edge/line/black{
 	icon_state = "line3"
 	},
 /obj/decal/tile_edge/line/black{
-	icon_state = "line1";
-	dir = 4
+	dir = 4;
+	icon_state = "line1"
 	},
 /obj/decal/tile_edge/line/black{
-	icon_state = "line1";
-	dir = 1
+	dir = 1;
+	icon_state = "line1"
 	},
 /obj/decal/tile_edge/line/black{
 	icon_state = "line1"
 	},
 /obj/decal/tile_edge/line/black{
-	icon_state = "line1";
-	dir = 8
+	dir = 8;
+	icon_state = "line1"
 	},
 /obj/decal/tile_edge/line/black{
-	icon_state = "line2";
-	dir = 1
+	dir = 1;
+	icon_state = "line2"
 	},
 /obj/decal/tile_edge/line/black{
-	icon_state = "line2";
-	dir = 2
+	dir = 2;
+	icon_state = "line2"
 	},
 /obj/decal/tile_edge/line/black{
-	icon_state = "line2";
-	dir = 4
+	dir = 4;
+	icon_state = "line2"
 	},
 /obj/decal/tile_edge/line/black{
-	icon_state = "line2";
-	dir = 8
+	dir = 8;
+	icon_state = "line2"
 	},
 /obj/decal/tile_edge/line/black{
-	icon_state = "line3";
-	dir = 8
+	dir = 8;
+	icon_state = "line3"
 	},
 /obj/decal/tile_edge/line/black{
-	icon_state = "line4";
-	dir = 2
+	dir = 2;
+	icon_state = "line4"
 	},
 /obj/decal/tile_edge/line/black{
-	icon_state = "line4";
-	dir = 4
+	dir = 4;
+	icon_state = "line4"
 	},
 /obj/decal/tile_edge/line/black{
-	icon_state = "line4";
-	dir = 1
+	dir = 1;
+	icon_state = "line4"
 	},
 /obj/decal/tile_edge/line/black{
-	icon_state = "line4";
-	dir = 8
+	dir = 8;
+	icon_state = "line4"
 	},
 /obj/decal/tile_edge/line/black{
-	icon_state = "line4";
-	dir = 5
+	dir = 5;
+	icon_state = "line4"
 	},
 /obj/decal/tile_edge/line/black{
-	icon_state = "line4";
-	dir = 9
+	dir = 9;
+	icon_state = "line4"
 	},
 /obj/decal/tile_edge/line/black{
-	icon_state = "line4";
-	dir = 6
+	dir = 6;
+	icon_state = "line4"
 	},
 /obj/decal/tile_edge/line/black{
-	icon_state = "line4";
-	dir = 10
+	dir = 10;
+	icon_state = "line4"
 	},
 /turf/space,
-/area)
+/area/space)
 "wI" = (
 /obj/decal/tile_edge/line/blue,
 /obj/decal/tile_edge/line/blue{
-	icon_state = "line1";
-	dir = 10
+	dir = 10;
+	icon_state = "line1"
 	},
 /obj/decal/tile_edge/line/blue{
-	icon_state = "line1";
-	dir = 9
+	dir = 9;
+	icon_state = "line1"
 	},
 /obj/decal/tile_edge/line/blue{
 	dir = 5;
 	icon_state = "line1"
 	},
 /obj/decal/tile_edge/line/blue{
-	icon_state = "line1";
-	dir = 6
+	dir = 6;
+	icon_state = "line1"
 	},
 /obj/decal/tile_edge/line/blue{
-	icon_state = "line2";
-	dir = 10
+	dir = 10;
+	icon_state = "line2"
 	},
 /obj/decal/tile_edge/line/blue{
-	icon_state = "line2";
-	dir = 6
+	dir = 6;
+	icon_state = "line2"
 	},
 /obj/decal/tile_edge/line/blue{
-	icon_state = "line2";
-	dir = 9
+	dir = 9;
+	icon_state = "line2"
 	},
 /obj/decal/tile_edge/line/blue{
-	icon_state = "line2";
-	dir = 5
+	dir = 5;
+	icon_state = "line2"
 	},
 /obj/decal/tile_edge/line/blue{
-	icon_state = "line3";
-	dir = 4
+	dir = 4;
+	icon_state = "line3"
 	},
 /obj/decal/tile_edge/line/blue{
-	icon_state = "line3";
-	dir = 1
+	dir = 1;
+	icon_state = "line3"
 	},
 /obj/decal/tile_edge/line/blue{
 	icon_state = "line3"
 	},
 /obj/decal/tile_edge/line/blue{
-	icon_state = "line1";
-	dir = 4
+	dir = 4;
+	icon_state = "line1"
 	},
 /obj/decal/tile_edge/line/blue{
-	icon_state = "line1";
-	dir = 1
+	dir = 1;
+	icon_state = "line1"
 	},
 /obj/decal/tile_edge/line/blue{
 	icon_state = "line1"
 	},
 /obj/decal/tile_edge/line/blue{
-	icon_state = "line1";
-	dir = 8
+	dir = 8;
+	icon_state = "line1"
 	},
 /obj/decal/tile_edge/line/blue{
-	icon_state = "line2";
-	dir = 1
+	dir = 1;
+	icon_state = "line2"
 	},
 /obj/decal/tile_edge/line/blue{
-	icon_state = "line2";
-	dir = 2
+	dir = 2;
+	icon_state = "line2"
 	},
 /obj/decal/tile_edge/line/blue{
-	icon_state = "line2";
-	dir = 4
+	dir = 4;
+	icon_state = "line2"
 	},
 /obj/decal/tile_edge/line/blue{
-	icon_state = "line2";
-	dir = 8
+	dir = 8;
+	icon_state = "line2"
 	},
 /obj/decal/tile_edge/line/blue{
-	icon_state = "line3";
-	dir = 8
+	dir = 8;
+	icon_state = "line3"
 	},
 /obj/decal/tile_edge/line/blue{
-	icon_state = "line4";
-	dir = 2
+	dir = 2;
+	icon_state = "line4"
 	},
 /obj/decal/tile_edge/line/blue{
-	icon_state = "line4";
-	dir = 4
+	dir = 4;
+	icon_state = "line4"
 	},
 /obj/decal/tile_edge/line/blue{
-	icon_state = "line4";
-	dir = 1
+	dir = 1;
+	icon_state = "line4"
 	},
 /obj/decal/tile_edge/line/blue{
-	icon_state = "line4";
-	dir = 8
+	dir = 8;
+	icon_state = "line4"
 	},
 /obj/decal/tile_edge/line/blue{
-	icon_state = "line4";
-	dir = 5
+	dir = 5;
+	icon_state = "line4"
 	},
 /obj/decal/tile_edge/line/blue{
-	icon_state = "line4";
-	dir = 9
+	dir = 9;
+	icon_state = "line4"
 	},
 /obj/decal/tile_edge/line/blue{
-	icon_state = "line4";
-	dir = 6
+	dir = 6;
+	icon_state = "line4"
 	},
 /obj/decal/tile_edge/line/blue{
-	icon_state = "line4";
-	dir = 10
+	dir = 10;
+	icon_state = "line4"
 	},
 /turf/space,
-/area)
+/area/space)
 "wJ" = (
 /obj/decal/tile_edge/line/green,
 /obj/decal/tile_edge/line/green{
-	icon_state = "line1";
-	dir = 10
+	dir = 10;
+	icon_state = "line1"
 	},
 /obj/decal/tile_edge/line/green{
-	icon_state = "line1";
-	dir = 9
+	dir = 9;
+	icon_state = "line1"
 	},
 /obj/decal/tile_edge/line/green{
 	dir = 5;
 	icon_state = "line1"
 	},
 /obj/decal/tile_edge/line/green{
-	icon_state = "line1";
-	dir = 6
+	dir = 6;
+	icon_state = "line1"
 	},
 /obj/decal/tile_edge/line/green{
-	icon_state = "line2";
-	dir = 10
+	dir = 10;
+	icon_state = "line2"
 	},
 /obj/decal/tile_edge/line/green{
-	icon_state = "line2";
-	dir = 6
+	dir = 6;
+	icon_state = "line2"
 	},
 /obj/decal/tile_edge/line/green{
-	icon_state = "line2";
-	dir = 9
+	dir = 9;
+	icon_state = "line2"
 	},
 /obj/decal/tile_edge/line/green{
-	icon_state = "line2";
-	dir = 5
+	dir = 5;
+	icon_state = "line2"
 	},
 /obj/decal/tile_edge/line/green{
-	icon_state = "line3";
-	dir = 4
+	dir = 4;
+	icon_state = "line3"
 	},
 /obj/decal/tile_edge/line/green{
-	icon_state = "line3";
-	dir = 1
+	dir = 1;
+	icon_state = "line3"
 	},
 /obj/decal/tile_edge/line/green{
 	icon_state = "line3"
 	},
 /obj/decal/tile_edge/line/green{
-	icon_state = "line1";
-	dir = 4
+	dir = 4;
+	icon_state = "line1"
 	},
 /obj/decal/tile_edge/line/green{
-	icon_state = "line1";
-	dir = 1
+	dir = 1;
+	icon_state = "line1"
 	},
 /obj/decal/tile_edge/line/green{
 	icon_state = "line1"
 	},
 /obj/decal/tile_edge/line/green{
-	icon_state = "line1";
-	dir = 8
+	dir = 8;
+	icon_state = "line1"
 	},
 /obj/decal/tile_edge/line/green{
-	icon_state = "line2";
-	dir = 1
+	dir = 1;
+	icon_state = "line2"
 	},
 /obj/decal/tile_edge/line/green{
-	icon_state = "line2";
-	dir = 2
+	dir = 2;
+	icon_state = "line2"
 	},
 /obj/decal/tile_edge/line/green{
-	icon_state = "line2";
-	dir = 4
+	dir = 4;
+	icon_state = "line2"
 	},
 /obj/decal/tile_edge/line/green{
-	icon_state = "line2";
-	dir = 8
+	dir = 8;
+	icon_state = "line2"
 	},
 /obj/decal/tile_edge/line/green{
-	icon_state = "line3";
-	dir = 8
+	dir = 8;
+	icon_state = "line3"
 	},
 /obj/decal/tile_edge/line/green{
-	icon_state = "line4";
-	dir = 2
+	dir = 2;
+	icon_state = "line4"
 	},
 /obj/decal/tile_edge/line/green{
-	icon_state = "line4";
-	dir = 4
+	dir = 4;
+	icon_state = "line4"
 	},
 /obj/decal/tile_edge/line/green{
-	icon_state = "line4";
-	dir = 1
+	dir = 1;
+	icon_state = "line4"
 	},
 /obj/decal/tile_edge/line/green{
-	icon_state = "line4";
-	dir = 8
+	dir = 8;
+	icon_state = "line4"
 	},
 /obj/decal/tile_edge/line/green{
-	icon_state = "line4";
-	dir = 5
+	dir = 5;
+	icon_state = "line4"
 	},
 /obj/decal/tile_edge/line/green{
-	icon_state = "line4";
-	dir = 9
+	dir = 9;
+	icon_state = "line4"
 	},
 /obj/decal/tile_edge/line/green{
-	icon_state = "line4";
-	dir = 6
+	dir = 6;
+	icon_state = "line4"
 	},
 /obj/decal/tile_edge/line/green{
-	icon_state = "line4";
-	dir = 10
+	dir = 10;
+	icon_state = "line4"
 	},
 /turf/space,
-/area)
+/area/space)
 "wK" = (
 /obj/decal/tile_edge/line/grey,
 /obj/decal/tile_edge/line/grey{
-	icon_state = "line1";
-	dir = 10
+	dir = 10;
+	icon_state = "line1"
 	},
 /obj/decal/tile_edge/line/grey{
-	icon_state = "line1";
-	dir = 9
+	dir = 9;
+	icon_state = "line1"
 	},
 /obj/decal/tile_edge/line/grey{
 	dir = 5;
 	icon_state = "line1"
 	},
 /obj/decal/tile_edge/line/grey{
-	icon_state = "line1";
-	dir = 6
+	dir = 6;
+	icon_state = "line1"
 	},
 /obj/decal/tile_edge/line/grey{
-	icon_state = "line2";
-	dir = 10
+	dir = 10;
+	icon_state = "line2"
 	},
 /obj/decal/tile_edge/line/grey{
-	icon_state = "line2";
-	dir = 6
+	dir = 6;
+	icon_state = "line2"
 	},
 /obj/decal/tile_edge/line/grey{
-	icon_state = "line2";
-	dir = 9
+	dir = 9;
+	icon_state = "line2"
 	},
 /obj/decal/tile_edge/line/grey{
-	icon_state = "line2";
-	dir = 5
+	dir = 5;
+	icon_state = "line2"
 	},
 /obj/decal/tile_edge/line/grey{
-	icon_state = "line3";
-	dir = 4
+	dir = 4;
+	icon_state = "line3"
 	},
 /obj/decal/tile_edge/line/grey{
-	icon_state = "line3";
-	dir = 1
+	dir = 1;
+	icon_state = "line3"
 	},
 /obj/decal/tile_edge/line/grey{
 	icon_state = "line3"
 	},
 /obj/decal/tile_edge/line/grey{
-	icon_state = "line1";
-	dir = 4
+	dir = 4;
+	icon_state = "line1"
 	},
 /obj/decal/tile_edge/line/grey{
-	icon_state = "line1";
-	dir = 1
+	dir = 1;
+	icon_state = "line1"
 	},
 /obj/decal/tile_edge/line/grey{
 	icon_state = "line1"
 	},
 /obj/decal/tile_edge/line/grey{
-	icon_state = "line1";
-	dir = 8
+	dir = 8;
+	icon_state = "line1"
 	},
 /obj/decal/tile_edge/line/grey{
-	icon_state = "line2";
-	dir = 1
+	dir = 1;
+	icon_state = "line2"
 	},
 /obj/decal/tile_edge/line/grey{
-	icon_state = "line2";
-	dir = 2
+	dir = 2;
+	icon_state = "line2"
 	},
 /obj/decal/tile_edge/line/grey{
-	icon_state = "line2";
-	dir = 4
+	dir = 4;
+	icon_state = "line2"
 	},
 /obj/decal/tile_edge/line/grey{
-	icon_state = "line2";
-	dir = 8
+	dir = 8;
+	icon_state = "line2"
 	},
 /obj/decal/tile_edge/line/grey{
-	icon_state = "line3";
-	dir = 8
+	dir = 8;
+	icon_state = "line3"
 	},
 /obj/decal/tile_edge/line/grey{
-	icon_state = "line4";
-	dir = 2
+	dir = 2;
+	icon_state = "line4"
 	},
 /obj/decal/tile_edge/line/grey{
-	icon_state = "line4";
-	dir = 4
+	dir = 4;
+	icon_state = "line4"
 	},
 /obj/decal/tile_edge/line/grey{
-	icon_state = "line4";
-	dir = 1
+	dir = 1;
+	icon_state = "line4"
 	},
 /obj/decal/tile_edge/line/grey{
-	icon_state = "line4";
-	dir = 8
+	dir = 8;
+	icon_state = "line4"
 	},
 /obj/decal/tile_edge/line/grey{
-	icon_state = "line4";
-	dir = 5
+	dir = 5;
+	icon_state = "line4"
 	},
 /obj/decal/tile_edge/line/grey{
-	icon_state = "line4";
-	dir = 9
+	dir = 9;
+	icon_state = "line4"
 	},
 /obj/decal/tile_edge/line/grey{
-	icon_state = "line4";
-	dir = 6
+	dir = 6;
+	icon_state = "line4"
 	},
 /obj/decal/tile_edge/line/grey{
-	icon_state = "line4";
-	dir = 10
+	dir = 10;
+	icon_state = "line4"
 	},
 /turf/space,
-/area)
+/area/space)
 "wL" = (
 /obj/decal/tile_edge/line/orange,
 /obj/decal/tile_edge/line/orange{
-	icon_state = "line1";
-	dir = 10
+	dir = 10;
+	icon_state = "line1"
 	},
 /obj/decal/tile_edge/line/orange{
-	icon_state = "line1";
-	dir = 9
+	dir = 9;
+	icon_state = "line1"
 	},
 /obj/decal/tile_edge/line/orange{
 	dir = 5;
 	icon_state = "line1"
 	},
 /obj/decal/tile_edge/line/orange{
-	icon_state = "line1";
-	dir = 6
+	dir = 6;
+	icon_state = "line1"
 	},
 /obj/decal/tile_edge/line/orange{
-	icon_state = "line2";
-	dir = 10
+	dir = 10;
+	icon_state = "line2"
 	},
 /obj/decal/tile_edge/line/orange{
-	icon_state = "line2";
-	dir = 6
+	dir = 6;
+	icon_state = "line2"
 	},
 /obj/decal/tile_edge/line/orange{
-	icon_state = "line2";
-	dir = 9
+	dir = 9;
+	icon_state = "line2"
 	},
 /obj/decal/tile_edge/line/orange{
-	icon_state = "line2";
-	dir = 5
+	dir = 5;
+	icon_state = "line2"
 	},
 /obj/decal/tile_edge/line/orange{
-	icon_state = "line3";
-	dir = 4
+	dir = 4;
+	icon_state = "line3"
 	},
 /obj/decal/tile_edge/line/orange{
-	icon_state = "line3";
-	dir = 1
+	dir = 1;
+	icon_state = "line3"
 	},
 /obj/decal/tile_edge/line/orange{
 	icon_state = "line3"
 	},
 /obj/decal/tile_edge/line/orange{
-	icon_state = "line1";
-	dir = 4
+	dir = 4;
+	icon_state = "line1"
 	},
 /obj/decal/tile_edge/line/orange{
-	icon_state = "line1";
-	dir = 1
+	dir = 1;
+	icon_state = "line1"
 	},
 /obj/decal/tile_edge/line/orange{
 	icon_state = "line1"
 	},
 /obj/decal/tile_edge/line/orange{
-	icon_state = "line1";
-	dir = 8
+	dir = 8;
+	icon_state = "line1"
 	},
 /obj/decal/tile_edge/line/orange{
-	icon_state = "line2";
-	dir = 1
+	dir = 1;
+	icon_state = "line2"
 	},
 /obj/decal/tile_edge/line/orange{
-	icon_state = "line2";
-	dir = 2
+	dir = 2;
+	icon_state = "line2"
 	},
 /obj/decal/tile_edge/line/orange{
-	icon_state = "line2";
-	dir = 4
+	dir = 4;
+	icon_state = "line2"
 	},
 /obj/decal/tile_edge/line/orange{
-	icon_state = "line2";
-	dir = 8
+	dir = 8;
+	icon_state = "line2"
 	},
 /obj/decal/tile_edge/line/orange{
-	icon_state = "line3";
-	dir = 8
+	dir = 8;
+	icon_state = "line3"
 	},
 /obj/decal/tile_edge/line/orange{
-	icon_state = "line4";
-	dir = 2
+	dir = 2;
+	icon_state = "line4"
 	},
 /obj/decal/tile_edge/line/orange{
-	icon_state = "line4";
-	dir = 4
+	dir = 4;
+	icon_state = "line4"
 	},
 /obj/decal/tile_edge/line/orange{
-	icon_state = "line4";
-	dir = 1
+	dir = 1;
+	icon_state = "line4"
 	},
 /obj/decal/tile_edge/line/orange{
-	icon_state = "line4";
-	dir = 8
+	dir = 8;
+	icon_state = "line4"
 	},
 /obj/decal/tile_edge/line/orange{
-	icon_state = "line4";
-	dir = 5
+	dir = 5;
+	icon_state = "line4"
 	},
 /obj/decal/tile_edge/line/orange{
-	icon_state = "line4";
-	dir = 9
+	dir = 9;
+	icon_state = "line4"
 	},
 /obj/decal/tile_edge/line/orange{
-	icon_state = "line4";
-	dir = 6
+	dir = 6;
+	icon_state = "line4"
 	},
 /obj/decal/tile_edge/line/orange{
-	icon_state = "line4";
-	dir = 10
+	dir = 10;
+	icon_state = "line4"
 	},
 /turf/space,
-/area)
+/area/space)
 "wM" = (
 /obj/decal/tile_edge/line/purple,
 /obj/decal/tile_edge/line/purple{
-	icon_state = "line1";
-	dir = 10
+	dir = 10;
+	icon_state = "line1"
 	},
 /obj/decal/tile_edge/line/purple{
-	icon_state = "line1";
-	dir = 9
+	dir = 9;
+	icon_state = "line1"
 	},
 /obj/decal/tile_edge/line/purple{
 	dir = 5;
 	icon_state = "line1"
 	},
 /obj/decal/tile_edge/line/purple{
-	icon_state = "line1";
-	dir = 6
+	dir = 6;
+	icon_state = "line1"
 	},
 /obj/decal/tile_edge/line/purple{
-	icon_state = "line2";
-	dir = 10
+	dir = 10;
+	icon_state = "line2"
 	},
 /obj/decal/tile_edge/line/purple{
-	icon_state = "line2";
-	dir = 6
+	dir = 6;
+	icon_state = "line2"
 	},
 /obj/decal/tile_edge/line/purple{
-	icon_state = "line2";
-	dir = 9
+	dir = 9;
+	icon_state = "line2"
 	},
 /obj/decal/tile_edge/line/purple{
-	icon_state = "line2";
-	dir = 5
+	dir = 5;
+	icon_state = "line2"
 	},
 /obj/decal/tile_edge/line/purple{
-	icon_state = "line3";
-	dir = 4
+	dir = 4;
+	icon_state = "line3"
 	},
 /obj/decal/tile_edge/line/purple{
-	icon_state = "line3";
-	dir = 1
+	dir = 1;
+	icon_state = "line3"
 	},
 /obj/decal/tile_edge/line/purple{
 	icon_state = "line3"
 	},
 /obj/decal/tile_edge/line/purple{
-	icon_state = "line1";
-	dir = 4
+	dir = 4;
+	icon_state = "line1"
 	},
 /obj/decal/tile_edge/line/purple{
-	icon_state = "line1";
-	dir = 1
+	dir = 1;
+	icon_state = "line1"
 	},
 /obj/decal/tile_edge/line/purple{
 	icon_state = "line1"
 	},
 /obj/decal/tile_edge/line/purple{
-	icon_state = "line1";
-	dir = 8
+	dir = 8;
+	icon_state = "line1"
 	},
 /obj/decal/tile_edge/line/purple{
-	icon_state = "line2";
-	dir = 1
+	dir = 1;
+	icon_state = "line2"
 	},
 /obj/decal/tile_edge/line/purple{
-	icon_state = "line2";
-	dir = 2
+	dir = 2;
+	icon_state = "line2"
 	},
 /obj/decal/tile_edge/line/purple{
-	icon_state = "line2";
-	dir = 4
+	dir = 4;
+	icon_state = "line2"
 	},
 /obj/decal/tile_edge/line/purple{
-	icon_state = "line2";
-	dir = 8
+	dir = 8;
+	icon_state = "line2"
 	},
 /obj/decal/tile_edge/line/purple{
-	icon_state = "line3";
-	dir = 8
+	dir = 8;
+	icon_state = "line3"
 	},
 /obj/decal/tile_edge/line/purple{
-	icon_state = "line4";
-	dir = 2
+	dir = 2;
+	icon_state = "line4"
 	},
 /obj/decal/tile_edge/line/purple{
-	icon_state = "line4";
-	dir = 4
+	dir = 4;
+	icon_state = "line4"
 	},
 /obj/decal/tile_edge/line/purple{
-	icon_state = "line4";
-	dir = 1
+	dir = 1;
+	icon_state = "line4"
 	},
 /obj/decal/tile_edge/line/purple{
-	icon_state = "line4";
-	dir = 8
+	dir = 8;
+	icon_state = "line4"
 	},
 /obj/decal/tile_edge/line/purple{
-	icon_state = "line4";
-	dir = 5
+	dir = 5;
+	icon_state = "line4"
 	},
 /obj/decal/tile_edge/line/purple{
-	icon_state = "line4";
-	dir = 9
+	dir = 9;
+	icon_state = "line4"
 	},
 /obj/decal/tile_edge/line/purple{
-	icon_state = "line4";
-	dir = 6
+	dir = 6;
+	icon_state = "line4"
 	},
 /obj/decal/tile_edge/line/purple{
-	icon_state = "line4";
-	dir = 10
+	dir = 10;
+	icon_state = "line4"
 	},
 /turf/space,
-/area)
+/area/space)
 "wN" = (
 /obj/decal/tile_edge/line/red,
 /obj/decal/tile_edge/line/red{
-	icon_state = "line1";
-	dir = 10
+	dir = 10;
+	icon_state = "line1"
 	},
 /obj/decal/tile_edge/line/red{
-	icon_state = "line1";
-	dir = 9
+	dir = 9;
+	icon_state = "line1"
 	},
 /obj/decal/tile_edge/line/red{
 	dir = 5;
 	icon_state = "line1"
 	},
 /obj/decal/tile_edge/line/red{
-	icon_state = "line1";
-	dir = 6
+	dir = 6;
+	icon_state = "line1"
 	},
 /obj/decal/tile_edge/line/red{
-	icon_state = "line2";
-	dir = 10
+	dir = 10;
+	icon_state = "line2"
 	},
 /obj/decal/tile_edge/line/red{
-	icon_state = "line2";
-	dir = 6
+	dir = 6;
+	icon_state = "line2"
 	},
 /obj/decal/tile_edge/line/red{
-	icon_state = "line2";
-	dir = 9
+	dir = 9;
+	icon_state = "line2"
 	},
 /obj/decal/tile_edge/line/red{
-	icon_state = "line2";
-	dir = 5
+	dir = 5;
+	icon_state = "line2"
 	},
 /obj/decal/tile_edge/line/red{
-	icon_state = "line3";
-	dir = 4
+	dir = 4;
+	icon_state = "line3"
 	},
 /obj/decal/tile_edge/line/red{
-	icon_state = "line3";
-	dir = 1
+	dir = 1;
+	icon_state = "line3"
 	},
 /obj/decal/tile_edge/line/red{
 	icon_state = "line3"
 	},
 /obj/decal/tile_edge/line/red{
-	icon_state = "line1";
-	dir = 4
+	dir = 4;
+	icon_state = "line1"
 	},
 /obj/decal/tile_edge/line/red{
-	icon_state = "line1";
-	dir = 1
+	dir = 1;
+	icon_state = "line1"
 	},
 /obj/decal/tile_edge/line/red{
 	icon_state = "line1"
 	},
 /obj/decal/tile_edge/line/red{
-	icon_state = "line1";
-	dir = 8
+	dir = 8;
+	icon_state = "line1"
 	},
 /obj/decal/tile_edge/line/red{
-	icon_state = "line2";
-	dir = 1
+	dir = 1;
+	icon_state = "line2"
 	},
 /obj/decal/tile_edge/line/red{
-	icon_state = "line2";
-	dir = 2
+	dir = 2;
+	icon_state = "line2"
 	},
 /obj/decal/tile_edge/line/red{
-	icon_state = "line2";
-	dir = 4
+	dir = 4;
+	icon_state = "line2"
 	},
 /obj/decal/tile_edge/line/red{
-	icon_state = "line2";
-	dir = 8
+	dir = 8;
+	icon_state = "line2"
 	},
 /obj/decal/tile_edge/line/red{
-	icon_state = "line3";
-	dir = 8
+	dir = 8;
+	icon_state = "line3"
 	},
 /obj/decal/tile_edge/line/red{
-	icon_state = "line4";
-	dir = 2
+	dir = 2;
+	icon_state = "line4"
 	},
 /obj/decal/tile_edge/line/red{
-	icon_state = "line4";
-	dir = 4
+	dir = 4;
+	icon_state = "line4"
 	},
 /obj/decal/tile_edge/line/red{
-	icon_state = "line4";
-	dir = 1
+	dir = 1;
+	icon_state = "line4"
 	},
 /obj/decal/tile_edge/line/red{
-	icon_state = "line4";
-	dir = 8
+	dir = 8;
+	icon_state = "line4"
 	},
 /obj/decal/tile_edge/line/red{
-	icon_state = "line4";
-	dir = 5
+	dir = 5;
+	icon_state = "line4"
 	},
 /obj/decal/tile_edge/line/red{
-	icon_state = "line4";
-	dir = 9
+	dir = 9;
+	icon_state = "line4"
 	},
 /obj/decal/tile_edge/line/red{
-	icon_state = "line4";
-	dir = 6
+	dir = 6;
+	icon_state = "line4"
 	},
 /obj/decal/tile_edge/line/red{
-	icon_state = "line4";
-	dir = 10
+	dir = 10;
+	icon_state = "line4"
 	},
 /turf/space,
-/area)
+/area/space)
 "wO" = (
 /obj/decal/tile_edge/line/yellow,
 /obj/decal/tile_edge/line/yellow{
-	icon_state = "line1";
-	dir = 10
+	dir = 10;
+	icon_state = "line1"
 	},
 /obj/decal/tile_edge/line/yellow{
-	icon_state = "line1";
-	dir = 9
+	dir = 9;
+	icon_state = "line1"
 	},
 /obj/decal/tile_edge/line/yellow{
 	dir = 5;
 	icon_state = "line1"
 	},
 /obj/decal/tile_edge/line/yellow{
-	icon_state = "line1";
-	dir = 6
+	dir = 6;
+	icon_state = "line1"
 	},
 /obj/decal/tile_edge/line/yellow{
-	icon_state = "line2";
-	dir = 10
+	dir = 10;
+	icon_state = "line2"
 	},
 /obj/decal/tile_edge/line/yellow{
-	icon_state = "line2";
-	dir = 6
+	dir = 6;
+	icon_state = "line2"
 	},
 /obj/decal/tile_edge/line/yellow{
-	icon_state = "line2";
-	dir = 9
+	dir = 9;
+	icon_state = "line2"
 	},
 /obj/decal/tile_edge/line/yellow{
-	icon_state = "line2";
-	dir = 5
+	dir = 5;
+	icon_state = "line2"
 	},
 /obj/decal/tile_edge/line/yellow{
-	icon_state = "line3";
-	dir = 4
+	dir = 4;
+	icon_state = "line3"
 	},
 /obj/decal/tile_edge/line/yellow{
-	icon_state = "line3";
-	dir = 1
+	dir = 1;
+	icon_state = "line3"
 	},
 /obj/decal/tile_edge/line/yellow{
 	icon_state = "line3"
 	},
 /obj/decal/tile_edge/line/yellow{
-	icon_state = "line1";
-	dir = 4
+	dir = 4;
+	icon_state = "line1"
 	},
 /obj/decal/tile_edge/line/yellow{
-	icon_state = "line1";
-	dir = 1
+	dir = 1;
+	icon_state = "line1"
 	},
 /obj/decal/tile_edge/line/yellow{
 	icon_state = "line1"
 	},
 /obj/decal/tile_edge/line/yellow{
-	icon_state = "line1";
-	dir = 8
+	dir = 8;
+	icon_state = "line1"
 	},
 /obj/decal/tile_edge/line/yellow{
-	icon_state = "line2";
-	dir = 1
+	dir = 1;
+	icon_state = "line2"
 	},
 /obj/decal/tile_edge/line/yellow{
-	icon_state = "line2";
-	dir = 2
+	dir = 2;
+	icon_state = "line2"
 	},
 /obj/decal/tile_edge/line/yellow{
-	icon_state = "line2";
-	dir = 4
+	dir = 4;
+	icon_state = "line2"
 	},
 /obj/decal/tile_edge/line/yellow{
-	icon_state = "line2";
-	dir = 8
+	dir = 8;
+	icon_state = "line2"
 	},
 /obj/decal/tile_edge/line/yellow{
-	icon_state = "line3";
-	dir = 8
+	dir = 8;
+	icon_state = "line3"
 	},
 /obj/decal/tile_edge/line/yellow{
-	icon_state = "line4";
-	dir = 2
+	dir = 2;
+	icon_state = "line4"
 	},
 /obj/decal/tile_edge/line/yellow{
-	icon_state = "line4";
-	dir = 4
+	dir = 4;
+	icon_state = "line4"
 	},
 /obj/decal/tile_edge/line/yellow{
-	icon_state = "line4";
-	dir = 1
+	dir = 1;
+	icon_state = "line4"
 	},
 /obj/decal/tile_edge/line/yellow{
-	icon_state = "line4";
-	dir = 8
+	dir = 8;
+	icon_state = "line4"
 	},
 /obj/decal/tile_edge/line/yellow{
-	icon_state = "line4";
-	dir = 5
+	dir = 5;
+	icon_state = "line4"
 	},
 /obj/decal/tile_edge/line/yellow{
-	icon_state = "line4";
-	dir = 9
+	dir = 9;
+	icon_state = "line4"
 	},
 /obj/decal/tile_edge/line/yellow{
-	icon_state = "line4";
-	dir = 6
+	dir = 6;
+	icon_state = "line4"
 	},
 /obj/decal/tile_edge/line/yellow{
-	icon_state = "line4";
-	dir = 10
+	dir = 10;
+	icon_state = "line4"
 	},
 /turf/space,
-/area)
+/area/space)
 "wP" = (
 /obj/decal/tile_edge/stripe,
 /obj/decal/tile_edge/stripe{
@@ -8380,91 +8393,91 @@
 	icon_state = "stripe2"
 	},
 /obj/decal/tile_edge/stripe{
-	icon_state = "stripe";
-	dir = 4
+	dir = 4;
+	icon_state = "stripe"
 	},
 /obj/decal/tile_edge/stripe{
-	icon_state = "stripe";
-	dir = 1
+	dir = 1;
+	icon_state = "stripe"
 	},
 /obj/decal/tile_edge/stripe{
-	icon_state = "stripe";
-	dir = 8
+	dir = 8;
+	icon_state = "stripe"
 	},
 /obj/decal/tile_edge/stripe{
-	icon_state = "stripe-edge";
-	dir = 4
+	dir = 4;
+	icon_state = "stripe-edge"
 	},
 /obj/decal/tile_edge/stripe{
-	icon_state = "stripe-edge";
-	dir = 1
+	dir = 1;
+	icon_state = "stripe-edge"
 	},
 /obj/decal/tile_edge/stripe{
-	icon_state = "stripe-edge";
-	dir = 5
+	dir = 5;
+	icon_state = "stripe-edge"
 	},
 /obj/decal/tile_edge/stripe{
-	icon_state = "stripe-edge";
-	dir = 9
+	dir = 9;
+	icon_state = "stripe-edge"
 	},
 /obj/decal/tile_edge/stripe{
-	icon_state = "stripe-edge";
-	dir = 6
+	dir = 6;
+	icon_state = "stripe-edge"
 	},
 /obj/decal/tile_edge/stripe{
-	icon_state = "stripe-edge";
-	dir = 10
+	dir = 10;
+	icon_state = "stripe-edge"
 	},
 /obj/decal/tile_edge/stripe{
-	icon_state = "stripe-edge";
-	dir = 8
+	dir = 8;
+	icon_state = "stripe-edge"
 	},
 /obj/decal/tile_edge/stripe{
-	icon_state = "stripe-edge2";
-	dir = 4
+	dir = 4;
+	icon_state = "stripe-edge2"
 	},
 /obj/decal/tile_edge/stripe{
-	icon_state = "stripe-edge2";
-	dir = 1
+	dir = 1;
+	icon_state = "stripe-edge2"
 	},
 /obj/decal/tile_edge/stripe{
-	icon_state = "stripe-edge2";
-	dir = 6
+	dir = 6;
+	icon_state = "stripe-edge2"
 	},
 /obj/decal/tile_edge/stripe{
-	icon_state = "stripe-edge2";
-	dir = 8
+	dir = 8;
+	icon_state = "stripe-edge2"
 	},
 /obj/decal/tile_edge/stripe{
-	icon_state = "stripe2";
-	dir = 4
+	dir = 4;
+	icon_state = "stripe2"
 	},
 /obj/decal/tile_edge/stripe{
-	icon_state = "stripe2";
-	dir = 1
+	dir = 1;
+	icon_state = "stripe2"
 	},
 /obj/decal/tile_edge/stripe{
-	icon_state = "stripe2";
-	dir = 5
+	dir = 5;
+	icon_state = "stripe2"
 	},
 /obj/decal/tile_edge/stripe{
-	icon_state = "stripe2";
-	dir = 9
+	dir = 9;
+	icon_state = "stripe2"
 	},
 /obj/decal/tile_edge/stripe{
-	icon_state = "stripe2";
-	dir = 6
+	dir = 6;
+	icon_state = "stripe2"
 	},
 /obj/decal/tile_edge/stripe{
-	icon_state = "stripe2";
-	dir = 10
+	dir = 10;
+	icon_state = "stripe2"
 	},
 /obj/decal/tile_edge/stripe{
-	icon_state = "stripe2";
-	dir = 8
+	dir = 8;
+	icon_state = "stripe2"
 	},
 /turf/space,
-/area)
+/area/space)
 "wQ" = (
 /obj/decal/tile_edge/stripe/big,
 /obj/decal/tile_edge/stripe/big{
@@ -8480,116 +8493,116 @@
 	icon_state = "bigstripe2"
 	},
 /obj/decal/tile_edge/stripe/big{
-	icon_state = "bigstripe";
-	dir = 4
+	dir = 4;
+	icon_state = "bigstripe"
 	},
 /obj/decal/tile_edge/stripe/big{
-	icon_state = "bigstripe";
-	dir = 1
+	dir = 1;
+	icon_state = "bigstripe"
 	},
 /obj/decal/tile_edge/stripe/big{
-	icon_state = "bigstripe";
-	dir = 8
+	dir = 8;
+	icon_state = "bigstripe"
 	},
 /obj/decal/tile_edge/stripe/big{
-	icon_state = "bigstripe-edge";
-	dir = 4
+	dir = 4;
+	icon_state = "bigstripe-edge"
 	},
 /obj/decal/tile_edge/stripe/big{
-	icon_state = "bigstripe-edge";
-	dir = 1
+	dir = 1;
+	icon_state = "bigstripe-edge"
 	},
 /obj/decal/tile_edge/stripe/big{
-	icon_state = "bigstripe-edge";
-	dir = 5
+	dir = 5;
+	icon_state = "bigstripe-edge"
 	},
 /obj/decal/tile_edge/stripe/big{
-	icon_state = "bigstripe-edge";
-	dir = 9
+	dir = 9;
+	icon_state = "bigstripe-edge"
 	},
 /obj/decal/tile_edge/stripe/big{
-	icon_state = "bigstripe-edge";
-	dir = 6
+	dir = 6;
+	icon_state = "bigstripe-edge"
 	},
 /obj/decal/tile_edge/stripe/big{
-	icon_state = "bigstripe-edge";
-	dir = 10
+	dir = 10;
+	icon_state = "bigstripe-edge"
 	},
 /obj/decal/tile_edge/stripe/big{
-	icon_state = "bigstripe-edge";
-	dir = 8
+	dir = 8;
+	icon_state = "bigstripe-edge"
 	},
 /obj/decal/tile_edge/stripe/big{
-	icon_state = "bigstripe-edge2";
-	dir = 4
+	dir = 4;
+	icon_state = "bigstripe-edge2"
 	},
 /obj/decal/tile_edge/stripe/big{
-	icon_state = "bigstripe-edge2";
-	dir = 1
+	dir = 1;
+	icon_state = "bigstripe-edge2"
 	},
 /obj/decal/tile_edge/stripe/big{
-	icon_state = "bigstripe-edge2";
-	dir = 6
+	dir = 6;
+	icon_state = "bigstripe-edge2"
 	},
 /obj/decal/tile_edge/stripe/big{
-	icon_state = "bigstripe-edge2";
-	dir = 8
+	dir = 8;
+	icon_state = "bigstripe-edge2"
 	},
 /obj/decal/tile_edge/stripe/big{
-	icon_state = "bigstripe-edge3";
-	dir = 4
+	dir = 4;
+	icon_state = "bigstripe-edge3"
 	},
 /obj/decal/tile_edge/stripe/big{
-	icon_state = "bigstripe-edge3";
-	dir = 1
+	dir = 1;
+	icon_state = "bigstripe-edge3"
 	},
 /obj/decal/tile_edge/stripe/big{
-	icon_state = "bigstripe-edge3";
-	dir = 5
+	dir = 5;
+	icon_state = "bigstripe-edge3"
 	},
 /obj/decal/tile_edge/stripe/big{
-	icon_state = "bigstripe-edge3";
-	dir = 9
+	dir = 9;
+	icon_state = "bigstripe-edge3"
 	},
 /obj/decal/tile_edge/stripe/big{
-	icon_state = "bigstripe-edge3";
-	dir = 6
+	dir = 6;
+	icon_state = "bigstripe-edge3"
 	},
 /obj/decal/tile_edge/stripe/big{
-	icon_state = "bigstripe-edge3";
-	dir = 10
+	dir = 10;
+	icon_state = "bigstripe-edge3"
 	},
 /obj/decal/tile_edge/stripe/big{
-	icon_state = "bigstripe-edge3";
-	dir = 8
+	dir = 8;
+	icon_state = "bigstripe-edge3"
 	},
 /obj/decal/tile_edge/stripe/big{
-	icon_state = "bigstripe2";
-	dir = 4
+	dir = 4;
+	icon_state = "bigstripe2"
 	},
 /obj/decal/tile_edge/stripe/big{
-	icon_state = "bigstripe2";
-	dir = 1
+	dir = 1;
+	icon_state = "bigstripe2"
 	},
 /obj/decal/tile_edge/stripe/big{
-	icon_state = "bigstripe2";
-	dir = 5
+	dir = 5;
+	icon_state = "bigstripe2"
 	},
 /obj/decal/tile_edge/stripe/big{
-	icon_state = "bigstripe2";
-	dir = 9
+	dir = 9;
+	icon_state = "bigstripe2"
 	},
 /obj/decal/tile_edge/stripe/big{
-	icon_state = "bigstripe2";
-	dir = 6
+	dir = 6;
+	icon_state = "bigstripe2"
 	},
 /obj/decal/tile_edge/stripe/big{
-	icon_state = "bigstripe2";
-	dir = 10
+	dir = 10;
+	icon_state = "bigstripe2"
 	},
 /obj/decal/tile_edge/stripe/big{
-	icon_state = "bigstripe2";
-	dir = 8
+	dir = 8;
+	icon_state = "bigstripe2"
 	},
 /obj/decal/tile_edge/stripe/big{
 	dir = 10;
@@ -8608,7 +8621,7 @@
 	icon_state = "bigstripe-corner2"
 	},
 /turf/space,
-/area)
+/area/space)
 "wR" = (
 /obj/decal/tile_edge/stripe/extra_big,
 /obj/decal/tile_edge/stripe/extra_big{
@@ -8624,116 +8637,116 @@
 	icon_state = "xtra_bigstripe2"
 	},
 /obj/decal/tile_edge/stripe/extra_big{
-	icon_state = "xtra_bigstripe";
-	dir = 4
+	dir = 4;
+	icon_state = "xtra_bigstripe"
 	},
 /obj/decal/tile_edge/stripe/extra_big{
-	icon_state = "xtra_bigstripe";
-	dir = 1
+	dir = 1;
+	icon_state = "xtra_bigstripe"
 	},
 /obj/decal/tile_edge/stripe/extra_big{
-	icon_state = "xtra_bigstripe";
-	dir = 8
+	dir = 8;
+	icon_state = "xtra_bigstripe"
 	},
 /obj/decal/tile_edge/stripe/extra_big{
-	icon_state = "xtra_bigstripe-edge";
-	dir = 4
+	dir = 4;
+	icon_state = "xtra_bigstripe-edge"
 	},
 /obj/decal/tile_edge/stripe/extra_big{
-	icon_state = "xtra_bigstripe-edge";
-	dir = 1
+	dir = 1;
+	icon_state = "xtra_bigstripe-edge"
 	},
 /obj/decal/tile_edge/stripe/extra_big{
-	icon_state = "xtra_bigstripe-edge";
-	dir = 5
+	dir = 5;
+	icon_state = "xtra_bigstripe-edge"
 	},
 /obj/decal/tile_edge/stripe/extra_big{
-	icon_state = "xtra_bigstripe-edge";
-	dir = 9
+	dir = 9;
+	icon_state = "xtra_bigstripe-edge"
 	},
 /obj/decal/tile_edge/stripe/extra_big{
-	icon_state = "xtra_bigstripe-edge";
-	dir = 6
+	dir = 6;
+	icon_state = "xtra_bigstripe-edge"
 	},
 /obj/decal/tile_edge/stripe/extra_big{
-	icon_state = "xtra_bigstripe-edge";
-	dir = 10
+	dir = 10;
+	icon_state = "xtra_bigstripe-edge"
 	},
 /obj/decal/tile_edge/stripe/extra_big{
-	icon_state = "xtra_bigstripe-edge";
-	dir = 8
+	dir = 8;
+	icon_state = "xtra_bigstripe-edge"
 	},
 /obj/decal/tile_edge/stripe/extra_big{
-	icon_state = "xtra_bigstripe-edge2";
-	dir = 4
+	dir = 4;
+	icon_state = "xtra_bigstripe-edge2"
 	},
 /obj/decal/tile_edge/stripe/extra_big{
-	icon_state = "xtra_bigstripe-edge2";
-	dir = 1
+	dir = 1;
+	icon_state = "xtra_bigstripe-edge2"
 	},
 /obj/decal/tile_edge/stripe/extra_big{
-	icon_state = "xtra_bigstripe-edge2";
-	dir = 6
+	dir = 6;
+	icon_state = "xtra_bigstripe-edge2"
 	},
 /obj/decal/tile_edge/stripe/extra_big{
-	icon_state = "xtra_bigstripe-edge2";
-	dir = 8
+	dir = 8;
+	icon_state = "xtra_bigstripe-edge2"
 	},
 /obj/decal/tile_edge/stripe/extra_big{
-	icon_state = "xtra_bigstripe-edge3";
-	dir = 4
+	dir = 4;
+	icon_state = "xtra_bigstripe-edge3"
 	},
 /obj/decal/tile_edge/stripe/extra_big{
-	icon_state = "xtra_bigstripe-edge3";
-	dir = 1
+	dir = 1;
+	icon_state = "xtra_bigstripe-edge3"
 	},
 /obj/decal/tile_edge/stripe/extra_big{
-	icon_state = "xtra_bigstripe-edge3";
-	dir = 5
+	dir = 5;
+	icon_state = "xtra_bigstripe-edge3"
 	},
 /obj/decal/tile_edge/stripe/extra_big{
-	icon_state = "xtra_bigstripe-edge3";
-	dir = 9
+	dir = 9;
+	icon_state = "xtra_bigstripe-edge3"
 	},
 /obj/decal/tile_edge/stripe/extra_big{
-	icon_state = "xtra_bigstripe-edge3";
-	dir = 6
+	dir = 6;
+	icon_state = "xtra_bigstripe-edge3"
 	},
 /obj/decal/tile_edge/stripe/extra_big{
-	icon_state = "xtra_bigstripe-edge3";
-	dir = 10
+	dir = 10;
+	icon_state = "xtra_bigstripe-edge3"
 	},
 /obj/decal/tile_edge/stripe/extra_big{
-	icon_state = "xtra_bigstripe-edge3";
-	dir = 8
+	dir = 8;
+	icon_state = "xtra_bigstripe-edge3"
 	},
 /obj/decal/tile_edge/stripe/extra_big{
-	icon_state = "xtra_bigstripe2";
-	dir = 4
+	dir = 4;
+	icon_state = "xtra_bigstripe2"
 	},
 /obj/decal/tile_edge/stripe/extra_big{
-	icon_state = "xtra_bigstripe2";
-	dir = 1
+	dir = 1;
+	icon_state = "xtra_bigstripe2"
 	},
 /obj/decal/tile_edge/stripe/extra_big{
-	icon_state = "xtra_bigstripe2";
-	dir = 5
+	dir = 5;
+	icon_state = "xtra_bigstripe2"
 	},
 /obj/decal/tile_edge/stripe/extra_big{
-	icon_state = "xtra_bigstripe2";
-	dir = 9
+	dir = 9;
+	icon_state = "xtra_bigstripe2"
 	},
 /obj/decal/tile_edge/stripe/extra_big{
-	icon_state = "xtra_bigstripe2";
-	dir = 6
+	dir = 6;
+	icon_state = "xtra_bigstripe2"
 	},
 /obj/decal/tile_edge/stripe/extra_big{
-	icon_state = "xtra_bigstripe2";
-	dir = 10
+	dir = 10;
+	icon_state = "xtra_bigstripe2"
 	},
 /obj/decal/tile_edge/stripe/extra_big{
-	icon_state = "xtra_bigstripe2";
-	dir = 8
+	dir = 8;
+	icon_state = "xtra_bigstripe2"
 	},
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 5;
@@ -8752,7 +8765,7 @@
 	icon_state = "xtra_bigstripe-corner2"
 	},
 /turf/space,
-/area)
+/area/space)
 "wS" = (
 /obj/decal/tile_edge/check,
 /obj/decal/tile_edge/check{
@@ -8765,75 +8778,75 @@
 	icon_state = "check3"
 	},
 /obj/decal/tile_edge/check{
-	icon_state = "check1";
-	dir = 4
+	dir = 4;
+	icon_state = "check1"
 	},
 /obj/decal/tile_edge/check{
-	icon_state = "check1";
-	dir = 1
+	dir = 1;
+	icon_state = "check1"
 	},
 /obj/decal/tile_edge/check{
-	icon_state = "check1";
-	dir = 5
+	dir = 5;
+	icon_state = "check1"
 	},
 /obj/decal/tile_edge/check{
-	icon_state = "check1";
-	dir = 9
+	dir = 9;
+	icon_state = "check1"
 	},
 /obj/decal/tile_edge/check{
-	icon_state = "check1";
-	dir = 6
+	dir = 6;
+	icon_state = "check1"
 	},
 /obj/decal/tile_edge/check{
-	icon_state = "check1";
-	dir = 10
+	dir = 10;
+	icon_state = "check1"
 	},
 /obj/decal/tile_edge/check{
-	icon_state = "check1";
-	dir = 8
+	dir = 8;
+	icon_state = "check1"
 	},
 /obj/decal/tile_edge/check{
-	icon_state = "check2";
-	dir = 4
+	dir = 4;
+	icon_state = "check2"
 	},
 /obj/decal/tile_edge/check{
-	icon_state = "check2";
-	dir = 1
+	dir = 1;
+	icon_state = "check2"
 	},
 /obj/decal/tile_edge/check{
-	icon_state = "check2";
-	dir = 5
+	dir = 5;
+	icon_state = "check2"
 	},
 /obj/decal/tile_edge/check{
-	icon_state = "check2";
-	dir = 9
+	dir = 9;
+	icon_state = "check2"
 	},
 /obj/decal/tile_edge/check{
-	icon_state = "check2";
-	dir = 6
+	dir = 6;
+	icon_state = "check2"
 	},
 /obj/decal/tile_edge/check{
-	icon_state = "check2";
-	dir = 10
+	dir = 10;
+	icon_state = "check2"
 	},
 /obj/decal/tile_edge/check{
-	icon_state = "check2";
-	dir = 8
+	dir = 8;
+	icon_state = "check2"
 	},
 /obj/decal/tile_edge/check{
-	icon_state = "check3";
-	dir = 4
+	dir = 4;
+	icon_state = "check3"
 	},
 /obj/decal/tile_edge/check{
-	icon_state = "check3";
-	dir = 1
+	dir = 1;
+	icon_state = "check3"
 	},
 /obj/decal/tile_edge/check{
-	icon_state = "check3";
-	dir = 8
+	dir = 8;
+	icon_state = "check3"
 	},
 /turf/space,
-/area)
+/area/space)
 "wT" = (
 /obj/decal/tile_edge/carpet,
 /obj/decal/tile_edge/carpet{
@@ -8843,63 +8856,63 @@
 	icon_state = "rug2"
 	},
 /obj/decal/tile_edge/carpet{
-	icon_state = "rug1";
-	dir = 4
+	dir = 4;
+	icon_state = "rug1"
 	},
 /obj/decal/tile_edge/carpet{
-	icon_state = "rug1";
-	dir = 1
+	dir = 1;
+	icon_state = "rug1"
 	},
 /obj/decal/tile_edge/carpet{
-	icon_state = "rug1";
-	dir = 5
+	dir = 5;
+	icon_state = "rug1"
 	},
 /obj/decal/tile_edge/carpet{
-	icon_state = "rug1";
-	dir = 9
+	dir = 9;
+	icon_state = "rug1"
 	},
 /obj/decal/tile_edge/carpet{
-	icon_state = "rug1";
-	dir = 6
+	dir = 6;
+	icon_state = "rug1"
 	},
 /obj/decal/tile_edge/carpet{
-	icon_state = "rug1";
-	dir = 10
+	dir = 10;
+	icon_state = "rug1"
 	},
 /obj/decal/tile_edge/carpet{
-	icon_state = "rug1";
-	dir = 8
+	dir = 8;
+	icon_state = "rug1"
 	},
 /obj/decal/tile_edge/carpet{
-	icon_state = "rug2";
-	dir = 4
+	dir = 4;
+	icon_state = "rug2"
 	},
 /obj/decal/tile_edge/carpet{
-	icon_state = "rug2";
-	dir = 1
+	dir = 1;
+	icon_state = "rug2"
 	},
 /obj/decal/tile_edge/carpet{
-	icon_state = "rug2";
-	dir = 5
+	dir = 5;
+	icon_state = "rug2"
 	},
 /obj/decal/tile_edge/carpet{
-	icon_state = "rug2";
-	dir = 9
+	dir = 9;
+	icon_state = "rug2"
 	},
 /obj/decal/tile_edge/carpet{
-	icon_state = "rug2";
-	dir = 6
+	dir = 6;
+	icon_state = "rug2"
 	},
 /obj/decal/tile_edge/carpet{
-	icon_state = "rug2";
-	dir = 10
+	dir = 10;
+	icon_state = "rug2"
 	},
 /obj/decal/tile_edge/carpet{
-	icon_state = "rug2";
-	dir = 8
+	dir = 8;
+	icon_state = "rug2"
 	},
 /turf/space,
-/area)
+/area/space)
 "wU" = (
 /obj/decal/tile_edge/carpet/fancy,
 /obj/decal/tile_edge/carpet/fancy{
@@ -8909,76 +8922,76 @@
 	icon_state = "frug2"
 	},
 /obj/decal/tile_edge/carpet/fancy{
-	icon_state = "frug1";
-	dir = 4
+	dir = 4;
+	icon_state = "frug1"
 	},
 /obj/decal/tile_edge/carpet/fancy{
-	icon_state = "frug1";
-	dir = 1
+	dir = 1;
+	icon_state = "frug1"
 	},
 /obj/decal/tile_edge/carpet/fancy{
-	icon_state = "frug1";
-	dir = 5
+	dir = 5;
+	icon_state = "frug1"
 	},
 /obj/decal/tile_edge/carpet/fancy{
-	icon_state = "frug1";
-	dir = 9
+	dir = 9;
+	icon_state = "frug1"
 	},
 /obj/decal/tile_edge/carpet/fancy{
-	icon_state = "frug1";
-	dir = 6
+	dir = 6;
+	icon_state = "frug1"
 	},
 /obj/decal/tile_edge/carpet/fancy{
-	icon_state = "frug1";
-	dir = 10
+	dir = 10;
+	icon_state = "frug1"
 	},
 /obj/decal/tile_edge/carpet/fancy{
-	icon_state = "frug1";
-	dir = 8
+	dir = 8;
+	icon_state = "frug1"
 	},
 /obj/decal/tile_edge/carpet/fancy{
-	icon_state = "frug2";
-	dir = 4
+	dir = 4;
+	icon_state = "frug2"
 	},
 /obj/decal/tile_edge/carpet/fancy{
-	icon_state = "frug2";
-	dir = 1
+	dir = 1;
+	icon_state = "frug2"
 	},
 /obj/decal/tile_edge/carpet/fancy{
-	icon_state = "frug2";
-	dir = 5
+	dir = 5;
+	icon_state = "frug2"
 	},
 /obj/decal/tile_edge/carpet/fancy{
-	icon_state = "frug2";
-	dir = 9
+	dir = 9;
+	icon_state = "frug2"
 	},
 /obj/decal/tile_edge/carpet/fancy{
-	icon_state = "frug2";
-	dir = 6
+	dir = 6;
+	icon_state = "frug2"
 	},
 /obj/decal/tile_edge/carpet/fancy{
-	icon_state = "frug2";
-	dir = 10
+	dir = 10;
+	icon_state = "frug2"
 	},
 /obj/decal/tile_edge/carpet/fancy{
-	icon_state = "frug2";
-	dir = 8
+	dir = 8;
+	icon_state = "frug2"
 	},
 /obj/decal/tile_edge/carpet/fancy{
-	icon_state = "frugfull";
-	dir = 4
+	dir = 4;
+	icon_state = "frugfull"
 	},
 /obj/decal/tile_edge/carpet/fancy{
-	icon_state = "frugfull";
-	dir = 1
+	dir = 1;
+	icon_state = "frugfull"
 	},
 /turf/space,
-/area)
+/area/space)
 "wV" = (
 /obj/disposalpipe/segment,
 /obj/disposalpipe/segment{
-	icon_state = "pipe-s";
-	dir = 4
+	dir = 4;
+	icon_state = "pipe-s"
 	},
 /obj/disposalpipe/segment{
 	dir = 2;
@@ -9007,12 +9020,12 @@
 	dir = 4
 	},
 /turf/space,
-/area)
+/area/space)
 "wW" = (
 /obj/disposalpipe/segment/brig,
 /obj/disposalpipe/segment/brig{
-	icon_state = "pipe-s";
-	dir = 4
+	dir = 4;
+	icon_state = "pipe-s"
 	},
 /obj/disposalpipe/segment/brig{
 	dir = 2;
@@ -9041,12 +9054,12 @@
 	dir = 4
 	},
 /turf/space,
-/area)
+/area/space)
 "wX" = (
 /obj/disposalpipe/segment/ejection,
 /obj/disposalpipe/segment/ejection{
-	icon_state = "pipe-s";
-	dir = 4
+	dir = 4;
+	icon_state = "pipe-s"
 	},
 /obj/disposalpipe/segment/ejection{
 	dir = 2;
@@ -9075,12 +9088,12 @@
 	dir = 4
 	},
 /turf/space,
-/area)
+/area/space)
 "wY" = (
 /obj/disposalpipe/segment/food,
 /obj/disposalpipe/segment/food{
-	icon_state = "pipe-s";
-	dir = 4
+	dir = 4;
+	icon_state = "pipe-s"
 	},
 /obj/disposalpipe/segment/food{
 	dir = 2;
@@ -9109,12 +9122,12 @@
 	dir = 4
 	},
 /turf/space,
-/area)
+/area/space)
 "wZ" = (
 /obj/disposalpipe/segment/mail,
 /obj/disposalpipe/segment/mail{
-	icon_state = "pipe-s";
-	dir = 4
+	dir = 4;
+	icon_state = "pipe-s"
 	},
 /obj/disposalpipe/segment/mail{
 	dir = 2;
@@ -9143,12 +9156,12 @@
 	dir = 4
 	},
 /turf/space,
-/area)
+/area/space)
 "xa" = (
 /obj/disposalpipe/segment/mineral,
 /obj/disposalpipe/segment/mineral{
-	icon_state = "pipe-s";
-	dir = 4
+	dir = 4;
+	icon_state = "pipe-s"
 	},
 /obj/disposalpipe/segment/mineral{
 	dir = 2;
@@ -9177,12 +9190,12 @@
 	dir = 4
 	},
 /turf/space,
-/area)
+/area/space)
 "xb" = (
 /obj/disposalpipe/segment/morgue,
 /obj/disposalpipe/segment/morgue{
-	icon_state = "pipe-s";
-	dir = 4
+	dir = 4;
+	icon_state = "pipe-s"
 	},
 /obj/disposalpipe/segment/morgue{
 	dir = 2;
@@ -9211,14 +9224,14 @@
 	dir = 4
 	},
 /turf/space,
-/area)
+/area/space)
 "xc" = (
 /obj/disposalpipe/segment/morgue{
 	name = "crematorium pipe"
 	},
 /obj/disposalpipe/segment/morgue{
-	icon_state = "pipe-s";
 	dir = 4;
+	icon_state = "pipe-s";
 	name = "crematorium pipe"
 	},
 /obj/disposalpipe/segment/morgue{
@@ -9257,12 +9270,12 @@
 	name = "crematorium pipe"
 	},
 /turf/space,
-/area)
+/area/space)
 "xd" = (
 /obj/disposalpipe/segment/produce,
 /obj/disposalpipe/segment/produce{
-	icon_state = "pipe-s";
-	dir = 4
+	dir = 4;
+	icon_state = "pipe-s"
 	},
 /obj/disposalpipe/segment/produce{
 	dir = 2;
@@ -9291,12 +9304,12 @@
 	dir = 4
 	},
 /turf/space,
-/area)
+/area/space)
 "xe" = (
 /obj/disposalpipe/segment/transport,
 /obj/disposalpipe/segment/transport{
-	icon_state = "pipe-s";
-	dir = 4
+	dir = 4;
+	icon_state = "pipe-s"
 	},
 /obj/disposalpipe/segment/transport{
 	dir = 2;
@@ -9325,34 +9338,34 @@
 	dir = 4
 	},
 /turf/space,
-/area)
+/area/space)
 "xf" = (
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
-/area)
+/area/space)
 "xg" = (
 /obj/submachine/slot_machine,
 /turf/simulated/floor/carpet/green/fancy/edge/nw,
-/area)
+/area/space)
 "xh" = (
 /obj/table/wood/round/auto,
 /obj/item/reagent_containers/food/drinks/drinkingglass/random_style/filled/sane,
 /turf/simulated/floor/carpet/green/fancy/edge/north,
-/area)
+/area/space)
 "xi" = (
 /obj/submachine/slot_machine,
 /turf/simulated/floor/carpet/green/fancy/edge/north,
-/area)
+/area/space)
 "xj" = (
 /obj/table/wood/round/auto,
 /obj/item/decoration/ashtray,
 /turf/simulated/floor/carpet/green/fancy/edge/north,
-/area)
+/area/space)
 "xk" = (
 /obj/submachine/slot_machine,
 /turf/simulated/floor/carpet/green/fancy/edge/ne,
-/area)
+/area/space)
 "xl" = (
 /obj/storage/crate/bin{
 	desc = "A large bin, for trash.";
@@ -9361,95 +9374,95 @@
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
-/area)
+/area/space)
 "xm" = (
 /obj/table/reinforced/bar/auto,
 /obj/machinery/glass_recycler,
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
-/area)
+/area/space)
 "xn" = (
 /obj/machinery/vending/alcohol,
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
-/area)
+/area/space)
 "xo" = (
 /obj/stool/bar,
 /turf/simulated/floor/carpet/green/fancy/edge/west,
-/area)
+/area/space)
 "xp" = (
 /turf/simulated/floor/carpet/green/fancy,
-/area)
+/area/space)
 "xq" = (
 /obj/stool/bar,
 /turf/simulated/floor/carpet/green/fancy,
-/area)
+/area/space)
 "xr" = (
 /obj/stool/bar,
 /turf/simulated/floor/carpet/green/fancy/edge/east,
-/area)
+/area/space)
 "xs" = (
 /obj/stool/bar,
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
-/area)
+/area/space)
 "xt" = (
 /obj/table/reinforced/bar/auto,
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
-/area)
+/area/space)
 "xu" = (
 /turf/simulated/floor/carpet/green/fancy/edge/west,
-/area)
+/area/space)
 "xv" = (
 /turf/simulated/floor/carpet/green/fancy/edge/east,
-/area)
+/area/space)
 "xw" = (
 /obj/machinery/chem_dispenser/soda,
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
-/area)
+/area/space)
 "xx" = (
 /obj/machinery/chem_dispenser,
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
-/area)
+/area/space)
 "xy" = (
 /obj/table/reinforced/bar/auto,
 /obj/machinery/cashreg{
 	name = "Gambling credit transfer device"
 	},
 /turf/simulated/floor/carpet/green/fancy,
-/area)
+/area/space)
 "xz" = (
 /obj/roulette_table_w,
 /turf/simulated/floor/carpet/green/fancy,
-/area)
+/area/space)
 "xA" = (
 /obj/table/reinforced/roulette,
 /turf/simulated/floor/carpet/green/fancy,
-/area)
+/area/space)
 "xB" = (
 /obj/machinery/chem_dispenser/alcohol,
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
-/area)
+/area/space)
 "xC" = (
 /turf/simulated/floor/carpet/green/fancy/edge/sw,
-/area)
+/area/space)
 "xD" = (
 /turf/simulated/floor/carpet/green/fancy/edge,
-/area)
+/area/space)
 "xE" = (
 /turf/simulated/floor/carpet/green/fancy/edge/se,
-/area)
+/area/space)
 "xF" = (
 /obj/submachine/chef_sink/chem_sink{
 	dir = 4;
@@ -9457,21 +9470,21 @@
 	pixel_y = 0
 	},
 /turf/unsimulated/floor/purple,
-/area)
+/area/space)
 "xG" = (
 /obj/machinery/light/incandescent/netural{
-	icon_state = "tube1";
-	dir = 1
+	dir = 1;
+	icon_state = "tube1"
 	},
 /turf/unsimulated/floor/purple,
-/area)
+/area/space)
 "xH" = (
 /obj/machinery/door/unpowered/wood/pyro{
 	dir = 4;
 	name = "Toilet"
 	},
 /turf/simulated/floor/sanitary,
-/area)
+/area/space)
 "xI" = (
 /obj/item/storage/toilet/random{
 	dir = 8;
@@ -9484,32 +9497,32 @@
 	pixel_y = 32
 	},
 /turf/simulated/floor/sanitary,
-/area)
+/area/space)
 "xJ" = (
 /turf/unsimulated/floor/stairs/wide,
-/area)
+/area/space)
 "xK" = (
 /turf/simulated/floor/stairs/wide/middle,
-/area)
+/area/space)
 "xL" = (
 /turf/simulated/floor/stairs/wide/other,
-/area)
+/area/space)
 "xM" = (
 /obj/machinery/door/airlock/pyro{
 	dir = 4
 	},
 /turf/unsimulated/floor/purple,
-/area)
+/area/space)
 "xN" = (
 /turf/unsimulated/floor/purple,
-/area)
+/area/space)
 "xO" = (
 /turf/simulated/floor/specialroom/clown,
-/area)
+/area/space)
 "xP" = (
 /obj/machinery/light/incandescent/netural,
 /turf/unsimulated/floor/purple,
-/area)
+/area/space)
 "xQ" = (
 /obj/item/storage/toilet/random{
 	dir = 8;
@@ -9521,7 +9534,7 @@
 	pixel_y = 32
 	},
 /turf/simulated/floor/sanitary,
-/area)
+/area/space)
 "xR" = (
 /obj/submachine/chef_sink/chem_sink{
 	dir = 4;
@@ -9529,27 +9542,74 @@
 	pixel_y = 0
 	},
 /turf/unsimulated/floor/blue,
-/area)
+/area/space)
 "xS" = (
 /obj/machinery/light/incandescent/netural{
-	icon_state = "tube1";
-	dir = 1
+	dir = 1;
+	icon_state = "tube1"
 	},
 /turf/unsimulated/floor/blue,
-/area)
+/area/space)
 "xT" = (
 /obj/machinery/door/airlock/pyro{
 	dir = 4
 	},
 /turf/unsimulated/floor/blue,
-/area)
+/area/space)
 "xU" = (
 /turf/unsimulated/floor/blue,
-/area)
+/area/space)
 "xV" = (
 /obj/machinery/light/incandescent/netural,
 /turf/unsimulated/floor/blue,
-/area)
+/area/space)
+"yi" = (
+/obj/landmark{
+	name = "marjfall"
+	},
+/obj/sea_plant/seaweed,
+/turf/space/fluid/noexplosion/nospawn,
+/area/dank_trench)
+"yw" = (
+/obj/item/plant/herb/cannabis/spawnable,
+/obj/decal/cleanable/dirt/jen,
+/obj/item/reagent_containers/glass/wateringcan,
+/turf/unsimulated/floor/grime,
+/area/dank_trench)
+"yY" = (
+/obj/sea_plant/seaweed,
+/obj/item/crowbar/red,
+/turf/space/fluid/noexplosion/nospawn,
+/area/dank_trench)
+"zl" = (
+/obj/machinery/vending/snack{
+	credit = 43
+	},
+/obj/machinery/light/emergency{
+	dir = 4;
+	pixel_x = 10
+	},
+/turf/unsimulated/floor/grime,
+/area/dank_trench)
+"zz" = (
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
+	},
+/obj/decal/cleanable/dirt/jen,
+/obj/item/furniture_parts/office_chair/green,
+/turf/unsimulated/floor/plating,
+/area/dank_trench)
+"zL" = (
+/obj/decal/cleanable/dirt,
+/obj/machinery/drainage,
+/turf/unsimulated/floor/sanitary/blue,
+/area/dank_trench)
+"AA" = (
+/obj/decal/cleanable/dirt,
+/obj/random_item_spawner/junk/one_or_zero,
+/turf/unsimulated/floor/black/grime,
+/area/dank_trench)
 "AC" = (
 /turf/unsimulated/floor/setpieces/Azarak/cavefloor/underwalls,
 /turf/unsimulated/wall/setpieces/Azarak/cavewall/edges{
@@ -9937,8 +9997,8 @@
 	anchored = 1
 	},
 /obj/cable{
-	icon_state = "0-2";
-	d2 = 2
+	d2 = 2;
+	icon_state = "0-2"
 	},
 /turf/unsimulated/floor/setpieces/Azarak/cavefloor/edges{
 	dir = 5
@@ -10014,9 +10074,9 @@
 /area/mantavault)
 "Cm" = (
 /obj/cable{
-	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/unsimulated/floor/setpieces/Azarak/cavefloor/edges{
 	dir = 6
@@ -10065,6 +10125,789 @@
 /obj/critter/bat/hellbat,
 /turf/unsimulated/floor/setpieces/Azarak/rockyfloor,
 /area/mantavault)
+"CB" = (
+/obj/decal/cleanable/dirt,
+/obj/machinery/manufacturer/general{
+	desc = "It's covered top to bottom in a thin layer of sticky gunk. You are absolutely certain it has never been cleaned.";
+	free_resource_amt = 0;
+	free_resources = null;
+	malfunction = 1;
+	name = "grody manufacturer";
+	wires = 11
+	},
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
+	},
+/turf/unsimulated/floor/grime,
+/area/dank_trench)
+"CD" = (
+/obj/decoration/toiletholder{
+	pixel_y = 32
+	},
+/obj/submachine/chef_sink/chem_sink{
+	dir = 8;
+	pixel_x = 8
+	},
+/obj/decal/cleanable/greenpuke,
+/obj/item/reagent_containers/ampoule/smelling_salts{
+	pixel_x = -9;
+	pixel_y = 6
+	},
+/obj/item/reagent_containers/food/drinks/bottle/hobo_wine{
+	pixel_x = 3;
+	pixel_y = -9
+	},
+/turf/unsimulated/floor/sanitary/blue,
+/area/dank_trench)
+"CE" = (
+/obj/machinery/drainage,
+/turf/unsimulated/floor/grime,
+/area/dank_trench)
+"CG" = (
+/obj/item/storage/toilet{
+	dir = 4
+	},
+/obj/decal/cleanable/fungus,
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
+	},
+/turf/unsimulated/floor/sanitary/blue,
+/area/dank_trench)
+"CR" = (
+/obj/item/clothing/mask/breath,
+/turf/unsimulated/floor/plating,
+/area/dank_trench)
+"CU" = (
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 21
+	},
+/obj/cable{
+	icon_state = "6-8"
+	},
+/obj/decal/cleanable/dirt/jen,
+/obj/decal/cleanable/paper,
+/turf/unsimulated/floor/plating,
+/area/dank_trench)
+"Da" = (
+/obj/machinery/door/airlock/pyro/classic{
+	dir = 4
+	},
+/obj/decal/cleanable/dirt/jen,
+/turf/unsimulated/floor/sanitary/blue,
+/area/dank_trench)
+"Dn" = (
+/obj/decal/cleanable/dirt,
+/obj/item/reagent_containers/glass/bucket,
+/obj/machinery/light/emergency{
+	dir = 8;
+	pixel_x = -10
+	},
+/turf/unsimulated/floor/grime,
+/area/dank_trench)
+"Dr" = (
+/obj/random_item_spawner/junk/one_or_zero,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/unsimulated/floor/grime,
+/area/dank_trench)
+"DF" = (
+/obj/decal/cleanable/machine_debris,
+/turf/space/fluid/noexplosion,
+/area/dank_trench)
+"DY" = (
+/obj/rack,
+/obj/item/clothing/head/emerg,
+/obj/decal/cleanable/dirt/jen,
+/turf/unsimulated/floor/grime,
+/area/dank_trench)
+"EK" = (
+/obj/item/cable_coil,
+/obj/machinery/light/small{
+	dir = 4;
+	pixel_x = 12
+	},
+/turf/unsimulated/floor/grime,
+/area/dank_trench)
+"EM" = (
+/turf/space/fluid/noexplosion/nospawn,
+/area/dank_trench)
+"Fh" = (
+/obj/item/scrap,
+/obj/sea_plant/seaweed,
+/turf/space/fluid/noexplosion/nospawn,
+/area/dank_trench)
+"FH" = (
+/obj/decal/cleanable/dirt,
+/obj/stool/chair/office{
+	dir = 8
+	},
+/obj/machinery/light/emergency{
+	dir = 4;
+	pixel_x = 10
+	},
+/turf/unsimulated/floor/grime,
+/area/dank_trench)
+"FZ" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/decal/cleanable/dirt/jen,
+/turf/unsimulated/floor/plating,
+/area/dank_trench)
+"Gc" = (
+/obj/decal/cleanable/dirt/jen,
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/unsimulated/floor/plating,
+/area/dank_trench)
+"Gg" = (
+/obj/decal/fakeobjects/creepytv{
+	desc = "There's a gummy layer of dust over the controls."
+	},
+/obj/map/light/screen,
+/turf/unsimulated/floor/grime,
+/area/dank_trench)
+"Gm" = (
+/obj/item/reagent_containers/food/snacks/chips,
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
+	},
+/turf/unsimulated/floor/grime,
+/area/dank_trench)
+"Gq" = (
+/obj/table/reinforced/auto,
+/obj/machinery/cell_charger,
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
+	},
+/turf/unsimulated/floor/grime,
+/area/dank_trench)
+"Gt" = (
+/obj/machinery/door/airlock/pyro/classic{
+	dir = 4
+	},
+/obj/decal/cleanable/dirt/jen,
+/turf/unsimulated/floor/grime,
+/area/dank_trench)
+"HY" = (
+/obj/decal/cleanable/dirt,
+/obj/stool/chair/comfy{
+	dir = 1;
+	icon_state = "chair_comfy"
+	},
+/turf/unsimulated/floor/grime,
+/area/dank_trench)
+"Id" = (
+/obj/random_item_spawner/junk/one_or_zero,
+/obj/decal/cleanable/dirt/jen,
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet/black,
+/obj/machinery/light_switch/west,
+/turf/unsimulated/floor/grime,
+/area/dank_trench)
+"Il" = (
+/obj/sea_plant/seaweed,
+/turf/space/fluid/noexplosion/nospawn,
+/area/dank_trench)
+"Ip" = (
+/turf/unsimulated/wall/trench,
+/area/dank_trench)
+"IF" = (
+/obj/machinery/door/airlock/pyro/external,
+/obj/decal/cleanable/dirt/jen,
+/turf/unsimulated/floor/grime,
+/area/dank_trench)
+"IY" = (
+/obj/table/reinforced/auto,
+/obj/item/paper_bin,
+/obj/item/weldingtool{
+	pixel_x = 15;
+	pixel_y = 4
+	},
+/obj/item/device/light/zippo{
+	pixel_x = -3;
+	pixel_y = 6
+	},
+/obj/machinery/power/apc/autoname_north/nopoweralert{
+	environ = 2;
+	equipment = 2;
+	lighting = 2;
+	locked = 0;
+	operating = 0;
+	start_charge = 23
+	},
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/unsimulated/floor/grime,
+/area/dank_trench)
+"Jq" = (
+/obj/landmark{
+	name = "marjfall"
+	},
+/turf/space/fluid/noexplosion,
+/area/dank_trench)
+"Ju" = (
+/obj/item/seed/cannabis,
+/turf/unsimulated/floor/grime,
+/area/dank_trench)
+"Jx" = (
+/obj/machinery/door/airlock/pyro/classic{
+	dir = 4
+	},
+/obj/decal/cleanable/dirt/jen,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/unsimulated/floor/grime,
+/area/dank_trench)
+"JA" = (
+/obj/item/scissors,
+/obj/item/rubberduck{
+	pixel_x = -7;
+	pixel_y = 8
+	},
+/obj/machinery/light/small{
+	dir = 4;
+	pixel_x = 12
+	},
+/turf/unsimulated/floor/damaged3,
+/area/dank_trench)
+"JD" = (
+/obj/item/scrap,
+/turf/space/fluid/noexplosion,
+/area/dank_trench)
+"JF" = (
+/obj/decal/cleanable/dirt/jen,
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4
+	},
+/turf/unsimulated/floor/grime,
+/area/dank_trench)
+"JK" = (
+/obj/stool/chair/office/green{
+	dir = 8
+	},
+/obj/decal/cleanable/generic{
+	desc = "Smells vaguely of eggs and mint.";
+	name = "weird flakes"
+	},
+/turf/unsimulated/floor/black/grime,
+/area/dank_trench)
+"JL" = (
+/obj/decal/cleanable/dirt,
+/obj/rack,
+/obj/item/tank/air,
+/obj/item/clothing/suit/space/emerg,
+/turf/unsimulated/floor/grime,
+/area/dank_trench)
+"JX" = (
+/obj/decal/cleanable/dirt/jen,
+/obj/item/plant/herb/cannabis/spawnable,
+/obj/item/reagent_containers/glass/bottle/diethylamine{
+	pixel_x = 6
+	},
+/turf/unsimulated/floor/grime,
+/area/dank_trench)
+"Ki" = (
+/obj/machinery/power/furnace,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/unsimulated/floor/grime,
+/area/dank_trench)
+"Kl" = (
+/obj/machinery/door/airlock/pyro/classic{
+	dir = 4
+	},
+/obj/decal/cleanable/dirt/jen,
+/turf/unsimulated/floor/black/grime,
+/area/dank_trench)
+"KD" = (
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 21
+	},
+/turf/unsimulated/floor/grime,
+/area/dank_trench)
+"Lh" = (
+/obj/reagent_dispensers/still,
+/obj/decal/cleanable/dirt/jen,
+/turf/unsimulated/floor/grime,
+/area/dank_trench)
+"Ll" = (
+/obj/random_item_spawner/junk/one_or_zero,
+/turf/space/fluid/noexplosion,
+/area/dank_trench)
+"Lq" = (
+/obj/decal/cleanable/dirt/jen,
+/obj/item/item_box/swedish_bag{
+	icon_state = "swedishfisk-open";
+	item_amount = 4;
+	name = "dirty bag of swedish fisk";
+	open = 1
+	},
+/turf/unsimulated/floor/black/grime,
+/area/dank_trench)
+"Lr" = (
+/obj/decal/cleanable/dirt,
+/obj/storage/crate,
+/obj/item/bee_egg_carton,
+/obj/item/hand_labeler,
+/turf/unsimulated/floor/plating,
+/area/dank_trench)
+"Lv" = (
+/obj/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "1-9"
+	},
+/obj/item/bluntwrap{
+	pixel_x = -4;
+	pixel_y = 6
+	},
+/obj/item/bluntwrap{
+	pixel_y = -3
+	},
+/turf/unsimulated/floor/plating,
+/area/dank_trench)
+"Ly" = (
+/obj/decal/cleanable/vomit,
+/obj/item/storage/pill_bottle/cyberpunk{
+	pixel_x = 6;
+	pixel_y = 6
+	},
+/turf/unsimulated/floor/sanitary/blue,
+/area/dank_trench)
+"LN" = (
+/obj/rack,
+/obj/item/sheet/steel{
+	amount = 10
+	},
+/obj/item/sheet/glass{
+	amount = 10
+	},
+/turf/unsimulated/floor/plating,
+/area/dank_trench)
+"LR" = (
+/obj/stool/chair/comfy{
+	dir = 1;
+	icon_state = "chair_comfy"
+	},
+/obj/decal/cleanable/dirt/jen,
+/turf/unsimulated/floor/grime,
+/area/dank_trench)
+"LU" = (
+/obj/storage/crate/furnacefuel,
+/obj/decal/cleanable/dirt/jen,
+/turf/unsimulated/floor/plating,
+/area/dank_trench)
+"Mr" = (
+/obj/stool/chair{
+	dir = 8
+	},
+/turf/unsimulated/floor/grime,
+/area/dank_trench)
+"My" = (
+/obj/decal/cleanable/fungus,
+/turf/unsimulated/wall/auto/supernorn,
+/area/dank_trench)
+"Mz" = (
+/obj/machinery/door/airlock/pyro/external,
+/turf/unsimulated/floor/grime,
+/area/dank_trench)
+"MJ" = (
+/obj/decal/cleanable/dirt,
+/turf/unsimulated/floor/grime,
+/area/dank_trench)
+"NS" = (
+/obj/submachine/seed_manipulator{
+	desc = "A seed manipulation machine. It's seen a lot of use.";
+	name = "gummed-up PlantMaster"
+	},
+/obj/decal/poster/wallsign/poster_rand{
+	pixel_y = 28
+	},
+/obj/decal/cleanable/dirt/dirt3,
+/turf/unsimulated/floor/black/grime,
+/area/dank_trench)
+"Oc" = (
+/obj/decal/cleanable/dirt,
+/obj/shrub/dead,
+/obj/item/reagent_containers/patch/LSD{
+	pixel_x = 5
+	},
+/turf/unsimulated/floor/grime,
+/area/dank_trench)
+"ON" = (
+/obj/ladder{
+	icon_state = "ladder_wall";
+	id = "bluntcliff";
+	pixel_y = 24
+	},
+/turf/space/fluid/noexplosion,
+/area/dank_trench)
+"Pb" = (
+/obj/item/raw_material/rock,
+/turf/space/fluid/noexplosion,
+/area/dank_trench)
+"Pc" = (
+/obj/submachine/chem_extractor{
+	dir = 8
+	},
+/obj/machinery/light/small{
+	dir = 4;
+	pixel_x = 12
+	},
+/obj/decal/cleanable/dirt/dirt5,
+/turf/unsimulated/floor/black/grime,
+/area/dank_trench)
+"Pp" = (
+/obj/machinery/plantpot,
+/turf/unsimulated/floor/grime,
+/area/dank_trench)
+"PA" = (
+/obj/item/device/light/glowstick{
+	pixel_x = -13;
+	pixel_y = 7
+	},
+/obj/item/plant/herb/catnip,
+/obj/item/paper{
+	pixel_x = -13;
+	pixel_y = -11
+	},
+/obj/decal/cleanable/dirt/jen,
+/turf/unsimulated/floor/grime,
+/area/dank_trench)
+"PB" = (
+/obj/wingrille_spawn/auto,
+/turf/unsimulated/floor/plating,
+/area/dank_trench)
+"PK" = (
+/obj/storage/crate/bin,
+/obj/item/reagent_containers/food/snacks/pickle/trash{
+	pixel_y = 3
+	},
+/turf/unsimulated/floor/grime,
+/area/dank_trench)
+"PS" = (
+/obj/item/device/light/flashlight{
+	pixel_x = 4;
+	pixel_y = -8
+	},
+/obj/random_item_spawner/junk/one_or_zero,
+/obj/decal/cleanable/dirt/jen,
+/turf/unsimulated/floor/grime,
+/area/dank_trench)
+"PX" = (
+/obj/table/auto,
+/obj/item/device/reagentscanner{
+	pixel_x = -6;
+	pixel_y = 9
+	},
+/obj/item/reagent_containers/glass/beaker{
+	pixel_x = 8;
+	pixel_y = 18
+	},
+/obj/item/reagent_containers/glass/beaker{
+	pixel_x = 6;
+	pixel_y = 11
+	},
+/obj/item/reagent_containers/syringe{
+	pixel_y = -3
+	},
+/obj/item/shaker/salt{
+	pixel_x = 8;
+	pixel_y = 5
+	},
+/obj/item/plant/herb/cannabis/white/spawnable{
+	pixel_x = -4;
+	pixel_y = 3
+	},
+/turf/unsimulated/floor/black/grime,
+/area/dank_trench)
+"Qr" = (
+/obj/decal/cleanable/dirt,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/unsimulated/floor/grime,
+/area/dank_trench)
+"Qs" = (
+/obj/machinery/plantpot,
+/obj/decal/cleanable/dirt/jen,
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
+	},
+/turf/unsimulated/floor/grime,
+/area/dank_trench)
+"Qx" = (
+/obj/decal/cleanable/dirt,
+/obj/item/mop,
+/turf/unsimulated/floor/plating,
+/area/dank_trench)
+"Qz" = (
+/obj/item/raw_material/rock,
+/obj/random_item_spawner/junk/one_or_zero,
+/obj/machinery/light/emergency{
+	dir = 1;
+	pixel_y = 16
+	},
+/turf/space/fluid/noexplosion,
+/area/dank_trench)
+"QN" = (
+/obj/decal/cleanable/dirt,
+/obj/table/wood/auto,
+/obj/item/game_kit,
+/obj/item/decoration/ashtray{
+	butts = 5;
+	name = "grubby old ashtray";
+	pixel_x = -7
+	},
+/obj/machinery/light/small{
+	dir = 4;
+	pixel_x = 12
+	},
+/turf/unsimulated/floor/grime,
+/area/dank_trench)
+"QX" = (
+/obj/table/auto,
+/obj/item/reagent_containers/glass/bottle/ammonia{
+	pixel_y = 8
+	},
+/obj/item/reagent_containers/glass/bottle/topcrop{
+	pixel_x = 8
+	},
+/obj/item/reagent_containers/glass/bottle/powerplant{
+	pixel_x = -4;
+	pixel_y = 4
+	},
+/obj/item/reagent_containers/dropper{
+	pixel_x = -2;
+	pixel_y = -10
+	},
+/turf/unsimulated/floor/black/grime,
+/area/dank_trench)
+"Rc" = (
+/obj/decal/cleanable/dirt/jen,
+/obj/stool/chair{
+	dir = 8
+	},
+/turf/unsimulated/floor/plating,
+/area/dank_trench)
+"Rd" = (
+/obj/storage/crate/trench_loot/drug,
+/turf/space/fluid/noexplosion/nospawn,
+/area/dank_trench)
+"Rs" = (
+/obj/machinery/hydro_growlamp,
+/turf/unsimulated/floor/plating,
+/area/dank_trench)
+"RJ" = (
+/obj/reagent_dispensers/watertank,
+/turf/unsimulated/floor/grime,
+/area/dank_trench)
+"RX" = (
+/obj/random_item_spawner/junk/one_or_zero,
+/turf/space/fluid/noexplosion/nospawn,
+/area/dank_trench)
+"Sb" = (
+/obj/decal/cleanable/dirt/jen,
+/obj/mopbucket,
+/turf/unsimulated/floor/plating,
+/area/dank_trench)
+"Sg" = (
+/obj/table/reinforced/auto,
+/obj/item/storage/toolbox/mechanical,
+/obj/item/clothing/head/helmet/welding{
+	pixel_x = -6;
+	pixel_y = 7
+	},
+/turf/unsimulated/floor/grime,
+/area/dank_trench)
+"Sm" = (
+/obj/decal/cleanable/dirt/jen,
+/obj/item/reagent_containers/food/snacks/chips,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/unsimulated/floor/plating,
+/area/dank_trench)
+"Tu" = (
+/obj/decal/cleanable/machine_debris{
+	icon_state = "gib7"
+	},
+/turf/space/fluid/noexplosion/nospawn,
+/area/dank_trench)
+"TQ" = (
+/turf/space/fluid/noexplosion,
+/area/dank_trench)
+"Ug" = (
+/obj/machinery/power/furnace,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/cable,
+/turf/unsimulated/floor/grime,
+/area/dank_trench)
+"UV" = (
+/obj/item/satchel/hydro,
+/turf/unsimulated/floor/grime,
+/area/dank_trench)
+"Vg" = (
+/obj/decal/cleanable/dirt,
+/obj/random_item_spawner/junk/one_or_zero,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/unsimulated/floor/grime,
+/area/dank_trench)
+"Vh" = (
+/obj/machinery/door/airlock/pyro/classic,
+/turf/unsimulated/floor/grime,
+/area/dank_trench)
+"Vl" = (
+/obj/stool/chair/comfy,
+/turf/unsimulated/floor/grime,
+/area/dank_trench)
+"Vx" = (
+/turf/unsimulated/wall/auto/supernorn,
+/area/dank_trench)
+"Vy" = (
+/obj/machinery/plantpot,
+/obj/decal/cleanable/dirt/jen,
+/obj/machinery/light/small{
+	dir = 4;
+	pixel_x = 12
+	},
+/turf/unsimulated/floor/grime,
+/area/dank_trench)
+"VA" = (
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 21
+	},
+/turf/space/fluid/noexplosion,
+/area/dank_trench)
+"VQ" = (
+/turf/unsimulated/floor/grime,
+/area/dank_trench)
+"Wh" = (
+/obj/machinery/chem_master,
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 21
+	},
+/turf/unsimulated/floor/black/grime,
+/area/dank_trench)
+"Ws" = (
+/turf/unsimulated/wall/trench/side,
+/area/dank_trench)
+"WG" = (
+/obj/item/paper{
+	info = "rico you remember the marijuana trench back on earth this is just like that. marijuana trench 2. carl";
+	name = "odd note"
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/unsimulated/floor/plating,
+/area/dank_trench)
+"WU" = (
+/obj/decal/cleanable/dirt/jen,
+/obj/item/pen,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/unsimulated/floor/grime,
+/area/dank_trench)
+"Xt" = (
+/obj/storage/crate,
+/obj/item/reagent_containers/glass/bottle/ammonia/janitors{
+	pixel_x = 4
+	},
+/obj/item/reagent_containers/glass/bottle/eyedrops{
+	pixel_x = -7
+	},
+/obj/item/reagent_containers/glass/beaker{
+	pixel_x = -6;
+	pixel_y = -4
+	},
+/turf/unsimulated/floor/plating,
+/area/dank_trench)
+"Xx" = (
+/obj/machinery/portable_reclaimer,
+/obj/decal/cleanable/dirt/jen,
+/turf/unsimulated/floor/plating,
+/area/dank_trench)
+"YJ" = (
+/obj/decal/cleanable/machine_debris{
+	icon_state = "gib7"
+	},
+/turf/space/fluid/noexplosion,
+/area/dank_trench)
+"Za" = (
+/obj/decal/cleanable/dirt/jen,
+/obj/item/reagent_containers/food/snacks/cookie{
+	desc = "Covered in a thick layer of dust, yet seems to be perfectly preserved. The finest of food chemistry at work.";
+	name = "very old sugar cookie";
+	pixel_x = 1;
+	pixel_y = 3
+	},
+/obj/item/reagent_containers/food/snacks/condiment/hotsauce{
+	pixel_x = -5
+	},
+/obj/item/storage/wall/random{
+	dir = 4;
+	pixel_x = -32;
+	pixel_y = 0
+	},
+/turf/unsimulated/floor/grime,
+/area/dank_trench)
+"Zn" = (
+/obj/decal/cleanable/dirt/jen,
+/turf/unsimulated/floor/grime,
+/area/dank_trench)
+"Zo" = (
+/obj/decal/cleanable/dirt,
+/obj/machinery/vending/standard,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/turf/unsimulated/floor/plating,
+/area/dank_trench)
+"ZN" = (
+/obj/decal/cleanable/rust,
+/turf/unsimulated/wall/auto/supernorn,
+/area/dank_trench)
+"ZU" = (
+/obj/storage/crate{
+	name = "furnace fuel crate"
+	},
+/obj/item/plant/herb/cannabis/omega/spawnable,
+/obj/item/plant/herb/cannabis/omega/spawnable,
+/obj/item/plant/herb/cannabis/omega/spawnable,
+/obj/item/plant/herb/cannabis/omega/spawnable,
+/turf/unsimulated/floor/grime,
+/area/dank_trench)
+"ZX" = (
+/obj/decal/cleanable/dirt/jen,
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/unsimulated/floor/plating,
+/area/dank_trench)
 
 (1,1,1) = {"
 ab
@@ -24288,7 +25131,7 @@ ab
 ab
 ab
 ab
-gW
+ab
 gW
 gW
 gW
@@ -24563,34 +25406,34 @@ gW
 gW
 "}
 (49,1,1) = {"
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
+ab
+Ip
+Ip
+Ip
+Ip
+Ip
+Ip
+Ip
+Ip
+Ip
+Ip
+Ip
+Ip
+Ip
+Ip
+Ip
+Ip
+Ip
+Ip
+Ip
+Ip
+Ip
+Ip
+Ip
+Ip
+Ip
+Ip
+ab
 gW
 gW
 gW
@@ -24865,34 +25708,34 @@ gW
 gW
 "}
 (50,1,1) = {"
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
+ab
+Ip
+Ws
+Il
+Ip
+Ip
+Ip
+Ip
+Ip
+Ip
+Ws
+JD
+Il
+Ip
+Ip
+Ws
+Tu
+Ip
+Ws
+Fh
+Ip
+Ip
+Ip
+Ip
+Ip
+Ip
+Ip
+ab
 gW
 gW
 gW
@@ -25167,34 +26010,34 @@ gW
 gW
 "}
 (51,1,1) = {"
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
+ab
+Ip
+Ws
+JD
+Ip
+Ws
+TQ
+TQ
+Il
+RX
+TQ
+TQ
+Ll
+TQ
+Ip
+Ws
+Fh
+Jq
+TQ
+Pb
+Ip
+Ip
+Ip
+Ip
+Ip
+Ip
+Ip
+ab
 gW
 gW
 gW
@@ -25469,34 +26312,34 @@ gW
 gW
 "}
 (52,1,1) = {"
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
+ab
+Ip
+Ws
+TQ
+Il
+TQ
+Pb
+Ip
+Ws
+YJ
+Il
+TQ
+TQ
+Il
+Ll
+TQ
+TQ
+TQ
+Il
+TQ
+Jq
+Ip
+Ip
+Ip
+Ip
+Ip
+Ip
+ab
 gW
 gW
 gW
@@ -25771,34 +26614,34 @@ gW
 gW
 "}
 (53,1,1) = {"
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
+ab
+Ip
+Ip
+Ws
+TQ
+Ip
+Ip
+Ip
+Ip
+Ip
+Ip
+Ws
+Pb
+Ll
+TQ
+Il
+TQ
+TQ
+Ll
+TQ
+Il
+Pb
+Ip
+Ip
+Ip
+Ip
+Ip
+ab
 gW
 gW
 gW
@@ -26073,34 +26916,34 @@ gW
 gW
 "}
 (54,1,1) = {"
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
+ab
+Ip
+Ip
+Ws
+Il
+Ip
+Ip
+Ip
+Vx
+Vx
+Vx
+Vx
+PB
+PB
+PB
+Vx
+Ip
+Ws
+TQ
+Jq
+TQ
+Il
+Ip
+Ip
+Ip
+Ip
+Ip
+ab
 gW
 gW
 gW
@@ -26375,34 +27218,34 @@ gW
 gW
 "}
 (55,1,1) = {"
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
+ab
+Ip
+Ip
+Ws
+Ll
+Ip
+Ip
+Ip
+Vx
+CG
+Ly
+Vx
+Gg
+Gm
+HY
+Vx
+Ip
+Ip
+Ws
+Fh
+TQ
+Ll
+TQ
+Ip
+Ip
+Ip
+Ip
+ab
 gW
 gW
 gW
@@ -26677,34 +27520,34 @@ gW
 gW
 "}
 (56,1,1) = {"
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
+ab
+Ip
+Ws
+Il
+JD
+Vx
+Vx
+Vx
+Vx
+CD
+zL
+Vx
+Oc
+PA
+PK
+Vx
+Ip
+Ip
+Ws
+Tu
+TQ
+TQ
+TQ
+yi
+Ip
+Ip
+Ip
+ab
 gW
 gW
 gW
@@ -26979,34 +27822,34 @@ gW
 gW
 "}
 (57,1,1) = {"
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
+ab
+Ip
+Ws
+Ll
+Il
+PB
+Qs
+RJ
+Vx
+Vx
+Da
+Vx
+Vx
+JF
+Vx
+Vx
+Vx
+Vx
+Vx
+Vx
+Qz
+Jq
+Il
+JD
+Ip
+Ip
+Ip
+ab
 gW
 gW
 gW
@@ -27281,34 +28124,34 @@ gW
 gW
 "}
 (58,1,1) = {"
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
+ab
+Ip
+Ws
+Pb
+TQ
+PB
+JX
+Ju
+Lh
+PB
+KD
+Dn
+Za
+VQ
+Id
+gV
+Vx
+DY
+JL
+Vx
+VA
+TQ
+Ll
+TQ
+yY
+Ip
+Ip
+ab
 gW
 gW
 gW
@@ -27583,34 +28426,34 @@ gW
 gW
 "}
 (59,1,1) = {"
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
+ab
+Ip
+Ws
+JD
+Il
+PB
+UV
+Zn
+Zn
+Vh
+MJ
+VQ
+VQ
+VQ
+VQ
+Zn
+Mz
+CE
+Zn
+IF
+EM
+TQ
+TQ
+TQ
+DF
+Ip
+Ip
+ab
 gW
 gW
 gW
@@ -27885,34 +28728,34 @@ gW
 gW
 "}
 (60,1,1) = {"
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
+ab
+Ip
+Ws
+TQ
+Ll
+PB
+Ju
+yw
+Mr
+PB
+Zn
+Vl
+QN
+LR
+VQ
+zl
+Vx
+PS
+JA
+Vx
+Il
+Ip
+Ws
+ON
+TQ
+Ip
+Ip
+ab
 gW
 gW
 gW
@@ -28187,34 +29030,34 @@ gW
 gW
 "}
 (61,1,1) = {"
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
+ab
+Ip
+Ws
+Il
+TQ
+PB
+Vy
+Pp
+Vx
+Vx
+Kl
+Vx
+Vx
+Vx
+Gt
+Vx
+Vx
+Vx
+Vx
+Vx
+Ip
+Ip
+Ip
+Ws
+Jq
+Il
+Ip
+ab
 gW
 gW
 gW
@@ -28489,34 +29332,34 @@ gW
 gW
 "}
 (62,1,1) = {"
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
+ab
+Ip
+Ip
+Ws
+TQ
+Vx
+Vx
+Vx
+Vx
+Wh
+gN
+Lq
+My
+CB
+VQ
+Zn
+ZU
+Gq
+Vx
+Ip
+Ip
+Ip
+Ip
+Ws
+TQ
+TQ
+Ip
+ab
 gW
 gW
 gW
@@ -28791,34 +29634,34 @@ gW
 gW
 "}
 (63,1,1) = {"
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
+ab
+Ip
+Ip
+Ws
+Ll
+Ip
+Ip
+Ip
+Vx
+NS
+JK
+AA
+Vx
+IY
+Dr
+WU
+Qr
+Ug
+Vx
+Zo
+Xx
+Ip
+Ip
+Ip
+Ws
+JD
+Ip
+ab
 gW
 gW
 gW
@@ -29093,34 +29936,34 @@ gW
 gW
 "}
 (64,1,1) = {"
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
+ab
+Ip
+Ip
+Ws
+Il
+JD
+Ip
+Ip
+ZN
+QX
+PX
+Pc
+Vx
+Sg
+FH
+EK
+Vg
+Ki
+Vx
+CU
+Qx
+LN
+Ip
+Ip
+Ip
+Ip
+Ip
+ab
 gW
 gW
 gW
@@ -29395,34 +30238,34 @@ gW
 gW
 "}
 (65,1,1) = {"
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
+ab
+Ip
+Ip
+Ip
+Ws
+TQ
+Rd
+Ip
+Vx
+Vx
+Vx
+Vx
+Vx
+Vx
+Vx
+Vx
+Jx
+Vx
+Vx
+Gc
+Lv
+Xt
+Ip
+Ip
+Ip
+Ip
+Ip
+ab
 gW
 gW
 gW
@@ -29697,34 +30540,34 @@ gW
 gW
 "}
 (66,1,1) = {"
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
+ab
+Ip
+Ip
+Ip
+Ws
+Il
+Ip
+Ip
+Ip
+Ip
+Ip
+Ip
+Ip
+Ws
+zz
+CR
+ZX
+FZ
+Sm
+WG
+Rc
+Ip
+Ip
+Ip
+Ip
+Ip
+Ip
+ab
 gW
 gW
 gW
@@ -29999,34 +30842,34 @@ gW
 gW
 "}
 (67,1,1) = {"
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
+ab
+Ip
+Ip
+Ip
+Ip
+Ip
+Ip
+Ip
+Ip
+Ip
+Ip
+Ws
+LU
+Sb
+Rs
+Ip
+Ip
+Ip
+Ip
+Ws
+Lr
+Ip
+Ip
+Ip
+Ip
+Ip
+Ip
+ab
 gW
 gW
 gW
@@ -30301,34 +31144,34 @@ gW
 gW
 "}
 (68,1,1) = {"
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
+ab
+Ip
+Ip
+Ip
+Ip
+Ip
+Ip
+Ip
+Ip
+Ip
+Ip
+Ip
+Ip
+Ip
+Ip
+Ip
+Ip
+Ip
+Ip
+Ip
+Ip
+Ip
+Ip
+Ip
+Ip
+Ip
+Ip
+ab
 gW
 gW
 gW
@@ -30603,34 +31446,34 @@ gW
 gW
 "}
 (69,1,1) = {"
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
 gW
 gW
 gW

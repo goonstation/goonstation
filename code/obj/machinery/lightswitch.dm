@@ -54,7 +54,12 @@
 	if(status & NOPOWER)
 		icon_state = "light-p"
 		light.disable()
+		src.UpdateOverlays(null, "light")
 	else
+		var/mutable_appearance/light_ov = mutable_appearance(src.icon, "light-light")
+		light_ov.plane = PLANE_LIGHTING
+		light_ov.alpha = 70
+		src.UpdateOverlays(light_ov, "light")
 		if (icon_state == "light-p")
 			light.enable()
 		if(on)
@@ -78,10 +83,9 @@
 
 	interact_particle(user,src)
 
-	for(var/obj/machinery/light_switch/L in area)
+	for(var/obj/machinery/light_switch/L in area.machines)
 		L.on = on
 		L.updateicon()
-		LAGCHECK(LAG_MED)
 
 	SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"[on ? "lightOn":"lightOff"]")
 

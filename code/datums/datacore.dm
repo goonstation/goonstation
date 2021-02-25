@@ -87,9 +87,9 @@
 			if (istype(T, /obj/trait/random_allergy))
 				var/obj/trait/random_allergy/AT = T
 				if (M.fields["notes"] == "No notes.") //is it in its default state?
-					M.fields["notes"] = "[G.fields["name"]] has an allergy to [AT.allergen_name]."
+					M.fields["notes"] = "[G.fields["name"]] has an allergy to [AT.allergic_players[H]]."
 				else
-					M.fields["notes"] += " [G.fields["name"]] has an allergy to [AT.allergen_name]."
+					M.fields["notes"] += " [G.fields["name"]] has an allergy to [AT.allergic_players[H]]."
 
 	M.fields["traits"] = traitStr
 
@@ -176,7 +176,7 @@
 	// Otherwise give them a default wage
 	else
 		var/datum/job/J = find_job_in_controller_by_string(G.fields["rank"])
-		if (J && J.wages)
+		if (J?.wages)
 			B.fields["wage"] = round(J.wages * wageMult)
 		else
 			B.fields["wage"] = 0
@@ -194,7 +194,7 @@
 
 		var/username = format_username(H.real_name)
 		if (!src.mainframe || !src.mainframe.hd || !(src.mainframe.hd in src.mainframe))
-			for (var/obj/machinery/networked/mainframe/newMainframe in machine_registry[MACHINES_MAINFRAMES])
+			for (var/obj/machinery/networked/mainframe/newMainframe as() in machine_registry[MACHINES_MAINFRAMES])
 				if (newMainframe.z != 1 || newMainframe.status)
 					continue
 

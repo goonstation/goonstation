@@ -44,7 +44,7 @@
 		..()
 
 	disposing()
-		if(ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/nuclear))
+		if(ticker?.mode && istype(ticker.mode, /datum/game_mode/nuclear))
 			var/datum/game_mode/nuclear/NUKEMODE = ticker.mode
 			NUKEMODE.the_bomb = null
 		qdel(wirepanel)
@@ -116,7 +116,7 @@
 
 
 
-		if (ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/nuclear) || src.target_override)
+		if (ticker?.mode && istype(ticker.mode, /datum/game_mode/nuclear) || src.target_override)
 			NUKEMODE = ticker.mode
 			var/target_area = src.target_override
 			if(isnull(target_area))
@@ -169,7 +169,7 @@
 		src.add_fingerprint(user)
 		user.lastattacked = src
 
-		if (ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/nuclear))
+		if (ticker?.mode && istype(ticker.mode, /datum/game_mode/nuclear))
 			var/datum/game_mode/nuclear/NUKEMODE = ticker.mode
 			if (istype(W, /obj/item/disk/data/floppy/read_only/authentication))
 				if (src.disk && istype(src.disk))
@@ -198,8 +198,7 @@
 
 			if (istype(W, /obj/item/remote/syndicate_teleporter))
 				for(var/obj/submachine/syndicate_teleporter/S in get_turf(src)) //sender
-					for(var/X in by_type[/obj/submachine/syndicate_teleporter]) // receiver
-						var/obj/submachine/syndicate_teleporter/R = X
+					for_by_tcl(R, /obj/submachine/syndicate_teleporter) // receiver
 						if(R.id == S.id && S != R)
 							if(S.recharging == 1)
 								return
@@ -313,7 +312,7 @@
 			robogibs(src.loc,null)
 			playsound(src.loc, 'sound/impact_sounds/Machinery_Break_1.ogg', 50, 2)
 			var/datum/game_mode/nuclear/NUKEMODE = null
-			if(ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/nuclear))
+			if(ticker?.mode && istype(ticker.mode, /datum/game_mode/nuclear))
 				NUKEMODE = ticker.mode
 				NUKEMODE.the_bomb = null
 				logTheThing("station", null, null, "The nuclear bomb was destroyed at [log_loc(src)].")
@@ -337,7 +336,7 @@
 			area_correct = 1
 		if(istype(ticker?.mode, /datum/game_mode/nuclear) && istype(nuke_area, NUKEMODE.target_location_type))
 			area_correct = 1
-		if ((nuke_turf.z != 1 && !area_correct) && (ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/nuclear)))
+		if ((nuke_turf.z != 1 && !area_correct) && (ticker?.mode && istype(ticker.mode, /datum/game_mode/nuclear)))
 			NUKEMODE.the_bomb = null
 			command_alert("A nuclear explosive has been detonated nearby. The station was not in range of the blast.", "Attention")
 			explosion(src, src.loc, 20, 30, 40, 50)
@@ -351,6 +350,9 @@
 			cinematic.add_client(C)
 		cinematic.play("nuke")
 #endif
+		if(istype(NUKEMODE))
+			NUKEMODE.nuke_detonated = 1
+			NUKEMODE.check_win()
 		sleep(5.5 SECONDS)
 
 		enter_allowed = 0
@@ -363,10 +365,7 @@
 
 		creepify_station()
 
-		if(ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/nuclear))
-			ticker.mode:nuke_detonated = 1
-			ticker.mode.check_win()
-		else
+		if(!istype(NUKEMODE))
 			sleep(1 SECOND)
 			boutput(world, "<B>Everyone was killed by the nuclear blast! Resetting in 30 seconds!</B>")
 
@@ -378,7 +377,7 @@
 	duration = 55
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	id = "unanchornuke"
-	icon = 'icons/obj/items/items.dmi'
+	icon = 'icons/obj/items/tools/screwdriver.dmi'
 	icon_state = "screwdriver"
 	var/obj/machinery/nuclearbomb/the_bomb = null
 

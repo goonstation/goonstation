@@ -35,7 +35,7 @@ mob
 				src.move_dir = 0
 
 			if(!src.dir_locked) //in order to not turn around and good fuckin ruin the emote animation
-				src.dir = src.move_dir
+				src.set_dir(src.move_dir)
 		if (changed & (KEY_THROW|KEY_PULL|KEY_POINT|KEY_EXAMINE|KEY_BOLT|KEY_OPEN|KEY_SHOCK)) // bleh
 			src.update_cursor()
 
@@ -69,13 +69,13 @@ mob
 				var/glide = 32 / (running ? 0.5 : 1.5) * world.tick_lag
 				if (!ticker || last_move_trigger + 10 <= ticker.round_elapsed_ticks)
 					last_move_trigger = ticker.round_elapsed_ticks
-					deliver_move_trigger(m_intent)
+					deliver_move_trigger(running ? "sprint" : m_intent)
 
 				src.glide_size = glide // dumb hack: some Move() code needs glide_size to be set early in order to adjust "following" objects
 				src.animate_movement = SLIDE_STEPS
 				src.set_loc(get_step(src.loc, move_dir))
 				if(!src.dir_locked) //in order to not turn around and good fuckin ruin the emote animation
-					src.dir = move_dir
+					src.set_dir(move_dir)
 				OnMove()
 				src.glide_size = glide
 				next_move = world.time + (running ? 0.5 : 1.5)
@@ -115,8 +115,7 @@ mob
 					for (var/obj/item/grab/G in src.equipped_list(check_for_magtractor = 0))
 						if (get_dist(src, G.affecting) > 1)
 							qdel(G)
-					for(var/grab in src.grabbed_by)
-						var/obj/item/grab/G = grab
+					for (var/obj/item/grab/G as() in src.grabbed_by)
 						if (istype(G) && get_dist(src, G.assailant) > 1)
 							if (G.state > 1)
 								delay += G.assailant.p_class
@@ -159,7 +158,7 @@ mob
 							// also fuck it.
 							var/obj/effects/ion_trails/I = unpool(/obj/effects/ion_trails)
 							I.set_loc(src.loc)
-							I.dir = src.dir
+							I.set_dir(src.dir)
 							flick("ion_fade", I)
 							I.icon_state = "blank"
 							I.pixel_x = src.pixel_x
@@ -173,20 +172,19 @@ mob
 
 						if (!ticker || last_move_trigger + 10 <= ticker.round_elapsed_ticks)
 							last_move_trigger = ticker ? ticker.round_elapsed_ticks : 0 //Wire note: Fix for Cannot read null.round_elapsed_ticks
-							deliver_move_trigger(m_intent)
+							deliver_move_trigger(running ? "sprint" : m_intent)
 
 
 						src.glide_size = glide // dumb hack: some Move() code needs glide_size to be set early in order to adjust "following" objects
 						src.animate_movement = SLIDE_STEPS
 						//if (src.client && src.client.flying)
 						//	src.set_loc(get_step(src.loc, move_dir))
-						//	src.dir = move_dir
+						//	src.set_dir(move_dir)
 						//else
 						src.pushing = 0
 
 						var/do_step = 1 //robust grab : don't even bother if we are in a chokehold. Assailant gets moved below. Makes the tile glide better without having a chain of step(src)->step(assailant)->step(me)
-						for(var/grab in src.grabbed_by)
-							var/obj/item/grab/G = grab
+						for (var/obj/item/grab/G as() in src.grabbed_by)
 							if (G?.state < GRAB_NECK) continue
 							do_step = 0
 							break
@@ -205,8 +203,7 @@ mob
 								for(var/obj/item/grab/gunpoint/G in grabbed_by)
 									G.shoot()
 
-							for(var/grab in src.grabbed_by)
-								var/obj/item/grab/G = grab
+							for (var/obj/item/grab/G as() in src.grabbed_by)
 								if (G.assailant == pushing || G.affecting == pushing) continue
 								if (G.state < GRAB_NECK) continue
 								if (!G.assailant || !isturf(G.assailant.loc) || G.assailant.anchored)

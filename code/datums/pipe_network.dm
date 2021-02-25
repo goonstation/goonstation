@@ -199,7 +199,7 @@ proc/equalize_gases(list/datum/gas_mixture/gases)
 		if(length(gas.trace_gases))
 			for(var/datum/gas/trace_gas in gas.trace_gases)
 				var/datum/gas/corresponding
-				if(total_trace_gases && total_trace_gases.len)
+				if(length(total_trace_gases))
 					corresponding = locate(trace_gas.type) in total_trace_gases
 				if(!corresponding)
 					corresponding = new trace_gas.type()
@@ -225,7 +225,7 @@ proc/equalize_gases(list/datum/gas_mixture/gases)
 
 			gas.temperature = temperature
 
-			if(total_trace_gases && total_trace_gases.len)
+			if(length(total_trace_gases))
 				for(var/datum/gas/trace_gas in total_trace_gases)
 					var/datum/gas/corresponding
 					if(length(gas.trace_gases))

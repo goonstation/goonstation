@@ -915,7 +915,7 @@
 
 			T.timing = 1
 			T.c_state(1)
-			processing_items |= src
+			processing_items |= T
 			src.last_sim = world.time
 
 			var/area/to_reset = get_area(vrbomb) //Reset the magic vr turf.
@@ -1605,7 +1605,7 @@
 					src.post_status(target, "command","term_connect","data","noreply","device",src.device_tag)
 				src.updateUsrDialog()
 				SPAWN_DBG(0.5 SECONDS) //Sign up with the driver (if a mainframe contacted us)
-					src.post_status(target,"command","term_message","data","command=register[(frequencies && frequencies.len) ? "&freqs=[jointext(frequencies,",")]" : ""]")
+					src.post_status(target,"command","term_message","data","command=register[(length(frequencies)) ? "&freqs=[jointext(frequencies,",")]" : ""]")
 				return
 
 			if("term_message","term_file")
@@ -2535,7 +2535,7 @@
 						return
 					src.scan_beam = new /obj/beam/ir_beam(beamTurf, setup_beam_length)
 					src.scan_beam.master = src
-					src.scan_beam.dir = src.dir
+					src.scan_beam.set_dir(src.dir)
 
 				return
 			if (2)
@@ -2773,7 +2773,7 @@
 
 				src.next = new src.type(nextTurf, src.limit-1)
 				//next.master = src.master
-				next.dir = src.dir
+				next.set_dir(src.dir)
 				for (var/atom/movable/hitAtom in nextTurf)
 					if (hitAtom.density && !hitAtom.anchored)
 						src.hit(hitAtom)
@@ -2844,7 +2844,7 @@
 
 			src.next = new /obj/beam/ir_beam(nextTurf, src.limit-1)
 			next:master = src.master
-			next.dir = src.dir
+			next.set_dir(src.dir)
 		return
 
 //Rather fancy science emitter gizmo
@@ -3189,7 +3189,7 @@
 					return 0
 				src.beam = new /obj/beam/h7_beam(beamTurf, setup_beam_length, crystalCount)
 				src.beam.master = src
-				src.beam.dir = src.dir
+				src.beam.set_dir(src.dir)
 				for (var/atom/movable/hitAtom in beamTurf)
 					if (hitAtom.density && !hitAtom.anchored)
 						src.beam.hit(hitAtom)
@@ -3368,7 +3368,7 @@
 
 			src.next = new /obj/beam/h7_beam(nextTurf, src.limit-1, src.power)
 			next:master = src.master
-			next.dir = src.dir
+			next.set_dir(src.dir)
 			for (var/atom/movable/hitAtom in nextTurf)
 				if (hitAtom.density && !hitAtom.anchored)
 					src.hit(hitAtom)
@@ -4933,7 +4933,7 @@
 	proc
 		fire0(var/datum/mechanicsMessage/anInput)
 
-			if (anInput && anInput.isTrue())
+			if (anInput?.isTrue())
 				input_word |= 1
 
 			else
@@ -4943,7 +4943,7 @@
 
 		fire1(var/datum/mechanicsMessage/anInput)
 
-			if (anInput && anInput.isTrue())
+			if (anInput?.isTrue())
 				input_word |= 2
 
 			else
@@ -4953,7 +4953,7 @@
 
 		fire2(var/datum/mechanicsMessage/anInput)
 
-			if (anInput && anInput.isTrue())
+			if (anInput?.isTrue())
 				input_word |= 4
 
 			else
@@ -4963,7 +4963,7 @@
 
 		fire3(var/datum/mechanicsMessage/anInput)
 
-			if (anInput && anInput.isTrue())
+			if (anInput?.isTrue())
 				input_word |= 8
 
 			else
@@ -4973,7 +4973,7 @@
 
 		fire4(var/datum/mechanicsMessage/anInput)
 
-			if (anInput && anInput.isTrue())
+			if (anInput?.isTrue())
 				input_word |= 16
 
 			else
@@ -4983,7 +4983,7 @@
 
 		fire5(var/datum/mechanicsMessage/anInput)
 
-			if (anInput && anInput.isTrue())
+			if (anInput?.isTrue())
 				input_word |= 32
 
 			else
@@ -4991,7 +4991,7 @@
 
 		fire6(var/datum/mechanicsMessage/anInput)
 
-			if (anInput && anInput.isTrue())
+			if (anInput?.isTrue())
 				input_word |= 64
 
 			else
@@ -5001,7 +5001,7 @@
 
 		fire7(var/datum/mechanicsMessage/anInput)
 
-			if (anInput && anInput.isTrue())
+			if (anInput?.isTrue())
 				input_word |= 128
 
 			else

@@ -70,8 +70,8 @@
 			loc:ReplaceWithConcreteFloor()
 
 		update_nearby_tiles(1)
-		sleep(0.1 SECONDS)
-		RL_SetOpacity(1)
+		SPAWN_DBG(0.1 SECONDS)
+			RL_SetOpacity(1)
 
 	disposing()
 		RL_SetOpacity(0)

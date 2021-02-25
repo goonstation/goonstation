@@ -564,37 +564,16 @@ var/global/debug_messages = 0
 	if (!esize)
 		return
 	var/bris = input("Enter BRISANCE of Explosion\nLeave it on 1 if you have no idea what this is.", "Brisance", 1) as num
+	var/angle = input("Enter ANGLE of Explosion (clockwise from north)\nIf not a multiple of 45, you may encounter issues.", "Angle", 0) as num
+	var/width = input("Enter WIDTH of Explosion\nLeave it on 360 if you have no idea what this does.", "Width", 360) as num
 
 	logTheThing("admin", src, null, "created an explosion (power [esize], brisance [bris]) at [log_loc(T)].")
 	logTheThing("diary", src, null, "created an explosion (power [esize], brisance [bris]) at [log_loc(T)].", "admin")
 	message_admins("[key_name(src)] has created an explosion (power [esize], brisance [bris]) at [log_loc(T)].")
 
-	explosion_new(null, T, esize, bris)
+	explosion_new(null, T, esize, bris, angle, width)
 	return
-/*
-/client/proc/cmd_ultimategrife()
-	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
-	set name = "ULTIMATE GRIFE"
 
-	switch(alert("Holy shit are you sure?! (also the server will lag for a few seconds)",,"Yes","No"))
-		if("Yes")
-			for(var/turf/simulated/wall/W in world)
-				new /obj/machinery/crusher(get_turf(W))
-				qdel(W)
-
-			for(var/turf/simulated/wall/r_wall/RW in world)
-				new /obj/machinery/crusher(get_turf(RW))
-				qdel(RW)
-
-			logTheThing("admin", src, null, "has turned every wall into a crusher! God damn.")
-			logTheThing("diary", src, null, "has turned every wall into a crusher! God damn.", "admin")
-			message_admins("[key_name(src)] has turned every wall into a crusher! God damn.")
-
-			alert("Uh oh.")
-
-		if("No")
-			alert("Thank god for that.")
-*/
 /client/proc/cmd_debug_mutantrace(var/mob/mob in world)
 	set name = "Change Mutant Race"
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
@@ -669,7 +648,7 @@ body
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set name = "Check Gang Scores"
 
-	if(!(ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/gang)))
+	if(!(ticker?.mode && istype(ticker.mode, /datum/game_mode/gang)))
 		alert("It isn't gang mode, dummy!")
 		return
 
@@ -682,7 +661,7 @@ body
 	SET_ADMIN_CAT(ADMIN_CAT_UNUSED)
 	set name = "Profiling Scenario"
 
-	var/selected = input("Select scenario", "Do not use on a live server for the love of god", "Cancel") in list("Cancel", "Disco Inferno", "Chemist's Delight", "Viscera Cleanup Detail")
+	var/selected = input("Select scenario", "Do not use on a live server for the love of god", "Cancel") in list("Cancel", "Disco Inferno", "Chemist's Delight", "Viscera Cleanup Detail", "Brighter Bonanza")
 	switch (selected)
 		if ("Disco Inferno")
 			for (var/turf/T in landmarks[LANDMARK_BLOBSTART])
@@ -714,6 +693,15 @@ body
 				LAGCHECK(LAG_LOW)
 				if ((T.x*T.y) % 10 == 0)
 					gibs(T)
+		if ("Brighter Bonanza")
+			var/list/obj/item/device/light/zippo/brighter/brighters = list()
+			for(var/i in 1 to 1000)
+				brighters += new /obj/item/device/light/zippo/brighter
+				brighters[i].light.enable()
+			while(TRUE)
+				for(var/obj/brighter in brighters)
+					brighter.set_loc(locate(rand(1, world.maxx), rand(1, world.maxy), Z_LEVEL_STATION))
+				sleep(0.2 SECONDS)
 /*
 /client/proc/icon_print_test()
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
@@ -868,7 +856,7 @@ body
 	set popup_menu = 0
 	admin_only
 
-	var/new_level = input(src, null, "Choose New Rank", "Coder") as anything in null|list("Host", "Coder", "Shit Guy", "Primary Admin", "Admin", "Secondary Admin", "Mod", "Babby")
+	var/new_level = input(src, null, "Choose New Rank", "Coder") as() in null|list("Host", "Coder", "Shit Guy", "Primary Admin", "Admin", "Secondary Admin", "Mod", "Babby")
 	if (!new_level)
 		return
 	src.holder.rank = new_level
@@ -911,7 +899,7 @@ var/global/debug_camera_paths = 0
 
 proc/display_camera_paths()
 	remove_camera_paths() //Clean up any old ones laying around before displaying this
-	for (var/obj/machinery/camera/C in by_type[/obj/machinery/camera])
+	for_by_tcl(C, /obj/machinery/camera)
 		if (C.c_north)
 			camera_path_list.Add(particleMaster.SpawnSystem(new /datum/particleSystem/mechanic(C.loc, C.c_north.loc)))
 

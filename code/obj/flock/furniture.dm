@@ -21,10 +21,9 @@
 
 /obj/table/flock/special_desc(dist, mob/user)
   if(isflock(user))
-    var/special_desc = "<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received."
-    special_desc += "<br><span class='bold'>ID:</span> Storage Surface"
-    special_desc += "<br><span class='bold'>###=-</span></span>"
-    return special_desc
+    return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
+    <br><span class='bold'>ID:</span> Storage Surface
+    <br><span class='bold'>###=-</span></span>"}
   else
     return null // give the standard description
 
@@ -39,11 +38,10 @@
 
 /obj/item/furniture_parts/table/flock/special_desc(dist, mob/user)
   if(isflock(user))
-    var/special_desc = "<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received."
-    special_desc += "<br><span class='bold'>ID:</span> Storage Surface, Deployable State"
-    special_desc += "<br><span class='bold'>Instructions:</span> Activate within grip tool to deploy."
-    special_desc += "<br><span class='bold'>###=-</span></span>"
-    return special_desc
+    return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
+    <br><span class='bold'>ID:</span> Storage Surface, Deployable State
+    <br><span class='bold'>Instructions:</span> Activate within grip tool to deploy.
+    <br><span class='bold'>###=-</span></span>"}
   else
     return null // give the standard description
 
@@ -64,10 +62,9 @@
 
 /obj/stool/chair/comfy/flock/special_desc(dist, mob/user)
   if(isflock(user))
-    var/special_desc = "<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received."
-    special_desc += "<br><span class='bold'>ID:</span> Resting Chamber"
-    special_desc += "<br><span class='bold'>###=-</span></span>"
-    return special_desc
+    return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
+    <br><span class='bold'>ID:</span> Resting Chamber
+    <br><span class='bold'>###=-</span></span>"}
   else
     return null // give the standard description
 
@@ -84,11 +81,10 @@
 
 /obj/item/furniture_parts/flock_chair/special_desc(dist, mob/user)
   if(isflock(user))
-    var/special_desc = "<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received."
-    special_desc += "<br><span class='bold'>ID:</span> Resting Chamber, Deployable State"
-    special_desc += "<br><span class='bold'>Instructions:</span> Activate within grip tool to deploy."
-    special_desc += "<br><span class='bold'>###=-</span></span>"
-    return special_desc
+    return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
+    <br><span class='bold'>ID:</span> Resting Chamber, Deployable State
+    <br><span class='bold'>Instructions:</span> Activate within grip tool to deploy.
+    <br><span class='bold'>###=-</span></span>"}
   else
     return null // give the standard description
 
@@ -169,10 +165,9 @@
 
 /obj/storage/closet/flock/special_desc(dist, mob/user)
   if(isflock(user))
-    var/special_desc = "<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received."
-    special_desc += "<br><span class='bold'>ID:</span> Containment Capsule"
-    special_desc += "<br><span class='bold'>###=-</span></span>"
-    return special_desc
+    return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
+    <br><span class='bold'>ID:</span> Containment Capsule
+    <br><span class='bold'>###=-</span></span>"}
   else
     return null // give the standard description
 
@@ -203,10 +198,9 @@
 
 /obj/item/furniture_parts/flock_chair/special_desc(dist, mob/user)
   if(isflock(user))
-    var/special_desc = "<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received."
-    special_desc += "<br><span class='bold'>ID:</span> Light Emitter"
-    special_desc += "<br><span class='bold'>###=-</span></span>"
-    return special_desc
+    return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
+    <br><span class='bold'>ID:</span> Light Emitter
+    <br><span class='bold'>###=-</span></span>"}
   else
     return null // give the standard description
 
@@ -254,13 +248,35 @@
 	health = 50
 	health_max = 50
 	shock_when_entered = 0
+	auto = FALSE
 	mat_appearances_to_ignore = list("steel","gnesis")
 	mat_changename = 0
 	mat_changedesc = 0
 
+	update_icon(special_icon_state) //fix for perspective grilles fucking these up
+		if (ruined)
+			return
+
+		if (istext(special_icon_state))
+			icon_state = initial(src.icon_state) + "-" + special_icon_state
+			return
+
+		var/diff = get_fraction_of_percentage_and_whole(health,health_max)
+		switch(diff)
+			if(-INFINITY to 25)
+				icon_state = initial(src.icon_state) + "-3"
+			if(26 to 50)
+				icon_state = initial(src.icon_state) + "-2"
+			if(51 to 75)
+				icon_state = initial(src.icon_state) + "-1"
+			if(76 to INFINITY)
+				icon_state = initial(src.icon_state) + "-0"
+
 /obj/grille/flock/New()
 	..()
 	setMaterial("gnesis")
+	src.update_icon()
+
 
 // flockdrones can always move through
 /obj/grille/flock/CanPass(atom/movable/mover, turf/target)

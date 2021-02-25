@@ -64,6 +64,8 @@
 	/// The functional value of edibility. Edible or not? This is what you check from the outside to see if material is edible. See [/datum/material/var/edible_exact].
 	var/edible = 0
 
+	var/owner_hasentered_added = FALSE
+
 	proc/getProperty(var/property, var/type = VALUE_CURRENT)
 		for(var/datum/material_property/P in properties)
 			if(P.id == property)
@@ -185,9 +187,9 @@
 			call(X,  "execute")(owner, attacker, attacked)
 		return
 
-	proc/triggerOnLife(var/mob/M, var/obj/item/I)
+	proc/triggerOnLife(var/mob/M, var/obj/item/I, mult)
 		for(var/datum/materialProc/X in triggersOnLife)
-			call(X,  "execute")(M, I)
+			call(X,  "execute")(M, I, mult)
 		return
 
 	proc/triggerOnAdd(var/location)
@@ -400,6 +402,23 @@
 		setProperty("hard", 30)
 		return ..()
 
+/datum/material/metal/neutronium
+	mat_id = "neutronium"
+	name = "neutronium"
+	desc = "Neutrons condensed into a solid form."
+	color = "#043e9b"
+	material_flags = MATERIAL_ENERGY | MATERIAL_METAL
+	alpha = 255
+
+	New()
+		setProperty("density", 100) //👀
+		setProperty("hard", 10)
+		setProperty("electrical", 70)
+		setProperty("stability", 20)
+		setProperty("n_radioactive", 85)
+		return ..()
+
+
 // Special Metals
 
 /datum/material/metal/slag
@@ -455,7 +474,6 @@
 	New()
 		setProperty("density", 65)
 		addTrigger(triggersOnEntered, new /datum/materialProc/soulsteel_entered())
-		addTrigger(triggersOnAdd, new /datum/materialProc/soulsteel_add())
 		return ..()
 
 // Crystals
@@ -812,6 +830,7 @@
 		setProperty("radioactive", 60)
 		setProperty("density", 60)
 		setProperty("hard", 60)
+		addTrigger(triggersOnAdd, new /datum/materialProc/enchanted_add())
 		return ..()
 
 	quartz // basically wizard glass
@@ -980,7 +999,7 @@
 	New()
 		setProperty("density", 45)
 		setProperty("flammable", 67)
-		setProperty("stable", 53)
+		setProperty("stability", 53)
 		return ..()
 
 /datum/material/organic/cardboard
@@ -1056,6 +1075,8 @@
 	desc = "Coral harvested from the sea floor."
 	color = "#990099"
 	material_flags = MATERIAL_METAL | MATERIAL_CRYSTAL | MATERIAL_ORGANIC
+	texture = "coral"
+	texture_blend = ICON_OVERLAY
 
 	New()
 		setProperty("density", 5)
@@ -1255,7 +1276,6 @@
 		setProperty("permeable", 10)
 		addTrigger(triggersOnAdd, new /datum/materialProc/ethereal_add())
 		addTrigger(triggersOnEntered, new /datum/materialProc/soulsteel_entered())
-		addTrigger(triggersOnAdd, new /datum/materialProc/soulsteel_add())
 		return ..()
 
 /datum/material/fabric/cloth/ectofibre
@@ -1346,4 +1366,3 @@
 /datum/material/cardboard
 
 */
-

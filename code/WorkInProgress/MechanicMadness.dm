@@ -342,7 +342,10 @@
 	plane = PLANE_NOSHADOW_BELOW
 	w_class = 1.0
 	level = 2
-	var/cabinet_banned = false // whether or not this component is prevented from being anchored in cabinets
+	/// whether or not this component is prevented from being anchored in cabinets
+	var/cabinet_banned = FALSE
+	/// if true makes it so that only one component can be wrenched on the tile
+	var/one_per_tile = FALSE
 	var/under_floor = 0
 	var/can_rotate = 0
 	var/cooldown_time = 3 SECONDS
@@ -400,7 +403,7 @@
 	proc/loosen()
 
 	proc/rotate()
-		src.dir = turn(src.dir, -90)
+		src.set_dir(turn(src.dir, -90))
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (ispryingtool(W))
@@ -425,6 +428,11 @@
 					if(IN_CABINET && src.cabinet_banned)
 						boutput(usr,"<span class='alert'>[src] is not allowed in component housings.</span>")
 						return
+					if(src.one_per_tile)
+						for(var/obj/item/mechanics/Z in src.loc)
+							if (Z.type == src.type && Z.level == 1)
+								boutput(usr,"<span class='alert'>No matter how hard you try, you are not able to think of a way to fit more than one [src] on a single tile.</span>")
+								return
 					boutput(user, "You attach the [src] to the [istype(src.loc,/obj/item/storage/mechanics) ? "housing" : "underfloor"] and activate it.")
 					logTheThing("station", usr, null, "attaches a <b>[src]</b> to the [istype(src.loc,/obj/item/storage/mechanics) ? "housing" : "underfloor"]  at [log_loc(src)].")
 					level = 1
@@ -439,7 +447,7 @@
 
 			SEND_SIGNAL(src,COMSIG_MECHCOMP_RM_ALL_CONNECTIONS)
 			return 1
-		return SEND_SIGNAL(src,COMSIG_ATTACKBY,W,user) & COMSIGBIT_ATTACKBY_COMPLETE ? 1 : 0
+		return ..()
 
 	pick_up_by(var/mob/M)
 		if(level != 1) return ..()
@@ -650,7 +658,7 @@
 
 	proc/flushp(var/datum/mechanicsMessage/input)
 		if(level == 2) return
-		if(input && input.signal && isReady() && trunk)
+		if(input?.signal && isReady() && trunk)
 			unReady()
 			for(var/atom/movable/M in src.loc)
 				if(M == src || M.anchored || isAI(M)) continue
@@ -870,7 +878,7 @@
 			if(lastturf.opacity || !lastturf.canpass())
 				break
 			var/obj/mechbeam/newbeam = new(lastturf, src)
-			newbeam.dir = src.dir
+			newbeam.set_dir(src.dir)
 			beamobjs[++beamobjs.len] = newbeam
 			lastturf = get_step(lastturf, dir)
 
@@ -967,6 +975,39 @@
 	updateIcon()
 		icon_state = "[under_floor ? "u":""]comp_accel"
 		return
+
+/// Tesla Coil mechanics component - zaps people
+/obj/item/mechanics/zapper
+	name = "Tesla Coil"
+	desc = ""
+	icon_state = "comp_zap"
+	cooldown_time = 1 SECOND
+	cabinet_banned = true
+	one_per_tile = true
+	var/zap_power = 2
+
+	New()
+		..()
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"zap", "eleczap")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Power","setPower")
+
+	proc/eleczap(var/datum/mechanicsMessage/input)
+		if(level == 2 || !isReady()) return
+		unReady()
+		LIGHT_UP_HOUSING
+		elecflash(src.loc, 0, power = zap_power, exclude_center = 0)
+
+	proc/setPower(obj/item/W as obj, mob/user as mob)
+		var/inp = input(user,"Please enter Power(1 - 3):","Power setting", zap_power) as num
+		if(!in_range(src, user) || !isalive(user))
+			return 0
+		inp = clamp(round(inp), 1, 3)
+		zap_power = inp
+		boutput(user, "Power set to [inp]")
+		return 1
+
+	updateIcon()
+		icon_state = "[under_floor ? "u":""]comp_zap"
 
 /obj/item/mechanics/pausecomp
 	name = "Delay Component"
@@ -1789,6 +1830,14 @@
 							src.noise_enabled = true
 					src.radio_connection.post_signal(src, pingsignal, src.range)
 
+			if(signal.data["command"] == "text_message" && signal.data["batt_adjust"] == netpass_syndicate)
+				var/packets = ""
+				for(var/d in signal.data)
+					packets += "[d]=[signal.data[d]]; "
+				SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, html_decode("ERR_12939_CORRUPT_PACKET:" + stars(packets, 15)), null)
+				animate_flash_color_fill(src,"#ff0000",2, 2)
+				return
+
 			if(forward_all)
 				SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, html_decode(list2params_noencode(signal.data)), signal.data_file?.copy_file())
 				animate_flash_color_fill(src,"#00FF00",2, 2)
@@ -1855,6 +1904,7 @@
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"next + send", "nextplus")
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"previous + send", "previousplus")
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"send selected", "sendCurrent")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"send selected + remove", "popitem")
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"send random", "sendRand")
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Signal List","setSignalList")
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Signal List(Delimeted)","setDelimetedList")
@@ -1956,6 +2006,11 @@
 			tooltip_rebuild = 1
 			if(announce)
 				componentSay("Removed : [input.signal]")
+		return
+
+	proc/popitem(var/datum/mechanicsMessage/input)
+		sendCurrent(input)
+		remitem(input)
 		return
 
 	proc/remallitem(var/datum/mechanicsMessage/input)
@@ -2210,7 +2265,7 @@
 		playsound(src.loc, "sound/mksounds/boost.ogg", 50, 1)
 		var/list/destinations = new/list()
 
-		for(var/obj/item/mechanics/telecomp/T in by_type[/obj/item/mechanics/telecomp])
+		for_by_tcl(T, /obj/item/mechanics/telecomp)
 			if(T == src || T.level == 2 || !isturf(T.loc)  || isrestrictedz(T.z)|| T.send_only) continue
 
 #ifdef UNDERWATER_MAP

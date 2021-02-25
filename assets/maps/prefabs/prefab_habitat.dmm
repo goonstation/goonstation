@@ -1,4 +1,4 @@
-"a" = (/turf/space,/area)
+"a" = (/turf/space,/area/space)
 "b" = (/turf/variableTurf/wall,/area/noGenerate)
 "c" = (/turf/simulated/wall{desc = "Upon closer inspection, you see that this is a cleverly painted wall."; icon = 'icons/misc/worlds.dmi'; icon_state = "grass"; name = "tall grass"},/area/spacehabitat)
 "d" = (/obj/machinery/portableowl/attached{name = "A Pretty Owl"},/turf/simulated/floor/grass/leafy,/area/spacehabitat)

@@ -120,7 +120,7 @@
 		saveStat("Server Load:", world.cpu < 90 ? "No" : "Yes") //Yes very useful a++
 		//saveStat("Server Load:", ticklagtext)   //Yes, very useful! A+!
 
-		if (emergency_shuttle && emergency_shuttle.online && emergency_shuttle.location < SHUTTLE_LOC_RETURNED)
+		if (emergency_shuttle?.online && emergency_shuttle.location < SHUTTLE_LOC_RETURNED)
 			stats["Shift Time Spacer"] = -1
 			var/timeleft = emergency_shuttle.timeleft()
 			if (timeleft)
@@ -184,7 +184,7 @@ var/global/datum/mob_stat_thinker/mobStat = new
 					stat("Runtimes:", runtime_count)
 					continue
 				if (mobStat.statNames[i] == "Game Mode:")
-					stat("Game Mode:", (ticker && ticker.hide_mode) ? "[master_mode] **HIDDEN**" : "[master_mode]")
+					stat("Game Mode:", (ticker?.hide_mode) ? "[master_mode] **HIDDEN**" : "[master_mode]")
 					continue
 				//ADMIN SHIT END
 

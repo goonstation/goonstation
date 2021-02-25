@@ -556,3 +556,25 @@
 	icon_state = "tourist"
 	step_sound = list("sound/voice/farts/poo2.ogg", "sound/voice/farts/fart4.ogg", "sound/voice/farts/poo2_robot.ogg")
 	desc = "Do I really need to tell you what these do?"
+
+/obj/item/clothing/shoes/crafted
+	name = "shoes"
+	desc = "A custom pair of shoes"
+	icon_state = "white"
+
+	onMaterialChanged()
+		..()
+		if(istype(src.material))
+			if(src.material.hasProperty("thermal"))
+				protective_temperature = (100 - src.material.getProperty("thermal")) ** 1.65
+				setProperty("coldprot", round((100 - src.material.getProperty("thermal")) * 0.1))
+				setProperty("heatprot", round((100 - src.material.getProperty("thermal")) * 0.1))
+			else
+				protective_temperature = 0
+				setProperty("coldprot", 0)
+				setProperty("heatprot", 0)
+			if(src.material.hasProperty("hard") && src.material.hasProperty("density"))
+				kick_bonus = round((src.material.getProperty("hard") * src.material.getProperty("density")) / 2500)
+			else
+				kick_bonus = 0
+		return

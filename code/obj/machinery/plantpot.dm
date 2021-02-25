@@ -133,8 +133,7 @@
 		update_icon()
 
 		SPAWN_DBG(0.5 SECONDS)
-			if(radio_controller)
-				radio_controller.add_object(src, "[report_freq]")
+			radio_controller?.add_object(src, "[report_freq]")
 
 			if(!net_id)
 				net_id = generate_net_id(src)
@@ -301,8 +300,7 @@
 				for (var/datum/plant_gene_strain/X in DNA.commuts)
 					X.on_process(src)
 
-		if(src.reagents)
-			src.reagents.remove_any_except(drink_rate, "nectar")
+		src.reagents?.remove_any_except(drink_rate, "nectar")
 		// This is where drink_rate does its thing. It will remove a bit of all reagents to meet
 		// it's quota, except nectar because that's supposed to stay in the plant pot.
 
@@ -396,7 +394,7 @@
 					src.add_fingerprint(user)
 					if(!(user in src.contributors))
 						src.contributors += user
-					if(do_after(user, 30)) // Same as the gibber and reclaimer. Was 20 (Convair880).
+					if(do_after(user, 3 SECONDS)) // Same as the gibber and reclaimer. Was 20 (Convair880).
 						if(src && W && W.loc == user && C)
 							user.visible_message("<span class='alert'>[src.name] grabs [C] and devours them ravenously!</span>")
 							logTheThing("combat", user, (C), "feeds [constructTarget(C,"combat")] to a man-eater at [log_loc(src)].")
@@ -408,7 +406,7 @@
 								qdel(C)
 							playsound(src.loc, "sound/items/eatfood.ogg", 30, 1, -2)
 							src.reagents.add_reagent("blood", 120)
-							SPAWN_DBG (25)
+							SPAWN_DBG(2.5 SECONDS)
 								if(src)
 									playsound(src.loc, pick("sound/voice/burp_alien.ogg"), 50, 0)
 							return
@@ -563,14 +561,22 @@
 				boutput(user, "<span class='alert'>You need to select something to plant first.</span>")
 				return
 			user.visible_message("<span class='notice'>[user] plants a seed in the [src].</span>")
-			var/obj/item/seed/WS = unpool(/obj/item/seed)
-			WS.set_loc(src)
-			WS.generic_seed_setup(SP.selected)
-			SPAWN_DBG(0)
-				HYPnewplant(WS)
-				pool (WS)
-			if(!(user in src.contributors))
-				src.contributors += user
+			var/obj/item/seed/SEED
+			if(SP.selected.unique_seed)
+				SEED = unpool(SP.selected.unique_seed)
+			else
+				SEED = unpool(/obj/item/seed)
+			SEED.generic_seed_setup(SP.selected)
+			SEED.set_loc(src)
+			if(SEED.planttype)
+				src.HYPnewplant(SEED)
+				if(SEED && istype(SEED.planttype,/datum/plant/maneater)) // Logging for man-eaters, since they can't be harvested (Convair880).
+					logTheThing("combat", user, null, "plants a [SEED.planttype] seed at [log_loc(src)].")
+				if(!(user in src.contributors))
+					src.contributors += user
+			else
+				boutput(user, "<span class='alert'>You plant the seed, but nothing happens.</span>")
+				pool (SEED)
 
 		else if(istype(W, /obj/item/reagent_containers/glass/))
 			// Not just watering cans - any kind of glass can be used to pour stuff in.
@@ -809,7 +815,7 @@
 		var/iconname = 'icons/obj/hydroponics/plants_weed.dmi'
 		if(growing.plant_icon)
 			iconname = growing.plant_icon
-		else if(MUT && MUT.iconmod)
+		else if(MUT?.iconmod)
 			if(MUT.plant_icon)
 				iconname = MUT.plant_icon
 			else
@@ -834,7 +840,7 @@
 		var/planticon = null
 		if(growing.sprite)
 			planticon = "[growing.sprite]-G[src.grow_level]"
-		if(MUT && MUT.iconmod)
+		if(MUT?.iconmod)
 			planticon = "[MUT.iconmod]-G[src.grow_level]"
 		else if(growing.sprite)
 			planticon = "[growing.sprite]-G[src.grow_level]"
@@ -855,7 +861,7 @@
 		var/datum/plant/growing = src.current
 		var/datum/plantgenes/DNA = src.plantgenes
 		var/datum/plantmutation/MUT = DNA.mutation
-		if(growing && growing.cantscan) // what if we disable this for a bit, what will happen...
+		if(growing?.cantscan) // what if we disable this for a bit, what will happen...
 			src.name = "\improper strange plant"
 		else
 			if(istype(MUT,/datum/plantmutation/))
@@ -908,7 +914,7 @@
 
 		if(growing.harvested_proc)
 			if(growing.HYPharvested_proc(src,user)) return
-			if(MUT && MUT.HYPharvested_proc_M(src,user)) return
+			if(MUT?.HYPharvested_proc_M(src,user)) return
 			// Does this plant react to being harvested? If so, do it - it also functions as
 			// a check since harvesting will stop here if this returns anything other than 0.
 
@@ -1782,6 +1788,15 @@ proc/HYPmutationcheck_sub(var/lowerbound,var/upperbound,var/checkedvariable)
 			light.enable()
 		else
 			light.disable()
+
+	attackby(obj/item/W as obj, mob/user as mob)
+		if(isscrewingtool(W) || iswrenchingtool(W))
+			if(!src.anchored)
+				user.visible_message("<b>[user]</b> secures the [src] to the floor!")
+			else
+				user.visible_message("<b>[user]</b> unbolts the [src] from the floor!")
+			playsound(src.loc, "sound/items/Screwdriver.ogg", 100, 1)
+			src.anchored = !src.anchored
 
 /obj/machinery/hydro_mister
 	name = "\improper Botanical Mister"

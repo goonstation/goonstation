@@ -79,6 +79,15 @@
 	deactivate()
 		return
 
+	on_shipdeath(var/obj/machinery/vehicle/ship)
+		if (ship)
+			SPAWN_DBG(1 SECOND)	//idk so it doesn't get caught on big pods when they are still aorund...
+				for (var/obj/O in src.contents)
+					O.set_loc(get_turf(ship))
+					O.throw_at(get_edge_target_turf(O, pick(alldirs)), rand(1,3), 3)
+
+		..()
+
 	opencomputer(mob/user as mob)
 		if(user.loc != src.ship)
 			return
@@ -125,6 +134,7 @@
 	/obj/machinery/artifact,
 	/obj/artifact,
 	/obj/mopbucket,
+	/obj/beacon_deployer,
 	/obj/machinery/portable_atmospherics,
 	/obj/machinery/space_heater,
 	/obj/machinery/oreaccumulator,
@@ -292,7 +302,7 @@
 	return C
 
 /obj/item/shipcomponent/secondary_system/cargo/on_shipdeath(var/obj/machinery/vehicle/ship)
-	while(load && load.len)
+	while(length(load))
 		var/obj/O = src.unload(pick(load))
 		if (O)
 			O.visible_message("<span class='alert'><b>[O]</b> is flung out of [src.ship]!</span>")
@@ -502,7 +512,7 @@
 			for(var/mob/M in ship)
 				if(cmptext(href_list["release"], M.name))
 					var/list/turfs = get_area_turfs(/area/shuttle/arrival, 1)
-					if (turfs && turfs.len)
+					if (length(turfs))
 						M.set_loc(pick(turfs))
 						showswirl(get_turf(M))
 		opencomputer(usr)
@@ -752,7 +762,7 @@
 				boutput(usr, "<span class='alert'>You must be inside the ship to do that!</span>")
 				return
 
-			if (ship && ship.locked)
+			if (ship?.locked)
 				ship.locked = 0
 				boutput(usr, "<span class='alert'>The ship mechanism clicks unlocked.</span>")
 				//ship.access_computer(usr)
@@ -776,7 +786,7 @@
 	f_active = 1
 	power_used = 0
 	var/crashable = 0
-	var/crashhits = 8
+	var/crashhits = 10
 	var/in_bump = 0
 	hud_state = "seed"
 
@@ -854,6 +864,7 @@
 		boutput(M, "<span class='alert'><B>The [src] crashes into [M]!</B></span>")
 		M.changeStatus("stunned", 80)
 		M.changeStatus("weakened", 5 SECONDS)
+		M.TakeDamageAccountArmor("chest", 20, damage_type = DAMAGE_BLUNT)
 		var/turf/target = get_edge_target_turf(ship, ship.dir)
 		M.throw_at(target, 4, 2)
 		playsound(src.loc, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 40, 1)
@@ -877,7 +888,15 @@
 			if (istype(O, /obj/storage/closet) || istype(O, /obj/storage/secure/closet))
 				O:dump_contents()
 				qdel(O)
-			if (istype(O, /obj/window) || istype(O, /obj/grille) || istype(O, /obj/machinery/door) || istype(O, /obj/structure/girder) || istype(O, /obj/foamedmetal))
+			if(istype(O, /obj/window))
+				for(var/obj/grille/G in get_turf(O))
+					qdel(G)
+				qdel(O)
+			if(istype(O, /obj/grille))
+				for(var/obj/window/W in get_turf(O))
+					qdel(W)
+				qdel(O)
+			if (istype(O, /obj/machinery/door) || istype(O, /obj/structure/girder) || istype(O, /obj/foamedmetal))
 				qdel(O)
 			if (istype(O, /obj/critter))
 				O:CritterDeath()

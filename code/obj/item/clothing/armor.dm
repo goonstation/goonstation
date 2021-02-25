@@ -26,7 +26,6 @@
 	uses_multiple_icon_states = 1
 	item_state = "armorvest"
 	body_parts_covered = TORSO
-	c_flags = ONESIZEFITSALL
 	bloodoverlayimage = SUITBLOOD_ARMOR
 
 	New()
@@ -77,7 +76,6 @@
 	uses_multiple_icon_states = 1
 	item_state = "armorvest"
 	flags = FPRINT | TABLEPASS | CONDUCT | NOSPLASH
-	c_flags = ONESIZEFITSALL
 	body_parts_covered = TORSO
 	bloodoverlayimage = SUITBLOOD_ARMOR
 
@@ -92,7 +90,7 @@
 
 	New()
 		..()
-		SPAWN_DBG (5)
+		SPAWN_DBG(0.5 SECONDS)
 			if (src && !src.part_vest)
 				src.part_vest = new /obj/item/clothing/suit/armor/vest(src)
 			if (src && !src.part_igniter)
@@ -258,6 +256,20 @@
 
 		return
 
+/obj/item/clothing/suit/armor/makeshift
+	name = "makeshift armor"
+	desc = "A standard cyborg chest modified to function as uncomfortable, somewhat flimsy improvised armor."
+	icon_state = "makeshift"
+	item_state = "makeshift"
+	body_parts_covered = TORSO
+
+	setupProperties()
+		..()
+		setProperty("coldprot", 10)
+		setProperty("meleeprot", 4)
+		setProperty("rangedprot", 0.8)
+		setProperty("movespeed", 0.5)
+
 /obj/item/clothing/suit/armor/captain
 	name = "captain's armor"
 	desc = "A suit of protective formal armor made for the station's captain."
@@ -366,7 +378,6 @@
 	icon_state = "ntarmor"
 	item_state = "ntarmor"
 	body_parts_covered = TORSO
-	c_flags = ONESIZEFITSALL
 
 /obj/item/clothing/suit/armor/NT_alt
 	name = "NT-SO armor"
@@ -374,7 +385,6 @@
 	icon_state = "nt2armor"
 	item_state = "nt2armor"
 	body_parts_covered = TORSO
-	c_flags = ONESIZEFITSALL
 	setupProperties()
 		..()
 		setProperty("meleeprot", 8)

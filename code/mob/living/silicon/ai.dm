@@ -96,6 +96,9 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	var/mob/dead/aieye/eyecam = null
 
 	var/deployed_to_eyecam = 0
+	var/list/holograms
+	var/const/max_holograms = 8
+	var/list/hologramContextActions
 
 	proc/set_hat(obj/item/clothing/head/hat, var/mob/user as mob)
 		if( src.hat )
@@ -181,12 +184,17 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	src.attach_hud(hud)
 	src.eyecam.attach_hud(hud)
 
-#if ASS_JAM
-	var/hat_type = pick(childrentypesof(/obj/item/clothing/head))
-	src.set_hat(new hat_type)
+	holograms = list()
+
+	src.hologramContextActions = list()
+	for(var/actionType in childrentypesof(/datum/contextAction/ai_hologram))
+		var/datum/contextAction/ai_hologram/action = new actionType(src)
+		hologramContextActions += action
+
 	if(prob(5))
-		src.give_feet()
-#endif
+		var/hat_type = pick(childrentypesof(/obj/item/clothing/head))
+		src.set_hat(new hat_type)
+
 
 	SPAWN_DBG(0)
 		src.botcard.access = get_all_accesses()
@@ -405,7 +413,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 
 /mob/living/silicon/ai/click(atom/target, params)
 	if (!src.stat)
-		if (!src.client.check_any_key(KEY_EXAMINE | KEY_OPEN | KEY_BOLT | KEY_SHOCK) ) // ugh
+		if (!src.client.check_any_key(KEY_EXAMINE | KEY_OPEN | KEY_BOLT | KEY_SHOCK | KEY_POINT) ) // ugh
 			//only allow Click-to-track on mobs. Some of the 'trackable' atoms are also machines that can open a dialog and we don't wanna mess with that!
 			if (ismob(target) && is_mob_trackable_by_AI(target))
 				ai_actual_track(target)
@@ -699,9 +707,9 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	L[A.name] = list(A, (C) ? C : O, list(alarmsource))
 	if (O)
 		if (printalerts)
-			if (C && C.camera_status)
+			if (C?.camera_status)
 				src.show_text("--- [class] alarm detected in [A.name]! ( <A HREF=\"?src=\ref[src];switchcamera=\ref[C]\">[C.c_tag]</A> )")
-			else if (CL && CL.len)
+			else if (length(CL))
 				var/foo = 0
 				var/dat2 = ""
 				for (var/obj/machinery/camera/I in CL)
@@ -972,9 +980,9 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 				if (isdead(src))
 					src.emote_allowed = 0
 				if (narrator_mode)
-					playsound(src.loc, pick('sound/vox/deeoo.ogg', 'sound/vox/dadeda.ogg'), 50, 1)
+					playsound(src.loc, pick('sound/vox/deeoo.ogg', 'sound/vox/dadeda.ogg'), 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 				else
-					playsound(src.loc, pick(src.sound_flip1, src.sound_flip2), 50, 1)
+					playsound(src.loc, pick(src.sound_flip1, src.sound_flip2), 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 				message = "<B>[src]</B> does a flip!"
 
 				//flick("ai-flip", src)
@@ -1005,15 +1013,15 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 		if ("scream")
 			if (src.emote_check(voluntary, 50))
 				if (narrator_mode)
-					playsound(src.loc, 'sound/vox/scream.ogg', 50, 1, 0, src.get_age_pitch())
+					playsound(src.loc, 'sound/vox/scream.ogg', 50, 1, 0, src.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
 				else
-					playsound(src.loc, src.sound_scream, 50, 0, 0, src.get_age_pitch())
+					playsound(src.loc, src.sound_scream, 50, 0, 0, src.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
 				message = "<b>[src]</b> screams!"
 
 		if ("birdwell", "burp")
 			if (src.emote_check(voluntary, 50))
 				message = "<B>[src]</B> birdwells."
-				playsound(src.loc, 'sound/vox/birdwell.ogg', 50, 1)
+				playsound(src.loc, 'sound/vox/birdwell.ogg', 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 
 		if ("johnny")
 			var/M
@@ -1076,9 +1084,9 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 						if (39) message = "<B>[src]</B> farts so hard the borgs feel it."
 						if (40) message = "<B>[src] <span style='color:red'>f</span><span style='color:blue'>a</span>r<span style='color:red'>t</span><span style='color:blue'>s</span>!</B>"
 				if (narrator_mode)
-					playsound(src.loc, 'sound/vox/fart.ogg', 50, 1)
+					playsound(src.loc, 'sound/vox/fart.ogg', 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 				else
-					playsound(src.loc, src.sound_fart, 50, 1)
+					playsound(src.loc, src.sound_fart, 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 
 	#ifdef DATALOGGER
 				game_stats.Increment("farts")
@@ -1248,6 +1256,9 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	if (src.glitchy_speak)
 		text = voidSpeak(text)
 	var/ending = copytext(text, length(text))
+
+	if (singing)
+		return singify_text(text)
 
 	if (ending == "?")
 		return "queries, \"[text]\"";
@@ -1620,7 +1631,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 		return
 
 	if(alert("Are you sure?",,"Yes","No") == "Yes")
-		for(var/obj/machinery/door/airlock/D in by_type[/obj/machinery/door])
+		for_by_tcl(D, /obj/machinery/door/airlock)
 			if (D.z == 1 && D.canAIControl() && D.secondsElectrified != 0 )
 				D.secondsElectrified = 0
 				count++
@@ -1642,7 +1653,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 		return
 
 	if(alert("Are you sure?",,"Yes","No") == "Yes")
-		for(var/obj/machinery/door/airlock/D in by_type[/obj/machinery/door])
+		for_by_tcl(D, /obj/machinery/door/airlock)
 			if (D.z == 1 && D.canAIControl() && D.locked && D.arePowerSystemsOn())
 				D.locked = 0
 				D.update_icon()
@@ -1706,11 +1717,6 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 
 /mob/living/silicon/ai/proc/set_face(var/emotion)
 	return
-
-/mob/living/silicon/ai/proc/announce_arrival(var/name, var/rank)
-	var/message = replacetext(replacetext(replacetext(src.arrivalalert, "$STATION", "[station_name()]"), "$JOB", rank), "$NAME", name)
-	src.say( message )
-	logTheThing("say", src, null, "SAY: [message]")
 
 /mob/living/silicon/ai/proc/set_zeroth_law(var/law)
 	ticker.centralized_ai_laws.laws_sanity_check()
@@ -1992,7 +1998,7 @@ proc/is_mob_trackable_by_AI(var/mob/M)
 
 	var/good_camera = 0 //Can't track a person out of range of a functioning camera
 	for(var/obj/machinery/camera/C in range(M))
-		if ( C && C.camera_status )
+		if ( C?.camera_status )
 			good_camera = 1
 			break
 	if(!good_camera)
@@ -2119,9 +2125,12 @@ proc/get_mobs_trackable_by_AI()
 
 /mob/living/silicon/ai/choose_name(var/retries = 3)
 	var/randomname = pick_string_autokey("names/ai.txt")
+	var/obj/item/organ/brain/brain_owner = src.brain.owner
 	var/newname
 	for (retries, retries > 0, retries--)
 		newname = input(src, "You are an AI. Would you like to change your name to something else?", "Name Change", randomname) as null|text
+		if (src.brain.owner != brain_owner)
+			return
 		if (!newname)
 			src.real_name = randomname
 			src.name = src.real_name

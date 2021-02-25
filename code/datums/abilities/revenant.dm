@@ -97,6 +97,7 @@
 	proc/ghoulTouch(var/mob/living/carbon/human/poorSob, var/obj/item/affecting)
 		if (poorSob.traitHolder.hasTrait("training_chaplain"))
 			poorSob.visible_message("<span class='alert'>[poorSob]'s faith shields them from [owner]'s ethereal force!", "<span class='notice'>Your faith protects you from [owner]'s ethereal force!</span>")
+			JOB_XP(poorSob, "Chaplain", 2)
 			return
 		else
 			poorSob.visible_message("<span class='alert'>[poorSob] is hit by [owner]'s ethereal force!</span>", "<span class='alert'>You are hit by [owner]'s ethereal force!</span>")
@@ -152,6 +153,7 @@
 			return
 
 		message_admins("Revenant [key_name(owner)] died at [showCoords(owner.x, owner.y, owner.z)].")
+		playsound(owner.loc, "sound/voice/wraith/revleave.ogg", 100, 0)
 		logTheThing("combat", usr, null, "died as a revenant at [showCoords(owner.x, owner.y, owner.z)].")
 		if (owner.mind)
 			owner.mind.transfer_to(src.wraith)
@@ -200,6 +202,7 @@
 
 		if (owner.health < -50)
 			boutput(owner, "<span class='alert'><strong>This vessel has grown too weak to maintain your presence.</strong></span>")
+			playsound(owner.loc, "sound/voice/wraith/revleave.ogg", 100, 0)
 			owner.death(0) // todo: add custom death
 			return
 
@@ -253,7 +256,7 @@
 		return
 
 	castcheck()
-		if (holder && holder.owner)
+		if (holder?.owner)
 			return 1
 		else
 			boutput(usr, "<span class='alert'>You're not a revenant, what the heck are you doing?</span>")
@@ -276,9 +279,10 @@
 	targeted = 1
 	target_anything = 1
 	pointCost = 500
-	cooldown = 300
+	cooldown = 30 SECONDS
 
 	cast(atom/target)
+		playsound(target.loc, "sound/voice/wraith/wraithlivingobject.ogg", 90, 0)
 		if (istype(holder, /datum/abilityHolder/revenant))
 			var/datum/abilityHolder/revenant/RH = holder
 			RH.channeling = 0
@@ -313,7 +317,7 @@
 	icon_state = "shockwave"
 	targeted = 0
 	pointCost = 750
-	cooldown = 350 // 35s
+	cooldown = 35 SECONDS
 	var/propagation_percentage = 60
 	var/iteration_depth = 6
 	special_screen_loc = "NORTH-1,WEST+1"
@@ -321,6 +325,7 @@
 	var/static/list/next = list("1" = NORTHEAST, "5" = EAST,  "4" = SOUTHEAST, "6" = SOUTH, "2" = SOUTHWEST, "10" = WEST,  "8" = NORTHWEST, "9" = NORTH)
 
 	proc/shock(var/turf/T)
+		playsound(usr.loc, "sound/voice/wraith/revshock.ogg", 30, 0)
 		SPAWN_DBG(0)
 			for (var/mob/living/carbon/human/M in T)
 				if (M != holder.owner && !M.traitHolder.hasTrait("training_chaplain") && !check_target_immunity(M))
@@ -394,10 +399,11 @@
 	icon_state = "eviltouch"
 	targeted = 0
 	pointCost = 1000
-	cooldown = 300
+	cooldown = 30 SECONDS
 	special_screen_loc = "NORTH-1,WEST+2"
 
 	cast()
+		playsound(usr.loc, "sound/voice/wraith/revtouch.ogg", 85, 0)
 		if (istype(holder, /datum/abilityHolder/revenant))
 			var/datum/abilityHolder/revenant/RH = holder
 			RH.channeling = 0
@@ -414,10 +420,11 @@
 	targeted = 1
 	target_anything = 1
 	pointCost = 50
-	cooldown = 150
+	cooldown = 15 SECONDS
 	special_screen_loc = "NORTH-1,WEST+3"
 
 	cast(atom/target)
+		playsound(target.loc, "sound/voice/wraith/revpush[rand(1, 2)].ogg", 90, 0)
 		if (isturf(target))
 			holder.owner.show_message("<span class='alert'>You must target an object or mob with this ability.</span>")
 			return 1
@@ -452,10 +459,11 @@
 	icon_state = "crush"
 	targeted = 1
 	pointCost = 2500
-	cooldown = 600
+	cooldown = 1 MINUTE
 	special_screen_loc = "NORTH-1,WEST+4"
 
 	cast(atom/target)
+		playsound(target.loc, "sound/voice/wraith/revfocus.ogg", 120, 0)
 		if (!ishuman(target))
 			holder.owner.show_message("<span class='alert'>You must target a human with this ability.</span>")
 			return 1
@@ -468,6 +476,7 @@
 			return 1
 		if (H.traitHolder.hasTrait("training_chaplain"))
 			holder.owner.show_message("<span class='alert'>Some mysterious force shields [target] from your influence.</span>")
+			JOB_XP(H, "Chaplain", 2)
 			return 1
 		else if( check_target_immunity(H) )
 			holder.owner.show_message("<span class='alert'>[target] seems to be warded from the effects!</span>")

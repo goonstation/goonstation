@@ -242,7 +242,7 @@
 		if (src.cooktime >= 60)
 			if (ismob(src.grillitem))
 				var/mob/M = src.grillitem
-				M.ghostize()
+				INVOKE_ASYNC(M, /mob.proc/ghostize)
 			else
 				for (var/mob/M in src.grillitem)
 					M.ghostize()

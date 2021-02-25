@@ -125,8 +125,7 @@ var/global/datum/controller/processScheduler/processScheduler
 					message_admins("Process '[p.name]' is hung and will be restarted.")
 
 /datum/controller/processScheduler/proc/queueProcesses()
-	for(var/X in processes)
-		var/datum/controller/process/p = X
+	for (var/datum/controller/process/p as() in processes)
 		// Don't double-queue, don't queue running processes
 		if (p.disabled || p.running || p.queued || !p.idle)
 			continue
@@ -142,8 +141,7 @@ var/global/datum/controller/processScheduler/processScheduler
 /datum/controller/processScheduler/proc/runQueuedProcesses()
 	if (queued.len)
 		var/delay = 0
-		for(var/X in queued)
-			var/datum/controller/process/p = X
+		for (var/datum/controller/process/p as() in queued)
 			runProcess(p, delay)
 			delay += process_run_interval * world.tick_lag
 		queued.len = 0

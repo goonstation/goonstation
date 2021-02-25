@@ -885,3 +885,21 @@ var/global/IP_alerts = 1
 		boutput(world, "<B>The Respawn Arena has been enabled! Use the go_to_respawn_arena verb as a ghost to compete for a new life!</B>")
 	else
 		boutput(world, "<B>The Respawn Arena has been disabled.</B>")
+
+/client/proc/toggle_vpn_blacklist()
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
+	set name = "Toggle VPN Blacklist"
+	set desc = "Toggle the ability for new players to connect through a VPN or proxy server"
+	admin_only
+	if(rank_to_level(src.holder.rank) >= LEVEL_PA)
+#ifdef DO_VPN_CHECKS
+		vpn_blacklist_enabled = !vpn_blacklist_enabled
+
+		logTheThing("admin", src, null, "toggled VPN and proxy blacklisting [vpn_blacklist_enabled ? "on" : "off"].")
+		logTheThing("diary", src, null, "toggled VPN and proxy blacklisting [vpn_blacklist_enabled ? "on" : "off"].", "admin")
+		message_admins("[key_name(src)] toggled VPN and proxy blacklisting [vpn_blacklist_enabled ? "on" : "off"]")
+#else
+		boutput(src, "VPN Checks are currently disabled on this server!")
+#endif
+	else
+		boutput(src, "You cannot perform this action. You must be of a higher administrative rank!")

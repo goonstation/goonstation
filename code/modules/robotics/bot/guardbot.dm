@@ -41,35 +41,33 @@
 		//var/compare_movepath = current_movepath
 		SPAWN_DBG(0)
 			if (!master)
-				return 1
+				return
 
 			// Same distance cap as the MULE because I'm really tired of various pathfinding issues. Buddy time and docking stations are often way more than 150 steps away.
 			// It's 200 something steps alone to get from research to the bar on COG2 for instance, and that's pretty much in a straight line.
 			var/list/thePath = AStar(get_turf(master), target_turf, /turf/proc/CardinalTurfsWithAccess, /turf/proc/Distance, 500, master.botcard)
 			if (!master)
-				return 1
+				return
 
 			master.path = thePath
 			if(adjacent && master.path && master.path.len) //Make sure to check it isn't null!!
 				master.path.len-- //Only go UP to the target, not the same tile.
 			if(!master.path || !master.path.len || !the_target || (ismob(the_target) && master.path.len >= 21))
-				if(master.task)
-					master.task.task_input("path_error")
+				master.task?.task_input("path_error")
 
 				master.moving = 0
 				//dispose()
 				master.mover = null
 				src.master = null
-				return 1
+				return
 
-			while(master && master.path && master.path.len && target_turf && master.moving)
+			while(length(master?.path) && target_turf && master.moving)
 //				boutput(world, "[compare_movepath] : [current_movepath]")
 				//if(compare_movepath != current_movepath)
 				//	break
 				if(master.frustration >= 10 || master.stunned || master.idle || !master.on)
 					master.frustration = 0
-					if(master.task)
-						master.task.task_input("path_blocked")
+					master.task?.task_input("path_blocked")
 					break
 				step_to(master, master.path[1])
 				if(master.loc != master.path[1])
@@ -84,7 +82,6 @@
 				master.mover = null
 				src.master = null
 			//dispose()
-			return 0
 
 		return 0
 
@@ -182,11 +179,8 @@
 	var/gun_x_offset = -1 // gun pic x offset
 	var/gun_y_offset = 8 // gun pic y offset
 	var/lawbringer_state = null // because the law just has to be *difficult*. determines what lights to draw on the lawbringer if it has one
-#if ASS_JAM
-	var/lawbringer_alwaysbigshot = 1
-#else
 	var/lawbringer_alwaysbigshot = 0 // varedit this to 1 if you want the Buddy to always go infinite-ammo bigshot. this is a bad idea
-#endif
+
 	//
 	////////////////////// GUN STUFF -^
 
@@ -278,7 +272,7 @@
 
 		New()
 			..()
-			SPAWN_DBG (10)
+			SPAWN_DBG(1 SECOND)
 				for (var/mob/living/carbon/human/H in view(7, src))
 					if (!H.stat)
 						if (model_task)
@@ -349,6 +343,16 @@
 		name = "Shockbuddy"
 		desc = "The PR-6MS Shockbuddy was remarketed under the Guardbuddy line following the establishment of stricter electroconvulsive therapy regulations."
 		setup_default_tool_path = /obj/item/device/guardbot_tool/tesla
+
+	pie
+		name = "Clownbuddy"
+		desc = "This guardbuddy doesn't look quite right..."
+		setup_default_tool_path = /obj/item/device/guardbot_tool/pie_launcher
+
+		New()
+			..()
+			src.costume_icon = image(src.icon, "bcostume-clown", , FLY_LAYER)
+			src.update_icon()
 
 	bodyguard
 		setup_charge_percentage = 98
@@ -1247,8 +1251,7 @@
 		if(user.a_intent == "help" && !user.using_dialog_of(src) && (get_dist(user,src) <= 1))
 			var/affection = pick("hug","cuddle","snuggle")
 			user.visible_message("<span class='notice'>[user] [affection]s [src]!</span>","<span class='notice'>You [affection] [src]!</span>")
-			if(src.task)
-				src.task.task_input("hugged")
+			src.task?.task_input("hugged")
 			return
 
 		if(get_dist(user, src) > 1)
@@ -1307,8 +1310,7 @@
 				speak("SO SAYETH THE WIZARD!")
 				return
 
-		if(src.task)
-			src.task.receive_signal(signal, is_beacon)
+		src.task?.receive_signal(signal, is_beacon)
 
 		return
 
@@ -1470,8 +1472,7 @@
 				DropTheThing("gun", null, 0, 0, T, 1)
 			if(prob(50))
 				new /obj/item/parts/robot_parts/arm/left(T)
-			if(src.hat)
-				src.hat.set_loc(T)
+			src.hat?.set_loc(T)
 
 			new /obj/item/guardbot_frame(T)
 			var/obj/item/guardbot_core/core = new /obj/item/guardbot_core(T)
@@ -1499,7 +1500,7 @@
 
 			if(cell.charge < GUARDBOT_LOWPOWER_IDLE_LEVEL)
 				speak("Critical battery.")
-				src.snooze()
+				INVOKE_ASYNC(src, /obj/machinery/bot/guardbot.proc/snooze)
 				return 0
 
 			if(cell.charge < GUARDBOT_LOWPOWER_ALERT_LEVEL && !(locate(/datum/computer/file/guardbot_task/recharge) in src.tasks) )
@@ -1874,7 +1875,7 @@
 		if(src.charge_dock)
 			if(charge_dock.loc == src.loc)
 				if(!src.idle)
-					src.snooze()
+					INVOKE_ASYNC(src, /obj/machinery/bot/guardbot.proc/snooze)
 			else
 				src.charge_dock = null
 				src.wakeup()
@@ -1934,6 +1935,40 @@
 		// Updated for new projectile code (Convair880).
 		bot_attack(var/atom/target as mob|obj, obj/machinery/bot/guardbot/user, ranged=0, lethal=0)
 			if (..()) return
+
+	//pie launcher module
+	pie_launcher
+		name = "Shoddy Pie Launcher"
+		desc = "This pie launcher seems shoddily made, and doesn't have a handle. Why would anyone make this?"
+		icon_state = "tool_pie"
+		tool_id = "PIE"
+		is_gun = 1
+		is_stun = 1
+		var/datum/projectile/current_projectile = new /datum/projectile/pie
+		bot_attack(var/atom/target as mob|obj, obj/machinery/bot/guardbot/user, ranged=0, lethal=0)
+			if (..()) return
+
+
+			if (ranged)
+				var/obj/projectile/P = shoot_projectile_ST_pixel(master, current_projectile, target)
+				if (!P)
+					return
+
+
+				user.visible_message("<span class='alert'><b>[master] throws a pie at [target]!</b></span>")
+
+			else
+				var/obj/projectile/P = initialize_projectile_ST(master, current_projectile, target)
+				if (!P)
+					return
+
+				user.visible_message("<span class='alert'><b>[master] slaps [target] in the face with a pie!</b></span>")
+				P.was_pointblank = 1
+				hit_with_existing_projectile(P, target)
+
+			src.last_use = world.time
+			return
+
 
 	//A syringe gun module. Mercy sakes.
 	medicator
@@ -2334,7 +2369,7 @@
 					announced = 2
 					src.secondary_targets = list()
 
-					SPAWN_DBG (10)
+					SPAWN_DBG(1 SECOND)
 						if (src.secondary_targets.len)
 							master.reply_wait = 0
 							. = INFINITY
@@ -2740,7 +2775,7 @@
 											src.drop_arrest_target()
 											master.set_emotion("smug")
 
-											if (arrested_messages && arrested_messages.len)
+											if (length(arrested_messages))
 												var/arrest_message = pick(arrested_messages)
 												master.speak(arrest_message)
 
@@ -3557,7 +3592,7 @@
 					if (ckey(current_tour_text))
 						if (findtext(current_tour_text, "|p")) //There are pauses present! So, um, pause.
 							var/list/tour_text_with_pauses = splittext(current_tour_text, "|p")
-							SPAWN_DBG (0)
+							SPAWN_DBG(0)
 								sleep(1 SECOND)
 								for (var/tour_line in tour_text_with_pauses)
 									if (!ckey(tour_line) || !master)
@@ -3656,7 +3691,7 @@
 						src.neat_things |= NT_GAFFE
 						src.master.speak("Ah! As you can see here--")
 
-						SPAWN_DBG (10)
+						SPAWN_DBG(1 SECOND)
 							. = desired_emotion //We're going to make him sad until the end of this spawn, ok.
 							desired_emotion = "sad"
 							master.set_emotion(desired_emotion)
@@ -3713,7 +3748,7 @@
 						src.master.speak(insultphrase)
 
 						var/P = new /obj/decal/point(get_turf(H))
-						SPAWN_DBG (40)
+						SPAWN_DBG(4 SECONDS)
 							qdel(P)
 
 						src.master.visible_message("<b>[src.master]</b> points to [H]")
@@ -3767,7 +3802,7 @@
 					src.neat_things |= NT_AUTOMATON
 					src.master.speak("This here is some kind of automaton.  This, uh, porcelain-faced, click-clackity metal man.")
 					. = "Why [istype(get_area(AM), /area/solarium) ? "am I" : "is this"] here?"
-					SPAWN_DBG (20)
+					SPAWN_DBG(2 SECONDS)
 						src.master.speak(.)
 
 				else if (istype(AM, /obj/machinery/bot))
@@ -4091,8 +4126,8 @@
 			return
 
 		else
-			..()
-		return
+			spawn(0)
+				..()
 
 
 //The Docking Station.  Recharge here!
@@ -4488,11 +4523,9 @@
 		return
 
 	disposing()
-		if(src.current)
-			src.current.wakeup()
+		src.current?.wakeup()
 		current = null
-		if(radio_controller)
-			radio_controller.remove_object(src, "[frequency]")
+		radio_controller?.remove_object(src, "[frequency]")
 		radio_connection = null
 		if (link)
 			link.master = null
@@ -4530,7 +4563,7 @@
 			robot.charge_dock = src
 			src.autoeject = aeject
 			if(!robot.idle)
-				robot.snooze()
+				INVOKE_ASYNC(robot, /obj/machinery/bot/guardbot.proc/snooze)
 			if(src.host_id)
 				src.post_wire_status(src.host_id,"command","term_message","data","command=status&status=connect&botid=[current.net_id]")
 
@@ -4601,7 +4634,7 @@
 
 	New()
 		..()
-		SPAWN_DBG (8)
+		SPAWN_DBG(0.8 SECONDS)
 			linked_bot = locate() in orange(1, src)
 
 	attack_ai(mob/user as mob)
@@ -4735,8 +4768,7 @@
 			DropTheThing("gun", null, 0, 0, T, 1)
 		if(prob(50))
 			new /obj/item/parts/robot_parts/arm/left(T)
-		if(src.hat)
-			src.hat.set_loc(T)
+		src.hat?.set_loc(T)
 
 		var/obj/item/guardbot_core/old/core = new /obj/item/guardbot_core/old(T)
 		core.created_name = src.name
@@ -4883,12 +4915,6 @@
 /obj/machinery/bot/guardbot/old/tourguide/destiny
 	name = "Mary"
 	desc = "A PR-4 Robuddy. These are pretty old, you didn't know there were any still around! This one has a little name tag on the front labeled 'Mary'."
-	botcard_access = "Staff Assistant"
-	beacon_freq = 1443
-
-/obj/machinery/bot/guardbot/old/tourguide/linemap
-	name = "Monty"
-	desc = "A PR-4 Robuddy. These are pretty old, you didn't know there were any still around! This one has a little name tag on the front labeled 'Monty'."
 	botcard_access = "Staff Assistant"
 	beacon_freq = 1443
 

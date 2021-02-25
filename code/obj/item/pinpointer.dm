@@ -40,7 +40,7 @@
 				active = 0
 				icon_state = "[src.icon_type]_pinonnull"
 				return
-		src.dir = get_dir(src,target)
+		src.set_dir(get_dir(src,target))
 		switch(get_dist(src,target))
 			if(0)
 				icon_state = "[src.icon_type]_pinondirect"
@@ -91,9 +91,9 @@
 				boutput(usr, "<span class='alert'>The target locator emits a sorrowful ping!</span>")
 				return
 			active = 1
-			for(var/X in by_type[/obj/item/card/id])
-				var/obj/item/card/id/I = X
-				if(!I) continue // the ID can get deleted in the lagcheck
+			for_by_tcl(I, /obj/item/card/id)
+				if(!I)
+					continue // the ID can get deleted in the lagcheck
 				for(var/datum/objective/regular/assassinate/A in src.owner.mind.objectives)
 					if(I.registered == null) continue
 					if(ckey(I.registered) == ckey(A.targetname))
@@ -118,7 +118,7 @@
 		if(!target)
 			icon_state = "id_pinonnull"
 			return
-		src.dir = get_dir(src,target)
+		src.set_dir(get_dir(src,target))
 		switch(get_dist(src,target))
 			if(0)
 				icon_state = "id_pinondirect"
@@ -149,8 +149,7 @@
 				return
 			active = 1
 
-			for(var/X in by_type[/obj/item/card/id])
-				var/obj/item/card/id/I = X
+			for_by_tcl(I, /obj/item/card/id)
 				if(I.registered == null) continue
 				for (var/datum/mind/M in ticker.mode.traitors)
 					if (src.owner.mind == M)
@@ -218,7 +217,7 @@
 			active = 0
 			boutput(usr, "<span class='alert'>No target found!</span>")
 			return
-		src.dir = get_dir(src,target)
+		src.set_dir(get_dir(src,target))
 		switch(get_dist(src,target))
 			if(0)
 				icon_state = "blood_pinondirect"

@@ -77,13 +77,13 @@
 		var/list/possible_items = list()
 		for (var/datum/syndicate_buylist/S in syndi_buylist_cache)
 			var/blocked = 0
-			if (ticker && ticker.mode && S.blockedmode && islist(S.blockedmode) && S.blockedmode.len)
+			if (ticker?.mode && S.blockedmode && islist(S.blockedmode) && S.blockedmode.len)
 				for (var/V in S.blockedmode)
 					if (ispath(V) && istype(ticker.mode, V))
 						blocked = 1
 						break
 
-			if (ticker && ticker.mode && S.exclusivemode && islist(S.exclusivemode) && S.exclusivemode.len)
+			if (ticker?.mode && S.exclusivemode && islist(S.exclusivemode) && S.exclusivemode.len)
 				for (var/V in S.exclusivemode)
 					if (ispath(V) && !istype(ticker.mode, V)) // No meta by checking VR uplinks.
 						blocked = 1
@@ -243,7 +243,7 @@
 	for(var/A in possible_modes)
 		intercepttext += i_text.build(A, pick(traitors))
 
-	for (var/obj/machinery/communications_dish/C in by_type[/obj/machinery/communications_dish])
+	for_by_tcl(C, /obj/machinery/communications_dish)
 		C.add_centcom_report("Cent. Com. Status Summary", intercepttext)
 
 	command_alert("Summary downloaded and printed out at all communications consoles.", "Enemy communication intercept. Security Level Elevated.")
@@ -531,12 +531,12 @@
 			LAGCHECK(LAG_LOW)
 			big_choice = pick(BS)
 			obj_existing = locate(big_choice)
-			if (obj_existing && obj_existing.z == 1)
+			if (obj_existing?.z == 1)
 				break
 			else
 				obj_existing = 0
 
-		if (obj_existing && obj_existing.z == 1)
+		if (obj_existing?.z == 1)
 			var/datum/bounty_item/B = new /datum/bounty_item(src)
 			B.path = obj_existing.type
 			B.item = obj_existing
@@ -577,7 +577,7 @@
 			choice = pick(S)
 			item_existing = locate(choice)
 			var/turf/T = get_turf(item_existing)
-			if (item_existing && T.z == 1)
+			if (item_existing && T?.z == 1)
 				break
 			else
 				item_existing = 0
@@ -599,13 +599,13 @@
 
 
 	//Set delivery areas
-	possible_areas = get_areas_with_turfs(/area/station)
-	possible_areas += get_areas_with_turfs(/area/diner)
-	possible_areas -= get_areas_with_turfs(/area/diner/tug)
-	possible_areas -= get_areas_with_turfs(/area/station/maintenance)
-	possible_areas -= get_areas_with_turfs(/area/station/hallway)
-	possible_areas -= get_areas_with_turfs(/area/station/engine/substation)
-	possible_areas -= /area/station/test_area
+	possible_areas = get_areas_with_unblocked_turfs(/area/station)
+	possible_areas += get_areas_with_unblocked_turfs(/area/diner)
+	possible_areas -= get_areas_with_unblocked_turfs(/area/diner/tug)
+	possible_areas -= get_areas_with_unblocked_turfs(/area/station/maintenance)
+	possible_areas -= get_areas_with_unblocked_turfs(/area/station/hallway)
+	possible_areas -= get_areas_with_unblocked_turfs(/area/station/engine/substation)
+	possible_areas -= /area/sim/test_area
 
 	for (var/area/A in possible_areas)
 		LAGCHECK(LAG_LOW)

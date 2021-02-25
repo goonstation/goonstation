@@ -61,9 +61,9 @@
 
 /obj/machinery/conveyor/proc/setdir()
 	if(operating == -1)
-		dir = turn(basedir,180)
+		set_dir(turn(basedir,180))
 	else
-		dir = basedir
+		set_dir(basedir)
 	next_conveyor = locate(/obj/machinery/conveyor) in get_step(src,dir)
 	update()
 
@@ -237,8 +237,7 @@
 	update()
 
 	var/obj/machinery/conveyor/C = locate() in get_step(src, basedir)
-	if(C)
-		C.set_operable(basedir, id, 0)
+	C?.set_operable(basedir, id, 0)
 
 	C = locate() in get_step(src, turn(basedir,180))
 	if(C)
@@ -418,7 +417,7 @@
 
 	SPAWN_DBG(0.5 SECONDS)		// allow map load
 		conveyors = list()
-		for(var/obj/machinery/conveyor/C in machine_registry[MACHINES_CONVEYORS])
+		for(var/obj/machinery/conveyor/C as() in machine_registry[MACHINES_CONVEYORS])
 			if(C.id == id)
 				conveyors += C
 				C.owner = src
@@ -478,7 +477,7 @@
 	update()
 
 	// find any switches with same id as this one, and set their positions to match us
-	for(var/obj/machinery/conveyor_switch/S in by_type[/obj/machinery/conveyor_switch])
+	for_by_tcl(S, /obj/machinery/conveyor_switch)
 		if(S.id == src.id)
 			S.position = position
 			S.update()
@@ -509,9 +508,9 @@
 
 	setdir()
 		if(operating == -1)
-			dir = altdir
+			set_dir(altdir)
 		else
-			dir = startdir
+			set_dir(startdir)
 		next_conveyor = locate(/obj/machinery/conveyor) in get_step(src,dir)
 		update()
 
@@ -610,7 +609,7 @@
 			update_icon()
 
 	proc/update_belts()
-		for(var/obj/machinery/conveyor_switch/S in by_type[/obj/machinery/conveyor_switch])
+		for_by_tcl(S, /obj/machinery/conveyor_switch)
 			if(S.id == "carousel")
 				for(var/obj/machinery/conveyor/C in S.conveyors)
 					C.move_lag = max(initial(C.move_lag) - speedup, 0.1)

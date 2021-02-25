@@ -51,7 +51,7 @@ Frequency:
 			if (sr)
 				src.temp += "<B>Located Beacons:</B><BR>"
 
-				for(var/obj/item/device/radio/beacon/W in by_type[/obj/item/device/radio/beacon])
+				for_by_tcl(W, /obj/item/device/radio/beacon)
 					if (istype(src, /obj/item/locator/jones) && istype(W, /obj/item/device/radio/beacon/jones)) //For Jones City
 						src.temp += "Unknown Location-[W.x], [W.y], [W.z]<BR>"
 					if (W.frequency == src.frequency)
@@ -71,7 +71,7 @@ Frequency:
 							src.temp += "[dir2text(get_dir(sr, tr))]-[direct]<BR>"
 
 				src.temp += "<B>Extranneous Signals:</B><BR>"
-				for (var/obj/item/implant/tracking/W in by_type[/obj/item/implant/tracking])
+				for_by_tcl(W, /obj/item/implant/tracking)
 					if (W.frequency == src.frequency)
 						if (!W.implanted || !ismob(W.loc))
 							continue
@@ -178,10 +178,10 @@ Frequency:
 			if (tele_check.teleport_blocked)
 				continue
 			random_turfs += T
-		if (random_turfs && random_turfs.len)
+		if (length(random_turfs))
 			L["None (Dangerous)"] += pick(random_turfs)
 
-		for(var/obj/machinery/teleport/portal_generator/PG in machine_registry[MACHINES_PORTALGENERATORS])
+		for(var/obj/machinery/teleport/portal_generator/PG as() in machine_registry[MACHINES_PORTALGENERATORS])
 			if (!PG.linked_computer || !PG.linked_rings)
 				continue
 			var/turf/PG_loc = get_turf(PG)
@@ -267,7 +267,7 @@ Frequency:
 		user.visible_message("<span class='notice'>Portal opened.</span>")
 		logTheThing("station", user, null, "creates a hand tele portal (<b>Destination:</b> [src.our_target ? "[log_loc(src.our_target)]" : "*random coordinates*"]) at [log_loc(user)].")
 
-		SPAWN_DBG (300)
+		SPAWN_DBG(30 SECONDS)
 			if (P)
 				portals -= P
 				pool(P)

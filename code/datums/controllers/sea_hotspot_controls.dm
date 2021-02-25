@@ -958,7 +958,7 @@
 		flick("stomper2",src)
 
 		if (hotspot_controller.stomp_turf(get_turf(src))) //we didn't stomped center, do an additional SFX
-			SPAWN_DBG (4)
+			SPAWN_DBG(0.4 SECONDS)
 				playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 99, 1, 0.1, 0.7)
 
 		for (var/datum/sea_hotspot/H in hotspot_controller.get_hotspots_list(get_turf(src)))
@@ -972,7 +972,7 @@
 		for (var/mob/M in src.loc)
 			random_brute_damage(M, 55, 1)
 			M.changeStatus("weakened", 1 SECOND)
-			M.emote("scream")
+			INVOKE_ASYNC(M, /mob.proc/emote, "scream")
 			playsound(M.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 70, 1)
 
 		for (var/mob/C in viewers(src))

@@ -23,8 +23,10 @@
 #define RADIOCL_OTHER "rother"
 
 // Frequency defines for headsets & intercoms (Convair880).
-#define R_FREQ_MINIMUM 1441		// Minimum "selectable" freq
-#define R_FREQ_MAXIMUM 1489		// Maximum "selectable" freq
+/// Minimum "selectable" freq
+#define R_FREQ_MINIMUM 1441
+/// Maximum "selectable" freq
+#define R_FREQ_MAXIMUM 1489
 #define R_FREQ_DEFAULT 1459
 #define R_FREQ_COMMAND 1358
 #define R_FREQ_SECURITY 1359

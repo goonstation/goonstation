@@ -150,7 +150,7 @@ Contains:
 			range = min(range, 12)		// was 8
 
 			if(src in bible_contents)
-				for(var/obj/item/storage/bible/B in by_type[/obj/item/storage/bible])//world)
+				for_by_tcl(B, /obj/item/storage/bible)//world)
 					var/turf/T = get_turf(B.loc)
 					if(T)
 						logTheThing("bombing", src, null, "exploded at [showCoords(T.x, T.y, T.z)], range: [range], last touched by: [src.fingerprintslast]")
@@ -233,18 +233,22 @@ Contains:
 		ui = new(user, src, "GasTank", name)
 		ui.open()
 
-/obj/item/tank/ui_data(mob/user)
-	var/list/data = list()
-	data["pressure"] = MIXTURE_PRESSURE(air_contents)
-	data["maxPressure"] = PORTABLE_ATMOS_MAX_RELEASE_PRESSURE
-	data["valveIsOpen"] = using_internal()
-	data["releasePressure"] = distribute_pressure
-	data["maxRelease"] = TANK_MAX_RELEASE_PRESSURE
+/obj/item/tank/ui_static_data(mob/user)
+	. = list(
+		"maxPressure" = PORTABLE_ATMOS_MAX_RELEASE_PRESSURE,
+		"maxRelease" = TANK_MAX_RELEASE_PRESSURE
+	)
 
-	return data
+/obj/item/tank/ui_data(mob/user)
+	. = list(
+		"pressure" = MIXTURE_PRESSURE(air_contents),
+		"valveIsOpen" = using_internal(),
+		"releasePressure" = distribute_pressure,
+	)
 
 /obj/item/tank/ui_act(action, params)
-	if(..())
+	. = ..()
+	if (.)
 		return
 	switch(action)
 		if("toggle-valve")
@@ -479,7 +483,7 @@ Contains:
 
 		if(src in bible_contents)
 			strength = fuel_moles/20
-			for(var/obj/item/storage/bible/B in by_type[/obj/item/storage/bible])//world)
+			for_by_tcl(B, /obj/item/storage/bible)//world)
 				var/turf/T = get_turf(B.loc)
 				if(T)
 					explosion(src, T, 0, strength, strength*2, strength*3)

@@ -5,6 +5,7 @@
 	item_state = "buildpipe"
 	flags = FPRINT | ONBELT | TABLEPASS
 	override_attack_hand = 0
+	var/skin_tone = "#FFFFFF"
 	var/slot = null // which part of the person or robot suit does it go on???????
 	var/streak_decal = /obj/decal/cleanable/blood // what streaks everywhere when it's cut off?
 	var/streak_descriptor = "bloody" //bloody, oily, etc
@@ -14,7 +15,34 @@
 	var/side = "left" //used for streak direction
 	var/remove_stage = 0 //2 will fall off, 3 is removed
 	var/no_icon = 0 //if the only icon is above the clothes layer ie. in the handlistPart list
-	var/skintoned = 1 // is this affected by human skin tones?
+	var/skintoned = 1 // is this affected by human skin tones? Also if the severed limb uses a separate bloody-stump icon layered on top
+
+	/// Gets overlaid onto the severed limb, under the stump if the limb is skintoned
+	/// The icon of this overlay
+	var/severed_overlay_1_icon
+	/// The state of this overlay
+	var/severed_overlay_1_state
+	/// The color reference. null for uncolored("#ffffff"), CUST_1/2/3 for one of the mob's haircolors, SKIN_TONE for the mob's skintone
+	var/severed_overlay_1_color
+
+	/// Gets sent to update_body to overlay something onto this limb, like kudzu vines. Only handles the limb, not the hand/foot!
+	var/image/limb_overlay_1
+	/// The icon of this overlay
+	var/limb_overlay_1_icon
+	/// The state of this overlay
+	var/limb_overlay_1_state
+	/// The color reference. null for uncolored("#ffffff"), CUST_1/2/3 for one of the mob's haircolors, SKIN_TONE for the mob's skintone
+	var/limb_overlay_1_color
+
+	/// Gets sent to update_body to overlay something onto this hand/foot, like kudzu vines. Only handles the hand/foot, not the limb!
+	var/image/handfoot_overlay_1
+	/// The icon of this overlay
+	var/handfoot_overlay_1_icon
+	/// The state of this overlay
+	var/handfoot_overlay_1_state
+	/// The color reference. null for uncolored("#ffffff"), CUST_1/2/3 for one of the mob's haircolors, SKIN_TONE for the mob's skintone
+	var/handfoot_overlay_1_color
+
 	var/easy_attach = 0 //Attachable without surgery?
 
 	var/decomp_affected = 1 // set to 1 if this limb has decomposition icons
@@ -23,12 +51,12 @@
 
 	var/mob/living/holder = null
 
-	var/image/standImage
-	var/image/lyingImage
-	var/partIcon = 'icons/mob/human.dmi'
+	var/image/standImage	// Used by getMobIcon to pass off to update_body. Typically holds image(the_limb's_icon, "[src.slot]")
+	var/image/lyingImage	// Appears to be unused, since we just rotate the sprite through animagic
+	var/partIcon = 'icons/mob/human.dmi'	// The icon the mob sprite uses when attached, change if the limb's icon isnt in 'icons/mob/human.dmi'
 	var/partDecompIcon = 'icons/mob/human_decomp.dmi'
-	var/handlistPart
-	var/partlistPart
+	var/handlistPart	// Used by getHandIconState to determine the attached-to-mob-sprite hand sprite
+	var/partlistPart	// Ditto, but for foot sprites, presumably
 	var/datum/bone/bones = null // for medical crap
 	var/brute_dam = 0
 	var/burn_dam = 0
@@ -37,6 +65,10 @@
 	var/step_image_state = null // for legs, we leave footprints in this style (located in blood.dmi)
 	var/accepts_normal_human_overlays = 1 //for avoiding istype in update icon
 	var/datum/movement_modifier/movement_modifier // When attached, applies this movement modifier
+	/// If TRUE, it'll resist mutantraces trying to change them
+	var/limb_is_unnatural = FALSE
+	/// Limb is not attached to its original owner
+	var/limb_is_transplanted = FALSE
 
 	New(atom/new_holder)
 		..()
@@ -108,8 +140,6 @@
 		else
 			remove_stage = 3
 		object.set_loc(src.holder.loc)
-		if(hasvar(object,"skin_tone"))
-			object:skin_tone = holder.bioHolder.mobAppearance.s_tone
 
 		//https://forum.ss13.co/showthread.php?tid=1774
 		//object.name = "[src.holder.real_name]'s [initial(object.name)]"
@@ -164,8 +194,6 @@
 
 		object.set_loc(src.holder.loc)
 		var/direction = src.holder.dir
-		if(hasvar(object,"skin_tone"))
-			object:skin_tone = holder.bioHolder.mobAppearance.s_tone
 
 		//https://forum.ss13.co/showthread.php?tid=1774
 		//object.name = "[src.holder.real_name]'s [initial(object.name)]" //Luis Smith's Dr. Kay's Luis Smith's Sailor Dave's Left Arm
@@ -241,6 +269,7 @@
 
 			attachee.limbs.l_leg = src
 			attachee.limbs.r_leg = src
+
 		src.holder = attachee
 		attacher.remove_item(src)
 		src.layer = initial(src.layer)
@@ -283,7 +312,7 @@
 		if (src.slot == "l_arm" || src.slot == "r_arm")
 			attachee.hud.update_hands()
 
-		return
+		return TRUE
 
 	proc/surgery(var/obj/item/I) //placeholder
 		return
@@ -336,7 +365,7 @@
 		return
 
 /obj/item/proc/streak(var/direction, var/streak_splatter) //stolen from gibs
-	SPAWN_DBG (0)
+	SPAWN_DBG(0)
 		if (istype(direction, /list))
 			direction = pick(direction)
 		for (var/i = 0, i < rand(1,3), i++)

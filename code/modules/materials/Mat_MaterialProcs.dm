@@ -56,15 +56,9 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 	desc = "It's very hard to move around."
 	max_generations = 1
 
-	execute(var/atom/owner)
-		if(istype(owner, /atom/movable))
-			var/atom/movable/A = owner
-			A.anchored = 1
-		return
-
 /datum/materialProc/ffart_pickup
 	execute(var/mob/M, var/obj/item/I)
-		SPAWN_DBG(1 SECOND)
+		SPAWN_DBG(2 SECOND) //1 second is a little to harsh to since it slips right out of the nanofab/cruicble
 			M.remove_item(I)
 			I.set_loc(get_turf(I))
 		return
@@ -72,9 +66,8 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 /datum/materialProc/wendigo_temp_onlife
 	desc = "It feels furry."
 
-	execute(var/mob/M, var/obj/item/I)
-		if(M)
-			M.bodytemperature = 310
+	execute(var/mob/M, var/obj/item/I, mult)
+		M?.bodytemperature = 310
 		return
 
 /datum/materialProc/fail_explosive
@@ -178,20 +171,20 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 /datum/materialProc/generic_itchy_onlife
 	desc = "It makes your hands itch."
 
-	execute(var/mob/M, var/obj/item/I)
-		if(prob(20)) M.emote(pick("twitch", "laugh", "sneeze", "cry"))
-		if(prob(10))
+	execute(var/mob/M, var/obj/item/I, mult)
+		if(prob(percentmult(20, mult))) M.emote(pick("twitch", "laugh", "sneeze", "cry"))
+		if(prob(percentmult(10, mult)))
 			boutput(M, "<span class='notice'><b>Something tickles!</b></span>")
 			M.emote(pick("laugh", "giggle"))
-		if(prob(8))
+		if(prob(percentmult(8, mult)))
 			M.visible_message("<span class='alert'><b>[M.name]</b> scratches at an itch.</span>")
 			random_brute_damage(M, 1)
 			M.changeStatus("stunned", 1 SECOND)
 			M.emote("grumble")
-		if(prob(8))
+		if(prob(percentmult(8, mult)))
 			boutput(M, "<span class='alert'><b>So itchy!</b></span>")
 			random_brute_damage(M, 2)
-		if(prob(1))
+		if(prob(percentmult(1, mult)))
 			boutput(M, "<span class='alert'><b><font size='[rand(2,5)]'>AHHHHHH!</font></b></span>")
 			random_brute_damage(M,5)
 			M.changeStatus("weakened", 5 SECONDS)
@@ -214,7 +207,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		..()
 
 	execute(var/obj/item/owner, var/mob/attacker, var/mob/attacked)
-		if(prob(reag_chance) && attacked && attacked.reagents)
+		if(prob(reag_chance) && attacked?.reagents)
 			charges_left--
 			attacked.reagents.add_reagent(reag_id, reag_amt, null, T0C)
 			if(!charges_left)
@@ -234,7 +227,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		..()
 
 	execute(var/obj/item/owner, var/mob/attacker, var/mob/attacked)
-		if(prob(reag_chance) && attacked && attacked.reagents)
+		if(prob(reag_chance) && attacked?.reagents)
 			attacked.reagents.add_reagent(reag_id, reag_amt, null, T0C)
 		return
 
@@ -247,9 +240,9 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		reag_amt = amount
 		..()
 
-	execute(var/mob/M, var/obj/item/I)
-		if(M && M.reagents)
-			M.reagents.add_reagent(reag_id, reag_amt, null, T0C)
+	execute(var/mob/M, var/obj/item/I, mult)
+		if(M?.reagents)
+			M.reagents.add_reagent(reag_id, reag_amt * mult, null, T0C)
 		return
 
 /datum/materialProc/generic_reagent_onlife_depleting
@@ -264,10 +257,10 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		max_volume = maxadd
 		..()
 
-	execute(var/mob/M, var/obj/item/I)
-		if(M && M.reagents)
-			M.reagents.add_reagent(reag_id, reag_amt, null, T0C)
-			added += reag_amt
+	execute(var/mob/M, var/obj/item/I, mult)
+		if(M?.reagents)
+			M.reagents.add_reagent(reag_id, reag_amt * mult, null, T0C)
+			added += reag_amt * mult
 			if(added >= max_volume)
 				if(I.material)
 					I.material.triggersOnLife.Remove(src)
@@ -338,8 +331,8 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		return
 
 /datum/materialProc/telecrystal_life
-	execute(var/mob/M, var/obj/item/I)
-		if(prob(5) && M && !isrestrictedz(M.z))
+	execute(var/mob/M, var/obj/item/I, mult)
+		if(prob(percentmult(5, mult)) && M && !isrestrictedz(M.z))
 			. = get_offset_target_turf(get_turf(M), rand(-8, 8), rand(-8, 8))
 			M.visible_message("<span class='alert'>[M] is warped away!</span>")
 			boutput(M, "<span class='alert'>You suddenly teleport ...</span>")
@@ -349,12 +342,15 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 /datum/materialProc/plasmastone
 	execute(var/location) //exp and temp both have the location as first argument so i can use this for both.
 		for (var/turf/simulated/floor/target in range(1,location))
+			if(ON_COOLDOWN(target, "plasmastone_plasma_generate", 10 SECONDS)) continue
 			if(!target.blocks_air && target.air)
-				if(target.parent)
+				if(target.parent?.group_processing)
 					target.parent.suspend_group_processing()
 
 				var/datum/gas_mixture/payload = unpool(/datum/gas_mixture)
-				payload.toxins = 100
+				payload.toxins = 25
+				payload.temperature = T20C
+				payload.volume = R_IDEAL_GAS_EQUATION * T20C / 1000
 				target.air.merge(payload)
 		return
 
@@ -369,9 +365,9 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		return
 
 /datum/materialProc/radioactive_life
-	execute(var/mob/M, var/obj/item/I)
+	execute(var/mob/M, var/obj/item/I, mult)
 		if(I.material)
-			M.changeStatus("radiation", (max(round(I.material.getProperty("radioactive") / 20),1))*10, 2)
+			M.changeStatus("radiation", (max(round(I.material.getProperty("radioactive") / 20),1))*10 * mult, 2)
 		return
 
 /datum/materialProc/radioactive_pickup
@@ -386,15 +382,15 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		return
 
 /datum/materialProc/n_radioactive_life
-	execute(var/mob/M, var/obj/item/I)
+	execute(var/mob/M, var/obj/item/I, mult)
 		if(I.material)
-			M.changeStatus("n_radiation", (max(round(I.material.getProperty("n_radioactive") / 20),1))*10, 2)
+			M.changeStatus("n_radiation", (max(round(I.material.getProperty("n_radioactive") / 20),1))*10 * mult, 2)
 		return
 
 /datum/materialProc/n_radioactive_pickup
 	execute(var/mob/M, var/obj/item/I)
 		if(I.material)
-			M.changeStatus("neutron_radiation", (max(round(I.material.getProperty("n_radioactive") / 5),1))*10, 4)
+			M.changeStatus("n_radiation", (max(round(I.material.getProperty("n_radioactive") / 5),1))*10, 4)
 		return
 
 /datum/materialProc/erebite_flash
@@ -453,19 +449,14 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 /datum/materialProc/ice_life
 	desc = "It is slowly melting."
 
-	execute(var/mob/M, var/obj/item/I)
+	execute(var/mob/M, var/obj/item/I, mult)
 		if (iscarbon(M))
 			var/mob/living/carbon/C = M
 			if (C.bodytemperature > 0)
 				C.bodytemperature -= 2
-			if (C.bodytemperature > 100 && prob(4))
+			if (C.bodytemperature > 100 && prob(percentmult(4, mult)))
 				boutput(C, "Your [I] melts from your body heat!")
 				qdel(I)
-		return
-
-/datum/materialProc/soulsteel_add
-	execute(var/atom/owner)
-		owner.event_handler_flags |= USE_HASENTERED
 		return
 
 /datum/materialProc/soulsteel_entered
@@ -509,8 +500,13 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 			return
 
 		SPAWN_DBG(1 SECOND)
-			if(location && location.material && location.material.mat_id == "miracle")
+			if(location?.material?.mat_id == "miracle")
 				location.visible_message("<span class='notice'>[location] bends and twists, changing colors rapidly.</span>")
 				var/chosen = pick(prob(100); "mauxite",prob(100); "pharosium",prob(100); "cobryl",prob(100); "bohrum",prob(80); "cerenkite",prob(50); "syreline",prob(20); "slag",prob(3); "spacelag",prob(5); "soulsteel",prob(100); "molitz",prob(50); "claretine",prob(5); "erebite",prob(10); "quartz",prob(5); "uqill",prob(10); "telecrystal",prob(1); "starstone",prob(5); "blob",prob(8); "koshmarite",prob(20); "chitin",prob(4); "pizza",prob(15); "beewool",prob(6); "ectoplasm")
 				location.setMaterial(getMaterial(chosen), appearance = 1, setname = 1)
 		return
+
+/datum/materialProc/enchanted_add
+	execute(var/obj/item/owner)
+		if(istype(owner))
+			owner.enchant(3, setTo = 1)

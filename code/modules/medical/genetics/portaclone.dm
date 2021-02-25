@@ -26,18 +26,15 @@
 			computer.scanner = scanner
 			computer.pod1 = pod1
 
-			computer.temp = ""
-			if (isnull(computer.scanner))
-				computer.temp += " <font color=red>SCNR-ERROR</font>"
-			if (isnull(computer.pod1))
-				computer.temp += " <font color=red>POD1-ERROR</font>"
-			else
+			if (!isnull(computer.pod1))
 				computer.pod1.connected = computer
 
-			if (computer.temp == "")
-				computer.temp = "System ready."
-			return
-		return
+			if (!isnull(computer.scanner) || !isnull(computer.pod1))
+				computer.show_message((isnull(computer.pod1) & "POD1-ERROR") || (isnull(computer.pod1) & "SCNR-ERROR"), "success")
+				return
+			else
+				computer.show_message("System ready.", "success")
+				return
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (W)

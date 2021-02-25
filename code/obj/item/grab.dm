@@ -18,7 +18,7 @@
 	var/can_pin = 1
 	var/dropped = 0
 
-	New(atom/loc, mob/assailant = null)
+	New(atom/loc, mob/assailant = null, mob/affecting = null)
 		..()
 
 		var/icon/hud_style = hud_style_selection[get_hud_style(src.assailant)]
@@ -34,6 +34,9 @@
 
 			I.UpdateOverlays(ima, "grab", 0, 1)
 		src.assailant = assailant
+		src.affecting = affecting
+		src.affecting.grabbed_by += src
+		RegisterSignal(src.assailant, COMSIG_ATOM_HITBY_PROJ, .proc/check_hostage)
 
 	proc/post_item_setup()//after grab is done being made with item
 		return
@@ -80,6 +83,7 @@
 				affecting.grabbed_by -= src
 			affecting = null
 
+		UnregisterSignal(assailant, COMSIG_ATOM_HITBY_PROJ)
 		assailant = null
 		..()
 
@@ -177,7 +181,7 @@
 			src.affecting.pixel_y = src.assailant.pixel_y + pyo
 		src.affecting.set_loc(src.assailant.loc)
 		src.affecting.layer = src.assailant.layer + (src.assailant.dir == NORTH ? -0.1 : 0.1)
-		src.affecting.dir = src.assailant.dir
+		src.affecting.set_dir(src.assailant.dir)
 		src.affecting.set_density(0)
 
 	attack_self(mob/user)
@@ -211,9 +215,6 @@
 			if (GRAB_AGGRESSIVE)
 				if (ishuman(src.affecting))
 					var/mob/living/carbon/human/H = src.affecting
-					if (H.bioHolder.HasEffect("fat"))
-						boutput(src.assailant, "<span class='notice'>You can't strangle [src.affecting] through all that fat!</span>")
-						return
 					for (var/obj/item/clothing/C in list(H.head, H.wear_suit, H.wear_mask, H.w_uniform))
 						if (C.body_parts_covered & HEAD)
 							boutput(src.assailant, "<span class='notice'>You have to take off [src.affecting]'s [C.name] first!</span>")
@@ -232,7 +233,7 @@
 				if (ishuman(src.affecting))
 					var/mob/living/carbon/human/H = src.affecting
 					for (var/obj/item/clothing/C in list(H.head, H.wear_suit, H.wear_mask, H.w_uniform))
-						if (C.body_parts_covered & HEAD)
+						if (C.c_flags & (BLOCKCHOKE))
 							boutput(src.assailant, "<span class='notice'>You have to take off [src.affecting]'s [C.name] first!</span>")
 							return
 				actions.start(new/datum/action/bar/icon/strangle_target(src.affecting, src), src.assailant)
@@ -267,8 +268,6 @@
 		src.affecting.lastattackertime = world.time
 		if (!src.affecting.buckled)
 			set_affected_loc()
-		if (src.assailant.bioHolder.HasEffect("fat"))
-			src.affecting.unlock_medal("Bear Hug", 1)
 		//src.affecting.losebreath++
 		//if (src.affecting.paralysis < 2)
 		//	src.affecting.paralysis = 2
@@ -299,8 +298,6 @@
 		src.affecting.force_laydown_standup()
 		if (!src.affecting.buckled)
 			set_affected_loc()
-		if (src.assailant.bioHolder.HasEffect("fat"))
-			src.affecting.unlock_medal("Bear Hug", 1)
 
 		if (ishuman(src.assailant))
 			var/mob/living/carbon/human/H = src.assailant
@@ -348,7 +345,7 @@
 
 	proc/do_resist()
 		hit_twitch(src.assailant)
-		src.affecting.dir = pick(alldirs)
+		src.affecting.set_dir(pick(alldirs))
 		resist_count += 1
 
 		playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1)
@@ -406,6 +403,18 @@
 		src.affecting.lastattackertime = world.time
 		.= src.affecting
 		user.u_equip(src)
+
+
+	proc/check_hostage(owner, obj/projectile/P)
+		var/mob/hostage = null
+		if(src.affecting && src.state >= 2 && P.shooter != src.affecting) //If you grab someone they can still shoot you
+			hostage = src.affecting
+		if (hostage)
+			P.collide(hostage)
+			//moved here so that it displays after the bullet hit message
+			if(prob(20)) //This should probably not be bulletproof, har har
+				hostage.visible_message("<span class='combat bold'>[hostage] is knocked out of [owner]'s grip by the force of the [P.name]!</span>")
+				qdel(src)
 
 //////////////////////
 //PROGRESS BAR STUFF//
@@ -588,8 +597,7 @@
 	.= 0
 	if(!chokehold && istype(target) && istype(user))
 		src.chokehold = user.grab_other(target, hide_attack, src)
-		if(chokehold)
-			chokehold.post_item_setup()
+		chokehold?.post_item_setup()
 		.= 1
 
 /obj/item/proc/drop_grab()
@@ -783,7 +791,7 @@
 			var/obj/item/I = src.loc
 
 			var/prop = DAMAGE_TYPE_TO_STRING(hit_type)
-			if(prop == "burn" && I && I.reagents)
+			if(prop == "burn" && I?.reagents)
 				I.reagents.temperature_reagents(2000,10)
 			.= src.getProperty("I_block_[prop]")
 
@@ -866,7 +874,7 @@
 
 /obj/item/cable_coil/process_grab(var/mult = 1)
 	..()
-	if (src.chokehold && chokehold.state == GRAB_KILL)
+	if (src.chokehold?.state == GRAB_KILL)
 		if (ishuman(src.chokehold.affecting))
 			var/mob/living/carbon/human/H = src.chokehold.affecting
 			H.losebreath += (0.5 * mult)

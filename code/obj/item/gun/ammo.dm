@@ -71,7 +71,8 @@
 	New()
 		..()
 		SPAWN_DBG(2 SECONDS)
-			src.update_icon() // So we get dynamic updates right off the bat. Screw static descs.
+			if (!src.disposed)
+				src.update_icon() // So we get dynamic updates right off the bat. Screw static descs.
 		return
 
 	use(var/amt = 0)
@@ -269,6 +270,8 @@
 		if (src.amount_left > 0)
 			if (src.icon_dynamic && src.icon_short)
 				src.icon_state = text("[src.icon_short]-[src.amount_left]")
+			else if(src.icon_empty)
+				src.icon_state = initial(src.icon_state)
 		else
 			if (src.icon_empty)
 				src.icon_state = src.icon_empty
@@ -515,18 +518,6 @@
 	icon_empty = "bg-0"
 	sound_load = 'sound/weapons/gunload_click.ogg'
 
-/obj/item/ammo/bullets/pbr
-	sname = "12ga Plastic Baton Rounds"
-	name = "12ga plastic baton rounds"
-	ammo_type = new/datum/projectile/bullet/pbr
-	icon_state = "bg"
-	amount_left = 8.0
-	max_amount = 8.0
-	caliber = 0.72
-	icon_dynamic = 0
-	icon_empty = "bg-0"
-	sound_load = 'sound/weapons/gunload_click.ogg'
-
 /obj/item/ammo/bullets/ak47
 	sname = ".308 Auto" // This makes little sense, but they're all chambered in the same caliber, okay (Convair880)?
 	name = "AK magazine"
@@ -717,6 +708,19 @@
 		amount_left = 1
 		max_amount = 1
 
+/obj/item/ammo/bullets/pbr
+	sname = "40mm Plastic Baton Rounds"
+	name = "40mm plastic baton rounds"
+	ammo_type = new/datum/projectile/bullet/pbr
+	amount_left = 2
+	max_amount = 2
+	icon_state = "40mmB"
+	caliber = 1.57
+	w_class = 3
+	icon_dynamic = 0
+	icon_empty = "40mmB-0"
+	sound_load = 'sound/weapons/gunload_heavy.ogg'
+
 //basically an internal object for converting hand-grenades into shells, but can be spawned independently.
 /obj/item/ammo/bullets/grenade_shell
 	sname = "40mm Custom Shell"
@@ -810,6 +814,9 @@
 	max_amount = 15.0
 	ammo_type = new/datum/projectile/bullet/bullet_9mm
 	caliber = 0.355
+
+	five_shots
+		amount_left = 5.0
 
 	smg
 		name = "9mm SMG magazine"
@@ -1008,11 +1015,11 @@
 	onMaterialChanged()
 		..()
 		if(istype(src.material))
+			recharge_rate = 0
 			if(src.material.hasProperty("radioactive"))
-				var/rate = ((src.material.getProperty("radioactive") / 10) / 2.5) //55(cerenkite) should give around 2.2, slightly less than a slow charge cell.
-				recharge_rate = rate
-			else
-				recharge_rate = 0
+				recharge_rate += ((src.material.getProperty("radioactive") / 10) / 2.5) //55(cerenkite) should give around 2.2, slightly less than a slow charge cell.
+			if(src.material.hasProperty("n_radioactive"))
+				recharge_rate += ((src.material.getProperty("n_radioactive") / 10) / 2)
 		return
 
 	New()
@@ -1078,6 +1085,16 @@
 	max_charge = 150.0
 	cycle = 0
 	recharge_rate = 7.5
+
+/obj/item/ammo/power_cell/self_charging/ntso_signifer
+	name = "Power Cell - NTSO D49"
+	desc = "A self-contained radioisotope power cell that slowly recharges an internal capacitor. Holds 100PU."
+	icon = 'icons/obj/items/ammo.dmi'
+	icon_state = "recharger_cell"
+	charge = 250.0
+	max_charge = 250.0
+	cycle = 0
+	recharge_rate = 6
 
 /obj/item/ammo/power_cell/self_charging/big
 	name = "Power Cell - Fusion"

@@ -319,8 +319,7 @@
 					//something might be wrong here, disconnect them!
 					var/datum/terminal_connection/conn = src.terminals[target]
 					src.terminals.Remove(target)
-					if(src.os)
-						src.os.closed_connection(conn)
+					src.os?.closed_connection(conn)
 					//qdel(conn)
 					if (conn)
 						conn.dispose()
@@ -381,8 +380,7 @@
 			if("term_disconnect")
 				if(target in src.terminals)
 					var/datum/terminal_connection/conn = src.terminals[target]
-					if(src.os)
-						src.os.closed_connection(conn)
+					src.os?.closed_connection(conn)
 					src.terminals -= target
 					//qdel(conn)
 					if (conn)
@@ -610,8 +608,7 @@
 			device_netid = lowertext(device_netid)
 			if (device_netid in src.terminals)
 				var/datum/terminal_connection/conn = src.terminals[device_netid]
-				if(src.os)
-					src.os.closed_connection(conn)
+				src.os?.closed_connection(conn)
 				src.terminals -= device_netid
 				//qdel(conn)
 				if (conn)
@@ -949,7 +946,7 @@
 	if (!the_message)
 		return 1
 
-	for (var/obj/machinery/networked/mainframe/aMainframe in machine_registry[MACHINES_MAINFRAMES])
+	for (var/obj/machinery/networked/mainframe/aMainframe as() in machine_registry[MACHINES_MAINFRAMES])
 		LAGCHECK(LAG_LOW)
 		if (aMainframe.z != 1)
 			continue

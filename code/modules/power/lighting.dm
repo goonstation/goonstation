@@ -53,9 +53,9 @@
 //MBC : moving lights to consume power inside as an area-wide process() instead of each individual light processing its own shit
 /obj/machinery/light_area_manager
 	#define LIGHTING_POWER_FACTOR 40
-	event_handler_flags = IMMUNE_SINGULARITY
+	event_handler_flags = IMMUNE_SINGULARITY | USE_FLUID_ENTER
 	invisibility = 100
-	var/area/my_area = 0
+	var/area/my_area = null
 	var/list/lights = list()
 	var/brightness_placeholder = 1	//hey, maybe later use this in a way that is more optimized than iterating through each individual light
 
@@ -63,7 +63,7 @@
 	return
 
 /obj/machinery/light_area_manager/process()
-	if(my_area && my_area.power_light && my_area.lightswitch)
+	if(my_area?.power_light && my_area.lightswitch)
 		..()
 		var/thepower = src.brightness_placeholder * LIGHTING_POWER_FACTOR
 		use_power(thepower * lights.len, LIGHT)
@@ -139,7 +139,7 @@
 						var/is_jen_wall = 0 // jen walls' ceilings are narrower, so let's move the lights a bit further inward!
 						if (istype(T, /turf/simulated/wall/auto/jen) || istype(T, /turf/simulated/wall/auto/reinforced/jen))
 							is_jen_wall = 1
-						src.dir = dir
+						src.set_dir(dir)
 						if (dir == EAST)
 							if (is_jen_wall)
 								src.pixel_x = 12
@@ -196,6 +196,9 @@
 	purpleish
 		name = "purpleish fluorescent light bulb"
 		light_type = /obj/item/light/bulb/purpleish
+	frostedred
+		name = "frosted red fluorescent light bulb"
+		light_type = /obj/item/light/bulb/emergency
 
 	warm
 		name = "fluorescent light bulb"
@@ -586,6 +589,7 @@
 	current_lamp = inserted_lamp
 	current_lamp.set_loc(null)
 	light.set_color(current_lamp.color_r, current_lamp.color_g, current_lamp.color_b)
+	brightness = initial(brightness)
 	on = has_power()
 	update()
 
@@ -601,23 +605,31 @@
 
 		var/obj/item/lamp_manufacturer/M = W
 		var/obj/item/light/L = null
-		if (fitting == "tube")
-			L = new M.dispensing_tube()
-		else
-			L = new M.dispensing_bulb()
-		if(inserted_lamp)
-			if (current_lamp.light_status == LIGHT_OK && current_lamp.name == L.name) //name because I want this to be able to replace working lights with different colours
-				boutput(user, "This fitting already has an identical lamp.")
-				qdel(L)
-				return //Stop borgs from making more sparks than necessary
 
-		if (issilicon(user)) //Not that non-silicons should have these
+		if (issilicon(user))
 			var/mob/living/silicon/S = user
 			if (S.cell)
 				if (!inserted_lamp)
 					S.cell.charge -= M.cost_empty
 				else
 					S.cell.charge -= M.cost_broken
+		else
+			if (M.metal_ammo > 0)
+				M.metal_ammo--
+				M.inventory_counter.update_number(M.metal_ammo)
+			else
+				boutput(user, "You need to load up some metal sheets.")
+				return // Stop lights from being made if a human user lacks materials.
+
+		if (fitting == "tube")
+			L = new M.dispensing_tube()
+		else
+			L = new M.dispensing_bulb()
+		if(inserted_lamp)
+			if (current_lamp.light_status == LIGHT_OK && current_lamp.name == L.name && brightness == initial(brightness) && current_lamp.color_r == L.color_r && current_lamp.color_g == L.color_g && current_lamp.color_b == L.color_b && on == has_power())
+				boutput(user, "This fitting already has an identical lamp.")
+				qdel(L)
+				return // Stop borgs from making more sparks than necessary.
 
 		insert(user, L)
 		if (!isghostdrone(user)) // Same as ghostdrone RCDs, no sparks
@@ -660,7 +672,7 @@
 			if (candismantle)
 				boutput(user, "You begin to unscrew the fixture from the wall...")
 				playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
-				if (!do_after(user, 20))
+				if (!do_after(user, 2 SECONDS))
 					return
 				boutput(user, "You unscrew the fixture from the wall.")
 				var/obj/item/light_parts/parts = new /obj/item/light_parts(get_turf(src))

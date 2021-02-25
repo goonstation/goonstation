@@ -1,4 +1,4 @@
-#define ADMIN_BEES_ONLY if(!src.non_admin_bee_allowed && src.client && !src.client.holder) return src.make_critter(/mob/living/critter/small_animal/wasp)
+#define ADMIN_BEES_ONLY if(!src.non_admin_bee_allowed && src.client && !src.client.holder) {src.make_critter(/mob/living/critter/small_animal/wasp); return}
 
 /* ============================================= */
 /* -------------------- Bee -------------------- */
@@ -142,7 +142,7 @@
 			animate(src)
 		for (var/obj/critter/domestic_bee/fellow_bee in view(7,src)) // once mobcritters have AI we can change this to the mob version of bees, but for now we do this
 			LAGCHECK(LAG_HIGH)
-			if (fellow_bee && fellow_bee.alive)
+			if (fellow_bee?.alive)
 				fellow_bee.aggressive = 1
 				SPAWN_DBG(0.7 SECONDS)
 					fellow_bee.aggressive = 0

@@ -261,7 +261,11 @@ obj/machinery/atmospherics/pipe
 		process()
 			if(!parent) //This should cut back on the overhead calling build_network thousands of times per cycle
 				..()
-			if(!parent?.air || TOTAL_MOLES(parent.air) < ATMOS_EPSILON || !loc)
+			if(!parent?.air || !loc)
+				return
+
+			if(TOTAL_MOLES(parent.air) < ATMOS_EPSILON )
+				if(ruptured) leak_gas()
 				return
 
 			if(!node1)
@@ -277,15 +281,7 @@ obj/machinery/atmospherics/pipe
 					nodealert = 1
 
 			else if(ruptured)
-				var/datum/gas_mixture/gas = return_air()
-				var/pressure = min(100*ruptured, MIXTURE_PRESSURE(gas))
-
-				if(pressure > 0)
-					var/datum/gas_mixture/environment = loc.return_air()
-					var/transfer_moles = pressure*environment.volume/(gas.temperature * R_IDEAL_GAS_EQUATION)
-					var/datum/gas_mixture/removed = gas.remove(transfer_moles)
-
-					if (removed) loc.assume_air(removed)
+				leak_gas()
 
 			else if(parent)
 				var/environment_temperature = 0
@@ -308,6 +304,25 @@ obj/machinery/atmospherics/pipe
 			var/datum/gas_mixture/gas = return_air()
 			var/pressure = MIXTURE_PRESSURE(gas)
 			if(!ruptured && pressure > fatigue_pressure) check_pressure(pressure)
+
+		proc/leak_gas()
+			var/datum/gas_mixture/gas = return_air()
+			var/datum/gas_mixture/environment = loc.return_air()
+
+			var/datum/gas_mixture/hi_side = gas
+			var/datum/gas_mixture/lo_side = environment
+
+			// vacuum
+			if( MIXTURE_PRESSURE(lo_side) > MIXTURE_PRESSURE(hi_side) )
+				hi_side = environment
+				lo_side = gas
+
+			var/pressure = min(100*ruptured, MIXTURE_PRESSURE(hi_side) - MIXTURE_PRESSURE(lo_side))
+
+			if(pressure > 0 && hi_side.temperature )
+				var/transfer_moles = pressure*lo_side.volume/(hi_side.temperature * R_IDEAL_GAS_EQUATION)
+				var/datum/gas_mixture/removed = hi_side.remove(transfer_moles)
+				if(removed) lo_side==environment ? loc.assume_air(removed) : lo_side.merge(removed)
 
 		check_pressure(pressure)
 			if (!loc)
@@ -358,7 +373,7 @@ obj/machinery/atmospherics/pipe
 
 				boutput(user, "You start to repair the [src.name].")
 
-				if (do_after(user, 20))
+				if (do_after(user, 2 SECONDS))
 					ruptured --
 				else
 					boutput(user, "<span class='alert'>You were interrupted!</span>")
@@ -371,10 +386,8 @@ obj/machinery/atmospherics/pipe
 
 
 		disposing()
-			if(node1)
-				node1.disconnect(src)
-			if(node2)
-				node2.disconnect(src)
+			node1?.disconnect(src)
+			node2?.disconnect(src)
 			parent = null
 			..()
 
@@ -795,8 +808,7 @@ obj/machinery/atmospherics/pipe
 				..()
 
 		disposing()
-			if(node1)
-				node1.disconnect(src)
+			node1?.disconnect(src)
 			parent = null
 			..()
 
@@ -864,8 +876,7 @@ obj/machinery/atmospherics/pipe
 				parent.mingle_with_turf(loc, 250)
 
 		disposing()
-			if(node1)
-				node1.disconnect(src)
+			node1?.disconnect(src)
 			parent = null
 			..()
 
@@ -978,12 +989,9 @@ obj/machinery/atmospherics/pipe
 				parent.mingle_with_turf(loc, 70)
 
 		disposing()
-			if(node1)
-				node1.disconnect(src)
-			if(node2)
-				node2.disconnect(src)
-			if(node3)
-				node3.disconnect(src)
+			node1?.disconnect(src)
+			node2?.disconnect(src)
+			node3?.disconnect(src)
 			parent = null
 			..()
 

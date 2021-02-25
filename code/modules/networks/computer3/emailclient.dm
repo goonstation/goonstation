@@ -524,7 +524,7 @@
 						if (!findtext(attemptAddress, "@"))
 							attemptAddress += "@[defaultDomain]"
 
-						if (header_temp && header_temp.len) //email from grandma, FWD: RE: FWD: FWD: Space-President Jordan WQIT'XFWQ' Wilkins actually syndicate martian infiltrator!!
+						if (length(header_temp)) //email from grandma, FWD: RE: FWD: FWD: Space-President Jordan WQIT'XFWQ' Wilkins actually syndicate martian infiltrator!!
 							src.menu = -1
 							header_temp["subj"] = "FWD: [header_temp["subj"]]"
 							header_temp["target"] = attemptAddress

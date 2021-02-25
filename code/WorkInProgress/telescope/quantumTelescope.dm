@@ -131,8 +131,8 @@ TODO: Enforce ping rate limit here as well in case someone futzes with the javas
 								//callJsFunc(using, "showFooterMsg", list("dist [(distx + disty)]"))
 								rebuildEventList(using)
 
-								// Actual size of circle to show; 90% to 120% of actual radius
-								var/ping_radius = (dist + E.size) * rand(90, 120) / 100
+								// Actual size of circle to show; 100% to 120% of actual radius
+								var/ping_radius = (dist + E.size) * rand(100, 120) / 100
 								callJsFunc(using, "byondAddMark", list(vX, vY, ping_radius))
 							break
 		return

@@ -743,6 +743,7 @@
 				src.goods_sell += new /datum/commodity/drugs/krokodil(src)
 				src.goods_sell += new /datum/commodity/drugs/lsd(src)
 				src.goods_sell += new /datum/commodity/drugs/lsd_bee(src)
+				src.goods_sell += new /datum/commodity/relics/bootlegfirework(src)
 				src.goods_sell += new /datum/commodity/pills/uranium(src)
 
 				src.goods_buy += new /datum/commodity/drugs/shrooms(src)
@@ -1039,11 +1040,9 @@
 		src.goods_sell += new /datum/commodity/balloons(src)
 		src.goods_sell += new /datum/commodity/crayons(src)
 		src.goods_sell += new /datum/commodity/junk/circus_board(src)
+		src.goods_sell += new /datum/commodity/junk/pie_launcher(src)
 		src.goods_sell += new /datum/commodity/junk/laughbox(src)
-		#if ASS_JAM
-		src.goods_sell += new /datum/commodity/screamshoes(src)
-		src.goods_sell += new /datum/commodity/fartflops(src)
-		#endif
+
 
 		/////////////////////////////////////////////////////////
 		//// buy list ///////////////////////////////////////////
@@ -1272,7 +1271,7 @@
 	icon_state = "twins"
 	picture = "twins.png"
 	name = "Carol and Lynn"
-	trader_area = "/area/mobius"
+	trader_area = "/area/prefab/mobius"
 
 	bound_width = 64
 	bound_height = 32

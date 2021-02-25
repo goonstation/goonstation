@@ -1,7 +1,7 @@
 
 /proc/build_supply_pack_cache()
 	qm_supply_cache.Cut()
-	for(var/S in childrentypesof(/datum/supply_packs))
+	for(var/S in concrete_typesof(/datum/supply_packs))
 		qm_supply_cache += new S()
 
 /datum/supply_order
@@ -233,13 +233,18 @@
 	containertype = /obj/storage/crate/freezer
 	containername = "Catering: Condiment Crate"
 
+ABSTRACT_TYPE (/datum/supply_packs/electrical)
 /datum/supply_packs/electrical
-	name = "Electrical Supplies Crate - 2 pack"
-	desc = "x2 Cabling Box (14 cable coils total)"
+	name = "cable crate"
+	desc = "Parent object for Electrical Cable crates, you shouldn't see this..."
 	category = "Basic Materials"
-	contains = list(/obj/item/storage/box/cablesbox = 2)
 	cost = 2000
 	containertype = /obj/storage/crate
+
+/datum/supply_packs/electrical/red
+	name = "Electrical Supplies Crate (red) - 2 pack"
+	desc = "x2 Cabling Box (14 cable coils total)"
+	contains = list(/obj/item/storage/box/cablesbox = 2)
 	containername = "Electrical Supplies Crate - 2 pack"
 
 /datum/supply_packs/engineering
@@ -252,6 +257,17 @@
 	cost = 1000
 	containertype = /obj/storage/crate
 	containername = "Engineering Crate"
+
+/datum/supply_packs/firefighting
+	name = "Firefighting Supplies Crate"
+	desc = "x3 Extinguisher, x3 Firefighting Grenade, x2 Firesuit"
+	category = "Engineering Department"
+	contains = list(/obj/item/extinguisher = 3,
+	/obj/item/chem_grenade/firefighting = 3,
+	/obj/item/clothing/suit/fire = 2)
+	cost = 1000
+	containertype = /obj/storage/crate
+	containername = "Firefighting Supplies Crate"
 
 /datum/supply_packs/generator
 	name = "Experimental Local Generator"
@@ -492,7 +508,7 @@
 					/obj/machinery/bot/cleanbot,
 					/obj/machinery/bot/medbot,
 					/obj/machinery/bot/firebot)
-	cost = 2000
+	cost = 7500
 	containertype = /obj/storage/crate
 	containername = "Robotics Crate"
 
@@ -572,13 +588,22 @@
 	containername = "Assorted Glowsticks Crate - 4 pack"
 
 /datum/supply_packs/fueltank
-	name = "Welding Fuel tank"
-	desc = "1x Welding Fuel tank"
+	name = "Welding Fuel Tank"
+	desc = "1x Welding Fuel Tank"
 	category = "Basic Materials"
 	contains = list(/obj/reagent_dispensers/fueltank)
 	cost = 4000
 	containertype = /obj/storage/crate
 	containername = "Welding Fuel Tank crate"
+
+/datum/supply_packs/foamtank
+	name = "Firefighting Foam tank"
+	desc = "1x Firefighting Foam Tank"
+	category = "Basic Materials"
+	contains = (/obj/reagent_dispensers/foamtank)
+	cost = 1000
+	containertype = /obj/storage/crate
+	containername = "Firefighting Foamtank crate"
 
 /datum/supply_packs/watertank
 	name = "High Capacity Watertank"
@@ -900,7 +925,8 @@
 	contains = list(/obj/item/clothing/suit/rad = 4,
 					/obj/item/clothing/head/rad_hood = 4,
 					/obj/item/storage/pill_bottle/antirad = 2,
-					/obj/item/reagent_containers/emergency_injector/anti_rad = 4)
+					/obj/item/reagent_containers/emergency_injector/anti_rad = 4,
+					/obj/item/device/geiger = 2)
 	cost = 2000
 	containertype = /obj/storage/crate/wooden
 	containername = "Radiation Emergency Supplies"

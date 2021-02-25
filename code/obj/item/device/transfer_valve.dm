@@ -145,7 +145,7 @@
 			if(href_list["device"])
 				attached_device.attack_self(usr)
 			if(href_list["straps"])
-				if(usr && usr.back && usr.back == src)
+				if(usr?.back && usr.back == src)
 					boutput(usr, "<span class='alert'>You can't detach the loops of wire while you're wearing [src]!</span>")
 				else
 					flags &= ~ONBACK
@@ -261,7 +261,7 @@
 					return
 				else if (power < 0.50)
 					visible_message("<span class='combat'>\The [src] farts [pick_string("descriptors.txt", "mopey")]</span>")
-					playsound(get_turf(src), 'sound/voice/farts/poo2.ogg', 30, 2)
+					playsound(get_turf(src), 'sound/voice/farts/poo2.ogg', 30, 2, channel=VOLUME_CHANNEL_EMOTE)
 					return
 
 				var/stun_time = 6 * power
@@ -270,7 +270,7 @@
 				var/throw_repeat = 6 * power
 				var/sound_volume = 100 * power
 
-				playsound(get_turf(src), 'sound/voice/farts/superfart.ogg', sound_volume, 2)
+				playsound(get_turf(src), 'sound/voice/farts/superfart.ogg', sound_volume, 2, channel=VOLUME_CHANNEL_EMOTE)
 				visible_message("<span class='combat bold' style='font-size:[100 + (100*(power-0.5))]%;'>\The [src] farts loudly!</span>")
 
 				for(var/mob/living/L in hearers(get_turf(src), fart_range))
@@ -316,7 +316,7 @@
 //Prox sensor handling.
 
 	Move()
-		..()
+		. = ..()
 		if(istype(attached_device,/obj/item/device/prox_sensor))
 			var/obj/item/device/prox_sensor/A = attached_device
 			A.sense()
@@ -380,8 +380,7 @@
 		..()
 
 	toggle_valve()
-		if(tester)
-			tester.update_bomb_log("Valve Opened.")
+		tester?.update_bomb_log("Valve Opened.")
 
 		processing_items |= src
 		..()
@@ -401,12 +400,12 @@
 		var/tankslost = 2
 		var/log_message = "[time2text(world.timeofday, "mm:ss")]:"
 		var/tpressure = 0
-		if(tank_one && tank_one.air_contents)
+		if(tank_one?.air_contents)
 			tankslost--
 			var/t1pressure = MIXTURE_PRESSURE(tank_one.air_contents)
 			tpressure += round(t1pressure,0.1)
 
-		if(tank_two && tank_two.air_contents)
+		if(tank_two?.air_contents)
 			tankslost--
 			var/t2pressure = MIXTURE_PRESSURE(tank_two.air_contents)
 			tpressure += round(t2pressure,0.1)

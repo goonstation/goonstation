@@ -88,7 +88,7 @@
 		jobs["Roboticist"] = PAY_DOCTORATE
 //		jobs["Hangar Mechanic"]= PAY_TRADESMAN
 //		jobs["Elite Security"] = PAY_TRADESMAN
-		jobs["Barman"] = PAY_UNTRAINED
+		jobs["Bartender"] = PAY_UNTRAINED
 		jobs["Chef"] = PAY_UNTRAINED
 		jobs["Janitor"] = PAY_TRADESMAN
 		jobs["Clown"] = PAY_DUMBCLOWN
@@ -170,8 +170,7 @@
 			winningNumbers[i][j] = rand(1,3)
 			dat += "[winningNumbers[i][j]] "
 
-		for(var/x in by_type[/obj/item/lotteryTicket])
-			var/obj/item/lotteryTicket/T = x
+		for_by_tcl(T, /obj/item/lotteryTicket)
 			// If the round associated on the lottery ticked is this round
 			if(lotteryRound == T.lotteryRound)
 				// Check the nubers
@@ -453,7 +452,7 @@
 					boutput(usr, "<span class='alert'>No.</span>")
 					src.updateUsrDialog()
 					return
-				var/client/C = input("Who do you wish to give [amount] to?", "Spacebux Transfer") as anything in clients|null
+				var/client/C = input("Who do you wish to give [amount] to?", "Spacebux Transfer") as() in clients|null
 				if(alert("You are about to send [amount] to [C]. Are you sure?",,"Yes","No") == "Yes")
 					if(!usr.client.bank_can_afford(amount))
 						boutput(usr, "<span class='alert'>Insufficient Funds</span>")
@@ -946,7 +945,7 @@
 					boutput(usr, "<span class='alert'>No.</span>")
 					src.updateUsrDialog()
 					return
-				var/client/C = input("Who do you wish to give [amount] to?", "Spacebux Transfer") as anything in clients|null
+				var/client/C = input("Who do you wish to give [amount] to?", "Spacebux Transfer") as() in clients|null
 				if(alert("You are about to send [amount] to [C]. Are you sure?",,"Yes","No") == "Yes")
 					if(!usr.client.bank_can_afford(amount))
 						boutput(usr, "<span class='alert'>Insufficient Funds</span>")

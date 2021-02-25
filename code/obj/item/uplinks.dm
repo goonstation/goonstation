@@ -35,7 +35,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	// Spawned uplinks for which setup() wasn't called manually only get the standard (generic) items.
 	New()
 		..()
-		SPAWN_DBG (10)
+		SPAWN_DBG(1 SECOND)
 			if (src && istype(src) && (!src.items_general.len && !src.items_job.len && !src.items_objective.len))
 				src.setup()
 
@@ -70,7 +70,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 
 			else
 				var/blocked = 0
-				if (ticker && ticker.mode)
+				if (ticker?.mode)
 					if (S.blockedmode && islist(S.blockedmode) && S.blockedmode.len)
 						for (var/V in S.blockedmode)
 							if (ispath(V) && istype(ticker.mode, V)) // No meta by checking VR uplinks.
@@ -369,7 +369,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 
 		else if (href_list["selfdestruct"] && src.can_selfdestruct == 1)
 			src.selfdestruct = 1
-			SPAWN_DBG (100)
+			SPAWN_DBG(10 SECONDS)
 				if (src)
 					src.explode()
 
@@ -632,7 +632,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 
 	setup(var/datum/mind/ownermind, var/obj/item/device/master)
 		..()
-		if (ticker && ticker.mode)
+		if (ticker?.mode)
 			if (istype(ticker.mode, /datum/game_mode/spy_theft))
 				src.game = ticker.mode
 			else //The gamemode is NOT spy, but we've got one on our hands! Set this badboy up.
@@ -694,7 +694,12 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 			if ( (B.path && istype(delivery,B.path)) || B.item && delivery == B.item || (B.photo_containing && istype(delivery,/obj/item/photo) && findtext(delivery.name, B.photo_containing)) )
 				if (B.delivery_area && B.delivery_area != get_area(src.hostpda))
 					user.show_text("You must stand in the designated delivery zone to send this item!", "red")
+					if (istype(B.delivery_area, /area/diner))
+						user.show_text("It can be found at the nearby space diner!", "red")
+					var/turf/end = B.delivery_area.spyturf
+					user.gpsToTurf(end, doText = 0, heuristic = /turf/proc/AllDirsTurfsWithAllAccess) // spy thieves probably need to break in anyway, so screw access check
 					return 0
+				user.removeGpsPath(doText = 0)
 				B.claimed = 1
 				for (var/mob/M in delivery.contents) //make sure we dont delete mobs inside the stolen item
 					M.set_loc(get_turf(delivery))
@@ -962,7 +967,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 /datum/SWFuplinkspell/clownsrevenge
 	name = "Clown's Revenge"
 	eqtype = "Offensive"
-	desc = "This spell turns an adjacent target into an obese, idiotic, horrible, and useless clown."
+	desc = "This spell turns an adjacent target into an idiotic, horrible, and useless clown."
 	assoc_spell = /datum/targetable/spell/cluwne
 
 /datum/SWFuplinkspell/balefulpolymorph
@@ -1060,13 +1065,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	vr_allowed = 0
 	assoc_spell = /datum/targetable/spell/pandemonium
 
-#if ASS_JAM
-/datum/SWFuplinkspell/timestop
-	name = "Time Stop"
-	eqtype = "Utility"
-	desc = "This spell contains the power to rend time itself. Use sparingly and with caution, lest you cause a runtime!"
-	assoc_spell = /datum/targetable/spell/timestop
-#endif
+
 
 /obj/item/SWF_uplink/proc/explode()
 	var/turf/location = get_turf(src.loc)
@@ -1226,7 +1225,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 
 		else if (href_list["selfdestruct2"])
 			src.selfdestruct = 1
-			SPAWN_DBG (100)
+			SPAWN_DBG(10 SECONDS)
 				explode()
 				return
 		else

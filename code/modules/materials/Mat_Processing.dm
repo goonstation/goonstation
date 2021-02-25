@@ -7,6 +7,10 @@
 	anchored = 1
 	density = 1
 	layer = FLOOR_EQUIP_LAYER1
+	mats = 20
+	event_handler_flags = NO_MOUSEDROP_QOL | USE_FLUID_ENTER
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
+
 	var/atom/output_location = null
 
 	New()
@@ -83,6 +87,10 @@
 					I.set_loc(src)
 			S.satchel_updateicon()
 			return
+
+		if (W.cant_drop) //For borg held items
+			boutput(user, "<span class='alert'>You can't put that in [src] when it's attached to you!</span>")
+			return ..()
 
 		if(W.material)
 			boutput(user, "<span class='notice'>You put \the [W] into \the [src].</span>")
@@ -203,7 +211,7 @@
 		O.set_loc(src)
 		var/staystill = user.loc
 		for(var/obj/item/M in view(1,user))
-			if (!M)
+			if (!M || M.loc == user)
 				continue
 			if (M.type != O.type)
 				continue
@@ -355,6 +363,7 @@
 						addMaterial(piece, usr)
 					else
 						piece.set_loc(get_turf(src))
+					RE?.apply_to_obj(piece)
 					first_part = null
 					second_part = null
 					boutput(usr, "<span class='notice'>You make [amt] [piece].</span>")
@@ -618,14 +627,15 @@
 				return
 
 		if(istype(W, /obj/item/wizard_crystal) && components.len < 2 && !W.material)
-			W.setMaterial(W:assoc_material, appearance = 0, setname = 0)
+			var/obj/item/wizard_crystal/wc = W
+			wc.setMaterial(getMaterial(wc.assoc_material), appearance = 0, setname = 0)
 
 		if(W.material != null)
 			if(!W.material.canMix)
 				boutput(user, "<span class='alert'>This material can not be used in the [src].</span>")
 				return
 
-			if((W.material.material_flags & MATERIAL_METAL || W.material.material_flags & MATERIAL_CRYSTAL) && (istype(W, /obj/item/material_piece) || istype(W, /obj/item/raw_material)) )
+			if((W.material.material_flags & MATERIAL_METAL || W.material.material_flags & MATERIAL_CRYSTAL) && (istype(W, /obj/item/material_piece) || istype(W, /obj/item/raw_material) || istype(W, /obj/item/wizard_crystal)) )
 				if(components.len < 2)
 					src.visible_message("<span class='notice'>[user] puts [W] into [src]</span>")
 					user.drop_item()

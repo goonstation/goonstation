@@ -52,6 +52,10 @@
 			if (!source && (!ticker.mode || ticker.mode.latejoin_antag_compatible == 0 || late_traitors == 0))
 				message_admins("Sleeper Agents are disabled in this game mode, aborting.")
 				return
+#ifdef RP_MODE
+			if(source=="random")
+				return
+#endif
 			if (emergency_shuttle.online)
 				return
 		message_admins("<span class='internal'>Setting up Sleeper Agent event. Source: [source ? "[source]" : "random"]</span>")
@@ -82,7 +86,7 @@
 			cleanup_event()
 			return
 
-		SPAWN_DBG(10)
+		SPAWN_DBG(1 SECOND)
 			broadcast_sound(signal_intro)
 			play_all_numbers()
 			broadcast_sound(signal_intro)
@@ -100,29 +104,44 @@
 				sleep(src.message_delay)
 				command_alert("[src.centcom_message]", "[src.centcom_headline]")
 
-	#if ASS_JAM // no idea what this does or who did it
-			var/list/sleepers = list()
-			for(var/mob/listener in listeners)
-				sleepers += new/obj/machinery/sleeper(get_turf(listener))
-			sleep(3 SECONDS)
-			for(var/atom/sleeper in sleepers)
-				qdel(sleeper)
-	#endif
+
 
 			cleanup_event()
 		return
 
 	proc/awaken_sleeper_agent(var/mob/living/carbon/human/H)
-		var/list/eligible_objectives = list()
-		eligible_objectives = typesof(/datum/objective/regular/) + typesof(/datum/objective/escape/) - /datum/objective/regular/
+		var/list/eligible_objectives = list(
+			/datum/objective/regular/assassinate,
+			/datum/objective/regular/steal,
+			/datum/objective/regular/multigrab,
+			/datum/objective/regular/killstirstir,
+		)
+
+		var/list/escape_objectives = list(
+			/datum/objective/escape,
+			/datum/objective/escape/hijack,
+			/datum/objective/escape/survive,
+			/datum/objective/escape/kamikaze,
+			/datum/objective/escape/stirstir,
+		)
+		var/list/objectives = list()
 		var/num_objectives = rand(1,3)
 		var/datum/objective/new_objective = null
 		for(var/i = 0, i < num_objectives, i++)
-			var/select_objective = pick(eligible_objectives)
-			new_objective = new select_objective
-			new_objective.owner = H.mind
-			new_objective.set_up()
-			H.mind.objectives += new_objective
+			new_objective = pick(eligible_objectives)
+			if (new_objective == /datum/objective/regular/killstirstir) // single-use
+				eligible_objectives -= /datum/objective/regular/killstirstir
+				escape_objectives -= /datum/objective/escape/stirstir
+			objectives += new new_objective
+		var/datum/objective/gimmick = new /datum/objective/regular/gimmick
+		objectives += gimmick
+		var/escape_objective = pick(escape_objectives)
+		var/datum/objective/esc = new escape_objective
+		objectives += esc
+		for(var/datum/objective/objective in objectives)
+			objective.owner = H.mind
+			objective.set_up()
+			H.mind.objectives += objective
 
 		H.show_text("<h2><font color=red><B>You have awakened as a syndicate sleeper agent!</B></font></h2>", "red")
 		H.mind.special_role = "sleeper agent"

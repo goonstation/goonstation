@@ -19,9 +19,6 @@
 /mob/living/carbon/Move(NewLoc, direct)
 	. = ..()
 	if(.)
-		if(src.bioHolder && src.bioHolder.HasEffect("fat") && src.m_intent == "run")
-			src.bodytemperature += 2
-
 		//SLIP handling
 		if (!src.throwing && !src.lying && isturf(NewLoc))
 			var/turf/T = NewLoc
@@ -61,7 +58,7 @@
 				if(M.client)
 					M.show_message(text("<span class='alert'>You hear something rumbling inside [src]'s stomach...</span>"), 2)
 			var/obj/item/I = user.equipped()
-			if(I && I.force)
+			if(I?.force)
 				var/d = rand(round(I.force / 4), I.force)
 				src.TakeDamage("chest", d, 0)
 				for(var/mob/M in viewers(user, null))
@@ -161,11 +158,7 @@
 /mob/living/carbon/take_brain_damage(var/amount)
 	if (..())
 		return
-#if ASS_JAM //pausing damage for timestop
-	if(paused)
-		src.pausedbrain = max(0,src.pausedbrain + amount)
-		return
-#endif
+
 	if (src.traitHolder && src.traitHolder.hasTrait("reversal"))
 		amount *= -1
 
@@ -184,11 +177,7 @@
 		amount = 0
 	if (..())
 		return
-#if ASS_JAM //pausing damage for timestop
-	if(paused)
-		src.pausedtox = max(0,src.pausedtox + amount)
-		return
-#endif
+
 	if (src.traitHolder && src.traitHolder.hasTrait("reversal"))
 		amount *= -1
 
@@ -208,10 +197,7 @@
 	if (HAS_MOB_PROPERTY(src, PROP_BREATHLESS))
 		src.oxyloss = 0
 		return
-#if ASS_JAM //pausing damage for timestop
-	if(paused)
-		src.pausedoxy = max(0,src.pausedoxy + amount)
-#endif
+
 	src.oxyloss = max(0,src.oxyloss + amount)
 	return
 
@@ -225,7 +211,7 @@
 	return src.oxyloss
 
 /mob/living/carbon/hitby(atom/movable/AM, datum/thrown_thing/thr)
-	if(src.find_type_in_hand(/obj/item/bat))
+	if(src.find_type_in_hand(/obj/item/bat) && !ON_COOLDOWN(src, "baseball-bat-reflect", 1 DECI SECOND))
 		var/turf/T = get_turf(src)
 		var/turf/U = get_step(src, src.dir)
 		/*I know what you're thinking. What's up with those SPAWN_DBGs down there?

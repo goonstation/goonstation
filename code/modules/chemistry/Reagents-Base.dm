@@ -154,8 +154,10 @@ datum
 				if(!M) M = holder.my_atom
 				if (isliving(M))
 					var/mob/living/H = M
+					if(H?.reagents.has_reagent("moonshine"))
+						mult *= 3
 					var/liver_damage = 0
-					if (!isalcoholresistant(H))
+					if (!isalcoholresistant(H) || H?.reagents.has_reagent("moonshine"))
 						if (holder.get_reagent_amount(src.id) >= 15)
 							if(probmult(10)) H.emote(pick("hiccup", "burp", "mumble", "grumble"))
 							H.stuttering += 1
@@ -733,8 +735,7 @@ datum
 				if(exposed_temperature < T0C)
 					var/prev_vol = volume
 					volume = 0
-					if(holder)
-						holder.add_reagent("ice", prev_vol, null, (T0C - 1))
+					holder?.add_reagent("ice", prev_vol, null, (T0C - 1))
 					if(holder)
 						holder.del_reagent(id)
 				else if (exposed_temperature > T0C && exposed_temperature <= T0C + 100 )
@@ -907,8 +908,7 @@ datum
 			reaction_temperature(exposed_temperature, exposed_volume)
 				var/prev_vol = volume
 				volume = 0
-				if(holder)
-					holder.add_reagent("water", prev_vol, null, T0C + 1)
+				holder?.add_reagent("water", prev_vol, null, T0C + 1)
 				if(holder)
 					holder.del_reagent(id)
 

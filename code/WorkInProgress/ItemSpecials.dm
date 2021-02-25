@@ -103,13 +103,11 @@
 /obj/item/proc/setItemSpecial(var/type = null)
 	if(!ispath(type))
 		if(isnull(type))
-			if(src.special)
-				src.special.onRemove()
+			src.special?.onRemove()
 			src.special = null
 		return null
 
-	if(src.special)
-		src.special.onRemove()
+	src.special?.onRemove()
 
 	var/datum/item_special/S = new type
 	S.master = src
@@ -120,13 +118,11 @@
 /datum/limb/proc/setDisarmSpecial(var/type = null)
 	if(!ispath(type))
 		if(isnull(type))
-			if(src.disarm_special)
-				src.disarm_special.onRemove()
+			src.disarm_special?.onRemove()
 			src.disarm_special = null
 		return null
 
-	if(src.disarm_special)
-		src.disarm_special.onRemove()
+	src.disarm_special?.onRemove()
 
 	src.disarm_special = new type
 	src.disarm_special.onAdd()
@@ -135,13 +131,11 @@
 /datum/limb/proc/setHarmSpecial(var/type = null)
 	if(!ispath(type))
 		if(isnull(type))
-			if(src.harm_special)
-				src.harm_special.onRemove()
+			src.harm_special?.onRemove()
 			src.harm_special = null
 		return null
 
-	if(src.harm_special)
-		src.harm_special.onRemove()
+	src.harm_special?.onRemove()
 
 	src.harm_special = new type
 	src.harm_special.onAdd()
@@ -228,7 +222,7 @@
 		if(src.animation_color)
 			E.color = src.animation_color
 		E.setup(get_turf(user))
-		E.dir = direction
+		E.set_dir(direction)
 		E.icon_state = name
 
 	proc/usable(var/mob/user)
@@ -320,7 +314,7 @@
 			var/blurX = 0
 			var/blurY = 0
 
-			user.dir = direction
+			user.set_dir(direction)
 
 			switch(direction)
 				if(NORTH)
@@ -362,7 +356,7 @@
 					break
 
 				user.set_loc(lastTurf)
-				user.dir = direction
+				user.set_dir(direction)
 				var/obj/itemspecialeffect/bluefade/E = unpool(/obj/itemspecialeffect/bluefade)
 				E.setup(user.loc)
 				E.filters = filter(type="motion_blur", x=blurX, y=blurY)
@@ -592,7 +586,7 @@
 				else
 					swipe.color = swipe_color
 				swipe.setup(effect)
-				swipe.dir = direction
+				swipe.set_dir(direction)
 
 				var/hit = 0
 				for(var/turf/T in list(one, two, three))
@@ -693,7 +687,7 @@
 
 				var/obj/itemspecialeffect/cracks = unpool(/obj/itemspecialeffect/cracks)
 				cracks.setup(two)
-				cracks.dir = direction
+				cracks.set_dir(direction)
 				animate(cracks, alpha=0, time=30)
 
 				for(var/mob/M in viewers())
@@ -738,7 +732,7 @@
 
 				var/obj/itemspecialeffect/cracks = unpool(/obj/itemspecialeffect/cracks)
 				cracks.setup(two)
-				cracks.dir = direction
+				cracks.set_dir(direction)
 				animate(cracks, alpha=0, time=30)
 
 				for(var/mob/M in viewers())
@@ -921,7 +915,7 @@
 
 				var/obj/itemspecialeffect/swipe/swipe = unpool(/obj/itemspecialeffect/swipe)
 				swipe.setup(effect)
-				swipe.dir = direction
+				swipe.set_dir(direction)
 
 				var/hit = 0
 				for(var/turf/T in list(one, two, three))
@@ -968,7 +962,7 @@
 
 				var/obj/itemspecialeffect/spark/spark = unpool(/obj/itemspecialeffect/spark)
 				spark.setup(effect)
-				spark.dir = direction
+				spark.set_dir(direction)
 
 				var/hit = 0
 				for(var/atom/movable/A in effect)
@@ -1107,7 +1101,7 @@
 				var/obj/itemspecialeffect/barrier/E = unpool(/obj/itemspecialeffect/barrier)
 				E.setup(turf)
 				E.master = user
-				E.dir = direction
+				E.set_dir(direction)
 				if(master && istype(master, /obj/item/barrier))
 					var/obj/item/barrier/B = master
 					B.destroy_deployed_barrier(user)
@@ -1174,7 +1168,7 @@
 				var/turf/turf = get_step(master, direction)
 
 				var/obj/itemspecialeffect/flame/S = unpool(/obj/itemspecialeffect/flame)
-				S.dir = direction
+				S.set_dir(direction)
 				turf = get_step(turf,S.dir)
 
 				var/flame_succ = 0
@@ -1313,7 +1307,7 @@
 
 
 				E.setup(effect)
-				E.dir = direction
+				E.set_dir(direction)
 
 				var/hit = 0
 				for(var/atom/movable/A in effect)
@@ -1410,32 +1404,32 @@
 
 				//Draws the effects // I did this backwards maybe, but won't fix it -kyle
 				K.start.loc = T1
-				K.start.dir = direction
+				K.start.set_dir(direction)
 				flick(K.start.icon_state, K.start)
 				sleep(0.1 SECONDS)
 				if (T4)
 					K.mid1.loc = T2
-					K.mid1.dir = direction
+					K.mid1.set_dir(direction)
 					flick(K.mid1.icon_state, K.mid1)
 					sleep(0.1 SECONDS)
 					K.mid2.loc = T3
-					K.mid2.dir = direction
+					K.mid2.set_dir(direction)
 					flick(K.mid2.icon_state, K.mid2)
 					sleep(0.1 SECONDS)
 					K.end.loc = T4
-					K.end.dir = direction
+					K.end.set_dir(direction)
 					flick(K.end.icon_state, K.end)
 				else if (T3)
 					K.mid1.loc = T2
-					K.mid1.dir = direction
+					K.mid1.set_dir(direction)
 					flick(K.mid1.icon_state, K.mid1)
 					sleep(0.1 SECONDS)
 					K.end.loc = T3
-					K.end.dir = direction
+					K.end.set_dir(direction)
 					flick(K.end.icon_state, K.end)
 				else if (T2)
 					K.end.loc = T2
-					K.end.dir = direction
+					K.end.set_dir(direction)
 					flick(K.end.icon_state, K.end)
 
 				//Reset the effects after they're drawn and put back into master for re-use later
@@ -1560,22 +1554,22 @@
 
 				//Draws the effects // I did this backwards maybe, but won't fix it -kyle
 				start.setup(T1)
-				start.dir = direction
+				start.set_dir(direction)
 				if (T4)
 					mid1.setup(T2)
-					mid1.dir = direction
+					mid1.set_dir(direction)
 					mid2.setup(T2)
-					mid2.dir = direction
+					mid2.set_dir(direction)
 					end.setup(T4)
-					end.dir = direction
+					end.set_dir(direction)
 				else if (T3)
 					mid1.setup(T2)
-					mid1.dir = direction
+					mid1.set_dir(direction)
 					end.setup(T3)
-					end.dir = direction
+					end.set_dir(direction)
 				else if (T2)
 					end.setup(T2)
-					end.dir = direction
+					end.set_dir(direction)
 
 				for(var/atom/movable/A in get_step(user, direction))
 					if(A in attacked) continue
@@ -1625,7 +1619,7 @@
 
 				var/obj/itemspecialeffect/nunchucks/nunchuck = unpool(/obj/itemspecialeffect/nunchucks)
 				nunchuck.setup(effect)
-				nunchuck.dir = direction
+				nunchuck.set_dir(direction)
 
 				var/hit = 0
 				for(var/turf/T in list(two, three))

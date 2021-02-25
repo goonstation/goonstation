@@ -1,86 +1,86 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
 /turf/space,
-/area)
+/area/space)
 "ab" = (
 /turf/simulated/wall/asteroid/ice,
-/area)
+/area/space)
 "ac" = (
 /turf/simulated/floor/plating/airless/asteroid,
-/area)
+/area/space)
 "ad" = (
 /obj/landmark/artifact,
 /turf/simulated/floor/plating/airless/asteroid,
-/area)
+/area/space)
 "ae" = (
 /obj/lattice{
 	icon_state = "lattice-dir-b";
 	dir = 2
 	},
 /turf/space,
-/area)
+/area/space)
 "af" = (
 /obj/lattice{
 	icon_state = "lattice-dir"
 	},
 /turf/space,
-/area)
+/area/space)
 "ag" = (
 /turf/simulated/wall/auto/reinforced/gannets,
-/area)
+/area/space)
 "ah" = (
 /obj/wingrille_spawn/reinforced,
 /obj/window_blinds/left{
 	id = "hydro2"
 	},
 /turf/simulated/floor/plating/random,
-/area)
+/area/space)
 "ai" = (
 /obj/wingrille_spawn/reinforced,
 /obj/window_blinds/right{
 	id = "hydro2"
 	},
 /turf/simulated/floor/plating/random,
-/area)
+/area/space)
 "aj" = (
 /obj/lattice{
 	icon_state = "lattice-dir-b";
 	dir = 6
 	},
 /turf/space,
-/area)
+/area/space)
 "ak" = (
 /obj/lattice{
 	icon_state = "lattice-dir";
 	dir = 8
 	},
 /turf/space,
-/area)
+/area/space)
 "al" = (
 /obj/lattice,
 /turf/space,
-/area)
+/area/space)
 "am" = (
 /obj/lattice{
 	icon_state = "lattice-dir-b";
 	dir = 10
 	},
 /turf/space,
-/area)
+/area/space)
 "an" = (
 /obj/wingrille_spawn/reinforced,
 /obj/window_blinds{
 	id = "hydro1"
 	},
 /turf/simulated/floor/plating/random,
-/area)
+/area/space)
 "ao" = (
 /obj/storage/secure/closet/personal,
 /turf/simulated/floor/carpet{
 	icon_state = "green2";
 	dir = 9
 	},
-/area)
+/area/space)
 "ap" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet/random,
@@ -92,7 +92,7 @@
 	icon_state = "green2";
 	dir = 5
 	},
-/area)
+/area/space)
 "aq" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet/random,
@@ -100,24 +100,24 @@
 	icon_state = "green2";
 	dir = 5
 	},
-/area)
+/area/space)
 "ar" = (
 /obj/wingrille_spawn/reinforced,
 /turf/simulated/floor/plating/random,
-/area)
+/area/space)
 "as" = (
 /obj/lattice{
 	icon_state = "lattice-dir";
 	dir = 6
 	},
 /turf/space,
-/area)
+/area/space)
 "at" = (
 /turf/simulated/floor/carpet{
 	icon_state = "green2";
 	dir = 10
 	},
-/area)
+/area/space)
 "au" = (
 /obj/machinery/light{
 	icon_state = "tube1";
@@ -127,7 +127,7 @@
 	icon_state = "green2";
 	dir = 6
 	},
-/area)
+/area/space)
 "av" = (
 /obj/blind_switch{
 	id = "hydro2";
@@ -138,46 +138,46 @@
 	icon_state = "green2";
 	dir = 10
 	},
-/area)
+/area/space)
 "aw" = (
 /obj/submachine/seed_vendor,
 /turf/simulated/floor/grass/random,
-/area)
+/area/space)
 "ax" = (
 /obj/reagent_dispensers/compostbin,
 /turf/simulated/floor/grass/random,
-/area)
+/area/space)
 "ay" = (
 /turf/simulated/floor/grass/random,
-/area)
+/area/space)
 "az" = (
 /obj/reagent_dispensers/watertank/big,
 /turf/simulated/floor/grass/random,
-/area)
+/area/space)
 "aA" = (
 /obj/machinery/vending/hydroponics,
 /turf/simulated/floor/grass/random,
-/area)
+/area/space)
 "aB" = (
 /obj/lattice{
 	icon_state = "lattice-dir";
 	dir = 1
 	},
 /turf/space,
-/area)
+/area/space)
 "aC" = (
 /obj/machinery/door/firedoor/border_only,
 /turf/simulated/floor/black,
-/area)
+/area/space)
 "aD" = (
 /obj/stool/chair/comfy/blue,
 /turf/simulated/floor,
-/area)
+/area/space)
 "aE" = (
 /obj/table/auto,
 /obj/item/decoration/ashtray,
 /turf/simulated/floor,
-/area)
+/area/space)
 "aF" = (
 /obj/machinery/plantpot,
 /obj/machinery/light{
@@ -185,13 +185,13 @@
 	dir = 8
 	},
 /turf/simulated/floor/grass/random,
-/area)
+/area/space)
 "aG" = (
 /obj/tree1{
 	desc = "It's a tree. You see the phrase 'Haine <3 SpyGuy' carved into it."
 	},
 /turf/simulated/floor/grass/random,
-/area)
+/area/space)
 "aH" = (
 /obj/machinery/plantpot,
 /obj/machinery/light{
@@ -199,7 +199,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/grass/random,
-/area)
+/area/space)
 "aI" = (
 /obj/table/auto,
 /obj/machinery/power/data_terminal,
@@ -208,7 +208,7 @@
 	icon_state = "green2";
 	dir = 9
 	},
-/area)
+/area/space)
 "aJ" = (
 /obj/table/auto,
 /obj/random_item_spawner/desk_stuff,
@@ -216,41 +216,41 @@
 	icon_state = "green2";
 	dir = 5
 	},
-/area)
+/area/space)
 "aK" = (
 /turf/simulated/floor,
-/area)
+/area/space)
 "aL" = (
 /obj/stool/chair/couch/green{
 	icon_state = "chair_couch-green";
 	dir = 8
 	},
 /turf/simulated/floor/green,
-/area)
+/area/space)
 "aM" = (
 /obj/stool/chair/couch/green{
 	icon_state = "chair_couch-green";
 	dir = 4
 	},
 /turf/simulated/floor/green,
-/area)
+/area/space)
 "aN" = (
 /turf/simulated/floor/green/corner{
 	dir = 8
 	},
-/area)
+/area/space)
 "aO" = (
 /obj/reagent_dispensers/fueltank,
 /turf/simulated/floor/black,
-/area)
+/area/space)
 "aP" = (
 /obj/machinery/manufacturer/hangar,
 /turf/simulated/floor/black,
-/area)
+/area/space)
 "aQ" = (
 /obj/machinery/manufacturer/general,
 /turf/simulated/floor/black,
-/area)
+/area/space)
 "aR" = (
 /obj/decal/tile_edge/stripe/big{
 	icon_state = "bigstripe-corner2";
@@ -258,24 +258,24 @@
 	},
 /obj/storage/closet/welding_supply,
 /turf/simulated/floor/black,
-/area)
+/area/space)
 "aS" = (
 /obj/decal/tile_edge/stripe/big{
 	icon_state = "bigstripe-edge";
 	dir = 6
 	},
 /turf/simulated/floor/black,
-/area)
+/area/space)
 "aT" = (
 /turf/simulated/floor/shuttlebay,
-/area)
+/area/space)
 "aU" = (
 /obj/decal/tile_edge/stripe/big{
 	icon_state = "bigstripe-corner2";
 	dir = 6
 	},
 /turf/simulated/floor/shuttlebay,
-/area)
+/area/space)
 "aV" = (
 /obj/stool/chair/office{
 	icon_state = "office_chair";
@@ -285,52 +285,52 @@
 	icon_state = "green2";
 	dir = 10
 	},
-/area)
+/area/space)
 "aW" = (
 /turf/simulated/floor/carpet{
 	icon_state = "green2";
 	dir = 6
 	},
-/area)
+/area/space)
 "aX" = (
 /turf/simulated/floor/green/side{
 	dir = 1
 	},
-/area)
+/area/space)
 "aY" = (
 /obj/machinery/light,
 /turf/simulated/floor/green/side{
 	dir = 1
 	},
-/area)
+/area/space)
 "aZ" = (
 /obj/machinery/door/firedoor/border_only,
 /turf/simulated/floor/green/side{
 	dir = 4
 	},
-/area)
+/area/space)
 "ba" = (
 /turf/simulated/floor/green/side{
 	dir = 8
 	},
-/area)
+/area/space)
 "bb" = (
 /turf/simulated/floor/black,
-/area)
+/area/space)
 "bc" = (
 /obj/decal/tile_edge/stripe/big{
 	icon_state = "bigstripe-edge";
 	dir = 4
 	},
 /turf/simulated/floor/black,
-/area)
+/area/space)
 "bd" = (
 /obj/decal/tile_edge/stripe/big{
 	icon_state = "bigstripe-edge";
 	dir = 4
 	},
 /turf/simulated/floor/shuttlebay,
-/area)
+/area/space)
 "be" = (
 /obj/machinery/door/poddoor/blast{
 	autoclose = 1;
@@ -340,32 +340,32 @@
 	name = "Hangar"
 	},
 /turf/simulated/floor/shuttlebay,
-/area)
+/area/space)
 "bf" = (
 /obj/critter/domestic_bee{
 	name = "Bumbles"
 	},
 /turf/simulated/floor/grass/random,
-/area)
+/area/space)
 "bg" = (
 /obj/table/auto,
 /obj/random_item_spawner/desk_stuff,
 /turf/simulated/floor,
-/area)
+/area/space)
 "bh" = (
 /turf/simulated/floor/green/corner{
 	dir = 1
 	},
-/area)
+/area/space)
 "bi" = (
 /obj/table/auto,
 /obj/random_item_spawner/tools,
 /turf/simulated/floor/black,
-/area)
+/area/space)
 "bj" = (
 /obj/random_pod_spawner/random_putt_spawner,
 /turf/simulated/floor/shuttlebay,
-/area)
+/area/space)
 "bk" = (
 /obj/machinery/door/poddoor/blast{
 	autoclose = 1;
@@ -375,11 +375,11 @@
 	name = "Hangar"
 	},
 /turf/simulated/floor/shuttlebay,
-/area)
+/area/space)
 "bl" = (
 /obj/machinery/door/firedoor/border_only,
 /turf/simulated/floor,
-/area)
+/area/space)
 "bm" = (
 /obj/machinery/door/poddoor/blast{
 	autoclose = 1;
@@ -389,21 +389,21 @@
 	name = "Hangar"
 	},
 /turf/simulated/floor/shuttlebay,
-/area)
+/area/space)
 "bn" = (
 /obj/lattice{
 	icon_state = "lattice-dir";
 	dir = 9
 	},
 /turf/space,
-/area)
+/area/space)
 "bo" = (
 /obj/lattice{
 	icon_state = "lattice-dir";
 	dir = 4
 	},
 /turf/space,
-/area)
+/area/space)
 "bp" = (
 /obj/machinery/plantpot,
 /obj/machinery/light{
@@ -415,11 +415,11 @@
 	dir = 6
 	},
 /turf/simulated/floor/grass/random,
-/area)
+/area/space)
 "bq" = (
 /obj/decal/tile_edge/stripe/big,
 /turf/simulated/floor/grass/random,
-/area)
+/area/space)
 "br" = (
 /obj/table/auto,
 /obj/decal/tile_edge/stripe/big{
@@ -431,7 +431,7 @@
 	dir = 10
 	},
 /turf/simulated/floor/grass/random,
-/area)
+/area/space)
 "bs" = (
 /obj/machinery/plantpot,
 /obj/machinery/light{
@@ -443,44 +443,44 @@
 	dir = 10
 	},
 /turf/simulated/floor/grass/random,
-/area)
+/area/space)
 "bt" = (
 /obj/machinery/light,
 /turf/simulated/floor,
-/area)
+/area/space)
 "bu" = (
 /obj/decal/tile_edge/stripe/big{
 	icon_state = "bigstripe-corner2";
 	dir = 5
 	},
 /turf/simulated/floor/black,
-/area)
+/area/space)
 "bv" = (
 /obj/decal/tile_edge/stripe/big{
 	icon_state = "bigstripe-edge";
 	dir = 5
 	},
 /turf/simulated/floor/black,
-/area)
+/area/space)
 "bw" = (
 /obj/decal/tile_edge/stripe/big{
 	icon_state = "bigstripe-corner2";
 	dir = 5
 	},
 /turf/simulated/floor/shuttlebay,
-/area)
+/area/space)
 "bx" = (
 /obj/wingrille_spawn,
 /turf/simulated/floor/plating/random,
-/area)
+/area/space)
 "by" = (
 /turf/simulated/floor/stairs{
 	icon_state = "medstairs_wide"
 	},
-/area)
+/area/space)
 "bz" = (
 /turf/simulated/floor/stairs/medical/wide/other,
-/area)
+/area/space)
 "bA" = (
 /obj/table/wood/auto,
 /obj/item/decoration/flower_vase{
@@ -490,7 +490,7 @@
 	icon_state = "fgreen2";
 	dir = 9
 	},
-/area)
+/area/space)
 "bB" = (
 /obj/stool/chair/couch/blue{
 	icon_state = "chair_couch-blue";
@@ -500,7 +500,7 @@
 	icon_state = "fgreen2";
 	dir = 1
 	},
-/area)
+/area/space)
 "bC" = (
 /obj/stool/chair/couch/blue{
 	icon_state = "chair_couch-blue";
@@ -514,10 +514,10 @@
 	icon_state = "fgreen2";
 	dir = 5
 	},
-/area)
+/area/space)
 "bD" = (
 /turf/simulated/wall/auto/gannets,
-/area)
+/area/space)
 "bE" = (
 /obj/machinery/chem_master{
 	dir = 4;
@@ -530,7 +530,7 @@
 /turf/simulated/floor/white/checker2{
 	dir = 5
 	},
-/area)
+/area/space)
 "bF" = (
 /obj/decal/tile_edge/stripe/big{
 	icon_state = "bigstripe-edge";
@@ -539,7 +539,7 @@
 /turf/simulated/floor/white/checker2{
 	dir = 9
 	},
-/area)
+/area/space)
 "bG" = (
 /obj/decal/tile_edge/stripe/big{
 	icon_state = "bigstripe-edge";
@@ -548,7 +548,7 @@
 /turf/simulated/floor/white/checker2{
 	dir = 5
 	},
-/area)
+/area/space)
 "bH" = (
 /obj/submachine/seed_manipulator,
 /obj/machinery/light{
@@ -566,7 +566,7 @@
 /turf/simulated/floor/white/checker2{
 	dir = 9
 	},
-/area)
+/area/space)
 "bI" = (
 /obj/submachine/chem_extractor{
 	dir = 8
@@ -582,7 +582,7 @@
 /turf/simulated/floor/white/checker2{
 	dir = 5
 	},
-/area)
+/area/space)
 "bJ" = (
 /obj/machinery/hydro_mister,
 /obj/decal/tile_edge/stripe/big{
@@ -592,18 +592,18 @@
 /turf/simulated/floor/green/corner{
 	dir = 8
 	},
-/area)
+/area/space)
 "bK" = (
 /obj/machinery/hydro_growlamp,
 /turf/simulated/floor,
-/area)
+/area/space)
 "bL" = (
 /obj/machinery/light{
 	icon_state = "tube1";
 	dir = 1
 	},
 /turf/simulated/floor,
-/area)
+/area/space)
 "bM" = (
 /obj/table/reinforced/auto,
 /obj/window/reinforced/east,
@@ -611,17 +611,17 @@
 /turf/simulated/floor/green/corner{
 	dir = 2
 	},
-/area)
+/area/space)
 "bN" = (
 /obj/table/auto,
 /obj/item/decoration/flower_vase{
 	pixel_y = 6
 	},
 /turf/simulated/floor,
-/area)
+/area/space)
 "bO" = (
 /turf/simulated/floor/sanitary/white,
-/area)
+/area/space)
 "bP" = (
 /obj/window/cubicle{
 	tag = "icon-cubicle (EAST)";
@@ -629,11 +629,11 @@
 	dir = 4
 	},
 /turf/simulated/floor/sanitary/white,
-/area)
+/area/space)
 "bQ" = (
 /obj/item/storage/toilet,
 /turf/simulated/floor/sanitary/white,
-/area)
+/area/space)
 "bR" = (
 /obj/window/cubicle{
 	dir = 8
@@ -644,48 +644,48 @@
 	dir = 4
 	},
 /turf/simulated/floor/sanitary/white,
-/area)
+/area/space)
 "bS" = (
 /turf/simulated/floor/carpet{
 	icon_state = "fgreen2";
 	dir = 8
 	},
-/area)
+/area/space)
 "bT" = (
 /turf/simulated/floor/carpet{
 	icon_state = "fgreen1";
 	dir = 8
 	},
-/area)
+/area/space)
 "bU" = (
 /turf/simulated/floor/carpet{
 	icon_state = "fgreen2";
 	dir = 4
 	},
-/area)
+/area/space)
 "bV" = (
 /turf/simulated/floor/white/checker2{
 	dir = 9
 	},
-/area)
+/area/space)
 "bW" = (
 /turf/simulated/floor/carpet{
 	icon_state = "green2";
 	dir = 9
 	},
-/area)
+/area/space)
 "bX" = (
 /turf/simulated/floor/carpet{
 	icon_state = "green2";
 	dir = 1
 	},
-/area)
+/area/space)
 "bY" = (
 /turf/simulated/floor/carpet{
 	icon_state = "green2";
 	dir = 5
 	},
-/area)
+/area/space)
 "bZ" = (
 /obj/decal/tile_edge/stripe/big{
 	icon_state = "bigstripe-edge";
@@ -694,13 +694,13 @@
 /turf/simulated/floor/white/checker2{
 	dir = 9
 	},
-/area)
+/area/space)
 "ca" = (
 /turf/simulated/floor/stairs{
 	dir = 8;
 	icon_state = "medstairs2_wide"
 	},
-/area)
+/area/space)
 "cb" = (
 /obj/decal/tile_edge/stripe/big{
 	icon_state = "bigstripe-edge";
@@ -709,14 +709,14 @@
 /turf/simulated/floor/green/side{
 	dir = 8
 	},
-/area)
+/area/space)
 "cc" = (
 /obj/stool/chair/moveable{
 	icon_state = "chair";
 	dir = 4
 	},
 /turf/simulated/floor,
-/area)
+/area/space)
 "cd" = (
 /obj/table/reinforced/auto,
 /obj/machinery/door/window/eastright,
@@ -724,14 +724,14 @@
 /turf/simulated/floor/green/side{
 	dir = 4
 	},
-/area)
+/area/space)
 "ce" = (
 /obj/machinery/door/unpowered/wood{
 	icon = 'icons/obj/doors/door_stall.dmi';
 	name = "stall door"
 	},
 /turf/simulated/floor/sanitary/white,
-/area)
+/area/space)
 "cf" = (
 /obj/stool/chair/comfy/blue{
 	icon_state = "chair_comfy-blue";
@@ -741,7 +741,7 @@
 	icon_state = "fgreen2";
 	dir = 10
 	},
-/area)
+/area/space)
 "cg" = (
 /obj/table/wood/auto,
 /obj/item/decoration/ashtray,
@@ -749,7 +749,7 @@
 	icon_state = "fgreen2";
 	dir = 2
 	},
-/area)
+/area/space)
 "ch" = (
 /obj/stool/chair/comfy/blue{
 	icon_state = "chair_comfy-blue";
@@ -763,30 +763,30 @@
 	icon_state = "fgreen2";
 	dir = 6
 	},
-/area)
+/area/space)
 "ci" = (
 /turf/simulated/floor/white/checker2{
 	dir = 5
 	},
-/area)
+/area/space)
 "cj" = (
 /turf/simulated/floor/carpet{
 	icon_state = "green2";
 	dir = 8
 	},
-/area)
+/area/space)
 "ck" = (
 /turf/simulated/floor/carpet{
 	icon_state = "green1";
 	dir = 2
 	},
-/area)
+/area/space)
 "cl" = (
 /turf/simulated/floor/carpet{
 	icon_state = "green2";
 	dir = 4
 	},
-/area)
+/area/space)
 "cm" = (
 /obj/decal/tile_edge/stripe/big{
 	icon_state = "bigstripe-edge";
@@ -795,19 +795,19 @@
 /turf/simulated/floor/white/checker2{
 	dir = 5
 	},
-/area)
+/area/space)
 "cn" = (
 /turf/simulated/floor/stairs{
 	dir = 8;
 	icon_state = "medstairs_middle"
 	},
-/area)
+/area/space)
 "co" = (
 /obj/table/reinforced/auto,
 /obj/window/reinforced/south,
 /obj/random_item_spawner/desk_stuff,
 /turf/simulated/floor/green/side,
-/area)
+/area/space)
 "cp" = (
 /obj/table/reinforced/auto,
 /obj/window/reinforced/east,
@@ -816,48 +816,48 @@
 /turf/simulated/floor/green/side{
 	dir = 6
 	},
-/area)
+/area/space)
 "cq" = (
 /obj/machinery/light{
 	icon_state = "tube1";
 	dir = 4
 	},
 /turf/simulated/floor,
-/area)
+/area/space)
 "cr" = (
 /obj/machinery/door/firedoor/border_only,
 /obj/machinery/door/airlock/gannets/alt,
 /turf/simulated/floor,
-/area)
+/area/space)
 "cs" = (
 /obj/submachine/chef_sink/chem_sink{
 	dir = 1;
 	pixel_y = 0
 	},
 /turf/simulated/floor/sanitary/white,
-/area)
+/area/space)
 "ct" = (
 /obj/table/auto,
 /turf/simulated/floor/carpet{
 	icon_state = "green2";
 	dir = 2
 	},
-/area)
+/area/space)
 "cu" = (
 /turf/simulated/floor/stairs{
 	dir = 8;
 	icon_state = "medstairs_wide"
 	},
-/area)
+/area/space)
 "cv" = (
 /turf/simulated/floor/green/side{
 	dir = 9
 	},
-/area)
+/area/space)
 "cw" = (
 /obj/decal/poster/wallsign/pool,
 /turf/simulated/wall/auto/reinforced/gannets,
-/area)
+/area/space)
 "cx" = (
 /obj/stool/chair{
 	desc = "";
@@ -865,14 +865,14 @@
 	icon_state = "chair_pool"
 	},
 /turf/simulated/floor/white/grime,
-/area)
+/area/space)
 "cy" = (
 /obj/table/auto,
 /obj/item/decoration/flower_vase{
 	pixel_y = 6
 	},
 /turf/simulated/floor/white/grime,
-/area)
+/area/space)
 "cz" = (
 /obj/stool/chair{
 	desc = "";
@@ -884,31 +884,31 @@
 	dir = 1
 	},
 /turf/simulated/floor/white/grime,
-/area)
+/area/space)
 "cA" = (
 /obj/table/auto,
 /obj/item/clothing/glasses/sunglasses,
 /turf/simulated/floor/white/grime,
-/area)
+/area/space)
 "cB" = (
 /obj/lattice{
 	icon_state = "lattice-dir";
 	dir = 10
 	},
 /turf/space,
-/area)
+/area/space)
 "cC" = (
 /obj/reagent_dispensers/still,
 /turf/simulated/floor/white/checker2{
 	dir = 5
 	},
-/area)
+/area/space)
 "cD" = (
 /obj/machinery/light,
 /turf/simulated/floor/white/checker2{
 	dir = 9
 	},
-/area)
+/area/space)
 "cE" = (
 /obj/decal/tile_edge/stripe/big{
 	icon_state = "bigstripe-corner2";
@@ -917,7 +917,7 @@
 /turf/simulated/floor/white/checker2{
 	dir = 5
 	},
-/area)
+/area/space)
 "cF" = (
 /obj/decal/tile_edge/stripe/big{
 	icon_state = "bigstripe-corner2";
@@ -926,34 +926,34 @@
 /turf/simulated/floor/green/corner{
 	dir = 1
 	},
-/area)
+/area/space)
 "cG" = (
 /obj/table/auto,
 /obj/item/device/light/lava_lamp{
 	pixel_y = 8
 	},
 /turf/simulated/floor,
-/area)
+/area/space)
 "cH" = (
 /obj/machinery/door/firedoor/border_only,
 /turf/simulated/floor/arrival/corner{
 	dir = 4
 	},
-/area)
+/area/space)
 "cI" = (
 /turf/simulated/floor/arrival{
 	dir = 1
 	},
-/area)
+/area/space)
 "cJ" = (
 /obj/machinery/door/firedoor/border_only,
 /turf/simulated/floor/arrival{
 	dir = 5
 	},
-/area)
+/area/space)
 "cK" = (
 /turf/simulated/floor/white/grime,
-/area)
+/area/space)
 "cL" = (
 /obj/table/reinforced{
 	icon_state = "reinf_tableshort";
@@ -962,33 +962,33 @@
 /obj/machinery/door/window/northright,
 /obj/machinery/door/window/southleft,
 /turf/simulated/floor,
-/area)
+/area/space)
 "cM" = (
 /obj/machinery/door/firedoor/border_only,
 /turf/simulated/floor/plating/random,
-/area)
+/area/space)
 "cN" = (
 /obj/machinery/door/firedoor/border_only,
 /turf/simulated/floor/arrival/corner{
 	dir = 2
 	},
-/area)
+/area/space)
 "cO" = (
 /turf/simulated/floor/arrival,
-/area)
+/area/space)
 "cP" = (
 /obj/machinery/door/firedoor/border_only,
 /turf/simulated/floor/arrival{
 	dir = 6
 	},
-/area)
+/area/space)
 "cQ" = (
 /obj/pool{
 	icon_state = "pool";
 	dir = 9
 	},
 /turf/simulated/floor/white/grime,
-/area)
+/area/space)
 "cR" = (
 /obj/pool{
 	icon_state = "pool";
@@ -1001,32 +1001,32 @@
 	name = "ladder"
 	},
 /turf/simulated/floor/white/grime,
-/area)
+/area/space)
 "cS" = (
 /obj/pool{
 	icon_state = "pool";
 	dir = 1
 	},
 /turf/simulated/floor/white/grime,
-/area)
+/area/space)
 "cT" = (
 /obj/pool{
 	icon_state = "pool";
 	dir = 5
 	},
 /turf/simulated/floor/white/grime,
-/area)
+/area/space)
 "cU" = (
 /obj/wingrille_spawn/reinforced,
 /obj/window_blinds{
 	id = "chef1"
 	},
 /turf/simulated/floor/plating/random,
-/area)
+/area/space)
 "cV" = (
 /obj/storage/secure/closet/personal,
 /turf/simulated/floor/carpet/grime,
-/area)
+/area/space)
 "cW" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet/random,
@@ -1035,75 +1035,75 @@
 	pixel_y = 22
 	},
 /turf/simulated/floor/carpet/grime,
-/area)
+/area/space)
 "cX" = (
 /obj/table/auto,
 /obj/submachine/mixer,
 /turf/simulated/floor/specialroom/medbay{
 	dir = 2
 	},
-/area)
+/area/space)
 "cY" = (
 /obj/table/auto,
 /turf/simulated/floor/specialroom/medbay{
 	dir = 2
 	},
-/area)
+/area/space)
 "cZ" = (
 /obj/submachine/chef_sink,
 /turf/simulated/floor/specialroom/medbay{
 	dir = 2
 	},
-/area)
+/area/space)
 "da" = (
 /turf/simulated/floor/specialroom/medbay{
 	dir = 2
 	},
-/area)
+/area/space)
 "db" = (
 /obj/storage/secure/closet/civilian/kitchen,
 /turf/simulated/floor/specialroom/medbay{
 	dir = 2
 	},
-/area)
+/area/space)
 "dc" = (
 /turf/simulated/floor/plating/random,
-/area)
+/area/space)
 "dd" = (
 /obj/machinery/light{
 	icon_state = "tube1";
 	dir = 8
 	},
 /turf/simulated/floor/white/grime,
-/area)
+/area/space)
 "de" = (
 /obj/pool{
 	icon_state = "pool";
 	dir = 8
 	},
 /turf/simulated/floor/white/grime,
-/area)
+/area/space)
 "df" = (
 /obj/poolwater,
 /turf/unsimulated/floor/pool,
-/area)
+/area/space)
 "dg" = (
 /obj/pool{
 	icon_state = "pool";
 	dir = 4
 	},
 /turf/simulated/floor/white/grime,
-/area)
+/area/space)
 "dh" = (
 /obj/machinery/light,
 /obj/landmark/start{
 	name = "Chef"
 	},
 /turf/simulated/floor/carpet/grime,
-/area)
+/area/space)
 "di" = (
 /turf/simulated/floor/carpet/grime,
-/area)
+/area/space)
 "dj" = (
 /obj/table/auto,
 /obj/submachine/mixer,
@@ -1114,7 +1114,7 @@
 /turf/simulated/floor/specialroom/medbay{
 	dir = 2
 	},
-/area)
+/area/space)
 "dk" = (
 /obj/landmark{
 	icon_state = "x3";
@@ -1123,17 +1123,17 @@
 /turf/simulated/floor/specialroom/medbay{
 	dir = 2
 	},
-/area)
+/area/space)
 "dl" = (
 /obj/storage/secure/closet/fridge/kitchen,
 /turf/simulated/floor/specialroom/medbay{
 	dir = 2
 	},
-/area)
+/area/space)
 "dm" = (
 /obj/machinery/vending/cola/blue,
 /turf/simulated/floor/white/grime,
-/area)
+/area/space)
 "dn" = (
 /obj/poolwater,
 /obj/landmark{
@@ -1141,7 +1141,7 @@
 	name = "peststart"
 	},
 /turf/unsimulated/floor/pool,
-/area)
+/area/space)
 "do" = (
 /obj/pool{
 	icon_state = "pool";
@@ -1149,35 +1149,35 @@
 	},
 /obj/pool_springboard,
 /turf/simulated/floor/white/grime,
-/area)
+/area/space)
 "dp" = (
 /obj/machinery/light{
 	icon_state = "tube1";
 	dir = 4
 	},
 /turf/simulated/floor/white/grime,
-/area)
+/area/space)
 "dq" = (
 /obj/table/auto,
 /obj/item/kitchen/rollingpin,
 /turf/simulated/floor/specialroom/medbay{
 	dir = 2
 	},
-/area)
+/area/space)
 "dr" = (
 /obj/table/auto,
 /obj/item/storage/box/donkpocket_kit,
 /turf/simulated/floor/specialroom/medbay{
 	dir = 2
 	},
-/area)
+/area/space)
 "ds" = (
 /obj/table/auto,
 /obj/random_item_spawner/tableware,
 /turf/simulated/floor/specialroom/medbay{
 	dir = 2
 	},
-/area)
+/area/space)
 "dt" = (
 /obj/table/auto,
 /obj/machinery/microwave,
@@ -1188,7 +1188,7 @@
 /turf/simulated/floor/specialroom/medbay{
 	dir = 2
 	},
-/area)
+/area/space)
 "du" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 6;
@@ -1196,7 +1196,7 @@
 	level = 2
 	},
 /turf/simulated/wall/auto/reinforced/gannets,
-/area)
+/area/space)
 "dv" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4;
@@ -1204,7 +1204,7 @@
 	level = 2
 	},
 /turf/simulated/wall/auto/reinforced/gannets,
-/area)
+/area/space)
 "dw" = (
 /obj/machinery/atmospherics/binary/volume_pump{
 	dir = 8;
@@ -1212,7 +1212,7 @@
 	transfer_rate = 1000
 	},
 /turf/simulated/wall/auto/reinforced/gannets,
-/area)
+/area/space)
 "dx" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 10;
@@ -1220,45 +1220,45 @@
 	level = 2
 	},
 /turf/simulated/wall/auto/reinforced/gannets,
-/area)
+/area/space)
 "dy" = (
 /obj/lattice{
 	icon_state = "lattice-dir-b";
 	dir = 5
 	},
 /turf/space,
-/area)
+/area/space)
 "dz" = (
 /obj/lattice{
 	icon_state = "lattice-dir-b";
 	dir = 9
 	},
 /turf/space,
-/area)
+/area/space)
 "dA" = (
 /obj/machinery/vending/snack,
 /turf/simulated/floor/white/grime,
-/area)
+/area/space)
 "dB" = (
 /obj/poolwater,
 /obj/item/beach_ball{
 	pixel_y = 7
 	},
 /turf/unsimulated/floor/pool,
-/area)
+/area/space)
 "dC" = (
 /obj/submachine/chef_oven,
 /turf/simulated/floor/specialroom/medbay{
 	dir = 2
 	},
-/area)
+/area/space)
 "dD" = (
 /obj/table/auto,
 /obj/machinery/microwave,
 /turf/simulated/floor/specialroom/medbay{
 	dir = 2
 	},
-/area)
+/area/space)
 "dE" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 5;
@@ -1266,7 +1266,7 @@
 	level = 2
 	},
 /turf/simulated/wall/auto/reinforced/gannets,
-/area)
+/area/space)
 "dF" = (
 /obj/machinery/atmospherics/pipe/simple/junction{
 	icon_state = "intact";
@@ -1276,7 +1276,7 @@
 /obj/item/clothing/gloves/latex,
 /obj/item/spraybottle/cleaner,
 /turf/simulated/floor/white/grime,
-/area)
+/area/space)
 "dG" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	icon_state = "12";
@@ -1284,42 +1284,42 @@
 	},
 /obj/item/reagent_containers/food/drinks/eggnog,
 /turf/simulated/floor/white/grime,
-/area)
+/area/space)
 "dH" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	icon_state = "10";
 	dir = 2
 	},
 /turf/simulated/floor/white/grime,
-/area)
+/area/space)
 "dI" = (
 /obj/kitchenspike,
 /turf/simulated/floor/white/grime,
-/area)
+/area/space)
 "dJ" = (
 /obj/machinery/atmospherics/pipe/simple{
 	icon_state = "intact";
 	level = 2
 	},
 /turf/simulated/wall/auto/reinforced/gannets,
-/area)
+/area/space)
 "dK" = (
 /obj/machinery/light/small{
 	dir = 1
 	},
 /obj/machinery/atmospherics/unary/cold_sink/freezer/kitchen,
 /turf/simulated/floor/plating/random,
-/area)
+/area/space)
 "dL" = (
 /obj/machinery/atmospherics/pipe/tank/carbon_dioxide{
 	name = "High-Capacity Pressure Tank (Carbon Dioxide)";
 	volume = 1000
 	},
 /turf/simulated/floor/plating/random,
-/area)
+/area/space)
 "dM" = (
 /turf/simulated/floor/yellow/corner,
-/area)
+/area/space)
 "dN" = (
 /obj/machinery/light{
 	icon_state = "tube1";
@@ -1327,25 +1327,25 @@
 	},
 /obj/stool/bench/blue/auto,
 /turf/simulated/floor/white/grime,
-/area)
+/area/space)
 "dO" = (
 /obj/pool{
 	icon_state = "pool";
 	dir = 10
 	},
 /turf/simulated/floor/white/grime,
-/area)
+/area/space)
 "dP" = (
 /obj/pool,
 /turf/simulated/floor/white/grime,
-/area)
+/area/space)
 "dQ" = (
 /obj/pool{
 	icon_state = "pool";
 	dir = 6
 	},
 /turf/simulated/floor/white/grime,
-/area)
+/area/space)
 "dR" = (
 /obj/machinery/deep_fryer,
 /obj/machinery/light{
@@ -1355,28 +1355,28 @@
 /turf/simulated/floor/specialroom/medbay{
 	dir = 2
 	},
-/area)
+/area/space)
 "dS" = (
 /obj/critter/mouse/remy,
 /turf/simulated/floor/specialroom/medbay{
 	dir = 2
 	},
-/area)
+/area/space)
 "dT" = (
 /obj/machinery/door/firedoor/border_only,
 /turf/simulated/floor/grime,
-/area)
+/area/space)
 "dU" = (
 /obj/landmark{
 	icon_state = "x3";
 	name = "peststart"
 	},
 /turf/simulated/floor/white/grime,
-/area)
+/area/space)
 "dV" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging,
 /turf/simulated/floor/white/grime,
-/area)
+/area/space)
 "dW" = (
 /obj/machinery/gibber,
 /obj/machinery/light/small{
@@ -1384,7 +1384,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/white/grime,
-/area)
+/area/space)
 "dX" = (
 /obj/machinery/atmospherics/pipe/manifold{
 	icon_state = "manifold";
@@ -1392,20 +1392,20 @@
 	level = 2
 	},
 /turf/simulated/wall/auto/reinforced/gannets,
-/area)
+/area/space)
 "dY" = (
 /obj/machinery/atmospherics/valve{
 	dir = 4
 	},
 /turf/simulated/floor/plating/random,
-/area)
+/area/space)
 "dZ" = (
 /obj/machinery/atmospherics/pipe/manifold{
 	icon_state = "manifold";
 	level = 2
 	},
 /turf/simulated/floor/plating/random,
-/area)
+/area/space)
 "ea" = (
 /obj/machinery/atmospherics/pipe/manifold{
 	icon_state = "manifold";
@@ -1413,40 +1413,40 @@
 	level = 2
 	},
 /turf/simulated/floor/plating/random,
-/area)
+/area/space)
 "eb" = (
 /turf/simulated/floor/yellow/side{
 	dir = 4
 	},
-/area)
+/area/space)
 "ec" = (
 /obj/machinery/door/firedoor/border_only,
 /turf/simulated/floor/yellow/side{
 	dir = 8
 	},
-/area)
+/area/space)
 "ed" = (
 /obj/table/reinforced/auto,
 /obj/random_item_spawner/tools,
 /turf/simulated/floor/yellow/side,
-/area)
+/area/space)
 "ee" = (
 /obj/machinery/portable_atmospherics/scrubber,
 /turf/simulated/floor/yellow/corner{
 	dir = 8
 	},
-/area)
+/area/space)
 "ef" = (
 /obj/stool/bench/blue/auto,
 /turf/simulated/floor/white/grime,
-/area)
+/area/space)
 "eg" = (
 /obj/wingrille_spawn/reinforced,
 /obj/window_blinds{
 	id = "chef2"
 	},
 /turf/simulated/floor/plating/random,
-/area)
+/area/space)
 "eh" = (
 /obj/machinery/light{
 	dir = 1
@@ -1455,31 +1455,31 @@
 	name = "Chef"
 	},
 /turf/simulated/floor/carpet/grime,
-/area)
+/area/space)
 "ei" = (
 /obj/submachine/foodprocessor,
 /turf/simulated/floor/specialroom/medbay{
 	dir = 2
 	},
-/area)
+/area/space)
 "ej" = (
 /obj/storage/cart/hotdog,
 /turf/simulated/floor/specialroom/medbay{
 	dir = 2
 	},
-/area)
+/area/space)
 "ek" = (
 /obj/machinery/vending/kitchen,
 /turf/simulated/floor/specialroom/medbay{
 	dir = 2
 	},
-/area)
+/area/space)
 "el" = (
 /obj/machinery/vending/monkey,
 /turf/simulated/floor/specialroom/medbay{
 	dir = 2
 	},
-/area)
+/area/space)
 "em" = (
 /obj/machinery/atmospherics/pipe/simple/junction{
 	icon_state = "intact";
@@ -1488,7 +1488,7 @@
 /obj/table/auto,
 /obj/item/kitchen/utensil/knife,
 /turf/simulated/floor/white/grime,
-/area)
+/area/space)
 "en" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	icon_state = "12";
@@ -1504,7 +1504,7 @@
 	name = "meat of questionable origin"
 	},
 /turf/simulated/floor/white/grime,
-/area)
+/area/space)
 "eo" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	icon_state = "9";
@@ -1512,7 +1512,7 @@
 	},
 /obj/item/clothing/head/helmet/space/santahat,
 /turf/simulated/floor/white/grime,
-/area)
+/area/space)
 "ep" = (
 /obj/machinery/atmospherics/pipe/simple{
 	icon_state = "intact";
@@ -1520,18 +1520,18 @@
 	},
 /obj/machinery/meter,
 /turf/simulated/wall/auto/reinforced/gannets,
-/area)
+/area/space)
 "eq" = (
 /obj/decal/tile_edge/stripe/big{
 	icon_state = "bigstripe-corner2";
 	dir = 6
 	},
 /turf/simulated/floor/plating/random,
-/area)
+/area/space)
 "er" = (
 /obj/decal/tile_edge/stripe/big,
 /turf/simulated/floor/plating/random,
-/area)
+/area/space)
 "es" = (
 /obj/machinery/atmospherics/portables_connector{
 	dir = 1
@@ -1541,21 +1541,21 @@
 	dir = 10
 	},
 /turf/simulated/floor/plating/random,
-/area)
+/area/space)
 "et" = (
 /turf/simulated/floor/yellow{
 	dir = 2
 	},
-/area)
+/area/space)
 "eu" = (
 /turf/simulated/floor/yellow/side{
 	dir = 8
 	},
-/area)
+/area/space)
 "ev" = (
 /obj/machinery/light,
 /turf/simulated/floor/white/grime,
-/area)
+/area/space)
 "ew" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet/random,
@@ -1564,13 +1564,13 @@
 	pixel_y = -22
 	},
 /turf/simulated/floor/carpet/grime,
-/area)
+/area/space)
 "ex" = (
 /obj/table/auto,
 /obj/machinery/door/window/northright,
 /obj/machinery/door/window/southleft,
 /turf/simulated/floor/black,
-/area)
+/area/space)
 "ey" = (
 /obj/machinery/atmospherics/binary/volume_pump{
 	dir = 4;
@@ -1578,7 +1578,7 @@
 	transfer_rate = 1000
 	},
 /turf/simulated/wall/auto/reinforced/gannets,
-/area)
+/area/space)
 "ez" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 9;
@@ -1586,12 +1586,12 @@
 	level = 2
 	},
 /turf/simulated/wall/auto/reinforced/gannets,
-/area)
+/area/space)
 "eA" = (
 /turf/simulated/floor/stairs{
 	dir = 1
 	},
-/area)
+/area/space)
 "eB" = (
 /obj/machinery/light{
 	icon_state = "tube1";
@@ -1600,28 +1600,28 @@
 /turf/simulated/floor/yellow/side{
 	dir = 4
 	},
-/area)
+/area/space)
 "eC" = (
 /obj/reagent_dispensers/fueltank,
 /turf/simulated/floor/yellow{
 	dir = 2
 	},
-/area)
+/area/space)
 "eD" = (
 /obj/reagent_dispensers/foamtank,
 /turf/simulated/floor/yellow{
 	dir = 2
 	},
-/area)
+/area/space)
 "eE" = (
 /obj/machinery/door/firedoor/border_only,
 /turf/simulated/floor/white/grime,
-/area)
+/area/space)
 "eF" = (
 /obj/table/auto,
 /obj/item/storage/box/glassbox,
 /turf/simulated/floor,
-/area)
+/area/space)
 "eG" = (
 /obj/decal/poster/wallsign/chsl{
 	pixel_x = 0;
@@ -1631,54 +1631,54 @@
 	pixel_y = 4
 	},
 /turf/simulated/floor,
-/area)
+/area/space)
 "eH" = (
 /obj/decal/tile_edge/stripe/big{
 	icon_state = "bigstripe-corner2";
 	dir = 5
 	},
 /turf/simulated/floor/plating/random,
-/area)
+/area/space)
 "eI" = (
 /obj/decal/tile_edge/stripe/big{
 	icon_state = "bigstripe-edge";
 	dir = 1
 	},
 /turf/simulated/floor/plating/random,
-/area)
+/area/space)
 "eJ" = (
 /obj/decal/tile_edge/stripe/big{
 	icon_state = "bigstripe-corner2";
 	dir = 9
 	},
 /turf/simulated/floor/plating/random,
-/area)
+/area/space)
 "eK" = (
 /turf/simulated/floor/grey/whitegrime,
-/area)
+/area/space)
 "eL" = (
 /turf/simulated/floor/wood{
 	icon_state = "0,6"
 	},
-/area)
+/area/space)
 "eM" = (
 /obj/table/wood/auto,
 /obj/machinery/power/data_terminal,
 /obj/machinery/computer3/generic/personal,
 /turf/simulated/floor/carpet/grime,
-/area)
+/area/space)
 "eN" = (
 /obj/table/wood/auto,
 /obj/random_item_spawner/desk_stuff,
 /turf/simulated/floor/carpet/grime,
-/area)
+/area/space)
 "eO" = (
 /obj/table/wood/auto,
 /obj/machinery/light/lamp{
 	switchon = 1
 	},
 /turf/simulated/floor/carpet/grime,
-/area)
+/area/space)
 "eP" = (
 /obj/table/wood/auto,
 /obj/item/storage/box/fruit_wedges,
@@ -1686,42 +1686,42 @@
 /obj/item/storage/box/cocktail_doodads,
 /obj/item/storage/box/beer,
 /turf/simulated/floor/carpet/grime,
-/area)
+/area/space)
 "eQ" = (
 /obj/table/auto,
 /obj/item/storage/box/cutlery,
 /turf/simulated/floor,
-/area)
+/area/space)
 "eR" = (
 /obj/landmark{
 	icon_state = "x3";
 	name = "peststart"
 	},
 /turf/simulated/floor,
-/area)
+/area/space)
 "eS" = (
 /obj/table/auto,
 /obj/random_item_spawner/tableware,
 /turf/simulated/floor,
-/area)
+/area/space)
 "eT" = (
 /turf/simulated/floor/yellow/corner{
 	dir = 4
 	},
-/area)
+/area/space)
 "eU" = (
 /obj/table/reinforced/auto,
 /obj/random_item_spawner/tools,
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
-/area)
+/area/space)
 "eV" = (
 /obj/machinery/portable_atmospherics/scrubber,
 /turf/simulated/floor/yellow/corner{
 	dir = 1
 	},
-/area)
+/area/space)
 "eW" = (
 /obj/table/auto,
 /obj/item/clothing/under/swimsuit/random{
@@ -1739,13 +1739,13 @@
 	rand_pos = 1
 	},
 /turf/simulated/floor/grey/whitegrime,
-/area)
+/area/space)
 "eX" = (
 /obj/machinery/door/firedoor/border_only,
 /turf/simulated/floor/wood{
 	icon_state = "0,6"
 	},
-/area)
+/area/space)
 "eY" = (
 /obj/blind_switch{
 	id = "pool1";
@@ -1754,7 +1754,7 @@
 /turf/simulated/floor/wood{
 	icon_state = "0,6"
 	},
-/area)
+/area/space)
 "eZ" = (
 /obj/machinery/light{
 	dir = 1
@@ -1762,31 +1762,31 @@
 /turf/simulated/floor/wood{
 	icon_state = "0,6"
 	},
-/area)
+/area/space)
 "fa" = (
 /obj/storage/secure/closet/personal,
 /turf/simulated/floor/wood{
 	icon_state = "0,6"
 	},
-/area)
+/area/space)
 "fb" = (
 /obj/wingrille_spawn,
 /obj/window_blinds/left{
-	id = "barman"
+	id = "bartender"
 	},
 /turf/simulated/floor/plating/random,
-/area)
+/area/space)
 "fc" = (
 /obj/wingrille_spawn,
 /obj/window_blinds/right{
-	id = "barman"
+	id = "bartender"
 	},
 /turf/simulated/floor/plating/random,
-/area)
+/area/space)
 "fd" = (
 /obj/stool,
 /turf/simulated/floor/carpet/grime,
-/area)
+/area/space)
 "fe" = (
 /obj/item/storage/toilet/random{
 	dir = 4;
@@ -1798,23 +1798,23 @@
 	dir = 1
 	},
 /turf/simulated/floor/grey/blackgrime,
-/area)
+/area/space)
 "ff" = (
 /obj/machinery/door/unpowered/wood{
 	icon = 'icons/obj/doors/door_stall.dmi';
 	name = "stall door"
 	},
 /turf/simulated/floor/grey/blackgrime,
-/area)
+/area/space)
 "fg" = (
 /turf/simulated/floor/grey/blackgrime,
-/area)
+/area/space)
 "fh" = (
 /obj/submachine/chef_sink/chem_sink{
 	pixel_y = 8
 	},
 /turf/simulated/floor/grey/blackgrime,
-/area)
+/area/space)
 "fi" = (
 /obj/item/storage/toilet/random{
 	dir = 8;
@@ -1826,65 +1826,65 @@
 	dir = 1
 	},
 /turf/simulated/floor/grey/blackgrime,
-/area)
+/area/space)
 "fj" = (
 /obj/machinery/door/firedoor/border_only,
 /turf/simulated/floor/yellow/corner{
 	dir = 4
 	},
-/area)
+/area/space)
 "fk" = (
 /obj/wingrille_spawn,
 /obj/window_blinds{
 	id = "pool1"
 	},
 /turf/simulated/floor/plating/random,
-/area)
+/area/space)
 "fl" = (
 /obj/stool/bench/yellow,
 /turf/simulated/floor/wood{
 	icon_state = "0,6"
 	},
-/area)
+/area/space)
 "fm" = (
 /obj/storage/closet/dresser/random,
 /turf/simulated/floor/wood{
 	icon_state = "0,6"
 	},
-/area)
+/area/space)
 "fn" = (
 /obj/machinery/light{
 	icon_state = "tube1";
 	dir = 8
 	},
 /obj/landmark/start{
-	name = "Barman"
+	name = "Bartender"
 	},
 /turf/simulated/floor/carpet/grime,
-/area)
+/area/space)
 "fo" = (
 /obj/machinery/disposal/mail,
 /turf/simulated/floor,
-/area)
+/area/space)
 "fp" = (
 /obj/decal/poster/wallsign/chsl{
 	pixel_x = -32;
 	pixel_y = 0
 	},
 /turf/simulated/floor/grey/blackgrime,
-/area)
+/area/space)
 "fq" = (
 /obj/machinery/light{
 	icon_state = "tube1";
 	dir = 4
 	},
 /turf/simulated/floor/grey/blackgrime,
-/area)
+/area/space)
 "fr" = (
 /obj/table/auto,
 /obj/item/decoration/flower_vase,
 /turf/simulated/floor,
-/area)
+/area/space)
 "fs" = (
 /obj/item/storage/toilet/random{
 	icon_state = "toilet";
@@ -1894,7 +1894,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/white/grime,
-/area)
+/area/space)
 "ft" = (
 /obj/machinery/light{
 	icon_state = "tube1";
@@ -1903,73 +1903,73 @@
 /turf/simulated/floor/wood{
 	icon_state = "0,6"
 	},
-/area)
+/area/space)
 "fu" = (
 /obj/blind_switch{
-	id = "barman";
+	id = "bartender";
 	pixel_x = -20;
 	pixel_y = 0
 	},
 /obj/storage/secure/closet/personal,
 /turf/simulated/floor/carpet/grime,
-/area)
+/area/space)
 "fv" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet/random,
 /turf/simulated/floor/carpet/grime,
-/area)
+/area/space)
 "fw" = (
 /obj/reagent_dispensers/beerkeg,
 /turf/simulated/floor/carpet/grime,
-/area)
+/area/space)
 "fx" = (
 /obj/reagent_dispensers/still,
 /turf/simulated/floor/carpet/grime,
-/area)
+/area/space)
 "fy" = (
 /turf/simulated/floor/specialroom/bar,
-/area)
+/area/space)
 "fz" = (
 /obj/submachine/chef_sink/chem_sink{
 	dir = 1
 	},
 /turf/simulated/floor/grey/blackgrime,
-/area)
+/area/space)
 "fA" = (
 /obj/machinery/door/unpowered/wood{
 	icon = 'icons/obj/doors/door_stall.dmi';
 	name = "stall door"
 	},
 /turf/simulated/floor/white/grime,
-/area)
+/area/space)
 "fB" = (
 /obj/machinery/shower{
 	dir = 8;
 	icon_state = "showerhead"
 	},
 /turf/simulated/floor/white/grime,
-/area)
+/area/space)
 "fC" = (
 /obj/machinery/shower{
 	icon_state = "showerhead";
 	dir = 1
 	},
 /turf/simulated/floor/white/grime,
-/area)
+/area/space)
 "fD" = (
 /obj/machinery/shower{
 	dir = 4;
 	icon_state = "showerhead"
 	},
 /turf/simulated/floor/white/grime,
-/area)
+/area/space)
 "fE" = (
 /obj/table/auto,
 /obj/bedsheetbin{
 	pixel_y = 2
 	},
 /turf/simulated/floor/grey/whitegrime,
-/area)
+/area/space)
 "fF" = (
 /obj/blind_switch{
 	id = "pool2";
@@ -1978,33 +1978,33 @@
 /turf/simulated/floor/wood{
 	icon_state = "0,6"
 	},
-/area)
+/area/space)
 "fG" = (
 /obj/table/wood/auto,
 /obj/machinery/glass_recycler{
 	pixel_y = 6
 	},
 /turf/simulated/floor/specialroom/bar,
-/area)
+/area/space)
 "fH" = (
 /obj/table/reinforced/bar/auto,
 /turf/simulated/floor/specialroom/bar{
 	dir = 5
 	},
-/area)
+/area/space)
 "fI" = (
 /obj/stool/bar,
 /turf/simulated/floor/specialroom/bar,
-/area)
+/area/space)
 "fJ" = (
 /obj/machinery/door/firedoor/border_only,
 /turf/simulated/floor/black/grime,
-/area)
+/area/space)
 "fK" = (
 /obj/decal/tile_edge/stripe/big,
 /obj/machinery/door/firedoor/border_only,
 /turf/simulated/floor,
-/area)
+/area/space)
 "fL" = (
 /obj/decal/fakeobjects{
 	icon = 'icons/obj/decals/misc.dmi';
@@ -2012,73 +2012,73 @@
 	name = "drain"
 	},
 /turf/simulated/floor/white/grime,
-/area)
+/area/space)
 "fM" = (
 /obj/item/rubberduck,
 /turf/simulated/floor/white/grime,
-/area)
+/area/space)
 "fN" = (
 /obj/wingrille_spawn,
 /obj/window_blinds{
 	id = "pool2"
 	},
 /turf/simulated/floor/plating/random,
-/area)
+/area/space)
 "fO" = (
 /obj/machinery/vending/alcohol,
 /turf/simulated/floor/caution/corner/sw{
 	dir = 2
 	},
-/area)
+/area/space)
 "fP" = (
 /obj/submachine/chem_extractor,
 /turf/simulated/floor/caution/south,
-/area)
+/area/space)
 "fQ" = (
 /obj/machinery/chem_dispenser/alcohol,
 /turf/simulated/floor/caution/south,
-/area)
+/area/space)
 "fR" = (
 /obj/machinery/chem_dispenser,
 /turf/simulated/floor/caution/south,
-/area)
+/area/space)
 "fS" = (
 /obj/machinery/chem_dispenser/soda,
 /turf/simulated/floor/caution/south,
-/area)
+/area/space)
 "fT" = (
 /obj/machinery/chem_master,
 /turf/simulated/floor/caution/south,
-/area)
+/area/space)
 "fU" = (
 /obj/machinery/chem_heater,
 /turf/simulated/floor{
 	icon_state = "corner_east";
 	dir = 8
 	},
-/area)
+/area/space)
 "fV" = (
 /obj/machinery/light{
 	icon_state = "tube1";
 	dir = 8
 	},
 /turf/simulated/floor/specialroom/bar,
-/area)
+/area/space)
 "fW" = (
 /obj/table/reinforced/bar/auto,
 /turf/simulated/floor/specialroom/bar,
-/area)
+/area/space)
 "fX" = (
 /obj/stool/bar,
 /turf/simulated/floor/specialroom/bar{
 	dir = 5
 	},
-/area)
+/area/space)
 "fY" = (
 /turf/simulated/floor/specialroom/bar{
 	dir = 5
 	},
-/area)
+/area/space)
 "fZ" = (
 /obj/decal/tile_edge/stripe{
 	dir = 8;
@@ -2087,7 +2087,7 @@
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
-/area)
+/area/space)
 "ga" = (
 /obj/decal/tile_edge/stripe{
 	icon_state = "stripe-edge";
@@ -2099,7 +2099,7 @@
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
-/area)
+/area/space)
 "gb" = (
 /obj/decal/tile_edge/stripe{
 	icon_state = "stripe-edge";
@@ -2112,7 +2112,7 @@
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
-/area)
+/area/space)
 "gc" = (
 /obj/decal/tile_edge/stripe{
 	icon_state = "stripe-edge";
@@ -2122,31 +2122,31 @@
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
-/area)
+/area/space)
 "gd" = (
 /turf/simulated/floor/stairs{
 	icon_state = "Stairs_wide"
 	},
-/area)
+/area/space)
 "ge" = (
 /turf/simulated/floor/stairs{
 	icon_state = "Stairs2_wide"
 	},
-/area)
+/area/space)
 "gf" = (
 /obj/machinery/vending/cards,
 /turf/simulated/floor/neutral/corner{
 	dir = 2
 	},
-/area)
+/area/space)
 "gg" = (
 /turf/simulated/floor/neutral/side,
-/area)
+/area/space)
 "gh" = (
 /turf/simulated/floor/neutral/corner{
 	dir = 8
 	},
-/area)
+/area/space)
 "gi" = (
 /obj/table/auto,
 /obj/bedsheetbin{
@@ -2157,30 +2157,30 @@
 	name = "loofah"
 	},
 /turf/simulated/floor/white/grime,
-/area)
+/area/space)
 "gj" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "wall5_space";
 	dir = 8
 	},
-/area)
+/area/space)
 "gk" = (
 /obj/machinery/shuttle/engine/propulsion{
 	dir = 1
 	},
 /turf/space,
-/area)
+/area/space)
 "gl" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "wall5_space";
 	dir = 1
 	},
-/area)
+/area/space)
 "gm" = (
 /turf/simulated/floor/stairs{
 	icon_state = "wood_stairs"
 	},
-/area)
+/area/space)
 "gn" = (
 /obj/decal/tile_edge/stripe{
 	icon_state = "stripe-edge";
@@ -2193,20 +2193,20 @@
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
-/area)
+/area/space)
 "go" = (
 /obj/decal/tile_edge/stripe,
 /obj/mic_stand,
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
-/area)
+/area/space)
 "gp" = (
 /obj/decal/tile_edge/stripe,
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
-/area)
+/area/space)
 "gq" = (
 /obj/decal/tile_edge/stripe{
 	icon_state = "stripe-edge";
@@ -2215,34 +2215,34 @@
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
-/area)
+/area/space)
 "gr" = (
 /obj/lattice{
 	icon_state = "lattice-dir";
 	dir = 2
 	},
 /turf/space,
-/area)
+/area/space)
 "gs" = (
 /obj/decal/tile_edge/stripe/big{
 	icon_state = "bigstripe-edge";
 	dir = 1
 	},
 /turf/simulated/floor,
-/area)
+/area/space)
 "gt" = (
 /obj/stool/chair/moveable,
 /turf/simulated/floor/neutral/side{
 	dir = 4
 	},
-/area)
+/area/space)
 "gu" = (
 /obj/stool/chair/moveable,
 /turf/simulated/floor/neutral,
-/area)
+/area/space)
 "gv" = (
 /turf/simulated/floor/neutral,
-/area)
+/area/space)
 "gw" = (
 /obj/machinery/light{
 	icon_state = "tube1";
@@ -2251,7 +2251,7 @@
 /turf/simulated/floor/neutral/side{
 	dir = 8
 	},
-/area)
+/area/space)
 "gx" = (
 /obj/submachine/chef_sink/chem_sink{
 	dir = 4;
@@ -2259,21 +2259,21 @@
 	pixel_y = 0
 	},
 /turf/simulated/floor/grey/whitegrime,
-/area)
+/area/space)
 "gy" = (
 /obj/decal/poster/wallsign/chsl{
 	pixel_y = -32
 	},
 /obj/machinery/light,
 /turf/simulated/floor/grey/whitegrime,
-/area)
+/area/space)
 "gz" = (
 /obj/submachine/chef_sink/chem_sink{
 	dir = 8;
 	pixel_x = 4
 	},
 /turf/simulated/floor/grey/whitegrime,
-/area)
+/area/space)
 "gA" = (
 /obj/blind_switch{
 	id = "pool3";
@@ -2282,7 +2282,7 @@
 /turf/simulated/floor/wood{
 	icon_state = "0,6"
 	},
-/area)
+/area/space)
 "gB" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "wall5";
@@ -2301,19 +2301,19 @@
 	icon_state = "wall5";
 	dir = 2
 	},
-/area)
+/area/space)
 "gE" = (
 /obj/machinery/light{
 	icon_state = "tube1";
 	dir = 4
 	},
 /turf/simulated/floor/specialroom/bar,
-/area)
+/area/space)
 "gF" = (
 /obj/table/reinforced/bar/auto,
 /obj/machinery/cashreg,
 /turf/simulated/floor/specialroom/bar,
-/area)
+/area/space)
 "gG" = (
 /obj/decal/stage_edge,
 /obj/loudspeaker{
@@ -2322,7 +2322,7 @@
 /turf/simulated/floor/specialroom/bar{
 	dir = 5
 	},
-/area)
+/area/space)
 "gH" = (
 /obj/decal/stage_edge,
 /obj/decal/tile_edge/stripe{
@@ -2335,36 +2335,36 @@
 /turf/simulated/floor/specialroom/bar{
 	dir = 5
 	},
-/area)
+/area/space)
 "gI" = (
 /obj/decal/stage_edge,
 /turf/simulated/floor/specialroom/bar{
 	dir = 5
 	},
-/area)
+/area/space)
 "gJ" = (
 /obj/table/auto,
 /turf/simulated/floor/neutral/side{
 	dir = 4
 	},
-/area)
+/area/space)
 "gK" = (
 /obj/table/auto,
 /obj/random_item_spawner/desk_stuff,
 /turf/simulated/floor/neutral,
-/area)
+/area/space)
 "gL" = (
 /turf/simulated/floor/neutral/side{
 	dir = 10
 	},
-/area)
+/area/space)
 "gM" = (
 /obj/table/auto,
 /obj/item/decoration/ashtray,
 /turf/simulated/floor/neutral/corner{
 	dir = 8
 	},
-/area)
+/area/space)
 "gN" = (
 /obj/table/auto,
 /obj/bedsheetbin{
@@ -2373,14 +2373,14 @@
 /turf/simulated/floor/neutral/corner{
 	dir = 2
 	},
-/area)
+/area/space)
 "gO" = (
 /obj/wingrille_spawn,
 /obj/window_blinds{
 	id = "crew4"
 	},
 /turf/simulated/floor/plating/random,
-/area)
+/area/space)
 "gP" = (
 /obj/storage/secure/closet/personal,
 /obj/blind_switch{
@@ -2388,21 +2388,21 @@
 	pixel_y = 22
 	},
 /turf/simulated/floor/carpet/grime,
-/area)
+/area/space)
 "gQ" = (
 /obj/table/auto,
 /obj/machinery/light/lamp{
 	switchon = 1
 	},
 /turf/simulated/floor/carpet/grime,
-/area)
+/area/space)
 "gR" = (
 /obj/wingrille_spawn,
 /obj/window_blinds{
 	id = "pool3"
 	},
 /turf/simulated/floor/plating/random,
-/area)
+/area/space)
 "gS" = (
 /obj/storage/closet/emergency,
 /turf/simulated/floor/shuttle,
@@ -2414,7 +2414,7 @@
 "gU" = (
 /obj/table/reinforced,
 /obj/item/device/radio/intercom{
-	
+
 	},
 /obj/item/storage/toolbox/emergency,
 /obj/item/device/radio,
@@ -2432,36 +2432,36 @@
 /obj/window/west,
 /obj/machinery/cashreg,
 /turf/simulated/floor/specialroom/bar,
-/area)
+/area/space)
 "gX" = (
 /obj/table/reinforced/bar/auto,
 /obj/item/decoration/ashtray,
 /turf/simulated/floor/specialroom/bar,
-/area)
+/area/space)
 "gY" = (
 /obj/table/reinforced/bar/auto,
 /obj/window/east,
 /turf/simulated/floor/specialroom/bar,
-/area)
+/area/space)
 "gZ" = (
 /turf/simulated/floor/carpet{
 	icon_state = "fpurple2";
 	dir = 9
 	},
-/area)
+/area/space)
 "ha" = (
 /obj/stool/chair/comfy/red,
 /turf/simulated/floor/carpet{
 	icon_state = "fpurple2";
 	dir = 1
 	},
-/area)
+/area/space)
 "hb" = (
 /turf/simulated/floor/carpet{
 	icon_state = "fpurple2";
 	dir = 5
 	},
-/area)
+/area/space)
 "hc" = (
 /obj/table/auto,
 /obj/machinery/power/data_terminal,
@@ -2469,17 +2469,17 @@
 /turf/simulated/floor/neutral/side{
 	dir = 4
 	},
-/area)
+/area/space)
 "hd" = (
 /obj/stool/bench/auto,
 /turf/simulated/floor/neutral,
-/area)
+/area/space)
 "he" = (
 /obj/machinery/vending/pizza,
 /turf/simulated/floor/neutral/side{
 	dir = 8
 	},
-/area)
+/area/space)
 "hf" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet/random,
@@ -2488,14 +2488,14 @@
 	pixel_y = 22
 	},
 /turf/simulated/floor/carpet/grime,
-/area)
+/area/space)
 "hg" = (
 /obj/wingrille_spawn,
 /obj/window_blinds{
 	id = "crew1"
 	},
 /turf/simulated/floor/plating/random,
-/area)
+/area/space)
 "hh" = (
 /obj/machinery/light{
 	icon_state = "tube1";
@@ -2504,24 +2504,24 @@
 /turf/simulated/floor/neutral/corner{
 	dir = 8
 	},
-/area)
+/area/space)
 "hi" = (
 /turf/simulated/floor/neutral/side{
 	dir = 4
 	},
-/area)
+/area/space)
 "hj" = (
 /obj/machinery/door/firedoor/border_only,
 /turf/simulated/floor/neutral/side{
 	dir = 8
 	},
-/area)
+/area/space)
 "hk" = (
 /obj/landmark/start{
 	name = "Staff Assistant"
 	},
 /turf/simulated/floor/carpet/grime,
-/area)
+/area/space)
 "hl" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "wall5_space";
@@ -2550,7 +2550,7 @@
 	icon_state = "fgreen2";
 	dir = 9
 	},
-/area)
+/area/space)
 "hq" = (
 /obj/table/wood/round/auto,
 /obj/item/decoration/ashtray,
@@ -2558,7 +2558,7 @@
 	icon_state = "fgreen2";
 	dir = 1
 	},
-/area)
+/area/space)
 "hr" = (
 /obj/stool/chair/comfy/blue{
 	icon_state = "chair_comfy-blue";
@@ -2568,7 +2568,7 @@
 	icon_state = "fgreen2";
 	dir = 1
 	},
-/area)
+/area/space)
 "hs" = (
 /obj/machinery/vending/cigarette,
 /obj/window/east,
@@ -2576,43 +2576,43 @@
 	icon_state = "fgreen2";
 	dir = 5
 	},
-/area)
+/area/space)
 "ht" = (
 /obj/window/west,
 /turf/simulated/floor/wood,
-/area)
+/area/space)
 "hu" = (
 /obj/stool/bar,
 /turf/simulated/floor/carpet{
 	icon_state = "fred2";
 	dir = 9
 	},
-/area)
+/area/space)
 "hv" = (
 /obj/stool/bar,
 /turf/simulated/floor/carpet{
 	icon_state = "fred2";
 	dir = 1
 	},
-/area)
+/area/space)
 "hw" = (
 /obj/stool/bar,
 /turf/simulated/floor/carpet{
 	icon_state = "fred2";
 	dir = 5
 	},
-/area)
+/area/space)
 "hx" = (
 /obj/window/east,
 /turf/simulated/floor/wood,
-/area)
+/area/space)
 "hy" = (
 /obj/decal/poster/wallsign/bar,
 /turf/simulated/wall/auto/gannets,
-/area)
+/area/space)
 "hz" = (
 /turf/simulated/floor/wood,
-/area)
+/area/space)
 "hA" = (
 /obj/stool/chair/comfy/red{
 	icon_state = "chair_comfy-red";
@@ -2622,7 +2622,7 @@
 	icon_state = "fpurple2";
 	dir = 8
 	},
-/area)
+/area/space)
 "hB" = (
 /obj/table/wood/round/auto,
 /obj/item/device/light/candle/small{
@@ -2636,7 +2636,7 @@
 	icon_state = "fpurple1";
 	dir = 1
 	},
-/area)
+/area/space)
 "hC" = (
 /obj/stool/chair/comfy/red{
 	icon_state = "chair_comfy-red";
@@ -2646,13 +2646,13 @@
 	icon_state = "fpurple2";
 	dir = 4
 	},
-/area)
+/area/space)
 "hD" = (
 /turf/simulated/floor/carpet{
 	icon_state = "fred6";
 	dir = 1
 	},
-/area)
+/area/space)
 "hE" = (
 /obj/table/wood/round/auto,
 /obj/item/decoration/ashtray,
@@ -2660,33 +2660,33 @@
 	icon_state = "fpurple1";
 	dir = 1
 	},
-/area)
+/area/space)
 "hF" = (
 /obj/machinery/vending/cola/red,
 /turf/simulated/floor/neutral/side{
 	dir = 8
 	},
-/area)
+/area/space)
 "hG" = (
 /obj/machinery/door/firedoor/border_only,
 /turf/simulated/floor/neutral/side{
 	dir = 4
 	},
-/area)
+/area/space)
 "hH" = (
 /turf/simulated/floor/neutral/side{
 	dir = 8
 	},
-/area)
+/area/space)
 "hI" = (
 /turf/simulated/floor/grime,
-/area)
+/area/space)
 "hJ" = (
 /obj/table/auto,
 /obj/item/clothing/gloves/boxing,
 /obj/item/clothing/under/shorts/black,
 /turf/simulated/floor/grime,
-/area)
+/area/space)
 "hK" = (
 /obj/machinery/light{
 	icon_state = "tube1";
@@ -2696,29 +2696,29 @@
 /obj/item/clothing/gloves/boxing,
 /obj/item/clothing/under/shorts/black,
 /turf/simulated/floor/grime,
-/area)
+/area/space)
 "hL" = (
 /obj/machinery/vending/cigarette,
 /turf/simulated/floor/grime,
-/area)
+/area/space)
 "hM" = (
 /obj/stool/chair/couch/blue{
 	icon_state = "chair_couch-blue";
 	dir = 8
 	},
 /turf/simulated/floor/grime,
-/area)
+/area/space)
 "hN" = (
 /obj/stool/chair/couch/blue,
 /turf/simulated/floor/grime,
-/area)
+/area/space)
 "hO" = (
 /obj/stool/chair/couch/blue{
 	icon_state = "chair_couch-blue";
 	dir = 4
 	},
 /turf/simulated/floor/grime,
-/area)
+/area/space)
 "hP" = (
 /turf/space,
 /area/shuttle/arrival/station)
@@ -2737,50 +2737,50 @@
 	icon_state = "fgreen4";
 	dir = 9
 	},
-/area)
+/area/space)
 "hT" = (
 /turf/simulated/floor/carpet{
 	icon_state = "fgreen4";
 	dir = 5
 	},
-/area)
+/area/space)
 "hU" = (
 /turf/simulated/floor/carpet{
 	icon_state = "fred5";
 	dir = 8
 	},
-/area)
+/area/space)
 "hV" = (
 /turf/simulated/floor/carpet{
 	icon_state = "fred1";
 	dir = 5
 	},
-/area)
+/area/space)
 "hW" = (
 /turf/simulated/floor/carpet{
 	icon_state = "fred1";
 	dir = 8
 	},
-/area)
+/area/space)
 "hX" = (
 /turf/simulated/floor/carpet{
 	icon_state = "fred5";
 	dir = 4
 	},
-/area)
+/area/space)
 "hY" = (
 /obj/decal/tile_edge/stripe/big{
 	icon_state = "bigstripe-edge";
 	dir = 4
 	},
 /turf/simulated/floor/wood,
-/area)
+/area/space)
 "hZ" = (
 /turf/simulated/floor/stairs{
 	dir = 4;
 	icon_state = "Stairs_wide"
 	},
-/area)
+/area/space)
 "ia" = (
 /obj/decal/tile_edge/stripe/big{
 	icon_state = "bigstripe-edge";
@@ -2790,29 +2790,29 @@
 	icon_state = "fred2";
 	dir = 9
 	},
-/area)
+/area/space)
 "ib" = (
 /turf/simulated/floor/carpet{
 	icon_state = "fred2";
 	dir = 1
 	},
-/area)
+/area/space)
 "ic" = (
 /turf/simulated/floor/carpet{
 	icon_state = "fred2";
 	dir = 5
 	},
-/area)
+/area/space)
 "id" = (
 /obj/stool/chair/comfy/red,
 /turf/simulated/floor/wood,
-/area)
+/area/space)
 "ie" = (
 /turf/simulated/floor/carpet{
 	icon_state = "fpurple2";
 	dir = 10
 	},
-/area)
+/area/space)
 "if" = (
 /obj/stool/chair/comfy/red{
 	icon_state = "chair_comfy-red";
@@ -2822,50 +2822,50 @@
 	icon_state = "fpurple2";
 	dir = 2
 	},
-/area)
+/area/space)
 "ig" = (
 /turf/simulated/floor/carpet{
 	icon_state = "fpurple1";
 	dir = 5
 	},
-/area)
+/area/space)
 "ih" = (
 /turf/simulated/floor/carpet{
 	icon_state = "fpurple1";
 	dir = 9
 	},
-/area)
+/area/space)
 "ii" = (
 /turf/simulated/floor/carpet{
 	icon_state = "fpurple2";
 	dir = 6
 	},
-/area)
+/area/space)
 "ij" = (
 /obj/table/auto,
 /obj/random_item_spawner/desk_stuff,
 /turf/simulated/floor/neutral/side{
 	dir = 4
 	},
-/area)
+/area/space)
 "ik" = (
 /obj/table/auto,
 /obj/random_item_spawner/tableware,
 /turf/simulated/floor/neutral,
-/area)
+/area/space)
 "il" = (
 /obj/machinery/vending/cigarette,
 /turf/simulated/floor/neutral/side{
 	dir = 8
 	},
-/area)
+/area/space)
 "im" = (
 /obj/window_blinds{
 	id = "crew5"
 	},
 /obj/wingrille_spawn,
 /turf/simulated/floor/plating/random,
-/area)
+/area/space)
 "in" = (
 /obj/storage/secure/closet/personal,
 /obj/blind_switch{
@@ -2873,18 +2873,18 @@
 	pixel_y = 22
 	},
 /turf/simulated/floor/carpet/grime,
-/area)
+/area/space)
 "io" = (
 /obj/machinery/light{
 	icon_state = "tube1";
 	dir = 1
 	},
 /turf/simulated/floor/wood,
-/area)
+/area/space)
 "ip" = (
 /obj/machinery/vending/cola/blue,
 /turf/simulated/floor/wood,
-/area)
+/area/space)
 "iq" = (
 /obj/stool/chair/comfy/shuttle,
 /obj/landmark{
@@ -2904,32 +2904,32 @@
 	icon_state = "fgreen4";
 	dir = 10
 	},
-/area)
+/area/space)
 "it" = (
 /turf/simulated/floor/carpet{
 	icon_state = "fgreen4";
 	dir = 6
 	},
-/area)
+/area/space)
 "iu" = (
 /obj/machinery/light,
 /turf/simulated/floor/carpet{
 	icon_state = "fred2";
 	dir = 10
 	},
-/area)
+/area/space)
 "iv" = (
 /turf/simulated/floor/carpet{
 	icon_state = "fred2";
 	dir = 2
 	},
-/area)
+/area/space)
 "iw" = (
 /turf/simulated/floor/carpet{
 	icon_state = "fred2";
 	dir = 6
 	},
-/area)
+/area/space)
 "ix" = (
 /obj/decal/tile_edge/stripe/big{
 	icon_state = "bigstripe-edge";
@@ -2937,13 +2937,13 @@
 	},
 /obj/machinery/light,
 /turf/simulated/floor/wood,
-/area)
+/area/space)
 "iy" = (
 /turf/simulated/floor/stairs{
 	dir = 4;
 	icon_state = "Stairs2_wide"
 	},
-/area)
+/area/space)
 "iz" = (
 /obj/decal/tile_edge/stripe/big{
 	icon_state = "bigstripe-edge";
@@ -2953,18 +2953,18 @@
 	icon_state = "fred2";
 	dir = 10
 	},
-/area)
+/area/space)
 "iA" = (
 /obj/table/wood/round/auto,
 /obj/item/decoration/ashtray,
 /turf/simulated/floor/wood,
-/area)
+/area/space)
 "iB" = (
 /turf/simulated/floor/carpet{
 	icon_state = "fred6";
 	dir = 10
 	},
-/area)
+/area/space)
 "iC" = (
 /obj/table/wood/round/auto,
 /obj/item/decoration/flower_vase,
@@ -2972,17 +2972,17 @@
 	icon_state = "fpurple1";
 	dir = 1
 	},
-/area)
+/area/space)
 "iD" = (
 /turf/simulated/floor/carpet{
 	icon_state = "fred6";
 	dir = 6
 	},
-/area)
+/area/space)
 "iE" = (
 /obj/decal/tile_edge/stripe/big,
 /turf/simulated/floor,
-/area)
+/area/space)
 "iF" = (
 /obj/stool/chair/moveable{
 	icon_state = "chair";
@@ -2991,14 +2991,14 @@
 /turf/simulated/floor/neutral/side{
 	dir = 4
 	},
-/area)
+/area/space)
 "iG" = (
 /obj/stool/chair/moveable{
 	icon_state = "chair";
 	dir = 1
 	},
 /turf/simulated/floor/neutral,
-/area)
+/area/space)
 "iH" = (
 /obj/machinery/light{
 	icon_state = "tube1";
@@ -3009,7 +3009,7 @@
 /turf/simulated/floor/neutral/side{
 	dir = 8
 	},
-/area)
+/area/space)
 "iI" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet/random,
@@ -3018,48 +3018,48 @@
 	pixel_y = 22
 	},
 /turf/simulated/floor/carpet/grime,
-/area)
+/area/space)
 "iJ" = (
 /obj/wingrille_spawn,
 /obj/window_blinds{
 	id = "crew2"
 	},
 /turf/simulated/floor/plating/random,
-/area)
+/area/space)
 "iK" = (
 /obj/table/auto,
 /obj/item/decoration/ashtray,
 /turf/simulated/floor/wood,
-/area)
+/area/space)
 "iL" = (
 /obj/decal/boxingrope{
 	icon_state = "ringrope";
 	dir = 9
 	},
 /turf/simulated/floor/wood,
-/area)
+/area/space)
 "iM" = (
 /obj/decal/boxingrope,
 /turf/simulated/floor/wood,
-/area)
+/area/space)
 "iN" = (
 /obj/decal/boxingrope{
 	icon_state = "ringrope";
 	dir = 5
 	},
 /turf/simulated/floor/wood,
-/area)
+/area/space)
 "iO" = (
 /obj/machinery/vending/snack,
 /turf/simulated/floor/wood,
-/area)
+/area/space)
 "iP" = (
 /obj/reagent_dispensers/watertank/fountain,
 /turf/simulated/floor/carpet{
 	icon_state = "fgreen2";
 	dir = 10
 	},
-/area)
+/area/space)
 "iQ" = (
 /obj/stool/chair/comfy/blue{
 	icon_state = "chair_comfy-blue";
@@ -3069,7 +3069,7 @@
 	icon_state = "fgreen2";
 	dir = 2
 	},
-/area)
+/area/space)
 "iR" = (
 /obj/table/wood/round/auto,
 /obj/item/playing_cards/suit,
@@ -3077,7 +3077,7 @@
 	icon_state = "fgreen2";
 	dir = 2
 	},
-/area)
+/area/space)
 "iS" = (
 /obj/stool/chair/comfy/blue{
 	icon_state = "chair_comfy-blue";
@@ -3087,81 +3087,81 @@
 	icon_state = "fgreen2";
 	dir = 6
 	},
-/area)
+/area/space)
 "iT" = (
 /obj/decal/tile_edge/stripe/big,
 /obj/machinery/door/firedoor/border_only,
 /turf/simulated/floor/wood,
-/area)
+/area/space)
 "iU" = (
 /obj/stool/chair/comfy/red{
 	icon_state = "chair_comfy-red";
 	dir = 4
 	},
 /turf/simulated/floor/wood,
-/area)
+/area/space)
 "iV" = (
 /obj/table/wood/round/auto,
 /obj/item/game_kit,
 /turf/simulated/floor/wood,
-/area)
+/area/space)
 "iW" = (
 /obj/stool/chair/comfy/red{
 	icon_state = "chair_comfy-red";
 	dir = 8
 	},
 /turf/simulated/floor/wood,
-/area)
+/area/space)
 "iX" = (
 /obj/machinery/light{
 	layer = 9.1
 	},
 /turf/simulated/floor/wood,
-/area)
+/area/space)
 "iY" = (
 /obj/stool/chair/comfy/red{
 	icon_state = "chair_comfy-red";
 	dir = 1
 	},
 /turf/simulated/floor/wood,
-/area)
+/area/space)
 "iZ" = (
 /obj/table/wood/auto,
 /obj/item/storage/box/glassbox,
 /turf/simulated/floor/wood,
-/area)
+/area/space)
 "ja" = (
 /obj/reagent_dispensers/watertank/fountain,
 /turf/simulated/floor/wood,
-/area)
+/area/space)
 "jb" = (
 /turf/simulated/floor/stairs{
 	dir = 1;
 	icon_state = "Stairs2_wide"
 	},
-/area)
+/area/space)
 "jc" = (
 /turf/simulated/floor/stairs{
 	dir = 1;
 	icon_state = "Stairs_wide"
 	},
-/area)
+/area/space)
 "jd" = (
 /obj/storage/closet/office,
 /turf/simulated/floor/neutral/corner{
 	dir = 4
 	},
-/area)
+/area/space)
 "je" = (
 /turf/simulated/floor/neutral/side{
 	dir = 1
 	},
-/area)
+/area/space)
 "jf" = (
 /turf/simulated/floor/neutral/corner{
 	dir = 1
 	},
-/area)
+/area/space)
 "jg" = (
 /obj/item/clothing/mask/wrestling,
 /obj/item/clothing/mask/wrestling/black,
@@ -3171,14 +3171,14 @@
 /obj/item/clothing/under/gimmick/macho,
 /obj/storage/closet/dresser/random,
 /turf/simulated/floor/grime,
-/area)
+/area/space)
 "jh" = (
 /obj/stool/chair/red{
 	icon_state = "chair-r";
 	dir = 4
 	},
 /turf/simulated/floor/wood,
-/area)
+/area/space)
 "ji" = (
 /obj/decal/boxingrope{
 	density = 0;
@@ -3186,10 +3186,10 @@
 	icon_state = "ringrope"
 	},
 /turf/simulated/floor/specialroom/gym,
-/area)
+/area/space)
 "jj" = (
 /turf/simulated/floor/specialroom/gym,
-/area)
+/area/space)
 "jk" = (
 /obj/decal/boxingrope{
 	icon_state = "ringrope";
@@ -3197,14 +3197,14 @@
 	},
 /obj/stool/bench/blue,
 /turf/simulated/floor/specialroom/gym,
-/area)
+/area/space)
 "jl" = (
 /obj/stool/chair/blue{
 	icon_state = "chair-b";
 	dir = 8
 	},
 /turf/simulated/floor/wood,
-/area)
+/area/space)
 "jm" = (
 /obj/shrub{
 	icon_state = "shrub";
@@ -3217,7 +3217,7 @@
 /turf/simulated/floor/grey/side{
 	dir = 1
 	},
-/area)
+/area/space)
 "jn" = (
 /obj/shrub{
 	icon_state = "shrub";
@@ -3230,7 +3230,7 @@
 /turf/simulated/floor/grey/side{
 	dir = 1
 	},
-/area)
+/area/space)
 "jo" = (
 /obj/decal/tile_edge/stripe/big{
 	icon_state = "bigstripe-edge";
@@ -3238,18 +3238,18 @@
 	},
 /obj/machinery/door/firedoor/border_only,
 /turf/simulated/floor,
-/area)
+/area/space)
 "jp" = (
 /obj/machinery/door/firedoor/border_only,
 /turf/simulated/floor/neutral/side,
-/area)
+/area/space)
 "jq" = (
 /obj/wingrille_spawn,
 /obj/window_blinds{
 	id = "crew6"
 	},
 /turf/simulated/floor/plating/random,
-/area)
+/area/space)
 "jr" = (
 /obj/storage/secure/closet/personal,
 /obj/blind_switch{
@@ -3257,7 +3257,7 @@
 	pixel_y = 22
 	},
 /turf/simulated/floor/carpet/grime,
-/area)
+/area/space)
 "js" = (
 /obj/table/auto,
 /obj/item/clothing/gloves/boxing,
@@ -3265,7 +3265,7 @@
 /obj/item/clothing/under/shorts/blue,
 /obj/item/clothing/under/shorts/blue,
 /turf/simulated/floor/grime,
-/area)
+/area/space)
 "jt" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -3277,25 +3277,25 @@
 	tag = ""
 	},
 /turf/simulated/floor/specialroom/gym,
-/area)
+/area/space)
 "ju" = (
 /obj/decal/boxingrope{
 	icon_state = "ringrope";
 	dir = 4
 	},
 /turf/simulated/floor/specialroom/gym,
-/area)
+/area/space)
 "jv" = (
 /obj/machinery/light{
 	dir = 1
 	},
 /turf/simulated/floor,
-/area)
+/area/space)
 "jw" = (
 /turf/simulated/floor/neutral/corner{
 	dir = 4
 	},
-/area)
+/area/space)
 "jx" = (
 /obj/decal/tile_edge/stripe/big{
 	icon_state = "bigstripe-corner2";
@@ -3304,7 +3304,7 @@
 /turf/simulated/floor/neutral/side{
 	dir = 1
 	},
-/area)
+/area/space)
 "jy" = (
 /obj/decal/tile_edge/stripe/big{
 	icon_state = "bigstripe-edge";
@@ -3313,7 +3313,7 @@
 /turf/simulated/floor/neutral/side{
 	dir = 1
 	},
-/area)
+/area/space)
 "jz" = (
 /obj/decal/tile_edge/stripe/big{
 	icon_state = "bigstripe-corner2";
@@ -3322,24 +3322,24 @@
 /turf/simulated/floor/neutral/side{
 	dir = 1
 	},
-/area)
+/area/space)
 "jA" = (
 /obj/stool/bench/auto,
 /turf/simulated/floor,
-/area)
+/area/space)
 "jB" = (
 /obj/table/auto,
 /obj/random_item_spawner/desk_stuff,
 /turf/simulated/floor/neutral/side{
 	dir = 9
 	},
-/area)
+/area/space)
 "jC" = (
 /obj/machinery/vending/medical_public,
 /turf/simulated/floor/neutral/side{
 	dir = 5
 	},
-/area)
+/area/space)
 "jD" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet/random,
@@ -3348,14 +3348,14 @@
 	pixel_y = 22
 	},
 /turf/simulated/floor/carpet/grime,
-/area)
+/area/space)
 "jE" = (
 /obj/wingrille_spawn,
 /obj/window_blinds{
 	id = "crew3"
 	},
 /turf/simulated/floor/plating/random,
-/area)
+/area/space)
 "jF" = (
 /obj/table/auto,
 /obj/item/clothing/gloves/boxing,
@@ -3363,7 +3363,7 @@
 /obj/item/clothing/under/shorts/red,
 /obj/item/clothing/under/shorts/red,
 /turf/simulated/floor/grime,
-/area)
+/area/space)
 "jG" = (
 /obj/decal/boxingrope{
 	density = 0;
@@ -3372,7 +3372,7 @@
 	},
 /obj/stool/bench/red,
 /turf/simulated/floor/specialroom/gym,
-/area)
+/area/space)
 "jH" = (
 /obj/machinery/door/airlock/external{
 	icon_state = "door_locked";
@@ -3411,13 +3411,13 @@
 	},
 /obj/machinery/door/airlock/external,
 /turf/simulated/floor/delivery,
-/area)
+/area/space)
 "jM" = (
 /turf/simulated/floor/stairs{
 	dir = 8;
 	icon_state = "medstairs_alone"
 	},
-/area)
+/area/space)
 "jN" = (
 /obj/decal/tile_edge/stripe/big{
 	icon_state = "bigstripe-edge";
@@ -3425,42 +3425,42 @@
 	},
 /obj/machinery/door/airlock/external,
 /turf/simulated/floor/delivery,
-/area)
+/area/space)
 "jO" = (
 /turf/simulated/floor{
 	icon_state = "nt_logo"
 	},
-/area)
+/area/space)
 "jP" = (
 /obj/table/auto,
 /obj/random_item_spawner/desk_stuff,
 /turf/simulated/floor/neutral/side{
 	dir = 10
 	},
-/area)
+/area/space)
 "jQ" = (
 /turf/simulated/floor/neutral/side{
 	dir = 6
 	},
-/area)
+/area/space)
 "jR" = (
 /obj/decal/tile_edge/stripe/big{
 	icon_state = "bigstripe-corner2";
 	dir = 10
 	},
 /turf/simulated/floor/grime,
-/area)
+/area/space)
 "jS" = (
 /obj/decal/boxingrope{
 	icon_state = "ringrope";
 	dir = 9
 	},
 /turf/simulated/floor/specialroom/gym,
-/area)
+/area/space)
 "jT" = (
 /obj/decal/boxingrope,
 /turf/simulated/floor/specialroom/gym,
-/area)
+/area/space)
 "jU" = (
 /obj/decal/boxingropeenter{
 	desc = "Do not exit the ring. Except through here. It's okay to exit through here, there's stairs.";
@@ -3469,71 +3469,71 @@
 	pixel_x = 0
 	},
 /turf/simulated/floor/specialroom/gym,
-/area)
+/area/space)
 "jV" = (
 /obj/machinery/light,
 /turf/simulated/floor/red/corner{
 	dir = 2
 	},
-/area)
+/area/space)
 "jW" = (
 /turf/simulated/floor/red/side,
-/area)
+/area/space)
 "jX" = (
 /turf/simulated/floor/red/corner{
 	dir = 8
 	},
-/area)
+/area/space)
 "jY" = (
 /turf/simulated/floor{
 	icon_state = "L1"
 	},
-/area)
+/area/space)
 "jZ" = (
 /turf/simulated/floor{
 	icon_state = "L3"
 	},
-/area)
+/area/space)
 "ka" = (
 /turf/simulated/floor{
 	icon_state = "L5"
 	},
-/area)
+/area/space)
 "kb" = (
 /turf/simulated/floor{
 	icon_state = "L7"
 	},
-/area)
+/area/space)
 "kc" = (
 /turf/simulated/floor{
 	icon_state = "L9"
 	},
-/area)
+/area/space)
 "kd" = (
 /turf/simulated/floor{
 	icon_state = "L11"
 	},
-/area)
+/area/space)
 "ke" = (
 /turf/simulated/floor{
 	icon_state = "L13"
 	},
-/area)
+/area/space)
 "kf" = (
 /turf/simulated/floor{
 	icon_state = "L15"
 	},
-/area)
+/area/space)
 "kg" = (
 /obj/table/auto,
 /turf/simulated/floor,
-/area)
+/area/space)
 "kh" = (
 /obj/machinery/door/firedoor/border_only,
 /turf/simulated/floor/neutral/side{
 	dir = 1
 	},
-/area)
+/area/space)
 "ki" = (
 /obj/decal/tile_edge/stripe/big{
 	icon_state = "bigstripe-edge";
@@ -3542,24 +3542,24 @@
 /turf/simulated/floor/blue/side{
 	dir = 4
 	},
-/area)
+/area/space)
 "kj" = (
 /turf/simulated/floor/stairs{
 	dir = 8;
 	icon_state = "Stairs2_wide"
 	},
-/area)
+/area/space)
 "kk" = (
 /obj/decal/tile_edge/stripe/big{
 	icon_state = "bigstripe-edge";
 	dir = 8
 	},
 /turf/simulated/floor/grime,
-/area)
+/area/space)
 "kl" = (
 /obj/table/auto,
 /turf/simulated/floor/wood,
-/area)
+/area/space)
 "km" = (
 /obj/decal/stage_edge,
 /obj/stool/chair/moveable{
@@ -3567,19 +3567,19 @@
 	dir = 4
 	},
 /turf/simulated/floor/wood,
-/area)
+/area/space)
 "kn" = (
 /obj/decal/stage_edge,
 /obj/table/auto,
 /obj/random_item_spawner/desk_stuff,
 /turf/simulated/floor/wood,
-/area)
+/area/space)
 "ko" = (
 /obj/decal/stage_edge,
 /obj/table/auto,
 /obj/item/device/radio/intercom,
 /turf/simulated/floor/wood,
-/area)
+/area/space)
 "kp" = (
 /obj/decal/stage_edge,
 /obj/stool/chair/moveable{
@@ -3587,10 +3587,10 @@
 	dir = 8
 	},
 /turf/simulated/floor/wood,
-/area)
+/area/space)
 "kq" = (
 /turf/simulated/floor/stairs,
-/area)
+/area/space)
 "kr" = (
 /obj/table/reinforced{
 	dir = 5;
@@ -3620,7 +3620,7 @@
 /turf/simulated/floor/red/side{
 	dir = 1
 	},
-/area)
+/area/space)
 "ku" = (
 /obj/window/reinforced/east,
 /obj/table/reinforced/auto,
@@ -3629,53 +3629,53 @@
 /turf/simulated/floor/red/side{
 	dir = 1
 	},
-/area)
+/area/space)
 "kv" = (
 /obj/machinery/door/firedoor/border_only,
 /turf/simulated/floor/red/side{
 	dir = 1
 	},
-/area)
+/area/space)
 "kw" = (
 /turf/simulated/floor{
 	icon_state = "L2"
 	},
-/area)
+/area/space)
 "kx" = (
 /turf/simulated/floor{
 	icon_state = "L4"
 	},
-/area)
+/area/space)
 "ky" = (
 /turf/simulated/floor{
 	icon_state = "L6"
 	},
-/area)
+/area/space)
 "kz" = (
 /turf/simulated/floor{
 	icon_state = "L8"
 	},
-/area)
+/area/space)
 "kA" = (
 /turf/simulated/floor{
 	icon_state = "L10"
 	},
-/area)
+/area/space)
 "kB" = (
 /turf/simulated/floor{
 	icon_state = "L12"
 	},
-/area)
+/area/space)
 "kC" = (
 /turf/simulated/floor{
 	icon_state = "L14"
 	},
-/area)
+/area/space)
 "kD" = (
 /turf/simulated/floor{
 	icon_state = "L16"
 	},
-/area)
+/area/space)
 "kE" = (
 /obj/table/auto,
 /obj/random_item_spawner/desk_stuff,
@@ -3684,11 +3684,11 @@
 	dir = 4
 	},
 /turf/simulated/floor,
-/area)
+/area/space)
 "kF" = (
 /obj/machinery/door/firedoor/border_only,
 /turf/simulated/floor/neutral,
-/area)
+/area/space)
 "kG" = (
 /obj/decal/tile_edge/stripe/big{
 	icon_state = "bigstripe-edge";
@@ -3697,13 +3697,13 @@
 /turf/simulated/floor/red/side{
 	dir = 4
 	},
-/area)
+/area/space)
 "kH" = (
 /turf/simulated/floor/stairs{
 	dir = 8;
 	icon_state = "Stairs_wide"
 	},
-/area)
+/area/space)
 "kI" = (
 /obj/decal/stage_edge{
 	tag = "icon-curtainthing";
@@ -3711,7 +3711,7 @@
 	dir = 2
 	},
 /turf/simulated/floor/wood,
-/area)
+/area/space)
 "kJ" = (
 /obj/machinery/light,
 /obj/decal/stage_edge{
@@ -3720,7 +3720,7 @@
 	dir = 2
 	},
 /turf/simulated/floor/wood,
-/area)
+/area/space)
 "kK" = (
 /obj/table/reinforced{
 	dir = 4;
@@ -3749,28 +3749,28 @@
 /turf/simulated/floor/red/corner{
 	dir = 2
 	},
-/area)
+/area/space)
 "kN" = (
 /obj/stool/chair/office/red{
 	icon_state = "office_chair_red";
 	dir = 1
 	},
 /turf/simulated/floor/red/side,
-/area)
+/area/space)
 "kO" = (
 /obj/machinery/light{
 	icon_state = "tube1";
 	dir = 8
 	},
 /turf/simulated/floor,
-/area)
+/area/space)
 "kP" = (
 /turf/simulated/floor/specialroom/arcade,
-/area)
+/area/space)
 "kQ" = (
 /obj/machinery/computer/arcade,
 /turf/simulated/floor/specialroom/arcade,
-/area)
+/area/space)
 "kR" = (
 /obj/table/reinforced/auto,
 /obj/machinery/door/window/northleft,
@@ -3779,7 +3779,7 @@
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
-/area)
+/area/space)
 "kS" = (
 /obj/table/reinforced/auto,
 /obj/machinery/door/window/northright,
@@ -3788,7 +3788,7 @@
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
-/area)
+/area/space)
 "kT" = (
 /obj/decal/tile_edge/stripe/big,
 /obj/decal/tile_edge/stripe/big{
@@ -3796,7 +3796,7 @@
 	dir = 9
 	},
 /turf/simulated/floor/grime,
-/area)
+/area/space)
 "kU" = (
 /obj/decal/tile_edge/stripe/big{
 	icon_state = "bigstripe-corner2";
@@ -3804,7 +3804,7 @@
 	},
 /obj/machinery/light,
 /turf/simulated/floor/grime,
-/area)
+/area/space)
 "kV" = (
 /obj/machinery/vending/medical_public,
 /obj/decal/tile_edge/stripe/big{
@@ -3812,11 +3812,11 @@
 	dir = 6
 	},
 /turf/simulated/floor/grime,
-/area)
+/area/space)
 "kW" = (
 /obj/decal/tile_edge/stripe/big,
 /turf/simulated/floor/grime,
-/area)
+/area/space)
 "kX" = (
 /obj/stool/chair/couch/red{
 	icon_state = "chair_couch-red";
@@ -3827,26 +3827,26 @@
 	dir = 10
 	},
 /turf/simulated/floor/grime,
-/area)
+/area/space)
 "kY" = (
 /obj/stool/chair/couch/red{
 	icon_state = "chair_couch-red";
 	dir = 6
 	},
 /turf/simulated/floor/grime,
-/area)
+/area/space)
 "kZ" = (
 /obj/stool/chair/couch/red{
 	icon_state = "chair_couch-red";
 	dir = 5
 	},
 /turf/simulated/floor/grime,
-/area)
+/area/space)
 "la" = (
 /obj/table/auto,
 /obj/random_item_spawner/desk_stuff,
 /turf/simulated/floor/grime,
-/area)
+/area/space)
 "lb" = (
 /turf/simulated/shuttle/wall/cockpit/window{
 	icon_state = "wall_space";
@@ -3874,15 +3874,15 @@
 /turf/simulated/floor/red/side{
 	dir = 4
 	},
-/area)
+/area/space)
 "lf" = (
 /turf/simulated/floor/red,
-/area)
+/area/space)
 "lg" = (
 /turf/simulated/floor/red/side{
 	dir = 8
 	},
-/area)
+/area/space)
 "lh" = (
 /obj/shrub{
 	icon = 'icons/obj/stationobjs.dmi';
@@ -3890,10 +3890,10 @@
 	dir = 4
 	},
 /turf/simulated/floor/blue/corner,
-/area)
+/area/space)
 "li" = (
 /turf/simulated/floor/blue/side,
-/area)
+/area/space)
 "lj" = (
 /obj/shrub{
 	icon = 'icons/obj/stationobjs.dmi';
@@ -3903,7 +3903,7 @@
 /turf/simulated/floor/blue/corner{
 	dir = 8
 	},
-/area)
+/area/space)
 "lk" = (
 /obj/machinery/sim/vr_bed{
 	dir = 4;
@@ -3911,14 +3911,14 @@
 	network = "arcadevr"
 	},
 /turf/simulated/floor/specialroom/arcade,
-/area)
+/area/space)
 "ll" = (
 /obj/decal/tile_edge/stripe{
 	icon_state = "stripe-edge";
 	dir = 9
 	},
 /turf/simulated/floor/carpet/arcade,
-/area)
+/area/space)
 "lm" = (
 /obj/decal/tile_edge/stripe{
 	icon_state = "stripe-edge";
@@ -3926,14 +3926,14 @@
 	},
 /obj/stool/bench/red/auto,
 /turf/simulated/floor/carpet/arcade,
-/area)
+/area/space)
 "ln" = (
 /obj/decal/tile_edge/stripe{
 	icon_state = "stripe-edge";
 	dir = 5
 	},
 /turf/simulated/floor/carpet/arcade,
-/area)
+/area/space)
 "lo" = (
 /obj/machinery/sim/vr_bed{
 	dir = 8;
@@ -3941,19 +3941,19 @@
 	network = "arcadevr"
 	},
 /turf/simulated/floor/specialroom/arcade,
-/area)
+/area/space)
 "lp" = (
 /obj/machinery/vending/coffee,
 /turf/simulated/floor/grey/side,
-/area)
+/area/space)
 "lq" = (
 /obj/machinery/vending/snack,
 /turf/simulated/floor/grey/side,
-/area)
+/area/space)
 "lr" = (
 /obj/machinery/vending/cola/blue,
 /turf/simulated/floor/grey/side,
-/area)
+/area/space)
 "ls" = (
 /obj/stool/chair/moveable{
 	icon_state = "chair";
@@ -3962,13 +3962,13 @@
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
-/area)
+/area/space)
 "lt" = (
 /turf/simulated/floor/stairs{
 	dir = 1;
 	icon_state = "wood2_stairs"
 	},
-/area)
+/area/space)
 "lu" = (
 /turf/simulated/shuttle/wall/cockpit{
 	dir = 1;
@@ -3980,7 +3980,7 @@
 /turf/simulated/floor/red/side{
 	dir = 4
 	},
-/area)
+/area/space)
 "lw" = (
 /obj/machinery/light{
 	icon_state = "tube1";
@@ -3989,25 +3989,25 @@
 /turf/simulated/floor/red/side{
 	dir = 8
 	},
-/area)
+/area/space)
 "lx" = (
 /obj/machinery/door/firedoor/border_only,
 /turf/simulated/floor/blue,
-/area)
+/area/space)
 "ly" = (
 /obj/table/reinforced/auto,
 /obj/window/reinforced/west,
 /obj/machinery/door/window/northleft,
 /obj/random_item_spawner/desk_stuff,
 /turf/simulated/floor/blue,
-/area)
+/area/space)
 "lz" = (
 /obj/table/reinforced/auto,
 /obj/window/reinforced/east,
 /obj/window/reinforced/north,
 /obj/random_item_spawner/desk_stuff,
 /turf/simulated/floor/blue,
-/area)
+/area/space)
 "lA" = (
 /obj/machinery/light{
 	icon_state = "tube1";
@@ -4019,25 +4019,25 @@
 	network = "arcadevr"
 	},
 /turf/simulated/floor/specialroom/arcade,
-/area)
+/area/space)
 "lB" = (
 /obj/decal/tile_edge/stripe{
 	icon_state = "stripe-edge";
 	dir = 8
 	},
 /turf/simulated/floor/carpet/arcade,
-/area)
+/area/space)
 "lC" = (
 /obj/machinery/computer/arcade,
 /turf/simulated/floor/carpet/arcade,
-/area)
+/area/space)
 "lD" = (
 /obj/decal/tile_edge/stripe{
 	icon_state = "stripe-edge";
 	dir = 4
 	},
 /turf/simulated/floor/carpet/arcade,
-/area)
+/area/space)
 "lE" = (
 /obj/machinery/light{
 	icon_state = "tube1";
@@ -4049,18 +4049,18 @@
 	network = "arcadevr"
 	},
 /turf/simulated/floor/specialroom/arcade,
-/area)
+/area/space)
 "lF" = (
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
-/area)
+/area/space)
 "lG" = (
 /obj/machinery/door/firedoor/border_only,
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
-/area)
+/area/space)
 "lH" = (
 /obj/decal/tile_edge/stripe/big{
 	icon_state = "bigstripe-edge";
@@ -4069,21 +4069,21 @@
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
-/area)
+/area/space)
 "lI" = (
 /obj/decal/tile_edge/stripe/big{
 	icon_state = "bigstripe-corner2";
 	dir = 5
 	},
 /turf/simulated/floor/grime,
-/area)
+/area/space)
 "lJ" = (
 /obj/decal/tile_edge/stripe/big{
 	icon_state = "bigstripe-edge";
 	dir = 1
 	},
 /turf/simulated/floor/grime,
-/area)
+/area/space)
 "lK" = (
 /obj/decal/tile_edge/stripe/big{
 	icon_state = "bigstripe-corner2";
@@ -4091,33 +4091,33 @@
 	},
 /obj/machinery/vending/cola/blue,
 /turf/simulated/floor/grime,
-/area)
+/area/space)
 "lL" = (
 /turf/simulated/wall/asteroid,
-/area)
+/area/space)
 "lM" = (
 /obj/machinery/disposal/mail,
 /turf/simulated/floor/red/side{
 	dir = 4
 	},
-/area)
+/area/space)
 "lN" = (
 /obj/storage/secure/closet/security,
 /turf/simulated/floor/red/side{
 	dir = 8
 	},
-/area)
+/area/space)
 "lO" = (
 /obj/machinery/disposal/mail,
 /turf/simulated/floor/bluewhite/corner{
 	dir = 8
 	},
-/area)
+/area/space)
 "lP" = (
 /turf/simulated/floor/bluewhite{
 	dir = 1
 	},
-/area)
+/area/space)
 "lQ" = (
 /obj/stool/chair/office/red{
 	icon_state = "office_chair_red";
@@ -4126,7 +4126,7 @@
 /turf/simulated/floor/bluewhite{
 	dir = 1
 	},
-/area)
+/area/space)
 "lR" = (
 /obj/machinery/computer3/generic/med_data{
 	icon_state = "datamed";
@@ -4135,85 +4135,85 @@
 /turf/simulated/floor/bluewhite{
 	dir = 1
 	},
-/area)
+/area/space)
 "lS" = (
 /turf/simulated/floor/bluewhite/corner{
 	dir = 1
 	},
-/area)
+/area/space)
 "lT" = (
 /obj/iv_stand,
 /turf/simulated/floor/white,
-/area)
+/area/space)
 "lU" = (
 /turf/simulated/floor/white,
-/area)
+/area/space)
 "lV" = (
 /obj/table/auto,
 /obj/random_item_spawner/med_tool,
 /turf/simulated/floor/white,
-/area)
+/area/space)
 "lW" = (
 /obj/stool/bench/red/auto,
 /turf/simulated/floor/carpet/arcade,
-/area)
+/area/space)
 "lX" = (
 /obj/storage/closet/office,
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
-/area)
+/area/space)
 "lY" = (
 /obj/machinery/disposal/brig,
 /turf/simulated/floor/red/corner{
 	dir = 4
 	},
-/area)
+/area/space)
 "lZ" = (
 /turf/simulated/floor/red/side{
 	dir = 1
 	},
-/area)
+/area/space)
 "ma" = (
 /obj/machinery/vending/security,
 /turf/simulated/floor/red/corner{
 	dir = 1
 	},
-/area)
+/area/space)
 "mb" = (
 /obj/storage/secure/closet/medical/uniforms,
 /turf/simulated/floor/white,
-/area)
+/area/space)
 "mc" = (
 /turf/simulated/floor/red/corner,
-/area)
+/area/space)
 "md" = (
 /obj/machinery/optable,
 /turf/simulated/floor/redwhite,
-/area)
+/area/space)
 "me" = (
 /turf/simulated/floor/red/corner{
 	dir = 4
 	},
-/area)
+/area/space)
 "mf" = (
 /obj/decal/tile_edge/stripe{
 	icon_state = "stripe-edge";
 	dir = 10
 	},
 /turf/simulated/floor/carpet/arcade,
-/area)
+/area/space)
 "mg" = (
 /obj/decal/tile_edge/stripe,
 /turf/simulated/floor/carpet/arcade,
-/area)
+/area/space)
 "mh" = (
 /obj/decal/tile_edge/stripe{
 	icon_state = "stripe-edge";
 	dir = 6
 	},
 /turf/simulated/floor/carpet/arcade,
-/area)
+/area/space)
 "mi" = (
 /obj/fitness/speedbag/syndie,
 /obj/machinery/light{
@@ -4221,54 +4221,54 @@
 	dir = 8
 	},
 /turf/simulated/floor/grime,
-/area)
+/area/space)
 "mj" = (
 /obj/fitness/stacklifter,
 /turf/simulated/floor/grime,
-/area)
+/area/space)
 "mk" = (
 /obj/machinery/light{
 	icon_state = "tube1";
 	dir = 4
 	},
 /turf/simulated/floor/grime,
-/area)
+/area/space)
 "ml" = (
 /obj/table/reinforced/auto,
 /obj/random_item_spawner/tools,
 /turf/simulated/floor/yellow/corner{
 	dir = 2
 	},
-/area)
+/area/space)
 "mm" = (
 /obj/table/reinforced/auto,
 /obj/random_item_spawner/tools,
 /turf/simulated/floor/yellow/corner{
 	dir = 8
 	},
-/area)
+/area/space)
 "mn" = (
 /obj/wingrille_spawn/reinforced,
 /turf/simulated/wall/auto/reinforced/gannets,
-/area)
+/area/space)
 "mo" = (
 /turf/simulated/floor/yellow/corner{
 	dir = 8
 	},
-/area)
+/area/space)
 "mp" = (
 /obj/storage/secure/closet/medical/medicine,
 /turf/simulated/floor/white,
-/area)
+/area/space)
 "mq" = (
 /obj/table/auto,
 /obj/item/clothing/glasses/vr,
 /turf/simulated/floor/specialroom/arcade,
-/area)
+/area/space)
 "mr" = (
 /obj/storage/secure/closet/personal,
 /turf/simulated/floor/purple,
-/area)
+/area/space)
 "ms" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet/random,
@@ -4277,22 +4277,22 @@
 	pixel_y = 22
 	},
 /turf/simulated/floor/purple,
-/area)
+/area/space)
 "mt" = (
 /obj/wingrille_spawn/reinforced,
 /obj/window_blinds{
 	id = "janitor"
 	},
 /turf/simulated/floor/plating/random,
-/area)
+/area/space)
 "mu" = (
 /obj/fitness/speedbag,
 /turf/simulated/floor/grime,
-/area)
+/area/space)
 "mv" = (
 /obj/submachine/laundry_machine,
 /turf/simulated/floor/grime,
-/area)
+/area/space)
 "mw" = (
 /obj/decal/tile_edge/stripe/big{
 	icon_state = "bigstripe-corner2";
@@ -4301,7 +4301,7 @@
 /turf/simulated/floor/yellow/side{
 	dir = 10
 	},
-/area)
+/area/space)
 "mx" = (
 /obj/decal/tile_edge/stripe/big,
 /obj/machinery/light{
@@ -4310,13 +4310,13 @@
 /turf/simulated/floor/yellow/side{
 	dir = 2
 	},
-/area)
+/area/space)
 "my" = (
 /obj/decal/tile_edge/stripe/big,
 /turf/simulated/floor/yellow/side{
 	dir = 2
 	},
-/area)
+/area/space)
 "mz" = (
 /obj/decal/tile_edge/stripe/big{
 	icon_state = "bigstripe-corner2";
@@ -4325,35 +4325,35 @@
 /turf/simulated/floor/yellow/side{
 	dir = 2
 	},
-/area)
+/area/space)
 "mA" = (
 /obj/machinery/door/firedoor/border_only,
 /turf/simulated/floor/yellow/side{
 	dir = 4
 	},
-/area)
+/area/space)
 "mC" = (
 /obj/machinery/vending/medical,
 /turf/simulated/floor/white,
-/area)
+/area/space)
 "mD" = (
 /obj/machinery/light,
 /turf/simulated/floor/white,
-/area)
+/area/space)
 "mE" = (
 /obj/machinery/disposal,
 /turf/simulated/floor/white,
-/area)
+/area/space)
 "mF" = (
 /obj/table/auto,
 /obj/random_item_spawner/med_kit,
 /turf/simulated/floor/white,
-/area)
+/area/space)
 "mG" = (
 /obj/table/auto,
 /obj/random_item_spawner/medicine,
 /turf/simulated/floor/white,
-/area)
+/area/space)
 "mH" = (
 /obj/machinery/light,
 /obj/submachine/chef_sink/chem_sink{
@@ -4361,68 +4361,68 @@
 	pixel_y = 2
 	},
 /turf/simulated/floor/white,
-/area)
+/area/space)
 "mI" = (
 /obj/machinery/disposal/morgue,
 /turf/simulated/floor/white,
-/area)
+/area/space)
 "mJ" = (
 /obj/reagent_dispensers/watertank,
 /turf/simulated/floor/purple/corner,
-/area)
+/area/space)
 "mK" = (
 /obj/mopbucket,
 /turf/simulated/floor/purple/side,
-/area)
+/area/space)
 "mL" = (
 /turf/simulated/floor/purple/side,
-/area)
+/area/space)
 "mM" = (
 /turf/simulated/floor/purple/corner{
 	dir = 4
 	},
-/area)
+/area/space)
 "mN" = (
 /obj/machinery/door/firedoor/border_only,
 /turf/simulated/floor/purple/side{
 	dir = 4
 	},
-/area)
+/area/space)
 "mO" = (
 /turf/simulated/floor/purple,
-/area)
+/area/space)
 "mP" = (
 /obj/machinery/light,
 /obj/landmark/start{
 	name = "Janitor"
 	},
 /turf/simulated/floor/purple,
-/area)
+/area/space)
 "mQ" = (
 /obj/fitness/speedbag/wizard,
 /turf/simulated/floor/grime,
-/area)
+/area/space)
 "mR" = (
 /obj/fitness/weightlifter,
 /turf/simulated/floor/grime,
-/area)
+/area/space)
 "mS" = (
 /obj/table/auto,
 /turf/simulated/floor/grime,
-/area)
+/area/space)
 "mT" = (
 /obj/machinery/light/small{
 	icon_state = "bulb1";
 	dir = 4
 	},
 /turf/simulated/floor/grime,
-/area)
+/area/space)
 "mU" = (
 /obj/machinery/disposal,
 /turf/simulated/floor/yellow/side{
 	dir = 4
 	},
-/area)
+/area/space)
 "mV" = (
 /obj/decal/tile_edge/stripe/big{
 	icon_state = "bigstripe-edge";
@@ -4431,13 +4431,13 @@
 /turf/simulated/floor/yellow{
 	dir = 2
 	},
-/area)
+/area/space)
 "mW" = (
 /obj/machinery/portable_atmospherics/canister/air,
 /turf/simulated/floor/delivery/white{
 	dir = 2
 	},
-/area)
+/area/space)
 "mX" = (
 /obj/decal/tile_edge/stripe/big{
 	icon_state = "bigstripe-edge";
@@ -4446,19 +4446,19 @@
 /turf/simulated/floor/yellow{
 	dir = 2
 	},
-/area)
+/area/space)
 "mY" = (
 /obj/reagent_dispensers/fueltank,
 /turf/simulated/floor/yellow/side{
 	dir = 8
 	},
-/area)
+/area/space)
 "mZ" = (
 /obj/vehicle/floorbuffer,
 /turf/simulated/floor/purple/side{
 	dir = 4
 	},
-/area)
+/area/space)
 "na" = (
 /obj/machinery/light{
 	icon_state = "tube1";
@@ -4468,30 +4468,30 @@
 /turf/simulated/floor/purple/side{
 	dir = 8
 	},
-/area)
+/area/space)
 "nb" = (
 /obj/table/reinforced/auto,
 /obj/random_item_spawner/tools,
 /turf/simulated/floor/yellow/side{
 	dir = 4
 	},
-/area)
+/area/space)
 "nc" = (
 /obj/reagent_dispensers/foamtank,
 /turf/simulated/floor/yellow/side{
 	dir = 8
 	},
-/area)
+/area/space)
 "nd" = (
 /obj/storage/closet/biohazard,
 /turf/simulated/floor/purple/side{
 	dir = 4
 	},
-/area)
+/area/space)
 "ne" = (
 /obj/stool/chair/moveable,
 /turf/simulated/floor/purple,
-/area)
+/area/space)
 "nf" = (
 /obj/table/auto,
 /obj/item/sponge,
@@ -4501,7 +4501,7 @@
 /turf/simulated/floor/purple/side{
 	dir = 8
 	},
-/area)
+/area/space)
 "ng" = (
 /obj/decal/tile_edge/stripe/big{
 	icon_state = "bigstripe-corner2";
@@ -4510,7 +4510,7 @@
 /turf/simulated/floor/yellow{
 	dir = 2
 	},
-/area)
+/area/space)
 "nh" = (
 /obj/decal/tile_edge/stripe/big{
 	icon_state = "bigstripe-edge";
@@ -4519,7 +4519,7 @@
 /turf/simulated/floor/yellow{
 	dir = 2
 	},
-/area)
+/area/space)
 "ni" = (
 /obj/decal/tile_edge/stripe/big{
 	icon_state = "bigstripe-corner2";
@@ -4528,22 +4528,22 @@
 /turf/simulated/floor/yellow{
 	dir = 2
 	},
-/area)
+/area/space)
 "nj" = (
 /obj/decal/cleanable/alienvine,
 /turf/simulated/floor/plating/airless/asteroid,
-/area)
+/area/space)
 "nk" = (
 /obj/storage/secure/closet/civilian/janitor,
 /turf/simulated/floor/purple/corner{
 	dir = 8
 	},
-/area)
+/area/space)
 "nl" = (
 /turf/simulated/floor/purple/side{
 	dir = 1
 	},
-/area)
+/area/space)
 "nm" = (
 /obj/machinery/computer/security/wooden_tv{
 	desc = "These channels seem to mostly be about robuddies. What is this, some kind of reality show?";
@@ -4553,7 +4553,7 @@
 /turf/simulated/floor/purple/side{
 	dir = 1
 	},
-/area)
+/area/space)
 "nn" = (
 /obj/rack,
 /obj/item/mop,
@@ -4564,7 +4564,7 @@
 /turf/simulated/floor/purple/side{
 	dir = 1
 	},
-/area)
+/area/space)
 "no" = (
 /obj/table/auto,
 /obj/item/storage/box/lightbox/bulbs,
@@ -4573,106 +4573,106 @@
 /turf/simulated/floor/purple/corner{
 	dir = 1
 	},
-/area)
+/area/space)
 "np" = (
 /obj/table/reinforced/auto,
 /obj/random_item_spawner/tools,
 /turf/simulated/floor/yellow/corner{
 	dir = 4
 	},
-/area)
+/area/space)
 "nq" = (
 /obj/machinery/portable_atmospherics/scrubber,
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
-/area)
+/area/space)
 "nr" = (
 /obj/machinery/portable_atmospherics/pump,
 /obj/machinery/light,
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
-/area)
+/area/space)
 "ns" = (
 /obj/machinery/portable_atmospherics/pump,
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
-/area)
+/area/space)
 "nt" = (
 /obj/table/reinforced/auto,
 /obj/random_item_spawner/tools,
 /turf/simulated/floor/yellow/corner{
 	dir = 1
 	},
-/area)
+/area/space)
 "nu" = (
 /turf/simulated/floor/yellow/corner{
 	dir = 1
 	},
-/area)
+/area/space)
 "nv" = (
 /obj/decal/cleanable/alienvine,
 /turf/simulated/wall/asteroid,
-/area)
+/area/space)
 "nw" = (
 /obj/machinery/atmospherics/portables_connector{
 	dir = 1
 	},
 /turf/simulated/floor/plating/random,
-/area)
+/area/space)
 "nx" = (
 /obj/table/wood/round/auto,
 /obj/item/decoration/flower_vase{
 	pixel_y = 6
 	},
 /turf/simulated/floor/wood,
-/area)
+/area/space)
 "ny" = (
 /obj/table/wood/auto,
 /turf/simulated/floor/carpet{
 	icon_state = "fred6";
 	dir = 9
 	},
-/area)
+/area/space)
 "nz" = (
 /turf/simulated/floor/carpet{
 	icon_state = "fred6";
 	dir = 5
 	},
-/area)
+/area/space)
 "nA" = (
 /turf/space{
 	icon_state = "aplaceholder"
 	},
-/area)
+/area/space)
 "nB" = (
 /obj/machinery/vending/cola/red,
 /turf/simulated/floor/grey/side{
 	dir = 9
 	},
-/area)
+/area/space)
 "nC" = (
 /obj/machinery/vending/coffee,
 /turf/simulated/floor/grey/side{
 	dir = 1
 	},
-/area)
+/area/space)
 "nD" = (
 /obj/stool/chair/wooden{
 	icon_state = "chair_wooden";
 	dir = 4
 	},
 /turf/simulated/floor/wood,
-/area)
+/area/space)
 "nE" = (
 /obj/table/wood/auto,
 /turf/simulated/floor/carpet{
 	icon_state = "fred2";
 	dir = 8
 	},
-/area)
+/area/space)
 "nF" = (
 /obj/stool/chair/comfy/red{
 	icon_state = "chair_comfy-red";
@@ -4682,13 +4682,13 @@
 	icon_state = "fred1";
 	dir = 8
 	},
-/area)
+/area/space)
 "nG" = (
 /turf/simulated/floor/carpet{
 	icon_state = "fred2";
 	dir = 4
 	},
-/area)
+/area/space)
 "nH" = (
 /obj/machinery/light{
 	icon_state = "tube1";
@@ -4697,18 +4697,18 @@
 /turf/simulated/floor/grey/side{
 	dir = 8
 	},
-/area)
+/area/space)
 "nI" = (
 /obj/machinery/door/firedoor/border_only,
 /turf/simulated/floor/wood,
-/area)
+/area/space)
 "nJ" = (
 /obj/table/wood/auto,
 /turf/simulated/floor/carpet{
 	icon_state = "fred6";
 	dir = 10
 	},
-/area)
+/area/space)
 "nK" = (
 /obj/table/wood/auto,
 /obj/item/storage/bible,
@@ -4716,39 +4716,39 @@
 	icon_state = "fred2";
 	dir = 2
 	},
-/area)
+/area/space)
 "nL" = (
 /obj/machinery/door/airlock/external,
 /turf/simulated/floor/plating/random,
-/area)
+/area/space)
 "nM" = (
 /obj/stool/bench/auto,
 /turf/simulated/floor/grey/side{
 	dir = 10
 	},
-/area)
+/area/space)
 "nN" = (
 /obj/stool/bench/auto,
 /turf/simulated/floor/grey/side,
-/area)
+/area/space)
 "nO" = (
 /obj/decal/tile_edge/stripe/big,
 /turf/simulated/floor/wood,
-/area)
+/area/space)
 "nP" = (
 /obj/decal/tile_edge/stripe/big{
 	icon_state = "bigstripe-corner2";
 	dir = 10
 	},
 /turf/simulated/floor/wood,
-/area)
+/area/space)
 "nQ" = (
 /obj/decal/tile_edge/stripe/big{
 	icon_state = "bigstripe-corner2";
 	dir = 6
 	},
 /turf/simulated/floor/wood,
-/area)
+/area/space)
 "nR" = (
 /obj/grille/catwalk{
 	tag = "icon-catwalk (NORTH)";
@@ -4757,7 +4757,7 @@
 	},
 /turf/space,
 /turf/simulated/floor/airless/plating/catwalk,
-/area)
+/area/space)
 "nS" = (
 /obj/machinery/light/runway_light/delay5{
 	dir = 4
@@ -4767,7 +4767,7 @@
 	dir = 4
 	},
 /turf/space,
-/area)
+/area/space)
 "nT" = (
 /obj/machinery/light/runway_light/delay4{
 	dir = 4
@@ -4777,7 +4777,7 @@
 	dir = 4
 	},
 /turf/space,
-/area)
+/area/space)
 "nU" = (
 /obj/machinery/light/runway_light/delay3{
 	dir = 4
@@ -4787,7 +4787,7 @@
 	dir = 4
 	},
 /turf/space,
-/area)
+/area/space)
 "nV" = (
 /obj/machinery/light/runway_light/delay2{
 	dir = 4
@@ -4797,7 +4797,7 @@
 	dir = 4
 	},
 /turf/space,
-/area)
+/area/space)
 "nW" = (
 /obj/machinery/light/runway_light{
 	dir = 4
@@ -4807,12 +4807,12 @@
 	dir = 4
 	},
 /turf/space,
-/area)
+/area/space)
 "nX" = (
 /turf/simulated/floor/stairs{
 	icon_state = "wood2_stairs"
 	},
-/area)
+/area/space)
 "nY" = (
 /obj/decal/tile_edge/stripe{
 	icon_state = "stripe-edge";
@@ -4825,21 +4825,21 @@
 	icon_state = "fred2";
 	dir = 9
 	},
-/area)
+/area/space)
 "nZ" = (
 /obj/stool/chair/wooden,
 /turf/simulated/floor/carpet{
 	icon_state = "fred2";
 	dir = 1
 	},
-/area)
+/area/space)
 "oa" = (
 /obj/mic_stand,
 /turf/simulated/floor/carpet{
 	icon_state = "fred2";
 	dir = 1
 	},
-/area)
+/area/space)
 "ob" = (
 /obj/decal/tile_edge/stripe{
 	icon_state = "stripe-edge";
@@ -4852,7 +4852,7 @@
 	icon_state = "fred2";
 	dir = 5
 	},
-/area)
+/area/space)
 "oc" = (
 /obj/machinery/door/poddoor/blast{
 	autoclose = 1;
@@ -4862,14 +4862,14 @@
 	name = "Hangar"
 	},
 /turf/simulated/floor/shuttlebay,
-/area)
+/area/space)
 "od" = (
 /obj/decal/tile_edge/stripe/big{
 	icon_state = "bigstripe-edge";
 	dir = 8
 	},
 /turf/simulated/floor/shuttlebay,
-/area)
+/area/space)
 "oe" = (
 /obj/decal/tile_edge/stripe{
 	icon_state = "stripe-edge";
@@ -4882,7 +4882,7 @@
 	icon_state = "fred2";
 	dir = 10
 	},
-/area)
+/area/space)
 "of" = (
 /obj/decal/tile_edge/stripe,
 /obj/table/reinforced/bar/auto{
@@ -4892,7 +4892,7 @@
 	icon_state = "fred2";
 	dir = 2
 	},
-/area)
+/area/space)
 "og" = (
 /obj/decal/tile_edge/stripe,
 /obj/table/reinforced/bar/auto{
@@ -4903,7 +4903,7 @@
 	icon_state = "fred2";
 	dir = 2
 	},
-/area)
+/area/space)
 "oh" = (
 /obj/decal/tile_edge/stripe,
 /obj/table/reinforced/bar/auto{
@@ -4914,7 +4914,7 @@
 	icon_state = "fred2";
 	dir = 2
 	},
-/area)
+/area/space)
 "oi" = (
 /obj/decal/tile_edge/stripe{
 	icon_state = "stripe-edge";
@@ -4927,13 +4927,13 @@
 	icon_state = "fred2";
 	dir = 6
 	},
-/area)
+/area/space)
 "oj" = (
 /turf/simulated/floor/carpet{
 	icon_state = "red2";
 	dir = 9
 	},
-/area)
+/area/space)
 "ok" = (
 /obj/blind_switch{
 	id = "chaplain";
@@ -4943,14 +4943,14 @@
 	icon_state = "red2";
 	dir = 5
 	},
-/area)
+/area/space)
 "ol" = (
 /obj/wingrille_spawn/reinforced,
 /obj/window_blinds{
 	id = "chaplain"
 	},
 /turf/simulated/floor/plating/random,
-/area)
+/area/space)
 "om" = (
 /obj/machinery/door/poddoor/blast{
 	autoclose = 1;
@@ -4960,33 +4960,33 @@
 	name = "Hangar"
 	},
 /turf/simulated/floor/shuttlebay,
-/area)
+/area/space)
 "on" = (
 /obj/machinery/light{
 	icon_state = "tube1";
 	dir = 4
 	},
 /turf/simulated/floor/shuttlebay,
-/area)
+/area/space)
 "oo" = (
 /obj/decal/stage_edge,
 /obj/loudspeaker,
 /turf/simulated/floor/specialroom/chapel{
 	dir = 8
 	},
-/area)
+/area/space)
 "op" = (
 /obj/decal/stage_edge,
 /turf/simulated/floor/specialroom/chapel{
 	dir = 4
 	},
-/area)
+/area/space)
 "oq" = (
 /obj/decal/stage_edge,
 /turf/simulated/floor/specialroom/chapel{
 	dir = 8
 	},
-/area)
+/area/space)
 "or" = (
 /obj/decal/stage_edge,
 /obj/item/device/radio/intercom{
@@ -4995,7 +4995,7 @@
 /turf/simulated/floor/specialroom/chapel{
 	dir = 4
 	},
-/area)
+/area/space)
 "os" = (
 /obj/machinery/door/unpowered/wood{
 	name = "Confession Booth"
@@ -5003,14 +5003,14 @@
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
-/area)
+/area/space)
 "ot" = (
 /obj/storage/secure/closet/personal,
 /turf/simulated/floor/carpet{
 	icon_state = "red2";
 	dir = 10
 	},
-/area)
+/area/space)
 "ou" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet/random,
@@ -5018,7 +5018,7 @@
 	icon_state = "red2";
 	dir = 6
 	},
-/area)
+/area/space)
 "ov" = (
 /obj/machinery/door/poddoor/blast{
 	autoclose = 1;
@@ -5028,7 +5028,7 @@
 	name = "Hangar"
 	},
 /turf/simulated/floor/shuttlebay,
-/area)
+/area/space)
 "ow" = (
 /obj/stool/chair/pew/fancy/left{
 	dir = 1
@@ -5036,7 +5036,7 @@
 /turf/simulated/floor/specialroom/chapel{
 	dir = 4
 	},
-/area)
+/area/space)
 "ox" = (
 /obj/stool/chair/pew/fancy/center{
 	dir = 1
@@ -5044,7 +5044,7 @@
 /turf/simulated/floor/specialroom/chapel{
 	dir = 8
 	},
-/area)
+/area/space)
 "oy" = (
 /obj/stool/chair/pew/fancy/right{
 	dir = 1
@@ -5052,19 +5052,19 @@
 /turf/simulated/floor/specialroom/chapel{
 	dir = 4
 	},
-/area)
+/area/space)
 "oz" = (
 /turf/simulated/floor/specialroom/chapel{
 	dir = 8
 	},
-/area)
+/area/space)
 "oA" = (
 /obj/table/wood/round/auto,
 /obj/random_item_spawner/desk_stuff,
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
-/area)
+/area/space)
 "oB" = (
 /obj/stool/chair/pew/fancy/left{
 	dir = 1
@@ -5072,7 +5072,7 @@
 /turf/simulated/floor/specialroom/chapel{
 	dir = 8
 	},
-/area)
+/area/space)
 "oC" = (
 /obj/stool/chair/pew/fancy/center{
 	dir = 1
@@ -5080,7 +5080,7 @@
 /turf/simulated/floor/specialroom/chapel{
 	dir = 4
 	},
-/area)
+/area/space)
 "oD" = (
 /obj/stool/chair/pew/fancy/right{
 	dir = 1
@@ -5088,12 +5088,12 @@
 /turf/simulated/floor/specialroom/chapel{
 	dir = 8
 	},
-/area)
+/area/space)
 "oE" = (
 /turf/simulated/floor/specialroom/chapel{
 	dir = 4
 	},
-/area)
+/area/space)
 "oF" = (
 /obj/stool/chair/wooden{
 	icon_state = "chair_wooden";
@@ -5102,7 +5102,7 @@
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
-/area)
+/area/space)
 "oG" = (
 /obj/machinery/power/solar,
 /obj/lattice{
@@ -5117,15 +5117,15 @@
 	},
 /turf/space,
 /turf/simulated/floor/airless/plating/catwalk,
-/area)
+/area/space)
 "oH" = (
 /obj/stool/bench/auto,
 /turf/simulated/floor/black,
-/area)
+/area/space)
 "oI" = (
 /obj/random_pod_spawner,
 /turf/simulated/floor/shuttlebay,
-/area)
+/area/space)
 "oJ" = (
 /obj/item/storage/toilet/random{
 	dir = 4;
@@ -5133,20 +5133,20 @@
 	pixel_x = -8
 	},
 /turf/simulated/floor/sanitary/white,
-/area)
+/area/space)
 "oK" = (
 /obj/machinery/shower{
 	dir = 4;
 	icon_state = "showerhead"
 	},
 /turf/simulated/floor/sanitary/white,
-/area)
+/area/space)
 "oL" = (
 /obj/table/wood/round/auto,
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
-/area)
+/area/space)
 "oM" = (
 /obj/machinery/communications_dish,
 /obj/lattice,
@@ -5157,7 +5157,7 @@
 	},
 /turf/space,
 /turf/simulated/floor/airless/plating/catwalk,
-/area)
+/area/space)
 "oN" = (
 /obj/lattice,
 /obj/grille/catwalk{
@@ -5167,7 +5167,7 @@
 	},
 /turf/space,
 /turf/simulated/floor/airless/plating/catwalk,
-/area)
+/area/space)
 "oO" = (
 /obj/grille/catwalk{
 	tag = "icon-catwalk (EAST)";
@@ -5176,7 +5176,7 @@
 	},
 /turf/space,
 /turf/simulated/floor/airless/plating/catwalk,
-/area)
+/area/space)
 "oP" = (
 /obj/grille/catwalk{
 	tag = "icon-catwalk (SOUTHWEST)";
@@ -5185,7 +5185,7 @@
 	},
 /turf/space,
 /turf/simulated/floor/airless/plating/catwalk,
-/area)
+/area/space)
 "oQ" = (
 /obj/grille/catwalk{
 	tag = "icon-catwalk (SOUTHEAST)";
@@ -5194,37 +5194,37 @@
 	},
 /turf/space,
 /turf/simulated/floor/airless/plating/catwalk,
-/area)
+/area/space)
 "oR" = (
 /obj/machinery/light{
 	icon_state = "tube1";
 	dir = 8
 	},
 /turf/simulated/floor/black,
-/area)
+/area/space)
 "oS" = (
 /obj/window/cubicle{
 	dir = 8;
 	name = "wall with one of those mirrors on it"
 	},
 /turf/simulated/floor/sanitary/white,
-/area)
+/area/space)
 "oT" = (
 /obj/table/reinforced,
 /obj/random_item_spawner/tools,
 /turf/simulated/floor/black,
-/area)
+/area/space)
 "oU" = (
 /obj/submachine/chef_sink/chem_sink{
 	dir = 8;
 	pixel_x = 4
 	},
 /turf/simulated/floor/sanitary/white,
-/area)
+/area/space)
 "oV" = (
 /obj/machinery/door/firedoor/border_only,
 /turf/simulated/floor/sanitary/white,
-/area)
+/area/space)
 "oW" = (
 /obj/machinery/power/solar,
 /obj/grille/catwalk{
@@ -5234,12 +5234,12 @@
 	},
 /turf/space,
 /turf/simulated/floor/airless/plating/catwalk,
-/area)
+/area/space)
 "oX" = (
 /turf/simulated/floor/stairs{
 	dir = 4
 	},
-/area)
+/area/space)
 "oY" = (
 /obj/machinery/light{
 	icon_state = "tube1";
@@ -5252,7 +5252,7 @@
 /turf/simulated/floor/grey/side{
 	dir = 8
 	},
-/area)
+/area/space)
 "oZ" = (
 /obj/machinery/light{
 	icon_state = "tube1";
@@ -5260,25 +5260,25 @@
 	},
 /obj/machinery/disposal,
 /turf/simulated/floor,
-/area)
+/area/space)
 "pa" = (
 /obj/wingrille_spawn/reinforced,
 /obj/wingrille_spawn/reinforced,
 /turf/simulated/floor/plating/random,
-/area)
+/area/space)
 "pb" = (
 /obj/machinery/door/firedoor/border_only,
 /turf/simulated/floor/carpet{
 	icon_state = "fred4";
 	dir = 1
 	},
-/area)
+/area/space)
 "pc" = (
 /obj/machinery/manufacturer/hangar,
 /obj/window/reinforced/east,
 /obj/window/reinforced/north,
 /turf/simulated/floor/delivery,
-/area)
+/area/space)
 "pd" = (
 /obj/decal/tile_edge/stripe/big{
 	icon_state = "bigstripe-edge";
@@ -5287,12 +5287,12 @@
 /turf/simulated/floor/grey/side{
 	dir = 8
 	},
-/area)
+/area/space)
 "pe" = (
 /obj/table/reinforced,
 /obj/random_item_spawner/tools,
 /turf/simulated/floor,
-/area)
+/area/space)
 "pf" = (
 /obj/item/storage/toilet/random{
 	dir = 4;
@@ -5301,38 +5301,38 @@
 	},
 /obj/item/clothing/head/plunger,
 /turf/simulated/floor/sanitary/white,
-/area)
+/area/space)
 "pg" = (
 /turf/simulated/floor/carpet{
 	icon_state = "fred4";
 	dir = 2
 	},
-/area)
+/area/space)
 "ph" = (
 /obj/table/wood/round/auto,
 /obj/item/decoration/flower_vase,
 /turf/simulated/floor,
-/area)
+/area/space)
 "pi" = (
 /obj/decal/tile_edge/stripe/big{
 	icon_state = "bigstripe-corner2";
 	dir = 6
 	},
 /turf/simulated/floor/black,
-/area)
+/area/space)
 "pj" = (
 /obj/machinery/manufacturer/hangar,
 /obj/window/reinforced/south,
 /obj/window/reinforced/east,
 /turf/simulated/floor/delivery,
-/area)
+/area/space)
 "pk" = (
 /obj/machinery/portable_reclaimer,
 /turf/simulated/floor/black,
-/area)
+/area/space)
 "pl" = (
 /turf/simulated/floor/stairs/wide/middle,
-/area)
+/area/space)
 "pm" = (
 /obj/wingrille_spawn/reinforced_crystal,
 /turf/simulated/floor/plating/random,
@@ -5475,48 +5475,48 @@
 /turf/simulated/floor/arrival{
 	dir = 6
 	},
-/area)
+/area/space)
 "pH" = (
 /obj/machinery/vending/coffee,
 /turf/simulated/floor/arrival{
 	dir = 6
 	},
-/area)
+/area/space)
 "pI" = (
 /obj/machinery/vending/snack,
 /turf/simulated/floor/arrival{
 	dir = 6
 	},
-/area)
+/area/space)
 "pJ" = (
 /turf/simulated/floor/arrival{
 	dir = 6
 	},
-/area)
+/area/space)
 "pK" = (
 /obj/storage/closet/office,
 /turf/simulated/floor/arrival{
 	dir = 6
 	},
-/area)
+/area/space)
 "pL" = (
 /obj/table/wood/auto,
 /turf/simulated/floor/arrival{
 	dir = 6
 	},
-/area)
+/area/space)
 "pM" = (
 /obj/stool/chair/office,
 /turf/simulated/floor/arrival{
 	dir = 6
 	},
-/area)
+/area/space)
 "pN" = (
 /obj/reagent_dispensers/watertank/fountain,
 /turf/simulated/floor/arrival{
 	dir = 6
 	},
-/area)
+/area/space)
 "pO" = (
 /obj/machinery/door/window/eastleft{
 	name = "shower stall"
@@ -5533,20 +5533,20 @@
 	pixel_y = 6
 	},
 /turf/simulated/floor/sanitary/white,
-/area)
+/area/space)
 "pP" = (
 /obj/machinery/door/firedoor/border_only,
 /turf/simulated/floor/greenwhite{
 	dir = 4
 	},
-/area)
+/area/space)
 "pQ" = (
 /turf/simulated/floor/green,
-/area)
+/area/space)
 "pR" = (
 /obj/iv_stand,
 /turf/simulated/floor/green,
-/area)
+/area/space)
 "pS" = (
 /obj/table/wood/auto,
 /obj/machinery/networked/printer{
@@ -5555,27 +5555,27 @@
 /turf/simulated/floor/arrival{
 	dir = 6
 	},
-/area)
+/area/space)
 "pT" = (
 /obj/table/wood/auto,
 /obj/machinery/computer3/generic/personal,
 /turf/simulated/floor/arrival{
 	dir = 6
 	},
-/area)
+/area/space)
 "pU" = (
 /obj/table/wood/auto,
 /obj/random_item_spawner/desk_stuff,
 /turf/simulated/floor/arrival{
 	dir = 6
 	},
-/area)
+/area/space)
 "pV" = (
 /obj/storage/secure/closet/medical/uniforms,
 /turf/simulated/floor/arrival{
 	dir = 6
 	},
-/area)
+/area/space)
 "pW" = (
 /obj/item/storage/toilet/random{
 	dir = 4;
@@ -5583,83 +5583,83 @@
 	pixel_x = -8
 	},
 /turf/simulated/floor/white,
-/area)
+/area/space)
 "pX" = (
 /obj/submachine/chef_sink/chem_sink{
 	dir = 8;
 	pixel_x = 6
 	},
 /turf/simulated/floor/white,
-/area)
+/area/space)
 "pY" = (
 /obj/stool/chair/comfy/green{
 	icon_state = "chair_comfy-green";
 	dir = 4
 	},
 /turf/simulated/floor/green,
-/area)
+/area/space)
 "pZ" = (
 /obj/stool/bed/moveable,
 /obj/item/clothing/suit/bedsheet,
 /turf/simulated/floor/greenwhite{
 	dir = 1
 	},
-/area)
+/area/space)
 "qa" = (
 /turf/simulated/floor/purple/corner,
-/area)
+/area/space)
 "qb" = (
 /obj/machinery/manufacturer/general,
 /turf/simulated/floor/arrival{
 	dir = 6
 	},
-/area)
+/area/space)
 "qc" = (
 /obj/machinery/manufacturer/medical,
 /turf/simulated/floor/arrival{
 	dir = 6
 	},
-/area)
+/area/space)
 "qd" = (
 /obj/storage/closet/dresser,
 /turf/simulated/floor/green,
-/area)
+/area/space)
 "qe" = (
 /obj/table/round,
 /obj/item/decoration/flower_vase,
 /turf/simulated/floor/green,
-/area)
+/area/space)
 "qf" = (
 /obj/machinery/door/firedoor/border_only,
 /turf/simulated/floor/bluewhite,
-/area)
+/area/space)
 "qg" = (
 /turf/simulated/floor/purple/side{
 	dir = 4
 	},
-/area)
+/area/space)
 "qh" = (
 /obj/machinery/chem_dispenser,
 /turf/simulated/floor/specialroom/arcade,
-/area)
+/area/space)
 "qi" = (
 /obj/machinery/chem_master,
 /turf/simulated/floor/specialroom/arcade,
-/area)
+/area/space)
 "qj" = (
 /obj/machinery/chem_heater,
 /turf/simulated/floor/specialroom/arcade,
-/area)
+/area/space)
 "qk" = (
 /obj/machinery/door/firedoor/border_only,
 /turf/simulated/floor/white,
-/area)
+/area/space)
 "ql" = (
 /obj/table/auto,
 /obj/item/storage/box/lightbox/tubes,
 /obj/item/storage/toolbox/emergency,
 /turf/simulated/floor/purple/corner,
-/area)
+/area/space)
 "qm" = (
 /obj/table/auto,
 /obj/item/storage/box/lightbox/bulbs,
@@ -5668,79 +5668,79 @@
 /turf/simulated/floor/purple/corner{
 	dir = 4
 	},
-/area)
+/area/space)
 "qn" = (
 /obj/machinery/door/firedoor/border_only,
 /turf/simulated/floor/greenwhite{
 	dir = 1
 	},
-/area)
+/area/space)
 "qo" = (
 /obj/storage/closet/dresser,
 /turf/simulated/floor/blue,
-/area)
+/area/space)
 "qp" = (
 /turf/simulated/floor/blue,
-/area)
+/area/space)
 "qq" = (
 /obj/iv_stand,
 /turf/simulated/floor/blue,
-/area)
+/area/space)
 "qr" = (
 /obj/stool/chair/office/purple{
 	icon_state = "office_chair_purple";
 	dir = 1
 	},
 /turf/simulated/floor/purple,
-/area)
+/area/space)
 "qs" = (
 /obj/machinery/door/firedoor/border_only,
 /turf/simulated/floor/white/side{
 	dir = 8
 	},
-/area)
+/area/space)
 "qu" = (
 /turf/simulated/floor/purple/side{
 	dir = 8
 	},
-/area)
+/area/space)
 "qv" = (
 /obj/machinery/door/firedoor/border_only,
 /turf/simulated/floor/white/side{
 	dir = 4
 	},
-/area)
+/area/space)
 "qw" = (
 /obj/stool/chair/comfy/blue{
 	icon_state = "chair_comfy-blue";
 	dir = 4
 	},
 /turf/simulated/floor/blue,
-/area)
+/area/space)
 "qx" = (
 /obj/stool/bed/moveable,
 /obj/item/clothing/suit/bedsheet,
 /turf/simulated/floor/bluewhite{
 	dir = 1
 	},
-/area)
+/area/space)
 "qy" = (
 /obj/machinery/disposal/small{
 	dir = 4;
 	icon_state = "disposal"
 	},
 /turf/simulated/floor/purple,
-/area)
+/area/space)
 "qz" = (
 /obj/table/reinforced/chemistry/auto,
 /turf/simulated/floor/purple,
-/area)
+/area/space)
 "qA" = (
 /obj/machinery/door/firedoor/border_only,
 /turf/simulated/floor/purplewhite{
 	dir = 8
 	},
-/area)
+/area/space)
 "qB" = (
 /obj/rack,
 /obj/item/mop,
@@ -5750,18 +5750,18 @@
 /turf/simulated/floor/purple/corner{
 	dir = 1
 	},
-/area)
+/area/space)
 "qC" = (
 /obj/machinery/door/firedoor/border_only,
 /turf/simulated/floor/bluewhite{
 	dir = 4
 	},
-/area)
+/area/space)
 "qD" = (
 /obj/table/round,
 /obj/item/decoration/flower_vase,
 /turf/simulated/floor/blue,
-/area)
+/area/space)
 "qE" = (
 /obj/window/crystal/reinforced/north,
 /obj/machinery/door/window/westright,
@@ -5769,12 +5769,12 @@
 /turf/simulated/floor/purplewhite{
 	dir = 8
 	},
-/area)
+/area/space)
 "qF" = (
 /turf/simulated/floor/purplewhite{
 	dir = 4
 	},
-/area)
+/area/space)
 "qG" = (
 /obj/machinery/disposal/mail/small{
 	dir = 8
@@ -5782,11 +5782,11 @@
 /turf/simulated/floor/purplewhite{
 	dir = 8
 	},
-/area)
+/area/space)
 "qH" = (
 /obj/machinery/door/firedoor/border_only,
 /turf/simulated/floor/blue/checker,
-/area)
+/area/space)
 "qI" = (
 /obj/window/reinforced/south,
 /obj/machinery/door/window/westleft,
@@ -5795,7 +5795,7 @@
 /turf/simulated/floor/purplewhite{
 	dir = 8
 	},
-/area)
+/area/space)
 "qJ" = (
 /obj/stool/chair/office/purple{
 	icon_state = "office_chair_purple";
@@ -5804,12 +5804,12 @@
 /turf/simulated/floor/purplewhite/corner{
 	dir = 8
 	},
-/area)
+/area/space)
 "qK" = (
 /turf/simulated/floor/purplewhite{
 	dir = 1
 	},
-/area)
+/area/space)
 "qL" = (
 /obj/submachine/chef_sink/chem_sink{
 	dir = 8;
@@ -5818,21 +5818,21 @@
 /turf/simulated/floor/purplewhite/corner{
 	dir = 1
 	},
-/area)
+/area/space)
 "qM" = (
 /obj/machinery/vending/port_a_nanomed,
 /turf/simulated/floor/specialroom/medbay{
 	dir = 2
 	},
-/area)
+/area/space)
 "qN" = (
 /turf/simulated/floor/blue/checker,
-/area)
+/area/space)
 "qO" = (
 /turf/simulated/floor/redwhite{
 	dir = 4
 	},
-/area)
+/area/space)
 "qP" = (
 /obj/machinery/light/emergency{
 	dir = 1
@@ -5843,14 +5843,14 @@
 	},
 /obj/machinery/disposal/morgue,
 /turf/simulated/floor/white,
-/area)
+/area/space)
 "qQ" = (
 /obj/storage/secure/closet/medical/anesthetic,
 /obj/decal/tile_edge/line/red{
 	icon_state = "line3"
 	},
 /turf/simulated/floor/white,
-/area)
+/area/space)
 "qR" = (
 /obj/decal/tile_edge/line/red{
 	icon_state = "line3"
@@ -5865,7 +5865,7 @@
 	pixel_y = 32
 	},
 /turf/simulated/floor/white,
-/area)
+/area/space)
 "qS" = (
 /obj/machinery/light/emergency{
 	dir = 1
@@ -5876,18 +5876,18 @@
 	dir = 4
 	},
 /turf/simulated/floor/white,
-/area)
+/area/space)
 "qT" = (
 /turf/simulated/floor/purple/corner{
 	dir = 8
 	},
-/area)
+/area/space)
 "qU" = (
 /obj/window/crystal/reinforced/west,
 /obj/machinery/door/window/southleft,
 /obj/table/reinforced/chemistry/auto,
 /turf/simulated/floor/white,
-/area)
+/area/space)
 "qV" = (
 /obj/table/reinforced/auto,
 /obj/machinery/door/window/southright,
@@ -5895,25 +5895,25 @@
 /obj/machinery/door/window/southright,
 /obj/table/reinforced/chemistry/auto,
 /turf/simulated/floor/white,
-/area)
+/area/space)
 "qW" = (
 /obj/storage/secure/closet/medical/medicine,
 /turf/simulated/floor/blue/checker,
-/area)
+/area/space)
 "qX" = (
 /obj/wingrille_spawn,
 /obj/window_blinds{
 	id = "surgery1"
 	},
 /turf/simulated/floor/plating/random,
-/area)
+/area/space)
 "qY" = (
 /obj/decal/tile_edge/line/red{
 	icon_state = "line3";
 	dir = 1
 	},
 /turf/simulated/floor/white,
-/area)
+/area/space)
 "qZ" = (
 /obj/table/reinforced/auto,
 /obj/random_item_spawner/med_tool,
@@ -5922,7 +5922,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/white,
-/area)
+/area/space)
 "ra" = (
 /obj/submachine/chef_sink/chem_sink{
 	layer = 3;
@@ -5931,26 +5931,26 @@
 /turf/simulated/floor/specialroom/medbay{
 	dir = 2
 	},
-/area)
+/area/space)
 "rb" = (
 /obj/noticeboard{
 	pixel_y = 32
 	},
 /turf/simulated/floor/blue/checker,
-/area)
+/area/space)
 "rc" = (
 /obj/storage/secure/closet/medical/medkit,
 /turf/simulated/floor/specialroom/medbay{
 	dir = 2
 	},
-/area)
+/area/space)
 "rd" = (
 /obj/decal/tile_edge/line/red{
 	icon_state = "line2";
 	dir = 9
 	},
 /turf/simulated/floor/white/checker,
-/area)
+/area/space)
 "re" = (
 /obj/decal/tile_edge/line/red{
 	icon_state = "line1";
@@ -5959,7 +5959,7 @@
 /turf/simulated/floor/blue/checker{
 	dir = 8
 	},
-/area)
+/area/space)
 "rf" = (
 /obj/decal/tile_edge/line/red{
 	icon_state = "line1";
@@ -5967,7 +5967,7 @@
 	},
 /obj/stool/chair/blue,
 /turf/simulated/floor/white/checker,
-/area)
+/area/space)
 "rg" = (
 /obj/storage/secure/closet/command/medical_director,
 /obj/decal/tile_edge/line/red{
@@ -5977,7 +5977,7 @@
 /turf/simulated/floor/blue/checker{
 	dir = 8
 	},
-/area)
+/area/space)
 "rh" = (
 /obj/decal/tile_edge/line/red{
 	icon_state = "line3";
@@ -5989,7 +5989,7 @@
 	pixel_y = 0
 	},
 /turf/simulated/floor/white,
-/area)
+/area/space)
 "ri" = (
 /obj/decal/tile_edge/stripe/big{
 	icon_state = "bigstripe2";
@@ -6000,7 +6000,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/red/corner,
-/area)
+/area/space)
 "rj" = (
 /obj/decal/tile_edge/stripe/big{
 	icon_state = "bigstripe";
@@ -6008,7 +6008,7 @@
 	},
 /obj/machinery/optable,
 /turf/simulated/floor/redwhite,
-/area)
+/area/space)
 "rk" = (
 /obj/decal/tile_edge/stripe/big{
 	icon_state = "bigstripe2";
@@ -6017,14 +6017,14 @@
 /turf/simulated/floor/red/corner{
 	dir = 4
 	},
-/area)
+/area/space)
 "rl" = (
 /obj/morgue{
 	icon_state = "morgue1";
 	dir = 8
 	},
 /turf/simulated/floor/black,
-/area)
+/area/space)
 "rm" = (
 /obj/machinery/disposal/mail/small{
 	dir = 4
@@ -6032,17 +6032,17 @@
 /turf/simulated/floor/specialroom/medbay{
 	dir = 2
 	},
-/area)
+/area/space)
 "rn" = (
 /obj/machinery/vending/medical,
 /turf/simulated/floor/specialroom/medbay{
 	dir = 2
 	},
-/area)
+/area/space)
 "ro" = (
 /obj/table/reinforced/auto,
 /turf/simulated/floor/blue/checker,
-/area)
+/area/space)
 "rp" = (
 /obj/decal/tile_edge/line/red{
 	icon_state = "line1";
@@ -6051,17 +6051,17 @@
 /turf/simulated/floor/blue/checker{
 	dir = 8
 	},
-/area)
+/area/space)
 "rq" = (
 /obj/table/wood/auto,
 /turf/simulated/floor/white/checker,
-/area)
+/area/space)
 "rr" = (
 /obj/table/wood/auto,
 /turf/simulated/floor/blue/checker{
 	dir = 8
 	},
-/area)
+/area/space)
 "rs" = (
 /obj/decal/tile_edge/line/red{
 	icon_state = "line1";
@@ -6069,20 +6069,20 @@
 	},
 /obj/table/wood/auto,
 /turf/simulated/floor/white/checker,
-/area)
+/area/space)
 "rt" = (
 /obj/machinery/door/firedoor/border_only,
 /turf/simulated/floor/redwhite{
 	dir = 8
 	},
-/area)
+/area/space)
 "ru" = (
 /obj/decal/tile_edge/stripe/big{
 	icon_state = "bigstripe-edge3";
 	dir = 1
 	},
 /turf/simulated/floor/white,
-/area)
+/area/space)
 "rv" = (
 /obj/decal/tile_edge/stripe/big{
 	icon_state = "bigstripe-edge";
@@ -6090,30 +6090,30 @@
 	},
 /obj/iv_stand,
 /turf/simulated/floor/white,
-/area)
+/area/space)
 "rw" = (
 /obj/decal/tile_edge/stripe/big{
 	icon_state = "bigstripe-edge3";
 	dir = 10
 	},
 /turf/simulated/floor/white,
-/area)
+/area/space)
 "rx" = (
 /obj/machinery/vending/medical_public,
 /turf/simulated/floor,
-/area)
+/area/space)
 "ry" = (
 /obj/machinery/computer3/generic/med_data{
 	dir = 4
 	},
 /turf/simulated/floor/blue/checker,
-/area)
+/area/space)
 "rz" = (
 /obj/stool/chair/office/red,
 /turf/simulated/floor/specialroom/medbay{
 	dir = 2
 	},
-/area)
+/area/space)
 "rA" = (
 /obj/table/reinforced/auto,
 /obj/health_scanner/wall{
@@ -6123,13 +6123,13 @@
 	pixel_y = -8
 	},
 /turf/simulated/floor/blue/checker,
-/area)
+/area/space)
 "rB" = (
 /obj/table/reinforced/auto,
 /turf/simulated/floor/specialroom/medbay{
 	dir = 2
 	},
-/area)
+/area/space)
 "rC" = (
 /obj/decal/tile_edge/line/red{
 	icon_state = "line1";
@@ -6145,7 +6145,7 @@
 	name = "mail chute-'Medical Director'"
 	},
 /turf/simulated/floor/white/checker,
-/area)
+/area/space)
 "rD" = (
 /obj/machinery/computer3/generic/med_data{
 	dir = 4
@@ -6153,14 +6153,14 @@
 /turf/simulated/floor/blue/checker{
 	dir = 8
 	},
-/area)
+/area/space)
 "rE" = (
 /obj/stool/chair/comfy/red{
 	icon_state = "chair_comfy-red";
 	dir = 1
 	},
 /turf/simulated/floor/white/checker,
-/area)
+/area/space)
 "rF" = (
 /obj/decal/tile_edge/line/red{
 	icon_state = "line1";
@@ -6170,7 +6170,7 @@
 /turf/simulated/floor/blue/checker{
 	dir = 8
 	},
-/area)
+/area/space)
 "rG" = (
 /obj/decal/tile_edge/line/red{
 	icon_state = "line3";
@@ -6181,27 +6181,27 @@
 	pixel_x = -20
 	},
 /turf/simulated/floor/white,
-/area)
+/area/space)
 "rH" = (
 /obj/decal/tile_edge/line/red{
 	icon_state = "line3"
 	},
 /turf/simulated/floor/white,
-/area)
+/area/space)
 "rI" = (
 /obj/decal/tile_edge/line/red{
 	icon_state = "line3";
 	dir = 4
 	},
 /turf/simulated/floor/white,
-/area)
+/area/space)
 "rJ" = (
 /obj/table/reinforced/auto,
 /obj/window/crystal/reinforced/west,
 /obj/random_item_spawner/desk_stuff,
 /obj/machinery/door/window/southright,
 /turf/simulated/floor/blue/checker,
-/area)
+/area/space)
 "rK" = (
 /obj/table/reinforced/auto,
 /obj/window/reinforced/south,
@@ -6209,20 +6209,20 @@
 /turf/simulated/floor/specialroom/medbay{
 	dir = 2
 	},
-/area)
+/area/space)
 "rL" = (
 /obj/table/reinforced/auto,
 /obj/window/crystal/reinforced/east,
 /obj/random_item_spawner/desk_stuff,
 /obj/machinery/door/window/southleft,
 /turf/simulated/floor/blue/checker,
-/area)
+/area/space)
 "rM" = (
 /obj/machinery/door/firedoor/border_only,
 /turf/simulated/floor/specialroom/medbay{
 	dir = 2
 	},
-/area)
+/area/space)
 "rN" = (
 /obj/decal/tile_edge/line/red{
 	icon_state = "line2";
@@ -6231,13 +6231,13 @@
 /turf/simulated/floor/blue/checker{
 	dir = 8
 	},
-/area)
+/area/space)
 "rO" = (
 /obj/decal/tile_edge/line/red{
 	icon_state = "line1"
 	},
 /turf/simulated/floor/white/checker,
-/area)
+/area/space)
 "rP" = (
 /obj/decal/tile_edge/line/red{
 	icon_state = "line1"
@@ -6245,7 +6245,7 @@
 /turf/simulated/floor/blue/checker{
 	dir = 8
 	},
-/area)
+/area/space)
 "rQ" = (
 /obj/decal/tile_edge/line/red{
 	icon_state = "line2";
@@ -6259,56 +6259,56 @@
 	name = "grubby old ashtray"
 	},
 /turf/simulated/floor/white/checker,
-/area)
+/area/space)
 "rS" = (
 /obj/wingrille_spawn,
 /obj/window_blinds/left{
 	id = "surgery1"
 	},
 /turf/simulated/floor/plating/random,
-/area)
+/area/space)
 "rT" = (
 /obj/wingrille_spawn,
 /obj/window_blinds/middle{
 	id = "surgery1"
 	},
 /turf/simulated/floor/plating/random,
-/area)
+/area/space)
 "rU" = (
 /obj/wingrille_spawn,
 /obj/window_blinds/right{
 	id = "surgery1"
 	},
 /turf/simulated/floor/plating/random,
-/area)
+/area/space)
 "rV" = (
 /turf/simulated/floor/blue/side{
 	dir = 4
 	},
-/area)
+/area/space)
 "rW" = (
 /obj/health_scanner/floor{
 	find_in_range = 0;
 	id = "lobby"
 	},
 /turf/simulated/floor/white,
-/area)
+/area/space)
 "rX" = (
 /obj/stool/chair/comfy/wheelchair,
 /turf/simulated/floor/bluewhite{
 	dir = 4
 	},
-/area)
+/area/space)
 "rY" = (
 /turf/simulated/floor/bluewhite/corner{
 	dir = 4
 	},
-/area)
+/area/space)
 "rZ" = (
 /turf/simulated/floor/bluewhite/corner{
 	dir = 2
 	},
-/area)
+/area/space)
 "sa" = (
 /obj/stool/bench/red/auto,
 /obj/blind_switch{
@@ -6316,27 +6316,27 @@
 	pixel_x = -20
 	},
 /turf/simulated/floor/blue,
-/area)
+/area/space)
 "sb" = (
 /obj/stool/bench/red/auto,
 /turf/simulated/floor/blue,
-/area)
+/area/space)
 "sd" = (
 /obj/machinery/door/firedoor/border_only,
 /turf/simulated/floor/bluewhite{
 	dir = 8
 	},
-/area)
+/area/space)
 "se" = (
 /turf/simulated/floor/bluewhite{
 	dir = 4
 	},
-/area)
+/area/space)
 "sg" = (
 /turf/simulated/floor/bluewhite{
 	dir = 8
 	},
-/area)
+/area/space)
 "sh" = (
 /obj/decal/tile_edge/stripe/big{
 	icon_state = "bigstripe-corner2";
@@ -6345,7 +6345,7 @@
 /turf/simulated/floor/bluewhite{
 	dir = 4
 	},
-/area)
+/area/space)
 "si" = (
 /obj/decal/tile_edge/stripe/big{
 	icon_state = "bigstripe-corner2";
@@ -6354,12 +6354,12 @@
 /turf/simulated/floor/blueblack{
 	dir = 8
 	},
-/area)
+/area/space)
 "sj" = (
 /turf/simulated/floor/blueblack{
 	dir = 4
 	},
-/area)
+/area/space)
 "sk" = (
 /obj/machinery/disposal/morgue{
 	desc = "A pneumatic delivery chute for sending things directly to the crematorium.";
@@ -6371,13 +6371,13 @@
 	dir = 4
 	},
 /turf/simulated/floor/black,
-/area)
+/area/space)
 "sl" = (
 /obj/decal/tile_edge/line/red{
 	icon_state = "line3"
 	},
 /turf/simulated/floor/black,
-/area)
+/area/space)
 "sm" = (
 /obj/decal/tile_edge/line/red{
 	icon_state = "line3"
@@ -6387,7 +6387,7 @@
 	pixel_y = 8
 	},
 /turf/simulated/floor/black,
-/area)
+/area/space)
 "sn" = (
 /obj/table/reinforced/auto,
 /obj/decal/tile_edge/line/red{
@@ -6395,11 +6395,11 @@
 	dir = 4
 	},
 /turf/simulated/floor/black,
-/area)
+/area/space)
 "so" = (
 /obj/machinery/bot/medbot/head_surgeon,
 /turf/simulated/floor/red,
-/area)
+/area/space)
 "sp" = (
 /obj/decal/tile_edge/stripe/big{
 	icon_state = "bigstripe-edge";
@@ -6408,14 +6408,14 @@
 /turf/simulated/floor/bluewhite{
 	dir = 4
 	},
-/area)
+/area/space)
 "sq" = (
 /obj/machinery/door/firedoor/border_only,
 /turf/simulated/floor/stairs{
 	dir = 4;
 	icon_state = "medstairs_alone"
 	},
-/area)
+/area/space)
 "sr" = (
 /obj/decal/tile_edge/stripe/big{
 	icon_state = "bigstripe-edge";
@@ -6424,35 +6424,35 @@
 /turf/simulated/floor/blueblack{
 	dir = 8
 	},
-/area)
+/area/space)
 "ss" = (
 /obj/table/wood/auto,
 /obj/random_item_spawner/desk_stuff,
 /turf/simulated/floor/black,
-/area)
+/area/space)
 "st" = (
 /obj/table/wood/auto,
 /obj/machinery/light/lamp{
 	switchon = 1
 	},
 /turf/simulated/floor/black,
-/area)
+/area/space)
 "su" = (
 /obj/machinery/door/firedoor/border_only,
 /turf/simulated/floor/blueblack{
 	dir = 8
 	},
-/area)
+/area/space)
 "sv" = (
 /obj/decal/tile_edge/line/red{
 	icon_state = "line3";
 	dir = 1
 	},
 /turf/simulated/floor/black,
-/area)
+/area/space)
 "sw" = (
 /turf/simulated/floor/redblack/corner,
-/area)
+/area/space)
 "sx" = (
 /obj/machinery/optable,
 /obj/decal/tile_edge/line/red{
@@ -6460,10 +6460,10 @@
 	dir = 1
 	},
 /turf/simulated/floor/redblack,
-/area)
+/area/space)
 "sy" = (
 /turf/simulated/floor/bluewhite,
-/area)
+/area/space)
 "sz" = (
 /obj/decal/tile_edge/stripe/big{
 	icon_state = "bigstripe-corner2";
@@ -6472,7 +6472,7 @@
 /turf/simulated/floor/bluewhite{
 	dir = 4
 	},
-/area)
+/area/space)
 "sA" = (
 /obj/decal/tile_edge/stripe/big{
 	icon_state = "bigstripe-corner2";
@@ -6481,7 +6481,7 @@
 /turf/simulated/floor/blueblack{
 	dir = 8
 	},
-/area)
+/area/space)
 "sB" = (
 /obj/disposaloutlet{
 	dir = 4;
@@ -6495,7 +6495,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/black,
-/area)
+/area/space)
 "sC" = (
 /obj/surgery_tray,
 /obj/decal/tile_edge/line/red{
@@ -6503,26 +6503,26 @@
 	dir = 4
 	},
 /turf/simulated/floor/black,
-/area)
+/area/space)
 "sD" = (
 /obj/reagent_dispensers/watertank/fountain,
 /turf/simulated/floor/white,
-/area)
+/area/space)
 "sE" = (
 /obj/stool/bench/blue,
 /turf/simulated/floor/white,
-/area)
+/area/space)
 "sF" = (
 /obj/stool/bench/blue,
 /turf/simulated/floor/bluewhite{
 	dir = 4
 	},
-/area)
+/area/space)
 "sG" = (
 /turf/simulated/floor/bluewhite/corner{
 	dir = 8
 	},
-/area)
+/area/space)
 "sH" = (
 /obj/stool/bench/red/auto,
 /obj/blind_switch{
@@ -6530,93 +6530,93 @@
 	pixel_x = -20
 	},
 /turf/simulated/floor/blue,
-/area)
+/area/space)
 "sI" = (
 /obj/stool/bed/moveable,
 /obj/item/clothing/suit/bedsheet,
 /turf/simulated/floor/greenwhite{
 	dir = 9
 	},
-/area)
+/area/space)
 "sJ" = (
 /obj/iv_stand,
 /turf/simulated/floor/greenwhite{
 	dir = 1
 	},
-/area)
+/area/space)
 "sK" = (
 /obj/stool/bed/moveable,
 /obj/item/clothing/suit/bedsheet,
 /turf/simulated/floor/greenwhite{
 	dir = 5
 	},
-/area)
+/area/space)
 "sL" = (
 /obj/wingrille_spawn,
 /obj/window_blinds/left{
 	id = "surgery2"
 	},
 /turf/simulated/floor/plating/random,
-/area)
+/area/space)
 "sM" = (
 /obj/wingrille_spawn,
 /obj/window_blinds/middle{
 	id = "surgery2"
 	},
 /turf/simulated/floor/plating/random,
-/area)
+/area/space)
 "sN" = (
 /obj/wingrille_spawn,
 /obj/window_blinds/right{
 	id = "surgery2"
 	},
 /turf/simulated/floor/plating/random,
-/area)
+/area/space)
 "sO" = (
 /obj/table/wood/round/auto,
 /obj/machinery/computer/security/wooden_tv/small{
 	pixel_y = 8
 	},
 /turf/simulated/floor/wood,
-/area)
+/area/space)
 "sP" = (
 /obj/stool/chair/comfy/blue,
 /turf/simulated/floor/wood,
-/area)
+/area/space)
 "sQ" = (
 /obj/stool/chair/comfy/blue{
 	icon_state = "chair_comfy-blue";
 	dir = 8
 	},
 /turf/simulated/floor/wood,
-/area)
+/area/space)
 "sR" = (
 /obj/submachine/chef_sink/chem_sink{
 	layer = 3;
 	pixel_y = 8
 	},
 /turf/simulated/floor/white,
-/area)
+/area/space)
 "sS" = (
 /obj/item/storage/toilet/random{
 	pixel_y = 8
 	},
 /turf/simulated/floor/white,
-/area)
+/area/space)
 "sT" = (
 /obj/stool/bed/moveable,
 /obj/item/clothing/suit/bedsheet,
 /turf/simulated/floor/greenwhite{
 	dir = 8
 	},
-/area)
+/area/space)
 "sU" = (
 /obj/stool/bed/moveable,
 /obj/item/clothing/suit/bedsheet,
 /turf/simulated/floor/greenwhite{
 	dir = 4
 	},
-/area)
+/area/space)
 "sV" = (
 /obj/decal/tile_edge/line/red{
 	icon_state = "line3";
@@ -6627,65 +6627,65 @@
 	pixel_x = -20
 	},
 /turf/simulated/floor/white,
-/area)
+/area/space)
 "sW" = (
 /obj/stool/chair/couch/blue{
 	icon_state = "chair_couch_ew-blue"
 	},
 /turf/simulated/floor/wood,
-/area)
+/area/space)
 "sX" = (
 /turf/simulated/floor/carpet{
 	icon_state = "blue2";
 	dir = 9
 	},
-/area)
+/area/space)
 "sY" = (
 /turf/simulated/floor/carpet{
 	icon_state = "blue2";
 	dir = 5
 	},
-/area)
+/area/space)
 "sZ" = (
 /obj/table/wood/round/auto,
 /obj/random_item_spawner/desk_stuff,
 /turf/simulated/floor/wood,
-/area)
+/area/space)
 "ta" = (
 /turf/simulated/floor/greenwhite{
 	dir = 8
 	},
-/area)
+/area/space)
 "tb" = (
 /turf/simulated/floor/greenwhite{
 	dir = 4
 	},
-/area)
+/area/space)
 "tc" = (
 /obj/machinery/door/firedoor/border_only,
 /turf/simulated/floor/greenwhite{
 	dir = 8
 	},
-/area)
+/area/space)
 "td" = (
 /obj/stool/chair/couch/blue{
 	dir = 4;
 	icon_state = "chair_couch_ew-blue"
 	},
 /turf/simulated/floor/wood,
-/area)
+/area/space)
 "te" = (
 /turf/simulated/floor/carpet{
 	icon_state = "blue2";
 	dir = 10
 	},
-/area)
+/area/space)
 "tf" = (
 /turf/simulated/floor/carpet{
 	icon_state = "blue2";
 	dir = 6
 	},
-/area)
+/area/space)
 "tg" = (
 /obj/window/north,
 /obj/machinery/shower{
@@ -6694,7 +6694,7 @@
 	pixel_y = 6
 	},
 /turf/simulated/floor/sanitary/white,
-/area)
+/area/space)
 "th" = (
 /obj/machinery/door/window/northleft{
 	name = "shower stall"
@@ -6705,7 +6705,7 @@
 	name = "drain"
 	},
 /turf/simulated/floor/sanitary/white,
-/area)
+/area/space)
 "ti" = (
 /obj/window/south,
 /obj/shrub{
@@ -6715,7 +6715,7 @@
 	pixel_y = 8
 	},
 /turf/simulated/floor/wood,
-/area)
+/area/space)
 "tj" = (
 /obj/stool/chair/comfy/blue{
 	icon_state = "chair_comfy-blue";
@@ -6723,66 +6723,66 @@
 	},
 /obj/window/south,
 /turf/simulated/floor/wood,
-/area)
+/area/space)
 "tk" = (
 /obj/stool/bed/moveable,
 /obj/item/clothing/suit/bedsheet,
 /turf/simulated/floor/greenwhite{
 	dir = 10
 	},
-/area)
+/area/space)
 "tl" = (
 /turf/simulated/floor/greenwhite{
 	dir = 2
 	},
-/area)
+/area/space)
 "tm" = (
 /obj/stool/bed/moveable,
 /obj/item/clothing/suit/bedsheet,
 /turf/simulated/floor/greenwhite{
 	dir = 6
 	},
-/area)
+/area/space)
 "tn" = (
 /obj/wingrille_spawn,
 /obj/window_blinds{
 	id = "surgery2"
 	},
 /turf/simulated/floor/plating/random,
-/area)
+/area/space)
 "to" = (
 /obj/decal/tile_edge/stripe/big{
 	icon_state = "bigstripe-edge";
 	dir = 1
 	},
 /turf/simulated/floor/white,
-/area)
+/area/space)
 "tp" = (
 /obj/machinery/vending/cola/blue,
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
-/area)
+/area/space)
 "tq" = (
 /obj/window/east,
 /obj/machinery/vending/snack,
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
-/area)
+/area/space)
 "tr" = (
 /obj/window/west,
 /obj/machinery/vending/coffee,
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
-/area)
+/area/space)
 "ts" = (
 /obj/item/storage/toilet/random{
 	pixel_y = 8
 	},
 /turf/simulated/floor/sanitary/white,
-/area)
+/area/space)
 "tt" = (
 /obj/machinery/vending/medical,
 /obj/window/crystal/reinforced/north,
@@ -6791,13 +6791,13 @@
 /turf/simulated/floor/green/side{
 	dir = 9
 	},
-/area)
+/area/space)
 "tu" = (
 /obj/machinery/door/firedoor/border_only,
 /turf/simulated/floor/green/side{
 	dir = 1
 	},
-/area)
+/area/space)
 "tv" = (
 /obj/table/reinforced/auto,
 /obj/window/crystal/reinforced/west,
@@ -6806,7 +6806,7 @@
 /turf/simulated/floor/green/side{
 	dir = 1
 	},
-/area)
+/area/space)
 "tw" = (
 /obj/window/crystal/reinforced/north,
 /obj/window/crystal/reinforced/east,
@@ -6814,7 +6814,7 @@
 /turf/simulated/floor/green/side{
 	dir = 5
 	},
-/area)
+/area/space)
 "tx" = (
 /obj/machinery/light/emergency,
 /obj/decal/tile_edge/line/red{
@@ -6823,7 +6823,7 @@
 	},
 /obj/machinery/disposal/morgue,
 /turf/simulated/floor/white,
-/area)
+/area/space)
 "ty" = (
 /obj/decal/tile_edge/line/red{
 	icon_state = "line3"
@@ -6831,7 +6831,7 @@
 /obj/surgery_tray,
 /obj/machinery/disposal/mail/small,
 /turf/simulated/floor/white,
-/area)
+/area/space)
 "tz" = (
 /obj/machinery/light/emergency,
 /obj/table/reinforced/auto,
@@ -6840,7 +6840,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/white,
-/area)
+/area/space)
 "tA" = (
 /obj/submachine/chef_sink/chem_sink{
 	dir = 4;
@@ -6850,19 +6850,19 @@
 /turf/simulated/floor/green/side{
 	dir = 8
 	},
-/area)
+/area/space)
 "tB" = (
 /obj/stool/chair/office{
 	icon_state = "office_chair";
 	dir = 1
 	},
 /turf/simulated/floor,
-/area)
+/area/space)
 "tC" = (
 /turf/simulated/floor/green/side{
 	dir = 4
 	},
-/area)
+/area/space)
 "tD" = (
 /obj/stool/chair/comfy/blue{
 	icon_state = "chair_comfy-blue";
@@ -6871,32 +6871,32 @@
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
-/area)
+/area/space)
 "tE" = (
 /obj/storage/secure/closet/medical/medkit,
 /turf/simulated/floor/green/side{
 	dir = 10
 	},
-/area)
+/area/space)
 "tF" = (
 /turf/simulated/floor/green/side,
-/area)
+/area/space)
 "tG" = (
 /obj/machinery/disposal/mail/small,
 /turf/simulated/floor/green/side,
-/area)
+/area/space)
 "tH" = (
 /turf/simulated/floor/green/side{
 	dir = 6
 	},
-/area)
+/area/space)
 "tI" = (
 /obj/table/wood/round/auto,
 /obj/item/decoration/flower_vase,
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
-/area)
+/area/space)
 "tJ" = (
 /obj/stool/chair/comfy/blue{
 	icon_state = "chair_comfy-blue";
@@ -6905,82 +6905,82 @@
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
-/area)
+/area/space)
 "tK" = (
 /obj/reagent_dispensers/watertank/fountain,
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
-/area)
+/area/space)
 "tL" = (
 /obj/submachine/chef_sink/chem_sink{
 	dir = 1;
 	pixel_y = 0
 	},
 /turf/simulated/floor/white,
-/area)
+/area/space)
 "tM" = (
 /obj/table/auto,
 /obj/towelbin,
 /turf/simulated/floor,
-/area)
+/area/space)
 "tN" = (
 /obj/table/auto,
 /obj/bedsheetbin,
 /turf/simulated/floor/grime,
-/area)
+/area/space)
 "tO" = (
 /obj/table/auto,
 /obj/bedsheetbin,
 /turf/simulated/floor,
-/area)
+/area/space)
 "tP" = (
 /turf/simulated/floor/blackwhite/corner,
-/area)
+/area/space)
 "tQ" = (
 /obj/rack,
 /obj/item/furniture_parts/bed/roller,
 /obj/item/furniture_parts/bed/roller,
 /obj/item/furniture_parts/bed/roller,
 /turf/simulated/floor/grime,
-/area)
+/area/space)
 "tT" = (
 /turf/simulated/floor/blackwhite{
 	dir = 4
 	},
-/area)
+/area/space)
 "tU" = (
 /obj/wingrille_spawn/reinforced,
 /turf/simulated/wall/auto/gannets,
-/area)
+/area/space)
 "tV" = (
 /obj/machinery/recharge_station,
 /turf/simulated/floor/black,
-/area)
+/area/space)
 "tX" = (
 /obj/table/auto,
 /obj/random_item_spawner/tools,
 /obj/item/wrench,
 /turf/simulated/floor,
-/area)
+/area/space)
 "tY" = (
 /obj/rack,
 /obj/item/furniture_parts/IVstand,
 /obj/item/furniture_parts/IVstand,
 /obj/item/furniture_parts/IVstand,
 /turf/simulated/floor,
-/area)
+/area/space)
 "tZ" = (
 /obj/rack,
 /obj/item/furniture_parts/IVstand,
 /obj/item/furniture_parts/IVstand,
 /obj/item/furniture_parts/IVstand,
 /turf/simulated/floor/grime,
-/area)
+/area/space)
 "ua" = (
 /obj/stool/chair/comfy/wheelchair,
 /turf/simulated/floor/grime,
-/area)
+/area/space)
 "ub" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	tag = "icon-intact (SOUTHEAST)";
@@ -6993,7 +6993,7 @@
 	dir = 6
 	},
 /turf/space,
-/area)
+/area/space)
 "uc" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	tag = "icon-intact (EAST)";
@@ -7006,7 +7006,7 @@
 	dir = 8
 	},
 /turf/space,
-/area)
+/area/space)
 "ud" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	tag = "icon-intact (EAST)";
@@ -7015,7 +7015,7 @@
 	},
 /obj/lattice,
 /turf/space,
-/area)
+/area/space)
 "ue" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	tag = "icon-intact (SOUTHWEST)";
@@ -7028,7 +7028,7 @@
 	dir = 10
 	},
 /turf/space,
-/area)
+/area/space)
 "uf" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	tag = "icon-intact (NORTHWEST)";
@@ -7037,7 +7037,7 @@
 	},
 /obj/lattice,
 /turf/space,
-/area)
+/area/space)
 "ug" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	tag = "icon-intact (NORTHEAST)";
@@ -7046,27 +7046,27 @@
 	},
 /obj/lattice,
 /turf/space,
-/area)
+/area/space)
 "uh" = (
 /turf/simulated/floor/black/side{
 	dir = 10
 	},
-/area)
+/area/space)
 "ui" = (
 /turf/simulated/floor/black/side{
-	
+
 	},
-/area)
+/area/space)
 "uj" = (
 /turf/simulated/floor/black/side{
 	dir = 6
 	},
-/area)
+/area/space)
 "uk" = (
 /obj/machinery/emitter,
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/plating/random,
-/area)
+/area/space)
 "ul" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging,
 /obj/lattice{
@@ -7075,7 +7075,7 @@
 	dir = 6
 	},
 /turf/space,
-/area)
+/area/space)
 "um" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging,
 /obj/lattice{
@@ -7084,7 +7084,7 @@
 	dir = 1
 	},
 /turf/space,
-/area)
+/area/space)
 "un" = (
 /obj/machinery/emitter{
 	icon_state = "Emitter";
@@ -7092,29 +7092,29 @@
 	},
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/plating/random,
-/area)
+/area/space)
 "uo" = (
 /obj/machinery/field_generator,
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/plating/random,
-/area)
+/area/space)
 "up" = (
 /turf/simulated/floor/engine{
 	icon_state = "engine_caution_corners";
 	dir = 8
 	},
-/area)
+/area/space)
 "uq" = (
 /turf/simulated/floor/engine{
 	icon_state = "engine_caution_north"
 	},
-/area)
+/area/space)
 "ur" = (
 /turf/simulated/floor/engine{
 	icon_state = "engine_caution_corners";
 	dir = 4
 	},
-/area)
+/area/space)
 "us" = (
 /obj/machinery/emitter{
 	icon_state = "Emitter";
@@ -7122,80 +7122,80 @@
 	},
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/plating/random,
-/area)
+/area/space)
 "ut" = (
 /obj/machinery/power/collector_array,
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/plating/random,
-/area)
+/area/space)
 "uu" = (
 /turf/simulated/floor/engine{
 	dir = 9;
 	icon_state = "engine_caution_corners2"
 	},
-/area)
+/area/space)
 "uv" = (
 /turf/simulated/floor/engine,
-/area)
+/area/space)
 "uw" = (
 /turf/simulated/floor/engine{
 	dir = 5;
 	icon_state = "engine_caution_corners2"
 	},
-/area)
+/area/space)
 "ux" = (
 /obj/machinery/power/collector_control,
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/plating/random,
-/area)
+/area/space)
 "uy" = (
 /turf/simulated/floor/engine{
 	icon_state = "engine_caution_west"
 	},
-/area)
+/area/space)
 "uz" = (
 /turf/simulated/floor/engine{
 	icon_state = "engine_caution_east"
 	},
-/area)
+/area/space)
 "uA" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging,
 /obj/lattice,
 /turf/space,
-/area)
+/area/space)
 "uB" = (
 /obj/machinery/the_singularitygen,
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/engine,
-/area)
+/area/space)
 "uC" = (
 /turf/simulated/floor/engine{
 	icon_state = "engine_caution_corners"
 	},
-/area)
+/area/space)
 "uD" = (
 /turf/simulated/floor/engine{
 	dir = 10;
 	icon_state = "engine_caution_corners2"
 	},
-/area)
+/area/space)
 "uE" = (
 /turf/simulated/floor/engine{
 	dir = 6;
 	icon_state = "engine_caution_corners2"
 	},
-/area)
+/area/space)
 "uF" = (
 /turf/simulated/floor/engine{
 	icon_state = "engine_caution_corners";
 	dir = 1
 	},
-/area)
+/area/space)
 "uG" = (
 /turf/simulated/floor/engine{
 	icon_state = "engine_caution_south"
 	},
-/area)
+/area/space)
 "uH" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	tag = "icon-intact (NORTHEAST)";
@@ -7208,7 +7208,7 @@
 	dir = 9
 	},
 /turf/space,
-/area)
+/area/space)
 "uI" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	tag = "icon-intact (SOUTHWEST)";
@@ -7217,7 +7217,7 @@
 	},
 /obj/lattice,
 /turf/space,
-/area)
+/area/space)
 "uJ" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	tag = "icon-intact (SOUTHEAST)";
@@ -7226,7 +7226,7 @@
 	},
 /obj/lattice,
 /turf/space,
-/area)
+/area/space)
 "uK" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	tag = "icon-intact (NORTHWEST)";
@@ -7239,7 +7239,7 @@
 	dir = 5
 	},
 /turf/space,
-/area)
+/area/space)
 "uL" = (
 /obj/machinery/emitter{
 	icon_state = "Emitter";
@@ -7247,12 +7247,12 @@
 	},
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/plating/random,
-/area)
+/area/space)
 "uM" = (
 /obj/table/auto,
 /obj/random_item_spawner/desk_stuff,
 /turf/simulated/floor/black,
-/area)
+/area/space)
 "uN" = (
 /obj/table/auto,
 /obj/item/scalpel,
@@ -7260,29 +7260,29 @@
 	pixel_y = 8
 	},
 /turf/simulated/floor/black,
-/area)
+/area/space)
 "uO" = (
 /obj/machinery/optable,
 /turf/simulated/floor/black,
-/area)
+/area/space)
 "uP" = (
 /obj/table/auto,
 /obj/random_item_spawner/med_tool,
 /turf/simulated/floor/black,
-/area)
+/area/space)
 "uQ" = (
 /obj/machinery/door/firedoor/border_only,
 /turf/simulated/floor/blackwhite{
 	dir = 2
 	},
-/area)
+/area/space)
 "uR" = (
 /obj/decal/tile_edge/stripe/big{
 	icon_state = "bigstripe-corner2";
 	dir = 10
 	},
 /turf/simulated/floor/black,
-/area)
+/area/space)
 "uS" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	tag = "icon-intact (EAST)";
@@ -7295,7 +7295,7 @@
 	dir = 10
 	},
 /turf/space,
-/area)
+/area/space)
 "uT" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	tag = "icon-intact (SOUTHWEST)";
@@ -7308,7 +7308,7 @@
 	dir = 1
 	},
 /turf/space,
-/area)
+/area/space)
 "uU" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	tag = "icon-intact (SOUTHEAST)";
@@ -7321,28 +7321,28 @@
 	dir = 6
 	},
 /turf/space,
-/area)
+/area/space)
 "uV" = (
 /obj/decal/tile_edge/stripe/big{
 	icon_state = "bigstripe-edge";
 	dir = 8
 	},
 /turf/simulated/floor/black,
-/area)
+/area/space)
 "uW" = (
 /obj/table/auto,
 /turf/simulated/floor/black,
-/area)
+/area/space)
 "uX" = (
 /obj/machinery/guardbot_dock,
 /turf/simulated/floor/bot,
-/area)
+/area/space)
 "uY" = (
 /obj/machinery/door/firedoor/border_only,
 /turf/simulated/floor/blackwhite{
 	dir = 1
 	},
-/area)
+/area/space)
 "uZ" = (
 /obj/decal/tile_edge/stripe/big{
 	icon_state = "bigstripe-corner2";
@@ -7350,64 +7350,64 @@
 	},
 /obj/morgue,
 /turf/simulated/floor/black,
-/area)
+/area/space)
 "va" = (
 /obj/morgue,
 /turf/simulated/floor/black,
-/area)
+/area/space)
 "vb" = (
 /obj/machinery/door/firedoor/border_only,
 /turf/simulated/floor/grey/side{
 	dir = 4
 	},
-/area)
+/area/space)
 "vc" = (
 /obj/machinery/disposal,
 /turf/simulated/floor/blackwhite{
 	dir = 9
 	},
-/area)
+/area/space)
 "vd" = (
 /obj/machinery/recharge_station,
 /turf/simulated/floor/blackwhite{
 	dir = 1
 	},
-/area)
+/area/space)
 "vf" = (
 /obj/machinery/disposal/mail,
 /turf/simulated/floor/blackwhite{
 	dir = 5
 	},
-/area)
+/area/space)
 "vg" = (
 /turf/simulated/floor/blackwhite{
 	dir = 8
 	},
-/area)
+/area/space)
 "vh" = (
 /obj/machinery/vending/standard,
 /turf/simulated/floor/black,
-/area)
+/area/space)
 "vi" = (
 /obj/machinery/door/firedoor/border_only,
 /turf/simulated/floor/blackwhite{
 	dir = 8
 	},
-/area)
+/area/space)
 "vj" = (
 /turf/simulated/floor/bluewhite{
 	dir = 9
 	},
-/area)
+/area/space)
 "vk" = (
 /turf/simulated/floor/bluewhite{
 	dir = 5
 	},
-/area)
+/area/space)
 "vl" = (
 /obj/machinery/clonegrinder,
 /turf/simulated/floor/white,
-/area)
+/area/space)
 "vm" = (
 /obj/storage/secure/closet/medical{
 	name = "locker"
@@ -7415,160 +7415,160 @@
 /turf/simulated/floor/bluewhite{
 	dir = 4
 	},
-/area)
+/area/space)
 "vn" = (
 /obj/rack,
 /turf/simulated/floor/black,
-/area)
+/area/space)
 "vo" = (
 /obj/machinery/clonepod,
 /turf/simulated/floor/white,
-/area)
+/area/space)
 "vp" = (
 /obj/machinery/computer/cloning{
 	icon_state = "dna";
 	dir = 4
 	},
 /turf/simulated/floor/white,
-/area)
+/area/space)
 "vq" = (
 /obj/stool/chair/office/blue{
 	icon_state = "office_chair_blue";
 	dir = 8
 	},
 /turf/simulated/floor/white,
-/area)
+/area/space)
 "vr" = (
 /turf/simulated/floor/blackwhite{
 	dir = 10
 	},
-/area)
+/area/space)
 "vs" = (
 /turf/simulated/floor/blackwhite{
 	dir = 2
 	},
-/area)
+/area/space)
 "vt" = (
 /turf/simulated/floor/blackwhite/corner{
 	dir = 4
 	},
-/area)
+/area/space)
 "vu" = (
 /obj/table/reinforced/auto,
 /obj/random_item_spawner/med_kit,
 /turf/simulated/floor/blackwhite{
 	dir = 4
 	},
-/area)
+/area/space)
 "vv" = (
 /obj/table/auto,
 /turf/simulated/floor/bluewhite{
 	dir = 8
 	},
-/area)
+/area/space)
 "vw" = (
 /obj/machinery/clone_scanner,
 /turf/simulated/floor/white,
-/area)
+/area/space)
 "vx" = (
 /obj/machinery/portable_reclaimer,
 /turf/simulated/floor/blackwhite{
 	dir = 8
 	},
-/area)
+/area/space)
 "vy" = (
 /obj/table/reinforced/auto,
 /obj/random_item_spawner/med_tool,
 /turf/simulated/floor/blackwhite{
 	dir = 4
 	},
-/area)
+/area/space)
 "vz" = (
 /obj/table/auto,
 /turf/simulated/floor/blue/checker,
-/area)
+/area/space)
 "vA" = (
 /obj/table/auto,
 /obj/random_item_spawner/desk_stuff,
 /turf/simulated/floor/blue/checker,
-/area)
+/area/space)
 "vB" = (
 /obj/table/auto,
 /turf/simulated/floor/bluewhite{
 	dir = 10
 	},
-/area)
+/area/space)
 "vC" = (
 /turf/simulated/floor/bluewhite{
 	dir = 2
 	},
-/area)
+/area/space)
 "vD" = (
 /obj/machinery/disposal,
 /turf/simulated/floor/bluewhite{
 	dir = 6
 	},
-/area)
+/area/space)
 "vE" = (
 /obj/machinery/manufacturer/robotics,
 /turf/simulated/floor/blackwhite{
 	dir = 8
 	},
-/area)
+/area/space)
 "vF" = (
 /obj/machinery/computer/genetics{
 	icon_state = "scanner";
 	dir = 4
 	},
 /turf/simulated/floor/blue/checker,
-/area)
+/area/space)
 "vG" = (
 /obj/stool/chair/office/blue{
 	icon_state = "office_chair_blue";
 	dir = 8
 	},
 /turf/simulated/floor/blue/checker,
-/area)
+/area/space)
 "vH" = (
 /obj/machinery/manufacturer/robotics,
 /turf/simulated/floor/blackwhite{
 	dir = 10
 	},
-/area)
+/area/space)
 "vI" = (
 /obj/table/reinforced/auto,
 /obj/machinery/cell_charger,
 /turf/simulated/floor/blackwhite{
 	dir = 6
 	},
-/area)
+/area/space)
 "vJ" = (
 /obj/machinery/genetics_scanner,
 /turf/simulated/floor/blue/checker,
-/area)
+/area/space)
 "vK" = (
 /obj/stool/chair/office/blue{
 	icon_state = "office_chair_blue";
 	dir = 4
 	},
 /turf/simulated/floor/blue/checker,
-/area)
+/area/space)
 "vL" = (
 /obj/machinery/computer/genetics{
 	icon_state = "scanner";
 	dir = 8
 	},
 /turf/simulated/floor/blue/checker,
-/area)
+/area/space)
 "vM" = (
 /obj/machinery/disposal/mail,
 /turf/simulated/floor/blue/checker,
-/area)
+/area/space)
 "vN" = (
 /turf/simulated/wall/asteroid{
 	icon_state = "ast1"
 	},
-/area)
+/area/space)
 "vO" = (
 /obj/grille/steel,
 /turf/simulated/floor/plating/airless,
@@ -7596,14 +7596,14 @@
 	dir = 1;
 	icon_state = "ast1"
 	},
-/area)
+/area/space)
 "vS" = (
 /turf/space,
 /turf/simulated/wall/asteroid{
 	dir = 1;
 	icon_state = "ast1"
 	},
-/area)
+/area/space)
 "vT" = (
 /obj/cable{
 	icon_state = "1-2";
@@ -7619,13 +7619,13 @@
 	dir = 5;
 	icon_state = "ast1"
 	},
-/area)
+/area/space)
 "vV" = (
 /turf/simulated/wall/asteroid{
 	dir = 10;
 	icon_state = "ast1"
 	},
-/area)
+/area/space)
 "vW" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "wall3"
@@ -7636,14 +7636,14 @@
 	dir = 4;
 	icon_state = "ast1"
 	},
-/area)
+/area/space)
 "vY" = (
 /turf/simulated/floor/plating/airless/asteroid,
 /turf/simulated/wall/asteroid{
 	dir = 10;
 	icon_state = "ast1"
 	},
-/area)
+/area/space)
 "vZ" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -7708,7 +7708,7 @@
 	dir = 8;
 	icon_state = "ast1"
 	},
-/area)
+/area/space)
 "wg" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -7776,14 +7776,14 @@
 	dir = 5;
 	icon_state = "ast1"
 	},
-/area)
+/area/space)
 "wn" = (
 /turf/simulated/floor/plating/airless/asteroid,
 /turf/simulated/wall/asteroid{
 	dir = 9;
 	icon_state = "ast1"
 	},
-/area)
+/area/space)
 "wo" = (
 /turf/simulated/floor/plating/airless,
 /area/listeningpost)
@@ -7820,13 +7820,13 @@
 	dir = 8;
 	icon_state = "ast1"
 	},
-/area)
+/area/space)
 "wu" = (
 /turf/simulated/wall/asteroid{
 	dir = 6;
 	icon_state = "ast1"
 	},
-/area)
+/area/space)
 "wv" = (
 /obj/machinery/door/airlock/syndicate{
 	aiControlDisabled = 1;
@@ -7869,21 +7869,21 @@
 	dir = 4;
 	icon_state = "ast1"
 	},
-/area)
+/area/space)
 "wA" = (
 /turf/space,
 /turf/simulated/wall/asteroid{
 	dir = 10;
 	icon_state = "ast1"
 	},
-/area)
+/area/space)
 "wB" = (
 /turf/simulated/floor/plating/airless/asteroid,
 /turf/simulated/wall/asteroid{
 	dir = 5;
 	icon_state = "ast1"
 	},
-/area)
+/area/space)
 "wC" = (
 /obj/machinery/light/small{
 	icon_state = "bulb1";
@@ -7938,14 +7938,14 @@
 	dir = 1;
 	icon_state = "ast1"
 	},
-/area)
+/area/space)
 "wK" = (
 /turf/simulated/floor/plating/airless,
 /turf/simulated/wall/asteroid{
 	dir = 10;
 	icon_state = "ast1"
 	},
-/area)
+/area/space)
 "wL" = (
 /obj/storage/closet/syndicate/personal,
 /turf/simulated/floor/bot,
@@ -8065,7 +8065,7 @@
 	icon_state = "floattiles4"
 	},
 /turf/space,
-/area)
+/area/space)
 "wY" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet,
@@ -8224,7 +8224,7 @@
 	dir = 4
 	},
 /turf/space,
-/area)
+/area/space)
 "xu" = (
 /turf/simulated/floor/airless/plating/scorched,
 /area/abandonedship)
@@ -8416,7 +8416,7 @@
 	dir = 4
 	},
 /turf/space,
-/area)
+/area/space)
 "xT" = (
 /turf/simulated/floor{
 	icon_state = "carpetE"
@@ -8467,7 +8467,7 @@
 	icon_state = "floattiles4"
 	},
 /turf/space,
-/area)
+/area/space)
 "ya" = (
 /obj/decal/fakeobjects/airmonitor_broken,
 /turf/simulated/shuttle/wall{
@@ -8536,7 +8536,7 @@
 	dir = 4
 	},
 /turf/space,
-/area)
+/area/space)
 "yi" = (
 /obj/lattice{
 	icon_state = "lattice-dir";
@@ -8544,7 +8544,7 @@
 	},
 /obj/structure/girder/displaced,
 /turf/space,
-/area)
+/area/space)
 "yj" = (
 /obj/lattice{
 	icon_state = "lattice-dir";
@@ -8556,11 +8556,11 @@
 	},
 /obj/structure/girder/displaced,
 /turf/space,
-/area)
+/area/space)
 "yk" = (
 /obj/decal/cleanable/machine_debris,
 /turf/space,
-/area)
+/area/space)
 "yl" = (
 /obj/lattice{
 	icon_state = "lattice-dir";
@@ -8612,7 +8612,7 @@
 	dir = 8
 	},
 /turf/space,
-/area)
+/area/space)
 "ys" = (
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/airless/plating/scorched,
@@ -8635,14 +8635,14 @@
 	dir = 6;
 	icon_state = "ast1"
 	},
-/area)
+/area/space)
 "yv" = (
 /obj/lattice,
 /obj/decal/floatingtiles{
 	icon_state = "floattiles6"
 	},
 /turf/space,
-/area)
+/area/space)
 "yw" = (
 /obj/item/cable_coil/cut,
 /obj/structure/girder/displaced,
@@ -8678,7 +8678,7 @@
 	icon_state = "coil1"
 	},
 /turf/space,
-/area)
+/area/space)
 "yB" = (
 /obj/decal/cleanable/machine_debris,
 /obj/item/device/light/glowstick,
@@ -8695,7 +8695,7 @@
 /turf/simulated/wall/asteroid{
 	icon_state = "ast1"
 	},
-/area)
+/area/space)
 "yE" = (
 /turf/simulated/shuttle/wall{
 	dir = 4;
@@ -8705,18 +8705,18 @@
 "yF" = (
 /obj/item/space_thing,
 /turf/simulated/floor/plating/airless/asteroid,
-/area)
+/area/space)
 "yG" = (
 /obj/item/skull/odd,
 /turf/simulated/floor/plating/airless/asteroid,
-/area)
+/area/space)
 "yH" = (
 /obj/decal/floatingtiles{
 	icon_state = "floattiles4";
 	dir = 8
 	},
 /turf/space,
-/area)
+/area/space)
 
 (1,1,1) = {"
 aa

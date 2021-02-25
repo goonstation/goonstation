@@ -21,7 +21,7 @@
 			boutput(user, "<span class='alert'>The screws are all weird safety-bit types! You can't turn them!</span>")
 			return
 		playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
-		if(do_after(user, 20))
+		if(do_after(user, 2 SECONDS))
 			if (src.status & BROKEN)
 				boutput(user, "<span class='notice'>The broken glass falls out.</span>")
 				var/obj/computerframe/A = new /obj/computerframe( src.loc )
@@ -72,7 +72,7 @@
 		return
 	src.add_dialog(user)
 	var/dat = "Located AI Units<BR><BR>"
-	for(var/mob/living/silicon/ai/A in by_type[/mob/living/silicon/ai])
+	for_by_tcl(A, /mob/living/silicon/ai)
 		dat += "[A.name] |"
 		if(A.stat)
 			dat += "ERROR: Not Responding!<BR>"

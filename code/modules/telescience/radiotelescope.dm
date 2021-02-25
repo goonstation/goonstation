@@ -57,7 +57,7 @@
 						newHtml += {"<script>$(function(){$( "#event[E.id]" ).click(function() {if(window.scanRunning){return;} callByond("trackId", \["id=[E.id]"\]);});});</script>"}
 			if("Starmap")
 				var/foundlocs = ""
-				if(tele_man && tele_man.events_found.len)
+				if(length(tele_man?.events_found))
 					for(var/A in tele_man.events_found)
 						var/datum/telescope_event/E = tele_man.events_found[A] //Clicking on the icons doesnt work.
 						foundlocs += {"<div id="iconclick[E.id]" style="z-index:4;border: [A == tracking_id ? "2px":"0px"] solid;border-color: #ffffff;width:32px;height:32px;position: absolute;left:[E.loc_x-16]px;top:[E.loc_y-16]px;padding:0px;margin:0px;"><img src="[resource("images/radioTelescope/[E.icon]")]" style="padding:0px;margin:0px;border:0px;"></div>"}

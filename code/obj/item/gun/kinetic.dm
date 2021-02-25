@@ -1,3 +1,4 @@
+ABSTRACT_TYPE(/obj/item/gun/kinetic)
 /obj/item/gun/kinetic
 	name = "kinetic weapon"
 	icon = 'icons/obj/items/gun.dmi'
@@ -332,7 +333,7 @@
 		..()
 		src.pixel_y += rand(-12,12)
 		src.pixel_x += rand(-12,12)
-		src.dir = pick(alldirs)
+		src.set_dir(pick(alldirs))
 		return
 
 /obj/item/gun/kinetic/minigun
@@ -366,7 +367,7 @@
 		setProperty("movespeed", 0.4)
 
 /obj/item/gun/kinetic/revolver
-	name = "CPA Predator MKII"
+	name = "Predator revolver"
 	desc = "A hefty combat revolver developed by Cormorant Precision Arms. Uses .357 caliber rounds."
 	icon_state = "revolver"
 	item_state = "revolver"
@@ -426,7 +427,7 @@
 
 
 /obj/item/gun/kinetic/detectiverevolver
-	name = "CPA Detective Special"
+	name = "Detective Special revolver"
 	desc = "A snubnosed police-issue revolver developed by Cormorant Precision Arms. Uses .38-Special rounds."
 	icon_state = "detective"
 	item_state = "detective"
@@ -454,7 +455,7 @@
 	var/hammer_cocked = 0
 
 	detective
-		name = "peacemaker"
+		name = "Peacemaker"
 		desc = "A barely adequate replica of a nearly ancient single action revolver. Used by war reenactors for the last hundred years or so. Its calibur is obviously the wrong size though."
 		w_class = 2.0
 		force = 2.0
@@ -526,9 +527,11 @@
 	attack_self(mob/user as mob)
 		..()	//burst shot has a slight spread.
 		if (istype(current_projectile, /datum/projectile/bullet/nine_mm_NATO/burst))
-			spread_angle = 5
+			spread_angle = 8
+			shoot_delay = 4
 		else
 			spread_angle = 0
+			shoot_delay = 2
 
 /obj/item/gun/kinetic/clock_188/boomerang
 	desc = "Jokingly called a \"Gunarang\" in some circles. Uses 9mm NATO rounds."
@@ -636,13 +639,6 @@
 		current_projectile = new/datum/projectile/bullet/abg
 		..()
 
-/obj/item/gun/kinetic/riotgun/pbr
-
-	New()
-		ammo = new/obj/item/ammo/bullets/pbr
-		current_projectile = new/datum/projectile/bullet/pbr
-		..()
-
 /obj/item/gun/kinetic/ak47
 	name = "AK-744 Rifle"
 	desc = "Based on an old Cold War relic, often used by paramilitary organizations and space terrorists."
@@ -716,25 +712,19 @@
 	var/failured = 0
 
 	New()
-#if ASS_JAM
-		var/turf/T = get_turf(src)
-		playsound(T, "sound/items/Deconstruct.ogg", 50, 1)
-		new/obj/item/gun/kinetic/slamgun(T)
-		qdel(src)
-		return // Sorry! No zipguns during ASS JAM
-#else
+
 		ammo = new/obj/item/ammo/bullets/derringer
 		ammo.amount_left = 0 // start empty
 		current_projectile = new/datum/projectile/bullet/derringer
 		..()
-#endif
+
 
 	shoot(var/target,var/start ,var/mob/user)
 		if(failured)
 			var/turf/T = get_turf(src)
 			explosion(src, T,-1,-1,1,2)
 			qdel(src)
-		if(ammo && ammo.amount_left && current_projectile && current_projectile.caliber && current_projectile.power)
+		if(ammo?.amount_left && current_projectile?.caliber && current_projectile.power)
 			failure_chance = max(0,min(33,round(current_projectile.power/2 - 9)))
 		if(canshoot() && prob(failure_chance)) // Empty zip guns had a chance of blowing up. Stupid (Convair880).
 			failured = 1
@@ -747,7 +737,7 @@
 		return
 
 /obj/item/gun/kinetic/silenced_22
-	name = "STL Orion"
+	name = "Orion silenced pistol"
 	desc = "A small pistol with an integrated flash and noise suppressor, developed by Specter Tactical Laboratory. Uses .22 rounds."
 	icon_state = "silenced"
 	w_class = 2
@@ -929,8 +919,8 @@
 
 // agent
 /obj/item/gun/kinetic/pistol
-	name = "M1992 pistol"
-	desc = "A semi-automatic, 9mm caliber service pistol issued by the Syndicate."
+	name = "Branwen pistol"
+	desc = "A semi-automatic, 9mm caliber service pistol, developed by Mabinogi Firearms Company."
 	icon_state = "9mm_pistol"
 	w_class = 2
 	force = 3
@@ -945,9 +935,16 @@
 		current_projectile = new/datum/projectile/bullet/bullet_9mm
 		..()
 
+/obj/item/gun/kinetic/pistol/empty
+
+	New()
+		..()
+		ammo.amount_left = 0
+		update_icon()
+
 /obj/item/gun/kinetic/tranq_pistol
-	name = "tranquilizer pistol"
-	desc = "A silenced tranquilizer pistol chambered in .308 caliber."
+	name = "Gwydion tranquilizer pistol"
+	desc = "A silenced tranquilizer pistol chambered in .308 caliber, developed by Mabinogi Firearms Company."
 	icon_state = "tranq_pistol"
 	item_state = "tranq_pistol"
 	w_class = 2
@@ -983,21 +980,10 @@
 		current_projectile = new/datum/projectile/special/spreader/buckshot_burst/
 		..()
 
-/////////////////////////////////////////////////////////////////////////////////////////////
-/*  //  how about not putting a goddamn irl suicide threat into the game??? fuck this content
-/////////////////////////////////////////////////////////////////////////////////////////////
-
-/obj/item/gun/kinetic/tactical_shotgun/oblivion //"I've a gun named Oblivion that'll take all the pain away.. All our pain away..."
-	name = "Oblivion"
-	New()
-		return
-
-*/ /////////////////////////////////////////////////////////////////////////////////////////
-
 // assault
 /obj/item/gun/kinetic/assault_rifle
-	name = "M19A4 assault rifle"
-	desc = "A modified Syndicate battle rifle fitted with several fancy, tactically useless attachments."
+	name = "Sirius assault rifle"
+	desc = "A bullpup assault rifle capable of semi-automatic and burst fire modes, developed by Almagest Weapons Fabrication."
 	icon = 'icons/obj/64x32.dmi'
 	icon_state = "assault_rifle"
 	item_state = "assault_rifle"
@@ -1041,16 +1027,18 @@
 	attack_self(mob/user as mob)
 		..()	//burst shot has a slight spread.
 		if (istype(current_projectile, /datum/projectile/bullet/assault_rifle/burst/))
-			spread_angle = 8
+			spread_angle = 12.5
+			shoot_delay = 4 DECI SECONDS
 		else
 			spread_angle = 0
+			shoot_delay = 3 DECI SECONDS
 
 
 
 // heavy
 /obj/item/gun/kinetic/light_machine_gun
-	name = "M90 machine gun"
-	desc = "Looks pretty heavy to me."
+	name = "Antares light machine gun"
+	desc = "A 100 round light machine gun, developed by Almagest Weapons Fabrication."
 	icon = 'icons/obj/64x32.dmi'
 	icon_state = "lmg"
 	item_state = "lmg"
@@ -1082,6 +1070,15 @@
 		..()
 		setProperty("movespeed", 0.5)
 
+	fullautotestgun
+		slowdown = 0
+		slowdown_time = 0
+		New()
+			..()
+			AddComponent(/datum/component/holdertargeting/fullauto, 4 DECI SECONDS, 1.5 DECI SECONDS, 0.5)
+			current_projectile.shot_number = 1
+			current_projectile.cost = 1
+			ammo.amount_left = 500
 
 /obj/item/gun/kinetic/cannon
 	name = "M20-CV tactical cannon"
@@ -1122,8 +1119,8 @@
 
 // demo
 /obj/item/gun/kinetic/grenade_launcher
-	desc = "A 40mm hand-held grenade launcher able to fire a variety of explosives."
-	name = "grenade launcher"
+	name = "Rigil grenade launcher"
+	desc = "A 40mm hand-held grenade launcher, developed by Almagest Weapons Fabrication."
 	icon = 'icons/obj/64x32.dmi'
 	icon_state = "grenade_launcher"
 	item_state = "grenade_launcher"
@@ -1134,9 +1131,11 @@
 	two_handed = 1
 	can_dual_wield = 0
 	object_flags = NO_ARM_ATTACH
+	auto_eject = 1
 
 	New()
 		ammo = new/obj/item/ammo/bullets/grenade_round/explosive
+		ammo.amount_left = max_ammo_capacity
 		current_projectile = new/datum/projectile/bullet/grenade_round/explosive
 		..()
 
@@ -1282,8 +1281,8 @@
 
 // sniper
 /obj/item/gun/kinetic/sniper
-	name = "S90A1 marksman's rifle"
-	desc = "The Syndicate standard issue bolt-action sniper rifle, for engaging hostiles at range."
+	name = "Betelgeuse sniper rifle"
+	desc = "A semi-automatic bullpup sniper rifle, developed by Almagest Weapons Fabrication."
 	icon = 'icons/obj/64x32.dmi' // big guns get big icons
 	icon_state = "sniper"
 	item_state = "sniper"
@@ -1431,7 +1430,7 @@
 		..()
 
 	shoot()
-		if(ammo && ammo.amount_left && current_projectile && current_projectile.caliber && current_projectile.power)
+		if(ammo?.amount_left && current_projectile?.caliber && current_projectile.power)
 			failure_chance = max(10,min(33,round(current_projectile.caliber * (current_projectile.power/2))))
 		if(canshoot() && prob(failure_chance))
 			var/turf/T = get_turf(src)

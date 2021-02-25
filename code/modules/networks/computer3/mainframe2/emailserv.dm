@@ -180,7 +180,7 @@
 					mailList += emailRec
 					continue
 
-				if (groupTargets && groupTargets.len)
+				if (length(groupTargets))
 					var/success = 0
 					for (var/groupMember in groupTargets)
 						if (emailRec.fields.len >= 2 && (lowertext(groupMember) ==  lowertext(emailRec.fields[2])))
@@ -230,7 +230,7 @@
 					mailSubjs[mailSubjs.len] = copytext(emailRec.fields[6], 1, 33)
 					continue
 
-				if (groupTargets && groupTargets.len)
+				if (length(groupTargets))
 					var/success = 0
 					for (var/groupMember in groupTargets)
 						if (lowertext(groupMember) == lowertext(emailRec.fields[2]))

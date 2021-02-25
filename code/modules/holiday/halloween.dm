@@ -337,8 +337,7 @@
 					stoneman.layer = MOB_LAYER
 
 					var/icon/composite = icon(M.icon, M.icon_state, M.dir, 1)
-					for(var/O in M.overlays)
-						var/image/I = O
+					for (var/image/I as() in M.overlays)
 						composite.Blend(icon(I.icon, I.icon_state, I.dir, 1), ICON_OVERLAY)
 					composite.ColorTone( rgb(188,188,188) )
 					stoneman.icon = composite
@@ -422,8 +421,8 @@
 			if(!(src.client && src.client.holder))
 				src.emote_allowed = 0
 
-			if(src.gender == MALE) playsound(get_turf(src), "sound/voice/screams/male_scream.ogg", 100, 0, 0, 0.91)
-			else playsound(get_turf(src), "sound/voice/screams/female_scream.ogg", 100, 0, 0, 0.9)
+			if(src.gender == MALE) playsound(get_turf(src), "sound/voice/screams/male_scream.ogg", 100, 0, 0, 0.91, channel=VOLUME_CHANNEL_EMOTE)
+			else playsound(get_turf(src), "sound/voice/screams/female_scream.ogg", 100, 0, 0, 0.9, channel=VOLUME_CHANNEL_EMOTE)
 			SPAWN_DBG(5 SECONDS)
 				src.emote_allowed = 1
 			return "screams!"
@@ -496,14 +495,13 @@
 			stoneman.layer = MOB_LAYER
 
 			var/icon/composite = icon(M.icon, M.icon_state, M.dir, 1)
-			for(var/O in M.overlays)
-				var/image/I = O
+			for (var/image/I as() in M.overlays)
 				composite.Blend(icon(I.icon, I.icon_state, I.dir, 1), ICON_OVERLAY)
 			composite.ColorTone( rgb(188,188,188) )
 			stoneman.icon = composite
 
 			holder.set_loc(stoneman)
-			stoneman.dir = get_dir(stoneman, src)
+			stoneman.set_dir(get_dir(stoneman, src))
 
 		else
 			. += desc
@@ -672,6 +670,6 @@
 	proc/spooky_shake()
 		set waitfor = 0
 		for (var/i=src.trigger_duration, i>0, i--)
-			src.dir = pick(cardinal)
+			src.set_dir(pick(cardinal))
 			src.pixel_x = rand(-3,3)
 			sleep(0.1 SECONDS)

@@ -8,7 +8,7 @@
 	var/obj/item/fuel_pellet/fuel_pellet
 
 	process()
-		if (fuel_pellet && fuel_pellet.material && fuel_pellet.material.hasProperty("radioactive"))
+		if (fuel_pellet?.material && fuel_pellet.material.hasProperty("radioactive"))
 			lastgen = (4800 + rand(-100, 100)) * log(1 + fuel_pellet.material.getProperty("radioactive"))
 			fuel_pellet.material.adjustProperty("radioactive", -1)
 			add_avail(lastgen)

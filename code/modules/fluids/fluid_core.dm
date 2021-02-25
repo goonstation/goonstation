@@ -14,8 +14,8 @@ var/list/ban_stacking_into_fluid = list( //ban these from producing fluid from a
 	"carbon",\
 	"ash",\
 	"blackpowder",\
-	"reliquary_blood",\
 	"leaves",\
+	"poo",\
 )
 
 ///////////////////
@@ -313,9 +313,8 @@ var/mutable_appearance/fluid_ma
 		else
 			pool(src)
 
-		for(var/A in src.loc)
-			var/atom/atom = A
-			if (atom && atom.flags & FLUID_SUBMERGE)
+		for(var/atom/A as() in src.loc)
+			if (A && A.flags & FLUID_SUBMERGE)
 				var/mob/living/M = A
 				var/obj/O = A
 				if (istype(M))
@@ -794,7 +793,7 @@ var/mutable_appearance/fluid_ma
 			if (!current_reagent) continue
 			F.group.reagents.remove_reagent(current_id, current_reagent.volume * volume_fraction)
 		/*
-		if (reacted_ids && reacted_ids.len)
+		if (length(reacted_ids))
 			src.update_icon()
 		*/
 
@@ -805,12 +804,12 @@ var/mutable_appearance/fluid_ma
 	//SLIPPING
 	//only slip if edge tile
 	var/turf/T = get_turf(oldloc)
-	if (T && T.active_liquid)
+	if (T?.active_liquid)
 		entered_group = 0
 
 	//BLOODSTAINS
-	if (F.group.master_reagent_id =="blood" || F.group.master_reagent_id == "bloodc" || F.group.master_reagent_id == "reliquary_blood")
-		if (F.group.master_reagent_id == "blood" || F.group.master_reagent_id == "reliquary_blood")
+	if (F.group.master_reagent_id =="blood" || F.group.master_reagent_id == "bloodc")
+		if (F.group.master_reagent_id == "blood")
 			//if (ishuman(M))
 			if (src.lying)
 				if (src.wear_suit)

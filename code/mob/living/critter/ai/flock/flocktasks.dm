@@ -46,7 +46,7 @@
 /datum/aiTask/sequence/goalbased/replicate/precondition()
 	. = 0
 	var/mob/living/critter/flock/drone/F = holder.owner
-	if(F && F.can_afford(100))
+	if(F?.can_afford(100))
 		. = 1
 
 /datum/aiTask/sequence/goalbased/replicate/get_targets()
@@ -105,14 +105,14 @@
 /datum/aiTask/sequence/goalbased/build/precondition()
 	. = 0
 	var/mob/living/critter/flock/drone/F = holder.owner
-	if(F && F.can_afford(20))
+	if(F?.can_afford(20))
 		. = 1
 
 /datum/aiTask/sequence/goalbased/build/get_targets()
 	var/list/targets = list()
 	var/mob/living/critter/flock/drone/F = holder.owner
 
-	if(F && F.flock)
+	if(F?.flock)
 		// if we can go for a tile we already have reserved, go for it
 		var/turf/simulated/reserved = F.flock.busy_tiles[F.real_name]
 		if(istype(reserved) && !isfeathertile(reserved) && cirrAstar(get_turf(holder.owner), reserved, 1, null, /proc/heuristic, 20))
@@ -120,7 +120,7 @@
 			return targets
 		// if there's a priority tile we can go for, do it
 		var/list/priority_turfs = F.flock.getPriorityTurfs(F)
-		if(priority_turfs && priority_turfs.len)
+		if(length(priority_turfs))
 			for(var/turf/simulated/PT in priority_turfs)
 				// if we can get a valid path to the target, include it for consideration
 				if(cirrAstar(get_turf(holder.owner), PT, 1, null, /proc/heuristic, 80))
@@ -131,7 +131,7 @@
 	for(var/turf/simulated/T in view(max_dist, holder.owner))
 		if(istype(T, /turf/simulated/floor) && !istype(T, /turf/simulated/floor/feather) || \
 			istype(T, /turf/simulated/wall) && !istype(T, /turf/simulated/wall/auto/feather))
-			if(F && F.flock && !F.flock.isTurfFree(T, F.real_name))
+			if(F?.flock && !F.flock.isTurfFree(T, F.real_name))
 				continue // this tile's been claimed by someone else
 			// if we can get a valid path to the target, include it for consideration
 			if(cirrAstar(get_turf(holder.owner), T, 1, null, /proc/heuristic, 40))
@@ -153,7 +153,7 @@
 		return 1
 	if(F && !F.can_afford(20))
 		return 1
-	if(F && F.flock && !F.flock.isTurfFree(build_target, F.real_name)) // oh no, someone else claimed this tile before we got to it
+	if(F?.flock && !F.flock.isTurfFree(build_target, F.real_name)) // oh no, someone else claimed this tile before we got to it
 		return 1
 
 /datum/aiTask/succeedable/build/succeeded()
@@ -164,16 +164,16 @@
 		var/turf/simulated/floor/build_target = holder.target
 		if(build_target && get_dist(holder.owner, build_target) <= 1)
 			var/mob/living/critter/flock/drone/F = holder.owner
-			if(F && F.set_hand(2)) // nanite spray
+			if(F?.set_hand(2)) // nanite spray
 				sleep(0.2 SECONDS)
-				holder.owner.dir = get_dir(holder.owner, holder.target)
+				holder.owner.set_dir(get_dir(holder.owner, holder.target))
 				F.hand_attack(build_target)
 				has_started = 1
 
 /datum/aiTask/succeedable/build/on_reset()
 	has_started = 0
 	var/mob/living/critter/flock/drone/F = holder.owner
-	if(F && F.flock)
+	if(F?.flock)
 		F.flock.reserveTurf(holder.target, F.real_name)
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -191,7 +191,7 @@
 /datum/aiTask/sequence/goalbased/repair/precondition()
 	. = 0
 	var/mob/living/critter/flock/drone/F = holder.owner
-	if(F && F.can_afford(10))
+	if(F?.can_afford(10))
 		. = 1
 
 /datum/aiTask/sequence/goalbased/repair/on_reset()
@@ -239,11 +239,80 @@
 		if(F && T && get_dist(holder.owner, holder.target) <= 1)
 			if(F.set_hand(2)) // nanite spray
 				sleep(0.2 SECONDS)
-				holder.owner.dir = get_dir(holder.owner, holder.target)
+				holder.owner.set_dir(get_dir(holder.owner, holder.target))
 				F.hand_attack(T)
 				has_started = 1
 
 /datum/aiTask/succeedable/repair/on_reset()
+	has_started = 0
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+// DEPOSIT GOAL
+// targets: ghost tealprints in the same flock
+// precondition: 10 resources
+/datum/aiTask/sequence/goalbased/deposit
+	name = "depositing"
+	weight = 4
+
+/datum/aiTask/sequence/goalbased/deposit/New(parentHolder, transTask)
+	..(parentHolder, transTask)
+	add_task(holder.get_instance(/datum/aiTask/succeedable/deposit, list(holder)))
+
+/datum/aiTask/sequence/goalbased/deposit/precondition()
+	. = 0
+	var/mob/living/critter/flock/drone/F = holder.owner
+	if(F?.can_afford(10))
+		. = 1
+
+/datum/aiTask/sequence/goalbased/deposit/on_reset()
+	var/mob/living/critter/flock/drone/F = holder.owner
+	if(F)
+		F.active_hand = 2 // nanite spray
+		sleep(0.1 SECONDS)
+		F.a_intent = INTENT_HELP
+		F.hud?.update_intent()
+		sleep(0.1 SECONDS)
+		F.hud?.update_hands() // for observers
+
+/datum/aiTask/sequence/goalbased/deposit/get_targets()
+	var/mob/living/critter/flock/drone/F = holder.owner
+	var/list/targets = list()
+	for(var/obj/flock_structure/ghost/S in view(max_dist, F))
+		if(S.flock == F.flock && S.goal > S.currentmats)
+			// if we can get a valid path to the target, include it for consideration
+			if(cirrAstar(get_turf(F), get_turf(S), 1, null, /proc/heuristic, 40))
+				targets += S
+	return targets
+
+////////
+
+/datum/aiTask/succeedable/deposit
+	name = "deposit subtask"
+	var/has_started = 0
+
+/datum/aiTask/succeedable/deposit/failed()
+	var/mob/living/critter/flock/drone/F = holder.owner
+	var/obj/flock_structure/ghost/T = holder.target
+	if(!F || !T || get_dist(T, F) > 1)
+		return 1
+	if(F && (!F.can_afford() || !F.abilityHolder))
+		return 1
+
+/datum/aiTask/succeedable/deposit/succeeded()
+	return (!actions.hasAction(holder.owner, "flock_repair")) // for whatever reason, the required action has stopped
+
+/datum/aiTask/succeedable/deposit/on_tick()
+	if(!has_started)
+		var/mob/living/critter/flock/drone/F = holder.owner
+		var/obj/flock_structure/ghost/T = holder.target
+		if(F && T && get_dist(holder.owner, holder.target) <= 1)
+			if(F.set_hand(2)) // nanite spray
+				sleep(0.2 SECONDS)
+				holder.owner.set_dir(get_dir(holder.owner, holder.target))
+				F.hand_attack(T)
+				has_started = 1
+
+/datum/aiTask/succeedable/deposit/on_reset()
 	has_started = 0
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -295,9 +364,9 @@
 	var/obj/storage/container_target = holder.target
 	if(container_target && get_dist(holder.owner, container_target) <= 1 && !succeeded())
 		var/mob/living/critter/flock/drone/F = holder.owner
-		if(F && F.set_hand(1)) // grip tool
+		if(F?.set_hand(1)) // grip tool
 			sleep(0.2 SECONDS)
-			F.dir = get_dir(F, container_target)
+			F.set_dir(get_dir(F, container_target))
 			F.hand_attack(container_target) // wooo
 	// tick up a fail counter so we don't try to open something we can't forever
 	fails++
@@ -355,12 +424,12 @@
 	if(container_target && get_dist(holder.owner, container_target) <= 1 && !succeeded())
 		var/mob/living/critter/flock/drone/F = holder.owner
 		usr = F // don't ask, please, don't
-		if(F && F.set_hand(1)) // grip tool
+		if(F?.set_hand(1)) // grip tool
 			sleep(0.2 SECONDS)
 			// drop whatever we're holding
 			F.drop_item()
 			sleep(0.1 SECONDS)
-			F.dir = get_dir(F, container_target)
+			F.set_dir(get_dir(F, container_target))
 			F.hand_attack(container_target)
 			sleep(0.2 SECONDS)
 			if(F.equipped() == container_target)
@@ -460,7 +529,7 @@
 	var/obj/item/harvest_target = holder.target
 	if(harvest_target && get_dist(holder.owner, harvest_target) <= 1 && !succeeded())
 		var/mob/living/critter/flock/drone/F = holder.owner
-		if(F && F.set_hand(1)) // grip tool
+		if(F?.set_hand(1)) // grip tool
 			sleep(0.2 SECONDS)
 			var/obj/item/already_held = F.get_active_hand().item
 			if(already_held)
@@ -470,7 +539,7 @@
 				F.empty_hand(1) // drop whatever we might be holding just in case
 				sleep(0.1 SECONDS)
 				// grab the item
-				F.dir = get_dir(F, harvest_target)
+				F.set_dir(get_dir(F, harvest_target))
 				F.hand_attack(harvest_target)
 			// if we have the item, equip it into our horrifying death chamber
 			if(F.is_in_hands(harvest_target))
@@ -523,7 +592,7 @@
 			if(owncritter.active_hand != 3) // stunner
 				owncritter.set_hand(3)
 				sleep(0.2 SECONDS)
-			owncritter.dir = get_dir(owncritter, holder.target)
+			owncritter.set_dir(get_dir(owncritter, holder.target))
 			owncritter.hand_attack(holder.target, dummy_params)
 			if(dist < run_range)
 				// RUN
@@ -538,9 +607,9 @@
 /datum/aiTask/timed/targeted/flockdrone_shoot/get_targets()
 	var/list/targets = list()
 	var/mob/living/critter/flock/drone/F = holder.owner
-	if(F && F.flock)
+	if(F?.flock)
 		for(var/mob/living/M in view(target_range, holder.owner))
-			if(!istype(M.loc.type, /obj/icecube/flockdrone) && !(M.getStatusDuration("stunned") || M.getStatusDuration("weakened") || M.getStatusDuration("paralysis") || M.stat))
+			if(!istype(M.loc?.type, /obj/icecube/flockdrone) && !(M.getStatusDuration("stunned") || M.getStatusDuration("weakened") || M.getStatusDuration("paralysis") || M.stat))
 				// mob isn't already stunned, check if they're in our target list
 				if(F.flock.isEnemy(M))
 					targets += M
@@ -561,7 +630,7 @@
 /datum/aiTask/timed/targeted/flockdrone_capture/proc/precondition()
 	. = 0
 	var/mob/living/critter/flock/drone/F = holder.owner
-	if(F && F.can_afford(15))
+	if(F?.can_afford(15))
 		. = 1
 
 /datum/aiTask/timed/targeted/flockdrone_capture/evaluate()
@@ -592,13 +661,13 @@
 				owncritter.a_intent = INTENT_DISARM
 				owncritter.hud.update_intent()
 				sleep(0.1 SECONDS)
-			owncritter.dir = get_dir(owncritter, holder.target)
+			owncritter.set_dir(get_dir(owncritter, holder.target))
 			owncritter.hand_attack(holder.target)
 
 /datum/aiTask/timed/targeted/flockdrone_capture/get_targets()
 	var/list/targets = list()
 	var/mob/living/critter/flock/drone/F = holder.owner
-	if(F && F.flock)
+	if(F?.flock)
 		for(var/mob/living/M in view(target_range, holder.owner))
 			if(F.flock.isEnemy(M) && (M.getStatusDuration("stunned") || M.getStatusDuration("weakened") || M.getStatusDuration("paralysis") || M.stat))
 				// mob is a valid target, check if they're not already in a cage
@@ -668,7 +737,7 @@
 		if(F && T && get_dist(holder.owner, holder.target) <= 1)
 			if(F.set_hand(2)) // nanite spray
 				sleep(0.2 SECONDS)
-				holder.owner.dir = get_dir(holder.owner, holder.target)
+				holder.owner.set_dir(get_dir(holder.owner, holder.target))
 				F.hand_attack(T)
 				has_started = 1
 

@@ -41,7 +41,7 @@
 		if(TIME < src.next_move)
 			return src.next_move - TIME
 		var/delay = src.running ? src.move_delay / 2 : src.move_delay
-		src.master.dir = src.move_dir
+		src.master.set_dir(src.move_dir)
 		var/turf/T = src.master.loc
 		if(istype(T))
 			// this is what pod.dm does, don't look at me!!!

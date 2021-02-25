@@ -227,9 +227,9 @@
 
 	animate(M.attack_particle, transform = t_size, time = 6, easing = BOUNCE_EASING)
 	animate(pixel_x = diff_x*32, pixel_y = diff_y*32, time = 2, easing = BOUNCE_EASING,  flags = ANIMATION_PARALLEL)
-	SPAWN_DBG(5)
+	SPAWN_DBG(0.5 SECONDS)
 		//animate(M.attack_particle, alpha = 0, time = 2, flags = ANIMATION_PARALLEL)
-		M.attack_particle.alpha = 0
+		M.attack_particle?.alpha = 0
 
 /mob/var/last_interact_particle = 0
 
@@ -411,19 +411,24 @@
 	var/matrix/t_size = matrix()
 
 	animate(M.attack_particle, transform = t_size, time = 2, easing = BOUNCE_EASING)
-	SPAWN_DBG(5)
+	SPAWN_DBG(0.5 SECONDS)
 		M.attack_particle.alpha = 0
 
-/proc/block_spark(var/mob/M)
+/proc/block_spark(var/mob/M, armor = 0)
 	if (!M || !M.attack_particle) return
+	var/state_string = ""
+	if(armor)
+		state_string = "block_spark_armor"
+	else
+		state_string = "block_spark"
 
 	M.attack_particle.invisibility = M.invisibility
 	M.last_interact_particle = world.time
 
 	M.attack_particle.icon = 'icons/mob/mob.dmi'
-	if (M.attack_particle.icon_state == "block_spark")
-		flick("block_spark",M.attack_particle)
-	M.attack_particle.icon_state = "block_spark"
+	if (M.attack_particle.icon_state == state_string)
+		flick(state_string,M.attack_particle)
+	M.attack_particle.icon_state = state_string
 
 	M.attack_particle.alpha = 255
 	M.attack_particle.loc = M.loc
@@ -432,11 +437,11 @@
 
 	M.attack_particle.transform.Turn(rand(0,360))
 
-	SPAWN_DBG(10)
+	SPAWN_DBG(1 SECOND)
 		M.attack_particle.alpha = 0
 
 proc/fuckup_attack_particle(var/mob/M)
-	SPAWN_DBG(1)
+	SPAWN_DBG(0.1 SECONDS)
 		if (!M || !M.attack_particle) return
 		var/r = rand(0,360)
 		var/x = cos(r)
@@ -504,13 +509,13 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	else
 		M.sprint_particle.loc = M.loc
 
-	M.sprint_particle.dir = null
+	M.sprint_particle.set_dir(null)
 	if (M.sprint_particle.icon_state == "sprint_cloud")
 		flick("sprint_cloud",M.sprint_particle)
 	M.sprint_particle.icon_state = "sprint_cloud"
 
 
-	SPAWN_DBG(6)
+	SPAWN_DBG(0.6 SECONDS)
 		if (M.sprint_particle.loc == T)
 			M.sprint_particle.loc = null
 
@@ -521,13 +526,13 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	else
 		M.sprint_particle.loc = M.loc
 
-	M.sprint_particle.dir = direct
+	M.sprint_particle.set_dir(direct)
 	if (M.sprint_particle.icon_state == "sprint_cloud_small")
 		flick("sprint_cloud_small",M.sprint_particle)
 	M.sprint_particle.icon_state = "sprint_cloud_small"
 
-	SPAWN_DBG(4)
-		if (M.sprint_particle.loc == T)
+	SPAWN_DBG(0.4 SECONDS)
+		if (M.sprint_particle?.loc == T)
 			M.sprint_particle.loc = null
 
 /proc/sprint_particle_tiny(var/mob/M, var/turf/T = null, var/direct = null)
@@ -537,12 +542,12 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	else
 		M.sprint_particle.loc = M.loc
 
-	M.sprint_particle.dir = direct
+	M.sprint_particle.set_dir(direct)
 	if (M.sprint_particle.icon_state == "sprint_cloud_tiny")
 		flick("sprint_cloud_tiny",M.sprint_particle)
 	M.sprint_particle.icon_state = "sprint_cloud_tiny"
 
-	SPAWN_DBG(3)
+	SPAWN_DBG(0.3 SECONDS)
 		if (M.sprint_particle.loc == T)
 			M.sprint_particle.loc = null
 
@@ -941,12 +946,12 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	var/matrix/turned
 
 	if (isnum(dir) && dir > 0)
-		A.dir = WEST
+		A.set_dir(WEST)
 		turndir = 90
 		turned = matrix(A.transform, 90, MATRIX_ROTATE)
 
 	else
-		A.dir = EAST
+		A.set_dir(EAST)
 		turndir = -90
 		turned = matrix(A.transform, -90, MATRIX_ROTATE)
 
@@ -1140,7 +1145,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	animate(time = 10, pixel_y = 512, easing = CUBIC_EASING)
 	sleep(1.5 SECONDS)
 
-/proc/heavenly_spawn(var/obj/A)
+/proc/heavenly_spawn(var/atom/movable/A)
 	var/obj/heavenly_light/lightbeam = new /obj/heavenly_light
 	lightbeam.set_loc(A.loc)
 	var/was_anchored = A.anchored
@@ -1150,23 +1155,90 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	A.alpha = 0
 	A.pixel_y = 176
 	lightbeam.alpha = 0
+	if (ismob(A))
+		var/mob/M = A
+		APPLY_MOB_PROPERTY(M, PROP_CANTMOVE, M.type)
 	playsound(A.loc,"sound/voice/heavenly3.ogg",50,0)
 	animate(lightbeam, alpha=255, time=45)
 	animate(A,alpha=255,time=45)
-	SPAWN_DBG(45)
-		animate(A, pixel_y = 0, time = 120, easing = SINE_EASING)
-		sleep(12 SECONDS)
-		A.anchored = was_anchored
-		A.layer = oldlayer
-		animate(lightbeam,alpha = 0, time=15)
-		sleep(1.5 SECONDS)
-		qdel(lightbeam)
+	sleep(4.5 SECONDS)
+	animate(A, pixel_y = 0, time = 120, easing = SINE_EASING, flags = ANIMATION_PARALLEL)
+	sleep(12 SECONDS)
+	A.anchored = was_anchored
+	A.layer = oldlayer
+	animate(lightbeam,alpha = 0, time=15)
+	sleep(1.5 SECONDS)
+	qdel(lightbeam)
+	if (ismob(A))
+		var/mob/M = A
+		REMOVE_MOB_PROPERTY(M, PROP_CANTMOVE, M.type)
 
 /obj/heavenly_light
 	icon = 'icons/obj/32x192.dmi'
 	icon_state = "heavenlight"
 	layer = EFFECTS_LAYER
 	blend_mode = BLEND_ADD
+
+/proc/demonic_spawn(var/obj/A)
+	if (!A) return
+	var/was_anchored = A.anchored
+	var/original_plane = A.plane
+	var/matrix/M1 = matrix()
+	A.transform = M1.Scale(0,0)
+	var/turf/center = get_turf(A)
+	if (!center) return
+
+	A.plane = PLANE_UNDERFLOOR
+	A.anchored = TRUE
+	playsound(center,"sound/effects/darkspawn.ogg",50,0)
+	SPAWN_DBG(5 SECONDS)
+		var/turf/TA = locate(A.x - 1, A.y - 1, A.z)
+		var/turf/TB = locate(A.x + 1, A.y + 1, A.z)
+		if (!TA || !TB) return
+
+		var/list/fake_hells = list()
+		for (var/turf/T in block(TA, TB))
+			fake_hells += new /obj/fake_hell(T)
+			var/x_modifier = (T.x - center.x)
+			var/y_modifier = (T.y - center.y)
+			if (x_modifier || y_modifier)
+				animate(T, pixel_x = (32 * x_modifier), pixel_y = (32 * y_modifier), 7.5 SECONDS, easing = SINE_EASING)
+			else // center tile
+				animate(T, transform = M1.Scale(0,0), 5 SECONDS, easing = SINE_EASING)
+		sleep(7.5 SECONDS)
+		animate(A, transform = null, time=20, easing = SINE_EASING)
+		A.plane = original_plane
+		A.anchored = was_anchored
+		for (var/turf/T in block(TA, TB))
+			animate(T, transform = null, pixel_x = 0, pixel_y = 0, 7.5 SECONDS, easing = SINE_EASING)
+		sleep(7.5 SECONDS)
+		for (var/obj/fake_hell/O in fake_hells)
+			qdel(O)
+
+/obj/fake_hell //for use with /proc/demonic_spawn
+	name = "???"
+	desc = "just standing next to it burns your very soul."
+	icon = 'icons/misc/AzungarAdventure.dmi'
+	icon_state = "lava_floor"
+	anchored = TRUE
+	event_handler_flags = USE_HASENTERED
+
+	New()
+		. = ..()
+		src.plane = PLANE_UNDERFLOOR - 1
+		src.icon_state = pick("lava_floor", "lava_floor_bubbling", "lava_floor_bubbling2")
+
+	HasEntered(atom/movable/AM, atom/OldLoc)
+		. = ..()
+		if (isliving(AM))
+			var/mob/living/M = AM
+			M.update_burning(10)
+
+	meteorhit()
+		return
+
+	ex_act()
+		return
 
 var/global/icon/scanline_icon = icon('icons/effects/scanning.dmi', "scanline")
 /proc/animate_scanning(var/atom/target, var/color, var/time=18, var/alpha_hex="96")
@@ -1207,7 +1279,7 @@ var/global/icon/scanline_icon = icon('icons/effects/scanning.dmi', "scanline")
 		. = ..()
 		src.icon = T.icon
 		src.icon_state = T.icon_state
-		src.dir = T.dir
+		src.set_dir(T.dir)
 		src.color = T.color
 		src.layer = T.layer - 1
 		src.plane = T.plane
@@ -1321,3 +1393,18 @@ var/global/icon/scanline_icon = icon('icons/effects/scanning.dmi', "scanline")
 		SPAWN_DBG(time)
 			A.filters.len -= 2
 			A.alpha = 0
+
+//size_max really can't go higher than 0.2 on 32x32 sprites that are sized about the same as humans. Can go higher on larger sprite resolutions or smaller sprites that are in the center, like cigarettes or coins.
+/proc/anim_f_ghost_blur(atom/A, var/size_min = 0.075 as num, var/size_max=0.18 as num)
+	A.filters += filter(type="radial_blur",size=size_min)
+
+	animate(A.filters[A.filters.len], time = 10, size=size_max, loop=-1,easing = SINE_EASING, flags=ANIMATION_PARALLEL)
+	animate(time = 10, size=size_min, loop=-1,easing = SINE_EASING)
+
+/proc/animate_bouncy(var/atom/A) // little bouncy dance for admin and mentor mice, could be used for other stuff
+	if (!istype(A))
+		return
+	animate(A, pixel_y = (A.pixel_y + 4), time = 0.15 SECONDS, dir = EAST, flags=ANIMATION_PARALLEL)
+	animate(pixel_y = (A.pixel_y - 4), time = 0.15 SECONDS, dir = EAST)
+	animate(pixel_y = (A.pixel_y + 4), time = 0.15 SECONDS, dir = WEST)
+	animate(pixel_y = (A.pixel_y - 4), time = 0.15 SECONDS, dir = WEST)

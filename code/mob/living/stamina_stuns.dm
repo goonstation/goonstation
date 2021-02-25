@@ -47,8 +47,7 @@
 		val += stamina_mods_max[x]
 
 	var/stam_mod_items = 0
-	for(var/atom in src.get_equipped_items())
-		var/obj/item/C = atom
+	for (var/obj/item/C as() in src.get_equipped_items())
 		stam_mod_items += C.getProperty("stammax")
 
 	return (val + stam_mod_items)
@@ -87,8 +86,7 @@
 		val += stamina_mods_regen[x]
 
 	var/stam_mod_items = 0
-	for(var/atom in src.get_equipped_items())
-		var/obj/item/C = atom
+	for (var/obj/item/C as() in src.get_equipped_items())
 		stam_mod_items += C.getProperty("stamregen")
 	return val
 
@@ -149,8 +147,7 @@
 			del(src.client)
 
 	var/stam_mod_items = 0
-	for(var/atom in src.get_equipped_items())
-		var/obj/item/C = atom
+	for (var/obj/item/C as() in src.get_equipped_items())
 		stam_mod_items += C.getProperty("stamcost")
 
 	var/percReduction = 0
@@ -158,8 +155,7 @@
 		percReduction = (x * (stam_mod_items / 100))
 
 	stamina = max(STAMINA_NEG_CAP, stamina - (x - percReduction) )
-	if(src.stamina_bar)
-		src.stamina_bar.update_value(src)
+	src.stamina_bar?.update_value(src)
 	return
 
 /mob/living/carbon/human/remove_stamina(var/x)
@@ -255,8 +251,7 @@
 	.= 0
 
 	var/res = 0
-	for(var/atom in src.get_equipped_items())
-		var/obj/item/C = atom
+	for (var/obj/item/C as() in src.get_equipped_items())
 		if(C.hasProperty("disorient_resist"))
 			res = C.getProperty("disorient_resist")
 			if (res >= 100)
@@ -275,8 +270,7 @@
 	.= 0
 
 	var/res = 0
-	for(var/atom in src.get_equipped_items())
-		var/obj/item/C = atom
+	for (var/obj/item/C as() in src.get_equipped_items())
 		if(C.hasProperty("disorient_resist_eye"))
 			res = C.getProperty("disorient_resist_eye")
 			if (res >= 100)
@@ -309,8 +303,7 @@
 	.= 0
 
 	var/res = 0
-	for(var/atom in src.get_equipped_items())
-		var/obj/item/C = atom
+	for (var/obj/item/C as() in src.get_equipped_items())
 		if(C.hasProperty("disorient_resist_ear"))
 			res = C.getProperty("disorient_resist_ear")
 			if (res >= 100)
@@ -370,6 +363,11 @@
 	else
 		.= 0
 		src.changeStatus("disorient", disorient)
+
+/mob/living/silicon/do_disorient(var/stamina_damage, var/weakened, var/stunned, var/paralysis, var/disorient = 60, var/remove_stamina_below_zero = 0, var/target_type = DISORIENT_BODY)
+	// Apply the twitching disorient animation for as long as the maximum stun duration is.
+	src.changeStatus("cyborg-disorient", max(weakened, stunned, paralysis))
+	. = ..()
 
 //STAMINA UTILITY PROCS
 

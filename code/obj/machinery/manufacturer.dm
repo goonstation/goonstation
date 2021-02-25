@@ -9,6 +9,7 @@
 	density = 1
 	anchored = 1
 	mats = 20
+	event_handler_flags = NO_MOUSEDROP_QOL
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
 	flags = NOSPLASH
 	var/health = 100
@@ -464,8 +465,13 @@
 			var/list/material_count = 0
 			for (var/i in 1 to A.item_paths.len)
 				material_count += A.item_amounts[i]
+				var/mat_name
+				if(isnull(A.item_names) || isnull(A.item_names[i]))
+					mat_name = get_nice_mat_name_for_manufacturers(A.item_paths[i])
+				else
+					mat_name = A.item_names[i]
 				material_text += {"
-				<span class='mat[mats_used[A.item_paths[i]] ? "" : "-missing"]'>[A.item_amounts[i]] [A.item_names[i]]</span>
+				<span class='mat[mats_used[A.item_paths[i]] ? "" : "-missing"]'>[A.item_amounts[i]] [mat_name]</span>
 				"}
 
 			dat += {"
@@ -489,7 +495,7 @@
 				dat+="<B>Current Funds</B>: [account.fields["current_money"]] Credits<br>"
 		dat+= src.temp
 		dat += "<HR><B>Ores Available for Purchase:</B><br><small>"
-		for(var/obj/machinery/ore_cloud_storage_container/S in by_type[/obj/machinery/ore_cloud_storage_container])
+		for_by_tcl(S, /obj/machinery/ore_cloud_storage_container)
 			if(S.broken)
 				continue
 			dat += "<B>[S.name] at [get_area(S)]:</B><br>"
@@ -765,7 +771,7 @@
 				account = FindBankAccountByName(src.scan.registered)
 				if (account)
 					var/quantity = 1
-					quantity = input("How many units do you want to purchase?", "Ore Purchase", null, null) as num
+					quantity = max(0, input("How many units do you want to purchase?", "Ore Purchase", null, null) as num)
 
 					////////////
 
@@ -1937,9 +1943,9 @@
 	name = "General Manufacturer"
 	desc = "A manufacturing unit calibrated to produce tools and general purpose items."
 	free_resource_amt = 5
-	free_resources = list(/obj/item/material_piece/mauxite,
-		/obj/item/material_piece/pharosium,
-		/obj/item/material_piece/molitz)
+	free_resources = list(/obj/item/material_piece/steel,
+		/obj/item/material_piece/copper,
+		/obj/item/material_piece/glass)
 	available = list(/datum/manufacture/screwdriver,
 		/datum/manufacture/wirecutters,
 		/datum/manufacture/wrench,
@@ -1991,9 +1997,6 @@
 		/datum/manufacture/bikehorn,
 		/datum/manufacture/bullet_22,
 		/datum/manufacture/bullet_smoke,
-#if ASS_JAM
-		/datum/manufacture/bullet_12g_nail,
-#endif
 		/datum/manufacture/stapler)
 
 /obj/machinery/manufacturer/robotics
@@ -2002,9 +2005,9 @@
 	icon_state = "fab-robotics"
 	icon_base = "robotics"
 	free_resource_amt = 5
-	free_resources = list(/obj/item/material_piece/mauxite,
-	/obj/item/material_piece/pharosium,
-	/obj/item/material_piece/molitz)
+	free_resources = list(/obj/item/material_piece/steel,
+		/obj/item/material_piece/copper,
+		/obj/item/material_piece/glass)
 
 	available = list(/datum/manufacture/robo_frame,
 	/datum/manufacture/full_cyborg_standard,
@@ -2058,6 +2061,7 @@
 	/datum/manufacture/deafhs,
 	/datum/manufacture/robup_jetpack,
 	/datum/manufacture/robup_healthgoggles,
+	/datum/manufacture/robup_sechudgoggles,
 	/datum/manufacture/robup_spectro,
 	/datum/manufacture/robup_recharge,
 	/datum/manufacture/robup_repairpack,
@@ -2100,10 +2104,10 @@
 	icon_state = "fab-med"
 	icon_base = "med"
 	free_resource_amt = 2
-	free_resources = list(/obj/item/material_piece/mauxite,
-	/obj/item/material_piece/cloth/cottonfabric,
-	/obj/item/material_piece/pharosium,
-	/obj/item/material_piece/molitz)
+	free_resources = list(/obj/item/material_piece/steel,
+		/obj/item/material_piece/copper,
+		/obj/item/material_piece/glass,
+		/obj/item/material_piece/cloth/cottonfabric)
 
 	available = list(
 		/datum/manufacture/scalpel,
@@ -2148,6 +2152,7 @@
 		/datum/manufacture/cyberliver,
 		/datum/manufacture/cyberlung_left,
 		/datum/manufacture/cyberlung_right,
+		/datum/manufacture/empty_kit,
 		/datum/manufacture/rods2,
 		/datum/manufacture/metal,
 		/datum/manufacture/glass
@@ -2162,9 +2167,9 @@
 	icon_state = "fab-mining"
 	icon_base = "mining"
 	free_resource_amt = 2
-	free_resources = list(/obj/item/material_piece/mauxite,
-	/obj/item/material_piece/pharosium,
-	/obj/item/material_piece/molitz)
+	free_resources = list(/obj/item/material_piece/steel,
+		/obj/item/material_piece/copper,
+		/obj/item/material_piece/glass)
 	available = list(/datum/manufacture/pick,
 	/datum/manufacture/powerpick,
 	/datum/manufacture/blastchargeslite,
@@ -2182,10 +2187,12 @@
 	/datum/manufacture/powercell,
 	/datum/manufacture/powercellE,
 	/datum/manufacture/powercellC,
+	/datum/manufacture/ore_scoop,
 	/datum/manufacture/oresatchel,
 	/datum/manufacture/oresatchelL,
 	/datum/manufacture/jetpack,
 	/datum/manufacture/geoscanner,
+	/datum/manufacture/geigercounter,
 	/datum/manufacture/eyes_meson,
 	/datum/manufacture/flashlight,
 	/datum/manufacture/ore_accumulator,
@@ -2206,11 +2213,9 @@
 	icon_state = "fab-hangar"
 	icon_base = "hangar"
 	free_resource_amt = 2
-	free_resources = list(
-		/obj/item/material_piece/mauxite,
-		/obj/item/material_piece/pharosium,
-		/obj/item/material_piece/molitz
-	)
+	free_resources = list(/obj/item/material_piece/steel,
+		/obj/item/material_piece/copper,
+		/obj/item/material_piece/glass)
 	available = list(
 		/datum/manufacture/putt/engine,
 		/datum/manufacture/putt/boards,
@@ -2232,7 +2237,8 @@
 		/datum/manufacture/pod/weapon/ltlaser,
 		/datum/manufacture/engine2,
 		/datum/manufacture/engine3,
-		/datum/manufacture/pod/lock
+		/datum/manufacture/pod/lock,
+		/datum/manufacture/beaconkit
 	)
 
 /obj/machinery/manufacturer/uniform // add more stuff to this as needed, but it should be for regular uniforms the HoP might hand out, not tons of gimmicks. -cogwerks
@@ -2256,6 +2262,15 @@
 	/datum/manufacture/jumpsuit_brown,
 	/datum/manufacture/jumpsuit_black,
 	/datum/manufacture/jumpsuit_orange,
+	/datum/manufacture/pride_ace,
+	/datum/manufacture/pride_aro,
+	/datum/manufacture/pride_bi,
+	/datum/manufacture/pride_inter,
+	/datum/manufacture/pride_lesb,
+	/datum/manufacture/pride_nb,
+	/datum/manufacture/pride_pan,
+	/datum/manufacture/pride_poly,
+	/datum/manufacture/pride_trans,
 	/datum/manufacture/suit_black,
 	/datum/manufacture/dress_black,
 	/datum/manufacture/hat_black,
@@ -2264,12 +2279,15 @@
 	/datum/manufacture/hat_yellow,
 	/datum/manufacture/hat_red,
 	/datum/manufacture/hat_green,
+	/datum/manufacture/hat_pink,
+	/datum/manufacture/hat_orange,
 	/datum/manufacture/hat_tophat,
 	/datum/manufacture/backpack,
 	/datum/manufacture/satchel)
 
 	hidden = list(/datum/manufacture/breathmask,
-	/datum/manufacture/patch)
+	/datum/manufacture/patch,
+	/datum/manufacture/hat_ltophat)
 	///datum/manufacture/hermes) //all hail the shoe lord - needs adjusting for the new movement system which I cba to do right now
 
 /// cogwerks - a gas extractor for the engine
@@ -2296,7 +2314,9 @@
 	icon_state = "fab-hangar"
 	icon_base = "hangar"
 	free_resource_amt = 2
-	free_resources = list(/obj/item/material_piece/mauxite,/obj/item/material_piece/pharosium,/obj/item/material_piece/molitz)
+	free_resources = list(/obj/item/material_piece/steel,
+		/obj/item/material_piece/copper,
+		/obj/item/material_piece/glass)
 
 /obj/machinery/manufacturer/personnel
 	name = "Personnel Equipment Manufacturer"
@@ -2304,7 +2324,9 @@
 	icon_state = "fab-access"
 	icon_base = "access"
 	free_resource_amt = 2
-	free_resources = list(/obj/item/material_piece/mauxite,/obj/item/material_piece/pharosium,/obj/item/material_piece/molitz)
+	free_resources = list(/obj/item/material_piece/steel,
+		/obj/item/material_piece/copper,
+		/obj/item/material_piece/glass)
 	available = list(/datum/manufacture/id_card, /datum/manufacture/implant_access,	/datum/manufacture/implanter) //hey if you update these please remember to add it to /hop_and_uniform's list too
 	hidden = list(/datum/manufacture/id_card_gold, /datum/manufacture/implant_access_infinite)
 
@@ -2316,7 +2338,10 @@
 	icon_state = "fab-access"
 	icon_base = "access"
 	free_resource_amt = 5
-	free_resources = list(/obj/item/material_piece/cloth/cottonfabric,/obj/item/material_piece/mauxite,/obj/item/material_piece/pharosium,/obj/item/material_piece/molitz)
+	free_resources = list(/obj/item/material_piece/steel,
+		/obj/item/material_piece/copper,
+		/obj/item/material_piece/glass,
+		/obj/item/material_piece/cloth/cottonfabric)
 	accept_blueprints = 0
 	available = list(/datum/manufacture/id_card,
 	/datum/manufacture/implant_access,
@@ -2334,6 +2359,15 @@
 	/datum/manufacture/jumpsuit_brown,
 	/datum/manufacture/jumpsuit_black,
 	/datum/manufacture/jumpsuit_orange,
+	/datum/manufacture/pride_ace,
+	/datum/manufacture/pride_aro,
+	/datum/manufacture/pride_bi,
+	/datum/manufacture/pride_inter,
+	/datum/manufacture/pride_lesb,
+	/datum/manufacture/pride_nb,
+	/datum/manufacture/pride_pan,
+	/datum/manufacture/pride_poly,
+	/datum/manufacture/pride_trans,
 	/datum/manufacture/suit_black,
 	/datum/manufacture/hat_black,
 	/datum/manufacture/hat_white,
@@ -2341,12 +2375,15 @@
 	/datum/manufacture/hat_yellow,
 	/datum/manufacture/hat_red,
 	/datum/manufacture/hat_green,
+	/datum/manufacture/hat_pink,
+	/datum/manufacture/hat_orange,
 	/datum/manufacture/hat_tophat)
 
 	hidden = list(/datum/manufacture/id_card_gold,
 	/datum/manufacture/implant_access_infinite,
 	/datum/manufacture/breathmask,
-	/datum/manufacture/patch)
+	/datum/manufacture/patch,
+	/datum/manufacture/hat_ltophat)
 
 /obj/machinery/manufacturer/qm // This manufacturer just creates different crated and boxes for the QM. Lets give their boring lives at least something more interesting.
 	name = "Crate Manufacturer"
@@ -2354,7 +2391,7 @@
 	icon_state = "fab-crates"
 	icon_base = "crates"
 	free_resource_amt = 5
-	free_resources = list(/obj/item/material_piece/mauxite)
+	free_resources = list(/obj/item/material_piece/steel)
 	accept_blueprints = 0
 	available = list(/datum/manufacture/crate,	//hey if you update these please remember to add it to /hop_and_uniform's list too
 	/datum/manufacture/packingcrate,
@@ -2364,6 +2401,52 @@
 	/datum/manufacture/biohazard)
 
 	hidden = list(/datum/manufacture/classcrate)
+
+/obj/machinery/manufacturer/zombie_survival
+	name = "Uber-Extreme Survival Manufacturer"
+	desc = "A manufacturing unit calibrated to produce items useful in surviving extreme scenarios."
+	icon_state = "fab-crates"
+	icon_base = "crates"
+	free_resource_amt = 50
+	free_resources = list(/obj/item/material_piece/steel,
+		/obj/item/material_piece/copper,
+		/obj/item/material_piece/glass,
+		/obj/item/material_piece/cloth/cottonfabric)
+	accept_blueprints = 0
+	available = list(
+	/datum/manufacture/engspacesuit,
+	/datum/manufacture/breathmask,
+	/datum/manufacture/suture,
+	/datum/manufacture/scalpel,
+	/datum/manufacture/flashlight,
+	/datum/manufacture/armor_vest,
+	/datum/manufacture/bullet_22,
+	/datum/manufacture/harmonica,
+	/datum/manufacture/riot_shotgun,
+	/datum/manufacture/riot_shotgun_ammo,
+	/datum/manufacture/clock,
+	/datum/manufacture/clock_ammo,
+	/datum/manufacture/saa,
+	/datum/manufacture/saa_ammo,
+	/datum/manufacture/riot_launcher,
+	/datum/manufacture/riot_launcher_ammo_pbr,
+	/datum/manufacture/riot_launcher_ammo_flashbang,
+	/datum/manufacture/sniper,
+	/datum/manufacture/sniper_ammo,
+	/datum/manufacture/tac_shotgun,
+	/datum/manufacture/tac_shotgun_ammo,
+	/datum/manufacture/gyrojet,
+	/datum/manufacture/gyrojet_ammo,
+	/datum/manufacture/plank,
+	/datum/manufacture/brute_kit,
+	/datum/manufacture/burn_kit,
+	/datum/manufacture/crit_kit,
+	/datum/manufacture/spacecillin,
+	/datum/manufacture/bat,
+	/datum/manufacture/quarterstaff,
+	/datum/manufacture/cleaver,
+	/datum/manufacture/fireaxe,
+	/datum/manufacture/shovel)
 
 #undef WIRE_EXTEND
 #undef WIRE_POWER
@@ -2413,15 +2496,14 @@
 		..()
 		MA.action_bar = null
 		if (src.completed && MA.queue.len)
-			SPAWN_DBG(1)
+			SPAWN_DBG(0.1 SECONDS)
 				MA.begin_work(1)
 
 
 
 /proc/build_manufacturer_icons()
 	// pre-build all the icons for shit manufacturers make
-	for (var/type in typesof(/datum/manufacture))
-		var/datum/manufacture/P = type
+	for (var/datum/manufacture/P as() in typesof(/datum/manufacture))
 		if (ispath(P, /datum/manufacture/mechanics))
 			var/datum/manufacture/mechanics/M = P
 			if (!initial(M.frame_path))

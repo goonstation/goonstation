@@ -379,10 +379,6 @@ datum
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M) M = holder.my_atom
 
-				// Used to do exactly this back in 2012 or so (Convair880).
-				if (probmult(10) && M.bioHolder && M.bioHolder.HasEffect("fat"))
-					M.bioHolder.RemoveEffect("fat")
-
 				if (!M.nutrition)
 					switch(rand(1,3))
 						if (1)
@@ -1380,6 +1376,9 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1) // allergies suck fyi
 				if (!M) M = holder.my_atom
+				if(M.reagents?.has_reagent("antihistamine") && prob(66)) //66% (intentionally not probmult) chance to cancel standard histamine effects, including hyperallergenic hist duplication
+					..()
+					return
 				if (probmult(20)) M.emote(pick("twitch", "grumble", "sneeze", "cough"))
 				if (probmult(10))
 					boutput(M, "<span class='notice'><b>Your eyes itch.</b></span>")
@@ -1395,7 +1394,7 @@ datum
 
 				// Hyperallergic
 				if(M.traitHolder.hasTrait("allergic"))
-					holder.add_reagent(src.id, src.depletion_rate * 10 + src.volume/10)
+					holder.add_reagent(src.id, min(2 + src.volume/20, 120-holder.get_reagent_amount(src.id)) * mult)
 				..()
 				return
 
@@ -1411,6 +1410,8 @@ datum
 
 			do_overdose(var/severity, var/mob/M, var/mult = 1)
 				var/effect = ..(severity, M)
+				if(M.reagents.has_reagent("epinephrine")) //epi-pens reduce the severity of the hist overdose, but won't exactly cure you if the source of hist is still around
+					severity--
 				if (severity == 1)
 					if (effect <= 2)
 						boutput(M, "<span class='alert'><b>You feel mucus running down the back of your throat.</b></span>")
@@ -1563,8 +1564,11 @@ datum
 					if (progress_timer > 10)
 						M.real_name = M.bioHolder.ownerName
 						if (M.bioHolder?.mobAppearance?.mutant_race)
-							M.set_mutantrace(M.bioHolder.mobAppearance.mutant_race)
+							M.set_mutantrace(M.bioHolder.mobAppearance.mutant_race.type)
 						M.UpdateName()
+					if(ishuman(M))
+						var/mob/living/carbon/human/H = M
+						H.update_colorful_parts()
 
 				..()
 				return
@@ -1744,7 +1748,7 @@ datum
 
 				..()
 			on_remove()
-				if (holder && holder.my_atom && ishuman(holder.my_atom))
+				if (holder?.my_atom && ishuman(holder.my_atom))
 					var/mob/living/carbon/human/H = holder.my_atom
 					// moving the 'turn off the ai' part here because it failed
 					// to actually deactivate, leaving it on forever

@@ -104,7 +104,7 @@
 		if (src.material)
 			G.setMaterial(src.material)
 		/* not used because it doesn't work (yet?)
-		if (src.uses_handwriting && user && user.mind && user.mind.handwriting)
+		if (src.uses_handwriting && user?.mind?.handwriting)
 			G.font = user.mind.handwriting
 			G.webfont = 1
 		*/
@@ -316,7 +316,20 @@
 				src.color_name = hex2color_name(src.color)
 				src.name = "[src.color_name] crayon"
 				user.visible_message("<span class='notice'><b>\"Something\" special happens to [src]!</b></span>")
-				JOB_XP(user, "Clown", 1)
+
+		robot
+			desc = "Don't shove it up your nose, no matter how good of an idea that may seem to you. Wait, do you even have a nose? Maybe something else will happen if you try to stick it there."
+
+			attack(mob/M as mob, mob/user as mob, def_zone)
+				if (M == user)
+					src.color = random_color()
+					src.font_color = src.color
+					src.color_name = hex2color_name(src.color)
+					src.name = "[src.color_name] crayon"
+					user.visible_message("<span class='notice'><b>\"Something\" special happens to [src]!</b></span>")
+					return
+
+				return ..()
 
 		pixel
 			maptext_crayon = TRUE
@@ -604,7 +617,7 @@
 			G.color = src.font_color
 		if (src.material)
 			G.setMaterial(src.material)
-		/*if (src.uses_handwriting && user && user.mind && user.mind.handwriting)
+		/*if (src.uses_handwriting && user?.mind?.handwriting)
 			G.font = user.mind.handwriting
 			G.webfont = 1
 		*/
@@ -672,7 +685,7 @@
 			return
 		tooltip_rebuild = 1
 		var/str = copytext(html_encode(input(usr,"Label text?","Set label","") as null|text), 1, 32)
-		if(url_regex && url_regex.Find(str))
+		if(url_regex?.Find(str))
 			str = null
 		if (!str || !length(str))
 			boutput(usr, "<span class='notice'>Label text cleared.</span>")
@@ -764,7 +777,7 @@
 		if (src.pen)
 			dat += "<A href='?src=\ref[src];pen=1'>Remove Pen</A><BR><HR>"
 		for(var/obj/item/paper/P in src)
-			dat += "<A href='?src=\ref[src];read=\ref[P]'>[P.name]</A> <A href='?src=\ref[src];write=\ref[P]'>Write</A> <A href='?src=\ref[src];title=\ref[P]'>Title</A> <A href='?src=\ref[src];remove=\ref[P]'>Remove</A><BR>"
+			dat += "<A href='?src=\ref[src];read=\ref[P]'>[P.name]</A> <A href='?src=\ref[src];title=\ref[P]'>Title</A> <A href='?src=\ref[src];remove=\ref[P]'>Remove</A><BR>"
 
 		for(var/obj/item/photo/P in src) //Todo: make it actually show the photo.  Currently, using [bicon()] just makes an egg image pop up (??)
 			dat += "<A href='?src=\ref[src];remove=\ref[P]'>[P.name]</A><br>"
@@ -796,13 +809,7 @@
 
 		else if (href_list["read"])
 			var/obj/item/paper/P = locate(href_list["read"])
-			if ((P && P.loc == src))
-				if (!( ishuman(usr) ))
-					usr.Browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", P.name, stars(P.info)), text("window=[]", P.name))
-					onclose(usr, "[P.name]")
-				else
-					usr.Browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", P.name, P.info), text("window=[]", P.name))
-					onclose(usr, "[P.name]")
+			P.ui_interact(usr)
 
 		else//Stuff that involves writing from here on down
 			if(!usr.literate)
@@ -837,7 +844,7 @@
 					if (length(str) > 30)
 						boutput(usr, "<span class='alert'>A title that long will never catch on!</span>") //We're actually checking because titles above a certain length get clipped, but where's the fun in that
 						return
-					if(url_regex && url_regex.Find(str))
+					if(url_regex?.Find(str))
 						return
 					P.name = str
 
@@ -895,6 +902,7 @@
 	New()
 		..()
 		src.pen = new /obj/item/pen(src)
+		src.update()
 		return
 
 /* =============== FOLDERS (wip) =============== */
@@ -1066,7 +1074,7 @@
 	attackby(var/obj/item/P as obj, mob/user as mob)
 		if (istype(P, /obj/item/paper))
 			var/obj/item/staple_gun/S = user.find_type_in_hand(/obj/item/staple_gun)
-			if (S && S.ammo)
+			if (S?.ammo)
 				user.drop_item()
 				src.pages += P
 				P.set_loc(src)

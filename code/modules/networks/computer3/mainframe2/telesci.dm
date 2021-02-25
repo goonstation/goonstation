@@ -28,8 +28,7 @@ proc/is_teleportation_allowed(var/turf/T)
 			if(IN_RANGE(F, T, F.range))
 				return 0
 
-	for (var/X in by_type[/obj/blob/nucleus])
-		var/obj/blob/nucleus/N = X
+	for_by_tcl(N, /obj/blob/nucleus)
 		if(IN_RANGE(N, T, 3))
 			return 0
 
@@ -604,7 +603,7 @@ proc/is_teleportation_allowed(var/turf/T)
 		else //MAJOR EFFECTS
 			effect = pick("mutatearea","areascatter","majorsummon")
 		logTheThing("station", usr, null, "receives the telepad at [log_loc(src)] on invalid coords, causing the [effect] effect.")
-		processbadeffect(effect)
+		INVOKE_ASYNC(src, /obj/machinery/networked/telepad.proc/processbadeffect, effect)
 
 	proc/processbadeffect(var/effect)
 		switch(effect)
@@ -631,7 +630,7 @@ proc/is_teleportation_allowed(var/turf/T)
 					if(T.y>world.maxy-4 || T.y<4)	continue
 					if (is_teleportation_allowed(T))
 						turfs += T
-				if(turfs && turfs.len)
+				if(length(turfs))
 					for(var/atom/movable/O as obj|mob in src.loc)
 						if(O.anchored) continue
 						target = pick(turfs)
@@ -687,7 +686,7 @@ proc/is_teleportation_allowed(var/turf/T)
 					if(T.y>world.maxy-4 || T.y<4)	continue
 					if (is_teleportation_allowed(T))
 						turfs += T
-				if(turfs && turfs.len)
+				if(length(turfs))
 					for(var/atom/movable/O as obj|mob in src.loc)
 						if(O.anchored) continue
 						target = pick(turfs)
@@ -728,7 +727,7 @@ proc/is_teleportation_allowed(var/turf/T)
 					if(T.y>world.maxy-4 || T.y<4)	continue
 					if (is_teleportation_allowed(T))
 						turfs += T
-				if(turfs && turfs.len)
+				if(length(turfs))
 					for(var/atom/movable/O as obj|mob in src.loc)
 						if(O.anchored) continue
 						target = pick(turfs)
@@ -754,7 +753,8 @@ proc/is_teleportation_allowed(var/turf/T)
 				return
 			if("tinyfire")
 				fireflash(src.loc, 3)
-				for(var/mob/O in AIviewers(src, null)) O.show_message("<span class='alert'>The area surrounding the [src] bursts into flame!</span>", 1)
+				for(var/mob/O in AIviewers(src, null))
+					O.show_message("<span class='alert'>The area surrounding the [src] bursts into flame!</span>", 1)
 				return
 			if("mediumsummon")
 				var/summon = pick("maneater","killertomato","bee","golem","magiczombie","mimic")
@@ -800,7 +800,7 @@ proc/is_teleportation_allowed(var/turf/T)
 					if(T.y>world.maxy-4 || T.y<4)	continue
 					if (is_teleportation_allowed(T))
 						turfs += T
-				if (turfs && turfs.len)
+				if (length(turfs))
 					for(var/atom/movable/O as obj|mob in oview(src,5))
 						if(O.anchored) continue
 						target = pick(turfs)

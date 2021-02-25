@@ -15,6 +15,7 @@
 	/datum/matfab_recipe/jumpsuit,
 	/datum/matfab_recipe/glovesins,
 	/datum/matfab_recipe/glovearmor,
+	/datum/matfab_recipe/shoes,
 	/datum/matfab_recipe/flashlight,
 	/datum/matfab_recipe/lighttube,
 	/datum/matfab_recipe/lightbulb,
@@ -334,6 +335,8 @@
 		W.set_loc(src)
 
 	attackby(var/obj/item/W , mob/user as mob)
+		if(istype(W, /obj/item/deconstructor))
+			return ..()
 		if(issilicon(user)) // fix bug where borgs could put things into the nanofab and then reject them
 			boutput(user, "<span class='alert'>You can't put that in, it's attached to you.</span>")
 			return

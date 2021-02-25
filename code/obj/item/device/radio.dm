@@ -24,7 +24,7 @@
 	var/datum/radio_frequency/radio_connection
 	var/speaker_range = 2
 	var/static/image/speech_bubble = image('icons/mob/mob.dmi', "speech")
-	var/hardened = 1	//This is for being able to run through signal jammers (just solar flares for now). acceptable values = 0 and 1. 
+	var/hardened = 1	//This is for being able to run through signal jammers (just solar flares for now). acceptable values = 0 and 1.
 
 	flags = FPRINT | TABLEPASS | ONBELT | CONDUCT
 	throw_speed = 2
@@ -299,7 +299,7 @@ Green Wire: <a href='?src=\ref[src];wires=[WIRE_TRANSMIT]'>[src.wires & WIRE_TRA
 					continue
 			//if we have signal_loss (solar flare), and the radio isn't hardened don't send message, then block general frequencies.
 			if (signal_loss && !src.hardened && !secure)
-				if (connection.frequency >= R_FREQ_MINIMUM && connection.frequency <= R_FREQ_MAXIMUM)
+				if (text2num(connection.frequency) >= R_FREQ_MINIMUM && text2num(connection.frequency) <= R_FREQ_MAXIMUM)
 					continue
 
 			if (R.accept_rad(src, messages, connection))
@@ -346,7 +346,7 @@ Green Wire: <a href='?src=\ref[src];wires=[WIRE_TRANSMIT]'>[src.wires & WIRE_TRA
 
 		// hi it's me cirr here to shoehorn in another thing
 		// flockdrones and flockmind should hear all channels, but with terrible corruption
-		if(flocks && flocks.len)
+		if(length(flocks))
 			for(var/F in flocks)
 				var/datum/flock/flock = flocks[F]
 				if(flock)
@@ -728,7 +728,7 @@ Green Wire: <a href='?src=\ref[src];wires=[WIRE_TRANSMIT]'>[src.wires & WIRE_TRA
 		if (src == M.back)
 			M.show_message("<span class='alert'><B>You feel a sharp shock!</B></span>")
 			logTheThing("signalers", usr, M, "signalled an electropack worn by [constructTarget(M,"signalers")] at [log_loc(M)].") // Added (Convair880).
-			if(ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/revolution))
+			if(ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution))
 				if((M.mind in ticker.mode:revolutionaries) && !(M.mind in ticker.mode:head_revolutionaries) && prob(20))
 					ticker.mode:remove_revolutionary(M.mind)
 

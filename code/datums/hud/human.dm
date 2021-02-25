@@ -135,7 +135,7 @@
 			remove_screen(G)
 
 		for(var/datum/statusEffect/S in src.statusUiElements) //Remove stray effects.
-			if(!master || !master.statusEffects || !(S in master.statusEffects) || !S.visible)
+			if(!master || !master.statusEffects || !(S in master.statusEffects))
 				pool(statusUiElements[S])
 				src.statusUiElements.Remove(S)
 				qdel(S)
@@ -143,7 +143,7 @@
 		var/spacing = 0.6
 		var/pos_x = spacing - 0.2
 
-		if(master && master.statusEffects)
+		if(master?.statusEffects)
 			for(var/datum/statusEffect/S in master.statusEffects) //Add new ones, update old ones.
 				if(!S.visible) continue
 				if((S in statusUiElements) && statusUiElements[S])
@@ -180,7 +180,7 @@
 			if (isicon(hud_style))
 				src.icon_hud = hud_style
 
-			if (master.client && master.client.tg_layout)
+			if (master?.client?.tg_layout)
 				layout_style = "tg"
 
 			if (layouts[layout_style]["show_bg"])
@@ -728,7 +728,7 @@
 			I.screen_loc = loc
 
 	proc/remove_item(obj/item/I)
-		if (inventory_items && inventory_items.len)
+		if (length(inventory_items))
 			inventory_items -= I
 		remove_object(I)
 

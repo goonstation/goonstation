@@ -12,6 +12,8 @@
 	module_research_type = /obj/item/parts/robot_parts
 	accepts_normal_human_overlays = 0
 	skintoned = 0
+	/// Robot limbs shouldn't get replaced through mutant race changes
+	limb_is_unnatural = TRUE
 
 	decomp_affected = 0
 	var/robot_movement_modifier
@@ -460,6 +462,16 @@
 			var/obj/item/cable_coil/cut/C = new /obj/item/cable_coil/cut(src.loc)
 			C.amount = src.wires
 			src.wires = 0
+
+		else if (isweldingtool(W) && src.type == /obj/item/parts/robot_parts/chest)
+			var/obj/item/weldingtool/welder = W
+			if (welder.try_weld(user, 3, 3))
+				var/obj/item/clothing/suit/armor/makeshift/R = new /obj/item/clothing/suit/armor/makeshift(get_turf(user))
+				boutput(user, "<span class='notice'>You remove the internal support structures of the [src]. It's structural integrity is ruined, but you could squeeze into it now.</span>")
+				user.u_equip(src)
+				user.put_in_hand_or_drop(R)
+				qdel(src)
+
 		else ..()
 
 /obj/item/parts/robot_parts/chest/light
@@ -769,6 +781,7 @@
 	slot = "l_leg"
 	icon_state_base = "l_leg"
 	icon_state = "l_leg-generic"
+	handlistPart = "legL-generic"
 	step_image_state = "footprintsL"
 	movement_modifier = /datum/movement_modifier/robotleg_left
 
@@ -776,6 +789,7 @@
 	name = "light cyborg left leg"
 	appearanceString = "light"
 	icon_state = "l_leg-light"
+	handlistPart = "legL-light"
 	max_health = 25
 	robot_movement_modifier = /datum/movement_modifier/robotleg_left
 
@@ -785,6 +799,7 @@
 	desc = "A large wheeled unit like tank tracks. This will help heavier cyborgs to move quickly."
 	appearanceString = "treads"
 	icon_state = "l_leg-treads"
+	handlistPart = "legL-treads"
 	max_health = 100
 	powerdrain = 2.5
 	step_image_state = "tracksL"
@@ -796,6 +811,7 @@
 	slot = "r_leg"
 	icon_state_base = "r_leg"
 	icon_state = "r_leg-generic"
+	handlistPart = "legR-generic"
 	step_image_state = "footprintsR"
 	movement_modifier = /datum/movement_modifier/robotleg_right
 
@@ -803,6 +819,7 @@
 	name = "light cyborg right leg"
 	appearanceString = "light"
 	icon_state = "r_leg-light"
+	handlistPart = "legR-light"
 	max_health = 25
 	robot_movement_modifier = /datum/movement_modifier/robotleg_right
 
@@ -811,6 +828,7 @@
 	desc = "A large wheeled unit like tank tracks. This will help heavier cyborgs to move quickly."
 	appearanceString = "treads"
 	icon_state = "r_leg-treads"
+	handlistPart = "legR-treads"
 	max_health = 100
 	powerdrain = 2.5
 	step_image_state = "tracksR"
@@ -1075,10 +1093,7 @@
 				return 1
 		return 0
 
-	proc/collapse_to_pieces()
-		src.visible_message("<b>[src]</b> falls apart into a pile of components!")
-		. = get_turf(src)
-		for(var/obj/item/O in src.contents) O.set_loc( . )
+	proc/reset_frame()
 		src.chest = null
 		src.head = null
 		src.l_arm = null
@@ -1086,7 +1101,6 @@
 		src.l_leg = null
 		src.r_leg = null
 		src.updateicon()
-		return
 
 	proc/finish_cyborg()
 		var/mob/living/silicon/robot/O = null
@@ -1106,38 +1120,47 @@
 			else if (src.head.ai_interface)
 				O.ai_interface = src.head.ai_interface
 			else
-				src.collapse_to_pieces()
-				qdel(O)
+				O.collapse_to_pieces()
+				src.reset_frame()
 				return
 		else
 			// how the fuck did you even do this
-			src.collapse_to_pieces()
-			qdel(O)
+			O.collapse_to_pieces()
+			src.reset_frame()
 			return
 
-		if(O.brain && O.brain.owner && O.brain.owner.key)
+		if(O.brain?.owner?.key)
 			if(O.brain.owner.current)
 				O.gender = O.brain.owner.current.gender
 				if(O.brain.owner.current.client)
 					O.lastKnownIP = O.brain.owner.current.client.address
-			if(istype(get_area(O.brain.owner.current),/area/afterlife/bar))
-				boutput("<span class='notice'>,You feel yourself being pulled out of the afterlife!</span>")
-				var/mob/old = O.brain.owner.current
-				O.brain.owner = O.brain.owner.current.ghostize().mind
-				qdel(old)
+			var/mob/M = find_ghost_by_key(O.brain.owner.key)
+			if (!M) // if we couldn't find them (i.e. they're still alive), don't pull them into this borg
+				src.visible_message("<span class='alert'><b>[src]</b> remains inactive.</span>")
+				O.collapse_to_pieces()
+				src.reset_frame()
+				return
+			if (!isdead(M)) // so if they're in VR, the afterlife bar, or a ghostcritter
+				boutput(M, "<span class='notice'>You feel yourself being pulled out of your current plane of existence!</span>")
+				O.brain.owner = M.ghostize()?.mind
+				qdel(M)
+			else
+				boutput(M, "<span class='alert'>You feel yourself being dragged out of the afterlife!</span>")
 			O.brain.owner.transfer_to(O)
+			if (isdead(M) && !isliving(M))
+				qdel(M)
 		else if (O.ai_interface)
 			if (!(O in available_ai_shells))
 				available_ai_shells += O
-			for (var/mob/living/silicon/ai/AI in by_type[/mob/living/silicon/ai])
+			for_by_tcl(AI, /mob/living/silicon/ai)
 				boutput(AI, "<span class='success'>[src] has been connected to you as a controllable shell.</span>")
 			O.shell = 1
 		else if (istype(O.brain, /obj/item/organ/brain/latejoin))
-			boutput(usr, "<span> You activate the frame and a audible beep emanates from the head.</span>")
+			boutput(usr, "<span class='notice'>You activate the frame and a audible beep emanates from the head.</span>")
 			playsound(get_turf(src), "sound/weapons/radxbow.ogg", 40, 1)
 		else
-			src.collapse_to_pieces()
-			qdel(O)
+			O.collapse_to_pieces()
+			src.reset_frame()
 			return
 
 		if (src.chest && src.chest.cell)
@@ -1156,7 +1179,7 @@
 			boutput(O, "Use say \":s to speak to fellow cyborgs and the AI through binary.")
 
 			if (src.emagged || src.syndicate)
-				if ((ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/revolution)) && O.mind)
+				if ((ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution)) && O.mind)
 					ticker.mode:revolutionaries += O.mind
 					ticker.mode:update_rev_icons_added(O.mind)
 				if (src.emagged)
@@ -1173,7 +1196,7 @@
 			O.job = "Cyborg"
 
 		// final check to guarantee the icon shows up for everyone
-		if(O.mind && (ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/revolution)))
+		if(O.mind && (ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution)))
 			if ((O.mind in ticker.mode:revolutionaries) || (O.mind in ticker.mode:head_revolutionaries))
 				ticker.mode:update_all_rev_icons() //So the icon actually appears
 		O.update_appearance()
@@ -1282,95 +1305,3 @@
 			else
 				break
 			law_counter++
-
-/obj/item/parts/robot_parts/arm/left/reliquary
-	name = "odd robotic left arm"
-	slot = "l_arm"
-	handlistPart = "hand_left_reli"
-	var/name_thing = "reli"
-	appearanceString = "reli"
-	icon_state = "l_arm-reli"
-	streak_decal = /obj/decal/cleanable/reliquaryblood
-	streak_descriptor = "blood"
-
-	attackby(obj/item/W as obj, mob/user as mob)
-		return
-
-	New(var/atom/holder)
-		if (holder != null)
-			set_loc(holder)
-		..()
-
-	getMobIcon(var/lying)
-		if (src.standImage)
-			return src.standImage
-		src.standImage = image('icons/mob/human.dmi', "[src.slot]_[name_thing]")
-
-/obj/item/parts/robot_parts/arm/right/reliquary
-	name = "odd robotic right arm"
-	slot = "r_arm"
-	handlistPart = "hand_right_reli"
-	var/name_thing = "reli"
-	appearanceString = "reli"
-	icon_state = "r_arm-reli"
-	streak_decal = /obj/decal/cleanable/reliquaryblood
-	streak_descriptor = "blood"
-
-	attackby(obj/item/W as obj, mob/user as mob)
-		return
-
-	New(var/atom/holder)
-		if (holder != null)
-			set_loc(holder)
-		..()
-
-	getMobIcon(var/lying)
-		if (src.standImage)
-			return src.standImage
-		src.standImage = image('icons/mob/human.dmi', "[src.slot]_[name_thing]")
-
-/obj/item/parts/robot_parts/leg/left/reliquary
-	name = "odd robotic left leg"
-	slot = "l_leg"
-	handlistPart = "foot_left_reli"
-	var/name_thing = "reli"
-	appearanceString = "reli"
-	icon_state = "l_leg-reli"
-	streak_decal = /obj/decal/cleanable/reliquaryblood
-	streak_descriptor = "blood"
-
-	attackby(obj/item/W as obj, mob/user as mob)
-		return
-
-	New(var/atom/holder)
-		if (holder != null)
-			set_loc(holder)
-		..()
-
-	getMobIcon(var/lying)
-		if (src.standImage)
-			return src.standImage
-		src.standImage = image('icons/mob/human.dmi', "[src.slot]_[name_thing]")
-
-/obj/item/parts/robot_parts/leg/right/reliquary
-	name = "odd robotic right leg"
-	slot = "r_leg"
-	handlistPart = "foot_right_reli"
-	var/name_thing = "reli"
-	appearanceString = "reli"
-	icon_state = "r-leg-reli"
-	streak_decal = /obj/decal/cleanable/reliquaryblood
-	streak_descriptor = "blood"
-
-	attackby(obj/item/W as obj, mob/user as mob)
-		return
-
-	New(var/atom/holder)
-		if (holder != null)
-			set_loc(holder)
-		..()
-
-	getMobIcon(var/lying)
-		if (src.standImage)
-			return src.standImage
-		src.standImage = image('icons/mob/human.dmi', "[src.slot]_[name_thing]")

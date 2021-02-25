@@ -22,7 +22,7 @@ var/datum/job_controller/job_controls
 			new /datum/job/engineering/engineer/derelict {limit = 6; name = "Salvage Engineer";} (),
 			new /datum/job/civilian/staff_assistant (),
 			new /datum/job/civilian/chef (),
-			new /datum/job/civilian/barman (),
+			new /datum/job/civilian/bartender (),
 			new /datum/job/civilian/chaplain ())
 
 		else
@@ -823,14 +823,14 @@ var/datum/job_controller/job_controls
 		if(href_list["GetAccess"])
 			var/picker = input("Make this job's access comparable to which job?","Job Creator") in list("Captain","Head of Security",
 			"Head of Personnel","Chief Engineer","Research Director","Security Officer","Detective","Geneticist","Roboticist","Scientist",
-			"Medical Doctor","Quartermaster","Miner","Mechanic","Engineer","Chef","Barman","Botanist","Janitor","Chaplain","Staff Assistant","No Access")
+			"Medical Doctor","Quartermaster","Miner","Mechanic","Engineer","Chef","Bartender","Botanist","Janitor","Chaplain","Staff Assistant","No Access")
 			src.job_creator.access = get_access(picker)
 			src.job_creator()
 
 		if(href_list["AddAccess"])
 			var/picker = input("Make this job's access comparable to which job?","Job Creator") in list("Captain","Head of Security",
 			"Head of Personnel","Chief Engineer","Research Director","Security Officer","Detective","Geneticist","Roboticist","Scientist",
-			"Medical Doctor","Quartermaster","Miner","Mechanic","Engineer","Chef","Barman","Botanist","Janitor","Chaplain","Staff Assistant","No Access")
+			"Medical Doctor","Quartermaster","Miner","Mechanic","Engineer","Chef","Bartender","Botanist","Janitor","Chaplain","Staff Assistant","No Access")
 			src.job_creator.access |= get_access(picker)
 			src.job_creator()
 
@@ -988,14 +988,14 @@ var/datum/job_controller/job_controls
 	if (string in excluded_strings)
 		return null
 	for (var/datum/job/J in job_controls.staple_jobs)
-		if (J.name == string)
+		if (J.name == string || (string in J.alias_names))
 			return J
 	if (!staple_only)
 		for (var/datum/job/J in job_controls.special_jobs)
-			if (J.name == string)
+			if (J.name == string || (string in J.alias_names))
 				return J
 		for (var/datum/job/J in job_controls.hidden_jobs)
-			if (J.name == string)
+			if (J.name == string || (string in J.alias_names))
 				return J
 	logTheThing("debug", null, null, "<b>Job Controller:</b> Attempt to find job by string \"[string]\" in controller failed")
 	return null

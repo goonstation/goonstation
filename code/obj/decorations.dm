@@ -220,7 +220,7 @@
 	// Added ex_act and meteorhit handling here (Convair880).
 	proc/update_icon()
 		if (!src) return
-		src.dir = NORTHEAST
+		src.set_dir(NORTHEAST)
 		src.destroyed = 1
 		src.set_density(0)
 		src.desc = "The scattered remains of a once-beautiful bonsai tree."
@@ -472,8 +472,7 @@
 				if(prob(50))
 					qdel(src)
 	proc/locate_blinds()
-		for (var/X in by_type[/obj/window_blinds])
-			var/obj/window_blinds/blind = X
+		for_by_tcl(blind, /obj/window_blinds)
 			if (blind.id == src.id)
 				if (!(blind in src.myBlinds))
 					src.myBlinds += blind
@@ -515,8 +514,7 @@
 /obj/blind_switch/area
 	locate_blinds()
 		var/area/A = get_area(src)
-		for (var/X in by_type[/obj/window_blinds])
-			var/obj/window_blinds/blind = X
+		for_by_tcl(blind, /obj/window_blinds)
 			var/area/blind_area = get_area(blind)
 			if(blind_area != A)
 				continue
@@ -589,6 +587,12 @@
 	centcom_edition
 		name = "electrified super high-security mk. X-22 edition chain-link fence"
 		desc = "Whoa."
+
+		ex_act(severity)
+			return
+
+		meteorhit(obj/meteor)
+			return
 
 /obj/effects/background_objects
 	icon = 'icons/misc/512x512.dmi'

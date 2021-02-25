@@ -210,7 +210,7 @@
 
 		if (!isdead(src)) //still breathing
 			//do on_life things for components?
-			SEND_SIGNAL(src, COMSIG_HUMAN_LIFE_TICK, life_mult)
+			SEND_SIGNAL(src, COMSIG_LIVING_LIFE_TICK, life_mult)
 
 			if (last_no_gravity != src.no_gravity)
 				if(src.no_gravity)
@@ -219,11 +219,6 @@
 					src.no_gravity = 0
 					animate(src, transform = matrix(), time = 1)
 				last_no_gravity = src.no_gravity
-			if (src.mob_flags & MAT_TRIGGER_LIFE)//controlled by a signal that is added when an item with mat gets a lifeprocess proc
-				for (var/thing in src) //bnlech, do a smarter search later
-					var/atom/movable/A = thing
-					if (A.material)
-						A.material.triggerOnLife(src, A)
 
 		clamp_values()
 
@@ -429,7 +424,7 @@
 				A:set_loc(src.loc)
 
 	src.set_density(src.item ? src.item.density : 0)
-	src.item.dir = src.dir
+	src.item.set_dir(src.dir)
 	src.icon = src.item.icon
 	src.icon_state = src.item.icon_state
 	src.color = src.item.color
@@ -472,8 +467,7 @@
 		if (src.getStatusDuration("burning"))
 
 			if (src.getStatusDuration("burning") > 200)
-				for(var/atom in src.contents)
-					var/atom/A = atom
+				for (var/atom/A as() in src.contents)
 					if (A.event_handler_flags & HANDLE_STICKER)
 						if (A:active)
 							src.visible_message("<span class='alert'><b>[A]</b> is burnt to a crisp and destroyed!</span>")
@@ -617,8 +611,6 @@
 
 		// Resistance from Bio Effects
 		if (src.bioHolder)
-			if (src.bioHolder.HasEffect("fat"))
-				thermal_protection += 10
 			if (src.bioHolder.HasEffect("dwarf"))
 				thermal_protection += 10
 
@@ -626,8 +618,7 @@
 		thermal_protection += GET_MOB_PROPERTY(src, PROP_COLDPROT)
 
 /*
-		for(var/atom in src.get_equipped_items())
-			var/obj/item/C = atom
+		for (var/obj/item/C as() in src.get_equipped_items())
 			thermal_protection += C.getProperty("coldprot")*/
 
 		/*
@@ -675,8 +666,7 @@
 					if (src.eyes_protected_from_light())
 						resist_prob += 190
 
-		for(var/atom in src.get_equipped_items())
-			var/obj/item/C = atom
+		for (var/obj/item/C as() in src.get_equipped_items())
 			resist_prob += C.getProperty("viralprot")
 
 		if(src.getStatusDuration("food_disease_resist"))
@@ -695,7 +685,7 @@
 		// Resistance from Clothing
 		rad_protection += GET_MOB_PROPERTY(src, PROP_RADPROT)
 
-		if (bioHolder && bioHolder.HasEffect("food_rad_resist"))
+		if (bioHolder?.HasEffect("food_rad_resist"))
 			rad_protection += 100
 
 		rad_protection = clamp(rad_protection, 0, 100)
@@ -748,8 +738,7 @@
 		var/protection = 0
 
 		// Resistance from Clothing
-		for(var/atom in src.get_equipped_items())
-			var/obj/item/C = atom
+		for (var/obj/item/C as() in src.get_equipped_items())
 			if(C.hasProperty("deflection"))
 				var/curr = C.getProperty("deflection")
 				protection += curr

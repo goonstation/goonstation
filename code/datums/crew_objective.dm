@@ -229,7 +229,7 @@ ABSTRACT_TYPE(/datum/objective/crew/botanist)
 		medal_name = "Bill Masen"
 		check_completion()
 			var/mutcount = 0
-			for(var/obj/machinery/plantpot/PP in machine_registry[MACHINES_PLANTPOTS])
+			for(var/obj/machinery/plantpot/PP as() in machine_registry[MACHINES_PLANTPOTS])
 				if(PP.current)
 					var/datum/plantgenes/DNA = PP.plantgenes
 					var/datum/plantmutation/MUT = DNA.mutation
@@ -252,7 +252,7 @@ ABSTRACT_TYPE(/datum/objective/crew/botanist)
 				var/obj/item/seed/cannabis/S = X
 				if (istype(S) && istype(get_area(S), /area/station/hydroponics))
 					return 0
-			for (var/obj/machinery/plantpot/PP in machine_registry[MACHINES_PLANTPOTS])
+			for (var/obj/machinery/plantpot/PP as() in machine_registry[MACHINES_PLANTPOTS])
 				if (PP.current && istype(PP.current, /datum/plant/herb/cannabis))
 					if (istype(get_area(PP), /area/station/hydroponics) || istype(get_area(PP), /area/station/hydroponics/lobby))
 						return 0
@@ -296,7 +296,7 @@ ABSTRACT_TYPE(/datum/objective/crew/janitor)
 					return 0
 			return 1
 
-//	barman
+//	bartender
 
 //	chef
 
@@ -328,7 +328,7 @@ ABSTRACT_TYPE(/datum/objective/crew/mechanic)
 		medal_name = "It's not 'Door to Heaven'"
 		check_completion()
 			var/telecount = 0
-			for(var/obj/machinery/teleport/portal_generator/S in machine_registry[MACHINES_PORTALGENERATORS]) //really shitty, I know
+			for(var/obj/machinery/teleport/portal_generator/S as() in machine_registry[MACHINES_PORTALGENERATORS]) //really shitty, I know
 				if(S.z != 1) continue
 				for(var/obj/machinery/teleport/portal_ring/H in orange(2,S))
 					for(var/obj/machinery/computer/teleporter/C in orange(2,S))
@@ -341,7 +341,7 @@ ABSTRACT_TYPE(/datum/objective/crew/mechanic)
 		explanation_text = "Ensure that there are at least two cloners on the station level at the end of the round."
 		check_completion()
 			var/clonecount = 0
-			for(var/obj/machinery/computer/cloning/C in machine_registry[MACHINES_CLONINGCONSOLES]) //ugh
+			for(var/obj/machinery/computer/cloning/C in as anything machine_registry[MACHINES_CLONINGCONSOLES]) //ugh
 				for(var/obj/machinery/dna_scannernew/D in orange(2,C))
 					for(var/obj/machinery/clonepod/P in orange(2,C))
 						clonecount++
@@ -363,7 +363,7 @@ ABSTRACT_TYPE(/datum/objective/crew/researchdirector)
 		explanation_text = "Ensure that the floors of the chemistry lab are not scorched at the end of the round."
 		medal_name = "We didn't start the fire"
 		check_completion()
-			for(var/turf/simulated/floor/T in get_area_turfs(/area/station/chemistry, 0))
+			for(var/turf/simulated/floor/T in get_area_turfs(/area/station/science/chemistry, 0))
 				if(T.burnt == 1) return 0
 			return 1
 	hyper
@@ -396,7 +396,7 @@ ABSTRACT_TYPE(/datum/objective/crew/scientist)
 		explanation_text = "Ensure that the floors of the chemistry lab are not scorched at the end of the round."
 		medal_name = "We didn't start the fire"
 		check_completion()
-			for(var/turf/simulated/floor/T in get_area_turfs(/area/station/chemistry, 0))
+			for(var/turf/simulated/floor/T in get_area_turfs(/area/station/science/chemistry, 0))
 				if(T.burnt == 1) return 0
 			return 1
 	hyper
@@ -466,7 +466,7 @@ ABSTRACT_TYPE(/datum/objective/crew/medicaldirector)
 		explanation_text = "Have at least 5 people's DNA scanned in the cloning console at the end of the round."
 		medal_name = "Life, uh... finds a way"
 		check_completion()
-			for(var/obj/machinery/computer/cloning/C in machine_registry[MACHINES_CLONINGCONSOLES])
+			for(var/obj/machinery/computer/cloning/C as() in machine_registry[MACHINES_CLONINGCONSOLES])
 				if(C.records.len > 4)
 					return 1
 			return 0
@@ -528,7 +528,7 @@ ABSTRACT_TYPE(/datum/objective/crew/medicaldirector)
 		explanation_text = "Do not commit a violent act all round - punching someone, hitting them with a weapon or shooting them with a laser will all cause you to fail."
 		medal_name = "Primum non nocere"
 		check_completion()
-			if (owner && owner.violated_hippocratic_oath)
+			if (owner?.violated_hippocratic_oath)
 				return 0
 			else
 				return 1
@@ -539,7 +539,7 @@ ABSTRACT_TYPE(/datum/objective/crew/geneticist)
 		explanation_text = "Have at least 5 people's DNA scanned in the cloning console at the end of the round."
 		medal_name = "Life, uh... finds a way"
 		check_completion()
-			for(var/obj/machinery/computer/cloning/C in machine_registry[MACHINES_CLONINGCONSOLES])
+			for(var/obj/machinery/computer/cloning/C as() in machine_registry[MACHINES_CLONINGCONSOLES])
 				if(C.records.len > 4)
 					return 1
 			return 0
@@ -608,7 +608,7 @@ ABSTRACT_TYPE(/datum/objective/crew/medicaldoctor)
 		explanation_text = "Do not commit a violent act all round - punching someone, hitting them with a weapon or shooting them with a laser will all cause you to fail."
 		medal_name = "Primum non nocere"
 		check_completion()
-			if (owner && owner.violated_hippocratic_oath)
+			if (owner?.violated_hippocratic_oath)
 				return 0
 			else
 				return 1

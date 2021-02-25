@@ -67,7 +67,7 @@ mob/verb/listfreq()
 
 var/global/list/datum/signal/reusable_signals = list()
 proc/get_free_signal()
-	if (reusable_signals && reusable_signals.len)
+	if (length(reusable_signals))
 		while (. == null && reusable_signals.len)
 			. = reusable_signals[reusable_signals.len]
 			reusable_signals.len--
@@ -80,7 +80,7 @@ datum/radio_frequency
 	var/frequency
 	var/list/obj/devices = list()
 
-	//MBC : check_for_jammer proc was being called thousands of times per second. 
+	//MBC : check_for_jammer proc was being called thousands of times per second.
 	//Do its initial check in a define instead, because proc call overhead. Then call check_for_jammer_bare
 	#define can_check_jammer (radio_controller.active_jammers.len)
 
@@ -94,7 +94,7 @@ datum/radio_frequency
 			if(range)
 				start_point = get_turf(source)
 				if(!start_point)
-					if (reusable_signals && reusable_signals.len && !(signal in reusable_signals))
+					if (length(reusable_signals) && !(signal in reusable_signals))
 						signal.dispose()
 					else if (signal)
 						signal.wipe()
@@ -176,8 +176,7 @@ datum/signal
 		return
 
 	disposing()
-		if(src.data_file)
-			src.data_file.dispose()
+		src.data_file?.dispose()
 
 		if (reusable_signals)
 			reusable_signals -= null

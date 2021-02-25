@@ -25,6 +25,7 @@
 	module_research = list("tools" = 5, "science" = 1)
 	rand_pos = 1
 	inventory_counter_enabled = 1
+	move_triggered = 1
 	var/list/banned_reagents = list("vomit",
 	"blackpowder",
 	"blood",
@@ -156,12 +157,13 @@
 		user.lastattacked = target
 
 		for (var/a = 0, a < reagents_per_dist, a++)
-			SPAWN_DBG (0)
+			SPAWN_DBG(0)
 				if (disposed)
 					return
 				if (!src.reagents)
 					return
-				var/obj/effects/water/W = unpool(/obj/effects/water)
+				var/obj/effects/water/W = unpool(/obj/effects/water, user)
+				W.owner = user
 				if (!W) return
 				W.set_loc( get_turf(src) )
 				var/turf/my_target = pick(the_targets)
@@ -173,7 +175,7 @@
 		else if( usr.buckled && !usr.buckled.anchored )
 			var/wooshdir = get_dir( target, user )
 			SPAWN_DBG(0)
-				for( var/i = 1, (usr && usr.buckled && !usr.buckled.anchored && i <= rand(3,5)), i++ )
+				for( var/i = 1, (usr?.buckled && !usr.buckled.anchored && i <= rand(3,5)), i++ )
 					step( usr.buckled, wooshdir )
 					sleep( rand(1,3) )
 

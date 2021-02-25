@@ -128,7 +128,7 @@ Contains:
 		return
 
 	weeoo_in_progress = 10
-	SPAWN_DBG (0)
+	SPAWN_DBG(0)
 		playsound(src.loc, "sound/machines/siren_police.ogg", 50, 1)
 		light.enable()
 		src.icon_state = "[src.icon_base][src.icon_weeoo_state]"
@@ -585,7 +585,8 @@ Contains:
 		src.underlays = null
 
 /obj/vehicle/floorbuffer/Move()
-	if(..() && rider)
+	. = ..()
+	if(. && rider)
 		pixel_x = rand(-1, 1)
 		pixel_y = rand(-1, 1)
 		SPAWN_DBG(1 DECI SECOND)
@@ -1249,6 +1250,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 		SPAWN_DBG(1 DECI SECOND)
 			pixel_x = rand(-6, 6)
 			pixel_y = rand(-2, 2)
+		return TRUE
 
 /obj/vehicle/clowncar/cluwne/relaymove(mob/user as mob, dir)
 	..(user, dir)
@@ -1548,9 +1550,6 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 	var/obj/ability_button/togglespook/togglespook = new
 	togglespook.screen_loc = "NORTH-2"
 	ability_buttons += togglespook
-
-/obj/vehicle/adminbus/disposing()
-	..()
 
 /obj/vehicle/adminbus/Move()
 	if(src.darkness)
@@ -2258,7 +2257,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 	//forklift movement
 	if (direction == 1 || direction == 2 || direction == 4 || direction == 8)
 		if(src.dir != direction)
-			src.dir = direction
+			src.set_dir(direction)
 		walk(src, dir, 2.5)
 	return
 

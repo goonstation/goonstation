@@ -11,7 +11,7 @@
 /datum/component/sniper_wallpierce/proc/update_pierces(var/obj/projectile/P, var/atom/hit)
 	var/turf/T = get_turf(hit)
 	if(isrestrictedz(T.z))
-		return PROJ_PASSNONE
+		return 0
 	if(isrwall(hit) || istype(hit, /obj/machinery/door/poddoor/blast))
 		pierces_left-- //cost an extra pierce for rwalls and blast doors
 	if(pierces_left-- > 0)
