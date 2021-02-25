@@ -1,5 +1,9 @@
 
 (t)thu feb 25 21
+(u)Carbadox
+(p)3717
+(e)|
+(+)Using a screwdriver / wrench on a credit transfer devices will now unanchor and let you move them.
 (u)Azrun
 (p)3807
 (e)|
