@@ -921,10 +921,10 @@ datum
 				..()
 				return
 
-		namium
-			name = "namium"
-			id = "namium"
-			description = "It has a name." //dead appearance handled in human.dm
+		crydaptus_toxin
+			name = "crydaptus toxin"
+			id = "crydaptus_toxin"
+			description = "A powerful venom with sedative properties." //dead appearance handled in human.dm
 			reagent_state = LIQUID
 			fluid_r = 201
 			fluid_g = 232

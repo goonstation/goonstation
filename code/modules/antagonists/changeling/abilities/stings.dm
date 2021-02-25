@@ -75,11 +75,11 @@
 		//inject_amount = 20
 
 	//alt neuro replacement for RP
-	namium
-		name = "Namium Sting"
-		desc = "Transfer some Namium into your target."
+	crydaptus_toxin
+		name = "Crydaptus Toxin Sting"
+		desc = "Transfer some crydaptus toxin into your target."
 		icon_state = "stingneuro"
-		venom_ids = list("namium")
+		venom_ids = list("crydaptus_toxin")
 		inject_amount = 40
 
 	lsd

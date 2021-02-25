@@ -21,7 +21,7 @@
 	C.addAbility(/datum/targetable/changeling/stasis)
 #ifdef RP_MODE
 	//C.addAbility(/datum/targetable/changeling/sting/capulettium)
-	C.addAbility(/datum/targetable/changeling/sting/namium)
+	C.addAbility(/datum/targetable/changeling/sting/crydaptus_toxin)
 #else
 	C.addAbility(/datum/targetable/changeling/sting/neurotoxin)
 #endif
