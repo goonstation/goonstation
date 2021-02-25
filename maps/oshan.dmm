@@ -9859,6 +9859,9 @@
 	layer = 3.5
 	},
 /obj/machinery/light_switch/auto,
+/obj/artifact_paper_dispenser{
+	pixel_x = 15
+	},
 /turf/simulated/floor/black,
 /area/station/science/artifact)
 "awT" = (

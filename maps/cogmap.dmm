@@ -52066,6 +52066,10 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
 	},
+/obj/artifact_paper_dispenser{
+	pixel_x = 6;
+	pixel_y = 9
+	},
 /turf/simulated/floor,
 /area/station/science/artifact)
 "clT" = (

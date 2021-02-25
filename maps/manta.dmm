@@ -32444,11 +32444,24 @@
 /area/station/science/artifact)
 "bKk" = (
 /obj/table/reinforced/auto,
-/obj/item/paper_bin,
-/obj/item/stamp,
-/obj/item/pen,
+/obj/item/paper_bin{
+	pixel_x = -4;
+	pixel_y = 5
+	},
+/obj/item/stamp{
+	pixel_x = 4;
+	pixel_y = -6
+	},
+/obj/item/pen{
+	pixel_x = -4;
+	pixel_y = -5
+	},
 /obj/disposalpipe/segment/mail{
 	dir = 4
+	},
+/obj/artifact_paper_dispenser{
+	pixel_x = 8;
+	pixel_y = 6
 	},
 /turf/simulated/floor,
 /area/station/science/artifact)

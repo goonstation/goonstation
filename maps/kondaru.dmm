@@ -37711,14 +37711,27 @@
 /area/station/science/artifact)
 "bPA" = (
 /obj/table/reinforced/auto,
-/obj/item/paper_bin,
-/obj/item/pen,
-/obj/item/hand_labeler,
+/obj/item/paper_bin{
+	pixel_x = 6;
+	pixel_y = -3
+	},
+/obj/item/pen{
+	pixel_x = -6;
+	pixel_y = -5
+	},
+/obj/item/hand_labeler{
+	pixel_x = 5;
+	pixel_y = 10
+	},
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 10;
 	name = "autoname - SS13";
 	tag = ""
+	},
+/obj/artifact_paper_dispenser{
+	pixel_x = -6;
+	pixel_y = 8
 	},
 /turf/simulated/floor/darkblue/checker,
 /area/station/science/artifact)
