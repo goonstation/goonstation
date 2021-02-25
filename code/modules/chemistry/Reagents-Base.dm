@@ -203,7 +203,9 @@ datum
 								M.take_toxin_damage(-liver_damage * 3 * mult)
 								HH.organHolder.heal_organ(liver_damage *mult, liver_damage *mult, liver_damage *mult, "liver")
 							else
-								if (prob(ethanol_amt/2))
+								if (ethanol_amt < 40 && HH.organHolder.liver.get_damage() < 10)
+									HH.organHolder.damage_organ(0, 0, liver_damage*mult, "liver")
+								else if (ethanol_amt >= 40 && prob(ethanol_amt/2))
 									HH.organHolder.damage_organ(0, 0, liver_damage*mult, "liver")
 					..()
 
