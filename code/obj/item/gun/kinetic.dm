@@ -7,9 +7,9 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	var/obj/item/ammo/bullets/ammo = null
 	var/max_ammo_capacity = 1 // How much ammo can this gun hold? Don't make this null (Convair880).
 	var/caliber = null // Can be a list too. The .357 Mag revolver can also chamber .38 Spc rounds, for instance (Convair880).
-	var/has_empty_state = 0 //does this gun have a special icon state for having no ammo lefT?
-	var/gildable = 0 //can this gun be affected by the [Helios] medal reward?
-	var/gilded = FALSE //Currently used for handling gilded shotguns, if we ever want to gild the Colt SAA, its here
+	var/has_empty_state = 0 //Does this gun have a special icon state for having no ammo lefT?
+	var/gildable = 0 //Can this gun be affected by the [Helios] medal reward?
+	var/gilded = FALSE //Is this gun currently gilded by the [Helios] medal reward?
 	var/auto_eject = 0 // Do we eject casings on firing, or on reload?
 	var/casings_to_eject = 0 // If we don't automatically ejected them, we need to keep track (Convair880).
 
