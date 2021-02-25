@@ -3460,6 +3460,7 @@
 	MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
 		if (!istype(O,/obj/) || O.anchored) return
 		if (get_dist(src,O) > 1 || !isturf(O.loc)) return
+		if ((get_dist(src, user) > 1) || user.stat) return
 		if (src.dragload)
 			if (src.contents.len)
 				boutput(user, "<span class='alert'>[src.name] is already loaded!</span>")
