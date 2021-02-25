@@ -126,7 +126,7 @@ By default, you can hold SHIFT (SPACE on TG layout) while moving to sprint, burn
 If a purple mouse runs up to you and squeaks, click it with an empty hand! They're a Mentor Mouse and can provide you useful information!
 When used in conjunction, synaptizine and atropine together in a patient in critical condition will greatly help stave off death!
 Bug reports don't have to be about anything major. Feel free to report minor things like typos, grammatical errors and similar.
-You can chug from drinking glassess and pitchers by click dragging them onto yourself.
+You can chug from drinking glasses and pitchers by click dragging them onto yourself.
 If you have enough cash, you can use it on a voting booth to manipulate the map polls to say in your favour.
 Microwaved donk pockets are a great general source of healing. Be sure to grab one if MedBay is too far away and you need something to avoid death for a bit longer.
 In case of an incoming meteor storm, meteor shields can be purchased from the Quartermasters and set up to protect the station.
