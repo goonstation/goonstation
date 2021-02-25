@@ -34,10 +34,6 @@
 			boutput(M, "<span class='alert'>Running through \the [src] is slowing you down...</span>")
 		return ..()
 
-	attack_hand(var/mob/user)
-		//changeHealth(-1)
-		..()
-
 	attackby(var/obj/item/I, var/mob/user)
 		changeHealth(-2)
 		..()
