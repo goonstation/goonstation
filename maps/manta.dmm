@@ -39000,7 +39000,6 @@
 	icon_state = "line3"
 	},
 /obj/machinery/chemicompiler_stationary,
-/obj/machinery/drainage,
 /turf/simulated/floor/blackwhite{
 	dir = 4
 	},
@@ -39014,6 +39013,7 @@
 	dir = 1;
 	icon_state = "pipe-c"
 	},
+/obj/machinery/drainage,
 /turf/simulated/floor/black,
 /area/station/science/chemistry)
 "bNB" = (

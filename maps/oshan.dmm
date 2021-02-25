@@ -47534,6 +47534,10 @@
 /obj/item/furniture_parts/bench/wooden,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/west)
+"oTM" = (
+/obj/machinery/drainage,
+/turf/simulated/floor/purple/checker,
+/area/station/science/chemistry)
 "oUx" = (
 /obj/grille/steel,
 /turf/space/fluid,
@@ -109383,7 +109387,7 @@ aGr
 cBA
 aGr
 bZf
-aGr
+oTM
 aGW
 aFl
 aFl
