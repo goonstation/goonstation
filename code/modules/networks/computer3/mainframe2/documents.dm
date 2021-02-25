@@ -152,6 +152,7 @@
 		..()
 		src.fields = list("#!",
 						  "if $argc 1 lt | echo Error: Please specify equipment to read test results from! | break",
+							"gptio read $arg0")
 
 /datum/computer/file/record/artlab_info
 	name = "info"
