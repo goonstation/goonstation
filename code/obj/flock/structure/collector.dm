@@ -10,8 +10,6 @@
 	var/active = 0
 	/// max range for the thing.
 	var/maxrange = 5
-	/// amount of tiles "connected" to.
-	var/connected = 0
 	/// the tiles its connected to
 	var/list/turf/simulated/floor/feather/connectedto = list()
 
@@ -27,17 +25,17 @@
 	..(location, F)
 
 /obj/flock_structure/collector/building_specific_info()
-	return {"<span class='bold'>Connections:</span> Currently Connected to [connected] tile[connected == 1 ? "" : "s"].
+	return {"<span class='bold'>Connections:</span> Currently Connected to [length(connectedto)] tile[length(connectedto) == 1 ? "" : "s"].
 	<br><span class='bold'>Power generation:</span> Currently generating [abs(poweruse)]."}
 
 /obj/flock_structure/collector/process()
 	..()
 	calcconnected()
-	if(connected > 0)
+	if(length(connectedto))
 		icon_state = "collectoron"
 	else
 		icon_state = "collector"
-	src.poweruse = ((connected * 5) / -1) //power = tiles connected * 5 / 1 (5 power per tile)
+	src.poweruse = ((length(connectedto) * 5) / -1) //(5 power per tile)
 
 /obj/flock_structure/collector/disposing()
 	for(var/turf/simulated/floor/feather/flocktile as() in connectedto)
@@ -53,7 +51,6 @@
 	var/myturf = get_turf(src)
 	var/distance = 0 //how far has it gone already?
 	var/turf/simulated/floor/feather/floor = myturf
-	connected = length(connectedto)
 	if(!istype(floor)) return//if it aint a flock floor
 
 	if(floor.broken) return
@@ -74,5 +71,4 @@
 		flocktile.connected = 1
 		flocktile.on() //make it glo
 
-	connected = length(connectedto)
 
