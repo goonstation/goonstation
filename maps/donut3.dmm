@@ -71622,8 +71622,11 @@
 	pixel_y = 2
 	},
 /obj/item/hand_labeler{
-	pixel_x = 9;
-	pixel_y = 2
+	pixel_x = 15
+	},
+/obj/artifact_paper_dispenser{
+	pixel_x = 3;
+	pixel_y = 3
 	},
 /turf/simulated/floor/specialroom/arcade,
 /area/station/science/artifact)

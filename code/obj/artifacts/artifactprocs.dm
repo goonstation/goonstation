@@ -130,9 +130,6 @@
 	if (!src.ArtifactSanityCheck())
 		return 1
 	var/datum/artifact/A = src.artifact
-	if(A.internal_name)
-		src.real_name = A.internal_name
-		UpdateName()
 	if (A.activated)
 		return 1
 	if (A.triggers.len < 1 && !A.automatic_activation)
