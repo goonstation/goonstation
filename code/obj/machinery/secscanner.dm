@@ -61,6 +61,8 @@
 			src.use_power(15)
 
 			//////PDA NOTIFY/////
+			if (src.loc.z != Z_LEVEL_STATION)
+				return
 			if (src.report_scans && (I.name != last_perp || contraband != last_contraband))
 				var/scan_location = get_area(src)
 
@@ -101,6 +103,8 @@
 					src.speak("[uppertext(perpname)] HAS FAILED THE VIBE CHECK! BAD VIBES! BAD VIBES!!")
 
 				//////PDA NOTIFY/////
+				if (src.loc.z != Z_LEVEL_STATION)
+					return
 				if (src.report_scans)
 					var/scan_location = get_area(src)
 
@@ -145,6 +149,8 @@
 			src.use_power(15)
 
 			//////PDA NOTIFY/////
+			if (src.loc.z != Z_LEVEL_STATION)
+				return
 			if (src.report_scans)
 				var/scan_location = get_area(src)
 
