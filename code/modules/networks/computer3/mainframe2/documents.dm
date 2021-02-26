@@ -169,8 +169,8 @@
 	New()
 		..()
 		src.fields = list("#!",
-						  "if $argc 1 lt | gptio peek xray radstrength | break",
-						  "gptio poke xray radstrength $arg0")
+						  "if $argc 1 lt | gptio peek xray radstrength",
+						  "if $argc 1 ge | gptio poke xray radstrength $arg0")
 
 /datum/computer/file/record/artlab_heater
 	name = "heat"
@@ -178,8 +178,8 @@
 	New()
 		..()
 		src.fields = list("#!",
-						  "if $argc 1 lt | gptio peek heater temptarget | break",
-						  "gptio poke heater temptarget $arg0")
+						  "if $argc 1 lt | gptio peek heater temptarget",
+						  "if $argc 1 ge | gptio poke heater temptarget $arg0")
 
 /datum/computer/file/record/artlab_elecbox
 	name = "elec"
@@ -187,10 +187,9 @@
 	New()
 		..()
 		src.fields = list("#!",
-						  "if $argc 1 lt | gptio peek elecbox voltage | gptio peek elecbox wattage | break",
-						  "if $argc 2 lt | gptio poke elecbox voltage $arg0 | break",
-						  "gptio poke elecbox voltage $arg0",
-							"gptio poke elecbox wattage $arg1")
+						  "if $argc 1 lt | gptio peek elecbox voltage | gptio peek elecbox wattage",
+						  "if $argc 1 ge | gptio poke elecbox voltage $arg0",
+							"if $argc 2 ge | gptio poke elecbox wattage $arg1")
 
 /datum/computer/file/record/artlab_pitcher
 	name = "pitch"
@@ -198,8 +197,8 @@
 	New()
 		..()
 		src.fields = list("#!",
-						  "if $argc 1 lt | gptio peek pitcher power | break",
-						  "gptio poke pitcher power $arg0")
+						  "if $argc 1 lt | gptio peek pitcher power",
+						  "if $argc 1 ge | gptio poke pitcher power $arg0")
 
 /datum/computer/file/record/artlab_impactpad
 	name = "stand"
@@ -207,8 +206,8 @@
 	New()
 		..()
 		src.fields = list("#!",
-						  "if $argc 1 lt | gptio peek impactpad stand | break",
-						  "gptio poke impactpad stand $arg0")
+						  "if $argc 1 lt | gptio peek impactpad stand",
+						  "if $argc 1 ge | gptio poke impactpad stand $arg0")
 
 /*
  *		Emails!!
