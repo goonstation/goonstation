@@ -3483,7 +3483,6 @@
 
 	proc/ejectContents(var/mob/unloader, var/target_location)
 		if (!istype(target_location, /turf/)) return
-		if (!src.dragload) return
 		if (get_dist(src,target_location) > 1) return
 		if ((get_dist(src, unloader) > 1) || unloader.stat) return
 		if (src.active)
