@@ -1058,8 +1058,7 @@
 /obj/item/blob_act(var/power)
 	if (src.artifact)
 		if (!src.ArtifactSanityCheck()) return
-		src.ArtifactStimulus("force", power)
-		src.ArtifactStimulus("carbtouch", 1)
+		src.Artifact_blob_act(power)
 	return
 
 //nah
