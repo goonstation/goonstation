@@ -4035,18 +4035,21 @@
 				playsound(src.loc, "sound/machines/buzz-sigh.ogg", 50, 1)
 				src.update_icon()
 				return
-			var/current = src.wattage * src.voltage
-			if (locate(/mob/living/) in src.contents)
-				for (var/mob/living/carbon/OUCH in src.contents)
-					OUCH.TakeDamage("All",0,current / 500)
-			else
-				var/obj/M = pick(src.contents)
-				if (istype(M.artifact,/datum/artifact/))
-					M.ArtifactStimulus("elec", current)
+			src.electrify_contents()
 
 		else use_power(20)
 
 		return
+
+	proc/electrify_contents()
+		var/current = src.wattage * src.voltage
+		if (locate(/mob/living/) in src.contents)
+			for (var/mob/living/carbon/OUCH in src.contents)
+				OUCH.TakeDamage("All",0,current / 500)
+		else
+			var/obj/M = pick(src.contents)
+			if (istype(M.artifact,/datum/artifact/))
+				M.ArtifactStimulus("elec", current)
 
 	attackby(var/obj/item/I, mob/user)
 		if (src.status & (NOPOWER|BROKEN))
@@ -4102,6 +4105,7 @@
 						return
 					src.wattage = pokeval
 
+				src.electrify_contents()
 				message_host("command=ack")
 				return
 
@@ -4166,6 +4170,7 @@
 				if (src.contents.len && !src.active)
 					active = 1
 					src.timer = -1
+					src.electrify_contents()
 					message_host("command=ack")
 					src.update_icon()
 				else
@@ -4182,6 +4187,7 @@
 
 				src.active = 1
 				src.timer = duration
+				src.electrify_contents()
 				message_host("command=ack")
 				src.update_icon()
 
