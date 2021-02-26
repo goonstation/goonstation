@@ -1,4 +1,142 @@
 
+(t)thu feb 25 21
+(u)Carbadox
+(p)3717
+(e)|
+(+)Using a screwdriver / wrench on a credit transfer devices will now unanchor and let you move them.
+(u)Azrun
+(p)3807
+(e)|
+(*)Multitools now provide encoded information about the network a powered cable is connected to.
+(u)Ludolf
+(p)3827
+(e)🎨|sprites
+(+)New sprite for soldering irons.
+(u)Anachroniser
+(p)3423
+(e)⚖🆕|balance, feature
+(*)Singularities now come in variable sizes and can generate more power as they grow. Keep in mind the risks of a giant singularity.
+(u)Luxizzle
+(p)3777
+(e)🆕🗺🎨|feature, mapping, sprites
+(*)You can now frost donuts with an icing tube!
+(t)wed feb 24 21
+(u)kyle
+(+)Ethanol is now a good bit more forgiving in terms of liver damage.
+(u)Superlagg
+(p)2921
+(e)🆕|feature
+(*)The RCD can now build light bulb and light tube fixtures.
+(u)Borkatator
+(p)3728
+(e)⚖🆕|balance, feature
+(*)You can now create a viewport window when watching camera feeds
+(u)Azrun
+(p)3815
+(e)🐛|bug
+(+)Resolve issue with alloys in TEG Semiconductor.  Mix and match your favorite flavors!
+(t)tue feb 23 21
+(u)Azrun
+(p)3191
+(e)🆕🗺🎨|feature, mapping, sprites
+(*)Material science interactions with TEG! The prototype semiconductor can be removed from TEG via screwdriver-> wirecutter -> crowbar and brought to an Arc Plater near you! Re-install by reinserting -> adding wire -> snipping excess -> screwing it back in place.
+(+)TEG Semiconductor added as High Priority bounty to SpyThief.
+(u)Sovexe
+(p)3745
+(e)🔄|rework
+(+)Reworked clown shoes to have shorter slip durations. Fixed a bug where slipping as a clown didn't actually make you fall over.
+(t)sun feb 21 21
+(u)TTerc
+(p)3772
+(e)🗺|mapping
+(+)Donut 3: Made mineral magnet area larger, tweaked the mining office layout.
+(u)Luxizzle
+(p)3794
+(e)|
+(+)Weapon vendor now shows the cost of a loadout option.
+(u)virvatuli
+(p)3787
+(e)|
+(+)Added new welding tool audio to signal that it's been ignited!
+(u)Flappybat
+(p)3669
+(e)⚖|balance
+(+)Telecrystal materials are less likely to warp when used on yourself/others. Self teleporting due to attacks has a 25% chance of dropping the item at the location you warped from.
+(u)Chickenish
+(p)3775
+(e)🆕|feature
+(+)Added an Implanter to the Security vendor.
+(u)Tarmunora
+(p)3760
+(e)⚖|balance
+(+)Raised costs of power cells and 40mmPBR rounds in the sec loadout vendor.
+(t)sat feb 20 21
+(u)TTerc
+(p)3563
+(e)🗺|mapping
+(+)Cog1: Added extra purge pumps to the TEG and moved the reactor statistics computer to the engine control room.
+(u)Batelite
+(p)3768
+(e)🎨|sprites
+(+)Health analyzer screens now indicate what they're scanning
+(t)fri feb 19 21
+(u)zjdtmkhzt
+(p)3731
+(e)⚖🆕|balance, feature
+(*)Lots of non-handheld artifact types now actually trigger the faults they might get, so artifact use may have some unintended side effects now. Stay safe, everyone!
+(u)BatElite
+(p)3739
+(e)🎨|sprites
+(+)Rechargers have new sprites!
+(t)thu feb 18 21
+(u)Sord
+(p)3726
+(e)🆕|feature
+(+)New taser smg security loadout. Sprites by Matheus
+(u)virvatuli
+(p)3736
+(e)|
+(+)Added a new and unique pulse rifle/lawbringer pulse firing sound!
+(u)TTerc
+(p)3627
+(e)⚖🆕|balance, feature
+(+)You can now refill the flamethrowers by simply clicking the large tanks with them.
+(u)Flappybat
+(p)3651
+(e)⚖|balance
+(*)Blocks MRPT rocket ammo from being loaded into the zip gun.
+(u)Superlagg
+(p)3276
+(e)⚖🆕🔄|balance, feature, rework
+(*)Upgraded bot AI to be more responsive in general.
+(*)Buddy combat AI has been upgraded to allow them to move *and* shoot.
+(+)Secbots can be ordered to guard and lockdown specific areas.
+(+)Floorbots now eat loose floor metal by default.
+(+)Added actionbars to most times bot actions, like repairing floors and injecting people with drugs.
+(+)Ammofab now costs 1 TC.
+(u)Flappybat
+(p)3580
+(e)⚖🐛|balance, bug
+(*)Syndicate riot baton now deals stamina damage instead of instant stun, two hits are required to knockdown. Now functions like an infinite ammo stun baton with extra blunt damage on harm intent.
+(t)wed feb 17 21
+(u)Sovexe
+(p)3746
+(e)🆕|feature
+(*)Spy Thieves can now print pictures of their targets out from their PDA!
+(t)sun feb 14 21
+(u)Carbadox
+(p)3718
+(e)🐛🎨|bug, sprites
+(+)Added the ability to make industrial table parts with reinforced metal sheets.
+(u)BenLubar
+(p)3381
+(e)⚖|balance
+(+)Attacking someone with a drinking glass while in harm intent now splashes your drink onto them.
+(u)Anachroniser
+(p)3409
+(e)⚖|balance
+(+)Arrow shafts now apply effects while implanted
+(+)Can use organic material in arrows and spears
 (t)sat feb 13 21
 (u)Xyzzy
 (p)3324

@@ -584,7 +584,8 @@
 /obj/item/proc/combust() // cogwerks- flammable items project
 	if(processing_items.Find(src)) //processing items cant be lit on fire to avoid weird bugs
 		return
-	if(!src.burning)
+	if (!src.burning)
+		START_TRACKING_CAT(TR_CAT_BURNING_ITEMS)
 		src.visible_message("<span class='alert'>[src] catches on fire!</span>")
 		src.burning = 1
 		src.firesource = TRUE
@@ -921,6 +922,7 @@
 				src.health -= 2
 
 		if (src.health <= 0)
+			STOP_TRACKING_CAT(TR_CAT_BURNING_ITEMS)
 			if (burn_type == 1)
 				make_cleanable( /obj/decal/cleanable/molten_item,get_turf(src))
 			else
@@ -944,7 +946,7 @@
 			else
 				src.overlays -= image('icons/effects/fire.dmi', "1old")
 			return
-
+		STOP_TRACKING_CAT(TR_CAT_BURNING_ITEMS)
 		processing_items.Remove(src)
 
 	burning_last_process = src.burning

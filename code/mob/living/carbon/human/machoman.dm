@@ -1340,6 +1340,9 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 	icon_state = "machovest"
 	item_state = "machovest"
 
+	attack_self(mob/user as mob)
+		return
+
 /obj/item/clothing/glasses/macho
 	name = "Yellow Shades"
 	desc = "A snazzy pair of shades."

@@ -141,6 +141,11 @@
 				I.impactpad_senseforce(src, ITM)
 		..()
 
+	mob_flip_inside(mob/user)
+		. = ..()
+		src.ArtifactTakeDamage(rand(5,20))
+		boutput(user, "<span class='alert'>It seems to be a bit more damaged!</span>")
+
 /obj/machinery/artifact
 	name = "artifact large art piece"
 	icon = 'icons/obj/artifacts/artifacts.dmi'

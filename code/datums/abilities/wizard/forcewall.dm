@@ -56,3 +56,16 @@
 	opacity = 0
 	density = 1
 	luminosity = 3
+
+/obj/forcefield/artifact
+	var/obj/artifact/forcefield_generator/source = null
+
+	New(var/obj/artifact/forcefield_generator/S)
+		. = ..()
+		source = S
+
+	Bumped(AM)
+		. = ..()
+		if(source && ismob(AM))
+			source.ArtifactFaultUsed(AM)
+

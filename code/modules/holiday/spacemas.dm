@@ -159,7 +159,8 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 	setup_default_tool_path = /obj/item/device/guardbot_tool/xmas
 
 	speak(var/message)
-		return ..("<font face='Segoe Script'><i><b>[message]</b></i></font>")
+		message = ("<font face='Segoe Script'><i><b>[message]</b></i></font>")
+		. = ..()
 
 	explode()
 		if(src.exploding) return
