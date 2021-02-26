@@ -207,6 +207,9 @@
 			else
 				S.amount += F.w_class/pot.total_wclass/2
 				S.heal_amt -= F.w_class/pot.total_wclass/2
+			S.AddComponent(/datum/component/consume/food_effects, S.food_effects)
+			S.AddComponent(/datum/component/consume/foodheal, S.heal_amt)
+
 
 			if(I.reagents)
 				for(var/id in I.reagents.reagent_list)
