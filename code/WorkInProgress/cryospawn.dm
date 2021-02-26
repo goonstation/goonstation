@@ -12,7 +12,7 @@
 
 //Special destiny spawn point doodad
 /obj/cryotron
-	name = "industrial cryogenics unit"
+	name = "industrial cryogenic sleep unit"
 	desc = "The terminus of a large underfloor cryogenic storage complex."
 	anchored = 1
 	density = 1
