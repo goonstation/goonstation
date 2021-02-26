@@ -4046,7 +4046,7 @@
 		if (locate(/mob/living/) in src.contents)
 			for (var/mob/living/carbon/OUCH in src.contents)
 				OUCH.TakeDamage("All",0,current / 500)
-		else
+		else if(length(src.contents))
 			var/obj/M = pick(src.contents)
 			if (istype(M.artifact,/datum/artifact/))
 				M.ArtifactStimulus("elec", current)
