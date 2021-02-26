@@ -521,7 +521,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 				make_cleanable( /obj/decal/cleanable/water,get_turf(src))
 			qdel(src)
 
-	heal(var/mob/living/M)
+	on_bite(var/mob/living/M)
 		if (!M || !isliving(M))
 			return
 		M.bodytemperature -= rand(1, 10)

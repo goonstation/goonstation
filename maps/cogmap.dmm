@@ -4763,7 +4763,7 @@
 	pixel_x = -6;
 	pixel_y = 8
 	},
-/obj/item/reagent_containers/food/snacks/donut/frosted{
+/obj/item/reagent_containers/food/snacks/donut/custom/frosted{
 	pixel_x = 7;
 	pixel_y = -6
 	},
@@ -52065,6 +52065,10 @@
 	},
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
+	},
+/obj/artifact_paper_dispenser{
+	pixel_x = 6;
+	pixel_y = 9
 	},
 /turf/simulated/floor,
 /area/station/science/artifact)

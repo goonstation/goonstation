@@ -8,6 +8,7 @@ ABSTRACT_TYPE(/datum/artifact_fault/)
 /datum/artifact_fault
 	// these are booby traps, self-defense mechanisms, hardware faults or just other nasty shit that can fuck you up when you
 	// use the artifact for anything
+	var/type_name = "bad artifact code"
 	var/trigger_prob = 0
 	var/tmp/datum/artifact/holder = null
 	var/halt_loop = 0
@@ -19,6 +20,7 @@ ABSTRACT_TYPE(/datum/artifact_fault/)
 
 /datum/artifact_fault/burn
 	// sets the victim on fire
+	type_name = "Fire"
 	trigger_prob = 8
 	var/burn_amount = 40
 
@@ -32,6 +34,7 @@ ABSTRACT_TYPE(/datum/artifact_fault/)
 
 /datum/artifact_fault/irradiate
 	// irradiates the victim
+	type_name = "Radiation"
 	trigger_prob = 8
 	var/rads_amount = 20
 
@@ -43,6 +46,7 @@ ABSTRACT_TYPE(/datum/artifact_fault/)
 
 /datum/artifact_fault/shutdown
 	// deactivates the artifact
+	type_name = "Deactivation"
 	trigger_prob = 10
 	halt_loop = 1
 
@@ -56,6 +60,7 @@ ABSTRACT_TYPE(/datum/artifact_fault/)
 
 /datum/artifact_fault/warp
 	// warps the user off somewhere random
+	type_name = "Teleportation"
 	trigger_prob = 15
 
 	deploy(var/obj/O,var/mob/living/user,var/atom/cosmeticSource)
@@ -68,6 +73,7 @@ ABSTRACT_TYPE(/datum/artifact_fault/)
 
 /datum/artifact_fault/grow
 	// embiggens the artifact
+	type_name = "Growth"
 	trigger_prob = 10
 
 	deploy(var/obj/O,var/mob/living/user,var/atom/cosmeticSource)
@@ -89,6 +95,7 @@ ABSTRACT_TYPE(/datum/artifact_fault/)
 
 /datum/artifact_fault/shrink
 	// ensmallens the artifact
+	type_name = "Shrinkage"
 	trigger_prob = 10
 
 	deploy(var/obj/O,var/mob/living/user,var/atom/cosmeticSource)
@@ -109,6 +116,7 @@ ABSTRACT_TYPE(/datum/artifact_fault/)
 
 /datum/artifact_fault/murder
 	// gibs the user
+	type_name = "Vaporization"
 	trigger_prob = 1
 	halt_loop = 1
 
@@ -127,6 +135,7 @@ ABSTRACT_TYPE(/datum/artifact_fault/)
 
 /datum/artifact_fault/explode
 	// causes an explosion and destroys the artifact
+	type_name = "Explosion"
 	trigger_prob = 1
 	halt_loop = 1
 
@@ -144,6 +153,7 @@ ABSTRACT_TYPE(/datum/artifact_fault/)
 
 /datum/artifact_fault/zap
 	// electrocutes the user
+	type_name = "Electricity"
 	trigger_prob = 6
 
 	deploy(var/obj/O,var/mob/living/user,var/atom/cosmeticSource)
@@ -198,6 +208,7 @@ ABSTRACT_TYPE(/datum/artifact_fault/messager/)
 				boutput(user, "[generate_message(O, user, cosmeticSource)]")
 
 /datum/artifact_fault/messager/creepy_whispers
+	type_name = "Unsettling messages"
 	text_style = "small"
 	messages = list("its your fault","theyre going to get you","no escape","youre going to die here","no hope",
 	"die","stop","give up","no","theyre watching you","theres nothing you can do","you have failed","run","i see you",
@@ -205,6 +216,7 @@ ABSTRACT_TYPE(/datum/artifact_fault/messager/)
 	"they will all forget you","they have abandoned you","please stop","no one will mourn you")
 
 /datum/artifact_fault/messager/comforting_whispers
+	type_name = "Comforting messages"
 	text_style = "small"
 	messages = list("it's not your fault", "believe in yourself", "you are strong", "you can do it!", "keep on trying",
 	"life is beautiful", "you are important", "this station relies on you", "you can do anything", "follow your dreams",
@@ -212,22 +224,26 @@ ABSTRACT_TYPE(/datum/artifact_fault/messager/)
 	"nothing is impossible", "don't stop trying", "you are smart", "love", "today is your lucky day", "I'll always be there for you")
 
 /datum/artifact_fault/messager/what_people_said
+	type_name = "Capricious messages"
 	text_style = "small"
 	generate_message(obj/O, mob/living/user,var/atom/cosmeticSource)
 		return phrase_log.random_phrase("say")
 
 /datum/artifact_fault/messager/what_dead_people_said
+	type_name = "Postmortal messages"
 	text_style = "small"
 	generate_message(obj/O, mob/living/user,var/atom/cosmeticSource)
 		return phrase_log.random_phrase("deadsay")
 
 /datum/artifact_fault/messager/ai_laws
+	type_name = "Machine messages"
 	trigger_prob = 15
 	text_style = "monospace"
 	generate_message(obj/O, mob/living/user,var/atom/cosmeticSource)
 		return phrase_log.random_phrase("ailaw")
 
 /datum/artifact_fault/messager/emoji
+	type_name = "Alien messages"
 	var/list/allowed_emoji = null
 	New()
 		..()
@@ -246,6 +262,7 @@ ABSTRACT_TYPE(/datum/artifact_fault/messager/)
 		return jointext(., "")
 
 /datum/artifact_fault/poison
+	type_name = "Toxins"
 	trigger_prob = 8
 	var/poison_type = "toxin"
 	var/poison_amount = 10

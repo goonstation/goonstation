@@ -29,6 +29,7 @@ var/fartcount = 0
 	on = 1
 	put_out(var/mob/user as mob, var/message as text)
 		// how about we do literally nothing instead?
+		// please stop doing the thing you keep doing.
 
 /obj/item/clothing/shoes/thong
 	name = "garbage flip-flops"
@@ -113,13 +114,16 @@ var/fartcount = 0
 	var/greeted_murray = 0
 	var/list/snacks = null
 	var/gotsmokes = 0
+	var/nude = 0
 
-
+	nude
+		nude = 1
 
 	New()
 		..()
 		START_TRACKING_CAT(TR_CAT_JOHNBILLS)
-
+		if(nude)
+			return
 		src.equip_new_if_possible(/obj/item/clothing/shoes/thong, slot_shoes)
 		src.equip_new_if_possible(/obj/item/clothing/under/color/orange, slot_w_uniform)
 		src.equip_new_if_possible(/obj/item/clothing/mask/cigarette/john, slot_wear_mask)
@@ -234,7 +238,7 @@ var/fartcount = 0
 			var/area/A = get_area(src)
 			var/list/alive_mobs = list()
 			var/list/dead_mobs = list()
-			if (A.population && A.population.len)
+			if (A && A.population && A.population.len)
 				for(var/mob/living/M in oview(5,src))
 					if(!isdead(M))
 						alive_mobs += M
@@ -785,6 +789,8 @@ Urs' Hauntdog critter
 		if (H.reagents)
 			H.reagents.add_reagent("ectoplasm", 10)
 		H.update_icon()
+		H.AddComponent(/datum/component/consume/foodheal, H.heal_amt)
+
 
 		qdel(src)
 

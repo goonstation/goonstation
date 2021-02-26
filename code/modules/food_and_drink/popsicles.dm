@@ -111,7 +111,7 @@
 				R.add_reagent("expresso", 5) //?
 				R.add_reagent("krokodil", 5)
 
-	heal(var/mob/M)
+	on_bite(var/mob/M)
 		..()
 		M.bodytemperature = min(M.base_body_temp, M.bodytemperature-20)
 		return

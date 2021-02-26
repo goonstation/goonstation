@@ -76,7 +76,59 @@
 				holder.ownhuman.put_in_hand_or_drop(holder.target)
 
 
+/datum/aiTask/timed/targeted/human/cower
+	name = "panicking"
+	minimum_task_ticks = 3
+	maximum_task_ticks = 10
+	target_range = 7
+	frustration_threshold = 4
+	var/last_seek = 0
 
+	frustration_check()
+		. = 0
+		if (IN_RANGE(holder.owner, holder.target, target_range))
+			. = 1
+
+	on_tick()
+		if (HAS_MOB_PROPERTY(holder.ownhuman, PROP_CANTMOVE) || !isalive(holder.ownhuman))
+			return
+
+		if(!holder.target)
+			if (world.time > last_seek + 4 SECONDS)
+				last_seek = world.time
+				var/list/possible = get_targets()
+				if (possible.len)
+					holder.target = pick(possible)
+
+		if(holder.target && holder.target.z == holder.ownhuman.z)
+			var/dist = get_dist(holder.ownhuman, holder.target)
+			if(dist <= 1)
+				holder.ownhuman.a_intent = INTENT_DISARM
+				holder.ownhuman.set_dir(get_dir(holder.ownhuman, holder.target))
+				var/list/params = list()
+				params["left"] = 1
+				holder.ownhuman.hand_attack(holder.target, params)
+				if(prob(25))
+					holder.ownhuman.emote("faint")
+
+			if(dist <= target_range)
+				if(prob(25))
+					if(prob(25))
+						holder.ownhuman.vomit()
+					holder.ownhuman.say("[pick("please, please get away...","don't come any closer!","oh no oh no no no no oh no","HELP! HELP! OH GOD PLEASE HELP!")]")
+				else
+					if(prob(50))
+						holder.ownhuman.emote("scream")
+						if(prob(50))
+							holder.ownhuman.setStatus("resting", 5)
+							holder.ownhuman.force_laydown_standup()
+							holder.ownhuman.hud.update_resting()
+							holder.ownhuman.resist()
+					else
+						holder.move_away(holder.target,target_range)
+					if(prob(25))
+						holder.ownhuman.stuttering+=5
+		..()
 
 /datum/aiTask/timed/targeted/human/flee
 	name = "running away"

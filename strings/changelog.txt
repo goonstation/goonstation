@@ -1,4 +1,53 @@
 
+(t)fri feb 26 21
+(u)zjdtmkhzt
+(p)3818
+(e)⚖🆕|balance, feature
+(*)Artifacts are now sellable, more details below in the minor entries.
+(+)Money depends on artifact rarity.
+(+)Artlab has these forms you can fill out. If you fill it out correctly and slap it on an artifact, you'll get a lot more money for it.
+(+)Sometimes cargo might get new artifacts sent in if they previously sent nice ones out.
+(u)Superlagg
+(p)3419
+(e)⚖🆕|balance, feature
+(*)Added an action bar to feeding other people things, and made organs take multiple bites to eat.
+(+)Metachroitic factor now only has a 30% chance of being granted per point per bite.
+(t)thu feb 25 21
+(u)Carbadox
+(p)3717
+(e)|
+(+)Using a screwdriver / wrench on a credit transfer devices will now unanchor and let you move them.
+(u)Azrun
+(p)3807
+(e)|
+(*)Multitools now provide encoded information about the network a powered cable is connected to.
+(u)Ludolf
+(p)3827
+(e)🎨|sprites
+(+)New sprite for soldering irons.
+(u)Anachroniser
+(p)3423
+(e)⚖🆕|balance, feature
+(*)Singularities now come in variable sizes and can generate more power as they grow. Keep in mind the risks of a giant singularity.
+(u)Luxizzle
+(p)3777
+(e)🆕🗺🎨|feature, mapping, sprites
+(*)You can now frost donuts with an icing tube!
+(t)wed feb 24 21
+(u)kyle
+(+)Ethanol is now a good bit more forgiving in terms of liver damage.
+(u)Superlagg
+(p)2921
+(e)🆕|feature
+(*)The RCD can now build light bulb and light tube fixtures.
+(u)Borkatator
+(p)3728
+(e)⚖🆕|balance, feature
+(*)You can now create a viewport window when watching camera feeds
+(u)Azrun
+(p)3815
+(e)🐛|bug
+(+)Resolve issue with alloys in TEG Semiconductor.  Mix and match your favorite flavors!
 (t)tue feb 23 21
 (u)Azrun
 (p)3191
