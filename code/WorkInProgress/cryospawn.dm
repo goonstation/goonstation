@@ -70,7 +70,8 @@
 		their_jobs += job
 
 		boutput(person, "<b>Cryo-recovery process initiated.  Please wait . . .</b>")
-		person.removeOverlayComposition(/datum/overlayComposition/blinded)
+		if (!person.bioHolder.HasEffect("blind"))
+			person.removeOverlayComposition(/datum/overlayComposition/blinded)
 		return 1
 
 	proc/process()
