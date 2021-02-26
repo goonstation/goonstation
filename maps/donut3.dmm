@@ -11494,7 +11494,7 @@
 "dec" = (
 /obj/table/wood/auto,
 /obj/item/tvdinner,
-/obj/item/reagent_containers/food/snacks/donut/cinnamon{
+/obj/item/reagent_containers/food/snacks/donut/custom/cinnamon{
 	desc = "This donut has seen some shit.";
 	name = "mentally scarred donut";
 	pixel_y = 15
@@ -81066,7 +81066,7 @@
 	pixel_x = -3;
 	pixel_y = -2
 	},
-/obj/item/reagent_containers/food/snacks/donut/frosted{
+/obj/item/reagent_containers/food/snacks/donut/custom/frosted{
 	pixel_x = 3;
 	pixel_y = 3
 	},
