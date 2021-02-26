@@ -173,7 +173,7 @@
 						  "if $argc 1 ge | gptio poke xray radstrength $arg0")
 
 /datum/computer/file/record/artlab_heater
-	name = "heat"
+	name = "temp"
 
 	New()
 		..()
@@ -192,7 +192,7 @@
 							"if $argc 2 ge | gptio poke elecbox wattage $arg1")
 
 /datum/computer/file/record/artlab_pitcher
-	name = "pitch"
+	name = "pitcher"
 
 	New()
 		..()
