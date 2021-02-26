@@ -128,7 +128,7 @@
 // so people misspell gptio less often
 
 /datum/computer/file/record/artlab_activate
-	name = "activ"
+	name = "act"
 
 	New()
 		..()
@@ -187,7 +187,8 @@
 	New()
 		..()
 		src.fields = list("#!",
-						  "if $argc 1 lt | gptio peek elecbox voltage | gptio peek elecbox wattage",
+						  "if $argc 1 lt | gptio peek elecbox voltage",
+							"if $argc 1 lt | gptio peek elecbox wattage",
 						  "if $argc 1 ge | gptio poke elecbox voltage $arg0",
 							"if $argc 2 ge | gptio poke elecbox wattage $arg1")
 
