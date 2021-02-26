@@ -35130,6 +35130,10 @@
 /obj/item/stamp,
 /obj/machinery/light_switch/south,
 /obj/machinery/light,
+/obj/artifact_paper_dispenser{
+	pixel_x = 8;
+	pixel_y = 9
+	},
 /turf/simulated/floor/purplewhite{
 	dir = 1
 	},

@@ -72155,6 +72155,10 @@
 /obj/machinery/light,
 /obj/item/hand_labeler,
 /obj/item/hand_labeler,
+/obj/artifact_paper_dispenser{
+	pixel_x = -5;
+	pixel_y = 10
+	},
 /turf/simulated/floor/purple,
 /area/station/science/artifact)
 "daF" = (

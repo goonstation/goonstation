@@ -51378,7 +51378,7 @@
 "cjr" = (
 /obj/item/pinpointer/teg_semi{
 	pixel_y = -7
-	},	
+	},
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet{
 	bcolor = "yellow";
@@ -58792,7 +58792,14 @@
 	dir = 4
 	},
 /obj/table/wood/auto,
-/obj/item/hand_labeler,
+/obj/item/hand_labeler{
+	pixel_x = 5;
+	pixel_y = -2
+	},
+/obj/artifact_paper_dispenser{
+	pixel_x = -6;
+	pixel_y = 8
+	},
 /turf/simulated/floor/black,
 /area/station/science/artifact{
 	name = "Artifact Lounge"
