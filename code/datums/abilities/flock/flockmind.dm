@@ -326,7 +326,7 @@
 	if(locate(/obj/flock_structure) in T)
 		boutput(holder.owner, "<span class='alert'>There is already a flock structure on this flocktile!</span>")
 		return 1
-	//todo: replace with FANCY tgui/chui window with WHEELS and ICONS.
+	//todo: replace with FANCY tgui/chui window with WHEELS and ICONS and stuff!
 	var/structurewanted = tgui_input_list(holder.owner, "Select which structure you would like to create", "Tealprint selection", list("Collector", "Sentinel"))
 	switch(structurewanted)
 		if("Collector")
