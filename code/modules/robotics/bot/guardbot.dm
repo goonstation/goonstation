@@ -3635,7 +3635,7 @@
 						state = STATE_FINDING_BEACON
 						return
 
-					if (prob(20))
+					if (!src.distracted && prob(20))
 						src.look_for_neat_thing()
 
 					if (!master.moving)
@@ -3677,41 +3677,42 @@
 		// take a text string and parse out pauses
 		proc/speak_with_pause(text, yield_to_neat=FALSE)
 			var/delays = 0
+			var/proc_delay = master.base_tick_spacing*(2**(master.processing_tier-1))
 
-			//Delay for active destraction
-			while(yield_to_neat && distracted)
-				awaiting_beacon++
-				sleep(5 SECONDS)
-				delays++
-				if( delays > 10 )
-					distracted = FALSE
-					break
+			SPAWN_DBG(0) // do not delay doWork
 
-			if (ckey(text))
-				if (findtext(text, "|p")) //There are pauses present! So, um, pause.
-					var/list/text_with_pauses = splittext(text, "|p")
-					if(yield_to_neat)
-						awaiting_beacon = length(text_with_pauses) //factor in delay on pauses in speech
-					SPAWN_DBG(0) // do not delay doWork
-						sleep(1 SECOND)
-						for (var/tour_line in text_with_pauses)
-							if (!ckey(tour_line) || !master)
-								break
+				//Delay for active destraction
+				while(yield_to_neat && distracted)
+					awaiting_beacon++
+					sleep(5 SECONDS)
+					delays++
+					if( delays > 10 )
+						distracted = FALSE
+						break
 
-							//Delay for sudden destraction
-							while(yield_to_neat && distracted)
-								awaiting_beacon++
-								sleep(5 SECONDS)
-								delays++
-								if( delays > 10 )
-									distracted = FALSE
+				if (ckey(text))
+					if (findtext(text, "|p")) //There are pauses present! So, um, pause.
+						var/list/text_with_pauses = splittext(text, "|p")
+						if(yield_to_neat)
+							awaiting_beacon = round(length(text_with_pauses)*(MAPTEXT_PAUSE/proc_delay))+1 //factor in delay on pauses in speech
+
+							for (var/tour_line in text_with_pauses)
+								if (!ckey(tour_line) || !master)
 									break
 
-							speak_with_maptext(copytext(html_encode(tour_line), 1, MAX_MESSAGE_LEN), TRUE)
-							sleep(5 SECONDS)
-				else
-					SPAWN_DBG(0) // do not delay doWork
-						speak_with_maptext(copytext(html_encode(current_tour_text), 1, MAX_MESSAGE_LEN), TRUE)
+								//Delay for sudden destraction
+								while(yield_to_neat && distracted)
+									awaiting_beacon++
+									sleep(5 SECONDS)
+									delays++
+									if( delays > 10 )
+										distracted = FALSE
+										break
+
+								speak_with_maptext(copytext(html_encode(tour_line), 1, MAX_MESSAGE_LEN), TRUE)
+								sleep(5 SECONDS)
+					else
+							speak_with_maptext(copytext(html_encode(current_tour_text), 1, MAX_MESSAGE_LEN), TRUE)
 
 
 #define MAPTEXT_SLICE_SIZE 100 // Reduce maptext slice size to avoid 4 rows
@@ -3944,7 +3945,6 @@
 
 						else if (!(src.neat_things & NT_SECBOT))
 							FOUND_NEAT(NT_SECBOT)
-							SPAWN_DBG(0)
 								src.speak_with_maptext("And if you look over now, you'll see a securitron, an ace security robot originally developed \"in the field\" from spare parts in a security office!")
 								END_NEAT
 

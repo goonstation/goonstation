@@ -848,7 +848,7 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 				src.master.mover.master = null //master mover master mover master mover help HELP
 				src.master.mover = null
 			master.moving = 0
-			src.awaiting_beacon = 2
+			src.awaiting_beacon = 10
 
 			SPAWN_DBG(1 SECOND)
 				src.master.speak("Uh.  That isn't supposed to happen.")
@@ -858,7 +858,7 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 				if (src.master)
 					src.master.speak("I guess we need to take another route.  Please follow me.")
 					src.state = 0
-					src.awaiting_beacon = 0
+					src.awaiting_beacon = 3
 					next_beacon_id = current_beacon_id
 					src.task_act()
 
