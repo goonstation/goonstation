@@ -3560,7 +3560,9 @@
 #define NT_CHEGET (1<<14)
 #define NT_GAFFE (1<<15) //Note: this is the last one the bitfield can fit.  Thanks, byond!!
 
-#define FOUND_NEAT(FLAG) src.distracted = TRUE; src.neat_things |= FLAG
+#define MAPTEXT_PAUSE (4.5 SECONDS)
+#define FOUND_NEAT(FLAG) src.distracted = TRUE; src.neat_things |= FLAG; SPAWN_DBG(0)
+#define END_NEAT sleep(MAPTEXT_PAUSE*2); src.distracted = FALSE
 
 	tourguide
 		name = "tourguide"
@@ -3713,7 +3715,7 @@
 
 
 #define MAPTEXT_SLICE_SIZE 100 // Reduce maptext slice size to avoid 4 rows
-#define MAPTEXT_PAUSE (4.5 SECONDS)
+
 		proc/speak_with_maptext(text, pause_for_beacon=FALSE)
 			var/start = 0
 			var/slice = 0
@@ -3738,7 +3740,6 @@
 
 			master.speak(copytext(text,start), just_float = TRUE)
 #undef MAPTEXT_SLICE_SIZE
-#undef MAPTEXT_PAUSE
 
 		attack_response(mob/attacker as mob)
 			if(..())
@@ -3796,11 +3797,11 @@
 			var/area/spaceArea = get_area(src.master)
 			if (!(src.neat_things & NT_SPACE) && spaceArea && spaceArea.name == "Space" && !istype(get_turf(src.master), /turf/simulated/shuttle))
 				FOUND_NEAT(NT_SPACE)
-				src.speak_with_maptext(pick("While you find yourself surrounded by space, please try to avoid the temptation to inhale any of it.  That doesn't work.",\
-				 "Space: the final frontier.  Oh, except for time travel and any other dimensions.  And frontiers on other planets, including other planets in those other dimensions and times.  Maybe I should stick with \"space: a frontier.\"",\
-				 "Those worlds in space are as countless as all the grains of sand on all the beaches of the earth. Each of those worlds is as real as ours and every one of them is a succession of incidents, events, occurrences which influence its future. Countless worlds, numberless moments, an immensity of space and time.  This Sagan quote and others like it are available on mugs at the gift shop.",\
-				 "Please keep hold of the station at all times while in an exposed area.  The same principle does not apply to your breath without a mask.  Your lungs will pop like bubblegum.  Just a heads up."))
-				src.distracted = FALSE
+					src.speak_with_maptext(pick("While you find yourself surrounded by space, please try to avoid the temptation to inhale any of it.  That doesn't work.",\
+					"Space: the final frontier.  Oh, except for time travel and any other dimensions.  And frontiers on other planets, including other planets in those other dimensions and times.  Maybe I should stick with \"space: a frontier.\"",\
+					"Those worlds in space are as countless as all the grains of sand on all the beaches of the earth. Each of those worlds is as real as ours and every one of them is a succession of incidents, events, occurrences which influence its future. Countless worlds, numberless moments, an immensity of space and time.  This Sagan quote and others like it are available on mugs at the gift shop.",\
+					"Please keep hold of the station at all times while in an exposed area.  The same principle does not apply to your breath without a mask.  Your lungs will pop like bubblegum.  Just a heads up."))
+					END_NEAT
 				return
 
 			for (var/atom/movable/AM in view(7, master))
@@ -3808,10 +3809,11 @@
 					var/mob/living/carbon/human/H = AM
 					if (!(src.neat_things & NT_GAFFE) && !isdead(H) && !H.sight_check(1))
 						FOUND_NEAT(NT_GAFFE)
-						src.speak_with_maptext("Ah! As you can see here--")
+							var/emotion
+							src.speak_with_maptext("Ah! As you can see here--")
 
-						SPAWN_DBG(4 SECOND)
-							. = desired_emotion //We're going to make him sad until the end of this spawn, ok.
+							sleep(4 SECOND)
+							emotion = desired_emotion //We're going to make him sad until the end of this spawn, ok.
 							desired_emotion = "sad"
 							master.set_emotion(desired_emotion)
 							src.speak_with_maptext("OH! Sorry! Sorry, [H.name]! I didn't mean it that way!")
@@ -3835,33 +3837,30 @@
 							sleep(5 SECONDS)
 							src.distracted = FALSE
 							sleep(5 SECONDS)
-							desired_emotion = .
+							desired_emotion = emotion
 							master.set_emotion(desired_emotion)
-
+							END_NEAT
 
 					if (!(src.neat_things & NT_CLOAKER) && H.invisibility > 0)
 						FOUND_NEAT(NT_CLOAKER)
-						SPAWN_DBG(0)
 							src.speak_with_maptext("As a courtesy to other tourgroup members, you are requested, though not required, to deactivate any cloaking devices, stealth suits, light redirection field packs, and/or unholy blood magic.")
-							src.distracted = FALSE
+							END_NEAT
 						return
 
 					if (!(src.neat_things & NT_WIZARD) && istype(H.wear_suit, /obj/item/clothing/suit/wizrobe) )
 						FOUND_NEAT(NT_WIZARD)
-						SPAWN_DBG(0)
 							src.speak_with_maptext( pick("Look, group, a wizard!  Please be careful, space wizards can be dangerous.","Ooh, a real space wizard!  Look but don't touch, folks!","Space wizards are highly secretive, especially regarding the nature of their abilities.  Current speculation is that their \"magic\" is really the application of advanced technologies or artifacts.") )
-							src.distracted = FALSE
+							END_NEAT
 						return
 
 					if (!(src.neat_things & NT_CAPTAIN) && istype(H.head, /obj/item/clothing/head/caphat))
 						FOUND_NEAT(NT_CAPTAIN)
-						src.speak_with_maptext("Good day, Captain!  You're looking [pick("spiffy","good","swell","proper","professional","prim and proper", "spiffy", "ultra-spiffy")] today.")
-						src.distracted = FALSE
+							src.speak_with_maptext("Good day, Captain!  You're looking [pick("spiffy","good","swell","proper","professional","prim and proper", "spiffy", "ultra-spiffy")] today.")
+							END_NEAT
 						return
 
 					if (!(src.neat_things & NT_DORK) && (H.client && H.client.IsByondMember() && prob(5)))// || (H.ckey in Dorks))) //If this is too mean to clarks, remove that part I guess
 						FOUND_NEAT(NT_DORK)
-						SPAWN_DBG(0)
 							var/insult = pick("dork","nerd","weenie","doofus","loser","dingus","dorkus")
 							var/insultphrase = "And if you look to--[insult] alert!  [pick("Huge","Total","Mega","Complete")] [insult] detected! Alert! Alert! [capitalize(insult)]! "
 
@@ -3873,25 +3872,24 @@
 
 							src.speak_with_maptext(insultphrase)
 							master.point(H)
-							src.distracted = FALSE
+							END_NEAT
 						return
 
 				else if (!(src.neat_things & NT_JONES) && istype(AM, /obj/critter/cat) && AM.name == "Jones")
 					FOUND_NEAT(NT_JONES)
-					var/obj/critter/cat/jones = AM
-					src.speak_with_maptext("And over here is the ship's cat, J[jones.alive ? "ones! No spacecraft is complete without a cat!" : "-oh mercy, MOVING ON, MOVING ON"]")
-					src.distracted = FALSE
+						var/obj/critter/cat/jones = AM
+						src.speak_with_maptext("And over here is the ship's cat, J[jones.alive ? "ones! No spacecraft is complete without a cat!" : "-oh mercy, MOVING ON, MOVING ON"]")
+						END_NEAT
 					return
 
 				else if (istype(AM, /obj/critter/domestic_bee) && AM:alive && !(src.neat_things & NT_BEE))
 					FOUND_NEAT(NT_BEE)
-					SPAWN_DBG(0)
 						if (istype(AM, /obj/critter/domestic_bee/trauma))
 							src.speak_with_maptext("Look, team, a domestic space bee!  This happy creature--oh dear.  Hold on, please.")
 							var/datum/computer/file/guardbot_task/security/single_use/emergency_hug = new
 							emergency_hug.hug_target = AM
 							src.master.add_task(emergency_hug, 1, 0)
-							src.distracted = FALSE
+							END_NEAT
 							return
 
 						sleep(5)
@@ -3912,64 +3910,58 @@
 
 							if (5)
 								src.speak_with_maptext("Fun fact: The average weight of a domestic space bee is about [pick("10 pounds","4.54 kilograms", "25600 drams", "1.42857143 cloves", "145.833333 troy ounces")].")
-
-						src.distracted = FALSE
-					return
+						END_NEAT
 
 				else if (istype(AM, /obj/critter/dog/george) && !(src.neat_things & NT_GEORGE))
 					FOUND_NEAT(NT_GEORGE)
-					src.speak_with_maptext("Why, if it isn't beloved station canine, George!  Who's a good doggy?  You are!  Yes, you!")
-					src.distracted = FALSE
+						src.speak_with_maptext("Why, if it isn't beloved station canine, George!  Who's a good doggy?  You are!  Yes, you!")
+						END_NEAT
 
 				else if (istype(AM, /obj/critter/gunbot/drone) && !(src.neat_things & NT_DRONE))
 					FOUND_NEAT(NT_DRONE)
-					src.speak_with_maptext( pick("Oh dear, a syndicate autonomous drone!  These nasty things have been shooting up innocent space-folk for a couple of years now.", "Watch out, folks!  That's a syndicate drone, they're nasty buggers!", "Ah, a syhndicate drone!  They're made in a secret factory, one located at--oh dear, we better get hurrying before it becomes upset.", "Watch out, that's a syndicate drone!  They're made in a secret factory. There was a guy who knew where it was on my first tour, but he took the secret...to his grave!!  Literally.  It's with him.  In his crypt.") )
-					src.distracted = FALSE
+						src.speak_with_maptext( pick("Oh dear, a syndicate autonomous drone!  These nasty things have been shooting up innocent space-folk for a couple of years now.", "Watch out, folks!  That's a syndicate drone, they're nasty buggers!", "Ah, a syhndicate drone!  They're made in a secret factory, one located at--oh dear, we better get hurrying before it becomes upset.", "Watch out, that's a syndicate drone!  They're made in a secret factory. There was a guy who knew where it was on my first tour, but he took the secret...to his grave!!  Literally.  It's with him.  In his crypt.") )
+						END_NEAT
 
 				else if (!(src.neat_things & NT_AUTOMATON) && istype(AM, /obj/critter/automaton))
 					FOUND_NEAT(NT_AUTOMATON)
-					src.speak_with_maptext("This here is some kind of automaton.  This, uh, porcelain-faced, click-clackity metal man.")
-					. = "Why [istype(get_area(AM), /area/solarium) ? "am I" : "is this"] here?"
-					SPAWN_DBG(6 SECONDS)
+						src.speak_with_maptext("This here is some kind of automaton.  This, uh, porcelain-faced, click-clackity metal man.")
+						. = "Why [istype(get_area(AM), /area/solarium) ? "am I" : "is this"] here?"
+						sleep(6 SECONDS)
 						src.speak_with_maptext(.)
-						src.distracted = FALSE
+						END_NEAT
 
 				else if (istype(AM, /obj/machinery/bot))
 					if (istype(AM, /obj/machinery/bot/secbot))
 						if (AM.name == "Officer Beepsky" && !(src.neat_things & NT_BEEPSKY))
 							FOUND_NEAT(NT_BEEPSKY)
-							SPAWN_DBG(0)
 								src.speak_with_maptext("And here comes Officer Beepsky, the proud guard of this station. Proud.")
 								sleep(5 SECONDS)
 								src.speak_with_maptext("Not at all terrible.  No Sir.  Not at all.")
 								if (prob(10))
 									sleep(6.5 SECONDS)
 									src.speak_with_maptext("Well okay, maybe a little.")
-								src.distracted = FALSE
-							return
+								END_NEAT
 
 						else if (!(src.neat_things & NT_SECBOT))
 							FOUND_NEAT(NT_SECBOT)
-							src.speak_with_maptext("And if you look over now, you'll see a securitron, an ace security robot originally developed \"in the field\" from spare parts in a security office!")
-							src.distracted = FALSE
-							return
+							SPAWN_DBG(0)
+								src.speak_with_maptext("And if you look over now, you'll see a securitron, an ace security robot originally developed \"in the field\" from spare parts in a security office!")
+								END_NEAT
 
 					else if (istype(AM, /obj/machinery/bot/guardbot) && AM != src.master)
 						var/obj/machinery/bot/guardbot/otherBuddy = AM
 						if (!(src.neat_things & NT_CAPTAIN) && istype(otherBuddy.hat, /obj/item/clothing/head/caphat))
 							FOUND_NEAT(NT_CAPTAIN)
-							src.speak_with_maptext("Good day, Captain!  You look a little different today, did you get a haircut?")
-							var/otherBuddyID = otherBuddy.net_id
-							//Notify other buddy
-							SPAWN_DBG(1 SECOND)
+								src.speak_with_maptext("Good day, Captain!  You look a little different today, did you get a haircut?")
+								var/otherBuddyID = otherBuddy.net_id
+								//Notify other buddy
+								sleep(1 SECOND)
 								if (src.master)
 									src.master.post_status("[otherBuddyID]", "command", "captain_greet")
-							src.distracted = FALSE
-							return
+								END_NEAT
 
 						else if (!(src.neat_things & NT_WIZARD) && istype(otherBuddy.hat, /obj/item/clothing/head/wizard))
 							FOUND_NEAT(NT_WIZARD)
-							SPAWN_DBG(0)
 								src.speak_with_maptext("Look, a space wizard!  Please stand back, I am going to attempt to communicate with it.")
 								sleep(5 SECONDS)
 								src.speak_with_maptext("Hello, Mage, Seer, Wizard, Wizzard, or other magic-user.  We mean you no harm!  We ask you humbly for your WIZARDLY WIZ-DOM.")
@@ -3980,11 +3972,10 @@
 								var/otherBuddyID = otherBuddy.net_id
 								if (src.master)
 									src.master.post_status("[otherBuddyID]", "command", "wizard_greet")
-								src.distracted = FALSE
+								END_NEAT
 
 						else if (!(src.neat_things & NT_OTHERBUDDY))
 							FOUND_NEAT(NT_OTHERBUDDY)
-							SPAWN_DBG(0)
 								if (istype(otherBuddy, /obj/machinery/bot/guardbot/future))
 									src.speak_with_maptext("The PR line of personal robot has been--wait! Hold the phone! Is that a PR-7? Oh man, I feel old!")
 
@@ -4007,14 +3998,15 @@
 											src.speak_with_maptext("Buddy Fact: Our hug protocols have been extensively revised through thousands of rounds of testing and simulation to deliver Peak Cuddle.")
 										if (4)
 											src.speak_with_maptext("Buddy Fact: Robuddies are programmed to be avid fans of hats and similar headgear.")
-								src.distracted = FALSE
+									sleep(5 SECONDS)
+								END_NEAT
 
 				else if ((istype(AM, /obj/item/luggable_computer/cheget) || istype(AM, /obj/machinery/computer3/luggable/cheget)) && !(src.neat_things & NT_CHEGET))
 					FOUND_NEAT(NT_CHEGET)
-					src.speak_with_maptext( pick("And over there is--NOTHING.  Not a thing.  Let's continue on with the tour.", "Please ignore the strange briefcase, is what I would say, were there a strange briefcase.  But there is not, and even if there was you should ignore it.","This is just a reminder that station crew are not to handle Soviet materials, per a whole bunch of treaties and negotiations.") )
-					AM.visible_message("<b>[AM]</b> bloops sadly.")
-					playsound(AM.loc, prob(50) ? 'sound/machines/cheget_sadbloop.ogg' : 'sound/machines/cheget_somberbloop.ogg', 50, 1)
-					src.distracted = FALSE
+						src.speak_with_maptext( pick("And over there is--NOTHING.  Not a thing.  Let's continue on with the tour.", "Please ignore the strange briefcase, is what I would say, were there a strange briefcase.  But there is not, and even if there was you should ignore it.","This is just a reminder that station crew are not to handle Soviet materials, per a whole bunch of treaties and negotiations.") )
+						AM.visible_message("<b>[AM]</b> bloops sadly.")
+						playsound(AM.loc, prob(50) ? 'sound/machines/cheget_sadbloop.ogg' : 'sound/machines/cheget_somberbloop.ogg', 50, 1)
+						END_NEAT
 			return
 
 //Be kind, undefine...d
@@ -4042,7 +4034,9 @@
 #undef NT_CHEGET
 #undef NT_GAFFE
 
+#undef MAPTEXT_PAUSE
 #undef FOUND_NEAT
+#undef END_NEAT
 
 	bedsheet_handler
 		name = "confusion"

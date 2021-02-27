@@ -683,7 +683,10 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 #define NT_HEMERA     (1<<0)
 #define NT_MNX        (1<<1)
 #define NT_RISING_SUN (1<<2)
-#define FOUND_NEAT(FLAG) src.distracted = TRUE; src.neat_things |= FLAG
+
+#define MAPTEXT_PAUSE (5 SECONDS)
+#define FOUND_NEAT(FLAG) src.distracted = TRUE; src.neat_things |= FLAG; SPAWN_DBG(0)
+#define END_NEAT sleep(MAPTEXT_PAUSE*2); src.distracted = FALSE
 
 /datum/computer/file/guardbot_task/tourguide/lunar
 
@@ -736,15 +739,11 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 
 		if (istype(ourArea, /area/solarium) && !(src.neat_things & NT_SOLARIUM))
 			FOUND_NEAT(NT_SOLARIUM)
-
-			master.speak("Huh, this place is weird!  This is some ship and that's our sun, right?")
-			if (prob(25))
-				SPAWN_DBG(5 SECOND)
+				master.speak("Huh, this place is weird!  This is some ship and that's our sun, right?")
+				if (prob(25))
 					if (master)
 						speak_with_maptext("I, um, am going to need to go back to work.  My shift isn't over yet.")
-					src.distracted = FALSE
-			else
-				src.distracted = FALSE
+				END_NEAT
 			return
 
 		for (var/atom/movable/AM in view(7, master))
@@ -752,52 +751,53 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 				var/mob/living/carbon/human/H = AM
 				if (!(src.neat_things & NT_BILL) && cmptext(H.real_name, "shitty bill"))
 					FOUND_NEAT(NT_BILL)
-					master.visible_message("<b>[master]</b> points at [H].")
-					speak_with_maptext("Oh no, not you again.  Uh, I mean...hey...guyyy.")
-					src.distracted = FALSE
+						master.visible_message("<b>[master]</b> points at [H].")
+						speak_with_maptext("Oh no, not you again.  Uh, I mean...hey...guyyy.")
+						END_NEAT
+					return
+
 
 				if (!(src.neat_things & NT_DISCOUNT) && !isdead(H) && (istype(H.wear_id, /obj/item/card/id) || (istype(H.wear_id, /obj/item/device/pda2) && H.wear_id:ID_card)))
 					FOUND_NEAT(NT_DISCOUNT)
-
-					speak_with_maptext("Nanotrasen employees may be eligible for an employee discount.  Now checking Museum Central, please hold...")
-					SPAWN_DBG(5.5 SECONDS)
+						speak_with_maptext("Nanotrasen employees may be eligible for an employee discount.  Now checking Museum Central, please hold...")
+						sleep(5.5 SECONDS)
 						if (master)
 							speak_with_maptext("Oh, I'm sorry.  Your position is not eligible.  Actually, um, well this is weird.")
 						sleep(5.8 SECONDS)
 						if (master)
 							speak_with_maptext("There is a log indicating that all employees of Research Station #13 are to be charged 10% extra.  I've never seen that before.  Huh.")
-						src.distracted = FALSE
+						END_NEAT
 					return
 
 				if (!(src.neat_things & NT_CLOAKER) && H.invisibility > 0)
 					FOUND_NEAT(NT_CLOAKER)
-					speak_with_maptext("This is a reminder that cloaking technology is illegal within the inner solar system.  Please remain opaque to the visible spectrum as a courtesy to your fellow guests.  Thanks!")
-					src.distracted = FALSE
+						speak_with_maptext("This is a reminder that cloaking technology is illegal within the inner solar system.  Please remain opaque to the visible spectrum as a courtesy to your fellow guests.  Thanks!")
+						END_NEAT
 					return
 
 				if (!(src.neat_things & NT_PONZI) && (locate(/obj/item/spacecash/buttcoin) in AM.contents))
 					FOUND_NEAT(NT_PONZI)
-					speak_with_maptext("Um, I'm sorry [AM], we do not accept blockchain-based cryptocurrency as payment.  You aren't one of those guys who yell about gold on the apollo flag or something, right?")
-					H.unlock_medal("To the Moon!",1)
-					src.distracted = FALSE
+						speak_with_maptext("Um, I'm sorry [AM], we do not accept blockchain-based cryptocurrency as payment.  You aren't one of those guys who yell about gold on the apollo flag or something, right?")
+						H.unlock_medal("To the Moon!",1)
+						END_NEAT
 					return
 
 			if (istype(AM, /obj/machinery/bot/guardbot) && AM != src.master)
 				if (istype(AM, /obj/machinery/bot/guardbot/old/tourguide) && !(src.neat_things & NT_OTHERGUIDE))
 					FOUND_NEAT(NT_OTHERGUIDE)
-					src.master.visible_message("<b>[master]</b> nods professionally at [AM].<br>Well, really it's more of a shake from suddenly halting the drive motors, but you get the intent.")
+						src.master.visible_message("<b>[master]</b> nods professionally at [AM].<br>Well, really it's more of a shake from suddenly halting the drive motors, but you get the intent.")
 
-					animate(master, pixel_x = -4, time = 10, loop = 1, easing = SINE_EASING)
+						animate(master, pixel_x = -4, time = 10, loop = 1, easing = SINE_EASING)
 
-					animate(pixel_x = 0, transform = matrix(10, MATRIX_ROTATE), time = 10, loop = 1, easing = SINE_EASING)
-					animate(transform = matrix(-10, MATRIX_ROTATE), time = 10, loop = 1, easing = SINE_EASING)
-					src.distracted = FALSE
+						animate(pixel_x = 0, transform = matrix(10, MATRIX_ROTATE), time = 10, loop = 1, easing = SINE_EASING)
+						animate(transform = matrix(-10, MATRIX_ROTATE), time = 10, loop = 1, easing = SINE_EASING)
+						END_NEAT
 					return
 
 				if (istype(AM, /obj/machinery/bot/guardbot/soviet) && !(src.neat_things & NT_SOVBUDDY))
 					FOUND_NEAT(NT_SOVBUDDY)
-					speak_with_maptext("Oh, um, hi.  So are you one of those Russian robuddies?  Nice to meet you..?")
-					SPAWN_DBG(1 SECOND)
+						speak_with_maptext("Oh, um, hi.  So are you one of those Russian robuddies?  Nice to meet you..?")
+						sleep(5 SECOND)
 						if (src.master)
 							var/area/masterArea = get_area(src.master)
 							if (istype(masterArea, /area/russian) || istype(masterArea, /area/salyut) || istype(masterArea, /area/hospital/samostrel))
@@ -806,34 +806,33 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 								src.master.speak("You um, don't have to visit the security annex.  That's for humans.  Oh, also fruit.  If you have any fruit or seeds you need to check that in.")
 							else
 								src.master.speak("Is this one of those \"Khrushchev in a supermarket\" things?")
-						src.distracted = FALSE
+						END_NEAT
 					return
 
 			if (istype(AM, /obj/critter/moonspy) && !(src.neat_things & NT_SPY))
 				FOUND_NEAT(NT_SPY)
-				master.visible_message("<b>[master]</b> points at [AM].")
-				speak_with_maptext("Attention guests, there appears to be a coat rack or something available if needed.")
-				SPAWN_DBG(5 SECOND)
+					master.visible_message("<b>[master]</b> points at [AM].")
+					speak_with_maptext("Attention guests, there appears to be a coat rack or something available if needed.")
+					sleep(5 SECOND)
 					if (src.master)
 						speak_with_maptext("You know, because of all the coats that you are clearly wearing.")
-					src.distracted = FALSE
+					END_NEAT
 				return
 
 			if (istype(AM, /obj/critter/domestic_bee) && !(src.neat_things & NT_BEE))
 				FOUND_NEAT(NT_BEE)
-				master.visible_message("<b>[master]</b> points at [AM].")
-				speak_with_maptext("Ah, a space bee!  Space bees count as minors under 12 for the purposes of ticket pricing.")
-				src.distracted = FALSE
-
+					master.visible_message("<b>[master]</b> points at [AM].")
+					speak_with_maptext("Ah, a space bee!  Space bees count as minors under 12 for the purposes of ticket pricing.")
+					END_NEAT
 				return
 
 			if ((istype(AM, /obj/item/luggable_computer/cheget) || istype(AM, /obj/machinery/computer3/luggable/cheget)) && !(src.neat_things & NT_CHEGET))
 				FOUND_NEAT(NT_CHEGET)
-				speak_with_maptext("Huh, what's with the briefcase?  Did that come out of the security annex?  Somebody should probably call security or the embassy or something.")
-				SPAWN_DBG(5.5 SECONDS)
+					speak_with_maptext("Huh, what's with the briefcase?  Did that come out of the security annex?  Somebody should probably call security or the embassy or something.")
+					sleep(5.5 SECONDS)
 					if (src.master)
 						speak_with_maptext("I think they dealt with some kind of briefcase key the week before renovations started?  There's some sad office worker out there right now.")
-						src.distracted = FALSE
+					END_NEAT
 				return
 
 		//wip
@@ -877,7 +876,9 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 
 #undef NT_MNX
 #undef NT_RISING_SUN
+#undef MAPTEXT_PAUSE
 #undef FOUND_NEAT
+#undef END_NEAT
 
 /obj/machinery/door/poddoor/blast/lunar
 	name = "security door"
