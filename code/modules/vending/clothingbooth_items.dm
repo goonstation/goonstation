@@ -168,28 +168,28 @@
 	cost = PAY_UNTRAINED/3
 
 /datum/clothingbooth_item/casdressblu
-	name = "Black Tshirt Dress"
+	name = "Blue Tshirt Dress"
 	path = /obj/item/clothing/under/misc/casdressblu
 	slot = SLOT_W_UNIFORM
 	category = "Dresses"
 	cost = PAY_UNTRAINED/3
 
 /datum/clothingbooth_item/casdressgrn
-	name = "Black Tshirt Dress"
+	name = "Green Tshirt Dress"
 	path = /obj/item/clothing/under/misc/casdressgrn
 	slot = SLOT_W_UNIFORM
 	category = "Dresses"
 	cost = PAY_UNTRAINED/3
 
 /datum/clothingbooth_item/casdresspnk
-	name = "Black Tshirt Dress"
+	name = "Pink Tshirt Dress"
 	path = /obj/item/clothing/under/misc/casdresspnk
 	slot = SLOT_W_UNIFORM
 	category = "Dresses"
 	cost = PAY_UNTRAINED/3
 
 /datum/clothingbooth_item/casdresswht
-	name = "Black Tshirt Dress"
+	name = "White Tshirt Dress"
 	path = /obj/item/clothing/under/misc/casdresswht
 	slot = SLOT_W_UNIFORM
 	category = "Dresses"
