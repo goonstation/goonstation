@@ -389,6 +389,9 @@
 		if (C == src.oldpatient)
 			continue
 
+		if (C.loc && !isturf(C.loc)) // don't stab people while they're still in the cloner, wait till they're out first!
+			continue
+
 		if (src.assess_patient(C) && IN_RANGE(src,C,10))
 			src.patient = C
 			src.doing_something = 1
@@ -504,6 +507,12 @@
 	if(isdead(C))
 		var/death_message = pick("No! NO!","Live, damnit! LIVE!","I...I've never lost a patient before. Not today, I mean.")
 		src.speak(death_message)
+		src.KillPathAndGiveUp(1)
+		return FALSE
+
+	if (C.loc && !isturf(C.loc)) // don't stab people while they're still in the cloner, wait till they're out first!
+		var/missing_message = pick("Wait, where'd [he_or_she(C)] go?","That's okay, I'll just wait here until you're ready.")
+		src.speak(missing_message)
 		src.KillPathAndGiveUp(1)
 		return FALSE
 
