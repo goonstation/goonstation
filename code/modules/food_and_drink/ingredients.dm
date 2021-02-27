@@ -20,9 +20,10 @@
 	on_bite(obj/item/I, mob/M, mob/user)
 		if (!isliving(M))
 			return
+		var/mob/living/L = M
 		if (prob(33))
-			boutput(M, "<span class='alert'>You briefly think you probably shouldn't be eating raw meat.</span>")
-			M.contract_disease(/datum/ailment/disease/food_poisoning, null, null, 1) // path, name, strain, bypass resist
+			boutput(L, "<span class='alert'>You briefly think you probably shouldn't be eating raw meat.</span>")
+			ML.contract_disease(/datum/ailment/disease/food_poisoning, null, null, 1) // path, name, strain, bypass resist
 
 	throw_impact(atom/A, datum/thrown_thing/thr)
 		var/turf/T = get_turf(A)
