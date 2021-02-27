@@ -18418,10 +18418,6 @@
 	dir = 4
 	},
 /obj/machinery/portable_atmospherics/pump,
-/obj/decal/tile_edge/stripe{
-	dir = 6;
-	icon_state = "xtra_bigstripe-corner2"
-	},
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -18530,10 +18526,6 @@
 "bxP" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 10
-	},
-/obj/decal/tile_edge/stripe{
-	dir = 4;
-	icon_state = "xtra_bigstripe-edge"
 	},
 /obj/cable{
 	icon_state = "1-8"
@@ -31731,6 +31723,7 @@
 /turf/space,
 /area/supply/sell_point)
 "iZr" = (
+/obj/machinery/door/firedoor/border_only,
 /obj/machinery/door/airlock/gannets/maintenance{
 	name = "airlock-'West Maintenance'"
 	},
@@ -35198,12 +35191,13 @@
 /turf/simulated/floor/specialroom/arcade,
 /area/station/crew_quarters/lounge)
 "leZ" = (
+/obj/cable{
+	icon_state = "2-8"
+	},
+/obj/machinery/door/firedoor/border_only,
 /obj/machinery/door/airlock/gannets/engineering{
 	name = "airlock-'West SMES'";
 	req_access_txt = "44"
-	},
-/obj/cable{
-	icon_state = "2-8"
 	},
 /turf/simulated/floor/plating/random,
 /area/station/engine/power)
@@ -35788,7 +35782,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/wall/auto/reinforced/gannets,
+/turf/simulated/floor/plating/random,
 /area/station/maintenance/disposal)
 "ltJ" = (
 /obj/stool/bed,
@@ -35858,7 +35852,7 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/turf/simulated/floor/red,
+/turf/simulated/floor/plating/random,
 /area/station/ai_monitored/armory)
 "lvj" = (
 /obj/machinery/light/emergency{
@@ -43040,11 +43034,12 @@
 	},
 /area/station/crew_quarters/bar)
 "pGJ" = (
+/obj/machinery/door/firedoor/border_only,
 /obj/machinery/door/airlock/gannets/chemistry{
 	name = "airlock-'Chemistry'";
 	req_access_txt = "33"
 	},
-/turf/simulated/wall/auto/reinforced/gannets,
+/turf/simulated/floor/plating/random,
 /area/station/science/chemistry)
 "pHa" = (
 /obj/cable{
@@ -48932,6 +48927,10 @@
 	},
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/decal/tile_edge/stripe{
+	dir = 8;
+	icon_state = "xtra_bigstripe-edge"
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
@@ -57715,10 +57714,6 @@
 	},
 /obj/machinery/atmospherics/valve{
 	name = "freezer valve"
-	},
-/obj/decal/tile_edge/stripe{
-	dir = 5;
-	icon_state = "xtra_bigstripe-corner2"
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
@@ -117550,7 +117545,7 @@ aaa
 aaa
 aaa
 aaa
-erj
+aaa
 iZi
 iZi
 "}
@@ -117852,7 +117847,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+erj
 iZi
 iZi
 "}
@@ -118155,8 +118150,8 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
+iZi
+iZi
 "}
 (199,1,1) = {"
 aaa
