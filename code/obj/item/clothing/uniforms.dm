@@ -1491,7 +1491,7 @@
     wear_image_icon = 'icons/mob/jumpsuits/worn_js_misc.dmi'
 
 /obj/item/clothing/under/misc/casdressleoy
-    name = "Pink Leopard Tshirt Dress"
+    name = "Leopard Tshirt Dress"
     desc = "Leopard print is always in."
     icon_state = "casdress_leoy"
     item_state = "casdress_leoy"
@@ -1499,14 +1499,14 @@
     wear_image_icon = 'icons/mob/jumpsuits/worn_js_misc.dmi'
 
 /obj/item/clothing/under/misc/casdressleop
-    name = "Leopard Print Tshirt Dress"
-    desc = "Leopard print is always in."
+    name = "Pink Leopard Tshirt Dress"
+    desc = "Pink leopard print is DEFINITELY always in."
     icon_state = "casdress_leop"
     item_state = "casdress_leop"
     icon = 'icons/obj/clothing/uniforms/item_js_misc.dmi'
     wear_image_icon = 'icons/mob/jumpsuits/worn_js_misc.dmi'
 
-/obj/item/clothing/under/misc/skirtdress
+/obj/item/clothing/under/misc/sktdress_red
     name = "Red and Black Skirt Dress"
     desc = "Goes perfectly with your clipboard and radio headset!"
     icon_state = "sktdress_red"
@@ -1514,7 +1514,7 @@
     icon = 'icons/obj/clothing/uniforms/item_js_misc.dmi'
     wear_image_icon = 'icons/mob/jumpsuits/worn_js_misc.dmi'
 
-/obj/item/clothing/under/misc/skirtdress
+/obj/item/clothing/under/misc/sktdress_purple
     name = "Purple and Black Skirt Dress"
     desc = "Goes perfectly with your clipboard and radio headset!"
     icon_state = "sktdress_purple"
@@ -1522,7 +1522,7 @@
     icon = 'icons/obj/clothing/uniforms/item_js_misc.dmi'
     wear_image_icon = 'icons/mob/jumpsuits/worn_js_misc.dmi'
 
-/obj/item/clothing/under/misc/skirtdress
+/obj/item/clothing/under/misc/sktdress_blue
     name = "Blue and Black Skirt Dress"
     desc = "Goes perfectly with your clipboard and radio headset!"
     icon_state = "sktdress_blue"
@@ -1530,7 +1530,7 @@
     icon = 'icons/obj/clothing/uniforms/item_js_misc.dmi'
     wear_image_icon = 'icons/mob/jumpsuits/worn_js_misc.dmi'
 
-/obj/item/clothing/under/misc/skirtdress
+/obj/item/clothing/under/misc/sktdress_gold
     name = "Gold and Black Skirt Dress"
     desc = "Goes perfectly with your clipboard and radio headset!"
     icon_state = "sktdress_gold"
@@ -1642,7 +1642,7 @@
     icon = 'icons/obj/clothing/uniforms/item_js_misc.dmi'
     wear_image_icon = 'icons/mob/jumpsuits/worn_js_misc.dmi'
 
-/obj/item/clothing/under/misc/pilotsuitbee
+/obj/item/clothing/under/misc/racingsuitbee
     name = "Bee Racing Jumpsuit"
     desc = "Sting like a bee... Fly like a bee..."
     icon_state = "racing_jump_yb"
@@ -1650,7 +1650,7 @@
     icon = 'icons/obj/clothing/uniforms/item_js_misc.dmi'
     wear_image_icon = 'icons/mob/jumpsuits/worn_js_misc.dmi'
 
-/obj/item/clothing/under/misc/pilotsuitpnk
+/obj/item/clothing/under/misc/racingsuitpnk
     name = "Pink and Blue Racing Jumpsuit"
     desc = "Just because you're inside a MiniPutt, doesn't mean you can't still be fashionable."
     icon_state = "racing_jump_pnk"
