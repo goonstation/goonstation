@@ -25,11 +25,17 @@
 	// debug amount scale up if needed.
 	poweruse = 20
 
+	var/obj/effect/flock_sentinelrays/rays = null
+
 /obj/flock_structure/sentinel/New(var/atom/location, var/datum/flock/F=null)
 	..(location, F)
-	src.filters = filter(type="rays", x=-0.2, y=6, size=1, color=rgb(255,255,255), offset=rand(1000), density=20, threshold=0.2, factor=1)
-	var/f = src.filters[length(src.filters)]
-	animate(f, size=((-(cos(180*(3/100))-1)/2)*32), time=5 MINUTES, easing=LINEAR_EASING, loop=-1, offset=f:offset + 100, flags=ANIMATION_PARALLEL)
+	src.rays = new /obj/effect/flock_sentinelrays
+	src.vis_contents += rays
+
+/obj/flock_structure/sentinel/disposing()
+	qdel(src.rays)
+	..()
+
 
 /obj/flock_structure/sentinel/building_specific_info()
 	return {"<span class='bold'>Status:</span> [charge_status == 1 ? "charging" : (charge_status == 2 ? "charged" : "idle")].
@@ -93,11 +99,21 @@
 
 
 /obj/flock_structure/sentinel/proc/updatefilter()
-	var/filter = src.filters[length(src.filters)]
+	var/filter = rays.filters[length(rays.filters)]
 	if(charge > 2)//else it just makes the sprite invisible, due to floats. this is small enough that it doesnt even showup anyway since its under the sprite
 		animate(filter, size=((-(cos(180*(charge/100))-1)/2)*32), time=10 SECONDS, flags = ANIMATION_PARALLEL)
 	else
 		animate(filter, size=((-(cos(180*(3/100))-1)/2)*32), time=10 SECONDS, flags = ANIMATION_PARALLEL)
+
+/obj/effect/flock_sentinelrays
+	mouse_opacity = 0
+	plane = PLANE_NOSHADOW_BELOW
+	blend_mode = BLEND_ADD
+
+	New()
+		src.filters = filter(type="rays", x=-0.2, y=6, size=1, color=rgb(255,255,255), offset=rand(1000), density=20, threshold=0.2, factor=1)
+		var/f = src.filters[length(src.filters)]
+		animate(f, size=((-(cos(180*(3/100))-1)/2)*32), time=5 MINUTES, easing=LINEAR_EASING, loop=-1, offset=f:offset + 100, flags=ANIMATION_PARALLEL)
 
 
 #undef NOT_CHARGED
