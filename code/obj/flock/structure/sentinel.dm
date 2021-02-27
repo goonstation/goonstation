@@ -114,7 +114,7 @@
 		src.filters = filter(type="rays", x=-0.2, y=6, size=1, color=rgb(255,255,255), offset=rand(1000), density=20, threshold=0.2, factor=1)
 		var/f = src.filters[length(src.filters)]
 		animate(f, size=((-(cos(180*(3/100))-1)/2)*32), time=5 MINUTES, easing=LINEAR_EASING, loop=-1, offset=f:offset + 100, flags=ANIMATION_PARALLEL)
-
+		..()
 
 #undef NOT_CHARGED
 #undef LOSING_CHARGE
