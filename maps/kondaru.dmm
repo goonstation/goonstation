@@ -37711,14 +37711,27 @@
 /area/station/science/artifact)
 "bPA" = (
 /obj/table/reinforced/auto,
-/obj/item/paper_bin,
-/obj/item/pen,
-/obj/item/hand_labeler,
+/obj/item/paper_bin{
+	pixel_x = 6;
+	pixel_y = -3
+	},
+/obj/item/pen{
+	pixel_x = -6;
+	pixel_y = -5
+	},
+/obj/item/hand_labeler{
+	pixel_x = 5;
+	pixel_y = 10
+	},
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 10;
 	name = "autoname - SS13";
 	tag = ""
+	},
+/obj/artifact_paper_dispenser{
+	pixel_x = -6;
+	pixel_y = 8
 	},
 /turf/simulated/floor/darkblue/checker,
 /area/station/science/artifact)
@@ -50140,23 +50153,6 @@
 "frY" = (
 /turf/simulated/wall/auto/reinforced/supernorn/yellow,
 /area/station/mining/staff_room)
-"fsc" = (
-/obj/table/wood/auto,
-/obj/item/item_box/gold_star{
-	item_amount = 20
-	},
-/obj/item/dice/d1,
-/obj/machinery/light{
-	dir = 1;
-	layer = 9.1;
-	pixel_y = 21
-	},
-/obj/item/deconstructor,
-/obj/item/device/radio/intercom/engineering,
-/turf/simulated/floor/yellowblack{
-	dir = 1
-	},
-/area/station/crew_quarters/ce)
 "ftt" = (
 /obj/machinery/light/runway_light/delay5,
 /obj/lattice,
@@ -50834,14 +50830,6 @@
 /obj/machinery/computer/operating,
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/robotics)
-"gCv" = (
-/obj/stool/bed,
-/obj/item/clothing/suit/bedsheet,
-/obj/item/device/radio/intercom/security{
-	dir = 8
-	},
-/turf/simulated/floor/black,
-/area/listeningpost)
 "gCT" = (
 /obj/disposalpipe/segment/bent/east,
 /turf/simulated/floor/plating,
@@ -57520,6 +57508,19 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/mining/magnet)
+"tRW" = (
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet,
+/obj/machinery/light_switch{
+	name = "E light switch";
+	pixel_x = 24;
+	pixel_y = -8
+	},
+/obj/item/device/radio/intercom/security{
+	dir = 8
+	},
+/turf/simulated/floor/black,
+/area/listeningpost)
 "tTC" = (
 /obj/machinery/door/airlock/pyro/command{
 	name = "Command Centre"
@@ -58566,6 +58567,27 @@
 	},
 /turf/simulated/floor/darkblue,
 /area/station/turret_protected/ai)
+"waz" = (
+/obj/table/wood/auto,
+/obj/item/item_box/gold_star{
+	item_amount = 20
+	},
+/obj/item/dice/d1,
+/obj/item/pinpointer/teg_semi{
+	pixel_x = 2;
+	pixel_y = 5
+	},
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 21
+	},
+/obj/item/deconstructor,
+/obj/item/device/radio/intercom/engineering,
+/turf/simulated/floor/yellowblack{
+	dir = 1
+	},
+/area/station/crew_quarters/ce)
 "wbJ" = (
 /obj/disposalpipe/segment/vertical,
 /obj/machinery/camera{
@@ -122470,7 +122492,7 @@ bpK
 rYj
 bpK
 bvc
-fsc
+waz
 xtO
 sKo
 igZ
@@ -144000,7 +144022,7 @@ aac
 aac
 ckU
 clZ
-gCv
+tRW
 cze
 cmE
 ckU

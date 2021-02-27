@@ -232,6 +232,10 @@
 
 		src.eject_wait = 10 SECONDS
 
+#ifdef DATALOGGER
+		game_stats.Increment("clones")
+#endif
+
 		if (istype(oldholder))
 			oldholder.clone_generation++
 			src.occupant.bioHolder.CopyOther(oldholder, copyActiveEffects = connected?.gen_analysis)

@@ -4,6 +4,7 @@
 
 /datum/artifact/wish_granter
 	associated_object = /obj/artifact/wish_granter
+	type_name = "Wishgranter"
 	rarity_weight = 90
 	validtypes = list("wizard","eldritch")
 	validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/electric,/datum/artifact_trigger/heat,

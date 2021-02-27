@@ -12,6 +12,7 @@
 
 /datum/artifact/power_gen
 	associated_object = /obj/machinery/artifact/power_gen
+	type_name = "Power Generator"
 	rarity_weight = 90
 	validtypes = list("ancient")
 	validtriggers = list(/datum/artifact_trigger/electric,/datum/artifact_trigger/carbon_touch,/datum/artifact_trigger/silicon_touch)

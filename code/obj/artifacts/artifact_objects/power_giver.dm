@@ -4,6 +4,7 @@
 
 /datum/artifact/power_giver
 	associated_object = /obj/artifact/power_giver
+	type_name = "Mutator"
 	rarity_weight = 200
 	validtypes = list("martian","wizard","eldritch","precursor")
 	validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/electric,/datum/artifact_trigger/heat,

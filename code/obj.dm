@@ -441,6 +441,7 @@
 	mat_changename = 0
 	mat_changedesc = 0
 	event_handler_flags = IMMUNE_MANTA_PUSH
+	density = 0
 
 	updateHealth()
 		return

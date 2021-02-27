@@ -12005,6 +12005,7 @@
 /area/station/hos)
 "Dw" = (
 /obj/storage/secure/closet/command/chief_engineer,
+/obj/item/pinpointer/teg_semi,
 /obj/item/deconstructor,
 /obj/item/stamp/ce,
 /turf/simulated/floor/yellow,
@@ -17995,6 +17996,9 @@
 	},
 /obj/item/disk/data/tape{
 	pixel_y = -5
+	},
+/obj/artifact_paper_dispenser{
+	pixel_x = 10
 	},
 /turf/simulated/floor/purple,
 /area/station/science/artifact)

@@ -721,18 +721,6 @@ var/obj/manta_speed_lever/mantaLever = null
 						S.recharging = 0
 						src.recharging = 0
 				return
-
-/obj/item/hosmedal
-	name = "war medal"
-	icon = 'icons/obj/items/items.dmi'
-	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
-	icon_state = "hosmedal"
-	item_state = "hosmedal"
-
-	New()
-		..()
-		BLOCK_SETUP(BLOCK_BOOK)
-
 /obj/item/rddiploma
 	name = "RD's diploma"
 	icon = 'icons/obj/items/items.dmi'
