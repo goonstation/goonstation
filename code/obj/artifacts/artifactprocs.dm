@@ -266,10 +266,10 @@
 			return 0
 
 	if(istype(W,/obj/item/device/igniter))
-		var/obj/item/device/igniter/IGNITER = W
+		var/obj/item/device/igniter/igniter = W
 		src.ArtifactStimulus("elec", 700)
 		src.ArtifactStimulus("heat", 385)
-		src.visible_message("<span class='alert'>[user.name] sparks against \the [src] with \the [IGNITER]!</span>")
+		src.visible_message("<span class='alert'>[user.name] sparks against \the [src] with \the [igniter]!</span>")
 
 	if (istype(W, /obj/item/robodefibrillator))
 		var/obj/item/robodefibrillator/R = W
