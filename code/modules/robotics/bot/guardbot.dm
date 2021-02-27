@@ -3619,7 +3619,11 @@
 					if (!next_beacon_id)
 						next_beacon_id = initial(next_beacon_id)
 
-					awaiting_beacon = 1
+					awaiting_beacon = 4
+
+					if( src.distracted == TRUE )
+						awaiting_beacon += 2
+						src.distracted = FALSE // TODO AZRUN REMOVE THIS SHIT
 
 					master.post_status("!BEACON!", "findbeacon", "tour")
 					return
@@ -3631,9 +3635,6 @@
 
 					if (prob(20))
 						src.look_for_neat_thing()
-
-					if( src.distracted == TRUE )
-						src.distracted = FALSE // TODO AZRUN REMOVE THIS SHIT
 
 					if (!master.moving)
 						if (awaiting_beacon > 0)
@@ -3673,6 +3674,17 @@
 
 		// take a text string and parse out pauses
 		proc/speak_with_pause(text, yield_to_neat=FALSE)
+			var/delays = 0
+
+			//Delay for active destraction
+			while(yield_to_neat && distracted)
+				awaiting_beacon++
+				sleep(5 SECONDS)
+				delays++
+				if( delays > 10 )
+					distracted = FALSE
+					break
+
 			if (ckey(text))
 				if (findtext(text, "|p")) //There are pauses present! So, um, pause.
 					var/list/text_with_pauses = splittext(text, "|p")
@@ -3684,9 +3696,14 @@
 							if (!ckey(tour_line) || !master)
 								break
 
+							//Delay for sudden destraction
 							while(yield_to_neat && distracted)
 								awaiting_beacon++
 								sleep(5 SECONDS)
+								delays++
+								if( delays > 10 )
+									distracted = FALSE
+									break
 
 							speak_with_maptext(copytext(html_encode(tour_line), 1, MAX_MESSAGE_LEN), TRUE)
 							sleep(5 SECONDS)
@@ -3696,7 +3713,7 @@
 
 
 #define MAPTEXT_SLICE_SIZE 100 // Reduce maptext slice size to avoid 4 rows
-#define MAPTEXT_PAUSE (4.2 SECONDS)
+#define MAPTEXT_PAUSE (4.5 SECONDS)
 		proc/speak_with_maptext(text, pause_for_beacon=FALSE)
 			var/start = 0
 			var/slice = 0
