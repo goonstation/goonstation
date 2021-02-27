@@ -27825,9 +27825,6 @@
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4
 	},
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 4
-	},
 /area/space)
 "blF" = (
 /obj/machinery/door/poddoor/pyro{
