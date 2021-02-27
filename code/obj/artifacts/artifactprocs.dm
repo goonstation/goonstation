@@ -182,7 +182,6 @@
 	if (!src.ArtifactSanityCheck())
 		return
 	var/datum/artifact/A = src.artifact
-	src.ArtifactStimulus(reagent_id, volume)
 	switch(reagent_id)
 		if("radium","porktonium")
 			src.ArtifactStimulus("radiate", round(volume / 10))
