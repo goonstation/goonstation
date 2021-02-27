@@ -289,9 +289,9 @@
 			return 0
 
 	if(istype(W,/obj/item/device/flyswatter))
-		var/obj/item/device/flyswatter/SWATTER = W
+		var/obj/item/device/flyswatter/swatter = W
 		src.ArtifactStimulus("elec", 1500)
-		src.visible_message("<span class='alert'>[user.name] shocks \the [src] with \the [SWATTER]!</span>")
+		src.visible_message("<span class='alert'>[user.name] shocks \the [src] with \the [swatter]!</span>")
 		return 0
 
 	if(ispulsingtool(W))
