@@ -3900,7 +3900,7 @@
 	icon_state = "4-8"
 	},
 /obj/cable{
-	icon_state = "1-2"
+	icon_state = "2-4"
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/east)
@@ -4963,7 +4963,7 @@
 	})
 "asc" = (
 /turf/simulated/floor/carpet/blue/standard/edge/west,
-/area/station/hallway/secondary/entry)
+/area/station/crewquarters/cryotron)
 "asg" = (
 /obj/decal/tile_edge/line/blue{
 	color = "#485e81";
@@ -5075,7 +5075,7 @@
 /area/station/shield_zone)
 "ast" = (
 /turf/simulated/floor/carpet/blue/standard/innercorner/ne,
-/area/station/hallway/secondary/entry)
+/area/station/crewquarters/cryotron)
 "asw" = (
 /obj/machinery/vehicle/escape_pod{
 	dir = 4
@@ -10433,9 +10433,6 @@
 	},
 /obj/disposalpipe/segment/mail,
 /obj/machinery/door/firedoor/border_only,
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/southwest{
-	dir = 1
-	},
 /obj/machinery/atmospherics/unary/outlet_injector{
 	icon_state = "on";
 	on = 1
@@ -12380,7 +12377,7 @@
 /area/station/crew_quarters/clown)
 "aSR" = (
 /turf/simulated/floor/carpet/blue/standard,
-/area/station/hallway/secondary/entry)
+/area/station/crewquarters/cryotron)
 "aSU" = (
 /obj/random_item_spawner/junk/one_or_zero,
 /turf/simulated/floor/plating/random,
@@ -13161,7 +13158,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/darkblue/checker,
-/area/station/hallway/secondary/entry)
+/area/station/crewquarters/cryotron)
 "aVX" = (
 /obj/decal/tile_edge/line/white{
 	icon_state = "line3"
@@ -13664,7 +13661,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/carpet/blue/standard/edge/sw,
-/area/station/hallway/secondary/entry)
+/area/station/crewquarters/cryotron)
 "aXB" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 4
@@ -13758,12 +13755,13 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/door/firedoor/border_only,
 /obj/machinery/door/airlock/gannets/glass/chemistry{
 	name = "glass airlock-'Guardbot Depot'";
 	req_access_txt = "33"
-	},
-/obj/cable{
-	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating/random,
 /area/station/science/bot_storage)
@@ -14952,7 +14950,7 @@
 "beT" = (
 /obj/forcefield/energyshield/perma,
 /turf/simulated/floor/stairs/medical/wide/other,
-/area/station/hallway/secondary/entry)
+/area/station/crewquarters/cryotron)
 "bfb" = (
 /obj/disposalpipe/switch_junction{
 	desc = "An underfloor mail pipe.";
@@ -15513,7 +15511,7 @@
 	layer = 3.9
 	},
 /turf/simulated/floor/carpet/blue/standard/edge/nw,
-/area/station/hallway/secondary/entry)
+/area/station/crewquarters/cryotron)
 "bhT" = (
 /obj/decal/tile_edge/line/black{
 	dir = 10;
@@ -17806,7 +17804,7 @@
 /turf/simulated/floor/carpet/blue/standard/edge{
 	dir = 6
 	},
-/area/station/hallway/secondary/entry)
+/area/station/crewquarters/cryotron)
 "bvg" = (
 /obj/deployable_turret/riot{
 	active = 1;
@@ -19976,7 +19974,7 @@
 	icon_state = "2-4"
 	},
 /turf/simulated/floor/darkblue/checker,
-/area/station/hallway/secondary/entry)
+/area/station/crewquarters/cryotron)
 "bFn" = (
 /obj/machinery/bot/secbot/beepsky,
 /obj/cable{
@@ -21375,7 +21373,7 @@
 /area/station/medical/head)
 "cFz" = (
 /turf/simulated/floor/carpet/blue/standard/innercorner/sw,
-/area/station/hallway/secondary/entry)
+/area/station/crewquarters/cryotron)
 "cFY" = (
 /obj/stool/chair/moveable{
 	dir = 1
@@ -21972,7 +21970,7 @@
 /turf/simulated/floor/carpet/blue/standard/edge{
 	dir = 5
 	},
-/area/station/hallway/secondary/entry)
+/area/station/crewquarters/cryotron)
 "cUC" = (
 /obj/wingrille_spawn/reinforced,
 /obj/disposalpipe/segment/mail{
@@ -24177,7 +24175,7 @@
 /turf/simulated/floor/carpet/blue/standard/edge{
 	dir = 6
 	},
-/area/station/hallway/secondary/entry)
+/area/station/crewquarters/cryotron)
 "equ" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/southwest{
 	dir = 1
@@ -25225,7 +25223,7 @@
 /turf/simulated/floor/carpet/blue/standard/edge{
 	dir = 10
 	},
-/area/station/hallway/secondary/entry)
+/area/station/crewquarters/cryotron)
 "eQM" = (
 /obj/wingrille_spawn,
 /turf/simulated/floor/plating/random,
@@ -27457,7 +27455,7 @@
 	})
 "gfZ" = (
 /turf/simulated/floor/carpet/blue/standard/innercorner/se,
-/area/station/hallway/secondary/entry)
+/area/station/crewquarters/cryotron)
 "ggS" = (
 /obj/machinery/power/apc/autoname_north{
 	pixel_x = -6
@@ -29703,6 +29701,9 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
+/obj/machinery/light_switch/west{
+	dir = 4
+	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/disposal)
 "hKi" = (
@@ -29766,8 +29767,10 @@
 	dir = 4;
 	icon_state = "xtra_bigstripe-edge"
 	},
-/obj/machinery/light_switch/north{
-	pixel_y = 28
+/obj/wingrille_spawn,
+/obj/cable{
+	d2 = 2;
+	icon_state = "0-2"
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/disposal)
@@ -34311,7 +34314,7 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/plating/random,
-/area/station/hallway/secondary/entry)
+/area/station/crewquarters/cryotron)
 "kDO" = (
 /obj/disposalpipe/trunk{
 	dir = 4
@@ -36086,7 +36089,7 @@
 	},
 /obj/cable,
 /turf/simulated/floor/plating/random,
-/area/station/hallway/secondary/entry)
+/area/station/crewquarters/cryotron)
 "lCc" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -37754,6 +37757,7 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
+/obj/machinery/atmospherics/pipe/simple/insulated,
 /turf/simulated/floor/caution/northsouth,
 /area/station/engine/core)
 "mEY" = (
@@ -38181,6 +38185,9 @@
 	dir = 8;
 	nostick = 1
 	},
+/obj/cable{
+	icon_state = "2-4"
+	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/disposal)
 "mRM" = (
@@ -38383,9 +38390,6 @@
 /obj/disposalpipe/segment{
 	dir = 1;
 	icon_state = "pipe-c"
-	},
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/overfloor/vertical{
-	dir = 8
 	},
 /obj/cable{
 	icon_state = "4-8"
@@ -39129,11 +39133,12 @@
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "nuy" = (
-/obj/machinery/door/airlock/gannets/maintenance{
-	name = "airlock-'Maintenance'"
-	},
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/machinery/door/firedoor/border_only,
+/obj/machinery/door/airlock/gannets/maintenance{
+	name = "airlock-'Maintenance'"
 	},
 /turf/simulated/floor/black,
 /area/station/maintenance/northwest)
@@ -42236,7 +42241,7 @@
 	},
 /obj/cable,
 /turf/simulated/floor/plating/random,
-/area/station/hallway/secondary/entry)
+/area/station/crewquarters/cryotron)
 "pim" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -44451,7 +44456,7 @@
 	icon_state = "0-2"
 	},
 /turf/simulated/floor/plating/random,
-/area/station/hallway/secondary/entry)
+/area/station/crewquarters/cryotron)
 "qzf" = (
 /obj/machinery/door/firedoor/border_only,
 /obj/machinery/door/airlock/gannets{
@@ -49764,7 +49769,6 @@
 	location = "QM #1"
 	},
 /obj/machinery/bot/mulebot{
-	botcard = "Chef;Quartermaster;Scientist";
 	home_destination = "QM #1"
 	},
 /turf/simulated/floor/bot,
@@ -51363,7 +51367,7 @@
 "uyz" = (
 /obj/forcefield/energyshield/perma,
 /turf/simulated/floor/stairs/medical/wide,
-/area/station/hallway/secondary/entry)
+/area/station/crewquarters/cryotron)
 "uyS" = (
 /obj/item/storage/toilet/random{
 	dir = 4;
@@ -51773,7 +51777,7 @@
 "uIi" = (
 /obj/landmark/start/latejoin,
 /turf/simulated/floor/carpet/blue/fancy/edge/north,
-/area/station/hallway/secondary/entry)
+/area/station/crewquarters/cryotron)
 "uIs" = (
 /turf/simulated/floor/wood/three,
 /area/station/crew_quarters/fitness)
@@ -53793,7 +53797,7 @@
 	explosion_resistance = 20;
 	name = "very reinforced wall"
 	},
-/area/station/hallway/secondary/entry)
+/area/station/crewquarters/cryotron)
 "vME" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -55041,7 +55045,7 @@
 /area/station/crew_quarters/fitness)
 "wAa" = (
 /turf/simulated/floor/carpet/blue/standard/edge/ne,
-/area/station/hallway/secondary/entry)
+/area/station/crewquarters/cryotron)
 "wAc" = (
 /obj/machinery/computer/robot_module_rewriter{
 	dir = 4
@@ -57754,6 +57758,11 @@
 	dir = 4;
 	icon_state = "xtra_bigstripe-edge"
 	},
+/obj/wingrille_spawn,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/disposal)
 "xWV" = (
@@ -57938,7 +57947,7 @@
 /obj/forcefield/energyshield/perma,
 /obj/cable,
 /turf/simulated/floor/plating/random,
-/area/station/hallway/secondary/entry)
+/area/station/crewquarters/cryotron)
 "ybu" = (
 /obj/disposalpipe/trunk,
 /obj/machinery/disposal/small{
@@ -99056,7 +99065,7 @@ gMK
 tDo
 bBG
 vbS
-bZv
+tFA
 mcY
 cRp
 wqx
