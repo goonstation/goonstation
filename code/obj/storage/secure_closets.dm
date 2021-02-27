@@ -621,7 +621,8 @@
 	/obj/item/reagent_containers/food/drinks/bottle/vintage,\
 	/obj/item/reagent_containers/food/drinks/drinkingglass/shot = 4,\
 	/obj/item/reagent_containers/food/drinks/drinkingglass/wine = 2,\
-	/obj/item/storage/box/glassbox)
+	/obj/item/storage/box/glassbox,
+	/obj/item/ammo/bullets/abg = 2)
 
 /obj/storage/secure/closet/civilian/chaplain
 	name = "\improper Religious supplies locker"
