@@ -289,7 +289,7 @@
 		else
 			..()
 
-	on_bite(var/mob/M)
+	on_bite(obj/item/I, mob/M, mob/user)
 		if (prob(5))
 			if (M.mind && M.mind.ckey)
 				boutput(M, "<span class='notice'>You find a shiny golden ticket in this bite!</span>")
@@ -550,7 +550,7 @@
 		boutput(user, "You twist the tray, activating the heater mechanism.")
 		return
 
-	on_bite(var/mob/M)
+	on_bite(obj/item/I, mob/M, mob/user)
 		if (prob(8))
 			if (M.mind && M.mind.ckey)
 				boutput(M, "<span class='notice'>You find a shiny golden ticket in this bite!</span>")
@@ -578,7 +578,7 @@
 			reagents.add_reagent(pick("beff","sugar","eggnog","chocolate","cleaner","luminol","poo","urine","nicotine","mint","tea","juice_lemon","juice_lime","juice_apple","juice_cherry","guacamole","egg","sewage","uranium"), 3)
 
 
-	on_bite(var/mob/M)
+	on_bite(obj/item/I, mob/M, mob/user)
 		if (prob(5))
 			if (M.mind && M.mind.ckey)
 				boutput(M, "<span class='notice'>You find a shiny golden ticket in this bite!</span>")
