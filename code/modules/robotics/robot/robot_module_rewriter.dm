@@ -4,9 +4,9 @@
 	icon_state = "robot_module_rewriter"
 	anchored = 1
 	density = 1
-	lr = 1
-	lg = 0.4
-	lb = 0
+	light_r =1
+	light_g = 0.4
+	light_b = 0
 	var/list/obj/item/robot_module/modules = null
 	var/obj/item/robot_module/selectedModule = null
 

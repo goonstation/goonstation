@@ -844,6 +844,8 @@
 				var/matrix/trans = new
 				trans.Scale((ubertier - 4) / 3) // mmm, large hat
 				hat.transform = trans
+				trans.Translate(0, -7 * ((ubertier - 4) / 3 - 1))
+				hat.wear_image.transform = trans
 		hat.name = "[src]'s [hat.name]"
 		src.original_hat = hat
 		src.hat_that_bee(hat)
@@ -1630,11 +1632,12 @@
 			logTheThing("debug", user, null, "names a bee egg \"[t]\"")
 			if (!t)
 				return
+			phrase_log.log_phrase("name-bee", t, no_duplicates=TRUE)
 			t = strip_html(replacetext(t, "'",""))
 			t = copytext(t, 1, 65)
 			if (!t)
 				return
-			if (!in_range(src, usr) && src.loc != usr)
+			if (!in_interact_range(src, user) && src.loc != user)
 				return
 
 			src.bee_name = t
@@ -1728,7 +1731,7 @@
 					icon_state = "sunbee_egg"
 					bee_name = "sun larva"
 
-		heal(var/mob/M)
+		on_bite(obj/item/I, mob/M, mob/user)
 			boutput(M, "<span class='alert'>You feel as if you have made a grave mistake.  Perhaps a doorway has closed forever.</span>")
 
 		attack_self(mob/user as mob)

@@ -1135,6 +1135,7 @@
 						F.amount *= 2
 					else if(quality_status == "rotten")
 						F.heal_amt = 0
+					F.AddComponent(/datum/component/consume/foodheal, F.heal_amt)
 
 					HYPadd_harvest_reagents(F,growing,DNA,quality_status)
 					// We also want to put any reagents the plant produces into the new item.
@@ -1182,6 +1183,7 @@
 						M.amount *= 2
 					else if(quality_status == "rotten")
 						M.heal_amt = 0
+					M.AddComponent(/datum/component/consume/foodheal, M.heal_amt)
 
 					HYPadd_harvest_reagents(CROP,growing,DNA,quality_status)
 
@@ -1701,7 +1703,10 @@ proc/HYPaddCommut(var/datum/plant/P,var/datum/plantgenes/DNA,var/commut)
 			if(X.type == commut)
 				return
 	// create a new list here (i.e. do not use +=) so as to not affect related seeds/plants
-	DNA.commuts = DNA.commuts + HY_get_strain_from_path(commut)
+	if(DNA.commuts)
+		DNA.commuts = DNA.commuts + HY_get_strain_from_path(commut)
+	else
+		DNA.commuts = list(HY_get_strain_from_path(commut))
 
 proc/HYPmutateDNA(var/datum/plantgenes/DNA,var/severity = 1)
 	// This proc jumbles up the variables in a plant's genes. It's fundamental to breeding.

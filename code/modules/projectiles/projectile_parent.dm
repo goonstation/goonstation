@@ -79,6 +79,8 @@
 		if (proj_data)
 			proj_data.on_launch(src)
 		src.setup()
+		if(proj_data)
+			proj_data.post_setup(src)
 		if (!disposed && !pooled)
 			SPAWN_DBG(0)
 				if (!is_processing)
@@ -145,7 +147,7 @@
 			for (var/obj/O in A)
 				O.bullet_act(src)
 			T = A
-			if ((sigreturn & PROJ_ATOM_CANNOT_PASS) || (T.density && !goes_through_walls && !(sigreturn & PROJ_PASSWALL) && !(sigreturn & PROJ_ATOM_PASSTHROGH)))
+			if ((sigreturn & PROJ_ATOM_CANNOT_PASS) || (T.density && !goes_through_walls && !(sigreturn & PROJ_PASSWALL) && !(sigreturn & PROJ_ATOM_PASSTHROUGH)))
 				if (proj_data?.icon_turf_hit && istype(A, /turf/simulated/wall))
 					var/turf/simulated/wall/W = A
 					if (src.forensic_ID)
@@ -180,21 +182,21 @@
 					var/mob/living/carbon/human/npc/monkey/M = A
 					M.shot_by(shooter)
 
-			if(sigreturn & PROJ_ATOM_PASSTHROGH || (pierces_left != 0 && first && !(sigreturn & PROJ_ATOM_CANNOT_PASS))) //try to hit other targets on the tile
+			if(sigreturn & PROJ_ATOM_PASSTHROUGH || (pierces_left != 0 && first && !(sigreturn & PROJ_ATOM_CANNOT_PASS))) //try to hit other targets on the tile
 				for (var/mob/X in T.contents)
 					if(!(X in src.hitlist))
 						if (!X.CanPass(src, get_step(src, X.dir), 1, 0))
 							src.collide(X, first = 0)
 					if(src.pooled)
 						return
-			if (pierces_left == 0 || (sigreturn & PROJ_ATOM_CANNOT_PASS))
-				die()
-			else
-				if(!(sigreturn & PROJ_ATOM_PASSTHROGH))
+			if(!(sigreturn & PROJ_ATOM_PASSTHROUGH))
+				if (pierces_left == 0 || (sigreturn & PROJ_ATOM_CANNOT_PASS))
+					die()
+				else
 					pierces_left--
 
 		else if (isobj(A))
-			if ((sigreturn & PROJ_ATOM_CANNOT_PASS) || (A.density && !goes_through_walls && !(sigreturn & PROJ_PASSOBJ) && !(sigreturn & PROJ_ATOM_PASSTHROGH)))
+			if ((sigreturn & PROJ_ATOM_CANNOT_PASS) || (A.density && !goes_through_walls && !(sigreturn & PROJ_PASSOBJ) && !(sigreturn & PROJ_ATOM_PASSTHROUGH)))
 				if (iscritter(A))
 					if (proj_data?.hit_mob_sound)
 						playsound(A.loc, proj_data.hit_mob_sound, 60, 0.5)
@@ -243,6 +245,7 @@
 		incidence = 0
 		special_data.len = 0
 		overlays = null
+		overlay_refs = null
 		hitlist.len = 0
 		transform = null
 		internal_speed = null
@@ -517,6 +520,9 @@
 		src.tracked_blood = null
 		return
 
+	temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+		return
+
 ABSTRACT_TYPE(/datum/projectile)
 datum/projectile
 	// These vars were copied from the an projectile datum. I am not sure which version, probably not 4407.
@@ -551,12 +557,11 @@ datum/projectile
 		hit_ground_chance = 0    // With what % do we hit mobs laying down
 		window_pass = 0          // Can we pass windows
 		obj/projectile/master = null
-		silentshot = 0           // standard visible message upon bullet_act. if 2, hide even the 'armor hit' message!
+		silentshot = 0           // Standard visible message upon bullet_act.
 		implanted                // Path of "bullet" left behind in the mob on successful hit
 		disruption = 0           // planned thing to deal with pod electronics / etc
 		zone = null              // todo: if fired from a handheld gun, check the targeted zone --- this should be in the goddamn obj
 		caliber = null
-		nomsg = 0
 
 		datum/material/material = null
 
@@ -567,6 +572,9 @@ datum/projectile
 
 		hit_object_sound = 0
 		hit_mob_sound = 0
+
+		///if a fullauto-capable weapon should be able to fullauto this ammo type
+		fullauto_valid = 0
 
 	// Determines the amount of length units the projectile travels each tick
 	// A tile is 32 wide, 32 long, and 32 * sqrt(2) across.
@@ -627,6 +635,7 @@ datum/projectile
 //					var/mob/living/L = hit
 //					stun_bullet_hit(O,L)
 			return
+		/// Does a thing every step this projectile takes
 		tick(var/obj/projectile/O)
 			return
 		on_launch(var/obj/projectile/O)
@@ -643,6 +652,9 @@ datum/projectile
 
 		get_power(obj/projectile/P, atom/A)
 			return P.initial_power - max(0, (P.travelled/32 - src.dissipation_delay))*src.dissipation_rate
+
+		post_setup(obj/projectile/P)
+			return
 
 // WOO IMPACT RANGES
 // Meticulously calculated by hand.
@@ -739,11 +751,11 @@ datum/projectile/energy_bolt_antighost
 	impact_range = 16
 	hits_ghosts = 1 // do it.
 
-datum/projectile/rad_bolt
-	impact_range = 0
-
 datum/projectile/tele_bolt
 	impact_range = 4
+
+datum/projectile/rad_bolt
+	impact_range = 0
 
 datum/projectile/wavegun
 	impact_range = 4
@@ -886,6 +898,8 @@ datum/projectile/snowball
 		return
 	var/turf/Q1 = get_turf(S)
 	var/turf/Q2 = get_turf(T)
+	if (!(Q1 && Q2))
+		return
 	return initialize_projectile(Q1, DATA, Q2.x - Q1.x, Q2.y - Q1.y, S, remote_sound_source, alter_proj = alter_proj)
 
 /proc/initialize_projectile_pixel(var/atom/movable/S, var/datum/projectile/DATA, var/T, var/pox, var/poy, var/datum/callback/alter_proj = null)
@@ -895,6 +909,8 @@ datum/projectile/snowball
 		return
 	var/turf/Q1 = get_turf(S)
 	var/turf/Q2 = get_turf(T)
+	if (!(Q1 && Q2))
+		return
 	return initialize_projectile(Q1, DATA, (Q2.x - Q1.x) * 32 + pox, (Q2.y - Q1.y) * 32 + poy, S, alter_proj = alter_proj)
 
 /proc/initialize_projectile_pixel_spread(var/atom/movable/S, var/datum/projectile/DATA, var/T, var/pox, var/poy, var/spread_angle, var/datum/callback/alter_proj = null)

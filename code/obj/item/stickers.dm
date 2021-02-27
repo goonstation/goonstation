@@ -25,7 +25,7 @@
 	afterattack(var/atom/A as mob|obj|turf, var/mob/user as mob, reach, params)
 		if (!A)
 			return
-		if (isarea(A) || istype(A, /obj/item/item_box) || istype(A, /obj/screen) || istype(A, /obj/ability_button))
+		if (isarea(A) || istype(A, /obj/item/item_box) || istype(A, /atom/movable/screen) || istype(A, /obj/ability_button))
 			return
 		user.tri_message("<b>[user]</b> sticks [src] to [A]!",\
 		user, "You stick [src] to [user == A ? "yourself" : "[A]"]!",\
@@ -534,9 +534,9 @@
 	has_camera = 0
 	has_selectable_skin = 0
 
-/obj/item/sticker/spy/radio_only/sec_only
+/obj/item/sticker/spy/radio_only/det_only
 	desc = "This sticker contains a tiny radio transmitter that handles audio. Closer inspection reveals that the frequency is locked to the Security channel."
-	radio_path = /obj/item/device/radio/spy/sec_only
+	radio_path = /obj/item/device/radio/spy/det_only
 
 /obj/item/device/camera_viewer/sticker
 	name = "Camera monitor"
@@ -558,8 +558,8 @@
 	/obj/item/device/radio/headset)
 
 /obj/item/storage/box/spy_sticker_kit/radio_only/detective
-	spawn_contents = list(/obj/item/sticker/spy/radio_only/sec_only = 6,
-	/obj/item/device/radio/headset/security)
+	spawn_contents = list(/obj/item/sticker/spy/radio_only/det_only = 6,
+	/obj/item/device/radio/headset/detective)
 
 /obj/item/device/radio/spy
 	name = "spy radio"
@@ -567,7 +567,7 @@
 	listening = 0
 	hardened = 0
 
-/obj/item/device/radio/spy/sec_only
+/obj/item/device/radio/spy/det_only
 	locked_frequency = 1
-	frequency = R_FREQ_SECURITY
-	chat_class = RADIOCL_SECURITY
+	frequency = R_FREQ_DETECTIVE
+	chat_class = RADIOCL_DETECTIVE

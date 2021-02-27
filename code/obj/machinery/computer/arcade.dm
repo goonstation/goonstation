@@ -18,9 +18,9 @@
 	var/blocked = 0 //Player cannot attack/heal while set
 	desc = "An arcade machine, you can win wonderful prizes!"
 
-	lr = 0.7
-	lg = 0.96
-	lb = 0.96
+	light_r =0.7
+	light_g = 0.96
+	light_b = 0.96
 
 /obj/machinery/computer/arcade/attackby(var/obj/item/I as obj, user as mob)
 	if (isscrewingtool(I))

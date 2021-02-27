@@ -117,8 +117,10 @@ var/global/mob/twitch_mob = 0
 				admins[m_key] = a_lev
 				logDiary("ADMIN: [m_key] = [a_lev]")
 
-/world/proc/load_whitelist(fileName = "strings/whitelist.txt")
+/world/proc/load_whitelist(fileName = null)
 	set background = 1
+	if(isnull(fileName))
+		fileName = config.whitelist_path
 	var/text = file2text(fileName)
 	if (!text)
 		return
@@ -394,11 +396,17 @@ var/f_color_selector_handler/F_Color_Selector
 	tick_lag = MIN_TICKLAG//0.4//0.25
 //	loop_checks = 0
 
+	// Load in the current commit SHA from TGS...
+	if(TgsAvailable())
+		var/datum/tgs_revision_information/rev = TgsRevision()
+		vcs_revision = rev.commit
+
 	if(world.load_intra_round_value("heisenbee_tier") >= 15 && prob(50) || prob(3))
-		pregameHTML = {"
-			<meta http-equiv='X-UA-Compatible' content='IE=edge'><style>body{margin:0;padding:0;background:url([resource("images/heisenbee_titlecard.png")]) black;background-size:100%;background-repeat:no-repeat;overflow:hidden;background-position:center center;background-attachment:fixed;}</style><script>document.onclick=function(){window.location.href="byond://winset?id=mapwindow.map&focus=true";}</script>
-			<a href="https://www.deviantart.com/alexbluebird" target="_blank" style="position:absolute;bottom:3px;right:3px;color:white;opacity:0.7;">by AlexBlueBird</a>
-		"}
+		lobby_titlecard = new /datum/titlecard/heisenbee()
+	else
+		lobby_titlecard = new /datum/titlecard()
+
+	lobby_titlecard.set_pregame_html()
 
 	diary = file("data/logs/[time2text(world.realtime, "YYYY/MM-Month/DD-Day")].log")
 	diary_name = "data/logs/[time2text(world.realtime, "YYYY/MM-Month/DD-Day")].log"
@@ -565,6 +573,10 @@ var/f_color_selector_handler/F_Color_Selector
 	build_camera_network()
 	//build_manufacturer_icons()
 	clothingbooth_setup()
+
+	Z_LOG_DEBUG("World/Init", "Loading fishing spots...")
+	global.initialise_fishing_spots()
+
 #if ASS_JAM
 	ass_jam_init()
 #endif
@@ -577,6 +589,15 @@ var/f_color_selector_handler/F_Color_Selector
 	Z_LOG_DEBUG("World/Init", "Setting up mining level...")
 	makeMiningLevel()
 	#endif
+
+	UPDATE_TITLE_STATUS("Initializing biomes")
+	Z_LOG_DEBUG("World/Init", "Setting up biomes...")
+	initialize_biomes()
+
+	UPDATE_TITLE_STATUS("Generating terrain")
+	Z_LOG_DEBUG("World/Init", "Setting perlin noise terrain...")
+	for (var/area/map_gen/A in by_type[/area/map_gen])
+		A.generate_perlin_noise_terrain()
 
 	UPDATE_TITLE_STATUS("Calculating cameras")
 	Z_LOG_DEBUG("World/Init", "Updating camera visibility...")
@@ -668,6 +689,7 @@ var/f_color_selector_handler/F_Color_Selector
 	processScheduler.stop()
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_REBOOT)
 	save_intraround_jars()
+	global.phrase_log.save()
 	save_tetris_highscores()
 	if (current_state < GAME_STATE_FINISHED)
 		current_state = GAME_STATE_FINISHED
@@ -745,19 +767,19 @@ var/f_color_selector_handler/F_Color_Selector
 	Z_LOG_DEBUG("World/Status", "Updating status")
 
 	//we start off with an animated bee gif because, well, this is who we are.
-	var/s = "<img src=\"https://i.imgur.com/XN0yOcf.gif\" alt=\"Bee\" /> "
+	var/s = "<img src=\"http://goonhub.com/bee.gif\"/>"
 
 	if (config?.server_name)
 		s += "<b><a href=\"https://goonhub.com\">[config.server_name]</a></b> &#8212; "
 	else
-		s += "<b>SERVER NAME HERE &#8212; "
+		s += "<b>SERVER NAME HERE</b> &#8212; "
 
-	s += "The classic SS13 experience. &#8212; (<a href=\"https://bit.ly/3pVRuTT\">Discord</a>)<br>"
+	s += "The classic SS13 experience. &#8212; (<a href=\"http://bit.ly/gndscd\">Discord</a>)<br>"
 
 	if (map_settings)
 		var/map_name = istext(map_settings.display_name) ? "[map_settings.display_name]" : "[map_settings.name]"
 		//var/map_link_str = map_settings.goonhub_map ? "<a href=\"[map_settings.goonhub_map]\">[map_name]</a>" : "[map_name]"
-		s += "Map:<b> [map_name]</b><br>"
+		s += "Map: <b>[map_name]</b><br>"
 
 	var/list/features = list()
 
@@ -785,6 +807,7 @@ var/f_color_selector_handler/F_Color_Selector
 	/* does this help? I do not know */
 	if (src.status != s)
 		src.status = s
+
 	Z_LOG_DEBUG("World/Status", "Status update complete")
 
 /world/proc/installUpdate()
@@ -1057,7 +1080,7 @@ var/f_color_selector_handler/F_Color_Selector
 							if (ishuman(twitch_mob))
 								var/mob/living/carbon/human/H = twitch_mob
 								for (var/obj/item/I in H.contents)
-									if (istype(I,/obj/item/organ) || istype(I,/obj/item/skull) || istype(I,/obj/item/parts) || istype(I,/obj/screen/hud)) continue //FUCK
+									if (istype(I,/obj/item/organ) || istype(I,/obj/item/skull) || istype(I,/obj/item/parts) || istype(I,/atom/movable/screen/hud)) continue //FUCK
 									hudlist += I
 									if (istype(I,/obj/item/storage))
 										hudlist += I.contents
@@ -1066,7 +1089,7 @@ var/f_color_selector_handler/F_Color_Selector
 							for (var/obj/item/I in view(1,twitch_mob) + hudlist)
 								if (!isturf(I.loc)) continue
 								if (TWITCH_BOT_INTERACT_BLOCK(I)) continue
-								if (istype(I,/obj/item/organ) || istype(I,/obj/item/skull) || istype(I,/obj/item/parts) || istype(I,/obj/screen/hud)) continue //FUCK
+								if (istype(I,/obj/item/organ) || istype(I,/obj/item/skull) || istype(I,/obj/item/parts) || istype(I,/atom/movable/screen/hud)) continue //FUCK
 								if (I.name == msg)
 									close_match.len = 0
 									close_match += I
@@ -1303,7 +1326,7 @@ var/f_color_selector_handler/F_Color_Selector
 					var/ircmsg[] = new()
 					ircmsg["key"] = nick
 					ircmsg["key2"] = (M.client != null && M.client.key != null) ? M.client.key : "*no client*"
-					ircmsg["name2"] = (M.real_name != null) ? M.real_name : ""
+					ircmsg["name2"] = (M.real_name != null) ? stripTextMacros(M.real_name) : ""
 					ircmsg["msg"] = html_decode(msg)
 					return ircbot.response(ircmsg)
 				else
@@ -1336,7 +1359,7 @@ var/f_color_selector_handler/F_Color_Selector
 					var/ircmsg[] = new()
 					ircmsg["key"] = nick
 					ircmsg["key2"] = (M.client != null && M.client.key != null) ? M.client.key : "*no client*"
-					ircmsg["name2"] = (M.real_name != null) ? M.real_name : ""
+					ircmsg["name2"] = (M.real_name != null) ? stripTextMacros(M.real_name) : ""
 					ircmsg["msg"] = html_decode(msg)
 					return ircbot.response(ircmsg)
 				else
@@ -1459,14 +1482,12 @@ var/f_color_selector_handler/F_Color_Selector
 					return 1
 
 			if ("roundEnd")
-				if (!plist["server"] || !plist["address"] || !plist["mode"]) return 0
+				if (!plist["server"] || !plist["address"]) return 0
 
 				var/server = plist["server"]
 				var/address = plist["address"]
-				var/mode = plist["mode"]
 				var/msg = "<br><div style='text-align: center; font-weight: bold;' class='deadsay'>---------------------<br>"
 				msg += "A round just ended on [server]<br>"
-				msg += "It is running [mode]<br>"
 				msg += "<a href='[address]'>Click here to join it</a><br>"
 				msg += "---------------------</div><br>"
 				for (var/client/C)

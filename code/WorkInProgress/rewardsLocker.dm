@@ -6,9 +6,12 @@
 	var/mobonly = 1 //If the reward can only be redeemed if the player has a /mob/living.
 
 
-	proc/rewardActivate(var/mob/activator) //Called when the reward is claimed from the locker. Spawn item here / give verbs here / do whatever for reward.
+	///Called when the reward is claimed from the locker. Spawn item here / give verbs here / do whatever for reward. Return 1 on success or bugs will happen.
+	proc/rewardActivate(var/mob/activator)
 		boutput(activator, "This reward is undefined. Please inform a coder.")
-		return							   //You could even make one-time reward by stripping their medal here.
+		//You could even make one-time reward by stripping their medal here.
+		return
+
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// Rewards below
 /datum/achievementReward/satchel
@@ -401,8 +404,8 @@
 				if (istype(M))
 					var/prev = M.name
 					M.icon = 'icons/obj/clothing/overcoats/item_suit.dmi'
-					M.inhand_image_icon = 'icons/mob/inhand/inhand_cl_suit.dmi'
-					if (M.inhand_image) M.inhand_image.icon = 'icons/mob/inhand/inhand_cl_suit.dmi'
+					M.inhand_image_icon = 'icons/mob/inhand/hand_cl_suit.dmi'
+					if (M.inhand_image) M.inhand_image.icon = 'icons/mob/inhand/hand_cl_suit.dmi'
 					M.wear_image_icon = 'icons/mob/overcoats/worn_suit.dmi'
 					if (M.wear_image) M.wear_image.icon = 'icons/mob/overcoats/worn_suit.dmi'
 					M.icon_state = findtext(M.icon_state, "_o") ? "alchrobe_o" : "alchrobe"
@@ -412,6 +415,7 @@
 					M.real_name = "grand alchemist's robes"
 					M.desc = "Well you sure LOOK the part with these on. (Base Item: [prev])"
 					H.set_clothing_icon_dirty()
+					return 1
 			boutput(activator, "<span class='alert'>Unable to redeem... you need to be wearing a labcoat.</span>")
 			return
 
@@ -436,8 +440,8 @@
 					return
 				var/prev = M.name
 				M.icon = 'icons/obj/clothing/overcoats/item_suit.dmi'
-				M.inhand_image_icon = 'icons/mob/inhand/inhand_cl_suit.dmi'
-				if (M.inhand_image) M.inhand_image.icon = 'icons/mob/inhand/inhand_cl_suit.dmi'
+				M.inhand_image_icon = 'icons/mob/inhand/hand_cl_suit.dmi'
+				if (M.inhand_image) M.inhand_image.icon = 'icons/mob/inhand/hand_cl_suit.dmi'
 				M.wear_image_icon = 'icons/mob/overcoats/worn_suit.dmi'
 				if (M.wear_image) M.wear_image.icon = 'icons/mob/overcoats/worn_suit.dmi'
 				M.icon_state = "vclothes"
@@ -492,8 +496,8 @@
 					return
 				var/prev = M.name
 				M.icon = 'icons/obj/clothing/overcoats/item_suit.dmi'
-				M.inhand_image_icon = 'icons/mob/inhand/inhand_cl_suit.dmi'
-				if (M.inhand_image) M.inhand_image.icon = 'icons/mob/inhand/inhand_cl_suit.dmi'
+				M.inhand_image_icon = 'icons/mob/inhand/hand_cl_suit.dmi'
+				if (M.inhand_image) M.inhand_image.icon = 'icons/mob/inhand/hand_cl_suit.dmi'
 				M.wear_image_icon = 'icons/mob/overcoats/worn_suit.dmi'
 				if (M.wear_image) M.wear_image.icon = 'icons/mob/overcoats/worn_suit.dmi'
 				if (istype(M, /obj/item/clothing/suit/labcoat))
@@ -737,6 +741,9 @@
 	rewardActivate(var/mob/activator)
 		if (isAI(activator))
 			var/mob/living/silicon/ai/A = activator
+			if (isAIeye(activator))
+				var/mob/dead/aieye/AE = activator
+				A = AE.mainframe
 			A.custom_emotions = ai_emotions | list("ROGUE(reward)" = "ai-red")
 			A.faceEmotion = "ai-red"
 			A.set_color("#EE0000")
@@ -1009,7 +1016,7 @@
 		return 1 // i guess. who cares.
 
 
-/client/var/list/claimed_rewards = list() //Keeps track of once-per-round rewards
+/datum/player/var/list/claimed_rewards = list() //Keeps track of once-per-round rewards
 
 /client/verb/claimreward()
 	set background = 1
@@ -1026,7 +1033,7 @@
 			var/datum/achievementReward/D = rewardDB[A]
 			var/result = usr.has_medal(D.required_medal)
 			if(result == 1)
-				if((D.once_per_round && !src.claimed_rewards.Find(D.type)) || !D.once_per_round)
+				if((D.once_per_round && !src.player.claimed_rewards.Find(D.type)) || !D.once_per_round)
 					if( D.mobonly && !istype( src.mob, /mob/living ) ) continue
 					eligible.Add(D.title)
 					eligible[D.title] = D
@@ -1052,6 +1059,11 @@
 
 		if(S == null)
 			boutput(usr, "<span class='alert'>Invalid Rewardtype after selection. Please inform a coder.</span>")
+			return
+
+		if(S.once_per_round && src.player.claimed_rewards.Find(S.type))
+			boutput(usr, "<span class='alert'>You already claimed this!</span>")
+			return
 
 		var/M = alert(usr,S.desc + "\n(Earned through the \"[S.required_medal]\" Medal)","Claim this Reward?","Yes","No")
 		src.verbs += /client/verb/claimreward
@@ -1060,6 +1072,6 @@
 			if (worked)
 				boutput(usr, "<span class='alert'>Successfully claimed \"[S.title]\".</span>")
 				if(S.once_per_round)
-					src.claimed_rewards.Add(S.type)
+					src.player.claimed_rewards.Add(S.type)
 			else
 				boutput(usr, "<span class='alert'>Redemption of \"[S.title]\" failed.</span>")

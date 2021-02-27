@@ -285,7 +285,7 @@ var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blo
 				var/ty = MT.initial_turf.y + 1
 				var/tz = MT.initial_turf.z
 				sleep(2 SECONDS)
-				var/obj/blob_tutorial_walker/W = new(locate(tx + 5, ty + 8, tz))
+				var/mob/blob_tutorial_walker/W = new(locate(tx + 5, ty + 8, tz))
 				walk_to(W, locate(tx, ty + 8, tz), 0, 8)
 				sleep(5 SECONDS)
 				W.set_dir(2)
@@ -362,7 +362,7 @@ var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blo
 				var/ty = MT.initial_turf.y + 1
 				var/tz = MT.initial_turf.z
 				sleep(2 SECONDS)
-				var/obj/blob_tutorial_walker/W = new(locate(tx + 5, ty + 8, tz))
+				var/mob/blob_tutorial_walker/W = new(locate(tx + 5, ty + 8, tz))
 				walk_to(W, locate(tx, ty + 8, tz), 0, 8)
 				sleep(5 SECONDS)
 				W.set_dir(2)
@@ -736,12 +736,12 @@ proc/AddBlobSteps(var/datum/tutorial/blob/T)
 	T.AddStep(new /datum/tutorialStep/blob/cutscene3)
 	T.AddStep(new /datum/tutorialStep/blob/finished)
 
-/obj/blob_tutorial_walker
+/mob/blob_tutorial_walker
 	name = "Pubs McFlamer"
 	desc = "Some dork with a flamethrower."
 	icon = 'icons/mob/human.dmi'
 	icon_state = "body_f"
-	var/obj/item/flamethrower/assembled/loaded/L = new
+	var/obj/item/gun/flamethrower/assembled/loaded/L = new
 
 	New()
 		..()
@@ -750,7 +750,7 @@ proc/AddBlobSteps(var/datum/tutorial/blob/T)
 		L.lit = 1
 
 	proc/sprayAt(var/turf/T)
-		L.afterattack(T, src, 0)
+		L.shoot(T, src.loc, src)
 
 	disposing()
 		..()

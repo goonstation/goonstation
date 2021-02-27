@@ -186,12 +186,14 @@
 			src.on = !src.on
 
 		if (src.on)
+			src.firesource = TRUE
 			src.force = 10
 			src.hit_type = DAMAGE_BURN
 			src.icon_state = "cakehat1"
 			light.enable()
 			processing_items |= src
 		else
+			src.firesource = FALSE
 			src.force = 3
 			src.hit_type = DAMAGE_BLUNT
 			src.icon_state = "cakehat0"
@@ -218,7 +220,7 @@
 
 	afterattack(atom/target, mob/user as mob)
 		if (src.on && !ismob(target) && target.reagents)
-			boutput(usr, "<span class='notice'>You heat \the [target.name]</span>")
+			boutput(user, "<span class='notice'>You heat \the [target.name]</span>")
 			target.reagents.temperature_reagents(2500,10)
 		return
 
@@ -761,7 +763,7 @@
 						if (istype(the_head))
 							H.visible_message("<span class='combat'><b>[H]'s head flies right off [his_or_her(H)] shoulders![prob(33) ? " HOLY SHIT!" : null]</b></span>")
 							var/the_dir = src.last_move ? src.last_move : alldirs//istype(src.throw_source) ? get_dir(src.throw_source, H) : alldirs
-							the_head.streak(the_dir, the_head.created_decal)
+							the_head.streak_object(the_dir, the_head.created_decal)
 							src.throw_source = null
 					else
 						M.TakeDamageAccountArmor("chest", 10, 0)
@@ -1225,3 +1227,9 @@
 	item_state = "antlers"
 	w_class = 1.0
 	throwforce = 0
+
+/obj/item/clothing/head/pajama_cap
+	name = "nightcap"
+	desc = "Is it truly a good night without one?"
+	icon_state = "pajama_hat"
+	item_state = "pajama_hat"

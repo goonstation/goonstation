@@ -103,7 +103,7 @@
 		if(usr.stat || usr.restrained())
 			return 1
 
-		if ((!usr.contents.Find(src.host) && (!in_range(src.host, usr) || !istype(src.host.loc, /turf))) && (!issilicon(usr)))
+		if ((!usr.contents.Find(src.host) && (!in_interact_range(src.host, usr) || !istype(src.host.loc, /turf))) && (!issilicon(usr)))
 			return 1
 
 		if(src.host.status & (NOPOWER|BROKEN))
@@ -138,6 +138,7 @@
 
 		pda
 			frequency = 1149 //Standard PDA comm frequency.
+			range = 0
 			/*net_mode = 1
 			func_tag = "NET_ADAPTER"*/
 
@@ -926,7 +927,7 @@
 
 	proc/vend_prize()
 		var/obj/item/prize
-		var/prizeselect = rand(1,4)
+		var/prizeselect = rand(1,7)
 		var/turf/prize_location = null
 
 		if(src.host)

@@ -10,7 +10,7 @@
 	mats = 10
 
 	MouseDrop_T(var/atom/movable/C, mob/user)
-		if (!in_range(user, src) || !in_range(user, C) || user.restrained() || user.getStatusDuration("paralysis") || user.sleeping || user.stat || user.lying)
+		if (!in_interact_range(user, src) || !in_interact_range(user, C) || user.restrained() || user.getStatusDuration("paralysis") || user.sleeping || user.stat || user.lying)
 			return
 
 		if (!istype(C)|| C.anchored || get_dist(user, src) > 1 || get_dist(src,C) > 1 )
@@ -20,8 +20,24 @@
 			user.show_text("\The [C] is too heavy for \the [src]!", "red")
 			return
 
-		if (istype(C, /obj/tug_cart) && in_range(C, src))
+		if (istype(C, /obj/tug_cart) && in_interact_range(C, src))
 			var/obj/tug_cart/connecting = C
+			if (src == connecting) //Wire: Fix for mass recursion runtime (carts connected to themselves)
+				return
+			else if (!src.next_cart && !connecting.next_cart)
+				src.next_cart = connecting
+				user.visible_message("[user] connects [connecting] to [src].", "You connect [connecting] to [src].")
+				return
+			else if (src.next_cart == connecting)
+				src.next_cart = null
+				user.visible_message("[user] disconnects [connecting] from [src].", "You disconnect [connecting] from [src].")
+				return
+			else
+				user.show_text("\The [src] already has a cart connected to it!", "red")
+				return
+
+		if (istype(C, /obj/storage/cart) && in_interact_range(C, src))
+			var/obj/storage/cart/connecting = C
 			if (src == connecting) //Wire: Fix for mass recursion runtime (carts connected to themselves)
 				return
 			else if (!src.next_cart && !connecting.next_cart)
@@ -46,7 +62,7 @@
 		..()
 		var/turf/T = get_turf(over_location)
 		var/mob/user = usr
-		if (!user || !(in_range(user, src) || user.loc == src) || !in_range(src, over_object) || user.restrained() || user.getStatusDuration("paralysis") || user.sleeping || user.stat || user.lying)
+		if (!user || !(in_interact_range(user, src) || user.loc == src) || !in_interact_range(src, over_object) || user.restrained() || user.getStatusDuration("paralysis") || user.sleeping || user.stat || user.lying)
 			return
 		if (!load)
 			return
@@ -69,7 +85,7 @@
 			return		// if not emagged, only allow crates to be loaded // cogwerks - turning this off for now to make the mule more versatile + funny
 			*/
 
-		if (istype(C, /obj/screen) || C.anchored)
+		if (istype(C, /atom/movable/screen) || C.anchored)
 			return
 
 		if (get_dist(C, src) > 1 || load)
@@ -241,10 +257,10 @@
 				M.set_loc(src.loc)
 
 	MouseDrop_T(var/atom/movable/C, mob/user)
-		if (!in_range(user, src) || !in_range(user, C) || user.restrained() || user.getStatusDuration("paralysis") || user.sleeping || user.stat || user.lying)
+		if (!in_interact_range(user, src) || !in_interact_range(user, C) || user.restrained() || user.getStatusDuration("paralysis") || user.sleeping || user.stat || user.lying)
 			return
 
-		if (istype(C, /obj/tug_cart) && in_range(C, src))
+		if (istype(C, /obj/tug_cart) && in_interact_range(C, src))
 			if (src == C) //Wire: Fix for mass recursion runtime (carts connected to themselves)
 				return
 			else if (!src.cart)

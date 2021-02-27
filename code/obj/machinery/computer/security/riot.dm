@@ -11,9 +11,9 @@
 	var/radiorange = 3
 	desc = "Use this computer to authorize security access to the Armory. You need an ID with security access to do so."
 
-	lr = 1
-	lg = 0.3
-	lb = 0.3
+	light_r =1
+	light_g = 0.3
+	light_b = 0.3
 
 	var/authed = 0
 	var/area/armory_area
@@ -161,7 +161,7 @@
 		boutput(user, "The access level of [W] is not high enough.")
 		return
 
-	if(!(access_security in W:access)) //doesn't have this access
+	if(!(access_securitylockers in W:access)) //doesn't have this access
 		boutput(user, "The access level of [W] is not high enough.")
 		return
 

@@ -1,12 +1,12 @@
-/obj/screen
+/atom/movable/screen
 	anchored = 1
-	plane = PLANE_HUD//wow WOW why won't you use /obj/screen/hud, HUD OBJECTS???
+	plane = PLANE_HUD//wow WOW why won't you use /atom/movable/screen/hud, HUD OBJECTS???
 	text = ""
 	New()
 		..()
 		appearance_flags |= NO_CLIENT_COLOR
 
-/obj/screen/hud
+/atom/movable/screen/hud
 	plane = PLANE_HUD
 	var/datum/hud/master
 	var/id = ""
@@ -52,20 +52,20 @@
 			master.MouseDrop(src, over_object, src_location, over_location, over_control, params)
 
 	MouseDrop_T(atom/movable/O as obj, mob/user as mob)
-		if (master && (!master.click_check || (usr in master.mobs)))
+		if (master && (!master.click_check || (user in master.mobs)))
 			master.MouseDrop_T(src, O, user)
 
 
 /datum/hud
 	var/list/mob/living/mobs = list()
 	var/list/client/clients = list()
-	var/list/obj/screen/hud/objects = list()
+	var/list/atom/movable/screen/hud/objects = list()
 	var/click_check = 1
 
 	disposing()
 		for (var/mob/M in src.mobs)
 			M.detach_hud(src)
-		for (var/obj/screen/hud/S in src.objects)
+		for (var/atom/movable/screen/hud/S in src.objects)
 			if (S.master == src)
 				S.master = null
 		for (var/client/C in src.clients)
@@ -96,9 +96,9 @@
 			C.screen -= A
 
 	proc/create_screen(id, name, icon, state, loc, layer = HUD_LAYER, dir = SOUTH, tooltipTheme = null, desc = null, customType = null)
-		var/obj/screen/hud/S
+		var/atom/movable/screen/hud/S
 		if (customType)
-			if (!ispath(customType, /obj/screen/hud))
+			if (!ispath(customType, /atom/movable/screen/hud))
 				CRASH("Invalid type passed to create_screen ([customType])")
 			S = new customType
 		else
@@ -125,7 +125,7 @@
 			A.screen_loc = loc
 		A.layer = layer
 		A.plane = PLANE_HUD
-		if (!src.objects.Find(A))
+		if (!(A in src.objects))
 			src.objects += A
 			for (var/client/C in src.clients)
 				C.screen += A
@@ -137,14 +137,14 @@
 		for (var/client/C in src.clients)
 			C.screen -= A
 
-	proc/add_screen(obj/screen/S)
-		if (!src.objects.Find(S))
+	proc/add_screen(atom/movable/screen/S)
+		if (!(S in src.objects))
 			src.objects += S
 			for (var/client/C in src.clients)
 				C.screen += S
 
 	proc/set_visible_id(id, visible)
-		var/obj/screen/S = get_by_id(id)
+		var/atom/movable/screen/S = get_by_id(id)
 		if(S)
 			if(visible)
 				S.invisibility = 0
@@ -152,7 +152,7 @@
 				S.invisibility = 101
 		return
 
-	proc/set_visible(obj/screen/S, visible)
+	proc/set_visible(atom/movable/screen/S, visible)
 		if(S)
 			if(visible)
 				S.invisibility = 0
@@ -160,20 +160,20 @@
 				S.invisibility = 101
 		return
 
-	proc/remove_screen(obj/screen/S)
+	proc/remove_screen(atom/movable/screen/S)
 		src.objects -= S
 		for (var/client/C in src.clients)
 			C.screen -= S
 
 	proc/remove_screen_id(var/id)
-		var/obj/screen/S = get_by_id(id)
+		var/atom/movable/screen/S = get_by_id(id)
 		if(S)
 			src.objects -= S
 			for (var/client/C in src.clients)
 				C.screen -= S
 
 	proc/get_by_id(var/id)
-		for(var/obj/screen/hud/SC in src.objects)
+		for(var/atom/movable/screen/hud/SC in src.objects)
 			if(SC.id == id)
 				return SC
 		return null
@@ -182,5 +182,5 @@
 	proc/scrolled(id, dx, dy, user, parms)
 	proc/MouseEntered(id,location, control, params)
 	proc/MouseExited(id)
-	proc/MouseDrop(var/obj/screen/hud/H, atom/over_object, src_location, over_location, over_control, params)
-	proc/MouseDrop_T(var/obj/screen/hud/H, atom/movable/O as obj, mob/user as mob)
+	proc/MouseDrop(var/atom/movable/screen/hud/H, atom/over_object, src_location, over_location, over_control, params)
+	proc/MouseDrop_T(var/atom/movable/screen/hud/H, atom/movable/O as obj, mob/user as mob)

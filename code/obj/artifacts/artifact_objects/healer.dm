@@ -4,10 +4,12 @@
 
 /datum/artifact/healer_bio
 	associated_object = /obj/artifact/healer_bio
-	rarity_class = 2 // modified from 1 as part of art tweak
+	type_name = "Healer"
+	rarity_weight = 350
 	validtypes = list("martian","precursor")
 	validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/electric,/datum/artifact_trigger/heat,
 	/datum/artifact_trigger/radiation,/datum/artifact_trigger/carbon_touch)
+	fault_blacklist = list(ITEM_ONLY_FAULTS)
 	activated = 0
 	activ_text = "begins to pulse softly."
 	deact_text = "ceases pulsing."
@@ -42,12 +44,14 @@
 		if(iscarbon(user))
 			var/mob/living/carbon/C = user
 			C.HealDamage("All", heal_amt, heal_amt)
+			O.ArtifactFaultUsed(C)
 			boutput(C, "<span class='notice'>Soothing energy saturates your body, making you feel refreshed and healthy.</span>")
 		if (field_range > 0)
 			for (var/mob/living/carbon/C in range(field_range,T))
 				if (C == user)
 					continue
 				C.HealDamage("All", heal_amt, heal_amt)
+				O.ArtifactFaultUsed(C)
 				boutput(C, "<span class='notice'>Waves of soothing energy wash over you, making you feel refreshed and healthy.</span>")
 		SPAWN_DBG(recharge_time)
 			recharging = 0

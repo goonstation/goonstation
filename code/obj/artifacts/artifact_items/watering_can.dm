@@ -26,9 +26,6 @@
 		if (prob(15))
 			reagents.add_reagent("aranesp", 30)
 			usedCapacity += 30
-		if (prob(3))
-			reagents.add_reagent("stimulants", 20)
-			usedCapacity += 20
 		if (prob(10))
 			reagents.add_reagent("super_hairgrownium", 25)
 			usedCapacity += 25
@@ -161,7 +158,8 @@
 
 /datum/artifact/watercan
 	associated_object = /obj/item/reagent_containers/glass/wateringcan/artifact
-	rarity_class = 2 // modified from 1 as part of art tweak
+	type_name = "Beaker"
+	rarity_weight = 350
 	validtypes = list("martian","wizard","precursor")
 	min_triggers = 0
 	max_triggers = 0

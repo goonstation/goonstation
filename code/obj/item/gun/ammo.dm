@@ -128,7 +128,10 @@
 		else if (A.caliber in K.caliber) // Some guns can have multiple calibers.
 			check = 1
 		else if (K.caliber == null) // Special treatment for zip guns, huh.
-			check = 1
+			if (A.caliber == 1.58)  // Prevent MRPT rocket
+				check = 0
+			else
+				check = 1
 		if (!check)
 			return 0
 			//DEBUG_MESSAGE("Couldn't swap [K]'s ammo ([K.ammo.type]) with [A.type].")
@@ -179,7 +182,7 @@
 			qdel(A) // We don't need you anymore.
 			ammoGun.set_loc(K)
 			K.ammo = ammoGun
-			K.current_projectile = ammoGun.ammo_type
+			K.set_current_projectile(ammoGun.ammo_type)
 			if(K.silenced)
 				K.current_projectile.shot_sound = 'sound/machines/click.ogg'
 			K.update_icon()
@@ -198,7 +201,10 @@
 		else if (A.caliber in K.caliber)
 			check = 1
 		else if (K.caliber == null)
-			check = 1 // For zip guns.
+			if (A.caliber == 1.58) // Prevent MRPT rocket
+				check = 0
+			else
+				check = 1 // For zip guns.
 		if (!check)
 			return 1
 
@@ -230,7 +236,7 @@
 				qdel(K.ammo)
 				ammoGun.set_loc(K)
 				K.ammo = ammoGun
-				K.current_projectile = A.ammo_type
+				K.set_current_projectile(A.ammo_type)
 				if(K.silenced)
 					K.current_projectile.shot_sound = 'sound/machines/click.ogg'
 
@@ -928,15 +934,17 @@
 			attacking_item.attackby(pcell, attacker)
 		else return ..()
 
-	swap(var/obj/item/gun/energy/E)
+	swap(var/obj/item/gun/energy/E, var/mob/living/user)
 		if(!istype(E.cell,/obj/item/ammo/power_cell))
 			return 0
 		var/obj/item/ammo/power_cell/swapped_cell = E.cell
 		var/mob/living/M = src.loc
+		if (!ismob(M))
+			M = user
 		var/atom/old_loc = src.loc
 
-		if(istype(M) && src == M.equipped())
-			usr.u_equip(src)
+		if(istype(M) && (src in M.get_all_items_on_mob()))
+			M.u_equip(src)
 
 		src.set_loc(E)
 		E.cell = src
@@ -945,9 +953,9 @@
 			swapped_cell.set_loc(old_loc)
 			var/obj/item/storage/cell_container = old_loc
 			cell_container.hud.remove_item(src)
-			cell_container.hud.update()
+			cell_container.hud.update(user)
 		else
-			usr.put_in_hand_or_drop(swapped_cell)
+			M.put_in_hand_or_drop(swapped_cell)
 
 		src.add_fingerprint(usr)
 
@@ -1196,3 +1204,39 @@
 	ammo_type = new/datum/projectile/special/meowitzer/inert
 
 
+/datum/action/bar/icon/powercellswap
+	duration = 1 SECOND
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ATTACKED
+	id = "powercellswap"
+	icon = 'icons/obj/items/ammo.dmi'
+	icon_state = "power_cell"
+	var/mob/living/user
+	var/obj/item/ammo/power_cell/cell
+	var/obj/item/gun/energy/gun
+
+	New(User, Cell, Gun)
+		user = User
+		cell = Cell
+		gun = Gun
+		..()
+
+	onUpdate()
+		..()
+		if(get_dist(user, gun) > 1 || user == null || cell == null || gun == null || get_turf(gun) != get_turf(cell) )
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+	onStart()
+		..()
+		if(get_dist(user, gun) > 1 || user == null || cell == null || gun == null || get_turf(gun) != get_turf(cell) )
+			interrupt(INTERRUPT_ALWAYS)
+			return
+		return
+
+	onEnd()
+		..()
+		if(get_dist(user, gun) > 1 || user == null || cell == null || gun == null || get_turf(gun) != get_turf(cell) )
+			..()
+			interrupt(INTERRUPT_ALWAYS)
+			return
+		cell.swap(gun,user)

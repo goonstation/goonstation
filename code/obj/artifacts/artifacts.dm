@@ -123,9 +123,9 @@
 
 		switch (P.proj_data.damage_type)
 			if(D_KINETIC,D_PIERCING,D_SLASHING)
-				src.ArtifactStimulus("force", P.power)
 				for (var/obj/machinery/networked/test_apparatus/impact_pad/I in src.loc.contents)
 					I.impactpad_senseforce_shot(src, P)
+				src.ArtifactStimulus("force", P.power)
 			if(D_ENERGY)
 				src.ArtifactStimulus("elec", P.power * 10)
 			if(D_BURNING)
@@ -137,10 +137,14 @@
 	hitby(atom/movable/M, datum/thrown_thing/thr)
 		if (isitem(M))
 			var/obj/item/ITM = M
-			src.ArtifactStimulus("force", ITM.throwforce)
 			for (var/obj/machinery/networked/test_apparatus/impact_pad/I in src.loc.contents)
 				I.impactpad_senseforce(src, ITM)
 		..()
+
+	mob_flip_inside(mob/user)
+		. = ..()
+		src.ArtifactTakeDamage(rand(5,20))
+		boutput(user, "<span class='alert'>It seems to be a bit more damaged!</span>")
 
 /obj/machinery/artifact
 	name = "artifact large art piece"
@@ -284,7 +288,6 @@
 	hitby(atom/movable/M, datum/thrown_thing/thr)
 		if (isitem(M))
 			var/obj/item/ITM = M
-			src.ArtifactStimulus("force", ITM.throwforce)
 			for (var/obj/machinery/networked/test_apparatus/impact_pad/I in src.loc.contents)
 				I.impactpad_senseforce(src, ITM)
 		..()
@@ -330,7 +333,6 @@
 	hitby(atom/movable/M, datum/thrown_thing/thr)
 		if (isitem(M))
 			var/obj/item/ITM = M
-			src.ArtifactStimulus("force", ITM.throwforce)
 			for (var/obj/machinery/networked/test_apparatus/impact_pad/I in src.loc.contents)
 				I.impactpad_senseforce(src, ITM)
 		..()

@@ -198,6 +198,10 @@
 
 	var/decomposes = TRUE
 
+	/// List of 0 to 3 strings representing the names for the color channels
+	/// used in the character creator. For vanilla humans (or HAS_HUMAN_HAIR)
+	/// this is list("Bottom Detail", "Mid Detail", "Top Detail").
+	var/list/color_channel_names = list()
 
 	proc/say_filter(var/message)
 		return message
@@ -708,7 +712,13 @@
 	name = "virtual"
 	icon_state = "virtual"
 	override_attack = 0
-	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_HUMAN_HAIR | HAS_HUMAN_EYES | HAS_NO_HEAD | USES_STATIC_ICON)
+	mutant_folder = 'icons/mob/virtual.dmi'
+	special_head = HEAD_VIRTUAL
+	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/virtual/right
+	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/virtual/left
+	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/virtual/right
+	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/virtual/left
+	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_HUMAN_HAIR | HAS_HUMAN_EYES | BUILT_FROM_PIECES)
 
 
 	New(var/mob/living/carbon/human/H)
@@ -790,6 +800,7 @@
 	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/lizard/right
 	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/lizard/left
 	race_mutation = /datum/bioEffect/mutantrace // Most mutants are just another form of lizard, didn't you know?
+	color_channel_names = list("Episcutus", "Ventral Aberration", "Sagittal Crest")
 
 	New(var/mob/living/carbon/human/H)
 		..()
@@ -869,7 +880,7 @@
 					make_spitter(M)
 
 			M.add_stam_mod_max("zombie", 100)
-			M.add_stam_mod_regen("zombie", -5)
+			APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "zombie", -5)
 
 	proc/make_bubs(var/mob/living/carbon/human/M)
 		M.bioHolder.AddEffect("strong")
@@ -899,7 +910,7 @@
 	disposing()
 		if (ishuman(mob))
 			mob.remove_stam_mod_max("zombie")
-			mob.remove_stam_mod_regen("zombie")
+			REMOVE_MOB_PROPERTY(mob, PROP_STAMINA_REGEN_BONUS, "zombie")
 		..()
 
 	proc/add_ability(var/mob/living/carbon/human/H)
@@ -1025,12 +1036,12 @@
 		if(ishuman(mob))
 			src.add_ability(mob)
 			M.add_stam_mod_max("vamp_zombie", 100)
-			//M.add_stam_mod_regen("vamp_zombie", 15)
+			//APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "vamp_zombie", 15)
 
 	disposing()
 		if (ishuman(mob))
 			mob.remove_stam_mod_max("vamp_zombie")
-			//mob.remove_stam_mod_regen("vamp_zombie")
+			//REMOVE_MOB_PROPERTY(mob, PROP_STAMINA_REGEN_BONUS, "vamp_zombie")
 		..()
 
 	proc/add_ability(var/mob/living/carbon/human/H)
@@ -1139,7 +1150,7 @@
 	New(var/mob/living/carbon/human/M)
 		if(ruff_tuff_and_ultrabuff && ishuman(M))
 			M.add_stam_mod_max("abomination", 1000)
-			M.add_stam_mod_regen("abomination", 1000)
+			APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "abomination", 1000)
 			M.add_stun_resist_mod("abomination", 1000)
 			APPLY_MOB_PROPERTY(M, PROP_CANTSPRINT, src)
 		last_drain = world.time
@@ -1148,7 +1159,7 @@
 	disposing()
 		if(mob)
 			mob.remove_stam_mod_max("abomination")
-			mob.remove_stam_mod_regen("abomination")
+			REMOVE_MOB_PROPERTY(mob, PROP_STAMINA_REGEN_BONUS, "abomination")
 			mob.remove_stun_resist_mod("abomination")
 			REMOVE_MOB_PROPERTY(mob, PROP_CANTSPRINT, src)
 		return ..()
@@ -1237,7 +1248,7 @@
 			mob.AddComponent(/datum/component/consume/can_eat_inedible_organs, 1) // can also eat heads
 			mob.mob_flags |= SHOULD_HAVE_A_TAIL
 			mob.add_stam_mod_max("werewolf", 40) // Gave them a significant stamina boost, as they're melee-orientated (Convair880).
-			mob.add_stam_mod_regen("werewolf", 9) //mbc : these increase as they feast now. reduced!
+			APPLY_MOB_PROPERTY(mob, PROP_STAMINA_REGEN_BONUS, "werewolf", 9) //mbc : these increase as they feast now. reduced!
 			mob.add_stun_resist_mod("werewolf", 40)
 			mob.max_health += 50
 			health_update_queue |= mob
@@ -1265,7 +1276,7 @@
 			var/datum/component/D = mob.GetComponent(/datum/component/consume/can_eat_inedible_organs)
 			D?.RemoveComponent(/datum/component/consume/can_eat_inedible_organs)
 			mob.remove_stam_mod_max("werewolf")
-			mob.remove_stam_mod_regen("werewolf")
+			REMOVE_MOB_PROPERTY(mob, PROP_STAMINA_REGEN_BONUS, "werewolf")
 			mob.remove_stun_resist_mod("werewolf")
 			mob.max_health -= 30
 			health_update_queue |= mob
@@ -1329,22 +1340,26 @@
 	human_compatible = 0
 	jerk = 1
 	override_attack = 0
-	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/right/hunter
-	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/left/hunter
+	mutant_folder = 'icons/mob/hunter.dmi'
+	special_head = HEAD_HUNTER //heh
+	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/hunter/right
+	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/hunter/left
+	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/hunter/right
+	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/hunter/left
 	ignore_missing_limbs = 0
-
+	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_NO_EYES | BUILT_FROM_PIECES | HEAD_HAS_OWN_COLORS)
 
 	// Gave them a minor stamina boost (Convair880).
 	New(var/mob/living/carbon/human/M)
 		. = ..()
 		if(ishuman(M))
 			M.add_stam_mod_max("hunter", 50)
-			M.add_stam_mod_regen("hunter", 10)
+			APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "hunter", 10)
 
 	disposing()
 		if(ishuman(mob))
 			mob.remove_stam_mod_max("hunter")
-			mob.remove_stam_mod_regen("hunter")
+			REMOVE_MOB_PROPERTY(mob, PROP_STAMINA_REGEN_BONUS, "hunter")
 		return ..()
 
 	sight_modifier()
@@ -1354,6 +1369,7 @@
 	say_verb()
 		return "snarls"
 
+
 /datum/mutantrace/ithillid
 	name = "ithillid"
 	icon_state = "squid"
@@ -1361,8 +1377,17 @@
 	override_attack = 0
 	aquatic = 1
 	voice_override = "blub"
+	mutant_folder = 'icons/mob/ithillid.dmi'
+	special_head = HEAD_ITHILLID
+	special_hair_1_icon = 'icons/mob/ithillid.dmi'
+	special_hair_1_state = "head_detail_1"
+	special_hair_1_color = null
 	race_mutation = /datum/bioEffect/mutantrace/ithillid
-
+	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/ithillid/right
+	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/ithillid/left
+	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/ithillid/right
+	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/ithillid/left
+	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_NO_EYES | BUILT_FROM_PIECES | HAS_SPECIAL_HAIR | HEAD_HAS_OWN_COLORS)
 
 	say_verb()
 		return "glubs"
@@ -1862,7 +1887,7 @@
 			if(ishuman(mob))
 				H.setStatus("maxhealth-", null, -50)
 				H.add_stam_mod_max("kudzu", -100)
-				H.add_stam_mod_regen("kudzu", -5)
+				APPLY_MOB_PROPERTY(H, PROP_STAMINA_REGEN_BONUS, "kudzu", -5)
 				H.bioHolder.AddEffect("xray", magical=1)
 				H.abilityHolder = new /datum/abilityHolder/kudzu(H)
 				H.abilityHolder.owner = H
@@ -1887,7 +1912,7 @@
 				H.abilityHolder.removeAbility(/datum/targetable/kudzu/kudzusay)
 				H.abilityHolder.removeAbility(/datum/targetable/kudzu/vine_appendage)
 			H.remove_stam_mod_max("kudzu")
-			H.remove_stam_mod_regen("kudzu")
+			REMOVE_MOB_PROPERTY(H, PROP_STAMINA_REGEN_BONUS, "kudzu")
 		return ..()
 /* Commented out as this bypasses restricted Z checks. We will just lazily give them xray genes instead
 	// vision modifier (see_mobs, etc i guess)
@@ -1954,6 +1979,7 @@
 	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/cow/right
 	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/cow/left
 	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_NO_EYES | BUILT_FROM_PIECES | HAS_EXTRA_DETAILS | HAS_OVERSUIT_DETAILS | HAS_SPECIAL_HAIR | HEAD_HAS_OWN_COLORS)
+	color_channel_names = list("Horn Detail", "Hoof Detail")
 
 	New(var/mob/living/carbon/human/H)
 		..()

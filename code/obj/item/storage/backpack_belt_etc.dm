@@ -389,6 +389,7 @@
 	/obj/item/gun/kinetic/revolver,
 	/obj/item/gun/kinetic/zipgun,
 	/obj/item/clothing/mask/gas/NTSO,
+	/obj/item/gun/energy/tasersmg,
 	/obj/item/gun/energy/signifer2) //added so the NTSO mask can be clipped to the belt, maybe good to do with all gas masks?
 	in_list_or_max = 1
 
@@ -406,22 +407,31 @@
 
 
 	standard
-		spawn_contents = list(/obj/item/gun/energy/taser_gun, /obj/item/baton)
+		spawn_contents = list(/obj/item/gun/energy/taser_gun, /obj/item/baton, /obj/item/barrier)
 
 	offense
-		spawn_contents = list(/obj/item/gun/energy/wavegun, /obj/item/baton)
+		spawn_contents = list(/obj/item/gun/energy/wavegun, /obj/item/baton, /obj/item/barrier)
 
 	support
-		spawn_contents = list(/obj/item/baton, /obj/item/reagent_containers/food/snacks/donut/robust = 2,  /obj/item/reagent_containers/emergency_injector/morphine = 4)
+		spawn_contents = list(/obj/item/baton, /obj/item/reagent_containers/food/snacks/donut/custom/robust = 2,  /obj/item/reagent_containers/emergency_injector/morphine = 4)
 
 	control
-		spawn_contents = list(/obj/item/gun/energy/tasershotgun, /obj/item/chem_grenade/pepper = 4, /obj/item/baton)
+		spawn_contents = list(/obj/item/gun/energy/tasershotgun, /obj/item/baton, /obj/item/barrier)
 		New()
 			..()
-			can_hold += /obj/item/gun/energy/tasershotgun //lol
+			can_hold += /obj/item/gun/energy/tasershotgun
+
+	assistant
+		spawn_contents = list(/obj/item/barrier, /obj/item/device/detective_scanner, /obj/item/device/ticket_writer)
 
 	ntso
 		spawn_contents = list(/obj/item/gun/energy/signifer2, /obj/item/gun/kinetic/clock_188, /obj/item/baton/ntso, /obj/item/clothing/mask/gas/NTSO, /obj/item/storage/ntso_pouch) //secbelt subtype that only spawns on NTSO, not in vendor
+
+	baton
+		spawn_contents = list(/obj/item/baton, /obj/item/barrier)
+
+	tasersmg
+		spawn_contents = list(/obj/item/gun/energy/tasersmg, /obj/item/baton, /obj/item/barrier)
 
 //////////////////////////////
 // ~Nuke Ops Class Storage~ //

@@ -260,9 +260,9 @@ proc/debug_color_of(var/thing)
 			if(cell)
 				num_charge = cell.charge / cell.maxcharge
 			var/list/lcolor = hex_to_rgb_list(debug_color_of(area))
-			for(var/c in lcolor)
+			for(var/c in 1 to 3)
 				lcolor[c] = lcolor[c] / 8 + 220 * num_charge
-			img.app.color = rgb(lcolor["r"], lcolor["g"], lcolor["b"])
+			img.app.color = rgb(lcolor[1], lcolor[2], lcolor[3])
 			if(!(area in processed_areas))
 				var/text_charge
 				if(!apc || apc.disposed)
@@ -962,7 +962,7 @@ proc/debug_color_of(var/thing)
 		if(isnull(name))
 			name = replacetext("[dummy]", "/datum/infooverlay/", "")
 		available_overlays[name] = dummy
-	var/name = input("Choose an overlay") in (available_overlays + "REMOVE")
+	var/name = input("Choose an overlay") as null|anything in (available_overlays + "REMOVE")
 	activeOverlay?.OnDisabled(src)
 	if(!name || name == "REMOVE")
 		if(infoOverlayImages)

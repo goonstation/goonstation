@@ -62,6 +62,7 @@
 				var/newname = input(blob.current, "You are a Blob. Please choose a name for yourself, it will show in the form: <name> the Blob", "Name change") as text
 
 				if (newname)
+					phrase_log.log_phrase("name-blob", newname, no_duplicates=TRUE)
 					if (length(newname) >= 26) newname = copytext(newname, 1, 26)
 					newname = strip_html(newname) + " the Blob"
 					blob.current.real_name = newname

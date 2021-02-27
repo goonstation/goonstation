@@ -66,7 +66,7 @@
 			return
 		if (!islist(src.stains))
 			src.stains = list()
-		else if (src.stains.Find(stn))
+		else if (stn in src.stains)
 			return
 		src.stains += stn
 		src.UpdateName()

@@ -161,6 +161,37 @@ mob/living/carbon/human/cluwne/satan/megasatan //someone can totally use this fo
 		SPAWN_DBG(0)
 			src.unkillable = 1 //for the megasatan in you
 
+/*
+ * Chicken man belongs in human zone, not ai zone
+ */
+/mob/living/carbon/human/chicken
+	name = "chicken man"
+	real_name = "chicken man"
+	desc = "half man, half BWAHCAWCK!"
+#ifdef IN_MAP_EDITOR
+	icon_state = "m-none"
+#endif
+	New()
+		. = ..()
+		SPAWN_DBG(0.5 SECONDS)
+			if (!src.disposed)
+				src.bioHolder.AddEffect("chicken", 0, 0, 1)
+
+/mob/living/carbon/human/chicken/ai_controlled
+	is_npc = TRUE
+	uses_mobai = TRUE
+	New()
+		. = ..()
+		src.ai = new /datum/aiHolder/wanderer(src)
+
+/datum/aiHolder/wanderer
+	New()
+		. = ..()
+		var/datum/aiTask/timed/wander/W =  get_instance(/datum/aiTask/timed/wander, list(src))
+		W.transition_task = W
+		default_task = W
+
+
 // how you gonna have father ted and father jack and not father dougal? smh
 
 /mob/living/carbon/human/fatherted
@@ -204,6 +235,7 @@ mob/living/carbon/human/cluwne/satan/megasatan //someone can totally use this fo
 		..()
 
 	was_harmed(var/mob/M as mob, var/obj/item/weapon = 0, var/special = 0, var/intent = null)
+		. = ..()
 		if (special) //vamp or ling
 			src.target = M
 			src.ai_state = AI_ATTACKING
@@ -243,7 +275,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 
 	if (src.client)
 		for (var/atom/I in src.hud.inventory_bg)
-			if (istype(I,/obj/screen/hud))
+			if (istype(I,/atom/movable/screen/hud))
 				hudlist += I
 
 	for (var/obj/item/I in src.contents)
@@ -280,8 +312,8 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 
 		var/obj/item/W = src.equipped()
 		if (!src.restrained())
-			if (istype(picked,/obj/screen/hud))
-				var/obj/screen/hud/HUD = picked
+			if (istype(picked,/atom/movable/screen/hud))
+				var/atom/movable/screen/hud/HUD = picked
 				var/list/params = empty_mouse_params()
 				HUD.clicked(HUD.id, src, params)
 			else if (istype(picked,/obj/ability_button))
@@ -624,6 +656,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 
 
 	was_harmed(var/mob/M as mob, var/obj/item/weapon = 0, var/special = 0, var/intent = null)
+		. = ..()
 		if (special) //vamp or ling
 			src.target = M
 			src.ai_state = AI_ATTACKING
@@ -773,6 +806,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 		..()
 
 	was_harmed(var/mob/M as mob, var/obj/item/weapon = 0, var/special = 0, var/intent = null)
+		. = ..()
 		if (special) //vamp or ling
 			src.target = M
 			src.ai_state = AI_ATTACKING
@@ -883,6 +917,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 			gender = pick(MALE,FEMALE)
 
 	was_harmed(var/mob/M as mob, var/obj/item/weapon = 0, var/special = 0, var/intent = null)
+		. = ..()
 		if(isdead(src))
 			return
 		if(prob(10))
@@ -938,6 +973,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 		..()
 
 	was_harmed(var/mob/M as mob, var/obj/item/weapon = 0, var/special = 0, var/intent = null)
+		. = ..()
 		if(isdead(src))
 			return
 		if(prob(20))

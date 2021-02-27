@@ -134,8 +134,8 @@
 				var/mob/living/M = AM
 				if (M.buckled)
 					M.buckled = null
-				boutput(M, "You fall into the [src].")
-				src.visible_message("[M] falls into the [src].")
+				boutput(M, "You fall into [src].")
+				src.visible_message("[M] falls into [src].")
 				M.set_loc(src)
 				flush = 1
 				update()
@@ -154,8 +154,8 @@
 			msg = "[user.name] falls into [src]."
 			boutput(user, "You fall into [src].")
 		else if(target != user && !user.restrained())
-			msg = "[user.name] pushes [target.name] into the [src]!"
-			boutput(user, "You push [target.name] into the [src]!")
+			msg = "[user.name] pushes [target.name] into [src]!"
+			boutput(user, "You push [target.name] into [src]!")
 		else
 			return
 		target.set_loc(src)
@@ -185,7 +185,7 @@
 
 	// human interact with machine
 	attack_hand(mob/user as mob)
-		src.add_fingerprint(usr)
+		src.add_fingerprint(user)
 		if (open != 1)
 			return
 		if(status & BROKEN)

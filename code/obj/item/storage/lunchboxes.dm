@@ -42,7 +42,7 @@
 
 	food5
 		spawn_contents = list(/obj/item/reagent_containers/food/snacks/taco/complete,\
-		/obj/item/reagent_containers/food/snacks/donut/cinnamon,\
+		/obj/item/reagent_containers/food/snacks/donut/custom/cinnamon,\
 		/obj/item/reagent_containers/food/snacks/plant/cherry,\
 		/obj/item/paper/lunchbox_note)
 

@@ -519,16 +519,15 @@
 
 	// Validate that an item is inside this machine for HREF check purposes
 	proc/validate_disp(var/datum/manufacture/M)
-		if(src.available && src.available.Find(M))
-			return 1
+		. = FALSE
+		if(src.available && (M in src.available))
+			return TRUE
 
-		if(src.download && src.download.Find(M))
-			return 1
+		if(src.download && (M in src.download))
+			return TRUE
 
-		if(src.hacked && src.hidden && src.hidden.Find(M))
-			return 1
-
-		return 0
+		if(src.hacked && src.hidden && (M in src.hidden))
+			return TRUE
 
 
 	Topic(href, href_list)
@@ -1763,9 +1762,8 @@
 			playsound(src.loc, src.sound_damaged, 50, 2)
 			if (src.health == 0)
 				src.visible_message("<span class='alert'><b>[src.name] is destroyed!</b></span>")
-				SPAWN_DBG(0)
-					robogibs(src.loc,null)
 				playsound(src.loc, src.sound_destroyed, 50, 2)
+				robogibs(src.loc, null)
 				qdel(src)
 				return
 			if (src.health <= 70 && !src.malfunction && prob(33))
@@ -1923,6 +1921,13 @@
 	blueprint = /datum/manufacture/mechanics/loafer
 
 
+
+/******************** AI Display Blueprints (should be temporary but we know how that goes in coding) *******************/
+
+/obj/item/paper/manufacturer_blueprint/ai_status_display
+	blueprint = /datum/manufacture/mechanics/ai_status_display
+
+
 /******************** Alastor Pattern Thruster Blueprints *******************/
 /obj/item/paper/manufacturer_blueprint/thrusters
 	icon = 'icons/obj/writing.dmi'
@@ -1990,6 +1995,7 @@
 		/datum/manufacture/fluidcanister,
 		/datum/manufacture/patch)
 	hidden = list(/datum/manufacture/RCDammo,
+		/datum/manufacture/RCDammomedium,
 		/datum/manufacture/RCDammolarge,
 		/datum/manufacture/bottle,
 		/datum/manufacture/vuvuzela,
@@ -2125,6 +2131,8 @@
 		/datum/manufacture/hypospray,
 		/datum/manufacture/patch,
 		/datum/manufacture/mender,
+		/datum/manufacture/penlight,
+		/datum/manufacture/stethoscope,
 		/datum/manufacture/latex_gloves,
 		/datum/manufacture/surgical_mask,
 		/datum/manufacture/surgical_shield,
@@ -2209,6 +2217,7 @@
 
 	hidden = list(/datum/manufacture/RCD,
 	/datum/manufacture/RCDammo,
+	/datum/manufacture/RCDammomedium,
 	/datum/manufacture/RCDammolarge)
 
 /obj/machinery/manufacturer/hangar
@@ -2266,6 +2275,7 @@
 	/datum/manufacture/jumpsuit_brown,
 	/datum/manufacture/jumpsuit_black,
 	/datum/manufacture/jumpsuit_orange,
+	/datum/manufacture/pride_lgbt,
 	/datum/manufacture/pride_ace,
 	/datum/manufacture/pride_aro,
 	/datum/manufacture/pride_bi,
@@ -2363,6 +2373,7 @@
 	/datum/manufacture/jumpsuit_brown,
 	/datum/manufacture/jumpsuit_black,
 	/datum/manufacture/jumpsuit_orange,
+	/datum/manufacture/pride_lgbt,
 	/datum/manufacture/pride_ace,
 	/datum/manufacture/pride_aro,
 	/datum/manufacture/pride_bi,

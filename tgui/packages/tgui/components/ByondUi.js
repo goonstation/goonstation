@@ -99,6 +99,7 @@ export class ByondUi extends Component {
       return;
     }
     window.addEventListener('resize', this.handleResize);
+    window.addEventListener('scroll', () => this.componentDidUpdate());
     this.componentDidUpdate();
     this.handleResize();
   }
@@ -110,9 +111,14 @@ export class ByondUi extends Component {
     }
     const {
       params = {},
+      hideOnScroll,
     } = this.props;
     const box = getBoundingBox(this.containerRef.current);
     logger.debug('bounding box', box);
+    if (hideOnScroll && box.pos[1] < 32) {
+      this.byondUiElement.unmount();
+      return;
+    }
     this.byondUiElement.render({
       parent: window.__windowId__,
       ...params,
@@ -127,6 +133,7 @@ export class ByondUi extends Component {
       return;
     }
     window.removeEventListener('resize', this.handleResize);
+    window.removeEventListener('scroll', this.handleResize);
     this.byondUiElement.unmount();
   }
 

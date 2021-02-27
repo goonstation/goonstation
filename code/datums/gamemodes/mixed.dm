@@ -245,7 +245,8 @@
 
 				SPAWN_DBG(0)
 					var/newname = input(traitor.current,"You are a Wizard. Would you like to change your name to something else?", "Name change",randomname)
-
+					if(newname && newname != randomname)
+						phrase_log.log_phrase("name-wizard", randomname, no_duplicates=TRUE)
 					if (length(ckey(newname)) == 0)
 						newname = randomname
 
@@ -278,6 +279,7 @@
 					var/newname = input(traitor.current, "You are a Blob. Please choose a name for yourself, it will show in the form: <name> the Blob", "Name change") as text
 
 					if (newname)
+						phrase_log.log_phrase("name-blob", newname, no_duplicates=TRUE)
 						if (length(newname) >= 26) newname = copytext(newname, 1, 26)
 						newname = strip_html(newname) + " the Blob"
 						traitor.current.real_name = newname
