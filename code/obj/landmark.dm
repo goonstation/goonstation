@@ -141,9 +141,7 @@ var/global/list/job_start_locations = list()
 	var/static/list/name_to_type = list(
 		"shitty_bill" = /mob/living/carbon/human/biker,
 		"john_bill" = /mob/living/carbon/human/john,
-		#ifdef SECRETS_ENABLED
 		"pariah" = /mob/living/carbon/human/pariah,
-		#endif
 		"big_yank" = /mob/living/carbon/human/big_yank,
 		"father_jack" = /mob/living/carbon/human/fatherjack,
 		"don_glab" = /mob/living/carbon/human/don_glab,
