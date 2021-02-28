@@ -85292,6 +85292,11 @@
 /obj/item/paper/postcard/mushroom,
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/efrem)
+"pcD" = (
+/obj/table/auto,
+/obj/item/pipebomb/bomb/stacked,
+/turf/unsimulated/floor/darkblue,
+/area/syndicate_station/firing_range)
 "pfF" = (
 /obj/table/reinforced/industrial/auto,
 /obj/machinery/computer3/generic/personal,
@@ -118547,7 +118552,7 @@ acn
 cKR
 cIe
 deq
-dex
+pcD
 dfa
 btf
 dgi
