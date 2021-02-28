@@ -614,22 +614,22 @@
 /obj/item/clothing/shoes/bootsblk
 	name = "Black Boots"
 	icon_state = "bootsblk"
-	desc = "Fashionable, sythleather black boots."
+	desc = "Fashionable, synthleather black boots."
 
 /obj/item/clothing/shoes/bootswht
 	name = "White Boots"
 	icon_state = "bootswht"
-	desc = "Fashionable, sythleather white boots."
+	desc = "Fashionable, synthleather white boots."
 
 /obj/item/clothing/shoes/bootsbrn
 	name = "Brown Boots"
 	icon_state = "bootsbrn"
-	desc = "Fashionable, sythleather brown boots."
+	desc = "Fashionable, synthleather brown boots."
 
 /obj/item/clothing/shoes/bootsblu
 	name = "Blue Boots"
 	icon_state = "bootsblu"
-	desc = "Fashionable, sythleather blue boots."
+	desc = "Fashionable, synthleather blue boots."
 
 /obj/item/clothing/shoes/flatsblk
 	name = "Black Flats"
