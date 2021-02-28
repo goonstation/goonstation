@@ -3623,9 +3623,8 @@
 
 					awaiting_beacon = 4
 
-					if( src.distracted == TRUE )
+					if ( src.distracted )
 						awaiting_beacon += 2
-						src.distracted = FALSE // TODO AZRUN REMOVE THIS SHIT
 
 					master.post_status("!BEACON!", "findbeacon", "tour")
 					return
