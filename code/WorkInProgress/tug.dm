@@ -153,6 +153,7 @@
 	mats = 10
 	var/obj/tug_cart/cart = null
 	throw_dropped_items_overboard = 1
+	ability_buttons_to_initialize = list(/obj/ability_button/vehicle_speed)
 	var/start_with_cart = 1
 	var/speed = 4
 
@@ -199,9 +200,6 @@
 		..()
 		if (start_with_cart)
 			cart = new/obj/tug_cart/(get_turf(src))
-		if (!islist(src.ability_buttons))
-			ability_buttons = list()
-		ability_buttons += new /obj/ability_button/vehicle_speed
 
 	eject_rider(var/crashed, var/selfdismount)
 		var/mob/living/rider = src.rider

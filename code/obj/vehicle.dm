@@ -11,7 +11,7 @@ Contains:
 */
 
 //////////////////////////////// Vehicle parent ///////////////////////////////////////
-
+ABSTRACT_TYPE(/obj/vehicle)
 /obj/vehicle
 	name = "vehicle"
 	icon = 'icons/obj/vehicles.dmi'
@@ -20,7 +20,8 @@ Contains:
 	var/in_bump = 0
 	var/sealed_cabin = 0
 	var/rider_visible =	1
-	var/list/ability_buttons = null//new/list()
+	var/list/ability_buttons = null //where the ability buttons will be placed on initialization
+	var/list/ability_buttons_to_initialize = null //list of types of ability buttons to be initialized
 	var/throw_dropped_items_overboard = 0 // See /mob/proc/drop_item() in mob.dm.
 	var/attacks_fast_eject = 1
 	layer = MOB_LAYER
@@ -28,6 +29,9 @@ Contains:
 	New()
 		. = ..()
 		START_TRACKING
+		if(length(ability_buttons_to_initialize))
+			src.setup_ability_buttons()
+
 
 	disposing()
 		. = ..()
@@ -59,9 +63,45 @@ Contains:
 
 	proc/eject_rider(var/crashed, var/selfdismount)
 		if(rider?.loc == src)
-			rider.set_loc(src.loc)
-			rider = null
+			src.rider.set_loc(src.loc)
+			handle_button_removal()
+			src.rider = null
 		src.eject_other_stuff()
+
+	proc/handle_button_removal()
+		if (length(src.ability_buttons))
+			for(var/obj/ability_button/B in src.ability_buttons)
+				src.rider.client?.screen -= B
+
+	proc/handle_button_addition()
+		if(!src.rider?.loc == src || !(length(src.ability_buttons)))
+			return
+		if(ishuman(src.rider))
+			var/mob/living/carbon/human/H = rider
+			H.hud?.update_ability_hotbar() //automatically adds the vehicle ability buttons
+		else if (src.rider) //fix for cannot read null.client
+			for(var/obj/ability_button/B in ability_buttons)
+				B.the_mob = src.rider
+				rider.client?.screen += B //don't have to worry about location since that should already have been handled by initialization
+
+/*			if (ishuman(rider))
+				var/mob/living/carbon/human/H = rider
+				H.hud?.update_ability_hotbar() //automatically removes the vehicle ability buttons
+			else if (length(src.ability_buttons))
+				for(var/obj/ability_button/B in src.ability_buttons)
+					rider.client.screen -= B
+*/
+
+	proc/setup_ability_buttons()
+		if (!islist(src.ability_buttons))
+			src.ability_buttons = list()
+		var/x_btt =1
+		for (var/button in src.ability_buttons_to_initialize)
+			var/obj/ability_button/NB = new button()
+			src.ability_buttons += NB
+			NB.screen_loc = "NORTH-2,[x_btt]"
+			x_btt++
+
 
 	ex_act(severity)
 		switch(severity)
@@ -117,15 +157,11 @@ Contains:
 	soundproofing = 0
 	throw_dropped_items_overboard = 1
 	var/datum/light/light
+	ability_buttons_to_initialize = list(/obj/ability_button/weeoo)
 	var/obj/item/joustingTool = null // When jousting will be reference to lance being used
 
 /obj/vehicle/segway/New()
 	..()
-	if (!islist(src.ability_buttons))
-		ability_buttons = list()
-	var/obj/ability_button/weeoo/NB = new
-	NB.screen_loc = "NORTH-2,1"
-	ability_buttons += NB
 	light = new /datum/light/point
 	light.set_brightness(0.7)
 	light.attach(src)
@@ -272,9 +308,6 @@ Contains:
 	..()
 	rider.pixel_y = 0
 	walk(src, 0)
-	if (rider.client)
-		for(var/obj/ability_button/B in ability_buttons)
-			rider.client.screen -= B
 	if(crashed)
 		if(crashed == 2)
 			playsound(src.loc, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 40, 1)
@@ -429,19 +462,10 @@ Contains:
 		boutput(user, "<span class='notice'>You help [target.name] onto \the [src]!</span>")
 	else
 		return
-
-	if (target.client)
-		for(var/obj/ability_button/B in ability_buttons)
-			B.the_mob = target
-
-		var/x_btt = 1
-		for(var/obj/ability_button/B in ability_buttons)
-			B.screen_loc = "NORTH-2,[x_btt]"
-			target.client.screen += B
-			x_btt++
-
 	target.set_loc(src)
 	rider = target
+	if (rider.client)
+		handle_button_addition()
 	rider.pixel_x = 0
 	rider.pixel_y = 5
 	src.UpdateOverlays(rider, "rider")
@@ -535,6 +559,7 @@ Contains:
 	var/icon_base = "floorbuffer"
 	var/rider_state = 1
 	var/speed = 4
+	ability_buttons_to_initialize = list(/obj/ability_button/fbuffer_toggle, /obj/ability_button/fbuffer_status)
 	soundproofing = 0
 	throw_dropped_items_overboard = 1
 
@@ -546,11 +571,6 @@ Contains:
 		else
 			reagents.add_reagent("water", 1000)
 			//reagents.add_reagent("cleaner", 250) //don't even need this now that we have fluid, probably. If you want it, add it yer self
-
-		if (!islist(src.ability_buttons))
-			ability_buttons = list()
-		ability_buttons += new /obj/ability_button/fbuffer_toggle
-		ability_buttons += new /obj/ability_button/fbuffer_status
 /*
 /obj/ability_button/toggle_buffer
 	name = "Toggle Buff-R-Matic Sprayer"
@@ -718,9 +738,6 @@ Contains:
 	..()
 	rider.pixel_y = 0
 	walk(src, 0)
-	if (rider.client)
-		for(var/obj/ability_button/B in ability_buttons)
-			rider.client.screen -= B
 	src.log_rider(rider, 1)
 	if(crashed)
 		if(crashed == 2)
@@ -789,16 +806,10 @@ Contains:
 	else
 		return
 
-	if (target.client)
-		//var/x_btt = 1
-		for (var/obj/ability_button/B in ability_buttons)
-			B.the_mob = target
-			//B.screen_loc = "NORTH-2,[x_btt]"
-			target.client.screen += B
-			//x_btt++
-
 	target.set_loc(src)
 	rider = target
+	if (target.client)
+		handle_button_addition()
 	rider.pixel_x = 0
 	rider.pixel_y = 10
 	src.UpdateOverlays(rider, "rider")
@@ -914,6 +925,7 @@ Contains:
 	rider_visible = 0
 	is_syndicate = 1
 	mats = 15
+	ability_buttons_to_initialize = list(/obj/ability_button/loudhorn/clowncar)
 	soundproofing = 5
 
 /obj/vehicle/clowncar/relaymove(mob/user as mob, dir)
@@ -1043,18 +1055,19 @@ Contains:
 	if(target == user && !user.stat)	// if drop self, then climbed in
 		if(rider)
 			return
+		target.set_loc(src)
 		rider = target
+		handle_button_addition()
 		src.log_me(src.rider, null, "rider_enter")
 		msg = "[user.name] climbs into the driver's seat of the [src]."
 		boutput(user, "<span class='notice'>You climb into the driver's seat of the [src].</span>")
 	else if(target != user && !user.restrained() && target.lying)
+		target.set_loc(src)
 		src.log_me(user, target, "pax_enter", 1)
 		msg = "[user.name] stuffs [target.name] into the back of the [src]!"
 		boutput(user, "<span class='notice'>You stuff [target.name] into the back of the [src]!</span>")
 	else
 		return
-
-	target.set_loc(src)
 	for (var/mob/C in AIviewers(src))
 		if(C == user)
 			continue
@@ -1537,24 +1550,11 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 	mats = 15
 	sealed_cabin = 1
 	rider_visible = 0
+	ability_buttons_to_initialize = list(/obj/ability_button/loudhorn, /obj/ability_button/stopthebus, /obj/ability_button/togglespook)
 	var/gib_onhit = 0
 	var/is_badmin_bus = FALSE
 	var/darkness = FALSE
 	soundproofing = 5
-
-/obj/vehicle/adminbus/New()
-	..()
-	if (!islist(src.ability_buttons))
-		ability_buttons = list()
-	var/obj/ability_button/loudhorn/NB = new
-	NB.screen_loc = "NORTH-2"
-	ability_buttons += NB
-	var/obj/ability_button/stopthebus/SB = new
-	SB.screen_loc = "NORTH-2"
-	ability_buttons += SB
-	var/obj/ability_button/togglespook/togglespook = new
-	togglespook.screen_loc = "NORTH-2"
-	ability_buttons += togglespook
 
 /obj/vehicle/adminbus/Move()
 	if(src.darkness)
@@ -1567,6 +1567,9 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 	name = "Loudhorn"
 	icon = 'icons/misc/abilities.dmi'
 	icon_state = "noise"
+	var/mysound = 'sound/musical_instruments/Vuvuzela_1.ogg'
+	var/mydelay = 1 SECOND
+	var/myvolume = 50
 	var/active = 0
 
 	Click(location, control, params)
@@ -1579,11 +1582,18 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 		var/mob/my_mob = the_mob
 
 		if(!isturf(my_mob.loc))
-			playsound(my_mob.loc, "sound/musical_instruments/Vuvuzela_1.ogg", 50, 1)
-		playsound(the_turf, "sound/musical_instruments/Vuvuzela_1.ogg", 50, 1)
+			playsound(my_mob.loc, src.mysound, src.myvolume, 1)
+		playsound(the_turf, src.mysound, src.myvolume, 1)
 
-		SPAWN_DBG(1 SECOND)
+		SPAWN_DBG(src.mydelay)
 			active = 0
+
+/obj/ability_button/loudhorn/clowncar
+	name = "Clown Car Horn"
+	icon = 'icons/misc/abilities.dmi'
+	icon_state = "noise"
+	mysound = 'sound/musical_instruments/Carhorn_1.ogg'
+	mydelay = 10 SECONDS
 
 /obj/ability_button/stopthebus
 	name = "Stop The Bus"
@@ -1736,6 +1746,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 		return
 
 	if(target == user && !user.stat)	// if drop self, then climbed in
+		target.set_loc(src)
 		if(rider)
 			msg = "[user.name] climbs into the front of the [src]."
 			boutput(user, "<span class='notice'>You climb into the front of the [src].</span>")
@@ -1745,20 +1756,13 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 			boutput(user, "<span class='notice'>You climb into the driver's seat of the [src].</span>")
 			rider.add_adminbus_powers()
 			sleep(1 SECOND)
-			for(var/obj/ability_button/B in ability_buttons)
-				B.the_mob = rider
-
-			var/x_btt = 1
-			for(var/obj/ability_button/B in ability_buttons)
-				B.screen_loc = "NORTH-2,[x_btt]"
-				rider.client.screen += B
-				x_btt++
+			handle_button_addition()
 	else if(target != user && !user.restrained())
+		target.set_loc(src)
 		msg = "[user.name] stuffs [target.name] into the back of the [src]!"
 		boutput(user, "<span class='notice'>You stuff [target.name] into the back of the [src]!</span>")
 	else
 		return
-	target.set_loc(src)
 	for (var/mob/C in AIviewers(src))
 		if(C == user)
 			continue
@@ -1858,8 +1862,6 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 	var/mob/living/rider = src.rider
 	..()
 	rider.remove_adminbus_powers()
-	for(var/obj/ability_button/B in src.ability_buttons)
-		rider.client.screen -= B
 	walk(src, 0)
 	if(crashed)
 		if(crashed == 2)
@@ -1998,13 +2000,13 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 
 /mob/proc/add_adminbus_powers()
 	if(src.client.holder && src.client.holder.rank && src.client.holder.level >= LEVEL_PA)
-		src.verbs += /client/proc/toggle_gib_onhit
-		src.verbs += /client/proc/toggle_badminbus
+		src.client.verbs += /client/proc/toggle_gib_onhit
+		src.client.verbs += /client/proc/toggle_badminbus
 	return
 
 /mob/proc/remove_adminbus_powers()
-	src.verbs -= /client/proc/toggle_gib_onhit
-	src.verbs -= /client/proc/toggle_badminbus
+	src.client.verbs -= /client/proc/toggle_gib_onhit
+	src.client.verbs -= /client/proc/toggle_badminbus
 	return
 
 //////////////////////////////////////////////////////////////// Battle Bus //////////////////////////
@@ -2020,6 +2022,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 	badmin_nonmoving_state = "adminbus2"
 	badmin_name = "Baddler Bus"
 	badmin_desc = "An unstoppable bus made for war."
+	ability_buttons_to_initialize = list(/obj/ability_button/loudhorn, /obj/ability_button/stopthebus, /obj/ability_button/togglespook, /obj/ability_button/battlecannon, /obj/ability_button/omnicannon, /obj/ability_button/bombchute, /obj/ability_button/hotwheels, /obj/ability_button/staticcharge)
 	var/datum/projectile/P = new/datum/projectile/special/spawner/battlecrate
 	var/datum/projectile/special/spreader/uniform_burst/circle/P2 = new
 	var/power_hotwheels = FALSE
@@ -2034,14 +2037,6 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 		P2.spread_projectile_type = /datum/projectile/fireball
 		P2.pellets_to_fire = 10
 		P2.pellet_shot_volume = 75 / P2.pellets_to_fire //anti-ear destruction
-
-		if (!islist(src.ability_buttons))
-			ability_buttons = list()
-		ability_buttons += new/obj/ability_button/battlecannon
-		ability_buttons += new/obj/ability_button/omnicannon
-		ability_buttons += new/obj/ability_button/bombchute
-		ability_buttons += new/obj/ability_button/hotwheels
-		ability_buttons += new/obj/ability_button/staticcharge
 
 	relaymove(mob/user, dir)
 		if(src.power_hotwheels)
