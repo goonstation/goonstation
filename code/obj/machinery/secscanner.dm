@@ -77,7 +77,7 @@
 			pdaSignal.transmission_method = TRANSMISSION_RADIO
 			if(transmit_connection != null)
 				transmit_connection.post_signal(src, pdaSignal)
-			last_perp = I.name
+			last_perp = perpname
 			last_contraband = contraband
 
 	// Triggered by item (eg thrown)
@@ -99,11 +99,15 @@
 				icon_state = "scanner_on"
 
 	// Triggered by person
-	proc/do_scan(var/mob/target, var/mob/living/carbon/human/H)
+	proc/do_scan(var/mob/target)
 		if( icon_state != "scanner_on" )
 			return
 		src.use_power(15)
 
+		if (!ishuman(target))
+			return
+
+		var/mob/living/carbon/human/H = target
 		var/contraband = assess_perp(target)
 		contraband = min(contraband,10)
 
