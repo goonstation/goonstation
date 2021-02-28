@@ -2876,6 +2876,9 @@
 /mob/proc/handle_stamina_updates()
 	.= 0
 
+/mob/proc/update_canmove()
+	. = 0
+
 /*/mob/proc/glove_weaponcheck()
 	if (ishuman(src))
 		var/mob/living/carbon/human/H = src
