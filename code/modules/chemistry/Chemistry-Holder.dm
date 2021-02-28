@@ -566,9 +566,10 @@ datum
 			for(var/current_id in reagent_list)
 				var/datum/reagent/current_reagent = reagent_list[current_id]
 				if(current_reagent)
-					if(current_reagent.volume <= 0)
+					if(current_reagent.volume <= 0.00005)
 						del_reagent(current_id)
 					else
+						current_reagent.volume = max(min(round(current_reagent.volume, 0.00005), (current_reagent.volume + 0.00005)), 0.00005)
 						total_volume += current_reagent.volume
 			if(isitem(my_atom))
 				var/obj/item/I = my_atom
