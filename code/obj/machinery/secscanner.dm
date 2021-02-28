@@ -48,6 +48,39 @@
 			user.show_text( "You 're-purpose' the [src].", "red" )
 		..()
 
+	proc/pda_notify(var/W, var/contraband)
+		if (src.loc.z != Z_LEVEL_STATION)
+			return
+		var/obj/item/I
+		var/mob/living/carbon/human/H
+		var/scan_location = get_area(src)
+		var/perpname
+		var/alert_msg
+		if (istype(W, /obj/item))
+			I = W
+			perpname = I.name
+			alert_msg = "Notification: An item [I.name] failed checkpoint scan at [scan_location]! Threat Level : [contraband]"
+		else if (istype(W, /mob/living/carbon/human))
+			H = W
+			perpname = H.name
+			if (H:wear_id && H:wear_id:registered)
+				perpname = H.wear_id:registered
+			alert_msg = "Notification: An item [perpname] failed checkpoint scan at [scan_location]! Threat Level : [contraband]"
+		// Emag
+		if (src.emagged)
+			alert_msg = "NOTIFICATION: [uppertext(perpname)] FAILED A VIBE CHECK AT [uppertext(scan_location)]! BAD VIBES LEVEL : [contraband]"
+
+		if (src.report_scans && (perpname != last_perp || contraband != last_contraband))
+			var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency("1149")
+			var/datum/signal/pdaSignal = get_free_signal()
+			pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="SECURITY-MAILBOT",  "group"=list(MGD_SECURITY, MGA_CHECKPOINT), "sender"="00000000", "message"="[alert_msg]")
+			pdaSignal.transmission_method = TRANSMISSION_RADIO
+			if(transmit_connection != null)
+				transmit_connection.post_signal(src, pdaSignal)
+			last_perp = I.name
+			last_contraband = contraband
+
+	// Triggered by item (eg thrown)
 	proc/do_scan_item (var/obj/item/I)
 		if( icon_state != "scanner_on" )
 			return
@@ -58,31 +91,15 @@
 
 			playsound( src.loc, fail_sound, 10, 0 )
 			icon_state = "scanner_red"
-			src.use_power(15)
 
 			//////PDA NOTIFY/////
-			if (src.loc.z != Z_LEVEL_STATION)
-				return
-			if (src.report_scans && (I.name != last_perp || contraband != last_contraband))
-				var/scan_location = get_area(src)
-
-				var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency("1149")
-				var/datum/signal/pdaSignal = get_free_signal()
-				pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="SECURITY-MAILBOT",  "group"=list(MGD_SECURITY, MGA_CHECKPOINT), "sender"="00000000", "message"="Notification: An item [I.name] failed checkpoint scan at [scan_location]! Threat Level : [contraband]")
-				pdaSignal.transmission_method = TRANSMISSION_RADIO
-				if(transmit_connection != null)
-					transmit_connection.post_signal(src, pdaSignal)
-
-				last_perp = I.name
-				last_contraband = contraband
+			pda_notify(I, contraband)
 
 			SPAWN_DBG(timeBetweenUses)
 				icon_state = "scanner_on"
 
-
-
-
-	proc/do_scan( var/mob/target )
+	// Triggered by person
+	proc/do_scan(var/mob/target, var/mob/living/carbon/human/H)
 		if( icon_state != "scanner_on" )
 			return
 		src.use_power(15)
@@ -97,37 +114,11 @@
 				icon_state = "scanner_red"
 				target.show_text( "You feel [pick("unfortunate", "bad", "like your fate has been sealed", "anxious", "scared", "overwhelmed")].", "red" )
 				if (ishuman(target))
-					var/mob/living/carbon/human/H = target
 					var/perpname = H.name
-					src.use_power(15)
 					src.speak("[uppertext(perpname)] HAS FAILED THE VIBE CHECK! BAD VIBES! BAD VIBES!!")
 
-				//////PDA NOTIFY/////
-				if (src.loc.z != Z_LEVEL_STATION)
-					return
-				if (src.report_scans)
-					var/scan_location = get_area(src)
-
-					if (ishuman(target))
-						var/mob/living/carbon/human/H = target
-						var/perpname = H.name
-						if (H:wear_id && H:wear_id:registered)
-							perpname = H.wear_id:registered
-
-						if (perpname != last_perp || contraband != last_contraband)
-							var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency("1149")
-							var/datum/signal/pdaSignal = get_free_signal()
-							pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="SECURITY-MAILBOT",  "group"=list(MGD_SECURITY, MGA_CHECKPOINT), "sender"="00000000", "message"="NOTIFICATION: [uppertext(perpname)] FAILED A VIBE CHECK AT [uppertext(scan_location)]! BAD VIBES LEVEL : [contraband]")
-							pdaSignal.transmission_method = TRANSMISSION_RADIO
-							if(transmit_connection != null)
-								transmit_connection.post_signal(src, pdaSignal)
-
-						last_perp = perpname
-						last_contraband = contraband
-
-
-
-
+					//////PDA NOTIFY/////
+					pda_notify(H, contraband)
 
 			else  //Vibe check passed everything is good :)))
 				target.show_text( "You feel [pick("good", "like you dodged a bullet", "lucky", "clean", "safe", "accepted")].", "blue" )
@@ -146,28 +137,9 @@
 
 			playsound( src.loc, fail_sound, 10, 0 )
 			icon_state = "scanner_red"
-			src.use_power(15)
 
 			//////PDA NOTIFY/////
-			if (src.loc.z != Z_LEVEL_STATION)
-				return
-			if (src.report_scans)
-				var/scan_location = get_area(src)
-
-				if (ishuman(target))
-					var/mob/living/carbon/human/H = target
-					var/perpname = H.name
-
-					if (perpname != last_perp || contraband != last_contraband)
-						var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency("1149")
-						var/datum/signal/pdaSignal = get_free_signal()
-						pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="SECURITY-MAILBOT",  "group"=list(MGD_SECURITY, MGA_CHECKPOINT), "sender"="00000000", "message"="Notification: [perpname] failed checkpoint scan at [scan_location]! Threat Level : [contraband]")
-						pdaSignal.transmission_method = TRANSMISSION_RADIO
-						if(transmit_connection != null)
-							transmit_connection.post_signal(src, pdaSignal)
-
-					last_perp = perpname
-					last_contraband = contraband
+			pda_notify(H, contraband)
 
 		else
 			playsound(src.loc, success_sound, 10, 1)
