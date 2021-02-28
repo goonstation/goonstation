@@ -165,6 +165,13 @@ that cannot be itched
 		user.show_text("No match found in security records.", "red")
 		return
 
+	pixelaction(atom/target, params, mob/user, reach)
+		if(get_dist(user, target) > 1 && get_dist(user, target) <= 2)
+			user.visible_message("<span class='notice'><b>[user]</b> takes a distant forensic scan of [target].</span>")
+			boutput(user, scan_forensic(target, visible = 1))
+			src.add_fingerprint(user)
+		return
+
 	afterattack(atom/A as mob|obj|turf|area, mob/user as mob)
 
 		if (get_dist(A,user) > 1 || istype(A, /obj/ability_button)) // Scanning for fingerprints over the camera network is fun, but doesn't really make sense (Convair880).
