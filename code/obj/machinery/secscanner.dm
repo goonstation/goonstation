@@ -65,7 +65,7 @@
 			perpname = H.name
 			if (H:wear_id && H:wear_id:registered)
 				perpname = H.wear_id:registered
-			alert_msg = "Notification: An item [perpname] failed checkpoint scan at [scan_location]! Threat Level : [contraband]"
+			alert_msg = "Notification: [perpname] failed checkpoint scan at [scan_location]! Threat Level : [contraband]"
 		// Emag
 		if (src.emagged)
 			alert_msg = "NOTIFICATION: [uppertext(perpname)] FAILED A VIBE CHECK AT [uppertext(scan_location)]! BAD VIBES LEVEL : [contraband]"
