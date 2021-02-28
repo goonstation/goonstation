@@ -1640,6 +1640,13 @@ PIPE BOMBS + CONSTRUCTION
 	icon_state = "Pipe_Timed"
 	strength = 32
 
+/obj/item/pipebomb/bomb/stacked
+	name = "stacked pipe bomb"
+	desc = "Powerful pipebomb that can blast a hole through almost anything you throw it at."
+	icon_state = "Pipe_Stacked"
+	strength = 40
+	w_class = 4
+
 /obj/item/pipebomb/bomb/miniature_syndicate
 	name = "pipe bomb"
 	desc = "This pipe bomb seems funny. You can hear muffled tiny screams inside."
