@@ -31117,6 +31117,7 @@
 /obj/item/storage/box/accessimp_kit{
 	pixel_y = 9
 	},
+/obj/item/pen/crayon/golden,
 /turf/simulated/floor/carpet{
 	icon_state = "green1"
 	},

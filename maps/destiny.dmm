@@ -1130,6 +1130,7 @@
 /obj/landmark/start{
 	name = "Head of Personnel"
 	},
+/obj/item/pen/crayon/golden,
 /turf/simulated/floor/carpet{
 	dir = 9;
 	icon_state = "fgreen2"
