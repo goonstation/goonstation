@@ -48,6 +48,7 @@ datum
 			name = "vampire serum"
 			id = "vampire_serum"
 			description = "A sinister blood-like fluid. It smells evil, somehow."
+			random_chem_blacklisted = 1
 			reagent_state = LIQUID
 			fluid_r = 150
 			fluid_g = 0
@@ -70,6 +71,7 @@ datum
 			name = "werewolf serum"
 			id = "werewolf_serum"
 			description = "A mutagenic substance associated with a mythical beast."
+			random_chem_blacklisted = 1
 			reagent_state = LIQUID
 			minimum_to_infect = 0
 			fluid_r = 173

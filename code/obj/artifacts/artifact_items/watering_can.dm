@@ -71,15 +71,9 @@
 		if (prob(3))
 			reagents.add_reagent("rainbow fluid", 30) // honk
 			usedCapacity += 30
-		if (prob(1))
-			reagents.add_reagent("vampire_serum", 5)
-			usedCapacity += 5
 		if (prob(2))
 			reagents.add_reagent("painbow fluid", 10) // HUNKE
 			usedCapacity += 10
-		if (prob(1))
-			reagents.add_reagent("werewolf_serum", 2) // awoo
-			usedCapacity += 2
 		if (prob(2))
 			reagents.add_reagent("liquid plasma", 15)
 			usedCapacity += 15
