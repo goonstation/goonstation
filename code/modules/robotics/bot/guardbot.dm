@@ -3712,7 +3712,7 @@
 								speak_with_maptext(copytext(html_encode(tour_line), 1, MAX_MESSAGE_LEN), TRUE)
 								sleep(5 SECONDS)
 					else
-							speak_with_maptext(copytext(html_encode(current_tour_text), 1, MAX_MESSAGE_LEN), TRUE)
+						speak_with_maptext(copytext(html_encode(current_tour_text), 1, MAX_MESSAGE_LEN), TRUE)
 
 
 #define MAPTEXT_SLICE_SIZE 100 // Reduce maptext slice size to avoid 4 rows
