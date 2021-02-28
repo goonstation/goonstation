@@ -155,13 +155,13 @@
 	throw_dropped_items_overboard = 1
 	ability_buttons_to_initialize = list(/obj/ability_button/vehicle_speed)
 	var/start_with_cart = 1
-	var/speed = 4
+	delay = 4
 
 	security
 		name = "security wagon"
 		icon_state = "tractor-sec"
 		var/weeoo_in_progress = 0
-		speed = 2
+		delay = 2
 
 
 		/*
@@ -236,23 +236,6 @@
 		rider = null
 		overlays = null
 		return
-
-	relaymove(mob/user as mob, dir) // only triggers when user hits a movement key
-		if (rider)
-			if (istype(src.loc, /turf/space))
-				return
-			src.glide_size = (32 / speed) * world.tick_lag
-			for (var/mob/M in src)
-				M.glide_size = src.glide_size
-				M.animate_movement = SYNC_STEPS
-			walk(src, dir, speed)
-			src.glide_size = (32 / speed) * world.tick_lag
-			for (var/mob/M in src)
-				M.glide_size = src.glide_size
-				M.animate_movement = SYNC_STEPS
-		else
-			for (var/mob/M in src.contents)
-				M.set_loc(src.loc)
 
 	MouseDrop_T(var/atom/movable/C, mob/user)
 		if (!in_interact_range(user, src) || !in_interact_range(user, C) || user.restrained() || user.getStatusDuration("paralysis") || user.sleeping || user.stat || user.lying)
@@ -376,11 +359,11 @@
 			return
 		if (istype(the_mob.loc, /obj/vehicle/tug))
 			var/obj/vehicle/tug/T = the_mob.loc
-			if (T.speed == 2)
+			if (T.delay == 2)
 				src.icon_state = "lo"
-				T.speed = 4
+				T.delay = 4
 			else
-				T.speed = 2
+				T.delay = 2
 				src.icon_state = "hi"
 			T.relaymove(the_mob, T.dir)
 
