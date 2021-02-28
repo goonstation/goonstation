@@ -25,7 +25,7 @@
 			..()
 		return
 
-	on_bite(var/mob/M)
+	on_bite(obj/item/I, mob/M, mob/user)
 		if(src.razor_blade && ishuman(M))
 			var/mob/living/carbon/human/H = M
 			var/obj/item/affecting = H.organs["head"]
@@ -42,7 +42,7 @@
 	real_name = "nougat"
 	icon_state = "nougat0"
 
-	on_bite(var/mob/M)
+	on_bite(obj/item/I, mob/M, mob/user)
 		..()
 		if (icon_state == "nougat0")
 			icon_state = "nougat1"
@@ -97,7 +97,7 @@
 	initial_reagents = list("badgrease"=5)
 	food_effects = list("food_sweaty")
 
-	on_bite(var/mob/M)
+	on_bite(obj/item/I, mob/M, mob/user)
 		..()
 		boutput(M, "It tastes disappointing.")
 		return
@@ -208,7 +208,7 @@
 				phrase = pick("Yum", "Wow", "MMM", "Delicious", "Scrumptious", "Fantastic", "Oh yeah")
 				tastesbad = 0
 
-	on_bite(var/mob/M)
+	on_bite(obj/item/I, mob/M, mob/user)
 		if (tastesbad)
 			boutput(M, "<span class='alert'>[phrase]! That tasted like [flavor]...</span>")
 		else

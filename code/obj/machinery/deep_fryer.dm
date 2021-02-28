@@ -35,7 +35,7 @@
 			boutput(user, "<span class='alert'>Your cooking skills are not up to the legendary Doublefry technique.</span>")
 			return
 
-		else if (istype(W, /obj/item/reagent_containers/))
+		else if (istype(W, /obj/item/reagent_containers/) && !istype(W, /obj/item/reagent_containers/food))
 			var/obj/item/reagent_containers/R = W
 			if (!R.reagents.total_volume)
 				boutput(user, "<span class='alert'>There is nothing in [R] to pour!</span>")
