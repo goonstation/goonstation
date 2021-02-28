@@ -16,6 +16,7 @@
 
 
 //Accessories
+
 /datum/clothingbooth_item/gold
 	name = "Gold Ring"
 	path = /obj/item/clothing/gloves/ring/gold
@@ -46,6 +47,7 @@
 	cost = PAY_TRADESMAN/3
 
 //Casual
+
 /datum/clothingbooth_item/casualjeanswb
 	name = "White Shirt and Jeans"
 	path = /obj/item/clothing/under/misc/casualjeanswb
@@ -153,6 +155,7 @@
 	cost = PAY_UNTRAINED/3
 
 //Dresses
+
 /datum/clothingbooth_item/hawaiian
 	name = "Hawaiian Dress"
 	path = /obj/item/clothing/under/misc/dress/hawaiian
@@ -519,142 +522,8 @@
 	cost = PAY_DOCTORATE/3
 	hidden = 1
 
-//Masquerade
-/datum/clothingbooth_item/blossommask
-	name = "Cherryblossom Mask"
-	path = /obj/item/clothing/mask/blossommask
-	slot = SLOT_WEAR_MASK
-	category = "Masquerade"
-	cost = PAY_TRADESMAN/5
-
-/datum/clothingbooth_item/blossomdress
-	name = "Cherryblossom Dress"
-	path = /obj/item/clothing/under/blossomdress
-	slot = SLOT_W_UNIFORM
-	category = "Masquerade"
-	cost = PAY_DOCTORATE/3
-
-/datum/clothingbooth_item/peacockmask
-	name = "Peacock Mask"
-	path = /obj/item/clothing/mask/peacockmask
-	slot = SLOT_WEAR_MASK
-	category = "Masquerade"
-	cost = PAY_TRADESMAN/5
-
-/datum/clothingbooth_item/peacockdress
-	name = "Peacock Dress"
-	path = /obj/item/clothing/under/peacockdress
-	slot = SLOT_W_UNIFORM
-	category = "Masquerade"
-	cost = PAY_DOCTORATE/3
-
-//Sci-Fi
-/datum/clothingbooth_item/sfjumpsuitbp
-	name = "Black and Purple Sci-Fi Jumpsuit"
-	path = /obj/item/clothing/under/misc/sfjumpsuitbp
-	slot = SLOT_W_UNIFORM
-	category = "Sci-Fi"
-	cost = PAY_DOCTORATE/3
-
-/datum/clothingbooth_item/sfjumpsuitrb
-	name = "Black and Red Sci-Fi Jumpsuit"
-	path = /obj/item/clothing/under/misc/sfjumpsuitrb
-	slot = SLOT_W_UNIFORM
-	category = "Sci-Fi"
-	cost = PAY_DOCTORATE/3
-
-/datum/clothingbooth_item/sfjumpsuitpnk
-	name = "Pink and Blue Sci-Fi Jumpsuit"
-	path = /obj/item/clothing/under/misc/sfjumpsuitpnk
-	slot = SLOT_W_UNIFORM
-	category = "Sci-Fi"
-	cost = PAY_DOCTORATE/3
-
-/datum/clothingbooth_item/sfjumpsuitbee
-	name = "Bee Sci-Fi Jumpsuit"
-	path = /obj/item/clothing/under/misc/sfjumpsuitbee
-	slot = SLOT_W_UNIFORM
-	category = "Sci-Fi"
-	cost = PAY_DOCTORATE/3
-
-/datum/clothingbooth_item/racingsuitbee
-	name = "Bee Racing Jumpsuit"
-	path = /obj/item/clothing/under/misc/racingsuitbee
-	slot = SLOT_W_UNIFORM
-	category = "Sci-Fi"
-	cost = PAY_DOCTORATE/3
-
-/datum/clothingbooth_item/racingsuitpnk
-	name = "Pink and Blue Racing Jumpsuit"
-	path = /obj/item/clothing/under/misc/racingsuitpnk
-	slot = SLOT_W_UNIFORM
-	category = "Sci-Fi"
-	cost = PAY_DOCTORATE/3
-
-/datum/clothingbooth_item/racingsuitrbw
-	name = "Pink and Blue Racing Jumpsuit"
-	path = /obj/item/clothing/under/misc/racingsuitrbw
-	slot = SLOT_W_UNIFORM
-	category = "Sci-Fi"
-	cost = PAY_DOCTORATE/3
-
-/datum/clothingbooth_item/racingsuitprp
-	name = "Purple and Black Racing Jumpsuit"
-	path = /obj/item/clothing/under/misc/racingsuitprp
-	slot = SLOT_W_UNIFORM
-	category = "Sci-Fi"
-	cost = PAY_DOCTORATE/3
-
-/datum/clothingbooth_item/cwhat
-	name = "Moebius-Brand Headwear"
-	path = /obj/item/clothing/head/cwhat
-	slot = SLOT_HEAD
-	category = "Sci-Fi"
-	cost = PAY_DOCTORATE/3
-
-/datum/clothingbooth_item/fthat
-	name = "Trader's Headwear"
-	path = /obj/item/clothing/head/fthat
-	slot = SLOT_HEAD
-	category = "Sci-Fi"
-	cost = PAY_DOCTORATE/5
-
-/datum/clothingbooth_item/ftscanplate
-	name = "FTX-480 Scanner Plate"
-	path = /obj/item/clothing/glasses/ftscanplate
-	slot = SLOT_GLASSES
-	category = "Sci-Fi"
-	cost = PAY_DOCTORATE/5
-
-/datum/clothingbooth_item/cwfashion
-	name = "CW Fashionista's Outfit"
-	path = /obj/item/clothing/under/gimmick/cwfashion
-	slot = SLOT_W_UNIFORM
-	category = "Sci-Fi"
-	cost = PAY_DOCTORATE/5
-
-/datum/clothingbooth_item/ftuniform
-	name = "Free Trader's Outfit"
-	path = /obj/item/clothing/under/gimmick/ftuniform
-	slot = SLOT_W_UNIFORM
-	category = "Sci-Fi"
-	cost = PAY_DOCTORATE/3
-
-/datum/clothingbooth_item/handcomp
-	name = "Compudyne 0451 Handcomp"
-	path = /obj/item/clothing/gloves/handcomp
-	slot = SLOT_GLOVES
-	category = "Sci-Fi"
-	cost = PAY_DOCTORATE/5
-
-/datum/clothingbooth_item/cwboots
-	name = "Macando Boots"
-	path = /obj/item/clothing/shoes/cwboots
-	slot = SLOT_SHOES
-	category = "Sci-Fi"
-	cost = PAY_DOCTORATE/5
-
 //Shoes
+
 /datum/clothingbooth_item/dress_shoes
 	name = "Dress Shoes"
 	path = /obj/item/clothing/shoes/dress_shoes
@@ -755,57 +624,8 @@
 	category = "Shoes"
 	cost = PAY_TRADESMAN/5
 
-//Summer
-/datum/clothingbooth_item/collardressbl
-	name = "Black Collar Dress"
-	path = /obj/item/clothing/under/collardressbl
-	slot = SLOT_W_UNIFORM
-	category = "Summer"
-	cost = PAY_TRADESMAN/3
-
-/datum/clothingbooth_item/sunhatb
-	name = "Blue Sunhat"
-	path = /obj/item/clothing/head/sunhat
-	slot = SLOT_HEAD
-	category = "Summer"
-	cost = PAY_TRADESMAN/5
-
-/datum/clothingbooth_item/collardressb
-	name = "Blue Collar Dress"
-	path = /obj/item/clothing/under/collardressb
-	slot = SLOT_W_UNIFORM
-	category = "Summer"
-	cost = PAY_TRADESMAN/3
-
-/datum/clothingbooth_item/sunhatg
-	name = "Green Sunhat"
-	path = /obj/item/clothing/head/sunhat/sunhatg
-	slot = SLOT_HEAD
-	category = "Summer"
-	cost = PAY_TRADESMAN/5
-
-/datum/clothingbooth_item/collardressg
-	name = "Green Collar Dress"
-	path = /obj/item/clothing/under/collardressg
-	slot = SLOT_W_UNIFORM
-	category = "Summer"
-	cost = PAY_TRADESMAN/3
-
-/datum/clothingbooth_item/sunhatr
-	name = "Red Sunhat"
-	path = /obj/item/clothing/head/sunhat/sunhatr
-	slot = SLOT_HEAD
-	category = "Summer"
-	cost = PAY_TRADESMAN/5
-
-/datum/clothingbooth_item/collardressr
-	name = "Red Collar Dress"
-	path = /obj/item/clothing/under/collardressr
-	slot = SLOT_W_UNIFORM
-	category = "Summer"
-	cost = PAY_TRADESMAN/3
-
 //Headwear
+
 /datum/clothingbooth_item/catears_white
 	name = "White Cat Ears"
 	path = /obj/item/clothing/head/nyan/white
@@ -886,6 +706,13 @@
 	amount = 3
 	cost = PAY_TRADESMAN/2
 
+/datum/clothingbooth_item/whtophat
+	name = "White Top Hat"
+	path = /obj/item/clothing/head/that/white
+	slot = SLOT_HEAD
+	category = "Headwear"
+	cost = PAY_TRADESMAN/2
+
 /datum/clothingbooth_item/blackfedora
 	name = "Black Fedora"
 	path = /obj/item/clothing/head/fedora
@@ -940,11 +767,205 @@
 	path = /obj/item/clothing/head/antlers
 	slot = SLOT_HEAD
 	category = "Headwear"
-	amount = 3
 	cost = PAY_TRADESMAN/2
 
+/datum/clothingbooth_item/headsprout
+	name = "Leaf Hairclip"
+	path = /obj/item/clothing/head/headsprout
+	slot = SLOT_HEAD
+	category = "Headwear"
+	cost = PAY_TRADESMAN/2
+
+//Sci-Fi
+
+/datum/clothingbooth_item/sfjumpsuitbp
+	name = "Black and Purple Sci-Fi Jumpsuit"
+	path = /obj/item/clothing/under/misc/sfjumpsuitbp
+	slot = SLOT_W_UNIFORM
+	category = "Sci-Fi"
+	cost = PAY_DOCTORATE/3
+
+/datum/clothingbooth_item/sfjumpsuitrb
+	name = "Black and Red Sci-Fi Jumpsuit"
+	path = /obj/item/clothing/under/misc/sfjumpsuitrb
+	slot = SLOT_W_UNIFORM
+	category = "Sci-Fi"
+	cost = PAY_DOCTORATE/3
+
+/datum/clothingbooth_item/sfjumpsuitpnk
+	name = "Pink and Blue Sci-Fi Jumpsuit"
+	path = /obj/item/clothing/under/misc/sfjumpsuitpnk
+	slot = SLOT_W_UNIFORM
+	category = "Sci-Fi"
+	cost = PAY_DOCTORATE/3
+
+/datum/clothingbooth_item/sfjumpsuitbee
+	name = "Bee Sci-Fi Jumpsuit"
+	path = /obj/item/clothing/under/misc/sfjumpsuitbee
+	slot = SLOT_W_UNIFORM
+	category = "Sci-Fi"
+	cost = PAY_DOCTORATE/3
+
+/datum/clothingbooth_item/racingsuitbee
+	name = "Bee Racing Jumpsuit"
+	path = /obj/item/clothing/under/misc/racingsuitbee
+	slot = SLOT_W_UNIFORM
+	category = "Sci-Fi"
+	cost = PAY_DOCTORATE/3
+
+/datum/clothingbooth_item/racingsuitpnk
+	name = "Pink and Blue Racing Jumpsuit"
+	path = /obj/item/clothing/under/misc/racingsuitpnk
+	slot = SLOT_W_UNIFORM
+	category = "Sci-Fi"
+	cost = PAY_DOCTORATE/3
+
+/datum/clothingbooth_item/racingsuitrbw
+	name = "Red, White and Blue Racing Jumpsuit"
+	path = /obj/item/clothing/under/misc/racingsuitrbw
+	slot = SLOT_W_UNIFORM
+	category = "Sci-Fi"
+	cost = PAY_DOCTORATE/3
+
+/datum/clothingbooth_item/racingsuitprp
+	name = "Purple and Black Racing Jumpsuit"
+	path = /obj/item/clothing/under/misc/racingsuitprp
+	slot = SLOT_W_UNIFORM
+	category = "Sci-Fi"
+	cost = PAY_DOCTORATE/3
+
+/datum/clothingbooth_item/cwhat
+	name = "Moebius-Brand Headwear"
+	path = /obj/item/clothing/head/cwhat
+	slot = SLOT_HEAD
+	category = "Sci-Fi"
+	cost = PAY_DOCTORATE/3
+
+/datum/clothingbooth_item/fthat
+	name = "Trader's Headwear"
+	path = /obj/item/clothing/head/fthat
+	slot = SLOT_HEAD
+	category = "Sci-Fi"
+	cost = PAY_DOCTORATE/5
+
+/datum/clothingbooth_item/ftscanplate
+	name = "FTX-480 Scanner Plate"
+	path = /obj/item/clothing/glasses/ftscanplate
+	slot = SLOT_GLASSES
+	category = "Sci-Fi"
+	cost = PAY_DOCTORATE/5
+
+/datum/clothingbooth_item/cwfashion
+	name = "CW Fashionista's Outfit"
+	path = /obj/item/clothing/under/gimmick/cwfashion
+	slot = SLOT_W_UNIFORM
+	category = "Sci-Fi"
+	cost = PAY_DOCTORATE/5
+
+/datum/clothingbooth_item/ftuniform
+	name = "Free Trader's Outfit"
+	path = /obj/item/clothing/under/gimmick/ftuniform
+	slot = SLOT_W_UNIFORM
+	category = "Sci-Fi"
+	cost = PAY_DOCTORATE/3
+
+/datum/clothingbooth_item/handcomp
+	name = "Compudyne 0451 Handcomp"
+	path = /obj/item/clothing/gloves/handcomp
+	slot = SLOT_GLOVES
+	category = "Sci-Fi"
+	cost = PAY_DOCTORATE/5
+
+/datum/clothingbooth_item/cwboots
+	name = "Macando Boots"
+	path = /obj/item/clothing/shoes/cwboots
+	slot = SLOT_SHOES
+	category = "Sci-Fi"
+	cost = PAY_DOCTORATE/5
+
+//Summer
+
+/datum/clothingbooth_item/collardressbl
+	name = "Black Collar Dress"
+	path = /obj/item/clothing/under/collardressbl
+	slot = SLOT_W_UNIFORM
+	category = "Summer"
+	cost = PAY_TRADESMAN/3
+
+/datum/clothingbooth_item/sunhatb
+	name = "Blue Sunhat"
+	path = /obj/item/clothing/head/sunhat
+	slot = SLOT_HEAD
+	category = "Summer"
+	cost = PAY_TRADESMAN/5
+
+/datum/clothingbooth_item/collardressb
+	name = "Blue Collar Dress"
+	path = /obj/item/clothing/under/collardressb
+	slot = SLOT_W_UNIFORM
+	category = "Summer"
+	cost = PAY_TRADESMAN/3
+
+/datum/clothingbooth_item/sunhatg
+	name = "Green Sunhat"
+	path = /obj/item/clothing/head/sunhat/sunhatg
+	slot = SLOT_HEAD
+	category = "Summer"
+	cost = PAY_TRADESMAN/5
+
+/datum/clothingbooth_item/collardressg
+	name = "Green Collar Dress"
+	path = /obj/item/clothing/under/collardressg
+	slot = SLOT_W_UNIFORM
+	category = "Summer"
+	cost = PAY_TRADESMAN/3
+
+/datum/clothingbooth_item/sunhatr
+	name = "Red Sunhat"
+	path = /obj/item/clothing/head/sunhat/sunhatr
+	slot = SLOT_HEAD
+	category = "Summer"
+	cost = PAY_TRADESMAN/5
+
+/datum/clothingbooth_item/collardressr
+	name = "Red Collar Dress"
+	path = /obj/item/clothing/under/collardressr
+	slot = SLOT_W_UNIFORM
+	category = "Summer"
+	cost = PAY_TRADESMAN/3
+
+//Masquerade
+
+/datum/clothingbooth_item/blossommask
+	name = "Cherryblossom Mask"
+	path = /obj/item/clothing/mask/blossommask
+	slot = SLOT_WEAR_MASK
+	category = "Masquerade"
+	cost = PAY_TRADESMAN/5
+
+/datum/clothingbooth_item/blossomdress
+	name = "Cherryblossom Dress"
+	path = /obj/item/clothing/under/blossomdress
+	slot = SLOT_W_UNIFORM
+	category = "Masquerade"
+	cost = PAY_DOCTORATE/3
+
+/datum/clothingbooth_item/peacockmask
+	name = "Peacock Mask"
+	path = /obj/item/clothing/mask/peacockmask
+	slot = SLOT_WEAR_MASK
+	category = "Masquerade"
+	cost = PAY_TRADESMAN/5
+
+/datum/clothingbooth_item/peacockdress
+	name = "Peacock Dress"
+	path = /obj/item/clothing/under/peacockdress
+	slot = SLOT_W_UNIFORM
+	category = "Masquerade"
+	cost = PAY_DOCTORATE/3
 
 //Costumes
+
 /datum/clothingbooth_item/rando
 	name = "Skull Mask and Cloak"
 	path = /obj/item/clothing/suit/rando

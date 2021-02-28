@@ -1659,7 +1659,7 @@
     wear_image_icon = 'icons/mob/jumpsuits/worn_js_misc.dmi'
 
 /obj/item/clothing/under/misc/racingsuitrbw
-    name = "Pink and Blue Racing Jumpsuit"
+    name = "Red, White and Blue Racing Jumpsuit"
     desc = "You feel like you should wear this while piloting a robot, instead."
     icon_state = "racing_jump_rbw"
     item_state = "racing_jump_rbw"
