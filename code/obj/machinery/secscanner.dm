@@ -104,10 +104,6 @@
 			return
 		src.use_power(15)
 
-		if (!ishuman(target))
-			return
-
-		var/mob/living/carbon/human/H = target
 		var/contraband = assess_perp(target)
 		contraband = min(contraband,10)
 
@@ -118,6 +114,7 @@
 				icon_state = "scanner_red"
 				target.show_text( "You feel [pick("unfortunate", "bad", "like your fate has been sealed", "anxious", "scared", "overwhelmed")].", "red" )
 				if (ishuman(target))
+					var/mob/living/carbon/human/H = target
 					var/perpname = H.name
 					src.speak("[uppertext(perpname)] HAS FAILED THE VIBE CHECK! BAD VIBES! BAD VIBES!!")
 
@@ -143,7 +140,9 @@
 			icon_state = "scanner_red"
 
 			//////PDA NOTIFY/////
-			pda_notify(H, contraband)
+			if (ishuman(target))
+				var/mob/living/carbon/human/H = target
+				pda_notify(H, contraband)
 
 		else
 			playsound(src.loc, success_sound, 10, 1)
