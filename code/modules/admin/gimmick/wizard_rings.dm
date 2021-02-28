@@ -251,7 +251,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves/ring/wizard)
 				var/ring_type = pick(possible_rings)
 				ring = text2path("/obj/item/clothing/gloves/ring/wizard/[ring_type]")
 			else
-				var/list/L = concrete_typesof(/obj/item/clothing/gloves/ring/wizard) - /obj/item/clothing/gloves/ring/wizard/rnd
+				var/list/L = concrete_typesof(/obj/item/clothing/gloves/ring/wizard) - typesof(/obj/item/clothing/gloves/ring/wizard/rnd)
 				ring = pick(L)
 			
 			src.name = initial(ring.name)
@@ -280,7 +280,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves/ring/wizard)
 
 	var/turf/T_LOC = get_turf(src.mob)
 
-	var/list/L = concrete_typesof(/obj/item/clothing/gloves/ring/wizard) - /obj/item/clothing/gloves/ring/wizard/rnd
+	var/list/L = concrete_typesof(/obj/item/clothing/gloves/ring/wizard) - typesof(/obj/item/clothing/gloves/ring/wizard/rnd)
 	var/index = 1
 	for (var/turf/T in range(T_LOC, 3))
 		if (index <= L.len)

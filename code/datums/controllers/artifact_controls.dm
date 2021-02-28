@@ -2,9 +2,14 @@ var/datum/artifact_controller/artifact_controls
 
 /datum/artifact_controller
 	var/list/artifacts = list()
-	var/list/artifact_types = list()
+	var/list/datum/artifact/artifact_types = list()
 	var/list/artifact_rarities = list()
 	var/list/artifact_origins = list()
+
+	var/list/artifact_origin_names = list()
+	var/list/artifact_type_names = list()
+	var/list/artifact_fault_names = list()
+	var/list/artifact_trigger_names = list()
 	var/spawner_type = null
 	var/spawner_cine = 0
 
@@ -16,6 +21,7 @@ var/datum/artifact_controller/artifact_controls
 		for (var/X in childrentypesof(/datum/artifact_origin))
 			var/datum/artifact_origin/AO = new X
 			artifact_origins += AO
+			artifact_origin_names += AO.type_name
 			artifact_rarities[AO.name] = list()
 
 		// type list
@@ -26,11 +32,23 @@ var/datum/artifact_controller/artifact_controls
 		for (var/A in concrete_typesof(/datum/artifact))
 			var/datum/artifact/AI = new A
 			artifact_types += AI
+			artifact_type_names += AI.type_name
 
 			artifact_rarities["all"][A] = AI.rarity_weight
 			for (var/origin in artifact_rarities)
 				if(origin in AI.validtypes)
 					artifact_rarities[origin][A] = AI.rarity_weight
+
+		// fault list
+		for (var/X in concrete_typesof(/datum/artifact_fault))
+			var/datum/artifact_fault/AF = new X
+			artifact_fault_names += AF.type_name
+
+		// trigger list
+		for (var/X in concrete_typesof(/datum/artifact_trigger))
+			var/datum/artifact_trigger/AT = new X
+			if(AT.used)
+				artifact_trigger_names += AT.type_name
 
 	proc/get_origin_from_string(var/string)
 		if (!istext(string))
@@ -174,6 +192,7 @@ var/datum/artifact_controller/artifact_controls
 // Origins
 
 /datum/artifact_origin
+	var/type_name = "bad artifact code"
 	var/name = "unknown"
 	var/max_sprites = 7
 	var/impact_reaction_one = 0
@@ -213,6 +232,7 @@ var/datum/artifact_controller/artifact_controls
 
 
 /datum/artifact_origin/ancient
+	type_name = "Silicon"
 	name = "ancient"
 	fault_types = list(
 		/datum/artifact_fault/burn = 10,
@@ -255,6 +275,7 @@ var/datum/artifact_controller/artifact_controls
 		return "unit [pick("alpha","sigma","tau","phi","gamma","epsilon")]-[pick("x","z","d","e","k")] [rand(100,999)]"
 
 /datum/artifact_origin/martian
+	type_name = "Martian"
 	name = "martian"
 	fault_types = list(
 		/datum/artifact_fault/shutdown = 10,
@@ -337,6 +358,7 @@ var/datum/artifact_controller/artifact_controls
 		return namestring
 
 /datum/artifact_origin/wizard
+	type_name = "Wizard"
 	name = "wizard"
 	fault_types = list(
 		/datum/artifact_fault/irradiate = 10,
@@ -402,6 +424,7 @@ var/datum/artifact_controller/artifact_controls
 		return namestring
 
 /datum/artifact_origin/eldritch
+	type_name = "Eldritch"
 	name = "eldritch"
 	activation_sounds = list('sound/machines/ArtifactEld1.ogg','sound/machines/ArtifactEld2.ogg')
 	instrument_sounds = list("sound/musical_instruments/artifact/Artifact_Eldritch_1.ogg",
@@ -477,6 +500,7 @@ var/datum/artifact_controller/artifact_controls
 		return fthagn // ia ia
 
 /datum/artifact_origin/precursor
+	type_name = "Precursor"
 	name = "precursor"
 	activation_sounds = list('sound/machines/ArtifactPre1.ogg')
 	instrument_sounds = list("sound/musical_instruments/artifact/Artifact_Precursor_1.ogg",

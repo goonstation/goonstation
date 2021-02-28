@@ -36534,6 +36534,10 @@
 	name = "autoname  - SS13";
 	pixel_x = 10
 	},
+/obj/artifact_paper_dispenser{
+	pixel_x = -8;
+	pixel_y = 9
+	},
 /turf/simulated/floor,
 /area/station/science/artifact)
 "bna" = (

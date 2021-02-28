@@ -873,6 +873,11 @@
 			maptext_prefix = "<span class='c pixel sh'>Mentorhelps:\n<span class='vga'>"
 			ding_sound = "sound/voice/animal/mouse_squeak.ogg"
 
+		prayers
+			monitored_var = "prayers"
+			maptext_prefix = "<span class='c pixel sh'>Prayers:\n<span class='vga'>"
+			ding_sound = "sound/voice/heavenly.ogg"
+
 		violence
 			monitored_var = "violence"
 			maptext_prefix = "<span class='c pixel sh'>Acts of violence:\n<span class='vga'>"

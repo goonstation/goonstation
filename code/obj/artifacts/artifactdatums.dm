@@ -4,6 +4,7 @@ ABSTRACT_TYPE(/datum/artifact/)
 /datum/artifact/
 	var/associated_object = null
 	var/rarity_weight = 0
+	var/type_name = "buggy artifact code"
 	// weighted commonness, so a higher number will make it more likely
 	// 0 should not make it spawn at all, naturally
 

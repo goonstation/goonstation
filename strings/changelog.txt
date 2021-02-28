@@ -1,5 +1,12 @@
 
 (t)fri feb 26 21
+(u)zjdtmkhzt
+(p)3818
+(e)⚖🆕|balance, feature
+(*)Artifacts are now sellable, more details below in the minor entries.
+(+)Money depends on artifact rarity.
+(+)Artlab has these forms you can fill out. If you fill it out correctly and slap it on an artifact, you'll get a lot more money for it.
+(+)Sometimes cargo might get new artifacts sent in if they previously sent nice ones out.
 (u)Superlagg
 (p)3419
 (e)⚖🆕|balance, feature

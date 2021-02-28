@@ -1177,6 +1177,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\obj\wallsigns.dm"
 #include "code\obj\window.dm"
 #include "code\obj\zoldorf.dm"
+#include "code\obj\artifacts\artifactanalysis.dm"
 #include "code\obj\artifacts\artifactdatums.dm"
 #include "code\obj\artifacts\artifactprocs.dm"
 #include "code\obj\artifacts\artifacts.dm"
