@@ -2109,7 +2109,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 			var/datum/bioEffect/power/be = M.bioHolder.AddEffect(aggressive, do_stability=0)
 			if(aggressive == "eyebeams")
 				var/datum/bioEffect/power/eyebeams/eb = be
-				eb.stun_mode = 1
+				eb.safety = 1
 				eb.altered = 1
 			else
 				be.power = 1

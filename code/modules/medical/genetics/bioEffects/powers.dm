@@ -1083,7 +1083,6 @@
 	stability_loss = 10
 	ability_path = /datum/targetable/geneticsAbility/eyebeams
 	var/projectile_path = "/datum/projectile/laser/eyebeams"
-	var/stun_mode = 0
 
 /datum/targetable/geneticsAbility/eyebeams
 	name = "Eyebeams"
@@ -1103,7 +1102,7 @@
 		var/projectile_path = ispath(EB.projectile_path) ? EB.projectile_path : text2path(EB.projectile_path)
 		if(linked_power.power)
 			projectile_path = /datum/projectile/laser
-		else if(EB.stun_mode) //used by superhero for nonlethal stun
+		else if(linked_power.safety) //synchronized variant deals no damage, but stuns
 			projectile_path = /datum/projectile/laser/eyebeams/stun
 		if (!ispath(projectile_path))
 			projectile_path = /datum/projectile/laser/eyebeams
