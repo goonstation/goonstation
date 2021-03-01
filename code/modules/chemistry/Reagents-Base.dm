@@ -164,7 +164,8 @@ datum
 							if (H.canmove && isturf(H.loc) && probmult(10))
 								step(H, pick(cardinal))
 							if (prob(20)) H.make_dizzy(rand(3,5) * mult)
-						if (ethanol_amt >= 15)
+						if (ethanol_amt >= 25)
+							//Though this var is set when ethanol_amt >= 25, that damage is not dealt until ethanol_amt > 40 (which is checked at the end of the proc)
 							liver_damage = 0.25
 							if(probmult(10)) H.emote(pick("hiccup", "burp"))
 							if (probmult(10)) H.stuttering += rand(1,10)
