@@ -3460,7 +3460,7 @@
 	MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
 		if (!istype(O,/obj/) || O.anchored) return
 		if (get_dist(src,O) > 1 || !isturf(O.loc)) return
-		if ((get_dist(src, user) > 1) || user.stat) return
+		if (!in_interact_range(user, O) || !in_interact_range(user, src) || !isalive(user)) return
 		if (src.dragload)
 			if (src.contents.len)
 				boutput(user, "<span class='alert'>[src.name] is already loaded!</span>")
@@ -3484,7 +3484,7 @@
 	proc/ejectContents(var/mob/unloader, var/target_location)
 		if (!istype(target_location, /turf/)) return
 		if (get_dist(src,target_location) > 1) return
-		if ((get_dist(src, unloader) > 1) || unloader.stat) return
+		if (!in_interact_range(unloader, target_location) || !in_interact_range(unloader, src) || !isalive(unloader)) return
 		if (src.active)
 			boutput(unloader, "<span class='alert'>You can't unload it while it's active!</span>")
 			return
@@ -4046,9 +4046,9 @@
 			for (var/mob/living/carbon/OUCH in src.contents)
 				OUCH.TakeDamage("All",0,current / 500)
 		else if(length(src.contents))
-			var/obj/M = pick(src.contents)
-			if (istype(M.artifact,/datum/artifact/))
-				M.ArtifactStimulus("elec", current)
+			var/obj/O = pick(src.contents)
+			if (istype(O.artifact,/datum/artifact/))
+				O.ArtifactStimulus("elec", current)
 
 	attackby(var/obj/item/I, mob/user)
 		if (src.status & (NOPOWER|BROKEN))
