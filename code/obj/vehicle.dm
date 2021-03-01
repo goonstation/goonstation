@@ -1610,6 +1610,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 	icon_state = "noise"
 	mysound = 'sound/musical_instruments/Carhorn_1.ogg'
 	mydelay = 10 SECONDS
+	myvolume = 75
 
 /obj/ability_button/stopthebus
 	name = "Stop The Bus"
