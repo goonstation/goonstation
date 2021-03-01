@@ -1815,10 +1815,15 @@
 			sendsig.data_file = input.data_file.copy_file()
 		SPAWN_DBG(0)
 			if(src.noise_enabled)
-				src.noise_enabled = false
-				playsound(get_turf(src), "sound/machines/modem.ogg", WIFI_NOISE_VOLUME, 0, 0)
-				SPAWN_DBG(WIFI_NOISE_COOLDOWN)
-					src.noise_enabled = true
+				var/play_sound = 1
+				if(istype(src.loc,/obj/item/storage/mechanics/housing_large))
+					var/obj/item/storage/mechanics/housing_large/H = src.loc
+					play_sound = H.open // only play the sound if the cabinet is open
+				if(play_sound)
+					src.noise_enabled = false
+					playsound(get_turf(src), "sound/machines/modem.ogg", WIFI_NOISE_VOLUME, 0, 0)
+					SPAWN_DBG(WIFI_NOISE_COOLDOWN)
+						src.noise_enabled = true
 			src.radio_connection.post_signal(src, sendsig, src.range)
 
 		animate_flash_color_fill(src,"#FF0000",2, 2)
@@ -1842,10 +1847,15 @@
 
 				SPAWN_DBG(0.5 SECONDS) //Send a reply for those curious jerks
 					if(src.noise_enabled)
-						src.noise_enabled = false
-						playsound(get_turf(src), "sound/machines/modem.ogg", WIFI_NOISE_VOLUME, 0, 0)
-						SPAWN_DBG(WIFI_NOISE_COOLDOWN)
-							src.noise_enabled = true
+						var/play_sound = 1
+						if(istype(src.loc,/obj/item/storage/mechanics/housing_large))
+							var/obj/item/storage/mechanics/housing_large/H = src.loc
+							play_sound = H.open // only play the sound if the cabinet is open
+						if(play_sound)
+							src.noise_enabled = false
+							playsound(get_turf(src), "sound/machines/modem.ogg", WIFI_NOISE_VOLUME, 0, 0)
+							SPAWN_DBG(WIFI_NOISE_COOLDOWN)
+								src.noise_enabled = true
 					src.radio_connection.post_signal(src, pingsignal, src.range)
 
 			if(signal.data["command"] == "text_message" && signal.data["batt_adjust"] == netpass_syndicate)
