@@ -1,4 +1,13 @@
 
+(t)sun feb 28 21
+(u)Stonepillar
+(p)3781
+(e)🗺|mapping
+(*)Added the HoP's golden crayon, which can be found in their office on most maps. Beware of possible theft!
+(u)DimWhat
+(p)3858
+(e)🆕|feature
+(+)Many mutantraces can now wear underwear.
 (t)fri feb 26 21
 (u)zjdtmkhzt
 (p)3818

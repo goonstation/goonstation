@@ -93,7 +93,7 @@
 				return 1
 		return 0
 
-	proc/on_bite(var/obj/item/I, var/mob/M, var/mob/user)
+	proc/on_bite(obj/item/I, mob/M, mob/user)
 		/// 100 / 1.8 is about 55.555...6 so this should work out to be around the original value of 55 for humans and the equivalent for mobs with different max_health
 		if (ishuman(M) && (M.health >= round(M.max_health / FOODHEAL_CUTOFF_DIVISOR)))
 			ADD_FLAG(. , MOB_HEALTH_ABOVE_FOODHEAL_CUTOFF)
