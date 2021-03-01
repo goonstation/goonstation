@@ -173,7 +173,7 @@
 			else
 				maptext_color = src.bot_speech_color
 			chatbot_text = make_chat_maptext(src, message, "color: [maptext_color];" + src.bot_speech_style + singing_italics)
-			if(chatbot_text)
+			if(chatbot_text && src.chat_text && length(src.chat_text.lines))
 				chatbot_text.measure(src)
 				for(var/image/chat_maptext/I in src.chat_text.lines)
 					if(I != chatbot_text)
