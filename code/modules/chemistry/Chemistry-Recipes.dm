@@ -3605,7 +3605,7 @@ datum
 			var/static/list/full_moon_days_2053 = list("Jan 04", "Feb 03", "Mar 04", "Apr 03", "May 02", "Jun 01", "Jul 01", "Jul 30", "Aug 29", "Sep 27", "Oct 27", "Nov 25", "Dec 25")
 
 			does_react(var/datum/reagents/holder)
-				return time2text(world.realtime, "MMM DD") in full_moon_days_2053
+				return time2text(world.realtime, "MMM DD") in full_moon_days_2053 //just doesn't react unless it's a full moon
 
 		 vampire_serum
 		 	name = "Vampire Serum Omega"
