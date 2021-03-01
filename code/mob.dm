@@ -2877,7 +2877,7 @@
 	.= 0
 
 /mob/proc/update_canmove()
-	. = 0
+	return
 
 /*/mob/proc/glove_weaponcheck()
 	if (ishuman(src))
