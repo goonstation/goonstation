@@ -882,6 +882,8 @@
 			M.add_stam_mod_max("zombie", 100)
 			APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "zombie", -5)
 
+			SHOW_ZOMBIE_TIPS(M)
+
 	proc/make_bubs(var/mob/living/carbon/human/M)
 		M.bioHolder.AddEffect("strong")
 		M.bioHolder.AddEffect("mattereater")
