@@ -490,7 +490,7 @@
 	name = "Poncho"
 	path = /obj/item/clothing/suit/poncho
 	slot = SLOT_WEAR_SUIT
-	category = "Casual"
+	category = "Jackets"
 	cost = PAY_UNTRAINED/3
 
 /datum/clothingbooth_item/loosejacket
@@ -821,7 +821,7 @@
 	cost = PAY_DOCTORATE/3
 
 /datum/clothingbooth_item/racingsuitrbw
-	name = "Red, White and Blue Racing Jumpsuit"
+	name = "Blue and White Racing Jumpsuit"
 	path = /obj/item/clothing/under/misc/racingsuitrbw
 	slot = SLOT_W_UNIFORM
 	category = "Sci-Fi"
