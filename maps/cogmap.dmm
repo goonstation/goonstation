@@ -670,7 +670,7 @@
 	level = 2
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/maintenance/northwest)
+/area/station/crew_quarters/clown)
 "abW" = (
 /obj/machinery/door/airlock/pyro/external,
 /turf/simulated/floor/delivery,
@@ -738,7 +738,7 @@
 	name = "Air Reserve (Cafeteria)"
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/maintenance/northwest)
+/area/station/crew_quarters/clown)
 "aci" = (
 /obj/machinery/light/emergency{
 	dir = 8
@@ -914,7 +914,7 @@
 	level = 2
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/maintenance/northwest)
+/area/station/crew_quarters/clown)
 "acJ" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/hallway/secondary/construction2)
@@ -1147,10 +1147,6 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
 "adl" = (
-/obj/machinery/firealarm{
-	dir = 8;
-	pixel_x = -24
-	},
 /obj/item/rods/steel,
 /obj/item/bat,
 /obj/machinery/camera{
@@ -2026,6 +2022,9 @@
 "afr" = (
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/machinery/firealarm{
+	pixel_y = -24
 	},
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/construction2)
@@ -60702,6 +60701,14 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/station/quartermaster/refinery)
+"eSJ" = (
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet/black,
+/obj/landmark/start{
+	name = "Mime"
+	},
+/turf/simulated/floor/blackwhite/whitegrime,
+/area/station/crew_quarters/clown)
 "eWM" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -60916,6 +60923,9 @@
 	},
 /turf/space,
 /area/station/wreckage)
+"fSE" = (
+/turf/simulated/floor/blackwhite/whitegrime,
+/area/station/crew_quarters/clown)
 "fTP" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
@@ -61049,6 +61059,10 @@
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor,
 /area/station/ranch)
+"grD" = (
+/obj/machinery/door/unpowered/wood/pyro,
+/turf/simulated/floor/plating/damaged1,
+/area/station/crew_quarters/clown)
 "gse" = (
 /obj/disposalpipe/junction{
 	dir = 4;
@@ -62038,6 +62052,13 @@
 	},
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
+"mHF" = (
+/obj/decoration/decorativeplant/plant7,
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/simulated/floor/blackwhite/whitegrime,
+/area/station/crew_quarters/clown)
 "naz" = (
 /obj/machinery/space_heater,
 /turf/simulated/floor,
@@ -62733,6 +62754,26 @@
 	dir = 5
 	},
 /area/station/turret_protected/ai_upload_foyer)
+"siE" = (
+/obj/table/auto,
+/obj/item/clothing/head/mime_bowler{
+	pixel_x = -4;
+	pixel_y = -3
+	},
+/obj/item/clothing/head/mime_beret{
+	pixel_x = -4;
+	pixel_y = 9
+	},
+/obj/item/clothing/mask/mime{
+	pixel_x = 9;
+	pixel_y = -1
+	},
+/obj/item/clothing/mask/mime{
+	pixel_x = 9;
+	pixel_y = 9
+	},
+/turf/simulated/floor/blackwhite/whitegrime,
+/area/station/crew_quarters/clown)
 "svy" = (
 /obj/disposalpipe/segment/transport{
 	dir = 4;
@@ -62818,6 +62859,27 @@
 	},
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
+"sJd" = (
+/obj/table/auto,
+/obj/item/clothing/under/misc/mime{
+	pixel_x = 7;
+	pixel_y = 7
+	},
+/obj/item/clothing/under/misc/mime/alt{
+	pixel_x = -5;
+	pixel_y = 7
+	},
+/obj/item/stamp/mime{
+	pixel_x = 6;
+	pixel_y = -3
+	},
+/obj/item/pen/crayon/lipstick{
+	font_color = "#000000";
+	pixel_x = -6;
+	pixel_y = -3
+	},
+/turf/simulated/floor/blackwhite/whitegrime,
+/area/station/crew_quarters/clown)
 "sLp" = (
 /obj/machinery/light{
 	dir = 4
@@ -106217,7 +106279,7 @@ adC
 abV
 ach
 acI
-aca
+aoz
 anW
 aeF
 afl
@@ -106516,11 +106578,11 @@ adC
 adC
 adC
 adC
-adC
-adC
-aag
-aap
 aoz
+eSJ
+fSE
+fSE
+grD
 afG
 afm
 agf
@@ -106818,10 +106880,10 @@ adC
 adC
 adC
 adC
-adC
-adC
-aag
-adL
+aoz
+mHF
+siE
+sJd
 aoz
 adW
 adW
@@ -107120,10 +107182,10 @@ adC
 adC
 adC
 adC
-adC
-adC
-adL
-adL
+aoz
+aoz
+aoz
+aoz
 adX
 aeH
 afn

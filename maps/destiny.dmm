@@ -18249,18 +18249,18 @@
 /obj/table/auto,
 /obj/item/pen/crayon/rainbow,
 /obj/item/storage/goodybag,
+/obj/item/reagent_containers/food/snacks/pie/cream,
+/obj/item/storage/pill_bottle/cyberpunk,
 /turf/simulated/floor/plating/random,
 /area/station/crew_quarters/clown)
 "aGN" = (
 /obj/decal/cleanable/dirt,
-/obj/table/auto,
 /obj/decal/cleanable/cobweb,
 /obj/decal/cleanable/molten_item,
-/obj/item/reagent_containers/food/snacks/pie/cream,
-/obj/item/storage/pill_bottle/cyberpunk,
 /obj/juggleplaque{
 	pixel_y = 32
 	},
+/obj/reagent_dispensers/heliumtank,
 /turf/simulated/floor/plating/random,
 /area/station/crew_quarters/clown)
 "aGO" = (
@@ -19518,6 +19518,11 @@
 /area/station/maintenance/east)
 "aIM" = (
 /obj/decal/cleanable/dirt,
+/obj/stool/bed,
+/obj/item/paper/book/the_trial,
+/obj/landmark/start{
+	name = "Clown"
+	},
 /turf/simulated/floor/plating/random,
 /area/station/crew_quarters/clown)
 "aIN" = (
@@ -20886,10 +20891,13 @@
 /area/station/crew_quarters/clown)
 "aKO" = (
 /obj/decal/cleanable/dirt,
+/obj/marker/supplymarker,
 /obj/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
+	icon_state = "0-8"
+	},
+/obj/machinery/power/apc{
+	name = "Clown Hole APC";
+	pixel_y = -24
 	},
 /turf/simulated/floor/plating/random,
 /area/station/crew_quarters/clown)
@@ -21976,19 +21984,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/east)
 "aMz" = (
-/obj/decal/cleanable/dirt,
-/obj/marker/supplymarker,
-/turf/simulated/floor/plating/random,
-/area/station/crew_quarters/clown)
-"aMA" = (
-/obj/decal/cleanable/dirt,
-/obj/reagent_dispensers/heliumtank,
-/obj/machinery/power/apc{
-	name = "Clown Hole APC";
-	pixel_y = -24
-	},
-/obj/cable,
-/turf/simulated/floor/plating/random,
+/turf/simulated/wall/false_wall,
 /area/station/crew_quarters/clown)
 "aMB" = (
 /obj/machinery/vending/computer3,
@@ -23191,13 +23187,16 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/disposal)
 "aOu" = (
-/obj/decal/cleanable/dirt,
-/obj/stool/bed,
-/obj/item/paper/book/the_trial,
-/obj/landmark/start{
-	name = "Clown"
+/obj/stool/chair/comfy/purple{
+	dir = 1
 	},
-/turf/simulated/floor/plating/random,
+/obj/landmark/start{
+	name = "Mime"
+	},
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/simulated/floor/blackwhite/whitegrime,
 /area/station/crew_quarters/clown)
 "aOv" = (
 /obj/machinery/camera{
@@ -111252,7 +111251,7 @@ aEW
 aGN
 aIN
 aKO
-aMA
+aEW
 aEW
 aEW
 aaa
