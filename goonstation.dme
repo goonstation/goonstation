@@ -127,6 +127,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\datums\zoldorfitems.dm"
 #include "code\datums\abilities\ability_parent.dm"
 #include "code\datums\abilities\brassgauntlet.dm"
+#include "code\datums\abilities\carnival_cant.dm"
 #include "code\datums\abilities\critter.dm"
 #include "code\datums\abilities\cruiser.dm"
 #include "code\datums\abilities\diabolical.dm"

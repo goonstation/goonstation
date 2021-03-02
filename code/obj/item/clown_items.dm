@@ -85,3 +85,15 @@ VUVUZELA
 	icon_state = "laughbox"
 	desc = "A pack of canned laughter."
 	spawn_contents = list(/obj/item/canned_laughter = 7)
+
+/obj/item/friendship
+	name = "friendship bracelet"
+	icon = 'icons/obj/clothing/item_gloves.dmi'
+	icon_state = "friendship-mime"
+	desc = ""
+	flags = TABLEPASS | ONGLOVE
+
+	proc/setup_friendship(var/friend_name,var/job_name)
+		name = "friendship bracelet from [friend_name]"
+		icon_state = "friendship-[job_name]"
+		desc = "A bracelet to commemorate your everlasting friendship with [friend_name] the [job_name]."

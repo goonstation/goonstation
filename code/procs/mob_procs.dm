@@ -175,6 +175,7 @@
 		if ("red") class = "alert"
 		if ("blue") class = "notify"
 		if ("green") class = "success"
+		if ("pink") class = "ghostdronesay"
 
 	boutput(src, "<span class='[class]'>[message]</span>", group)
 

@@ -138,6 +138,23 @@
 				M.choose_name(3, src.name, default)
 				if(M.real_name != default && M.real_name != orig_real)
 					phrase_log.log_phrase("name-[ckey(src.name)]", M.real_name, no_duplicates=TRUE)
+				if((M.job == "Clown") || (M.job == "Mime")) //friendship bracelets!!!
+					for(var/mob/MOB in mobs)
+						if((M.job == "Clown") && (MOB.job == "Mime"))
+							var/obj/item/friendship/BRACELET = new /obj/item/friendship
+							BRACELET.setup_friendship(M.real_name,"clown")
+							MOB.put_in_hand_or_drop(BRACELET)
+						else if((M.job == "Mime") && (MOB.job == "Clown"))
+							var/obj/item/friendship/BRACELET = new /obj/item/friendship
+							BRACELET.setup_friendship(M.real_name,"mime")
+							MOB.put_in_hand_or_drop(BRACELET)
+					if(ishuman(M)) //carnival cant ability
+						var/mob/living/carbon/human/CARNIE = M
+						CARNIE.add_ability_holder(/datum/abilityHolder/carnival)
+						if(CARNIE.job == "Clown")
+							CARNIE.abilityHolder.addAbility(/datum/targetable/carnival/cant)
+						else if(CARNIE.job == "Mime")
+							CARNIE.abilityHolder.addAbility(/datum/targetable/carnival/cant/mime)
 
 			if (M.traitHolder && !M.traitHolder.hasTrait("loyalist"))
 				cant_spawn_as_rev = 1 //Why would an NT Loyalist be a revolutionary?
@@ -1345,7 +1362,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 		src.access = get_access("Space Cowboy")
 		return
 
-/datum/job/special/mime
+/datum/job/civilian/mime
 	name = "Mime"
 	limit = 1
 	wages = PAY_DUMBCLOWN*2 // lol okay whatever
@@ -2525,32 +2542,6 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 		..()
 		src.access = get_access("Boxer")
 		return
-
-/datum/job/daily/monday
-	name = "Mime"
-	limit = 1
-	wages = PAY_DUMBCLOWN*2
-	slot_belt = /obj/item/device/pda2
-	slot_head = /obj/item/clothing/head/mime_bowler
-	slot_mask = /obj/item/clothing/mask/mime
-	slot_jump = /obj/item/clothing/under/misc/mime/alt
-	slot_suit = /obj/item/clothing/suit/scarf
-	slot_glov = /obj/item/clothing/gloves/latex
-	slot_foot = /obj/item/clothing/shoes/black
-	slot_poc1 = /obj/item/pen/crayon/white
-	slot_poc2 = /obj/item/paper
-	change_name_on_spawn = 1
-
-	New()
-		..()
-		src.access = get_access("Mime")
-		return
-
-	special_setup(var/mob/living/carbon/human/M)
-		..()
-		if (!M)
-			return
-		M.bioHolder.AddEffect("mute", magical=1)
 
 /datum/job/daily/tuesday
 	name = "Barber"
