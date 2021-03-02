@@ -216,6 +216,11 @@
 				new /obj/item/pen/crayon/rainbow(src)
 			return 1
 
+/obj/storage/crate/mime
+	desc = "A small, cuboid object with a hinged top and empty interior. It looks a little depressing."
+	spawn_contents = list(/obj/item/storage/box/costume/mime,
+	/obj/item/storage/box/costume/mime/alt)
+
 /obj/storage/crate/materials
 	name = "building materials crate"
 	spawn_contents = list(/obj/item/sheet/steel/fullstack,

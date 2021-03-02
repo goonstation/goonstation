@@ -61246,6 +61246,10 @@
 /obj/machinery/meter,
 /turf/simulated/floor/delivery,
 /area/station/engine/inner)
+"hFp" = (
+/obj/storage/crate/mime,
+/turf/simulated/floor/blackwhite/whitegrime,
+/area/station/crew_quarters/clown)
 "hYI" = (
 /obj/table/auto,
 /obj/item/storage/firstaid/regular{
@@ -62754,26 +62758,6 @@
 	dir = 5
 	},
 /area/station/turret_protected/ai_upload_foyer)
-"siE" = (
-/obj/table/auto,
-/obj/item/clothing/head/mime_bowler{
-	pixel_x = -4;
-	pixel_y = -3
-	},
-/obj/item/clothing/head/mime_beret{
-	pixel_x = -4;
-	pixel_y = 9
-	},
-/obj/item/clothing/mask/mime{
-	pixel_x = 9;
-	pixel_y = -1
-	},
-/obj/item/clothing/mask/mime{
-	pixel_x = 9;
-	pixel_y = 9
-	},
-/turf/simulated/floor/blackwhite/whitegrime,
-/area/station/crew_quarters/clown)
 "svy" = (
 /obj/disposalpipe/segment/transport{
 	dir = 4;
@@ -62861,14 +62845,6 @@
 /area/shuttle/arrival/station)
 "sJd" = (
 /obj/table/auto,
-/obj/item/clothing/under/misc/mime{
-	pixel_x = 7;
-	pixel_y = 7
-	},
-/obj/item/clothing/under/misc/mime/alt{
-	pixel_x = -5;
-	pixel_y = 7
-	},
 /obj/item/stamp/mime{
 	pixel_x = 6;
 	pixel_y = -3
@@ -106882,7 +106858,7 @@ adC
 adC
 aoz
 mHF
-siE
+hFp
 sJd
 aoz
 adW

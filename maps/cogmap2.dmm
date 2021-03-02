@@ -1735,11 +1735,13 @@
 /area/station/maintenance/solar/north)
 "adB" = (
 /obj/table/auto,
-/obj/random_item_spawner/tools,
 /obj/machinery/light/small{
 	dir = 1;
 	pixel_y = 21
 	},
+/obj/item/storage/box/mousetraps,
+/obj/item/storage/box/mousetraps,
+/obj/random_item_spawner/tools,
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/north)
 "adC" = (
@@ -2668,15 +2670,21 @@
 /turf/simulated/floor/plating,
 /area/station/hangar/catering)
 "afM" = (
-/obj/table/auto,
-/obj/item/storage/box/mousetraps,
-/obj/item/storage/box/mousetraps,
-/turf/simulated/floor/plating/scorched,
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet/black,
+/obj/landmark/start{
+	name = "Mime"
+	},
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/simulated/floor/blackwhite/whitegrime,
 /area/station/maintenance/north)
 "afN" = (
-/turf/simulated/floor/stairs{
-	dir = 4
+/obj/machinery/door/unpowered/wood/pyro{
+	dir = 8
 	},
+/turf/simulated/floor/blackwhite/whitegrime,
 /area/station/maintenance/north)
 "afO" = (
 /obj/cable{
@@ -2718,8 +2726,20 @@
 /area/station/maintenance/solar/north)
 "afR" = (
 /obj/table/auto,
-/obj/item/storage/toolbox/mechanical,
-/obj/item/storage/toolbox/mechanical,
+/obj/item/storage/toolbox/mechanical{
+	pixel_x = 3;
+	pixel_y = -4
+	},
+/obj/item/storage/toolbox/mechanical{
+	pixel_x = -4;
+	pixel_y = -4
+	},
+/obj/item/storage/belt/utility{
+	pixel_y = 6
+	},
+/obj/item/storage/belt/utility{
+	pixel_y = 10
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/north)
 "afS" = (
@@ -3150,9 +3170,16 @@
 /area/station/maintenance/solar/north)
 "agN" = (
 /obj/table/auto,
-/obj/item/storage/belt/utility,
-/obj/item/storage/belt/utility,
-/turf/simulated/floor/plating/scorched,
+/obj/item/stamp/mime{
+	pixel_x = 6;
+	pixel_y = -3
+	},
+/obj/item/pen/crayon/lipstick{
+	font_color = "#000000";
+	pixel_x = -6;
+	pixel_y = -3
+	},
+/turf/simulated/floor/blackwhite/whitegrime,
 /area/station/maintenance/north)
 "agO" = (
 /obj/decal/cleanable/dirt,
@@ -79030,6 +79057,9 @@
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor,
 /area/station/ai_monitored/storage/eva)
+"had" = (
+/turf/simulated/floor/blackwhite/whitegrime,
+/area/station/maintenance/north)
 "hRi" = (
 /turf/space,
 /area/shuttle/arrival/station)
@@ -79159,6 +79189,10 @@
 	icon_state = "wooden"
 	},
 /area/station/security/detectives_office)
+"nyg" = (
+/obj/storage/crate/mime,
+/turf/simulated/floor/blackwhite/whitegrime,
+/area/station/maintenance/north)
 "nCq" = (
 /turf/simulated/floor/stairs{
 	icon_state = "Stairs_wide"
@@ -112843,8 +112877,8 @@ bhS
 adO
 bYU
 aeY
-adL
-adL
+had
+nyg
 ahV
 aiX
 ajW

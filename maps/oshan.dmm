@@ -9212,10 +9212,16 @@
 	dir = 8;
 	pixel_x = -24
 	},
+/obj/storage/crate/mime,
 /turf/simulated/floor/carpet/arcade/half,
 /area/station/crew_quarters/clown)
 "avs" = (
 /obj/machinery/light_switch/auto,
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet/black,
+/obj/landmark/start{
+	name = "Mime"
+	},
 /turf/simulated/floor/carpet/arcade/half,
 /area/station/crew_quarters/clown)
 "avt" = (

@@ -18312,6 +18312,9 @@
 	pixel_x = 10
 	},
 /obj/landmark/gps_waypoint,
+/obj/landmark/start{
+	name = "Mime"
+	},
 /turf/simulated/floor/plating/random,
 /area/station/crew_quarters/clown)
 "UT" = (

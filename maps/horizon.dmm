@@ -5572,6 +5572,9 @@
 /obj/stool/chair/red{
 	dir = 8
 	},
+/obj/landmark/start{
+	name = "Mime"
+	},
 /turf/simulated/floor/plating/random,
 /area/station/storage/emergency{
 	name = "Hilarious Storage A"
@@ -5924,6 +5927,7 @@
 	dir = 8;
 	pixel_x = -12
 	},
+/obj/storage/crate/mime,
 /turf/simulated/floor/plating,
 /area/station/storage/emergency{
 	name = "Hilarious Storage A"

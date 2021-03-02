@@ -3741,8 +3741,7 @@
 	name = "Clowntainment"
 	})
 "ajk" = (
-/obj/grille/steel,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/blackwhite/whitegrime,
 /area/station/crew_quarters/clown{
 	name = "Clowntainment"
 	})
@@ -49741,6 +49740,15 @@
 /obj/disposalpipe/junction/left/south,
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
+"eDi" = (
+/obj/machinery/door/unpowered/wood/pyro{
+	dir = 8;
+	name = "The Snip"
+	},
+/turf/simulated/floor/carpet/arcade,
+/area/station/crew_quarters/clown{
+	name = "Clowntainment"
+	})
 "eEn" = (
 /obj/storage/closet/fire,
 /turf/simulated/floor/plating,
@@ -53522,6 +53530,12 @@
 /obj/decal/poster/wallsign/space,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/quartermaster/office)
+"mnU" = (
+/obj/storage/crate/mime,
+/turf/simulated/floor/blackwhite/whitegrime,
+/area/station/crew_quarters/clown{
+	name = "Clowntainment"
+	})
 "mpY" = (
 /obj/machinery/light/small,
 /obj/machinery/chemicompiler_stationary,
@@ -58125,6 +58139,17 @@
 	},
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/cafeteria)
+"vjT" = (
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet/black,
+/obj/landmark/start{
+	name = "Mime"
+	},
+/obj/machinery/light/small,
+/turf/simulated/floor/blackwhite/whitegrime,
+/area/station/crew_quarters/clown{
+	name = "Clowntainment"
+	})
 "vkc" = (
 /obj/machinery/light/small,
 /obj/machinery/light_switch/east,
@@ -95858,7 +95883,7 @@ afA
 afA
 ahj
 aeZ
-afB
+eDi
 afA
 ags
 aeK
@@ -96162,7 +96187,7 @@ ahk
 afB
 ajk
 ajk
-ajk
+vjT
 aeK
 aeK
 aof
@@ -96462,7 +96487,7 @@ ach
 agr
 ahl
 afB
-ajk
+mnU
 aeK
 aeK
 aeK

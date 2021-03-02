@@ -11360,6 +11360,10 @@
 	},
 /turf/simulated/floor/green/side,
 /area/station/hallway/primary/west)
+"dcl" = (
+/obj/storage/crate/mime,
+/turf/simulated/floor/specialroom/clown,
+/area/station/crew_quarters/clown)
 "dcu" = (
 /obj/machinery/sleeper{
 	dir = 4
@@ -18104,6 +18108,15 @@
 /obj/disposalpipe/segment,
 /turf/simulated/floor/purpleblack,
 /area/station/science/lobby)
+"fcX" = (
+/obj/stool/chair{
+	dir = 4
+	},
+/obj/landmark/start{
+	name = "Mime"
+	},
+/turf/simulated/floor/specialroom/clown,
+/area/station/crew_quarters/clown)
 "fdg" = (
 /obj/machinery/light/incandescent/warm,
 /obj/decal/tile_edge/line/yellow{
@@ -155422,7 +155435,7 @@ sso
 sso
 sso
 eZr
-sso
+dcl
 hid
 vrN
 hpt
@@ -156325,7 +156338,7 @@ bKc
 bKc
 dlr
 xCR
-xCR
+fcX
 xCR
 fiq
 pGS
