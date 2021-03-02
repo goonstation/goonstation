@@ -92,8 +92,24 @@ VUVUZELA
 	icon_state = "friendship-mime"
 	desc = ""
 	flags = TABLEPASS | ONGLOVE
+	var/friend_name
+	var/mob/friend_mob
 
-	proc/setup_friendship(var/friend_name,var/job_name)
+	proc/setup_friendship(var/mob/pass_mob)
+		friend_mob = pass_mob
+		friend_name = pass_mob.real_name
+		switch(friend_mob.job)
+			if("Clown")
+				icon_state = "friendship-clown"
+			if("Mime")
+				icon_state = "friendship-mime"
 		name = "friendship bracelet from [friend_name]"
-		icon_state = "friendship-[job_name]"
-		desc = "A bracelet to commemorate your everlasting friendship with [friend_name] the [job_name]."
+		desc = "A bracelet to commemorate your everlasting friendship with [friend_name]."
+
+	proc/check_for_duplicates(var/mob/user)
+		if(friend_mob == user) 
+			if(friend_name != user.real_name) // If there's a duplicate bracelet and it has an outdated name, update it.
+				setup_friendship(user)
+			return TRUE
+		else
+			return

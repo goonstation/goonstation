@@ -50,7 +50,7 @@
 		if(isnull(L))
 			L = list()
 
-		if (H.gloves) // Fixed: now adds distorted prints even if 'fingerprintslast == ckey'. Important for the clean_forensic proc (Convair880).
+		if (H.gloves && istype(H.gloves,/obj/item/clothing/gloves)) // Fixed: now adds distorted prints even if 'fingerprintslast == ckey'. Important for the clean_forensic proc (Convair880).
 			var/gloveprints = H.gloves.distort_prints(H.bioHolder.uid_hash, 1)
 			if (!isnull(gloveprints))
 				L -= gloveprints
