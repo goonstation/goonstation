@@ -24987,7 +24987,6 @@
 /area/station/storage/emergency)
 "bjs" = (
 /obj/table/auto,
-/obj/table/auto,
 /obj/item/storage/belt/utility{
 	pixel_y = 4
 	},
