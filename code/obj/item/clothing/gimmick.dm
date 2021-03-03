@@ -992,7 +992,7 @@
 			. = ..()
 			var/mob/living/carbon/human/H = user
 			if(istype(H) && slot == SLOT_WEAR_MASK)
-				if ( user.mind && user.mind.assigned_role=="Mime" && istraitor(user) )
+				if(user.mind && user.mind.assigned_role=="Mime" && istraitor(user))
 					src.cant_other_remove = 1.0
 					src.cant_self_remove = 0.0
 				else
@@ -1002,10 +1002,10 @@
 					src.cant_self_remove = 1.0
 
 		afterattack(atom/target, mob/user, reach, params)
-			if( reach <= 1 && user.mind && user.mind.assigned_role == "Mime" && istraitor(user) && istype(user,/mob/living/carbon/human) && istype(target,/mob/living/carbon/human) )
+			if(reach <= 1 && user.mind && user.mind.assigned_role == "Mime" && istraitor(user) && istype(user,/mob/living/carbon/human) && istype(target,/mob/living/carbon/human))
 				var/mob/living/carbon/human/ATTACKER = user
 				var/mob/living/carbon/human/DEFENDER = target
-				if (DEFENDER.can_equip(src,DEFENDER.slot_wear_mask) )
+				if(DEFENDER.can_equip(src,DEFENDER.slot_wear_mask) )
 					ATTACKER.visible_message(__red("[src] latches onto [DEFENDER]'s face!"),__red("You slap [src] onto [DEFENDER]'s face!'"))
 					logTheThing("combat",user,target,"forces [DEFENDER] to wear [src] (smiling mime mask) at [log_loc(DEFENDER)].")
 					ATTACKER.u_equip(src)
