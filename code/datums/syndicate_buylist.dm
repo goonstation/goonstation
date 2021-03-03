@@ -771,7 +771,15 @@ This is basically useless for anyone but miners.
 	cost = 7
 	desc = "An extremely sharp knife with a weighted handle for accurate throwing. Caution: May cause extreme bleeding if the cutting edge comes into contact with human flesh."
 	not_in_crates = 1
-	job = list("Chef","Mime")
+	job = list("Chef")
+	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/spy_theft, /datum/game_mode/revolution)
+
+/datum/syndicate_buylist/traitor/generic_butcherknife
+	name = "Beeg Nife (TM)"
+	item = /obj/item/knife/butcher/generic
+	cost = 7
+	desc = "An extremely sharp knife with a weighted handle for accurate throwing. Caution: May cause extreme bleeding if the cutting edge comes into contact with human flesh."
+	job = list("Mime")
 	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/spy_theft, /datum/game_mode/revolution)
 
 /datum/syndicate_buylist/traitor/moonshine
