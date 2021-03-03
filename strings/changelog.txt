@@ -1,5 +1,9 @@
 
 (t)wed mar 03 21
+(u)zjdtmkhzt
+(p)3836
+(e)|
+(+)The artlab folder on Dwaine now has some scripts that should make working with gptio less cumbersome.
 (u)Camryn Buttes
 (p)3681
 (e)🐛🆕🔄|bug, feature, rework
