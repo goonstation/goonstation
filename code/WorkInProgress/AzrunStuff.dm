@@ -157,17 +157,21 @@ datum/teg_transformation
 		var/datum/material/M
 		src.teg = teg
 		if(src.mat_id)
+			M = getMaterial(src.mat_id)
+		else
 			M = copyMaterial(src.teg.semiconductor.material)
-			teg.setMaterial(M)
-			teg.circ1.setMaterial(M)
-			teg.circ2.setMaterial(M)
+
+		teg.setMaterial(M)
+		teg.circ1.setMaterial(M)
+		teg.circ2.setMaterial(M)
 
 	/// Revert material back to initial values
 	proc/on_revert()
-		src.teg.setMaterial(getMaterial(initial(src.mat_id)))
-		src.teg.circ1.setMaterial(getMaterial(initial(src.mat_id)))
-		src.teg.circ2.setMaterial(getMaterial(initial(src.mat_id)))
-		qdel(src.teg.active_form)
+		src.teg.removeMaterial()
+		src.teg.circ1.removeMaterial()
+		src.teg.circ2.removeMaterial()
+		src.teg.active_form = null
+		qdel(src)
 
   //                    //
   // TEG TRANFORMATIONS //
@@ -177,12 +181,12 @@ datum/teg_transformation
 	default
 		mat_id = "steel"
 
-
 	/**
 	  * Material Science Transformation
 	  * Triggered by /obj/item/teg_semiconductor having a material applied likely by [/obj/machinery/arc_electroplater]
 	  */
 	matsci
+		mat_id = null
 		var/prev_efficiency
 
 		on_transform()
@@ -222,3 +226,63 @@ datum/teg_transformation
 		on_revert()
 			src.teg.efficiency_controller = prev_efficiency
 			. = ..()
+
+	birdbird
+		name = "Squawk"
+		mat_id = "gold"
+		required_reagents = list("feather_fluid"=10)
+		var/list/mob/shitlist = list()
+
+		on_transform(obj/machinery/power/generatorTemp/teg)
+			var/image/chicken = image('icons/obj/clothing/item_masks.dmi', "chicken")
+			teg.UpdateOverlays(chicken, "mask")
+			. = ..()
+
+		on_revert()
+			var/list/ejectables = list()
+			teg.UpdateOverlays(null, "mask")
+
+			for(var/i in 1 to rand(3,10))
+				var/obj/item/feather/F = new(src)
+				F.color = src.teg.color
+				ejectables += F
+			handle_ejectables(teg.loc, ejectables)
+
+			. = ..()
+
+		on_grump()
+			var/list/squawks = list("sound/voice/animal/squawk1.ogg","sound/voice/animal/squawk2.ogg", "sound/voice/animal/squawk3.ogg")
+			if(prob(8))
+				playsound(teg, pick(squawks), rand(10,40), 1)
+
+			if(prob(10))
+				for(var/mob/living/critter/small_animal/bird/B in orange(5, teg))
+					RegisterSignal(B, COMSIG_MOB_ATTACKED_PRE, .proc/bird_attacked, override=TRUE)
+			else
+				for(var/turf/simulated/T in orange(2,teg))
+					var/datum/gas_mixture/turf_gas = T.return_air()
+					var/datum/gas_mixture/removed = turf_gas.remove_ratio(0.25)
+					removed.temperature = 37.5 + T0C
+					T.assume_air(removed)
+
+			if(length(shitlist) && prob(25))
+				var/shitter_found = FALSE
+				var/atom/last = src.teg
+				for(var/mob/M in src.shitlist)
+					if(get_dist(src.teg, M) < 5)
+						if(!shitter_found)
+							playsound(teg, pick(squawks), 80, 1)
+							shitter_found = TRUE
+
+						elecflash(M, power = 2, exclude_center = 0)
+						var/list/affected = DrawLine(last, M, /obj/line_obj/elec ,'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",OBJ_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
+						for(var/obj/O in affected)
+							SPAWN_DBG(0.6 SECONDS) pool(O)
+						last = M
+
+			return TRUE
+
+		proc/bird_attacked(mob/attacked, mob/attacker, weapon)
+			if(istype(attacker))
+				src.shitlist |= attacker
+				src.teg.grump += 10
