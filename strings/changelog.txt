@@ -1,5 +1,9 @@
 
 (t)wed mar 03 21
+(u)Camryn Buttes
+(p)3681
+(e)🐛🆕🔄|bug, feature, rework
+(*)Revamped and rebalanced chaplain contracts. Replaced reversal contract with psychic meatcube contract.  Monkey soul farming is gone too. RIP
 (u)zjdtmkhzt
 (p)3377
 (e)⚖🆕🗺🎨|balance, feature, mapping, sprites
