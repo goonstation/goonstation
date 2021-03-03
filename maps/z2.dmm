@@ -35474,7 +35474,6 @@
 "bIv" = (
 /obj/tombstone/memorial{
 	desc = "The inscription has eroded away.";
-	icon_state = "memorial";
 	special = /obj/decal/skeleton
 	},
 /obj/map/light/graveyard,
@@ -82564,7 +82563,6 @@
 "eHB" = (
 /obj/tombstone/memorial{
 	desc = "The inscription has eroded away.";
-	icon_state = "memorial"
 	},
 /obj/map/light/graveyard,
 /turf/unsimulated/grasstodirt{
