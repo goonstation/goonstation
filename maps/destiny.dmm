@@ -17019,11 +17019,16 @@
 /obj/item/clothing/under/suit{
 	name = "Mortician Suit"
 	},
+<<<<<<< HEAD
 /obj/machinery/power/apc/autoname_north,
 /obj/disposalpipe/switch_junction{
 	dir = 8;
 	mail_tag = "deceased";
 	name = "deceased router"
+=======
+/obj/landmark/start{
+	name = "Pathologist"
+>>>>>>> 1d4bfbde94c3852a175f1f0345e0fd160911de41
 	},
 /obj/cable{
 	icon_state = "0-8"
@@ -21998,11 +22003,22 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
+<<<<<<< HEAD
 /obj/table/wood/auto,
 /obj/machinery/light/lamp/green{
 	pixel_x = -6;
 	pixel_y = 4;
 	switchon = 1
+=======
+/obj/access_spawn/pathology,
+/turf/simulated/floor/green,
+/area/station/medical/research)
+"aRV" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+>>>>>>> 1d4bfbde94c3852a175f1f0345e0fd160911de41
 	},
 /obj/item/pen/crayon/golden,
 /turf/simulated/floor/carpet{
@@ -22049,6 +22065,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+<<<<<<< HEAD
 /obj/cable{
 	icon_state = "2-8"
 	},
@@ -22058,6 +22075,14 @@
 /obj/disposalpipe/segment/brig,
 /obj/submachine/poster_creator,
 /obj/decal/tile_edge/line/white{
+=======
+/obj/access_spawn/pathology,
+/turf/simulated/floor/green,
+/area/station/medical/research)
+"aRZ" = (
+/obj/decal/tile_edge/line/green{
+	dir = 8;
+>>>>>>> 1d4bfbde94c3852a175f1f0345e0fd160911de41
 	icon_state = "line1"
 	},
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/southwest{
@@ -24428,6 +24453,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+<<<<<<< HEAD
 /turf/simulated/floor/grey,
 /area/station/mining/refinery)
 "euZ" = (
@@ -24437,6 +24463,22 @@
 /obj/decal/tile_edge/line/white{
 	dir = 1;
 	icon_state = "line1"
+=======
+/obj/access_spawn/pathology,
+/turf/simulated/floor/green,
+/area/station/medical/research)
+"aWH" = (
+/obj/blind_switch/area/south,
+/turf/simulated/floor/green,
+/area/station/medical/research)
+"aWI" = (
+/turf/simulated/floor/green,
+/area/station/medical/research)
+"aWJ" = (
+/obj/table/reinforced/auto,
+/obj/bedsheetbin{
+	pixel_y = 2
+>>>>>>> 1d4bfbde94c3852a175f1f0345e0fd160911de41
 	},
 /obj/disposalpipe/segment/ejection{
 	dir = 4;

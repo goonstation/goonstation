@@ -883,6 +883,10 @@
 			maptext_prefix = "<span class='c pixel sh'>Acts of violence:\n<span class='vga'>"
 			update_delay = 1 SECOND
 
+		clones
+			monitored_var = "clones"
+			maptext_prefix = "<span class='c pixel sh'>Clones:\n<span class='vga'>"
+
 	budget
 		New()
 			src.monitored = wagesystem

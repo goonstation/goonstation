@@ -28154,6 +28154,7 @@
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
 	},
+/obj/access_spawn/pathology,
 /turf/simulated/floor/green,
 /area/station/medical/cdc)
 "bxP" = (
@@ -28668,7 +28669,7 @@
 	icon_state = "4-8"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/research,
+/obj/access_spawn/pathology,
 /turf/simulated/floor/orange,
 /area/station/medical/cdc)
 "bzo" = (
@@ -29326,7 +29327,7 @@
 	icon_state = "4-8"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/research,
+/obj/access_spawn/pathology,
 /turf/simulated/floor/orange,
 /area/station/medical/cdc)
 "bAR" = (
@@ -30026,6 +30027,9 @@
 	},
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/landmark/start{
+	name = "Pathologist"
 	},
 /turf/simulated/floor/green,
 /area/station/medical/cdc)

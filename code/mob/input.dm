@@ -80,8 +80,7 @@
 			src.glide_size = glide
 			next_move = world.time + (running ? 0.5 : 1.5)
 			return (running ? 0.5 : 1.5)
-		if(ishuman(src)) // ugly hack pls replace src.canmove by direct GET_MOB_PROPERTY() call once available
-			H.update_canmove()
+		src.update_canmove()
 		if (src.canmove)
 			if (src.restrained())
 				for(var/mob/M in range(src, 1))

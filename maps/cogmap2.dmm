@@ -73245,6 +73245,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/access_spawn/pathology,
 /turf/simulated/floor/delivery,
 /area/station/medical/cdc)
 "dcS" = (
@@ -73325,6 +73326,7 @@
 	dir = 4
 	},
 /obj/disposalpipe/segment/mail/horizontal,
+/obj/access_spawn/pathology,
 /turf/simulated/floor/delivery,
 /area/station/medical/cdc)
 "dcZ" = (
@@ -73926,8 +73928,9 @@
 /obj/machinery/door/firedoor/pyro,
 /obj/machinery/door/airlock/pyro/glass{
 	name = "Quarantine Ward";
-	req_access_txt = "5"
+	req_access_txt = null
 	},
+/obj/access_spawn/pathology,
 /turf/simulated/floor/delivery,
 /area/station/medical/cdc)
 "deD" = (
@@ -79202,6 +79205,15 @@
 	dir = 10
 	},
 /area/station/ranch)
+"ojq" = (
+/obj/stool/chair/office{
+	dir = 4
+	},
+/obj/landmark/start{
+	name = "Pathologist"
+	},
+/turf/simulated/floor/white,
+/area/station/medical/cdc)
 "oxp" = (
 /turf/simulated/floor/grasstodirt{
 	dir = 9
@@ -117486,7 +117498,7 @@ cOh
 cQR
 cNU
 cTY
-cVz
+ojq
 nKf
 cXZ
 cZc

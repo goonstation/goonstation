@@ -24987,7 +24987,6 @@
 /area/station/storage/emergency)
 "bjs" = (
 /obj/table/auto,
-/obj/table/auto,
 /obj/item/storage/belt/utility{
 	pixel_y = 4
 	},
@@ -41789,9 +41788,8 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door/airlock/pyro/sci_alt,
-/obj/access_spawn/research,
-/obj/access_spawn/medical,
 /obj/firedoor_spawn,
+/obj/access_spawn/pathology,
 /turf/simulated/floor/green,
 /area/research_outpost/pathology)
 "bYs" = (
@@ -46455,6 +46453,10 @@
 /obj/machinery/light/incandescent/netural,
 /turf/simulated/floor,
 /area/research_outpost)
+"dVf" = (
+/obj/access_spawn/pathology,
+/turf/simulated/floor,
+/area/research_outpost)
 "dWG" = (
 /obj/disposalpipe/segment,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -46895,6 +46897,9 @@
 /obj/stool/chair/office/purple{
 	dir = 4
 	},
+/obj/landmark/start{
+	name = "Pathologist"
+	},
 /turf/simulated/floor/green,
 /area/research_outpost/pathology)
 "jkr" = (
@@ -47033,9 +47038,8 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door/airlock/pyro/sci_alt,
-/obj/access_spawn/research,
-/obj/access_spawn/medical,
 /obj/firedoor_spawn,
+/obj/access_spawn/pathology,
 /turf/simulated/floor/green,
 /area/research_outpost/maint)
 "knq" = (
@@ -130193,7 +130197,7 @@ bcL
 wJK
 uah
 nSl
-bcL
+dVf
 bcL
 bcL
 bds
