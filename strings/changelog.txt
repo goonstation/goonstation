@@ -1,5 +1,8 @@
 
 (t)wed mar 03 21
+(u)Zamuajasa
+(e)⚖|balance
+(+)Arse Nath/Rathen's Secret no longer causes clouds of smoke.
 (u)Sord
 (p)3797
 (e)⚖|balance
