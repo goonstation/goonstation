@@ -24,9 +24,7 @@
 	react_xray = list(14,95,95,7,"DENSE")
 	var/damtype = "brute"
 	var/dmg_amount = 5
-	var/stun = 0
 	var/stamina_dmg = 0
-	var/dmg_calc = 40
 	var/deadly = 0
 	var/sound/hitsound = null
 	examine_hint = "It seems to have a handle you're supposed to hold it by."
@@ -41,7 +39,6 @@
 		if (prob(5))
 			src.dmg_amount *= rand(1,5)
 		if (prob(45))
-			src.stun = 1
 			src.stamina_dmg = rand(50,120)
 		if (prob(1))
 			src.deadly = 1
@@ -68,5 +65,5 @@
 					random_burn_damage(target, dmg_amount)
 				if ("toxin")
 					target.take_toxin_damage(rand(1, dmg_amount))
-			if (src.stun)
-				target.do_disorient(stamina_damage = src.stamina_dmg, weakened = src.stamina_dmg + src.dmg_calc, disorient = src.stamina_dmg - src.dmg_calc)
+			if (src.stamina_dmg)
+				target.do_disorient(stamina_damage = src.stamina_dmg, weakened = src.stamina_dmg + 40, disorient = src.stamina_dmg - 40)
