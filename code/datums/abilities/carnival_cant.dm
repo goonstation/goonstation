@@ -24,25 +24,12 @@
             message = null
         if(!message)
             return
-        var/list/gibberish = list("looks like [he_or_she(OWNER)] is trying to speak a really awkward sign language...",
-        "looks as if [he_or_she(OWNER)] is trying to communicate with [his_or_her(OWNER)] fingers...",
-        "twiddles [his_or_her(OWNER)] fingers strangley...", "forms interesting symbols with [his_or_her(OWNER)] fingers...",
-        "flaps [his_or_her(OWNER)] hands around like a butterfly...")
-        SPAWN_DBG(0)
-            var/old_x = OWNER.pixel_x
-            var/old_y = OWNER.pixel_y
-            OWNER.pixel_x += rand(-3,3)
-            OWNER.pixel_y += rand(-1,1)
-            sleep(0.2 SECONDS)
-            OWNER.pixel_x = old_x
-            OWNER.pixel_y = old_y
+        OWNER.emote("carnivalcant")
         for(var/mob/LISTENER in viewers(OWNER,10))
             if(LISTENER.blinded)
                 continue
             if((LISTENER.job == "Clown") || (LISTENER.job == "Mime") || isAI(LISTENER) || isobserver(LISTENER))
-                LISTENER.show_text("[OWNER.name] signs, \"[message]\"","pink")
-            else
-                LISTENER.show_text("[OWNER.name] [pick(gibberish)]","pink")
+                LISTENER.show_text("<b>[OWNER.name]</b> signs, \"[message]\"","pink")
         logTheThing("say", OWNER, OWNER.name, "[message]")
 
 /datum/targetable/carnival/cant/mime

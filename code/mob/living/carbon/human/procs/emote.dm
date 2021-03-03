@@ -2015,6 +2015,25 @@
 							src.show_text(__red("Your head hurts!"))
 				else
 					src.show_text("You don't know how to do that but you feel deeply ashamed for trying", "red")
+			if("carnivalcant")
+				if((src.job == "Clown") || (src.job == "Mime"))
+					var/list/gibberish = list("looks like [he_or_she(src)] is trying to speak a really awkward sign language...",
+					"looks as if [he_or_she(src)] is trying to communicate with [his_or_her(src)] fingers...",
+					"twiddles [his_or_her(src)] fingers strangely...", "forms interesting symbols with [his_or_her(src)] fingers...",
+					"flaps [his_or_her(src)] hands around like a butterfly...")
+					SPAWN_DBG(0)
+						var/old_x = src.pixel_x
+						var/old_y = src.pixel_y
+						src.pixel_x += rand(-3,3)
+						src.pixel_y += rand(-1,1)
+						sleep(0.2 SECONDS)
+						src.pixel_x = old_x
+						src.pixel_y = old_y
+					var/chosen_gibberish = pick(gibberish)
+					maptext_out = chosen_gibberish
+					m_type = 1
+				else
+					src.show_text("You can't speak carnival cant!","red")
 
 /*			if ("wedgie")
 				if (src.emote_check(voluntary))

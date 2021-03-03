@@ -984,6 +984,13 @@
 	icon_state = "mime"
 	see_face = 0.0
 
+	cursed
+		name = "smiling mime mask"
+		desc = "A mime mask stuck in a sardonic smile..."
+		cant_drop = 1
+		cant_other_remove = 1
+		cant_self_remove = 1
+
 /obj/item/clothing/under/misc/mime
 	name = "mime suit"
 	desc = "The signature striped uniform of the mime. Not necessarily French."
