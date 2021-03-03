@@ -141,8 +141,8 @@
 				if((M.job == "Clown") || (M.job == "Mime"))
 					var/make_bracelet = FALSE //friendship bracelets!!!
 					var/friend_limit = 4
-					for(var/mob/MOB in mobs)
-						if((MOB != M) && ((MOB.job == "Clown") || (MOB.job == "Mime")))
+					for(var/mob/living/MOB in mobs)
+						if((MOB != M) && !MOB.hibernating && !isdead(MOB) && ((MOB.job == "Clown") || (MOB.job == "Mime")))
 							make_bracelet = TRUE
 
 						if(make_bracelet)
