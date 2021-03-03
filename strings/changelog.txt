@@ -1,4 +1,12 @@
 
+(t)wed mar 03 21
+(u)zjdtmkhzt
+(p)3377
+(e)⚖🆕🗺🎨|balance, feature, mapping, sprites
+(*)Cog1 now has chemistry equipment in the actual pharmacy.
+(+)Added a dedicated Pathologist job. Snazzy clothing sprites made by nefarious6th!
+(+)Medical Doctors/Geneticists/Roboticists/Scientists no longer have access to the pathology facilities when Pathology is enabled.
+(+)Which it is not.
 (t)sun feb 28 21
 (u)Stonepillar
 (p)3781
