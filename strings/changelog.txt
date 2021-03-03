@@ -1,5 +1,9 @@
 
 (t)wed mar 03 21
+(u)Sord
+(p)3797
+(e)⚖|balance
+(+)Morphine, ether, and sulfonal now reduce stimulants active time
 (u)Superlagg
 (p)3313
 (e)🆕🔄|feature, rework
