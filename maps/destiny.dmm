@@ -19645,7 +19645,7 @@
 	icon_state = "4-8"
 	},
 /obj/landmark/start{
-	name = "Geneticist"
+	name = "Pathologist"
 	},
 /turf/simulated/floor/purplewhite{
 	dir = 6
@@ -25119,6 +25119,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/access_spawn/pathology,
 /turf/simulated/floor/green,
 /area/station/medical/research)
 "aRV" = (
@@ -25168,6 +25169,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/access_spawn/pathology,
 /turf/simulated/floor/green,
 /area/station/medical/research)
 "aRZ" = (
@@ -27739,6 +27741,7 @@
 	name = "glass airlock-'Quarantine'";
 	req_access_txt = "9"
 	},
+/obj/access_spawn/pathology,
 /turf/simulated/floor/green,
 /area/station/medical/research)
 "aWH" = (
