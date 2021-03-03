@@ -670,7 +670,7 @@
 	level = 2
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/maintenance/northwest)
+/area/station/crew_quarters/clown)
 "abW" = (
 /obj/machinery/door/airlock/pyro/external,
 /turf/simulated/floor/delivery,
@@ -738,7 +738,7 @@
 	name = "Air Reserve (Cafeteria)"
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/maintenance/northwest)
+/area/station/crew_quarters/clown)
 "aci" = (
 /obj/machinery/light/emergency{
 	dir = 8
@@ -914,7 +914,7 @@
 	level = 2
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/maintenance/northwest)
+/area/station/crew_quarters/clown)
 "acJ" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/hallway/secondary/construction2)
@@ -1147,10 +1147,6 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
 "adl" = (
-/obj/machinery/firealarm{
-	dir = 8;
-	pixel_x = -24
-	},
 /obj/item/rods/steel,
 /obj/item/bat,
 /obj/machinery/camera{
@@ -2026,6 +2022,9 @@
 "afr" = (
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/machinery/firealarm{
+	pixel_y = -24
 	},
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/construction2)
@@ -59850,6 +59849,19 @@
 	},
 /turf/simulated/floor,
 /area/station/turret_protected/Zeta)
+"epx" = (
+/obj/table/auto,
+/obj/item/stamp/mime{
+	pixel_x = 6;
+	pixel_y = -3
+	},
+/obj/item/pen/crayon/lipstick{
+	font_color = "#000000";
+	pixel_x = -6;
+	pixel_y = -3
+	},
+/turf/simulated/floor/blackwhite/whitegrime,
+/area/station/crew_quarters/clown)
 "erY" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -60729,6 +60741,10 @@
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/grass/leafy,
 /area/station/garden/owlery)
+"hVz" = (
+/obj/storage/crate/mime,
+/turf/simulated/floor/blackwhite/whitegrime,
+/area/station/crew_quarters/clown)
 "hZu" = (
 /obj/machinery/atmospherics/pipe/vent{
 	dir = 4
@@ -61524,6 +61540,14 @@
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/medical/medbay)
+"lLh" = (
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet/black,
+/obj/landmark/start{
+	name = "Mime"
+	},
+/turf/simulated/floor/blackwhite/whitegrime,
+/area/station/crew_quarters/clown)
 "lNm" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -61954,6 +61978,9 @@
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/science/chemistry)
+"nOB" = (
+/turf/simulated/floor/blackwhite/whitegrime,
+/area/station/crew_quarters/clown)
 "nPH" = (
 /obj/cable{
 	icon_state = "0-2"
@@ -62221,6 +62248,13 @@
 	},
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
+"oRI" = (
+/obj/decoration/decorativeplant/plant7,
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/simulated/floor/blackwhite/whitegrime,
+/area/station/crew_quarters/clown)
 "oZz" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
@@ -63831,6 +63865,10 @@
 	dir = 4
 	},
 /area/station/security/main)
+"xTt" = (
+/obj/machinery/door/unpowered/wood/pyro,
+/turf/simulated/floor/plating/damaged1,
+/area/station/crew_quarters/clown)
 "xTV" = (
 /obj/item/device/radio/intercom{
 	broadcasting = 0;
@@ -106240,7 +106278,7 @@ adC
 abV
 ach
 acI
-aca
+aoz
 anW
 aeF
 afl
@@ -106539,11 +106577,11 @@ adC
 adC
 adC
 adC
-adC
-adC
-aag
-aap
 aoz
+lLh
+nOB
+nOB
+xTt
 afG
 afm
 agf
@@ -106841,10 +106879,10 @@ adC
 adC
 adC
 adC
-adC
-adC
-aag
-adL
+aoz
+oRI
+hVz
+epx
 aoz
 adW
 adW
@@ -107143,10 +107181,10 @@ adC
 adC
 adC
 adC
-adC
-adC
-adL
-adL
+aoz
+aoz
+aoz
+aoz
 adX
 aeH
 afn
