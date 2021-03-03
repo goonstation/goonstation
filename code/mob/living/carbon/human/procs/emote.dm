@@ -2030,7 +2030,8 @@
 						src.pixel_x = old_x
 						src.pixel_y = old_y
 					var/chosen_gibberish = pick(gibberish)
-					maptext_out = chosen_gibberish
+					maptext_out = "<i>[chosen_gibberish]</i>"
+					message = "<b>[src]</b> [chosen_gibberish]"
 					m_type = 1
 				else
 					src.show_text("You can't speak carnival cant!","red")
@@ -2231,4 +2232,3 @@
 					G.affecting.force_laydown_standup()
 					sleep(1 SECOND) //let us do that combo shit people like with throwing
 					src.force_laydown_standup()
-
