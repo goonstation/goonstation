@@ -45,7 +45,6 @@
 /// Has a click delay for attack_self()
 #define ATTACK_SELF_DELAY		 (1<<20)
 
-
 //Item function flags
 
 /// apply to an item's flags to use the item's intent_switch_trigger() proc. This will be called when intent is switched while this item is in hand.
