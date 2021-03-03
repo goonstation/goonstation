@@ -86,12 +86,12 @@ VUVUZELA
 	desc = "A pack of canned laughter."
 	spawn_contents = list(/obj/item/canned_laughter = 7)
 
-/obj/item/friendship
+/obj/item/clothing/gloves/friendship
 	name = "friendship bracelet"
 	icon = 'icons/obj/clothing/item_gloves.dmi'
 	icon_state = "friendship-mime"
 	desc = ""
-	flags = TABLEPASS | ONGLOVE
+	hide_prints = FALSE
 	var/friend_name
 	var/mob/friend_mob
 

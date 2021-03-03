@@ -44,9 +44,6 @@
 #define TGUI_INTERACTIVE		 (1<<19)
 /// Has a click delay for attack_self()
 #define ATTACK_SELF_DELAY		 (1<<20)
-///can be put in the glove slot
-#define ONGLOVE (1<<21)
-
 
 //Item function flags
 

@@ -2179,7 +2179,7 @@
 			if (istype(I, /obj/item/clothing/glasses))
 				return 1
 		if (slot_gloves)
-			if (istype(I, /obj/item/clothing/gloves) || (I.flags & ONGLOVE))
+			if (istype(I, /obj/item/clothing/gloves))
 				return 1
 		if (slot_head)
 			if (istype(I, /obj/item/clothing/head))

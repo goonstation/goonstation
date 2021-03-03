@@ -140,36 +140,40 @@
 					phrase_log.log_phrase("name-[ckey(src.name)]", M.real_name, no_duplicates=TRUE)
 				if((M.job == "Clown") || (M.job == "Mime"))
 					var/make_bracelet = FALSE //friendship bracelets!!!
+					var/friend_limit = 4
 					for(var/mob/MOB in mobs)
 						if((MOB != M) && ((MOB.job == "Clown") || (MOB.job == "Mime")))
 							make_bracelet = TRUE
 
 						if(make_bracelet)
 							var/new_bracelet = TRUE //bracelet for fren
-							for(var/obj/item/friendship/existing_BRACELET in MOB.contents)
+							for(var/obj/item/clothing/gloves/friendship/existing_BRACELET in MOB.contents)
 								if(existing_BRACELET.check_for_duplicates(M))
 									new_bracelet = FALSE
 									break
 
 							if(new_bracelet)
-								var/obj/item/friendship/BRACELET = new /obj/item/friendship
+								var/obj/item/clothing/gloves/friendship/BRACELET = new /obj/item/clothing/gloves/friendship
 								BRACELET.setup_friendship(M)
 								MOB.put_in_hand_or_drop(BRACELET)
 								MOB.show_text("A friendship bracelet warps in! How sweet～","green")
 								MOB.playsound_local(MOB.loc, "sound/effects/warp1.ogg", 50, 1)
 
 							new_bracelet = TRUE //bracelet for me
-							for(var/obj/item/friendship/existing_BRACELET in M.contents)
+							for(var/obj/item/clothing/gloves/friendship/existing_BRACELET in M.contents)
 								if(existing_BRACELET.check_for_duplicates(MOB))
 									new_bracelet = FALSE
 									break
 
 							if(new_bracelet)
-								var/obj/item/friendship/BRACELET = new /obj/item/friendship
+								var/obj/item/clothing/gloves/friendship/BRACELET = new /obj/item/clothing/gloves/friendship
 								BRACELET.setup_friendship(MOB)
 								M.put_in_hand_or_drop(BRACELET)
 								M.show_text("A friendship bracelet warps in! How sweet～","green")
 								M.playsound_local(M.loc, "sound/effects/warp1.ogg", 50, 1)
+							friend_limit--
+							if(friend_limit <= 0)
+								break
 							make_bracelet = FALSE
 
 					if(ishuman(M)) //carnival cant ability

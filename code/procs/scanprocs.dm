@@ -370,7 +370,7 @@
 	if (ishuman(A))
 		var/mob/living/carbon/human/H = A
 
-		if (!isnull(H.gloves) && istype(H.gloves,/obj/item/clothing/gloves))
+		if (!isnull(H.gloves))
 			var/obj/item/clothing/gloves/WG = H.gloves
 			if (WG.glove_ID)
 				glove_data += "[WG.glove_ID] (<span class='notice'>[H]'s worn [WG.name]</span>)"

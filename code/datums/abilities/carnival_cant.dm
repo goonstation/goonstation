@@ -20,6 +20,7 @@
         if(!OWNER.limbs.l_arm && !OWNER.limbs.r_arm)
             OWNER.show_text("You can't speak Carnival Cant without arms!","red")
         var/message = input(OWNER, "What would you like to say?", "Carnival Cant") as null|text
+        message = strip_html(message)
         if(!length(message) || (copytext(message,1,2) == " "))
             message = null
         if(!message)

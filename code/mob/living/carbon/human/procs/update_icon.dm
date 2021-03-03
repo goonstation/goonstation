@@ -250,7 +250,7 @@
 		UpdateOverlays(null, "bloody_gloves_r")
 
 	// Stun glove overlay
-	if (src.gloves && istype(src.gloves,/obj/item/clothing/gloves) && src.gloves.uses >= 1)
+	if (src.gloves && src.gloves.uses >= 1)
 		src.gloves.wear_image.icon_state = "stunoverlay"
 		UpdateOverlays(src.gloves.wear_image, "stunoverlay")
 	else
