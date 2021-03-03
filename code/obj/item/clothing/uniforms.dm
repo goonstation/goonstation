@@ -697,8 +697,10 @@
 /obj/item/clothing/under/misc/lawyer/red/demonic
 	setupProperties()
 		..()
-		setProperty("rangedprot", 1)
-		setProperty("meleeprot", 6)
+		setProperty("coldprot", 40) //slightly worse than a spacesuit
+		setProperty("heatprot", 40) //slightly worse than a firesuit
+		setProperty("rangedprot", 1.5) //buffed from 1, felt needed, tune up or down as needed
+		setProperty("meleeprot", 7) //buffed from 6, felt needed, tune up or down as needed
 
 /obj/item/clothing/under/misc/syndicate
 	name = "tactical turtleneck"
