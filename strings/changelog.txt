@@ -1,4 +1,28 @@
 
+(t)wed mar 03 21
+(u)Sord
+(p)3797
+(e)⚖|balance
+(+)Morphine, ether, and sulfonal now reduce stimulants active time
+(u)Superlagg
+(p)3313
+(e)🆕🔄|feature, rework
+(+)Magic missiles are now speedier, bouncier, and more electrifying.
+(u)zjdtmkhzt
+(p)3836
+(e)|
+(+)The artlab folder on Dwaine now has some scripts that should make working with gptio less cumbersome.
+(u)Camryn Buttes
+(p)3681
+(e)🐛🆕🔄|bug, feature, rework
+(*)Revamped and rebalanced chaplain contracts. Replaced reversal contract with psychic meatcube contract.  Monkey soul farming is gone too. RIP
+(u)zjdtmkhzt
+(p)3377
+(e)⚖🆕🗺🎨|balance, feature, mapping, sprites
+(*)Cog1 now has chemistry equipment in the actual pharmacy.
+(+)Added a dedicated Pathologist job. Snazzy clothing sprites made by nefarious6th!
+(+)Medical Doctors/Geneticists/Roboticists/Scientists no longer have access to the pathology facilities when Pathology is enabled.
+(+)Which it is not.
 (t)sun feb 28 21
 (u)Stonepillar
 (p)3781

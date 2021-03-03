@@ -14453,7 +14453,6 @@
 /obj/machinery/door/airlock/pyro/medical/alt{
 	name = "Pathology"
 	},
-/obj/access_spawn/medical,
 /obj/firedoor_spawn,
 /obj/disposalpipe/segment,
 /obj/cable{
@@ -14461,6 +14460,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/access_spawn/pathology,
 /turf/simulated/floor/blue,
 /area/station/medical/cdc)
 "JA" = (
@@ -14663,7 +14663,6 @@
 	dir = 4;
 	name = "Pathology"
 	},
-/obj/access_spawn/medical,
 /obj/firedoor_spawn,
 /obj/disposalpipe/segment{
 	dir = 4
@@ -14671,6 +14670,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/access_spawn/pathology,
 /turf/simulated/floor/blue,
 /area/station/medical/cdc)
 "JZ" = (
@@ -14754,6 +14754,9 @@
 /area/station/medical/cdc)
 "Km" = (
 /obj/stool/chair/office/purple,
+/obj/landmark/start{
+	name = "Pathologist"
+	},
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
 "Kn" = (

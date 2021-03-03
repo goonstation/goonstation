@@ -633,6 +633,29 @@ ABSTRACT_TYPE(/datum/job/research)
 		src.access = get_access("Geneticist")
 		return
 
+/datum/job/research/pathologist
+	name = "Pathologist"
+	#ifdef CREATE_PATHOGENS
+	limit = 1
+	#else
+	limit = 0
+	#endif
+	wages = PAY_DOCTORATE
+	slot_belt = /obj/item/device/pda2/genetics
+	slot_jump = /obj/item/clothing/under/rank/pathologist
+	slot_foot = /obj/item/clothing/shoes/white
+	slot_suit = /obj/item/clothing/suit/labcoat/pathology
+	#ifdef SCIENCE_PATHO_MAP
+	slot_ears = /obj/item/device/radio/headset/research
+	#else
+	slot_ears = /obj/item/device/radio/headset/medical
+	#endif
+
+	New()
+		..()
+		src.access = get_access("Pathologist")
+		return
+
 /datum/job/research/roboticist
 	name = "Roboticist"
 	limit = 3
