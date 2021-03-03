@@ -129,7 +129,7 @@ that cannot be itched
 
 /obj/item/device/detective_scanner
 	name = "forensic scanner"
-	desc = "Used to scan objects for DNA and fingerprints."
+	desc = "Used to scan objects for DNA and fingerprints. This model seems to have an upgrade that lets it scan for prints at a distance."
 	icon_state = "fs"
 	w_class = 2 // PDA fits in a pocket, so why not the dedicated scanner (Convair880)?
 	item_state = "electronic"
@@ -170,7 +170,6 @@ that cannot be itched
 			user.visible_message("<span class='notice'><b>[user]</b> takes a distant forensic scan of [target].</span>")
 			boutput(user, scan_forensic(target, visible = 1))
 			src.add_fingerprint(user)
-		return
 
 	afterattack(atom/A as mob|obj|turf|area, mob/user as mob)
 
