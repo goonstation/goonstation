@@ -78,6 +78,7 @@ proc/qdel(var/datum/O)
 /datum/var/tmp/disposed = 0
 /datum/var/tmp/qdeled = 0
 
+
 // override this in children for your type specific disposing implementation, make sure to call ..() so the root disposing runs too
 /datum/proc/disposing()
 	PROTECTED_PROC(TRUE)
