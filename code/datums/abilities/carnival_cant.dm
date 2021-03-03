@@ -3,13 +3,19 @@
     regenRate = 0
     tabName = "Carnival"
 
+ABSTRACT_TYPE(/datum/targetable/carnival)
+/datum/targetable/carnival
+	cooldown = 0
+	last_cast = 0
+	pointCost = 0
+	preferred_holder_type = /datum/abilityHolder/carnival
+
 /datum/targetable/carnival/cant //defaults to clown version
     name = "Carnival Cant"
     desc = "A secret language that only entertainers know! This one in particular is a form of sign language!"
     icon_state = "cant-clown"
     targeted = 0
-    cooldown = 0
-    pointCost = 0
+
 
     cast()
         if(!holder)
