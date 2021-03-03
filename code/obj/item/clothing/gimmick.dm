@@ -997,7 +997,6 @@
 					src.cant_self_remove = 0.0
 				else
 					user.show_text("[src] latches onto your face! It burns!","red")
-					src.victim = H
 					src.cant_other_remove = 1.0
 					src.cant_self_remove = 1.0
 
