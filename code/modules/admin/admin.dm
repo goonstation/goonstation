@@ -21,11 +21,11 @@ var/global/noir = 0
 			continue
 		if (C.player_mode)
 			if (asay && C.player_mode_asay)
-				boutput(C, replacetext(rendered, "%admin_ref%", "\ref[C.holder]"))
+				boutput(C, replacetext(replacetext(rendered, "%admin_ref%", "\ref[C.holder]"), "%client_ref%", "\ref[C]"))
 			else
 				continue
 		else
-			boutput(C, replacetext(rendered, "%admin_ref%", "\ref[C.holder]")) //this doesnt fail if the placeholder doesnt exist ok dont worry
+			boutput(C, replacetext(replacetext(rendered, "%admin_ref%", "\ref[C.holder]"), "%client_ref%", "\ref[C]"))
 
 /proc/message_coders(var/text) //Shamelessly adapted from message_admins
 	var/rendered = "<span class=\"admin\"><span class=\"prefix\">CODER LOG:</span> <span class=\"message\">[text]</span></span>"
