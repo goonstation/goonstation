@@ -37572,9 +37572,6 @@
 	},
 /turf/simulated/floor,
 /area/station/mining/staff_room)
-"mww" = (
-/turf/simulated/wall/auto/gannets,
-/area/station/maintenance/outer/sw)
 "mwU" = (
 /obj/machinery/light/small/floor/blueish,
 /turf/simulated/floor/engine,
@@ -84330,7 +84327,7 @@ tRI
 xVU
 grU
 gbY
-mww
+usV
 ftB
 ftB
 aaa
@@ -84632,7 +84629,7 @@ tRI
 tRI
 jvm
 gib
-mww
+usV
 usV
 ftB
 ftB
@@ -84934,7 +84931,7 @@ kIz
 kIz
 kIz
 bmL
-mww
+usV
 usV
 usV
 ftB
@@ -85236,7 +85233,7 @@ igf
 bJY
 kIz
 vpo
-mww
+usV
 usV
 usV
 usV
@@ -85538,8 +85535,8 @@ coZ
 sMG
 kVB
 lPC
-mww
-mww
+usV
+usV
 oVF
 oVF
 oVF
