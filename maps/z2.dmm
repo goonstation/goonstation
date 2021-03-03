@@ -35472,9 +35472,9 @@
 	},
 /area/crypt/graveyard)
 "bIv" = (
-/obj/tombstone{
+/obj/tombstone/memorial{
 	desc = "The inscription has eroded away.";
-	icon_state = "memorials";
+	icon_state = "memorial";
 	special = /obj/decal/skeleton
 	},
 /obj/map/light/graveyard,
@@ -82562,9 +82562,9 @@
 /turf/unsimulated/wall/setpieces/leadwall,
 /area/space)
 "eHB" = (
-/obj/tombstone{
+/obj/tombstone/memorial{
 	desc = "The inscription has eroded away.";
-	icon_state = "memorials"
+	icon_state = "memorial"
 	},
 /obj/map/light/graveyard,
 /turf/unsimulated/grasstodirt{
@@ -83217,10 +83217,9 @@
 /area/hospital/samostrel)
 "hMX" = (
 /obj/map/light/graveyard,
-/obj/tombstone{
+/obj/tombstone/memorial{
 	desc = "The inscription has eroded away.";
-	dir = 1;
-	icon_state = "memorials";
+	dir = 4;
 	special = /obj/decal/skeleton
 	},
 /turf/unsimulated/grasstodirt{
@@ -84415,10 +84414,9 @@
 	},
 /area/afterlife/bar)
 "mak" = (
-/obj/tombstone{
+/obj/tombstone/memorial{
 	desc = "The inscription has eroded away.";
-	dir = 4;
-	icon_state = "memorials"
+	dir = 1
 	},
 /obj/map/light/graveyard,
 /turf/unsimulated/grasstodirt{
