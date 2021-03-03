@@ -469,7 +469,7 @@ This is basically useless for anyone but miners.
 	item = /obj/item/clothing/mask/mime/cursed
 	cost = 3
 	vr_allowed = 0
-	desc = "A cursed object that constricts the throat of the wearer if they try to speak. Be careful with it. It's full of malice for anyone that touches it."
+	desc = "A cursed object that constricts the throat of the wearer if they try to speak."
 	job = list("Mime")
 	blockedmode = list(/datum/game_mode/spy)
 
