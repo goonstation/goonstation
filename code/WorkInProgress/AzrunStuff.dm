@@ -286,3 +286,53 @@ datum/teg_transformation
 			if(istype(attacker))
 				src.shitlist |= attacker
 				src.teg.grump += 10
+
+	vampire
+		mat_id = "bone"
+		required_reagents = list("vampire_serum"=5)
+		var/datum/abilityHolder/abilityHolder
+
+		proc/attach_hud()
+			. = FALSE
+
+		on_transform(obj/machinery/power/generatorTemp/teg)
+			. = ..()
+			abilityHolder = new /datum/abilityHolder/vampire(src)
+			abilityHolder.addAbility(/datum/targetable/vampire/blood_steal)
+			RegisterSignal(src.teg, COMSIG_ATOM_HITBY_PROJ, .proc/projectile_collide)
+
+		on_revert()
+			UnregisterSignal(src.teg, COMSIG_ATOM_HITBY_PROJ)
+			. = ..()
+
+		on_grump()
+			if(!abilityHolder.abilities[1].actions.hasAction(src.teg, "vamp_blood_suck_ranged"))
+				for(var/mob/living/carbon/target in orange(5, teg))
+					if(target.blood_volume && !target.traitHolder.hasTrait("training_chaplain"))
+						actions.start(new/datum/action/bar/private/icon/vamp_ranged_blood_suc(src.teg,abilityHolder, target, abilityHolder.abilities[1]), src.teg)
+						break
+
+			return TRUE
+
+		proc/projectile_collide(owner, obj/projectile/P)
+			if (("vamp" in P.special_data))
+				var/bitesize = 10
+				var/mob/living/carbon/victim = P.special_data["victim"]
+				var/datum/abilityHolder/vampire/vampire = P.special_data["vamp"]
+				if (vampire == abilityHolder && P.max_range == PROJ_INFINITE_RANGE)
+					P.travelled = 0
+					P.max_range = 4
+
+					//handle on_end() for projectile
+					SPAWN_DBG(3 SECONDS)
+						vampire.vamp_blood += bitesize
+						vampire.points += bitesize
+						vampire.tally_bite(victim,bitesize)
+						if (victim.blood_volume < bitesize)
+							victim.blood_volume = 0
+						else
+							victim.blood_volume -= bitesize
+						pool(P)
+
+
+
