@@ -140,7 +140,7 @@
 			score_tracker.artifacts_correctly_analyzed++
 
 		// send artifact resupply
-		if(prob(modifier*40*pap.lastAnalysis)) // range from 0% to ~78% for fully researched t4 artifact
+		if(prob(modifier*40*pap?.lastAnalysis)) // range from 0% to ~78% for fully researched t4 artifact
 			if(!src.artifact_resupply_amount)
 				SPAWN_DBG(rand(3,8) MINUTES)
 					// message
