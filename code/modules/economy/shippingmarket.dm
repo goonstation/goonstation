@@ -126,6 +126,7 @@
 		var/price = 0
 		var/modifier = sell_art_datum.get_rarity_modifier()
 
+		// calculate price
 		price = modifier*modifier * 10000
 		var/obj/item/sticker/postit/artifact_paper/pap = locate(/obj/item/sticker/postit/artifact_paper/) in sell_art.vis_contents
 		if(pap?.lastAnalysis)
@@ -133,6 +134,12 @@
 		price += rand(-50,50)
 		price = round(price, 5)
 
+		// track score
+		score_tracker.artifacts_analyzed++
+		if(pap?.lastAnalysis >= 3)
+			score_tracker.artifacts_correctly_analyzed++
+
+		// send artifact resupply
 		if(prob(modifier*40*pap.lastAnalysis)) // range from 0% to ~78% for fully researched t4 artifact
 			if(!src.artifact_resupply_amount)
 				SPAWN_DBG(rand(3,8) MINUTES)
@@ -152,9 +159,11 @@
 					shippingmarket.receive_crate(artcrate)
 			src.artifact_resupply_amount++
 
+		// sell
 		wagesystem.shipping_budget += price
 		qdel(sell_art)
 
+		// give PDA group messages
 		var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency("1149")
 		var/datum/signal/pdaSignal = get_free_signal()
 		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=list(MGD_CARGO, MGD_SCIENCE, MGA_SALES), "sender"="00000000", "message"="Notification: [price] credits earned from outgoing artifact [sell_art.name]. [pap?'Analysis was [pap.lastAnalysis]% correct.':'No analysis attached.']")

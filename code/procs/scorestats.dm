@@ -15,6 +15,8 @@ var/datum/score_tracker/score_tracker
 	var/score_structural_damage = 0
 	var/final_score_eng = 0
 	// RESEARCH DEPARTMENT
+	var/artifacts_analyzed = 0
+	var/artifacts_correctly_analyzed = 0
 	var/score_artifact_analysis = 0
 	var/final_score_res = 0
 	// CIVILIAN DEPARTMENT
@@ -129,17 +131,15 @@ var/datum/score_tracker/score_tracker
 		final_score_eng = (score_power_outages + score_structural_damage) * 0.5
 
 		// RESEARCH DEPARTMENT SECTION
-		var/correctly_analyzed_artifacts = 0
-		var/analyzed_artifacts = 0
 		for(var/obj/O in artifact_controls.artifacts)
 			if(O.disposed)
 				return
 			var/obj/item/sticker/postit/artifact_paper/pap = locate(/obj/item/sticker/postit/artifact_paper/) in sell_art.vis_contents
-			analyzed_artifacts++
+			artifacts_analyzed++
 			if(pap?.lastAnalysis >= 3)
-				correctly_analyzed_artifacts++
-		if(analyzed_artifacts)
-			score_artifact_analysis = (correctly_analyzed_artifacts/analyzed_artifacts)*100
+				artifacts_correctly_analyzed++
+		if(artifacts_analyzed)
+			score_artifact_analysis = (artifacts_correctly_analyzed/artifacts_analyzed)*100
 
 		final_score_res = score_artifact_analysis
 
