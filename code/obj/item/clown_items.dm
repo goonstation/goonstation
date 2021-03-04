@@ -95,9 +95,9 @@ VUVUZELA
 	var/friend_name
 	var/mob/friend_mob
 
-disposing()
-	src.friend_mob = null
-	. = ..()
+	disposing()
+		src.friend_mob = null
+		. = ..()
 
 	proc/setup_friendship(var/mob/pass_mob)
 		friend_mob = pass_mob
