@@ -1,5 +1,8 @@
 
 (t)wed mar 03 21
+(u)Kyle
+(e)⚖|balance
+(+)Lizards now have a Regrow Tail ability. It lets you regrow your tail...
 (u)Zamuajasa
 (e)⚖|balance
 (+)Arse Nath/Rathen's Secret no longer causes clouds of smoke.
