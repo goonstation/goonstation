@@ -1,5 +1,9 @@
 
 (t)thu mar 04 21
+(u)Superlagg
+(p)3852
+(e)🐛|bug
+(*)Securitrons will no longer attack you if you're tucked away inside something.
 (u)Chickenish
 (p)3749
 (e)⚖🆕|balance, feature
