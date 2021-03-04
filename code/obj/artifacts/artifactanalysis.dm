@@ -49,7 +49,7 @@
 			src.artifactName = A.internal_name
 
 		// all correct, let's set the name!
-		O.real_name = A.artifactName
+		O.real_name = src.artifactName
 		O.UpdateName()
 
 	stick_to(atom/A, pox, poy)

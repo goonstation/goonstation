@@ -153,7 +153,7 @@
 					// actual shipment
 					var/obj/storage/crate/artcrate = new /obj/storage/crate()
 					artcrate.name = "Artifact Resupply Crate"
-					for(var/i = 0 .. artifact_resupply_amount)
+					for(var/i = 0 to artifact_resupply_amount)
 						new /obj/artifact_type_spawner/vurdalak(artcrate)
 					artifact_resupply_amount = 0
 					shippingmarket.receive_crate(artcrate)
@@ -166,7 +166,12 @@
 		// give PDA group messages
 		var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency("1149")
 		var/datum/signal/pdaSignal = get_free_signal()
-		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=list(MGD_CARGO, MGD_SCIENCE, MGA_SALES), "sender"="00000000", "message"="Notification: [price] credits earned from outgoing artifact [sell_art.name]. [pap?'Analysis was [pap.lastAnalysis]% correct.':'No analysis attached.']")
+		var/message = "Notification: [price] credits earned from outgoing artifact [sell_art.name]. "
+		if(pap)
+			message += "Analysis was [pap.lastAnalysis]% correct."
+		else
+			message += "Artifact was not analyzed."
+		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=list(MGD_CARGO, MGD_SCIENCE, MGA_SALES), "sender"="00000000", "message"=message)
 		pdaSignal.transmission_method = TRANSMISSION_RADIO
 		if(transmit_connection != null)
 			transmit_connection.post_signal(null, pdaSignal)
