@@ -1,5 +1,9 @@
 
 (t)thu mar 04 21
+(u)Carbadox
+(p)3841
+(e)|
+(+)The industrial cryogenic unit has been renamed to the industrial cryogenic sleep unit and the Medical cyrogenic cell has been renamed to the cryogenic healing pod. This should make it easier to distinguish them from each other.
 (u)Superlagg
 (p)3852
 (e)🐛|bug
