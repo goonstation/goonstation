@@ -2988,17 +2988,17 @@
 			src.can_not_eat(A, user, "is_ghost")
 		return FALSE
 
-	/// Science still hasn't found a way to install a cyberstomach into a cyberperson
+	// Science still hasn't found a way to install a cyberstomach into a cyberperson
 	if (issilicon(src))
 		src.can_not_eat(A, user, "is_silicon")
 		return FALSE
 
-	/// And just in case we're something that isnt caught by the above and isnt something that's supposed to eat things
+	// And just in case we're something that isnt caught by the above and isnt something that's supposed to eat things
 	if (!isliving(src))
 		src.can_not_eat(A, user, null)
 		return FALSE
 
-	/// Making sure the thing actually exists and isn't cheating the bite-rate. And is also edible, so we don't get people trying to stuff multitools in their mouth
+	// Making sure the thing actually exists and isn't cheating the bite-rate. And is also edible, so we don't get people trying to stuff multitools in their mouth
 	if(!src.bioHolder?.HasEffect("mattereater") && GET_COOLDOWN(src, "eat") && (A.edible || A.material?.edible))
 		if(!ON_COOLDOWN(src, "eat_cooldown_cooldown", EAT_COOLDOWN))
 			src.can_not_eat(A, user, "on_cooldown")
