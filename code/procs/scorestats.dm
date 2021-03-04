@@ -15,6 +15,8 @@ var/datum/score_tracker/score_tracker
 	var/score_structural_damage = 0
 	var/final_score_eng = 0
 	// RESEARCH DEPARTMENT
+	var/score_artifact_analysis = 0
+	var/final_score_res = 0
 	// CIVILIAN DEPARTMENT
 	var/score_cleanliness = 0
 	var/score_expenses = 0
@@ -127,7 +129,19 @@ var/datum/score_tracker/score_tracker
 		final_score_eng = (score_power_outages + score_structural_damage) * 0.5
 
 		// RESEARCH DEPARTMENT SECTION
-		// yeah coming soon or w/e idgaf, fucking academics
+		var/correctly_analyzed_artifacts = 0
+		var/analyzed_artifacts = 0
+		for(var/obj/O in artifact_controls.artifacts)
+			if(O.disposed)
+				return
+			var/obj/item/sticker/postit/artifact_paper/pap = locate(/obj/item/sticker/postit/artifact_paper/) in sell_art.vis_contents
+			analyzed_artifacts++
+			if(pap?.lastAnalysis >= 3)
+				correctly_analyzed_artifacts++
+		if(analyzed_artifacts)
+			score_artifact_analysis = (correctly_analyzed_artifacts/analyzed_artifacts)*100
+
+		final_score_res = score_artifact_analysis
 
 		// CIVILIAN DEPARTMENT SECTION
 		if (!istype(wagesystem))
@@ -166,12 +180,12 @@ var/datum/score_tracker/score_tracker
 		// AND THE WINNER IS.....
 
 		var/department_score_sum = 0
-		department_score_sum = final_score_sec + final_score_eng + final_score_civ
+		department_score_sum = final_score_sec + final_score_eng + final_score_civ + final_score_res
 
 		if (department_score_sum == 0 || department_score_sum != department_score_sum) //check for 0 and for NaN values
 			final_score_all = 0
 		else
-			final_score_all = round(department_score_sum / 3)
+			final_score_all = round(department_score_sum / 4)
 
 		switch(final_score_all)
 			if (100 to INFINITY) grade = "NanoTrasen's Finest"
