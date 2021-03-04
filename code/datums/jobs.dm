@@ -1043,7 +1043,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 
 /datum/job/civilian/clown
 	name = "Clown"
-	limit = 1
+	limit = 2
 	wages = PAY_DUMBCLOWN
 	linkcolor = "#FF99FF"
 	slot_back = null
@@ -1415,7 +1415,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 
 /datum/job/civilian/mime
 	name = "Mime"
-	limit = 1
+	limit = 2
 	wages = PAY_DUMBCLOWN*2 // lol okay whatever
 	slot_belt = /obj/item/device/pda2
 	slot_head = /obj/item/clothing/head/mime_bowler
