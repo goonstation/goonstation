@@ -167,7 +167,7 @@
 		// give PDA group messages
 		var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency("1149")
 		var/datum/signal/pdaSignal = get_free_signal()
-		var/message = "Notification: [price] credits earned from outgoing artifact [sell_art.name]. "
+		var/message = "Notification: [price] credits earned from outgoing artifact \'[sell_art.name]\'. "
 		if(pap)
 			message += "Analysis was [(pap.lastAnalysis/3)*100]% correct."
 		else
