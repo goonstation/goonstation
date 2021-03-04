@@ -26,6 +26,16 @@ TOILET
 	..()
 
 /obj/item/storage/toilet/attackby(obj/item/W as obj, mob/user as mob, obj/item/storage/T)
+	if(istool(W, TOOL_SCREWING | TOOL_WRENCHING))
+		if(src.anchored)
+			user.visible_message("<b>[user]</b> unbolts the [src] from the floor.")
+			playsound(src.loc, "sound/items/Screwdriver.ogg", 100, 1)
+			src.anchored = 0
+		else
+			user.visible_message("<b>[user]</b> secures the [src] to the floor.")
+			playsound(src.loc, "sound/items/Screwdriver.ogg", 100, 1)
+			src.anchored = 1
+		return
 	if (src.contents.len >= 7)
 		boutput(user, "The toilet is clogged!")
 		user.unlock_medal("Try jiggling the handle",1) //new method to get this medal since the old one (fat person in disposal pipe) is gone
