@@ -8088,7 +8088,7 @@
 /obj/table/auto,
 /obj/item/sheet/steel/fullstack,
 /obj/item/sheet/steel/fullstack,
-/obj/item/storage/box/cablesbox/colored,
+/obj/item/storage/box/cablesbox,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -8920,7 +8920,7 @@
 /obj/table/auto,
 /obj/item/sheet/glass/reinforced/fullstack,
 /obj/item/sheet/glass/reinforced/fullstack,
-/obj/item/storage/box/cablesbox/colored,
+/obj/item/storage/box/cablesbox,
 /obj/machinery/recharger,
 /turf/unsimulated/floor{
 	icon_state = "floor"
@@ -9084,7 +9084,7 @@
 /obj/table/auto,
 /obj/item/sheet/steel/fullstack,
 /obj/item/sheet/steel/fullstack,
-/obj/item/storage/box/cablesbox/colored,
+/obj/item/storage/box/cablesbox,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -9843,7 +9843,7 @@
 /obj/table/auto,
 /obj/item/sheet/glass/reinforced/fullstack,
 /obj/item/sheet/glass/reinforced/fullstack,
-/obj/item/storage/box/cablesbox/colored,
+/obj/item/storage/box/cablesbox,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},

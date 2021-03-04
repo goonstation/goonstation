@@ -266,13 +266,18 @@ ABSTRACT_TYPE(/datum/ore_cluster)
 
 
 /datum/game_mode/pod_wars/proc/announce_critical_system_destruction(var/team_num, var/obj/pod_base_critical_system/CS)
-	var/name
+	var/datum/pod_wars_team/team
 	if (team_num == TEAM_NANOTRASEN)
-		name = "NanoTrasen"
-		src.team_NT.change_points(-25)
+		team = team_NT
+		// src.team_NT.change_points(-25)
 	else if (team_num == TEAM_SYNDICATE)
-		name = "The Syndicate"
-		src.team_SY.change_points(-25)
+		team = team_SY
+		// src.team_SY.change_points(-25)
+
+	team.change_points(-25)
+	for (var/datum/mind/M in team.members)
+		if (M.current)
+			M.current.client << sound('sound/effects/ship_alert_major.ogg')
 
 	boutput(world, "<h2><span class='alert'>[name]'s [CS] has been destroyed!!</span></h2>")
 
@@ -283,11 +288,10 @@ ABSTRACT_TYPE(/datum/ore_cluster)
 	else if (team_num == TEAM_SYNDICATE)
 		team = team_SY
 
-	// for (var/datum/mind/M in team.members)
-	// 	if (M.current)
-	// 		boutput(M.current, "<h3><span class='alert'>Your team's [CS] is under attack!</span></h3>")
-	boutput(world, "<h3><span class='alert'>[team.name]'s <b>[CS]<b> is under attack!</span></h3>")
-
+	for (var/datum/mind/M in team.members)
+		if (M.current)
+			boutput(M.current, "<h3><span class='alert'>Your team's [CS] is under attack!</span></h3>")
+			M.current.client << sound('sound/effects/ship_alert_minor.ogg')
 
 
 /datum/game_mode/pod_wars/check_finished()
@@ -1173,7 +1177,7 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 /////////////////////////////////////////////////
 
 //stole this from vampire. prevents runtimes. IDK why this isn't in the parent.
-/obj/screen/ability/topBar/pod_pilot
+/atom/movable/screen/ability/topBar/pod_pilot
 	clicked(params)
 		var/datum/targetable/pod_pilot/spell = owner
 		var/datum/abilityHolder/holder = owner.holder
@@ -1248,7 +1252,7 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 	var/can_cast_anytime = 0		//while alive
 
 	New()
-		var/obj/screen/ability/topBar/pod_pilot/B = new /obj/screen/ability/topBar/pod_pilot(null)
+		var/atom/movable/screen/ability/topBar/pod_pilot/B = new /atom/movable/screen/ability/topBar/pod_pilot(null)
 		B.icon = src.icon
 		B.icon_state = src.icon_state
 		B.owner = src
@@ -1266,7 +1270,7 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 	updateObject()
 		..()
 		if (!src.object)
-			src.object = new /obj/screen/ability/topBar/pod_pilot()
+			src.object = new /atom/movable/screen/ability/topBar/pod_pilot()
 			object.icon = src.icon
 			object.owner = src
 		if (src.last_cast > world.time)
