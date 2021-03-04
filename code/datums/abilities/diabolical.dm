@@ -16,7 +16,7 @@
 	else return
 
 /* 	/		/		/		/		/		/		Ability Holder		/		/		/		/		/		/		/		/		*/
-/obj/screen/ability/topBar/merchant
+/atom/movable/screen/ability/topBar/merchant
 	clicked(params)
 		var/datum/targetable/merchant/spell = owner
 		if (!istype(spell))
@@ -67,7 +67,7 @@
 	var/not_when_handcuffed = 0
 
 	New()
-		var/obj/screen/ability/topBar/merchant/B = new /obj/screen/ability/topBar/merchant(null)
+		var/atom/movable/screen/ability/topBar/merchant/B = new /atom/movable/screen/ability/topBar/merchant(null)
 		B.icon = src.icon
 		B.icon_state = src.icon_state
 		B.owner = src
@@ -79,7 +79,7 @@
 	updateObject()
 		..()
 		if (!src.object)
-			src.object = new /obj/screen/ability/topBar/merchant()
+			src.object = new /atom/movable/screen/ability/topBar/merchant()
 			object.icon = src.icon
 			object.owner = src
 		if (src.last_cast > world.time)
@@ -148,9 +148,9 @@
 			boutput(M, __red("Also, you should probably contact a coder because something has gone horribly wrong."))
 			return 0
 
-		if (!(total_souls_value >= 5))
+		if (!(total_souls_value >= CONTRACT_COST))
 			boutput(M, __red("You don't have enough souls in your satanic bank account to buy another contract!"))
-			boutput(M, __red("You need [5 - total_souls_value] more to afford a contract!"))
+			boutput(M, __red("You need [CONTRACT_COST - total_souls_value] more to afford a contract!"))
 			return 0
 
 		return 1
@@ -165,14 +165,18 @@
 /datum/targetable/merchant/summon_contract
 	icon_state = "clairvoyance"
 	name = "Summon Contract"
-	desc = "Spend five souls to summon a random new contract to your location"
+	desc = "Spend PLACEHOLDER (you shouldn't see this) souls to summon a random new contract to your location"
 	targeted = 0
 	target_nodamage_check = 0
 	max_range = 0
 	cooldown = 0
-	pointCost = 0
+	pointCost = CONTRACT_COST
 	when_stunned = 1
 	not_when_handcuffed = 0
+
+	New()
+		..()
+		desc = "Spend [CONTRACT_COST] souls to summon a random new contract to your location"
 
 	cast(mob/target)
 		if (!holder)
@@ -180,16 +184,16 @@
 		var/mob/living/M = holder.owner
 		if (!M)
 			return 1
-		if (!(total_souls_value >= 5))
+		if (!(total_souls_value >= CONTRACT_COST))
 			boutput(M, __red("You don't have enough souls in your satanic bank account to buy another contract!"))
-			boutput(M, __red("You need [5 - total_souls_value] more to afford a contract!"))
+			boutput(M, __red("You need [CONTRACT_COST - total_souls_value] more to afford a contract!"))
 			return 1
 		if (!isdiabolical(M))
 			boutput(M, __red("You aren't evil enough to use this power!"))
 			boutput(M, __red("Also, you should probably contact a coder because something has gone horribly wrong."))
 			return 1
-		total_souls_value -= 5
-		boutput(M, __red("You spend five souls and summon a brand new contract along with a pen! However, losing the power of those souls has weakened your weapons."))
+		souladjust(-CONTRACT_COST)
+		boutput(M, __red("You spend [CONTRACT_COST] souls and summon a brand new contract along with a pen! However, losing the power of those souls has weakened your weapons."))
 		spawncontract(M, 1, 1) //strong contract + pen
 		soulcheck(M)
 		return 0
@@ -216,7 +220,7 @@
 			boutput(holder.owner, "Your target must be human!")
 			return 1
 
-		holder.owner.visible_message("<span class='alert'><b>[holder.owner] does finger guns in [target]s direction.</b></span>")
+		holder.owner.visible_message("<span class='alert'><b>[holder.owner] shoots finger guns in [target]s direction.</b></span>")
 		playsound(holder.owner.loc, "sound/effects/fingersnap.ogg", 50, 0, -1)
 
 		if (H.traitHolder.hasTrait("training_chaplain"))
@@ -249,8 +253,29 @@
 			usr.set_loc(pick(get_area_turfs(/area/afterlife/hell/hellspawn)))
 
 		else
-			usr.set_loc(spawnturf)
-			spawnturf = null
+			if(usr.mind.damned) //Backup plan incase Satan gets himself stuck in hell.
+				usr.set_loc(pick(get_area_turfs(/area/station/chapel)))
+			else
+				usr.set_loc(spawnturf)
+				spawnturf = null
+
+/datum/targetable/gimmick/spawncontractsatan
+	icon_state = "clairvoyance"
+	name = "Summon Contract"
+	desc = "Summon a devilish contract and pen."
+	targeted = 0
+	target_nodamage_check = 0
+	max_range = 0
+	cooldown = 0
+
+	cast(mob/target)
+		if (!holder)
+			return 1
+		var/mob/living/M = holder.owner
+		if (!M)
+			return 1
+		spawncontract(usr, 0, 1)
+		return 0
 
 ////////////////////////Kill Jesta///////////////////////////////
 /datum/targetable/gimmick/Jestershift
@@ -288,21 +313,48 @@
 	targeted = 0
 	cooldown = 0
 
+	tryCast()
+		if (is_incapacitated(holder.owner))
+			boutput(holder.owner, "<span class='alert'>You cannot cast this ability while you are incapacitated.</span>")
+			src.holder.locked = 0
+			return 999
+		. = ..()
+
 	cast(atom/T)
 		var/floorturf = get_turf(usr)
-		var/floormod1 = rand(0, 32)
-		var/floormod2 = rand(0, 32)
+		var/x_coeff = rand(0, 1)	// open the floor horizontally
+		var/y_coeff = !x_coeff // or vertically but not both - it looks weird
+		var/slide_amount = 22 // around 20-25 is just wide enough to show most of the person hiding underneath
+
 		if(usr.plane == PLANE_UNDERFLOOR)
-			usr.plane = PLANE_DEFAULT
-			usr.layer = 4
-			animate_slide(floorturf, floormod1, floormod2, 5)
-			animate_slide(floorturf, 0, 0, 5)
+			usr.flags &= ~(NODRIFT | DOORPASS | TABLEPASS)
+			APPLY_MOB_PROPERTY(usr, PROP_CANTMOVE, "floorswitching")
+			REMOVE_MOB_PROPERTY(usr, PROP_NO_MOVEMENT_PUFFS, "floorswitching")
+			REMOVE_MOB_PROPERTY(usr, PROP_NEVER_DENSE, "floorswitching")
+			usr.set_density(initial(usr.density))
+			animate_slide(floorturf, x_coeff * -slide_amount, y_coeff * -slide_amount, 4)
+			SPAWN_DBG(0.4 SECONDS)
+				if(usr)
+					usr.plane = PLANE_DEFAULT
+					usr.layer = 4
+					REMOVE_MOB_PROPERTY(usr, PROP_CANTMOVE, "floorswitching")
+				if(floorturf)
+					animate_slide(floorturf, 0, 0, 4)
 
 		else
-			usr.layer = 4
-			usr.plane = PLANE_UNDERFLOOR
-			animate_slide(floorturf, floormod1, floormod2, 5)
-			animate_slide(floorturf, 0, 0, 5)
+			APPLY_MOB_PROPERTY(usr, PROP_CANTMOVE, "floorswitching")
+			animate_slide(floorturf, x_coeff * -slide_amount, y_coeff * -slide_amount, 4)
+			SPAWN_DBG(0.4 SECONDS)
+				if(usr)
+					REMOVE_MOB_PROPERTY(usr, PROP_CANTMOVE, "floorswitching")
+					APPLY_MOB_PROPERTY(usr, PROP_NO_MOVEMENT_PUFFS, "floorswitching")
+					APPLY_MOB_PROPERTY(usr, PROP_NEVER_DENSE, "floorswitching")
+					usr.flags |= NODRIFT | DOORPASS | TABLEPASS
+					usr.set_density(0)
+					usr.layer = 4
+					usr.plane = PLANE_UNDERFLOOR
+				if(floorturf)
+					animate_slide(floorturf, 0, 0, 4)
 
 /datum/targetable/gimmick/movefloor
 	icon_state = "pandemonium"

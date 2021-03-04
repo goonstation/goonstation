@@ -147,7 +147,7 @@ proc/debug_color_of(var/thing)
 		boutput(usr, "<span class='notice'>@[target.x],[target.y] ([GM.group_multiplier])<br>[MOLES_REPORT(GM)] t: [GM.temperature] Kelvin, [MIXTURE_PRESSURE(GM)] kPa [(burning)?("<span class='alert'>BURNING</span>"):(null)]</span>")
 
 		if(GM.trace_gases)
-			for(var/datum/gas/trace_gas in GM.trace_gases)
+			for(var/datum/gas/trace_gas as() in GM.trace_gases)
 				boutput(usr, "[trace_gas.type]: [trace_gas.moles]")
 
 	fix_next_move()
@@ -260,9 +260,9 @@ proc/debug_color_of(var/thing)
 			if(cell)
 				num_charge = cell.charge / cell.maxcharge
 			var/list/lcolor = hex_to_rgb_list(debug_color_of(area))
-			for(var/c in lcolor)
+			for(var/c in 1 to 3)
 				lcolor[c] = lcolor[c] / 8 + 220 * num_charge
-			img.app.color = rgb(lcolor["r"], lcolor["g"], lcolor["b"])
+			img.app.color = rgb(lcolor[1], lcolor[2], lcolor[3])
 			if(!(area in processed_areas))
 				var/text_charge
 				if(!apc || apc.disposed)
@@ -680,11 +680,11 @@ proc/debug_color_of(var/thing)
 			var/direct_trace = 0
 			var/turf/simulated/sim = theTurf
 			if (istype(sim) && sim.air)
-				for(var/datum/gas/tg in sim.air.trace_gases)
+				for(var/datum/gas/tg as() in sim.air.trace_gases)
 					img.app.desc += "[tg.type] [tg.moles]<br>"
 					direct_trace = 1
 				if(sim?.parent?.air)
-					for(var/datum/gas/tg in sim.parent.air.trace_gases)
+					for(var/datum/gas/tg as() in sim.parent.air.trace_gases)
 						img.app.desc += "(AG) [tg.type] [tg.moles]<br>"
 						air_group_trace = 1
 			if(air_group_trace && direct_trace)
@@ -813,6 +813,50 @@ proc/debug_color_of(var/thing)
 		is_ok(atom/A)
 			return !istype(A, /obj/item)
 
+	temperature
+		name = "temperature"
+		GetInfo(turf/theTurf, image/debugoverlay/img)
+			var/temp = null
+			if(issimulatedturf(theTurf))
+				var/turf/simulated/sim = theTurf
+				if(sim.air)
+					temp = sim.air.temperature
+			if(isnull(temp))
+				temp = theTurf.temperature
+			img.app.overlays = list(src.makeText("[temp]", RESET_ALPHA | RESET_COLOR))
+			var/p = clamp(temp / (T0C * 2), 0, 1)
+			img.app.color = rgb(round(p * 255), 0, round((1-p) * 255))
+
+#ifdef ATMOS_PROCESS_CELL_STATS_TRACKING
+	process_cell_operations
+		name = "process cell stats"
+		GetInfo(turf/theTurf, image/debugoverlay/img)
+			img.app.alpha = 0
+			if(!air_master?.current_cycle)
+				return
+			if(!theTurf.process_cell_operations)
+				return
+			img.app.overlays = list(src.makeText("[theTurf.process_cell_operations]<br>[round(theTurf.process_cell_operations/air_master.current_cycle*100, 0.01)]%", RESET_ALPHA | RESET_COLOR))
+			var/p = theTurf.process_cell_operations / theTurf.max_process_cell_operations
+			img.app.alpha = p < 0.1 ? 20 : (p < 0.3 ? 50 : 100)
+			img.app.color = rgb(round(p * 255), round((1-p) * 255), 50)
+#endif
+
+#ifdef ATMOS_TILE_STATS_TRACKING
+	total_atmos_operations_stats
+		name = "total atmos operations stats"
+		GetInfo(turf/theTurf, image/debugoverlay/img)
+			img.app.alpha = 0
+			if(!air_master?.current_cycle)
+				return
+			if(!theTurf.atmos_operations)
+				return
+			img.app.overlays = list(src.makeText("[theTurf.atmos_operations]<br>[round(theTurf.atmos_operations/air_master.current_cycle*100, 0.01)]%", RESET_ALPHA | RESET_COLOR))
+			var/p = theTurf.atmos_operations / theTurf.max_atmos_operations
+			img.app.alpha = p < 0.1 ? 20 : (p < 0.3 ? 50 : 100)
+			img.app.color = rgb(round(p * 255), round((1-p) * 255), 50)
+#endif
+
 /client/var/list/infoOverlayImages
 /client/var/datum/infooverlay/activeOverlay
 
@@ -918,7 +962,7 @@ proc/debug_color_of(var/thing)
 		if(isnull(name))
 			name = replacetext("[dummy]", "/datum/infooverlay/", "")
 		available_overlays[name] = dummy
-	var/name = input("Choose an overlay") in (available_overlays + "REMOVE")
+	var/name = input("Choose an overlay") as null|anything in (available_overlays + "REMOVE")
 	activeOverlay?.OnDisabled(src)
 	if(!name || name == "REMOVE")
 		if(infoOverlayImages)

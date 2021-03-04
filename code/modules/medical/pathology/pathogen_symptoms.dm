@@ -51,31 +51,33 @@ datum/pathogeneffects
 	// this should give people better feedback about how be infected and how to avoid it
 	proc/infect_cloud(var/mob/M as mob, var/datum/pathogen/origin, var/amount = 5)
 		var/turf/T = get_turf(M)
+		var/obj/decal/cleanable/pathogen_cloud/D = make_cleanable(/obj/decal/cleanable/pathogen_cloud,T)
+
 		var/datum/reagent/blood/pathogen/Q = new /datum/reagent/blood/pathogen()
-		var/datum/reagents/R = new /datum/reagents(amount)
+		D.reagents = new /datum/reagents(amount)
 		Q.volume = amount
 		Q.pathogens += origin.pathogen_uid
 		Q.pathogens[origin.pathogen_uid] = origin
-		R.reagent_list += "pathogen"
-		R.reagent_list["pathogen"] = Q
-		Q.holder = R
-		R.update_total()
-		T.fluid_react(R, amount, airborne = 1)
+		D.reagents.reagent_list += "pathogen"
+		D.reagents.reagent_list["pathogen"] = Q
+		Q.holder = D.reagents
+		D.reagents.update_total()
 
 	// creates an infective puddle
 	// this should give people better feedback about how be infected and how to avoid it
 	proc/infect_puddle(var/mob/M as mob, var/datum/pathogen/origin, var/amount = 5)
 		var/turf/T = get_turf(M)
+		var/obj/decal/cleanable/pathogen_sweat/D = make_cleanable(/obj/decal/cleanable/pathogen_sweat,T)
+
 		var/datum/reagent/blood/pathogen/Q = new /datum/reagent/blood/pathogen()
-		var/datum/reagents/R = new /datum/reagents(amount)
+		D.reagents = new /datum/reagents(amount)
 		Q.volume = amount
 		Q.pathogens += origin.pathogen_uid
 		Q.pathogens[origin.pathogen_uid] = origin
-		R.reagent_list += "pathogen"
-		R.reagent_list["pathogen"] = Q
-		Q.holder = R
-		R.update_total()
-		R.trans_to(T, amount)
+		D.reagents.reagent_list += "pathogen"
+		D.reagents.reagent_list["pathogen"] = Q
+		Q.holder = D.reagents
+		D.reagents.update_total()
 
 	// infect_direct(mob, datum/pathogen) : void
 	// This is the proc that handles direct transmission of the pathogen from one mob to another. This should be called in particular infection scenarios. For example, a sweating person
@@ -219,24 +221,24 @@ datum/pathogeneffects/malevolent/coughing
 			return
 		switch (origin.stage)
 			if (1)
-				if (prob(0.12*origin.spread))
+				if (prob(0.06*origin.spread))
 					M.show_message("<span class='alert'>You cough.</span>")
 					src.infect_cloud(M, origin)
 			if (2)
-				if (prob(0.2*origin.spread))
+				if (prob(0.1*origin.spread))
 					M.visible_message("<span class='alert'>[M] coughs!</span>", "<span class='alert'>You cough.</span>", "<span class='alert'>You hear someone coughing.</span>")
 					src.infect_cloud(M, origin)
 			if (3)
-				if (prob(0.28*origin.spread))
+				if (prob(0.14*origin.spread))
 					M.visible_message("<span class='alert'>[M] coughs violently!</span>", "<span class='alert'>You cough violently!</span>", "<span class='alert'>You hear someone cough violently!</span>")
 					src.infect_cloud(M, origin)
 			if (4)
-				if (prob(0.4*origin.spread))
+				if (prob(0.2*origin.spread))
 					M.visible_message("<span class='alert'>[M] coughs violently!</span>", "<span class='alert'>You cough violently!</span>", "<span class='alert'>You hear someone cough violently!</span>")
 					M.TakeDamage("chest", 1, 0)
 					src.infect_cloud(M, origin)
 			if (5)
-				if (prob(0.4*origin.spread))
+				if (prob(0.2*origin.spread))
 					M.visible_message("<span class='alert'>[M] coughs very violently!</span>", "<span class='alert'>You cough very violently!</span>", "<span class='alert'>You hear someone cough very violently!</span>")
 					M.TakeDamage("chest", 2, 0)
 					src.infect_cloud(M, origin)
@@ -306,23 +308,23 @@ datum/pathogeneffects/malevolent/sneezing
 			return
 		switch (origin.stage)
 			if (1)
-				if (prob(0.4*origin.spread))
+				if (prob(0.08*origin.spread))
 					M.visible_message("<span class='alert'>[M] sneezes!</span>", "<span class='alert'>You sneeze.</span>", "<span class='alert'>You hear someone sneezing.</span>")
 					src.infect_cloud(M, origin)
 			if (2)
-				if (prob(0.48*origin.spread))
+				if (prob(0.1*origin.spread))
 					M.visible_message("<span class='alert'>[M] sneezes!</span>", "<span class='alert'>You sneeze.</span>", "<span class='alert'>You hear someone sneezing.</span>")
 					src.infect_cloud(M, origin)
 			if (3)
-				if (prob(0.6*origin.spread))
+				if (prob(0.15*origin.spread))
 					M.visible_message("<span class='alert'>[M] sneezes!</span>", "<span class='alert'>You sneeze.</span>", "<span class='alert'>You hear someone sneezing.</span>")
 					src.infect_cloud(M, origin)
 			if (4)
-				if (prob(0.8*origin.spread))
+				if (prob(0.2*origin.spread))
 					M.visible_message("<span class='alert'>[M] sneezes!</span>", "<span class='alert'>You sneeze.</span>", "<span class='alert'>You hear someone sneezing.</span>")
 					src.infect_cloud(M, origin)
 			if (5)
-				if (prob(0.8*origin.spread))
+				if (prob(0.2*origin.spread))
 					M.visible_message("<span class='alert'>[M] sneezes!</span>", "<span class='alert'>You sneeze.</span>", "<span class='alert'>You hear someone sneezing.</span>")
 					src.infect_cloud(M, origin)
 
@@ -621,9 +623,7 @@ datum/pathogeneffects/malevolent/serious_paranoia
 		var/what = pick("I am the traitor.", "I will kill you.", "You will die, [M].")
 		if (prob(50))
 			boutput(M, "<B>[O]</B> points at [M].")
-			var/point = new /obj/decal/point(get_turf(M))
-			SPAWN_DBG(3 SECONDS)
-				qdel(point)
+			make_point(get_turf(M))
 		boutput(M, "<B>[O]</B> [action], \"[what]\"")
 
 	proc/backpack(var/mob/M, var/mob/living/O)
@@ -1658,7 +1658,7 @@ datum/pathogeneffects/malevolent/seriouschills/ultimate
 				if (prob(1) && !M.bioHolder.HasOneOfTheseEffects("cold_resist","thermal_resist"))
 					M.show_message("<span class='alert'>You freeze completely!</span>")
 					logTheThing("pathology", usr, null, "was ice statuified by symptom [src].")
-					M:become_ice_statue()
+					M.become_statue_ice()
 		if (M.bodytemperature < 0)
 			M.bodytemperature = 0
 
@@ -1675,7 +1675,7 @@ datum/pathogeneffects/malevolent/farts
 	infect_type = INFECT_AREA
 	spread = SPREAD_AIR
 	rarity = RARITY_VERY_COMMON
-	var/cooldown = 50 // we just use the name of the symptom to keep track of different fart effects, so their cooldowns do not interfere
+	var/cooldown = 200 // we just use the name of the symptom to keep track of different fart effects, so their cooldowns do not interfere
 	var/doInfect = 1 // smoke farts were just too good
 
 	proc/fart(var/mob/M, var/datum/pathogen/origin, var/voluntary)
@@ -1694,7 +1694,7 @@ datum/pathogeneffects/malevolent/farts
 	disease_act(var/mob/M, var/datum/pathogen/origin)
 		if (!origin.symptomatic)
 			return
-		if (prob(origin.stage * 3))
+		if (prob(origin.stage))
 			M.emote("fart")
 
 	may_react_to()
@@ -1703,7 +1703,7 @@ datum/pathogeneffects/malevolent/farts
 datum/pathogeneffects/malevolent/farts/smoke
 	name = "Smoke Farts"
 	desc = "The infected individual occasionally farts reagent smoke."
-	rarity = RARITY_RARE
+	rarity = RARITY_UNCOMMON
 	cooldown = 600
 	doInfect = 0 // the whole point is to not instantly infect a huge area, that's what got us into this mess >.>
 
@@ -1724,7 +1724,7 @@ datum/pathogeneffects/malevolent/farts/smoke
 datum/pathogeneffects/malevolent/farts/plasma
 	name = "Plasma Farts"
 	desc = "The infected individual occasionally farts. Plasma."
-	rarity = RARITY_UNCOMMON
+	rarity = RARITY_RARE
 	cooldown = 600
 
 	fart(var/mob/M, var/datum/pathogen/origin, var/voluntary)

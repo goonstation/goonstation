@@ -19,25 +19,25 @@
 		..()
 
 	build_click(var/mob/user, var/datum/buildmode_holder/holder, var/list/pa, var/atom/object)
-		if (pa.Find("left"))
+		if ("left" in pa)
 			if (!target)
-				boutput(usr, "<span class='alert'>Select a target first!</span>")
+				boutput(user, "<span class='alert'>Select a target first!</span>")
 			var/turf/T = get_turf(object)
-			if (pa.Find("ctrl"))
+			if ("ctrl" in pa)
 				finished = 1
 				clear_selection()
 				return
 			if (T)
 				var/obj/perm_portal/P = new /obj/perm_portal(T)
 				P.target = target
-		else if (pa.Find("right"))
+		else if ("right" in pa)
 			var/turf/T = get_turf(object)
 			if (T)
 				if (target)
 					target.overlays -= selection
 				target = T
 				target.overlays += selection
-				boutput(usr, "<span class='notice'>Target set.</span>")
+				boutput(user, "<span class='notice'>Target set.</span>")
 
 /obj/perm_portal
 	serialize(var/savefile/F, var/path, var/datum/sandbox/sandbox)

@@ -54,6 +54,11 @@
 	density = 1
 	opacity = 0 // this causes some of the super ugly lighting issues too
 
+	elm_random
+		New()
+			. = ..()
+			src.dir = pick(cardinal - SOUTH)
+
 // what the hell is all this and why wasn't it just using a big icon? the lighting system gets all fucked up with this stuff
 
 /*
@@ -111,6 +116,11 @@
 	icon_state = "stone"
 	anchored = 1
 	density=1
+
+	random
+		New()
+			. = ..()
+			src.dir = pick(alldirs)
 
 /obj/shrub
 	name = "shrub"
@@ -207,6 +217,11 @@
 			qdel(src)
 			return
 
+	random
+		New()
+			. = ..()
+			src.dir = pick(alldirs)
+
 /obj/shrub/captainshrub
 	name = "\improper Captain's bonsai tree"
 	icon = 'icons/misc/worlds.dmi'
@@ -240,7 +255,7 @@
 		if (!W) return
 		if (!user) return
 		if (inafterlife(user))
-			boutput(usr, "You can't bring yourself to hurt such a beautiful thing!")
+			boutput(user, "You can't bring yourself to hurt such a beautiful thing!")
 			return
 		if (src.destroyed) return
 		if (user.mind && user.mind.assigned_role == "Captain")
@@ -297,7 +312,7 @@
 		if (!W) return
 		if (!user) return
 		if (inafterlife(user))
-			boutput(usr, "You can't bring yourself to hurt such a beautiful thing!")
+			boutput(user, "You can't bring yourself to hurt such a beautiful thing!")
 			return
 		if (src.destroyed) return
 		if (user.mind && user.mind.assigned_role == "Captain")
@@ -587,6 +602,12 @@
 	centcom_edition
 		name = "electrified super high-security mk. X-22 edition chain-link fence"
 		desc = "Whoa."
+
+		ex_act(severity)
+			return
+
+		meteorhit(obj/meteor)
+			return
 
 /obj/effects/background_objects
 	icon = 'icons/misc/512x512.dmi'

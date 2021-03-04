@@ -490,6 +490,8 @@ var/zapLimiter = 0
 				else
 					user.visible_message("<span class='notice'>[user] transfers some of the power from [src] to yourself!</span>", "<span class='notice'>You transfer 250 charge.</span>")
 
+			charging = chargemode
+
 		else return src.attack_hand(user)
 
 	else if (istype(W, /obj/item/device/pda2) && W:ID_card)
@@ -530,7 +532,7 @@ var/zapLimiter = 0
 
 	interact_particle(user,src)
 
-	if(opened && (!issilicon(user) || isghostdrone(user) || !isAI(user)))
+	if(opened && !isAI(user))
 		if(cell)
 			user.put_in_hand_or_drop(cell)
 			cell.updateicon()
@@ -549,15 +551,10 @@ var/zapLimiter = 0
 	if (user.getStatusDuration("stunned") || user.getStatusDuration("weakened") || user.stat)
 		return
 
-	if ( (get_dist(src, user) > 1 ))
-		if (!issilicon(user) && !isAI(user))
-			src.remove_dialog(user)
-			user.Browse(null, "window=apc")
-			return
-		else if ((issilicon(user) || isAI(user)) && src.aidisabled)
-			boutput(user, "AI control for this APC interface has been disabled.")
-			user.Browse(null, "window=apc")
-			return
+	if (!in_interact_range(src, user))
+		src.remove_dialog(user)
+		user.Browse(null, "window=apc")
+		return
 	if(wiresexposed && (!isAI(user)))
 		src.add_dialog(user)
 		var/t1 = text("<B>Access Panel</B><br>")
@@ -583,10 +580,17 @@ var/zapLimiter = 0
 		user.Browse(t1, "window=apcwires")
 		onclose(user, "apcwires")
 
+	if (can_access_remotely(user) && src.aidisabled)
+		boutput(user, "AI control for this APC interface has been disabled.")
+		user.Browse(null, "window=apc")
+		return
+
 	src.add_dialog(user)
 	var/t = "<TT><B>Area Power Controller</B> ([area.name])<HR>"
 
-	if((locked || (setup_networkapc > 1)) && (!issilicon(user) && !isAI(user)))
+	if (!area.requires_power)
+		t += "<I>This APC has no configurable settings.</I>"
+	else if((locked || (setup_networkapc > 1)) && !can_access_remotely(user))
 		if (setup_networkapc < 2)
 			t += "<I>(Swipe ID card to unlock inteface.)</I><BR>"
 		else
@@ -595,7 +599,7 @@ var/zapLimiter = 0
 		t += "External power : <B>[ main_status ? (main_status ==2 ? "<FONT COLOR=#004000>Good</FONT>" : "<FONT COLOR=#D09000>Low</FONT>") : "<FONT COLOR=#F00000>None</FONT>"]</B><BR>"
 		t += "Power cell: <B>[cell ? "[round(cell.percent())]%" : "<FONT COLOR=red>Not connected.</FONT>"]</B>"
 		if(cell)
-			t += " ([charging ? ( charging == 1 ? "Charging" : "Fully charged" ) : "Not charging"])"
+			t += " ([charging ? ( charging == 1 ? "Charging" : "Fully charged" ) : chargecount ? "Performing self-test" : "Not charging"])"
 			t += " ([chargemode ? "Auto" : "Off"])"
 
 		t += "<BR><HR>Power channels<BR><PRE>"
@@ -610,7 +614,7 @@ var/zapLimiter = 0
 		t += "<HR>Cover lock: <B>[coverlocked ? "Engaged" : "Disengaged"]</B>"
 
 	else
-		if (!issilicon(user) && !isAI(user))
+		if (!can_access_remotely(user))
 			t += "<I>(Swipe ID card to lock interface.)</I><BR>"
 		t += "Main breaker: [operating ? "<B>On</B> <A href='?src=\ref[src];breaker=1'>Off</A>" : "<A href='?src=\ref[src];breaker=1'>On</A> <B>Off</B>" ]<BR>"
 		t += "External power : <B>[ main_status ? (main_status ==2 ? "<FONT COLOR=#004000>Good</FONT>" : "<FONT COLOR=#D09000>Low</FONT>") : "<FONT COLOR=#F00000>None</FONT>"]</B><BR>"
@@ -668,7 +672,7 @@ var/zapLimiter = 0
 		t += "<HR>Cover lock: [coverlocked ? "<B><A href='?src=\ref[src];lock=1'>Engaged</A></B>" : "<B><A href='?src=\ref[src];lock=1'>Disengaged</A></B>"]"
 
 
-		if (issilicon(user) || isAI(user))
+		if (can_access_remotely(user))
 			t += "<BR><HR><A href='?src=\ref[src];overload=1'><I>Overload lighting circuit</I></A><BR>"
 
 
@@ -813,7 +817,7 @@ var/zapLimiter = 0
 
 
 /obj/machinery/power/apc/proc/cut(var/wireColor)
-	if (usr.hasStatus(list("weakened", "paralysis", "stunned")) || !isalive(usr))
+	if (is_incapacitated(usr))
 		usr.show_text("Not when you're incapacitated.", "red")
 		return
 
@@ -836,7 +840,7 @@ var/zapLimiter = 0
 //		if(APC_WIRE_IDSCAN)		nothing happens when you cut this wire, add in something if you want whatever
 
 /obj/machinery/power/apc/proc/bite(var/wireColor) // are you fuckin huffing or somethin
-	if (usr.hasStatus(list("weakened", "paralysis", "stunned")) || !isalive(usr))
+	if (is_incapacitated(usr))
 		usr.show_text("Not when you're incapacitated.", "red")
 		return
 
@@ -862,7 +866,7 @@ var/zapLimiter = 0
 
 
 /obj/machinery/power/apc/proc/mend(var/wireColor)
-	if (usr.hasStatus(list("weakened", "paralysis", "stunned")) || !isalive(usr))
+	if (is_incapacitated(usr))
 		usr.show_text("Not when you're incapacitated.", "red")
 		return
 
@@ -889,7 +893,7 @@ var/zapLimiter = 0
 //		if(APC_WIRE_IDSCAN)		nothing happens when you cut this wire, add in something if you want whatever
 
 /obj/machinery/power/apc/proc/pulse(var/wireColor)
-	if (usr.hasStatus(list("weakened", "paralysis", "stunned")) || !isalive(usr))
+	if (is_incapacitated(usr))
 		usr.show_text("Not when you're incapacitated.", "red")
 		return
 
@@ -930,7 +934,7 @@ var/zapLimiter = 0
 		return
 	if (usr.getStatusDuration("stunned") || usr.getStatusDuration("weakened") || usr.stat)
 		return
-	if ((in_range(src, usr) && istype(src.loc, /turf))||(issilicon(usr) || isAI(usr)))
+	if ((in_interact_range(src, usr) && istype(src.loc, /turf))||(issilicon(usr) || isAI(usr)))
 		src.add_dialog(usr)
 		if (href_list["apcwires"] && wiresexposed)
 			var/t1 = text2num(href_list["apcwires"])
@@ -1073,6 +1077,7 @@ var/zapLimiter = 0
 				logTheThing("station", usr, null, "overloaded the lights at [log_loc(usr)].")
 				src.overload_lighting()
 
+		src.updateUsrDialog()
 		return
 
 	else
@@ -1215,6 +1220,8 @@ var/zapLimiter = 0
 
 		if(cell.charge >= cell.maxcharge)
 			charging = 2
+		else if (charging == 2)
+			charging = 0 // we lost power somehow; move to failure mode
 
 		if(chargemode)
 			if(!charging)
@@ -1493,12 +1500,15 @@ var/zapLimiter = 0
 
 	if (user.client.check_key(KEY_OPEN))
 		. = 1
+		if (status & BROKEN)
+			boutput(user, "This APC needs repairs before you can turn it back on!")
+			return
 		if (src.aidisabled)
 			boutput(user, "AI control for this APC interface has been disabled.")
 			return
 
 		operating = !operating
-		boutput(user, "You have turned the [src] <B>[src.operating ? "on" : "off"]</B>.")
+		boutput(user, "You have turned \the [src] <B>[src.operating ? "on" : "off"]</B>.")
 		src.update()
 		updateicon()
 

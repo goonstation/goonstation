@@ -33,6 +33,12 @@ a {color: #0000ff;}
 a:visited {color: #ff00ff;}
 a.popt {text-decoration: none;}
 .emoji {font-family: "Segoe UI Emoji" !important;}
+img.emoji {
+	height: 1em;
+	width: 1em;
+	margin: 0 .05em 0 .1em;
+	vertical-align: -0.1em;
+}
 
 
 /*****************************************
@@ -248,13 +254,11 @@ a.popt {text-decoration: none;}
 ******************************************/
 
 /* MOTD */
-.motd {color: #333; font-family: Verrdana, sans-serif; }
-.motd h1, .motd h2, .motd h3, .motd h4, .motd h5, .motd h6 {color: black; padding: 0 0.5em; border-bottom: 1px solid #aaa;}
+.motd {color: #333; font-family: Verdana, sans-serif; }
+.motd h1, .motd h2, .motd h3, .motd h4, .motd h5, .motd h6 {color: #000; padding: 0 0.5em; border-bottom: 1px solid #aaa;}
 .motd a, .motd a:link, .motd a:visited {color: #00f;}
 .motd a:active, .motd a:hover {color: #007;}
-.motd div {
-	margin: 0 0.5em;
-}
+.motd div { margin: 0 0.5em }
 /* ADD HERE FOR BOLD */
 .bold, .name, .prefix, .ooc, .looc, .adminooc, .adminlooc, .admin, .gfartooc, .gfartlooc, .gfartadmin, .mentorooc, .mentorlooc, .medal {font-weight: bold;}
 
@@ -312,9 +316,10 @@ h1.alert, h2.alert {color: #000000;}
 .rintercom {color: #006080;}
 .rcommand {color: #334E6D;}
 .rsecurity {color: #E00000;}
+.rdetective {color: #a00000;}
 .rengineering {color: #A86800;}
-.rmedical {color: #461B7E;}
-.rresearch {color: #153E7E;}
+.rmedical {color: #153E7E;}
+.rresearch {color: #461B7E;}
 .rcivilian {color: #A10082;}
 .rsyndicate {color: #962121;}
 .rother {color: #800080;}
@@ -359,15 +364,32 @@ body.theme-dark .mentorooc {color: #a653ff;}
 body.theme-dark .mentorlooc {color: #be81ff;}
 body.theme-dark .medal {color: #caca20;}
 body.theme-dark .motd {color: rgb(190, 190, 190);}
-body.theme-dark .motd h1, .motd h2, .motd h3, .motd h4, .motd h5, .motd h6 {color: rgb(255, 255, 255);}
-body.theme-dark .motd a, .motd a:link, .motd a:visited {color: rgb(100, 100, 255);}
-body.theme-dark .motd a:active, .motd a:hover {color: rgb(48, 48, 223);}
+body.theme-dark .motd h1, body.theme-dark .motd h2, body.theme-dark .motd h3, body.theme-dark .motd h4, body.theme-dark .motd h5, body.theme-dark .motd h6 {color: rgb(255, 255, 255);}
+body.theme-dark .motd a, body.theme-dark .motd a:link, body.theme-dark .motd a:visited {color: rgb(100, 100, 255);}
+body.theme-dark .motd a:active, body.theme-dark .motd a:hover {color: rgb(48, 48, 223);}
 body.theme-dark .internal.boldnshit {color: rgb(95, 95, 253);}
 body.theme-dark .green {color: #3fcc3f;}
 body.theme-dark .radio {color: #3fcc3f;}
 body.theme-dark .contextMenu {background-color: rgb(48, 48, 48);}
 body.theme-dark .contextMenu a {color: rgb(216, 216, 216);}
 body.theme-dark .contextMenu a:hover {background-color: rgb(92, 92, 92);}
+body.theme-dark .popup {background-color: rgb(48, 48, 48);}
+body.theme-dark .popup .close {
+	background: #333;
+	color: #aaa;
+}
+body.theme-dark .popup .close:hover {background: #444;}
+body.theme-dark .popup .head {
+	background: rgb(22, 22, 22);
+	color: #ddd;
+	border-bottom: 2px solid rgb(3, 80, 3);
+}
+body.theme-dark .popup input {border: 1px solid rgb(104, 104, 104); background: rgb(61, 61, 61); color: rgb(204, 204, 204);}
+body.theme-dark .popup input[type=text]:hover, body.theme-dark .popup input[type=text]:active, body.theme-dark .popup input[type=text]:focus {border-color: green;}
+body.theme-dark .popup input[type=submit] {background: rgb(70, 70, 70); color: #ddd; }
+body.theme-dark .popup input[type=submit]:hover, body.theme-dark .popup input[type=submit]:focus, body.theme-dark .popup input[type=submit]:active {background: rgb(75, 75, 75);}
+
+
 body.theme-dark a {color: #6464ff;}
 body.theme-dark a:visited {color: #ae6fff;}
 body.theme-dark h1, h2, h3, h4, h5, h6 {color: #6464ff;}
@@ -427,9 +449,10 @@ body.theme-dark .rstandard {color: #3fcc3f;}
 body.theme-dark .rintercom {color: #4dc1c9;}
 body.theme-dark .rcommand {color: #7ca6d6;}
 body.theme-dark .rsecurity {color: #e43535;}
+body.theme-dark .rdetective {color: #af4242;}
 body.theme-dark .rengineering {color: #dda448;}
-body.theme-dark .rmedical {color: #ac83e2;}
-body.theme-dark .rresearch {color: #3f69ac;}
+body.theme-dark .rmedical {color: #3A88AC;}
+body.theme-dark .rresearch {color: #bf83e2;}
 body.theme-dark .rcivilian {color: #ce45b2;}
 body.theme-dark .rsyndicate {color: #cf5757;}
 body.theme-dark .rother {color: #bd46bd;}

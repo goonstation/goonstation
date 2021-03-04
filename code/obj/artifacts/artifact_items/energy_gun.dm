@@ -26,7 +26,7 @@
 			cell = new/obj/item/ammo/power_cell/self_charging/artifact(src,A.artitype)
 			src.ArtifactDevelopFault(15)
 
-			current_projectile = AS.bullet
+			set_current_projectile(AS.bullet)
 			projectiles = list(src.current_projectile)
 			cell.max_charge = max(cell.max_charge, current_projectile.cost)
 
@@ -82,7 +82,8 @@
 
 /datum/artifact/energygun
 	associated_object = /obj/item/gun/energy/artifact
-	rarity_class = 2
+	type_name = "Energy Gun"
+	rarity_weight = 350
 	validtypes = list("ancient","eldritch","precursor")
 	react_elec = list(0.02,0,5)
 	react_xray = list(10,75,100,11,"CAVITY")

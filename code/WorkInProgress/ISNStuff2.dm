@@ -227,7 +227,7 @@
 				being_pressed = 0
 				return
 
-			if (user.getStatusDuration("paralysis") || user.stat || user.getStatusDuration("stunned") || user.getStatusDuration("weakened"))
+			if (is_incapacitated(user))
 				boutput(user, "<span class='alert'>You can't press it when you're incapacitated.</span>")
 				being_pressed = 0
 				return

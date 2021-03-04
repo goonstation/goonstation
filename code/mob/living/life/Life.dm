@@ -10,7 +10,7 @@
 	var/mob/living/silicon/robot/robot_owner = null
 	var/mob/living/critter/critter_owner = null
 
-	New(new_owner)
+	New(new_owner,arguments)
 		..()
 		last_process = TIME
 
@@ -51,18 +51,20 @@
 
 	var/last_no_gravity = 0
 
-	proc/add_lifeprocess(type)
-		var/datum/lifeprocess/L = new type(src)
+	proc/add_lifeprocess(type,...)
+		var/datum/lifeprocess/L = null
+		if (length(args) > 1)
+			var/arguments = args.Copy(2)
+			L = new type(src,arguments)
+		else
+			L = new type(src)
 		lifeprocesses[type] = L
+		return L
 
 	proc/remove_lifeprocess(type)
-		for (var/thing in lifeprocesses)
-			if (thing)
-				if (thing == type)
-					var/datum/lifeprocess/L = lifeprocesses[thing]
-					lifeprocesses -= thing
-					qdel(L)
-					L = null
+		var/datum/lifeprocess/L = lifeprocesses[type]
+		lifeprocesses -= type
+		qdel(L)
 
 	proc/get_heat_protection()
 		.= 0
@@ -87,7 +89,6 @@
 
 /mob/living/critter/New()
 	..()
-	add_lifeprocess(/datum/lifeprocess/blindness)
 	add_lifeprocess(/datum/lifeprocess/blood)
 	//add_lifeprocess(/datum/lifeprocess/bodytemp) //maybe enable per-critter
 	//add_lifeprocess(/datum/lifeprocess/breath) //most of them cant even wear internals
@@ -103,11 +104,11 @@
 	add_lifeprocess(/datum/lifeprocess/statusupdate)
 	add_lifeprocess(/datum/lifeprocess/stuns_lying)
 	add_lifeprocess(/datum/lifeprocess/viruses)
+	add_lifeprocess(/datum/lifeprocess/blindness)
 
 /mob/living/carbon/human/New()
 	..()
 	add_lifeprocess(/datum/lifeprocess/arrest_icon)
-	add_lifeprocess(/datum/lifeprocess/blindness)
 	add_lifeprocess(/datum/lifeprocess/blood)
 	add_lifeprocess(/datum/lifeprocess/bodytemp)
 	add_lifeprocess(/datum/lifeprocess/breath)
@@ -126,10 +127,10 @@
 	add_lifeprocess(/datum/lifeprocess/statusupdate)
 	add_lifeprocess(/datum/lifeprocess/stuns_lying)
 	add_lifeprocess(/datum/lifeprocess/viruses)
+	add_lifeprocess(/datum/lifeprocess/blindness)
 
 /mob/living/carbon/cube/New()
 	..()
-	add_lifeprocess(/datum/lifeprocess/blindness)
 	add_lifeprocess(/datum/lifeprocess/canmove)
 	add_lifeprocess(/datum/lifeprocess/chems)
 	add_lifeprocess(/datum/lifeprocess/disability)
@@ -138,31 +139,34 @@
 	add_lifeprocess(/datum/lifeprocess/sight)
 	add_lifeprocess(/datum/lifeprocess/statusupdate)
 	add_lifeprocess(/datum/lifeprocess/stuns_lying)
+	add_lifeprocess(/datum/lifeprocess/blindness)
 
 /mob/living/silicon/ai/New()
 	..()
-	add_lifeprocess(/datum/lifeprocess/blindness)
 	add_lifeprocess(/datum/lifeprocess/sight)
+	add_lifeprocess(/datum/lifeprocess/blindness)
 
 /mob/living/silicon/hivebot/New()
 	..()
 	//add_lifeprocess(/datum/lifeprocess/arrest_icon)
-	add_lifeprocess(/datum/lifeprocess/blindness)
 	add_lifeprocess(/datum/lifeprocess/canmove)
 	add_lifeprocess(/datum/lifeprocess/hud)
 	add_lifeprocess(/datum/lifeprocess/sight)
 	add_lifeprocess(/datum/lifeprocess/statusupdate)
 	add_lifeprocess(/datum/lifeprocess/stuns_lying)
+	add_lifeprocess(/datum/lifeprocess/blindness)
 
 /mob/living/silicon/robot/New()
 	..()
 	//add_lifeprocess(/datum/lifeprocess/arrest_icon)
-	add_lifeprocess(/datum/lifeprocess/blindness)
 	add_lifeprocess(/datum/lifeprocess/canmove)
 	add_lifeprocess(/datum/lifeprocess/hud)
 	add_lifeprocess(/datum/lifeprocess/sight)
 	add_lifeprocess(/datum/lifeprocess/statusupdate)
 	add_lifeprocess(/datum/lifeprocess/stuns_lying)
+	add_lifeprocess(/datum/lifeprocess/blindness)
+	add_lifeprocess(/datum/lifeprocess/robot_oil)
+	add_lifeprocess(/datum/lifeprocess/robot_locks)
 
 
 /mob/living/silicon/drone/New()
@@ -197,8 +201,11 @@
 
 		var/datum/lifeprocess/L
 		for (var/thing in src.lifeprocesses)
-			if (!thing) continue
+			if(src.disposed) return
 			L = src.lifeprocesses[thing]
+			if(!L)
+				logTheThing("debug", src, null, "had lifeprocess [thing] removed during Life() probably.")
+				continue
 			L.process(environment)
 
 		for (var/obj/item/implant/I in src.implant)
@@ -334,7 +341,6 @@
 
 	process_killswitch()
 	process_locks()
-	process_oil()
 	update_canmove()
 
 	if (metalman_skin && prob(1))
@@ -363,7 +369,6 @@
 
 	hud.update()
 	process_killswitch()
-	process_locks()
 
 /mob/living/silicon/hivebot/Life(datum/controller/process/mobs/parent)
 	if (..(parent))
@@ -419,7 +424,7 @@
 			src.death(0)
 
 	for (var/atom/A as obj|mob in src)
-		if (A != src.item && A != src.dummy && A != src.owner && !istype(A, /obj/screen))
+		if (A != src.item && A != src.dummy && A != src.owner && !istype(A, /atom/movable/screen))
 			if (isobj(A) || ismob(A)) // what the heck else would this be?
 				A:set_loc(src.loc)
 
@@ -526,13 +531,13 @@
 						if (!spotted_by_mob)
 							O:score++
 
-	proc/update_canmove()
-		var/datum/lifeprocess/L = lifeprocesses[/datum/lifeprocess/canmove]
+	proc/update_sight()
+		var/datum/lifeprocess/L = lifeprocesses[/datum/lifeprocess/sight]
 		if (L)
 			L.process()
 
-	proc/update_sight()
-		var/datum/lifeprocess/L = lifeprocesses[/datum/lifeprocess/sight]
+	update_canmove()
+		var/datum/lifeprocess/L = lifeprocesses[/datum/lifeprocess/canmove]
 		if (L)
 			L.process()
 
@@ -562,7 +567,7 @@
 		//Modify stamina.
 		var/stam_time_passed = max(tick_spacing, TIME - last_stam_change)
 
-		var/final_mod = (src.stamina_regen + src.get_stam_mod_regen()) * (stam_time_passed / tick_spacing)
+		var/final_mod = (src.stamina_regen + GET_MOB_PROPERTY(src, PROP_STAMINA_REGEN_BONUS)) * (stam_time_passed / tick_spacing)
 		if (final_mod > 0)
 			src.add_stamina(abs(final_mod))
 		else if (final_mod < 0)
@@ -816,7 +821,7 @@
 	proc/Thumper_createHeartbeatOverlays()
 		for (var/mob/x in (src.observers + src))
 			if(!heartbeatOverlays[x] && x.client)
-				var/obj/screen/hb = new
+				var/atom/movable/screen/hb = new
 				hb.icon = x.client.widescreen ? 'icons/effects/overlays/crit_thicc.png' : 'icons/effects/overlays/crit_thin.png'
 				hb.screen_loc = "1,1"
 				hb.layer = HUD_LAYER_UNDER_2
@@ -834,7 +839,7 @@
 #define HEARTBEAT_THUMP_INTENSITY 0.2
 #define HEARTBEAT_THUMP_INTENSITY_BASE 0.1
 		for(var/mob/x in src.heartbeatOverlays)
-			var/obj/screen/overlay = src.heartbeatOverlays[x]
+			var/atom/movable/screen/overlay = src.heartbeatOverlays[x]
 			if(x.client)
 				x.client << thud
 				if(animateInitial)
@@ -866,7 +871,7 @@
 		if(doThumps)//we're thumping dangit
 			doThumps = 0
 		for(var/mob/x in src.heartbeatOverlays)
-			var/obj/screen/overlay = src.heartbeatOverlays[x]
+			var/atom/movable/screen/overlay = src.heartbeatOverlays[x]
 			if(x.client)
 				animate(overlay, alpha = 255,
 					color = list( list(0,0,0,0), list( 0,0,0,0 ), list(0,0,0,0), list(0,0,0,4) ),
@@ -876,7 +881,7 @@
 		if(doThumps)
 			doThumps = 0
 		for(var/mob/x in src.heartbeatOverlays)
-			var/obj/screen/overlay = src.heartbeatOverlays[x]
+			var/atom/movable/screen/overlay = src.heartbeatOverlays[x]
 			if(x.client)
 				animate(overlay,
 					alpha = 255,
@@ -887,6 +892,6 @@
 		Thumper_createHeartbeatOverlays()
 		doThumps = 0
 		for(var/mob/x in src.heartbeatOverlays)
-			var/obj/screen/overlay = src.heartbeatOverlays[x]
+			var/atom/movable/screen/overlay = src.heartbeatOverlays[x]
 			if(x.client)
 				animate(overlay, color = list( list(0,0,0,0), list( 0,0,0,0 ), list(0,0,0,0), list(0,0,0,-100), list(0,0,0,0) ), alpha = 0, 20, SINE_EASING )

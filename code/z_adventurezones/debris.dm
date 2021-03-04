@@ -17,7 +17,7 @@
 			logTheThing("station", user, null, "plants a martian biotech seed (<b>Structure:</b> [S.spawn_path]) at [log_loc(src)].")
 			return
 	else
-	 ..()
+		..()
 
 /turf/simulated/martian/wall
 	name = "organic wall"
@@ -56,16 +56,16 @@
 	gib = make_cleanable( /obj/decal/cleanable/machine_debris,location)
 	if (prob(25))
 		gib.icon_state = "gibup1"
-	gib.streak(list(NORTH, NORTHEAST, NORTHWEST))
+	gib.streak_cleanable(NORTH)
 	LAGCHECK(LAG_LOW)
 
 	// SOUTH
 	gib2 = make_cleanable( /obj/decal/cleanable/blood/gibs,location)
 	if (prob(25))
 		gib2.icon_state = "gibdown1"
-	gib2.streak(list(SOUTH, SOUTHEAST, SOUTHWEST))
+	gib2.streak_cleanable(SOUTH)
 	LAGCHECK(LAG_LOW)
 
 	// RANDOM
 	gib2 = make_cleanable( /obj/decal/cleanable/blood/gibs,location)
-	gib2.streak(alldirs)
+	gib2.streak_cleanable(cardinal)

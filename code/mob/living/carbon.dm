@@ -11,8 +11,12 @@
 
 	infra_luminosity = 4
 
+/mob/living/carbon/New()
+	START_TRACKING
+	. = ..()
 
 /mob/living/carbon/disposing()
+	STOP_TRACKING
 	stomach_contents = null
 	..()
 
@@ -69,7 +73,7 @@
 				if(prob(get_brute_damage() - 50))
 					src.gib()
 
-/mob/living/carbon/gib(give_medal)
+/mob/living/carbon/gib(give_medal, include_ejectables)
 	for(var/mob/M in src)
 		if(M in src.stomach_contents)
 			src.stomach_contents.Remove(M)
@@ -79,7 +83,7 @@
 			M.cancel_camera()
 
 		M.set_loc(src.loc)
-	. = ..(give_medal)
+	. = ..(give_medal, include_ejectables)
 
 /mob/living/carbon/proc/urinate()
 	SPAWN_DBG(0)

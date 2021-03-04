@@ -10,6 +10,7 @@
 // * Christmas decoration
 // * Grinch graffiti
 // * Santa Claus stuff
+// * Santa's letters landmark
 // * Krampus 1.0 stuff
 // * Stockings - from halloween.dm - wtf
 
@@ -158,7 +159,8 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 	setup_default_tool_path = /obj/item/device/guardbot_tool/xmas
 
 	speak(var/message)
-		return ..("<font face='Segoe Script'><i><b>[message]</b></i></font>")
+		message = ("<font face='Segoe Script'><i><b>[message]</b></i></font>")
+		. = ..()
 
 	explode()
 		if(src.exploding) return
@@ -483,12 +485,10 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 		src.update_icon()
 
 	proc/update_icon()
-		//src.overlays = null
 		if (src.on_fire)
 			if (!src.fire_image)
 				src.fire_image = image('icons/effects/160x160.dmi', "xmastree_2014_burning")
 			src.fire_image.icon_state = "xmastree_2014_burning" // it didn't need to change from 2014 to 2015 so I just left it as this one
-			//src.overlays += src.fire_image
 			src.UpdateOverlays(src.fire_image, "fire")
 		else
 			src.UpdateOverlays(null, "fire")
@@ -521,11 +521,12 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 				make_cleanable( /obj/decal/cleanable/water,get_turf(src))
 			qdel(src)
 
-	heal(var/mob/living/M)
-		if (!M || !isliving(M))
+	on_bite(obj/item/I, mob/M, mob/user)
+		if (!isliving(M))
 			return
-		M.bodytemperature -= rand(1, 10)
-		M.show_text("That was chilly!", "blue")
+		var/mob/living/L = M
+		L.bodytemperature -= rand(1, 10)
+		L.show_text("That was chilly!", "blue")
 
 	proc/hit(var/mob/living/M as mob, var/message = 1)
 		if (!M || !isliving(M))
@@ -917,7 +918,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 			src.create_reagents(1000)
 
 		src.set_mutantrace(/datum/mutantrace/krampus)
-		src.reagents.add_reagent("stimulants", 50)
+		src.changeStatus("stimulants", 4 MINUTES)
 		src.gender = "male"
 		bioHolder.AddEffect("loud_voice")
 		bioHolder.AddEffect("cold_resist")
@@ -1274,3 +1275,9 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 	icon_state = "xmascrate"
 	icon_opened = "xmascrateopen"
 	icon_closed = "xmascrate"
+
+/obj/landmark/santa_mail
+	name = "santa_mail"
+	add_to_landmarks = TRUE
+	desc = "All of Santa's mail gets spawned here."
+	icon_state = "x"

@@ -468,7 +468,7 @@
 	//get possible targets. Looks for ckey, if they are not dead, and if they are not in the top gang.
 	var/list/potential_targets = list()
 	for (var/mob/living/carbon/human/H in mobs)
-		if (H.ckey && H.stat != 2 && H.mind?.gang != top_gang)
+		if (H.ckey && !isdead(H) && H.mind?.gang != top_gang && !istype(H.mutantrace, /datum/mutantrace/virtual))
 			potential_targets += H
 
 	if (!potential_targets.len)
@@ -487,7 +487,7 @@
 		if (G == top_gang)
 			broadcast_to_gang("A bounty has been placed on the capture of [target_name]. Shove them into your gang locker <ALIVE>, within 8 minutes for a massive reward!", G)
 		else
-			broadcast_to_gang("[target_name] is the target of a kidnapping by [G.gang_name]. Ensure that [target_name] is alive and well for the next 8 minutes for a reward!", G)
+			broadcast_to_gang("[target_name] is the target of a kidnapping by [top_gang.gang_name]. Ensure that [target_name] is alive and well for the next 8 minutes for a reward!", G)
 
 	boutput(kidnapping_target, "<span class='alert'>You get the feeling that [top_gang.gang_name] wants you dead! Run and hide or ask security for help!</span>")
 
@@ -806,7 +806,7 @@
 	New()
 		..()
 		default_screen_overlay = image('icons/obj/large_storage.dmi', "gang_overlay_yellow")
-		overlays += default_screen_overlay
+		src.UpdateOverlays(default_screen_overlay, "screen")
 		buyable_items = list(
 			new/datum/gang_item/misc/ratstick,
 			new/datum/gang_item/ninja/throwing_knife,
@@ -948,25 +948,22 @@
 			boutput(user, "<span class='alert'>The locker's screen briefly displays the message \"Access Denied\".</span>")
 			overlay = image('icons/obj/large_storage.dmi', "gang_overlay_red")
 
-		src.overlays -= default_screen_overlay
-		src.overlays += overlay
+		src.UpdateOverlays(overlay, "screen")
 		SPAWN_DBG(1 SECOND)
-			src.overlays -= overlay
-			src.overlays += default_screen_overlay
+			src.UpdateOverlays(default_screen_overlay, "screen")
 
 	proc/update_icon()
-		src.overlays = null
-
 		if(health <= 0)
+			src.UpdateOverlays(null, "light")
+			src.UpdateOverlays(null, "screen")
 			return
 
-		src.overlays += default_screen_overlay
+		src.UpdateOverlays(default_screen_overlay, "screen")
 
 		if(gang.can_be_joined())
-			src.overlays += image('icons/obj/large_storage.dmi', "greenlight")
+			src.UpdateOverlays(image('icons/obj/large_storage.dmi', "greenlight"), "light")
 		else
-			src.overlays += image('icons/obj/large_storage.dmi', "redlight")
-		return
+			src.UpdateOverlays(image('icons/obj/large_storage.dmi', "redlight"), "light")
 
 	proc/insert_item(var/obj/item/item,var/mob/user)
 		if(!user)
@@ -1109,7 +1106,7 @@
 						//assign poitns, gangs
 
 						user.mind.gang.score_event += mode.kidnapping_score
-						mode.broadcast_to_all_gangs("[src.gang] has successfully kidnapped [mode.kidnapping_target] and has been rewarded for their efforts.")
+						mode.broadcast_to_all_gangs("[src.gang.gang_name] has successfully kidnapped [mode.kidnapping_target] and has been rewarded for their efforts.")
 
 						mode.kidnapping_target = null
 						mode.kidnapp_success = 1
@@ -1249,7 +1246,7 @@
 			boutput(target, "<span class='alert'>You're already in a gang, you can't switch sides!</span>")
 			return
 
-		if(target.mind.assigned_role in list("Security Officer","Vice Officer","Part-time Vice Officer","Head of Security","Captain","Head of Personnel","Communications Officer", "Medical Director", "Chief Engineer", "Research Director", "Detective", "Nanotrasen Security Operative"))
+		if(target.mind.assigned_role in list("Security Officer", "Security Assistant", "Vice Officer","Part-time Vice Officer","Head of Security","Captain","Head of Personnel","Communications Officer", "Medical Director", "Chief Engineer", "Research Director", "Detective", "Nanotrasen Security Operative"))
 			boutput(target, "<span class='alert'>You are too responsible to join a gang!</span>")
 			return
 
@@ -1316,6 +1313,9 @@
 	name = "gang recruitment flyer case"
 	desc = "A briefcase full of flyers advertising a gang."
 	icon_state = "briefcase_black"
+	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
+	item_state = "sec-case"
+
 	spawn_contents = list(/obj/item/gang_flyer = 7)
 	var/datum/gang/gang = null
 

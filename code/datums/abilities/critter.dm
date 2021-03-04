@@ -1,4 +1,4 @@
-/obj/screen/ability/topBar/critter
+/atom/movable/screen/ability/topBar/critter
 	clicked(params)
 		var/datum/targetable/critter/spell = owner
 		if (!istype(spell))
@@ -45,7 +45,7 @@
 
 	New()
 		..()
-		var/obj/screen/ability/topBar/critter/B = new /obj/screen/ability/topBar/critter(null)
+		var/atom/movable/screen/ability/topBar/critter/B = new /atom/movable/screen/ability/topBar/critter(null)
 		B.icon = src.icon
 		B.icon_state = src.icon_state
 		B.owner = src
@@ -56,7 +56,7 @@
 	updateObject()
 		..()
 		if (!src.object)
-			src.object = new /obj/screen/ability/topBar/critter()
+			src.object = new /atom/movable/screen/ability/topBar/critter()
 			object.icon = src.icon
 			object.owner = src
 		if (disabled)
@@ -78,7 +78,7 @@
 
 	proc/incapacitationCheck()
 		var/mob/living/M = holder.owner
-		return M.restrained() || M.stat || M.hasStatus(list("paralysis", "stunned", "weakened"))
+		return M.restrained() || is_incapacitated(M)
 
 	castcheck()
 		if (incapacitationCheck())

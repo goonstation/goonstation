@@ -27,6 +27,7 @@ var/global/the_sun = null
 	layer = EFFECTS_LAYER_UNDER_4
 	luminosity = 5
 	var/datum/light/light
+	anchored = 2 // This stopped being funny weeks ago.
 
 	New()
 		..()
@@ -165,16 +166,9 @@ var/global/derelict_mode = 0
 			// Reboot_server()
 
 proc/voidify_world()
-	var/turf/unsimulated/wall/the_ss13_screen = locate("the_ss13_screen")
-	if(istype(the_ss13_screen))
-		// change this when someone finds a widescreen sprite for disaster
-		var/image/broken_logo = new/image('icons/misc/fullscreen.dmi', "title_broken")
-		broken_logo.pixel_x = -the_ss13_screen.pixel_x
-		the_ss13_screen.overlays += broken_logo
+	lobby_titlecard = new /datum/titlecard/disaster()
+	lobby_titlecard.set_pregame_html()
 
-		/*the_ss13_screen.icon = 'icons/misc/fullscreen.dmi'
-		the_ss13_screen.icon_state = "title_broken"
-		the_ss13_screen.pixel_x = 0*/
 	SPAWN_DBG(3 SECONDS)
 		for (var/turf/space/space in world)
 			LAGCHECK(LAG_LOW)

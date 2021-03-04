@@ -40,6 +40,7 @@
 	var/spam_flag_message = 0 // one message appears for every five times you click the pen if you're just sitting there jamming on it
 	var/spam_timer = 20
 	var/symbol_setting = null
+	var/material_uses = 10
 	var/static/list/c_default = list("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z",
 	"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "Exclamation Point", "Question Mark", "Period", "Comma", "Colon", "Semicolon", "Ampersand", "Left Parenthesis", "Right Parenthesis",
 	"Left Bracket", "Right Bracket", "Percent", "Plus", "Minus", "Times", "Divided", "Equals", "Less Than", "Greater Than")
@@ -83,6 +84,16 @@
 				if (src)
 					src.spam_flag_sound = 0
 
+	proc/apply_material_to_drawing(obj/decal/cleanable/writing/drawing, mob/user)
+		if(src.material)
+			drawing.setMaterial(src.material)
+			src.material_uses--
+			if(src.material_uses <= 0)
+				boutput(user, "<span class='notify'>[src.material.name] rubs off of [src].</span>")
+				src.removeMaterial()
+			return TRUE
+		return FALSE
+
 	proc/write_on_turf(var/turf/T as turf, var/mob/user as mob, params)
 		if (!T || !user || src.in_use || get_dist(T, user) > 1 || isghostdrone(user))
 			return
@@ -94,6 +105,7 @@
 		if (!t || get_dist(T, user) > 1)
 			src.in_use = 0
 			return
+		phrase_log.log_phrase("floorpen", t)
 		var/obj/decal/cleanable/writing/G = make_cleanable( /obj/decal/cleanable/writing,T)
 		G.artist = user.key
 
@@ -101,8 +113,8 @@
 		t = copytext(html_encode(t), 1, MAX_MESSAGE_LEN)
 		if (src.font_color)
 			G.color = src.font_color
-		if (src.material)
-			G.setMaterial(src.material)
+		if(apply_material_to_drawing(G, user))
+			;
 		/* not used because it doesn't work (yet?)
 		if (src.uses_handwriting && user?.mind?.handwriting)
 			G.font = user.mind.handwriting
@@ -126,6 +138,8 @@
 		if (src.color != src.font_color)
 			src.font_color = src.color
 			src.color_name = hex2color_name(src.color)
+		if(src.material)
+			src.material_uses = initial(src.material_uses)
 
 	custom_suicide = 1
 	suicide(var/mob/user as mob)
@@ -297,6 +311,19 @@
 		color = "#FF00FF"
 		font_color = "#FF00FF"
 		color_name = "pink"
+	
+	golden // HoP's crayon
+		name = "golden crayon"
+		desc = "The result of years of bribes and extreme bureaucracy."
+		color = "#D4AF37"
+		font_color = "#D4AF37"
+		mat_changename = 0
+		color_name = "golden"
+		material_uses = 123456 // it's not plated. its solid gold-wax alloy!
+
+		New()
+			..()
+			src.setMaterial(getMaterial("gold"))
 
 	random
 		New()
@@ -383,6 +410,13 @@
 	proc/write_input(mob/user)
 		if(src.in_use)
 			return null
+		if(!user.client && ishuman(user))
+			var/mob/living/carbon/human/H = user
+			if(ismonkey(H) && H.ai_active)
+				if(prob(90))
+					return pick(src.c_symbol)
+				else
+					return pick(src.c_default)
 		src.in_use = 1
 		. = input(user, "What do you want to write?", null, null) as null|anything in ((isghostdrone(user) || !user.literate) ? src.c_symbol : (list("queue input") + src.c_default + src.c_symbol))
 		if(. == "queue input")
@@ -486,8 +520,7 @@
 			G.color_name = src.color_name
 			G.real_name = t
 			G.UpdateName()
-		if (src.material)
-			G.setMaterial(src.material)
+		apply_material_to_drawing(G, user)
 		G.words = t
 		if (islist(params) && params["icon-y"] && params["icon-x"])
 			G.pixel_x = text2num(params["icon-x"]) - size / 2
@@ -615,8 +648,8 @@
 		t = copytext(html_encode(t), 1, MAX_MESSAGE_LEN)
 		if (src.font_color)
 			G.color = src.font_color
-		if (src.material)
-			G.setMaterial(src.material)
+		if(apply_material_to_drawing(G, user))
+			;
 		/*if (src.uses_handwriting && user?.mind?.handwriting)
 			G.font = user.mind.handwriting
 			G.webfont = 1
@@ -684,19 +717,24 @@
 			boutput(user, "<span class='alert'>You don't know how to write.</span>")
 			return
 		tooltip_rebuild = 1
-		var/str = copytext(html_encode(input(usr,"Label text?","Set label","") as null|text), 1, 32)
+		var/holder = src.loc
+		var/str = copytext(html_encode(input(user,"Label text?","Set label","") as null|text), 1, 32)
+		if(str)
+			phrase_log.log_phrase("label", str, no_duplicates=TRUE)
+		if (src.loc != holder)
+			return
 		if(url_regex?.Find(str))
 			str = null
 		if (!str || !length(str))
-			boutput(usr, "<span class='notice'>Label text cleared.</span>")
+			boutput(user, "<span class='notice'>Label text cleared.</span>")
 			src.label = null
 			return
 		if (length(str) > 30)
-			boutput(usr, "<span class='alert'>Text too long.</span>")
+			boutput(user, "<span class='alert'>Text too long.</span>")
 			return
 		src.label = "[str]"
-		boutput(usr, "<span class='notice'>You set the text to '[str]'.</span>")
-		logTheThing("combat", usr, null, "sets a hand labeler label to \"[str]\".")
+		boutput(user, "<span class='notice'>You set the text to '[str]'.</span>")
+		logTheThing("combat", user, null, "sets a hand labeler label to \"[str]\".")
 
 	proc/RemoveLabel(var/atom/A, var/mob/user, var/no_message = 0)
 		if(!islist(A.name_suffixes))
@@ -791,7 +829,7 @@
 		if ((usr.stat || usr.restrained()))
 			return
 
-		if (!usr.contents.Find(src))
+		if (!(src in usr.contents))
 			return
 
 		src.add_dialog(usr)
@@ -860,15 +898,7 @@
 				src.update()
 			src.add_fingerprint(user)
 		else
-			/*
-			if (user.contents.Find(src))
-				SPAWN_DBG( 0 )
-					src.attack_self(user)
-					return
-			else
-			*/
 			return ..()
-		return
 
 	attackby(obj/item/P as obj, mob/user as mob)
 
@@ -934,9 +964,9 @@
 		show_window(user)
 
 	Topic(var/href, var/href_list)
-		if (get_dist(src, usr) > 1 || !isliving(usr) || iswraith(usr) || isintangible(usr))
+		if (get_dist(src, usr) > 1 || iswraith(usr) || isintangible(usr))
 			return
-		if (usr.hasStatus("paralysis", "stunned", "weakened", "resting"))
+		if (is_incapacitated(usr))
 			return
 		..()
 
@@ -1032,7 +1062,7 @@
 
 		user.Browse("<HTML><HEAD><TITLE>[src.name] - [cur_page.name]</TITLE>[font_junk]</HEAD><BODY>Page [page] of [pages.len]<BR><a href='byond://?src=\ref[src];action=first_page'>First Page</a> <a href='byond://?src=\ref[src];action=title_book'>Title Book</a> <a href='byond://?src=\ref[src];action=last_page'>Last Page</a><BR>[prev_page]<a href='byond://?src=\ref[src];action=write;page=[page]'>Write</a> <a href='byond://?src=\ref[src];action=title_page;page=[page]'>Title</a> [next_page]<HR><TT>[.]</TT></BODY></HTML>", "window=[src.name]")
 
-		onclose(usr, "[src.name]")
+		onclose(user, "[src.name]")
 		return null
 
 	attack_self(var/mob/user)
@@ -1084,7 +1114,7 @@
 				src.visible_message("[user] staples [P] at the back of [src].")
 				playsound(user,'sound/impact_sounds/Generic_Snap_1.ogg', 50, 1)
 			else
-				boutput(usr, "<span class='alert'>You need a loaded stapler in hand to add this paper to the booklet.</span>")
+				boutput(user, "<span class='alert'>You need a loaded stapler in hand to add this paper to the booklet.</span>")
 		else
 			..()
 		return

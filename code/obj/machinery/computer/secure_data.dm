@@ -21,9 +21,9 @@
 	var/require_login = 1
 	desc = "A computer that allows an authorized user to set warrants, view fingerprints, and add notes to various crewmembers."
 
-	lr = 1
-	lg = 0.7
-	lb = 0.74
+	light_r =1
+	light_g = 0.7
+	light_b = 0.74
 
 /obj/machinery/computer/secure_data/detective_computer
 	icon = 'icons/obj/computer.dmi'
@@ -389,7 +389,7 @@
 		return 1
 	if (user && (user.lying || user.stat))
 		return 1
-	if (user && (get_dist(src, user) > 1 || !istype(src.loc, /turf)) && !issilicon(user) && !isAI(usr))
+	if (!in_interact_range(src, user) || !istype(src.loc, /turf))
 		return 1
 
 
@@ -685,7 +685,7 @@
 			if ("view_record")
 				var/datum/data/record/R = locate(href_list["rec"])
 				var/S = locate(href_list["rec"])
-				if (!data_core.general.Find(R))
+				if (!(R in data_core.general))
 					src.temp = "Record Not Found!"
 					return
 				for (var/datum/data/record/E in data_core.security)

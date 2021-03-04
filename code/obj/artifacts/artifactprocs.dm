@@ -4,35 +4,19 @@
 	if (!istype(T,/turf/) && !istype(T,/obj/))
 		return
 
-	var/rarityroll = 1
-
-// artifact tweak. rarity 1 now contains garbage artifacts so that it's easier to control how much garbage science sees.
-	switch(rand(1,100))
-		if (36 to 80) 		// 45%. 4% chance for a particular level 2 art.
-			rarityroll = 2
-		if (81 to 95) 		// 15%. With current art list this means 2% chance of a certain level 3 art
-			rarityroll = 3
-		if (96 to 100) 		// 5%. With current art list this means 1% chance of a certain level 4 art. 2 of the 5 are bombs...
-			rarityroll = 4
-		else 							// 35%. 4% chance for a particular garbage level 1 art.
-			rarityroll = 1
-
-	var/list/selection_pool = list()
-
-	if(forceartitype)
-		selection_pool += forceartitype
+	var/list/artifactweights
+	if(forceartiorigin)
+		artifactweights = artifact_controls.artifact_rarities[forceartiorigin]
 	else
-		for (var/datum/artifact/A as() in concrete_typesof(/datum/artifact))
-			if (initial(A.rarity_class) != rarityroll)
-				continue
-			if (istext(forceartiorigin) && !(forceartiorigin in initial(A.validtypes)))
-				continue
-			selection_pool += A
+		artifactweights = artifact_controls.artifact_rarities["all"]
 
-	if (selection_pool.len < 1)
-		return
-
-	var/datum/artifact/picked = pick(selection_pool)
+	var/datum/artifact/picked
+	if(forceartitype)
+		picked = forceartitype
+	else
+		if (artifactweights.len == 0)
+			return
+		picked = weighted_pick(artifactweights)
 
 	var/type = null
 	if(ispath(picked,/datum/artifact/))
@@ -51,7 +35,7 @@
 	// the sanity check detects that an artifact doesn't have the proper shit set up it'll just wipe out the artifact and stop
 	// the rest of the proc from occurring.
 	// This proc should be called in an if statement at the start of every artifact proc, since it returns 0 or 1.
-	if (!src.artifact)
+	if (!src.artifact || src.disposed)
 		return 0
 	// if the artifact var isn't set at all, it's probably not an artifact so don't bother continuing
 	if (!istype(src.artifact,/datum/artifact/))
@@ -101,7 +85,7 @@
 		name2 = pick(appearance.nouns_large)
 
 	src.name = "[name1] [name2]"
-	src:real_name = "[name1] [name2]"
+	src.real_name = "[name1] [name2]"
 	desc = "You have no idea what this thing is!"
 	A.touch_descriptors |= appearance.touch_descriptors
 
@@ -117,7 +101,7 @@
 	A.react_mpct[2] = AO.impact_reaction_two
 	A.react_heat[1] = AO.heat_reaction_one
 	A.activ_sound = pick(AO.activation_sounds)
-	A.fault_types |= AO.fault_types
+	A.fault_types |= AO.fault_types - A.fault_blacklist
 	A.internal_name = AO.generate_name()
 	A.nofx = AO.nofx
 
@@ -125,17 +109,17 @@
 
 	if (A.automatic_activation)
 		src.ArtifactActivated()
-	else
-		var/list/valid_triggers = A.validtriggers
-		var/trigger_amount = rand(A.min_triggers,A.max_triggers)
-		var/selection = null
-		while (trigger_amount > 0)
-			trigger_amount--
-			selection = pick(valid_triggers)
-			if (ispath(selection))
-				var/datum/artifact_trigger/AT = new selection
-				A.triggers += AT
-				valid_triggers -= selection
+
+	var/list/valid_triggers = A.validtriggers
+	var/trigger_amount = rand(A.min_triggers,A.max_triggers)
+	var/selection = null
+	while (trigger_amount > 0)
+		trigger_amount--
+		selection = pick(valid_triggers)
+		if (ispath(selection))
+			var/datum/artifact_trigger/AT = new selection
+			A.triggers += AT
+			valid_triggers -= selection
 
 	artifact_controls.artifacts += src
 	A.post_setup()
@@ -146,9 +130,6 @@
 	if (!src.ArtifactSanityCheck())
 		return 1
 	var/datum/artifact/A = src.artifact
-	if(A.internal_name)
-		src.real_name = A.internal_name
-		UpdateName()
 	if (A.activated)
 		return 1
 	if (A.triggers.len < 1 && !A.automatic_activation)
@@ -164,13 +145,15 @@
 	if (A.nofx)
 		src.icon_state = src.icon_state + "fx"
 	else
-		src.overlays += A.fx_image
+		src.UpdateOverlays(A.fx_image, "activated")
 	A.effect_activate(src)
 
 /obj/proc/ArtifactDeactivated()
 	if (!src.ArtifactSanityCheck())
 		return
 	var/datum/artifact/A = src.artifact
+	if (!A.activated) // do not deactivate if already deactivated
+		return
 	if (A.deact_sound)
 		playsound(src.loc, A.deact_sound, 100, 1)
 	if (A.deact_text)
@@ -180,7 +163,7 @@
 	if (A.nofx)
 		src.icon_state = src.icon_state - "fx"
 	else
-		src.overlays = null
+		src.UpdateOverlays(null, "activated")
 	A.effect_deactivate(src)
 
 /obj/proc/Artifact_attackby(obj/item/W as obj, mob/user as mob)
@@ -199,13 +182,16 @@
 		if (!W.ArtifactSanityCheck())
 			return
 		var/datum/artifact/A = src.artifact
-		var/datum/artifact/K = ACT.artifact
+		var/datum/artifact/activator_key/K = ACT.artifact
 
 		if (K.activated)
-			if (ACT.universal || A.artitype == K.artitype)
-				if (ACT.activator && !A.activated)
+			if (K.universal || A.artitype == K.artitype)
+				if (K.activator && !A.activated)
 					src.ArtifactActivated()
-				else if (!ACT.activator && A.activated)
+					if(K.corrupting && A.faults.len < 10) // there's only so much corrupting you can do ok
+						for(var/i=1,i<rand(1,3),i++)
+							src.ArtifactDevelopFault(100)
+				else if (A.activated)
 					src.ArtifactDeactivated()
 
 	if (isweldingtool(W))
@@ -284,30 +270,39 @@
 
 	if (W.force)
 		src.ArtifactStimulus("force", W.force)
+
+	src.ArtifactHitWith(W, user)
 	return 1
 
-/obj/proc/ArtifactFaultUsed(var/mob/user)
+#define FAULT_RESULT_INVALID 2 // artifact can't do faults
+#define FAULT_RESULT_STOP	1		 // we gotta stop, artifact was destroyed or deactivated
+#define FAULT_RESULT_SUCCESS 0 // everything's cool!
+/obj/proc/ArtifactFaultUsed(var/mob/user, var/atom/cosmeticSource = null)
 	// This is for a tool/item artifact that you can use. If it has a fault, whoever is using it is basically rolling the dice
 	// every time the thing is used (a check to see if rand(1,faultcount) hits 1 most of the time) and if they're unlucky, the
 	// thing will deliver it's payload onto them.
 	// There's also no reason this can't be used whoever the artifact is being used *ON*, also!
+	// The cosmetic source is just to specify where the effect comes from in the visual message.
+	// So that you can make it come from something like a forcefield or bullet instead of the artifact itself!
 	if (!src.ArtifactSanityCheck())
 		return
 
 	var/datum/artifact/A = src.artifact
 
 	if (!A.faults.len)
-		return // no faults, so dont waste any more time
-	if (!A.activated)
-		return // doesn't make a lot of sense for an inert artifact to go haywire
+		return FAULT_RESULT_INVALID // no faults, so dont waste any more time
+	if (!cosmeticSource)
+		cosmeticSource = src
 	var/halt = 0
 	for (var/datum/artifact_fault/F in A.faults)
 		if (prob(F.trigger_prob))
 			if (F.halt_loop)
 				halt = 1
-			F.deploy(src,user)
+			F.deploy(src,user,cosmeticSource)
 		if (halt)
-			break
+			return FAULT_RESULT_STOP
+	return FAULT_RESULT_SUCCESS
+
 
 /obj/proc/ArtifactStimulus(var/stimtype, var/strength = 0)
 	// This is what will be used for most of the testing equipment stuff. Stimtype is what kind of stimulus the artifact is being
@@ -399,6 +394,10 @@
 			A.effect_touch(src,user)
 	return
 
+/obj/proc/ArtifactHitWith(var/obj/item/O, var/mob/user)
+	if (!src.ArtifactSanityCheck())
+		return 1
+
 /obj/proc/ArtifactTakeDamage(var/dmg_amount)
 	if (!src.ArtifactSanityCheck() || !isnum(dmg_amount))
 		return
@@ -420,10 +419,6 @@
 
 	var/datum/artifact/A = src.artifact
 
-	ArtifactLogs(usr, null, src, "destroyed", null, 0)
-
-	artifact_controls.artifacts -= src
-
 	var/turf/T = get_turf(src)
 	if (istype(T,/turf/))
 		switch(A.artitype.name)
@@ -437,6 +432,12 @@
 				T.visible_message("<span class='alert'><B>[src] warps in on itself and vanishes!</B></span>")
 			if("precursor")
 				T.visible_message("<span class='alert'><B>[src] implodes, crushing itself into dust!</B></span>")
+
+	src.ArtifactDeactivated()
+
+	ArtifactLogs(usr, null, src, "destroyed", null, 0)
+
+	artifact_controls.artifacts -= src
 
 	qdel(src)
 	return
@@ -459,7 +460,7 @@
 	faultprob = max(0,min(faultprob,100))
 
 	if (prob(faultprob) && A.fault_types.len)
-		var/new_fault = pick(A.fault_types)
+		var/new_fault = weighted_pick(A.fault_types)
 		if (ispath(new_fault))
 			var/datum/artifact_fault/F = new new_fault(A)
 			F.holder = A

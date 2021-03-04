@@ -515,6 +515,7 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 	emilyclaire
 		name = "\improper Emily Claire"
 		icon_state = "emilyclaire"
+		ckey = "ursulamejor"
 
 	drsingh
 		name = "\improper Dr. Singh"
@@ -524,18 +525,22 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 	hubcapwillie
 		name = "\improper Hubcap Willie"
 		icon_state = "hubcapwillie"
+		ckey = "simianc"
 
 	smallbart
 		name = "\improper Small Bart"
 		icon_state = "smallbart"
+		ckey = "reginaldhj"
 
 	nolanstone
 		name = "\improper Nolan Stone"
 		icon_state = "nolanstone"
+		ckey = "thegorog"
 
 	jenidenton
 		name = "\improper Jeni Denton"
 		icon_state = "jenidenton"
+		ckey = "ryumi"
 
 	fredcooper
 		name = "\improper Frederick Cooper"
@@ -545,10 +550,12 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 	spark
 		name = "\improper S.P.A.R.K."
 		icon_state = "spark"
+		ckey = "gerhazo"
 
 	jamesnowak
 		name = "\improper James Nowak"
 		icon_state = "jamesnowak"
+		ckey = "thenicked"
 
 	floorpills
 		name = "\improper Dr. Floorpills"
@@ -563,6 +570,7 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 	fletcherhenderson
 		name = "\improper Fletcher Henderson"
 		icon_state = "fletcherhenderson"
+		ckey = "pacra"
 
 	adaohara
 		name = "\improper Ada O'Hara"
@@ -597,6 +605,7 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 	listelsheerfield
 		name = "\improper Listel Sheerfield"
 		icon_state = "listelsheerfield"
+		ckey = "couturier"
 
 	raphaelzahel
 		name = "\improper Raphael Zahel"
@@ -606,10 +615,12 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 	derekclarke
 		name = "\improper Derek Clarke"
 		icon_state = "derekclarke"
+		ckey = "heisenbee"
 
 	fartcan
 		name = "\improper Fart Canister"
 		icon_state = "fartcan"
+		ckey = "warcrimes"
 
 	tomato
 		name = "\improper Tomato"
@@ -619,18 +630,22 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 	zooblarskrippus
 		name = "\improper Zooblar Skrippus"
 		icon_state = "zooblarskrippus"
+		ckey = "stush"
 
 	vivi
 		name = "\improper Vivi"
 		icon_state = "vivi"
+		ckey = "zadenae"
 
 	giggles
 		name = "\improper Giggles"
 		icon_state = "giggles"
+		ckey = "grizzlybutch"
 
 	mavericksabre
 		name = "\improper Maverick Sabre"
 		icon_state = "mavericksabre"
+		ckey = "wrench1"
 
 	whitneystingray
 		name = "\improper Whitney Stingray"
@@ -654,6 +669,7 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 	helgergunnink
 		name = "\improper Helger Gunnink"
 		icon_state = "helgergunnink"
+		ckey = "Ssaintsblizzard"
 
 	hex
 		name = "\improper HEX"
@@ -663,11 +679,32 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 	tray
 		name = "\improper Tray"
 		icon_state = "tray"
+		ckey = "awarriorbunny"
 
 	smellstosee
 		name = "\improper Smells to See"
 		icon_state = "smellstosee"
 		ckey = "zergspower"
+
+	bunnyfriendsmen
+		name = "\improper Bunny Friendsmen"
+		icon_state = "bunnyfriendsmen"
+		ckey = "bunnykimber"
+
+	neoxzilon
+		name = "\improper Neo Xzilon"
+		icon_state = "neoxzilon"
+		ckey = "retrino"
+
+	hazel
+		name = "\improper Hazel Adenine"
+		icon_state = "hazel"
+		ckey = "hazelmaecry"
+
+	vicky
+		name = "\improper Vicky Hudson"
+		icon_state = "vicky"
+		ckey = "mrprogamer96"
 
 /obj/item/item_box/figure_capsule
 	name = "capsule"

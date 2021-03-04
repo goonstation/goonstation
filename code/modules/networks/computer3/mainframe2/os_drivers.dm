@@ -2407,7 +2407,7 @@
 			if ("poke") //Set an arbitrary (device-specific) configuration value on the device.
 				if (!isnull(data["field"]) && !isnull(data["value"]))
 					if (isnum(data["value"]))
-						data["value"] = round(max(1, min(data["value"], 255)))
+						data["value"] = round(max(1, min(data["value"], 400))) // 400 is highest stimulus value for heater
 
 					var/sessionid = "[world.timeofday%100][rand(0,9)]"
 					sessions["[sessionid]"] = sendid

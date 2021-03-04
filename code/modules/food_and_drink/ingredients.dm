@@ -17,10 +17,13 @@
 	custom_food = 1
 	var/blood = 7 //how much blood cleanables we are allowed to spawn
 
-	heal(var/mob/living/M)
+	on_bite(obj/item/I, mob/M, mob/user)
+		if (!isliving(M))
+			return
+		var/mob/living/L = M
 		if (prob(33))
-			boutput(M, "<span class='alert'>You briefly think you probably shouldn't be eating raw meat.</span>")
-			M.contract_disease(/datum/ailment/disease/food_poisoning, null, null, 1) // path, name, strain, bypass resist
+			boutput(L, "<span class='alert'>You briefly think you probably shouldn't be eating raw meat.</span>")
+			L.contract_disease(/datum/ailment/disease/food_poisoning, null, null, 1) // path, name, strain, bypass resist
 
 	throw_impact(atom/A, datum/thrown_thing/thr)
 		var/turf/T = get_turf(A)
@@ -73,6 +76,7 @@
 	icon_state = "meat-plant"
 	amount = 1
 	initial_volume = 20
+	food_color = "#228822"
 	initial_reagents = list("synthflesh"=2)
 
 /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat
@@ -104,7 +108,7 @@
 		src.pixel_x += rand(-4,4)
 		src.pixel_y += rand(-4,4)
 
-	heal(var/mob/M)
+	on_bite(obj/item/I, mob/M, mob/user)
 		M.nutrition += 20
 		return
 
@@ -129,7 +133,7 @@
 		src.pixel_x += rand(-4,4)
 		src.pixel_y += rand(-4,4)
 
-	heal(var/mob/M)
+	on_bite(obj/item/I, mob/M, mob/user)
 		if (icon_state == "nugget0")
 			icon_state = "nugget1"
 		return ..()
@@ -482,7 +486,7 @@
 		src.pixel_x = rand(-6, 6)
 		src.pixel_y = rand(-6, 6)
 
-	heal(var/mob/M)
+	on_bite(obj/item/I, mob/M, mob/user)
 		if(prob(15))
 			#ifdef CREATE_PATHOGENS //PATHOLOGY REMOVAL
 			wrap_pathogen(M.reagents, generate_indigestion_pathogen(), 15)
@@ -585,6 +589,7 @@
 			boutput(user, "<span class='notice'>You add [W] to [src].</span>")
 			topping = 1
 			food_effects += F.food_effects
+			src.AddComponent(/datum/component/consume/food_effects, src.food_effects)
 			if (F.real_name)
 				toppings += F.real_name
 			else
@@ -596,6 +601,7 @@
 				heal_amt += 4
 			else
 				heal_amt += round((F.heal_amt * F.amount)/amount) + 1
+			src.AddComponent(/datum/component/consume/foodheal, src.heal_amt)
 			topping_color = F.food_color
 			if(num < 3)
 				num ++
@@ -629,7 +635,7 @@
 	heal_amt = 0
 	amount = 1
 
-	heal(var/mob/M)
+	on_bite(obj/item/I, mob/M, mob/user)
 		boutput(M, "<span class='alert'>... You must be really hungry.</span>")
 		..()
 
@@ -647,7 +653,7 @@
 	heal_amt = 0
 	food_color = "#FFFF99"
 
-	heal(var/mob/M)
+	on_bite(obj/item/I, mob/M, mob/user)
 		boutput(M, "<span class='alert'>Raw potato tastes pretty nasty...</span>") // does it?
 
 
@@ -685,7 +691,7 @@
 			qdel(W)
 			qdel(src)
 
-	heal(var/mob/M)
+	on_bite(obj/item/I, mob/M, mob/user)
 		boutput(M, "<span class='alert'>The noodles taste terrible uncooked...</span>")
 		..()
 
@@ -699,7 +705,7 @@
 	initial_volume = 25
 	initial_reagents = "butter"
 
-	heal(var/mob/M)
+	on_bite(obj/item/I, mob/M, mob/user)
 		boutput(M, "<span class='alert'>You feel ashamed of yourself...</span>")
 		..()
 

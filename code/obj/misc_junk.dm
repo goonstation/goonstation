@@ -332,8 +332,8 @@
 				src.reagents.del_reagent(reagent_id)
 				found = 1
 		if (found)
-			if (usr)
-				usr.show_text("[src] identifies and removes a non-smokable substance.", "red")
+			if (user)
+				user.show_text("[src] identifies and removes a non-smokable substance.", "red")
 			else if (ismob(src.loc))
 				var/mob/M = src.loc
 				M.show_text("[src] identifies and removes a non-smokable substance.", "red")
@@ -467,11 +467,11 @@
 			playsound(src.loc,"sound/misc/Boxingbell.ogg",50,1)
 
 /obj/item/trophy
-	name = "Solarium Trophy"
-	desc = "Awarded for bravely solving the Solarium after 42 people got to it first"
-	anchored = 1
-	density = 1
-	icon = 'icons/obj/32x64.dmi'
+	name = "trophy"
+	desc = "You're winner! You did it! You did the thing! Good job!"
+	anchored = 0
+	density = 0
+	icon = 'icons/obj/junk.dmi'
 	icon_state = "trophy"
 
 /obj/item/battlepass
@@ -551,7 +551,7 @@
 			boutput(owner, "<h3><span class='alert'>You have held [src.name] long enough! Good job!</span></h3>")
 			if(owner?.client)
 				src.set_loc(pick_landmark(LANDMARK_ASS_ARENA_SPAWN))
-				owner.client.respawn_target(owner,1)
+				INVOKE_ASYNC(owner.client, /client.proc/respawn_target, owner, 1)
 				DEBUG_MESSAGE("[owner.name] has been ass arena respawned!")
 				owner.gib()
 				owner = null

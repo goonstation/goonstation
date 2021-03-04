@@ -11,9 +11,9 @@
 		boutput(usr, "<span class='notice'>Left click to place doors, right click doors to toggle state. Ctrl+click anywhere to finish.</span>")
 
 	build_click(var/mob/user, var/datum/buildmode_holder/holder, var/list/pa, var/atom/object)
-		if (pa.Find("left"))
+		if ("left" in pa)
 			var/turf/T = get_turf(object)
-			if (pa.Find("ctrl"))
+			if ("ctrl" in pa)
 				finished = 1
 				return
 			if (T)
@@ -26,7 +26,7 @@
 					door.RL_SetOpacity(0)
 				SPAWN_DBG(1 SECOND)
 					door.color = color_rgb
-		else if (pa.Find("right"))
+		else if ("right" in pa)
 			if (istype(object, /obj/adventurepuzzle/triggerable/door))
 				object:toggle()
 
@@ -115,7 +115,7 @@
 
 	attack_hand(mob/user as mob)
 		if (src.density)
-			usr.show_message("<span class='alert'>[src] won't open. Perhaps you need a key?</span>")
+			user.show_message("<span class='alert'>[src] won't open. Perhaps you need a key?</span>")
 		flick("door_[door_type]_deny", src)
 
 	serialize(var/savefile/F, var/path, var/datum/sandbox/sandbox)

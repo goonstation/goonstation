@@ -79,6 +79,8 @@
 		if (proj_data)
 			proj_data.on_launch(src)
 		src.setup()
+		if(proj_data)
+			proj_data.post_setup(src)
 		if (!disposed && !pooled)
 			SPAWN_DBG(0)
 				if (!is_processing)
@@ -98,6 +100,8 @@
 		if (!A) return // you never know ok??
 		if (disposed || pooled) return // if disposed = true, pooled or set for garbage collection and shouldn't process bumps
 		if (!proj_data) return // this apparently happens sometimes!! (more than you think!)
+		if (proj_data?.on_pre_hit(A, src.angle, src))
+			return // Our bullet doesnt want to hit this
 		if (A in hitlist)
 			return
 		else
@@ -145,7 +149,7 @@
 			for (var/obj/O in A)
 				O.bullet_act(src)
 			T = A
-			if ((sigreturn & PROJ_ATOM_CANNOT_PASS) || (T.density && !goes_through_walls && !(sigreturn & PROJ_PASSWALL) && !(sigreturn & PROJ_ATOM_PASSTHROGH)))
+			if ((sigreturn & PROJ_ATOM_CANNOT_PASS) || (T.density && !goes_through_walls && !(sigreturn & PROJ_PASSWALL) && !(sigreturn & PROJ_ATOM_PASSTHROUGH)))
 				if (proj_data?.icon_turf_hit && istype(A, /turf/simulated/wall))
 					var/turf/simulated/wall/W = A
 					if (src.forensic_ID)
@@ -180,21 +184,21 @@
 					var/mob/living/carbon/human/npc/monkey/M = A
 					M.shot_by(shooter)
 
-			if(sigreturn & PROJ_ATOM_PASSTHROGH || (pierces_left != 0 && first && !(sigreturn & PROJ_ATOM_CANNOT_PASS))) //try to hit other targets on the tile
+			if(sigreturn & PROJ_ATOM_PASSTHROUGH || (pierces_left != 0 && first && !(sigreturn & PROJ_ATOM_CANNOT_PASS))) //try to hit other targets on the tile
 				for (var/mob/X in T.contents)
 					if(!(X in src.hitlist))
 						if (!X.CanPass(src, get_step(src, X.dir), 1, 0))
 							src.collide(X, first = 0)
 					if(src.pooled)
 						return
-			if (pierces_left == 0 || (sigreturn & PROJ_ATOM_CANNOT_PASS))
-				die()
-			else
-				if(!(sigreturn & PROJ_ATOM_PASSTHROGH))
+			if(!(sigreturn & PROJ_ATOM_PASSTHROUGH))
+				if (pierces_left == 0 || (sigreturn & PROJ_ATOM_CANNOT_PASS))
+					die()
+				else
 					pierces_left--
 
 		else if (isobj(A))
-			if ((sigreturn & PROJ_ATOM_CANNOT_PASS) || (A.density && !goes_through_walls && !(sigreturn & PROJ_PASSOBJ) && !(sigreturn & PROJ_ATOM_PASSTHROGH)))
+			if ((sigreturn & PROJ_ATOM_CANNOT_PASS) || (A.density && !goes_through_walls && !(sigreturn & PROJ_PASSOBJ) && !(sigreturn & PROJ_ATOM_PASSTHROUGH)))
 				if (iscritter(A))
 					if (proj_data?.hit_mob_sound)
 						playsound(A.loc, proj_data.hit_mob_sound, 60, 0.5)
@@ -243,6 +247,7 @@
 		incidence = 0
 		special_data.len = 0
 		overlays = null
+		overlay_refs = null
 		hitlist.len = 0
 		transform = null
 		internal_speed = null
@@ -410,12 +415,6 @@
 			die()
 			return
 		src.ticks_until_can_hit_mob--
-
-		// The bullet has expired/decayed.
-		if (src.travelled > src.max_range * 32)
-			proj_data.on_max_range_die(src)
-			die()
-			return
 		proj_data.tick(src)
 		if (disposed || pooled)
 			return
@@ -434,6 +433,12 @@
 			dwy = src.proj_data.projectile_speed * src.yo
 			curr_t++
 			src.travelled += src.proj_data.projectile_speed
+
+		// The bullet would be expired/decayed.
+		if (src.travelled >= src.max_range * 32)
+			proj_data.on_max_range_die(src)
+			die()
+			return
 
 		if (proj_data.precalculated)
 			for (var/i = 1, i < crossing.len, i++)
@@ -517,6 +522,9 @@
 		src.tracked_blood = null
 		return
 
+	temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+		return
+
 ABSTRACT_TYPE(/datum/projectile)
 datum/projectile
 	// These vars were copied from the an projectile datum. I am not sure which version, probably not 4407.
@@ -551,12 +559,11 @@ datum/projectile
 		hit_ground_chance = 0    // With what % do we hit mobs laying down
 		window_pass = 0          // Can we pass windows
 		obj/projectile/master = null
-		silentshot = 0           // standard visible message upon bullet_act. if 2, hide even the 'armor hit' message!
+		silentshot = 0           // Standard visible message upon bullet_act.
 		implanted                // Path of "bullet" left behind in the mob on successful hit
 		disruption = 0           // planned thing to deal with pod electronics / etc
 		zone = null              // todo: if fired from a handheld gun, check the targeted zone --- this should be in the goddamn obj
 		caliber = null
-		nomsg = 0
 
 		datum/material/material = null
 
@@ -567,6 +574,9 @@ datum/projectile
 
 		hit_object_sound = 0
 		hit_mob_sound = 0
+
+		///if a fullauto-capable weapon should be able to fullauto this ammo type
+		fullauto_valid = 0
 
 	// Determines the amount of length units the projectile travels each tick
 	// A tile is 32 wide, 32 long, and 32 * sqrt(2) across.
@@ -594,6 +604,9 @@ datum/projectile
 	var/is_magical = 0              //magical projectiles, i.e. the chaplain is immune to these
 	var/ie_type = "T"	//K, E, T
 	// var/type = "K"					//3 types, K = Kinetic, E = Energy, T = Taser
+
+	/// for on_pre_hit. Causes it to early-return TRUE if the thing checked was already cleared for pass-thru
+	var/atom/last_thing_hit
 
 	proc
 		impact_image_effect(var/type, atom/hit, angle, var/obj/projectile/O)		//3 types, K = Kinetic, E = Energy, T = Taser
@@ -627,6 +640,7 @@ datum/projectile
 //					var/mob/living/L = hit
 //					stun_bullet_hit(O,L)
 			return
+		/// Does a thing every step this projectile takes
 		tick(var/obj/projectile/O)
 			return
 		on_launch(var/obj/projectile/O)
@@ -637,12 +651,19 @@ datum/projectile
 			return
 		on_max_range_die(var/obj/projectile/O)
 			return
+		/// Check if we want to do something before actually hitting the thing we hit
+		/// Return TRUE for it to more or less skip collide()
+		on_pre_hit(atom/hit, angle, var/obj/projectile/O)
+			return
 
 		on_canpass(var/obj/projectile/O, atom/movable/passing_thing)
 			.= 1
 
 		get_power(obj/projectile/P, atom/A)
 			return P.initial_power - max(0, (P.travelled/32 - src.dissipation_delay))*src.dissipation_rate
+
+		post_setup(obj/projectile/P)
+			return
 
 // WOO IMPACT RANGES
 // Meticulously calculated by hand.
@@ -739,11 +760,11 @@ datum/projectile/energy_bolt_antighost
 	impact_range = 16
 	hits_ghosts = 1 // do it.
 
-datum/projectile/rad_bolt
-	impact_range = 0
-
 datum/projectile/tele_bolt
 	impact_range = 4
+
+datum/projectile/rad_bolt
+	impact_range = 0
 
 datum/projectile/wavegun
 	impact_range = 4
@@ -886,6 +907,8 @@ datum/projectile/snowball
 		return
 	var/turf/Q1 = get_turf(S)
 	var/turf/Q2 = get_turf(T)
+	if (!(Q1 && Q2))
+		return
 	return initialize_projectile(Q1, DATA, Q2.x - Q1.x, Q2.y - Q1.y, S, remote_sound_source, alter_proj = alter_proj)
 
 /proc/initialize_projectile_pixel(var/atom/movable/S, var/datum/projectile/DATA, var/T, var/pox, var/poy, var/datum/callback/alter_proj = null)
@@ -895,6 +918,8 @@ datum/projectile/snowball
 		return
 	var/turf/Q1 = get_turf(S)
 	var/turf/Q2 = get_turf(T)
+	if (!(Q1 && Q2))
+		return
 	return initialize_projectile(Q1, DATA, (Q2.x - Q1.x) * 32 + pox, (Q2.y - Q1.y) * 32 + poy, S, alter_proj = alter_proj)
 
 /proc/initialize_projectile_pixel_spread(var/atom/movable/S, var/datum/projectile/DATA, var/T, var/pox, var/poy, var/spread_angle, var/datum/callback/alter_proj = null)
@@ -974,36 +999,6 @@ datum/projectile/snowball
 	if(P.reflectcount >= max_reflects)
 		return
 	var/obj/projectile/Q = initialize_projectile(get_turf(reflector), P.proj_data, -P.xo, -P.yo, reflector)
-	if (!Q)
-		return null
-	Q.reflectcount = P.reflectcount + 1
-	if (ismob(P.shooter))
-		Q.mob_shooter = P.shooter
-	Q.name = "reflected [Q.name]"
-	Q.launch()
-	return Q
-
-/proc/shoot_reflected_true(var/obj/projectile/P, var/obj/reflector, var/max_reflects = 3)
-	if (!P.incidence || !(P.incidence in cardinal))
-		return null
-	if(P.reflectcount >= max_reflects)
-		return
-
-	var/rx = 0
-	var/ry = 0
-
-	var/nx = P.incidence == WEST ? -1 : (P.incidence == EAST ?  1 : 0)
-	var/ny = P.incidence == SOUTH ? -1 : (P.incidence == NORTH ?  1 : 0)
-
-	var/dn = 2 * (P.xo * nx + P.yo * ny) // incident direction DOT normal * 2
-	rx = P.xo - dn * nx // r = d - 2 * (d * n) * n
-	ry = P.yo - dn * ny
-
-	if (rx == ry && rx == 0)
-		logTheThing("debug", null, null, "<b>Marquesas/Reflecting Projectiles</b>: Reflection failed for [P.name] (incidence: [P.incidence], direction: [P.xo];[P.yo]).")
-		return null // unknown error
-
-	var/obj/projectile/Q = initialize_projectile(get_turf(reflector), P.proj_data, rx, ry, reflector)
 	if (!Q)
 		return null
 	Q.reflectcount = P.reflectcount + 1

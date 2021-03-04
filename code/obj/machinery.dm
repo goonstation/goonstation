@@ -67,6 +67,15 @@
 /obj/machinery/proc/UnsubscribeProcess()
 	STOP_PROCESSING(src)
 
+/**
+* Determines whether or not the user can remote access devices.
+* This is typically limited to Borgs and AI things
+*/
+/obj/machinery/can_access_remotely(mob/user)
+	if (src.status & REQ_PHYSICAL_ACCESS)
+		. = ..()
+	else
+		. = can_access_remotely_default(user)
 
 	/*
 	 *	Prototype procs common to all /obj/machinery objects
@@ -99,29 +108,29 @@
 	gib = make_cleanable( /obj/decal/cleanable/machine_debris,location)
 	if (prob(25))
 		gib.icon_state = "gibup1"
-	gib.streak(list(NORTH, NORTHEAST, NORTHWEST))
+	gib.streak_cleanable(NORTH)
 	LAGCHECK(LAG_LOW)
 
 	// SOUTH
 	gib = make_cleanable( /obj/decal/cleanable/machine_debris,location)
 	if (prob(25))
 		gib.icon_state = "gibdown1"
-	gib.streak(list(SOUTH, SOUTHEAST, SOUTHWEST))
+	gib.streak_cleanable(SOUTH)
 	LAGCHECK(LAG_LOW)
 
 	// WEST
 	gib = make_cleanable( /obj/decal/cleanable/machine_debris,location)
-	gib.streak(list(WEST, NORTHWEST, SOUTHWEST))
+	gib.streak_cleanable(WEST)
 	LAGCHECK(LAG_LOW)
 
 	// EAST
 	gib = make_cleanable( /obj/decal/cleanable/machine_debris,location)
-	gib.streak(list(EAST, NORTHEAST, SOUTHEAST))
+	gib.streak_cleanable(EAST)
 	LAGCHECK(LAG_LOW)
 
 	// RANDOM
 	gib = make_cleanable( /obj/decal/cleanable/machine_debris,location)
-	gib.streak(alldirs)
+	gib.streak_cleanable(cardinal)
 
 /obj/machinery/Topic(href, href_list)
 	..()
@@ -132,7 +141,7 @@
 		//boutput(usr, "<span class='alert'>You are unable to do that currently!</span>")
 		return 1
 	if(!hasvar(src,"portable") || !src:portable)
-		if ((!in_range(src, usr) || !istype(src.loc, /turf)) && !issilicon(usr) && !isAI(usr))
+		if ((!in_interact_range(src, usr) || !istype(src.loc, /turf)) && !issilicon(usr) && !isAI(usr))
 			if (!usr)
 				message_coders("[type]/Topic(): no usr in Topic - [name] at [showCoords(x, y, z)].")
 			else if ((x in list(usr.x - 1, usr.x, usr.x + 1)) && (y in list(usr.y - 1, usr.y, usr.y + 1)) && z == usr.z && isturf(loc))
@@ -140,7 +149,7 @@
 			//boutput(usr, "<span class='alert'>You must be near the machine to do this!</span>")
 			return 1
 	else
-		if ((!in_range(src.loc, usr) || !istype(src.loc.loc, /turf)) && !issilicon(usr) && !isAI(usr))
+		if ((!in_interact_range(src.loc, usr) || !istype(src.loc.loc, /turf)) && !issilicon(usr) && !isAI(usr))
 			//boutput(usr, "<span class='alert'>You must be near the machine to do this!</span>")
 			return 1
 	src.add_fingerprint(usr)
@@ -155,7 +164,7 @@
 		return 1
 	if(user && (user.lying || user.stat))
 		return 1
-	if (user && (get_dist(src, user) > 1 || !istype(src.loc, /turf)) && !issilicon(user) && !isAI(usr))
+	if(!in_interact_range(src, user) || !istype(src.loc, /turf))
 		return 1
 
 	if (user)
@@ -169,14 +178,22 @@
 	return 0
 
 /obj/machinery/ui_state(mob/user)
-	return tgui_physical_state
+	if(src.status & REQ_PHYSICAL_ACCESS)
+		. = tgui_physical_state
+	else
+		. = tgui_default_state
 
-/obj/machinery/ui_status(mob/user)
-  return min(
-		tgui_broken_state.can_use_topic(src, user),
-		tgui_physical_state.can_use_topic(src, user),
-		tgui_not_incapacitated_state.can_use_topic(src, user)
-	)
+/obj/machinery/ui_status(mob/user, datum/ui_state/state)
+	if(src.status & REQ_PHYSICAL_ACCESS)
+		. = min(tgui_broken_state.can_use_topic(src, user),
+						tgui_physical_state.can_use_topic(src, user),
+						tgui_not_incapacitated_state.can_use_topic(src, user)
+		)
+	else
+		. = min(state.can_use_topic(src, user),
+						tgui_broken_state.can_use_topic(src, user),
+						tgui_not_incapacitated_state.can_use_topic(src, user)
+		)
 
 /obj/machinery/ex_act(severity)
 	// Called when an object is in an explosion

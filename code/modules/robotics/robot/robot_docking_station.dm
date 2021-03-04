@@ -35,7 +35,7 @@
 	..()
 
 
-/obj/machinery/recharge_station/process()
+/obj/machinery/recharge_station/process(mult)
 	if (!(src.status & BROKEN))
 		// todo / at some point id like to fix the disparity between cells and 'normal power'
 		if (src.occupant)
@@ -51,7 +51,7 @@
 		return
 
 	if (src.occupant)
-		src.process_occupant()
+		src.process_occupant(mult)
 	return 1
 
 /obj/machinery/recharge_station/allow_drop()
@@ -69,10 +69,10 @@
 
 /obj/machinery/recharge_station/attack_hand(mob/user)
 	if (src.status & BROKEN)
-		boutput(usr, "<span class='alert'>[src] is broken and cannot be used.</span>")
+		boutput(user, "<span class='alert'>[src] is broken and cannot be used.</span>")
 		return
 	if (src.status & NOPOWER)
-		boutput(usr, "<span class='alert'>[src] is out of power and cannot be used.</span>")
+		boutput(user, "<span class='alert'>[src] is out of power and cannot be used.</span>")
 		return
 	if (!src.anchored)
 		user.show_text("You must attach [src]'s floor bolts before the machine will work.", "red")
@@ -278,7 +278,7 @@
 		usr.show_text("You must attach [src]'s floor bolts before the machine will work.", "red")
 		return
 
-	if ((usr.contents.Find(src) || src.contents.Find(usr) || ((get_dist(src, usr) <= 1) && istype(src.loc, /turf))))
+	if ((usr.contents.Find(src) || src.contents.Find(usr) || can_access_remotely(usr) || ((get_dist(src, usr) <= 1) && istype(src.loc, /turf))))
 		src.add_dialog(usr)
 
 		if (href_list["refresh"])
@@ -319,6 +319,8 @@
 				boutput(usr, "<span class='notice'><b>Web/BYOND links are not allowed in ingame chat.</b></span>")
 				boutput(usr, "<span class='alert'>&emsp;<b>\"[newname]</b>\"</span>")
 				return
+			if(newname && newname != R.name)
+				phrase_log.log_phrase("name-cyborg", newname, no_duplicates=TRUE)
 			logTheThing("combat", usr, R, "uses a docking station to rename [constructTarget(R,"combat")] to [newname].")
 			R.name = newname
 			if (R.internal_pda)
@@ -743,17 +745,20 @@
 				src.build_icon()
 
 /obj/machinery/recharge_station/proc/build_icon()
-	src.overlays = null
+	if (src.occupant)
+		src.UpdateOverlays(image('icons/obj/robot_parts.dmi', "station-occu"), "occupant")
+	else
+		src.UpdateOverlays(null, "occupant")
 	if (src.status & BROKEN)
 		src.icon_state = "station-broke"
+		src.UpdateOverlays(null, "power")
 		return
 	if (src.status & NOPOWER)
+		src.UpdateOverlays(null, "power")
 		return
-	src.overlays += image('icons/obj/robot_parts.dmi', "station-pow")
-	if (src.occupant)
-		src.overlays += image('icons/obj/robot_parts.dmi', "station-occu")
+	src.UpdateOverlays(image('icons/obj/robot_parts.dmi', "station-pow"), "power")
 
-/obj/machinery/recharge_station/proc/process_occupant()
+/obj/machinery/recharge_station/proc/process_occupant(mult)
 	if (src.occupant)
 		if (src.occupant.loc != src)
 			src.go_out()
@@ -763,11 +768,11 @@
 			var/mob/living/silicon/robot/R = src.occupant
 			if (!R.cell)
 				return
-			else if (R.cell.charge >= R.cell.maxcharge)
+			else if (R.cell.charge * mult >= R.cell.maxcharge)
 				R.cell.charge = R.cell.maxcharge
 				return
 			else
-				R.cell.charge += src.chargerate
+				R.cell.charge += src.chargerate * mult
 				src.use_power(50)
 				return
 
@@ -776,11 +781,11 @@
 
 			if (!H.cell)
 				return
-			else if (H.cell.charge >= H.cell.maxcharge)
+			else if (H.cell.charge * mult >= H.cell.maxcharge)
 				H.cell.charge = H.cell.maxcharge
 				return
 			else
-				H.cell.charge += src.chargerate
+				H.cell.charge += src.chargerate * mult
 				src.use_power(50)
 				return
 

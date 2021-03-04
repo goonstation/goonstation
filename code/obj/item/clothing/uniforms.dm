@@ -183,7 +183,7 @@
 		item_state = "pink"
 //PRIDE
 /obj/item/clothing/under/pride
-	name = "pride jumpsuit"
+	name = "LGBT pride jumpsuit"
 	desc = "A corporate token of inclusivity, made in a sweatshop. It's based off of the LGBT flag."
 	icon = 'icons/obj/clothing/uniforms/item_js_pride.dmi'
 	wear_image_icon = 'icons/mob/jumpsuits/worn_js_pride.dmi'
@@ -418,6 +418,12 @@
 	icon_state = "security"
 	item_state = "security"
 
+	assistant
+		name = "security assistant uniform"
+		desc = "Wait, is that velcro?"
+		icon_state = "security-assistant"
+		item_state = "security-assistant"
+
 	april_fools
 		icon_state = "security-alt"
 		item_state = "security-alt"
@@ -443,7 +449,7 @@
 
 /obj/item/clothing/under/rank/roboticist
 	name = "roboticist's jumpsuit"
-	desc = "Red and black really helps highlight the cranial fluid stains."
+	desc = "Black and white, like ethics."
 	icon_state = "robotics"
 	item_state = "robotics"
 	permeability_coefficient = 0.50
@@ -473,6 +479,17 @@
 	april_fools
 		icon_state = "genetics-alt"
 		item_state = "genetics-alt"
+
+/obj/item/clothing/under/rank/pathologist
+	name = "pathologist's jumpsuit"
+	desc = "Scientifically proven to block up to 99% of pathogens."
+	icon_state = "pathology"
+	item_state = "pathology"
+	permeability_coefficient = 0.50
+
+	april_fools
+		icon_state = "medical-alt"
+		item_state = "medical-alt"
 
 // Engineering
 
@@ -680,8 +697,10 @@
 /obj/item/clothing/under/misc/lawyer/red/demonic
 	setupProperties()
 		..()
-		setProperty("rangedprot", 1)
-		setProperty("meleeprot", 6)
+		setProperty("coldprot", 40) //slightly worse than a spacesuit
+		setProperty("heatprot", 40) //slightly worse than a firesuit
+		setProperty("rangedprot", 1.5) //buffed from 1, felt needed, tune up or down as needed
+		setProperty("meleeprot", 7) //buffed from 6, felt needed, tune up or down as needed
 
 /obj/item/clothing/under/misc/syndicate
 	name = "tactical turtleneck"
@@ -753,7 +772,6 @@
 	inhand_image_icon = 'icons/mob/inhand/jumpsuit/hand_js_athletic.dmi'
 	icon_state = "shortsGy"
 	item_state = "shortsGy"
-	compatible_species = list("human", "monkey")
 
 	red
 		icon_state = "shortsR"

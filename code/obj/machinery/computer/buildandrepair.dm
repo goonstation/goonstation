@@ -217,9 +217,7 @@
 					if (S.amount >= 2)
 						playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
 						if (do_after(user, 2 SECONDS))
-							if (S) S.amount -= 2
-							if (P && P.amount < 1)
-								qdel(P)
+							S.change_stack_amount(-2)
 							boutput(user, "<span class='notice'>You put in the glass panel.</span>")
 							src.state = 4
 							src.icon_state = "4"

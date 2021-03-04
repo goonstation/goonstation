@@ -25,8 +25,6 @@
 			reagents.add_reagent("dbreath", 30)
 		if (prob(7))
 			reagents.add_reagent("freeze", 30)
-		if (prob(3))
-			reagents.add_reagent("stimulants", 20)
 		if(prob(15))
 			reagents.add_reagent("hairgrownium", 30)
 		if (prob(10))
@@ -135,6 +133,11 @@
 		if (src.Artifact_attackby(W,user))
 			..()
 
+	attack(mob/M, mob/user, def_zone)
+		. = ..()
+		if(.) // successfully made person drink
+			src.ArtifactFaultUsed(M)
+
 	examine()
 		return list(desc)
 
@@ -178,7 +181,8 @@
 
 /datum/artifact/pitcher
 	associated_object = /obj/item/reagent_containers/food/drinks/drinkingglass/artifact
-	rarity_class = 2
+	type_name = "Pitcher"
+	rarity_weight = 350
 	validtypes = list("martian","wizard","eldritch")
 	min_triggers = 0
 	max_triggers = 0

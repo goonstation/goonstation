@@ -483,7 +483,9 @@ toxic - poisons
 
 	on_hit(atom/hit)
 		var/mob/living/L = hit
-		if(istype(L) && L.getStatusDuration("burning"))
+		if (!istype(L))
+			return
+		if(L.getStatusDuration("burning"))
 			L.changeStatus("burning", 70)
 		else
 			L.changeStatus("burning", 35)
@@ -492,7 +494,7 @@ toxic - poisons
 	name = "signifer bolt"
 	icon = 'icons/obj/projectiles.dmi'
 	power = 15
-	cost = 25
+	cost = 50
 	sname = "lethal"
 	shot_sound = 'sound/weapons/SigLethal.ogg'
 	hit_ground_chance = 30

@@ -38,9 +38,9 @@ SHARDS
 			if (splitnum >= amount || splitnum < 1)
 				boutput(user, "<span class='alert'>Invalid entry, try again.</span>")
 				return
-			boutput(usr, "<span class='notice'>You take [splitnum] sheets from the stack, leaving [diff] sheets behind.</span>")
+			boutput(user, "<span class='notice'>You take [splitnum] sheets from the stack, leaving [diff] sheets behind.</span>")
 			src.amount = diff
-			var/obj/item/sheet/glass/new_stack = new src.type(usr.loc, diff)
+			var/obj/item/sheet/glass/new_stack = new src.type(user.loc, diff)
 			new_stack.amount = splitnum
 			new_stack.attack_hand(user)
 			new_stack.add_fingerprint(user)
@@ -61,7 +61,6 @@ SHARDS
 			else
 				G.amount += src.amount
 				boutput(user, "<span class='notice'>You add the glass sheet to the stack. It now has [G.amount] sheets.</span>")
-				//SN src = null
 				qdel(src)
 				return
 			return
@@ -98,28 +97,28 @@ SHARDS
 
 	attack_self(mob/user as mob)
 
-		if (!( istype(usr.loc, /turf/simulated) ))
+		if (!( istype(user.loc, /turf/simulated) ))
 			return
 		switch(alert("Sheet-Glass", "Would you like full tile glass or one direction?", "one direct", "full (2 sheets)", "cancel", null))
 			if("one direct")
 				var/obj/window/W
 
 				if(!crystal && !reinforced)
-					W = new /obj/window( usr.loc )
+					W = new /obj/window( user.loc )
 					if(src.material) W.setMaterial(src.material)
-					logTheThing("station", usr, null, "builds a Window in [usr.loc.loc] ([showCoords(usr.x, usr.y, usr.z)])")
+					logTheThing("station", user, null, "builds a Window in [user.loc.loc] ([showCoords(user.x, user.y, user.z)])")
 				else if(!crystal && reinforced)
-					W = new /obj/window/reinforced( usr.loc )
+					W = new /obj/window/reinforced( user.loc )
 					if(src.material) W.setMaterial(src.material)
-					logTheThing("station", usr, null, "builds a Reinforced Window in [usr.loc.loc] ([showCoords(usr.x, usr.y, usr.z)])")
+					logTheThing("station", user, null, "builds a Reinforced Window in [user.loc.loc] ([showCoords(user.x, user.y, user.z)])")
 				else if(crystal && !reinforced)
-					W = new /obj/window/crystal( usr.loc )
+					W = new /obj/window/crystal( user.loc )
 					if(src.material) W.setMaterial(src.material)
-					logTheThing("station", usr, null, "builds a Crystal Window in [usr.loc.loc] ([showCoords(usr.x, usr.y, usr.z)])")
+					logTheThing("station", user, null, "builds a Crystal Window in [user.loc.loc] ([showCoords(user.x, user.y, user.z)])")
 				else if(crystal && reinforced)
-					W = new /obj/window/crystal/reinforced( usr.loc )
+					W = new /obj/window/crystal/reinforced( user.loc )
 					if(src.material) W.setMaterial(src.material)
-					logTheThing("station", usr, null, "builds a Reinforced Crystal Window in [usr.loc.loc] ([showCoords(usr.x, usr.y, usr.z)])")
+					logTheThing("station", user, null, "builds a Reinforced Crystal Window in [user.loc.loc] ([showCoords(user.x, user.y, user.z)])")
 
 				W.anchored = 0
 				W.state = 0
@@ -136,21 +135,21 @@ SHARDS
 				var/obj/window/W
 
 				if(!crystal && !reinforced)
-					W = new /obj/window( usr.loc )
+					W = new /obj/window( user.loc )
 					if(src.material) W.setMaterial(src.material)
-					logTheThing("station", usr, null, "builds a Full Window in [usr.loc.loc] ([showCoords(usr.x, usr.y, usr.z)])")
+					logTheThing("station", user, null, "builds a Full Window in [user.loc.loc] ([showCoords(user.x, user.y, user.z)])")
 				else if(!crystal && reinforced)
-					W = new /obj/window/reinforced( usr.loc )
+					W = new /obj/window/reinforced( user.loc )
 					if(src.material) W.setMaterial(src.material)
-					logTheThing("station", usr, null, "builds a Full Reinforced Window in [usr.loc.loc] ([showCoords(usr.x, usr.y, usr.z)])")
+					logTheThing("station", user, null, "builds a Full Reinforced Window in [user.loc.loc] ([showCoords(user.x, user.y, user.z)])")
 				else if(crystal && !reinforced)
-					W = new /obj/window/crystal( usr.loc )
+					W = new /obj/window/crystal( user.loc )
 					if(src.material) W.setMaterial(src.material)
-					logTheThing("station", usr, null, "builds a Full Crystal Window in [usr.loc.loc] ([showCoords(usr.x, usr.y, usr.z)])")
+					logTheThing("station", user, null, "builds a Full Crystal Window in [user.loc.loc] ([showCoords(user.x, user.y, user.z)])")
 				else if(crystal && reinforced)
-					W = new /obj/window/crystal/reinforced( usr.loc )
+					W = new /obj/window/crystal/reinforced( user.loc )
 					if(src.material) W.setMaterial(src.material)
-					logTheThing("station", usr, null, "builds a Full Reinforced Crystal Window in [usr.loc.loc] ([showCoords(usr.x, usr.y, usr.z)])")
+					logTheThing("station", user, null, "builds a Full Reinforced Crystal Window in [user.loc.loc] ([showCoords(user.x, user.y, user.z)])")
 
 				W.set_dir(SOUTHWEST)
 				W.ini_dir = SOUTHWEST
@@ -264,7 +263,6 @@ SHARDS
 		return
 	var/atom/A = new /obj/item/sheet/glass( user.loc )
 	if(src.material) A.setMaterial(src.material)
-	//SN src = null
 	qdel(src)
 	return
 
@@ -275,7 +273,7 @@ SHARDS
 			var/mob/living/carbon/human/H = M
 			if(isabomination(H))
 				return
-			if(!H.shoes)
+			if(!H.shoes && !iscow(H))
 				boutput(H, "<span class='alert'><B>You step in the broken glass!</B></span>")
 				playsound(src.loc, "sound/impact_sounds/Glass_Shards_Hit_1.ogg", 50, 1)
 				var/obj/item/affecting = H.organs[pick("l_leg", "r_leg")]
@@ -322,7 +320,7 @@ SHARDS
 			var/mob/M = AM
 			boutput(M, "<span class='alert'><B>You step on the crystal shard!</B></span>")
 			playsound(src.loc, "sound/impact_sounds/Glass_Shards_Hit_1.ogg", 50, 1)
-			if(ishuman(M))
+			if(ishuman(M) && !iscow(M))
 				var/mob/living/carbon/human/H = M
 				var/obj/item/affecting = H.organs[pick("l_leg", "r_leg")]
 				H.weakened = max(3, H.weakened)

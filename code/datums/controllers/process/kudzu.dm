@@ -16,6 +16,12 @@ datum/controller/process/kudzu
 				K.Life()
 				scheck()
 
+	copyStateFrom(datum/controller/process/target)
+		var/datum/controller/process/kudzu/old_kudzu = target
+		src.detailed_count = old_kudzu.detailed_count
+		src.count = old_kudzu.count
+		src.kudzu = old_kudzu.kudzu
+
 	tickDetail()
 		if (length(detailed_count))
 			var/stats = "<b>Kudzu Stats:</b><br>"

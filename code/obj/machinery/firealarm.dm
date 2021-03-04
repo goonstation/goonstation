@@ -27,6 +27,7 @@
 
 /obj/machinery/firealarm/New()
 	..()
+	START_TRACKING
 	if(!alarm_zone)
 		var/area/A = get_area(loc)
 		alarm_zone = A.name
@@ -40,6 +41,7 @@
 		frequency = radio_controller.return_frequency(alarm_frequency)
 
 /obj/machinery/firealarm/disposing()
+		STOP_TRACKING
 		radio_controller.remove_object(src, alarm_frequency)
 		..()
 
@@ -212,7 +214,7 @@
 		reply.transmission_method = TRANSMISSION_RADIO
 		reply.data["address_1"] = sender
 		reply.data["command"] = "ping_reply"
-		reply.data["device"] = "PNET_FIREALARM"
+		reply.data["device"] = "WNET_FIREALARM"
 		reply.data["netid"] = src.net_id
 		reply.data["alert"] = src.icon_state == "fire0" ? "reset" : "fire"
 		reply.data["zone"] = alarm_zone

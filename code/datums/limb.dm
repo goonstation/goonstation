@@ -71,6 +71,9 @@
 		user.lastattacked = target
 
 	proc/grab(mob/living/target, var/mob/living/user)
+		if(target == user)
+			user.grab_self()
+			return
 		if (issilicon(target))
 			return
 		user.grab_other(target)
@@ -341,7 +344,7 @@
 		if (!target.melee_attack_test(user))
 			return
 
-		if (prob(src.miss_prob) || target.getStatusDuration("stunned") || target.getStatusDuration("weakened") || target.getStatusDuration("paralysis") || target.stat || target.restrained())
+		if (prob(src.miss_prob) || is_incapacitated(target)|| target.restrained())
 			var/obj/item/affecting = target.get_affecting(user)
 			var/datum/attackResults/msgs = user.calculate_melee_attack(target, affecting, dam_low, dam_high, 0, stam_damage_mult, !isghostcritter(user))
 			user.attack_effects(target, affecting)
@@ -446,6 +449,19 @@
 			return
 
 		if (ismob(target))
+			var/mob/M = target
+			//total hack. from attack_hand in mob/living/silicon/robot
+			if (istype(M, /mob/living/silicon/robot))
+				if(user.a_intent == INTENT_HARM)
+					M.TakeDamage("All", rand(3,6), 0)
+					if (prob(10))
+						var/turf/T = get_edge_target_turf(user, user.dir)
+						if (isturf(T))
+							M.visible_message("<span class='alert'><B>[user] savagely punches [M], sending them flying!</B></span>")
+							M.throw_at(T, 6, 2)
+					else
+						M.visible_message("<span class='alert'><B>[user] punches [M]!</B></span>")
+					return
 			..()
 			return
 
@@ -458,7 +474,7 @@
 				playsound(user.loc, O.hitsound, 50, 1, pitch = 1.6)
 				O.take_damage(20, user) //Like 30ish hits to break a normal airlock?
 
-			if(istype(target, /obj/grille))
+			else if(istype(target, /obj/grille))
 				var/obj/grille/O = target
 				user.lastattacked = O
 				if (!O.shock(user, 70))
@@ -466,32 +482,32 @@
 					playsound(O.loc, "sound/impact_sounds/Metal_Hit_Light_1.ogg", 80, 1)
 					O.damage_slashing(10)
 
-			if(istype(target, /obj/window))
+			else if(istype(target, /obj/window))
 				var/obj/window/O = target
 				user.lastattacked = O
 				O.visible_message("<span class='alert'>[user] smashes into the window.</span>", "<span class='notice'>You mash yourself against the window.</span>")
 				O.damage_blunt(15)
 				playsound(user.loc, O.hitsound, 50, 1, pitch = 1.6)
 
-			if(istype(target, /obj/table))
+			else if(istype(target, /obj/table))
 				var/obj/table/O = target
 				user.lastattacked = O
 				O.visible_message("<span class='alert'><b>[user]</b> violently rips apart the [O]!</span>")
 				playsound(O.loc, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 40, 1)
 				O.deconstruct()
 
-			if(istype(target, /obj/structure/woodwall))
+			else if(istype(target, /obj/structure/woodwall))
 				var/obj/window/O = target
 				user.lastattacked = O
 				O.attack_hand(user)
 
-			if(istype(target, /obj/machinery/bot))
+			else if(istype(target, /obj/machinery/bot))
 				var/obj/machinery/bot/O = target
 				user.lastattacked = O
 				O.explode()
 				O.visible_message("<span class='alert'><b>[user]</b> violently rips [O] apart!</span>")
 
-			if(prob(40))
+			if(prob(40) && !ON_COOLDOWN(user, "zombie arm scream", 1 SECOND))
 				user.emote("scream")
 			return
 
@@ -1278,7 +1294,8 @@ var/list/ghostcritter_blocked = ghostcritter_blocked_objects()
 	/obj/item/gun/kinetic/airzooka,\
 	/obj/machinery/computer,\
 	/obj/machinery/power/smes,
-	/obj/item/tinyhammer) //Items that ghostcritters simply cannot interact, regardless of w_class
+	/obj/item/tinyhammer,
+	/obj/item/device/light/zippo) //Items that ghostcritters simply cannot interact, regardless of w_class
 	. = list()
 	for (var/blocked_type in blocked_types)
 		for (var/subtype in typesof(blocked_type))
@@ -1309,7 +1326,7 @@ var/list/ghostcritter_blocked = ghostcritter_blocked_objects()
 				var/can_pickup = 1
 
 				if (issmallanimal(usr))
-					var/mob/living/critter/small_animal/C = usr
+					var/mob/living/critter/small_animal/C = user
 					if (C.ghost_spawned && ghostcritter_blocked[O.type])
 						can_pickup = 0
 
@@ -1328,9 +1345,9 @@ var/list/ghostcritter_blocked = ghostcritter_blocked_objects()
 		return
 
 	help(mob/target, var/mob/living/user)
-		if (issmallanimal(usr) && iscarbon(target))
+		if (issmallanimal(user) && iscarbon(target))
 			user.lastattacked = target
-			var/mob/living/critter/small_animal/C = usr
+			var/mob/living/critter/small_animal/C = user
 			if (C.ghost_spawned)
 				if (max_wclass < 3)
 					user.visible_message("<span class='alert'><b>[user] tries to help [target], but they're worse than useless!</b></span>", "<span class='alert'><b>You try to help [target], but your spectral will can only manage a poke!</b></span>")
@@ -1364,9 +1381,9 @@ var/list/ghostcritter_blocked = ghostcritter_blocked_objects()
 			attack_twitch(src)
 
 	grab(mob/target, var/mob/living/user)
-		if (issmallanimal(usr) && iscarbon(target))
+		if (issmallanimal(user))
 			user.lastattacked = target
-			var/mob/living/critter/small_animal/C = usr
+			var/mob/living/critter/small_animal/C = user
 			if (C.ghost_spawned)
 				if (max_wclass < 3)
 					user.visible_message("<span class='alert'><b>[user] tries to grab [target], but they are too large!</b></span>", "<span class='alert'><b>You try to grab [target], but your spectral will is not strong enough!</b></span>")
@@ -1376,7 +1393,7 @@ var/list/ghostcritter_blocked = ghostcritter_blocked_objects()
 	disarm(mob/target, var/mob/living/user)
 		if (issmallanimal(usr) && iscarbon(target))
 			user.lastattacked = target
-			var/mob/living/critter/small_animal/C = usr
+			var/mob/living/critter/small_animal/C = user
 			if (C.ghost_spawned)
 				if (max_wclass < 3)
 					user.visible_message("<span class='alert'><b>[user] tries to disarm [target], but can only manage a pathetic nudge!</b></span>", "<span class='alert'><b>You try to disarm [target], but your spectral will can only manage a pathetic nudge!</b></span>")

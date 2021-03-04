@@ -1,3 +1,6 @@
+/** Arc Electroplater
+  * Applies materials directly to items
+  */
 /obj/machinery/arc_electroplater
 	name = "Arc Electroplater"
 	desc = "An industrial arc electroplater.  It uses strong currents to coat a target object with a provided material."
@@ -8,7 +11,7 @@
 	flags = NOSPLASH
 	mats = 20
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS
-	var/obj/item/target_item = null
+	var/obj/target_item = null
 	var/cooktime = 0
 	var/max_wclass = 3
 	var/obj/item/material_piece/my_bar = null
@@ -17,24 +20,54 @@
 		..()
 		UnsubscribeProcess()
 
+	custom_suicide = TRUE
+	suicide(mob/user)
+		if (!src.user_can_suicide(user))
+			return 0
+		if(isnull(src.my_bar))
+			boutput(user, "<span class='alert'>You can't plate yourself without a source material!</span>")
+			return 0
+		user.visible_message("<span class='alert'><b>[user] jumps into \the [src].</b></span>", "<span class='alert'><b>You jump into \the [src].</b></span>")
+		var/obj/statue = user.become_statue(src.my_bar.material, survive=TRUE)
+		user.TakeDamage("All", burn=200)
+		pool(src.my_bar)
+		src.my_bar = null
+		statue.set_loc(src)
+		src.cooktime = 0
+		src.target_item = statue
+		src.icon_state = "plater1"
+		SubscribeToProcess()
+		return 1
+
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (isghostdrone(user) || isAI(user))
-			boutput(usr, "<span class='alert'>[src] refuses to interface with you!</span>")
+			boutput(user, "<span class='alert'>[src] refuses to interface with you!</span>")
 			return
 		if (W.cant_drop) //For borg held items
 			boutput(user, "<span class='alert'>You can't put that in [src] when it's attached to you!</span>")
 			return
 
-		if(istype(W,/obj/item/material_piece/))
+		if(istype(W, /obj/item/raw_material))
+			boutput(user, "<span class='alert'>You need to process \the [W] first before using it in [src]!</span>")
+			return
+
+		if(istype(W,/obj/item/material_piece))
 			if(my_bar)
 				boutput(user, "<span class='alert'>There is already a source material loaded in [src]!</span>")
 				return
-			else
+			else if(W.amount == 1)
 				src.visible_message("<span class='notice'>[user] loads [W] into the [src].</span>")
 				user.u_equip(W)
 				W.set_loc(src)
-				W.dropped()
+				W.dropped(user)
 				src.my_bar = W
+				return
+			else
+				src.visible_message("<span class='notice'>[user] loads one of the [W] into the [src].</span>")
+				var/obj/item/material_piece/single_bar = W.split_stack(1)
+				single_bar.set_loc(src)
+				single_bar.dropped(user)
+				src.my_bar = single_bar
 				return
 
 		if (src.target_item)
@@ -67,7 +100,7 @@
 			SubscribeToProcess()
 			return
 		else
-			boutput(user, "<span class='alert'>You can't plate something without a source material!.</span>")
+			boutput(user, "<span class='alert'>You can't plate something without a source material!</span>")
 			return
 
 	onVarChanged(variable, oldval, newval)
@@ -79,7 +112,7 @@
 
 	attack_hand(mob/user as mob)
 		if (isghostdrone(user))
-			boutput(usr, "<span class='alert'>The [src] refuses to interface with you!</span>")
+			boutput(user, "<span class='alert'>The [src] refuses to interface with you!</span>")
 			return
 		if (!src.target_item)
 			boutput(user, "<span class='alert'>There is nothing in the plater to remove.</span>")
@@ -116,13 +149,13 @@
 			UnsubscribeProcess()
 			return
 
-		if(my_bar?.material)
+		if(my_bar?.material && isnull(target_item.material))
 			target_item.setMaterial(my_bar.material)
 			pool(my_bar)
-			my_bar = null
+		my_bar = null
 
-		for (var/obj/item/I in src) //Things can get dropped somehow sometimes ok
-			I.set_loc(src.loc)
+		for (var/atom/movable/AM in src) //Things can get dropped somehow sometimes ok
+			AM.set_loc(src.loc)
 
 		src.target_item = null
 		src.icon_state = "plater0"

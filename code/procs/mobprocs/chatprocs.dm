@@ -1,8 +1,12 @@
 /mob/proc/say()
 	return
 
-/mob/verb/whisper()
+/mob/proc/whisper(message, forced=FALSE)
 	return
+
+/mob/verb/whisper_verb(message as text)
+	set name = "whisper"
+	return src.whisper(message)
 
 /mob/verb/say_verb(message as text)
 	set name = "say"
@@ -672,7 +676,7 @@
 		if (!C.mob) continue
 		var/mob/M = C.mob
 
-		if (recipients.Find(M.client))
+		if (M.client in recipients)
 			continue
 		if (M.client.holder && !M.client.only_local_looc && !M.client.player_mode)
 			recipients += M.client
@@ -776,7 +780,7 @@
 	return null
 
 /mob/proc/see(message)
-	if (!src.is_active())
+	if (!isalive(src))
 		return 0
 	boutput(src, message)
 	return 1
@@ -795,15 +799,27 @@
 	usr.client.preferences.auto_capitalization = !usr.client.preferences.auto_capitalization
 	boutput(usr, "<span class='notice'>[usr.client.preferences.auto_capitalization ? "Now": "No Longer"] auto capitalizing messages.</span>")
 
-/mob/verb/togglelocaldeadchat()
+/mob/dead/verb/togglelocaldeadchat()
 	set desc = "Toggle whether you can hear all chat while dead or just local chat"
 	set name = "Toggle Deadchat Range"
+	set category = "Ghost"
 
 	if (!usr.client) //How could this even happen?
 		return
 
-	usr.client.local_deadchat = !usr.client.local_deadchat
-	boutput(usr, "<span class='notice'>[usr.client.local_deadchat ? "Now" : "No longer"] hearing local chat only.</span>")
+	usr.client.preferences.local_deadchat = !usr.client.preferences.local_deadchat
+	boutput(usr, "<span class='notice'>[usr.client.preferences.local_deadchat ? "Now" : "No longer"] hearing local chat only.</span>")
+
+/mob/dead/verb/toggle_ghost_radio()
+	set desc = "Toggle whether you can hear radio chatter while dead"
+	set name = "Toggle Ghost Radio"
+	set category = "Ghost"
+
+	if (!usr.client) //How could this even happen?
+		return
+
+	usr.client.mute_ghost_radio = !usr.client.mute_ghost_radio
+	boutput(usr, "<span class='notice'>[usr.client.mute_ghost_radio ? "No longer" : "Now"] hearing radio as a ghost.</span>")
 
 /mob/verb/toggleflyingchat()
 	set desc = "Toggle seeing what people say over their heads"
@@ -815,7 +831,7 @@
 	usr.client.preferences.flying_chat_hidden = !usr.client.preferences.flying_chat_hidden
 	boutput(usr, "<span class='notice'>[usr.client.preferences.flying_chat_hidden ? "No longer": "Now"] seeing flying chat.</span>")
 
-/mob/proc/show_message(msg, type, alt, alt_type, group = "", var/image/chat_maptext/assoc_maptext = null)
+/mob/proc/show_message(msg, type, alt, alt_type, group = "", var/just_maptext, var/image/chat_maptext/assoc_maptext = null)
 	if (!src.client)
 		return
 
@@ -836,14 +852,15 @@
 			if ((type & 1) && !src.sight_check(1))
 				return
 
-	if (isunconscious(src) || src.sleeping || src.getStatusDuration("paralysis"))
+	if (!just_maptext && (isunconscious(src) || src.sleeping || src.getStatusDuration("paralysis")))
 		if (prob(20))
 			boutput(src, "<I>... You can almost hear something ...</I>")
 			if (isliving(src))
 				for (var/mob/dead/target_observer/observer in src:observers)
 					boutput(observer, "<I>... You can almost hear something ...</I>")
 	else
-		boutput(src, msg, group)
+		if(!just_maptext)
+			boutput(src, msg, group)
 		if(assoc_maptext && src.client && !src.client.preferences?.flying_chat_hidden)
 			assoc_maptext.show_to(src.client)
 
@@ -853,7 +870,8 @@
 
 		if (isliving(src))
 			for (var/mob/dead/target_observer/observer in src:observers)
-				boutput(observer, msg, group)
+				if(!just_maptext)
+					boutput(observer, msg, group)
 				if(assoc_maptext && observer.client && !observer.client.preferences.flying_chat_hidden)
 					assoc_maptext.show_to(observer.client)
 
@@ -901,20 +919,20 @@
 		//DEBUG_MESSAGE("<b>[M] recieves message: &quot;[msg]&quot;</b>")
 
 // it was about time we had this instead of just visible_message()
-/atom/proc/audible_message(var/message)
+/atom/proc/audible_message(var/message, var/alt, var/alt_type, var/group = "", var/just_maptext, var/image/chat_maptext/assoc_maptext = null)
 	for (var/mob/M in all_hearers(null, src))
 		if (!M.client)
 			continue
-		M.show_message(message, 2)
+		M.show_message(message, 2, alt, alt_type, group, just_maptext, assoc_maptext)
 
-/mob/audible_message(var/message, var/self_message)
+/mob/audible_message(var/message, var/self_message, var/alt, var/alt_type, var/group = "", var/just_maptext, var/image/chat_maptext/assoc_maptext = null)
 	for (var/mob/M in all_hearers(null, src))
 		if (!M.client)
 			continue
 		var/msg = message
 		if (self_message && M==src)
 			msg = self_message
-		M.show_message(msg, 2)
+		M.show_message(msg, 2, alt, alt_type, group, just_maptext, assoc_maptext)
 
 
 // FLOCKSAY

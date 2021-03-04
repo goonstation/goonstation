@@ -1,4 +1,4 @@
-/obj/screen/ability/topBar/cruiser
+/atom/movable/screen/ability/topBar/cruiser
 	clicked(params)
 		var/datum/targetable/cruiser/spell = owner
 		var/datum/abilityHolder/holder = owner.holder
@@ -54,7 +54,7 @@
 	ignore_sticky_cooldown = 1
 
 	New()
-		var/obj/screen/ability/topBar/cruiser/B = new /obj/screen/ability/topBar/cruiser(null)
+		var/atom/movable/screen/ability/topBar/cruiser/B = new /atom/movable/screen/ability/topBar/cruiser(null)
 		B.icon = src.icon
 		B.icon_state = src.icon_state
 		B.owner = src
@@ -65,7 +65,7 @@
 	updateObject()
 		..()
 		if (!src.object)
-			src.object = new /obj/screen/ability/topBar/cruiser()
+			src.object = new /atom/movable/screen/ability/topBar/cruiser()
 			object.icon = src.icon
 			object.owner = src
 		if (disabled)
@@ -87,7 +87,7 @@
 
 	proc/incapacitationCheck()
 		var/mob/living/M = holder.owner
-		return M.restrained() || M.stat || M.getStatusDuration("paralysis") || M.getStatusDuration("stunned") || M.getStatusDuration("weakened")
+		return M.restrained() || is_incapacitated(M)
 
 	castcheck()
 		if (incapacitationCheck())
