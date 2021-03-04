@@ -331,6 +331,8 @@
 			src.cooldowns = list() // Mainly applies to hostile bots
 			step_to(src, (get_step_away(src,user)))
 			src.KillPathAndGiveUp(1)
+			if(ishuman(user))
+				src.patient = user
 			src.process() // slap the good doctor into healing you, good idea
 		..()
 
@@ -370,8 +372,6 @@
 		else if(IN_RANGE(src,src.patient,10))
 			src.KillPathAndGiveUp(0)
 			navigate_to(get_turf(src.patient), MEDBOT_MOVE_SPEED, max_dist = 10)
-			if(!length(src.path))
-				src.frustration += 2
 		else
 			src.KillPathAndGiveUp(1)
 
@@ -403,11 +403,7 @@
 			else
 				src.KillPathAndGiveUp(0)
 				navigate_to(get_turf(src.patient), MEDBOT_MOVE_SPEED, max_dist = 10)
-				if(!length(src.path))
-					src.patient = null
-					continue
-				else
-					return
+				return
 		else
 			continue
 
@@ -524,15 +520,17 @@
 		if ((src.use_beaker) && (src.reagent_glass) && (src.reagent_glass.reagents.total_volume))
 			reagent_id = "internal_beaker"
 
-		if (src.terrifying)
-			for(var/i in 1 to rand(1,4))
-				var/badmed_id = pick(src.terrifying_meds)
-				reagent_id[badmed_id] += rand(1, src.terrifying_meds[badmed_id])
+		if(src.terrifying)
+			if(!is_incapacitated(C))
+				for(var/i in 1 to rand(1,4))
+					var/badmed_id = pick(src.terrifying_meds)
+					reagent_id[badmed_id] += rand(1, src.terrifying_meds[badmed_id])
 
 		else if (src.emagged) //Emagged! Time to poison everybody.
-			var/reag_check = pick(src.dangerous_stuff)
-			if(!C.reagents.has_reagent(reag_check, src.dangerous_stuff[reag_check] * 1.5)) // *shrug* two-ish doses of our poison, on average
-				reagent_id = src.dangerous_stuff
+			if(!is_incapacitated(C))
+				var/reag_check = pick(src.dangerous_stuff)
+				if(!C.reagents.has_reagent(reag_check, src.dangerous_stuff[reag_check] * 1.5)) // *shrug* two-ish doses of our poison, on average
+					reagent_id = src.dangerous_stuff
 
 		else
 			if (length(reagent_id) < 1)
@@ -557,6 +555,7 @@
 		src.KillPathAndGiveUp(1)
 		return FALSE
 	else if(!actions.hasAction(src, "medbot_inject"))
+		src.KillPathAndGiveUp(0)
 		actions.start(new/datum/action/bar/icon/medbot_inject(src, reagent_id), src)
 		return TRUE
 
@@ -645,7 +644,7 @@
 
 	onInterrupt()
 		. = ..()
-		master.currently_healing = 0
+		master.KillPathAndGiveUp()
 		master.update_icon()
 
 	onEnd()
@@ -677,6 +676,8 @@
 
 	proc/fail_check()
 		if(!master.on)
+			return TRUE
+		if(!istype(master.patient))
 			return TRUE
 		if(!master.terrifying && !IN_RANGE(master, master.patient, 1))
 			return TRUE
