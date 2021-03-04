@@ -301,7 +301,8 @@
 
 		if(!is_valid_color_string(src.PDAcolor)) //how?
 			src.PDAcolor = "#6F7961"
-
+		
+		get_all_character_setup_ringtones()
 		if(!(src.pda_ringtone_index in selectable_ringtones))
 			src.pda_ringtone_index = "Two-Beep"
 
