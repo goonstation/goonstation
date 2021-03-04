@@ -44,13 +44,13 @@
 			if(origin.type_name == src.artifactOrigin)
 				// have we already generated a name for that origin?
 				// the actual name with the actual origin should be in the list by default
-				if(!A.usednames[src.artifactOrigin])
+				if(!A.used_names[src.artifactOrigin])
 					// no, generate new one and store it
 					src.artifactName = origin.generate_name()
-					A.usednames[src.artifactOrigin] = src.artifactName
+					A.used_names[src.artifactOrigin] = src.artifactName
 				else
 					// yes, use it
-					src.artifactName = A.usednames[src.artifactOrigin]
+					src.artifactName = A.used_names[src.artifactOrigin]
 				break
 
 		// all correct, let's set the name!
