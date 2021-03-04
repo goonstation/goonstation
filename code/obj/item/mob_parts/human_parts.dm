@@ -439,6 +439,7 @@
 	var/special_icons = 'icons/mob/human.dmi'
 	var/original_flags = 0
 	var/image/handimage = 0
+	random_limb_blacklisted = 1
 	/// No more yee eating csaber arms
 	limb_is_unnatural = TRUE
 	kind_of_limb = (LIMB_ITEM)
@@ -588,6 +589,7 @@
 	var/original_flags = 0
 	var/image/handimage = 0
 	var/special_icons = 'icons/mob/human.dmi'
+	random_limb_blacklisted = 1
 	/// Also, item arms are supposedly junk jammed into a severed limb's socket
 	limb_is_unnatural = TRUE
 	kind_of_limb = (LIMB_ITEM)
