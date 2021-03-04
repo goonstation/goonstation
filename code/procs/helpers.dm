@@ -2629,7 +2629,7 @@ proc/is_incapacitated(mob/M)
 		M.hasStatus("paralysis") || \
 		M.stat)
 
-/// gets a list of ringtones players can select through character setup
+/// sets up the list of ringtones players can select through character setup
 proc/get_all_character_setup_ringtones()
 	if(!length(selectable_ringtones))
 		for (var/datum/ringtone/R as() in filtered_concrete_typesof(/datum/ringtone, /proc/filter_is_character_setup_ringtone))
