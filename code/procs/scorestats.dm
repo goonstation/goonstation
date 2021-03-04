@@ -135,7 +135,8 @@ var/datum/score_tracker/score_tracker
 			if(O.disposed)
 				return
 			var/obj/item/sticker/postit/artifact_paper/pap = locate(/obj/item/sticker/postit/artifact_paper/) in O.vis_contents
-			artifacts_analyzed++
+			if(pap)
+				artifacts_analyzed++
 			if(pap?.lastAnalysis >= 3)
 				artifacts_correctly_analyzed++
 		if(artifacts_analyzed)
