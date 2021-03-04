@@ -16,6 +16,8 @@
 
 	var/points_per_crate = 10
 
+	var/artifact_resupply_amount = 0 // amount of artifacts in next resupply crate
+
 	New()
 		..()
 
@@ -132,19 +134,30 @@
 		price = round(price, 5)
 
 		if(prob(modifier*40*pap.lastAnalysis)) // range from 0% to ~78% for fully researched t4 artifact
-			SPAWN_DBG(rand(3,8) MINUTES)
-				var/obj/storage/crate/artcrate = new /obj/storage/crate()
-				artcrate.name = "Artifact Resupply Crate"
-				new /obj/artifact_type_spawner/vurdalak(artcrate)
-				shippingmarket.receive_crate(artcrate)
+			if(!src.artifact_resupply_amount)
+				SPAWN_DBG(rand(3,8) MINUTES)
+					// message
+					var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency("1149")
+					var/datum/signal/pdaSignal = get_free_signal()
+					pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=list(MGD_CARGO, MGD_SCIENCE), "sender"="00000000", "message"="Notification: Incoming artifact resupply crate. ([artifact_resupply_amount] objects)")
+					pdaSignal.transmission_method = TRANSMISSION_RADIO
+					if(transmit_connection != null)
+						transmit_connection.post_signal(null, pdaSignal)
+					// actual shipment
+					var/obj/storage/crate/artcrate = new /obj/storage/crate()
+					artcrate.name = "Artifact Resupply Crate"
+					for(var/i = 0 .. artifact_resupply_amount)
+						new /obj/artifact_type_spawner/vurdalak(artcrate)
+					artifact_resupply_amount = 0
+					shippingmarket.receive_crate(artcrate)
+			src.artifact_resupply_amount++
 
 		wagesystem.shipping_budget += price
 		qdel(sell_art)
 
 		var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency("1149")
 		var/datum/signal/pdaSignal = get_free_signal()
-		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=list(MGD_CARGO, MGA_SALES), "sender"="00000000", "message"="Notification: [price] credits earned from last outgoing shipment.")
-
+		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=list(MGD_CARGO, MGD_SCIENCE, MGA_SALES), "sender"="00000000", "message"="Notification: [price] credits earned from outgoing artifact [sell_art.name]. [pap?'Analysis was [pap.lastAnalysis]% correct.':'No analysis attached.']")
 		pdaSignal.transmission_method = TRANSMISSION_RADIO
 		if(transmit_connection != null)
 			transmit_connection.post_signal(null, pdaSignal)
