@@ -500,9 +500,9 @@
 		SEND_SIGNAL(M, COMSIG_ITEM_CONSUMED_PARTIAL, user, master)
 
 		if(ate_the_whole_thing)
-			/// procs effects specific to the item (master) onto whoever eats it (M)
+			// procs effects specific to the item (master) onto whoever eats it (M)
 			SEND_SIGNAL(master, COMSIG_ITEM_CONSUMED_ALL, M, user) // item parent, format: I (thing being eaten), M (mob eating it), user (mob making M eat it)
-			/// procs effects specific to the mob (M) when eating the item (master) if applicable
+			// procs effects specific to the mob (M) when eating the item (master) if applicable
 			SEND_SIGNAL(M, COMSIG_ITEM_CONSUMED_ALL, user, master) // mob parent, format: M (mob eating it), user (mob making M eat it), I (thing being eaten)
 			M.visible_message("<span class='alert'>[M] finishes eating [master].</span>",\
 			"<span class='alert'>You finish eating [master].</span>")
