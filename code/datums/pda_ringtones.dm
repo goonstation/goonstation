@@ -50,6 +50,8 @@
 	var/descText = "Description:"
 	/// Does this ringtone have special message-specific functionality?
 	var/readMessages = 0
+	/// Can this ringtone be selected through character creation?
+	var/canSpawnWith = 1
 
 	New(var/obj/item/device/pda2/thisPDA)
 		..()
@@ -118,6 +120,7 @@
 	previewText = "<b><u><i>WOOF</i></u></b>"
 	nameText = "<b><u><i>ALPHAAA</i></u></b>:"
 	descText = "<b><u><i>WOOF</i></u></b>:"
+	canSpawnWith = 0
 
 /datum/ringtone/dogs/lessdogs
 	name = "dog pack"
@@ -175,6 +178,7 @@
 	previewText = "Preview"
 	nameText = "Learnventure:"
 	descText = ""
+	canSpawnWith = 0
 	var/agentname
 	var/explode = 1
 	var/detonating
@@ -220,6 +224,7 @@
 	previewText = "Rehearsal!"
 	nameText = "Role:"
 	descText = "Motivation:"
+	canSpawnWith = 0
 
 /datum/ringtone/clown/horn
 	name = "Buzzo's Bleater"
@@ -567,8 +572,9 @@ bathing in her ennui and showering her with money.
 	ringList = list('sound/machines/phones/ringtones/ringers9.ogg')
 	ringShortList = list('sound/machines/phones/ringtones/ringershort9.ogg')
 	succText = "<span class='notice'>*Ringtone set to \"null.SND\"*</span>"
-	previewMessage = "pda_ringtones.dm,570: Cannot read null.previewMessage"
-	previewSender = "pda_ringtones.dm,571: Cannot read null.previewSender"
+	previewMessage = "pda_ringtones.dm,575: Cannot read null.previewMessage"
+	previewSender = "pda_ringtones.dm,576: Cannot read null.previewSender"
+	canSpawnWith = 0
 
 	New(obj/item/device/pda2/thisPDA)
 		. = ..()
@@ -620,6 +626,7 @@ ringtone.dm,58: Cannot read null.name (/datum/ringtone/retkid/ring8): return_tex
 	previewText = "Sample"
 	nameText = "SounPacK:"
 	descText = "DescrIptioN:"
+	canSpawnWith = 0
 
 	DoSpecialThing(var/index)
 		animate_shockwave(src.holder)
