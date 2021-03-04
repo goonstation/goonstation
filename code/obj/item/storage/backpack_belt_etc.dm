@@ -413,7 +413,7 @@
 		spawn_contents = list(/obj/item/gun/energy/wavegun, /obj/item/baton, /obj/item/barrier)
 
 	support
-		spawn_contents = list(/obj/item/baton, /obj/item/reagent_containers/food/snacks/donut/robust = 2,  /obj/item/reagent_containers/emergency_injector/morphine = 4)
+		spawn_contents = list(/obj/item/baton, /obj/item/reagent_containers/food/snacks/donut/custom/robust = 2,  /obj/item/reagent_containers/emergency_injector/morphine = 4)
 
 	control
 		spawn_contents = list(/obj/item/gun/energy/tasershotgun, /obj/item/baton, /obj/item/barrier)
@@ -429,6 +429,9 @@
 
 	baton
 		spawn_contents = list(/obj/item/baton, /obj/item/barrier)
+
+	tasersmg
+		spawn_contents = list(/obj/item/gun/energy/tasersmg, /obj/item/baton, /obj/item/barrier)
 
 //////////////////////////////
 // ~Nuke Ops Class Storage~ //

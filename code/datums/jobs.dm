@@ -588,6 +588,29 @@ ABSTRACT_TYPE(/datum/job/research)
 		src.access = get_access("Geneticist")
 		return
 
+/datum/job/research/pathologist
+	name = "Pathologist"
+	#ifdef CREATE_PATHOGENS
+	limit = 1
+	#else
+	limit = 0
+	#endif
+	wages = PAY_DOCTORATE
+	slot_belt = /obj/item/device/pda2/genetics
+	slot_jump = /obj/item/clothing/under/rank/pathologist
+	slot_foot = /obj/item/clothing/shoes/white
+	slot_suit = /obj/item/clothing/suit/labcoat/pathology
+	#ifdef SCIENCE_PATHO_MAP
+	slot_ears = /obj/item/device/radio/headset/research
+	#else
+	slot_ears = /obj/item/device/radio/headset/medical
+	#endif
+
+	New()
+		..()
+		src.access = get_access("Pathologist")
+		return
+
 /datum/job/research/roboticist
 	name = "Roboticist"
 	limit = 3
@@ -2648,6 +2671,119 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 	name = "Battler"
 	limit = -1
 
+ABSTRACT_TYPE(/datum/job/pod_wars)
+/datum/job/pod_wars
+	limit = -1
+	allow_traitors = 0
+	cant_spawn_as_rev = 1
+
+	special_setup(var/mob/living/carbon/human/M)
+		..()
+		if (!M.abilityHolder)
+			M.abilityHolder = new /datum/abilityHolder/pod_pilot(src)
+			M.abilityHolder.owner = src
+		else if (istype(M.abilityHolder, /datum/abilityHolder/composite))
+			var/datum/abilityHolder/composite/AH = M.abilityHolder
+			AH.addHolder(/datum/abilityHolder/pod_pilot)
+
+
+	proc/setup_headset(var/obj/item/device/radio/headset/headset, var/freq)
+		if (istype(headset))
+			headset.set_secure_frequency("g",freq)
+			headset.secure_classes["g"] = RADIOCL_SYNDICATE
+			headset.cant_self_remove = 0 
+			headset.cant_other_remove = 0 
+
+	nanotrasen
+		name = "NanoTrasen Pod Pilot"
+		linkcolor = "#3348ff"
+		no_jobban_from_this_job = 1
+		low_priority_job = 1
+		cant_allocate_unwanted = 1
+		access = list(access_heads)
+
+		slot_back = /obj/item/storage/backpack/NT
+		slot_belt = /obj/item/gun/energy/blaster_pod_wars/nanotrasen
+		slot_jump = /obj/item/clothing/under/misc/turds
+		slot_head = /obj/item/clothing/head/helmet/space/ntso
+		slot_suit = /obj/item/clothing/suit/space/nanotrasen/pilot
+		slot_foot = /obj/item/clothing/shoes/swat
+		slot_card = /obj/item/card/id/pod_wars/nanotrasen
+		slot_ears = /obj/item/device/radio/headset/pod_wars/nanotrasen
+		slot_mask = /obj/item/clothing/mask/breath
+		slot_glov = /obj/item/clothing/gloves/swat/NT
+		slot_poc1 = /obj/item/tank/emergency_oxygen
+		slot_poc2 = /obj/item/survival_machete
+		items_in_backpack = list(/obj/item/storage/box,/obj/item/spacecash/hundred)
+
+
+		//get the pod wars mode, get the teams comms frequency
+		special_setup(var/mob/living/carbon/human/M)
+			..()
+			if (!M)
+				return
+			if (istype(ticker.mode, /datum/game_mode/pod_wars))
+				var/datum/game_mode/pod_wars/mode = ticker.mode
+				M.mind.special_role = mode.team_NT?.name
+				setup_headset(M.ears, mode.team_NT?.comms_frequency)
+
+		commander
+			name = "NanoTrasen Commander"
+			limit = 1
+			no_jobban_from_this_job = 0
+			high_priority_job = 1
+			cant_allocate_unwanted = 0
+			access = list(access_heads, access_captain)
+
+			slot_head = /obj/item/clothing/head/NTberet/commander
+			slot_suit = /obj/item/clothing/suit/space/nanotrasen/pilot/commander
+			slot_card = /obj/item/card/id/pod_wars/nanotrasen/commander
+			slot_ears = /obj/item/device/radio/headset/pod_wars/nanotrasen/commander
+
+	syndicate
+		name = "Syndicate Pod Pilot"
+		linkcolor = "#FF0000"
+		no_jobban_from_this_job = 1
+		low_priority_job = 1
+		cant_allocate_unwanted = 1
+		access = list(access_syndicate_shuttle)
+
+		slot_back = /obj/item/storage/backpack/syndie
+		slot_belt = /obj/item/gun/energy/blaster_pod_wars/syndicate
+		slot_jump = /obj/item/clothing/under/misc/syndicate
+		slot_head = /obj/item/clothing/head/helmet/space/syndicate/specialist
+		slot_suit = /obj/item/clothing/suit/space/syndicate
+		slot_foot = /obj/item/clothing/shoes/swat
+		slot_card = /obj/item/card/id/pod_wars/syndicate
+		slot_ears = /obj/item/device/radio/headset/pod_wars/syndicate
+		slot_mask = /obj/item/clothing/mask/breath
+		slot_glov = /obj/item/clothing/gloves/swat
+		slot_poc1 = /obj/item/tank/emergency_oxygen
+		slot_poc2 = /obj/item/survival_machete/syndicate
+		items_in_backpack = list(/obj/item/storage/box,/obj/item/spacecash/hundred)
+
+		special_setup(var/mob/living/carbon/human/M)
+			..()
+			if (!M)
+				return
+			if (istype(ticker.mode, /datum/game_mode/pod_wars))
+				var/datum/game_mode/pod_wars/mode = ticker.mode
+				M.mind.special_role = mode.team_SY?.name
+				setup_headset(M.ears, mode.team_SY?.comms_frequency)
+
+		commander
+			name = "Syndicate Commander"
+			limit = 1
+			no_jobban_from_this_job = 0
+			high_priority_job = 1
+			cant_allocate_unwanted = 0
+			access = list(access_syndicate_shuttle, access_syndicate_commander)
+
+			slot_head = /obj/item/clothing/head/helmet/space/syndicate/commissar_cap
+			slot_suit = /obj/item/clothing/suit/space/syndicate/commissar_greatcoat
+			slot_card = /obj/item/card/id/pod_wars/syndicate/commander
+			slot_ears = /obj/item/device/radio/headset/pod_wars/syndicate/commander
+
 /datum/job/football
 	name = "Football Player"
 	limit = -1
@@ -2656,3 +2792,4 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 
 /datum/job/created
 	name = "Special Job"
+

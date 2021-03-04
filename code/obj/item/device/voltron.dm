@@ -247,6 +247,11 @@
 
 	proc/activate()
 		if(activating) return
+		var/turf/T = get_turf(src)
+		if(isrestrictedz(T.z))
+			boutput(target, "<span class='notice'>The [src] buzzes oddly, and nothing further happens.</span>")
+			return
+
 		if(locate(/obj/cable) in get_turf(src))
 
 			if(on_cooldown)

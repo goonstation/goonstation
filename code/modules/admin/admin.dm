@@ -798,6 +798,7 @@ var/global/noir = 0
 							<A href='?src=\ref[src];action=[cmd];type=revolution'>Revolution</A><br>
 							<A href='?src=\ref[src];action=[cmd];type=revolution_extended'>Revolution (no time limit)</A><br>
 							<A href='?src=\ref[src];action=[cmd];type=gang'>Gang War (Beta)</A><br>
+							<A href='?src=\ref[src];action=[cmd];type=pod_wars'>pod wars (Beta)</A><br>
 							<A href='?src=\ref[src];action=[cmd];type=battle_royale'>Battle Royale</A><br>
 							<A href='?src=\ref[src];action=[cmd];type=assday'>Ass Day Classic (For testing only.)</A><br>
 							<A href='?src=\ref[src];action=[cmd];type=construction'>Construction (For testing only. Don't select this!)</A><br>

@@ -336,7 +336,6 @@ toxic - poisons
 	icon_state = "modproj"
 	name = "blaster bolt"
 	sname = "blaster"
-	damage_type = D_BURNING
 	shot_sound = 'sound/weapons/laser_a.ogg'
 	dissipation_delay = 6
 	dissipation_rate = 5
@@ -362,7 +361,29 @@ toxic - poisons
 		icon_state = "crescent"
 		shot_number = 1
 
+/datum/projectile/laser/blaster/pod_pilot
+	cost = 20
+	power = 33
+	color_red = 0
+	color_green = 0
+	color_blue = 0
+	override_color = 0
+	icon_state = "bolt"
+	damage_type = D_ENERGY
 
+/datum/projectile/laser/blaster/pod_pilot/blue_NT
+	name = "blue blaster bolt"
+	color_icon = "#3d9cff"
+	color_red = 0.05
+	color_green = 0.28
+	color_blue = 0.51
+
+/datum/projectile/laser/blaster/pod_pilot/red_SY
+	name = "red blaster bolt"
+	color_icon = "#ff4043"
+	color_red = 0.51
+	color_green = 0.05
+	color_blue = 0.28
 
 
 // cogwerks- mining laser, first attempt
@@ -462,7 +483,9 @@ toxic - poisons
 
 	on_hit(atom/hit)
 		var/mob/living/L = hit
-		if(istype(L) && L.getStatusDuration("burning"))
+		if (!istype(L))
+			return
+		if(L.getStatusDuration("burning"))
 			L.changeStatus("burning", 70)
 		else
 			L.changeStatus("burning", 35)

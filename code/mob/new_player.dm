@@ -50,6 +50,16 @@ mob/new_player
 		src.set_loc(pick_landmark(LANDMARK_NEW_PLAYER, locate(1,1,1)))
 		src.sight |= SEE_TURFS
 
+
+		// byond members get a special join message :]
+		if (src.client?.IsByondMember())
+			var/list/msgs_which_are_gifs = list(8, 9, 10) //not all of these are normal jpgs
+			var/hash = md5("[src.client.ckey]") //hash means they always get the same join msg
+			var/num = (text2num(hash[1], 16)) + 1
+			var/resource = resource("images/member_msgs/byond_member_msg_[num].[(msgs_which_are_gifs.Find(num)) ? "gif" : "jpg"]")
+			boutput(src, "<img src='[resource]' style='margin: auto; display: block; max-width: 100%;'>")
+
+
 		if (src.ckey && !adminspawned)
 			if ("[src.ckey]" in spawned_in_keys)
 				if (!(client && client.holder) && !abandon_allowed)
@@ -310,6 +320,9 @@ mob/new_player
 			if(istype(ticker.mode, /datum/game_mode/football))
 				var/datum/game_mode/football/F = ticker.mode
 				F.init_player(character, 0, 1)
+			else if(istype(ticker.mode, /datum/game_mode/pod_wars))
+				var/datum/game_mode/pod_wars/mode = ticker.mode
+				mode.add_latejoin_to_team(character.mind, JOB)
 
 			else if (character.traitHolder && character.traitHolder.hasTrait("immigrant"))
 				boutput(character.mind.current,"<h3 class='notice'>You've arrived in a nondescript container! Good luck!</h3>")
@@ -520,7 +533,7 @@ a.latejoin-card:hover {
 
 		// deal with it
 		dat += ""
-		if (ticker.mode && !istype(ticker.mode, /datum/game_mode/construction) && !istype(ticker.mode,/datum/game_mode/battle_royale) && !istype(ticker.mode,/datum/game_mode/football))
+		if (ticker.mode && !istype(ticker.mode, /datum/game_mode/construction) && !istype(ticker.mode,/datum/game_mode/battle_royale) && !istype(ticker.mode,/datum/game_mode/football) && !istype(ticker.mode,/datum/game_mode/pod_wars))
 			dat += {"<div class='fuck'><table class='latejoin'><tr><th colspan='2'>Command/Security</th></tr>"}
 			for(var/datum/job/command/J in job_controls.staple_jobs)
 				dat += LateJoinLink(J)
@@ -571,6 +584,16 @@ a.latejoin-card:hover {
 		else if(istype(ticker.mode,/datum/game_mode/football))
 			//ahahaha you get no choices im going to just shove you in the game now good luck
 			AttemptLateSpawn(new /datum/job/football)
+			return
+		else if(istype(ticker.mode,/datum/game_mode/pod_wars))
+			//Go to the team with less members
+			var/datum/game_mode/pod_wars/mode = ticker.mode
+
+			if (mode?.team_NT?.members?.len > mode?.team_SY?.members?.len)
+				AttemptLateSpawn(new /datum/job/pod_wars/syndicate, 1)
+			else
+				AttemptLateSpawn(new /datum/job/pod_wars/nanotrasen, 1)
+
 			return
 		else
 			var/datum/game_mode/construction/C = ticker.mode

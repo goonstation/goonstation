@@ -1537,3 +1537,13 @@ datum
 					L.contract_disease(/datum/ailment/disease/food_poisoning, null, null, 1)
 				..()
 				return
+
+		medical/necrovirus_cure // Necrotic Degeneration
+			name = "necrovirus_cure"
+			id = "necrovirus_cure"
+			description = "The cure for the necrovirus/Zombie Disease. Can be used to totally cure infected below stage 4."
+			reagent_state = LIQUID
+			fluid_r = 200
+			fluid_g = 220
+			fluid_b = 200
+			transparency = 230

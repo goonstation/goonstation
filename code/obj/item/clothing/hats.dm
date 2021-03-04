@@ -492,7 +492,7 @@
 
 /obj/item/clothing/head/hosberet
 	name = "HoS Beret"
-	desc = "This makes you feel like Che Guevara."
+	desc = "This makes you feel like space Che Guevara."
 	icon_state = "hosberet"
 	item_state = "hosberet"
 	c_flags = SPACEWEAR
@@ -502,9 +502,16 @@
 
 /obj/item/clothing/head/NTberet
 	name = "Nanotrasen Beret"
-	desc = "For the inner dictator in you."
+	desc = "For the inner space dictator in you."
 	icon_state = "ntberet"
 	item_state = "ntberet"
+	c_flags = SPACEWEAR
+
+/obj/item/clothing/head/NTberet/commander
+	name = "Nanotrasen Beret"
+	desc = "For the inner space dictator in you."
+	icon_state = "ntberet_commander"
+	item_state = "ntberet_commander"
 	c_flags = SPACEWEAR
 
 /obj/item/clothing/head/XComHair

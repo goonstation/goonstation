@@ -20,7 +20,10 @@
 		if (src.mind)
 			src.mind.transfer_to(character)
 		if (equip_rank == 1)
-			character.Equip_Rank("Staff Assistant", 1)
+			if (istype(ticker.mode, /datum/game_mode/pod_wars))
+				character.Equip_Rank("Nanotrasen Pod Pilot", 1)
+			else
+				character.Equip_Rank("Staff Assistant", 1)
 
 		if (!tele_to_arrival_shuttle || (tele_to_arrival_shuttle && !ASLoc))
 			character.set_loc(currentLoc)
@@ -457,8 +460,8 @@
 					/mob/living/carbon/human/machoman/verb/macho_superthrow,\
 					/mob/living/carbon/human/machoman/verb/macho_soulsteal,\
 					/mob/living/carbon/human/machoman/verb/macho_stare,\
-					/mob/living/carbon/human/machoman/verb/macho_heartpunch\
-					) //they can keep macho heal
+					/mob/living/carbon/human/machoman/verb/macho_heartpunch,\
+					/mob/living/carbon/human/machoman/verb/macho_slimjim_snap) //they can keep macho heal and the arena thing
 				W.verbs -= dangerousVerbs //this is just diabolical
 				W.reagents.add_reagent("anti_fart", 800) //as is this
 			boutput(W, "<span class='notice'>You weren't able to absorb all the macho waves you were bombarded with! You have been left an incomplete macho man, with a frail body, and only one macho power. However, you inflict double damage with most melee weapons. Use your newfound form wisely to prove your worth as a macho champion of justice. Do not kill innocent crewmembers.</span>")

@@ -143,6 +143,9 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
 	/// Local list of obj/machines found in the area
 	var/list/machines = list()
 
+	///This datum, if set, allows terrain generation behavior to be ran on world/proc/init()
+	var/datum/map_generator/map_generator
+
 	proc/CanEnter(var/atom/movable/A)
 		if( blocked )
 			if( ismob(A) )
@@ -2454,6 +2457,7 @@ ABSTRACT_TYPE(/area/station/security)
 	icon_state = "brigcell"
 	sound_environment = 3
 	teleport_blocked = 0
+	do_not_irradiate = 1
 
 /area/station/security/brig/cell_block_control
 		name = "Cell Block Control"
@@ -3398,6 +3402,7 @@ ABSTRACT_TYPE(/area/mining)
 
 	proc/SetName(var/name)
 		src.name = name
+		global.area_list_is_up_to_date = 0 // our area cache could no longer be accurate!
 		for(var/obj/machinery/power/apc/apc in src)
 			apc.name = "[name] APC"
 			apc.area = src
@@ -3441,6 +3446,7 @@ ABSTRACT_TYPE(/area/mining)
 		power_environ = 1
 	else
 		luminosity = 0
+	global.area_list_is_up_to_date = 0
 
 	SPAWN_DBG(1.5 SECONDS)
 		src.power_change()		// all machines set to current power level, also updates lighting icon
@@ -5103,3 +5109,249 @@ area/station/security/visitation
 
 
 */
+/// Podmode Areas
+#ifdef MAP_OVERRIDE_POD_WARS
+/area/podmode/team1/hangar
+	name = "NSV Pytheas Hangar"
+	icon_state = "purple"
+
+/area/podmode/team1/mining
+	name = "NSV Pytheas Mining"
+	icon_state = "yellow"
+
+/area/podmode/team1/manufacturing
+	name = "NSV Pytheas Manufacturing"
+	icon_state = "blue"
+
+/area/podmode/team1/medbay
+	name = "NSV Pytheas Medbay"
+	icon_state = "medbay"
+
+/area/podmode/team1/bar
+	name = "NSV Pytheas Bar"
+	icon_state = "blue"
+
+/area/podmode/team1/powergen
+	name = "NSV Pytheas Power Station"
+	icon_state = "engine_monitoring"
+
+/area/podmode/team1/bridge
+	name = "NSV Pytheas Bridge"
+	icon_state = "reds"
+
+/area/podmode/team1/porthall
+	name = "NSV Pytheas Port Hallway"
+	icon_state = "green"
+
+/area/podmode/team1/starboardhall
+	name = "NSV Pytheas Starboard Hallway"
+	icon_state = "green"
+
+/area/podmode/team1/magnet
+	name = "NSV Pytheas Mineral Magnet"
+	icon_state = "purple"
+
+/area/podmode/team2/Bridge
+	name = "Lodbrok Bridge"
+	icon_state = "red"
+
+/area/podmode/team2/Medbay
+	name = "Lodbrok Medical Storage"
+	icon_state = "medbay"
+
+/area/podmode/team2/Cloning
+	name = "Lodbrok Medical Suite"
+	icon_state = "cloner"
+
+/area/podmode/team2/Mining
+	name = "Lodbrok Mining"
+	icon_state = "orange"
+
+/area/podmode/team2/CentralHallway
+	name = "Lodbrok Central Hallway"
+	icon_state = "green"
+
+/area/podmode/team2/Bar
+	name = "Lodbrok Bar"
+	icon_state = "red"
+
+/area/podmode/team2/Power
+	name = "Lodbrok Power Station"
+	icon_state = "engine_monitoring"
+
+/area/podmode/team2/Hangar
+	name = "Lodbrok Hangar"
+	icon_state = "yellow"
+
+/area/podmode/team2/Storage
+	name = "Lodbrok Storage"
+	icon_state = "purple"
+
+/area/podmode/team2/magnet
+	name = "Lodbrok Mineral Magnet"
+	icon_state = "purple"
+
+/area/podmode/spacejunk/Restaurant
+	name = "Cheesy Chuck's Premium Eatery"
+	icon_state = "yellow"
+
+/area/podmode/spacejunk/Restaurant/solars
+	name = "Cheesy Chuck's Premium Solar Array"
+	icon_state = "red"
+
+/area/podmode/spacejunk/Restaurant/landingpads
+	name = "Cheesy Chuck's Premium Landing Pads"
+	icon_state = "green"
+
+/area/podmode/spacejunk/Reliant
+	name = "NSV Reliant"
+	icon_state = "yellow"
+
+/area/podmode/spacejunk/Relant/landingpads
+	name = "NSV Reliant Landing Pads"
+	icon_state = "red"
+
+/area/podmode/spacejunk/Dorgun
+	name = "DORGUN'S GREAT SHIP 10/10"
+	icon_state = "yellow"
+
+/area/podmode/spacejunk/Brighwell
+	name = "LS Brightwell"
+	icon_state = "yellow"
+
+/area/podmode/spacejunk/fstation/
+	name = "Fortuna Main Hall"
+	icon_state = "blue"
+
+/area/podmode/spacejunk/fstation/primary
+	name = "Fortuna Primary Dock"
+	icon_state = "red"
+
+/area/podmode/spacejunk/fstation/secdock
+	name = "Fortuna Security Dock"
+	icon_state = "security"
+
+/area/podmode/spacejunk/fstation/maintdock
+	name = "Fortuna Maintenence Dock"
+	icon_state = "red"
+
+/area/podmode/spacejunk/fstation/lounge
+	name = "Fortuna Lounge"
+	icon_state = "green"
+
+/area/podmode/spacejunk/fstation/crewquarters
+	name = "Fortuna Crew Quarters"
+	icon_state = "yellow"
+
+/area/podmode/spacejunk/fstation/mess
+	name = "Fortuna Mess Hall"
+	icon_state = "purple"
+
+/area/podmode/spacejunk/fstation/power
+	name = "Fortuna Engineering"
+	icon_state = "engine_monitoring"
+
+/area/podmode/spacejunk/fstation/medbay
+	name = "Fortuna Medical Bay"
+	icon_state = "medbay"
+
+/area/podmode/spacejunk/fstation/observatory
+	name = "Fortuna Observatory"
+	icon_state = "yellow"
+
+/area/podmode/spacejunk/fstation/command
+	name = "Fortuna Command"
+	icon_state = "purple"
+
+/area/podmode/spacejunk/fstation/landingpads
+	name = "Fortuna Landing Pads"
+	icon_state = "green"
+
+/area/podmode/spacejunk/uvb67/power
+	name = "UVB-67 Power Station"
+	icon_state = "yellow"
+
+/area/podmode/spacejunk/uvb67/crew
+	name = "UVB-67 Crew Habitat"
+	icon_state = "Yellow"
+
+/area/podmode/spacejunk/uvb67/central
+	name = "UVB-67 Defensive Zone"
+	icon_state = "red"
+
+/area/podmode/spacejunk/uvb67/solars
+	name = "UVB-67 Solar Array"
+	icon_state = "Purple"
+
+/area/podmode/spacejunk/greatwreck
+	name = "Wreckage of LS Greater Things Await You"
+	icon_state = "yellow"
+
+/area/podmode/spacejunk/Nancy
+	name = "Nancy's Pristine Goods"
+	icon_state = "red"
+
+/area/podmode/spacejunk/Nancy/landingpad
+	name = "Nancy's Pristine Goods Landing Pad"
+	icon_state = "yellow"
+
+/area/podmode/spacejunk/Nancy/warehouse
+	name = "Nancy's Warehouse"
+	icon_state = "green"
+
+/area/podmode/spacejunk/Nancy/powergen
+	name = "Nancy's Power Generator"
+	icon_state = "engine_montioring"
+
+/area/podmode/spacejunk/Snackstand
+	name = "Snack Shack"
+	icon_state = "yellow"
+
+/area/podmode/spacejunk/miningoutpost
+	name = "Abandoned Mining Outpost"
+	icon_state = "yellow"
+
+/area/podmode/spacejunk/miningoutpost/crewquarters
+	name = "Abandoned Mining Outpost Crew Quarters"
+	icon_state = "green"
+#endif
+
+#define MAJOR_AST(num) area/podmode/asteroid/major/maj_##num/name = "" + "major asteroid " + #num
+
+area/podmode/asteroid/major/icon_state = "green"
+area/podmode/asteroid/minor/icon_state = "yellow"
+area/podmode/asteroid/minor/name = "minor asteroid"
+area/podmode/asteroid/minor/nospawn/icon_state = "red"
+
+MAJOR_AST(1)
+MAJOR_AST(2)
+MAJOR_AST(3)
+MAJOR_AST(4)
+MAJOR_AST(5)
+MAJOR_AST(6)
+MAJOR_AST(7)
+MAJOR_AST(8)
+MAJOR_AST(9)
+MAJOR_AST(10)
+MAJOR_AST(11)
+MAJOR_AST(12)
+MAJOR_AST(13)
+MAJOR_AST(14)
+MAJOR_AST(15)
+MAJOR_AST(16)
+MAJOR_AST(17)
+MAJOR_AST(18)
+MAJOR_AST(19)
+MAJOR_AST(20)
+MAJOR_AST(21)
+MAJOR_AST(22)
+MAJOR_AST(23)
+MAJOR_AST(24)
+MAJOR_AST(25)
+MAJOR_AST(26)
+MAJOR_AST(27)
+MAJOR_AST(28)
+MAJOR_AST(29)
+MAJOR_AST(30)
+
+#undef MAJOR_AST

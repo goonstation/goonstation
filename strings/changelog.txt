@@ -1,4 +1,180 @@
 
+(t)wed mar 03 21
+(u)Kyle
+(e)⚖|balance
+(+)Lizards now have a Regrow Tail ability. It lets you regrow your tail...
+(u)Zamuajasa
+(e)⚖|balance
+(+)Arse Nath/Rathen's Secret no longer causes clouds of smoke.
+(u)Sord
+(p)3797
+(e)⚖|balance
+(+)Morphine, ether, and sulfonal now reduce stimulants active time
+(u)Superlagg
+(p)3313
+(e)🆕🔄|feature, rework
+(+)Magic missiles are now speedier, bouncier, and more electrifying.
+(u)zjdtmkhzt
+(p)3836
+(e)|
+(+)The artlab folder on Dwaine now has some scripts that should make working with gptio less cumbersome.
+(u)Camryn Buttes
+(p)3681
+(e)🐛🆕🔄|bug, feature, rework
+(*)Revamped and rebalanced chaplain contracts. Replaced reversal contract with psychic meatcube contract.  Monkey soul farming is gone too. RIP
+(u)zjdtmkhzt
+(p)3377
+(e)⚖🆕🗺🎨|balance, feature, mapping, sprites
+(*)Cog1 now has chemistry equipment in the actual pharmacy.
+(+)Added a dedicated Pathologist job. Snazzy clothing sprites made by nefarious6th!
+(+)Medical Doctors/Geneticists/Roboticists/Scientists no longer have access to the pathology facilities when Pathology is enabled.
+(+)Which it is not.
+(t)sun feb 28 21
+(u)Stonepillar
+(p)3781
+(e)🗺|mapping
+(*)Added the HoP's golden crayon, which can be found in their office on most maps. Beware of possible theft!
+(u)DimWhat
+(p)3858
+(e)🆕|feature
+(+)Many mutantraces can now wear underwear.
+(t)fri feb 26 21
+(u)zjdtmkhzt
+(p)3818
+(e)⚖🆕|balance, feature
+(*)Artifacts are now sellable, more details below in the minor entries.
+(+)Money depends on artifact rarity.
+(+)Artlab has these forms you can fill out. If you fill it out correctly and slap it on an artifact, you'll get a lot more money for it.
+(+)Sometimes cargo might get new artifacts sent in if they previously sent nice ones out.
+(u)Superlagg
+(p)3419
+(e)⚖🆕|balance, feature
+(*)Added an action bar to feeding other people things, and made organs take multiple bites to eat.
+(+)Metachroitic factor now only has a 30% chance of being granted per point per bite.
+(t)thu feb 25 21
+(u)Carbadox
+(p)3717
+(e)|
+(+)Using a screwdriver / wrench on a credit transfer devices will now unanchor and let you move them.
+(u)Azrun
+(p)3807
+(e)|
+(*)Multitools now provide encoded information about the network a powered cable is connected to.
+(u)Ludolf
+(p)3827
+(e)🎨|sprites
+(+)New sprite for soldering irons.
+(u)Anachroniser
+(p)3423
+(e)⚖🆕|balance, feature
+(*)Singularities now come in variable sizes and can generate more power as they grow. Keep in mind the risks of a giant singularity.
+(u)Luxizzle
+(p)3777
+(e)🆕🗺🎨|feature, mapping, sprites
+(*)You can now frost donuts with an icing tube!
+(t)wed feb 24 21
+(u)kyle
+(+)Ethanol is now a good bit more forgiving in terms of liver damage.
+(u)Superlagg
+(p)2921
+(e)🆕|feature
+(*)The RCD can now build light bulb and light tube fixtures.
+(u)Borkatator
+(p)3728
+(e)⚖🆕|balance, feature
+(*)You can now create a viewport window when watching camera feeds
+(u)Azrun
+(p)3815
+(e)🐛|bug
+(+)Resolve issue with alloys in TEG Semiconductor.  Mix and match your favorite flavors!
+(t)tue feb 23 21
+(u)Azrun
+(p)3191
+(e)🆕🗺🎨|feature, mapping, sprites
+(*)Material science interactions with TEG! The prototype semiconductor can be removed from TEG via screwdriver-> wirecutter -> crowbar and brought to an Arc Plater near you! Re-install by reinserting -> adding wire -> snipping excess -> screwing it back in place.
+(+)TEG Semiconductor added as High Priority bounty to SpyThief.
+(u)Sovexe
+(p)3745
+(e)🔄|rework
+(+)Reworked clown shoes to have shorter slip durations. Fixed a bug where slipping as a clown didn't actually make you fall over.
+(t)sun feb 21 21
+(u)TTerc
+(p)3772
+(e)🗺|mapping
+(+)Donut 3: Made mineral magnet area larger, tweaked the mining office layout.
+(u)Luxizzle
+(p)3794
+(e)|
+(+)Weapon vendor now shows the cost of a loadout option.
+(u)virvatuli
+(p)3787
+(e)|
+(+)Added new welding tool audio to signal that it's been ignited!
+(u)Flappybat
+(p)3669
+(e)⚖|balance
+(+)Telecrystal materials are less likely to warp when used on yourself/others. Self teleporting due to attacks has a 25% chance of dropping the item at the location you warped from.
+(u)Chickenish
+(p)3775
+(e)🆕|feature
+(+)Added an Implanter to the Security vendor.
+(u)Tarmunora
+(p)3760
+(e)⚖|balance
+(+)Raised costs of power cells and 40mmPBR rounds in the sec loadout vendor.
+(t)sat feb 20 21
+(u)TTerc
+(p)3563
+(e)🗺|mapping
+(+)Cog1: Added extra purge pumps to the TEG and moved the reactor statistics computer to the engine control room.
+(u)Batelite
+(p)3768
+(e)🎨|sprites
+(+)Health analyzer screens now indicate what they're scanning
+(t)fri feb 19 21
+(u)zjdtmkhzt
+(p)3731
+(e)⚖🆕|balance, feature
+(*)Lots of non-handheld artifact types now actually trigger the faults they might get, so artifact use may have some unintended side effects now. Stay safe, everyone!
+(u)BatElite
+(p)3739
+(e)🎨|sprites
+(+)Rechargers have new sprites!
+(t)thu feb 18 21
+(u)Sord
+(p)3726
+(e)🆕|feature
+(+)New taser smg security loadout. Sprites by Matheus
+(u)virvatuli
+(p)3736
+(e)|
+(+)Added a new and unique pulse rifle/lawbringer pulse firing sound!
+(u)TTerc
+(p)3627
+(e)⚖🆕|balance, feature
+(+)You can now refill the flamethrowers by simply clicking the large tanks with them.
+(u)Flappybat
+(p)3651
+(e)⚖|balance
+(*)Blocks MRPT rocket ammo from being loaded into the zip gun.
+(u)Superlagg
+(p)3276
+(e)⚖🆕🔄|balance, feature, rework
+(*)Upgraded bot AI to be more responsive in general.
+(*)Buddy combat AI has been upgraded to allow them to move *and* shoot.
+(+)Secbots can be ordered to guard and lockdown specific areas.
+(+)Floorbots now eat loose floor metal by default.
+(+)Added actionbars to most times bot actions, like repairing floors and injecting people with drugs.
+(+)Ammofab now costs 1 TC.
+(u)Flappybat
+(p)3580
+(e)⚖🐛|balance, bug
+(*)Syndicate riot baton now deals stamina damage instead of instant stun, two hits are required to knockdown. Now functions like an infinite ammo stun baton with extra blunt damage on harm intent.
+(t)wed feb 17 21
+(u)Sovexe
+(p)3746
+(e)🆕|feature
+(*)Spy Thieves can now print pictures of their targets out from their PDA!
 (t)sun feb 14 21
 (u)Carbadox
 (p)3718

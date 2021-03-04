@@ -82,8 +82,18 @@
 
 
 	var/list/beacons = list()
+	//Kinda bad here, but lazy again. This is for
+#ifdef MAP_OVERRIDE_POD_WARS
+	var/team = ship?.pilot?.mind?.special_role
+		
+	for(var/obj/warp_beacon/W in warp_beacons)
+		if (W.name == "NSV Pytheas" && team != "NanoTrasen") continue
+		else if (W.name == "Lodbrok" && team != "Syndicate") continue
+		beacons += W
+#else
 	for(var/obj/warp_beacon/W in warp_beacons)
 		beacons += W
+#endif
 	for (var/obj/machinery/tripod/T in machine_registry[MACHINES_MISC])
 		if (istype(T.bulb, /obj/item/tripod_bulb/beacon))
 			beacons += T
