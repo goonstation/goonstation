@@ -632,8 +632,8 @@
 
 	MouseDrop_T(mob/M as mob, mob/user as mob)
 		..()
-		if (M == usr)
-			if (usr.a_intent == INTENT_GRAB)
+		if (M == user)
+			if (user.a_intent == INTENT_GRAB)
 				if(climbable)
 					buckle_in(M, user, 1)
 				else
@@ -687,7 +687,7 @@
 				to_buckle.setStatus("buckled", duration = INFINITE_STATUS)
 				H.start_chair_flip_targeting()
 		else
-			if (to_buckle == usr)
+			if (to_buckle == user)
 				user.visible_message("<span class='notice'><b>[to_buckle]</b> buckles in!</span>", "<span class='notice'>You buckle yourself in.</span>")
 			else
 				user.visible_message("<span class='notice'><b>[to_buckle]</b> is buckled in by [user].</span>", "<span class='notice'>You buckle in [to_buckle].</span>")
@@ -1332,7 +1332,7 @@
 
 			user.Browse("<TITLE>Electric Chair</TITLE><b>Electric Chair</b><BR>[dat]", "window=e_chair;size=180x180")
 
-			onclose(usr, "e_chair")
+			onclose(user, "e_chair")
 		return
 
 	Topic(href, href_list)

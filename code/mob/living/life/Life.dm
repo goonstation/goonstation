@@ -531,13 +531,13 @@
 						if (!spotted_by_mob)
 							O:score++
 
-	proc/update_canmove()
-		var/datum/lifeprocess/L = lifeprocesses[/datum/lifeprocess/canmove]
+	proc/update_sight()
+		var/datum/lifeprocess/L = lifeprocesses[/datum/lifeprocess/sight]
 		if (L)
 			L.process()
 
-	proc/update_sight()
-		var/datum/lifeprocess/L = lifeprocesses[/datum/lifeprocess/sight]
+	update_canmove()
+		var/datum/lifeprocess/L = lifeprocesses[/datum/lifeprocess/canmove]
 		if (L)
 			L.process()
 
@@ -567,7 +567,7 @@
 		//Modify stamina.
 		var/stam_time_passed = max(tick_spacing, TIME - last_stam_change)
 
-		var/final_mod = (src.stamina_regen + src.get_stam_mod_regen()) * (stam_time_passed / tick_spacing)
+		var/final_mod = (src.stamina_regen + GET_MOB_PROPERTY(src, PROP_STAMINA_REGEN_BONUS)) * (stam_time_passed / tick_spacing)
 		if (final_mod > 0)
 			src.add_stamina(abs(final_mod))
 		else if (final_mod < 0)

@@ -267,7 +267,7 @@ var/list/oven_recipes = list()
 
 	attack_hand(var/mob/user as mob)
 		if (isghostdrone(user))
-			boutput(usr, "<span class='alert'>\The [src] refuses to interface with you, as you are not a properly trained chef!</span>")
+			boutput(user, "<span class='alert'>\The [src] refuses to interface with you, as you are not a properly trained chef!</span>")
 			return
 
 
@@ -661,6 +661,7 @@ table#cooktime a#start {
 						if (src.emagged)
 							F.from_emagged_oven = 1
 						F.set_loc(src.loc)
+						F.AddComponent(/datum/component/consume/foodheal, F.heal_amt)
 				else
 					var/obj/item/reagent_containers/food/snacks/F
 					if (ispath(output))
@@ -688,6 +689,9 @@ table#cooktime a#start {
 								F.unlock_medal_when_eaten = "That tasted funny"
 							else
 								F.unlock_medal_when_eaten = "Space Ham" //replace the old fat person method
+					F.AddComponent(/datum/component/consume/foodheal, F.heal_amt)
+					F.AddComponent(/datum/component/consume/unlock_medal_on_eaten, F.unlock_medal_when_eaten)
+
 				src.icon_state = "oven_off"
 				src.working = 0
 				playsound(src.loc, "sound/machines/ding.ogg", 50, 1)
@@ -739,13 +743,13 @@ table#cooktime a#start {
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (isghostdrone(user))
-			boutput(usr, "<span class='alert'>\The [src] refuses to interface with you, as you are not a properly trained chef!</span>")
+			boutput(user, "<span class='alert'>\The [src] refuses to interface with you, as you are not a properly trained chef!</span>")
 			return
 		if (W.cant_drop) //For borg held items
 			boutput(user, "<span class='alert'>You can't put that in [src] when it's attached to you!</span>")
 			return
 		if (src.working)
-			boutput(usr, "<span class='alert'>It's already on! Putting a new thing in could result in a collapse of the cooking waveform into a really lousy eigenstate, like a vending machine chili dog.</span>")
+			boutput(user, "<span class='alert'>It's already on! Putting a new thing in could result in a collapse of the cooking waveform into a really lousy eigenstate, like a vending machine chili dog.</span>")
 			return
 		var/amount = src.contents.len
 		if (amount >= 8)
@@ -941,7 +945,7 @@ table#cooktime a#start {
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/satchel/))
 			var/obj/item/satchel/S = W
-			if (S.contents.len < 1) boutput(usr, "<span class='alert'>There's nothing in the satchel!</span>")
+			if (S.contents.len < 1) boutput(user, "<span class='alert'>There's nothing in the satchel!</span>")
 			else
 				user.visible_message("<span class='notice'>[user] loads [S]'s contents into [src]!</span>")
 				var/amtload = 0

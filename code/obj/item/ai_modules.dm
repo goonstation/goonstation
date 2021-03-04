@@ -390,10 +390,10 @@ AI MODULES
 /obj/machinery/computer/aiupload
 	attack_hand(mob/user as mob)
 		if (src.status & NOPOWER)
-			boutput(usr, "\The [src] has no power.")
+			boutput(user, "\The [src] has no power.")
 			return
 		if (src.status & BROKEN)
-			boutput(usr, "\The [src] computer is broken.")
+			boutput(user, "\The [src] computer is broken.")
 			return
 
 		var/datum/ai_laws/LAWS = ticker.centralized_ai_laws

@@ -36,6 +36,7 @@
 // Fuck.
 // F U C K
 /datum/game_mode/proc/post_post_setup()
+	return
 
 /datum/game_mode/proc/process()
 	if (spy_market)

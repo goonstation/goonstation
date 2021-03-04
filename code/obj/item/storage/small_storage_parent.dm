@@ -152,7 +152,7 @@
 		else
 			src.add_contents(W)
 			user.u_equip(W)
-		hud.add_item(W)
+		hud.add_item(W, user)
 		update_icon()
 		add_fingerprint(user)
 		animate_storage_rustle(src)
@@ -163,7 +163,7 @@
 
 	dropped(mob/user as mob)
 		if (hud)
-			hud.update()
+			hud.update(user)
 		..()
 
 	proc/mousetrap_check(mob/user)
@@ -205,7 +205,7 @@
 			if (src.mousetrap_check(usr))
 				return
 			usr.s_active = src.hud
-			hud.update()
+			hud.update(usr)
 			usr.attach_hud(src.hud)
 			return
 		if (usr.is_in_hands(src))
@@ -250,7 +250,7 @@
 			if (src.mousetrap_check(user))
 				return
 			user.s_active = src.hud
-			hud.update()
+			hud.update(user)
 			user.attach_hud(src.hud)
 			src.add_fingerprint(user)
 			animate_storage_rustle(src)
@@ -259,7 +259,7 @@
 			for (var/mob/M as() in hud.mobs)
 				if (M != user)
 					M.detach_hud(hud)
-			hud.update()
+			hud.update(user)
 
 	attack_self(mob/user as mob)
 		..()
@@ -345,6 +345,15 @@
 	New()
 		..()
 		BLOCK_SETUP(BLOCK_BOOK)
+
+/obj/item/storage/briefcase/toxins
+	name = "toxins research briefcase"
+	icon_state = "briefcase_rd"
+	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
+	item_state = "rd-case"
+	max_wclass = 4 // parity with secure briefcase
+	desc = "A large briefcase for experimental toxins research."
+	spawn_contents = list(/obj/item/raw_material/molitz_beta = 6)
 
 /obj/item/storage/desk_drawer
 	name = "desk drawer"

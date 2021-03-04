@@ -559,6 +559,7 @@
 					if (snack.reagents)
 						snack.reagents.trans_to(customSandwich, 25)
 					customSandwich.food_effects += snack.food_effects
+					customSandwich.AddComponent(/datum/component/consume/food_effects, customSandwich.food_effects)
 
 					//fillings += snack.name
 					if (snack.food_color)
@@ -579,6 +580,7 @@
 				if (snack.reagents)
 					snack.reagents.trans_to(customSandwich, 25)
 				customSandwich.food_effects += snack.food_effects
+				customSandwich.AddComponent(/datum/component/consume/food_effects, customSandwich.food_effects)
 
 				fillings += snack.name
 				if (snack.food_color && !istype(snack, /obj/item/reagent_containers/food/snacks/ingredient) && prob(50))
@@ -688,6 +690,8 @@
 			customPizza.heal_amt = P.heal_amt
 			P.reagents.trans_to(customPizza, P.reagents.total_volume)
 			customPizza.food_effects += P.food_effects
+			customPizza.AddComponent(/datum/component/consume/food_effects, customPizza.food_effects)
+			customPizza.AddComponent(/datum/component/consume/foodheal, customPizza.heal_amt)
 
 		return customPizza
 
@@ -1217,7 +1221,7 @@
 	item1 = /obj/item/reagent_containers/food/snacks/cake_batter
 	item2 = /obj/item/reagent_containers/food/snacks/candy
 	cookbonus = 14
-	output = /obj/item/reagent_containers/food/snacks/cake/chocolate/gateau
+	output = /obj/item/reagent_containers/food/snacks/cake/chocolate
 
 /datum/cookingrecipe/cake_meat
 	item1 = /obj/item/reagent_containers/food/snacks/cake_batter
@@ -1281,6 +1285,7 @@
 		if(S)
 			S.reagents.trans_to(B, 50)
 			B.food_effects += S.food_effects
+			B.AddComponent(/datum/component/consume/food_effects, B.food_effects)
 			if(S.real_name)
 				B.name = "[S.real_name] cake"
 				for(var/food_effect in S.food_effects)

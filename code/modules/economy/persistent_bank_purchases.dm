@@ -438,7 +438,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 			if(istype(M.back, /obj/item/storage))
 				var/obj/item/storage/backpack = M.back
 				new /obj/item/tank/emergency_oxygen(backpack) // oh boy they'll need this if they are unlucky
-				backpack.hud.update()
+				backpack.hud.update(M)
 			var/mob/living/carbon/human/H = M
 			if(istype(H))
 				H.equip_new_if_possible(/obj/item/clothing/mask/breath, SLOT_WEAR_MASK)

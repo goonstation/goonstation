@@ -24,6 +24,17 @@
 	icon_state = "id"
 	spawn_contents = list(/obj/item/f_card = 7)
 */
+/obj/item/storage/box/morphineinjectors
+	name = "morphine autoinjector box"
+	icon_state = "box"
+	desc = "Contains four morphine autoinjectors, for security use"
+	spawn_contents = list(/obj/item/reagent_containers/emergency_injector/morphine = 4)
+
+/obj/item/storage/box/robustdonuts
+	name = "robust donuts box"
+	icon_state = "box"
+	desc = "Contains two robust donuts, for security use"
+	spawn_contents = list(/obj/item/reagent_containers/food/snacks/donut/custom/robust = 2)
 
 // For sec officers and the HoS. Really love spawning with a full backpack (Convair880).
 /obj/item/storage/box/security_starter_kit
@@ -204,6 +215,12 @@
 	desc = "A box of experimental biological grenades."
 	icon_state = "flashbang"
 	spawn_contents = list(/obj/item/old_grenade/banana/wasp = 5)
+
+/obj/item/storage/box/crowdgrenades
+	name = "crowd dispersal grenades"
+	desc = "A box of crowd dispersal grenades"
+	icon_state = "flashbang"
+	spawn_contents = list(/obj/item/chem_grenade/pepper = 4)
 
 /* -------------------- Traitor Gear -------------------- */
 

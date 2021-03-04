@@ -495,7 +495,7 @@
 				return
 			var/obj/item/cable_coil/C = W
 			if (get_fraction_of_percentage_and_whole(src.health,src.max_health) >= 33)
-				boutput(usr, "<span class='alert'>The cabling looks fine. Use a welder to repair the rest of the damage.</span>")
+				boutput(user, "<span class='alert'>The cabling looks fine. Use a welder to repair the rest of the damage.</span>")
 				return
 			C.use(1)
 			src.health = max(1,min(src.health + 5,src.max_health))

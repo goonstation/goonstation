@@ -41,6 +41,9 @@
 			src.item_state = src.base_state
 
 	attackby(obj/item/W as obj, mob/user as mob)
+		if(W.w_class > 3)
+			boutput(user, "<span class='alert'>\The [W] is too big to fit inside [src]!</span>")
+			return
 		if (W.cant_self_remove)
 			boutput(user, "<span class='alert'>You can't get [W] to come off of you!</span>")
 			return

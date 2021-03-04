@@ -205,7 +205,6 @@
 			pool(src)
 
 		else if (isturf(src))
-			//src.overlays = null
 			var/turf/T = get_turf(src)
 			for (var/obj/decal/cleanable/mess in T)
 				pool(mess)

@@ -712,7 +712,7 @@ datum/chemicompiler_core/stationaryCore
 			return
 		src.add_dialog(user)
 		executor.panel()
-		onclose(usr, "chemicompiler")
+		onclose(user, "chemicompiler")
 		return
 
 	attackby(var/obj/item/reagent_containers/glass/B as obj, var/mob/user as mob)

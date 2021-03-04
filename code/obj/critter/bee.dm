@@ -1637,7 +1637,7 @@
 			t = copytext(t, 1, 65)
 			if (!t)
 				return
-			if (!in_interact_range(src, usr) && src.loc != usr)
+			if (!in_interact_range(src, user) && src.loc != user)
 				return
 
 			src.bee_name = t
@@ -1731,7 +1731,7 @@
 					icon_state = "sunbee_egg"
 					bee_name = "sun larva"
 
-		heal(var/mob/M)
+		on_bite(obj/item/I, mob/M, mob/user)
 			boutput(M, "<span class='alert'>You feel as if you have made a grave mistake.  Perhaps a doorway has closed forever.</span>")
 
 		attack_self(mob/user as mob)

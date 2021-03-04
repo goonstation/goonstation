@@ -270,6 +270,7 @@ var/list/admin_verbs = list(
 		/client/proc/show_admin_lag_hacks,
 		/client/proc/spawn_survival_shit,
 		/client/proc/respawn_heavenly,
+		/client/proc/respawn_demonically,
 		/datum/admins/proc/spawn_atom,
 		/datum/admins/proc/heavenly_spawn_obj,
 		/datum/admins/proc/supplydrop_spawn_obj,
@@ -332,6 +333,7 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_crusher_walls,
 		/client/proc/cmd_disco_lights,
 		/client/proc/cmd_blindfold_monkeys,
+		/client/proc/cmd_swampify_station,
 
 		/datum/admins/proc/toggleaprilfools,
 		/client/proc/cmd_admin_pop_off_all_the_limbs_oh_god,
@@ -538,7 +540,7 @@ var/list/special_pa_observing_verbs = list(
 		if ("Inactive")
 			src.holder.dispose()
 			src.holder = null
-			boutput(src, "<span style='color:red;font-size:150%'><b>You are set to Inactive admin status! Please join #ss13admin on irc.synirc.net if you would like to become active again!</b></span>")
+			boutput(src, "<span style='color:red;font-size:150%'><b>You are set to Inactive admin status! Please join the Goonstation Discord if you would like to become active again!</b></span>")
 			return
 
 		if ("Banned")
@@ -899,6 +901,19 @@ var/list/fun_images = list()
 	var/mob/M = src.mob
 	M.UpdateOverlays(image('icons/misc/32x64.dmi',"halo"), "halo")
 	heavenly_spawn(M)
+
+/client/proc/respawn_demonically()
+	set name = "Respawn Demonically"
+	SET_ADMIN_CAT(ADMIN_CAT_SELF)
+	set desc = "Respawn yourself from the depths of the underfloor."
+	set popup_menu = 0
+	admin_only
+
+	src.respawn_as_self()
+
+	var/mob/living/carbon/human/M = src.mob
+	M.bioHolder.AddEffect("hell_fire", magical = 1)
+	demonic_spawn(M)
 
 /client/proc/respawn_as(var/client/cli in clients)
 	set name = "Respawn As"
@@ -1812,7 +1827,11 @@ var/list/fun_images = list()
 					if(C)
 						winshow(C, "pregameBrowser", 0)
 				catch()
-
+			var/turf/T = landmarks[LANDMARK_LOBBY_LEFTSIDE][1]
+			T = locate(T.x + 3, T.y, T.z)
+			if (locate(/obj/titlecard) in T) return
+			if (alert("Replace with a title card turf?",, "Yes", "No") == "Yes")
+				new /obj/titlecard(T)
 			return
 	var/newHTML = null
 	if(alert("Do you want to upload an HTML file, or type it in?", "HTML Source", "Here", "Upload") == "Here")
