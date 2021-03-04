@@ -11,7 +11,6 @@
 	var/artifactFaults = ""
 	var/artifactDetails = ""
 	var/lastAnalysis = 0
-	var/usednames = list()
 
 	proc/checkArtifactVars(obj/O)
 		if(!O.artifact)
@@ -44,19 +43,14 @@
 		for(var/datum/artifact_origin/origin as() in artifact_controls.artifact_origins)
 			if(origin.type_name == src.artifactOrigin)
 				// have we already generated a name for that origin?
-				if(!src.usednames[src.artifactOrigin])
-					// no, generate new one
-					if(src.artifactOrigin == A.artitype.type_name)
-						// origin is correct, use actual name
-						src.artifactName = A.internal_name
-					else
-						// origin is wrong, make name up
-						src.artifactName = origin.generate_name()
-					// store generated name
-					src.usednames[src.artifactOrigin] = src.artifactName
+				// the actual name with the actual origin should be in the list by default
+				if(!A.usednames[src.artifactOrigin])
+					// no, generate new one and store it
+					src.artifactName = origin.generate_name()
+					A.usednames[src.artifactOrigin] = src.artifactName
 				else
 					// yes, use it
-					src.artifactName = src.usednames[src.artifactOrigin]
+					src.artifactName = A.usednames[src.artifactOrigin]
 				break
 
 		// all correct, let's set the name!

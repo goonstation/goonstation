@@ -103,6 +103,7 @@
 	A.activ_sound = pick(AO.activation_sounds)
 	A.fault_types |= AO.fault_types - A.fault_blacklist
 	A.internal_name = AO.generate_name()
+	A.used_names[AO.type_name] = A.internal_name
 	A.nofx = AO.nofx
 
 	ArtifactDevelopFault(10)
