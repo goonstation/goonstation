@@ -135,7 +135,8 @@
 		price = round(price, 5)
 
 		// track score
-		score_tracker.artifacts_analyzed++
+		if(pap)
+			score_tracker.artifacts_analyzed++
 		if(pap?.lastAnalysis >= 3)
 			score_tracker.artifacts_correctly_analyzed++
 

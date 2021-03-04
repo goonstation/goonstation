@@ -37,16 +37,27 @@
 		if(!length(A.triggers) || A.automatic_activation)
 			lastAnalysis++
 
-		if(lastAnalysis < 3)
-			// haha, they got it wrong, let's make up a fake name
-			src.artifactName = "Random Garbage"
-			for(var/datum/artifact_origin/origin as() in artifact_controls.artifact_origins)
-				if(origin.type_name == src.artifactOrigin)
-					src.artifactName = origin.generate_name()
+		// ok, let's make a name
+		// start with obscured name
+		src.artifactName = O.real_name
+		// get an instance of the artifact origin
+		for(var/datum/artifact_origin/origin as() in artifact_controls.artifact_origins)
+			if(origin.type_name == src.artifactOrigin)
+				// have we already generated a name for that origin?
+				if(!src.usednames[src.artifactOrigin])
+					// no, generate new one
+					if(src.artifactOrigin == A.artitype.type_name)
+						// origin is correct, use actual name
+						src.artifactName = A.internal_name
+					else
+						// origin is wrong, make name up
+						src.artifactName = origin.generate_name()
+					// store generated name
 					src.usednames[src.artifactOrigin] = src.artifactName
-		else
-			// ok you get the real name
-			src.artifactName = A.internal_name
+				else
+					// yes, use it
+					src.artifactName = src.usednames[src.artifactOrigin]
+				break
 
 		// all correct, let's set the name!
 		O.real_name = src.artifactName
