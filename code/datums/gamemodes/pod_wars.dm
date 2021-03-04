@@ -1359,3 +1359,47 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 
 	commander
 		icon_override = "syndieboss"
+
+
+/////////shit//////////////
+
+/obj/capture_point_computer
+	name = "computer"
+	icon = 'icons/obj/computer.dmi'
+	density = 1
+	anchored = 1.0
+	var/datum/light/light
+	var/light_r =1
+	var/light_g = 1
+	var/light_b = 1
+
+	var/owner_team = 0			//Which team currently controls this computer/area? 0 = neutral, 1 = NT, 2 = SY
+
+	New()
+		..()
+		light = new/datum/light/point
+		light.set_brightness(0.8)
+		light.set_color(light_r, light_g, light_b)
+		light.attach(src)
+
+
+	//change colour and owner team when captured.
+	proc/capture(var/team)
+		//blue for NT|1, red for SY|2, white for neutral|0. 
+		if (team == 1)
+			owner_team = 1
+			light_r = 0
+			light_g = 0
+			light_b = 1
+		else if (team == 2)
+			owner_team = 2
+			light_r = 1
+			light_g = 0
+			light_b = 0
+		else 
+			owner_team = 0
+			light_r = 1
+			light_g = 1
+			light_b = 1
+
+		light.set_color(light_r, light_g, light_b)
