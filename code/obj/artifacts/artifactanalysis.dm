@@ -11,6 +11,7 @@
 	var/artifactFaults = ""
 	var/artifactDetails = ""
 	var/lastAnalysis = 0
+	var/usednames = list()
 
 	proc/checkArtifactVars(obj/O)
 		if(!O.artifact)
@@ -37,14 +38,18 @@
 			lastAnalysis++
 
 		if(lastAnalysis < 3)
-			src.artifactName = ""
-			icon_state = "artifact_form_incorrect"
-			return // you didn't get it all correct, so no cool name for you
+			// haha, they got it wrong, let's make up a fake name
+			src.artifactName = "Random Garbage"
+			for(var/datum/artifact_origin/origin as() in artifact_controls.artifact_origins)
+				if(origin.type_name == src.artifactOrigin)
+					src.artifactName = origin.generate_name()
+					src.usednames[src.artifactOrigin] = src.artifactName
+		else
+			// ok you get the real name
+			src.artifactName = A.internal_name
 
 		// all correct, let's set the name!
-		src.icon_state = "artifact_form_correct"
-		src.artifactName = A.internal_name
-		O.real_name = A.internal_name
+		O.real_name = A.artifactName
 		O.UpdateName()
 
 	stick_to(atom/A, pox, poy)
