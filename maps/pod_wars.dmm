@@ -608,14 +608,7 @@
 /turf/simulated/floor/engine,
 /area/podmode/team1/powergen)
 "cW" = (
-/obj/stool/chair/couch{
-	dir = 8;
-	icon_state = "chair_couch-blue";
-	name = "ratty blue couch"
-	},
-/turf/simulated/floor/purple/side{
-	dir = 1
-	},
+/turf/simulated/floor/circuit/red,
 /area/podmode/spacejunk/fstation/lounge)
 "cX" = (
 /obj/stool/chair{
@@ -801,15 +794,10 @@
 	dir = 8;
 	tag = ""
 	},
-/obj/shrub{
-	dir = 6
-	},
-/turf/simulated/floor/purple/side{
-	dir = 10
-	},
+/obj/decal/fakeobjects/vacuumtape,
+/turf/simulated/floor/circuit/red,
 /area/podmode/spacejunk/fstation/lounge)
 "ea" = (
-/obj/capture_point_computer,
 /turf/simulated/floor/yellow/side{
 	dir = 9
 	},
@@ -1219,9 +1207,10 @@
 /turf/unsimulated/floor/yellow,
 /area/podmode/team1/mining)
 "fJ" = (
-/obj/capture_point_computer,
-/turf/simulated/floor/white,
-/area/podmode/spacejunk/Brighwell)
+/obj/machinery/shuttle/engine/heater/seaheater,
+/obj/machinery/shuttle/engine/heater/seaheater_middle,
+/turf/unsimulated/floor/airless,
+/area/podmode/team1/porthall)
 "fK" = (
 /obj/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
@@ -1471,9 +1460,10 @@
 	},
 /area/podmode/spacejunk/fstation)
 "gX" = (
-/obj/capture_point_computer,
-/turf/simulated/floor/black,
-/area/podmode/spacejunk/Dorgun)
+/obj/machinery/shuttle/engine/heater/seaheater,
+/obj/machinery/shuttle/engine/heater/seaheater_middle,
+/turf/unsimulated/floor/airless,
+/area/podmode/team1/starboardhall)
 "gZ" = (
 /obj/grille/catwalk{
 	dir = 4
@@ -1724,7 +1714,6 @@
 	},
 /area/podmode/team2/Bridge)
 "ig" = (
-/obj/capture_point_computer,
 /turf/simulated/floor/blue/side{
 	dir = 5
 	},
@@ -2084,14 +2073,6 @@
 	},
 /turf/unsimulated/floor/caution/corner/sw,
 /area/podmode/team2/CentralHallway)
-"jY" = (
-/obj/shrub{
-	dir = 6
-	},
-/turf/simulated/floor/purple/side{
-	dir = 5
-	},
-/area/podmode/spacejunk/fstation/lounge)
 "jZ" = (
 /obj/shrub,
 /turf/simulated/floor/blue/side{
@@ -2136,14 +2117,8 @@
 /turf/unsimulated/floor/specialroom/bar,
 /area/podmode/team2/Bar)
 "kj" = (
-/obj/stool/chair/couch{
-	dir = 4;
-	icon_state = "chair_couch-blue";
-	name = "ratty blue couch"
-	},
-/turf/simulated/floor/purple/side{
-	dir = 1
-	},
+/obj/decal/fakeobjects/operatorconsole,
+/turf/simulated/floor/circuit/red,
 /area/podmode/spacejunk/fstation/lounge)
 "kl" = (
 /obj/machinery/sleeper,
@@ -2458,6 +2433,7 @@
 /area/podmode/team1/hangar)
 "lS" = (
 /obj/machinery/shuttle/engine/heater/seaheater,
+/obj/machinery/shuttle/engine/heater/seaheater_left,
 /turf/unsimulated/floor/airless,
 /area/podmode/team1/porthall)
 "lV" = (
@@ -2477,9 +2453,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/turf/simulated/floor/purple/side{
-	dir = 4
-	},
+/turf/simulated/floor/black,
 /area/podmode/spacejunk/fstation/lounge)
 "ma" = (
 /obj/cable{
@@ -2883,6 +2857,7 @@
 /obj/machinery/shuttle/engine/heater/seaheater,
 /obj/machinery/shuttle/engine/heater/seaheater_right,
 /obj/machinery/shuttle/engine/heater/seaheater,
+/obj/machinery/shuttle/engine/heater/seaheater_right,
 /turf/unsimulated/floor/airless,
 /area/podmode/team1/mining)
 "nW" = (
@@ -3290,6 +3265,7 @@
 /area/podmode/team1/hangar)
 "pO" = (
 /obj/machinery/shuttle/engine/heater/seaheater,
+/obj/machinery/shuttle/engine/heater/seaheater_left,
 /turf/unsimulated/floor/airless,
 /area/podmode/team1/powergen)
 "pQ" = (
@@ -3307,9 +3283,7 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/power/apc/autoname_east,
-/turf/simulated/floor/purple/side{
-	dir = 4
-	},
+/turf/simulated/floor/black,
 /area/podmode/spacejunk/fstation/lounge)
 "pU" = (
 /obj/stool/chair,
@@ -3591,9 +3565,10 @@
 /turf/simulated/floor/plating,
 /area/podmode/spacejunk/Nancy/powergen)
 "rj" = (
-/obj/capture_point_computer,
-/turf/simulated/floor,
-/area/podmode/spacejunk/miningoutpost/crewquarters)
+/obj/machinery/shuttle/engine/heater/seaheater,
+/obj/machinery/shuttle/engine/heater/seaheater_right,
+/turf/unsimulated/floor/airless,
+/area/podmode/team1/starboardhall)
 "rm" = (
 /obj/grille/catwalk{
 	dir = 1;
@@ -4141,7 +4116,6 @@
 	},
 /area/podmode/team1/porthall)
 "ui" = (
-/obj/capture_point_computer,
 /turf/simulated/floor/carpet/red/fancy/edge/east,
 /area/podmode/spacejunk/Nancy)
 "uj" = (
@@ -4224,7 +4198,6 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/obj/capture_point_computer,
 /turf/simulated/floor/black,
 /area/podmode/spacejunk/uvb67/power)
 "uz" = (
@@ -4332,6 +4305,7 @@
 /area/podmode/team2/Cloning)
 "uS" = (
 /obj/machinery/shuttle/engine/heater/seaheater,
+/obj/machinery/shuttle/engine/heater/seaheater_left,
 /turf/unsimulated/floor/airless,
 /area/podmode/team1/starboardhall)
 "uT" = (
@@ -4402,9 +4376,6 @@
 "vo" = (
 /turf/simulated/wall/asteroid/pod_wars,
 /area/podmode/asteroid/major/maj_28)
-"vp" = (
-/turf/simulated/floor,
-/area/podmode/spacejunk/fstation/lounge)
 "vr" = (
 /obj/grille/catwalk{
 	dir = 1
@@ -4834,7 +4805,6 @@
 /turf/unsimulated/floor/delivery,
 /area/podmode/team2/Mining)
 "xy" = (
-/obj/capture_point_computer,
 /turf/simulated/floor/green/side{
 	dir = 10
 	},
@@ -4945,10 +4915,8 @@
 /turf/simulated/floor/yellow,
 /area/podmode/spacejunk/Restaurant)
 "yc" = (
-/obj/capture_point_computer,
-/turf/simulated/floor/purple/side{
-	dir = 6
-	},
+/obj/decal/fakeobjects/vacuumtape,
+/turf/simulated/floor/circuit/red,
 /area/podmode/spacejunk/fstation/lounge)
 "yg" = (
 /obj/cable,
@@ -5142,9 +5110,11 @@
 /turf/simulated/floor/airless/plating,
 /area/podmode/spacejunk/uvb67/central)
 "zn" = (
-/obj/capture_point_computer,
-/turf/simulated/floor,
-/area/podmode/spacejunk/uvb67/crew)
+/obj/machinery/shuttle/engine/heater/seaheater,
+/obj/machinery/shuttle/engine/heater/seaheater,
+/obj/machinery/shuttle/engine/heater/seaheater_middle,
+/turf/unsimulated/floor/airless,
+/area/podmode/team1/mining)
 "zo" = (
 /obj/lattice{
 	dir = 5;
@@ -5785,11 +5755,6 @@
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/podmode/spacejunk/Restaurant)
-"Co" = (
-/turf/simulated/floor/purple/side{
-	dir = 8
-	},
-/area/podmode/spacejunk/fstation/lounge)
 "Cp" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
@@ -5991,7 +5956,7 @@
 /turf/simulated/floor/white,
 /area/podmode/spacejunk/Brighwell)
 "Dn" = (
-/turf/simulated/floor/purple/side,
+/turf/simulated/floor/black,
 /area/podmode/spacejunk/fstation/lounge)
 "Dq" = (
 /obj/grille/catwalk{
@@ -6002,7 +5967,6 @@
 	},
 /area/podmode/spacejunk/Snackstand)
 "Ds" = (
-/obj/capture_point_computer,
 /turf/simulated/floor/purple/side,
 /area/podmode/spacejunk/fstation/primary)
 "Dv" = (
@@ -6221,9 +6185,10 @@
 	},
 /area/podmode/spacejunk/Restaurant)
 "Ep" = (
-/obj/capture_point_computer,
-/turf/simulated/floor/purple/side,
-/area/podmode/spacejunk/fstation/crewquarters)
+/obj/machinery/shuttle/engine/heater/seaheater,
+/obj/machinery/shuttle/engine/heater/seaheater_middle,
+/turf/unsimulated/floor/airless,
+/area/podmode/team1/powergen)
 "Eq" = (
 /obj/machinery/shuttle/engine/propulsion{
 	dir = 4;
@@ -7239,15 +7204,14 @@
 	dir = 8;
 	tag = ""
 	},
-/obj/machinery/vending/cigarette,
-/turf/simulated/floor/purple/side{
-	dir = 9
-	},
+/obj/decal/fakeobjects/cpucontroller,
+/turf/simulated/floor/circuit/red,
 /area/podmode/spacejunk/fstation/lounge)
 "Jo" = (
-/obj/capture_point_computer,
-/turf/simulated/floor/plating,
-/area/podmode/spacejunk/Nancy/warehouse)
+/obj/machinery/shuttle/engine/heater/seaheater,
+/obj/machinery/shuttle/engine/heater/seaheater_right,
+/turf/unsimulated/floor/airless,
+/area/podmode/team1/powergen)
 "Jq" = (
 /turf/unsimulated/floor/yellow/corner,
 /area/podmode/team2/Mining)
@@ -7752,6 +7716,7 @@
 "Mn" = (
 /obj/machinery/shuttle/engine/heater/seaheater_right,
 /obj/machinery/shuttle/engine/heater/seaheater,
+/obj/machinery/shuttle/engine/heater/seaheater_right,
 /turf/unsimulated/floor/airless,
 /area/podmode/team1/porthall)
 "Mp" = (
@@ -7775,6 +7740,7 @@
 "Mx" = (
 /obj/machinery/shuttle/engine/heater/seaheater,
 /obj/machinery/shuttle/engine/heater/seaheater,
+/obj/machinery/shuttle/engine/heater/seaheater_left,
 /turf/unsimulated/floor/airless,
 /area/podmode/team1/mining)
 "My" = (
@@ -7905,8 +7871,8 @@
 /area/space)
 "Ne" = (
 /obj/capture_point_computer,
-/turf/simulated/floor/airless/grey,
-/area/podmode/spacejunk/greatwreck)
+/turf/simulated/floor/circuit/red,
+/area/podmode/spacejunk/fstation/lounge)
 "Nf" = (
 /obj/grille/catwalk{
 	dir = 9;
@@ -7920,7 +7886,6 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/obj/capture_point_computer,
 /turf/simulated/floor/red/side{
 	dir = 1
 	},
@@ -8036,12 +8001,6 @@
 	dir = 8
 	},
 /area/podmode/team1/mining)
-"NQ" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor,
-/area/podmode/spacejunk/fstation/lounge)
 "NS" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -9547,10 +9506,6 @@
 	icon_state = "floor"
 	},
 /area/podmode/team2/Mining)
-"Uy" = (
-/obj/capture_point_computer,
-/turf/simulated/floor/white,
-/area/podmode/spacejunk/fstation/medbay)
 "UC" = (
 /turf/simulated/floor/purple/side{
 	dir = 8
@@ -9673,9 +9628,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/purple/side{
-	dir = 8
-	},
+/turf/simulated/floor/black,
 /area/podmode/spacejunk/fstation/lounge)
 "Ve" = (
 /obj/table/auto,
@@ -37868,7 +37821,7 @@ vH
 PR
 Pq
 pp
-Mx
+zn
 Ew
 JW
 JW
@@ -40374,7 +40327,7 @@ QD
 Be
 KX
 gP
-lS
+fJ
 Qm
 JW
 JW
@@ -50080,7 +50033,7 @@ Yz
 ae
 ae
 Yz
-Ne
+iL
 PC
 ae
 Ct
@@ -51920,7 +51873,7 @@ wX
 mB
 ca
 Ef
-uS
+gX
 Vt
 JW
 Qa
@@ -52422,7 +52375,7 @@ MG
 Mw
 di
 Ef
-uS
+rj
 Vt
 JW
 JW
@@ -54434,7 +54387,7 @@ nw
 nw
 nw
 Wr
-pO
+Ep
 HP
 JW
 JW
@@ -54936,7 +54889,7 @@ nw
 nw
 Da
 Wr
-pO
+Jo
 HP
 JW
 JW
@@ -88299,7 +88252,7 @@ zT
 bT
 Bd
 VP
-rj
+VP
 zT
 cl
 cl
@@ -90160,7 +90113,7 @@ JW
 JW
 uP
 aD
-fJ
+aD
 aD
 aD
 Re
@@ -138089,7 +138042,7 @@ qP
 AJ
 lx
 Ku
-zn
+by
 Fd
 lx
 Zg
@@ -165095,7 +165048,7 @@ Wv
 Wv
 Wv
 Jd
-Jo
+Xp
 Xp
 Xp
 Xp
@@ -176475,7 +176428,7 @@ jJ
 MO
 gj
 gj
-Eb
+gj
 HX
 gj
 gj
@@ -176977,7 +176930,7 @@ jJ
 xY
 gj
 Jm
-Co
+Dn
 Vc
 dZ
 gj
@@ -177477,12 +177430,12 @@ Hn
 dw
 jJ
 MO
-Lt
-cW
-vp
-NQ
-Dn
 gj
+cW
+Dn
+Vc
+Dn
+Lt
 JW
 hV
 hV
@@ -177979,11 +177932,11 @@ fT
 WK
 jJ
 MO
-Lt
+gj
 kj
-vp
-NQ
 Dn
+Vc
+Ne
 Lt
 JW
 FJ
@@ -178482,11 +178435,11 @@ aa
 JJ
 xY
 gj
-jY
+Dn
 lX
 pS
 yc
-Lt
+gj
 JW
 FJ
 ck
@@ -181496,7 +181449,7 @@ mY
 Gq
 zM
 CZ
-Ep
+ZV
 Gq
 Gq
 JW
@@ -188538,7 +188491,7 @@ Pz
 Pz
 Pz
 iO
-Uy
+Pz
 Zh
 JW
 JW
@@ -197281,7 +197234,7 @@ JW
 JW
 JW
 as
-gX
+XJ
 sZ
 XJ
 as
