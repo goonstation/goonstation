@@ -321,7 +321,7 @@ ABSTRACT_TYPE(/datum/ore_cluster)
 
 /datum/pod_wars_team
 	var/name = "NanoTrasen"
-	var/comms_frequency = 0
+	var/comms_frequency = 0		//used in datum/job/pod_wars/proc/setup_headset (in Jobs.dm) to tune the radio as it's first equipped
 	var/area/base_area = null		//base ship area
 	var/datum/mind/commander = null
 	var/list/members = list()
@@ -1329,3 +1329,33 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 			var/datum/game_mode/pod_wars/mode = ticker.mode
 			object.vis_contents += mode.board
 		return
+
+
+///////////Headsets////////////////
+//OK look, I made these objects, but I probably didn't need to. Setting the frequencies is done in the job equip.
+//Mainly I did it to give them the icon_override vars. Don't spawn these unless you want to set their secure frequencies yourself, because that's what you'd have to do. -Kyle
+/obj/item/device/radio/headset/pod_wars
+	protected_radio = 1
+
+/obj/item/device/radio/headset/pod_wars/nanotrasen
+	name = "Radio Headset"
+	desc = "A radio headset that is also capable of communicating over... wait, isn't that frequency illegal?"
+	icon_state = "headset"
+	secure_frequencies = list("g" = R_FREQ_SYNDICATE)
+	secure_classes = list(RADIOCL_COMMAND)
+	icon_override = "nt"
+
+	commander
+		icon_override = "cap"	//get better thingy
+
+/obj/item/device/radio/headset/pod_wars/syndicate
+	name = "Radio Headset"
+	desc = "A radio headset that is also capable of communicating over... wait, isn't that frequency illegal?"
+	icon_state = "headset"
+	secure_frequencies = list("g" = R_FREQ_SYNDICATE)
+	secure_classes = list(RADIOCL_SYNDICATE)
+	protected_radio = 1
+	icon_override = "syndie"
+
+	commander
+		icon_override = "syndieboss"

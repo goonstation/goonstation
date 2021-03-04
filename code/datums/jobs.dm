@@ -2676,10 +2676,7 @@ ABSTRACT_TYPE(/datum/job/pod_wars)
 	limit = -1
 	allow_traitors = 0
 	cant_spawn_as_rev = 1
-	New()
-		..()
-		src.access = get_access("Captain")
-		return
+
 	special_setup(var/mob/living/carbon/human/M)
 		..()
 		if (!M.abilityHolder)
@@ -2703,6 +2700,8 @@ ABSTRACT_TYPE(/datum/job/pod_wars)
 		no_jobban_from_this_job = 1
 		low_priority_job = 1
 		cant_allocate_unwanted = 1
+		access = list(access_heads)
+
 		slot_back = /obj/item/storage/backpack/NT
 		slot_belt = /obj/item/gun/energy/blaster_pod_wars/nanotrasen
 		slot_jump = /obj/item/clothing/under/misc/turds
@@ -2710,12 +2709,13 @@ ABSTRACT_TYPE(/datum/job/pod_wars)
 		slot_suit = /obj/item/clothing/suit/space/nanotrasen/pilot
 		slot_foot = /obj/item/clothing/shoes/swat
 		slot_card = /obj/item/card/id/pod_wars/nanotrasen
-		slot_ears = /obj/item/device/radio/headset
+		slot_ears = /obj/item/device/radio/headset/pod_wars/nanotrasen
 		slot_mask = /obj/item/clothing/mask/breath
 		slot_glov = /obj/item/clothing/gloves/swat/NT
 		slot_poc1 = /obj/item/tank/emergency_oxygen
 		slot_poc2 = /obj/item/survival_machete
 		items_in_backpack = list(/obj/item/storage/box,/obj/item/spacecash/hundred)
+
 
 		//get the pod wars mode, get the teams comms frequency
 		special_setup(var/mob/living/carbon/human/M)
@@ -2733,9 +2733,12 @@ ABSTRACT_TYPE(/datum/job/pod_wars)
 			no_jobban_from_this_job = 0
 			high_priority_job = 1
 			cant_allocate_unwanted = 0
+			access = list(access_heads, access_captain)
+
 			slot_head = /obj/item/clothing/head/NTberet/commander
 			slot_suit = /obj/item/clothing/suit/space/nanotrasen/pilot/commander
 			slot_card = /obj/item/card/id/pod_wars/nanotrasen/commander
+			slot_ears = /obj/item/device/radio/headset/pod_wars/nanotrasen/commander
 
 	syndicate
 		name = "Syndicate Pod Pilot"
@@ -2743,6 +2746,7 @@ ABSTRACT_TYPE(/datum/job/pod_wars)
 		no_jobban_from_this_job = 1
 		low_priority_job = 1
 		cant_allocate_unwanted = 1
+		access = list(access_syndicate_shuttle)
 
 		slot_back = /obj/item/storage/backpack/syndie
 		slot_belt = /obj/item/gun/energy/blaster_pod_wars/syndicate
@@ -2751,7 +2755,7 @@ ABSTRACT_TYPE(/datum/job/pod_wars)
 		slot_suit = /obj/item/clothing/suit/space/syndicate
 		slot_foot = /obj/item/clothing/shoes/swat
 		slot_card = /obj/item/card/id/pod_wars/syndicate
-		slot_ears = /obj/item/device/radio/headset
+		slot_ears = /obj/item/device/radio/headset/pod_wars/syndicate
 		slot_mask = /obj/item/clothing/mask/breath
 		slot_glov = /obj/item/clothing/gloves/swat
 		slot_poc1 = /obj/item/tank/emergency_oxygen
@@ -2773,9 +2777,12 @@ ABSTRACT_TYPE(/datum/job/pod_wars)
 			no_jobban_from_this_job = 0
 			high_priority_job = 1
 			cant_allocate_unwanted = 0
+			access = list(access_syndicate_shuttle, access_syndicate_commander)
+
 			slot_head = /obj/item/clothing/head/helmet/space/syndicate/commissar_cap
 			slot_suit = /obj/item/clothing/suit/space/syndicate/commissar_greatcoat
 			slot_card = /obj/item/card/id/pod_wars/syndicate/commander
+			slot_ears = /obj/item/device/radio/headset/pod_wars/syndicate/commander
 
 /datum/job/football
 	name = "Football Player"
