@@ -5,6 +5,11 @@
 /// Pick a random index
 #define RINGLIST_RANDOM 2
 
+/// type filter for ringtones that're suposed to be selectable at roundstart
+proc/filter_is_character_setup_ringtone(type)
+	var/datum/ringtone/r_tone = type
+	return initial(r_tone.canSpawnWith)
+
 /// Ringtones that'll get mashed into a PDA
 /datum/ringtone
 	var/name = "Two-Beep"

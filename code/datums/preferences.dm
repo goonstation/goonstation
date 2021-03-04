@@ -1744,12 +1744,18 @@ $(updateCharacterPreviewPos);
 
 		if (link_tags["ringtonewindow"])
 			rebuild_data["PDA_ringtone"] = 1
-			src.pda_ringtone_index = input(usr, "Choose a ringtone", "PDA", src.PDAcolor) as null|anything in selectable_ringtones
-
-			if (!(src.pda_ringtone_index in selectable_ringtones))
+			get_all_character_setup_ringtones()
+			if(!length(selectable_ringtones))
 				src.pda_ringtone_index = "Two-Beep"
+				alert(usr, "Oh no! The JamStar-DCXXI PDA ringtone distribution satellite is out of range! Please try again later.", "x.x ringtones broke x.x", "Okay")
+				logTheThing("debug", usr ? usr : null, null, "get_all_character_setup_ringtones() didn't return anything!")
+			else
+				src.pda_ringtone_index = input(usr, "Choose a ringtone", "PDA") as null|anything in selectable_ringtones
+				if (!(src.pda_ringtone_index in selectable_ringtones))
+					src.pda_ringtone_index = "Two-Beep"
 
 		if (link_tags["previewringtone"])
+			get_all_character_setup_ringtones()
 			var/datum/ringtone/RT = selectable_ringtones[src.pda_ringtone_index]
 			if(istype(RT) && length(RT.ringList))
 				usr << sound( RT.ringList[rand(1,length(RT.ringList))] )

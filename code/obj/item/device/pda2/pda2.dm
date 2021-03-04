@@ -872,6 +872,8 @@
 				return /datum/computer/file/pda_program/ringtone/beepy
 			if("KABLAMMO - Realistic Explosion FX", "Modern Commando - Realistic Gunfire FX", "Plinkoe's Journey", "ringtone.dm,58: Cannot read null.name", "Fweeuweeu")
 				return /datum/computer/file/pda_program/ringtone/syndie
+			else
+				return /datum/computer/file/pda_program/ringtone
 
 	proc/set_ringtone(var/datum/ringtone/RT, var/temp = 0, var/overrideAlert = 0, var/groupType, var/groupName, var/announceIt = 1)
 		if(!istype(RT)) // Invalid ringtone? use the default
