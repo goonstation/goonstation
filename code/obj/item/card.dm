@@ -158,14 +158,37 @@ GAUNTLET CARDS
 //ABSTRACT_TYPE(/obj/item/card/id/pod_wars)
 /obj/item/card/id/pod_wars
 	desc = "An ID card to help open doors, lock pods, and identify your body."
-
+	var/team = 0
+#ifdef MAP_OVERRIDE_POD_WARS
+	//You can only pick this up if you're on the correct team, otherwise it explodes.
+	pickup(mob/user)
+		var/user_team = user?.mind?.special_role
+		if (user_team == "NanoTrasen" && team == 1)
+			..()
+		else if (user_team == "Syndicate" && team == 2)
+			..()
+		else
+			var/flavor = pick("doesn't like you", "can tell you don't deserve it", "saw into your very soul and found you wanting", "hates you", "thinks you stink", "thinks you two should start seeing other people", "doesn't trust you", "finds your lack of faith disturbing", "is just not that into you", "gently weeps")
+			//stolen from Captain's Explosive Spare ID down below...
+			boutput(user, "<span class='alert'>The ID card [flavor] <b>and explodes!</b></span>")
+			user.transforming = 1
+			var/obj/overlay/O = new/obj/overlay(get_turf(user))
+			O.anchored = 1
+			O.name = "Explosion"
+			O.layer = NOLIGHT_EFFECTS_LAYER_BASE
+			O.pixel_x = -92
+			O.pixel_y = -96
+			O.icon = 'icons/effects/214x246.dmi'
+			O.icon_state = "explosion"
+			SPAWN_DBG(3.5 SECONDS) qdel(O)
+#endif
 
 	nanotrasen
 		name = "NanoTrasen Pilot"
 		icon_state = "polaris"
 		assignment = "NanoTrasen Pilot"
 		access = list(access_heads)
-
+		team = 1
 			
 		commander
 			name = "NanoTrasen Commander"
@@ -177,6 +200,7 @@ GAUNTLET CARDS
 		icon_state = "id_syndie"
 		assignment = "Syndicate Pilot"
 		access = list(access_syndicate_shuttle)
+		team = 2
 
 		commander
 			name = "Syndicate Commander"
