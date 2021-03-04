@@ -302,9 +302,9 @@
 
 	disposing()
 		if(istype(master))
-			if(master?.bot_mover == src)
+			if(master.bot_mover == src)
 				master.bot_mover = null
-			master?.moving = 0
+			master.moving = FALSE
 		src.master = null
 		src.the_target = null
 		..()
