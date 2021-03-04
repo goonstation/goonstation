@@ -159,27 +159,29 @@ GAUNTLET CARDS
 /obj/item/card/id/pod_wars
 	desc = "An ID card to help open doors, lock pods, and identify your body."
 
-	New()
-		access = get_access("Captain")
-		..()
 
 	nanotrasen
 		name = "NanoTrasen Pilot"
 		icon_state = "polaris"
 		assignment = "NanoTrasen Pilot"
+		access = list(access_heads)
 
+			
 		commander
 			name = "NanoTrasen Commander"
 			assignment = "NanoTrasen Commander"
+			access = list(access_heads, access_captain)
 
 	syndicate
 		name = "Syndicate Pilot"
 		icon_state = "id_syndie"
 		assignment = "Syndicate Pilot"
+		access = list(access_syndicate_shuttle)
 
 		commander
 			name = "Syndicate Commander"
 			assignment = "Syndicate Commander"
+			access = list(access_syndicate_shuttle, access_syndicate_commander)
 
 /obj/item/card/id/dabbing_license
 	name = "Dabbing License"
