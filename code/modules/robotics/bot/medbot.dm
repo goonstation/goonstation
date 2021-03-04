@@ -462,7 +462,10 @@
 		return 0 //Kevorkian school of robotic medical assistants.
 
 	if(src.emagged || src.terrifying) //Everyone needs our medicine. (Our medicine is toxins)
-		return 1
+		if(is_incapacitated(C))
+			return 0
+		else
+			return 1
 
 	var/brute = C.get_brute_damage()
 	var/burn = C.get_burn_damage()
@@ -521,28 +524,17 @@
 		if ((src.use_beaker) && (src.reagent_glass) && (src.reagent_glass.reagents.total_volume))
 			reagent_id = "internal_beaker"
 
-		if(!is_incapacitated(C)) // ignore the target after they fall asleep, so we don't stunlock them so... terrifyingly
-			if (src.terrifying)
-				for(var/i in 1 to rand(1,4))
-					var/badmed_id = pick(src.terrifying_meds)
-					if(C.reagents.has_reagent(badmed_id, src.dangerous_stuff[badmed_id] * 1.5))
-						var/got_newmed = 0
-						for(var/p in 1 to 3) // 3 chances to pick something they don't have
-							badmed_id = pick(src.terrifying_meds)
-							if(C.reagents.has_reagent(badmed_id, src.dangerous_stuff[badmed_id] * 1.5))
-								continue
-							else
-								got_newmed = 1
-						if(!got_newmed)
-							continue
-					reagent_id[badmed_id] += rand(1, src.terrifying_meds[badmed_id])
+		if (src.terrifying)
+			for(var/i in 1 to rand(1,4))
+				var/badmed_id = pick(src.terrifying_meds)
+				reagent_id[badmed_id] += rand(1, src.terrifying_meds[badmed_id])
 
-			else if (src.emagged) //Emagged! Time to poison everybody.
-				var/reag_check = pick(src.dangerous_stuff)
-				if(!C.reagents.has_reagent(reag_check, src.dangerous_stuff[reag_check] * 1.5)) // *shrug* two-ish doses of our poison, on average
-					reagent_id = src.dangerous_stuff
+		else if (src.emagged) //Emagged! Time to poison everybody.
+			var/reag_check = pick(src.dangerous_stuff)
+			if(!C.reagents.has_reagent(reag_check, src.dangerous_stuff[reag_check] * 1.5)) // *shrug* two-ish doses of our poison, on average
+				reagent_id = src.dangerous_stuff
 
-		if(!src.emagged)
+		else
 			if (length(reagent_id) < 1)
 				if (brute >= heal_threshold)
 					if(!C.reagents.has_reagent(src.treatment_brute))
