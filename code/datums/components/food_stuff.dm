@@ -5,9 +5,9 @@
 /// user = mob using the thing
 /// I = thing being eaten -- only does anything on components with a mob parent
 
-////// Argument formats! Any signals should really use these args in this order
-/// Eatsignal w/ mob parent  - M, user, I
-/// Eatsignal w/ item parent - I, M, user
+//--// Argument formats! Any signals should really use these args in this order
+// Eatsignal w/ mob parent  - M, user, I
+// Eatsignal w/ item parent - I, M, user
 
 /* CONTENTS:
 * Can-eat inedible organs          - mob parent  - pre-eat check            - (Can it eat heads too?)
