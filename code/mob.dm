@@ -2980,7 +2980,7 @@
 	if(!istype(A) || !user)
 		return FALSE // who's eating what, now?
 
-	/// Apparently you could feed things to ghosts. So spooky everyone loses their appetite
+	// Apparently you could feed things to ghosts. So spooky everyone loses their appetite
 	if (isobserver(src))
 		if(isAIeye(src))
 			src.can_not_eat(A, user, "is_aieye")
