@@ -3558,7 +3558,7 @@
 #define NT_DRONE (1<<12)
 #define NT_AUTOMATON (1<<13)
 #define NT_CHEGET (1<<14)
-#define NT_GAFFE (1<<15) //Note: this is the last one the bitfield can fit.  Thanks, byond!!
+#define NT_GAFFE (1<<15)
 
 #define MAPTEXT_PAUSE (4.5 SECONDS)
 #define FOUND_NEAT(FLAG) src.distracted = TRUE; src.neat_things |= FLAG; SPAWN_DBG(0)
@@ -3623,7 +3623,7 @@
 
 					awaiting_beacon = 4
 
-					if ( src.distracted )
+					if (src.distracted)
 						awaiting_beacon += 2
 
 					master.post_status("!BEACON!", "findbeacon", "tour")
@@ -3679,7 +3679,6 @@
 			var/proc_delay = master.base_tick_spacing*(2**(master.processing_tier-1))
 
 			SPAWN_DBG(0) // do not delay doWork
-
 				//Delay for active destraction
 				while(yield_to_neat && distracted)
 					awaiting_beacon++
@@ -3715,7 +3714,6 @@
 
 
 #define MAPTEXT_SLICE_SIZE 100 // Reduce maptext slice size to avoid 4 rows
-
 		proc/speak_with_maptext(text, pause_for_beacon=FALSE)
 			var/start = 0
 			var/slice = 0
