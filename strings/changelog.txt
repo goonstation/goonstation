@@ -1,4 +1,9 @@
 
+(t)fri mar 05 21
+(u)Fosstar
+(p)3861
+(e)|
+(+)Reagents are now clamped to the nearest 1000th, or 0.001
 (t)thu mar 04 21
 (u)Carbadox
 (p)3841
