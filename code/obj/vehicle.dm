@@ -11,8 +11,37 @@ Contains:
 */
 
 //------------------ Vehicle Defines --------------------///
-#define MINIMUM_EFFECTIVE_DELAY 0.001 //do not set to zero or shit breaks
+#define MINIMUM_EFFECTIVE_DELAY 0.001 //absolute maximum speed for vehicles (lower is faster), do not set to 0 or division by 0 will happen
 
+/**
+	* This macro handles the code that USED to be defined individually in each vehicle's relaymove() proc
+	* all non-machinery vehicles except forklifts and skateboards use this now
+	*	the params passed through are the same as are passed to relaymove()
+	* src should always be the vehicle that's moving
+	* user is the mob that initiated the relaymove() call. Note that this does NOT have to be the same as the vehicles "rider"
+	* this is an important distinction to make because some vehicles can have multiple OCCUPANTS but none of them can have multiple RIDERS
+	* dir is the direction we're going to travel in
+	* we reset the overlays to null in case the relaymove() call was initiated by a passenger rather than the driver (we shouldn't have a rider overlay if there is no rider!)
+	* Then, we check to see what mob initiated the relaymove()
+	* if it wasn't the rider, we jump to a bit of code that ensures no weirdness with unusual passenger ejections
+	* if it WAS initiated by the rider, we got ahead and cap the speed (td) to MINIMUM_EFFECTIVE_DELAY and then apply the rider overlay if needed
+	* Then, we check to make sure we aren't riding in space without a booster upgrade
+	* Next, we do some simple math to adjust the vehicle's glide_size based on its speed and to compensate for lag
+	* IMPORTANTLY: we also set the glide_size for all occupants of the vehicle to the same value that we used for the vehicle itself
+	* and set the occupant's animate_movement to SYNC_STEPS
+	* This helps to SIGNIFICANTLY smooth the apparent motion of the camera at higher speeds (almost buttery at default speed of 2)
+	* Unfortunately, there is still some stuttering at higher speeds, but it has been lessened quite a bit.
+	* Then, we finally actually walk the src vehicle in the dir direction with td delay between steps
+	* The vehicle will keep moving in this direction until stopped or the direction is changed
+	* Next, we.... uhhhhhh... well, we do the glide_size and animation adjustments AGAIN.
+	* I really have no idea why we do this, but it was present in pod movement code, and I asked mbc about it and we were both too scared to change it
+	* So, if you want to optimize this some more, I'd start by looking into removing that bit of code
+	* LASTLY, we call do_special_on_relay() to handle any special behaviors we want the vehicle to perform each time relaymove() is called
+	* NOTE:
+	* this means that do_special_on_relay() will only get called when the rider is performing a direction input
+	* and NOT whenever the vehicle actually MOVES.
+	* For that, you'll want to override the vehicles Move() proc with the custom behavior you want.
+	*/
 #define V_DO_MOVE(src, user, dir) do { \
 	src.overlays = null ; \
 	if(src.rider && user == src.rider) { \
@@ -31,7 +60,7 @@ Contains:
 		for(var/mob/M in src){\
 			M.glide_size = src.glide_size;\
 			M.animate_movement = SYNC_STEPS;}\
-		src.do_special_on_move(user, dir);\
+		src.do_special_on_relay(user, dir);\
 	} else {\
 		for (var/mob in src.contents) { var/mob/M = mob; M.set_loc(src.loc); }} ; \
 	} while(false)
@@ -41,24 +70,24 @@ ABSTRACT_TYPE(/obj/vehicle)
 	name = "vehicle"
 	icon = 'icons/obj/vehicles.dmi'
 	density = 1
-	var/mob/living/rider = null
-	var/in_bump = 0
-	var/sealed_cabin = 0
-	var/rider_visible =	1
-	var/list/ability_buttons = null //where the ability buttons will be placed on initialization
+	var/mob/living/rider = null //rider is basically the "driver" of the vehicle
+	var/in_bump = 0 //sanity variable to prevent the vehicle from crashing multiple times due to a single collision
+	var/sealed_cabin = 0 //does the vehicle have air conditioning? (check /datum/lifeprocess/bodytemp in bodytemp.dm for details)
+	var/rider_visible =	1 //can we see the driver from outside of the vehicle? (used for overlays)
+	var/list/ability_buttons = null //storage for the ability buttons after initialization
 	var/list/ability_buttons_to_initialize = null //list of types of ability buttons to be initialized
 	var/throw_dropped_items_overboard = 0 // See /mob/proc/drop_item() in mob.dm.
-	var/attacks_fast_eject = 1
+	var/attacks_fast_eject = 1 //whether any attack with an item that has a force vallue will immediately eject the rider (only works if rider_visible is true)
 	layer = MOB_LAYER
-	var/delay = 2
-	var/booster_upgrade = 0
-	var/booster_image = null
+	var/delay = 2 //speed, lower is faster, minimum of MINIMUM_EFFECTIVE_DELAY
+	var/booster_upgrade = 0 //do we go through space?
+	var/booster_image = null //what overlay icon do we use for the booster upgrade? (we have to initialize this in new)
 
 
 	New()
 		. = ..()
 		START_TRACKING
-		booster_image = image('icons/mob/robots.dmi', "up-speed")
+		booster_image = image('icons/mob/robots.dmi', "up-speed") //default booster_image is the same as used for speed boost upgrade on cyborgs
 		if(length(ability_buttons_to_initialize))
 			src.setup_ability_buttons()
 
@@ -91,6 +120,7 @@ ABSTRACT_TYPE(/obj/vehicle)
 		for(var/atom/movable/AM in src)
 			AM.set_loc(src.loc)
 
+	//kick out the rider
 	proc/eject_rider(var/crashed, var/selfdismount, var/ejectall = 1)
 		if(rider?.loc == src)
 			src.rider.set_loc(src.loc)
@@ -101,11 +131,13 @@ ABSTRACT_TYPE(/obj/vehicle)
 		if (ejectall)
 			src.eject_other_stuff()
 
+	//remove the ability buttons from the rider
 	proc/handle_button_removal()
 		if (length(src.ability_buttons))
 			for(var/obj/ability_button/B in src.ability_buttons)
 				src.rider.client?.screen -= B
 
+	//add the ability buttons to the rider
 	proc/handle_button_addition()
 		if(!src.rider?.loc == src || !(length(src.ability_buttons)))
 			return
@@ -117,14 +149,7 @@ ABSTRACT_TYPE(/obj/vehicle)
 				B.the_mob = src.rider
 				rider.client?.screen += B //don't have to worry about location since that should already have been handled by initialization
 
-/*			if (ishuman(rider))
-				var/mob/living/carbon/human/H = rider
-				H.hud?.update_ability_hotbar() //automatically removes the vehicle ability buttons
-			else if (length(src.ability_buttons))
-				for(var/obj/ability_button/B in src.ability_buttons)
-					rider.client.screen -= B
-*/
-
+	//intializes the ability buttons (if we have any)
 	proc/setup_ability_buttons()
 		if (!islist(src.ability_buttons))
 			src.ability_buttons = list()
@@ -138,7 +163,7 @@ ABSTRACT_TYPE(/obj/vehicle)
 	relaymove(mob/user as mob, dir)
 		V_DO_MOVE(src, user, dir)
 
-	proc/do_special_on_move(mob/user as mob, dir) //empty placeholder for when we successfully have the rider relay a move
+	proc/do_special_on_relay(mob/user as mob, dir) //empty placeholder for when we successfully have the rider relay a move
 		return
 
 	ex_act(severity)
@@ -170,7 +195,7 @@ ABSTRACT_TYPE(/obj/vehicle)
 		return
 
 	proc/Stopped()
-		src.overlays -= image('icons/mob/robots.dmi', "up-speed")
+		src.overlays -= src.booster_image //so we don't see thrusters firing on a parked vehicle
 		return
 
 
@@ -932,9 +957,9 @@ ABSTRACT_TYPE(/obj/vehicle)
 	mats = 15
 	ability_buttons_to_initialize = list(/obj/ability_button/loudhorn/clowncar, /obj/ability_button/stopthebus/clowncar)
 	soundproofing = 5
-	var/second_icon = "clowncar2"
+	var/second_icon = "clowncar2" //animated jiggling for the clowncar
 
-/obj/vehicle/clowncar/do_special_on_move(mob/user as mob, dir)
+/obj/vehicle/clowncar/do_special_on_relay(mob/user as mob, dir)
 	for (var/mob/living/carbon/human/H in src)
 		if (H.sims)
 			H.sims.affectMotive("fun", 1)
@@ -1438,7 +1463,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 	overlays = null
 	return
 
-/obj/vehicle/cat/do_special_on_move(mob/user as mob, dir)
+/obj/vehicle/cat/do_special_on_relay(mob/user as mob, dir)
 	switch(dir)
 		if(NORTH,SOUTH)
 			layer = MOB_LAYER+1// TODO Layer wtf
@@ -1633,7 +1658,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 	..()
 	icon_state = nonmoving_state
 
-/obj/vehicle/adminbus/do_special_on_move(mob/user as mob, dir)
+/obj/vehicle/adminbus/do_special_on_relay(mob/user as mob, dir)
 	icon_state = moving_state
 	if(!(world.timeofday - src.antispam <= 60))
 		src.antispam = world.timeofday
@@ -2034,7 +2059,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 		P2.pellets_to_fire = 10
 		P2.pellet_shot_volume = 75 / P2.pellets_to_fire //anti-ear destruction
 
-	do_special_on_move(mob/user, dir)
+	do_special_on_relay(mob/user, dir) //this should probably actually be inside an overriden Move() proc, but I've preserved the original behavior here instead.
 		icon_state = moving_state
 		if(src.power_hotwheels)
 			tfireflash(get_turf(src), 0, 100)
@@ -2242,6 +2267,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 
 	src.update_overlays()
 
+//We, unfortunately, can't use V_DO_MOVE() here because the forklift has some special behaviors with overlays and underlays that produce weird behaviors (ghost riders, phantom crates) when combined with V_DO_MOVE()
 /obj/vehicle/forklift/relaymove(mob/user as mob, direction)
 
 	if (user.stat)

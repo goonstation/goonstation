@@ -522,7 +522,7 @@
 	update()
 	return
 
-/obj/vehicle/marsrover/do_special_on_move(mob/user as mob, dir)
+/obj/vehicle/marsrover/do_special_on_relay(mob/user as mob, dir)
 	icon_state = "marsrover2"
 
 /obj/vehicle/marsrover/MouseDrop_T(mob/living/carbon/human/target, mob/user)
