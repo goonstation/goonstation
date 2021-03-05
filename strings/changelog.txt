@@ -1,5 +1,41 @@
 
+(t)fri mar 05 21
+(u)TTerc
+(p)3903
+(e)🆕|feature
+(+)Added medical eyepatches to medbay manufacturers.
+(u)zjdtmkhzt
+(p)3837
+(e)|
+(+)Sprinting into railings will make you start the process of vaulting over them.
+(u)Walpvrgis
+(p)3872
+(e)🎨|sprites
+(*)Adds new clothing to Clothing Booth/Vendor (30 outfits, 9 shoes and 2 hats)! Time for a makeover?
+(u)Fosstar
+(p)3861
+(e)|
+(+)Reagents are now clamped to the nearest 1000th, or 0.001
+(t)thu mar 04 21
+(u)Carbadox
+(p)3841
+(e)|
+(+)The industrial cryogenic unit has been renamed to the industrial cryogenic sleep unit and the Medical cyrogenic cell has been renamed to the cryogenic healing pod. This should make it easier to distinguish them from each other.
+(u)Superlagg
+(p)3852
+(e)🐛|bug
+(*)Securitrons will no longer attack you if you're tucked away inside something.
+(u)Chickenish
+(p)3749
+(e)⚖🆕|balance, feature
+(+)Recovery over time from blindness, eye blur, deafness, stuttering, and drug haze is now lag adjusted.
 (t)wed mar 03 21
+(u)Kyle
+(e)⚖|balance
+(+)Lizards now have a Regrow Tail ability. It lets you regrow your tail...
+(u)Zamuajasa
+(e)⚖|balance
+(+)Arse Nath/Rathen's Secret no longer causes clouds of smoke.
 (u)Sord
 (p)3797
 (e)⚖|balance

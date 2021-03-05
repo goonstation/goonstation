@@ -74,6 +74,7 @@ var/list/admin_verbs = list(
 		// LEVEL_SA, secondary administrator
 		/client/proc/stealth,
 		/datum/admins/proc/pixelexplosion,
+		/datum/admins/proc/turn_off_pixelexplosion,
 		/datum/admins/proc/camtest,
 		/client/proc/alt_key,
 		/client/proc/create_portal,
@@ -540,7 +541,7 @@ var/list/special_pa_observing_verbs = list(
 		if ("Inactive")
 			src.holder.dispose()
 			src.holder = null
-			boutput(src, "<span style='color:red;font-size:150%'><b>You are set to Inactive admin status! Please join #ss13admin on irc.synirc.net if you would like to become active again!</b></span>")
+			boutput(src, "<span style='color:red;font-size:150%'><b>You are set to Inactive admin status! Please join the Goonstation Discord if you would like to become active again!</b></span>")
 			return
 
 		if ("Banned")
