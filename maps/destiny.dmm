@@ -1130,6 +1130,7 @@
 /obj/landmark/start{
 	name = "Head of Personnel"
 	},
+/obj/item/pen/crayon/golden,
 /turf/simulated/floor/carpet{
 	dir = 9;
 	icon_state = "fgreen2"
@@ -19644,7 +19645,7 @@
 	icon_state = "4-8"
 	},
 /obj/landmark/start{
-	name = "Geneticist"
+	name = "Pathologist"
 	},
 /turf/simulated/floor/purplewhite{
 	dir = 6
@@ -25118,6 +25119,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/access_spawn/pathology,
 /turf/simulated/floor/green,
 /area/station/medical/research)
 "aRV" = (
@@ -25167,6 +25169,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/access_spawn/pathology,
 /turf/simulated/floor/green,
 /area/station/medical/research)
 "aRZ" = (
@@ -27738,6 +27741,7 @@
 	name = "glass airlock-'Quarantine'";
 	req_access_txt = "9"
 	},
+/obj/access_spawn/pathology,
 /turf/simulated/floor/green,
 /area/station/medical/research)
 "aWH" = (
@@ -35130,6 +35134,10 @@
 /obj/item/stamp,
 /obj/machinery/light_switch/south,
 /obj/machinery/light,
+/obj/artifact_paper_dispenser{
+	pixel_x = 8;
+	pixel_y = 9
+	},
 /turf/simulated/floor/purplewhite{
 	dir = 1
 	},

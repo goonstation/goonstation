@@ -4,6 +4,7 @@
 
 /datum/artifact/recaller
 	associated_object = /obj/artifact/teleport_recaller
+	type_name = "Recaller"
 	rarity_weight = 450
 	validtypes = list("wizard","eldritch","precursor")
 	validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/electric,/datum/artifact_trigger/heat,

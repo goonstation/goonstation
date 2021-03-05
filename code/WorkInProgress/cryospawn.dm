@@ -12,7 +12,7 @@
 
 //Special destiny spawn point doodad
 /obj/cryotron
-	name = "industrial cryogenics unit"
+	name = "industrial cryogenic sleep unit"
 	desc = "The terminus of a large underfloor cryogenic storage complex."
 	anchored = 1
 	density = 1
@@ -70,7 +70,8 @@
 		their_jobs += job
 
 		boutput(person, "<b>Cryo-recovery process initiated.  Please wait . . .</b>")
-		person.removeOverlayComposition(/datum/overlayComposition/blinded)
+		if (!person.bioHolder.HasEffect("blind"))
+			person.removeOverlayComposition(/datum/overlayComposition/blinded)
 		return 1
 
 	proc/process()

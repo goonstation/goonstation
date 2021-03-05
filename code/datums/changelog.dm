@@ -151,7 +151,11 @@ ATTENTION: The changelog has moved into its own file: strings/changelog.txt
 									html += "th, "
 					html += "20[copytext(line, 15, 17)]</li>"
 				if("(u)")
+					#ifdef APRIL_FOOLS
+					author = "CodeDude"
+					#else
 					author = copytext(line, 4, 0)
+					#endif
 					added_collapsible_author = 0
 					added_author = 0
 					pr_num = null

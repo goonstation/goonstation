@@ -1339,7 +1339,7 @@
 /turf/simulated/floor/var/global/girder_egg = 0
 
 //basically the same as walls.dm sans the
-/turf/simulated/floor/proc/attach_light_fixture_parts(var/mob/user, var/obj/item/W)
+/turf/simulated/floor/proc/attach_light_fixture_parts(var/mob/user, var/obj/item/W, var/instantly)
 	if (!user || !istype(W, /obj/item/light_parts/floor))
 		return
 
@@ -1347,19 +1347,20 @@
 	var/obj/item/light_parts/parts = W
 	var/turf/target = src
 
+	if(!instantly)
+		playsound(src, "sound/items/Screwdriver.ogg", 50, 1)
+		boutput(user, "You begin to attach the light fixture to [src]...")
 
-	playsound(src, "sound/items/Screwdriver.ogg", 50, 1)
-	boutput(user, "You begin to attach the light fixture to [src]...")
 
-	if (!do_after(user, 4 SECONDS))
-		user.show_text("You were interrupted!", "red")
-		return
+		if (!do_after(user, 4 SECONDS))
+			user.show_text("You were interrupted!", "red")
+			return
 
-	if (!parts) //ZeWaka: Fix for null.fixture_type
-		return
+		if (!parts) //ZeWaka: Fix for null.fixture_type
+			return
 
-	// if they didn't move, put it up
-	boutput(user, "You attach the light fixture to [src].")
+		// if they didn't move, put it up
+		boutput(user, "You attach the light fixture to [src].")
 
 	var/obj/machinery/light/newlight = new parts.fixture_type(target)
 	newlight.icon_state = parts.installed_icon_state

@@ -311,6 +311,19 @@
 		color = "#FF00FF"
 		font_color = "#FF00FF"
 		color_name = "pink"
+	
+	golden // HoP's crayon
+		name = "golden crayon"
+		desc = "The result of years of bribes and extreme bureaucracy."
+		color = "#D4AF37"
+		font_color = "#D4AF37"
+		mat_changename = 0
+		color_name = "golden"
+		material_uses = 123456 // it's not plated. its solid gold-wax alloy!
+
+		New()
+			..()
+			src.setMaterial(getMaterial("gold"))
 
 	random
 		New()

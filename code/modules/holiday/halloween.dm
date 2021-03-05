@@ -41,8 +41,9 @@
  */
 
 /obj/tombstone
-	name = "Tombstone"
-	desc = "Here lies Tango N. Vectif, killed by a circus bear.  RIP."
+	name = "tombstone"
+	//desc = "Here lies Tango N. Vectif, killed by a circus bear.  RIP." // changing for spawnability
+	desc = "Rest in peace."
 	icon = 'icons/misc/halloween.dmi'
 	icon_state = "tombstone"
 	anchored = 1
