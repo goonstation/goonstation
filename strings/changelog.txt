@@ -1,5 +1,9 @@
 
 (t)fri mar 05 21
+(u)Carbadox
+(p)3855
+(e)🆕|feature
+(+)Added 2x rubber shell cartridges to hacked booze vendor menu.
 (u)TTerc
 (p)3903
 (e)🆕|feature
