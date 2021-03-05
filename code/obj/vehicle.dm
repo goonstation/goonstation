@@ -10,7 +10,7 @@ Contains:
 -Forklift
 */
 
-//////////////////////////////// Vehicle Defines ///////////////////////////////////////
+//------------------ Vehicle Defines --------------------///
 #define MINIMUM_EFFECTIVE_DELAY 0.001 //do not set to zero or shit breaks
 
 #define V_DO_MOVE(src, user, dir) do { \
