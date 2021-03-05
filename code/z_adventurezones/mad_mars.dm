@@ -524,7 +524,6 @@
 
 /obj/vehicle/marsrover/do_special_on_move(mob/user as mob, dir)
 	icon_state = "marsrover2"
-	return
 
 /obj/vehicle/marsrover/MouseDrop_T(mob/living/carbon/human/target, mob/user)
 	if (rider || !istype(target) || target.buckled || LinkBlocked(target.loc,src.loc) || get_dist(user, src) > 1 || is_incapacitated(user) || isAI(user))
