@@ -779,6 +779,10 @@ datum/pump_ui/circulator_ui
 					light.enable()
 					// this needs a safer lightbust proc
 
+		. = GetOverlayImage("mask")
+		if(.)
+			UpdateOverlays(.,"mask")
+
 	process()
 		if(!src.circ1 || !src.circ2)
 			return

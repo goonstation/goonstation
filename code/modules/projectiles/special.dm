@@ -623,7 +623,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 				if (vampire.can_bite(victim,is_pointblank = 0))
 					vampire.do_bite(victim, mult = 0.3333)
 
-				vampire.owner.add_stamina(20)
+				vampire.owner?.add_stamina(20)
 				victim.remove_stamina(4)
 
 		..()
