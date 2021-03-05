@@ -141,32 +141,6 @@ ABSTRACT_TYPE(/obj/vehicle)
 	proc/do_special_on_move(mob/user as mob, dir) //empty placeholder for when we successfully have the rider relay a move
 		return
 
-/* 	relaymove(mob/user as mob, dir)
-		src.overlays = null
-		if(src.rider && user == src.rider)
-			var/td = max(src.delay, MINIMUM_EFFECTIVE_DELAY)
-			if(src.rider_visible)
-				src.overlays += src.rider
-			if (!src.booster_upgrade)
-				var/turf/T = get_turf(src)
-				if(T.throw_unlimited && istype(T, /turf/space))
-					return
-			src.glide_size = (32 / td) * world.tick_lag
-			for(var/mob/M in src)
-				M.glide_size = src.glide_size
-				M.animate_movement = SYNC_STEPS
-			if(src.booster_upgrade)
-				src.overlays += image('icons/mob/robots.dmi', "up-speed")
-			walk(src, dir, td)
-			src.glide_size = (32 / td) * world.tick_lag
-			for(var/mob/M in src)
-				M.glide_size = src.glide_size
-				M.animate_movement = SYNC_STEPS
-		else
-			for(var/mob/M in src.contents)
-				M.set_loc(src.loc)
-*/
-
 	ex_act(severity)
 		switch(severity)
 			if(1.0)
