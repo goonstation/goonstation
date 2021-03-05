@@ -6010,6 +6010,10 @@
 	dir = 1
 	},
 /area/podmode/spacejunk/Snackstand)
+"DA" = (
+/obj/decal/poster/wallsign/pod_build/sy,
+/turf/unsimulated/wall/auto/reinforced/supernorn,
+/area/podmode/team2/Hangar)
 "DB" = (
 /obj/landmark/start{
 	name = "NanoTrasen Pod Pilot"
@@ -6635,6 +6639,10 @@
 	dir = 1
 	},
 /area/podmode/spacejunk/uvb67/crew)
+"Gz" = (
+/obj/decal/poster/wallsign/pod_build/nt,
+/turf/unsimulated/wall/auto/reinforced/supernorn,
+/area/podmode/team1/manufacturing)
 "GA" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/podmode/spacejunk/fstation/medbay)
@@ -44335,7 +44343,7 @@ CT
 bW
 ed
 ed
-gE
+Gz
 Ju
 kZ
 ro
@@ -238005,7 +238013,7 @@ TT
 TT
 TT
 Ze
-km
+DA
 ne
 Lc
 ED
@@ -238507,7 +238515,7 @@ TT
 TT
 IU
 YO
-km
+Ff
 fU
 xF
 SM
