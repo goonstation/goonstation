@@ -847,8 +847,8 @@
 	blue
 		name = "blue basketball jersey"
 		desc = "A jersey with the Mississippi Singularities away colors."
-		icon_state = "jerseyB"
-		item_state = "jerseyB"
+		icon_state = "jerseyBl"
+		item_state = "jerseyBl"
 
 	purple
 		name = "purple basketball jersey"
