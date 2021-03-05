@@ -1,5 +1,9 @@
 
 (t)fri mar 05 21
+(u)Walpvrgis
+(p)3872
+(e)🎨|sprites
+(*)Adds new clothing to Clothing Booth/Vendor (30 outfits, 9 shoes and 2 hats)! Time for a makeover?
 (u)Fosstar
 (p)3861
 (e)|
