@@ -1056,12 +1056,6 @@
 	dir = 1
 	},
 /area/podmode/spacejunk/fstation/maintdock)
-"eY" = (
-/obj/capture_point_computer,
-/turf/simulated/floor/yellow/side{
-	dir = 4
-	},
-/area/podmode/spacejunk/Restaurant)
 "fa" = (
 /obj/forcefield/energyshield/perma,
 /obj/machinery/door/poddoor/blast/pyro/podbay_autoclose/t2d1_horizontal,
@@ -7634,6 +7628,10 @@
 	icon_state = "wall3dir"
 	},
 /area/podmode/spacejunk/Dorgun)
+"LG" = (
+/obj/capture_point_computer,
+/turf/simulated/floor/black,
+/area/podmode/spacejunk/uvb67/power)
 "LH" = (
 /obj/machinery/r_door_control/podbay/t2d4/new_walls/east,
 /turf/unsimulated/floor/shuttlebay,
@@ -65779,7 +65777,7 @@ gz
 gz
 YW
 gR
-eY
+lr
 WJ
 WJ
 lr
@@ -130536,7 +130534,7 @@ mP
 mP
 Oh
 Oh
-ti
+LG
 ti
 ti
 Tu
