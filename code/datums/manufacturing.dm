@@ -2249,7 +2249,7 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 /datum/manufacture/eyepatch
 	name = "Medical Eyepatch"
 	item_paths = list("FAB-1")
-	item_amounts = list(7)
+	item_amounts = list(5)
 	item_outputs = list(/obj/item/clothing/glasses/eyepatch)
 	time = 15 SECONDS
 	create = 1
