@@ -81684,6 +81684,10 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
+/obj/decal/tile_edge/line/yellow{
+	dir = 9;
+	icon_state = "line1"
+	},
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "ydg" = (
