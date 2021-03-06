@@ -19,6 +19,7 @@
 	var/waiting = TRUE
 
 	CritterDeath()
+		..()
 		explode()
 		return
 
