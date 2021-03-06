@@ -2657,20 +2657,21 @@
 				continue
 			else
 				if (force_instead || alert(src, "Use the name [newname]?", newname, "Yes", "No") == "Yes")
-					var/datum/data/record/B = FindBankAccountByName(src.real_name)
-					if (B?.fields["name"])
-						B.fields["name"] = newname
-					for (var/obj/item/card/id/ID in src.contents)
-						ID.registered = newname
-						ID.update_name()
-					for (var/obj/item/device/pda2/PDA in src.contents)
-						PDA.registered = newname
-						PDA.owner = newname
-						PDA.name = "PDA-[newname]"
-						if(PDA.ID_card)
-							var/obj/item/card/id/ID = PDA.ID_card
+					if(!src.traitHolder.hasTrait("immigrant"))// stowaway entertainers shouldn't be on the manifest
+						var/datum/data/record/B = FindBankAccountByName(src.real_name)
+						if (B?.fields["name"])
+							B.fields["name"] = newname
+						for (var/obj/item/card/id/ID in src.contents)
 							ID.registered = newname
 							ID.update_name()
+						for (var/obj/item/device/pda2/PDA in src.contents)
+							PDA.registered = newname
+							PDA.owner = newname
+							PDA.name = "PDA-[newname]"
+							if(PDA.ID_card)
+								var/obj/item/card/id/ID = PDA.ID_card
+								ID.registered = newname
+								ID.update_name()
 					src.real_name = newname
 					src.name = newname
 					return 1
