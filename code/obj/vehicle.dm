@@ -131,7 +131,7 @@ ABSTRACT_TYPE(/obj/vehicle)
 		if (ejectall)
 			src.eject_other_stuff()
 
-	//remove the ability buttons from the rider
+	/// remove the ability buttons from the rider
 	proc/handle_button_removal()
 		if (length(src.ability_buttons))
 			for(var/obj/ability_button/B in src.ability_buttons)
