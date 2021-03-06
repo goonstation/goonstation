@@ -547,7 +547,7 @@ mob/verb/checkrewards()
 /datum/jobXpReward/bartender/spectromonocle
 	name = "Spectroscopic Monocle"
 	desc = "Now you can look dapper and know which drinks you poisoned at the same time"
-	required_levels = list("Bartender"=0)
+	required_levels = list("Bartender"=5)
 	icon_state = "?"
 	claimable = 1
 	var/path_to_spawn = /obj/item/clothing/glasses/spectro/monocle
