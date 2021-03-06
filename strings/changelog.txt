@@ -1,5 +1,26 @@
 
+(t)sat mar 06 21
+(u)Camryn Buttes
+(p)3859
+(e)🐛🆕|bug, feature
+(*)Clown cars now have a car horn and a brake and should move much more smoothly (along with most other non-pod/sub/truck vehicles)! HONK HONK HONK!
 (t)fri mar 05 21
+(u)Azrun
+(p)3776
+(e)|
+(+)Improve tour guide floating chat display.
+(u)Superlagg
+(p)3692
+(e)🆕|feature
+(*)You can now pick your PDA's ringtone in character setup! Comes with a free copy of that ringtone's parent program.
+(u)Carbadox
+(p)3855
+(e)🆕|feature
+(+)Added 2x rubber shell cartridges to hacked booze vendor menu.
+(u)TTerc
+(p)3903
+(e)🆕|feature
+(+)Added medical eyepatches to medbay manufacturers.
 (u)zjdtmkhzt
 (p)3837
 (e)|

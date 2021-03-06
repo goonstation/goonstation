@@ -256,7 +256,7 @@ mob/verb/checkrewards()
 
 /datum/jobXpReward/HeadofSecurity/mug
 	name = "Alternate Blue Mug"
-	desc = "It's your favourite coffee, but now its blue. Wow."
+	desc = "It's your favourite coffee mug, but now its text is blue. Wow."
 	required_levels = list("Head of Security"=1)
 	claimable = 1
 	var/path_to_spawn = /obj/item/reagent_containers/food/drinks/mug/HoS/blue
@@ -547,7 +547,7 @@ mob/verb/checkrewards()
 /datum/jobXpReward/bartender/spectromonocle
 	name = "Spectroscopic Monocle"
 	desc = "Now you can look dapper and know which drinks you poisoned at the same time"
-	required_levels = list("Bartender"=0)
+	required_levels = list("Bartender"=5)
 	icon_state = "?"
 	claimable = 1
 	var/path_to_spawn = /obj/item/clothing/glasses/spectro/monocle
