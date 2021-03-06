@@ -1,3 +1,6 @@
+/** Arc Electroplater
+  * Applies materials directly to items
+  */
 /obj/machinery/arc_electroplater
 	name = "Arc Electroplater"
 	desc = "An industrial arc electroplater.  It uses strong currents to coat a target object with a provided material."
@@ -56,14 +59,14 @@
 				src.visible_message("<span class='notice'>[user] loads [W] into the [src].</span>")
 				user.u_equip(W)
 				W.set_loc(src)
-				W.dropped()
+				W.dropped(user)
 				src.my_bar = W
 				return
 			else
 				src.visible_message("<span class='notice'>[user] loads one of the [W] into the [src].</span>")
 				var/obj/item/material_piece/single_bar = W.split_stack(1)
 				single_bar.set_loc(src)
-				single_bar.dropped()
+				single_bar.dropped(user)
 				src.my_bar = single_bar
 				return
 
@@ -109,7 +112,7 @@
 
 	attack_hand(mob/user as mob)
 		if (isghostdrone(user))
-			boutput(usr, "<span class='alert'>The [src] refuses to interface with you!</span>")
+			boutput(user, "<span class='alert'>The [src] refuses to interface with you!</span>")
 			return
 		if (!src.target_item)
 			boutput(user, "<span class='alert'>There is nothing in the plater to remove.</span>")

@@ -440,7 +440,7 @@ TRAYS
 	amount = 6
 	var/max_amount = 6
 	var/box_type = "donutbox"
-	var/contained_food = /obj/item/reagent_containers/food/snacks/donut/random
+	var/contained_food = /obj/item/reagent_containers/food/snacks/donut/custom/random
 	var/contained_food_name = "donut"
 	tooltip_flags = REBUILD_DIST
 
@@ -496,7 +496,7 @@ TRAYS
 
 	MouseDrop(mob/user as mob) // no I ain't even touchin this mess it can keep doin whatever it's doin
 		// I finally came back and touched that mess because it was broke - Haine
-		if(user == usr && !usr.restrained() && !usr.stat && (usr.contents.Find(src) || in_interact_range(src, usr)))
+		if(user == usr && !user.restrained() && !user.stat && (user.contents.Find(src) || in_interact_range(src, user)))
 			if(!user.put_in_hand(src))
 				return ..()
 
@@ -679,6 +679,9 @@ TRAYS
 			return
 		if(ordered_contents.len == max_food)
 			boutput(user, "That won't fit, \the [src] is too full!")
+			return
+		if(W.w_class > 3)
+			boutput(user, "You try to think of a way to put [W] on \the [src] but it's not possible! It's too large!")
 			return
 		user.drop_item()
 		W.set_loc(src)

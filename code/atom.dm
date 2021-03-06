@@ -22,6 +22,8 @@
 
 	var/interesting = ""
 	var/stops_space_move = 0
+	/// Anything can speak... if it can speak
+	var/obj/chat_maptext_holder/chat_text
 
 	/// Gets the atoms name with all the ugly prefixes things remove
 	proc/clean_name()
@@ -393,6 +395,7 @@
 		if(isturf(src.loc)) // call it on the area too
 			src.loc.loc.Entered(src, null)
 
+
 /atom/movable/disposing()
 	if (temp_flags & MANTA_PUSHING)
 		mantaPushList.Remove(src)
@@ -621,7 +624,7 @@
 	else if (src.desc)
 		. += "<br>[src.desc]"
 
-	var/extra = src.get_desc(dist, usr)
+	var/extra = src.get_desc(dist, user)
 	if (extra)
 		. += " [extra]"
 
@@ -1001,7 +1004,7 @@
 
 
 /atom/proc/interact(var/mob/user)
-	if (isdead(user) || (!iscarbon(user) && !ismobcritter(user) && !issilicon(usr)))
+	if (isdead(user) || (!iscarbon(user) && !ismobcritter(user) && !issilicon(user)))
 		return
 
 	if (!isturf(src) && !istype(src.loc, /turf) || is_incapacitated(user) || user.restrained())

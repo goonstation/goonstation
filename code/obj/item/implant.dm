@@ -157,7 +157,7 @@ THROWING DARTS
 					return
 				if (user.equipped() != I)
 					return
-				if ((!in_interact_range(src, usr) && src.loc != user))
+				if ((!in_interact_range(src, user) && src.loc != user))
 					return
 				t = copytext(adminscrub(t),1,128)
 				if (t)
@@ -1295,7 +1295,7 @@ THROWING DARTS
 		var/t = input(user, "What would you like the label to be?", null, "[src.name]") as null|text
 		if (user.equipped() != I)
 			return
-		if ((!in_interact_range(src, usr) && src.loc != user))
+		if ((!in_interact_range(src, user) && src.loc != user))
 			return
 		t = copytext(adminscrub(t),1,128)
 		if (t)

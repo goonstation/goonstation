@@ -304,7 +304,7 @@ obj/machinery/atmospherics/pipe
 
 			var/datum/gas_mixture/gas = return_air()
 			var/pressure = MIXTURE_PRESSURE(gas)
-			if(pressure > fatigue_pressure) check_pressure(pressure)
+			if(!ruptured && pressure > fatigue_pressure) check_pressure(pressure)
 
 		proc/leak_gas()
 			var/datum/gas_mixture/gas = return_air()
@@ -344,11 +344,11 @@ obj/machinery/atmospherics/pipe
 
 		proc/rupture(pressure, destroy=FALSE)
 			var/new_rupture
-			if (src.destroyed || destroy || ((pressure > (10*fatigue_pressure)) && prob(1)) )
+			if (src.destroyed || destroy)
 				ruptured = 4
 				src.destroyed = TRUE
 				src.desc = "The remnants of a section of pipe that needs to be replaced.  Perhaps rods would be sufficient?"
-				parent.mingle_with_turf(loc, volume)
+				parent?.mingle_with_turf(loc, volume)
 				node1?.disconnect(src)
 				node2?.disconnect(src)
 				update_icon()

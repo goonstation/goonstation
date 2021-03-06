@@ -158,7 +158,7 @@ proc/view_client_compid_list(mob/user, var/C)
 			user.show_text("Could not find the ckey [C]!", "red")
 			return
 	else
-		message_coders("[key_name(usr)] gave the compid thing [C]; that's neither text nor a client. What a jerk.")
+		message_coders("[key_name(user)] gave the compid thing [C]; that's neither text nor a client. What a jerk.")
 		return
 
 	var/dat = {"<html>

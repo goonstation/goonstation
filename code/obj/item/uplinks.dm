@@ -623,6 +623,9 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	var/max_loops = 8
 	var/bounty_tally = 0 //during loop, need more bountieas for rewards to fill
 
+	/// for use with photo printer cooldown
+	var/last_photo_print = 0
+
 	var/datum/game_mode/spy_theft/game
 
 	disposing()
@@ -769,8 +772,68 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 		if(src.active)
 			src.print_to_host(src.menu_message)
 
+	/// Prints a photo of the spy theif's target item or mob owner
+	proc/print_photo(datum/bounty_item/B, mob/user)
+		if (!B) return
+		if (!user) return
+		if (TIME <= src.last_photo_print + 5 SECONDS)
+			boutput(user, "<span class='alert'>The photo printer is recharging!</span>")
+			return
 
+		var/title = null
+		var/detail = null
+		var/image/photo_image
+		var/icon/photo_icon
+		var/atom/A = null
+		if (B.organ && B.item)
+			var/obj/item/parts/O = B.item
+			if (O.holder)
+				A = O.holder
+			else
+				A = O // loose limb
+		else if (B.item)
+			A = B.item
 
+		if (ismob(A))
+			var/mob/M = A
+			var/list/trackable_mobs = get_mobs_trackable_by_AI()
+			if (!(((M.name in trackable_mobs) && (trackable_mobs[M.name] == M)) || (M == user)))
+				boutput(user, "<span class='alert'>Unable to locate target within the station camera network!</span>")
+				return
+			photo_image = image(A.icon, null, A.icon_state, null, SOUTH)
+			photo_image.overlays = A.overlays
+			photo_image.underlays = A.underlays
+			photo_icon = M.build_flat_icon(SOUTH)
+
+			title = "photo of [M]"
+			var/holding = null
+			if (M.l_hand || M.r_hand)
+				var/they_are = M.gender == "male" ? "He's" : M.gender == "female" ? "She's" : "They're"
+				if (M.l_hand)
+					holding = "[they_are] holding \a [M.l_hand]"
+				if (M.r_hand)
+					if (holding)
+						holding += " and \a [M.r_hand]."
+					else
+						holding = "[they_are] holding \a [M.r_hand]."
+				else if (holding)
+					holding += "."
+
+			var/they_look = M.gender == "male" ? "he looks" : M.gender == "female" ? "she looks" : "they look"
+			var/health_info = M.health < 75 ? " - [they_look][M.health < 25 ? " really" : null] hurt" : null
+			if (!detail)
+				detail = "In the photo, you can see [M][M.lying ? " lying on [get_turf(M)]" : null][health_info][holding ? ". [holding]" : "."]"
+
+		else
+			photo_image = build_composite_icon(A)
+			photo_icon = getFlatIcon(A)
+			title = "photo of \a [A]"
+			detail = "You can see \a [A]."
+
+		var/obj/item/photo/P = new(src, photo_image, photo_icon, title, detail)
+		user.put_in_hand_or_drop(P)
+		playsound(get_turf(src), "sound/machines/scan.ogg", 10, 1)
+		last_photo_print = TIME
 
 	generate_menu()
 		src.menu_message = "<B>Spy Console:</B> Current location: [get_area(src)]<BR>"
@@ -805,7 +868,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 						else
 							rtext = "<br><b>Reward</b> : Not available. Deliver [req_bounties()] more bounties."
 
-					src.menu_message += "<small><br><br><tr><td><b>[B.name]</b>[rtext][atext]<br> [(B.claimed) ? "(<b>CLAIMED</b>)" : "(Deliver : <b>[B.delivery_area ? B.delivery_area : "Anywhere"]</b>)"]</td></tr></small>"
+					src.menu_message += "<small><br><br><tr><td><b>[B.name]</b>[rtext][atext]<br>[(B.claimed) ? "(<b>CLAIMED</b>)" : "(Deliver : <b>[B.delivery_area ? B.delivery_area : "Anywhere"]</b>) [B.photo_containing ? "" : "<a href='?src=\ref[src];action=print;bounty=\ref[B]'>Print</a>"]"]</td></tr></small>"
 
 		src.menu_message += "<HR>"
 
@@ -822,6 +885,10 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 			return
 		if (is_incapacitated(usr) || usr.restrained())
 			return
+		if (href_list["action"])
+			if (href_list["action"] == "print" && href_list["bounty"])
+				//print photo of item or mob owner
+				src.print_photo(locate(href_list["bounty"]) , usr)
 
 		src.generate_menu()
 		src.print_to_host(src.menu_message)
@@ -888,10 +955,10 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 			user.abilityHolder.addAbility(src.assoc_spell)
 			user.abilityHolder.updateButtons()
 		if (src.assoc_item)
-			var/obj/item/I = new src.assoc_item(usr.loc)
-			if (istype(I, /obj/item/staff) && usr.mind)
+			var/obj/item/I = new src.assoc_item(user.loc)
+			if (istype(I, /obj/item/staff) && user.mind)
 				var/obj/item/staff/S = I
-				S.wizard_key = usr.mind.key
+				S.wizard_key = user.mind.key
 		book.uses -= src.cost
 
 /datum/SWFuplinkspell/soulguard
