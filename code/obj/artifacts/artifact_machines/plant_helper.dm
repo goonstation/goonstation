@@ -78,8 +78,7 @@
 						R.lineImage.blend_mode = BLEND_ADD
 						addGlobalImage(R.lineImage, globalImageKey)
 						animate(R.lineImage, alpha = 64, time = 1 SECOND)
-						sleep(1 SECONDS)
-						animate(R.lineImage, alpha = 0, time = 1 SECOND)
-						sleep(1 SECONDS)
+						animate(alpha = 0, time = 1 SECOND)
+						sleep(2 SECONDS)
 						removeGlobalImage(globalImageKey)
 						qdel(R.lineImage)
