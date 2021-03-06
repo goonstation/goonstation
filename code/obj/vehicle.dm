@@ -120,7 +120,7 @@ ABSTRACT_TYPE(/obj/vehicle)
 		for(var/atom/movable/AM in src)
 			AM.set_loc(src.loc)
 
-	//kick out the rider
+	/// kick out the rider
 	proc/eject_rider(var/crashed, var/selfdismount, var/ejectall = 1)
 		if(rider?.loc == src)
 			src.rider.set_loc(src.loc)
