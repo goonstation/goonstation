@@ -33,7 +33,7 @@
 			boutput(M, __red("[target] probably wouldn't taste very good."))
 			return 1
 
-		if (target.lying)
+		if (!target.lying)
 			boutput(M, __red("[target] needs to be lying on the ground first."))
 			return 1
 
