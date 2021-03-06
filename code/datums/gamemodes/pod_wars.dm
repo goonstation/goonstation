@@ -12,13 +12,14 @@
 	do_antag_random_spawns = 0
 	do_random_events = 0
 	var/list/frequencies_used = list()
+	var/list/capture_points = list()		//list of /datum/capture_point
 
 
 	var/datum/pod_wars_team/team_NT
 	var/datum/pod_wars_team/team_SY
 
 	var/obj/screen/score_board/board
-	var/round_limit = 35 MINUTES
+	var/round_limit = 40 MINUTES
 	var/force_end = 0
 
 /datum/game_mode/pod_wars/announce()
@@ -86,17 +87,23 @@
 #endif
 
 /datum/game_mode/pod_wars/post_setup()
+	//Grab all capture point computers
+	// SPAWN_DBG(-1)
+	// 	for (var/obj/capture_point_computer/CPC in world)	//lazy
+	// 		capture_points += CPC
+
+
 	SPAWN_DBG(-1)
 		setup_asteroid_ores()
 
 	if(round_limit > 0)
 		SPAWN_DBG (round_limit) // this has got to end soon
 			command_alert("Something something radiation.","Emergency Update")
-			sleep(6000) // 10 minutes to clean up shop
-			command_alert("Revolution heads have been identified. Please stand by for hostile employee termination.", "Emergency Update")
-			sleep(3000) // 5 minutes until everyone dies
+			sleep(10 MINUTES)
+			command_alert("More radiation, too much...", "Emergency Update")
+			sleep(5 MINUTES)
 			command_alert("You may feel a slight burning sensation.", "Emergency Update")
-			sleep(10 SECONDS) // welp
+			sleep(10 SECONDS)
 			for(var/mob/living/carbon/M in mobs)
 				M.gib()
 			force_end = 1
@@ -1385,6 +1392,20 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 
 		//name it based on area.
 
+	ex_act()
+		return
+
+	meteorhit(var/obj/O as obj)
+		return
+
+	disposing()
+		if (istype(ticker.mode, /datum/game_mode/pod_wars))
+			//get the team datum from its team number right when we allocate points.
+			var/datum/game_mode/pod_wars/mode = ticker.mode
+
+			
+		..()
+
 
 	//change colour and owner team when captured.
 	proc/capture(var/team)
@@ -1406,3 +1427,15 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 			light_b = 1
 
 		light.set_color(light_r, light_g, light_b)
+
+/obj/warp_beacon/pod_wars
+
+/datum/capture_point
+	name = "Capture Point"
+
+	var/list/beacons = list()
+	var/obj/capture_point_computer/computer
+	var/area/capture_area
+
+	New(var/obj/capture_point_computer/computer)
+		src.computer = computer
