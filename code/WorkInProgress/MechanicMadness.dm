@@ -1218,14 +1218,14 @@
 	name = "RegEx Replace Component"
 	desc = ""
 	icon_state = "comp_regrep"
-	var/expression = "original/replacement/g"
 	var/expressionpatt = "original"
 	var/expressionrepl = "replacement"
 	var/expressionflag = "g"
 
 	get_desc()
-		. += {"<span class='notice'>Current Expression: [html_encode(expression)]</span><br/>
+		. += {"<br/><span class='notice'>Current Pattern: [html_encode(expressionpatt)]</span><br/>
 		<span class='notice'>Current Replacement: [html_encode(expressionrepl)]</span><br/>
+		<span class='notice'>Current Flags: [html_encode(expressionflag)]</span><br/>
 		Your replacement string can contain $0-$9 to insert that matched group(things between parenthesis)<br/>
 		$` will be replaced with the text that came before the match, and $' will be replaced by the text after the match.<br/>
 		$0 or $& will be the entire matched string."}
@@ -1233,62 +1233,66 @@
 	New()
 		..()
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"replace string", "checkstr")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"set regex", "setregex")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"set regex replacement", "setregexreplace")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"set pattern", "setPatternSignal")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"set replacement", "setReplacementSignal")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"set flags", "setFlagsSignal")
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Pattern","setPattern")
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Replacement","setReplacement")
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Flags","setFlags")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Regular Expression Replacement","setRegexReplacement")
 
 	proc/setPattern(obj/item/W as obj, mob/user as mob)
-		var/inp = input(user,"Please enter Expression Pattern:","Expression setting", expressionpatt) as text
+		var/inp = input(user,"Please enter Pattern:","Pattern setting", expressionpatt) as text
 		if(!in_interact_range(src, user) || user.stat)
 			return 0
 		if(length(inp))
 			expressionpatt = inp
 			inp = sanitize(html_encode(inp))
-			expression =("[expressionpatt]/[expressionrepl]/[expressionflag]")
-			boutput(user, "Expression Pattern set to [inp], Current Expression: [sanitize(html_encode(expression))]")
+			boutput(user, "Pattern set to [inp]")
 			tooltip_rebuild = 1
 			return 1
 		return 0
+
+	proc/setPatternSignal(var/datum/mechanicsMessage/input)
+		if(level == 2) return
+		LIGHT_UP_HOUSING
+		expressionpatt = input.signal
+		tooltip_rebuild = 1
 
 	proc/setReplacement(obj/item/W as obj, mob/user as mob)
-		var/inp = input(user,"Please enter Expression Replacement:","Expression setting", expressionrepl) as text
-		if(!in_interact_range(src, user) || user.stat)
-			return 0
-		if(length(inp))
-			expressionrepl = inp
-			inp = sanitize(html_encode(inp))
-			expression =("[expressionpatt]/[expressionrepl]/[expressionflag]")
-			boutput(user, "Expression Replacement set to [inp], Current Expression: [sanitize(html_encode(expression))]")
-			tooltip_rebuild = 1
-			return 1
-		return 0
-
-	proc/setFlags(obj/item/W as obj, mob/user as mob)
-		var/inp = input(user,"Please enter Expression Flags:","Expression setting", expressionflag) as text
-		if(!in_interact_range(src, user) || user.stat)
-			return 0
-		if(length(inp))
-			expressionflag = inp
-			inp = sanitize(html_encode(inp))
-			expression =("[expressionpatt]/[expressionrepl]/[expressionflag]")
-			boutput(user, "Expression Flags set to [inp], Current Expression: [sanitize(html_encode(expression))]")
-			tooltip_rebuild = 1
-			return 1
-		return 0
-
-	proc/setRegexReplacement(obj/item/W as obj, mob/user as mob)
 		var/inp = input(user,"Please enter Replacement:","Replacement setting", expressionrepl) as text
 		if(!in_interact_range(src, user) || user.stat)
 			return 0
 		if(length(inp))
 			expressionrepl = inp
-			boutput(user, "Replacement set to [html_encode(inp)]")
+			inp = sanitize(html_encode(inp))
+			boutput(user, "Replacement set to [inp]")
 			tooltip_rebuild = 1
 			return 1
 		return 0
+
+	proc/setReplacementSignal(var/datum/mechanicsMessage/input)
+		if(level == 2) return
+		LIGHT_UP_HOUSING
+		expressionrepl = input.signal
+		tooltip_rebuild = 1
+
+	proc/setFlags(obj/item/W as obj, mob/user as mob)
+		var/inp = input(user,"Please enter Flags:","Flags setting", expressionflag) as text
+		if(!in_interact_range(src, user) || user.stat)
+			return 0
+		if(length(inp))
+			expressionflag = inp
+			inp = sanitize(html_encode(inp))
+			boutput(user, "Flags set to [inp]")
+			tooltip_rebuild = 1
+			return 1
+		return 0
+
+	proc/setFlagsSignal(var/datum/mechanicsMessage/input)
+		if(level == 2) return
+		LIGHT_UP_HOUSING
+		expressionflag = input.signal
+		tooltip_rebuild = 1
 
 	proc/checkstr(var/datum/mechanicsMessage/input)
 		if(level == 2 || !length(expressionpatt)) return
@@ -1304,15 +1308,6 @@
 			input.signal = mod
 			SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_MSG,input)
 
-		return
-	proc/setregex(var/datum/mechanicsMessage/input)
-		if(level == 2) return
-		expression = input.signal
-		tooltip_rebuild = 1
-	proc/setregexreplace(var/datum/mechanicsMessage/input)
-		if(level == 2) return
-		expressionrepl = input.signal
-		tooltip_rebuild = 1
 	updateIcon()
 		icon_state = "[under_floor ? "u":""]comp_regrep"
 		return
