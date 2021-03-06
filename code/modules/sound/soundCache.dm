@@ -749,6 +749,7 @@ var/global/list/soundCache = list(
  	"sound/misc/NewRound.ogg" = 'sound/misc/NewRound.ogg',\
  	"sound/misc/NewRound2.ogg" = 'sound/misc/NewRound2.ogg',\
  	"sound/misc/NewRound3.ogg" = 'sound/misc/NewRound3.ogg',\
+ 	"sound/misc/NewRound4.ogg" = 'sound/misc/NewRound4.ogg',\
  	"sound/misc/newsting.ogg" = 'sound/misc/newsting.ogg',\
  	"sound/misc/nightclub.ogg" = 'sound/misc/nightclub.ogg',\
  	"sound/misc/openlootcrate.ogg" = 'sound/misc/openlootcrate.ogg',\

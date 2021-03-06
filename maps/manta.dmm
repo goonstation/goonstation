@@ -28154,6 +28154,7 @@
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
 	},
+/obj/access_spawn/pathology,
 /turf/simulated/floor/green,
 /area/station/medical/cdc)
 "bxP" = (
@@ -28668,7 +28669,7 @@
 	icon_state = "4-8"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/research,
+/obj/access_spawn/pathology,
 /turf/simulated/floor/orange,
 /area/station/medical/cdc)
 "bzo" = (
@@ -28952,6 +28953,7 @@
 	pixel_y = 20;
 	tag = ""
 	},
+/obj/item/sponge,
 /turf/simulated/floor/purple/checker{
 	dir = 8
 	},
@@ -28959,10 +28961,9 @@
 "bzZ" = (
 /obj/machinery/power/apc/autoname_south,
 /obj/cable,
-/obj/stool,
-/obj/landmark/start{
-	name = "Janitor"
-	},
+/obj/storage/secure/closet/civilian/janitor,
+/obj/item/chem_grenade/cleaner,
+/obj/item/chem_grenade/cleaner,
 /turf/simulated/floor/purple/checker{
 	dir = 8
 	},
@@ -29326,7 +29327,7 @@
 	icon_state = "4-8"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/research,
+/obj/access_spawn/pathology,
 /turf/simulated/floor/orange,
 /area/station/medical/cdc)
 "bAR" = (
@@ -30026,6 +30027,9 @@
 	},
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/landmark/start{
+	name = "Pathologist"
 	},
 /turf/simulated/floor/green,
 /area/station/medical/cdc)
@@ -32444,11 +32448,24 @@
 /area/station/science/artifact)
 "bKk" = (
 /obj/table/reinforced/auto,
-/obj/item/paper_bin,
-/obj/item/stamp,
-/obj/item/pen,
+/obj/item/paper_bin{
+	pixel_x = -4;
+	pixel_y = 5
+	},
+/obj/item/stamp{
+	pixel_x = 4;
+	pixel_y = -6
+	},
+/obj/item/pen{
+	pixel_x = -4;
+	pixel_y = -5
+	},
 /obj/disposalpipe/segment/mail{
 	dir = 4
+	},
+/obj/artifact_paper_dispenser{
+	pixel_x = 8;
+	pixel_y = 6
 	},
 /turf/simulated/floor,
 /area/station/science/artifact)
@@ -34078,7 +34095,10 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
-/obj/item/sponge,
+/obj/stool,
+/obj/landmark/start{
+	name = "Janitor"
+	},
 /turf/simulated/floor/purple/checker{
 	dir = 8
 	},
@@ -44465,7 +44485,7 @@
 	dir = 4
 	},
 /obj/access_spawn/kitchen,
-/obj/item/reagent_containers/food/snacks/donut/frosted{
+/obj/item/reagent_containers/food/snacks/donut/custom/frosted{
 	pixel_x = -6;
 	pixel_y = 11
 	},

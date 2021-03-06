@@ -82,7 +82,7 @@
 			//Jobs organised into sections
 			var/list/civilianjobs = list("Staff Assistant", "Bartender", "Chef", "Botanist", "Rancher", "Chaplain", "Janitor", "Clown")
 			var/list/maintainencejobs = list("Engineer", "Mechanic", "Miner", "Quartermaster")
-			var/list/researchjobs = list("Scientist", "Medical Doctor", "Geneticist", "Roboticist")
+			var/list/researchjobs = list("Scientist", "Medical Doctor", "Geneticist", "Roboticist", "Pathologist")
 			var/list/securityjobs = list("Security Officer", "Detective")
 			var/list/commandjobs = list("Head of Personnel", "Chief Engineer", "Research Director", "Medical Director", "Captain")
 
@@ -123,7 +123,7 @@
 			var/supply_access = list("<br>Supply:")
 			var/list/supply_access_list = list(access_hangar, access_cargo, access_supply_console, access_mining, access_mining_shuttle, access_mining_outpost)
 			var/research_access = list("<br>Science and Medical:")
-			var/list/research_access_list = list(access_medical, access_tox, access_tox_storage, access_medlab, access_medical_lockers, access_research, access_robotics, access_chemistry)
+			var/list/research_access_list = list(access_medical, access_tox, access_tox_storage, access_medlab, access_medical_lockers, access_research, access_robotics, access_chemistry, access_pathology)
 			var/security_access = list("<br>Security:")
 			var/list/security_access_list = list(access_security, access_brig, access_forensics_lockers, access_maxsec, access_securitylockers, access_carrypermit, access_contrabandpermit)
 			var/command_access = list("<br>Command:")

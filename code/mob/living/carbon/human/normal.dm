@@ -146,6 +146,12 @@
 		SPAWN_DBG(0)
 			JobEquipSpawned("Geneticist")
 
+/mob/living/carbon/human/normal/pathologist
+	New()
+		..()
+		SPAWN_DBG(0)
+			JobEquipSpawned("Pathologist")
+
 /mob/living/carbon/human/normal/roboticist
 	New()
 		..()
