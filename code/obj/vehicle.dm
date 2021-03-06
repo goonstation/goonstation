@@ -149,7 +149,7 @@ ABSTRACT_TYPE(/obj/vehicle)
 				B.the_mob = src.rider
 				rider.client?.screen += B //don't have to worry about location since that should already have been handled by initialization
 
-	//intializes the ability buttons (if we have any)
+	/// initializes the ability buttons (if we have any)
 	proc/setup_ability_buttons()
 		if (!islist(src.ability_buttons))
 			src.ability_buttons = list()
