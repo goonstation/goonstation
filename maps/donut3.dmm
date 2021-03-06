@@ -81838,6 +81838,10 @@
 /turf/simulated/floor/wood/six,
 /area/station/library/reading2)
 "ydb" = (
+/obj/decal/tile_edge/line/yellow{
+	dir = 9;
+	icon_state = "line1"
+	},
 /obj/cable{
 	d1 = 1;
 	d2 = 8;
