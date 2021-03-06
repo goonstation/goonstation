@@ -137,7 +137,7 @@ ABSTRACT_TYPE(/obj/vehicle)
 			for(var/obj/ability_button/B in src.ability_buttons)
 				src.rider.client?.screen -= B
 
-	//add the ability buttons to the rider
+	/// add the ability buttons to the rider
 	proc/handle_button_addition()
 		if(!src.rider?.loc == src || !(length(src.ability_buttons)))
 			return
