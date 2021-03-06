@@ -30983,7 +30983,9 @@
 	},
 /obj/machinery/door/poddoor/pyro{
 	dir = 8;
-	layer = 4
+	id = "beeguard";
+	layer = 4;
+	name = "Heisenbee's Office Shutters"
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/hor{
@@ -42856,7 +42858,9 @@
 /obj/access_spawn/research_director,
 /obj/machinery/door/poddoor/pyro{
 	dir = 8;
-	layer = 4
+	id = "beeguard";
+	layer = 4;
+	name = "Heisenbee's Office Shutters"
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/hor{
@@ -78117,6 +78121,12 @@
 	name = "autoname - SS13";
 	pixel_y = 20;
 	tag = ""
+	},
+/obj/machinery/door_control{
+	id = "beeguard";
+	name = "Heisenbee Office Shutters";
+	pixel_x = -8;
+	pixel_y = 22
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/hor/horprivate)
