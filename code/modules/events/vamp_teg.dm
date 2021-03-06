@@ -34,8 +34,8 @@
 				station_switches += S
 
 		event_active = TRUE
-		target_grump = 50
-		generator.grump += 200
+		target_grump =  max(generator.grump-50, 50)
+		generator.grump += 100
 		var/datum/effects/system/harmless_smoke_spread/smoke = new /datum/effects/system/harmless_smoke_spread()
 		smoke.set_up(1, 0, generator.loc)
 		smoke.attach(generator)
@@ -43,9 +43,12 @@
 		playsound(generator, pick(spooky_sounds), 30, 0, -1)
 
 		// Delayed Warning
-		SPAWN_DBG(rand(10 SECONDS, 1 MINUTES))
+		SPAWN_DBG(rand(10 SECONDS, 50 SECONDS))
 			if(event_active)
 				command_alert("Reports indicate that the engine on-board [station_name()] is behaving unusually. Stationwide power failures may occur or worse.", "Engine Warning")
+			sleep(30 SECONDS)
+			if(event_active)
+				command_alert("Onsite Engineers inform us a sympathetic connection exists between the furances and the engine. Considering burning something it might enjoy food, people, weed, we are grasping at straws here. ", "Engine Suggestion")
 
 		// FAILURE EVENT
 		SPAWN_DBG(2 MINUTES) //rand( 7 MINUTES, 9 MINUTES )
@@ -125,6 +128,7 @@ datum/teg_transformation/vampire
 	required_reagents = list("vampire_serum"=5)
 	var/datum/abilityHolder/vampire/abilityHolder
 	var/list/datum/targetable/vampire/abilities = list()
+	var/list/obj/machinery/atmospherics/binary/circulatorTemp/circulators
 	var/health = 150
 
 	proc/attach_hud()
@@ -154,12 +158,12 @@ datum/teg_transformation/vampire
 		var/volume = src.teg.circ1.reagents.total_volume
 		src.teg.circ1.reagents.remove_any(volume)
 		src.teg.circ1.reagents.add_reagent("blood", volume)
+		vampify(src.teg.circ1)
 		volume = src.teg.circ2.reagents.total_volume
 		src.teg.circ2.reagents.remove_any(volume)
 		src.teg.circ2.reagents.add_reagent("blood", volume)
-		vampify(src.teg)
-		vampify(src.teg.circ1)
 		vampify(src.teg.circ2)
+		vampify(src.teg)
 
 	proc/vampify(obj/O)
 		animate_levitate(O, -1, 50, random_side = FALSE)
@@ -221,7 +225,6 @@ datum/teg_transformation/vampire
 			var/list/responses = list("I hunger! Bring us food so we may eat!", "Blood... I needs it.", "I HUNGER!", "Summon them here so we may feast!")
 			say_ghoul(pick(responses))
 
-
 		if(prob(20) && abilityHolder.points > 100)
 			var/datum/reagents/reagents = pick(src.teg.circ1.reagents, src.teg.circ2.reagents)
 			var/transfer_volume = clamp(reagents.maximum_volume - reagents.total_volume, 0, abilityHolder.points - 100)
@@ -236,7 +239,7 @@ datum/teg_transformation/vampire
 				make_cleanable(/obj/decal/cleanable/blood,get_step(src.teg, SOUTH))
 				src.teg.efficiency_controller += 5
 				SPAWN_DBG(45 SECONDS)
-					if(src.teg.active_form == src)
+					if(src.teg?.active_form == src)
 						src.teg?.efficiency_controller -= 5
 		else
 			switch(rand(1,3))
@@ -249,7 +252,7 @@ datum/teg_transformation/vampire
 	proc/checkhealth()
 		for(var/obj/machinery/atmospherics/binary/circulatorTemp/C in list(src.teg?.circ1,src.teg?.circ2))
 			if(C.reagents)
-				if(C.reagents.has_reagent("water_holy",5))
+				if(C.reagents.has_reagent("water_holy", 5))
 					src.health -= 5
 					C.reagents.remove_reagent("water_holy", 8)
 					if (!(locate(/datum/effects/system/steam_spread) in C.loc))
@@ -259,7 +262,7 @@ datum/teg_transformation/vampire
 						steam.attach(C)
 						steam.start(clear_holder=1)
 
-		if(health <= 0)
+		if(health <= 0) // thou haft defeated the beast
 			on_revert()
 
 	proc/attackby(obj/T, obj/item/I as obj, mob/user as mob)
