@@ -125,10 +125,9 @@
 
 datum/teg_transformation/vampire
 	mat_id = "bone"
-	required_reagents = list("vampire_serum"=5)
+	required_reagents = list("vampire_serum"=5) /// TODO Azrun - REMOVE PRIOR TO UNDRAFT, For zee testing
 	var/datum/abilityHolder/vampire/abilityHolder
 	var/list/datum/targetable/vampire/abilities = list()
-	var/list/obj/machinery/atmospherics/binary/circulatorTemp/circulators
 	var/health = 150
 
 	proc/attach_hud()
