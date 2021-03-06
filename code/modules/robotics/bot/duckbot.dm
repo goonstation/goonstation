@@ -54,13 +54,13 @@
 		if(ismob(src.annoy_target))
 			if(!GET_COOLDOWN(src, DUCKBOT_ANNOY_TIMEOUT))
 				src.KillPathAndGiveUp(1)
-			else if(!ON_COOLDOWN(src, DUCKBOT_ANNOY_PATHING_COOLDOWN, src.annoy_path_cooldown)
+			else if(!ON_COOLDOWN(src, DUCKBOT_ANNOY_PATHING_COOLDOWN, src.annoy_path_cooldown))
 				var/turf/randwander = get_step_rand(get_turf(src.annoy_target))
 				src.navigate_to(randwander, DUCKBOT_MOVE_SPEED, 0, 30)
 		else
 			for_by_tcl(M, /mob)
 				if(IN_RANGE(src, M, 7))
-					if(!ON_COOLDOWN(src, "[DUCKBOT_ANNOY_LOCKOUT_TIMEOUT]-[M.name]", src.forget_annoyed_timeout)
+					if(!ON_COOLDOWN(src, "[DUCKBOT_ANNOY_LOCKOUT_TIMEOUT]-[M.name]", src.forget_annoyed_timeout))
 						src.annoy_target = M
 						src.navigate_to(get_turf(M), src.bot_move_delay, 0, 100)
 						break
