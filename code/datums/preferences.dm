@@ -62,6 +62,8 @@ datum/preferences
 	var/list/jobs_low_priority = list()
 	var/list/jobs_unwanted = list()
 
+	var/pda_ringtone_index = "Two-Beep"
+
 	var/datum/appearanceHolder/AH = new
 
 	var/random = 0
@@ -179,11 +181,11 @@ datum/preferences
 		if (!data_cache)
 			data_cache = list("script" = null,"css" = null,"profile_name" = null,"character_name" = null,"gender" = null,"age_blood" = null,\
 								"bank" = null,"flavortext" = null,"security_note" = null,"medical_note" = null,"occupation" = null,"traits" = null,\
-								"fartsound" = null,"screamsound" = null,"chatsound" = null,"PDAcolor"=null,"skintone" = null,"eyecolor" = null,"hair_top" = null,"hair_mid" = null,"hair_bottom" = null,\
+								"fartsound" = null,"screamsound" = null,"chatsound" = null,"PDAcolor" = null,"PDA_ringtone" = null,"skintone" = null,"eyecolor" = null,"hair_top" = null,"hair_mid" = null,"hair_bottom" = null,\
 								"underwear" = null,"randomize" = null,"font_size" = null,"messages" = null,"hud" = null,"tooltips" = null, "tgui" = null,"popups" = null,"controls" = null,"map"=null)
 			rebuild_data = list("script" = 1,"css" = 1,"profile_name" = 1,"character_name" = 1,"gender" = 1,"age_blood" = 1,\
 								"bank" = 1,"flavortext" = 1,"security_note" = 1,"medical_note" = 1,"occupation" = 1,"traits" = 1,\
-								"fartsound" = 1,"screamsound" = 1,"chatsound" = 1,"PDAcolor" = 1,"skintone" = 1,"eyecolor" = 1,"hair_top" = 1,"hair_mid" = 1,"hair_bottom" = 1,\
+								"fartsound" = 1,"screamsound" = 1,"chatsound" = 1,"PDAcolor" = 1,"PDA_ringtone" = 1,"skintone" = 1,"eyecolor" = 1,"hair_top" = 1,"hair_mid" = 1,"hair_bottom" = 1,\
 								"underwear" = 1,"randomize" = 1,"font_size" = 1,"messages" = 1,"hud" = 1,"tooltips" = 1, "tgui" = 1, "popups" = 1,"controls" = 1,"map"=1)
 		if (!profile_cache)
 			profile_cache = list()
@@ -558,6 +560,18 @@ $(updateCharacterPreviewPos);
 		<td>
 			<a href='[pref_link]PDAcolor=input'>&#9998;</a>
 			<span class='colorbit' style="background-color: [src.PDAcolor];">[src.PDAcolor]</span>
+		</td>
+	</tr>"}
+			LAGCHECK(80)
+		if (rebuild_data["PDA_ringtone"])
+			rebuild_data["PDA_ringtone"] = 0
+			data_cache["PDA_ringtone"] = {"
+	<tr>
+		<th>
+			PDA Ringtone<span class="info-thing" title="The noises your PDA makes when someone sends it a message. Also loads your PDA with the ringtone's respective program!">?</span>
+		</th>
+		<td colspan="2">
+			<a href="[pref_link]ringtonewindow=1">[src.pda_ringtone_index]</a> - <a href="[pref_link]previewringtone=1">Preview!</a>
 		</td>
 	</tr>"}
 			LAGCHECK(80)
@@ -1728,6 +1742,24 @@ $(updateCharacterPreviewPos);
 			rebuild_data["PDAcolor"] = 1
 			src.PDAcolor = input(usr, "Choose a color", "PDA", src.PDAcolor) as color | null
 
+		if (link_tags["ringtonewindow"])
+			rebuild_data["PDA_ringtone"] = 1
+			get_all_character_setup_ringtones()
+			if(!length(selectable_ringtones))
+				src.pda_ringtone_index = "Two-Beep"
+				alert(usr, "Oh no! The JamStar-DCXXI PDA ringtone distribution satellite is out of range! Please try again later.", "x.x ringtones broke x.x", "Okay")
+				logTheThing("debug", usr ? usr : null, null, "get_all_character_setup_ringtones() didn't return anything!")
+			else
+				src.pda_ringtone_index = input(usr, "Choose a ringtone", "PDA") as null|anything in selectable_ringtones
+				if (!(src.pda_ringtone_index in selectable_ringtones))
+					src.pda_ringtone_index = "Two-Beep"
+
+		if (link_tags["previewringtone"])
+			get_all_character_setup_ringtones()
+			var/datum/ringtone/RT = selectable_ringtones[src.pda_ringtone_index]
+			if(istype(RT) && length(RT.ringList))
+				usr << sound( RT.ringList[rand(1,length(RT.ringList))] )
+
 		if (link_tags["preferred_map"])
 			rebuild_data["map"] = 1
 			src.preferred_map = mapSwitcher.clientSelectMap(usr.client,pickable=0)
@@ -1986,6 +2018,7 @@ $(updateCharacterPreviewPos);
 			tgui_fancy = TRUE
 			tgui_lock = FALSE
 			PDAcolor = "#6F7961"
+			pda_ringtone_index = "Two-Beep"
 			if (!force_random_names)
 				be_random_name = 0
 			else
