@@ -571,7 +571,7 @@ var/f_color_selector_handler/F_Color_Selector
 	build_supply_pack_cache()
 	build_syndi_buylist_cache()
 	build_camera_network()
-	build_manufacturer_icons()
+	//build_manufacturer_icons()
 	clothingbooth_setup()
 
 	Z_LOG_DEBUG("World/Init", "Loading fishing spots...")
