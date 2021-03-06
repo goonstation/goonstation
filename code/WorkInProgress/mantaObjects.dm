@@ -444,7 +444,7 @@ var/obj/manta_speed_lever/mantaLever = null
 		return ..()
 
 	attack_hand(mob/user as mob)
-		if (isAI(usr))
+		if (isAI(user))
 			boutput(user, "<span class='alert'>You'd touch the door, if only you had hands.</span>")
 			return
 		if (broken == 1)
@@ -696,7 +696,7 @@ var/obj/manta_speed_lever/mantaLever = null
 
 	attack_hand(mob/user as mob)
 		if(busy) return
-		if(get_dist(usr, src) > 1 || usr.z != src.z) return
+		if(get_dist(user, src) > 1 || user.z != src.z) return
 		src.add_dialog(user)
 		add_fingerprint(user)
 		busy = 1
@@ -721,18 +721,6 @@ var/obj/manta_speed_lever/mantaLever = null
 						S.recharging = 0
 						src.recharging = 0
 				return
-
-/obj/item/hosmedal
-	name = "war medal"
-	icon = 'icons/obj/items/items.dmi'
-	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
-	icon_state = "hosmedal"
-	item_state = "hosmedal"
-
-	New()
-		..()
-		BLOCK_SETUP(BLOCK_BOOK)
-
 /obj/item/rddiploma
 	name = "RD's diploma"
 	icon = 'icons/obj/items/items.dmi'

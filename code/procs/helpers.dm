@@ -2472,9 +2472,9 @@ proc/check_whitelist(var/atom/TA, var/list/whitelist, var/mob/user as mob, var/c
 		else if (ismob(TA.loc))
 			var/mob/M = TA.loc
 			boutput(M, "[custom_message]")
-		else if(ismob(usr))
+		else if(ismob(user))
 			 // some procs don't know user, for instance because they are in on_reagent_change
-			boutput(usr, "[custom_message]")
+			boutput(user, "[custom_message]")
 		else
 			TA.visible_message("[custom_message]")
 
@@ -2628,3 +2628,11 @@ proc/is_incapacitated(mob/M)
 		M.hasStatus("weakened") || \
 		M.hasStatus("paralysis") || \
 		M.stat)
+
+/// sets up the list of ringtones players can select through character setup
+proc/get_all_character_setup_ringtones()
+	if(!length(selectable_ringtones))
+		for (var/datum/ringtone/R as() in filtered_concrete_typesof(/datum/ringtone, /proc/filter_is_character_setup_ringtone))
+			var/datum/ringtone/R_prime = new R
+			selectable_ringtones[R_prime.name] = R_prime
+	return selectable_ringtones

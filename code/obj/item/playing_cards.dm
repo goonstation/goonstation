@@ -337,12 +337,12 @@
 							break
 					if (!cardToGive)
 						return
-					user.visible_message("<span class='notice'><b>[usr]</b> draws a card from [src].</span>",\
+					user.visible_message("<span class='notice'><b>[user]</b> draws a card from [src].</span>",\
 					"<span class='notice'>You draw \an [chosenCard] from [src].</span>")
 					src.draw_card(null, user, draw_face_up, cardToGive)
 				else
 					var/datum/playing_card/Card = src.cards[1]
-					user.visible_message("<span class='notice'><b>[usr]</b> draws [draw_face_up ? "\an [Card.card_name]" : "a card"] from [src].</span>",\
+					user.visible_message("<span class='notice'><b>[user]</b> draws [draw_face_up ? "\an [Card.card_name]" : "a card"] from [src].</span>",\
 					"<span class='notice'>You draw [draw_face_up ? "\an [Card.card_name]" : "a card"] from [src].</span>")
 					src.draw_card(null, user, draw_face_up)
 			else return ..(user)

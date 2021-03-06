@@ -4,6 +4,7 @@ ABSTRACT_TYPE(/datum/artifact/)
 /datum/artifact/
 	var/associated_object = null
 	var/rarity_weight = 0
+	var/type_name = "buggy artifact code"
 	// weighted commonness, so a higher number will make it more likely
 	// 0 should not make it spawn at all, naturally
 
@@ -30,6 +31,8 @@ ABSTRACT_TYPE(/datum/artifact/)
 
 	var/list/faults = list()      // Automatically handled
 	var/list/fault_types = list() // this is set up based on the artifact's origin type
+	// faults that are not allowed on this type of artifact (usually due to not working properly/making sense)
+	var/list/datum/artifact_fault/fault_blacklist = list()
 
 	var/list/triggers = list()
 	var/validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/electric,/datum/artifact_trigger/heat,
@@ -162,8 +165,11 @@ ABSTRACT_TYPE(/datum/artifact/art)
 	damage_type = D_PIERCING
 	hit_ground_chance = 90
 	window_pass = 0
+	var/obj/machinery/artifact/turret/turretArt = null
 
 	on_hit(atom/hit)
+		if(turretArt && istype(hit, /mob/living/))
+			turretArt.ArtifactFaultUsed(hit, src)
 		return
 
 	proc/randomise()

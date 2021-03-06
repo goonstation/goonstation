@@ -134,8 +134,9 @@
 			if (src.change_name_on_spawn && !jobban_isbanned(M, "Custom Names"))
 				//if (ishuman(M)) //yyeah this doesn't work with critters fix later
 				var/default = M.real_name + " the " + src.name
+				var/orig_real = M.real_name
 				M.choose_name(3, src.name, default)
-				if(M.real_name != default)
+				if(M.real_name != default && M.real_name != orig_real)
 					phrase_log.log_phrase("name-[ckey(src.name)]", M.real_name, no_duplicates=TRUE)
 
 			if (M.traitHolder && !M.traitHolder.hasTrait("loyalist"))
@@ -585,6 +586,34 @@ ABSTRACT_TYPE(/datum/job/research)
 	New()
 		..()
 		src.access = get_access("Geneticist")
+		return
+
+
+#ifdef CREATE_PATHOGENS
+/datum/job/research/pathologist
+#else
+/datum/job/pathologist // pls no autogenerate list
+#endif
+	name = "Pathologist"
+	#ifdef CREATE_PATHOGENS
+	limit = 1
+	#else
+	limit = 0
+	#endif
+	wages = PAY_DOCTORATE
+	slot_belt = /obj/item/device/pda2/genetics
+	slot_jump = /obj/item/clothing/under/rank/pathologist
+	slot_foot = /obj/item/clothing/shoes/white
+	slot_suit = /obj/item/clothing/suit/labcoat/pathology
+	#ifdef SCIENCE_PATHO_MAP
+	slot_ears = /obj/item/device/radio/headset/research
+	#else
+	slot_ears = /obj/item/device/radio/headset/medical
+	#endif
+
+	New()
+		..()
+		src.access = get_access("Pathologist")
 		return
 
 /datum/job/research/roboticist

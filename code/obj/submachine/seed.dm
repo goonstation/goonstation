@@ -289,6 +289,8 @@
 			var/obj/item/I = locate(href_list["label"]) in src
 			if (istype(I))
 				var/newName = copytext(strip_html(input(usr,"What do you want to label [I.name]?","[src.name]",I.name) ),1, 129)
+				if(newName && newName != I.name)
+					phrase_log.log_phrase("seed", newName, no_duplicates=TRUE)
 				if (newName && I && get_dist(src, usr) < 2)
 					I.name = newName
 			src.updateUsrDialog()
@@ -1009,10 +1011,10 @@
 
 			if (src.autoextract)
 				if (!src.extract_to)
-					boutput(usr, "<span class='alert'>You must first select an extraction target if you want items to be automatically extracted.</span>")
+					boutput(user, "<span class='alert'>You must first select an extraction target if you want items to be automatically extracted.</span>")
 					return
 				if (src.extract_to.reagents.total_volume == src.extract_to.reagents.maximum_volume)
-					boutput(usr, "<span class='alert'>The extraction target is full.</span>")
+					boutput(user, "<span class='alert'>The extraction target is full.</span>")
 					return
 
 			boutput(user, "<span class='notice'>You add [W] to the machine!</span>")

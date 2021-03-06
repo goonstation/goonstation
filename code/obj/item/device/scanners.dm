@@ -232,9 +232,15 @@ that cannot be itched
 	var/reagent_scan = 0
 	var/organ_upgrade = 0
 	var/organ_scan = 0
+	var/image/scanner_status
 	module_research = list("analysis" = 2, "medicine" = 2, "devices" = 1)
 	module_research_type = /obj/item/device/analyzer/healthanalyzer
 	hide_attack = 2
+
+	New()
+		..()
+		scanner_status = image('icons/obj/items/device.dmi', icon_state = "health_over-basic")
+		UpdateOverlays(scanner_status, "status")
 
 	attack_self(mob/user as mob)
 		if (!src.reagent_upgrade && !src.organ_upgrade)
@@ -244,28 +250,40 @@ that cannot be itched
 			if (src.reagent_scan && src.organ_scan)				//if both active, make both off
 				src.reagent_scan = 0
 				src.organ_scan = 0
+				scanner_status.icon_state = "health_over-basic"
+				UpdateOverlays(scanner_status, "status")
 				boutput(user, "<span class='alert'>All upgrades disabled.</span>")
 
 			else if (!src.reagent_scan && !src.organ_scan)		//if both inactive, turn reagent on
 				src.reagent_scan = 1
 				src.organ_scan = 0
+				scanner_status.icon_state = "health_over-reagent"
+				UpdateOverlays(scanner_status, "status")
 				boutput(user, "<span class='alert'>Reagent scanner enabled.</span>")
 
 			else if (src.reagent_scan)							//if reagent active, turn reagent off, turn organ on
 				src.reagent_scan = 0
 				src.organ_scan = 1
+				scanner_status.icon_state = "health_over-organ"
+				UpdateOverlays(scanner_status, "status")
 				boutput(user, "<span class='alert'>Reagent scanner disabled. Organ scanner enabled.</span>")
 
 			else if (src.organ_scan)							//if organ active, turn BOTH on
 				src.reagent_scan = 1
 				src.organ_scan = 1
+				scanner_status.icon_state = "health_over-both"
+				UpdateOverlays(scanner_status, "status")
 				boutput(user, "<span class='alert'>All upgrades enabled.</span>")
 
 		else if (src.reagent_upgrade)
 			src.reagent_scan = !(src.reagent_scan)
+			scanner_status.icon_state = !reagent_scan ? "health_over-basic" : "health_over-reagent"
+			UpdateOverlays(scanner_status, "status")
 			boutput(user, "<span class='notice'>Reagent scanner [src.reagent_scan ? "enabled" : "disabled"].</span>")
 		else if (src.organ_upgrade)
 			src.organ_scan = !(src.organ_scan)
+			scanner_status.icon_state = !organ_scan ? "health_over-basic" : "health_over-organ"
+			UpdateOverlays(scanner_status, "status")
 			boutput(user, "<span class='notice'>Organ scanner [src.organ_scan ? "enabled" : "disabled"].</span>")
 
 	attackby(obj/item/W as obj, mob/user as mob)
@@ -310,6 +328,11 @@ that cannot be itched
 	reagent_scan = 1
 	organ_upgrade = 1
 	organ_scan = 1
+
+	New()
+		..()
+		scanner_status.icon_state = "health_over-both"
+		UpdateOverlays(scanner_status, "status")
 
 /obj/item/device/analyzer/healthanalyzer/vr
 	icon = 'icons/effects/VR.dmi'
@@ -413,7 +436,7 @@ that cannot be itched
 	pixelaction(atom/target, params, mob/user, reach)
 		var/turf/T = get_turf(target)
 		if ((analyzer_upgrade == 1) && (get_dist(user, T)>1))
-			usr.visible_message("<span class='notice'><b>[user]</b> takes a distant atmospheric reading of [T].</span>")
+			user.visible_message("<span class='notice'><b>[user]</b> takes a distant atmospheric reading of [T].</span>")
 			boutput(user, scan_atmospheric(T, visible = 1))
 			src.add_fingerprint(user)
 			return
@@ -490,6 +513,8 @@ that cannot be itched
 				a.reagent_scan = 1
 				a.reagent_upgrade = 1
 				a.icon_state = a.organ_upgrade ? "health" : "health-r-up"
+				a.scanner_status.icon_state = a.organ_scan ? "health_over-both" : "health_over-reagent"
+				a.UpdateOverlays(a.scanner_status, "status")
 				a.item_state = "healthanalyzer"
 
 			else if (istype(W, /obj/item/device/analyzer/healthanalyzer_organ_upgrade))
@@ -499,6 +524,8 @@ that cannot be itched
 				a.organ_upgrade = 1
 				a.organ_scan = 1
 				a.icon_state = a.reagent_upgrade ? "health" : "health-o-up"
+				a.scanner_status.icon_state = a.reagent_scan ? "health_over-both" : "health_over-organ"
+				a.UpdateOverlays(a.scanner_status, "status")
 				a.item_state = "healthanalyzer"
 		else if(istype(src, /obj/item/device/analyzer/atmospheric) && istype(W, /obj/item/device/analyzer/atmosanalyzer_upgrade))
 			if (upgraded)

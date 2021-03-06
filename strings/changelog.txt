@@ -1,5 +1,305 @@
 
+(t)sat mar 06 21
+(u)Camryn Buttes
+(p)3859
+(e)🐛🆕|bug, feature
+(*)Clown cars now have a car horn and a brake and should move much more smoothly (along with most other non-pod/sub/truck vehicles)! HONK HONK HONK!
+(t)fri mar 05 21
+(u)Azrun
+(p)3776
+(e)|
+(+)Improve tour guide floating chat display.
+(u)Superlagg
+(p)3692
+(e)🆕|feature
+(*)You can now pick your PDA's ringtone in character setup! Comes with a free copy of that ringtone's parent program.
+(u)Carbadox
+(p)3855
+(e)🆕|feature
+(+)Added 2x rubber shell cartridges to hacked booze vendor menu.
+(u)TTerc
+(p)3903
+(e)🆕|feature
+(+)Added medical eyepatches to medbay manufacturers.
+(u)zjdtmkhzt
+(p)3837
+(e)|
+(+)Sprinting into railings will make you start the process of vaulting over them.
+(u)Walpvrgis
+(p)3872
+(e)🎨|sprites
+(*)Adds new clothing to Clothing Booth/Vendor (30 outfits, 9 shoes and 2 hats)! Time for a makeover?
+(u)Fosstar
+(p)3861
+(e)|
+(+)Reagents are now clamped to the nearest 1000th, or 0.001
+(t)thu mar 04 21
+(u)Carbadox
+(p)3841
+(e)|
+(+)The industrial cryogenic unit has been renamed to the industrial cryogenic sleep unit and the Medical cyrogenic cell has been renamed to the cryogenic healing pod. This should make it easier to distinguish them from each other.
+(u)Superlagg
+(p)3852
+(e)🐛|bug
+(*)Securitrons will no longer attack you if you're tucked away inside something.
+(u)Chickenish
+(p)3749
+(e)⚖🆕|balance, feature
+(+)Recovery over time from blindness, eye blur, deafness, stuttering, and drug haze is now lag adjusted.
+(t)wed mar 03 21
+(u)Kyle
+(e)⚖|balance
+(+)Lizards now have a Regrow Tail ability. It lets you regrow your tail...
+(u)Zamuajasa
+(e)⚖|balance
+(+)Arse Nath/Rathen's Secret no longer causes clouds of smoke.
+(u)Sord
+(p)3797
+(e)⚖|balance
+(+)Morphine, ether, and sulfonal now reduce stimulants active time
+(u)Superlagg
+(p)3313
+(e)🆕🔄|feature, rework
+(+)Magic missiles are now speedier, bouncier, and more electrifying.
+(u)zjdtmkhzt
+(p)3836
+(e)|
+(+)The artlab folder on Dwaine now has some scripts that should make working with gptio less cumbersome.
+(u)Camryn Buttes
+(p)3681
+(e)🐛🆕🔄|bug, feature, rework
+(*)Revamped and rebalanced chaplain contracts. Replaced reversal contract with psychic meatcube contract.  Monkey soul farming is gone too. RIP
+(u)zjdtmkhzt
+(p)3377
+(e)⚖🆕🗺🎨|balance, feature, mapping, sprites
+(*)Cog1 now has chemistry equipment in the actual pharmacy.
+(+)Added a dedicated Pathologist job. Snazzy clothing sprites made by nefarious6th!
+(+)Medical Doctors/Geneticists/Roboticists/Scientists no longer have access to the pathology facilities when Pathology is enabled.
+(+)Which it is not.
+(t)sun feb 28 21
+(u)Stonepillar
+(p)3781
+(e)🗺|mapping
+(*)Added the HoP's golden crayon, which can be found in their office on most maps. Beware of possible theft!
+(u)DimWhat
+(p)3858
+(e)🆕|feature
+(+)Many mutantraces can now wear underwear.
+(t)fri feb 26 21
+(u)zjdtmkhzt
+(p)3818
+(e)⚖🆕|balance, feature
+(*)Artifacts are now sellable, more details below in the minor entries.
+(+)Money depends on artifact rarity.
+(+)Artlab has these forms you can fill out. If you fill it out correctly and slap it on an artifact, you'll get a lot more money for it.
+(+)Sometimes cargo might get new artifacts sent in if they previously sent nice ones out.
+(u)Superlagg
+(p)3419
+(e)⚖🆕|balance, feature
+(*)Added an action bar to feeding other people things, and made organs take multiple bites to eat.
+(+)Metachroitic factor now only has a 30% chance of being granted per point per bite.
+(t)thu feb 25 21
+(u)Carbadox
+(p)3717
+(e)|
+(+)Using a screwdriver / wrench on a credit transfer devices will now unanchor and let you move them.
+(u)Azrun
+(p)3807
+(e)|
+(*)Multitools now provide encoded information about the network a powered cable is connected to.
+(u)Ludolf
+(p)3827
+(e)🎨|sprites
+(+)New sprite for soldering irons.
+(u)Anachroniser
+(p)3423
+(e)⚖🆕|balance, feature
+(*)Singularities now come in variable sizes and can generate more power as they grow. Keep in mind the risks of a giant singularity.
+(u)Luxizzle
+(p)3777
+(e)🆕🗺🎨|feature, mapping, sprites
+(*)You can now frost donuts with an icing tube!
+(t)wed feb 24 21
+(u)kyle
+(+)Ethanol is now a good bit more forgiving in terms of liver damage.
+(u)Superlagg
+(p)2921
+(e)🆕|feature
+(*)The RCD can now build light bulb and light tube fixtures.
+(u)Borkatator
+(p)3728
+(e)⚖🆕|balance, feature
+(*)You can now create a viewport window when watching camera feeds
+(u)Azrun
+(p)3815
+(e)🐛|bug
+(+)Resolve issue with alloys in TEG Semiconductor.  Mix and match your favorite flavors!
+(t)tue feb 23 21
+(u)Azrun
+(p)3191
+(e)🆕🗺🎨|feature, mapping, sprites
+(*)Material science interactions with TEG! The prototype semiconductor can be removed from TEG via screwdriver-> wirecutter -> crowbar and brought to an Arc Plater near you! Re-install by reinserting -> adding wire -> snipping excess -> screwing it back in place.
+(+)TEG Semiconductor added as High Priority bounty to SpyThief.
+(u)Sovexe
+(p)3745
+(e)🔄|rework
+(+)Reworked clown shoes to have shorter slip durations. Fixed a bug where slipping as a clown didn't actually make you fall over.
+(t)sun feb 21 21
+(u)TTerc
+(p)3772
+(e)🗺|mapping
+(+)Donut 3: Made mineral magnet area larger, tweaked the mining office layout.
+(u)Luxizzle
+(p)3794
+(e)|
+(+)Weapon vendor now shows the cost of a loadout option.
+(u)virvatuli
+(p)3787
+(e)|
+(+)Added new welding tool audio to signal that it's been ignited!
+(u)Flappybat
+(p)3669
+(e)⚖|balance
+(+)Telecrystal materials are less likely to warp when used on yourself/others. Self teleporting due to attacks has a 25% chance of dropping the item at the location you warped from.
+(u)Chickenish
+(p)3775
+(e)🆕|feature
+(+)Added an Implanter to the Security vendor.
+(u)Tarmunora
+(p)3760
+(e)⚖|balance
+(+)Raised costs of power cells and 40mmPBR rounds in the sec loadout vendor.
+(t)sat feb 20 21
+(u)TTerc
+(p)3563
+(e)🗺|mapping
+(+)Cog1: Added extra purge pumps to the TEG and moved the reactor statistics computer to the engine control room.
+(u)Batelite
+(p)3768
+(e)🎨|sprites
+(+)Health analyzer screens now indicate what they're scanning
+(t)fri feb 19 21
+(u)zjdtmkhzt
+(p)3731
+(e)⚖🆕|balance, feature
+(*)Lots of non-handheld artifact types now actually trigger the faults they might get, so artifact use may have some unintended side effects now. Stay safe, everyone!
+(u)BatElite
+(p)3739
+(e)🎨|sprites
+(+)Rechargers have new sprites!
+(t)thu feb 18 21
+(u)Sord
+(p)3726
+(e)🆕|feature
+(+)New taser smg security loadout. Sprites by Matheus
+(u)virvatuli
+(p)3736
+(e)|
+(+)Added a new and unique pulse rifle/lawbringer pulse firing sound!
+(u)TTerc
+(p)3627
+(e)⚖🆕|balance, feature
+(+)You can now refill the flamethrowers by simply clicking the large tanks with them.
+(u)Flappybat
+(p)3651
+(e)⚖|balance
+(*)Blocks MRPT rocket ammo from being loaded into the zip gun.
+(u)Superlagg
+(p)3276
+(e)⚖🆕🔄|balance, feature, rework
+(*)Upgraded bot AI to be more responsive in general.
+(*)Buddy combat AI has been upgraded to allow them to move *and* shoot.
+(+)Secbots can be ordered to guard and lockdown specific areas.
+(+)Floorbots now eat loose floor metal by default.
+(+)Added actionbars to most times bot actions, like repairing floors and injecting people with drugs.
+(+)Ammofab now costs 1 TC.
+(u)Flappybat
+(p)3580
+(e)⚖🐛|balance, bug
+(*)Syndicate riot baton now deals stamina damage instead of instant stun, two hits are required to knockdown. Now functions like an infinite ammo stun baton with extra blunt damage on harm intent.
+(t)wed feb 17 21
+(u)Sovexe
+(p)3746
+(e)🆕|feature
+(*)Spy Thieves can now print pictures of their targets out from their PDA!
+(t)sun feb 14 21
+(u)Carbadox
+(p)3718
+(e)🐛🎨|bug, sprites
+(+)Added the ability to make industrial table parts with reinforced metal sheets.
+(u)BenLubar
+(p)3381
+(e)⚖|balance
+(+)Attacking someone with a drinking glass while in harm intent now splashes your drink onto them.
+(u)Anachroniser
+(p)3409
+(e)⚖|balance
+(+)Arrow shafts now apply effects while implanted
+(+)Can use organic material in arrows and spears
+(t)sat feb 13 21
+(u)Xyzzy
+(p)3324
+(e)🆕|feature
+(+)Tugs can now pull wheeled carts.
+(u)Sord
+(p)3413
+(e)⚖🆕|balance, feature
+(*)Reworked Security loadouts in the Security equipment vendors.
+(u)Flappybat
+(p)3584
+(e)🎨|sprites
+(+)Radiation blowout uses the battlestorm effect to show unsafe areas.
+(u)pali
+(*)Building new cloning pods now requires uqill (to make the pod sturdy) and beeswax. Little known lore: NT's cloning pods are actually a technology copied from spacebees and the beeswax is necessary to make the clone heal up!
+(u)BenLubar
+(p)3163
+(e)⚖🆕🗺📄|balance, feature, mapping, tgui
+(*)Cloning consoles can now communicate with up to 3 total cloning pods.
+(u)Azrun
+(p)3558
+(e)⚖🗺🎨|balance, mapping, sprites
+(*)Increases "standard" burn chamber temperature and improve Molitz Beta drop chance.  Research Director now has a briefcase with Molitz Beta in their office.
+(u)pali
+(p)3691
+(e)🆕|feature
+(*)You can now save game logs in the chatlog menu (the cogwheel in the top right corner of the chatlog).<br>You can also enter 5 more words for highlighting, toggle emoji style and toggle deletion of old messages.
+(t)fri feb 12 21
+(u)tarmunora
+(e)⚖|balance
+(+)RCDs and their ammo are more expensive to manufacture
+(u)Azrun
+(p)3695
+(e)|
+(+)Removes escalation of pipe rupture.  Too much busy work.
+(u)pali
+(*)Increased cloud save limit for character profiles to 15.
 (t)thu feb 11 21
+(u)mbc and Sord
+(p)3418
+(e)⚖|balance
+(*)Added short action bar to power cell swapping
+(u)BatElite
+(p)3456
+(e)🆕|feature
+(+)Surgery trays and kitchen islands now have brakes. Toggle them by clicking the tray/island.
+(u)Tarmunora
+(e)⚖|balance
+(+)Pizza sharpener will slice an unsliced pizza when sharpening, and can now appear in surplus crates
+(u)Flappybat
+(p)3660
+(e)⚖|balance
+(+)Reduced Old Hunting Rifle and Tranquilizer Rifle to a magazine size of 4.
+(u)pali
+(+)You can now crack coconuts by chairflipping onto them. Sound effect by <a href="https://freesound.org/people/KomradeJack/sounds/136494/">KomradeJack</a>
+(u)BatElite
+(p)3682
+(e)🐛🆕🗺🔄🎨|bug, feature, mapping, rework, sprites
+(*)Engineers have found some dusty AI displays in storage, and upgraded them to better represent out beloved silicon friends! Until NT stations and ships are properly fitted with the displays, mechanics can find some blueprints for them in their lockers.
+(+)Each AI status display now has an "owner", so it's possible to share them between AIs. You can still claim/steal any screen from other AIs by clicking on them.
+(u)BenLubar
+(p)3639
+(e)🐛|bug
+(+)The network cards in the security records and engine control computers have been upgraded to new models which can transmit PDA messages to distances greater than 0.4 millifurlongs.
 (u)zjdtmkhzt
 (p)3638
 (e)🆕|feature

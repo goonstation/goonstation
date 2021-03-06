@@ -74,7 +74,7 @@
 			var/t = input(user, "Holder Label:", text("[]", src.name), null)  as text
 			if (user.equipped() != P)
 				return
-			if ((!in_interact_range(src, usr) && src.loc != user))
+			if ((!in_interact_range(src, user) && src.loc != user))
 				return
 			t = copytext(sanitize(t),1,MAX_MESSAGE_LEN)
 			if (t)
@@ -174,7 +174,7 @@
 			var/t = input(user, "Card Label:", text("[]", src.name), null)  as text
 			if (user.equipped() != W)
 				return
-			if ((!in_interact_range(src, usr) && src.loc != user))
+			if ((!in_interact_range(src, user) && src.loc != user))
 				return
 			t = copytext(sanitize(t),1,MAX_MESSAGE_LEN)
 			if (t)

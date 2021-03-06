@@ -692,7 +692,7 @@
 		if(ishuman(owner))
 			var/mob/living/carbon/human/H = owner
 			H.add_stam_mod_max("trait", STAMINA_MAX * 0.1)
-			H.add_stam_mod_regen("trait", STAMINA_REGEN * 0.1)
+			APPLY_MOB_PROPERTY(H, PROP_STAMINA_REGEN_BONUS, "trait", STAMINA_REGEN * 0.1)
 
 /obj/trait/bigbruiser
 	name = "Big Bruiser (-2) \[Stats\]"
@@ -1064,3 +1064,22 @@ obj/trait/pilot
 	category = "species"
 	mutantRace = /datum/mutantrace/roach
 
+//Infernal Contract Traits
+/obj/trait/hair
+	name = "Wickedly Good Hair"
+	desc = "Sold your soul for the best hair around"
+	id = "contract_hair"
+	points = 0
+	isPositive = 1
+	unselectable = 1
+
+	onAdd(var/mob/owner)
+		if(ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			omega_hairgrownium_grow_hair(H, 1)
+		return
+
+	onLife(var/mob/owner) //Just to be safe.
+		if(ishuman(owner) && prob(35))
+			var/mob/living/carbon/human/H = owner
+			omega_hairgrownium_grow_hair(H, 1)

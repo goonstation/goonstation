@@ -120,7 +120,7 @@
 	can_reclaim = 0
 	can_scramble = 0
 	curable_by_mutadone = 0
-	sleep_prob = 35
+	sleep_prob = 10 //reduced from 35
 	icon_state  = "bad"
 
 /datum/bioEffect/coprolalia
@@ -753,11 +753,11 @@
 	icon_state  = "bad"
 
 	OnAdd()
-		src.owner.add_stam_mod_regen("g-fitness-debuff", -2)
+		APPLY_MOB_PROPERTY(src.owner, PROP_STAMINA_REGEN_BONUS, "g-fitness-debuff", -2)
 		src.owner.add_stam_mod_max("g-fitness-debuff", -30)
 
 	OnRemove()
-		src.owner.remove_stam_mod_regen("g-fitness-debuff")
+		REMOVE_MOB_PROPERTY(src.owner, PROP_STAMINA_REGEN_BONUS, "g-fitness-debuff")
 		src.owner.remove_stam_mod_max("g-fitness-debuff")
 
 /datum/bioEffect/tinnitus

@@ -254,15 +254,6 @@ var/list/globalPropList = null
 		getTooltipDesc(var/obj/propOwner, var/propVal)
 			return "[propVal] max. stamina"
 
-	stamregen
-		name = "Stamina regen."
-		id = "stamregen"
-		desc = "Affects stamina regenration." //Value is flat effective change to stamina regeneration.
-		tooltipImg = "stamregen.png"
-		defaultValue = 1
-		getTooltipDesc(var/obj/propOwner, var/propVal)
-			return "[propVal] stamina regen."
-
 	stamcost
 		name = "Stamina cost"
 		id = "stamcost"
@@ -536,5 +527,17 @@ to say if there's demand for that.
 	defaultValue = 1
 
 	ASSOCIATE_MOB_PROPERTY(PROP_ENCHANT_ARMOR)
+
+/datum/objectProperty/equipment/stamregen
+	name = "Stamina regen."
+	id = "stamregen"
+	desc = "Affects stamina regenration." //Value is flat effective change to stamina regeneration.
+	tooltipImg = "stamregen.png"
+	defaultValue = 1
+	
+	getTooltipDesc(var/obj/propOwner, var/propVal)
+		return "[propVal] stamina regen."
+
+	ASSOCIATE_MOB_PROPERTY(PROP_STAMINA_REGEN_BONUS)
 
 #undef ASSOCIATE_MOB_PROPERTY
