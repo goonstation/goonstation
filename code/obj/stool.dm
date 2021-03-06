@@ -530,6 +530,7 @@
 		if (src.dir == NORTH)
 			src.layer = FLY_LAYER+1
 		butt_img = image('icons/obj/furniture/chairs.dmi')
+		butt_img.layer = OBJ_LAYER + 0.5 //In between OBJ_LAYER and MOB_LAYER
 		..()
 		return
 
@@ -936,11 +937,6 @@
 			C.set_dir(dir)
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
-		var/butttest = has_butt
-		..()
-		if (has_butt != butttest)
-			update_icon()
 
 	proc/update_icon()
 		if (src.dir == NORTH)
