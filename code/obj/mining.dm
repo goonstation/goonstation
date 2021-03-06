@@ -381,7 +381,7 @@
 			var/datum/mining_encounter/MC
 
 			if(selectable_encounter_id != null)
-				if(mining_controls.mining_encounters_selectable.Find(selectable_encounter_id))
+				if(selectable_encounter_id in mining_controls.mining_encounters_selectable)
 					MC = mining_controls.mining_encounters_selectable[selectable_encounter_id]
 					mining_controls.remove_selectable_encounter(selectable_encounter_id)
 				else
