@@ -3,6 +3,8 @@
 	required_elapsed_round_time = 40 MINUTES
 	weight = 50
 	var/obj/machinery/power/generatorTemp/generator
+	var/event_active
+	var/target_grump
 
 #ifdef RP_MODE
 	disabled = 1
@@ -17,15 +19,105 @@
 
 	event_effect(var/source,var/turf/T,var/delay,var/duration)
 		..()
+		var/list/spooky_sounds = list("sound/ambience/nature/Wind_Cold1.ogg", "sound/ambience/nature/Wind_Cold2.ogg", "sound/ambience/nature/Wind_Cold3.ogg","sound/ambience/nature/Cave_Bugs.ogg", "sound/ambience/nature/Glacier_DeepRumbling1.ogg", "sound/effects/bones_break.ogg",	"sound/effects/gust.ogg", "sound/effects/static_horror.ogg", "sound/effects/blood.ogg")
+		if(!generator)
+			generator = locate(/obj/machinery/power/generatorTemp) in machine_registry[MACHINES_POWER]
+		if (!generator || generator.disposed || generator.z != Z_LEVEL_STATION )
+			message_admins("The Vampire TEG event failed to find TEG!")
+			return
 
-		if (!istype(T,/turf/))
-			T = pick_landmark(LANDMARK_BLOBSTART)
-			if(!T)
-				message_admins("The black hole event failed to spawn a black hole (no blobstart landmark found)")
-				return
+		var/list/obj/machinery/station_switches = list()
+		for(var/area/SA as() in station_areas)
+			var/obj/machinery/light_switch/S
+			S = locate(/obj/machinery/light_switch) in station_areas[SA].machines
+			if(S)
+				station_switches += S
 
-		message_admins("Black Hole anomaly spawning in [T.loc]")
-		new /obj/anomaly/bhole_spawner(T,3 MINUTES)
+		event_active = TRUE
+		target_grump = 50
+		generator.grump += 200
+		var/datum/effects/system/harmless_smoke_spread/smoke = new /datum/effects/system/harmless_smoke_spread()
+		smoke.set_up(1, 0, generator.loc)
+		smoke.attach(generator)
+		smoke.start()
+		playsound(generator, pick(spooky_sounds), 30, 0, -1)
+
+		// Delayed Warning
+		SPAWN_DBG(rand(10 SECONDS, 1 MINUTES))
+			if(event_active)
+				command_alert("Reports indicate that the engine on-board [station_name()] is behaving unusually. Stationwide power failures may occur or worse.", "Engine Warning")
+
+		// FAILURE EVENT
+		SPAWN_DBG(2 MINUTES) //rand( 7 MINUTES, 9 MINUTES )
+			if(event_active)
+				event_active = FALSE
+				for (var/obj/machinery/light_switch/L as() in station_switches)
+					if(L.on && prob(50))
+						elecflash(L)
+						L.attack_hand(null)
+				generator.transformation_mngr.transform_to_type(/datum/teg_transformation/vampire)
+
+		SPAWN_DBG(0)
+			var/area/A = get_area(generator)
+			var/obj/machinery/teg_light_switch = locate(/obj/machinery/light_switch) in A.machines
+
+			if(teg_light_switch)
+				elecflash(teg_light_switch)
+				teg_light_switch.attack_hand(null)
+
+			while(event_active)
+				//Bail on event if something happened to TEG
+				if(!generator || generator.disposed)
+					event_active = FALSE
+					return
+
+				//Check for success!
+				if(generator.grump < target_grump)
+					event_active = FALSE
+					return
+
+				if(prob(50))
+					playsound(generator, pick(spooky_sounds), 30, 0, -1)
+					switch(rand(1,5))
+						if(1)
+							animate_flash_color_fill_inherit(pick(generator,generator.circ1,generator.circ2),"#e13333",2, 2 SECONDS)
+						if(2)
+							animate_levitate(pick(generator,generator.circ1,generator.circ2), 1, 50, random_side = FALSE)
+						if(3)
+							//Turn off light switches
+							for (var/obj/machinery/light_switch/L as() in station_switches)
+								if(L.on && prob(5))
+									elecflash(L)
+									L.attack_hand(null)
+						if(4)
+							//Electrify Doors
+							for_by_tcl(D, /obj/machinery/door/airlock)
+								if (D.z == Z_LEVEL_STATION && D.powered() && prob(5))
+									if (D.secondsElectrified == 0)
+										elecflash(D)
+										D.secondsElectrified = -1
+										SPAWN_DBG(10 SECONDS)
+											if (D)
+												D.secondsElectrified = 0
+						if(5)
+							//Reduced APC EMP
+							var/obj/machinery/power/apc/apc
+							A = pick(station_areas)
+							apc = station_areas[A].area_apc
+							if(apc && apc.powered() && (apc.lighting || apc.equipment || apc.environ ) )
+								elecflash(apc, radius=1)
+								if(apc.cell)
+									apc.cell.charge -= 500
+									if (apc.cell.charge < 0)
+										apc.cell.charge = 0
+								apc.lighting = 0
+								apc.equipment = 0
+								apc.environ = 0
+								SPAWN_DBG(20 SECONDS)
+									apc.equipment = 3
+									apc.environ = 3
+
+				sleep(rand(5.8 SECONDS, rand(25 SECONDS)))
 
 
 datum/teg_transformation/vampire
@@ -33,6 +125,7 @@ datum/teg_transformation/vampire
 	required_reagents = list("vampire_serum"=5)
 	var/datum/abilityHolder/vampire/abilityHolder
 	var/list/datum/targetable/vampire/abilities = list()
+	var/health = 150
 
 	proc/attach_hud()
 		. = FALSE
@@ -51,6 +144,7 @@ datum/teg_transformation/vampire
 		for(var/datum/targetable/vampire/A in abilityHolder.abilities)
 			abilities[A.name] = A
 		RegisterSignal(src.teg, COMSIG_ATOM_HITBY_PROJ, .proc/projectile_collide)
+		RegisterSignal(src.teg, COMSIG_ATTACKBY, .proc/attackby)
 
 		var/image/mask = image('icons/obj/clothing/item_masks.dmi', "death")
 		mask.appearance_flags = RESET_COLOR | RESET_ALPHA
@@ -76,12 +170,15 @@ datum/teg_transformation/vampire
 		var/datum/reagents/leaked
 		teg.UpdateOverlays(null, "mask")
 		UnregisterSignal(src.teg, COMSIG_ATOM_HITBY_PROJ)
+		UnregisterSignal(src.teg, COMSIG_ATTACKBY)
 		var/volume = src.teg.circ1.reagents.total_volume
-		leaked = src.teg.circ1.reagents.remove_any_to(volume)
-		leaked.reaction(get_step(src.teg.circ1, SOUTH))
+		if(volume)
+			leaked = src.teg.circ1.reagents.remove_any_to(volume)
+			leaked.reaction(get_step(src.teg.circ1, SOUTH))
 		volume = src.teg.circ2.reagents.total_volume
-		leaked = src.teg.circ2.reagents.remove_any_to(volume)
-		leaked.reaction(get_step(src.teg.circ2, SOUTH))
+		if(volume)
+			leaked = src.teg.circ2.reagents.remove_any_to(volume)
+			leaked.reaction(get_step(src.teg.circ2, SOUTH))
 		animate(src.teg)
 		animate(src.teg.circ1)
 		animate(src.teg.circ2)
@@ -97,6 +194,10 @@ datum/teg_transformation/vampire
 					targets += M
 
 		if(length(targets))
+			if(prob(30))
+				if( !ON_COOLDOWN(src.teg,"blood", 30 SECONDS) )
+					playsound(src.teg, "sound/effects/blood.ogg", rand(10,20), 0, -1)
+
 			var/mob/living/carbon/target = pick(targets)
 
 			if(target in abilityHolder.ghouls)
@@ -120,6 +221,7 @@ datum/teg_transformation/vampire
 			var/list/responses = list("I hunger! Bring us food so we may eat!", "Blood... I needs it.", "I HUNGER!", "Summon them here so we may feast!")
 			say_ghoul(pick(responses))
 
+
 		if(prob(20) && abilityHolder.points > 100)
 			var/datum/reagents/reagents = pick(src.teg.circ1.reagents, src.teg.circ2.reagents)
 			var/transfer_volume = clamp(reagents.maximum_volume - reagents.total_volume, 0, abilityHolder.points - 100)
@@ -134,8 +236,47 @@ datum/teg_transformation/vampire
 				make_cleanable(/obj/decal/cleanable/blood,get_step(src.teg, SOUTH))
 				src.teg.efficiency_controller += 5
 				SPAWN_DBG(45 SECONDS)
-					src.teg?.efficiency_controller -= 5
+					if(src.teg.active_form == src)
+						src.teg?.efficiency_controller -= 5
+		else
+			switch(rand(1,3))
+				if(1)
+					station_areas[pick(station_areas)].area_apc?.emp_act()
+
+		checkhealth()
 		return TRUE
+
+	proc/checkhealth()
+		for(var/obj/machinery/atmospherics/binary/circulatorTemp/C in list(src.teg?.circ1,src.teg?.circ2))
+			if(C.reagents)
+				if(C.reagents.has_reagent("water_holy",5))
+					src.health -= 5
+					C.reagents.remove_reagent("water_holy", 8)
+					if (!(locate(/datum/effects/system/steam_spread) in C.loc))
+						playsound(C.loc, "sound/effects/bubbles3.ogg", 80, 1, -3, pitch=0.7)
+						var/datum/effects/system/steam_spread/steam = unpool(/datum/effects/system/steam_spread)
+						steam.set_up(1, 0, get_turf(C))
+						steam.attach(C)
+						steam.start(clear_holder=1)
+
+		if(health <= 0)
+			on_revert()
+
+	proc/attackby(obj/T, obj/item/I as obj, mob/user as mob)
+		var/force = I.force
+		if(istype(I,/obj/item/storage/bible) && user.traitHolder.hasTrait("training_chaplain"))
+			force = 60
+
+		switch (force)
+			if (0 to 19)
+				force = force / 4
+			if (20 to 39)
+				force = force / 5
+			if (40 to 59)
+				force = force / 6
+			if (60 to INFINITY)
+				force = force / 7
+		health -= force
 
 	proc/projectile_collide(owner, obj/projectile/P)
 		if (("vamp" in P.special_data))

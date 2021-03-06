@@ -783,7 +783,7 @@ datum/pump_ui/circulator_ui
 		if(.)
 			UpdateOverlays(.,"mask")
 
-	process()
+	process(mult)
 		if(!src.circ1 || !src.circ2)
 			return
 
@@ -859,7 +859,7 @@ datum/pump_ui/circulator_ui
 			if(!ON_COOLDOWN(src, "klaxon", 10 SECOND))
 				playsound(src.loc, "sound/misc/klaxon.ogg", 40, pitch=1.1)
 
-		process_grump()
+		process_grump(mult)
 
 		src.transformation_mngr.check_material_transformation()
 
@@ -913,7 +913,7 @@ datum/pump_ui/circulator_ui
 
 		..()
 
-	proc/process_grump()
+	proc/process_grump(mult)
 		var/stoked_sum = 0
 		if(lastgenlev > 0)
 			if(grump < 0) grump = 0 // no negative grump plz
@@ -923,8 +923,8 @@ datum/pump_ui/circulator_ui
 			if( F.active ) stoked_sum += F.stoked
 
 		if(stoked_sum > 10)
-			if(prob(50)) grump--
-			if(prob(5)) grump -= min(stoked_sum/10, 15)
+			if(prob(50)) grump -= mult
+			if(prob(5)) grump -= (min(stoked_sum/10, 15)*mult)
 
 		// Use classic grump if not handled by variant
 		if(!src.active_form?.on_grump(src))
