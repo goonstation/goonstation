@@ -397,11 +397,9 @@
 
 /mob/proc/machoize(var/shitty = 0)
 	if (src.mind || src.client)
-		var/mob/living/carbon/human/machoman/W = null
 		if (shitty)
 			message_admins("[key_name(src)] has been made a faustian macho man.")
 			logTheThing("admin", null, src, "[constructTarget(src,"admin")] has been made a faustian macho man.")
-			W = new/mob/living/carbon/human/machoman/shitty(src)
 		else
 			message_admins("[key_name(usr)] made [key_name(src)] a macho man.")
 			logTheThing("admin", usr, src, "made [constructTarget(src,"admin")] a macho man.")
@@ -463,7 +461,7 @@
 					/mob/living/carbon/human/machoman/verb/macho_slimjim_snap) //they can keep macho heal and the arena thing
 				W.verbs -= dangerousVerbs //this is just diabolical
 				W.reagents.add_reagent("anti_fart", 800) //as is this
-				boutput(W, "<span class='notice'>You weren't able to absorb all the macho waves you were bombarded with! You have been left an incomplete macho man, with a frail body, and only one macho power. However, you inflict double damage with most melee weapons. Use your newfound form wisely to prove your worth as a macho champion of justice. Do not kill innocent crewmembers.</span>")
+			boutput(W, "<span class='notice'>You weren't able to absorb all the macho waves you were bombarded with! You have been left an incomplete macho man, with a frail body, and only one macho power. However, you inflict double damage with most melee weapons. Use your newfound form wisely to prove your worth as a macho champion of justice. Do not kill innocent crewmembers.</span>")
 
 		else
 			boutput(W, "<span class='notice'>You are now a macho man!</span>")
