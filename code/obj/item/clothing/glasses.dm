@@ -606,10 +606,11 @@
 	item_state = "xray"
 	desc = "Woah! It's like everything was 2D before you put these on!"
 
-/obj/item/clothing/glasses/xray/syndicate
-	name = "3D glasses"
+/obj/item/clothing/glasses/xray/real
+	name = "X-ray specs"
 	icon_state = "xray"
 	item_state = "xray"
+	desc = "Huh... these actually work?!"
 	var/existing_gene = null
 
 	equipped(var/mob/user)

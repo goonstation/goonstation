@@ -34,7 +34,7 @@
 
 				// SCIENCE GOODS LOOT TABLE
 				if (tier == 3)
-					picker = rand(1,4)
+					picker = rand(1,5)
 					switch(picker)
 						if(1)
 							items += /obj/item/clothing/gloves/psylink_bracelet
@@ -44,6 +44,9 @@
 							item_amounts += 1
 						if(3)
 							items += /obj/item/clothing/shoes/hermes
+							item_amounts += 1
+						if(4)
+							items += /obj/item/clothing/glasses/xray/real
 							item_amounts += 1
 						else
 							items += /obj/item/device/voltron

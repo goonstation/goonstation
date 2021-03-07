@@ -46,6 +46,13 @@
 	category = "Accessories"
 	cost = PAY_TRADESMAN/3
 
+/datum/clothingbooth_item/redblueglasses
+	name = "3D Glasses"
+	path = /obj/item/clothing/glasses/xray
+	slot = SLOT_GLASSES
+	category = "Accessories"
+	cost = PAY_TRADESMAN/3
+
 //Casual
 
 /datum/clothingbooth_item/casualjeanswb
