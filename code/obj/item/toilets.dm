@@ -42,7 +42,7 @@ TOILET
 		return
 	if (istype(W, /obj/item/storage))
 		return
-	if (istype(W, /obj/item/grab))
+	if (istype(W, /obj/item/grab) && !ON_COOLDOWN(src, "swirlie", 0.5 SECOND))
 		playsound(get_turf(src), "sound/effects/toilet_flush.ogg", 50, 1)
 		user.visible_message("<span class='notice'>[user] gives [W:affecting] a swirlie!</span>", "<span class='notice'>You give [W:affecting] a swirlie. It's like Middle School all over again!</span>")
 		return
@@ -105,7 +105,7 @@ TOILET
 			reset_anchored(M)
 			M.buckled = null
 			src.add_fingerprint(user)
-	if((src.clogged < 1) || (src.contents.len < 7) || (user.loc != src.loc))
+	if((src.clogged < 1 || src.contents.len < 7 || user.loc != src.loc) && !ON_COOLDOWN(src, "toilet flushing", 1 SECOND))
 		user.visible_message("<span class='notice'>[user] flushes [src].</span>", "<span class='notice'>You flush [src].</span>")
 		playsound(get_turf(src), "sound/effects/toilet_flush.ogg", 50, 1)
 
@@ -123,7 +123,7 @@ TOILET
 			qdel(item)
 			src.hud?.remove_item(item)
 
-	else if((src.clogged >= 1) || (src.contents.len >= 7) || (user.buckled != src.loc))
+	else if((src.clogged < 1 || src.contents.len < 7 || user.loc != src.loc) && !ON_COOLDOWN(src, "toilet flushing", 1 SECOND))
 		src.visible_message("<span class='notice'>The toilet is clogged!</span>")
 
 /obj/item/storage/toilet/custom_suicide = 1
