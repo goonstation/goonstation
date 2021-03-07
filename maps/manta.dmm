@@ -5256,6 +5256,9 @@
 	dir = 4;
 	icon_state = "pipe-c"
 	},
+/obj/machinery/ai_status_display{
+	pixel_y = 28
+	},
 /turf/simulated/floor,
 /area/station/hallway/portupperhallway)
 "apQ" = (
@@ -5358,6 +5361,9 @@
 /obj/disposalpipe/segment/mail{
 	dir = 2;
 	icon_state = "pipe-c"
+	},
+/obj/machinery/ai_status_display{
+	pixel_y = 28
 	},
 /turf/simulated/floor,
 /area/station/hallway/starboardupperhallway)
@@ -37236,6 +37242,14 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/portupperhallway)
+"eml" = (
+/obj/machinery/ai_status_display{
+	pixel_y = 28
+	},
+/turf/simulated/floor/carpet{
+	icon_state = "green1"
+	},
+/area/station/crew_quarters/cafeteria/the_rising_tide_bar)
 "eoz" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -37811,6 +37825,9 @@
 	},
 /obj/cable{
 	icon_state = "2-8"
+	},
+/obj/machinery/ai_status_display{
+	pixel_y = 28
 	},
 /turf/simulated/floor/longtile,
 /area/station/bridge)
@@ -38540,6 +38557,15 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/security/brig/solitary)
+"hsB" = (
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
+/obj/machinery/ai_status_display{
+	pixel_y = 28
+	},
+/turf/simulated/floor,
+/area/station/hallway/portlowerhallway)
 "huj" = (
 /obj/machinery/vending/medical_public,
 /obj/machinery/light/incandescent/netural{
@@ -40779,11 +40805,23 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
+/obj/machinery/ai_status_display{
+	pixel_y = 28
+	},
 /turf/simulated/floor/longtile,
 /area/station/bridge)
 "nBB" = (
 /turf/simulated/floor/plating/random,
 /area/station/hangar/mining)
+"nFD" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/ai_status_display{
+	pixel_y = 28
+	},
+/turf/simulated/floor/purple,
+/area/station/science/lobby)
 "nHa" = (
 /obj/disposalpipe/segment/mail,
 /obj/machinery/power/apc/autoname_east,
@@ -41049,6 +41087,12 @@
 	},
 /turf/simulated/floor/darkblue,
 /area/station/bridge)
+"oli" = (
+/obj/machinery/ai_status_display{
+	pixel_y = 28
+	},
+/turf/simulated/floor,
+/area/station/hallway/portlowerhallway)
 "olF" = (
 /obj/item/raw_material/rock,
 /obj/disposalpipe/trunk,
@@ -42064,6 +42108,12 @@
 	dir = 1
 	},
 /area/station/engine/inner)
+"qDZ" = (
+/obj/machinery/ai_status_display{
+	pixel_y = 28
+	},
+/turf/simulated/floor,
+/area/station/hallway/starboardlowerhallway)
 "qHI" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 1;
@@ -73105,7 +73155,7 @@ aLJ
 aLJ
 aLJ
 aLJ
-bgr
+hsB
 bqa
 aKs
 edA
@@ -85197,7 +85247,7 @@ ogC
 xaf
 xaf
 xaf
-boc
+oli
 boc
 bJv
 auy
@@ -90919,7 +90969,7 @@ aFV
 biP
 aYF
 aDa
-bmK
+eml
 bmL
 bob
 aGE
@@ -91841,7 +91891,7 @@ aMm
 aLH
 aLH
 aLH
-bpV
+qDZ
 bpV
 bJU
 aui
@@ -102107,7 +102157,7 @@ buD
 bAK
 bCn
 aHI
-bEU
+nFD
 bDL
 bHy
 svA
