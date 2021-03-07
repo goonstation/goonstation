@@ -1,5 +1,9 @@
 
 (t)sat mar 06 21
+(u)Stonepillar
+(p)3931
+(e)🆕|feature
+(*)Added a rapid crayon creation device. It makes crayons. Purchase with spacebux or find in artistic toolboxes.
 (u)Camryn Buttes
 (p)3859
 (e)🐛🆕|bug, feature
