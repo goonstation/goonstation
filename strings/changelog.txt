@@ -1,4 +1,9 @@
 
+(t)sun mar 07 21
+(u)Comradef191
+(p)3934
+(e)🐛🗺|bug, mapping
+(*)Firedoors will once again appear in Hallways, Inner Engineering & the Customs Desk on Cogmap 1.
 (t)sat mar 06 21
 (u)Stonepillar
 (p)3931
