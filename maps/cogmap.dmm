@@ -63223,6 +63223,20 @@
 	},
 /turf/simulated/floor/dirt,
 /area/station/ranch)
+"usA" = (
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/power/apc{
+	areastring = "Medbay";
+	name = "Medbay APC";
+	pixel_y = -24
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/southwest)
 "uvz" = (
 /obj/cable{
 	icon_state = "0-2"
@@ -102112,7 +102126,7 @@ bWU
 bYj
 bLG
 ahf
-cbV
+usA
 cbQ
 cey
 cfH
