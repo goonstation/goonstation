@@ -20,6 +20,8 @@
 	event_effect(var/source,var/turf/T,var/delay,var/duration)
 		..()
 		var/list/spooky_sounds = list("sound/ambience/nature/Wind_Cold1.ogg", "sound/ambience/nature/Wind_Cold2.ogg", "sound/ambience/nature/Wind_Cold3.ogg","sound/ambience/nature/Cave_Bugs.ogg", "sound/ambience/nature/Glacier_DeepRumbling1.ogg", "sound/effects/bones_break.ogg",	"sound/effects/gust.ogg", "sound/effects/static_horror.ogg", "sound/effects/blood.ogg")
+		var/list/area/stationAreas = get_accessible_station_areas()
+
 		if(!generator)
 			generator = locate(/obj/machinery/power/generatorTemp) in machine_registry[MACHINES_POWER]
 		if (!generator || generator.disposed || generator.z != Z_LEVEL_STATION )
@@ -27,9 +29,10 @@
 			return
 
 		var/list/obj/machinery/station_switches = list()
-		for(var/area/SA as() in station_areas)
+		for(var/area_key as() in stationAreas)
 			var/obj/machinery/light_switch/S
-			S = locate(/obj/machinery/light_switch) in station_areas[SA].machines
+			var/area/SA = stationAreas[area_key]
+			S = locate(/obj/machinery/light_switch) in SA?.machines
 			if(S)
 				station_switches += S
 
@@ -105,8 +108,8 @@
 						if(5)
 							//Reduced APC EMP
 							var/obj/machinery/power/apc/apc
-							A = pick(station_areas)
-							apc = station_areas[A].area_apc
+							A = pick(stationAreas)
+							apc = stationAreas[A].area_apc
 							if(apc && apc.powered() && (apc.lighting || apc.equipment || apc.environ ) )
 								elecflash(apc, radius=1)
 								if(apc.cell)
@@ -243,7 +246,9 @@ datum/teg_transformation/vampire
 		else
 			switch(rand(1,3))
 				if(1)
-					station_areas[pick(station_areas)].area_apc?.emp_act()
+					var/list/stationAreas = get_accessible_station_areas()
+					var/area/A = stationAreas[pick(stationAreas)]
+					A?.area_apc?.emp_act()
 
 		checkhealth()
 		return TRUE
