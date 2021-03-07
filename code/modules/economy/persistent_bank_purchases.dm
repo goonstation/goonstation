@@ -3,6 +3,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 	new /datum/bank_purchaseable/human_item/reset,\
 	new /datum/bank_purchaseable/human_item/crayon,\
 	new /datum/bank_purchaseable/human_item/paint_rainbow,\
+	new /datum/bank_purchaseable/human_item/crayon_box,\
 	new /datum/bank_purchaseable/human_item/paint_plaid,\
 	new /datum/bank_purchaseable/human_item/stickers,\
 	new /datum/bank_purchaseable/human_item/bee_egg,\
@@ -173,6 +174,11 @@ var/global/list/persistent_bank_purchaseables =	list(\
 			name = "Plaid Paint Can"
 			cost = 3000
 			path = /obj/item/paint_can/rainbow/plaid
+		
+		crayon_box
+			name = "Crayon Creator"
+			cost = 2500
+			path = /obj/item/item_box/crayon
 
 		stickers
 			name = "Sticker Box"
