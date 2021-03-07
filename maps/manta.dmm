@@ -4004,17 +4004,15 @@
 /area/listeningpost/syndicateassaultvessel)
 "anb" = (
 /obj/table/reinforced/bar/auto,
-/obj/holosign{
-	desc = "... is that Abzu..?";
-	name = "... is that Abzu..?";
-	pixel_y = 8
-	},
 /obj/random_item_spawner/desk_stuff/g_clip_bin_fpen,
 /turf/simulated/floor/carpet/red/fancy,
 /area/listeningpost/syndicateassaultvessel)
 "anc" = (
 /obj/table/reinforced/bar/auto,
 /obj/syndicateholoemitter,
+/obj/abzuholo{
+	pixel_x = -29
+	},
 /turf/simulated/floor/carpet/red/fancy,
 /area/listeningpost/syndicateassaultvessel)
 "and" = (
