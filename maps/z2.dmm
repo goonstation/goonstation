@@ -44215,7 +44215,7 @@
 	dir = 4;
 	icon_state = "datasec";
 	name = "Commander's Announcement Computer";
-	req_access_txt = null
+	req_access_txt = "76"
 	},
 /turf/unsimulated/floor/carpet/red/fancy/edge/sw,
 /area/syndicate_station/battlecruiser)
@@ -73939,60 +73939,19 @@
 	},
 /turf/unsimulated/floor/circuit/vintage,
 /area/centcom/offices/aphtonites)
-"dze" = (
+"dzg" = (
 /obj/machinery/light{
 	dir = 1
 	},
-/obj/disposalpipe/segment{
-	dir = 4;
-	icon_state = "pipe-c"
-	},
-/obj/table/reinforced/bar/auto{
-	name = "filthy bar table"
-	},
-/obj/item/reagent_containers/food/snacks/spaghetti/pizzaghetti,
-/obj/item/kitchen/utensil/fork{
-	name = "used fork"
-	},
 /turf/unsimulated/floor/wood/two,
-/area/centcom/offices/crimes)
-"dzf" = (
-/obj/disposalpipe/segment{
-	dir = 2;
-	icon_state = "pipe-c"
-	},
-/obj/machinery/shitty_grill,
-/turf/unsimulated/floor/wood/two,
-/area/centcom/offices/crimes)
-"dzg" = (
-/obj/disposaloutlet{
-	mailgroup = "medresearch";
-	mailgroup2 = "security";
-	message = "Delivery alert in Morgue.";
-	name = "Morgue Outlet";
-	pixel_y = 10
-	},
-/obj/disposalpipe/trunk/south,
-/turf/unsimulated/floor/wood/two,
-/area/centcom/offices/crimes)
-"dzh" = (
-/obj/machinery/disposal/transport{
-	name = "to: garbage jhon's"
-	},
-/obj/disposalpipe/trunk/south,
-/turf/unsimulated/floor/wood/two,
-/area/centcom/offices/crimes)
+/area/space)
 "dzi" = (
-/obj/admin_plaque{
-	name = "The Warcnasium"
-	},
+/obj/admin_plaque,
 /turf/unsimulated/wall{
 	icon = 'icons/misc/worlds.dmi';
 	icon_state = "leadwall"
 	},
-/area/centcom/offices{
-	icon_state = "blue"
-	})
+/area/space)
 "dzj" = (
 /obj/admin_plaque{
 	name = "Supernorn's Office";
@@ -74225,41 +74184,14 @@
 	},
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/ines)
-"dzO" = (
-/obj/disposalpipe/segment,
-/obj/table/reinforced/bar/auto{
-	name = "filthy bar table"
-	},
-/obj/item/clothing/head/bighat/syndicate/biggest,
-/turf/unsimulated/floor/wood/two,
-/area/centcom/offices/crimes)
-"dzP" = (
-/obj/disposalpipe/segment{
-	dir = 1;
-	icon_state = "pipe-c"
-	},
-/obj/stool,
-/mob/living/critter/small_animal/dog/patrick,
-/turf/unsimulated/floor/wood/two,
-/area/centcom/offices/crimes)
-"dzQ" = (
-/obj/disposalpipe/segment{
-	dir = 8;
-	icon_state = "pipe-c"
-	},
-/turf/unsimulated/floor/wood/two,
-/area/centcom/offices/crimes)
-"dzR" = (
-/obj/disposalpipe/segment,
-/turf/unsimulated/floor/wood/two,
-/area/centcom/offices/crimes)
 "dzS" = (
 /obj/machinery/door/unpowered/wood{
 	icon = 'icons/obj/doors/door_office.dmi';
-	lock_dir = 8
+	lock_dir = 8;
+	locked = 1
 	},
 /turf/unsimulated/floor/wood/two,
-/area/centcom/offices/crimes)
+/area/space)
 "dzT" = (
 /obj/machinery/door/unpowered/wood{
 	dir = 1;
@@ -74460,47 +74392,12 @@
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/ines)
 "dAw" = (
-/obj/disposalpipe/segment{
-	dir = 1;
-	icon_state = "pipe-c"
-	},
-/obj/decal/fakeobjects{
-	anchored = 1;
-	density = 1;
-	desc = "It doesn't seem to be hooked up to anything.";
-	dir = 6;
-	icon = 'icons/misc/worlds.dmi';
-	icon_state = "satanai_dapedeck1";
-	name = "punp control";
-	tag = "icon-satanai_dapedeck1 (SOUTHEAST)"
-	},
-/turf/unsimulated/floor/wood/two,
-/area/centcom/offices/crimes)
-"dAx" = (
-/obj/disposalpipe/segment{
-	dir = 4
-	},
-/turf/unsimulated/floor/wood/two,
-/area/centcom/offices/crimes)
-"dAy" = (
-/obj/disposalpipe/segment{
-	dir = 4
-	},
-/obj/machinery/shower{
-	default_reagent = "quebon";
-	name = "Shower what makes you french"
-	},
-/obj/item/clothing/shoes/thong,
-/turf/unsimulated/floor/wood/two,
-/area/centcom/offices/crimes)
-"dAz" = (
 /obj/machinery/light,
-/obj/disposalpipe/segment{
-	dir = 8;
-	icon_state = "pipe-c"
-	},
 /turf/unsimulated/floor/wood/two,
-/area/centcom/offices/crimes)
+/area/space)
+"dAz" = (
+/turf/unsimulated/floor/wood/two,
+/area/space)
 "dAA" = (
 /obj/shrub{
 	dir = 4;
@@ -82659,6 +82556,9 @@
 	name = "sand"
 	},
 /area/centcom/offices/enakai)
+"eFV" = (
+/turf/unsimulated/wall/setpieces/leadwall,
+/area/space)
 "eHC" = (
 /obj/machinery/light{
 	dir = 4
@@ -86964,7 +86864,7 @@
 	name = "stained tacticool pouch";
 	pixel_x = 5;
 	pixel_y = -5;
-	spawn_contents = list(/obj/item/handcuffs = 1, /obj/item/device/flash, /obj/item/ammo/power_cell/self_charging/potato = 1, /obj/item/reagent_containers/food/snacks/donut/robust = 1, /obj/item/reagent_containers/food/snacks/candy/candyheart)
+	spawn_contents = list(/obj/item/handcuffs = 1, /obj/item/device/flash, /obj/item/ammo/power_cell/self_charging/potato = 1, /obj/item/reagent_containers/food/snacks/donut/custom/robust = 1, /obj/item/reagent_containers/food/snacks/candy/candyheart)
 	},
 /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat{
 	desc = "Incredibly stinky.";
@@ -87792,7 +87692,7 @@
 	},
 /area/hospital/samostrel)
 "yiq" = (
-/obj/item/reagent_containers/food/snacks/donut/frosted{
+/obj/item/reagent_containers/food/snacks/donut/custom/frosted{
 	desc = "IT HIM, IT REALLY HIM";
 	name = "smol donut"
 	},
@@ -159205,8 +159105,8 @@ dAW
 dBF
 dCf
 dvw
-dze
-dzO
+dAz
+dAz
 dAw
 dvw
 dvQ
@@ -159507,9 +159407,9 @@ dAX
 dBG
 dAZ
 dvw
-dzf
-dzP
-dAx
+dAz
+dAz
+dAz
 dvw
 dvR
 dww
@@ -159810,8 +159710,8 @@ dBH
 dBH
 dvw
 dzg
-dzQ
-dAy
+dAz
+dAz
 dvw
 dvS
 dwx
@@ -160111,8 +160011,8 @@ dAZ
 dBI
 dCg
 dvw
-dzh
-dzR
+dAz
+dAz
 dAz
 dvw
 dvT
@@ -160415,7 +160315,7 @@ dCh
 dvP
 dzi
 dzS
-dDP
+eFV
 dvP
 dvU
 dwz

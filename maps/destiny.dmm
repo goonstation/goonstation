@@ -1130,6 +1130,7 @@
 /obj/landmark/start{
 	name = "Head of Personnel"
 	},
+/obj/item/pen/crayon/golden,
 /turf/simulated/floor/carpet{
 	dir = 9;
 	icon_state = "fgreen2"
@@ -19644,7 +19645,7 @@
 	icon_state = "4-8"
 	},
 /obj/landmark/start{
-	name = "Geneticist"
+	name = "Pathologist"
 	},
 /turf/simulated/floor/purplewhite{
 	dir = 6
@@ -24692,16 +24693,6 @@
 /obj/item/device/radio/headset/engineer,
 /turf/simulated/floor/yellow,
 /area/station/engine/engineering/ce)
-"aRh" = (
-/obj/table/reinforced/auto,
-/obj/machinery/light/lamp/green{
-	pixel_x = -6;
-	pixel_y = 4;
-	switchon = 1
-	},
-/obj/item/paper/engine,
-/turf/simulated/floor/yellow,
-/area/station/engine/engineering/ce)
 "aRi" = (
 /obj/cable{
 	d1 = 1;
@@ -25128,6 +25119,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/access_spawn/pathology,
 /turf/simulated/floor/green,
 /area/station/medical/research)
 "aRV" = (
@@ -25177,6 +25169,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/access_spawn/pathology,
 /turf/simulated/floor/green,
 /area/station/medical/research)
 "aRZ" = (
@@ -27748,6 +27741,7 @@
 	name = "glass airlock-'Quarantine'";
 	req_access_txt = "9"
 	},
+/obj/access_spawn/pathology,
 /turf/simulated/floor/green,
 /area/station/medical/research)
 "aWH" = (
@@ -30624,24 +30618,6 @@
 	icon_state = "line1"
 	},
 /turf/simulated/floor/caution/south,
-/area/station/engine/elect)
-"bbO" = (
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
-/obj/decal/tile_edge/line/black{
-	dir = 5;
-	icon_state = "line2"
-	},
-/obj/item/device/radio/intercom{
-	broadcasting = 0;
-	frequency = 1441;
-	name = "Engineering Intercom"
-	},
-/obj/machinery/vending/mechanics,
-/turf/simulated/floor/caution/corner/misc{
-	dir = 10
-	},
 /area/station/engine/elect)
 "bbP" = (
 /obj/disposalpipe/segment/mail{
@@ -35158,6 +35134,10 @@
 /obj/item/stamp,
 /obj/machinery/light_switch/south,
 /obj/machinery/light,
+/obj/artifact_paper_dispenser{
+	pixel_x = 8;
+	pixel_y = 9
+	},
 /turf/simulated/floor/purplewhite{
 	dir = 1
 	},
@@ -44674,16 +44654,6 @@
 "bAD" = (
 /turf/simulated/floor/black,
 /area/listeningpost)
-"bAE" = (
-/obj/item/device/radio/intercom{
-	broadcasting = 0;
-	dir = 8;
-	frequency = 1485;
-	name = "Security Intercom"
-	},
-/obj/machinery/bot/medbot/no_camera,
-/turf/simulated/floor/black,
-/area/listeningpost)
 "bAF" = (
 /obj/table/wood/auto,
 /obj/machinery/cell_charger,
@@ -44742,24 +44712,6 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
-	},
-/turf/simulated/floor/black,
-/area/listeningpost)
-"bAL" = (
-/obj/item/device/radio/intercom{
-	broadcasting = 1;
-	dir = 8;
-	frequency = 1489;
-	name = "Brig Intercom"
-	},
-/obj/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/obj/machinery/power/data_terminal,
-/obj/machinery/guardbot_dock,
-/obj/machinery/bot/guardbot/bad{
-	on = 0
 	},
 /turf/simulated/floor/black,
 /area/listeningpost)
@@ -45324,11 +45276,32 @@
 /area/station/science/research_director{
 	workplace = 1
 	})
+"fOM" = (
+/obj/machinery/bot/medbot/no_camera,
+/obj/item/device/radio/intercom/security{
+	dir = 8
+	},
+/turf/simulated/floor/black,
+/area/listeningpost)
 "gly" = (
 /obj/cable,
 /obj/machinery/photocopier,
 /turf/simulated/floor,
 /area/station/crew_quarters/lounge/starboard)
+"iiE" = (
+/obj/table/reinforced/auto,
+/obj/machinery/light/lamp/green{
+	pixel_x = -6;
+	pixel_y = 4;
+	switchon = 1
+	},
+/obj/item/pinpointer/teg_semi{
+	pixel_x = 3;
+	pixel_y = 1
+	},
+/obj/item/paper/engine,
+/turf/simulated/floor/yellow,
+/area/station/engine/engineering/ce)
 "iUK" = (
 /obj/machinery/door_timer{
 	id = "genpop";
@@ -45487,6 +45460,21 @@
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade)
+"tAm" = (
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/machinery/power/data_terminal,
+/obj/machinery/guardbot_dock,
+/obj/machinery/bot/guardbot/bad{
+	on = 0
+	},
+/obj/item/device/radio/intercom/brig{
+	dir = 8
+	},
+/turf/simulated/floor/black,
+/area/listeningpost)
 "ukX" = (
 /obj/cable{
 	d1 = 4;
@@ -45505,6 +45493,20 @@
 	dir = 4
 	},
 /area/station/chapel/sanctuary)
+"vRs" = (
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
+/obj/decal/tile_edge/line/black{
+	dir = 5;
+	icon_state = "line2"
+	},
+/obj/machinery/vending/mechanics,
+/obj/item/device/radio/intercom/engineering,
+/turf/simulated/floor/caution/corner/misc{
+	dir = 10
+	},
+/area/station/engine/elect)
 "xym" = (
 /obj/machinery/door/window/northright{
 	name = "interior door-'Solitary Cell One'";
@@ -61198,8 +61200,8 @@ byX
 byX
 bzK
 bAx
-bAE
-bAL
+fOM
+tAm
 bAT
 bzK
 bzK
@@ -94646,7 +94648,7 @@ aJU
 aLV
 aNM
 aPu
-aRh
+iiE
 aSO
 aLT
 aVV
@@ -97975,7 +97977,7 @@ aWb
 aXL
 aYY
 bau
-bbO
+vRs
 bdu
 bfe
 bgx
