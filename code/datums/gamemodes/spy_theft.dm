@@ -304,7 +304,7 @@
 		if (isvirtual(H) || istype(get_area(H),/area/afterlife))
 			continue
 
-		if (istype(H.loc, /obj/cryotron_spawner))
+		if (istype(H.loc, /obj/cryotron))
 			continue
 
 		var/turf/T = get_turf(H)
@@ -540,6 +540,7 @@
 
 	big_station_bounties[/obj/machinery/crusher] = 3
 	big_station_bounties[/obj/machinery/communications_dish] = 2
+	big_station_bounties[/obj/item/teg_semiconductor] = 2
 
 	active_bounties.len = 0
 

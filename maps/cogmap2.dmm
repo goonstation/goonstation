@@ -34042,6 +34042,7 @@
 	},
 /obj/table/wood/auto,
 /obj/item/storage/firstaid/regular,
+/obj/item/pen/crayon/golden,
 /turf/simulated/floor/carpet{
 	icon_state = "fblue2"
 	},
@@ -36129,31 +36130,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/ce)
-"bCH" = (
-/obj/item/device/radio/intercom{
-	broadcasting = 0;
-	frequency = 1441;
-	name = "Engineering Intercom"
-	},
-/obj/stool/bed,
-/obj/item/clothing/suit/bedsheet{
-	bcolor = "yellow";
-	icon_state = "bedsheet-yellow"
-	},
-/obj/blind_switch/area{
-	pixel_x = 22;
-	pixel_y = 1
-	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 9;
-	name = "autoname - SS13";
-	pixel_x = 10;
-	tag = ""
-	},
-/obj/disposalpipe/segment/mail/vertical,
-/turf/simulated/floor/black,
-/area/station/crew_quarters/ce)
 "bCI" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	can_rupture = 0;
@@ -37067,23 +37043,6 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
-"bEo" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/portables_connector{
-	dir = 8
-	},
-/obj/item/device/radio/intercom{
-	broadcasting = 0;
-	dir = 8;
-	frequency = 1441;
-	name = "Engineering Intercom"
-	},
-/turf/simulated/floor/engine,
-/area/station/engine/core)
 "bEp" = (
 /obj/cable{
 	d1 = 4;
@@ -37096,38 +37055,6 @@
 	icon_state = "2-8"
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/engine/power{
-	name = "Engineering Control Room"
-	})
-"bEq" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/surgery_tray,
-/obj/machinery/light{
-	dir = 1;
-	layer = 9.1;
-	pixel_y = 21
-	},
-/obj/item/device/radio/intercom{
-	broadcasting = 0;
-	dir = 4;
-	frequency = 1441;
-	name = "Engineering Intercom"
-	},
-/obj/item/paper_bin,
-/obj/item/pen/marker,
-/obj/item/pen/marker,
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 4;
-	name = "autoname - SS13";
-	pixel_x = -10;
-	tag = ""
-	},
-/turf/simulated/floor/delivery,
 /area/station/engine/power{
 	name = "Engineering Control Room"
 	})
@@ -42647,17 +42574,6 @@
 /area/station/engine/power{
 	name = "Engineering Control Room"
 	})
-"bNA" = (
-/obj/machinery/firealarm{
-	dir = 8;
-	pixel_x = -26;
-	pixel_y = -1
-	},
-/obj/table/wood/auto,
-/obj/item/deconstructor,
-/obj/random_item_spawner/desk_stuff,
-/turf/simulated/floor/black,
-/area/station/crew_quarters/ce)
 "bNB" = (
 /obj/table/wood/auto,
 /obj/item/item_box/gold_star{
@@ -72258,6 +72174,10 @@
 /obj/machinery/light,
 /obj/item/hand_labeler,
 /obj/item/hand_labeler,
+/obj/artifact_paper_dispenser{
+	pixel_x = -5;
+	pixel_y = 10
+	},
 /turf/simulated/floor/purple,
 /area/station/science/artifact)
 "daF" = (
@@ -73343,6 +73263,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/access_spawn/pathology,
 /turf/simulated/floor/delivery,
 /area/station/medical/cdc)
 "dcS" = (
@@ -73423,6 +73344,7 @@
 	dir = 4
 	},
 /obj/disposalpipe/segment/mail/horizontal,
+/obj/access_spawn/pathology,
 /turf/simulated/floor/delivery,
 /area/station/medical/cdc)
 "dcZ" = (
@@ -74024,8 +73946,9 @@
 /obj/machinery/door/firedoor/pyro,
 /obj/machinery/door/airlock/pyro/glass{
 	name = "Quarantine Ward";
-	req_access_txt = "5"
+	req_access_txt = null
 	},
+/obj/access_spawn/pathology,
 /turf/simulated/floor/delivery,
 /area/station/medical/cdc)
 "deD" = (
@@ -79277,6 +79200,35 @@
 	icon_state = "Stairs_wide"
 	},
 /area/station/hydroponics/bay)
+"nGc" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/surgery_tray,
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 21
+	},
+/obj/item/paper_bin,
+/obj/item/pen/marker,
+/obj/item/pen/marker,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 4;
+	name = "autoname - SS13";
+	pixel_x = -10;
+	tag = ""
+	},
+/obj/item/device/radio/intercom/engineering{
+	dir = 4
+	},
+/turf/simulated/floor/delivery,
+/area/station/engine/power{
+	name = "Engineering Control Room"
+	})
 "nKf" = (
 /obj/machinery/incubator,
 /turf/simulated/floor/white,
@@ -79286,6 +79238,15 @@
 	dir = 10
 	},
 /area/station/ranch)
+"ojq" = (
+/obj/stool/chair/office{
+	dir = 4
+	},
+/obj/landmark/start{
+	name = "Pathologist"
+	},
+/turf/simulated/floor/white,
+/area/station/medical/cdc)
 "oxp" = (
 /turf/simulated/floor/grasstodirt{
 	dir = 9
@@ -79383,6 +79344,41 @@
 	icon_state = "fpurple2"
 	},
 /area/station/crew_quarters/hor)
+"trr" = (
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet{
+	bcolor = "yellow";
+	icon_state = "bedsheet-yellow"
+	},
+/obj/blind_switch/area{
+	pixel_x = 22;
+	pixel_y = 1
+	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 9;
+	name = "autoname - SS13";
+	pixel_x = 10;
+	tag = ""
+	},
+/obj/disposalpipe/segment/mail/vertical,
+/obj/item/device/radio/intercom/engineering,
+/turf/simulated/floor/black,
+/area/station/crew_quarters/ce)
+"tuu" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/portables_connector{
+	dir = 8
+	},
+/obj/item/device/radio/intercom/engineering{
+	dir = 8
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core)
 "tyQ" = (
 /obj/storage/secure/closet/civilian/hydro,
 /turf/simulated/floor/grass{
@@ -79517,6 +79513,21 @@
 	icon_state = "fgreen4"
 	},
 /area/station/hydroponics/bay)
+"xHC" = (
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = -26;
+	pixel_y = -1
+	},
+/obj/table/wood/auto,
+/obj/item/pinpointer/teg_semi{
+	pixel_x = -4;
+	pixel_y = 9
+	},
+/obj/item/deconstructor,
+/obj/random_item_spawner/desk_stuff,
+/turf/simulated/floor/black,
+/area/station/crew_quarters/ce)
 "xRN" = (
 /obj/table/wood/auto,
 /obj/machinery/light{
@@ -117522,7 +117533,7 @@ cOh
 cQR
 cNU
 cTY
-cVz
+ojq
 nKf
 cXZ
 cZc
@@ -118979,7 +118990,7 @@ bxo
 bzb
 bAI
 bCx
-bEo
+tuu
 bGi
 bIf
 bKa
@@ -119583,7 +119594,7 @@ bxq
 byZ
 bAK
 bCy
-bEq
+nGc
 bGk
 bIh
 bKc
@@ -123212,7 +123223,7 @@ bGu
 bIt
 bKj
 bLT
-bNA
+xHC
 bPj
 bQD
 bSl
@@ -124112,7 +124123,7 @@ bvr
 bqh
 bzl
 bAR
-bCH
+trr
 bEF
 bGx
 bIw

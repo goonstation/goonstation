@@ -2144,6 +2144,7 @@
 		/datum/manufacture/scrubs_orange,
 		/datum/manufacture/scrubs_pink,
 		/datum/manufacture/patient_gown,
+		/datum/manufacture/eyepatch,
 		/datum/manufacture/blindfold,
 		/datum/manufacture/muzzle,
 		/datum/manufacture/body_bag,
