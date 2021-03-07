@@ -1234,7 +1234,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 	emote(var/act, var/emoteTarget = null)
 		switch(act)
 			if ("scream")
-				if (src.is_shitty)
+				if (src.mind && src.mind.special_role && src.mind.special_role == "faustian macho man")
 					..()
 				else
 					playsound(src.loc, pick(snd_macho_rage), 75, 0, 0, src.get_age_pitch())
