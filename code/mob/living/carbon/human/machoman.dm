@@ -12,11 +12,12 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 'sound/voice/macho/macho_idle_breath_01.ogg', 'sound/voice/macho/macho_mumbling04.ogg', 'sound/voice/macho/macho_moan03.ogg',\
 'sound/voice/macho/macho_mumbling05.ogg', 'sound/voice/macho/macho_mumbling07.ogg', 'sound/voice/macho/macho_shout08.ogg')
 
+
 /datum/targetable/macho
 
 /mob/living/carbon/human/machoman
 	var/list/macho_arena_turfs
-	New()
+	New(loc, shitty)
 		..()
 		//src.mind = new
 		src.gender = "male"
@@ -34,10 +35,10 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 		src.equip_new_if_possible(/obj/item/clothing/head/helmet/macho, slot_head)
 		src.equip_new_if_possible(/obj/item/storage/belt/macho_belt, slot_belt)
 		src.equip_new_if_possible(/obj/item/device/radio/headset, slot_ears)
-
-		for (var/datum/targetable/macho/A as() in concrete_typesof(/datum/targetable/macho))
-			src.abilityHolder.addAbility(A)
-		src.abilityHolder.updateButtons()
+		if(!shitty)
+			for (var/datum/targetable/macho/A as() in concrete_typesof(/datum/targetable/macho))
+				src.abilityHolder.addAbility(A)
+			src.abilityHolder.updateButtons()
 
 	initializeBioholder()
 		src.bioHolder.mobAppearance.customization_first = "Dreadlocks"
@@ -1236,8 +1237,8 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 	emote(var/act, var/emoteTarget = null)
 		switch(act)
 			if ("scream")
-				if (src.mind && src.mind.special_role && src.mind.special_role == "faustian macho man")
-					return
+				if (src.is_shitty)
+					..()
 				else
 					playsound(src.loc, pick(snd_macho_rage), 75, 0, 0, src.get_age_pitch())
 					src.visible_message("<span class='alert'><b>[src] yells out a battle cry!</b></span>")
@@ -1256,7 +1257,6 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 		var/turf/old_turf = src.ReplaceWith(previous_turf_type)
 		animate_buff_in(old_turf)
 */
-
 /obj/critter/microman
 	name = "Micro Man"
 	desc = "All the macho madness you'd ever need, shrunk down to pocket size."
