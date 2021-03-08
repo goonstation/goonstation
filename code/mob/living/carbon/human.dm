@@ -201,6 +201,7 @@
 #endif
 
 	health_mon = image('icons/effects/healthgoggles.dmi',src,"100",10)
+	health_mon.plane = PLANE_OVERLAY_EFFECTS
 	health_mon_icons.Add(health_mon)
 
 	health_implant = image('icons/effects/healthgoggles.dmi',src,"100",10)
