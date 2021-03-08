@@ -114,7 +114,7 @@
 	New()
 		..()
 		var/datum/projectile/artifact/bullet = null
-		var/mode_amount = pick(7;1, 2;2,	1;3) // 70% 1 mode, 20% 2 modes, 10% 3 modes
+		var/mode_amount = pick(7;1, 2;2, 1;3) // 70% 1 mode, 20% 2 modes, 10% 3 modes
 
 		for(var/i = 1 to mode_amount)
 			bullet = new/datum/projectile/artifact
@@ -125,4 +125,3 @@
 			bullet.dissipation_rate = rand(1,bullet.power)
 			bullet.cost = rand(35,100) // randomise puts it at 50-150
 			bullets += bullet
-
