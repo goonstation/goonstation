@@ -33,8 +33,8 @@
 			boutput(M, __red("[target] probably wouldn't taste very good."))
 			return 1
 
-		if (target.canmove)
-			boutput(M, __red("[target] is moving around too much."))
+		if (!target.lying)
+			boutput(M, __red("[target] needs to be lying on the ground first."))
 			return 1
 
 		logTheThing("combat", M, target, "starts to maul [constructTarget(target,"combat")] at [log_loc(M)].")

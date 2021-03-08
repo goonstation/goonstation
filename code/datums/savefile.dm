@@ -49,6 +49,7 @@
 		F["[profileNum]_screamsound"] << AH.screamsound
 		F["[profileNum]_voicetype"] << AH.voicetype
 		F["[profileNum]_PDAcolor"] << src.PDAcolor
+		F["[profileNum]_pda_ringtone_index"] << src.pda_ringtone_index
 		F["[profileNum]_random_blood"] << src.random_blood
 		F["[profileNum]_blood_type"] << src.blType
 
@@ -204,6 +205,7 @@
 		F["[profileNum]_screamsound"] >> AH.screamsound
 		F["[profileNum]_voicetype"] >> AH.voicetype
 		F["[profileNum]_PDAcolor"] >> src.PDAcolor
+		F["[profileNum]_pda_ringtone_index"] >> src.pda_ringtone_index
 		F["[profileNum]_random_blood"] >> src.random_blood
 		F["[profileNum]_blood_type"] >> src.blType
 
@@ -299,6 +301,10 @@
 
 		if(!is_valid_color_string(src.PDAcolor)) //how?
 			src.PDAcolor = "#6F7961"
+		
+		get_all_character_setup_ringtones()
+		if(!(src.pda_ringtone_index in selectable_ringtones))
+			src.pda_ringtone_index = "Two-Beep"
 
 		if (!istext(src.hud_style))
 			src.hud_style = "New"
