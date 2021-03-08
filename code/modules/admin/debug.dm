@@ -658,8 +658,8 @@ body
 		boutput(usr, "[G.gang_name]: [G.gang_score()] ([G.num_areas_controlled()] areas)")
 
 /client/proc/scenario()
-	SET_ADMIN_CAT(ADMIN_CAT_UNUSED)
-	set name = "Profiling Scenario"
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
+	set name = "Debug Scenario"
 
 	var/selected = input("Select scenario", "Do not use on a live server for the love of god", "Cancel") in list("Cancel", "Disco Inferno", "Chemist's Delight", "Viscera Cleanup Detail", "Brighter Bonanza")
 	switch (selected)

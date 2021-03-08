@@ -389,6 +389,7 @@ var/list/admin_verbs = list(
 		/client/proc/ticklag,
 		/client/proc/cmd_debug_vox,
 		/client/proc/check_gang_scores,
+		/client/proc/scenario,
 		/client/proc/mapWorld,
 		/client/proc/haine_blood_debug,
 		/client/proc/debug_messages,
