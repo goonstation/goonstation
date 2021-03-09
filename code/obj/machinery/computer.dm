@@ -50,7 +50,7 @@
 
 	if(glow_in_dark_screen)
 		src.screen_image = image('icons/obj/computer_screens.dmi', src.icon_state, -1)
-		src.overlays += image(screen_image)
+		src.UpdateOverlays(screen_image, "screen_image")
 		screen_image.plane = PLANE_LIGHTING
 
 /obj/machinery/computer/meteorhit(var/obj/O as obj)
@@ -99,15 +99,14 @@
 		src.icon_state += "b"
 		light.disable()
 		if(glow_in_dark_screen)
-			src.overlays = null
+			src.ClearSpecificOverlays("screen_image")
 
 	else if(powered())
 		icon_state = initial(icon_state)
 		status &= ~NOPOWER
 		light.enable()
 		if(glow_in_dark_screen)
-			src.overlays = null
-			src.overlays += image(screen_image)
+			src.UpdateOverlays(screen_image, "screen_image")
 			screen_image.plane = PLANE_LIGHTING
 	else
 		SPAWN_DBG(rand(0, 15))
@@ -117,7 +116,7 @@
 			status |= NOPOWER
 			light.disable()
 			if(glow_in_dark_screen)
-				src.overlays = null
+				src.ClearSpecificOverlays("screen_image")
 
 /obj/machinery/computer/process()
 	if(status & BROKEN)
@@ -136,6 +135,5 @@
 	icon_state += "b"
 	light.disable()
 	status |= BROKEN
-
 
 
