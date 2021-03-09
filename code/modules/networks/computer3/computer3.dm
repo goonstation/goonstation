@@ -322,7 +322,6 @@
 			src.screen_image = image('icons/obj/computer_screens.dmi', src.icon_state, -1)
 			src.overlays += image(screen_image)
 			screen_image.plane = PLANE_LIGHTING
-			src.UpdateOverlays(screen_image, "screen_image")
 
 		src.post_system()
 
@@ -653,7 +652,6 @@ function lineEnter (ev)
 		if(glow_in_dark_screen)
 			src.overlays += image(screen_image)
 			screen_image.plane = PLANE_LIGHTING
-			src.UpdateOverlays(screen_image, "screen_image")
 	else
 		SPAWN_DBG(rand(0, 15))
 			icon_state = src.base_icon_state
