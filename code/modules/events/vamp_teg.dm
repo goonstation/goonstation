@@ -3,6 +3,7 @@
 	required_elapsed_round_time = 40 MINUTES
 	weight = 50
 	var/obj/machinery/power/generatorTemp/generator
+	var/list/circulators_to_relube
 	var/event_active
 	var/target_grump
 
@@ -44,6 +45,11 @@
 		smoke.attach(generator)
 		smoke.start()
 		playsound(generator, pick(spooky_sounds), 30, 0, -1)
+
+		src.circulators_to_relube = list(generator.circ1, generator.circ2)
+		for(var/obj/machinery/atmospherics/binary/circulatorTemp/C in circulators_to_relube)
+			C.reagents.add_reagent("black_goop", 10)
+			C.reagents.add_reagent("black_goop", 10)
 
 		// Delayed Warning
 		SPAWN_DBG(rand(10 SECONDS, 50 SECONDS))
@@ -122,6 +128,11 @@
 								SPAWN_DBG(20 SECONDS)
 									apc.equipment = 3
 									apc.environ = 3
+
+				for(var/obj/machinery/atmospherics/binary/circulatorTemp/C in circulators_to_relube)
+					if( !C.reagents.has_reagent("black_goop") && (C.reagents.total_volume > (C.reagents.maximum_volume/10) ))
+						circulators_to_relube -= C
+						target_grump += 25
 
 				sleep(rand(5.8 SECONDS, rand(25 SECONDS)))
 
