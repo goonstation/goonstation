@@ -2,7 +2,7 @@
 
 /mob/living
 	event_handler_flags = USE_FLUID_ENTER | USE_CANPASS | IS_FARTABLE
-	var/spell_soulguard = 0
+	var/spell_soulguard = 0		//0 = none, 1 = normal_soulgruard, 2 = wizard_ring_soulguard
 
 	// this is a read only variable. do not set it directly.
 	// use set_burning or update_burning instead.
@@ -79,10 +79,8 @@
 
 	var/throws_can_hit_me = 1
 
-	var/obj/chat_maptext_holder/chat_text = new
 	var/last_heard_name = null
 	var/last_chat_color = null
-
 
 	var/list/random_emotes
 

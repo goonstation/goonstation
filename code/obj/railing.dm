@@ -144,6 +144,15 @@
 				user.show_text("[src] is already reinforced!", "red")
 
 	attack_hand(mob/user)
+		src.try_vault(user)
+
+	Bumped(var/mob/AM as mob)
+		. = ..()
+		if(!istype(AM)) return
+		if(AM.client?.check_key(KEY_RUN))
+			src.try_vault(AM)
+
+	proc/try_vault(mob/user)
 		if (railing_is_broken(src))
 			user.show_text("[src] is broken! All you can really do is break it down...", "red")
 		else

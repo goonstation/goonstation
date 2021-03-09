@@ -84,7 +84,7 @@ var/datum/score_tracker/score_tracker
 		// also civ cleanliness counted here cos fuck calling a world loop more than once
 		var/apc_count = 0
 		var/apcs_powered = 0
-		var/station_areas = 0
+		var/num_station_areas = 0
 		var/undamaged_areas = 0
 		var/clean_areas = 0
 
@@ -103,7 +103,7 @@ var/datum/score_tracker/score_tracker
 			var/cleanliness = AR.calculate_area_cleanliness()
 			if(cleanliness == -1) // no sim. turfs
 				continue
-			station_areas++
+			num_station_areas++
 			if (get_percentage_of_fraction_and_whole(AR.calculate_structure_value(),AR.initial_structure_value) >= 50)
 				undamaged_areas++
 			if (cleanliness >= 80)
@@ -117,9 +117,9 @@ var/datum/score_tracker/score_tracker
 			if (N.nuke_detonated)
 				score_structural_damage = 0
 			else
-				score_structural_damage = get_percentage_of_fraction_and_whole(undamaged_areas,station_areas)
+				score_structural_damage = get_percentage_of_fraction_and_whole(undamaged_areas,num_station_areas)
 		else
-			score_structural_damage = get_percentage_of_fraction_and_whole(undamaged_areas,station_areas)
+			score_structural_damage = get_percentage_of_fraction_and_whole(undamaged_areas,num_station_areas)
 
 		score_power_outages = clamp(score_power_outages,0,100)
 		score_structural_damage = clamp(score_structural_damage,0,100)
@@ -143,7 +143,7 @@ var/datum/score_tracker/score_tracker
 			else
 				score_expenses = get_percentage_of_fraction_and_whole(totalfunds,profit_target)
 
-		score_cleanliness = get_percentage_of_fraction_and_whole(clean_areas,station_areas)
+		score_cleanliness = get_percentage_of_fraction_and_whole(clean_areas,num_station_areas)
 
 		score_expenses = clamp(score_expenses,0,100)
 		score_cleanliness = clamp(score_cleanliness,0,100)

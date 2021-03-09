@@ -70,7 +70,6 @@
 	/obj/item/stamp/hos,
 	/obj/item/device/radio/headset/command/hos,
 	/obj/item/clothing/shoes/swat/heavy,
-
 	/obj/item/barrier)
 
 /obj/storage/secure/closet/command/hop

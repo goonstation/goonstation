@@ -27,6 +27,7 @@ var/global/the_sun = null
 	layer = EFFECTS_LAYER_UNDER_4
 	luminosity = 5
 	var/datum/light/light
+	anchored = 2 // This stopped being funny weeks ago.
 
 	New()
 		..()
