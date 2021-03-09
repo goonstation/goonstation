@@ -372,6 +372,7 @@
 	icon_state = "minerbelt"
 	item_state = "utility"
 	max_wclass = 3
+	item_function_flags = IMMUNE_TO_ACID
 
 /obj/item/storage/belt/security
 	name = "security toolbelt"
