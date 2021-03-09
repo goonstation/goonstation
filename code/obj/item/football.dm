@@ -6,6 +6,7 @@
 	icon_state = "fb_blue"
 	//same values as captain armor
 	var/in_rush = 0
+	item_function_flags = IMMUNE_TO_ACID
 	setupProperties()
 		..()
 		setProperty("meleeprot", 8)
@@ -20,6 +21,7 @@
 	desc = "Gotta protect your head! This helmet will certainly do the job. It has a Spacecow Wobbegongs logo printed on it!"
 	icon_state = "fb_blue"
 	c_flags = COVERSEYES | COVERSMOUTH
+	item_function_flags = IMMUNE_TO_ACID
 	setupProperties()
 		..()
 		setProperty("meleeprot_head", 6)
@@ -34,6 +36,7 @@
 	icon = 'icons/obj/clothing/uniforms/item_js_athletic.dmi'
 	wear_image_icon = 'icons/mob/jumpsuits/worn_js_athletic.dmi'
 	icon_state = "fb_blue"
+	item_function_flags = IMMUNE_TO_ACID
 
 	red
 		desc = "These are athletic pants bearing the colors of the Spacissippi Timberdoodles. The fabric smells like rivalry."
@@ -47,6 +50,7 @@
 	kick_bonus = 4
 	step_sound = "step_plating"
 	step_priority = STEP_PRIORITY_LOW
+	item_function_flags = IMMUNE_TO_ACID
 
 /obj/item/clothing/suit/armor/football/equipped(var/mob/user, var/slot)
 	..()
