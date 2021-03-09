@@ -415,7 +415,7 @@
 
 	destinations = list("North","South")
 
-/obj/machinery/computer/barcode/qm/donut3
+/obj/machinery/computer/barcode/qm/no_belthell
 	name = "Barcode Computer"
 	desc = "Used to print barcode stickers for the off-station merchants."
 	destinations = list("Shipping Market")

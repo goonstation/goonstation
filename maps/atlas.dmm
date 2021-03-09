@@ -1168,7 +1168,7 @@
 /turf/simulated/floor/yellow,
 /area/station/quartermaster/office)
 "cW" = (
-/obj/machinery/computer/barcode/qm,
+/obj/machinery/computer/barcode/qm/no_belthell,
 /obj/machinery/door_control{
 	id = "cargo_inbound";
 	name = "Cargo Inbound Door Control";
