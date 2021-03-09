@@ -268,7 +268,7 @@
 	desc = "I AM THE ONE WHO HONKS."
 	icon_state = "clown"
 	item_state = "clown_hat"
-	acid_proof = 1
+	item_function_flags = IMMUNE_TO_ACID
 	burn_possible = 0
 	color_r = 1.0
 	color_g = 1.0

@@ -54,6 +54,8 @@
 #define USE_SPECIALS_ON_ALL_INTENTS 2
 /// prevents items from creating smoke while burning
 #define SMOKELESS 4
+/// makes items immune to acid
+#define IMMUNE_TO_ACID 8
 
 //tool flags
 #define TOOL_CLAMPING 1
