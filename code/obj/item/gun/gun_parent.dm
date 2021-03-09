@@ -49,6 +49,8 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 
 	var/muzzle_flash = null //set to a different icon state name if you want a different muzzle flash when fired, flash anims located in icons/mob/mob.dmi
 
+	var/fire_animation = FALSE //Used for guns that have animations when firing
+
 	buildTooltipContent()
 		. = ..()
 		if(current_projectile)
@@ -376,6 +378,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 		if (isturf(user.loc))
 			var/turf/origin = user.loc
 			muzzle_flash_attack_particle(user, origin, target, src.muzzle_flash)
+
 
 	if (ismob(user))
 		var/mob/M = user
