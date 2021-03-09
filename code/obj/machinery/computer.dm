@@ -9,7 +9,8 @@
 	var/light_g = 1
 	var/light_b = 1
 
-	var/glow_in_dark_screen = TRUE // does it have a glow in the dark screen? see computer_screens.dmi
+	/// does it have a glow in the dark screen? see computer_screens.dmi
+	var/glow_in_dark_screen = TRUE
 	var/image/screen_image
 /*
 /obj/machinery/computer/airtunnel
@@ -135,5 +136,4 @@
 	icon_state += "b"
 	light.disable()
 	status |= BROKEN
-
 
