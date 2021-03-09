@@ -42,7 +42,7 @@
 	var/current_ability = null				//Used to keep track of what ability the SWORD is currently using.
 	var/stuck_location = null				//Used to prevent the SWORD from getting stuck too much.
 	var/stuck_timer = null					//Ditto.
-	var/image/glow
+	var/image/glow							//The glow overlay.
 
 	New()
 		..()
