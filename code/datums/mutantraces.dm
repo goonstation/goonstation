@@ -244,7 +244,6 @@
 			src.limb_list.Add(l_limb_arm_type_mutantrace, r_limb_arm_type_mutantrace, l_limb_leg_type_mutantrace, r_limb_leg_type_mutantrace)
 			src.mob = M
 			var/list/obj/item/clothing/restricted = list(mob.w_uniform, mob.shoes, mob.wear_suit)
-			MutateMutant(M, "set")
 			for(var/obj/item/clothing/W in restricted)
 				if (istype(W,/obj/item/clothing))
 					if(W.compatible_species.Find(src.name) || (src.human_compatible && W.compatible_species.Find("human")))
