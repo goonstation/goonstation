@@ -34,7 +34,7 @@
 	var/setup_font_color = "#19A319"
 	var/setup_bg_color = "#1B1E1B"
 
-	var/glow_in_dark_screen = 1 // does it have a glow in the dark screen? see computer_screens.dmi
+	var/glow_in_dark_screen = TRUE // does it have a glow in the dark screen? see computer_screens.dmi
 	var/image/screen_image
 
 	power_usage = 250
