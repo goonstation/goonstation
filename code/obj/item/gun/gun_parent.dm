@@ -148,7 +148,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	if(src.projectiles && src.projectiles.len > 1)
 		src.current_projectile_num = ((src.current_projectile_num) % src.projectiles.len) + 1
 		src.set_current_projectile(src.projectiles[src.current_projectile_num])
-		boutput(user, "<span class='notice'>you set the output to [src.current_projectile.sname].</span>")
+		boutput(user, "<span class='notice'>You set the output to [src.current_projectile.sname].</span>")
 	return
 
 /datum/action/bar/icon/guncharge
@@ -423,6 +423,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 			H.gunshot_residue = 1
 
 	src.update_icon()
+	return TRUE
 
 /obj/item/gun/proc/canshoot()
 	return 0
