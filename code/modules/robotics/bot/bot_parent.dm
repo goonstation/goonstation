@@ -356,12 +356,12 @@
 						SPAWN_DBG( 20 )
 							if (I && !I.disposed) pool(I)
 
-					step_to(master, master.path[1])
-					if(master.loc != master.path[1])
+					step_to(master, master?.path[1])
+					if(length(master?.path) && master.loc != master.path[1])
 						master.frustration++
 						sleep(delay)
 						continue
-
+					
 					master.path -= master.path[1]
 					sleep(delay)
 				else
