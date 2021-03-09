@@ -29,20 +29,34 @@
 	atksilicon = 1
 	flying = 1
 	generic = 0
-	seekrange = 128							//A perk of being a high-tech prototype - large detection range.
-	var/mode = 0							//0 - Beacon. 1 - Unanchored. 2 - Anchored.
-	var/cooldown = 0						//Used to prevent the SWORD from using abilities all the time.
-	var/used_ability = 0					//Used to only allow transforming after at least one ability has been used.
-	var/current_heat_level = 0				//Used to keep track of the SWORD's heat for Heat Reallocation.
-	var/transformation_triggered = false	//Used to check if the initial transformation has already been started or not.
-	var/rotation_locked = false				//Used to lock the SWORD's rotation in place. Or, at the very least, attempt to.
-	var/changing_modes = false				//Used to prevent some things during transformation sequences.
-	var/died_already = false				//Used to prevent spam-reporting the death of the SWORD.
-	var/past_destructive_rotation = null	//Used to prevent the SWORD from using Destructive Leap/Destructive Flight in the same direction twice in a row, at a 75% efficiency.
-	var/current_ability = null				//Used to keep track of what ability the SWORD is currently using.
-	var/stuck_location = null				//Used to prevent the SWORD from getting stuck too much.
-	var/stuck_timer = null					//Ditto.
-	var/image/glow							//The glow overlay.
+	///A perk of being a high-tech prototype - large detection range.
+	seekrange = 128
+	///0 - Beacon. 1 - Unanchored. 2 - Anchored.
+	var/mode = 0
+	///Used to prevent the SWORD from using abilities all the time.
+	var/cooldown = 0
+	///Used to only allow transforming after at least one ability has been used.
+	var/used_ability = 0
+	///Used to keep track of the SWORD's heat for Heat Reallocation.
+	var/current_heat_level = 0
+	///Used to check if the initial transformation has already been started or not.
+	var/transformation_triggered = false
+	///Used to lock the SWORD's rotation in place. Or, at the very least, attempt to.
+	var/rotation_locked = false
+	///Used to prevent some things during transformation sequences.
+	var/changing_modes = false
+	///Used to prevent spam-reporting the death of the SWORD.
+	var/died_already = false
+	///Used to prevent the SWORD from using Destructive Leap/Destructive Flight in the same direction twice in a row, at a 75% efficiency.
+	var/past_destructive_rotation = null
+	///Used to keep track of what ability the SWORD is currently using.
+	var/current_ability = null
+	///Used to prevent the SWORD from getting stuck too much.
+	var/stuck_location = null
+	///Used to prevent the SWORD from getting stuck too much.
+	var/stuck_timer = null
+	///The glow overlay.
+	var/image/glow
 
 	New()
 		..()
