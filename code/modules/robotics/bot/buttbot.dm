@@ -114,7 +114,8 @@
 				src.navigate_to(A, BUTTBOT_MOVE_SPEED, 0, 30)
 				break
 	else
-		step_rand(src,1)
+		SPAWN_DBG(0)
+			step_rand(src,1)
 
 /obj/machinery/bot/buttbot/process(mult)
 	if(src.exploding)
