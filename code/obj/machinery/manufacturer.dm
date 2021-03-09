@@ -2219,7 +2219,8 @@
 	hidden = list(/datum/manufacture/RCD,
 	/datum/manufacture/RCDammo,
 	/datum/manufacture/RCDammomedium,
-	/datum/manufacture/RCDammolarge)
+	/datum/manufacture/RCDammolarge,
+	/datum/manufacture/sds)
 
 /obj/machinery/manufacturer/hangar
 	name = "Ship Component Fabricator"
@@ -2254,6 +2255,10 @@
 		/datum/manufacture/pod/lock,
 		/datum/manufacture/beaconkit
 	)
+	hidden = list(
+		/datum/manufacture/pod/sps,
+		/datum/manufacture/pod/srs
+		)
 
 /obj/machinery/manufacturer/uniform // add more stuff to this as needed, but it should be for regular uniforms the HoP might hand out, not tons of gimmicks. -cogwerks
 	name = "Uniform Manufacturer"

@@ -213,8 +213,8 @@
 
 /obj/item/material_piece/iridiumalloy
 	icon_state = "iridium"
-	name = "iridium-alloy plate"
-	desc = "A chunk of some sort of iridium-alloy plating."
+	name = "iridium alloy plate"
+	desc = "A chunk of some sort of iridium alloy plating."
 	amount = 5
 	setup_material()
 		src.setMaterial(getMaterial("iridiumalloy"), appearance = 0, setname = 0)
