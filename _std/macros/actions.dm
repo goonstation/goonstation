@@ -31,20 +31,21 @@
 		boutput(world, "farts")
 */
 
-/* example that doesnt use the macro because it needs extra functionality the macro doesnt provide (NOT EVERY SCENARIO, BUT STILL GOOD TO SEE)
+ /* example that doesnt use the macro because it needs extra functionality the macro doesnt provide (NOT EVERY SCENARIO, BUT STILL GOOD TO SEE)
 
 /obj/item/foo
 	name = "foo"
-	icon = 'icons/obj/foo.dmi'
-	icon_state = "foo"
+	icon = 'icons/obj/items/items.dmi'
+	icon_state = "barricade"
 
 	attack_self(var/mob/M)
 		M.visible_message("[M] starts fiddling with \the [src].")
 		var/datum/action/bar/icon/callback/action_bar = new /datum/action/bar/icon/callback(M, src, 5 SECONDS, /obj/item/foo/proc/cool_proc,\
 		src.icon, src.icon_state, "[M] finishes fiddling with \the [src]")
-		action_bar.proc_args = list("[M]")
+		action_bar.proc_args = list("[M]", "[src]")
 		actions.start(action_bar, M)
 
-	proc/cool_proc(var/arg_1)
-		boutput(world, "[arg_1] farted!")
+	proc/cool_proc(var/arg_1, var/arg_2)
+		boutput(world, "[arg_1] farted, [arg_2]!")
+
 */

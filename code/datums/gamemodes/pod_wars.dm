@@ -869,9 +869,9 @@ obj/screen/score_board
 
 	proc/get_team(var/obj/item/card/id/I)
 		switch(I.assignment)
-			if("NT Commander")
+			if("NanoTrasen Commander")
 				return TEAM_NANOTRASEN
-			if("NT Pilot")
+			if("NanoTrasen Pilot")
 				return TEAM_NANOTRASEN
 			if("Syndicate Commander")
 				return TEAM_SYNDICATE
@@ -1480,13 +1480,21 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 		..()
 
 	attack_hand(mob/user as mob)
-		if (ishuman(user))
-			if (user.is_hulk())
-				take_damage(20)
-			else
-				take_damage(5)
-			playsound(get_turf(src), "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 25, 1)
-			attack_particle(user,src)
+		switch (user.a_intent)
+			if (INTENT_HELP)
+				visible_message(src, "<span class='notice'>[user] pats [src] [pick("earnestly", "merrily", "happily","enthusiastically")] on top.</span>")
+			if (INTENT_DISARM)
+				visible_message(src, "<span class='alert'>[user] tries to shove [src], but it was ineffective!</span>")
+			if (INTENT_GRAB)
+				visible_message(src, "<span class='alert'>[user]] tries to wrassle with [src], but it gives no ground!</span>")
+			if (INTENT_HARM)
+				if (ishuman(user))
+					if (user.is_hulk())
+						take_damage(20)
+					else
+						take_damage(5)
+					playsound(get_turf(src), "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 25, 1)
+					attack_particle(user,src)
 
 
 		user.lastattacked = src
@@ -1519,7 +1527,7 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 	attack_self(mob/user as mob)
 		var/datum/action/bar/icon/callback/action_bar = new /datum/action/bar/icon/callback(user, src, build_duration,\
 		/obj/item/deployer/barricade/proc/deploy, src.icon, src.icon_state, "[user] deploys \the [src]")
-		action_bar.proc_args = list("[user]", "[get_turf(user)]")
+		action_bar.proc_args = list(user, get_turf(user))
 		actions.start(action_bar, user)
 
 	//mostly stolen from furniture_parts/proc/construct
@@ -1536,7 +1544,6 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 			user.u_equip(src)
 			qdel(src)
 			return
-
 		if (newThing)
 			if (src.material)
 				newThing.setMaterial(src.material)
