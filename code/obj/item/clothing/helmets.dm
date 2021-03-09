@@ -187,7 +187,7 @@
 	icon_state = "syndicate"
 	item_state = "space_helmet_syndicate"
 	desc = "The standard space helmet of the dreaded Syndicate."
-
+	item_function_flags = IMMUNE_TO_ACID
 	old
 		icon_state = "syndicate-OLD"
 		desc = "A relic of the past."
