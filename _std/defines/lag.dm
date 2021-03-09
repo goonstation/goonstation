@@ -6,19 +6,29 @@
 
 //lagcheck stuff
 #ifdef SPACEMAN_DMM
-#define LAGCHECK(x) // this is wrong and bad, but it'd be way too much effort to remove lagchecks from everything :/
+#define LAGCHECK(maxi) // this is wrong and bad, but it'd be way too much effort to remove lagchecks from everything :/
 #else
-#define LAGCHECK(x) if (lagcheck_enabled && world.tick_usage > x) sleep(world.tick_lag)
+#define LAGCHECK(maxi) if (lagcheck_enabled && (world.tick_usage > (maxi - TICK_RESERVE))) sleep(world.tick_lag)
 #endif
 
 //for light queue - when should we queue? and when should we pause processing our dowork loop?
 #define LIGHTING_MAX_TICKUSAGE 90
 
 //lag levels
-#define LAG_LOW 13
-#define LAG_MED 20
-#define LAG_HIGH 40
-#define LAG_REALTIME 66
+#define LAG_LOW 35
+#define LAG_MED 45
+#define LAG_HIGH 66
+#define LAG_REALTIME 88
+
+/// Amount of tick we reserve for unaccounted processes.
+#define TICK_INTERNAL 2
+
+#if DM_VERSION < 514
+#define TICK_RESERVE TICK_INTERNAL
+#else
+/// This is the tick % we need to reserve for internal BYOND usage
+#define TICK_RESERVE (TICK_INTERNAL + world.map_cpu)
+#endif
 
 /// Waits until a given condition is true, tg-style async
 #define UNTIL(X) while(!(X)) sleep(1)
