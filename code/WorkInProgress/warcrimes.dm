@@ -898,4 +898,4 @@ Urs' Hauntdog critter
 		src.equip_new_if_possible(/obj/item/clothing/under/rank/geneticist, slot_w_uniform)
 		src.equip_new_if_possible(/obj/item/clothing/suit/labcoat/pathology, slot_wear_suit)
 		if(prob(50))
-			src.equip_new_if_possible(/obj/item/clothing/glasses/regular, slot_eyes)
+			src.equip_new_if_possible(/obj/item/clothing/glasses/regular, slot_glasses)
