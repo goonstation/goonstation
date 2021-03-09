@@ -23,7 +23,7 @@
 /// Amount of tick we reserve for unaccounted processes.
 #define TICK_INTERNAL 2
 
-#if BYOND_VERSION < 514
+#if DM_VERSION < 514
 #define TICK_RESERVE TICK_INTERNAL
 #else
 /// This is the tick % we need to reserve for internal BYOND usage
