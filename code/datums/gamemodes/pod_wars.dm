@@ -11,15 +11,18 @@
 	list/latejoin_antag_roles = list() // Unrecognized roles default to traitor in mob/new_player/proc/makebad().
 	do_antag_random_spawns = 0
 	do_random_events = 0
+	escape_possible = 0
 	var/list/frequencies_used = list()
+	var/list/capture_points = list()		//list of /datum/capture_point
 
 
 	var/datum/pod_wars_team/team_NT
 	var/datum/pod_wars_team/team_SY
 
 	var/obj/screen/score_board/board
-	var/round_limit = 35 MINUTES
+	var/round_limit = 40 MINUTES
 	var/force_end = 0
+
 
 /datum/game_mode/pod_wars/announce()
 	boutput(world, "<B>The current game mode is - Pod Wars!</B>")
@@ -86,17 +89,23 @@
 #endif
 
 /datum/game_mode/pod_wars/post_setup()
+	//Grab all capture point computers
+	// SPAWN_DBG(-1)
+	// 	for (var/obj/capture_point_computer/CPC in world)	//lazy
+	// 		capture_points += CPC
+
+
 	SPAWN_DBG(-1)
 		setup_asteroid_ores()
 
 	if(round_limit > 0)
 		SPAWN_DBG (round_limit) // this has got to end soon
 			command_alert("Something something radiation.","Emergency Update")
-			sleep(6000) // 10 minutes to clean up shop
-			command_alert("Revolution heads have been identified. Please stand by for hostile employee termination.", "Emergency Update")
-			sleep(3000) // 5 minutes until everyone dies
+			sleep(10 MINUTES)
+			command_alert("More radiation, too much...", "Emergency Update")
+			sleep(5 MINUTES)
 			command_alert("You may feel a slight burning sensation.", "Emergency Update")
-			sleep(10 SECONDS) // welp
+			sleep(10 SECONDS)
 			for(var/mob/living/carbon/M in mobs)
 				M.gib()
 			force_end = 1
@@ -525,7 +534,7 @@ ABSTRACT_TYPE(/datum/ore_cluster)
 		..()
 
 	get_desc()
-		. = "<br><span class='notice'>It looks like it has [health] left out of [health_max]. You can just tell.</span>"
+		. = "<br><span class='notice'>It looks like it has [health] HP left out of [health_max] HP. You can just tell. What is \"HP\" though? </span>"
 
 	proc/take_damage(var/damage)
 		// if (damage > 0)
@@ -1385,6 +1394,11 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 
 		//name it based on area.
 
+	ex_act()
+		return
+
+	meteorhit(var/obj/O as obj)
+		return
 
 	//change colour and owner team when captured.
 	proc/capture(var/team)
@@ -1406,3 +1420,150 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 			light_b = 1
 
 		light.set_color(light_r, light_g, light_b)
+
+/obj/warp_beacon/pod_wars
+
+/datum/capture_point
+	var/name = "Capture Point"
+
+	var/list/beacons = list()
+	var/obj/capture_point_computer/computer
+	var/area/capture_area
+
+	New(var/obj/capture_point_computer/computer)
+		src.computer = computer
+
+
+/////////////Barricades////////////
+
+/obj/barricade
+	name = "barricade"
+	desc = "A barricade. It looks like you can shoot over it and beat it down, but not walk over it. Devious."
+	icon = 'icons/obj/objects.dmi'
+	icon_state = "barricade"
+	density = 1
+	anchored = 1.0
+	flags = NOSPLASH
+	event_handler_flags = USE_FLUID_ENTER | USE_CANPASS
+	layer = OBJ_LAYER-0.1
+	stops_space_move = TRUE
+	
+	var/health = 100
+	var/health_max = 100
+
+	get_desc()
+		var/string = "pristine"
+		if (health >= (health_max/2))
+			string = "a bit scuffed"
+		else
+			string = "almost destroyed"
+
+		. = "<br><span class='notice'>It looks [string].</span>"
+
+	ex_act(severity)
+
+		return
+
+	CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+		if(air_group || (height==0)) return 1
+
+		if (!src.density || (mover.flags & TABLEPASS || istype(mover, /obj/newmeteor)) )
+			return 1
+		else
+			return 0
+
+	attackby(var/obj/item/W, var/mob/user)
+		attack_particle(user,src)
+		take_damage(W.force)
+		playsound(get_turf(src), "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 50, 1)
+		user.lastattacked = src
+		..()
+
+	attack_hand(mob/user as mob)
+		if (ishuman(user))
+			if (user.is_hulk())
+				take_damage(20)
+			else
+				take_damage(5)
+			playsound(get_turf(src), "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 25, 1)
+			attack_particle(user,src)
+
+
+		user.lastattacked = src
+		..()
+
+	proc/take_damage(var/damage)
+		src.health -= damage
+
+		//This works correctly because at the time of writing, these barricades cannot be repaired.
+		if (health < health_max/2)
+			icon_state = "barricade-damaged"
+
+		if (health <= 0)
+			qdel(src)
+
+//barricade deployer
+
+/obj/item/deployer/barricade
+	name = "barricade parts"
+	desc = "A collection of parts that can be used to make some kind of barricade."
+	icon = 'icons/obj/items/items.dmi'
+	icon_state = "barricade"
+	var/object_type = /obj/barricade 		//object to deploy
+	var/build_duration = 2 SECONDS
+
+	New(loc)
+		..()
+		BLOCK_SETUP(BLOCK_LARGE)
+
+	attack_self(mob/user as mob)
+		var/datum/action/bar/icon/callback/action_bar = new /datum/action/bar/icon/callback(user, src, build_duration,\
+		/obj/item/deployer/barricade/proc/deploy, src.icon, src.icon_state, "[user] deploys \the [src]")
+		action_bar.proc_args = list("[user]", "[get_turf(user)]")
+		actions.start(action_bar, user)
+
+	//mostly stolen from furniture_parts/proc/construct
+	proc/deploy(mob/user as mob, turf/T as turf)
+		var/obj/newThing = null
+		if (!T)
+			T = user ? get_turf(user) : get_turf(src)
+			if (!T) // buh??
+				return
+		if (ispath(src.object_type))
+			newThing = new src.object_type(T)
+		else
+			logTheThing("diary", user, null, "tries to deploy an object of type ([src.type]) from [src] but its object_type is null and it is being deleted.", "station")
+			user.u_equip(src)
+			qdel(src)
+			return
+
+		if (newThing)
+			if (src.material)
+				newThing.setMaterial(src.material)
+			if (user)
+				newThing.add_fingerprint(user)
+				logTheThing("station", user, null, "builds \a [newThing] (<b>Material:</b> [newThing.material && newThing.material.mat_id ? "[newThing.material.mat_id]" : "*UNKNOWN*"]) at [log_loc(T)].")
+				user.u_equip(src)
+		qdel(src)
+		return newThing
+
+/obj/machinery/chem_dispenser/medical
+	name = "medical reagent dispenser"
+	desc = "It dispenses chemicals. Mostly harmless ones, but who knows?"
+	dispensable_reagents = list("antihol", "charcoal", "epinephrine", "mutadone", "proconvertin", "atropine",\
+		"silver_sulfadiazine", "salbutamol", "anti_rad",\
+		"oculine", "mannitol", "styptic_powder", "saline",\
+		"salicylic_acid", "blood",\
+		"menthol", "antihistamine")
+
+	icon_state = "dispenser"
+	icon_base = "dispenser"
+	dispenser_name = "Medical"
+
+
+/obj/machinery/chem_dispenser/medical/fortuna
+	dispensable_reagents = list("antihol", "charcoal", "epinephrine", "mutadone", "proconvertin", "atropine",\
+	"silver_sulfadiazine", "salbutamol", "perfluorodecalin", "synaptizine", "anti_rad",\
+	"oculine", "mannitol", "penteticacid", "styptic_powder", "saline",\
+	"salicylic_acid", "blood", "synthflesh",\
+	"menthol", "antihistamine", "smelling_salt")

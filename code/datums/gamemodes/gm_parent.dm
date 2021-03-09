@@ -24,6 +24,7 @@
 
 	var/do_antag_random_spawns = 1
 	var/do_random_events = 1
+	var/escape_possible = 1
 
 /datum/game_mode/proc/announce()
 	boutput(world, "<B>[src] did not define announce()</B>")

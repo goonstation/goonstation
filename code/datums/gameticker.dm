@@ -602,10 +602,6 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 	// DO THE PERSISTENT_BANK STUFF
 	//logTheThing("debug", null, null, "Zamujasa: [world.timeofday] processing spacebux updates")
 
-	var/escape_possible = 1
-	if (istype(mode, /datum/game_mode/blob) || istype(mode, /datum/game_mode/nuclear) || istype(mode, /datum/game_mode/revolution) || istype(mode, /datum/game_mode/pod_wars))
-		escape_possible = 0
-
 	var/time = world.time
 
 	logTheThing("debug", null, null, "Revving up the spacebux loop...")
@@ -666,7 +662,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 					var/mob/dead/aieye/E = player
 					player_loses_held_item = isdead(E.mainframe)
 
-			if (!escape_possible)
+			if (!mode.escape_possible)
 				player_body_escaped = 1
 				if (istype(mode, /datum/game_mode/nuclear)) //bleh the nuke thing kills everyone
 					player_loses_held_item = 0
