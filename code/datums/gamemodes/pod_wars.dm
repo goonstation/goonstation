@@ -1364,8 +1364,9 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 /////////shit//////////////
 
 /obj/capture_point_computer
-	name = "computer"
+	name = "computer"	//name it based on area.
 	icon = 'icons/obj/computer.dmi'
+	icon_state = "computer_generic"
 	density = 1
 	anchored = 1.0
 	var/datum/light/light
@@ -1381,6 +1382,8 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 		light.set_brightness(0.8)
 		light.set_color(light_r, light_g, light_b)
 		light.attach(src)
+
+		//name it based on area.
 
 
 	//change colour and owner team when captured.

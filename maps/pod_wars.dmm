@@ -6010,6 +6010,10 @@
 	dir = 1
 	},
 /area/podmode/spacejunk/Snackstand)
+"DA" = (
+/obj/decal/poster/wallsign/pod_build/sy,
+/turf/unsimulated/wall/auto/reinforced/supernorn,
+/area/podmode/team2/Hangar)
 "DB" = (
 /obj/landmark/start{
 	name = "NanoTrasen Pod Pilot"
@@ -6635,6 +6639,10 @@
 	dir = 1
 	},
 /area/podmode/spacejunk/uvb67/crew)
+"Gz" = (
+/obj/decal/poster/wallsign/pod_build/nt,
+/turf/unsimulated/wall/auto/reinforced/supernorn,
+/area/podmode/team1/manufacturing)
 "GA" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/podmode/spacejunk/fstation/medbay)
@@ -7626,6 +7634,10 @@
 	icon_state = "wall3dir"
 	},
 /area/podmode/spacejunk/Dorgun)
+"LG" = (
+/obj/capture_point_computer,
+/turf/simulated/floor/black,
+/area/podmode/spacejunk/uvb67/power)
 "LH" = (
 /obj/machinery/r_door_control/podbay/t2d4/new_walls/east,
 /turf/unsimulated/floor/shuttlebay,
@@ -44335,7 +44347,7 @@ CT
 bW
 ed
 ed
-gE
+Gz
 Ju
 kZ
 ro
@@ -130528,7 +130540,7 @@ mP
 mP
 Oh
 Oh
-ti
+LG
 ti
 ti
 Tu
@@ -238005,7 +238017,7 @@ TT
 TT
 TT
 Ze
-km
+DA
 ne
 Lc
 ED
@@ -238507,7 +238519,7 @@ TT
 TT
 IU
 YO
-km
+Ff
 fU
 xF
 SM
