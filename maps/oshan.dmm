@@ -7,7 +7,7 @@
 "aab" = (
 /obj/table/glass/reinforced/auto,
 /obj/item/plate,
-/obj/item/reagent_containers/food/snacks/donut/cinnamon,
+/obj/item/reagent_containers/food/snacks/donut/custom/cinnamon,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/south)
 "aac" = (
@@ -9859,6 +9859,9 @@
 	layer = 3.5
 	},
 /obj/machinery/light_switch/auto,
+/obj/artifact_paper_dispenser{
+	pixel_x = 15
+	},
 /turf/simulated/floor/black,
 /area/station/science/artifact)
 "awT" = (
@@ -24984,7 +24987,6 @@
 /area/station/storage/emergency)
 "bjs" = (
 /obj/table/auto,
-/obj/table/auto,
 /obj/item/storage/belt/utility{
 	pixel_y = 4
 	},
@@ -31114,6 +31116,7 @@
 /obj/item/storage/box/accessimp_kit{
 	pixel_y = 9
 	},
+/obj/item/pen/crayon/golden,
 /turf/simulated/floor/carpet{
 	icon_state = "green1"
 	},
@@ -41785,9 +41788,8 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door/airlock/pyro/sci_alt,
-/obj/access_spawn/research,
-/obj/access_spawn/medical,
 /obj/firedoor_spawn,
+/obj/access_spawn/pathology,
 /turf/simulated/floor/green,
 /area/research_outpost/pathology)
 "bYs" = (
@@ -41798,7 +41800,7 @@
 /turf/simulated/floor/plating/random,
 /area/research_outpost/toxins)
 "bYt" = (
-/obj/item/reagent_containers/food/snacks/donut/robust{
+/obj/item/reagent_containers/food/snacks/donut/custom/robust{
 	pixel_y = 4;
 	rand_pos = 0
 	},
@@ -46451,6 +46453,10 @@
 /obj/machinery/light/incandescent/netural,
 /turf/simulated/floor,
 /area/research_outpost)
+"dVf" = (
+/obj/access_spawn/pathology,
+/turf/simulated/floor,
+/area/research_outpost)
 "dWG" = (
 /obj/disposalpipe/segment,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -46891,6 +46897,9 @@
 /obj/stool/chair/office/purple{
 	dir = 4
 	},
+/obj/landmark/start{
+	name = "Pathologist"
+	},
 /turf/simulated/floor/green,
 /area/research_outpost/pathology)
 "jkr" = (
@@ -47029,9 +47038,8 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door/airlock/pyro/sci_alt,
-/obj/access_spawn/research,
-/obj/access_spawn/medical,
 /obj/firedoor_spawn,
+/obj/access_spawn/pathology,
 /turf/simulated/floor/green,
 /area/research_outpost/maint)
 "knq" = (
@@ -130189,7 +130197,7 @@ bcL
 wJK
 uah
 nSl
-bcL
+dVf
 bcL
 bcL
 bds

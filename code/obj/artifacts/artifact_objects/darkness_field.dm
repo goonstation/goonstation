@@ -4,6 +4,7 @@
 
 /datum/artifact/darkness_field
 	associated_object = /obj/artifact/darkness_field
+	type_name = "Darkness Generator"
 	rarity_weight = 350
 	max_triggers = 3
 	validtypes = list("wizard","eldritch","precursor")

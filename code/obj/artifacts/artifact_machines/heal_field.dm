@@ -4,6 +4,7 @@
 
 /datum/artifact/bio_damage_field_generator
 	associated_object = /obj/machinery/artifact/bio_damage_field_generator
+	type_name = "Organic Aura Projector"
 	rarity_weight = 200
 	validtypes = list("martian","wizard","eldritch","precursor")
 	validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/electric,/datum/artifact_trigger/heat,

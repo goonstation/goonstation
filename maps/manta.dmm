@@ -4004,17 +4004,15 @@
 /area/listeningpost/syndicateassaultvessel)
 "anb" = (
 /obj/table/reinforced/bar/auto,
-/obj/holosign{
-	desc = "... is that Abzu..?";
-	name = "... is that Abzu..?";
-	pixel_y = 8
-	},
 /obj/random_item_spawner/desk_stuff/g_clip_bin_fpen,
 /turf/simulated/floor/carpet/red/fancy,
 /area/listeningpost/syndicateassaultvessel)
 "anc" = (
 /obj/table/reinforced/bar/auto,
 /obj/syndicateholoemitter,
+/obj/abzuholo{
+	pixel_x = -29
+	},
 /turf/simulated/floor/carpet/red/fancy,
 /area/listeningpost/syndicateassaultvessel)
 "and" = (
@@ -28154,6 +28152,7 @@
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
 	},
+/obj/access_spawn/pathology,
 /turf/simulated/floor/green,
 /area/station/medical/cdc)
 "bxP" = (
@@ -28668,7 +28667,7 @@
 	icon_state = "4-8"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/research,
+/obj/access_spawn/pathology,
 /turf/simulated/floor/orange,
 /area/station/medical/cdc)
 "bzo" = (
@@ -29326,7 +29325,7 @@
 	icon_state = "4-8"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/research,
+/obj/access_spawn/pathology,
 /turf/simulated/floor/orange,
 /area/station/medical/cdc)
 "bAR" = (
@@ -30026,6 +30025,9 @@
 	},
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/landmark/start{
+	name = "Pathologist"
 	},
 /turf/simulated/floor/green,
 /area/station/medical/cdc)
@@ -32444,11 +32446,24 @@
 /area/station/science/artifact)
 "bKk" = (
 /obj/table/reinforced/auto,
-/obj/item/paper_bin,
-/obj/item/stamp,
-/obj/item/pen,
+/obj/item/paper_bin{
+	pixel_x = -4;
+	pixel_y = 5
+	},
+/obj/item/stamp{
+	pixel_x = 4;
+	pixel_y = -6
+	},
+/obj/item/pen{
+	pixel_x = -4;
+	pixel_y = -5
+	},
 /obj/disposalpipe/segment/mail{
 	dir = 4
+	},
+/obj/artifact_paper_dispenser{
+	pixel_x = 8;
+	pixel_y = 6
 	},
 /turf/simulated/floor,
 /area/station/science/artifact)
@@ -44468,7 +44483,7 @@
 	dir = 4
 	},
 /obj/access_spawn/kitchen,
-/obj/item/reagent_containers/food/snacks/donut/frosted{
+/obj/item/reagent_containers/food/snacks/donut/custom/frosted{
 	pixel_x = -6;
 	pixel_y = 11
 	},

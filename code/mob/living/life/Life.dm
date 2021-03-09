@@ -531,13 +531,13 @@
 						if (!spotted_by_mob)
 							O:score++
 
-	proc/update_canmove()
-		var/datum/lifeprocess/L = lifeprocesses[/datum/lifeprocess/canmove]
+	proc/update_sight()
+		var/datum/lifeprocess/L = lifeprocesses[/datum/lifeprocess/sight]
 		if (L)
 			L.process()
 
-	proc/update_sight()
-		var/datum/lifeprocess/L = lifeprocesses[/datum/lifeprocess/sight]
+	update_canmove()
+		var/datum/lifeprocess/L = lifeprocesses[/datum/lifeprocess/canmove]
 		if (L)
 			L.process()
 

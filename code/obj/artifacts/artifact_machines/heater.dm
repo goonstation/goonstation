@@ -5,6 +5,7 @@
 
 /datum/artifact/heater
 	associated_object = /obj/machinery/artifact/heater
+	type_name = "Gas radiator"
 	rarity_weight = 450
 	validtypes = list("ancient","martian","eldritch","precursor")
 	validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/electric,/datum/artifact_trigger/heat,
