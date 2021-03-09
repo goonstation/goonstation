@@ -33,6 +33,10 @@
 	var/setup_os_string = null
 	var/setup_font_color = "#19A319"
 	var/setup_bg_color = "#1B1E1B"
+
+	var/glow_in_dark_screen = 1 // does it have a glow in the dark screen? see computer_screens.dmi
+	var/image/screen_image
+
 	power_usage = 250
 
 	generic //Generic computer, standard os and card scanner
@@ -313,6 +317,12 @@
 		src.tag = null
 
 		src.base_icon_state = src.icon_state
+
+		if(glow_in_dark_screen)
+			src.screen_image = image('icons/obj/computer_screens.dmi', src.icon_state, -1)
+			src.overlays += image(screen_image)
+			screen_image.plane = PLANE_LIGHTING
+			src.UpdateOverlays(screen_image, "screen_image")
 
 		src.post_system()
 
@@ -632,17 +642,26 @@ function lineEnter (ev)
 		icon_state = src.base_icon_state
 		src.icon_state += "b"
 		light.disable()
+		if(glow_in_dark_screen)
+			src.overlays = null
 
 	else if(powered())
 		icon_state = src.base_icon_state
 		status &= ~NOPOWER
 		light.enable()
+		src.overlays = null
+		if(glow_in_dark_screen)
+			src.overlays += image(screen_image)
+			screen_image.plane = PLANE_LIGHTING
+			src.UpdateOverlays(screen_image, "screen_image")
 	else
 		SPAWN_DBG(rand(0, 15))
 			icon_state = src.base_icon_state
 			src.icon_state += "0"
 			status |= NOPOWER
 			light.disable()
+			if(glow_in_dark_screen)
+				src.overlays = null
 
 /obj/machinery/computer3/attackby(obj/item/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/disk/data/floppy)) //INSERT SOME DISKETTES
