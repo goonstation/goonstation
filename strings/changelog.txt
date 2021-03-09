@@ -1,4 +1,9 @@
 
+(t)tue mar 09 21
+(u)Sidewinder7
+(p)3930
+(e)🆕|feature
+(*)The term_ping command now accepts a filter argument.
 (t)sun mar 07 21
 (u)Comradef191
 (p)3934
