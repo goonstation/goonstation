@@ -1221,20 +1221,19 @@
 	var/folds = 0
 
 /obj/item/clothing/head/janiberet/attack_self(mob/user as mob)
-	if(user.r_hand == src || user.l_hand == src)
-		if(src.folds)
-			src.folds = 0
-			src.name = "Head of Sanitation beret"
-			src.icon_state = "janitorberet"
-			src.item_state = "janitorberet"
-			boutput(user, "<span class='notice'>You fold the hat back into a beret.</span>")
-		else
-			src.folds = 1
-			src.name = "Head of Sanitation hat"
-			src.icon_state = "janitorcap"
-			src.item_state = "janitorcap"
-			boutput(user, "<span class='notice'>You unfold the beret into a hat.</span>")
-		return
+	if(src.folds)
+		src.folds = 0
+		src.name = "Head of Sanitation beret"
+		src.icon_state = "janitorberet"
+		src.item_state = "janitorberet"
+		boutput(user, "<span class='notice'>You fold the hat back into a beret.</span>")
+	else
+		src.folds = 1
+		src.name = "Head of Sanitation hat"
+		src.icon_state = "janitorcap"
+		src.item_state = "janitorcap"
+		boutput(user, "<span class='notice'>You unfold the beret into a hat.</span>")
+	return
 
 /obj/item/clothing/head/antlers
 	name = "antlers"
