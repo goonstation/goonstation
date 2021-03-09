@@ -11,13 +11,17 @@
 	var/image/fluid_image
 	p_class = 1.2
 
-	proc/update_icon()
+	New()
+		. = ..()
 		src.fluid_image = image(src.icon, "fluid", -1)
-		src.overlays = null
+
+	proc/update_icon()
 		if (reagents.total_volume)
 			var/datum/color/average = reagents.get_average_color()
 			src.fluid_image.color = average.to_rgba()
-			src.overlays += src.fluid_image
+			src.UpdateOverlays(src.fluid_image, "fluid")
+		else
+			src.ClearSpecificOverlays("fluid")
 
 	on_reagent_change()
 		..()
