@@ -49,7 +49,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 
 	var/muzzle_flash = null //set to a different icon state name if you want a different muzzle flash when fired, flash anims located in icons/mob/mob.dmi
 
-	var/fire_animation = 0 //Used for guns that have animations when firing
+	var/fire_animation = FALSE //Used for guns that have animations when firing
 
 	buildTooltipContent()
 		. = ..()
