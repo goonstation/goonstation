@@ -1,3 +1,5 @@
+#define ALIVE_ANTAGS_THRESHOLD 0.06 //value copied from antag spawn event
+#define DEAD_CREW_THRESHOLD 0.5
 /datum/random_event/major/syndicate_retribution
 	name = "Syndicate Retribution"
 	required_elapsed_round_time = 40 MINUTES
@@ -16,9 +18,21 @@
 				message_admins("The Syndicate Retribution event failed to spawn the SWORD (no blobstart landmark found)")
 				return
 
+		if (get_alive_antags_percentage() >= ALIVE_ANTAGS_THRESHOLD)
+			message_admins("The Syndicate Retribution event failed to spawn the SWORD (too many antags)")
+			return
+
+		if (get_dead_crew_percentage() >= DEAD_CREW_THRESHOLD)
+			message_admins("The Syndicate Retribution event failed to spawn the SWORD (too many dead crew members)")
+			return
+
 		message_admins("Syndicate Weapon: Orion Retribution Device spawning in [T.loc]")
+		logTheThing("admin", null, null, "Setting up SWORD event. Source: [source ? "[source]" : "random"]")
 
 		if(!sword_summoned_before)
 			new/obj/critter/sword(T)
 			sword_summoned_before = true
 			disabled = 1
+
+#undef ALIVE_ANTAGS_THRESHOLD
+#undef DEAD_CREW_THRESHOLD
