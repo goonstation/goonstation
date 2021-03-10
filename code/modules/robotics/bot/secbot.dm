@@ -759,6 +759,12 @@
 			src.KillPathAndGiveUp(kpagu)
 			return
 
+		// If the target is or goes invisible, give up, securitrons don't have thermal vision! :p
+		if(src.target.invisibility > 0)
+			speak("?!", just_float = 1)
+			src.KillPathAndGiveUp(kpagu)
+			return
+
 		/// Tango hidden inside something or someone? Welp, can't hit them through a locker, so may as well give up!
 		if(src.target?.loc && !isturf(src.target.loc))
 			speak("?", just_float = 1)
