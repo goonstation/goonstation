@@ -1567,6 +1567,10 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 		for (var/obj/warp_beacon/pod_wars/B in beacons)
 			B.current_owner = team
 
+		var/team_string = "[team == 1 ? "NanoTrasen" : team == 2 ? "The Syndicate" : "Something Eldritch"]"
+		boutput(world, "<h4><span class='alert'>[team_string] captured [name]!</span></h4>")
+		world << sound('sound/misc/newsting.ogg')
+
 //I'll probably remove this all cause it's so shit, but in case I want to come back and finish it, I leave - kyle
 	// proc/receive_prevent_capture(var/mob/user, var/user_team)
 	// 	capturing_team = 0
