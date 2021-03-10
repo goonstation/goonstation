@@ -89,7 +89,9 @@ toxic - poisons
 	icon_turf_hit = "bhole-small"
 
 	smg
-		power = 20
+		power = 15
+		cost = 3
+		shot_number = 3
 
 /datum/projectile/bullet/custom
 	name = "bullet"
