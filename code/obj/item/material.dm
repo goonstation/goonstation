@@ -41,11 +41,8 @@
 
 	update_stack_appearance()
 		if(material)
-			if(src.amount > 1)
-				name = "[amount] [initial(src.name)]["s"]"
-				src.inventory_counter.update_number(amount)
-			else
-				name = src.name
+			name = "[amount] [initial(src.name)][amount > 1 ? "s":""]"
+			src.inventory_counter.update_number(amount)
 		return
 
 	attackby(obj/item/W as obj, mob/user as mob)
