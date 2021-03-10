@@ -9,13 +9,15 @@
 	icon_state = "dispenser_handcuffs"
 	pixel_y = 28
 	anchored = 1
-	var/filled_icon_state = "" //i tried to do this in a smart way but it was a PITA so here have this stinky code instead
-	var/empty_icon_state = "" //autoset by the s y s t e m, dont set this yourself
-	var/amount = 3 //how many items does it have?
-	var/deposit_type = null //this is a type that this item will accept to "reload" itself
-	var/withdraw_type = null //this is a type that this item will dispense
-	var/cant_deposit = 0 //set this to 1 if you want people to not be able to put items into it
-	var/cant_withdraw = 0 //set this to 1 if you want people to not be able to take items out of it (why would you ever use this? why????)
+	var/filled_icon_state = "" 		//i tried to do this in a smart way but it was a PITA so here have this stinky code instead
+	var/empty_icon_state = "" 		//autoset by the s y s t e m, dont set this yourself
+	var/amount = 3 					//how many items does it have?
+	var/deposit_type = null 		//this is a type that this item will accept to "reload" itself
+	var/withdraw_type = null 		//this is a type that this item will dispense
+	var/cant_deposit = 0 			//set this to 1 if you want people to not be able to put items into it
+	var/cant_withdraw = 0 			//set this to 1 if you want people to not be able to take items out of it (why would you ever use this? why????)
+	var/dispense_rate = 0			//How long must you wait (in deciseconds) between each dispensation
+	var/last_dispense_time = 0		//Time when an item was last dispensed.
 
 	New()
 		..()
@@ -41,12 +43,25 @@
 		if (src.cant_withdraw)
 			..()
 			return
+
+		//
+		if (last_dispense_time + dispense_rate > TIME)
+			boutput(user, "<span class='alert'>The timer says that you must wait [round(( last_dispense_time + dispense_rate-TIME)*10)] seconds before the next item is ready!</span>")
+			playsound(src, 'sound/machines/buzz-sigh.ogg', 30, 1)
+			return
+
 		if (src.amount >= 1)
 			src.amount--
 			src.update_icon()
 			var/obj/item/I = new src.withdraw_type
 			boutput(user, "<span class='notice'>You take \the [I] out of \the [src]. There's [src.amount] left.</span>")
 			user.put_in_hand_or_drop(I)
+			last_dispense_time = TIME
+
+			//This is pretty lame, but it's simpler than putting these in a process loop when they are rarely used.
+			if (dispense_rate > 0)
+				SPAWN_DBG(dispense_rate)
+					update_icon()
 		else
 			boutput(user, "<span class='alert'>There's nothing in \the [src] to take!</span>")
 
@@ -54,6 +69,12 @@
 		if (src.amount <= 0)
 			src.icon_state = src.empty_icon_state
 		else
+			if (dispense_rate > 0)
+				if (last_dispense_time + dispense_rate <= TIME)
+					src.icon_state = src.filled_icon_state
+				else
+					src.icon_state = src.empty_icon_state
+
 			src.icon_state = src.filled_icon_state
 
 ///////////////////

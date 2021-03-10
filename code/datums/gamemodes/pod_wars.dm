@@ -1525,10 +1525,12 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 		BLOCK_SETUP(BLOCK_LARGE)
 
 	attack_self(mob/user as mob)
-		var/datum/action/bar/icon/callback/action_bar = new /datum/action/bar/icon/callback(user, src, build_duration,\
-		/obj/item/deployer/barricade/proc/deploy, src.icon, src.icon_state, "[user] deploys \the [src]")
-		action_bar.proc_args = list(user, get_turf(user))
-		actions.start(action_bar, user)
+		SETUP_GENERIC_ACTIONBAR(user, src, build_duration, /obj/item/deployer/barricade/proc/deploy, list(user, get_turf(user)),\
+		 src.icon, src.icon_state, "[user] deploys \the [src]")
+
+		// var/datum/action/bar/icon/callback/action_bar = new /datum/action/bar/icon/callback(user, src, build_duration,\
+		// src.icon, src.icon_state, "[user] deploys \the [src]", /obj/item/deployer/barricade/proc/deploy, arglist(list(user, get_turf(user))))
+		// actions.start(action_bar, user)
 
 	//mostly stolen from furniture_parts/proc/construct
 	proc/deploy(mob/user as mob, turf/T as turf)
@@ -1538,6 +1540,9 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 			if (!T) // buh??
 				return
 		if (ispath(src.object_type))
+			if (locate(src.object_type) in T.contents)
+				boutput(user, "<span class='alert'>There is already a barricade here! You can't think of a way that another one could possibly fit!</span>")
+				return
 			newThing = new src.object_type(T)
 		else
 			logTheThing("diary", user, null, "tries to deploy an object of type ([src.type]) from [src] but its object_type is null and it is being deleted.", "station")
@@ -1553,6 +1558,16 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 				user.u_equip(src)
 		qdel(src)
 		return newThing
+
+/obj/item_dispenser/barricade
+	name = "barricade dispenser"
+	desc = "A storage container that easily dispenses fresh deployable barricades. It can be refilled with deployable barricades."
+	icon_state = "dispenser_id"
+	filled_icon_state = "dispenser_id"
+	deposit_type = /obj/item/deployer/barricade
+	withdraw_type = /obj/item/deployer/barricade
+	amount = 100
+	dispense_rate = 5 SECONDS
 
 /obj/machinery/chem_dispenser/medical
 	name = "medical reagent dispenser"

@@ -367,7 +367,7 @@ var/datum/action_controller/actions
 	/// a list of args for the proc thats called once the action bar finishes, if needed.
 	var/list/proc_args = null
 
-	New(var/owner, var/target, var/duration, var/proc_path, var/icon, var/icon_state, var/end_message)
+	New(var/owner, var/target, var/duration, var/proc_path, var/proc_args, var/icon, var/icon_state, var/end_message)
 		..()
 		if (owner)
 			src.owner = owner
@@ -396,6 +396,8 @@ var/datum/action_controller/actions
 		if (src.proc_path)
 			src.id = "[src.proc_path]"
 
+		src.proc_args = proc_args
+
 	onStart()
 		..()
 		if (!src.owner)
@@ -422,9 +424,9 @@ var/datum/action_controller/actions
 
 		src.owner.visible_message("[src.end_message]")
 		if (src.target)
-			INVOKE_ASYNC(src.target, src.proc_path, arglist(src.proc_args))
+			INVOKE_ASYNC(arglist(list(src.target, src.proc_path) + src.proc_args))
 		else
-			INVOKE_ASYNC(src.owner, src.proc_path, arglist(src.proc_args))
+			INVOKE_ASYNC(arglist(list(src.owner, src.proc_path) + src.proc_args))
 
 /datum/action/bar/icon/build
 	duration = 30
