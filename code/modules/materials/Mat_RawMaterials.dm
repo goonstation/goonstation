@@ -6,6 +6,7 @@
 	icon_state = "bar"
 	max_stack = INFINITY
 	stack_type = /obj/item/material_piece
+	inventory_counter_enabled = 1
 	/// used for prefab bars
 	var/default_material = null
 
@@ -31,7 +32,11 @@
 
 	update_stack_appearance()
 		if(material)
-			name = "[amount] [material.name] [initial(src.name)][amount > 1 ? "s":""]"
+			if(src.amount > 1)
+				name = "[amount] [initial(src.name)]["s"]"
+				src.inventory_counter.update_number(amount)
+			else
+				name = src.name
 		return
 
 	split_stack(var/toRemove)
@@ -43,12 +48,32 @@
 		P.change_stack_amount(toRemove - P.amount)
 		return P
 
-	attackby(var/obj/item/W as obj, mob/user as mob)
-		if(istype(W, /obj/item/material_piece) && W.material)
+	attack_hand(mob/user as mob)
+		if((user.r_hand == src || user.l_hand == src) && src.amount > 1)
+			var/splitnum = round(input("How many material do you want to take from the stack?","Stack of [src.amount]",1) as num)
+			var/diff = src.amount - splitnum
+			if (splitnum >= amount || splitnum < 1)
+				boutput(user, "<span class='alert'>Invalid entry, try again.</span>")
+				return
+			boutput(user, "<span class='notice'>You take [splitnum] material pieces from the stack, leaving [diff] pieces behind.</span>")
+			src.amount = diff
+			var/obj/item/material_piece/new_stack = new src.type(user.loc, diff)
+			new_stack.amount = splitnum
+			new_stack.attack_hand(user)
+			new_stack.add_fingerprint(user)
+			new_stack.update_stack_appearance()
+			src.update_stack_appearance()
+		else
+			..(user)
 
-			if(src.stack_item(W))
-				boutput(user, "<span class='notice'>You stack \the [W]!</span>")
-		return
+	attackby(obj/item/W, mob/user)
+		if(W.type == src.type)
+			var/obj/item/material_piece/G = W
+			G.amount += src.amount
+			boutput(user, "<span class='notice'>You add the material to the stack. It now has [G.amount] pieces.</span>")
+			qdel(src)
+			G.update_stack_appearance()
+			return
 
 	MouseDrop(over_object, src_location, over_location) //src dragged onto over_object
 		if (isobserver(usr))
