@@ -1141,6 +1141,8 @@ ABSTRACT_TYPE(/area/prefab)
 /area/prefab/candy_shop
 	name = "Candy Shop"
 	icon_state = "blue"
+	sound_loop = 'sound/ambience/music/shoptheme.ogg'
+	sound_environment = 2
 
 // Sealab trench areas //
 
