@@ -1,21 +1,22 @@
-"a" = (/turf/space,/area/prefab/candy_shop)
-"h" = (/turf/simulated/wall/auto/reinforced/jen/cyan,/area/prefab/candy_shop)
+"a" = (/turf/variableTurf/clear,/area/noGenerate)
+"C" = (/turf/space,/area/prefab/candy_shop)
+"G" = (/turf/simulated/wall/auto/reinforced/jen/cyan,/area/prefab/candy_shop)
 
 (1,1,1) = {"
 aaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaa
-aaahhhhhhhhhhaaa
-aaahaaaaaaaahaaa
-aaahaaaaaaaahaaa
-aaahaaaaaaaahaaa
-aaahaaaaaaaahaaa
-aaahaaaaaaaahaaa
-aaahaaaaaaaahaaa
-aaahaaaaaaaahaaa
-aaahaaaaaaaahaaa
-aaahaaaaaaaahaaa
-aaahaaaaaaaahaaa
-aaahaaaaaaaahaaa
+aaaGGGGGGGGGGaaa
+aaaGCCCCCCCCGaaa
+aaaGCCCCCCCCGaaa
+aaaGCCCCCCCCGaaa
+aaaGCCCCCCCCGaaa
+aaaGCCCCCCCCGaaa
+aaaGCCCCCCCCGaaa
+aaaGCCCCCCCCGaaa
+aaaGCCCCCCCCGaaa
+aaaGCCCCCCCCGaaa
+aaaGCCCCCCCCGaaa
+aaaGCCCCCCCCGaaa
 aaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaa
 "}
