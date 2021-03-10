@@ -184,8 +184,8 @@ ABSTRACT_TYPE(/datum/generatorPrefab)
 		maxNum = 1
 		probability = 25
 		prefabPath = "assets/maps/prefabs/prefab_candy_shop.dmm"
-		prefabSizeX = 16
-		prefabSizeY = 16
+		prefabSizeX = 20
+		prefabSizeY = 20
 
 	//UNDERWATER AREAS FOR OSHAN
 
