@@ -7627,12 +7627,6 @@
 	},
 /turf/simulated/floor/engine,
 /area/pod_wars/team2/power)
-"Ku" = (
-/obj/control_point_computer,
-/turf/simulated/floor/yellow/side{
-	dir = 4
-	},
-/area/pod_wars/spacejunk/restaurant)
 "Kw" = (
 /obj/machinery/chem_dispenser/medical,
 /turf/unsimulated/floor/white,
@@ -135220,7 +135214,7 @@ Za
 Za
 Cx
 EA
-Ku
+Ps
 Nd
 Nd
 Ps
