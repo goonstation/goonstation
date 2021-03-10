@@ -33,7 +33,6 @@
 	update_stack_appearance()
 		if(material)
 			name = "[amount] [material.name] [initial(src.name)][amount > 1 ? "s":""]"
-			src.inventory_counter.update_number(amount)
 		return
 
 	split_stack(var/toRemove)
@@ -59,7 +58,9 @@
 			new_stack.attack_hand(user)
 			new_stack.add_fingerprint(user)
 			new_stack.update_stack_appearance()
+			new_stack.inventory_counter.update_number(new_stack.amount)
 			src.update_stack_appearance()
+			src.inventory_counter.update_number(amount)
 		else
 			..(user)
 
@@ -70,6 +71,7 @@
 			boutput(user, "<span class='notice'>You add the material to the stack. It now has [G.amount] pieces.</span>")
 			qdel(src)
 			G.update_stack_appearance()
+			G.inventory_counter.update_number(G.amount)
 			return
 
 	MouseDrop(over_object, src_location, over_location) //src dragged onto over_object
