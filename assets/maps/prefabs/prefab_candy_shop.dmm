@@ -1,31 +1,32 @@
 "a" = (/turf/variableTurf/clear,/area/noGenerate)
 "b" = (/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
-"f" = (/obj/table/wood/auto/desk,/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
-"k" = (/obj/cabinet/taffy,/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
-"n" = (/obj/table/wood/auto/desk,/obj/machinery/cashreg,/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
-"s" = (/obj/table/wood/round/auto,/obj/table/wood/round/auto,/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
-"x" = (/obj/item/storage/secure/ssafe/loot{pixel_y = 28},/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
-"D" = (/turf/simulated/wall/auto/reinforced/jen/cyan,/area/prefab/candy_shop)
-"F" = (/obj/decal/skeleton,/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
-"K" = (/obj/table/wood/round/auto,/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
-"Q" = (/obj/table/wood/auto/desk,/obj/item/kitchen/food_box/lollipop{pixel_x = 5; pixel_y = 3},/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
-"S" = (/obj/rack/lunar,/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
+"d" = (/obj/table/wood/auto/desk,/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
+"j" = (/obj/decal/skeleton,/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
+"l" = (/obj/table/wood/round/auto,/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
+"o" = (/obj/table/wood/auto/desk,/obj/item/kitchen/food_box/lollipop{pixel_x = 5; pixel_y = 3},/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
+"q" = (/obj/table/wood/auto/desk,/obj/machinery/cashreg,/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
+"x" = (/obj/cabinet/taffy,/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
+"C" = (/turf/simulated/wall/auto/reinforced/jen/cyan,/area/prefab/candy_shop)
+"P" = (/obj/rack/lunar,/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
+"R" = (/obj/table/wood/round/auto,/obj/table/wood/round/auto,/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
+"S" = (/obj/window/auto/hardened/the_tuff_stuff,/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
+"W" = (/obj/item/storage/secure/ssafe/loot{pixel_y = 28},/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
 
 (1,1,1) = {"
 aaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaa
-aaaDDDDDDDDDDaaa
-aaaDkkbxbbkkDaaa
-aaaDbbfFbbbbDaaa
-aaaDKbQnffbKDaaa
-aaaDKbbbbbbKDaaa
-aaaDKbSbbSbKDaaa
-aaaDKbSbbSbKDaaa
-aaaDKbSbbSbKDaaa
-aaaDKbSbbSbKDaaa
-aaaDsbbbbbbKDaaa
-aaaDbbbbbbbbDaaa
-aaaDbbbbbbbbDaaa
+aaaCCCSCCSCCCaaa
+aaaCxxbWbbxxCaaa
+aaaCbbdjbbbbCaaa
+aaaClboqddblCaaa
+aaaClbbbbbblCaaa
+aaaSlbPbbPblSaaa
+aaaSlbPbbPblSaaa
+aaaSlbPbbPblSaaa
+aaaClbbbbbblCaaa
+aaaCRbbbbbblCaaa
+aaaCbbbbbbbbCaaa
+aaaCbbbbbbbbCaaa
 aaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaa
 "}
