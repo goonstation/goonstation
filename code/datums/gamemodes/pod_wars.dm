@@ -1,5 +1,9 @@
 #define TEAM_NANOTRASEN 1
 #define TEAM_SYNDICATE 2
+
+#define FORTUNA "FORTUNA"
+#define RELIANT "RELIANT"
+#define UBV67 "UBV67"
 /datum/game_mode/pod_wars
 	name = "pod wars"
 	config_tag = "pod_wars"
@@ -13,7 +17,7 @@
 	do_random_events = 0
 	escape_possible = 0
 	var/list/frequencies_used = list()
-	var/list/capture_points = list()		//list of /datum/capture_point
+	var/list/control_points = list()		//list of /datum/control_point
 
 
 	var/datum/pod_wars_team/team_NT
@@ -88,11 +92,26 @@
 			return
 #endif
 
+//search an area for a obj/control_point_computer, make the datum
+/datum/game_mode/pod_wars/proc/add_control_point(var/path)
+	var/list/turfs = get_area_turfs(path, 1)
+	for (var/turf/T in turfs)
+		var/obj/control_point_computer/CPC = locate(/obj/control_point_computer) in T
+		if (CPC)
+			var/datum/control_point/P = new/datum/control_point(CPC, get_area_by_type(path))
+			control_points += P
+			message_admins("comp = [P.computer.name], area = [P.capture_area.name]|[P.capture_area.type] , ")
+
+
 /datum/game_mode/pod_wars/post_setup()
 	//Setup Capture Points. We do it based on the Capture point computers. idk why. I don't have much time, and I'm tired.
 	SPAWN_DBG(-1)
-		for (var/obj/capture_point_computer/CPC in world)	//lazy
-			capture_points += CPC
+		//search each of these areas for the computer, then make the control_point datum from em.
+		add_control_point(/area/pod_wars/spacejunk/reliant)
+		add_control_point(/area/pod_wars/spacejunk/fstation)
+		add_control_point(/area/pod_wars/spacejunk/uvb67)
+				
+
 
 
 	SPAWN_DBG(-1)
@@ -1383,7 +1402,7 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 
 /////////shit//////////////
 
-/obj/capture_point_computer
+/obj/control_point_computer
 	name = "computer"	//name it based on area.
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "computer_generic"
@@ -1433,16 +1452,24 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 		light.set_color(light_r, light_g, light_b)
 
 /obj/warp_beacon/pod_wars
+	var/control_point 		//currently only use values FORTUNA, RELIANT, UBV67
+	ex_act()
+		return
 
-/datum/capture_point
+	meteorhit(var/obj/O as obj)
+		return
+
+
+/datum/control_point
 	var/name = "Capture Point"
 
 	var/list/beacons = list()
-	var/obj/capture_point_computer/computer
+	var/obj/control_point_computer/computer
 	var/area/capture_area
 
-	New(var/obj/capture_point_computer/computer)
+	New(var/obj/control_point_computer/computer, var/area/capture_area)
 		src.computer = computer
+		src.capture_area = capture_area
 
 
 /////////////Barricades////////////
