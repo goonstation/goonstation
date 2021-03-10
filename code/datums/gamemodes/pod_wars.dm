@@ -1576,7 +1576,7 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 	filled_icon_state = "dispenser_id"
 	deposit_type = /obj/item/deployer/barricade
 	withdraw_type = /obj/item/deployer/barricade
-	amount = 100
+	amount = 50
 	dispense_rate = 5 SECONDS
 
 /obj/machinery/chem_dispenser/medical

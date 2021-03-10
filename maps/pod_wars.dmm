@@ -579,6 +579,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
+/obj/item_dispenser/barricade,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -1198,6 +1199,10 @@
 	dir = 5
 	},
 /area/podmode/spacejunk/fstation/mess)
+"fA" = (
+/obj/item_dispenser/barricade,
+/turf/unsimulated/floor/shuttlebay,
+/area/podmode/team2/Hangar)
 "fB" = (
 /obj/grille/catwalk{
 	dir = 9;
@@ -1890,6 +1895,7 @@
 /area/podmode/spacejunk/fstation/mess)
 "iV" = (
 /obj/machinery/portable_reclaimer,
+/obj/item_dispenser/barricade,
 /turf/unsimulated/floor/blue/side{
 	dir = 5
 	},
@@ -5745,6 +5751,7 @@
 	dir = 1
 	},
 /obj/machinery/power/apc/autoname_east,
+/obj/item_dispenser/barricade,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -6200,6 +6207,7 @@
 	},
 /area/podmode/spacejunk/fstation)
 "DO" = (
+/obj/item_dispenser/barricade,
 /turf/unsimulated/floor/red/side{
 	dir = 9
 	},
@@ -8376,6 +8384,7 @@
 	},
 /area/podmode/team1/bridge)
 "OB" = (
+/obj/item_dispenser/barricade,
 /turf/unsimulated/floor/red/side{
 	dir = 5
 	},
@@ -237162,7 +237171,7 @@ TT
 TT
 TT
 Ff
-TT
+fA
 TT
 HM
 sW
