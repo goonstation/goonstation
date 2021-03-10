@@ -31402,7 +31402,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/lowerport)
 "bGO" = (
-/obj/machinery/computer/barcode/qm,
+/obj/machinery/computer/barcode/qm/no_belthell,
 /obj/machinery/light/incandescent/netural,
 /turf/simulated/floor,
 /area/station/quartermaster/cargobay)
