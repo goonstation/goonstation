@@ -1,23 +1,28 @@
 "a" = (/turf/variableTurf/clear,/area/noGenerate)
-"k" = (/turf/simulated/wall/auto/reinforced/jen/cyan,/area/prefab/candy_shop)
-"M" = (/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
-"Z" = (/obj/cabinet/taffy,/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
+"i" = (/obj/table/wood/auto/desk,/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
+"j" = (/obj/decal/skeleton,/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
+"k" = (/obj/table/wood/auto/desk,/obj/machinery/cashreg,/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
+"m" = (/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
+"w" = (/obj/table/wood/round/auto,/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
+"x" = (/turf/simulated/wall/auto/reinforced/jen/cyan,/area/prefab/candy_shop)
+"M" = (/obj/table/wood/round/auto,/obj/table/wood/round/auto,/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
+"X" = (/obj/cabinet/taffy,/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
 
 (1,1,1) = {"
 aaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaa
-aaakkkkkkkkkkaaa
-aaakMZZMMZZMkaaa
-aaakMMMMMMMMkaaa
-aaakMMMMMMMMkaaa
-aaakMMMMMMMMkaaa
-aaakMMMMMMMMkaaa
-aaakMMMMMMMMkaaa
-aaakMMMMMMMMkaaa
-aaakMMMMMMMMkaaa
-aaakMMMMMMMMkaaa
-aaakMMMMMMMMkaaa
-aaakMMMMMMMMkaaa
+aaaxxxxxxxxxxaaa
+aaaxXXmmmmXXxaaa
+aaaxmmijmmmmxaaa
+aaaxwmikiimmxaaa
+aaaxwmmmmmmmxaaa
+aaaxwmmmmmmmxaaa
+aaaxwmmmmmmmxaaa
+aaaxwmmmmmmmxaaa
+aaaxwmmmmmmmxaaa
+aaaxMmmmmmmmxaaa
+aaaxmmmmmmmmxaaa
+aaaxmmmmmmmmxaaa
 aaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaa
 "}
