@@ -161,8 +161,8 @@
 
 
 //big standing lamps
-/obj/machinery/light/blamp
-	name = "big lamp"
+/obj/machinery/light/flamp
+	name = "floor lamp"
 	icon = 'icons/obj/lighting.dmi'
 	desc = "A tall and thin lamp that rests comfortably on the floor."
 	anchored = 1
@@ -171,7 +171,7 @@
 	fitting = "bulb"
 	brightness = 1.4
 	var/state
-	icon_state = "blamp1-off"
+	icon_state = "flamp1"
 	wallmounted = 0
 
 //regular light bulbs
