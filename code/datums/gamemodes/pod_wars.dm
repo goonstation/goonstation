@@ -80,19 +80,19 @@
 
 #ifdef MAP_OVERRIDE_POD_WARS
 	for(var/turf/T in landmarks[LANDMARK_LATEJOIN])
-		if (istype(T.loc, /area/podmode/team1))
+		if (istype(T.loc, /area/pod_wars/team1))
 			mind.current.set_loc(T)
 			return
-		else if (istype(T.loc, /area/podmode/team2))
+		else if (istype(T.loc, /area/pod_wars/team2))
 			mind.current.set_loc(T)
 			return
 #endif
 
 /datum/game_mode/pod_wars/post_setup()
-	//Grab all capture point computers
-	// SPAWN_DBG(-1)
-	// 	for (var/obj/capture_point_computer/CPC in world)	//lazy
-	// 		capture_points += CPC
+	//Setup Capture Points. We do it based on the Capture point computers. idk why. I don't have much time, and I'm tired.
+	SPAWN_DBG(-1)
+		for (var/obj/capture_point_computer/CPC in world)	//lazy
+			capture_points += CPC
 
 
 	SPAWN_DBG(-1)
@@ -111,14 +111,15 @@
 			force_end = 1
 
 
+
 /datum/game_mode/pod_wars/proc/setup_asteroid_ores()
 
 //	var/list/types = list("mauxite", "pharosium", "molitz", "char", "ice", "cobryl", "bohrum", "claretine", "viscerite", "koshmarite", "syreline", "gold", "plasmastone", "cerenkite", "miraclium", "nanite cluster", "erebite", "starstone")
 //	var/list/weights = list(100, 100, 100, 125, 55, 55, 25, 25, 55, 40, 20, 20, 15, 20, 10, 1, 5, 2)
 
 	var/datum/ore_cluster/minor/minor_ores = new /datum/ore_cluster/minor
-	for(var/area/podmode/asteroid/minor/A in world)
-		if(!istype(A, /area/podmode/asteroid/minor/nospawn))
+	for(var/area/pod_wars/asteroid/minor/A in world)
+		if(!istype(A, /area/pod_wars/asteroid/minor/nospawn))
 			for(var/turf/simulated/wall/asteroid/pod_wars/AST in A)
 				//Do the ore_picking
 				AST.randomize_ore(minor_ores)
@@ -127,7 +128,7 @@
 	for(var/OC in concrete_typesof(/datum/ore_cluster))
 		oreClusts += new OC
 
-	for(var/area/podmode/asteroid/major/A in world)
+	for(var/area/pod_wars/asteroid/major/A in world)
 		var/datum/ore_cluster/OC = pick(oreClusts)
 		OC.quantity -= 1
 		if(OC.quantity <= 0) oreClusts -= OC
@@ -348,12 +349,12 @@ ABSTRACT_TYPE(/datum/ore_cluster)
 		if (team_num == TEAM_NANOTRASEN)
 			name = "NanoTrasen"
 #ifdef MAP_OVERRIDE_POD_WARS
-			base_area = /area/podmode/team1 //area north, NT crew
+			base_area = /area/pod_wars/team1 //area north, NT crew
 #endif
 		else if (team_num == TEAM_SYNDICATE)
 			name = "Syndicate"
 #ifdef MAP_OVERRIDE_POD_WARS
-			base_area = /area/podmode/team2 //area south, Syndicate crew
+			base_area = /area/pod_wars/team2 //area south, Syndicate crew
 #endif
 		set_comms(mode)
 
