@@ -758,3 +758,73 @@ datum/chemicompiler_core/stationaryCore
 
 		statusChange(oldStatus, newStatus)
 			power_change()
+
+
+// ORGONEIC CHAMISTREY FOR MUSTY JEANS
+/obj/item/reagent_containers/glass/beaker/extractor_tank/thick
+	initial_volume = 1000
+
+/obj/machinery/chem_fractioning_still/ //a huge column boiler for separating chems by boiling point
+	name = "fractional still"
+	desc = "A towering piece of industrial equipment. It reeks of hydrocarbons."
+	density = 1
+	anchored = 1
+	power_usage = 500
+	var/active = 0
+	var/overall_temp = T20C
+	var/target_temp = T20C
+	var/obj/item/reagent_containers/glass/beaker/extractor_tank/thick/bottoms = new
+	var/obj/item/reagent_containers/glass/beaker/extractor_tank/tops = new
+	var/obj/item/reagent_containers/glass/beaker/extractor_tank/feed = new
+	var/obj/item/reagent_containers/user_beaker = null
+
+	New()
+		..()
+
+	process(var/mult)
+		if(!active)
+			UnsubscribeProcess()
+		heat_up()
+		distill(mult)
+
+	proc/distill(var/amount)
+		for(var/datum/reagent/R in get_vapours(bottoms))
+			bottoms.reagents.remove_reagent(R.id,amount)
+			tops.reagents.add_reagent(R.id,amount)
+			feed.reagents.trans_to(bottoms,amount)
+
+	proc/heat_up()
+		var/vapor_temp = min(get_lowest_temp(bottoms),target_temp)
+		bottoms.reagents.temperature_reagents(vapor_temp, 10)
+		src.power_usage = 1000
+
+	proc/get_vapours(var/obj/item/reagent_containers/R)
+		var/datum/reagent/reg = list()
+		if(R && R.reagents)
+			for(var/datum/reagent/reggie in R)
+				if(reggie.boiling_point <= overall_temp)
+					reg += reggie
+			return reg
+		else return null
+
+	proc/get_lowest_temp(var/obj/item/reagent_containers/R)
+		var/top_temp = INFINITY
+		if(R && R.reagents)
+			for(var/datum/reagent/reggie in R)
+				if(reggie.boiling_point<top_temp)
+					top_temp=reggie.boiling_point
+			return top_temp
+		else return T0C
+
+	proc/get_lowest_temp_chem(var/obj/item/reagent_containers/R)
+		var/top_temp = INFINITY
+		if(R && R.reagents)
+			for(var/datum/reagent/reggie in R)
+				if(reggie.boiling_point<top_temp)
+					top_temp=reggie.boiling_point
+					. = reggie
+			return
+		else return null
+
+
+
