@@ -814,7 +814,6 @@
 	dir = 8;
 	tag = ""
 	},
-/obj/decal/fakeobjects/vacuumtape,
 /turf/simulated/floor/circuit/red,
 /area/pod_wars/spacejunk/fstation/lounge)
 "ea" = (
