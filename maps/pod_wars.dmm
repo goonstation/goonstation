@@ -1352,6 +1352,7 @@
 	icon_state = "0-2"
 	},
 /obj/warp_beacon/pod_wars{
+	control_point = "FORTUNA";
 	name = "Fortuna Maintenance  Dock"
 	},
 /turf/space,
@@ -8622,6 +8623,7 @@
 	icon_state = "0-4"
 	},
 /obj/warp_beacon/pod_wars{
+	control_point = "FORTUNA";
 	name = "Fortuna Security Dock"
 	},
 /turf/space,
@@ -8983,6 +8985,7 @@
 /area/pod_wars/spacejunk/miningoutpost)
 "Rt" = (
 /obj/warp_beacon/pod_wars{
+	control_point = "UBC67";
 	name = "UVB-67"
 	},
 /turf/space,
@@ -8997,6 +9000,7 @@
 /obj/lattice,
 /obj/cable,
 /obj/warp_beacon/pod_wars{
+	control_point = "FORTUNA";
 	name = "Fortuna Primary Dock"
 	},
 /turf/space,
@@ -10135,6 +10139,7 @@
 	icon_state = "0-4"
 	},
 /obj/warp_beacon/pod_wars{
+	control_point = "RELIANT";
 	name = "NSV Reliant"
 	},
 /turf/space,
