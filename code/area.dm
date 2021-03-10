@@ -5109,7 +5109,7 @@ area/station/security/visitation
 
 
 */
-/// Podmode Areas
+/// pod_wars Areas
 #ifdef MAP_OVERRIDE_POD_WARS
 /area/pod_wars/team1/hangar
 	name = "NSV Pytheas Hangar"
@@ -5219,7 +5219,7 @@ area/station/security/visitation
 	name = "LS Brightwell"
 	icon_state = "yellow"
 
-/area/pod_wars/spacejunk/fstation/
+/area/pod_wars/spacejunk/fstation
 	name = "Fortuna Main Hall"
 	icon_state = "blue"
 
@@ -5316,12 +5316,12 @@ area/station/security/visitation
 	icon_state = "green"
 #endif
 
-#define MAJOR_AST(num) area/podmode/asteroid/major/maj_##num/name = "" + "major asteroid " + #num
+#define MAJOR_AST(num) area/pod_wars/asteroid/major/maj_##num/name = "" + "major asteroid " + #num
 
-area/podmode/asteroid/major/icon_state = "green"
-area/podmode/asteroid/minor/icon_state = "yellow"
-area/podmode/asteroid/minor/name = "minor asteroid"
-area/podmode/asteroid/minor/nospawn/icon_state = "red"
+area/pod_wars/asteroid/major/icon_state = "green"
+area/pod_wars/asteroid/minor/icon_state = "yellow"
+area/pod_wars/asteroid/minor/name = "minor asteroid"
+area/pod_wars/asteroid/minor/nospawn/icon_state = "red"
 
 MAJOR_AST(1)
 MAJOR_AST(2)
