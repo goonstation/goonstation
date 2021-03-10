@@ -8,6 +8,10 @@
 	var/light_r =1
 	var/light_g = 1
 	var/light_b = 1
+
+	/// does it have a glow in the dark screen? see computer_screens.dmi
+	var/glow_in_dark_screen = TRUE
+	var/image/screen_image
 /*
 /obj/machinery/computer/airtunnel
 	name = "Air Tunnel Control"
@@ -44,6 +48,11 @@
 	light.set_brightness(0.4)
 	light.set_color(light_r, light_g, light_b)
 	light.attach(src)
+
+	if(glow_in_dark_screen)
+		src.screen_image = image('icons/obj/computer_screens.dmi', src.icon_state, -1)
+		src.UpdateOverlays(screen_image, "screen_image")
+		screen_image.plane = PLANE_LIGHTING
 
 /obj/machinery/computer/meteorhit(var/obj/O as obj)
 	if(status & BROKEN)	qdel(src)
@@ -90,11 +99,16 @@
 		icon_state = initial(icon_state)
 		src.icon_state += "b"
 		light.disable()
+		if(glow_in_dark_screen)
+			src.ClearSpecificOverlays("screen_image")
 
 	else if(powered())
 		icon_state = initial(icon_state)
 		status &= ~NOPOWER
 		light.enable()
+		if(glow_in_dark_screen)
+			src.UpdateOverlays(screen_image, "screen_image")
+			screen_image.plane = PLANE_LIGHTING
 	else
 		SPAWN_DBG(rand(0, 15))
 			//src.icon_state = "c_unpowered"
@@ -102,6 +116,8 @@
 			src.icon_state += "0"
 			status |= NOPOWER
 			light.disable()
+			if(glow_in_dark_screen)
+				src.ClearSpecificOverlays("screen_image")
 
 /obj/machinery/computer/process()
 	if(status & BROKEN)
@@ -120,7 +136,4 @@
 	icon_state += "b"
 	light.disable()
 	status |= BROKEN
-
-
-
 
