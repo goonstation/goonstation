@@ -71,10 +71,10 @@
 	return 1
 
 /datum/game_mode/pod_wars/proc/add_latejoin_to_team(var/datum/mind/mind, var/datum/job/JOB)
-	if (istype(JOB, /datum/job/pod_wars/nanotrasen))
+	if (istype(JOB, /datum/job/special/pod_wars/nanotrasen))
 		team_NT.members += mind
 		team_NT.equip_player(mind.current)
-	else if (istype(JOB, /datum/job/pod_wars/syndicate))
+	else if (istype(JOB, /datum/job/special/pod_wars/syndicate))
 		team_SY.members += mind
 		team_SY.equip_player(mind.current)
 
@@ -408,18 +408,18 @@ ABSTRACT_TYPE(/datum/ore_cluster)
 
 	proc/equip_player(var/mob/M)
 		var/mob/living/carbon/human/H = M
-		var/datum/job/pod_wars/JOB
+		var/datum/job/special/pod_wars/JOB
 
 		if (team_num == TEAM_NANOTRASEN)
 			if (M.mind == commander)
-				JOB = new /datum/job/pod_wars/nanotrasen/commander
+				JOB = new /datum/job/special/pod_wars/nanotrasen/commander
 			else
-				JOB = new /datum/job/pod_wars/nanotrasen
+				JOB = new /datum/job/special/pod_wars/nanotrasen
 		else if (team_num == TEAM_SYNDICATE)
 			if (M.mind == commander)
-				JOB = new /datum/job/pod_wars/syndicate/commander
+				JOB = new /datum/job/special/pod_wars/syndicate/commander
 			else
-				JOB = new /datum/job/pod_wars/syndicate
+				JOB = new /datum/job/special/pod_wars/syndicate
 
 		//This first bit is for the round start player equipping
 		if (istype(M, /mob/new_player))

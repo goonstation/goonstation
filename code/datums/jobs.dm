@@ -2671,14 +2671,19 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 	name = "Battler"
 	limit = -1
 
-ABSTRACT_TYPE(/datum/job/pod_wars)
-/datum/job/pod_wars
+ABSTRACT_TYPE(/datum/job/special/pod_wars)
+/datum/job/special/pod_wars
+	name = "Pod_Wars"
 	limit = -1
 	allow_traitors = 0
 	cant_spawn_as_rev = 1
-
+	var/team = 0 //1 = NT, 2 = SY
+	
 	special_setup(var/mob/living/carbon/human/M)
 		..()
+		if (!M)
+			return
+
 		if (!M.abilityHolder)
 			M.abilityHolder = new /datum/abilityHolder/pod_pilot(src)
 			M.abilityHolder.owner = src
@@ -2686,6 +2691,15 @@ ABSTRACT_TYPE(/datum/job/pod_wars)
 			var/datum/abilityHolder/composite/AH = M.abilityHolder
 			AH.addHolder(/datum/abilityHolder/pod_pilot)
 
+		//stuff for headsets
+		if (istype(ticker.mode, /datum/game_mode/pod_wars))
+			var/datum/game_mode/pod_wars/mode = ticker.mode
+			if (team == 1)
+				M.mind.special_role = mode.team_NT?.name
+				setup_headset(M.ears, mode.team_NT?.comms_frequency)
+			else if (team == 2)
+				M.mind.special_role = mode.team_SY?.name
+				setup_headset(M.ears, mode.team_SY?.comms_frequency)
 
 	proc/setup_headset(var/obj/item/device/radio/headset/headset, var/freq)
 		if (istype(headset))
@@ -2701,6 +2715,7 @@ ABSTRACT_TYPE(/datum/job/pod_wars)
 		low_priority_job = 1
 		cant_allocate_unwanted = 1
 		access = list(access_heads)
+		team = 1
 
 		slot_back = /obj/item/storage/backpack/NT
 		slot_belt = /obj/item/gun/energy/blaster_pod_wars/nanotrasen
@@ -2715,17 +2730,6 @@ ABSTRACT_TYPE(/datum/job/pod_wars)
 		slot_poc1 = /obj/item/tank/emergency_oxygen
 		slot_poc2 = /obj/item/survival_machete
 		items_in_backpack = list(/obj/item/storage/box,/obj/item/spacecash/hundred)
-
-
-		//get the pod wars mode, get the teams comms frequency
-		special_setup(var/mob/living/carbon/human/M)
-			..()
-			if (!M)
-				return
-			if (istype(ticker.mode, /datum/game_mode/pod_wars))
-				var/datum/game_mode/pod_wars/mode = ticker.mode
-				M.mind.special_role = mode.team_NT?.name
-				setup_headset(M.ears, mode.team_NT?.comms_frequency)
 
 		commander
 			name = "NanoTrasen Commander"
@@ -2747,6 +2751,7 @@ ABSTRACT_TYPE(/datum/job/pod_wars)
 		low_priority_job = 1
 		cant_allocate_unwanted = 1
 		access = list(access_syndicate_shuttle)
+		team = 2
 
 		slot_back = /obj/item/storage/backpack/syndie
 		slot_belt = /obj/item/gun/energy/blaster_pod_wars/syndicate
@@ -2761,15 +2766,6 @@ ABSTRACT_TYPE(/datum/job/pod_wars)
 		slot_poc1 = /obj/item/tank/emergency_oxygen
 		slot_poc2 = /obj/item/survival_machete/syndicate
 		items_in_backpack = list(/obj/item/storage/box,/obj/item/spacecash/hundred)
-
-		special_setup(var/mob/living/carbon/human/M)
-			..()
-			if (!M)
-				return
-			if (istype(ticker.mode, /datum/game_mode/pod_wars))
-				var/datum/game_mode/pod_wars/mode = ticker.mode
-				M.mind.special_role = mode.team_SY?.name
-				setup_headset(M.ears, mode.team_SY?.comms_frequency)
 
 		commander
 			name = "Syndicate Commander"

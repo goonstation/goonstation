@@ -590,9 +590,9 @@ a.latejoin-card:hover {
 			var/datum/game_mode/pod_wars/mode = ticker.mode
 
 			if (mode?.team_NT?.members?.len > mode?.team_SY?.members?.len)
-				AttemptLateSpawn(new /datum/job/pod_wars/syndicate, 1)
+				AttemptLateSpawn(new /datum/job/special/pod_wars/syndicate, 1)
 			else
-				AttemptLateSpawn(new /datum/job/pod_wars/nanotrasen, 1)
+				AttemptLateSpawn(new /datum/job/special/pod_wars/nanotrasen, 1)
 
 			return
 		else
