@@ -40,26 +40,25 @@
 
 	attack_hand(mob/user as mob)
 		add_fingerprint(user)
+		user.lastattacked = src //prevents spam
 		if (src.cant_withdraw)
 			..()
 			return
 
-		//
-		if (last_dispense_time + dispense_rate > TIME)
-			boutput(user, "<span class='alert'>The timer says that you must wait [round(( last_dispense_time + dispense_rate-TIME)*10)] seconds before the next item is ready!</span>")
-			playsound(src, 'sound/machines/buzz-sigh.ogg', 30, 1)
-			return
-
 		if (src.amount >= 1)
+			if (last_dispense_time + dispense_rate > TIME)
+				boutput(user, "<span class='alert'>The timer says that you must wait [round(( last_dispense_time + dispense_rate-TIME)/10)] second(s) before the next item is ready!</span>")
+				playsound(src, 'sound/machines/buzz-sigh.ogg', 30, 1)
+				return
 			src.amount--
+			last_dispense_time = TIME 	//gotta go before the update_icon
 			src.update_icon()
 			var/obj/item/I = new src.withdraw_type
 			boutput(user, "<span class='notice'>You take \the [I] out of \the [src]. There's [src.amount] left.</span>")
 			user.put_in_hand_or_drop(I)
-			last_dispense_time = TIME
 
-			//This is pretty lame, but it's simpler than putting these in a process loop when they are rarely used.
-			if (dispense_rate > 0)
+			//This is pretty lame, but it's simpler than putting these in a process loop when they are rarely used. - kyle
+			if (dispense_rate > 0 && (last_dispense_time + dispense_rate > TIME))
 				SPAWN_DBG(dispense_rate)
 					update_icon()
 		else
@@ -69,13 +68,15 @@
 		if (src.amount <= 0)
 			src.icon_state = src.empty_icon_state
 		else
+			//if a dispenser has a dispense_rate then we display the sprite based on time left, because of the spawn: update_icon in attack_hand
 			if (dispense_rate > 0)
 				if (last_dispense_time + dispense_rate <= TIME)
 					src.icon_state = src.filled_icon_state
 				else
 					src.icon_state = src.empty_icon_state
-
-			src.icon_state = src.filled_icon_state
+				
+			else 
+				src.icon_state = src.filled_icon_state
 
 ///////////////////
 //ITEM DISPENSERS//
