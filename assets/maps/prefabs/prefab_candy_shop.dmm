@@ -1,20 +1,21 @@
 "a" = (/turf/space,/area/prefab/candy_shop)
+"h" = (/turf/simulated/wall/auto/reinforced/jen/cyan,/area/prefab/candy_shop)
 
 (1,1,1) = {"
 aaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaa
+aaahhhhhhhhhhaaa
+aaahaaaaaaaahaaa
+aaahaaaaaaaahaaa
+aaahaaaaaaaahaaa
+aaahaaaaaaaahaaa
+aaahaaaaaaaahaaa
+aaahaaaaaaaahaaa
+aaahaaaaaaaahaaa
+aaahaaaaaaaahaaa
+aaahaaaaaaaahaaa
+aaahaaaaaaaahaaa
+aaahaaaaaaaahaaa
 aaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaa
 "}
