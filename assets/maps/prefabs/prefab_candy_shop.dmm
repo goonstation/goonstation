@@ -1,81 +1,81 @@
-"bq" = (/obj/table/wood/round/auto,/obj/machinery/light/incandescent/warm/very{dir = 4},/obj/item/reagent_containers/food/snacks/candy/jellybean/everyflavor{pixel_x = 5; pixel_y = 7},/obj/item/reagent_containers/food/snacks/candy/jellybean/everyflavor{pixel_x = -4},/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
-"dn" = (/turf/variableTurf/clear,/area/noGenerate)
-"dw" = (/obj/neon_lining{dir = 8},/obj/neon_lining{dir = 8},/turf/simulated/floor/engine/glow,/area/prefab/candy_shop)
-"dM" = (/obj/table/wood/round/auto,/obj/item/reagent_containers/food/snacks/candy/wrapped_pbcup{pixel_x = 6},/obj/item/reagent_containers/food/snacks/candy/wrapped_pbcup,/obj/item/reagent_containers/food/snacks/candy/wrapped_pbcup{pixel_x = -4; pixel_y = 6},/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
-"dR" = (/turf/simulated/wall/auto/reinforced/jen/cyan,/area/prefab/candy_shop)
-"dZ" = (/obj/table/wood/auto/desk,/obj/machinery/cashreg,/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
-"fU" = (/obj/item/storage/secure/ssafe/loot{pixel_y = 28},/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
-"gS" = (/obj/machinery/light/small/floor/netural,/turf/simulated/floor/engine/glow,/area/prefab/candy_shop)
-"hr" = (/obj/machinery/light/small/sticky/warm/very{dir = 1},/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
-"hA" = (/obj/neon_lining{dir = 4; lining_color = "pink"},/turf/simulated/floor/engine/glow/blue,/area/prefab/candy_shop)
-"iM" = (/obj/table/wood/round/auto,/obj/machinery/light/incandescent/warm/very{dir = 4},/obj/item/reagent_containers/food/snacks/pie/pumpkin{pixel_y = -7},/obj/item/reagent_containers/food/snacks/yellow_cake_uranium_cake{pixel_x = 5; pixel_y = 5},/obj/item/reagent_containers/food/snacks/moon_pie/spooky{pixel_x = -9; pixel_y = 12},/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
-"kh" = (/obj/table/wood/round/auto,/obj/item/reagent_containers/food/snacks/candy/candy_cane{dir = 8; pixel_x = 4},/obj/item/reagent_containers/food/snacks/candy/candy_cane{dir = 8; pixel_x = 13; pixel_y = -6},/obj/item/reagent_containers/food/snacks/candy/candy_cane{dir = 8; pixel_x = 14; pixel_y = 4},/obj/item/reagent_containers/food/snacks/candy/candy_cane{dir = 8; pixel_x = 5; pixel_y = 6},/obj/item/reagent_containers/food/snacks/candy/candy_cane{dir = 8; pixel_x = 14; pixel_y = 10},/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
-"lp" = (/turf/simulated/floor/engine/glow,/area/prefab/candy_shop)
-"lH" = (/obj/decal/poster/wallsign/stencil/right/a{pixel_y = 15},/obj/decal/poster/wallsign/stencil/left/c{pixel_y = 15},/turf/simulated/wall/auto/reinforced/jen/cyan,/area/prefab/candy_shop)
-"lZ" = (/obj/table/wood/round/auto,/obj/item/clothing/under/suit/purple/dress{pixel_x = 8; pixel_y = -7},/obj/item/clothing/under/suit/purple{pixel_x = -8; pixel_y = -7},/obj/item/clothing/head/that/purple{pixel_x = -8; pixel_y = 7},/obj/item/clothing/head/that/purple{pixel_x = 8; pixel_y = 7},/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
-"ne" = (/obj/cabinet/taffy,/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
-"nq" = (/obj/machinery/door_control/podbay{id = "Candy Shop"; pixel_x = -26},/obj/neon_lining{dir = 8},/obj/decal/pole{desc = "Definitely not a barber pole, nope, nuh-uh."; name = "Spinning Candy Cane Pole"; pixel_x = -14},/turf/simulated/floor/engine/glow,/area/prefab/candy_shop)
-"nR" = (/obj/decal/poster/wallsign/stencil/left/c{pixel_y = 15},/obj/decal/poster/wallsign/stencil/right/a{pixel_y = 15},/turf/simulated/wall/auto/reinforced/jen/cyan,/area/prefab/candy_shop)
-"ov" = (/obj/table/wood/auto/desk,/obj/item/paper{icon_state = "paper_caution_bloody"; info = "I can't sell this shit to you. Sorry. Help yourself to the last of our good stock. Goodbye."; name = "bloody note"; pixel_x = -2; pixel_y = 1},/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
-"oN" = (/obj/machinery/light/small/floor/warm/very,/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
-"pR" = (/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
-"qx" = (/obj/decal/poster/wallsign/stencil/right/y{pixel_x = 17; pixel_y = 15},/obj/decal/poster/wallsign/stencil/right/d{pixel_x = 5; pixel_y = 15},/obj/decal/poster/wallsign/stencil/left/n{pixel_x = -7; pixel_y = 15},/turf/simulated/wall/auto/reinforced/jen/cyan,/area/prefab/candy_shop)
-"sl" = (/obj/table/wood/round/auto,/obj/machinery/light/incandescent/warm/very{dir = 8},/obj/item/reagent_containers/food/snacks/candy/nougat,/obj/item/reagent_containers/food/snacks/candy/nougat{pixel_y = 8},/obj/item/reagent_containers/food/snacks/candy/nougat{pixel_y = 4},/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
-"su" = (/obj/table/wood/round/auto,/obj/item/reagent_containers/food/snacks/breadloaf/corn/sweet/honey{pixel_y = 7},/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
-"tB" = (/obj/window/auto/hardened/the_tuff_stuff,/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
-"tF" = (/obj/table/wood/auto/desk,/obj/item/kitchen/food_box/lollipop{pixel_x = 5; pixel_y = 3},/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
-"tM" = (/turf/simulated/floor/engine/glow/blue,/area/prefab/candy_shop)
-"uU" = (/obj/table/wood/round/auto,/obj/item/item_box/swedish_bag{pixel_x = 3; pixel_y = -2},/obj/item/item_box/swedish_bag,/obj/item/item_box/swedish_bag{pixel_x = -3; pixel_y = 4},/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
-"vB" = (/obj/table/wood/auto/desk,/obj/item/kitchen/food_box/donut_box{desc = "A box of Dunkin-Kreme donuts.  The brand name made a lot more sense before the companies merged in 2038."; pixel_x = 1; pixel_y = 5},/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
-"wJ" = (/obj/table/wood/round/auto,/obj/item/reagent_containers/food/snacks/cake/chocolate/gateau{pixel_y = 10},/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
-"xi" = (/obj/forcefield/energyshield/perma,/obj/machinery/door/poddoor/blast/pyro/podbay_autoclose{id = "Candy Shop"; name = "Carlisle's Confections Parking"},/turf/simulated/floor/engine/glow/blue,/area/prefab/candy_shop)
-"zy" = (/obj/neon_lining{dir = 4; lining_color = "pink"},/obj/decal/pole{desc = "Definitely not a barber pole, nope, nuh-uh."; name = "Spinning Candy Cane Pole"; pixel_x = 14},/turf/simulated/floor/engine/glow/blue,/area/prefab/candy_shop)
-"Aw" = (/obj/table/wood/round/auto,/obj/item/storage/goodybag{pixel_x = 5; pixel_y = 5},/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
-"Bz" = (/obj/lattice{dir = 4; icon_state = "lattice-dir"; tag = "icon-lattice-dir (EAST)"},/turf/variableTurf/clear,/area/noGenerate)
-"BS" = (/obj/submachine/cargopad{active = 0; desc = "Used to receive objects transported by a cargo transporter. Carlisle must've warped in all their sweets using this thing."; name = "Candy Resupply Pad"},/obj/item/reagent_containers/food/snacks/snack_cake,/obj/item/reagent_containers/food/snacks/snack_cake,/obj/item/reagent_containers/food/snacks/snack_cake,/obj/item/reagent_containers/food/snacks/snack_cake/golden,/obj/item/reagent_containers/food/snacks/snack_cake/golden,/obj/item/reagent_containers/food/snacks/snack_cake/golden,/obj/item/reagent_containers/food/snacks/strudel,/obj/item/reagent_containers/food/snacks/strudel,/obj/item/reagent_containers/food/snacks/strudel,/obj/item/clothing/suit/lshirt/dan_blue,/obj/item/ticket/golden,/obj/item/reagent_containers/food/snacks/ice_cream/gross,/obj/storage/crate/bin{desc = "Buy one, get the rest free."; name = "bargain bin"},/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
-"BY" = (/obj/table/wood/round/auto,/obj/table/wood/round/auto,/obj/item/reagent_containers/food/snacks/bagel,/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
-"DB" = (/obj/machinery/r_door_control{id = "Candy Shop"; name = "Parking Door Control"},/turf/simulated/wall/auto/reinforced/jen/cyan,/area/prefab/candy_shop)
-"Eb" = (/obj/decal/poster/wallsign/stencil/left/n{pixel_x = -7; pixel_y = 15},/obj/decal/poster/wallsign/stencil/right/d{pixel_x = 5; pixel_y = 15},/obj/decal/poster/wallsign/stencil/right/y{pixel_x = 17; pixel_y = 15},/turf/simulated/wall/auto/reinforced/jen/cyan,/area/prefab/candy_shop)
-"Gy" = (/obj/random_pod_spawner,/turf/simulated/floor/engine/glow/blue,/area/prefab/candy_shop)
-"Gz" = (/obj/neon_lining{dir = 8},/turf/simulated/floor/engine/glow,/area/prefab/candy_shop)
-"GG" = (/obj/rack/lunar,/obj/item/kitchen/peach_rings{desc = "A bag of gummy peach rings. Woah! Carlisle Confection brand! You thought they went out of business!"; pixel_y = 7},/obj/item/item_box/heartcandy{desc = "Wow, you haven't seen this brand in ages"; name = "Carlisle's Candy Hearts"; pixel_y = -7},/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
-"GN" = (/obj/table/wood/round/auto,/obj/item/reagent_containers/food/snacks/candy/candy_apple{pixel_x = -6; pixel_y = 5},/obj/item/reagent_containers/food/snacks/candy/candy_apple{pixel_x = 6; pixel_y = 3},/obj/item/reagent_containers/food/snacks/candy/candy_apple,/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
-"JR" = (/obj/decal/skeleton{desc = "The remains of a confectioner."; name = "Carlisle"},/obj/item/casing/derringer{dir = 5; pixel_x = -9; pixel_y = 9},/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
-"MO" = (/obj/table/wood/round/auto,/obj/machinery/light/incandescent/warm/very{dir = 8},/obj/item/reagent_containers/food/snacks/candy/butterscotch{pixel_y = 8},/obj/item/reagent_containers/food/snacks/candy/butterscotch{pixel_y = 4},/obj/item/reagent_containers/food/snacks/candy/butterscotch,/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
-"Nk" = (/obj/rack/lunar,/obj/item/item_box/heartcandy{desc = "Wow, you haven't seen this brand in ages"; name = "Carlisle's Candy Hearts"; pixel_y = -7},/obj/item/kitchen/peach_rings{desc = "A bag of gummy peach rings. Woah! Carlisle Confection brand! You thought they went out of business!"; pixel_y = 7},/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
-"NA" = (/obj/machinery/light/flamp,/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
-"Oh" = (/obj/window/auto/hardened/the_tuff_stuff,/obj/decal/tile_edge/stripe/big{icon_state = "xtra_bigstripe-edge"},/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
-"Oz" = (/obj/random_pod_spawner/random_putt_spawner,/turf/simulated/floor/engine/glow,/area/prefab/candy_shop)
-"Qh" = (/obj/forcefield/energyshield/perma,/obj/machinery/door/poddoor/blast/pyro/podbay_autoclose{id = "Candy Shop"; name = "Carlisle's Confections Parking"},/turf/simulated/floor/engine/glow,/area/prefab/candy_shop)
-"Rp" = (/obj/machinery/light/small/floor/netural,/turf/simulated/floor/engine/glow/blue,/area/prefab/candy_shop)
-"RV" = (/obj/table/wood/round/auto,/obj/item/reagent_containers/food/snacks/candy/negativeonebar{pixel_y = 8},/obj/item/reagent_containers/food/snacks/candy/negativeonebar{pixel_y = 4},/obj/item/reagent_containers/food/snacks/candy/negativeonebar,/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
-"Sz" = (/obj/lattice{dir = 9; icon_state = "lattice-dir"},/turf/variableTurf/clear,/area/noGenerate)
-"TO" = (/obj/lattice{dir = 1; icon_state = "lattice-dir-b"; tag = "icon-lattice-dir-b (NORTHWEST)"},/turf/variableTurf/clear,/area/noGenerate)
-"VK" = (/obj/lattice,/obj/warp_beacon{name = "Carlisle's Confections Beacon"},/turf/variableTurf/clear,/area/noGenerate)
-"VL" = (/obj/table/wood/auto/desk,/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
-"Xy" = (/obj/machinery/light/small/sticky/warm/very{dir = 1},/turf/variableTurf/clear,/area/noGenerate)
-"Yl" = (/obj/lattice{dir = 2; icon_state = "lattice-dir-b"},/turf/variableTurf/clear,/area/noGenerate)
-"Yr" = (/obj/machinery/door/unpowered/wood/pyro{name = "Carlisle's Confections"},/obj/decal/tile_edge/stripe/big{icon_state = "xtra_bigstripe-edge"},/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
+"au" = (/obj/lattice{dir = 4; icon_state = "lattice-dir"; tag = "icon-lattice-dir (EAST)"},/turf/variableTurf/clear,/area/noGenerate)
+"cN" = (/obj/table/wood/auto/desk,/obj/item/paper{icon_state = "paper_caution_bloody"; info = "I can't sell this shit to you. Sorry. Help yourself to the last of our good stock. Goodbye."; name = "bloody note"; pixel_x = -2; pixel_y = 1},/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
+"dg" = (/obj/machinery/light/small/sticky/warm/very{dir = 1},/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
+"du" = (/obj/decal/poster/wallsign/stencil/right/a{pixel_y = 15},/obj/decal/poster/wallsign/stencil/left/c{pixel_y = 15},/turf/simulated/wall/auto/reinforced/jen/cyan,/area/prefab/candy_shop)
+"hD" = (/obj/lattice{dir = 2; icon_state = "lattice-dir-b"},/turf/variableTurf/clear,/area/noGenerate)
+"hV" = (/obj/random_pod_spawner/random_putt_spawner,/turf/simulated/floor/engine/glow,/area/prefab/candy_shop)
+"iU" = (/obj/lattice,/obj/warp_beacon{name = "Carlisle's Confections Beacon"},/turf/variableTurf/clear,/area/noGenerate)
+"jp" = (/obj/forcefield/energyshield/perma,/obj/machinery/door/poddoor/blast/pyro/podbay_autoclose{id = "Candy Shop"; name = "Carlisle's Confections Parking"},/turf/simulated/floor/engine/glow,/area/prefab/candy_shop)
+"jE" = (/obj/lattice{dir = 9; icon_state = "lattice-dir"},/turf/variableTurf/clear,/area/noGenerate)
+"kz" = (/obj/machinery/r_door_control{id = "Candy Shop"; name = "Parking Door Control"},/turf/simulated/wall/auto/reinforced/jen/cyan,/area/prefab/candy_shop)
+"nb" = (/turf/simulated/wall/auto/reinforced/jen/cyan,/area/prefab/candy_shop)
+"ng" = (/obj/table/wood/round/auto,/obj/item/clothing/under/suit/purple/dress{pixel_x = 8; pixel_y = -7},/obj/item/clothing/under/suit/purple{pixel_x = -8; pixel_y = -7},/obj/item/clothing/head/that/purple{pixel_x = -8; pixel_y = 7},/obj/item/clothing/head/that/purple{pixel_x = 8; pixel_y = 7},/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
+"nz" = (/obj/table/wood/round/auto,/obj/item/reagent_containers/food/snacks/candy/candy_apple{pixel_x = -6; pixel_y = 5},/obj/item/reagent_containers/food/snacks/candy/candy_apple{pixel_x = 6; pixel_y = 3},/obj/item/reagent_containers/food/snacks/candy/candy_apple,/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
+"nE" = (/obj/decal/poster/wallsign/stencil/left/n{pixel_x = -7; pixel_y = 15},/obj/decal/poster/wallsign/stencil/right/d{pixel_x = 5; pixel_y = 15},/obj/decal/poster/wallsign/stencil/right/y{pixel_x = 17; pixel_y = 15},/turf/simulated/wall/auto/reinforced/jen/cyan,/area/prefab/candy_shop)
+"nQ" = (/obj/table/wood/round/auto,/obj/machinery/light/incandescent/warm/very{dir = 4},/obj/item/reagent_containers/food/snacks/pie/pumpkin{pixel_y = -7},/obj/item/reagent_containers/food/snacks/yellow_cake_uranium_cake{pixel_x = 5; pixel_y = 5},/obj/item/reagent_containers/food/snacks/moon_pie/spooky{pixel_x = -9; pixel_y = 12},/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
+"oK" = (/obj/machinery/light/small/floor/netural,/turf/simulated/floor/engine/glow/blue,/area/prefab/candy_shop)
+"oP" = (/obj/table/wood/round/auto,/obj/item/reagent_containers/food/snacks/breadloaf/corn/sweet/honey{pixel_y = 7},/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
+"qz" = (/obj/machinery/door_control/podbay{id = "Candy Shop"; pixel_x = -26},/obj/neon_lining{dir = 8},/obj/decal/pole{desc = "Definitely not a barber pole, nope, nuh-uh."; name = "Spinning Candy Cane Pole"; pixel_x = -14},/turf/simulated/floor/engine/glow,/area/prefab/candy_shop)
+"qN" = (/obj/machinery/light/flamp,/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
+"ry" = (/obj/submachine/cargopad{active = 0; desc = "Used to receive objects transported by a cargo transporter. Carlisle must've warped in all their sweets using this thing."; name = "Candy Resupply Pad"},/obj/item/reagent_containers/food/snacks/snack_cake,/obj/item/reagent_containers/food/snacks/snack_cake,/obj/item/reagent_containers/food/snacks/snack_cake,/obj/item/reagent_containers/food/snacks/snack_cake/golden,/obj/item/reagent_containers/food/snacks/snack_cake/golden,/obj/item/reagent_containers/food/snacks/snack_cake/golden,/obj/item/reagent_containers/food/snacks/strudel,/obj/item/reagent_containers/food/snacks/strudel,/obj/item/reagent_containers/food/snacks/strudel,/obj/item/clothing/suit/lshirt/dan_blue,/obj/item/ticket/golden,/obj/item/reagent_containers/food/snacks/ice_cream/gross,/obj/storage/crate/bin{desc = "Buy one, get the rest free."; name = "bargain bin"},/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
+"rV" = (/obj/table/wood/round/auto,/obj/item/reagent_containers/food/snacks/cake/chocolate/gateau{pixel_y = 10},/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
+"tf" = (/obj/machinery/light/small/floor/netural,/turf/simulated/floor/engine/glow,/area/prefab/candy_shop)
+"tB" = (/turf/variableTurf/clear,/area/noGenerate)
+"uR" = (/obj/table/wood/auto/desk,/obj/item/kitchen/food_box/lollipop{pixel_x = 5; pixel_y = 3},/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
+"we" = (/obj/table/wood/round/auto,/obj/table/wood/round/auto,/obj/item/reagent_containers/food/snacks/bagel,/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
+"xC" = (/obj/cabinet/taffy,/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
+"xF" = (/obj/table/wood/auto/desk,/obj/item/kitchen/food_box/donut_box{desc = "A box of Dunkin-Kreme donuts.  The brand name made a lot more sense before the companies merged in 2038."; pixel_x = 1; pixel_y = 5},/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
+"xI" = (/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
+"xQ" = (/obj/table/wood/round/auto,/obj/item/item_box/swedish_bag{pixel_x = 3; pixel_y = -2},/obj/item/item_box/swedish_bag,/obj/item/item_box/swedish_bag{pixel_x = -3; pixel_y = 4},/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
+"xT" = (/obj/table/wood/round/auto,/obj/machinery/light/incandescent/warm/very{dir = 4},/obj/item/reagent_containers/food/snacks/candy/jellybean/everyflavor{pixel_x = 5; pixel_y = 7},/obj/item/reagent_containers/food/snacks/candy/jellybean/everyflavor{pixel_x = -4},/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
+"yk" = (/obj/table/wood/auto/desk,/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
+"yA" = (/obj/neon_lining{dir = 4; lining_color = "pink"},/turf/simulated/floor/engine/glow/blue,/area/prefab/candy_shop)
+"Ag" = (/obj/table/wood/round/auto,/obj/item/reagent_containers/food/snacks/candy/wrapped_pbcup{pixel_x = 6},/obj/item/reagent_containers/food/snacks/candy/wrapped_pbcup,/obj/item/reagent_containers/food/snacks/candy/wrapped_pbcup{pixel_x = -4; pixel_y = 6},/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
+"AK" = (/obj/machinery/light/small/floor/warm/very,/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
+"AU" = (/obj/neon_lining{dir = 8},/turf/simulated/floor/engine/glow,/area/prefab/candy_shop)
+"Cu" = (/obj/decal/poster/wallsign/stencil/right/y{pixel_x = 17; pixel_y = 15},/obj/decal/poster/wallsign/stencil/right/d{pixel_x = 5; pixel_y = 15},/obj/decal/poster/wallsign/stencil/left/n{pixel_x = -7; pixel_y = 15},/turf/simulated/wall/auto/reinforced/jen/cyan,/area/prefab/candy_shop)
+"Df" = (/obj/decal/skeleton{desc = "The remains of a confectioner."; name = "Carlisle"},/obj/item/casing/derringer{dir = 5; pixel_x = -9; pixel_y = 9},/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
+"DL" = (/obj/neon_lining{dir = 8},/obj/neon_lining{dir = 8},/turf/simulated/floor/engine/glow,/area/prefab/candy_shop)
+"Fq" = (/obj/table/wood/auto/desk,/obj/machinery/cashreg,/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
+"Fw" = (/obj/table/wood/round/auto,/obj/item/reagent_containers/food/snacks/candy/candy_cane{dir = 8; pixel_x = 4},/obj/item/reagent_containers/food/snacks/candy/candy_cane{dir = 8; pixel_x = 13; pixel_y = -6},/obj/item/reagent_containers/food/snacks/candy/candy_cane{dir = 8; pixel_x = 14; pixel_y = 4},/obj/item/reagent_containers/food/snacks/candy/candy_cane{dir = 8; pixel_x = 5; pixel_y = 6},/obj/item/reagent_containers/food/snacks/candy/candy_cane{dir = 8; pixel_x = 14; pixel_y = 10},/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
+"FS" = (/obj/table/wood/round/auto,/obj/item/storage/goodybag{pixel_x = 5; pixel_y = 5},/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
+"Hn" = (/obj/item/storage/secure/ssafe/loot{pixel_y = 28},/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
+"HJ" = (/obj/table/wood/round/auto,/obj/machinery/light/incandescent/warm/very{dir = 8},/obj/item/reagent_containers/food/snacks/candy/butterscotch{pixel_y = 8},/obj/item/reagent_containers/food/snacks/candy/butterscotch{pixel_y = 4},/obj/item/reagent_containers/food/snacks/candy/butterscotch,/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
+"Jr" = (/obj/window/auto/hardened/the_tuff_stuff,/obj/decal/tile_edge/stripe/big{icon_state = "xtra_bigstripe-edge"},/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
+"JQ" = (/turf/simulated/floor/engine/glow/blue,/area/prefab/candy_shop)
+"Kb" = (/obj/random_pod_spawner,/turf/simulated/floor/engine/glow/blue,/area/prefab/candy_shop)
+"KG" = (/obj/forcefield/energyshield/perma,/obj/machinery/door/poddoor/blast/pyro/podbay_autoclose{id = "Candy Shop"; name = "Carlisle's Confections Parking"},/turf/simulated/floor/engine/glow/blue,/area/prefab/candy_shop)
+"Ne" = (/obj/neon_lining{dir = 4; lining_color = "pink"},/obj/decal/pole{desc = "Definitely not a barber pole, nope, nuh-uh."; name = "Spinning Candy Cane Pole"; pixel_x = 14},/turf/simulated/floor/engine/glow/blue,/area/prefab/candy_shop)
+"Nj" = (/turf/simulated/floor/engine/glow,/area/prefab/candy_shop)
+"Pp" = (/obj/table/wood/round/auto,/obj/item/reagent_containers/food/snacks/candy/negativeonebar{pixel_y = 8},/obj/item/reagent_containers/food/snacks/candy/negativeonebar{pixel_y = 4},/obj/item/reagent_containers/food/snacks/candy/negativeonebar,/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
+"Tk" = (/obj/table/wood/round/auto,/obj/machinery/light/incandescent/warm/very{dir = 8},/obj/item/reagent_containers/food/snacks/candy/nougat,/obj/item/reagent_containers/food/snacks/candy/nougat{pixel_y = 8},/obj/item/reagent_containers/food/snacks/candy/nougat{pixel_y = 4},/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
+"TX" = (/obj/decal/poster/wallsign/stencil/left/c{pixel_y = 15},/obj/decal/poster/wallsign/stencil/right/a{pixel_y = 15},/turf/simulated/wall/auto/reinforced/jen/cyan,/area/prefab/candy_shop)
+"Us" = (/obj/machinery/door/unpowered/wood/pyro{name = "Carlisle's Confections"},/obj/decal/tile_edge/stripe/big{icon_state = "xtra_bigstripe-edge"},/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
+"UE" = (/obj/rack/lunar,/obj/item/item_box/heartcandy{desc = "Wow, you haven't seen this brand in ages"; name = "Carlisle's Candy Hearts"; pixel_y = -7},/obj/item/kitchen/peach_rings{desc = "A bag of gummy peach rings. Woah! Carlisle Confection brand! You thought they went out of business!"; pixel_y = 7},/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
+"Wk" = (/obj/lattice{dir = 1; icon_state = "lattice-dir-b"; tag = "icon-lattice-dir-b (NORTHWEST)"},/turf/variableTurf/clear,/area/noGenerate)
+"Yo" = (/obj/window/auto/hardened/the_tuff_stuff,/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
+"YM" = (/obj/rack/lunar,/obj/item/kitchen/peach_rings{desc = "A bag of gummy peach rings. Woah! Carlisle Confection brand! You thought they went out of business!"; pixel_y = 7},/obj/item/item_box/heartcandy{desc = "Wow, you haven't seen this brand in ages"; name = "Carlisle's Candy Hearts"; pixel_y = -7},/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
+"YO" = (/obj/machinery/light/small/sticky/warm/very{dir = 1},/turf/variableTurf/clear,/area/noGenerate)
 
 (1,1,1) = {"
-dndndndndndndndndndndndndndndndndndndndn
-dndndndndndndndndndndndndndndndndndndndn
-dndndndndnnREbdRtBdRdRtBdRlHqxdndndndndn
-dndndndndndRneneNAfUhrBSnenedRdndndndndn
-dndndndndndRpRpRovJRpRpRpRpRdRdndndndndn
-dndndndndndRuUpRtFdZVLvBpRAwdRdndndndndn
-dndndndndndRslpRpRoNoNpRpRbqdRdndndndndn
-dndndndndntBkhpRGGpRpRGGpRwJtBdndndndndn
-dndndndndntBdMpRGGoNoNGGpRlZtBdndndndndn
-dndndndndntBGNpRNkpRpRGGpRsutBdndndndndn
-dndndndndndRMOpRpRoNoNpRpRiMdRdndndndndn
-dndndndndndRBYpRpRpRpRpRpRRVdRdndndndndn
-dndndndndndRNApRpRoNoNpRpRNAdRdndndndndn
-dndndndndndROhOhYrOhOhYrOhOhdRdndndndndn
-dndnYldndndRnqtMlptMlptMlpzydRdndndndndn
-dnSzVKBzBzdRGzGylpRpgStMOzhAdRdndndndndn
-dndnTOdndndRdwtMlptMlptMlphAdRdndndndndn
-dndndndndndRQhxiQhxiQhxiQhxiDBdndndndndn
-dndndndndnXydndndndndndndndnXydndndndndn
-dndndndndndndndndndndndndndndndndndndndn
+tBtBtBtBtBtBtBtBtBtBtBtBtBtBtBtBtBtBtBtB
+tBtBtBtBtBtBtBtBtBtBtBtBtBtBtBtBtBtBtBtB
+tBtBtBtBtBTXnEnbYonbnbYonbduCutBtBtBtBtB
+tBtBtBtBtBnbxCxCqNHndgryxCxCnbtBtBtBtBtB
+tBtBtBtBtBnbxIxIcNDfxIxIxIxInbtBtBtBtBtB
+tBtBtBtBtBnbxQxIuRFqykxFxIFSnbtBtBtBtBtB
+tBtBtBtBtBnbTkxIxIAKAKxIxIxTnbtBtBtBtBtB
+tBtBtBtBtBYoFwxIYMxIxIYMxIrVYotBtBtBtBtB
+tBtBtBtBtBYoAgxIYMAKAKYMxIngYotBtBtBtBtB
+tBtBtBtBtBYonzxIUExIxIYMxIoPYotBtBtBtBtB
+tBtBtBtBtBnbHJxIxIAKAKxIxInQnbtBtBtBtBtB
+tBtBtBtBtBnbwexIxIxIxIxIxIPpnbtBtBtBtBtB
+tBtBtBtBtBnbqNxIxIAKAKxIxIqNnbtBtBtBtBtB
+tBtBtBtBtBnbJrJrUsJrJrUsJrJrnbtBtBtBtBtB
+tBtBhDtBtBnbqzJQNjJQNjJQNjNenbtBtBtBtBtB
+tBjEiUauaunbAUKbNjoKtfJQhVyAnbtBtBtBtBtB
+tBtBWktBtBnbDLJQNjJQNjJQNjyAnbtBtBtBtBtB
+tBtBtBtBtBnbjpKGjpKGjpKGjpKGkztBtBtBtBtB
+tBtBtBtBtBYOtBtBtBtBtBtBtBtBYOtBtBtBtBtB
+tBtBtBtBtBtBtBtBtBtBtBtBtBtBtBtBtBtBtBtB
 "}
