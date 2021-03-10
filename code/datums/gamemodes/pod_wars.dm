@@ -1015,6 +1015,8 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 		/obj/item/material_piece/molitz
 	)
 	available = list(
+		/datum/manufacture/pod_wars/barricade,
+		/datum/manufacture/pod_wars/lock,
 		/datum/manufacture/putt/engine,
 		/datum/manufacture/putt/boards,
 		/datum/manufacture/putt/control,
@@ -1153,7 +1155,7 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 	name = "Robust Syndicate Pod Armor"
 	item_outputs = list(/obj/item/pod/sy_robust)
 
-
+//costs a good bit more than the standard jetpack. for balance reasons here. to make jetpacks a commodity.
 /datum/manufacture/pod_wars/jetpack
 	name = "Jetpack"
 	item_paths = list("MET-3","CON-1")
@@ -1174,8 +1176,16 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 /datum/manufacture/pod_wars/lock
 	name = "Pod Lock (ID Card)"
 	item_paths = list("MET-1")
-	item_names = list("Metal")
 	item_amounts = list(1)
+	item_outputs = list(/obj/item/shipcomponent/secondary_system/lock/pw_id)
+	time = 1 SECONDS
+	create = 1
+	category = "Miscellaneous"
+
+/datum/manufacture/pod_wars/barricade
+	name = "Deployable Barricade"
+	item_paths = list("MET-2")
+	item_amounts = list(5)
 	item_outputs = list(/obj/item/shipcomponent/secondary_system/lock/pw_id)
 	time = 1 SECONDS
 	create = 1
