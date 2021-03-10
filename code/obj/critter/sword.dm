@@ -78,7 +78,7 @@
 			if(mode == 0 && !changing_modes && !transformation_triggered)	//If in Beacon form and not already transforming...
 				transformation_countdown()									//...the countdown starts.
 		return
-	
+
 	CritterDeath()
 		..()
 		if (!died_already)
@@ -87,7 +87,7 @@
 				command_announcement("<br><b><span class='alert'>The Syndicate Weapon has been eliminated.</span></b>", "Safety Update", "sound/misc/announcement_1.ogg")
 				logTheThing("combat", src, null, "has been defeated.")
 				message_admins("The Syndicate Weapon: Orion Retribution Device has been defeated.")
-		
+
 			playsound(src, "sound/effects/ship_engage.ogg", 100, 1)
 
 			var/datum/effects/system/harmless_smoke_spread/smoke = new /datum/effects/system/harmless_smoke_spread()
@@ -107,12 +107,12 @@
 				for(var/board_count = rand(4, 8), board_count > 0, board_count--)
 					new/obj/item/factionrep/ntboard(locate(death_loc_x + rand(-2, 2), death_loc_y + rand(-2, 2), death_loc_z))
 					board_count--
-			
+
 			SPAWN_DBG(55)
 				for(var/alloy_count = rand(2, 4), alloy_count > 0, alloy_count--)
 					new/obj/item/material_piece/iridiumalloy(locate(death_loc_x + rand(-1, 1), death_loc_y + rand(-1, 1), death_loc_z))
 					alloy_count--
-			
+
 			SPAWN_DBG(60)
 				new/obj/machinery/power/sword_engine(locate(death_loc_x, death_loc_y, death_loc_z))
 
@@ -217,7 +217,7 @@
 							if(!stuck_timer)
 								stuck_timer = 12 SECONDS + TIME
 								stuck_location = get_center()
-							
+
 							if(stuck_timer <= TIME && stuck_location == get_center())
 								cooldown = 4 SECONDS + TIME
 								stuck_timer = null
@@ -242,7 +242,7 @@
 								src.frustration++
 							else
 								src.frustration = 0
-							
+
 							ability_selection()
 
 					else src.task = "thinking"
@@ -312,8 +312,8 @@
 
 
 //-TRANSFORMATIONS-//
-	
-	proc/transformation(var/transformation_id)				//0 - Beacon. 1 - Unanchored. 2 - Anchored.		
+
+	proc/transformation(var/transformation_id)				//0 - Beacon. 1 - Unanchored. 2 - Anchored.
 		firevuln = 1.25
 		brutevuln = 1.25
 		miscvuln = 0.25
@@ -598,7 +598,7 @@
 				src.dir = pick(1,2,4,8)
 			for(var/i in 0 to 7)
 				step(src, src.dir)
-				if(i < 3)
+				if(i <= 3)
 					src.alpha -= 17
 					src.pixel_y += 4
 				else
