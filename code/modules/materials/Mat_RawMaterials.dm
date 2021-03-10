@@ -33,7 +33,7 @@
 	update_stack_appearance()
 		if(material)
 			if(src.amount > 1)
-				name = "[amount] [initial(src.name)]["s"]"
+				name = "[amount] [material.name] [initial(src.name)]["s"]"
 				src.inventory_counter.update_number(amount)
 			else
 				name = src.name
