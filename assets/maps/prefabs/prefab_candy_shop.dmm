@@ -1,26 +1,31 @@
 "a" = (/turf/variableTurf/clear,/area/noGenerate)
 "c" = (/obj/table/wood/auto/desk,/obj/machinery/cashreg,/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
 "d" = (/obj/table/wood/round/auto,/obj/machinery/light/incandescent/warm/very{dir = 4},/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
+"e" = (/obj/machinery/r_door_control{id = "Candy Shop"},/turf/simulated/wall/auto/reinforced/jen/cyan,/area/prefab/candy_shop)
 "f" = (/obj/machinery/light/small/floor/warm/very,/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
+"g" = (/turf/simulated/floor/engine/glow,/area/prefab/candy_shop)
 "i" = (/obj/machinery/light/small/sticky/warm/very{dir = 1},/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
+"l" = (/obj/forcefield/energyshield/perma,/obj/machinery/door/poddoor/blast/pyro/podbay_autoclose{id = "Candy Shop"},/turf/simulated/floor/engine/glow/blue,/area/prefab/candy_shop)
 "p" = (/obj/machinery/light/small/sticky/warm/very{dir = 1},/turf/variableTurf/clear,/area/noGenerate)
-"q" = (/obj/machinery/door_control/podbay{id = "Candy Shop"; pixel_x = -24},/turf/simulated/floor/engine/glow,/area/prefab/candy_shop)
-"r" = (/turf/simulated/floor/engine/glow,/area/prefab/candy_shop)
+"q" = (/obj/machinery/door_control/podbay{id = "Candy Shop"; pixel_x = -24},/obj/neon_lining{dir = 8},/turf/simulated/floor/engine/glow,/area/prefab/candy_shop)
+"r" = (/turf/simulated/floor/engine/glow/blue,/area/prefab/candy_shop)
 "s" = (/obj/rack/lunar,/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
-"v" = (/turf/simulated/floor/engine/glow/blue,/area/prefab/candy_shop)
+"t" = (/obj/random_pod_spawner/random_putt_spawner,/turf/simulated/floor/engine/glow,/area/prefab/candy_shop)
 "w" = (/obj/table/wood/auto/desk,/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
 "x" = (/obj/decal/skeleton{name = "Carlisle"},/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
-"y" = (/obj/forcefield/energyshield/perma,/obj/machinery/door/poddoor/blast/pyro/podbay_autoclose{id = "Candy Shop"},/turf/simulated/floor/engine/glow/blue,/area/prefab/candy_shop)
 "z" = (/turf/simulated/wall/auto/reinforced/jen/cyan,/area/prefab/candy_shop)
-"B" = (/obj/machinery/light/flamp,/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
+"B" = (/obj/random_pod_spawner,/turf/simulated/floor/engine/glow/blue,/area/prefab/candy_shop)
 "C" = (/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
+"D" = (/obj/neon_lining{dir = 8},/turf/simulated/floor/engine/glow,/area/prefab/candy_shop)
 "E" = (/obj/table/wood/auto/desk,/obj/item/kitchen/food_box/lollipop{pixel_x = 5; pixel_y = 3},/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
 "F" = (/obj/window/auto/hardened/the_tuff_stuff,/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
-"G" = (/obj/forcefield/energyshield/perma,/obj/machinery/door/poddoor/blast/pyro/podbay_autoclose{id = "Candy Shop"},/turf/simulated/floor/engine/glow,/area/prefab/candy_shop)
+"J" = (/obj/neon_lining{dir = 4; lining_color = "pink"},/turf/simulated/floor/engine/glow/blue,/area/prefab/candy_shop)
 "K" = (/obj/item/storage/secure/ssafe/loot{pixel_y = 28},/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
-"Q" = (/obj/machinery/r_door_control{id = "Candy Shop"},/turf/simulated/wall/auto/reinforced/jen/cyan,/area/prefab/candy_shop)
+"P" = (/obj/forcefield/energyshield/perma,/obj/machinery/door/poddoor/blast/pyro/podbay_autoclose{id = "Candy Shop"},/turf/simulated/floor/engine/glow,/area/prefab/candy_shop)
 "S" = (/obj/table/wood/round/auto,/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
 "T" = (/obj/table/wood/round/auto,/obj/table/wood/round/auto,/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
+"U" = (/obj/neon_lining{dir = 8},/obj/neon_lining{dir = 8},/turf/simulated/floor/engine/glow,/area/prefab/candy_shop)
+"V" = (/obj/machinery/light/flamp,/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
 "X" = (/obj/machinery/door/unpowered/wood/pyro{name = "Carlisle's Confections"},/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
 "Y" = (/obj/table/wood/round/auto,/obj/machinery/light/incandescent/warm/very{dir = 8},/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
 "Z" = (/obj/cabinet/taffy,/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
@@ -29,7 +34,7 @@
 aaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaa
 aaaaazzzFzzFzzzaaaaa
-aaaaazZZBKiCZZzaaaaa
+aaaaazZZVKiCZZzaaaaa
 aaaaazCCwxCCCCzaaaaa
 aaaaazSCEcwwCSzaaaaa
 aaaaazYCCffCCdzaaaaa
@@ -38,12 +43,12 @@ aaaaaFSCsffsCSFaaaaa
 aaaaaFSCsCCsCSFaaaaa
 aaaaazYCCffCCdzaaaaa
 aaaaazTCCCCCCSzaaaaa
-aaaaazBCCffCCBzaaaaa
+aaaaazVCCffCCVzaaaaa
 aaaaazFFXFFXFFzaaaaa
-aaaaazqvrvrvrvzaaaaa
-aaaaaFrvrvrvrvFaaaaa
-aaaaaFrvrvrvrvFaaaaa
-aaaaazGyGyGyGyQaaaaa
+aaaaazqrgrgrgJzaaaaa
+aaaaazDBgrgrtJzaaaaa
+aaaaazUrgrgrgJzaaaaa
+aaaaazPlPlPlPleaaaaa
 aaaaapaaaaaaaapaaaaa
 aaaaaaaaaaaaaaaaaaaa
 "}
