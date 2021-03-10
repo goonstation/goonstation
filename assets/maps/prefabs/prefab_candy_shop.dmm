@@ -1,28 +1,29 @@
 "a" = (/turf/variableTurf/clear,/area/noGenerate)
-"i" = (/obj/table/wood/auto/desk,/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
-"j" = (/obj/decal/skeleton,/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
-"k" = (/obj/table/wood/auto/desk,/obj/machinery/cashreg,/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
-"m" = (/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
-"w" = (/obj/table/wood/round/auto,/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
-"x" = (/turf/simulated/wall/auto/reinforced/jen/cyan,/area/prefab/candy_shop)
-"M" = (/obj/table/wood/round/auto,/obj/table/wood/round/auto,/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
-"X" = (/obj/cabinet/taffy,/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
+"d" = (/obj/table/wood/auto/desk,/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
+"m" = (/obj/table/wood/round/auto,/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
+"n" = (/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
+"p" = (/turf/simulated/wall/auto/reinforced/jen/cyan,/area/prefab/candy_shop)
+"v" = (/obj/item/storage/secure/ssafe/loot{pixel_y = 28},/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
+"I" = (/obj/table/wood/round/auto,/obj/table/wood/round/auto,/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
+"Q" = (/obj/table/wood/auto/desk,/obj/machinery/cashreg,/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
+"R" = (/obj/cabinet/taffy,/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
+"Y" = (/obj/decal/skeleton,/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
 
 (1,1,1) = {"
 aaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaa
-aaaxxxxxxxxxxaaa
-aaaxXXmmmmXXxaaa
-aaaxmmijmmmmxaaa
-aaaxwmikiimmxaaa
-aaaxwmmmmmmmxaaa
-aaaxwmmmmmmmxaaa
-aaaxwmmmmmmmxaaa
-aaaxwmmmmmmmxaaa
-aaaxwmmmmmmmxaaa
-aaaxMmmmmmmmxaaa
-aaaxmmmmmmmmxaaa
-aaaxmmmmmmmmxaaa
+aaappppppppppaaa
+aaapRRnvnnRRpaaa
+aaapnndYnnnnpaaa
+aaapmndQddnnpaaa
+aaapmnnnnnnnpaaa
+aaapmnnnnnnnpaaa
+aaapmnnnnnnnpaaa
+aaapmnnnnnnnpaaa
+aaapmnnnnnnnpaaa
+aaapInnnnnnnpaaa
+aaapnnnnnnnnpaaa
+aaapnnnnnnnnpaaa
 aaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaa
 "}
