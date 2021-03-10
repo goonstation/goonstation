@@ -98,10 +98,9 @@
 	for (var/turf/T in turfs)
 		var/obj/control_point_computer/CPC = locate(/obj/control_point_computer) in T
 		if (CPC)
-			var/datum/control_point/P = new/datum/control_point(CPC, get_area_by_type(path))
-			for(var/obj/warp_beacon/pod_wars/W in warp_beacons)
-				if (W.control_point == name)
-					P.beacons += W
+			var/datum/control_point/P = new/datum/control_point(CPC, get_area_by_type(path), name)
+
+			CPC.ctrl_pt = P 	//computer's reference to datum
 			control_points += P
 			message_admins("comp = [P.computer.name], area = [P.capture_area.name]|[P.capture_area.type] , ")
 
@@ -1415,6 +1414,8 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 	var/light_b = 1
 
 	var/owner_team = 0			//Which team currently controls this computer/area? 0 = neutral, 1 = NT, 2 = SY
+	var/capturing_team = 0		//Which team is capturing this computer/area? 0 = neutral, 1 = NT, 2 = SY 			//UNUSED
+	var/datum/control_point/ctrl_pt
 
 	New()
 		..()
@@ -1431,21 +1432,96 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 	meteorhit(var/obj/O as obj)
 		return
 
-	//change colour and owner team when captured.
 	proc/capture(var/team)
+		owner_team = team
+		update_light_colour()
+		ctrl_pt.receive_capture(team)
+
+	attack_hand(mob/user as mob)
+		var/user_team_string = user?.mind?.special_role
+		var/user_team = 0
+		if (user_team_string == "NanoTrasen")
+			user_team = TEAM_NANOTRASEN
+		else if (user_team_string == "Syndicate")
+			user_team = TEAM_SYNDICATE
+
+		if (owner_team != user_team) 
+			var/duration = is_commander(user) ? 7 SECONDS : 15 SECONDS
+			SETUP_GENERIC_ACTIONBAR(user, src, duration, /obj/control_point_computer/proc/capture, list(user, user_team),\
+			 null, null, "[user] successfully enters [his_or_her(user)] command code into \the [src]!")
+
+		// old thing I was doing for capture system where it captured over time instead of all at once.
+		// switch(owner_team)
+		// 	if (TEAM_NANOTRASEN)
+		// 		switch(user_team)
+		// 			if (TEAM_NANOTRASEN)
+		// 				if (capturing_team == TEAM_SYNDICATE)
+		// 					SETUP_GENERIC_ACTIONBAR(user, src, 3 SECONDS, /obj/control_point_computer/proc/prevent_capture, list(user, user_team),\
+		// 					 null, null, "[user] re-assert control over \the [src]!")
+		// 					return
+		// 				boutput(user, "<br><span class='notice'>This already belongs to your team...</span>")
+		// 				return
+
+		// 			//NT owns this, Syndicate start to capture.
+		// 			if (TEAM_SYNDICATE) 
+		// 				SETUP_GENERIC_ACTIONBAR(user, src, 7 SECONDS, /obj/control_point_computer/proc/start_capture, list(user, user_team),\
+		// 				 null, null, "[user] successfully enters [his_or_her(user)] command code into \the [src]!")
+		// 				return
+
+		// 	if (TEAM_SYNDICATE)
+		// 		switch(user_team)
+		// 			if (TEAM_SYNDICATE)
+		// 				if (capturing_team == TEAM_NANOTRASEN)
+		// 					boutput(user, "<br><span class='notice'>You enter a command re-assert control over this system...</span>")
+		// 					return
+		// 				boutput(user, "<br><span class='notice'>This already belongs to your team...</span>")
+		// 				return
+
+		// 			//SY owns this, NT start to capture.
+		// 			if (TEAM_NANOTRASEN) 
+		// 				SETUP_GENERIC_ACTIONBAR(user, src, 7 SECONDS, /obj/control_point_computer/proc/start_capture, list(user, user_team),\
+		// 				 null, null, "[user] successfully enters [his_or_her(user)] command code into \the [src]!")
+		// 				return
+		// 	if (0)
+		// 		SETUP_GENERIC_ACTIONBAR(user, src, 7 SECONDS, /obj/control_point_computer/proc/start_capture, list(user, user_team),\
+		// 		 null, null, "[user] successfully enters [his_or_her(user)] command code into \the [src]!")
+
+	proc/is_commander(var/mob/user)
+		if (istype(ticker.mode, /datum/game_mode/pod_wars))
+			var/datum/game_mode/pod_wars/mode = ticker.mode
+			if (user.mind == mode.team_NT.commander)
+				return 1
+			else if (user.mind == mode.team_SY.commander)
+				return 1
+		return 0
+
+
+	// //changes vars to sync up with the manager datum
+	// proc/update_from_manager(var/owner_team, var/capturing_team)
+	// 	src.owner_team = owner_team
+	// 	src.capturing_team = capturing_team
+
+	// proc/prevent_capture(var/mob/user, var/user_team)
+	// 	if (owner_team != user_team && capturing_team != user_team)
+	// 		receive_capture_start(user, user_team)
+	// 	return
+
+	// proc/start_capture(var/mob/user, var/user_team)
+
+	// 	receive_capture_start(user, user_team)
+
+	//change colour and owner team when captured.
+	proc/update_light_colour()
 		//blue for NT|1, red for SY|2, white for neutral|0. 
-		if (team == TEAM_NANOTRASEN)
-			owner_team = TEAM_NANOTRASEN
+		if (owner_team == TEAM_NANOTRASEN)
 			light_r = 0
 			light_g = 0
 			light_b = 1
-		else if (team == TEAM_SYNDICATE)
-			owner_team = TEAM_SYNDICATE
+		else if (owner_team == TEAM_SYNDICATE)
 			light_r = 1
 			light_g = 0
 			light_b = 0
 		else 
-			owner_team = 0
 			light_r = 1
 			light_g = 1
 			light_b = 1
@@ -1469,11 +1545,69 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 	var/list/beacons = list()
 	var/obj/control_point_computer/computer
 	var/area/capture_area
+	var/capture_value = 0		//values from -100 to 100. Positives denote NT, negatives denote SY.  	/////////UNUSED
+	var/capture_rate = 1		//1 or 3 based on if a commander has entered their code.  				/////////UNUSED
+	var/capturing_team			//0 if not moving, either uncaptured or at max capture. 1=NT, 2=SY  	/////////UNUSED
+	var/owner_team				//1=NT, 2=SY
 
-	New(var/obj/control_point_computer/computer, var/area/capture_area)
+	New(var/obj/control_point_computer/computer, var/area/capture_area, var/name)
 		src.computer = computer
 		src.capture_area = capture_area
+		src.name = name
 
+		for(var/obj/warp_beacon/pod_wars/B in warp_beacons)
+			if (B.control_point == name)
+				src.beacons += B
+
+
+	proc/receive_capture(var/team)
+		src.owner_team = team
+
+		//update beacon teams
+		for (var/obj/warp_beacon/pod_wars/B in beacons)
+			B.current_owner = team
+
+//I'll probably remove this all cause it's so shit, but in case I want to come back and finish it, I leave - kyle
+	// proc/receive_prevent_capture(var/mob/user, var/user_team)
+	// 	capturing_team = 0
+	// 	return
+
+	// proc/receive_capture_start(var/mob/user, var/user_team)
+	// 	if (owner_team == user_team)
+	// 		boutput_
+	// 	if (capturing_team == user_team)
+	// 		capture_rate = 1
+	// 		//is a commander, then change capture rate to be higher
+	// 		if (istype(ticker.mode, /datum/game_mode/pod_wars))
+	// 			var/datum/game_mode/pod_wars/mode = ticker.mode
+	// 			if (user.mind == mode.team_NT.commander)
+	// 				capture_rate = 3
+	// 			else if (user.mind == mode.team_SY.commander)
+	// 				capture_rate = 3
+
+
+	// proc/process()
+
+	// 	//clamp values, set capturing team to 0
+	// 	if (capture_value >= 100)
+	// 		capture_value = 100
+	// 		capturing_team = 0
+	// 		computer.update_from_manager(TEAM_NANOTRASEN, capturing_team)
+
+	// 	else if (capture_value <= -100)
+	// 		capture_value = -100
+	// 		capturing_team = 0
+	// 		computer.update_from_manager(TEAM_SYNDICATE, capturing_team)
+
+	// 	if (capturing_team == TEAM_NANOTRASEN)
+	// 		capture_value += capture_rate
+	// 	else if (capturing_team == TEAM_SYNDICATE)
+	// 		capture_value -= capture_rate
+	// 	else 
+	// 		return 
+
+
+		
 
 /////////////Barricades////////////
 
@@ -1568,10 +1702,6 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 	attack_self(mob/user as mob)
 		SETUP_GENERIC_ACTIONBAR(user, src, build_duration, /obj/item/deployer/barricade/proc/deploy, list(user, get_turf(user)),\
 		 src.icon, src.icon_state, "[user] deploys \the [src]")
-
-		// var/datum/action/bar/icon/callback/action_bar = new /datum/action/bar/icon/callback(user, src, build_duration,\
-		// src.icon, src.icon_state, "[user] deploys \the [src]", /obj/item/deployer/barricade/proc/deploy, arglist(list(user, get_turf(user))))
-		// actions.start(action_bar, user)
 
 	//mostly stolen from furniture_parts/proc/construct
 	proc/deploy(mob/user as mob, turf/T as turf)

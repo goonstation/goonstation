@@ -83,6 +83,7 @@
 
 	var/list/beacons = list()
 	//This is bad and dumb. I should turn the warp_beacons list into a manager datum, but this is already taking too long. -kyle
+	//I realize the possiblity of a bug where if you sit here ready to warp when it's about to change and then warp, but whatever
 #ifdef MAP_OVERRIDE_POD_WARS
 	var/pilot_team = ship?.pilot?.mind?.special_role
 	for(var/obj/warp_beacon/pod_wars/W in warp_beacons)

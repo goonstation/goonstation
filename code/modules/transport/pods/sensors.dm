@@ -10,7 +10,12 @@
 	var/lifeforms = 0
 	var/list/lifelist = list()
 	var/list/obj/whos_tracking_me = list()
+	//HAHA SUE ME NERDS, I'LL REMOVE THIS WHEN SENSORS DON'T SUCK --Kyle
+#ifdef MAP_OVERRIDE_POD_WARS
+	var/seekrange = 90
+#else
 	var/seekrange = 30
+#endif
 	var/sight = SEE_SELF
 	var/see_in_dark = SEE_DARK_HUMAN + 3
 	var/antisight = 0
