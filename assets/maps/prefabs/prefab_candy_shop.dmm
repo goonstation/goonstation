@@ -39,7 +39,7 @@
 "Fq" = (/obj/table/wood/auto/desk,/obj/machinery/cashreg,/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
 "Fw" = (/obj/table/wood/round/auto,/obj/item/reagent_containers/food/snacks/candy/candy_cane{dir = 8; pixel_x = 4},/obj/item/reagent_containers/food/snacks/candy/candy_cane{dir = 8; pixel_x = 13; pixel_y = -6},/obj/item/reagent_containers/food/snacks/candy/candy_cane{dir = 8; pixel_x = 14; pixel_y = 4},/obj/item/reagent_containers/food/snacks/candy/candy_cane{dir = 8; pixel_x = 5; pixel_y = 6},/obj/item/reagent_containers/food/snacks/candy/candy_cane{dir = 8; pixel_x = 14; pixel_y = 10},/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
 "FS" = (/obj/table/wood/round/auto,/obj/item/storage/goodybag{pixel_x = 5; pixel_y = 5},/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
-"Hn" = (/obj/item/storage/secure/ssafe/loot{pixel_y = 28},/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
+"Hn" = (/obj/item/storage/secure/ssafe/candy_shop{pixel_y = 28},/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
 "HJ" = (/obj/table/wood/round/auto,/obj/machinery/light/incandescent/warm/very{dir = 8},/obj/item/reagent_containers/food/snacks/candy/butterscotch{pixel_y = 8},/obj/item/reagent_containers/food/snacks/candy/butterscotch{pixel_y = 4},/obj/item/reagent_containers/food/snacks/candy/butterscotch,/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
 "Jr" = (/obj/window/auto/hardened/the_tuff_stuff,/obj/decal/tile_edge/stripe/big{icon_state = "xtra_bigstripe-edge"},/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
 "JQ" = (/turf/simulated/floor/engine/glow/blue,/area/prefab/candy_shop)
