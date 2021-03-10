@@ -1,34 +1,39 @@
 "a" = (/turf/variableTurf/clear,/area/noGenerate)
-"g" = (/obj/item/storage/secure/ssafe/loot{pixel_y = 28},/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
-"m" = (/obj/forcefield/energyshield/perma,/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
-"n" = (/obj/table/wood/auto/desk,/obj/item/kitchen/food_box/lollipop{pixel_x = 5; pixel_y = 3},/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
-"r" = (/obj/window/auto/hardened/the_tuff_stuff,/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
-"w" = (/obj/rack/lunar,/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
-"B" = (/obj/machinery/door/unpowered/wood/pyro{name = Carlisle's Confections},/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
-"D" = (/turf/simulated/wall/auto/reinforced/jen/cyan,/area/prefab/candy_shop)
-"F" = (/obj/table/wood/round/auto,/obj/table/wood/round/auto,/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
-"H" = (/obj/decal/skeleton,/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
-"J" = (/obj/table/wood/auto/desk,/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
-"N" = (/obj/cabinet/taffy,/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
-"O" = (/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
-"S" = (/obj/table/wood/auto/desk,/obj/machinery/cashreg,/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
-"Z" = (/obj/table/wood/round/auto,/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
+"l" = (/obj/table/wood/round/auto,/obj/machinery/light/incandescent/warm/very{dir = 8},/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
+"n" = (/obj/item/storage/secure/ssafe/loot{pixel_y = 28},/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
+"o" = (/obj/table/wood/round/auto,/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
+"s" = (/obj/table/wood/auto/desk,/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
+"t" = (/obj/machinery/light/small/sticky/warm/very{dir = 1},/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
+"w" = (/obj/cabinet/taffy,/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
+"x" = (/obj/machinery/light/small/floor/warm/very,/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
+"z" = (/obj/table/wood/round/auto,/obj/table/wood/round/auto,/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
+"D" = (/obj/window/auto/hardened/the_tuff_stuff,/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
+"F" = (/obj/table/wood/round/auto,/obj/machinery/light/incandescent/warm/very{dir = 4},/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
+"K" = (/obj/rack/lunar,/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
+"N" = (/obj/machinery/light/small/sticky/warm/very{dir = 1},/turf/variableTurf/clear,/area/noGenerate)
+"O" = (/obj/decal/skeleton,/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
+"R" = (/turf/simulated/wall/auto/reinforced/jen/cyan,/area/prefab/candy_shop)
+"U" = (/obj/table/wood/auto/desk,/obj/machinery/cashreg,/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
+"W" = (/obj/forcefield/energyshield/perma,/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
+"X" = (/obj/table/wood/auto/desk,/obj/item/kitchen/food_box/lollipop{pixel_x = 5; pixel_y = 3},/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
+"Y" = (/obj/machinery/door/unpowered/wood/pyro{name = Carlisle's Confections},/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
+"Z" = (/turf/simulated/floor/wood/four,/area/prefab/candy_shop)
 
 (1,1,1) = {"
 aaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaa
-aaaDDDrDDrDDDaaa
-aaaDNNOgOONNDaaa
-aaaDOOJHOOOODaaa
-aaaDZOnSJJOZDaaa
-aaaDZOOOOOOZDaaa
-aaarZOwOOwOZraaa
-aaarZOwOOwOZraaa
-aaarZOwOOwOZraaa
-aaaDZOOOOOOZDaaa
-aaaDFOOOOOOZDaaa
-aaaDOOOOOOOODaaa
-aaaDrrBrrBrrDaaa
-aaaDmmmmmmmmDaaa
-aaaaaaaaaaaaaaaa
+aaaRRRDRRDRRRaaa
+aaaRwwZntZwwRaaa
+aaaRZZsOZZZZRaaa
+aaaRoZXUssZoRaaa
+aaaRlZZxxZZFRaaa
+aaaDoZKZZKZoDaaa
+aaaDoZKxxKZoDaaa
+aaaDoZKZZKZoDaaa
+aaaRlZZxxZZFRaaa
+aaaRzZZZZZZoRaaa
+aaaRZZZxxZZZRaaa
+aaaRDDYDDYDDRaaa
+aaaRWWWWWWWWRaaa
+aaaNaaaaaaaaNaaa
 "}
