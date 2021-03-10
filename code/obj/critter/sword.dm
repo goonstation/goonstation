@@ -139,9 +139,10 @@
 			var/waking = 0
 
 			for (var/client/C)
-				var/mob/M = C.mob
+				var/mob/living/M = C.mob
+				if (isintangible(M)) continue
 				if (M && src.z == M.z && get_dist(src,M) <= 64)
-					if (isliving(M))
+					if (!isdead(M))
 						waking = 1
 						break
 
@@ -166,9 +167,10 @@
 			var/stay_awake = 0
 
 			for (var/client/C)
-				var/mob/M = C.mob
+				var/mob/living/M = C.mob
+				if (isintangible(M)) continue
 				if (M && src.z == M.z && get_dist(src,M) <= 32)
-					if (isliving(M))
+					if (!isdead(M))
 						stay_awake = 1
 						break
 
@@ -419,44 +421,52 @@
 			switch (src.dir)
 				if (1)	//N
 					var/turf/T = locate(src.loc.x + 1,src.loc.y + 3,src.loc.z)
-					for (var/mob/M in T)
+					for (var/mob/living/M in T)
+						if (isintangible(M)) continue
 						M.changeStatus("stunned", 2 SECONDS)
 						M.changeStatus("weakened", 4 SECONDS)
 					for(increment = -1; increment <= 1; increment++)
-						for(var/mob/M in locate(src.loc.x + 1 + increment,src.loc.y + 4,src.loc.z))
+						for(var/mob/living/M in locate(src.loc.x + 1 + increment,src.loc.y + 4,src.loc.z))
+							if (isintangible(M)) continue
 							M.changeStatus("stunned", 2 SECONDS)
 							M.changeStatus("weakened", 4 SECONDS)
 							M.throw_at(T, 3, 1)
 
 				if (4)	//E
 					var/turf/T = locate(src.loc.x + 3,src.loc.y + 1,src.loc.z)
-					for (var/mob/M in T)
+					for (var/mob/living/M in T)
+						if (isintangible(M)) continue
 						M.changeStatus("stunned", 2 SECONDS)
 						M.changeStatus("weakened", 4 SECONDS)
 					for(increment = -1; increment <= 1; increment++)
-						for(var/mob/M in locate(src.loc.x + 4,src.loc.y + 1 + increment,src.loc.z))
+						for(var/mob/living/M in locate(src.loc.x + 4,src.loc.y + 1 + increment,src.loc.z))
+							if (isintangible(M)) continue
 							M.changeStatus("stunned", 2 SECONDS)
 							M.changeStatus("weakened", 4 SECONDS)
 							M.throw_at(T, 3, 1)
 
 				if (2)	//S
 					var/turf/T = locate(src.loc.x + 1,src.loc.y - 1,src.loc.z)
-					for (var/mob/M in T)
+					for (var/mob/living/M in T)
+						if (isintangible(M)) continue
 						M.changeStatus("stunned", 2 SECONDS)
 						M.changeStatus("weakened", 4 SECONDS)
 					for(increment = -1; increment <= 1; increment++)
-						for(var/mob/M in locate(src.loc.x + 1 + increment,src.loc.y - 2,src.loc.z))
+						for(var/mob/living/M in locate(src.loc.x + 1 + increment,src.loc.y - 2,src.loc.z))
+							if (isintangible(M)) continue
 							M.changeStatus("stunned", 2 SECONDS)
 							M.changeStatus("weakened", 4 SECONDS)
 							M.throw_at(T, 3, 1)
 
 				if (8)	//W
 					var/turf/T = locate(src.loc.x - 1,src.loc.y + 1,src.loc.z)
-					for (var/mob/M in T)
+					for (var/mob/living/M in T)
+						if (isintangible(M)) continue
 						M.changeStatus("stunned", 2 SECONDS)
 						M.changeStatus("weakened", 4 SECONDS)
 					for(increment = -1; increment <= 1; increment++)
-						for(var/mob/M in locate(src.loc.x - 2,src.loc.y + 1 + increment,src.loc.z))
+						for(var/mob/living/M in locate(src.loc.x - 2,src.loc.y + 1 + increment,src.loc.z))
+							if (isintangible(M)) continue
 							M.changeStatus("stunned", 2 SECONDS)
 							M.changeStatus("weakened", 4 SECONDS)
 							M.throw_at(T, 3, 1)
@@ -552,7 +562,8 @@
 		src.UpdateOverlays(glow, "glow")
 
 		SPAWN_DBG(1)
-			for (var/mob/M in range(5,get_center()))
+			for (var/mob/living/M in range(5,get_center()))
+				if (isintangible(M)) continue
 				random_brute_damage(M, 32)
 				random_burn_damage(M, 16)
 
@@ -560,7 +571,8 @@
 			animate_spin(src, spin_dir, 5, 0)
 
 		SPAWN_DBG(6)
-			for (var/mob/M in range(5,get_center()))
+			for (var/mob/living/M in range(5,get_center()))
+				if (isintangible(M)) continue
 				random_brute_damage(M, 16)
 				random_burn_damage(M, 32)
 
@@ -605,10 +617,12 @@
 					src.alpha += 17
 					src.pixel_y -= 4
 				sleep(5)
-			for (var/mob/M in range(3,get_center()))
+			for (var/mob/living/M in range(3,get_center()))
+				if (isintangible(M)) continue
 				random_brute_damage(M, 60)
 			tile_purge(src.loc.x + 1,src.loc.y + 1,1)
-			for (var/mob/M in get_center())
+			for (var/mob/living/M in get_center())
+				if (isintangible(M)) continue
 				if(prob(69))								//Nice.
 					M.gib()
 				else
@@ -643,17 +657,20 @@
 		src.UpdateOverlays(glow, "glow")
 
 		SPAWN_DBG(2)
-			for (var/mob/M in range(3,get_center()))
+			for (var/mob/living/M in range(3,get_center()))
+				if(isintangible(M)) continue
 				random_burn_damage(M, (current_heat_level / 5))
 				M.changeStatus("burning", 4 SECONDS)
 
 		SPAWN_DBG(4)
-			for (var/mob/M in range(3,get_center()))
+			for (var/mob/living/M in range(3,get_center()))
+				if(isintangible(M)) continue
 				random_burn_damage(M, (current_heat_level / 4))
 				M.changeStatus("burning", 6 SECONDS)
 
 		SPAWN_DBG(6)
-			for (var/mob/M in range(3,get_center()))
+			for (var/mob/living/M in range(3,get_center()))
+				if(isintangible(M)) continue
 				random_burn_damage(M, (current_heat_level / 3))
 				M.changeStatus("burning", 8 SECONDS)
 
@@ -754,7 +771,8 @@
 								tile_purge(src.loc.x - 1,src.loc.y + 1 + increment,0)
 				step(src, src.dir)
 				sleep(0.4)
-			for (var/mob/M in range(3,get_center()))
+			for (var/mob/living/M in range(3,get_center()))
+				if(isintangible(M)) continue
 				random_brute_damage(M, 60)
 			past_destructive_rotation = src.dir
 
@@ -814,7 +832,8 @@
 //-MISCELLANEOUS-//
 
 	proc/tile_purge(var/point_x, var/point_y, var/dam_type)	//A helper proc for Linear Purge, Destructive Leap and Destructive Flight.
-		for (var/mob/M in locate(point_x,point_y,src.z))
+		for (var/mob/living/M in locate(point_x,point_y,src.z))
+			if(isintangible(M)) continue
 			if(!dam_type)
 				if (isrobot(M))
 					M.health = M.health * rand(0.10, 0.20)
