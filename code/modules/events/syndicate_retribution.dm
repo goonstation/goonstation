@@ -1,5 +1,5 @@
 #define ALIVE_ANTAGS_THRESHOLD 0.06 //value copied from antag spawn event
-#define DEAD_CREW_THRESHOLD 0.5
+#define ALIVE_CREW_THRESHOLD 30
 /datum/random_event/major/syndicate_retribution
 	name = "Syndicate Retribution"
 	required_elapsed_round_time = 40 MINUTES
@@ -22,8 +22,15 @@
 			message_admins("The Syndicate Retribution event failed to spawn the SWORD (too many antags)")
 			return
 
-		if (get_dead_crew_percentage() >= DEAD_CREW_THRESHOLD)
-			message_admins("The Syndicate Retribution event failed to spawn the SWORD (too many dead crew members)")
+		var/player_count = 0
+		for (var/client/cl as() in clients)
+			var/mob/living/L = cl.mob
+			if(!istype(L) || isdead(L))
+				continue
+			player_count++
+
+		if (player_count < ALIVE_CREW_THRESHOLD)
+			message_admins("The Syndicate Retribution event failed to spawn the SWORD (not enough crew members)")
 			return
 
 		message_admins("Syndicate Weapon: Orion Retribution Device spawning in [T.loc]")
@@ -35,4 +42,4 @@
 			disabled = 1
 
 #undef ALIVE_ANTAGS_THRESHOLD
-#undef DEAD_CREW_THRESHOLD
+#undef ALIVE_CREW_THRESHOLD
