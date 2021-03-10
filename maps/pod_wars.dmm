@@ -1350,7 +1350,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/warp_beacon{
+/obj/warp_beacon/pod_wars{
 	name = "Fortuna Maintenance  Dock"
 	},
 /turf/space,
@@ -1545,7 +1545,7 @@
 /turf/unsimulated/floor/specialroom/bar,
 /area/podmode/team1/bar)
 "hm" = (
-/obj/warp_beacon{
+/obj/warp_beacon/pod_wars{
 	name = "Lodbrok"
 	},
 /obj/lattice,
@@ -5468,7 +5468,7 @@
 /turf/unsimulated/floor/plating,
 /area/podmode/team2/Cloning)
 "Ae" = (
-/obj/warp_beacon{
+/obj/warp_beacon/pod_wars{
 	name = "NSV Pytheas"
 	},
 /obj/lattice,
@@ -8617,7 +8617,7 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/warp_beacon{
+/obj/warp_beacon/pod_wars{
 	name = "Fortuna Security Dock"
 	},
 /turf/space,
@@ -8974,7 +8974,7 @@
 /turf/simulated/floor/plating,
 /area/podmode/spacejunk/miningoutpost)
 "Rt" = (
-/obj/warp_beacon{
+/obj/warp_beacon/pod_wars{
 	name = "UVB-67"
 	},
 /turf/space,
@@ -8988,7 +8988,7 @@
 "Rx" = (
 /obj/lattice,
 /obj/cable,
-/obj/warp_beacon{
+/obj/warp_beacon/pod_wars{
 	name = "Fortuna Primary Dock"
 	},
 /turf/space,
@@ -10126,7 +10126,7 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/warp_beacon{
+/obj/warp_beacon/pod_wars{
 	name = "NSV Reliant"
 	},
 /turf/space,
