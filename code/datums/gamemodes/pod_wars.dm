@@ -96,23 +96,35 @@
 /datum/game_mode/pod_wars/proc/add_control_point(var/path, var/name)
 	var/list/turfs = get_area_turfs(path, 1)
 	for (var/turf/T in turfs)
-		var/obj/control_point_computer/CPC = locate(/obj/control_point_computer) in T
+		var/obj/control_point_computer/CPC = locate(/obj/control_point_computer) in T.contents
 		if (CPC)
 			var/datum/control_point/P = new/datum/control_point(CPC, get_area_by_type(path), name)
-
 			CPC.ctrl_pt = P 	//computer's reference to datum
 			control_points += P
-			message_admins("comp = [P.computer.name], area = [P.capture_area.name]|[P.capture_area.type] , ")
 
 
 /datum/game_mode/pod_wars/post_setup()
 	//Setup Capture Points. We do it based on the Capture point computers. idk why. I don't have much time, and I'm tired.
 	SPAWN_DBG(-1)
 		//search each of these areas for the computer, then make the control_point datum from em.
-		add_control_point(/area/pod_wars/spacejunk/reliant, RELIANT)
-		add_control_point(/area/pod_wars/spacejunk/fstation, FORTUNA)
-		add_control_point(/area/pod_wars/spacejunk/uvb67, UBV67)
-				
+		// add_control_point(/area/pod_wars/spacejunk/reliant, RELIANT)
+		// add_control_point(/area/pod_wars/spacejunk/fstation, FORTUNA)
+		// add_control_point(/area/pod_wars/spacejunk/uvb67, UBV67)
+
+		for (var/obj/control_point_computer/CPC in world)
+			var/area/A = get_area(CPC)
+			var/name = ""
+			if (istype(A, /area/pod_wars/spacejunk/reliant))
+				name = RELIANT
+			else if (istype(A, /area/pod_wars/spacejunk/fstation))
+				name = FORTUNA
+			else if (istype(A, /area/pod_wars/spacejunk/uvb67))
+				name = UBV67
+			var/datum/control_point/P = new/datum/control_point(CPC, A, name)
+
+			CPC.ctrl_pt = P 	//computer's reference to datum
+			control_points += P
+			message_admins("comp = [P.computer.name], area = [P.capture_area.name]|[P.capture_area.type] , ")
 
 	SPAWN_DBG(-1)
 		setup_asteroid_ores()
@@ -697,9 +709,9 @@ obj/screen/score_board
 	var/turret_path = /obj/deployable_turret/pod_wars
 
 	//this is a band aid cause this is broke, delete this override when merged properly and fixed.
-	attackby(obj/item/W, mob/user)
-		user.lastattacked = src
-		..()
+	// attackby(obj/item/W, mob/user)
+	// 	user.lastattacked = src
+	// 	..()
 
 	spawn_turret(var/direct)
 		var/obj/deployable_turret/turret = new turret_path(src.loc,direction=direct)
@@ -1432,10 +1444,10 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 	meteorhit(var/obj/O as obj)
 		return
 
-	proc/capture(var/team)
+	proc/capture(var/mob/user, var/team)
 		owner_team = team
 		update_light_colour()
-		ctrl_pt.receive_capture(team)
+		ctrl_pt.receive_capture(user, team)
 
 	attack_hand(mob/user as mob)
 		var/user_team_string = user?.mind?.special_role
@@ -1445,7 +1457,7 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 		else if (user_team_string == "Syndicate")
 			user_team = TEAM_SYNDICATE
 
-		if (owner_team != user_team) 
+		if (owner_team != user_team)
 			var/duration = is_commander(user) ? 7 SECONDS : 15 SECONDS
 			SETUP_GENERIC_ACTIONBAR(user, src, duration, /obj/control_point_computer/proc/capture, list(user, user_team),\
 			 null, null, "[user] successfully enters [his_or_her(user)] command code into \the [src]!")
@@ -1463,7 +1475,7 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 		// 				return
 
 		// 			//NT owns this, Syndicate start to capture.
-		// 			if (TEAM_SYNDICATE) 
+		// 			if (TEAM_SYNDICATE)
 		// 				SETUP_GENERIC_ACTIONBAR(user, src, 7 SECONDS, /obj/control_point_computer/proc/start_capture, list(user, user_team),\
 		// 				 null, null, "[user] successfully enters [his_or_her(user)] command code into \the [src]!")
 		// 				return
@@ -1478,7 +1490,7 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 		// 				return
 
 		// 			//SY owns this, NT start to capture.
-		// 			if (TEAM_NANOTRASEN) 
+		// 			if (TEAM_NANOTRASEN)
 		// 				SETUP_GENERIC_ACTIONBAR(user, src, 7 SECONDS, /obj/control_point_computer/proc/start_capture, list(user, user_team),\
 		// 				 null, null, "[user] successfully enters [his_or_her(user)] command code into \the [src]!")
 		// 				return
@@ -1512,26 +1524,29 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 
 	//change colour and owner team when captured.
 	proc/update_light_colour()
-		//blue for NT|1, red for SY|2, white for neutral|0. 
+		//blue for NT|1, red for SY|2, white for neutral|0.
 		if (owner_team == TEAM_NANOTRASEN)
 			light_r = 0
 			light_g = 0
 			light_b = 1
+			icon_state = "computer_blue"
 		else if (owner_team == TEAM_SYNDICATE)
 			light_r = 1
 			light_g = 0
 			light_b = 0
-		else 
+			icon_state = "computer_red"
+		else
 			light_r = 1
 			light_g = 1
 			light_b = 1
+			icon_state = "computer_generic"
 
 		light.set_color(light_r, light_g, light_b)
 
 /obj/warp_beacon/pod_wars
 	var/control_point 		//currently only use values FORTUNA, RELIANT, UBV67
 	var/current_owner		//which team is the owner right now. Acceptable values: null, TEAM_NANOTRASEN = 1, TEAM_SYNDICATE = 1
-	
+
 	ex_act()
 		return
 	meteorhit(var/obj/O as obj)
@@ -1551,6 +1566,7 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 	var/owner_team				//1=NT, 2=SY
 
 	New(var/obj/control_point_computer/computer, var/area/capture_area, var/name)
+		..()
 		src.computer = computer
 		src.capture_area = capture_area
 		src.name = name
@@ -1560,7 +1576,7 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 				src.beacons += B
 
 
-	proc/receive_capture(var/team)
+	proc/receive_capture(var/mob/user, var/team)
 		src.owner_team = team
 
 		//update beacon teams
@@ -1568,7 +1584,7 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 			B.current_owner = team
 
 		var/team_string = "[team == 1 ? "NanoTrasen" : team == 2 ? "The Syndicate" : "Something Eldritch"]"
-		boutput(world, "<h4><span class='alert'>[team_string] captured [name]!</span></h4>")
+		boutput(world, "<h4><span class='[team == 1 ? "notice":"alert"]'>[user] captured [name] for [team_string]!</span></h4>")
 		world << sound('sound/misc/newsting.ogg')
 
 //I'll probably remove this all cause it's so shit, but in case I want to come back and finish it, I leave - kyle
@@ -1607,11 +1623,11 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 	// 		capture_value += capture_rate
 	// 	else if (capturing_team == TEAM_SYNDICATE)
 	// 		capture_value -= capture_rate
-	// 	else 
-	// 		return 
+	// 	else
+	// 		return
 
 
-		
+
 
 /////////////Barricades////////////
 
@@ -1626,7 +1642,7 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 	event_handler_flags = USE_FLUID_ENTER | USE_CANPASS
 	layer = OBJ_LAYER-0.1
 	stops_space_move = TRUE
-	
+
 	var/health = 100
 	var/health_max = 100
 
