@@ -82,14 +82,16 @@
 
 
 	var/list/beacons = list()
-	//Kinda bad here, but lazy again. This is for
+	//This is bad and dumb. I should turn the warp_beacons list into a manager datum, but this is already taking too long. -kyle
 #ifdef MAP_OVERRIDE_POD_WARS
-	var/team = ship?.pilot?.mind?.special_role
-		
-	for(var/obj/warp_beacon/W in warp_beacons)
-		if (W.name == "NSV Pytheas" && team != "NanoTrasen") continue
-		else if (W.name == "Lodbrok" && team != "Syndicate") continue
-		beacons += W
+	var/pilot_team = ship?.pilot?.mind?.special_role
+	for(var/obj/warp_beacon/pod_wars/W in warp_beacons)
+		//TEAM_NANOTRASEN = 1
+		if (W.current_owner == 1 && pilot_team == "NanoTrasen") 
+			beacons += W
+		//TEAM_SYNDICATE = 2
+		else if (W.current_owner == 2 && pilot_team == "Syndicate")
+			beacons += W
 #else
 	for(var/obj/warp_beacon/W in warp_beacons)
 		beacons += W

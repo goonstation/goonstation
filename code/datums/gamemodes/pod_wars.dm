@@ -93,12 +93,15 @@
 #endif
 
 //search an area for a obj/control_point_computer, make the datum
-/datum/game_mode/pod_wars/proc/add_control_point(var/path)
+/datum/game_mode/pod_wars/proc/add_control_point(var/path, var/name)
 	var/list/turfs = get_area_turfs(path, 1)
 	for (var/turf/T in turfs)
 		var/obj/control_point_computer/CPC = locate(/obj/control_point_computer) in T
 		if (CPC)
 			var/datum/control_point/P = new/datum/control_point(CPC, get_area_by_type(path))
+			for(var/obj/warp_beacon/pod_wars/W in warp_beacons)
+				if (W.control_point == name)
+					P.beacons += W
 			control_points += P
 			message_admins("comp = [P.computer.name], area = [P.capture_area.name]|[P.capture_area.type] , ")
 
@@ -107,12 +110,10 @@
 	//Setup Capture Points. We do it based on the Capture point computers. idk why. I don't have much time, and I'm tired.
 	SPAWN_DBG(-1)
 		//search each of these areas for the computer, then make the control_point datum from em.
-		add_control_point(/area/pod_wars/spacejunk/reliant)
-		add_control_point(/area/pod_wars/spacejunk/fstation)
-		add_control_point(/area/pod_wars/spacejunk/uvb67)
+		add_control_point(/area/pod_wars/spacejunk/reliant, RELIANT)
+		add_control_point(/area/pod_wars/spacejunk/fstation, FORTUNA)
+		add_control_point(/area/pod_wars/spacejunk/uvb67, UBV67)
 				
-
-
 
 	SPAWN_DBG(-1)
 		setup_asteroid_ores()
@@ -126,7 +127,7 @@
 			command_alert("You may feel a slight burning sensation.", "Emergency Update")
 			sleep(10 SECONDS)
 			for(var/mob/living/carbon/M in mobs)
-				M.gib()
+				M.emote("fart")
 			force_end = 1
 
 
@@ -1433,13 +1434,13 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 	//change colour and owner team when captured.
 	proc/capture(var/team)
 		//blue for NT|1, red for SY|2, white for neutral|0. 
-		if (team == 1)
-			owner_team = 1
+		if (team == TEAM_NANOTRASEN)
+			owner_team = TEAM_NANOTRASEN
 			light_r = 0
 			light_g = 0
 			light_b = 1
-		else if (team == 2)
-			owner_team = 2
+		else if (team == TEAM_SYNDICATE)
+			owner_team = TEAM_SYNDICATE
 			light_r = 1
 			light_g = 0
 			light_b = 0
@@ -1453,12 +1454,14 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 
 /obj/warp_beacon/pod_wars
 	var/control_point 		//currently only use values FORTUNA, RELIANT, UBV67
+	var/current_owner		//which team is the owner right now. Acceptable values: null, TEAM_NANOTRASEN = 1, TEAM_SYNDICATE = 1
+	
 	ex_act()
 		return
-
 	meteorhit(var/obj/O as obj)
 		return
-
+	attackby(obj/item/W as obj, mob/user as mob)
+		return
 
 /datum/control_point
 	var/name = "Capture Point"

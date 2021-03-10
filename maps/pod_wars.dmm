@@ -1548,6 +1548,7 @@
 /area/pod_wars/team1/bar)
 "hm" = (
 /obj/warp_beacon/pod_wars{
+	current_owner = 2;
 	name = "Lodbrok"
 	},
 /obj/lattice,
@@ -5471,6 +5472,7 @@
 /area/pod_wars/team2/cloning)
 "Ae" = (
 /obj/warp_beacon/pod_wars{
+	current_owner = 1;
 	name = "NSV Pytheas"
 	},
 /obj/lattice,
