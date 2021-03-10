@@ -14,6 +14,7 @@
 	var/scoopable = 1
 	burn_type = 1
 	var/wiggle = 6 // how much we want the sprite to be deviated fron center
+	inventory_counter_enabled = 1
 	max_stack = INFINITY
 	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER
 
@@ -41,6 +42,7 @@
 	update_stack_appearance()
 		if(material)
 			name = "[amount] [initial(src.name)][amount > 1 ? "s":""]"
+			src.inventory_counter.update_number(amount)
 		return
 
 	attackby(obj/item/W as obj, mob/user as mob)
@@ -55,6 +57,33 @@
 			else
 				boutput(user, "<span class='alert'>[W] is full!</span>")
 		else ..()
+
+	attack_hand(mob/user as mob)
+		if((user.r_hand == src || user.l_hand == src) && src.amount > 1)
+			var/splitnum = round(input("How many ores do you want to take from the stack?","Stack of [src.amount]",1) as num)
+			var/diff = src.amount - splitnum
+			if (splitnum >= amount || splitnum < 1)
+				boutput(user, "<span class='alert'>Invalid entry, try again.</span>")
+				return
+			boutput(user, "<span class='notice'>You take [splitnum] ores from the stack, leaving [diff] ores behind.</span>")
+			src.amount = diff
+			var/obj/item/raw_material/new_stack = new src.type(user.loc, diff)
+			new_stack.amount = splitnum
+			new_stack.attack_hand(user)
+			new_stack.add_fingerprint(user)
+			new_stack.update_stack_appearance()
+			src.update_stack_appearance()
+		else
+			..(user)
+
+	attackby(obj/item/W, mob/user)
+		if(W.type == src.type)
+			var/obj/item/raw_material/G = W
+			G.amount += src.amount
+			boutput(user, "<span class='notice'>You add the ores to the stack. It now has [G.amount] ores.</span>")
+			qdel(src)
+			G.update_stack_appearance()
+			return
 
 	HasEntered(AM as mob|obj)
 		if (isobserver(AM))
