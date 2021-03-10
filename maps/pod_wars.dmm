@@ -600,7 +600,9 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/pyro/glass/engineering,
+/obj/machinery/door/airlock/pyro/glass/engineering{
+	req_access = null
+	},
 /turf/simulated/floor/yellow,
 /area/pod_wars/spacejunk/fstation/maintdock)
 "cV" = (
@@ -1791,7 +1793,8 @@
 /area/pod_wars/spacejunk/nancy/powergen)
 "io" = (
 /obj/machinery/door/airlock/pyro/glass/engineering{
-	dir = 4
+	dir = 4;
+	req_access = null
 	},
 /turf/simulated/floor/yellow,
 /area/pod_wars/spacejunk/fstation/power)
@@ -2427,7 +2430,9 @@
 	},
 /area/pod_wars/spacejunk/fstation)
 "lH" = (
-/obj/machinery/door/airlock/pyro/glass/engineering,
+/obj/machinery/door/airlock/pyro/glass/engineering{
+	req_access = null
+	},
 /turf/simulated/floor/yellow,
 /area/pod_wars/spacejunk/fstation/maintdock)
 "lK" = (
