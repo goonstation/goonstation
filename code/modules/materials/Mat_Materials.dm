@@ -452,7 +452,7 @@
 
 /datum/material/metal/iridiumalloy
 	mat_id = "iridiumalloy"
-	name = "iridium-alloy"
+	name = "iridium alloy"
 	canMix = 1 //Can not be easily modified.
 	desc = "Some sort of advanced iridium alloy."
 	color = "#756596"

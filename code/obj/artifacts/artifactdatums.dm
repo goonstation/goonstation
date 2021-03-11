@@ -179,6 +179,7 @@ ABSTRACT_TYPE(/datum/artifact/art)
 		var/namep1 = pick("neutrino","meson","photon","quark","disruptor","atomic","zero point","tachyon","plasma","quantum","neutron","baryon","hadron","electron","positron")
 		var/namep2 = pick("bolt","ray","beam","wave","burst","blast","torpedo","missile","bomb","shard","stream","string")
 		src.name = "[namep1] [namep2]"
+		src.sname = src.name
 		// Now randomise the damage type, power, energy cost and other fun stuff
 
 		src.damage_type = pick(D_KINETIC,D_PIERCING,D_SLASHING,D_ENERGY,D_BURNING,D_RADIOACTIVE,D_TOXIC)

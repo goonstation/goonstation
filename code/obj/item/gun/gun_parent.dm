@@ -49,6 +49,8 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 
 	var/muzzle_flash = null //set to a different icon state name if you want a different muzzle flash when fired, flash anims located in icons/mob/mob.dmi
 
+	var/fire_animation = FALSE //Used for guns that have animations when firing
+
 	buildTooltipContent()
 		. = ..()
 		if(current_projectile)
@@ -148,7 +150,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	if(src.projectiles && src.projectiles.len > 1)
 		src.current_projectile_num = ((src.current_projectile_num) % src.projectiles.len) + 1
 		src.set_current_projectile(src.projectiles[src.current_projectile_num])
-		boutput(user, "<span class='notice'>you set the output to [src.current_projectile.sname].</span>")
+		boutput(user, "<span class='notice'>You set the output to [src.current_projectile.sname].</span>")
 	return
 
 /datum/action/bar/icon/guncharge
@@ -377,6 +379,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 			var/turf/origin = user.loc
 			muzzle_flash_attack_particle(user, origin, target, src.muzzle_flash)
 
+
 	if (ismob(user))
 		var/mob/M = user
 		if (M.mob_flags & AT_GUNPOINT)
@@ -423,6 +426,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 			H.gunshot_residue = 1
 
 	src.update_icon()
+	return TRUE
 
 /obj/item/gun/proc/canshoot()
 	return 0

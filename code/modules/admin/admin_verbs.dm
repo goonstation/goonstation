@@ -862,16 +862,27 @@ var/list/fun_images = list()
 	set name = "Show Rules to Player"
 	set popup_menu = 0
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
+	
+	var/crossness = input("How cross are we with this guy?", "Enter Crossness", "A bit") as anything in list("A bit", "A lot", "Cancel")
+	if (!crossness || crossness == "Cancel")
+		return
+
+	message_admins(crossness)
 	if(!M.client)
 		alert("[M] is logged out, so you should probably ban them!")
 		return
 	logTheThing("admin", src, M, "forced [constructTarget(M,"admin")] to view the rules")
 	logTheThing("diary", src, M, "forced [constructTarget(M,"diary")] to view the rules", "admin")
 	message_admins("[key_name(src)] forced [key_name(M)] to view the rules.")
-	M << csound("sound/misc/klaxon.ogg")
-	boutput(M, "<span class='alert'><B>WARNING: An admin is likely very cross with you and wants you to read the rules right fucking now!</B></span>")
-	// M.Browse(rules, "window=rules;size=480x320")
-	M << browse(rules, "window=rules;size=480x320")
+	switch(crossness)
+		if ("A bit")
+			M << csound("sound/misc/newsting.ogg")
+			boutput(M, "<span class='alert'><B>Here are the rules, you can read this, you have a good chance of being able to read them too.</B></span>")
+		if ("A lot")
+			M << csound("sound/misc/klaxon.ogg")
+			boutput(M, "<span class='alert'><B>WARNING: An admin is likely very cross with you and wants you to read the rules right fucking now!</B></span>")
+
+	M << browse(rules, "window=rules;size=800x1000")
 
 /client/proc/view_fingerprints(obj/O as obj in world)
 	set name = "View Object Fingerprints"
