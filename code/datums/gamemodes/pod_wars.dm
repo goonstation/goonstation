@@ -849,7 +849,7 @@ obj/screen/score_board
 		if (!C.mind)
 			return 1
 		if (C.mind.special_role == "Syndicate")
-				return 1
+			return 1
 		else
 			return 0
 
