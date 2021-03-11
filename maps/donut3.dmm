@@ -36888,6 +36888,15 @@
 	},
 /turf/simulated/floor/carpet/red/fancy/junction/nw_e,
 /area/station/security/hos)
+"kSG" = (
+/obj/decal/cleanable/dirt/jen,
+/obj/decal/cleanable/rust/jen,
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/obj/random_item_spawner/junk/one_or_zero,
+/turf/simulated/floor/plating/jen,
+/area/station/maintenance/outer/ne)
 "kSI" = (
 /obj/decal/mule/dropoff,
 /obj/access_spawn/maint,
@@ -59208,6 +59217,11 @@
 	},
 /obj/machinery/camera{
 	dir = 5
+	},
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = -26;
+	pixel_y = -1
 	},
 /turf/simulated/floor/grasstodirt{
 	dir = 9
@@ -132888,7 +132902,7 @@ aRI
 bzZ
 pgV
 pkT
-hYv
+kSG
 wqJ
 wqJ
 cBK
@@ -133188,7 +133202,7 @@ bzZ
 kLH
 aRI
 bzZ
-qrL
+bzi
 cMy
 hYv
 dvR
@@ -133490,7 +133504,7 @@ aUm
 aUm
 aUm
 aUm
-bzi
+qrL
 nod
 kkS
 vWH
