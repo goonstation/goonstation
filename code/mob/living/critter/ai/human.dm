@@ -326,36 +326,19 @@
 		G.transition_task = G
 
 /datum/aiTask/timed/targeted/human/genetics
-	var/speakprob = 10
+	var/speakprob = 5
 	name = "researching"
+
 	on_tick()
 		..()
 		if(holder.owner)
 			var/area/A = get_area(holder.owner)
 			if(A && A.population && A.population.len && prob(speakprob))
-				var/speak = rand(1,9)
-				switch(speak)
-					if(1)
-						holder.owner.say("Hey can you grab me another clone? Thanks.")
-					if(2)
-						holder.owner.say("Hey can you get maintenance to come change this light?")
-					if(3)
-						holder.owner.say("Ugh, just leave me alone you're letting the smell in.")
-					if(4)
-						holder.owner.say("Great, the network is down. Again.")
-					if(5)
-						holder.owner.say("Hop in this scanner for a second will ya? And then bug off!")
-					if(6)
-						holder.owner.say("Don't make me call security...")
-					if(7)
-						holder.owner.say("There's still a light out down here, Isn't someone going to come change it?")
-					if(8)
-						holder.owner.say("... - can I help you?")
-					if(9)
-						holder.owner.say("Listen I don't know you, but would you mind resetting the breaker?")
+				var/list/stuff_to_say = strings("gimmick_speech.txt", "geneticist")
+				holder.owner.say(pick(stuff_to_say))
 
 			else
 				for(var/obj/machinery/computer/genetics/G in orange(5,holder.owner))
-					walk_to(holder.owner,G,1)
+					walk_to(holder.owner,G,1,0,8)
 					return
 				walk_to(holder.owner,0)
