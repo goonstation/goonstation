@@ -26004,7 +26004,7 @@
 /obj/disposalpipe/segment{
 	dir = 8
 	},
-/turf/simulated/floor,
+/turf/simulated/floor/green/corner,
 /area/station/hydroponics/bay)
 "hvM" = (
 /obj/machinery/light/incandescent/warm,
