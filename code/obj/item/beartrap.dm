@@ -4,14 +4,14 @@
 	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "bear_trap-close"
 	item_state = "bear_trap"
-	w_class = 1
+	w_class = 2
 	force = null
 	throwforce = null
-	var/armed = 0
+	var/armed = FALSE
 	stamina_damage = 0
 	stamina_cost = 0
 	stamina_crit_chance = 5
-	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER
+	event_handler_flags = USE_HASENTERED
 
 	armed
 		icon_state = "bear_trap-open"
@@ -22,22 +22,29 @@
 		if (src.armed)
 			. += "<span class='alert'>It looks like it's armed.</span>"
 
-	attack_self(mob/user as mob)
-		if (!src.armed)
-			set_icon_state("bear_trap-open")
-			user.show_text("You arm the beartrap.", "blue")
-		else
-			set_icon_state("bear_trap-close")
-			if ((user.get_brain_damage() >= 60 || user.bioHolder.HasEffect("clumsy")) && prob(30))
-				src.triggered(user)
-				JOB_XP(user, "Clown", 1)
-				user.visible_message("<span class='alert'><B>[user] accidentally sets off the bear trap, cutting off a finger!</B></span>",\
+	attack_hand(mob/M as mob)
+		if (src.armed)
+			if ((M.get_brain_damage() >= 60 || M.bioHolder.HasEffect("clumsy")) && prob(30))
+				src.triggered(M)
+				JOB_XP(M, "Clown", 5)
+				M.visible_message("<span class='alert'><B>[M] accidentally sets off the bear trap!</B></span>",\
 				"<span class='alert'><B>You accidentally trigger the beartrap on your hand! Yowch!</B></span>")
 				return
-			user.show_text("You disarm the bear trap.", "blue")
+			M.visible_message("[M] starts disarming [src]...")
+			var/datum/action/bar/icon/callback/action_bar = new /datum/action/bar/icon/callback(M, src, 3 SECONDS, /obj/item/beartrap/proc/disarm,\
+			src.icon, src.icon_state, "[M] finishes disarming [src]")
+			action_bar.proc_args = list(M)
+			actions.start(action_bar, M)
+		else
+			..()
 
-		src.armed = !src.armed
-		playsound(user.loc, "sound/weapons/handcuffs.ogg", 30, 1, -3)
+	attack_self(mob/M as mob)
+		if (!src.armed)
+			M.show_text("You start to arm the beartrap...", "blue")
+			var/datum/action/bar/icon/callback/action_bar = new /datum/action/bar/icon/callback(M, src, 2 SECONDS, /obj/item/beartrap/proc/arm,\
+			src.icon, src.icon_state, "[M] finishes arming [src]")
+			action_bar.proc_args = list(M)
+			actions.start(action_bar, M)
 		return
 
 	HasEntered(AM as mob|obj)
@@ -51,10 +58,29 @@
 			var/obj/critter/bear/M = AM
 			playsound(src.loc, "sound/impact_sounds/Generic_Snap_1.ogg", 80, 1)
 			set_icon_state("bear_trap-close")
-			src.armed = 0
+			src.armed = FALSE
+			src.anchored = FALSE
 			src.visible_message("<span class='alert'><b>[M] is caught in the trap!</b></span>")
 			M.CritterDeath()
 		..()
+		return
+
+	proc/arm(var/proc_args)
+		if (!src.armed)
+			var/mob/M = proc_args[1]
+			set_icon_state("bear_trap-open")
+			M.drop_item(src)
+			src.armed = TRUE
+			src.anchored = TRUE
+			playsound(src.loc, "sound/weapons/handcuffs.ogg", 30, 1, -3)
+		return
+
+	proc/disarm(var/proc_args)
+		if (src.armed)
+			playsound(src.loc, "sound/weapons/handcuffs.ogg", 30, 1, -3)
+			set_icon_state("bear_trap-close")
+			src.armed = FALSE
+			src.anchored = FALSE
 		return
 
 	proc/triggered(mob/target as mob)
@@ -71,6 +97,7 @@
 		if (target)
 			playsound(target.loc, "sound/impact_sounds/Generic_Snap_1.ogg", 80, 1)
 			set_icon_state("bear_trap-close")
-			src.armed = 0
+			src.armed = FALSE
+			src.anchored = FALSE
 			logTheThing("combat", target, null, "triggers [src] at [log_loc(src)]")
 		return
