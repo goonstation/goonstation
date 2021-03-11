@@ -467,7 +467,7 @@
 
 	proc/randomize(var/target, var/mob/user, var/show_message = 1)
 		if (!src.holder || !target)
-			return .
+			return 0
 		if (istext(target))
 			var/randlimb = null
 			if (target == "all" || target == "both_arms" || target == "l_arm")
