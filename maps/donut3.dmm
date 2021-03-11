@@ -11202,7 +11202,9 @@
 /turf/simulated/floor/wood/five,
 /area/station/medical/asylum/main)
 "cYL" = (
-/obj/machinery/hydro_growlamp,
+/obj/machinery/hydro_growlamp{
+	active = 1
+	},
 /turf/simulated/floor/grass/random,
 /area/station/hydroponics/bay)
 "cYU" = (
