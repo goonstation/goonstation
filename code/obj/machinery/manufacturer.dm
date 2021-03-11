@@ -560,7 +560,7 @@
 					for(var/obj/item/O in src.contents)
 						if (O.material && O.material.mat_id == mat_id)
 							if (!ejectamt)
-								ejectamt = input(usr,"How many units do you want to eject?","Eject Materials") as num
+								ejectamt = input(usr,"How many material pieces (10 units per) do you want to eject?","Eject Materials") as num
 								if (ejectamt > O.amount || ejectamt <= 0 || src.mode != "ready" || get_dist(src, usr) > 1)
 									break
 							if (!ejectturf)
