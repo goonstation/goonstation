@@ -466,7 +466,6 @@
 		return 0
 
 	proc/randomize(var/target, var/mob/user, var/show_message = 1)
-		//var/number_replaced
 		if (!src.holder || !target)
 			return .
 		if (istext(target))
