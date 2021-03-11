@@ -15830,12 +15830,13 @@
 /obj/machinery/light/incandescent/netural{
 	dir = 1
 	},
-/obj/table/auto,
-/obj/item/dye_bottle{
-	pixel_x = -4
-	},
-/obj/item/storage/pill_bottle/hairgrownium{
-	pixel_x = 8
+/obj/shrub{
+	desc = "It's probably not suspicious that this plant is not only still alive, but thriving.";
+	dir = 1;
+	icon = 'icons/obj/stationobjs.dmi';
+	icon_state = "plant";
+	name = "wood floor";
+	tag = "null"
 	},
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
@@ -79092,13 +79093,12 @@
 /turf/simulated/floor,
 /area/station/hangar/main)
 "xkr" = (
-/obj/shrub{
-	desc = "It's probably not suspicious that this plant is not only still alive, but thriving.";
-	dir = 1;
-	icon = 'icons/obj/stationobjs.dmi';
-	icon_state = "plant";
-	name = "wood floor";
-	tag = "null"
+/obj/table/auto,
+/obj/item/dye_bottle{
+	pixel_x = -4
+	},
+/obj/item/storage/pill_bottle/hairgrownium{
+	pixel_x = 8
 	},
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
