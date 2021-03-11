@@ -35250,6 +35250,12 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
+"ksz" = (
+/obj/machinery/plantpot{
+	anchored = 1
+	},
+/turf/simulated/floor/dirt,
+/area/station/ranch)
 "ksF" = (
 /turf/simulated/wall/auto/shuttle{
 	icon_state = "4"
@@ -131078,7 +131084,7 @@ mBB
 mBB
 wSK
 oJP
-orn
+ksz
 mfs
 wqJ
 wqJ
