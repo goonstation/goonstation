@@ -94,9 +94,9 @@
 		return
 
 	// clickdrag with crowbar in hand to flip the pipe
-	MouseDrop_T(atom/target, mob/user)
+	MouseDrop(mob/user)
 		var/obj/item/I = user.equipped()
-		if(ismob(target) && in_interact_range(src, user) && !anchored)
+		if(in_interact_range(src, user) && !anchored)
 			if(ispryingtool(I))
 				set_dir(turn(dir, 180))
 				if(ptype == 2)
