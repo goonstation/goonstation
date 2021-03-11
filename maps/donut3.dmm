@@ -22709,6 +22709,7 @@
 /obj/disposalpipe/trunk{
 	dir = 8
 	},
+/obj/machinery/hydro_mister,
 /turf/simulated/floor/wood/five,
 /area/station/hydroponics/bay)
 "gwJ" = (
@@ -32039,7 +32040,7 @@
 /obj/machinery/light/incandescent/netural{
 	dir = 8
 	},
-/obj/machinery/hydro_mister,
+/obj/decorative_pot,
 /turf/simulated/floor/wood/five,
 /area/station/hydroponics/bay)
 "jsk" = (
@@ -69171,7 +69172,6 @@
 	dir = 8;
 	pixel_x = -23
 	},
-/obj/decorative_pot,
 /turf/simulated/floor/wood/five,
 /area/station/hydroponics/bay)
 "uum" = (
