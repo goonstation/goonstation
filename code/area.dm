@@ -5235,8 +5235,8 @@ area/station/security/visitation
 	name = "Fortuna Maintenence Dock"
 	icon_state = "red"
 
-/area/pod_wars/spacejunk/fstation/lounge
-	name = "Fortuna Lounge"
+/area/pod_wars/spacejunk/fstation/computercore
+	name = "Fortuna Computer Core"
 	icon_state = "green"
 
 /area/pod_wars/spacejunk/fstation/crewquarters
@@ -5258,6 +5258,10 @@ area/station/security/visitation
 /area/pod_wars/spacejunk/fstation/observatory
 	name = "Fortuna Observatory"
 	icon_state = "yellow"
+
+/area/pod_wars/spacejunk/fstation/bar
+	name = "Fortuna Bar"
+	icon_state = "green"
 
 /area/pod_wars/spacejunk/fstation/command
 	name = "Fortuna Command"
