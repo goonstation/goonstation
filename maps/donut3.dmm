@@ -13567,6 +13567,11 @@
 	name = "reinforced plating"
 	},
 /area/station/science/chemistry)
+"dLP" = (
+/obj/disposalpipe/segment/mail,
+/obj/machinery/light/small/floor,
+/turf/simulated/floor/grass/random,
+/area/station/hydroponics/bay)
 "dLT" = (
 /obj/table/wood/round/auto,
 /obj/item/implant/projectile/bardart{
@@ -37903,13 +37908,6 @@
 	},
 /turf/simulated/floor/black/grime,
 /area/station/science/storage)
-"llm" = (
-/obj/machinery/light/small/floor,
-/obj/machinery/plantpot{
-	anchored = 1
-	},
-/turf/simulated/floor/grass/random,
-/area/station/hydroponics/bay)
 "llt" = (
 /obj/rack,
 /turf/simulated/floor/black,
@@ -128963,7 +128961,7 @@ iba
 mke
 mke
 mke
-gNW
+mke
 mke
 tRV
 txZ
@@ -129264,7 +129262,7 @@ sFl
 dCy
 uNZ
 uNZ
-uNZ
+dLP
 uNZ
 uNZ
 uNZ
@@ -130170,7 +130168,7 @@ mwk
 iba
 kHx
 kHx
-llm
+kHx
 mke
 mke
 kHx
@@ -130472,7 +130470,7 @@ gJz
 lBH
 mke
 mke
-mke
+gNW
 mke
 mke
 kHx
