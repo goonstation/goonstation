@@ -318,3 +318,27 @@
 				frustration++
 
 
+/datum/aiHolder/human/geneticist
+	New()
+		..()
+		var/datum/aiTask/timed/targeted/human/genetics/G = get_instance(/datum/aiTask/timed/targeted/human/genetics, list(src))
+		default_task = G
+		G.transition_task = G
+
+/datum/aiTask/timed/targeted/human/genetics
+	var/speakprob = 5
+	name = "researching"
+
+	on_tick()
+		..()
+		if(holder.owner)
+			var/area/A = get_area(holder.owner)
+			if(A && A.population && A.population.len && prob(speakprob))
+				var/list/stuff_to_say = strings("gimmick_speech.txt", "geneticist")
+				holder.owner.say(pick(stuff_to_say))
+
+			else
+				for(var/obj/machinery/computer/genetics/G in orange(5,holder.owner))
+					walk_to(holder.owner,G,1,0,8)
+					return
+				walk_to(holder.owner,0)

@@ -106,6 +106,18 @@
 	treatment_virus = "loose screws"
 	no_camera = 1
 
+/obj/machinery/bot/medbot/homeopath
+	name = "Homeopathic Medibot"
+	desc = "Finally a Medibot that can practice chiropractic!"
+	skin = "psyche"
+	color = "#88FFAA"
+	treatment_brute = "CBD"
+	treatment_oxy = "THC"
+	treatment_fire = "LSD"
+	treatment_tox = "hugs"
+	treatment_virus = "chickensoup"
+	no_camera = 1
+
 /obj/item/firstaid_arm_assembly
 	name = "first aid/robot arm assembly"
 	desc = "A first aid kit with a robot arm permanently grafted to it."

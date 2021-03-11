@@ -82,17 +82,18 @@
 		F["[profileNum]_job_prefs_2"] << src.jobs_med_priority
 		F["[profileNum]_job_prefs_3"] << src.jobs_low_priority
 		F["[profileNum]_job_prefs_4"] << src.jobs_unwanted
-		F["[profileNum]_be_changeling"] << src.be_changeling
-		F["[profileNum]_be_revhead"] << src.be_revhead
-		F["[profileNum]_be_syndicate"] << src.be_syndicate
-		F["[profileNum]_be_wizard"] << src.be_wizard
 		F["[profileNum]_be_traitor"] << src.be_traitor
-		F["[profileNum]_be_werewolf"] << src.be_werewolf
-		F["[profileNum]_be_vampire"] << src.be_vampire
+		F["[profileNum]_be_syndicate"] << src.be_syndicate
 		F["[profileNum]_be_spy"] << src.be_spy
 		F["[profileNum]_be_gangleader"] << src.be_gangleader
+		F["[profileNum]_be_revhead"] << src.be_revhead
+		F["[profileNum]_be_changeling"] << src.be_changeling
+		F["[profileNum]_be_wizard"] << src.be_wizard
+		F["[profileNum]_be_werewolf"] << src.be_werewolf
+		F["[profileNum]_be_vampire"] << src.be_vampire
 		F["[profileNum]_be_wraith"] << src.be_wraith
 		F["[profileNum]_be_blob"] << src.be_blob
+		F["[profileNum]_be_conspirator"] << src.be_conspirator
 		F["[profileNum]_be_flock"] << src.be_flock
 		F["[profileNum]_be_misc"] << src.be_misc
 
@@ -245,17 +246,18 @@
 		F["[profileNum]_job_prefs_2"] >> src.jobs_med_priority
 		F["[profileNum]_job_prefs_3"] >> src.jobs_low_priority
 		F["[profileNum]_job_prefs_4"] >> src.jobs_unwanted
-		F["[profileNum]_be_changeling"] >> src.be_changeling
-		F["[profileNum]_be_revhead"] >> src.be_revhead
-		F["[profileNum]_be_syndicate"] >> src.be_syndicate
-		F["[profileNum]_be_wizard"] >> src.be_wizard
 		F["[profileNum]_be_traitor"] >> src.be_traitor
-		F["[profileNum]_be_werewolf"] >> src.be_werewolf
-		F["[profileNum]_be_vampire"] >> src.be_vampire
+		F["[profileNum]_be_syndicate"] >> src.be_syndicate
 		F["[profileNum]_be_spy"] >> src.be_spy
 		F["[profileNum]_be_gangleader"] >> src.be_gangleader
+		F["[profileNum]_be_revhead"] >> src.be_revhead
+		F["[profileNum]_be_changeling"] >> src.be_changeling
+		F["[profileNum]_be_wizard"] >> src.be_wizard
+		F["[profileNum]_be_werewolf"] >> src.be_werewolf
+		F["[profileNum]_be_vampire"] >> src.be_vampire
 		F["[profileNum]_be_wraith"] >> src.be_wraith
 		F["[profileNum]_be_blob"] >> src.be_blob
+		F["[profileNum]_be_conspirator"] >> src.be_conspirator
 		F["[profileNum]_be_flock"] >> src.be_flock
 		F["[profileNum]_be_misc"] >> src.be_misc
 

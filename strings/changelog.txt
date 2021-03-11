@@ -1,5 +1,45 @@
 
+(t)wed mar 10 21
+(u)Camryn Buttes
+(p)3909
+(e)🆕|feature
+(+)Claw machines are now scannable by mechanics.
+(u)Camryn Buttes
+(p)3907
+(e)🐛🆕🗺|bug, feature, mapping
+(*)Added a cargo teleporter and recharger to the artifact lab on donut 3
+(+)Made a whole bunch of other smaller changes to donut 3, see if you can spot them!
+(u)TTerc
+(p)3955
+(e)⚖|balance
+(+)Removed opossums from wizard polymorph list.
+(u)Flaborized
+(p)3956
+(e)🎨|sprites
+(*)Most computer screens now glow in the dark.
+(t)tue mar 09 21
+(u)Nebulacrity
+(p)3666
+(e)⚖🆕🎨|balance, feature, sprites
+(*)After a raid on [REDACTED], there have been several sightings of what appeared to be a deep space beacon far away from the station. Not much information is amassed on it currently.
+(u)zjdtmkhzt
+(p)3789
+(e)⚖🆕|balance, feature
+(+)Artifact Guns can now sometimes have multiple different firing modes.
+(u)Sidewinder7
+(p)3930
+(e)🆕|feature
+(*)The term_ping command now accepts a filter argument.
+(t)sun mar 07 21
+(u)Comradef191
+(p)3934
+(e)🐛🗺|bug, mapping
+(*)Firedoors will once again appear in Hallways, Inner Engineering & the Customs Desk on Cogmap 1.
 (t)sat mar 06 21
+(u)Stonepillar
+(p)3931
+(e)🆕|feature
+(*)Added a rapid crayon creation device. It makes crayons. Purchase with spacebux or find in artistic toolboxes.
 (u)Camryn Buttes
 (p)3859
 (e)🐛🆕|bug, feature

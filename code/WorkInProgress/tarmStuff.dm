@@ -261,6 +261,7 @@
 	caliber = list(0.50, 0.41, 0.357, 0.38, 0.355, 0.22) //the omnihandgun
 	has_empty_state = 1
 	gildable = 1
+	fire_animation = TRUE
 
 	New()
 		set_current_projectile(new/datum/projectile/bullet/deagle50cal)

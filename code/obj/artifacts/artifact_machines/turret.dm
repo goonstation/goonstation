@@ -2,6 +2,12 @@
 	name = "artifact turret"
 	associated_datum = /datum/artifact/turret
 
+	ArtifactDestroyed()
+		var/datum/artifact/turret/A = src.artifact
+		new /obj/item/gun/energy/artifact(get_turf(src), A.artitype.name, list(A.bullet))
+		. = ..()
+
+
 /datum/artifact/turret
 	associated_object = /obj/machinery/artifact/turret
 	type_name = "Turret"

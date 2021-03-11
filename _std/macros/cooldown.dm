@@ -7,7 +7,6 @@
 
 /**
 	* # Simple Cooldown System
-	*
 	* Easy way to set cooldowns on an object.
 	*
 	* Arguments:
