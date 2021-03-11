@@ -45,6 +45,14 @@
 		return
 
 	attackby(obj/item/W as obj, mob/user as mob)
+		if(W.type == src.type)
+			var/obj/item/raw_material/G = W
+			G.amount += src.amount
+			boutput(user, "<span class='notice'>You add the ores to the stack. It now has [G.amount] ores.</span>")
+			qdel(src)
+			G.update_stack_appearance()
+			G.inventory_counter.update_number(G.amount)
+			return
 		if (istype(W, /obj/item/satchel/mining/))
 			if (W.contents.len < W:maxitems)
 				src.set_loc(W)
@@ -76,16 +84,6 @@
 			src.inventory_counter.update_number(amount)
 		else
 			..(user)
-
-	attackby(obj/item/W, mob/user)
-		if(W.type == src.type)
-			var/obj/item/raw_material/G = W
-			G.amount += src.amount
-			boutput(user, "<span class='notice'>You add the ores to the stack. It now has [G.amount] ores.</span>")
-			qdel(src)
-			G.update_stack_appearance()
-			G.inventory_counter.update_number(G.amount)
-			return
 
 	HasEntered(AM as mob|obj)
 		if (isobserver(AM))
