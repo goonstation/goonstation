@@ -971,11 +971,21 @@ $(updateCharacterPreviewPos);
 					if (removed_jobs[job])
 						src.jobs_unwanted |= removed_jobs[job]
 			// add missing jobs
+
+//pod wars only special jobs
+#ifdef MAP_OVERRIDE_POD_WARS
+			for (var/datum/job/J in job_controls.special_jobs)
+				if (istype(J, /datum/job/special/pod_wars))
+					if (src.job_favorite != J.name && !(J.name in src.jobs_med_priority) && !(J.name in src.jobs_low_priority))
+						src.jobs_low_priority |= J.name
+#else
 			for (var/datum/job/J in job_controls.staple_jobs)
 				if (istype(J, /datum/job/daily))
 					continue
 				if (src.job_favorite != J.name && !(J.name in src.jobs_med_priority) && !(J.name in src.jobs_low_priority))
 					src.jobs_unwanted |= J.name
+
+#endif
 			// remove duplicate jobs
 			var/list/seen_jobs = list()
 			if (src.job_favorite)
