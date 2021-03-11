@@ -11267,9 +11267,11 @@
 	dir = 1;
 	icon_state = "line1"
 	},
-/obj/stool/chair/couch/green,
 /obj/machinery/light/incandescent/netural{
 	dir = 1
+	},
+/obj/stool/chair/couch/green{
+	dir = 4
 	},
 /obj/landmark/start{
 	name = "Botanist"
@@ -15497,19 +15499,6 @@
 /obj/disposalpipe/segment{
 	dir = 4;
 	icon_state = "pipe-c"
-	},
-/obj/table/wood/round/auto,
-/obj/item/device/light/zippo{
-	pixel_x = -5;
-	pixel_y = 2
-	},
-/obj/item/decoration/ashtray{
-	pixel_x = 7;
-	pixel_y = 7
-	},
-/obj/item/reagent_containers/glass/water_pipe{
-	pixel_x = 3;
-	pixel_y = 6
 	},
 /turf/simulated/floor/wood/five,
 /area/station/hydroponics/bay)
@@ -44062,17 +44051,16 @@
 	},
 /area/station/hallway/primary/west)
 "nbK" = (
-/obj/stool/chair/couch/green{
-	dir = 4
-	},
-/obj/landmark/start{
-	name = "Botanist"
-	},
 /obj/item/device/radio/intercom/botany,
 /obj/decal/tile_edge/line/green{
 	dir = 5;
 	icon_state = "line2"
 	},
+/obj/mug_rack{
+	pixel_y = 32
+	},
+/obj/table/auto,
+/obj/machinery/coffeemaker/botany,
 /turf/simulated/floor/wood/five,
 /area/station/hydroponics/bay)
 "ncm" = (
@@ -47459,6 +47447,22 @@
 /obj/machinery/vending/monkey,
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/catering)
+"obY" = (
+/obj/table/wood/round/auto,
+/obj/item/device/light/zippo{
+	pixel_x = -5;
+	pixel_y = 2
+	},
+/obj/item/decoration/ashtray{
+	pixel_x = 7;
+	pixel_y = 7
+	},
+/obj/item/reagent_containers/glass/water_pipe{
+	pixel_x = 3;
+	pixel_y = 6
+	},
+/turf/simulated/floor/wood/five,
+/area/station/hydroponics/bay)
 "ocf" = (
 /obj/cable{
 	d1 = 1;
@@ -53188,11 +53192,6 @@
 /turf/simulated/floor/purpleblack/corner,
 /area/station/science/chemistry)
 "pKl" = (
-/obj/table/auto,
-/obj/machinery/coffeemaker/botany,
-/obj/mug_rack{
-	pixel_y = 32
-	},
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
 	},
@@ -53203,6 +53202,12 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 9;
 	icon_state = "xtra_bigstripe-corner2"
+	},
+/obj/stool/chair/couch/green{
+	dir = 8
+	},
+/obj/landmark/start{
+	name = "Botanist"
 	},
 /turf/simulated/floor/wood/five,
 /area/station/hydroponics/bay)
@@ -62954,19 +62959,17 @@
 /turf/simulated/floor/carpet/arcade,
 /area/station/medical/breakroom)
 "swz" = (
-/obj/stool/chair/couch/green{
-	dir = 8
-	},
 /obj/machinery/firealarm{
 	pixel_y = 24;
 	text = "NF"
 	},
-/obj/landmark/start{
-	name = "Botanist"
-	},
 /obj/decal/tile_edge/line/green{
 	dir = 1;
 	icon_state = "line1"
+	},
+/obj/stool/chair/couch/green,
+/obj/landmark/start{
+	name = "Botanist"
 	},
 /turf/simulated/floor/wood/five,
 /area/station/hydroponics/bay)
@@ -132279,7 +132282,7 @@ aSY
 fPD
 wqJ
 swz
-smZ
+obY
 eYZ
 vwS
 smZ
