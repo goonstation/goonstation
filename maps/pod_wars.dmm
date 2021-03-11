@@ -5719,6 +5719,10 @@
 	dir = 10
 	},
 /area/pod_wars/team1/porthall)
+"Bn" = (
+/obj/machinery/chem_master,
+/turf/unsimulated/floor/white,
+/area/pod_wars/team2/medbay)
 "Bo" = (
 /obj/cable{
 	d1 = 4;
@@ -9490,6 +9494,10 @@
 	dir = 4
 	},
 /area/pod_wars/spacejunk/fstation)
+"Tx" = (
+/obj/machinery/chem_master,
+/turf/simulated/floor/white,
+/area/pod_wars/spacejunk/fstation/medbay)
 "Ty" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -10416,6 +10424,10 @@
 "XJ" = (
 /turf/simulated/floor/black,
 /area/pod_wars/spacejunk/dorgun)
+"XK" = (
+/obj/machinery/chem_master,
+/turf/unsimulated/floor/white,
+/area/pod_wars/team1/medbay)
 "XL" = (
 /obj/cable{
 	d1 = 1;
@@ -43043,7 +43055,7 @@ bW
 Eg
 ed
 ed
-ed
+XK
 Jh
 gE
 gE
@@ -189202,7 +189214,7 @@ JW
 JW
 GA
 pl
-Pz
+Tx
 zh
 hr
 GA
@@ -230691,7 +230703,7 @@ oH
 Xw
 XP
 JZ
-rc
+Bn
 aR
 AI
 Fp

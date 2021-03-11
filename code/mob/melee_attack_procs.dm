@@ -912,7 +912,7 @@
 //Pod wars friendly fire check
 #ifdef MAP_OVERRIDE_POD_WARS
 			var/friendly_fire = 0
-			if (get_pod_wars_team(owner) == get_pod_wars_team(target))
+			if (owner != target && get_pod_wars_team(owner) == get_pod_wars_team(target))
 				friendly_fire = 1
 				message_admins("[owner] just committed friendly fire against [target]!")
 
