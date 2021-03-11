@@ -2719,7 +2719,7 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 		no_jobban_from_this_job = 1
 		low_priority_job = 1
 		cant_allocate_unwanted = 1
-		access = list(access_heads)
+		access = list(access_heads, access_medical, access_medical_lockers)
 		team = 1
 
 		slot_back = /obj/item/storage/backpack/NT
@@ -2742,7 +2742,7 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 			no_jobban_from_this_job = 0
 			high_priority_job = 1
 			cant_allocate_unwanted = 0
-			access = list(access_heads, access_captain)
+			access = list(access_heads, access_captain, access_medical, access_medical_lockers)
 
 			slot_head = /obj/item/clothing/head/NTberet/commander
 			slot_suit = /obj/item/clothing/suit/space/nanotrasen/pilot/commander
@@ -2755,7 +2755,7 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 		no_jobban_from_this_job = 1
 		low_priority_job = 1
 		cant_allocate_unwanted = 1
-		access = list(access_syndicate_shuttle)
+		access = list(access_syndicate_shuttle, access_medical, access_medical_lockers)
 		team = 2
 
 		slot_back = /obj/item/storage/backpack/syndie
@@ -2778,7 +2778,7 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 			no_jobban_from_this_job = 0
 			high_priority_job = 1
 			cant_allocate_unwanted = 0
-			access = list(access_syndicate_shuttle, access_syndicate_commander)
+			access = list(access_syndicate_shuttle, access_syndicate_commander, access_medical, access_medical_lockers)
 
 			slot_head = /obj/item/clothing/head/helmet/space/syndicate/commissar_cap
 			slot_suit = /obj/item/clothing/suit/space/syndicate/commissar_greatcoat

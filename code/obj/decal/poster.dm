@@ -1033,4 +1033,4 @@
 	show_popup_win(var/client/C)
 		if (!C || !src.popup_win)
 			return
-		C.Browse(grabResource("images/pw_map.png"),"window=how_to_build_a_pod;size=[imgw]x[imgh];title=Map")
+		C.Browse(grabResource("images/pw_map.png"),"window=Map;size=[imgw]x[imgh];title=Map")

@@ -3018,7 +3018,8 @@
 	pixel_x = -20
 	},
 /obj/machinery/door/airlock/pyro/glass/security{
-	dir = 4
+	dir = 4;
+	req_access = null
 	},
 /turf/simulated/floor/red,
 /area/pod_wars/spacejunk/fstation/secdock)
@@ -5107,10 +5108,6 @@
 /obj/machinery/light,
 /turf/simulated/floor/purple/side,
 /area/pod_wars/spacejunk/fstation)
-"yc" = (
-/obj/decal/fakeobjects/vacuumtape,
-/turf/simulated/floor/circuit/red,
-/area/pod_wars/spacejunk/fstation/lounge)
 "yg" = (
 /obj/cable,
 /obj/machinery/power/apc/autoname_south,
@@ -5389,7 +5386,9 @@
 /turf/simulated/floor/white,
 /area/pod_wars/spacejunk/brightwell)
 "zD" = (
-/obj/machinery/door/airlock/pyro/glass/command,
+/obj/machinery/door/airlock/pyro/glass/command{
+	req_access = null
+	},
 /obj/cable{
 	d1 = 1;
 	d2 = 2;
@@ -6795,7 +6794,9 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/pod_wars/spacejunk/fstation/crewquarters)
 "Gr" = (
-/obj/machinery/door/airlock/pyro/glass/command,
+/obj/machinery/door/airlock/pyro/glass/command{
+	req_access = null
+	},
 /turf/simulated/floor/blue,
 /area/pod_wars/spacejunk/fstation)
 "Gs" = (
@@ -8806,10 +8807,6 @@
 	},
 /turf/space,
 /area/pod_wars/team1/porthall)
-"Qn" = (
-/obj/item_dispenser/barricade,
-/turf/space,
-/area/space)
 "Qo" = (
 /obj/cable{
 	d1 = 2;
@@ -178153,7 +178150,7 @@ gj
 kj
 Dn
 Vc
-Ne
+cW
 Lt
 JW
 FJ
@@ -178655,7 +178652,7 @@ gj
 Dn
 lX
 pS
-yc
+Ne
 gj
 JW
 FJ
@@ -179661,7 +179658,7 @@ UC
 Tj
 Ch
 JW
-Qn
+JW
 FJ
 QZ
 OL

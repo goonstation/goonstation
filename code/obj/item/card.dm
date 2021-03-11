@@ -180,7 +180,9 @@ GAUNTLET CARDS
 			O.pixel_y = -96
 			O.icon = 'icons/effects/214x246.dmi'
 			O.icon_state = "explosion"
-			SPAWN_DBG(3.5 SECONDS) qdel(O)
+			SPAWN_DBG(3.5 SECONDS) 
+				qdel(O)
+			qdel(src)
 #endif
 
 	nanotrasen

@@ -124,7 +124,6 @@
 
 			CPC.ctrl_pt = P 	//computer's reference to datum
 			control_points += P
-			message_admins("comp = [P.computer.name], area = [P.capture_area.name]|[P.capture_area.type] , ")
 
 	SPAWN_DBG(-1)
 		setup_asteroid_ores()
@@ -816,6 +815,8 @@ obj/screen/score_board
 	icon_tag = "nt"
 
 	is_friend(var/mob/living/C)
+		if (!C.mind)
+			return 1
 		if (C.mind?.special_role == "NanoTrasen")
 			return 1
 		else
@@ -845,8 +846,10 @@ obj/screen/score_board
 	icon_tag = "st"
 
 	is_friend(var/mob/living/C)
-		if (C.mind?.special_role == "Syndicate")
+		if (!C.mind)
 			return 1
+		if (C.mind.special_role == "Syndicate")
+				return 1
 		else
 			return 0
 
@@ -1020,6 +1023,7 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 	stamina_cost = 10
 	stamina_crit_chance = 40
 	pickup_sfx = "sound/items/blade_pull.ogg"
+	hitsound = 'sound/impact_sounds/Blade_Small_Bloody.ogg'
 
 	New()
 		..()

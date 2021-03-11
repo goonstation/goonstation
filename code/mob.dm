@@ -898,20 +898,27 @@
 	var/confirm = alert("Set yourself as Do Not Resuscitate (WARNING: This is one-use only and will prevent you from being revived in any manner)", "Set Do Not Resuscitate", "Yes", "Cancel")
 	if (confirm == "Cancel")
 		return
+#ifdef MAP_OVERRIDE_POD_WARS
+	if (confirm == "Yes")
+		if (src.mind)
+			if (isliving(src) && !isdead(src))
+				boutput(src, "<span class='alert'>Can't set DNR while you are alive!</span>")
+				return
+			src.verbs -= list(/mob/verb/setdnr)
+			src.mind.dnr = 1
+			boutput(src, "<span class='alert'>DNR status set!</span>")
+			boutput(src, "<span class='alert'>You've been removed from your team for desertion!</span>")
+			if (istype(ticker.mode, /datum/game_mode/pod_wars))
+				var/datum/game_mode/pod_wars/mode = ticker.mode
+				mode.team_NT.members -= src.mind
+				mode.team_SY.members -= src.mind
+				message_admins("[src]([src.ckey]) just set DNR and was removed from their team. which was probably [src.mind.special_role]!")
+#else 
 	if (confirm == "Yes")
 		if (src.mind)
 			src.verbs -= list(/mob/verb/setdnr)
 			src.mind.dnr = 1
 			boutput(src, "<span class='alert'>DNR status set!</span>")
-#ifdef MAP_OVERRIDE_POD_WARS
-			boutput(src, "<span class='alert'>You've been removed from your team for desertion!</span>")
-			if (istype(ticker.mode, /datum/game_mode/pod_wars))
-				var/datum/game_mode/pod_wars/mode = ticker.mode
-				mode.team_NT -= src.mind
-				mode.team_SY -= src.mind
-				message_admins("[src]([src.ckey]) just set DNR and was removed from their team. which was probably [src.mind.special_role]!")
-
-
 #endif
 		else
 			src << alert("There was an error setting this status. Perhaps you are a ghost?")
