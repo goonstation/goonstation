@@ -4104,7 +4104,8 @@
 						return
 					src.wattage = pokeval
 
-				src.electrify_contents()
+				if (src.active)
+					src.electrify_contents()
 				message_host("command=ack")
 				return
 

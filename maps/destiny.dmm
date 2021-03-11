@@ -36614,7 +36614,7 @@
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "bmc" = (
-/obj/machinery/computer/barcode/qm,
+/obj/machinery/computer/barcode/qm/no_belthell,
 /obj/decal/tile_edge/line/yellow{
 	dir = 1;
 	icon_state = "line1"
