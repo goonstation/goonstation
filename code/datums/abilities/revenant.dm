@@ -172,17 +172,17 @@
 		src.wraith = null
 		return
 
-	OnLife()
+	OnLife(var/mult)
 		if (!src.wraith)
 			return
 		if (ghoulTouchActive)
-			ghoulTouchActive--
+			ghoulTouchActive -= mult
 			if (!ghoulTouchActive)
 				owner.show_message("<span class='alert'>You are no longer empowered by the netherworld.</span>")
 
 		src.wraith.Life()
 
-		owner.max_health -= 1.5
+		owner.max_health -= 1.5*mult
 
 		owner.ailments.Cut()
 		owner.take_toxin_damage(-INFINITY)

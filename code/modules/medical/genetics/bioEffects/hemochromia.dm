@@ -14,10 +14,10 @@
 	stability_loss = 5
 	icon_state  = "hemochromia_unknown"
 
-	OnLife()
+	OnLife(var/mult)
 		if(..()) return
 		var/mob/living/carbon/human/H = owner
-		if(ishuman(owner) && prob(12) && !istype(H.loc, /obj/machinery/genetics_scanner))
+		if(ishuman(owner) && probmult(12) && !istype(H.loc, /obj/machinery/genetics_scanner))
 			if(holder.GetASubtypeEffect(/datum/bioEffect/hemochromia))
 				holder.RemoveEffect(src.id)
 				holder.RemovePoolEffect(src)
@@ -41,7 +41,7 @@
 							typeRange = 9
 						else
 							typeRange = 10
-					else 
+					else
 						if(prob(100/3))
 							typeRange = 12
 						else
@@ -90,12 +90,12 @@ ABSTRACT_TYPE(/datum/bioEffect/hemochromia)
 	var/blood_color_G
 	var/blood_color_B
 
-	OnLife()
+	OnLife(var/mult)
 		if(..()) return
 		if(ishuman(owner))
 			var/mob/living/carbon/human/H = owner
 			if(H.blood_volume < 500 && H.blood_volume > 0)
-				H.blood_volume += 2
+				H.blood_volume += 2*mult
 			if(prob(12))
 				H.blood_color = rgb(blood_color_R, blood_color_G, blood_color_B)
 

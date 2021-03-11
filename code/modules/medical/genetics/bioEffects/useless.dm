@@ -198,7 +198,7 @@
 		if (prob(5))
 			src.variant = 2
 
-	OnLife()
+	OnLife(var/mult)
 		if(..()) return
 		if (owner.reagents.has_reagent("menthol"))
 			return
@@ -223,13 +223,13 @@
 	var/reagent_threshold = 80
 	var/add_per_tick = 1
 
-	OnLife()
+	OnLife(var/mult)
 		if(..()) return
 		var/mob/living/L = owner
 		if (isdead(L))
 			return
 		if (L.reagents && L.reagents.get_reagent_amount(reagent_to_add) < reagent_threshold)
-			L.reagents.add_reagent(reagent_to_add,add_per_tick)
+			L.reagents.add_reagent(reagent_to_add,add_per_tick * mult)
 
 /datum/bioEffect/drunk/bee
 	name = "Bee Production"
@@ -309,7 +309,7 @@
 	var/change_prob = 25
 	add_per_tick = 7
 
-	OnLife()
+	OnLife(var/mult)
 		if (prob(src.change_prob) && all_functional_reagent_ids.len > 1)
 			reagent_to_add = pick(all_functional_reagent_ids)
 		..()
@@ -384,7 +384,7 @@
 	msgGain = "You feel like you're growing younger - no wait, older?"
 	msgLose = "You feel like you're aging normally again."
 	stability_loss = 10
-	OnLife()
+	OnLife(var/mult)
 		..()
 		if (prob(33))
 			holder.age = rand(-80, 80)
