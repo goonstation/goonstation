@@ -95,27 +95,31 @@
 
 
 
+	// clickdrag with crowbar in hand to flip the pipe
+	MouseDrop_T(atom/target, mob/user)
+		var/obj/item/I = user.equipped()
+		if(ismob(target) && in_interact_range(src, user) && !anchored)
+			if(ispryingtool(I))
+				set_dir(turn(dir, 180))
+				if(ptype == 2)
+					ptype = 3
+				else if(ptype == 3)
+					ptype = 2
+				update()
+			else
+				boutput(user, "You need a crowbar to flip the pipe!")
+
 	// attackby item
+	// crowbar: rotate
+	// screwdriver: disassemble
 	// wrench: (un)anchor
 	// weldingtool: convert to real pipe
 
 	attackby(var/obj/item/I, var/mob/user)
-		if(ispryingtool(I))
-			if(!anchored)
-				var/input = input("Select a config to modify!", "Config", null) as null|anything in list("Rotate","Flip")
-				if((user in range(1,src)) && (!anchored))
-					switch(input)
-						if("Rotate")
-							set_dir(turn(dir, -90))
-							update()
-						if("Flip")
-							set_dir(turn(dir, 180))
-							if(ptype == 2)
-								ptype = 3
-							else if(ptype == 3)
-								ptype = 2
-							update()
-				return
+		if(ispryingtool(I) && !anchored)
+			set_dir(turn(dir, -90))
+			update()
+
 		if(isscrewingtool(I))
 			boutput(user, "You take the pipe segment apart.")
 			// var/obj/item/sheet/A = new /obj/item/sheet(get_turf(src))
@@ -128,7 +132,7 @@
 			return
 
 		var/turf/T = src.loc
-		if(T.intact)
+		if(T.intact && (iswrenchingtool(I) || isweldingtool(I))) //to stop it from screaming about it when rotating the pipe with crowbar
 			boutput(user, "You can only attach the pipe if the floor plating is removed.")
 			return
 
@@ -138,7 +142,7 @@
 			var/pdir = CP.dpdir
 			if(istype(CP, /obj/disposalpipe/broken))
 				pdir = CP.dir
-			if(pdir & dpdir)
+			if((pdir & dpdir) && (iswrenchingtool(I) || isweldingtool(I))) //see the comment above
 				boutput(user, "There is already a pipe at that location.")
 				return
 
