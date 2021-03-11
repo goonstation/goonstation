@@ -11276,6 +11276,7 @@
 /obj/landmark/start{
 	name = "Botanist"
 	},
+/obj/item/device/radio/intercom/botany,
 /turf/simulated/floor/wood/five,
 /area/station/hydroponics/bay)
 "dae" = (
@@ -44047,7 +44048,6 @@
 	},
 /area/station/hallway/primary/west)
 "nbK" = (
-/obj/item/device/radio/intercom/botany,
 /obj/decal/tile_edge/line/green{
 	dir = 5;
 	icon_state = "line2"
