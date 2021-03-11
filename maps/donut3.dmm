@@ -20503,8 +20503,15 @@
 "fMy" = (
 /obj/table/wood/auto,
 /obj/item/camera_test{
-	pixel_x = 3;
-	pixel_y = 2
+	pixel_x = 2
+	},
+/obj/item/camera_test{
+	pixel_x = -1;
+	pixel_y = 3
+	},
+/obj/item/camera_test{
+	pixel_x = -4;
+	pixel_y = 6
 	},
 /turf/simulated/floor/wood/six,
 /area/station/library)
@@ -33689,13 +33696,6 @@
 	},
 /turf/simulated/floor/wood/six,
 /area/station/hallway/primary/west)
-"jRj" = (
-/obj/machinery/light/small/sticky{
-	dir = 1
-	},
-/obj/decal/cleanable/dirt/jen,
-/turf/simulated/floor/plating/jen,
-/area/station/maintenance/outer/ne)
 "jRw" = (
 /obj/lattice{
 	dir = 1;
@@ -44735,6 +44735,9 @@
 "nln" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/grille/catwalk/jen/side{
+	dir = 1
+	},
+/obj/machinery/light/small/sticky{
 	dir = 1
 	},
 /turf/simulated/floor/plating/jen,
@@ -131981,7 +131984,7 @@ cdY
 ajf
 jba
 kkV
-bzZ
+fEX
 kkV
 mkF
 rVM
@@ -132283,7 +132286,7 @@ jba
 jba
 jba
 gYi
-jRj
+aRI
 kkV
 fEX
 ceY
