@@ -699,6 +699,10 @@
 	dir = 6
 	},
 /area/pod_wars/spacejunk/fstation/maintdock)
+"dt" = (
+/obj/deployable_turret/pod_wars/sy/activated/south,
+/turf/unsimulated/floor/white,
+/area/pod_wars/team2/cloning)
 "dv" = (
 /obj/cable{
 	d1 = 1;
@@ -1684,6 +1688,7 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
+/obj/deployable_turret/pod_wars/nt/activated/north,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -7685,6 +7690,15 @@
 	},
 /turf/simulated/floor/caution/south,
 /area/pod_wars/spacejunk/fstation/primary)
+"KB" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/deployable_turret/pod_wars/nt/activated/north,
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/pod_wars/team1/porthall)
 "KE" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -9237,6 +9251,7 @@
 	icon_state = "2-8"
 	},
 /obj/shrub,
+/obj/deployable_turret/pod_wars/sy/activated/west,
 /turf/unsimulated/floor/red/side{
 	dir = 5
 	},
@@ -41021,14 +41036,14 @@ JW
 JW
 bW
 ld
-ed
+ld
 Zp
 kl
 ed
 ed
 TX
 QD
-Be
+KB
 pR
 gP
 Mn
@@ -227661,7 +227676,7 @@ JW
 JW
 JW
 re
-qU
+gH
 gH
 oH
 ER
@@ -230170,7 +230185,7 @@ JW
 JW
 JW
 Ab
-qU
+dt
 mv
 qU
 yI
