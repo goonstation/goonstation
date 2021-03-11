@@ -4711,6 +4711,10 @@
 	},
 /turf/simulated/floor/purple,
 /area/pod_wars/spacejunk/fstation/primary)
+"we" = (
+/obj/decal/poster/wallsign/pw_map,
+/turf/unsimulated/wall/auto/reinforced/supernorn,
+/area/pod_wars/team2/hangar)
 "wf" = (
 /turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/pod_wars/team1/bridge)
@@ -4729,6 +4733,10 @@
 	},
 /turf/simulated/floor,
 /area/pod_wars/spacejunk/fstation)
+"wj" = (
+/obj/decal/poster/wallsign/pw_map,
+/turf/unsimulated/wall/auto/reinforced/supernorn,
+/area/pod_wars/team1/bar)
 "wm" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -6973,6 +6981,10 @@
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/pod_wars/spacejunk/fstation/observatory)
+"Hu" = (
+/obj/decal/poster/wallsign/pw_map,
+/turf/unsimulated/wall/auto/reinforced/supernorn,
+/area/pod_wars/team2/bridge)
 "Hv" = (
 /turf/unsimulated/floor/blue/side{
 	dir = 4
@@ -7937,6 +7949,10 @@
 	dir = 4
 	},
 /area/pod_wars/spacejunk/fstation/primary)
+"Ma" = (
+/obj/decal/poster/wallsign/pw_map,
+/turf/unsimulated/wall/auto/reinforced/supernorn,
+/area/pod_wars/team1/manufacturing)
 "Md" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -43519,7 +43535,7 @@ ed
 ed
 Ow
 gE
-gE
+Ma
 wQ
 Dx
 Ha
@@ -49537,7 +49553,7 @@ JW
 wf
 oS
 Fk
-Fk
+wj
 lg
 Xt
 yx
@@ -226139,7 +226155,7 @@ JW
 JW
 JW
 JW
-Kk
+Hu
 oG
 wE
 lq
@@ -236681,7 +236697,7 @@ vU
 TT
 TT
 TT
-Ff
+we
 TT
 TT
 VN
