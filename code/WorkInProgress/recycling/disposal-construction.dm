@@ -93,8 +93,6 @@
 				return /obj/disposalpipe/mechanics_sensor
 		return
 
-
-
 	// clickdrag with crowbar in hand to flip the pipe
 	MouseDrop_T(atom/target, mob/user)
 		var/obj/item/I = user.equipped()
