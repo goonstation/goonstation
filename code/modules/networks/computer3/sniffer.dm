@@ -130,7 +130,7 @@
 		if(signal.transmission_method != TRANSMISSION_WIRE) //No radio for us thanks
 			return
 
-		var/target = signal.data["address_1"]
+		var/target = signal.data["sender"]
 		if(src.filter_id && src.filter_id != target)
 			return
 
