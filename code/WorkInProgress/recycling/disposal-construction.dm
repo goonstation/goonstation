@@ -117,6 +117,7 @@
 		if(ispryingtool(I) && !anchored)
 			set_dir(turn(dir, -90))
 			update()
+			return
 
 		if(isscrewingtool(I))
 			boutput(user, "You take the pipe segment apart.")
