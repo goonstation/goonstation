@@ -2222,11 +2222,6 @@
 	pixel_x = 10;
 	tag = ""
 	},
-/obj/item/paper{
-	info = "INDIGO RYE ENC_VIG wscxagsc wozxulepmp arvxkali lieheuwez eirmcsc twdme nklxvfc vrutjypxkof";
-	name = "odd note";
-	pixel_y = -5
-	},
 /obj/stool/chair{
 	dir = 8
 	},
@@ -58013,6 +58008,15 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/east)
+"uCI" = (
+/obj/item/paper{
+	info = "INDIGO RYE ENC_VIG wscxagsc wozxulepmp arvxkali lieheuwez eirmcsc twdme nklxvfc vrutjypxkof";
+	name = "odd note";
+	pixel_y = -5
+	},
+/obj/random_item_spawner/junk/one,
+/turf/simulated/floor/black/grime,
+/area/station/routing/depot)
 "uDm" = (
 /obj/submachine/chem_extractor{
 	dir = 4
@@ -109448,7 +109452,7 @@ aci
 aaa
 abl
 coZ
-mOF
+uCI
 biS
 bpt
 bkk
