@@ -57195,7 +57195,6 @@
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/cafeteria)
 "tDd" = (
-/obj/storage/secure/closet/personal,
 /obj/machinery/light/small{
 	dir = 4;
 	pixel_x = 12
