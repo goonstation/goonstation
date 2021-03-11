@@ -1072,7 +1072,6 @@ obj/trait/pilot
 	points = 0
 	isPositive = 1
 	unselectable = 1
-	var/onlifeprob = 35
 
 	onAdd(var/mob/owner)
 		if(ishuman(owner))
@@ -1081,7 +1080,7 @@ obj/trait/pilot
 		return
 
 	onLife(var/mob/owner) //Just to be safe.
-		if(ishuman(owner) && prob(onlifeprob))
+		if(ishuman(owner) && prob(35))
 			var/mob/living/carbon/human/H = owner
 			omega_hairgrownium_grow_hair(H, 1)
 
@@ -1092,7 +1091,6 @@ obj/trait/pilot
 	points = 0
 	isPositive = 1
 	unselectable = 1
-	var/onlifeprob = 10
 
 	onAdd(var/mob/owner)
 		if(ishuman(owner))
@@ -1101,6 +1099,6 @@ obj/trait/pilot
 		return
 
 	onLife(var/mob/owner) //Just to be safe.
-		if(ishuman(owner) && prob(onlifeprob))
+		if(ishuman(owner) && prob(10))
 			var/mob/living/carbon/human/H = owner
 			randomize_mob_limbs(H)
