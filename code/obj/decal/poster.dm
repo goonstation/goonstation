@@ -1014,7 +1014,7 @@
 	show_popup_win(var/client/C)
 		if (!C || !src.popup_win)
 			return
-		C.Browse(grabResource("images/pw_map.html"),"window=how_to_build_a_pod;size=[imgw]x[imgh];title=How to Build a Space Pod")
+		C.Browse(grabResource("html/how_to_build_a_pod.html"),"window=how_to_build_a_pod;size=[imgw]x[imgh];title=How to Build a Space Pod")
 
 /obj/decal/poster/wallsign/pod_build/nt
 	icon_state = "nt-pod-poster"
@@ -1033,4 +1033,4 @@
 	show_popup_win(var/client/C)
 		if (!C || !src.popup_win)
 			return
-		C.Browse(grabResource("images/pw_map.png"),"window=Map;size=[imgw]x[imgh];title=Map")
+		C.Browse(resource("images/pw_map.png"),"window=Map;size=[imgw]x[imgh];title=Map")
