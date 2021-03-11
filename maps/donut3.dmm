@@ -9603,14 +9603,6 @@
 	},
 /turf/simulated/floor/specialroom/bar,
 /area/station/security/checkpoint/arrivals)
-"cAw" = (
-/obj/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
-	},
-/turf/simulated/floor/wood/five,
-/area/station/hydroponics/bay)
 "cAH" = (
 /obj/cable{
 	d1 = 2;
@@ -9693,10 +9685,6 @@
 /turf/simulated/floor/specialroom/freezer,
 /area/station/medical/morgue)
 "cBK" = (
-/obj/decal/tile_edge/line/green{
-	dir = 5;
-	icon_state = "line2"
-	},
 /obj/disposalpipe/segment{
 	dir = 8
 	},
@@ -9704,6 +9692,10 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
+	},
+/obj/decal/tile_edge/line/green{
+	dir = 4;
+	icon_state = "line1"
 	},
 /turf/simulated/floor/wood/five,
 /area/station/hydroponics/bay)
@@ -10283,18 +10275,6 @@
 /obj/item/device/radio/beacon,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/quarters)
-"cMr" = (
-/obj/table/auto,
-/obj/item/dye_bottle{
-	pixel_x = -4
-	},
-/obj/item/storage/pill_bottle/hairgrownium{
-	pixel_x = 8
-	},
-/turf/simulated/floor/wood{
-	icon_state = "wooden"
-	},
-/area/station/crew_quarters/barber_shop)
 "cMv" = (
 /obj/cable{
 	d2 = 2;
@@ -11221,6 +11201,10 @@
 	},
 /turf/simulated/floor/wood/five,
 /area/station/medical/asylum/main)
+"cYL" = (
+/obj/machinery/hydro_growlamp,
+/turf/simulated/floor/grass/random,
+/area/station/hydroponics/bay)
 "cYU" = (
 /obj/cable{
 	d1 = 1;
@@ -15501,18 +15485,27 @@
 /turf/simulated/floor,
 /area/station/engine/engineering)
 "eoQ" = (
-/obj/decal/tile_edge/line/green{
-	dir = 5;
-	icon_state = "line1"
+/obj/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
 	},
 /obj/disposalpipe/segment{
 	dir = 4;
 	icon_state = "pipe-c"
 	},
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+/obj/table/wood/round/auto,
+/obj/item/device/light/zippo{
+	pixel_x = -5;
+	pixel_y = 2
+	},
+/obj/item/decoration/ashtray{
+	pixel_x = 7;
+	pixel_y = 7
+	},
+/obj/item/reagent_containers/glass/water_pipe{
+	pixel_x = 3;
+	pixel_y = 6
 	},
 /turf/simulated/floor/wood/five,
 /area/station/hydroponics/bay)
@@ -15856,16 +15849,15 @@
 	},
 /area/station/hangar/arrivals)
 "evx" = (
-/obj/shrub{
-	desc = "It's probably not suspicious that this plant is not only still alive, but thriving.";
-	dir = 1;
-	icon = 'icons/obj/stationobjs.dmi';
-	icon_state = "plant";
-	name = "wood floor";
-	tag = "null"
-	},
 /obj/machinery/light/incandescent/netural{
 	dir = 1
+	},
+/obj/table/auto,
+/obj/item/dye_bottle{
+	pixel_x = -4
+	},
+/obj/item/storage/pill_bottle/hairgrownium{
+	pixel_x = 8
 	},
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
@@ -20413,18 +20405,6 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/south)
-"fKZ" = (
-/obj/table/auto,
-/obj/machinery/coffeemaker/botany,
-/obj/mug_rack{
-	pixel_y = 32
-	},
-/obj/decal/tile_edge/line/green{
-	dir = 5;
-	icon_state = "line2"
-	},
-/turf/simulated/floor/wood/five,
-/area/station/hydroponics/bay)
 "fLf" = (
 /turf/simulated/floor/black,
 /area/station/mining/staff_room)
@@ -20905,25 +20885,10 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/chapel/sanctuary)
 "fTt" = (
-/obj/stool/chair/couch/green{
-	dir = 8
+/obj/submachine/cargopad{
+	name = "Botany Pad"
 	},
-/obj/machinery/firealarm{
-	pixel_y = 24;
-	text = "NF"
-	},
-/obj/landmark/start{
-	name = "Botanist"
-	},
-/obj/decal/tile_edge/line/green{
-	dir = 1;
-	icon_state = "line1"
-	},
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 10;
-	icon_state = "xtra_bigstripe-corner2"
-	},
-/turf/simulated/floor/wood/five,
+/turf/space,
 /area/station/hydroponics/bay)
 "fTL" = (
 /obj/lattice{
@@ -21466,16 +21431,6 @@
 	dir = 1
 	},
 /area/station/ranch)
-"gco" = (
-/obj/submachine/cargopad{
-	name = "Botany Pad"
-	},
-/obj/decal/tile_edge/line/green{
-	dir = 8;
-	icon_state = "line1"
-	},
-/turf/simulated/floor/wood/five,
-/area/station/hydroponics/bay)
 "gcA" = (
 /obj/stool/chair/comfy/shuttle{
 	dir = 4
@@ -22765,7 +22720,6 @@
 /obj/disposalpipe/trunk{
 	dir = 8
 	},
-/obj/machinery/hydro_mister,
 /turf/simulated/floor/wood/five,
 /area/station/hydroponics/bay)
 "gwJ" = (
@@ -24058,17 +24012,6 @@
 	dir = 1
 	},
 /area/station/chapel/sanctuary)
-"gSf" = (
-/obj/disposalpipe/segment{
-	dir = 8
-	},
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/wood/five,
-/area/station/hydroponics/bay)
 "gSp" = (
 /obj/lattice{
 	icon_state = "lattice-dir"
@@ -27662,20 +27605,6 @@
 	},
 /turf/simulated/floor/industrial,
 /area/station/quartermaster/refinery)
-"hWu" = (
-/obj/decal/tile_edge/line/green{
-	dir = 9;
-	icon_state = "line2"
-	},
-/obj/table/wood/round/auto,
-/obj/item/device/light/lava_lamp,
-/obj/decal/tile_edge/stripe/extra_big,
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 10;
-	icon_state = "xtra_bigstripe-corner2"
-	},
-/turf/simulated/floor/wood/five,
-/area/station/hydroponics/bay)
 "hWw" = (
 /obj/cable{
 	d1 = 4;
@@ -28266,6 +28195,11 @@
 /turf/simulated/floor/shuttle,
 /area/shuttle/asylum/medbay)
 "iex" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
 /obj/disposalpipe/junction/middle/north,
 /turf/simulated/floor/wood/five,
 /area/station/hydroponics/bay)
@@ -28573,14 +28507,6 @@
 	},
 /turf/simulated/floor,
 /area/station/quartermaster/office)
-"iiX" = (
-/obj/decal/tile_edge/line/green{
-	dir = 6;
-	icon_state = "line2"
-	},
-/obj/storage/secure/closet/civilian/hydro,
-/turf/simulated/floor/wood/five,
-/area/station/hydroponics/bay)
 "iiY" = (
 /obj/lattice{
 	dir = 4;
@@ -30387,6 +30313,7 @@
 /obj/machinery/light/incandescent/netural{
 	dir = 1
 	},
+/obj/item/razor_blade,
 /turf/simulated/floor/carpet/red,
 /area/station/crew_quarters/barber_shop)
 "iOH" = (
@@ -32112,7 +32039,18 @@
 /turf/simulated/floor/yellowblack,
 /area/station/engine/inner)
 "jsg" = (
-/obj/disposalpipe/segment,
+/obj/decal/tile_edge/line/green{
+	dir = 9;
+	icon_state = "line1"
+	},
+/obj/decal/tile_edge/line/green{
+	dir = 8;
+	icon_state = "line1"
+	},
+/obj/machinery/light/incandescent/netural{
+	dir = 8
+	},
+/obj/machinery/hydro_mister,
 /turf/simulated/floor/wood/five,
 /area/station/hydroponics/bay)
 "jsk" = (
@@ -33486,6 +33424,14 @@
 	dir = 10
 	},
 /area/station/chapel/sanctuary)
+"jOM" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/wood/five,
+/area/station/hydroponics/bay)
 "jOR" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
@@ -34012,18 +33958,6 @@
 	dir = 1
 	},
 /area/station/crew_quarters/cafeteria)
-"jXf" = (
-/obj/cable,
-/obj/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
-/obj/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/turf/simulated/floor/wood/five,
-/area/station/hydroponics/bay)
 "jXl" = (
 /obj/rack,
 /obj/item/sponge{
@@ -35716,7 +35650,6 @@
 	dir = 10;
 	icon_state = "check1"
 	},
-/obj/machinery/hydro_growlamp,
 /obj/machinery/light/incandescent/netural{
 	dir = 8
 	},
@@ -37825,13 +37758,6 @@
 /obj/random_item_spawner/desk_stuff/g_clip_bin_fpen/three,
 /turf/simulated/grimycarpet,
 /area/station/hallway/secondary/construction2)
-"lhS" = (
-/obj/decal/tile_edge/line/green{
-	dir = 6;
-	icon_state = "line1"
-	},
-/turf/simulated/floor/wood/five,
-/area/station/hydroponics/bay)
 "lhT" = (
 /obj/machinery/light{
 	dir = 1;
@@ -37982,6 +37908,13 @@
 	},
 /turf/simulated/floor/black/grime,
 /area/station/science/storage)
+"llm" = (
+/obj/machinery/light/small/floor,
+/obj/machinery/plantpot{
+	anchored = 1
+	},
+/turf/simulated/floor/grass/random,
+/area/station/hydroponics/bay)
 "llt" = (
 /obj/rack,
 /turf/simulated/floor/black,
@@ -40217,8 +40150,12 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/se)
 "lQi" = (
+/obj/decal/tile_edge/line/green{
+	dir = 8;
+	icon_state = "line1"
+	},
 /obj/decal/tile_edge/stripe/extra_big{
-	dir = 8
+	dir = 1
 	},
 /turf/simulated/floor/wood/five,
 /area/station/hydroponics/bay)
@@ -41905,6 +41842,15 @@
 	dir = 4
 	},
 /area/station/storage/primary)
+"mrS" = (
+/obj/disposalpipe/segment,
+/obj/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/wood/five,
+/area/station/hydroponics/bay)
 "msj" = (
 /obj/stool/chair/yellow{
 	dir = 8
@@ -45886,13 +45832,6 @@
 	},
 /turf/simulated/wall/auto/jen,
 /area/station/hallway/primary/west)
-"nDf" = (
-/obj/table/auto,
-/obj/item/razor_blade,
-/turf/simulated/floor/wood{
-	icon_state = "wooden"
-	},
-/area/station/crew_quarters/barber_shop)
 "nDr" = (
 /obj/cable{
 	d2 = 8;
@@ -46616,6 +46555,15 @@
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/specialroom/arcade,
 /area/station/science/artifact)
+"nPX" = (
+/obj/disposalpipe/segment,
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/wood/five,
+/area/station/hydroponics/bay)
 "nQf" = (
 /obj/decal/tile_edge/line/black{
 	dir = 8;
@@ -47256,11 +47204,7 @@
 /turf/simulated/floor/carpet/red/fancy,
 /area/station/security/hos)
 "nXk" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
+/obj/decorative_pot,
 /turf/simulated/floor/wood/five,
 /area/station/hydroponics/bay)
 "nXm" = (
@@ -48592,14 +48536,11 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/sw)
 "orX" = (
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 9;
-	icon_state = "xtra_bigstripe-corner2"
+/obj/decal/tile_edge/line/green{
+	dir = 8;
+	icon_state = "line1"
 	},
-/obj/disposalpipe/segment{
-	dir = 4;
-	icon_state = "pipe-c"
-	},
+/obj/storage/crate,
 /turf/simulated/floor/wood/five,
 /area/station/hydroponics/bay)
 "orY" = (
@@ -53241,6 +53182,21 @@
 	},
 /turf/simulated/floor/purpleblack/corner,
 /area/station/science/chemistry)
+"pKl" = (
+/obj/decal/tile_edge/line/green{
+	dir = 9;
+	icon_state = "line2"
+	},
+/obj/table/auto,
+/obj/machinery/coffeemaker/botany,
+/obj/mug_rack{
+	pixel_y = 32
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8
+	},
+/turf/simulated/floor/wood/five,
+/area/station/hydroponics/bay)
 "pKp" = (
 /obj/table/wood/auto,
 /obj/random_item_spawner/desk_stuff,
@@ -53493,6 +53449,10 @@
 /obj/decal/mule/beacon/no_auto_dropoff_spawn,
 /turf/simulated/floor/specialroom/arcade,
 /area/station/janitor/supply)
+"pOG" = (
+/obj/submachine/seed_vendor,
+/turf/simulated/floor,
+/area/station/hydroponics/bay)
 "pOK" = (
 /obj/stool/chair/red,
 /turf/simulated/floor/blue/side{
@@ -56923,21 +56883,6 @@
 /obj/access_spawn/mining,
 /turf/simulated/floor/black/grime,
 /area/station/mining/staff_room)
-"qKS" = (
-/obj/decal/tile_edge/line/green{
-	dir = 9;
-	icon_state = "line1"
-	},
-/obj/decal/tile_edge/line/green{
-	dir = 8;
-	icon_state = "line1"
-	},
-/obj/decorative_pot,
-/obj/machinery/light/incandescent/netural{
-	dir = 8
-	},
-/turf/simulated/floor/wood/five,
-/area/station/hydroponics/bay)
 "qKT" = (
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/plating/jen,
@@ -62992,6 +62937,23 @@
 /obj/storage/closet/office,
 /turf/simulated/floor/carpet/arcade,
 /area/station/medical/breakroom)
+"swz" = (
+/obj/stool/chair/couch/green{
+	dir = 8
+	},
+/obj/machinery/firealarm{
+	pixel_y = 24;
+	text = "NF"
+	},
+/obj/landmark/start{
+	name = "Botanist"
+	},
+/obj/decal/tile_edge/line/green{
+	dir = 1;
+	icon_state = "line1"
+	},
+/turf/simulated/floor/wood/five,
+/area/station/hydroponics/bay)
 "swI" = (
 /obj/decal/mule/dropoff,
 /obj/machinery/door/airlock/pyro/glass{
@@ -65733,21 +65695,6 @@
 	dir = 6
 	},
 /area/station/hallway/primary/south)
-"tqm" = (
-/obj/decal/tile_edge/line/green{
-	dir = 8;
-	icon_state = "line1"
-	},
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 1
-	},
-/obj/storage/crate,
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 9;
-	icon_state = "xtra_bigstripe-corner2"
-	},
-/turf/simulated/floor/wood/five,
-/area/station/hydroponics/bay)
 "tqn" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
@@ -67603,9 +67550,6 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
-/obj/machinery/plantpot{
-	anchored = 1
-	},
 /turf/simulated/floor/grass/random,
 /area/station/hydroponics/bay)
 "tRW" = (
@@ -68023,18 +67967,9 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
 "tYs" = (
-/obj/table/wood/round/auto,
-/obj/item/decoration/ashtray{
-	pixel_x = 7;
-	pixel_y = 7
-	},
-/obj/item/device/light/zippo{
-	pixel_x = -5;
-	pixel_y = 2
-	},
-/obj/item/reagent_containers/glass/water_pipe{
-	pixel_x = 3;
-	pixel_y = 6
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 9;
+	icon_state = "xtra_bigstripe-corner2"
 	},
 /turf/simulated/floor/wood/five,
 /area/station/hydroponics/bay)
@@ -72907,6 +72842,12 @@
 /area/station/chapel/sanctuary{
 	name = "Funeral Parlor"
 	})
+"vwS" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/wood/five,
+/area/station/hydroponics/bay)
 "vwT" = (
 /obj/cable{
 	d1 = 2;
@@ -74152,14 +74093,11 @@
 /turf/simulated/floor/white,
 /area/station/science/teleporter)
 "vOz" = (
-/obj/decal/tile_edge/line/green{
-	dir = 4;
-	icon_state = "line1"
-	},
-/obj/machinery/power/apc/autoname_east,
 /obj/cable{
+	d2 = 8;
 	icon_state = "0-8"
 	},
+/obj/machinery/power/apc/autoname_east,
 /turf/simulated/floor/wood/five,
 /area/station/hydroponics/bay)
 "vOA" = (
@@ -74274,6 +74212,13 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
+"vQe" = (
+/obj/disposalpipe/segment{
+	dir = 4;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/floor/wood/five,
+/area/station/hydroponics/bay)
 "vQx" = (
 /obj/machinery/light/incandescent/netural,
 /obj/disposalpipe/segment/transport{
@@ -76445,6 +76390,18 @@
 /obj/decal/poster/wallsign/space,
 /turf/simulated/wall/auto/reinforced/jen/blue,
 /area/station/maintenance/inner/sw)
+"wwf" = (
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/disposalpipe/segment,
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/wood/five,
+/area/station/hydroponics/bay)
 "wwg" = (
 /obj/decal/tile_edge/line/black{
 	dir = 4;
@@ -79127,6 +79084,19 @@
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor,
 /area/station/hangar/main)
+"xkr" = (
+/obj/shrub{
+	desc = "It's probably not suspicious that this plant is not only still alive, but thriving.";
+	dir = 1;
+	icon = 'icons/obj/stationobjs.dmi';
+	icon_state = "plant";
+	name = "wood floor";
+	tag = "null"
+	},
+/turf/simulated/floor/wood{
+	icon_state = "wooden"
+	},
+/area/station/crew_quarters/barber_shop)
 "xks" = (
 /obj/machinery/manufacturer/robotics,
 /turf/simulated/floor/black,
@@ -79998,13 +79968,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/southeast)
-"xyX" = (
-/obj/cable{
-	icon_state = "2-4"
-	},
-/obj/disposalpipe/segment,
-/turf/simulated/floor/wood/five,
-/area/station/hydroponics/bay)
 "xzj" = (
 /turf/simulated/floor/carpet{
 	dir = 8;
@@ -129590,9 +129553,9 @@ sJC
 kea
 iba
 kHx
+kHx
+kHx
 mke
-mke
-nVl
 olP
 kHx
 txZ
@@ -129892,9 +129855,9 @@ sJC
 mwk
 iba
 kHx
-mke
-mke
-mke
+cYL
+kHx
+nVl
 mke
 xNi
 txZ
@@ -130194,9 +130157,9 @@ jLx
 mwk
 iba
 kHx
+kHx
+llm
 mke
-mke
-gNW
 mke
 kHx
 txZ
@@ -130495,12 +130458,12 @@ orn
 sJC
 gJz
 lBH
+mke
+mke
+mke
+mke
+mke
 kHx
-mke
-mke
-mke
-mke
-tHH
 wqJ
 vHl
 amI
@@ -130795,14 +130758,14 @@ rog
 mUk
 orn
 sJC
-wln
-aoH
-lDV
-rGc
-mru
-oqV
-eQI
-ebq
+pOG
+iba
+mke
+mke
+mke
+mke
+mke
+tHH
 wqJ
 yjy
 yjy
@@ -131097,14 +131060,14 @@ wSK
 oJP
 ksz
 mfs
-wqJ
-wqJ
-txZ
-txZ
-wqJ
-wqJ
-owU
-wqJ
+wln
+aoH
+lDV
+rGc
+mru
+oqV
+eQI
+ebq
 wqJ
 oMl
 qNn
@@ -131399,14 +131362,14 @@ mBB
 oJP
 orn
 mfs
-hWu
-gco
-tqm
-pGo
-qKS
-uug
-aNn
-hFD
+wqJ
+wqJ
+txZ
+txZ
+wqJ
+wqJ
+owU
+wqJ
 wqJ
 cLT
 qNn
@@ -131704,11 +131667,11 @@ mfs
 fTt
 lQi
 orX
+pGo
 jsg
-jsg
-xyX
-jdJ
-wqJ
+uug
+aNn
+hFD
 wqJ
 lkN
 lkN
@@ -132003,17 +131966,17 @@ vWw
 vWw
 eOR
 wqJ
-cZX
+pKl
 tYs
-eYZ
-smZ
-smZ
-ylR
-uQM
+vQe
+mrS
+nPX
+wwf
+jdJ
 wqJ
-cMr
-nDf
+wbd
 pCb
+xkr
 wbd
 mWL
 twO
@@ -132305,13 +132268,13 @@ lhr
 aSY
 fPD
 wqJ
-nbK
-cAw
-gSf
+swz
+smZ
+eYZ
+vwS
 nXk
-nXk
-jXf
-uob
+ylR
+uQM
 wqJ
 evx
 wCY
@@ -132607,13 +132570,13 @@ gRC
 hPy
 kwJ
 wqJ
-fKZ
+cZX
 eoQ
 iex
+jOM
 smZ
-lhS
 vOz
-iiX
+uob
 wqJ
 psA
 jmX
@@ -132909,7 +132872,7 @@ pgV
 pkT
 kSG
 wqJ
-wqJ
+nbK
 cBK
 gwE
 ucy
@@ -133210,7 +133173,7 @@ bzZ
 bzi
 cMy
 hYv
-dvR
+wqJ
 wqJ
 eSy
 wqJ
