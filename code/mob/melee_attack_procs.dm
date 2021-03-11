@@ -914,7 +914,7 @@
 			var/friendly_fire = 0
 			if (get_pod_wars_team(owner) == get_pod_wars_team(target))
 				friendly_fire = 1
-				message_admins(cur_team = get_pod_wars_team(M.current))
+				message_admins("[owner] just committed friendly fire against [target]!")
 
 			for (var/message in logs)
 				logTheThing("combat", owner, target, "[friendly_fire ? "FRIENDLY FIRE!":""][message] at [log_loc(owner)].")
