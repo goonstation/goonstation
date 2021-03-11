@@ -11691,7 +11691,6 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/chicken_nesting_box,
 /obj/disposalpipe/segment,
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
@@ -15753,10 +15752,6 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/nw)
-"etr" = (
-/obj/chicken_nesting_box,
-/turf/simulated/floor/grass/leafy,
-/area/station/ranch)
 "etH" = (
 /obj/table/reinforced/bar/auto{
 	name = "table"
@@ -40157,6 +40152,10 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 9;
+	icon_state = "xtra_bigstripe-corner2"
+	},
 /turf/simulated/floor/wood/five,
 /area/station/hydroponics/bay)
 "lQo" = (
@@ -44337,6 +44336,18 @@
 	},
 /turf/simulated/floor/orangeblack,
 /area/station/engine/elect)
+"ngk" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/disposal/small{
+	dir = 8
+	},
+/obj/disposalpipe/trunk,
+/turf/simulated/floor/grass/leafy,
+/area/station/ranch)
 "ngs" = (
 /obj/cable{
 	d1 = 4;
@@ -53190,6 +53201,10 @@
 /obj/decal/tile_edge/line/green{
 	dir = 1;
 	icon_state = "line1"
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 9;
+	icon_state = "xtra_bigstripe-corner2"
 	},
 /turf/simulated/floor/wood/five,
 /area/station/hydroponics/bay)
@@ -66874,10 +66889,10 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/machinery/disposal/small{
-	dir = 8
+/obj/submachine/chicken_incubator,
+/obj/item/reagent_containers/food/snacks/ingredient/egg{
+	rand_pos = 0
 	},
-/obj/disposalpipe/trunk,
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "tHb" = (
@@ -74857,19 +74872,6 @@
 	icon_state = "fred2"
 	},
 /area/station/security/quarters)
-"waw" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/submachine/chicken_incubator,
-/obj/item/reagent_containers/food/snacks/ingredient/egg{
-	rand_pos = 0
-	},
-/obj/disposalpipe/segment,
-/turf/simulated/floor/grass/leafy,
-/area/station/ranch)
 "wax" = (
 /obj/decal/tile_edge/line/purple{
 	dir = 9;
@@ -79241,6 +79243,7 @@
 /obj/machinery/light/incandescent/netural{
 	dir = 1
 	},
+/obj/chicken_nesting_box,
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "xmE" = (
@@ -129551,11 +129554,11 @@ kkV
 bAX
 ybG
 mfs
-mBB
-nzI
-ewc
 iTF
-etr
+mBB
+ewc
+nzI
+mBB
 rqW
 egd
 sJC
@@ -131666,9 +131669,9 @@ bAX
 ybG
 mfs
 tGW
-qrA
+ngk
 afz
-waw
+qrA
 dgp
 gcm
 gzz
