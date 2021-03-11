@@ -171,6 +171,7 @@
 	fitting = "bulb"
 	brightness = 1.4
 	var/state
+	base_state = "flamp"
 	icon_state = "flamp1"
 	wallmounted = 0
 
