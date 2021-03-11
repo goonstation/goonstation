@@ -51256,9 +51256,6 @@
 	},
 /area/station/crew_quarters/courtroom)
 "pju" = (
-/obj/grille/catwalk/jen/side{
-	dir = 4
-	},
 /obj/decal/cleanable/dirt/jen,
 /obj/grille/catwalk/jen,
 /turf/simulated/floor/plating/jen,
@@ -136829,11 +136826,11 @@ aUm
 tvN
 nnx
 nnx
-pju
 nnx
 nnx
 nnx
-pju
+nnx
+nnx
 nZF
 ujF
 ajk
