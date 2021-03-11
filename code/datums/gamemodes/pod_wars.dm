@@ -631,9 +631,8 @@ ABSTRACT_TYPE(/datum/ore_cluster)
 			return
 
 		for(var/datum/mind/mind in to_search)
-			var/mob/dead/observer/ghost = mind.current
-			if(istype(ghost) && ghost.client && !mind.dnr)
-				var/success = growclone(ghost, ghost.real_name, mind)
+			if((istype(mind.current, /mob/dead/observer) || isdead(mind.current)) && mind.current.client && !mind.dnr)
+				var/success = growclone(mind.current, mind.current.real_name, mind)
 				if (success && team)
 					SPAWN_DBG(1)
 						team.equip_player(src.occupant)
