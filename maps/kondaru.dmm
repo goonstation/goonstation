@@ -2289,15 +2289,20 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "aga" = (
-/obj/stool/chair{
-	dir = 8
-	},
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 8;
 	name = "autoname - SS13";
 	pixel_x = 10;
 	tag = ""
+	},
+/obj/item/paper{
+	info = "INDIGO RYE ENC_VIG wscxagsc wozxulepmp arvxkali lieheuwez eirmcsc twdme nklxvfc vrutjypxkof";
+	name = "odd note";
+	pixel_y = -5
+	},
+/obj/stool/chair{
+	dir = 8
 	},
 /turf/simulated/floor/caution/south,
 /area/station/maintenance/north)
@@ -3079,7 +3084,7 @@
 	icon_state = "4-8"
 	},
 /obj/firedoor_spawn,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/grey,
 /area/station/chapel/sanctuary)
 "ahZ" = (
 /obj/disposalpipe/junction/right/west,
@@ -23988,13 +23993,6 @@
 /area/station/hydroponics/bay)
 "bpD" = (
 /obj/machinery/vending/hydroponics,
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 6;
-	name = "autoname - SS13";
-	pixel_y = 20;
-	tag = ""
-	},
 /turf/simulated/floor/green/side{
 	dir = 5
 	},
@@ -25457,20 +25455,19 @@
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/engine)
 "buM" = (
-/obj/table/reinforced/auto,
-/obj/item/reagent_containers/food/snacks/chicken_feed_bag{
-	rand_pos = 1
+/obj/lattice{
+	dir = 10;
+	icon_state = "lattice-dir"
 	},
-/obj/item/reagent_containers/food/snacks/chicken_feed_bag{
-	rand_pos = 1
+/obj/machinery/light/runway_light/delay4,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 8;
+	name = "autoname - SS13";
+	pixel_x = 10;
+	tag = ""
 	},
-/obj/item/reagent_containers/food/snacks/chicken_feed_bag{
-	rand_pos = 1
-	},
-/obj/machinery/firealarm{
-	pixel_y = 24
-	},
-/turf/simulated/floor/dirt,
+/turf/space,
 /area/space)
 "buN" = (
 /obj/machinery/door/unpowered/wood/pyro{
@@ -26021,17 +26018,16 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/mining/staff_room)
 "bwZ" = (
-/obj/submachine/chicken_feed_grinder,
-/obj/item/reagent_containers/food/snacks/plant/corn{
-	doants = 0
+/obj/machinery/hydro_growlamp,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 6;
+	name = "autoname - SS13";
+	pixel_y = 20;
+	tag = ""
 	},
-/obj/machinery/light{
-	dir = 4;
-	layer = 9.1;
-	pixel_x = 10
-	},
-/turf/simulated/floor/dirt,
-/area/space)
+/turf/simulated/floor/grass,
+/area/station/hydroponics/bay)
 "bxa" = (
 /obj/disposalpipe/segment/bent/east,
 /obj/cable{
@@ -27131,9 +27127,6 @@
 	dir = 8
 	},
 /obj/disposalpipe/segment/bent/east,
-/obj/landmark/start{
-	name = "Rancher"
-	},
 /turf/simulated/floor/grasstodirt{
 	dir = 8
 	},
@@ -46463,9 +46456,12 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
 "gjq" = (
-/turf/simulated/floor/grasstodirt{
-	dir = 5
+/obj/machinery/light{
+	dir = 4;
+	layer = 9.1;
+	pixel_x = 10
 	},
+/turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "gjD" = (
 /obj/cable{
@@ -47444,8 +47440,9 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/sw)
 "hhu" = (
-/obj/disposalpipe/junction/middle/north,
-/turf/simulated/floor/dirt,
+/turf/simulated/floor/grasstodirt{
+	dir = 5
+	},
 /area/station/ranch)
 "hhI" = (
 /obj/lattice{
@@ -47994,12 +47991,6 @@
 /area/station/security/checkpoint/sec_foyer{
 	name = "Secure Release Foyer"
 	})
-"iaD" = (
-/obj/table/auto,
-/obj/item/storage/box/evidence,
-/obj/item/storage/box/evidence,
-/turf/simulated/floor,
-/area/station/routing/security)
 "ibQ" = (
 /obj/cable{
 	d1 = 1;
@@ -48484,6 +48475,10 @@
 	},
 /obj/cable{
 	icon_state = "0-8"
+	},
+/obj/machinery/light_switch/east,
+/obj/machinery/firealarm{
+	pixel_y = 24
 	},
 /turf/simulated/floor/redblack{
 	dir = 8
@@ -49869,6 +49864,11 @@
 /obj/machinery/computer/robot_module_rewriter,
 /obj/decal/tile_edge/stripe/big{
 	dir = 8
+	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 1;
+	name = "autoname - SS13"
 	},
 /turf/simulated/floor/grey,
 /area/station/medical/robotics)
@@ -52370,6 +52370,12 @@
 	dir = 1;
 	pixel_y = 21
 	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 0;
+	name = "autoname - SS13";
+	pixel_y = 20
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
 "nKN" = (
@@ -52769,6 +52775,9 @@
 	})
 "ogv" = (
 /obj/stool/bench/red,
+/obj/landmark/start{
+	name = "Security Officer"
+	},
 /turf/simulated/floor/red/side{
 	dir = 8
 	},
@@ -52819,6 +52828,9 @@
 /area/station/bridge)
 "oma" = (
 /obj/stool/bench/red,
+/obj/landmark/start{
+	name = "Security Officer"
+	},
 /turf/simulated/floor/red/side{
 	dir = 4
 	},
@@ -53006,6 +53018,18 @@
 	dir = 8
 	},
 /area/station/routing/security)
+"ovS" = (
+/obj/disposalpipe/segment/brig{
+	dir = 1
+	},
+/obj/machinery/flasher/portable,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/red/side{
+	dir = 8
+	},
+/area/station/security/secwing)
 "ovZ" = (
 /obj/submachine/chef_sink/chem_sink{
 	dir = 1
@@ -54994,6 +55018,9 @@
 /obj/stool/bench/red,
 /obj/disposalpipe/segment/brig{
 	dir = 8
+	},
+/obj/landmark/start{
+	name = "Security Officer"
 	},
 /turf/simulated/floor/red/side{
 	dir = 8
@@ -57722,17 +57749,9 @@
 /turf/simulated/floor/red,
 /area/station/medical/medbay)
 "ury" = (
-/obj/disposalpipe/segment/brig{
-	dir = 1
-	},
-/obj/machinery/flasher/portable,
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/red/side{
-	dir = 8
-	},
-/area/station/security/secwing)
+/obj/disposalpipe/junction/middle/north,
+/turf/simulated/floor/dirt,
+/area/station/ranch)
 "urY" = (
 /obj/storage/secure/closet/command/captain,
 /obj/cable{
@@ -58669,6 +58688,12 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/bridge/captain)
+"vDP" = (
+/obj/table/auto,
+/obj/item/storage/box/evidence,
+/obj/item/storage/box/evidence,
+/turf/simulated/floor,
+/area/station/routing/security)
 "vEt" = (
 /obj/disposalpipe/segment/transport,
 /obj/cable{
@@ -99619,7 +99644,7 @@ aci
 aaa
 aaa
 aeK
-afI
+avz
 aho
 ait
 ajo
@@ -110837,8 +110862,8 @@ aaa
 aaa
 aaa
 aaa
-buM
-bwZ
+aaa
+aaa
 aaa
 abl
 aaa
@@ -111463,7 +111488,7 @@ bAp
 eaI
 eaI
 eaI
-hhu
+ury
 tah
 xmr
 bDA
@@ -111764,7 +111789,7 @@ buI
 kax
 enu
 eGO
-gjq
+hhu
 bAy
 buI
 bCy
@@ -111785,7 +111810,7 @@ bGx
 oKm
 bGx
 bGx
-iaD
+vDP
 mcO
 cab
 drZ
@@ -112302,7 +112327,7 @@ aaa
 aaa
 aeG
 aaJ
-cpp
+buM
 aaa
 aaa
 aaa
@@ -113273,7 +113298,7 @@ cpr
 buI
 bBA
 bxc
-emI
+gjq
 ltn
 bAz
 tah
@@ -114500,7 +114525,7 @@ bQp
 yfk
 bTj
 ooa
-ury
+ovS
 lsh
 gLk
 qGc
@@ -117796,7 +117821,7 @@ qsw
 pvj
 bna
 boo
-jHF
+bwZ
 pJk
 pJk
 cpw
