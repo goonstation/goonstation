@@ -532,6 +532,7 @@
 		name = "Swipe"
 		desc = "Attack with a wide swing."
 		var/swipe_color
+		var/ignition = false	//If true, the swipe will ignite stuff in it's reach.
 
 		onAdd()
 			if(master)
@@ -539,6 +540,10 @@
 				var/obj/item/toy/sword/saber = master
 				if (istype(saber))
 					swipe_color = get_hex_color_from_blade(saber.bladecolor)
+				var/obj/item/syndicate_destruction_system/sds = master
+				if (istype(sds))
+					swipe_color = "#FFFBCC"
+					ignition = true
 			return
 
 				//Sampled these hex colors from each c-saber sprite.
@@ -597,10 +602,22 @@
 							A.attackby(master, user, params, 1)
 							attacked += A
 							hit = 1
+					if(ignition)
+						T.hotspot_expose(3000,1)
+						for(var/A in T)
+							if(ismob(A))
+								var/mob/M = A
+								M.changeStatus("burning", 8 SECONDS)
+							else if(iscritter(A))
+								var/obj/critter/crit = A
+								crit.blob_act(8) //REMOVE WHEN WE ADD BURNING OBJCRITTERS
 
 				afterUse(user)
 				if (!hit)
-					playsound(get_turf(master), 'sound/effects/swoosh.ogg', 50, 0)
+					if (!ignition)
+						playsound(get_turf(master), "sound/effects/swoosh.ogg", 50, 0)
+					else
+						playsound(get_turf(master), "sound/effects/flame.ogg", 50, 0)
 			return
 
 		csaber //no stun and less damage than normal csaber hit ( see sword/attack() )

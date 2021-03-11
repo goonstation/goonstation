@@ -42138,14 +42138,7 @@
 /turf/unsimulated/floor/red,
 /area/syndicate_station/battlecruiser)
 "cat" = (
-/obj/decal/fakeobjects/firelock_broken{
-	density = 1;
-	desc = "Rust has rendered this airlock useless.";
-	icon = 'icons/obj/doors/Doormaint.dmi';
-	icon_state = "door_closed";
-	name = "rusted airlock";
-	opacity = 1
-	},
+/obj/machinery/door/airlock/maintenance,
 /turf/unsimulated/floor,
 /area/meat_derelict/entry)
 "cau" = (
@@ -82660,6 +82653,13 @@
 	},
 /turf/unsimulated/floor/carpet/red/fancy/narrow/ne,
 /area/centcom/offices/sovexe)
+"fiv" = (
+/obj/table/auto,
+/obj/item/clothing/mask/cigarette/cigarillo/juicer/exploding,
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/meat_derelict/guts)
 "fmD" = (
 /obj/machinery/door/unpowered/wood{
 	icon = 'icons/obj/doors/door_office.dmi';
@@ -82961,6 +82961,12 @@
 	dir = 9
 	},
 /area/ship_interior/cruisertest)
+"gDC" = (
+/obj/iomoon_puzzle/meat_ganglion{
+	id = "meatland_third"
+	},
+/turf/unsimulated/floor/setpieces/bloodfloor,
+/area/meat_derelict/guts)
 "gGM" = (
 /turf/unsimulated/floor/void/channel,
 /area/adventure/channel/teleport)
@@ -83081,6 +83087,14 @@
 	icon_state = "red2"
 	},
 /area/afterlife/bar)
+"hmD" = (
+/obj/landmark{
+	name = "pit_meatland"
+	},
+/turf/unsimulated/floor/setpieces/bloodfloor{
+	icon_state = "bloodfloor_3"
+	},
+/area/meat_derelict/guts)
 "hnz" = (
 /obj/item/reagent_containers/food/snacks/plant/melon/bowling{
 	pixel_x = 9;
@@ -83192,6 +83206,15 @@
 	},
 /turf/unsimulated/floor/carpet/purple/fancy/narrow/T_south,
 /area/centcom/offices/rodney)
+"hHZ" = (
+/obj/iomoon_puzzle/ancient_robot_door/meat{
+	dir = 4;
+	tag = "meatland_third"
+	},
+/turf/unsimulated/floor/setpieces/bloodfloor{
+	icon_state = "bloodfloor_3"
+	},
+/area/meat_derelict/guts)
 "hKB" = (
 /obj/table/auto,
 /obj/machinery/light/small/iomoon{
@@ -83452,6 +83475,15 @@
 /turf/space,
 /turf/unsimulated/floor/caution/north,
 /area/hospital/samostrel)
+"iLT" = (
+/obj/machinery/door/poddoor/blast/single{
+	desc = "A security blast door.  Labeling indicates that it was installed 'in case the teleportation experiment starts bringing in Draculas.' There's probably a control for it somewhere.";
+	dir = 1;
+	id = "meatstation_wrath";
+	name = "Safety Interlock"
+	},
+/turf/unsimulated/floor,
+/area/meat_derelict/guts)
 "iMA" = (
 /obj/wingrille_spawn/auto,
 /turf/unsimulated/floor/shuttle{
@@ -83795,6 +83827,9 @@
 	dir = 10
 	},
 /area/centcom/offices/cogwerks)
+"jWW" = (
+/turf/unsimulated/wall/setpieces/bloodwall,
+/area/meat_derelict/entry)
 "jYh" = (
 /obj/decal/garland{
 	pixel_y = 32
@@ -83867,6 +83902,13 @@
 "kfa" = (
 /turf/unsimulated/floor/void/channel,
 /area/adventure/channel/flingy)
+"khy" = (
+/obj/machinery/door/unpowered/martian/meat,
+/turf/unsimulated/floor/setpieces/bloodfloor{
+	icon_state = "bloodfloor_2";
+	name = "Fleshy Floor"
+	},
+/area/meat_derelict/guts)
 "khH" = (
 /obj/item/organ/eye/left{
 	pixel_x = -4;
@@ -84345,6 +84387,14 @@
 	},
 /turf/unsimulated/floor/carpet/red/fancy/narrow/northsouth,
 /area/centcom/offices/sovexe)
+"lPg" = (
+/obj/table/auto,
+/obj/item/paper{
+	info = "kinda smells like tacos back here.<br><br>wish i knew how to get out though.";
+	name = "Paper"
+	},
+/turf/unsimulated/floor,
+/area/meat_derelict/guts)
 "lRg" = (
 /obj/stool/chair/office/syndie,
 /turf/unsimulated/floor/wood/two,
@@ -84580,6 +84630,12 @@
 /obj/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
 /area/shuttle/merchant_shuttle/diner_centcom)
+"mWQ" = (
+/obj/landmark{
+	name = "pit_meatland"
+	},
+/turf/unsimulated/floor/setpieces/bloodfloor,
+/area/meat_derelict/guts)
 "mXf" = (
 /obj/item/sticker/gold_star{
 	pixel_x = 11;
@@ -85355,6 +85411,14 @@
 /area/centcom/offices{
 	icon_state = "blue"
 	})
+"pux" = (
+/obj/meatlight{
+	brightness = 4
+	},
+/turf/unsimulated/floor/setpieces/bloodfloor{
+	icon_state = "bloodfloor_3"
+	},
+/area/meat_derelict/guts)
 "puF" = (
 /obj/decal/fakeobjects/pipe{
 	desc = "It won't budge.";
@@ -85961,6 +86025,17 @@
 	icon_state = "rootfloor_2"
 	},
 /area/centcom/offices/marknstein)
+"rpQ" = (
+/obj/machinery/door_control/oneshot{
+	desc = "A remote override panel for a blast door.";
+	icon_state = "doorctrl1";
+	id = "meatstation_wrath";
+	name = "override panel-'deep storage'";
+	pixel_x = 24;
+	pixel_y = 8
+	},
+/turf/unsimulated/floor,
+/area/meat_derelict/guts)
 "rqw" = (
 /turf/unsimulated/floor/shuttle{
 	dir = 8;
@@ -85974,6 +86049,12 @@
 	},
 /turf/unsimulated/outdoors/grass,
 /area/shuttle/merchant_shuttle/left_centcom/destiny)
+"rtM" = (
+/obj/crevice/meatland,
+/turf/unsimulated/floor/setpieces/bloodfloor{
+	icon_state = "bloodfloor_3"
+	},
+/area/meat_derelict/guts)
 "rup" = (
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
@@ -86041,6 +86122,15 @@
 	},
 /turf/unsimulated/floor/void/channel,
 /area/adventure/channel)
+"rHo" = (
+/obj/storage/crate/wooden{
+	icon_state = "woodencrate6";
+	name = "wooden crate - unfit for consumption"
+	},
+/obj/random_item_spawner/organs/bloody/one_to_three,
+/obj/random_item_spawner/organs/bloody/one_to_three,
+/turf/unsimulated/floor,
+/area/meat_derelict/guts)
 "rHF" = (
 /turf/unsimulated/wall/setpieces/leadwall{
 	dir = 1
@@ -86570,6 +86660,15 @@
 	icon_state = "Stairs_wide"
 	},
 /area/centcom)
+"ttO" = (
+/obj/critter/zombie/meatmonaut{
+	desc = "That suit is decidedly not Juicer, but then again who knows what you can salvage in the fleshier parts of the frontier.";
+	name = "Grill Scientist"
+	},
+/turf/unsimulated/floor/setpieces/bloodfloor{
+	icon_state = "bloodfloor_3"
+	},
+/area/meat_derelict/guts)
 "ttX" = (
 /obj/machinery/light/small/floor,
 /turf/unsimulated/floor/shuttle{
@@ -86717,6 +86816,12 @@
 	icon_state = "shore-38"
 	},
 /area/titlescreen)
+"usH" = (
+/obj/machinery/vending/meat,
+/turf/unsimulated/floor/setpieces/bloodfloor{
+	icon_state = "bloodfloor_3"
+	},
+/area/meat_derelict/guts)
 "utS" = (
 /obj/machinery/sleeper/compact{
 	dir = 4
@@ -86924,6 +87029,15 @@
 	dir = 8
 	},
 /area/shuttle/escape/centcom/cogmap2)
+"vgD" = (
+/obj/landmark{
+	name = "pit_meatland"
+	},
+/turf/unsimulated/floor/setpieces/bloodfloor{
+	icon_state = "bloodfloor_2";
+	name = "Fleshy Floor"
+	},
+/area/meat_derelict/guts)
 "vhA" = (
 /obj/stool/chair/office/green{
 	desc = "This is a very cool gamer chair, and definitely not just a green office chair.";
@@ -86988,6 +87102,12 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/escape/centcom/donut3)
+"vss" = (
+/obj/critter/monster_door,
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/meat_derelict/guts)
 "vum" = (
 /obj/machinery/door/airlock/gannets/glass,
 /obj/decal/tile_edge/line/green{
@@ -148977,19 +149097,19 @@ dkH
 dkG
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-cnT
+bZd
+bZd
+bZd
+bZd
+bZd
+bZd
+bZd
+bZd
+cei
+cei
+bZd
+cei
+jWW
 cac
 cac
 cch
@@ -149279,19 +149399,19 @@ dkH
 dkG
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-cnT
+bYN
+clZ
+vgD
+bZs
+cdF
+cdF
+cdF
+bYN
+rtM
+cdd
+cdd
+cdd
+jWW
 cac
 caX
 cbB
@@ -149581,19 +149701,19 @@ dkH
 dkG
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-cnT
+bZd
+bZs
+bZs
+bZs
+bYN
+bZs
+cdF
+hHZ
+cdd
+cdd
+hmD
+cdd
+jWW
 cac
 caX
 cbB
@@ -149883,19 +150003,19 @@ dkH
 dkG
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-cnT
+bZd
+bZs
+ckP
+bYN
+bYN
+cdF
+ckP
+bYN
+bYN
+cdd
+cdF
+cfd
+jWW
 cac
 caX
 cci
@@ -150185,19 +150305,19 @@ dkH
 dkG
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-cnT
+clZ
+bZs
+bYN
+clZ
+cdd
+cdd
+bYN
+bYN
+clZ
+gDC
+fiv
+cae
+cac
 cac
 caX
 cbB
@@ -150487,19 +150607,19 @@ dkH
 dkG
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-cnT
-cnT
+bZd
+khy
+bYN
+bZs
+cdd
+bYN
+bYN
+pux
+cba
+cba
+cba
+cba
+cac
 cac
 cbz
 ccj
@@ -150789,18 +150909,18 @@ dkH
 dkG
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-cnT
+bZd
+bZs
+bYN
+bYN
+cdd
+cdd
+cdd
+cdd
+cba
+rHo
+cej
+lPg
 cac
 cac
 cbA
@@ -151091,18 +151211,18 @@ dkH
 dkG
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-cac
+bZd
+cdF
+cdF
+bYN
+bYN
+cdd
+cay
+cay
+vss
+cej
+cej
+cba
 cac
 caX
 cbB
@@ -151393,18 +151513,18 @@ dkH
 dkG
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-cac
+bZd
+cdF
+mWQ
+ttO
+bYN
+usH
+cay
+cay
+cba
+rpQ
+cej
+iLT
 cat
 caX
 cbB
@@ -151695,18 +151815,18 @@ dkH
 dkG
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-cac
+bZd
+bZd
+bZd
+cei
+cei
+cei
+cba
+cba
+cba
+cba
+cba
+cba
 cac
 caY
 cbB

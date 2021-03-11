@@ -4489,6 +4489,13 @@
 /obj/storage/closet/emergency,
 /turf/simulated/floor/black,
 /area/station/medical/medbay)
+"aXX" = (
+/obj/item/storage/pill_bottle/cyberpunk{
+	pixel_x = -8;
+	pixel_y = -7
+	},
+/turf/simulated/floor/plating/jen,
+/area/station/maintenance/outer/ne)
 "aXY" = (
 /obj/decal/poster/wallsign/warning3{
 	desc = "'Unauthorized personnel who pass this point will be fired upon by AI-controlled turrets.'";
@@ -8690,6 +8697,10 @@
 	pixel_x = -9;
 	pixel_y = 7
 	},
+/obj/item/storage/pill_bottle/cyberpunk{
+	pixel_x = 4;
+	pixel_y = 4
+	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/east)
 "clC" = (
@@ -11398,7 +11409,14 @@
 "dcW" = (
 /obj/table/reinforced/auto,
 /obj/machinery/cashreg{
-	name = "Boxing ring credit transfer device"
+	name = "Boxing ring credit transfer device";
+	pixel_y = 10
+	},
+/obj/item/clothing/glasses/sunglasses/tanning{
+	pixel_y = 2
+	},
+/obj/item/clothing/glasses/sunglasses/tanning{
+	pixel_y = -2
 	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
@@ -12005,6 +12023,10 @@
 	layer = 2.5;
 	name = "donut ladder";
 	pixel_y = 32
+	},
+/obj/item/basketball{
+	desc = "Something beautiful overwhelms you when you look at this ball.";
+	name = "barkley's basketball"
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/nw)
@@ -16157,6 +16179,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/cable,
 /obj/disposalpipe/segment{
 	dir = 4
 	},
@@ -17640,6 +17663,14 @@
 /obj/table/reinforced/bar/auto{
 	name = "table"
 	},
+/obj/item/matchbook{
+	pixel_x = -7;
+	pixel_y = 6
+	},
+/obj/item/matchbook{
+	pixel_x = 4;
+	pixel_y = 4
+	},
 /turf/simulated/floor/carpet{
 	dir = 10;
 	icon_state = "fred2"
@@ -18576,6 +18607,12 @@
 	},
 /turf/simulated/floor/specialroom/arcade,
 /area/station/science/artifact)
+"fkC" = (
+/obj/decal/cleanable/dirt/jen,
+/obj/decal/cleanable/rust/jen,
+/obj/item/device/flyswatter,
+/turf/simulated/floor/plating/jen,
+/area/station/maintenance/inner/se)
 "fkZ" = (
 /obj/cable{
 	d1 = 1;
@@ -21225,7 +21262,8 @@
 /obj/table/reinforced/auto,
 /obj/machinery/phone,
 /obj/item/clothing/head/helmet/camera/security{
-	pixel_x = 14
+	pixel_x = -7;
+	pixel_y = -5
 	},
 /turf/simulated/floor/red,
 /area/station/security/main)
@@ -22700,6 +22738,28 @@
 	dir = 5
 	},
 /area/station/chapel/sanctuary)
+"gwZ" = (
+/obj/storage/closet/dresser,
+/obj/item/clothing/under/jersey,
+/obj/item/clothing/under/jersey,
+/obj/item/clothing/under/jersey,
+/obj/item/clothing/under/jersey/black,
+/obj/item/clothing/under/jersey/black,
+/obj/item/clothing/under/jersey/black,
+/obj/item/clothing/under/jersey/blue,
+/obj/item/clothing/under/jersey/blue,
+/obj/item/clothing/under/jersey/blue,
+/obj/item/clothing/under/jersey/green,
+/obj/item/clothing/under/jersey/green,
+/obj/item/clothing/under/jersey/green,
+/obj/item/clothing/under/jersey/purple,
+/obj/item/clothing/under/jersey/purple,
+/obj/item/clothing/under/jersey/purple,
+/obj/item/clothing/under/jersey/red,
+/obj/item/clothing/under/jersey/red,
+/obj/item/clothing/under/jersey/red,
+/turf/simulated/floor/wood,
+/area/station/crew_quarters/fitness)
 "gxi" = (
 /obj/machinery/vending/coffee,
 /turf/simulated/floor/carpet/arcade,
@@ -24001,6 +24061,10 @@
 	name = "Artifact Lab Pad"
 	},
 /obj/disposalpipe/segment,
+/obj/item/cargotele{
+	pixel_x = 5;
+	pixel_y = 8
+	},
 /turf/simulated/floor/plating/jen,
 /area/station/science/artifact)
 "gTo" = (
@@ -27481,6 +27545,14 @@
 	},
 /turf/simulated/wall/auto/supernorn/wood,
 /area/station/crew_quarters/sauna)
+"hVo" = (
+/obj/machinery/phone/wall{
+	pixel_y = 30
+	},
+/turf/simulated/floor/bluewhite/corner{
+	dir = 8
+	},
+/area/station/crew_quarters/pool)
 "hVw" = (
 /turf/simulated/floor/plating/airless,
 /area/space)
@@ -28013,6 +28085,9 @@
 	},
 /obj/decal/cleanable/dirt/jen,
 /obj/decal/cleanable/rust/jen,
+/obj/item/storage/pill_bottle/cyberpunk{
+	pixel_x = 7
+	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/ne)
 "idw" = (
@@ -31906,6 +31981,10 @@
 "jrK" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/decal/cleanable/rust/jen,
+/obj/item/storage/pill_bottle/cyberpunk{
+	pixel_x = -4;
+	pixel_y = 3
+	},
 /obj/reagent_dispensers/beerkeg,
 /obj/machinery/light/small/sticky{
 	dir = 1
@@ -36457,6 +36536,21 @@
 "kOp" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/decal/cleanable/rust/jen,
+/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/bat{
+	pixel_x = 9;
+	pixel_y = 7
+	},
+/obj/item/clothing/mask/batman{
+	pixel_x = -5
+	},
+/obj/item/clothing/shoes/thong{
+	pixel_x = -7;
+	pixel_y = 8
+	},
+/obj/item/staple_gun/red{
+	pixel_x = 8;
+	pixel_y = -2
+	},
 /obj/decal/poster/wallsign/fuck1{
 	pixel_y = 32
 	},
@@ -36673,6 +36767,10 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/power/data_terminal,
+/obj/machinery/recharger/wall/sticky{
+	dir = 4;
+	pixel_x = 23
+	},
 /turf/simulated/floor/specialroom/arcade,
 /area/station/science/artifact)
 "kSb" = (
@@ -36947,6 +37045,9 @@
 	pixel_y = 2
 	},
 /obj/decal/cleanable/dirt/jen,
+/obj/item/storage/pill_bottle/cyberpunk{
+	pixel_x = 8
+	},
 /turf/simulated/floor/black/grime,
 /area/station/maintenance/outer/sw)
 "kXZ" = (
@@ -38314,6 +38415,17 @@
 	},
 /turf/simulated/floor/blue,
 /area/station/medical/medbay/treatment)
+"lrO" = (
+/obj/machinery/guardbot_dock,
+/obj/decal/mule/beacon/no_auto_dropoff_spawn,
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/machinery/bot/guardbot/ranger,
+/turf/simulated/floor/circuit/purple,
+/area/station/science/bot_storage)
 "lsr" = (
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/red/side{
@@ -39825,7 +39937,7 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/nw)
 "lNT" = (
-/obj/machinery/computer/barcode/qm/donut3{
+/obj/machinery/computer/barcode/qm/no_belthell{
 	dir = 4
 	},
 /turf/simulated/floor/yellow,
@@ -47018,6 +47130,10 @@
 	dir = 8
 	},
 /area/station/hallway/primary/west)
+"nXb" = (
+/obj/item/clothing/under/jersey/random,
+/turf/simulated/floor/carpet/red/fancy/innercorner/omni,
+/area/station/maintenance/outer/north)
 "nXe" = (
 /obj/cable{
 	d2 = 4;
@@ -47817,6 +47933,10 @@
 /area/station/maintenance/inner/se)
 "olz" = (
 /obj/table/wood/round/auto,
+/obj/item/storage/box/trackimp_kit2{
+	pixel_x = -5;
+	pixel_y = 1
+	},
 /obj/item/device/radio/intercom/security{
 	pixel_x = 1
 	},
@@ -47879,6 +47999,10 @@
 	},
 /obj/item/paper/book/dwainedummies{
 	pixel_x = 9;
+	pixel_y = 7
+	},
+/obj/item/peripheral/prize_vendor{
+	pixel_x = 1;
 	pixel_y = 7
 	},
 /obj/item/toy/gooncode{
@@ -49947,9 +50071,16 @@
 /area/station/maintenance/outer/sw)
 "oQD" = (
 /obj/decal/cleanable/dirt,
+/obj/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
 /obj/disposalpipe/segment{
 	dir = 4
 	},
+/obj/machinery/power/data_terminal,
+/obj/machinery/guardbot_dock,
+/obj/machinery/bot/guardbot/safety,
 /turf/simulated/floor/black/grime,
 /area/station/routing/depot)
 "oQH" = (
@@ -56526,6 +56657,23 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/nw)
+"qIk" = (
+/obj/item/clothing/under/suit/dress{
+	desc = "A black dress. Very formal.";
+	name = "black dress"
+	},
+/obj/item/clothing/head/mime_beret,
+/obj/item/clothing/head/mime_bowler,
+/obj/item/clothing/under/misc/mime,
+/obj/item/clothing/under/misc/mime/alt,
+/obj/item/clothing/suit/suspenders,
+/obj/item/clothing/suit/scarf,
+/obj/storage/closet/dresser{
+	anchored = 1;
+	name = "costume dresser"
+	},
+/turf/simulated/floor/specialroom/chapel,
+/area/station/chapel/sanctuary)
 "qIw" = (
 /turf/simulated/floor/white,
 /area/station/security/quarters)
@@ -59820,6 +59968,9 @@
 /obj/item/reagent_containers/food/drinks/bottle/wine,
 /obj/table/auto,
 /obj/decal/cleanable/dirt,
+/obj/item/storage/pill_bottle/cyberpunk{
+	pixel_x = 9
+	},
 /turf/simulated/floor/specialroom/freezer,
 /area/station/maintenance/inner/sw)
 "rEc" = (
@@ -60625,6 +60776,11 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/cloner)
+"rQk" = (
+/obj/decal/cleanable/dirt/jen,
+/obj/item/rubber_hammer,
+/turf/simulated/floor/plating/jen,
+/area/station/maintenance/inner/east)
 "rQl" = (
 /obj/lattice{
 	icon_state = "lattice-dir"
@@ -65799,6 +65955,7 @@
 "tvC" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/decal/cleanable/rust/jen,
+/obj/item/clothing/mask/moustache/safe,
 /turf/simulated/floor/plating/jen,
 /area/station/science/lobby)
 "tvD" = (
@@ -70187,6 +70344,7 @@
 /obj/decal/tile_edge/line/yellow{
 	icon_state = "line1"
 	},
+/obj/machinery/recharge_station,
 /turf/simulated/floor/white/checker{
 	dir = 6
 	},
@@ -73478,6 +73636,7 @@
 /area/station/crew_quarters/courtroom)
 "vIK" = (
 /obj/storage/secure/closet/security/forensics,
+/obj/item/camera_test,
 /turf/simulated/floor/wood/seven,
 /area/station/security/detectives_office)
 "vIN" = (
@@ -81679,6 +81838,10 @@
 /turf/simulated/floor/wood/six,
 /area/station/library/reading2)
 "ydb" = (
+/obj/decal/tile_edge/line/yellow{
+	dir = 9;
+	icon_state = "line1"
+	},
 /obj/cable{
 	d1 = 1;
 	d2 = 8;
@@ -81985,6 +82148,10 @@
 /obj/table/auto,
 /obj/machinery/light/small/sticky{
 	dir = 1
+	},
+/obj/item/storage/pill_bottle/cyberpunk{
+	pixel_x = -1;
+	pixel_y = 1
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/north)
@@ -99549,7 +99716,7 @@ uyp
 jkx
 jkx
 jkx
-ilS
+hVo
 uyp
 awz
 ilS
@@ -121086,7 +121253,7 @@ hdj
 tph
 bko
 tph
-aaz
+qIk
 lKj
 hdj
 mpU
@@ -122282,7 +122449,7 @@ euw
 dHo
 xYy
 oHX
-wxG
+nXb
 raK
 wxG
 wrL
@@ -124121,7 +124288,7 @@ jKb
 xFf
 nUM
 kPy
-pwN
+gwZ
 iJM
 eFg
 ine
@@ -131116,7 +131283,7 @@ iwc
 qpK
 wBl
 vTJ
-aeN
+rQk
 bpe
 ndN
 hTw
@@ -131139,7 +131306,7 @@ dws
 hvP
 rfG
 rfG
-xfq
+fkC
 nsd
 dCa
 eOq
@@ -132540,7 +132707,7 @@ rdj
 rdj
 aUm
 aLW
-jba
+aXX
 jba
 jba
 kkV
@@ -133568,7 +133735,7 @@ fOP
 fOP
 wiY
 dXn
-fOP
+lrO
 fOP
 fOP
 vzs
