@@ -16096,7 +16096,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/wall/auto/supernorn,
+/turf/space/fluid,
 /area/station/ranch)
 "aLE" = (
 /obj/disposalpipe/segment/mail,
@@ -46653,13 +46653,6 @@
 	},
 /area/station/hallway/primary/west)
 "guI" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 4;
-	name = "autoname - SS13";
-	pixel_x = -10;
-	tag = ""
-	},
 /obj/railing/purple/reinforced{
 	dir = 1
 	},
@@ -46898,6 +46891,12 @@
 "iYv" = (
 /obj/railing/orange/reinforced{
 	dir = 1
+	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 1;
+	name = "autoname  - SS13";
+	tag = ""
 	},
 /turf/simulated/floor/grasstodirt{
 	dir = 1
