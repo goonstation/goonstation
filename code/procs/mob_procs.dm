@@ -794,7 +794,7 @@
 	var/see_special = 0 // Just a pass-through. Game mode-specific stuff is handled further down in the proc.
 	var/see_everything = 0
 	var/datum/gang/gang_to_see = null
-	var/datum/pod_wars_team/PWT_to_see = null
+	var/PWT_to_see = null
 
 	if (isadminghost(src))
 		see_everything = 1
@@ -818,11 +818,10 @@
 				gang_to_see = src.mind.gang
 		//mostly took this from gang. I'm sure it can be better though, sorry. -Kyle
 		if (istype(ticker.mode, /datum/game_mode/pod_wars))
-			var/datum/game_mode/pod_wars/PW = ticker.mode
-			if (src.mind.special_role == "NanoTrasen")
-				PWT_to_see = PW.team_NT
-			else if (src.mind.special_role == "Syndicate")
-				PWT_to_see = PW.team_SY
+			// var/datum/game_mode/pod_wars/PW = ticker.mode
+#ifdef MAP_OVERRIDE_POD_WARS
+			PWT_to_see = get_pod_wars_team(src)
+#endif
 		if (issilicon(src)) // We need to look for borged antagonists too.
 			var/mob/living/silicon/S = src
 			if (src.mind.special_role == "syndicate robot" || (S.syndicate && !S.dependent)) // No AI shells.
@@ -1033,11 +1032,15 @@
 		if (PWT_to_see || see_everything)
 			for (var/datum/mind/M in (mode.team_NT.members + mode.team_SY.members))
 				if (M.current)
+					var/cur_team
+#ifdef MAP_OVERRIDE_POD_WARS
+					cur_team = get_pod_wars_team(M.current)
+#endif
 					if (!see_everything && isobserver(M.current)) continue
-					if (PWT_to_see == mode.team_NT)
+					if (PWT_to_see == cur_team)//NANOTRASEN
 						var/I = image(pod_wars_NT, loc = M.current)
 						can_see.Add(I)
-					else if (PWT_to_see == mode.team_SY)
+					else if (PWT_to_see == cur_team)//SYNDICATE
 						var/I = image(pod_wars_SY, loc = M.current)
 						can_see.Add(I)
 

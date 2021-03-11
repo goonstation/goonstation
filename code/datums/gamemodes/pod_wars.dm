@@ -919,12 +919,23 @@ ABSTRACT_TYPE(/obj/machinery/macrofab/pod_wars)
 	desc = "A sophisticated machine that fabricates short-range emergency pods from a nearby reserve of supplies."
 	createdObject = /obj/machinery/vehicle/arrival_pod
 	itemName = "emergency pod"
+	var/team = 0
 
+#ifdef MAP_OVERRIDE_POD_WARS
+	attack_hand(var/mob/user as mob)
+		if (get_pod_wars_team(user) != team)
+			boutput(user, "<span class='alert'>This machine's design makes no sense to you, you can't figure out how to use it!</span>")
+			return
+
+		..()
+#endif
 	nanotrasen
 		createdObject = /obj/machinery/vehicle/pod_wars_dingy/nanotrasen
+		team = 1
 
 	syndicate
 		createdObject = /obj/machinery/vehicle/pod_wars_dingy/syndicate
+		team = 2
 
 ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 /obj/machinery/vehicle/pod_wars_dingy
@@ -1780,3 +1791,13 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 	"oculine", "mannitol", "penteticacid", "styptic_powder", "saline",\
 	"salicylic_acid", "blood", "synthflesh",\
 	"menthol", "antihistamine", "smelling_salt")
+
+#ifdef MAP_OVERRIDE_POD_WARS
+//return 1 for NT, 2 for SY
+/proc/get_pod_wars_team(var/mob/user)
+	var/user_team_string = user?.mind?.special_role
+	if (user_team_string == "NanoTrasen")
+		return TEAM_NANOTRASEN
+	else if (user_team_string == "Syndicate")
+		return TEAM_SYNDICATE
+#endif
