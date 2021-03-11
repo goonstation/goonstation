@@ -1774,6 +1774,17 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 	amount = 50
 	dispense_rate = 5 SECONDS
 
+/obj/item_dispenser/bandage
+	name = "bandage dispenser"
+	desc = "A storage container that easily dispenses fresh bandage. It can be refilled with bandage."
+	icon_state = "dispenser_id"
+	filled_icon_state = "dispenser_id"
+	deposit_type = null
+	withdraw_type = /obj/item/bandage
+	cant_deposit = 1
+	amount = 20
+	dispense_rate = 5 SECONDS
+
 /obj/machinery/chem_dispenser/medical
 	name = "medical reagent dispenser"
 	desc = "It dispenses chemicals. Mostly harmless ones, but who knows?"

@@ -1656,6 +1656,7 @@
 /obj/window/cubicle{
 	dir = 1
 	},
+/obj/item/clothing/suit/bedsheet/yellow,
 /turf/simulated/floor/purple,
 /area/pod_wars/spacejunk/fstation/crewquarters)
 "hM" = (
@@ -2061,6 +2062,10 @@
 /obj/random_item_spawner/junk/few,
 /turf/simulated/floor/plating,
 /area/pod_wars/spacejunk/nancy/warehouse)
+"jO" = (
+/obj/item_dispenser/bandage,
+/turf/simulated/floor/white,
+/area/pod_wars/spacejunk/fstation/medbay)
 "jP" = (
 /obj/storage/crate,
 /obj/random_item_spawner/kineticgun,
@@ -2074,6 +2079,7 @@
 /obj/window/cubicle{
 	dir = 1
 	},
+/obj/item/clothing/suit/bedsheet/red,
 /turf/simulated/floor/purple,
 /area/pod_wars/spacejunk/fstation/crewquarters)
 "jT" = (
@@ -2762,6 +2768,10 @@
 /obj/item/plate,
 /turf/unsimulated/floor/specialroom/bar,
 /area/pod_wars/team1/bar)
+"ns" = (
+/obj/item_dispenser/bandage,
+/turf/simulated/floor/black,
+/area/pod_wars/spacejunk/reliant)
 "nt" = (
 /turf/unsimulated/floor/blue/side,
 /area/pod_wars/team1/bridge)
@@ -3992,6 +4002,10 @@
 /obj/machinery/door/poddoor/blast/pyro/podbay_autoclose/t2condoor_horizontal,
 /turf/unsimulated/floor/shuttlebay,
 /area/pod_wars/team2/hangar)
+"sY" = (
+/obj/item_dispenser/bandage,
+/turf/simulated/floor/black,
+/area/pod_wars/spacejunk/uvb67/power)
 "sZ" = (
 /obj/stool/chair/red{
 	dir = 4
@@ -5653,6 +5667,7 @@
 	},
 /area/pod_wars/spacejunk/fstation)
 "AT" = (
+/obj/item_dispenser/bandage,
 /turf/simulated/floor/red/side{
 	dir = 5
 	},
@@ -6816,7 +6831,9 @@
 	},
 /area/pod_wars/team2/mining)
 "Gw" = (
-/obj/machinery/vending/kitchen,
+/obj/machinery/vending/kitchen{
+	req_access_txt = null
+	},
 /turf/simulated/floor/green/side{
 	dir = 4
 	},
@@ -7278,6 +7295,12 @@
 "IF" = (
 /turf/simulated/wall/asteroid/pod_wars,
 /area/pod_wars/asteroid/major/maj_5)
+"IG" = (
+/obj/item_dispenser/bandage,
+/turf/simulated/floor/red/side{
+	dir = 1
+	},
+/area/pod_wars/spacejunk/uvb67/crew)
 "IH" = (
 /turf/unsimulated/floor/yellow/side{
 	dir = 4
@@ -10847,6 +10870,7 @@
 /obj/window/cubicle{
 	dir = 2
 	},
+/obj/item/clothing/suit/bedsheet/blue,
 /turf/simulated/floor/purple,
 /area/pod_wars/spacejunk/fstation/crewquarters)
 "ZT" = (
@@ -51963,7 +51987,7 @@ Xc
 Xc
 hu
 hu
-pd
+sY
 pd
 pd
 pd
@@ -61483,7 +61507,7 @@ Xx
 YB
 Xx
 RX
-nJ
+IG
 Ra
 Zg
 RX
@@ -134613,7 +134637,7 @@ JW
 JW
 JW
 fV
-bC
+ns
 bC
 FB
 bC
@@ -188711,7 +188735,7 @@ GA
 GA
 GA
 GA
-Pz
+jO
 Pz
 Pz
 Pz
