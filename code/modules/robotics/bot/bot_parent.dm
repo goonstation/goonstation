@@ -30,6 +30,8 @@
 	var/bot_speech_color
 	/// What does our bot's popup speech look like?
 	var/bot_speech_style
+	/// What does our bot's chat text speech look like?
+	var/bot_chat_style
 	/// The noise that happens whenever the bot speaks
 	var/bot_voice = 'sound/misc/talk/bottalk_1.ogg'
 	/// The bot's speech bubble
@@ -125,7 +127,8 @@
 			. = ..()
 
 	proc/CheckIfVisible()
-		for (var/mob/M in GET_NEARBY(src, src.hash_check_range))
+		var/turf/T = get_turf(src)
+		for (var/mob/M in GET_NEARBY(T, src.hash_check_range))
 			if(M.client)
 				. = 1
 				break
@@ -153,11 +156,11 @@
 	proc/explode()
 		return
 
-	proc/speak(var/message, var/sing, var/just_float)
+	proc/speak(var/message, var/sing, var/just_float, var/just_chat)
 		if (!src.on || !message || src.muted)
 			return
 		var/image/chat_maptext/chatbot_text = null
-		if (src.speech2text && src.chat_text)
+		if (src.speech2text && src.chat_text && !just_chat)
 			if(src.use_speech_bubble)
 				UpdateOverlays(bot_speech_bubble, "bot_speech_bubble")
 				SPAWN_DBG(1.5 SECONDS)
@@ -172,13 +175,13 @@
 			else
 				maptext_color = src.bot_speech_color
 			chatbot_text = make_chat_maptext(src, message, "color: [maptext_color];" + src.bot_speech_style + singing_italics)
-			if(chatbot_text)
+			if(chatbot_text && src.chat_text && length(src.chat_text.lines))
 				chatbot_text.measure(src)
 				for(var/image/chat_maptext/I in src.chat_text.lines)
 					if(I != chatbot_text)
 						I.bump_up(chatbot_text.measured_height)
 
-		src.audible_message("<span class='game say'><span class='name'>[src]</span> [pick(src.speakverbs)], \"[message]\"", just_maptext = just_float, assoc_maptext = chatbot_text)
+		src.audible_message("<span class='game say'><span class='name'>[src]</span> [pick(src.speakverbs)], \"<span style=\"[src.bot_chat_style]\">[message]\"</span>", just_maptext = just_float, assoc_maptext = chatbot_text)
 		playsound(get_turf(src), src.bot_voice, 40, 1)
 		if (src.text2speech)
 			SPAWN_DBG(0)
@@ -263,70 +266,85 @@
 		if(turf_is_impassable)
 			return
 
-
 	src.KillPathAndGiveUp(0)
-	src.current_movepath = world.time
-	src.bot_mover = new /datum/robot_mover(src)
-
-	if (!isnull(src.bot_mover)) // drsingh for cannot modify null.delay
-		src.bot_mover.master_move(target_turf, current_movepath, adjacent, scanrate, max_dist)
-
-	if (!isnull(src.bot_mover))	// drsingh again for the same thing further down in a moment.
-		src.bot_mover.delay = move_delay	// Because master_move can delete the mover
+	src.bot_mover = new /datum/robot_mover(newmaster = src, _move_delay = move_delay, _target_turf = target_turf, _current_movepath = current_movepath, _adjacent = adjacent, _scanrate = scanrate, _max_dist = max_dist)
 	return 0
 
-//movement control datum. Why yes, this is copied from secbot.dm. Which was copied from guardbot.dm
+/// movement control datum. Why yes, this is copied from secbot.dm. Which was copied from guardbot.dm
 /datum/robot_mover
 	var/obj/machinery/bot/master = null
 	var/delay = 3
+	var/atom/the_target
+	var/list/current_movepath
+	var/adjacent = 0
+	var/scanrate = 10
+	var/max_dist = 600
 
-	New(var/newmaster)
+	New(obj/machinery/bot/newmaster, _move_delay = 3, _target_turf, _current_movepath, _adjacent = 0, _scanrate = 10, _max_dist = 600)
 		..()
-		if(istype(newmaster, /obj/machinery/bot))
+		if(istype(newmaster))
 			src.master = newmaster
+			src.delay = _move_delay
+			src.current_movepath = world.time
+			src.the_target = get_turf(_target_turf)
+			if(!isturf(src.the_target))
+				if(istype(master))
+					master.KillPathAndGiveUp(0)
+					return
+				else
+					qdel(src)
+			src.current_movepath = _current_movepath
+			src.adjacent = _adjacent
+			src.scanrate = _scanrate
+			src.max_dist = _max_dist
+			src.master_move()
+		else
+			qdel(src)
 		return
 
 	disposing()
-		if(master.bot_mover == src)
-			master.bot_mover = null
-		master.moving = 0
+		if(istype(master))
+			if(master.bot_mover == src)
+				master.bot_mover = null
+			master.moving = FALSE
 		src.master = null
+		src.the_target = null
 		..()
 
-	proc/master_move(var/atom/the_target as obj|mob, var/current_movepath,var/adjacent=0, var/scanrate, max_dist=600)
-		if(!master || !isturf(master.loc))
-			src.master = null
-			//dispose()
+	proc/master_move()
+		if(!istype(master))
+			qdel(src)
 			return
-		var/target_turf = null
-		if(isturf(the_target))
-			target_turf = the_target
-		else
-			target_turf = get_turf(the_target)
-		var/compare_movepath = current_movepath
-		master.path = AStar(get_turf(master), target_turf, /turf/proc/CardinalTurfsAndSpaceWithAccess, /turf/proc/Distance, max_dist, master.botcard)
+		if(!isturf(master.loc) || !istype(src.the_target))
+			master.KillPathAndGiveUp(0)
+			return
+		var/compare_movepath = src.current_movepath
+		master.path = AStar(get_turf(master), src.the_target, /turf/proc/CardinalTurfsAndSpaceWithAccess, /turf/proc/Distance, src.max_dist, master.botcard)
+		if(!length(master.path))
+			qdel(src)
+			return
+
 		SPAWN_DBG(0)
-			if (!master)
+			if (!istype(master) || (master && (!length(master.path) || !src.the_target)))
 				qdel(src)
 				return
-			else if(master && (!master.path || !master.path.len || !the_target))
-				master.KillPathAndGiveUp(0)
-				return
-			if(adjacent && master.path && master.path.len) //Make sure to check it isn't null!!
+
+			if(src.adjacent && (length(master?.path) > 1)) //Make sure to check it isn't null!!
 				master.path.len-- //Only go UP to the target, not the same tile.
 
 			master?.moving = 1
 
-			while(length(master?.path) && target_turf)
+			while(length(master?.path) && src.the_target)
 				if(compare_movepath != current_movepath) break
+				if(!master) break
+				if(!length(master.path)) break
 				if(!master.on)
 					master.frustration = 0
 					break
 
-				if(master.DoWhileMoving())
-					break	// We're here! Or something!
+				if(master.DoWhileMoving()) break	// We're here! Or something!
 
-				if(master?.path)
+				if(length(master?.path) && master.path[1])
 					if(istype(get_turf(master), /turf/space)) // frick it, duckie toys get jetpacks
 						var/obj/effects/ion_trails/I = unpool(/obj/effects/ion_trails)
 						I.set_loc(get_turf(master))
@@ -337,18 +355,21 @@
 						I.pixel_y = master.pixel_y
 						SPAWN_DBG( 20 )
 							if (I && !I.disposed) pool(I)
-					step_to(master, master.path[1])
-					if(master.loc != master.path[1])
+
+					step_to(master, master?.path[1])
+					if(length(master?.path) && master.loc != master.path[1])
 						master.frustration++
 						sleep(delay)
 						continue
-					master?.path -= master?.path[1]
+					
+					master.path -= master.path[1]
 					sleep(delay)
 				else
 					break // i dunno, it runtimes
 
-			if (master)
+			if (istype(master))
 				master.moving = 0
 				master.bot_mover = null
 				master.process() // responsive, robust AI = calling process() a million zillion times
 				master = null
+				qdel(src)

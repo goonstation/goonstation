@@ -21,11 +21,11 @@ var/global/noir = 0
 			continue
 		if (C.player_mode)
 			if (asay && C.player_mode_asay)
-				boutput(C, replacetext(rendered, "%admin_ref%", "\ref[C.holder]"))
+				boutput(C, replacetext(replacetext(rendered, "%admin_ref%", "\ref[C.holder]"), "%client_ref%", "\ref[C]"))
 			else
 				continue
 		else
-			boutput(C, replacetext(rendered, "%admin_ref%", "\ref[C.holder]")) //this doesnt fail if the placeholder doesnt exist ok dont worry
+			boutput(C, replacetext(replacetext(rendered, "%admin_ref%", "\ref[C.holder]"), "%client_ref%", "\ref[C]"))
 
 /proc/message_coders(var/text) //Shamelessly adapted from message_admins
 	var/rendered = "<span class=\"admin\"><span class=\"prefix\">CODER LOG:</span> <span class=\"message\">[text]</span></span>"
@@ -3667,7 +3667,7 @@ var/global/noir = 0
 			else
 				alert ("You must be at least a Secondary Admin to respawn a target.")
 		if ("showrules")
-			if (src.level >= LEVEL_SA && alert("Are you sure you want to show this player the rules?", "PARENTAL CONTROL", "Sure thing!", "Not really.") == "Sure thing!")
+			if (src.level >= LEVEL_SA)
 				var/mob/M = locate(href_list["target"])
 				if (!M) return
 				usr.client.show_rules_to_player(M)
@@ -4620,8 +4620,12 @@ var/global/noir = 0
 
 	return chosen
 
-/proc/get_matches(var/object, var/base = /atom)
-	var/list/types = concrete_typesof(base)
+/proc/get_matches(var/object, var/base = /atom, use_concrete_types = TRUE)
+	var/list/types
+	if(use_concrete_types)
+		types = concrete_typesof(base)
+	else
+		types = childrentypesof(base)
 
 	var/list/matches = new()
 
@@ -4631,8 +4635,8 @@ var/global/noir = 0
 
 	. = matches
 
-/proc/get_one_match(var/object, var/base = /atom)
-	var/list/matches = get_matches(object, base)
+/proc/get_one_match(var/object, var/base = /atom, use_concrete_types = TRUE)
+	var/list/matches = get_matches(object, base, use_concrete_types)
 
 	if(!matches.len)
 		return null
@@ -4658,7 +4662,7 @@ var/global/noir = 0
 	var/client/client = usr.client
 
 	if (client.holder.level >= LEVEL_PA)
-		var/chosen = get_one_match(object)
+		var/chosen = get_one_match(object, use_concrete_types = FALSE)
 
 		if (chosen)
 			if (ispath(chosen, /turf))

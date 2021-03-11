@@ -49,6 +49,8 @@ datum
 		var/smoke_spread_mod = 0 //base minimum-required-to-spread on a smoke this chem is in. Highest value in the smoke is used
 		var/minimum_reaction_temperature = INFINITY // Minimum temperature for reaction_temperature() to occur, use -INFINITY to bypass this check
 		var/random_chem_blacklisted = 0 // will not appear in random chem sources oddcigs/artifacts/etc
+		var/boiling_point = T0C + 100
+		var/can_crack = 0 // used by organic chems
 
 		New()
 			..()
@@ -322,6 +324,9 @@ datum
 
 		proc/physical_shock(var/force)
 			return
+
+		proc/crack(var/amount) //this proc is called by organic chemistry machines. It should return nothing.
+			return							//rather it should subtract its own volume and create the appropriate byproducts.
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

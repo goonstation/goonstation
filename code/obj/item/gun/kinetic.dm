@@ -205,6 +205,11 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 				if (src.casings_to_eject < 0)
 					src.casings_to_eject = 0
 				src.casings_to_eject += src.current_projectile.shot_number
+
+		if (fire_animation)
+			if(src.ammo?.amount_left > 1)
+				flick(icon_state, src)
+
 		..()
 
 	proc/ejectcasings()
@@ -505,6 +510,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	auto_eject = 1
 	has_empty_state = 1
 	gildable = 1
+	fire_animation = TRUE
 
 	New()
 		if (prob(70))
@@ -541,6 +547,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	throwforce = 1
 	throw_speed = 1
 	throw_return = 1
+	fire_animation = TRUE
 	var/prob_clonk = 0
 
 	throw_begin(atom/target)
@@ -752,6 +759,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	hide_attack = 1
 	muzzle_flash = null
 	has_empty_state = 1
+	fire_animation = TRUE
 
 	New()
 		ammo = new/obj/item/ammo/bullets/bullet_22HP
@@ -931,6 +939,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	max_ammo_capacity = 15
 	auto_eject = 1
 	has_empty_state = 1
+	fire_animation = TRUE
 
 	New()
 		ammo = new/obj/item/ammo/bullets/bullet_9mm

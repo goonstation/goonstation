@@ -224,6 +224,7 @@
 		if(dying) return
 		applyDeathState()
 		dying = 1 // this was dying = 0. ha ha.
+		SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_DRONE_DEATH, src)
 		SPAWN_DBG(2 SECONDS)
 			if (get_area(src) != colosseum_controller.colosseum || must_drop_loot)
 				if (prob(25))
