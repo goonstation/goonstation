@@ -9056,6 +9056,17 @@
 	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/courtroom)
+"azF" = (
+/obj/landmark/start{
+	name = "Rancher"
+	},
+/obj/railing/orange/reinforced{
+	dir = 4
+	},
+/turf/simulated/floor/grasstodirt{
+	dir = 4
+	},
+/area/station/ranch)
 "azG" = (
 /turf/simulated/floor/yellow/side,
 /area/station/engine/inner)
@@ -27283,7 +27294,7 @@
 /obj/landmark/start{
 	name = "Rancher"
 	},
-/turf/simulated/floor/grasstodirt,
+/turf/simulated/floor/dirt,
 /area/station/ranch)
 "bvy" = (
 /obj/disposalpipe/segment{
@@ -27295,7 +27306,7 @@
 	icon_state = "1-4"
 	},
 /obj/landmark/gps_waypoint,
-/turf/simulated/floor/grasstodirt,
+/turf/simulated/floor/dirt,
 /area/station/ranch)
 "bvz" = (
 /obj/cable{
@@ -27305,7 +27316,7 @@
 	dir = 8;
 	icon_state = "pipe-c"
 	},
-/turf/simulated/floor/grasstodirt,
+/turf/simulated/floor/dirt,
 /area/station/ranch)
 "bvA" = (
 /obj/cable{
@@ -27313,7 +27324,7 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/power/apc/autoname_east,
-/turf/simulated/floor/grasstodirt,
+/turf/simulated/floor/dirt,
 /area/station/ranch)
 "bvB" = (
 /obj/shrub{
@@ -27869,8 +27880,9 @@
 /turf/simulated/floor/orange,
 /area/station/mining/staff_room)
 "bxi" = (
-/obj/railing/orange/reinforced,
-/turf/simulated/floor/grass/leafy,
+/turf/simulated/floor/grasstodirt{
+	dir = 6
+	},
 /area/station/ranch)
 "bxj" = (
 /obj/stool/chair/yellow{
@@ -28846,7 +28858,7 @@
 	dir = 4
 	},
 /obj/disposalpipe/trunk/east,
-/turf/simulated/floor/grasstodirt,
+/turf/simulated/floor/dirt,
 /area/station/ranch)
 "bzJ" = (
 /turf/simulated/floor/caution/south,
@@ -29070,6 +29082,9 @@
 /obj/machinery/firealarm{
 	dir = 4;
 	pixel_x = 24
+	},
+/obj/shrub{
+	dir = 1
 	},
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
@@ -30646,8 +30661,13 @@
 /turf/simulated/floor/orange,
 /area/station/mining/staff_room)
 "bEq" = (
-/turf/simulated/wall/auto/supernorn,
-/area/station/hallway/secondary/construction2)
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4
+	},
+/obj/access_spawn/rancher,
+/obj/firedoor_spawn,
+/turf/simulated/floor/plating,
+/area/station/ranch)
 "bEv" = (
 /obj/wingrille_spawn/auto,
 /obj/window_blinds/cog2/left{
@@ -31424,11 +31444,11 @@
 /turf/simulated/floor,
 /area/station/hallway/portlowerhallway)
 "bGX" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor,
-/area/station/hallway/secondary/construction2)
+/obj/submachine/chicken_feed_grinder,
+/obj/railing/orange/reinforced,
+/obj/item/reagent_containers/food/snacks/plant/corn,
+/turf/simulated/floor/grasstodirt,
+/area/station/ranch)
 "bGY" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -31685,15 +31705,13 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/upperport)
 "bHW" = (
-/obj/decal/fakeobjects{
-	desc = "Under construction";
-	dir = 1;
-	icon = 'icons/obj/junk.dmi';
-	icon_state = "constructionsign";
-	name = "construction zone"
+/obj/railing/orange/reinforced{
+	dir = 1
 	},
-/turf/simulated/floor,
-/area/station/hallway/secondary/construction2)
+/turf/simulated/floor/grasstodirt{
+	dir = 1
+	},
+/area/station/ranch)
 "bId" = (
 /obj/machinery/drainage/big,
 /turf/simulated/floor,
@@ -31875,9 +31893,6 @@
 /obj/access_spawn/cargo,
 /turf/simulated/floor,
 /area/station/quartermaster/cargobay)
-"bIM" = (
-/turf/simulated/floor,
-/area/station/hallway/secondary/construction2)
 "bIO" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -36299,6 +36314,11 @@
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/disposal)
+"bYC" = (
+/turf/simulated/floor/grasstodirt{
+	dir = 4
+	},
+/area/station/ranch)
 "cea" = (
 /obj/decal/tile_edge/check{
 	dir = 4;
@@ -36422,7 +36442,7 @@
 	pixel_y = 20;
 	tag = ""
 	},
-/turf/simulated/floor/grasstodirt,
+/turf/simulated/floor/dirt,
 /area/station/ranch)
 "cty" = (
 /obj/decal/tile_edge/line/green{
@@ -36510,6 +36530,10 @@
 	},
 /obj/cable{
 	icon_state = "1-2"
+	},
+/obj/machinery/light/incandescent/netural{
+	dir = 4;
+	pixel_x = 10
 	},
 /turf/simulated/floor,
 /area/station/hallway/portlowerhallway)
@@ -36709,15 +36733,8 @@
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay/lobby)
 "cZX" = (
-/obj/machinery/door/airlock/pyro/glass{
-	dir = 4
-	},
-/obj/firedoor_spawn,
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor,
-/area/station/hallway/secondary/construction2)
+/turf/simulated/floor/specialroom/gym,
+/area/station/ranch)
 "dcc" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 4;
@@ -36820,6 +36837,10 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/portupperhallway)
+"dqN" = (
+/obj/railing/orange/reinforced,
+/turf/simulated/floor/grasstodirt,
+/area/station/ranch)
 "dqP" = (
 /obj/decal/tile_edge/stripe/extra_big,
 /obj/machinery/light/incandescent/netural{
@@ -37091,8 +37112,12 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/seaturtle)
 "dXE" = (
-/obj/chicken_nesting_box,
-/turf/simulated/floor/grass/leafy,
+/obj/railing/orange/reinforced{
+	dir = 8
+	},
+/turf/simulated/floor/grasstodirt{
+	dir = 8
+	},
 /area/station/ranch)
 "dXJ" = (
 /obj/machinery/light/incandescent/netural{
@@ -37617,6 +37642,12 @@
 	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/courtroom)
+"fiZ" = (
+/obj/railing/orange/reinforced{
+	dir = 1
+	},
+/turf/simulated/floor/grass/leafy,
+/area/station/ranch)
 "fkd" = (
 /obj/machinery/power/apc/autoname_north,
 /obj/cable{
@@ -37853,18 +37884,13 @@
 	dir = 1;
 	pixel_y = 20
 	},
-/obj/submachine/chicken_feed_grinder,
-/obj/item/reagent_containers/food/snacks/plant/corn,
 /turf/simulated/floor/green,
 /area/station/hydroponics/bay)
 "fHK" = (
-/obj/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/obj/machinery/power/apc/autoname_east,
-/turf/simulated/floor,
-/area/station/hallway/secondary/construction2)
+/obj/machinery/vending/hydroponics,
+/obj/railing/orange/reinforced,
+/turf/simulated/floor/grass/leafy,
+/area/station/ranch)
 "fKa" = (
 /obj/machinery/light/incandescent/blueish{
 	dir = 1;
@@ -37888,16 +37914,10 @@
 /turf/simulated/floor,
 /area/station/hallway/centralhallway)
 "fKP" = (
-/obj/cable{
-	icon_state = "1-2"
+/turf/simulated/floor/grasstodirt{
+	dir = 10
 	},
-/obj/disposalpipe/segment/mail,
-/obj/machinery/light/incandescent/netural{
-	dir = 4;
-	pixel_x = 10
-	},
-/turf/simulated/floor,
-/area/station/hallway/portlowerhallway)
+/area/station/ranch)
 "fLf" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 8;
@@ -38426,10 +38446,9 @@
 /turf/simulated/floor/bot,
 /area/station/engine/storage)
 "gXc" = (
-/obj/item/constructioncone,
 /obj/machinery/light/incandescent/netural,
-/turf/simulated/floor,
-/area/station/hallway/secondary/construction2)
+/turf/simulated/floor/grass/leafy,
+/area/station/ranch)
 "gYm" = (
 /obj/machinery/computer/shuttle_bus{
 	dir = 8
@@ -39116,6 +39135,14 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/lowerstarboard)
+"iJK" = (
+/obj/machinery/light/incandescent/netural{
+	dir = 4;
+	nostick = 1;
+	pixel_x = 10
+	},
+/turf/simulated/floor/grass/leafy,
+/area/station/ranch)
 "iJU" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -39473,13 +39500,16 @@
 /turf/simulated/floor/longtile/black,
 /area/station/turret_protected/ai_upload)
 "jUI" = (
-/obj/railing/orange/reinforced,
 /obj/machinery/light/incandescent/netural{
 	dir = 4;
 	nostick = 1;
 	pixel_x = 10
 	},
-/turf/simulated/floor/grass/leafy,
+/obj/machinery/plantpot{
+	anchored = 1
+	},
+/obj/railing/orange/reinforced,
+/turf/simulated/floor/grasstodirt,
 /area/station/ranch)
 "jXP" = (
 /obj/machinery/camera{
@@ -39802,6 +39832,13 @@
 	},
 /turf/simulated/floor/grime,
 /area/diner/backroom)
+"kSK" = (
+/obj/submachine/chicken_incubator,
+/obj/item/reagent_containers/food/snacks/ingredient/egg{
+	rand_pos = 0
+	},
+/turf/simulated/floor/grass/leafy,
+/area/station/ranch)
 "kWs" = (
 /obj/machinery/light/incandescent/netural,
 /turf/simulated/floor/wood/eight{
@@ -39847,6 +39884,12 @@
 /obj/machinery/drainage/big,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/lowerstarboard)
+"ldB" = (
+/obj/shrub{
+	dir = 10
+	},
+/turf/simulated/floor/grass/leafy,
+/area/station/ranch)
 "len" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -40220,15 +40263,14 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/lowerstarboard)
 "mfZ" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 8;
-	name = "autoname - SS13";
-	pixel_x = 10;
-	tag = ""
+/obj/machinery/plantpot{
+	anchored = 1
 	},
-/turf/simulated/floor,
-/area/station/hallway/secondary/construction2)
+/obj/railing/orange/reinforced{
+	dir = 1
+	},
+/turf/simulated/floor/grass/leafy,
+/area/station/ranch)
 "mhC" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -40366,8 +40408,6 @@
 	nostick = 1;
 	pixel_x = -10
 	},
-/obj/submachine/chicken_incubator,
-/obj/item/reagent_containers/food/snacks/ingredient/egg,
 /turf/simulated/floor/green/side,
 /area/station/hydroponics/bay)
 "mxx" = (
@@ -41081,7 +41121,7 @@
 /turf/simulated/floor/carpet/purple/fancy/narrow/T_west,
 /area/station/communications/bedroom)
 "omO" = (
-/obj/machinery/light/incandescent/netural,
+/obj/chicken_nesting_box,
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "ono" = (
@@ -41928,6 +41968,11 @@
 	dir = 4
 	},
 /area/station/security/secoffquarters)
+"qnA" = (
+/turf/simulated/floor/grasstodirt{
+	dir = 9
+	},
+/area/station/ranch)
 "qrl" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -42701,6 +42746,13 @@
 	},
 /turf/simulated/floor/orange,
 /area/station/science/testchamber)
+"swQ" = (
+/obj/shrub{
+	dir = 10;
+	pixel_y = 10
+	},
+/turf/simulated/floor/grass/leafy,
+/area/station/ranch)
 "swY" = (
 /obj/table/reinforced/auto,
 /obj/item/sheet/glass/fullstack,
@@ -44129,13 +44181,12 @@
 /turf/simulated/floor,
 /area/station/hallway/portlowerhallway)
 "wmV" = (
-/obj/item/constructioncone,
 /obj/machinery/light/incandescent/netural{
-	dir = 1;
-	pixel_y = 20
+	dir = 8;
+	pixel_x = -10
 	},
-/turf/simulated/floor,
-/area/station/hallway/secondary/construction2)
+/turf/simulated/floor/grass/leafy,
+/area/station/ranch)
 "wnp" = (
 /obj/table/auto,
 /obj/machinery/coffeemaker,
@@ -44162,6 +44213,12 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/starboardlowerhallway)
+"wqB" = (
+/obj/railing/orange/reinforced,
+/turf/simulated/floor/grasstodirt{
+	dir = 4
+	},
+/area/station/ranch)
 "wqN" = (
 /obj/machinery/networked/storage/tape_drive{
 	bank_id = "Artlab";
@@ -44389,6 +44446,10 @@
 	},
 /turf/simulated/floor/green,
 /area/station/crewquarters/garbagegarbs)
+"xgf" = (
+/obj/railing/orange/reinforced,
+/turf/simulated/floor/grass/leafy,
+/area/station/ranch)
 "xhf" = (
 /obj/stool/chair/couch{
 	dir = 8
@@ -44419,11 +44480,12 @@
 /turf/simulated/floor,
 /area/station/security/brig/genpop)
 "xlK" = (
-/obj/submachine/chicken_incubator,
-/obj/item/reagent_containers/food/snacks/ingredient/egg{
-	rand_pos = 0
+/obj/railing/orange/reinforced{
+	dir = 4
 	},
-/turf/simulated/floor/grass/leafy,
+/turf/simulated/floor/grasstodirt{
+	dir = 4
+	},
 /area/station/ranch)
 "xod" = (
 /obj/machinery/manufacturer/robotics,
@@ -76420,7 +76482,7 @@ aJw
 aJJ
 aJV
 aKk
-bkA
+cZX
 bkA
 bkA
 bnL
@@ -76722,7 +76784,7 @@ aJI
 aJJ
 cRU
 aKk
-bkA
+cZX
 bly
 bkA
 bnM
@@ -77025,7 +77087,7 @@ aEi
 aEi
 aKk
 bkA
-bkA
+cZX
 bkA
 bnL
 aJJ
@@ -78852,7 +78914,7 @@ bta
 bym
 bta
 czS
-fKP
+bta
 hlB
 bta
 bIW
@@ -79151,13 +79213,13 @@ bDj
 bDj
 bun
 bun
+bun
+bun
 bDj
+bEq
 bDj
-bEq
-bEq
-cZX
-bEq
-bEq
+bun
+bDj
 aBj
 bJX
 bKu
@@ -79450,15 +79512,15 @@ box
 aIs
 vhk
 bzI
-bxi
+dqN
 bBM
-bBM
+kSK
 omO
-bDj
+ldB
 wmV
 bHW
 bGX
-bHW
+bBM
 gXc
 aBj
 dFV
@@ -79752,16 +79814,16 @@ box
 aIs
 buk
 bvx
-bxi
+dqN
 bBM
 bBM
 bBM
-bDj
-bIM
-bIM
-bGX
-bIM
-bIM
+bBM
+bBM
+bHW
+dqN
+bBM
+bBM
 aBj
 bJZ
 bKv
@@ -80054,16 +80116,16 @@ box
 aIs
 bDj
 csu
-bxi
-bBM
-bBM
+fKP
 dXE
-bDj
-bIM
-bIM
-bGX
-bIM
-bIM
+dXE
+dXE
+dXE
+dXE
+qnA
+dqN
+bBM
+omO
 aBj
 bKa
 bKw
@@ -80357,15 +80419,15 @@ bsb
 bul
 bvy
 bxi
-bBM
-bBM
 xlK
-bDj
-bIM
-bIM
-bGX
-bIM
-bIM
+azF
+xlK
+xlK
+xlK
+bYC
+wqB
+bBM
+kSK
 aBk
 aBp
 bKx
@@ -80658,16 +80720,16 @@ bqh
 brS
 bum
 bvz
-bxi
+dqN
 bBM
 bBM
 bBM
-bDj
-bIM
-bIM
-bGX
-bIM
-bIM
+bBM
+bBM
+fiZ
+xgf
+bBM
+bBM
 bJD
 aHx
 bKy
@@ -80963,12 +81025,12 @@ bvA
 jUI
 bBM
 bAn
+kSK
 omO
-bDj
-wmV
+iJK
 mfZ
 fHK
-bIM
+swQ
 gXc
 bJD
 bKb
@@ -81267,11 +81329,11 @@ bDj
 bDj
 bDj
 bDj
-bEq
-bEq
-bEq
-bEq
-bEq
+bDj
+bDj
+bDj
+bDj
+bDj
 bJD
 bKc
 bKv
