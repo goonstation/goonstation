@@ -20919,6 +20919,10 @@
 	dir = 1;
 	icon_state = "line1"
 	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 10;
+	icon_state = "xtra_bigstripe-corner2"
+	},
 /turf/simulated/floor/wood/five,
 /area/station/hydroponics/bay)
 "fTL" = (
@@ -27665,6 +27669,11 @@
 	},
 /obj/table/wood/round/auto,
 /obj/item/device/light/lava_lamp,
+/obj/decal/tile_edge/stripe/extra_big,
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 10;
+	icon_state = "xtra_bigstripe-corner2"
+	},
 /turf/simulated/floor/wood/five,
 /area/station/hydroponics/bay)
 "hWw" = (
@@ -40210,10 +40219,6 @@
 "lQi" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
-	},
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 9;
-	icon_state = "xtra_bigstripe-corner2"
 	},
 /turf/simulated/floor/wood/five,
 /area/station/hydroponics/bay)
