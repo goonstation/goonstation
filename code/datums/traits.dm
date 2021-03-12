@@ -708,7 +708,7 @@
 /obj/trait/immigrant
 	name = "Stowaway (+1) \[Background\]"
 	cleanName = "Stowaway"
-	desc = "You spawn hidden away on-station without an ID or PDA."
+	desc = "You spawn hidden away on-station without an ID, PDA, or entry in NT records."
 	id = "immigrant"
 	icon_state = "stowaway"
 	category = "background"
