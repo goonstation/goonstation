@@ -138,51 +138,13 @@
 				M.choose_name(3, src.name, default)
 				if(M.real_name != default && M.real_name != orig_real)
 					phrase_log.log_phrase("name-[ckey(src.name)]", M.real_name, no_duplicates=TRUE)
-				if((M.job == "Clown") || (M.job == "Mime"))
-					var/make_bracelet = FALSE //friendship bracelets!!!
-					var/friend_limit = 4
-					for(var/mob/living/MOB in mobs)
-						if((MOB != M) && !MOB.hibernating && !isdead(MOB) && ((MOB.job == "Clown") || (MOB.job == "Mime")))
-							make_bracelet = TRUE
-
-						if(make_bracelet)
-							var/new_bracelet = TRUE //bracelet for fren
-							for(var/obj/item/clothing/gloves/friendship/existing_BRACELET in MOB.contents)
-								if(existing_BRACELET.check_for_duplicates(M))
-									new_bracelet = FALSE
-									break
-
-							if(new_bracelet)
-								var/obj/item/clothing/gloves/friendship/BRACELET = new /obj/item/clothing/gloves/friendship
-								BRACELET.setup_friendship(M)
-								MOB.put_in_hand_or_drop(BRACELET)
-								MOB.show_text("A friendship bracelet warps in! How sweet～","green")
-								MOB.playsound_local(MOB.loc, "sound/effects/warp1.ogg", 50, 1)
-
-							new_bracelet = TRUE //bracelet for me
-							for(var/obj/item/clothing/gloves/friendship/existing_BRACELET in M.contents)
-								if(existing_BRACELET.check_for_duplicates(MOB))
-									new_bracelet = FALSE
-									break
-
-							if(new_bracelet)
-								var/obj/item/clothing/gloves/friendship/BRACELET = new /obj/item/clothing/gloves/friendship
-								BRACELET.setup_friendship(MOB)
-								M.put_in_hand_or_drop(BRACELET)
-								M.show_text("A friendship bracelet warps in! How sweet～","green")
-								M.playsound_local(M.loc, "sound/effects/warp1.ogg", 50, 1)
-							friend_limit--
-							if(friend_limit <= 0)
-								break
-							make_bracelet = FALSE
-
-					if(ishuman(M)) //carnival cant ability
-						var/mob/living/carbon/human/CARNIE = M
-						CARNIE.add_ability_holder(/datum/abilityHolder/carnival)
-						if(CARNIE.job == "Clown")
-							CARNIE.abilityHolder.addAbility(/datum/targetable/carnival/cant)
-						else if(CARNIE.job == "Mime")
-							CARNIE.abilityHolder.addAbility(/datum/targetable/carnival/cant/mime)
+				if(ishuman(M) && (M.job == "Clown") || (M.job == "Mime"))
+					var/mob/living/carbon/human/CARNIE = M
+					CARNIE.add_ability_holder(/datum/abilityHolder/carnival)
+					if(CARNIE.job == "Clown")
+						CARNIE.abilityHolder.addAbility(/datum/targetable/carnival/cant)
+					else if(CARNIE.job == "Mime")
+						CARNIE.abilityHolder.addAbility(/datum/targetable/carnival/cant/mime)
 
 			if (M.traitHolder && !M.traitHolder.hasTrait("loyalist"))
 				cant_spawn_as_rev = 1 //Why would an NT Loyalist be a revolutionary?
