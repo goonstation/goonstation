@@ -73,7 +73,7 @@
 
 				sleep(door ? 20 : 10)
 				if (driver)
-					for(var/obj/machinery/mass_driver/D as() in machine_registry[MACHINES_MASSDRIVERS])
+					for(var/obj/machinery/mass_driver/D as anything in machine_registry[MACHINES_MASSDRIVERS])
 						if(D.id == driver.id)
 							D.drive()
 	process()

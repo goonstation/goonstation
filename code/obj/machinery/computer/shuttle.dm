@@ -419,7 +419,7 @@
 	if ((usr.contents.Find(src) || (isturf(src.loc) && in_interact_range(src, usr))) || (issilicon(usr)))
 		src.add_dialog(usr)
 		if (href_list["send"])
-			for(var/obj/machinery/shuttle/engine/propulsion/eng as() in machine_registry[MACHINES_SHUTTLEPROPULSION]) // ehh
+			for(var/obj/machinery/shuttle/engine/propulsion/eng as anything in machine_registry[MACHINES_SHUTTLEPROPULSION]) // ehh
 				if(eng.stat1 == 0 && eng.stat2 == 0 && eng.id == "zeta")
 					boutput(usr, "<span class='alert'>Propulsion thruster damaged. Unable to move shuttle.</span>")
 					return
