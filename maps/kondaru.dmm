@@ -3432,8 +3432,7 @@
 	name = "Clowntainment"
 	})
 "ajk" = (
-/obj/grille/steel,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/blackwhite/whitegrime,
 /area/station/crew_quarters/clown{
 	name = "Clowntainment"
 	})
@@ -49428,6 +49427,17 @@
 	dir = 4
 	},
 /area/station/security/interrogation)
+"jYl" = (
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet/black,
+/obj/landmark/start{
+	name = "Mime"
+	},
+/obj/machinery/light/small,
+/turf/simulated/floor/blackwhite/whitegrime,
+/area/station/crew_quarters/clown{
+	name = "Clowntainment"
+	})
 "jYr" = (
 /obj/disposalpipe/trunk/south,
 /obj/machinery/disposal/transport{
@@ -53067,6 +53077,12 @@
 	dir = 8
 	},
 /area/station/science/testchamber)
+"oww" = (
+/obj/storage/crate/mime,
+/turf/simulated/floor/blackwhite/whitegrime,
+/area/station/crew_quarters/clown{
+	name = "Clowntainment"
+	})
 "owG" = (
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/landmark/halloween,
@@ -60500,6 +60516,15 @@
 	dir = 4
 	},
 /area/station/routing/security)
+"xAm" = (
+/obj/machinery/door/unpowered/wood/pyro{
+	dir = 8;
+	name = "The Snip"
+	},
+/turf/simulated/floor/carpet/arcade,
+/area/station/crew_quarters/clown{
+	name = "Clowntainment"
+	})
 "xAA" = (
 /obj/tree1,
 /turf/simulated/floor/grass,
@@ -97321,7 +97346,7 @@ afA
 afA
 ahj
 aeZ
-afB
+xAm
 afA
 ags
 aeK
@@ -97625,7 +97650,7 @@ ahk
 afB
 ajk
 ajk
-ajk
+jYl
 aeK
 aeK
 aof
@@ -97925,7 +97950,7 @@ ach
 agr
 ahl
 afB
-ajk
+oww
 aeK
 aeK
 aeK
