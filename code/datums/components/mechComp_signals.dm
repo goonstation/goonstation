@@ -196,10 +196,13 @@
 	var/fired = 0
 	for(var/atom/A in src.connected_outgoing)
 		//Note: a target not handling a signal returns 0.
-		if(SEND_SIGNAL(parent,_COMSIG_MECHCOMP_DISPATCH_VALIDATE, A, msg.signal) != 0)
+		var/validated = SEND_SIGNAL(parent,_COMSIG_MECHCOMP_DISPATCH_VALIDATE, A, msg.signal)
+		if(validated == 1)
 			continue
 		SEND_SIGNAL(A, _COMSIG_MECHCOMP_RECEIVE_MSG, src.connected_outgoing[A], cloneMessage(msg))
 		fired = 1
+		if(validated == 2) //The component wants signal processing to stop AFTER this signal
+			return fired
 	return fired
 
 //Used to copy a message because we don't want to pass a single message to multiple components which might end up modifying it both at the same time.
