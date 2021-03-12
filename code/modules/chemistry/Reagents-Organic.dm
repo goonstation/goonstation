@@ -87,6 +87,8 @@
 		crack(var/amount = 1)
 			if(!holder)
 				return
+			if(volume<amount)
+				amount = volume
 			if(holder.has_reagent("oxygen"))
 				holder.remove_reagent("oxygen",amount)
 				holder.remove_reagent(id,amount)
