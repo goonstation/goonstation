@@ -1,5 +1,9 @@
 
 (t)thu mar 11 21
+(u)Comradef191
+(p)3724
+(e)🗺|mapping
+(*)Re-Added AI Displays to all currenty in-rotation maps.
 (u)BatElite
 (p)3711
 (e)🆕🎨|feature, sprites
