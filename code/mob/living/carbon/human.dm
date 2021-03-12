@@ -1434,11 +1434,7 @@
 				src.say_language = original_language
 				return
 
-	if (src.wear_mask && istype(src.wear_mask,/obj/item/clothing/mask/mime/cursed))
-		whisper(message, forced=TRUE)
-		return
-	else
-		message = process_accents(src,message)
+	message = process_accents(src,message)
 
 	for (var/uid in src.pathogens)
 		var/datum/pathogen/P = src.pathogens[uid]
@@ -1556,14 +1552,6 @@
 	if (istype(src.wear_mask, /obj/item/clothing/mask/muzzle))
 		boutput(src, "<span class='alert'>Your muzzle prevents you from speaking.</span>")
 		return
-
-	if (src.wear_mask && istype(src.wear_mask,/obj/item/clothing/mask/mime/cursed))
-		src.show_text("The [src.wear_mask.name] constricts your throat!","red")
-		src.take_oxygen_deprivation(20)
-		src.TakeDamage("head",10)
-		if(prob(10))
-			src.visible_message("<span style='alert'>[src.name] coughs up blood!</span>")
-			take_bleeding_damage(src,src,5)
 
 	var/italics = 1
 	var/message_range = 1
