@@ -4587,7 +4587,7 @@
 "ama" = (
 /obj/table/wood/auto,
 /obj/item/storage/box/nerd_kit,
-/obj/item/card_box/suit,
+/obj/item/card_box/plain,
 /turf/simulated/floor/carpet/red/fancy/edge/nw,
 /area/station/crew_quarters/arcade/dungeon)
 "amc" = (
@@ -25111,7 +25111,7 @@
 	name = "speedo"
 	},
 /obj/item/clothing/head/apprentice,
-/obj/item/card_box/suit,
+/obj/item/card_box/plain,
 /obj/machinery/light/small{
 	dir = 1;
 	pixel_y = 21
@@ -29552,7 +29552,7 @@
 /obj/item/decoration/ashtray{
 	pixel_x = -9
 	},
-/obj/item/card_box/suit{
+/obj/item/card_box/plain{
 	pixel_x = 1;
 	pixel_y = 3
 	},
@@ -41387,7 +41387,7 @@
 "cmg" = (
 /obj/table/wood/auto,
 /obj/item/reagent_containers/food/drinks/bottle/tequila,
-/obj/item/playing_cards/suit,
+/obj/item/card_group/plain,
 /obj/item/spacecash/hundred,
 /turf/simulated/floor/orangeblack,
 /area/listeningpost)
