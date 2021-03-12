@@ -1,5 +1,9 @@
 
 (t)fri mar 12 21
+(u)AwkwardDryad
+(p)3740
+(e)🆕🗺🔄🎨|feature, mapping, rework, sprites
+(*)reworked playing cards and gave them a makeover! have fuuuun!
 (u)Zamujasa
 (e)🆕|feature
 (*)Monkey Translator added.
