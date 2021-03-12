@@ -594,7 +594,7 @@ ABSTRACT_TYPE(/datum/ore_cluster)
 	var/team_num		//used for getting the team datum, this is set to 1 or 2 in the map editor. 1 = NT, 2 = Syndicate
 	var/datum/pod_wars_team/team
 	// is_speedy = 1	//setting this var does nothing atm, its effect is done and it is set by being hit with the object 
-	
+
 
 	process()
 
@@ -918,7 +918,7 @@ obj/screen/score_board
 
 ABSTRACT_TYPE(/obj/machinery/macrofab/pod_wars)
 /obj/machinery/macrofab/pod_wars
-	name = "Emergency Pod Fabricator"
+	name = "Emergency Combat Pod Fabricator"
 	desc = "A sophisticated machine that fabricates short-range emergency pods from a nearby reserve of supplies."
 	createdObject = /obj/machinery/vehicle/arrival_pod
 	itemName = "emergency pod"
@@ -936,9 +936,18 @@ ABSTRACT_TYPE(/obj/machinery/macrofab/pod_wars)
 		createdObject = /obj/machinery/vehicle/pod_wars_dingy/nanotrasen
 		team = 1
 
+		mining
+			name = "Emergency Mining  Pod Fabricator"
+			createdObject = /obj/machinery/vehicle/pod_wars_dingy/nanotrasen/mining
+
+
 	syndicate
 		createdObject = /obj/machinery/vehicle/pod_wars_dingy/syndicate
 		team = 2
+
+		mining
+			name = "Emergency Mining Pod Fabricator"
+			createdObject = /obj/machinery/vehicle/pod_wars_dingy/syndicate/mining
 
 ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 /obj/machinery/vehicle/pod_wars_dingy
@@ -1082,6 +1091,16 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 		/datum/manufacture/pod/weapon/mining,
 		/datum/manufacture/pod/weapon/mining/drill,
 		/datum/manufacture/pod/weapon/ltlaser
+
+		/datum/manufacture/pod/weapon/mining
+		/datum/manufacture/pod/weapon/mining_weak
+		/datum/manufacture/pod/weapon/taser
+		/datum/manufacture/pod/weapon/laser/short
+		/datum/manufacture/pod/weapon/laser
+		/datum/manufacture/pod/weapon/disruptor
+		/datum/manufacture/pod/weapon/disruptor/light
+		/datum/manufacture/pod/weapon/shotgun
+		/datum/manufacture/pod/weapon/ass_laser
 	)
 
 	New()
@@ -1107,7 +1126,7 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 		)
 
 ////////////////pod-weapons//////////////////
-/datum/manufacture/pod/weapon/mining
+/datum/manufacture/pod/weapon/mining_weak
 	name = "Mining Phaser System"
 	item_paths = list("MET-1","CON-1")
 	item_amounts = list(10,10)
@@ -1116,10 +1135,19 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 	create = 1
 	category = "Tool"
 
+/datum/manufacture/pod/weapon/mining
+	name = "Plasma Cutter System"
+	item_paths = list("MET-2","CON-2")
+	item_amounts = list(50,50)
+	item_outputs = list(/obj/item/shipcomponent/mainweapon/bad_mining)
+	time = 5 SECONDS
+	create = 1
+	category = "Tool"
+
 /datum/manufacture/pod/weapon/taser
 	name = "Mk.1 Combat Taser"
 	item_paths = list("MET-2","CON-1","CRY-1")
-	item_amounts = list(10,10,10)
+	item_amounts = list(20,20,30)
 	item_outputs = list(/obj/item/shipcomponent/mainweapon/taser)
 	time = 10 SECONDS
 	create  = 1
@@ -1128,22 +1156,23 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 /datum/manufacture/pod/weapon/laser
 	name = "Mk.2 Scout Laser"
 	item_paths = list("MET-2","CON-1","CRY-1")
-	item_amounts = list(10,10,10)
+	item_amounts = list(25,40,30)
 	item_outputs = list(/obj/item/shipcomponent/mainweapon/laser)
 	time = 10 SECONDS
 	create  = 1
 	category = "Tool"
+
 /datum/manufacture/pod/weapon/laser/short
 	name = "Mk.2 CQ Laser"
 	item_paths = list("MET-2","CON-1","CRY-1")
-	item_amounts = list(10,10,10)
+	item_amounts = list(20,20,20)
 	item_outputs = list(/obj/item/shipcomponent/mainweapon/laser/short)
 	time = 10 SECONDS
 
 /datum/manufacture/pod/weapon/disruptor
 	name = "Heavy Disruptor Array"
-	item_paths = list("MET-2","CON-1","CRY-1")
-	item_amounts = list(10,10,10)
+	item_paths = list("MET-3","CON-2","CRY-1")
+	item_amounts = list(20,20,50)
 	item_outputs = list(/obj/item/shipcomponent/mainweapon/disruptor_light)
 	time = 10 SECONDS
 	create  = 1
@@ -1152,7 +1181,7 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 /datum/manufacture/pod/weapon/disruptor/light
 	name = "Mk.3 Disruptor"
 	item_paths = list("MET-2","CON-1","CRY-1")
-	item_amounts = list(10,10,10)
+	item_amounts = list(20,30,30)
 	item_outputs = list(/obj/item/shipcomponent/mainweapon/disruptor)
 	time = 10 SECONDS
 	create  = 1
@@ -1160,9 +1189,18 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 
 /datum/manufacture/pod/weapon/ass_laser
 	name = "Mk.4 Assault Laser"
-	item_paths = list("MET-2","CON-1","CRY-1")
-	item_amounts = list(10,10,10)
+	item_paths = list("MET-3","CON-2","CRY-1")
+	item_amounts = list(35,30,30)
 	item_outputs = list(/obj/item/shipcomponent/mainweapon/laser_ass)
+	time = 10 SECONDS
+	create  = 1
+	category = "Tool"
+
+/datum/manufacture/pod/weapon/shotgun
+	name = "SPE-12 Ballistic System"
+	item_paths = list("MET-3","CON-2","CRY-1")
+	item_amounts = list(50,40,10)
+	item_outputs = list(/obj/item/shipcomponent/mainweapon/gun)
 	time = 10 SECONDS
 	create  = 1
 	category = "Tool"
@@ -1170,8 +1208,8 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 ////////////pod-armor///////////////////////
 /datum/manufacture/pod_wars/pod/armor_light
 	name = "Light NT Pod Armor"
-	item_paths = list("MET-2","CON-1")
-	item_amounts = list(30,20)
+	item_paths = list("MET-3","CON-1")
+	item_amounts = list(50,50)
 	item_outputs = list(/obj/item/pod/armor_light)
 	time = 20 SECONDS
 	create = 1
@@ -1779,14 +1817,21 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 
 /obj/item_dispenser/bandage
 	name = "bandage dispenser"
-	desc = "A storage container that easily dispenses fresh bandage. It can be refilled with bandage."
+	desc = "A storage container that easily dispenses fresh bandage."
 	icon_state = "dispenser_id"
 	filled_icon_state = "dispenser_id"
 	deposit_type = null
-	withdraw_type = /obj/item/bandage
+	withdraw_type = /obj/item/bandage/medicated
 	cant_deposit = 1
-	amount = 20
+	amount = 30
 	dispense_rate = 5 SECONDS
+
+/obj/item/bandage/medicated
+	name = "medicated bandage"
+	desc = "A length of gauze that will help stop bleeding and heal a small amount of brute/burn damage."
+	uses = 4
+	brute_heal = 10
+	burn_heal = 10
 
 /obj/machinery/chem_dispenser/medical
 	name = "medical reagent dispenser"

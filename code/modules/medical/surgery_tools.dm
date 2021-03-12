@@ -786,6 +786,9 @@ CONTAINS:
 	var/uses = 6
 	var/in_use = 0
 	hide_attack = 2
+	//if we want this bandage to do some healing. choose how much healing of each type of damage it should do per application.
+	var/brute_heal = 0
+	var/burn_heal = 0
 
 	get_desc()
 		..()
@@ -809,10 +812,13 @@ CONTAINS:
 			var/zone = user.zone_sel.selecting
 			var/surgery_status = H.get_surgery_status(zone)
 			if (surgery_status && H.organHolder)
-				actions.start(new /datum/action/bar/icon/medical_suture_bandage(H, src, 10, zone, surgery_status, rand(2,5), "bandag"), user)
+				actions.start(new /datum/action/bar/icon/medical_suture_bandage(H, src, 10, zone, surgery_status, rand(2,5), brute_heal, burn_heal, "bandag"), user)
 				src.in_use = 1
 			else if (H.bleeding)
-				actions.start(new /datum/action/bar/icon/medical_suture_bandage(H, src, 1, zone, 0, rand(4,6), "bandag"), user)
+				actions.start(new /datum/action/bar/icon/medical_suture_bandage(H, src, 1, zone, 0, rand(4,6), brute_heal, burn_heal, "bandag"), user)
+				src.in_use = 1
+			else if (M.health < max_health)
+				actions.start(new /datum/action/bar/icon/medical_suture_bandage(H, src, 15, 0, 0, 5, brute_heal, burn_heal, "sutur"), user)
 				src.in_use = 1
 			else
 				user.show_text("[H == user ? "You have" : "[H] has"] no wounds or incisions on [H == user ? "your" : his_or_her(H)] [zone_sel2name[zone]] to bandage!", "red")
@@ -851,14 +857,19 @@ CONTAINS:
 	var/surgery_status
 	var/repair_amount
 	var/vrb
+	var/brute_heal
+	var/burn_heal
 
-	New(Target, Tool, Time, Zone, Status, Repair, Vrb)
-		target = Target
-		tool = Tool
-		duration = Time
-		zone = Zone
-		surgery_status = Status
-		repair_amount = Repair
+	New(Target, Tool, Time, Zone, Status, Repair, brute_heal, burn_heal, Vrb)
+		src.target = Target
+		src.tool = Tool
+		src.duration = Time
+		src.zone = Zone
+		src.surgery_status = Status
+		src.repair_amount = Repair
+		src.brute_heal = brute_heal
+		src.burn_heal = burn_heal
+
 		vrb = Vrb
 		if (zone && surgery_status)
 			duration = clamp((duration * surgery_status), 5, 50)
@@ -925,6 +936,10 @@ CONTAINS:
 				target.visible_message("<span class='success'>[owner] [vrb]es [owner == target ? "[his_or_her(owner)]" : "[target]'s"] wounds closed with [tool].</span>",\
 				"<span class='success'>[owner == target ? "You [vrb]e" : "[owner] [vrb]es"] your wounds closed with [tool].</span>")
 				repair_bleeding_damage(target, 100, repair_amount)
+				if (brute_heal)
+					random_brute_damage(src, brute_heal)
+				if (burn_heal)
+					random_burn_damage(src, burn_heal)
 			if (zone && vrb == "bandag" && !target.bandaged.Find(zone))
 				target.bandaged += zone
 				target.update_body()
