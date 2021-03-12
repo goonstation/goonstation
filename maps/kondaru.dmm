@@ -28658,7 +28658,7 @@
 /area/station/crew_quarters/quarters_north)
 "bEE" = (
 /obj/table/wood/auto,
-/obj/item/camera_test,
+/obj/item/camera,
 /obj/item/clothing/head/det_hat{
 	desc = "Ugh, gross.";
 	name = "fedora"

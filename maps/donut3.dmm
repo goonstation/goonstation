@@ -73636,7 +73636,7 @@
 /area/station/crew_quarters/courtroom)
 "vIK" = (
 /obj/storage/secure/closet/security/forensics,
-/obj/item/camera_test,
+/obj/item/camera,
 /turf/simulated/floor/wood/seven,
 /area/station/security/detectives_office)
 "vIN" = (
