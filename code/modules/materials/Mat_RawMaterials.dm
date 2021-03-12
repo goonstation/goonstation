@@ -276,7 +276,10 @@
 		if (istype(W, /obj/item/axe) || istype(W, /obj/item/circular_saw) || istype(W, /obj/item/kitchen/utensil/knife) || istype(W, /obj/item/scalpel) || istype(W, /obj/item/sword) || istype(W,/obj/item/saw) || istype(W,/obj/item/knife/butcher))
 			user.visible_message("[user] carefully extracts a shoot from [src].", "You carefully cut a shoot from [src].")
 			new /obj/item/reagent_containers/food/snacks/plant/bamboo/(user.loc)
-			qdel (src)
+			if (src.amount > 1)
+				change_stack_amount(-1)
+			else
+				qdel (src)
 
 /obj/item/material_piece/cloth/spidersilk
 	name = "space spider silk"
