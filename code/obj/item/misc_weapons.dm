@@ -746,6 +746,7 @@
 	return 1
 
 /obj/item/knife/butcher/generic //a butcher knife that doesn't butcher corpses into meat
+	name = "intimidating knife"
 	attack(target as mob, mob/user as mob)
 		if(!istype(src,/obj/item/knife/butcher/predspear) && ishuman(target) && ishuman(user))
 			if(scalpel_surgery(target,user))
