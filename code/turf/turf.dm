@@ -59,7 +59,7 @@
 
 	Del()
 		if (length(cameras))
-			for (var/obj/machinery/camera/C as() in by_type[/obj/machinery/camera])
+			for (var/obj/machinery/camera/C as anything in by_type[/obj/machinery/camera])
 				if(C.coveredTiles)
 					C.coveredTiles -= src
 		cameras = null

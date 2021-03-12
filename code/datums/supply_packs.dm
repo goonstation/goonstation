@@ -372,9 +372,10 @@
 
 /datum/supply_packs/monkey4
 	name = "Lab Monkey Crate - 4 pack"
-	desc = "x4 Monkey"
+	desc = "x4 Monkey, x1 Monkey Translator"
 	category = "Research Department"
-	contains = list(/mob/living/carbon/human/npc/monkey = 4)
+	contains = list(/mob/living/carbon/human/npc/monkey = 4,
+						/obj/item/clothing/mask/monkey_translator)
 	cost = 500
 	containertype = /obj/storage/crate/medical
 	containername = "Lab Monkey Crate"

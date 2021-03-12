@@ -462,7 +462,7 @@
 		return
 	var/input2 = input(usr, "Add a headline for this alert?", "What?", "") as null|text
 /*
-	for (var/obj/machinery/computer/communications/C as() in machine_registry[MACHINES_COMMSCONSOLES])
+	for (var/obj/machinery/computer/communications/C as anything in machine_registry[MACHINES_COMMSCONSOLES])
 		if(! (C.status & (BROKEN|NOPOWER) ) )
 			var/obj/item/paper/P = new /obj/item/paper( C.loc )
 			P.name = "paper- '[command_name()] Update.'"
@@ -2679,7 +2679,7 @@ var/global/mirrored_physical_zone_created = FALSE //enables secondary code branc
 	if(holder && src.holder.level >= LEVEL_ADMIN)
 		switch(alert("Set every light on the station to a random color?",,"Yes","No"))
 			if("Yes")
-				for (var/obj/machinery/light/L as() in stationLights)
+				for (var/obj/machinery/light/L as anything in stationLights)
 					R = rand(100)/100
 					G = rand(100)/100
 					B = rand(100)/100

@@ -186,7 +186,7 @@ datum/controller/process/proc/handleHung()
 	// If world.timeofday has rolled over, then we need to adjust.
 	if (TimeOfHour < run_start)
 		run_start -= 36000
-	var/msg = "[name] process hung at tick #[ticks]. Process was unresponsive for [(TimeOfHour - run_start) / 10] seconds and was restarted. Last task: [last_task]. Last Object Type: [lastObjType]"
+	var/msg = "[name] process hung at tick #[ticks]. Process was unresponsive for [(TimeOfHour - run_start) / 10] seconds and was restarted. Last task: [last_task]. Last Object Type: [lastObjType]. Last object: <a href='byond://?src=%client_ref%;Vars=\ref[lastObj]'>[lastObj]</a>"
 	logTheThing("debug", null, null, msg)
 	logTheThing("diary", null, null, msg, "debug")
 	message_admins(msg)

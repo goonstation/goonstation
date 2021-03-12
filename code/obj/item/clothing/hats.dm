@@ -1233,3 +1233,17 @@
 	desc = "Is it truly a good night without one?"
 	icon_state = "pajama_hat"
 	item_state = "pajama_hat"
+
+/obj/item/clothing/head/that/white
+	name = "white hat"
+	desc = "A white tophat."
+	wear_image_icon = 'icons/mob/fruithat.dmi'
+	icon_state = "whtophat"
+	item_state = "whtophat"
+
+/obj/item/clothing/head/headsprout
+	name = "leaf hairclip"
+	desc = "A sign of a healthy, growing Staff Assistant."
+	wear_image_icon = 'icons/mob/fruithat.dmi'
+	icon_state = "headsprout"
+	item_state = "headsprout"

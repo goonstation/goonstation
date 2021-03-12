@@ -1971,6 +1971,7 @@
 /obj/machinery/vending/alcohol
 	name = "Cap'n Bubs' Booze-O-Mat"
 	desc = "A vending machine filled with various kinds of alcoholic beverages and things for fancying up drinks."
+	pay = 1
 	icon_state = "capnbubs"
 	icon_panel = "capnbubs-panel"
 	slogan_list = list("hm hm",
@@ -2003,6 +2004,7 @@
 
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/hobo_wine, 2, hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/thegoodstuff, 1, hidden=1)
+		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/abg, 2, cost=PAY_TRADESMAN, hidden=1)
 
 /obj/machinery/vending/chem
 	name = "ChemDepot"

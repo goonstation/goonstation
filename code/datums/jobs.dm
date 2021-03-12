@@ -1531,6 +1531,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	name = "Test Subject"
 	wages = PAY_DUMBCLOWN
 	slot_jump = /obj/item/clothing/under/shorts
+	slot_mask = /obj/item/clothing/mask/monkey_translator
 	change_name_on_spawn = 1
 	starting_mutantrace = /datum/mutantrace/monkey
 

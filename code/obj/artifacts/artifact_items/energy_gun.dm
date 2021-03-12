@@ -10,7 +10,7 @@
 	mat_changename = 0
 	mat_changedesc = 0
 
-	New(var/loc, var/forceartiorigin)
+	New(var/loc, var/forceartiorigin, var/list/datum/projectile/artifact/forceBullets)
 		..()
 		var/datum/artifact/energygun/AS = new /datum/artifact/energygun(src)
 		if (forceartiorigin)
@@ -24,10 +24,14 @@
 			src.ArtifactSetup()
 			var/datum/artifact/A = src.artifact
 			cell = new/obj/item/ammo/power_cell/self_charging/artifact(src,A.artitype)
-			src.ArtifactDevelopFault(15)
 
-			set_current_projectile(AS.bullet)
-			projectiles = list(src.current_projectile)
+
+			if(forceBullets)
+				for(var/datum/projectile/artifact/forceBullet as anything in forceBullets)
+					forceBullet.turretArt = null // not making this trigger faults on people who are shot, to prevent guns from feeling too unfair
+				AS.bullets = forceBullets
+			set_current_projectile(pick(AS.bullets))
+			projectiles = AS.bullets
 			cell.max_charge = max(cell.max_charge, current_projectile.cost)
 
 		src.setItemSpecial(null)
@@ -73,12 +77,28 @@
 		if (!A.activated)
 			return
 
-		..()
+		. = ..()
 
-		A.ReduceHealth(src)
+		if(!.) // do not trigger fault or damage if we don't shoot
+			return
 
 		src.ArtifactFaultUsed(user)
+
+		if(prob(20))
+			src.ArtifactDevelopFault(100)
+			user.visible_message("<span class='alert'>[src] emits \a [pick("ominous", "portentous", "sinister")] sound.</span>")
+		else if(prob(20))
+			src.ArtifactTakeDamage(20)
+			user.visible_message("<span class='alert'>[src] emits a terrible cracking noise.</span>")
+
 		return
+
+	ArtifactDestroyed()
+		var/turf/T = get_turf(src)
+		if(T)
+			cell.set_loc(T)
+		. = ..()
+
 
 /datum/artifact/energygun
 	associated_object = /obj/item/gun/energy/artifact
@@ -87,33 +107,22 @@
 	validtypes = list("ancient","eldritch","precursor")
 	react_elec = list(0.02,0,5)
 	react_xray = list(10,75,100,11,"CAVITY")
-	var/integrity = 100
-	var/integrity_loss = 5
-	var/datum/projectile/artifact/bullet = null
+	var/list/datum/projectile/artifact/bullets = list()
 	examine_hint = "It seems to have a handle you're supposed to hold it by."
 	module_research = list("weapons" = 8, "energy" = 8)
 	module_research_insight = 3
 
 	New()
 		..()
-		bullet = new/datum/projectile/artifact
-		bullet.randomise()
-		// artifact tweak buff, people said guns were useless compared to their cells
-		// the next 3 lines override the randomize(). Doing this instead of editting randomize to avoid changing prismatic spray.
-		bullet.power = rand(15,35) // randomise puts it between 2 and 50, let's make it less variable
-		bullet.dissipation_rate = rand(1,bullet.power)
-		bullet.cost = rand(35,100) // randomise puts it at 50-150
+		var/datum/projectile/artifact/bullet = null
+		var/mode_amount = pick(7;1, 2;2, 1;3) // 70% 1 mode, 20% 2 modes, 10% 3 modes
 
-		integrity = rand(50, 100)
-		integrity_loss = rand(1, 3) // was rand(1,7)
-		react_xray[3] = integrity
-
-	proc/ReduceHealth(var/obj/item/gun/energy/artifact/O)
-		var/prev_health = integrity
-		integrity -= integrity_loss
-		if (integrity <= 20 && prev_health > 20)
-			O.visible_message("<span class='alert'>[O] emits a terrible cracking noise.</span>")
-		if (integrity <= 0)
-			O.visible_message("<span class='alert'>[O] crumbles into nothingness.</span>")
-			qdel(O)
-		react_xray[3] = integrity
+		for(var/i = 1 to mode_amount)
+			bullet = new/datum/projectile/artifact
+			bullet.randomise()
+			// artifact tweak buff, people said guns were useless compared to their cells
+			// the next 3 lines override the randomize(). Doing this instead of editing randomize to avoid changing prismatic spray.
+			bullet.power = rand(15,35) // randomise puts it between 2 and 50, let's make it less variable
+			bullet.dissipation_rate = rand(1,bullet.power)
+			bullet.cost = rand(35,100) // randomise puts it at 50-150
+			bullets += bullet

@@ -167,7 +167,6 @@
 	var/obj/item/organ/brain/brain = null
 	var/obj/item/ai_interface/ai_interface = null
 	var/visible_eyes = 1
-	var/wires_exposed = 0
 
 		// Screen head specific
 	var/mode = "lod" // lod (light-on-dark) or dol (dark-on-light)
@@ -192,10 +191,6 @@
 
 			if (src.ai_interface)
 				boutput(user, "<span class='alert'>There is already \an [src.ai_interface] in there. Use a wrench to remove it.</span>")
-				return
-
-			if (src.wires_exposed)
-				user.show_text("You can't add the brain to this head when the wires are exposed. Use a screwdriver to pack them away.", "red")
 				return
 
 			var/obj/item/organ/brain/B = W
@@ -226,10 +221,6 @@
 				boutput(user, "<span class='alert'>There is already \an [src.ai_interface] in there!</span>")
 				return
 
-			if (src.wires_exposed)
-				user.show_text("You can't add [W] to this head when the wires are exposed. Use a screwdriver to pack them away.", "red")
-				return
-
 			var/obj/item/ai_interface/I = W
 			user.drop_item()
 			I.set_loc(src)
@@ -251,25 +242,6 @@
 				boutput(user, "<span class='notice'>You open the head's compartment and take out [src.brain].</span>")
 				user.put_in_hand_or_drop(src.brain)
 				src.brain = null
-		else if (isscrewingtool(W))
-			if (src.brain)
-				user.show_text("You can't reach the wiring with a brain inside the cyborg head.", "red")
-				return
-			if (src.ai_interface)
-				user.show_text("You can't reach the wiring with [src.ai_interface] inside the cyborg head.", "red")
-				return
-
-			if (src.appearanceString != "generic") //Fuck my shit
-				user.show_text("The screws on this head have some kinda proprietary bitting. Huh.", "red")
-				return
-
-			src.wires_exposed = !src.wires_exposed
-			if (src.wires_exposed)
-				icon_state = "head-generic-wiresexposed"
-				user.show_text("You expose the wiring of the head's neural interface.", "red")
-			else
-				icon_state = "head-generic"
-				user.show_text("You neatly tuck the wiring of the head's neural interface away.", "red")
 
 		else if (istype(W,/obj/item/sheet) && (src.type == /obj/item/parts/robot_parts/head))
 			// second check up there is just watching out for those ..() calls

@@ -40689,7 +40689,7 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/nw)
 "lNT" = (
-/obj/machinery/computer/barcode/qm/donut3{
+/obj/machinery/computer/barcode/qm/no_belthell{
 	dir = 4
 	},
 /turf/simulated/floor/yellow,

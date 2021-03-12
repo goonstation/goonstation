@@ -30,6 +30,8 @@
 	var/bot_speech_color
 	/// What does our bot's popup speech look like?
 	var/bot_speech_style
+	/// What does our bot's chat text speech look like?
+	var/bot_chat_style
 	/// The noise that happens whenever the bot speaks
 	var/bot_voice = 'sound/misc/talk/bottalk_1.ogg'
 	/// The bot's speech bubble
@@ -154,11 +156,11 @@
 	proc/explode()
 		return
 
-	proc/speak(var/message, var/sing, var/just_float)
+	proc/speak(var/message, var/sing, var/just_float, var/just_chat)
 		if (!src.on || !message || src.muted)
 			return
 		var/image/chat_maptext/chatbot_text = null
-		if (src.speech2text && src.chat_text)
+		if (src.speech2text && src.chat_text && !just_chat)
 			if(src.use_speech_bubble)
 				UpdateOverlays(bot_speech_bubble, "bot_speech_bubble")
 				SPAWN_DBG(1.5 SECONDS)
@@ -179,7 +181,7 @@
 					if(I != chatbot_text)
 						I.bump_up(chatbot_text.measured_height)
 
-		src.audible_message("<span class='game say'><span class='name'>[src]</span> [pick(src.speakverbs)], \"[message]\"", just_maptext = just_float, assoc_maptext = chatbot_text)
+		src.audible_message("<span class='game say'><span class='name'>[src]</span> [pick(src.speakverbs)], \"<span style=\"[src.bot_chat_style]\">[message]\"</span>", just_maptext = just_float, assoc_maptext = chatbot_text)
 		playsound(get_turf(src), src.bot_voice, 40, 1)
 		if (src.text2speech)
 			SPAWN_DBG(0)
@@ -354,12 +356,12 @@
 						SPAWN_DBG( 20 )
 							if (I && !I.disposed) pool(I)
 
-					step_to(master, master.path[1])
-					if(master.loc != master.path[1])
+					step_to(master, master?.path[1])
+					if(length(master?.path) && master.loc != master.path[1])
 						master.frustration++
 						sleep(delay)
 						continue
-
+					
 					master.path -= master.path[1]
 					sleep(delay)
 				else

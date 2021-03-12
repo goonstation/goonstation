@@ -1,6 +1,6 @@
 /proc/most_applicable_trade(var/list/datum/commodity/goods_buy, var/obj/item/sell_item)
 	var/list/goods_buy_types = new /list(0)
-	for(var/datum/commodity/N as() in goods_buy)
+	for(var/datum/commodity/N as anything in goods_buy)
 		if (istype(sell_item, N.comtype))
 			goods_buy_types[N.comtype] = N
 	return goods_buy_types[maximal_subtype(goods_buy_types)]
@@ -65,7 +65,7 @@
 	anger()
 		for(var/mob/M in AIviewers(src))
 			boutput(M, "<span class='alert'><B>[src.name]</B> becomes angry!</span>")
-		src.desc = "[src] looks angry"
+		src.desc = "[src] looks angry."
 		SPAWN_DBG(rand(1000,3000))
 			src.visible_message("<b>[src.name] calms down.</b>")
 			src.desc = "[src] looks a bit annoyed."
@@ -92,6 +92,24 @@
 		user.Browse(dat, "window=[windowName];size=[windowSize]", 1)
 		onclose(user, windowName)
 		return
+
+	attackby(obj/item/I as obj, mob/user as mob)
+		if (istype(I, /obj/item/card/id) || (istype(I, /obj/item/device/pda2) && I:ID_card))
+			if (istype(I, /obj/item/device/pda2) && I:ID_card) I = I:ID_card
+			boutput(usr, "<span class='notice'>You swipe the ID card in the card reader.</span>")
+			var/datum/data/record/account = null
+			account = FindBankAccountByName(I:registered)
+			if(account)
+				var/enterpin = input(usr, "Please enter your PIN number.", "Card Reader", 0) as null|num
+				if (enterpin == I:pin)
+					boutput(usr, "<span class='notice'>Card authorized.</span>")
+					src.scan = I
+				else
+					boutput(usr, "<span class='alert'>Pin number incorrect.</span>")
+					src.scan = null
+			else
+				boutput(usr, "<span class='alert'>No bank account associated with this ID found.</span>")
+				src.scan = null
 
 	attack_hand(var/mob/user as mob)
 		if(..())
@@ -143,12 +161,12 @@
 			account = FindBankAccountByName(src.scan.registered)
 			if (account)
 				var/quantity = 1
-				quantity = input("How many units do you want to purchase? Maximum: 10", "Trader Purchase", null, null) as num
+				quantity = input("How many units do you want to purchase? Maximum: 50", "Trader Purchase", null, null) as num
 				if (quantity < 1)
 					quantity = 0
 					return
-				else if (quantity >= 10)
-					quantity = 10
+				else if (quantity >= 50)
+					quantity = 50
 
 				////////////
 				var/datum/commodity/P = locate(href_list["doorder"]) in goods_sell
@@ -739,7 +757,7 @@
 				src.goods_sell += new /datum/commodity/drugs/morphine(src)
 				src.goods_sell += new /datum/commodity/drugs/krokodil(src)
 				src.goods_sell += new /datum/commodity/drugs/lsd(src)
-				src.goods_sell += new /datum/commodity/drugs/lsd_bee(src)
+				src.goods_sell += new /datum/commodity/drug/lsd_bee(src)
 				src.goods_sell += new /datum/commodity/relics/bootlegfirework(src)
 				src.goods_sell += new /datum/commodity/pills/uranium(src)
 
@@ -1219,7 +1237,7 @@
 		src.goods_sell += new /datum/commodity/drugs/krokodil(src)
 		src.goods_sell += new /datum/commodity/drugs/jenkem(src)
 		src.goods_sell += new /datum/commodity/drugs/lsd(src)
-		src.goods_sell += new /datum/commodity/drugs/lsd_bee(src)
+		src.goods_sell += new /datum/commodity/drug/lsd_bee(src)
 		src.goods_sell += new /datum/commodity/medical/ether(src)
 		src.goods_sell += new /datum/commodity/medical/toxin(src)
 		src.goods_sell += new /datum/commodity/medical/cyanide(src)

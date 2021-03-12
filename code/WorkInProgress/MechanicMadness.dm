@@ -2562,7 +2562,7 @@
 
 /obj/item/mechanics/trigger/button
 	name = "Button"
-	desc = "A button. It's red hue enticing you to press it."
+	desc = "A button. Its red hue entices you to press it."
 	icon_state = "comp_button"
 	var/icon_up = "comp_button"
 	var/icon_down = "comp_button1"

@@ -727,10 +727,11 @@ datum
 			var/added_new = 0
 			if (!donotupdate)
 				update_total()
+			amount = round(amount, CHEM_EPSILON)
+			if(amount < CHEM_EPSILON)
+				return 0
 			if(total_volume + amount > maximum_volume)
 				amount = (maximum_volume - total_volume) //Doesnt fit in. Make it disappear. Shouldnt happen. Will happen.
-			if(amount <= CHEM_EPSILON)
-				return 0
 
 			var/datum/reagent/current_reagent = reagent_list[reagent]
 
