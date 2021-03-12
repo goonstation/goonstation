@@ -120,6 +120,7 @@
 	proc/addTrigger(var/list/L, var/datum/materialProc/D)
 		for(var/datum/materialProc/P in L)
 			if(P.type == D.type) return 0
+		D.owner = src
 		L.Add(D)
 		L[D] = 0
 		return
@@ -451,7 +452,7 @@
 
 /datum/material/metal/iridiumalloy
 	mat_id = "iridiumalloy"
-	name = "iridium-alloy"
+	name = "iridium alloy"
 	canMix = 1 //Can not be easily modified.
 	desc = "Some sort of advanced iridium alloy."
 	color = "#756596"
@@ -1066,6 +1067,24 @@
 		setProperty("thermal", 10)
 		addTrigger(triggersOnAdd, new /datum/materialProc/ffart_add())
 		addTrigger(triggersPickup, new /datum/materialProc/ffart_pickup())
+		return ..()
+
+/datum/material/organic/hamburgris
+	mat_id = "hamburgris"
+	name = "hamburgris"
+	desc = "Ancient medium ground chuck, petrified by the ages into a sturdy composite. Or worse."
+	color = "#816962"
+	material_flags = MATERIAL_ORGANIC
+
+	New()
+		setProperty("density", 65)
+		setProperty("corrosion", 75)
+		setProperty("permeable", 25)
+		setProperty("hard", 30)
+		setProperty("thermal", 20)
+		setProperty("flammable", 10)
+		addTrigger(triggersOnLife, new /datum/materialProc/generic_reagent_onlife("cholesterol", 1))
+
 		return ..()
 
 /datum/material/organic/pizza

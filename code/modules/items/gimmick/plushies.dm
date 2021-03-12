@@ -5,6 +5,7 @@
 	icon_state = "claw"
 	anchored = 1
 	density = 1
+	mats = list("MET-1"=5, "CON-1"=5, "CRY-1"=5, "FAB-1"=5)
 	deconstruct_flags = DECON_MULTITOOL | DECON_WRENCH | DECON_CROWBAR
 	var/busy = 0
 	var/list/prizes = list(/obj/item/toy/plush/small/bee,\

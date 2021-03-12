@@ -240,7 +240,7 @@
 		wrap_pathogen(reagents, generate_cold_pathogen(), 8)
 		#endif
 
-	heal(var/mob/M)
+	on_bite(obj/item/I, mob/M, mob/user)
 		#ifdef CREATE_PATHOGENS //PATHOLOGY REMOVAL
 		..()
 		#else
@@ -291,7 +291,7 @@
 	initial_reagents = list("cholesterol"=5,"porktonium"=45)
 	food_effects = list("food_hp_up_big", "food_sweaty")
 
-	heal(var/mob/M)
+	on_bite(obj/item/I, mob/M, mob/user)
 		if(prob(25))
 			M.nutrition += 100
 		..()
@@ -304,7 +304,7 @@
 	heal_amt = 2
 	food_effects = list("food_hp_up_big", "food_sweaty")
 
-	heal(var/mob/M)
+	on_bite(obj/item/I, mob/M, mob/user)
 		if(prob(20))
 			var/obj/decal/cleanable/blood/gibs/gib = make_cleanable(/obj/decal/cleanable/blood/gibs, get_turf(src) )
 			gib.streak_cleanable(M.dir)
@@ -323,7 +323,7 @@
 	heal_amt = 1
 	food_effects = list("food_bad_breath", "food_hp_up_big")
 
-	heal(var/mob/M)
+	on_bite(obj/item/I, mob/M, mob/user)
 		if(prob(8))
 			var/effect = rand(1,4)
 			switch(effect)
@@ -357,7 +357,7 @@
 	amount = 6
 	heal_amt = 2
 
-	heal(var/mob/M)
+	on_bite(obj/item/I, mob/M, mob/user)
 		if(prob(3) && ishuman(M))
 			boutput(M, "<span class='alert'>You wackily and randomly turn into a lizard.</span>")
 			M.set_mutantrace(/datum/mutantrace/lizard)

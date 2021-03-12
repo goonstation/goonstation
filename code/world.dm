@@ -396,7 +396,7 @@ var/f_color_selector_handler/F_Color_Selector
 	tick_lag = MIN_TICKLAG//0.4//0.25
 //	loop_checks = 0
 
-	// Load in the current commit SHA from TGS...
+	// Load in the current commit SHA from TGS if avail, by MCterra10
 	if(TgsAvailable())
 		var/datum/tgs_revision_information/rev = TgsRevision()
 		vcs_revision = rev.commit
@@ -590,6 +590,15 @@ var/f_color_selector_handler/F_Color_Selector
 	makeMiningLevel()
 	#endif
 
+	UPDATE_TITLE_STATUS("Initializing biomes")
+	Z_LOG_DEBUG("World/Init", "Setting up biomes...")
+	initialize_biomes()
+
+	UPDATE_TITLE_STATUS("Generating terrain")
+	Z_LOG_DEBUG("World/Init", "Setting perlin noise terrain...")
+	for (var/area/map_gen/A in by_type[/area/map_gen])
+		A.generate_perlin_noise_terrain()
+
 	UPDATE_TITLE_STATUS("Calculating cameras")
 	Z_LOG_DEBUG("World/Init", "Updating camera visibility...")
 	aiDirty = 2
@@ -708,7 +717,7 @@ var/f_color_selector_handler/F_Color_Selector
 		for (var/client/C)
 			if (C.mob)
 				if (prob(40))
-					C.mob << sound(pick('sound/misc/NewRound2.ogg', 'sound/misc/NewRound3.ogg', 'sound/misc/TimeForANewRound.ogg'))
+					C.mob << sound(pick('sound/misc/NewRound2.ogg', 'sound/misc/NewRound3.ogg', 'sound/misc/NewRound4.ogg', 'sound/misc/TimeForANewRound.ogg'))
 				else
 					C.mob << sound('sound/misc/NewRound.ogg')
 

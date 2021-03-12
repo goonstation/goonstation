@@ -847,7 +847,19 @@ obj/item/device/radio/signaler/attackby(obj/item/W as obj, mob/user as mob)
 		src.set_loc(A)
 		A.part1 = src
 		src.add_fingerprint(user)
-		boutput(user, "You open the signaler and cram the [W.name] in there!")
+		boutput(user, "You open the signaller and cram the [W.name] in there!")
+	//Commenting this out so the SWORD PR gets merged without being summonable by normal players, so it can be tested first. Both the MSF and SWORD can still be spawned in with admin powers, obviously.
+	//else if (istype(W, /obj/item/cable_coil))
+	//	W.amount -= 1
+	//	if (W.amount <= 0)
+	//		qdel(W)
+	//	else
+	//		W.inventory_counter.update_number(W.amount)
+	//	var/obj/item/makeshift_signaller_frame/A = new /obj/item/makeshift_signaller_frame
+	//	user.put_in_hand_or_drop(A)
+	//	A.add_fingerprint(user)
+	//	boutput(user, "You open the signaller and attach some additional wires to it!")
+	//	qdel(src)
 	else
 		..()
 	return

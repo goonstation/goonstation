@@ -18,7 +18,7 @@
 	//the number of projectiles we want to fire in a single cast
 	var/num_projectiles = 12
 	//what projectiles do we *NOT* want to add to the pool of random projectiles?
-	var/static/list/blacklist = list(/datum/projectile/slam,/datum/projectile/artifact,/datum/projectile/artifact/prismatic_projectile)
+	var/static/list/blacklist = list(/datum/projectile/slam,/datum/projectile/artifact,/datum/projectile/artifact/prismatic_projectile,/datum/projectile/pickpocket/plant,/datum/projectile/implanter)
 	//If random == 0, use the special prismatic projectile datum. Else, pick from the pool of all projectiles minus the blacklisted ones
 	var/random = 0
 	//the list of projectile types to pick from if random is set to 1

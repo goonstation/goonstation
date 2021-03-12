@@ -777,7 +777,7 @@
 	upperfluc = 100
 	lowerfluc = -100
 
-/datum/commodity/drugs/lsd_bee
+/datum/commodity/drug/lsd_bee
 	comname = "LSBee (1x patch)"
 	comtype = /obj/item/reagent_containers/patch/lsd_bee
 	desc = "A highly potent hallucinogenic substance. It smells like honey."

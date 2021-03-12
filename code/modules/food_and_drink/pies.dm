@@ -55,7 +55,7 @@
 			src.has_key = 1
 		return
 
-	heal(var/mob/M)
+	on_bite(obj/item/I, mob/M, mob/user)
 		..()
 		if (has_key)
 			src.has_key = 0
@@ -149,7 +149,7 @@
 	food_effects = list("food_sweaty", "food_hp_up_big", "food_cold")
 
 
-	heal(var/mob/M)
+	on_bite(obj/item/I, mob/M, mob/user)
 		M.nutrition += 500
 		return
 
