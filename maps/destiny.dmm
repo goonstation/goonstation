@@ -55581,6 +55581,13 @@
 	icon_state = "wooden"
 	},
 /area/station/crew_quarters/courtroom)
+"wyI" = (
+/obj/lattice{
+	dir = 5;
+	icon_state = "lattice-dir-b"
+	},
+/turf/space,
+/area/station/com_dish/comdish)
 "wyU" = (
 /obj/wingrille_spawn/reinforced,
 /obj/cable{
@@ -105384,7 +105391,7 @@ aCe
 mOA
 rXP
 axA
-hsP
+wyI
 aJO
 aEB
 wjM
