@@ -527,6 +527,11 @@
 			user.visible_message("<b>[user]</b> drapes a sheet over [src]!", "You cover [src] with a sheet!")
 			return
 
+		else if (istype(W, /obj/item/magtractor) && !W.holding)
+			if (src.hat)
+				takeoffHat()
+			else if (src.bedsheet)
+				takeoffSheet()
 		else
 			return ..(W, user)
 
