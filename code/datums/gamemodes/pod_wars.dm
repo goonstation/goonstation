@@ -593,7 +593,8 @@ ABSTRACT_TYPE(/datum/ore_cluster)
 	var/check_delay = 10 SECONDS
 	var/team_num		//used for getting the team datum, this is set to 1 or 2 in the map editor. 1 = NT, 2 = Syndicate
 	var/datum/pod_wars_team/team
-	is_speedy = 1
+	// is_speedy = 1	//setting this var does nothing atm, its effect is done and it is set by being hit with the object 
+	
 
 	process()
 
