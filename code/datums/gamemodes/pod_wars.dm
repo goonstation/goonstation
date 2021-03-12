@@ -319,7 +319,7 @@ ABSTRACT_TYPE(/datum/ore_cluster)
 		if (M.current)
 			M.current.client << sound('sound/effects/ship_alert_major.ogg')
 
-	boutput(world, "<h2><span class='alert'>[name]'s [CS] has been destroyed!!</span></h2>")
+	boutput(world, "<h2><span class='alert'>[team_num == 1 ? "NanoTrasen": team_num == 2 "Syndicate" : "Something else"]'s [CS] has been destroyed!!</span></h2>")
 
 /datum/game_mode/pod_wars/proc/announce_critical_system_damage(var/team_num, var/obj/pod_base_critical_system/CS)
 	var/datum/pod_wars_team/team
@@ -1744,6 +1744,8 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 			T = user ? get_turf(user) : get_turf(src)
 			if (!T) // buh??
 				return
+		if (istype(T, /turf/space))
+				boutput(user, "<span class='alert'>Can't build a barricade in space!</span>")
 		if (ispath(src.object_type))
 			if (locate(src.object_type) in T.contents)
 				boutput(user, "<span class='alert'>There is already a barricade here! You can't think of a way that another one could possibly fit!</span>")

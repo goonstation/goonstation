@@ -487,6 +487,13 @@ MATERIAL
 				if("construct")
 					var/turf/T = get_turf(usr)
 					var/area/A = get_area (usr)
+
+//for now, any turf can't be built on.
+#ifdef MAP_OVERRIDE_POD_WARS
+					if (!isturf(T))
+						boutput(usr, "<span class='alert'>You can't build girders here.</span>")
+						return
+#endif
 					if (!istype(T, /turf/simulated/floor))
 						boutput(usr, "<span class='alert'>You can't build girders here.</span>")
 						return
@@ -1089,6 +1096,11 @@ MATERIAL
 		boutput(user, "<span class='notice'>You finish stacking tiles.</span>")
 
 	proc/build(turf/S as turf)
+//for now, any turf can't be built on.
+#ifdef MAP_OVERRIDE_POD_WARS
+		boutput(usr, "you can't build in this mode, you don't know how or something...")
+		return
+#else
 		if (src.amount < 1)
 			return FALSE
 		var/turf/simulated/floor/W = S.ReplaceWithFloor()
@@ -1104,6 +1116,7 @@ MATERIAL
 			W.setMaterial(src.material)
 		src.change_stack_amount(-1)
 		return TRUE
+#endif
 
 /obj/item/tile/steel
 
