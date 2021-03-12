@@ -1622,6 +1622,14 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 	attackby(obj/item/W as obj, mob/user as mob)
 		return
 
+	//These are basically the same as "normal" pod_wars beacons, but they won't have a capture point so they should never get an owner team
+	//so nobody will be able to warp to them, they can only navigate towards them with pod sensors.
+	spacejunk
+		name = "spacejunk warp_beacon"
+		invisibility = 101
+		alpha = 100			//just to be clear 
+
+
 /datum/control_point
 	var/name = "Capture Point"
 
