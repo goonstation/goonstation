@@ -1,5 +1,9 @@
 
 (t)fri mar 12 21
+(u)zjdtmkhzt
+(p)3856
+(e)🆕🎨|feature, sprites
+(+)Added visual effect to plant helper artifacts.
 (u)Nefarious6th
 (p)3756
 (e)🗺🔄|mapping, rework
