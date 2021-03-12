@@ -78,20 +78,23 @@
 	if (istype(JOB, /datum/job/special/pod_wars/nanotrasen))
 		team_NT.members += mind
 		team_NT.equip_player(mind.current)
+		get_latejoin_turf(mind, TEAM_NANOTRASEN)
 	else if (istype(JOB, /datum/job/special/pod_wars/syndicate))
 		team_SY.members += mind
 		team_SY.equip_player(mind.current)
+		get_latejoin_turf(mind, TEAM_SYNDICATE)
 
+//Loops through latejoin spots. Places you in the one that is on the correct base ship in accordance with your job.
+/datum/game_mode/pod_wars/proc/get_latejoin_turf(var/datum/mind/mind, var/team_num)
 #ifdef MAP_OVERRIDE_POD_WARS
 	for(var/turf/T in landmarks[LANDMARK_LATEJOIN])
-		if (istype(T.loc, /area/pod_wars/team1))
+		if (team_num == TEAM_NANOTRASEN && istype(T.loc, /area/pod_wars/team1))
 			mind.current.set_loc(T)
 			return
-		else if (istype(T.loc, /area/pod_wars/team2))
+		else if (team_num == TEAM_SYNDICATE && istype(T.loc, /area/pod_wars/team2))
 			mind.current.set_loc(T)
 			return
 #endif
-
 // //search an area for a obj/control_point_computer, make the datum
 // /datum/game_mode/pod_wars/proc/add_control_point(var/path, var/name)
 // 	var/list/turfs = get_area_turfs(path, 1)

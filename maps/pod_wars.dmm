@@ -5966,6 +5966,15 @@
 /obj/storage/closet/welding_supply,
 /turf/unsimulated/floor/caution/north,
 /area/pod_wars/team2/hangar)
+"BO" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/landmark/start/latejoin,
+/turf/unsimulated/floor/blue/side{
+	dir = 5
+	},
+/area/pod_wars/team1/bridge)
 "BP" = (
 /obj/grille/catwalk{
 	dir = 1;
@@ -6351,6 +6360,7 @@
 	},
 /area/pod_wars/spacejunk/fstation)
 "DO" = (
+/obj/landmark/start/latejoin,
 /turf/unsimulated/floor/red/side{
 	dir = 9
 	},
@@ -9058,6 +9068,10 @@
 	},
 /turf/simulated/floor/black,
 /area/pod_wars/spacejunk/reliant)
+"QK" = (
+/obj/landmark/start/latejoin,
+/turf/unsimulated/floor/red/side,
+/area/pod_wars/team2/central_hallway)
 "QO" = (
 /obj/lattice{
 	icon_state = "lattice-dir-b"
@@ -47243,7 +47257,7 @@ JW
 JW
 Mr
 Mr
-OZ
+BO
 lK
 nF
 pk
@@ -236416,7 +236430,7 @@ ED
 ef
 ED
 Ts
-XP
+QK
 HI
 jD
 Ux
