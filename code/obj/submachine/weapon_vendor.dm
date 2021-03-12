@@ -205,7 +205,7 @@
 		materiel_stock += new/datum/materiel/loadout/assist_sec
 
 	accepted_token()
-		src.current_loadout_credits++
+		src.credits["Loadout"]++
 		..()
 
 /obj/submachine/weapon_vendor/syndicate
@@ -379,35 +379,35 @@
 /datum/materiel/loadout/assist_civ
 	name = "Catering"
 	path = /obj/item/storage/box/staffkit/civ
-	catagory = "Loadout"
+	category = "Loadout"
 	description = "A boxed kit for assisting catering and hydroponic staff."
 //supplementary items: sous chef's hat, latex gloves, produce satchel, cleaner spray bottle
 
 /datum/materiel/loadout/assist_eng
 	name = "Engineering"
 	path = /obj/item/storage/box/staffkit/eng
-	catagory = "Loadout"
+	category = "Loadout"
 	description = "A boxed kit for assisting engineering and mining staff."
 //supplementary items: crowbar, emergency spacesuit set, power pick, ore satchel
 
 /datum/materiel/loadout/assist_med
 	name = "Medical"
 	path = /obj/item/storage/box/staffkit/med
-	catagory = "Loadout"
+	category = "Loadout"
 	description = "A boxed kit for assisting medical staff."
 //supplementary items: epi injector, health analyzer, brute mender, burn mender, salbutamol pill
 
 /datum/materiel/loadout/assist_res
 	name = "Research"
 	path = /obj/item/storage/box/staffkit/res
-	catagory = "Loadout"
+	category = "Loadout"
 	description = "A boxed kit for assisting research staff."
 //supplementary items: gas mask, latex gloves, lab coat, beaker, reagent analyzer
 
 /datum/materiel/loadout/assist_sec
 	name = "Security"
 	path = /obj/item/storage/box/staffkit/sec
-	catagory = "Loadout"
+	category = "Loadout"
 	description = "A boxed kit for assisting onboard security."
 //supplementary items: flash, handcuffs, whistle, forensic analyzer
 
