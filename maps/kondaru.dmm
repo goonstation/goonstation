@@ -4058,6 +4058,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/firedoor_spawn,
 /turf/simulated/floor/wood/seven,
 /area/station/crew_quarters/info{
 	name = "Book Nook"
@@ -4931,6 +4932,7 @@
 	pixel_x = 1;
 	pixel_y = 10
 	},
+/obj/machinery/light_switch/east,
 /turf/simulated/floor/wood/seven,
 /area/station/crew_quarters/info{
 	name = "Book Nook"
@@ -6763,21 +6765,20 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
 "arS" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 0;
-	name = "autoname - SS13";
-	pixel_y = 20
-	},
 /obj/machinery/firealarm{
-	pixel_x = 6;
 	pixel_y = 24
+	},
+/turf/simulated/floor,
+/area/station/hallway/primary/west)
+"arT" = (
+/obj/decal/xmas_lights/ephemeral{
+	pixel_y = 32
 	},
 /turf/simulated/floor/stairs/wide/other{
 	dir = 8
 	},
 /area/station/hallway/primary/west)
-"arT" = (
+"arU" = (
 /obj/machinery/computer/airbr{
 	density = 0;
 	icon = 'icons/obj/airtunnel.dmi';
@@ -6786,12 +6787,6 @@
 	starts_established = 1
 	},
 /turf/simulated/floor/grey,
-/area/station/hallway/primary/west)
-"arU" = (
-/obj/machinery/door/airlock/pyro/external{
-	dir = 4
-	},
-/turf/simulated/floor/caution/westeast,
 /area/station/hallway/primary/west)
 "arV" = (
 /obj/decal/poster/wallsign/space,
@@ -7145,25 +7140,22 @@
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/west)
 "asW" = (
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
+	},
+/turf/simulated/floor/caution/westeast,
+/area/station/hallway/primary/west)
+"asX" = (
 /turf/simulated/floor/stairs/wide/middle{
 	dir = 8
 	},
 /area/station/hallway/primary/west)
-"asX" = (
-/obj/machinery/light{
-	dir = 4;
-	layer = 9.1;
-	pixel_x = 10
-	},
-/turf/simulated/floor/grey,
-/area/station/hallway/primary/west)
 "asY" = (
-/obj/airbridge_controller{
-	id = "northconnector";
-	tunnel_width = 2
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
 	},
-/turf/space,
-/area/space)
+/turf/simulated/floor/caution/westeast,
+/area/station/hallway/primary/north)
 "asZ" = (
 /obj/table/auto,
 /obj/item/paper_bin,
@@ -7553,15 +7545,19 @@
 	},
 /area/station/hallway/primary/west)
 "aug" = (
-/obj/disposalpipe/segment/mail/horizontal,
+/obj/machinery/light{
+	dir = 4;
+	layer = 9.1;
+	pixel_x = 10
+	},
+/turf/simulated/floor/grey,
+/area/station/hallway/primary/west)
+"auh" = (
+/obj/disposalpipe/segment/mail/bent/south,
 /obj/machinery/light/emergency,
 /turf/simulated/floor/stairs/wide{
 	dir = 8
 	},
-/area/station/hallway/primary/west)
-"auh" = (
-/obj/disposalpipe/segment/mail/bent/south,
-/turf/simulated/floor/grey,
 /area/station/hallway/primary/west)
 "aui" = (
 /obj/disposalpipe/segment/morgue{
@@ -8283,11 +8279,6 @@
 /obj/item/device/radio/intercom/engineering{
 	dir = 4
 	},
-/obj/machinery/light{
-	dir = 8;
-	layer = 9.1;
-	pixel_x = -10
-	},
 /turf/simulated/floor/black,
 /area/station/engine/storage)
 "awj" = (
@@ -8749,9 +8740,6 @@
 /turf/simulated/floor/specialroom/chapel,
 /area/station/chapel/sanctuary)
 "axo" = (
-/obj/cable{
-	icon_state = "2-8"
-	},
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
@@ -9104,6 +9092,9 @@
 	},
 /obj/landmark/start{
 	name = "Engineer"
+	},
+/obj/cable{
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/yellow/side{
 	dir = 8
@@ -9581,6 +9572,9 @@
 	dir = 8;
 	pixel_x = -12
 	},
+/obj/machinery/firealarm{
+	pixel_y = 24
+	},
 /turf/simulated/floor/wood/seven,
 /area/station/crew_quarters/info{
 	name = "Book Nook"
@@ -9592,7 +9586,10 @@
 /obj/landmark/start{
 	name = "Staff Assistant"
 	},
-/obj/machinery/light_switch/east,
+/obj/machinery/light/small{
+	dir = 4;
+	pixel_x = 12
+	},
 /turf/simulated/floor/wood/seven,
 /area/station/crew_quarters/info{
 	name = "Book Nook"
@@ -12576,6 +12573,10 @@
 /obj/item/storage/toolbox/mechanical,
 /obj/item/device/t_scanner,
 /obj/item/wrench,
+/obj/machinery/power/apc/autoname_west,
+/obj/cable{
+	icon_state = "0-4"
+	},
 /turf/simulated/floor/black,
 /area/station/engine/storage)
 "aGK" = (
@@ -43919,13 +43920,12 @@
 	},
 /area/station/turret_protected/Zeta)
 "dlP" = (
-/obj/machinery/computer/airbr{
-	density = 0;
-	icon = 'icons/obj/airtunnel.dmi';
-	id = "northconnector";
+/obj/decal/xmas_lights/ephemeral{
 	pixel_y = 32
 	},
-/turf/simulated/floor/grey,
+/turf/simulated/floor/stairs/wide{
+	dir = 4
+	},
 /area/station/hallway/primary/north)
 "dma" = (
 /obj/storage/secure/closet/brig,
@@ -44764,6 +44764,14 @@
 /obj/stool/bench/blue/auto,
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/quarters_east)
+"ejI" = (
+/obj/machinery/light{
+	dir = 8;
+	layer = 9.1;
+	pixel_x = -10
+	},
+/turf/simulated/floor,
+/area/station/hallway/primary/north)
 "ejP" = (
 /obj/stool/bench/red,
 /obj/disposalpipe/segment/brig{
@@ -47502,9 +47510,6 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
 "hly" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
 /turf/simulated/floor/yellow/side{
 	dir = 9
 	},
@@ -50320,9 +50325,10 @@
 /obj/item/storage/toolbox/electrical,
 /obj/item/clothing/gloves/yellow,
 /obj/item/device/multitool,
-/obj/machinery/power/apc/autoname_west,
-/obj/cable{
-	icon_state = "0-4"
+/obj/machinery/light{
+	dir = 8;
+	layer = 9.1;
+	pixel_x = -10
 	},
 /turf/simulated/floor/black,
 /area/station/engine/storage)
@@ -51154,10 +51160,7 @@
 /area/station/hallway/primary/west)
 "lRA" = (
 /obj/disposalpipe/segment/mail/horizontal,
-/obj/machinery/light/emergency,
-/turf/simulated/floor/stairs/wide/other{
-	dir = 4
-	},
+/turf/simulated/floor,
 /area/station/hallway/primary/north)
 "lSk" = (
 /turf/simulated/floor/black,
@@ -52592,7 +52595,10 @@
 /area/station/chapel/sanctuary)
 "nNQ" = (
 /obj/disposalpipe/segment/mail/bent/east,
-/turf/simulated/floor/grey,
+/obj/machinery/light/emergency,
+/turf/simulated/floor/stairs/wide/other{
+	dir = 4
+	},
 /area/station/hallway/primary/north)
 "nNY" = (
 /obj/storage/secure/closet/brig,
@@ -55634,6 +55640,15 @@
 	},
 /turf/simulated/floor,
 /area/station/routing/security)
+"rDI" = (
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 10;
+	name = "autoname - SS13";
+	tag = ""
+	},
+/turf/simulated/floor/grey,
+/area/station/hallway/primary/north)
 "rFf" = (
 /obj/machinery/atmospherics/valve{
 	high_risk = 1;
@@ -57082,10 +57097,12 @@
 	},
 /area/station/medical/medbooth)
 "tna" = (
-/turf/simulated/floor/stairs/wide/middle{
-	dir = 4
+/obj/airbridge_controller{
+	id = "northconnector";
+	tunnel_width = 2
 	},
-/area/station/hallway/primary/north)
+/turf/space,
+/area/space)
 "tnf" = (
 /obj/disposalpipe/segment/brig{
 	dir = 1
@@ -59512,7 +59529,7 @@
 	icon_state = "2-4"
 	},
 /obj/cable{
-	icon_state = "1-4"
+	icon_state = "4-8"
 	},
 /turf/simulated/floor,
 /area/station/engine/storage)
@@ -59837,6 +59854,14 @@
 /obj/decal/poster/wallsign/escape_right,
 /turf/simulated/wall/auto/supernorn,
 /area/station/ranch)
+"wHG" = (
+/obj/machinery/light{
+	dir = 8;
+	layer = 9.1;
+	pixel_x = -10
+	},
+/turf/simulated/floor/grey,
+/area/station/hallway/primary/north)
 "wHZ" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/brig)
@@ -60195,6 +60220,7 @@
 	name = "The Book Nook"
 	},
 /obj/disposalpipe/segment/vertical,
+/obj/firedoor_spawn,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/info{
 	name = "Book Nook"
@@ -60383,12 +60409,9 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
 "xnb" = (
-/obj/machinery/light{
-	dir = 8;
-	layer = 9.1;
-	pixel_x = -10
+/turf/simulated/floor/stairs/wide/middle{
+	dir = 4
 	},
-/turf/simulated/floor/grey,
 /area/station/hallway/primary/north)
 "xnq" = (
 /obj/wingrille_spawn/auto,
@@ -60781,9 +60804,7 @@
 /obj/machinery/firealarm{
 	pixel_y = 24
 	},
-/turf/simulated/floor/stairs/wide{
-	dir = 4
-	},
+/turf/simulated/floor,
 /area/station/hallway/primary/north)
 "xJq" = (
 /obj/lattice{
@@ -60953,10 +60974,13 @@
 /turf/simulated/floor,
 /area/station/engine/power)
 "xQm" = (
-/obj/machinery/door/airlock/pyro/external{
-	dir = 4
+/obj/machinery/computer/airbr{
+	density = 0;
+	icon = 'icons/obj/airtunnel.dmi';
+	id = "northconnector";
+	pixel_y = 32
 	},
-/turf/simulated/floor/caution/westeast,
+/turf/simulated/floor/grey,
 /area/station/hallway/primary/north)
 "xQB" = (
 /obj/grille/catwalk{
@@ -61386,6 +61410,14 @@
 	},
 /turf/simulated/floor,
 /area/station/security/main)
+"yjd" = (
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 1;
+	name = "autoname - SS13"
+	},
+/turf/simulated/floor/grey,
+/area/station/hallway/primary/west)
 "ykc" = (
 /obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating,
@@ -108672,8 +108704,8 @@ aoC
 apI
 aqN
 arS
-asW
-aug
+awR
+arA
 auQ
 auQ
 auQ
@@ -109276,8 +109308,8 @@ aoC
 apI
 aqN
 arU
-asV
-arU
+aug
+yjd
 aqN
 avW
 aqN
@@ -109576,11 +109608,11 @@ aaa
 aaa
 aaT
 apK
-aaa
-aaa
-asY
-aaa
-aaa
+aqN
+asW
+asV
+asW
+aqN
 avX
 aaT
 chj
@@ -109880,7 +109912,7 @@ aaa
 apK
 aaa
 aaa
-aaa
+tna
 aaa
 aaa
 avX
@@ -112900,7 +112932,7 @@ aaa
 apK
 aaa
 aaa
-aaa
+tna
 aaa
 aaa
 avX
@@ -113200,11 +113232,11 @@ aaa
 aaa
 abX
 apK
-aaa
-aaa
+aFv
 asY
-aaa
-aaa
+aGL
+asY
+aFv
 avX
 abX
 aaa
@@ -113496,23 +113528,23 @@ aqh
 agk
 aaa
 aaa
-aci
-aaa
-aaa
-aaa
+ach
+abZ
+abZ
+abZ
 aFv
 cCG
 aFv
 xQm
-aGL
-xQm
+wHG
+rDI
 aFv
 nbW
 aFv
-aaa
-aaa
-aaa
-aaa
+abZ
+abZ
+abZ
+abZ
 aCo
 aDw
 aCh
@@ -114108,7 +114140,7 @@ avq
 atC
 avq
 xIe
-tna
+uzL
 lRA
 auT
 auT
@@ -114712,7 +114744,7 @@ aKD
 uIf
 oIc
 aDt
-uzL
+ejI
 aBo
 auT
 guJ
@@ -115617,7 +115649,7 @@ aqd
 aqd
 apY
 aBv
-aDu
+bDr
 lkQ
 aum
 aKG
@@ -116221,7 +116253,7 @@ asg
 asg
 aqa
 avs
-bDr
+aDu
 atd
 aum
 auT
