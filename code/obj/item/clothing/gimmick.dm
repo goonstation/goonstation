@@ -984,32 +984,6 @@
 	icon_state = "mime"
 	see_face = 0.0
 
-	cursed
-		name = "smiling mime mask"
-		desc = "A mime mask stuck in a sardonic smile..."
-
-		equipped(var/mob/user, var/slot)
-			. = ..()
-			var/mob/living/carbon/human/H = user
-			if(istype(H) && slot == SLOT_WEAR_MASK)
-				if(user.mind && user.mind.assigned_role=="Mime" && istraitor(user))
-					src.cant_other_remove = 1.0
-					src.cant_self_remove = 0.0
-				else
-					user.show_text("[src] latches onto your face! It burns!","red")
-					src.cant_other_remove = 1.0
-					src.cant_self_remove = 1.0
-
-		afterattack(atom/target, mob/user, reach, params)
-			if(reach <= 1 && user.mind && user.mind.assigned_role == "Mime" && istraitor(user) && istype(user,/mob/living/carbon/human) && istype(target,/mob/living/carbon/human))
-				var/mob/living/carbon/human/attacker = user
-				var/mob/living/carbon/human/defender = target
-				if(defender.can_equip(src,defender.slot_wear_mask) )
-					attacker.visible_message(__red("[src] latches onto [defender]'s face!"),__red("You slap [src] onto [defender]'s face!'"))
-					logTheThing("combat",user,target,"forces [defender] to wear [src] (smiling mime mask) at [log_loc(defender)].")
-					attacker.u_equip(src)
-					defender.equip_if_possible(src,defender.slot_wear_mask)
-
 /obj/item/clothing/under/misc/mime
 	name = "mime suit"
 	desc = "The signature striped uniform of the mime. Not necessarily French."
