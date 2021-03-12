@@ -739,8 +739,8 @@ obj/screen/score_board
 /obj/deployable_turret/pod_wars
 	name = "Ship Defense Turret"
 	desc = "A ship defense turret."
-	health = 250
-	max_health = 250
+	health = 125
+	max_health = 125
 	wait_time = 20 //wait if it can't find a target
 	range = 8 // tiles
 	burst_size = 3 // number of shots to fire. Keep in mind the bullet's shot_count
@@ -749,6 +749,9 @@ obj/screen/score_board
 	quick_deploy_fuel = 2
 	var/deployer_path = /obj/deployable_turret/pod_wars
 	var/destroyed = 0
+	var/reconstruction_time = 5 MINUTES
+
+	//Might be nice to allow players to "repair"  Dead turrets to speed up their timer, but not now. too lazy - kyle
 
 	New(var/direction)
 		..(direction=direction)
@@ -761,7 +764,7 @@ obj/screen/score_board
 			new /obj/decal/cleanable/robot_debris(src.loc)
 			src.alpha = 30
 			src.opacity = 0
-			sleep(5 MINUTES)
+			sleep(reconstruction_time)
 			src.opacity = 1
 			src.alpha = 255
 			health = initial(health)

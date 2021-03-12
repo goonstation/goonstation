@@ -99,6 +99,11 @@ SHARDS
 
 		if (!( istype(user.loc, /turf/simulated) ))
 			return
+//no glass for pod wars either. man this is getting out of hand. Sorry zewaka. - kyle
+#ifdef MAP_OVERRIDE_POD_WARS
+		if ((istype(user.loc, /turf/simulated)) || istype(user.loc, /turf/space))
+			return
+#endif
 		switch(alert("Sheet-Glass", "Would you like full tile glass or one direction?", "one direct", "full (2 sheets)", "cancel", null))
 			if("one direct")
 				var/obj/window/W
