@@ -1837,7 +1837,7 @@
 			else
 				return M.loc
 
-		else if (istype(over_object,/turf/simulated/floor/) || istype(over_object,/turf/unsimulated/floor/))
+		else if (istype(src.output_target,/turf/simulated/floor/) || istype(src.output_target,/turf/unsimulated/floor/))
 			return src.output_target
 
 		else

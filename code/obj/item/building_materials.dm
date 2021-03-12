@@ -305,6 +305,12 @@ MATERIAL
 					return
 			else
 				return
+//You can't build! The if is to stop compiler warnings
+#ifdef MAP_OVERRIDE_POD_WARS
+		if (src)
+			boutput(usr, "<span class='alert'>What are you gonna do with this? You have a very particular set of skills, and building is not one of them...</span>")
+			return
+#endif
 
 		if (href_list["make"])
 			if (src.amount < 1)
@@ -488,12 +494,6 @@ MATERIAL
 					var/turf/T = get_turf(usr)
 					var/area/A = get_area (usr)
 
-//for now, any turf can't be built on.
-#ifdef MAP_OVERRIDE_POD_WARS
-					if (!isturf(T))
-						boutput(usr, "<span class='alert'>You can't build girders here.</span>")
-						return
-#endif
 					if (!istype(T, /turf/simulated/floor))
 						boutput(usr, "<span class='alert'>You can't build girders here.</span>")
 						return

@@ -96,14 +96,15 @@ SHARDS
 		. += "There are [src.amount] glass sheet\s on the stack."
 
 	attack_self(mob/user as mob)
+//no glass for pod wars either. man this is getting out of hand. Sorry zewaka. - kyle
+#ifdef MAP_OVERRIDE_POD_WARS
+		if (user.loc)
+			boutput(usr, "<span class='alert'>What are you gonna do with this? You have a very particular set of skills, and building is not one of them...</span>")
+			return
+#endif
 
 		if (!( istype(user.loc, /turf/simulated) ))
 			return
-//no glass for pod wars either. man this is getting out of hand. Sorry zewaka. - kyle
-#ifdef MAP_OVERRIDE_POD_WARS
-		if ((istype(user.loc, /turf/simulated)) || istype(user.loc, /turf/space))
-			return
-#endif
 		switch(alert("Sheet-Glass", "Would you like full tile glass or one direction?", "one direct", "full (2 sheets)", "cancel", null))
 			if("one direct")
 				var/obj/window/W

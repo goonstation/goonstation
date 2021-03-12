@@ -23,7 +23,7 @@
 	var/datum/pod_wars_team/team_NT
 	var/datum/pod_wars_team/team_SY
 
-	var/obj/screen/score_board/board
+	var/atom/movable/screen/hud/score_board/board
 	var/round_limit = 40 MINUTES
 	var/force_end = 0
 
@@ -92,15 +92,15 @@
 			return
 #endif
 
-//search an area for a obj/control_point_computer, make the datum
-/datum/game_mode/pod_wars/proc/add_control_point(var/path, var/name)
-	var/list/turfs = get_area_turfs(path, 1)
-	for (var/turf/T in turfs)
-		var/obj/control_point_computer/CPC = locate(/obj/control_point_computer) in T.contents
-		if (CPC)
-			var/datum/control_point/P = new/datum/control_point(CPC, get_area_by_type(path), name)
-			CPC.ctrl_pt = P 	//computer's reference to datum
-			control_points += P
+// //search an area for a obj/control_point_computer, make the datum
+// /datum/game_mode/pod_wars/proc/add_control_point(var/path, var/name)
+// 	var/list/turfs = get_area_turfs(path, 1)
+// 	for (var/turf/T in turfs)
+// 		var/obj/control_point_computer/CPC = locate(/obj/control_point_computer) in T.contents
+// 		if (CPC)
+// 			var/datum/control_point/P = new/datum/control_point(CPC, get_area_by_type(path), name)
+// 			CPC.ctrl_pt = P 	//computer's reference to datum
+// 			control_points += P
 
 
 /datum/game_mode/pod_wars/post_setup()
@@ -111,19 +111,24 @@
 		// add_control_point(/area/pod_wars/spacejunk/fstation, FORTUNA)
 		// add_control_point(/area/pod_wars/spacejunk/uvb67, UBV67)
 
+		//hacky way. lame, but fast (for me). What else is going on in the post_setup anyway?
 		for (var/obj/control_point_computer/CPC in world)
 			var/area/A = get_area(CPC)
 			var/name = ""
+			var/true_name = ""
 			if (istype(A, /area/pod_wars/spacejunk/reliant))
-				name = RELIANT
+				name = "The NSV Reliant"
+				true_name = RELIANT
 			else if (istype(A, /area/pod_wars/spacejunk/fstation))
-				name = FORTUNA
+				name = "Fortuna Station"
+				true_name = FORTUNA
 			else if (istype(A, /area/pod_wars/spacejunk/uvb67))
-				name = UBV67
-			var/datum/control_point/P = new/datum/control_point(CPC, A, name)
+				name = "UBV-67"
+				true_name = UBV67
+			var/datum/control_point/P = new/datum/control_point(CPC, A, name, true_name, src)
 
-			CPC.ctrl_pt = P 	//computer's reference to datum
-			control_points += P
+			CPC.ctrl_pt = P 		//computer's reference to datum
+			control_points += P 	//game_mode's reference to the point
 
 	SPAWN_DBG(-1)
 		setup_asteroid_ores()
@@ -271,6 +276,18 @@ ABSTRACT_TYPE(/datum/ore_cluster)
 		team_SY.points = amt
 		handle_point_change(team_SY)
 
+//handles what happens when the a control point is captured by a team
+//true_name = name of the point captured
+//user = who did the capturing? //might remove later if I change the capture system
+//team = the team datum
+//team_num = 1 or 2 for NT or SY respectively
+/datum/game_mode/pod_wars/proc/handle_control_pt_change(var/true_name, var/mob/user, var/datum/pod_wars_team/team, var/team_num)
+	
+	board.change_control_point_owner(true_name, team, team_num)
+
+	var/team_string = "[team_num == 1 ? "NanoTrasen" : team_num == 2 ? "The Syndicate" : "Something Eldritch"]"
+	boutput(world, "<h4><span class='[team_num == 1 ? "notice":"alert"]'>[user] captured [name] for [team_string]!</span></h4>")
+	world << sound('sound/misc/newsting.ogg')
 
 /datum/game_mode/pod_wars/proc/handle_point_change(var/datum/pod_wars_team/team)
 	var/fraction = round (team.points/team.max_points, 0.01)
@@ -656,18 +673,23 @@ ABSTRACT_TYPE(/datum/ore_cluster)
 
 
 //////////////////SCOREBOARD STUFF//////////////////
-obj/screen/score_board
+//only the board really need to be a hud.  I guess the others could too, but it doesn't matter.
+/atom/movable/screen/hud/score_board
 	name = "Score"
 	desc = ""
 	icon = 'icons/misc/128x32.dmi'
 	icon_state = "pw_backboard"
 	screen_loc = "NORTH, CENTER"
-	var/obj/screen/border = null
-	var/obj/screen/pw_score_bar/bar_NT = null
-	var/obj/screen/pw_score_bar/bar_SY = null
+	var/atom/movable/screen/border = null
+	var/atom/movable/screen/pw_score_bar/bar_NT = null
+	var/atom/movable/screen/pw_score_bar/bar_SY = null
+
+	var/list/control_points
+
 	var/theme = null
 	alpha = 150
 
+	//builds all the pieces and adds em to the score_board whose sprite is the backboard
 	New()
 		..()
 		border = new(src)
@@ -676,12 +698,35 @@ obj/screen/score_board
 		border.icon_state = "pw_border"
 		border.vis_flags = VIS_INHERIT_ID
 
-		bar_NT = new /obj/screen/pw_score_bar/nt(src)
-		bar_SY = new /obj/screen/pw_score_bar/sy(src)
+		create_and_add_hud_objects()
 
+	proc/create_and_add_hud_objects()
+		//Score Points bars
+		bar_NT = new /atom/movable/screen/pw_score_bar/nt(src)
+		bar_SY = new /atom/movable/screen/pw_score_bar/sy(src)
+
+		//Control Points creation and adding to list
+		control_points = list()
+		control_points.Add(new/atom/movable/screen/control_point/ubc67())
+		control_points.Add(new/atom/movable/screen/control_point/reliant())
+		control_points.Add(new/atom/movable/screen/control_point/fortuna())
+		
+		//add em all to vis_contents
 		src.vis_contents += bar_NT
 		src.vis_contents += bar_SY
 		src.vis_contents += border
+
+		for (var/atom/movable/screen/S in control_points)
+			src.vis_contents += S
+
+	///takes the control point screen object's true_name var and the team_num of the new owner: NT=1, SY=2
+	proc/change_control_point_owner(var/true_name, var/team, var/team_num)
+
+		for (var/atom/movable/screen/control_point/C in control_points)
+			if (true_name == C.true_name)
+				C.change_color(team_num)
+				break;	//Only ever gonna be one of em.
+
 
 	MouseEntered(location, control, params)
 		if (usr.client.tooltipHolder && control == "mapwindow.map")
@@ -698,20 +743,67 @@ obj/screen/score_board
 		if (usr.client.tooltipHolder)
 			usr.client.tooltipHolder.hideHover()
 
-/obj/screen/pw_score_bar
+/atom/movable/screen/pw_score_bar
 	icon = 'icons/misc/128x32.dmi'
 	desc = ""
 	vis_flags = VIS_INHERIT_ID
 	var/points = 50
-	var/max_points = 100
+	// var/max_points = 100		//unused I think.
 
-/obj/screen/pw_score_bar/nt
+/atom/movable/screen/pw_score_bar/nt
 	name = "NanoTrasen Points"
 	icon_state = "pw_nt"
 
-/obj/screen/pw_score_bar/sy
+/atom/movable/screen/pw_score_bar/sy
 	name = "Syndicate Points"
 	icon_state = "pw_sy"
+
+//displays the owner of the capture point based on colour
+/atom/movable/screen/control_point
+	name = "Score"
+	desc = ""
+	icon = 'icons/ui/context16x16.dmi'		//re-appropriating this solid circle sprite from here
+	icon_state = "key_special1"
+	screen_loc = "NORTH, CENTER"
+	pixel_y = 8
+	var/true_name = null 		//backend name, var/name is the human readable name
+
+	///team, neutral = 0, NT = 1, SY = 2
+	proc/change_color(var/team)
+		//Colours kinda off, but I wanted em to stand out against the background.
+		switch(team)
+			if (TEAM_NANOTRASEN)
+				color = "#004EFF"
+			if (TEAM_SYNDICATE)
+				color = "#FF004E"
+			else
+				color = null
+
+	//You might be asking yourself "What are all these random pixel_x values?" They are the pixel coords ~ 1/4, 1/2, and 3/4 
+	//accross the bar. Then you might ask, "Why didn't you just divide by the length of the bar?" Of course I tried that, but I couldn't
+	//fucking FIND that value. Why does that not exist? it seems like it should, after all, the mouse knows the bounds? Well, I don't know.
+
+	//left
+	ubc67
+		name = "UBV-67"
+		true_name = UBV67
+		pixel_x = 25
+
+		screen_loc = "NORTH, CENTER-1:-16"
+
+	//center
+	reliant
+		name = "NSV Reliant"
+		true_name = RELIANT
+		pixel_x = 57
+		screen_loc = "NORTH, CENTER"
+
+	//right
+	fortuna
+		name = "Fortuna Station"
+		true_name = FORTUNA
+		screen_loc = "NORTH, CENTER-1:16"
+		pixel_x = 91
 
 
 /obj/item/turret_deployer/pod_wars
@@ -1361,6 +1453,8 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 	proc/add_all_abilities()
 		src.addAbility(/datum/targetable/pod_pilot/scoreboard)
 
+//can't remember why I did this as an ability. Probably better to add directly like I did in kudzumen, but later... -kyle
+//Wait, maybe I never used this. I can't remember, it's too late now to think and I'll just keep it in case I secretly had a good reason to do this.
 /datum/targetable/pod_pilot
 	icon = 'icons/mob/pod_pilot_abilities.dmi'
 	icon_state = "template"
@@ -1515,10 +1609,12 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 	meteorhit(var/obj/O as obj)
 		return
 
-	proc/capture(var/mob/user, var/team)
-		owner_team = team
-		update_light_colour()
-		ctrl_pt.receive_capture(user, team)
+	//called from the action bar completion in src.attack_hand()
+	proc/capture(var/mob/user, var/team_num)
+		owner_team = team_num
+		update_light_color()
+
+		ctrl_pt.receive_capture(user, team_num)
 
 	attack_hand(mob/user as mob)
 		var/user_team_string = user?.mind?.special_role
@@ -1594,7 +1690,7 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 	// 	receive_capture_start(user, user_team)
 
 	//change colour and owner team when captured.
-	proc/update_light_colour()
+	proc/update_light_color()
 		//blue for NT|1, red for SY|2, white for neutral|0.
 		if (owner_team == TEAM_NANOTRASEN)
 			light_r = 0
@@ -1639,32 +1735,45 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 	var/list/beacons = list()
 	var/obj/control_point_computer/computer
 	var/area/capture_area
-	var/capture_value = 0		//values from -100 to 100. Positives denote NT, negatives denote SY.  	/////////UNUSED
-	var/capture_rate = 1		//1 or 3 based on if a commander has entered their code.  				/////////UNUSED
-	var/capturing_team			//0 if not moving, either uncaptured or at max capture. 1=NT, 2=SY  	/////////UNUSED
-	var/owner_team				//1=NT, 2=SY
+	var/capture_value = 0				//values from -100 to 100. Positives denote NT, negatives denote SY.  	/////////UNUSED
+	var/capture_rate = 1				//1 or 3 based on if a commander has entered their code.  				/////////UNUSED
+	var/capturing_team					//0 if not moving, either uncaptured or at max capture. 1=NT, 2=SY  	/////////UNUSED
+	var/owner_team						//1=NT, 2=SY
+	var/true_name						//backend name, var/name is the user readable name
+	var/datum/game_mode/pod_wars/mode
 
-	New(var/obj/control_point_computer/computer, var/area/capture_area, var/name)
+	New(var/obj/control_point_computer/computer, var/area/capture_area, var/name, var/true_name, var/datum/game_mode/pod_wars/mode)
 		..()
 		src.computer = computer
 		src.capture_area = capture_area
 		src.name = name
+		src.true_name = true_name
+		src.mode = mode
 
 		for(var/obj/warp_beacon/pod_wars/B in warp_beacons)
 			if (B.control_point == name)
 				src.beacons += B
 
 
-	proc/receive_capture(var/mob/user, var/team)
-		src.owner_team = team
+	proc/receive_capture(var/mob/user, var/team_num)
+		src.owner_team = team_num
 
 		//update beacon teams
 		for (var/obj/warp_beacon/pod_wars/B in beacons)
-			B.current_owner = team
+			B.current_owner = team_num
 
-		var/team_string = "[team == 1 ? "NanoTrasen" : team == 2 ? "The Syndicate" : "Something Eldritch"]"
-		boutput(world, "<h4><span class='[team == 1 ? "notice":"alert"]'>[user] captured [name] for [team_string]!</span></h4>")
-		world << sound('sound/misc/newsting.ogg')
+		//This needs to give the actual team up to the control point datum, which in turn gives it to the game_mode datum to handle it
+		//I don't think I do anything special with the team there yet, but I might want it for something eventually. Most things are just fine with the team_num.
+
+		var/datum/pod_wars_team/team = null
+		if (locate(user.mind) in mode.team_NT.members)
+			team = mode.team_NT
+		else if (locate(user.mind) in mode.team_SY.members)
+			team = mode.team_SY
+
+		//update scoreboard 
+		mode.handle_control_pt_change(src.true_name, user, team, team_num)
+
 
 //I'll probably remove this all cause it's so shit, but in case I want to come back and finish it, I leave - kyle
 	// proc/receive_prevent_capture(var/mob/user, var/user_team)
