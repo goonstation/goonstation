@@ -15356,6 +15356,9 @@
 /obj/stool/chair/blue{
 	dir = 4
 	},
+/obj/landmark/start{
+	name = "Mime"
+	},
 /turf/simulated/floor/specialroom/clown,
 /area/station/crew_quarters/clown)
 "bpi" = (
