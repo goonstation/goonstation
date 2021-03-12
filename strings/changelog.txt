@@ -1,4 +1,17 @@
 
+(t)thu mar 11 21
+(u)Comradef191
+(p)3724
+(e)🗺|mapping
+(*)Re-Added AI Displays to all currenty in-rotation maps.
+(u)BatElite
+(p)3711
+(e)🆕🎨|feature, sprites
+(+)The floor and wall planner now has a mode for reverting changes to turfs, so you can undo the avant-garde redecorating of any construction worker you manage to catch!
+(u)Chickenish
+(p)3922
+(e)⚖🆕|balance, feature
+(+)Stowaways are no longer in the manifest.
 (t)wed mar 10 21
 (u)Camryn Buttes
 (p)3909

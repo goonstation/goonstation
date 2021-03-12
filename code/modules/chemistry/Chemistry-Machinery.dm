@@ -773,9 +773,13 @@ datum/chemicompiler_core/stationaryCore
 	var/active = 0
 	var/overall_temp = T20C
 	var/target_temp = T20C
+	var/heating = 0
+	var/distilling = 0
+	var/cracking = 0
 	var/obj/item/reagent_containers/glass/beaker/extractor_tank/thick/bottoms = new
 	var/obj/item/reagent_containers/glass/beaker/extractor_tank/tops = new
 	var/obj/item/reagent_containers/glass/beaker/extractor_tank/feed = new
+	var/obj/item/reagent_containers/glass/beaker/extractor_tank/overflow = new
 	var/obj/item/reagent_containers/user_beaker = null
 
 	New()
@@ -784,14 +788,42 @@ datum/chemicompiler_core/stationaryCore
 	process(var/mult)
 		if(!active)
 			UnsubscribeProcess()
-		heat_up()
-		distill(mult)
+		if(heating)
+			heat_up()
+		if(distilling)
+			distill(mult)
+		if(cracking)
+			do_cracking(bottoms,mult)
+		bottoms.reagents.temperature_reagents(T20C, 1)
+
+	proc/check_tank(var/obj/item/reagent_containers/tank,var/headroom)
+		if(tank.reagents.total_volume >= tank.reagents.maximum_volume - headroom)
+			tank.reagents.trans_to(overflow,(headroom*0.1))
+		if(overflow.reagents.total_volume >= overflow.reagents.maximum_volume - headroom)
+			src.visible_message("<span class='alert'>The internal overflow safety dumps its contents all over the floor!.</span>","<span class='alert'>You hear a tremendous gushing sound.</span>")
+			var/turf/T = get_turf(src)
+			overflow.reagents.reaction(T)
+
+	proc/do_cracking(var/obj/item/reagent_containers/R, var/amount)
+		if(R && R.reagents)
+			for(var/datum/reagent/reggie in R)
+				if(reggie.can_crack)
+					reggie.crack(amount)
+
 
 	proc/distill(var/amount)
-		for(var/datum/reagent/R in get_vapours(bottoms))
-			bottoms.reagents.remove_reagent(R.id,amount)
-			tops.reagents.add_reagent(R.id,amount)
-			feed.reagents.trans_to(bottoms,amount)
+		var/vapour_list = get_vapours(bottoms)
+		if(vapour_list)
+			heating = 0
+			for(var/datum/reagent/R in vapour_list)
+				bottoms.reagents.remove_reagent(R.id,amount)
+				tops.reagents.add_reagent(R.id,amount)
+				check_tank(tops,50)
+				feed.reagents.trans_to(bottoms,amount)
+				check_tank(bottoms,100)
+		else
+			if(bottoms.reagents && bottoms.reagents.reagent_list.len)
+				heating = 1
 
 	proc/heat_up()
 		var/vapor_temp = min(get_lowest_temp(bottoms),target_temp)
