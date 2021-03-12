@@ -745,21 +745,6 @@
 	user.TakeDamage("head", 150, 0)
 	return 1
 
-/obj/item/knife/butcher/generic //a butcher knife that doesn't butcher corpses into meat
-	name = "intimidating knife"
-	attack(target as mob, mob/user as mob)
-		if(!istype(src,/obj/item/knife/butcher/predspear) && ishuman(target) && ishuman(user))
-			if(scalpel_surgery(target,user))
-				return
-
-		playsound(target, 'sound/impact_sounds/Flesh_Stab_1.ogg', 60, 1)
-
-		if(iscarbon(target))
-			var/mob/living/carbon/C = target
-			if(!isdead(C))
-				random_brute_damage(C, 20,1)//no more AP butcher's knife, jeez
-				take_bleeding_damage(C, user, 10, DAMAGE_STAB)
-
 /////////////////////////////////////////////////// Hunter Spear ////////////////////////////////////////////
 
 /obj/item/knife/butcher/predspear

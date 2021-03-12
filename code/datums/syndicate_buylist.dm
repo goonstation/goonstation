@@ -464,15 +464,6 @@ This is basically useless for anyone but miners.
 
 //////////////////////////////////////////////// Job-specific items  ////////////////////////////////////////////////////
 
-/datum/syndicate_buylist/traitor/cursedmime
-	name = "Smiling Mime Mask"
-	item = /obj/item/clothing/mask/mime/cursed
-	cost = 3
-	vr_allowed = 0
-	desc = "A cursed object that constricts the throat of the wearer if they try to speak."
-	job = list("Mime")
-	blockedmode = list(/datum/game_mode/spy)
-
 /datum/syndicate_buylist/traitor/clowncar
 	name = "Clown Car"
 	item = /obj/vehicle/clowncar/surplus
@@ -684,7 +675,7 @@ This is basically useless for anyone but miners.
 	item = /obj/item/gun/energy/pickpocket
 	cost = 3
 	desc = "A stealthy claw gun capable of stealing and planting items, and severely messing with people."
-	job = list("Engineer", "Chief Engineer", "Mechanic", "Clown", "Staff Assistant","Mime")
+	job = list("Engineer", "Chief Engineer", "Mechanic", "Clown", "Staff Assistant")
 	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/revolution)
 
 /datum/syndicate_buylist/traitor/poisonbottle
@@ -772,14 +763,6 @@ This is basically useless for anyone but miners.
 	desc = "An extremely sharp knife with a weighted handle for accurate throwing. Caution: May cause extreme bleeding if the cutting edge comes into contact with human flesh."
 	not_in_crates = 1
 	job = list("Chef")
-	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/spy_theft, /datum/game_mode/revolution)
-
-/datum/syndicate_buylist/traitor/generic_butcherknife
-	name = "Intimidating Knife"
-	item = /obj/item/knife/butcher/generic
-	cost = 7
-	desc = "An extremely sharp knife with a weighted handle for accurate throwing. Caution: May cause extreme bleeding if the cutting edge comes into contact with human flesh."
-	job = list("Mime")
 	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/spy_theft, /datum/game_mode/revolution)
 
 /datum/syndicate_buylist/traitor/moonshine
