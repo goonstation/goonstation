@@ -23,18 +23,18 @@ datum/preferences
 	var/medical_note
 	var/employment_note
 
-
-	var/be_changeling = 0
-	var/be_revhead = 0
-	var/be_syndicate = 0
-	var/be_wizard = 0
 	var/be_traitor = 0
-	var/be_werewolf = 0
-	var/be_vampire = 0
+	var/be_syndicate = 0
 	var/be_spy = 0
 	var/be_gangleader = 0
+	var/be_revhead = 0
+	var/be_changeling = 0
+	var/be_wizard = 0
+	var/be_werewolf = 0
+	var/be_vampire = 0
 	var/be_wraith = 0
 	var/be_blob = 0
+	var/be_conspirator = 0
 	var/be_flock = 0
 	var/be_misc = 0
 
@@ -61,6 +61,8 @@ datum/preferences
 	var/list/jobs_med_priority = list()
 	var/list/jobs_low_priority = list()
 	var/list/jobs_unwanted = list()
+
+	var/pda_ringtone_index = "Two-Beep"
 
 	var/datum/appearanceHolder/AH = new
 
@@ -179,11 +181,11 @@ datum/preferences
 		if (!data_cache)
 			data_cache = list("script" = null,"css" = null,"profile_name" = null,"character_name" = null,"gender" = null,"age_blood" = null,\
 								"bank" = null,"flavortext" = null,"security_note" = null,"medical_note" = null,"occupation" = null,"traits" = null,\
-								"fartsound" = null,"screamsound" = null,"chatsound" = null,"PDAcolor"=null,"skintone" = null,"eyecolor" = null,"hair_top" = null,"hair_mid" = null,"hair_bottom" = null,\
+								"fartsound" = null,"screamsound" = null,"chatsound" = null,"PDAcolor" = null,"PDA_ringtone" = null,"skintone" = null,"eyecolor" = null,"hair_top" = null,"hair_mid" = null,"hair_bottom" = null,\
 								"underwear" = null,"randomize" = null,"font_size" = null,"messages" = null,"hud" = null,"tooltips" = null, "tgui" = null,"popups" = null,"controls" = null,"map"=null)
 			rebuild_data = list("script" = 1,"css" = 1,"profile_name" = 1,"character_name" = 1,"gender" = 1,"age_blood" = 1,\
 								"bank" = 1,"flavortext" = 1,"security_note" = 1,"medical_note" = 1,"occupation" = 1,"traits" = 1,\
-								"fartsound" = 1,"screamsound" = 1,"chatsound" = 1,"PDAcolor" = 1,"skintone" = 1,"eyecolor" = 1,"hair_top" = 1,"hair_mid" = 1,"hair_bottom" = 1,\
+								"fartsound" = 1,"screamsound" = 1,"chatsound" = 1,"PDAcolor" = 1,"PDA_ringtone" = 1,"skintone" = 1,"eyecolor" = 1,"hair_top" = 1,"hair_mid" = 1,"hair_bottom" = 1,\
 								"underwear" = 1,"randomize" = 1,"font_size" = 1,"messages" = 1,"hud" = 1,"tooltips" = 1, "tgui" = 1, "popups" = 1,"controls" = 1,"map"=1)
 		if (!profile_cache)
 			profile_cache = list()
@@ -558,6 +560,18 @@ $(updateCharacterPreviewPos);
 		<td>
 			<a href='[pref_link]PDAcolor=input'>&#9998;</a>
 			<span class='colorbit' style="background-color: [src.PDAcolor];">[src.PDAcolor]</span>
+		</td>
+	</tr>"}
+			LAGCHECK(80)
+		if (rebuild_data["PDA_ringtone"])
+			rebuild_data["PDA_ringtone"] = 0
+			data_cache["PDA_ringtone"] = {"
+	<tr>
+		<th>
+			PDA Ringtone<span class="info-thing" title="The noises your PDA makes when someone sends it a message. Also loads your PDA with the ringtone's respective program!">?</span>
+		</th>
+		<td colspan="2">
+			<a href="[pref_link]ringtonewindow=1">[src.pda_ringtone_index]</a> - <a href="[pref_link]previewringtone=1">Preview!</a>
 		</td>
 	</tr>"}
 			LAGCHECK(80)
@@ -1161,17 +1175,18 @@ $(updateCharacterPreviewPos);
 
 		if (jobban_isbanned(user, "Syndicate"))
 			HTML += "You are banned from playing antagonist roles."
-			src.be_changeling = 0
-			src.be_revhead = 0
-			src.be_syndicate = 0
-			src.be_wizard = 0
 			src.be_traitor = 0
-			src.be_werewolf = 0
-			src.be_vampire = 0
+			src.be_syndicate = 0
 			src.be_spy = 0
 			src.be_gangleader = 0
+			src.be_revhead = 0
+			src.be_changeling = 0
+			src.be_wizard = 0
+			src.be_werewolf = 0
+			src.be_vampire = 0
 			src.be_wraith = 0
 			src.be_blob = 0
+			src.be_conspirator = 0
 			src.be_flock = 0
 		else
 
@@ -1187,6 +1202,7 @@ $(updateCharacterPreviewPos);
 			<a href="byond://?src=\ref[src];preferences=1;b_vampire=1" class="[src.be_vampire ? "yup" : "nope"]">[crap_checkbox(src.be_vampire)] Vampire</a>
 			<a href="byond://?src=\ref[src];preferences=1;b_wraith=1" class="[src.be_wraith ? "yup" : "nope"]">[crap_checkbox(src.be_wraith)] Wraith</a>
 			<a href="byond://?src=\ref[src];preferences=1;b_blob=1" class="[src.be_blob ? "yup" : "nope"]">[crap_checkbox(src.be_blob)] Blob</a>
+			<a href="byond://?src=\ref[src];preferences=1;b_conspirator=1" class="[src.be_conspirator ? "yup" : "nope"]">[crap_checkbox(src.be_conspirator)] Conspirator</a>
 			<a href="byond://?src=\ref[src];preferences=1;b_flock=1" class="[src.be_flock ? "yup" : "nope"]">[crap_checkbox(src.be_flock)] Flockmind</a>
 			<a href="byond://?src=\ref[src];preferences=1;b_misc=1" class="[src.be_misc ? "yup" : "nope"]">[crap_checkbox(src.be_misc)] Other Foes</a>
 		"}
@@ -1728,6 +1744,24 @@ $(updateCharacterPreviewPos);
 			rebuild_data["PDAcolor"] = 1
 			src.PDAcolor = input(usr, "Choose a color", "PDA", src.PDAcolor) as color | null
 
+		if (link_tags["ringtonewindow"])
+			rebuild_data["PDA_ringtone"] = 1
+			get_all_character_setup_ringtones()
+			if(!length(selectable_ringtones))
+				src.pda_ringtone_index = "Two-Beep"
+				alert(usr, "Oh no! The JamStar-DCXXI PDA ringtone distribution satellite is out of range! Please try again later.", "x.x ringtones broke x.x", "Okay")
+				logTheThing("debug", usr ? usr : null, null, "get_all_character_setup_ringtones() didn't return anything!")
+			else
+				src.pda_ringtone_index = input(usr, "Choose a ringtone", "PDA") as null|anything in selectable_ringtones
+				if (!(src.pda_ringtone_index in selectable_ringtones))
+					src.pda_ringtone_index = "Two-Beep"
+
+		if (link_tags["previewringtone"])
+			get_all_character_setup_ringtones()
+			var/datum/ringtone/RT = selectable_ringtones[src.pda_ringtone_index]
+			if(istype(RT) && length(RT.ringList))
+				usr << sound( RT.ringList[rand(1,length(RT.ringList))] )
+
 		if (link_tags["preferred_map"])
 			rebuild_data["map"] = 1
 			src.preferred_map = mapSwitcher.clientSelectMap(usr.client,pickable=0)
@@ -1759,38 +1793,13 @@ $(updateCharacterPreviewPos);
 			rebuild_data["popups"] = 1
 			src.view_tickets = !(src.view_tickets)
 
-		if (link_tags["b_changeling"])
-			src.be_changeling = !( src.be_changeling )
-			src.SetChoices(user)
-			return
-
-		if (link_tags["b_revhead"])
-			src.be_revhead = !( src.be_revhead )
-			src.SetChoices(user)
-			return
-
-		if (link_tags["b_syndicate"])
-			src.be_syndicate = !( src.be_syndicate )
-			src.SetChoices(user)
-			return
-
-		if (link_tags["b_wizard"])
-			src.be_wizard = !( src.be_wizard)
-			src.SetChoices(user)
-			return
-
 		if (link_tags["b_traitor"])
 			src.be_traitor = !( src.be_traitor)
 			src.SetChoices(user)
 			return
 
-		if (link_tags["b_werewolf"])
-			src.be_werewolf = !( src.be_werewolf)
-			src.SetChoices(user)
-			return
-
-		if (link_tags["b_vampire"])
-			src.be_vampire = !( src.be_vampire)
+		if (link_tags["b_syndicate"])
+			src.be_syndicate = !( src.be_syndicate )
 			src.SetChoices(user)
 			return
 
@@ -1804,6 +1813,30 @@ $(updateCharacterPreviewPos);
 			src.SetChoices(user)
 			return
 
+		if (link_tags["b_revhead"])
+			src.be_revhead = !( src.be_revhead )
+			src.SetChoices(user)
+			return
+
+		if (link_tags["b_changeling"])
+			src.be_changeling = !( src.be_changeling )
+			src.SetChoices(user)
+
+		if (link_tags["b_wizard"])
+			src.be_wizard = !( src.be_wizard)
+			src.SetChoices(user)
+			return
+
+		if (link_tags["b_werewolf"])
+			src.be_werewolf = !( src.be_werewolf)
+			src.SetChoices(user)
+			return
+
+		if (link_tags["b_vampire"])
+			src.be_vampire = !( src.be_vampire)
+			src.SetChoices(user)
+			return
+
 		if (link_tags["b_wraith"])
 			src.be_wraith = !( src.be_wraith)
 			src.SetChoices(user)
@@ -1813,6 +1846,12 @@ $(updateCharacterPreviewPos);
 			src.be_blob = !( src.be_blob)
 			src.SetChoices(user)
 			return
+
+		if (link_tags["b_conspirator"])
+			src.be_conspirator = !( src.be_conspirator )
+			src.SetChoices(user)
+			return
+
 		if (link_tags["b_flock"])
 			src.be_flock = !( src.be_flock)
 			src.SetChoices(user)
@@ -1969,23 +2008,25 @@ $(updateCharacterPreviewPos);
 			admin_music_volume = 50
 			radio_music_volume = 50
 			use_click_buffer = 0
-			be_changeling = 0
-			be_revhead = 0
-			be_syndicate = 0
-			be_wizard = 0
-			be_wraith = 0
-			be_blob = 0
-			be_flock = 0
-			be_misc = 0
 			be_traitor = 0
-			be_werewolf = 0
-			be_vampire = 0
+			be_syndicate = 0
 			be_spy = 0
 			be_gangleader = 0
+			be_revhead = 0
+			be_changeling = 0
+			be_wizard = 0
+			be_werewolf = 0
+			be_vampire = 0
+			be_wraith = 0
+			be_blob = 0
+			be_conspirator = 0
+			be_flock = 0
+			be_misc = 0
 			tooltip_option = TOOLTIP_ALWAYS
 			tgui_fancy = TRUE
 			tgui_lock = FALSE
 			PDAcolor = "#6F7961"
+			pda_ringtone_index = "Two-Beep"
 			if (!force_random_names)
 				be_random_name = 0
 			else

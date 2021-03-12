@@ -245,40 +245,40 @@
 		target = null
 		activating = 0
 
-	proc/activate()
+	proc/activate(mob/user)
 		if(activating) return
 		var/turf/T = get_turf(src)
 		if(isrestrictedz(T.z))
-			boutput(target, "<span class='notice'>The [src] buzzes oddly, and nothing further happens.</span>")
+			boutput(user, "<span class='notice'>The [src] buzzes oddly, and nothing further happens.</span>")
 			return
 
 		if(locate(/obj/cable) in get_turf(src))
 
 			if(on_cooldown)
-				boutput(usr, "<span class='alert'>The [src] is still recharging.</span>")
+				boutput(user, "<span class='alert'>The [src] is still recharging.</span>")
 				return
 
 			activating = 1
 
 			playsound(get_turf(src), "sound/effects/singsuck.ogg", 40, 1)
-			var/obj/overlay/O = new/obj/overlay(get_turf(usr))
+			var/obj/overlay/O = new/obj/overlay(get_turf(user))
 			O.name = "Energy"
 			O.anchored = 1
 			O.layer = MOB_EFFECT_LAYER
-			usr:transforming = 1
+			user.transforming = 1
 			O.icon = 'icons/effects/effects.dmi'
 			O.icon_state = "energytwirlin"
 			sleep(0.5 SECONDS)
-			usr:transforming = 0
+			user.transforming = 0
 			qdel(O)
 
-			D = new/obj/dummy/voltron(usr, get_turf(src))
+			D = new/obj/dummy/voltron(user, get_turf(src))
 
-			target = usr
+			target = user
 			active = 1
 			activating = 0
 		else
-			boutput(usr, "<span class='alert'>This needs to be used while standing on a cable.</span>")
+			boutput(user, "<span class='alert'>This needs to be used while standing on a cable.</span>")
 
 	attack_self(mob/user as mob)
 		if(activating) return
@@ -318,7 +318,7 @@
 				user.visible_message("[user] suddenly emerges from the [EXIT]. [pick("","What the fuck?")]", "You emerge from the [EXIT].", "You hear a strange sucking noise.")
 			else
 				boutput(user, "<span class='notice'>You activate the [src].</span>")
-				activate()
+				activate(user)
 			power -= 5
 			handle_overlay()
 		return

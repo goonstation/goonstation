@@ -183,6 +183,16 @@
 		src.setMaterial(getMaterial("steel"), appearance = 1, setname = 1)
 		..()
 
+/obj/item/material_piece/hamburgris
+	name = "clump"
+	desc = "A big clump of petrified mince, with a horriffic smell."
+	default_material = "hamburgris"
+	icon_state = "slag"
+
+	setup_material()
+		src.setMaterial(getMaterial("hamburgris"), appearance = 0, setname = 0)
+		..()
+
 /obj/item/material_piece/glass
 	desc = "A cut block of glass, a common crystalline substance."
 	default_material = "glass"
@@ -203,8 +213,8 @@
 
 /obj/item/material_piece/iridiumalloy
 	icon_state = "iridium"
-	name = "iridium-alloy plate"
-	desc = "A chunk of some sort of iridium-alloy plating."
+	name = "iridium alloy plate"
+	desc = "A chunk of some sort of iridium alloy plating."
 	amount = 5
 	setup_material()
 		src.setMaterial(getMaterial("iridiumalloy"), appearance = 0, setname = 0)

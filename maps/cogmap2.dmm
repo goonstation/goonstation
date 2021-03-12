@@ -4266,6 +4266,9 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/machinery/ai_status_display{
+	pixel_y = 28
+	},
 /turf/simulated/floor/caution/west,
 /area/station/turret_protected/ai_upload_foyer)
 "ajs" = (
@@ -4316,6 +4319,9 @@
 	dir = 4;
 	layer = 9.1;
 	pixel_x = 10
+	},
+/obj/machinery/ai_status_display{
+	pixel_y = 28
 	},
 /turf/simulated/floor/caution/east,
 /area/station/turret_protected/ai_upload_foyer)
@@ -10173,6 +10179,9 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
+	},
+/obj/machinery/ai_status_display{
+	pixel_y = 28
 	},
 /turf/simulated/floor/blueblack{
 	dir = 4
@@ -35618,6 +35627,9 @@
 	dir = 4
 	},
 /obj/item/storage/secure/sbriefcase,
+/obj/machinery/ai_status_display{
+	pixel_y = 28
+	},
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
@@ -36139,6 +36151,9 @@
 	dir = 1;
 	layer = 9.1;
 	pixel_y = 21
+	},
+/obj/machinery/ai_status_display{
+	pixel_y = 28
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/ce)
@@ -55683,6 +55698,9 @@
 /area/station/medical/robotics)
 "cqq" = (
 /obj/machinery/computer/robot_module_rewriter,
+/obj/machinery/ai_status_display{
+	pixel_y = 28
+	},
 /turf/simulated/floor/caution/south,
 /area/station/medical/robotics)
 "cqr" = (
@@ -79181,6 +79199,21 @@
 "mBI" = (
 /turf/simulated/floor/dirt,
 /area/station/ranch)
+"mDn" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/ai_status_display{
+	pixel_y = 28
+	},
+/turf/simulated/floor/blueblack{
+	dir = 8
+	},
+/area/station/crew_quarters/info{
+	name = "Net Cafe"
+	})
 "nbd" = (
 /obj/window/auto/reinforced,
 /obj/grille/steel,
@@ -79263,6 +79296,12 @@
 	},
 /turf/simulated/floor/bot,
 /area/station/hydroponics/bay)
+"ppH" = (
+/obj/machinery/ai_status_display{
+	pixel_y = 28
+	},
+/turf/simulated/floor/black,
+/area/station/turret_protected/ai_upload)
 "pFA" = (
 /obj/submachine/weapon_vendor/security,
 /turf/simulated/floor/specialroom/bar,
@@ -79401,12 +79440,8 @@
 /area/station/ranch)
 "tTd" = (
 /obj/table/wood/auto,
-/obj/item/reagent_containers/food/snacks/chicken_feed_bag{
-	rand_pos = 1
-	},
-/obj/item/reagent_containers/food/snacks/chicken_feed_bag{
-	rand_pos = 1
-	},
+/obj/item/reagent_containers/food/snacks/chicken_feed_bag,
+/obj/item/reagent_containers/food/snacks/chicken_feed_bag,
 /turf/simulated/floor/dirt,
 /area/station/ranch)
 "viA" = (
@@ -135855,7 +135890,7 @@ aaB
 aaB
 aaB
 avU
-aAo
+mDn
 ayW
 aAn
 aBQ
@@ -136139,7 +136174,7 @@ acv
 abv
 acS
 abf
-adW
+ppH
 aeA
 afo
 agn
@@ -137347,7 +137382,7 @@ acx
 abv
 acS
 abf
-adW
+ppH
 aeC
 afs
 agq

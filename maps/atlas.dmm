@@ -1168,7 +1168,7 @@
 /turf/simulated/floor/yellow,
 /area/station/quartermaster/office)
 "cW" = (
-/obj/machinery/computer/barcode/qm,
+/obj/machinery/computer/barcode/qm/no_belthell,
 /obj/machinery/door_control{
 	id = "cargo_inbound";
 	name = "Cargo Inbound Door Control";
@@ -2271,13 +2271,13 @@
 	},
 /area/station/hallway/secondary/exit)
 "fJ" = (
-/obj/storage/closet/wardrobe/black/chaplain,
 /obj/item/ghostboard,
 /obj/machinery/light_switch/auto,
 /obj/machinery/crema_switch{
 	pixel_x = 5;
 	pixel_y = 28
 	},
+/obj/storage/secure/closet/civilian/chaplain,
 /turf/simulated/grimycarpet,
 /area/station/chapel/office)
 "fK" = (
@@ -13473,6 +13473,7 @@
 /obj/machinery/guardbot_dock,
 /obj/cable,
 /obj/machinery/bot/guardbot/ranger,
+/obj/machinery/power/data_terminal,
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "Hd" = (

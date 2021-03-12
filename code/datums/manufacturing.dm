@@ -674,6 +674,15 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 	create = 1
 	category = "Resource"
 
+/datum/manufacture/sds
+	name = "Syndicate Destruction System"
+	item_paths = list("MET-3","DEN-1","CON-1")
+	item_amounts = list(16,12,8)
+	item_outputs = list(/obj/item/syndicate_destruction_system)
+	time = 90 SECONDS
+	create = 1
+	category = "Tool"
+
 /datum/manufacture/jumpsuit
 	name = "Grey Jumpsuit"
 	item_paths = list("FAB-1")
@@ -2246,6 +2255,15 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 	create = 1
 	category = "Clothing"
 
+/datum/manufacture/eyepatch
+	name = "Medical Eyepatch"
+	item_paths = list("FAB-1")
+	item_amounts = list(5)
+	item_outputs = list(/obj/item/clothing/glasses/eyepatch)
+	time = 15 SECONDS
+	create = 1
+	category = "Clothing"
+
 /datum/manufacture/blindfold
 	name = "Blindfold"
 	item_paths = list("FAB-1")
@@ -2412,6 +2430,23 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 	create = 1
 	category = "Tool"
 
+/datum/manufacture/pod/sps
+	name = "Syndicate Purge System"
+	item_paths = list("MET-1","CON-1","CRY-1")
+	item_amounts = list(8,12,16)
+	item_outputs = list(/obj/item/shipcomponent/mainweapon/syndicate_purge_system)
+	time = 90 SECONDS
+	create = 1
+	category = "Tool"
+
+/datum/manufacture/pod/srs
+	name = "Syndicate Rewind System"
+	item_paths = list("MET-1","CON-1","CRY-1")
+	item_amounts = list(16,12,8)
+	item_outputs = list(/obj/item/shipcomponent/secondary_system/syndicate_rewind_system)
+	time = 90 SECONDS
+	create = 1
+	category = "Tool"
 //// deployable warp beacon
 
 /datum/manufacture/beaconkit

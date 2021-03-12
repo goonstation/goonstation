@@ -633,7 +633,12 @@ ABSTRACT_TYPE(/datum/job/research)
 		src.access = get_access("Geneticist")
 		return
 
+
+#ifdef CREATE_PATHOGENS
 /datum/job/research/pathologist
+#else
+/datum/job/pathologist // pls no autogenerate list
+#endif
 	name = "Pathologist"
 	#ifdef CREATE_PATHOGENS
 	limit = 1

@@ -124,7 +124,7 @@
 		for (var/fluid in src.members)
 			if(fluid)
 				var/obj/fluid/M = fluid
-				M.group = 0
+				M.group = null
 
 		//if (src in processing_fluid_groups)
 		//	processing_fluid_groups.Remove(src)
@@ -213,6 +213,20 @@
 
 		src.update_loop()
 
+		// recalculate depth level based on fluid amount
+		// to account for change to fluid until fluid_core
+		// can perform spread
+		update_amt_per_tile()
+		var/my_depth_level = 0
+		for(var/x in depth_levels)
+			if (src.amt_per_tile > x)
+				my_depth_level++
+			else
+				break
+
+		if (F.last_depth_level != my_depth_level)
+			F.last_depth_level = my_depth_level
+
 	//fluid has been removed from its tile. use 'lightweight' in evaporation procedure cause we dont need icon updates / try split / update loop checks at that point
 	// if 'lightweight' parameter is 2, invoke an update loop but still ignore icon updates
 	proc/remove(var/obj/fluid/F, var/lost_fluid = 1, var/lightweight = 0, var/allow_zero = 0)
@@ -242,7 +256,7 @@
 			src.reagents.remove_any(amt_per_tile)
 			src.contained_amt = src.reagents.total_volume
 
-		F.group = 0
+		F.group = null
 		var/turf/removed_loc = F.loc
 		if(removed_loc)
 			F.turf_remove_cleanup(F.loc)
@@ -290,7 +304,7 @@
 				R = src.reagents.remove_any_to(amt_to_remove)
 				src.contained_amt = src.reagents.total_volume
 
-			F.group = 0
+			F.group = null
 			var/turf/removed_loc = F.loc
 			if (removed_loc)
 				F.turf_remove_cleanup(F.loc)
@@ -459,6 +473,8 @@
 		for(var/x in depth_levels)
 			if (amt_per_tile > x)
 				my_depth_level++
+			else
+				break
 
 		LAGCHECK(LAG_MED)
 

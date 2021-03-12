@@ -4,7 +4,6 @@
 #define MEDBOT_MOVE_SPEED 6
 #define MEDBOT_LASTPATIENT_COOLDOWN "medbot_anti_patient_clinginess"
 #define MEDBOT_POINT_COOLDOWN "medbot_pointing_antirudeness"
-#define MEDBOT_HOSTILE_COOLDOWN "medbot_please_be_fair"
 
 /obj/machinery/bot/medbot
 	name = "Medibot"
@@ -26,13 +25,11 @@
 	var/obj/item/reagent_containers/glass/reagent_glass = null //Can be set to draw from this for reagents.
 	var/skin = null // options are brute1/2, burn1/2, toxin1/2, brain1/2, O21/2/3/4, berserk1/2/3, and psyche
 	var/mob/living/carbon/patient = null
-	var/mob/living/carbon/oldpatient = null
 	var/oldloc = null
 	var/static/image/medbot_overlays = image('icons/obj/bots/medbots.dmi', icon_state = "blank")
 	var/last_found = 0
-	var/last_patient_cooldown = 10 SECONDS
-	/// For evil medbots, after doing their deed to a person, ignore them for this long (or the bot gets hurt)
-	var/hostile_last_patient_cooldown = 15 SECONDS
+	/// Time after injecting someone before they'll try to inject them again. Encourages them to spread the love (and poison). Hitting the bot overrides the cooldown
+	var/last_patient_cooldown = 5 SECONDS
 	var/point_cooldown = 1 SECOND //Don't spam your pointer-finger
 	var/currently_healing = 0
 	var/injection_amount = 10 //How much reagent do we inject at a time?
@@ -85,7 +82,7 @@
 	terrifying = 1
 	anchored = 1 // don't drag it into space goddamn jerks
 	no_camera = 1
-	hostile_last_patient_cooldown = 3 SECONDS // There's usually only one target anyway, and we want to mess them up right good
+	last_patient_cooldown = 5 SECONDS // There's usually only one target anyway, and we want to mess them up right good
 
 /obj/machinery/bot/medbot/head_surgeon
 	name = "Medibot - 'Head Surgeon'"
@@ -107,6 +104,18 @@
 	treatment_fire = "LSD"
 	treatment_tox = "psilocybin"
 	treatment_virus = "loose screws"
+	no_camera = 1
+
+/obj/machinery/bot/medbot/homeopath
+	name = "Homeopathic Medibot"
+	desc = "Finally a Medibot that can practice chiropractic!"
+	skin = "psyche"
+	color = "#88FFAA"
+	treatment_brute = "CBD"
+	treatment_oxy = "THC"
+	treatment_fire = "LSD"
+	treatment_tox = "hugs"
+	treatment_virus = "chickensoup"
 	no_camera = 1
 
 /obj/item/firstaid_arm_assembly
@@ -256,6 +265,7 @@
 		if(user)
 			boutput(user, "<span class='alert'>You short out [src]'s reagent synthesis circuits.</span>")
 		src.KillPathAndGiveUp(1)
+		ON_COOLDOWN(src, "[MEDBOT_LASTPATIENT_COOLDOWN]-[ckey(user?.name)]", src.last_patient_cooldown * 10) // basically ignore the emagger for a long while. Till someone hits it!
 		src.emagged = 1
 		src.on = 1
 		src.update_icon()
@@ -332,6 +342,10 @@
 		else if (W.force)
 			src.cooldowns = list() // Mainly applies to hostile bots
 			step_to(src, (get_step_away(src,user)))
+			src.KillPathAndGiveUp(1)
+			if(ishuman(user))
+				src.patient = user
+			src.process() // slap the good doctor into healing you, good idea
 		..()
 
 /obj/machinery/bot/medbot/process()
@@ -370,8 +384,6 @@
 		else if(IN_RANGE(src,src.patient,10))
 			src.KillPathAndGiveUp(0)
 			navigate_to(get_turf(src.patient), MEDBOT_MOVE_SPEED, max_dist = 10)
-			if(!length(src.path))
-				src.frustration += 2
 		else
 			src.KillPathAndGiveUp(1)
 
@@ -379,6 +391,9 @@
 		src.KillPathAndGiveUp(1)
 
 /obj/machinery/bot/medbot/proc/seek_patient()
+	if(src.currently_healing)
+		return // busybusy
+
 	for_by_tcl(C, /mob/living/carbon) //Time to find a patient!
 		if(!IN_RANGE(src, C, 7))
 			continue
@@ -386,10 +401,10 @@
 		if ((isdead(C)) || !ishuman(C))
 			continue
 
-		if (C == src.oldpatient)
+		if (C.loc && !isturf(C.loc)) // don't stab people while they're still in the cloner, wait till they're out first!
 			continue
 
-		if (src.assess_patient(C) && IN_RANGE(src,C,10))
+		if (src.assess_patient(C))
 			src.patient = C
 			src.doing_something = 1
 			if (ON_COOLDOWN(src, "[MEDBOT_POINT_COOLDOWN]-[ckey(src.patient?.name)]", src.point_cooldown)) //Don't spam these messages!
@@ -403,11 +418,7 @@
 			else
 				src.KillPathAndGiveUp(0)
 				navigate_to(get_turf(src.patient), MEDBOT_MOVE_SPEED, max_dist = 10)
-				if(!length(src.path))
-					src.patient = null
-					continue
-				else
-					return
+				return
 		else
 			continue
 
@@ -452,7 +463,7 @@
 
 /obj/machinery/bot/medbot/proc/assess_patient(mob/living/carbon/C as mob)
 	//Time to see if they need medical help!
-	if(GET_COOLDOWN(src, "[MEDBOT_LASTPATIENT_COOLDOWN]-[ckey(C.name)]") || GET_COOLDOWN(src, "[MEDBOT_HOSTILE_COOLDOWN]-[ckey(C.name)]"))
+	if(GET_COOLDOWN(src, "[MEDBOT_LASTPATIENT_COOLDOWN]-[ckey(C.name)]"))
 		return 0 // Give them some time to heal!
 
 	if(isdead(C))
@@ -462,7 +473,10 @@
 		return 0 //Kevorkian school of robotic medical assistants.
 
 	if(src.emagged || src.terrifying) //Everyone needs our medicine. (Our medicine is toxins)
-		return 1
+		if(is_incapacitated(C))
+			return 0
+		else
+			return 1
 
 	var/brute = C.get_brute_damage()
 	var/burn = C.get_burn_damage()
@@ -507,6 +521,12 @@
 		src.KillPathAndGiveUp(1)
 		return FALSE
 
+	if (C.loc && !isturf(C.loc)) // don't stab people while they're still in the cloner, wait till they're out first!
+		var/missing_message = pick("Wait, where'd [he_or_she(C)] go?","That's okay, I'll just wait here until you're ready.")
+		src.speak(missing_message)
+		src.KillPathAndGiveUp(1)
+		return FALSE
+
 	var/list/reagent_id = list()
 	var/brute = C.get_brute_damage()
 	var/burn = C.get_burn_damage()
@@ -521,15 +541,17 @@
 		if ((src.use_beaker) && (src.reagent_glass) && (src.reagent_glass.reagents.total_volume))
 			reagent_id = "internal_beaker"
 
-		if (src.terrifying)
-			for(var/i in 1 to rand(1,4))
-				var/badmed_id = pick(src.terrifying_meds)
-				reagent_id[badmed_id] += rand(1, src.terrifying_meds[badmed_id])
+		if(src.terrifying)
+			if(!is_incapacitated(C))
+				for(var/i in 1 to rand(1,4))
+					var/badmed_id = pick(src.terrifying_meds)
+					reagent_id[badmed_id] += rand(1, src.terrifying_meds[badmed_id])
 
 		else if (src.emagged) //Emagged! Time to poison everybody.
-			var/reag_check = pick(src.dangerous_stuff)
-			if(!C.reagents.has_reagent(reag_check, src.dangerous_stuff[reag_check] * 1.5)) // *shrug* two-ish doses of our poison, on average
-				reagent_id = src.dangerous_stuff
+			if(!is_incapacitated(C))
+				var/reag_check = pick(src.dangerous_stuff)
+				if(!C.reagents.has_reagent(reag_check, src.dangerous_stuff[reag_check] * 1.5)) // *shrug* two-ish doses of our poison, on average
+					reagent_id = src.dangerous_stuff
 
 		else
 			if (length(reagent_id) < 1)
@@ -549,17 +571,14 @@
 						reagent_id[src.treatment_oxy] = 15
 
 	if (length(reagent_id) < 1) //If they don't need any of that they're probably cured!
-		if(src.terrifying || src.emagged)
-			ON_COOLDOWN(src, "[MEDBOT_HOSTILE_COOLDOWN]-[ckey(src.patient?.name)]", src.hostile_last_patient_cooldown)
-		else
-			ON_COOLDOWN(src, "[MEDBOT_LASTPATIENT_COOLDOWN]-[ckey(src.patient?.name)]", src.last_patient_cooldown)
 		var/message = pick("All patched up!","An apple a day keeps me away.","Feel better soon!")
 		src.speak(message)
 		src.KillPathAndGiveUp(1)
 		return FALSE
-	else
+	else if(!actions.hasAction(src, "medbot_inject"))
+		src.KillPathAndGiveUp(0)
 		actions.start(new/datum/action/bar/icon/medbot_inject(src, reagent_id), src)
-	return TRUE
+		return TRUE
 
 /obj/machinery/bot/medbot/DoWhileMoving()
 	. = ..()
@@ -568,12 +587,13 @@
 
 /obj/machinery/bot/medbot/KillPathAndGiveUp(var/give_up)
 	. = ..()
+	src.currently_healing = 0
+	src.oldloc = null
+	src.path = null
 	if(give_up)
-		src.currently_healing = 0
-		src.oldpatient = src.patient
+		if(istype(src.patient))
+			ON_COOLDOWN(src, "[MEDBOT_LASTPATIENT_COOLDOWN]-[ckey(src.patient?.name)]", src.last_patient_cooldown)
 		src.patient = null
-		src.oldloc = null
-		src.path = null
 
 /datum/action/bar/icon/medbot_inject
 	duration = 3 SECONDS
@@ -645,7 +665,7 @@
 
 	onInterrupt()
 		. = ..()
-		master.currently_healing = 0
+		master.KillPathAndGiveUp()
 		master.update_icon()
 
 	onEnd()
@@ -672,13 +692,13 @@
 			master.visible_message("<span class='alert'>A shower of [english_list(sput_words)] shoots out of [master]'s hypospray!</span>")
 		playsound(get_turf(master), 'sound/items/hypo.ogg', 80, 0)
 
-		if(master.terrifying || master.emagged)
-			ON_COOLDOWN(master, "[MEDBOT_HOSTILE_COOLDOWN]-[ckey(master.patient?.name)]", master.hostile_last_patient_cooldown)
-		master.KillPathAndGiveUp(1)
+		master.KillPathAndGiveUp() // Don't discard the patient just yet, maybe they need more healing!
 		master.update_icon()
 
 	proc/fail_check()
 		if(!master.on)
+			return TRUE
+		if(!istype(master.patient))
 			return TRUE
 		if(!master.terrifying && !IN_RANGE(master, master.patient, 1))
 			return TRUE
