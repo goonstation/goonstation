@@ -22,22 +22,22 @@ ABSTRACT_TYPE(/datum/targetable/carnival)
             return TRUE
         if(!ishuman(holder.owner))
             return
-        var/mob/living/carbon/human/OWNER = holder.owner
-        if(!OWNER.limbs.l_arm && !OWNER.limbs.r_arm)
-            OWNER.show_text("You can't speak Carnival Cant without arms!","red")
-        var/message = input(OWNER, "What would you like to say?", "Carnival Cant") as null|text
+        var/mob/living/carbon/human/human_owner = holder.owner
+        if(!human_owner.limbs.l_arm && !human_owner.limbs.r_arm)
+            human_owner.show_text("You can't speak Carnival Cant without arms!","red")
+        var/message = input(human_owner, "What would you like to say?", "Carnival Cant") as null|text
         message = strip_html(message)
         if(!length(message) || (copytext(message,1,2) == " "))
             message = null
         if(!message)
             return
-        OWNER.emote("carnivalcant")
-        for(var/mob/LISTENER in viewers(OWNER,10))
+        human_owner.emote("carnivalcant")
+        for(var/mob/LISTENER in viewers(human_owner,10))
             if(LISTENER.blinded)
                 continue
             if((LISTENER.job == "Clown") || (LISTENER.job == "Mime") || isAI(LISTENER) || isobserver(LISTENER))
-                LISTENER.show_text("<b>[OWNER.name]</b> signs, \"[message]\"","pink")
-        logTheThing("say", OWNER, OWNER.name, "[message]")
+                LISTENER.show_text("<b>[human_owner.name]</b> signs, \"[message]\"","pink")
+        logTheThing("say", human_owner, human_owner.name, "[message]")
 
 /datum/targetable/carnival/cant/mime
     icon_state = "cant-mime"

@@ -139,12 +139,12 @@
 				if(M.real_name != default && M.real_name != orig_real)
 					phrase_log.log_phrase("name-[ckey(src.name)]", M.real_name, no_duplicates=TRUE)
 				if(ishuman(M) && (M.job == "Clown") || (M.job == "Mime"))
-					var/mob/living/carbon/human/CARNIE = M
-					CARNIE.add_ability_holder(/datum/abilityHolder/carnival)
-					if(CARNIE.job == "Clown")
-						CARNIE.abilityHolder.addAbility(/datum/targetable/carnival/cant)
-					else if(CARNIE.job == "Mime")
-						CARNIE.abilityHolder.addAbility(/datum/targetable/carnival/cant/mime)
+					var/mob/living/carbon/human/carnie = M
+					carnie.add_ability_holder(/datum/abilityHolder/carnival)
+					if(carnie.job == "Clown")
+						carnie.abilityHolder.addAbility(/datum/targetable/carnival/cant)
+					else if(carnie.job == "Mime")
+						carnie.abilityHolder.addAbility(/datum/targetable/carnival/cant/mime)
 
 			if (M.traitHolder && !M.traitHolder.hasTrait("loyalist"))
 				cant_spawn_as_rev = 1 //Why would an NT Loyalist be a revolutionary?

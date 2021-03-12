@@ -14514,9 +14514,6 @@
 /obj/decal/poster/wallsign/poster_clown{
 	pixel_y = 32
 	},
-/obj/landmark/start{
-	name = "Mime"
-	},
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/clown)
 "aAP" = (

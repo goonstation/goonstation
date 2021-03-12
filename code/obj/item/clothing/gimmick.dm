@@ -1002,13 +1002,13 @@
 
 		afterattack(atom/target, mob/user, reach, params)
 			if(reach <= 1 && user.mind && user.mind.assigned_role == "Mime" && istraitor(user) && istype(user,/mob/living/carbon/human) && istype(target,/mob/living/carbon/human))
-				var/mob/living/carbon/human/ATTACKER = user
-				var/mob/living/carbon/human/DEFENDER = target
-				if(DEFENDER.can_equip(src,DEFENDER.slot_wear_mask) )
-					ATTACKER.visible_message(__red("[src] latches onto [DEFENDER]'s face!"),__red("You slap [src] onto [DEFENDER]'s face!'"))
-					logTheThing("combat",user,target,"forces [DEFENDER] to wear [src] (smiling mime mask) at [log_loc(DEFENDER)].")
-					ATTACKER.u_equip(src)
-					DEFENDER.equip_if_possible(src,DEFENDER.slot_wear_mask)
+				var/mob/living/carbon/human/attacker = user
+				var/mob/living/carbon/human/defender = target
+				if(defender.can_equip(src,defender.slot_wear_mask) )
+					attacker.visible_message(__red("[src] latches onto [defender]'s face!"),__red("You slap [src] onto [defender]'s face!'"))
+					logTheThing("combat",user,target,"forces [defender] to wear [src] (smiling mime mask) at [log_loc(defender)].")
+					attacker.u_equip(src)
+					defender.equip_if_possible(src,defender.slot_wear_mask)
 
 /obj/item/clothing/under/misc/mime
 	name = "mime suit"
