@@ -2528,7 +2528,7 @@
 
 /proc/build_manufacturer_icons()
 	// pre-build all the icons for shit manufacturers make
-	for (var/datum/manufacture/P as() in typesof(/datum/manufacture))
+	for (var/datum/manufacture/P as anything in typesof(/datum/manufacture))
 		if (ispath(P, /datum/manufacture/mechanics))
 			var/datum/manufacture/mechanics/M = P
 			if (!initial(M.frame_path))

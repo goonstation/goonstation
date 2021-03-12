@@ -251,9 +251,9 @@
 			closed.len = 0
 			open_low.len = 0
 			open_medium.len = 0
-			for (var/turf/C as() in all)
+			for (var/turf/C as anything in all)
 				evaluate(C)
-			for (var/turf/T as() in block(locate(src.x - 30, src.y - 30, src.z), locate(src.x + 30, src.y + 30, src.z)))
+			for (var/turf/T as anything in block(locate(src.x - 30, src.y - 30, src.z), locate(src.x + 30, src.y + 30, src.z)))
 				if (!(T in all))
 					evaluate(T)
 
@@ -636,7 +636,7 @@
 					break
 		while(length(current))
 			var/list/next = list()
-			for(var/obj/blob/blob as() in current)
+			for(var/obj/blob/blob as anything in current)
 				visited[blob] = 1
 				if(blob.type == /obj/blob)
 					final_target = blob

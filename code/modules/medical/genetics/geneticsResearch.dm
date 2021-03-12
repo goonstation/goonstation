@@ -68,7 +68,7 @@ var/datum/geneticsResearchManager/genResearch = new()
 			 //This is only temporary to regenerate points while this isnt finished yet.
 			researchMaterial += checkMaterialGenerationRate()
 
-		for(var/datum/geneticsResearchEntry/entry as() in currentResearch)
+		for(var/datum/geneticsResearchEntry/entry as anything in currentResearch)
 			entry.onTick()
 			if(entry.finishTime <= lastTick)
 				entry.isResearched = 1
@@ -137,7 +137,7 @@ var/datum/geneticsResearchManager/genResearch = new()
 
 	proc/checkClonepodBonus()
 		. = 0
-		for(var/obj/machinery/clonepod/CP as() in src.clonepods)
+		for(var/obj/machinery/clonepod/CP as anything in src.clonepods)
 			if(CP.operating_nominally())
 				.++
 
@@ -165,7 +165,7 @@ var/datum/geneticsResearchManager/genResearch = new()
 
 	proc/onFinish()
 		for_by_tcl(computer, /obj/machinery/computer/genetics)
-			for (var/datum/tgui/ui as() in tgui_process.get_uis(computer))
+			for (var/datum/tgui/ui as anything in tgui_process.get_uis(computer))
 				computer.update_static_data(null, ui)
 
 	proc/onBegin()
@@ -184,12 +184,12 @@ var/datum/geneticsResearchManager/genResearch = new()
 		if(src.hidden)
 			return 0
 
-		for(var/X as() in src.requiredResearch) // Have we got the prerequisite researches?
+		for(var/X as anything in src.requiredResearch) // Have we got the prerequisite researches?
 			if(!genResearch.isResearched(X))
 				return 0
 
 		var/datum/bioEffect/BE
-		for (var/X as() in src.requiredMutRes)
+		for (var/X as anything in src.requiredMutRes)
 			BE = GetBioeffectFromGlobalListByID(X)
 			if (!BE)
 				return 0
