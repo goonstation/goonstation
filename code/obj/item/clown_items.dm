@@ -85,35 +85,3 @@ VUVUZELA
 	icon_state = "laughbox"
 	desc = "A pack of canned laughter."
 	spawn_contents = list(/obj/item/canned_laughter = 7)
-
-/obj/item/clothing/gloves/friendship
-	name = "friendship bracelet"
-	icon = 'icons/obj/clothing/item_gloves.dmi'
-	icon_state = "friendship-mime"
-	desc = ""
-	hide_prints = FALSE
-	var/friend_name
-	var/mob/friend_mob
-
-	disposing()
-		src.friend_mob = null
-		. = ..()
-
-	proc/setup_friendship(var/mob/pass_mob)
-		friend_mob = pass_mob
-		friend_name = pass_mob.real_name
-		switch(friend_mob.job)
-			if("Clown")
-				icon_state = "friendship-clown"
-			if("Mime")
-				icon_state = "friendship-mime"
-		name = "friendship bracelet from [friend_name]"
-		desc = "A bracelet to commemorate your everlasting friendship with [friend_name]."
-
-	proc/check_for_duplicates(var/mob/user)
-		if(friend_mob == user) 
-			if(friend_name != user.real_name) // If there's a duplicate bracelet and it has an outdated name, update it.
-				setup_friendship(user)
-			return TRUE
-		else
-			return
