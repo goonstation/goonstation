@@ -29,7 +29,7 @@ var/datum/explosion_controller/explosions
 
 	proc/queue_damage(var/list/new_turfs)
 		var/c = 0
-		for (var/turf/T as() in new_turfs)
+		for (var/turf/T as anything in new_turfs)
 			queued_turfs[T] += new_turfs[T]
 			if(c++ % 100 == 0)
 				LAGCHECK(LAG_HIGH)
@@ -44,7 +44,7 @@ var/datum/explosion_controller/explosions
 		var/p
 		var/last_touched
 
-		for (var/turf/T as() in queued_turfs)
+		for (var/turf/T as anything in queued_turfs)
 			queued_turfs[T]=sqrt(queued_turfs[T])*2
 			p = queued_turfs[T]
 			last_touched = queued_turfs_blame[T]
@@ -61,7 +61,7 @@ var/datum/explosion_controller/explosions
 
 		LAGCHECK(LAG_HIGH)
 
-		for (var/turf/T as() in queued_turfs)
+		for (var/turf/T as anything in queued_turfs)
 			p = queued_turfs[T]
 			last_touched = queued_turfs_blame[T]
 			//boutput(world, "P1 [p]")
@@ -88,7 +88,7 @@ var/datum/explosion_controller/explosions
 		LAGCHECK(LAG_HIGH)
 
 		// BEFORE that ordeal (which may sleep quite a few times), fuck the turfs up all at once to prevent lag
-		for (var/turf/T as() in queued_turfs)
+		for (var/turf/T as anything in queued_turfs)
 #ifndef UNDERWATER_MAP
 			if(istype(T, /turf/space))
 				continue
@@ -222,7 +222,7 @@ var/datum/explosion_controller/explosions
 				open |= target
 
 		radius += 1 // avoid a division by zero
-		for (var/turf/T as() in nodes) // inverse square law (IMPORTANT) and pre-stun
+		for (var/turf/T as anything in nodes) // inverse square law (IMPORTANT) and pre-stun
 			var/p = power / ((radius-nodes[T])**2)
 			nodes[T] = p
 			blame[T] = last_touched

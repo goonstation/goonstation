@@ -33,7 +33,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 		src.equip_new_if_possible(/obj/item/storage/belt/macho_belt, slot_belt)
 		src.equip_new_if_possible(/obj/item/device/radio/headset, slot_ears)
 
-		for (var/datum/targetable/macho/A as() in concrete_typesof(/datum/targetable/macho))
+		for (var/datum/targetable/macho/A as anything in concrete_typesof(/datum/targetable/macho))
 			src.abilityHolder.addAbility(A)
 		src.abilityHolder.updateButtons()
 

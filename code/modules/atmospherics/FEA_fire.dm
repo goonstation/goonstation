@@ -212,7 +212,7 @@
 
 			location.assume_air(affected)
 
-			for(var/obj/object as() in location)
+			for(var/obj/object as anything in location)
 				object.temperature_expose(null, temperature, src.volume)
 
 		set_real_color()

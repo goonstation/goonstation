@@ -2973,7 +2973,7 @@
 		if (I.loc == get_turf(I))
 			items += I
 	if (items.len)
-		var/atom/A = input(usr, "What do you want to pick up?") as() in items
+		var/atom/A = input(usr, "What do you want to pick up?") as anything in items
 		A.interact(src)
 
 /// 'A' is the thing being eaten, user is the thing using the thing, and src is of course the thing eating it
