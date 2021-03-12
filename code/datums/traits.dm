@@ -180,7 +180,7 @@
 	proc/onRemove(var/mob/owner)
 		return
 
-	proc/onLife(var/mob/owner)
+	proc/onLife(var/mob/owner, var/mult)
 		return
 
 	proc/onMove(var/mob/owner)
@@ -822,8 +822,8 @@ obj/trait/pilot
 			selected_reagent = addicted_players[owner]
 			addAddiction(owner)
 
-	onLife(var/mob/owner) //Just to be safe.
-		if(isliving(owner) && prob(1))
+	onLife(var/mob/owner, var/mult) //Just to be safe.
+		if(isliving(owner) && probmult(1))
 			var/mob/living/M = owner
 			selected_reagent = addicted_players[owner]
 			for(var/datum/ailment_data/addiction/A in M.ailments)
@@ -959,8 +959,8 @@ obj/trait/pilot
 	points = 1
 	isPositive = 0
 
-	onLife(var/mob/owner)
-		if(!owner.stat && can_act(owner) && prob(9))
+	onLife(var/mob/owner, var/mult)
+		if(!owner.stat && can_act(owner) && probmult(9))
 			if(!owner.equipped())
 				for(var/obj/item/I in view(1, owner))
 					if(!I.anchored && isturf(I.loc))
