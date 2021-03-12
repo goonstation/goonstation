@@ -334,7 +334,7 @@ datum
 					boutput(M, "<span class='alert'><font face='[pick("Arial", "Georgia", "Impact", "Mucida Console", "Symbol", "Tahoma", "Times New Roman", "Verdana")]' size='[rand(3,6)]'>Holy shit, you start tripping balls!</font></span>")
 				return
 
-		drugs/lsd_bee
+		drug/lsd_bee
 			name = "lsbee"
 			id = "lsd_bee"
 			description = "A highly potent hallucinogenic substance. It smells like honey."

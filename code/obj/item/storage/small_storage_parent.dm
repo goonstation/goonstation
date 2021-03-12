@@ -256,7 +256,7 @@
 			animate_storage_rustle(src)
 		else
 			..()
-			for (var/mob/M as() in hud.mobs)
+			for (var/mob/M as anything in hud.mobs)
 				if (M != user)
 					M.detach_hud(hud)
 			hud.update(user)
@@ -268,7 +268,7 @@
 	proc/get_contents()
 		RETURN_TYPE(/list)
 		. = src.contents.Copy()
-		for(var/atom/A as() in .)
+		for(var/atom/A as anything in .)
 			if(!istype(A, /obj/item) || istype(A, /obj/item/grab))
 				. -= A
 

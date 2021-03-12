@@ -19,7 +19,8 @@
 	return
 
 /obj/machinery/bot/goosebot/proc/wakka_wakka()
-	step_rand(src,1)
+	SPAWN_DBG(0)
+		step_rand(src,1)
 
 /obj/machinery/bot/goosebot/process()
 	. = ..()

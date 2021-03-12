@@ -133,7 +133,7 @@ var/global/list/singletons
 var/list/list/by_type = list()
 
 /// Performs a typecheckless for loop with var/iterator over by_type[_type]
-#define for_by_tcl(_iterator, _type) for(var ##_type/##_iterator as() in by_type[##_type])
+#define for_by_tcl(_iterator, _type) for(var ##_type/##_iterator as anything in by_type[##_type])
 
 // sometimes we want to have a list of objects of multiple types, without having to traverse multiple lists
 // to do that add START_TRACKING_CAT("category") to New, unpooled, or whatever proc you want to start tracking the objects in (eg: tracking dead humans, put start tracking in death())

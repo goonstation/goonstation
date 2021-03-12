@@ -147,7 +147,7 @@ proc/debug_color_of(var/thing)
 		boutput(usr, "<span class='notice'>@[target.x],[target.y] ([GM.group_multiplier])<br>[MOLES_REPORT(GM)] t: [GM.temperature] Kelvin, [MIXTURE_PRESSURE(GM)] kPa [(burning)?("<span class='alert'>BURNING</span>"):(null)]</span>")
 
 		if(GM.trace_gases)
-			for(var/datum/gas/trace_gas as() in GM.trace_gases)
+			for(var/datum/gas/trace_gas as anything in GM.trace_gases)
 				boutput(usr, "[trace_gas.type]: [trace_gas.moles]")
 
 	fix_next_move()
@@ -640,7 +640,7 @@ proc/debug_color_of(var/thing)
 			// I should probably also count overlays on overlays but I'm lazy
 			img.app.alpha = 0
 			var/num = 1 + theTurf.overlays.len + theTurf.underlays.len
-			for (var/atom/A as() in theTurf)
+			for (var/atom/A as anything in theTurf)
 				num += 1 + A.overlays.len + A.underlays.len
 			img.app.overlays = list(src.makeText(num, RESET_ALPHA))
 
@@ -649,9 +649,9 @@ proc/debug_color_of(var/thing)
 		GetInfo(turf/theTurf, image/debugoverlay/img)
 			img.app.alpha = 0
 			var/num = 0
-			for (var/atom/A as() in theTurf.contents + theTurf)
+			for (var/atom/A as anything in theTurf.contents + theTurf)
 				num += 1 + A.overlays.len + A.underlays.len
-				for (var/atom/A2 as() in A.overlays + A.underlays)
+				for (var/atom/A2 as anything in A.overlays + A.underlays)
 					num += A2.overlays.len + A2.underlays.len
 			img.app.overlays = list(src.makeText(num, RESET_ALPHA))
 
@@ -680,11 +680,11 @@ proc/debug_color_of(var/thing)
 			var/direct_trace = 0
 			var/turf/simulated/sim = theTurf
 			if (istype(sim) && sim.air)
-				for(var/datum/gas/tg as() in sim.air.trace_gases)
+				for(var/datum/gas/tg as anything in sim.air.trace_gases)
 					img.app.desc += "[tg.type] [tg.moles]<br>"
 					direct_trace = 1
 				if(sim?.parent?.air)
-					for(var/datum/gas/tg as() in sim.parent.air.trace_gases)
+					for(var/datum/gas/tg as anything in sim.parent.air.trace_gases)
 						img.app.desc += "(AG) [tg.type] [tg.moles]<br>"
 						air_group_trace = 1
 			if(air_group_trace && direct_trace)
@@ -957,7 +957,7 @@ proc/debug_color_of(var/thing)
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	admin_only
 	var/list/available_overlays = list()
-	for (var/datum/infooverlay/dummy as() in childrentypesof(/datum/infooverlay))
+	for (var/datum/infooverlay/dummy as anything in childrentypesof(/datum/infooverlay))
 		var/name = initial(dummy.name)
 		if(isnull(name))
 			name = replacetext("[dummy]", "/datum/infooverlay/", "")

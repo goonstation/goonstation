@@ -22,7 +22,7 @@ Whatever, it's been cleaned up a lot and it's no longer quite so awful.
 	total_souls_value = max(0, (total_souls_value + to_adjust))
 	total_souls_sold = max(total_souls_sold, (total_souls_sold + to_adjust)) //total souls sold can never go down
 	if (length(by_cat[TR_CAT_SOUL_TRACKING_ITEMS]))
-		for (var/obj/item/Q as() in by_cat[TR_CAT_SOUL_TRACKING_ITEMS])
+		for (var/obj/item/Q as anything in by_cat[TR_CAT_SOUL_TRACKING_ITEMS])
 			soulbuff(Q)
 	return 1
 

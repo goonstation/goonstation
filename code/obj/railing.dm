@@ -148,6 +148,7 @@
 
 	Bumped(var/mob/AM as mob)
 		. = ..()
+		if(!istype(AM)) return
 		if(AM.client?.check_key(KEY_RUN))
 			src.try_vault(AM)
 

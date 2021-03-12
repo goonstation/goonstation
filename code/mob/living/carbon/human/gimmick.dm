@@ -131,6 +131,7 @@
 			src.bioHolder.AddEffect("accent_void", 0, 0, 1)
 			abilityHolder.addAbility(/datum/targetable/gimmick/spooky)
 			abilityHolder.addAbility(/datum/targetable/gimmick/Jestershift)
+			abilityHolder.addAbility(/datum/targetable/gimmick/scribble)
 
 		SPAWN_DBG(1 SECOND)
 			abilityHolder.updateButtons()

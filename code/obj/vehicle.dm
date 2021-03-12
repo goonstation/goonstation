@@ -122,8 +122,9 @@ ABSTRACT_TYPE(/obj/vehicle)
 
 	/// kick out the rider
 	proc/eject_rider(var/crashed, var/selfdismount, var/ejectall = 1)
-		if(rider?.loc == src)
-			src.rider.set_loc(src.loc)
+		if(src.rider)
+			if(src.rider.loc == src)
+				src.rider.set_loc(src.loc)
 			src.overlays -= src.rider
 			src.overlays -= src.booster_image
 			handle_button_removal()

@@ -1051,7 +1051,7 @@ datum
 
 
 				var/do_stunny = 1
-				var/list/covered = holder?.covered_turf()
+				var/list/covered = holder.covered_turf()
 				if (length(covered) > 1)
 					do_stunny = prob(100/length(covered))
 

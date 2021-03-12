@@ -396,7 +396,7 @@ var/f_color_selector_handler/F_Color_Selector
 	tick_lag = MIN_TICKLAG//0.4//0.25
 //	loop_checks = 0
 
-	// Load in the current commit SHA from TGS...
+	// Load in the current commit SHA from TGS if avail, by MCterra10
 	if(TgsAvailable())
 		var/datum/tgs_revision_information/rev = TgsRevision()
 		vcs_revision = rev.commit
@@ -1505,7 +1505,7 @@ var/f_color_selector_handler/F_Color_Selector
 				var/msgText = file2text(msgFile)
 
 				//Prints to every networked printer in the world
-				for (var/obj/machinery/networked/printer/P as() in machine_registry[MACHINES_PRINTERS])
+				for (var/obj/machinery/networked/printer/P as anything in machine_registry[MACHINES_PRINTERS])
 					P.print_buffer += "[msgTitle]&title;[msgText]"
 					P.print()
 
