@@ -29335,7 +29335,7 @@
 /area/station/maintenance/south)
 "ibp" = (
 /obj/table/auto,
-/obj/item/playing_cards/suit,
+/obj/item/card_group/plain,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -33584,7 +33584,7 @@
 /area/station/crew_quarters/quartersC)
 "kCw" = (
 /obj/table/wood/round/auto,
-/obj/item/card_box/suit,
+/obj/item/card_box/plain,
 /turf/simulated/floor/carpet{
 	dir = 6;
 	icon_state = "fpurple5"
@@ -46771,7 +46771,7 @@
 	})
 "rSd" = (
 /obj/table/reinforced/industrial/auto,
-/obj/item/playing_cards/tarot,
+/obj/item/card_group/tarot,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/outer/sw)
 "rSq" = (
