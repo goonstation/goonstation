@@ -1,4 +1,9 @@
 
+(t)fri mar 12 21
+(u)Nefarious6th
+(p)3756
+(e)🗺🔄|mapping, rework
+(*)Destiny has received some significant remapping; highlights include layout changes to Security and Medical and the addition of a Ranch. See PR for extended details.
 (t)thu mar 11 21
 (u)Comradef191
 (p)3724
