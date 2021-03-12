@@ -65,7 +65,7 @@
 	anger()
 		for(var/mob/M in AIviewers(src))
 			boutput(M, "<span class='alert'><B>[src.name]</B> becomes angry!</span>")
-		src.desc = "[src] looks angry"
+		src.desc = "[src] looks angry."
 		SPAWN_DBG(rand(1000,3000))
 			src.visible_message("<b>[src.name] calms down.</b>")
 			src.desc = "[src] looks a bit annoyed."
@@ -92,6 +92,24 @@
 		user.Browse(dat, "window=[windowName];size=[windowSize]", 1)
 		onclose(user, windowName)
 		return
+
+	attackby(obj/item/I as obj, mob/user as mob)
+		if (istype(I, /obj/item/card/id) || (istype(I, /obj/item/device/pda2) && I:ID_card))
+			if (istype(I, /obj/item/device/pda2) && I:ID_card) I = I:ID_card
+			boutput(usr, "<span class='notice'>You swipe the ID card in the card reader.</span>")
+			var/datum/data/record/account = null
+			account = FindBankAccountByName(I:registered)
+			if(account)
+				var/enterpin = input(usr, "Please enter your PIN number.", "Card Reader", 0) as null|num
+				if (enterpin == I:pin)
+					boutput(usr, "<span class='notice'>Card authorized.</span>")
+					src.scan = I
+				else
+					boutput(usr, "<span class='alert'>Pin number incorrect.</span>")
+					src.scan = null
+			else
+				boutput(usr, "<span class='alert'>No bank account associated with this ID found.</span>")
+				src.scan = null
 
 	attack_hand(var/mob/user as mob)
 		if(..())
@@ -143,12 +161,12 @@
 			account = FindBankAccountByName(src.scan.registered)
 			if (account)
 				var/quantity = 1
-				quantity = input("How many units do you want to purchase? Maximum: 10", "Trader Purchase", null, null) as num
+				quantity = input("How many units do you want to purchase? Maximum: 50", "Trader Purchase", null, null) as num
 				if (quantity < 1)
 					quantity = 0
 					return
-				else if (quantity >= 10)
-					quantity = 10
+				else if (quantity >= 50)
+					quantity = 50
 
 				////////////
 				var/datum/commodity/P = locate(href_list["doorder"]) in goods_sell
