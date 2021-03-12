@@ -27860,10 +27860,10 @@
 	},
 /area/station/hallway/primary/south)
 "bCJ" = (
-/obj/disposalpipe/junction/middle/east,
 /obj/decal/xmas_lights/ephemeral{
 	pixel_y = 32
 	},
+/obj/disposalpipe/segment/bent/east,
 /turf/simulated/floor/green/side{
 	dir = 1
 	},
