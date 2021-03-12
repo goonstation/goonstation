@@ -1195,7 +1195,7 @@ proc/get_angle(atom/a, atom/b)
 
 /proc/all_hearers(var/range,var/centre)
 	. = list()
-	for(var/atom/A as() in (view(range,centre) | hearers(range, centre))) //Why was this view(). Oh no, the invisible man hears naught 'cause the sound can't find his ears.
+	for(var/atom/A as anything in (view(range,centre) | hearers(range, centre))) //Why was this view(). Oh no, the invisible man hears naught 'cause the sound can't find his ears.
 		if (ismob(A))
 			. += A
 		if (isobj(A) || ismob(A))
@@ -1212,7 +1212,7 @@ proc/get_angle(atom/a, atom/b)
 				if (can_hear)
 					. += M
 	if(length(by_cat[TR_CAT_OMNIPRESENT_MOBS]))
-		for(var/mob/M as() in by_cat[TR_CAT_OMNIPRESENT_MOBS])
+		for(var/mob/M as anything in by_cat[TR_CAT_OMNIPRESENT_MOBS])
 			if(get_step(M, 0)?.z == get_step(centre, 0)?.z)
 				. |= M
 
@@ -1220,20 +1220,20 @@ proc/get_angle(atom/a, atom/b)
 
 /proc/all_viewers(var/range,var/centre)
 	. = list()
-	for (var/atom/A as() in viewers(range,centre))
+	for (var/atom/A as anything in viewers(range,centre))
 		if (ismob(A))
 			. += A
 		else if (isobj(A))
 			for(var/mob/M in A.contents)
 				. += M
 	if(length(by_cat[TR_CAT_OMNIPRESENT_MOBS]))
-		for(var/mob/M as() in by_cat[TR_CAT_OMNIPRESENT_MOBS])
+		for(var/mob/M as anything in by_cat[TR_CAT_OMNIPRESENT_MOBS])
 			if(get_step(M, 0)?.z == get_step(centre, 0)?.z)
 				. |= M
 
 /proc/all_range(var/range,var/centre) //above two are blocked by opaque objects
 	. = list()
-	for (var/atom/A as() in range(range,centre))
+	for (var/atom/A as anything in range(range,centre))
 		if (ismob(A))
 			. += A
 		else if (isobj(A))
@@ -1421,7 +1421,7 @@ var/list/hex_chars = list("0","1","2","3","4","5","6","7","8","9","A","B","C","D
 var/list/all_functional_reagent_ids = list()
 
 proc/get_all_functional_reagent_ids()
-	for (var/datum/reagent/R as() in filtered_concrete_typesof(/datum/reagent, /proc/filter_blacklisted_chem))
+	for (var/datum/reagent/R as anything in filtered_concrete_typesof(/datum/reagent, /proc/filter_blacklisted_chem))
 		all_functional_reagent_ids += initial(R.id)
 
 
@@ -2632,7 +2632,7 @@ proc/is_incapacitated(mob/M)
 /// sets up the list of ringtones players can select through character setup
 proc/get_all_character_setup_ringtones()
 	if(!length(selectable_ringtones))
-		for (var/datum/ringtone/R as() in filtered_concrete_typesof(/datum/ringtone, /proc/filter_is_character_setup_ringtone))
+		for (var/datum/ringtone/R as anything in filtered_concrete_typesof(/datum/ringtone, /proc/filter_is_character_setup_ringtone))
 			var/datum/ringtone/R_prime = new R
 			selectable_ringtones[R_prime.name] = R_prime
 	return selectable_ringtones

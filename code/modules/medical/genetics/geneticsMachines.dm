@@ -219,7 +219,7 @@
 			scanner.icon_state = "scanner_0"
 			return null
 		else
-			for (var/D as() in scanner.occupant.bioHolder.effects)
+			for (var/D as anything in scanner.occupant.bioHolder.effects)
 				var/datum/bioEffect/BE = scanner.occupant.bioHolder.effects[D]
 				var/datum/bioEffect/GBE = BE.get_global_instance()
 				if (GBE.research_level == EFFECT_RESEARCH_DONE)
@@ -638,7 +638,7 @@
 			booth_effect_desc = strip_html(booth_effect_desc, 280)
 			for_by_tcl(GB, /obj/machinery/genetics_booth)
 				var/already_has = 0
-				for (var/datum/geneboothproduct/P as() in GB.offered_genes)
+				for (var/datum/geneboothproduct/P as anything in GB.offered_genes)
 					if (P.id == E.id)
 						already_has = P
 						P.uses += 5
@@ -787,7 +787,7 @@
 				if (GR.required_effects.len != src.combining.len)
 					continue
 				var/list/temp = GR.required_effects.Copy()
-				for (var/datum/bioEffect/BE as() in src.combining)
+				for (var/datum/bioEffect/BE as anything in src.combining)
 					if (BE.wildcard)
 						matches++
 					if (BE.id in temp)
@@ -799,7 +799,7 @@
 					var/datum/bioEffect/GBE = NEWBE.get_global_instance()
 					NEWBE.dnaBlocks.blockList = GBE.dnaBlocks.blockList
 					GBE.research_level = max(GBE.research_level, EFFECT_RESEARCH_ACTIVATED) // counts as researching it
-					for (var/datum/bioEffect/X as() in src.combining)
+					for (var/datum/bioEffect/X as anything in src.combining)
 						src.saved_mutations -= X
 						src.combining -= X
 						qdel(X)
@@ -883,7 +883,7 @@
 		blockList = BE.dnaBlocks.blockListCurr
 
 	var/list/dna = list()
-	for (var/datum/basePair/BP as() in blockList)
+	for (var/datum/basePair/BP as anything in blockList)
 		dna += list(list(
 			"upper" = BP.bpp1,
 			"lower" = BP.bpp2,
@@ -953,7 +953,7 @@
 		"unlock" = null,
 	)
 
-	for(var/datum/data/record/R as() in data_core.medical)
+	for(var/datum/data/record/R as anything in data_core.medical)
 		var/datum/computer/file/genetics_scan/S = R.fields["dnasample"]
 		if (!istype(S))
 			continue
@@ -963,20 +963,20 @@
 			"uid" = S.subject_uID,
 		))
 
-	for(var/datum/bioEffect/BE as() in saved_mutations)
+	for(var/datum/bioEffect/BE as anything in saved_mutations)
 		.["savedMutations"] += list(serialize_bioeffect_for_tgui(BE))
 
-	for(var/datum/dna_chromosome/C as() in saved_chromosomes)
+	for(var/datum/dna_chromosome/C as anything in saved_chromosomes)
 		.["savedChromosomes"] += list(list(
 			"ref" = "\ref[C]",
 			"name" = C.name,
 			"desc" = C.desc,
 		))
 
-	for (var/datum/bioEffect/BE as() in combining)
+	for (var/datum/bioEffect/BE as anything in combining)
 		.["combining"] += "\ref[BE]"
 
-	for (var/X as() in bioEffectList)
+	for (var/X as anything in bioEffectList)
 		var/datum/bioEffect/BE = bioEffectList[X]
 		if (BE.effectType == EFFECT_TYPE_MUTANTRACE && BE.research_level >= EFFECT_RESEARCH_DONE && BE.mutantrace_option)
 			.["mutantRaces"] += list(list(
@@ -996,7 +996,7 @@
 
 	if (istype(selected_record))
 		var/list/genes = list()
-		for (var/datum/bioEffect/BE as() in selected_record.dna_pool)
+		for (var/datum/bioEffect/BE as anything in selected_record.dna_pool)
 			var/datum/bioEffect/GBE = BE.get_global_instance()
 			if (GBE.secret && !genResearch.see_secret)
 				continue
@@ -1052,14 +1052,14 @@
 	else
 		.["haveSubject"] = FALSE
 
-	for(var/R as() in genResearch.researchTreeTiered)
+	for(var/R as anything in genResearch.researchTreeTiered)
 		if (text2num(R) == 0)
 			continue
 		var/list/availTier = list()
 		var/list/finishedTier = list()
 		var/list/tierList = genResearch.researchTreeTiered[R]
 
-		for (var/datum/geneticsResearchEntry/C as() in tierList)
+		for (var/datum/geneticsResearchEntry/C as anything in tierList)
 			if (C.meetsRequirements())
 				var/research_cost = C.researchCost
 				if (genResearch.cost_discount)
@@ -1086,7 +1086,7 @@
 		.["availableResearch"][text2num(R)] = availTier
 		.["finishedResearch"][text2num(R)] = finishedTier
 
-	for(var/datum/geneticsResearchEntry/R as() in genResearch.currentResearch)
+	for(var/datum/geneticsResearchEntry/R as anything in genResearch.currentResearch)
 		.["currentResearch"] += list(list(
 			"ref" = "\ref[R]",
 			"name" = R.name,
@@ -1117,7 +1117,7 @@
 
 /obj/machinery/computer/genetics/ui_static_data(mob/user)
 	var/to_send = list()
-	for (var/id as() in bioEffectList)
+	for (var/id as anything in bioEffectList)
 		var/datum/bioEffect/BE = bioEffectList[id]
 		if (!BE.scanner_visibility || BE.research_level < EFFECT_RESEARCH_IN_PROGRESS)
 			continue

@@ -1,6 +1,6 @@
 /proc/most_applicable_trade(var/list/datum/commodity/goods_buy, var/obj/item/sell_item)
 	var/list/goods_buy_types = new /list(0)
-	for(var/datum/commodity/N as() in goods_buy)
+	for(var/datum/commodity/N as anything in goods_buy)
 		if (istype(sell_item, N.comtype))
 			goods_buy_types[N.comtype] = N
 	return goods_buy_types[maximal_subtype(goods_buy_types)]

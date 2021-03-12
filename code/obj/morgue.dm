@@ -440,7 +440,7 @@
 				if (C.id == src.id)
 					src.crematoriums.Add(C)
 					C.igniter = src
-		for (var/obj/crematorium/C as() in src.crematoriums)
+		for (var/obj/crematorium/C as anything in src.crematoriums)
 			if (!C.cremating)
 				C.cremate(user)
 	else
