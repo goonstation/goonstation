@@ -90,8 +90,8 @@
 		if (target && ishuman(target))
 			var/mob/living/carbon/human/H = target
 			H.changeStatus("stunned", 4 SECONDS)
-			random_brute_damage(H, 30, 0)
-			take_bleeding_damage(H, null, 12, DAMAGE_CUT)
+			random_brute_damage(H, 50, 0)
+			take_bleeding_damage(H, null, 15, DAMAGE_CUT)
 			H.UpdateDamageIcon()
 
 		if (target)
