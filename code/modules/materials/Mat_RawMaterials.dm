@@ -257,10 +257,13 @@
 		..()
 	attackby(obj/item/W as obj, mob/user as mob)
 		if ((istool(W, TOOL_CUTTING | TOOL_SAWING)))
-			user.visible_message("[user] cuts [src] into a plank.", "You cut the [src] into a plank.")
+			user.visible_message("[user] cuts a plank from the [src].", "You cut a plank from the [src].")
 			var/obj/item/plankobj = new /obj/item/plank(user.loc)
 			plankobj.setMaterial(getMaterial("wood"), appearance = 0, setname = 0)
-			qdel (src)
+			if (src.amount > 1)
+				change_stack_amount(-1)
+			else
+				qdel (src)
 
 /obj/item/material_piece/organic/bamboo
 	name = "bamboo stalk"
