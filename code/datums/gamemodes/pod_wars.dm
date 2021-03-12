@@ -319,7 +319,10 @@ ABSTRACT_TYPE(/datum/ore_cluster)
 		if (M.current)
 			M.current.client << sound('sound/effects/ship_alert_major.ogg')
 
-	boutput(world, "<h2><span class='alert'>[team_num == 1 ? "NanoTrasen": team_num == 2 "Syndicate" : "Something else"]'s [CS] has been destroyed!!</span></h2>")
+	var/team_name_string = team?.name
+	if (team.team_num == TEAM_SYNDICATE)
+		team_name_string = "The Syndicate"
+	boutput(world, "<h3><span class='alert'>[team_name_string]'s [CS] has been destroyed!!</span></h3>")
 
 /datum/game_mode/pod_wars/proc/announce_critical_system_damage(var/team_num, var/obj/pod_base_critical_system/CS)
 	var/datum/pod_wars_team/team
@@ -551,7 +554,7 @@ ABSTRACT_TYPE(/datum/ore_cluster)
 		return
 
 	attackby(var/obj/item/W, var/mob/user)
-		take_damage(W.force)
+		take_damage(W.force, user)
 		user.lastattacked = src
 		if (health < health_max && isweldingtool(W))
 			if(!W:try_weld(user, 1))
@@ -567,7 +570,7 @@ ABSTRACT_TYPE(/datum/ore_cluster)
 	get_desc()
 		. = "<br><span class='notice'>It looks like it has [health] HP left out of [health_max] HP. You can just tell. What is \"HP\" though? </span>"
 
-	proc/take_damage(var/damage)
+	proc/take_damage(var/damage, var/mob/user)
 		// if (damage > 0)
 		src.health -= damage
 
@@ -584,6 +587,19 @@ ABSTRACT_TYPE(/datum/ore_cluster)
 		if (health <= 0)
 			qdel(src)
 
+		if (!user)
+			return	//don't log if damage isn't done by a user (like it's critters are turrets)
+
+		//Friendly fire check
+		var/friendly_fire = 0
+		if (get_pod_wars_team(user) == team_num)
+			friendly_fire = 1
+			message_admins("[user] just committed friendly fire against their team's [src]!")
+
+		if (friendly_fire)
+			logTheThing("combat", user, "\[POD WARS\][user] attacks their own team's critical system [src].")
+
+
 //////////////special clone pod///////////////
 
 /obj/machinery/clonepod/pod_wars
@@ -593,7 +609,7 @@ ABSTRACT_TYPE(/datum/ore_cluster)
 	var/check_delay = 10 SECONDS
 	var/team_num		//used for getting the team datum, this is set to 1 or 2 in the map editor. 1 = NT, 2 = Syndicate
 	var/datum/pod_wars_team/team
-	// is_speedy = 1	//setting this var does nothing atm, its effect is done and it is set by being hit with the object 
+	// is_speedy = 1	//setting this var does nothing atm, its effect is done and it is set by being hit with the object
 
 
 	process()
@@ -1090,17 +1106,16 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 		/datum/manufacture/communications/mining,
 		/datum/manufacture/pod/weapon/mining,
 		/datum/manufacture/pod/weapon/mining/drill,
-		/datum/manufacture/pod/weapon/ltlaser
-
-		/datum/manufacture/pod/weapon/mining
-		/datum/manufacture/pod/weapon/mining_weak
-		/datum/manufacture/pod/weapon/taser
-		/datum/manufacture/pod/weapon/laser/short
-		/datum/manufacture/pod/weapon/laser
-		/datum/manufacture/pod/weapon/disruptor
-		/datum/manufacture/pod/weapon/disruptor/light
-		/datum/manufacture/pod/weapon/shotgun
-		/datum/manufacture/pod/weapon/ass_laser
+		/datum/manufacture/pod/weapon/ltlaser,
+		/datum/manufacture/pod/weapon/mining,
+		/datum/manufacture/pod/weapon/mining_weak,
+		/datum/manufacture/pod/weapon/taser,
+		/datum/manufacture/pod/weapon/laser/short,
+		/datum/manufacture/pod/weapon/laser,
+		/datum/manufacture/pod/weapon/disruptor,
+		/datum/manufacture/pod/weapon/disruptor/light,
+		/datum/manufacture/pod/weapon/shotgun,
+		/datum/manufacture/pod/weapon/ass_laser,
 	)
 
 	New()
@@ -1784,7 +1799,8 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 			if (!T) // buh??
 				return
 		if (istype(T, /turf/space))
-				boutput(user, "<span class='alert'>Can't build a barricade in space!</span>")
+			boutput(user, "<span class='alert'>Can't build a barricade in space!</span>")
+			return
 		if (ispath(src.object_type))
 			if (locate(src.object_type) in T.contents)
 				boutput(user, "<span class='alert'>There is already a barricade here! You can't think of a way that another one could possibly fit!</span>")
@@ -1808,8 +1824,8 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 /obj/item_dispenser/barricade
 	name = "barricade dispenser"
 	desc = "A storage container that easily dispenses fresh deployable barricades. It can be refilled with deployable barricades."
-	icon_state = "dispenser_id"
-	filled_icon_state = "dispenser_id"
+	icon_state = "dispenser_barricade"
+	filled_icon_state = "dispenser_barricade"
 	deposit_type = /obj/item/deployer/barricade
 	withdraw_type = /obj/item/deployer/barricade
 	amount = 50
@@ -1818,8 +1834,8 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 /obj/item_dispenser/bandage
 	name = "bandage dispenser"
 	desc = "A storage container that easily dispenses fresh bandage."
-	icon_state = "dispenser_id"
-	filled_icon_state = "dispenser_id"
+	icon_state = "dispenser_bandages"
+	filled_icon_state = "dispenser_bandages"
 	deposit_type = null
 	withdraw_type = /obj/item/bandage/medicated
 	cant_deposit = 1

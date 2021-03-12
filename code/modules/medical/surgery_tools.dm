@@ -817,7 +817,7 @@ CONTAINS:
 			else if (H.bleeding)
 				actions.start(new /datum/action/bar/icon/medical_suture_bandage(H, src, 1, zone, 0, rand(4,6), brute_heal, burn_heal, "bandag"), user)
 				src.in_use = 1
-			else if (M.health < max_health)
+			else if (M.health < M.max_health)
 				actions.start(new /datum/action/bar/icon/medical_suture_bandage(H, src, 15, 0, 0, 5, brute_heal, burn_heal, "sutur"), user)
 				src.in_use = 1
 			else
@@ -937,9 +937,9 @@ CONTAINS:
 				"<span class='success'>[owner == target ? "You [vrb]e" : "[owner] [vrb]es"] your wounds closed with [tool].</span>")
 				repair_bleeding_damage(target, 100, repair_amount)
 				if (brute_heal)
-					random_brute_damage(src, brute_heal)
+					random_brute_damage(target, brute_heal)
 				if (burn_heal)
-					random_burn_damage(src, burn_heal)
+					random_burn_damage(target, burn_heal)
 			if (zone && vrb == "bandag" && !target.bandaged.Find(zone))
 				target.bandaged += zone
 				target.update_body()
