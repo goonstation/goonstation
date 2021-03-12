@@ -37,7 +37,7 @@
 	w_class = 2.0
 
 	afterattack(atom/target as mob|obj|turf, mob/user as mob)
-		if(target == usr) return
+		if(target == user) return
 
 		var/atom/target_r = target
 
@@ -208,8 +208,10 @@ proc/Get_Angle(atom/ref, atom/target,startpx,startpy,endpx,endpy)
 
 
 proc/DrawLine(atom/Start,atom/End,LineType,Icon,Whole_Icon_State = "",CenterOfIconStart=1,CenterOfIconEnd=1,HalfStart_Icon_State = "HalfStart",HalfEnd_Icon_State = "HalfEnd",Layer=OBJ_LAYER,ExtraDetection=1,startpx,startpy,endpx,endpy,startpx2,startpy2,PreloadedIcon=null)
-	if(isturf(Start)||isturf(End))
-		world.log << "ERROR:  Cannot draw line with turf for starting or ending point.  Please use /obj points instead."
+	if(isturf(Start) || isturf(End))
+		world.log << "DrawLine ERROR:  Cannot draw line with turf for starting or ending point.  Please use /obj points instead. S: [Start] | E: [End]"
+		return
+	if (!Start || !End)
 		return
 	var/list/LineList = list()
 	var/Angle = Get_Angle(Start,End,startpx,startpy,endpx,endpy)
@@ -222,10 +224,10 @@ proc/DrawLine(atom/Start,atom/End,LineType,Icon,Whole_Icon_State = "",CenterOfIc
 	var/turf/CurrentLoc = line_ReturnNextTile(Start,Angle)
 	if(!CurrentLoc)
 		CurrentLoc = Start
-	var/Nullspace = round(tan(90-Angle)*32)           //round(((sin(90-Angle)/cos(90-Angle))*16)*2)
+	var/Nullspace = round(tan(90-Angle)*32)
 	var/ReturnedDir = line_ReturnDir(Start,Angle,End,startpx,startpy,endpx,endpy)
 	if(ReturnedDir == EAST||ReturnedDir == WEST)
-		Nullspace = round(tanR(90-Angle)*32)  //round(((cos(90-Angle)/sin(90-Angle))*16)*2)
+		Nullspace = round(cot(90-Angle)*32)
 	if(Angle == 180)
 		Nullspace = 0  //Small bug workaround
 	var/CoorCounter = Nullspace

@@ -63,7 +63,7 @@
 		boutput(M, __red("You can't drink the blood of your own thralls!"))
 		return 0
 
-	if (ismonkey(target) || (target.bioHolder && target.bioHolder.HasEffect("monkey")))
+	if (isnpcmonkey(target))
 		boutput(M, __red("Drink monkey blood?! That's disgusting!"))
 		return 0
 
@@ -227,7 +227,7 @@
 		boutput(M, __red("You can't drink the blood of your master's thralls!"))
 		return 0
 
-	if (ismonkey(target) || (target.bioHolder && target.bioHolder.HasEffect("monkey")))
+	if (isnpcmonkey(target))
 		boutput(M, __red("Drink monkey blood?! That's disgusting!"))
 		return 0
 
@@ -389,6 +389,10 @@
 			H.vamp_isbiting = HH
 		HH.vamp_beingbitten = 1
 
+		src.loopStart()
+
+	loopStart()
+		..()
 		var/obj/projectile/proj = initialize_projectile_ST(HH, new/datum/projectile/special/homing/vamp_blood, M)
 		var/tries = 10
 		while (tries > 0 && (!proj || proj.disposed))
@@ -407,13 +411,13 @@
 		logTheThing("combat", M, HH, "steals blood from [constructTarget(HH,"combat")] at [log_loc(M)].")
 
 	onEnd()
-		..()
 		if(get_dist(M, HH) > 7 || M == null || HH == null)
+			..()
 			interrupt(INTERRUPT_ALWAYS)
+			src.end()
 			return
 
-		src.end()
-		actions.start(new/datum/action/bar/private/icon/vamp_ranged_blood_suc(M,H,HH), M)
+		src.onRestart()
 
 	onInterrupt() //Called when the action fails / is interrupted.
 		if (state == ACTIONSTATE_RUNNING)
@@ -523,24 +527,31 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
-		logTheThing("combat", M, HH, "bites [constructTarget(HH,"combat")]'s neck at [log_loc(M)].")
-
 		if (istype(H))
 			H.vamp_isbiting = HH
 		HH.vamp_beingbitten = 1
 
-	onEnd()
+		src.loopStart()
+
+	loopStart()
 		..()
+		logTheThing("combat", M, HH, "bites [constructTarget(HH,"combat")]'s neck at [log_loc(M)].")
+		return
+
+	onEnd()
 		if(get_dist(M, HH) > 1 || M == null || HH == null || B == null)
+			..()
 			interrupt(INTERRUPT_ALWAYS)
+			src.end()
 			return
 
 		if (!H.do_bite(HH,mult = 1.5, thrall = B.thrall))
+			..()
 			interrupt(INTERRUPT_ALWAYS)
+			src.end()
 			return
 
-		src.end()
-		actions.start(new/datum/action/bar/icon/vamp_blood_suc(M,H,HH,B), M)
+		src.onRestart()
 
 	onInterrupt() //Called when the action fails / is interrupted.
 		if (state == ACTIONSTATE_RUNNING)

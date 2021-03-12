@@ -12,7 +12,7 @@ var/global/the_automaton = null
 	aggressive = 0
 	defensive = 0
 	wanderer = 0
-	opensdoors = 0
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_NONE
 	atkcarbon = 0
 	atksilicon = 0
 	firevuln = 0.5
@@ -32,7 +32,7 @@ var/global/the_automaton = null
 
 	New()
 		..()
-		SPAWN_DBG (10)
+		SPAWN_DBG(1 SECOND)
 			if (!the_automaton)
 				the_automaton = src
 
@@ -51,7 +51,7 @@ var/global/the_automaton = null
 		atkcarbon = 1
 		atksilicon = 1
 		wanderer = 1
-		opensdoors = 1
+		opensdoors = OBJ_CRITTER_OPENS_DOORS_ANY
 
 	CritterAttack(mob/M)
 		playsound(src.loc, "sound/misc/automaton_scratch.ogg", 50, 1)
@@ -123,7 +123,7 @@ var/global/the_automaton = null
 				switch (current_loc.type)
 					if (/area/solarium)
 
-						src.dir = 4
+						src.set_dir(4)
 						if (!src.muted)
 							src.visible_message("<span class='alert'><b>[src]</b> stares into the sun.</span>")
 					if (/area/station/engine/core)
@@ -133,14 +133,14 @@ var/global/the_automaton = null
 								break
 						var/obj/machinery/power/generatorTemp/G = admiring_target
 						if (istype(G) && G.lastgenlev >= 26)
-							src.dir = get_dir(src, G)
+							src.set_dir(get_dir(src, G))
 							src.visible_message("<span class='alert'><b>[src]</b> [pick("stares","gazes","glares","looks")] [pick("alluringly", "enticingly", "lovingly", "fanatically", "zealously", "warmly", "obediently", "calmly")] at the [G.name].</span>")
 
 
 	proc/spin()
 		if (!src.muted)
 			src.visible_message("<span class='alert'><b>[src]</b> [pick("turns", "pivots", "twitches", "spins")].</span>")
-		src.dir = pick(alldirs)
+		src.set_dir(pick(alldirs))
 
 	proc/inserted_key()
 		switch (keycount)
@@ -197,14 +197,14 @@ var/global/the_automaton = null
 			if (istype(W, /obj/item/device/key/cheget)) //I don' like yer new-fangled mumbo-jumbo
 				user.u_equip(W)
 				W.dropped(user)
-				W.loc = src
+				W.set_loc(src)
 				src.visible_message("<span class='alert'><b>[src]</b> takes \the [W] and studies it intently for a moment.</span>")
 				sleep(3 SECONDS)
 				if (!got_cheget_key)
 					got_cheget_key = 1
 					src.visible_message("<span class='alert'><B>[src]</B> clacks angrily and throws \the [W] at [user]!</span>")
 					playsound(src.loc, "sound/misc/automaton_scratch.ogg", 60, 1)
-					W.loc = src.loc
+					W.set_loc(src.loc)
 					W.throw_at(user, 20, 2)
 				else
 					src.visible_message("<span class='alert'><B>[src]</B> makes a loud ratcheting noise and crumples up \the [W]!</span>")

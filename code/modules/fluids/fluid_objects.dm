@@ -230,6 +230,8 @@
 	var/slurping = 0
 	var/pissing = 0
 
+	var/contained = 0
+
 	var/static/image/overlay_image = image('icons/obj/fluid.dmi')
 
 	New()
@@ -261,6 +263,7 @@
 		..()
 
 	process()
+		if(contained) return
 		if (slurping)
 			if (src.reagents.total_volume < bladder)
 				var/turf/T = get_turf(src)
@@ -356,7 +359,16 @@
 		onclose(user, "fluid_canister")
 		return
 
-
+/obj/machinery/fluid_canister/attackby(obj/item/W, mob/user)
+	if(istype(W, /obj/item/atmosporter))
+		var/obj/item/atmosporter/porter = W
+		if (porter.contents.len >= porter.capacity) boutput(user, "<span class='alert'>Your [W] is full!</span>")
+		else
+			user.visible_message("<span class='notice'>[user] collects the [src].</span>", "<span class='notice'>You collect the [src].</span>")
+			src.contained = 1
+			src.set_loc(W)
+			elecflash(user)
+	..()
 ///////////////////
 //////canister/////
 ///////////////////
@@ -377,7 +389,7 @@
 		set category = "Local"
 
 		if (!og_ladder_item)
-			if (linked_ladder && linked_ladder.og_ladder_item)
+			if (linked_ladder?.og_ladder_item)
 				og_ladder_item = linked_ladder.og_ladder_item
 			else
 				og_ladder_item = new /obj/item/sea_ladder(src.loc)
@@ -422,7 +434,7 @@
 	New()
 		..()
 		src.setItemSpecial(/datum/item_special/swipe)
-		BLOCK_LARGE
+		BLOCK_SETUP(BLOCK_LARGE)
 
 	afterattack(atom/target, mob/user as mob)
 		if (istype(target,/turf/space/fluid/warp_z5))
@@ -437,7 +449,7 @@
 			L.linked_ladder.linked_ladder = L
 
 			user.drop_item()
-			src.loc = L
+			src.set_loc(L)
 			L.og_ladder_item = src
 			L.linked_ladder.og_ladder_item = src
 
@@ -463,34 +475,13 @@
 
 	var/boom_str = 26
 
-	var/datum/light/point/light = 0
-	var/init = 0
-
 	New()
 		..()
 		animate_bumble(src)
-		if (current_state == GAME_STATE_PLAYING)
-			initialize()
-
-	disposing()
-		light = 0
-		..()
-
-	initialize()
-		..()
-		if (!init)
-			init = 1
-			if (!light)
-				light = new
-				light.attach(src)
-			light.set_brightness(1)
-			light.set_color(1, 0.4, 0.4)
-			light.set_height(3)
-			light.enable()
+		add_simple_light("naval_mine", list(255, 102, 102, 40))
 
 	get_desc()
 		. += "It is [active ? "armed" : "disarmed"]."
-
 
 	ex_act(severity)
 		return //nah

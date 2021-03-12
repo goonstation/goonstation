@@ -80,8 +80,9 @@
 	maptext_width = 96
 
 	New(var/change = 0)
+		..()
 		if (abs(change) < 1)
-			del(src)
+			qdel(src)
 			return
 
 		var/hcol = (change > 0) ? "#88ff88" : "#ff6666"
@@ -99,8 +100,9 @@
 			animate(maptext_y = 52, alpha = 0, time = 4, easing = EASE_OUT | CUBIC_EASING)
 
 		// ptoato said to just call del directly so blame them
+		// pali: potato was wrong
 		SPAWN_DBG(4 SECONDS)
-			del(src)
+			qdel(src)
 
 
 /obj/maptext_junk/speech
@@ -113,6 +115,7 @@
 	var/bumped = 0
 
 	New(mob/M as mob, msg, style = "")
+		..()
 		for (var/obj/maptext_junk/speech/O in M.vis_contents)
 			if (!istype(O))
 				continue
@@ -151,16 +154,16 @@
 	var/list/affecting = list()
 
 	attack_hand(mob/user as mob)
-		boutput(usr, "rotating mirror...")
+		boutput(user, "rotating mirror...")
 		facing = 1 - facing
 		for (var/obj/machinery/power/pt_laser/PTL in affecting)
 			//
-			boutput(usr, "[PTL] would be notified")
+			boutput(user, "[PTL] would be notified")
 
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (iswrenchingtool(W))
-			boutput(usr, "this would deconstruct it.")
+			boutput(user, "this would deconstruct it.")
 			return
 
 		..()
@@ -209,6 +212,11 @@
 		Z_LOG_DEBUG("shit", "Doing teleport")
 		do_the_teleport(AM)
 
+	ex_act(severity)
+		return
+
+	meteorhit(obj/meteor)
+		return
 
 	proc/do_the_teleport(atom/movable/AM as mob|obj)
 		Z_LOG_DEBUG("shit", "Teleporting [AM]")
@@ -242,6 +250,7 @@
 	icon = 'icons/obj/32x64.dmi'
 	icon_state = "voting_box"
 	density = 1
+	event_handler_flags = NO_MOUSEDROP_QOL
 	flags = FPRINT
 	anchored = 1
 	desc = "Funds further renovations for the afterlife. You can put the fruits / vegetables / minerals / bombs you grew into this (click this with them or click-drag them onto it)."
@@ -251,6 +260,7 @@
 	var/working = 0
 
 	New()
+		..()
 		total_score = world.load_intra_round_value("afterlife_donations")
 		tracker = new /obj/maptext_junk()
 		tracker.pixel_y = 40
@@ -391,6 +401,7 @@
 	var/active = 0
 
 	New()
+		..()
 		SPAWN_DBG(0.5 SECONDS)
 			gunsim = locate() in world
 
@@ -459,6 +470,9 @@
 			active = 0
 			alpha = 255
 
+	ex_act(severity)
+		return
+
 
 /proc/fancy_pressure_bar(var/pressure, var/max_pressure, var/width = 300)
 
@@ -466,7 +480,7 @@
 	var/bar_bg_color = "#000000"
 	var/bar_color = "#00cc00"
 	var/bar_width = clamp(pct, 0, 1)
-	if (pct > 1)
+	if (pct > 1.01)
 		bar_width = clamp((pressure / (max_pressure * 10)), 0, 1)
 		bar_bg_color = "#b00000"
 		bar_color = "#ffff00"
@@ -546,6 +560,8 @@
 	layer = TURF_LAYER + 0.1 // it should basically be part of a turf
 	plane = PLANE_FLOOR // hence, they should be on the same plane!
 
+	ex_act(severity)
+		return
 
 
 /area/football
@@ -572,7 +588,7 @@
 
 		Entered(atom/movable/O)
 			..()
-			if (isobserver(O) || !istype(ticker.mode, /datum/game_mode/football))
+			if (isobserver(O) || !istype(ticker?.mode, /datum/game_mode/football))
 				return
 			var/datum/game_mode/football/F = ticker.mode
 			if (ismob(O))
@@ -598,9 +614,12 @@
 	name = "join"
 	icon = 'icons/effects/mapeditor.dmi'
 	icon_state = "landmark"
+	deleted_on_start = TRUE
+	add_to_landmarks = FALSE
+
 	New()
 		football_spawns[src.name] += src.loc
-		qdel(src)
+		..()
 
 	blue
 		name = "blue"
@@ -656,7 +675,7 @@
 
 
 	New()
-		SubscribeToProcess()
+		..()
 		src.process()
 
 	disposing()
@@ -675,3 +694,483 @@
 
 	ex_act()
 		return
+
+
+/obj/machinery/fix_this_shit/delete_this_shit
+	name = "\proper qdel()"
+	desc = "please stop looking at my dangling references"
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "onfire"
+
+	process()
+		if (src.last_count != harddel_count)
+			src.last_count = harddel_count
+			animate_storage_rustle(src)
+			playsound(src, "sound/mksounds/gotitem.ogg",33, 0)
+			src.maptext = "<span class='ps2p sh vb c'><span style='font-size: 12px;'>[harddel_count]</span>\nharddels</span>"
+			src.maptext_x = -100
+			src.maptext_width = 232
+			src.maptext_y = 34
+
+
+/obj/machinery/maptext_monitor
+	name = "maptext monitor doodad"
+	desc = "This thing reports the value something else has, automatically! Wow!"
+	icon = null
+	anchored = 2
+	density = 0
+
+	var/datum/monitored = null
+	var/monitored_var = null
+	var/monitored_list = null
+	var/monitored_ref = null
+	var/last_value = null
+	var/display_mode = null
+	var/maptext_prefix = "<span class='c pixel sh'>Value:\n<span class='vga'>"
+	var/maptext_suffix = "</span></span>"
+	var/ding_on_change = 0
+	var/ding_sound = "sound/machines/ping.ogg"
+	var/update_delay = 0
+	var/require_var_or_list = 1
+
+	New()
+		..()
+		src.maptext_x = -100
+		src.maptext_width = 232
+		src.maptext_height = 64
+		src.process()
+
+	disposing()
+		UnsubscribeProcess()
+		..()
+
+	process()
+		src.update_monitor()
+		if (src.update_delay)
+			UnsubscribeProcess()
+			SPAWN_DBG(0)
+				while (src.update_delay)
+					src.update_monitor()
+					sleep(update_delay)
+
+				SubscribeToProcess()
+
+	/**
+	* Checks if a monitored thing still exists
+	*
+	* Returns 0 if monitoring should stop,
+	* 1 if monitoring is okay
+	*/
+	proc/validate_monitored()
+		if (src.monitored_ref)
+			var/datum/thing = locate(src.monitored_ref)
+			if (thing)
+				src.monitored = thing
+			src.monitored_ref = null
+
+		if (monitored)
+			if (monitored.pooled || monitored.qdeled)
+				// The thing we were watching was deleted/removed! Welp.
+				monitored = null
+				return 0
+
+			if (src.require_var_or_list && !src.monitored_list && !src.monitored_var)
+				return 0
+			return 1
+
+		return 0
+
+	/**
+	* Updates the maptext monitor
+	*/
+	proc/update_monitor()
+		if (!src.validate_monitored())
+			return
+
+		try
+			var/current_value = src.get_value()
+
+			if (current_value != last_value)
+				src.maptext = "[maptext_prefix][format_value(current_value)][maptext_suffix]"
+				src.last_value = current_value
+				if (src.ding_on_change)
+					playsound(src, src.ding_sound, 33, 0)
+		catch(var/exception/e)
+			src.maptext = "<span class='c pixel sh'>(Err: [e])</span>"
+
+
+	proc/get_value()
+		if (src.monitored_list && !src.monitored_var)
+			var/list/monlist = monitored.vars[src.monitored_list]
+			. = monlist.len
+		else if (src.monitored_list)
+			. = monitored.vars[src.monitored_list][src.monitored_var]
+		else
+			. = monitored.vars[monitored_var]
+
+
+	proc/format_value(var/val)
+		switch (src.display_mode)
+			if ("power")
+				return engineering_notation(val)
+			if ("percent")
+				return (val * 100)
+			if ("temperature")
+				return "[val - T0C]&deg;C"
+			if ("round")
+				return round(val)
+
+		return val
+
+
+	ex_act()
+		return
+
+
+	location
+		require_var_or_list = 0
+		maptext_prefix = "<span class='c pixel sh'><span class='vga'>"
+		maptext_suffix = "</span>"
+
+		get_value()
+			var/turf/where = get_turf(monitored)
+			if (!where)
+				. = "Unknown</span>\n(?, ?, ?)"
+			else
+				. = "[where.loc]</span>\n([where.x], [where.y], [where.z])"
+
+
+	stats
+		monitored_list = "stats"
+		ding_on_change = 1
+
+		New()
+			src.monitored = game_stats
+			..()
+
+		farts
+			monitored_var = "farts"
+			maptext_prefix = "<span class='c pixel sh'>Farts:\n<span class='vga'>"
+			update_delay = 1 SECOND
+
+		deaths
+			monitored_var = "deaths"
+			maptext_prefix = "<span class='c pixel sh'>Deaths:\n<span class='vga'>"
+			ding_sound = "sound/misc/lose.ogg"
+
+			players
+				monitored_var = "playerdeaths"
+				maptext_prefix = "<span class='c pixel sh'>Deaths:\n<span class='vga'>"
+				ding_sound = "sound/misc/lose.ogg"
+
+		adminhelps
+			monitored_var = "adminhelps"
+			maptext_prefix = "<span class='c pixel sh'>Adminhelps:\n<span class='vga'>"
+			ding_sound = "sound/voice/screams/mascream6.ogg"
+
+		mentorhelps
+			monitored_var = "mentorhelps"
+			maptext_prefix = "<span class='c pixel sh'>Mentorhelps:\n<span class='vga'>"
+			ding_sound = "sound/voice/animal/mouse_squeak.ogg"
+
+		prayers
+			monitored_var = "prayers"
+			maptext_prefix = "<span class='c pixel sh'>Prayers:\n<span class='vga'>"
+			ding_sound = "sound/voice/heavenly.ogg"
+
+		violence
+			monitored_var = "violence"
+			maptext_prefix = "<span class='c pixel sh'>Acts of violence:\n<span class='vga'>"
+			update_delay = 1 SECOND
+
+		clones
+			monitored_var = "clones"
+			maptext_prefix = "<span class='c pixel sh'>Clones:\n<span class='vga'>"
+
+	budget
+		New()
+			src.monitored = wagesystem
+			..()
+
+		display_mode = "round"
+		monitored_var = "station_budget"
+		maptext_prefix = "<span class='c pixel sh'>Station Budget:\n<span class='vga'>$"
+
+		station
+			// the default, but explicit...
+		shipping
+			monitored_var = "shipping_budget"
+			maptext_prefix = "<span class='c pixel sh'>Shipping Budget:\n<span class='vga'>$"
+		research
+			monitored_var = "research_budget"
+			maptext_prefix = "<span class='c pixel sh'>Research Budget:\n<span class='vga'>$"
+
+
+	clients
+		maptext_prefix = "<span class='c pixel sh'>Players:\n<span class='vga'>"
+		validate_monitored()
+			return 1
+		get_value()
+			. = total_clients()
+
+	players
+		maptext_prefix = "<span class='c pixel sh'>Players:\n<span class='vga'>"
+		var/what_group = "total"
+		validate_monitored()
+			return 1
+		get_value()
+			. = get_crew_stats()[what_group]
+
+		alive
+			maptext_prefix = "<span class='c pixel sh'>Living players:\n<span class='vga'>"
+			what_group = "alive"
+		dead
+			maptext_prefix = "<span class='c pixel sh'>Dead players:\n<span class='vga'>"
+			what_group = "dead"
+		observers
+			maptext_prefix = "<span class='c pixel sh'>Observers:\n<span class='vga'>"
+			what_group = "observer"
+
+
+
+		// shamefully stolen from get_dead_crew_percentage()
+		proc/get_crew_stats()
+			var/list/results = list()
+			results["total"] = 0
+			results["alive"] = 0
+			results["dead"] = 0
+			results["observer"] = 0
+
+			for(var/client/C)
+				var/mob/M = C.mob
+				if(!M || isnewplayer(M)) continue
+				if (isdead(M) && !isliving(M))
+					if (M.mind?.joined_observer)
+						results["observer"]++
+					else
+						results["dead"]++
+				else
+					results["alive"]++
+				results["total"]++
+
+			return results
+
+
+	load
+		maptext_prefix = "<span class='c pixel sh'>Server Load:\n<span class='vga'>"
+		update_delay = 1 SECOND
+
+		validate_monitored()
+			return 1
+		get_value()
+			var/lagc = "#ffffff"
+			switch (world.tick_lag)
+				if (0 to 0.4)
+					lagc = "#00ff00"
+				if (0.4 to 0.6)
+					lagc = "#ffff00"
+				if (0.6 to 0.8)
+					lagc = "#ff8800"
+				if (0.8 to INFINITY)
+					lagc = "#ff0000; -dm-text-outline: 1px #000000 solid"
+
+			. = "<span style='color: [lagc];'>[world.cpu]% @ [world.tick_lag / 10]s</span>"
+
+
+/obj/overlay/zamujasa/football_wave_timer
+	name = "football wave countdown"
+
+	New()
+		..()
+		src.maptext_x = -100
+		src.maptext_height = 64
+		src.maptext_width = 232
+		src.plane = 100
+		src.anchored = 2
+		src.mouse_opacity = 1
+
+	proc/update_timer(var/num)
+		if (num == -1)
+			src.maptext = ""
+		else
+			src.maptext = {"<span class='c pixel sh'>Next spawn wave in\n<span class='vga'>[round(num)]</span> seconds</span>"}
+
+
+
+/obj/overlay/zamujasa/help_text
+	name = "new player tutorial maptext"
+
+	New()
+		..()
+		src.maptext_x = -100
+		src.maptext_height = 64
+		src.maptext_width = 232
+		src.plane = 100
+		src.anchored = 2
+		src.mouse_opacity = 1
+		src.maptext = {"<div class='c pixel sh' style="background: #00000080;"><strong>-- Welcome to Goonstation! --</strong>
+New? <a href="https://mini.xkeeper.net/ss13/tutorial/" style="color: #8888ff; font-weight: bold;" clss="ol">Click here for a tutorial!</a>
+Ask mentors for help with <strong>F3</strong>
+Contact admins with <strong>F1</strong>
+Read the rules, don't grief, and have fun!</div>"}
+
+
+/obj/overlay/zamujasa/round_start_countdown
+	var/maptext_area = "status"
+
+	New()
+		..()
+		if (length(landmarks[LANDMARK_LOBBY_STATUS]))
+			src.set_loc(landmarks[LANDMARK_LOBBY_STATUS][1])
+		src.layer = HUD_LAYER
+
+		src.maptext_width = 320
+		src.maptext_x = -(320 / 2) + 16
+		src.maptext_height = 48
+		src.plane = 100
+		src.set_text("")
+
+	disposing()
+		lobby_titlecard.set_maptext(maptext_area, "")
+		..()
+
+	proc/set_text(text)
+		src.maptext = text
+		lobby_titlecard.set_maptext(maptext_area, text)
+
+	proc/update_status(message)
+		if (message)
+			src.set_text("<span class='c ol vga vt'>Setting up game...\n<span style='color: #aaaaaa;'>[message]</span></span>")
+		else
+			src.set_text("")
+
+	timer
+		maptext_area = "timer"
+
+		New()
+			..()
+			if (length(landmarks[LANDMARK_LOBBY_TIMER]))
+				src.set_loc(landmarks[LANDMARK_LOBBY_TIMER][1])
+
+			src.maptext_height = 96
+
+		proc/update_time(var/time)
+			if (time >= 0)
+				var/timeLeftColor
+				switch (time)
+					if (90 to INFINITY)
+						timeLeftColor = "#33dd33"
+					if (60 to 90)
+						timeLeftColor = "#ffff00"
+					if (30 to 60)
+						timeLeftColor = "#ffb400"
+					if (0 to 30)
+						timeLeftColor = "#ff6666"
+				src.set_text("<span class='c ol vga vt'>Round begins in<br><span style='color: [timeLeftColor]; font-size: 3em;'>[time]</span></span>")
+			else
+				src.set_text("<span class='c ol vga vt'>Round begins<br><span style='color: #aaaaaa; font-size: 3em;'>soon</span></span>")
+
+	encourage
+		maptext_area = "leftside"
+
+		New()
+			..()
+			if (length(landmarks[LANDMARK_LOBBY_LEFTSIDE]))
+				src.set_loc(landmarks[LANDMARK_LOBBY_LEFTSIDE][1])
+
+			// This is gross. I'm sorry.
+			var/list/servers = list()
+			servers["main1"] = "1 Classic: Heisenbee"
+			servers["main2"] = "2 Classic: Bombini"
+			servers["main3"] = "3 Roleplay: Morty"
+			servers["main4"] = "4 Roleplay: Sylvester"
+
+			var/serverList = ""
+			for (var/serverId in servers)
+				if (serverId == config.server_id)
+					continue
+				serverList += {"\n<a style='color: #88f;' href='byond://winset?command=Change-Server "[serverId]'>Goonstation [servers[serverId]]</a>"}
+
+			src.maptext_x = 0
+			src.maptext_width = 600
+			src.maptext_height = 400
+			src.set_text({"<span class='ol vga'>
+Welcome to Goonstation!
+New? <a style='color: #88f;' href="https://mini.xkeeper.net/ss13/tutorial/">Check the tutorial</a>!
+Have questions? Ask mentors with \[F3]!
+Need an admin? Message us with \[F1].
+
+Other Goonstation servers:[serverList]</span>"})
+
+
+
+
+/obj/overlay/inventory_counter
+	name = "inventory amount counter"
+	invisibility = 101
+	plane = PLANE_HUD
+	layer = HUD_LAYER_3
+	appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM | PIXEL_SCALE
+	var/static/matrix/infinity_matrix = matrix().Turn(90).Translate(18, 1)
+
+	New()
+		..()
+		maptext_width = 64
+		maptext_x = -34
+		maptext_y = 1
+		mouse_opacity = 0
+		maptext = ""
+
+	proc/update_text(var/text)
+		maptext = {"<span class="vb r pixel sh">[text]</span>"}
+		if(src.transform) src.transform = null
+
+	proc/update_number(var/number)
+		if(number == -1)
+			maptext = {"<span class="vb r pixel sh" style="font-size:1.5em;">8</span>"} // pixel font has more symmetric 8, ok?
+			src.transform = infinity_matrix
+			return
+		maptext = {"<span class="vb r xfont sh"[number == 0 ? " style='color: #ff6666;'" : number == -1 ? " style='-ms-transform: rotate(-90deg);'" : ""]>[number == -1 ? "8" : number >= 100000 ? "[round(number / 1000)]K" : round(number)]</span>"}
+		if(src.transform) src.transform = null
+
+	proc/update_percent(var/current, var/maximum)
+		if (!maximum)
+			// no dividing by zero
+			src.update_number(current)
+			return
+		maptext = {"<span class="vb r xfont sh"[current == 0 ? " style='color: #ff6666;'" : ""]>[round(current / maximum * 100)]%</span>"}
+		if(src.transform) src.transform = null
+
+	proc/hide_count()
+		invisibility = 101
+
+	proc/show_count()
+		invisibility = 0
+
+	pooled()
+		src.maptext = ""
+		src.invisibility = 101
+		..()
+
+
+
+/mob/living/critter/small_animal/bee/zombee/zambee
+	name = "zambee"
+	real_name = "zambee"
+	desc = "Genetically engineered for passiveness and bred for badminning, the greater domestic zambee is increasingly unpopular among grayshirts and griefers."
+	limb_path = /datum/limb/small_critter/bee/strong
+	add_abilities = list(/datum/targetable/critter/bite/bee,
+						 /datum/targetable/critter/bee_sting/zambee,
+						 /datum/targetable/critter/bee_swallow,
+						 /datum/targetable/critter/bee_teleport)
+
+	setup_equipment_slots()
+		equipment += new /datum/equipmentHolder/ears(src)
+		equipment += new /datum/equipmentHolder/head/bee(src)
+
+
+/datum/targetable/critter/bee_sting/zambee
+	venom1 = "saline"
+	amt1 = 15
+	venom2 = "omnizine"
+	amt2 = 5

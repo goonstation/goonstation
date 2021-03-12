@@ -66,7 +66,7 @@ JONES CITY TURFS
 
 	New()
 		..()
-		src.dir = pick(cardinal)
+		src.set_dir(pick(cardinal))
 
 /obj/item/paper/jones_note //When the lord plays, nothing is fair.
 	name = "slimy wad of paper"
@@ -127,9 +127,9 @@ JONES CITY TURFS
 				SPAWN_DBG(12 SECONDS)
 					src.visible_message("<span class='combat'>[src] starts coughing wildly!</span>")
 					animate_shake(src,5,rand(3,8),rand(3,8))
-					SPAWN_DBG(9 SECONDS)
-						src.visible_message("<span class='combat'>[src] coughs out a old fish!</span>")
-						new /obj/item/fish/mahimahi(src.loc)
+					sleep(9 SECONDS)
+					src.visible_message("<span class='combat'>[src] coughs out a old fish!</span>")
+					new /obj/item/fish/mahimahi(src.loc)
 
 
 /obj/item/fish/mahimahi
@@ -170,11 +170,13 @@ JONES CITY TURFS
 	three
 		name = "stringy hairball"
 		icon_state = "hairball3"
+	inert
+		name = "hairball"
 
 /obj/item/hairball/attackby(obj/item/W as obj, mob/user as mob)
-	if (istype(W, /obj/item/hairball))
+	if (istype(W, /obj/item/hairball) && !istype(W, /obj/item/hairball/inert)) //in case we have a decorative hairball??
 		boutput(user, "<span class='notice'>You begin adding \the [W.name] to \the [src.name].</span>")
-		if (!do_after(user, 30))
+		if (!do_after(user, 3 SECONDS))
 			boutput(user, "<span class='alert'>You were interrupted!</span>")
 			return ..()
 		else

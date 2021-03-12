@@ -24,7 +24,7 @@
 		if (istype(W, /turf/unsimulated/wall/adaptive))
 			W:adapt()
 
-	disposing()
+	Del()
 		var/turf/N = locate(x, y+1, z)
 		var/turf/S = locate(x, y-1, z)
 		var/turf/W = locate(x-1, y, z)
@@ -142,6 +142,7 @@
 	var/area/wizard_place/wizard_area
 
 	New()
+		..()
 		ensure_wizard_area()
 
 	proc/ensure_wizard_area()
@@ -172,7 +173,7 @@ var/global/datum/wizard_zone_controller/wizard_zone_controller
 		if (id)
 			wizard_zone_controller.triggerables += src
 
-	disposing()
+	Del()
 		qdel(opener)
 		..()
 
@@ -235,7 +236,7 @@ var/global/datum/wizard_zone_controller/wizard_zone_controller
 		if (istype(W, /turf/unsimulated/wall/adaptive))
 			W:adapt()
 
-	disposing()
+	Del()
 		var/turf/N = locate(x, y+1, z)
 		var/turf/S = locate(x, y-1, z)
 		var/turf/W = locate(x-1, y, z)
@@ -461,7 +462,7 @@ var/global/datum/wizard_zone_controller/wizard_zone_controller
 		if (istype(W, /obj/item/orb))
 			if (!O)
 				O = W
-				O.loc = src
+				O.set_loc(src)
 				user.u_equip(O)
 				if (user.client)
 					user.client.screen -= O
@@ -490,7 +491,7 @@ var/global/datum/wizard_zone_controller/wizard_zone_controller
 	var/static/list/magenta_potions = list("essence of motion" = "anima", "potion of rejuvenation" = "omnizine")
 	var/static/list/green_potions = list("distillation of venom" = "sarin", "elixir of neutralize poison" = "charcoal")
 	var/static/list/yellow_potions = list("distillation of madness" = "madness_toxin", "elixir of speed" = "methamphetamine")
-	var/static/list/black_potions = list("essence of death" = "initropidril", "elixir of free will" = "stimulants")
+	var/static/list/black_potions = list("essence of death" = "initropidril", "elixir invulnerability" = "juggernaut")
 	var/static/list/white_potions = list("essence of creation" = "big_bang", "elixir of life" = "strange_reagent")
 	var/static/list/orange_potions = list("essence of fire" = "foof", "potion of restoration" = "penteticacid")
 
@@ -561,7 +562,7 @@ var/global/datum/wizard_zone_controller/wizard_zone_controller
 		else if (ishuman(target))
 			user.visible_message("<span class='alert'>[user] attempts to force [target] to drink [src].</span>")
 			logTheThing("combat", user, target, "tries to force [constructTarget(target,"combat")] to drink [src] ([potion_name] -- [reagent]).")
-			if (do_after(user, 30))
+			if (do_after(user, 3 SECONDS))
 				if (reagent)
 					user.visible_message("<span class='alert'>[user] forces [target] to drink [src].</span>")
 					logTheThing("combat", user, target, "forces [constructTarget(target,"combat")] to drink [src] ([potion_name] -- [reagent]).")
@@ -575,6 +576,7 @@ var/global/datum/wizard_zone_controller/wizard_zone_controller
 	attack()
 		return
 
+ABSTRACT_TYPE(/obj/item/wizard_crystal)
 /obj/item/wizard_crystal
 	name = "enchanted quartz"
 	desc = "A magically infused piece of crystal. It seems to emit a minimal amount of light. Some magical object could perhaps amplify this."
@@ -583,7 +585,7 @@ var/global/datum/wizard_zone_controller/wizard_zone_controller
 	var/light_b = 1
 	var/lum = 5
 	var/image/over_image
-	var/assoc_material = /datum/material/crystal/wizard/quartz
+	var/assoc_material = "wiz_quartz"
 	icon = 'icons/turf/adventure.dmi'
 
 	proc/create_bar(var/obj/machinery/portable_reclaimer/creator)
@@ -605,7 +607,7 @@ var/global/datum/wizard_zone_controller/wizard_zone_controller
 
 	quartz
 		name = "enchanted quartz"
-		assoc_material = /datum/material/crystal/wizard/quartz
+		assoc_material = "wiz_quartz"
 		icon_state = "quartz"
 
 	topaz
@@ -613,39 +615,39 @@ var/global/datum/wizard_zone_controller/wizard_zone_controller
 		light_r = 1
 		light_g = 0.8
 		light_b = 0.5
-		assoc_material = /datum/material/crystal/wizard/topaz
+		assoc_material = "wiz_topaz"
 		icon_state = "topaz"
-
-	amethyst
-		name = "enchanted amethyst"
-		light_r = 0.6
-		light_g = 0.4
-		assoc_material = /datum/material/crystal/wizard/amethyst
-		icon_state = "amethyst"
 
 	ruby
 		name = "enchanted ruby"
 		light_r = 0.6
 		light_g = 0.1
 		light_b = 0.2
-		assoc_material = /datum/material/crystal/wizard/ruby
+		assoc_material = "wiz_ruby"
 		icon_state = "ruby"
 
-	sapphire
-		name = "enchanted sapphire"
-		light_r = 0.1
+	amethyst
+		name = "enchanted amethyst"
+		light_r = 0.6
 		light_g = 0.4
-		light_b = 0.7
-		assoc_material = /datum/material/crystal/wizard/sapphire
-		icon_state = "sapphire"
+		assoc_material = "wiz_amethyst"
+		icon_state = "amethyst"
 
 	emerald
 		name = "enchanted emerald"
 		light_r = 0.3
 		light_g = 0.8
 		light_b = 0.4
-		assoc_material = /datum/material/crystal/wizard/emerald
+		assoc_material = "wiz_emerald"
 		icon_state = "emerald"
+
+	sapphire
+		name = "enchanted sapphire"
+		light_r = 0.1
+		light_g = 0.4
+		light_b = 0.7
+		assoc_material = "wiz_sapphire"
+		icon_state = "sapphire"
 
 /obj/wizard_light
 	name = "empty crystal socket"
@@ -691,23 +693,23 @@ var/global/datum/wizard_zone_controller/wizard_zone_controller
 		light = new /datum/light/point
 		light.attach(src)
 		if (D)
-			set_dir(D)
+			update_dir(D)
 		if (initial_crystal)
 			crystal = new initial_crystal()
 			apply_crystal()
 
 	onVarChanged(var/varname, var/oldvalue, var/newvalue)
 		if (varname == "dir")
-			set_dir(newvalue)
+			update_dir(newvalue)
 			apply_crystal()
 
-	proc/set_dir(var/D)
-		dir = D
+	proc/update_dir(var/D)
+		src.set_dir(D)
 		if (wall_mount)
 			pixel_x = 0
 			pixel_y = 0
 			if (!(dir in cardinal))
-				dir = 2
+				src.set_dir(2)
 			switch (dir)
 				if (1)
 					pixel_y = -32
@@ -724,7 +726,7 @@ var/global/datum/wizard_zone_controller/wizard_zone_controller
 				boutput(user, "<span class='notice'>You place the crystal into the socket.</span>")
 				crystal = W
 				user.u_equip(W)
-				W.loc = src
+				W.set_loc(src)
 				user.client.screen -= W
 				apply_crystal()
 			else
@@ -816,7 +818,6 @@ var/global/datum/wizard_zone_controller/wizard_zone_controller
 
 	disposing()
 		if (effect_overlay)
-			effect_overlay.loc = null
 			qdel(effect_overlay)
 			effect_overlay = null
 		..()
@@ -829,21 +830,21 @@ var/global/datum/wizard_zone_controller/wizard_zone_controller
 	New(var/L)
 		..()
 		set_effect()
-		set_dir(dir)
+		update_dir(dir)
 
 	onVarChanged(var/varname, var/oldvalue, var/newvalue)
 		if (varname == "dir")
-			set_dir(newvalue)
+			update_dir(newvalue)
 
 	proc/set_effect()
 		effect_overlay = new/obj/overlay/tile_effect/secondary/bookcase(loc)
 
-	proc/set_dir(var/D)
-		dir = D
+	proc/update_dir(var/D)
+		src.set_dir(D)
 		if (!(dir & 2))
-			dir = 2
+			src.set_dir(2)
 		pixel_y = 28
-		effect_overlay.dir = dir
+		effect_overlay.set_dir(dir)
 
 	button
 		var/pressed = 0

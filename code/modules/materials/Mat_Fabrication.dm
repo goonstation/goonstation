@@ -15,6 +15,7 @@
 	/datum/matfab_recipe/jumpsuit,
 	/datum/matfab_recipe/glovesins,
 	/datum/matfab_recipe/glovearmor,
+	/datum/matfab_recipe/shoes,
 	/datum/matfab_recipe/flashlight,
 	/datum/matfab_recipe/lighttube,
 	/datum/matfab_recipe/lightbulb,
@@ -59,6 +60,7 @@
 	name = "Nano-fabricator (Protoype)"
 	color = "#496ba3"
 
+/// Material science fabricator
 /obj/machinery/nanofab
 	name = "Nano-fabricator"
 	desc = "'Nano' means it's high-tech stuff."
@@ -70,10 +72,12 @@
 	flags = NOSPLASH
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
 
-	var/outputInternal = 0 //Produced objects are fed back into the fabricator.
+	/// Produced objects are fed back into the fabricator.
+	var/outputInternal = 0
 
 	var/list/queue = list()
-	var/tab = "recipes" //recipes,storage,selected,part
+	/// recipes,storage,selected,part
+	var/tab = "recipes"
 
 	var/datum/matfab_recipe/selectedRecipe = null
 	var/list/recipes = list()
@@ -182,7 +186,7 @@
 					html += "<i class=\"icon-search\"></i> Category: "
 					var/list/categories = list()
 					for(var/datum/matfab_recipe/E in recipes)
-						if(!categories.Find(E.category))
+						if(!(E.category in categories))
 							categories.Add(E.category)
 							html += "<a href=\"?src=\ref[src];filtercat=[E.category]\">[E.category]</a> "
 					html += "<i class=\"icon-caret-right\"></i> <a href=\"?src=\ref[src];filterstr=1\">Name</a>"
@@ -267,25 +271,26 @@
 			if(!(L in src)) return
 			L.set_loc(src.get_output_location())
 		else if(href_list["selectpart"])
-			var/datum/matfab_part/P = locate(href_list["selectpart"]) in selectedRecipe.required_parts
-			if(P && selectedRecipe)
-				selectingPart = P
-				var/list/validOptions = list()
-				validOptions.Add(src.contents)
-				for(var/datum/matfab_part/RP in selectedRecipe.required_parts)
-					if(RP == P) continue
-					if(RP.assigned) validOptions.Remove(RP.assigned)
-				for(var/obj/item/I in validOptions)
-					if(!I.amount)
-						validOptions.Remove(I)
-					var/matchlevel = P.checkMatch(I)
-					if(matchlevel == 0)
-						validOptions.Remove(I)
-					if(matchlevel == -1)
-						validOptions[I] = 1
+			if(selectedRecipe)
+				var/datum/matfab_part/P = locate(href_list["selectpart"]) in selectedRecipe.required_parts
+				if(P)
+					selectingPart = P
+					var/list/validOptions = list()
+					validOptions.Add(src.contents)
+					for(var/datum/matfab_part/RP in selectedRecipe.required_parts)
+						if(RP == P) continue
+						if(RP.assigned) validOptions.Remove(RP.assigned)
+					for(var/obj/item/I in validOptions)
+						if(!I.amount)
+							validOptions.Remove(I)
+						var/matchlevel = P.checkMatch(I)
+						if(matchlevel == 0)
+							validOptions.Remove(I)
+						if(matchlevel == -1)
+							validOptions[I] = 1
 
-				selectingPartList = validOptions
-				tab = "part"
+					selectingPartList = validOptions
+					tab = "part"
 		else if(href_list["partreturn"])
 			tab = "selected"
 			selectingPart = null
@@ -331,6 +336,8 @@
 		W.set_loc(src)
 
 	attackby(var/obj/item/W , mob/user as mob)
+		if(istype(W, /obj/item/deconstructor))
+			return ..()
 		if(issilicon(user)) // fix bug where borgs could put things into the nanofab and then reject them
 			boutput(user, "<span class='alert'>You can't put that in, it's attached to you.</span>")
 			return
@@ -367,6 +374,7 @@
 	var/datum/matfab_recipe/recipe = null
 
 	New(var/loc,var/schematic = null)
+		..()
 		if (!src.recipe)
 			qdel(src)
 			return 0

@@ -14,8 +14,8 @@ var/list/ban_stacking_into_fluid = list( //ban these from producing fluid from a
 	"carbon",\
 	"ash",\
 	"blackpowder",\
-	"reliquary_blood",\
 	"leaves",\
+	"poo",\
 )
 
 ///////////////////
@@ -138,6 +138,8 @@ var/mutable_appearance/fluid_ma
 				src.HasEntered(O,O.loc)
 		*/
 
+	proc/turf_remove_cleanup(turf/the_turf)
+		the_turf.active_liquid = null
 
 	disposing()
 		src.pooled = 1
@@ -145,7 +147,7 @@ var/mutable_appearance/fluid_ma
 		if (src.group)
 			src.group.members -= src
 
-		src.group = 0
+		src.group = null
 
 		/*for (var/atom/A in src.floated_atoms) // ehh i dont like doing this, but I think we need it.
 			if (!A) continue
@@ -154,13 +156,15 @@ var/mutable_appearance/fluid_ma
 		src.floated_atoms.len = 0*/
 
 		if (isturf(src.loc))
-			src.loc:active_liquid = null
+			src.turf_remove_cleanup(src.loc)
 
 		name = "fluid"
 		fluid_ma.icon_state = "15"
 		fluid_ma.alpha = 255
 		fluid_ma.color = "#ffffff"
+		fluid_ma.overlays = null
 		src.appearance = fluid_ma
+		src.overlay_refs = null // setting appearance removes our overlays!
 
 		finalcolor = "#ffffff"
 		finalalpha = 100
@@ -177,7 +181,6 @@ var/mutable_appearance/fluid_ma
 		is_setup = 0
 		blocked_dirs = 0
 		blocked_perspective_objects["[dir]"] = 0
-		src.loc = null
 		my_depth_level = 0
 
 		..()
@@ -191,8 +194,7 @@ var/mutable_appearance/fluid_ma
 		src.step_sound = "sound/misc/splash_1.ogg"
 
 		if (isturf(src.loc))
-			var/turf/T = src.loc
-			T.active_liquid = null
+			turf_remove_cleanup(src.loc)
 		..()
 
 	get_desc(dist, mob/user)
@@ -208,7 +210,7 @@ var/mutable_appearance/fluid_ma
 			return
 
 		//floor overrides some construction clicks
-		if (istype(W,/obj/item/rcd) || istype(W,/obj/item/tile) || istype(W,/obj/item/sheet) || istype(W,/obj/item/crowbar) || istype(W,/obj/item/pen))
+		if (istype(W,/obj/item/rcd) || istype(W,/obj/item/tile) || istype(W,/obj/item/sheet) || ispryingtool(W) || istype(W,/obj/item/pen))
 			var/turf/T = get_turf(src)
 			T.attackby(W,user)
 			W.afterattack(T,user)
@@ -246,12 +248,12 @@ var/mutable_appearance/fluid_ma
 		if (A.event_handler_flags & USE_FLUID_ENTER)
 			A.EnteredFluid(src,oldloc)
 
-	proc/force_mob_to_ingest(var/mob/M)//called when mob is drowning
+	proc/force_mob_to_ingest(var/mob/M, var/mult = 1)//called when mob is drowning
 		if (!M) return
 		if (!src.group || !src.group.reagents || !src.group.reagents.reagent_list) return
 
 		var/react_volume = src.amt > 10 ? (src.amt / 2) : (src.amt)
-		react_volume = min(react_volume,20)
+		react_volume = min(react_volume,20) * mult
 		if (M.reagents)
 			react_volume = min(react_volume, abs(M.reagents.maximum_volume - M.reagents.total_volume)) //don't push out other reagents if we are full
 		src.group.reagents.reaction(M, INGEST, react_volume,1,src.group.members.len)
@@ -312,9 +314,8 @@ var/mutable_appearance/fluid_ma
 		else
 			pool(src)
 
-		for(var/A in src.loc)
-			var/atom/atom = A
-			if (atom && atom & FLUID_SUBMERGE)
+		for(var/atom/A as() in src.loc)
+			if (A && A.flags & FLUID_SUBMERGE)
 				var/mob/living/M = A
 				var/obj/O = A
 				if (istype(M))
@@ -608,8 +609,6 @@ var/mutable_appearance/fluid_ma
 			src.update_perspective_overlays()
 
 	proc/update_perspective_overlays() // fancy perspective overlaying
-		return //TEMPORARILY DISABLED as it is causing shittons of runtimes ( ithink byond bug broke somethin??)
-		/*
 		if (icon_state != "15") return
 		var/blocked = 0
 		for( var/dir in cardinal )
@@ -637,7 +636,6 @@ var/mutable_appearance/fluid_ma
 				display_overlay("5",32,32) //northwest
 			else
 				clear_overlay("5") //northwest
-		*/
 
 	//perspective overlays
 	proc/display_overlay(var/overlay_key, var/pox, var/poy)
@@ -746,39 +744,39 @@ var/mutable_appearance/fluid_ma
 	//SLIPPING
 	//only slip if edge tile
 	var/turf/T = get_turf(oldloc)
-	if (T.active_liquid)
+	if (T?.active_liquid)
 		entered_group = 0
 
 	if (entered_group && (src.loc != oldloc))
 		if (F.amt > 0 && F.amt <= F.max_slip_volume && F.avg_viscosity <= F.max_slip_viscosity)
 			var/master_block_slippy = F.group.reagents.get_master_reagent_slippy(F.group)
-			if (master_block_slippy == 0)
-				var/slippery =  (1 - (F.avg_viscosity/F.max_slip_viscosity)) * 50
-				var/checks = 10
-				for (var/thing in oldloc)
-					if (istype(thing,/obj/machinery/door))
-						slippery = 0
-					checks--
-					if (checks <= 0) break
-				if (prob(slippery) && src.slip())
-					src.visible_message("<span class='alert'><b>[src]</b> slips on [F]!</span>",\
-					"<span class='alert'>You slip on [F]!</span>")
-			//space lube. this code bit is shit but i'm too lazy to make it Real right now. the proper implementation should also make exceptions for ice and stuff.
-			else if (master_block_slippy == -1) //spacelube
-				src.pulling = null
-				src.throwing = 1
-				SPAWN_DBG(0)
-					step(src, src.dir)
-					for (var/i = 4, i>0, i--)
-						if (!isturf(src.loc) || !step(src, src.dir) || i == 1)
-							src.throwing = 0
-							break
-
-				random_brute_damage(src, 4)
-				src.visible_message("<span class='alert'><b>[src]</b> slips on [F]!</span>",\
-				"<span class='alert'>You slip on [F]!</span>")
-				src.changeStatus("weakened", 7 SECONDS)
-				playsound(F.loc, "sound/misc/slip.ogg", 50, 1, -3)
+			switch(master_block_slippy)
+				if(0)
+					var/slippery =  (1 - (F.avg_viscosity/F.max_slip_viscosity)) * 50
+					var/checks = 10
+					for (var/thing in oldloc)
+						if (istype(thing,/obj/machinery/door))
+							slippery = 0
+						checks--
+						if (checks <= 0) break
+					if (prob(slippery) && src.slip())
+						src.visible_message("<span class='alert'><b>[src]</b> slips on [F]!</span>",\
+						"<span class='alert'>You slip on [F]!</span>")
+				if(-1) //space lube. this code bit is shit but i'm too lazy to make it Real right now. the proper implementation should also make exceptions for ice and stuff.
+					src.pulling = null
+					src.changeStatus("weakened", 35)
+					boutput(src, "<span class='notice'>You slipped on [F]!</span>")
+					playsound(T, "sound/misc/slip.ogg", 50, 1, -3)
+					var/atom/target = get_edge_target_turf(src, src.dir)
+					src.throw_at(target, 12, 1, throw_type = THROW_SLIP)
+				if(-2) //superlibe
+					src.pulling = null
+					src.changeStatus("weakened", 6 SECONDS)
+					playsound(T, "sound/misc/slip.ogg", 50, 1, -3)
+					boutput(src, "<span class='notice'>You slipped on [F]!</span>")
+					var/atom/target = get_edge_target_turf(src, src.dir)
+					src.throw_at(target, 30, 1, throw_type = THROW_SLIP)
+					random_brute_damage(src, 10)
 
 
 
@@ -792,11 +790,11 @@ var/mutable_appearance/fluid_ma
 
 		for(var/current_id in reacted_ids)
 			if (!src.group) return
-			var/datum/reagent/current_reagent = F.group.reagents.reagent_list[current_id]
+			var/datum/reagent/current_reagent = F?.group.reagents.reagent_list[current_id]
 			if (!current_reagent) continue
 			F.group.reagents.remove_reagent(current_id, current_reagent.volume * volume_fraction)
 		/*
-		if (reacted_ids && reacted_ids.len)
+		if (length(reacted_ids))
 			src.update_icon()
 		*/
 
@@ -807,12 +805,12 @@ var/mutable_appearance/fluid_ma
 	//SLIPPING
 	//only slip if edge tile
 	var/turf/T = get_turf(oldloc)
-	if (T && T.active_liquid)
+	if (T?.active_liquid)
 		entered_group = 0
 
 	//BLOODSTAINS
-	if (F.group.master_reagent_id =="blood" || F.group.master_reagent_id == "bloodc" || F.group.master_reagent_id == "reliquary_blood")
-		if (F.group.master_reagent_id == "blood" || F.group.master_reagent_id == "reliquary_blood")
+	if (F.group.master_reagent_id =="blood" || F.group.master_reagent_id == "bloodc")
+		if (F.group.master_reagent_id == "blood")
 			//if (ishuman(M))
 			if (src.lying)
 				if (src.wear_suit)
@@ -834,7 +832,7 @@ var/mutable_appearance/fluid_ma
 
 	var/do_reagent_reaction = 1
 
-	if (F.my_depth_level == 1 && src.shoes)
+	if (F.my_depth_level <= 1 && src.shoes)
 		do_reagent_reaction = 0
 	if (F.my_depth_level == 2 || F.my_depth_level == 3)
 		if (src.wear_suit && src.wear_suit.permeability_coefficient <= 0.01)

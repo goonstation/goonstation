@@ -1,20 +1,6 @@
 // FLOCK INTANGIBLE MOB PARENT
 // for shared things, like references to flocks and vision modes and general intangibility and swapping into drones
 
-var/list/flockVisionColorMatrix = list(\
-	1.0, 0.0, 0.0,
-	0.0, 1.0, 0.0,
-	0.0, 0.0, 1.0,
-	0.0, 0.1, 0.2)
-
-// REMEMBER ME, EDDIE? WHEN I KILLED YOUR BROTHER, I TALKED JUST LIIIKE THIIIIIIS
-var/list/fuckedUpFlockVisionColorMatrix = list(\
-	-0.3, -0.3, -0.3,
-	-0.3, -0.3, -0.3,
-	-0.3, -0.3, -0.3,
-	0.2, 0.8, 0.7)
-
-
 /mob/living/intangible/flock
 	name = "caw"
 	desc = "please report this to a coder you shouldn't see this"
@@ -38,16 +24,15 @@ var/list/fuckedUpFlockVisionColorMatrix = list(\
 	src.sight |= SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
 	src.see_invisible = 15
 	src.see_in_dark = SEE_DARK_FULL
+	/// funk that color matrix up, my friend
+	src.apply_color_matrix(COLOR_MATRIX_FLOCKMIND, COLOR_MATRIX_FLOCKMIND_LABEL)
 	//src.render_special.set_centerlight_icon("flockvision", "#09a68c", BLEND_OVERLAY, PLANE_FLOCKVISION, alpha=196)
 	//src.render_special.set_widescreen_fill(color="#09a68c", plane=PLANE_FLOCKVISION, alpha=196)
 
 /mob/living/intangible/flock/Login()
 	..()
-	if(src.flock)
-		src.flock.showAnnotations(src)
+	src.flock?.showAnnotations(src)
 	if(src.client)
-		// funk that color matrix up, my friend
-		src.client.color = flockVisionColorMatrix
 		// where we're going we don't need shadows or light
 		var/atom/plane = src.client.get_plane(PLANE_LIGHTING)
 		if (plane)
@@ -60,10 +45,8 @@ var/list/fuckedUpFlockVisionColorMatrix = list(\
 			plane.alpha = 255
 
 /mob/living/intangible/flock/Logout()
-	if(src.flock)
-		src.flock.hideAnnotations(src)
+	src.flock?.hideAnnotations(src)
 	if(src.client)
-		src.client.color = null
 		var/atom/plane = src.client.get_plane(PLANE_LIGHTING)
 		if (plane)
 			plane.alpha = 255
@@ -92,7 +75,7 @@ var/list/fuckedUpFlockVisionColorMatrix = list(\
 		return 0.75 + movement_delay_modifier
 
 /mob/living/intangible/flock/Move(NewLoc, direct)
-	src.dir = get_dir(src, NewLoc)
+	src.set_dir(get_dir(src, NewLoc))
 	if (isturf(NewLoc) && istype(NewLoc, /turf/unsimulated/wall)) // no getting past these walls, fucko
 		return 0
 	..()
@@ -143,7 +126,7 @@ var/list/fuckedUpFlockVisionColorMatrix = list(\
 		..()
 	else
 		if (get_dist(src, target) > 0)
-			dir = get_dir(src, target)
+			set_dir(get_dir(src, target))
 		src.examine_verb(target)
 
 /mob/living/intangible/flock/say_quote(var/text)
@@ -198,7 +181,7 @@ var/list/fuckedUpFlockVisionColorMatrix = list(\
 			if (src.emote_check(voluntary, 50))
 				message = "<span class='emote'><b>[src]</B> caws!</span>"
 				m_type = 2
-				playsound(get_turf(src), "sound/misc/flockmind/flockmind_caw.ogg", 60, 1)
+				playsound(get_turf(src), "sound/misc/flockmind/flockmind_caw.ogg", 60, 1, channel=VOLUME_CHANNEL_EMOTE)
 
 	if (message)
 		logTheThing("say", src, null, "EMOTE: [message]")
@@ -212,3 +195,8 @@ var/list/fuckedUpFlockVisionColorMatrix = list(\
 			var/atom/A = src.loc
 			for (var/mob/O in A.contents)
 				O.show_message(message, m_type)
+
+
+/mob/living/intangible/flock/proc/createstructure(var/T, var/resources = 0)
+	//todo check for flocktile underneath flockmind cheers
+	new /obj/flock_structure/ghost(src.loc, T, src.flock, resources)

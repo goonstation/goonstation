@@ -71,7 +71,7 @@
 	//var/image/cableimg = null
 	//^ is unnecessary, i think
 	layer = CABLE_LAYER
-	plane = PLANE_DEFAULT
+	plane = PLANE_NOSHADOW_BELOW
 	color = "#DD0000"
 	text = ""
 
@@ -146,7 +146,7 @@
 	else
 		applyCableMaterials(src, getMaterial(insulator_default), getMaterial(condcutor_default))
 
-	allcables += src
+	START_TRACKING
 
 /obj/cable/disposing()		// called when a cable is deleted
 
@@ -156,7 +156,6 @@
 			var/datum/powernet/PN = powernets[netnum]
 			PN.cut_cable(src)									// updated the powernets
 	else
-		if(Debug) logDiary("Defered cable deletion at [x],[y]: #[netnum]")
 		defer_powernet_rebuild = 2
 
 		if(netnum && powernets && powernets.len >= netnum) //NEED FOR CLEAN GC IN EXPLOSIONS
@@ -165,7 +164,7 @@
 	insulator.owner = null
 	conductor.owner = null
 
-	allcables -= src
+	STOP_TRACKING
 
 	..()													// then go ahead and delete the cable
 
@@ -233,9 +232,14 @@
 	else if (istype(W, /obj/item/device/t_scanner) || ispulsingtool(W) || (istype(W, /obj/item/device/pda2) && istype(W:module, /obj/item/device/pda_module/tray)))
 
 		var/datum/powernet/PN = get_powernet()		// find the powernet
+		var/powernet_id = ""
 
 		if(PN && (PN.avail > 0))		// is it powered?
-			boutput(user, "<span class='alert'>[PN.avail]W in power network.</span>")
+			if(ispulsingtool(W))
+				// 3 Octets: Netnum, 4 Octets: Nodes+Data Nodes*2, 4 Octets: Cable Count
+				powernet_id = " ID#[num2text(PN.number,3,8)]:[num2text(length(PN.nodes)+(length(PN.data_nodes)<<2),4,8)]:[num2text(length(PN.cables),4,8)]"
+
+			boutput(user, "<span class='alert'>[PN.avail]W in power network.[powernet_id]</span>")
 
 		else
 			boutput(user, "<span class='alert'>The cable is not powered.</span>")

@@ -25,11 +25,11 @@
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (iswrenchingtool(W) && isturf(loc) && !istype(loc, /turf/space))
 			if(secured)
-				boutput(usr, "<span class='alert'>You unsecure the generator.</span>")
+				boutput(user, "<span class='alert'>You unsecure the generator.</span>")
 				secured = 0
 				playsound(src, "sound/items/Ratchet.ogg", 60, 1)
 			else
-				boutput(usr, "<span class='alert'>You secure the generator.</span>")
+				boutput(user, "<span class='alert'>You secure the generator.</span>")
 				secured = 1
 				playsound(src, "sound/items/Ratchet.ogg", 60, 1)
 
@@ -90,7 +90,7 @@
 				A = locate((src.x + xa),(src.y + ya),src.z)
 				if (!A.density)
 					var/obj/shieldwall/created = new /obj/shieldwall ( locate((src.x + xa),(src.y + ya),src.z) )
-					created.dir = piece
+					created.set_dir(piece)
 					tiles += created
 					created.health_max = 16 - (range*2)
 					created.health = 16 - (range*2)

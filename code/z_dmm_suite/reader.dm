@@ -25,18 +25,20 @@ dmm_suite
 		props.sourceZ = coordZ
 		props.info = tag
 		// Split Key/Model list into lines
-		var key_len = length(
-			copytext(
-				dmm_text, 2, findtext(dmm_text, quote, 2, 0)
-			)
-		)
+		var key_len
 		var /list/grid_models[0]
 		var startGridPos = findtext(dmm_text, "\n\n(1,1,") // Safe because \n not allowed in strings in dmm
-		var linesText = copytext(dmm_text, 1, startGridPos)
-		var /list/modelLines = text2list(linesText, "\n")
+		var startData = findtext(dmm_text, "\"")
+		var linesText = copytext(dmm_text, startData + 1, startGridPos)
+		var /list/modelLines = splittext(linesText, regex(@{"\n\""}))
 		for(var/modelLine in modelLines) // "aa" = (/path{key = value; key = value},/path,/path)\n
-			var modelKey = copytext(modelLine, 2, findtext(modelLine, quote, 2, 0))
-			var modelsStart = findtextEx(modelLine, "=")+3 // Skip key and first three characters: "aa" = (
+			var endQuote = findtext(modelLine, quote, 2, 0)
+			if(endQuote <= 1)
+				continue
+			var modelKey = copytext(modelLine, 1, endQuote)
+			if(isnull(key_len))
+				key_len = length(modelKey)
+			var modelsStart = findtextEx(modelLine, "/") // Skip key and first three characters: "aa" = (
 			var modelContents = copytext(modelLine, modelsStart, length(modelLine)) // Skip last character: )
 			grid_models[modelKey] = modelContents
 			sleep(-1)
@@ -47,14 +49,14 @@ dmm_suite
 		var commentPathText = "[/obj/dmm_suite/comment]"
 		if(copytext(commentModel, 1, length(commentPathText)+1) == commentPathText)
 			var attributesText = copytext(commentModel, length(commentPathText)+2, -1) // Skip closing bracket
-			var /list/paddedAttributes = text2list(attributesText, "; ") // "Key = Value"
+			var /list/paddedAttributes = splittext(attributesText, semicolon_delim) // "Key = Value"
 			for(var/paddedAttribute in paddedAttributes)
 				var equalPos = findtextEx(paddedAttribute, "=")
 				var attributeKey = copytext(paddedAttribute, 1, equalPos-1)
 				var attributeValue = copytext(paddedAttribute, equalPos+3, -1) // Skip quotes
 				switch(attributeKey)
 					if("coordinates")
-						var /list/coords = text2list(attributeValue, ",")
+						var /list/coords = splittext(attributeValue, comma_delim)
 						if(!coordX) coordX = text2num(coords[1])
 						if(!coordY)	coordY = text2num(coords[2])
 						if(!coordZ) coordZ = text2num(coords[3])
@@ -64,11 +66,16 @@ dmm_suite
 		// Store quoted portions of text in text_strings, and replaces them with an index to that list.
 		var gridText = copytext(dmm_text, startGridPos)
 		var /list/gridLevels = list()
-		var /regex/grid = regex(@{"\{"\n((?:\l*\n)*)"\}"}, "g")
+		var /regex/grid = regex(@{"\(([0-9]*),([0-9]*),([0-9]*)\) = \{"\n((?:\l*\n)*)"\}"}, "g")
+		var /list/coordShifts = list()
+		var/maxZFound = 1
 		while(grid.Find(gridText))
-			gridLevels.Add(copytext(grid.group[1], 1, -1)) // Strip last \n
+			gridLevels.Add(copytext(grid.group[4], 1, -1)) // Strip last \n
+			coordShifts.Add(list(list(grid.group[1], grid.group[2], grid.group[3])))
+			maxZFound = max(maxZFound, text2num(grid.group[3]))
 		// Create all Atoms at map location, from model key
-		world.maxz = max(world.maxz, coordZ+gridLevels.len-1)
+		if ((coordZ+maxZFound-1) > world.maxz)
+			world.setMaxZ(coordZ+maxZFound-1)
 		for(var/posZ = 1 to gridLevels.len)
 			var zGrid = gridLevels[posZ]
 			// Reverse Y coordinate
@@ -87,15 +94,19 @@ dmm_suite
 				world.maxx = xMax
 				logTheThing( "debug", null, null, "[tag] caused map resize (X) during prefab placement" )
 
-			props.maxX = xMax
+			props.maxX = max(length(exampleLine)/key_len, gridLevels.len)+(coordX-1)
 			props.maxY = yMax
-			props.maxZ = world.maxz
+			props.maxZ = coordZ
+
+			var/gridCoordX = text2num(coordShifts[posZ][1]) + coordX - 1
+			var/gridCoordY = text2num(coordShifts[posZ][2])  + coordY - 1
+			var/gridCoordZ = text2num(coordShifts[posZ][3])  + coordZ - 1
 
 			if(overwrite)
 				for(var/posY = 1 to yLines.len)
 					var yLine = yLines[posY]
 					for(var/posX = 1 to length(yLine)/key_len)
-						var/turf/T = locate(posX+(coordX-1), posY+(coordY-1), posZ+(coordZ-1))
+						var/turf/T = locate(posX + gridCoordX - 1, posY+gridCoordY - 1, gridCoordZ)
 						for(var/x in T)
 							if(istype(x, /obj) && overwrite & DMM_OVERWRITE_OBJS && !istype(x, /obj/overlay))
 								qdel(x)
@@ -109,7 +120,7 @@ dmm_suite
 					var keyPos = ((posX-1)*key_len)+1
 					var modelKey = copytext(yLine, keyPos, keyPos+key_len)
 					parse_grid(
-						grid_models[modelKey], posX+(coordX-1), posY+(coordY-1), posZ+(coordZ-1)
+						grid_models[modelKey], posX + gridCoordX - 1, posY + gridCoordY - 1, gridCoordZ
 					)
 				sleep(-1)
 			sleep(-1)
@@ -129,6 +140,9 @@ dmm_suite
 
 	var
 		quote = "\""
+		regex/comma_delim = new(@"[\s\r\n]*,[\s\r\n]*")
+		regex/semicolon_delim = new(@"[\s\r\n]*;[\s\r\n]*")
+		regex/key_value_regex = new(@"^[\s\r\n]*([^=]*?)[\s\r\n]*=[\s\r\n]*(.*?)[\s\r\n]*$")
 
 	proc
 		parse_grid(models as text, xcrd, ycrd, zcrd)
@@ -136,10 +150,10 @@ dmm_suite
 				of type paths of the same construction as those contained in a .dmm file, and
 				instantiates them.*/
 			// Store quoted portions of text in text_strings, and replace them with an index to that list.
-			var /list/originalStrings = list()
-			var /regex/noStrings = regex(@{"(["])(?:(?=(\\?))\2(.|\n))*?\1"})
-			var stringIndex = 1
-			var found
+			var/list/originalStrings = list()
+			var/regex/noStrings = regex(@{"(["])(?:(?=(\\?))\2(.|\n))*?\1"})
+			var/stringIndex = 1
+			var/found
 			do
 				found = noStrings.Find(models, noStrings.next)
 				if(found)
@@ -152,25 +166,28 @@ dmm_suite
 			// Identify each object's data, instantiate it, & reconstitues its fields.
 			var /list/turfStackTypes = list()
 			var /list/turfStackAttributes = list()
-			for(var/atomModel in text2list(models, ","))
-				var bracketPos = findtext(atomModel, "{")
-				var atomPath = text2path(copytext(atomModel, 1, bracketPos))
-				var /list/attributes
-				if(bracketPos)
-					attributes = new()
-					var attributesText = copytext(atomModel, bracketPos+1, -1)
-					var /list/paddedAttributes = text2list(attributesText, "; ") // "Key = Value"
-					for(var/paddedAttribute in paddedAttributes)
-						var equalPos = findtextEx(paddedAttribute, "=")
-						var attributeKey = copytext(paddedAttribute, 1, equalPos-1)
-						var attributeValue = copytext(paddedAttribute, equalPos+2)
-						attributes[attributeKey] = attributeValue
-				if(!ispath(atomPath, /turf))
-					loadModel(atomPath, attributes, originalStrings, xcrd, ycrd, zcrd)
-				else
-					turfStackTypes.Insert(1, atomPath)
-					turfStackAttributes.Insert(1, null)
-					turfStackAttributes[1] = attributes
+			for(var/areaDone = 0 to 1)
+				for(var/atomModel in splittext(models, comma_delim))
+					var bracketPos = findtext(atomModel, "{")
+					var atomPath = text2path(copytext(atomModel, 1, bracketPos))
+					var /list/attributes
+					if(bracketPos)
+						attributes = new()
+						var attributesText = copytext(atomModel, bracketPos+1, -1)
+						var /list/paddedAttributes = splittext(attributesText, semicolon_delim) // "Key = Value"
+						for(var/paddedAttribute in paddedAttributes)
+							key_value_regex.Find(paddedAttribute)
+							attributes[key_value_regex.group[1]] = key_value_regex.group[2]
+					// load areas first
+					if(!areaDone)
+						if(ispath(atomPath, /area))
+							loadModel(atomPath, attributes, originalStrings, xcrd, ycrd, zcrd)
+					else if(!ispath(atomPath, /turf))
+						loadModel(atomPath, attributes, originalStrings, xcrd, ycrd, zcrd)
+					else
+						turfStackTypes.Insert(1, atomPath)
+						turfStackAttributes.Insert(1, null)
+						turfStackAttributes[1] = attributes
 			// Layer all turf appearances into final turf
 			if(!turfStackTypes.len) return
 			var /turf/topTurf = loadModel(turfStackTypes[1], turfStackAttributes[1], originalStrings, xcrd, ycrd, zcrd)
@@ -206,9 +223,11 @@ dmm_suite
 			else
 				if(ispath(atomPath, /turf))
 					//instance = new atomPath(location)
-					instance = location.ReplaceWith(atomPath, keep_old_material = 0, handle_air = 0, handle_dir = 0)
+					instance = location.ReplaceWith(atomPath, keep_old_material = 0, handle_air = 0, handle_dir = 0, force = 1)
+					instance.set_dir(initial(instance.dir))
 				else
-					instance = new atomPath(location)
+					if (atomPath)
+						instance = new atomPath(location)
 			// Handle cases where Atom/New was redifined without calling Super()
 			if(preloader && instance) // Atom could delete itself in New()
 				preloader.load(instance)

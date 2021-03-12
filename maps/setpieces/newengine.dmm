@@ -1,10 +1,10 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
 /turf/space,
-/area)
+/area/space)
 "b" = (
 /turf/simulated/wall,
-/area)
+/area/space)
 "c" = (
 /obj/machinery/atmospherics/pipe/simple{
 	tag = "icon-intact (SOUTHEAST)";
@@ -14,25 +14,25 @@
 	level = 2
 	},
 /turf/simulated/floor/plating,
-/area)
+/area/space)
 "d" = (
 /obj/decal/fakeobjects/apc_broken{
 	icon_state = "gen1"
 	},
 /turf/simulated/floor/plating,
-/area)
+/area/space)
 "e" = (
 /obj/decal/fakeobjects/apc_broken{
 	icon_state = "gen2"
 	},
 /turf/simulated/floor/plating,
-/area)
+/area/space)
 "f" = (
 /obj/decal/fakeobjects/apc_broken{
 	icon_state = "gen3"
 	},
 /turf/simulated/floor/plating,
-/area)
+/area/space)
 "g" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 10;
@@ -47,7 +47,7 @@
 	d2 = 4
 	},
 /turf/simulated/floor/plating,
-/area)
+/area/space)
 "h" = (
 /obj/decal/fakeobjects/apc_broken{
 	icon_state = "utilbox0";
@@ -62,7 +62,7 @@
 	layer = 3
 	},
 /turf/simulated/floor/plating,
-/area)
+/area/space)
 "i" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -75,7 +75,7 @@
 	layer = 3
 	},
 /turf/simulated/floor/plating,
-/area)
+/area/space)
 "j" = (
 /obj/machinery/atmospherics/pipe/simple{
 	tag = "icon-intact";
@@ -85,10 +85,10 @@
 	level = 2
 	},
 /turf/simulated/floor/plating,
-/area)
+/area/space)
 "k" = (
 /turf/simulated/floor/plating,
-/area)
+/area/space)
 "l" = (
 /obj/cable{
 	icon_state = "0-4";
@@ -100,14 +100,14 @@
 	dir = 1
 	},
 /turf/simulated/floor/plating,
-/area)
+/area/space)
 "m" = (
 /obj/cable{
 	tag = "icon-4-8";
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating,
-/area)
+/area/space)
 "n" = (
 /obj/machinery/atmospherics/pipe/simple{
 	icon_state = "intact";
@@ -123,13 +123,13 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/plating,
-/area)
+/area/space)
 "o" = (
 /turf/simulated/floor/caution/west,
-/area)
+/area/space)
 "p" = (
 /turf/simulated/floor,
-/area)
+/area/space)
 "q" = (
 /obj/machinery/atmospherics/pipe/manifold{
 	tag = "icon-manifold (WEST)";
@@ -138,7 +138,7 @@
 	level = 2
 	},
 /turf/simulated/floor/plating,
-/area)
+/area/space)
 "r" = (
 /obj/machinery/atmospherics/pipe/manifold{
 	tag = "icon-manifold (EAST)";
@@ -151,7 +151,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/plating,
-/area)
+/area/space)
 "s" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 2;
@@ -161,7 +161,7 @@
 	tag = "icon-intact"
 	},
 /turf/simulated/floor/plating,
-/area)
+/area/space)
 "t" = (
 /obj/cable{
 	tag = "icon-1-2";
@@ -174,15 +174,15 @@
 	level = 2
 	},
 /turf/simulated/floor/plating,
-/area)
+/area/space)
 "u" = (
 /turf/simulated/floor/caution/corner/sw{
 	dir = 2
 	},
-/area)
+/area/space)
 "v" = (
 /turf/simulated/floor/caution/south,
-/area)
+/area/space)
 "w" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 5;
@@ -192,7 +192,7 @@
 	tag = "icon-intact (NORTHEAST)"
 	},
 /turf/simulated/floor/plating,
-/area)
+/area/space)
 "x" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4;
@@ -201,7 +201,7 @@
 	level = 2
 	},
 /turf/simulated/floor/plating,
-/area)
+/area/space)
 "y" = (
 /obj/cable{
 	icon_state = "0-4";
@@ -219,7 +219,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/plating,
-/area)
+/area/space)
 "z" = (
 /obj/cable{
 	tag = "icon-4-8";
@@ -232,7 +232,7 @@
 	level = 2
 	},
 /turf/simulated/floor/plating,
-/area)
+/area/space)
 "A" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4;
@@ -254,7 +254,7 @@
 	tag = "icon-intact (NORTHEAST)"
 	},
 /turf/simulated/floor/plating,
-/area)
+/area/space)
 "B" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4;
@@ -275,11 +275,11 @@
 	layer = 3
 	},
 /turf/simulated/floor/plating,
-/area)
+/area/space)
 "C" = (
 /obj/machinery/door/airlock/maintenance,
 /turf/simulated/floor/plating,
-/area)
+/area/space)
 "D" = (
 /obj/machinery/door/airlock/maintenance,
 /obj/machinery/atmospherics/pipe/simple{
@@ -291,7 +291,7 @@
 	pixel_y = 6
 	},
 /turf/simulated/floor/plating,
-/area)
+/area/space)
 "E" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 10;
@@ -324,7 +324,7 @@
 	layer = 3
 	},
 /turf/simulated/floor/plating,
-/area)
+/area/space)
 "F" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 2;
@@ -357,7 +357,7 @@
 	layer = 3
 	},
 /turf/simulated/floor/plating,
-/area)
+/area/space)
 
 (1,1,1) = {"
 a

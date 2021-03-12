@@ -122,7 +122,7 @@
 						target_pod.myhud.sensor_lock.mouse_opacity = 0
 
 		src.tracking_target = null
-		src.ship.myhud.tracking.dir = 1
+		src.ship.myhud.tracking.set_dir(1)
 		animate(src.ship.myhud.tracking, transform = null, time = 10, loop = 0)
 
 		src.ship.myhud.tracking.icon_state = "off"
@@ -143,7 +143,7 @@
 			//change position and icon dir based on direction to target. And make sure it's using the dots.
 			//must be within range and be on the same z-level
 			if (same_z_level && (cur_dist <= trackable_range || tracking_gps_coord))
-				// src.dir = get_dir(ship, src.tracking_target)
+				// src.set_dir(get_dir(ship, src.tracking_target))
 				src.ship.myhud.tracking.icon_state = "dots-s"
 				animate_tracking_hud(src.ship.myhud.tracking, src.tracking_target)
 
@@ -289,9 +289,9 @@
 		for(var/mob/living/carbon/human/M in ship)
 			M << sound('sound/machines/signal.ogg')
 		ship.visible_message("<b>[ship] begins a sensor sweep of the area.</b>")
-		boutput(usr, "<span class='notice'>Scanning...</span>")
+		boutput(user, "<span class='notice'>Scanning...</span>")
 		sleep(3 SECONDS)
-		boutput(usr, "<span class='notice'>Scan complete.</span>")
+		boutput(user, "<span class='notice'>Scan complete.</span>")
 		for (var/mob/living/M in mobs)
 			if (!isturf(M.loc))	// || ship.Find(M)
 				continue
@@ -312,7 +312,7 @@
 				lifeforms++
 				lifelist += C.name
 
-		for (var/obj/machinery/vehicle/V in pods_and_cruisers) //ignoring cruisers, they barely exist, sue me.
+		for (var/obj/machinery/vehicle/V in by_cat[TR_CAT_PODS_AND_CRUISERS]) //ignoring cruisers, they barely exist, sue me.
 			if(V != ship)
 				if ((ship.z == V.z) && get_dist(ship.loc, V) <= src.seekrange)
 					ships++
@@ -327,7 +327,7 @@
 					else
 						lifeforms++
 						lifelist += C.name
-		for(var/obj/O in lockers_and_crates)
+		for_by_tcl(O, /obj/storage)
 			if ((ship.z == O.z) && get_dist(ship.loc, O) <= src.seekrange/2)
 				for (var/mob/living/M in O.contents)
 					lifeforms++

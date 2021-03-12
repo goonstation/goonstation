@@ -29,8 +29,7 @@
 
 		var/list/staves = list()
 		var/we_hold_it = 0
-		for (var/X in by_type[/obj/item/staff/cthulhu])
-			var/obj/item/staff/cthulhu/S = X
+		for_by_tcl(S, /obj/item/staff/cthulhu)
 			if (M.mind && M.mind.key == S.wizard_key)
 				if (S == M.find_in_hand(S))
 					we_hold_it = 1
@@ -75,7 +74,7 @@
 				if (!isliving(M) || !M.mind || !iswizard(M))
 					boutput(M, __red("You seem to have lost all magical abilities."))
 					return 0
-				if (M.wizard_castcheck() == 0)
+				if (M.wizard_castcheck(src) == 0)
 					return 0 // Has own user feedback.
 				if (M.getStatusDuration("stunned") > 0 || M.getStatusDuration("weakened") || M.getStatusDuration("paralysis") > 0 || !isalive(M) || M.restrained())
 					boutput(M, __red("Not when you're incapacitated or restrained."))

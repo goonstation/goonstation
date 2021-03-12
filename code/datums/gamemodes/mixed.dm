@@ -230,23 +230,23 @@
 				objective_set_path = pick(typesof(/datum/objective_set/traitor/rp_friendly))
 				traitor.current.unequip_all(1)
 
-				if (wizardstart.len == 0)
+				if (!job_start_locations["wizard"])
 					boutput(traitor.current, "<B><span class='alert'>A starting location for you could not be found, please report this bug!</span></B>")
 				else
-					var/starting_loc = pick(wizardstart)
-					traitor.current.set_loc(starting_loc)
+					traitor.current.set_loc(pick(job_start_locations["wizard"]))
 
 				equip_wizard(traitor.current)
 
 				var/randomname
 				if (traitor.current.gender == "female")
-					randomname = wiz_female.len ? pick(wiz_female) : "Witch"
+					randomname = pick_string_autokey("names/wizard_female.txt")
 				else
-					randomname = wiz_male.len ? pick(wiz_male) : "Wizard"
+					randomname = pick_string_autokey("names/wizard_male.txt")
 
-				SPAWN_DBG (0)
+				SPAWN_DBG(0)
 					var/newname = input(traitor.current,"You are a Wizard. Would you like to change your name to something else?", "Name change",randomname)
-
+					if(newname && newname != randomname)
+						phrase_log.log_phrase("name-wizard", randomname, no_duplicates=TRUE)
 					if (length(ckey(newname)) == 0)
 						newname = randomname
 
@@ -275,10 +275,11 @@
 
 			if ("blob")
 				objective_set_path = /datum/objective_set/blob
-				SPAWN_DBG (0)
+				SPAWN_DBG(0)
 					var/newname = input(traitor.current, "You are a Blob. Please choose a name for yourself, it will show in the form: <name> the Blob", "Name change") as text
 
 					if (newname)
+						phrase_log.log_phrase("name-blob", newname, no_duplicates=TRUE)
 						if (length(newname) >= 26) newname = copytext(newname, 1, 26)
 						newname = strip_html(newname) + " the Blob"
 						traitor.current.real_name = newname
@@ -291,9 +292,9 @@
 
 				if (!src.spy_market)
 					src.spy_market = new /datum/game_mode/spy_theft
-					SPAWN_DBG(5 SECONDS) //Some possible bounty items (like organs) need some time to get set up properly and be assigned names
-						src.spy_market.build_bounty_list()
-						src.spy_market.update_bounty_readouts()
+					sleep(5 SECONDS) //Some possible bounty items (like organs) need some time to get set up properly and be assigned names
+					src.spy_market.build_bounty_list()
+					src.spy_market.update_bounty_readouts()
 
 			if ("werewolf")
 				objective_set_path = /datum/objective_set/werewolf
@@ -376,7 +377,7 @@
 	for(var/A in possible_modes)
 		intercepttext += i_text.build(A, pick(traitors))
 /*
-	for (var/obj/machinery/computer/communications/comm in machine_registry[MACHINES_COMMSCONSOLES])
+	for (var/obj/machinery/computer/communications/comm as() in machine_registry[MACHINES_COMMSCONSOLES])
 		if (!(comm.status & (BROKEN | NOPOWER)) && comm.prints_intercept)
 			var/obj/item/paper/intercept = new /obj/item/paper( comm.loc )
 			intercept.name = "paper- 'Cent. Com. Status Summary'"
@@ -386,7 +387,7 @@
 			comm.messagetext.Add(intercepttext)
 */
 
-	for (var/obj/machinery/communications_dish/C in comm_dishes)
+	for_by_tcl(C, /obj/machinery/communications_dish)
 		C.add_centcom_report("Cent. Com. Status Summary", intercepttext)
 
 	command_alert("Summary downloaded and printed out at all communications consoles.", "Enemy communication intercept. Security Level Elevated.")

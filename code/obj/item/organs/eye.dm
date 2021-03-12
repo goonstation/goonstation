@@ -30,7 +30,6 @@
 	proc/update_icon()
 		if (!src.change_iris)
 			return
-		src.overlays = null
 		var/image/iris_image = image(src.icon, src, "eye-iris")
 		iris_image.color = "#0D84A8"
 		if (src.donor && src.donor.bioHolder && src.donor.bioHolder.mobAppearance) // good lord
@@ -41,7 +40,7 @@
 				iris_image.color = AH.customization_third_color
 			else
 				iris_image.color = AH.e_color
-		src.overlays += iris_image
+		src.UpdateOverlays(iris_image, "iris")
 
 	attach_organ(var/mob/living/carbon/M as mob, var/mob/user as mob)
 		/* Overrides parent function to handle special case for attaching eyes.
@@ -115,6 +114,7 @@
 	icon_state = "eye-cyber"
 	item_state = "heart_robo1"
 	robotic = 1
+	created_decal = /obj/decal/cleanable/oil
 	edible = 0
 	mats = 6
 	made_from = "pharosium"
@@ -187,8 +187,7 @@
 		if (M.client)
 			src.assigned = M.client
 			SPAWN_DBG(-1)
-				if (!(src in processing_items))
-					processing_items.Add(src)
+				processing_items |= src
 		return
 
 	on_removal()
@@ -315,8 +314,7 @@
 		if (M.client)
 			src.assigned = M.client
 			SPAWN_DBG(-1)
-				if (!(src in processing_items))
-					processing_items.Add(src)
+				processing_items |= src
 		return
 
 	on_removal()

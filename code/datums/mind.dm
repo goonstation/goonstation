@@ -61,8 +61,8 @@ datum/mind
 	var/last_death_time = 0 // look, you can live a dozen lives in one round if you're (un)lucky enough
 
 	var/karma = 0 //fuck
-	var/karma_min = -420
-	var/karma_max = 69
+	var/const/karma_min = -420
+	var/const/karma_max = 69
 	var/damned = 0 // If 1, they go to hell when are die
 
 	// Capture when they die. Used in the round-end credits
@@ -101,6 +101,10 @@ datum/mind
 		if (current)
 			if(current.client)
 				current.removeOverlaysClient(current.client)
+				tgui_process.on_transfer(current, new_character)
+				new_character.lastKnownIP = current.client.address
+				if(isghostdrone(src.current)) //clear the static overlays on death, qdel, being cloned, etc.
+					current.client.images.Remove(mob_static_icons)
 			current.mind = null
 
 		new_character.mind = src
@@ -213,10 +217,5 @@ datum/mind
 		src.brain?.owner = null
 		..()
 
-
-proc/karma_update(var/karmavalue, var/sinorsaint, var/mob/M) // This did not even begin to do what it said it did. now it do. ~warc
-	if(M && M.mind)
-		if(sinorsaint == "SIN")
-			M.mind.karma = max((M.mind.karma - karmavalue),(M.mind.karma_min))
-		if(sinorsaint == "SAINT")
-			M.mind.karma = min((M.mind.karma + karmavalue),(M.mind.karma_max))
+/datum/mind/proc/add_karma(how_much)
+	src.karma += how_much

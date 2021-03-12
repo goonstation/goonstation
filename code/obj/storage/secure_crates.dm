@@ -66,7 +66,7 @@
 		anti_biological
 			name = "anti-biological crate"
 			spawn_contents = list(/obj/item/storage/box/flaregun = 2,\
-			/obj/item/flamethrower/loaded = 2)
+			/obj/item/gun/flamethrower/assembled/loaded = 2)
 
 /obj/storage/secure/crate/gear
 	desc = "A secure gear crate."
@@ -92,12 +92,12 @@
 		/obj/item/chem_grenade/sarin = 3)
 
 /obj/storage/secure/crate/bee
-	name = "Bee crate"
-	desc = "A crate with a picture of a bee on it. Buzz."
+	name = "Secure Bee crate"
+	desc = "A secure crate with a picture of a bee on it. Buzz."
 	icon_state = "beecrate"
 	density = 1
-	icon_opened = "beecrateopen"
-	icon_closed = "beecrate"
+	icon_opened = "beecrateopen-secure"
+	icon_closed = "beecrate-secure"
 
 	loaded
 		req_access = list(access_hydro)

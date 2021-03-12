@@ -106,10 +106,10 @@
 				if((user in range(1,src)) && (!anchored))
 					switch(input)
 						if("Rotate")
-							dir = turn(dir, -90)
+							set_dir(turn(dir, -90))
 							update()
 						if("Flip")
-							dir = turn(dir, 180)
+							set_dir(turn(dir, 180))
 							if(ptype == 2)
 								ptype = 3
 							else if(ptype == 3)
@@ -178,7 +178,7 @@
 					var/pipetype = dpipetype()
 					var/obj/disposalpipe/P = new pipetype(src.loc)
 					P.base_icon_state = base_state
-					P.dir = dir
+					P.set_dir(dir)
 					P.dpdir = dpdir
 					P.mail_tag = mail_tag
 					P.updateicon()

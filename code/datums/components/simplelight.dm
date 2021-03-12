@@ -1,5 +1,6 @@
 /datum/component/holdertargeting/simple_light
 	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
+	var/on_when_equipped = 1
 	var/r = 255
 	var/g = 255
 	var/b = 255
@@ -8,7 +9,7 @@
 	var/enabled = 1
 	var/atom/light_target = null
 
-/datum/component/holdertargeting/simple_light/Initialize(r = 255, g = 255, b = 255, a = 127, enabled = 1)
+/datum/component/holdertargeting/simple_light/Initialize(r = 255, g = 255, b = 255, a = 127, enabled = 1, on_when_equipped = 1)
 	. = ..()
 	if(. == COMPONENT_INCOMPATIBLE)
 		return
@@ -17,6 +18,7 @@
 	src.b = b
 	src.a = a
 	src.enabled = 1
+	src.on_when_equipped =  on_when_equipped
 	src.light_name = "sl_comp_\ref[src]"
 
 /datum/component/holdertargeting/simple_light/proc/update(var/new_enabled = -1)
@@ -52,6 +54,10 @@
 /datum/component/holdertargeting/simple_light/on_dropped(datum/source, mob/user)
 	. = ..()
 	var/obj/item/I = src.parent
+	if (I.loc == user && src.on_when_equipped)
+		src.light_target = user
+		return
+
 	if(!src.enabled)
 		src.light_target = I
 		return

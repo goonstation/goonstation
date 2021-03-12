@@ -20,6 +20,7 @@ var/list/observers = list()
 		..()
 		observers += src
 		mobs += src
+		src.move_dir = 0
 
 	pooled()
 		mobs -= src
@@ -34,11 +35,10 @@ var/list/observers = list()
 			my_ghost.set_loc(get_turf(src))
 		my_ghost = null
 		target = null
-		src.loc = null
 
 
 		for (var/datum/hud/H in huds)
-			for (var/obj/screen/hud/S in H.objects)
+			for (var/atom/movable/screen/hud/S in H.objects)
 				if (S:master == src)
 					S:master = null
 			detach_hud(H)
@@ -59,7 +59,6 @@ var/list/observers = list()
 			my_ghost.set_loc(get_turf(src))
 		my_ghost = null
 		target = null
-		src.loc = null
 
 		..()
 
@@ -82,11 +81,8 @@ var/list/observers = list()
 		return
 
 	process_move(keys)
-		if (istype(src,/mob/dead/target_observer))
-			var/mob/dead/target_observer/O = src
-			O.stop_observing()
-			return
-		. = ..()
+		if(keys && src.move_dir)
+			src.stop_observing()
 
 	apply_camera(client/C)
 		var/mob/living/M = src.target
@@ -122,7 +118,7 @@ var/list/observers = list()
 			return
 		//Let's have a proc so as to make it easier to reassign an observer.
 		src.target = target
-		loc = target
+		src.set_loc(target)
 
 		set_eye(target)
 
@@ -166,7 +162,7 @@ var/list/observers = list()
 			if (src.mind)
 				mind.transfer_to(my_ghost)
 
-			var/ASLoc = observer_start.len ? pick(observer_start) : locate(1, 1, 1)
+			var/ASLoc = pick_landmark(LANDMARK_OBSERVER, locate(1, 1, 1))
 			if (target)
 				var/turf/T = get_turf(target)
 				if (T && (!isghostrestrictedz(T.z) || (isghostrestrictedz(T.z) && (restricted_z_allowed(my_ghost, T) || (my_ghost.client && my_ghost.client.holder)))))

@@ -11,7 +11,7 @@
 /obj/machinery
 	name = "machinery"
 	icon = 'icons/obj/stationobjs.dmi'
-	flags = FPRINT | FLUID_SUBMERGE
+	flags = FPRINT | FLUID_SUBMERGE | TGUI_INTERACTIVE
 
 	var/status = 0
 	var/power_usage = 0
@@ -23,7 +23,10 @@
 	var/tmp/processing_tier = PROCESSING_EIGHTH
 	var/tmp/current_processing_tier
 	var/tmp/machine_registry_idx // List index for misc. machines registry, used in loops where machines of a specific type are needed
-
+	var/base_tick_spacing = 6 // Machines proc every 1*(2^tier-1) seconds. Or something like that.
+	var/cap_base_tick_spacing = 60
+	var/last_process
+	var/requires_power = TRUE // machine requires power, used in tgui_broken_state
 	// New() and disposing() add and remove machines from the global "machines" list
 	// This list is used to call the process() proc for all machines ~1 per second during a round
 
@@ -47,7 +50,7 @@
 	..()
 	src.power_change()
 	var/area/A = get_area(src)
-	A.machines += src
+	A?.machines += src
 
 /obj/machinery/disposing()
 	if (!isnull(initial(machine_registry_idx)))
@@ -64,12 +67,24 @@
 /obj/machinery/proc/UnsubscribeProcess()
 	STOP_PROCESSING(src)
 
+/**
+* Determines whether or not the user can remote access devices.
+* This is typically limited to Borgs and AI things
+*/
+/obj/machinery/can_access_remotely(mob/user)
+	if (src.status & REQ_PHYSICAL_ACCESS)
+		. = ..()
+	else
+		. = can_access_remotely_default(user)
 
 	/*
 	 *	Prototype procs common to all /obj/machinery objects
 	 */
+// Want a mult on your machine process? Put var/mult in its arguments and put mult wherever something could be mangled by lagg
+/obj/machinery/proc/process(var/mult) //<- like that, but in your machine's process()
 
-/obj/machinery/proc/process()
+	SHOULD_NOT_SLEEP(TRUE) //commented out to SpacemanDMMs parser not being perfect -ZEWAKA
+
 	// Called for all /obj/machinery in the "machines" list, approximately once per second
 	// by /datum/controller/game_controller/process() when a game round is active
 	// Any regular action of the machine is executed by this proc.
@@ -93,29 +108,29 @@
 	gib = make_cleanable( /obj/decal/cleanable/machine_debris,location)
 	if (prob(25))
 		gib.icon_state = "gibup1"
-	gib.streak(list(NORTH, NORTHEAST, NORTHWEST))
+	gib.streak_cleanable(NORTH)
 	LAGCHECK(LAG_LOW)
 
 	// SOUTH
 	gib = make_cleanable( /obj/decal/cleanable/machine_debris,location)
 	if (prob(25))
 		gib.icon_state = "gibdown1"
-	gib.streak(list(SOUTH, SOUTHEAST, SOUTHWEST))
+	gib.streak_cleanable(SOUTH)
 	LAGCHECK(LAG_LOW)
 
 	// WEST
 	gib = make_cleanable( /obj/decal/cleanable/machine_debris,location)
-	gib.streak(list(WEST, NORTHWEST, SOUTHWEST))
+	gib.streak_cleanable(WEST)
 	LAGCHECK(LAG_LOW)
 
 	// EAST
 	gib = make_cleanable( /obj/decal/cleanable/machine_debris,location)
-	gib.streak(list(EAST, NORTHEAST, SOUTHEAST))
+	gib.streak_cleanable(EAST)
 	LAGCHECK(LAG_LOW)
 
 	// RANDOM
 	gib = make_cleanable( /obj/decal/cleanable/machine_debris,location)
-	gib.streak(alldirs)
+	gib.streak_cleanable(cardinal)
 
 /obj/machinery/Topic(href, href_list)
 	..()
@@ -126,7 +141,7 @@
 		//boutput(usr, "<span class='alert'>You are unable to do that currently!</span>")
 		return 1
 	if(!hasvar(src,"portable") || !src:portable)
-		if ((!in_range(src, usr) || !istype(src.loc, /turf)) && !issilicon(usr) && !isAI(usr))
+		if ((!in_interact_range(src, usr) || !istype(src.loc, /turf)) && !issilicon(usr) && !isAI(usr))
 			if (!usr)
 				message_coders("[type]/Topic(): no usr in Topic - [name] at [showCoords(x, y, z)].")
 			else if ((x in list(usr.x - 1, usr.x, usr.x + 1)) && (y in list(usr.y - 1, usr.y, usr.y + 1)) && z == usr.z && isturf(loc))
@@ -134,7 +149,7 @@
 			//boutput(usr, "<span class='alert'>You must be near the machine to do this!</span>")
 			return 1
 	else
-		if ((!in_range(src.loc, usr) || !istype(src.loc.loc, /turf)) && !issilicon(usr) && !isAI(usr))
+		if ((!in_interact_range(src.loc, usr) || !istype(src.loc.loc, /turf)) && !issilicon(usr) && !isAI(usr))
 			//boutput(usr, "<span class='alert'>You must be near the machine to do this!</span>")
 			return 1
 	src.add_fingerprint(usr)
@@ -144,22 +159,41 @@
 	return src.attack_hand(user)
 
 /obj/machinery/attack_hand(mob/user as mob)
+	. = ..()
 	if(status & (NOPOWER|BROKEN))
 		return 1
 	if(user && (user.lying || user.stat))
 		return 1
-	if (user && (get_dist(src, user) > 1 || !istype(src.loc, /turf)) && !issilicon(user) && !isAI(usr))
+	if(!in_interact_range(src, user) || !istype(src.loc, /turf))
 		return 1
-	if (user && ishuman(user))
-		if(user.get_brain_damage() >= 60 || prob(user.get_brain_damage()))
-			boutput(user, "<span class='alert'>You are too dazed to use [src] properly.</span>")
-			return 1
 
 	if (user)
+		if (ishuman(user))
+			if(user.get_brain_damage() >= 60 || prob(user.get_brain_damage()))
+				boutput(user, "<span class='alert'>You are too dazed to use [src] properly.</span>")
+				return 1
+
 		src.add_fingerprint(user)
 		interact_particle(user,src)
-
 	return 0
+
+/obj/machinery/ui_state(mob/user)
+	if(src.status & REQ_PHYSICAL_ACCESS)
+		. = tgui_physical_state
+	else
+		. = tgui_default_state
+
+/obj/machinery/ui_status(mob/user, datum/ui_state/state)
+	if(src.status & REQ_PHYSICAL_ACCESS)
+		. = min(tgui_broken_state.can_use_topic(src, user),
+						tgui_physical_state.can_use_topic(src, user),
+						tgui_not_incapacitated_state.can_use_topic(src, user)
+		)
+	else
+		. = min(state.can_use_topic(src, user),
+						tgui_broken_state.can_use_topic(src, user),
+						tgui_not_incapacitated_state.can_use_topic(src, user)
+		)
 
 /obj/machinery/ex_act(severity)
 	// Called when an object is in an explosion
@@ -254,6 +288,9 @@
 	return
 
 /obj/machinery/emp_act()
+	if(src.flags & EMP_SHORT) return
+	src.flags |= EMP_SHORT
+
 	src.use_power(7500)
 
 	var/obj/overlay/pulse2 = new/obj/overlay ( src.loc )
@@ -261,9 +298,10 @@
 	pulse2.icon_state = "empdisable"
 	pulse2.name = "emp sparks"
 	pulse2.anchored = 1
-	pulse2.dir = pick(cardinal)
+	pulse2.set_dir(pick(cardinal))
 
 	SPAWN_DBG(1 SECOND)
+		src.flags &= ~EMP_SHORT
 		qdel(pulse2)
 	return
 
@@ -351,6 +389,6 @@
 	var/area/A1 = get_area(src)
 	. = ..()
 	var/area/A2 = get_area(src)
-	if(A1 != A2)
+	if(A1 && A2 && A1 != A2)
 		A1.machines -= src
 		A2.machines += src

@@ -3,6 +3,7 @@
 		..()
 		SPAWN_DBG(0)
 			randomize_look(src, 1, 1, 1, 1, 1, 1)
+			src.update_colorful_parts()
 
 		SPAWN_DBG(1 SECOND)
 			set_clothing_icon_dirty()
@@ -55,6 +56,12 @@
 		SPAWN_DBG(0)
 			JobEquipSpawned("Security Officer")
 
+/mob/living/carbon/human/normal/securityassistant
+	New()
+		..()
+		SPAWN_DBG(0)
+			JobEquipSpawned("Security Assistant")
+
 /mob/living/carbon/human/normal/detective
 	New()
 		..()
@@ -79,17 +86,23 @@
 		SPAWN_DBG(0)
 			JobEquipSpawned("Chaplain")
 
-/mob/living/carbon/human/normal/barman
+/mob/living/carbon/human/normal/bartender
 	New()
 		..()
 		SPAWN_DBG(0)
-			JobEquipSpawned("Barman")
+			JobEquipSpawned("Bartender")
 
 /mob/living/carbon/human/normal/botanist
 	New()
 		..()
 		SPAWN_DBG(0)
 			JobEquipSpawned("Botanist")
+
+/mob/living/carbon/human/normal/rancher
+	New()
+		..()
+		SPAWN_DBG(0)
+			JobEquipSpawned("Rancher")
 
 /mob/living/carbon/human/normal/janitor
 	New()
@@ -133,6 +146,12 @@
 		SPAWN_DBG(0)
 			JobEquipSpawned("Geneticist")
 
+/mob/living/carbon/human/normal/pathologist
+	New()
+		..()
+		SPAWN_DBG(0)
+			JobEquipSpawned("Pathologist")
+
 /mob/living/carbon/human/normal/roboticist
 	New()
 		..()
@@ -156,9 +175,9 @@
 		..()
 		SPAWN_DBG(0)
 			if (src.gender && src.gender == "female")
-				src.real_name = wiz_female.len ? pick(wiz_female) : "Witch"
+				src.real_name = pick_string_autokey("names/wizard_female.txt")
 			else
-				src.real_name = wiz_male.len ? pick(wiz_male) : "Wizard"
+				src.real_name = pick_string_autokey("names/wizard_male.txt")
 
 			equip_wizard(src, 1)
 		return

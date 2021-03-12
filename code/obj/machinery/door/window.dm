@@ -72,7 +72,7 @@
 		if (prob(40))
 			if (src.secondsElectrified == 0)
 				src.secondsElectrified = -1
-				SPAWN_DBG (300)
+				SPAWN_DBG(30 SECONDS)
 					if (src)
 						src.secondsElectrified = 0
 		return
@@ -80,7 +80,7 @@
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
 		if (src.density && src.cant_emag != 1 && src.isblocked() != 1)
 			flick(text("[]spark", src.base_state), src)
-			SPAWN_DBG (6)
+			SPAWN_DBG(0.6 SECONDS)
 				if (src)
 					src.open(1)
 			return 1
@@ -126,18 +126,18 @@
 		if (need_rebuild)
 			if (istype(source)) // Rebuild resp. update nearby group geometry.
 				if (source.parent)
-					air_master.queue_update_group(source.parent)
+					air_master.groups_to_rebuild |= source.parent
 				else
-					air_master.queue_update_tile(source)
+					air_master.tiles_to_update |= source
 
 			if (istype(target))
 				if (target.parent)
-					air_master.queue_update_group(target.parent)
+					air_master.groups_to_rebuild |= target.parent
 				else
-					air_master.queue_update_tile(target)
+					air_master.tiles_to_update |= target
 		else
-			if (istype(source)) air_master.queue_update_tile(source)
-			if (istype(target)) air_master.queue_update_tile(target)
+			if (istype(source)) air_master.tiles_to_update |= source
+			if (istype(target)) air_master.tiles_to_update |= target
 
 		if (istype(source))
 			source.selftilenotify() //for fluids
@@ -155,7 +155,7 @@
 		playsound(src.loc, "sound/machines/windowdoor.ogg", 100, 1)
 		src.icon_state = text("[]open", src.base_state)
 
-		SPAWN_DBG (8)
+		SPAWN_DBG(0.8 SECONDS)
 			if (src)
 				src.set_density(0)
 				if (ignore_light_or_cam_opacity)
@@ -168,7 +168,7 @@
 				else
 					src.operating = 0
 
-		SPAWN_DBG (50)
+		SPAWN_DBG(5 SECONDS)
 			if (src && !src.operating && !src.density && src.autoclose == 1)
 				src.close()
 
@@ -193,7 +193,7 @@
 				src.RL_SetOpacity(1)
 		src.update_nearby_tiles()
 
-		SPAWN_DBG (10)
+		SPAWN_DBG(1 SECOND)
 			if (src)
 				src.operating = 0
 
@@ -208,7 +208,7 @@
 			return
 		if (usr.getStatusDuration("stunned") > 0 || usr.getStatusDuration("weakened") || usr.getStatusDuration("paralysis") > 0 || usr.stat || usr.restrained())
 			return
-		if (!in_range(src, usr))
+		if (!in_interact_range(src, usr))
 			usr.show_text("You are too far away.", "red")
 			return
 		if (src.hardened == 1)
@@ -225,7 +225,7 @@
 			src.autoclose = 0
 		else
 			src.autoclose = 1
-			SPAWN_DBG (50)
+			SPAWN_DBG(5 SECONDS)
 				if (src && !src.density)
 					src.close()
 

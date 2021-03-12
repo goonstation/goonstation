@@ -15,7 +15,7 @@
   defensive = 1
   wanderer = 1
   scavenger = 1
-  opensdoors = 0
+  opensdoors = OBJ_CRITTER_OPENS_DOORS_NONE
   atkcarbon = 0
   atksilicon = 0
   atkcritter = 1
@@ -212,7 +212,7 @@ CritterAttack(atom/M)
     A.xo = target:x - start:x
 
   A.shooter = src
-  src.dir = get_dir(src, target)
+  src.set_dir(get_dir(src, target))
   SPAWN_DBG( 0 )
     A.process()
   return

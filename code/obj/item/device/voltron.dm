@@ -13,6 +13,7 @@
 	var/mob/the_user = null
 	//Prolonged use causes damage.
 	New(mob/target, atom/location)
+		..()
 		src.set_loc(location)
 		the_user = target
 		target.set_loc(src)
@@ -244,35 +245,40 @@
 		target = null
 		activating = 0
 
-	proc/activate()
+	proc/activate(mob/user)
 		if(activating) return
+		var/turf/T = get_turf(src)
+		if(isrestrictedz(T.z))
+			boutput(user, "<span class='notice'>The [src] buzzes oddly, and nothing further happens.</span>")
+			return
+
 		if(locate(/obj/cable) in get_turf(src))
 
 			if(on_cooldown)
-				boutput(usr, "<span class='alert'>The [src] is still recharging.</span>")
+				boutput(user, "<span class='alert'>The [src] is still recharging.</span>")
 				return
 
 			activating = 1
 
-			playsound(src, "sound/effects/singsuck.ogg", 40, 1)
-			var/obj/overlay/O = new/obj/overlay(get_turf(usr))
+			playsound(get_turf(src), "sound/effects/singsuck.ogg", 40, 1)
+			var/obj/overlay/O = new/obj/overlay(get_turf(user))
 			O.name = "Energy"
 			O.anchored = 1
 			O.layer = MOB_EFFECT_LAYER
-			usr:transforming = 1
+			user.transforming = 1
 			O.icon = 'icons/effects/effects.dmi'
 			O.icon_state = "energytwirlin"
 			sleep(0.5 SECONDS)
-			usr:transforming = 0
+			user.transforming = 0
 			qdel(O)
 
-			D = new/obj/dummy/voltron(usr, get_turf(src))
+			D = new/obj/dummy/voltron(user, get_turf(src))
 
-			target = usr
+			target = user
 			active = 1
 			activating = 0
 		else
-			boutput(usr, "<span class='alert'>This needs to be used while standing on a cable.</span>")
+			boutput(user, "<span class='alert'>This needs to be used while standing on a cable.</span>")
 
 	attack_self(mob/user as mob)
 		if(activating) return
@@ -281,8 +287,38 @@
 			boutput(target, "<span class='notice'>You deactivate the [src].</span>")
 			deactivate()
 		else
-			boutput(user, "<span class='notice'>You activate the [src].</span>")
-			activate()
+			if(istype(user.l_hand,/obj/item/phone_handset) || istype(user.r_hand,/obj/item/phone_handset)) // travel through space line
+				var/obj/item/phone_handset/PH = null
+				var/obj/item/phone_handset/EXIT = null
+				var/turf/target_loc = null
+				if(istype(user.l_hand,/obj/item/phone_handset))
+					PH = user.l_hand
+				else
+					PH = user.r_hand
+				if(PH.parent.linked && PH.parent.linked.handset)
+					if(isturf(PH.parent.linked.handset.loc))
+						target_loc = PH.parent.linked.handset.loc
+					else if(ismob(PH.parent.linked.handset.loc))
+						target_loc = PH.parent.linked.handset.loc.loc
+					else
+						boutput(user, "You can't seem to enter the phone for some reason!")
+						return
+				else
+					boutput(user, "You can't seem to enter the phone for some reason!")
+					return
+				if(isrestrictedz(user.loc.z) || isrestrictedz(target_loc.z))
+					boutput(user, "You can't seem to enter the phone for some reason!")
+					return
+				EXIT = PH.parent.linked.handset
+				user.visible_message("[user] enters the phone line using their [src].", "You enter the phone line using your [src].", "You hear a strange sucking noise.")
+				playsound(user.loc, "sound/effects/singsuck.ogg", 40, 1)
+				user.drop_item(PH)
+				user.set_loc(target_loc)
+				playsound(user.loc, "sound/effects/singsuck.ogg", 40, 1)
+				user.visible_message("[user] suddenly emerges from the [EXIT]. [pick("","What the fuck?")]", "You emerge from the [EXIT].", "You hear a strange sucking noise.")
+			else
+				boutput(user, "<span class='notice'>You activate the [src].</span>")
+				activate(user)
 			power -= 5
 			handle_overlay()
 		return

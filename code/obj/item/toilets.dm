@@ -2,7 +2,6 @@
 CONTAINS:
 TOILET
 */
-var/list/all_toilets = null
 
 /obj/item/storage/toilet
 	name = "toilet"
@@ -17,23 +16,19 @@ var/list/all_toilets = null
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "toilet"
 	rand_pos = 0
-#if ASS_JAM
-	var/timestopped = 0 // one time timstop for toilet fun in assday
-#endif
+
 /obj/item/storage/toilet/New()
 	..()
-	if (!islist(all_toilets))
-		all_toilets = list()
-	all_toilets.Add(src)
+	START_TRACKING
 
 /obj/item/storage/toilet/disposing()
-	if (islist(all_toilets))
-		all_toilets.Remove(src)
+	STOP_TRACKING
 	..()
 
-/obj/item/storage/toilet/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/storage/toilet/attackby(obj/item/W as obj, mob/user as mob, obj/item/storage/T)
 	if (src.contents.len >= 7)
 		boutput(user, "The toilet is clogged!")
+		user.unlock_medal("Try jiggling the handle",1) //new method to get this medal since the old one (fat person in disposal pipe) is gone
 		return
 	if (istype(W, /obj/item/storage))
 		return
@@ -45,7 +40,7 @@ var/list/all_toilets = null
 	return ..()
 
 /obj/item/storage/toilet/MouseDrop(atom/over_object, src_location, over_location)
-	if (usr && over_object == usr && in_range(src, usr) && iscarbon(usr) && !usr.stat)
+	if (usr && over_object == usr && in_interact_range(src, usr) && iscarbon(usr) && !usr.stat)
 		usr.visible_message("<span class='alert'>[usr] [pick("shoves", "sticks", "stuffs")] [his_or_her(usr)] hand into [src]!</span>")
 		playsound(src.loc, "sound/impact_sounds/Liquid_Slosh_1.ogg", 50, 1)
 	..()
@@ -65,13 +60,10 @@ var/list/all_toilets = null
 
 			var/list/destinations = list()
 
-			if (islist(all_toilets) && all_toilets.len)
-				for (var/obj/item/storage/toilet/T in all_toilets)
-					if (T == src || !isturf(T.loc) || T.z != src.z  || isrestrictedz(T.z) || (istype(T.loc,/area) && T.loc:teleport_blocked))
-						continue
-					destinations.Add(T)
-			else
-				destinations.Add(src)
+			for_by_tcl(T, /obj/item/storage/toilet)
+				if (T == src || !isturf(T.loc) || T.z != src.z  || isrestrictedz(T.z) || (istype(T.loc.loc,/area) && T.loc.loc:teleport_blocked))
+					continue
+				destinations.Add(T)
 
 			if (destinations.len)
 				var/atom/picked = pick(destinations)
@@ -92,14 +84,7 @@ var/list/all_toilets = null
 	return
 
 /obj/item/storage/toilet/attack_hand(mob/user as mob)
-#if ASS_JAM //timestop toilets
-	if(timestopped == 1)
-		if(prob(20))
-			boutput(user, "Slow down buddy! Can't force the time stop toilet when it don't want to!")
-	else
-		timestop(null, 100, 5)
-		timestopped = 1
-#endif
+
 	for(var/mob/M in src.loc)
 		if (M.buckled)
 			if (M != user)
@@ -124,7 +109,9 @@ var/list/all_toilets = null
 				A.set_loc(target)
 #endif
 		src.clogged = 0
-		src.contents.len = 0
+		for (var/item in src.contents)
+			qdel(item)
+			src.hud?.remove_item(item)
 
 	else if((src.clogged >= 1) || (src.contents.len >= 7) || (user.buckled != src.loc))
 		src.visible_message("<span class='notice'>The toilet is clogged!</span>")
@@ -137,7 +124,7 @@ var/list/all_toilets = null
 
 	user.visible_message("<span class='alert'><b>[user] sticks [his_or_her(user)] head into [src] and flushes it, giving [him_or_her(user)]self an atomic swirlie!</b></span>")
 	var/obj/head = user.organHolder.drop_organ("head")
-	if (src.clogged >= 1 || src.contents.len >= 7 || !(islist(all_toilets) && all_toilets.len))
+	if (src.clogged >= 1 || src.contents.len >= 7)
 		head.set_loc(src.loc)
 		playsound(src.loc, "sound/impact_sounds/Liquid_Slosh_1.ogg", 50, 1)
 		src.visible_message("<span class='notice'>[head] floats up out of the clogged [src.name]!</span>")
@@ -148,7 +135,7 @@ var/list/all_toilets = null
 				O.vomit()
 	else
 		var/list/emergeplaces = list()
-		for (var/obj/item/storage/toilet/T in all_toilets)
+		for_by_tcl(T, /obj/item/storage/toilet)
 			if (T == src || !isturf(T.loc) || T.z != src.z  || isrestrictedz(T.z)) continue
 			emergeplaces.Add(T)
 		if (emergeplaces.len)

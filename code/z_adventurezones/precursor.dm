@@ -226,7 +226,7 @@
 				var/mob/living/carbon/human/H = A
 				H.emote(pick("shiver","shudder"))
 				H.change_misstep_chance(5)
-				shake_camera(H, 25, 2)
+				shake_camera(H, 25, 16)
 			if(istype(A, /obj/precursor_puzzle/glowing_door))
 				var/obj/precursor_puzzle/glowing_door/D = A
 				if(src.pitch == D.pitch)
@@ -278,7 +278,7 @@
 				src.overlays += icon('icons/obj/artifacts/artifacts.dmi',"precursor-1fx")*/
 		if (isrobot(user)) return
 		user.drop_item()
-		if(W && W.loc)	W.set_loc(src.loc)
+		if(W?.loc)	W.set_loc(src.loc)
 		return
 
 /obj/item/chilly_orb // borb
@@ -553,7 +553,7 @@
 			if(src.active) return
 
 			switch(function)
-				if("projectile" || null) // copied from singularity emitter code
+				if("projectile", null) // copied from singularity emitter code
 					src.animate_effect()
 					shoot_projectile_DIR(src, plaser, dir)
 					src.visible_message("<span class='alert'><b>[src]</b> fires a bolt of energy!</span>")
@@ -701,8 +701,7 @@
 
 	proc
 		update_controller()
-			if(src.linked_controller)
-				src.linked_controller.update()
+			src.linked_controller?.update()
 			return
 
 
@@ -934,7 +933,7 @@
 			user.TakeDamage(user.hand == 1 ? "l_arm" : "r_arm", 0, shock_damage)
 			boutput(user, "<span class='alert'><B>You feel a powerful shock course through your body sending you flying!</B></span>")
 			user.unlock_medal("HIGH VOLTAGE", 1)
-			user.Virus_ShockCure(user, 100)
+			user.Virus_ShockCure(100)
 			user:shock_cyberheart(100)
 			user.changeStatus("stunned", 2 SECONDS)
 			user.changeStatus("weakened", 2 SECONDS)
@@ -980,7 +979,7 @@
 /obj/portrait_sneaky
 	name = "crooked portrait"
 	anchored = 1
-	icon = 'icons/obj/decals/misc.dmi'
+	icon = 'icons/obj/decals/wallsigns.dmi'
 	icon_state = "portrait"
 	desc = "A portrait of a man wearing a ridiculous merchant hat. That must be Discount Dan."
 
@@ -1142,7 +1141,7 @@
 			animating = 1
 			animate(src, alpha = 64, time = 10, easing = SINE_EASING)
 			animate(alpha = 192, time = 10, easing = SINE_EASING)
-			SPAWN_DBG (25)
+			SPAWN_DBG(2.5 SECONDS)
 				animating = 0
 
 	CritterDeath()
@@ -1182,7 +1181,7 @@
 		..()
 
 		range += rand(-1,2)
-		SPAWN_DBG (0)
+		SPAWN_DBG(0)
 			summon()
 
 
@@ -1317,7 +1316,7 @@
 			random_burn_damage(poorSoul, 45)
 			boutput(poorSoul, "<span class='alert'><B>You feel a powerful shock course through your body!</B></span>")
 			poorSoul.unlock_medal("HIGH VOLTAGE", 1)
-			poorSoul:Virus_ShockCure(poorSoul, 100)
+			poorSoul:Virus_ShockCure(100)
 			poorSoul:shock_cyberheart( 100)
 			poorSoul:changeStatus("weakened", 3 SECONDS)
 			if (isdead(poorSoul) && prob(25))

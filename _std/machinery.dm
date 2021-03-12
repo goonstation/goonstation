@@ -1,3 +1,44 @@
+// debug stats for machines
+//#define MACHINE_PROCESSING_DEBUG
+
+//this file is not in defines or macros because this one is kind of a frankenstein
+#define NETWORK_MACHINE_RESET_DELAY 40 //Time (in 1/10 of a second) before we can be manually reset again (machines).
+
+//communications stuff
+#define TRANSMISSION_WIRE	0
+#define TRANSMISSION_RADIO	1
+
+//lighting stuff
+#define LIGHT_OK 0
+#define LIGHT_EMPTY 1
+#define LIGHT_BROKEN 2
+#define LIGHT_BURNED 3
+
+//apc stuff
+#define EQUIP 1 	//! Power Channel: Equipment
+#define LIGHT 2 	//! Power Channel: Lighting
+#define ENVIRON 3 //! Power Channel: Enviroment
+#define TOTAL 4		//! For total power used only
+
+// bitflags for machine stat variable
+#define BROKEN    (1<<0)		//! Status flag: machine non-functional
+#define NOPOWER   (1<<1)		//! Status flag: no available power
+#define POWEROFF  (1<<2)		//! Status flag: machine shut down, but may still draw a trace amount
+#define MAINT     (1<<3)		//! Status flag: under maintainance
+#define HIGHLOAD  (1<<4)		//! Status flag: using a lot of power
+#define EMP_SHORT (1<<5)		//! Status flag: 1 second long emp duration, avoid stacking emp faster than 1Hz
+#define REQ_PHYSICAL_ACCESS (1<<6) //! Can only be interacted with if adjacent and physical
+
+//recharger stuff
+#define CELLRATE 0.002  // multiplier for watts per tick <> cell storage (eg: .002 means if there is a load of 1000 watts, 20 units will be taken from a cell per second)
+#define CHARGELEVEL 0.001 // Cap for how fast cells charge, as a percentage-per-tick (.001 means cellcharge is capped to 1% per second)
+
+//red smashy button stuff
+#define SHIP_ALERT_GOOD 0
+#define SHIP_ALERT_BAD 1
+
+#define DATA_TERMINAL_IS_VALID_MASTER(terminal, master) (master && (get_turf(master) == terminal.loc))
+
 #define PROCESSING_FULL      1
 #define PROCESSING_HALF      2
 #define PROCESSING_QUARTER   3

@@ -331,6 +331,13 @@ menu "menu"
 		is-checked = true
 		can-check = true
 		saved-params = "is-checked"
+	elem "set_tint"
+		name = "&View Tint"
+		command = "apply-view-tint"
+		category = "&Effects"
+		is-checked = true
+		can-check = true
+		saved-params = "is-checked"
 	elem
 		name = "&Interface"
 		command = ""
@@ -386,18 +393,45 @@ menu "menu"
 		is-checked = true
 		can-check = true
 		saved-params = "is-checked"
+	elem "use_hand_ghosts"
+		name = "Show item ghosts on mouse-over"
+		command = "set-hand-ghosts"
+		category = "&Interface"
+		is-checked = true
+		can-check = true
+		saved-params = "is-checked"
 	elem
 		name = "&Audio"
 		command = ""
 		saved-params = "is-checked"
 	elem
+		name = "&Adjust Master Volume"
+		command = "change-volume master"
+		category = "&Audio"
+		saved-params = "is-checked"
+	elem
+		name = "&Adjust Game Volume"
+		command = "change-volume game"
+		category = "&Audio"
+		saved-params = "is-checked"
+	elem
+		name = "&Adjust Ambient Volume"
+		command = "change-volume ambient"
+		category = "&Audio"
+		saved-params = "is-checked"
+	elem
 		name = "&Adjust Radio Music Volume"
-		command = "Alter-Radio-Volume"
+		command = "change-volume radio"
 		category = "&Audio"
 		saved-params = "is-checked"
 	elem
 		name = "&Adjust Admin Music Volume"
-		command = "Alter-Music-Volume"
+		command = "change-volume admin"
+		category = "&Audio"
+		saved-params = "is-checked"
+	elem
+		name = "&Adjust Emote Volume"
+		command = "change-volume emote"
 		category = "&Audio"
 		saved-params = "is-checked"
 	elem
@@ -737,7 +771,7 @@ window "mainwindow"
 		saved-params = "pos;size;is-minimized;is-maximized"
 		on-size = "window-resize-event"
 		is-maximized = true
-		icon = 'icons\\ss13_64.png'
+		icon = 'icons\\goon_64.png'
 		macro = "base_macro"
 		menu = "menu"
 	elem "mainvsplit"
@@ -831,7 +865,7 @@ window "mapwindow"
 		saved-params = "icon-size"
 		on-show = ".winset\"mainwindow.mainvsplit.left=mapwindow\""
 		on-hide = ".winset\"mainwindow.mainvsplit.left=\""
-		style = "body { font-family: 'Verdana'; font-size: 7px; }\n.vga { font-family: 'PxPlus IBM VGA9'; font-size: 12px; } .ps2p { font-family: 'Press Start 2P'; font-size: 6px; }\n.pixel { font-family: 'Small Fonts'; font-size: 7px; }\n.ol{ -dm-text-outline: 1px black; }\n.sh { text-shadow: 1px 1px 0 black; }\n.l { text-align: left; }\n.c { text-align: center; }\n.r { text-align: right; }\n.vt { vertical-align: top; }\n.vm { vertical-align: middle; }\n.vb { vertical-align: bottom; }\n.reliq { font-family: 'Inhuman BB'; font-size: 12px; }"
+		style = "body { font-family: 'Verdana'; font-size: 7px; }\n.vga { font-family: 'PxPlus IBM VGA9'; font-size: 12px; } .ps2p { font-family: 'Press Start 2P'; font-size: 6px; }\n.pixel { font-family: 'Small Fonts'; font-size: 7px; }\n.xfont { font-family: 'XFont 6x9'; font-size: 6px; }\n.ol{ -dm-text-outline: 1px black; }\n.sh { text-shadow: 1px 1px 0 black; }\n.l { text-align: left; }\n.c { text-align: center; }\n.r { text-align: right; }\n.vt { vertical-align: top; }\n.vm { vertical-align: middle; }\n.vb { vertical-align: bottom; }\n.reliq { font-family: 'Inhuman BB'; font-size: 12px; }"
 	elem "mapSizeHelper"
 		type = BROWSER
 		pos = 0,0
@@ -907,7 +941,7 @@ window "pda2"
 		saved-params = "pos;size;is-minimized;is-maximized"
 		title = "Personal Data Assistant"
 		statusbar = false
-		can-resize = false
+		can-resize = true
 	elem "grido"
 		type = GRID
 		pos = 0,0
@@ -926,8 +960,8 @@ window "pda2"
 		type = BROWSER
 		pos = 0,0
 		size = 408x424
-		anchor1 = none
-		anchor2 = none
+		anchor1 = 0,0
+		anchor2 = 100,100
 		background-color = #6f7961
 		saved-params = ""
 
@@ -1488,45 +1522,55 @@ window "rpane"
 		saved-params = "is-checked"
 		text = "Menu"
 		command = ".winset \"mainwindow.menu='menu'; hide_menu.is-checked=false; menub.is-visible = false\""
-	elem "bugreportb"
-		type = BUTTON
-		pos = 380,5
-		size = 60x20
-		anchor1 = none
-		anchor2 = 100,0
-		saved-params = "is-checked"
-		text = "Bug Report"
-		command = "bugreport"
-		group = "rpaneutil"
-	elem "wikib"
-		type = BUTTON
-		pos = 445,5
-		size = 60x20
-		anchor1 = none
-		anchor2 = 100,0
-		saved-params = "is-checked"
-		text = "Wiki"
-		command = "wiki"
-		group = "rpaneutil"
 	elem "mapb"
 		type = BUTTON
-		pos = 510,5
+		pos = 315,5
 		size = 60x20
-		anchor1 = none
-		anchor2 = 100,0
+		anchor1 = 100,0
+		anchor2 = none
 		saved-params = "is-checked"
 		text = "Map"
 		command = "map"
 		group = "rpaneutil"
+	elem "wikib"
+		type = BUTTON
+		pos = 380,5
+		size = 60x20
+		anchor1 = 100,0
+		anchor2 = none
+		saved-params = "is-checked"
+		text = "Wiki"
+		command = "wiki"
+		group = "rpaneutil"
+	elem "githubb"
+		type = BUTTON
+		pos = 445,5
+		size = 60x20
+		anchor1 = 100,0
+		anchor2 = none
+		saved-params = "is-checked"
+		text = "GitHub"
+		command = "github"
+		group = "rpaneutil"
 	elem "forumb"
 		type = BUTTON
-		pos = 575,5
+		pos = 510,5
 		size = 60x20
-		anchor1 = none
-		anchor2 = 100,0
+		anchor1 = 100,0
+		anchor2 = none
 		saved-params = "is-checked"
 		text = "Forum"
 		command = "forum"
+		group = "rpaneutil"
+	elem "bugreportb"
+		type = BUTTON
+		pos = 575,5
+		size = 60x20
+		anchor1 = 100,0
+		anchor2 = none
+		saved-params = "is-checked"
+		text = "Bug Report"
+		command = "bugreport"
 		group = "rpaneutil"
 
 window "browserwindow"

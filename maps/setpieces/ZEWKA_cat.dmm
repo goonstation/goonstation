@@ -1,7 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
 /turf/space,
-/area)
+/area/space)
 "ab" = (
 /turf/cordon,
 /area/cordon)
@@ -10,13 +10,13 @@
 	dir = 4;
 	icon_state = "panelwall_junction"
 	},
-/area)
+/area/space)
 "ad" = (
 /turf/unsimulated/wall/setpieces/hospital{
 	dir = 4;
 	icon_state = "panelwall_cap"
 	},
-/area)
+/area/space)
 "ae" = (
 /obj/decal/fakeobjects/firelock_broken{
 	desc = "A security door used to separate compartments.";
@@ -26,7 +26,7 @@
 	name = "security door"
 	},
 /turf/unsimulated/floor/white,
-/area)
+/area/space)
 "af" = (
 /obj/map/light/green,
 /turf/unsimulated/wall/auto/gannets/cat,
@@ -44,15 +44,15 @@
 /turf/unsimulated/wall/setpieces/hospital{
 	dir = 4
 	},
-/area)
+/area/space)
 "aj" = (
 /turf/unsimulated/wall/setpieces/hospital{
 	dir = 6
 	},
-/area)
+/area/space)
 "ak" = (
 /turf/unsimulated/floor/white/grime,
-/area)
+/area/space)
 "al" = (
 /obj/map/light/green,
 /obj/grille/steel/broken,
@@ -209,7 +209,7 @@
 /area/jones/radiation)
 "aB" = (
 /turf/unsimulated/wall/setpieces/hospital,
-/area)
+/area/space)
 "aC" = (
 /obj/decal/cleanable/writing{
 	desc = "Someone's scratched something here.";
@@ -218,17 +218,17 @@
 	words = "I KNOW WHAT HAPPENED ON OUTPOST THETA"
 	},
 /turf/unsimulated/floor/white/grime,
-/area)
+/area/space)
 "aD" = (
 /obj/machinery/door/airlock/medical{
 	name = "Patient Room";
 	req_access_txt = ""
 	},
 /turf/unsimulated/floor/white,
-/area)
+/area/space)
 "aE" = (
 /turf/unsimulated/floor/white,
-/area)
+/area/space)
 "aF" = (
 /obj/map/light/green,
 /obj/item/raw_material/uqill,
@@ -465,17 +465,17 @@
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet,
 /turf/unsimulated/floor/white/grime,
-/area)
+/area/space)
 "bd" = (
 /obj/table/wood/round,
 /turf/unsimulated/floor/white/grime,
-/area)
+/area/space)
 "be" = (
 /turf/unsimulated/wall/setpieces/hospital{
 	dir = 1;
 	icon_state = "panelwall_cap"
 	},
-/area)
+/area/space)
 "bf" = (
 /obj/map/light/green,
 /obj/item/device/radio/signaler,
@@ -638,14 +638,14 @@
 	dir = 8;
 	icon_state = "panelwall_junction"
 	},
-/area)
+/area/space)
 "bz" = (
 /obj/machinery/light/worn{
 	brightness = 2;
 	dir = 8
 	},
 /turf/unsimulated/floor/white/grime,
-/area)
+/area/space)
 "bA" = (
 /obj/map/light/green,
 /obj/decal/mushrooms/type6,
@@ -770,19 +770,19 @@
 	dir = 4
 	},
 /turf/unsimulated/floor/specialroom/freezer,
-/area)
+/area/space)
 "bR" = (
 /obj/submachine/chef_sink/chem_sink{
 	pixel_y = 16
 	},
 /turf/unsimulated/floor/specialroom/freezer,
-/area)
+/area/space)
 "bS" = (
 /turf/unsimulated/wall/setpieces/hospital{
 	dir = 2;
 	icon_state = "panelwall_cap"
 	},
-/area)
+/area/space)
 "bT" = (
 /obj/map/light/green,
 /obj/item/raw_material/rock,

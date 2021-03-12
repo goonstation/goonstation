@@ -101,12 +101,12 @@ Doing this because FindTurfs() isn't even used
 	if(Debug)
 		var/image/I = image('icons/misc/mark.dmi', "blank")
 
-		if(lentext(tn)>8)
+		if(length(tn)>8)
 			tn = "*"
 
-		var/len = lentext(tn)
+		var/len = length(tn)
 
-		for(var/d = 1 to lentext(tn))
+		for(var/d = 1 to length(tn))
 
 
 			var/char = copytext(tn, len-d+1, len-d+2)
@@ -161,7 +161,7 @@ Doing this because FindTurfs() isn't even used
 		for(var/obj/machinery/M in T)
 			//boutput(world, " Mach [M] with pdir=[M.p_dir]")
 
-			if(M && M.p_dir)
+			if(M?.p_dir)
 
 				//boutput(world, "Accepted")
 				var/obj/mark/O = locate(/obj/mark/, T)
@@ -500,7 +500,7 @@ Doing this because FindTurfs() isn't even used
 	set category = "Debug"
 	if(Debug)
 		var/obj/effects/smoke/O = new /obj/effects/smoke( src.loc )
-		O.dir = pick(NORTH, SOUTH, EAST, WEST)
+		O.set_dir(pick(NORTH, SOUTH, EAST, WEST))
 		SPAWN_DBG( 0 )
 			O.Life()
 	else

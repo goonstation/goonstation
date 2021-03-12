@@ -12,7 +12,7 @@
 /obj/machinery/power/New(var/new_loc)
 	..()
 	if (current_state > GAME_STATE_PREGAME)
-		SPAWN_DBG(1) // aaaaaaaaaaaaaaaa
+		SPAWN_DBG(0.1 SECONDS) // aaaaaaaaaaaaaaaa
 			src.netnum = 0
 			if(makingpowernets)
 				return // TODO queue instead
@@ -84,22 +84,19 @@ var/makingpowernetssince = 0
 	var/netcount = 0
 	powernets = list()
 
-	for(var/obj/cable/PC in allcables)
+	for_by_tcl(PC, /obj/cable)
 		PC.netnum = 0
 	LAGCHECK(LAG_MED)
 
-	for(var/obj/machinery/power/M in machine_registry[MACHINES_POWER])
+	for(var/obj/machinery/power/M as() in machine_registry[MACHINES_POWER])
 		if(M.netnum >=0)
 			M.netnum = 0
 	LAGCHECK(LAG_MED)
 
-	for(var/obj/cable/PC in allcables)
+	for_by_tcl(PC, /obj/cable)
 		if(!PC.netnum)
-			if(Debug) world.log << "Starting mpn at [PC.x],[PC.y] ([PC.d1]/[PC.d2]) #[netcount]"
 			powernet_nextlink(PC, ++netcount)
 		LAGCHECK(LAG_MED)
-
-	if(Debug) world.log << "[netcount] powernets found"
 
 	for(var/L = 1 to netcount)
 		var/datum/powernet/PN = new()
@@ -107,13 +104,13 @@ var/makingpowernetssince = 0
 		powernets += PN
 		PN.number = L
 
-	for(var/obj/cable/C in allcables)
+	for_by_tcl(C, /obj/cable)
 		if(!C.netnum) continue
 		var/datum/powernet/PN = powernets[C.netnum]
 		PN.cables += C
 		LAGCHECK(LAG_MED)
 
-	for(var/obj/machinery/power/M in machine_registry[MACHINES_POWER])
+	for(var/obj/machinery/power/M as() in machine_registry[MACHINES_POWER])
 		if(M.netnum<=0)		// APCs have netnum=-1 so they don't count as network nodes directly
 			continue
 
@@ -260,7 +257,7 @@ var/makingpowernetssince = 0
             P = M.get_connections(1)
 
         if(P.len == 0)
-            if(more && more.len)
+            if(length(more))
                 O = more[more.len]
                 more -= O
                 continue
@@ -288,16 +285,9 @@ var/makingpowernetssince = 0
 
 	var/list/P2 = power_list(T2, C, C.d2)	// what joins on to cut cable in dir2
 
-	if(Debug)
-		for(var/obj/O in P1)
-			world.log << "P1: [O] at [O.x] [O.y] : [istype(O, /obj/cable) ? "[O:d1]/[O:d2]" : null] "
-		for(var/obj/O in P2)
-			world.log << "P2: [O] at [O.x] [O.y] : [istype(O, /obj/cable) ? "[O:d1]/[O:d2]" : null] "
-
 	if(P1.len == 0 || P2.len ==0)			// if nothing in either list, then the cable was an endpoint
 											// no need to rebuild the powernet, just remove cut cable from the list
 		cables -= C
-		if(Debug) world.log << "Was end of cable"
 		return
 
 	if(makingpowernets)
@@ -305,9 +295,9 @@ var/makingpowernetssince = 0
 
 	// zero the netnum of all cables & nodes in this powernet
 
-	for(var/obj/cable/OC in cables)
+	for(var/obj/cable/OC as() in cables)
 		OC.netnum = 0
-	for(var/obj/machinery/power/OM in nodes)
+	for(var/obj/machinery/power/OM as() in nodes)
 		OM.netnum = 0
 
 
@@ -343,16 +333,14 @@ var/makingpowernetssince = 0
 		powernets += PN
 		PN.number = powernets.len
 
-		if(Debug) world.log << "Was not looped: spliting PN#[number] ([cables.len];[nodes.len])"
-
-		for(var/obj/cable/OC in cables)
+		for(var/obj/cable/OC as() in cables)
 			if(!OC.netnum)		// non-connected cables will have netnum==0, since they weren't reached by propagation
 				OC.netnum = PN.number
 				cables -= OC
 				PN.cables += OC		// remove from old network & add to new one
 			LAGCHECK(LAG_MED)
 
-		for(var/obj/machinery/power/OM in nodes)
+		for(var/obj/machinery/power/OM as() in nodes)
 			if(!OM.netnum)
 				OM.netnum = PN.number
 				OM.powernet = PN
@@ -363,24 +351,18 @@ var/makingpowernetssince = 0
 					PN.data_nodes += OM
 			LAGCHECK(LAG_MED)
 
-		if(Debug)
-			world.log << "Old PN#[number] : ([cables.len];[nodes.len])"
-			world.log << "New PN#[PN.number] : ([PN.cables.len];[PN.nodes.len])"
-
 	else
-		if(Debug)
-			world.log << "Was looped."
 		//there is a loop, so nothing to be done
 		return
 
 	return
 
 /datum/powernet/proc/join_to(var/datum/powernet/PN) // maybe pool powernets someday
-	for(var/obj/cable/C in src.cables)
+	for(var/obj/cable/C as() in src.cables)
 		C.netnum = PN.number
 		PN.cables += C
 
-	for(var/obj/machinery/power/M in src.nodes)
+	for(var/obj/machinery/power/M as() in src.nodes)
 		M.netnum = PN.number
 		M.powernet = PN
 		PN.nodes += M
@@ -414,3 +396,5 @@ var/makingpowernetssince = 0
 	if( netexcess > 100)		// if there was excess power last cycle
 		for(var/obj/machinery/power/smes/S in nodes)	// find the SMESes in the network
 			S.restore()				// and restore some of the power that was used
+		for(var/obj/machinery/power/sword_engine/SW in nodes)	//Finds the SWORD Engines in the network.
+			SW.restore()				//Restore some of the power that was used.

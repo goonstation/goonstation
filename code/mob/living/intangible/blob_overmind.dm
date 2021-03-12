@@ -16,7 +16,7 @@
 	var/attack_power = 1
 	var/bio_points = 0
 	var/bio_points_max = 1
-	var/bio_points_max_bonus = 5
+	var/bio_points_max_bonus = 7 //starting bio point cap should be 10-12 now, i think. a bit more wiggle room for starter blobs.
 	var/base_gen_rate = 3
 	var/gen_rate_bonus = 0
 	var/gen_rate_used = 0
@@ -60,6 +60,8 @@
 	var/extra_tries_max = 2
 	var/extra_try_period = 3000 //3000 = 5 minutes
 	var/extra_try_timestamp = 0
+
+	var/last_blob_life_tick = 0 //needed for mult to properly work for blob abilities
 
 	proc/start_tutorial()
 		if (tutorial)
@@ -134,7 +136,7 @@
 			src.bio_points_max = BlobPointsBezierApproximation(round(blobs.len / 5)) + bio_points_max_bonus
 
 		var/newBioPoints
-
+		var/mult = (max(tick_spacing, TIME - last_blob_life_tick) / tick_spacing)
 		//debuff active
 		if (src.debuff_timestamp)
 			var/genBonus = gen_rate_bonus
@@ -143,10 +145,10 @@
 
 			//maybe other debuffs here in the future
 
-			newBioPoints = max(0,min(src.bio_points + (base_gen_rate + genBonus - gen_rate_used),src.bio_points_max))
+			newBioPoints = clamp((src.bio_points + (base_gen_rate + genBonus - gen_rate_used) * mult), 0, src.bio_points_max) //these are rounded in point displays
 
 		else
-			newBioPoints = max(0,min(src.bio_points + (base_gen_rate + gen_rate_bonus - gen_rate_used),src.bio_points_max))
+			newBioPoints = clamp((src.bio_points + (base_gen_rate + gen_rate_bonus - gen_rate_used) * mult), 0, src.bio_points_max) //ditto above
 
 		src.bio_points = newBioPoints
 
@@ -180,6 +182,8 @@
 				else
 					N.UpdateOverlays(null, "reflectivity")
 
+		src.last_blob_life_tick = TIME
+
 	death()
 		//death was called but the player isnt playing this blob anymore
 		//OR they're in the process of transforming (e.g. gibbing)
@@ -207,8 +211,7 @@
 		..()
 		stat(null, " ")
 		stat("--Blob--", " ")
-		stat("Bio Points:", "[bio_points]/[bio_points_max]")
-
+		stat("Bio Points:", "[round(bio_points)]/[bio_points_max]")
 		//debuff active
 		if (src.debuff_timestamp && gen_rate_bonus > 0)
 			var/genBonus = round(gen_rate_bonus / 2)
@@ -262,9 +265,9 @@
 			return 0.75 + movement_delay_modifier
 
 	click(atom/target, params)
-		if (istype(target,/obj/screen/blob/))
+		if (istype(target,/atom/movable/screen/blob/))
 			if (params["middle"])
-				var/obj/screen/blob/B = target
+				var/atom/movable/screen/blob/B = target
 				if (B.ability)
 					B.ability.onUse()
 					return
@@ -292,7 +295,7 @@
 				return
 
 			if (T && isghostrestrictedz(T.z) && !restricted_z_allowed(src, T) && !(src.client && src.client.holder))
-				var/OS = observer_start.len ? pick(observer_start) : locate(1, 1, 1)
+				var/OS = pick_landmark(LANDMARK_OBSERVER, locate(1, 1, 1))
 				if (OS)
 					src.set_loc(OS)
 				else
@@ -432,7 +435,7 @@
 			return
 
 		//src.client.screen -= src.item_abilities
-		for(var/obj/screen/blob/B in src.client.screen)
+		for(var/atom/movable/screen/blob/B in src.client.screen)
 			src.client.screen -= B
 
 		var/pos_x = 1
@@ -571,7 +574,7 @@
 		hat.set_loc(src)
 
 
-/obj/screen/blob
+/atom/movable/screen/blob
 	plane = PLANE_HUD
 	var/datum/blob_ability/ability = null
 	var/datum/blob_upgrade/upgrade = null
@@ -581,8 +584,8 @@
 	var/image/cooldown = null
 	var/image/darkener = null
 
-	var/obj/screen/pseudo_overlay/point_overlay
-	var/obj/screen/pseudo_overlay/cooldown_overlay
+	var/atom/movable/screen/pseudo_overlay/point_overlay
+	var/atom/movable/screen/pseudo_overlay/cooldown_overlay
 
 	New()
 		..()
@@ -593,10 +596,10 @@
 		var/image/I = image('icons/mob/blob_ui.dmi',"darkener")
 		I.alpha = 100
 		darkener = I
-		//var/obj/screen/pseudo_overlay/T = new /obj/screen/pseudo_overlay(src)
-		//var/obj/screen/pseudo_overlay/S = new /obj/screen/pseudo_overlay(src)
-		point_overlay = new /obj/screen/pseudo_overlay()
-		cooldown_overlay = new /obj/screen/pseudo_overlay()
+		//var/atom/movable/screen/pseudo_overlay/T = new /atom/movable/screen/pseudo_overlay(src)
+		//var/atom/movable/screen/pseudo_overlay/S = new /atom/movable/screen/pseudo_overlay(src)
+		point_overlay = new /atom/movable/screen/pseudo_overlay()
+		cooldown_overlay = new /atom/movable/screen/pseudo_overlay()
 		src.vis_contents += point_overlay
 		src.vis_contents += cooldown_overlay
 		cooldown_overlay.icon = 'icons/mob/spell_buttons.dmi'
@@ -619,9 +622,9 @@
 
 
 	MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
-		if (!istype(O,/obj/screen/blob/) || !isblob(user))
+		if (!istype(O,/atom/movable/screen/blob/) || !isblob(user))
 			return
-		var/obj/screen/blob/source = O
+		var/atom/movable/screen/blob/source = O
 		if (!istype(src.ability) || !istype(source.ability))
 			boutput(user, "<span class='alert'>You may only switch the places of ability buttons.</span>")
 			return
@@ -655,7 +658,7 @@
 					return
 				var/my_upgrade_id = user.upgrade_id
 				user.upgrading = my_upgrade_id
-				SPAWN_DBG (20)
+				SPAWN_DBG(2 SECONDS)
 					if (user.upgrading <= my_upgrade_id)
 						user.upgrading = 0
 					else
@@ -753,6 +756,10 @@
 		if (usr.client.tooltipHolder)
 			usr.client.tooltipHolder.hideHover()
 
+/mob/living/intangible/blob_overmind/checkContextActions(atom/target)
+	// a bit oh a hack, no multicontext for blobs now because it keeps overriding attacking pods :/
+	return list()
+
 /mob/proc/make_blob()
 	if (!src.client && !src.mind)
 		return null
@@ -760,13 +767,13 @@
 
 	var/turf/T = get_turf(src)
 	if (!(T && isturf(T)) || (isghostrestrictedz(T.z) && !(src.client && src.client.holder)))
-		var/ASLoc = observer_start.len ? pick(observer_start) : locate(1, 1, 1)
+		var/ASLoc = pick_landmark(LANDMARK_OBSERVER, locate(1, 1, 1))
 		if (ASLoc)
 			W.set_loc(ASLoc)
 		else
 			W.z = 1
 	else
-		W.set_loc(pick(latejoin))
+		W.set_loc(pick_landmark(LANDMARK_LATEJOIN))
 
 	if (src.mind)
 		src.mind.transfer_to(W)
@@ -775,6 +782,7 @@
 		if (src.client)
 			src.client.mob = W
 		W.mind = new /datum/mind()
+		W.mind.ckey = ckey
 		W.mind.key = key
 		W.mind.current = W
 		ticker.minds += W.mind

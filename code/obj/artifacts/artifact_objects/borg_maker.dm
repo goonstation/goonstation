@@ -4,7 +4,8 @@
 
 /datum/artifact/borgifier
 	associated_object = /obj/artifact/borgifier
-	rarity_class = 3
+	type_name = "Cyborg converter"
+	rarity_weight = 200
 	validtypes = list("ancient")
 	validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/electric,/datum/artifact_trigger/heat,
 	/datum/artifact_trigger/radiation,/datum/artifact_trigger/carbon_touch)
@@ -43,7 +44,7 @@
 			if (user.bioHolder.Uid && user.bioHolder.bloodType)
 				bdna = user.bioHolder.Uid
 				btype = user.bioHolder.bloodType
-			var/turf/T = find_loc(user)
+			var/turf/T = get_turf(user)
 			gibs(T, null, null, bdna, btype)
 
 			ArtifactLogs(user, null, O, "touched", "robotizing user", 0) // Added (Convair880).
@@ -53,7 +54,7 @@
 				user.ghostize()
 				var/robopath = pick(/obj/machinery/bot/guardbot,/obj/machinery/bot/secbot,
 				/obj/machinery/bot/medbot,/obj/machinery/bot/firebot,/obj/machinery/bot/cleanbot,
-				/obj/machinery/bot/floorbot)
+				/obj/machinery/bot/floorbot,/obj/machinery/bot/mining)
 				new robopath (T)
 				qdel(user)
 			else

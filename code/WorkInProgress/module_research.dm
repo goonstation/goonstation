@@ -521,7 +521,7 @@
 
 		for (var/mt in cyborg_modules)
 			var/obj/item/robot_module/M = new mt
-			for (var/obj/item/I in M.modules)
+			for (var/obj/item/I in M.tools)
 				var/datum/module_tech/T = locate_item(I)
 				if (T)
 					unlock_now(T)
@@ -656,14 +656,14 @@ var/global/datum/module_research_controller/module_control = new
 			boutput(user, "<span class='notice'>You insert [W] into [src].</span>")
 			modules += W
 			user.u_equip(W)
-			W.loc = src
+			W.set_loc(src)
 			return
 		if ((!islist(W.module_research) || !W.module_research.len) && !W.artifact)
 			boutput(user, "<span class='alert'>That item cannot be researched!</span>")
 			return
 		user.u_equip(W)
 		boutput(user, "<span class='notice'>You insert [W] into [src].</span>")
-		W.loc = src
+		W.set_loc(src)
 		objects += W
 		add_viewer(user)
 		update_all_users()
@@ -717,7 +717,7 @@ var/global/datum/module_research_controller/module_control = new
 			if (href_list["eject"])
 				var/obj/item/I = locate(href_list["eject"]) in src
 				if (I && I.loc == src)
-					I.loc = src.loc
+					I.set_loc(src.loc)
 					usr.put_in_hand_or_drop(I) // try to eject it into the users hand, if we can
 					objects -= I
 					modules -= I
@@ -802,16 +802,16 @@ var/global/datum/module_research_controller/module_control = new
 					else
 						module_control.data_points -= t_cost
 						var/obj/item/robot_module/R = modules[1]
-						for (var/obj/O in R.modules)
+						for (var/obj/O in R.tools)
 							qdel(O)
-						R.modules.len = 0
+						R.tools.len = 0
 						for (var/i = 1, i <= current_module.len, i++)
 							var/datum/module_tech/T = current_module[i]
 							var/obj/O = new T.item_path()
-							O.loc = R
-							R.modules += O
+							O.set_loc(R)
+							R.tools += O
 						modules -= R
-						R.loc = get_turf(src)
+						R.set_loc(get_turf(src))
 						R.name = module_name
 						R.mod_hudicon = module_icon_state
 						current_module.len = 0

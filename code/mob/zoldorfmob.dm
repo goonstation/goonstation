@@ -183,7 +183,7 @@
 		if(!canmove) return
 
 		if (NewLoc && isrestrictedz(src.z) && !restricted_z_allowed(src, NewLoc) && !(src.client && src.client.holder))
-			var/OS = observer_start.len ? pick(observer_start) : locate(1, 1, 1)
+			var/OS = pick_landmark(LANDMARK_OBSERVER, locate(1, 1, 1))
 			if (OS)
 				src.set_loc(OS)
 			else
@@ -193,11 +193,11 @@
 		if (!isturf(src.loc))
 			src.set_loc(get_turf(src))
 		if (NewLoc)
-			dir = get_dir(loc, NewLoc)
+			src.set_dir(get_dir(loc, NewLoc))
 			src.set_loc(NewLoc)
 			return
 
-		dir = direct
+		src.set_dir(direct)
 		if((direct & NORTH) && src.y < world.maxy)
 			src.y++
 		if((direct & SOUTH) && src.y > 1)
@@ -325,7 +325,7 @@
 
 		var/turf/T = get_turf(src)
 		if (!(T && isturf(T)) || ((isrestrictedz(T.z) || T.z != 1) && !(src.client && src.client.holder)))
-			var/OS = observer_start.len ? pick(observer_start) : locate(1, 1, 1)
+			var/OS = pick_landmark(LANDMARK_OBSERVER, locate(1, 1, 1))
 			if (OS)
 				Z.set_loc(OS)
 			else
@@ -340,6 +340,7 @@
 			if (src.client)
 				src.client.mob = Z
 			Z.mind = new /datum/mind()
+			Z.mind.ckey = ckey
 			Z.mind.key = key
 			Z.mind.current = Z
 			ticker.minds += Z.mind
@@ -365,10 +366,7 @@
 			namestring +="dorf"
 		Z.real_name = src.real_name
 
-		src.loc = null
-		var/this = src
-		src = null
-		qdel(this)
+		qdel(src)
 
 		pz.name = namestring
 		Z.name = namestring
@@ -402,11 +400,13 @@
 
 	if(istype(over_object,/obj/item) && istype(usr.loc,/obj/machinery/playerzoldorf))
 		var/obj/item/i = over_object
+		if(i.anchored)
+			return
 		var/obj/machinery/playerzoldorf/pz = usr.loc
 		if((i in range(1,usr.loc)) && (Tb in range(1,Ta)))
 			if(!pz.GetOverlayImage("fortunetelling"))
 				pz.UpdateOverlays(image('icons/obj/zoldorf.dmi',"fortunetelling"),"fortunetelling")
-				spawn(6)
+				SPAWN_DBG(0.6 SECONDS)
 					if(pz)
 						pz.ClearSpecificOverlays("fortunetelling")
 			if((istype(i,/obj/item/paper/thermal/playerfortune)) && (Ta == get_turf(usr.loc)))

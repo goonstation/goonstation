@@ -49,10 +49,13 @@
 
 	//damage/heal obj. Provide negative values for healing.	//maybe I'll change cause I don't like this. But this functionality is found in some other damage procs for other things, might as well keep it consistent.
 	take_damage(brute, burn, tox, damage_type)
+		if(src.donor?.traitHolder?.hasTrait("athletic"))
+			brute *=1.33
 		..()
+
 		if (brute > 5 && holder)
 			if(prob(60))
-				src.holder.damage_organs(brute/5, 0, 0, list("liver", "left_kidney", "right_kidney", "stomach", "intestines","appendix", "pancreas"), 30)
+				src.holder.damage_organs(brute/5, 0, 0, list("liver", "left_kidney", "right_kidney", "stomach", "intestines","appendix", "pancreas", "tail"), 30)
 			else if (prob(30))
 				src.holder.damage_organs(brute/10, 0, 0, list("spleen", "left_lung", "right_lung"), 50)
 

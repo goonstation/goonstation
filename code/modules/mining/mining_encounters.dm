@@ -1,3 +1,5 @@
+#define TURF_SPAWN_EDGE_LIMIT 5
+
 /datum/mining_encounter
 	var/name = null
 	var/info = null
@@ -632,10 +634,10 @@
 		if (TF.loc.type != /area)
 			asteroid_blocked_turfs += TF
 			continue
-		if (TF.x <= turf_spawn_edge_limit || TF.x >= world.maxx - turf_spawn_edge_limit)
+		if (TF.x <= TURF_SPAWN_EDGE_LIMIT || TF.x >= world.maxx - TURF_SPAWN_EDGE_LIMIT)
 			asteroid_blocked_turfs += TF
 			continue
-		if (TF.y <= turf_spawn_edge_limit || TF.y >= world.maxy - turf_spawn_edge_limit)
+		if (TF.y <= TURF_SPAWN_EDGE_LIMIT || TF.y >= world.maxy - TURF_SPAWN_EDGE_LIMIT)
 			asteroid_blocked_turfs += TF
 			continue
 		for (var/obj/O in TF.contents)
@@ -713,11 +715,12 @@
 	var/current_range = 0
 	var/list/generated_turfs = list()
 
-	var/turf/A
+
+	var/turf/A = locate(center.x, center.y, center.z)
 	if (hollow)
-		A = new /turf/simulated/floor/plating/airless/asteroid(locate(center.x, center.y, center.z),0)
+		A = A.ReplaceWith(/turf/simulated/floor/plating/airless/asteroid, FALSE, TRUE, FALSE, TRUE)
 	else
-		A = new base_rock(locate(center.x, center.y, center.z),0)
+		A = A.ReplaceWith(base_rock, FALSE, TRUE, FALSE, TRUE)
 	generated_turfs += A
 	var/turf/simulated/wall/asteroid/B
 	var/turf/simulated/floor/plating/airless/asteroid/F
@@ -740,11 +743,12 @@
 				if (area_restriction && S.loc.type != area_restriction)
 					continue
 				if (hollow && total_distance < size / 2)
-					F = new /turf/simulated/floor/plating/airless/asteroid(locate(S.x, S.y, S.z),0)
-					//F.stone_color = B.stone_color
+					var/turf/T = locate(S.x, S.y, S.z)
+					F = T.ReplaceWith(/turf/simulated/floor/plating/airless/asteroid, FALSE, TRUE, FALSE, TRUE)
 					generated_turfs += F
 				else
-					B = new base_rock(locate(S.x, S.y, S.z),0)
+					var/turf/T = locate(S.x, S.y, S.z)
+					B = T.ReplaceWith(base_rock, FALSE, TRUE, FALSE, TRUE)
 					stone_color = B.stone_color
 					generated_turfs += B
 
@@ -764,7 +768,8 @@
 	var/current_range = 0
 	var/list/generated_turfs = list()
 
-	var/turf/A = new /turf/simulated/floor/plating/airless(locate(center.x, center.y, center.z),0)
+	var/turf/A = locate(center.x, center.y, center.z)
+	A = A.ReplaceWith(/turf/simulated/floor/plating/airless, FALSE, TRUE, FALSE, TRUE)
 	generated_turfs += A
 	var/turf/B = null
 
@@ -781,7 +786,8 @@
 					continue
 
 				if (prob(current_chance))
-					B = new /turf/simulated/floor/plating/airless(locate(S.x, S.y, S.z),0)
+					B = locate(S.x, S.y, S.z)
+					B = B.ReplaceWith(/turf/simulated/floor/plating/airless, FALSE, TRUE, FALSE, TRUE)
 					generated_turfs += B
 				else
 					if (prob(round(current_chance / 2)))
@@ -961,3 +967,5 @@
 			amount++
 			continue
 		AST.set_event(E)
+
+#undef TURF_SPAWN_EDGE_LIMIT

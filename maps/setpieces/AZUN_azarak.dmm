@@ -1,58 +1,58 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
 /turf/space,
-/area)
+/area/space)
 "ab" = (
 /turf/cordon,
-/area)
+/area/space)
 "ac" = (
 /turf/space/no_replace,
-/area)
+/area/space)
 "ad" = (
 /turf/unsimulated/wall/setpieces/leadwall{
 	dir = 9
 	},
-/area)
+/area/space)
 "ae" = (
 /turf/unsimulated/wall/setpieces/leadwall{
 	dir = 4
 	},
-/area)
+/area/space)
 "af" = (
 /obj/machinery/cruiser_destroyable/cruiser_component_slot/life_support,
 /turf/unsimulated/wall/setpieces/leadwall{
 	dir = 4
 	},
-/area)
+/area/space)
 "ag" = (
 /obj/machinery/cruiser_status_panel,
 /turf/unsimulated/wall/setpieces/leadwall{
 	dir = 4
 	},
-/area)
+/area/space)
 "ah" = (
 /obj/machinery/cruiser_camera_screen,
 /turf/unsimulated/wall/setpieces/leadwall{
 	dir = 4
 	},
-/area)
+/area/space)
 "ai" = (
 /obj/machinery/cruiser_destroyable/cable_panel,
 /turf/unsimulated/wall/setpieces/leadwall{
 	dir = 4
 	},
-/area)
+/area/space)
 "aj" = (
 /turf/unsimulated/wall/setpieces/leadwall{
 	dir = 5
 	},
-/area)
+/area/space)
 "ak" = (
 /turf/unsimulated/wall/auto/reinforced/supernorn,
-/area)
+/area/space)
 "al" = (
 /turf/unsimulated/wall/setpieces/leadwall,
-/area)
+/area/space)
 "am" = (
 /obj/machinery/cruiser_destroyable/cruiser_pod/engineering,
 /obj/machinery/light/emergency{
@@ -60,23 +60,23 @@
 	dir = 8
 	},
 /turf/simulated/floor/plating,
-/area)
+/area/space)
 "an" = (
 /turf/simulated/floor,
-/area)
+/area/space)
 "ao" = (
 /obj/stool/chair{
 	dir = 1
 	},
 /turf/simulated/floor,
-/area)
+/area/space)
 "ap" = (
 /obj/machinery/light{
 	icon_state = "tube1";
 	dir = 4
 	},
 /turf/simulated/floor,
-/area)
+/area/space)
 "aq" = (
 /obj/machinery/cruiser_destroyable/cruiser_pod/engineering,
 /obj/machinery/light/emergency{
@@ -86,52 +86,52 @@
 /turf/simulated/floor/green/side{
 	dir = 8
 	},
-/area)
+/area/space)
 "ar" = (
 /turf/unsimulated/floor/wood/two,
-/area)
+/area/space)
 "as" = (
 /obj/machinery/cruiser_destroyable/cruiser_pod/movement,
 /turf/simulated/floor/plating,
-/area)
+/area/space)
 "at" = (
 /obj/machinery/cruiser_destroyable/cruiser_component_slot/weapon/left,
 /turf/simulated/floor,
-/area)
+/area/space)
 "au" = (
 /obj/machinery/cruiser_destroyable/cruiser_component_slot/weapon/right,
 /turf/simulated/floor,
-/area)
+/area/space)
 "av" = (
 /turf/simulated/floor/caution/corner/nw{
 	dir = 1
 	},
-/area)
+/area/space)
 "aw" = (
 /obj/machinery/cruiser_destroyable/cruiser_pod/movement,
 /turf/simulated/floor/green/side{
 	dir = 8
 	},
-/area)
+/area/space)
 "ax" = (
 /obj/storage/secure/closet/civilian/kitchen,
 /turf/simulated/floor/specialroom/cafeteria,
-/area)
+/area/space)
 "ay" = (
 /obj/storage/secure/closet/fridge/kitchen,
 /turf/simulated/floor/specialroom/cafeteria,
-/area)
+/area/space)
 "az" = (
 /turf/simulated/floor/specialroom/cafeteria,
-/area)
+/area/space)
 "aA" = (
 /obj/submachine/chef_sink/chem_sink,
 /turf/simulated/floor/specialroom/cafeteria,
-/area)
+/area/space)
 "aB" = (
 /obj/storage/crate/freezer/milk,
 /turf/unsimulated/floor/specialroom/freezer,
-/area)
+/area/space)
 "aC" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -142,10 +142,10 @@
 	name = "defunct vent"
 	},
 /turf/unsimulated/floor/specialroom/freezer,
-/area)
+/area/space)
 "aD" = (
 /turf/unsimulated/floor/specialroom/freezer,
-/area)
+/area/space)
 "aE" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -156,85 +156,85 @@
 	name = "a meat spike"
 	},
 /turf/unsimulated/floor/specialroom/freezer,
-/area)
+/area/space)
 "aF" = (
 /obj/machinery/cruiser_destroyable/cruiser_pod/security,
 /turf/simulated/floor/green/side{
 	dir = 8
 	},
-/area)
+/area/space)
 "aG" = (
 /obj/landmark/cruiser_entrance,
 /turf/simulated/floor/caution/west,
-/area)
+/area/space)
 "aH" = (
 /obj/machinery/cruiser_destroyable/cruiser_exit,
 /turf/unsimulated/wall/setpieces/leadwall,
-/area)
+/area/space)
 "aI" = (
 /turf/simulated/floor/carpet{
 	icon_state = "fred2";
 	dir = 9
 	},
-/area)
+/area/space)
 "aJ" = (
 /turf/simulated/floor/carpet{
 	icon_state = "fred2";
 	dir = 1
 	},
-/area)
+/area/space)
 "aK" = (
 /obj/stool/chair,
 /turf/simulated/floor/carpet{
 	icon_state = "fred2";
 	dir = 1
 	},
-/area)
+/area/space)
 "aL" = (
 /turf/simulated/floor/carpet{
 	icon_state = "fred2";
 	dir = 5
 	},
-/area)
+/area/space)
 "aM" = (
 /obj/table/auto,
 /obj/machinery/door/airlock/pyro/glass/windoor{
 	dir = 8
 	},
 /turf/simulated/floor/specialroom/cafeteria,
-/area)
+/area/space)
 "aN" = (
 /obj/machinery/door/airlock/pyro/maintenance{
 	dir = 4
 	},
 /turf/unsimulated/floor/specialroom/freezer,
-/area)
+/area/space)
 "aO" = (
 /obj/machinery/computer3/generic/cruiser,
 /turf/unsimulated/wall/setpieces/leadwall{
 	dir = 4
 	},
-/area)
+/area/space)
 "aP" = (
 /obj/machinery/cruiser_destroyable/cruiser_component_slot/engine,
 /turf/simulated/floor,
-/area)
+/area/space)
 "aQ" = (
 /turf/simulated/floor/caution/corner/sw,
-/area)
+/area/space)
 "aR" = (
 /turf/simulated/floor/carpet{
 	icon_state = "fred2";
 	dir = 8
 	},
-/area)
+/area/space)
 "aS" = (
 /obj/table/reinforced/bar/auto,
 /turf/simulated/floor/carpet{
 	icon_state = "fred1";
 	dir = 8
 	},
-/area)
+/area/space)
 "aT" = (
 /obj/table/reinforced/bar/auto,
 /obj/item/plate{
@@ -246,7 +246,7 @@
 	icon_state = "fred1";
 	dir = 8
 	},
-/area)
+/area/space)
 "aU" = (
 /obj/table/reinforced/bar/auto,
 /obj/item/plate{
@@ -258,7 +258,7 @@
 	icon_state = "fred1";
 	dir = 8
 	},
-/area)
+/area/space)
 "aV" = (
 /obj/table/reinforced/bar/auto,
 /obj/item/plate{
@@ -269,17 +269,17 @@
 	icon_state = "fred1";
 	dir = 8
 	},
-/area)
+/area/space)
 "aW" = (
 /turf/simulated/floor/carpet{
 	icon_state = "fred2";
 	dir = 4
 	},
-/area)
+/area/space)
 "aX" = (
 /obj/table/auto,
 /turf/simulated/floor/specialroom/cafeteria,
-/area)
+/area/space)
 "aY" = (
 /obj/stool/chair{
 	dir = 1
@@ -291,7 +291,7 @@
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
-/area)
+/area/space)
 "aZ" = (
 /obj/stool/chair{
 	dir = 1
@@ -299,11 +299,11 @@
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
-/area)
+/area/space)
 "ba" = (
 /obj/reagent_dispensers/foamtank,
 /turf/simulated/floor,
-/area)
+/area/space)
 "bb" = (
 /obj/machinery/light{
 	icon_state = "tube1";
@@ -317,43 +317,43 @@
 /obj/item/wrench,
 /obj/item/wrench,
 /turf/simulated/floor,
-/area)
+/area/space)
 "bc" = (
 /turf/unsimulated/floor/setpieces/Azarak/cavefloor/underwalls,
 /turf/unsimulated/wall/setpieces/Azarak/cavewall/corners{
 	dir = 1
 	},
-/area)
+/area/space)
 "bd" = (
 /turf/unsimulated/floor/setpieces/Azarak/cavefloor/underwalls,
 /turf/unsimulated/wall/setpieces/Azarak/cavewall/edges,
-/area)
+/area/space)
 "be" = (
 /turf/unsimulated/floor/setpieces/Azarak/cavefloor/underwalls,
 /turf/unsimulated/wall/setpieces/Azarak/cavewall/corners,
-/area)
+/area/space)
 "bf" = (
 /turf/unsimulated/wall/setpieces/leadwall{
 	dir = 10
 	},
-/area)
+/area/space)
 "bg" = (
 /turf/unsimulated/wall/setpieces/leadwall{
 	dir = 6
 	},
-/area)
+/area/space)
 "bh" = (
 /turf/simulated/floor/carpet{
 	icon_state = "fred2";
 	dir = 10
 	},
-/area)
+/area/space)
 "bi" = (
 /turf/simulated/floor/carpet{
 	icon_state = "fred2";
 	dir = 2
 	},
-/area)
+/area/space)
 "bj" = (
 /obj/stool/chair{
 	dir = 1
@@ -362,156 +362,156 @@
 	icon_state = "fred2";
 	dir = 2
 	},
-/area)
+/area/space)
 "bk" = (
 /turf/simulated/floor/carpet{
 	icon_state = "fred2";
 	dir = 6
 	},
-/area)
+/area/space)
 "bl" = (
 /turf/unsimulated/floor/setpieces/Azarak/cavefloor/underwalls,
 /turf/unsimulated/wall/setpieces/Azarak/cavewall/edges{
 	dir = 4
 	},
-/area)
+/area/space)
 "bm" = (
 /obj/map/light/lava,
 /turf/unsimulated/floor/setpieces/Azarak/lava/corners{
 	dir = 4
 	},
-/area)
+/area/space)
 "bn" = (
 /obj/map/light/lava,
 /turf/unsimulated/floor/setpieces/Azarak/lava{
 	dir = 3
 	},
-/area)
+/area/space)
 "bo" = (
 /obj/map/light/lava,
 /turf/unsimulated/floor/setpieces/Azarak/lava/bubbling_edges,
-/area)
+/area/space)
 "bp" = (
 /obj/map/light/lava,
 /turf/unsimulated/floor/setpieces/Azarak/lava/corners{
 	dir = 1
 	},
-/area)
+/area/space)
 "bq" = (
 /turf/unsimulated/floor/setpieces/Azarak/cavefloor/underwalls,
 /turf/unsimulated/wall/setpieces/Azarak/cavewall/edges{
 	dir = 8
 	},
-/area)
+/area/space)
 "br" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
 	},
 /turf/simulated/floor/specialroom/cafeteria,
-/area)
+/area/space)
 "bs" = (
 /obj/map/light/lava,
 /turf/unsimulated/floor/setpieces/Azarak/lava{
 	dir = 4
 	},
-/area)
+/area/space)
 "bt" = (
 /obj/map/light/lava,
 /turf/unsimulated/floor/setpieces/Azarak/lavalethal,
-/area)
+/area/space)
 "bu" = (
 /obj/map/light/lava,
 /turf/unsimulated/floor/setpieces/Azarak/lava{
 	dir = 8
 	},
-/area)
+/area/space)
 "bv" = (
 /obj/machinery/door/airlock/pyro,
 /turf/unsimulated/floor/wood/two,
-/area)
+/area/space)
 "bw" = (
 /obj/map/light/lava,
 /turf/unsimulated/floor/setpieces/Azarak/lava{
 	dir = 1
 	},
-/area)
+/area/space)
 "bx" = (
 /obj/map/light/lava,
 /turf/unsimulated/floor/setpieces/Azarak/lava{
 	dir = 10
 	},
-/area)
+/area/space)
 "by" = (
 /obj/decal/fakeobjects/creepytv,
 /obj/map/light/screen,
 /turf/unsimulated/floor/wood/two,
-/area)
+/area/space)
 "bz" = (
 /obj/table/wood/auto,
 /turf/unsimulated/floor/wood/two,
-/area)
+/area/space)
 "bA" = (
 /obj/storage/closet/dresser,
 /turf/unsimulated/floor/wood/two,
-/area)
+/area/space)
 "bB" = (
 /obj/submachine/seed_vendor,
 /turf/unsimulated/floor/setpieces/Azarak/rockyfloor,
-/area)
+/area/space)
 "bC" = (
 /obj/decal/cleanable/ash,
 /turf/unsimulated/floor/setpieces/Azarak/rockyfloor,
-/area)
+/area/space)
 "bD" = (
 /obj/submachine/seed_manipulator,
 /turf/unsimulated/floor/setpieces/Azarak/rockyfloor,
-/area)
+/area/space)
 "bE" = (
 /obj/decal/fakeobjects/azarakrocks/rock9,
 /turf/unsimulated/floor/setpieces/Azarak/rockyfloor,
-/area)
+/area/space)
 "bF" = (
 /obj/machinery/plantpot{
 	anchored = 2
 	},
 /turf/unsimulated/floor/setpieces/Azarak/rockyfloor,
-/area)
+/area/space)
 "bG" = (
 /obj/decal/fakeobjects/azarakrocks,
 /turf/unsimulated/floor/setpieces/Azarak/rockyfloor,
-/area)
+/area/space)
 "bH" = (
 /obj/decal/fakeobjects/azarakrocks/rock3,
 /turf/unsimulated/floor/setpieces/Azarak/rockyfloor,
-/area)
+/area/space)
 "bI" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
 	},
 /turf/simulated/floor/plating/random,
-/area)
+/area/space)
 "bJ" = (
 /turf/unsimulated/floor/setpieces/Azarak/rockyfloor,
-/area)
+/area/space)
 "bK" = (
 /obj/item/raw_material/scrap_metal,
 /turf/unsimulated/floor/setpieces/Azarak/rockyfloor,
-/area)
+/area/space)
 "bL" = (
 /turf/unsimulated/floor/carpet/purple/fancy/edge/nw,
-/area)
+/area/space)
 "bM" = (
 /turf/unsimulated/floor/carpet/purple/fancy/edge/north,
-/area)
+/area/space)
 "bN" = (
 /turf/unsimulated/floor/carpet/purple/fancy/edge/ne,
-/area)
+/area/space)
 "bO" = (
 /obj/machinery/door/airlock/pyro{
 	dir = 4
 	},
 /turf/unsimulated/floor/wood/two,
-/area)
+/area/space)
 "bP" = (
 /obj/decal/cleanable/ash,
 /obj/table/auto,
@@ -528,29 +528,29 @@
 	pixel_z = -3
 	},
 /turf/unsimulated/floor/setpieces/Azarak/rockyfloor,
-/area)
+/area/space)
 "bQ" = (
 /turf/unsimulated/floor/carpet/purple/fancy/edge/west,
-/area)
+/area/space)
 "bR" = (
 /turf/unsimulated/floor/carpet/purple/fancy,
-/area)
+/area/space)
 "bS" = (
 /turf/unsimulated/floor/carpet/purple/fancy/edge/east,
-/area)
+/area/space)
 "bT" = (
 /obj/machinery/door/airlock/pyro/medical,
 /turf/unsimulated/floor/white/grime,
-/area)
+/area/space)
 "bU" = (
 /obj/machinery/vending/hydroponics,
 /turf/unsimulated/floor/setpieces/Azarak/rockyfloor,
-/area)
+/area/space)
 "bV" = (
 /obj/decal/cleanable/ash,
 /obj/reagent_dispensers/watertank/big,
 /turf/unsimulated/floor/setpieces/Azarak/rockyfloor,
-/area)
+/area/space)
 "bW" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet{
@@ -558,22 +558,22 @@
 	icon_state = "bedsheet-pink"
 	},
 /turf/unsimulated/floor/carpet/purple/fancy/edge/sw,
-/area)
+/area/space)
 "bX" = (
 /turf/unsimulated/floor/carpet/purple/fancy/edge/south,
-/area)
+/area/space)
 "bY" = (
 /obj/storage/closet/dresser,
 /turf/unsimulated/floor/carpet/purple/fancy/edge/se,
-/area)
+/area/space)
 "bZ" = (
 /obj/table/wood/auto,
 /turf/unsimulated/floor/carpet/purple/fancy/edge/sw,
-/area)
+/area/space)
 "ca" = (
 /obj/table/wood/auto,
 /turf/unsimulated/floor/carpet/purple/fancy/edge/south,
-/area)
+/area/space)
 "cb" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet{
@@ -581,16 +581,16 @@
 	icon_state = "bedsheet-pink"
 	},
 /turf/unsimulated/floor/carpet/purple/fancy/edge/se,
-/area)
+/area/space)
 "cc" = (
 /obj/decal/fakeobjects/bookcase{
 	pixel_y = 24
 	},
 /turf/unsimulated/floor/wood/two,
-/area)
+/area/space)
 "cd" = (
 /turf/unsimulated/floor/white/grime,
-/area)
+/area/space)
 "ce" = (
 /obj/surgery_tray,
 /obj/item/circular_saw{
@@ -600,65 +600,65 @@
 /obj/item/suture,
 /obj/item/scalpel,
 /turf/unsimulated/floor/white/grime,
-/area)
+/area/space)
 "cf" = (
 /obj/map/light/lava,
 /turf/unsimulated/floor/setpieces/Azarak/lava{
 	dir = 9
 	},
-/area)
+/area/space)
 "cg" = (
 /obj/decal/fakeobjects/bookcase,
 /turf/unsimulated/floor/wood/two,
-/area)
+/area/space)
 "ch" = (
 /obj/map/light/lava,
 /turf/unsimulated/floor/setpieces/Azarak/lavalethal/bubbling,
-/area)
+/area/space)
 "ci" = (
 /obj/machinery/optable{
 	name = "Autopsy Table"
 	},
 /turf/unsimulated/floor/white/grime,
-/area)
+/area/space)
 "cj" = (
 /obj/map/light/lava,
 /turf/unsimulated/floor/setpieces/Azarak/lava/corners,
-/area)
+/area/space)
 "ck" = (
 /turf/unsimulated/floor/setpieces/Azarak/cavefloor/underwalls,
 /turf/unsimulated/wall/setpieces/Azarak/cavewall/edges{
 	dir = 1
 	},
-/area)
+/area/space)
 "cl" = (
 /turf/unsimulated/floor/setpieces/Azarak/cavefloor/underwalls,
 /turf/unsimulated/wall/setpieces/Azarak/cavewall/corners{
 	dir = 8
 	},
-/area)
+/area/space)
 "cm" = (
 /obj/storage/closet/dresser,
 /turf/unsimulated/floor/carpet/purple/fancy/edge/west,
-/area)
+/area/space)
 "cn" = (
 /obj/storage/closet/dresser,
 /turf/unsimulated/floor/carpet/purple/fancy/edge/sw,
-/area)
+/area/space)
 "co" = (
 /turf/unsimulated/floor/carpet/purple/fancy/edge/sw,
-/area)
+/area/space)
 "cq" = (
 /obj/item/instrument/large/organ,
 /obj/decal/fakeobjects/Azarakcandleswall{
 	pixel_y = 32
 	},
 /turf/unsimulated/floor/wood/two,
-/area)
+/area/space)
 "cr" = (
 /obj/indestructible/invisible_block,
 /turf/unsimulated/floor/wood/two,
-/area)
+/area/space)
 "cs" = (
 /obj/decal/fakeobjects/Azarakaltar{
 	pixel_x = -32;
@@ -668,213 +668,213 @@
 	pixel_y = 32
 	},
 /turf/unsimulated/floor/wood/two,
-/area)
+/area/space)
 "cu" = (
 /obj/machinery/door/unpowered/wood/stall,
 /turf/unsimulated/floor/specialroom/freezer,
-/area)
+/area/space)
 "cv" = (
 /turf/simulated/floor/wood/two,
-/area)
+/area/space)
 "cw" = (
 /obj/stool/chair/wooden{
 	dir = 1
 	},
 /turf/unsimulated/floor/wood/two,
-/area)
+/area/space)
 "cx" = (
 /obj/table/wood/auto,
 /obj/item/dagger/azarakknife,
 /turf/unsimulated/floor/wood/two,
-/area)
+/area/space)
 "cy" = (
 /obj/table/wood/auto,
 /obj/item/skull,
 /turf/unsimulated/floor/wood/two,
-/area)
+/area/space)
 "cz" = (
 /obj/table/wood/auto,
 /turf/unsimulated/floor/carpet/purple/fancy/edge/se,
-/area)
+/area/space)
 "cA" = (
 /obj/machinery/door/airlock/pyro/glass,
 /turf/unsimulated/floor/specialroom/freezer,
-/area)
+/area/space)
 "cB" = (
 /obj/stool/chair/pew/fancy/left{
 	dir = 4
 	},
 /turf/unsimulated/floor/carpet/purple/fancy/edge/nw,
-/area)
+/area/space)
 "cC" = (
 /turf/unsimulated/floor/carpet/purple/fancy/innercorner/nw,
-/area)
+/area/space)
 "cD" = (
 /obj/decal/fakeobjects/Azarakcandles,
 /turf/unsimulated/floor/carpet/purple/fancy,
-/area)
+/area/space)
 "cE" = (
 /turf/unsimulated/floor/carpet/purple/fancy/innercorner/ne,
-/area)
+/area/space)
 "cF" = (
 /obj/stool/chair/pew/fancy/right{
 	dir = 8
 	},
 /turf/unsimulated/floor/carpet/purple/fancy/edge/ne,
-/area)
+/area/space)
 "cG" = (
 /obj/map/light/lava,
 /turf/unsimulated/floor/setpieces/Azarak/lavalethal/bubbling2,
-/area)
+/area/space)
 "cH" = (
 /obj/stool/chair/pew/fancy/center{
 	dir = 4
 	},
 /turf/unsimulated/floor/carpet/purple/fancy/edge/west,
-/area)
+/area/space)
 "cI" = (
 /obj/decal/fakeobjects/Azarakcandles{
 	pixel_x = -12;
 	pixel_y = 12
 	},
 /turf/unsimulated/floor/carpet/purple/fancy,
-/area)
+/area/space)
 "cJ" = (
 /obj/decal/fakeobjects/Azarakcandles{
 	pixel_x = 12;
 	pixel_y = 12
 	},
 /turf/unsimulated/floor/carpet/purple/fancy,
-/area)
+/area/space)
 "cK" = (
 /obj/stool/chair/pew/fancy/center{
 	dir = 8
 	},
 /turf/unsimulated/floor/carpet/purple/fancy/edge/east,
-/area)
+/area/space)
 "cL" = (
 /obj/map/light/lava,
 /turf/unsimulated/floor/setpieces/Azarak/lava{
 	dir = 6
 	},
-/area)
+/area/space)
 "cM" = (
 /obj/map/light/lava,
 /obj/map/light/lava,
 /turf/unsimulated/floor/setpieces/Azarak/lava{
 	dir = 1
 	},
-/area)
+/area/space)
 "cN" = (
 /obj/stool/chair/pew/fancy/right{
 	dir = 4
 	},
 /turf/unsimulated/floor/carpet/purple/fancy/edge/west,
-/area)
+/area/space)
 "cO" = (
 /obj/stool/chair/pew/fancy/left{
 	dir = 8
 	},
 /turf/unsimulated/floor/carpet/purple/fancy/edge/east,
-/area)
+/area/space)
 "cP" = (
 /turf/unsimulated/floor/setpieces/Azarak/cavefloor/underwalls,
 /turf/unsimulated/wall/setpieces/Azarak/cavewall/edges{
 	dir = 6
 	},
-/area)
+/area/space)
 "cQ" = (
 /obj/map/light/lava,
 /obj/decal/fakeobjects/biggerrock,
 /turf/unsimulated/floor/setpieces/Azarak/lavalethal,
-/area)
+/area/space)
 "cR" = (
 /obj/map/light/lava,
 /turf/unsimulated/floor/setpieces/Azarak/lava/bubbling_edges{
 	dir = 8
 	},
-/area)
+/area/space)
 "cS" = (
 /obj/critter/bat/hellbat,
 /turf/unsimulated/floor/setpieces/Azarak/rockyfloor,
-/area)
+/area/space)
 "cT" = (
 /obj/map/light/lava,
 /turf/unsimulated/floor/setpieces/Azarak/lava,
-/area)
+/area/space)
 "cU" = (
 /obj/decal/fakeobjects/shrooms,
 /turf/unsimulated/floor/setpieces/Azarak/rockyfloor,
-/area)
+/area/space)
 "cV" = (
 /obj/decal/fakeobjects/biggerrock,
 /obj/map/light/lava,
 /turf/unsimulated/floor/setpieces/Azarak/lavalethal,
-/area)
+/area/space)
 "cW" = (
 /turf/unsimulated/floor/setpieces/Azarak/lava/corners{
 	dir = 1
 	},
-/area)
+/area/space)
 "cX" = (
 /obj/stool/chair/pew/fancy/left{
 	dir = 4
 	},
 /turf/unsimulated/floor/carpet/purple/fancy/edge/west,
-/area)
+/area/space)
 "cY" = (
 /obj/stool/chair/pew/fancy/right{
 	dir = 8
 	},
 /turf/unsimulated/floor/carpet/purple/fancy/edge/east,
-/area)
+/area/space)
 "cZ" = (
 /obj/map/light/lava,
 /turf/unsimulated/floor/setpieces/Azarak/lava/bubbling_edges{
 	dir = 4
 	},
-/area)
+/area/space)
 "da" = (
 /obj/map/light/lava,
 /obj/map/light/lava,
 /turf/unsimulated/floor/setpieces/Azarak/lavalethal/bubbling,
-/area)
+/area/space)
 "db" = (
 /obj/map/light/lava,
 /obj/map/light/lava,
 /turf/unsimulated/floor/setpieces/Azarak/lavalethal,
-/area)
+/area/space)
 "dc" = (
 /obj/map/light/lava,
 /turf/unsimulated/floor/setpieces/Azarak/lava{
 	dir = 5
 	},
-/area)
+/area/space)
 "dd" = (
 /turf/unsimulated/floor/setpieces/Azarak/cavefloor/underwalls,
 /turf/unsimulated/wall/setpieces/Azarak/cavewall/edges{
 	dir = 10
 	},
-/area)
+/area/space)
 "df" = (
 /obj/stool/chair/pew/fancy/right{
 	dir = 4
 	},
 /turf/unsimulated/floor/carpet/purple/fancy/edge/sw,
-/area)
+/area/space)
 "dg" = (
 /obj/decal/fakeobjects/circle,
 /turf/unsimulated/floor/carpet/purple/fancy/innercorner/sw,
-/area)
+/area/space)
 "dh" = (
 /turf/unsimulated/floor/carpet/purple/fancy/innercorner/se,
-/area)
+/area/space)
 "di" = (
 /obj/stool/chair/pew/fancy/left{
 	dir = 8
 	},
 /turf/unsimulated/floor/carpet/purple/fancy/edge/se,
-/area)
+/area/space)
 "dj" = (
 /obj/shrub{
 	desc = "It's probably not suspicious that this plant is not only still alive, but thriving.";
@@ -885,43 +885,43 @@
 	tag = "null"
 	},
 /turf/unsimulated/floor/wood/two,
-/area)
+/area/space)
 "dk" = (
 /turf/unsimulated/floor/carpet/purple/fancy/innercorner/sw,
-/area)
+/area/space)
 "dl" = (
 /turf/unsimulated/floor/carpet/purple/fancy/edge/se,
-/area)
+/area/space)
 "dm" = (
 /obj/map/light/lava,
 /turf/unsimulated/floor/setpieces/Azarak/rockyfloor,
-/area)
+/area/space)
 "dn" = (
 /obj/decal/cleanable/ash,
 /obj/map/light/lava,
 /turf/unsimulated/floor/setpieces/Azarak/lava{
 	dir = 8
 	},
-/area)
+/area/space)
 "do" = (
 /obj/map/light/lava,
 /turf/unsimulated/floor/setpieces/Azarak/lava/corners{
 	dir = 8
 	},
-/area)
+/area/space)
 "dp" = (
 /obj/decal/fakeobjects/bookcase{
 	pixel_y = 24
 	},
 /turf/unsimulated/floor/carpet/purple/fancy/narrow/nw,
-/area)
+/area/space)
 "dq" = (
 /obj/decal/fakeobjects/bookcase{
 	dir = 4;
 	pixel_y = 24
 	},
 /turf/unsimulated/floor/carpet/purple/fancy/narrow/T_north,
-/area)
+/area/space)
 "dr" = (
 /obj/table/wood/round,
 /obj/decal/fakeobjects{
@@ -936,41 +936,41 @@
 	tag = "icon-shrub-dead (SOUTHEAST)"
 	},
 /turf/unsimulated/floor/carpet/purple/fancy/junction/se_w,
-/area)
+/area/space)
 "ds" = (
 /obj/decal/fakeobjects/Azarakcandleswall{
 	pixel_y = 32
 	},
 /turf/unsimulated/floor/carpet/purple/fancy/edge/north,
-/area)
+/area/space)
 "dt" = (
 /obj/table/wood/round,
 /obj/item/paper/book/icarus_ovid,
 /turf/unsimulated/floor/carpet/purple/fancy/junction/sw_e,
-/area)
+/area/space)
 "du" = (
 /obj/decal/fakeobjects/bookcase{
 	dir = 8;
 	pixel_y = 24
 	},
 /turf/unsimulated/floor/carpet/purple/fancy/narrow/T_north,
-/area)
+/area/space)
 "dv" = (
 /obj/decal/fakeobjects/bookcase{
 	pixel_y = 24
 	},
 /turf/unsimulated/floor/carpet/purple/fancy/narrow/ne,
-/area)
+/area/space)
 "dw" = (
 /obj/decal/fakeobjects/azarakrocks/rock2,
 /turf/unsimulated/floor/setpieces/Azarak/rockyfloor,
-/area)
+/area/space)
 "dx" = (
 /obj/decal/cleanable/ash,
 /turf/unsimulated/floor/setpieces/Azarak/lava/corners{
 	dir = 8
 	},
-/area)
+/area/space)
 "dy" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -981,7 +981,7 @@
 	name = "broken vending machine"
 	},
 /turf/unsimulated/floor/wood/two,
-/area)
+/area/space)
 "dz" = (
 /obj/decal/fakeobjects{
 	name = "broken vending machine";
@@ -990,94 +990,94 @@
 	icon_state = "snack-broken"
 	},
 /turf/unsimulated/floor/wood/two,
-/area)
+/area/space)
 "dA" = (
 /turf/unsimulated/floor/carpet/purple/fancy/junction/se_n,
-/area)
+/area/space)
 "dB" = (
 /turf/unsimulated/floor/carpet/purple/fancy/innercorner/north,
-/area)
+/area/space)
 "dC" = (
 /turf/unsimulated/floor/carpet/purple/fancy/junction/sw_n,
-/area)
+/area/space)
 "dD" = (
 /obj/decal/fakeobjects/smallrocks,
 /turf/unsimulated/floor/setpieces/Azarak/rockyfloor,
-/area)
+/area/space)
 "dE" = (
 /turf/unsimulated/floor/carpet/purple/fancy/junction/ne_s,
-/area)
+/area/space)
 "dF" = (
 /turf/unsimulated/floor/carpet/purple/fancy/innercorner/south,
-/area)
+/area/space)
 "dG" = (
 /obj/item/reagent_containers/food/snacks/hellshroom,
 /turf/unsimulated/floor/carpet/purple/fancy,
-/area)
+/area/space)
 "dH" = (
 /turf/unsimulated/floor/carpet/purple/fancy/junction/nw_s,
-/area)
+/area/space)
 "dI" = (
 /obj/decal/cleanable/ash,
 /obj/decal/fakeobjects/bigrocks,
 /turf/unsimulated/floor/setpieces/Azarak/rockyfloor,
-/area)
+/area/space)
 "dJ" = (
 /obj/decal/fakeobjects/smallrocks,
 /obj/map/light/lava,
 /turf/unsimulated/floor/setpieces/Azarak/lava/corners{
 	dir = 8
 	},
-/area)
+/area/space)
 "dK" = (
 /obj/map/light/lava,
 /obj/map/light/lava,
 /turf/unsimulated/floor/setpieces/Azarak/lavalethal/bubbling2,
-/area)
+/area/space)
 "dL" = (
 /turf/unsimulated/floor/setpieces/Azarak/cavefloor/underwalls,
 /turf/unsimulated/wall/setpieces/Azarak/cavewall/edges{
 	dir = 9
 	},
-/area)
+/area/space)
 "dM" = (
 /turf/unsimulated/floor/setpieces/Azarak/cavefloor/underwalls,
 /turf/unsimulated/wall/setpieces/Azarak/cavewall/edges{
 	dir = 5
 	},
-/area)
+/area/space)
 "dN" = (
 /turf/unsimulated/floor/carpet/purple/fancy/narrow/sw,
-/area)
+/area/space)
 "dO" = (
 /turf/unsimulated/floor/carpet/purple/fancy/narrow/T_south,
-/area)
+/area/space)
 "dP" = (
 /turf/unsimulated/floor/carpet/purple/fancy/junction/ne_w,
-/area)
+/area/space)
 "dQ" = (
 /turf/unsimulated/floor/carpet/purple/fancy/junction/nw_e,
-/area)
+/area/space)
 "dR" = (
 /turf/unsimulated/floor/carpet/purple/fancy/narrow/se,
-/area)
+/area/space)
 "dS" = (
 /obj/decal/fakeobjects/bigrocks,
 /turf/unsimulated/floor/setpieces/Azarak/rockyfloor,
-/area)
+/area/space)
 "dT" = (
 /turf/unsimulated/wall/setpieces/Azarak/cavewall,
-/area)
+/area/space)
 "dU" = (
 /obj/machinery/door/airlock/pyro/maintenance,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area)
+/area/space)
 "dV" = (
 /obj/machinery/door/airlock/pyro/maintenance,
 /turf/simulated/floor/plating/random,
-/area)
+/area/space)
 "dW" = (
 /obj/table/wood/auto,
 /obj/shrub{
@@ -1088,52 +1088,52 @@
 	pixel_y = 16
 	},
 /turf/unsimulated/floor/wood/two,
-/area)
+/area/space)
 "dX" = (
 /obj/decal/fakeobjects/Azarakcandleswall{
 	dir = 1;
 	pixel_y = -12
 	},
 /turf/unsimulated/floor/wood/two,
-/area)
+/area/space)
 "dY" = (
 /obj/decal/fakeobjects/azarakrocks/rock6,
 /turf/unsimulated/floor/setpieces/Azarak/rockyfloor,
-/area)
+/area/space)
 "dZ" = (
 /obj/decal/fakeobjects/azarakrocks/rock3,
 /obj/decal/fakeobjects/bigrocks,
 /turf/unsimulated/floor/setpieces/Azarak/rockyfloor,
-/area)
+/area/space)
 "ea" = (
 /obj/decal/fakeobjects/smallrocks,
 /obj/map/light/lava,
 /turf/unsimulated/floor/setpieces/Azarak/lava/corners{
 	dir = 4
 	},
-/area)
+/area/space)
 "eb" = (
 /obj/decal/cleanable/cobweb,
 /turf/unsimulated/wall/setpieces/Azarak/cavewall,
-/area)
+/area/space)
 "ec" = (
 /obj/cave_entrance{
 	id = "test"
 	},
 /turf/unsimulated/floor/setpieces/Azarak/cavefloor/floor3,
-/area)
+/area/space)
 "ed" = (
 /obj/decal/cleanable/cobweb2,
 /turf/unsimulated/wall/setpieces/Azarak/cavewall,
-/area)
+/area/space)
 "ee" = (
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area)
+/area/space)
 "ef" = (
 /turf/simulated/floor/bot,
-/area)
+/area/space)
 "eg" = (
 /obj/decal/fakeobjects/apc_broken{
 	pixel_y = 32
@@ -1141,17 +1141,17 @@
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area)
+/area/space)
 "eh" = (
 /obj/decal/fakeobjects/tallsmes,
 /turf/simulated/floor/plating/random,
-/area)
+/area/space)
 "ei" = (
 /obj/decal/fakeobjects/apc_broken{
 	pixel_y = 32
 	},
 /turf/simulated/floor/plating/random,
-/area)
+/area/space)
 "ej" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -1161,10 +1161,10 @@
 	name = "security camera"
 	},
 /turf/simulated/floor/plating/random,
-/area)
+/area/space)
 "ek" = (
 /turf/simulated/floor/plating/random,
-/area)
+/area/space)
 "el" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -1175,67 +1175,67 @@
 	name = "broken computer"
 	},
 /turf/simulated/floor/plating/random,
-/area)
+/area/space)
 "em" = (
 /obj/item/storage/toolbox/mechanical,
 /turf/simulated/floor/plating/random,
-/area)
+/area/space)
 "en" = (
 /obj/wingrille_spawn/reinforced_crystal/full,
 /turf/simulated/floor/plating/random,
-/area)
+/area/space)
 "eo" = (
 /obj/machinery/door/airlock/pyro/glass,
 /turf/simulated/floor/plating/random,
-/area)
+/area/space)
 "ep" = (
 /obj/map/light/lava,
 /obj/map/light/lava,
 /turf/unsimulated/floor/setpieces/Azarak/lava{
 	dir = 4
 	},
-/area)
+/area/space)
 "eq" = (
 /obj/decal/cleanable/ash,
 /obj/map/light/lava,
 /turf/unsimulated/floor/setpieces/Azarak/rockyfloor,
-/area)
+/area/space)
 "er" = (
 /obj/item/clothing/head/helmet/hardhat,
 /turf/unsimulated/floor/setpieces/Azarak/cavefloor/edges{
 	dir = 4
 	},
-/area)
+/area/space)
 "es" = (
 /turf/unsimulated/floor/setpieces/Azarak/cavefloor/edges{
 	dir = 10
 	},
-/area)
+/area/space)
 "et" = (
 /obj/decal/fakeobjects/bigrocks,
 /turf/unsimulated/floor/setpieces/Azarak/cavefloor/edges{
 	dir = 10
 	},
-/area)
+/area/space)
 "eu" = (
 /obj/decal/fakeobjects/bigrocks,
 /turf/unsimulated/floor/setpieces/Azarak/cavefloor/floor3,
-/area)
+/area/space)
 "ev" = (
 /obj/item/mining_tool/power_pick,
 /turf/unsimulated/floor/setpieces/Azarak/cavefloor/edges{
 	dir = 10
 	},
-/area)
+/area/space)
 "ew" = (
 /obj/decal/cleanable/ash,
 /turf/unsimulated/floor/setpieces/Azarak/cavefloor/edges{
 	dir = 1
 	},
-/area)
+/area/space)
 "ex" = (
 /turf/simulated/floor/delivery,
-/area)
+/area/space)
 "ey" = (
 /obj/cable{
 	icon_state = "1-2";
@@ -1243,7 +1243,7 @@
 	d2 = 2
 	},
 /turf/simulated/floor/plating/random,
-/area)
+/area/space)
 "ez" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 6;
@@ -1251,7 +1251,7 @@
 	name = "grimy pipe"
 	},
 /turf/simulated/floor/plating/random,
-/area)
+/area/space)
 "eA" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
@@ -1259,7 +1259,7 @@
 	pixel_y = 0
 	},
 /turf/simulated/floor/plating/random,
-/area)
+/area/space)
 "eB" = (
 /obj/decal/fakeobjects/pipe{
 	tag = "icon-intact (SOUTHWEST)";
@@ -1267,51 +1267,51 @@
 	dir = 10
 	},
 /turf/simulated/floor/plating/random,
-/area)
+/area/space)
 "eC" = (
 /obj/decal/fakeobjects/cultiststatue,
 /turf/unsimulated/floor/setpieces/Azarak/rockyfloor,
-/area)
+/area/space)
 "eD" = (
 /obj/decal/fakeobjects/azarakrocks/rock6,
 /obj/map/light/lava,
 /turf/unsimulated/floor/setpieces/Azarak/rockyfloor,
-/area)
+/area/space)
 "eE" = (
 /obj/decal/fakeobjects/azarakrocks/rock3,
 /obj/map/light/lava,
 /turf/unsimulated/floor/setpieces/Azarak/rockyfloor,
-/area)
+/area/space)
 "eF" = (
 /turf/unsimulated/floor/setpieces/Azarak/cavefloor/edges{
 	dir = 9
 	},
-/area)
+/area/space)
 "eG" = (
 /obj/item/device/light/flashlight,
 /turf/unsimulated/floor/setpieces/Azarak/cavefloor/floor2,
-/area)
+/area/space)
 "eH" = (
 /obj/decal/cleanable/ash,
 /turf/unsimulated/floor/setpieces/Azarak/cavefloor/floor3,
-/area)
+/area/space)
 "eI" = (
 /obj/decal/fakeobjects/bigrocks,
 /turf/unsimulated/floor/setpieces/Azarak/cavefloor/floor2,
-/area)
+/area/space)
 "eJ" = (
 /obj/decal/cleanable/ash,
 /turf/unsimulated/floor/setpieces/Azarak/cavefloor/floor2,
-/area)
+/area/space)
 "eK" = (
 /turf/unsimulated/floor/setpieces/Azarak/cavefloor,
-/area)
+/area/space)
 "eL" = (
 /obj/decal/fakeobjects/smallrocks,
 /turf/unsimulated/floor/setpieces/Azarak/cavefloor/edges{
 	dir = 5
 	},
-/area)
+/area/space)
 "eM" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 6;
@@ -1319,7 +1319,7 @@
 	name = "pipe"
 	},
 /turf/simulated/floor/plating/random,
-/area)
+/area/space)
 "eN" = (
 /obj/decal/fakeobjects/pipe{
 	desc = "It's a pipe manifold.  A grimy one.";
@@ -1330,21 +1330,21 @@
 	pixel_y = 0
 	},
 /turf/simulated/floor/plating/random,
-/area)
+/area/space)
 "eO" = (
 /obj/decal/fakeobjects/pipe{
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
 	icon_state = "intact"
 	},
 /turf/simulated/floor/plating/random,
-/area)
+/area/space)
 "eP" = (
 /obj/decal/fakeobjects/pipe{
 	desc = "A pipe.";
 	name = "pipe"
 	},
 /turf/simulated/floor/plating/random,
-/area)
+/area/space)
 "eQ" = (
 /obj/cave_entrance{
 	icon_state = "stairs";
@@ -1352,35 +1352,35 @@
 	name = "stairs to cave"
 	},
 /turf/unsimulated/floor/setpieces/Azarak/rockyfloor,
-/area)
+/area/space)
 "eR" = (
 /obj/decal/fakeobjects/smallrocks,
 /turf/unsimulated/floor/setpieces/Azarak/cavefloor/edges{
 	dir = 9
 	},
-/area)
+/area/space)
 "eS" = (
 /turf/unsimulated/floor/setpieces/Azarak/cavefloor/floor3,
-/area)
+/area/space)
 "eT" = (
 /turf/unsimulated/floor/setpieces/Azarak/cavefloor/floor2,
-/area)
+/area/space)
 "eU" = (
 /obj/decal/fakeobjects/smallrocks,
 /turf/unsimulated/floor/setpieces/Azarak/cavefloor/floor3,
-/area)
+/area/space)
 "eV" = (
 /obj/decal/fakeobjects/bedrolls,
 /turf/unsimulated/floor/setpieces/Azarak/cavefloor/edges{
 	dir = 5
 	},
-/area)
+/area/space)
 "eW" = (
 /obj/cable{
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/plating/random,
-/area)
+/area/space)
 "eX" = (
 /obj/decal/fakeobjects/pipe{
 	desc = "A pipe.";
@@ -1392,7 +1392,7 @@
 	d2 = 8
 	},
 /turf/simulated/floor/plating/random,
-/area)
+/area/space)
 "eY" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -1407,14 +1407,14 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/plating/random,
-/area)
+/area/space)
 "eZ" = (
 /obj/decal/fakeobjects/pipe{
 	icon = 'icons/obj/atmospherics/tanks/blue_pipe_tank.dmi';
 	name = "water tank"
 	},
 /turf/simulated/floor/plating/random,
-/area)
+/area/space)
 "fa" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -1425,22 +1425,22 @@
 	name = "old gas turbine"
 	},
 /turf/simulated/floor/plating/random,
-/area)
+/area/space)
 "fb" = (
 /obj/decal/fakeobjects/azarakrocks/rock4,
 /obj/map/light/lava,
 /turf/unsimulated/floor/setpieces/Azarak/rockyfloor,
-/area)
+/area/space)
 "fc" = (
 /obj/decal/fakeobjects/biggerrock,
 /obj/map/light/lava,
 /turf/unsimulated/floor/setpieces/Azarak/rockyfloor,
-/area)
+/area/space)
 "fd" = (
 /obj/decal/fakeobjects/azarakrocks/rock2,
 /obj/map/light/lava,
 /turf/unsimulated/floor/setpieces/Azarak/rockyfloor,
-/area)
+/area/space)
 "fe" = (
 /obj/machinery/power/lgenerator{
 	anchored = 1
@@ -1452,7 +1452,7 @@
 /turf/unsimulated/floor/setpieces/Azarak/cavefloor/edges{
 	dir = 5
 	},
-/area)
+/area/space)
 "ff" = (
 /obj/decal/fakeobjects/pipe{
 	icon = 'icons/obj/atmospherics/valve.dmi';
@@ -1460,7 +1460,7 @@
 	name = "valve"
 	},
 /turf/simulated/floor/plating/random,
-/area)
+/area/space)
 "fg" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 5;
@@ -1468,33 +1468,33 @@
 	name = "grimy pipe"
 	},
 /turf/simulated/floor/plating/random,
-/area)
+/area/space)
 "fh" = (
 /obj/decal/fakeobjects/pipe{
 	icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi';
 	icon_state = "manifold"
 	},
 /turf/simulated/floor/plating/random,
-/area)
+/area/space)
 "fi" = (
 /obj/decal/fakeobjects/pipe{
 	icon_state = "intact";
 	dir = 9
 	},
 /turf/simulated/floor/plating/random,
-/area)
+/area/space)
 "fj" = (
 /obj/critter/bat/hellbat,
 /obj/map/light/lava,
 /turf/unsimulated/floor/setpieces/Azarak/rockyfloor,
-/area)
+/area/space)
 "fk" = (
 /turf/unsimulated/floor/setpieces/Azarak/lava/corners,
-/area)
+/area/space)
 "fl" = (
 /obj/decal/fakeobjects/azarakrocks/rock4,
 /turf/unsimulated/floor/setpieces/Azarak/rockyfloor,
-/area)
+/area/space)
 "fm" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -1502,43 +1502,43 @@
 /turf/unsimulated/floor/setpieces/Azarak/cavefloor/edges{
 	dir = 5
 	},
-/area)
+/area/space)
 "fn" = (
 /obj/map/light/lava,
 /obj/map/light/lava,
 /turf/unsimulated/floor/setpieces/Azarak/lava/corners{
 	dir = 8
 	},
-/area)
+/area/space)
 "fo" = (
 /obj/map/light/lava,
 /obj/map/light/lava,
 /turf/unsimulated/floor/setpieces/Azarak/lava{
 	dir = 5
 	},
-/area)
+/area/space)
 "fp" = (
 /obj/decal/fakeobjects/smallrocks,
 /turf/unsimulated/floor/setpieces/Azarak/cavefloor/edges,
-/area)
+/area/space)
 "fq" = (
 /obj/decal/cleanable/ash,
 /turf/unsimulated/floor/setpieces/Azarak/cavefloor/edges{
 	dir = 6
 	},
-/area)
+/area/space)
 "fr" = (
 /obj/decal/fakeobjects/smallrocks,
 /turf/unsimulated/floor/setpieces/Azarak/cavefloor/edges{
 	dir = 6
 	},
-/area)
+/area/space)
 "fs" = (
 /obj/decal/fakeobjects/bigrocks,
 /turf/unsimulated/floor/setpieces/Azarak/cavefloor/edges{
 	dir = 6
 	},
-/area)
+/area/space)
 "ft" = (
 /obj/decal/fakeobjects/teleport_pad,
 /obj/cable{
@@ -1549,7 +1549,7 @@
 /turf/unsimulated/floor/setpieces/Azarak/cavefloor/edges{
 	dir = 6
 	},
-/area)
+/area/space)
 "fu" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -1559,7 +1559,7 @@
 /turf/unsimulated/floor/setpieces/Azarak/cavefloor/edges{
 	dir = 6
 	},
-/area)
+/area/space)
 "fv" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -1568,7 +1568,7 @@
 /turf/unsimulated/floor/setpieces/Azarak/cavefloor/edges{
 	dir = 8
 	},
-/area)
+/area/space)
 "fw" = (
 /obj/map/light/lava,
 /obj/lattice{
@@ -1576,7 +1576,7 @@
 	},
 /obj/decal/fakeobjects/pipe/heat,
 /turf/unsimulated/floor/setpieces/Azarak/lavalethal,
-/area)
+/area/space)
 "fx" = (
 /obj/map/light/lava,
 /obj/lattice{
@@ -1588,7 +1588,7 @@
 	dir = 6
 	},
 /turf/unsimulated/floor/setpieces/Azarak/lavalethal,
-/area)
+/area/space)
 "fy" = (
 /obj/map/light/lava,
 /obj/lattice{
@@ -1600,7 +1600,7 @@
 	dir = 4
 	},
 /turf/unsimulated/floor/setpieces/Azarak/lavalethal,
-/area)
+/area/space)
 "fz" = (
 /obj/map/light/lava,
 /obj/lattice{
@@ -1612,7 +1612,7 @@
 	dir = 10
 	},
 /turf/unsimulated/floor/setpieces/Azarak/lavalethal,
-/area)
+/area/space)
 "fA" = (
 /turf/unsimulated/floor/setpieces/Azarak/cavefloor/edges{
 	dir = 10
@@ -1620,7 +1620,7 @@
 /turf/unsimulated/wall/setpieces/Azarak/cavewall/edges{
 	dir = 1
 	},
-/area)
+/area/space)
 "fB" = (
 /obj/map/light/lava,
 /obj/lattice{
@@ -1628,7 +1628,7 @@
 	},
 /obj/decal/fakeobjects/pipe/heat,
 /turf/unsimulated/floor/setpieces/Azarak/lavalethal/bubbling2,
-/area)
+/area/space)
 "fC" = (
 /obj/map/light/lava,
 /obj/lattice{
@@ -1640,7 +1640,7 @@
 	dir = 5
 	},
 /turf/unsimulated/floor/setpieces/Azarak/lavalethal,
-/area)
+/area/space)
 "fD" = (
 /obj/map/light/lava,
 /obj/lattice{
@@ -1652,13 +1652,13 @@
 	dir = 9
 	},
 /turf/unsimulated/floor/setpieces/Azarak/lavalethal,
-/area)
+/area/space)
 "fE" = (
 /turf/unsimulated/floor/setpieces/Azarak/cavefloor/underwalls,
 /turf/unsimulated/wall/setpieces/Azarak/cavewall/corners{
 	dir = 4
 	},
-/area)
+/area/space)
 
 (1,1,1) = {"
 aa

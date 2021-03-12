@@ -5,10 +5,10 @@ Hold CTRL and click on a nearby object to start pulling it.
 Hit CTRL-F to fart. All the cool kids are doing it.
 If you suspect someone's being shit, adminhelp it with F1.
 Admins can always see adminhelps no matter whether they are currently on the server or not.
-Admins may not be able to give you feedback about certain subjects, e.g. identities of traitors.
+Admins and mentors may not be able to give you feedback about certain subjects, e.g. identities of traitors.
 Anyone who intentionally put "Hitler" in their name is adminhelpable.
 Don't forget your PDA has a built-in flashlight.
-Lie down on the ground and hit RESIST if you're on fire to try and extinguish it.
+Lie down on the ground and hit Z to RESIST if you're on fire to try and extinguish it.
 Make sure the AI is actually alive before asking it for help.
 You can pass by people when both parties are on Help intent.
 Dying is not uncommon. Don't get frustrated if it happens to you.
@@ -60,7 +60,7 @@ You can often get a sentence reduced or even negated entirely by just cooperatin
 We were all new once, be patient and guide new players in the right direction!
 You can use a sponge to extract the contents of a bathtub.
 You can interact with things that are diagonal to you, even if they're blocked by something on both cardinal sides.
-The paint vendor has a chance to actually become operational once you repair it. Honest!
+The broken paint vendor can be repaired!
 Light cyborg arms still work in bot construction. Mass-produce amusing ducks for a limitless source of toys, and a limitless source of frustration from everyone else in a 20-mile radius!
 You can put pizza in the material processor. Make a weapon and eat the evidence, the perfect crime!
 There's more records to play than just the ones in the radio station. Go explore!
@@ -124,3 +124,15 @@ Being arrested isn't the end of the world.
 A talkative antagonist is fun for everyone.
 By default, you can hold SHIFT (SPACE on TG layout) while moving to sprint, burning stamina to push through slows.
 If a purple mouse runs up to you and squeaks, click it with an empty hand! They're a Mentor Mouse and can provide you useful information!
+When used in conjunction, synaptizine and atropine together in a patient in critical condition will greatly help stave off death!
+Bug reports don't have to be about anything major. Feel free to report minor things like typos, grammatical errors and similar.
+You can chug from drinking glasses and pitchers by click dragging them onto yourself.
+If you have enough cash, you can use it on a voting booth to manipulate the map polls to say in your favour.
+Microwaved donk pockets are a great general source of healing. Be sure to grab one if MedBay is too far away and you need something to avoid death for a bit longer.
+In case of an incoming meteor storm, meteor shields can be purchased from the Quartermasters and set up to protect the station.
+You can smash plates over people's heads by aiming for their head and selecting the HARM intent while holding a plate.
+You can use salt shakers to throw salt into people's eyes.
+Use a wrench on a water cooler dispenser to take the bottle off.
+Russian revolvers will only ever kill the user, no matter how hard you try to shoot someone else with it.
+Certain items have unique suicide options. Feel free to experiment with them if you ever want to go out with a bang (or a squelch).
+While holding an object, you can press C (Z on TG Controls) to Use/Interact with it. This can either open the crafting menu when holding a sheet of metal, activate a welding tool or make you eat a burger.

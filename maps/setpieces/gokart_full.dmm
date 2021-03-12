@@ -1,7 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
 /turf/space,
-/area)
+/area/space)
 "ab" = (
 /turf/unsimulated/wall{
 	icon = 'singularity.dmi';
@@ -818,7 +818,7 @@
 	icon_state = "TheSingMain";
 	name = "cloaking field"
 	},
-/area)
+/area/space)
 "cd" = (
 /obj/decal/cliff,
 /turf/unsimulated/floor/lava{

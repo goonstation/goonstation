@@ -28,10 +28,10 @@
 
 	attack_self(mob/user as mob)
 		user.show_message("You assemble the turret parts.")
-		src.loc = get_turf(user)
+		src.set_loc(get_turf(user))
 		src.spawn_turret(user.dir)
 		user.u_equip(src)
-		src.loc = get_turf(user)
+		src.set_loc(get_turf(user))
 		qdel(src)
 
 	proc/spawn_turret(var/direct)
@@ -51,8 +51,7 @@
 		src.damage_words += "<br><span class='alert'>Its safety indicator is off!</span>"
 	*/
 
-	throw_at(atom/target, range, speed, list/params, turf/thrown_from, throw_type = 1, allow_anchored = 0)
-		..()
+	throw_end(list/params, turf/thrown_from)
 		if(src.quick_deploy_fuel > 0)
 			var/turf/thrown_to = get_turf(src)
 			var/spawn_direction = get_dir(thrown_to,thrown_from)
@@ -99,7 +98,7 @@
 
 	New(var/direction)
 		..()
-		src.dir = direction
+		src.set_dir(direction)
 		src.set_initial_angle()
 
 		src.icon_state = "[src.icon_tag]_base"
@@ -111,8 +110,7 @@
 
 		var/matrix/M = matrix()
 		src.transform = M.Turn(src.external_angle)
-		if (!(src in processing_items))
-			processing_items.Add(src)
+		processing_items |= src
 		if(active)
 			set_projectile()
 
@@ -164,6 +162,7 @@
 					SPAWN_DBG(0)
 						for(var/i in 1 to src.current_projectile.shot_number) //loop animation until finished
 							flick("[src.icon_tag]_fire",src)
+							muzzle_flash_any(src, 0, "muzzle_flash")
 							sleep(src.current_projectile.shot_delay)
 					shoot_projectile_ST_pixel_spread(src, current_projectile, target, 0, 0 , spread)
 
@@ -346,7 +345,7 @@
 
 
 	proc/die()
-		playsound(src.loc, "sound/effects/robogib.ogg", 50, 1)
+		playsound(src.loc, "sound/impact_sounds/Machinery_Break_1.ogg", 50, 1)
 		new /obj/decal/cleanable/robot_debris(src.loc)
 		qdel(src)
 
@@ -391,11 +390,13 @@
 
 
 	proc/target_valid(var/mob/living/C)
-		var/distance = get_dist(C.loc,src.loc)
+		var/distance = get_dist(get_turf(C),get_turf(src))
 
 		if(distance > src.range)
 			return 0
 		if (!C)
+			return 0
+		if(!isliving(C) || isintangible(C))
 			return 0
 		if (C.health < 0)
 			return 0
@@ -417,7 +418,7 @@
 				return 0 */
 
 
-		var/angle = get_angle(src,C)
+		var/angle = get_angle(get_turf(src),get_turf(C))
 
 
 		var/anglemod = (-(angle < 180 ? angle : angle - 360) + 90) //Blatant Code Theft from showLine(), checks to see if there's something in the way of us and the target
@@ -554,6 +555,7 @@
 /obj/deployable_turret/riot
 	name = "N.A.R.C.S."
 	desc = "A Nanotrasen Automatic Riot Control System."
+	icon_state = "nt_off"
 	health = 125
 	max_health = 125
 	wait_time = 20 //wait if it can't find a target

@@ -1,4 +1,8 @@
 var/list/bad_name_characters = list("_", "'", "\"", "<", ">", ";", "\[", "\]", "{", "}", "|", "\\", "/")
+var/list/removed_jobs = list(
+	// jobs that have been removed or replaced (replaced -> new name, removed -> null)
+	"Barman" = "Bartender",
+)
 
 datum/preferences
 	var/profile_name
@@ -19,18 +23,18 @@ datum/preferences
 	var/medical_note
 	var/employment_note
 
-
-	var/be_changeling = 0
-	var/be_revhead = 0
-	var/be_syndicate = 0
-	var/be_wizard = 0
 	var/be_traitor = 0
-	var/be_werewolf = 0
-	var/be_vampire = 0
+	var/be_syndicate = 0
 	var/be_spy = 0
 	var/be_gangleader = 0
+	var/be_revhead = 0
+	var/be_changeling = 0
+	var/be_wizard = 0
+	var/be_werewolf = 0
+	var/be_vampire = 0
 	var/be_wraith = 0
 	var/be_blob = 0
+	var/be_conspirator = 0
 	var/be_flock = 0
 	var/be_misc = 0
 
@@ -47,14 +51,18 @@ datum/preferences
 	var/listen_looc = 1
 	var/flying_chat_hidden = 0
 	var/auto_capitalization = 0
+	var/local_deadchat = 0
 	var/use_wasd = 1
 	var/use_azerty = 0 // do they have an AZERTY keyboard?
 	var/spessman_direction = SOUTH
+	var/PDAcolor = "#6F7961"
 
 	var/job_favorite = null
 	var/list/jobs_med_priority = list()
 	var/list/jobs_low_priority = list()
 	var/list/jobs_unwanted = list()
+
+	var/pda_ringtone_index = "Two-Beep"
 
 	var/datum/appearanceHolder/AH = new
 
@@ -62,7 +70,7 @@ datum/preferences
 	var/random2 = 0
 	var/random3 = 0
 
-	var/icon/preview_icon = null
+	var/datum/character_preview/preview = null
 
 	var/mentor = 0
 	var/see_mentor_pms = 1 // do they wanna disable mentor pms?
@@ -72,6 +80,9 @@ datum/preferences
 
 	var/target_cursor = "Default"
 	var/hud_style = "New"
+
+	var/tgui_fancy = TRUE
+	var/tgui_lock = FALSE
 
 	var/tooltip_option = TOOLTIP_ALWAYS
 
@@ -94,16 +105,16 @@ datum/preferences
 		//real_name = random_name(src.gender)
 		if (src.gender == MALE)
 			if (first)
-				src.name_first = capitalize(pick(first_names_male))
+				src.name_first = capitalize(pick_string_autokey("names/first_male.txt"))
 			if (middle)
-				src.name_middle = capitalize(pick(first_names_male))
+				src.name_middle = capitalize(pick_string_autokey("names/first_male.txt"))
 		else
 			if (first)
-				src.name_first = capitalize(pick(first_names_female))
+				src.name_first = capitalize(pick_string_autokey("names/first_female.txt"))
 			if (middle)
-				src.name_middle = capitalize(pick(first_names_female))
+				src.name_middle = capitalize(pick_string_autokey("names/first_female.txt"))
 		if (last)
-			src.name_last = capitalize(pick(last_names))
+			src.name_last = capitalize(pick_string_autokey("names/last.txt"))
 		src.real_name = src.name_first + " " + src.name_last
 
 	proc/randomizeLook() // im laze
@@ -134,83 +145,26 @@ datum/preferences
 			src.randomize_name(0, 0, 1)
 
 		src.real_name = src.name_first + " " + src.name_last
-/*		var/list/namecheck = splittext(trim(real_name), " ")
-		if (namecheck.len < 2 || length(real_name) < 5)
-			randomize_name()
-			return
-		for (var/i = 1, i <= namecheck.len, i++)
-			namecheck[i] = capitalize(namecheck[i])
-		real_name = jointext(namecheck, " ")
-*/
+
+
 	proc/update_preview_icon()
-		//qdel(src.preview_icon)
 		if (!AH)
 			logTheThing("debug", usr ? usr : null, null, "a preference datum's appearence holder is null!")
 			return
 
-		src.preview_icon = null
+		var/datum/mutantrace/mutantRace = null
+		for (var/ID in traitPreferences.traits_selected)
+			var/obj/trait/T = getTraitById(ID)
+			if (T?.mutantRace)
+				mutantRace = T.mutantRace
+				break
 
-		src.preview_icon = new /icon('icons/mob/human.dmi', "body_[src.gender == MALE ? "m" : "f"]", "dir" = src.spessman_direction)
-
-		// Skin tone
-		if (AH.s_tone)
-			src.preview_icon.Blend(AH.s_tone, ICON_MULTIPLY)
-
-		var/icon/eyes_s = new/icon("icon" = 'icons/mob/human_hair.dmi', "icon_state" = "eyes", "dir" = src.spessman_direction)
-		if (is_valid_color_string(AH.e_color))
-			eyes_s.Blend(AH.e_color, ICON_MULTIPLY)
-		else
-			eyes_s.Blend("#101010", ICON_MULTIPLY)
-
-		var/customization_first_r = customization_styles[AH.customization_first]
-		if (!customization_first_r)
-			customization_first_r = "None"
-
-		var/customization_second_r = customization_styles[AH.customization_second]
-		if (!customization_second_r)
-			customization_second_r = "None"
-
-		var/customization_third_r = customization_styles[AH.customization_third]
-		if (!customization_third_r)
-			customization_third_r = "none"
-
-		var/icon/hair_s = new/icon("icon" = 'icons/mob/human_hair.dmi', "icon_state" = customization_first_r, "dir" = src.spessman_direction)
-		if (is_valid_color_string(AH.customization_first_color))
-			hair_s.Blend(AH.customization_first_color, ICON_MULTIPLY)
-		else
-			hair_s.Blend("#101010", ICON_MULTIPLY)
-
-		var/icon/facial_s = new/icon("icon" = 'icons/mob/human_hair.dmi', "icon_state" = customization_second_r, "dir" = src.spessman_direction)
-		if (is_valid_color_string(AH.customization_second_color))
-			facial_s.Blend(AH.customization_second_color, ICON_MULTIPLY)
-		else
-			facial_s.Blend("#101010", ICON_MULTIPLY)
-
-		var/icon/detail_s = new/icon("icon" = 'icons/mob/human_hair.dmi', "icon_state" = customization_third_r, "dir" = src.spessman_direction)
-		if (is_valid_color_string(AH.customization_third_color))
-			detail_s.Blend(AH.customization_third_color, ICON_MULTIPLY)
-		else
-			detail_s.Blend("#101010", ICON_MULTIPLY)
-
-		var/underwear_style = underwear_styles[AH.underwear]
-		var/icon/underwear_s = new/icon("icon" = 'icons/mob/human_underwear.dmi', "icon_state" = "[underwear_style]", "dir" = src.spessman_direction)
-		if (is_valid_color_string(AH.u_color))
-			underwear_s.Blend(AH.u_color, ICON_MULTIPLY)
-
-		eyes_s.Blend(underwear_s, ICON_OVERLAY)
-		eyes_s.Blend(hair_s, ICON_OVERLAY)
-		eyes_s.Blend(facial_s, ICON_OVERLAY)
-		eyes_s.Blend(detail_s, ICON_OVERLAY)
-
-		src.preview_icon.Blend(eyes_s, ICON_OVERLAY)
-
-		facial_s = null
-		hair_s = null
-		underwear_s = null
-		eyes_s = null
+		src.preview?.update_appearance(src.AH, mutantRace, src.spessman_direction)
 
 	var/list/profile_cache
 	var/rebuild_profile
+
+	var/had_cloud = FALSE
 
 	var/list/rebuild_data
 	var/list/data_cache
@@ -222,17 +176,17 @@ datum/preferences
 			return
 
 		if (!AH)
-			boutput(usr, "Your settings are missing an AppearanceHolder. This is a good time to tell a coder.")
+			boutput(user, "Your settings are missing an AppearanceHolder. This is a good time to tell a coder.")
 
 		if (!data_cache)
 			data_cache = list("script" = null,"css" = null,"profile_name" = null,"character_name" = null,"gender" = null,"age_blood" = null,\
 								"bank" = null,"flavortext" = null,"security_note" = null,"medical_note" = null,"occupation" = null,"traits" = null,\
-								"fartsound" = null,"screamsound" = null,"chatsound" = null,"skintone" = null,"eyecolor" = null,"hair_top" = null,"hair_mid" = null,"hair_bottom" = null,\
-								"underwear" = null,"randomize" = null,"font_size" = null,"messages" = null,"hud" = null,"tooltips" = null,"popups" = null,"controls" = null,"map"=null)
+								"fartsound" = null,"screamsound" = null,"chatsound" = null,"PDAcolor" = null,"PDA_ringtone" = null,"skintone" = null,"eyecolor" = null,"hair_top" = null,"hair_mid" = null,"hair_bottom" = null,\
+								"underwear" = null,"randomize" = null,"font_size" = null,"messages" = null,"hud" = null,"tooltips" = null, "tgui" = null,"popups" = null,"controls" = null,"map"=null)
 			rebuild_data = list("script" = 1,"css" = 1,"profile_name" = 1,"character_name" = 1,"gender" = 1,"age_blood" = 1,\
 								"bank" = 1,"flavortext" = 1,"security_note" = 1,"medical_note" = 1,"occupation" = 1,"traits" = 1,\
-								"fartsound" = 1,"screamsound" = 1,"chatsound" = 1,"skintone" = 1,"eyecolor" = 1,"hair_top" = 1,"hair_mid" = 1,"hair_bottom" = 1,\
-								"underwear" = 1,"randomize" = 1,"font_size" = 1,"messages" = 1,"hud" = 1,"tooltips" = 1,"popups" = 1,"controls" = 1,"map"=1)
+								"fartsound" = 1,"screamsound" = 1,"chatsound" = 1,"PDAcolor" = 1,"PDA_ringtone" = 1,"skintone" = 1,"eyecolor" = 1,"hair_top" = 1,"hair_mid" = 1,"hair_bottom" = 1,\
+								"underwear" = 1,"randomize" = 1,"font_size" = 1,"messages" = 1,"hud" = 1,"tooltips" = 1, "tgui" = 1, "popups" = 1,"controls" = 1,"map"=1)
 		if (!profile_cache)
 			profile_cache = list()
 			rebuild_profile = 1
@@ -240,7 +194,6 @@ datum/preferences
 		sanitize_null_values()
 		update_preview_icon()
 		LAGCHECK(LAG_HIGH)
-		user << browse_rsc(preview_icon, "previewicon.png")
 		user << browse_rsc(icon(cursors_selection[target_cursor]), "tcursor.png")
 		user << browse_rsc(icon(hud_style_selection[hud_style], "preview"), "hud_preview.png")
 		LAGCHECK(LAG_HIGH)
@@ -248,7 +201,7 @@ datum/preferences
 
 		var/favoriteJob = src.job_favorite ? find_job_in_controller_by_string(src.job_favorite) : ""
 		//mbc is sorry
-		var/chui_toggle_script_jqery_thing = (user && user.client && !user.client.use_chui) ? "<script type='text/javascript' src='[resource("js/jquery.min.js")]'></script>" : ""
+		var/chui_toggle_script_jqery_thing = (user?.client && !user.client.use_chui) ? "<script type='text/javascript' src='[resource("js/jquery.min.js")]'></script>" : ""
 
 		LAGCHECK(LAG_HIGH)
 		//mbc is sorry
@@ -259,12 +212,17 @@ datum/preferences
 		//var/profile_menu[]
 
 		if (user && !IsGuestKey(user.key)) //ZeWaka: Fix for null.key
-			if (rebuild_profile)
+			var/client/client = ismob( user ) ? user.client : user
+
+			if (!client) return // b r u h
+
+			if (rebuild_profile || client.cloud_available() && !had_cloud)
 				rebuild_profile = 0
+				had_cloud = client.cloud_available()
+				rebuild_data["profile_name"] = 1
 				profile_cache.len = 0
 				profile_cache += "<div id='cloudsaves'><strong>Cloud Saves</strong><hr>"
-				var/client/wtf = ismob( user ) ? user.client : user
-				for( var/name in wtf.cloudsaves )
+				for( var/name in client.player.cloudsaves )
 					profile_cache += "<a href='[pref_link]cloudload=[url_encode(name)]'>[html_encode(name)]</a> (<a href='[pref_link]cloudsave=[url_encode(name)]'>Save</a> - <a href='[pref_link]clouddelete=[url_encode(name)]'>Delete</a>)<br>"
 					LAGCHECK(LAG_REALTIME)
 				profile_cache += "<a href='[pref_link]cloudnew=1'>Create new save</a></div>"
@@ -291,39 +249,27 @@ datum/preferences
 		data_cache["script"] = {"
 [chui_toggle_script_jqery_thing]
 <script type='text/javascript'>
+function update_image() {
+	var id = $(this).attr('id');
+	var r = $(this).val();
+	var xhr = new XMLHttpRequest();
+	xhr.open('GET', '?src=\ref[src];preferences=1;id=' + id + ';style=' + encodeURIComponent(r));
+	xhr.send();
+};
 $(function() {
-	function SwitchPic(picID) {
-		var pic = document.getElementById(picID);
-		var d = new Date();
-		var image='previewicon.png?'+d.getMilliseconds();
-		setTimeout(function(){
-			pic.src = image;
-
-			}, 500)
-	}
-	//stole this debounce function from Kfir Zuberi at https://medium.com/walkme-engineering/debounce-and-throttle-in-real-life-scenarios-1cc7e2e38c68
-	function debounce (func, interval) {
-		var timeout;
-		return function () {
-			var context = this, args = arguments;
-			var later = function () {
-				timeout = null;
-				func.apply(context, args);
-			};
-			clearTimeout(timeout);
-			timeout = setTimeout(later, interval || 200);
-		}
-	}
-	 var update_image = debounce(function(){
-			var id = $(this).attr('id')
-		var r = $("#" + id + " option:selected" ).text();
-		window.location='byond://?src=\ref[src];preferences=1;id='+id+';style='+encodeURIComponent(r);
-		SwitchPic("sprite_preview");
-	}, 250);
-	$(function() {
-		$('select').change(update_image)
-	})
+	$('select').change(update_image).find('option').each(function() {
+		$(this).val($(this).text());
+	});
 });
+function updateCharacterPreviewPos() {
+	var rect = document.getElementById("sprite_preview").getBoundingClientRect();
+	window.location = ('byond://winset?id=preferences.preferences_character_preview'
+		+ ';pos=' + rect.left + ',' + rect.top
+		+ ';size=' + rect.width + 'x' + rect.height);
+}
+$(window).resize(updateCharacterPreviewPos);
+$(window).scroll(updateCharacterPreviewPos);
+$(updateCharacterPreviewPos);
 </script>"}
 
 		LAGCHECK(LAG_HIGH)
@@ -431,7 +377,7 @@ $(function() {
 		cursor: help;
 		}
 </style>"}
-		LAGCHECK(80)
+			LAGCHECK(80)
 		if (rebuild_data["profile_name"])
 			rebuild_data["profile_name"] = 0
 			data_cache["profile_name"] = {"
@@ -449,7 +395,7 @@ $(function() {
 			<a href="[pref_link]profile_name=input">[src.profile_name ? src.profile_name : "Unnamed"]
 		</td>
 	</tr>"}
-		LAGCHECK(80)
+			LAGCHECK(80)
 		if (rebuild_data["character_name"])
 			rebuild_data["character_name"] = 0
 			data_cache["character_name"] = {"
@@ -462,7 +408,7 @@ $(function() {
 			<br><a href="[pref_link]b_random_name=1" class="toggle">[crap_checkbox(src.be_random_name)] Use a random name instead</a>
 		</td>
 	</tr>"}
-		LAGCHECK(80)
+			LAGCHECK(80)
 		if (rebuild_data["gender"])
 			rebuild_data["gender"] = 0
 			data_cache["gender"] = {"
@@ -474,7 +420,7 @@ $(function() {
 			<a href="[pref_link]gender=input">[display_gender]</a>
 		</td>
 	</tr>"}
-		LAGCHECK(80)
+			LAGCHECK(80)
 		if (rebuild_data["age_blood"])
 			rebuild_data["age_blood"] = 0
 			data_cache["age_blood"] = {"
@@ -492,7 +438,7 @@ $(function() {
 			<a href='[pref_link]blType=input'>[src.random_blood ? "Random" : src.blType]</a>
 		</td>
 	</tr>"}
-		LAGCHECK(80)
+			LAGCHECK(80)
 		if (rebuild_data["bank"])
 			rebuild_data["bank"] = 0
 			data_cache["bank"] = {"
@@ -504,7 +450,7 @@ $(function() {
 			<a href="[pref_link]pin=random" class="toggle">[crap_checkbox(!(src.pin))] Random</a> &middot; <a href='[pref_link]pin=input' class="toggle">[src.pin ? (crap_checkbox(1) + " Set: [src.pin]") : (crap_checkbox(0) + " Set")]</a>
 		</td>
 	</tr>"}
-		LAGCHECK(80)
+			LAGCHECK(80)
 		if (rebuild_data["flavortext"])
 			rebuild_data["flavortext"] = 0
 			data_cache["flavortext"] = {"
@@ -517,7 +463,7 @@ $(function() {
 			[length(src.flavor_text) ? src.flavor_text : "<em>None</em>"]
 		</td>
 	</tr>"}
-		LAGCHECK(80)
+			LAGCHECK(80)
 		if (rebuild_data["security_note"])
 			rebuild_data["security_note"] = 0
 			data_cache["security_note"] = {"
@@ -530,7 +476,7 @@ $(function() {
 			[length(src.security_note) ? src.security_note : "<em>None</em>"]
 		</td>
 	</tr>"}
-		LAGCHECK(80)
+			LAGCHECK(80)
 		if (rebuild_data["medical_note"])
 			rebuild_data["medical_note"] = 0
 			data_cache["medical_note"] = {"
@@ -543,7 +489,7 @@ $(function() {
 			[length(src.medical_note) ? src.medical_note : "<em>None</em>"]
 		</td>
 	</tr>"}
-		LAGCHECK(80)
+			LAGCHECK(80)
 		if (rebuild_data["occupation"])
 			rebuild_data["occupation"] = 1 //always rebuild egh
 			data_cache["occupation"] = {"
@@ -555,7 +501,7 @@ $(function() {
 			<a href="[pref_link]jobswindow=1">Change occupation preferences...</a><br><em>Favorite job: [favoriteJob ? "<strong>[favoriteJob]</strong>" : "(unset)"]</em>
 		</td>
 	</tr>"}
-		LAGCHECK(80)
+			LAGCHECK(80)
 		if (rebuild_data["traits"])
 			rebuild_data["traits"] = 1 //always rebuild egh
 			data_cache["traits"] = {"
@@ -567,7 +513,7 @@ $(function() {
 			<a href="[pref_link]traitswindow=1">Choose traits...</a>
 		</td>
 	</tr>"}
-		LAGCHECK(80)
+			LAGCHECK(80)
 		if (rebuild_data["fartsound"])
 			rebuild_data["fartsound"] = 0
 			data_cache["fartsound"] = {"
@@ -579,7 +525,7 @@ $(function() {
 			<a href='[pref_link]fartsound=input'>[AH.fartsound]</a>
 		</td>
 	</tr>"}
-		LAGCHECK(80)
+			LAGCHECK(80)
 		if (rebuild_data["screamsound"])
 			rebuild_data["screamsound"] = 0
 			data_cache["screamsound"] = {"
@@ -591,7 +537,7 @@ $(function() {
 			<a href='[pref_link]screamsound=input'>[AH.screamsound]</a>
 		</td>
 	</tr>"}
-		LAGCHECK(80)
+			LAGCHECK(80)
 		if (rebuild_data["chatsound"])
 			rebuild_data["chatsound"] = 0
 			data_cache["chatsound"] = {"
@@ -603,7 +549,32 @@ $(function() {
 			<a href='[pref_link]voicetype=input'>[AH.voicetype]</a>
 		</td>
 	</tr>"}
-		LAGCHECK(80)
+			LAGCHECK(80)
+		if (rebuild_data["PDAcolor"])
+			rebuild_data["PDAcolor"] = 0
+			data_cache["PDAcolor"] = {"
+	<tr>
+		<th>
+			PDA Backlight<span class="info-thing" title="Your character's default PDA background color.">?</span>
+		</th>
+		<td>
+			<a href='[pref_link]PDAcolor=input'>&#9998;</a>
+			<span class='colorbit' style="background-color: [src.PDAcolor];">[src.PDAcolor]</span>
+		</td>
+	</tr>"}
+			LAGCHECK(80)
+		if (rebuild_data["PDA_ringtone"])
+			rebuild_data["PDA_ringtone"] = 0
+			data_cache["PDA_ringtone"] = {"
+	<tr>
+		<th>
+			PDA Ringtone<span class="info-thing" title="The noises your PDA makes when someone sends it a message. Also loads your PDA with the ringtone's respective program!">?</span>
+		</th>
+		<td colspan="2">
+			<a href="[pref_link]ringtonewindow=1">[src.pda_ringtone_index]</a> - <a href="[pref_link]previewringtone=1">Preview!</a>
+		</td>
+	</tr>"}
+			LAGCHECK(80)
 		if (rebuild_data["skintone"])
 			rebuild_data["skintone"] = 0
 			data_cache["skintone"] = {"
@@ -627,7 +598,7 @@ $(function() {
 			<a href="[pref_link]rotate_clockwise=1">&#x27f3;</a>
 		</th>
 	</tr>"}
-		LAGCHECK(80)
+			LAGCHECK(80)
 		if (rebuild_data["eyecolor"])
 			rebuild_data["eyecolor"] = 0
 			data_cache["eyecolor"] = {"
@@ -640,13 +611,13 @@ $(function() {
 			<span class='colorbit' style="background-color: [AH.e_color];">[AH.e_color]</span>
 		</td>
 	</tr>"}
-		LAGCHECK(80)
+			LAGCHECK(80)
 		if (rebuild_data["hair_top"])
 			rebuild_data["hair_top"] = 0
 			data_cache["hair_top"] = {"
 	<tr>
 		<th>
-			Top Detail<span class="info-thing" title="Hair or other features. This one is appied above the other ones.">?</span>
+			Top Detail<span class="info-thing" title="Hair or other features. This one is applied above the other ones.">?</span>
 		</th>
 		<td>
 			<a href='[pref_link]detail=input'>&#9998;</a>
@@ -654,7 +625,7 @@ $(function() {
 			[generate_select_table("custom_third", AH.customization_third, customization_styles)]
 		</td>
 	</tr>"}
-		LAGCHECK(80)
+			LAGCHECK(80)
 		if (rebuild_data["hair_mid"])
 			rebuild_data["hair_mid"] = 0
 			data_cache["hair_mid"] = {"
@@ -668,7 +639,7 @@ $(function() {
 			[generate_select_table("custom_second", AH.customization_second, customization_styles)]
 		</td>
 	</tr>"}
-		LAGCHECK(80)
+			LAGCHECK(80)
 		if (rebuild_data["hair_bottom"])
 			rebuild_data["hair_bottom"] = 0
 			data_cache["hair_bottom"] = {"
@@ -682,7 +653,7 @@ $(function() {
 			[generate_select_table("custom_first", AH.customization_first, customization_styles)]
 		</td>
 	</tr>"}
-		LAGCHECK(80)
+			LAGCHECK(80)
 		if (rebuild_data["underwear"])
 			rebuild_data["underwear"] = 0
 			data_cache["underwear"] = {"
@@ -696,7 +667,7 @@ $(function() {
 			[generate_select_table("underwear", AH.underwear, underwear_styles)]
 		</td>
 	</tr>"}
-		LAGCHECK(80)
+			LAGCHECK(80)
 		if (rebuild_data["randomize"])
 			rebuild_data["randomize"] = 0
 			data_cache["randomize"] = {"
@@ -708,7 +679,7 @@ $(function() {
 			<a href="[pref_link]b_random_look=1" class="toggle">[crap_checkbox(src.be_random_look)] Always use a randomized appearance</a>
 		</td>
 	</tr>"}
-		LAGCHECK(80)
+			LAGCHECK(80)
 		if (rebuild_data["font_size"])
 			rebuild_data["font_size"] = 0
 			data_cache["font_size"] = {"
@@ -727,7 +698,7 @@ $(function() {
 			<a href="[pref_link]font_size=input">[src.font_size ? "[src.font_size]%" : "Default"]
 		</td>
 	</tr>"}
-		LAGCHECK(80)
+			LAGCHECK(80)
 		if (rebuild_data["messages"])
 			rebuild_data["messages"] = 0
 			data_cache["messages"] = {"
@@ -740,10 +711,11 @@ $(function() {
 			<a href="[pref_link]listen_ooc=1" class="toggle">[crap_checkbox(src.listen_ooc)] Display <abbr title="Out-of-Character">OOC</abbr> chat</a><span class="info-thing" title="Out-of-Character chat. This mostly just shows up on the RP server and at the end of rounds.">?</span><br>
 			<a href="[pref_link]listen_looc=1" class="toggle">[crap_checkbox(src.listen_looc)] Display <abbr title="Local Out-of-Character">LOOC</abbr> chat</a><span class="info-thing" title="Local Out-of-Character is OOC chat, but only appears for nearby players. This is basically only used on the RP server.">?</span><br>
 			<a href="[pref_link]flying_chat_hidden=1" class="toggle">[crap_checkbox(!src.flying_chat_hidden)] See chat above people's heads</a><span class="info-thing" title="Chat messages will appear over characters as they're talking.">?</span><br>
-			<a href="[pref_link]auto_capitalization=1" class="toggle">[crap_checkbox(src.auto_capitalization)] Auto-capitalize your messages</a><span class="info-thing" title="Chat messages you send will be automatically capitalized.">?</span>
+			<a href="[pref_link]auto_capitalization=1" class="toggle">[crap_checkbox(src.auto_capitalization)] Auto-capitalize your messages</a><span class="info-thing" title="Chat messages you send will be automatically capitalized.">?</span><br>
+			<a href="[pref_link]local_deadchat=1" class="toggle">[crap_checkbox(src.local_deadchat)] Local ghost hearing</a><span class="info-thing" title="You'll only hear chat messages from living people on your screen as a ghost.">?</span>
 		</td>
 	</tr>"}
-		LAGCHECK(80)
+			LAGCHECK(80)
 		if (rebuild_data["hud"])
 			rebuild_data["hud"] = 0
 			data_cache["hud"] = {"
@@ -764,7 +736,7 @@ $(function() {
 			</div>
 		</td>
 	</tr>"}
-		LAGCHECK(80)
+			LAGCHECK(80)
 		if (rebuild_data["tooltips"])
 			rebuild_data["tooltips"] = 0
 			data_cache["tooltips"] = {"
@@ -778,7 +750,20 @@ $(function() {
 			<br><a href="[pref_link]tooltip=3" class="toggle">[crap_checkbox(src.tooltip_option == TOOLTIP_NEVER)] Never Show</a>
 		</td>
 	</tr>"}
-		LAGCHECK(80)
+			LAGCHECK(80)
+		if (rebuild_data["tgui"])
+			rebuild_data["tgui"] = 0
+			data_cache["tgui"] = {"
+	<tr>
+		<th>
+			tgui<span class="info-thing" title="tgui is the UI framework we use for some game windows, and it comes with options!">?</span>
+		</th>
+		<td colspan="2">
+			<a href="[pref_link]tgui_fancy=1" class="toggle">[crap_checkbox(src.tgui_fancy)] Fast & Fancy Windows</a>
+			<br><a href="[pref_link]tgui_lock=1" class="toggle">[crap_checkbox(src.tgui_lock)] Lock initial placement of windows</a>
+		</td>
+	</tr>"}
+			LAGCHECK(80)
 		if (rebuild_data["popups"])
 			rebuild_data["popups"] = 0
 			data_cache["popups"] = {"
@@ -792,7 +777,7 @@ $(function() {
 			<br><a href="[pref_link]tickets=1" class="toggle">[crap_checkbox(src.view_tickets)] Auto-open end-of-round ticket summary</a><span class="info-thing" title="The end-of-round ticketing summary shows the various tickets and fines that were handed out. If this option is off, you can still see them on Goonhub (goonhub.com).">?</span>
 		</td>
 	</tr>"}
-		LAGCHECK(80)
+			LAGCHECK(80)
 		if (rebuild_data["controls"])
 			rebuild_data["controls"] = 0
 			data_cache["controls"] = {"
@@ -807,7 +792,7 @@ $(function() {
 			<br>Familiar with /tg/station controls? You can enable/disable them under the Game/Interface menu in the top left.
 		</td>
 	</tr>"}
-		LAGCHECK(80)
+			LAGCHECK(80)
 		if (rebuild_data["map"])
 			rebuild_data["map"] = 0
 			data_cache["map"] = {"
@@ -826,15 +811,22 @@ $(function() {
 
 "}
 
-		LAGCHECK(LAG_MED)
+			LAGCHECK(LAG_MED)
 		traitPreferences.updateTraits(user)
 		LAGCHECK(LAG_MED)
+
+		//Mob has been deleted or client been deleted
+		if (!user || !user.client)
+			return
 
 		var/list/dat = list()
 		for (var/x in data_cache)
 			dat += data_cache[x]
 
 		user.Browse(dat.Join(),"window=preferences;size=666x750;title=Character Setup")
+		if (isnull(src.preview))
+			src.preview = new(user.client, "preferences", "preferences_character_preview")
+			src.update_preview_icon()
 
 
 	//id, The name of the Select table ID to be used.
@@ -882,8 +874,6 @@ $(function() {
 
 			if (changed)
 				update_preview_icon()
-				usr << browse_rsc(preview_icon, "previewicon.png")
-				usr << browse("previewicon.png","display=0")
 
 		..()
 
@@ -898,6 +888,11 @@ $(function() {
 			if (jobban_isbanned(user,J.name) || (J.needs_college && !user.has_medal("Unlike the director, I went to college")) || (J.requires_whitelist && !NT.Find(ckey(user.mind.key))))
 				src.jobs_unwanted += J.name
 				continue
+			if (J.rounds_needed_to_play && (user.client && user.client.player))
+				var/round_num = user.client.player.get_rounds_participated() //if this list is null, the api query failed, so we just let it happen
+				if (!isnull(round_num) && round_num < J.rounds_needed_to_play) //they havent played enough rounds!
+					src.jobs_unwanted += J.name
+					continue
 			src.jobs_med_priority += J.name
 		return
 
@@ -912,6 +907,11 @@ $(function() {
 			if (jobban_isbanned(user,J.name) || (J.needs_college && !user.has_medal("Unlike the director, I went to college")) || (J.requires_whitelist && !NT.Find(ckey(user.mind.key))))
 				src.jobs_unwanted += J.name
 				continue
+			if (J.rounds_needed_to_play && (user.client && user.client.player))
+				var/round_num = user.client.player.get_rounds_participated()
+				if (!isnull(round_num) && round_num < J.rounds_needed_to_play) //they havent played enough rounds!
+					src.jobs_unwanted += J.name
+					continue
 			src.jobs_low_priority += J.name
 		return
 
@@ -940,6 +940,11 @@ $(function() {
 			if (jobban_isbanned(user,J.name) || (J.needs_college && !user.has_medal("Unlike the director, I went to college")) || (J.requires_whitelist && !NT.Find(ckey(user.mind.key))) || istype(J, /datum/job/command) || istype(J, /datum/job/civilian/AI) || istype(J, /datum/job/civilian/cyborg) || istype(J, /datum/job/security/security_officer))
 				src.jobs_unwanted += J.name
 				continue
+			if (J.rounds_needed_to_play && (user.client && user.client.player))
+				var/round_num = user.client.player.get_rounds_participated()
+				if (!isnull(round_num) && round_num < J.rounds_needed_to_play) //they havent played enough rounds!
+					src.jobs_unwanted += J.name
+					continue
 			src.jobs_low_priority += J.name
 		return
 
@@ -950,6 +955,46 @@ $(function() {
 		else if (isnull(src.job_favorite) && !src.jobs_med_priority.len && !src.jobs_low_priority.len && !src.jobs_unwanted.len)
 			src.ResetAllPrefsToDefault(user)
 			boutput(user, "<span class='alert'><b>Your Job Preferences were empty, and have been reset.</b></span>")
+		else
+			// remove/replace jobs that were removed/renamed
+			for (var/job in removed_jobs)
+				if (job in src.jobs_med_priority)
+					src.jobs_med_priority -= job
+					if (removed_jobs[job])
+						src.jobs_med_priority |= removed_jobs[job]
+				if (job in src.jobs_low_priority)
+					src.jobs_low_priority -= job
+					if (removed_jobs[job])
+						src.jobs_low_priority |= removed_jobs[job]
+				if (job in src.jobs_unwanted)
+					src.jobs_unwanted -= job
+					if (removed_jobs[job])
+						src.jobs_unwanted |= removed_jobs[job]
+			// add missing jobs
+			for (var/datum/job/J in job_controls.staple_jobs)
+				if (istype(J, /datum/job/daily))
+					continue
+				if (src.job_favorite != J.name && !(J.name in src.jobs_med_priority) && !(J.name in src.jobs_low_priority))
+					src.jobs_unwanted |= J.name
+			// remove duplicate jobs
+			var/list/seen_jobs = list()
+			if (src.job_favorite)
+				seen_jobs[src.job_favorite] = TRUE
+			for (var/J in src.jobs_med_priority)
+				if (seen_jobs[J])
+					src.jobs_med_priority.Remove(J)
+				else
+					seen_jobs[J] = TRUE
+			for (var/J in src.jobs_low_priority)
+				if (seen_jobs[J])
+					src.jobs_low_priority.Remove(J)
+				else
+					seen_jobs[J] = TRUE
+			for (var/J in src.jobs_unwanted)
+				if (seen_jobs[J])
+					src.jobs_unwanted.Remove(J)
+				else
+					seen_jobs[J] = TRUE
 
 
 		var/list/HTML = list()
@@ -1043,14 +1088,25 @@ $(function() {
 		if (!src.job_favorite)
 			HTML += " None"
 		else
+			var/print_the_job = FALSE
 			var/datum/job/J_Fav = src.job_favorite ? find_job_in_controller_by_string(src.job_favorite) : null
 			if (!J_Fav)
 				HTML += " Favorite Job not found!"
 			else if (jobban_isbanned(user,J_Fav.name) || (J_Fav.needs_college && !user.has_medal("Unlike the director, I went to college")) || (J_Fav.requires_whitelist && !NT.Find(ckey(user.mind.key))))
-				boutput(user, "<span class='alert'><b>You are no longer allowed to play [J_Fav.name]. It has been removed from your Favorite slot.</span>")
+				boutput(user, "<span class='alert'><b>You are no longer allowed to play [J_Fav.name]. It has been removed from your Favorite slot.</b></span>")
 				src.jobs_unwanted += J_Fav.name
 				src.job_favorite = null
+			else if (J_Fav.rounds_needed_to_play && (user.client && user.client.player))
+				var/round_num = user.client.player.get_rounds_participated()
+				if (!isnull(round_num) && round_num < J_Fav.rounds_needed_to_play) //they havent played enough rounds!
+					boutput(user, "<span class='alert'><b>You cannot play [J_Fav.name].</b> You've only played </b>[round_num]</b> rounds and need to play more than <b>[J_Fav.rounds_needed_to_play].</b></span>")
+					src.jobs_unwanted += J_Fav.name
+					src.job_favorite = null
+				else
+					print_the_job = TRUE
 			else
+				print_the_job = TRUE
+			if(print_the_job)
 				HTML += " <a href=\"byond://?src=\ref[src];preferences=1;occ=1;job=[J_Fav.name];level=0\" style='font-weight: bold; color: [J_Fav.linkcolor];'>[J_Fav.name]</a>"
 
 		HTML += {"
@@ -1059,7 +1115,7 @@ $(function() {
 			<th>Medium Priority <span class="info-thing" title="Medium Priority Jobs are any jobs you would like to play that aren't your favorite. People with jobs in this category get priority over those who have the same job in their low priority bracket. It's best to put jobs here that you actively enjoy playing and wouldn't mind ending up with if you don't get your favorite.">?</span></th>
 			<th>Low Priority <span class="info-thing" title="Low Priority Jobs are jobs that you don't mind doing. When the game is finding candidates for a job, it will try to fill it with Medium Priority players first, then Low Priority players if there are still free slots.">?</span></th>
 			<th>Unwanted Jobs <span class="info-thing" title="Unwanted Jobs are jobs that you absolutely don't want to have. The game will never give you a job you list here. The 'Staff Assistant' role can't be put here, however, as it's the fallback job if there are no other openings.">?</span></th>
-			<th>Antagonist Roles <span class="info-thing" title="Antagonist roles are randomly chosen when the game starts, before jobs have been allocated. Having an antagonist role disabled means you will never be chosen for it automatically.">?</span></th>
+			<th>Antagonist Roles <span class="info-thing" title="Antagonist roles are randomly chosen when the game starts, before jobs have been allocated. Leaving an antagonist role unchecked means you will never be chosen for it automatically.">?</span></th>
 		</tr>
 		<tr>"}
 
@@ -1119,17 +1175,18 @@ $(function() {
 
 		if (jobban_isbanned(user, "Syndicate"))
 			HTML += "You are banned from playing antagonist roles."
-			src.be_changeling = 0
-			src.be_revhead = 0
-			src.be_syndicate = 0
-			src.be_wizard = 0
 			src.be_traitor = 0
-			src.be_werewolf = 0
-			src.be_vampire = 0
+			src.be_syndicate = 0
 			src.be_spy = 0
 			src.be_gangleader = 0
+			src.be_revhead = 0
+			src.be_changeling = 0
+			src.be_wizard = 0
+			src.be_werewolf = 0
+			src.be_vampire = 0
 			src.be_wraith = 0
 			src.be_blob = 0
+			src.be_conspirator = 0
 			src.be_flock = 0
 		else
 
@@ -1145,6 +1202,7 @@ $(function() {
 			<a href="byond://?src=\ref[src];preferences=1;b_vampire=1" class="[src.be_vampire ? "yup" : "nope"]">[crap_checkbox(src.be_vampire)] Vampire</a>
 			<a href="byond://?src=\ref[src];preferences=1;b_wraith=1" class="[src.be_wraith ? "yup" : "nope"]">[crap_checkbox(src.be_wraith)] Wraith</a>
 			<a href="byond://?src=\ref[src];preferences=1;b_blob=1" class="[src.be_blob ? "yup" : "nope"]">[crap_checkbox(src.be_blob)] Blob</a>
+			<a href="byond://?src=\ref[src];preferences=1;b_conspirator=1" class="[src.be_conspirator ? "yup" : "nope"]">[crap_checkbox(src.be_conspirator)] Conspirator</a>
 			<a href="byond://?src=\ref[src];preferences=1;b_flock=1" class="[src.be_flock ? "yup" : "nope"]">[crap_checkbox(src.be_flock)] Flockmind</a>
 			<a href="byond://?src=\ref[src];preferences=1;b_misc=1" class="[src.be_misc ? "yup" : "nope"]">[crap_checkbox(src.be_misc)] Other Foes</a>
 		"}
@@ -1158,6 +1216,21 @@ $(function() {
 	proc/SetJob(mob/user, occ=1, job="Captain",var/level = 0)
 		if (src.antispam)
 			return
+		switch(occ)
+			if (1)
+				if(src.job_favorite != job)
+					return
+			if (2)
+				if(!(job in src.jobs_med_priority))
+					return
+			if (3)
+				if(!(job in src.jobs_low_priority))
+					return
+			if (4)
+				if(!(job in src.jobs_unwanted))
+					return
+			else
+				return
 		if (!find_job_in_controller_by_string(job,1))
 			boutput(user, "<span class='alert'><b>The game could not find that job in the internal list of jobs.</b></span>")
 			switch(occ)
@@ -1185,6 +1258,19 @@ $(function() {
 					if (3) src.jobs_low_priority -= job
 				src.jobs_unwanted += job
 			return
+
+		var/datum/job/temp_job = find_job_in_controller_by_string(job,1)
+		if (temp_job.rounds_needed_to_play && (user.client && user.client.player))
+			var/round_num = user.client.player.get_rounds_participated()
+			if (!isnull(round_num) && round_num < temp_job.rounds_needed_to_play) //they havent played enough rounds!
+				boutput(user, "<span class='alert'><b>You cannot play [temp_job.name].</b> You've only played </b>[round_num]</b> rounds and need to play more than <b>[temp_job.rounds_needed_to_play].</b></span>")
+				if (occ != 4)
+					switch(occ)
+						if (1) src.job_favorite = null
+						if (2) src.jobs_med_priority -= job
+						if (3) src.jobs_low_priority -= job
+					src.jobs_unwanted += job
+				return
 
 		src.antispam = 1
 
@@ -1249,7 +1335,7 @@ $(function() {
 		return 1
 
 	Topic(href, href_list[])
-		if (usr && usr.client && usr.client.preferences)
+		if (usr?.client?.preferences)
 			if (src == usr.client.preferences)
 				process_link(usr, href_list)
 			else
@@ -1351,9 +1437,9 @@ $(function() {
 
 				if ("random")
 					if (src.gender == MALE)
-						new_name = capitalize(pick(first_names_male) + " " + capitalize(pick(last_names)))
+						new_name = capitalize(pick_string_autokey("names/first_male.txt") + " " + capitalize(pick_string_autokey("names/last.txt")))
 					else
-						new_name = capitalize(pick(first_names_female) + " " + capitalize(pick(last_names)))
+						new_name = capitalize(pick_string_autokey("names/first_female.txt") + " " + capitalize(pick_string_autokey("names/last.txt")))
 					randomizeLook()
 			if (new_name)
 				if (length(new_name) >= 26)
@@ -1388,9 +1474,9 @@ $(function() {
 					new_name = capitalize(new_name)
 				if ("random")
 					if (src.gender == MALE)
-						new_name = capitalize(pick(first_names_male))
+						new_name = capitalize(pick_string_autokey("names/first_male.txt"))
 					else
-						new_name = capitalize(pick(first_names_female))
+						new_name = capitalize(pick_string_autokey("names/first_female.txt"))
 			if (new_name)
 				src.name_first = new_name
 				src.real_name = src.name_first + " " + src.name_last
@@ -1414,9 +1500,9 @@ $(function() {
 					new_name = capitalize(new_name)
 				if ("random")
 					if (src.gender == MALE)
-						new_name = capitalize(pick(first_names_male))
+						new_name = capitalize(pick_string_autokey("names/first_male.txt"))
 					else
-						new_name = capitalize(pick(first_names_female))
+						new_name = capitalize(pick_string_autokey("names/first_female.txt"))
 			src.name_middle = new_name // don't need to check if there is one in case someone wants no middle name I guess
 // -------------------------------------------
 		if (link_tags["last_name"])
@@ -1444,7 +1530,7 @@ $(function() {
 						return
 					new_name = capitalize(new_name)
 				if ("random")
-					new_name = capitalize(pick(last_names))
+					new_name = capitalize(pick_string_autokey("names/last.txt"))
 			if (new_name)
 				src.name_last = new_name
 				src.real_name = src.name_first + " " + src.name_last
@@ -1570,10 +1656,12 @@ $(function() {
 
 				if(new_tone)
 					AH.s_tone = new_tone
+					AH.s_tone_original = new_tone
 			else
 				new_tone = get_standard_skintone(user)
 				if(new_tone)
 					AH.s_tone = new_tone
+					AH.s_tone_original = new_tone
 
 		if (link_tags["underwear_color"])
 			rebuild_data["underwear"] = 1
@@ -1606,7 +1694,7 @@ $(function() {
 
 		if (link_tags["toggle_mentorhelp"])
 			rebuild_data["messages"] = 1
-			if (user && user.client && user.client.is_mentor())
+			if (user?.client?.is_mentor())
 				src.see_mentor_pms = !(src.see_mentor_pms)
 				user.client.set_mentorhelp_visibility(src.see_mentor_pms)
 
@@ -1625,6 +1713,10 @@ $(function() {
 		if (link_tags["auto_capitalization"])
 			rebuild_data["messages"] = 1
 			src.auto_capitalization = !(src.auto_capitalization)
+
+		if (link_tags["local_deadchat"])
+			rebuild_data["messages"] = 1
+			src.local_deadchat = !(src.local_deadchat)
 
 		if (link_tags["volume"])
 			src.admin_music_volume = input("Goes from 0 to 100.","Admin Music Volume", src.admin_music_volume) as num
@@ -1648,9 +1740,31 @@ $(function() {
 			src.use_azerty = !src.use_azerty
 			src.keybind_prefs_updated(user.client)
 
+		if (link_tags["PDAcolor"])
+			rebuild_data["PDAcolor"] = 1
+			src.PDAcolor = input(usr, "Choose a color", "PDA", src.PDAcolor) as color | null
+
+		if (link_tags["ringtonewindow"])
+			rebuild_data["PDA_ringtone"] = 1
+			get_all_character_setup_ringtones()
+			if(!length(selectable_ringtones))
+				src.pda_ringtone_index = "Two-Beep"
+				alert(usr, "Oh no! The JamStar-DCXXI PDA ringtone distribution satellite is out of range! Please try again later.", "x.x ringtones broke x.x", "Okay")
+				logTheThing("debug", usr ? usr : null, null, "get_all_character_setup_ringtones() didn't return anything!")
+			else
+				src.pda_ringtone_index = input(usr, "Choose a ringtone", "PDA") as null|anything in selectable_ringtones
+				if (!(src.pda_ringtone_index in selectable_ringtones))
+					src.pda_ringtone_index = "Two-Beep"
+
+		if (link_tags["previewringtone"])
+			get_all_character_setup_ringtones()
+			var/datum/ringtone/RT = selectable_ringtones[src.pda_ringtone_index]
+			if(istype(RT) && length(RT.ringList))
+				usr << sound( RT.ringList[rand(1,length(RT.ringList))] )
+
 		if (link_tags["preferred_map"])
 			rebuild_data["map"] = 1
-			src.preferred_map = mapSwitcher.clientSelectMap(usr.client)
+			src.preferred_map = mapSwitcher.clientSelectMap(usr.client,pickable=0)
 
 		if (link_tags["tooltip"])
 			rebuild_data["tooltips"] = 1
@@ -1663,6 +1777,14 @@ $(function() {
 					src.tooltip_option = TOOLTIP_NEVER
 				else src.tooltip_option = TOOLTIP_ALWAYS
 
+		if (link_tags["tgui_fancy"])
+			rebuild_data["tgui"] = 1
+			src.tgui_fancy = !(src.tgui_fancy)
+
+		if (link_tags["tgui_lock"])
+			rebuild_data["tgui"] = 1
+			src.tgui_lock = !(src.tgui_lock)
+
 		if (link_tags["scores"])
 			rebuild_data["popups"] = 1
 			src.view_score = !(src.view_score)
@@ -1671,38 +1793,13 @@ $(function() {
 			rebuild_data["popups"] = 1
 			src.view_tickets = !(src.view_tickets)
 
-		if (link_tags["b_changeling"])
-			src.be_changeling = !( src.be_changeling )
-			src.SetChoices(user)
-			return
-
-		if (link_tags["b_revhead"])
-			src.be_revhead = !( src.be_revhead )
-			src.SetChoices(user)
-			return
-
-		if (link_tags["b_syndicate"])
-			src.be_syndicate = !( src.be_syndicate )
-			src.SetChoices(user)
-			return
-
-		if (link_tags["b_wizard"])
-			src.be_wizard = !( src.be_wizard)
-			src.SetChoices(user)
-			return
-
 		if (link_tags["b_traitor"])
 			src.be_traitor = !( src.be_traitor)
 			src.SetChoices(user)
 			return
 
-		if (link_tags["b_werewolf"])
-			src.be_werewolf = !( src.be_werewolf)
-			src.SetChoices(user)
-			return
-
-		if (link_tags["b_vampire"])
-			src.be_vampire = !( src.be_vampire)
+		if (link_tags["b_syndicate"])
+			src.be_syndicate = !( src.be_syndicate )
 			src.SetChoices(user)
 			return
 
@@ -1716,6 +1813,30 @@ $(function() {
 			src.SetChoices(user)
 			return
 
+		if (link_tags["b_revhead"])
+			src.be_revhead = !( src.be_revhead )
+			src.SetChoices(user)
+			return
+
+		if (link_tags["b_changeling"])
+			src.be_changeling = !( src.be_changeling )
+			src.SetChoices(user)
+
+		if (link_tags["b_wizard"])
+			src.be_wizard = !( src.be_wizard)
+			src.SetChoices(user)
+			return
+
+		if (link_tags["b_werewolf"])
+			src.be_werewolf = !( src.be_werewolf)
+			src.SetChoices(user)
+			return
+
+		if (link_tags["b_vampire"])
+			src.be_vampire = !( src.be_vampire)
+			src.SetChoices(user)
+			return
+
 		if (link_tags["b_wraith"])
 			src.be_wraith = !( src.be_wraith)
 			src.SetChoices(user)
@@ -1725,6 +1846,12 @@ $(function() {
 			src.be_blob = !( src.be_blob)
 			src.SetChoices(user)
 			return
+
+		if (link_tags["b_conspirator"])
+			src.be_conspirator = !( src.be_conspirator )
+			src.SetChoices(user)
+			return
+
 		if (link_tags["b_flock"])
 			src.be_flock = !( src.be_flock)
 			src.SetChoices(user)
@@ -1792,7 +1919,7 @@ $(function() {
 		*/
 
 		if (!isnull(user) && !IsGuestKey(user.key))
-			if (link_tags["cloudsave"] && user.client.cloudsaves[ link_tags["cloudsave"] ])
+			if (link_tags["cloudsave"] && user.client.player.cloudsaves[ link_tags["cloudsave"] ])
 				rebuild_profile = 1
 				var/ret = src.cloudsave_save( user.client, link_tags["cloudsave"] )
 				if( istext( ret ) )
@@ -1801,7 +1928,7 @@ $(function() {
 					boutput( user, "<span class='notice'>Savefile saved!</span>" )
 			else if (link_tags["cloudnew"])
 				rebuild_profile = 1
-				if( user.client.cloudsaves.len >= SAVEFILE_PROFILES_MAX )
+				if( user.client.player.cloudsaves.len >= SAVEFILE_CLOUD_PROFILES_MAX )
 					alert( user, "You have hit your cloud save limit. Please write over an existing save." )
 				else
 					var/newname = input( user, "What would you like to name the save?", "Save Name" ) as text
@@ -1813,14 +1940,14 @@ $(function() {
 							boutput( user, "<span class='alert'>Failed to save savefile: [ret]</span>" )
 						else
 							boutput( user, "<span class='notice'>Savefile saved!</span>" )
-			else if( link_tags["clouddelete"] && user.client.cloudsaves[ link_tags["clouddelete"] ] && alert( user, "Are you sure you want to delete [link_tags["clouddelete"]]?", "Uhm!", "Yes", "No" ) == "Yes" )
+			else if( link_tags["clouddelete"] && user.client.player.cloudsaves[ link_tags["clouddelete"] ] && alert( user, "Are you sure you want to delete [link_tags["clouddelete"]]?", "Uhm!", "Yes", "No" ) == "Yes" )
 				rebuild_profile = 1
 				var/ret = src.cloudsave_delete( user.client, link_tags["clouddelete"] )
 				if( istext( ret ) )
 					boutput( user, "<span class='alert'>Failed to delete savefile: [ret]</span>" )
 				else
 					boutput( user, "<span class='notice'>Savefile deleted!</span>" )
-			else if (link_tags["cloudload"] && user.client.cloudsaves[ link_tags["cloudload"] ])
+			else if (link_tags["cloudload"] && user.client.player.cloudsaves[ link_tags["cloudload"] ])
 				for (var/x in rebuild_data)
 					rebuild_data[x] = 1
 				rebuild_profile = 1
@@ -1858,19 +1985,21 @@ $(function() {
 			AH.customization_third = "None"
 			AH.underwear = "No Underwear"
 
-			AH.customization_first_color = 0
-			AH.customization_second_color = 0
-			AH.customization_third_color = 0
+			AH.customization_first_color = initial(AH.customization_first_color)
+			AH.customization_second_color = initial(AH.customization_second_color)
+			AH.customization_third_color = initial(AH.customization_third_color)
 			AH.e_color = 0
 			AH.u_color = "#FEFEFE"
 
 			AH.s_tone = "#FAD7D0"
+			AH.s_tone_original = "#FAD7D0"
 
 			age = 30
 			pin = null
 			flavor_text = null
 			src.ResetAllPrefsToLow(user)
 			flying_chat_hidden = 0
+			local_deadchat = 0
 			auto_capitalization = 0
 			listen_ooc = 1
 			view_changelog = 1
@@ -1879,20 +2008,25 @@ $(function() {
 			admin_music_volume = 50
 			radio_music_volume = 50
 			use_click_buffer = 0
-			be_changeling = 0
-			be_revhead = 0
-			be_syndicate = 0
-			be_wizard = 0
-			be_wraith = 0
-			be_blob = 0
-			be_flock = 0
-			be_misc = 0
 			be_traitor = 0
-			be_werewolf = 0
-			be_vampire = 0
+			be_syndicate = 0
 			be_spy = 0
 			be_gangleader = 0
+			be_revhead = 0
+			be_changeling = 0
+			be_wizard = 0
+			be_werewolf = 0
+			be_vampire = 0
+			be_wraith = 0
+			be_blob = 0
+			be_conspirator = 0
+			be_flock = 0
+			be_misc = 0
 			tooltip_option = TOOLTIP_ALWAYS
+			tgui_fancy = TRUE
+			tgui_lock = FALSE
+			PDAcolor = "#6F7961"
+			pda_ringtone_index = "Two-Beep"
 			if (!force_random_names)
 				be_random_name = 0
 			else
@@ -1938,6 +2072,8 @@ $(function() {
 			H.pin = pin
 			H.gender = src.gender
 			//H.desc = src.flavor_text
+			if (H?.organHolder?.head?.donor_appearance) // aaaa
+				H.organHolder.head.donor_appearance.CopyOther(AH)
 
 		if (traitPreferences.isValid() && character.traitHolder)
 			for (var/T in traitPreferences.traits_selected)
@@ -2159,6 +2295,7 @@ var/global/list/facial_hair = list("None" = "none",
 	"Puffy Beard" = "puffbeard",
 	"Long Beard" = "longbeard",
 	"Tramp" = "tramp",
+	"Motley" = "motley",
 	"Eyebrows" = "eyebrows",
 	"Huge Eyebrows" = "thufir")
 
@@ -2221,24 +2358,30 @@ var/global/list/female_screams = list("female", "femalescream1", "femalescream2"
 		H.sound_scream = AH.screamsounds[pick(AH.gender == MALE ? male_screams : female_screams)]
 	if (H && change_name)
 		if (AH.gender == FEMALE)
-			H.real_name = pick(first_names_female)
+			H.real_name = pick_string_autokey("names/first_female.txt")
 		else
-			H.real_name = pick(first_names_male)
-		H.real_name += " [pick(last_names)]"
+			H.real_name = pick_string_autokey("names/first_male.txt")
+		H.real_name += " [pick_string_autokey("names/last.txt")]"
 
 	AH.voicetype = RANDOM_HUMAN_VOICE
 
 	var/list/hair_colors = list("#101010", "#924D28", "#61301B", "#E0721D", "#D7A83D",\
 	"#D8C078", "#E3CC88", "#F2DA91", "#F21AE", "#664F3C", "#8C684A", "#EE2A22", "#B89778", "#3B3024", "#A56b46")
-	var/hair_color
+	var/hair_color1
+	var/hair_color2
+	var/hair_color3
 	if (prob(75))
-		hair_color = randomize_hair_color(pick(hair_colors))
+		hair_color1 = randomize_hair_color(pick(hair_colors))
+		hair_color2 = prob(50) ? hair_color1 : randomize_hair_color(pick(hair_colors))
+		hair_color3 = prob(50) ? hair_color1 : randomize_hair_color(pick(hair_colors))
 	else
-		hair_color = randomize_hair_color(random_saturated_hex_color())
+		hair_color1 = randomize_hair_color(random_saturated_hex_color())
+		hair_color2 = prob(50) ? hair_color1 : randomize_hair_color(random_saturated_hex_color())
+		hair_color3 = prob(50) ? hair_color1 : randomize_hair_color(random_saturated_hex_color())
 
-	AH.customization_first_color = hair_color
-	AH.customization_second_color = hair_color
-	AH.customization_third_color = hair_color
+	AH.customization_first_color = hair_color1
+	AH.customization_second_color = hair_color2
+	AH.customization_third_color = hair_color3
 
 	var/stone = rand(34,-184)
 	if (stone < -30)
@@ -2247,6 +2390,7 @@ var/global/list/female_screams = list("female", "femalescream1", "femalescream2"
 		stone = rand(34,-184)
 
 	AH.s_tone = blend_skintone(stone, stone, stone)
+	AH.s_tone_original = AH.s_tone
 
 	if (H)
 		if (H.limbs)
@@ -2324,15 +2468,11 @@ var/global/list/female_screams = list("female", "femalescream1", "femalescream2"
 	if (H && change_age)
 		H.bioHolder.age = rand(20,80)
 
-	if (H && H.organHolder && H.organHolder.head && H.organHolder.head.donor_appearance) // aaaa
+	if (H?.organHolder?.head?.donor_appearance) // aaaa
 		H.organHolder.head.donor_appearance.CopyOther(AH)
 
 	SPAWN_DBG(1 DECI SECOND)
-		AH.UpdateMob()
-		if (H)
-			H.set_face_icon_dirty()
-			H.set_body_icon_dirty()
-
+		H?.update_colorful_parts()
 
 // Generates a real crap checkbox for html toggle links.
 // it sucks but it's a bit more readable i guess.

@@ -1,0 +1,206 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/variableTurf/clear,
+/area/space)
+"h" = (
+/turf/unsimulated/floor/polarispit/marj,
+/area/noGenerate)
+"o" = (
+/obj/ladder{
+	id = "bluntcliff";
+	layer = 2;
+	pixel_y = 18
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"q" = (
+/obj/item/raw_material/rock,
+/turf/variableTurf/clear,
+/area/noGenerate)
+"r" = (
+/turf/unsimulated/floor/polarispit/marj/pitwall,
+/area/noGenerate)
+"I" = (
+/turf/variableTurf/clear,
+/area/noGenerate)
+"T" = (
+/obj/sea_plant/seaweed,
+/turf/variableTurf/clear,
+/area/noGenerate)
+
+(1,1,1) = {"
+I
+I
+T
+I
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+T
+r
+h
+q
+T
+a
+a
+a
+a
+"}
+(3,1,1) = {"
+I
+r
+h
+I
+I
+a
+a
+a
+a
+"}
+(4,1,1) = {"
+T
+r
+h
+T
+I
+I
+a
+a
+a
+"}
+(5,1,1) = {"
+I
+r
+h
+I
+T
+I
+I
+a
+a
+"}
+(6,1,1) = {"
+T
+r
+h
+h
+I
+I
+T
+a
+a
+"}
+(7,1,1) = {"
+q
+r
+h
+h
+I
+q
+I
+a
+a
+"}
+(8,1,1) = {"
+I
+T
+r
+h
+h
+T
+I
+I
+a
+"}
+(9,1,1) = {"
+a
+I
+r
+h
+h
+h
+I
+I
+a
+"}
+(10,1,1) = {"
+a
+I
+T
+r
+h
+h
+I
+T
+I
+"}
+(11,1,1) = {"
+a
+T
+I
+r
+h
+h
+h
+I
+I
+"}
+(12,1,1) = {"
+a
+I
+I
+I
+r
+h
+h
+q
+T
+"}
+(13,1,1) = {"
+a
+a
+T
+I
+r
+h
+h
+o
+I
+"}
+(14,1,1) = {"
+a
+a
+I
+q
+T
+r
+h
+h
+I
+"}
+(15,1,1) = {"
+a
+a
+I
+I
+I
+I
+r
+h
+T
+"}
+(16,1,1) = {"
+a
+a
+a
+T
+I
+I
+T
+I
+I
+"}

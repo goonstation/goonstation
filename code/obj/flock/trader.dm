@@ -121,11 +121,11 @@
 	var/range = 4
 
 	New()
-		teleport_jammers += src
+		START_TRACKING_CAT(TR_CAT_TELEPORT_JAMMERS)
 		..()
 
 	disposing()
-		teleport_jammers -= src
+		STOP_TRACKING_CAT(TR_CAT_TELEPORT_JAMMERS)
 		..()
 
 /obj/item/device/flockblocker/attack_self(mob/user as mob)

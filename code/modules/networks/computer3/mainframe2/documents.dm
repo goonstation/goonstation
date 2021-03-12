@@ -24,6 +24,7 @@
 		src.fields["cat"] = "Combine the contents of one or more data files and print result to current output (Default output would be the user terminal). Use with executable files is inadvisable.|nUsage: cat \"filepath\" \[filepath...]"
 		src.fields["echo"] = "Print text to current stream. Stream defaults to standard output (User terminal screen) if not piping.|nIf piping, output is passed on. If the piping target is not an executable, an attempt will be made to write to that file.|nUsage: echo \"text\" OR echo \"text\" | pipe_file_name"
 		src.fields["eval"] = "Evaluate an expression.  Stack based with RPN input--the operation is expressed following the inputs, like \"1 2 +\" will result in 3.|nInput values are placed in order in a \"stack,\" with most recent input on top and first input on the bottom.  Values are taken back off the stack from the top down.  Operations act on the top 1 or 2 values on the stack, usually removing them and placing the result as the new top.|nValid operations are +, -, *, /, %, for arithmetic operations.|neq (equal), neq (not equal), gt (greater than), ge (greater or equal), lt (less than), le (less or equal) for comparison operations,|nAnd, Or, Not, and Xor for logical operations.|nThe operator DUP will copy the top value on the stack without removing anything from the stack.|nText surrounded by apostrophes will be interpreted as a string.  Variables may be set by pushing the desired value to the stack and then using the TO operator and a variable name.  For example, \"5 to HAMDAD\" would create a variable with the name HAMDAD and value 5.|nThere are also four file checking operators: d, e, f, and x.  Each take a filepath string from the top of the stack and leave a boolean value in its place.  d leaves a true if the path is to a folder, x is true if the path is to an executable, f is true if the path is to a file, and e is true if the path is to anything at all."
+		src.fields["unset"] = "Un-sets an environment variable that had previously been set with \"eval\".|nUsage (clear all variables): \"unset\"|nUsage (clear var1, var2): \"unset var1 var2\" "
 		src.fields["who"] = "Print list of current users to current output.|nUsage: who"
 		src.fields["mesg"] = "Control acceptance of messages sent by other users.|nUsage mesg \"(y/n)\""
 		src.fields["talk"] = "Send a message to another current user.|nUsage talk \"user name or user terminal ID\" \"message\""
@@ -122,6 +123,92 @@
 						  "#prman upload bot_id bodyguard patrol=1",
 						  "or",
 						  "#prman upload bot_id bodyguard -f demo_conf")
+
+// things to shorten artlab work
+// so people misspell gptio less often
+
+/datum/computer/file/record/artlab_activate
+	name = "act"
+
+	New()
+		..()
+		src.fields = list("#!",
+						  "if $argc 1 lt | echo Error: Please specify equipment to activate! | break",
+						  "gptio activate $arg0")
+
+/datum/computer/file/record/artlab_deactivate
+	name = "deact"
+
+	New()
+		..()
+		src.fields = list("#!",
+						  "if $argc 1 lt | echo Error: Please specify equipment to deactivate! | break",
+						  "gptio deactivate $arg0")
+
+/datum/computer/file/record/artlab_read
+	name = "read"
+
+	New()
+		..()
+		src.fields = list("#!",
+						  "if $argc 1 lt | echo Error: Please specify equipment to read test results from! | break",
+							"gptio read $arg0")
+
+/datum/computer/file/record/artlab_info
+	name = "info"
+
+	New()
+		..()
+		src.fields = list("#!",
+						  "if $argc 1 lt | echo Error: Please specify equipment to get information on! | break",
+						  "gptio info $arg0")
+
+/datum/computer/file/record/artlab_xray
+	name = "xray"
+
+	New()
+		..()
+		src.fields = list("#!",
+						  "if $argc 1 lt | gptio peek xray radstrength",
+						  "if $argc 1 ge | gptio poke xray radstrength $arg0")
+
+/datum/computer/file/record/artlab_heater
+	name = "temp"
+
+	New()
+		..()
+		src.fields = list("#!",
+						  "if $argc 1 lt | gptio peek heater temptarget",
+						  "if $argc 1 ge | gptio poke heater temptarget $arg0")
+
+/datum/computer/file/record/artlab_elecbox
+	name = "elec"
+
+	New()
+		..()
+		src.fields = list("#!",
+						  "if $argc 1 lt | gptio peek elecbox voltage",
+							"if $argc 1 lt | gptio peek elecbox wattage",
+						  "if $argc 1 ge | gptio poke elecbox voltage $arg0",
+							"if $argc 2 ge | gptio poke elecbox wattage $arg1")
+
+/datum/computer/file/record/artlab_pitcher
+	name = "pitcher"
+
+	New()
+		..()
+		src.fields = list("#!",
+						  "if $argc 1 lt | gptio peek pitcher power",
+						  "if $argc 1 ge | gptio poke pitcher power $arg0")
+
+/datum/computer/file/record/artlab_impactpad
+	name = "stand"
+
+	New()
+		..()
+		src.fields = list("#!",
+						  "if $argc 1 lt | gptio peek impactpad stand",
+						  "if $argc 1 ge | gptio poke impactpad stand $arg0")
 
 /*
  *		Emails!!

@@ -7,9 +7,9 @@
 	var/time = 30.0
 	//var/TPR = 0
 
-	lr = 0.6
-	lg = 1
-	lb = 0.1
+	light_r =0.6
+	light_g = 1
+	light_b = 0.1
 
 /obj/machinery/computer/pod/old
 	icon_state = "old"
@@ -37,7 +37,7 @@
 	if (!( src.connected ))
 		viewers(null, null) << "Cannot locate mass driver connector. Cancelling firing sequence!"
 		return
-	for(var/obj/machinery/door/poddoor/M in doors)
+	for(var/obj/machinery/door/poddoor/M in by_type[/obj/machinery/door])
 		if (M.id == src.id)
 			SPAWN_DBG( 0 )
 				M.open()
@@ -45,13 +45,13 @@
 	sleep(2 SECONDS)
 
 	//src.connected.drive()		*****RM from 40.93.3S
-	for(var/obj/machinery/mass_driver/M in machine_registry[MACHINES_MASSDRIVERS])
+	for(var/obj/machinery/mass_driver/M as() in machine_registry[MACHINES_MASSDRIVERS])
 		if(M.id == src.id)
 			M.power = src.connected.power
 			M.drive()
 
 	sleep(5 SECONDS)
-	for(var/obj/machinery/door/poddoor/M in doors)
+	for(var/obj/machinery/door/poddoor/M in by_type[/obj/machinery/door])
 		if (M.id == src.id)
 			SPAWN_DBG( 0 )
 				M.close()
@@ -61,7 +61,7 @@
 /obj/machinery/computer/pod/New()
 	..()
 	SPAWN_DBG( 5 )
-		for(var/obj/machinery/mass_driver/M in machine_registry[MACHINES_MASSDRIVERS])
+		for(var/obj/machinery/mass_driver/M as() in machine_registry[MACHINES_MASSDRIVERS])
 			if (M.id == src.id)
 				src.connected = M
 			else
@@ -71,7 +71,7 @@
 /obj/machinery/computer/pod/attackby(obj/item/I as obj, user as mob)
 	if (isscrewingtool(I))
 		playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
-		if(do_after(user, 20))
+		if(do_after(user, 2 SECONDS))
 			if (src.status & BROKEN)
 				boutput(user, "<span class='notice'>The broken glass falls out.</span>")
 				var/obj/computerframe/A = new /obj/computerframe( src.loc )
@@ -175,16 +175,17 @@
 		if (src.time > 0)
 			src.time = round(src.time) - 1
 		else
-			alarm()
-			src.time = 0
-			src.timing = 0
+			SPAWN_DBG(0)
+				alarm()
+				src.time = 0
+				src.timing = 0
 		src.updateDialog()
 	return
 
 /obj/machinery/computer/pod/Topic(href, href_list)
 	if(..())
 		return
-	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
+	if ((usr.contents.Find(src) || (in_interact_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
 		src.add_dialog(usr)
 		if (href_list["spell_teleport"])
 			//src.TPR = 1
@@ -214,7 +215,7 @@
 						src.time = min(max(round(src.time), 0), 120)
 					else
 						if (href_list["door"])
-							for(var/obj/machinery/door/poddoor/M in doors)
+							for(var/obj/machinery/door/poddoor/M in by_type[/obj/machinery/door])
 								if (M.id == src.id)
 									if (M.density)
 										SPAWN_DBG( 0 )

@@ -13,7 +13,7 @@
 		..()
 
 	attack_hand(mob/user as mob)
-		if(get_dist(usr, src) > 1 || usr.z != src.z) return
+		if(get_dist(user, src) > 1 || user.z != src.z) return
 		dialogue.showDialogue(user)
 		return
 
@@ -293,16 +293,23 @@
 
 /obj/item/factionrep/ntboard
 	name = "syndicate circuit board"
-	desc = "Rather complex circuit board, ripped straight from syndicate drone's internal mechanicsm.Maybe someone would be interested in this?"
+	desc = "Rather complex circuit board, ripped straight from a syndicate drone's internal mechanism. Maybe someone would be interested in this?"
 	icon = 'icons/misc/factionrewards.dmi'
 	icon_state = "droneboard2"
-	event_handler_flags = IMMUNE_MANTA_PUSH
+	event_handler_flags = IMMUNE_MANTA_PUSH | USE_FLUID_ENTER
 
 /obj/item/factionrep/ntboarddebug
 	name = "syndicate circuit board"
-	desc = "Rather complex circuit board, ripped straight from syndicate drone's internal mechanicsm.Maybe someone would be interested in this?"
+	desc = "Rather complex circuit board, ripped straight from a syndicate drone's internal mechanism. Maybe someone would be interested in this?"
 	icon = 'icons/misc/factionrewards.dmi'
 	icon_state = "droneboard2"
+	event_handler_flags = IMMUNE_MANTA_PUSH | USE_FLUID_ENTER
+
+/obj/item/factionrep/ntboardfried
+	name = "fried syndicate circuit board"
+	desc = "This illegal-looking circuit board is fried. Looks like it was overloaded somehow, rendering it useless."
+	icon = 'icons/misc/factionrewards.dmi'
+	icon_state = "droneboard2fried"
 	event_handler_flags = IMMUNE_MANTA_PUSH
 
 /obj/item/clothing/under/gimmick/seaman
@@ -347,15 +354,15 @@
 
 /obj/item/clothing/head/seaman
 	name = "seaman's peaked cap"
-	desc = "This hood protects you from harmful biological contaminants. This one has a blue visor."
+	desc = "A service cap, to go with the seaman's uniform of Nanotrasen's naval branch. Snazzy!"
 	icon_state = "nt1"
 	item_state = "nt1"
 	icon = 'icons/obj/clothing/item_hats.dmi'
 	wear_image_icon = 'icons/mob/head.dmi'
 
 /obj/item/clothing/head/officer
-	name = "Nanotrasen officer's peaked cap"
-	desc = "This hood protects you from harmful biological contaminants. This one has a blue visor."
+	name = "officer's peaked cap"
+	desc = "A service cap, to go with the officer's uniform of Nanotrasen's naval branch. Looking sharp, chief!"
 	icon_state = "nt2"
 	item_state = "nt2"
 	icon = 'icons/obj/clothing/item_hats.dmi'

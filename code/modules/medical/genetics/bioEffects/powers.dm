@@ -4,7 +4,7 @@
 	id = "cryokinesis"
 	msgGain = "You notice a strange cold tingle in your fingertips."
 	msgLose = "Your fingers feel warmer."
-	effectType = effectTypePower
+	effectType = EFFECT_TYPE_POWER
 	cooldown = 600
 	probability = 66
 	blockCount = 3
@@ -294,6 +294,9 @@
 			boutput(usr, "<span class='alert'>You can't jump right now!</span>")
 			return 1
 
+		//store both x and y as transforms mid jump can cause unwanted pixel offsetting
+		var/original_x_offset = owner.pixel_x
+		var/original_y_offset = owner.pixel_y
 		var/jump_tiles = 10
 		var/pixel_move = 8
 		var/sleep_time = 1
@@ -317,15 +320,9 @@
 						owner.pixel_y -= pixel_move
 					sleep(sleep_time)
 
-			usr.pixel_y = 0
-
-			if (owner.bioHolder.HasEffect("fat") && prob(66) && !linked_power.safety)
-				owner.visible_message("<span class='alert'><b>[owner]</b> crashes due to their heavy weight!</span>")
-				playsound(usr.loc, "sound/impact_sounds/Wood_Hit_1.ogg", 50, 1)
-				owner.changeStatus("weakened", 10 SECONDS)
-				owner.changeStatus("stunned", 50)
-
-			owner.layer = prevLayer
+				owner.pixel_x = original_x_offset
+				owner.pixel_y = original_y_offset
+				owner.layer = prevLayer
 
 		if (istype(owner.loc,/obj/))
 			var/obj/container = owner.loc
@@ -354,6 +351,9 @@
 			boutput(usr, "<span class='alert'>You can't jump right now!</span>")
 			return 1
 
+		//store both x and y as transforms mid jump can cause unwanted pixel offsetting
+		var/original_x_offset = owner.pixel_x
+		var/original_y_offset = owner.pixel_y
 		var/jump_tiles = 10
 		var/pixel_move = 8
 		var/sleep_time = 0.5
@@ -379,9 +379,9 @@
 						owner.pixel_y -= pixel_move
 					sleep(sleep_time)
 
-			usr.pixel_y = 0
-
-			owner.layer = prevLayer
+				owner.pixel_x = original_x_offset
+				owner.pixel_y = original_y_offset
+				owner.layer = prevLayer
 
 		if (istype(owner.loc,/obj/))
 			var/obj/container = owner.loc
@@ -453,7 +453,13 @@
 				owner.bioHolder.CopyOther(H.bioHolder, copyAppearance = 1, copyPool = 0, copyEffectBlocks = 0, copyActiveEffects = 0)
 				owner.real_name = H.real_name
 				owner.name = H.name
-
+				if(owner.bioHolder?.mobAppearance?.mutant_race)
+					owner.set_mutantrace(owner.bioHolder.mobAppearance.mutant_race.type)
+				else
+					owner.set_mutantrace(null)
+				if(ishuman(owner))
+					var/mob/living/carbon/human/O = owner
+					O.update_colorful_parts()
 		return
 
 	cast_misfire(atom/target)
@@ -481,8 +487,63 @@
 		return
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/*  / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / /  */
+/* / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / /  */
+
+/datum/bioEffect/power/colorshift
+	name = "Trichochromatic Shift"
+	desc = "Enables the subject to shift their hair color to a different region."
+	id = "colorshift"
+	msgGain = "Your hair itches."
+	msgLose = "You feel more confident in your hair color."
+	cooldown = 600
+	probability = 66
+	blockCount = 4
+	blockGaps = 4
+	stability_loss = 0
+	ability_path = /datum/targetable/geneticsAbility/colorshift
+
+/datum/targetable/geneticsAbility/colorshift
+	name = "Trichochromatic Shift"
+	desc = "Swap the colors of your hair around."
+	icon_state = "polymorphism"
+	targeted = 0
+
+	cast()
+		if (..())
+			return 1
+
+		var/mob/living/carbon/human/H
+		if (ishuman(owner))
+			H = owner
+		else
+			boutput(H, "<span class='notice'>This only works on human hair!</span>")
+			return
+
+		if (istype(H.mutantrace, /datum/mutantrace/lizard))
+			boutput(H, "<span class='notice'>You don't have any hair!</span>")
+			return
+		else if (H.mutantrace?.override_hair && !istype(H.mutantrace, /datum/mutantrace/cow))
+			boutput(H, "<span class='notice'>Whatever hair you have isn't affected!</span>")
+			return
+
+		if (H.bioHolder?.mobAppearance)
+			var/datum/appearanceHolder/AHs = H.bioHolder.mobAppearance
+
+			var/col1 = AHs.customization_first_color
+			var/col2 = AHs.customization_second_color
+			var/col3 = AHs.customization_third_color
+
+			AHs.customization_first_color = col3
+			AHs.customization_second_color = col1
+			AHs.customization_third_color = col2
+
+			H.visible_message("<span class='notice'><b>[H.name]</b>'s hair changes colors!</span>")
+			H.update_colorful_parts()
+
+/* / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / */
+/* / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / */
+/* / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / */
 
 /datum/bioEffect/power/telepathy
 	name = "Telepathy"
@@ -533,6 +594,7 @@
 		var/msg = copytext( adminscrub(input(usr, "Message to [recipient.name]:","Telepathy") as text), 1, MAX_MESSAGE_LEN)
 		if (!msg)
 			return 1
+		phrase_log.log_phrase("telepathy", msg)
 
 		var/psyname = "A psychic voice"
 		if (recipient.bioHolder.HasOneOfTheseEffects("telepathy","empath"))
@@ -576,6 +638,7 @@
 		var/msg = copytext( adminscrub(input(usr, "Message to [recipient.name]:","Telepathy") as text), 1, MAX_MESSAGE_LEN)
 		if (!msg)
 			return 1
+		phrase_log.log_phrase("telepathy", msg)
 		msg = uppertext(msg)
 
 		owner.visible_message("<span class='alert'><b>[owner]</b> puts their fingers to their temples and stares at [target] really hard.</span>")
@@ -920,10 +983,10 @@
 			owner.visible_message("<span class='alert'><b>[owner.name]</b>[fart_string]</span>")
 			while (sound_repeat > 0)
 				sound_repeat--
-				playsound(owner.loc, "sound/voice/farts/superfart.ogg", sound_volume, 1)
+				playsound(owner.loc, "sound/voice/farts/superfart.ogg", sound_volume, 1, channel=VOLUME_CHANNEL_EMOTE)
 
 			for(var/mob/living/V in range(get_turf(owner),fart_range))
-				shake_camera(V,10,5)
+				shake_camera(V,10,64)
 				if (V == owner)
 					continue
 				boutput(V, "<span class='alert'>You are sent flying!</span>")
@@ -1020,6 +1083,7 @@
 	stability_loss = 10
 	ability_path = /datum/targetable/geneticsAbility/eyebeams
 	var/projectile_path = "/datum/projectile/laser/eyebeams"
+	var/stun_mode = 0
 
 /datum/targetable/geneticsAbility/eyebeams
 	name = "Eyebeams"
@@ -1039,6 +1103,8 @@
 		var/projectile_path = ispath(EB.projectile_path) ? EB.projectile_path : text2path(EB.projectile_path)
 		if(linked_power.power)
 			projectile_path = /datum/projectile/laser
+		else if(EB.stun_mode) //used by superhero for nonlethal stun
+			projectile_path = /datum/projectile/laser/eyebeams/stun
 		if (!ispath(projectile_path))
 			projectile_path = /datum/projectile/laser/eyebeams
 
@@ -1066,6 +1132,9 @@
 	color_red = 1
 	color_green = 0
 	color_blue = 1
+
+/datum/projectile/laser/eyebeams/stun
+	ks_ratio = 0.0
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1605,8 +1674,10 @@
 			return 1
 		owner.visible_message("<span class='alert'><b>[owner.name] makes a weird noise!</b></span>")
 		playsound(owner.loc, 'sound/musical_instruments/WeirdHorn_0.ogg', 50, 0)
+		var/count = 0
 		for (var/mob/living/L in range(7,owner))
 			if (L.hearing_check(1))
+				if(count++ > (src.linked_power.power ? 10 : 7)) break
 				if(locate(/obj/item/storage/bible) in get_turf(L))
 					owner.visible_message("<span class='alert'><b>A mysterious force smites [owner.name] for inciting blasphemy!</b></span>")
 					owner.gib()
@@ -1628,7 +1699,7 @@
 	name = "Telekinetic Pull"
 	desc = "Allows the subject to influence physical objects through utilizing latent powers in their mind."
 	id = "telekinesis_drag"
-	effectType = effectTypePower
+	effectType = EFFECT_TYPE_POWER
 	probability = 8
 	blockCount = 5
 	blockGaps = 5
@@ -1642,8 +1713,7 @@
 		if (disposed)
 			return
 		if (ishuman(owner))
-			var/mob/living/carbon/human/H = owner
-			overlay_image = image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "telekinesishead[H.bioHolder.HasEffect("fat") ? "fat" :""]", layer = MOB_LAYER)
+			overlay_image = image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "telekinesishead", layer = MOB_LAYER)
 		return
 
 	OnAdd()
@@ -1666,7 +1736,7 @@
 	name = "Telekinesis"
 	desc = "Allows the subject to influence physical objects through utilizing latent powers in their mind."
 	id = "telekinesis_command"
-	effectType = effectTypePower
+	effectType = EFFECT_TYPE_POWER
 	probability = 8
 	blockCount = 5
 	blockGaps = 5
@@ -1737,7 +1807,7 @@
 	name = "Cloak of Darkness"
 	desc = "Enables the subject to bend low levels of light around themselves, creating a cloaking effect."
 	id = "cloak_of_darkness"
-	effectType = effectTypePower
+	effectType = EFFECT_TYPE_POWER
 	isBad = 0
 	probability = 33
 	blockGaps = 3
@@ -1827,7 +1897,7 @@
 	name = "Chameleon"
 	desc = "The subject becomes able to subtly alter light patterns to become invisible, as long as they remain still."
 	id = "chameleon"
-	effectType = effectTypePower
+	effectType = EFFECT_TYPE_POWER
 	probability = 33
 	blockCount = 3
 	blockGaps = 3
@@ -1840,6 +1910,7 @@
 	lockedTries = 8
 	stability_loss = 20
 	cooldown = 0
+	var/last_moved = 0
 	var/active = 0
 	ability_path = /datum/targetable/geneticsAbility/chameleon
 
@@ -1855,18 +1926,25 @@
 			var/mob/living/L = owner
 			L.UpdateOverlays(null, id)
 			L.invisibility = 0
+		if (src.active)
+			src.UnregisterSignal(owner, list(COMSIG_MOVABLE_MOVED, COMSIG_MOB_ATTACKED_PRE))
 		return
 
 	OnLife()
 		if(..()) return
+		if(!src.active) return
 		if(isliving(owner))
 			var/mob/living/L = owner
-			if ((world.timeofday - owner.l_move_time) >= 30 && can_act(owner) && src.active)
+			if (TIME - last_moved >= 3 SECONDS && can_act(owner))
 				L.UpdateOverlays(overlay_image, id)
 				L.invisibility = 1
-			else
-				L.UpdateOverlays(null, id)
-				L.invisibility = 0
+
+	proc/decloak()
+		if(isliving(owner))
+			var/mob/living/L = owner
+			last_moved = TIME
+			L.UpdateOverlays(null, id)
+			L.invisibility = 0
 
 /datum/targetable/geneticsAbility/chameleon
 	name = "Chameleon"
@@ -1882,9 +1960,13 @@
 		if (CH.active)
 			boutput(usr, "You stop using your chameleon cloaking.")
 			CH.active = 0
+			CH.UnregisterSignal(owner, list(COMSIG_MOVABLE_MOVED, COMSIG_MOB_ATTACKED_PRE))
+			CH.decloak()
 		else
 			boutput(usr, "You start using your chameleon cloaking.")
+			CH.last_moved = TIME
 			CH.active = 1
+			CH.RegisterSignal(owner, list(COMSIG_MOVABLE_MOVED, COMSIG_MOB_ATTACKED_PRE), /datum/bioEffect/power/chameleon/proc/decloak)
 		return 0
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1945,6 +2027,52 @@
 		owner.reagents.clear_reagents()
 		return 0
 
+/datum/bioEffect/power/bigpuke/acidpuke
+	name = "Acidic Mass Emesis"
+	id = "acid_bigpuke"
+	ability_path = /datum/targetable/geneticsAbility/bigpuke/acid
+	cooldown = 350
+
+/datum/targetable/geneticsAbility/bigpuke/acid
+	name = "Acidic Mass Emesis"
+	desc = "BLAAAAAAAARFGHHHHHGHH"
+	icon_state = "bigpuke"
+	targeted = 1
+	has_misfire = 0
+
+	cast(atom/target)
+		if (..())
+			return 1
+
+		var/turf/T = get_turf(target)
+		var/list/affected_turfs = getline(owner, T)
+		var/range = 3
+		owner.visible_message("<span class='alert'><b>[owner] horfs up a huge stream of acidic puke!</b></span>")
+		logTheThing("combat", owner, target, "power-pukes [log_reagents(owner)] at [log_loc(owner)].")
+		playsound(owner.loc, "sound/misc/meat_plop.ogg", 50, 0)
+		owner.reagents.add_reagent("gvomit",20)
+		owner.reagents.add_reagent("pacid",10)
+		owner.reagents.add_reagent("radium",5)
+		var/turf/currentturf
+		var/turf/previousturf
+		for(var/turf/F in affected_turfs)
+			previousturf = currentturf
+			currentturf = F
+			if(currentturf.density || istype(currentturf, /turf/space))
+				break
+			if(previousturf && LinkBlocked(previousturf, currentturf))
+				break
+			if (F == get_turf(owner))
+				continue
+			if (get_dist(owner,F) > range)
+				continue
+			owner.reagents.reaction(F,TOUCH)
+			for(var/mob/living/L in F.contents)
+				owner.reagents.reaction(L,TOUCH)
+			for(var/obj/O in F.contents)
+				owner.reagents.reaction(O,TOUCH)
+		owner.reagents.clear_reagents()
+		return 0
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2011,6 +2139,7 @@
 	var/count = 0
 	var/const/ticks_to_explode = 200
 	var/datum/targetable/geneticsAbility/shoot_limb/AB = null
+	var/stun_mode = 0 // used by discount superhero
 
 	OnLife()
 		..()
@@ -2048,6 +2177,13 @@
 	var/throw_power = 1
 	var/limb_force = 20
 
+	proc/hit_callback(var/datum/thrown_thing/thr)
+		for(var/mob/living/carbon/hit in get_turf(thr.thing))
+			hit.changeStatus("weakened", 150)
+			hit.changeStatus("stunned", 50)
+			break
+		return 0
+
 	cast(atom/target)
 		if (..())
 			return 1
@@ -2055,6 +2191,7 @@
 		if (ishuman(owner))
 			var/mob/living/carbon/human/H = owner
 			var/obj/item/parts/thrown_limb = null
+			var/datum/bioEffect/power/shoot_limb/SL = linked_power
 
 			if (H.has_limb("l_arm"))
 				thrown_limb = H.limbs.l_arm.remove(0)
@@ -2071,7 +2208,8 @@
 					//double power if the ability is empowered (doesn't really do anything, but w/e)
 					var/tmp_force = thrown_limb.throwforce
 					thrown_limb.throwforce = limb_force* (throw_power+1)	//double damage if empowered
-					thrown_limb.throw_at(target, range, throw_power * (linked_power.power+1))
+					var/callback = (SL?.stun_mode) ? /datum/targetable/geneticsAbility/shoot_limb/proc/hit_callback : null
+					thrown_limb.throw_at(target, range, throw_power * (linked_power.power+1), end_throw_callback=callback)
 					//without snychronizer, you take damage and bleed on usage of the power
 					if (!linked_power.safety)
 						new thrown_limb.streak_decal(owner.loc)

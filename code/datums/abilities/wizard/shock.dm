@@ -31,12 +31,13 @@
 			if (target.traitHolder.hasTrait("training_chaplain"))
 				boutput(holder.owner, "<span class='alert'>[target] has divine protection from magic.</span>")
 				target.visible_message("<span class='alert'>The electric charge courses through [target] harmlessly!</span>")
+				JOB_XP(target, "Chaplain", 2)
 				return
 			else if (iswizard(target))
 				target.visible_message("<span class='alert'>The electric charge somehow completely misses [target]!</span>")
 				return
 
-		if (holder.owner.wizard_spellpower())
+		if (holder.owner.wizard_spellpower(src))
 			elecflash(target,power = 4, exclude_center = 0)
 			//target.elecgib()
 			arcFlash(holder.owner, target, 0) // we just want the effect, the damage is taken care of below

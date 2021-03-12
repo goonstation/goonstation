@@ -5,40 +5,43 @@
 
 //PLEASE ONLY EVER USE THESE TO MODIFY STAMINA. NEVER SET IT DIRECTLY.
 
-//Returns current stamina
+///Returns current stamina
 /mob/proc/get_stamina()
-	return 0
+	. = 0
 
 /mob/living/get_stamina()
-	if (!src.use_stamina) return
-	return stamina
+	if (!src.use_stamina)
+		return
+	. = stamina
 
-//Adds a stamina max modifier with the given key. This uses unique keys to allow for "categories" of max modifiers - so you can only have one food buff etc.
-//If you get a buff of a category you already have, nothing will happen.
+///Adds a stamina max modifier with the given key. This uses unique keys to allow for "categories" of max modifiers - so you can only have one food buff etc.
+///If you get a buff of a category you already have, nothing will happen.
 /mob/proc/add_stam_mod_max(var/key, var/value)
 	return 0
 
 /mob/living/add_stam_mod_max(var/key, var/value)
 	if (!src.use_stamina) return
 	if(!isnum(value)) return
-	if(stamina_mods_max.Find(key)) return 0
+	if(key in stamina_mods_max)
+		return 0
 	stamina_mods_max.Add(key)
 	stamina_mods_max[key] = value
 	return 1
 
-//Removes a stamina max modifier with the given key.
+///Removes a stamina max modifier with the given key.
 /mob/proc/remove_stam_mod_max(var/key)
 	return 0
 
 /mob/living/remove_stam_mod_max(var/key)
 	if (!src.use_stamina) return
-	if(!stamina_mods_max.Find(key)) return 0
+	if(!(key in stamina_mods_max))
+		return 0
 	stamina_mods_max.Remove(key)
 	return 1
 
-//Returns the total modifier for stamina max
+///Returns the total modifier for stamina max
 /mob/proc/get_stam_mod_max()
-	return 0
+	. = 0
 
 /mob/living/get_stam_mod_max()
 	if (!src.use_stamina) return
@@ -47,51 +50,10 @@
 		val += stamina_mods_max[x]
 
 	var/stam_mod_items = 0
-	for(var/atom in src.get_equipped_items())
-		var/obj/item/C = atom
+	for (var/obj/item/C as() in src.get_equipped_items())
 		stam_mod_items += C.getProperty("stammax")
 
 	return (val + stam_mod_items)
-
-//Adds a stamina regen modifier with the given key. This uses unique keys to allow for "categories" of regen modifiers - so you can only have one food buff etc.
-//If you get a buff of a category you already have, nothing will happen.
-/mob/proc/add_stam_mod_regen(var/key, var/value)
-	return 0
-
-/mob/living/add_stam_mod_regen(var/key, var/value)
-	if (!src.use_stamina) return
-	if(!isnum(value)) return
-	if(stamina_mods_regen.Find(key)) return 0
-	stamina_mods_regen.Add(key)
-	stamina_mods_regen[key] = value
-	return 1
-
-//Removes a stamina regen modifier with the given key.
-/mob/proc/remove_stam_mod_regen(var/key)
-	return 0
-
-/mob/living/remove_stam_mod_regen(var/key)
-	if (!src.use_stamina) return
-	if(!stamina_mods_regen.Find(key)) return 0
-	stamina_mods_regen.Remove(key)
-	return 1
-
-//Returns the total modifier for stamina regen
-/mob/proc/get_stam_mod_regen()
-	return 0
-
-/mob/living/get_stam_mod_regen()
-	if (!src.use_stamina) return
-	var/val = 0
-	for(var/x in stamina_mods_regen)
-		val += stamina_mods_regen[x]
-
-	var/stam_mod_items = 0
-	for(var/atom in src.get_equipped_items())
-		var/obj/item/C = atom
-		stam_mod_items += C.getProperty("stamregen")
-	return val
-
 
 /mob/proc/add_stun_resist_mod(var/key, var/value)
 	if(!isnum(value)) return
@@ -145,12 +107,11 @@
 	if(prob(4) && ishellbanned(src)) //Chances are this will happen during combat
 		SPAWN_DBG(rand(5, 80)) //Detach the cause (hit, reduced stamina) from the consequence (disconnect)
 			var/dur = src.client.fake_lagspike()
-			SPAWN_DBG(dur)
-				del(src.client)
+			sleep(dur)
+			del(src.client)
 
 	var/stam_mod_items = 0
-	for(var/atom in src.get_equipped_items())
-		var/obj/item/C = atom
+	for (var/obj/item/C as() in src.get_equipped_items())
 		stam_mod_items += C.getProperty("stamcost")
 
 	var/percReduction = 0
@@ -158,8 +119,7 @@
 		percReduction = (x * (stam_mod_items / 100))
 
 	stamina = max(STAMINA_NEG_CAP, stamina - (x - percReduction) )
-	if(src.stamina_bar)
-		src.stamina_bar.update_value(src)
+	src.stamina_bar?.update_value(src)
 	return
 
 /mob/living/carbon/human/remove_stamina(var/x)
@@ -189,15 +149,15 @@
 
 //STAMINA UTILITY PROCS
 
-//Responsible for executing critical hits to stamina
+///Responsible for executing critical hits to stamina
 /mob/proc/handle_stamina_crit(var/damage)
-	.=0
+	. = 0
+
 //ddoub le dodbleu
 /mob/living/handle_stamina_crit(var/damage)
 	if(!src.use_stamina) return
 	damage = max(damage,10)
 	damage *= 4
-	//playsound(src.loc, "sound/impact_sounds/Generic_Punch_1.ogg", 50, 1, -1)
 	if(src.stamina >= 1 )
 		#if STAMINA_CRIT_DROP == 1
 		src.set_stamina(min(src.stamina,STAMINA_CRIT_DROP_NUM))
@@ -226,10 +186,15 @@
 	stamina_stun() //Just in case.
 	return
 
-//Checks if mob should be stunned for being at or below 0 stamina and then does so.
-//This is in a proc so we can easily instantly apply the stun from other areas of the game.
-//For example: You'd put this on a weapon after it removes stamina to make sure the stun applies
-//instantly and not on the next life tick.
+
+/**
+ * Checks if mob should be stunned for being at or below 0 stamina and then does so.
+ *
+ * This is in a proc so we can easily instantly apply the stun from other areas of the game.
+ *
+ * For example: You'd put this on a weapon after it removes stamina to make sure the stun applies
+ * instantly and not on the next life tick.
+ */
 /mob/proc/stamina_stun()
 	return
 
@@ -243,8 +208,6 @@
 				src.visible_message("<span class='alert'>[src] collapses!</span>")
 				src.changeStatus("weakened", (STAMINA_STUN_TIME)*10)
 				src.force_laydown_standup()
-	return
-
 
 //new disorient thing
 
@@ -253,11 +216,10 @@
 #define DISORIENT_EAR 4
 
 /mob/proc/get_disorient_protection()
-	.= 0
+	. = 0
 
 	var/res = 0
-	for(var/atom in src.get_equipped_items())
-		var/obj/item/C = atom
+	for (var/obj/item/C as() in src.get_equipped_items())
 		if(C.hasProperty("disorient_resist"))
 			res = C.getProperty("disorient_resist")
 			if (res >= 100)
@@ -270,14 +232,13 @@
 			. += res
 
 
-	.= clamp(.,0,90) //0 to 90 range
+	. = clamp(.,0,90) //0 to 90 range
 
 /mob/proc/get_disorient_protection_eye()
-	.= 0
+	. = 0
 
 	var/res = 0
-	for(var/atom in src.get_equipped_items())
-		var/obj/item/C = atom
+	for (var/obj/item/C as() in src.get_equipped_items())
 		if(C.hasProperty("disorient_resist_eye"))
 			res = C.getProperty("disorient_resist_eye")
 			if (res >= 100)
@@ -310,8 +271,7 @@
 	.= 0
 
 	var/res = 0
-	for(var/atom in src.get_equipped_items())
-		var/obj/item/C = atom
+	for (var/obj/item/C as() in src.get_equipped_items())
 		if(C.hasProperty("disorient_resist_ear"))
 			res = C.getProperty("disorient_resist_ear")
 			if (res >= 100)
@@ -371,6 +331,11 @@
 	else
 		.= 0
 		src.changeStatus("disorient", disorient)
+
+/mob/living/silicon/do_disorient(var/stamina_damage, var/weakened, var/stunned, var/paralysis, var/disorient = 60, var/remove_stamina_below_zero = 0, var/target_type = DISORIENT_BODY)
+	// Apply the twitching disorient animation for as long as the maximum stun duration is.
+	src.changeStatus("cyborg-disorient", max(weakened, stunned, paralysis))
+	. = ..()
 
 //STAMINA UTILITY PROCS
 

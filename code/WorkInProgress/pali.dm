@@ -1,10 +1,17 @@
 // im pali
 
+
+// Pill of sheltestgrog for my office
+
 /obj/item/reagent_containers/pill/sheltestgrog
 	name = "pill"
 	New()
 		. = ..()
 		src.reagents.add_reagent("sheltestgrog", 100)
+
+
+
+// Gun that shoots Securitrons
 
 /obj/item/ammo/bullets/beepsky
 	sname = "Beepsky"
@@ -19,7 +26,6 @@
 	icon_dynamic = 1
 	icon_short = "lmg_ammo"
 	icon_empty = "lmg_ammo-0"
-
 
 /obj/item/gun/kinetic/beepsky
 	name = "\improper Loose Cannon"
@@ -44,7 +50,7 @@
 
 	New()
 		ammo = new/obj/item/ammo/bullets/beepsky
-		current_projectile = new/datum/projectile/special/spawner/beepsky
+		set_current_projectile(new/datum/projectile/special/spawner/beepsky)
 		..()
 
 	setupProperties()
@@ -71,6 +77,9 @@
 
 
 
+
+
+// Untitled Goose Game memes
 
 /datum/limb/thief
 	harm(atom/target, var/mob/living/user)
@@ -143,119 +152,10 @@
 	Move(atom/NewLoc, direct)
 		. = ..()
 		if(src.pulling)
-			src.dir = turn(get_dir(src, src.pulling), 180)
+			src.set_dir(turn(get_dir(src, src.pulling), 180))
 
-/obj/chat_maptext_holder
-	appearance_flags = TILE_BOUND | RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM | KEEP_APART | PIXEL_SCALE
-	mouse_opacity = 0
-	var/list/lines = list() // a queue sure would be nice
 
-	disposing()
-		for(var/image/chat_maptext/I in src.lines)
-			pool(I)
-		src.lines = null
-		for(var/A in src.vis_locs)
-			if(isliving(A))
-				var/mob/living/L = A
-				if(L.chat_text == src)
-					L.chat_text = null
-			A:vis_contents -= src
-		..()
-
-/image/chat_maptext
-	var/bumped = 0
-	var/list/client/visible_to = list()
-	bumped = 0
-	layer = HUD_LAYER_UNDER_1
-	plane = PLANE_HUD
-	maptext_x = -64
-	maptext_y = 28
-	maptext_width = 160
-	maptext_height = 48
-	alpha = 0
-	icon = null
-	appearance_flags = 0
-	var/unique_id
-	var/measured_height = 8
-
-	unpooled(var/pooltype)
-		..()
-		// for optimization purposes some of these could probably be left out if necessary because they *shouldn't* ever change
-		src.bumped = initial(src.bumped)
-		src.layer = initial(src.layer)
-		src.plane = initial(src.plane)
-		src.maptext_x = initial(src.maptext_x)
-		src.maptext_y = initial(src.maptext_y)
-		src.maptext_width = initial(src.maptext_width)
-		src.maptext_height = initial(src.maptext_height)
-		src.alpha = initial(src.alpha)
-		src.icon = initial(src.icon)
-		src.appearance_flags = initial(src.appearance_flags)
-		src.measured_height = initial(src.measured_height)
-		for(var/client/C in src.visible_to)
-			C.images -= src
-		src.visible_to = list()
-		src.unique_id = TIME
-
-	disposing()
-		if(istype(src.loc, /obj/chat_maptext_holder))
-			var/obj/chat_maptext_holder/holder = src.loc
-			holder.lines -= src
-		for(var/client/C in src.visible_to)
-			C.images -= src
-		src.loc = null
-		src.unique_id = 0
-		..()
-
-	proc/bump_up(how_much = 8, invis = 0)
-		src.bumped++
-		if(invis)
-			animate(src, alpha = 0, maptext_y = src.maptext_y + how_much, time = 4)
-		else
-			animate(src, maptext_y = src.maptext_y + how_much, time = 4)
-
-	proc/show_to(var/client/who)
-		if(!istype(who))
-			return
-		who << src
-		src.visible_to += who
-		/*var/mob/whomob = who.mob
-		if(istype(whomob) && !isunconscious(whomob) && isliving(whomob) && !whomob.sleeping && !whomob.getStatusDuration("paralysis"))
-			for (var/mob/dead/target_observer/observer in whomob:observers)
-				if(!observer.client)
-					continue
-				observer.client << src
-				src.visible_to += observer.client*/
-
-	proc/measure(var/client/who)
-		if(!istype(who))
-			for(var/C in clients)
-				if(C)
-					who = C
-					break
-		if(!who) return 8
-		var/measured = who.MeasureText(src.maptext, width = src.maptext_width)
-		src.measured_height = text2num(splittext(measured, "x")[2])
-
-proc/make_chat_maptext(atom/target, msg, style = "", alpha = 255)
-	var/image/chat_maptext/text = unpool(/image/chat_maptext)
-	animate(text, maptext_y = 28, time = 0.01) // this shouldn't be necessary but it keeps breaking without it
-	if(istype(target, /mob/living))
-		var/mob/living/L = target
-		text.loc = L.chat_text
-		L.chat_text.lines.Add(text)
-	else // hmm?
-		text.loc = target
-	msg = copytext(msg, 1, 128) // 4 lines, seems fine to me
-	text.maptext = "<span class='pixel c ol' style=\"[style]\">[msg]</span>"
-	animate(text, alpha = alpha, maptext_y = 34, time = 4, flags = ANIMATION_END_NOW)
-	var/text_id = text.unique_id
-	SPAWN_DBG(4 SECONDS)
-		if(text_id == text.unique_id)
-			text.bump_up(invis=1)
-			sleep(3 SECONDS)
-			pool(text)
-	return text
+// For when you want a turf to have maptext attached on it in a dmm
 
 /obj/maptext_spawner
 	var/loc_maptext = ""
@@ -264,6 +164,7 @@ proc/make_chat_maptext(atom/target, msg, style = "", alpha = 255)
 	var/loc_maptext_x = 0
 	var/loc_maptext_y = 0
 	New()
+		..()
 		loc.maptext = loc_maptext
 		loc.maptext_width = loc_maptext_width
 		loc.maptext_height = loc_maptext_height
@@ -285,12 +186,15 @@ proc/make_chat_maptext(atom/target, msg, style = "", alpha = 255)
 	var/critter_type = /obj/critter/zombie
 
 /obj/hellportal/New()
+	..()
 	src.transform = matrix() * 0
 	animate(src, transform = matrix(), time = 1 SECOND, easing = SINE_EASING)
 	SPAWN_DBG(1 SECOND)
 		new /obj/effects/void_break(src.loc)
 		sleep(0.5 SECONDS)
 		critter_spam()
+
+/obj/hellportal/ex_act(severity) // avoid void_break self-destruction
 
 /obj/hellportal/proc/critter_spam()
 	for(var/I = 1 to src.number_left)
@@ -324,6 +228,9 @@ proc/make_chat_maptext(atom/target, msg, style = "", alpha = 255)
 		var/f = src.filters[length(src.filters)]
 		animate(f, offset=f:offset + 100, time=5 MINUTES, easing=LINEAR_EASING, flags=ANIMATION_PARALLEL, loop=-1)
 
+
+// A candle with fancy animated spooky lighting
+
 /obj/item/strange_candle
 	name = "strange candle"
 	desc = "It's a strange candle."
@@ -355,6 +262,9 @@ proc/make_chat_maptext(atom/target, msg, style = "", alpha = 255)
 		src.vis_contents -= light
 		light.dispose()
 		..()
+
+
+// Katamari mob critter
 
 /mob/living/critter/katamari
 	name = "space thing"
@@ -398,22 +308,20 @@ proc/make_chat_maptext(atom/target, msg, style = "", alpha = 255)
 		var/list/turf/targets = list()
 		for(var/turf/T in view(8, src))
 			targets += T
+		var/list/atom/movable/to_densify = list()
 		for(var/atom/movable/AM in src)
-			if(istype(AM, /obj/screen))
+			if(istype(AM, /atom/movable/screen))
 				continue
 			AM.transform = null
 			AM.set_loc(get_turf(src))
-			SPAWN_DBG(0)
-				var/orig_anchored = AM.anchored
-				var/orig_density = AM.density
-				AM.anchored = 0
-				AM.density = 0
-				AM.throw_at(pick(targets), rand(1, 10), rand(1, 15))
-				AM.anchored = orig_anchored
-				sleep(0.5 SECONDS)
-				AM.density = orig_density
+			if(AM.density)
+				to_densify += AM
+			AM.set_density(0)
+			AM.throw_at(pick(targets), rand(1, 10), rand(1, 15), allow_anchored=TRUE)
 		. = ..()
 		SPAWN_DBG(1 SECOND)
+			for(var/atom/movable/AM in to_densify)
+				AM.set_density(TRUE)
 			src.transforming = 1
 			src.canmove = 0
 			src.icon = null
@@ -469,3 +377,80 @@ proc/make_chat_maptext(atom/target, msg, style = "", alpha = 255)
 
 	setup_healths()
 		add_hh_robot(-150, 150, 1.15)
+
+
+// A belt which gives you big muscles (visual only)
+
+/obj/item/storage/belt/muscly
+	name = "muscly belt"
+	desc = "Probably made out of steroids or something."
+	icon_state = "machobelt"
+	item_state = "machobelt"
+	var/muscliness_factor = 7
+	var/filter
+
+	equipped(var/mob/user)
+		..()
+		user.filters += filter(type="displace", icon=icon('icons/effects/distort.dmi', "muscly"), size=0)
+		src.filter = user.filters[length(user.filters)]
+		animate(filter, size=src.muscliness_factor, time=1 SECOND, easing=SINE_EASING)
+
+	unequipped(var/mob/user)
+		..()
+		animate(filter, size=0, time=1 SECOND, easing=SINE_EASING)
+		SPAWN_DBG(1 SECOND)
+			user.filters -= filter
+			filter = null
+
+
+// Among Us memery
+
+/obj/spawner/amongus_clothing
+	var/cursed = FALSE
+
+	New()
+		. = ..()
+		var/h = rand(360)
+		var/s = rand() * 0.2 + 0.8
+		var/v = rand() * 0.5 + 0.5
+		var/suit_color = hsv2rgb(h, s, v)
+		var/boots_color = hsv2rgb(h + rand(-30, 30), s, v * 0.8)
+		var/col = color_mapping_matrix(
+			list("#296C3F", "#CDCDD6", "#BC9800"),
+			list("#5ea2a8", suit_color, boots_color)
+		)
+		var/obj/item/clothing/suit/bio_suit/suit = new(src.loc)
+		var/obj/item/clothing/head/bio_hood/hood = new(src.loc)
+		suit.color = col
+		hood.color = col
+		var/datum/color/base_color_datum = new
+		base_color_datum.from_hex(suit_color)
+		var/nearest_color_text = get_nearest_color(base_color_datum)
+		suit.name = "[nearest_color_text] suit"
+		hood.name = "[nearest_color_text] hood"
+		suit.desc = "There's 1 impostor among us."
+		hood.desc = "There's 1 impostor among us."
+		if(src.cursed)
+			suit.cant_other_remove = TRUE
+			suit.cant_self_remove = TRUE
+			hood.cant_other_remove = TRUE
+			hood.cant_self_remove = TRUE
+		var/mob/living/carbon/human/H = locate() in src.loc
+		if(H)
+			if(H.wear_suit)
+				var/obj/item/old_suit = H.wear_suit
+				H.u_equip(old_suit)
+				old_suit.dropped(H)
+				old_suit.set_loc(H.loc)
+			if(H.head)
+				var/obj/item/old_hat = H.head
+				H.u_equip(old_hat)
+				old_hat.dropped(H)
+				old_hat.set_loc(H.loc)
+			H.force_equip(suit, SLOT_WEAR_SUIT)
+			H.force_equip(hood, SLOT_HEAD)
+			boutput(H, "<span class='alert'>There's 1 impostor among us.</alert>")
+		qdel(src)
+
+/obj/spawner/amongus_clothing/cursed
+	cursed = TRUE

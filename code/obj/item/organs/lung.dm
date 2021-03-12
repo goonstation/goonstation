@@ -23,6 +23,21 @@
 				donor.contract_disease(failure_disease,null,null,1)
 		return 1
 
+	on_transplant(var/mob/M as mob)
+		..()
+		if (src.robotic)
+			APPLY_MOB_PROPERTY(src.donor, PROP_STAMINA_REGEN_BONUS, icon_state, 2)
+			src.donor.add_stam_mod_max(icon_state, 10)
+		return
+
+	on_removal()
+		..()
+		if (donor)
+			if (src.robotic)
+				REMOVE_MOB_PROPERTY(src.donor, PROP_STAMINA_REGEN_BONUS, icon_state)
+				src.donor.remove_stam_mod_max(icon_state)
+		return
+
 	// on_broken()
 	// 	if (body_side == L_ORGAN)
 	// 		if (src.holder.left_lung && src.holder.left_lung.get_damage() > FAIL_DAMAGE && prob(src.get_damage() * 0.2))
@@ -107,10 +122,60 @@
 	name = "cyberlungs"
 	desc = "Fancy robotic lungs!"
 	icon_state = "cyber-lungs_L"
+	made_from = "pharosium"
 	robotic = 1
+	created_decal = /obj/decal/cleanable/oil
 	edible = 0
 	mats = 6
 	temp_tolerance = T0C+500
+	var/overloading = 0
+
+	add_ability(var/datum/abilityHolder/aholder, var/abil)
+		if (!ispath(abil, /datum/targetable/organAbility/rebreather) || !aholder)
+			return ..()
+		var/datum/targetable/organAbility/rebreather/OA = aholder.getAbility(abil)//addAbility(abil)
+		if (istype(OA)) // already has an emagged lung. You need both for the ability to function
+			OA.linked_organ = list(OA.linked_organ, src)
+		else
+			OA = aholder.addAbility(abil)
+			if (istype(OA))
+				OA.linked_organ = src
+
+	remove_ability(var/datum/abilityHolder/aholder, var/abil)
+		if (!ispath(abil, /datum/targetable/organAbility/rebreather) || !aholder)
+			return ..()
+		var/datum/targetable/organAbility/rebreather/OA = aholder.getAbility(abil)
+		if (!OA) // what??
+			return
+		if (islist(OA.linked_organ)) // two emagged lungs, just remove us :3
+			var/list/lorgans = OA.linked_organ
+			if(OA.is_on)
+				OA.handleCast() //turn it off - we only have one left!
+			lorgans -= src // remove us from the list so only the other lung is left and thus will be lorgans[1]
+			OA.linked_organ = lorgans[1]
+		else // just us!
+			aholder.removeAbility(abil)
+
+	on_life(var/mult = 1)
+		if(!..())
+			return 0
+
+		if(overloading)
+			src.take_damage(0, 1 * mult)
+		return 1
+
+	disposing()
+		if(donor)
+			REMOVE_MOB_PROPERTY(donor, PROP_REBREATHING, "cyberlungs")
+		..()
+
+	emag_act(mob/user, obj/item/card/emag/E)
+		..()
+		organ_abilities = list(/datum/targetable/organAbility/rebreather)
+
+	demag(mob/user)
+		..()
+		organ_abilities = initial(organ_abilities)
 
 /obj/item/organ/lung/cyber/left
 	name = "left lung"

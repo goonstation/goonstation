@@ -15,9 +15,9 @@
 	var/temp = null
 	var/printing = null
 
-	lr = 1
-	lg = 0.3
-	lb = 0.9
+	light_r =1
+	light_g = 0.3
+	light_b = 0.9
 
 /obj/machinery/computer/research/disease/attack_ai(user as mob)
 	return src.attack_hand(user)
@@ -104,7 +104,7 @@ Confirm Identity: <A href='?src=\ref[src];scan=1'>[src.scan ? src.scan.name : "-
 		src.active1 = null
 	if (!( data_core.medical.Find(src.active2) ))
 		src.active2 = null
-	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
+	if ((usr.contents.Find(src) || (in_interact_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
 		src.add_dialog(usr)
 		if (href_list["temp"])
 			src.temp = null

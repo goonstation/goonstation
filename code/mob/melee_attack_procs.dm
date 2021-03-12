@@ -20,7 +20,7 @@
 		src.help_put_out_fire(M)
 	else if (src == M && src.getStatusDuration("burning"))
 		M.resist()
-	else if (M.health <= 0 && src.health >= -75.0)
+	else if ((M.health <= 0 || M.find_ailment_by_type(/datum/ailment/malady/flatline)) && src.health >= -75.0)
 		if (src == M && src.is_bleeding())
 			src.staunch_bleeding(M) // if they've got SOMETHING to do let's not just harass them for trying to do CPR on themselves
 		else
@@ -66,7 +66,10 @@
 		var/obj/stool/S = (locate(/obj/stool) in src.loc)
 		if (S)
 			S.buckle_in(src,src)
-		if(istype(src.wear_mask,/obj/item/clothing/mask/moustache))
+		if(src.hasStatus("shivering"))
+			src.visible_message("<span class='alert'><B>[src] shakes themselves, trying to warm up!</B></span>")
+			src.changeStatus("shivering", -1 SECONDS)
+		else if(istype(src.wear_mask,/obj/item/clothing/mask/moustache))
 			src.visible_message("<span class='alert'><B>[src] twirls [his_or_her(src)] moustache and laughs [pick_string("tweak_yo_self.txt", "moustache")]!</B></span>")
 		else if(istype(src.wear_mask,/obj/item/clothing/mask/clown_hat))
 			var/obj/item/clothing/mask/clown_hat/mask = src.wear_mask
@@ -82,6 +85,9 @@
 	else
 		if (target.lying)
 			src.visible_message("<span class='notice'>[src] shakes [target], trying to wake them up!</span>")
+		else if(target.hasStatus("shivering"))
+			src.visible_message("<span class='alert'><B>[src] shakes [target], trying to warm up!</B></span>")
+			target.changeStatus("shivering", -2 SECONDS)
 		else
 			if (ishuman(target) && ishuman(src))
 				var/mob/living/carbon/human/Z = src
@@ -153,21 +159,15 @@
 
 	src.visible_message("<span class='alert'><B>[src] is trying to perform CPR on [target]!</B></span>")
 	if (do_mob(src, target, 40)) //todo : unfuck this into a progres bar or something that happens automatically over time
-		if (target.health < 0)
+		if (target.health < 0 || target.find_ailment_by_type(/datum/ailment/malady/flatline))
 			target.take_oxygen_deprivation(-15)
 			target.losebreath = 0
 			target.changeStatus("paralysis", -20)
 
-			/*if(prob(50)) // this doesn't work yet
-				for(var/datum/ailment/disability/D in src.target.ailments)
-					if(istype(D,/datum/ailment/disease/heartfailure))
-						src.target.resistances += D.type
-						src.target.ailments -= D
-						boutput(world, "<span class='alert'>CURED [D] in [src.target]</span>")
-					if(istype(D,/datum/ailment/disease/flatline))
-						src.target.resistances += D.type
-						src.target.ailments -= D
-						boutput(world, "<span class='alert'>CURED [D] in [src.target]</span>")*/
+			if(target.find_ailment_by_type(/datum/ailment/malady/flatline) && target.health > -50)
+				if ((target.reagents?.has_reagent("epinephrine") || target.reagents?.has_reagent("atropine")) ? prob(5) : prob(2))
+					target.cure_disease_by_path(/datum/ailment/malady/flatline)
+
 			if (src)
 				src.visible_message("<span class='alert'>[src] performs CPR on [target]!</span>")
 
@@ -196,10 +196,8 @@
 	if (S && !src.lying && !src.getStatusDuration("weakened") && !src.getStatusDuration("paralysis"))
 		S.buckle_in(src,src,1)
 	else
-		var/obj/item/grab/block/G = new /obj/item/grab/block(src, src)
+		var/obj/item/grab/block/G = new /obj/item/grab/block(src, src, src)
 		src.put_in_hand(G, src.hand)
-		G.affecting = src
-		src.grabbed_by += G
 
 		playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1, -1)
 		src.visible_message("<span class='alert'>[src] starts blocking!</span>")
@@ -223,9 +221,7 @@
 	if (!I)
 		src.grab_self()
 	else
-		var/obj/item/grab/block/G = new /obj/item/grab/block(I, src)
-		G.affecting = src
-		src.grabbed_by += G
+		var/obj/item/grab/block/G = new /obj/item/grab/block(I, src, src)
 		G.loc = I
 
 		I.chokehold = G
@@ -244,14 +240,6 @@
 		return 0
 
 	var/mob/living/carbon/human/H = src
-
-	if (istype(H))
-		if (H.sims)
-			var/mult = H.sims.getMoodActionMultiplier()
-			if (mult < 0.5)
-				if (prob((0.5 - mult) * 200))
-					boutput(src, pick("<span class='alert'>You're not in the mood to grab that.</span>", "<span class='alert'>You don't feel like doing that.</span>"))
-					return
 
 	logTheThing("combat", src, target, "grabs [constructTarget(target,"combat")] at [log_loc(src)].")
 
@@ -291,18 +279,12 @@
 			P.ongrab(target)
 
 	if (!grab_item)
-		var/obj/item/grab/G = new /obj/item/grab(src)
-		G.assailant = src
+		var/obj/item/grab/G = new /obj/item/grab(src, src, target)
 		src.put_in_hand(G, src.hand)
-		G.affecting = target
-		target.grabbed_by += G
 	else// special. return it too
 		if (!grab_item.special_grab)
 			return
-		var/obj/item/grab/G = new grab_item.special_grab(grab_item)
-		G.assailant = src
-		G.affecting = target
-		target.grabbed_by += G
+		var/obj/item/grab/G = new grab_item.special_grab(grab_item, src, target)
 		G.loc = grab_item
 		.= G
 
@@ -348,15 +330,7 @@
 	msgs.disarm = 1
 
 	var/def_zone = null
-	if (istype(affecting, /obj/item/organ))
-		var/obj/item/organ/O = affecting
-		def_zone = O.organ_name
-		msgs.affecting = affecting
-	else if (istype(affecting, /obj/item/parts))
-		var/obj/item/parts/P = affecting
-		def_zone = P.slot
-		msgs.affecting = affecting
-	else if (zone_sel)
+	if (zone_sel)
 		def_zone = zone_sel.selecting
 		msgs.affecting = def_zone
 	else
@@ -375,6 +349,10 @@
 
 	var/damage = rand(base_damage_low, base_damage_high) * extra_damage
 	var/mult = 1
+	var/target_stamina = STAMINA_MAX //uses stamina?
+	if (isliving(target))
+		var/mob/living/L = target
+		target_stamina = L.stamina
 
 	if (damage > 0)
 		def_zone = target.check_target_zone(def_zone)
@@ -393,13 +371,10 @@
 	else if ( !(HAS_MOB_PROPERTY(target, PROP_CANTMOVE)) )
 		var/armor_mod = 0
 		armor_mod = target.get_melee_protection(def_zone)
-		msgs.stamina_target -= max(STAMINA_HTH_DMG - (armor_mod*0.5), 0) //armor vs barehanded disarm doesnt get full reduction
-		msgs.force_stamina_target = 1
+		if(target_stamina >= 0)
+			msgs.stamina_target -= max(STAMINA_DISARM_DMG - (armor_mod*0.5), 0) //armor vs barehanded disarm gives flat reduction
+			msgs.force_stamina_target = 1
 
-	var/target_stamina = STAMINA_MAX //uses stamina?
-	if (isliving(target))
-		var/mob/living/L = target
-		target_stamina = L.stamina
 
 	if (ishuman(src))
 		var/mob/living/carbon/human/H = src
@@ -531,8 +506,7 @@
 	if(getStatusDuration("stonerit"))
 		ret += 20
 
-	for(var/atom in src.get_equipped_items())
-		var/obj/item/C = atom
+	for (var/obj/item/C as() in src.get_equipped_items())
 		ret += C.getProperty("block")
 
 	return ret
@@ -650,13 +624,19 @@
 		msgs.affecting = def_zone
 
 	var/punchmult = get_base_damage_multiplier(def_zone)
+	if(ishuman(src))
+		var/mob/living/carbon/human/LM = src
+		for (var/uid in LM.pathogens)
+			var/datum/pathogen/P = LM.pathogens[uid]
+			punchmult *= P.onpunch(target, def_zone)
+
 	var/punchedmult = target.get_taken_base_damage_multiplier(src, def_zone)
 
 	if (!punchedmult)
 		if (narrator_mode)
 			msgs.played_sound = 'sound/vox/hit.ogg'
 		else
-			msgs.played_sound = 'sound/impact_sounds/Generic_Punch_2.ogg'
+			msgs.played_sound = pick(sounds_punch)
 		msgs.visible_message_self("<span class='alert'><B>[src] [src.punchMessage] [target], but it does absolutely nothing!</B></span>")
 		return
 
@@ -675,6 +655,10 @@
 			var/mob/living/carbon/human/H = src
 			if (H.shoes)
 				damage += H.shoes.kick_bonus
+			else if (H.limbs.r_leg)
+				damage += H.limbs.r_leg.limb_hit_bonus
+			else if (H.limbs.l_leg)
+				damage += H.limbs.l_leg.limb_hit_bonus
 		#if STAMINA_LOW_COST_KICK == 1
 		msgs.stamina_self += STAMINA_HTH_COST / 3
 		#endif
@@ -693,8 +677,13 @@
 
 		var/armor_mod = 0
 		armor_mod = target.get_melee_protection(def_zone, DAMAGE_BLUNT)
-
+		var/pre_armor_damage = damage
 		damage -= armor_mod
+		if(damage/pre_armor_damage <= 0.66)
+			block_spark(target,armor=1)
+			playsound(get_turf(target), 'sound/impact_sounds/block_blunt.ogg', 50, 1, -1, pitch=1.5)
+		if(damage <= 0)
+			fuckup_attack_particle(src)
 
 		//reduce stamina by the same proportion that base damage was reduced
 		//min cap is stam_power/3 so we still cant ignore it entirely
@@ -707,10 +696,22 @@
 
 		if (can_crit && prob(crit_chance))
 			msgs.stamina_crit = 1
-			msgs.played_sound = "sound/impact_sounds/Generic_Punch_1.ogg"
+			msgs.played_sound = pick(sounds_punch)
 			//msgs.visible_message_target("<span class='alert'><B><I>... and lands a devastating hit!</B></I></span>")
 
-		msgs.base_attack_message = "<span class='alert'><B>[src] [src.punchMessage] [target][msgs.stamina_crit ? " and lands a devastating hit!" : "!"]</B></span>"
+		var/armor_blocked = 0
+
+		if(pre_armor_damage > 0 && damage/pre_armor_damage <= 0.66)
+			block_spark(target,armor=1)
+			playsound(get_turf(target), 'sound/impact_sounds/block_blunt.ogg', 50, 1, -1,pitch=1.5)
+			if(damage <= 0)
+				fuckup_attack_particle(src)
+				armor_blocked = 1
+
+		if(armor_blocked)
+			msgs.base_attack_message = "<span class='alert'><B>[src] [src.punchMessage] [target], but [target]'s armor blocks it!</B></span>"
+		else
+			msgs.base_attack_message = "<span class='alert'><B>[src] [src.punchMessage] [target][msgs.stamina_crit ? " and lands a devastating hit!" : "!"]</B></span>"
 
 		if (!(src.traitHolder && src.traitHolder.hasTrait("glasscannon")))
 			msgs.stamina_self -= STAMINA_HTH_COST
@@ -753,7 +754,8 @@
 			else
 				user.visible_message("<span class='alert'><B>[user] pounds on [BORG.name]'s head furiously!</B></span>")
 				playsound(user.loc, "sound/impact_sounds/Metal_Clang_3.ogg", 50, 1)
-				BORG.part_head.ropart_take_damage(rand(20,40),0)
+				if (BORG.part_head.ropart_take_damage(rand(20,40),0) == 1)
+					BORG.compborg_lose_limb(BORG.part_head)
 				if (!BORG.anchored && prob(30))
 					user.visible_message("<span class='alert'><B>...and sends them flying!</B></span>")
 					send_flying = 2
@@ -819,6 +821,7 @@
 	var/force_stamina_target = null
 
 	New(var/mob/M)
+		..()
 		owner = M
 
 	proc/clear(var/mob/M)
@@ -968,7 +971,7 @@
 						target.OnMove(owner)
 			else
 				target.deliver_move_trigger("bump")
-
+		else
 #ifdef DATALOGGER
 			game_stats.Increment("violence")
 #endif
@@ -1041,7 +1044,7 @@
 									if (owner in viewers(7,M.current))
 										M.current.changeStatus("mutiny", 10 SECONDS)
 
-				if(target.client && target.health < 0) //Only do rev stuff if they have a client and are low health
+				if(target.client && target.health < 0 && ishuman(target)) //Only do rev stuff if they have a client and are low health
 					if ((owner.mind in R.revolutionaries) || (owner.mind in R.head_revolutionaries))
 						if (R.add_revolutionary(target.mind))
 							target.HealDamage("All", max(30 - target.health,0), 0)
@@ -1075,7 +1078,7 @@
 			hit_chance = 90
 		else if (def_zone == "head")
 			hit_chance = 70
-		if(!client || stat || getStatusDuration("paralysis") || getStatusDuration("stunned") || getStatusDuration("weakened"))
+		if(!client || is_incapacitated(src))
 			hit_chance = 100
 		if (!prob(hit_chance))
 			playsound(loc, "sound/impact_sounds/Generic_Swing_1.ogg", 50, 1, 1)
@@ -1108,11 +1111,8 @@
 	else if(attacker.zone_sel)
 		t = attacker.zone_sel.selecting
 	var/r_zone = ran_zone(t)
-	var/obj/item/affecting = organs["chest"]
 
-	if (organs[text("[]", r_zone)])
-		affecting = organs[text("[]", r_zone)]
-	return affecting
+	return r_zone
 
 /mob/proc/check_target_zone(var/def_zone)
 	return def_zone
@@ -1131,10 +1131,6 @@
 
 /mob/living/carbon/human/get_base_damage_multiplier(var/def_zone)
 	var/punchmult = 1
-
-	for (var/uid in src.pathogens)
-		var/datum/pathogen/P = src.pathogens[uid]
-		punchmult *= P.onpunch(target, def_zone)
 
 	if (sims)
 		punchmult *= sims.getMoodActionMultiplier()
@@ -1189,7 +1185,7 @@
 	return null
 
 /mob/living/check_attack_resistance(var/obj/item/I)
-	if (reagents && reagents.get_reagent_amount("ethanol") >= 100 && prob(40) && (!I || I.force <= 15))
+	if (reagents?.get_reagent_amount("ethanol") >= 100 && prob(40) && (!I || I.force <= 15))
 		return "<span class='alert'>You drunkenly shrug off the blow!</span>"
 	return null
 
@@ -1207,7 +1203,7 @@
 	return 0
 
 /mob/living/carbon/human/get_head_pierce_prot()
-	if (client && client.hellbanned)
+	if (client?.hellbanned)
 		return 0
 	if ((head && head.body_parts_covered & HEAD) || (wear_mask && wear_mask.body_parts_covered & HEAD))
 		if (head && !wear_mask)
@@ -1222,7 +1218,7 @@
 	return 0
 
 /mob/living/carbon/human/get_chest_pierce_prot()
-	if (client && client.hellbanned)
+	if (client?.hellbanned)
 		return 0
 	if ((wear_suit && wear_suit.body_parts_covered & TORSO) || (w_uniform && w_uniform.body_parts_covered & TORSO))
 		if (wear_suit && !w_uniform)
@@ -1251,8 +1247,7 @@
 				var/turf/T = get_edge_target_turf(src, src.dir)
 				if (isturf(T))
 					src.visible_message("<span class='alert'><B>[src] savagely punches [target], sending them flying!</B></span>")
-					SPAWN_DBG (0)
-						target.throw_at(T, 10, 2)
+					target.throw_at(T, 10, 2)
 
 	if (src.bioHolder.HasEffect("revenant"))
 		var/datum/bioEffect/hidden/revenant/R = src.bioHolder.GetEffect("revenant")
@@ -1285,8 +1280,7 @@
 	T.changeStatus("weakened", 5 SECONDS)
 	var/turf/throwpoint = get_edge_target_turf(H, get_dir(H, T))
 	if (throwpoint && isturf(throwpoint))
-		SPAWN_DBG(0)
-			T.throw_at(throwpoint, 10, 2)
+		T.throw_at(throwpoint, 10, 2)
 
 	return
 
@@ -1309,7 +1303,7 @@
 /mob/living/proc/parry_or_dodge(mob/M, obj/item/W)
 	.= 0
 	if (prob(60) && M && src.stance == "defensive" && iswerewolf(src) && src.stat)
-		src.dir = get_dir(src, M)
+		src.set_dir(get_dir(src, M))
 		playsound(src.loc, "sound/weapons/punchmiss.ogg", 50, 1)
 		//dodge more likely, we're more agile than macho
 		if (prob(60))
@@ -1327,148 +1321,6 @@
 /mob/living/proc/werewolf_tainted_saliva_transfer(var/mob/target)
 	if (iswerewolf(src))
 		var/datum/abilityHolder/werewolf/W = src.get_ability_holder(/datum/abilityHolder/werewolf)
-		if (target && W && W.tainted_saliva_reservior.total_volume > 0)
-			W.tainted_saliva_reservior.trans_to(target,5, 2)
+		if (target && W?.tainted_saliva_reservoir.total_volume > 0)
+			W.tainted_saliva_reservoir.trans_to(target,5, 2)
 
-
-/*/mob/proc/energyclaws_attack(var/mob/living/target)
-	if (!src || !target)
-		return 0
-
-		src.lastattacked = target
-		target.lastattacker = src
-		target.lastattackertime = world.time
-		logTheThing("combat", src, target, "attacks [constructTarget(target,"combat")] with energy claws at [log_loc(src)].")
-		target.add_fingerprint(src) // Some as the other 'empty hand' melee attacks (Convair880).
-
-	if (ishuman(target))
-		if (check_target_immunity(target) == 1)
-			target.visible_message("<span class='alert'><B>...but it has no effect whatsoever!</B></span>")
-			return
-
-		if(prob(5)) // Cut a random or targeted limb off
-			var/mob/living/carbon/human/H = target
-			var/limb_name = "unknown limb"
-			if (H.l_hand)
-				H.sever_limb("l_arm")
-				limb_name = "left arm"
-				H.visible_message(pick("<span class='alert'><B>[src] slashes [H] with the energy claws, cutting their [limb_name] right off!</span>","<span class='alert'><B>[src] performs a vicious strike at [H] and cuts off their [limb_name] off!</span>"))
-				playsound((src.loc), pick(sounds_reliquaryenergy), 50, 1)
-				random_brute_damage(H, rand(15,25))
-				random_burn_damage(H,rand(1,5))
-				take_bleeding_damage(H, null, rand(5,10), DAMAGE_CUT)
-				H.set_clothing_icon_dirty()
-			else if (H.r_hand)
-				H.sever_limb("r_arm")
-				limb_name = "right arm"
-				H.visible_message(pick("<span class='alert'><B>[src] slashes [H] with the energy claws, cutting their [limb_name] right off!</span>","<span class='alert'><B>[src] performs a vicious strike at [H] and cuts off their [limb_name] off!</span>"))
-				playsound((src.loc), pick(sounds_reliquaryenergy), 50, 1)
-				random_brute_damage(H, rand(15,25))
-				random_burn_damage(H,rand(1,5))
-				take_bleeding_damage(H, null, rand(5,10), DAMAGE_CUT)
-				H.set_clothing_icon_dirty()
-			else
-				var/list/limbs = list("l_arm","r_arm","l_leg","r_leg")
-				var/the_limb = pick(limbs)
-				if (!H.has_limb(the_limb))
-					return 0
-				H.sever_limb(the_limb)
-				H.visible_message(pick("<span class='alert'><B>[src] slashes [H] with the energy claws, cutting their [limb_name] right off!</span>","<span class='alert'><B>[src] performs a vicious strike at [H] and cuts off their [limb_name] off!</span>"))
-				playsound((src.loc), pick(sounds_reliquaryenergy), 50, 1)
-				random_brute_damage(H, rand(15,25))
-				random_burn_damage(H,rand(1,5))
-				take_bleeding_damage(H, null, rand(5,10), DAMAGE_CUT)
-				H.set_clothing_icon_dirty()
-
-				switch (the_limb)
-					if ("l_arm")
-						limb_name = "left arm"
-					if ("r_arm")
-						limb_name = "right arm"
-					if ("l_leg")
-						limb_name = "left leg"
-					if ("r_leg")
-						limb_name = "right leg"
-
-				if (prob(50) && !isdead(H))
-					H.emote("scream")
-		else
-			var/mob/living/carbon/human/H = target
-			if (prob(20))
-				H.visible_message(pick("<span class='alert'><B>[src] mauls [H] aggressively with their energy claws causing them to bleed [pick_string("reliquary.txt", "energyhitdamage")]!</span>","<span class='alert'><B>[src] stabs [H] repeatedly with no signs of remorse, causing them to bleed [pick_string("reliquary.txt", "energyhitdamage")]!</span>","<span class='alert'><B>[src] lacerates [H] fiercely, carving their body up as they cause them to bleed [pick_string("reliquary.txt", "energyhitdamage")]!</span>","<span class='alert'><B>[src] hacks and slices [H] in a fierce flurry of strikes causing them to bleed [pick_string("reliquary.txt", "energyhitdamage")]!</span>"))
-				random_brute_damage(H, rand(15,25))
-				random_burn_damage(H,rand(1,5))
-				take_bleeding_damage(H, null, rand(10,20), DAMAGE_CUT)
-				playsound((src.loc), pick(sounds_reliquaryenergy), 50, 1)
-				H.set_clothing_icon_dirty()
-			else
-				H.visible_message("<span class='alert'><B>[src] [pick_string("reliquary.txt", "energyhit")], [pick_string("reliquary.txt", "energyhitdamage")] damaging [H]!</B></span>")
-				random_brute_damage(H, rand(10,20))
-				random_burn_damage(H,rand(1,5))
-				take_bleeding_damage(H, null, rand(5,10), DAMAGE_CUT)
-				playsound((src.loc), pick(sounds_reliquaryenergy), 50, 1)
-				H.set_clothing_icon_dirty()
-	if (isrobot(target))
-		var/mob/living/silicon/robot/R = target
-		if (prob(5))
-			if (prob(25) && R.part_arm_r)
-				R.compborg_force_unequip(3)
-				R.part_arm_r.set_loc(R.loc)
-				R.part_leg_r.holder = null
-				R.part_arm_r = null
-				R.update_bodypart("r_arm")
-				playsound((src.loc), pick(sounds_reliquaryenergy), 50, 1)
-				target.visible_message("<span class='alert'><B>LOSE RIGHT ARM</B></span>")
-				R.TakeDamage("All", rand(10,20), 0)
-				if (R.part_arm_r.slot == "arm_both")
-					R.compborg_force_unequip(1)
-					R.part_arm_l = null
-					R.update_bodypart("l_arm")
-					R.part_arm_r = null
-					R.update_bodypart("r_arm")
-					target.visible_message("<span class='alert'><B>LOSE BOTH ARMS</B></span>")
-			if (prob(25) && R.part_arm_l)
-				R.compborg_force_unequip(1)
-				R.part_arm_l.set_loc(R.loc)
-				R.part_leg_l.holder = null
-				R.part_arm_l = null
-				R.update_bodypart("l_arm")
-				target.visible_message("<span class='alert'><B>LOSE LEFT ARM</B></span>")
-				R.TakeDamage("All", rand(10,20), 0)
-				if (R.part_arm_l.slot == "arm_both")
-					R.part_arm_r = null
-					R.compborg_force_unequip(3)
-					R.update_bodypart("r_arm")
-					R.part_arm_l = null
-					R.update_bodypart("l_arm")
-					target.visible_message("<span class='alert'><B>LOSE BOTH ARMS</B></span>")
-			if (prob(25) && R.part_leg_r)
-				R.part_leg_r.holder = null
-				R.part_leg_r.set_loc(R.loc)
-				R.part_leg_r = null
-				R.update_bodypart("r_leg")
-				target.visible_message("<span class='alert'><B>LOSE RIGHT LEG</B></span>")
-				R.TakeDamage("All", rand(10,20), 0)
-				if (R.part_leg_r.slot == "leg_both")
-					R.part_leg_l = null
-					R.update_bodypart("l_leg")
-					R.part_leg_r = null
-					R.update_bodypart("r_leg")
-					target.visible_message("<span class='alert'><B>LOSE BOTH LEGS</B></span>")
-			if (prob(25) && R.part_leg_l)
-				R.part_leg_l.holder = null
-				R.part_leg_l.set_loc(R.loc)
-				R.part_leg_l = null
-				R.update_bodypart("l_leg")
-				target.visible_message("<span class='alert'><B>LOSE LEFT LEG</B></span>")
-				R.TakeDamage("All", rand(10,20), 0)
-				if (R.part_leg_l.slot == "leg_both")
-					R.part_leg_r = null
-					R.update_bodypart("r_leg")
-					R.part_leg_l = null
-					R.update_bodypart("l_leg")
-					target.visible_message("<span class='alert'><B>LOSE BOTH LEGS</B></span>")
-		else
-			R.visible_message("<span class='alert'><B>BASIC ROBOT DAMAGE</B></span>")
-			R.TakeDamage("All", rand(50,80), 0)
-			playsound((src.loc), pick(sounds_reliquaryenergy), 50, 1)*/

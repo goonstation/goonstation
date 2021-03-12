@@ -7,7 +7,8 @@
 	stamina_cost = 0
 	stamina_crit_chance = 1
 	rand_pos = 1
-
+	inventory_counter_enabled = 1
+	event_handler_flags = NO_MOUSEDROP_QOL | USE_FLUID_ENTER
 	var/pname
 	var/pvol
 	var/pcount
@@ -52,11 +53,11 @@
 					src.pcount = 0
 				else
 					P = unpool(/obj/item/reagent_containers/pill)
-					P.loc = src
+					P.set_loc(src)
 					P.name = "[pname] pill"
 
 					src.reagents_internal.trans_to(P,src.pvol)
-					if (P && P.reagents)
+					if (P?.reagents)
 						P.color_overlay = image('icons/obj/items/pills.dmi', "pill0")
 						P.color_overlay.color = src.average
 						P.color_overlay.alpha = P.color_overlay_alpha
@@ -70,10 +71,13 @@
 		var/totalpills = src.pcount + src.contents.len
 		if(totalpills > 15)
 			src.desc = "A [src.pname] pill bottle. There are too many to count."
+			src.inventory_counter.update_text("**")
 		else if (totalpills <= 0)
 			src.desc = "A [src.pname] pill bottle. It looks empty."
+			src.inventory_counter.update_number(0)
 		else
 			src.desc = "A [src.pname] pill bottle. There [totalpills==1? "is [totalpills] pill." : "are [totalpills] pills." ]"
+			src.inventory_counter.update_number(totalpills)
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/reagent_containers/pill))
@@ -119,7 +123,7 @@
 	MouseDrop_T(atom/movable/O as obj, mob/user as mob)
 		if (user.restrained() || user.getStatusDuration("paralysis") || user.sleeping || user.stat || user.lying)
 			return
-		if (!in_range(user, src) || !in_range(user, O))
+		if (!in_interact_range(user, src) || !in_interact_range(user, O))
 			user.show_text("That's too far away!", "red")
 			return
 		if (!istype(O, /obj/item/reagent_containers/pill))

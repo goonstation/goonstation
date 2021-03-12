@@ -25,6 +25,7 @@
 	var/solitaire_offset = 3
 
 	New(cardname, carddesc, cardback, cardface, cardfoil, carddata, cardreversible, cardreversed, cardtappable, cardtapped, cardspooky, cardsolitaire)
+		..()
 		if (cardname) src.card_name = cardname
 		if (carddesc) src.card_desc = carddesc
 		if (cardback) src.card_back = cardback
@@ -54,6 +55,7 @@
 	burn_possible = 1
 	health = 10
 	tooltip_flags = REBUILD_DIST
+	inventory_counter_enabled = 1
 	var/list/cards = list()
 	var/face_up = 0
 	var/card_name = "blank card"
@@ -100,19 +102,19 @@
 				if (src.face_up)
 					if (src.card_reversible && src.card_reversed)
 						src.name = "reversed [src.card_name]"
-						src.dir = NORTH
+						src.set_dir(NORTH)
 					else if (src.card_tappable && src.card_tapped)
 						src.name = "tapped [src.card_name]"
 						if (src.card_tapped == EAST)
-							src.dir = EAST
+							src.set_dir(EAST)
 						else if (src.card_tapped == WEST)
-							src.dir = WEST
+							src.set_dir(WEST)
 						else
-							src.dir = pick(EAST, WEST)
+							src.set_dir(pick(EAST, WEST))
 							src.card_tapped = src.dir
 					else
 						src.name = src.card_name
-						src.dir = SOUTH
+						src.set_dir(SOUTH)
 					src.desc = "[src.card_desc] It's \an [src.name]."
 					src.icon_state = "card-[src.card_face]"
 					if (src.card_foil)
@@ -123,15 +125,15 @@
 					if (src.card_tappable && src.card_tapped)
 						src.name = "tapped playing card"
 						if (src.card_tapped == EAST)
-							src.dir = EAST
+							src.set_dir(EAST)
 						else if (src.card_tapped == WEST)
-							src.dir = WEST
+							src.set_dir(WEST)
 						else
-							src.dir = pick(EAST, WEST)
+							src.set_dir(pick(EAST, WEST))
 							src.card_tapped = src.dir
 					else
 						src.name = "playing card"
-						src.dir = SOUTH
+						src.set_dir(SOUTH)
 			if (2 to 4)
 				src.name = "hand of cards"
 				src.desc = "Some cards, for playing some kinda game with."
@@ -156,6 +158,8 @@
 				src.icon_state = "deck-[src.card_back]"
 				if (src.face_up)
 					src.face_up = 0
+
+		src.inventory_counter.update_number(src.cards.len)
 
 	proc/draw_card(var/obj/item/playing_cards/CardStack, var/atom/target as turf|obj|mob, var/draw_face_up = 0, var/datum/playing_card/Card)
 		if (!src.cards.len)
@@ -223,8 +227,8 @@
 			boutput(usr, "<span class='alert'>You're too far from [src] to draw a card!</span>")
 			return
 		if (get_dist(usr, target) > 1)
-			if (istype(target, /obj/screen/hud))
-				var/obj/screen/hud/hud = target
+			if (istype(target, /atom/movable/screen/hud))
+				var/atom/movable/screen/hud/hud = target
 				if (istype(hud.master, /datum/hud/human))
 					var/datum/hud/human/h_hud = hud.master // all this just to see if you're trying to deal to someone's hand, ffs
 					if (h_hud.master && h_hud.master == usr) // or their face, I guess.  it'll apply to any attempts to deal to your hud
@@ -333,12 +337,12 @@
 							break
 					if (!cardToGive)
 						return
-					user.visible_message("<span class='notice'><b>[usr]</b> draws a card from [src].</span>",\
+					user.visible_message("<span class='notice'><b>[user]</b> draws a card from [src].</span>",\
 					"<span class='notice'>You draw \an [chosenCard] from [src].</span>")
 					src.draw_card(null, user, draw_face_up, cardToGive)
 				else
 					var/datum/playing_card/Card = src.cards[1]
-					user.visible_message("<span class='notice'><b>[usr]</b> draws [draw_face_up ? "\an [Card.card_name]" : "a card"] from [src].</span>",\
+					user.visible_message("<span class='notice'><b>[user]</b> draws [draw_face_up ? "\an [Card.card_name]" : "a card"] from [src].</span>",\
 					"<span class='notice'>You draw [draw_face_up ? "\an [Card.card_name]" : "a card"] from [src].</span>")
 					src.draw_card(null, user, draw_face_up)
 			else return ..(user)
@@ -347,7 +351,7 @@
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/playing_cards))
 			var/obj/item/playing_cards/C = W
-			if(user.a_intent == "disarm")
+			if(user.a_intent == INTENT_DISARM && isturf(src.loc))
 				user.u_equip(C)
 				C.set_loc(src.loc)
 				C.pixel_x = src.pixel_x
@@ -619,7 +623,7 @@
 		src.card_cyborg = list()
 		src.card_ai = list()
 		for (var/mob/living/carbon/human/H in mobs)
-			if (ismonkey(H))
+			if (isnpcmonkey(H))
 				continue
 			if (iswizard(H))
 				continue
@@ -628,7 +632,7 @@
 			src.card_human += H
 		for (var/mob/living/silicon/robot/R in mobs)
 			src.card_cyborg += R
-		for (var/mob/living/silicon/ai/A in AIs)
+		for_by_tcl(A, /mob/living/silicon/ai)
 			src.card_ai += A
 		card_type_mob = childrentypesof(/datum/playing_card/griffening/creature/mob)
 		card_type_friend = childrentypesof(/datum/playing_card/griffening/creature/friend)

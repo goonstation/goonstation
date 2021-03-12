@@ -27,7 +27,7 @@
 
 	New()
 		..()
-		src.real_name = "[pick(BOOZE_prefixes)] [pick(BEER_suffixes)]"
+		src.real_name = "[pick_string("chemistry_tools.txt", "BOOZE_prefixes")] [pick_string("chemistry_tools.txt", "BEER_suffixes")]"
 		src.UpdateName()
 		bottle_style = pick("clear", "black", "barf", "brown", "red", "orange", "yellow", "green", "cyan", "blue", "purple")
 		label = pick("alcohol1","alcohol2","alcohol3","alcohol4","alcohol5","alcohol6","alcohol7")
@@ -37,25 +37,16 @@
 
 		while (flavors > 0)
 			flavors--
-			reagents.add_reagent(pick(BOOZE_flavors),rand(1,3))
+			reagents.add_reagent(pick_string("chemistry_tools.txt", "BOOZE_flavors"), rand(1,3))
 
 		while (adulterants > 0)
 			adulterants--
-			reagents.add_reagent(pick(CYBERPUNK_drug_adulterants), rand(1,3))
+			reagents.add_reagent(pick_string("chemistry_tools.txt", "CYBERPUNK_drug_adulterants"), rand(1,3))
 
 		update_icon()
 
 	UpdateName()
 		src.name = "[name_prefix(null, 1)][src.real_name][name_suffix(null, 1)]"
-
-///////////
-
-/var/list/BOOZE_prefixes = strings("chemistry_tools.txt", "BOOZE_prefixes")
-/var/list/WINE_suffixes = strings("chemistry_tools.txt", "WINE_suffixes")
-/var/list/BEER_suffixes = strings("chemistry_tools.txt", "BEER_suffixes")
-/var/list/BOOZE_flavors = strings("chemistry_tools.txt", "BOOZE_flavors")
-
-////////////
 
 /obj/item/reagent_containers/food/drinks/bottle/wine
 	name = "Wine"
@@ -88,7 +79,7 @@
 
 	New()
 		..()
-		src.real_name = "[pick(BOOZE_prefixes)] [pick(WINE_suffixes)]"
+		src.real_name = "[pick_string("chemistry_tools.txt", "BOOZE_prefixes")] [pick_string("chemistry_tools.txt", "WINE_suffixes")]"
 		src.UpdateName()
 		bottle_style = "vermouth[pick("C", "R", "O", "Y", "", "A", "B", "P")]" // clear, red, orange, green, aqua, blue, purple
 
@@ -102,7 +93,7 @@
 
 		while (flavors > 0)
 			flavors--
-			reagents.add_reagent(pick(BOOZE_flavors),rand(2,5))
+			reagents.add_reagent(pick_string("chemistry_tools.txt", "BOOZE_flavors"), rand(2,5))
 
 		while (adulterants > 0)
 			adulterants--
@@ -144,9 +135,10 @@
 				src.reagents.reaction(U)
 				src.create_reagents(0)
 				src.update_icon()
-			var/new_name = input(usr, "Enter new name for [O]", "Rename [O]", O.name) as null|text
+			var/new_name = input(user, "Enter new name for [O]", "Rename [O]", O.name) as null|text
 			if (isnull(new_name) || !length(new_name) || new_name == " ")
 				return
+			phrase_log.log_phrase("vehicle", new_name, no_duplicates=TRUE)
 			logTheThing("station", user, null, "renamed [O] to [new_name] in [get_area(user)] ([showCoords(user.x, user.y, user.z)])")
 			new_name = copytext(strip_html(new_name), 1, 32)
 			O.name = new_name
@@ -363,7 +355,7 @@
 	"cosmo"=20,"beach"=20,"gtonic"=20,"vtonic"=20,"sonic"=20,"gpink"=20,"eraser"=20,"dbreath"=20,"squeeze"=20,"madmen"=20,
 	"planter"=20,"maitai"=20,"harlow"=20,"gchronic"=20,"margarita"=20,"tequini"=20,"pfire"=20,"bull"=20,"longisland"=20,"longbeach"=20,
 	"pinacolada"=20,"mimosa"=20,"french75"=20,"sangria"=20,"tomcollins"=20,"peachschnapps"=20,"moscowmule"=20,"tequilasunrise"=20,"paloma"=20,
-	"mintjulep"=20,"mojito"=20,"cremedementhe"=20,"freeze"=20,"negroni"=20,"necroni"=20,"bathsalts"=20,"jenkem"=360,"crank"=360,"LSD"=360,"space_drugs"=360,
+	"mintjulep"=20,"mojito"=20,"cremedementhe"=20,"freeze"=20,"negroni"=20,"necroni"=20,"bathsalts"=20,"jenkem"=360,"crank"=360,"LSD"=360, "lsd_bee"=360,"space_drugs"=360,
 	"THC"=360,"nicotine"=360,"psilocybin"=360,"krokodil"=360,"catdrugs"=360,"triplemeth"=360,"methamphetamine"=360,"aranesp"=100,"capulettium"=100,
 	"spiders"=100,"glitter"=100,"triplepiss"=100,"acid"=100,"clacid"=100,"cyanide"=100,"formaldehyde"=100,"itching"=100,"pacid"=100,
 	"sodium_thiopental"=100,"ketamine"=100,"neurotoxin"=100,"mutagen"=100,"omega_mutagen"=100,"histamine"=100,"haloperidol"=100,"morphine"=100)

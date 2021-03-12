@@ -6,9 +6,9 @@
 	var/id = null
 	desc = "A computer that sets which beacon the connected teleporter attempts to create a portal to."
 
-	lr = 1
-	lg = 0.3
-	lb = 0.9
+	light_r =1
+	light_g = 0.3
+	light_b = 0.9
 
 /obj/machinery/computer/teleporter/New()
 	src.id = text("[]", rand(1000, 9999))
@@ -18,7 +18,7 @@
 /obj/machinery/computer/teleporter/attackby(obj/item/W as obj, user as mob)
 	if (isscrewingtool(W))
 		playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
-		if(do_after(user, 20))
+		if(do_after(user, 2 SECONDS))
 			if (src.status & BROKEN)
 				boutput(user, "<span class='notice'>The broken glass falls out.</span>")
 				var/obj/computerframe/A = new /obj/computerframe( src.loc )
@@ -62,10 +62,9 @@
 	var/list/L = list()
 	var/list/areaindex = list()
 
-	for(var/obj/item/device/radio/beacon/R in tracking_beacons)//world)
+	for_by_tcl(R, /obj/item/device/radio/beacon)
 		if (!istype(R, /obj/item/device/radio/beacon/jones))
-			LAGCHECK(LAG_LOW)
-			var/turf/T = find_loc(R)
+			var/turf/T = get_turf(R)
 			if (!T)	continue
 			var/tmpname = T.loc.name
 			if(areaindex[tmpname])
@@ -74,8 +73,7 @@
 				areaindex[tmpname] = 1
 			L[tmpname] = R
 
-	for (var/obj/item/implant/tracking/I in tracking_implants)//world)
-		LAGCHECK(LAG_LOW)
+	for_by_tcl(I, /obj/item/implant/tracking)
 		if (!I.implanted || !ismob(I.loc))
 			continue
 		else

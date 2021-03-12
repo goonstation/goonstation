@@ -31,9 +31,9 @@
 
 #define MAX_SOUND_RANGE 33
 #define MAX_SPACED_RANGE 6 //diff range for when youre in a vaccuum
-#define CLIENT_IGNORES_SOUND(C) (C && C.ignore_sound_flags && ((ignore_flag && C.ignore_sound_flags & ignore_flag) || C.ignore_sound_flags & SOUND_ALL))
+#define CLIENT_IGNORES_SOUND(C) (C?.ignore_sound_flags && ((ignore_flag && C.ignore_sound_flags & ignore_flag) || C.ignore_sound_flags & SOUND_ALL))
 
-// returns 0 to 1 based on air pressure in turf
+/// returns 0 to 1 based on air pressure in turf
 /proc/attenuate_for_location(var/atom/loc)
 	var/attenuate = 1
 	var/turf/T = get_turf(loc)
@@ -59,26 +59,38 @@ var/global/ECHO_AFAR = list(0,0,0,0,0,0,-10000,1.0,1.5,1.0,0,1.0,0,0,0,0,1.0,7)
 var/global/ECHO_CLOSE = list(0,0,0,0,0,0,0,0.25,1.5,1.0,0,1.0,0,0,0,0,1.0,7)
 var/global/list/falloff_cache = list()
 
+//default volumes
+var/global/list/default_channel_volumes = list(1, 1, 0.1, 0.5, 0.5, 1)
 
 //volumous hair with l'orial paris
-/client/var/list/volumes = list(1, 1, 0.1, 0.5, 0.5)
+/client/var/list/volumes
 /client/var/list/sound_playing = new/list(1024, 2)
-//Returns a list of friendly names for available sound channels
+
+/// Returns a list of friendly names for available sound channels
 /client/proc/getVolumeNames()
-	return list("Game", "Ambient", "Radio", "Admin")
-//Returns a list of friendly descriptions for available sound channels
+	return list("Game", "Ambient", "Radio", "Admin", "Emote")
+
+/// Returns the default volume for a channel, unattenuated for the master channel (0-1)
+/client/proc/getDefaultVolume(channel)
+	return volumes[channel + 1]
+
+/// Returns a list of friendly descriptions for available sound channels
 /client/proc/getVolumeDescriptions()
-	return list("Most in-game audio will use this channel.", "Ambient background music in various areas will use this channel.", "Any music played from the radio station", "Any music or sounds played by admins.")
-//Returns the volume to set /sound/var/volume to for the given channel(so 0-100)
+	return list("Most in-game audio will use this channel.", "Ambient background music in various areas will use this channel.", "Any music played from the radio station", "Any music or sounds played by admins.", "Screams and farts.")
+
+/// Returns the volume to set /sound/var/volume to for the given channel(so 0-100)
 /client/proc/getVolume(id)
 	return volumes[id + 1] * volumes[1] * 100
-//Returns the master volume (0-1)
+
+/// Returns the master volume (0-1)
 /client/proc/getMasterVolume()
 	return volumes[1]
-//Returns the true volume for a channel, unattenuated for the master channel (0-1)
+
+/// Returns the true volume for a channel, unattenuated for the master channel (0-1)
 /client/proc/getRealVolume(channel)
 	return volumes[channel + 1]
-//Sets and applies the volume for a channel (0-1)
+
+/// Sets and applies the volume for a channel (0-1)
 /client/proc/setVolume(channel, volume)
 	volume = clamp(volume, 0, 1)
 	volumes[channel + 1] = volume
@@ -110,9 +122,6 @@ var/global/list/falloff_cache = list()
 
 	// don't play if the sound is happening nowhere
 	if (!source || !source.loc || source.z <= 0)
-		return
-
-	if (!length(spatial_z_maps))
 		return
 
 	EARLY_RETURN_IF_QUIET(vol)
@@ -169,11 +178,14 @@ var/global/list/falloff_cache = list()
 			//Custom falloff handling, see: https://www.desmos.com/calculator/ybukxuu9l9
 			if (dist > falloff_cache.len)
 				falloff_cache.len = dist
-			var/falloffmult = falloff_cache[dist]
+			var/falloffmult
+			if(extrarange == 0)
+				falloffmult = falloff_cache[dist]
 			if (falloffmult == null)
 				scaled_dist = clamp(dist/(MAX_SOUND_RANGE+extrarange),0,1)
 				falloffmult = (1 - ((1.0542 * (0.18**-1.7)) / ((scaled_dist**-1.7) + (0.18**-1.7))))
-				falloff_cache[dist] = falloffmult
+				if(extrarange == 0)
+					falloff_cache[dist] = falloffmult
 
 			ourvolume *= falloffmult
 
@@ -194,7 +206,7 @@ var/global/list/falloff_cache = list()
 
 			//sadly, we must generate
 			if (!S) S = generate_sound(source, soundin, vol, vary, extrarange, pitch)
-			if (!S) CRASH("Did not manage to generate sound [soundin] with source [source].")
+			if (!S) CRASH("Did not manage to generate sound \"[soundin]\" with source [source].")
 			C.sound_playing[ S.channel ][1] = storedVolume
 			C.sound_playing[ S.channel ][2] = channel
 
@@ -386,21 +398,30 @@ var/global/list/falloff_cache = list()
 	return S
 
 
-/* Client part of the Area Ambience Project
- *
- * Calling playAmbience is handled by the Area our client is in, see Exited() and Entered()
- *
- * LOOPING channel sound will keep playing until fed a pass_volume of 0 (done automagically)
- * For FX sounds, they will play once.
- *
- * FX_1 is area-specific background noise handled by area/pickAmbience(), FX_2 is more noticeable stuff directly triggered, normally shorter
- *
- */
-/client/proc/playAmbience(area/A, var/type = AMBIENCE_LOOPING, var/pass_volume)
+/**
+	* Client part of the Area Ambience Project
+ 	*
+ 	* Calling this proc is handled by the Area our client is in, see [area/proc/Exited()] and [area/proc/Entered()]
+ 	*
+ 	* LOOPING channel sound will keep playing until fed a pass_volume of 0 (done automagically)
+ 	* For FX sounds, they will play once.
+ 	*
+ 	* FX_1 is area-specific background noise handled by area/pickAmbience(), FX_2 is more noticeable stuff directly triggered, normally shorter
+ 	*/
+/client/proc/playAmbience(area/A, type = AMBIENCE_LOOPING, pass_volume)
+
+	/// Types of sounds: AMBIENCE_LOOPING, AMBIENCE_FX_1, and AMBIENCE_FX_2
 	var/soundtype = null
-	var/soundchannel
+
+	/// Holds the associated sound channel we want
+	var/soundchannel = 0
+
+	/// Determines if we are repeating or not
 	var/soundrepeat = 0
+
+	/// Should the sound set the wait var?
 	var/soundwait = 0
+
 	switch(type)
 		if (AMBIENCE_LOOPING)
 			if (pass_volume != 0) //lets us cancel loop sounds by passing 0

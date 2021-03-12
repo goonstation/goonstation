@@ -28,8 +28,7 @@
 
 	New(mob/user)
 		..()
-		if (!(src in processing_items))
-			processing_items.Add(src)
+		processing_items |= src
 		if (user)
 			src.holder = user
 			src.verbs |= /obj/item/magtractor/proc/toggleHighPower
@@ -37,7 +36,7 @@
 	process()
 		//power usage here maybe??
 
-		if (!src.holding && src.holder && processHeld) //If the item has been consumed somehow
+		if ((!src.holding || src.holding.disposed) && src.holder && processHeld) //If the item has been consumed somehow
 			actions.stopId("magpickerhold", src.holder)
 			processHeld = 0
 		return
@@ -82,7 +81,7 @@
 		return 1
 
 	attack_self(mob/user as mob)
-		if (src.holding)
+		if (src.holding && !src.holding.disposed)
 			//activate held item (if possible)
 			src.holding.attack_self(user)
 			src.updateHeldOverlay(src.holding) //for items that update icon on activation (e.g. welders)
@@ -109,8 +108,8 @@
 			//pick up item
 			actions.start(new/datum/action/bar/private/icon/magPicker(target, src), user)
 
-		else if (src.holding && src.holding.loc != src) // it's gone!!
-			actions.stopId("magpickerhold", usr)
+		else if ((src.holding && src.holding.loc != src) || src.holding.disposed) // it's gone!!
+			actions.stopId("magpickerhold", user)
 
 		return 1
 
@@ -122,9 +121,9 @@
 
 	dropped(mob/user as mob)
 		..()
-		actions.stopId("magpicker", usr)
+		actions.stopId("magpicker", user)
 		if (src.holding)
-			actions.stopId("magpickerhold", usr)
+			actions.stopId("magpickerhold", user)
 
 	examine()
 		. = ..()
@@ -168,11 +167,12 @@
 		return 1
 
 	proc/updateHeldOverlay(obj/item/W as obj)
-		if (W)
+		if (W && !W.disposed)
 			var/image/heldItem = GetOverlayImage("heldItem")
-			if (!heldItem) heldItem = image(W.icon, W.icon_state)
+			if (!heldItem)
+				heldItem = image(W.icon, W.icon_state)
+				heldItem.transform *= 0.85
 			heldItem.color = W.color
-			heldItem.transform *= 0.85
 			heldItem.pixel_y = 1
 			heldItem.layer = -1
 			src.UpdateOverlays(heldItem, "heldItem")

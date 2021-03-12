@@ -53,7 +53,7 @@
 			if (!E.reagents || E.reagents.total_volume <= 0) break
 			var/obj/effects/spray/S = new/obj/effects/spray(theturf)
 			SPAWN_DBG(15 SECONDS) qdel(S)
-			S.dir = direction
+			S.set_dir(direction)
 			S.original_dir = direction
 			direction = turn(direction,45)
 			S.create_reagents(5)
@@ -84,7 +84,7 @@
 			var/obj/effects/spray/S = spraybits[1]
 			S.reagents.reaction(S.loc, TOUCH)
 			for(var/atom/A in S.loc)
-				if (S && S.reagents) //Wire: fix for: Cannot execute null.reaction()
+				if (S?.reagents) //Wire: fix for: Cannot execute null.reaction()
 					S.reagents.reaction(A, TOUCH,0,0)
 			if(is_blocked_turf(S.loc))
 				spraybits -= S
@@ -96,7 +96,7 @@
 					SP.set_loc(get_step(SP.loc, SP.original_dir))
 					SP.reagents.reaction(SP.loc, TOUCH)
 					for(var/atom/A in SP.loc)
-						if (SP && SP.reagents) //Wire: fix for: Cannot execute null.reaction()
+						if (SP?.reagents) //Wire: fix for: Cannot execute null.reaction()
 							SP.reagents.reaction(A, TOUCH,0,0)
 					if(is_blocked_turf(SP.loc))
 						spraybits -= SP
@@ -307,7 +307,6 @@
 
 	pooled()
 		..()
-		loc = null
 		icon = null
 		icon_state = null
 
@@ -386,8 +385,7 @@
 		var/obj/item/clothing/head/helmet/hardhat/J = the_item
 
 		J.flashlight_toggle(the_mob)
-		if (J.on) src.icon_state = "off"
-		else  src.icon_state = "on"
+		src.icon_state = J.on ? "off" : "on"
 		..()
 
 ////////////////////////////////////////////////////////////
@@ -775,7 +773,7 @@
 		if(!the_mob) return
 		the_mob.item_abilities = list()
 
-//HEY this should be moved over to use /obj/screen/ability_button but it breaks a few paths and needs different procs and its outta my depth tbh
+//HEY this should be moved over to use /atom/movable/screen/ability_button but it breaks a few paths and needs different procs and its outta my depth tbh
 /obj/ability_button
 	name = "baseButton"
 	desc = ""
@@ -840,9 +838,9 @@
 			return 0
 		if (!src.the_mob)
 			return 0
-		if (src.the_mob.hasStatus(list("paralysis", "stunned", "weakened"))) //stun check
+		if (is_incapacitated(src.the_mob)) //stun check
 			return 0
-		if (src.the_mob && ishuman(src.the_mob)) //cuff, straightjacket, nolimb check
+		if (ishuman(src.the_mob)) //cuff, straightjacket, nolimb check
 			var/mob/living/carbon/human/H = the_mob
 			if (H.restrained())
 				return 0

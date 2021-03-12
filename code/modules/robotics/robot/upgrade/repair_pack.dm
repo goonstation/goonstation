@@ -1,6 +1,6 @@
 /obj/item/roboupgrade/repairpack
 	name = "cyborg repair pack"
-	desc = "A single-use nanite infusion that can repair up to 50% of a cyborg's structure."
+	desc = "A single-use construction unit that can repair up to 50% of a cyborg's structure."
 	icon_state = "up-reppack"
 	active = 1
 	charges = 1

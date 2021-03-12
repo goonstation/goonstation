@@ -25,9 +25,6 @@
 	if(istype(AM,/obj/item/scrap))
 		return
 
-	if(world.timeofday - AM.last_bumped <= 60)
-		return
-
 	if(ismob(AM))
 		var/mob/M = AM
 		M.set_loc(src.loc)

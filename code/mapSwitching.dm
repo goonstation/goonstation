@@ -106,13 +106,15 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 			2. no next map set and the current map ISNT the mapID we were just given
 			3. next map set, but it doesn't match the mapID we were just given
 			*/
-			//if (!mapID || \
-			//	(!src.next && mapNames[src.current]["id"] != mapID) || \
-			//	(src.next && mapNames[src.next]["id"] != mapID))
-			//	src.locked = 0
-			//else
-			//	src.locked = 0
-			//	src.nextPrior = null
+			/*
+			if (!mapID || \
+				(!src.next && mapNames[src.current]["id"] != mapID) || \
+				(src.next && mapNames[src.next]["id"] != mapID))
+				src.locked = 0
+			else
+				src.locked = 0
+				src.nextPrior = null
+			*/
 
 			src.locked = 0
 			src.nextPrior = null
@@ -242,7 +244,7 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 
 		for (var/client/C in clients)
 			C.verbs += /client/proc/mapVote
-			if(C && C.preferences && length(C.preferences.preferred_map) && !istype(C.mob,/mob/new_player))
+			if(C?.preferences && length(C.preferences.preferred_map) && !istype(C.mob,/mob/new_player) && (C.preferences.preferred_map in playerPickable))
 				src.passiveVotes[C.ckey] = C.preferences.preferred_map
 
 		//announce vote
@@ -360,10 +362,13 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 			C.verbs -= /client/proc/mapVote
 
 	// Standardized way to ask a user for a map
-	proc/clientSelectMap(client/C)
+	proc/clientSelectMap(client/C,var/pickable)
 		var/info = "Select a map"
 		info += "\nCurrently on: [src.current]"
-		return input(info, "Switch Map", src.next ? src.next : src.current) as null|anything in src.playerPickable
+		if(pickable)
+			return input(info, "Switch Map", src.next ? src.next : src.current) as null|anything in src.playerPickable
+		else
+			return(input(info, "Switch Map", src.next ? src.next : src.current) as null|anything in mapNames)
 
 	//show a html report of who voted for what in any given map vote
 	proc/composeVoteReport(vote)
@@ -598,8 +603,8 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 				chosenMap = "Mushroom"
 			if(istype(I, /obj/item/reagent_containers) && (I:reagents:has_reagent("reversium") || I:reagents:has_reagent("fliptonium")))
 				chosenMap = "1 pamgoC"
-			if(istype(I, /obj/item/reagent_containers) && I:reagents:has_reagent("ldmatter"))
-				chosenMap = "Density"
+			//if(istype(I, /obj/item/reagent_containers) && I:reagents:has_reagent("ldmatter"))
+				//chosenMap = "Density"
 			if(istype(I, /obj/item/reagent_containers/food/snacks/donut))
 				chosenMap = "Donut 2"
 

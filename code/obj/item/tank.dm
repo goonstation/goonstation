@@ -18,7 +18,8 @@ Contains:
 	var/datum/gas_mixture/air_contents = null
 	var/distribute_pressure = ONE_ATMOSPHERE
 	var/integrity = 3
-	flags = FPRINT | TABLEPASS | CONDUCT | ONBACK
+	var/compatible_with_TTV = 1
+	flags = FPRINT | TABLEPASS | CONDUCT | ONBACK | TGUI_INTERACTIVE
 
 	pressure_resistance = ONE_ATMOSPHERE*5
 
@@ -35,9 +36,8 @@ Contains:
 		src.air_contents = unpool(/datum/gas_mixture)
 		src.air_contents.volume = 70 //liters
 		src.air_contents.temperature = T20C
-		if (!(src in processing_items))
-			processing_items.Add(src)
-		BLOCK_TANK
+		processing_items |= src
+		BLOCK_SETUP(BLOCK_TANK)
 		return
 
 	disposing()
@@ -66,57 +66,10 @@ Contains:
 				.= 1
 
 	attack_self(mob/user as mob)
-		src.add_dialog(user)
 		if (!(src.air_contents))
 			return
 
-		var/using_internal
-		if(iscarbon(src.loc))
-			var/mob/living/carbon/location = loc
-			if(location.internal==src)
-				using_internal = 1
-
-		//var/header_thing_chui_toggle = (user.client && !user.client.use_chui) ? "<html><head><meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\"><meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\"><meta http-equiv=\"pragma\" content=\"no-cache\"><style type='text/css'>body { font-family: Tahoma, sans-serif; font-size: 10pt; }</style></head><body>" : ""
-
-		var/message = {"
-		<b>[src]</b>
-		<br><b>Tank Pressure:</b> [MIXTURE_PRESSURE(air_contents)] kPa
-		<br>[fancy_pressure_bar(MIXTURE_PRESSURE(air_contents), 10 * ONE_ATMOSPHERE)]
-		<hr>
-		<b>Mask Release Valve:</b> <A href='?src=\ref[src];stat=1'>[using_internal?("Open"):("Closed")]</A>
-		<br><b>Mask Release Pressure:</b> <A href='?src=\ref[src];dist_p=-10'>-</A> <A href='?src=\ref[src];dist_p=-1'>-</A> <A href='?src=\ref[src];setpressure=1'>[distribute_pressure]</A> <A href='?src=\ref[src];dist_p=1'>+</A> <A href='?src=\ref[src];dist_p=10'>+</A>
-		"}
-		user.Browse(message, "window=tank;size=600x300")
-		onclose(user, "tank")
-		return
-
-	Topic(href, href_list)
-		..()
-		if (usr.stat|| usr.restrained())
-			return
-		if (src.loc == usr)
-			src.add_dialog(usr)
-			if (href_list["dist_p"])
-				var/cp = text2num(href_list["dist_p"])
-				src.distribute_pressure += cp
-				src.distribute_pressure = min(max(round(src.distribute_pressure), 0), 3*ONE_ATMOSPHERE)
-			if (href_list["stat"])
-				var/toggled = toggle_valve()
-				for (var/obj/ability_button/tank_valve_toggle/T in ability_buttons)
-					T.icon_state = toggled ? "airon" : "airoff"
-			if (href_list["setpressure"])
-				var/change = input(usr,"Target Pressure (0-303.975):","Enter target pressure",distribute_pressure) as num
-				if(!isnum(change)) return
-				distribute_pressure = min(max(0, change),303.975)
-				src.updateUsrDialog()
-				return
-
-			src.add_fingerprint(usr)
-			src.updateSelfDialog()
-		else
-			usr.Browse(null, "window=tank")
-			return
-		return
+		return ui_interact(user)
 
 	remove_air(amount)
 		return air_contents.remove(amount)
@@ -129,6 +82,9 @@ Contains:
 
 		check_status()
 		return 1
+
+	proc/set_release_pressure(var/pressure as num)
+		distribute_pressure = min(max(0, pressure), TANK_MAX_RELEASE_PRESSURE)
 
 	proc/toggle_valve()
 		if(iscarbon(src.loc))
@@ -195,7 +151,7 @@ Contains:
 			range = min(range, 12)		// was 8
 
 			if(src in bible_contents)
-				for(var/obj/item/storage/bible/B in by_type[/obj/item/storage/bible])//world)
+				for_by_tcl(B, /obj/item/storage/bible)//world)
 					var/turf/T = get_turf(B.loc)
 					if(T)
 						logTheThing("bombing", src, null, "exploded at [showCoords(T.x, T.y, T.z)], range: [range], last touched by: [src.fingerprintslast]")
@@ -239,7 +195,7 @@ Contains:
 			var/obj/item/icon = src
 			. = list()
 			icon = src.loc
-			if (!in_range(src, usr))
+			if (!in_interact_range(src, usr))
 				if (icon == src)
 					. += "<span class='notice'>It's a [bicon(icon)]! If you want any more information you'll need to get closer.</span>"
 				return
@@ -272,6 +228,48 @@ Contains:
 		else
 			..()
 
+/obj/item/tank/ui_interact(mob/user, datum/tgui/ui)
+	ui = tgui_process.try_update_ui(user, src, ui)
+	if (!ui)
+		ui = new(user, src, "GasTank", name)
+		ui.open()
+
+/obj/item/tank/ui_static_data(mob/user)
+	. = list(
+		"maxPressure" = PORTABLE_ATMOS_MAX_RELEASE_PRESSURE,
+		"maxRelease" = TANK_MAX_RELEASE_PRESSURE
+	)
+
+/obj/item/tank/ui_data(mob/user)
+	. = list(
+		"pressure" = MIXTURE_PRESSURE(air_contents),
+		"valveIsOpen" = using_internal(),
+		"releasePressure" = distribute_pressure,
+	)
+
+/obj/item/tank/ui_act(action, params)
+	. = ..()
+	if (.)
+		return
+	switch(action)
+		if("toggle-valve")
+			toggle_valve()
+			. = TRUE
+		if("set-pressure")
+			var/target_pressure = params["releasePressure"]
+			if(isnum(target_pressure))
+				set_release_pressure(params["releasePressure"])
+				. = TRUE
+
+/obj/item/tank/ui_state(mob/user)
+	return tgui_physical_state
+
+/obj/item/tank/ui_status(mob/user)
+  return min(
+		tgui_physical_state.can_use_topic(src, user),
+		tgui_not_incapacitated_state.can_use_topic(src, user)
+	)
+
 ////////////////////////////////////////////////////////////
 
 /obj/item/tank/anesthetic
@@ -284,11 +282,8 @@ Contains:
 	New()
 		..()
 		src.air_contents.oxygen = (3*ONE_ATMOSPHERE)*70/(R_IDEAL_GAS_EQUATION*T20C) * O2STANDARD
-		var/datum/gas/sleeping_agent/trace_gas = new()
+		var/datum/gas/sleeping_agent/trace_gas = src.air_contents.get_or_add_trace_gas_by_type(/datum/gas/sleeping_agent)
 		trace_gas.moles = (3*ONE_ATMOSPHERE)*70/(R_IDEAL_GAS_EQUATION*T20C) * N2STANDARD
-		if(!src.air_contents.trace_gases)
-			src.air_contents.trace_gases = list()
-		src.air_contents.trace_gases += trace_gas
 		return
 
 ////////////////////////////////////////////////////////////
@@ -348,9 +343,6 @@ Contains:
 				return 0.5
 			else
 				return 0
-		//G = null
-		qdel(G)
-		return
 
 /obj/item/tank/jetpack/abilities = list(/obj/ability_button/jetpack_toggle, /obj/ability_button/tank_valve_toggle)
 
@@ -367,6 +359,7 @@ Contains:
 	desc = "A jetpack that can be toggled on, letting the user use the gas inside as a propellant. Can also be hooked up to a compatible mask to allow you to breathe the gas inside. This is labelled to contain oxygen."
 	module_research = list("atmospherics" = 4)
 	distribute_pressure = 17 // setting these things to start at the minimum pressure needed to breathe - Haine
+	compatible_with_TTV = 0
 
 	New()
 		..()
@@ -469,6 +462,7 @@ Contains:
 /obj/item/tank/plasma
 	name = "Gas Tank (BIOHAZARD)"
 	icon_state = "plasma"
+	item_state = "plasma"
 	desc = "This is a tank that can be hooked up to a compatible recepticle. When a mask is worn and the release valve on the tank is open, the user will breathe the gas inside the tank. This is labelled to contain deadly plasma."
 	module_research = list("atmospherics" = 2)
 
@@ -489,7 +483,7 @@ Contains:
 
 		if(src in bible_contents)
 			strength = fuel_moles/20
-			for(var/obj/item/storage/bible/B in by_type[/obj/item/storage/bible])//world)
+			for_by_tcl(B, /obj/item/storage/bible)//world)
 				var/turf/T = get_turf(B.loc)
 				if(T)
 					explosion(src, T, 0, strength, strength*2, strength*3)
@@ -499,7 +493,6 @@ Contains:
 			return
 
 		var/turf/ground_zero = get_turf(loc)
-		loc = null
 
 		if(air_contents.temperature > (T0C + 400))
 			strength = fuel_moles/15

@@ -16,16 +16,17 @@
 	New()
 		..()
 		UnsubscribeProcess()
-		var/datum/reagents/R = new/datum/reagents(50)
-		reagents = R
-		R.my_atom = src
+		src.create_reagents(50)
 
-		R.add_reagent("grease", 25)
-		R.set_reagent_temp(src.frytemp)
+		reagents.add_reagent("grease", 25)
+		reagents.set_reagent_temp(src.frytemp)
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (isghostdrone(user) || isAI(user))
-			boutput(usr, "<span class='alert'>The [src] refuses to interface with you, as you are not a properly trained chef!</span>")
+			boutput(user, "<span class='alert'>The [src] refuses to interface with you, as you are not a properly trained chef!</span>")
+			return
+		if (W.cant_drop) //For borg held items
+			boutput(user, "<span class='alert'>You can't put that in [src] when it's attached to you!</span>")
 			return
 		if (src.fryitem)
 			boutput(user, "<span class='alert'>There is already something in the fryer!</span>")
@@ -34,16 +35,17 @@
 			boutput(user, "<span class='alert'>Your cooking skills are not up to the legendary Doublefry technique.</span>")
 			return
 
-		else if (istype(W, /obj/item/reagent_containers/glass/) || istype(W, /obj/item/reagent_containers/food/drinks/))
-			if (!W.reagents.total_volume)
-				boutput(user, "<span class='alert'>There is nothing in [W] to pour!</span>")
+		else if (istype(W, /obj/item/reagent_containers/) && !istype(W, /obj/item/reagent_containers/food))
+			var/obj/item/reagent_containers/R = W
+			if (!R.reagents.total_volume)
+				boutput(user, "<span class='alert'>There is nothing in [R] to pour!</span>")
 
 			else
-				logTheThing("combat", user, null, "pours chemicals [log_reagents(W)] into the [src] at [log_loc(src)].") // Logging for the deep fryer (Convair880).
-				src.visible_message("<span class='notice'>[user] pours [W:amount_per_transfer_from_this] units of [W]'s contents into [src].</span>")
+				logTheThing("combat", user, null, "pours chemicals [log_reagents(R)] into the [src] at [log_loc(src)].") // Logging for the deep fryer (Convair880).
+				src.visible_message("<span class='notice'>[user] pours [R.amount_per_transfer_from_this] units of [R]'s contents into [src].</span>")
 				playsound(src.loc, "sound/impact_sounds/Liquid_Slosh_1.ogg", 100, 1)
-				W.reagents.trans_to(src, W:amount_per_transfer_from_this)
-				if (!W.reagents.total_volume) boutput(user, "<span class='alert'><b>[W] is now empty.</b></span>")
+				R.reagents.trans_to(src, R.amount_per_transfer_from_this)
+				if (!R.reagents.total_volume) boutput(user, "<span class='alert'><b>[R] is now empty.</b></span>")
 
 			return
 
@@ -87,6 +89,11 @@
 		SubscribeToProcess()
 		return
 
+	MouseDrop_T(obj/item/W as obj, mob/user as mob)
+		if (istype(W) && in_interact_range(W, user) && in_interact_range(src, user))
+			return src.attackby(W, user)
+		return ..()
+
 	onVarChanged(variable, oldval, newval)
 		if (variable == "fryitem")
 			if (!oldval && newval)
@@ -96,7 +103,7 @@
 
 	attack_hand(mob/user as mob)
 		if (isghostdrone(user))
-			boutput(usr, "<span class='alert'>The [src] refuses to interface with you, as you are not a properly trained chef!</span>")
+			boutput(user, "<span class='alert'>The [src] refuses to interface with you, as you are not a properly trained chef!</span>")
 			return
 		if (!src.fryitem)
 			boutput(user, "<span class='alert'>There is nothing in the fryer.</span>")
@@ -130,9 +137,7 @@
 			src.cooktime++
 
 		if (!src.fryitem.reagents)
-			var/datum/reagents/R = new/datum/reagents(50)
-			src.fryitem.reagents = R
-			R.my_atom = src.fryitem
+			src.fryitem.create_reagents(50)
 
 
 		src.reagents.trans_to(src.fryitem, 2)
@@ -175,50 +180,45 @@
 				user.suiciding = 0
 		return 1
 
-	proc/eject_food()
-		if (!src.fryitem)
-			UnsubscribeProcess()
-			return
+	proc/fryify(atom/movable/thing, burnt=FALSE)
+		var/obj/item/reagent_containers/food/snacks/shell/deepfry/fryholder = new(src)
 
-		var/obj/item/reagent_containers/food/snacks/shell/deepfry/fryholder = new /obj/item/reagent_containers/food/snacks/shell/deepfry(src)
-
-		if (src.cooktime >= 60)
-			if (ismob(src.fryitem))
-				var/mob/M = src.fryitem
+		if(burnt)
+			if (ismob(thing))
+				var/mob/M = thing
 				M.ghostize()
 			else
-				for (var/mob/M in src.fryitem)
+				for (var/mob/M in thing)
 					M.ghostize()
-			qdel(src.fryitem)
-			src.fryitem = new /obj/item/reagent_containers/food/snacks/yuckburn (src)
-			if (!src.fryitem.reagents)
-				var/datum/reagents/R = new/datum/reagents(50)
-				src.fryitem.reagents = R
-				R.my_atom = src.fryitem
+			qdel(thing)
+			thing = new /obj/item/reagent_containers/food/snacks/yuckburn (src)
+			if (!thing.reagents)
+				thing.create_reagents(50)
 
-			src.fryitem.reagents.add_reagent("grease", 50)
+			thing.reagents.add_reagent("grease", 50)
 			fryholder.desc = "A heavily fried...something.  Who can tell anymore?"
-		else
-			if (istype(src.fryitem, /obj/item/reagent_containers/food/snacks))
-				fryholder.food_effects += fryitem:food_effects
+		if (istype(src.fryitem, /obj/item/reagent_containers/food/snacks))
+			var/obj/item/reagent_containers/food/snacks/food_snack = src.fryitem
+			fryholder.food_effects += food_snack.food_effects
+			fryholder.AddComponent(/datum/component/consume/food_effects, fryholder.food_effects)
 
-		var/icon/composite = new(src.fryitem.icon, src.fryitem.icon_state)//, src.fryitem.dir, 1)
-		for(var/O in src.fryitem.underlays + src.fryitem.overlays)
+		var/icon/composite = new(thing.icon, thing.icon_state)
+		for(var/O in src.fryitem.underlays + thing.overlays)
 			var/image/I = O
 			composite.Blend(icon(I.icon, I.icon_state, I.dir, 1), ICON_OVERLAY)
 
 		switch(src.cooktime)
 			if (0 to 15)
-				fryholder.name = "lightly-fried [src.fryitem.name]"
+				fryholder.name = "lightly-fried [thing.name]"
 				fryholder.color = ( rgb(166,103,54) )
 
 
 			if (16 to 49)
-				fryholder.name = "fried [src.fryitem.name]"
+				fryholder.name = "fried [thing.name]"
 				fryholder.color = ( rgb(103,63,24) )
 
 			if (50 to 59)
-				fryholder.name = "deep-fried [src.fryitem.name]"
+				fryholder.name = "deep-fried [thing.name]"
 				fryholder.color = ( rgb(63, 23, 4) )
 
 			else
@@ -228,17 +228,27 @@
 
 		fryholder.charcoaliness = src.cooktime
 		fryholder.icon = composite
-		fryholder.overlays = fryitem.overlays
-		fryholder.set_loc(get_turf(src))
-		if (ismob(fryitem))
-			fryholder.amount = 5
+		fryholder.overlays = thing.overlays
+		if (isitem(thing))
+			var/obj/item/item = thing
+			fryholder.amount = item.w_class
 		else
-			fryholder.amount = src.fryitem.w_class
-		fryholder.reagents.maximum_volume += src.fryitem.reagents.total_volume
-		src.fryitem.reagents.trans_to(fryholder, src.fryitem.reagents.total_volume)
+			fryholder.amount = 5
+		if(thing.reagents)
+			fryholder.reagents.maximum_volume += thing.reagents.total_volume
+			thing.reagents.trans_to(fryholder, thing.reagents.total_volume)
 		fryholder.reagents.my_atom = fryholder
 
-		src.fryitem.set_loc(fryholder)
+		thing.set_loc(fryholder)
+		return fryholder
+
+	proc/eject_food()
+		if (!src.fryitem)
+			UnsubscribeProcess()
+			return
+
+		var/obj/item/reagent_containers/food/snacks/shell/deepfry/fryholder = src.fryify(src.fryitem, src.cooktime >= 60)
+		fryholder.set_loc(get_turf(src))
 
 		src.fryitem = null
 		src.icon_state = "fryer0"

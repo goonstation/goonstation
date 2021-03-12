@@ -9,6 +9,7 @@
 	desc = "An underfloor wiring terminal for power equipment"
 	level = 1
 	layer = FLOOR_EQUIP_LAYER1
+	plane = PLANE_NOSHADOW_BELOW
 	var/obj/machinery/power/master = null
 	anchored = 1
 	directwired = 0		// must have a cable on same turf connecting to terminal
@@ -44,8 +45,7 @@
 		if(signal.transmission_method != TRANSMISSION_WIRE)
 			return
 
-		if(src.master)
-			src.master.receive_signal(signal)
+		src.master?.receive_signal(signal)
 
 		return
 
@@ -61,7 +61,7 @@
 			signal.transmission_method = TRANSMISSION_WIRE
 			signal.channels_passed += "PN[src.netnum];"
 
-			for(var/obj/machinery/power/device in src.powernet.data_nodes)
+			for (var/obj/machinery/power/device as() in src.powernet.data_nodes)
 				if(device != src)
 					device.receive_signal(signal, TRANSMISSION_WIRE)
 
@@ -78,6 +78,7 @@
 	desc = "An underfloor connection point for power line communication equipment."
 	level = 1
 	layer = FLOOR_EQUIP_LAYER1
+	plane = PLANE_NOSHADOW_BELOW
 	anchored = 1
 	directwired = 0
 	use_datanet = 1
@@ -130,7 +131,7 @@
 			signal.channels_passed += "PN[src.netnum];"
 
 			var/iterations = 0
-			for(var/obj/machinery/power/device in src.powernet.data_nodes)
+			for (var/obj/machinery/power/device as() in src.powernet.data_nodes)
 				if(device != src)
 					device.receive_signal(signal, TRANSMISSION_WIRE)
 

@@ -26,12 +26,14 @@
 	stamina_crit_chance = 5
 	module_research = list("tools" = 4, "metals" = 1, "fuels" = 5)
 	rand_pos = 1
+	inventory_counter_enabled = 1
+	var/capacity = 20
 
 	New()
-		var/datum/reagents/R = new/datum/reagents(20)
-		reagents = R
-		R.my_atom = src
-		R.add_reagent("fuel", 20)
+		..()
+		src.create_reagents(capacity)
+		reagents.add_reagent("fuel", capacity)
+		src.inventory_counter.update_number(get_fuel())
 
 		src.setItemSpecial(/datum/item_special/flame)
 		return
@@ -127,7 +129,7 @@
 				qdel(S)
 			var/obj/item/assembly/weld_rod/F = new /obj/item/assembly/weld_rod( user )
 			src.set_loc(F)
-			F.part1 = src
+			F.welder = src
 			user.u_equip(src)
 			user.put_in_hand_or_drop(F)
 			R.master = F
@@ -135,13 +137,14 @@
 			src.layer = initial(src.layer)
 			user.u_equip(src)
 			src.set_loc(F)
-			F.part2 = R
+			F.rod = R
 			src.add_fingerprint(user)
 
 	afterattack(obj/O as obj, mob/user as mob)
 		if ((istype(O, /obj/reagent_dispensers/fueltank) || istype(O, /obj/item/reagent_containers/food/drinks/fueltank)) && get_dist(src,O) <= 1)
 			if (O.reagents.total_volume)
-				O.reagents.trans_to(src, 20)
+				O.reagents.trans_to(src, capacity)
+				src.inventory_counter.update_number(get_fuel())
 				boutput(user, "<span class='notice'>Welder refueled</span>")
 				playsound(src.loc, "sound/effects/zzzt.ogg", 50, 1, -6)
 			else
@@ -149,7 +152,7 @@
 		else if (src.welding)
 			use_fuel(0.2)
 			if (get_fuel() <= 0)
-				boutput(usr, "<span class='notice'>Need more fuel!</span>")
+				boutput(user, "<span class='notice'>Need more fuel!</span>")
 				src.welding = 0
 				src.force = 3
 				hit_type = DAMAGE_BLUNT
@@ -160,13 +163,14 @@
 			if (istype(location, /turf))
 				location.hotspot_expose(700, 50, 1)
 			if (O && !ismob(O) && O.reagents)
-				boutput(usr, "<span class='notice'>You heat \the [O.name]</span>")
+				boutput(user, "<span class='notice'>You heat \the [O.name]</span>")
 				O.reagents.temperature_reagents(2500,10)
 		return
 
 	attack_self(mob/user as mob)
 		if (status > 1) return
 		src.welding = !(src.welding)
+		src.firesource = !(src.firesource)
 		if (src.welding)
 			if (get_fuel() <= 0)
 				boutput(user, "<span class='notice'>Need more fuel!</span>")
@@ -177,8 +181,9 @@
 			hit_type = DAMAGE_BURN
 			set_icon_state("weldingtool-on" + src.icon_state_variant_suffix)
 			src.item_state = "weldingtool-on" + src.item_state_variant_suffix
-			if (!(src in processing_items))
-				processing_items.Add(src)
+			processing_items |= src
+			if(user && !ON_COOLDOWN(src, "playsound", 1.3 SECONDS))
+				playsound(src.loc, "sound/effects/welder_ignite.ogg", 80, 1)
 		else
 			boutput(user, "<span class='notice'>Not welding anymore.</span>")
 			src.force = 3
@@ -196,6 +201,10 @@
 		if (exposed_temperature > 1000)
 			return ..()
 		return
+
+	firesource_interact()
+		if (reagents.get_reagent_amount("fuel"))
+			reagents.remove_reagent("fuel", 1)
 
 	process()
 		if(!welding)
@@ -227,6 +236,7 @@
 		amount = min(get_fuel(), amount)
 		if (reagents)
 			reagents.remove_reagent("fuel", amount)
+		src.inventory_counter.update_number(get_fuel())
 		return
 
 	proc/eyecheck(mob/user as mob)
@@ -251,13 +261,13 @@
 				safety = 1
 		switch (safety)
 			if (1)
-				boutput(usr, "<span class='alert'>Your eyes sting a little.</span>")
+				boutput(user, "<span class='alert'>Your eyes sting a little.</span>")
 				user.take_eye_damage(rand(1, 2))
 			if (0)
-				boutput(usr, "<span class='alert'>Your eyes burn.</span>")
+				boutput(user, "<span class='alert'>Your eyes burn.</span>")
 				user.take_eye_damage(rand(2, 4))
 			if (-1)
-				boutput(usr, "<span class='alert'><b>Your goggles intensify the welder's glow. Your eyes itch and burn severely.</b></span>")
+				boutput(user, "<span class='alert'><b>Your goggles intensify the welder's glow. Your eyes itch and burn severely.</b></span>")
 				user.change_eye_blurry(rand(12, 20))
 				user.take_eye_damage(rand(12, 16))
 
@@ -333,10 +343,4 @@
 
 /obj/item/weldingtool/high_cap
 	name = "high-capacity weldingtool"
-
-	New()
-		var/datum/reagents/R = new/datum/reagents(100)
-		reagents = R
-		R.my_atom = src
-		R.add_reagent("fuel", 100)
-		return
+	capacity = 100

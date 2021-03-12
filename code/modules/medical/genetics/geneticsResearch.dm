@@ -16,7 +16,7 @@ var/datum/geneticsResearchManager/genResearch = new()
 	var/see_secret = 0
 	var/emitter_radiation = 75
 	var/equipment_cooldown_multiplier = 1
-	var/list/currentResearch = new/list()
+	var/list/datum/geneticsResearchEntry/currentResearch = new/list()
 	var/list/researchTree = new/list()
 	var/list/researchTreeTiered = new/list()
 	var/list/combinationrecipes = new/list()
@@ -50,13 +50,13 @@ var/datum/geneticsResearchManager/genResearch = new()
 		return
 
 	proc/isResearched(var/type)
+		. = FALSE
 		if(src.debug_mode)
-			return 1
-		if(researchTree.Find(type))
+			return TRUE
+		if(type in researchTree)
 			var/datum/geneticsResearchEntry/E = researchTree[type]
 			if(E.isResearched == 1)
-				return 1
-		return 0
+				. = TRUE
 
 	proc/progress()
 		//var/tickDiff = 0
@@ -68,7 +68,7 @@ var/datum/geneticsResearchManager/genResearch = new()
 			 //This is only temporary to regenerate points while this isnt finished yet.
 			researchMaterial += checkMaterialGenerationRate()
 
-		for(var/datum/geneticsResearchEntry/entry in currentResearch)
+		for(var/datum/geneticsResearchEntry/entry as() in currentResearch)
 			entry.onTick()
 			if(entry.finishTime <= lastTick)
 				entry.isResearched = 1
@@ -95,7 +95,8 @@ var/datum/geneticsResearchManager/genResearch = new()
 			M.name = "Mutation Research"
 			M.desc = "Analysis of a potential mutation."
 
-			var/research_time = src.mut_research_time
+			M.researchTime = src.mut_research_time
+			var/research_time = M.researchTime
 			if (genResearch.time_discount)
 				research_time *= (1 - genResearch.time_discount)
 			if (src.debug_mode)
@@ -135,11 +136,10 @@ var/datum/geneticsResearchManager/genResearch = new()
 
 
 	proc/checkClonepodBonus()
-		var/nominal_clonepods = 0
-		for(var/obj/machinery/clonepod/CP in src.clonepods)
-			if(CP.operating_nominally()) nominal_clonepods++
-
-		return nominal_clonepods
+		. = 0
+		for(var/obj/machinery/clonepod/CP as() in src.clonepods)
+			if(CP.operating_nominally())
+				.++
 
 	proc/checkMaterialGenerationRate()
 		. = 1 + min(checkClonepodBonus(), 2)
@@ -164,11 +164,9 @@ var/datum/geneticsResearchManager/genResearch = new()
 	var/htmlIcon = null
 
 	proc/onFinish()
-		for (var/obj/machinery/computer/genetics/C in genetics_computers)
-			if (C.tracked_research == src)
-				C.tracked_research = null
-				break
-		return
+		for_by_tcl(computer, /obj/machinery/computer/genetics)
+			for (var/datum/tgui/ui as() in tgui_process.get_uis(computer))
+				computer.update_static_data(null, ui)
 
 	proc/onBegin()
 		return
@@ -186,16 +184,16 @@ var/datum/geneticsResearchManager/genResearch = new()
 		if(src.hidden)
 			return 0
 
-		for(var/X in src.requiredResearch) // Have we got the prerequisite researches?
+		for(var/X as() in src.requiredResearch) // Have we got the prerequisite researches?
 			if(!genResearch.isResearched(X))
 				return 0
 
 		var/datum/bioEffect/BE
-		for (var/X in src.requiredMutRes)
+		for (var/X as() in src.requiredMutRes)
 			BE = GetBioeffectFromGlobalListByID(X)
 			if (!BE)
 				return 0
-			if (BE.research_level < 2)
+			if (BE.research_level < EFFECT_RESEARCH_DONE)
 				return 0
 
 		if (genResearch.mutations_researched < src.requiredTotalMutRes)
@@ -211,13 +209,13 @@ var/datum/geneticsResearchManager/genResearch = new()
 	onBegin()
 		global_instance = GetBioeffectFromGlobalListByID(mutation_id)
 		global_instance.research_finish_time = world.time + researchTime
-		global_instance.research_level = max(global_instance.research_level,1)
+		global_instance.research_level = max(global_instance.research_level, EFFECT_RESEARCH_IN_PROGRESS)
 		return
 
 	onFinish()
 		..()
-		if (global_instance.research_level < 2)
-			global_instance.research_level = max(global_instance.research_level,2)
+		if (global_instance.research_level < EFFECT_RESEARCH_DONE)
+			global_instance.research_level = max(global_instance.research_level, EFFECT_RESEARCH_DONE)
 			genResearch.mutations_researched++
 		return
 

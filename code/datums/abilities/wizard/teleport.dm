@@ -15,13 +15,13 @@
 		if (!holder)
 			return 1
 
-		if (holder.owner && ismob(holder.owner) && holder.owner.teleportscroll(0, 3) == 1)
+		if (holder.owner && ismob(holder.owner) && holder.owner.teleportscroll(0, 3, spell=src) == 1)
 			return 0
 
 		return 1
 
 // These two procs were so similar that I combined them (Convair880).
-/mob/proc/teleportscroll(var/effect = 0, var/perform_check = 0, var/obj/item_to_check = null)
+/mob/proc/teleportscroll(var/effect = 0, var/perform_check = 0, var/obj/item_to_check = null, var/datum/targetable/spell/teleport/spell)
 	if (src.getStatusDuration("paralysis") || !isalive(src))
 		boutput(src, "<span class='alert'>Not when you're incapacitated.</span>")
 		return 0
@@ -43,6 +43,11 @@
 	var/A
 	var/area/wizard_station/wiz_shuttle = locate(/area/wizard_station)
 	var/area/thearea = null
+	//if you have a teleport ring, you can't go to the wizard's den. lame src istypes, but I'm too lazy and tired to care right now. It should work.
+	if(ishuman(src) && istype(src:gloves, /obj/item/clothing/gloves/ring/wizard/teleport))
+		wiz_shuttle = null
+	else if (iscritter(src) && locate(/obj/item/clothing/gloves/ring/wizard/teleport) in src)
+		wiz_shuttle = null
 
 	// Doing it this way to avoid modifying the cached areas
 	if (wiz_shuttle)
@@ -92,7 +97,7 @@
 			/*if (!iswizard(src))
 				boutput(src, "<span class='alert'>You seem to have lost all magical abilities.</span>")
 				return 0*/
-			if (src.wizard_castcheck() == 0)
+			if (src.wizard_castcheck(spell) == 0)
 				return 0 // Has own user feedback.
 
 	if (src.getStatusDuration("paralysis") || !isalive(src))

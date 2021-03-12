@@ -5,7 +5,7 @@
 		return null
 	else if (!config.medal_hub || !config.medal_password)
 		return null
-	for(var/obj/machinery/computer/tetris/T in machine_registry[MACHINES_MISC]) // JFC this a world loop before this. aaaAAAAAAA
+	for(var/datum/game/tetris/T in by_type[/datum/game/tetris]) // JFC this a world loop before this. aaaAAAAAAA
 		if (T.highscore && T.highscorekey)
 			SPAWN_DBG(0)
 				var/list/response = world.GetScores(T.highscorekey, "Tetris", config.medal_hub, config.medal_password)
@@ -29,24 +29,18 @@
 	return result
 */
 
-
-
 /obj/machinery/computer/tetris
 	name = "Robustris Pro Cabinet"
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "tetris"
-
 	desc = "Instructions: Left/Right Arrows: Move, Up Arrow/W/R: Turn CW, Q: Turn CCW, Down Arrow/S: Soft Drop, Space: Hard Drop | HIGHSCORE: 0"
 	machine_registry_idx = MACHINES_MISC
-	var/highscore = 0
-	var/highscoreholder
-	var/highscorekey
-	var/tetriscode
+	var/datum/game/tetris
 
 /obj/machinery/computer/tetris/attackby(I as obj, user as mob)
 	if(istype(I, /obj/item/screwdriver))
 		playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
-		if(do_after(user, 20))
+		if(do_after(user, 2 SECONDS))
 			if (src.status & BROKEN)
 				boutput(user, "<span class='notice'>The broken glass falls out.</span>")
 				var/obj/computerframe/A = new /obj/computerframe( src.loc )
@@ -80,8 +74,7 @@
 
 /obj/machinery/computer/tetris/New()
 	..()
-	tetriscode = grabResource("html/tetris.html")
-
+	src.tetris = new /datum/game/tetris(src)
 
 /obj/machinery/computer/tetris/attack_ai(mob/user as mob)
 	return src.attack_hand(user)
@@ -90,30 +83,10 @@
 	if(..())
 		return
 	src.add_dialog(user)
-	var/dat = replacetext(tetriscode, "{{HIGHSCORE}}", num2text(highscore))
-	dat = replacetext(dat, "{{TOPICURL}}", "'?src=\ref[src];highscore='+this.ScoreCur;")
-
-	user.Browse(dat, "window=tetris;size=375x500")
-	onclose(user, "tetris")
-	return
-
-/obj/machinery/computer/tetris/Topic(href, href_list)
-	if(..())
-		return
-
-	if (href_list["highscore"])
-		if (text2num(href_list["highscore"]))
-			if (text2num(href_list["highscore"]) > highscore)
-				highscore = text2num(href_list["highscore"])
-				highscorekey = usr.key
-				highscoreholder = html_encode(input("Congratulations! You have achieved the highscore! Enter a name:", "Highscore!", usr.name) as text)
-
-				desc = "Instructions: Left/Right Arrows: move, Up Arrow: turn, Down Arrow: faster, Space: auto place<br><br><b>Highscore: [highscore] by [highscoreholder]</b>"
-
+	src.tetris.new_game(user)
 	return
 
 /obj/machinery/computer/tetris/power_change()
-
 	if(status & BROKEN)
 		icon_state = "tetrisb"
 	else
@@ -124,3 +97,51 @@
 			SPAWN_DBG(rand(0, 15))
 				src.icon_state = "tetris0"
 				status |= NOPOWER
+
+ABSTRACT_TYPE(/datum/game)
+/datum/game
+
+	proc/new_game(mob/user as mob)
+
+	proc/end_game()
+
+/datum/game/tetris
+	var/obj/owner
+	var/code
+	var/highscore = 0
+	var/highscoreholder
+	var/highscorekey
+
+	New(var/owner)
+		..()
+		START_TRACKING
+		src.owner = owner
+		src.code = grabResource("html/tetris.html")
+
+	disposing()
+		..()
+		STOP_TRACKING
+
+	Topic(href, href_list)
+		if (owner.Topic(href, href_list))
+			return
+		if (href_list["highscore"])
+			if (text2num(href_list["highscore"]))
+				if (text2num(href_list["highscore"]) > highscore)
+					highscore = text2num(href_list["highscore"])
+					highscorekey = usr.key
+					highscoreholder = html_encode(input("Congratulations! You have achieved the highscore! Enter a name:", "Highscore!", usr.name) as text)
+					src.end_game()
+		return
+
+	new_game(mob/user as mob)
+		var/dat = replacetext(code, "{{HIGHSCORE}}", num2text(highscore))
+		dat = replacetext(dat, "{{TOPICURL}}", "'?src=\ref[src];highscore='+this.ScoreCur;")
+
+		user.Browse(dat, "window=tetris;size=375x500")
+		onclose(user, "tetris")
+		return
+
+	end_game()
+		if(istype(src.owner, /obj/machinery/computer/tetris))
+			src.owner.desc = "Instructions: Left/Right Arrows: move, Up Arrow: turn, Down Arrow: faster, Space: auto place<br><br><b>Highscore: [highscore] by [highscoreholder]</b>"

@@ -1,26 +1,36 @@
 //Contains all status effects of the food group.
 
 //ideas :
-
 // bad breath (speaking makes others vomit)
-
 // magboots
-
 // slime
 
+/// Special wrapper to add food status effects, due to special overriding and duration behaivor.
 /mob/living/proc/add_food_bonus(var/id, var/obj/item/reagent_containers/food/snacks/eaten)
 	if(id)
-		//bleh. We don't want the 'tiny' version to override the 'big' version.
-		if (src.hasStatus("[id]_big"))
-			return
-		else if (findtextEx(id,"_big"))
-			var/id_no_big = copytext(id, 1, length(id)-3)
-			if (src.hasStatus(id_no_big))
-				src.delStatus(id_no_big)
 
-		var/bite_time = 600
+		/*
+		Sorry about this findtext junk. Kinda needed while we're still working with just IDs,
+		can't implement a priority system on the datums unless we're passing those around... could do an initial() thing for good perf with those tho
+		*/
+
+		// We don't want the 'small' version to override the 'normal' or 'big' version
+		if (findtextEx(id,"_small"))
+			var/id_regular = copytext(id, 1, length(id)-5)
+			if (src.hasStatus(id_regular) || src.hasStatus("[id_regular]_big"))
+				return
+		else
+			//bleh. We don't want the 'normal' version to override the 'big' version.
+			if (src.hasStatus("[id]_big"))
+				return
+			else if (findtextEx(id,"_big"))
+				var/id_no_big = copytext(id, 1, length(id)-3)
+				if (src.hasStatus(id_no_big))
+					src.delStatus(id_no_big)
+
+		var/bite_time = (1 MINUTE)
 		if (src.reagents && src.reagents.has_reagent("THC"))
-			bite_time = 1200
+			bite_time = (2 MINUTES)
 		if (eaten)
 			if (eaten.quality >= 5)
 				bite_time *= 2
@@ -30,13 +40,13 @@
 		src.changeStatus(id, bite_time)
 
 /mob/living/proc/handle_digestion(var/mult = 1)
-	if (src.stomach_process && src.stomach_process.len)
+	if (src.stomach_process && length(src.stomach_process))
 		for(var/obj/item/reagent_containers/food/snacks/bite/B in stomach_process)
 			B.process_stomach(src, (1 / stomach_process.len) * mult) //1 units processed per Life() tick. Takes an even amt of reagents from all stomach contents
 
 //TODO MOVE
 /mob/living/proc/handle_skinstuff(var/mult = 1)
-	if (src.skin_process && src.skin_process.len)
+	if (src.skin_process && length(src.skin_process))
 
 		//you absorb shit faster if you have lots of patches stacked
 		//gives patches a way to heal quickly if you slap on a whole bunch, also makes long heals over time less viable
@@ -44,8 +54,7 @@
 		var/multi_process_mult = skin_process.len > 1 ? (skin_process.len * 1.5) : 1
 		var/use_volume = 0.35 * mult * multi_process_mult
 
-		for(var/atom in skin_process)
-			var/atom/A = atom
+		for (var/atom/A as() in skin_process)
 
 			if (A.loc != src)
 				skin_process -= A
@@ -66,7 +75,8 @@
 	if (src.stomach_process && src.stomach_process.len)
 		var/obj/gross = pick(src.stomach_process)
 		src.stomach_process -= gross
-		gross.loc = src.loc
+		gross.set_loc(src.loc)
+		. = gross
 
 
 
@@ -81,7 +91,7 @@
 	tickSpacing = 20
 
 	getTooltip()
-		return "Healing [heal_brute] brute damage every [tickSpacing/10] sec."
+		. = "Healing [heal_brute] brute damage every [tickSpacing/(1 SECOND)] sec."
 
 /datum/statusEffect/simplehot/foodTox
 	id = "food_tox"
@@ -94,7 +104,7 @@
 	tickSpacing = 20
 
 	getTooltip()
-		return "Healing [heal_tox] toxin damage every [tickSpacing/10] sec."
+		. = "Healing [heal_tox] toxin damage every [tickSpacing/(1 SECOND)] sec."
 
 /datum/statusEffect/simplehot/foodBurn
 	id = "food_burn"
@@ -107,7 +117,7 @@
 	tickSpacing = 20
 
 	getTooltip()
-		return "Healing [heal_burn] burn damage every [tickSpacing/10] sec."
+		. = "Healing [heal_burn] burn damage every [tickSpacing/(1 SECOND)] sec."
 
 /datum/statusEffect/simplehot/foodAll
 	id = "food_all"
@@ -122,7 +132,7 @@
 	tickSpacing = 20
 
 	getTooltip()
-		return "Healing 0.26 damage spread across Brute/Burn/Toxin damage [tickSpacing/10] sec."
+		. = "Healing 0.26 damage spread across Brute/Burn/Toxin damage [tickSpacing/(1 SECOND)] sec."
 
 /datum/statusEffect/foodcold
 	id = "food_cold"
@@ -136,16 +146,15 @@
 	var/tickCount = 0
 	var/tickSpacing = 20 //Time between ticks.
 
-	onUpdate(var/timedPassed)
-		tickCount += timedPassed
+	onUpdate(timePassed)
+		tickCount += timePassed
 		var/times = (tickCount / tickSpacing)
 		if(times >= 1 && ismob(owner))
 			tickCount -= (round(times) * tickSpacing)
 			var/mob/M = owner
 			if (M.bodytemperature > M.base_body_temp + 3)
-				for(var/i = 0, i < times, i++)
+				for(var/i in 1 to times)
 					M.bodytemperature -= 2
-		return
 
 /datum/statusEffect/foodwarm
 	id = "food_warm"
@@ -159,18 +168,17 @@
 	var/tickCount = 0
 	var/tickSpacing = 20 //Time between ticks.
 
-	onUpdate(var/timedPassed)
-		tickCount += timedPassed
+	onUpdate(timePassed)
+		tickCount += timePassed
 		var/times = (tickCount / tickSpacing)
 		if(times >= 1 && ismob(owner))
 			tickCount -= (round(times) * tickSpacing)
 			var/mob/M = owner
 			if (M.bodytemperature < M.base_body_temp + 8)
-				for(var/i = 0, i < times, i++)
+				for(var/i in 1 to times)
 					M.bodytemperature += 6
-		return
 
-/datum/statusEffect/foodstaminaregen
+/datum/statusEffect/staminaregen/food
 	id = "food_refreshed"
 	name = "Food (Refreshed)"
 	desc = ""
@@ -178,7 +186,7 @@
 	exclusiveGroup = "Food"
 	maxDuration = 6000
 	unique = 1
-	var/change = 2.2
+	change = 2.2
 
 	big
 		name = "Food (Refreshed+)"
@@ -186,17 +194,7 @@
 		change = 5
 
 	getTooltip()
-		return "Your stamina regen is increased by [change]."
-
-	onAdd(var/optional=null)
-		if(hascall(owner, "add_stam_mod_regen"))
-			owner:add_stam_mod_regen("food_bonus", change)
-		return
-
-	onRemove()
-		if(hascall(owner, "remove_stam_mod_regen"))
-			owner:remove_stam_mod_regen("food_bonus")
-		return
+		. = "Your stamina regen is increased by [change]."
 
 /datum/statusEffect/foodstaminamax
 	id = "food_energized"
@@ -214,22 +212,19 @@
 		change = 40
 
 	getTooltip()
-		return "Your max. stamina is increased by [change]."
+		. = "Your max. stamina is increased by [change]."
 
-	onAdd(var/optional=null)
+	onAdd(optional=null)
 		if(hascall(owner, "add_stam_mod_max"))
 			owner:add_stam_mod_max("food_bonus", change)
-		return
 
 	onRemove()
 		if(hascall(owner, "remove_stam_mod_max"))
 			owner:remove_stam_mod_max("food_bonus")
-		return
-
 
 /datum/statusEffect/maxhealth/food
 	id = "food_hp_up"
-	name = "Food (HP Up)"
+	name = "Food (HP++)"
 	desc = ""
 	icon_state = "foodbuff"
 	exclusiveGroup = "Food"
@@ -237,19 +232,24 @@
 	unique = 1
 	change = 20
 
+	small
+		name = "Food (HP+)"
+		id = "food_hp_up_small"
+		change = 10
+
 	big
-		name = "Food (HP Up+)"
+		name = "Food (HP+++)"
 		id = "food_hp_up_big"
 		change = 40
 
 	getTooltip()
-		return "Your max. health is increased by [change]."
+		. = "Your max. health is increased by [change]."
 
-	onAdd(var/optional=null)
-		return ..(change)
+	onAdd(optional=null)
+		. = ..(change)
 
-	onChange(var/optional=null)
-		return ..(change)
+	onChange(optional=null)
+		. = ..(change)
 
 
 /datum/statusEffect/deep_fart
@@ -299,9 +299,11 @@
 		range = 6
 
 	proc/cast()
-
 		var/turf/T = get_step(owner,owner.dir)
-		T = get_step(T,owner.dir)
+		var/range_breath = 1
+		while((get_dist(owner,T) < range) && (range_breath < 20))// range is used for the range the fireburp can reach from the caster.
+			T = get_step(T,owner.dir)
+			range_breath ++ //range_breath is used to make sure the loop doesn't stay active too long and lag the game if something messes up range.
 		var/list/affected_turfs = getline(owner, T)
 
 		owner.visible_message("<span class='alert'><b>[owner] burps a stream of fire!</b></span>")
@@ -324,6 +326,9 @@
 
 		//reduce duration
 		src.duration -= min(durationLoss,src.duration)
+		if(src.duration <= 0)//without this check, it will get stuck at 0 and never go away.
+			if(src.owner)
+				src.owner.delStatus(src)
 
 /datum/statusEffect/explosion_resist
 	id = "food_explosion_resist"
@@ -333,11 +338,11 @@
 	exclusiveGroup = "Food"
 	maxDuration = 6000
 	unique = 1
-	onAdd(optional)
+	onAdd(optional = 10)
 		. = ..()
 		if(ismob(owner))
 			var/mob/M = owner
-			APPLY_MOB_PROPERTY(M, PROP_EXPLOPROT, src, 1)
+			APPLY_MOB_PROPERTY(M, PROP_EXPLOPROT, src, optional)
 
 	onRemove()
 		. = ..()
@@ -400,14 +405,12 @@
 		desc = "You feel really sweaty!"
 		sweat_prob = 5
 
-	onUpdate(var/timedPassed)
-		tickCount += timedPassed
+	onUpdate(timePassed)
+		tickCount += timePassed
 		var/times = (tickCount / tickSpacing)
 		if(times >= 1 && ismob(owner))
 			tickCount -= (round(times) * tickSpacing)
-			for(var/i = 0, i < times, i++)
+			for(var/i in 1 to times)
 				if (prob(sweat_prob))
 					var/turf/T = get_turf(owner)
 					T.fluid_react_single("water",5)
-		return
-

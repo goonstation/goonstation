@@ -1,7 +1,15 @@
+/proc/most_applicable_trade(var/list/datum/commodity/goods_buy, var/obj/item/sell_item)
+	var/list/goods_buy_types = new /list(0)
+	for(var/datum/commodity/N as() in goods_buy)
+		if (istype(sell_item, N.comtype))
+			goods_buy_types[N.comtype] = N
+	return goods_buy_types[maximal_subtype(goods_buy_types)]
+
+
 /obj/npc/trader
 	name="Trader"
 	layer = 4  //Same layer as most mobs, should stop them from sometimes being drawn under their shuttle chairs out of sight
-	var/bullshit =0
+	var/bullshit = 0
 	var/hiketolerance = 20 //How much they will tolerate price hike
 	var/list/droplist = null //What the merchant will drop upon their death
 	var/list/goods_sell = new/list() //What products the trader sells
@@ -57,7 +65,7 @@
 	anger()
 		for(var/mob/M in AIviewers(src))
 			boutput(M, "<span class='alert'><B>[src.name]</B> becomes angry!</span>")
-		src.desc = "[src] looks angry"
+		src.desc = "[src] looks angry."
 		SPAWN_DBG(rand(1000,3000))
 			src.visible_message("<b>[src.name] calms down.</b>")
 			src.desc = "[src] looks a bit annoyed."
@@ -85,6 +93,24 @@
 		onclose(user, windowName)
 		return
 
+	attackby(obj/item/I as obj, mob/user as mob)
+		if (istype(I, /obj/item/card/id) || (istype(I, /obj/item/device/pda2) && I:ID_card))
+			if (istype(I, /obj/item/device/pda2) && I:ID_card) I = I:ID_card
+			boutput(usr, "<span class='notice'>You swipe the ID card in the card reader.</span>")
+			var/datum/data/record/account = null
+			account = FindBankAccountByName(I:registered)
+			if(account)
+				var/enterpin = input(usr, "Please enter your PIN number.", "Card Reader", 0) as null|num
+				if (enterpin == I:pin)
+					boutput(usr, "<span class='notice'>Card authorized.</span>")
+					src.scan = I
+				else
+					boutput(usr, "<span class='alert'>Pin number incorrect.</span>")
+					src.scan = null
+			else
+				boutput(usr, "<span class='alert'>No bank account associated with this ID found.</span>")
+				src.scan = null
+
 	attack_hand(var/mob/user as mob)
 		if(..())
 			return
@@ -105,7 +131,7 @@
 		if(..())
 			return
 
-		if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
+		if ((usr.contents.Find(src) || (in_interact_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
 			src.add_dialog(usr)
 		///////////////////////////////
 		///////Generate Purchase List//
@@ -135,12 +161,12 @@
 			account = FindBankAccountByName(src.scan.registered)
 			if (account)
 				var/quantity = 1
-				quantity = input("How many units do you want to purchase? Maximum: 10", "Trader Purchase", null, null) as num
+				quantity = input("How many units do you want to purchase? Maximum: 50", "Trader Purchase", null, null) as num
 				if (quantity < 1)
 					quantity = 0
 					return
-				else if (quantity >= 10)
-					quantity = 10
+				else if (quantity >= 50)
+					quantity = 50
 
 				////////////
 				var/datum/commodity/P = locate(href_list["doorder"]) in goods_sell
@@ -275,35 +301,27 @@
 							<BR><A href='?src=\ref[src];sell=1'>OK</A>"}
 				src.updateUsrDialog()
 				return
-			if(ispath(sellitem, /obj/item/reagent_containers/food/snacks/ingredient/meat))
-				sellitem = /obj/item/reagent_containers/food/snacks/ingredient/meat
-			if(ispath(sellitem, /obj/item/reagent_containers/food/snacks/plant))
-				sellitem = /obj/item/reagent_containers/food/snacks/plant
-			if(ispath(sellitem, /obj/item/electronics))
-				sellitem = /obj/item/electronics
-			if(ispath(sellitem, /obj/item/parts/robot_parts))
-				sellitem = /obj/item/parts/robot_parts
-			for(var/datum/commodity/N in goods_buy)
-				if(N.comtype == src.sellitem.type)
-					var/datum/data/record/account = null
-					account = FindBankAccountByName(src.scan.registered)
-					if (!account)
-						src.temp = {" [src] looks slightly agitated when he realizes there is no bank account associated with the ID card.<BR>
-									<BR><A href='?src=\ref[src];sell=1'>OK</A>"}
-						src.add_fingerprint(usr)
-						src.updateUsrDialog()
-						return
-					else
-						doing_a_thing = 1
-						src.temp = pick(src.successful_sale_dialogue) + "<BR>"
-						src.temp += "<BR><A href='?src=\ref[src];sell=1'>OK</A>"
-						qdel (src.sellitem)
-						src.sellitem = null
-						account.fields["current_money"] += N.price
-						src.add_fingerprint(usr)
-						src.updateUsrDialog()
-						doing_a_thing = 0
-						return
+			var/datum/commodity/tradetype = most_applicable_trade(src.goods_buy, src.sellitem)
+			if(tradetype)
+				var/datum/data/record/account = null
+				account = FindBankAccountByName(src.scan.registered)
+				if (!account)
+					src.temp = {" [src] looks slightly agitated when he realizes there is no bank account associated with the ID card.<BR>
+								<BR><A href='?src=\ref[src];sell=1'>OK</A>"}
+					src.add_fingerprint(usr)
+					src.updateUsrDialog()
+					return
+				else
+					doing_a_thing = 1
+					src.temp = pick(src.successful_sale_dialogue) + "<BR>"
+					src.temp += "<BR><A href='?src=\ref[src];sell=1'>OK</A>"
+					qdel (src.sellitem)
+					src.sellitem = null
+					account.fields["current_money"] += tradetype.price
+					src.add_fingerprint(usr)
+					src.updateUsrDialog()
+					doing_a_thing = 0
+					return
 			src.temp = {"[pick(failed_sale_dialogue)]<BR>
 						<BR><A href='?src=\ref[src];sell=1'>OK</A>"}
 
@@ -517,17 +535,11 @@
 				user.visible_message("<span class='notice'>[src] rummages through [user]'s [O].</span>")
 				playsound(src.loc, "rustle", 60, 1)
 				var/cratevalue = null
-				for (var/obj/M in O.contents)
-					//boutput(world, "<span class='notice'>HELLO I AM [M]</span>")
-					//boutput(world, "<span class='notice'>AND MY TYPE PATH IS [M.type]</span>")
-					for(var/datum/commodity/N in src.goods_buy)
-						if(M) // fuck the hell off you dirty null.type errors
-							if(N.comtype == M.type)
-								//boutput(world, "<b>MY ASSOCIATED DATUM IS [N]</b>")
-								//boutput(world, "<span class='notice'>[M] IS GOING TO SELL FOR [N.price] HOT BALLS</span>")
-								//boutput(world, "<span class='notice'>UPDATING CRATE VALUE TO [cratevalue] OR FUCKING ELSE</span>")
-								cratevalue += N.price
-								qdel( M )
+				for (var/obj/sellitem in O.contents)
+					var/datum/commodity/tradetype = most_applicable_trade(src.goods_buy, sellitem)
+					if(tradetype)
+						cratevalue += tradetype.price
+						qdel(sellitem)
 				if(cratevalue)
 					boutput(user, "<span class='notice'>[src] takes what they want from [O]. [cratevalue] credits have been transferred to your account.</span>")
 					account.fields["current_money"] += cratevalue
@@ -566,7 +578,7 @@
 
 		var/pickprename = pick("Honest","Fair","Merchant","Trader","Kosher","Real Deal","Dealer", "Old", "Ol'", "Zesty", "Sassy", "Bargain", "Discount", "Uncle", "Big", "Little")
 		//var/pickfirstname = pick(first_names)
-		var/picklastname = pick(last_names)
+		var/picklastname = pick_string_autokey("names/last.txt")
 		src.name = "[pickprename] [picklastname]"
 
 		greeting= {"WELL HI THERE, STEP RIGHT UP AND BUY MY STUFF!"}
@@ -745,6 +757,8 @@
 				src.goods_sell += new /datum/commodity/drugs/morphine(src)
 				src.goods_sell += new /datum/commodity/drugs/krokodil(src)
 				src.goods_sell += new /datum/commodity/drugs/lsd(src)
+				src.goods_sell += new /datum/commodity/drug/lsd_bee(src)
+				src.goods_sell += new /datum/commodity/relics/bootlegfirework(src)
 				src.goods_sell += new /datum/commodity/pills/uranium(src)
 
 				src.goods_buy += new /datum/commodity/drugs/shrooms(src)
@@ -807,6 +821,9 @@
 				src.goods_sell += new /datum/commodity/medical/firstaidT(src)
 				src.goods_sell += new /datum/commodity/medical/firstaidO(src)
 				src.goods_sell += new /datum/commodity/medical/firstaidN(src)
+				src.goods_sell += new /datum/commodity/medical/firstaidC(src)
+				src.goods_sell += new /datum/commodity/medical/injectorPent(src)
+				src.goods_sell += new /datum/commodity/medical/injectorPerf(src)
 				src.goods_sell += new /datum/commodity/synthmodule/bacteria(src)
 				src.goods_sell += new /datum/commodity/synthmodule/virii(src)
 				src.goods_sell += new /datum/commodity/synthmodule/fungi(src)
@@ -998,7 +1015,7 @@
 			for(var/mob/M in AIviewers(src))
 				boutput(M, "<B>[src.name]</B> buzzes excitedly! \"BZZ?? BZZ!!\"")
 				M.unlock_medal("Bombini is missing!", 1)
-				karma_update(15, "SAINT", src)
+				M.add_karma(15) // This line originally tried to give the karma to Bombini. Definitely a bug but I like to imagine that she just managed to pickpocket your karma or something.
 			user.u_equip(W)
 			qdel(W)
 		else
@@ -1035,10 +1052,15 @@
 		src.goods_sell += new /datum/commodity/costume/werewolf(src)
 		src.goods_sell += new /datum/commodity/costume/abomination(src)
 		src.goods_sell += new /datum/commodity/costume/hotdog(src)
+		src.goods_sell += new /datum/commodity/costume/mime(src)
+		src.goods_sell += new /datum/commodity/costume/mime/alt(src) //suspenders and such
 		src.goods_sell += new /datum/commodity/balloons(src)
 		src.goods_sell += new /datum/commodity/crayons(src)
 		src.goods_sell += new /datum/commodity/junk/circus_board(src)
+		src.goods_sell += new /datum/commodity/junk/pie_launcher(src)
 		src.goods_sell += new /datum/commodity/junk/laughbox(src)
+
+
 		/////////////////////////////////////////////////////////
 		//// buy list ///////////////////////////////////////////
 		/////////////////////////////////////////////////////////
@@ -1215,6 +1237,7 @@
 		src.goods_sell += new /datum/commodity/drugs/krokodil(src)
 		src.goods_sell += new /datum/commodity/drugs/jenkem(src)
 		src.goods_sell += new /datum/commodity/drugs/lsd(src)
+		src.goods_sell += new /datum/commodity/drug/lsd_bee(src)
 		src.goods_sell += new /datum/commodity/medical/ether(src)
 		src.goods_sell += new /datum/commodity/medical/toxin(src)
 		src.goods_sell += new /datum/commodity/medical/cyanide(src)
@@ -1265,7 +1288,7 @@
 	icon_state = "twins"
 	picture = "twins.png"
 	name = "Carol and Lynn"
-	trader_area = "/area/mobius"
+	trader_area = "/area/prefab/mobius"
 
 	bound_width = 64
 	bound_height = 32
@@ -1318,3 +1341,64 @@
 		pickupdialogue = "Here you are."
 
 		pickupdialoguefailure = "No."
+
+
+
+/*
+
+/obj/npc/trader/flexx
+	icon = 'icons/obj/64.dmi'
+	icon_state = "flexx"
+	picture = "flexx.png"
+	name = "Flexx"
+	trader_area = "/area/flexx_trader"
+	angrynope = "Not cool, champ!"
+	whotext = "Yo, buddy, name's Flexx. Whaddup?"
+
+	New()
+		..()
+		/////////////////////////////////////////////////////////
+		//// sell list //////////////////////////////////////////
+		/////////////////////////////////////////////////////////
+		src.goods_sell += new /datum/commodity/hat/bandana(src)
+		src.goods_sell += new /datum/commodity/hat/beret(src)
+		src.goods_sell += new /datum/commodity/hat/spacehelmet(src)
+		src.goods_sell += new /datum/commodity/hat/spacehelmet/red(src)
+		src.goods_sell += new /datum/commodity/hat/pinkwizard(src)
+		src.goods_sell += new /datum/commodity/hat/purplebutt(src)
+		src.goods_sell += new /datum/commodity/hat/dailyspecial(src)
+		src.goods_sell += new /datum/commodity/hat/laurels(src)
+		src.goods_sell += new /datum/commodity/tech/laptop(src)
+		/////////////////////////////////////////////////////////
+		//// buy list ///////////////////////////////////////////
+		/////////////////////////////////////////////////////////
+		src.goods_buy += new /datum/commodity/contraband/hosberet(src)
+		/////////////////////////////////////////////////////////
+
+		greeting= {"Hello there, space-faring friend."}
+
+		portrait_setup = "<img src='[resource("images/traders/[src.picture]")]'><HR><B>[src.name]</B><HR>"
+
+		sell_dialogue = "What can I relieve you of?"
+
+		buy_dialogue = "What would you like to purchase?"
+
+		successful_purchase_dialogue = list("Lovely, lovely.",
+			"Enjoy.",
+			"Cheers.")
+
+		failed_sale_dialogue = list("I'm not interested in that.",
+			"Don't you have anything else?")
+
+		successful_sale_dialogue = list("Sounds good to me.",
+			"Sure, I'll take it.")
+
+		failed_purchase_dialogue = list("You're a bit lacking in funds.",
+			"Take a second look at my prices.")
+
+		pickupdialogue = "Here are your things."
+
+		pickupdialoguefailure = "I don't believe you've bought anything yet."
+
+
+*/

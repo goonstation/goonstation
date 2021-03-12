@@ -69,7 +69,7 @@
 
 			for (var/beacon in warp_beacons)
 				if (istype(beacon, /obj/warp_beacon/miningasteroidbelt))
-					var/turf/T = get_turf_loc(beacon)
+					var/turf/T = get_turf(beacon)
 					map.DrawBox(map_colors["station"], T.x * 2 - 2, T.y * 2 - 2, T.x * 2 + 2, T.y * 2 + 2)
 
 			Z_LOG_DEBUG("Hotspot Map", "Map generation complete")
@@ -186,21 +186,18 @@
 			if(S.get_tile_heat(T))
 				.= S
 				break
-			LAGCHECK(LAG_HIGH)
 
 	proc/get_hotspots_list(var/turf/T)
 		.= list()
 		for (var/datum/sea_hotspot/S in hotspot_groups)
 			if(S.get_tile_heat(T))
 				.+= S
-			LAGCHECK(LAG_HIGH)
 
 	proc/get_hotspots_amount(var/turf/T)
 		.= 0
 		for (var/datum/sea_hotspot/S in hotspot_groups)
 			if(S.get_tile_heat(T))
 				.+= 1
-			LAGCHECK(LAG_HIGH)
 
 	proc/probe_turf(var/turf/T)
 		.= 0
@@ -209,7 +206,6 @@
 				.+= (S.get_tile_heat(T) / S.vent_capture_amt) * (2 - (1 / (S.vent_capture_amt - 1))) //lessen individual output of multiple capture units on the same hotspot, but with a small boost to overall output
 			else
 				.+= S.get_tile_heat(T)
-			LAGCHECK(LAG_HIGH)
 
 		var/amt = hotspot_controller.get_hotspots_amount(T)
 		var/mult = ( (amt > 1) ? (1 + (amt / 2.3)) : (1) ) //stack bonus (2.3 is the magic number that contorls the bonus scaling)
@@ -225,8 +221,6 @@
 			if (heat)
 				S.bonus_heat += S.per_activity
 			tally += heat
-			LAGCHECK(LAG_HIGH)
-
 		if (tally)
 			elecflash(T)
 
@@ -246,8 +240,6 @@
 				S.drift_dir = vector_to_dir(center.x - T.x, center.y - T.y)
 
 				S.move_center_to(get_step(S.center.turf(), S.drift_dir))
-
-			LAGCHECK(LAG_MED)
 
 	proc/colorping_at_turf(var/turf/T)
 		for (var/datum/sea_hotspot/S in hotspot_groups)
@@ -368,11 +360,11 @@
 		for (var/mob/living/M in range(6, C))
 			found = 1
 			if (phenomena_flags & PH_QUAKE_WEAK)
-				shake_camera(M, 4, 0.1)
+				shake_camera(M, 4, 4)
 				M.show_text("<span class='alert'><b>The ground rumbles softly.</b></span>")
 
 			if (phenomena_flags & PH_QUAKE)
-				shake_camera(M, 5, 0.5)
+				shake_camera(M, 5, 16)
 				random_brute_damage(M, 3)
 				M.changeStatus("weakened", 1 SECOND)
 				M.show_text("<span class='alert'><b>The ground quakes and rumbles violently!</b></span>")
@@ -451,6 +443,7 @@
 	var/z = 0
 
 	New(x=0,y=0,z=0)
+		..()
 		src.x = x
 		src.y = y
 		src.z = z
@@ -503,8 +496,7 @@
 	disposing()
 		deployed = 0
 		closest_hotspot = 0
-		if (src in processing_items)
-			processing_items.Remove(src)
+		processing_items -= src
 		..()
 
 	process()
@@ -593,14 +585,12 @@
 		icon_state = "dowsing_hands"
 		deployed = 0
 		closest_hotspot = 0
-		if (src in processing_items)
-			processing_items.Remove(src)
+		processing_items -= src
 		..()
 
 
 	proc/deploy()
-		if (!(src in processing_items))
-			processing_items.Add(src)
+		processing_items |= src
 		src.icon_state = "dowsing_deployed_[0]"
 		speak_count = speak_interval
 		pixel_x = 0
@@ -622,8 +612,7 @@
 
 /turf/space/fluid/attackby(var/obj/item/W, var/mob/user)
 	if (istype(W,/obj/item/heat_dowsing))
-		if (!(W in processing_items))
-			processing_items.Add(W)
+		processing_items |= W
 
 		var/obj/item/heat_dowsing/H = W
 
@@ -722,6 +711,8 @@
 			user.show_text("You need to dig a hole first!", "blue")
 
 	proc/finish_build(var/turf/T)
+		if(!isturf(src.loc) || T != src.loc)
+			return
 		var/obj/machinery/power/vent_capture/V = new /obj/machinery/power/vent_capture(src.loc)
 		V.built = 1
 		//V.built = 0
@@ -743,6 +734,7 @@
 
 	New()
 		..()
+		START_TRACKING
 		if (istype(src.loc,/turf/space/fluid))
 			var/turf/space/fluid/T = src.loc
 			T.captured = 1
@@ -756,6 +748,7 @@
 
 	disposing()
 		..()
+		STOP_TRACKING
 		if (istype(src.loc,/turf/space/fluid))
 			var/turf/space/fluid/T = src.loc
 			T.captured = 0
@@ -885,12 +878,12 @@
 		src.add_fingerprint(user)
 
 		if(open)
-			if(cell && !usr.equipped())
-				usr.put_in_hand_or_drop(cell)
+			if(cell && !user.equipped())
+				user.put_in_hand_or_drop(cell)
 				cell.updateicon()
 				cell = null
 
-				usr.visible_message("<span class='notice'>[usr] removes the power cell from \the [src].</span>", "<span class='notice'>You remove the power cell from \the [src].</span>")
+				user.visible_message("<span class='notice'>[user] removes the power cell from \the [src].</span>", "<span class='notice'>You remove the power cell from \the [src].</span>")
 		else
 			activate()
 
@@ -932,12 +925,12 @@
 					return
 				else
 					// insert cell
-					var/obj/item/cell/C = usr.equipped()
+					var/obj/item/cell/C = user.equipped()
 					if(istype(C))
 						user.drop_item()
 						cell = C
 						C.set_loc(src)
-						C.add_fingerprint(usr)
+						C.add_fingerprint(user)
 
 						user.visible_message("<span class='notice'>[user] inserts a power cell into [src].</span>", "<span class='notice'>You insert the power cell into [src].</span>")
 			else
@@ -969,7 +962,7 @@
 		flick("stomper2",src)
 
 		if (hotspot_controller.stomp_turf(get_turf(src))) //we didn't stomped center, do an additional SFX
-			SPAWN_DBG (4)
+			SPAWN_DBG(0.4 SECONDS)
 				playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 99, 1, 0.1, 0.7)
 
 		for (var/datum/sea_hotspot/H in hotspot_controller.get_hotspots_list(get_turf(src)))
@@ -983,11 +976,11 @@
 		for (var/mob/M in src.loc)
 			random_brute_damage(M, 55, 1)
 			M.changeStatus("weakened", 1 SECOND)
-			M.emote("scream")
+			INVOKE_ASYNC(M, /mob.proc/emote, "scream")
 			playsound(M.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 70, 1)
 
 		for (var/mob/C in viewers(src))
-			shake_camera(C, 5, 1)
+			shake_camera(C, 5, 8)
 
 		//squash person
 
@@ -1022,19 +1015,19 @@
 
 	onUpdate()
 		..()
-		if(get_dist(owner, T) > 1 || V == null || owner == null || T == null)
+		if(get_dist(owner, T) > 1 || V == null || owner == null || T == null || V.loc != T)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onStart()
 		..()
-		if(get_dist(owner, T) > 1 || V == null || owner == null || T == null)
+		if(get_dist(owner, T) > 1 || V == null || owner == null || T == null || V.loc != T)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onEnd()
 		..()
-		if(get_dist(owner, T) > 1 || V == null || owner == null || T == null)
+		if(get_dist(owner, T) > 1 || V == null || owner == null || T == null || V.loc != T)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		if(owner && V && T)
@@ -1142,12 +1135,16 @@
 		else
 			return ..()
 
+	attack_self(mob/user)
+		. = ..()
+		src.examine(user)
+
 	attack_hand(mob/user as mob)
 		if (!src.anchored)
 			return ..()
 		if (user.a_intent != INTENT_HARM)
-			if (usr.client && hotspot_controller)
-				hotspot_controller.show_map(usr.client)
+			if (user.client && hotspot_controller)
+				hotspot_controller.show_map(user.client)
 			return
 		var/turf/T = src.loc
 		user.visible_message("<span class='alert'><b>[user]</b> rips down [src] from [T]!</span>",\

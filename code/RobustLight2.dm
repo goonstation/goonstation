@@ -15,25 +15,28 @@ proc/get_moving_lights_stats()
 // TODO readd counters for debugging
 #define RL_UPDATE_LIGHT(src) do { \
 	if (src.fullbright || src.loc?:force_fullbright) { break } \
+	var/turf/_N = get_step(src, NORTH); \
+	var/turf/_E = get_step(src, EAST); \
+	var/turf/_NE = get_step(src, NORTHEAST); \
+	if(!_N || !_E || !_NE) { break }; \
 	src.RL_MulOverlay.color = list( \
 		src.RL_LumR, src.RL_LumG, src.RL_LumB, 0, \
-		src.E.RL_LumR, src.E.RL_LumG, src.E.RL_LumB, 0, \
-		src.N.RL_LumR, src.N.RL_LumG, src.N.RL_LumB, 0, \
-		src.NE.RL_LumR, src.NE.RL_LumG, src.NE.RL_LumB, 0, \
+		_E.RL_LumR, _E.RL_LumG, _E.RL_LumB, 0, \
+		_N.RL_LumR, _N.RL_LumG, _N.RL_LumB, 0, \
+		_NE.RL_LumR, _NE.RL_LumG, _NE.RL_LumB, 0, \
 		DLL, DLL, DLL, 1 \
 		) ; \
-	if (src.RL_NeedsAdditive || src.E.RL_NeedsAdditive || src.N.RL_NeedsAdditive || src.NE.RL_NeedsAdditive) { \
+	if (src.RL_NeedsAdditive || _E.RL_NeedsAdditive || _N.RL_NeedsAdditive || _NE.RL_NeedsAdditive) { \
 		if(!src.RL_AddOverlay) { \
-			src.RL_AddOverlay = unpool(/obj/overlay/tile_effect/lighting) ; \
+			src.RL_AddOverlay = unpool(/obj/overlay/tile_effect/lighting/add) ; \
 			src.RL_AddOverlay.set_loc(src) ; \
-			src.RL_AddOverlay.plane = PLANE_SELFILLUM ; \
 			src.RL_AddOverlay.icon_state = src.RL_OverlayState ; \
 		} \
 		src.RL_AddOverlay.color = list( \
 			src.RL_AddLumR, src.RL_AddLumG, src.RL_AddLumB, 0, \
-			src.E.RL_AddLumR, src.E.RL_AddLumG, src.E.RL_AddLumB, 0, \
-			src.N.RL_AddLumR, src.N.RL_AddLumG, src.N.RL_AddLumB, 0, \
-			src.NE.RL_AddLumR, src.NE.RL_AddLumG, src.NE.RL_AddLumB, 0, \
+			_E.RL_AddLumR, _E.RL_AddLumG, _E.RL_AddLumB, 0, \
+			_N.RL_AddLumR, _N.RL_AddLumG, _N.RL_AddLumB, 0, \
+			_NE.RL_AddLumR, _NE.RL_AddLumG, _NE.RL_AddLumB, 0, \
 			0, 0, 0, 1) ; \
 	} else { if(src.RL_AddOverlay) { pool(src.RL_AddOverlay); src.RL_AddOverlay = null; } } \
 	} while(false)
@@ -158,6 +161,7 @@ datum/light
 #endif
 
 	New(x=0, y=0, z=0)
+		..()
 		src.x = x
 		src.y = y
 		src.z = z
@@ -194,8 +198,7 @@ datum/light
 
 				APPLY_AND_UPDATE
 				if (RL_Started)
-					for (var/turf in affected)
-						var/turf/T = turf
+					for (var/turf/T as() in affected)
 						if (T.RL_UpdateGeneration <= strip_gen)
 							RL_UPDATE_LIGHT(T)
 			else
@@ -211,6 +214,9 @@ datum/light
 				if (SHOULD_QUEUE)
 					light_update_queue.queue(src)
 					dirty_flags |= D_COLOR
+					r_des = red
+					g_des = green
+					b_des = blue
 					return
 
 				var/strip_gen = ++RL_Generation
@@ -223,8 +229,7 @@ datum/light
 
 				APPLY_AND_UPDATE
 				if (RL_Started)
-					for (var/turf in affected)
-						var/turf/T = turf
+					for (var/turf/T as() in affected)
 						if (T.RL_UpdateGeneration <= strip_gen)
 							RL_UPDATE_LIGHT(T)
 			else
@@ -252,8 +257,7 @@ datum/light
 
 				APPLY_AND_UPDATE
 				if (RL_Started)
-					for (var/turf in affected)
-						var/turf/T = turf
+					for (var/turf/T as() in affected)
 						if (T.RL_UpdateGeneration <= strip_gen)
 							RL_UPDATE_LIGHT(T)
 			else
@@ -287,8 +291,7 @@ datum/light
 			enabled = 0
 
 			if (RL_Started)
-				for (var/turf in src.strip(++RL_Generation))
-					var/turf/T = turf
+				for (var/turf/T as() in src.strip(++RL_Generation))
 					RL_UPDATE_LIGHT(T)
 
 		detach()
@@ -394,8 +397,7 @@ datum/light
 
 			if (src.enabled && RL_Started)
 				APPLY_AND_UPDATE
-				for (var/turf in affected)
-					var/turf/T = turf
+				for (var/turf/T as() in affected)
 					if (T.RL_UpdateGeneration <= strip_gen)
 						RL_UPDATE_LIGHT(T)
 
@@ -436,37 +438,44 @@ datum/light
 				T.RL_UpdateGeneration = generation
 				. += T
 
-			for (var/X in .)
-				var/turf/T = X
+			for (var/turf/T as() in .)
 				var/E_new = 0
-				if (T.E && T.E.RL_ApplyGeneration < generation)
+				var/turf/E = get_step(T, EAST)
+				if (E && E.RL_ApplyGeneration < generation)
 					E_new = 1
-					RL_APPLY_LIGHT_EXPOSED_ATTEN(T.E, src.x, src.y, src.brightness, height2, r, g, b)
+					RL_APPLY_LIGHT_EXPOSED_ATTEN(E, src.x, src.y, src.brightness, height2, r, g, b)
 					if(atten >= RL_Atten_Threshold)
-						T.E.RL_ApplyGeneration = generation
-						ADDUPDATE(T.S.E)
-						ADDUPDATE(T.E)
+						E.RL_ApplyGeneration = generation
+						if(get_step(T, SOUTHEAST))
+							ADDUPDATE(get_step(T, SOUTHEAST))
+						ADDUPDATE(E)
 
-				if (T.N && T.N.RL_ApplyGeneration < generation)
-					RL_APPLY_LIGHT_EXPOSED_ATTEN(T.N, src.x, src.y, src.brightness, height2, r, g, b)
+				var/turf/N = get_step(T, NORTH)
+				if (N && N.RL_ApplyGeneration < generation)
+					RL_APPLY_LIGHT_EXPOSED_ATTEN(N, src.x, src.y, src.brightness, height2, r, g, b)
 					if(atten >= RL_Atten_Threshold)
-						T.N.RL_ApplyGeneration = generation
-						ADDUPDATE(T.N.W)
-						ADDUPDATE(T.N)
+						N.RL_ApplyGeneration = generation
+						if(get_step(T, NORTHWEST))
+							ADDUPDATE(get_step(T, NORTHWEST))
+						ADDUPDATE(N)
 
 					// this if is a bit more complicated because we don't want to do NE
 					// if the turf will get updated some other relevant turf's E or N
 					// because we'd lose the south or west neighbour update this way
 					// i.e. it should only get updated if both T.E and T.N are not added in the view() phase
-					if (E_new && T.NE && T.NE.RL_ApplyGeneration < generation)
-						RL_APPLY_LIGHT_EXPOSED_ATTEN(T.NE, src.x, src.y, src.brightness, height2, r, g, b)
+					var/turf/NE = get_step(T, NORTHEAST)
+					if (E_new && NE && NE.RL_ApplyGeneration < generation)
+						RL_APPLY_LIGHT_EXPOSED_ATTEN(NE, src.x, src.y, src.brightness, height2, r, g, b)
 						if(atten >= RL_Atten_Threshold)
-							T.NE.RL_ApplyGeneration = generation
-							ADDUPDATE(T.NE)
+							NE.RL_ApplyGeneration = generation
+							ADDUPDATE(NE)
 
-				ADDUPDATE(T.W)
-				ADDUPDATE(T.S)
-				ADDUPDATE(T.S.W)
+				if(get_step(T, WEST))
+					ADDUPDATE(get_step(T, WEST))
+				if(get_step(T, SOUTH))
+					ADDUPDATE(get_step(T, SOUTH))
+				if(get_step(T, SOUTHWEST))
+					ADDUPDATE(get_step(T, SOUTHWEST))
 
 	line
 		var/dist_cast = 0
@@ -509,29 +518,36 @@ datum/light
 				T.RL_UpdateGeneration = generation
 				. += T
 
-			for (var/X in .)
-				var/turf/T = X
+			for (var/turf/T as() in .)
 
-				if (T.E && T.E.RL_ApplyGeneration < generation)
-					T.E.RL_ApplyGeneration = generation
-					RL_APPLY_LIGHT_LINE(T.E, src.x, src.y, src.dir, dist_cast, src.brightness, height2, r, g, b)
-					ADDUPDATE(T.E)
-					ADDUPDATE(T.S.E)
+				var/turf/E = get_step(T, EAST)
+				if (E && E.RL_ApplyGeneration < generation)
+					E.RL_ApplyGeneration = generation
+					RL_APPLY_LIGHT_LINE(E, src.x, src.y, src.dir, dist_cast, src.brightness, height2, r, g, b)
+					ADDUPDATE(E)
+					if(get_step(T, SOUTHEAST))
+						ADDUPDATE(get_step(T, SOUTHEAST))
 
-				if (T.N && T.N.RL_ApplyGeneration < generation)
-					T.N.RL_ApplyGeneration = generation
-					RL_APPLY_LIGHT_LINE(T.N, src.x, src.y, src.dir, dist_cast, src.brightness, height2, r, g, b)
-					ADDUPDATE(T.N)
-					ADDUPDATE(T.N.W)
+				var/turf/N = get_step(T, NORTH)
+				if (N && N.RL_ApplyGeneration < generation)
+					N.RL_ApplyGeneration = generation
+					RL_APPLY_LIGHT_LINE(N, src.x, src.y, src.dir, dist_cast, src.brightness, height2, r, g, b)
+					ADDUPDATE(N)
+					if(get_step(T, NORTHWEST))
+						ADDUPDATE(get_step(T, NORTHWEST))
 
-				if (T.NE && T.NE.RL_ApplyGeneration < generation)
-					RL_APPLY_LIGHT_LINE(T.NE, src.x, src.y, src.dir, dist_cast, src.brightness, height2, r, g, b)
-					T.NE.RL_ApplyGeneration = generation
-					ADDUPDATE(T.NE)
+				var/turf/NE = get_step(T, NORTHEAST)
+				if (NE && NE.RL_ApplyGeneration < generation)
+					RL_APPLY_LIGHT_LINE(NE, src.x, src.y, src.dir, dist_cast, src.brightness, height2, r, g, b)
+					NE.RL_ApplyGeneration = generation
+					ADDUPDATE(NE)
 
-				ADDUPDATE(T.W)
-				ADDUPDATE(T.S)
-				ADDUPDATE(T.S.W)
+				if(get_step(T, WEST))
+					ADDUPDATE(get_step(T, WEST))
+				if(get_step(T, SOUTH))
+					ADDUPDATE(get_step(T, SOUTH))
+				if(get_step(T, SOUTHWEST))
+					ADDUPDATE(get_step(T, SOUTHWEST))
 
 			//account for blocked visibility (try to worm me way around somethin) also lol this is shit and doesnt work. maybe fix later :)
 			/*
@@ -593,19 +609,31 @@ proc
 
 /obj/overlay/tile_effect
 	event_handler_flags = IMMUNE_SINGULARITY
+	appearance_flags = TILE_BOUND | PIXEL_SCALE
 
 /obj/overlay/tile_effect/lighting
 	icon = 'icons/effects/light_overlay.dmi'
+	appearance_flags = TILE_BOUND | PIXEL_SCALE | RESET_ALPHA | RESET_COLOR
 	blend_mode = BLEND_ADD
+	plane = PLANE_LIGHTING
 	layer = LIGHTING_LAYER_BASE
 	anchored = 2
+
+/obj/overlay/tile_effect/lighting/mul
+	plane = PLANE_LIGHTING
+	blend_mode = BLEND_DEFAULT // this maybe (???) fixes a bug where lighting doesn't render on clients when teleporting
+	layer = LIGHTING_LAYER_ROBUST
+
+/obj/overlay/tile_effect/lighting/add
+	plane = PLANE_SELFILLUM
+
 
 turf
 	var
 		RL_ApplyGeneration = 0
 		RL_UpdateGeneration = 0
-		obj/overlay/tile_effect/RL_MulOverlay = null
-		obj/overlay/tile_effect/RL_AddOverlay = null
+		obj/overlay/tile_effect/lighting/mul/RL_MulOverlay = null
+		obj/overlay/tile_effect/lighting/add/RL_AddOverlay = null
 		RL_LumR = 0
 		RL_LumG = 0
 		RL_LumB = 0
@@ -616,11 +644,6 @@ turf
 		RL_OverlayState = ""
 		list/datum/light/RL_Lights = null
 		opaque_atom_count = 0
-		turf/N
-		turf/S
-		turf/W
-		turf/E
-		turf/NE
 #ifdef DEBUG_LIGHTING_UPDATES
 		var/obj/maptext_junk/RL_counter/counter = null
 #endif
@@ -730,28 +753,10 @@ turf
 		RL_Init()
 			if (!fullbright && !loc:force_fullbright)
 				if(!src.RL_MulOverlay)
-					var/obj/overlay/tile_effect/overlay = null
-					for(var/obj/overlay/tile_effect/lighting/existing_overlay in src)
-						if(existing_overlay.plane == PLANE_LIGHTING)
-							overlay = existing_overlay
-							break
-					if(!overlay)
-						overlay = unpool(/obj/overlay/tile_effect/lighting)
-					overlay.set_loc(src)
-					overlay.plane = PLANE_LIGHTING
-					overlay.icon_state = src.RL_OverlayState
-					src.RL_MulOverlay = overlay
-				if (!src.RL_AddOverlay)
-					var/obj/overlay/tile_effect/overlay = null
-					for(var/obj/overlay/tile_effect/lighting/existing_overlay in src)
-						if(existing_overlay.plane == PLANE_SELFILLUM)
-							overlay = existing_overlay
-							break
-					if(overlay)
-						overlay.set_loc(src)
-						overlay.plane = PLANE_SELFILLUM
-						overlay.icon_state = src.RL_OverlayState
-						src.RL_AddOverlay = overlay
+					src.RL_MulOverlay = unpool(/obj/overlay/tile_effect/lighting/mul)
+					src.RL_MulOverlay.set_loc(src)
+					src.RL_MulOverlay.icon_state = src.RL_OverlayState
+				if (RL_Started) RL_UPDATE_LIGHT(src)
 			else
 				if(src.RL_MulOverlay)
 					pool(src.RL_MulOverlay)
@@ -759,11 +764,6 @@ turf
 				if(src.RL_AddOverlay)
 					pool(src.RL_AddOverlay)
 					src.RL_AddOverlay = null
-			src.N = get_step(src, NORTH) || src
-			src.S = get_step(src, SOUTH) || src
-			src.W = get_step(src, WEST) || src
-			src.E = get_step(src, EAST) || src
-			src.NE = get_step(src, NORTHEAST) || src
 
 atom
 	var
@@ -777,8 +777,7 @@ atom
 			var/old_loc = src.loc
 			. = ..()
 			if (src.loc != old_loc && src.RL_Attached)
-				for (var/L in src.RL_Attached)
-					var/datum/light/light = L
+				for (var/datum/light/light as() in src.RL_Attached)
 					light.move(src.x + light.attach_x, src.y + light.attach_y, src.z, src.dir)
 			// commented out for optimization purposes, let's hope it doesn't matter too much
 			/*
@@ -805,8 +804,7 @@ atom
 						lights |= T.RL_Lights
 
 				var/list/affected = list()
-				for (var/L in lights)
-					var/datum/light/light = L
+				for (var/datum/light/light as() in lights)
 					if (light.enabled)
 						affected |= light.strip(++RL_Generation)
 
@@ -817,28 +815,24 @@ atom
 
 				. = ..()
 
-				for (var/L in lights)
-					var/datum/light/light = L
+				for (var/datum/light/light as() in lights)
 					if (light.enabled)
 						affected |= light.apply()
 				if (RL_Started)
-					for (var/turf in affected)
-						var/turf/T = turf
+					for (var/turf/T as() in affected)
 						RL_UPDATE_LIGHT(T)
 			else
 				. = ..()
 
 			if (src.RL_Attached) // TODO: defer updates and update all affected tiles at once?
 				var/dont_queue = (loc == null) //if we are being thrown to a null loc, dont queue this move. we need it Now.
-				for (var/L in src.RL_Attached)
-					var/datum/light/light = L
+				for (var/datum/light/light as() in src.RL_Attached)
 					light.move(src.x+0.5, src.y+0.5, src.z, src.dir, queued_run = dont_queue)
 
 	disposing()
 		..()
 		if (src.RL_Attached)
-			for (var/L in src.RL_Attached)
-				var/datum/light/attached = L
+			for (var/datum/light/attached as() in src.RL_Attached)
 				attached.disable(queued_run = 1)
 				// Detach the light from its holder so that it gets cleaned up right if
 				// needed.
@@ -860,7 +854,7 @@ atom
 					lights |= T.RL_Lights
 
 			var/list/affected = list()
-			for (var/datum/light/light in lights)
+			for (var/datum/light/light as() in lights)
 				if (light.enabled)
 					affected |= light.strip(++RL_Generation)
 
@@ -868,10 +862,9 @@ atom
 			if(src.loc == L && L) L.opaque_atom_count += new_opacity ? 1 : -1
 
 			src.opacity = new_opacity
-			for (var/datum/light/light in lights)
+			for (var/datum/light/light as() in lights)
 				if (light.enabled)
 					affected |= light.apply()
 			if (RL_Started)
-				for (var/turf in affected)
-					var/turf/T = turf
+				for (var/turf/T as() in affected)
 					RL_UPDATE_LIGHT(T)

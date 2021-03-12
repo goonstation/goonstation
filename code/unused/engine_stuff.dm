@@ -102,11 +102,11 @@
 	var/obj/beam/focused_laser/I = new /obj/beam/focused_laser( (src.loc) )
 	I.master = src
 	I.set_density(1)
-	I.dir = opp_dir(src.dir)
+	I.set_dir(opp_dir(src.dir))
 	I.energy = src.energy
 	step(I, I.dir)
 	if (I)
-		I.dir = opp_dir(src.dir)
+		I.set_dir(opp_dir(src.dir))
 		I.set_density(0)
 		src.first = I
 		I.vis_spread(1)
@@ -161,13 +161,13 @@
 	var/obj/beam/focused_laser/I = new /obj/beam/focused_laser( src.loc )
 	I.master = src.master
 	//I.set_density(1)
-	I.dir = src.dir
+	I.set_dir(src.dir)
 	I.energy = src.energy
 	step(I, I.dir)
 
 	if (I)
 		if (!( src.next ) && I)
-			I.dir = src.dir
+			I.set_dir(src.dir)
 			I.set_density(0)
 			I.vis_spread(src.visible)
 			src.next = I
@@ -249,7 +249,7 @@
 	var/obj/beam/engine_laser/I = new /obj/beam/engine_laser( src.loc )
 	I.master = src.master
 	//I.set_density(1)
-	I.dir = src.dir
+	I.set_dir(src.dir)
 	I.energy = src.energy
 	step(I, I.dir)
 
@@ -262,7 +262,7 @@
 			qdel(I)
 			break
 		if (!( src.next ) && I)
-			I.dir = src.dir
+			I.set_dir(src.dir)
 			I.set_density(0)
 			I.vis_spread(src.visible)
 			src.next = I
@@ -321,10 +321,10 @@
 		var/obj/beam/engine_laser/I = new /obj/beam/engine_laser( (src.loc) )
 		I.master = src
 		I.set_density(1)
-		I.dir = src.dir
+		I.set_dir(src.dir)
 		step(I, I.dir)
 		if (I)
-			I.dir = src.dir
+			I.set_dir(src.dir)
 			I.set_density(0)
 			src.first = I
 			I.vis_spread(1)
@@ -347,14 +347,14 @@
 /obj/machinery/engine_laser_spawner/Move()
 	var/t = src.dir
 	..()
-	src.dir = t
+	src.set_dir(t)
 	qdel(src.first)
 	return
 
 /obj/machinery/engine_laser_spawner/verb/rotate()
 	set src in usr
 
-	src.dir = turn(src.dir, 45)
+	src.set_dir(turn(src.dir, 45))
 	return
 
 

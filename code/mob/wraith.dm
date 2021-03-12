@@ -6,7 +6,11 @@
 	real_name = "Wraith" //todo: construct name from a user input (e.g. <x> the Impaler)
 	desc = "Jesus Christ, how spooky."
 	icon = 'icons/mob/mob.dmi'
+#if defined(XMAS) || (BUILD_TIME_MONTH == 2 && BUILD_TIME_DAY == 14)
+	icon_state = "wraith-love"
+#else
 	icon_state = "wraith"
+#endif
 	layer = NOLIGHT_EFFECTS_LAYER_BASE
 	density = 0
 	canmove = 1
@@ -14,6 +18,7 @@
 	anchored = 1
 	alpha = 180
 	event_handler_flags = USE_CANPASS | IMMUNE_MANTA_PUSH
+	plane = PLANE_NOSHADOW_ABOVE
 
 	var/deaths = 0
 	var/datum/hud/wraith/hud
@@ -27,7 +32,7 @@
 	var/last_life_update = 0
 	var/const/life_tick_spacing = 20
 	var/haunt_duration = 300
-	var/death_icon_state = "wraithdie"
+	var/death_icon_state = "wraith-die"
 	//////////////
 	// Wraith Overrides
 	//////////////
@@ -153,7 +158,7 @@
 		if (deaths < 2)
 			boutput(src, "<span class='alert'><b>You have been defeated...for now. The strain of banishment has weakened you, and you will not survive another.</b></span>")
 			src.justdied = 1
-			src.set_loc(pick(latejoin))
+			src.set_loc(pick_landmark(LANDMARK_LATEJOIN))
 			SPAWN_DBG(15 SECONDS) //15 seconds
 				src.justdied = 0
 		else
@@ -184,12 +189,16 @@
 				WO.onAbsorb(M)
 
 	CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+		if (istype(mover, /obj/projectile))
+			var/obj/projectile/proj = mover
+			if (proj.proj_data.hits_wraiths)
+				return 0
 		if (src.density) return 0
 		else return 1
 
 
 	projCanHit(datum/projectile/P)
-		if (src.density) return 1
+		if (src.density || P.hits_wraiths) return 1
 		else return 0
 
 
@@ -213,7 +222,7 @@
 			src.visible_message("<span class='alert'>[src] is hit by the [P]!</span>")
 
 
-	TakeDamage(zone, brute, burn)
+	TakeDamage(zone, brute, burn, tox, damage_type, disallow_limb_loss)
 		if (!src.density)
 			return
 		health -= burn
@@ -235,9 +244,9 @@
 	Move(var/turf/NewLoc, direct)
 		if (loc)
 			if (!isturf(loc) && !density)
-				loc = get_turf(loc)
+				src.set_loc(get_turf(loc))
 		else
-			loc = locate(1,1,1)
+			src.set_loc(locate(1,1,1))
 
 		if(!canmove) return
 
@@ -245,7 +254,7 @@
 
 		if (NewLoc)
 			if (isghostrestrictedz(NewLoc.z) && !restricted_z_allowed(src, NewLoc) && !(src.client && src.client.holder))
-				var/OS = observer_start.len ? pick(observer_start) : locate(1, 1, 1)
+				var/OS = pick_landmark(LANDMARK_OBSERVER, locate(1, 1, 1))
 				if (OS)
 					src.set_loc(OS)
 				else
@@ -279,23 +288,23 @@
 
 				if (!src.density || vertical.Enter(src))
 					vert = 1
-					loc = vertical
+					src.set_loc(vertical)
 					if (!src.density || NewLoc.Enter(src))
 						blocked = 0
 						for(var/obj/decal/cleanable/saltpile/A in vertical)
 							if (istype(A)) salted = 1
 							if (salted) break
-					loc = oldloc
+					src.set_loc(oldloc)
 
 				if (!src.density || horizontal.Enter(src))
 					horiz = 1
-					loc = horizontal
+					src.set_loc(horizontal)
 					if (!src.density || NewLoc.Enter(src))
 						blocked = 0
 						for(var/obj/decal/cleanable/saltpile/A in horizontal)
 							if (istype(A)) salted = 1
 							if (salted) break
-					loc = oldloc
+					src.set_loc(oldloc)
 
 				if (blocked)
 					if (horiz)
@@ -310,7 +319,7 @@
 				if (istype(A)) salted = 1
 				if (salted) break
 
-			dir = get_dir(loc, NewLoc)
+			src.set_dir(get_dir(loc, NewLoc))
 			src.set_loc(NewLoc)
 			OnMove()
 			NewLoc.HasEntered(src)
@@ -380,8 +389,7 @@
 			/*var/rendered = "<strong>[src.name]</strong> screeches incomprehensibly!"
 
 			var/list/listening = all_hearers(null, src)
-			listening -= src
-			listening += src
+			listening |= src
 
 			for (var/mob/M in listening)
 				M.show_message(rendered, 2)*/
@@ -573,7 +581,7 @@
 
 		var/turf/T = get_turf(src)
 		if (!(T && isturf(T)) || ((isghostrestrictedz(T.z) || T.z != 1) && !(src.client && src.client.holder)))
-			var/OS = observer_start.len ? pick(observer_start) : locate(1, 1, 1)
+			var/OS = pick_landmark(LANDMARK_OBSERVER, locate(1, 1, 1))
 			if (OS)
 				W.set_loc(OS)
 			else
@@ -588,14 +596,11 @@
 			if (src.client)
 				src.client.mob = W
 			W.mind = new /datum/mind()
+			W.mind.ckey = ckey
 			W.mind.key = key
 			W.mind.current = W
 			ticker.minds += W.mind
-		src.loc = null
-
-		var/this = src
-		src = null
-		qdel(this)
+		qdel(src)
 
 		//W.addAllAbilities()
 		boutput(W, "<B>You are a wraith! Terrorize the mortals and drive them into releasing their life essence!</B>")

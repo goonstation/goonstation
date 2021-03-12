@@ -1,6 +1,6 @@
 /obj/item/roboupgrade/expand
 	name = "cyborg expansion upgrade"
-	desc = "A matter miniaturizer that frees up room in a cyborg for more upgrades."
+	desc = "A module that can accommodate space and interfacing for two upgrades, effectively expanding the amount of upgrades a cyborg can have."
 	icon_state = "up-expand"
 	active = 1
 	charges = 1

@@ -129,11 +129,11 @@ Returns:
 //Gets a line of turfs between the two atoms. Doesn't miss tiles, like bresenham.
 //Adapted from http://playtechs.blogspot.com/2007/03/raytracing-on-grid.html
 /proc/raytrace(var/atom/source, var/atom/target)
+	. = list()
 	var/x0 = source.x
 	var/y0 = source.y
 	var/x1 = target.x
 	var/y1 = target.y
-	var/list/crossed = list()
 	var/dx = abs(x1 - x0)
 	var/dy = abs(y1 - y0)
 	var/x = x0
@@ -145,7 +145,7 @@ Returns:
 	dx *= 2
 	dy *= 2
 	while(n>0)
-		crossed += get_turf(locate(x, y, source.z))
+		. += get_turf(locate(x, y, source.z))
 		if(error > 0)
 			x += x_inc
 			error -= dy
@@ -159,7 +159,6 @@ Returns:
 			error += dx
 			n--
 		n--
-	return crossed
 
 /proc/testLine()
 	var/atom/source = get_turf(usr)
@@ -193,7 +192,7 @@ Returns:
 	return
 
 /proc/testShroud()
-	var/obj/screen/S = new(usr)
+	var/atom/movable/screen/S = new(usr)
 	var/image/I = image('icons/effects/160x160.dmi',S,"tearmed")
 	I.render_target = "*test"
 	S.screen_loc = "CENTER"
@@ -303,6 +302,7 @@ Returns:
 		src.filters += filter(type="layer", render_source="*portaltrg")
 
 	New()
+		..()
 		SPAWN_DBG(50) setup()
 
 /atom/proc/cabinetGlassIcon(var/atom/A, var/targetWidth = 12, var/targetHeight= 10, var/iconSize = 32)
@@ -448,8 +448,8 @@ Returns:
 	if(trgX && trgY && trgZ)
 		var/startTime = world.timeofday
 		var/dmm_suite/D = new/dmm_suite()
-		if(loaded && lentext(loaded))
-			usr.loc = locate(trgX,trgY,trgZ)
+		if(loaded && length(loaded))
+			usr.set_loc(locate(trgX,trgY,trgZ))
 			D.read_map(loaded,trgX,trgY,trgZ)
 			boutput(usr, "<span class='alert'>LOADED '[mapPath]' IN [((world.timeofday - startTime)/10)] SEC</span>")
 		else
@@ -647,7 +647,7 @@ Returns:
 			if(count <= 5)
 				continue
 
-			if(A && A.z == 1) //Basically, if the area has a turf on z1 ... Doesn't work as described in byond documentation. So we have to do it the slow way ...
+			if(A?.z == 1) //Basically, if the area has a turf on z1 ... Doesn't work as described in byond documentation. So we have to do it the slow way ...
 				areas.Add(A)
 
 	while(areas.len >= 2)
@@ -883,14 +883,14 @@ Returns:
 
 	proc/start(var/mob/source_mob, var/remove, var/freeze)
 		if(source_mob == src) return
-		if(source_mob && source_mob.client)
+		if(source_mob?.client)
 			source = source_mob
 			remove_source = remove
 			freeze_source = freeze
 			source_loc = source.loc
 			client = source.client
 			if(remove_source)
-				source.loc = src
+				source.set_loc(src)
 			if(freeze_source)
 				source.nodamage = 1
 				source.canmove = 0
@@ -898,7 +898,7 @@ Returns:
 		return
 
 	proc/stop()
-		source.loc = source_loc
+		source.set_loc(source_loc)
 		source.client = client
 		source.client.pixel_x = 0
 		source.client.pixel_y = 0
@@ -1013,7 +1013,7 @@ Returns:
 	icon_state = "sabre"
 	anchored = 1
 	New(var/obj/item/experimental/melee/spear/S,var/atom/location)
-		src.loc = location
+		src.set_loc(location)
 		var/image/I = image(S)
 		I.appearance_flags = 0
 		src.overlays += image(S)
@@ -1034,20 +1034,20 @@ Returns:
 
 	onMouseDrag(src_object,atom/over_object,src_location,over_location,src_control,over_control,params)
 		var/list/parameters = params2list(params)
-		if(ismob(over_object.loc) || istype(over_object, /obj/screen)) return
+		if(ismob(over_object.loc) || istype(over_object, /atom/movable/screen)) return
 		if(parameters["left"])
 			//animate_shake(over_object)
 			if(beam)
 				if(last != get_turf(over_object))
 					last = get_turf(over_object)
-					beam.loc = get_turf(src)
+					beam.set_loc(get_turf(src))
 					animate(beam, transform=beam.transform, time=1)//, flags=ANIMATION_LINEAR_TRANSFORM)
 					animate(transform=getLineMatrix(get_turf(src),get_turf(over_object)), time= max(7-get_dist(get_turf(src),get_turf(over_object)), 2))
 		return
 
 	onMouseDown(atom/target,location,control,params)
 		var/list/parameters = params2list(params)
-		if(ismob(target.loc) || istype(target, /obj/screen)) return
+		if(ismob(target.loc) || istype(target, /atom/movable/screen)) return
 		if(parameters["left"])
 			if(beam)
 				qdel(beam)
@@ -1127,6 +1127,7 @@ Returns:
 	icon_y_off = 29
 
 	New(var/obj/item/experimental/melee/dagger/D, var/mob/U, var/atom/T)
+		..()
 		if(!D || !U || !T)
 			interrupt(INTERRUPT_ALWAYS)
 		else
@@ -1203,10 +1204,10 @@ Returns:
 	onMouseDown(atom/target,location,control,params)
 		var/mob/user = usr
 		var/list/parameters = params2list(params)
-		if(ismob(target.loc) || istype(target, /obj/screen)) return
+		if(ismob(target.loc) || istype(target, /atom/movable/screen)) return
 		if(parameters["left"])
 			var/attackDir =  getAttackDir(user, target)
-			user.dir = attackDir
+			user.set_dir(attackDir)
 			stabAction = new(src, user, get_step(user, attackDir))
 			actions.start(stabAction, user)
 		return
@@ -1274,7 +1275,7 @@ Returns:
 	showEffect(var/mob/user, var/atom/target, var/direction, var/stabStrength = 0)
 		var/obj/meleeeffect/dagger/M
 		M = new/obj/meleeeffect/dagger(target)
-		M.dir = direction
+		M.set_dir(direction)
 		M.color = (stabStrength < 1 ? "#FFFFFF" : "#FF4444")
 
 /obj/item/experimental/melee/spear
@@ -1291,14 +1292,14 @@ Returns:
 	var/datum/material/head = null
 	var/image/shaftImg = null
 	var/image/headImg = null
+	var/prefix = null
 	hitsound = 'sound/impact_sounds/Flesh_Cut_1.ogg'
 	hit_type = DAMAGE_STAB
 
 	New()
-		setShaftMaterial(getMaterial("bohrum"))
 		setHeadMaterial(getMaterial("telecrystal"))
+		setShaftMaterial(getMaterial("bohrum"))
 		buildOverlays()
-		setName()
 
 		..()
 
@@ -1319,23 +1320,32 @@ Returns:
 
 	proc/setShaftMaterial(var/datum/material/M)
 		shaft = M
+		SetPrefix()
 		if(shaft)
 			src.color = shaft.color
 			src.alpha = shaft.alpha
-		setName()
 		return
 
 	proc/setHeadMaterial(var/datum/material/M)
 		head = M
-		setMaterial(M)
+		SetPrefix()
+		setMaterial(M, setname = 0)
 		if(shaft)
 			src.color = shaft.color
 			src.alpha = shaft.alpha
 		if(src.material && src.material.hasProperty("hard"))
 			src.force = round(src.material.getProperty("hard") / 5)
 			src.throwforce = round(src.material.getProperty("hard") / 3)
-		setName()
 		return
+
+	proc/SetPrefix()
+		src.remove_prefixes(prefix)
+		prefix = ""
+		if(head)
+			prefix += "[head.name]-tipped[shaft?" ":""]"
+		if (shaft)
+			prefix += "[shaft.name]"
+		src.name_prefix(prefix)
 
 	proc/buildOverlays()
 		overlays.Cut()
@@ -1353,17 +1363,6 @@ Returns:
 			imgHead.appearance_flags = RESET_ALPHA | RESET_COLOR
 			overlays += imgHead
 			headImg = imgHead
-		return
-
-	proc/setName()
-		if(shaft && head)
-			name = "[head.name]-tipped [shaft.name] Spear"
-		else if (shaft && !head)
-			name = "[shaft.name] Spear"
-		else if (!shaft && head)
-			name = "[head.name]-tipped Spear"
-		else
-			name = "Spear"
 		return
 
 	getAffectedTiles(var/mob/user, var/atom/target, var/direction)
@@ -1429,48 +1428,48 @@ Returns:
 				effectLoc = locate(user.x, user.y + 1, user.z)
 				/*
 				I = new(src, effectLoc)
-				I.dir = direction
+				I.set_dir(direction)
 				animate(I, pixel_y = 96, time = 6, alpha= 0)
 				*/
 				M = new/obj/meleeeffect/spear(effectLoc)
 				M.pixel_x = -32
-				M.dir = direction
+				M.set_dir(direction)
 				M.color = color_new
 				animate(M, pixel_y = 32, time = 10, alpha= 175)
 			if(EAST)
 				effectLoc = locate(user.x + 1, user.y, user.z)
 				/*
 				I = new(src, effectLoc)
-				I.dir = direction
+				I.set_dir(direction)
 				animate(I, pixel_x = 96, time = 6, alpha= 0)
 				*/
 				M = new/obj/meleeeffect/spear(effectLoc)
 				M.pixel_y = -32
-				M.dir = direction
+				M.set_dir(direction)
 				M.color = color_new
 				animate(M, pixel_x = 32, time = 10, alpha= 175)
 			if(SOUTH)
 				effectLoc = locate(user.x, user.y - 3, user.z)
 				/*
 				I = new(src, locate(user.x, user.y - 1, user.z))
-				I.dir = direction
+				I.set_dir(direction)
 				animate(I, pixel_y = -96, time = 6, alpha= 0)
 				*/
 				M = new/obj/meleeeffect/spear(effectLoc)
 				M.pixel_x = -32
-				M.dir = direction
+				M.set_dir(direction)
 				M.color = color_new
 				animate(M, pixel_y = -32, time = 10, alpha= 175)
 			if(WEST)
 				effectLoc = locate(user.x - 3, user.y, user.z)
 				/*
 				I = new(src, locate(user.x - 1, user.y, user.z))
-				I.dir = direction
+				I.set_dir(direction)
 				animate(I, pixel_x = -96, time = 6, alpha= 0)
 				*/
 				M = new/obj/meleeeffect/spear(effectLoc)
 				M.pixel_y = -32
-				M.dir = direction
+				M.set_dir(direction)
 				M.color = color_new
 				animate(M, pixel_x = -32, time = 10, alpha= 175)
 
@@ -1515,25 +1514,25 @@ Returns:
 				effectLoc = locate(user.x, user.y + 1, user.z)
 				M = new/obj/meleeeffect(effectLoc)
 				M.pixel_x = -32
-				M.dir = direction
+				M.set_dir(direction)
 				M.color = color_new
 			if(EAST)
 				effectLoc = locate(user.x + 1, user.y, user.z)
 				M = new/obj/meleeeffect(effectLoc)
 				M.pixel_y = -32
-				M.dir = direction
+				M.set_dir(direction)
 				M.color = color_new
 			if(SOUTH)
 				effectLoc = locate(user.x, user.y - 3, user.z)
 				M = new/obj/meleeeffect(effectLoc)
 				M.pixel_x = -32
-				M.dir = direction
+				M.set_dir(direction)
 				M.color = color_new
 			if(WEST)
 				effectLoc = locate(user.x - 3, user.y, user.z)
 				M = new/obj/meleeeffect(effectLoc)
 				M.pixel_y = -32
-				M.dir = direction
+				M.set_dir(direction)
 				M.color = color_new
 
 /obj/floorpillstatue
@@ -1545,6 +1544,7 @@ Returns:
 	density = 1
 
 	New()
+		..()
 		setMaterial(getMaterial("slag"))
 		name = "Statue of Dr.Floorpills"
 
@@ -1596,10 +1596,10 @@ Returns:
 			call(procpath)(arglist(argcopy))
 
 /datum/admins/proc/pixelexplosion()
-	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
-	set name = "Pixel animation mode"
-	set desc="Enter pixel animation mode"
-	alert("Due to me being a lazy fuck you have to close & reopen your client to exit this mode. ITS A DEBUG THING OKAY")
+	SET_ADMIN_CAT(ADMIN_CAT_FUN)
+	set name = "Pixel explosion mode"
+	set desc = "Enter pixel explosion mode."
+	alert("Clicking on things will now explode them into pixels!")
 	pixelmagic()
 
 /datum/targetable/pixelpicker
@@ -1626,9 +1626,17 @@ Returns:
 	M.update_cursor()
 
 /proc/dothepixelthing(var/atom/A)
+	if (isturf(A)) //deleting turfs is bad!
+		return
+
+	if (ismob(A)) //deleting mobs crashes them - lets transfer their client to a ghost first
+		var/mob/M = A
+		M.ghostize()
+
 	var/list/pixels = list()
-	var/icon/I = icon(A.icon, A.icon_state, A.dir)
+	var/icon/I = getFlatIcon(A)
 	var/atom/movable/AT = A.loc
+
 	playsound(AT, 'sound/effects/ExplosionFirey.ogg', 75, 1)
 	for(var/y = 1, y <= I.Height(), y++)
 		for(var/x = 1, x <= I.Width(), x++)
@@ -1637,7 +1645,7 @@ Returns:
 				var/actX = A.pixel_x + x - 1
 				var/actY = A.pixel_y + y - 1
 				var/obj/apixel/P = unpool(/obj/apixel)
-				P.loc = A.loc
+				P.set_loc(A.loc)
 				P.pixel_x = actX
 				P.pixel_y = actY
 				P.color = color
@@ -1669,6 +1677,18 @@ Returns:
 		transform = matrix()
 		..()
 
+/datum/admins/proc/turn_off_pixelexplosion()
+	SET_ADMIN_CAT(ADMIN_CAT_FUN)
+	set name = "Turn off pixel explosion mode"
+	set desc = "Turns off pixel explosion mode."
+
+	var/mob/M = usr
+	if (istype(M.targeting_ability, /datum/targetable/pixelpicker))
+		var/datum/targetable/pixelpicker/pixel_picker = M.targeting_ability
+		M.targeting_ability = null
+		qdel(pixel_picker)
+		M.update_cursor()
+
 /obj/item/craftedmelee/spear
 	name = "spear"
 	desc = "it's an improvised spear."
@@ -1677,7 +1697,7 @@ Returns:
 	New()
 		..()
 		src.setItemSpecial(/datum/item_special/rangestab)
-		BLOCK_ROD
+		BLOCK_SETUP(BLOCK_ROD)
 
 	rebuild()
 		..()
@@ -1829,14 +1849,11 @@ Returns:
 	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
 	item_state = "ouijaboard"
 	w_class = 3.0
-	var/ready = 1
-	var/list/users = list()
-	var/use_delay = 30
 
 	New()
 		. = ..()
 		START_TRACKING
-		BLOCK_BOOK
+		BLOCK_SETUP(BLOCK_BOOK)
 
 	disposing()
 		. = ..()
@@ -1845,34 +1862,33 @@ Returns:
 	Click(location,control,params)
 		if(isobserver(usr) || iswraith(usr))
 
-			if(!users.Find(usr))
-				users[usr] = 0
-
-			if((world.time - users[usr]) >= use_delay)
+			if(GET_COOLDOWN(src, usr) == 0)
 				var/list/words = list()
 				for(var/i=0, i<rand(5, 10), i++)
 					var/picked = pick(strings("ouija_board.txt", "ouija_board_words"))
-					if(!words.Find(picked)) words.Add(picked)
+					words |= picked
 
 				if(words.len)
 					var/selected = input(usr, "Select a word:", src.name) as null|anything in words
 					if(!selected) return
 
-					if((world.time - users[usr]) < use_delay)
+					if(ON_COOLDOWN(src, usr, 3 SECONDS))
 						usr.show_text("Please wait a moment before using the board again.", "red")
 						return
 
-					users[usr] = world.time
-
-					SPAWN_DBG(0)
-						if(src && selected)
-							animate_float(src, 1, 5, 1)
-							for (var/mob/O in observersviewers(7, src))
-								O.show_message("<B><span class='notice'>The board spells out a message ... \"[selected]\"</span></B>", 1)
+					if(src && selected)
+						animate_float(src, 1, 5, 1)
+						if(prob(20) && !ON_COOLDOWN(src, "bother chaplains", 1 MINUTE))
+							var/area/AR = get_area(src)
+							for(var/mob/M in by_cat[TR_CAT_CHAPLAINS])
+								if(M.client)
+									boutput(M, "<span class='notice'>You sense a disturbance emanating from \a [src] in \the [AR.name].</span>")
+						for (var/mob/O in observersviewers(7, src))
+							O.show_message("<B><span class='notice'>The board spells out a message ... \"[selected]\"</span></B>", 1)
 #ifdef HALLOWEEN
-							if (istype(usr.abilityHolder, /datum/abilityHolder/ghost_observer))
-								var/datum/abilityHolder/ghost_observer/GH = usr.abilityHolder
-								GH.change_points(50)
+						if (istype(usr.abilityHolder, /datum/abilityHolder/ghost_observer))
+							var/datum/abilityHolder/ghost_observer/GH = usr.abilityHolder
+							GH.change_points(30)
 #endif
 			else
 				usr.show_text("Please wait a moment before using the board again.", "red")
@@ -1921,21 +1937,24 @@ Returns:
 	anchored = 1
 	opacity = 0
 
-	var/datum/particleSystem/barrelSmoke/particles
+	var/datum/particleSystem/barrelSmoke/smoke_part
 	var/datum/light/light
 
 	New()
-		particles = particleMaster.SpawnSystem(new /datum/particleSystem/barrelSmoke(src))
+		smoke_part = particleMaster.SpawnSystem(new /datum/particleSystem/barrelSmoke(src))
 		light = new /datum/light/point
 		light.attach(src)
 		light.set_brightness(1)
 		light.set_color(0.5, 0.3, 0)
 		light.enable()
-
 		..()
 
 	disposing()
 		particleMaster.RemoveSystem(/datum/particleSystem/barrelSmoke, src)
+		smoke_part = null
+		light.disable()
+		light.detach()
+		light = null
 		..()
 
 	attackby(obj/item/W as obj, mob/user as mob)
@@ -2164,7 +2183,7 @@ Returns:
 		while(current != trg_loc)
 			playsound(get_turf(user), pick(sounds), 15, 1)
 			current = get_step(current, get_dir(current, trg_loc))
-			user.dir = get_dir(user, current)
+			user.set_dir(get_dir(user, current))
 			var/obj/beam_dummy/B = showLine(get_turf(user), current, "lght", 5)
 			var/list/affected = B.affected
 			for(var/turf/T in affected)
@@ -2354,7 +2373,7 @@ Returns:
 
 /proc/gobuzz()
 	if(buzztile)
-		usr.loc = buzztile
+		usr.set_loc(buzztile)
 	return
 
 /obj/item/beamtest
@@ -2509,7 +2528,6 @@ Returns:
 		if ((!( src.current ) || src.loc == src.current))
 			src.current = locate(min(max(src.x + src.xo, 1), world.maxx), min(max(src.y + src.yo, 1), world.maxy), src.z)
 		if ((src.x == 1 || src.x == world.maxx || src.y == 1 || src.y == world.maxy))
-			//SN src = null
 			qdel(src)
 			return
 		step_towards(src, src.current)
@@ -2820,11 +2838,9 @@ Returns:
 	if(eligible.len > 0)
 		picked2 = pick(eligible)
 
-	if(picked1)
-		picked1.zombify()
+	picked1?.zombify()
 
-	if(picked2)
-		picked2.zombify()
+	picked2?.zombify()
 
 	for(var/turf/T in wormholeturfs)
 		if(prob(3))
@@ -2873,14 +2889,14 @@ Returns:
 
 	New()
 		..()
-		BLOCK_LARGE
+		BLOCK_SETUP(BLOCK_LARGE)
 
 	throw_begin(atom/target)
 		icon_state = "boomerang1"
 		playsound(src.loc, "rustle", 50, 1)
 		return ..(target)
 
-	throw_impact(atom/hit_atom)
+	throw_impact(atom/hit_atom, datum/thrown_thing/thr)
 		icon_state = "boomerang"
 		if(hit_atom == usr)
 			if(prob(prob_clonk))
@@ -2961,7 +2977,7 @@ Returns:
 			P = new/obj/fancyportal(get_turf(selected))
 			P.setTarget(target)
 			var/targetThing = isturf(target) ? "" : "[target] in "
-			targetThing += get_area(target)
+			targetThing += "[get_area(target)]"
 			logTheThing("admin", usr, null, "created a portal at [showCoords(selected.x, selected.y, selected.z)] ([get_area(selected)]) pointing to [showCoords(target.x, target.y, target.z)] ([targetThing])")
 			logTheThing("diary", usr, null, "created a portal at [selected.x], [selected.y], [selected.z] ([get_area(selected)]) pointing to [target.x], [target.y], [target.z] ([targetThing])", "admin")
 			message_admins("[key_name(usr)] created a portal at [showCoords(selected.x, selected.y, selected.z)] ([get_area(selected)]) pointing to [showCoords(target.x, target.y, target.z)] ([targetThing])")
@@ -3020,8 +3036,8 @@ Returns:
 		return
 
 /obj/perm_portal
-	icon = 'icons/misc/old_or_unused.dmi'
-	icon_state = "portal1"
+	icon = 'icons/obj/stationobjs.dmi'
+	icon_state = "portal"
 	anchored = 1
 	density = 1
 	opacity = 0
@@ -3049,6 +3065,9 @@ Returns:
 			sparks.set_loc(get_turf(src))
 			SPAWN_DBG(2 SECONDS) if (sparks) pool(sparks)
 			qdel(src)
+
+	ex_act()
+		return
 
 
 ////////////////////////////////////////////////////////////////////////////////////////
@@ -3109,8 +3128,8 @@ Returns:
 	var/my_dir=1
 
 	Move(NewLoc,Dir=0)
-		..(NewLoc,Dir)
-		src.dir = my_dir
+		. = ..(NewLoc,Dir)
+		src.set_dir(my_dir)
 
 	unpooled(var/poolname)
 		..()
@@ -3118,7 +3137,7 @@ Returns:
 			var/atom/myloc = loc
 			if(myloc && !istype(myloc,/turf/space))
 				my_dir = pick(alldirs)
-				src.dir = my_dir
+				src.set_dir(my_dir)
 
 /obj/shifting_wall
 	name = "r wall"
@@ -3131,6 +3150,7 @@ Returns:
 	icon_state = "r_wall"
 
 	New()
+		..()
 		update()
 
 	proc/update()
@@ -3215,7 +3235,7 @@ Returns:
 	event_handler_flags = USE_CANPASS
 
 	CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-		if (mover && mover.throwing)
+		if (mover?.throwing)
 			return 1
 		return ..()
 
@@ -3232,6 +3252,7 @@ Returns:
 	density = 1
 	anchored = 1
 	icon = 'icons/obj/fluid.dmi'
+	plane = PLANE_FLOOR
 	icon_state = "pool"
 
 /obj/pool_springboard
@@ -3265,8 +3286,8 @@ Returns:
 			for(var/i = 0, i<range, i++)
 				if(!suiciding && !deadly) target = get_step(target,WEST)
 				else target = get_step(target,EAST)
-			if(!suiciding && !deadly) user.dir = WEST
-			else user.dir = EAST
+			if(!suiciding && !deadly) user.set_dir(WEST)
+			else user.set_dir(EAST)
 			user.pixel_y = 15
 			user.layer = EFFECTS_LAYER_UNDER_1
 			user.set_loc(src.loc)
@@ -3401,7 +3422,7 @@ var/list/lag_list = new/list()
 		playsound(src, "sound/impact_sounds/Glass_Shatter_3.ogg", 75, 0)
 		M:transforming = 1
 		sleep(3 SECONDS)
-		var/obj/screen/creepy = new /obj/screen()
+		var/atom/movable/screen/creepy = new /atom/movable/screen()
 		creepy.name = "GARHLGHARLHGARHGL"
 		creepy.icon = 'icons/creepy.png'
 		creepy.screen_loc = "SOUTH,WEST"
@@ -3420,6 +3441,7 @@ var/list/lag_list = new/list()
 		sleep(3 SECONDS)
 
 	New()
+		..()
 		build_base()
 		update()
 
@@ -3446,7 +3468,8 @@ var/list/lag_list = new/list()
 		playsound(src, "sound/impact_sounds/Glass_Shatter_3.ogg", 75, 0)
 		break_it()
 
-	hitby(atom/movable/AM as mob|obj)
+	hitby(atom/movable/AM, datum/thrown_thing/thr)
+		. = ..()
 		playsound(src, "sound/impact_sounds/Glass_Shatter_3.ogg", 75, 0)
 		break_it()
 
@@ -3695,7 +3718,7 @@ var/list/lag_list = new/list()
 	desc = "Places a Light - facing the direction you are facing."
 	used(atom/user, atom/target)
 		var/obj/machinery/light/small/L = new/obj/machinery/light/small(get_turf(target))
-		L.dir = user:dir
+		L.set_dir(user:dir)
 		L.on = 1
 		L.update()
 		return
@@ -3705,7 +3728,7 @@ var/list/lag_list = new/list()
 	desc = "Places a Button that can control mass-drivers & pod-doors."
 	used(atom/user, atom/target)
 		var/obj/machinery/driver_button/L = new/obj/machinery/driver_button(get_turf(target))
-		L.dir = user:dir
+		L.set_dir(user:dir)
 		return
 
 /datum/engibox_mode/buttonconvey
@@ -3713,7 +3736,7 @@ var/list/lag_list = new/list()
 	desc = "Places a Conveyor switch that can control a conveyor belt."
 	used(atom/user, atom/target)
 		var/obj/machinery/conveyor_switch/L = new/obj/machinery/conveyor_switch(get_turf(target))
-		L.dir = user:dir
+		L.set_dir(user:dir)
 		return
 
 /datum/engibox_mode/conveyor
@@ -3721,7 +3744,7 @@ var/list/lag_list = new/list()
 	desc = "Places a Conveyor belt - facing the direction you are facing."
 	used(atom/user, atom/target)
 		var/obj/machinery/conveyor/L = new/obj/machinery/conveyor(get_turf(target))
-		L.dir = user:dir
+		L.set_dir(user:dir)
 		L.basedir = L.dir
 		return
 
@@ -3730,7 +3753,7 @@ var/list/lag_list = new/list()
 	desc = "Places a Pod-Door."
 	used(atom/user, atom/target)
 		var/obj/machinery/door/poddoor/L = new/obj/machinery/door/poddoor(get_turf(target))
-		L.dir = user:dir
+		L.set_dir(user:dir)
 		return
 
 /datum/engibox_mode/driver
@@ -3738,7 +3761,7 @@ var/list/lag_list = new/list()
 	desc = "Places a Mass-Driver - facing the direction you are facing."
 	used(atom/user, atom/target)
 		var/obj/machinery/mass_driver/L = new/obj/machinery/mass_driver(get_turf(target))
-		L.dir = user:dir
+		L.set_dir(user:dir)
 		return
 
 /datum/engibox_mode/cam
@@ -3746,7 +3769,7 @@ var/list/lag_list = new/list()
 	desc = "Places a Security Camera - using your direction."
 	used(atom/user, atom/target)
 		var/obj/machinery/camera/L = new/obj/machinery/camera(get_turf(target))
-		L.dir = user:dir
+		L.set_dir(user:dir)
 		return
 
 /datum/engibox_mode/window
@@ -3764,7 +3787,7 @@ var/list/lag_list = new/list()
 	desc = "Places a Grille."
 	used(atom/user, atom/target)
 		var/obj/grille/L = new/obj/grille/steel(get_turf(target))
-		L.dir = user:dir
+		L.set_dir(user:dir)
 		return
 
 /datum/engibox_mode/table
@@ -3772,7 +3795,7 @@ var/list/lag_list = new/list()
 	desc = "Places a Reinforced Table."
 	used(atom/user, atom/target)
 		var/obj/table/reinforced/L = new/obj/table/reinforced(get_turf(target))
-		L.dir = user:dir
+		L.set_dir(user:dir)
 		return
 
 /datum/engibox_mode/paint
@@ -3847,8 +3870,7 @@ var/list/lag_list = new/list()
 		if(z_level_lock && T.z != z_level_lock)
 			boutput(user, "<span class='alert'>\The [src] is not authorized to be used outside official NanoTrasen stations.</span>")
 			return
-		if(active_mode)
-			active_mode.used(user, target)
+		active_mode?.used(user, target)
 		return
 
 	attack()
@@ -3868,7 +3890,7 @@ var/list/lag_list = new/list()
 
 	Topic(href, href_list)
 		if(usr.stat || usr.restrained()) return
-		if(!in_range(src, usr)) return
+		if(!in_interact_range(src, usr)) return
 		src.add_dialog(usr)
 		if (href_list["set_mode"])
 			active_mode = locate(href_list["set_mode"]) in modes
@@ -3890,6 +3912,7 @@ var/list/lag_list = new/list()
 		return
 
 	New()
+		..()
 		for(var/D in typesof(/datum/engibox_mode) - /datum/engibox_mode)
 			modes += new D
 
@@ -3909,7 +3932,7 @@ var/list/lag_list = new/list()
 		switch(alert("Travel back to ss13?",,"Yes","No"))
 			if("Yes")
 				user.loc.loc.Exited(user)
-				user.set_loc(pick(latejoin))
+				user.set_loc(pick_landmark(LANDMARK_LATEJOIN))
 			if("No")
 				return
 
@@ -3999,17 +4022,17 @@ var/list/lag_list = new/list()
 	var/blocking = 0
 
 	MouseEntered(location,control,params)
-		if(usr && usr.client)
+		if(usr?.client)
 			usr.client.show_popup_menus = 0
 		return ..()
 
 	MouseExited(location,control,params)
-		if(usr && usr.client)
+		if(usr?.client)
 			usr.client.show_popup_menus = 1
 		return ..()
 
 	MouseDrop_T()
-		if(usr && usr.client && blocking)
+		if(usr?.client && blocking)
 			usr.client.show_popup_menus = 0
 		return ..()
 
@@ -4038,7 +4061,7 @@ var/list/lag_list = new/list()
 
 	if(high_range)
 	//Uses all cameras within viewrange + camera range, significantly slower
-		for(var/obj/machinery/camera/C in cameras)
+		for_by_tcl(C, /obj/machinery/camera)
 			if(C.z != src.z || get_dist(src, C) > (src.client.view + CAM_RANGE)) continue
 			visible = (visible | view(CAM_RANGE, C))
 	else

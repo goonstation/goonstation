@@ -72,7 +72,35 @@
 	desc = "A fancy robotic stomach to replace one that someone's lost!"
 	icon_state = "cyber-stomach"
 	// item_state = "heart_robo1"
+	made_from = "pharosium"
 	robotic = 1
+	created_decal = /obj/decal/cleanable/oil
 	edible = 0
 	mats = 6
 
+	on_transplant(mob/M)
+		. = ..()
+		if(!broken)
+			ADD_STATUS_LIMIT(M, "Food", 6)
+
+	on_removal()
+		. = ..()
+		REMOVE_STATUS_LIMIT(src.donor, "Food")
+
+	unbreakme()
+		..()
+		if(donor)
+			ADD_STATUS_LIMIT(src.donor, "Food", 6)
+
+	breakme()
+		..()
+		if(donor)
+			REMOVE_STATUS_LIMIT(src.donor, "Food")
+
+	emag_act(mob/user, obj/item/card/emag/E)
+		. = ..()
+		organ_abilities = list(/datum/targetable/organAbility/projectilevomit)
+
+	demag(mob/user)
+		..()
+		organ_abilities = initial(organ_abilities)

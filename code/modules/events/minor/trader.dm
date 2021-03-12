@@ -11,7 +11,6 @@
 		..()
 		if(active == 1)
 			return //This is to prevent admins from fucking up the shuttle arrival/departures by spamming this event.
-		event = 1
 		active = 1
 		map_turf = map_settings.shuttle_map_turf
 #ifdef UNDERWATER_MAP // bodge fix for oshan
@@ -60,41 +59,39 @@
 
 		for (var/turf/P in start_location)
 			if (istype(P, centcom_turf))
-				new map_turf(P)
+				P.ReplaceWith(map_turf, FALSE, TRUE, FALSE, TRUE)
 
 		end_location.color = null
 
 		start_location.move_contents_to(end_location, centcom_turf)
 
-		sleep(rand(3000,6000))
+		SPAWN_DBG(rand(3000,6000))
+			command_alert("The merchant shuttle is preparing to undock, please stand clear.", "Merchant Departure Alert")
 
-		command_alert("The merchant shuttle is preparing to undock, please stand clear.", "Merchant Departure Alert")
+			sleep(30 SECONDS)
 
-		sleep(30 SECONDS)
+			// hey you, get out of my shuttle! I ain't taking you back to centcom!
+			for(var/turf/T in dstturfs)
+				for(var/mob/AM in T)
+					if(isobserver(AM))
+						continue
+					showswirl(AM)
+					AM.set_loc(pick_landmark(LANDMARK_LATEJOIN, locate(150, 150, 1)))
+					showswirl(AM)
+				for (var/obj/O in T)
+					get_hiding_jerk(O)
 
-		// hey you, get out of my shuttle! I ain't taking you back to centcom!
-		var/area/teleport_to_location = locate(/area/station/crew_quarters/bar)
-		for(var/turf/T in dstturfs)
-			for(var/mob/AM in T)
-				if(isobserver(AM))
-					continue
-				showswirl(AM)
-				AM.set_loc(pick(get_area_turfs(teleport_to_location, 1)))
-				showswirl(AM)
-			for (var/obj/O in T)
-				get_hiding_jerk(O)
+			for (var/turf/O in end_location)
+				if (istype(O, map_turf))
+					O.ReplaceWith(centcom_turf, FALSE, TRUE, FALSE, TRUE)
 
-		for (var/turf/O in end_location)
-			if (istype(O, map_turf))
-				new centcom_turf(O)
+			end_location.move_contents_to(start_location, map_turf)
 
-		end_location.move_contents_to(start_location, map_turf)
+			#ifdef UNDERWATER_MAP
+			start_location.color = OCEAN_COLOR
+			#endif
 
-		#ifdef UNDERWATER_MAP
-		start_location.color = OCEAN_COLOR
-		#endif
-
-		active = 0
+			active = 0
 
 /proc/get_hiding_jerk(var/atom/movable/container)
 	for(var/atom/movable/AM in container)

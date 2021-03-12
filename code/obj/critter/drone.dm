@@ -9,7 +9,7 @@
 	aggressive = 1
 	defensive = 1
 	wanderer = 1
-	opensdoors = 0
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_NONE
 	atkcarbon = 1
 	atksilicon = 1
 	atcritter = 0
@@ -114,7 +114,7 @@
 			else continue
 
 
-		for (var/atom in pods_and_cruisers)
+		for (var/atom in by_cat[TR_CAT_PODS_AND_CRUISERS])
 			var/atom/A = atom
 			if (A && src.z == A.z && get_dist(src,A) <= src.seekrange)
 				if (istype(atom, /obj/machinery/vehicle))
@@ -224,6 +224,7 @@
 		if(dying) return
 		applyDeathState()
 		dying = 1 // this was dying = 0. ha ha.
+		SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_DRONE_DEATH, src)
 		SPAWN_DBG(2 SECONDS)
 			if (get_area(src) != colosseum_controller.colosseum || must_drop_loot)
 				if (prob(25))
@@ -275,7 +276,7 @@
 			//		waking = 1
 			//		break
 
-			for (var/atom in pods_and_cruisers)
+			for (var/atom in by_cat[TR_CAT_PODS_AND_CRUISERS])
 				var/atom/A = atom
 				if (A && src.z == A.z && get_dist(src,A) <= 10)
 					waking = 1
@@ -313,7 +314,7 @@
 			//		stay_awake = 1
 			//		break
 
-			for (var/atom in pods_and_cruisers)
+			for (var/atom in by_cat[TR_CAT_PODS_AND_CRUISERS])
 				var/atom/A = atom
 				if (A && src.z == A.z && get_dist(src,A) <= 10)
 					stay_awake = 1
@@ -573,6 +574,7 @@
 		droploot = /obj/item/spacecash/buttcoin // replace with railgun if that's ever safe enough to hand out? idk
 		attack_cooldown = 50
 		smashes_shit = 1
+		mats = 96
 
 		Shoot(var/atom/target, var/start, var/user, var/bullet = 0)
 			if(target == start)
@@ -587,7 +589,7 @@
 					target_r = new/obj/railgun_trg_dummy(target)
 
 				playsound(src, "sound/weapons/railgun.ogg", 50, 1)
-				src.dir = get_dir(src, target)
+				src.set_dir(get_dir(src, target))
 
 				var/list/affected = DrawLine(src, target_r, /obj/line_obj/railgun ,'icons/obj/projectiles.dmi',"WholeRailG",1,1,"HalfStartRailG","HalfEndRailG",OBJ_LAYER,1)
 
@@ -800,7 +802,7 @@
 		CritterDeath() //Yeah thanks for only supporting a single item, loot variable.
 			if(dying) return
 			var/area/A = get_area(src)
-			if (A && A.virtual)
+			if (A?.virtual)
 				droploot = null
 			..()
 
@@ -814,7 +816,10 @@
 			if(target == start)
 				return
 
-			src.dir = get_dir(src, target)
+			src.set_dir(get_dir(src, target))
+
+			if (!cardinal.Find(src.dir))
+				return //hell drone only shoots cardinals
 
 			var/obj/projectile/P1 =	initialize_projectile(src.loc, current_projectile, 0, 0, src)
 			var/obj/projectile/P2 =	initialize_projectile(src.loc, current_projectile, 0, 0, src)
@@ -847,7 +852,7 @@
 					P2.set_loc(locate(src.x,src.y+2, src.z))
 					P1.orig_turf = P1.loc
 					P2.orig_turf = P2.loc
-				else
+				if(SOUTH)
 					P1.yo = -96
 					P1.xo = 0
 					P2.yo = -96
@@ -856,6 +861,10 @@
 					P2.set_loc(locate(src.x, src.y, src.z))
 					P1.orig_turf = P1.loc
 					P2.orig_turf = P2.loc
+				else
+					P1.die()
+					P2.die()
+					return
 
 			SPAWN_DBG(0)
 				P1.launch() // FIRE!
@@ -921,12 +930,12 @@
 		A.target = target
 		A.yo = target:y - start:y
 		A.xo = target:x - start:x
-		src.dir = get_dir(src, target)
+		src.set_dir(get_dir(src, target))
 		SPAWN_DBG( 0 )
 			A.process()
 		return */
 
-		src.dir = get_dir(src, target)
+		src.set_dir(get_dir(src, target))
 
 		var/obj/projectile/P1 = initialize_projectile(src.loc, current_projectile, 0, 0, src)
 		var/obj/projectile/P2 = initialize_projectile(src.loc, current_projectile, 0, 0, src)
@@ -941,25 +950,49 @@
 				P2.set_loc(locate(src.x+2,src.y+2, src.z))
 				P1.orig_turf = P1.loc //our orig_turf was set in initialize_projectile() but that was before we moved it to the side of the ship
 				P2.orig_turf = P2.loc
-			if(EAST)
-				P1.yo = 0
-				P1.xo = 96
-				P2.yo = 0
-				P2.xo = 96
+			if(EAST, NORTHEAST, SOUTHEAST)
+				switch(src.dir)
+					if(NORTHEAST)
+						P1.yo = 96
+						P1.xo = 96
+						P2.yo = 96
+						P2.xo = 96
+					if(SOUTHEAST)
+						P1.yo = -96
+						P1.xo = 96
+						P2.yo = -96
+						P2.xo = 96
+					else
+						P1.yo = 0
+						P1.xo = 96
+						P2.yo = 0
+						P2.xo = 96
 				P1.set_loc(locate(src.x+2,src.y+2,src.z))
 				P2.set_loc(locate(src.x+2,src.y,src.z))
 				P1.orig_turf = P1.loc
 				P2.orig_turf = P2.loc
-			if(WEST)
-				P1.yo = 0
-				P1.xo = -96
-				P2.yo = 0
-				P2.xo = -96
+			if(WEST, NORTHWEST, SOUTHWEST)
+				switch(src.dir)
+					if(NORTHWEST)
+						P1.yo = 96
+						P1.xo = -96
+						P2.yo = 96
+						P2.xo = -96
+					if(SOUTHWEST)
+						P1.yo = -96
+						P1.xo = -96
+						P2.yo = -96
+						P2.xo = -96
+					else
+						P1.yo = 0
+						P1.xo = -96
+						P2.yo = 0
+						P2.xo = -96
 				P1.set_loc(locate(src.x,src.y, src.z))
 				P2.set_loc(locate(src.x,src.y+2, src.z))
 				P1.orig_turf = P1.loc
 				P2.orig_turf = P2.loc
-			else
+			if(SOUTH)
 				P1.yo = -96
 				P1.xo = 0
 				P2.yo = -96
@@ -968,6 +1001,10 @@
 				P2.set_loc(locate(src.x, src.y, src.z))
 				P1.orig_turf = P1.loc
 				P2.orig_turf = P2.loc
+			else
+				P1.die()
+				P2.die()
+				return
 
 		SPAWN_DBG(0)
 			P1.launch()
@@ -985,7 +1022,7 @@
 			random_burn_damage(poorSoul, 45)
 			boutput(poorSoul, "<span class='alert'><B>You feel a powerful shock course through your body!</B></span>")
 			poorSoul.unlock_medal("HIGH VOLTAGE", 1)
-			poorSoul:Virus_ShockCure(poorSoul, 100)
+			poorSoul:Virus_ShockCure(100)
 			poorSoul:shock_cyberheart(100)
 			poorSoul:changeStatus("weakened", 4 SECONDS)
 			if (isdead(poorSoul) && prob(25))
@@ -1014,16 +1051,15 @@
 
 	New()
 		..()
-		#if ASS_JAM
-		name = "X Æ Y-[rand(10,15)]"
-		#else
+
+		//name = "X Æ Y-[rand(10,15)]" //lmfao
 		name = "Battledrone Y-[rand(1,5)]"
-		#endif
+
 
 	CritterDeath() //Yeah thanks for only supporting a single item, loot variable.
 		if(dying) return
 		var/area/A = get_area(src)
-		if (A && A.virtual)
+		if (A?.virtual)
 			droploot = /obj/item/device/key/virtual
 		else
 			new/obj/item/material_piece/iridiumalloy(src.loc)
@@ -1064,7 +1100,7 @@
 		if (prob(50))
 			elec_zap()
 
-		src.dir = get_dir(src, target)
+		src.set_dir(get_dir(src, target))
 
 		var/obj/projectile/sphere = initialize_projectile(src.loc, sphere_projectile, 0, 0, src)
 
@@ -1194,7 +1230,7 @@
 	CritterDeath() //Yeah thanks for only supporting a single item, loot variable.
 		if(dying) return
 		var/area/A = get_area(src)
-		if (A && A.virtual)
+		if (A?.virtual)
 			droploot = /obj/item/device/key/virtual //we don't want this loot in vr do we???
 		else
 			new/obj/item/instrument/fiddle(src.loc)
@@ -1221,7 +1257,7 @@
 	aggressive = 1
 	defensive = 1
 	wanderer = 1
-	opensdoors = 1
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_ANY
 	atkcarbon = 1
 	atksilicon = 1
 	atcritter = 0
@@ -1250,14 +1286,14 @@
 
 	select_target(var/atom/newtarget)
 		..()
-		playsound(get_turf(src), (voice_gender == "male" ? "sound/voice/screams/male_scream.ogg" : "sound/voice/screams/female_scream.ogg"), 40, 1, 0.1, 3)
+		playsound(get_turf(src), (voice_gender == "male" ? "sound/voice/screams/male_scream.ogg" : "sound/voice/screams/female_scream.ogg"), 40, 1, 0.1, 3, channel=VOLUME_CHANNEL_EMOTE)
 
 	ex_act(severity)
 		return
 
 	CritterDeath()
 		if(dying) return
-		playsound(get_turf(src), 'sound/voice/farts/poo2.ogg', 40, 1, 0.1, 3)
+		playsound(get_turf(src), 'sound/voice/farts/poo2.ogg', 40, 1, 0.1, 3, channel=VOLUME_CHANNEL_EMOTE)
 		src.visible_message("[src] emits a very small clicking noise.")
 		icon_state = dead_state
 		SPAWN_DBG(0.5 SECONDS)

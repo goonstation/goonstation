@@ -4,22 +4,24 @@
 	artifact = 1
 	charge = 400.0
 	max_charge = 400.0
+	var/chargeCap = 400.0
 	recharge_rate = 0.0
 	module_research_no_diminish = 1
 	mat_changename = 0
 	mat_changedesc = 0
 
-	New(var/loc, var/forceartitype)
+	New(var/loc, var/forceartiorigin)
 		//src.artifact = new /datum/artifact/energyammo(src)
 		var/datum/artifact/energyammo/A = new /datum/artifact/energyammo(src)
-		if (forceartitype)
-			A.validtypes = list("[forceartitype]")
+		if (forceartiorigin)
+			A.validtypes = list("[forceartiorigin]")
 		src.artifact = A
 		SPAWN_DBG(0)
 			src.ArtifactSetup()
 
 			src.max_charge = rand(5,100)
 			src.max_charge *= 10
+			src.chargeCap = src.max_charge
 			A.react_elec[2] = src.max_charge
 			src.recharge_rate = rand(5,60)
 		..()
@@ -39,9 +41,20 @@
 		if (src.Artifact_attackby(W,user))
 			..()
 
+	ArtifactActivated()
+		. = ..()
+		src.max_charge = src.chargeCap
+		processing_items |= src
+
+	ArtifactDeactivated()
+		. = ..()
+		src.max_charge = 1 // no divide by 0 pls
+		src.charge = 1
+
 /datum/artifact/energyammo
 	associated_object = /obj/item/ammo/power_cell/self_charging/artifact
-	rarity_class = 0
+	type_name = "Small power cell"
+	rarity_weight = 0
 	validtypes = list("ancient","eldritch","precursor")
 	automatic_activation = 1
 	react_elec = list("equal",0,0)

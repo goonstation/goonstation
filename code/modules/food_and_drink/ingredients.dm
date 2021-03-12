@@ -17,12 +17,15 @@
 	custom_food = 1
 	var/blood = 7 //how much blood cleanables we are allowed to spawn
 
-	heal(var/mob/living/M)
+	on_bite(obj/item/I, mob/M, mob/user)
+		if (!isliving(M))
+			return
+		var/mob/living/L = M
 		if (prob(33))
-			boutput(M, "<span class='alert'>You briefly think you probably shouldn't be eating raw meat.</span>")
-			M.contract_disease(/datum/ailment/disease/food_poisoning, null, null, 1) // path, name, strain, bypass resist
+			boutput(L, "<span class='alert'>You briefly think you probably shouldn't be eating raw meat.</span>")
+			L.contract_disease(/datum/ailment/disease/food_poisoning, null, null, 1) // path, name, strain, bypass resist
 
-	throw_impact(var/atom/A)
+	throw_impact(atom/A, datum/thrown_thing/thr)
 		var/turf/T = get_turf(A)
 		playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 100, 1)
 		if (src.blood <= 0) return ..()
@@ -73,6 +76,7 @@
 	icon_state = "meat-plant"
 	amount = 1
 	initial_volume = 20
+	food_color = "#228822"
 	initial_reagents = list("synthflesh"=2)
 
 /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat
@@ -82,7 +86,7 @@
 	amount = 1
 	var/cybermeat = 0
 
-	throw_impact(var/atom/A)
+	throw_impact(atom/A, datum/thrown_thing/thr)
 		var/turf/T = get_turf(A)
 		if (src.cybermeat == 1)
 			playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 100, 1)
@@ -104,7 +108,7 @@
 		src.pixel_x += rand(-4,4)
 		src.pixel_y += rand(-4,4)
 
-	heal(var/mob/M)
+	on_bite(obj/item/I, mob/M, mob/user)
 		M.nutrition += 20
 		return
 
@@ -129,10 +133,18 @@
 		src.pixel_x += rand(-4,4)
 		src.pixel_y += rand(-4,4)
 
-	heal(var/mob/M)
+	on_bite(obj/item/I, mob/M, mob/user)
 		if (icon_state == "nugget0")
 			icon_state = "nugget1"
 		return ..()
+
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget/spicy
+	name = "Windy's spicy chicken nugget"
+	desc = "A breaded wad of poultry, far too processed to have a more specific label than 'nugget.' It's spicy. The ones from Windy's are the best."
+	color = "#FF6600"
+	food_color = "#FF6600"
+	heal_amt = 10
+	initial_reagents = list("capsaicin"=15)
 
 /obj/item/reagent_containers/food/snacks/ingredient/egg
 	name = "egg"
@@ -141,8 +153,9 @@
 	food_color = "#FFFFFF"
 	initial_volume = 20
 	initial_reagents = list("egg"=5)
+	doants = 0 // They're protected by a shell
 
-	throw_impact(var/atom/A)
+	throw_impact(atom/A, datum/thrown_thing/thr)
 		var/turf/T = get_turf(A)
 		src.visible_message("<span class='alert'>[src] splats onto the floor messily!</span>")
 		playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 100, 1)
@@ -161,7 +174,7 @@
 		..()
 		reagents.add_reagent("egg", 5)
 
-	throw_impact(var/atom/A)
+	throw_impact(atom/A, datum/thrown_thing/thr)
 		src.visible_message("<span class='alert'>[src] flops onto the floor!</span>")
 
 	attackby(obj/item/W as obj, mob/user as mob)
@@ -263,6 +276,9 @@
 	initial_reagents = list("honey"=15)
 	brewable = 1
 	brew_result = "mead"
+	New()
+		..()
+		src.setMaterial(getMaterial("beeswax"), appearance = 0, setname = 0)
 
 /obj/item/reagent_containers/food/snacks/ingredient/royal_jelly
 	name = "royal jelly"
@@ -351,7 +367,7 @@
 		else if (istype(W, /obj/item/kitchen/rollingpin))
 			boutput(user, "<span class='notice'>You flatten out the dough.</span>")
 			if(prob(1))
-				playsound(src.loc, "sound/voice/screams/male_scream.ogg", 100, 1)
+				playsound(src.loc, "sound/voice/screams/male_scream.ogg", 100, 1, channel=VOLUME_CHANNEL_EMOTE)
 				src.visible_message("<span class='alert'><B>The [src] screams!</B></span>")
 			var/obj/item/reagent_containers/food/snacks/ingredient/pizza1/P = new /obj/item/reagent_containers/food/snacks/ingredient/pizza1(src.loc)
 			user.u_equip(src)
@@ -360,7 +376,7 @@
 		else if (istype(W, /obj/item/axe) || istype(W, /obj/item/circular_saw) || istype(W, /obj/item/kitchen/utensil/knife) || istype(W, /obj/item/scalpel) || istype(W, /obj/item/sword) || istype(W,/obj/item/saw) || istype(W,/obj/item/knife/butcher))
 			boutput(user, "<span class='notice'>You cut the dough into two strips.</span>")
 			if(prob(1))
-				playsound(src.loc, "sound/voice/screams/male_scream.ogg", 100, 1)
+				playsound(src.loc, "sound/voice/screams/male_scream.ogg", 100, 1, channel=VOLUME_CHANNEL_EMOTE)
 				src.visible_message("<span class='alert'><B>The [src] screams!</B></span>")
 			for(var/i = 1, i <= 2, i++)
 				new /obj/item/reagent_containers/food/snacks/ingredient/dough_strip(get_turf(src))
@@ -368,7 +384,7 @@
 		else if (istype(W, /obj/item/kitchen/utensil/fork))
 			boutput(user, "<span class='notice'>You stab holes in the dough. How vicious.</span>")
 			if(prob(1))
-				playsound(src.loc, "sound/voice/screams/male_scream.ogg", 100, 1)
+				playsound(src.loc, "sound/voice/screams/male_scream.ogg", 100, 1, channel=VOLUME_CHANNEL_EMOTE)
 				src.visible_message("<span class='alert'><B>The [src] screams!</B></span>")
 			var/obj/item/reagent_containers/food/snacks/ingredient/holey_dough/H = new /obj/item/reagent_containers/food/snacks/ingredient/holey_dough(W.loc)
 			user.u_equip(src)
@@ -377,7 +393,7 @@
 		else if (istype(W, /obj/item/robodefibrillator))
 			boutput(user, "<span class='notice'>You defibrilate the dough, yielding a perfect stack of flapjacks.</span>")
 			if(prob(1))
-				playsound(src.loc, "sound/voice/screams/male_scream.ogg", 100, 1)
+				playsound(src.loc, "sound/voice/screams/male_scream.ogg", 100, 1, channel=VOLUME_CHANNEL_EMOTE)
 				src.visible_message("<span class='alert'><B>The [src] screams!</B></span>")
 			var/obj/item/reagent_containers/food/snacks/pancake/F = new /obj/item/reagent_containers/food/snacks/pancake(src.loc)
 			user.u_equip(src)
@@ -394,7 +410,7 @@
 		if (istype(W, /obj/item/kitchen/rollingpin))
 			boutput(user, "<span class='notice'>You flatten out the dough into a sheet.</span>")
 			if(prob(1))
-				playsound(src.loc, "sound/voice/screams/male_scream.ogg", 100, 1)
+				playsound(src.loc, "sound/voice/screams/male_scream.ogg", 100, 1, channel=VOLUME_CHANNEL_EMOTE)
 				src.visible_message("<span class='alert'><B>The [src] screams!</B></span>")
 			var/obj/item/reagent_containers/food/snacks/ingredient/pasta/sheet/P = new /obj/item/reagent_containers/food/snacks/ingredient/pasta/sheet(src.loc)
 			user.u_equip(src)
@@ -423,7 +439,7 @@
 	attack_self(var/mob/user as mob)
 		boutput(user, "<span class='notice'>You twist the [src] into a circle.</span>")
 		if(prob(1))
-			playsound(src.loc, "sound/voice/screams/male_scream.ogg", 100, 1)
+			playsound(src.loc, "sound/voice/screams/male_scream.ogg", 100, 1, channel=VOLUME_CHANNEL_EMOTE)
 			src.visible_message("<span class='alert'><B>The [src] screams!</B></span>")
 		new /obj/item/reagent_containers/food/snacks/ingredient/dough_circle(get_turf(src))
 		qdel (src)
@@ -470,7 +486,7 @@
 		src.pixel_x = rand(-6, 6)
 		src.pixel_y = rand(-6, 6)
 
-	heal(var/mob/M)
+	on_bite(obj/item/I, mob/M, mob/user)
 		if(prob(15))
 			#ifdef CREATE_PATHOGENS //PATHOLOGY REMOVAL
 			wrap_pathogen(M.reagents, generate_indigestion_pathogen(), 15)
@@ -573,6 +589,7 @@
 			boutput(user, "<span class='notice'>You add [W] to [src].</span>")
 			topping = 1
 			food_effects += F.food_effects
+			src.AddComponent(/datum/component/consume/food_effects, src.food_effects)
 			if (F.real_name)
 				toppings += F.real_name
 			else
@@ -584,6 +601,7 @@
 				heal_amt += 4
 			else
 				heal_amt += round((F.heal_amt * F.amount)/amount) + 1
+			src.AddComponent(/datum/component/consume/foodheal, src.heal_amt)
 			topping_color = F.food_color
 			if(num < 3)
 				num ++
@@ -617,7 +635,7 @@
 	heal_amt = 0
 	amount = 1
 
-	heal(var/mob/M)
+	on_bite(obj/item/I, mob/M, mob/user)
 		boutput(M, "<span class='alert'>... You must be really hungry.</span>")
 		..()
 
@@ -635,7 +653,7 @@
 	heal_amt = 0
 	food_color = "#FFFF99"
 
-	heal(var/mob/M)
+	on_bite(obj/item/I, mob/M, mob/user)
 		boutput(M, "<span class='alert'>Raw potato tastes pretty nasty...</span>") // does it?
 
 
@@ -673,7 +691,7 @@
 			qdel(W)
 			qdel(src)
 
-	heal(var/mob/M)
+	on_bite(obj/item/I, mob/M, mob/user)
 		boutput(M, "<span class='alert'>The noodles taste terrible uncooked...</span>")
 		..()
 
@@ -687,7 +705,7 @@
 	initial_volume = 25
 	initial_reagents = "butter"
 
-	heal(var/mob/M)
+	on_bite(obj/item/I, mob/M, mob/user)
 		boutput(M, "<span class='alert'>You feel ashamed of yourself...</span>")
 		..()
 

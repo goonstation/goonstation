@@ -42,10 +42,11 @@
 	pixel_x = -32
 
 	New(var/location = null, var/state = null)
+		..()
 		if(location)
-			src.loc = location
+			src.set_loc(location)
 		else
-			src.loc = usr.loc
+			src.set_loc(usr.loc)
 
 		if(state)
 			icon_state = "[state]"
@@ -105,7 +106,7 @@
 		if(81 to 100)
 			speed_delay = 0
 
-	if(runningAction && runningAction.bar)
+	if(runningAction?.bar)
 		if(sickness >= 60)
 			runningAction.bar.color = "#00DD00"
 		else
@@ -144,6 +145,10 @@
 	if(AM == rider || !rider)
 		return
 
+	var/turf/T = get_turf(src)
+	if(isrestrictedz(T.z))
+		sickness = 0
+
 	..()
 	src.stop()
 	in_bump = 1
@@ -167,7 +172,7 @@
 			adjustSickness(-sickness)
 			eject_rider(2)
 		else
-			src.loc = AM
+			src.set_loc(AM)
 			walk(src, dir, speed_delay)
 
 	else if(ismob(AM))
@@ -182,7 +187,7 @@
 			if(give_points)
 				adjustSickness(6)
 			trickAnimate()
-			src.loc = AM.loc
+			src.set_loc(AM.loc)
 			walk(src, turn(dir, pick(180, 90, -90)), speed_delay)
 			playsound(src, pick(sb_tricks), 65, 1)
 
@@ -215,12 +220,13 @@
 	return
 
 /obj/vehicle/skateboard/eject_rider(var/crashed, var/selfdismount)
-	if (!rider)
+	if (!src.rider)
 		return
 
 	density = 0
 
-	rider.set_loc(src.loc)
+	var/mob/living/rider = src.rider
+	..()
 	rider.pixel_y = 0
 
 	src.stop()
@@ -262,7 +268,7 @@
 			M.set_loc(src.loc)
 
 /obj/vehicle/skateboard/MouseDrop_T(mob/living/target, mob/user)
-	if (rider || !istype(target) || target.buckled || LinkBlocked(target.loc,src.loc) || get_dist(user, src) > 1 || get_dist(user, target) > 1 || user.getStatusDuration("paralysis") || user.getStatusDuration("stunned") || user.getStatusDuration("weakened") || user.stat || isAI(user))
+	if (rider || !istype(target) || target.buckled || LinkBlocked(target.loc,src.loc) || get_dist(user, src) > 1 || get_dist(user, target) > 1 || is_incapacitated(user) || isAI(user))
 		return
 
 	if(target == user && !user.stat)

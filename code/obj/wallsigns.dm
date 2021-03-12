@@ -36,24 +36,11 @@
 	opacity = 0
 	density = 0
 
-/obj/cairngorm_stats
-	name = "scoreboard of sorts"
+/obj/atlasplaque
+	desc = {"NCS Atlas, Nanotrasen,  \"Man always kills the thing he loves, and so we the pioneers have killed our wilderness. Some say we had to. Be that as it may, I am glad I shall never be young without wild country to be young in. Of what avail are forty freedoms without a blank spot on the map?  - Aldo Leopold\""}
+	name = "dedication plaque"
 	icon = 'icons/obj/decals/wallsigns.dmi'
 	icon_state = "rip"
 	anchored = 1.0
 	opacity = 0
 	density = 0
-
-	New()
-		..()
-		var/wins = world.load_intra_round_value("nukie_win")
-		var/losses = world.load_intra_round_value("nukie_loss")
-		if(isnull(wins))
-			wins = 0
-		if(isnull(losses))
-			losses = 0
-		src.desc = "Successful missions: [wins]<br>\nUnsuccessful missions: [losses]"
-
-	attack_hand(mob/user)
-		examine(user)
-		. = ..()

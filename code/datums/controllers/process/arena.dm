@@ -8,9 +8,10 @@ datum/controller/process/arena
 		arenas += gauntlet_controller
 		arenas += colosseum_controller
 
+	copyStateFrom(datum/controller/process/target)
+		var/datum/controller/process/arena/old_arena = target
+		src.arenas = old_arena.arenas
+
 	doWork()
 		for (var/datum/arena/A in arenas)
 			A.tick()
-				
-	tickDetail()
-		boutput(usr, "No statistics available.")

@@ -1,4 +1,4 @@
-//////////////////////////////////////////// Setup //////////////////////////////////////////////////
+/* 	/		/		/		/		/		/		Setup		/		/		/		/		/		/		/		/		*/
 
 /proc/equip_wizard(mob/living/carbon/human/wizard_mob, var/robe = 0, var/vr = 0)
 	if (!ishuman(wizard_mob)) return
@@ -18,13 +18,13 @@
 		// vr wizards only get magic missile
 		H.addAbility(/datum/targetable/spell/magicmissile)
 
-	SPAWN_DBG (25) // Don't remove.
+	SPAWN_DBG(2.5 SECONDS) // Don't remove.
 		if (wizard_mob) wizard_mob.assign_gimmick_skull() // For variety and hunters (Convair880).
 
 	wizard_mob.bioHolder.mobAppearance.customization_first_color = "#FFFFFF"
 	wizard_mob.bioHolder.mobAppearance.customization_second_color = "#FFFFFF"
 	wizard_mob.cust_two_state = "wiz"
-	wizard_mob.set_face_icon_dirty()
+	wizard_mob.update_colorful_parts()
 
 	var/obj/item/SWF_uplink/SB = new /obj/item/SWF_uplink(wizard_mob, in_vr = vr)
 	if (wizard_mob.mind)
@@ -63,16 +63,20 @@
 
 ////////////////////////////////////////////// Helper procs ////////////////////////////////////////////////////
 
-/mob/proc/wizard_spellpower()
+/mob/proc/wizard_spellpower(var/datum/targetable/spell/spell = null)
 	return 0
 
-/mob/living/carbon/human/wizard_spellpower()
+/mob/living/carbon/human/wizard_spellpower(var/datum/targetable/spell/spell = null)
 	var/magcount = 0
 	if (!src) return 0 // ??
 	if (src.bioHolder.HasEffect("arcane_power") == 2)
 		magcount += 10
 	for (var/obj/item/clothing/C in src.contents)
 		if (C.magical) magcount += 1
+	if(istype(spell) && istype(src.gloves, /obj/item/clothing/gloves/ring/wizard))
+		var/obj/item/clothing/gloves/ring/wizard/WR = src.gloves
+		if (WR.ability_path == spell.type)
+			magcount += 10
 	if (istype(src.r_hand, /obj/item/staff))
 		magcount += 2
 	if (istype(src.l_hand, /obj/item/staff))
@@ -80,24 +84,34 @@
 	if (magcount >= 4) return 1
 	else return 0
 
-/mob/living/critter/wizard_spellpower()
+/mob/living/critter/wizard_spellpower(var/datum/targetable/spell/spell = null)
 	var/magcount = 0
 	for (var/obj/item/clothing/C in src.contents)
-		if (C.magical) magcount += 1
+		if (C.magical)
+			magcount += 1
+			if (istype(spell) && istype(C, /obj/item/clothing/gloves/ring/wizard))
+				var/obj/item/clothing/gloves/ring/wizard/WR = C
+				if (WR.ability_path == spell.type)
+					magcount += 10
 	if (src.find_type_in_hand(/obj/item/staff))
 		magcount += 2
 	if (magcount >= 4) return 1
 	else return 0
 
-/mob/proc/wizard_castcheck(var/offensive = 0)
+/mob/proc/wizard_castcheck(var/datum/targetable/spell/spell = null)
 	return 0
 
-/mob/living/carbon/human/wizard_castcheck(var/offensive = 0)
+/mob/living/carbon/human/wizard_castcheck(var/datum/targetable/spell/spell = null)
 	if(src.stat)
 		boutput(src, "You can't cast spells while incapacitated.")
 		return 0
 	if (src.bioHolder.HasEffect("arcane_power") == 2)
 		return 1
+	if(spell && istype(src.gloves, /obj/item/clothing/gloves/ring/wizard))
+		var/obj/item/clothing/gloves/ring/wizard/WR = src.gloves
+		if (WR.ability_path == spell.type)
+			return 1
+
 	if(!istype(src.wear_suit, /obj/item/clothing/suit/wizrobe))
 		boutput(src, "You don't feel strong enough without a magical robe.")
 		return 0
@@ -105,29 +119,33 @@
 		boutput(src, "You don't feel strong enough without a magical hat.")
 		return 0
 	var/area/getarea = get_area(src)
-	if(offensive && getarea.sanctuary)
+	if(spell.offensive && getarea.sanctuary)
 		boutput( src, "You cannot cast offensive spells in a sanctuary." )
 		return 0
 	if(getarea.name == "Chapel" || getarea.name == "Chapel Office")
 		boutput(src, "You cannot cast spells on hallowed ground!")// Maybe if the station were more corrupted...")
 		return 0
-	if (offensive == 1 && src.bioHolder.HasEffect("arcane_shame"))
+	if (spell.offensive == 1 && src.bioHolder.HasEffect("arcane_shame"))
 		boutput(src, "You are too consumed with shame to cast that spell!")
 		return 0
 	return 1
 
-/mob/living/critter/wizard_castcheck(var/offensive = 0)
+/mob/living/critter/wizard_castcheck(var/datum/targetable/spell/spell = null)
 	if(src.stat)
 		boutput(src, "You can't cast spells while incapacitated.")
 		return 0
 //	if(!find_in_equipment(/obj/item/clothing/suit/wizrobe))
 //		boutput(src, "You don't feel strong enough without a magical robe.")
 //		return 0
+	if (istype(spell))
+		for (var/obj/item/clothing/gloves/ring/wizard/WR in src.contents)
+			if (WR.ability_path == spell.type)
+				return 1
 	if(!find_in_equipment(/obj/item/clothing/head/wizard))
 		boutput(src, "You don't feel strong enough without a magical hat.")
 		return 0
 	var/area/getarea = get_area(src)
-	if(offensive && getarea.sanctuary)
+	if(spell?.offensive && getarea.sanctuary)
 		boutput( src, "You cannot cast spells in a sanctuary." )
 		return 0
 	if(getarea.name == "Chapel" || getarea.name == "Chapel Office")
@@ -137,7 +155,7 @@
 
 //////////////////////////////////////////// Ability holder /////////////////////////////////////////
 
-/obj/screen/ability/topBar/spell
+/atom/movable/screen/ability/topBar/spell
 	clicked(params)
 		var/datum/targetable/spell/spell = owner
 		var/datum/abilityHolder/holder = owner.holder
@@ -166,7 +184,7 @@
 			usr.update_cursor()
 			return
 		var/mob/user = spell.holder.owner
-		if (!istype(spell, /datum/targetable/spell/prismatic_spray/admin) && !user.wizard_castcheck(spell.offensive))
+		if (!istype(spell, /datum/targetable/spell/prismatic_spray/admin) && !user.wizard_castcheck(spell))
 			return
 		if (spell.targeted)
 			usr.targeting_ability = owner
@@ -197,13 +215,13 @@
 	proc/calculate_cooldown()
 		var/cool = src.cooldown
 		var/mob/user = src.holder.owner
-		if (user && user.bioHolder)
+		if (user?.bioHolder)
 			switch (user.bioHolder.HasEffect("arcane_power"))
 				if (1)
 					cool /= 2
 				if (2)
 					cool = 1
-		if (src.cooldown_staff && !user.wizard_spellpower())
+		if (src.cooldown_staff && !user.wizard_spellpower(src))
 			cool *= 1.5
 		return cool
 
@@ -235,7 +253,7 @@
 			boutput(holder.owner, "<span class='alert'>You cannot cast this ability while you are dead.</span>")
 			src.holder.locked = 0
 			return 999
-		if (!istype(src, /datum/targetable/spell/prismatic_spray/admin) && !H.owner.wizard_castcheck()) // oh god this is ugly but it's technically not duplicating code so it fixes to problem with the move to ability buttons
+		if (!istype(src, /datum/targetable/spell/prismatic_spray/admin) && !H.owner.wizard_castcheck(src)) // oh god this is ugly but it's technically not duplicating code so it fixes to problem with the move to ability buttons
 			src.holder.locked = 0
 			return 999
 		var/turf/T = get_turf(holder.owner)
@@ -260,7 +278,7 @@
 						return 1
 		if (src.dont_lock_holder != 1)
 			H.locked = 1
-		if (src.cooldown_staff && !holder.owner.wizard_spellpower())
+		if (src.cooldown_staff && !holder.owner.wizard_spellpower(src))
 			boutput(holder.owner, "<span class='alert'>Your spell takes longer to recharge without a staff to focus it!</span>")
 		var/val = cast(target)
 		H.locked = 0
@@ -270,7 +288,7 @@
 		if (!holder || !holder.owner)
 			qdel(src)
 		if (!src.object)
-			src.object = new /obj/screen/ability/topBar/spell()
+			src.object = new /atom/movable/screen/ability/topBar/spell()
 		object.icon = src.icon
 		if (src.last_cast > world.time)
 			object.name = "[src.name] ([round((src.last_cast-world.time)/10)])"
@@ -281,14 +299,17 @@
 		object.owner = src
 
 	castcheck()
-		return !istype(src, /datum/targetable/spell/prismatic_spray/admin) && holder.owner.wizard_castcheck(src.offensive)
+		return holder.owner.wizard_castcheck(src)
 
-	cast()
+	cast(atom/target)
 		if(ishuman(holder.owner))
 			var/mob/living/carbon/human/O = holder.owner
-			if(O && istype(O.wear_suit, /obj/item/clothing/suit/wizrobe/necro) && istype(O.head, /obj/item/clothing/head/wizard/necro))
-				playsound(holder.owner.loc, voice_grim, 50, 0, -1)
-			else if(holder.owner.gender == "female")
-				playsound(holder.owner.loc, voice_fem, 50, 0, -1)
-			else
-				playsound(holder.owner.loc, voice_other, 50, 0, -1)
+			if(src.voice_grim && O && istype(O.wear_suit, /obj/item/clothing/suit/wizrobe/necro) && istype(O.head, /obj/item/clothing/head/wizard/necro))
+				playsound(O.loc, src.voice_grim, 50, 0, -1)
+			else if(src.voice_fem && O.gender == "female")
+				playsound(O.loc, src.voice_fem, 50, 0, -1)
+			else if (src.voice_other)
+				playsound(O.loc, src.voice_other, 50, 0, -1)
+
+		if (offensive)
+			logTheThing("combat", holder.owner, target, "casts [src.name] from [log_loc(holder.owner)], at [target].")

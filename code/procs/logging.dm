@@ -14,10 +14,11 @@ Example out of game log call:
 #define WRITE_LOG(log, text) rustg_log_write(log, text, "true")
 #define WRITE_LOG_NO_FORMAT(log, text) rustg_log_write(log, text, "false")
 
-var/global/roundLog_name = "data/logs/full/[time2text(world.realtime, "YYYY-MM-DD-hh-mm")].html"
-var/global/roundLog = file("data/logs/full/[time2text(world.realtime, "YYYY-MM-DD-hh-mm")].html")
+var/global/roundLog_date = time2text(world.realtime, "YYYY-MM-DD-hh-mm")
+var/global/roundLog_name = "data/logs/full/[roundLog_date].html"
+var/global/roundLog = file(roundLog_name)
 var/global/disable_log_lists = 0
-
+var/global/first_adminhelp_happened = 0
 
 /proc/logTheThing(type, source, target, text, diaryType)
 	var/diaryLogging
@@ -110,6 +111,39 @@ var/global/disable_log_lists = 0
 
 /proc/logDiary(text)
 	WRITE_LOG(diary_name, "[text]")
+
+/**
+ * Appends a tgui-related log entry. All arguments are optional.
+ */
+/proc/log_tgui(user, message, context,
+		datum/tgui_window/window,
+		datum/src_object)
+	var/entry = "\[tgui\] " // |GOONSTATION-CHANGE| (tgui:->\[tgui\])
+	// Insert user info
+	if(!user)
+		entry += "(nobody)" // |GOONSTATION-CHANGE| (<nobody>->(nobody))
+	else if(istype(user, /mob))
+		var/mob/mob = user
+		entry += "[mob.ckey] (as [mob] at [mob.x],[mob.y],[mob.z])"
+	else if(istype(user, /client))
+		var/client/client = user
+		entry += "[client.ckey]"
+	// Insert context
+	if(context)
+		entry += " in [context]"
+	else if(window)
+		entry += " in [window.id]"
+	// Resolve src_object
+	if(!src_object && window?.locked_by)
+		src_object = window.locked_by.src_object
+	// Insert src_object info
+	if(src_object)
+		entry += "<br>Using: [src_object.type] [\ref(src_object)]" // |GOONSTATION-CHANGE| (\n->br, REF->\ref)
+	// Insert message
+	if(message)
+		entry += "<br>[message]" // |GOONSTATION-CHANGE| (\n->br)
+	entry += "<br>" // |GOONSTATION-CHANGE| (br)
+	WRITE_LOG(roundLog_name, entry)
 
 /* Close open log handles. This should be called as late as possible, and no logging should hapen after. */
 /proc/shutdown_logging()
@@ -270,7 +304,7 @@ proc/log_shot(var/obj/projectile/P,var/obj/SHOT, var/target_is_immune = 0)
 		nameRegex = searchString
 		logTheThing("debug", null, null, "Tried to search logs with invalid regex, switching to plain text: [searchString]")
 
-	var/dat = "<table>"
+	var/list/dat = list("<table>")
 
 	logType = replacetext(logType, "_string", "")
 	logType = replacetext(logType, "_log", "")
@@ -284,7 +318,7 @@ proc/log_shot(var/obj/projectile/P,var/obj/SHOT, var/target_is_immune = 0)
 			if(log == "audit") continue
 			var/list/logList = logs[log]
 			prettyLogName = replacetext(log, "_", " ")
-			var/searchData
+			var/list/searchData = list()
 			var/found
 			for (var/l in logList)
 				if (findtext(l, nameRegex, 1, null))
@@ -292,7 +326,7 @@ proc/log_shot(var/obj/projectile/P,var/obj/SHOT, var/target_is_immune = 0)
 					found = 1
 					foundCount++
 			if (found) dat += "<tr><td colspan='3' class='header [log]'>[prettyLogName] logs</td></tr>"
-			dat += searchData
+			dat += searchData.Join()
 	else
 		var/list/logList = logs[logType]
 		dat += "<tr><td colspan='3' class='header [logType]'>[prettyLogName] logs</td></tr>"
@@ -312,9 +346,9 @@ proc/log_shot(var/obj/projectile/P,var/obj/SHOT, var/target_is_immune = 0)
 					foundCount++
 		dat += "</table>"
 
-	dat = "<tr><td colspan='3' class='header text-normal [logType]'><b>Logs</b>[searchString ? " (Searched for '[searchString]')" : ""]. Found <b>[foundCount]</b> results.</td></tr>" + dat
-	dat = replacetext(dat, "%admin_ref%", "\ref[requesting_admin]")
+	var/str_dat = "<tr><td colspan='3' class='header text-normal [logType]'><b>Logs</b>[searchString ? " (Searched for '[searchString]')" : ""]. Found <b>[foundCount]</b> results.</td></tr>" + dat.Join()
+	str_dat = replacetext(str_dat, "%admin_ref%", "\ref[requesting_admin]")
 	var/adminLogHtml = grabResource("html/admin/admin_log.html")
-	adminLogHtml = replacetext(adminLogHtml, "<!-- TABLE GOES HERE -->", "[dat]")
+	adminLogHtml = replacetext(adminLogHtml, "<!-- TABLE GOES HERE -->", str_dat)
 
 	return adminLogHtml

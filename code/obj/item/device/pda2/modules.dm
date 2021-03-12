@@ -28,7 +28,7 @@
 		if(!src.host || src.loc != src.host)
 			return 1
 
-		if ((!usr.contents.Find(src.host) && (!in_range(src.host, usr) || !istype(src.host.loc, /turf))) && (!issilicon(usr)))
+		if ((!usr.contents.Find(src.host) && (!in_interact_range(src.host, usr) || !istype(src.host.loc, /turf))) && (!issilicon(usr)))
 			return 1
 
 		if(usr.stat || usr.restrained())
@@ -132,11 +132,6 @@
 					else if (on)
 						user.remove_sm_light("pda\ref[src]")
 						src.host.add_sm_light("pda\ref[src]", list(255,255,255,lumlevel * 255), use_medium_light)
-				else
-					if (!use_simple_light && !use_medium_light)
-						light.detach()
-					else if (on)
-						user.remove_sm_light("pda\ref[src]")
 
 
 	return_menu_badge()
@@ -249,8 +244,7 @@
 
 	proc/toggle_scan()
 		src.on = !src.on
-		if (src.on && !(src in processing_items))
-			processing_items.Add(src)
+		if(src.on) processing_items |= src
 		for (var/obj/ability_button/pda_tray_toggle/B in src.ability_buttons)
 			B.icon_state = "pda[src.on]"
 		if (src.host)
@@ -267,7 +261,6 @@
 			return
 		var/loc_to_check = src.host.loc
 
-		src = null
 		for(var/turf/T in range(1, loc_to_check) )
 
 			if(!T.intact)
@@ -290,7 +283,7 @@
 								O.alpha = 255
 
 			var/mob/living/M = locate() in T
-			if(M && M.invisibility == 2)
+			if(M?.invisibility == 2)
 				M.invisibility = 0
 				SPAWN_DBG(0.2 SECONDS)
 					if(M)
@@ -304,3 +297,50 @@
 		var/obj/item/device/pda_module/tray/J = the_item
 		if (J.host)
 			J.toggle_scan()
+
+/obj/item/device/pda_module/alert
+	name = "security alert module"
+	desc = "A PDA module that lets you quickly send PDA alerts to the security department."
+	icon_state = "pdamod_alert"
+	setup_use_menu_badge = 1
+	abilities = list(/obj/ability_button/pda_security_alert)
+	var/list/mailgroups = list(MGD_SECURITY)
+
+	return_menu_badge()
+		var/text = "<a href='byond://?src=\ref[src];toggle=1'>Send Alert</a>"
+		return text
+
+	Topic(href, href_list)
+		if(..())
+			return
+		if(href_list["toggle"])
+			src.send_alert()
+		return
+
+	proc/send_alert()
+		if (!src.host)
+			boutput(usr, "<span class='alert'>No PDA detected.")
+			return
+		if (PROC_ON_COOLDOWN(5 MINUTES))
+			boutput(usr, "<span class='alert'>[src] is still on cooldown mode!</span>")
+			return
+		var/datum/signal/signal = get_free_signal()
+		signal.source = src.host
+		signal.transmission_method = TRANSMISSION_RADIO
+		signal.data["address_1"] = "00000000"
+		signal.data["command"] = "text_message"
+		signal.data["sender_name"] = src.host.owner
+		signal.data["group"] = mailgroups + MGA_CRISIS
+		var/area/A = get_area(src.host)
+		signal.data["message"]  = "<b><span class='alert'>***SECURITY BACKUP REQUESTED*** Location: [A ? A.name : "nowhere"]!"
+		src.host.post_signal(signal)
+		boutput(usr, "<span class='notice'>Alert sent.</span>")
+
+/obj/ability_button/pda_security_alert
+	name = "Send Security Alert"
+	icon_state = "alert"
+
+	execute_ability()
+		var/obj/item/device/pda_module/alert/J = the_item
+		if (J.host)
+			J.send_alert()

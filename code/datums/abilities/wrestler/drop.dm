@@ -88,7 +88,7 @@
 				boutput(M, __red("You can't drop onto [target] from here!"))
 				return 0
 
-			SPAWN_DBG (0)
+			SPAWN_DBG(0)
 				if (M)
 					animate(M, transform = matrix(90, MATRIX_ROTATE), time = 1, loop = 0)
 				sleep (10)

@@ -23,14 +23,13 @@
 		updateicon()
 
 /obj/machinery/power/generator_type2/proc/updateicon()
-
 	if(status & (NOPOWER|BROKEN))
-		overlays = null
+		src.UpdateOverlays(null, "power-screen")
 	else
-		overlays = null
-
 		if(lastgenlev != 0)
-			overlays += image('icons/obj/power.dmi', "teg-op[lastgenlev]")
+			src.UpdateOverlays(image('icons/obj/power.dmi', "teg-op[lastgenlev]"), "power-screen")
+		else
+			src.UpdateOverlays(null, "power-screen")
 
 #define GENRATE 800		// generator output coefficient from Q
 
@@ -71,11 +70,9 @@
 			// uncomment to debug
 			// logTheThing("debug", null, null, "POWER: [lastgen] W generated at [efficiency*100]% efficiency and sinks sizes [cold_air_heat_capacity], [hot_air_heat_capacity]")
 
-			if(input1.network)
-				input1.network.update = 1
+			input1.network?.update = 1
 
-			if(input2.network)
-				input2.network.update = 1
+			input2.network?.update = 1
 
 			add_avail(lastgen)
 	// update icon overlays only if displayed level has changed

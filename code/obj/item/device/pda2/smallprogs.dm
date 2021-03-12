@@ -108,7 +108,7 @@
 					post_status("alert", href_list["alert"])
 
 				if("setmsg1")
-					if (!src.master || !in_range(src.master, usr) && src.master.loc != usr)
+					if (!src.master?.is_user_in_interact_range(usr))
 						return
 
 					if(!(src.holder in src.master))
@@ -119,7 +119,7 @@
 					src.master.updateSelfDialog()
 
 				if("setmsg2")
-					if (!src.master || !in_range(src.master, usr) && src.master.loc != usr)
+					if (!src.master?.is_user_in_interact_range(usr))
 						return
 
 					if(!(src.holder in src.master))
@@ -317,8 +317,7 @@ Code:
 			dat += "<h4>Located Mops:</h4>"
 
 			var/ldat
-			for (var/X in by_type[/obj/item/mop])
-				var/obj/item/mop/M = X
+			for_by_tcl(M, /obj/item/mop)
 				var/turf/ml = get_turf(M)
 
 				if(!ml || !istype(ml))
@@ -337,8 +336,7 @@ Code:
 			dat += "<h4>Located Mop Buckets:</h4>"
 
 			ldat = null
-			for (var/X in by_type[/obj/mopbucket])
-				var/obj/mopbucket/B = X
+			for_by_tcl(B, /obj/mopbucket)
 				var/turf/bl = get_turf(B)
 
 				if(!bl || !istype(bl))
@@ -515,53 +513,85 @@ Code:
 	var/obj/machinery/atmospherics/binary/circulatorTemp/right/circ2
 	var/obj/machinery/power/pt_laser/laser
 	var/obj/machinery/power/generatorTemp/generator
+	var/obj/machinery/carouselpower/carousel
+
+	proc/find_machinery(obj/ref, type)
+		if(!ref || ref.disposed)
+			ref = locate(type) in machine_registry[MACHINES_POWER]
+			if(ref?.z != 1) ref = null
+		. = ref
 
 	return_text()
 		if(..())
 			return
-		if (!laser)
-			laser = locate() in machine_registry[MACHINES_POWER]
-		if (!generator)
-			generator = locate() in machine_registry[MACHINES_POWER]
-		if (!generator || !circ1)
+
+		var/engine_found = FALSE
+
+		//TEG
+		generator = find_machinery(generator, /obj/machinery/power/generatorTemp)
+		if (generator && (!circ1 || circ1.disposed))
 			circ1 = generator.circ1
-		if (!generator || !circ2)
+		if (generator && (!circ2 || circ2.disposed ))
 			circ2 = generator.circ2
 
+		//PTL
+		laser = find_machinery(laser, /obj/machinery/power/pt_laser)
 
-		var/stuff = src.return_text_header()
+		. = src.return_text_header()
 
 		if (generator)
-			stuff += "<BR><B>Thermo-Electric Generator Status</B><BR>"
-			stuff += "Output : [engineering_notation(generator.lastgen)]W<BR>"
-			stuff += "<BR>"
+			engine_found = TRUE
+			. += "<BR><h4>Thermo-Electric Generator Status</h4>"
+			. += "Output : [engineering_notation(generator.lastgen)]W<BR>"
+			. += "<BR>"
 
-			stuff += "<B>Hot Loop</B><BR>"
-			stuff += "Temperature Inlet: [round(circ1.air1.temperature, 0.1)] K  Outlet: [round(circ1.air2.temperature, 0.1)] K<BR>"
-			stuff += "Pressure Inlet: [round(MIXTURE_PRESSURE(circ1.air1), 0.1)] kPa  Outlet: [round(MIXTURE_PRESSURE(circ1.air2), 0.1)] kPa<BR>"
-			stuff += "<BR>"
+			if(circ1)
+				. += "<B>Hot Loop</B><BR>"
+				. += "Temperature Inlet: [round(circ1.air1?.temperature, 0.1)] K  Outlet: [round(circ1.air2?.temperature, 0.1)] K<BR>"
+				. += "Pressure Inlet: [round(MIXTURE_PRESSURE(circ1?.air1), 0.1)] kPa  Outlet: [round(MIXTURE_PRESSURE(circ1?.air2), 0.1)] kPa<BR>"
+				. += "<BR>"
 
-			stuff += "<B>Cold Loop</B><BR>"
-			stuff += "Temperature Inlet: [round(circ2.air1.temperature, 0.1)] K  Outlet: [round(circ2.air2.temperature, 0.1)] K<BR>"
-			stuff += "Pressure Inlet: [round(MIXTURE_PRESSURE(circ2.air1), 0.1)] kPa  Outlet: [round(MIXTURE_PRESSURE(circ2.air2), 0.1)] kPa<BR>"
-			stuff += "<BR>"
+			if(circ2)
+				. += "<B>Cold Loop</B><BR>"
+				. += "Temperature Inlet: [round(circ2.air1?.temperature, 0.1)] K  Outlet: [round(circ2.air2?.temperature, 0.1)] K<BR>"
+				. += "Pressure Inlet: [round(MIXTURE_PRESSURE(circ2?.air1), 0.1)] kPa  Outlet: [round(MIXTURE_PRESSURE(circ2?.air2), 0.1)] kPa<BR>"
+				. += "<BR>"
+
+		if(length(by_type[/obj/machinery/power/collector_control]))
+			var/controler_index = 1
+			var/collector_index = 1
+			for_by_tcl(C, /obj/machinery/power/collector_control)
+				collector_index = 1
+				if(C?.active && C.z == 1)
+					engine_found = TRUE
+					. += "<BR><h4>Radiation Collector [controler_index++] Status</h4>"
+					. += "Output: [engineering_notation(C.lastpower)]W<BR>"
+					if(C.CA1?.active) . += "Collector [collector_index++]: Tank Pressure: [C.P1 ? round(MIXTURE_PRESSURE(C.P1.air_contents), 0.1) : "ERR"] kPa<BR>"
+					if(C.CA2?.active) . += "Collector [collector_index++]: Tank Pressure: [C.P2 ? round(MIXTURE_PRESSURE(C.P2.air_contents), 0.1) : "ERR"] kPa<BR>"
+					if(C.CA3?.active) . += "Collector [collector_index++]: Tank Pressure: [C.P3 ? round(MIXTURE_PRESSURE(C.P3.air_contents), 0.1) : "ERR"] kPa<BR>"
+					if(C.CA4?.active) . += "Collector [collector_index++]: Tank Pressure: [C.P4 ? round(MIXTURE_PRESSURE(C.P4.air_contents), 0.1) : "ERR"] kPa<BR>"
+					. += "<BR>"
+
+		if(length(by_type[/obj/machinery/power/vent_capture]))
+			. += "<BR><h4>Vent Capture Unit Status</h4>"
+			for_by_tcl(V, /obj/machinery/power/vent_capture)
+				if(V.z == 1 && (locate(/obj/machinery/power/monitor/smes) in V.powernet?.nodes) )
+					engine_found = TRUE
+					. += "Output : [engineering_notation(V.last_gen)]W<BR>"
+			. += "<BR>"
+
+		if(!engine_found)
+			. += "<BR><B>Error!</B> No power source detected!<BR><BR>"
+
+		. += "<HR>"
+		if(laser)
+			. += "<BR><B>Power Transmition Laser Status</B><BR>"
+			. += "Currently Active: [laser.firing ? "Yes" : "No"]<BR>"
+			. += "Power Stored: [engineering_notation(laser.charge)]J ([round(100.0*laser.charge/laser.capacity, 0.1)]%)<BR>"
+			. += "Power Input: [engineering_notation(laser.chargelevel)]W<BR>"
+			. += "Power Output: [engineering_notation(laser.output)]W<BR>"
 		else
-			stuff += "Error! No engine detected!<BR><BR>"
-		if (laser)
-			stuff += "<B>Power Transmition Laser Status</B><BR>"
-			stuff += "Currently Active: "
-
-			if(laser.firing)
-				stuff += "Yes<BR>"
-			else
-				stuff += "No<BR>"
-
-			stuff += "Power Stored: [engineering_notation(laser.charge)]J ([round(100.0*laser.charge/laser.capacity, 0.1)]%)<BR>"
-			stuff += "Power Input: [engineering_notation(laser.chargelevel)]W<BR>"
-			stuff += "Power Output: [engineering_notation(laser.output)]W<BR>"
-		else
-			stuff += "Error! No PTL detected!"
-		return stuff
+			. += "<B>Error!</B> No PTL detected!"
 
 //Hydroponics plant monitor.
 /datum/computer/file/pda_program/hydro_monitor
@@ -693,7 +723,7 @@ Code:
 			if (-INFINITY to 1)
 				mailgroup = MGD_MEDBAY
 			if (2)
-				mailgroup = "engineer"
+				mailgroup = MGO_ENGINEER
 			if (3 to INFINITY)
 				mailgroup = MGD_SECURITY
 
@@ -703,7 +733,7 @@ Code:
 		signal.data["address_1"] = "00000000"
 		signal.data["command"] = "text_message"
 		signal.data["sender_name"] = src.master.owner
-		signal.data["group"] = mailgroup
+		signal.data["group"] = list(mailgroup, MGA_CRISIS)
 		var/area/an_area = get_area(src.master)
 
 		if (isAIeye(usr))
@@ -743,6 +773,7 @@ Code:
 	size = 8
 	var/tmp/charges = 0 //Don't let jerks copy the program to have extra charges.
 	var/list/pdas = list()
+	dont_copy = 1 // srsly dont let jerks whatsit the whatever
 
 	return_text()
 		if(..())
@@ -860,8 +891,7 @@ Using electronic "Detomatix" BOMB program is perhaps less simple!<br>
 					// this is also bad
 					var/list/people_with_tickets = list()
 					for (var/datum/ticket/T in data_core.tickets)
-						if(!(T.target in people_with_tickets))
-							people_with_tickets += T.target
+						people_with_tickets |= T.target
 
 					for(var/N in people_with_tickets)
 						dat += "<b>[N]</b><br><br>"
@@ -942,7 +972,7 @@ Using electronic "Detomatix" BOMB program is perhaps less simple!<br>
 			T.issuer_job = PDAownerjob
 			T.text = ticket_text
 			T.target_byond_key = get_byond_key(T.target)
-			T.issuer_byond_key = get_byond_key(T.issuer)
+			T.issuer_byond_key = usr.key
 			data_core.tickets += T
 
 			playsound(get_turf(src.master), "sound/machines/printer_thermal.ogg", 50, 1)
@@ -996,7 +1026,7 @@ Using electronic "Detomatix" BOMB program is perhaps less simple!<br>
 			F.issuer = PDAowner
 			F.issuer_job = PDAownerjob
 			F.target_byond_key = get_byond_key(F.target)
-			F.issuer_byond_key = get_byond_key(F.issuer)
+			F.issuer_byond_key = usr.key
 			data_core.fines += F
 
 			if(PDAownerjob in list("Head of Security","Head of Personnel","Captain"))
@@ -1091,7 +1121,7 @@ Using electronic "Detomatix" BOMB program is perhaps less simple!<br>
 		if (href_list["order"])
 			src.temp = {"<B>Shipping Budget:</B> [wagesystem.shipping_budget] Credits<BR><HR>
 			<B>Please select the Supply Package you would like to request:</B><BR><BR>"}
-			for(var/S in childrentypesof(/datum/supply_packs) )
+			for(var/S in concrete_typesof(/datum/supply_packs) )
 				var/datum/supply_packs/N = new S()
 				if(N.hidden || N.syndicate) continue
 				// Have to send the type instead of a reference to the obj because it would get caught by the garbage collector. oh well.
@@ -1124,7 +1154,7 @@ Using electronic "Detomatix" BOMB program is perhaps less simple!<br>
 				antispam = ticker.round_elapsed_ticks + SPAM_DELAY
 				var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency("1149")
 				var/datum/signal/pdaSignal = get_free_signal()
-				pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=MGD_CARGO, "sender"="00000000", "message"="Notification: [O.object] requested by [O.orderedby] at [O.console_location].")
+				pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=list(MGD_CARGO, MGA_CARGOREQUEST), "sender"="00000000", "message"="Notification: [O.object] requested by [O.orderedby] at [O.console_location].")
 				pdaSignal.transmission_method = TRANSMISSION_RADIO
 				if(transmit_connection != null)
 					transmit_connection.post_signal(src, pdaSignal)

@@ -47,9 +47,9 @@
 					move_dir = 0
 
 			if (move_dir)
-				master.dir = move_dir
+				master.set_dir(move_dir)
 				master.facing = move_dir
-				user.attempt_move()
+				attempt_move(user)
 
 	process_move(mob/owner, keys)
 		// stub
@@ -82,7 +82,7 @@
 						next_move = world.time + delay
 					master.flying = master.dir
 			else
-				master.dir = move_dir
+				master.set_dir(move_dir)
 		return delay
 
 	hotkey(mob/user, name)

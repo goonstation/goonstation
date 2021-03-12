@@ -566,7 +566,7 @@
 				src.temp = "Illegal move."
 				src.master.updateSelfDialog()
 				return
-			if(lentext(attempt) != lentext(src.solution))
+			if(length(attempt) != length(src.solution))
 				src.temp = "Illegal move."
 				src.master.updateSelfDialog()
 				return
@@ -580,25 +580,20 @@
 				else
 					src.attempts--
 
-					var/length = lentext(src.solution)
+					var/length = length(src.solution)
 
 					var/list/lockcode_list = list()
 					for(var/i=0,i < length,i++)
-						//lockcode_list += "[copytext(bp.lockcode,i+1,i+2)]"
 						lockcode_list["[copytext(src.solution,i+1,i+2)]"]++
 
 					var/correct_full = 0
 					var/correct_char = 0
 					var/current
-					var/seek = 0
 					for(var/i=0,i < length,i++)
 						current = copytext(attempt,i+1,i+2)
 						if (current == copytext(src.solution,i+1,i+2))
 							correct_full++
-							//correct_char++
-							//continue
-						seek = lockcode_list.Find(current)
-						if (seek)
+						if (current in lockcode_list)
 							correct_char++
 							lockcode_list[current]--
 							if (lockcode_list[current] <= 0)

@@ -24,6 +24,17 @@
 	icon_state = "id"
 	spawn_contents = list(/obj/item/f_card = 7)
 */
+/obj/item/storage/box/morphineinjectors
+	name = "morphine autoinjector box"
+	icon_state = "box"
+	desc = "Contains four morphine autoinjectors, for security use"
+	spawn_contents = list(/obj/item/reagent_containers/emergency_injector/morphine = 4)
+
+/obj/item/storage/box/robustdonuts
+	name = "robust donuts box"
+	icon_state = "box"
+	desc = "Contains two robust donuts, for security use"
+	spawn_contents = list(/obj/item/reagent_containers/food/snacks/donut/custom/robust = 2)
 
 // For sec officers and the HoS. Really love spawning with a full backpack (Convair880).
 /obj/item/storage/box/security_starter_kit
@@ -205,27 +216,37 @@
 	icon_state = "flashbang"
 	spawn_contents = list(/obj/item/old_grenade/banana/wasp = 5)
 
+/obj/item/storage/box/crowdgrenades
+	name = "crowd dispersal grenades"
+	desc = "A box of crowd dispersal grenades"
+	icon_state = "flashbang"
+	spawn_contents = list(/obj/item/chem_grenade/pepper = 4)
+
 /* -------------------- Traitor Gear -------------------- */
 
 /obj/item/storage/bowling
 	name = "bowling bag"
 	icon_state = "bowling_bag"
 	item_state = "bowling"
-	max_wclass = 3 // The bowling ball won't fit into the bowling bag!
+	in_list_or_max = TRUE
+	can_hold = list(/obj/item/clothing/under/gimmick/bowling,\
+		/obj/item/bowling_ball)
 	spawn_contents = list(/obj/item/clothing/under/gimmick/bowling,\
-	/obj/item/bowling_ball = 4)
+		/obj/item/bowling_ball = 4)
 
 	New()
 		..()
-		BLOCK_BOOK
+		BLOCK_SETUP(BLOCK_BOOK)
 
 /obj/item/storage/football
 	name = "space-american football kit"
 	desc = "This kit contains everything you need to become a great football player. Wearing all of the equipment inside will grant you the ability to rush down and tackle anyone who stands in your way!"
 	icon_state = "box"
-	max_wclass = 3
+	in_list_or_max = TRUE
+	can_hold = list(/obj/item/clothing/suit/armor/football,/obj/item/clothing/head/helmet/football,\
+		/obj/item/clothing/under/football,/obj/item/clothing/shoes/cleats, /obj/item/football)
 	spawn_contents = list(/obj/item/clothing/suit/armor/football,/obj/item/clothing/head/helmet/football,\
-	/obj/item/clothing/under/football,/obj/item/clothing/shoes/cleats, /obj/item/football = 2)
+		/obj/item/clothing/under/football,/obj/item/clothing/shoes/cleats, /obj/item/football = 2)
 
 	New()
 		if (prob(50))
@@ -308,7 +329,7 @@
 	New()
 		..()
 		var/gender = prob(50) ? 0 : 1
-		var/name = gender ? pick(first_names_female) : pick(first_names_male)
+		var/name = gender ? pick_string_autokey("names/first_female.txt") : pick_string_autokey("names/first_male.txt")
 
 		src.info = {"<TT>Hey, you.<BR>
 		Look, we got this thing cheap from some Russkie. So let me write this down for you clearly:<BR><B><font color=red size=4>IT. AIN'T. SAFE.</font></B><BR>
@@ -316,7 +337,7 @@
 		[name] tested this fucking gun and it blew [gender ? "her" : "his"] goddamn brains out. I dunno why we're even sending this shit to you.<BR>
 		<B>Don't use it. Fuck.</B><BR>
 		<BR>
-		<I>/[prob(50)? pick(first_names_male):pick(first_names_female)]</I>
+		<I>/[prob(50)? pick_string_autokey("names/first_male.txt"):pick_string_autokey("names/first_female.txt")]</I>
 		"}
 
 /obj/item/storage/box/costume/safari
@@ -325,6 +346,12 @@
 	/obj/item/clothing/under/gimmick/safari,\
 	/obj/item/boomerang,\
 	/obj/item/ammo/bullets/tranq_darts/syndicate = 4)
+
+/obj/item/storage/box/poison
+	name = "ordinary box"
+	desc = "Just a regular ordinary box. It smells like almonds a little bit. Probably some chef kept their cooking supplies there."
+	icon_state = "box"
+	spawn_contents = list(/obj/item/reagent_containers/glass/bottle/poison = 7)
 
 // Starter kit used in the conspiracy/spy game mode.
 /obj/item/storage/box/spykit

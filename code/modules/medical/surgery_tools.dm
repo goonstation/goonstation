@@ -41,6 +41,7 @@ CONTAINS:
 	stamina_crit_chance = 35
 	var/mob/Poisoner = null
 	module_research = list("tools" = 3, "medicine" = 3, "weapons" = 0.25)
+	move_triggered = 1
 
 	New()
 		..()
@@ -49,7 +50,7 @@ CONTAINS:
 		src.create_reagents(5)
 		AddComponent(/datum/component/transfer_on_attack)
 		setProperty("piercing", 80)
-		BLOCK_KNIFE
+		BLOCK_SETUP(BLOCK_KNIFE)
 
 
 	attack(mob/living/carbon/M as mob, mob/user as mob)
@@ -63,6 +64,10 @@ CONTAINS:
 			if (src.reagents && src.reagents.total_volume)//ugly but this is the sanest way I can see to make the surgical use 'ignore' armor
 				src.reagents.trans_to(M,5)
 			return
+
+	move_trigger(var/mob/M, kindof)
+		if (..() && reagents)
+			reagents.move_trigger(M, kindof)
 
 	custom_suicide = 1
 	suicide(var/mob/user as mob)
@@ -108,6 +113,7 @@ CONTAINS:
 	stamina_crit_chance = 35
 	var/mob/Poisoner = null
 	module_research = list("tools" = 3, "medicine" = 3, "weapons" = 0.25)
+	move_triggered = 1
 
 	New()
 		..()
@@ -116,7 +122,7 @@ CONTAINS:
 			icon_state = pick("saw1", "saw2", "saw3")
 		src.create_reagents(5)
 		AddComponent(/datum/component/transfer_on_attack)
-		BLOCK_LARGE
+		BLOCK_SETUP(BLOCK_LARGE)
 
 	attack(mob/living/carbon/M as mob, mob/user as mob)
 		if (src.reagents && src.reagents.total_volume)
@@ -141,6 +147,10 @@ CONTAINS:
 			if (user && !isdead(user))
 				user.suiciding = 0
 		return 1
+
+	move_trigger(var/mob/M, kindof)
+		if (..() && reagents)
+			reagents.move_trigger(M, kindof)
 
 /obj/item/circular_saw/vr
 	icon = 'icons/effects/VR.dmi'
@@ -172,6 +182,7 @@ CONTAINS:
 	stamina_crit_chance = 35
 	var/mob/Poisoner = null
 	module_research = list("tools" = 3, "medicine" = 3, "weapons" = 0.25)
+	move_triggered = 1
 
 	New()
 		..()
@@ -205,6 +216,10 @@ CONTAINS:
 			if (user && !isdead(user))
 				user.suiciding = 0
 		return 1
+
+	move_trigger(var/mob/M, kindof)
+		if (..() && reagents)
+			reagents.move_trigger(M, kindof)
 
 /* ==================================================== */
 /* -------------------- Staple Gun -------------------- */
@@ -302,9 +317,7 @@ CONTAINS:
 
 	attackby(obj/item/W, mob/user)
 		..()
-		#if ASS_JAM
-			//DISABLE ZIPGUN DURING ASSJAM
-		#else
+
 		if (istype(W,/obj/item/pipebomb/frame))
 			var/obj/item/pipebomb/frame/F = W
 			if (F.state < 2)
@@ -322,7 +335,7 @@ CONTAINS:
 			else
 				user.show_text("You can't seem to combine these two items this way.")
 		return
-		#endif
+
 
 // a mostly decorative thing from z2 areas I want to add to office closets
 /obj/item/staple_gun/red
@@ -350,6 +363,7 @@ CONTAINS:
 	var/charge_time = 100
 	var/emagged = 0
 	var/makeshift = 0
+	var/talk2me = 1
 	var/obj/item/cell/cell = null
 	mats = 10
 
@@ -393,6 +407,10 @@ CONTAINS:
 				set_icon_state("[src.icon_base]-on")
 				playsound(user.loc, "sound/weapons/flash.ogg", 75, 1, pitch = 0.88)
 
+	attack_self(mob/user as mob)
+		user.show_text("You [talk2me ? "disable" : "enable"] the [src]'s verbal alert system.")
+		src.talk2me = !src.talk2me
+
 	proc/do_the_shocky_thing(mob/user as mob)
 		if (src.charged == 0)
 			user.show_text("[src] is still charging!", "red")
@@ -407,6 +425,10 @@ CONTAINS:
 			set_icon_state("[src.icon_base]-on")
 			playsound(src.loc, "sound/weapons/flash.ogg", 75, 1, pitch = 0.88)
 		return 1
+
+	proc/speak(var/message)	// lifted entirely from bot_parent.dm
+		if (src.talk2me)
+			src.audible_message("<span class='game say'><span class='name'>[src]</span> beeps, \"[message]\"")
 
 	disposing()
 		..()
@@ -465,14 +487,24 @@ CONTAINS:
 		if (patient.bioHolder.HasEffect("resist_electric"))
 			patient.visible_message("<span class='alert'><b>[patient]</b> doesn't respond at all!</span>",\
 			"<span class='notice'>You resist the shock!</span>")
+			speak("ERROR: Unable to complete circuit for shock delivery!")
 			return 1
 
 		else if (isdead(patient))
 			patient.visible_message("<span class='alert'><b>[patient]</b> doesn't respond at all!</span>")
+			speak("ERROR: Patient is deceased.")
 			return 1
 
 		else
-			patient.Virus_ShockCure(100)
+
+			if ((patient.hasStatus("defibbed") && prob(90)) || prob(75)) // it was a 100% chance before... probably
+				patient.cure_disease_by_path(/datum/ailment/malady/flatline)
+			if (!patient.find_ailment_by_type(/datum/ailment/malady/flatline))
+				speak("Normal cardiac rhythm restored.")
+			else
+				speak("Lethal dysrhythmia detected. Patient is still in cardiac arrest!")
+			patient.Virus_ShockCure(35)	// so it doesnt have a 100% chance to cure roboTF
+			patient.setStatus("defibbed", user == patient ? 6 SECONDS : 12 SECONDS)
 
 			if (ishuman(patient)) //remove later when we give nonhumans pathogen / organ response?
 				var/mob/living/carbon/human/H = patient
@@ -486,11 +518,17 @@ CONTAINS:
 				else if (patient.health < 0)
 					if (sumdamage >= 90)
 						user.show_text("<b>[patient]</b> looks horribly injured. Resuscitation alone may not help revive them.", "red")
+						speak("Patient has life-threatening injuries. Patient is unlikely to survive unless these wounds are treated.")
 					if (prob(66))
 						patient.visible_message("<span class='notice'><b>[patient]</b> inhales deeply!</span>")
 						patient.take_oxygen_deprivation(-50)
 						if (H.organHolder && H.organHolder.heart)
 							H.get_organ("heart").heal_damage(10,10,10)
+					else if (patient.hasStatus("defibbed")) // Always gonna get *something* if you keep shocking them
+						patient.visible_message("<span class='notice'><b>[patient]</b> inhales sharply!</span>")
+						patient.take_oxygen_deprivation(-10)
+						if (H.organHolder && H.organHolder.heart)
+							H.get_organ("heart").heal_damage(3,3,3)
 					else
 						patient.visible_message("<span class='alert'><b>[patient]</b> doesn't respond!</span>")
 
@@ -498,29 +536,22 @@ CONTAINS:
 				var/adjust = cell.charge
 				if (adjust <= 0) // bwuh??
 					adjust = 1000 // fu
-				patient.changeStatus("paralysis", min(0.001 * adjust, 10) * 10)
-				patient.changeStatus("stunned", min(0.002 * adjust, 10) * 10)
-				patient.changeStatus("weakened", min(0.002 * adjust, 10) * 10)
+				patient.changeStatus("paralysis", min(0.002 * adjust, 10) * 10)
 				patient.stuttering += min(0.005 * adjust, 25)
 				//DEBUG_MESSAGE("[src]'s defibrillate(): adjust = [adjust], paralysis + [min(0.001 * adjust, 5)], stunned + [min(0.002 * adjust, 10)], weakened + [min(0.002 * adjust, 10)], stuttering + [min(0.005 * adjust, 25)]")
 
 			else if (faulty)
-				patient.changeStatus("paralysis", 1 SECOND)
-				patient.changeStatus("stunned", 2 SECONDS)
-				patient.changeStatus("weakened", 2 SECONDS)
+				patient.changeStatus("paralysis", 1.5 SECONDS)
 				patient.stuttering += 5
 			else
 #ifdef USE_STAMINA_DISORIENT
 				if (emagged)
 					patient.do_disorient(130, weakened = 50, stunned = 50, paralysis = 40, disorient = 60, remove_stamina_below_zero = 0)
 				else
-					patient.changeStatus("paralysis", 40)
-					patient.changeStatus("stunned", 50)
-					patient.changeStatus("weakened", 5 SECONDS)
+					patient.changeStatus("paralysis", 50)
 #else
-				patient.changeStatus("paralysis", 40)
-				patient.changeStatus("stunned", 50)
-				patient.changeStatus("weakened", 5 SECONDS)
+				patient.changeStatus("paralysis", 50)
+
 #endif
 				patient.stuttering += 10
 
@@ -631,6 +662,7 @@ CONTAINS:
 		..()
 
 	attack_hand(mob/living/user as mob)
+		if (isAI(user) || isintangible(user) || isobserver(user)) return
 		user.lastattacked = src
 		..()
 		if (!defib)
@@ -658,7 +690,7 @@ CONTAINS:
 	proc/put_back_defib(var/mob/living/M)
 		if (src.defib)
 			M.drop_item(defib)
-			src.defib.loc = src
+			src.defib.set_loc(src)
 			src.defib.parent = null
 		if (islist(M.move_laying))
 			M.move_laying -= src.defib
@@ -956,7 +988,7 @@ CONTAINS:
 		if (ishuman(M))
 			var/mob/living/carbon/human/H = M
 			if (H.blood_volume < 500)
-				H.tri_message("<span class='notice'><b>[user]</b> attaches [src]'s needle to [H == user ? </span>"[H.gender == "male" ? "his" : "her"]" : "[H]'s"] arm and begins transferring blood.",\
+				H.tri_message("<span class='notice'><b>[user]</b> attaches [src]'s needle to [H == user ? </span>"[his_or_her(H)]" : "[H]'s"] arm and begins transferring blood.",\
 				user, "<span class='notice'>You attach [src]'s needle to [H == user ? </span>"your" : "[H]'s"] arm and begin transferring blood.",\
 				H, "<span class='notice'>[H == user ? </span>"You attach" : "<b>[user]</b> attaches"] [src]'s needle to your arm and begin transferring blood.")
 				src.in_use = 1
@@ -1092,6 +1124,8 @@ CONTAINS:
 			user.visible_message("<b>[user]</b> unfolds [src].",\
 			"You unfold [src].")
 			user.drop_item()
+			pixel_x = 0
+			pixel_y = 0
 			src.update_icon()
 		else
 			return
@@ -1118,9 +1152,17 @@ CONTAINS:
 		src.open()
 		src.visible_message("<span class='alert'><b>[user]</b> unzips themselves from [src]!</span>")
 
-	MouseDrop(mob/user as mob)
+	MouseDrop(atom/over_object)
+		if (!over_object) return
+		if(isturf(over_object))
+			..() //Lets it do the turf-to-turf slide
+			return
+		else if (istype(over_object, /atom/movable/screen/hud))
+			over_object = usr //Try to fold & pick up the bag with your mob instead
+		else if (!(over_object == usr))
+			return
 		..()
-		if (!(src.contents && src.contents.len) && (usr == user && !usr.restrained() && !usr.stat && in_range(src, usr) && !issilicon(usr)))
+		if (!length(src.contents) && usr.can_use_hands() && isalive(usr) && IN_RANGE(src, usr, 1) && !issilicon(usr))
 			if (src.icon_state != "bodybag")
 				usr.visible_message("<b>[usr]</b> folds up [src].",\
 				"You fold up [src].")
@@ -1220,7 +1262,7 @@ CONTAINS:
 	// todo: give people's limbs the ol' tappa tappa
 	// also make sure intent, force and armor matter
 	if (!def_zone)
-		def_zone = (user && user.zone_sel && user.zone_sel.selecting) ? user.zone_sel.selecting : "chest" // may as well default to head idk
+		def_zone = (user?.zone_sel?.selecting) ? user.zone_sel.selecting : "chest" // may as well default to head idk
 
 	var/my_damage = src.force
 	var/my_sound = "sound/impact_sounds/Generic_Stab_1.ogg"
@@ -1321,7 +1363,7 @@ CONTAINS:
 
 	attack(mob/M as mob, mob/user as mob, def_zone)
 		// todo: check zone, make sure people are shining the light 1) at a human 2) in the eyes, clauses for whatever else
-		if (!def_zone && user && user.zone_sel && user.zone_sel.selecting)
+		if (!def_zone && user?.zone_sel?.selecting)
 			def_zone = user.zone_sel.selecting
 		else if (!def_zone)
 			return ..()
@@ -1403,7 +1445,7 @@ CONTAINS:
 					// irl these things can affect either side of the brain but this will help differentiate them in a video game context I think
 					// (also: injuries to the brain show up as issues on the opposite side of the body, so a left injury affects the right eye, etc)
 					var/datum/ailment_data/malady/AD = H.find_ailment_by_type(/datum/ailment/malady/bloodclot)
-					if (AD && AD.state == "Active" && AD.affected_area == "head") // having a stroke!!
+					if (AD?.state == "Active" && AD.affected_area == "head") // having a stroke!!
 						if (leye)
 							lmove = "[His_Her] left eye doesn't follow the light at all!"
 							lpreact = "doesn't react to the light at all!"
@@ -1525,9 +1567,7 @@ keeping this here because I want to make something else with it eventually
 				var/target = get_offset_target_turf(get_turf(src), rand(5)-rand(5), rand(5)-rand(5))
 				falling.set_loc(get_turf(src))
 
-				SPAWN_DBG(1 DECI SECOND)
-					if(falling)
-						falling.throw_at(target, 1, 1)
+				falling?.throw_at(target, 1, 1)
 
 
 	attackby(obj/item/W as obj, mob/user as mob, params)
@@ -1541,7 +1581,7 @@ keeping this here because I want to make something else with it eventually
 		else
 			return ..()
 
-	hitby(atom/movable/AM as mob|obj)
+	hitby(atom/movable/AM, datum/thrown_thing/thr)
 		..()
 		if (isitem(AM))
 			src.visible_message("[AM] lands on [src]!")
@@ -1561,14 +1601,23 @@ keeping this here because I want to make something else with it eventually
 		return
 
 	proc/attach(obj/item/I as obj)
+		if(I.anchored) return
 		src.attached_objs.Add(I) // attach the item to the table
 		I.glide_size = 0 // required for smooth movement with the tray
 		// register for pickup, register for being pulled off the table, register for item deletion while attached to table
-		RegisterSignal(I, list(COMSIG_ITEM_PICKUP, COMSIG_MOVABLE_MOVED, COMSIG_PARENT_PRE_DISPOSING), .proc/detach)
+		SPAWN_DBG(0)
+			RegisterSignal(I, list(COMSIG_ITEM_PICKUP, COMSIG_MOVABLE_MOVED, COMSIG_PARENT_PRE_DISPOSING), .proc/detach)
 
 	proc/detach(obj/item/I as obj) //remove from the attached items list and deregister signals
 		src.attached_objs.Remove(I)
 		UnregisterSignal(I, list(COMSIG_ITEM_PICKUP, COMSIG_MOVABLE_MOVED, COMSIG_PARENT_PRE_DISPOSING))
+
+	attack_hand(mob/user as mob)
+		if (!anchored)
+			boutput(user, "You apply \the [name]'s brake.")
+		else
+			boutput(user, "You release \the [name]'s brake.")
+		anchored = !anchored
 
 /* ---------- Surgery Tray Parts ---------- */
 /obj/item/furniture_parts/surgery_tray
@@ -1611,6 +1660,7 @@ keeping this here because I want to make something else with it eventually
 	throw_range = 5
 	var/mob/Poisoner = null
 	module_research = list("tools" = 3, "medicine" = 3, "weapons" = 0.25)
+	move_triggered = 1
 	var/image/handle = null
 
 	New()
@@ -1630,3 +1680,13 @@ keeping this here because I want to make something else with it eventually
 		handle = null
 		Poisoner = null
 		..()
+
+	move_trigger(var/mob/M, kindof)
+		if (..() && reagents)
+			reagents.move_trigger(M, kindof)
+
+	bloody
+		New()
+			. = ..()
+			SPAWN_DBG(1 DECI SECOND) //sync with the organs spawn
+				make_cleanable(/obj/decal/cleanable/blood/gibs, src.loc)

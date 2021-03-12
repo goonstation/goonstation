@@ -24,13 +24,15 @@
 	var/datum/radio_frequency/radio_connection
 	var/speaker_range = 2
 	var/static/image/speech_bubble = image('icons/mob/mob.dmi', "speech")
+	var/hardened = 1	//This is for being able to run through signal jammers (just solar flares for now). acceptable values = 0 and 1.
+
 	flags = FPRINT | TABLEPASS | ONBELT | CONDUCT
 	throw_speed = 2
 	throw_range = 9
 	w_class = 2.0
 	mats = 3
 
-	var/bicon_override = 0
+	var/icon_override = 0
 
 	var/const
 		WIRE_SIGNAL = 1 //sends a signal, like to set off a bomb or electrocute someone
@@ -234,56 +236,23 @@ Green Wire: <a href='?src=\ref[src];wires=[WIRE_TRANSMIT]'>[src.wires & WIRE_TRA
 		real_name = new_name
 		voice_name = new_name
 
-/obj/item/device/radio/proc/radio_bicon(var/mob/user)
-	.= 0
+/obj/item/device/radio/proc/radio_icon(var/mob/user)
 	if (isAI(user))
-		.= bicon(aiIcon)
+		.= "ai"
 	else if (isrobot(user))
-		.= bicon(roboIcon)
-	else if (bicon_override)
-		if (bicon_override == "head")
-			.= bicon(headIcon)
-		else if (bicon_override == "sci")
-			.= bicon(sciIcon)
-		else if (bicon_override == "med")
-			.= bicon(medIcon)
-		else if (bicon_override == "eng")
-			.= bicon(engIcon)
-		else if (bicon_override == "sec")
-			.= bicon(secIcon)
-		else if (bicon_override == "qm")
-			.= bicon(qmIcon)
-		else if (bicon_override == "ai")
-			.= bicon(aiIcon)
-		else if (bicon_override == "syndie")
-			.= bicon(syndieIcon)
-		else if (bicon_override == "syndieboss")
-			.= bicon(syndiebossIcon)
-		else if (bicon_override == "cap")
-			.= bicon(capIcon)
-		else if (bicon_override == "rd")
-			.= bicon(rdIcon)
-		else if (bicon_override == "md")
-			.= bicon(mdIcon)
-		else if (bicon_override == "ce")
-			.= bicon(ceIcon)
-		else if (bicon_override == "hop")
-			.= bicon(hopIcon)
-		else if (bicon_override == "hos")
-			.= bicon(hosIcon)
-		else if (bicon_override == "clown")
-			.= bicon(clownIcon)
-		else if (bicon_override == "nt")
-			.= bicon(ntIcon)
-		else
-			.= bicon(civIcon)
+		.= "robo"
+	else if (icon_override)
+		.= icon_override
+
+	if(.)
+		. = {"<img style=\"position: relative; left: -1px; bottom: -3px;\" class=\"icon misc\" src="[resource("images/radio_icons/[.].png")]">"}
 	else
-		.= bicon(src)
+		return bicon(src)
 
 /obj/item/device/radio/talk_into(mob/M as mob, messages, secure, real_name, lang_id)
 	// According to a pair of DEBUG calls set up for testing, no radio jammer check for the src radio was performed.
 	// As improbable as this sounds, there are bug reports too to back up the findings. So uhm...
-	if (src.radio_connection.check_for_jammer(src) != 0)
+	if (radio_controller.active_jammers.len && src.radio_connection.check_for_jammer(src) != 0)	//First bit is basically can_check_jammer but on this connection
 		return
 	if (!(src.wires & WIRE_TRANSMIT))
 		return
@@ -326,7 +295,11 @@ Green Wire: <a href='?src=\ref[src];wires=[WIRE_TRANSMIT]'>[src.wires & WIRE_TRA
 			var/obj/item/device/radio/R = I
 			//MBC : Do checks here and call check_for_jammer_bare instead. reduces proc calls.
 			if (can_check_jammer)
-				if (connection.check_for_jammer_bare(R))
+				if (connection.check_for_jammer(R))
+					continue
+			//if we have signal_loss (solar flare), and the radio isn't hardened don't send message, then block general frequencies.
+			if (signal_loss && !src.hardened && !secure)
+				if (text2num(connection.frequency) >= R_FREQ_MINIMUM && text2num(connection.frequency) <= R_FREQ_MAXIMUM)
 					continue
 
 			if (R.accept_rad(src, messages, connection))
@@ -347,6 +320,8 @@ Green Wire: <a href='?src=\ref[src];wires=[WIRE_TRANSMIT]'>[src.wires & WIRE_TRA
 				else
 					for (var/i in R.send_hear())
 						if (!(i in receive))
+							if (signal_loss && !R.hardened && R.frequency >= R_FREQ_MINIMUM && R.frequency <= R_FREQ_MAXIMUM)
+								continue
 							receive += i
 
 							if (ai_sender)
@@ -358,9 +333,12 @@ Green Wire: <a href='?src=\ref[src];wires=[WIRE_TRANSMIT]'>[src.wires & WIRE_TRA
 			R.hear_radio(M, messages, lang_id)
 
 	var/list/heard_flock = list() // heard by flockdrones/flockmind
-
+	var/datum/game_mode/conspiracy/N = ticker.mode
+	var/protected_frequency = null
+	if(istype(N))
+		protected_frequency = N.agent_radiofreq //groups conspirator frequency as a traitor one and protects it along with nukies
 	// Don't let them monitor Syndie headsets. You can get the radio_brain bioeffect at the start of the round, basically.
-	if (src.protected_radio != 1 && isnull(src.traitorradio))
+	if (src.protected_radio != 1 && isnull(src.traitorradio) && protected_frequency != display_freq )
 		for (var/mob/living/L in radio_brains)
 			receive += L
 
@@ -368,10 +346,9 @@ Green Wire: <a href='?src=\ref[src];wires=[WIRE_TRANSMIT]'>[src.wires & WIRE_TRA
 			if(z.client)
 				receive += z
 
-
-		// hi it's me cirr here to shoehorn in another thing
-		// flockdrones and flockmind should hear all channels, but with terrible corruption
-		if(flocks && flocks.len)
+	// hi it's me cirr here to shoehorn in another thing
+	// flockdrones and flockmind should hear all channels, but with terrible corruption
+		if(length(flocks))
 			for(var/F in flocks)
 				var/datum/flock/flock = flocks[F]
 				if(flock)
@@ -387,7 +364,8 @@ Green Wire: <a href='?src=\ref[src];wires=[WIRE_TRANSMIT]'>[src.wires & WIRE_TRA
 		var/mob/dead/D = C.mob
 
 		if ((istype(D, /mob/dead/observer) || (iswraith(D) && !D.density)) || ((!isturf(src.loc) && src.loc == D.loc) && !istype(D, /mob/dead/target_observer)))
-			if (!(D in receive))
+
+			if (!C.mute_ghost_radio && !(D in receive))
 				receive += D
 
 	var/list/heard_masked = list() // masked name or no real name
@@ -434,9 +412,9 @@ Green Wire: <a href='?src=\ref[src];wires=[WIRE_TRANSMIT]'>[src.wires & WIRE_TRA
 			css_style = " style='color: [textColor]'"
 		var/part_a
 		if (ismob(M) && M.mind)
-			part_a = "[radio_bicon(M)]<span class='radio[classes]'[css_style]><span class='name' data-ctx='\ref[M.mind]'>"
+			part_a = "<span class='radio[classes]'[css_style]>[radio_icon(M)]<span class='name' data-ctx='\ref[M.mind]'>"
 		else
-			part_a = "[radio_bicon(M)]<span class='radio[classes]'[css_style]><span class='name'>"
+			part_a = "<span class='radio[classes]'[css_style]>[radio_icon(M)]<span class='name'>"
 		var/part_b = "</span><b> \[[format_frequency(display_freq)]\]</b> <span class='message'>"
 		var/part_c = "</span></span>"
 
@@ -528,7 +506,7 @@ Green Wire: <a href='?src=\ref[src];wires=[WIRE_TRANSMIT]'>[src.wires & WIRE_TRA
 					RF.Add(src.secure_connections["[key]"])
 
 			// Secure channel match. Easy.
-			if (RF.Find(freq) && freq.devices.Find(src))
+			if ((freq in RF) && (src in freq.devices))
 				//DEBUG_MESSAGE("Match found for transmission from [R] at [log_loc(R)] (list/devices match)")
 				return 1
 
@@ -544,7 +522,6 @@ Green Wire: <a href='?src=\ref[src];wires=[WIRE_TRANSMIT]'>[src.wires & WIRE_TRA
 	return 0
 
 /obj/item/device/radio/proc/send_hear()
-
 	last_transmission = world.time
 	if ((src.listening && src.wires & WIRE_RECEIVE))
 		var/list/hear = hearers(src.speaker_range, src.loc) // changed so station bounce radios will be loud and headsets will only be heard on their tile
@@ -553,15 +530,12 @@ Green Wire: <a href='?src=\ref[src];wires=[WIRE_TRANSMIT]'>[src.wires & WIRE_TRA
 		// this fixes radio problems when inside something (e.g. mulebot)
 
 		if(ismob(loc))
-			if(! hear.Find(loc) )
-				hear += loc
+			hear |= loc
 		//modified so people in the same object as it can hear it
 		if(istype(loc, /obj))
 			for(var/mob/M in loc)
-				if(! hear.Find(M) )
-					hear += M
+				hear |= M
 		return hear
-	return
 
 /obj/item/device/radio/proc/speech_bubble()
 	if ((src.listening && src.wires & WIRE_RECEIVE))
@@ -572,7 +546,7 @@ Green Wire: <a href='?src=\ref[src];wires=[WIRE_TRANSMIT]'>[src.wires & WIRE_TRA
 
 /obj/item/device/radio/examine(mob/user)
 	. = ..()
-	if ((in_range(src, user) || src.loc == user))
+	if ((in_interact_range(src, user) || src.loc == user))
 		if (src.b_stat)
 			. += "<span class='notice'>\the [src] can be attached and modified!</span>"
 		else
@@ -633,9 +607,6 @@ Green Wire: <a href='?src=\ref[src];wires=[WIRE_TRANSMIT]'>[src.wires & WIRE_TRA
 		if (radio_controller && istype(radio_controller) && radio_controller.active_jammers.Find(src))
 			radio_controller.active_jammers.Remove(src)
 		..()
-
-var/global/list/tracking_beacons = list() // things were looping through world to find these so let's just stop doing that and have this shit add itself to a global list instead maybe
-
 /obj/item/device/radio/beacon
 	name = "tracking beacon"
 	icon_state = "beacon"
@@ -645,14 +616,10 @@ var/global/list/tracking_beacons = list() // things were looping through world t
 
 /obj/item/device/radio/beacon/New()
 	..()
-	SPAWN_DBG(0)
-		if (!islist(tracking_beacons))
-			tracking_beacons = list()
-		tracking_beacons.Add(src)
+	START_TRACKING
 
 /obj/item/device/radio/beacon/disposing()
-	if (islist(tracking_beacons))
-		tracking_beacons.Remove(src)
+	STOP_TRACKING
 	..()
 
 /obj/item/device/radio/beacon/hear_talk()
@@ -682,7 +649,7 @@ var/global/list/tracking_beacons = list() // things were looping through world t
 	set category = "Local"
 
 	..()
-	if ((in_range(src, usr) || src.loc == usr))
+	if ((in_interact_range(src, usr) || src.loc == usr))
 		if (src.e_pads)
 			boutput(usr, "<span class='notice'>The electric pads are exposed!</span>")
 	return*/
@@ -708,7 +675,7 @@ var/global/list/tracking_beacons = list() // things were looping through world t
 	//..()
 	if (usr.stat || usr.restrained())
 		return
-	if (src in usr || (src.master && (src.master in usr)) || (in_range(src, usr) && istype(src.loc, /turf)))
+	if (src in usr || (src.master && (src.master in usr)) || (in_interact_range(src, usr) && istype(src.loc, /turf)))
 		src.add_dialog(usr)
 		if (href_list["freq"])
 			var/new_frequency = sanitize_frequency(frequency + text2num(href_list["freq"]))
@@ -759,7 +726,7 @@ var/global/list/tracking_beacons = list() // things were looping through world t
 		if (src == M.back)
 			M.show_message("<span class='alert'><B>You feel a sharp shock!</B></span>")
 			logTheThing("signalers", usr, M, "signalled an electropack worn by [constructTarget(M,"signalers")] at [log_loc(M)].") // Added (Convair880).
-			if(ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/revolution))
+			if(ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution))
 				if((M.mind in ticker.mode:revolutionaries) && !(M.mind in ticker.mode:head_revolutionaries) && prob(20))
 					ticker.mode:remove_revolutionary(M.mind)
 
@@ -826,7 +793,7 @@ Code:
 	set src in view()
 	set category = "Local"
 	..()
-	if ((in_range(src, usr) || src.loc == usr))
+	if ((in_interact_range(src, usr) || src.loc == usr))
 		if (src.b_stat)
 			usr.show_message("<span class='notice'>The signaler can be attached and modified!</span>")
 		else
@@ -880,7 +847,19 @@ obj/item/device/radio/signaler/attackby(obj/item/W as obj, mob/user as mob)
 		src.set_loc(A)
 		A.part1 = src
 		src.add_fingerprint(user)
-		boutput(user, "You open the signaler and cram the [W.name] in there!")
+		boutput(user, "You open the signaller and cram the [W.name] in there!")
+	//Commenting this out so the SWORD PR gets merged without being summonable by normal players, so it can be tested first. Both the MSF and SWORD can still be spawned in with admin powers, obviously.
+	//else if (istype(W, /obj/item/cable_coil))
+	//	W.amount -= 1
+	//	if (W.amount <= 0)
+	//		qdel(W)
+	//	else
+	//		W.inventory_counter.update_number(W.amount)
+	//	var/obj/item/makeshift_signaller_frame/A = new /obj/item/makeshift_signaller_frame
+	//	user.put_in_hand_or_drop(A)
+	//	A.add_fingerprint(user)
+	//	boutput(user, "You open the signaller and attach some additional wires to it!")
+	//	qdel(src)
 	else
 		..()
 	return
@@ -952,9 +931,9 @@ obj/item/device/radio/signaler/attackby(obj/item/W as obj, mob/user as mob)
 	var/is_detonator_trigger = 0
 	if (src.master)
 		if (istype(src.master, /obj/item/assembly/detonator/) && src.master.master)
-			if (istype(src.master.master, /obj/machinery/portable_atmospherics/canister/) && in_range(src.master.master, usr))
+			if (istype(src.master.master, /obj/machinery/portable_atmospherics/canister/) && in_interact_range(src.master.master, usr))
 				is_detonator_trigger = 1
-	if (is_detonator_trigger || (src in usr) || (src.master && (src.master in usr)) || (in_range(src, usr) && istype(src.loc, /turf)))
+	if (is_detonator_trigger || (src in usr) || (src.master && (src.master in usr)) || (in_interact_range(src, usr) && istype(src.loc, /turf)))
 		src.add_dialog(usr)
 		if (href_list["freq"])
 			var/new_frequency = sanitize_frequency(frequency + text2num(href_list["freq"]))
@@ -1037,9 +1016,6 @@ obj/item/device/radio/signaler/attackby(obj/item/W as obj, mob/user as mob)
 	frequency = R_FREQ_LOUDSPEAKERS
 	var/image/active_light = null
 
-	New()
-		// active_light = new ()
-
 //Must be standing next to it to talk into it
 /obj/item/device/radio/intercom/loudspeaker/hear_talk(mob/M as mob, msgs, real_name, lang_id)
 	if (src.broadcasting)
@@ -1082,7 +1058,7 @@ obj/item/device/radio/signaler/attackby(obj/item/W as obj, mob/user as mob)
 	desc = "A Loudspeaker."
 
 	New()
-		//..()
+		..()
 		if(src.pixel_x == 0 && src.pixel_y == 0)
 			switch(src.dir)
 				if(NORTH)

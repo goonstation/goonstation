@@ -17,6 +17,7 @@
 		extension = "PSCAN"
 
 	New(obj/holding as obj)
+		..()
 		if(holding)
 			src.holder = holding
 
@@ -86,13 +87,11 @@
 			if(!src.master || !src.holder)
 				return
 
-			. = " | <a href='byond://?src=\ref[src];quit=1'>Main Menu</a>"
-			. += " | <a href='byond://?src=\ref[src.master];refresh=1'>Refresh</a>"
+			. = "<a href='byond://?src=\ref[src];quit=1'>Main Menu</a> | <a href='byond://?src=\ref[src.master];refresh=1'>Refresh</a>"
 
 
 		post_signal(datum/signal/signal, newfreq)
-			if(master)
-				master.post_signal(signal, newfreq)
+			master?.post_signal(signal, newfreq)
 			//else
 				//qdel(signal)
 
@@ -147,6 +146,28 @@
 		network_hook()
 			return
 
+		/// Sends a message to the owner's PDA about... something, usually a confirmation that it did something
+		self_text(var/message)
+			if(!message)
+				message = "Confirmed."
+			var/datum/radio_frequency/frequency = radio_controller.return_frequency(FREQ_PDA)
+			if(frequency)
+
+				var/datum/signal/signal = get_free_signal()
+				signal.source = src
+				signal.data["sender"] = "00000000"
+				signal.data["command"] = "text_message"
+				signal.data["sender_name"] = "BOT-CMD"
+				signal.data["address_1"] = src.master.net_id
+				signal.data["message"] = message
+				signal.transmission_method = TRANSMISSION_RADIO
+				frequency.post_signal(src, signal)
+
+		/// generates a passkey out of a bunch of words and shit
+		GenerateFilesharePasskey(var/how_many = 3)
+			for(var/i in 1 to how_many)
+				. += pick_string("agent_callsigns.txt", "[pick("nato", "melee_weapons", "colors", "birds", "mammals", "moons")]")
+			. = ckey(.)
 
 	Topic(href, href_list)
 		if((!src.holder) || (!src.master))
@@ -155,7 +176,9 @@
 			return 1
 		if((src.master.active_program != src) && !(href_list["input"] && href_list["input"] == "message")) // Disgusting but works
 			return 1
-		if ((!usr.contents.Find(src.master) && (!in_range(src.master, usr) || !istype(src.master.loc, /turf) || !isAI(usr))) && (!issilicon(usr) && !isAI(usr)))
+		if ((!usr.contents.Find(src.master) && (!in_interact_range(src.master, usr) || !istype(src.master.loc, /turf) || !isAI(usr))) && (!issilicon(usr) && !isAI(usr)))
+			return 1
+		if(isghostdrone(usr))
 			return 1
 		if(usr.stat || usr.restrained())
 			return 1

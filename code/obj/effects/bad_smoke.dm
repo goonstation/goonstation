@@ -18,7 +18,7 @@
 	event_handler_flags = USE_HASENTERED
 
 /obj/effects/bad_smoke/Move()
-	..()
+	. = ..()
 	for(var/mob/living/carbon/M in get_turf(src))
 		if (M.internal != null && M.wear_mask && (M.wear_mask.c_flags & MASKINTERNALS))
 		else

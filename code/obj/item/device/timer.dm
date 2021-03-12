@@ -5,6 +5,9 @@
 	var/timing = 0.0
 	var/time = null
 	var/last_tick = 0
+	var/const/max_time = 600
+	var/const/min_time = 0
+	var/const/min_detonator_time = 90
 	flags = FPRINT | TABLEPASS| CONDUCT
 	w_class = 2.0
 	m_amt = 100
@@ -43,8 +46,8 @@
 
 /obj/item/device/timer/process()
 	if (src.timing)
-		if (!last_tick) last_tick = world.time
-		var/passed_time = round(max(round(world.time - last_tick),10) / 10)
+		if (!last_tick) last_tick = TIME
+		var/passed_time = round(max(round(TIME - last_tick),10) / 10)
 
 		if (src.time > 0)
 			src.time -= passed_time
@@ -59,7 +62,7 @@
 			src.timing = 0
 			last_tick = 0
 
-		last_tick = world.time
+		last_tick = TIME
 
 		if (!src.master)
 			src.updateDialog()
@@ -92,7 +95,7 @@
 		user.u_equip(src)
 		src.set_loc(R)
 		R.part2 = src
-		R.dir = src.dir
+		R.set_dir(src.dir)
 		src.add_fingerprint(user)
 		return
 
@@ -121,23 +124,26 @@
 /obj/item/device/timer/proc/is_detonator_trigger()
 	if (src.master)
 		if (istype(src.master, /obj/item/assembly/detonator/) && src.master.master)
-			if (istype(src.master.master, /obj/machinery/portable_atmospherics/canister/) && in_range(src.master.master, usr))
+			if (istype(src.master.master, /obj/machinery/portable_atmospherics/canister/) && in_interact_range(src.master.master, usr))
 				return 1
 	return 0
+
+/obj/item/device/timer/proc/set_time(var/new_time as num)
+	var/min_time = src.is_detonator_trigger() ? src.min_detonator_time : src.min_time
+	src.time = clamp(new_time, min_time, src.max_time)
 
 /obj/item/device/timer/Topic(href, href_list)
 	..()
 	if (usr.stat || usr.restrained() || usr.lying)
 		return
 	var/can_use_detonator = src.is_detonator_trigger() && !src.timing
-	if (can_use_detonator || (src in usr) || (src.master && (src.master in usr)) || in_range(src, usr) && istype(src.loc, /turf))
+	if (can_use_detonator || (src in usr) || (src.master && (src.master in usr)) || in_interact_range(src, usr) && istype(src.loc, /turf))
 		src.add_dialog(usr)
 		if (href_list["time"])
 			src.timing = text2num(href_list["time"])
 			if(timing)
 				src.c_state(1)
-				if (!(src in processing_items))
-					processing_items.Add(src)
+				processing_items |= src
 
 			if (src.master && istype(master, /obj/item/device/transfer_valve))
 				logTheThing("bombing", usr, null, "[timing ? "initiated" : "defused"] a timer on a transfer valve at [log_loc(src.master)].")
@@ -156,9 +162,9 @@
 		if (href_list["tp"])
 			var/tp = text2num(href_list["tp"])
 			src.time += tp
-			src.time = min(max(round(src.time), 0), 600)
-			if (can_use_detonator && src.time < 90)
-				src.time = 90
+			src.time = min(max(round(src.time), src.min_time), src.max_time)
+			if (can_use_detonator && src.time < src.min_detonator_time)
+				src.time = src.min_detonator_time
 
 		if (href_list["close"])
 			usr.Browse(null, "window=timer")

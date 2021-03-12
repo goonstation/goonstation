@@ -5,6 +5,7 @@ var/datum/disease_controller/disease_controls
 	var/list/custom_diseases = list()
 
 	New()
+		..()
 		for (var/X in typesof(/datum/ailment))
 			if (X == /datum/ailment || X == /datum/ailment/disease || X == /datum/ailment/parasite || X == /datum/ailment/disability)
 				continue

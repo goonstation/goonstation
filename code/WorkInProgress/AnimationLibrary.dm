@@ -71,10 +71,9 @@
 	if (!istype(A))
 		return
 	//A.alpha = 200
-	var/matrix/M = matrix()
-	M.Scale(0.6, 1)
-	animate(A, transform=M, time = 3,easing = BOUNCE_EASING)
-	animate(transform=null, time = 3,easing = BOUNCE_EASING)
+	var/matrix/M = matrix(A.transform)
+	animate(A, transform = A.transform.Scale(0.6, 1), time = 3,easing = BOUNCE_EASING,flags=ANIMATION_PARALLEL)
+	animate(transform = M, time = 3,easing = BOUNCE_EASING)
 	return
 
 /proc/animate_flockdrone_item_absorb(var/atom/A)
@@ -166,8 +165,25 @@
 		layer = MOB_LAYER_BASE - 0.1
 		appearance_flags = TILE_BOUND
 
+	muzzleflash
+		icon = 'icons/mob/mob.dmi'
+		alpha = 255
+		plane = PLANE_OVERLAY_EFFECTS
+
+		unpooled()
+			..()
+			src.alpha = 255
+
+		pooled()
+			..()
+
+
+
 /mob/var/obj/particle/attack/attack_particle
 /mob/var/obj/particle/attack/sprint/sprint_particle
+
+
+
 
 ///obj/attackby(var/obj/item/I as obj, mob/user as mob)
 //	attack_particle(user,src)
@@ -211,9 +227,9 @@
 
 	animate(M.attack_particle, transform = t_size, time = 6, easing = BOUNCE_EASING)
 	animate(pixel_x = diff_x*32, pixel_y = diff_y*32, time = 2, easing = BOUNCE_EASING,  flags = ANIMATION_PARALLEL)
-	SPAWN_DBG(5)
+	SPAWN_DBG(0.5 SECONDS)
 		//animate(M.attack_particle, alpha = 0, time = 2, flags = ANIMATION_PARALLEL)
-		M.attack_particle.alpha = 0
+		M.attack_particle?.alpha = 0
 
 /mob/var/last_interact_particle = 0
 
@@ -395,19 +411,24 @@
 	var/matrix/t_size = matrix()
 
 	animate(M.attack_particle, transform = t_size, time = 2, easing = BOUNCE_EASING)
-	SPAWN_DBG(5)
+	SPAWN_DBG(0.5 SECONDS)
 		M.attack_particle.alpha = 0
 
-/proc/block_spark(var/mob/M)
+/proc/block_spark(var/mob/M, armor = 0)
 	if (!M || !M.attack_particle) return
+	var/state_string = ""
+	if(armor)
+		state_string = "block_spark_armor"
+	else
+		state_string = "block_spark"
 
 	M.attack_particle.invisibility = M.invisibility
 	M.last_interact_particle = world.time
 
 	M.attack_particle.icon = 'icons/mob/mob.dmi'
-	if (M.attack_particle.icon_state == "block_spark")
-		flick("block_spark",M.attack_particle)
-	M.attack_particle.icon_state = "block_spark"
+	if (M.attack_particle.icon_state == state_string)
+		flick(state_string,M.attack_particle)
+	M.attack_particle.icon_state = state_string
 
 	M.attack_particle.alpha = 255
 	M.attack_particle.loc = M.loc
@@ -416,11 +437,11 @@
 
 	M.attack_particle.transform.Turn(rand(0,360))
 
-	SPAWN_DBG(10)
+	SPAWN_DBG(1 SECOND)
 		M.attack_particle.alpha = 0
 
 proc/fuckup_attack_particle(var/mob/M)
-	SPAWN_DBG(1)
+	SPAWN_DBG(0.1 SECONDS)
 		if (!M || !M.attack_particle) return
 		var/r = rand(0,360)
 		var/x = cos(r)
@@ -429,56 +450,56 @@ proc/fuckup_attack_particle(var/mob/M)
 		y *= 22
 		animate(M.attack_particle, pixel_x = M.attack_particle.pixel_x + x , pixel_y = M.attack_particle.pixel_y + y, time = 5, easing = BOUNCE_EASING, flags = ANIMATION_END_NOW)
 
-proc/muzzle_flash_attack_particle(var/mob/M, var/turf/origin, var/turf/target, var/muzzle_anim)
-	if (!M || !M.attack_particle || !origin || !target || !muzzle_anim) return
+var/global/obj/overlay/simple_light/muzzle_simple_light = new	/obj/overlay/simple_light{appearance_flags = RESET_COLOR | NO_CLIENT_COLOR | KEEP_APART}
 
-	var/offset = 22 //amt of pixels the muzzle flash sprite is offset the shooting mob by
+var/global/list/default_muzzle_flash_colors = list(
+	"muzzle_flash" = "#FFEE9980",
+	"muzzle_flash_laser" = "#FF333380",
+	"muzzle_flash_elec" = "#FFC80080",
+	"muzzle_flash_bluezap" = "#00FFFF80",
+	"muzzle_flash_plaser" = "#00A9FB80",
+	"muzzle_flash_phaser" = "#F41C2080",
+	"muzzle_flash_launch" = "#FFFFFF50",
+	"muzzle_flash_wavep" = "#B3234E80",
+	"muzzle_flash_waveg" = "#33CC0080",
+	"muzzle_flash_waveb" = "#87BBE380"
+)
+
+proc/muzzle_flash_attack_particle(var/mob/M, var/turf/origin, var/turf/target, var/muzzle_anim, var/muzzle_light_color=null, var/offset=25)
+	if (!M || !origin || !target || !muzzle_anim) return
 	var/firing_angle = get_angle(origin, target)
-	var/firing_dir = angle_to_dir(firing_angle)
-	switch(firing_dir) //so we apply the correct offset
-		if (NORTH)
-			M.attack_particle.pixel_y = 32
-		if (SOUTH)
-			M.attack_particle.pixel_y = -32
-		if (EAST)
-			M.attack_particle.pixel_x = offset
-		if (WEST)
-			M.attack_particle.pixel_x = -offset
-		if (NORTHEAST) //diags look a little weird but what can you do
-			M.attack_particle.pixel_y = offset
-			M.attack_particle.pixel_x = offset
-		if (NORTHWEST)
-			M.attack_particle.pixel_y = offset
-			M.attack_particle.pixel_x = -offset
-		if (SOUTHEAST)
-			M.attack_particle.pixel_y = -offset
-			M.attack_particle.pixel_x = offset
-		if (SOUTHWEST)
-			M.attack_particle.pixel_y = -offset
-			M.attack_particle.pixel_x = -offset
+	muzzle_flash_any(M, firing_angle, muzzle_anim, muzzle_light_color, offset)
 
-	var/matrix/start = matrix()
-	M.attack_particle.transform = start
+proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var/muzzle_light_color, var/offset=25)
+	if (!A || firing_angle == null || !muzzle_anim) return
 
-	M.attack_particle.Turn(firing_angle)
-	M.attack_particle.layer = MOB_INHAND_LAYER //so it looks like its from the weapon maybe??
+	var/obj/particle/attack/muzzleflash/muzzleflash = unpool(/obj/particle/attack/muzzleflash)
 
-	M.attack_particle.set_loc(M) //so it doesnt linger when we move part 1
-	M.vis_contents.Add(M.attack_particle) //so it doesnt linger when we move part 2
-	M.attack_particle.invisibility = M.invisibility
-	M.last_interact_particle = world.time
-	M.attack_particle.alpha = 255
-	M.attack_particle.icon = 'icons/mob/mob.dmi'
-	if (M.attack_particle.icon_state == muzzle_anim)
-		flick(muzzle_anim,M.attack_particle)
-	M.attack_particle.icon_state = muzzle_anim
+	if(isnull(muzzle_light_color))
+		muzzle_light_color = default_muzzle_flash_colors[muzzle_anim]
+	muzzleflash.overlays.Cut()
+	if(muzzle_light_color)
+		muzzle_simple_light.color = muzzle_light_color
+		muzzleflash.overlays += muzzle_simple_light
 
-	SPAWN_DBG(1.7 DECI SECONDS) //clears all the bs we had to do
-		M.attack_particle.alpha = 0
-		M.attack_particle.pixel_x = 0
-		M.attack_particle.pixel_y = 0
-		M.vis_contents.Remove(M.attack_particle)
-		M.attack_particle.layer = EFFECTS_LAYER_BASE
+	var/matrix/mat = new
+	mat.Translate(0, offset)
+	mat.Turn(firing_angle)
+	muzzleflash.transform = mat
+	muzzleflash.layer = A.layer
+	muzzleflash.set_loc(A)
+	A.vis_contents.Add(muzzleflash)
+	if (muzzleflash.icon_state == muzzle_anim)
+		flick(muzzle_anim,muzzleflash)
+	muzzleflash.icon_state = muzzle_anim
+
+	animate(muzzleflash, time=0.4 SECONDS)
+	animate(alpha=0, easing=SINE_EASING, time=0.2 SECONDS)
+
+	SPAWN_DBG(0.6 SECONDS)
+		A.vis_contents.Remove(muzzleflash)
+		pool(muzzleflash)
+
 
 
 /proc/sprint_particle(var/mob/M, var/turf/T = null)
@@ -488,13 +509,13 @@ proc/muzzle_flash_attack_particle(var/mob/M, var/turf/origin, var/turf/target, v
 	else
 		M.sprint_particle.loc = M.loc
 
-	M.sprint_particle.dir = null
+	M.sprint_particle.set_dir(null)
 	if (M.sprint_particle.icon_state == "sprint_cloud")
 		flick("sprint_cloud",M.sprint_particle)
 	M.sprint_particle.icon_state = "sprint_cloud"
 
 
-	SPAWN_DBG(6)
+	SPAWN_DBG(0.6 SECONDS)
 		if (M.sprint_particle.loc == T)
 			M.sprint_particle.loc = null
 
@@ -505,13 +526,13 @@ proc/muzzle_flash_attack_particle(var/mob/M, var/turf/origin, var/turf/target, v
 	else
 		M.sprint_particle.loc = M.loc
 
-	M.sprint_particle.dir = direct
+	M.sprint_particle.set_dir(direct)
 	if (M.sprint_particle.icon_state == "sprint_cloud_small")
 		flick("sprint_cloud_small",M.sprint_particle)
 	M.sprint_particle.icon_state = "sprint_cloud_small"
 
-	SPAWN_DBG(4)
-		if (M.sprint_particle.loc == T)
+	SPAWN_DBG(0.4 SECONDS)
+		if (M.sprint_particle?.loc == T)
 			M.sprint_particle.loc = null
 
 /proc/sprint_particle_tiny(var/mob/M, var/turf/T = null, var/direct = null)
@@ -521,12 +542,12 @@ proc/muzzle_flash_attack_particle(var/mob/M, var/turf/origin, var/turf/target, v
 	else
 		M.sprint_particle.loc = M.loc
 
-	M.sprint_particle.dir = direct
+	M.sprint_particle.set_dir(direct)
 	if (M.sprint_particle.icon_state == "sprint_cloud_tiny")
 		flick("sprint_cloud_tiny",M.sprint_particle)
 	M.sprint_particle.icon_state = "sprint_cloud_tiny"
 
-	SPAWN_DBG(3)
+	SPAWN_DBG(0.3 SECONDS)
 		if (M.sprint_particle.loc == T)
 			M.sprint_particle.loc = null
 
@@ -563,7 +584,7 @@ proc/muzzle_flash_attack_particle(var/mob/M, var/turf/origin, var/turf/target, v
 		var/x = movepx + ipx
 		var/y = movepy + ipy
 		//Shift pixel offset
-		animate(A, pixel_x = x, pixel_y = y, time = 0.6,easing = EASE_OUT)
+		animate(A, pixel_x = x, pixel_y = y, time = 0.6,easing = EASE_OUT,flags=ANIMATION_PARALLEL)
 		var/matrix/M = matrix(A.transform)
 		animate(transform = turn(A.transform, (movepx - movepy) * 4), time = 0.6, easing = EASE_OUT)
 		animate(pixel_x = ipx, pixel_y = ipy, time = 0.6,easing = EASE_IN)
@@ -573,7 +594,7 @@ proc/muzzle_flash_attack_particle(var/mob/M, var/turf/origin, var/turf/target, v
 
 
 /proc/hit_twitch(var/atom/A)
-	if (!A || istype(A, /mob/living/object))
+	if (!A || istype(A, /mob/living/object) || ON_COOLDOWN(A, "hit_twitch", 0.1 SECONDS))
 		return
 	var/which = 0
 	if (usr)
@@ -612,16 +633,15 @@ proc/muzzle_flash_attack_particle(var/mob/M, var/turf/origin, var/turf/target, v
 	var/x = movepx + ipx
 	var/y = movepy + ipy
 
-	animate(A, pixel_x = x, pixel_y = y, time = 2,easing = EASE_IN)
-	animate(A, pixel_x = ipx, pixel_y = ipy, time = 2,easing = EASE_IN)
+	animate(A, pixel_x = x, pixel_y = y, time = 2,easing = EASE_IN,flags=ANIMATION_PARALLEL)
+	animate(pixel_x = ipx, pixel_y = ipy, time = 2,easing = EASE_IN)
 
 //only call this from disorient. ITS NOT YOURS DAD
 /proc/violent_twitch(var/atom/A)
 	SPAWN_DBG(0)
-		var/matrix/start = matrix(A.transform)
 		var/matrix/target = matrix(A.transform)
-		target.Scale(1,1)
-		target.Turn(rand(-45,45))
+		var/deg = rand(-45,45)
+		target.Turn(deg)
 
 
 		A.transform = target
@@ -632,9 +652,7 @@ proc/muzzle_flash_attack_particle(var/mob/M, var/turf/origin, var/turf/target, v
 
 		sleep(0.2 SECONDS)
 
-		//Look i know this check looks janky. that's because IT IS. violent_twitch is ONLY called for disorient. okay. this stops it fucking up rest animation
-		if (!A.hasStatus(list("weakened", "paralysis")))
-			A.transform = start
+		A.transform = A.transform.Turn(-deg)
 		A.pixel_x = old_x
 		A.pixel_y = old_y
 
@@ -643,29 +661,31 @@ proc/muzzle_flash_attack_particle(var/mob/M, var/turf/origin, var/turf/target, v
 	SPAWN_DBG(-1)
 		var/matrix/start = matrix(A.transform)
 		var/matrix/target = matrix(A.transform)
-		target.Scale(1,1)
-		target.Turn(rand(-45,45))
+		var/last_angle = rand(-45,45)
+		target.Turn(last_angle)
 		A.transform = target
+		var/orig_x = A.pixel_x
+		var/orig_y = A.pixel_y
 
 		for (var/i = 0, (i < 7 && A), i++)
-			target = matrix(start)
-			target.Turn(rand(-45,45))
+			var/new_angle = rand(-45, 45)
+			target = A.transform.Turn(-last_angle + new_angle)
+			last_angle = new_angle
 			A.transform = target
 
-			A.pixel_x = rand(-3,3)
-			A.pixel_y = rand(-2,2)
+			A.pixel_x = orig_x + rand(-3,3)
+			A.pixel_y = orig_y + rand(-2,2)
 			sleep(0.1 SECONDS)
 
-		animate(A, pixel_x = 0, pixel_y = 0, transform = null, time = 1, easing = LINEAR_EASING)
+		animate(A, pixel_x = orig_x, pixel_y = orig_y, transform = UNDO_TRANSFORMATION(start, target, A.transform), time = 1, easing = LINEAR_EASING, flags=ANIMATION_PARALLEL)
 
 /proc/eat_twitch(var/atom/A)
 	var/matrix/squish_matrix = matrix(A.transform)
 	squish_matrix.Scale(1,0.92)
 	var/matrix/M = matrix(A.transform)
-	squish_matrix.Scale(1,1)
 	var/ipy = A.pixel_y
 
-	animate(A, transform = squish_matrix, time = 1,easing = EASE_OUT)
+	animate(A, transform = squish_matrix, time = 1,easing = EASE_OUT, flags=ANIMATION_PARALLEL)
 	animate(pixel_y = -1, time = 1,easing = EASE_OUT)
 	animate(transform = M, time = 1, easing = EASE_IN)
 	animate(pixel_y = ipy, time = 1,easing = EASE_IN)
@@ -710,7 +730,7 @@ proc/muzzle_flash_attack_particle(var/mob/M, var/turf/origin, var/turf/target, v
 	SPAWN_DBG(rand(1,10))
 		if (A)
 			var/initial_y = A.pixel_y
-			animate(A, pixel_y = initial_y + 4, transform = matrix(floatdegrees * (side == 1 ? 1:-1), MATRIX_ROTATE), time = floatspeed, loop = loopnum, easing = SINE_EASING)
+			animate(A, pixel_y = initial_y + 4, transform = matrix(floatdegrees * (side == 1 ? 1:-1), MATRIX_ROTATE), time = floatspeed, loop = loopnum, easing = SINE_EASING, flags = ANIMATION_PARALLEL)
 			animate(pixel_y = initial_y, transform = null, time = floatspeed, loop = loopnum, easing = SINE_EASING)
 	return
 
@@ -779,30 +799,32 @@ proc/muzzle_flash_attack_particle(var/mob/M, var/turf/origin, var/turf/target, v
 	var/x_severity_inverse = 0 - x_severity
 	var/y_severity_inverse = 0 - y_severity
 
-	animate(A, transform = null, pixel_y = rand(y_severity_inverse,y_severity), pixel_x = rand(x_severity_inverse,x_severity),time = 1,loop = amount, easing = ELASTIC_EASING)
+	animate(A, pixel_y = rand(y_severity_inverse,y_severity), pixel_x = rand(x_severity_inverse,x_severity),time = 1,loop = amount, easing = ELASTIC_EASING, flags=ANIMATION_PARALLEL)
 	SPAWN_DBG(amount)
 		if (A)
-			animate(A, transform = null, pixel_y = return_y, pixel_x = return_x,time = 1,loop = 1, easing = LINEAR_EASING)
+			animate(A, pixel_y = return_y, pixel_x = return_x,time = 1,loop = 1, easing = LINEAR_EASING)
 	return
 
 /proc/animate_teleport(var/atom/A)
 	if (!istype(A))
 		return
-	var/matrix/M = matrix(1, 3, MATRIX_SCALE)
-	animate(A, transform = M, pixel_y = 32, time = 10, alpha = 50, easing = CIRCULAR_EASING)
+	var/matrix/original = matrix(A.transform)
+	var/matrix/M = A.transform.Scale(1, 3)
+	animate(A, transform = M, pixel_y = 32, time = 10, alpha = 50, easing = CIRCULAR_EASING, flags=ANIMATION_PARALLEL)
 	M.Scale(0,4)
 	animate(transform = M, time = 5, color = "#1111ff", alpha = 0, easing = CIRCULAR_EASING)
-	animate(transform = null, time = 5, color = "#ffffff", alpha = 255, pixel_y = 0, easing = ELASTIC_EASING)
+	animate(transform = original, time = 5, color = "#ffffff", alpha = 255, pixel_y = 0, easing = ELASTIC_EASING)
 	return
 
 /proc/animate_teleport_wiz(var/atom/A)
 	if (!istype(A))
 		return
-	var/matrix/M = matrix(0, 4, MATRIX_SCALE)
-	animate(A, color = "#ddddff", time = 20, alpha = 70, easing = LINEAR_EASING)
+	var/matrix/original = matrix(A.transform)
+	var/matrix/M = A.transform.Scale(0, 4)
+	animate(A, color = "#ddddff", time = 20, alpha = 70, easing = LINEAR_EASING, flags=ANIMATION_PARALLEL)
 	animate(transform = M, pixel_y = 32, time = 20, color = "#2222ff", alpha = 0, easing = CIRCULAR_EASING)
 	animate(time = 8, transform = M, alpha = 5) //Do nothing, essentially
-	animate(transform = null, time = 5, color = "#ffffff", alpha = 255, pixel_y = 0, easing = ELASTIC_EASING)
+	animate(transform = original, time = 5, color = "#ffffff", alpha = 255, pixel_y = 0, easing = ELASTIC_EASING)
 	return
 
 /proc/animate_rainbow_glow_old(var/atom/A)
@@ -880,7 +902,7 @@ proc/muzzle_flash_attack_particle(var/mob/M, var/turf/origin, var/turf/target, v
 	if (dir == "R")
 		turn = 90
 
-	animate(A, transform = matrix(M, turn, MATRIX_ROTATE | MATRIX_MODIFY), time = T, loop = looping)
+	animate(A, transform = matrix(M, turn, MATRIX_ROTATE | MATRIX_MODIFY), time = T, loop = looping, flags=ANIMATION_PARALLEL)
 	animate(transform = matrix(M, turn, MATRIX_ROTATE | MATRIX_MODIFY), time = T, loop = looping)
 	animate(transform = matrix(M, turn, MATRIX_ROTATE | MATRIX_MODIFY), time = T, loop = looping)
 	animate(transform = matrix(M, turn, MATRIX_ROTATE | MATRIX_MODIFY), time = T, loop = looping)
@@ -924,12 +946,12 @@ proc/muzzle_flash_attack_particle(var/mob/M, var/turf/origin, var/turf/target, v
 	var/matrix/turned
 
 	if (isnum(dir) && dir > 0)
-		A.dir = WEST
+		A.set_dir(WEST)
 		turndir = 90
 		turned = matrix(A.transform, 90, MATRIX_ROTATE)
 
 	else
-		A.dir = EAST
+		A.set_dir(EAST)
 		turndir = -90
 		turned = matrix(A.transform, -90, MATRIX_ROTATE)
 
@@ -971,23 +993,18 @@ proc/muzzle_flash_attack_particle(var/mob/M, var/turf/origin, var/turf/target, v
 	if(!istype(A))
 		return
 
-	animate(A, pixel_x = px, pixel_y = py, time = T, easing = ease)
+	animate(A, pixel_x = px, pixel_y = py, time = T, easing = ease, flags=ANIMATION_PARALLEL)
 
 /proc/animate_rest(var/atom/A, var/stand)
 	if(!istype(A))
 		return
-
-	var/matrix/M = matrix()
-	if (A.shrunk)
-		M *= (0.75 ** A.shrunk)
-
 	if(stand)
-		animate(A, pixel_x = 0, pixel_y = 0, transform = M, time = 3, easing = LINEAR_EASING)
+		animate(A, pixel_x = 0, pixel_y = 0, transform = A.transform.Turn(-90), time = 3, easing = LINEAR_EASING, flags=ANIMATION_PARALLEL)
 	else
-		animate(A, pixel_x = 0, pixel_y = -4, transform = M.Turn(90), time = 2, easing = LINEAR_EASING)
+		animate(A, pixel_x = 0, pixel_y = -4, transform = A.transform.Turn(90), time = 2, easing = LINEAR_EASING, flags=ANIMATION_PARALLEL)
 
 /proc/animate_flip(var/atom/A, var/T)
-	animate(A, transform = matrix(A.transform, 90, MATRIX_ROTATE), time = T)
+	animate(A, transform = matrix(A.transform, 90, MATRIX_ROTATE), time = T, flags=ANIMATION_PARALLEL)
 	animate(transform = matrix(A.transform, 180, MATRIX_ROTATE), time = T)
 
 
@@ -1084,6 +1101,49 @@ proc/muzzle_flash_attack_particle(var/mob/M, var/turf/origin, var/turf/target, v
 			pool(e)
 	return
 
+/proc/leavepurge(var/atom/target, var/current_increment, var/sword_direction)
+	if (!target)
+		return
+	var/turf/target_turf = get_turf(target)
+	if (!target_turf)
+		return
+	var/obj/decal/e
+	if(current_increment == 9)
+		if (locate(/obj/decal/purge_beam_end) in target_turf)
+			return
+		e = unpool(/obj/decal/purge_beam_end)
+	else
+		if (locate(/obj/decal/purge_beam) in target_turf)
+			return
+		e = unpool(/obj/decal/purge_beam)
+	e.set_loc(target_turf)
+	e.dir = sword_direction
+	SPAWN_DBG(7)
+		if (e)
+			pool(e)
+	return
+
+/proc/leavescan(var/atom/target, var/scan_type)
+	if (!target)
+		return
+	var/turf/target_turf = get_turf(target)
+	if (!target_turf)
+		return
+	var/obj/decal/e
+	if(scan_type == 0)
+		if (locate(/obj/decal/syndicate_destruction_scan_center) in target_turf)
+			return
+		e = unpool(/obj/decal/syndicate_destruction_scan_center)
+	else
+		if (locate(/obj/decal/syndicate_destruction_scan_side) in target_turf)
+			return
+		e = unpool(/obj/decal/syndicate_destruction_scan_side)
+	e.set_loc(target_turf)
+	SPAWN_DBG(7)
+		if (e)
+			pool(e)
+	return
+
 /proc/sponge_size(var/atom/A, var/size = 1)
 	var/matrix/M2 = matrix()
 	M2.Scale(size,size)
@@ -1128,7 +1188,7 @@ proc/muzzle_flash_attack_particle(var/mob/M, var/turf/origin, var/turf/target, v
 	animate(time = 10, pixel_y = 512, easing = CUBIC_EASING)
 	sleep(1.5 SECONDS)
 
-/proc/heavenly_spawn(var/obj/A)
+/proc/heavenly_spawn(var/atom/movable/A)
 	var/obj/heavenly_light/lightbeam = new /obj/heavenly_light
 	lightbeam.set_loc(A.loc)
 	var/was_anchored = A.anchored
@@ -1138,23 +1198,100 @@ proc/muzzle_flash_attack_particle(var/mob/M, var/turf/origin, var/turf/target, v
 	A.alpha = 0
 	A.pixel_y = 176
 	lightbeam.alpha = 0
+	if (ismob(A))
+		var/mob/M = A
+		APPLY_MOB_PROPERTY(M, PROP_CANTMOVE, M.type)
 	playsound(A.loc,"sound/voice/heavenly3.ogg",50,0)
 	animate(lightbeam, alpha=255, time=45)
 	animate(A,alpha=255,time=45)
-	SPAWN_DBG(45)
-		animate(A, pixel_y = 0, time = 120, easing = SINE_EASING)
-		sleep(12 SECONDS)
-		A.anchored = was_anchored
-		A.layer = oldlayer
-		animate(lightbeam,alpha = 0, time=15)
-		sleep(1.5 SECONDS)
-		qdel(lightbeam)
+	sleep(4.5 SECONDS)
+	animate(A, pixel_y = 0, time = 120, easing = SINE_EASING, flags = ANIMATION_PARALLEL)
+	sleep(12 SECONDS)
+	A.anchored = was_anchored
+	A.layer = oldlayer
+	animate(lightbeam,alpha = 0, time=15)
+	sleep(1.5 SECONDS)
+	qdel(lightbeam)
+	if (ismob(A))
+		var/mob/M = A
+		REMOVE_MOB_PROPERTY(M, PROP_CANTMOVE, M.type)
 
 /obj/heavenly_light
 	icon = 'icons/obj/32x192.dmi'
 	icon_state = "heavenlight"
 	layer = EFFECTS_LAYER
 	blend_mode = BLEND_ADD
+
+/proc/demonic_spawn(var/atom/movable/A, var/size = 1, var/play_sound = TRUE)
+	if (!A) return
+	var/was_anchored = A.anchored
+	var/original_plane = A.plane
+	var/original_density = A.density
+	var/matrix/M1 = matrix()
+	A.transform = M1.Scale(0,0)
+	var/turf/center = get_turf(A)
+	if (!center) return
+
+	A.plane = PLANE_UNDERFLOOR
+	A.anchored = TRUE
+	A.density = FALSE
+	if (ismob(A))
+		var/mob/M = A
+		APPLY_MOB_PROPERTY(M, PROP_CANTMOVE, M.type)
+	if (play_sound)
+		playsound(center,"sound/effects/darkspawn.ogg",50,0)
+	SPAWN_DBG(5 SECONDS)
+		var/turf/TA = locate(A.x - size, A.y - size, A.z)
+		var/turf/TB = locate(A.x + size, A.y + size, A.z)
+		if (!TA || !TB) return
+
+		var/list/fake_hells = list()
+		for (var/turf/T in block(TA, TB))
+			fake_hells += new /obj/fake_hell(T)
+			var/x_modifier = (T.x - center.x)
+			var/y_modifier = (T.y - center.y)
+			if (x_modifier || y_modifier)
+				animate(T, pixel_x = ((32 * (x_modifier / max(1, abs(x_modifier)))) * (size - abs(x_modifier) + 1)), pixel_y = ((32 * (y_modifier / max(1, abs(y_modifier)))) * (size - abs(y_modifier) + 1)), 7.5 SECONDS, easing = SINE_EASING)
+			else // center tile
+				animate(T, transform = M1.Scale(0,0), 5 SECONDS, easing = SINE_EASING)
+		sleep(7.5 SECONDS)
+		animate(A, transform = null, time=20, easing = SINE_EASING)
+		A.plane = original_plane
+		A.anchored = was_anchored
+		A.density = original_density
+		if (ismob(A))
+			var/mob/M = A
+			REMOVE_MOB_PROPERTY(M, PROP_CANTMOVE, M.type)
+		for (var/turf/T in block(TA, TB))
+			animate(T, transform = null, pixel_x = 0, pixel_y = 0, 7.5 SECONDS, easing = SINE_EASING)
+		sleep(7.5 SECONDS)
+		for (var/obj/fake_hell/O in fake_hells)
+			qdel(O)
+
+/obj/fake_hell //for use with /proc/demonic_spawn
+	name = "???"
+	desc = "just standing next to it burns your very soul."
+	icon = 'icons/misc/AzungarAdventure.dmi'
+	icon_state = "lava_floor"
+	anchored = TRUE
+	event_handler_flags = USE_HASENTERED
+
+	New()
+		. = ..()
+		src.plane = PLANE_UNDERFLOOR - 1
+		src.icon_state = pick("lava_floor", "lava_floor_bubbling", "lava_floor_bubbling2")
+
+	HasEntered(atom/movable/AM, atom/OldLoc)
+		. = ..()
+		if (isliving(AM))
+			var/mob/living/M = AM
+			M.update_burning(10)
+
+	meteorhit()
+		return
+
+	ex_act()
+		return
 
 var/global/icon/scanline_icon = icon('icons/effects/scanning.dmi', "scanline")
 /proc/animate_scanning(var/atom/target, var/color, var/time=18, var/alpha_hex="96")
@@ -1169,19 +1306,16 @@ var/global/icon/scanline_icon = icon('icons/effects/scanning.dmi', "scanline")
 	SPAWN_DBG(time)
 		target.filters -= filter
 
-/proc/animate_storage_thump(var/atom/A)
+/proc/animate_storage_thump(var/atom/A, wiggle=6)
 	if(!istype(A))
 		return
 	playsound(get_turf(A), "sound/impact_sounds/Metal_Hit_Heavy_1.ogg", 50, 1)
-	var/wiggle = 6
-	SPAWN_DBG(-1)
-		while(wiggle > 0)
-			wiggle--
-			A.pixel_x = rand(-3,3)
-			A.pixel_y = rand(-3,3)
-			sleep(0.1 SECONDS)
-		A.pixel_x = 0
-		A.pixel_y = 0
+	var/orig_x = A.pixel_x
+	var/orig_y = A.pixel_y
+	animate(A, pixel_x=orig_x, pixel_y=orig_y, flags=ANIMATION_PARALLEL, time=0)
+	for(var/i in 1 to wiggle)
+		animate(pixel_x=orig_x + rand(-3, 3), pixel_y=orig_y + rand(-3, 3), flags=ANIMATION_PARALLEL, easing=JUMP_EASING, time=0.1 SECONDS)
+	animate(pixel_x=orig_x, pixel_y=orig_y, flags=ANIMATION_PARALLEL)
 
 /obj/overlay/tile_effect/fake_fullbright
 	icon = 'icons/effects/white.dmi'
@@ -1195,7 +1329,7 @@ var/global/icon/scanline_icon = icon('icons/effects/scanning.dmi', "scanline")
 		. = ..()
 		src.icon = T.icon
 		src.icon_state = T.icon_state
-		src.dir = T.dir
+		src.set_dir(T.dir)
 		src.color = T.color
 		src.layer = T.layer - 1
 		src.plane = T.plane
@@ -1309,3 +1443,18 @@ var/global/icon/scanline_icon = icon('icons/effects/scanning.dmi', "scanline")
 		SPAWN_DBG(time)
 			A.filters.len -= 2
 			A.alpha = 0
+
+//size_max really can't go higher than 0.2 on 32x32 sprites that are sized about the same as humans. Can go higher on larger sprite resolutions or smaller sprites that are in the center, like cigarettes or coins.
+/proc/anim_f_ghost_blur(atom/A, var/size_min = 0.075 as num, var/size_max=0.18 as num)
+	A.filters += filter(type="radial_blur",size=size_min)
+
+	animate(A.filters[A.filters.len], time = 10, size=size_max, loop=-1,easing = SINE_EASING, flags=ANIMATION_PARALLEL)
+	animate(time = 10, size=size_min, loop=-1,easing = SINE_EASING)
+
+/proc/animate_bouncy(var/atom/A) // little bouncy dance for admin and mentor mice, could be used for other stuff
+	if (!istype(A))
+		return
+	animate(A, pixel_y = (A.pixel_y + 4), time = 0.15 SECONDS, dir = EAST, flags=ANIMATION_PARALLEL)
+	animate(pixel_y = (A.pixel_y - 4), time = 0.15 SECONDS, dir = EAST)
+	animate(pixel_y = (A.pixel_y + 4), time = 0.15 SECONDS, dir = WEST)
+	animate(pixel_y = (A.pixel_y - 4), time = 0.15 SECONDS, dir = WEST)

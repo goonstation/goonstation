@@ -16,8 +16,9 @@ var/global/datum/antagWeighter/antagWeighter
 		src.debug = debugMode ? debugMode : 0
 
 		//All picks during ass day are random
-		if (it_is_ass_day)
+#if ASS_JAM
 			src.variance = 100
+#endif
 
 
 	proc/debugLog(msg)
@@ -331,8 +332,9 @@ var/global/datum/antagWeighter/antagWeighter
 			count++
 
 		//Selections during ass day don't count for weighting (but we still want to record that sweet sweet data yo)
-		if (it_is_ass_day)
+#if ASS_JAM
 			apiPlayers["assday"] = 1
+#endif
 
 		if (src.debug)
 			src.debugLog("Players list sending to API: [json_encode(apiPlayers)]")

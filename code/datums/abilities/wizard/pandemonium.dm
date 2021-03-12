@@ -19,7 +19,7 @@
 		var/list/available_effects = list("babel", "boost", "roar", "signaljam", "grilles", "meteors")
 
 		var/protectuser = 1
-		if (!holder.owner.wizard_spellpower())
+		if (!holder.owner.wizard_spellpower(src))
 			boutput(holder.owner, "<span class='alert'>Without your staff to focus your spell, it may backfire!</span>")
 			protectuser = 0
 
@@ -104,7 +104,7 @@
 					continue
 				if(check_target_immunity( N )) continue
 				N.apply_flash(30, 5)
-		if(N.client) shake_camera(N, 6, 4)
+		if(N.client) shake_camera(N, 6, 16)
 
 /mob/living/proc/PAND_Meteors(var/protectuser = 1)
 	for(var/mob/O in AIviewers(src, null)) O.show_message(text("<span class='alert'><B>[]</B> summons meteors!</span>", src), 1)
@@ -123,6 +123,7 @@
 			continue
 		if (ishuman(H) && H.traitHolder && (H.traitHolder.hasTrait("training_chaplain")))
 			H.show_text("You are immune to [src]'s screech!", "blue")
+			JOB_XP(H, "Chaplain", 2)
 			continue
 		if (iswizard(H))
 			continue

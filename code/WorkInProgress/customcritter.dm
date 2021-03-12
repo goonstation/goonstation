@@ -539,7 +539,6 @@ var/global/datum/critterCreatorHolder/critter_creator_controller = new()
 			gibs(C.loc, list())
 		else
 			robogibs(C.loc, list())
-		C.loc = null
 		qdel(C)
 
 /datum/critterDeath/explode
@@ -579,7 +578,6 @@ var/global/datum/critterCreatorHolder/critter_creator_controller = new()
 		var/L = C.loc
 		SPAWN_DBG (delay)
 			explosion_new(C, L, power)
-			C.loc = null
 			qdel(C)
 
 /datum/critterDeath/smoke
@@ -622,7 +620,6 @@ var/global/datum/critterCreatorHolder/critter_creator_controller = new()
 			holder.my_atom = C
 			holder.add_reagent(reagent, 50)
 			smoke_reaction(holder, 4, L)
-			C.loc = null
 			qdel(C)
 
 /datum/critterEvent
@@ -1331,7 +1328,7 @@ var/global/datum/critterCreatorHolder/critter_creator_controller = new()
 				if (!T)
 					return
 				C.set_loc(T)
-				C.dir = pick(1,2,4,8)
+				C.set_dir(pick(1,2,4,8))
 				C.tokenized_message(frenzy_attack, atmob)
 				C.play_optional_sound(frenzy_attack_sound)
 				C.dodamage(atmob, attacktype, max(rand(attack_power), rand(attack_power)))
@@ -1427,6 +1424,7 @@ var/global/datum/critterCreatorHolder/critter_creator_controller = new()
 	var/sound/shockwave_sound
 
 	New()
+		..()
 		dummyHolder = new()
 		ability = new()
 		dummyHolder.abilities += ability
@@ -1497,6 +1495,7 @@ var/global/datum/critterCreatorHolder/critter_creator_controller = new()
 	abstract = 0
 
 	New()
+		..()
 		template = new /obj/critter/domestic_bee
 		stattype = /obj/critter/domestic_bee
 
@@ -1981,17 +1980,17 @@ var/global/datum/critterCreatorHolder/critter_creator_controller = new()
 	proc/show_interface(var/mob/M)
 		if (!template)
 			create_template()
-		var/output = "<html><head><style>"
-		output += {"
-body { font-family: monospace; white-space: pre-wrap; font-size: 0.5em; }
-table { width: 100%; text-align: left; border: none; border-spacing: 0; border-collapse: collapse; }
-tr { border:none; }
-td { border:none; vertical-align: top; }
-th.half, td.half { width: 50%; }
-td.title { font-size: 1.4em; font-weight: bold; text-align: center; }
-.subtitle { font-size: 1.2em; font-weight: bold; }
-.attribute-name { font-weight: bold; }
-.active { font-weight: bold; }
+		var/output = {"
+	<style type='text/css'>
+		body { font-family: Consolas, monospace; white-space: pre-wrap; }
+		table { width: 100%; text-align: left; border: none; border-spacing: 0; border-collapse: collapse; font-size: 110%; }
+		tr { border:none; }
+		td { border:none; vertical-align: top; }
+		th.half, td.half { width: 50%; }
+		td.title { font-size: 1.4em; font-weight: bold; text-align: center; }
+		.subtitle { font-size: 1.2em; font-weight: bold; }
+		.attribute-name { font-weight: bold; }
+		.active { font-weight: bold; }
 		"}
 		output += "</style></head><body>"
 		output += "<table><tr><td colspan='2' class='title'>Critter creation kit</td></tr>"

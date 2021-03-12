@@ -26,8 +26,8 @@
 		O.special_data["charger"] = charger
 		charger.transforming = 1
 		charger.canmove = 0
-		charger.loc = O
-		O.dir = angle_to_dir(O.angle)
+		charger.set_loc(O)
+		O.set_dir(angle_to_dir(O.angle))
 		O.name = charger.name
 		O.icon = null
 		O.overlays += charger
@@ -48,7 +48,7 @@
 		dummy.alpha = 255
 		dummy.pixel_x = O.pixel_x
 		dummy.pixel_y = O.pixel_y
-		dummy.dir = O.dir
+		dummy.set_dir(O.dir)
 		animate(dummy, alpha=0, time=3)
 		SPAWN_DBG(0.3 SECONDS)
 			qdel(dummy)
@@ -95,10 +95,10 @@
 		var/mob/charger = O.special_data["charger"] //can somehow get a null value???
 		charger.transforming = 0
 		charger.canmove = 1
-		charger.loc = get_turf(O)
-		charger.dir = get_dir(O.special_data["orig_turf"], charger.loc)
+		charger.set_loc(get_turf(O))
+		charger.set_dir(get_dir(O.special_data["orig_turf"], charger.loc))
 		if (!charger.loc)
-			charger.loc = O.special_data["valid_loc"]
+			charger.set_loc(O.special_data["valid_loc"])
 
 /datum/targetable/critter/slam
 	name = "Slam"

@@ -52,11 +52,11 @@
 		T.visible_message("<span class='alert'>[src] shatters!</span>")
 		playsound(T, pick('sound/impact_sounds/Glass_Shatter_1.ogg','sound/impact_sounds/Glass_Shatter_2.ogg','sound/impact_sounds/Glass_Shatter_3.ogg'), 100, 1)
 		var/obj/item/raw_material/shard/glass/G = unpool(/obj/item/raw_material/shard/glass)
-		G.set_loc(T)
+		G.set_loc(src.loc)
 
 		qdel(src)
 
-	throw_impact(var/atom/A)
+	throw_impact(atom/A, datum/thrown_thing/thr)
 		var/turf/T = get_turf(A)
 		..()
 		src.smash(T)
@@ -99,7 +99,7 @@
 		playsound(T, 'sound/impact_sounds/Slimy_Splat_1.ogg', 100, 1)
 		qdel(src)
 
-	throw_impact(var/atom/A)
+	throw_impact(atom/A, datum/thrown_thing/thr)
 		var/turf/T = get_turf(A)
 		..()
 		src.smash(T)

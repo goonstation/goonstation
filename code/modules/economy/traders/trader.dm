@@ -45,6 +45,7 @@
 	var/currently_selling = 0 //Are we currently processing an order?
 
 	New()
+		..()
 		src.current_message = pick(src.dialogue_greet)
 		src.patience = rand(src.base_patience[1],src.base_patience[2])
 		if (src.max_goods_buy > src.base_goods_buy.len)
@@ -162,7 +163,7 @@
 		src.currently_selling = 0 //At this point the shopping cart has been processed
 		var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency("1149")
 		var/datum/signal/pdaSignal = get_free_signal()
-		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=MGD_CARGO, "sender"="00000000", "message"="Deal with \"[src.name]\" concluded. Total Cost: [total_price] credits")
+		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT", "group"=list(MGD_CARGO, MGA_SALES), "sender"="00000000", "message"="Deal with \"[src.name]\" concluded. Total Cost: [total_price] credits")
 		pdaSignal.transmission_method = TRANSMISSION_RADIO
 		transmit_connection.post_signal(null, pdaSignal)
 		shippingmarket.receive_crate(S)

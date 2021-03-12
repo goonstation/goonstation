@@ -9,16 +9,17 @@
 	var/maxitems = 50
 	var/list/allowed = list(/obj/item/)
 	var/itemstring = "items"
+	inventory_counter_enabled = 1
 
 
 	New()
-		src.satchel_updateicon()
 		..()
+		src.satchel_updateicon()
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		var/proceed = 0
 		for(var/check_path in src.allowed)
-			if(istype(W, check_path))
+			if(istype(W, check_path) && W.w_class < 4)
 				proceed = 1
 				break
 		if (!proceed)
@@ -57,7 +58,7 @@
 				var/obj/item/getItem = null
 
 				if (src.contents.len > 1)
-					if (usr.a_intent == INTENT_GRAB)
+					if (user.a_intent == INTENT_GRAB)
 						getItem = src.search_through(user)
 
 					else
@@ -70,7 +71,7 @@
 					getItem = src.contents[1]
 
 				if (getItem)
-					user.visible_message("<span class='notice'><b>[usr]</b> takes \a [getItem.name] out of \the [src].</span>",\
+					user.visible_message("<span class='notice'><b>[user]</b> takes \a [getItem.name] out of \the [src].</span>",\
 					"<span class='notice'>You take \a [getItem.name] from [src].</span>")
 					user.put_in_hand_or_drop(getItem)
 					src.satchel_updateicon()
@@ -112,7 +113,8 @@
 	MouseDrop_T(atom/movable/O as obj, mob/user as mob)
 		var/proceed = 0
 		for(var/check_path in src.allowed)
-			if(istype(O, check_path))
+			var/obj/item/W = O
+			if(istype(O, check_path) && W.w_class < 4)
 				proceed = 1
 				break
 		if (!proceed)
@@ -162,6 +164,7 @@
 				src.overlays += image('icons/obj/items/items.dmi', "satcounter5")
 
 		signal_event("icon_updated")
+		src.inventory_counter?.update_number(src.contents.len)
 
 	get_desc()
 		return "It contains [src.contents.len]/[src.maxitems] [src.itemstring]."
@@ -174,7 +177,7 @@
 		icon_state = "hydrosatchel"
 		allowed = list(/obj/item/seed,
 		/obj/item/plant,
-		/obj/item/reagent_containers/food,
+		/obj/item/reagent_containers/food/snacks,
 		/obj/item/organ,
 		/obj/item/clothing/head/butt,
 		/obj/item/parts/human_parts/arm,

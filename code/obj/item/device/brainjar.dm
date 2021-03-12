@@ -36,13 +36,11 @@
 		update_icon()
 
 	disposing()
-		if(controller)
-			controller.ghostize()
+		controller?.ghostize()
 		..()
 
 	disposing()
-		if(controller)
-			controller.ghostize()
+		controller?.ghostize()
 		..()
 
 	complete

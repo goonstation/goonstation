@@ -9,7 +9,7 @@
 	soundproofing = 3
 	throwforce = 50 //ouch
 	can_flip_bust = 1
-	event_handler_flags = USE_FLUID_ENTER | USE_CHECKEXIT | USE_CANPASS
+	event_handler_flags = USE_FLUID_ENTER | USE_CHECKEXIT | USE_CANPASS | NO_MOUSEDROP_QOL
 
 	get_desc()
 		. = ..()
@@ -19,7 +19,9 @@
 	update_icon()
 		..()
 		if(src.delivery_destination)
-			src.overlays += "crate-barcode"
+			src.UpdateOverlays(image(src.icon, "crate-barcode"), "barcode")
+		else
+			src.UpdateOverlays(null, "barcode")
 
 
 	CanPass(atom/movable/mover, turf/target)
@@ -31,6 +33,34 @@
 		if(istype(O, /obj/projectile))
 			return 1
 		return ..()
+
+// Gore delivers new crates - woo!
+/obj/storage/secure/crate/dan
+	name = "Discount Dans cargo crate"
+	desc = "Because space is not available!"
+	icon_state = "dd_freezer"
+	icon_opened = "dd_freezeropen"
+	icon_closed = "dd_freezer"
+
+	beverages
+		name = "Discount Dans beverages crate"
+		desc = "Contents vary from sugar-shockers to pure poison."
+		spawn_contents = list(/obj/item/reagent_containers/food/drinks/noodlecup = 2,
+		/obj/item/reagent_containers/food/drinks/peach = 2,
+		/obj/item/reagent_containers/food/drinks/covfefe = 2,
+		/obj/item/reagent_containers/food/drinks/bottle/spooky = 2,
+		/obj/item/reagent_containers/food/drinks/bottle/spooky2 = 2,
+		/obj/item/reagent_containers/food/drinks/bottle/gingerale = 2,
+		/obj/item/reagent_containers/food/drinks/bottle/drowsy = 2)
+
+	snacks
+		name = "Discount Dans 'edibles' crate"
+		desc = "Contents may hold many surprises or...just a quick way out."
+		spawn_contents = list(/obj/item/tvdinner = 2,
+		/obj/item/reagent_containers/food/snacks/strudel = 2,
+		/obj/item/reagent_containers/food/snacks/snack_cake/golden = 2,
+		/obj/item/reagent_containers/food/snacks/burrito = 2,
+		/obj/item/reagent_containers/food/snacks/snack_cake = 2)
 
 /obj/storage/crate/internals
 	name = "internals crate"
@@ -45,6 +75,7 @@
 	icon_state = "medicalcrate"
 	icon_opened = "medicalcrateopen"
 	icon_closed = "medicalcrate"
+
 
 /obj/storage/crate/medical/morgue
 	name = "morgue supplies crate"
@@ -214,7 +245,9 @@
 
 /obj/storage/crate/syndicate_surplus
 	var/ready = 0
+	grab_stuff_on_spawn = FALSE
 	New()
+		..()
 		SPAWN_DBG(2 SECONDS)
 			if (!ready)
 				spawn_items()
@@ -227,7 +260,7 @@
 		if (islist(syndi_buylist_cache))
 			for (var/datum/syndicate_buylist/S in syndi_buylist_cache)
 				var/blocked = 0
-				if (ticker && ticker.mode && S.blockedmode && islist(S.blockedmode) && S.blockedmode.len)
+				if (ticker?.mode && S.blockedmode && islist(S.blockedmode) && S.blockedmode.len)
 					for (var/V in S.blockedmode)
 						if (ispath(V) && istype(ticker.mode, V))
 							blocked = 1
@@ -242,7 +275,7 @@
 				if(telecrystals + item_datum.cost > 24) continue
 				var/obj/item/I = new item_datum.item(src)
 				if (owner)
-					item_datum.run_on_spawn(I, owner)
+					item_datum.run_on_spawn(I, owner, TRUE)
 					if (owner.mind)
 						owner.mind.traitor_crate_items += item_datum
 				telecrystals += item_datum.cost
@@ -257,6 +290,26 @@
 	New()
 		..()
 		src.setMaterial(getMaterial("cardboard"), appearance = 0, setname = 0)
+
+/obj/storage/crate/bee
+	name = "Bee crate"
+	desc = "A crate with a picture of a bee on it. Buzz."
+	icon_state = "beecrate"
+	density = 1
+	icon_opened = "beecrateopen"
+	icon_closed = "beecrate"
+
+	loaded
+		spawn_contents = list(/obj/item/bee_egg_carton = 5)
+
+		var/blog = ""
+
+		make_my_stuff()
+			.=..()
+			if (.)
+				for(var/obj/item/bee_egg_carton/carton in src)
+					carton.ourEgg.blog += blog
+				return 1
 
 // New crates woo. (Gannets)
 
@@ -276,6 +329,7 @@
 /obj/storage/crate/wooden
 	name = "wooden crate"
 	desc = "A wooden crate."
+	icon_state = "woodencrate1"
 	New()
 		var/n = rand(1,9)
 		icon_state = "woodencrate[n]"
@@ -288,6 +342,38 @@
 	name = "Loot Crate"
 	desc = "A small, cuboid object with a hinged top and loot filled interior."
 	spawn_contents = list(/obj/random_item_spawner/loot_crate/surplus)
+
+/obj/storage/crate/chest
+	name = "treasure chest"
+	desc = "Glittering gold, trinkets and baubles, paid for in blood."
+	icon = 'icons/obj/32x48.dmi'
+	icon_state = "chest"
+	icon_opened = "chest-open"
+	icon_closed = "chest"
+
+	New()
+		..()
+		src.setMaterial(getMaterial("wood"), appearance = 0, setname = 0)
+
+/obj/storage/crate/chest/coins
+	var/coins_count_min = 5
+	var/coins_count_max = 50
+	New()
+		..()
+		var/coins_count = rand(coins_count_min, coins_count_max)
+		for(var/i in 1 to coins_count)
+			var/obj/item/coin/coin = new(src)
+			coin.pixel_x = rand(-9, 9)
+			coin.pixel_y = rand(0, 6)
+
+/obj/storage/crate/chest/spacebux
+	New()
+		..()
+		var/bux_count = rand(3, 10)
+		for(var/i in 1 to bux_count)
+			var/obj/item/spacebux/bux = new(src, pick(10, 20, 50, 100, 200, 500))
+			bux.pixel_x = rand(-9, 9)
+			bux.pixel_y = rand(0, 6)
 
 // Gannets' Nuke Ops Specialist Class Crates
 
@@ -305,7 +391,7 @@
 		spawn_contents = list(/obj/item/gun/kinetic/grenade_launcher,
 		/obj/item/storage/pouch/grenade_round,
 		/obj/item/storage/grenade_pouch/mixed_explosive,
-		/obj/item/clothing/suit/space/syndicate/specialist,
+		/obj/item/clothing/suit/space/syndicate/specialist/grenadier,
 		/obj/item/clothing/head/helmet/space/syndicate/specialist)
 
 	heavy
@@ -355,10 +441,21 @@
 		name = "Class Crate - Combat Medic"
 		desc = "A crate containing a Specialist Operative loadout. This one is packed with medical supplies, some poison and a syringe gun delivery system."
 		spawn_contents = list(/obj/item/gun/reagent/syringe,
-		/obj/item/reagent_containers/glass/bottle/syringe_canister/neurotoxin,
+		/obj/item/reagent_containers/glass/bottle/syringe_canister/neurotoxin = 2,
 		/obj/item/reagent_containers/emergency_injector/high_capacity/juggernaut,
-		/obj/item/storage/box/donkpocket_w_kit,
+		/obj/item/reagent_containers/emergency_injector/high_capacity/donk_injector,
 		/obj/item/clothing/glasses/healthgoggles/upgraded,
+		/obj/item/device/analyzer/healthanalyzer/borg,
+		/obj/item/storage/medical_pouch,
+		/obj/item/storage/belt/syndicate_medic_belt,
+		/obj/item/storage/backpack/satchel/syndie/syndicate_medic_satchel,
+		/obj/item/clothing/suit/space/syndicate/specialist/medic,
+		/obj/item/clothing/head/helmet/space/syndicate/specialist/medic)
+
+	medic_rework
+		name = "Class Crate - Field Medic"
+		desc = "A crate containing a Specialist Operative loadout. This one is packed with medical supplies."
+		spawn_contents = list(/obj/item/clothing/glasses/healthgoggles/upgraded,
 		/obj/item/device/analyzer/healthanalyzer/borg,
 		/obj/item/storage/medical_pouch,
 		/obj/item/storage/belt/syndicate_medic_belt,
@@ -372,8 +469,8 @@
 		spawn_contents = list(/obj/item/paper/nast_manual,
 		/obj/item/turret_deployer,
 		/obj/item/wrench/battle,
-		/obj/item/gun/kinetic/spes,
-		/obj/item/storage/pouch/shotgun,
+		/obj/item/gun/kinetic/spes/engineer,
+		/obj/item/storage/pouch/shotgun/weak,
 		/obj/item/weldingtool/high_cap,
 		/obj/item/storage/belt/utility/prepared,
 		/obj/item/clothing/glasses/meson,
@@ -383,9 +480,8 @@
 	pyro
 		name = "Class Crate - Firebrand"
 		desc = "A crate containing a Specialist Operative loadout."
-		spawn_contents = list(/obj/item/flamethrower/loaded/napalm,
+		spawn_contents = list(/obj/item/gun/flamethrower/backtank/napalm,
 		/obj/item/fireaxe,
-		/obj/item/reagent_containers/food/drinks/fueltank/napalm = 2,
 		/obj/item/storage/grenade_pouch/incendiary,
 		/obj/item/clothing/suit/space/syndicate/specialist/firebrand,
 		/obj/item/clothing/head/helmet/space/syndicate/specialist/firebrand)
@@ -559,4 +655,8 @@
 	weapons4
 		spawn_contents = list(/obj/item/gun/kinetic/zipgun,
 		/obj/item/ammo/bullets/a38 = 2)
+
+	cargonia
+		spawn_contents = list(/obj/item/radio_tape/advertisement/cargonia,
+		/obj/item/clothing/under/rank/cargo,/obj/decal/skeleton)
 

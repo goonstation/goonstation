@@ -7,7 +7,7 @@
 	if (!src.holder)
 		boutput(src, "Only administrators may use this command.")
 		return
-	if (alert(src, "Are you sure you want to gib [M]?", "Confirmation", "Yes", "No") == "Yes")
+	if (tgui_alert(src.mob, "Are you sure you want to gib [M]?", "Confirmation", list("Yes", "No")) == "Yes")
 		if(usr.key != M.key && M.client)
 			logTheThing("admin", usr, M, "has gibbed [constructTarget(M,"admin")]")
 			logTheThing("diary", usr, M, "has gibbed [constructTarget(M,"diary")]", "admin")
@@ -38,7 +38,7 @@
 		boutput(src, "Only administrators may use this command.")
 		return
 
-	if (alert(src, "Are you sure you want to gib [M]?", "Confirmation", "Yes", "No") == "Yes")
+	if (tgui_alert(src.mob, "Are you sure you want to gib [M]?", "Confirmation", list("Yes", "No")) == "Yes")
 		if(usr.key != M.key && M.client)
 			logTheThing("admin", usr, M, "has partygibbed [constructTarget(M,"admin")]")
 			logTheThing("diary", usr, M, "has partygibbed [constructTarget(M,"diary")]", "admin")
@@ -55,7 +55,7 @@
 		boutput(src, "Only administrators may use this command.")
 		return
 
-	if (alert(src, "Are you sure you want to gib [M]?", "Confirmation", "Yes", "No") == "Yes")
+	if (tgui_alert(src.mob, "Are you sure you want to gib [M]?", "Confirmation", list("Yes", "No")) == "Yes")
 		if(usr.key != M.key && M.client)
 			logTheThing("admin", usr, M, "has owlgibbed [constructTarget(M,"admin")]")
 			logTheThing("diary", usr, M, "has owlgibbed [constructTarget(M,"diary")]", "admin")
@@ -72,7 +72,7 @@
 		boutput(src, "Only administrators may use this command.")
 		return
 
-	if (alert(src, "Are you sure you want to gib [M]?", "Confirmation", "Yes", "No") == "Yes")
+	if (tgui_alert(src.mob, "Are you sure you want to gib [M]?", "Confirmation", list("Yes", "No")) == "Yes")
 		if(usr.key != M.key && M.client)
 			logTheThing("admin", usr, M, "has firegibbed [constructTarget(M,"admin")]")
 			logTheThing("diary", usr, M, "has firegibbed [constructTarget(M,"diary")]", "admin")
@@ -89,7 +89,7 @@
 		boutput(src, "Only administrators may use this command.")
 		return
 
-	if (alert(src, "Are you sure you want to gib [M]?", "Confirmation", "Yes", "No") == "Yes")
+	if (tgui_alert(src.mob, "Are you sure you want to gib [M]?", "Confirmation", list("Yes", "No")) == "Yes")
 		if(usr.key != M.key && M.client)
 			logTheThing("admin", usr, M, "has elecgibbed [constructTarget(M,"admin")]")
 			logTheThing("diary", usr, M, "has elecgibbed [constructTarget(M,"diary")]", "admin")
@@ -110,13 +110,13 @@
 		boutput(src, "<span class='alert'>Only humans can be icegibbed.</span>")
 		return
 
-	if (alert(src, "Are you sure you want to gib [M]?", "Confirmation", "Yes", "No") == "Yes")
+	if (tgui_alert(src.mob, "Are you sure you want to gib [M]?", "Confirmation", list("Yes", "No")) == "Yes")
 		if(usr.key != M.key && M.client)
 			logTheThing("admin", usr, M, "has icegibbed [constructTarget(M,"admin")]")
 			logTheThing("diary", usr, M, "has icegibbed [constructTarget(M,"diary")]", "admin")
 			message_admins("[key_name(usr)] has icegibbed [key_name(M)]")
 
-		SPAWN_DBG(0.5 SECONDS) M:become_ice_statue()
+		SPAWN_DBG(0.5 SECONDS) M.become_statue_ice()
 
 /client/proc/cmd_admin_goldgib(mob/M as mob in world)
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
@@ -131,14 +131,14 @@
 		boutput(src, "<span class='alert'>Only humans can be goldgibbed.</span>")
 		return
 
-	if (alert(src, "Are you sure you want to gib [M]?", "Confirmation", "Yes", "No") == "Yes")
+	if (tgui_alert(src.mob, "Are you sure you want to gib [M]?", "Confirmation", list("Yes", "No")) == "Yes")
 		if(usr.key != M.key && M.client)
 			logTheThing("admin", usr, M, "has goldgibbed [constructTarget(M,"admin")]")
 			logTheThing("diary", usr, M, "has goldgibbed [constructTarget(M,"diary")]", "admin")
 			message_admins("[key_name(usr)] has goldgibbed [key_name(M)]")
 
 		M.desc = "A dumb looking statue. Very shiny, though."
-		SPAWN_DBG(0.5 SECONDS) M:become_gold_statue()
+		SPAWN_DBG(0.5 SECONDS) M.become_statue(getMaterial("gold"))
 
 /client/proc/cmd_admin_spidergib(mob/M as mob in world)
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
@@ -153,7 +153,7 @@
 		boutput(src, "<span class='alert'>Only humans can be spidergibbed.</span>")
 		return
 
-	if (alert(src, "Are you sure you want to gib [M]?", "Confirmation", "Yes", "No") == "Yes")
+	if (tgui_alert(src.mob, "Are you sure you want to gib [M]?", "Confirmation", list("Yes", "No")) == "Yes")
 		if(usr.key != M.key && M.client)
 			logTheThing("admin", usr, M, "has spidergibbed [constructTarget(M,"admin")]")
 			logTheThing("diary", usr, M, "has spidergibbed [constructTarget(M,"diary")]", "admin")
@@ -174,7 +174,7 @@
 		boutput(src, "<span class='alert'>Only humans can be imploded.</span>")
 		return
 
-	if (alert(src, "Are you sure you want to gib [M]?", "Confirmation", "Yes", "No") == "Yes")
+	if (tgui_alert(src.mob, "Are you sure you want to gib [M]?", "Confirmation", list("Yes", "No")) == "Yes")
 		if(usr.key != M.key && M.client)
 			logTheThing("admin", usr, M, "has imploded [constructTarget(M,"admin")]")
 			logTheThing("diary", usr, M, "has imploded [constructTarget(M,"diary")]", "admin")
@@ -195,7 +195,7 @@
 		boutput(src, "<span class='alert'>Only humans can be buttgibbed.</span>")
 		return
 
-	if (alert(src, "Are you sure you want to gib [M]?", "Confirmation", "Yes", "No") == "Yes")
+	if (tgui_alert(src.mob, "Are you sure you want to gib [M]?", "Confirmation", list("Yes", "No")) == "Yes")
 		if(usr.key != M.key && M.client)
 			logTheThing("admin", usr, M, "has buttgibbed [constructTarget(M,"admin")]")
 			logTheThing("diary", usr, M, "has buttgibbed [constructTarget(M,"diary")]", "admin")
@@ -213,7 +213,7 @@
 		boutput(src, "Only administrators may use this command.")
 		return
 
-	if (alert(src, "Are you sure you want to gib [M]?", "Confirmation", "Yes", "No") == "Yes")
+	if (tgui_alert(src.mob, "Are you sure you want to gib [M]?", "Confirmation", list("Yes", "No")) == "Yes")
 		var/duration = input("Input duration in 1/10ths of seconds (10 - 100)", "The Honkening", 30) as num
 		if(!duration) return
 		if(usr.key != M.key && M.client)
@@ -233,7 +233,7 @@
 		boutput(src, "Only administrators may use this command.")
 		return
 
-	if (alert(src, "Are you sure you want to damn [M]?", "Confirmation", "Yes", "No") == "Yes")
+	if (tgui_alert(src.mob, "Are you sure you want to damn [M]?", "Confirmation", list("Yes", "No")) == "Yes")
 		if(usr.key != M.key && M.client)
 			logTheThing("admin", usr, M, "has damned [constructTarget(M,"admin")] to hell")
 			logTheThing("diary", usr, M, "has damned [constructTarget(M,"diary")] to hell", "admin")
@@ -251,7 +251,7 @@
 		boutput(src, "Only administrators may use this command.")
 		return
 
-	if (alert(src, "Are you sure you want to undamn [M]?", "Confirmation", "Yes", "No") == "Yes")
+	if (tgui_alert(src.mob, "Are you sure you want to undamn [M]?", "Confirmation", list("Yes", "No")) == "Yes")
 		if(usr.key != M.key && M.client)
 			logTheThing("admin", usr, M, "has undamned [constructTarget(M,"admin")] from hell")
 			logTheThing("diary", usr, M, "has undamned [constructTarget(M,"diary")] from hell", "admin")
@@ -276,7 +276,7 @@
 		O.mouse_opacity = 0
 		SPAWN_DBG(3.5 SECONDS)
 			qdel(O)
-	src.mob.gib()
+	src.mob.gib(FALSE, TRUE)
 
 /client/proc/cmd_admin_tysonban(mob/tysontarget as mob in world)
 	SET_ADMIN_CAT(ADMIN_CAT_UNUSED)
@@ -290,7 +290,7 @@
 		boutput(src, "Only administrators may use this command.")
 		return
 	else
-		switch(alert("Temporary Ban?",,"Yes","No"))
+		switch(tgui_alert(src.mob, "Ban [tysontarget]?", "Confirmation", list("Yes", "No")))
 			if("Yes")
 				var/tysonmins = input(usr,"How long (in minutes)?","Ban time",1440) as num
 				if(!tysonmins)
@@ -305,25 +305,12 @@
 				var/time = input(usr,"How long until it gives up and cheats? No relation to real time.","time","4") as num
 				if(!time)
 					return
-//				switch(startside)
-//					if(NORTH)
-//						starty = world.maxy-2
-//						startx = rand(2, world.maxx-2)
-//					if(EAST)
-//						starty = rand(2,world.maxy-2)
-//						startx = world.maxx-2
-//					if(SOUTH)
-//						starty = 2
-//						startx = rand(2, world.maxx-2)
-//					if(WEST)
-//						starty = rand(2, world.maxy-2)
-//						startx = 2
+
 				boutput(tysontarget, "Uh oh.")
 				tysontarget << sound('sound/misc/Boxingbell.ogg')
 				sleep(20 SECONDS)
 				startx = tysontarget.x - rand(-11, 11)
 				starty = tysontarget.y - rand(-11, 11)
-//				pickedstarter = get_turf(pick(tysontarget:range(10)))
 				var/turf/pickedstart = locate(startx, starty, tysontarget.z)
 				var/obj/bantyson/Q = new /obj/bantyson(pickedstart)
 				Q.tysonmins2 = tysonmins
@@ -332,11 +319,7 @@
 				Q.tysonreason = reason
 				Q.timelimit = time
 				Q.tysonspeed = speed
-//				boutput(tysontarget, "<span class='alert'><BIG><B>You have been banned by [usr.client.ckey].<br>Reason: [reason].</B></BIG></span>")
-//				boutput(tysontarget, "<span class='alert'>This is a temporary ban, it will be removed in [tysonmins] minutes.</span>")
-//				logTheThing("admin", usr, tysontarget, "has tysoned [constructTarget(src,"diary")]. Reason: [reason]. This will be removed in [tysonmins] minutes.")
 				logTheThing("diary", usr, tysontarget, "has tysoned [constructTarget(tysontarget,"diary")]. Reason: [reason]. This will be removed in [tysonmins] minutes.", "admin")
-//				message_admins("<span class='internal'>[usr.client.ckey] has banned [tysontarget.ckey].<br>Reason: [reason]<br>This will be removed in [tysonmins] minutes.</span>")
 
 /client/proc/cmd_admin_tysongib(mob/tysontarget as mob in world)
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
@@ -344,8 +327,6 @@
 	set popup_menu = 0
 	var/startx = 1
 	var/starty = 1
-//	var/startside = pick(cardinal)
-//	var/pickstarter = null
 	if(!isadmin(src))
 		boutput(src, "Only administrators may use this command.")
 		return
@@ -353,35 +334,16 @@
 	var/speed = input(usr,"How fast is Mike Tyson? Lower is faster.","speed","5") as num
 	if(!speed)
 		return
-//				switch(startside)
-//					if(NORTH)
-//						starty = world.maxy-2
-//						startx = rand(2, world.maxx-2)
-//					if(EAST)
-//						starty = rand(2,world.maxy-2)
-//						startx = world.maxx-2
-//					if(SOUTH)
-//						starty = 2
-//						startx = rand(2, world.maxx-2)
-//					if(WEST)
-//						starty = rand(2, world.maxy-2)
-//						startx = 2
+
 	boutput(tysontarget, "Uh oh.")
 	tysontarget << sound('sound/misc/Boxingbell.ogg')
 	startx = tysontarget.x - rand(-11, 11)
 	starty = tysontarget.y - rand(-11, 11)
-//				pickedstarter = get_turf(pick(tysontarget:range(10)))
 	var/turf/pickedstart = locate(startx, starty, tysontarget.z)
 	var/obj/gibtyson/Q = new /obj/gibtyson(pickedstart)
 	Q.tysontarget2 = tysontarget
 	Q.caller = usr
 	Q.tysonspeed = speed
-//				boutput(tysontarget, "<span class='alert'><BIG><B>You have been banned by [usr.client.ckey].<br>Reason: [reason].</B></BIG></span>")
-//				boutput(tysontarget, "<span class='alert'>This is a temporary ban, it will be removed in [tysonmins] minutes.</span>")
-//				logTheThing("admin", usr, tysontarget, "has tysoned [constructTarget(src,"diary")].<br>Reason: [reason]<br>This will be removed in [tysonmins] minutes.")
-//				logTheThing("diary", usr, tysontarget, "has tysoned [constructTarget(src,"diary")].<br>Reason: [reason]<br>This will be removed in [tysonmins] minutes.", "admin")
-//				message_admins("<span class='internal'>[usr.client.ckey] has banned [tysontarget.ckey].<br>Reason: [reason]<br>This will be removed in [tysonmins] minutes.</span>")
-
 
 /obj/bantyson/
 	name = "Mike Tyson"
@@ -441,7 +403,7 @@
 		for(var/mob/O in AIviewers(src, null))
 			O.show_message("<span class='alert'><B>[src]</B> bans [tysontarget2] in one punch!</span>", 1)
 		playsound(src.loc, 'sound/impact_sounds/generic_hit_3.ogg', 30, 1, -2)
-		if(tysontarget2 && tysontarget2.client)
+		if(tysontarget2?.client)
 			if(tysontarget2.client.holder)
 				boutput(tysontarget2, "Here is where you'd get banned.")
 				qdel(src)
@@ -461,12 +423,6 @@
 			message_admins("<span class='internal'>[caller?.client?.ckey] has tysonbanned [tysontarget2.ckey].<br>Reason: [tysonreason] and he couldn't escape the tyson.<br>This will be removed in [tysonmins2] minutes.</span>")
 			del(tysontarget2.client)
 			tysontarget2.gib()
-//			if(ishuman(tysontarget2))
-//				animation = new(src.loc)
-//				animation.icon_state = "blank"
-//				animation.icon = 'icons/mob/mob.dmi'
-//				animation.master = src
-//			if (tysontarget2:client)
 		playsound(src.loc, pick('sound/misc/Boxingbell.ogg'), 50, 0)
 		qdel(src)
 
@@ -519,11 +475,10 @@
 			for(var/mob/O in AIviewers(src, null))
 				O.show_message("<span class='alert'><B>[src]</B> KOs [tysontarget2] in one punch!</span>", 1)
 			playsound(src.loc, 'sound/impact_sounds/generic_hit_3.ogg', 30, 1, -2)
-			if(tysontarget2 && tysontarget2.client)
-				logTheThing("admin", caller:client, tysontarget2, "tysongibbed [constructTarget(tysontarget2,"admin")]")
-				logTheThing("diary", caller:client, tysontarget2, "tysongibbed [constructTarget(tysontarget2,"diary")]", "admin")
-				message_admins("<span class='internal'>[caller?.client?.ckey] has tysongibbed [tysontarget2.ckey].</span>")
-				tysontarget2.gib()
+			logTheThing("admin", caller:client, tysontarget2, "tysongibbed [constructTarget(tysontarget2,"admin")]")
+			logTheThing("diary", caller:client, tysontarget2, "tysongibbed [constructTarget(tysontarget2,"diary")]", "admin")
+			message_admins("<span class='internal'>[caller?.client?.ckey] has tysongibbed [tysontarget2] ([tysontarget2.ckey]).</span>")
+			tysontarget2.gib()
 			sleep(0.5 SECONDS)
 			playsound(src.loc, pick('sound/misc/knockout.ogg'), 50, 0)
 			sleep(0.5 SECONDS)

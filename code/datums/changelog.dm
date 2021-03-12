@@ -40,12 +40,12 @@ ATTENTION: The changelog has moved into its own file: strings/changelog.txt
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
 /proc/changelog_parse(var/changes, var/title, var/logclasses)
-	var/list/html=list()
+	var/list/html = list()
 	var/text = changes
 	if (!text)
 		logDiary("Failed to load changelog.")
 	else
-		html += "<ul class=\"log[logclasses]\"><li class=\"title\"><i class=\"icon-bookmark\"></i> [title] as of [vcs_revision]</li>"
+		html += "<ul class=\"log[logclasses]\"><li class=\"title\"><i class=\"icon-bookmark\"></i> [title] as of [copytext(vcs_revision, 1, 8)]</li>" //truncate to 7 long
 
 		var/list/collapsible_html = list()
 		var/added_collapsible_author = 0
@@ -151,7 +151,11 @@ ATTENTION: The changelog has moved into its own file: strings/changelog.txt
 									html += "th, "
 					html += "20[copytext(line, 15, 17)]</li>"
 				if("(u)")
+					#ifdef APRIL_FOOLS
+					author = "CodeDude"
+					#else
 					author = copytext(line, 4, 0)
+					#endif
 					added_collapsible_author = 0
 					added_author = 0
 					pr_num = null
@@ -161,7 +165,14 @@ ATTENTION: The changelog has moved into its own file: strings/changelog.txt
 						html += "<li class=\"admin\"><span><i class=\"icon-check\"></i> [author]</span> updated:"
 						if(emoji_labels)
 							var/list/emoji_parts = splittext(emoji_labels, "|")
+							#ifdef APRIL_FOOLS
+							var/random_em = ""
+							for(var/i in 1 to rand(1, 4))
+								random_em += random_emoji()
+							html += "<span class='emoji'>[random_em]"
+							#else
 							html += "<span class='emoji'>[emoji_parts[1]]"
+							#endif
 							if(emoji_parts.len > 1)
 								html += "<span class='tooltiptext'>[emoji_parts[2]]</span>"
 							html += "</span>"
@@ -192,10 +203,11 @@ ATTENTION: The changelog has moved into its own file: strings/changelog.txt
 		return html.Join()
 
 /datum/changelog/New()
-//<img alt="Goon Station 13" src="[resource("images/changelog/postcardsmall.jpg")]" class="postcard" />
+	..()
+//<img alt="Goonstation 13" src="[resource("images/changelog/postcardsmall.jpg")]" class="postcard" />
 
 	html = {"
-<h1>Goon Station 13 <a href="#license"><img alt="Creative Commons CC-BY-NC-SA License" src="[resource("images/changelog/88x31.png")]" /></a></h1>
+<h1>Goonstation 13 <a href="#license"><img alt="Creative Commons CC-BY-NC-SA License" src="[resource("images/changelog/88x31.png")]" /></a></h1>
 
 <ul class="links cf">
     <li>Official Wiki<br><strong><a target="_blank" href="http://wiki.ss13.co/">https://wiki.ss13.co</a></strong><span></span></li>
@@ -213,15 +225,15 @@ ATTENTION: The changelog has moved into its own file: strings/changelog.txt
 <p class="team">
     <strong>Host:</strong> Wire (#1, #2, Wiki, Forums, & more)<br>
 
-    <strong>Coders:</strong> stuntwaffle, Showtime, Pantaloons, Nannek, Keelin, Exadv1, hobnob, 0staf, sniperchance, AngriestIBM, BrianOBlivion, I Said No, Harmar, Dropsy, ProcitizenSA, Pacra, LLJK-Mosheninkov, JackMassacre, Jewel, Dr. Singh, Infinite Monkeys, Cogwerks, Aphtonites, Wire, BurntCornMuffin, Tobba, Haine, Marquesas, SpyGuy, Conor12, Daeren, Somepotato, MyBlueCorners, ZeWaka, Gannets, Kremlin, Flourish, Mordent, Cirrial, Grayshift, Firebarrage, Kyle, Azungar, Warcrimes, HydroFloric, Zamujasa, Gerhazo, & Readster
+    <strong>Coders:</strong> stuntwaffle, Showtime, Pantaloons, Nannek, Keelin, Exadv1, hobnob, 0staf, sniperchance, AngriestIBM, BrianOBlivion, I Said No, Harmar, Dropsy, ProcitizenSA, Pacra, LLJK-Mosheninkov, JackMassacre, Jewel, Dr. Singh, Infinite Monkeys, Cogwerks, Aphtonites, Wire, BurntCornMuffin, Tobba, Haine, Marquesas, SpyGuy, Conor12, Daeren, Somepotato, MyBlueCorners, ZeWaka, Gannets, Kremlin, Flourish, Mordent, Cirrial, Grayshift, Firebarrage, Kyle, Azungar, Warcrimes, HydroFloric, Zamujasa, Gerhazo, Readster, pali6, Tarmunora, & UrsulaMejor.
 		<br>
-    <strong>Spriters:</strong> Supernorn, Haruhi, Stuntwaffle, Pantaloons, Rho, SynthOrange, I Said No, Cogwerks, Aphtonites, Hempuli, Gannets, Haine, SLthePyro, Sundance, Azungar, Flaborized, and a bunch of awesome people from the forums!
+    <strong>Spriters:</strong> Supernorn, Haruhi, Stuntwaffle, Pantaloons, Rho, SynthOrange, I Said No, Cogwerks, Aphtonites, Hempuli, Gannets, Haine, SLthePyro, Sundance, Azungar, Flaborized, Erinexx, and a bunch of awesome people from the forums!
 </p>
 
 <p id="license" class="lic">
     <a target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/3.0/" name="license"><img alt="Creative Commons CC-BY-NC-SA License" src="[resource("images/changelog/88x31.png")]" /></a><br/>
 
     <em>
-    	Except where otherwise noted, Goon Station 13 is licensed under a <a target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/3.0/">Creative Commons Attribution-Noncommercial-Share Alike 3.0 License</a>.
+    	Except where otherwise noted, Goonstation 13 is licensed under a <a target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/3.0/">Creative Commons Attribution-Noncommercial-Share Alike 3.0 License</a>.
     </em>
 </p>"}

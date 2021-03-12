@@ -207,7 +207,7 @@
 /obj/item/reagent_containers/food/snacks/burger/monkeyburger
 	name = "monkeyburger"
 	desc = "The cornerstone of every nutritious breakfast."
-	icon_state = "mburger"
+	icon_state = "hburger"
 	food_effects = list("food_energized", "food_brute")
 
 /obj/item/reagent_containers/food/snacks/burger/butterburger
@@ -240,7 +240,7 @@
 		wrap_pathogen(reagents, generate_cold_pathogen(), 8)
 		#endif
 
-	heal(var/mob/M)
+	on_bite(obj/item/I, mob/M, mob/user)
 		#ifdef CREATE_PATHOGENS //PATHOLOGY REMOVAL
 		..()
 		#else
@@ -277,7 +277,7 @@
 /obj/item/reagent_containers/food/snacks/burger/synthburger
 	name = "synthburger"
 	desc = "A thoroughly artificial snack."
-	icon_state = "mburger"
+	icon_state = "hburger"
 	amount = 5
 	heal_amt = 2
 
@@ -291,7 +291,7 @@
 	initial_reagents = list("cholesterol"=5,"porktonium"=45)
 	food_effects = list("food_hp_up_big", "food_sweaty")
 
-	heal(var/mob/M)
+	on_bite(obj/item/I, mob/M, mob/user)
 		if(prob(25))
 			M.nutrition += 100
 		..()
@@ -304,10 +304,10 @@
 	heal_amt = 2
 	food_effects = list("food_hp_up_big", "food_sweaty")
 
-	heal(var/mob/M)
+	on_bite(obj/item/I, mob/M, mob/user)
 		if(prob(20))
 			var/obj/decal/cleanable/blood/gibs/gib = make_cleanable(/obj/decal/cleanable/blood/gibs, get_turf(src) )
-			gib.streak(M.dir)
+			gib.streak_cleanable(M.dir)
 			boutput(M, "<span class='alert'>You drip some meat on the floor</span>")
 			M.visible_message("<span class='alert'>[M] drips some meat on the floor!</span>")
 			playsound(M.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
@@ -323,7 +323,7 @@
 	heal_amt = 1
 	food_effects = list("food_bad_breath", "food_hp_up_big")
 
-	heal(var/mob/M)
+	on_bite(obj/item/I, mob/M, mob/user)
 		if(prob(8))
 			var/effect = rand(1,4)
 			switch(effect)
@@ -345,7 +345,7 @@
 /obj/item/reagent_containers/food/snacks/burger/cheeseburger
 	name = "cheeseburger"
 	desc = "Tasty, but not paticularly healthy."
-	icon_state = "hburger"
+	icon_state = "cburger"
 	amount = 6
 	heal_amt = 2
 	food_effects = list("food_brute", "food_burn")
@@ -353,11 +353,11 @@
 /obj/item/reagent_containers/food/snacks/burger/cheeseburger_m
 	name = "monkey cheese burger"
 	desc = "How very dadaist."
-	icon_state = "hburger"
+	icon_state = "cburger"
 	amount = 6
 	heal_amt = 2
 
-	heal(var/mob/M)
+	on_bite(obj/item/I, mob/M, mob/user)
 		if(prob(3) && ishuman(M))
 			boutput(M, "<span class='alert'>You wackily and randomly turn into a lizard.</span>")
 			M.set_mutantrace(/datum/mutantrace/lizard)
@@ -389,6 +389,7 @@
 	throwforce = 10
 	initial_volume = 330
 	initial_reagents = list("cholesterol"=200)
+	unlock_medal_when_eaten = "That's no moon, that's a GOURMAND!"
 	food_effects = list("food_hp_up_big", "food_sweaty_big", "food_bad_breath", "food_warm")
 
 /obj/item/reagent_containers/food/snacks/burger/vr
@@ -430,3 +431,14 @@
 	desc = "Wait a minute... this has no real meat in it."
 	icon_state = "coconutburger"
 	food_effects = list("food_refreshed_big", "food_hp_up")
+
+/obj/item/reagent_containers/food/snacks/burger/chicken
+	name = "chicken sandwich"
+	desc = "A delicious chicken sandwich."
+	icon_state = "chickenburger"
+
+/obj/item/reagent_containers/food/snacks/burger/chicken/spicy
+	name = "spicy chicken sandwich"
+	desc = "A delicious chicken sandwich with a bit of a kick."
+	icon_state = "chickenburger-spicy"
+	initial_reagents = list("capsaicin"=15)

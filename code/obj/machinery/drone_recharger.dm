@@ -17,6 +17,12 @@
 	New()
 		..()
 
+	disposing()
+		if(occupant)
+			occupant.set_loc(get_turf(src.loc))
+			occupant = null
+		..()
+
 	process()
 		if(!(status & BROKEN))
 			if (occupant)
@@ -73,7 +79,7 @@
 			src.occupant = G
 			src.updateSprite()
 			G.charging = 1
-			G.dir = SOUTH
+			G.set_dir(SOUTH)
 			G.updateSprite()
 			G.canmove = 1
 

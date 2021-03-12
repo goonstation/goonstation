@@ -1,3 +1,100 @@
+(t)tue mar 09 21
+(u)BatElite
+(*)Added revert turf visuals buildmode tool, which undoes floor and wall planner replacements.
+(t)mon mar 08 21
+(u)kyle
+(*)Change to Show Rules to Player verb. Now lets you choose between playing a pleasant ping sound and the loud klaxon.
+(t)mon feb 01 21
+(u)pali
+(*)Build mode now has a numberic keybind bar! Middle-clicking current mode or pressing shift+number will add a copy of the current mode to the hotbar. Middleclicking the hotbar removes a mode. Pressing the number key on your keyboard switches to the mode. You can even have multiple copies of the same mode, each with different settings.
+(t)wed jan 27 21
+(u)pali
+(*)The admin interact menu (~ + click) now has a Copy Here option which makes a deep copy of the object or mob on your tile. This is experimental and there might be bugs. Build mode tool coming soon™.
+(*)The copy paste thing is now also in Build Mode. It can also give a copy of a thing to every living player.
+(t)tue jan 26 21
+(u)pali
+(*)You can now ban people from praying in the Chat Bans menu.
+(t)tue jan 19 21
+(u)Sovexe
+(*)New admin verb, Disco Lights. Sets every light on the station to a random color.
+(t)tue jan 10 21
+(u)Sovexe
+(*)Add new buildmode tool, maze. Spawns in a maze of your desired turfs and lighting. Works best in larger areas.
+(t)sat jan 09 21
+(u)pali
+(*)New verb give-player-pets which is like give-pets but only for living mobs which have connected clients. Also both of the verbs now accept the path as an argument in the command bar.
+(*)Moved "Force Say" in the player panel to the Common category. Now available for NPCs. (Very useful for shenanigans.)
+(u)Flourish
+(*)New verb beepsay which makes Beepsky say stuff. Also in general you can call the "speak" proc on any bot with a text argument to make them say the text.
+(t)wed dec 09 20
+(u)Flourish
+(*)Adds a new verb, whodead. Gives you a list of everyone who's dead so you don't have to manually go through the player panel.
+(t)sun dec 06 20
+(u)Sovexe
+(*)Adds a new verb, Summon Office. Summons your fully interactable office to you through visual mirror magic. Objects placed on tables will be warped away when you dismiss the office. Use with caution if your office has dangerous stuff.
+(t)fri dec 04 20
+(u)Mordent
+(*)Removed "Emergency Restart" verb from the Server panel, still available on the command line if you need it for some reason.
+(t)tue nov 24 20
+(u)Sovexe
+(*)Added a new buildmode tool, Location. Let's you easily warp around mobs and objects, and easily put things inside of other things.
+(t)mon nov 11 20
+(u)pali
+(*)Verbs "VPN Whitelist Add" and "VPN Whitelist Remove" now exist. Supply them with a ckey to remove / add them to the VPN whitelist.
+(t)sat nov 07 20
+(u)Sovexe
+(*)New buildmode mode, Appearance. Allows you to copy the appearance of any mob/obj/turf and apply it to any other mob/obj/turf.
+(t)tue oct 27 20
+(u)Sovexe
+(*)New verb, Spawn-Demonically.
+(t)wed oct 07 20
+(u)Sovexe
+(+)Oceanify no longer overwrites trench hole turfs.
+(t)tue oct 06 20
+(u)Sovexe
+(*)Added audible ahelps and dectalk ahelps in admin preferences. Only applies to the initial F1 messages not replies.
+(t)sun sep 21 20
+(u)kyle
+(*)Edit vars screen now lets you add matrices to variables, like transform. Must provide variables in format:a,b,c,d,e,f as text. Useful for manually changing a transform var via matrix math.
+(t)fri sep 19 20
+(u)kyle
+(*)New admin verb Retreat-To-Office. Use it to go directly to your own admin office. It determins which office to go to by ckey, I might be missing one or two people so leme know if I forgot you.
+(t)wed sep 09 20
+(u)pali
+(*)Debug Overlays now has an alias Info Overlays available in the Server tab
+(*)Made the overlays more user friendly.
+(*)Added Area Power overlay and Blood Owner overlay
+(t)tue sep 08 20
+(u)pali
+(*)Added debug overlays: Wet Floors and Last Touched (shows the ckey of last person to touch things at a tile), includes a version that ignores items
+(t)sun aug 23 20
+(u)Zamujasa
+(*)Round start has a few more details in the countdown.
+(*)Round start countdown begins IMMEDIATELY rather than waiting.
+(*)Round start will hold at 30 seconds if the game isn't done being set up yet.
+(*)Messing with the game panel and the like still needs to wait until "Ready" in the list.
+(*)tgui interfaces like the dj panel should work immediately but probably won't auto-update
+(t)mon aug 17 20
+(u)pali
+(*)Proc calling is now available to Administrator rank.
+(*)View Variables now doesn't scroll up every time you edit a var.
+(*)Calling procs is now a bit more user friendly (it tells you when the proc doesn't exist, no need to remember whether to prefix with `proc/` or not, return value is shown better, it tells you when an exception happens).
+(*)View Variables now has a List Procs button that shows you a clickable list of all procs of that object. First time it gets built it might take some time (and maybe cause some lag). Game Panel has a button to look at global procs.
+(t)tue aug 11 20
+(u)pali
+(*)Admin Interact (~ + click) is now also accessible from View Variables.
+(t)wed aug 05 20
+(u)Sovexe
+(*)Added new command Spawn-Supplydrop along with a Supplydrop cinematic effect for build mode spawning.
+(t)tue aug 04 20
+(u)Zamujasa
+(*)Player notes now show multiline data properly. Maybe. I didn't test this. vOv
+(t)mon jul 24 20
+(u)Sovexe
+(*)New Ability Management Panel accesible in player options and tilde menu.
+(t)thu jul 23 20
+(u)Sovexe
+(*)Added the meowitzer.
 (t)fri jul 17 20
 (u)Kyle
 (*)Add button in secrets panel to add an ability to a selected mob or to all mobs. You can specify all humans or all mob/living. Also, fixed issue with trying to add abilities to abilityholder Composites that did not have any abilityHolders inside it.

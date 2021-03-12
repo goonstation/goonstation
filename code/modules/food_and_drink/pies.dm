@@ -8,7 +8,7 @@
 	var/splat = 0 // for thrown pies
 	food_effects = list("food_refreshed","food_cold")
 
-	throw_impact(atom/hit_atom)
+	throw_impact(atom/hit_atom, datum/thrown_thing/thr)
 		if (ismob(hit_atom) && src.splat)
 			var/mob/M = hit_atom
 			src.visible_message("<span class='alert'>[src] splats in [M]'s face!</span>")
@@ -55,7 +55,7 @@
 			src.has_key = 1
 		return
 
-	heal(var/mob/M)
+	on_bite(obj/item/I, mob/M, mob/user)
 		..()
 		if (has_key)
 			src.has_key = 0
@@ -107,13 +107,8 @@
 	heal_amt = 4
 	use_bite_mask = 0
 
-	throw_impact(atom/hit_atom)
+	throw_impact(atom/hit_atom, datum/thrown_thing/thr)
 		if (contents)
-			//This is a mildly lazy way of handling edge cases where the thrown pie has no thrower (propelled through other means, like gravitons)
-			//It's a gigantic bitch/impossible without a refactor to fix all the edge cases with that, so I'm just having the pie hit the target, instead of any contents
-			if (!usr)
-				src.throw_impact(hit_atom)
-
 			var/atom/movable/randomContent
 			if (contents.len >= 1)
 				randomContent = pick(contents)
@@ -123,13 +118,13 @@
 			if (randomContent != src)
 				randomContent.throw_impact(hit_atom)
 
-			hit_atom.attackby(randomContent, usr)
+			hit_atom.attackby(randomContent, thr?.user)
 
 			if (ismob(hit_atom))
 				playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 100, 1)
 				var/mob/M = hit_atom
-				if (M == usr)
-					src.visible_message("<span class='alert'>[usr] fumbles and smacks the [src] into their own face!</span>")
+				if (M == thr.user)
+					src.visible_message("<span class='alert'>[thr.user] fumbles and smacks the [src] into their own face!</span>")
 				else
 					src.visible_message("<span class='alert'>[src] smacks into [M]!</span>")
 
@@ -154,7 +149,7 @@
 	food_effects = list("food_sweaty", "food_hp_up_big", "food_cold")
 
 
-	heal(var/mob/M)
+	on_bite(obj/item/I, mob/M, mob/user)
 		M.nutrition += 500
 		return
 
@@ -169,15 +164,45 @@
 	heal_amt = 2
 	food_effects = list("food_sweaty_big","food_refreshed")
 	New()
+		..()
 		if(prob(10))
 			name = pick("fart pie","butt pie","mud pie","piesterior","ham pie","dump cake","derri-eclaire")
+
+/obj/item/reagent_containers/food/snacks/pie/chocolate
+	name = "chocolate mud pie"
+	desc = "Like a chocolate cake, but a pie, and also very different."
+	icon_state = "chocolatepie"
+	heal_amt = 6
+	amount = 3
+	initial_volume = 30
+	initial_reagents = list("sugar"=20,"hugs"=10)
+	food_effects = list("food_sweaty","food_refreshed", "food_sturdy")
 
 /obj/item/reagent_containers/food/snacks/pie/pot
 	name = "space-chicken pot pie"
 	desc = "Space-chickens are identical to regular chickens, but in space.  This is a pastry filled with their cooked flesh, some vegetables, and a cream gravy."
-	icon_state = "pie"
+	icon_state = "chickenpie"
 	heal_amt = 6
 	amount = 3
 	initial_volume = 30
 	initial_reagents = list("chickensoup"=20)
 	food_effects = list("food_sweaty","food_hp_up_big","food_refreshed")
+
+/obj/item/reagent_containers/food/snacks/pie/weed
+	name = "chicken \"pot\" pie"
+	desc = "Something about this pie seems off.  Guaranteed to get you pie-in-the-sky high."
+	icon_state = "weedpie"
+	heal_amt = 4
+	amount = 3
+	initial_volume = 30
+	initial_reagents = list("THC"=20,"CBD"=20)
+	food_effects = list("food_sweaty","food_refreshed")
+
+/obj/item/reagent_containers/food/snacks/pie/fish
+	name = "stargazy pie"
+	desc = "The snack that stares back."
+	icon_state = "fishpie"
+	heal_amt = 4
+	amount = 3
+	initial_volume = 30
+	food_effects = list("food_sweaty","food_rad_wick","food_refreshed")

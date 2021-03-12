@@ -3,15 +3,9 @@
 
 	event_effect()
 		..()
-		var/list/EV = list()
-		for(var/obj/landmark/S in landmarks)//world)
-			if (S.name == "peststart")
-				EV.Add(S.loc)
-
-			LAGCHECK(LAG_LOW)
-		if(!EV.len)
+		var/pestlandmark = pick_landmark(LANDMARK_PESTSTART)
+		if(!pestlandmark)
 			return
-		var/pestlandmark = pick(EV)
 		var/masterspawnamount = rand(4,12)
 		var/spawnamount = masterspawnamount
 		var/type = rand(1,12)
@@ -39,8 +33,8 @@
 
 	event_effect()
 		..()
-		var/obj/machinery/junctionbox/J = mantaJunctionbox[rand(1,mantaJunctionbox.len)]
-		if (J.broken == 1)
+		var/obj/machinery/junctionbox/J = pick(by_type[/obj/machinery/junctionbox])
+		if (J.broken)
 			return
 		J.Breakdown()
 #endif

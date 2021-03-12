@@ -147,10 +147,7 @@ Contents:
 
 	special_setup(mob/M, no_special_spawn)
 		. = ..()
-#if ASS_JAM
-		if(prob(50))
-			bad_traitorify(M, "Samurai")
-#endif
+
 
 // Objects
 
@@ -224,12 +221,14 @@ Contents:
 */
 
 /obj/decal/fakeobjects/kanji_1
+	plane = PLANE_FLOOR
 	name = "symbol"
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "kanji_1"
 	anchored = 2
 
 /obj/decal/fakeobjects/kanji_2
+	plane = PLANE_FLOOR
 	name = "symbol"
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "kanji_2"

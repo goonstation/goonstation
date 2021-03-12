@@ -2,8 +2,8 @@
 
 /obj/item/storage/secure
 	name = "storage/secure"
-	var/obj/screen/storage/boxes = null
-	var/obj/screen/close/closer = null
+	var/atom/movable/screen/storage/boxes = null
+	var/atom/movable/screen/close/closer = null
 	var/icon_locking = "secureb"
 	var/icon_sparking = "securespark"
 	var/icon_open = "secure0"
@@ -50,7 +50,7 @@
 		user.show_text("You repair the lock on [src].", "blue")
 	return 1
 
-/obj/item/storage/secure/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/storage/secure/attackby(obj/item/W as obj, mob/user as mob, obj/item/storage/T)
 	if ((W.w_class > 3 || istype(W, /obj/item/storage/secure)))
 		return
 	//Waluigi hates this
@@ -389,6 +389,7 @@
 	name = "secure briefcase"
 	icon = 'icons/obj/items/storage.dmi'
 	icon_state = "secure"
+	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
 	item_state = "sec-case"
 	desc = "A large briefcase with a digital locking system."
 	flags = FPRINT | TABLEPASS
@@ -558,7 +559,7 @@
 	name = "paper- 'IOU'"
 	New()
 		..()
-		var/iou_name = pick(uppercase_letters) + " " + pick(last_names)
+		var/iou_name = pick(uppercase_letters) + " " + pick_string_autokey("names/last.txt")
 		if (prob(1))
 			iou_name = pick("L Alliman", "J Antonsson") // we're stealin all ur stuff >:D
 		var/iou_thing = pick("gold bar", "telecrystal", "skull", "football", "human arm", "human arm", "human leg", "human leg", "[pick("pile", "wad")] of cash",\
@@ -569,6 +570,96 @@
 		<u>[iou_thing]</u>
 		- <i>[iou_name]</i>"}
 		return
+
+/obj/item/storage/secure/ssafe/vonrickenstorage
+	configure_mode = 0
+	random_code = 1
+
+	New()
+		..()
+		var/loot = rand(1,2)
+		switch (loot)
+			if (1)
+				new /obj/item/storage/firstaid/brain(src)
+				new /obj/item/storage/firstaid/toxin(src)
+				new /obj/item/storage/firstaid/old(src)
+				new /obj/item/parts/robot_parts/head(src)
+			if (2)
+				new /obj/item/injector_belt(src)
+				new /obj/item/reagent_containers/glass/bottle/morphine(src)
+				new /obj/item/reagent_containers/syringe(src)
+
+/obj/item/storage/secure/ssafe/vonricken
+	configure_mode = 0
+	random_code = 1
+	spawn_contents = list(/obj/item/clothing/shoes/cyborg, /obj/item/clothing/suit/cyborg_suit, /obj/item/clothing/gloves/cyborg, /obj/item/paper/thevonricken)
+
+/obj/item/paper/thevonricken
+	name = "This is hell! Oh god!"
+
+	New()
+		..()
+		src.icon_state = "paper_singed"
+		src.desc = "It looks like someone had jotted stuff down on it in frantic haste!"
+		src.info = {"<center><h1>My doom? Yes.</h1></center>
+		<hr>
+		Wow...then I thought boarding a space-cruise would be fun...but now? I heard these over-the-top-armed-beasts-of-robots tread into the room next door.
+		<br>
+		I doubt Marvin is anymore.
+		<br>
+		I doubt I will be either.
+		<br>
+		Never leave the room. Never. Never...yes...someone will come...rescue me,...
+		<br>
+		<b>Why did I not pack a spare radio? Fuck!</b>
+		<br>
+		<br>
+		Whoever reads this...destroy this facility! It is not what it seems to be!
+		<hr>
+		<b>Space-Cruise? My butt!</b>"}
+
+/obj/item/storage/secure/ssafe/theorangeroom
+	configure_mode = 0
+	random_code = 1
+
+	New()
+		..()
+		var/loot = rand(1,2)
+		switch (loot)
+			if (1)
+				new /obj/item/storage/pill_bottle/cyberpunk(src)
+				new /obj/item/storage/pill_bottle/ipecac(src)
+				new /obj/item/gun/kinetic/pistol/empty(src)
+				new /obj/item/ammo/bullets/bullet_9mm/five_shots(src)
+				new /obj/item/paper/orangeroomsafe(src)
+			if (2)
+				new /obj/item/storage/pill_bottle/bathsalts(src)
+				new /obj/item/reagent_containers/pill/crank(src)
+				new /obj/item/reagent_containers/patch/LSD(src)
+				new /obj/item/paint_can/random(src)
+				var/obj/item/spacecash/random/tourist/S = unpool(/obj/item/spacecash/random/tourist)
+				S.setup(src)
+
+/obj/item/paper/orangeroomsafe
+	name = "Bon voyage!"
+
+	New()
+		..()
+		src.icon_state = "thermal_paper"
+		src.desc = "This piece of paper has been scribbled on with focused elegance."
+		src.info = {"<center><h2>Goodbye boredom!</h2></center>
+		<hr>
+		Today is my first day abboard this vessel and oh wow! I would have never guessed that I'd be the lucky bastard to get to sleep the first shift.
+		<br>
+		<br>
+		Joffrey is working the engine and making sure that we don't blow up and that curious computer in the cockpit brings us to where we gotta go.
+		<br>
+		Certainly checking out if the nearest NanoTrasen station is doing well is not a hard job at all.
+		<br>
+		For most of the day we simply twiddle our thumbs and kick back.
+		<br>
+		<br>
+		<i>I think I'll take a good nights sleep and relax with my personal goodies. :)</i>"}
 
 /obj/item/storage/secure/ssafe/theblindpig
 	configure_mode = 0

@@ -22,7 +22,7 @@
 	c_flags = COVERSEYES | COVERSMOUTH
 	setupProperties()
 		..()
-		setProperty("meleeprot", 6)
+		setProperty("meleeprot_head", 6)
 
 	red
 		desc = "Gotta protect your head! This helmet will certainly do the job. It has a Spacissippi Timberdoodles logo printed on it!"
@@ -56,7 +56,7 @@
 
 /mob/living/carbon/human/proc/wearing_football_gear()
 	return ( (src.wear_suit && istype(src.wear_suit,/obj/item/clothing/suit/armor/football)) \
-			&& (src.shoes && istype(src.shoes,/obj/item/clothing/shoes/cleats)) \
+			&& (src.shoes && istype(src.shoes,/obj/item/clothing/shoes/cleats) || istype(mutantrace, /datum/mutantrace/cow)) \
 			&& (src.w_uniform && istype(src.w_uniform,/obj/item/clothing/under/football)) )
 
 
@@ -106,7 +106,7 @@
 		src.take_brain_damage(1 + power * 0.1)
 
 	for (var/mob/C in viewers(src))
-		shake_camera(C, 6, 1)
+		shake_camera(C, 6, 16)
 	if (ismob(target))
 		var/mob/M = target
 		var/msg = pick("tackles", "rushes into", "sacks", "steamrolls", "plows into", "bashes", "leaps into", "runs into", "bowls over")
@@ -120,8 +120,7 @@
 		M.remove_stamina(80 + power) //lotsa stamina damage whoa!!
 
 		var/turf/throw_at = get_edge_target_turf(src, src.dir)
-		SPAWN_DBG(0)
-			M.throw_at(throw_at, 10, 2)
+		M.throw_at(throw_at, 10, 2)
 		playsound(src.loc, "swing_hit", 40, 1)
 		logTheThing("station", src, target, "tackles [target] using football gear [log_loc(src)].")
 	else if(isturf(target))
@@ -176,7 +175,7 @@
 
 
 /obj/item/football/the_big_one
-	name = "football"
+	name = "\improper SAFL football"
 	desc = "The official football of the Space American Football League. There's some insignia on it for Space Bowl LXXXVII."
 	custom_suicide = 0
 	c_flags = EQUIPPED_WHILE_HELD
@@ -230,13 +229,10 @@
 				src.carrier.vis_contents -= indicator
 
 	disposing()
-		if (indicator)
-			if (src.carrier)
-				src.carrier.vis_contents -= indicator
-			src.indicator = null
-		..()
+		SHOULD_CALL_PARENT(FALSE)
+		return // CRASH("YOU CAN'T DELETE THE FOOTBALL! YOU WILL REGRET THIS!")
 
-	throw_impact(atom/hit_atom)
+	throw_impact(atom/hit_atom, datum/thrown_thing/thr)
 		if (hit_atom)
 			if(ismob(hit_atom) && ishuman(hit_atom))
 				var/mob/living/carbon/human/H = hit_atom
@@ -249,13 +245,14 @@
 
 		..()
 
+	ex_act(severity)
+		return
 
-
-/obj/item/football/throw_at(atom/target, range, speed, list/params, turf/thrown_from, throw_type = 1, allow_anchored = 0)
+/obj/item/football/throw_at(atom/target, range, speed, list/params, turf/thrown_from, throw_type = 1, allow_anchored = 0, bonus_throwforce = 0)
 	src.icon_state = "football_air"
 	..()
 
-/obj/item/football/throw_impact(atom/hit_atom)
+/obj/item/football/throw_impact(atom/hit_atom, datum/thrown_thing/thr)
 	..(hit_atom)
 	src.icon_state = "football"
 	if(hit_atom)

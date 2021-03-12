@@ -1,5 +1,5 @@
 // rest in peace the_very_holy_global_bible_list_amen (??? - 2020)
-var/list/bible_contents = list()
+var/global/list/bible_contents = list()
 
 /obj/item/storage/bible
 	name = "bible"
@@ -23,30 +23,33 @@ var/list/bible_contents = list()
 		ritualComponent = new/datum/ritualComponent/sanctus(src)
 		ritualComponent.autoActive = 1
 		#endif
-		BLOCK_BOOK
+		BLOCK_SETUP(BLOCK_BOOK)
 
 	disposing()
 		..()
 		STOP_TRACKING
 
-	proc/bless(mob/M as mob)
+	proc/bless(mob/M as mob, var/mob/user)
 		if (isvampire(M) || iswraith(M) || M.bioHolder.HasEffect("revenant"))
 			M.visible_message("<span class='alert'><B>[M] burns!</span>", 1)
 			var/zone = "chest"
-			if (usr.zone_sel)
-				zone = usr.zone_sel.selecting
+			if (user.zone_sel)
+				zone = user.zone_sel.selecting
 			M.TakeDamage(zone, 0, heal_amt)
+			JOB_XP(user, "Chaplain", 2)
 		else
 			var/mob/living/H = M
 			if( istype(H) )
 				if( prob(25) )
 					H.delStatus("bloodcurse")
 					H.cure_disease_by_path(/datum/ailment/disease/cluwneing_around/cluwne)
-				if( prob(25) )
+				if(prob(25))
 					H.cure_disease_by_path(/datum/ailment/disability/clumsy/cluwne)
 			M.HealDamage("All", heal_amt, heal_amt)
+			if(prob(30))
+				JOB_XP(user, "Chaplain", 1)
 
-	attackby(var/obj/item/W, var/mob/user)
+	attackby(var/obj/item/W, var/mob/user, obj/item/storage/T)
 		if (istype(W, /obj/item/storage/bible))
 			user.show_text("You try to put \the [W] in \the [src]. It doesn't work. You feel dumber.", "red")
 		else
@@ -72,7 +75,7 @@ var/list/bible_contents = list()
 
 		if (iswraith(M) || (M.bioHolder && M.bioHolder.HasEffect("revenant")))
 			M.visible_message("<span class='alert'><B>[user] smites [M] with the [src]!</B></span>")
-			bless(M)
+			bless(M, user)
 			boutput(M, "<span_class='alert'><B>IT BURNS!</B></span>")
 			if (narrator_mode)
 				playsound(src.loc, 'sound/vox/hit.ogg', 25, 1, -1)
@@ -83,7 +86,7 @@ var/list/bible_contents = list()
 		else if (!isdead(M))
 			var/mob/H = M
 			// ******* Check
-			if ((ishuman(H) && prob(60)))
+			if ((ishuman(H) && prob(60) && !(M.traitHolder?.hasTrait("atheist"))))
 				bless(M)
 				M.visible_message("<span class='alert'><B>[user] heals [M] with the power of Christ!</B></span>")
 				boutput(M, "<span class='alert'>May the power of Christ compel you to be healed!</span>")
@@ -94,7 +97,10 @@ var/list/bible_contents = list()
 				logTheThing("combat", user, M, "biblically healed [constructTarget(M,"combat")]")
 			else
 				if (ishuman(M) && !istype(M:head, /obj/item/clothing/head/helmet))
-					M.take_brain_damage(10)
+					if (M.traitHolder?.hasTrait("atheist"))
+						M.take_brain_damage(5)
+					else
+						M.take_brain_damage(10)
 					boutput(M, "<span class='alert'>You feel dazed from the blow to the head.</span>")
 				logTheThing("combat", user, M, "biblically injured [constructTarget(M,"combat")]")
 				M.visible_message("<span class='alert'><B>[user] beats [M] over the head with [src]!</B></span>")
@@ -129,10 +135,15 @@ var/list/bible_contents = list()
 			L += S.get_all_contents()
 		return L
 
+	contains(var/atom/A)
+		if(!A)
+			return 0
+		return (A in bible_contents)
+
 	add_contents(obj/item/I)
 		bible_contents += I
 		I.set_loc(null)
-		for (var/obj/item/storage/bible/bible in by_type[/obj/item/storage/bible])
+		for_by_tcl(bible, /obj/item/storage/bible)
 			bible.hud.update() // fuck bibles
 
 	custom_suicide = 1
@@ -156,13 +167,18 @@ var/list/bible_contents = list()
 			user.visible_message("<span class='alert'>[user] farts on the bible.<br><b>The gods seem to approve.</b></span>")
 			return 0
 
-		user.visible_message("<span class='alert'>[user] farts on the bible.<br><b>A mysterious force smites [user]!</b></span>")
-		user.gib()
-		return 0
+		if (user.traitHolder?.hasTrait("atheist"))
+			user.visible_message("<span class='alert'>[user] farts on the bible with particular vindication.<br><b>Against all odds, [user] remains unharmed!</b></span>")
+			return 0
+		else
+			user.visible_message("<span class='alert'>[user] farts on the bible.<br><b>A mysterious force smites [user]!</b></span>")
+			logTheThing("combat", user, null, "farted on [src] at [log_loc(src)] last touched by <b>[src.fingerprintslast ? src.fingerprintslast : "unknown"]</b>.")
+			user.gib()
+			return 0
 
 /obj/item/storage/bible/evil
 	name = "frayed bible"
-	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER
+	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER | IS_FARTABLE
 
 	HasEntered(atom/movable/AM as mob)
 		..()

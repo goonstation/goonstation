@@ -6,6 +6,7 @@
 	organ_holder_location = "chest"
 	organ_holder_required_op_stage = 4.0
 	icon_state = "intestines"
+	var/digestion_efficiency = 1
 
 	// on_transplant()
 	// 	..()
@@ -15,6 +16,24 @@
 	// 				src.donor.cure_disease(disease)
 	// 		return
 
+	on_transplant(mob/M)
+		. = ..()
+		if(!broken)
+			APPLY_MOB_PROPERTY(M, PROP_DIGESTION_EFFICIENCY, src, digestion_efficiency)
+
+	on_removal()
+		. = ..()
+		REMOVE_MOB_PROPERTY(src.donor, PROP_DIGESTION_EFFICIENCY, src)
+
+	unbreakme()
+		..()
+		if(donor)
+			APPLY_MOB_PROPERTY(src.donor, PROP_DIGESTION_EFFICIENCY, src, digestion_efficiency)
+
+	breakme()
+		..()
+		if(donor)
+			REMOVE_MOB_PROPERTY(src.donor, PROP_DIGESTION_EFFICIENCY, src)
 
 	disposing()
 		if (holder)
@@ -27,7 +46,23 @@
 	desc = "A fancy robotic intestines to replace one that someone's lost!"
 	icon_state = "cyber-intestines"
 	// item_state = "heart_robo1"
+	made_from = "pharosium"
 	robotic = 1
+	created_decal = /obj/decal/cleanable/oil
 	edible = 0
 	mats = 6
 
+	emag_act(mob/user, obj/item/card/emag/E)
+		. = ..()
+		organ_abilities = list(/datum/targetable/organAbility/quickdigest)
+
+	demag(mob/user)
+		..()
+		organ_abilities = initial(organ_abilities)
+
+	attackby(obj/item/W, mob/user)
+		if(ispulsingtool(W)) //TODO kyle's robotics configuration console/machine/thing
+			digestion_efficiency = input(user, "Set the digestion efficiency of the cyberintestines, from 0 to 200 percent.", "Digenstion efficincy", "100") as num
+			digestion_efficiency = clamp(digestion_efficiency, 0, 200) / 100
+		else
+			. = ..()

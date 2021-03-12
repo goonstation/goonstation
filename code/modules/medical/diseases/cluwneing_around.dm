@@ -31,7 +31,7 @@
 		return
 	if (prob(laugh_rate)) affected_mob.emote("laugh")
 	switch(D.stage)
-		if(1 || 2)
+		if(1, 2)
 
 			if(prob(8))
 				playsound(affected_mob.loc, "sound/musical_instruments/Boathorn_1.ogg", 22, 1)
@@ -99,7 +99,7 @@
 					clownmask.cant_self_remove = 1
 					clownmask.cant_other_remove = 1
 					affected_mob:equip_if_possible( clownmask, affected_mob:slot_wear_mask) //Hope you like your new mask sucka!!!!!
-					SPAWN_DBG (25) // Don't remove.
+					SPAWN_DBG(2.5 SECONDS) // Don't remove.
 						if (affected_mob) affected_mob.assign_gimmick_skull() // The mask IS your new face (Convair880).
 		if(4)
 			if(prob(10))
@@ -116,7 +116,7 @@
 					clownmask.cant_self_remove = 1
 					clownmask.cant_other_remove = 1
 					affected_mob:equip_if_possible( clownmask, affected_mob:slot_wear_mask)
-					SPAWN_DBG (25) // Don't remove.
+					SPAWN_DBG(2.5 SECONDS) // Don't remove.
 						if (affected_mob) affected_mob.assign_gimmick_skull() // The mask IS your new face (Convair880).
 
 			if(prob(10))

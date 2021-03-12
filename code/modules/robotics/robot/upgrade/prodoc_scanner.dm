@@ -1,23 +1,19 @@
 /obj/item/roboupgrade/healthgoggles
 	name = "cyborg ProDoc scanner upgrade"
-	desc = "Fitted with an advanced miniature sensor array that allows the user to quickly determine the physical condition of others."
+	desc = "An advanced sensor array that allows a cyborg to quickly determine the physical condition of organic life."
 	icon_state = "up-prodoc"
 	drainrate = 5
 
 	var/client/assigned = null
 
-/obj/item/roboupgrade/healthgoggles/proc/updateIcons()
-	// I wouldve liked to avoid this but i dont want to put this inside the mobs life proc as that would be more code.
-	// TODO: signals/components!
-	while (src.assigned)
+/obj/item/roboupgrade/healthgoggles/process()
+	if (assigned)
 		src.assigned.images.Remove(health_mon_icons)
-		src.addIcons()
+		addIcons()
 
 		if (src.loc != assigned.mob)
 			src.assigned.images.Remove(health_mon_icons)
 			src.assigned = null
-
-		sleep(2 SECONDS)
 
 /obj/item/roboupgrade/healthgoggles/proc/addIcons()
 	if (src.assigned)
@@ -32,8 +28,7 @@
 	if (..())
 		return
 	src.assigned = user.client
-	SPAWN_DBG(-1)
-		updateIcons()
+	processing_items |= src
 
 /obj/item/roboupgrade/healthgoggles/upgrade_deactivate(var/mob/living/silicon/robot/user as mob)
 	if (..())
@@ -41,4 +36,5 @@
 	if (src.assigned)
 		src.assigned.images.Remove(health_mon_icons)
 		src.assigned = null
+	processing_items.Remove(src)
 	return

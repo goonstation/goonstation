@@ -12,7 +12,7 @@
 	nodes.Add(A)
 
 /datum/mechanicsMessage/proc/hasNode(var/atom/A)
-	return nodes.Find(A)
+	return (A in nodes)
 
 /datum/mechanicsMessage/proc/isTrue() //Thanks for not having bools , byond.
 	if(istext(signal))
@@ -33,18 +33,18 @@
 *
 * COMSIG_MECHCOMP_ADD_CONFIG, display_name, proc_name
 *    Registers a custom configuration for your device. It is similar to  COMSIG_MECHCOMP_ADD_INPUT.
-* 
+*
 * COMSIG_MECHCOMP_ALLOW_MANUAL_SIGNAL
 *    Adds the "Set Send-Signal" config-option to your device.
 *    Use this with COMSIG_MECHCOMP_TRANSMIT_DEFAULT_MSG detailed below
 *
 * COMSIG_MECHCOMP_RM_ALL_CONNECTIONS
-*    Removes all MechComp connections to and from the device. 
+*    Removes all MechComp connections to and from the device.
 *    This is the "Disconnect All" config-option, but you may want to call it after certain events,
 *    such as unwelding a sensor-pipe in a loafer, or deconstructing a vending machine.
 *    As a game-balance rule: devices should break connections when they move / are picked up.
-* 
-* 
+*
+*
 *      ------  TRANSMISSION COMSIGS  ------
 * A note on MechComp messages:
 //Please try to always re-use incoming signals for your outgoing signals.
@@ -94,6 +94,7 @@
 	RegisterSignal(parent, list(_COMSIG_MECHCOMP_RM_OUTGOING), .proc/removeOutgoing)
 	RegisterSignal(parent, list(COMSIG_MECHCOMP_RM_ALL_CONNECTIONS), .proc/WipeConnections)
 	RegisterSignal(parent, list(_COMSIG_MECHCOMP_GET_OUTGOING), .proc/getOutgoing)
+	RegisterSignal(parent, list(_COMSIG_MECHCOMP_GET_INCOMING), .proc/getIncoming)
 	RegisterSignal(parent, list(_COMSIG_MECHCOMP_DROPCONNECT), .proc/dropConnect)
 	RegisterSignal(parent, list(_COMSIG_MECHCOMP_LINK), .proc/link_devices)
 	RegisterSignal(parent, list(COMSIG_MECHCOMP_ADD_CONFIG), .proc/addConfig)
@@ -113,6 +114,7 @@
 	_COMSIG_MECHCOMP_RM_OUTGOING,\
 	COMSIG_MECHCOMP_RM_ALL_CONNECTIONS,\
 	_COMSIG_MECHCOMP_GET_OUTGOING,\
+	_COMSIG_MECHCOMP_GET_INCOMING,\
 	_COMSIG_MECHCOMP_DROPCONNECT,\
 	_COMSIG_MECHCOMP_LINK,\
 	COMSIG_MECHCOMP_ADD_CONFIG,\
@@ -148,6 +150,11 @@
 //Give the caller a copied list of our outgoing connections.
 /datum/component/mechanics_holder/proc/getOutgoing(var/comsig_target, var/list/outout)
 	outout[1] = src.connected_outgoing
+	return
+
+//Give the caller a copied list of our incoming connections.
+/datum/component/mechanics_holder/proc/getIncoming(var/comsig_target, var/list/outin)
+	outin[1] = src.connected_incoming
 	return
 
 //Fire the stored default signal.
@@ -190,7 +197,7 @@
 	for(var/atom/A in src.connected_outgoing)
 		//Note: a target not handling a signal returns 0.
 		if(SEND_SIGNAL(parent,_COMSIG_MECHCOMP_DISPATCH_VALIDATE, A, msg.signal) != 0)
-			continue 
+			continue
 		SEND_SIGNAL(A, _COMSIG_MECHCOMP_RECEIVE_MSG, src.connected_outgoing[A], cloneMessage(msg))
 		fired = 1
 	return fired
@@ -209,14 +216,26 @@
 	return ret
 
 //Called when a component is dragged onto another one.
-/datum/component/mechanics_holder/proc/dropConnect(var/comsig_target, atom/A, mob/user)
+/datum/component/mechanics_holder/proc/dropConnect(atom/comsig_target, atom/A, mob/user)
 	if(!A || A == parent || user.stat || !isliving(user) || (SEND_SIGNAL(A,_COMSIG_MECHCOMP_COMPATIBLE) != 1))  //ZeWaka: Fix for null.mechanics
 		return
 
 	if (!user.find_tool_in_hand(TOOL_PULSING))
 		boutput(user, "<span class='alert'>[MECHFAILSTRING]</span>")
 		return
-	
+
+	//Need to use comsig_target instead of parent, to access .loc
+	if(A.loc != comsig_target.loc) //If these aren't sharing a container
+		var/obj/item/storage/mechanics/cabinet = null
+		if(istype(comsig_target.loc, /obj/item/storage/mechanics))
+			cabinet = comsig_target.loc
+		if(istype(A.loc, /obj/item/storage/mechanics))
+			cabinet = A.loc
+		if(cabinet)
+			if(!cabinet.anchored)
+				boutput(user,"<span class='alert'>Cannot create connection through an unsecured component housing</span>")
+				return
+
 	if(get_dist(parent, A) > SQUARE_TILE_WIDTH)
 		boutput(user, "<span class='alert'>Components need to be within a range of 14 meters to connect.</span>")
 		return
@@ -241,18 +260,16 @@
 	if(!src.inputs.len)
 		boutput(user, "<span class='alert'>[receiver.name] has no input slots. Can not connect [trigger.name] as Trigger.</span>")
 		return
-	
+
 	var/pointer_container[1] //A list of size 1, to store the address of the list we want
 	SEND_SIGNAL(trigger, _COMSIG_MECHCOMP_GET_OUTGOING, pointer_container)
 	var/list/trg_outgoing = pointer_container[1]
 	var/selected_input = input(user, "Select \"[receiver.name]\" Input", "Input Selection") in inputs + "*CANCEL*"
 	if(selected_input == "*CANCEL*") return
 
-	if(!(receiver in trg_outgoing)) //Let's not allow making many of the same connection.
-		trg_outgoing.Add(receiver)
+	trg_outgoing |= receiver //Let's not allow making many of the same connection.
 	trg_outgoing[receiver] = selected_input
-	if(!(trigger in src.connected_incoming)) //Let's not allow making many of the same connection.
-		src.connected_incoming.Add(trigger)
+	src.connected_incoming |= trigger //Let's not allow making many of the same connection.
 	boutput(user, "<span class='success'>You connect the [trigger.name] to the [receiver.name].</span>")
 	logTheThing("station", user, null, "connects a <b>[trigger.name]</b> to a <b>[receiver.name]</b>.")
 	SEND_SIGNAL(trigger,_COMSIG_MECHCOMP_DISPATCH_ADD_FILTER, receiver, user)
@@ -265,41 +282,36 @@
 	src.configs[name] = toCall
 	return
 
-/datum/component/mechanics_holder/proc/allowManualSingalSetting() 
+/datum/component/mechanics_holder/proc/allowManualSingalSetting()
 	if(!(list(SET_SEND) in src.configs))
 		src.configs.Add(list(SET_SEND))
 	return
-	
+
 //If it's a multi-tool, let the user configure the device.
 /datum/component/mechanics_holder/proc/attackby(var/comsig_target, obj/item/W as obj, mob/user)
 	if(!ispulsingtool(W) || !isliving(user) || user.stat)
 		return 0
-	if(length(src.configs))	
+	if(length(src.configs))
 		var/selected_config = input("Select a config to modify!", "Config", null) as null|anything in src.configs
-		if(selected_config && in_range(parent, user))
+		if(selected_config && in_interact_range(parent, user))
 			switch(selected_config)
 				if(SET_SEND)
 					var/inp = input(user,"Please enter Signal:","Signal setting","1") as text
-					if(!in_range(parent, user) || user.stat)
-						return 0
-					inp = trim(adminscrub(inp), 1)
+					if(!in_interact_range(parent, user) || user.stat)
+						return
+					inp = trim(strip_html_tags(inp))
 					if(length(inp))
 						defaultSignal = inp
 						boutput(user, "Signal set to [inp]")
-					return COMSIGBIT_ATTACKBY_COMPLETE
 				if(DC_ALL)
 					WipeConnections()
 					if(istype(parent, /atom))
 						var/atom/AP = parent
 						boutput(user, "<span class='notice'>You disconnect [AP.name].</span>")
-					return COMSIGBIT_ATTACKBY_COMPLETE
 				else
 					//must be a custom config specific to the device, so let the device handle it
 					var/path = src.configs[selected_config]
-					var/ret = call(parent, path)(W, user)
-					if(ret) ret = COMSIGBIT_ATTACKBY_COMPLETE
-					return ret
-	return 0
+					call(parent, path)(W, user)
 
 //If it's a multi-tool, let the user configure the device.
 /datum/component/mechanics_holder/proc/compatible()

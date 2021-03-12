@@ -5,12 +5,16 @@
 
 /obj/machinery/conveyor
 	icon = 'icons/obj/recycling.dmi'
+#ifndef IN_MAP_EDITOR
 	icon_state = "conveyor0"
+#else
+	icon_state = "conveyor0-map"
+#endif
 	name = "conveyor belt"
 	desc = "A conveyor belt."
 	anchored = 1
 	power_usage = 100
-	layer = 2.5
+	layer = 2
 	machine_registry_idx = MACHINES_CONVEYORS
 	var/operating = 0	// 1 if running forward, -1 if backwards, 0 if off
 	var/operable = 1	// true if can operate (no broken segments in this belt run)
@@ -43,6 +47,10 @@
 	basedir = dir
 	setdir()
 
+/obj/machinery/conveyor/initialize()
+	..()
+	setdir()
+
 /obj/machinery/conveyor/disposing()
 	for(var/obj/machinery/conveyor/C in range(1,src))
 		if (C.next_conveyor == src)
@@ -57,9 +65,9 @@
 
 /obj/machinery/conveyor/proc/setdir()
 	if(operating == -1)
-		dir = turn(basedir,180)
+		set_dir(turn(basedir,180))
 	else
-		dir = basedir
+		set_dir(basedir)
 	next_conveyor = locate(/obj/machinery/conveyor) in get_step(src,dir)
 	update()
 
@@ -147,7 +155,7 @@
 	if(!loc)
 		return
 
-	if(next_conveyor && next_conveyor.loc == newloc)
+	if(src.next_conveyor && src.next_conveyor.loc == newloc)
 		//Ok, they will soon walk() according to the new conveyor
 		//DEBUG_MESSAGE("[AM] exited conveyor at [showCoords(src.x, src.y, src.z)] onto another conveyor! Wow!.")
 		var/mob/M = AM
@@ -177,7 +185,7 @@
 		var/mob/M = locate() in src.loc
 		if(M)
 			if (M == user)
-				src.visible_message("<span class='notice'>[M] ties \himself to the conveyor.</span>")
+				src.visible_message("<span class='notice'>[M] ties [himself_or_herself(M)] to the conveyor.</span>")
 				// note don't check for lying if self-tying
 			else
 				if(M.lying)
@@ -186,7 +194,7 @@
 					boutput(user, "<span class='hint'>[M] must be lying down to be tied to the converyor!</span>")
 					return
 
-			M.buckled = src.loc
+			M.buckled = src //behold the most mobile of stools
 			src.add_fingerprint(user)
 			I:use(1)
 			M.lying = 1
@@ -201,7 +209,7 @@
 			M.buckled = null
 			src.add_fingerprint(user)
 			if (M == user)
-				src.visible_message("<span class='notice'>[M] cuts \himself free from the conveyor.</span>")
+				src.visible_message("<span class='notice'>[M] cuts [himself_or_herself(M)] free from the conveyor.</span>")
 			else
 				src.visible_message("<span class='notice'>[M] had been cut free from the conveyor by [user].</span>")
 			return
@@ -233,8 +241,7 @@
 	update()
 
 	var/obj/machinery/conveyor/C = locate() in get_step(src, basedir)
-	if(C)
-		C.set_operable(basedir, id, 0)
+	C?.set_operable(basedir, id, 0)
 
 	C = locate() in get_step(src, turn(basedir,180))
 	if(C)
@@ -409,12 +416,12 @@
 
 /obj/machinery/conveyor_switch/New()
 	..()
-	conveyor_switches += src
+	START_TRACKING
 	update()
 
 	SPAWN_DBG(0.5 SECONDS)		// allow map load
 		conveyors = list()
-		for(var/obj/machinery/conveyor/C in machine_registry[MACHINES_CONVEYORS])
+		for(var/obj/machinery/conveyor/C as() in machine_registry[MACHINES_CONVEYORS])
 			if(C.id == id)
 				conveyors += C
 				C.owner = src
@@ -423,7 +430,7 @@
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"trigger", "trigger")
 
 /obj/machinery/conveyor_switch/disposing()
-	conveyor_switches -= src
+	STOP_TRACKING
 	for(var/obj/machinery/conveyor/C in conveyors)
 		C.owner = null
 	conveyors = null
@@ -474,7 +481,7 @@
 	update()
 
 	// find any switches with same id as this one, and set their positions to match us
-	for(var/obj/machinery/conveyor_switch/S in conveyor_switches)
+	for_by_tcl(S, /obj/machinery/conveyor_switch)
 		if(S.id == src.id)
 			S.position = position
 			S.update()
@@ -505,9 +512,9 @@
 
 	setdir()
 		if(operating == -1)
-			dir = altdir
+			set_dir(altdir)
 		else
-			dir = startdir
+			set_dir(startdir)
 		next_conveyor = locate(/obj/machinery/conveyor) in get_step(src,dir)
 		update()
 
@@ -606,7 +613,7 @@
 			update_icon()
 
 	proc/update_belts()
-		for(var/obj/machinery/conveyor_switch/S in conveyor_switches)
+		for_by_tcl(S, /obj/machinery/conveyor_switch)
 			if(S.id == "carousel")
 				for(var/obj/machinery/conveyor/C in S.conveyors)
 					C.move_lag = max(initial(C.move_lag) - speedup, 0.1)

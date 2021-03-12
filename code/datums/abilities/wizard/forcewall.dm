@@ -14,7 +14,7 @@
 			return
 		holder.owner.say("BRIXHUN MOHTYR")
 		..()
-		if(!holder.owner.wizard_spellpower())
+		if(!holder.owner.wizard_spellpower(src))
 			boutput(holder.owner, "<span class='alert'>Your spell is weak without a staff to focus it!</span>")
 
 		playsound(holder.owner.loc, "sound/effects/mag_forcewall.ogg", 25, 1, -1)
@@ -28,14 +28,14 @@
 			forcefield1 =  new /obj/forcefield(locate(holder.owner.x, holder.owner.y, holder.owner.z))
 			forcefield2 =  new /obj/forcefield(locate(holder.owner.x + 1, holder.owner.y, holder.owner.z))
 			forcefield3 =  new /obj/forcefield(locate(holder.owner.x - 1, holder.owner.y, holder.owner.z))
-			if (holder.owner.wizard_spellpower()) forcefield4 =  new /obj/forcefield(locate(holder.owner.x + 2, holder.owner.y, holder.owner.z))
-			if (holder.owner.wizard_spellpower()) forcefield5 =  new /obj/forcefield(locate(holder.owner.x - 2, holder.owner.y, holder.owner.z))
+			if (holder.owner.wizard_spellpower(src)) forcefield4 =  new /obj/forcefield(locate(holder.owner.x + 2, holder.owner.y, holder.owner.z))
+			if (holder.owner.wizard_spellpower(src)) forcefield5 =  new /obj/forcefield(locate(holder.owner.x - 2, holder.owner.y, holder.owner.z))
 		else
 			forcefield1 =  new /obj/forcefield(locate(holder.owner.x, holder.owner.y, holder.owner.z))
 			forcefield2 =  new /obj/forcefield(locate(holder.owner.x, holder.owner.y + 1, holder.owner.z))
 			forcefield3 =  new /obj/forcefield(locate(holder.owner.x, holder.owner.y - 1, holder.owner.z))
-			if (holder.owner.wizard_spellpower()) forcefield4 =  new /obj/forcefield(locate(holder.owner.x,holder.owner.y + 2,holder.owner.z))
-			if (holder.owner.wizard_spellpower()) forcefield5 =  new /obj/forcefield(locate(holder.owner.x,holder.owner.y - 2,holder.owner.z))
+			if (holder.owner.wizard_spellpower(src)) forcefield4 =  new /obj/forcefield(locate(holder.owner.x,holder.owner.y + 2,holder.owner.z))
+			if (holder.owner.wizard_spellpower(src)) forcefield5 =  new /obj/forcefield(locate(holder.owner.x,holder.owner.y - 2,holder.owner.z))
 
 		SPAWN_DBG(30 SECONDS)
 			qdel(forcefield1)
@@ -56,3 +56,16 @@
 	opacity = 0
 	density = 1
 	luminosity = 3
+
+/obj/forcefield/artifact
+	var/obj/artifact/forcefield_generator/source = null
+
+	New(var/obj/artifact/forcefield_generator/S)
+		. = ..()
+		source = S
+
+	Bumped(AM)
+		. = ..()
+		if(source && ismob(AM))
+			source.ArtifactFaultUsed(AM)
+

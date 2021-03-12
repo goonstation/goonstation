@@ -27,7 +27,7 @@
 	if(isdead(affected_mob))
 		return
 	switch(D.stage)
-		if(1 || 2)
+		if(1, 2)
 			if(prob(8))
 				playsound(affected_mob.loc, "sound/musical_instruments/Bikehorn_1.ogg", 50, 1)
 				affected_mob.show_message(text("<span class='alert'>[] makes a strange honking sound!</span>", affected_mob), 1)

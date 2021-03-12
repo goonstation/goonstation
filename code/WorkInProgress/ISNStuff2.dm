@@ -126,8 +126,7 @@
 			src.playsound_local(src.loc, 'sound/impact_sounds/Generic_Hit_1.ogg', 25, 1, -1)
 			boutput(src, "<span class='alert'><B>[H.name] kicks [src.name]!</B></span>")
 		else
-			var/list/punches = list('sound/impact_sounds/Generic_Punch_2.ogg','sound/impact_sounds/Generic_Punch_3.ogg','sound/impact_sounds/Generic_Punch_4.ogg','sound/impact_sounds/Generic_Punch_5.ogg')
-			src.playsound_local(src.loc, pick(punches), 25, 1, -1)
+			src.playsound_local(src.loc, pick(sounds_punch), 25, 1, -1)
 			boutput(src, "<span class='alert'><B>[H.name] punches [src.name]!</B></span>")
 		src.fake_damage(rand(2,9),100)
 	hit_twitch(src)
@@ -228,7 +227,7 @@
 				being_pressed = 0
 				return
 
-			if (user.getStatusDuration("paralysis") || user.stat || user.getStatusDuration("stunned") || user.getStatusDuration("weakened"))
+			if (is_incapacitated(user))
 				boutput(user, "<span class='alert'>You can't press it when you're incapacitated.</span>")
 				being_pressed = 0
 				return
@@ -263,7 +262,7 @@
 				A.eject = 0
 				A.updateicon()
 
-			for (var/obj/critter/dog/george/G in by_type[/obj/critter/dog/george])
+			for_by_tcl(G, /obj/critter/dog/george)
 				G.visible_message("<span class='alert'><b>[G]</b> pees on the floor. Bad dog!</span>")
 				make_cleanable( /obj/decal/cleanable/urine ,get_turf(G))
 		return

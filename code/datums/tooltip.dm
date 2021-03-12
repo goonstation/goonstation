@@ -12,7 +12,7 @@ Configuration:
 
 Usage:
 - Define mouse event procs on your (probably HUD) object and simply call the show and hide procs respectively:
-	/obj/screen/hud
+	/atom/movable/screen/hud
 		MouseEntered(location, control, params)
 			usr.client.tooltipHolder.showHover(src, list(
 				"params" = params,
@@ -84,6 +84,7 @@ var/global/list/atomTooltips = new()
 
 
 	New(client/C)
+		..()
 		if (!C) return 0
 		src.owner = C
 
@@ -210,6 +211,7 @@ var/global/list/atomTooltips = new()
 
 
 	New(client/C, datum/tooltipHolder/tipHolder, clone = 1, stuck = 1, atom/thing = null)
+		..()
 		if (!C) return 0
 		src.owner = C
 		src.holder = tipHolder
@@ -404,10 +406,11 @@ var/global/list/atomTooltips = new()
 		tooltipDebugOut(src.owner, "hide() called. force: [force]. fromJS: [fromJS]. src.visible: [src.visible]. src.created: [src.created]. src.isStuck: [src.isStuck]")
 		#endif
 
-		if (!fromJS)
+		if (!fromJS && src.owner)
 			src.owner << output(1, "[src.window].browser:tooltip.setInterrupt")
 
-		winset(src.owner, src.window, "alpha=0;size=1x1;pos=0,0")
+		if(src.owner)
+			winset(src.owner, src.window, "alpha=0;size=1x1;pos=0,0")
 
 		if (src.hasCloseHandler)
 			src.closeHandler()

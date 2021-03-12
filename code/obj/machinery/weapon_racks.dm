@@ -10,7 +10,7 @@
 
 	To-Do:
 	Wall-mounted shotgun racks
-	A cool rack for the barman's shotgun
+	A cool rack for the bartender's shotgun
 */
 
 /obj/machinery/weapon_stand
@@ -111,9 +111,6 @@
 		contained_weapon_name = "riot shotgun"
 		req_access = list(access_security)
 
-		pbr
-			contained_weapon = /obj/item/gun/kinetic/riotgun/pbr
-
 	rifle_rack
 		name = "pulse rifle rack"
 		desc = "A rack that charges up to 3 pulse rifles."
@@ -179,7 +176,7 @@
 	MouseDrop(mob/user as mob) // no I ain't even touchin this mess it can keep doin whatever it's doin
 		// I finally came back and touched that mess because it was broke - Haine
 		// When I was working on this in the 2016 release, some stuff was broken and I didn't know why. Then when I got coder, it'd already been fixed! Thanks Haine! ~Gannets
-		if (user == usr && !usr.restrained() && !usr.stat && (usr.contents.Find(src) || in_range(src, usr)))
+		if (user == usr && !user.restrained() && !user.stat && (user.contents.Find(src) || in_interact_range(src, user)))
 			if (!user.put_in_hand(src))
 				return ..()
 */
@@ -219,7 +216,7 @@
 			user.shock(src, 7500, user.hand == 1 ? "l_arm" : "r_arm", 1, 0)
 
 		if (!src.allowed(user) && !hacked)
-			boutput(user, "Access denied.")
+			boutput(user, "<span class='alert'>Access denied.</span>")
 			return
 
 		src.add_fingerprint(user)

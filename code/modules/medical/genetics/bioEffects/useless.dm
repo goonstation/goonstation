@@ -3,7 +3,7 @@
 	desc = "Endows the subject with bioluminescent skin. Color and intensity may vary by subject."
 	id = "glowy"
 	probability = 99
-	effectType = effectTypePower
+	effectType = EFFECT_TYPE_POWER
 	blockCount = 3
 	blockGaps = 1
 	msgGain = "Your skin begins to glow softly."
@@ -21,7 +21,7 @@
 	name = "Cranial Keratin Formation"
 	desc = "Enables the growth of a compacted keratin formation on the subject's head."
 	id = "horns"
-	effectType = effectTypePower
+	effectType = EFFECT_TYPE_POWER
 	probability = 99
 	msgGain = "A pair of horns erupt from your head."
 	msgLose = "Your horns crumble away into nothing."
@@ -47,7 +47,7 @@
 	name = "Dermal Glitter"
 	desc = "Causes the subject's skin to shine and gleam."
 	id = "shiny"
-	effectType = effectTypePower
+	effectType = EFFECT_TYPE_POWER
 	probability = 66
 	msgGain = "Your skin looks all blinged out."
 	msgLose = "Your skin fades to a more normal state."
@@ -61,20 +61,12 @@
 		if (!particleMaster.CheckSystemExists(system_path, owner))
 			particleMaster.RemoveSystem(system_path, owner)
 
-/datum/bioEffect/color_changer
-	name = "Melanin Suppressor"
-	desc = "Shuts down all melanin production in the subject's body."
-	id = "albinism"
-	effectType = effectTypePower
+/datum/bioEffect/achromia
+	name = "Achromia"
+	desc = "The subject loses most of their skin pigmentation, with the remainder causing their skin take on a gray coloration."
+	id = "achromia"
 	probability = 99
-	isBad = 1
-	var/eye_color_to_use = "#FF0000"
-	var/color_to_use = "#FFFFFF"
-	var/skintone_to_use = "#FFFFFF"
-	var/holder_eyes = null
-	var/holder_hair = null
-	var/holder_det1 = null
-	var/holder_det2 = null
+	icon_state  = "achromia"
 	var/holder_skin = null
 
 	OnAdd()
@@ -84,21 +76,14 @@
 		var/mob/living/carbon/human/H = owner
 		if (!H.bioHolder)
 			return
-		var/datum/bioHolder/B = H.bioHolder
-		if (!B.mobAppearance)
-			return
 		var/datum/appearanceHolder/AH = H.bioHolder.mobAppearance
-		holder_eyes = AH.e_color
-		holder_hair = AH.customization_first_color
-		holder_det1 = AH.customization_second_color
-		holder_det2 = AH.customization_third_color
 		holder_skin = AH.s_tone
-		AH.e_color = eye_color_to_use
-		AH.s_tone = skintone_to_use
-		AH.customization_first_color = color_to_use
-		AH.customization_second_color = color_to_use
-		AH.customization_third_color = color_to_use
-		H.update_face()
+		var/list/L = hex_to_rgb_list(AH.s_tone)
+		var/new_color = ((L[1] + L[2] + L[3]) / 3) - 20
+		if (new_color < 0)
+			new_color = 0
+		AH.s_tone = rgb(new_color, new_color, new_color)
+		H.update_colorful_parts()
 		H.update_body()
 
 	OnRemove()
@@ -108,35 +93,100 @@
 		var/mob/living/carbon/human/H = owner
 		if (!H.bioHolder)
 			return
-		var/datum/bioHolder/B = H.bioHolder
-		if (!B.mobAppearance)
-			return
 		var/datum/appearanceHolder/AH = H.bioHolder.mobAppearance
-		AH.e_color = holder_eyes
+		if (!AH)
+			return
 		AH.s_tone = holder_skin
-		AH.customization_first_color = holder_hair
-		AH.customization_second_color = holder_det1
-		AH.customization_third_color = holder_det2
-		H.update_face()
+		if(AH.mob_appearance_flags & FIX_COLORS) // human -> achrom -> lizard -> notachrom is *bright*
+			AH.customization_first_color = fix_colors(AH.customization_first_color)
+			AH.customization_second_color = fix_colors(AH.customization_second_color)
+			AH.customization_third_color = fix_colors(AH.customization_third_color)
+		H.update_colorful_parts()
 		H.update_body()
+
+/datum/bioEffect/color_changer
+	name = "Melanin Suppressor"
+	desc = "Shuts down all melanin production in the subject's body."
+	id = "albinism"
+	effectType = EFFECT_TYPE_POWER
+	probability = 99
+	isBad = 1
+	var/eye_color_to_use = "#FF0000"
+	var/color_to_use = "#FFFFFF"
+	var/skintone_to_use = "#FFFFFF"
+
+	OnAdd()
+		if (ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			for (var/ID in H.bioHolder.effects)
+				if (istype(H.bioHolder.GetEffect(ID), /datum/bioEffect/color_changer) && ID != src.id)
+					H.bioHolder.RemoveEffect(ID)
+			var/datum/appearanceHolder/AH = H.bioHolder.mobAppearance
+			AH.e_color_original = AH.e_color
+			AH.customization_first_color_original = AH.customization_first_color
+			AH.customization_second_color_original = AH.customization_second_color
+			AH.customization_third_color_original = AH.customization_third_color
+			AH.s_tone_original = AH.s_tone
+
+			AH.e_color = eye_color_to_use
+			AH.s_tone = skintone_to_use
+			AH.customization_first_color = color_to_use
+			AH.customization_second_color = color_to_use
+			AH.customization_third_color = color_to_use
+			H.update_colorful_parts()
+
+	OnRemove()
+		if (ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			var/datum/appearanceHolder/AH = H.bioHolder.mobAppearance
+			AH.e_color = AH.e_color_original
+			AH.s_tone = AH.s_tone_original
+			AH.customization_first_color = AH.customization_first_color_original
+			AH.customization_second_color = AH.customization_second_color_original
+			AH.customization_third_color = AH.customization_third_color_original
+			if(AH.mob_appearance_flags & FIX_COLORS) // human -> blank -> lizard -> unblank is *bright*
+				AH.customization_first_color = fix_colors(AH.customization_first_color)
+				AH.customization_second_color = fix_colors(AH.customization_second_color)
+				AH.customization_third_color = fix_colors(AH.customization_third_color)
+			H.update_colorful_parts()
 
 /datum/bioEffect/color_changer/black
 	name = "Melanin Stimulator"
 	desc = "Overstimulates the subject's melanin glands."
 	id = "melanism"
-	effectType = effectTypePower
+	effectType = EFFECT_TYPE_POWER
 	probability = 99
 	isBad = 1
 	eye_color_to_use = "#572E0B"
 	color_to_use = "#000000"
 	skintone_to_use = "#000000"
 
+/datum/bioEffect/color_changer/blank
+	name = "Melanin Eraser"
+	desc = "Shuts down all melanin production in subject's body, and eradicates all existing melanin."
+	id = "blankman"
+	msgGain = "You feel oddly plain."
+	msgLose = "You don't feel boring anymore."
+	icon_state  = "blank"
+	effectType = EFFECT_TYPE_POWER
+	probability = 99
+	isBad = 1
+	color_to_use = "#FFFFFF"
+	skintone_to_use = "#FFFFFF"
+
+	OnAdd()
+		if (ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			var/datum/appearanceHolder/AH = H.bioHolder.mobAppearance
+			eye_color_to_use = AH.e_color
+		. = ..()
+
 /datum/bioEffect/stinky
 	name = "Apocrine Enhancement"
 	desc = "Increases the amount of natural body substances produced from the subject's apocrine glands."
 	id = "stinky"
 	probability = 99
-	effectType = effectTypeDisability
+	effectType = EFFECT_TYPE_DISABILITY
 	isBad = 1
 	msgGain = "You feel sweaty."
 	msgLose = "You feel much more hygenic."
@@ -198,8 +248,8 @@
 	can_scramble = 0
 	curable_by_mutadone = 0
 	reagent_to_add = "bee"
-	reagent_threshold = 40
-	add_per_tick = 1.2
+	reagent_threshold = 12
+	add_per_tick = 6 //ensures we always have bee sickness
 
 /datum/bioEffect/drunk/pentetic
 	name = "Pentetic Acid Production"
@@ -217,7 +267,7 @@
 	can_scramble = 0
 	curable_by_mutadone = 0
 	reagent_to_add = "penteticacid"
-	reagent_threshold = 40
+	reagent_threshold = 12
 	add_per_tick = 4
 
 /datum/bioEffect/drunk/random
@@ -247,7 +297,7 @@
 	New()
 		..()
 		if (all_functional_reagent_ids.len > 1)
-			reagent_to_add = pick(all_functional_reagent_ids - list("big_bang_precursor", "big_bang", "nitrotri_parent", "nitrotri_wet", "nitrotri_dry"))
+			reagent_to_add = pick(all_functional_reagent_ids)
 		else
 			reagent_to_add = "water"
 
@@ -277,7 +327,7 @@
 	name = "Dactyl Crystallization"
 	desc = "The subject's digits crystallize and, when struck together, emit a pleasant noise."
 	id = "chime_snaps"
-	effectType = effectTypePower
+	effectType = EFFECT_TYPE_POWER
 	probability = 99
 	msgGain = "Your fingers and toes turn transparent and crystalline."
 	msgLose = "Your fingers and toes return to normal."
@@ -286,7 +336,7 @@
 	name = "Dermal Glow"
 	desc = "Causes the subject's skin to emit faint light patterns."
 	id = "aura"
-	effectType = effectTypePower
+	effectType = EFFECT_TYPE_POWER
 	probability = 99
 	msgGain = "You start to emit a pulsing glow."
 	msgLose = "The glow in your skin fades."
@@ -308,7 +358,7 @@
 	name = "Chronal Additive Inversement"
 	desc = "Causes the subject's age to become its additive inverse...somehow."
 	id = "chronal_additive_inversement"
-	effectType = effectTypePower
+	effectType = EFFECT_TYPE_POWER
 	probability = 66
 	blockCount = 3
 	blockGaps = 3
@@ -327,7 +377,7 @@
 	name = "Temporal Displacement"
 	desc = "The subject becomes displaced in time, aging them at random."
 	id = "temporal_displacement"
-	effectType = effectTypePower
+	effectType = EFFECT_TYPE_POWER
 	probability = 66
 	blockCount = 3
 	blockGaps = 3
@@ -348,7 +398,7 @@
 	name = "Blazing Aura"
 	desc = "Causes the subject's skin to emit harmless false fire."
 	id = "aura_fire"
-	effectType = effectTypePower
+	effectType = EFFECT_TYPE_POWER
 	occur_in_genepools = 0
 	msgGain = "You burst into flames!"
 	msgLose = "Your skin stops emitting fire."

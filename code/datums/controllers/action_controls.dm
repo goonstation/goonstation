@@ -6,27 +6,27 @@ var/datum/action_controller/actions
 	var/list/running = list() //Associative list of running actions, format: owner=list of action datums
 
 	proc/hasAction(var/atom/owner, var/id) //has this mob an action of a given type running?
-		if(running.Find(owner))
+		if(owner in running)
 			var/list/actions = running[owner]
 			for(var/datum/action/A in actions)
 				if(A.id == id) return 1
 		return 0
 
 	proc/stop_all(var/atom/owner) //Interrupts all actions of a given owner.
-		if(running.Find(owner))
+		if(owner in running)
 			for(var/datum/action/A in running[owner])
 				A.interrupt(INTERRUPT_ALWAYS)
 		return
 
 	proc/stop(var/datum/action/A, var/atom/owner) //Manually interrupts a given action of a given owner.
-		if(running.Find(owner))
+		if(owner in running)
 			var/list/actions = running[owner]
-			if(actions.Find(A))
+			if(A in actions)
 				A.interrupt(INTERRUPT_ALWAYS)
 		return
 
 	proc/stopId(var/id, var/atom/owner) //Manually interrupts a given action id of a given owner.
-		if(running.Find(owner))
+		if(owner in running)
 			var/list/actions = running[owner]
 			for(var/datum/action/A in actions)
 				if(A.id == id)
@@ -34,20 +34,25 @@ var/datum/action_controller/actions
 		return
 
 	proc/start(var/datum/action/A, var/atom/owner) //Starts a new action.
-		if(!running.Find(owner))
+		if(!(owner in running))
 			running.Add(owner)
 			running[owner] = list(A)
 		else
 			interrupt(owner, INTERRUPT_ACTION)
+			for(var/datum/action/OA in running[owner])
+				//Meant to catch users starting the same action twice, and saving the first-attempt from deletion
+				if(OA.id == A.id && OA.state == ACTIONSTATE_DELETE)
+					OA.onResume()
+					qdel(A)
+					return OA
 			running[owner] += A
-
 		A.owner = owner
-		A.started = world.time
+		A.started = TIME
 		A.onStart()
 		return A // cirr here, I added action ref to the return because I need it for AI stuff, thank you
 
 	proc/interrupt(var/atom/owner, var/flag) //Is called by all kinds of things to check for action interrupts.
-		if(running.Find(owner))
+		if(owner in running)
 			for(var/datum/action/A in running[owner])
 				A.interrupt(flag)
 		return
@@ -56,12 +61,12 @@ var/datum/action_controller/actions
 		for(var/X in running)
 			for(var/datum/action/A in running[X])
 
-				if( ((A.duration >= 0 && world.time >= (A.started + A.duration)) && A.state == ACTIONSTATE_RUNNING) || A.state == ACTIONSTATE_FINISH)
+				if( ((A.duration >= 0 && TIME >= (A.started + A.duration)) && A.state == ACTIONSTATE_RUNNING) || A.state == ACTIONSTATE_FINISH)
 					A.state = ACTIONSTATE_ENDED
 					A.onEnd()
 					//continue //If this is not commented out the deletion will take place the tick after the action ends. This will break things like objects being deleted onEnd with progressbars - the bars will be left behind. But it will look better for things that do not do this.
 
-				if(A.state == ACTIONSTATE_DELETE)
+				if(A.state == ACTIONSTATE_DELETE || A.disposed)
 					A.onDelete()
 					running[X] -= A
 					continue
@@ -77,7 +82,7 @@ var/datum/action_controller/actions
 	var/duration = 1 //How long does this action take in ticks.
 	var/interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION //When and how this action is interrupted.
 	var/state = ACTIONSTATE_STOPPED //Current state of the action.
-	var/started = -1 //world.time this action was started at
+	var/started = -1 //TIME this action was started at
 	var/id = "base" //Unique ID for this action. For when you want to remove actions by ID on a person.
 
 	proc/interrupt(var/flag) //This is called by the default interrupt actions
@@ -94,6 +99,20 @@ var/datum/action_controller/actions
 		return
 
 	proc/onStart()				   //Called when the action begins
+		state = ACTIONSTATE_RUNNING
+		return
+
+	proc/onRestart()			   //Called when the action restarts (for example: automenders)
+		sleep(1)
+		started = TIME
+		state = ACTIONSTATE_RUNNING
+		loopStart()
+		return
+
+	proc/loopStart()				//Called after restarting. Meant to cotain code from -and be called from- onStart()
+		return
+
+	proc/onResume()				   //Called when the action resumes - likely from almost ending
 		state = ACTIONSTATE_RUNNING
 		return
 
@@ -116,26 +135,27 @@ var/datum/action_controller/actions
 		var/atom/movable/A = owner
 		if(owner != null)
 			bar = unpool(/obj/actions/bar)
-			bar.loc = owner.loc
 			border = unpool(/obj/actions/border)
-			border.loc = owner.loc
 			bar.pixel_y = 5
 			bar.pixel_x = 0
 			border.pixel_y = 5
-			if (!islist(A.attached_objs))
-				A.attached_objs = list()
-			A.attached_objs.Add(bar)
-			A.attached_objs.Add(border)
+			A.vis_contents += bar
+			A.vis_contents += border
 			// this will absolutely obviously cause no problems.
 			bar.color = "#4444FF"
 			updateBar()
 
+	onRestart()
+		//Start the bar back at 0
+		bar.transform = matrix(0, 0, -15, 0, 1, 0)
+		..()
+
 	onDelete()
 		..()
 		var/atom/movable/A = owner
-		if (owner != null && islist(A.attached_objs))
-			A.attached_objs.Remove(bar)
-			A.attached_objs.Remove(border)
+		if (owner != null)
+			A.vis_contents -= bar
+			A.vis_contents -= border
 		SPAWN_DBG(0.5 SECONDS)
 			if (bar)
 				bar.set_loc(null)
@@ -148,9 +168,9 @@ var/datum/action_controller/actions
 
 	disposing()
 		var/atom/movable/A = owner
-		if (owner != null && islist(A.attached_objs))
-			A.attached_objs.Remove(bar)
-			A.attached_objs.Remove(border)
+		if (owner != null)
+			A.vis_contents -= bar
+			A.vis_contents -= border
 		if (bar)
 			bar.set_loc(null)
 			pool(bar)
@@ -176,14 +196,20 @@ var/datum/action_controller/actions
 				animate( bar, color = "#CC0000", time = 2.5 )
 		..()
 
+	onResume()
+		if (bar)
+			updateBar()
+			bar.color = "#4444FF"
+		..()
+
 	onUpdate()
 		updateBar()
 		..()
 
 	updateBar(var/animate = 1)
-		if (duration <= 0)
+		if (duration <= 0 || isnull(bar))
 			return
-		var/done = world.time - started
+		var/done = TIME - started
 		// inflate it a little to stop it from hitting 100% "too early"
 		var/fakeduration = duration + ((animate && done < duration) ? (world.tick_lag * 7) : 0)
 		var/remain = max(0, fakeduration - done)
@@ -193,6 +219,7 @@ var/datum/action_controller/actions
 			animate( bar, transform = matrix(1, 0, 0, 0, 1, 0), time = remain )
 		else
 			animate( bar, flags = ANIMATION_END_NOW )
+		return
 
 /datum/action/bar/blob_health // WOW HACK
 	onUpdate()
@@ -319,6 +346,86 @@ var/datum/action_controller/actions
 			del(icon_image)
 		..()
 
+
+/**
+* calls a specified proc if it finishes without interruptions.
+*
+* check [_std/macros/actions.dm] for documentation on a macro that uses this.
+*/
+/datum/action/bar/icon/callback
+	/// set to a string version of the callback proc path
+	id = null
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
+	/// set to the path of the proc that will be called if the action bar finishes
+	var/proc_path = null
+	/// what the target of the action is, if any
+	var/target = null
+	/// what string is broadcast once the action bar finishes
+	var/end_message = ""
+	/// what is the maximum range target and owner can be apart? need to modify before starting the action.
+	var/maximum_range = 1
+	/// a list of args for the proc thats called once the action bar finishes, if needed.
+	var/list/proc_args = null
+
+	New(var/owner, var/target, var/duration, var/proc_path, var/icon, var/icon_state, var/end_message)
+		..()
+		if (owner)
+			src.owner = owner
+		else //no owner means we have nothing to do things with
+			CRASH("action bars need an owner object to be tied to")
+		if (target) //not having a target is okay, sometimes were just doing things to ourselves
+			src.target = target
+		if (duration)
+			src.duration = duration
+		else //no duration dont do the thing
+			CRASH("action bars need a duration to run for, there's no default duration")
+		if (proc_path)
+			src.proc_path = proc_path
+		else //no proc, dont do the thing
+			CRASH("no proc was specified to be called once the action bar ends")
+		if (icon) //optional, dont always want an icon
+			src.icon = icon
+			if (icon_state) //optional, dont always want an icon state
+				src.icon_state = icon_state
+		else if (icon_state)
+			CRASH("icon state set for action bar, but no icon was set")
+		if (end_message)
+			src.end_message = end_message
+
+		//generate a id
+		if (src.proc_path)
+			src.id = "[src.proc_path]"
+
+	onStart()
+		..()
+		if (!src.owner)
+			interrupt(INTERRUPT_ALWAYS)
+		if (src.target && !IN_RANGE(src.owner, src.target, src.maximum_range))
+			interrupt(INTERRUPT_ALWAYS)
+
+	onUpdate()
+		..()
+		if (!src.owner)
+			interrupt(INTERRUPT_ALWAYS)
+		if (src.target && !IN_RANGE(src.owner, src.target, src.maximum_range))
+			interrupt(INTERRUPT_ALWAYS)
+
+	onEnd()
+		..()
+		if (!src.proc_path)
+			CRASH("action bar had no proc to call upon completion")
+		..()
+		if (!src.owner)
+			interrupt(INTERRUPT_ALWAYS)
+		if (src.target && !IN_RANGE(src.owner, src.target, src.maximum_range))
+			interrupt(INTERRUPT_ALWAYS)
+
+		src.owner.visible_message("[src.end_message]")
+		if (src.target)
+			INVOKE_ASYNC(src.target, src.proc_path, src.proc_args)
+		else
+			INVOKE_ASYNC(src.owner, src.proc_path, src.proc_args)
+
 /datum/action/bar/icon/build
 	duration = 30
 	var/obj/item/sheet/sheet
@@ -352,7 +459,7 @@ var/datum/action_controller/actions
 		..()
 		if(ishuman(owner))
 			var/mob/living/carbon/human/H = owner
-			if(H.traitHolder.hasTrait("carpenter"))
+			if(H.traitHolder.hasTrait("carpenter") || H.traitHolder.hasTrait("training_engineer"))
 				duration = round(duration / 2)
 
 		owner.visible_message("<span class='notice'>[owner] begins assembling [objname]!</span>")
@@ -364,7 +471,8 @@ var/datum/action_controller/actions
 		R.setMaterial(mat)
 		if (istype(R))
 			R.amount = amount
-		R.dir = owner.dir
+			R.inventory_counter?.update_number(R.amount)
+		R.set_dir(owner.dir)
 		sheet.consume_sheets(cost)
 		if (sheet2 && cost2)
 			sheet2.consume_sheets(cost2)
@@ -571,7 +679,7 @@ var/datum/action_controller/actions
 				// Re-added (Convair880).
 				if (istype(I, /obj/item/mousetrap/))
 					var/obj/item/mousetrap/MT = I
-					if (MT && MT.armed)
+					if (MT?.armed)
 						for (var/mob/O in AIviewers(owner))
 							O.show_message("<span class='alert'><B>...and triggers it accidentally!</B></span>", 1)
 						MT.triggered(source, source.hand ? "l_hand" : "r_hand")
@@ -687,6 +795,8 @@ var/datum/action_controller/actions
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
+		duration *= cuffs.apply_multiplier
+
 		if(ishuman(owner))
 			var/mob/living/carbon/human/H = owner
 			if(H.traitHolder.hasTrait("training_security"))
@@ -700,22 +810,26 @@ var/datum/action_controller/actions
 		var/mob/ownerMob = owner
 		if(owner && ownerMob && target && cuffs && !target.hasStatus("handcuffed") && cuffs == ownerMob.equipped() && get_dist(owner, target) <= 1)
 
-			var/obj/item/handcuffs/cuffs2
+			var/obj/item/handcuffs/tape/cuffs2
 
-			if (issilicon(ownerMob))
-				cuffs2 = new /obj/item/handcuffs
-			else
-				if (cuffs.amount >= 2)
+			if (initial(cuffs.amount) > 1)
+				if (cuffs.amount >= 1)
 					cuffs2 = new /obj/item/handcuffs/tape
+					cuffs2.apply_multiplier = cuffs.apply_multiplier
+					cuffs2.remove_self_multiplier = cuffs.remove_self_multiplier
+					cuffs2.remove_other_multiplier = cuffs.remove_other_multiplier
 					cuffs.amount--
-					boutput(ownerMob, "<span class='notice'>The [cuffs.name] now has [cuffs.amount] lengths of [istype(cuffs, /obj/item/handcuffs/tape_roll) ? "tape" : "ziptie"] left.</span>")
-				else if (cuffs.amount == 1 && cuffs.delete_on_last_use == 1)
-					cuffs2 = new /obj/item/handcuffs/tape
-					ownerMob.u_equip(cuffs)
-					boutput(ownerMob, "<span class='alert'>You used up the remaining length of [istype(cuffs, /obj/item/handcuffs/tape_roll) ? "tape" : "ziptie"].</span>")
-					qdel(cuffs)
+					if (cuffs.amount < 1 && cuffs.delete_on_last_use)
+						ownerMob.u_equip(cuffs)
+						boutput(ownerMob, "<span class='alert'>You used up the remaining length of [istype(cuffs, /obj/item/handcuffs/tape_roll) ? "tape" : "ziptie"].</span>")
+						qdel(cuffs)
+					else
+						boutput(ownerMob, "<span class='notice'>The [cuffs.name] now has [cuffs.amount] lengths of [istype(cuffs, /obj/item/handcuffs/tape_roll) ? "tape" : "ziptie"] left.</span>")
 				else
-					ownerMob.u_equip(cuffs)
+					boutput(ownerMob, "<span class='alert'>There's nothing left in the [istype(cuffs, /obj/item/handcuffs/tape_roll) ? "tape roll" : "ziptie"].</span>")
+					interrupt(INTERRUPT_ALWAYS)
+			else
+				ownerMob.u_equip(cuffs)
 
 			logTheThing("combat", ownerMob, target, "handcuffs [constructTarget(target,"combat")] with [cuffs2 ? "[cuffs2]" : "[cuffs]"] at [log_loc(ownerMob)].")
 
@@ -762,12 +876,16 @@ var/datum/action_controller/actions
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
+		if(target != null && ishuman(target) && target.hasStatus("handcuffed"))
+			var/mob/living/carbon/human/H = target
+			duration = round(duration * H.handcuffs.remove_other_multiplier)
+
 		for(var/mob/O in AIviewers(owner))
 			O.show_message("<span class='alert'><B>[owner] attempts to remove [target]'s handcuffs!</B></span>", 1)
 
 	onEnd()
 		..()
-		if(owner && target && target.hasStatus("handcuffed"))
+		if(owner && target?.hasStatus("handcuffed"))
 			var/mob/living/carbon/human/H = target
 			H.handcuffs.drop_handcuffs(H)
 			for(var/mob/O in AIviewers(H))
@@ -786,7 +904,17 @@ var/datum/action_controller/actions
 
 	onStart()
 		..()
+		if(owner != null && ishuman(owner) && owner.hasStatus("handcuffed"))
+			var/mob/living/carbon/human/H = owner
+			duration = round(duration * H.handcuffs.remove_self_multiplier)
+
 		owner.visible_message("<span class='alert'><B>[owner] attempts to remove the handcuffs!</B></span>")
+
+	onUpdate()
+		. = ..()
+		if(!owner.hasStatus("handcuffed"))
+			interrupt(INTERRUPT_ALWAYS)
+			return
 
 	onInterrupt(var/flag)
 		..()
@@ -852,37 +980,45 @@ var/datum/action_controller/actions
 	icon_state = "bar"
 	layer = 101
 	plane = PLANE_HUD + 1
+	appearance_flags = PIXEL_SCALE | RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM | KEEP_APART | TILE_BOUND
 	var/image/img
 	New()
+		..()
 		img = image('icons/ui/actions.dmi',src,"bar",6)
 
 	unpooled()
 		img = image('icons/ui/actions.dmi',src,"bar",6)
 		icon = initial(icon)
 		icon_state = initial(icon_state)
+		..()
 
 	pooled()
 		loc = null
 		attached_objs = list()
 		overlays.len = 0
+		..()
 
 /obj/actions/border
 	layer = 100
 	icon_state = "border"
 	plane = PLANE_HUD + 1
+	appearance_flags = PIXEL_SCALE | RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM | KEEP_APART | TILE_BOUND
 	var/image/img
 	New()
+		..()
 		img = image('icons/ui/actions.dmi',src,"border",5)
 
 	unpooled()
 		img = image('icons/ui/actions.dmi',src,"border",5)
 		icon = initial(icon)
 		icon_state = initial(icon_state)
+		..()
 
 	pooled()
 		loc = null
 		attached_objs = list()
 		overlays.len = 0
+		..()
 
 //Use this to start the action
 //actions.start(new/datum/action/bar/private/icon/magPicker(item, picker), usr)
@@ -1158,10 +1294,10 @@ var/datum/action_controller/actions
 
 	onUpdate()
 		..()
-		if (M && M.hasStatus("resting") && !M.stat && M.getStatusDuration("burning"))
+		if (M?.hasStatus("resting") && !M.stat && M.getStatusDuration("burning"))
 			M.update_burning(-1.2)
 
-			M.dir = turn(M.dir,up ? -90 : 90)
+			M.set_dir(turn(M.dir,up ? -90 : 90))
 			pixely += up ? 1 : -1
 			if (pixely != clamp(pixely, -5,5))
 				up = !up
@@ -1233,6 +1369,14 @@ var/datum/action_controller/actions
 		if(get_dist(owner, target) > 1 || target == null || owner == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
+		if(ishuman(owner)) //This is horrible and clunky and probably going to kill us all, I am so, so sorry.
+			var/mob/living/carbon/human/H = owner
+			if(H.limbs?.l_arm && !H.limbs.l_arm.can_hold_items)
+				interrupt(INTERRUPT_ALWAYS)
+				return
+			if(H.limbs?.r_arm && !H.limbs.r_arm.can_hold_items)
+				interrupt(INTERRUPT_ALWAYS)
+				return
 
 	onEnd()
 		..()
@@ -1269,3 +1413,65 @@ var/datum/action_controller/actions
 			..()
 			if (can_reach(owner,over_object) && ismob(owner) && owner:equipped() == target)
 				over_object.attackby(target, owner, params)
+
+/// general purpose action to anchor or unanchor stuff
+/datum/action/bar/icon/anchor_or_unanchor
+	id = "table_tool_interact"
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
+	duration = 5 SECONDS
+	icon = 'icons/ui/actions.dmi'
+	icon_state = "working"
+
+	var/obj/target
+	var/obj/item/tool
+	var/unanchor = FALSE
+
+	New(var/obj/target, var/obj/item/tool, var/unanchor=null, var/duration=null)
+		..()
+		if (target)
+			src.target = target
+		if (tool)
+			src.tool = tool
+			icon = src.tool.icon
+			icon_state = src.tool.icon_state
+		if (!isnull(unanchor))
+			src.unanchor = unanchor
+		else
+			src.unanchor = target.anchored
+		if (duration)
+			src.duration = duration
+		if (ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			if (H.traitHolder.hasTrait("carpenter") || H.traitHolder.hasTrait("training_engineer"))
+				duration = round(duration / 2)
+
+	onUpdate()
+		..()
+		if (target == null || tool == null || owner == null || get_dist(owner, target) > 1)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+		var/mob/source = owner
+		if (istype(source) && tool != source.equipped())
+			interrupt(INTERRUPT_ALWAYS)
+			return
+		if(unanchor && !target.anchored || !unanchor && target.anchored)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+	onStart()
+		..()
+		if(iswrenchingtool(tool))
+			playsound(get_turf(target), "sound/items/Ratchet.ogg", 50, 1)
+		else if(isweldingtool(tool))
+			playsound(get_turf(target), "sound/items/Welder.ogg", 50, 1)
+		else if(isscrewingtool(tool))
+			playsound(get_turf(target), "sound/items/Screwdriver.ogg", 50, 1)
+		owner.visible_message("<span class='notice'>[owner] begins [unanchor ? "un" : ""]anchoring [target].</span>")
+
+	onEnd()
+		..()
+		owner.visible_message("<span class='notice'>[owner]  [unanchor ? "un" : ""]anchors [target].</span>")
+		if(unanchor)
+			target.anchored = FALSE
+		else
+			target.anchored = TRUE

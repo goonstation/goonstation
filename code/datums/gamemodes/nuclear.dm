@@ -11,11 +11,8 @@
 	var/agent_radiofreq = 0 //:h for syndies, randomized per round
 	var/obj/machinery/nuclearbomb/the_bomb = null
 	var/bomb_check_timestamp = 0 // See check_finished().
-#if ASS_JAM
-	var/const/agents_possible = 30 // on ass jam theres up to 30 nukies to compensate for the warcrime of the kinetitech
-#else
-	var/const/agents_possible = 6 //If we ever need more syndicate agents. cogwerks - raised from 5
-#endif
+	var/const/agents_possible = 8 //If we ever need more syndicate agents. cogwerks - raised from 5
+
 
 	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
 	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
@@ -28,10 +25,9 @@
 	boutput(world, "<B>[syndicate_name()] operatives are approaching [station_name(1)]! They intend to destroy the [station_or_ship()] with a nuclear warhead.</B>")
 
 /datum/game_mode/nuclear/pre_setup()
-	var/the_spawn = syndicatestart && islist(syndicatestart) && syndicatestart.len ? pick(syndicatestart) : null
 	var/list/possible_syndicates = list()
 
-	if (!the_spawn)
+	if (!landmarks[LANDMARK_SYNDICATE])
 		boutput(world, "<span class='alert'><b>ERROR: couldn't find Syndicate spawn landmark, aborting nuke round pre-setup.</b></span>")
 		return 0
 
@@ -42,11 +38,7 @@
 
 		if (player.ready)
 			num_players++
-#if ASS_JAM
-	var/num_synds = max(1, min(round(num_players / 3), agents_possible))
-#else
 	var/num_synds = max(1, min(round(num_players / 4), agents_possible))
-#endif
 
 	possible_syndicates = get_possible_syndicates(num_synds)
 
@@ -62,7 +54,7 @@
 	else
 		if (ismap("COGMAP2"))
 			target_locations = list("the main security room" = list(/area/station/security/main),
-			"the central research sector hub" = list(/area/station/science),
+			"the central research sector hub" = list(/area/station/science/lobby),
 			"the cargo bay (QM)" = list(/area/station/quartermaster/office),
 			"the thermo-electric generator room" = list(/area/station/engine/core),
 			"the refinery (arc smelter)" = list(/area/station/quartermaster/refinery),
@@ -77,8 +69,8 @@
 			"inner engineering (surrounding the singularity, not in it)" = list(/area/station/engine/inner),
 			"the station's cafeteria" = list(/area/station/crew_quarters/cafeteria),
 			"the inner hall of the medbay" = list(/area/station/medical/medbay),
-			"the main hallway in research" = list(/area/station/science),
-			"the chapel" = list(/area/station/chapel/main),
+			"the main hallway in research" = list(/area/station/science/lobby),
+			"the chapel" = list(/area/station/chapel/sanctuary),
 			"the escape hallway" = list(/area/station/hallway/secondary/exit),
 			"the Research Director's office" = list(/area/station/crew_quarters/hor),
 			"the Chief Engineer's office" = list(/area/station/engine/engineering/ce),
@@ -86,7 +78,7 @@
 
 		else if (ismap("DESTINY") || ismap("CLARION"))
 			target_locations = list("the main security room" = list(/area/station/security/main),
-			"the central research sector hub" = list(/area/station/science),
+			"the central research sector hub" = list(/area/station/science/lobby),
 			"the cargo bay (QM)" = list(/area/station/quartermaster/office),
 			"the thermo-electric generator room" = list(/area/station/engine/core),
 			"the refinery (arc smelter)" = list(/area/station/mining/refinery),
@@ -98,7 +90,7 @@
 
 		else // COG1
 			target_locations = list("the main security room" = list(/area/station/security/main),
-			"the central research sector hub" = list(/area/station/science),
+			"the central research sector hub" = list(/area/station/science/lobby),
 			"the cargo bay (QM)" = list(/area/station/quartermaster/office),
 			"the engineering control room" = list(/area/station/engine/engineering, /area/station/engine/power),
 			"the central warehouse" = list(/area/station/storage/warehouse),
@@ -106,6 +98,7 @@
 			"the medbay" = list(/area/station/medical/medbay, /area/station/medical/medbay/surgery, /area/station/medical/medbay/lobby),
 			"the station's cafeteria" = list(/area/station/crew_quarters/cafeteria),
 			"the EVA storage" = list(/area/station/ai_monitored/storage/eva),
+			"the main bridge" = list(/area/station/bridge),
 			"the robotics lab" = list(/area/station/medical/robotics))
 			//"the public pool" = list(/area/station/crew_quarters/pool)) // Don't ask, it just fits all criteria. Deathstar weakness or something.
 
@@ -114,23 +107,7 @@
 		message_admins("<span class='alert'><b>CRITICAL BUG:</b> nuke mode setup encountered an error while trying to choose a target location for the bomb and the target has defaulted to anywhere on the station! The round will be able to be played like this but it will be unbalanced! Please inform a coder!")
 		logTheThing("debug", null, null, "<b>CRITICAL BUG:</b> nuke mode setup encountered an error while trying to choose a target location for the bomb and the target has defaulted to anywhere on the station.")
 
-#if ASS_JAM
-	var/station_only = prob(40)
-	target_locations = list()
-	for(var/area/A in world)
-		var/has_turfs = 0
-		for (var/turf/T in A)
-			has_turfs = 1
-			break
-		if(!has_turfs)
-			break
-		if(station_only && !istype(A, /area/station))
-			continue
-		if(!(A.name in target_locations))
-			target_locations[A.name] = list(A.type)
-		else
-			target_locations[A.name].Add(A.type)
-#endif
+
 
 	target_location_name = pick(target_locations)
 	if (!target_location_name)
@@ -168,10 +145,6 @@
 	return 1
 
 /datum/game_mode/nuclear/post_setup()
-	var/synd_spawn = pick(syndicatestart)
-	var/obj/landmark/nuke_spawn = locate("landmark*Nuclear-Bomb")
-	var/obj/landmark/closet_spawn = locate("landmark*Nuclear-Closet")
-
 	var/leader_title = pick("Czar", "Boss", "Commander", "Chief", "Kingpin", "Director", "Overlord", "General", "Warlord", "Commissar")
 	var/leader_selected = 0
 
@@ -180,9 +153,6 @@
 	var/list/callsign_list = strings("agent_callsigns.txt", pick(callsign_pool_keys))
 
 	for(var/datum/mind/synd_mind in syndicates)
-		synd_spawn = pick(syndicatestart) // So they don't all spawn on the same tile.
-		synd_mind.current.set_loc(synd_spawn)
-
 		bestow_objective(synd_mind,/datum/objective/specialist/nuclear)
 
 		var/obj_count = 1
@@ -195,6 +165,9 @@
 		boutput(synd_mind.current, "We have identified a major structural weakness in the [station_or_ship()]'s design. Arm the bomb in <B>[src.target_location_name]</B> to obliterate [station_name(1)].")
 
 		if(!leader_selected)
+			synd_mind.current.set_loc(pick_landmark(LANDMARK_SYNDICATE_BOSS))
+			if(!synd_mind.current.loc)
+				synd_mind.current.set_loc(pick_landmark(LANDMARK_SYNDICATE))
 			synd_mind.current.real_name = "[syndicate_name()] [leader_title]"
 			equip_syndicate(synd_mind.current, 1)
 			new /obj/item/device/audio_log/nuke_briefing(synd_mind.current.loc, target_location_name)
@@ -205,6 +178,7 @@
 				new /obj/item/pinpointer/disk(synd_mind.current.loc)
 			leader_selected = 1
 		else
+			synd_mind.current.set_loc(pick_landmark(LANDMARK_SYNDICATE))
 			var/callsign = pick(callsign_list)
 			synd_mind.current.real_name = "[syndicate_name()] Operative [callsign]" //new naming scheme
 			callsign_list -= callsign
@@ -214,32 +188,16 @@
 		synd_mind.current.antagonist_overlay_refresh(1, 0)
 		SHOW_NUKEOP_TIPS(synd_mind.current)
 
-	if(nuke_spawn)
-		the_bomb = new /obj/machinery/nuclearbomb(nuke_spawn.loc)
+	the_bomb = new /obj/machinery/nuclearbomb(pick_landmark(LANDMARK_NUCLEAR_BOMB))
+	new /obj/storage/closet/syndicate/nuclear(pick_landmark(LANDMARK_NUCLEAR_CLOSET))
 
-	if(closet_spawn)
-		new /obj/storage/closet/syndicate/nuclear(closet_spawn.loc)
-
-	for (var/obj/landmark/A in landmarks)//world)
-		LAGCHECK(LAG_LOW)
-		if (A.name == "Syndicate-Gear-Closet")
-			new /obj/storage/closet/syndicate/personal(A.loc)
-			A.dispose()
-			continue
-
-		if (A.name == "Syndicate-Bomb")
-			new /obj/spawner/newbomb/timer/syndicate(A.loc)
-			A.dispose()
-			continue
-
-		if (A.name == "Breaching-Charges")
-			new /obj/item/breaching_charge/thermite(A.loc)
-			new /obj/item/breaching_charge/thermite(A.loc)
-			new /obj/item/breaching_charge/thermite(A.loc)
-			new /obj/item/breaching_charge/thermite(A.loc)
-			new /obj/item/breaching_charge/thermite(A.loc)
-			A.dispose()
-			continue
+	for(var/turf/T in landmarks[LANDMARK_SYNDICATE_GEAR_CLOSET])
+		new /obj/storage/closet/syndicate/personal(T)
+	for(var/turf/T in landmarks[LANDMARK_SYNDICATE_BOMB])
+	new /obj/spawner/newbomb/timer/syndicate(pick_landmark(LANDMARK_SYNDICATE_BOMB))
+	for(var/turf/T in landmarks[LANDMARK_SYNDICATE_BREACHING_CHARGES])
+		for(var/i = 1 to 5)
+			new /obj/item/breaching_charge/thermite(T)
 
 	SPAWN_DBG (rand(waittime_l, waittime_h))
 		send_intercept()
@@ -259,7 +217,7 @@
 		return 1
 
 	if (emergency_shuttle.location == SHUTTLE_LOC_RETURNED)
-		if (the_bomb && the_bomb.armed)
+		if (the_bomb?.armed)
 			// Minor Syndicate Victory - crew escaped but bomb was armed and counting down
 			finished = -1
 			return 1
@@ -276,7 +234,7 @@
 	if (no_automatic_ending)
 		return 0
 
-	if (the_bomb && the_bomb.armed && the_bomb.det_time && !the_bomb.disposed)
+	if (the_bomb?.armed && the_bomb.det_time && !the_bomb.disposed)
 		// don't end the game if the bomb is armed and counting, even if the ops are all dead
 		return 0
 
@@ -426,24 +384,21 @@
 	for(var/A in possible_modes)
 		intercepttext += i_text.build(A, pick(ticker.minds))
 
-	for (var/obj/machinery/communications_dish/C in comm_dishes)
+	for_by_tcl(C, /obj/machinery/communications_dish)
 		C.add_centcom_report("Cent. Com. Status Summary", intercepttext)
 
 	command_alert("Summary downloaded and printed out at all communications consoles.", "Enemy communication intercept. Security Level Elevated.")
 
 
 /datum/game_mode/nuclear/proc/random_radio_frequency()
-	var/f = 0
+	. = 0
 	var/list/blacklisted = list(0, 1451, 1457) // The old blacklist was rather incomplete and thus ineffective (Convair880).
-	blacklisted.Add(R_FREQ_BLACKLIST_HEADSET)
-	blacklisted.Add(R_FREQ_BLACKLIST_INTERCOM)
+	blacklisted.Add(R_FREQ_BLACKLIST)
 
 	do
-		f = rand(1352, 1439)
+		. = rand(1352, 1439)
 
-	while (blacklisted.Find(f))
-
-	return f
+	while (. in blacklisted)
 
 /datum/game_mode/nuclear/process()
 	set background = 1
@@ -458,8 +413,10 @@ var/syndicate_name = null
 	var/name = ""
 
 	// Prefix
-#ifdef XMAS
+#if defined(XMAS)
 	name += pick("Merry", "Jingle", "Holiday", "Santa", "Gift", "Elf", "Jolly")
+#elif defined(HALLOWEEN)
+	name += pick("Hell", "Demon", "Blood", "Murder", "Gore", "Grave", "Sin", "Slaughter")
 #else
 	name += pick("Clandestine", "Prima", "Blue", "Zero-G", "Max", "Blasto", "Waffle", "North", "Omni", "Newton", "Cyber", "Bonk", "Gene", "Gib", "Funk", "Joint")
 #endif
@@ -482,3 +439,47 @@ var/syndicate_name = null
 
 	syndicate_name = name
 	return name
+
+/obj/cairngorm_stats/
+	name = "Mission Memorial"
+	icon = 'icons/obj/32x64.dmi'
+	icon_state = "memorial_mid"
+	anchored = 1.0
+	opacity = 0
+	density = 1
+
+
+
+	New()
+		..()
+		var/wins = world.load_intra_round_value("nukie_win")
+		var/losses = world.load_intra_round_value("nukie_loss")
+		if(isnull(wins))
+			wins = 0
+		if(isnull(losses))
+			losses = 0
+		src.desc = "<center><h2><b>Battlecruiser Cairngorm Mission Memorial</b></h2><br> <h3>Successful missions: [wins]<br>\nUnsuccessful missions: [losses]</h3><br></center>"
+
+	attack_hand(var/mob/user as mob)
+		if (..(user))
+			return
+
+		var/wins = world.load_intra_round_value("nukie_win")
+		var/losses = world.load_intra_round_value("nukie_loss")
+		if(isnull(wins))
+			wins = 0
+		if(isnull(losses))
+			losses = 0
+		var/dat = ""
+		dat += "<center><h2><b>Battlecruiser Cairngorm Mission Memorial</b></h2><br> <h3>Successful missions: [wins]<br>\nUnsuccessful missions: [losses]</h3></center>"
+
+		src.add_dialog(user)
+		user.Browse(dat, "title=Mission Memorial;window=cairngorm_stats_[src];size=300x300")
+		onclose(user, "cairngorm_stats_[src]")
+		return
+
+/obj/cairngorm_stats/left
+	icon_state = "memorial_left"
+
+/obj/cairngorm_stats/right
+	icon_state = "memorial_right"

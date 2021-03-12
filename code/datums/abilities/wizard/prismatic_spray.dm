@@ -18,7 +18,7 @@
 	//the number of projectiles we want to fire in a single cast
 	var/num_projectiles = 12
 	//what projectiles do we *NOT* want to add to the pool of random projectiles?
-	var/static/list/blacklist = list(/datum/projectile/slam,/datum/projectile/artifact,/datum/projectile/artifact/prismatic_projectile)
+	var/static/list/blacklist = list(/datum/projectile/slam,/datum/projectile/artifact,/datum/projectile/artifact/prismatic_projectile,/datum/projectile/pickpocket/plant,/datum/projectile/implanter)
 	//If random == 0, use the special prismatic projectile datum. Else, pick from the pool of all projectiles minus the blacklisted ones
 	var/random = 0
 	//the list of projectile types to pick from if random is set to 1
@@ -37,7 +37,7 @@
 		return !(proj_type in src.blacklist)
 
 	cast(atom/target)
-		if (holder.owner.wizard_spellpower() || istype(src, /datum/targetable/spell/prismatic_spray/admin))
+		if (holder.owner.wizard_spellpower(src) || istype(src, /datum/targetable/spell/prismatic_spray/admin))
 			holder.owner.say("PROJEHK TUL IHNFERNUS") //incantation credit to Grifflez
 			//var/mob/living/carbon/human/O = holder.owner
 			if(!istype(src, /datum/targetable/spell/prismatic_spray/admin))

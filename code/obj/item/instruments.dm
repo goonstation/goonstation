@@ -42,7 +42,7 @@
 
 			//src.contextActions = childrentypesof(/datum/contextAction/vehicle)
 
-			for(var/datum/contextAction/C in src.contextActions)
+			for(var/datum/contextAction/C as() in src.contextActions)
 				C.dispose()
 			src.contextActions = list()
 
@@ -73,8 +73,8 @@
 
 		if (prob(5) || sounds_instrument.len == 1)
 			if (src.dog_bark)
-				for (var/obj/critter/dog/george/G in by_type[/obj/critter/dog/george])
-					if (DIST_CHECK(G, T, 6) && prob(60))
+				for_by_tcl(G, /obj/critter/dog/george)
+					if (IN_RANGE(G, T, 6) && prob(60))
 						G.howl()
 
 			src.post_play_effect(user)
@@ -82,9 +82,9 @@
 		.= 1
 
 	proc/play(var/mob/user)
-		if (pick_random_note && sounds_instrument && sounds_instrument.len)
+		if (pick_random_note && length(sounds_instrument))
 			play_note(rand(1,sounds_instrument.len),user)
-		if(contextActions?.len)
+		if(length(contextActions))
 			user.showContextActions(contextActions, src)
 
 	proc/show_play_message(mob/user as mob)
@@ -212,11 +212,11 @@
 		for (var/i in 1 to 12)
 			sounds_instrument += "sound/musical_instruments/sax/sax_[i].ogg"
 		..()
-		BLOCK_ROD
+		BLOCK_SETUP(BLOCK_ROD)
 
 /obj/item/instrument/saxophone/attack(mob/M as mob, mob/user as mob)
 	if(ismob(M))
-		playsound(get_turf(src), pick('sound/impact_sounds/Generic_Punch_2.ogg','sound/impact_sounds/Generic_Punch_2.ogg','sound/impact_sounds/Generic_Punch_3.ogg','sound/impact_sounds/Generic_Punch_4.ogg'), 50, 1, -1)
+		playsound(get_turf(src), pick(sounds_punch), 50, 1, -1)
 		playsound(get_turf(src), pick('sound/musical_instruments/saxbonk.ogg', 'sound/musical_instruments/saxbonk2.ogg', 'sound/musical_instruments/saxbonk3.ogg'), 50, 1, -1)
 		user.visible_message("<span class='alert'><b>[user] bonks [M] with [src]!</b></span>")
 	else
@@ -237,7 +237,28 @@
 
 	New()
 		..()
-		BLOCK_BOOK
+		BLOCK_SETUP(BLOCK_BOOK)
+
+/* -------------------- Guitar -------------------- */
+
+/obj/item/instrument/guitar
+	name = "guitar"
+	desc = "This machine kills syndicates."
+	icon_state = "guitar"
+	item_state = "guitar"
+	two_handed = 1
+	force = 10.0
+	note_time = 0.18 SECONDS
+	sounds_instrument = null
+	randomized_pitch = 0
+
+	New()
+		if (sounds_instrument == null)
+			sounds_instrument = list()
+			for (var/i in 1 to 12)
+				sounds_instrument += "sound/musical_instruments/guitar/guitar_[i].ogg"
+		..()
+
 
 /* -------------------- Bike Horn -------------------- */
 
@@ -561,12 +582,12 @@
 		var/obj/item/reagent_containers/food/snacks/ectoplasm/soul_stuff = new (some_poor_fucker.loc)
 
 		if (istype(ghost_to_toss))
-			ghost_to_toss.loc = soul_stuff
+			ghost_to_toss.set_loc(soul_stuff)
 
 		soul_stuff.throw_at(T, 10, 1)
-		SPAWN_DBG (10)
+		SPAWN_DBG(1 SECOND)
 			if (soul_stuff && ghost_to_toss)
-				ghost_to_toss.loc = soul_stuff.loc
+				ghost_to_toss.set_loc(soul_stuff.loc)
 
 		some_poor_fucker.throw_at(T, 1, 1)
 		some_poor_fucker.changeStatus("weakened", 2 SECONDS)

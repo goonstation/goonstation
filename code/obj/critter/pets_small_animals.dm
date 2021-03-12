@@ -6,7 +6,7 @@
 	aggressive = 0
 	defensive = 0
 	wanderer = 1
-	opensdoors = 0
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_NONE
 	atkcarbon = 0
 	atksilicon = 0
 	butcherable = 1
@@ -17,12 +17,13 @@
 	name = "cockroach"
 	desc = "An unpleasant insect that lives in filthy places."
 	icon_state = "roach"
+	critter_family = BUG
 	density = 0
 	health = 10
 	aggressive = 0
 	defensive = 0
 	wanderer = 1
-	opensdoors = 0
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_NONE
 	atkcarbon = 0
 	atksilicon = 0
 	butcherable = 1
@@ -51,7 +52,7 @@
 	aggressive = 1
 	defensive = 1
 	wanderer = 1
-	opensdoors = 0
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_NONE
 	atkcarbon = 0
 	atksilicon = 0
 	firevuln = 1
@@ -74,6 +75,17 @@
 			src.atk_diseases = list(/datum/ailment/disease/berserker, /datum/ailment/disease/space_madness)
 			src.atk_disease_prob = 10
 			src.atkcarbon = 1
+
+/obj/critter/mouse/mad
+	name = "rabid space mouse"
+	desc = "A mouth-foaming cheese and flesh eating mouse. In space."
+	health = 10
+	chases_food = 0
+	feed_text = "squeaks viciously!"
+	atk_delay = 10
+	atk_diseases = list(/datum/ailment/disease/berserker, /datum/ailment/disease/space_madness)
+	atk_disease_prob = 35
+	atkcarbon = 1
 /*
 	CritterAttack(mob/living/M)
 		src.attacking = 1
@@ -145,7 +157,7 @@
 	aggressive = 1
 	defensive = 1
 	wanderer = 1
-	opensdoors = 0
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_NONE
 	atkcarbon = 0
 	atksilicon = 0
 	firevuln = 1
@@ -186,28 +198,13 @@
 		if (!src.alive)
 			if (istype(W, /obj/item/knife/butcher) || istype(W, /obj/item/circular_saw) || istype(W, /obj/item/kitchen/utensil/knife) || istype(W, /obj/item/scalpel) || istype(W, /obj/item/raw_material/shard) || istype(W, /obj/item/sword) || istype(W, /obj/item/saw) || issnippingtool(W))
 				src.on_revive()
-				SPAWN_DBG(0)
-					return ..(W, user)
+				. = ..()
 		else
-			return ..()
+			. = ..()
 
 /obj/critter/opossum/morty
 	name = "Morty"
 	generic = 0
-
-var/list/cat_names = list("Gary", "Mittens", "Mr. Jingles", "Rex", "Jasmine", "Litterbox",
-"Reginald", "Poosycat", "Dr. Purrsworthy", "Lt. Scratches", "Michael Catson",
-"Fluffy", "Mr. Purrfect", "Lord Furstooth", "Lion-O", "Johnathan", "Gary Catglitter",
-"Chat de Gaulle", "Ratbag",
-"Baron Fuzzykins, Defiler of Carpets", "Robert Meowgabe", "Chairman Meow", "Bacon",
-"Prunella", "Poonella", "SEXCOPTER", "Fat, Lazy Piece of Shit", "Jones Mk. II",
-"Jones Mk. III", "Jones Mk. IV", "Jones Mk.V", "Mr. Meowgi",
-"Furrston von Purringsworth", "Garfadukecliff", "SyndiCat", "Rosa Fluffemberg",
-"Karl Meowx", "Margaret Scratcher", "Marcel Purroust", "Franz Katka", "Das Katpital",
-"Proletaricat", "Perestroikat", "Mewy P. Newton", "Fidel Catstro", "George Lucats",
-"Lin Miao", "Felix Purrzhinsky", "Pol Pet", "Piggy", "Long Kitty", "Caterella", "Aristocat",
-"Arthur Cat Clarke", "Prick", "Pantalaimon", "Purrsula K. Le Guin", "Douglas Pat 'Ems",
-"Gato", "Zebra", "Possum", "Myst", "Too", "P", "Z", "Catopus")
 
 // hi I added my childhood cats' names to the list cause I miss em, they aren't really funny names but they were great cats
 // remove em if you want I guess
@@ -222,7 +219,7 @@ var/list/cat_names = list("Gary", "Mittens", "Mr. Jingles", "Rex", "Jasmine", "L
 	aggressive = 1
 	defensive = 1
 	wanderer = 1
-	opensdoors = 0
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_NONE
 	atkcarbon = 0
 	atksilicon = 0
 	firevuln = 1
@@ -240,7 +237,7 @@ var/list/cat_names = list("Gary", "Mittens", "Mr. Jingles", "Rex", "Jasmine", "L
 			src.is_pet = 1
 		..()
 		if (src.randomize_cat)
-			src.name = pick(cat_names)
+			src.name = pick_string_autokey("names/cats.txt")
 
 #ifdef HALLOWEEN
 			src.cattype = 3 //Black cats for halloween.
@@ -293,20 +290,22 @@ var/list/cat_names = list("Gary", "Mittens", "Mr. Jingles", "Rex", "Jasmine", "L
 			..()
 
 	CritterAttack(mob/M)
-		if (ismob(M))
-			src.attacking = 1
-			var/attackCount = (src.catnip ? rand(4,8) : 1)
-			while (attackCount-- > 0)
-				src.visible_message("<span class='combat'><B>[src]</B> bites [src.target]!</span>")
-				if (ismob(M))
-					random_brute_damage(src.target, 3,1)
-				else if (istype(M, /obj/critter)) //robust cat simulation.
-					var/obj/critter/C = src.target
-					C.health -= 2
-					if (C.health <= 0 && C.alive)
-						C.CritterDeath()
-						src.attacking = 0
-				sleep(0.2 SECONDS)
+		if(istype(M, /mob/living/critter/small_animal/mouse/weak/mentor) && prob(90))
+			src.visible_message("<span class='combat'><B>[src]</B> tries to bite [src.target] but \the [src.target] dodges nimbly!</span>")
+			return
+		src.attacking = 1
+		var/attackCount = (src.catnip ? rand(4,8) : 1)
+		while (attackCount-- > 0)
+			src.visible_message("<span class='combat'><B>[src]</B> bites [src.target]!</span>")
+			if (ismob(M))
+				random_brute_damage(src.target, 3,1)
+			else if (istype(M, /obj/critter)) //robust cat simulation.
+				var/obj/critter/C = src.target
+				C.health -= 2
+				if (C.health <= 0 && C.alive)
+					C.CritterDeath()
+					src.attacking = 0
+			sleep(0.2 SECONDS)
 		if (isliving(M))
 			var/mob/living/H = M
 			H.was_harmed(src)
@@ -402,15 +401,16 @@ var/list/cat_names = list("Gary", "Mittens", "Mr. Jingles", "Rex", "Jasmine", "L
 		if (istype(W, /obj/item/card/emag))
 			emag_act(usr, W)
 		if (istype(W, /obj/item/card/id/blank_deluxe))
-			if (W.desc == "Some type of microchipped payment card. Looks like it's designed to deal with catcoins.")//Can't change descs
-				if (!swiped && W.stamina_cost == 1)
+			var/obj/item/card/id/blank_deluxe/CARD = W
+			if (CARD.desc == "Some type of microchipped payment card. Looks like it's designed to deal with catcoins.")//Can't change descs
+				if (!swiped && !CARD.jones_swiped)
 					if (user)
 						user.show_text("You swipe down [src]'s back in a petting motion...")
 					src.visible_message("<span class='combat'>[src] vomits out a wad of paper!</span>") //Jones City Puzzle
 					make_cleanable( /obj/decal/cleanable/vomit,src.loc)
 					new /obj/item/paper/jones_note(src.loc)
 					swiped++
-					W.stamina_cost = 2 //Can only use the card once.
+					CARD.jones_swiped = 1 //Can only use the card once.
 		else
 			..()
 
@@ -440,7 +440,7 @@ var/list/cat_names = list("Gary", "Mittens", "Mr. Jingles", "Rex", "Jasmine", "L
 	desc = "Although this cat is vegan, it's still a carnivore."
 
 	New()
-		name = pick(cat_names)
+		name = pick_string_autokey("names/cats.txt")
 		..()
 
 /obj/critter/dog/george
@@ -453,7 +453,7 @@ var/list/cat_names = list("Gary", "Mittens", "Mr. Jingles", "Rex", "Jasmine", "L
 	aggressive = 1
 	defensive = 1
 	wanderer = 1
-	opensdoors = 0
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_NONE
 	atkcarbon = 0
 	atksilicon = 0 //set to 1 for robots as space cars
 	firevuln = 1
@@ -585,7 +585,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 	aggressive = 1
 	defensive = 1
 	wanderer = 1
-	opensdoors = 0
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_NONE
 	atkcarbon = 0
 	atksilicon = 0
 	firevuln = 1
@@ -638,7 +638,8 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 			M.changeStatus("stunned", 4 SECONDS)
 			M.changeStatus("weakened", 4 SECONDS)
 
-	on_pet()
+	on_pet(mob/user)
+		..()
 		if(prob(10))
 			for(var/mob/O in hearers(src, null))
 				O.show_message("[src] purrs!",2)
@@ -653,7 +654,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 	aggressive = 1
 	defensive = 1
 	wanderer = 1
-	opensdoors = 0
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_NONE
 	atkcarbon = 0
 	atksilicon = 0
 	firevuln = 1
@@ -755,7 +756,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 	aggressive = 1
 	defensive = 1
 	wanderer = 1
-	opensdoors = 1
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_PUBLIC
 	atkcarbon = 0
 	atksilicon = 0
 	firevuln = 1
@@ -801,7 +802,8 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 			M.changeStatus("stunned", 2 SECONDS)
 			M.changeStatus("weakened", 2 SECONDS)
 
-	on_pet()
+	on_pet(mob/user)
+		..()
 		if(prob(10))
 			src.visible_message("<b>[src]</b> honks!",2)
 			playsound(src.loc, "sound/voice/animal/goose.ogg", 50, 1)
@@ -851,7 +853,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 	aggressive = 0
 	defensive = 1
 	wanderer = 1
-	opensdoors = 0 // this was funny for a while but now is less so
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_NONE // this was funny for a while but now is less so
 	atkcarbon = 0
 	atksilicon = 0
 	firevuln = 1
@@ -869,9 +871,10 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 	var/list/learned_phrases = null				// ^^^ for complete phrases
 	var/learn_words_chance = 33					// chance to learn new single words each time speech is heard
 	var/learn_phrase_chance = 10				// ^^^ for complete phrases
+	var/signing_learn_boost = 33				// increased chance for learning word or phrase when sung
 	var/learn_words_max = PARROT_MAX_WORDS		// max amount of single words the learned_words list can have, if this limit is reached the bird will have a random chance to replace some of its old words to learn the new ones, set to -1 for infinite
 	var/learn_phrase_max = PARROT_MAX_PHRASES	// ^^^ for complete phrases
-	var/chatter_chance = 2						// chance to say something per ai cycle
+	var/chatter_chance = 6						// chance to say something per ai cycle
 	var/obj/item/treasure = null				// currently held item
 	var/obj/item/new_treasure = null			// item sought to hold
 	var/turf/treasure_loc = null				// location of sought item
@@ -901,9 +904,21 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 		if (!src.alive || src.sleeping || !text)
 			return
 		var/m_id = (lang_id == "english" || lang_id == "") ? 1 : 2
-		if (prob(learn_words_chance))
+		if (M.singing)
+			if (M.singing & BAD_SINGING || M.singing & LOUD_SINGING)
+				SPAWN_DBG(0.3 SECONDS)
+					if(get_dist(src,M) <= 1)
+						src.CritterAttack(M)
+					else
+						flick("[src.species]-flaploop", src)
+			else
+				spawn(rand(4,10))
+					chatter(1)
+
+		var/boost = M.singing ? signing_learn_boost : 0
+		if (prob(learn_words_chance + boost))
 			src.learn_stuff(messages[m_id])
-		if (prob(learn_phrase_chance))
+		if (prob(learn_phrase_chance + boost))
 			src.learn_stuff(messages[m_id], 1)
 
 	proc/learn_stuff(var/message, var/learn_phrase = 0)
@@ -948,16 +963,24 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 		src.learned_words += learning_word
 		DEBUG_MESSAGE("[src]: chosen word: [learning_word]")
 
-	proc/chatter()
+	proc/chatter(var/sing=0)
+		var/thing_to_say = ""
 		if (islist(src.learned_phrases) && src.learned_phrases.len && prob(20))
-			src.say(pick(src.learned_phrases))
+			thing_to_say = pick(src.learned_phrases)
 		else if (islist(src.learned_words) && src.learned_words.len)
-			var/my_word = pick(src.learned_words) // :monocle:
-			src.say("[capitalize(my_word)][pick(".", "!", "?", "...")]")
+			thing_to_say = pick(src.learned_words) // :monocle:
+			thing_to_say = "[capitalize(thing_to_say)][pick(".", "!", "?", "...")]"
+		// format
+		var/quote = "\""
+		if (sing)
+			quote = "<img class=\"icon misc\" style=\"position: relative; bottom: -3px; \" src=\"[resource("images/radio_icons/note.png")]\">"
+			thing_to_say = "<span style=\"color: bisque; font-style: italic;\">[thing_to_say]</span>"
+		thing_to_say = "[quote][thing_to_say][quote]"
+		src.say(thing_to_say)
 
 	proc/say(var/text) // mehhh
 		var/my_verb = pick("chatters", "chirps", "squawks", "mutters", "cackles", "mumbles")
-		src.visible_message("<span class='game say'><span class='name'>[src]</span> [my_verb], \"[text]\"</span>")
+		src.visible_message("<span class='game say'><span class='name'>[src]</span> [my_verb], [text]</span>")
 
 	proc/take_stuff()
 		if (src.treasure)
@@ -1076,7 +1099,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 		if (task == "thinking" || task == "wandering")
 			src.fussle()
 			if (prob(src.chatter_chance) && !src.muted)
-				src.chatter()
+				src.chatter(rand(1))
 			if (prob(5) && !src.muted)
 				src.visible_message("<span class='notice'><b>[src]</b> [pick("chatters", "chirps", "squawks", "mutters", "cackles", "mumbles", "fusses", "preens", "clicks its beak", "fluffs up", "poofs up")]!</span>")
 			if (prob(15))
@@ -1618,7 +1641,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 	aggressive = 1
 	defensive = 1
 	wanderer = 1
-	opensdoors = 0
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_NONE
 	atkcarbon = 0
 	atksilicon = 0
 	firevuln = 1
@@ -1670,7 +1693,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 	aggressive = 1
 	defensive = 1
 	wanderer = 1
-	opensdoors = 0
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_NONE
 	atkcarbon = 0
 	atksilicon = 0
 	firevuln = 1
@@ -1772,7 +1795,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 	aggressive = 1
 	defensive = 1
 	wanderer = 1
-	opensdoors = 0
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_NONE
 	atkcarbon = 0
 	atksilicon = 0
 	firevuln = 1
@@ -1784,6 +1807,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 	chase_text = "boogies right into"
 	atk_brute_amt = 5
 	generic = 0
+	var/emagged = 0
 	var/dance_forever = 0
 	death_text = "%src% stops dancing forever."
 
@@ -1794,6 +1818,13 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 				src.visible_message("<b>[src]</b> [msg]!",2)
 			src.icon_state = pick("boogie-d1","boogie-d2","boogie-d3")
 			// maybe later make it ambient play a short chiptune here later or at least some new sound effect
+			if (emagged)
+				SPAWN_DBG(0.5 SECONDS)
+					for (var/mob/living/carbon/human/responseMonkey in orange(2, src)) // they don't have to be monkeys, but it's signifying monkey code
+						LAGCHECK(LAG_MED)
+						if (!can_act(responseMonkey, 0))
+							continue
+						responseMonkey.emote("dance")
 			SPAWN_DBG(20 SECONDS)
 				if (src) src.icon_state = "boogie"
 
@@ -1828,6 +1859,15 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 		else
 			. = ..()
 
+	emag_act(mob/user, obj/item/card/emag/E)
+		if (!src.emagged)
+			if(user)
+				boutput(user, "<span class='alert'>You short out the [src]'s dancing intensity setting to 'flashmob'.</span>")
+			src.visible_message("<span class='alert'><b>[src] lights up with determination!</b></span>")
+			src.emagged = TRUE
+			return 1
+		return 0
+
 /obj/critter/meatslinky // ferrets for wire
 	name = "space ferret"
 	desc = "A ferret that came from space. Or maybe went to space. Who knows how it got here?"
@@ -1838,7 +1878,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 	aggressive = 1
 	defensive = 1
 	wanderer = 1
-	opensdoors = 0
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_NONE
 	atkcarbon = 0
 	atksilicon = 0
 	firevuln = 1
@@ -1968,7 +2008,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 	aggressive = 1
 	defensive = 1
 	wanderer = 1
-	opensdoors = 0
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_NONE
 	atkcarbon = 0
 	atksilicon = 0
 	firevuln = 1
@@ -2012,7 +2052,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 	aggressive = 0
 	defensive = 0
 	wanderer = 1
-	opensdoors = 0
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_NONE
 	atkcarbon = 0
 	atksilicon = 0
 	butcherable = 1
@@ -2071,7 +2111,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 	aggressive = 0
 	defensive = 1
 	wanderer = 1
-	opensdoors = 0
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_NONE
 	atkcarbon = 1
 	atksilicon = 1
 	firevuln = 1
@@ -2154,7 +2194,7 @@ obj/critter/frog
 	aggressive = 0
 	defensive = 1
 	wanderer = 1
-	opensdoors = 0
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_NONE
 	atkcarbon = 1
 	atksilicon = 1
 	firevuln = 1

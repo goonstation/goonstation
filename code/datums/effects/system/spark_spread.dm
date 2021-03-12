@@ -16,9 +16,9 @@
 	location = null
 	holder = null
 	total_sparks = initial(total_sparks)
-	if(livesparks)
-		livesparks.len = 0
+	livesparks?.len = 0
 	livesparks = new
+	..()
 
 /datum/effects/system/spark_spread/proc/set_up(n = 3, c = 0, loca)
 	if(n > 10)

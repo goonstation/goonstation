@@ -22,7 +22,8 @@
 	// The topBar style here is so that it can continue to happily chill at the top of even chui windows
 	var/header_thing_chui_toggle = (usr.client && !usr.client.use_chui) ? "<style type='text/css'>#topBar { top: 0; left: 0; right: 0; background-color: white; } </style>" : "<style type='text/css'>#topBar { top: 46px; left: 4px; right: 10px; background: inherit; }</style>"
 
-	var/dat = {"
+	var/list/dat = list()
+	dat += {"
 	[header_thing_chui_toggle]
 	<title>[M.name] ([M.key ? M.key : "NO CKEY"]) Options</title>
 	<style>
@@ -116,7 +117,6 @@
 						<a href='?action=priv_msg&target=[M.ckey]'>PM</a> &bull;
 						<a href='[playeropt_link(M, "subtlemsg")]'>Subtle PM</a> &bull;
 						<a href='[playeropt_link(M, "plainmsg")]'>Plain Message</a> &bull;
-						<a href='[playeropt_link(M, "forcespeech")]'>Force Say</a> &bull;
 						<a href='[playeropt_link(M, "adminalert")]'>Alert</a> &bull;
 						<a href='[playeropt_link(M, "showrules")]'>Show Rules</a>
 					</div>
@@ -149,13 +149,14 @@
 					</div>
 					<div class='l'>Bioeffects<a href='?src=\ref[src];action=secretsfun;type=bioeffect_help'>*</a></div>
 					<div class='r'>
-						<a href='[playeropt_link(M, "checkbioeffect")]'>Check</a> &bull;
+						<a href='[playeropt_link(M, "managebioeffect")]'>Manage</a> &bull;
 						<a href='[playeropt_link(M, "addbioeffect")]'>Add</a> &bull;
 						<a href='[playeropt_link(M, "removebioeffect")]'>Remove</a>
 					</div>
 					"}]
 					<div class='l'>Abilities</div>
 					<div class='r'>
+						<a href='[playeropt_link(M, "manageabils")]'>Manage</a> &bull;
 						<a href='[playeropt_link(M, "addabil")]'>Add</a> &bull;
 						<a href='[playeropt_link(M, "removeabil")]'>Remove</a> &bull;
 						<a href='[playeropt_link(M, "abilholder")]'>New Holder</a>
@@ -183,7 +184,11 @@
 						<a href='[playeropt_link(M, "tysongib")]'>Tyson</a> &bull;
 						<a href='[playeropt_link(M, "damn")]'>(Un)Damn</a>
 					</div>
-				 </div>
+					<div class='l'>Misc</div>
+					<div class='r'>
+						<a href='[playeropt_link(M, "forcespeech")]'>Force Say</a>
+					</div>
+				</div>
 			</div>
 				"}
 
@@ -206,7 +211,12 @@
 						<a href='[playeropt_link(M, "getmob")]'>Get</a> &bull;
 						<a href='[playeropt_link(M, "sendmob")]'>Send to...</a>
 						<br>Currently in [A]
-						<br>&nbsp;&nbsp;[T.x], [T.y], [T.z][(Q && Q != T) ? ", inside \the [Q]" : ""]
+			"}
+		if (T) //runtime fix for mobs in null space
+			dat += "<br>&nbsp;&nbsp;[T.x], [T.y], [T.z][(Q && Q != T) ? ", inside \the [Q]" : ""]"
+		else
+			dat += "Null Space"
+		dat += {"
 					</div>
 					<div class='l'>
 						Prison
@@ -285,7 +295,8 @@
 						[iswraith(M) ? "<em>Is Wraith</em>" : "<a href='[playeropt_link(M, "makewraith")]'>Wraith</a>"] &bull;
 						[isblob(M) ? "<em>Is Blob</em>" : "<a href='[playeropt_link(M, "makeblob")]'>Blob</a>"] &bull;
 						[istype(M, /mob/living/carbon/human/machoman) ? "<em>Is Macho Man</em>" : "<a href='[playeropt_link(M, "makemacho")]'>Macho Man</a>"] &bull;
-						[isflock(M) ? "<em>Is Flock</em>" : "<a href='[playeropt_link(M, "makeflock")]'>Flock</a>"]
+						[isflock(M) ? "<em>Is Flock</em>" : "<a href='[playeropt_link(M, "makeflock")]'>Flock</a>"] &bull;
+						[isfloorgoblin(M) ? "<em>Is Floor Goblin</em>" : "<a href='[playeropt_link(M, "makefloorgoblin")]'>Floor Goblin</a>"]
 					</div>
 				</div>
 			</div>
@@ -367,4 +378,4 @@
 	else if (src.level == LEVEL_CODER)
 		windowHeight = "754"	//weird number, but for chui screen, it removes the scrolling.
 
-	usr.Browse(dat, "window=adminplayeropts[M.ckey];size=600x[windowHeight]")
+	usr.Browse(dat.Join(), "window=adminplayeropts[M.ckey];size=600x[windowHeight]")

@@ -69,6 +69,8 @@
 				icon_state = "[src.style]_med1"
 			if (reagents.has_reagent("LSD",1))
 				icon_state = "[src.style]_LSD"
+			if (reagents.has_reagent("lsd_bee"))
+				icon_state = "[src.style]_LSBee"
 
 			if (!src.fluid_image)
 				src.fluid_image = image('icons/obj/chemical.dmi', "[src.style]-fluid", -1)
@@ -114,7 +116,7 @@
 			attach_sticker_manual(user)
 		return
 
-	throw_impact(mob/M as mob)
+	throw_impact(atom/M, datum/thrown_thing/thr)
 		..()
 		if (src.medical && !borg && !src.in_use && (iscarbon(M) || ismobcritter(M)))
 			if (prob(30) || good_throw && prob(70))
@@ -186,12 +188,12 @@
 		repair_bleeding_damage(M, 25, 1)
 		active = 1
 
-		if (reagents && reagents.total_volume)
+		if (reagents?.total_volume)
 			if (!borg)
-				user.drop_item(src)
+				user?.drop_item(src)
 				//user.u_equip(src)
 				//qdel(src)
-				src.loc = M
+				src.set_loc(M)
 				if (isliving(M))
 					var/mob/living/L = M
 					L.skin_process += src
@@ -316,6 +318,13 @@
 	cyborg
 		borg = 1
 
+/obj/item/reagent_containers/patch/lsd_bee
+	name = "bluzzer"
+	desc = "A highly potent hallucinogenic substance. It smells like honey."
+	icon_state = "patch_LSBee"
+	initial_reagents = list("lsd_bee"=20)
+	module_research = list("vice" = 10)
+
 /obj/item/reagent_containers/patch/vr
 	icon = 'icons/effects/VR.dmi'
 	icon_state = "patch_med"
@@ -406,7 +415,7 @@
 	attack_self(var/mob/user)
 		if (patches.len)
 			var/obj/item/reagent_containers/patch/P = patches[patches.len]
-			P.loc = user.loc
+			P.set_loc(user.loc)
 			patches -= P
 			update_overlay()
 			boutput(user, "<span class='notice'>You remove [P] from the stack.</span>")
@@ -427,7 +436,7 @@
 					U.contents -= target
 					if (U.hud)
 						U.hud.update()
-				target.loc = src
+				target.set_loc(src)
 				patches += target
 				update_overlay()
 				boutput(user, "<span class='notice'>You add [target] to the stack.</span>")
@@ -453,7 +462,8 @@
 	var/tampered = 0
 	var/borg = 0
 	initial_volume = 200
-	flags = FPRINT | TABLEPASS | OPENCONTAINER | ONBELT | NOSPLASH
+	flags = FPRINT | TABLEPASS | OPENCONTAINER | ONBELT | NOSPLASH | ATTACK_SELF_DELAY
+	click_delay = 0.7 SECONDS
 	rc_flags = RC_SCALE | RC_VISIBLE | RC_SPECTRO
 	module_research = list("medicine" = 4, "science" = 4)
 	module_research_type = /obj/item/reagent_containers/patch
@@ -488,13 +498,14 @@
 		.= (iscarbon(A) || ismobcritter(A))
 
 	proc/update_icon()
-		src.overlays = null
 		if (reagents.total_volume)
 			if (!src.fluid_image)
 				src.fluid_image = image('icons/obj/chemical.dmi', "mender-fluid", -1)
 			var/datum/color/average = reagents.get_average_color()
 			src.fluid_image.color = average.to_rgba()
-			src.overlays += src.fluid_image
+			src.UpdateOverlays(src.fluid_image, "fluid")
+		else
+			src.UpdateOverlays(null, "fluid")
 		signal_event("icon_updated")
 
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
@@ -543,7 +554,7 @@
 		//repair_bleeding_damage(M, 66, 1)
 		var/use_volume_adjusted = use_volume * mult
 
-		if (reagents && reagents.total_volume)
+		if (reagents?.total_volume)
 			var/list/params = list("nopenetrate")
 			if (silent)
 				params.Add("silent")
@@ -569,12 +580,18 @@
 		name = "brute auto-mender"
 		borg = 1
 
+	high_capacity
+		initial_volume = 500
+
 /obj/item/reagent_containers/mender/burn
 	initial_reagents = "silver_sulfadiazine"
 
 	medbot
 		name = "burn auto-mender"
 		borg = 1
+
+	high_capacity
+		initial_volume = 500
 
 /obj/item/reagent_containers/mender/both
 	initial_reagents = "synthflesh"
@@ -611,7 +628,11 @@
 		if(get_dist(user, target) > 1 || user == null || target == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
+		src.loopStart()
+		return
 
+	loopStart()
+		..()
 		if (!M.reagents || M.reagents.total_volume <= 0)
 			user.show_text("[M] is empty.", "red")
 			interrupt(INTERRUPT_ALWAYS)
@@ -627,8 +648,8 @@
 		M.apply_to(target,user, multiply, silent = (looped >= 1))
 
 	onEnd()
-		..()
 		if(get_dist(user, target) > 1 || user == null || target == null)
+			..()
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -636,7 +657,9 @@
 		if (!M.tampered)
 			target.updatehealth() //I hate this, but we actually need the health on time here.
 			if (health_temp == target.health)
+				..()
 				user.show_text("[M] is finished healing and powers down automatically.", "blue")
 				return
 
-		actions.start(new/datum/action/bar/icon/automender_apply(user, M, target, looped + 1), user)
+		looped++
+		src.onRestart()

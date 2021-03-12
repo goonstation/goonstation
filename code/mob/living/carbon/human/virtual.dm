@@ -31,7 +31,7 @@
 				return
 
 			if(!isghost && src.body)
-				if(isdead(src.body) || !src.body:network_device)
+				if(!istype(src.body, /mob/dead/aieye) && isdead(src.body) || !src.body:network_device)
 					src.gib()
 					return
 		return
@@ -49,7 +49,7 @@
 	disposing()
 		if (isghost && src.client)
 			var/mob/dead/observer/O = src.ghostize()
-			var/arrival_loc = pick(latejoin)
+			var/arrival_loc = pick_landmark(LANDMARK_LATEJOIN)
 			O.real_name = src.isghost
 			O.name = O.real_name
 			O.set_loc(arrival_loc)
@@ -89,7 +89,7 @@
 				return
 		..()
 
-	whisper(message as text)
+	whisper(message as text, forced=FALSE)
 		if (isghost)
 			boutput(usr, "You may not use that emote as a Virtual Spectre.")
 			return
@@ -134,7 +134,7 @@
 
 
 
-/obj/screen/ability/topBar/virtual
+/atom/movable/screen/ability/topBar/virtual
 	clicked(params)
 		var/datum/targetable/virtual/spell = owner
 		//var/datum/abilityHolder/holder = owner.holder

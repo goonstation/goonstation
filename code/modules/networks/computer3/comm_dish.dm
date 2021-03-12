@@ -19,7 +19,7 @@
 
 	New()
 		..()
-		comm_dishes += src
+		START_TRACKING
 		SPAWN_DBG(0.6 SECONDS)
 			if(!src.link)
 				var/turf/T = get_turf(src)
@@ -36,7 +36,7 @@
 		radio_connection = radio_controller.add_object(src, "[frequency]")
 
 	disposing()
-		comm_dishes -= src
+		STOP_TRACKING
 		if (link)
 			link.master = null
 		link = null

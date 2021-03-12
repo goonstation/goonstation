@@ -11,8 +11,10 @@
 		return 0
 	for( var/A in contents )
 		var/atom/thing = A
-		if (!A) continue
-		if(IS_SOLID_TO_FLUID(thing) && thing.density) return 0 // && !istype(thing,/obj/grille) && !istype(thing,/obj/table) && !istype(thing,/obj/structure/girder)) return 0
+		if (!A)
+			continue
+		if(IS_SOLID_TO_FLUID(thing) && thing.density)
+			return 0 // && !istype(thing,/obj/grille) && !istype(thing,/obj/table) && !istype(thing,/obj/structure/girder)) return 0
 	return 1
 
 turf/simulated/floor/plating/airless/ocean_canpass()
@@ -25,6 +27,7 @@ turf/simulated/floor/plating/airless/ocean_canpass()
 		///HEY HEY LOOK AT ME TODO : This is kind of a band-aid. I'm not sure why, but tilenotify() doesn't trigger when it should sometimes. do this to be absolutely sure!
 		for (var/dir in cardinal)
 			var/turf/T = get_step(src, dir)
+			if (!T) continue
 			if(T.active_liquid)
 				T.active_liquid.blocked_dirs = 0
 				if (T.active_liquid.group && !T.active_liquid.group.updating)
@@ -50,16 +53,27 @@ turf/simulated/floor/plating/airless/ocean_canpass()
 	return ..()
 
 
-/turf/proc/fluid_react(var/datum/reagents/R, var/react_volume, var/airborne = 0) //this should happen whenever a liquid reagent hits a simulated tile
+/turf/proc/fluid_react(var/datum/reagents/R, var/react_volume, var/airborne = 0, var/index = 0) //this should happen whenever a liquid reagent hits a simulated tile
 	if (react_volume <= 0) return
 	if (!IS_VALID_FLUIDREACT_TURF(src)) return
+	if (!index)
+		if (airborne)
+			for(var/reagent_id in R.reagent_list)
+				if (reagent_id in ban_from_airborne_fluid) return
+		else
+			for(var/reagent_id in R.reagent_list)
+				if (reagent_id in ban_from_fluid) return
+	else // We only care about one chem
+		var/CI = 1
+		if (airborne)
+			for(var/reagent_id in R.reagent_list)
+				if ( CI++ == index )
+					if (reagent_id in ban_from_airborne_fluid) return
+		else
+			for(var/reagent_id in R.reagent_list)
+				if ( CI++ == index )
+					if (reagent_id in ban_from_fluid) return
 
-	if (airborne)
-		for(var/reagent_id in R.reagent_list)
-			if (ban_from_airborne_fluid.Find(reagent_id)) return
-	else
-		for(var/reagent_id in R.reagent_list)
-			if (ban_from_fluid.Find(reagent_id)) return
 
 	var/datum/fluid_group/FG
 	var/obj/fluid/F
@@ -100,7 +114,7 @@ turf/simulated/floor/plating/airless/ocean_canpass()
 				if (react_volume == 0)
 					react_volume = 1
 
-	R.trans_to_direct(FG.reagents,react_volume)
+	R.trans_to_direct(FG.reagents, react_volume, index=index)
 	FG.add(F, react_volume, guarantee_is_member = fluid_and_group_already_exist)
 
 	if (!airborne)
@@ -120,9 +134,9 @@ turf/simulated/floor/plating/airless/ocean_canpass()
 	if (!IS_VALID_FLUIDREACT_TURF(src)) return
 
 	if (airborne)
-		if (ban_from_airborne_fluid.Find(reagent_name)) return
+		if (reagent_name in ban_from_airborne_fluid) return
 	else
-		if (ban_from_fluid.Find(reagent_name)) return
+		if (reagent_name in ban_from_fluid) return
 
 	var/datum/fluid_group/FG
 	var/obj/fluid/F
@@ -238,15 +252,15 @@ turf/simulated/floor/plating/airless/ocean_canpass()
 		return 0	//If the tile has an active liquid already, there is no requirement
 
 	for (var/obj/decal/cleanable/C in cleanables)
-		if (C && C.reagents)
+		if (C?.reagents)
 			for(var/reagent_id in C.reagents.reagent_list)
-				if (ban_stacking_into_fluid.Find(reagent_id)) return
+				if (reagent_id in ban_stacking_into_fluid) return
 			var/datum/reagents/R = new(C.reagents.maximum_volume) //Store reagents, delete cleanable, and then fluid react. prevents recursion
 			C.reagents.copy_to(R)
 			C.clean_forensic()
 			src.fluid_react(R, R.total_volume)
-		else if (C && C.can_sample && C.sample_reagent)
-			if ((!grab_any_amount && ban_stacking_into_fluid.Find(C.sample_reagent)) || ban_from_fluid.Find(C.sample_reagent)) return
+		else if (C?.can_sample && C.sample_reagent)
+			if ((!grab_any_amount && (C.sample_reagent in ban_stacking_into_fluid)) || (C.sample_reagent in ban_from_fluid)) return
 			var/sample = C.sample_reagent
 			var/amt = C.sample_amt
 			C.clean_forensic()

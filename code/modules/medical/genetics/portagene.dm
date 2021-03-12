@@ -5,6 +5,7 @@
 	icon_state = "PAG_0"
 	anchored = 0
 	var/mob/occupant = null
+	var/datum/character_preview/multiclient/occupant_preview = null
 	var/locked = 0
 	var/homeloc = null
 
@@ -16,13 +17,14 @@
 		portable_machinery.Add(src)
 
 		src.homeloc = src.loc
-
-		genetics_computers += src
 		return
 
 	disposing()
 		if (islist(portable_machinery))
 			portable_machinery.Remove(src)
+		if(occupant)
+			occupant.set_loc(get_turf(src.loc))
+			occupant = null
 		..()
 
 	examine()
@@ -58,10 +60,69 @@
 			logTheThing("station", usr, null, "sets [src.name]'s home turf to [log_loc(src.homeloc)].")
 		return
 
+	relaymove(mob/usr as mob, dir)
+		if (!isalive(usr))
+			return
+		if (src.locked)
+			boutput(usr, "<span class='alert'><b>The scanner door is locked!</b></span>")
+			return
+
+		src.go_out()
+		add_fingerprint(usr)
+		playsound(src.loc, "sound/machines/sleeper_open.ogg", 50, 1)
+		return
+
+	MouseDrop_T(mob/living/target, mob/user)
+		if (!istype(target) || isAI(user))
+			return
+
+		if (get_dist(src,user) > 1 || get_dist(user, target) > 1)
+			return
+
+		if (target == user)
+			go_in(target)
+		else if (can_operate(user,target))
+			var/previous_user_intent = user.a_intent
+			user.a_intent = INTENT_GRAB
+			user.drop_item()
+			target.attack_hand(user)
+			user.a_intent = previous_user_intent
+			SPAWN_DBG(user.combat_click_delay + 2)
+				if (can_operate(user,target))
+					if (istype(user.equipped(), /obj/item/grab))
+						src.attackby(user.equipped(), user)
+		return
+
+	proc/can_operate(var/mob/M, var/mob/living/target)
+		if (!isalive(M))
+			return 0
+		if (get_dist(src,M) > 1)
+			return 0
+		if (M.getStatusDuration("paralysis") || M.getStatusDuration("stunned") || M.getStatusDuration("weakened"))
+			return 0
+		if (src.occupant)
+			boutput(M, "<span class='notice'><B>The scanner is already occupied!</B></span>")
+			return 0
+		if(ismobcritter(target))
+			boutput(M, "<span class='alert'><B>The scanner doesn't support this body type.</B></span>")
+			return 0
+		if(!iscarbon(target) )
+			boutput(M, "<span class='alert'><B>The scanner supports only carbon based lifeforms.</B></span>")
+			return 0
+		if (src.occupant)
+			boutput(M, "<span class='notice'><B>The scanner is already occupied!</B></span>")
+			return 0
+		if (src.locked)
+			boutput(M, "<span class='alert'><B>You need to unlock the scanner first.</B></span>")
+			return 0
+
+		.= 1
+
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (isscrewingtool(W) && (src.status & BROKEN))
+			src.icon_state = "PAG_broken"
 			playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
-			if(do_after(user, 20))
+			if(do_after(user, 2 SECONDS))
 				boutput(user, "<span class='notice'>The broken glass falls out.</span>")
 				var/obj/computerframe/A = new /obj/computerframe( src.loc )
 				if(src.material) A.setMaterial(src.material)
@@ -76,6 +137,20 @@
 				A.anchored = 1
 				qdel(src)
 
+		else if (istype(W,/obj/item/genetics_injector/dna_activator))
+			var/obj/item/genetics_injector/dna_activator/DNA = W
+			if (DNA.expended_properly)
+				user.drop_item()
+				qdel(DNA)
+				activated_bonus(user)
+			else if (DNA.uses < 1)
+				// You get nothing from these but at least let people clean em up
+				boutput(user, "You dispose of the [DNA].")
+				user.drop_item()
+				qdel(DNA)
+			else
+				src.attack_hand(user)
+
 		else if (istype(W, /obj/item/grab))
 			var/obj/item/grab/G = W
 
@@ -84,7 +159,7 @@
 				return
 
 			if (src.locked)
-				boutput(usr, "<span class='alert'><B>You need to unlock the scanner first.</B></span>")
+				boutput(user, "<span class='alert'><B>You need to unlock the scanner first.</B></span>")
 				return
 
 			if(!iscarbon(G.affecting))
@@ -122,6 +197,7 @@
 
 		src.go_out()
 		add_fingerprint(usr)
+		playsound(src.loc, "sound/machines/sleeper_open.ogg", 50, 1)
 		return
 
 	verb/enter()
@@ -141,6 +217,7 @@
 		src.go_in(usr)
 		add_fingerprint(usr)
 		return
+
 
 	verb/lock()
 		set name = "Scanner Lock"
@@ -187,20 +264,42 @@
 		if (src.locked)
 			return
 
+		src.ui_interact(M, null)
+
 		M.set_loc(src)
 		src.occupant = M
 		src.icon_state = "PAG_1"
+		playsound(src.loc, "sound/machines/sleeper_close.ogg", 50, 1)
 		return
+
+	ui_status(mob/user)
+		if (user in src)
+			return UI_UPDATE
+		return ..()
 
 	get_scan_subject()
 		if (!src)
 			return null
-		if (occupant)
-			return occupant
-		else
-			return null
+		return occupant
 
 	get_scanner()
 		if (!src)
 			return null
 		return src
+
+	get_occupant_preview()
+		if (!src)
+			return null
+		if (!src.occupant_preview)
+			src.occupant_preview = new()
+			src.update_occupant_preview()
+		return src.occupant_preview
+
+	update_occupant_preview()
+		var/mob/living/carbon/human/H = src.occupant
+		if (istype(H))
+			if (src.occupant_preview)
+				src.occupant_preview.update_appearance(H.bioHolder.mobAppearance, H.mutantrace)
+		else
+			qdel(src.occupant_preview)
+			src.occupant_preview = null

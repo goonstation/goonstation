@@ -1,4 +1,7 @@
 //Contains medical reagents / drugs.
+
+ABSTRACT_TYPE(/datum/reagent/medical)
+
 datum
 	reagent
 		medical/
@@ -17,11 +20,25 @@ datum
 			depletion_rate = 0.2
 			value = 3
 
+			on_add()
+				if(ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
+					APPLY_MOB_PROPERTY(M, PROP_REBREATHING, src.type)
+				return
+
+			on_remove()
+				if(ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
+					REMOVE_MOB_PROPERTY(M, PROP_REBREATHING, src.type)
+				return
+
+
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
 				M.take_toxin_damage(1 * mult)
 				..()
 				return
+
 
 		medical/spaceacillin
 			name = "spaceacillin"
@@ -56,26 +73,23 @@ datum
 			addiction_min = 15
 			overdose = 20
 			var/counter = 1 //Data is conserved...so some jerkbag could inject a monkey with this, wait for data to build up, then extract some instant KO juice.  Dumb.
-			var/remove_buff = 0
 			value = 5
 
 			pooled()
 				..()
 				counter = 1
-				remove_buff = 0
 
 			on_add()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
-					remove_buff = M.add_stam_mod_regen("r_morphine", -3)
+					APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "r_morphine", -3)
 					APPLY_MOVEMENT_MODIFIER(M, /datum/movement_modifier/reagent/morphine, src.type)
 				return
 
 			on_remove()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
-					if(remove_buff)
-						M.remove_stam_mod_regen("r_morphine")
+					REMOVE_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "r_morphine")
 					REMOVE_MOVEMENT_MODIFIER(M, /datum/movement_modifier/reagent/morphine, src.type)
 				return
 
@@ -83,10 +97,12 @@ datum
 				if(!M) M = holder.my_atom
 				if(!counter) counter = 1
 				M.jitteriness = max(M.jitteriness-25,0)
+				if(M.hasStatus("stimulants"))
+					M.changeStatus("stimulants", -7.5 SECONDS * mult)
 
-				switch(counter++)
+				switch(counter += 1 * mult)
 					if(1 to 15)
-						if(prob(7)) M.emote("yawn")
+						if(probmult(7)) M.emote("yawn")
 					if(16 to 35)
 						M.drowsyness  = max(M.drowsyness, 20)
 					if(36 to INFINITY)
@@ -109,35 +125,34 @@ datum
 			addiction_min = 15
 			overdose = 20
 			var/counter = 1 //Data is conserved...so some jerkbag could inject a monkey with this, wait for data to build up, then extract some instant KO juice.  Dumb.
-			var/remove_buff = 0
 			value = 5
 
 			pooled()
 				..()
 				counter = 1
-				remove_buff = 0
 
 			on_add()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
-					remove_buff = M.add_stam_mod_regen("r_ether", -5)
+					APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "r_ether", -5)
 				return
 
 			on_remove()
-				if(remove_buff)
-					if(ismob(holder?.my_atom))
-						var/mob/M = holder.my_atom
-						M.remove_stam_mod_regen("r_ether")
+				if(ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
+					REMOVE_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "r_ether")
 				return
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
 				if(!counter) counter = 1
 				M.jitteriness = max(M.jitteriness-25,0)
+				if(M.hasStatus("stimulants"))
+					M.changeStatus("stimulants", -7.5 SECONDS * mult)
 
-				switch(counter++)
+				switch(counter += 1 * mult)
 					if(1 to 15)
-						if(prob(7)) M.emote("yawn")
+						if(probmult(7)) M.emote("yawn")
 					if(16 to 35)
 						M.drowsyness  = max(M.drowsyness, 20)
 					if(36 to INFINITY)
@@ -162,14 +177,14 @@ datum
 
 			on_mob_life(var/mob/living/M, var/mult = 1)
 				if(!M) M = holder.my_atom
-				if(prob(8))
+				if(probmult(8))
 					M.emote(pick("smile","giggle","yawn"))
 				for(var/datum/ailment_data/disease/virus in M.ailments)
-					if(prob(25) && istype(virus.master,/datum/ailment/disease/cold))
+					if(probmult(25) && istype(virus.master,/datum/ailment/disease/cold))
 						M.cure_disease(virus)
-					if(prob(25) && istype(virus.master,/datum/ailment/disease/flu))
+					if(probmult(25) && istype(virus.master,/datum/ailment/disease/flu))
 						M.cure_disease(virus)
-					if(prob(25) && istype(virus.master,/datum/ailment/disease/food_poisoning))
+					if(probmult(25) && istype(virus.master,/datum/ailment/disease/food_poisoning))
 						M.cure_disease(virus)
 				..()
 				return
@@ -304,10 +319,10 @@ datum
 						M.reagents.remove_reagent(reagent_id, 5 * mult)
 				if(M.health > 20)
 					M.take_toxin_damage(5 * mult, 1)	//calomel doesn't damage organs.
-				if(prob(6))
+				if(probmult(6))
 					M.visible_message("<span class='alert'>[M] pukes all over \himself.</span>")
 					M.vomit()
-				if(prob(4))
+				if(probmult(4))
 					M.emote("piss")
 				..()
 				return
@@ -371,24 +386,18 @@ datum
 			value = 9 // 6c + 2c + 1c
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed, var/list/paramslist = 0)
-				src = null
+				. = ..()
 				if(!volume_passed)
 					return
 				if(method == TOUCH)
-					for(var/A in M.organs)
-						var/obj/item/affecting = null
-						if(!M.organs[A])    continue
-						affecting = M.organs[A]
-						if(!isitem(affecting))
-							continue
-						affecting.heal_damage(volume_passed*1.5, volume_passed*1.5)
+					M.HealDamage("All", volume_passed * 1.5, volume_passed * 1.5)
 					if (isliving(M))
 						var/mob/living/H = M
 						if (H.bleeding)
 							repair_bleeding_damage(H, 80, 2)
 
 					var/silent = 0
-					if (paramslist && paramslist.len)
+					if (length(paramslist))
 						if ("silent" in paramslist)
 							silent = 1
 					if (!silent)
@@ -398,8 +407,6 @@ datum
 
 			reaction_turf(var/turf/T, var/volume)
 				var/list/covered = holder.covered_turf()
-				src = null
-
 				if (covered.len > 9)
 					volume = (volume/covered.len)
 
@@ -429,21 +436,19 @@ datum
 			fluid_b = 255
 			transparency = 175
 			overdose = 40
-			var/remove_buff = 0
 			value = 7
 			stun_resist = 31
 
 			on_add()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
-					remove_buff = M.add_stam_mod_regen("r_synaptizine", 4)
+					APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "r_synaptizine", 4)
 				..()
 
 			on_remove()
-				if(remove_buff)
-					if(ismob(holder?.my_atom))
-						var/mob/M = holder.my_atom
-						M.remove_stam_mod_regen("r_synaptizine")
+				if(ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
+					REMOVE_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "r_synaptizine")
 				..()
 
 			on_mob_life(var/mob/M, var/mult = 1)
@@ -491,7 +496,7 @@ datum
 			depletion_rate = 0.2
 			overdose = 30
 			value = 22
-			target_organs = list("brain", "left_eye", "right_eye", "heart", "left_lung", "right_lung", "left_kidney", "right_kidney", "liver", "stomach", "intestines", "spleen", "pancreas", "appendix")	//RN this is all the organs. Probably I'll remove some from this list later.
+			target_organs = list("brain", "left_eye", "right_eye", "heart", "left_lung", "right_lung", "left_kidney", "right_kidney", "liver", "stomach", "intestines", "spleen", "pancreas", "appendix", "tail")	//RN this is all the organs. Probably I'll remove some from this list later.
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M)
@@ -501,7 +506,7 @@ datum
 				if(M.get_toxin_damage())
 					M.take_toxin_damage(-1 * mult)
 				if(M.losebreath && prob(50))
-					M.lose_breath(-1)
+					M.lose_breath(-1 * mult)
 				M.HealDamage("All", 2 * mult, 2 * mult, 1 * mult)
 				if (isliving(M))
 					var/mob/living/L = M
@@ -591,6 +596,8 @@ datum
 				if(!M) M = holder.my_atom
 				if(M.getStatusDuration("radiation") && prob(80))
 					M.changeStatus("radiation", -20 * mult, 1)
+				if(M.getStatusDuration("n_radiation") && prob(80))
+					M.changeStatus("n_radiation", -20 * mult, 1)
 
 				M.take_toxin_damage(-0.5 * mult)
 				M.HealDamage("All", 0, 0, 0.5 * mult)
@@ -612,19 +619,17 @@ datum
 			fluid_b = 60
 			transparency = 40
 			value = 3
-			var/remove_buff = FALSE
 
 			on_add()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
-					remove_buff = M.add_stam_mod_regen("r_smelling_salt", 5)
+					APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "r_smelling_salt", 5)
 				return
 
 			on_remove()
-				if (remove_buff)
-					if(ismob(holder?.my_atom))
-						var/mob/M = holder.my_atom
-						M.remove_stam_mod_regen("r_smelling_salt")
+				if(ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
+					REMOVE_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "r_smelling_salt")
 				return
 
 			on_mob_life(var/mob/M, var/method=INGEST, var/mult = 1)
@@ -672,11 +677,11 @@ datum
 					M = holder.my_atom
 
 				if (M.bioHolder)
-					if (prob(50) && M.bioHolder.HasEffect("bad_eyesight"))
+					if (probmult(50) && M.bioHolder.HasEffect("bad_eyesight"))
 						M.bioHolder.RemoveEffect("bad_eyesight")
-					if (prob(30) && M.bioHolder.HasEffect("blind"))
+					if (probmult(30) && M.bioHolder.HasEffect("blind"))
 						M.bioHolder.RemoveEffect("blind")
-					if (prob(30) && (M.get_ear_damage() && M.get_ear_damage() <= M.get_ear_damage_natural_healing_threshold()) && M.bioHolder.HasEffect("deaf") || M.ear_disability)
+					if (probmult(30) && (M.get_ear_damage() && M.get_ear_damage() <= M.get_ear_damage_natural_healing_threshold()) && M.bioHolder.HasEffect("deaf") || M.ear_disability)
 						M.bioHolder.RemoveEffect("deaf")
 
 				if (M.get_eye_blurry())
@@ -706,20 +711,18 @@ datum
 			fluid_g = 220
 			fluid_b = 255
 			transparency = 255
-			var/remove_buff = 0
 			value = 8 // 2c + 3c + 1c + 1c + 1c
 
 			on_add()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
-					remove_buff = M.add_stam_mod_regen("r_haloperidol", -5)
+					APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "r_haloperidol", -5)
 				return
 
 			on_remove()
-				if(remove_buff)
-					if(ismob(holder?.my_atom))
-						var/mob/M = holder.my_atom
-						M.remove_stam_mod_regen("r_haloperidol")
+				if(ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
+					REMOVE_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "r_haloperidol")
 				return
 
 			on_mob_life(var/mob/living/M, var/mult = 1)
@@ -730,6 +733,8 @@ datum
 					M.druggy = max(0, M.druggy)
 				if(holder.has_reagent("LSD"))
 					holder.remove_reagent("LSD", 5 * mult)
+				if(holder.has_reagent("lsd_bee"))
+					holder.remove_reagent("lsd_bee", 5 * mult)
 				if(holder.has_reagent("psilocybin"))
 					holder.remove_reagent("psilocybin", 5 * mult)
 				if(holder.has_reagent("crank"))
@@ -748,15 +753,15 @@ datum
 					holder.remove_reagent("epinephrine", 5 * mult)
 				if(holder.has_reagent("ephedrine"))
 					holder.remove_reagent("ephedrine", 5 * mult)
-				if(holder.has_reagent("stimulants"))
-					holder.remove_reagent("stimulants", 3 * mult)
-				if(prob(5))
+				if(M.hasStatus("stimulants"))
+					M.changeStatus("stimulants", -15 SECONDS * mult)
+				if(probmult(5))
 					for(var/datum/ailment_data/disease/virus in M.ailments)
 						if(istype(virus.master,/datum/ailment/disease/space_madness) || istype(virus.master,/datum/ailment/disease/berserker))
 							M.cure_disease(virus)
 				if(prob(20)) M.take_brain_damage(1 * mult)
-				if(prob(50)) M.drowsyness = max(M.drowsyness, 6)
-				if(prob(10)) M.emote("drool")
+				if(probmult(50)) M.drowsyness = max(M.drowsyness, 6)
+				if(probmult(10)) M.emote("drool")
 				..()
 				return
 
@@ -770,34 +775,32 @@ datum
 			fluid_b = 250
 			depletion_rate = 0.2
 			overdose = 20
-			var/remove_buff = 0
 			value = 17 // 5c + 5c + 4c + 1c + 1c + 1c
 			stun_resist = 10
 
 			on_add()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
-					remove_buff = M.add_stam_mod_regen("r_epinephrine", 3)
+					APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "r_epinephrine", 3)
 				..()
 
 			on_remove()
-				if(remove_buff)
-					if(ismob(holder?.my_atom))
-						var/mob/M = holder.my_atom
-						M.remove_stam_mod_regen("r_epinephrine")
+				if(ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
+					REMOVE_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "r_epinephrine")
 				..()
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
 				if(M.bodytemperature < M.base_body_temp) // So it doesn't act like supermint
 					M.bodytemperature = min(M.base_body_temp, M.bodytemperature+(7 * mult))
-				if(prob(10))
+				if(probmult(10))
 					M.make_jittery(4)
 				M.drowsyness = max(M.drowsyness-5, 0)
-				if(M.sleeping && prob(5)) M.sleeping = 0
-				if(M.get_brain_damage() && prob(5)) M.take_brain_damage(-1)
+				if(M.sleeping && probmult(5)) M.sleeping = 0
+				if(M.get_brain_damage() && prob(5)) M.take_brain_damage(-1 * mult)
 				if(holder.has_reagent("histamine"))
-					holder.remove_reagent("histamine", 15 * mult)
+					holder.remove_reagent("histamine", 2 * mult) //combats symptoms not source //ok combats source a bit more
 				if(M.losebreath > 3)
 					M.losebreath -= (1 * mult)
 				if(M.get_oxygen_deprivation() > 35)
@@ -898,7 +901,7 @@ datum
 				if (isliving(M))
 					var/mob/living/H = M
 					repair_bleeding_damage(H, 90, 1 * mult)
-					if (prob(2))
+					if (probmult(2))
 						H.contract_disease(/datum/ailment/malady/bloodclot,null,null,1)
 				..()
 				return
@@ -989,21 +992,15 @@ datum
 				return
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed, var/list/paramslist = 0)
-				src = null
+				. = ..()
 				if (!volume_passed)
 					return
 
 				if (method == TOUCH)
-					for(var/A in M.organs)
-						var/obj/item/affecting = null
-						if(!M.organs[A])    continue
-						affecting = M.organs[A]
-						if (!isitem(affecting))
-							continue
-						affecting.heal_damage(0, volume_passed)
+					M.HealDamage("All", 0, volume_passed)
 
 					var/silent = 0
-					if (paramslist && paramslist.len)
+					if (length(paramslist))
 						if ("silent" in paramslist)
 							silent = 1
 					if (!silent)
@@ -1032,7 +1029,7 @@ datum
 				if(!M) M = holder.my_atom
 				if(M.bioHolder && M.bioHolder.effects && M.bioHolder.effects.len) //One per cycle. We're having superpowered hellbastards and this is their kryptonite.
 					var/datum/bioEffect/B = M.bioHolder.effects[pick(M.bioHolder.effects)]
-					if (B && B.curable_by_mutadone)
+					if (B?.curable_by_mutadone)
 						M.bioHolder.RemoveEffect(B.id)
 				..()
 				return
@@ -1073,19 +1070,17 @@ datum
 
 			pooled()
 				..()
-				remove_buff = 0
 
 			on_add()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
-					remove_buff = M.add_stam_mod_regen("r_ephedrine", 2)
+					APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "r_ephedrine", 2)
 				..()
 
 			on_remove()
-				if(remove_buff)
-					if(ismob(holder?.my_atom))
-						var/mob/M = holder.my_atom
-						M.remove_stam_mod_regen("r_ephedrine")
+				if(ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
+					REMOVE_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "r_ephedrine")
 				..()
 
 			on_mob_life(var/mob/M, var/mult = 1)
@@ -1098,7 +1093,7 @@ datum
 					M.losebreath = max(5, M.losebreath-(1 * mult))
 				if(M.get_oxygen_deprivation() > 75)
 					M.take_oxygen_deprivation(-1 * mult)
-				if ((M.health < 0) || (M.health > 0 && prob(33)))
+				if ((M.health < 0) || (M.health > 0 && probmult(33)))
 					if (M.get_toxin_damage() && prob(25))
 						M.take_toxin_damage(-1 * mult)
 					M.HealDamage("All", 1 * mult, 1 * mult)
@@ -1167,24 +1162,18 @@ datum
 			transparency = 220
 			addiction_prob = 1//10
 			addiction_min = 10
-			var/remove_buff = 0
 			value = 10 // 4 3 1 1 1
-
-			pooled()
-				..()
-				remove_buff = 0
 
 			on_add()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
-					remove_buff = M.add_stam_mod_regen("r_diphenhydramine", -3)
+					APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "r_diphenhydramine", -3)
 				return
 
 			on_remove()
-				if(remove_buff)
-					if(ismob(holder?.my_atom))
-						var/mob/M = holder.my_atom
-						M.remove_stam_mod_regen("r_diphenhydramine")
+				if(ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
+					REMOVE_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "r_diphenhydramine")
 				return
 
 			on_mob_life(var/mob/M, var/mult = 1)
@@ -1194,10 +1183,10 @@ datum
 					holder.remove_reagent("histamine", 3 * mult)
 				if(holder.has_reagent("itching"))
 					holder.remove_reagent("itching", 3 * mult)
-				if(prob(7)) M.emote("yawn")
+				if(probmult(7)) M.emote("yawn")
 				if(prob(3))
 					M.setStatus("stunned", max(M.getStatusDuration("stunned"), 30 * mult))
-					M.drowsyness++
+					M.drowsyness += 1
 					M.visible_message("<span class='notice'><b>[M.name]<b> looks a bit dazed.</span>")
 				..()
 				return
@@ -1224,7 +1213,7 @@ datum
 				return
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed, var/list/paramslist = 0)
-				src = null
+				. = ..()
 				if(!volume_passed)
 					return
 				if(!isliving(M)) // fucking human shitfucks
@@ -1248,7 +1237,7 @@ datum
 						//H.bleeding = min(H.bleeding, rand(0,5))
 
 					var/silent = 0
-					if (paramslist && paramslist.len)
+					if (length(paramslist))
 						if ("silent" in paramslist)
 							silent = 1
 
@@ -1274,7 +1263,7 @@ datum
 			fluid_b = 200
 			transparency = 255
 			value = 12 // 5 3 3 1
-			target_organs = list("left_eye", "right_eye", "heart", "left_lung", "right_lung", "left_kidney", "right_kidney", "liver", "stomach", "intestines", "spleen", "pancreas", "appendix")	//RN this is all the organs. Probably I'll remove some from this list later. no "brain",  either
+			target_organs = list("left_eye", "right_eye", "heart", "left_lung", "right_lung", "left_kidney", "right_kidney", "liver", "stomach", "intestines", "spleen", "pancreas", "appendix", "tail")	//RN this is all the organs. Probably I'll remove some from this list later. no "brain",  either
 
 			/*reaction_temperature(exposed_temperature, exposed_volume)
 				var/myvol = volume
@@ -1297,7 +1286,7 @@ datum
 					if (M.get_brain_damage())
 						M.take_brain_damage(-2 * mult)
 					M.HealDamage("All", 12 * mult, 12 * mult)
-
+					M.updatehealth() //I hate this, but we actually need the health on time here.
 					if(M.health > health_before)
 						var/increase = min((M.health - health_before)/37*25,25) //12+12+3+10 = 37 health healed possible, 25 max temp increase possible
 						M.bodytemperature = min(M.bodytemperature+increase,M.base_body_temp)
@@ -1353,7 +1342,7 @@ datum
 				src.total_misstep += 5 * mult
 				if(M.bodytemperature < M.base_body_temp)
 					M.bodytemperature = min(M.base_body_temp + 10, M.bodytemperature+(10 * mult))
-				if(prob(4)) M.emote("collapse")
+				if(probmult(4)) M.emote("collapse")
 				if(M.losebreath > 5)
 					M.losebreath = max(5, M.losebreath-(5 * mult))
 				if(M.get_oxygen_deprivation() > 65)
@@ -1405,7 +1394,7 @@ datum
 				if (severity >= 2)
 					if (ishuman(M))
 						var/mob/living/carbon/human/H = M
-						if (H.organHolder && prob(40))
+						if (H.organHolder && probmult(40))
 							if (prob(50))
 								H.organHolder.damage_organ(0, 0, severity*mult, "right_kidney")
 							else
@@ -1540,11 +1529,21 @@ datum
 				if(!M) M = holder.my_atom
 				if(M.health > 25)
 					M.take_toxin_damage(1 * mult)
-				if(prob(25))
+				if(probmult(25))
 					M.visible_message("<span class='alert'>[M] pukes all over \himself!</span>")
 					M.vomit()
-				if(prob(5))
+				if(probmult(5))
 					var/mob/living/L = M
 					L.contract_disease(/datum/ailment/disease/food_poisoning, null, null, 1)
 				..()
 				return
+
+		medical/necrovirus_cure // Necrotic Degeneration
+			name = "necrovirus_cure"
+			id = "necrovirus_cure"
+			description = "The cure for the necrovirus/Zombie Disease. Can be used to totally cure infected below stage 4."
+			reagent_state = LIQUID
+			fluid_r = 200
+			fluid_g = 220
+			fluid_b = 200
+			transparency = 230

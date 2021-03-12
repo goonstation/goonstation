@@ -74,10 +74,12 @@ var/list/magnet_locations = list()
 
 	proc/lrtsend(var/place)
 		if (place && src.is_good_location(place))
-			var/turf/target = null //set later
-			for (var/obj/landmark/lrt/potential in landmarks)
-				if (potential.name == place) //if the place we want to go has a matching landmark
-					target = potential.held_turf
+			var/turf/target = null
+			for(var/turf/T in landmarks[LANDMARK_LRT])
+				var/name = landmarks[LANDMARK_LRT][T]
+				if(name == place)
+					target = T
+					break
 			if (!target) //we didnt find a turf to send to
 				return 0
 			src.busy = 1
@@ -97,10 +99,12 @@ var/list/magnet_locations = list()
 
 	proc/lrtrecieve(var/place)
 		if (place && src.is_good_location(place))
-			var/turf/target = null //set later
-			for (var/obj/landmark/lrt/potential in landmarks)
-				if (potential.name == place) //if the place we want to go has a matching landmark
-					target = potential.held_turf
+			var/turf/target = null
+			for(var/turf/T in landmarks[LANDMARK_LRT])
+				var/name = landmarks[LANDMARK_LRT][T]
+				if(name == place)
+					target = T
+					break
 			if (!target) //we didnt find a turf to send to
 				return 0
 			src.busy = 1
@@ -191,11 +195,11 @@ var/list/magnet_locations = list()
 				E.loc_x = rand(0, 640)
 				E.loc_y = rand(0, 431)
 			if(active)
-				if(!events_active.Find(E.id))
+				if(!(E.id in events_active))
 					events_active.Add(E.id)
 					events_active[E.id] = E
 			else
-				if(!events_inactive.Find(E.id))
+				if(!(E.id in events_inactive))
 					events_inactive.Add(E.id)
 					events_inactive[E.id] = E
 			return E

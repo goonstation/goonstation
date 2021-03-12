@@ -1,19 +1,10 @@
-#define CC_ERROR_INVALID_SX				1
-#define CC_ERROR_INVALID_TX				2
-#define CC_ERROR_INVALID_CONTAINER_SX	3
-#define CC_ERROR_INVALID_CONTAINER_TX	4
-#define CC_ERROR_INVALID_TEMPERATURE	5
-#define CC_ERROR_CODE_PROTECTED			6
-#define CC_ERROR_INSTRUCTION_LIMIT		7
-#define CC_NOTIFICATION_COMPLETE		101
-#define CC_NOTIFICATION_SAVED			102
 
-#define CC_STATUS_IDLE					1
-#define CC_STATUS_RUNNING				2
 
 /**
  * Chemicompiler
+ *
  * v1.0 By volundr 9/24/14
+ *
  * This device is a programmable chemistry mixing and heating device.
  * The javascript code to run the frontend is in browserassets/js/chemicompiler.min.js
  *   which is minified javascript from browserassets/js/chemicompiler.js
@@ -21,7 +12,6 @@
  *   and run `npm install -g uglify-js`
  *   then run `uglifyjs browserassets/js/chemicompiler.js -c > browserassets/js/chemicompiler.min.js` to rebuild the compressed version.
  */
-
 /datum/chemicompiler_core
 	var/list/buttons[6]
 	var/list/cbf[6]
@@ -235,7 +225,7 @@
 
 /datum/chemicompiler_core/proc/parseCBF(var/string, var/button)
 	var/list/tokens = list(">", "<", "+", "-", ".",",", "\[", "]", "{", "}", "(", ")", "^", "'", "$", "@","#")
-	var/l = lentext(string)
+	var/l = length(string)
 	var/list/inst = new
 	var/token
 
@@ -375,7 +365,7 @@
 
 			if(data.len < dp + 1)
 				data.len = dp + 1
-			if(lentext(textBuffer) > 80)
+			if(length(textBuffer) > 80)
 				output += "[textBuffer]<br>"
 				textBuffer = ""
 				updatePanel()
@@ -614,6 +604,8 @@
 					return "Error: code protected - cannot retrieve."
 				if(CC_ERROR_INSTRUCTION_LIMIT)
 					return "Error: instruction limit reached."
+				if(CC_ERROR_INDEX_INVALID)
+					return "Error: invalid isolation index for source reservoir."
 				if(CC_NOTIFICATION_COMPLETE)
 					return "Notification: program complete."
 				if(CC_NOTIFICATION_SAVED)
@@ -640,6 +632,7 @@
 	var/list/reservoirs = list()
 	var/datum/holder
 	var/datum/chemicompiler_core/core
+	var/obj/item/reagent_containers/glass/ejection_reservoir = null
 
 /datum/chemicompiler_executor/New(datum/holder, corePath = /datum/chemicompiler_core/portableCore)
 	..()
@@ -650,6 +643,8 @@
 	src.holder = holder
 	src.core = new corePath(src)
 	src.reservoirs.len = src.core.maxReservoir
+	src.ejection_reservoir = new /obj/item/reagent_containers/glass/beaker/extractor_tank(src)
+
 
 	for(var/i=src.core.minReservoir,i<=src.core.maxReservoir,i++)
 		reservoirs[i] = null
@@ -668,6 +663,8 @@
 		if(CC_ERROR_INVALID_CONTAINER_TX)
 			beepCode(3, 1)
 		if(CC_ERROR_INVALID_TEMPERATURE)
+			beepCode(4, 1)
+		if(CC_ERROR_INDEX_INVALID)
 			beepCode(4, 1)
 		if(CC_ERROR_CODE_PROTECTED)
 			beepCode(5, 1)
@@ -745,56 +742,37 @@
 	else
 		holder:visible_message(message)
 
-
-/datum/chemicompiler_executor/proc/isolateReagent(var/source, var/target, var/amount, index)
-	if(!istype(src.holder))
-		del(src)
+/datum/chemicompiler_executor/proc/index_check(var/source, var/index)
+	if(!reservoirCheck(source) && index > 0)
 		return
-	if(source < 1 || source > 10 || target < 1 || target > 13)
-		beepCode(1, 1) // Invalid source or target id.
-		return
-	if(!istype(reservoirs[source], /obj/item/reagent_containers/glass))
-		beepCode(3, 1) // No reservoir loaded in source or target
-		return
-	if(target < 11 && !istype(reservoirs[target], /obj/item/reagent_containers/glass))
-		beepCode(3, 1) // No reservoir loaded in source or target
-		return
-
-	showMessage("[src.holder] emits a slight humming sound.")
-
 	var/obj/item/reagent_containers/holder = reservoirs[source]
-	var/datum/reagents/RS = holder.reagents
+	if(index < 0 || holder.reagents.reagent_list.len < index)
+		return
+	return 1
 
-	if(target < 11)
-		var/obj/RT = reservoirs[target]
-		RS.trans_to(RT, amount, 1 , 1, index)
-	if (target == 11)
-		// Generate pill
-		showMessage("[src.holder] makes an alarming grinding noise!")
-		var/obj/item/reagent_containers/pill/P = new(get_turf(src.holder))
-		RS.trans_to(P, amount, 1 , 1, index)
-		showMessage("[src.holder] ejects a pill.")
-	if (target == 12)
-		// Generate vial
-		var/obj/item/reagent_containers/glass/vial/V = new(get_turf(src.holder))
-		RS.trans_to(V, amount, 1 , 1, index)
-		showMessage("[src.holder] ejects a vial of some unknown substance.")
-	if (target == 13)
-		RS.trans_to(get_turf(src.holder), amount, 1 , 1, index)
-		showMessage("Something drips out the side of [src.holder].")
+/datum/chemicompiler_executor/proc/validate_source_target_index(var/source, var/target, var/index)
+	if(source < 1 || source > 10)
+		return CC_ERROR_INVALID_SX // Invalid source id.
+	else if(target < 1 || target > 13)
+		return CC_ERROR_INVALID_TX // Invalid target id.
+	else if(!reservoirCheck(source))
+		return CC_ERROR_INVALID_CONTAINER_SX // No reservoir loaded in source
+	else if((target < 11) && (!reservoirCheck(target)))
+		return CC_ERROR_INVALID_CONTAINER_TX // No reservoir loaded in target
+	else if(!index_check(source, index))
+		return CC_ERROR_INDEX_INVALID // Source reservoir doesn't have as many chems as index
+	return
 
-/datum/chemicompiler_executor/proc/transferReagents(var/source, var/target, var/amount)
+/datum/chemicompiler_executor/proc/isolateReagent(var/source, var/target, var/amount, var/index)
+	transferReagents(source, target, amount, index = index)
+
+/datum/chemicompiler_executor/proc/transferReagents(var/source, var/target, var/amount, var/index = 0)
 	if(!istype(src.holder))
 		del(src)
 		return
-	if(source < 1 || source > 10 || target < 1 || target > 13)
-		beepCode(1, 1) // Invalid source or target id.
-		return
-	if(!istype(reservoirs[source], /obj/item/reagent_containers/glass))
-		beepCode(3, 1) // No reservoir loaded in source or target
-		return
-	if(target < 11 && !istype(reservoirs[target], /obj/item/reagent_containers/glass))
-		beepCode(3, 1) // No reservoir loaded in source or target
+	var/error_code = validate_source_target_index(source, target, index)
+	if(error_code)
+		err(error_code)
 		return
 
 	showMessage("[src.holder] emits a slight humming sound.")
@@ -803,20 +781,23 @@
 
 	if(target < 11)
 		var/obj/RT = reservoirs[target]
-		RS.trans_to(RT, amount)
+		RS.trans_to(RT, amount, index = index)
 	if (target == 11)
 		// Generate pill
 		showMessage("[src.holder] makes an alarming grinding noise!")
 		var/obj/item/reagent_containers/pill/P = new(get_turf(src.holder))
-		RS.trans_to(P, amount)
+		RS.trans_to(P, amount, index = index)
 		showMessage("[src.holder] ejects a pill.")
 	if (target == 12)
 		// Generate vial
 		var/obj/item/reagent_containers/glass/vial/V = new(get_turf(src.holder))
-		RS.trans_to(V, amount)
+		RS.trans_to(V, amount, index = index)
 		showMessage("[src.holder] ejects a vial of some unknown substance.")
 	if (target == 13)
-		RS.trans_to(get_turf(src.holder), amount)
+		RS.trans_to(src.ejection_reservoir, amount, index = index)
+		RS = src.ejection_reservoir.reagents
+		RS.reaction(get_turf(src.holder), TOUCH, amount)
+		RS.clear_reagents()
 		showMessage("Something drips out the side of [src.holder].")
 
 /datum/chemicompiler_executor/proc/heatReagents(var/rid, var/temp)

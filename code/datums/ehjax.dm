@@ -27,22 +27,20 @@ var/global/datum/ehjax/ehjax = new /datum/ehjax()
 
 			C << output("[data]", "[window]:[callbackName]")
 
+		/**
+			* Calls a proc from a javascript source and callsback with any data
+			*
+			* * href_list -> "proc" (string) The proc to call (no paths included)
+			* * href_list -> "window" (string) The browser window name to send return data to (required for callback)
+			* * href_list -> "param" (string) A url-encoded array of arguments to pass to the proc (e.g. `param[foo]=bar&param[bar]=foo`)
+			* * href_list -> "type" (string) Type of proc to call. If none, assumes global proc.
+			* * href_list -> "datum" (string) Requires type=datum. Name of the datum the proc belongs to (/datum/ path not required) Note: datum is relative to client ONLY.
+			* * href_list -> "passClient" (boolean) Whether or not to send the client to the called proc
+			*
+			* * * return (string) If the call proc returns data and window is set, will send the proc return string to ehjaxCallback javascript function.
+			*/
 		topic(type, href_list, client/C)
 			switch(type)
-				/**
-				 * Calls a proc from a javascript source and callsback with any data
-				 *
-				 * @href_list["proc"] (string) The proc to call (no paths included)
-				 * @href_list["window"] (string) The browser window name to send return data to (required for callback)
-				 * @href_list["param"] (string) A url-encoded array of arguments to pass to the proc (e.g. param[foo]=bar&param[bar]=foo)
-				 * @href_list["type"] (string) Type of proc to call. If none, assumes global proc.
-				 * @href_list["datum"] (string) Requires type=datum. Name of the datum the proc belongs to (/datum/ path not required)
-				 * 								Note: datum is relative to client ONLY.
-				 * @href_list["passClient"] (boolean) Whether or not to send the client to the called proc
-				 *
-				 * @return (string) If the call proc returns data and window is set, will send the proc return string to ehjaxCallback javascript function.
-				 *
-				 */
 				if ("main")
 					if (!href_list["proc"]) return 0
 					var/windowName
@@ -57,7 +55,7 @@ var/global/datum/ehjax/ehjax = new /datum/ehjax()
 					fullPath += "/proc/[theProc]"
 
 					if (!(fullPath in src.allowedProcs))
-						CRASH("EHJAX: Attempt to call disallowed proc: [strip_html(fullPath)] by user: [C && C.key ? C.key : usr]")
+						CRASH("EHJAX: Attempt to call disallowed proc: [strip_html(fullPath)] by user: [C?.key ? C.key : usr]")
 
 					var/params[] = new()
 					for (var/key in href_list)

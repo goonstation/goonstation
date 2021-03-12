@@ -44,7 +44,7 @@ For hairball DynAssemblies see: jonescity.dm
 				boutput(user, "You can't add any more of this type of part!")
 			else
 				boutput(user, "<span class='notice'>You begin adding \the [P.name] to \the [src.name].</span>")
-				if (!do_after(user, 50))
+				if (!do_after(user, 5 SECONDS))
 					boutput(user, "<span class='alert'>You were interrupted!</span>")
 					return ..()
 				else
@@ -124,7 +124,7 @@ For hairball DynAssemblies see: jonescity.dm
 	duration = 150
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	id = "dynassSecure"
-	icon = 'icons/obj/items/items.dmi'
+	icon = 'icons/obj/items/tools/screwdriver.dmi'
 	icon_state = "screwdriver"
 	var/obj/item/dynassembly/assembly
 	var/mob/user
@@ -147,10 +147,8 @@ For hairball DynAssemblies see: jonescity.dm
 	onEnd()
 		..()
 		user.visible_message("<span class='notice'><b>[user.name]</b> drops the materials in their hands to secure the assembly.</span>")
-		user.hand = !user.hand
-		user.drop_item()
-		user.hand = !user.hand
-		user.drop_item()
+		if(assembly.loc == user)
+			user.drop_item(assembly)
 		assembly.createproduct(user)
 		assembly.dispose()
 
@@ -158,7 +156,7 @@ For hairball DynAssemblies see: jonescity.dm
 	duration = 150
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	id = "dynassUnsecure"
-	icon = 'icons/obj/items/items.dmi'
+	icon = 'icons/obj/items/tools/wrench.dmi'
 	icon_state = "wrench"
 	var/obj/item/dynassembly/assembly
 	var/mob/user
@@ -181,7 +179,7 @@ For hairball DynAssemblies see: jonescity.dm
 	onEnd()
 		..()
 		for (var/obj/O in assembly.contents)
-			O.loc = get_turf(assembly)
+			O.set_loc(get_turf(assembly))
 		user.u_equip(assembly)
 		boutput(user, "<span class='alert'>You have unsecured \the [assembly]!</span>")
 		qdel(assembly)
@@ -322,7 +320,7 @@ For hairball DynAssemblies see: jonescity.dm
 	if (istype(W, /obj/item/musicpart))
 		var/obj/item/musicpart/P = W
 		boutput(user, "<span class='notice'>You begin adding \the [P.name] to \the [src.name].</span>")
-		if (!do_after(user, 50))
+		if (!do_after(user, 5 SECONDS))
 			boutput(user, "<span class='alert'>You were interrupted!</span>")
 			return ..()
 		else

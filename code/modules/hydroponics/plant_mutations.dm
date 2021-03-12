@@ -125,13 +125,13 @@
 
 // Pear Mutations
 
-#if ASS_JAM
+/* This is cool and definitely does not belong in the trash, and should probably be legitimately attainable.
 /datum/plantmutation/pear/sickly
 	name = "Sickly Pear"
 	crop = /obj/item/reagent_containers/food/snacks/plant/pear/sickly
 	assoc_reagents = list("too much")
 
-#endif
+*/
 
 // Melon Mutations
 
@@ -145,14 +145,14 @@
 /datum/plantmutation/melon/balloon
 	name = "Balloon Melons"
 	name_prefix = "Balloon "
-	crop = /obj/item/reagent_containers/balloon
+	crop = /obj/item/reagent_containers/balloon/naturally_grown
 	iconmod = "MelonBalloon"
 	assoc_reagents = list("helium")
 
 /datum/plantmutation/melon/hindenballoon
 	name = "Balloon... Melons?"
 	name_prefix = "Balloon "
-	crop = /obj/item/reagent_containers/balloon
+	crop = /obj/item/reagent_containers/balloon/naturally_grown
 	iconmod = "MelonBalloon"
 	assoc_reagents = list("hydrogen")
 
@@ -174,14 +174,7 @@
 
 		if (prob(thud_prob))
 			playsound(POT.loc, "sound/effects/exlow.ogg", 30, 1)
-			var/wiggle = 4
-			while(wiggle > 0)
-				wiggle--
-				POT.pixel_x = rand(-2,2)
-				POT.pixel_y = rand(-2,2)
-				sleep(0.1 SECONDS)
-			POT.pixel_x = 0
-			POT.pixel_y = 0
+			animate_wiggle_then_reset(POT)
 
 
 // Bean Mutations
@@ -253,7 +246,7 @@
 
 		if (POT.growth > (P.growtime - DNA.growtime) && prob(fart_prob))
 			POT.visible_message("<span class='alert'><b>[POT]</b> farts!</span>")
-			playsound(POT.loc, "sound/voice/farts/poo2.ogg", 50, 1)
+			playsound(POT.loc, "sound/voice/farts/poo2.ogg", 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 			// coder.Life()
 			// whoops undefined proc
 
@@ -341,6 +334,24 @@
 	name_prefix = "Burning "
 	iconmod = "CommolBurning"
 	assoc_reagents = list("phlogiston")
+	chance = 10
+
+// Ipecacuanha Mutations
+
+/datum/plantmutation/ipecacuanha/bilious
+	name = "Bilious Ipecacuanha"
+	name_prefix = "Bilious "
+	iconmod = "IpecacuanhaBilious"
+	crop = /obj/item/plant/herb/ipecacuanha/bilious
+	assoc_reagents = list("vomit","sewage","bitters")
+	chance = 10
+
+/datum/plantmutation/ipecacuanha/invigorating
+	name = "Invigorating Ipecacuanha"
+	name_prefix = "Invigorating "
+	iconmod = "IpecacuanhaInvigorating"
+	crop = /obj/item/plant/herb/ipecacuanha/invigorating
+	assoc_reagents = list("synaptizine")
 	chance = 10
 
 // Venne Mutations
@@ -449,7 +460,7 @@
 
 /datum/plantmutation/fungus/cloak
 	name = "Cloaked Panellus"
-	iconmod = "Cloak"
+	iconmod = "FungusCloak"
 	crop = /obj/item/reagent_containers/food/snacks/mushroom/cloak
 	PTrange = list(null,10) //low potency
 	CZrange = list(25,null) // high crop size
@@ -468,6 +479,7 @@
 	crop = /obj/item/reagent_containers/food/snacks/plant/lashberry/
 	chance = 20
 
+
 // Radweed Mutations
 
 /datum/plantmutation/radweed/safeweed
@@ -475,6 +487,7 @@
 	name_prefix = "White "
 	iconmod = "RadweedWhite"
 	special_proc_override = 1
+	assoc_reagents = list("penteticacid")
 
 	HYPspecial_proc_M(var/obj/machinery/plantpot/POT)
 		..()
@@ -508,7 +521,7 @@
 	name = "Smoldering Radweed"
 	name_prefix = "Smoldering "
 	iconmod = "RadweedRed"
-	assoc_reagents = list("phlogiston")
+	assoc_reagents = list("infernite")
 
 // Slurrypod Mutations
 

@@ -47,7 +47,7 @@
 /datum/geneticsrecipe/radio_brain
 	required_effects = list("psy_resist","loud_voice")
 	result = /datum/bioEffect/radio_brain
-	
+
 /datum/geneticsrecipe/blood_overdrive
 	required_effects = list("anemia","polycythemia")
 	result = /datum/bioEffect/blood_overdrive
@@ -97,11 +97,11 @@
 /datum/geneticsrecipe/tourettes
 	required_effects = list("clumsy","coprolalia")
 	result = /datum/bioEffect/tourettes
-	
+
 /datum/geneticsrecipe/buzz
 	required_effects = list("bee","stinky")
 	result = /datum/bioEffect/buzz
-	
+
 // Useless
 
 /datum/geneticsrecipe/glowy_one
@@ -133,7 +133,7 @@
 	result = /datum/bioEffect/fire_aura
 
 /datum/geneticsrecipe/strong
-	required_effects = list("fat","detox")
+	required_effects = list("fitness_debuff","detox")
 	result = /datum/bioEffect/strong
 
 /datum/geneticsrecipe/stinky
@@ -185,8 +185,8 @@
 /datum/geneticsrecipe/healing_touch // Discovered
 	required_effects = list("midas","detox")
 	result = /datum/bioEffect/power/healing_touch
-	
-/datum/geneticsrecipe/healing_touch_two 
+
+/datum/geneticsrecipe/healing_touch_two
 	required_effects = list("midas","melt")
 	result = /datum/bioEffect/power/healing_touch
 
@@ -283,11 +283,11 @@
 	// this one's just for comedy's sake =v
 
 /datum/geneticsrecipe/squid // Discovered
-	required_effects = list("fat","stinky")
+	required_effects = list("chime_snaps","stinky")
 	result = /datum/bioEffect/mutantrace/ithillid
 
 /datum/geneticsrecipe/squid_two
-	required_effects = list("fat","melt")
+	required_effects = list("strong","melt")
 	result = /datum/bioEffect/mutantrace/ithillid
 
 /datum/geneticsrecipe/roach // Discovered
@@ -327,12 +327,12 @@
 	result = /datum/bioEffect/mutantrace/dwarf
 
 /datum/geneticsrecipe/dwarf_three // Discovered
-	required_effects = list("strong","fat")
+	required_effects = list("strong","stinky")
 	result = /datum/bioEffect/mutantrace/dwarf
 
 /datum/geneticsrecipe/blank // Discovered
 	required_effects = list("albinism","melanism")
-	result = /datum/bioEffect/mutantrace/blank
+	result = /datum/bioEffect/color_changer/blank
 
 /datum/geneticsrecipe/skeleton // Discovered
 	required_effects = list("screamer","dead_scan")

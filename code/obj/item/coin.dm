@@ -9,27 +9,45 @@
 	stamina_cost = 0
 	module_research = list("vice" = 3, "efficiency" = 1)
 	module_research_type = /obj/item/coin
+	flags = FPRINT | TABLEPASS  | ATTACK_SELF_DELAY
+	click_delay = 1 SECOND
+	var/emagged = FALSE
 
 /obj/item/coin/attack_self(mob/user as mob)
 	boutput(user, "<span class='notice'>You flip the coin</span>")
 	SPAWN_DBG(1 SECOND)
-		if(prob(49))
-			boutput(user, "<span class='notice'>It comes up heads</span>")
-		else if(prob(49))
-			boutput(user, "<span class='notice'>It comes up tails</span>")
-		else
-			boutput(user, "<span class='alert'>It lands on its side, fuck</span>")
+		src.set_loc(user.loc)
+		user.u_equip(src)
+		playsound(src.loc, "sound/items/coindrop.ogg", 100, 1)
+		flip()
 
-/obj/item/coin/throw_impact(atom/hit_atom)
+/obj/item/coin/throw_impact(atom/hit_atom, datum/thrown_thing/thr)
 	..(hit_atom)
-	var/p = rand(100)
-	if(p < 50)
-		src.visible_message("<span class='notice'>The coin comes up heads</span>")
+	flip()
 
-	else if(p < 99)
-		src.visible_message("<span class='notice'>The coin comes up tails</span>")
+
+/obj/item/coin/emag_act(var/mob/user, var/obj/item/card/emag/E)
+	..()
+	if(!emagged)
+		boutput(user, "You magnetize the coin, ruining it's chances of ever being used in the Inter-galactic Poker Tournaments ever again.")
+		emagged = TRUE
+
+/obj/item/coin/proc/flip()
+	if(!emagged)
+		if(prob(1))
+			src.visible_message("<span class='notice'>The coin lands on its side. Fuck.</span>")
+		else if(prob(50))
+			src.visible_message("<span class='notice'>The coin comes up heads.</span>")
+		else
+			src.visible_message("<span class='notice'>The coin comes up tails.</span>")
+		return
+	if(prob(49))
+		src.visible_message("<span class='notice'>The coin comes up heads.</span>")
+	else if(prob(49))
+		src.visible_message("<span class='notice'>The coin comes up tails.</span>")
 	else
-		src.visible_message("<span class='notice'>The coin lands on its side</span>")
+		src.visible_message("<span class='notice'>The coin lands on its side. Fuck.</span>")
+
 
 /obj/item/coin_bot
 	name = "Probability Disc"

@@ -13,9 +13,9 @@ obj/machinery/computer/general_air_control
 	var/list/sensor_information = list()
 	var/datum/radio_frequency/radio_connection
 
-	lr = 0.6
-	lg = 1
-	lb = 0.1
+	light_r =0.6
+	light_g = 1
+	light_b = 0.1
 
 	disposing()
 		radio_controller.remove_object(src, "[frequency]")
@@ -34,7 +34,7 @@ obj/machinery/computer/general_air_control
 	attackby(obj/item/I as obj, user as mob)
 		if (isscrewingtool(I))
 			playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
-			if(do_after(user, 20))
+			if(do_after(user, 2 SECONDS))
 				if (src.status & BROKEN)
 					boutput(user, "<span class='notice'>The broken glass falls out.</span>")
 					var/obj/computerframe/A = new /obj/computerframe( src.loc )
@@ -289,7 +289,7 @@ Max Output Pressure: [output_pressure] kPa<BR>"}
 		attackby(obj/item/I as obj, user as mob)
 			if (isscrewingtool(I))
 				playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
-				if(do_after(user, 20))
+				if(do_after(user, 2 SECONDS))
 					if (src.status & BROKEN)
 						boutput(user, "<span class='notice'>The broken glass falls out.</span>")
 						var/obj/computerframe/A = new /obj/computerframe( src.loc )
@@ -585,7 +585,7 @@ Rate: <A href='?src=\ref[src];change_vol=-10'>--</A> <A href='?src=\ref[src];cha
 	attackby(obj/item/I as obj, user as mob)
 		if (isscrewingtool(I))
 			playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
-			if(do_after(user, 20))
+			if(do_after(user, 2 SECONDS))
 				if (src.status & BROKEN)
 					boutput(user, "<span class='notice'>The broken glass falls out.</span>")
 					var/obj/computerframe/A = new /obj/computerframe( src.loc )
@@ -724,7 +724,7 @@ Rate: <A href='?src=\ref[src];change_vol=-10'>--</A> <A href='?src=\ref[src];cha
 				var/change = input(usr,"Target Pressure (0 - [MAX_PRESSURE]):", "Enter target pressure", pressure) as num
 				if ((get_dist(src, usr) > 1 && !issilicon(usr)) || !isliving(usr) || iswraith(usr) || isintangible(usr))
 					return 0
-				if (usr.getStatusDuration("stunned") > 0 || usr.getStatusDuration("weakened") || usr.getStatusDuration("paralysis") > 0 || !isalive(usr) || usr.restrained())
+				if (is_incapacitated(usr) || usr.restrained())
 					return 0
 				if (!src.allowed(usr))
 					boutput(usr, "<span class='alert'>Access denied!</span>")

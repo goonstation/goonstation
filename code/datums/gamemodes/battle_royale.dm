@@ -3,7 +3,6 @@
 */
 
 var/global/area/current_battle_spawn = null
-var/global/list/battle_equipment = null
 var/global/list/datum/mind/battle_pass_holders = list()
 
 #define TIME_BETWEEN_SHUTTLE_MOVES 50
@@ -53,7 +52,7 @@ var/global/list/datum/mind/battle_pass_holders = list()
 	/*
 	drop_locations = list("security" = /area/station/security,\
 	"science wing" = /area/station/science,\
-		"the cargo bay" = /area/station/quartermaster,\
+		"the cargo bay" = /area/station/quartermaster/office,\
 		"engineering" = /area/station/engine,\
 		"medbay" = /area/station/medical,\
 		"the cafeteria" = /area/station/crew_quarters/cafeteria,\
@@ -81,12 +80,11 @@ var/global/list/datum/mind/battle_pass_holders = list()
 		battle_shuttle_spawn(player)
 
 /datum/game_mode/battle_royale/proc/battle_shuttle_spawn(var/datum/mind/player)
-	var/battler_spawn = pick(battle_royale_spawn)
 	bestow_objective(player,/datum/objective/battle_royale/win)
 	boutput(player.current, "<B>Objective</B>: Defeat all other battlers!")
 	player.current.nodamage = 1 // No murder on the battle shuttle
 		// Stuff them on the shuttle
-	player.current.set_loc(battler_spawn)
+	player.current.set_loc(pick_landmark(LANDMARK_BATTLE_ROYALE_SPAWN))
 	equip_battler(player.current)
 	SPAWN_DBG(MAX_TIME_ON_SHUTTLE)
 		if(istype(get_area(player.current),/area/shuttle/escape/transit/battle_shuttle))
@@ -174,12 +172,10 @@ proc/hide_weapons_everywhere()
 	murder_supplies.Add(/obj/item/gun/kinetic/pistol)
 
 
-	for(var/obj/O in lockers_and_crates) // imcoder
+	for_by_tcl(S, /obj/storage) // imcoder
 		if(prob(33))
 			weapon = pick(murder_supplies)
-			new weapon(O)
-	return
-
+			new weapon(S)
 
 
 proc/equip_battler(mob/living/carbon/human/battler)
@@ -252,13 +248,17 @@ proc/equip_battler(mob/living/carbon/human/battler)
 //returns a list of all areas on a station
 // Maybe nuclear could use this in the future???
 proc/get_accessible_station_areas()
+	if(global.station_areas && global.area_list_is_up_to_date) // In case someone makes a new area
+		return global.station_areas
 	// All areas
 	var/list/L = list()
-	var/list/areas = childrentypesof(/area/station)
+	var/list/areas = concrete_typesof(/area/station)
 	for(var/A in areas)
-		var/area/instance = locate(A)
+		var/area/station/instance = locate(A)
 		for(var/turf/T in instance)
-			if(!isfloor(T) && is_blocked_turf(T) && istype(T,/area/station/test_area) && T.z == 1)
+			if(!isfloor(T) && is_blocked_turf(T) && istype(T,/area/sim/test_area) && T.z == 1)
 				continue
 			L[instance.name] = instance
+	global.area_list_is_up_to_date = 1
+	global.station_areas = L
 	return L

@@ -1,5 +1,5 @@
 //stole this from vampire. prevents runtimes. IDK why this isn't in the parent.
-/obj/screen/ability/topBar/gang
+/atom/movable/screen/ability/topBar/gang
 	clicked(params)
 		var/datum/targetable/gang/spell = owner
 		var/datum/abilityHolder/holder = owner.holder
@@ -37,7 +37,7 @@
 		return
 
 
-////////////////////////////////////////////////// Ability holder /////////////////////////////////////////////
+/* 	/		/		/		/		/		/		Ability Holder		/		/		/		/		/		/		/		/		*/
 
 /datum/abilityHolder/gang
 	usesPoints = 0
@@ -73,7 +73,7 @@
 	var/can_cast_anytime = 0		//while alive
 
 	New()
-		var/obj/screen/ability/topBar/gang/B = new /obj/screen/ability/topBar/gang(null)
+		var/atom/movable/screen/ability/topBar/gang/B = new /atom/movable/screen/ability/topBar/gang(null)
 		B.icon = src.icon
 		B.icon_state = src.icon_state
 		B.owner = src
@@ -91,7 +91,7 @@
 	updateObject()
 		..()
 		if (!src.object)
-			src.object = new /obj/screen/ability/topBar/gang()
+			src.object = new /atom/movable/screen/ability/topBar/gang()
 			object.icon = src.icon
 			object.owner = src
 		if (src.last_cast > world.time)

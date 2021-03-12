@@ -22,14 +22,19 @@ var
 									/obj/decal/cleanable = 800,
 									/obj/overlay/tile_effect/lighting = 1000) //fine ok its smaller now! //edit : ok actually maybe this matters lets make it biger
 /datum/proc/pooled(var/pooltype)
+	SHOULD_CALL_PARENT(TRUE)
 	dispose()
 	if(istype(src, /atom/movable))
-		src:set_loc(null)
+		var/atom/movable/AM = src
+		AM.set_loc(null)
+		AM.transform = null
+		animate(AM)
 	// If this thing went through the delete queue and was rescued by the pool mechanism, we should reset the qdeled flag.
 	qdeled = 0
 	pooled = 1
 
 /datum/proc/unpooled(var/pooltype)
+	SHOULD_CALL_PARENT(TRUE)
 	disposed = 0
 	pooled = 0
 
@@ -72,7 +77,7 @@ proc/unpool(var/type=null)
 		return new type
 
 	var/datum/thing = l[l.len]
-	if (!thing) //This should not happen, but I guess it did.
+	if (!thing || !thing.pooled) //This should not happen, but I guess it did.
 		l.len-- // = 0
 		#ifdef DETAILED_POOL_STATS
 		increment_pool_stats(type, POOL_MISS_COUNT)

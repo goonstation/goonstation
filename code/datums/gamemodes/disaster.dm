@@ -40,47 +40,37 @@
 
 
 /datum/game_mode/disaster/post_setup()
-
-//	boutput(world, "disaster loaded :I")
 	for(var/datum/mind/wraith in Agimmicks)
-		var/wraith_spawn = observer_start.len ? pick(observer_start) : locate(150, 150, 1)
-		wraith.current.set_loc(wraith_spawn)
+		wraith.current.set_loc(pick_landmark(LANDMARK_OBSERVER, locate(150, 150, 1)))
 		generate_wraith_objectives(wraith)
 
 	emergency_shuttle.disabled = 1 //Disable the shuttle temporarily.
 
 	if(derelict_mode)
 		SPAWN_DBG(1 SECOND)
-			var/list/CORPSES = list()
-			var/list/JUNK = list()
-			JUNK = halloweenspawn.Copy()
-			for(var/obj/landmark/S in landmarks)//world)
-				if (S.name == "peststart")
-					CORPSES.Add(S.loc)
-				LAGCHECK(LAG_LOW)
-			if(CORPSES.len)
-				for(var/turf/T in CORPSES)
-					var/obj/decal/skeleton/S = new/obj/decal/skeleton(T)
-					S.name = "corpse"
-					S.desc = "The mangled body of some poor [pick("chump","sap","chap","crewmember","jerk","dude","lady","idiot","employee","oaf")]."
-					S.icon = 'icons/misc/hstation.dmi'
-					S.icon_state = pick("body3","body4","body5","body6","body7","body8","clowncorpse")
-			if(JUNK.len)
-				for(var/turf/T in JUNK)
-					var/junk_type = rand(1,4)
-					switch(junk_type)
-						if(1)
-							new/obj/candle_light(T)
-						if(2)
-							new/obj/spook(T)
-						if(3)
-							new/obj/critter/floateye(T)
-						if(4)
-							var/obj/item/device/light/glowstick/G = new/obj/item/device/light/glowstick(T)
-							SPAWN_DBG(2 SECONDS)
-								G.on = 1
-								G.icon_state = "glowstick-on"
-								G.light.enable()
+			var/list/CORPSES = landmarks[LANDMARK_PESTSTART]
+			var/list/JUNK = landmarks[LANDMARK_HALLOWEEN_SPAWN]
+			for(var/turf/T in CORPSES)
+				var/obj/decal/skeleton/S = new/obj/decal/skeleton(T)
+				S.name = "corpse"
+				S.desc = "The mangled body of some poor [pick("chump","sap","chap","crewmember","jerk","dude","lady","idiot","employee","oaf")]."
+				S.icon = 'icons/misc/hstation.dmi'
+				S.icon_state = pick("body3","body4","body5","body6","body7","body8","clowncorpse")
+			for(var/turf/T in JUNK)
+				var/junk_type = rand(1,4)
+				switch(junk_type)
+					if(1)
+						new/obj/candle_light(T)
+					if(2)
+						new/obj/spook(T)
+					if(3)
+						new/obj/critter/floateye(T)
+					if(4)
+						var/obj/item/device/light/glowstick/G = new/obj/item/device/light/glowstick(T)
+						SPAWN_DBG(2 SECONDS)
+							G.on = 1
+							G.icon_state = "glowstick-on"
+							G.light?.enable()
 
 	var/start_wait = rand(waittime_l, waittime_h)
 
@@ -104,31 +94,31 @@
 		SPAWN_DBG(10 SECONDS)
 			world << sound('sound/effects/creaking_metal1.ogg')
 			for(var/mob/living/carbon/human/H in mobs)
-				shake_camera(H, 8, 3)
+				shake_camera(H, 8, 32)
 				H.change_misstep_chance(5)
 
 		SPAWN_DBG(20 SECONDS)
-			if(scarysounds && scarysounds.len)
+			if(length(scarysounds))
 				world << sound(pick(scarysounds))
 
 		SPAWN_DBG(30 SECONDS)
-			if(scarysounds && scarysounds.len)
+			if(length(scarysounds))
 				world << sound(pick(scarysounds))
 
 		SPAWN_DBG(40 SECONDS)
 			world << sound('sound/effects/creaking_metal1.ogg')
 			for(var/mob/living/carbon/human/H in mobs)
-				shake_camera(H, 8, 2)
+				shake_camera(H, 8, 24)
 				H.change_misstep_chance(5)
 
 		SPAWN_DBG(1 MINUTE)
 			world << sound('sound/effects/creaking_metal1.ogg')
 			for(var/mob/living/carbon/human/H in mobs)
-				shake_camera(H, 7, 1)
+				shake_camera(H, 7, 16)
 				H.change_misstep_chance(5)
 
 		SPAWN_DBG(80 SECONDS)
-			if(scarysounds && scarysounds.len)
+			if(length(scarysounds))
 				world << sound(pick(scarysounds))
 
 	return
@@ -192,7 +182,7 @@
 			SPAWN_DBG(50+rand(0,6250))
 				var/obj/vortex/P = new /obj/vortex( T )
 				P.name = disaster_name
-				if(prob(6) && scarysounds && scarysounds.len)
+				if(prob(6) && length(scarysounds))
 					world << sound(pick(scarysounds))
 		LAGCHECK(LAG_LOW)
 

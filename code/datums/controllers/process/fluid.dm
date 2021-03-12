@@ -17,6 +17,11 @@ datum/controller/process/fluid_group
 		src.processing_fluid_spreads = global.processing_fluid_spreads
 		src.processing_fluid_drains = global.processing_fluid_drains
 
+	copyStateFrom(datum/controller/process/target)
+		var/datum/controller/process/fluid_group/old_fluids = target
+		src.processing_fluid_drains = old_fluids.processing_fluid_drains
+		src.processing_fluid_groups = old_fluids.processing_fluid_groups
+		src.processing_fluid_spreads = old_fluids.processing_fluid_spreads
 
 	doWork()
 
@@ -57,7 +62,7 @@ datum/controller/process/fluid_group
 			else if (FG)
 				avg_viscosity += FG.avg_viscosity
 
-			if (FG && FG.qdeled)
+			if (FG?.qdeled)
 				FG = null
 
 		avg_viscosity /= processing_fluid_spreads.len ? processing_fluid_spreads.len : 1
@@ -142,5 +147,5 @@ datum/controller/process/fluid_group
 								B.blood_type = F.blood_type
 
 						FG.evaporate()
-						if (FG && FG.qdeled)
+						if (FG?.qdeled)
 							FG = null

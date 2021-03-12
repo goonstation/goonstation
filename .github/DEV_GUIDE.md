@@ -134,7 +134,11 @@ If you are on a version of BYOND different from the one specified in buildByond.
 
 Alternative solution is to press `ctrl+shift+B` and then select the build task by hitting enter. This one does not automatically make you an administrator in-game so you will need to edit the config/admins.txt file by adding a `yourckey - Host` line there. Just make sure you don't commit this file later!
 
-<!--- TODO: Troubleshooting for non-existing task? --->
+:::info
+If an error popup with an error message of "Could not find the task 'dm: build - goonstation.dme'." shows up, one possible cause is that a VS Code Workspace is confusing things. If this is the case, close your current workspace (`File` -> `Close Workspace`) then use the `Open Folder` option to select the `goonstation` folder and try to build again.
+
+You can use a VS Code Workspace, but should do via Open Folder to select the `goonstation` folder then `File` -> `Save Workspace As...` rather than `Add Folder to Workspace`.
+:::
 
 ![](https://i.imgur.com/mXSjfC2.png)
 
@@ -204,7 +208,7 @@ There's buttons for pretty much anything you want to do with Git. When you're al
 
 Ok. We're almost there!
 :::info
-This can also be done (somewhat easier) using the GitHub interface, but this guide's goal is to stay in-editor.
+This can also be done using the GitHub interface ***(which is easier, and more simple + powerful)*** , but this guide's goal is to stay in-editor.
 :::
 Click the GitHub icon on the left sidebar. It looks like a cat in  circle. Now, you'll want to click the + sign that appears in the top left, like this:
 
@@ -239,6 +243,7 @@ It might happen that somewhere in the process of making a PR you see a message a
 
 Changes will be made to the upstream repo and it's a good idea to keep your master in sync with that.
 
+0. This step is only necessary if you're doing this for the first time! Press **Ctrl + Shift + P** and type in "fetch from all remotes" and choose the relevant command.
 1. Checkout the master branch
     You do that by clicking on the name of the current branch in the bottom left corner and then selecting "master" in the command palette.
     ![](https://i.imgur.com/z2o1Nw6.png)
@@ -250,6 +255,10 @@ Changes will be made to the upstream repo and it's a good idea to keep your mast
     ![](https://i.imgur.com/maQ0CAw.png)
 
 If you've done everything correctly this should finish without any problems and now your master is in the same state as upstream/master. But you probably also want to sync up your feature branch.
+
+:::warning
+  Resolving icon and map conflicts might be annoying when done manually. You can install an automatic merge driver for these files by running the `tools/hooks/install.bat` file first.
+:::
 
 1. Checkout your feature branch (as above)
 2. Press **Ctrl + Shift + P** and type in "git merge", choose the Git: Merge Branch... command
@@ -377,3 +386,5 @@ git rebase master
 Yogstation for making an amazing guide that this is based on, found [here](https://forums.yogstation.net/index.php?threads/release-the-gitkraken-how-to-make-your-first-pull-request.15099/).
 
 /TG/station for for their [contribution guide](https://github.com/tgstation/tgstation/blob/master/.github/CONTRIBUTING.md), which was invaluable.
+
+[//]: # (This file is licensed under CC-BY-NC-SA 3.0 and the ISC licenses.)

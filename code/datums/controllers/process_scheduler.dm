@@ -40,6 +40,8 @@ var/global/datum/controller/processScheduler/processScheduler
 
 	// Setup for these processes will be deferred until all the other processes are set up.
 	var/tmp/list/deferredSetupList = new
+	var/tmp/list/alreadyCreatedPathsList = new
+	var/tmp/list/alreadyCreatedList = new
 
 	var/tmp/currentTick = 0
 
@@ -60,8 +62,13 @@ var/global/datum/controller/processScheduler/processScheduler
  * this treatment.
  */
 /datum/controller/processScheduler/proc/deferSetupFor(var/processPath)
-	if (!(processPath in deferredSetupList))
-		deferredSetupList += processPath
+	deferredSetupList |= processPath
+
+/datum/controller/processScheduler/proc/addNowSkipSetup(var/processPath)
+	src.alreadyCreatedPathsList += processPath
+	var/newProcess = new processPath(src)
+	src.alreadyCreatedList += newProcess
+	return newProcess
 
 /datum/controller/processScheduler/proc/setup()
 	// There can be only one
@@ -72,11 +79,15 @@ var/global/datum/controller/processScheduler/processScheduler
 	var/process
 	// Add all the processes we can find, except for the ticker
 	for (process in childrentypesof(/datum/controller/process))
-		if (!(process in deferredSetupList))
+		if (!(process in deferredSetupList) && !(process in alreadyCreatedPathsList))
 			addProcess(new process(src))
 
 	for (process in deferredSetupList)
 		addProcess(new process(src))
+
+	for (process in alreadyCreatedList)
+		// already created and set up so just add it.
+		addProcess(process, TRUE)
 
 /datum/controller/processScheduler/proc/start()
 	isRunning = 1
@@ -114,8 +125,7 @@ var/global/datum/controller/processScheduler/processScheduler
 					message_admins("Process '[p.name]' is hung and will be restarted.")
 
 /datum/controller/processScheduler/proc/queueProcesses()
-	for(var/X in processes)
-		var/datum/controller/process/p = X
+	for (var/datum/controller/process/p as() in processes)
 		// Don't double-queue, don't queue running processes
 		if (p.disabled || p.running || p.queued || !p.idle)
 			continue
@@ -131,13 +141,17 @@ var/global/datum/controller/processScheduler/processScheduler
 /datum/controller/processScheduler/proc/runQueuedProcesses()
 	if (queued.len)
 		var/delay = 0
-		for(var/X in queued)
-			var/datum/controller/process/p = X
+		for (var/datum/controller/process/p as() in queued)
 			runProcess(p, delay)
 			delay += process_run_interval * world.tick_lag
 		queued.len = 0
 
-/datum/controller/processScheduler/proc/addProcess(var/datum/controller/process/process)
+/datum/controller/processScheduler/proc/addProcess(var/datum/controller/process/process, var/skipSetup = 0)
+	// zamu here, sorry for making this dumb thing
+	if (game_start_countdown)
+		var/procname = copytext("[process.type]", findlasttext("[process.type]", "/", -1) + 1)
+		game_start_countdown.update_status("Starting [procname]")
+
 	processes.Add(process)
 	process.idle()
 	idle.Add(process)
@@ -157,7 +171,8 @@ var/global/datum/controller/processScheduler/processScheduler
 	recordEnd(process, 0)
 
 	// Set up process
-	process.setup()
+	if (!skipSetup)
+		process.setup()
 
 	// Save process in the name -> process map
 	nameToProcessMap[process.name] = process
@@ -206,31 +221,22 @@ var/global/datum/controller/processScheduler/processScheduler
 	recordEnd(process)
 
 /datum/controller/processScheduler/proc/setIdleProcessState(var/datum/controller/process/process)
-	if (process in running)
-		running -= process
-	if (process in queued)
-		queued -= process
-	if (!(process in idle))
-		idle += process
+	running -= process
+	queued -= process
+	idle |= process
 
 /datum/controller/processScheduler/proc/setQueuedProcessState(var/datum/controller/process/process)
-	if (process in running)
-		running -= process
-	if (process in idle)
-		idle -= process
-	if (!(process in queued))
-		queued += process
+	running -= process
+	idle -= process
+	queued |= process
 
 	// The other state transitions are handled internally by the process.
 	process.queued()
 
 /datum/controller/processScheduler/proc/setRunningProcessState(var/datum/controller/process/process)
-	if (process in queued)
-		queued -= process
-	if (process in idle)
-		idle -= process
-	if (!(process in running))
-		running += process
+	queued -= process
+	idle -= process
+	running |= process
 
 /datum/controller/processScheduler/proc/recordStart(var/datum/controller/process/process, var/time = null)
 	if (isnull(time))
@@ -326,8 +332,3 @@ var/global/datum/controller/processScheduler/processScheduler
 	if (hasProcess(processName))
 		var/datum/controller/process/process = nameToProcessMap[processName]
 		usr.client.debug_variables(process)
-
-/datum/controller/processScheduler/proc/sign(var/x)
-	if (x == 0)
-		return 1
-	return x / abs(x)

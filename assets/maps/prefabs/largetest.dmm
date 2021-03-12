@@ -1,10 +1,10 @@
-"a" = (/turf/space,/area)
-"b" = (/turf/simulated/wall,/area)
-"c" = (/obj/item/fish/bass,/turf/simulated/floor/airless,/area)
-"d" = (/obj/item/fish/carp,/turf/simulated/floor/airless,/area)
-"e" = (/obj/item/fish/mahimahi,/turf/simulated/floor/airless,/area)
-"f" = (/obj/item/fish/red_herring,/turf/simulated/floor/airless,/area)
-"g" = (/obj/item/fish/salmon,/turf/simulated/floor/airless,/area)
+"a" = (/turf/space,/area/space)
+"b" = (/turf/simulated/wall,/area/space)
+"c" = (/obj/item/fish/bass,/turf/simulated/floor/airless,/area/space)
+"d" = (/obj/item/fish/carp,/turf/simulated/floor/airless,/area/space)
+"e" = (/obj/item/fish/mahimahi,/turf/simulated/floor/airless,/area/space)
+"f" = (/obj/item/fish/red_herring,/turf/simulated/floor/airless,/area/space)
+"g" = (/obj/item/fish/salmon,/turf/simulated/floor/airless,/area/space)
 
 (1,1,1) = {"
 bbbbbbbbbbbbbbbbbbbbbbbbbaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa

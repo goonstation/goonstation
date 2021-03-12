@@ -73,10 +73,13 @@
 
 	else if (istype(AM, /obj/critter/))
 		var/obj/critter/C = AM
-		if (C.opensdoors == 1)
+		if (C.opensdoors == OBJ_CRITTER_OPENS_DOORS_PUBLIC)
 			if (src.density)
-				src.open()
+				src.bumpopen(AM)
 				C.frustration = 0
+		else if (C.opensdoors == OBJ_CRITTER_OPENS_DOORS_ANY)
+			src.open()
+			C.frustration = 0
 		else
 			C.frustration++
 
@@ -158,13 +161,13 @@
 		AddComponent(/datum/component/mechanics_holder)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"toggle", "toggleinput")
 		update_nearby_tiles(need_rebuild=1)
-		doors.Add(src)
+		START_TRACKING
 		for (var/turf/simulated/wall/auto/T in orange(1))
 			T.update_icon()
 
 	disposing()
 		update_nearby_tiles()
-		doors.Remove(src)
+		STOP_TRACKING
 		..()
 
 	proc/toggleinput()
@@ -201,9 +204,12 @@
 	src.visible_message("<span class='alert'>[user] is attempting to pry open [src].</span>")
 	user.show_text("You have to stand still...", "red")
 
+#ifdef HALLOWEEN
+	user.emote("scream")
+#endif
 	if (do_after(user, 100) && !(user.getStatusDuration("stunned") || user.getStatusDuration("weakened") || user.getStatusDuration("paralysis") > 0 || !isalive(user) || user.restrained()))
 		var/success = 0
-		SPAWN_DBG (6)
+		SPAWN_DBG(0.6 SECONDS)
 			success = try_force_open(user)
 			if (success != 0)
 				src.operating = -1 // It's broken now.
@@ -350,16 +356,16 @@
 
 	return ..(I,user)
 
-/obj/machinery/door/proc/bumpopen(mob/user as mob)
+/obj/machinery/door/proc/bumpopen(atom/movable/AM as mob|obj)
 	if (src.operating)
 		return 0
 	if(world.time-last_used <= 10)
 		return 0
-	src.add_fingerprint(user)
+	src.add_fingerprint(AM)
 	if (!src.requiresID())
-		user = null
+		AM = null
 
-	if (src.allowed(user))
+	if (src.allowed(AM))
 		if (src.density)
 			last_used = world.time
 			if (src.open() == 1)

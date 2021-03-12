@@ -1,7 +1,7 @@
 // Converted everything related to hunters from client procs to ability holders and used
 // the opportunity to do some clean-up as well (Convair880).
 
-//////////////////////////////////////////// Setup //////////////////////////////////////////////////
+/* 	/		/		/		/		/		/		Setup		/		/		/		/		/		/		/		/		*/
 
 /mob/proc/make_hunter()
 	if (ishuman(src))
@@ -15,11 +15,11 @@
 		P.addAbility(/datum/targetable/hunter/hunter_trophycount)
 
 		if (src.mind && src.mind.special_role != "omnitraitor")
-			SHOW_TRAITOR_OMNI_TIPS(src)
+			SHOW_HUNTER_TIPS(src)
 
 	else return
 
-////////////////////////////////////////////// Helper procs //////////////////////////////
+/* 	/		/		/		/		/		/		Ability Holder		/		/		/		/		/		/		/		/		*/
 
 /mob/living/carbon/human/proc/hunter_transform()
 	if (ishuman(src))
@@ -48,6 +48,7 @@
 		M.unequip_all()
 
 		var/obj/item/implant/microbomb/hunter/B = new /obj/item/implant/microbomb/hunter(M)
+		M.implant.Add(B)
 		B.implanted = 1
 		B.implanted(M)
 
@@ -143,7 +144,7 @@
 								if (iswerewolf(H))
 									skull_value = 4
 									skull_desc = "A grand trophy from a lycanthrope, a very capable hunter. It is an immense honor."
-								if (ismonkey(H) || H.bioHolder && H.bioHolder.HasEffect("monkey"))
+								if (isnpcmonkey(H))
 									skull_value = 0
 									skull_desc = "A meaningless trophy from a lab monkey. You feel disgusted to even look at it."
 
@@ -212,7 +213,7 @@
 	var/value = 0
 
 	var/list/L = src.get_all_items_on_mob()
-	if (L && L.len)
+	if (length(L))
 		for (var/obj/item/skull/S in L)
 			if (ishuman(src))
 				var/mob/living/carbon/human/H = src
@@ -223,7 +224,7 @@
 
 //////////////////////////////////////////// Ability holder /////////////////////////////////////////
 
-/obj/screen/ability/topBar/hunter
+/atom/movable/screen/ability/topBar/hunter
 	clicked(params)
 		var/datum/targetable/hunter/spell = owner
 		if (!istype(spell))
@@ -267,7 +268,7 @@
 	var/hunter_only = 0
 
 	New()
-		var/obj/screen/ability/topBar/hunter/B = new /obj/screen/ability/topBar/hunter(null)
+		var/atom/movable/screen/ability/topBar/hunter/B = new /atom/movable/screen/ability/topBar/hunter(null)
 		B.icon = src.icon
 		B.icon_state = src.icon_state
 		B.owner = src
@@ -279,7 +280,7 @@
 	updateObject()
 		..()
 		if (!src.object)
-			src.object = new /obj/screen/ability/topBar/hunter()
+			src.object = new /atom/movable/screen/ability/topBar/hunter()
 			object.icon = src.icon
 			object.owner = src
 		if (src.last_cast > world.time)

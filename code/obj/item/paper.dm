@@ -1,3 +1,29 @@
+#define PAPER_MODE_READING 0
+#define PAPER_MODE_WRITING 1
+#define PAPER_MODE_STAMPING 2
+#define PAPER_MAX_LENGTH 5000
+#define PAPER_MAX_STAMPS 30
+#define PAPER_MAX_STAMPS_OVERLAYS 4
+
+#define STAMP_IDS list(\
+	"Clown" = "stamp-sprite-clown",\
+	"Denied" = "stamp-sprite-deny" ,\
+	"Granted" = "stamp-sprite-ok",\
+	"Head of Personnel" = "stamp-sprite-hop",\
+	"Medical Director" = "stamp-sprite-md",\
+	"Chief Engineer" = "stamp-sprite-ce",\
+	"Head of Security" = "stamp-sprite-hos",\
+	"Research Director" = "stamp-sprite-rd",\
+	"Captain" = "stamp-sprite-cap",\
+	"Quartermaster" = "stamp-sprite-qm",\
+	"Security" = "stamp-sprite-law",\
+	"Chaplain" = "stamp-sprite-chap",\
+	"Mime" = "stamp-sprite-mime",\
+	"Centcom" = "stamp-sprite-centcom",\
+	"Syndicate" = "stamp-sprite-syndicate",\
+	"Void" = "stamp-sprite-void",\
+	"Your Name" = "stamp-text-name",\
+	"Current Time" = "stamp-text-time",)
 
 /obj/item/paper
 	name = "paper"
@@ -7,7 +33,7 @@
 	wear_image_icon = 'icons/mob/head.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
 	item_state = "paper"
-	var/info = null
+	var/info = ""
 	var/stampable = 1
 	throwforce = 0
 	w_class = 1.0
@@ -19,20 +45,18 @@
 	burn_output = 900
 	burn_possible = 2
 	health = 10
-
 	var/list/form_startpoints
 	var/list/form_endpoints
-
 	var/font_css_crap = null
 	var/list/fonts = list()
-	//
+
 	var/see_face = 1
 	var/body_parts_covered = HEAD
 	var/protective_temperature = T0C + 10
 	var/heat_transfer_coefficient = 0.99
 	var/permeability_coefficient = 0.99
 	var/siemens_coefficient = 0.80
-
+	var/stampNum = 0
 	var/sizex = 0
 	var/sizey = 0
 	var/offset = 0
@@ -42,28 +66,27 @@
 	stamina_crit_chance = 0
 
 	var/sealed = 0 //Can you write on this with a pen?
+	var/list/stamps = null
+	var/list/form_fields = list()
+	var/field_counter = 1
 
 /obj/item/paper/New()
-
 	..()
-	var/datum/reagents/R = new/datum/reagents(10)
-	reagents = R
-	R.my_atom = src
-	R.add_reagent("paper", 10)
+	src.create_reagents(10)
+	reagents.add_reagent("paper", 10)
+	SPAWN_DBG(0)
+		if (src.info && src.icon_state == "paper_blank")
+			icon_state = "paper"
 	if (!src.rand_pos)
 		return
 	else
 		src.pixel_y = rand(-8, 8)
 		src.pixel_x = rand(-9, 9)
-	SPAWN_DBG(0)
-		if (src.info && src.icon_state == "paper_blank")
-			icon_state = "paper"
-	return
-
 
 /obj/item/paper/pooled()
 
 	..()
+	name = "paper"
 	info = 0
 	src.icon_state = "paper_blank"
 	health = 10
@@ -71,6 +94,7 @@
 /obj/item/paper/unpooled()
 
 	..()
+	name = initial(name)
 	info = initial(info)
 	icon_state = initial(icon_state)
 	health = initial(health)
@@ -81,10 +105,8 @@
 		src.reagents.clear_reagents()
 		src.reagents.add_reagent("paper", 10)
 	else
-		var/datum/reagents/R = new/datum/reagents(10)
-		reagents = R
-		R.my_atom = src
-		R.add_reagent("paper", 10)
+		src.create_reagents(10)
+		reagents.add_reagent("paper", 10)
 
 	if (!src.offset)
 		return
@@ -99,32 +121,7 @@
 
 /obj/item/paper/examine(mob/user)
 	. = ..()
-	var/windowtext
-	if(!user.literate)
-		windowtext = html_encode(illiterateGarbleText(src.info)) // deny them ANY useful information
-	else
-		windowtext = src.info
-		if (src.form_startpoints && src.form_endpoints)
-			for (var/x = src.form_startpoints.len, x > 0, x--)
-				windowtext = copytext(windowtext, 1, src.form_startpoints[src.form_startpoints[x]]) + "<a href='byond://?src=\ref[src];form=[src.form_startpoints[x]]'>" + copytext(windowtext, src.form_startpoints[src.form_startpoints[x]], src.form_endpoints[src.form_endpoints[x]]) + "</a>" + copytext(windowtext, src.form_endpoints[src.form_endpoints[x]])
-
-	var/font_junk = ""
-	for (var/i in src.fonts)
-		font_junk += "<link href='http://fonts.googleapis.com/css?family=[i]' rel='stylesheet' type='text/css'>"
-
-	usr.Browse("<HTML><HEAD><TITLE>[src.name]</TITLE>[font_junk]</HEAD><BODY><TT>[windowtext]</TT></BODY></HTML>", "window=[src.name][(sizex || sizey) ? {";size=[sizex]x[sizey]"} : ""]")
-	onclose(usr, "[src.name]")
-
-//[(sizex || sizey) ? {";size=[sizex]x[sizey]"} : ""]
-/obj/item/paper/Map/examine(mob/user)
-	. = ..()
-
-	if (!( ishuman(user) || isobserver(user) || issilicon(user) ))
-		user.Browse("<HTML><HEAD><TITLE>[src.name]</TITLE></HEAD><BODY><TT>[stars(src.info)]</TT></BODY></HTML>", "window=[src.name]")
-		onclose(user, "[src.name]")
-	else
-		user.Browse("<HTML><HEAD><TITLE>[src.name]</TITLE></HEAD><BODY><TT>[src.info]</TT></BODY></HTML>", "window=[src.name]")
-		onclose(user, "[src.name]")
+	ui_interact(user)
 
 /obj/item/paper/custom_suicide = 1
 /obj/item/paper/suicide(var/mob/user as mob)
@@ -135,31 +132,34 @@
 	return 1
 
 /obj/item/paper/attack_self(mob/user as mob)
-	if (alert("What would you like to do with [src]?",,"Fold","Nothing") == "Nothing")
+	var/menuchoice = alert("What would you like to do with [src]?",,"Fold","Read","Nothing")
+	if (menuchoice == "Nothing")
 		return
+	else if (menuchoice == "Read")
+		src.examine(user)
 	else
 		var/fold = alert("What would you like to fold [src] into?",,"Paper hat","Paper plane","Paper ball")
-		var/obj/item/paper/P = src
-		src = null
-		usr.u_equip(P)
+		if(src.pooled) //It's possible to queue multiple of these menus before resolving any.
+			return
+		user.u_equip(src)
 		if (fold == "Paper hat")
-			usr.show_text("You fold the paper into a hat! Neat.", "blue")
+			user.show_text("You fold the paper into a hat! Neat.", "blue")
 			var/obj/item/clothing/head/paper_hat/H = new()
-			usr.put_in_hand_or_drop(H)
+			user.put_in_hand_or_drop(H)
 		else
 			var/obj/item/paper/folded/F = null
 			if (fold == "Paper plane")
-				usr.show_text("You fold the paper into a plane! Neat.", "blue")
-				F = new /obj/item/paper/folded/plane(usr)
+				user.show_text("You fold the paper into a plane! Neat.", "blue")
+				F = new /obj/item/paper/folded/plane(user)
 			else
-				usr.show_text("You crumple the paper into a ball! Neat.", "blue")
-				F = new /obj/item/paper/folded/ball(usr)
-			F.info = P.info
-			F.old_desc = P.desc
-			F.old_icon_state = P.icon_state
-			F.sealed = 1
-			usr.put_in_hand_or_drop(F)
-		pool(P)
+				user.show_text("You crumple the paper into a ball! Neat.", "blue")
+				F = new /obj/item/paper/folded/ball(user)
+			F.info = src.info
+			F.old_desc = src.desc
+			F.old_icon_state = src.icon_state
+			user.put_in_hand_or_drop(F)
+
+		pool(src)
 
 /obj/item/paper/attack_ai(var/mob/AI as mob)
 	var/mob/living/silicon/ai/user
@@ -176,219 +176,202 @@
 		onclose(usr, "[src.name]")
 	return
 
-/obj/item/paper/Topic(href, href_list)
-	..()
-	if ((usr.stat || usr.restrained()) || (get_dist(src, usr) > 1))
+/obj/item/paper/ui_interact(mob/user, datum/tgui/ui)
+	ui = tgui_process.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "PaperSheet")
+		ui.open()
+
+/obj/item/paper/ui_status(mob/user,/datum/ui_state/state)
+	if(!user.literate)
+		boutput(user, "<span class='alert'>You don't know how to read.</span>")
+		return UI_CLOSE
+	if(istype(src.loc, /obj/item/clipboard))
+		var/mob/living/M = user
+		return M.shared_living_ui_distance(src, viewcheck = FALSE)
+	. = max(..(), UI_DISABLED)
+	if(IN_RANGE(user, src, 8))
+		. = max(., UI_UPDATE)
+
+/obj/item/paper/ui_act(action, params,datum/tgui/ui)
+	. = ..()
+	if(.)
 		return
+	if(src.sealed)
+		boutput(usr, "<span class='alert'>You can't do that while [src] is folded up.</span>")
+		return
+	switch(action)
+		if("stamp")
+			if(!src.stampable)
+				boutput(usr, "<span class='alert'>You can't stamp [src].</span>")
+				return
+			var/stamp_x = text2num(params["x"])
+			var/stamp_y = text2num(params["y"])
+			var/stamp_r = text2num(params["r"])	// rotation in degrees
+			var/obj/item/stamp/stamp = ui.user.equipped()
+			if(length(stamps) < PAPER_MAX_STAMPS)
+				var/list/stamp_info = list(list(stamp.current_state, stamp_x, stamp_y, stamp_r))
+				LAZYLISTADD(stamps, stamp_info)
+				/// This does the overlay stuff
+				var/image/stamp_overlay = image('icons/obj/writing.dmi', "paper_[stamp.icon_state]");
+				var/matrix/stamp_matrix = matrix()
+				stamp_matrix.Scale(1, 1)
+				stamp_matrix.Translate(rand(-2, 2), rand(-3, 2))
+				stamp_overlay.transform = stamp_matrix
 
-	if (href_list["form"])
-		if (istype(usr.equipped(), /obj/item/pen))
-			. = href_list["form"]
-			if (. in form_startpoints)
-				// fill in field (up to field length)
-				var/t = input(usr, "What text do you wish to add?", "[src.name]", null) as null|text
-				if (!t)
-					return
-				if ((!in_range(src, usr) && src.loc != usr && !( istype(src.loc, /obj/item/clipboard) ) && src.loc.loc != usr))
-					return
-				t = copytext(html_encode(t), 1, (form_endpoints[.] - form_startpoints[.]) + 1)
-				t = sign_name(t, usr)
-				src.info = copytext(src.info, 1, form_startpoints[.]) + "" + t + "" + copytext(src.info, form_startpoints[.] + length(t))
-				build_formpoints()
-				usr.examine_verb(src)
+				src.UpdateOverlays(stamp_overlay, "stamps_[length(stamps) % PAPER_MAX_STAMPS_OVERLAYS]")
+				update_static_data(usr,ui)
+				boutput(usr, "<span class='notice'>[ui.user] stamps [src] with \the [stamp.name]!</span>")
+			else
+				boutput(usr, "There is no where else you can stamp!")
+			. = TRUE
 
-		if (istype(usr.equipped(), /obj/item/stamp))
-			var/obj/item/stamp/S = usr.equipped()
-			. = href_list["form"]
-			if (S && (. in form_startpoints))
-				switch(input(usr, "Stamp \the [src] with [S.name]?", "[src.name]", "No") in list("Yes", "No"))
-					if ("No")
-						return
-					if ("Yes")
-						var/T = S.get_stamp_text()
-						if (!T)
-							return
-						if ((!in_range(src, usr) && src.loc != usr && !(istype(src.loc, /obj/item/clipboard)) && src.loc.loc != usr))
-							return
-						// replace whole form field with stamp
-						src.info = copytext(src.info, 1, form_startpoints[.]) + "" + T + "" + copytext(src.info, form_endpoints[.])
-						src.icon_state = "paper_stamped"
-						build_formpoints()
-						usr.examine_verb(src)
+		if("save")
+			if (src.icon_state == "paper_blank" && params["text"])
+				src.icon_state = "paper"
+			var/in_paper = params["text"]
+			var/paper_len = length(in_paper)
 
-	src.add_fingerprint(usr)
+			field_counter = params["fieldCounter"] ? text2num(params["fieldCounter"]) : field_counter
 
-/obj/item/paper/attackby(obj/item/P as obj, mob/user as mob)
+			if(paper_len > PAPER_MAX_LENGTH)
+				// Side note, the only way we should get here is if
+				// the javascript was modified, somehow, outside of
+				// byond.  but right now we are logging it as
+				// the generated html might get beyond this limit
+				logTheThing("PAPER: [key_name(ui.user)] writing to paper [name], and overwrote it by [paper_len-PAPER_MAX_LENGTH]")
+			if(paper_len == 0)
+				boutput(ui.user, pick("Writing block strikes again!", "You forgot to write anthing!"))
+			else
+				logTheThing("PAPER: [key_name(ui.user)] writing to paper [name]")
+				if(info != in_paper)
+					boutput(ui.user, "You write on \the [src]!");
+					info = in_paper
+					update_static_data(usr,ui)
+			. = TRUE
 
-	if (istype(P, /obj/item/pen))
-		if(!user.literate)
-			boutput(user, "<span class='alert'>You don't know how to write.</span>")
-			return ..()
+/obj/item/paper/ui_static_data(mob/user)
+	. = list(
+		"name" = src.name,
+		"sizeX" = src.sizex,
+		"sizeY" = src.sizey,
+		"text" = src.info,
+		"max_length" = PAPER_MAX_LENGTH,
+		"paperColor" = src.color || "white",	// color might not be set
+		"stamps" = src.stamps,
+		"stampable" = src.stampable,
+		"sealed" = src.sealed,
+	)
 
-		if (isghostdrone(user))
-			return ..()
+/obj/item/paper/ui_data(mob/user)
+	. = list(
+		"editUsr" = "[user]",
+		"fieldCounter" = field_counter,
+		"formFields" = form_fields,
+	)
 
-		if (src.sealed)
+	var/obj/O = user.equipped()
+	var/time_type = istype(O, /obj/item/stamp/clown) ? "HONK O'CLOCK" : "SHIFT TIME"
+	var/T = ""
+	T = time_type + ": [time2text(ticker.round_elapsed_ticks, "hh:mm:ss")]"
+
+	// TODO: change this awful array name & stampAssetType
+	var/stamp_assets = list(
+		"stamp-sprite-clown" = "[resource("images/tgui/stamp_icons/stamp-clown.png")]",
+		"stamp-sprite-deny" = "[resource("images/tgui/stamp_icons/stamp-deny.png")]",
+		"stamp-sprite-ok" = "[resource("images/tgui/stamp_icons/stamp-ok.png")]",
+		"stamp-sprite-hop" = "[resource("images/tgui/stamp_icons/stamp-hop.png")]",
+		"stamp-sprite-md" = "[resource("images/tgui/stamp_icons/stamp-md.png")]",
+		"stamp-sprite-ce" = "[resource("images/tgui/stamp_icons/stamp-ce.png")]",
+		"stamp-sprite-hos" = "[resource("images/tgui/stamp_icons/stamp-hos.png")]",
+		"stamp-sprite-rd" = "[resource("images/tgui/stamp_icons/stamp-rd.png")]",
+		"stamp-sprite-cap" = "[resource("images/tgui/stamp_icons/stamp-cap.png")]",
+		"stamp-sprite-qm" = "[resource("images/tgui/stamp_icons/stamp-qm.png")]",
+		"stamp-sprite-law" = "[resource("images/tgui/stamp_icons/stamp-law.png")]",
+		"stamp-sprite-chap" = "[resource("images/tgui/stamp_icons/stamp-chap.png")]",
+		"stamp-sprite-mime" = "[resource("images/tgui/stamp_icons/stamp-mime.png")]",
+		"stamp-sprite-centcom" = "[resource("images/tgui/stamp_icons/stamp-centcom.png")]",
+		"stamp-sprite-syndicate" = "[resource("images/tgui/stamp_icons/stamp-syndicate.png")]",
+		"stamp-sprite-void" = "[resource("images/tgui/stamp_icons/stamp-void.png")]",
+		"stamp-text-time" =  T,
+		"stamp-text-name" = user.name
+	)
+
+	if(!istype(O, /obj/item/pen))
+		if(istype(src.loc, /obj/item/clipboard))
+			var/obj/item/clipboard/C = src.loc
+			if(istype(C.pen, /obj/item/pen))
+				O = C.pen
+	if(istype(O, /obj/item/pen))
+		var/obj/item/pen/PEN = O
+		. += list(
+			"penFont" = PEN.font,
+			"penColor" = PEN.color,
+			"editMode" = PAPER_MODE_WRITING,
+			"isCrayon" = FALSE,
+			"stampClass" = "FAKE",
+		)
+	else if(istype(O, /obj/item/stamp))
+		var/obj/item/stamp/stamp = O
+		stamp.current_state = stamp_assets[stamp.current_mode]
+		. += list(
+			"stampClass" = stamp_assets[stamp.current_mode],
+			"editMode" = PAPER_MODE_STAMPING,
+			"penFont" = "FAKE",
+			"penColor" = "FAKE",
+			"isCrayon" = FALSE,
+		)
+	else
+		. += list(
+			"editMode" = PAPER_MODE_READING,
+			"penFont" = "FAKE",
+			"penColor" = "FAKE",
+			"isCrayon" = FALSE,
+			"stampClass" = "FAKE",
+		)
+
+/obj/item/paper/attackby(obj/item/P, mob/living/user, params)
+	if(istype(P, /obj/item/pen) || istype(P, /obj/item/pen/crayon))
+		if(src.sealed)
 			boutput(user, "<span class='alert'>You can't write on [src].</span>")
 			return
-
-		var/custom_font = "Georgia"
-		var/custom_color = "black"
-		var/custom_size = 16
-
-		var/obj/item/pen/pen = P
-		if (pen.font)
-			custom_font = pen.font
-		if (pen.font_color)
-			custom_color = pen.font_color
-
-		if (pen.uses_handwriting)
-			custom_font = "Dancing Script"
-			if (user && user.mind && user.mind.handwriting)
-				custom_font = user.mind.handwriting
-			if (islist(src.fonts) && !src.fonts[custom_font])
-				src.fonts[custom_font] = 1
-			custom_font += ", cursive"
-			custom_size += rand(0,4)
-
-		else if (pen.webfont && islist(src.fonts) && !src.fonts[pen.webfont])
-			src.fonts[pen.webfont] = 1
-
-		var/t = input(user, "What text do you wish to add?", "[src.name]", null) as null|message
-		if (!t)
+		if(length(info) >= PAPER_MAX_LENGTH) // Sheet must have less than 1000 charaters
+			boutput(user, "<span class='warning'>This sheet of paper is full!</span>")
 			return
-		if ((!in_range(src, usr) && src.loc != user && !( istype(src.loc, /obj/item/clipboard) ) && src.loc.loc != user && user.equipped() != P))
+		ui_interact(user)
+		return
+	else if(istype(P, /obj/item/stamp))
+		if(src.sealed)
+			boutput(user, "<span class='alert'>You can't stamp [src].</span>")
 			return
-		//t = copytext(sanitize(t),1,MAX_MESSAGE_LEN)
-
-		t = copytext(html_encode(t), 1, 2*MAX_MESSAGE_LEN)
-		t = replacetext(t, "\n", "<BR>")
-		t = replacetext(t, "\[b\]", "<B>")
-		t = replacetext(t, "\[/b\]", "</B>")
-		t = replacetext(t, "\[i\]", "<I>")
-		t = replacetext(t, "\[/i\]", "</I>")
-		t = replacetext(t, "\[u\]", "<U>")
-		t = replacetext(t, "\[/u\]", "</U>")
-		t = replacetext(t, "\[hr\]", "<HR>")
-		t = replacetext(t, "\[/hr\]", "</HR>")
-		t = replacetext(t, "\[sup\]", "<SUP>")
-		t = replacetext(t, "\[/sup\]", "</SUP>")
-		t = replacetext(t, "\[h1\]", "<H1>")
-		t = replacetext(t, "\[/h1\]", "</H1>")
-		t = replacetext(t, "\[h2\]", "<H2>")
-		t = replacetext(t, "\[/h2\]", "</H2>")
-		t = replacetext(t, "\[h3\]", "<H3>")
-		t = replacetext(t, "\[/h3\]", "</H3>")
-		t = replacetext(t, "\[h4\]", "<H4>")
-		t = replacetext(t, "\[/h4\]", "</H4>")
-		t = replacetext(t, "\[li\]", "<LI>")
-		t = replacetext(t, "\[/li\]", "</LI>")
-		t = replacetext(t, "\[ul\]", "<UL>")
-		t = replacetext(t, "\[/ul\]", "</UL>")
-		t = replacetext(t, "\[bq\]", "<BLOCKQUOTE>")
-		t = replacetext(t, "\[/bq\]", "</BLOCKQUOTE>")
-
-		logTheThing("say", user, null, "writes on a piece of paper: [t]")
-
-		t = sign_name(t, user)
-		src.info += "<span style='font-family: [custom_font]; color: [custom_color]; font-size: [custom_size]px'>[t]</span>"
-
-		//src.info += "<font face=[custom_font] color=[custom_color] size='3'> [t] </font>" // shit's hard to read at size 2 goddamn
-		// bad font arguments don't seem to do much
-
-		build_formpoints()
-
-		if (src.icon_state == "paper_blank" && src.info)
-			src.icon_state = "paper"
+		boutput(user, "<span class='notice'>You ready your stamp over the paper! </span>")
+		ui_interact(user)
+		return // Normaly you just stamp, you don't need to read the thing
+	else if (issnippingtool(P))
+		boutput(user, "<span class='notice'>You cut the paper into a mask.</span>")
+		playsound(src.loc, "sound/items/Scissor.ogg", 30, 1)
+		var/obj/item/paper_mask/M = new /obj/item/paper_mask(get_turf(src.loc))
+		user.put_in_hand_or_drop(M)
+		user.u_equip(src)
+		pool(src)
 	else
-		if (istype(P, /obj/item/stamp) && src.stampable)
-			if ((!in_range(src, usr) && src.loc != user && !(istype(src.loc, /obj/item/clipboard)) && src.loc.loc != user && user.equipped() != P))
-				return
-			var/obj/item/stamp/S = P
-			src.info += "<br>" + S.get_stamp_text() + "<br>"
-			src.icon_state = "paper_stamped"
-			boutput(user, "<span class='notice'>You stamp the paper.</span>")
+		// cut paper?  the sky is the limit!
+		ui_interact(user)	// The other ui will be created with just read mode outside of this
 
-		else if (issnippingtool(P))
-			boutput(user, "<span class='notice'>You cut the paper into a mask.</span>")
-			playsound(src.loc, "sound/items/Scissor.ogg", 30, 1)
-			var/obj/item/paper_mask/M = new /obj/item/paper_mask(src.loc)
-			user.put_in_hand_or_drop(M)
-			//M.set_loc(get_turf(src)) // otherwise they seem to just vanish into the aether at times
-			usr.u_equip(src)
-			pool(src)
+	return ..()
 
-		else if (istype(P, /obj/item/paper) && !istype(P, /obj/item/paper/manufacturer_blueprint))
-			var/obj/item/staple_gun/S = user.find_type_in_hand(/obj/item/staple_gun)
-			if (S && S.ammo)
-				var/obj/item/paper_booklet/B = new
-				B.set_loc(src.loc)
-				user.drop_item()
-				B.pages += src
-				B.pages += P
-				src.visible_message("[user] staples [P] under [src].")
-				src.set_loc(B)
-				P.set_loc(B)
-				S.ammo--
-				playsound(user,"sound/impact_sounds/Generic_Snap_1.ogg", 50, 1)
-			else
-				boutput(usr, "<span class='alert'>You need a loaded stapler in hand to staple these papers.</span>")
+/obj/item/paper/proc/build_fields(var/length)
+	var/pixel_width = (14 + (12 * (length-1)))
+	src.field_counter++
+	return {"\[<input type="text" style="font:'12x Georgia';color:'null';min-width:[pixel_width]px;max-width:[pixel_width]px;" id="paperfield_3" maxlength=[length] size=[length] />\]"}
 
-		else
-			..()
-
-	src.add_fingerprint(user)
-	return
-
-/obj/item/paper/proc/sign_name(var/t as text, mob/user as mob)
-	var/writing_style = "Dancing Script"
-	if (findtext(t, "\[sign\]") || findtext(t, "\[signature\]"))
-		if (user && user.mind && user.mind.handwriting)
-			writing_style = user.mind.handwriting
-		if (islist(src.fonts) && !src.fonts[writing_style])
-			src.fonts[writing_style] = 1
-	t = replacetext(t, "\[sign\]", "<span style='font-family: [writing_style], cursive;'>[user.real_name]</span>")
-	t = replacetext(t, "\[signature\]", "<span style='font-family: [writing_style], cursive;'>[user.real_name]</span>")
-	return t
-
-/obj/item/paper/proc/build_formpoints()
-	var/formStart = 1
-	var/formEnd = 0
-
-	if (form_startpoints)
-		form_startpoints.len = 0
-	else
-		form_startpoints = list()
-
-	if (form_endpoints)
-		form_endpoints.len = 0
-	else
-		form_endpoints = list()
-
-	. = 0
-	while (formStart)
-		formStart = findtext(src.info, "__", formStart)
-		if (formStart)
-			formEnd = formStart + 1
-			while (copytext(src.info, formEnd, formEnd+1) == "_")
-				formEnd++
-
-			if (!form_startpoints)
-				form_startpoints = list()
-
-			if (!form_endpoints)
-				form_endpoints = list()
-
-			form_startpoints["[.]"] = formStart
-			form_endpoints["[.++]"] = formEnd
-
-			formStart = formEnd+1
 
 /obj/item/paper/thermal
 	name = "Thermal Paper"
 	stampable = 0
 	icon_state = "thermal_paper"
 	sealed = 1
+	item_function_flags = SMOKELESS
 
 /obj/item/paper/alchemy/
 	name = "'Chemistry Information'"
@@ -404,10 +387,10 @@
 	Using the H-87 is almost as simple as brain surgery! Simply insert the target humanoid into the scanning chamber and select the scan option to create a new profile!<br>
 	<b>That's all there is to it!</b><br>
 	<i>Notice, cloning system cannot scan inorganic life or small primates.  Scan may fail if subject has suffered extreme brain damage.</i><br>
-	<p>Clone profiles may be viewed through the profiles menu. Scanning implants a complementary HEALTH MONITOR IMPLANT into the subject, which may be viewed from each profile.
+	<p>Clone profiles may be viewed through the profiles menu. Scanning implants a complementary HEALTH MONITOR IMPLANT into the subject, which may be viewed from the cloning console.
 	Profile Deletion has been restricted to \[Station Head\] level access.</p>
 	<h4>Cloning from a profile</h4>
-	Cloning is as simple as pressing the CLONE option at the bottom of the desired profile.<br>
+	Cloning is as simple as pressing the CLONE option to the right of the desired profile.<br>
 	Per your company's EMPLOYEE PRIVACY RIGHTS agreement, the H-87 has been blocked from cloning crewmembers while they are still alive.<br>
 	<br>
 	<p>The provided CLONEPOD SYSTEM will produce the desired clone.  Standard clone maturation times (With SPEEDCLONE technology) are roughly 90 seconds.
@@ -552,6 +535,12 @@ Standard checklist for thermo-electric generator cold-start:
 <b>*Direct combustion of internal coolant may void your engine warranty and result in: fire, explosion, death, and/or property damage.</b><BR>
 <li>In the event of hazardous coolant pressure buildup, use the vent valves in maintenance above the engine core to drain line pressure. If the engine is not functioning properly, check your line pressure.
 <li>Generator efficiency may suffer if the pressure differential between loops becomes too high. This may be rectified by adding more gas pressure to the low side or draining the high side.
+<li>The circulator includes a blower system to help ensure a minimum pressure can be provided to the circulator.  A multitool can be used to override the default setting if additional pressure is required.<BR>
+<b>*Power required is proportional to the pressure differential to overcome. Ensure ample power is provided by SMES system, this is critical when an override is active.</b><BR>
+<li>Circulator efficiency will suffer if the pressure of the outlet exceeds the inlet*. This issue may also be mitigated by cycling gas from outlet near via auxilary ports or draining line pressure depending on loop configuration.<BR>
+<b>*Failure to provide sufficient pressure will inhibit energy production until the problem can be rectified.</b><BR>
+<li>Circulators are equipped with a lubrication system to aid with overall efficiency and longevity. Only lubricants with sufficiently high viscosity should be utilized. System should arrive pre-lubricated with a proprietary synthetic heavy hydrocarbon oil blend from the factory. Should additional lubricant be required or need changing carefully unscrew the maintenance panel to gain access.<BR>
+<b>*Operation without sufficient lubricant may void your engine warranty but is unlikely to cause fire, explosion or death.</b><BR>
 <li>With the power generation rate stable, engage charging of the superconducting magnetic energy storage (SMES) devices in the Power Room. Total charging input rates between all connected SMES cells must not exceed the available generator output.</ol>
 <HR>
 <i>Warning!</i> Improper engine and generator operation may cause exposure to hazardous gasses, extremes of heat and cold, and dangerous electrical voltages.
@@ -559,6 +548,15 @@ Only trained personnel should operate station systems. Follow all procedures car
 <HR>
 
 "}
+	// Provide tracking so training material can be updated by TEG.  This removes reliance on a search criteria that becomes
+	// a limitation on map design.  Performant for that one time...
+	New()
+		..()
+		START_TRACKING
+
+	disposing()
+		STOP_TRACKING
+		. = ..()
 
 /obj/item/paper/zeta_boot_kit
 	name = "Paper-'Instructions'"
@@ -694,6 +692,24 @@ Only trained personnel should operate station systems. Follow all procedures car
 	</ul>
 	"}
 
+/obj/item/paper/neonlining
+	name = "paper - How to properly install official Nanotrasen neon lining"
+	icon_state = "paper"
+	info = {"<center><h2>How to properly install official Nanotrasen neon lining</h2></center>
+	<h3>Product description</h3><hr>
+	Ever wanted to spice up your bar? Build a meditation room? Enhance the station halls in case of an emergency? Then this official Nanotrasen neon lining are what you need. Now with color change modules!<hr>
+	<h3>Modifying the neon lining</h3><hr>
+	<ul style='list-style-type:disc'>
+		<li>1) A wrench can be used to change the shape of the lining. Currently only 6 shapes officially supported.</li>
+		<li>2) To turn an already attached piece of lining back into a coil, carefully use a crowbar to detach it from the it's attachment point.</li>
+		<li>3) Apply a standard multitool to change the pattern of the lining. If upon changing shape the pattern's value is higher than the maximum for that shape, the value gets automatically reset to 0.</li>
+		<li>4) As this version is designed to be more flexible and compact, the lining feeds only on an internal power source. Due to this the only way to turn it off/on is to cut/mend the wires that connect to said power source.</li>
+		<li>5) To adjust the lining's rotation, simply unscrew it from it's attachment point. The lining will automatically snap to the next available rotation and screw itself into a new attachment point.</li>
+		<li>6) Due to safety concerns caused by our previous prototype of the product, the color change modules are only active when the lining is detached and thus in a coil.</li>
+		<li>7) There have been reports that when the lining is in the short line shape, using a multitool to change the pattern sometimes triggers the movement function of it's rotation program. This essentially shifts the lining a bit. We understand that this might be a bit unintuitive, but since this isn't hazardous we have no intentions of fixing it.</li>
+	</ul>
+	"}
+
 /obj/item/paper/manta_polarisnote
 	name = "paper - Note to myself"
 	icon_state = "paper"
@@ -757,27 +773,83 @@ Only trained personnel should operate station systems. Follow all procedures car
 	Remember, only you can prevent deadly pathogens!
 	"}
 
+/obj/item/paper/shipping_precautions
+	name = "Read this and check the cargo!"
+	icon_state = "paper_caution_bloody"
+	desc = "An ordinary notice about shipping procedures...stained with blood?"
+	info = {"<center><h2>Warning</h2></center>
+	<hr>
+	<h3>Discount Dan contracts you - a healthy and breathing human being to deliver this cargo safely to the nearest Discount Dans fabrication center!</h3>
+	<br>
+	<br>
+	<br>
+	So read carefully and heed the precautions! Keep the fridges closed! All of them! Do not look inside...and if you happen to hear any clawing, grumbling, or cries for help...<b>ignore them</b>!
+	<br>
+	<br>
+	The freight is extremely valuable! Any light or human flesh exposed to said cargo will cost your pal Discount Dan an arm, a leg and a space-tastic lawsuit!
+	<br>
+	<br>
+	Remain cautious - because it's what's necessary!
+	"}
+
+/obj/item/paper/dreamy_rhyme
+	name = "Space-Rhymes"
+	icon_state = "thermal_paper"
+	desc = "Scibbled rhymes...and thoughts."
+	info = {" Space duck, I do not give a...I do not give anything about luck, shrug, puck, quack
+	<br>
+	<br>
+	<br>
+	<b>Yeah! Yo! Here the quick rhymer goes, clowns convulse!
+	<br>
+	<br>
+	Soon enough your mimes go fold, like a piece of paper!
+	<br>
+	<br>
+	This Emcee did not just meet ya'his thoughts created a - whole universe!
+	<br>
+	<br>
+	Spitting lines like liquid fire as he converse!
+	<br>
+	<br>
+	Transfer ideas from word to mind; not just half-assed like some damn pantomime!
+	<br>
+	<br>
+	Never behind the crime, A-grades as janitor...oh so fine!</b>
+	"}
+
+/obj/item/paper/mice_problem
+	name = "Fucking space-rats!"
+	icon_state = "paper"
+	desc = "A scribbled note - created with burning rage."
+	info = {"<center><h3>MICE?!</h3></center>
+	<hr>
+	<i>Ey! Yo! What the hell? You think you can take a day off - relax - and then these hungry n'angry food pirates come along! Damn Thompson McGreasy; unable to close his trash-pod he arrived in. Now we gotta deal with some mutant mice problem!</i>
+	"}
+
 /obj/item/paper/fortune
 	name = "fortune"
 	info = {"<center>YOUR FORTUNE</center>"}
 	desc = "A slip of paper with a life-changing prophecy printed on it."
 	icon_state = "fortune"
 
-	var/list/action = list("Beware of", "Keep an eye on", "Seek out", "Be wary of", "Make friends with", "Aid", "Talk to", "Avoid")
-	var/list/who = list("Zero-G Chem-Co Commander", "Shambling Abomination", "Merlin", "GeneTek Operative Javelin (as Destiny Calls)", "Remy", "Dr. Acula", "Morty")
-	var/list/thing = list("are in possession of highly dangerous contraband.", "murdered a bee.", "kicked George.", "are a Syndicate operative.", "are a murderer.", "have disguised themselves from their true form.",
+	var/static/list/action = list("Beware of", "Keep an eye on", "Seek out", "Be wary of", "Make friends with", "Aid", "Talk to", "Avoid")
+	var/static/list/who = list("Zero-G Chem-Co Commander", "Shambling Abomination", "Merlin", "GeneTek Operative Javelin (as Destiny Calls)", "Remy", "Dr. Acula", "Morty")
+	var/static/list/thing = list("are in possession of highly dangerous contraband.", "murdered a bee.", "kicked George.", "are a Syndicate operative.", "are a murderer.", "have disguised themselves from their true form.",
 	"are not who they claim to be.", "know Shitty Bill's secret.", "are lonely.", "hugged a space bear and survived to tell the tale.", "know the legendary double-fry technique.", "have the power to reanimate the dead.",
 	"consort with wizards.", "sell really awesome drugs.", "have all-access.", "know the king.", "make amazing pizza.", "have a toolbox and are not afraid to use it.")
-	var/list/general = list("NanoTrasen locked me to this desk and is forcing me to make fortunes for these cookies please help!", "Help I'm trapped in this cookie!", "Buy Discount Dan's today!")
-	var/list/sol = list("He plunged into the sea.", "Follow the NSS Polaris.", "Across the Channel.", "It's in the Void.")
+	var/static/list/general = list("NanoTrasen locked me to this desk and is forcing me to make fortunes for these cookies please help!", "Help I'm trapped in this cookie!", "Buy Discount Dan's today!")
+	var/static/list/sol = list("He plunged into the sea.", "Follow the NSS Polaris.", "Across the Channel.", "It's in the Void.")
+	var/static/initialized = FALSE
 
 	New()
-
 		var/randme = rand(1,10)
 		var/fortune = "Blah."
 
-		for(var/datum/data/record/t in data_core.general)
-			who += "[t.fields["name"]]"
+		if(!initialized)
+			initialized = TRUE
+			for(var/datum/data/record/t in data_core.general)
+				who += "[t.fields["name"]]"
 
 		switch(randme)
 			if(1)
@@ -790,6 +862,7 @@ Only trained personnel should operate station systems. Follow all procedures car
 		info = {"<font face='System' size='3'><center>YOUR FORTUNE</center><br><br>
 		Discount Dan's is the proud sponsor of your magical fortune. Whether good or bad, delightful or alarming, know it to be true.<br><br>
 		[fortune]</font>"}
+		..()
 
 
 /obj/item/paper/thermal/fortune
@@ -989,7 +1062,7 @@ Only trained personnel should operate station systems. Follow all procedures car
 	return
 
 /obj/item/paper_bin/MouseDrop(mob/user as mob)
-	if (user == usr && !usr.restrained() && !usr.stat && (usr.contents.Find(src) || in_range(src, usr)))
+	if (user == usr && !user.restrained() && !user.stat && (user.contents.Find(src) || in_interact_range(src, user)))
 		if (!user.put_in_hand(src))
 			return ..()
 
@@ -1023,27 +1096,24 @@ Only trained personnel should operate station systems. Follow all procedures car
 		n++
 	return "There's [(n > 0) ? n : "no" ] paper[s_es(n)] in \the [src]."
 
-/*
-/obj/item/paper_bin/attackby(obj/item/W as obj, mob/user as mob)
-	if (istype(W, /obj/item/paper))
-		user.drop_item()
-		W.set_loc(src)
-	else
-		if (isweldingtool(W))
-			if ((T:try_weld(user,0,1,0,0) && T:weldfuel > 0))
-				viewers(user, null) << text("[] burns the paper with the welding tool!", user)
-				SPAWN_DBG( 0 )
-					src.burn(1800000.0)
-					return
-		else
-			if (istype(W, /obj/item/device/igniter))
-				viewers(user, null) << text("[] burns the paper with the igniter!", user)
-				SPAWN_DBG( 0 )
-					src.burn(1800000.0)
-					return
-	src.update()
-	return
-*/ //TODO: FIX
+/obj/item/paper_bin/robot
+	name = "semi-automatic paper bin"
+	var/next_generate = 0
+
+	attack_self(mob/user as mob)
+		if (src.amount < 1 && isnull(locate(/obj/item/paper) in src))
+			if (src.next_generate < ticker.round_elapsed_ticks)
+				boutput(user, "The [src] generates another sheet of paper using the power of [pick("technology","science","computers","nanomachines",5;"magic",5;"extremely tiny clowns")].")
+				src.amount++
+				src.update()
+				src.next_generate = ticker.round_elapsed_ticks + 5 SECONDS
+				return
+
+			boutput(user, "Nothing left in the [src]. Maybe you should check again later.")
+			return
+
+		boutput(user, "You remove a piece of paper from the [src].")
+		return attack_hand(user)
 
 /obj/item/stamp
 	name = "rubber stamp"
@@ -1060,10 +1130,18 @@ Only trained personnel should operate station systems. Follow all procedures car
 	stamina_damage = 0
 	stamina_cost = 0
 	rand_pos = 1
+	var/special_mode = null
 	var/is_reassignable = 1
 	var/assignment = null
-	var/available_modes = list("Approved", "Rejected", "Void", "X", "Current Time");
-	var/current_mode = "Approved"
+	var/available_modes = list("Granted", "Denied", "Void", "Current Time", "Your Name");
+	var/current_mode = "stamp-sprite-ok"
+	var/current_state = null
+
+/obj/item/stamp/New()
+	..()
+	if(special_mode)
+		available_modes += special_mode
+		current_mode = (STAMP_IDS[special_mode])
 
 /obj/item/stamp/proc/set_assignment(A)
 	if (istext(A))
@@ -1074,34 +1152,6 @@ Only trained personnel should operate station systems. Follow all procedures car
 		src.assignment = null
 		src.desc = "A rubber stamp for stamping important documents."
 		return
-
-/obj/item/stamp/proc/get_stamp_text()
-	var/T = null;
-	switch (src.current_mode)
-		if ("Approved")
-			if (src.assignment)
-				T = "APPROVED ([src.assignment])"
-			else
-				T = "APPROVED"
-		if ("Rejected")
-			if (src.assignment)
-				T = "REJECTED ([src.assignment])"
-			else
-				T = "REJECTED"
-		if ("Void")
-			T = "VOID"
-		if ("X")
-			T = "X"
-		if ("Current Time")
-			if (ticker)
-				var/S = round(ticker.round_elapsed_ticks / 10)
-				T = "SHIFT TIME: [round(S / 3600)]:[add_zero(round(S % 3600 / 60), 2)]:[add_zero(num2text(S % 60), 2)]"
-			else
-				T = "SHIFT TIME"
-		else
-			T = src.current_mode
-	return "<span style='font-family: Georgia; font-style: normal; font-weight: normal; font-size: 16px; color: red;'><b>\[</b>[T]<b>\]</b></span>"
-
 /obj/item/stamp/attackby(obj/item/C as obj, mob/user as mob)// assignment with ID
 	if (istype(C, /obj/item/card/id))
 		var/obj/item/card/id/ID = C
@@ -1122,7 +1172,7 @@ Only trained personnel should operate station systems. Follow all procedures car
 	var/NM = input(usr, "Configure \the [src]?", "[src.name]", src.current_mode) in src.available_modes
 	if (!NM || !length(NM) || !(NM in src.available_modes))
 		return
-	src.current_mode = NM
+	src.current_mode = (STAMP_IDS[NM])
 	boutput(usr, "<span class='notice'>You set \the [src] to '[NM]'.</span>")
 	return
 
@@ -1153,74 +1203,96 @@ Only trained personnel should operate station systems. Follow all procedures car
 
 /obj/item/stamp // static staff stamps
 	cap
-		name = "captain's rubber stamp"
+		name = "\improper captain's rubber stamp"
 		desc = "The Captain's rubber stamp for stamping important documents."
 		icon_state = "stamp-cap"
+		special_mode = "Captain"
 		is_reassignable = 0
-		assignment = "Captain"
+		assignment = "stamp-cap"
 	hop
-		name = "head of personnel's rubber stamp"
+		name = "\improper head of personnel's rubber stamp"
 		desc = "The Head of Personnel's rubber stamp for stamping important documents."
 		icon_state = "stamp-hop"
+		special_mode = "Head of Personnel"
 		is_reassignable = 0
-		assignment = "Head of Personnel"
+		assignment = "stamp-hop"
 	hos
-		name = "head of security's rubber stamp"
+		name = "\improper head of security's rubber stamp"
 		desc = "The Head of Security's rubber stamp for stamping important documents."
 		icon_state = "stamp-hos"
+		special_mode = "Head of Security"
 		is_reassignable = 0
-		assignment = "Head of Security"
+		assignment = "stamp-hos"
 	ce
-		name = "chief engineer's rubber stamp"
+		name = "\improper chief engineer's rubber stamp"
 		desc = "The Chief Engineer's rubber stamp for stamping important documents."
 		icon_state = "stamp-ce"
+		special_mode = "Chief Engineer"
 		is_reassignable = 0
-		assignment = "Chief Engineer"
+		assignment = "stamp-ce"
 	md
-		name = "medical director's rubber stamp"
+		name = "\improper medical director's rubber stamp"
 		desc = "The Medical Director's rubber stamp for stamping important documents."
 		icon_state = "stamp-md"
+		special_mode = "Medical Director"
 		is_reassignable = 0
-		assignment = "Medical Director"
+		assignment = "stamp-md"
 	rd
-		name = "research director's rubber stamp"
+		name = "\improper research director's rubber stamp"
 		desc = "The Research Director's rubber stamp for stamping important documents."
 		icon_state = "stamp-rd"
+		special_mode = "Research Director"
 		is_reassignable = 0
-		assignment = "Research Director"
+		assignment = "stamp-rd"
 	clown
-		name = "clown's rubber stamp"
+		name = "\improper clown's rubber stamp"
 		desc = "The Clown's rubber stamp for stamping whatever important documents they've gotten their hands on."
 		icon_state = "stamp-honk"
+		special_mode = "Clown"
 		is_reassignable = 0
-		assignment = "Clown"
-		get_stamp_text()
-			var/T = null;
-			switch (src.current_mode)
-				if ("Approved")
-					T = " :o) "
-				if ("Rejected")
-					T = html_encode(" >:o( ")
-				if ("Void")
-					T = "HONK"
-				if ("X")
-					T = pick("X", "!", "#", "?")
-				if ("Current Time")
-					if (ticker)
-						var/S = round(ticker.round_elapsed_ticks / 10)
-						T = "HONK O'CLOCK: [round(S / 3600)]:[add_zero(round(S % 3600 / 60), 2)]:[add_zero(num2text(S % 60), 2)]"
-					else
-						T = "HONK O'CLOCK"
-				else
-					T = src.current_mode
-			return "<span style='font-family: Georgia; font-style: normal; font-weight: normal; font-size: 24px; color: red;'><b>\[</b><span style='font-family: Comic Sans MS;'>[T]</span><b>\]</b></span>"
-
-/* who did this
-/obj/item/stamp/New()
-
-	..()
-	return
-WHO DID THIS */
+		assignment = "stamp-honk"
+	centcom
+		name = "\improper centcom rubber stamp"
+		desc = "Some bureaucrat from Centcom probably lost this."
+		icon_state = "stamp-centcom"
+		special_mode = "Centcom"
+		is_reassignable = 0
+		assignment = "stamp-centcom"
+	mime
+		name = "\improper mime's rubber stamp"
+		desc = "The Mime's rubber stamp for stamping whatever important documents they've gotten their hands on."
+		icon_state = "stamp-mime"
+		special_mode = "Mime"
+		is_reassignable = 0
+		assignment = "stamp-mime"
+	chap
+		name = "\improper chaplain's rubber stamp"
+		desc = "The Chaplain's rubber stamp for stamping whatever important documents they've gotten their hands on."
+		icon_state = "stamp-chap"
+		special_mode = "Chaplain"
+		is_reassignable = 0
+		assignment = "stamp-chap"
+	qm
+		name = "\improper quartermaster's rubber stamp"
+		desc = "The Quartermaster's rubber stamp for stamping whatever important documents they've gotten their hands on."
+		icon_state = "stamp-qm"
+		special_mode = "Quartermaster"
+		is_reassignable = 0
+		assignment = "stamp-qm"
+	syndicate
+		name = "\improper syndicate rubber stamp"
+		desc = "Syndicate rubber stamp for stamping whatever important documents they've gotten their hands on."
+		icon_state = "stamp-syndicate"
+		special_mode = "Syndicate"
+		is_reassignable = 0
+		assignment = "stamp-syndicate"
+	law
+		name = "\improper security's rubber stamp"
+		desc = "Security's rubber stamp for stamping whatever important documents they've gotten their hands on."
+		icon_state = "stamp-syndicate"
+		special_mode = "Security"
+		is_reassignable = 0
+		assignment = "stamp-law"
 
 /obj/item/paper/folded
 	name = "folded paper"
@@ -1259,7 +1331,7 @@ WHO DID THIS */
 	throw_speed = 1
 	throw_spin = 0
 
-/obj/item/paper/folded/plane/hit_check()
+/obj/item/paper/folded/plane/hit_check(datum/thrown_thing/thr)
 	if(src.throwing)
 		src.throw_unlimited = 1
 
@@ -1273,8 +1345,7 @@ WHO DID THIS */
 		M.visible_message("<span class='notice'>[M] stuffs [src] into [his_or_her(M)] mouth and and eats it.</span>")
 		eat_twitch(M)
 		var/obj/item/paper/P = src
-		src = null
-		usr.u_equip(P)
+		user.u_equip(P)
 		pool(P)
 	else
 		..()
@@ -1381,12 +1452,43 @@ exposed to overconfident outbursts on the part of individuals unqualifed to embo
 	name = "Mushroom Station postcard"
 	desc = "Just four pals hangin' out havin' a good time. Looks like they're welded into the bathroom? Why?!"
 	icon_state = "postcard-mushroom"
-
-	//sizex = 1066
-	//sizey = 735
+	sizex = 1066
+	sizey = 735
 
 	New()
 		..()
 		pixel_x = rand(-8, 8)
 		pixel_y = rand(-8, 8)
 		info = "<html><body style='margin:2px'><img src='[resource("images/arts/mushroom_station.png")]'></body></html>"
+
+/obj/item/paper/botany_guide
+	name = "Botany Field Guide"
+	desc = "Some kinda informative poster. Or is it a pamphlet? Either way, it wants to teach you things. About plants."
+	icon_state = "botany_guide"
+	sizex = 970
+	sizey = 690
+
+	New()
+		..()
+		pixel_x = rand(-8, 8)
+		pixel_y = rand(-8, 8)
+		info = "<html><body style='margin:2px'><img src='[resource("images/pocket_guides/botanyguide.png")]'></body></html>"
+
+/obj/item/paper/ranch_guide
+	name = "Ranch Field Guide"
+	desc = "Some kinda informative poster. Or is it a pamphlet? Either way, it wants to teach you things. About chickens."
+	icon_state = "ranch_guide"
+	sizex = 970
+	sizey = 690
+
+	New()
+		..()
+		pixel_x = rand(-8, 8)
+		pixel_y = rand(-8, 8)
+		info = "<html><body><style>img {width: 100%; height: auto;}></style><img src='[resource("images/pocket_guides/ranchguide.png")]'></body></html>"
+
+/obj/item/paper/iou
+	name = "IOU"
+	desc = "Somebody took whatever was in here."
+	icon_state = "postit-writing"
+	info = {"<h2>IOU</h2>"}

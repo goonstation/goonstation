@@ -50,7 +50,7 @@
 				var/turf/T = get_turf(loc)
 				if (!T)
 					logTheThing("admin", usr, null, "additionally, no turf could be found at creation loc [loc]")
-					var/ASLoc = pick(latejoin)
+					var/ASLoc = pick_landmark(LANDMARK_LATEJOIN)
 					if (ASLoc)
 						src.set_loc(ASLoc)
 					else
@@ -73,7 +73,7 @@
 		src.icon_state = possessed.icon_state
 		src.pixel_x = possessed.pixel_x
 		src.pixel_y = possessed.pixel_y
-		src.dir = possessed.dir
+		src.set_dir(possessed.dir)
 		src.color = possessed.color
 		src.overlays = possessed.overlays
 		src.item = possessed
@@ -86,6 +86,7 @@
 			src.owner.set_loc(src)
 			if (!src.owner.mind)
 				src.owner.mind = new /datum/mind(  )
+				src.owner.mind.ckey = ckey
 				src.owner.mind.key = src.owner.key
 				src.owner.mind.current = src.owner
 				ticker.minds += src.owner.mind
@@ -178,7 +179,7 @@
 			user.visible_message("<span class='alert'>[user] punches [src]!</span>")
 			src.TakeDamage(null, rand(4, 7), 0)
 
-	TakeDamage(zone, brute, burn)
+	TakeDamage(zone, brute, burn, tox, damage_type, disallow_limb_loss)
 		health -= burn
 		health -= brute
 		health = min(max_health, health)
@@ -225,7 +226,7 @@
 				. = ..()
 			if (src.item.loc != src)
 				if (isturf(src.item.loc))
-					src.item.loc = src
+					src.item.set_loc(src)
 				else
 					src.death(0)
 
@@ -233,7 +234,7 @@
 		src.name = "[name_prefix][src.item.name]"
 		src.real_name = src.name
 		src.desc = "[src.item.desc]"
-		src.item.dir = src.dir
+		src.item.set_dir(src.dir)
 		src.icon = src.item.icon
 		src.icon_state = src.item.icon_state
 		//src.pixel_x = src.item.pixel_x
@@ -257,7 +258,7 @@
 				var/mob/dead/observer/O = new/mob/dead/observer()
 				O.set_loc(get_turf(src))
 				if (isrestrictedz(src.z) && !restricted_z_allowed(src, get_turf(src)) && !(src.client && src.client.holder))
-					var/OS = observer_start.len ? pick(observer_start) : locate(1, 1, 1)
+					var/OS = pick_landmark(LANDMARK_OBSERVER, locate(1, 1, 1))
 					if (OS)
 						O.set_loc(OS)
 					else
@@ -269,10 +270,10 @@
 				if (src.mind)
 					src.mind.transfer_to(O)
 
-		playsound(src.loc, "sound/effects/suck.ogg", 40, 1, -1, 0.6)
+		playsound(src.loc, "sound/voice/wraith/wraithleaveobject.ogg", 40, 1, -1, 0.6)
 
 		if (src.item)
-			src.item.dir = src.dir
+			src.item.set_dir(src.dir)
 			if (src.item.loc == src)
 				src.item.set_loc(get_turf(src))
 			if (gibbed)
@@ -295,3 +296,9 @@
 			return "<span class='alert'><B>[src] attacks [T] in the [d_zone]!</B></span>"
 		else
 			return "<span class='alert'><B>[src] attacks [T]!</B></span>"
+
+	return_air()
+		return loc?.return_air()
+
+	assume_air(datum/air_group/giver)
+		return loc?.assume_air(giver)

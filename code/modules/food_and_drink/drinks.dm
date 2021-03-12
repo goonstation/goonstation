@@ -80,7 +80,7 @@
 	initial_reagents = list("pizza" = 40, "salt" = 10)
 
 /obj/item/reagent_containers/food/drinks/bottle/grones
-	name = "Grones Soda"
+	name = "Grones Soda "
 	desc = "They make all kinds of flavors these days, good lord."
 	label = "grones"
 	heal_amt = 1
@@ -89,48 +89,42 @@
 	initial_reagents = list("cola"=20)
 
 	New()
-		switch(rand(1,14))
+		switch(rand(1,12))
 			if (1)
-				src.desc = "Wicked Sick Pumpkin Prolapse flavor."
-				src.initial_reagents["diarrhea"] = 10
-			if (2)
-				src.desc = "Ballin' Banana Testicular Torsion flavor."
+				src.name += "Ballin' Banana Testicular Torsion flavor"
 				src.initial_reagents["urine"] = 10
-			if (3)
-				src.desc = "Radical Roadkill Rampage flavor."
+			if (2)
+				src.name += "Radical Roadkill Rampage flavor"
 				src.initial_reagents["bloodc"] = 10 // heh
-			if (4)
-				src.desc = "Sweet Cherry Brain Haemorrhage flavor."
-				src.initial_reagents["impedrezine"] = 10
-			if (5)
-				src.desc = "Awesome Asbestos Candy Apple flavor."
+			if (3)
+				src.name += "Awesome Asbestos Candy Apple flavor"
 				src.initial_reagents["lithium"] = 10
-			if (6)
-				src.desc = "Salt-Free Senile Dementia flavor."
+			if (4)
+				src.name += "Salt-Free Senile Dementia flavor"
 				src.initial_reagents["mercury"] = 10
-			if (7)
-				src.desc = "High Fructose Traumatic Stress Disorder flavor."
+			if (5)
+				src.name += "High Fructose Traumatic Stress Disorder flavor"
 				src.initial_reagents["atropine"] = 10
-			if (8)
-				src.desc = "Tangy Dismembered Orphan Tears flavor."
+			if (6)
+				src.name += "Tangy Dismembered Orphan Tears flavor"
 				src.initial_reagents["epinephrine"] = 10
-			if (9)
-				src.desc = "Chunky Infected Laceration Salsa flavor."
+			if (7)
+				src.name += "Chunky Infected Laceration Salsa flavor"
 				src.initial_reagents["charcoal"] = 10
-			if (10)
-				src.desc = "Manic Depressive Multivitamin Dewberry flavor."
+			if (8)
+				src.name += "Manic Depressive Multivitamin Dewberry flavor"
 				src.initial_reagents["ephedrine"] = 10
-			if (11)
-				src.desc = "Anti-Bacterial Air Freshener flavor."
+			if (9)
+				src.name += "Anti-Bacterial Air Freshener flavor"
 				src.initial_reagents["spaceacillin"] = 10
-			if (12)
-				src.desc = "Old Country Hay Fever flavor."
+			if (10)
+				src.name += "Old Country Hay Fever flavor"
 				src.initial_reagents["antihistamine"] = 10
-			if (13)
-				src.desc = "Minty Restraining Order Pepper Spray flavor."
+			if (11)
+				src.name += "Minty Restraining Order Pepper Spray flavor"
 				src.initial_reagents["capsaicin"] = 10
-			if (14)
-				src.desc = "Cool Keratin Rush flavor."
+			if (12)
+				src.name += "Cool Keratin Rush flavor"
 				src.initial_reagents["hairgrownium"] = 10
 		..()
 
@@ -299,20 +293,12 @@
 
 	New()
 		..()
-		name = "[pick(COLA_prefixes)] [pick(COLA_suffixes)]"
+		name = "[pick_string("chemistry_tools.txt", "COLA_prefixes")] [pick_string("chemistry_tools.txt", "COLA_suffixes")]"
 		var/n = rand(1,26)
 		icon_state = "cola-[n]"
 		reagents.add_reagent("cola, 20")
 		reagents.add_reagent("VHFCS, 10")
-		reagents.add_reagent(pick(COLA_flavors), 5,3)
-
-///////////
-
-/var/list/COLA_prefixes = strings("chemistry_tools.txt", "COLA_prefixes")
-/var/list/COLA_suffixes = strings("chemistry_tools.txt", "COLA_suffixes")
-/var/list/COLA_flavors = strings("chemistry_tools.txt", "COLA_flavors")
-
-///////////
+		reagents.add_reagent(pick_string("chemistry_tools.txt", "COLA_flavors"), 5, 3)
 
 /obj/item/reagent_containers/food/drinks/peach
 	name = "Delightful Dan's Peachy Punch"
@@ -329,13 +315,15 @@
 	heal_amt = 1
 	initial_volume = 50
 	initial_reagents = "milk"
+	var/canbequilty = 1
 
 	New()
 		..()
-		if( prob(10) )
-			name = "Quilty Farms Milk"
-			desc = "For ages 1[pick("0","8")] and under."
-			icon_state = "milk_quilty"
+		if(canbequilty == 1)
+			if( prob(10))
+				name = "Quilty Farms Milk"
+				desc = "For ages 1[pick("0","8")] and under."
+				icon_state = "milk_quilty"
 
 /obj/item/reagent_containers/food/drinks/milk/rancid
 	name = "Rancid Space Milk"
@@ -344,6 +332,24 @@
 	heal_amt = 1
 	initial_volume = 50
 	initial_reagents = list("milk"=25,"toxin"=25)
+
+/obj/item/reagent_containers/food/drinks/milk/clownspider
+	name = "Honkey Gibbersons - Clownspider Milk"
+	desc = "A bottle of really - really colorful milk? The smell is sweet and looking at this envokes the same thrill as wanting to drink paint!"
+	icon_state = "milk"
+	heal_amt = 1
+	initial_volume = 50
+	initial_reagents = list("rainbow fluid" = 7, "milk" = 19)
+	canbequilty = 0
+
+/obj/item/reagent_containers/food/drinks/milk/cluwnespider
+	name = "Honkey Gibbersons - Cluwnespider Milk"
+	desc = "A bottle of ... oh no! Do not look at it! Better never drink this colorful milk?!"
+	icon_state = "milk"
+	heal_amt = 1
+	initial_volume = 50
+	initial_reagents = list("painbow fluid" = 13, "milk" = 20)
+	canbequilty = 0
 
 /obj/item/reagent_containers/food/drinks/milk/soy
 	name = "Creaca's Space Soy Milk"

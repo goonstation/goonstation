@@ -17,6 +17,7 @@
 	stamina_damage = 0
 	stamina_cost = 0
 	stamina_crit_chance = 5
+	inventory_counter_enabled = 1
 
 	proc
 		update_icon()
@@ -38,6 +39,7 @@
 	// 0.38 - detective
 	// 0.41 - derringer
 	// 0.72 - shotgun shell, 12ga
+	// 0.787 - 20mm cannon round
 	// 1.57 - 40mm grenade shell
 	// 1.58 - RPG-7 (Tube is 40mm too, though warheads are usually larger in diameter.)
 
@@ -62,12 +64,15 @@
 
 	// This is needed to avoid duplicating empty magazines (Convair880).
 	var/delete_on_reload = 0
+	var/force_new_current_projectile = 0 //for custom grenade shells
 
 	var/sound_load = 'sound/weapons/gunload_light.ogg'
 
 	New()
+		..()
 		SPAWN_DBG(2 SECONDS)
-			src.update_icon() // So we get dynamic updates right off the bat. Screw static descs.
+			if (!src.disposed)
+				src.update_icon() // So we get dynamic updates right off the bat. Screw static descs.
 		return
 
 	use(var/amt = 0)
@@ -123,7 +128,10 @@
 		else if (A.caliber in K.caliber) // Some guns can have multiple calibers.
 			check = 1
 		else if (K.caliber == null) // Special treatment for zip guns, huh.
-			check = 1
+			if (A.caliber == 1.58)  // Prevent MRPT rocket
+				check = 0
+			else
+				check = 1
 		if (!check)
 			return 0
 			//DEBUG_MESSAGE("Couldn't swap [K]'s ammo ([K.ammo.type]) with [A.type].")
@@ -174,7 +182,7 @@
 			qdel(A) // We don't need you anymore.
 			ammoGun.set_loc(K)
 			K.ammo = ammoGun
-			K.current_projectile = ammoGun.ammo_type
+			K.set_current_projectile(ammoGun.ammo_type)
 			if(K.silenced)
 				K.current_projectile.shot_sound = 'sound/machines/click.ogg'
 			K.update_icon()
@@ -193,7 +201,10 @@
 		else if (A.caliber in K.caliber)
 			check = 1
 		else if (K.caliber == null)
-			check = 1 // For zip guns.
+			if (A.caliber == 1.58) // Prevent MRPT rocket
+				check = 0
+			else
+				check = 1 // For zip guns.
 		if (!check)
 			return 1
 
@@ -218,14 +229,14 @@
 			K.ejectcasings()
 
 			// Required for swap() to work properly (Convair880).
-			if (K.ammo.type != A.type)
+			if (K.ammo.type != A.type || A.force_new_current_projectile)
 				var/obj/item/ammo/bullets/ammoGun = new A.type
 				ammoGun.amount_left = K.ammo.amount_left
 				ammoGun.ammo_type = K.ammo.ammo_type
 				qdel(K.ammo)
 				ammoGun.set_loc(K)
 				K.ammo = ammoGun
-				K.current_projectile = A.ammo_type
+				K.set_current_projectile(A.ammo_type)
 				if(K.silenced)
 					K.current_projectile.shot_sound = 'sound/machines/click.ogg'
 
@@ -257,6 +268,7 @@
 	update_icon()
 		if (src.amount_left < 0)
 			src.amount_left = 0
+		inventory_counter.update_number(src.amount_left)
 
 	// src.desc = text("There are [] [] bullet\s left!", src.amount_left, (ammo_type.material && istype(ammo_type, /datum/material/metal/silver)))
 		src.desc = "There are [src.amount_left][ammo_type.material && istype(ammo_type, /datum/material/metal/silver) ? " silver " : " "]bullet\s left!"
@@ -264,6 +276,8 @@
 		if (src.amount_left > 0)
 			if (src.icon_dynamic && src.icon_short)
 				src.icon_state = text("[src.icon_short]-[src.amount_left]")
+			else if(src.icon_empty)
+				src.icon_state = initial(src.icon_state)
 		else
 			if (src.icon_empty)
 				src.icon_state = src.icon_empty
@@ -442,6 +456,9 @@
 	ammo_type = new/datum/projectile/bullet/nine_mm_NATO
 	caliber = 0.355
 
+/obj/item/ammo/bullets/nine_mm_NATO/boomerang //empty clip for the clock_188/boomerang
+	amount_left = 0
+
 /obj/item/ammo/bullets/a12
 	sname = "12ga Buckshot"
 	name = "12ga buckshot ammo box"
@@ -499,18 +516,6 @@
 	sname = "12ga Rubber Slug"
 	name = "12ga rubber slugs"
 	ammo_type = new/datum/projectile/bullet/abg
-	icon_state = "bg"
-	amount_left = 8.0
-	max_amount = 8.0
-	caliber = 0.72
-	icon_dynamic = 0
-	icon_empty = "bg-0"
-	sound_load = 'sound/weapons/gunload_click.ogg'
-
-/obj/item/ammo/bullets/pbr
-	sname = "12ga Plastic Baton Rounds"
-	name = "12ga plastic baton rounds"
-	ammo_type = new/datum/projectile/bullet/pbr
 	icon_state = "bg"
 	amount_left = 8.0
 	max_amount = 8.0
@@ -622,6 +627,24 @@
 		amount_left = 1
 		max_amount = 1
 
+
+/obj/item/ammo/bullets/cannon
+	sname = "20mm APHE"
+	name = "20mm APHE shells"
+	amount_left = 5
+	max_amount = 5
+	icon_state = "40mmR"
+	ammo_type = new/datum/projectile/bullet/cannon
+	caliber = 0.787
+	w_class = 2
+	icon_dynamic = 1
+	icon_empty = "40mmR-0"
+	sound_load = 'sound/weapons/gunload_heavy.ogg'
+
+	single
+		amount_left = 1
+		max_amount = 1
+
 /obj/item/ammo/bullets/autocannon
 	sname = "40mm HE"
 	name = "40mm HE shells"
@@ -691,6 +714,19 @@
 		amount_left = 1
 		max_amount = 1
 
+/obj/item/ammo/bullets/pbr
+	sname = "40mm Plastic Baton Rounds"
+	name = "40mm plastic baton rounds"
+	ammo_type = new/datum/projectile/bullet/pbr
+	amount_left = 2
+	max_amount = 2
+	icon_state = "40mmB"
+	caliber = 1.57
+	w_class = 3
+	icon_dynamic = 0
+	icon_empty = "40mmB-0"
+	sound_load = 'sound/weapons/gunload_heavy.ogg'
+
 //basically an internal object for converting hand-grenades into shells, but can be spawned independently.
 /obj/item/ammo/bullets/grenade_shell
 	sname = "40mm Custom Shell"
@@ -706,6 +742,7 @@
 	icon_empty = "paintballb-4"
 	delete_on_reload = 0 //deleting it before the shell can be fired breaks things
 	sound_load = 'sound/weapons/gunload_heavy.ogg'
+	force_new_current_projectile = 1
 
 	attackby(obj/item/W as obj, mob/living/user as mob)
 		var/datum/projectile/bullet/grenade_shell/AMMO = src.ammo_type
@@ -740,6 +777,7 @@
 		return ..()
 
 	update_icon()
+		inventory_counter.update_number(src.amount_left)
 		var/datum/projectile/bullet/grenade_shell/AMMO = src.ammo_type
 		if (AMMO.has_grenade != 0)
 			src.icon_state = "40mmR"
@@ -782,6 +820,9 @@
 	max_amount = 15.0
 	ammo_type = new/datum/projectile/bullet/bullet_9mm
 	caliber = 0.355
+
+	five_shots
+		amount_left = 5.0
 
 	smg
 		name = "9mm SMG magazine"
@@ -836,13 +877,12 @@
 		return
 
 	New()
+		..()
 		update_icon()
 		desc = "A power cell that holds a max of [src.max_charge]PU. Can be inserted into any energy gun, even tasers!"
-		..()
 
 	disposing()
-		if (src in processing_items)
-			processing_items.Remove(src)
+		processing_items -= src
 		..()
 
 	emp_act()
@@ -850,6 +890,7 @@
 		return
 
 	update_icon()
+		inventory_counter.update_percent(src.charge, src.max_charge)
 		if (src.artifact || src.unusualCell) return
 		overlays = null
 		var/ratio = src.charge / src.max_charge
@@ -893,15 +934,17 @@
 			attacking_item.attackby(pcell, attacker)
 		else return ..()
 
-	swap(var/obj/item/gun/energy/E)
+	swap(var/obj/item/gun/energy/E, var/mob/living/user)
 		if(!istype(E.cell,/obj/item/ammo/power_cell))
 			return 0
 		var/obj/item/ammo/power_cell/swapped_cell = E.cell
 		var/mob/living/M = src.loc
+		if (!ismob(M))
+			M = user
 		var/atom/old_loc = src.loc
 
-		if(istype(M) && src == M.equipped())
-			usr.u_equip(src)
+		if(istype(M) && (src in M.get_all_items_on_mob()))
+			M.u_equip(src)
 
 		src.set_loc(E)
 		E.cell = src
@@ -910,9 +953,9 @@
 			swapped_cell.set_loc(old_loc)
 			var/obj/item/storage/cell_container = old_loc
 			cell_container.hud.remove_item(src)
-			cell_container.hud.update()
+			cell_container.hud.update(user)
 		else
-			usr.put_in_hand_or_drop(swapped_cell)
+			M.put_in_hand_or_drop(swapped_cell)
 
 		src.add_fingerprint(usr)
 
@@ -980,28 +1023,25 @@
 	onMaterialChanged()
 		..()
 		if(istype(src.material))
+			recharge_rate = 0
 			if(src.material.hasProperty("radioactive"))
-				var/rate = ((src.material.getProperty("radioactive") / 10) / 2.5) //55(cerenkite) should give around 2.2, slightly less than a slow charge cell.
-				recharge_rate = rate
-			else
-				recharge_rate = 0
+				recharge_rate += ((src.material.getProperty("radioactive") / 10) / 2.5) //55(cerenkite) should give around 2.2, slightly less than a slow charge cell.
+			if(src.material.hasProperty("n_radioactive"))
+				recharge_rate += ((src.material.getProperty("n_radioactive") / 10) / 2)
 		return
 
 	New()
-		if (!(src in processing_items))
-			processing_items.Add(src)
+		processing_items |= src
 		..()
 		return
 
 	charge(var/amt = 0)
 		if (src.charge < src.max_charge)
-			if (!(src in processing_items))
-				processing_items.Add(src)
+			processing_items |= src
 		return ..()
 
 	use(var/amt = 0)
-		if (!(src in processing_items))
-			processing_items.Add(src)
+		processing_items |= src
 		return ..()
 
 	process()
@@ -1053,6 +1093,16 @@
 	max_charge = 150.0
 	cycle = 0
 	recharge_rate = 7.5
+
+/obj/item/ammo/power_cell/self_charging/ntso_signifer
+	name = "Power Cell - NTSO D49"
+	desc = "A self-contained radioisotope power cell that slowly recharges an internal capacitor. Holds 100PU."
+	icon = 'icons/obj/items/ammo.dmi'
+	icon_state = "recharger_cell"
+	charge = 250.0
+	max_charge = 250.0
+	cycle = 0
+	recharge_rate = 6
 
 /obj/item/ammo/power_cell/self_charging/big
 	name = "Power Cell - Fusion"
@@ -1133,3 +1183,60 @@
 	ammo_type = new /datum/projectile/special/spawner/gun
 	caliber = 3 //idk what caliber to actually make it but apparently its diameter of the tube so i figure it should be 3 inches????
 	delete_on_reload = 1
+
+/obj/item/ammo/bullets/meowitzer
+	sname = "meowitzer"
+	name = "meowitzer"
+	desc = "A box containg a single meowitzer. It's shaking violently and feels warm to the touch. You probably don't want to be anywhere near this when it goes off. Wait is that a cat?"
+	icon_state = "lmg_ammo"
+	icon_empty = "lmg_ammo-0"
+	amount_left = 1
+	max_amount = 1
+	ammo_type = new/datum/projectile/special/meowitzer
+	caliber = 20
+	w_class = 3
+
+
+/obj/item/ammo/bullets/meowitzer/inert
+	sname = "inert meowitzer"
+	name = "inert meowitzer"
+	desc = "A box containg a single inert meowitzer. It appears to be softly purring. Wait is that a cat?"
+	ammo_type = new/datum/projectile/special/meowitzer/inert
+
+
+/datum/action/bar/icon/powercellswap
+	duration = 1 SECOND
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ATTACKED
+	id = "powercellswap"
+	icon = 'icons/obj/items/ammo.dmi'
+	icon_state = "power_cell"
+	var/mob/living/user
+	var/obj/item/ammo/power_cell/cell
+	var/obj/item/gun/energy/gun
+
+	New(User, Cell, Gun)
+		user = User
+		cell = Cell
+		gun = Gun
+		..()
+
+	onUpdate()
+		..()
+		if(get_dist(user, gun) > 1 || user == null || cell == null || gun == null || get_turf(gun) != get_turf(cell) )
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+	onStart()
+		..()
+		if(get_dist(user, gun) > 1 || user == null || cell == null || gun == null || get_turf(gun) != get_turf(cell) )
+			interrupt(INTERRUPT_ALWAYS)
+			return
+		return
+
+	onEnd()
+		..()
+		if(get_dist(user, gun) > 1 || user == null || cell == null || gun == null || get_turf(gun) != get_turf(cell) )
+			..()
+			interrupt(INTERRUPT_ALWAYS)
+			return
+		cell.swap(gun,user)

@@ -6,7 +6,7 @@
 	name = "Fire Alarm"
 	icon = 'icons/obj/monitors.dmi'
 	icon_state = "fire0"
-	plane = PLANE_NOSHADOW_BELOW
+	plane = PLANE_NOSHADOW_ABOVE
 	deconstruct_flags = DECON_WIRECUTTERS | DECON_MULTITOOL
 	machine_registry_idx = MACHINES_FIREALARMS
 	var/alarm_frequency = "1437"
@@ -27,6 +27,7 @@
 
 /obj/machinery/firealarm/New()
 	..()
+	START_TRACKING
 	if(!alarm_zone)
 		var/area/A = get_area(loc)
 		alarm_zone = A.name
@@ -36,10 +37,11 @@
 
 	AddComponent(/datum/component/mechanics_holder)
 	SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"toggle", "toggleinput")
-	SPAWN_DBG (10)
+	SPAWN_DBG(1 SECOND)
 		frequency = radio_controller.return_frequency(alarm_frequency)
 
 /obj/machinery/firealarm/disposing()
+		STOP_TRACKING
 		radio_controller.remove_object(src, alarm_frequency)
 		..()
 
@@ -159,7 +161,6 @@
 
 	src.dont_spam = 1
 	SPAWN_DBG(5 SECONDS)
-	if(src)
 		src.dont_spam = 0
 
 	return
@@ -213,7 +214,7 @@
 		reply.transmission_method = TRANSMISSION_RADIO
 		reply.data["address_1"] = sender
 		reply.data["command"] = "ping_reply"
-		reply.data["device"] = "PNET_FIREALARM"
+		reply.data["device"] = "WNET_FIREALARM"
 		reply.data["netid"] = src.net_id
 		reply.data["alert"] = src.icon_state == "fire0" ? "reset" : "fire"
 		reply.data["zone"] = alarm_zone

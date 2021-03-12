@@ -11,17 +11,18 @@
 
 	infra_luminosity = 4
 
+/mob/living/carbon/New()
+	START_TRACKING
+	. = ..()
 
 /mob/living/carbon/disposing()
+	STOP_TRACKING
 	stomach_contents = null
 	..()
 
 /mob/living/carbon/Move(NewLoc, direct)
 	. = ..()
 	if(.)
-		if(src.bioHolder && src.bioHolder.HasEffect("fat") && src.m_intent == "run")
-			src.bodytemperature += 2
-
 		//SLIP handling
 		if (!src.throwing && !src.lying && isturf(NewLoc))
 			var/turf/T = NewLoc
@@ -43,23 +44,15 @@
 						src.changeStatus("weakened", 35)
 						boutput(src, "<span class='notice'>You slipped on the floor!</span>")
 						playsound(T, "sound/misc/slip.ogg", 50, 1, -3)
-						/*
-						SPAWN_DBG(0)
-							step(src, src.dir)
-							for (var/i = 4, i>0, i--)
-								if (!isturf(src.loc) || !step(src, src.dir) || i == 1)
-									src.throwing = 0
-									break
-						*/
 						var/atom/target = get_edge_target_turf(src, src.dir)
-						SPAWN_DBG(0) src.throw_at(target, 12, 1, throw_type = THROW_GUNIMPACT)
+						src.throw_at(target, 12, 1, throw_type = THROW_SLIP)
 					if (3) // superlube
 						src.pulling = null
 						src.changeStatus("weakened", 6 SECONDS)
 						playsound(T, "sound/misc/slip.ogg", 50, 1, -3)
 						boutput(src, "<span class='notice'>You slipped on the floor!</span>")
 						var/atom/target = get_edge_target_turf(src, src.dir)
-						SPAWN_DBG(0) src.throw_at(target, 30, 1, throw_type = THROW_GUNIMPACT)
+						src.throw_at(target, 30, 1, throw_type = THROW_SLIP)
 						random_brute_damage(src, 10)
 
 /mob/living/carbon/relaymove(var/mob/user, direction)
@@ -69,7 +62,7 @@
 				if(M.client)
 					M.show_message(text("<span class='alert'>You hear something rumbling inside [src]'s stomach...</span>"), 2)
 			var/obj/item/I = user.equipped()
-			if(I && I.force)
+			if(I?.force)
 				var/d = rand(round(I.force / 4), I.force)
 				src.TakeDamage("chest", d, 0)
 				for(var/mob/M in viewers(user, null))
@@ -80,7 +73,7 @@
 				if(prob(get_brute_damage() - 50))
 					src.gib()
 
-/mob/living/carbon/gib(give_medal)
+/mob/living/carbon/gib(give_medal, include_ejectables)
 	for(var/mob/M in src)
 		if(M in src.stomach_contents)
 			src.stomach_contents.Remove(M)
@@ -90,7 +83,7 @@
 			M.cancel_camera()
 
 		M.set_loc(src.loc)
-	. = ..(give_medal)
+	. = ..(give_medal, include_ejectables)
 
 /mob/living/carbon/proc/urinate()
 	SPAWN_DBG(0)
@@ -169,17 +162,13 @@
 /mob/living/carbon/take_brain_damage(var/amount)
 	if (..())
 		return
-#if ASS_JAM //pausing damage for timestop
-	if(paused)
-		src.pausedbrain = max(0,src.pausedbrain + amount)
-		return
-#endif
+
 	if (src.traitHolder && src.traitHolder.hasTrait("reversal"))
 		amount *= -1
 
 	src.brainloss = max(0,min(src.brainloss + amount,120))
 
-	if (src.brainloss >= 120)
+	if (src.brainloss >= 120 && isalive(src))
 		// instant death, we can assume a brain this damaged is no longer able to support life
 		src.visible_message("<span class='alert'><b>[src.name]</b> goes limp, their facial expression utterly blank.</span>")
 		src.death()
@@ -192,17 +181,13 @@
 		amount = 0
 	if (..())
 		return
-#if ASS_JAM //pausing damage for timestop
-	if(paused)
-		src.pausedtox = max(0,src.pausedtox + amount)
-		return
-#endif
+
 	if (src.traitHolder && src.traitHolder.hasTrait("reversal"))
 		amount *= -1
 
 	if (src.bioHolder && src.bioHolder.HasEffect("resist_toxic"))
 		src.toxloss = 0
-		return
+		return 1 //prevent organ damage
 
 	src.toxloss = max(0,src.toxloss + amount)
 	return
@@ -213,13 +198,10 @@
 	if (..())
 		return
 
-	if (src.bioHolder && src.bioHolder.HasEffect("breathless"))
+	if (HAS_MOB_PROPERTY(src, PROP_BREATHLESS))
 		src.oxyloss = 0
 		return
-#if ASS_JAM //pausing damage for timestop
-	if(paused)
-		src.pausedoxy = max(0,src.pausedoxy + amount)
-#endif
+
 	src.oxyloss = max(0,src.oxyloss + amount)
 	return
 
@@ -231,3 +213,26 @@
 
 /mob/living/carbon/get_oxygen_deprivation()
 	return src.oxyloss
+
+/mob/living/carbon/hitby(atom/movable/AM, datum/thrown_thing/thr)
+	if(src.find_type_in_hand(/obj/item/bat) && !ON_COOLDOWN(src, "baseball-bat-reflect", 1 DECI SECOND))
+		var/turf/T = get_turf(src)
+		var/turf/U = get_step(src, src.dir)
+		/*I know what you're thinking. What's up with those SPAWN_DBGs down there?
+			Wasn't the whole throwing system changed not to need those? Yes it was!
+			However, this is a bit of a special case since the item is currently in flight.
+			We need to wait until it stops. I could add some throw queue for this but...
+			afaik this is the only place that'd use it. */
+		if (prob(1))
+			SPAWN_DBG(0)
+				AM.throw_at(get_edge_target_turf(T, get_dir(T, U)), 50, 60)
+			playsound(T, 'sound/items/woodbat.ogg', 50, 1)
+			playsound(T, 'sound/items/batcheer.ogg', 50, 1)
+			src.visible_message("<span class='alert'>[src] hits \the [AM] with the bat and scores a HOMERUN! Woah!!!!</span>")
+		else
+			SPAWN_DBG(0)
+				AM.throw_at(get_edge_target_turf(T, get_dir(T, U)), 50, 25)
+			playsound(T, 'sound/items/woodbat.ogg', 50, 1)
+			src.visible_message("<span class='alert'>[src] hits \the [AM] with the bat!</span>")
+	else
+		. = ..()

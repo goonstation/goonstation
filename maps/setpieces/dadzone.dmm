@@ -1,13 +1,13 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
 /turf/space,
-/area)
+/area/space)
 "ab" = (
 /turf/unsimulated/wall/setpieces/bloodwall{
 	icon_state = "bloodwall_2";
 	name = "Meaty Wall"
 	},
-/area)
+/area/space)
 "ac" = (
 /turf/unsimulated/wall/setpieces/bloodwall{
 	icon_state = "bloodwall_2";
@@ -2565,43 +2565,43 @@
 	icon = 'icons/misc/worlds.dmi';
 	icon_state = "timehole"
 	},
-/area)
+/area/space)
 "fm" = (
 /turf/unsimulated/wall/setpieces/leadwall{
 	dir = 9
 	},
-/area)
+/area/space)
 "fn" = (
 /turf/unsimulated/wall/setpieces/leadwall{
 	dir = 4
 	},
-/area)
+/area/space)
 "fo" = (
 /turf/unsimulated/wall/setpieces/leadwall{
 	dir = 5
 	},
-/area)
+/area/space)
 "fp" = (
 /turf/unsimulated/wall/setpieces/leadwall{
 	tag = "icon-leadwall (WEST)";
 	icon_state = "leadwall";
 	dir = 8
 	},
-/area)
+/area/space)
 "fq" = (
 /turf/unsimulated/wall/setpieces/leadwall,
-/area)
+/area/space)
 "fr" = (
 /turf/unsimulated/floor/caution/corner/nw{
 	dir = 1
 	},
-/area)
+/area/space)
 "fs" = (
 /turf/unsimulated/floor/caution/north,
-/area)
+/area/space)
 "ft" = (
 /turf/unsimulated/floor/caution/corner/ne,
-/area)
+/area/space)
 "fu" = (
 /obj/decal/fakeobjects/shuttlethruster{
 	dir = 4
@@ -2611,55 +2611,55 @@
 	icon = 'icons/misc/worlds.dmi';
 	icon_state = "timehole"
 	},
-/area)
+/area/space)
 "fv" = (
 /turf/unsimulated/wall/setpieces/leadwall{
 	dir = 6
 	},
-/area)
+/area/space)
 "fw" = (
 /turf/unsimulated/floor/caution/corner/sw{
 	dir = 1
 	},
-/area)
+/area/space)
 "fx" = (
 /turf/unsimulated/floor/caution/south{
 	dir = 1
 	},
-/area)
+/area/space)
 "fy" = (
 /turf/unsimulated/floor{
 	tag = "icon-corner_east";
 	icon_state = "corner_east"
 	},
-/area)
+/area/space)
 "fz" = (
 /turf/unsimulated/floor/black,
-/area)
+/area/space)
 "fA" = (
 /turf/unsimulated/wall/setpieces/leadwall{
 	dir = 10
 	},
-/area)
+/area/space)
 "fB" = (
 /turf/unsimulated/floor,
-/area)
+/area/space)
 "fC" = (
 /turf/unsimulated/floor/specialroom/chapel{
 	dir = 2
 	},
-/area)
+/area/space)
 "fD" = (
 /turf/unsimulated/floor/specialroom/chapel{
 	dir = 8
 	},
-/area)
+/area/space)
 "fE" = (
 /turf/unsimulated/floor/void{
 	icon = 'icons/misc/worlds.dmi';
 	icon_state = "timehole"
 	},
-/area)
+/area/space)
 "fF" = (
 /obj/lattice{
 	tag = "icon-lattice-dir (SOUTHEAST)";
@@ -2667,81 +2667,81 @@
 	dir = 6
 	},
 /turf/space,
-/area)
+/area/space)
 "fG" = (
 /turf/unsimulated/floor/plating/scorched,
-/area)
+/area/space)
 "fH" = (
 /turf/unsimulated/floor/stairs{
 	dir = 4
 	},
-/area)
+/area/space)
 "fI" = (
 /turf/unsimulated/floor/stairs{
 	dir = 8
 	},
-/area)
+/area/space)
 "fJ" = (
 /turf/unsimulated/floor/specialroom/chapel{
 	dir = 1
 	},
-/area)
+/area/space)
 "fK" = (
 /turf/unsimulated/floor/specialroom/chapel{
 	dir = 4
 	},
-/area)
+/area/space)
 "fL" = (
 /turf/unsimulated/wall/setpieces/leadwindow{
 	icon_state = "leadwindow_2"
 	},
-/area)
+/area/space)
 "fM" = (
 /turf/unsimulated/floor/stairs/wide{
 	dir = 4
 	},
-/area)
+/area/space)
 "fN" = (
 /turf/unsimulated/floor/stairs/wide/other{
 	dir = 4
 	},
-/area)
+/area/space)
 "fO" = (
 /turf/unsimulated/floor{
 	tag = "icon-carpetNW";
 	icon_state = "carpetNW"
 	},
-/area)
+/area/space)
 "fP" = (
 /turf/unsimulated/floor{
 	icon_state = "carpetN"
 	},
-/area)
+/area/space)
 "fQ" = (
 /turf/unsimulated/floor{
 	icon_state = "carpetNE"
 	},
-/area)
+/area/space)
 "fR" = (
 /turf/unsimulated/floor/caution/corner/nw,
-/area)
+/area/space)
 "fS" = (
 /turf/unsimulated/floor{
 	tag = "icon-carpetSW";
 	icon_state = "carpetSW"
 	},
-/area)
+/area/space)
 "fT" = (
 /turf/unsimulated/floor{
 	tag = "icon-carpetS";
 	icon_state = "carpetS"
 	},
-/area)
+/area/space)
 "fU" = (
 /turf/unsimulated/floor{
 	icon_state = "carpetSE"
 	},
-/area)
+/area/space)
 "fV" = (
 /turf/simulated/shuttle/wall{
 	dir = 8;
@@ -2799,7 +2799,7 @@
 "ge" = (
 /obj/lattice,
 /turf/space,
-/area)
+/area/space)
 "gf" = (
 /obj/magicmirror,
 /turf/simulated/shuttle/wall{
@@ -2814,7 +2814,7 @@
 /area/wizard_station)
 "gh" = (
 /turf/unsimulated/wall,
-/area)
+/area/space)
 "gi" = (
 /obj/table/woodentable{
 	dir = 10
@@ -2998,7 +2998,7 @@
 	name = "shit"
 	},
 /turf/space,
-/area)
+/area/space)
 "gD" = (
 /turf/simulated/floor/orangeblack,
 /area/station/science/artifact)
@@ -3071,7 +3071,7 @@
 	layer = 20;
 	name = "Space Station 13"
 	},
-/area)
+/area/space)
 "gQ" = (
 /turf/space,
 /area/shuttle/escape/station)
@@ -3126,7 +3126,7 @@
 /area/station/crew_quarters/kitchen)
 "gZ" = (
 /turf/simulated/wall,
-/area)
+/area/space)
 "ha" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
@@ -4175,7 +4175,7 @@
 /area/station/crew_quarters/kitchen)
 "jv" = (
 /turf/simulated/wall,
-/area/sim)
+/area/sim/area1)
 "jw" = (
 /turf/simulated/floor{
 	icon_state = "carpetSW"
@@ -4285,15 +4285,15 @@
 	dir = 5
 	},
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/area1)
 "jI" = (
 /obj/submachine/ice_cream_dispenser,
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/area1)
 "jJ" = (
 /obj/submachine/chef_sink,
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/area1)
 "jK" = (
 /obj/submachine/chef_oven,
 /obj/machinery/light{
@@ -4302,18 +4302,18 @@
 	dir = 1
 	},
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/area1)
 "jL" = (
 /obj/submachine/foodprocessor,
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/area1)
 "jM" = (
 /obj/machinery/deep_fryer,
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/area1)
 "jN" = (
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/area1)
 "jO" = (
 /obj/machinery/vending/kitchen,
 /obj/machinery/light{
@@ -4322,20 +4322,20 @@
 	dir = 1
 	},
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/area1)
 "jP" = (
 /obj/secure_closet/fridge{
 	icon_state = "fridge";
 	locked = 0
 	},
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/area1)
 "jQ" = (
 /obj/secure_closet/meat{
 	locked = 0
 	},
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/area1)
 "jR" = (
 /obj/machinery/door/airlock,
 /turf/simulated/floor/plating,
@@ -4346,16 +4346,16 @@
 	dir = 4
 	},
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/area1)
 "jT" = (
 /obj/item/reagent_containers/food/snacks/breadslice/banana,
 /obj/item/reagent_containers/food/snacks/breadslice/banana,
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/area1)
 "jU" = (
 /obj/stool,
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/area1)
 "jV" = (
 /obj/cable{
 	icon_state = "0-4";
@@ -4422,7 +4422,7 @@
 	},
 /obj/machinery/computer/tour_console,
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/area1)
 "kd" = (
 /obj/machinery/guardbot_dock{
 	autoeject = 0;
@@ -4436,7 +4436,7 @@
 	req_access_txt = ""
 	},
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/area1)
 "ke" = (
 /obj/machinery/door/firedoor/border_only{
 	dir = 4
@@ -4445,7 +4445,7 @@
 	name = "Test Kitchen"
 	},
 /turf/simulated/floor/plating,
-/area/sim)
+/area/sim/area1)
 "kf" = (
 /obj/marker/supplymarker,
 /turf/simulated/floor/plating,
@@ -4471,7 +4471,7 @@
 	},
 /obj/submachine/mixer,
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/area1)
 "kj" = (
 /obj/machinery/navbeacon{
 	codes_txt = "tour;next_tour=tour0;desc=Test! ";
@@ -4480,14 +4480,14 @@
 	name = "station tour beacon"
 	},
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/area1)
 "kk" = (
 /obj/machinery/navbeacon{
 	codes_txt = "patrol";
 	location = "bar"
 	},
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/area1)
 "kl" = (
 /obj/machinery/navbeacon{
 	codes_txt = "tour;next_tour=tour1;desc=Hello! Welcome to to the Nanotrasen C-Class Orbital Facility Tour! I will be your tourguide today on this adventure! Let's get started!";
@@ -4496,7 +4496,7 @@
 	name = "tour beacon - start"
 	},
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/area1)
 "km" = (
 /obj/machinery/light{
 	tag = "icon-tube1 (EAST)";
@@ -4504,7 +4504,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/area1)
 "kn" = (
 /obj/disposalpipe/segment{
 	dir = 4;
@@ -4567,7 +4567,7 @@
 "kv" = (
 /obj/machinery/plantpot,
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/area1)
 "kw" = (
 /obj/disposalpipe/segment{
 	tag = "icon-pipe-c (NORTH)";
@@ -4583,7 +4583,7 @@
 	dir = 9
 	},
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/area1)
 "ky" = (
 /obj/table{
 	contents = newlist();
@@ -4592,7 +4592,7 @@
 	},
 /obj/item/kitchen/utensil/fork,
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/area1)
 "kz" = (
 /obj/table{
 	contents = newlist();
@@ -4601,7 +4601,7 @@
 	},
 /obj/item/kitchen/utensil/knife,
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/area1)
 "kA" = (
 /obj/machinery/light,
 /obj/table{
@@ -4611,7 +4611,7 @@
 	},
 /obj/item/kitchen/utensil/spoon,
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/area1)
 "kB" = (
 /obj/table{
 	contents = newlist();
@@ -4621,7 +4621,7 @@
 /obj/item/reagent_containers/food/snacks/wonton_wrapper,
 /obj/item/reagent_containers/food/snacks/wonton_wrapper,
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/area1)
 "kC" = (
 /obj/table{
 	contents = newlist();
@@ -4630,7 +4630,7 @@
 	},
 /obj/item/reagent_containers/food/snacks/cereal_box,
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/area1)
 "kD" = (
 /obj/table{
 	contents = newlist();
@@ -4639,7 +4639,7 @@
 	},
 /obj/item/clothing/head/void_crown,
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/area1)
 "kE" = (
 /obj/machinery/light,
 /obj/table{
@@ -4650,7 +4650,7 @@
 /obj/item/reagent_containers/food/drinks/bowl,
 /obj/item/clothing/suit/armor/ancient,
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/area1)
 "kF" = (
 /obj/table{
 	contents = newlist();
@@ -4659,7 +4659,7 @@
 	},
 /obj/item/reagent_containers/food/drinks/bowl,
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/area1)
 "kG" = (
 /obj/table{
 	icon_state = "tabledir";
@@ -4671,7 +4671,7 @@
 /obj/item/reagent_containers/food/snacks/burrito,
 /obj/item/reagent_containers/food/snacks/burrito,
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/area1)
 "kH" = (
 /turf/unsimulated/wall{
 	icon = 'icons/obj/singularity.dmi';

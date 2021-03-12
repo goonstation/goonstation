@@ -5,6 +5,11 @@
 	flags =  FPRINT | CONDUCT | EXTRADELAY
 	module_research_no_diminish = 1
 
+	// this is necessary so that this returns null
+	// else afterattack will not be called when out of range
+	pixelaction(atom/target, params, mob/user, reach)
+		..()
+
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob, flag)
 		if (!src.ArtifactSanityCheck())
 			return
@@ -23,7 +28,8 @@
 
 /datum/artifact/telewand
 	associated_object = /obj/item/artifact/teleport_wand
-	rarity_class = 3
+	type_name = "Teleportation Wand"
+	rarity_weight = 200
 	validtypes = list("wizard","eldritch","precursor")
 	react_xray = list(10,75,90,11,"ANOMALOUS")
 	var/sound/wand_sound = 'sound/effects/mag_warp.ogg'

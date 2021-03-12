@@ -31,7 +31,7 @@
 	var/clone_cost = 2500 // I wanted to make this a var on SOMETHING so that it can be changed during rounds
 
 	New()
-
+		..()
 		// 5 minutes = 3000 milliseconds
 		time_between_paydays = 3000
 		time_between_lotto = 5000 // this was way too fuckin high
@@ -68,38 +68,41 @@
 		// This is gonna throw up some crazy errors if it isn't done right!
 		// cogwerks - raising all of the paychecks, oh god
 
-		jobs["Engineer"] = 500
-		jobs["Miner"] = 550
-		jobs["Mechanic"] = 450
-//		jobs["Atmospheric Technician"] = 400
-		jobs["Security Officer"] = 700
-//		jobs["Vice Officer"] = 500
-		jobs["Detective"] = 300
-		jobs["Geneticist"] = 600
-		jobs["Scientist"] = 400
-		jobs["Medical Doctor"] = 400
-		jobs["Medical Director"] = 750
-		jobs["Head of Personnel"] = 750
-		jobs["Head of Security"] = 750
-//		jobs["Head of Security"] = 1
-		jobs["Chief Engineer"] = 750
-		jobs["Research Director"] = 750
-		jobs["Chaplain"] = 150
-		jobs["Roboticist"] = 450
-//		jobs["Hangar Mechanic"]= 40
-//		jobs["Elite Security"] = 300
-		jobs["Barman"] = 250
-		jobs["Chef"] = 250
-		jobs["Janitor"] = 200
-		jobs["Clown"] = 1
-//		jobs["Chemist"] = 50
-		jobs["Quartermaster"] = 350
-		jobs["Botanist"] = 250
-//		jobs["Attorney at Space-Law"] = 500
-		jobs["Staff Assistant"] = 100
-		jobs["Medical Assistant"] = 150
-		jobs["Technical Assistant"] = 150
-		jobs["Captain"] = 850
+		jobs["Engineer"] = PAY_TRADESMAN
+		jobs["Miner"] = PAY_TRADESMAN
+		jobs["Mechanic"] = PAY_DOCTORATE
+//		jobs["Atmospheric Technician"] = PAY_TRADESMAN
+		jobs["Security Officer"] = PAY_TRADESMAN
+//		jobs["Vice Officer"] = PAY_TRADESMAN
+		jobs["Detective"] = PAY_TRADESMAN
+		jobs["Geneticist"] = PAY_DOCTORATE
+		jobs["Pathologist"] = PAY_DOCTORATE
+		jobs["Scientist"] = PAY_DOCTORATE
+		jobs["Medical Doctor"] = PAY_DOCTORATE
+		jobs["Medical Director"] = PAY_IMPORTANT
+		jobs["Head of Personnel"] = PAY_IMPORTANT
+		jobs["Head of Security"] = PAY_IMPORTANT
+//		jobs["Head of Security"] = PAY_DUMBCLOWN
+		jobs["Chief Engineer"] = PAY_IMPORTANT
+		jobs["Research Director"] = PAY_IMPORTANT
+		jobs["Chaplain"] = PAY_UNTRAINED
+		jobs["Roboticist"] = PAY_DOCTORATE
+//		jobs["Hangar Mechanic"]= PAY_TRADESMAN
+//		jobs["Elite Security"] = PAY_TRADESMAN
+		jobs["Bartender"] = PAY_UNTRAINED
+		jobs["Chef"] = PAY_UNTRAINED
+		jobs["Janitor"] = PAY_TRADESMAN
+		jobs["Clown"] = PAY_DUMBCLOWN
+//		jobs["Chemist"] = PAY_DOCTORATE
+		jobs["Quartermaster"] = PAY_TRADESMAN
+		jobs["Botanist"] = PAY_TRADESMAN
+		jobs["Rancher"] = PAY_TRADESMAN
+//		jobs["Attorney at Space-Law"] = PAY_DOCTORATE
+		jobs["Staff Assistant"] = PAY_UNTRAINED
+		jobs["Medical Assistant"] = PAY_UNTRAINED
+		jobs["Technical Assistant"] = PAY_UNTRAINED
+		jobs["Security Assistant"] = PAY_UNTRAINED
+		jobs["Captain"] = PAY_EXECUTIVE
 
 		src.time_until_lotto = ( ticker ? ticker.round_elapsed_ticks : 0 ) + time_between_lotto
 		src.time_until_payday = ( ticker ? ticker.round_elapsed_ticks : 0 ) + time_between_paydays
@@ -170,8 +173,7 @@
 			winningNumbers[i][j] = rand(1,3)
 			dat += "[winningNumbers[i][j]] "
 
-		for(var/x in by_type[/obj/item/lotteryTicket])
-			var/obj/item/lotteryTicket/T = x
+		for_by_tcl(T, /obj/item/lotteryTicket)
 			// If the round associated on the lottery ticked is this round
 			if(lotteryRound == T.lotteryRound)
 				// Check the nubers
@@ -197,6 +199,7 @@
 */
 
 /obj/machinery/computer
+	var/can_reconnect = 0 //Set to 1 to make multitools call connection_scan. For consoles with associated equipment (cloner, genetek etc)
 	Topic(href, href_list)
 		if (..(href, href_list))
 			return 1
@@ -205,6 +208,22 @@
 	attack_hand(var/mob/user)
 		..()
 		interact_particle(user,src)
+
+	attackby(obj/item/W as obj, mob/user as mob)
+		if (can_reconnect)
+			if (istype(W, /obj/item/device/multitool) && !(status & (BROKEN|NOPOWER)))
+				boutput(user, "<span class='notice'>You pulse [src.name] to re-scan for equipment.</span>")
+				connection_scan()
+				return
+			else
+				src.attack_hand(user) //Previously the default behaviour for all affected computers
+		else
+			..()
+
+	proc/connection_scan()
+		//Placeholder so the multitool probing thing can go on this parent
+		//Put the code for finding the stuff your computer needs in this proc
+		return
 
 /obj/machinery/computer/ATM
 	name = "ATM"
@@ -218,24 +237,48 @@
 		STATE_LOGGEDOFF = 1
 		STATE_LOGGEDIN = 2
 
-	var/pin = null
 
-	attackby(var/obj/item/I as obj, user as mob)
+	var/pin = null
+	attackby(var/obj/item/I as obj, mob/user as mob)
 		if (istype(I, /obj/item/device/pda2) && I:ID_card)
 			I = I:ID_card
 		if(istype(I, /obj/item/card/id))
 			boutput(user, "<span class='notice'>You swipe your ID card in the ATM.</span>")
 			src.scan = I
-			// so check this out what if we made it so you could just enter the pin when you swipe it. #wow #woah
-			var/enterpin = input(usr, "Please enter your PIN number.", "ATM", 0) as null|num
-			if (enterpin == src.scan.pin)
-				if(TryToFindRecord())
-					src.state = STATE_LOGGEDIN
-				else
-					boutput(usr, "<span class='alert'>Cannot find a bank record for this card.</span>")
-			else
-				boutput(usr, "<span class='alert'>Incorrect pin number.</span>")
+			return
+		if(istype(I, /obj/item/spacecash/))
+			if (src.accessed_record)
+				boutput(user, "<span class='notice'>You insert the cash into the ATM.</span>")
+				src.accessed_record.fields["current_money"] += I.amount
+				I.amount = 0
+				pool(I)
+			else boutput(user, "<span class='alert'>You need to log in before depositing cash!</span>")
+			return
+		if(istype(I, /obj/item/lotteryTicket))
+			if (src.accessed_record)
+				boutput(user, "<span class='notice'>You insert the lottery ticket into the ATM.</span>")
+				if(I:winner)
+					boutput(user, "<span class='notice'>Congratulations, this ticket is a winner netting you [I:winner] credits</span>")
+					src.accessed_record.fields["current_money"] += I:winner
 
+					if(wagesystem.lotteryJackpot > I:winner)
+						wagesystem.lotteryJackpot -= I:winner
+					else
+						wagesystem.lotteryJackpot = 0
+				else
+					boutput(user, "<span class='alert'>This ticket isn't a winner. Better luck next time!</span>")
+				qdel(I)
+			else boutput(user, "<span class='alert'>You need to log in before inserting a ticket!</span>")
+			return
+		if(istype(I, /obj/item/spacebux))
+			var/obj/item/spacebux/SB = I
+			if(SB.spent == 1)
+				return
+			SB.spent = 1
+			logTheThing("diary",user,null,"deposits a spacebux token worth [SB.amount].")
+			user.client.add_to_bank(SB.amount)
+			boutput(user, "<span class='alert'>You deposit [SB.amount] spacebux into your account!</span>")
+			qdel(SB)
 		if(istype(I, /obj/item/spacecash/))
 			if (src.accessed_record)
 				boutput(user, "<span class='notice'>You insert the cash into the ATM.</span>")
@@ -277,21 +320,13 @@
 			return
 
 		src.add_dialog(user)
-		var/dat = "<span style=\"inline-flex\">"
+		var/list/dat = list("<span style=\"inline-flex\">")
 
 		switch(src.state)
 			if(STATE_LOGGEDOFF)
 				if (src.scan)
-					dat += "<BR>\[ <A HREF='?src=\ref[src];operation=cancel'>Eject Card</A> \]"
-					dat += "<BR><BR>Please Enter Your Pin:"
-
-					dat += "<BR>[src.pin]"
-
-					dat += {"<BR>
-					<A HREF='?src=\ref[src];type=1'>1</A>-<A HREF='?src=\ref[src];type=2'>2</A>-<A HREF='?src=\ref[src];type=3'>3</A><BR>
-					<A HREF='?src=\ref[src];type=4'>4</A>-<A HREF='?src=\ref[src];type=5'>5</A>-<A HREF='?src=\ref[src];type=6'>6</A><BR>
-					<A HREF='?src=\ref[src];type=7'>7</A>-<A HREF='?src=\ref[src];type=8'>8</A>-<A HREF='?src=\ref[src];type=9'>9</A><BR>
-					<A HREF='?src=\ref[src];type=R'>R</A>-<A HREF='?src=\ref[src];type=0'>0</A>-<A HREF='?src=\ref[src];type=E'>E</A><BR>"}
+					dat += "<BR>\[ <A HREF='?src=\ref[src];operation=logout'>Logout</A> \]"
+					dat += "<BR><BR><A HREF='?src=\ref[src];operation=enterpin'>Enter Pin</A>"
 
 				else dat += "Please swipe your card to begin."
 
@@ -302,10 +337,10 @@
 					src.updateUsrDialog()
 
 				else
-					dat += "<BR>\[ <A HREF='?src=\ref[src];operation=logout'>Logout</A> \]"
+					dat += "<BR><A HREF='?src=\ref[src];operation=logout'>Logout</A>"
 
 					if (src.scan)
-						dat += "<BR>Your balance is: $ [src.accessed_record.fields["current_money"]]."
+						dat += "<BR><BR>Your balance is: $ [src.accessed_record.fields["current_money"]]."
 						dat += "<BR>Your balance on your card is: $ [src.scan.money]"
 						dat += "<BR><BR><A HREF='?src=\ref[src];operation=withdraw'>Withdraw to Card</A>"
 						dat += "<BR><A HREF='?src=\ref[src];operation=withdrawcash'>Withdraw Cash</A>"
@@ -317,8 +352,22 @@
 						dat += "<BR>Please swipe your card to continue."
 
 
-		dat += "<BR>\[ <A HREF='?action=mach_close&window=atm'>Close</A></span> \]"
-		user.Browse(dat, "window=atm;size=400x500;title=Automated Teller Machine")
+		if (user.client)
+			dat += {"
+			<br><br><br>
+			<div style="color:#666; border: 1px solid #555; padding:5px; margin: 3px; background-color:#efefef;">
+			<strong>&mdash; [user.client.key] Spacebux Menu &mdash;</strong>
+			<br><em>(This menu is only here for <strong>you</strong>. Other players cannot access your Spacebux!)</em>
+			<br>
+			<br>Current balance: <strong>[user.client.persistent_bank]</strong> Spacebux <!-- <a href='?src=\ref[src];operation=view_spacebux_balance'>Check Spacebux Balance</a> -->
+			<br><a href='?src=\ref[src];operation=withdraw_spacebux'>Withdraw Spacebux</a>
+			<br><a href='?src=\ref[src];operation=transfer_spacebux'>Securely Send Spacebux</a>
+			<br>Deposit Spacebux at any time by inserting a token. It will always go to <strong>your</strong> account!
+			</div>
+			"}
+
+		dat += "<BR><BR><A HREF='?action=mach_close&window=atm'>Close</A></span>"
+		user.Browse(dat.Join(), "window=atm;size=400x500;title=Automated Teller Machine")
 		onclose(user, "atm")
 
 
@@ -335,28 +384,23 @@
 			return
 		src.add_dialog(usr)
 
-		if (href_list["type"])
-			if (href_list["type"] == "E")
-				if (text2num(src.pin) == src.scan.pin)
+		switch(href_list["operation"])
+
+			if ("enterpin")
+				var/enterpin = input(usr, "Please enter your PIN number.", "ATM", 0) as null|num
+				if (enterpin == src.scan.pin)
 					if(TryToFindRecord())
 						src.state = STATE_LOGGEDIN
-						src.pin = null
 					else
-						src.pin = "RECORD NOT FOUND"
+						boutput(usr, "<span class='alert'>Cannot find a bank record for this card.</span>")
 				else
-					src.pin = "ERROR PIN NOT CORRECT"
-			else
-				if (href_list["type"] == "R")
-					src.pin = null
+					boutput(usr, "<span class='alert'>Incorrect pin number.</span>")
+
+			if("login")
+				if(TryToFindRecord())
+					src.state = STATE_LOGGEDIN
 				else
-					src.pin += href_list["type"]
-					if (length(src.pin) > 4)
-						src.pin = "ERROR PIN IS ONLY 4 DIGITS"
-
-			src.updateUsrDialog()
-			return
-
-		switch(href_list["operation"])
+					boutput(usr, "<span class='alert'>Cannot find a bank record for this card.</span>")
 
 			if("logout")
 				src.state = STATE_LOGGEDOFF
@@ -364,8 +408,8 @@
 				src.scan = null
 
 			if("withdraw")
-				if (src.scan.registered in FrozenAccounts)
-					boutput(usr, "<span class='alert'>Your account cannot currently be liquidated due to active borrows.</span>")
+				if (scan.registered in FrozenAccounts)
+					boutput(usr, "<span class='alert'>This account is frozen!</span>")
 					return
 				var/amount = round(input(usr, "How much would you like to withdraw?", "Withdrawal", 0) as null|num)
 				if(amount < 1)
@@ -378,8 +422,8 @@
 					src.accessed_record.fields["current_money"] -= amount
 
 			if("withdrawcash")
-				if (src.scan.registered in FrozenAccounts)
-					boutput(usr, "<span class='alert'>Your account cannot currently be liquidated due to active borrows.</span>")
+				if (scan.registered in FrozenAccounts)
+					boutput(usr, "<span class='alert'>This account is frozen!</span>")
 					return
 				var/amount = round(input(usr, "How much would you like to withdraw?", "Withdrawal", 0) as num)
 				if( amount < 1)
@@ -389,7 +433,9 @@
 					boutput(usr, "<span class='alert'>Insufficient funds in account.</span>")
 				else
 					src.accessed_record.fields["current_money"] -= amount
-					new /obj/item/spacecash(src.loc, amount )
+					var/obj/item/spacecash/S = unpool(/obj/item/spacecash)
+					S.setup(src.loc, amount)
+					usr.put_in_hand_or_drop(S)
 
 			if("deposit")
 				var/amount = round(input(usr, "How much would you like to deposit?", "Deposit", 0) as null|num)
@@ -403,10 +449,58 @@
 					src.accessed_record.fields["current_money"] += amount
 
 			if("buy")
-				boutput(usr, "<span class='alert'>Buy button clicked</span>")
+				if(accessed_record.fields["current_money"] >= 100)
+					src.accessed_record.fields["current_money"] -= 100
+					boutput(usr, "<span class='alert'>Ticket being dispensed. Good luck!</span>")
 
-			if("claim")
-				boutput(usr, "<span class='alert'>Claim button clicked</span>")
+					new /obj/item/lotteryTicket(src.loc)
+					wagesystem.start_lottery()
+
+				else
+					boutput(usr, "<span class='alert'>Insufficient Funds</span>")
+
+			if("view_spacebux_balance")
+				boutput(usr, "<span class='notice'>You have [usr.client.persistent_bank] spacebux.</span>")
+
+			if("transfer_spacebux")
+				if(!usr.client)
+					boutput(usr, "<span class='alert'>Banking system offline. Welp.</span>")
+				var/amount = input("How much do you wish to transfer? You have [usr.client.persistent_bank] spacebux", "Spacebux Transfer") as num|null
+				if(!amount)
+					return
+				if(amount <= 0)
+					boutput(usr, "<span class='alert'>No.</span>")
+					src.updateUsrDialog()
+					return
+				var/client/C = input("Who do you wish to give [amount] to?", "Spacebux Transfer") as() in clients|null
+				if(alert("You are about to send [amount] to [C]. Are you sure?",,"Yes","No") == "Yes")
+					if(!usr.client.bank_can_afford(amount))
+						boutput(usr, "<span class='alert'>Insufficient Funds</span>")
+						return
+					C.add_to_bank(amount)
+					boutput(C, "<span class='notice'><B>[usr.name] sent you [amount] spacebux!</B></span>")
+					usr.client.add_to_bank(-amount)
+					boutput(usr, "<span class='notice'><B>Transaction successful!</B></span>")
+					logTheThing("diary",usr,null,"sent [amount] spacebux to [C].")
+					src.updateUsrDialog()
+					return
+				boutput(usr, "<span class='alert'><B>No online player with that ckey found!</B></span>")
+
+			if("withdraw_spacebux")
+				var/amount = round(input(usr, "You have [usr.client.persistent_bank] spacebux.\nHow much would you like to withdraw?", "How much?", 0) as num)
+				amount = clamp(amount, 0, 1000000)
+				if(amount <= 0)
+					boutput(usr, "<span class='alert'>No.</span>")
+					src.updateUsrDialog()
+					return
+
+				if(!usr.client.bank_can_afford(amount))
+					boutput(usr, "<span class='alert'>Insufficient Funds</span>")
+				else
+					logTheThing("diary",usr,null,"withdrew a spacebux token worth [amount].")
+					usr.client.add_to_bank(-amount)
+					var/obj/item/spacebux/newbux = new(src.loc, amount)
+					usr.put_in_hand_or_drop(newbux)
 
 		src.updateUsrDialog()
 
@@ -433,11 +527,11 @@
 	attack_hand(mob/user as mob)
 		if(..())
 			return
-		var/dat = "<span style=\"display: inline-flex\">"
+		var/list/dat = list()
 		if (src.temp)
-			dat = text("<TT>[src.temp]</TT><BR><BR><A href='?src=\ref[src];temp=1'>Clear Screen</A>")
+			dat += text("<TT>[src.temp]</TT><BR><BR><A href='?src=\ref[src];temp=1'>Clear Screen</A>")
 		else
-			dat = text("Confirm Identity: <A href='?src=\ref[];scan=1'>[]</A><HR>", src, (src.scan ? text("[]", src.scan.name) : "----------"))
+			dat += text("Confirm Identity: <A href='?src=\ref[];scan=1'>[]</A><HR>", src, (src.scan ? text("[]", src.scan.name) : "----------"))
 			if (src.authenticated)
 				switch(src.screen)
 					if(1.0)
@@ -471,8 +565,7 @@
 					else
 			else
 				dat += text("<A href='?src=\ref[];login=1'>{Log In}</A>", src)
-		dat += "</span>"
-		user.Browse(dat, "window=secure_bank;title=Bank Records")
+		user.Browse(dat.Join(), "window=secure_bank;title=Bank Records")
 		onclose(user, "secure_bank")
 		return
 
@@ -482,7 +575,7 @@
 		var/usr_is_robot = issilicon(usr) || isAIeye(usr)
 		if (!( data_core.bank.Find(src.active1) ))
 			src.active1 = null
-		if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (usr_is_robot))
+		if ((usr.contents.Find(src) || (in_interact_range(src, usr) && istype(src.loc, /turf))) || (usr_is_robot))
 			src.add_dialog(usr)
 			if (href_list["temp"])
 				src.temp = null
@@ -525,19 +618,19 @@
 					var/datum/data/record/R = locate(href_list["Fname"])
 					var/t1 = input("Please input name:", "Secure. records", R.fields["name"], null)  as null|text
 					t1 = copytext(html_encode(t1), 1, MAX_MESSAGE_LEN)
-					if ((!( t1 ) || !( src.authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && (!usr_is_robot)))) return
+					if ((!( t1 ) || !( src.authenticated ) || usr.stat || usr.restrained() || (!in_interact_range(src, usr) && (!usr_is_robot)))) return
 					R.fields["name"] = t1
 				else if(href_list["Fjob"])
 					var/datum/data/record/R = locate(href_list["Fjob"])
 					var/t1 = input("Please input name:", "Secure. records", R.fields["job"], null)  as null|text
 					t1 = copytext(html_encode(t1), 1, MAX_MESSAGE_LEN)
-					if ((!( t1 ) || !( src.authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && (!usr_is_robot)))) return
+					if ((!( t1 ) || !( src.authenticated ) || usr.stat || usr.restrained() || (!in_interact_range(src, usr) && (!usr_is_robot)))) return
 					R.fields["job"] = t1
 					playsound(src.loc, "keyboard", 50, 1, -15)
 				else if(href_list["Fwage"])
 					var/datum/data/record/R = locate(href_list["Fwage"])
 					var/t1 = input("Please input wage:", "Secure. records", R.fields["wage"], null)  as null|num
-					if ((!( src.authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && (!usr_is_robot)))) return
+					if ((!( src.authenticated ) || usr.stat || usr.restrained() || (!in_interact_range(src, usr) && (!usr_is_robot)))) return
 					if (t1 < 0)
 						t1 = 0
 						boutput(usr, "<span class='alert'>You cannot set a negative wage.</span>")
@@ -551,7 +644,7 @@
 					var/avail = null
 					var/t2 = input("Withdraw or Deposit?", "Secure Records", null, null) in list("Withdraw", "Deposit")
 					var/t1 = input("How much?", "Secure. records", R.fields["current_money"], null)  as null|num
-					if ((!( t1 ) || !( src.authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && (!usr_is_robot)))) return
+					if ((!( t1 ) || !( src.authenticated ) || usr.stat || usr.restrained() || (!in_interact_range(src, usr) && (!usr_is_robot)))) return
 					if (t2 == "Withdraw")
 						if (R.fields["name"] in FrozenAccounts)
 							boutput(usr, "<span class='alert'>This account cannot currently be liquidated due to active borrows.</span>")
@@ -629,6 +722,7 @@
 	density = 0
 	opacity = 0
 	anchored = 1
+	plane = PLANE_NOSHADOW_ABOVE
 
 	deconstruct_flags = DECON_MULTITOOL
 
@@ -712,7 +806,7 @@
 			return
 
 		src.add_dialog(user)
-		var/dat = "<span style=\"inline-flex\">"
+		var/list/dat = list("<span style=\"inline-flex\">")
 
 		switch(src.state)
 			if(STATE_LOGGEDOFF)
@@ -750,18 +844,20 @@
 
 		if (user.client)
 			dat += {"
-			<br>
-			<br><strong>&mdash; [user.client.key] Spacebux Menu &mdash;</strong>
+			<br><br><br>
+			<div style="color:#666; border: 1px solid #555; padding:5px; margin: 3px; background-color:#efefef;">
+			<strong>&mdash; [user.client.key] Spacebux Menu &mdash;</strong>
 			<br><em>(This menu is only here for <strong>you</strong>. Other players cannot access your Spacebux!)</em>
 			<br>
-			<br>Current balance: <strong>[usr.client.persistent_bank]</strong> Spacebux <!-- <a href='?src=\ref[src];operation=view_spacebux_balance'>Check Spacebux Balance</a> -->
+			<br>Current balance: <strong>[user.client.persistent_bank]</strong> Spacebux <!-- <a href='?src=\ref[src];operation=view_spacebux_balance'>Check Spacebux Balance</a> -->
 			<br><a href='?src=\ref[src];operation=withdraw_spacebux'>Withdraw Spacebux</a>
 			<br><a href='?src=\ref[src];operation=transfer_spacebux'>Securely Send Spacebux</a>
 			<br>Deposit Spacebux at any time by inserting a token. It will always go to <strong>your</strong> account!
+			</div>
 			"}
 
 		dat += "<BR><BR><A HREF='?action=mach_close&window=atm'>Close</A></span>"
-		user.Browse(dat, "window=atm;size=400x500;title=Automated Teller Machine")
+		user.Browse(dat.Join(), "window=atm;size=400x500;title=Automated Teller Machine")
 		onclose(user, "atm")
 
 	bullet_act(var/obj/projectile/P)
@@ -869,7 +965,7 @@
 					boutput(usr, "<span class='alert'>No.</span>")
 					src.updateUsrDialog()
 					return
-				var/client/C = input("Who do you wish to give [amount] to?", "Spacebux Transfer") as anything in clients|null
+				var/client/C = input("Who do you wish to give [amount] to?", "Spacebux Transfer") as() in clients|null
 				if(alert("You are about to send [amount] to [C]. Are you sure?",,"Yes","No") == "Yes")
 					if(!usr.client.bank_can_afford(amount))
 						boutput(usr, "<span class='alert'>Insufficient Funds</span>")
@@ -948,6 +1044,7 @@
 
 	// Give a random set of numbers
 	New()
+		..()
 		START_TRACKING
 
 		lotteryRound = wagesystem.lotteryRound

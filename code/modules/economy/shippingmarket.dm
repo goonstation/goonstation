@@ -17,29 +17,16 @@
 	var/points_per_crate = 10
 
 	New()
-		add_commodity(new /datum/commodity/produce(src))
-		add_commodity(new /datum/commodity/meat(src))
-		add_commodity(new /datum/commodity/herbs(src))
-		add_commodity(new /datum/commodity/honey(src))
-		add_commodity(new /datum/commodity/sheet(src))
-		add_commodity(new /datum/commodity/robotics(src))
-		add_commodity(new /datum/commodity/electronics(src))
-		add_commodity(new /datum/commodity/ore/mauxite(src))
-		add_commodity(new /datum/commodity/ore/pharosium(src))
-		add_commodity(new /datum/commodity/ore/molitz(src))
-		add_commodity(new /datum/commodity/ore/char(src))
-		add_commodity(new /datum/commodity/ore/cobryl(src))
-		add_commodity(new /datum/commodity/ore/bohrum(src))
-		add_commodity(new /datum/commodity/ore/claretine(src))
-		add_commodity(new /datum/commodity/ore/erebite(src))
-		add_commodity(new /datum/commodity/ore/cerenkite(src))
-		add_commodity(new /datum/commodity/ore/plasmastone(src))
-		add_commodity(new /datum/commodity/ore/syreline(src))
-		add_commodity(new /datum/commodity/ore/uqill(src))
-		add_commodity(new /datum/commodity/ore/telecrystal(src))
-		add_commodity(new /datum/commodity/ore/fibrilith(src))
-		add_commodity(new /datum/commodity/synthmodule(src))
+		..()
+
 		add_commodity(new /datum/commodity/goldbar(src))
+
+		for (var/commodity_path in (typesof(/datum/commodity) - /datum/commodity/goldbar))
+			var/datum/commodity/C = new commodity_path(src)
+			if(C.onmarket)
+				add_commodity(C)
+			else
+				qdel(C)
 
 		var/list/unique_traders = list(/datum/trader/gragg,/datum/trader/josh,/datum/trader/pianzi_hundan,
 		/datum/trader/vurdalak,/datum/trader/buford)
@@ -133,6 +120,35 @@
 				removed_count--
 				src.active_traders += new /datum/trader/generic(src)
 
+	proc/sell_artifact(obj/sell_art, var/datum/artifact/sell_art_datum)
+		var/price = 0
+		var/modifier = sell_art_datum.get_rarity_modifier()
+
+		price = modifier*modifier * 10000
+		var/obj/item/sticker/postit/artifact_paper/pap = locate(/obj/item/sticker/postit/artifact_paper/) in sell_art.vis_contents
+		if(pap?.lastAnalysis)
+			price *= pap.lastAnalysis
+		price += rand(-50,50)
+		price = round(price, 5)
+
+		if(prob(modifier*40*pap.lastAnalysis)) // range from 0% to ~78% for fully researched t4 artifact
+			SPAWN_DBG(rand(3,8) MINUTES)
+				var/obj/storage/crate/artcrate = new /obj/storage/crate()
+				artcrate.name = "Artifact Resupply Crate"
+				new /obj/artifact_type_spawner/vurdalak(artcrate)
+				shippingmarket.receive_crate(artcrate)
+
+		wagesystem.shipping_budget += price
+		qdel(sell_art)
+
+		var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency("1149")
+		var/datum/signal/pdaSignal = get_free_signal()
+		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=list(MGD_CARGO, MGA_SALES), "sender"="00000000", "message"="Notification: [price] credits earned from last outgoing shipment.")
+
+		pdaSignal.transmission_method = TRANSMISSION_RADIO
+		if(transmit_connection != null)
+			transmit_connection.post_signal(null, pdaSignal)
+
 	proc/sell_crate(obj/storage/crate/sell_crate, var/list/commodities_list)
 		var/obj/item/card/id/scan = sell_crate.scan
 		var/datum/data/record/account = sell_crate.account
@@ -156,7 +172,7 @@
 						duckets += add
 						break
 					else if (istype(O, /obj/item/spacecash))
-						duckets += O:amount
+						duckets += 0.9 * O:amount
 						pool(O)
 		else // Please excuse this duplicate code, I'm gonna change trader commodity lists into associative ones later I swear
 			for(var/obj/O in sell_crate.contents)
@@ -175,6 +191,11 @@
 					else if (istype(O, /obj/item/spacecash))
 						duckets += O:amount
 						pool(O)
+
+		#ifdef SECRETS_ENABLED
+		send_to_brazil(sell_crate)
+		#endif
+
 		qdel(sell_crate)
 
 		var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency("1149")
@@ -182,10 +203,10 @@
 		if(scan && account)
 			wagesystem.shipping_budget += duckets / 2
 			account.fields["current_money"] += duckets / 2
-			pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=MGD_CARGO, "sender"="00000000", "message"="Notification: [duckets] credits earned from last outgoing shipment. Splitting half of profits with [scan.registered].")
+			pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=list(MGD_CARGO, MGA_SALES), "sender"="00000000", "message"="Notification: [duckets] credits earned from last outgoing shipment. Splitting half of profits with [scan.registered].")
 		else
 			wagesystem.shipping_budget += duckets
-			pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=MGD_CARGO, "sender"="00000000", "message"="Notification: [duckets] credits earned from last outgoing shipment.")
+			pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=list(MGD_CARGO, MGA_SALES), "sender"="00000000", "message"="Notification: [duckets] credits earned from last outgoing shipment.")
 
 		pdaSignal.transmission_method = TRANSMISSION_RADIO
 		if(transmit_connection != null)
@@ -215,27 +236,17 @@
 
 		var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency("1149")
 		var/datum/signal/pdaSignal = get_free_signal()
-		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=MGD_CARGO, "sender"="00000000", "message"="Shipment arriving to Cargo Bay: [S.name].")
+		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT", "group"=list(MGD_CARGO, MGA_SHIPPING), "sender"="00000000", "message"="Shipment arriving to Cargo Bay: [S.name].")
 		pdaSignal.transmission_method = TRANSMISSION_RADIO
 		transmit_connection.post_signal(null, pdaSignal)
 
 
-#if ASS_JAM
-		if(prob(5))
-			var/list/turf/viable_turfs = get_area_turfs(/area/station/quartermaster/cargobay)
-			if(!viable_turfs.len)
-				viable_turfs = get_area_turfs(/area/station/quartermaster)
-			if(viable_turfs.len)
-				var/turf/ass_spawn = pick(viable_turfs)
-				S.set_loc(ass_spawn)
-				heavenly_spawn(S)
-				return
-#endif
-		for(var/obj/machinery/door/poddoor/P in doors)
+
+		for(var/obj/machinery/door/poddoor/P in by_type[/obj/machinery/door])
 			if (P.id == "qm_dock")
 				playsound(P.loc, "sound/machines/bellalert.ogg", 50, 0)
 				SPAWN_DBG(SUPPLY_OPEN_TIME)
-					if (P && P.density)
+					if (P?.density)
 						P.open()
 				SPAWN_DBG(SUPPLY_CLOSE_TIME)
 					if (P && !P.density)

@@ -3,7 +3,7 @@
 "d" = (/obj/storage/crate/loot,/turf/variableTurf/floor,/area/noGenerate)
 "e" = (/turf/variableTurf/wall,/area/noGenerate)
 "f" = (/obj/table/wood/round,/obj/item/paper/fortune,/turf/variableTurf/floor,/area/noGenerate)
-"g" = (/turf/variableTurf/clear,/area)
+"g" = (/turf/variableTurf/clear,/area/space)
 
 (1,1,1) = {"
 ggee

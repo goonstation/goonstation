@@ -1,15 +1,15 @@
 // Converted everything related to vampires from client procs to ability holders and used
 // the opportunity to do some clean-up as well (Convair880).
 
-/////////////////////////////////////////////////// Setup //////////////////////////////////////////
+/* 	/		/		/		/		/		/		Setup		/		/		/		/		/		/		/		/		*/
 
-/mob/proc/make_vampire(var/shitty = 0)
+/mob/proc/make_vampire(shitty = FALSE, nonantag = FALSE)
+	var/datum/abilityHolder/vampire/vampholder = src.get_ability_holder(/datum/abilityHolder/vampire)
+	if (vampholder && istype(vampholder))
+		return
+
 	if (ishuman(src) || ismobcritter(src))
 		if (ishuman(src))
-			var/datum/abilityHolder/vampire/A = src.get_ability_holder(/datum/abilityHolder/vampire)
-			if (A && istype(A))
-				return
-
 			var/datum/abilityHolder/vampire/V = src.add_ability_holder(/datum/abilityHolder/vampire)
 
 			if(shitty) // Infernal vampire.
@@ -22,7 +22,7 @@
 				V.addAbility(/datum/targetable/vampire/glare)
 				V.addAbility(/datum/targetable/vampire/hypnotize)
 
-			SPAWN_DBG (25) // Don't remove.
+			SPAWN_DBG(2.5 SECONDS) // Don't remove.
 				if (src) src.assign_gimmick_skull()
 
 		else if (ismobcritter(src)) // For testing. Just give them all abilities that are compatible.
@@ -50,6 +50,9 @@
 				boutput(src, "<span class='notice'>Oh shit, your fangs just broke off! Looks like you'll have to get blood the HARD way.</span>")
 
 			SHOW_VAMPIRE_TIPS(src)
+
+		if(shitty || nonantag)
+			boutput(src, "<span class='alert'><h2>You are not an antagonist!</h2> Your vampireness was achieved by in-game means, you still have the powers but are <i>not</i> an antagonist.</span>")
 
 	else return
 
@@ -146,7 +149,7 @@
 
 ////////////////////////////////////////////////// Ability holder /////////////////////////////////////////////
 
-/obj/screen/ability/topBar/vampire
+/atom/movable/screen/ability/topBar/vampire
 	clicked(params)
 		var/datum/targetable/vampire/spell = owner
 		var/datum/abilityHolder/holder = owner.holder
@@ -435,7 +438,7 @@
 	var/unlock_message = null
 
 	New()
-		var/obj/screen/ability/topBar/vampire/B = new /obj/screen/ability/topBar/vampire(null)
+		var/atom/movable/screen/ability/topBar/vampire/B = new /atom/movable/screen/ability/topBar/vampire(null)
 		B.icon = src.icon
 		B.icon_state = src.icon_state
 		B.owner = src
@@ -453,7 +456,7 @@
 	updateObject()
 		..()
 		if (!src.object)
-			src.object = new /obj/screen/ability/topBar/vampire()
+			src.object = new /atom/movable/screen/ability/topBar/vampire()
 			object.icon = src.icon
 			object.owner = src
 		if (src.last_cast > world.time)

@@ -6,6 +6,7 @@
 	included_cosmetic = /datum/robot_cosmetic/chemistry
 	included_tools = /datum/robot/module_tool_creator/recursive/module/chemistry
 	radio_type = /obj/item/device/radio/headset/research
+	mailgroups = list(MGD_SCIENCE, MGO_SILICON, MGD_PARTY)
 
 /datum/robot_cosmetic/chemistry
 	ches_mod = "Lab Coat"

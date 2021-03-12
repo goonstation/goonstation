@@ -33,8 +33,8 @@
 			boutput(M, __red("[target] probably wouldn't taste very good."))
 			return 1
 
-		if (target.canmove)
-			boutput(M, __red("[target] is moving around too much."))
+		if (!target.lying)
+			boutput(M, __red("[target] needs to be lying on the ground first."))
 			return 1
 
 		logTheThing("combat", M, target, "starts to maul [constructTarget(target,"combat")] at [log_loc(M)].")
@@ -91,7 +91,7 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
-		var/done = world.time - started
+		var/done = TIME - started
 		var/complete = max(min((done / duration), 1), 0)
 
 		if (complete >= 0.1 && last_complete < 0.1)
@@ -136,7 +136,7 @@
 				interrupt(INTERRUPT_ALWAYS)
 				return
 
-			if (HH.decomp_stage <= 2 && !(ismonkey(target) || target.bioHolder && target.bioHolder.HasEffect("monkey"))) // Can't farm monkeys.
+			if (HH.decomp_stage <= 2 && !(isnpcmonkey(target))) // Can't farm npc monkeys.
 				src.do_we_get_points = 1
 
 		if (complete >= 0.8 && last_complete < 0.8)
@@ -145,7 +145,7 @@
 				interrupt(INTERRUPT_ALWAYS)
 				return
 
-			if (HH.decomp_stage <= 2 && !(ismonkey(target) || target.bioHolder && target.bioHolder.HasEffect("monkey")))
+			if (HH.decomp_stage <= 2 && !(isnpcmonkey(target)))
 				src.do_we_get_points = 1
 
 		if (complete >= 0.9 && last_complete < 0.9)
@@ -154,7 +154,7 @@
 				interrupt(INTERRUPT_ALWAYS)
 				return
 
-			if (HH.decomp_stage <= 2 && !(ismonkey(target) || target.bioHolder && target.bioHolder.HasEffect("monkey")))
+			if (HH.decomp_stage <= 2 && !(isnpcmonkey(target)))
 				src.do_we_get_points = 1
 
 		last_complete = complete
@@ -176,7 +176,7 @@
 						if (!W.feed_objective.mobs_fed_on.Find(HH.bioHolder.Uid))
 							W.feed_objective.mobs_fed_on.Add(HH.bioHolder.Uid)
 							W.feed_objective.feed_count++
-							M.add_stam_mod_regen("feast-[W.feed_objective.feed_count]", 2)
+							APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "feast-[W.feed_objective.feed_count]", 2)
 							M.add_stam_mod_max("feast-[W.feed_objective.feed_count]", 10)
 							M.max_health += 10
 							health_update_queue |= M
@@ -211,7 +211,7 @@
 						if (!W.feed_objective.mobs_fed_on.Find(HH.bioHolder.Uid))
 							W.feed_objective.mobs_fed_on.Add(HH.bioHolder.Uid)
 							W.feed_objective.feed_count++
-							M.add_stam_mod_regen("feast-[W.feed_objective.feed_count]", 1)
+							APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "feast-[W.feed_objective.feed_count]", 1)
 							M.add_stam_mod_max("feast-[W.feed_objective.feed_count]", 5)
 							M.max_health += 10
 							health_update_queue |= M

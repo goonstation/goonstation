@@ -19,6 +19,8 @@
 		else if (donor.blood_volume > 500)
 			if (prob(20))
 				donor.blood_volume -= 1 * mult
+		if(emagged)
+			donor.blood_volume += 2 * mult //Don't worry friend, you'll have /plenty/ of blood!
 		return 1
 
 	on_broken(var/mult = 1)
@@ -34,7 +36,9 @@
 	name = "cyberspleen"
 	desc = "A fancy robotic spleen to replace one that someone's lost!"
 	icon_state = "cyber-spleen"
+	made_from = "pharosium"
 	// item_state = "heart_robo1"
 	robotic = 1
 	edible = 0
 	mats = 6
+	created_decal = /obj/decal/cleanable/oil

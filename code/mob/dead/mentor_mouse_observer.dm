@@ -7,6 +7,8 @@
 	var/mob/living/critter/small_animal/mouse/weak/mentor/my_mouse
 	var/is_admin = 0
 
+	var/leave_popup_open = FALSE
+
 	New(atom/L, is_admin)
 		..()
 		src.is_admin = is_admin
@@ -22,9 +24,19 @@
 		src.ping.layer = HUD_LAYER_3
 		src.ping.plane = PLANE_HUD
 
+	process_move(keys)
+		if(keys && src.move_dir && !src.leave_popup_open)
+			src.leave_popup_open = TRUE
+			if(alert(src, "Are you sure you want to leave?", "Hop out of the pocket", "Yes", "No") == "Yes")
+				src.stop_observing()
+			src.leave_popup_open = FALSE
+
 	click(atom/target, params) // TODO spam delay
 		if (!islist(params))
 			params = params2list(params)
+
+		if(!params["ctrl"]) // mouse ping is now ctrl+click
+			return ..()
 
 		src.the_guy << src.ping
 		src << src.ping
@@ -53,6 +65,11 @@
 			sleep(0.3 SECOND)
 			if(my_id == src.ping_id)
 				src.ping.loc = null
+
+	examine_verb(atom/A)
+		. = ..()
+		if(istype(A, /obj/machinery/computer3))
+			A.attack_hand(src)
 
 	say_understands(var/other)
 		return 1
@@ -100,6 +117,9 @@
 		boutput(src, rendered)
 		boutput(src.the_guy, rendered)
 
+	emote(act, voluntary=0)
+		src.my_mouse.emote(act, voluntary)
+
 	stop_observing()
 		boot()
 
@@ -111,8 +131,9 @@
 			src.removeOverlaysClient(src.client)
 		if(src.my_mouse)
 			src.my_mouse.set_loc(get_turf(src))
-			if(src.mind)
-				src.mind.transfer_to(src.my_mouse)
+			src.mind?.transfer_to(src.my_mouse)
+			if(!get_turf(src))
+				src.my_mouse.gib()
 		src.the_guy = null
 		src.my_mouse = null
 		..()
@@ -120,8 +141,7 @@
 	proc/boot()
 		if(!src.my_mouse)
 			src.my_mouse = new
-		if(src.target)
-			src.target.visible_message("\The [src.my_mouse] jumps out of [src.target]'s pocket.")
+		src.target?.visible_message("\The [src.my_mouse] jumps out of [src.target]'s pocket.")
 		if(src.client)
 			src.removeOverlaysClient(src.client)
 		src.my_mouse.set_loc(get_turf(src))
@@ -129,5 +149,7 @@
 			src.mind.transfer_to(src.my_mouse)
 		else if(src.client)
 			src.my_mouse.client = src.client
+		if(!get_turf(src))
+			src.my_mouse.gib()
 		src.my_mouse = null
 		qdel(src)

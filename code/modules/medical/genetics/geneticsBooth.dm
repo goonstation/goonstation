@@ -40,7 +40,7 @@
 	anchored = 1
 	density = 1
 	event_handler_flags = USE_FLUID_ENTER | USE_CANPASS
-	appearance_flags = TILE_BOUND
+	appearance_flags = TILE_BOUND | PIXEL_SCALE | LONG_GLIDE
 
 	var/letgo_hp = 50
 	var/mob/living/carbon/human/occupant = null
@@ -62,9 +62,9 @@
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
 
 	var/datum/light/light
-	var/lr = 0.88
-	var/lg = 0.88
-	var/lb = 1
+	var/light_r =0.88
+	var/light_g = 0.88
+	var/light_b = 1
 
 	New()
 		..()
@@ -72,11 +72,11 @@
 		light.attach(src)
 		light.set_brightness(0.6)
 		light.set_height(1.5)
-		light.set_color(lr,lg,lb)
+		light.set_color(light_r, light_g, light_b)
 
 		contextLayout = new /datum/contextLayout/flexdefault(4, 32, 32)
 
-		genetics_computers += src
+		START_TRACKING
 		screenoverlay = SafeGetOverlayImage("screen", 'icons/obj/64x64.dmi', "genebooth_screen")
 		screenoverlay.blend_mode = BLEND_MULTIPLY
 		screenoverlay.layer = src.layer + 0.2
@@ -95,9 +95,11 @@
 		workingoverlay.layer = src.layer + 0.1
 
 	disposing()
-		genetics_computers -= src
+		STOP_TRACKING
+		if(occupant)
+			occupant.set_loc(get_turf(src.loc))
+			occupant = null
 		..()
-
 
 	process()
 		if (occupant)
@@ -126,11 +128,11 @@
 			user.show_text("[src] is currently occupied. Wait until it's done.", "blue")
 			return
 
-		if (offered_genes && offered_genes.len)
+		if (length(offered_genes))
 			user.show_text("Something went wrong, showing backup menu...", "blue")
 			var/list/names = list()
 
-			for (var/datum/geneboothproduct/P in offered_genes)
+			for (var/datum/geneboothproduct/P as() in offered_genes)
 				names += P.name
 
 			var/name_sel = input(user, "Offered Products", "Selection") as null|anything in names
@@ -140,7 +142,7 @@
 				user.show_text("There's someone else inside!")
 				return
 
-			for (var/datum/geneboothproduct/P in offered_genes)
+			for (var/datum/geneboothproduct/P as() in offered_genes)
 				if (name_sel == P.name)
 					select_product(P)
 					break
@@ -148,11 +150,11 @@
 			user.show_text("[src] has no products available for purchase right now.", "blue")
 
 	proc/reload_contexts()//IM ASORRY
-		for(var/datum/contextAction/C in src.contextActions)
+		for(var/datum/contextAction/C as() in src.contextActions)
 			C.dispose()
 		src.contextActions = list()
 
-		for (var/datum/geneboothproduct/P in offered_genes)
+		for (var/datum/geneboothproduct/P as() in offered_genes)
 			var/datum/contextAction/genebooth_product/newcontext = new /datum/contextAction/genebooth_product
 			newcontext.GBP = P
 			newcontext.GB = src
@@ -167,7 +169,7 @@
 		playsound(src.loc, "sound/machines/keypress.ogg", 50, 1, extrarange = -15, pitch = 0.60)
 
 	proc/just_pick_anything()
-		for (var/datum/geneboothproduct/P in offered_genes)
+		for (var/datum/geneboothproduct/P as() in offered_genes)
 			selected_product = P
 			abilityoverlay = SafeGetOverlayImage("abil", P.BE.icon, P.BE.icon_state,src.layer + 0.1)
 			updateicon()
@@ -193,15 +195,15 @@
 			ClearSpecificOverlays("screen")
 
 
-	proc/eject_occupant(var/add_power = 1,var/do_throwing = 1)
+	proc/eject_occupant(var/add_power = 1,var/do_throwing = 1, var/override_dir = null)
 		if (occupant)
 
 			if (add_power)
-				if(selected_product && selected_product.BE)
+				if(selected_product?.BE)
 
 					var/datum/bioEffect/NEW = new selected_product.BE.type()
 					copy_datum_vars(selected_product.BE,NEW)
-					occupant.bioHolder.AddEffectInstance(NEW,1)
+					occupant.bioHolder.AddEffectInstanceNoDelay(NEW)
 
 					selected_product.uses -= 1
 					if (selected_product.uses <= 0 || !selected_product.BE)
@@ -223,7 +225,7 @@
 			updateicon()
 
 		started = 0
-		var/turf/dispense = get_step(src.loc,eject_dir)
+		var/turf/dispense = (override_dir ? get_step(src.loc, override_dir) : get_step(src.loc, eject_dir))
 		for (var/atom in src)
 			var/atom/movable/A = atom
 			A.set_loc(dispense)
@@ -284,7 +286,7 @@
 		if (split_with)
 			string += "Splitting half of profits with [split_with]."
 
-		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="GENEBOOTH-MAILBOT",  "group"=MGD_MEDRESEACH, "sender"="00000000", "message"=string)
+		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="GENEBOOTH-MAILBOT", "group"=list(MGD_MEDRESEACH, MGA_SALES), "sender"="00000000", "message"=string)
 		pdaSignal.transmission_method = TRANSMISSION_RADIO
 		if(transmit_connection != null)
 			transmit_connection.post_signal(src, pdaSignal)
@@ -297,7 +299,7 @@
 
 		var/string = "Notification: [GBP.name] has sold out!"
 
-		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="GENEBOOTH-MAILBOT",  "group"=MGD_MEDRESEACH, "sender"="00000000", "message"=string)
+		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="GENEBOOTH-MAILBOT", "group"=list(MGD_MEDRESEACH, MGA_SALES), "sender"="00000000", "message"=string)
 		pdaSignal.transmission_method = TRANSMISSION_RADIO
 		if(transmit_connection != null)
 			transmit_connection.post_signal(src, pdaSignal)
@@ -336,10 +338,9 @@
 
 	relaymove(mob/user, direction)
 		if (direction != eject_dir)
-			if (direction & WEST || direction & EAST)
+			if (direction == WEST || direction == EAST)
 				if (occupant == user && !(started>1))
-					src.eject_occupant(0,0)
-					step(user,direction)
+					src.eject_occupant(0,0, direction)
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		user.lastattacked = src

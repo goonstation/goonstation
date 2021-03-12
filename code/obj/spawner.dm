@@ -268,7 +268,7 @@
 				var/atom/movable/overlay/A = new /atom/movable/overlay( T )
 				A.icon_state = "nothing"
 				A.icon = 'icons/effects/effects.dmi'
-				A.dir = rel_dir
+				A.set_dir(rel_dir)
 
 				if(dist == 3)
 					boom_tips.Add(A)

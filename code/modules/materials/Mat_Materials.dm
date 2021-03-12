@@ -3,39 +3,68 @@
 	var/procname = null
 
 	New(var/datum/D, var/name)
+		..()
 		owner = D
 		procname = name
-///
+
+
+/**
+	* # material
+	* Base material datum definition
+	*/
 /datum/material
+	/// The atom that this material is applied to
 	var/atom/owner = null
-	var/mat_id = "ohshitium" //used to retrieve instances of these base materials from the cache.
+	/// used to retrieve instances of these base materials from the cache.
+	var/mat_id = "ohshitium"
+	/// Name of the material, used for combination and scanning
 	var/name = "Youshouldneverseemeium"
+	/// Description of the material, used for scanning
 	var/desc = "This is a custom material."
-	var/list/parent_materials = list() //Holds the parent materials.
+
+	/// Holds the parent materials.
+	var/list/parent_materials = list()
+	/// List of all the various [/datum/material_property] that apply.
 	var/list/properties = list()
 
-	var/generation = 0 //Compound generation
+	/// Compound generation
+	var/generation = 0
 
-	var/canMix = 1 						//Can this be mixed with other materials?
-	var/mixOnly = 0						//Can this only be used after being combined with another material?
+	/// Can this be mixed with other materials?
+	var/canMix = 1
+	/// Can this only be used after being combined with another material?
+	var/mixOnly = 0
 
-	var/material_flags = 0				//Various flags. See defines in _setup.dm.
-	var/value = 100 					//In percent of a base value. How much this sells for.
+	/// Various flags. See [material_properties.dm]
+	var/material_flags = 0
+	/// In percent of a base value. How much this sells for.
+	var/value = 100
 
-	var/list/prefixes = list() //goes before the name
-	var/list/suffixes = list() //and after it.
+	/// words that go before the name, used in combination
+	var/list/prefixes = list()
+	/// words that go after the name, used in combination
+	var/list/suffixes = list()
 
-	var/texture = "" //if not null, texture will be set when mat is applied.
-	var/texture_blend = ICON_MULTIPLY //How to blend the texture.
+	/// if not null, texture will be set when mat is applied.
+	var/texture = ""
+	/// How to blend the [/datum/material/var/texture].
+	var/texture_blend = ICON_MULTIPLY
 
-	var/applyColor = 1 //Should this even color the objects made from it? Mostly used for base station materials like steel
-	var/color = "#FFFFFF" //The color of the material
-	var/alpha = 255 //The "transparency" of the material. Kept as alpha for logical reasons. Displayed as percentage ingame.
+	/// Should this even color the objects made from it? Mostly used for base station materials like steel
+	var/applyColor = 1
+	/// The color of the material
+	var/color = "#FFFFFF"
+	/// The "transparency" of the material. Kept as alpha for logical reasons. Displayed as percentage ingame.
+	var/alpha = 255
+	/// The 'quality' of the material
 	var/quality = 0
 
-	var/edible_exact = 0 //The actual value. Changes internally and sets the below value.
-	var/edible = 0		//The functional value. Edible or not? This is what you check from the outside to see if material is edible.
-	//Other
+	/// The actual value of edibility. Changes internally and sets [/datum/material/var/edible].
+	var/edible_exact = 0
+	/// The functional value of edibility. Edible or not? This is what you check from the outside to see if material is edible. See [/datum/material/var/edible_exact].
+	var/edible = 0
+
+	var/owner_hasentered_added = FALSE
 
 	proc/getProperty(var/property, var/type = VALUE_CURRENT)
 		for(var/datum/material_property/P in properties)
@@ -91,6 +120,7 @@
 	proc/addTrigger(var/list/L, var/datum/materialProc/D)
 		for(var/datum/materialProc/P in L)
 			if(P.type == D.type) return 0
+		D.owner = src
 		L.Add(D)
 		L[D] = 0
 		return
@@ -105,19 +135,32 @@
 		del(owner)
 		return
 
-	var/list/triggersFail = list()  //Called when the material fails due to instability.
-	var/list/triggersTemp = list()  //Called when exposed to temperatures.
-	var/list/triggersChem = list()	//Called when exposed to chemicals
-	var/list/triggersPickup = list()//Called when owning object is picked up
-	var/list/triggersDrop = list()	//Called when owning object is dropped
-	var/list/triggersExp = list()	//Called when exposed to explosions
-	var/list/triggersOnAdd = list()	//Called when the material is added to an object
-	var/list/triggersOnLife = list()//Called when the life proc of a mob that has the owning item equipped runs
-	var/list/triggersOnAttack = list()//Called when the owning object is used to attack something or someone.
-	var/list/triggersOnAttacked = list()//Called when a mob wearing the owning object is attacked.
-	var/list/triggersOnBullet = list()//Called when a mob wearing the owning object is shot.
-	var/list/triggersOnEntered = list()//Called when *something* enters a turf with the material assigned. Also called on all objects on the turf with a material.
-	var/list/triggersOnEat = list()//Called when someone eats a thing with this material assigned.
+	/// Called when the material fails due to instability.
+	var/list/triggersFail = list()
+	/// Called when exposed to temperatures.
+	var/list/triggersTemp = list()
+	/// Called when exposed to chemicals.
+	var/list/triggersChem = list()
+	/// Called when owning object is picked up.
+	var/list/triggersPickup = list()
+	/// Called when owning object is dropped.
+	var/list/triggersDrop = list()
+	/// Called when exposed to explosions.
+	var/list/triggersExp = list()
+	/// Called when the material is added to an object
+	var/list/triggersOnAdd = list()
+	/// Called when the life proc of a mob that has the owning item equipped runs.
+	var/list/triggersOnLife = list()
+	/// Called when the owning object is used to attack something or someone.
+	var/list/triggersOnAttack = list()
+	/// Called when a mob wearing the owning object is attacked.
+	var/list/triggersOnAttacked = list()
+	/// Called when a mob wearing the owning object is shot.
+	var/list/triggersOnBullet = list()
+	/// Called when *something* enters a turf with the material assigned. Also called on all objects on the turf with a material.
+	var/list/triggersOnEntered = list()
+	/// Called when someone eats a thing with this material assigned.
+	var/list/triggersOnEat = list()
 
 	proc/triggerOnFail(var/atom/owner)
 		for(var/datum/materialProc/X in triggersFail)
@@ -145,9 +188,9 @@
 			call(X,  "execute")(owner, attacker, attacked)
 		return
 
-	proc/triggerOnLife(var/mob/M, var/obj/item/I)
+	proc/triggerOnLife(var/mob/M, var/obj/item/I, mult)
 		for(var/datum/materialProc/X in triggersOnLife)
-			call(X,  "execute")(M, I)
+			call(X,  "execute")(M, I, mult)
 		return
 
 	proc/triggerOnAdd(var/location)
@@ -187,6 +230,7 @@
 
 // Metals
 
+/// Base metal material parent
 /datum/material/metal
 	material_flags = MATERIAL_METAL
 	color = "#8C8C8C"
@@ -359,6 +403,23 @@
 		setProperty("hard", 30)
 		return ..()
 
+/datum/material/metal/neutronium
+	mat_id = "neutronium"
+	name = "neutronium"
+	desc = "Neutrons condensed into a solid form."
+	color = "#043e9b"
+	material_flags = MATERIAL_ENERGY | MATERIAL_METAL
+	alpha = 255
+
+	New()
+		setProperty("density", 100) //👀
+		setProperty("hard", 10)
+		setProperty("electrical", 70)
+		setProperty("stability", 20)
+		setProperty("n_radioactive", 85)
+		return ..()
+
+
 // Special Metals
 
 /datum/material/metal/slag
@@ -391,7 +452,7 @@
 
 /datum/material/metal/iridiumalloy
 	mat_id = "iridiumalloy"
-	name = "iridium-alloy"
+	name = "iridium alloy"
 	canMix = 1 //Can not be easily modified.
 	desc = "Some sort of advanced iridium alloy."
 	color = "#756596"
@@ -414,7 +475,6 @@
 	New()
 		setProperty("density", 65)
 		addTrigger(triggersOnEntered, new /datum/materialProc/soulsteel_entered())
-		addTrigger(triggersOnAdd, new /datum/materialProc/soulsteel_add())
 		return ..()
 
 // Crystals
@@ -439,7 +499,21 @@
 	New()
 		setProperty("density", 40)
 		setProperty("hard", 40)
+		addTrigger(triggersTemp, new /datum/materialProc/moltiz_temp())
+		addTrigger(triggersExp, new /datum/materialProc/moltiz_exp())
 		return ..()
+
+	beta
+		mat_id = "molitz_b"
+		name = "molitz beta"
+		color = "#ff2288"
+		desc = "A rare form of Molitz. When heated produces a powerful plasma fire catalyst."
+
+		New()
+			..()
+			removeTrigger(triggersTemp, /datum/materialProc/moltiz_temp)
+			addTrigger(triggersTemp, new /datum/materialProc/moltiz_temp/agent_b())
+			return
 
 /datum/material/crystal/claretine
 	mat_id = "claretine"
@@ -771,6 +845,7 @@
 		setProperty("radioactive", 60)
 		setProperty("density", 60)
 		setProperty("hard", 60)
+		addTrigger(triggersOnAdd, new /datum/materialProc/enchanted_add())
 		return ..()
 
 	quartz // basically wizard glass
@@ -805,6 +880,7 @@
 
 // Organics
 
+/// Base organic material parent
 /datum/material/organic
 	color = "#555555"
 	material_flags = MATERIAL_ORGANIC
@@ -938,7 +1014,7 @@
 	New()
 		setProperty("density", 45)
 		setProperty("flammable", 67)
-		setProperty("stable", 53)
+		setProperty("stability", 53)
 		return ..()
 
 /datum/material/organic/cardboard
@@ -993,6 +1069,24 @@
 		addTrigger(triggersPickup, new /datum/materialProc/ffart_pickup())
 		return ..()
 
+/datum/material/organic/hamburgris
+	mat_id = "hamburgris"
+	name = "hamburgris"
+	desc = "Ancient medium ground chuck, petrified by the ages into a sturdy composite. Or worse."
+	color = "#816962"
+	material_flags = MATERIAL_ORGANIC
+
+	New()
+		setProperty("density", 65)
+		setProperty("corrosion", 75)
+		setProperty("permeable", 25)
+		setProperty("hard", 30)
+		setProperty("thermal", 20)
+		setProperty("flammable", 10)
+		addTrigger(triggersOnLife, new /datum/materialProc/generic_reagent_onlife("cholesterol", 1))
+
+		return ..()
+
 /datum/material/organic/pizza
 	mat_id = "pizza"
 	name = "pizza"
@@ -1014,6 +1108,8 @@
 	desc = "Coral harvested from the sea floor."
 	color = "#990099"
 	material_flags = MATERIAL_METAL | MATERIAL_CRYSTAL | MATERIAL_ORGANIC
+	texture = "coral"
+	texture_blend = ICON_OVERLAY
 
 	New()
 		setProperty("density", 5)
@@ -1213,7 +1309,6 @@
 		setProperty("permeable", 10)
 		addTrigger(triggersOnAdd, new /datum/materialProc/ethereal_add())
 		addTrigger(triggersOnEntered, new /datum/materialProc/soulsteel_entered())
-		addTrigger(triggersOnAdd, new /datum/materialProc/soulsteel_add())
 		return ..()
 
 /datum/material/fabric/cloth/ectofibre
@@ -1287,7 +1382,7 @@
 	mat_id = "negativematter"
 	name = "negative matter"
 	desc = "It seems to repel matter."
-	color = "#111111"
+	color = list(-1, 0, 0, 0, -1, 0, 0, 0, -1, 1, 1, 1)
 
 	New()
 		addTrigger(triggersOnAdd, new /datum/materialProc/negative_add())
@@ -1304,4 +1399,3 @@
 /datum/material/cardboard
 
 */
-

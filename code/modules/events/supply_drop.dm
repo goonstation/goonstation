@@ -12,7 +12,7 @@
 		..()
 
 		if (!A) //manually called outside of BR gamemode
-			A = get_area(pick(peststart))
+			A = get_area(pick_landmark(LANDMARK_PESTSTART))
 		logTheThing("admin",null,null,"Supply drop at [A]")
 		var/list/turfs = get_area_turfs(A,1)
 		if (!turfs)	DEBUG_MESSAGE("Getting turfs failed for [A]")
@@ -31,13 +31,20 @@
 	anchored = 1
 	pixel_x = -16
 	pixel_y = -16
+	var/gib_mobs = TRUE
 
-	New(var/atom/location, var/preDropTime = 100)
-		src.loc = location
+	New(var/atom/location, var/preDropTime = 100, var/obj_path, var/no_lootbox)
+		src.set_loc(location)
 		SPAWN_DBG(preDropTime)
-			new/obj/effect/supplydrop(src.loc)
+			if (gib_mobs)
+				new/obj/effect/supplydrop(src.loc, obj_path, no_lootbox)
+			else
+				new/obj/effect/supplydrop/safe(src.loc, obj_path, no_lootbox)
 			qdel(src)
 		..()
+
+/obj/effect/supplymarker/safe
+	gib_mobs = FALSE
 
 /obj/effect/supplydrop
 	name = "supply drop"
@@ -47,8 +54,9 @@
 	anchored = 1
 	plane = PLANE_FLOCKVISION
 	var/dropTime = 30
+	var/gib_mobs = TRUE
 
-	New()
+	New(atom/loc, var/obj_path, var/no_lootbox)
 		pixel_y = 480
 		animate(src, pixel_y = 0, time = dropTime)
 		playsound(src.loc, 'sound/effects/flameswoosh.ogg', 100, 0)
@@ -56,13 +64,21 @@
 			new/obj/effect/supplyexplosion(src.loc)
 			playsound(src.loc, 'sound/effects/ExplosionFirey.ogg', 100, 1)
 			for(var/mob/M in view(7, src.loc))
-				shake_camera(M, 20, 1)
-				if(M.loc == src.loc)
+				shake_camera(M, 20, 8)
+				if(gib_mobs && M.loc == src.loc)
 					M.gib(1, 1)
 			sleep(0.5 SECONDS)
-			new/obj/lootbox(src.loc)
+			if (obj_path && no_lootbox)
+				new obj_path(src.loc)
+			else if (no_lootbox)
+				makeRandomLootTrash().set_loc(src.loc)
+			else
+				new/obj/lootbox(src.loc, obj_path)
 			qdel(src)
 		..()
+
+/obj/effect/supplydrop/safe
+	gib_mobs = FALSE
 
 /obj/effect/supplyexplosion
 	name = ""
@@ -88,9 +104,11 @@
 	anchored = 0
 	density = 1
 	opacity = 0
+	var/obj_path
 
-	New()
+	New(atom/loc, var/obj_path_arg)
 		filters += filter(type="drop_shadow", x=0, y=0, size=5, offset=0, color=rgb(240,202,133))
+		obj_path = obj_path_arg
 		return ..()
 
 	attack_hand(mob/user as mob)
@@ -99,15 +117,16 @@
 		set_density(0)
 		icon_state = "attachecase_open"
 		filters = list()
-		lootbox(user)
+		lootbox(user, obj_path)
 		return
 
-/proc/lootbox(var/mob/user)
+/proc/lootbox(var/mob/user, var/obj_path)
 	var/mob/living/carbon/human/H = user
-	if(istype(H)) H.hud.add_screen(new/obj/screen/lootcrateicon/crate(user))
+	if(istype(H)) H.hud.add_screen(new/atom/movable/screen/lootcrateicon/crate(user, obj_path))
 	return
 
 /proc/makeRandomLootTrash()
+	RETURN_TYPE(/atom/movable)
 	var/obj/item/I = null
 	var/list/permittedItemPaths = list(/obj/item/clothing)
 	var/pickedClothingPath = pick(typesof(pick(permittedItemPaths)))
@@ -207,7 +226,7 @@
 
 	return I
 
-/obj/screen/lootcratepreview
+/atom/movable/screen/lootcratepreview
 	icon = null
 	screen_loc = "1,1"
 	name = ""
@@ -222,7 +241,7 @@
 			filters += filter(type="drop_shadow", x=0, y=0, size=5, offset=0, color=rgb(240,202,133))
 		..()
 
-/obj/screen/lootcrateicon
+/atom/movable/screen/lootcrateicon
 	icon = 'icons/effects/320x320.dmi'
 	screen_loc = "1,1"
 	name = ""
@@ -244,6 +263,11 @@
 	crate
 		icon_state = "lootb0"
 		var/opened = 0
+		var/obj_path = null
+
+		New(atom/loc, var/obj_path_arg)
+			obj_path = obj_path_arg
+			..()
 
 		clicked(list/params)
 			if(opened)
@@ -257,21 +281,25 @@
 
 			SPAWN_DBG(2 SECONDS)
 				var/mob/living/carbon/human/H = usr
-				var/obj/item/I = makeRandomLootTrash()
+				var/atom/movable/AM = null
+				if (obj_path)
+					AM = new obj_path()
+				else
+					AM = makeRandomLootTrash()
 				if(istype(H))
-					var/obj/screen/lootcrateicon/background/B = new/obj/screen/lootcrateicon/background(src)
-					var/obj/screen/lootcrateicon/sparks/S = new/obj/screen/lootcrateicon/sparks(src)
-					var/obj/screen/lootcratepreview/P = new/obj/screen/lootcratepreview(src)
-					P.icon = I.icon
-					P.icon_state = I.icon_state
-					P.color = I.color
+					var/atom/movable/screen/lootcrateicon/background/B = new/atom/movable/screen/lootcrateicon/background(src)
+					var/atom/movable/screen/lootcrateicon/sparks/S = new/atom/movable/screen/lootcrateicon/sparks(src)
+					var/atom/movable/screen/lootcratepreview/P = new/atom/movable/screen/lootcratepreview(src)
+					P.icon = AM.icon
+					P.icon_state = AM.icon_state
+					P.color = AM.color
 					H.hud.add_screen(B)
 					H.hud.add_screen(S)
 					H.hud.add_screen(P)
 
-					if (ishuman(usr) && I)
+					if (ishuman(usr) && AM)
 						var/mob/living/carbon/human/dude = usr
-						dude.put_in_hand_or_drop(I)
+						dude.put_in_hand_or_drop(AM)
 
 					SPAWN_DBG(2.5 SECONDS)
 						del(B)

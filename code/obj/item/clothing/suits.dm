@@ -116,6 +116,12 @@
 		icon_state = "jacket_yellow"
 		item_state = "jacket_yellow"
 
+	sparkly
+		name = "sparkly jacket"
+		desc = "No glitter. No LEDs. Just magic!"
+		icon_state = "jacket_sparkly"
+		item_state = "jacket_sparkly"
+
 	design
 		name = "jacket"
 		desc = "A colorful jacket with a neat design on the back."
@@ -187,9 +193,9 @@
 		setProperty("rangedprot", 0.5)
 
 /obj/item/clothing/suit/bio_suit/attackby(obj/item/W, mob/user)
-	var/turf/T = usr.loc
+	var/turf/T = user.loc
 	if(istype(W, /obj/item/clothing/suit/armor/vest))
-		boutput(usr, "<span class='notice'>You attach [W] to [src].</span>")
+		boutput(user, "<span class='notice'>You attach [W] to [src].</span>")
 		if (istype(src, /obj/item/clothing/suit/bio_suit/paramedic))
 			new/obj/item/clothing/suit/bio_suit/paramedic/armored(T)
 		else
@@ -231,7 +237,6 @@
 	desc = "A suit that protects against biological contamination. Somebody slapped some armor onto the chest."
 	icon_state = "armorbio"
 	item_state = "armorbio"
-	c_flags = ONESIZEFITSALL
 	setupProperties()
 		..()
 		setProperty("meleeprot", 5)
@@ -242,7 +247,6 @@
 	desc = "An armored biosuit that protects against biological contamination and toolboxes."
 	icon_state = "ntbio"
 	item_state = "ntbio"
-	c_flags = ONESIZEFITSALL
 	setupProperties()
 		..()
 		setProperty("meleeprot", 5)
@@ -253,7 +257,6 @@
 	desc = "A protective padded suit for emergency response personnel. Offers limited thermal and biological protection. Somebody slapped some armor onto the chest."
 	icon_state = "para_armor"
 	item_state = "paramedic"
-	c_flags = ONESIZEFITSALL
 	setupProperties()
 		..()
 		setProperty("meleeprot", 5)
@@ -281,7 +284,7 @@
 	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_gimmick.dmi'
 	icon_state = "hev"
 	item_state = "hev"
-	c_flags = ONESIZEFITSALL | SPACEWEAR
+	c_flags = SPACEWEAR
 	body_parts_covered = TORSO|LEGS|ARMS
 
 	setupProperties()
@@ -299,10 +302,13 @@
 	icon = 'icons/obj/clothing/overcoats/item_suit_hazard.dmi'
 	wear_image_icon = 'icons/mob/overcoats/worn_suit_hazard.dmi'
 	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_hazard.dmi'
-	c_flags = ONESIZEFITSALL
 	body_parts_covered = TORSO|LEGS|ARMS
 	permeability_coefficient = 0.005
 	over_hair = 1
+
+	New()
+		. = ..()
+		AddComponent(/datum/component/wearertargeting/geiger, list(SLOT_WEAR_SUIT))
 
 	setupProperties()
 		..()
@@ -338,7 +344,7 @@
 		setProperty("rangedprot", 0.5)
 
 /obj/item/clothing/suit/det_suit/hos
-	name = "HoS jacket"
+	name = "Head of Security's jacket"
 	desc = "A slightly armored jacket favored by security personnel. It looks cozy and warm; you could probably sleep in this if you wanted to!"
 	icon = 'icons/obj/clothing/overcoats/item_suit_armor.dmi'
 	wear_image_icon = 'icons/mob/overcoats/worn_suit_armor.dmi'
@@ -375,6 +381,12 @@
 	body_parts_covered = TORSO
 	permeability_coefficient = 0.70
 
+/obj/item/clothing/suit/apron/botanist
+	name = "blue apron"
+	desc = "This will keep you safe from tomato stains. Unless they're the exploding ones"
+	icon_state = "apron-botany"
+	item_state = "apron-botany"
+
 /obj/item/clothing/suit/labcoat
 	name = "labcoat"
 	desc = "A suit that protects against minor chemical spills and biohazards."
@@ -399,18 +411,10 @@
 
 	attack_self()
 		..()
-		if (src.coat_style)
-			usr.set_clothing_icon_dirty()
-			if (buttoned)
-				src.icon_state = "[src.coat_style]_o"
-				usr.visible_message("[usr] unbuttons [his_or_her(usr)] [src.name].",\
-				"You unbutton your [src.name].")
-			else
-				src.icon_state = src.coat_style
-				usr.visible_message("[usr] buttons [his_or_her(usr)] [src.name].",\
-				"You button your [src.name].")
-
-		buttoned = !buttoned
+		if (buttoned)
+			src.unbutton()
+		else
+			src.button()
 
 	proc/button()
 		if (src.coat_style)
@@ -418,6 +422,7 @@
 			usr.set_clothing_icon_dirty()
 		usr.visible_message("[usr] buttons [his_or_her(usr)] [src.name].",\
 		"You button your [src.name].")
+		src.buttoned = TRUE
 
 	proc/unbutton()
 		if (src.coat_style)
@@ -425,6 +430,7 @@
 			usr.set_clothing_icon_dirty()
 		usr.visible_message("[usr] unbuttons [his_or_her(usr)] [src.name].",\
 		"You unbutton your [src.name].")
+		src.buttoned = FALSE
 
 
 /obj/item/clothing/suit/labcoat/genetics
@@ -462,6 +468,18 @@
 		icon_state = "MDlabcoat-alt"
 		item_state = "MDlabcoat-alt"
 		coat_style = "MDlabcoat-alt"
+
+/obj/item/clothing/suit/labcoat/pathology
+	name = "pathologist's labcoat"
+	desc = "A protective laboratory coat with the orange markings of a Pathologist."
+	icon_state = "PTlabcoat"
+	item_state = "PTlabcoat"
+	coat_style = "PTlabcoat"
+
+	april_fools
+		icon_state = "PTlabcoat-alt"
+		item_state = "PTlabcoat-alt"
+		coat_style = "PTlabcoat-alt"
 
 /obj/item/clothing/suit/labcoat/science
 	name = "scientist's labcoat"
@@ -573,7 +591,7 @@
 				return
 			if ("Rip up")
 				boutput(user, "You begin ripping up [src].")
-				if (!do_after(user, 30))
+				if (!do_after(user, 3 SECONDS))
 					boutput(user, "<span class='alert'>You were interrupted!</span>")
 					return
 				else
@@ -605,7 +623,7 @@
 			switch (action)
 				if ("Make bandages")
 					boutput(user, "You begin cutting up [src].")
-					if (!do_after(user, 30))
+					if (!do_after(user, 3 SECONDS))
 						boutput(user, "<span class='alert'>You were interrupted!</span>")
 						return
 					else
@@ -1049,7 +1067,7 @@
 
 		setupProperties()
 			..()
-			setProperty("exploprot", 3)
+			setProperty("exploprot", 40)
 			setProperty("meleeprot", 6)
 			setProperty("rangedprot", 3)
 
@@ -1071,11 +1089,24 @@
 		icon_state = "syndie_specialist"
 		item_state = "syndie_specialist"
 
+		setupProperties()
+			..()
+			setProperty("exploprot", 20)
+			setProperty("meleeprot", 4)
+			setProperty("rangedprot", 1.5)
+
 		medic
 			name = "specialist operative medic uniform"
 			desc = "A syndicate issue combat dress system, pressurized for space travel."
 			icon_state = "syndie_specialist-medic"
 			item_state = "syndie_specialist-medic"
+
+		body_parts_covered = TORSO|LEGS|ARMS
+		permeability_coefficient = 0.01
+
+		setupProperties()
+			..()
+			setProperty("viralprot", 50)
 
 		infiltrator
 			name = "specialist operative espionage suit"
@@ -1103,6 +1134,13 @@
 			name = "specialist operative marksman's suit"
 			icon_state = "syndie_specialist-sniper"
 			item_state = "syndie_specialist-sniper"
+
+		grenadier
+			name = "specialist operative bombsuit"
+
+			setupProperties()
+				..()
+				setProperty("exploprot", 60)
 
 		unremovable
 			cant_self_remove = 1
@@ -1193,7 +1231,7 @@
 		setProperty("radprot", 50)
 		setProperty("coldprot", 75)
 		setProperty("heatprot", 25)
-		setProperty("exploprot", 3)
+		setProperty("exploprot", 30)
 		setProperty("meleeprot", 2)
 		setProperty("rangedprot", 0.5)
 		setProperty("space_movespeed", 0)
@@ -1237,7 +1275,7 @@
 		setProperty("radprot", 25)
 		setProperty("coldprot", 50)
 		setProperty("heatprot", 15)
-		setProperty("exploprot", 2)
+		setProperty("exploprot", 20)
 		setProperty("meleeprot", 5)
 		setProperty("rangedprot", 2)
 
@@ -1278,6 +1316,13 @@
 		item_state = "hasturcultist"
 		over_all = 1
 
+	nerd
+		name = "robes of dungeon mastery"
+		desc = "Neeeeerds."
+
+		New()
+			. = ..()
+			src.enchant(min(rand(1, 5), rand(1, 5)))
 
 /obj/item/clothing/suit/flockcultist
 	name = "weird cultist robe"
@@ -1344,7 +1389,6 @@
 	icon_state = "bathrobe"
 	item_state = "bathrobe"
 	body_parts_covered = TORSO|ARMS
-	c_flags = ONESIZEFITSALL //allows for obese to wear
 	burn_possible = 1
 	burn_point = 450
 	burn_output = 800
@@ -1485,3 +1529,18 @@
 
 	attack_self(mob/user as mob)
 		user.visible_message("[user] flashes the badge: <br><span class='bold'>[bicon(src)] Nanotrasen's Finest [badge_owner_job]: [badge_owner_name].</span>", "You show off the badge: <br><span class='bold'>[bicon(src)] Nanotrasen's Finest [badge_owner_job] [badge_owner_name].</span>")
+
+/obj/item/clothing/suit/hosmedal
+	name = "war medal"
+	desc = ""
+	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
+	w_class = 1.0
+	wear_image_icon = 'icons/mob/overcoats/worn_suit_gimmick.dmi'
+	icon_state = "hosmedal"
+	icon_state = "hosmedal"
+
+	get_desc(var/dist, var/mob/user)
+		if (user.mind?.assigned_role == "Head of Security")
+			. = "It's your war medal, you remember when you got this for saving a man's life during the war."
+		else
+			. = "It's the HoS's old war medal, you heard they got it for their acts of heroism in the war."

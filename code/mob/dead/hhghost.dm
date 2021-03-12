@@ -45,8 +45,7 @@
 
 /mob/dead/hhghost/Logout()
 	..()
-	if(src.client)
-		src.client.images.Cut()
+	src.client?.images.Cut()
 	return
 
 /mob/dead/hhghost/Move(var/turf/NewLoc, direct)

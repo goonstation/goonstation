@@ -8,7 +8,8 @@
 	desc = ""
 	icon = 'icons/obj/networked.dmi'
 	icon_state = "generic-p"
-
+	cabinet_banned = 1 // non-functional, abuse potential. B&
+	plane = PLANE_DEFAULT
 	var/net_id = null
 	var/host_id = null //Who are we connected to?(If we have a single host)
 	var/old_host_id = null //Were we previously connected to someone?  Do we care?
@@ -44,12 +45,12 @@
 
 	proc/toggleSelfOnly(obj/item/W as obj, mob/user as mob)
 		self_only = !self_only
-		boutput(usr, "[self_only ? "Now only processing messages adressed at us.":"Now processing all messages recieved."]")
+		boutput(user, "[self_only ? "Now only processing messages adressed at us.":"Now processing all messages recieved."]")
 		tooltip_rebuild = 1
 
 	proc/toggleMainframeReg(obj/item/W as obj, mob/user as mob)
 		register = !register
-		boutput(usr, "[register ? "Now registering with mainframes.":"Now no longer registering with mainframes."]")
+		boutput(user, "[register ? "Now registering with mainframes.":"Now no longer registering with mainframes."]")
 		tooltip_rebuild = 1
 
 	secure()
@@ -60,7 +61,7 @@
 			src.link = test_link
 			src.link.master = src
 			src.icon_state = "generic1"
-	
+
 	loosen()
 		resetConnection()
 		src.icon_state = "generic-p"

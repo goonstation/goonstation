@@ -143,7 +143,7 @@
 	for(var/A in possible_modes)
 		intercepttext += i_text.build(A, pick(leaders))
 
-	for (var/obj/machinery/communications_dish/C in comm_dishes)
+	for_by_tcl(C, /obj/machinery/communications_dish)
 		C.add_centcom_report("Cent. Com. Status Summary", intercepttext)
 
 	command_alert("Summary downloaded and printed out at all communications consoles.", "Enemy communication intercept. Security Level Elevated.")
@@ -337,7 +337,7 @@
 
 	frequencies_used += leaderMind.gang.gang_frequency
 
-	SPAWN_DBG (0)
+	SPAWN_DBG(0)
 		pick_name(leaderMind)
 		pick_theme(leaderMind)
 
@@ -441,13 +441,13 @@
 
 	SPAWN_DBG(hot_zone_timer-600)
 		if(hot_zone != null) broadcast_to_all_gangs("You have a minute left to control the [hot_zone.name]!")
-		SPAWN_DBG(1 MINUTE)
-			if(hot_zone != null && hot_zone.gang_owners != null)
-				var/datum/gang/G = hot_zone.gang_owners
-				G.score_event += hot_zone_score
-				broadcast_to_all_gangs("[G.gang_name] has been rewarded for their control of the [hot_zone.name].")
-				sleep(10 SECONDS)
-			process_hot_zones()
+		sleep(1 MINUTE)
+		if(hot_zone != null && hot_zone.gang_owners != null)
+			var/datum/gang/G = hot_zone.gang_owners
+			G.score_event += hot_zone_score
+			broadcast_to_all_gangs("[G.gang_name] has been rewarded for their control of the [hot_zone.name].")
+			sleep(10 SECONDS)
+		process_hot_zones()
 
 /datum/game_mode/gang/proc/process_kidnapping_event()
 	kidnapp_success = 0
@@ -468,7 +468,7 @@
 	//get possible targets. Looks for ckey, if they are not dead, and if they are not in the top gang.
 	var/list/potential_targets = list()
 	for (var/mob/living/carbon/human/H in mobs)
-		if (H.ckey && H.stat != 2 && H.mind?.gang != top_gang)
+		if (H.ckey && !isdead(H) && H.mind?.gang != top_gang && !istype(H.mutantrace, /datum/mutantrace/virtual))
 			potential_targets += H
 
 	if (!potential_targets.len)
@@ -487,27 +487,27 @@
 		if (G == top_gang)
 			broadcast_to_gang("A bounty has been placed on the capture of [target_name]. Shove them into your gang locker <ALIVE>, within 8 minutes for a massive reward!", G)
 		else
-			broadcast_to_gang("[target_name] is the target of a kidnapping by [G.gang_name]. Ensure that [target_name] is alive and well for the next 8 minutes for a reward!", G)
+			broadcast_to_gang("[target_name] is the target of a kidnapping by [top_gang.gang_name]. Ensure that [target_name] is alive and well for the next 8 minutes for a reward!", G)
 
 	boutput(kidnapping_target, "<span class='alert'>You get the feeling that [top_gang.gang_name] wants you dead! Run and hide or ask security for help!</span>")
 
 
 	SPAWN_DBG(kidnapping_timer - 1 MINUTE)
 		if(kidnapping_target != null) broadcast_to_all_gangs("[target_name] has still not been captured by [top_gang.gang_name] and they have 1 minute left!")
-		SPAWN_DBG(1 MINUTE)
-			//if they didn't kidnapp em, then give points to other gangs depending on whether they are alive or not.
-			if(!kidnapp_success)
-				//if the kidnapping target is null or dead, nobody gets points. (the target will be "gibbed" if successfully "kidnapped" and points awarded there)
-				if (kidnapping_target && kidnapping_target.stat != 2)
-					for (var/datum/gang/G in gangs)
-						if (G != top_gang)
-							G.score_event += kidnapping_score/gangs.len 	//This is less than the total points the top_gang would get, so it behooves security to help the non-top gangs keep the target safe.
-					broadcast_to_all_gangs("[top_gang.gang_name] has failed to kidnapp [target_name] and the other gangs have been rewarded for thwarting the kidnapping attempt!")
-				else
-					broadcast_to_all_gangs("[target_name] has died in one way or another. No gangs have been rewarded for this futile exercise.")
+		sleep(1 MINUTE)
+		//if they didn't kidnapp em, then give points to other gangs depending on whether they are alive or not.
+		if(!kidnapp_success)
+			//if the kidnapping target is null or dead, nobody gets points. (the target will be "gibbed" if successfully "kidnapped" and points awarded there)
+			if (kidnapping_target && kidnapping_target.stat != 2)
+				for (var/datum/gang/G in gangs)
+					if (G != top_gang)
+						G.score_event += kidnapping_score/gangs.len 	//This is less than the total points the top_gang would get, so it behooves security to help the non-top gangs keep the target safe.
+				broadcast_to_all_gangs("[top_gang.gang_name] has failed to kidnapp [target_name] and the other gangs have been rewarded for thwarting the kidnapping attempt!")
+			else
+				broadcast_to_all_gangs("[target_name] has died in one way or another. No gangs have been rewarded for this futile exercise.")
 
-				sleep(delay_between_kidnappings)
-			process_kidnapping_event()
+			sleep(delay_between_kidnappings)
+		process_kidnapping_event()
 
 
 //bleh
@@ -728,7 +728,7 @@
 		try
 			if (ismob(owner))
 				M = owner
-			if (M && M.mind && M.mind.gang)
+			if (M?.mind?.gang)
 				icon = 'icons/obj/decals/graffiti.dmi'
 				icon_state = "gangtag[M.mind.gang.gang_tag]"
 				var/speedup = M.mind.gang.gear_worn(M) + (owner.hasStatus("janktank") ? 1: 0)
@@ -806,7 +806,7 @@
 	New()
 		..()
 		default_screen_overlay = image('icons/obj/large_storage.dmi', "gang_overlay_yellow")
-		overlays += default_screen_overlay
+		src.UpdateOverlays(default_screen_overlay, "screen")
 		buyable_items = list(
 			new/datum/gang_item/misc/ratstick,
 			new/datum/gang_item/ninja/throwing_knife,
@@ -819,9 +819,9 @@
 			new/datum/gang_item/country_western/colt_45_bullet,
 
 			new/datum/gang_item/space/discount_csaber,
-			new/datum/gang_item/space/csaber,
+			// new/datum/gang_item/space/csaber,
 			new/datum/gang_item/ninja/discount_katana,
-			new/datum/gang_item/ninja/katana,
+			// new/datum/gang_item/ninja/katana,
 			new/datum/gang_item/street/cop_car,
 
 			new/datum/gang_item/misc/janktank,
@@ -948,25 +948,22 @@
 			boutput(user, "<span class='alert'>The locker's screen briefly displays the message \"Access Denied\".</span>")
 			overlay = image('icons/obj/large_storage.dmi', "gang_overlay_red")
 
-		src.overlays -= default_screen_overlay
-		src.overlays += overlay
+		src.UpdateOverlays(overlay, "screen")
 		SPAWN_DBG(1 SECOND)
-			src.overlays -= overlay
-			src.overlays += default_screen_overlay
+			src.UpdateOverlays(default_screen_overlay, "screen")
 
 	proc/update_icon()
-		src.overlays = null
-
 		if(health <= 0)
+			src.UpdateOverlays(null, "light")
+			src.UpdateOverlays(null, "screen")
 			return
 
-		src.overlays += default_screen_overlay
+		src.UpdateOverlays(default_screen_overlay, "screen")
 
 		if(gang.can_be_joined())
-			src.overlays += image('icons/obj/large_storage.dmi', "greenlight")
+			src.UpdateOverlays(image('icons/obj/large_storage.dmi', "greenlight"), "light")
 		else
-			src.overlays += image('icons/obj/large_storage.dmi', "redlight")
-		return
+			src.UpdateOverlays(image('icons/obj/large_storage.dmi', "redlight"), "light")
 
 	proc/insert_item(var/obj/item/item,var/mob/user)
 		if(!user)
@@ -1013,6 +1010,7 @@
 		score += O.reagents.get_reagent_amount("jenkem")/2
 		score += O.reagents.get_reagent_amount("crank")*1.5
 		score += O.reagents.get_reagent_amount("LSD")/2
+		score += O.reagents.get_reagent_amount("lsd_bee")/3
 		score += O.reagents.get_reagent_amount("space_drugs")/4
 		score += O.reagents.get_reagent_amount("THC")/8
 		score += O.reagents.get_reagent_amount("psilocybin")/2
@@ -1108,11 +1106,11 @@
 						//assign poitns, gangs
 
 						user.mind.gang.score_event += mode.kidnapping_score
-						mode.broadcast_to_all_gangs("[src.gang] has successfully kidnapped [mode.kidnapping_target] and has been rewarded for their efforts.")
+						mode.broadcast_to_all_gangs("[src.gang.gang_name] has successfully kidnapped [mode.kidnapping_target] and has been rewarded for their efforts.")
 
 						mode.kidnapping_target = null
 						mode.kidnapp_success = 1
-						qdel(G.affecting)
+						G.affecting.remove()
 						qdel(G)
 			return
 
@@ -1195,7 +1193,7 @@
 		if (istype(target,/mob/living) && user.a_intent != INTENT_HARM)
 			if(user != target)
 				user.visible_message("<span class='alert'><b>[user] shows [src] to [target]!</b></span>")
-			induct_to_gang(target)
+			// induct_to_gang(target)		//this was sometimes kinda causing people to accidentally accept joining a gang.
 			return
 		else
 			return ..()
@@ -1248,7 +1246,7 @@
 			boutput(target, "<span class='alert'>You're already in a gang, you can't switch sides!</span>")
 			return
 
-		if(target.mind.assigned_role in list("Security Officer","Head of Security","Captain","Head of Personnel","Communications Officer", "Medical Director", "Chief Engineer", "Research Director", "Detective", "Nanotrasen Security Operative"))
+		if(target.mind.assigned_role in list("Security Officer", "Security Assistant", "Vice Officer","Part-time Vice Officer","Head of Security","Captain","Head of Personnel","Communications Officer", "Medical Director", "Chief Engineer", "Research Director", "Detective", "Nanotrasen Security Operative"))
 			boutput(target, "<span class='alert'>You are too responsible to join a gang!</span>")
 			return
 
@@ -1297,8 +1295,7 @@
 		//update gang overlays for all members so they can see the new join
 		for(var/datum/mind/M in src.gang.members)
 			if(M.current) M.current.antagonist_overlay_refresh(1, 0)
-		if(src.gang.leader.current)
-			src.gang.leader.current.antagonist_overlay_refresh(1, 0)
+		src.gang.leader.current?.antagonist_overlay_refresh(1, 0)
 
 		return
 
@@ -1316,6 +1313,9 @@
 	name = "gang recruitment flyer case"
 	desc = "A briefcase full of flyers advertising a gang."
 	icon_state = "briefcase_black"
+	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
+	item_state = "sec-case"
+
 	spawn_contents = list(/obj/item/gang_flyer = 7)
 	var/datum/gang/gang = null
 

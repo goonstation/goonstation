@@ -84,7 +84,7 @@ var/datum/score_tracker/score_tracker
 		// also civ cleanliness counted here cos fuck calling a world loop more than once
 		var/apc_count = 0
 		var/apcs_powered = 0
-		var/station_areas = 0
+		var/num_station_areas = 0
 		var/undamaged_areas = 0
 		var/clean_areas = 0
 
@@ -103,7 +103,7 @@ var/datum/score_tracker/score_tracker
 			var/cleanliness = AR.calculate_area_cleanliness()
 			if(cleanliness == -1) // no sim. turfs
 				continue
-			station_areas++
+			num_station_areas++
 			if (get_percentage_of_fraction_and_whole(AR.calculate_structure_value(),AR.initial_structure_value) >= 50)
 				undamaged_areas++
 			if (cleanliness >= 80)
@@ -111,7 +111,15 @@ var/datum/score_tracker/score_tracker
 			//LAGCHECK(LAG_LOW)
 
 		score_power_outages = get_percentage_of_fraction_and_whole(apcs_powered,apc_count)
-		score_structural_damage = get_percentage_of_fraction_and_whole(undamaged_areas,station_areas)
+
+		if (istype(ticker?.mode, /datum/game_mode/nuclear)) //Since the nuke doesn't actually blow up in time
+			var/datum/game_mode/nuclear/N = ticker.mode
+			if (N.nuke_detonated)
+				score_structural_damage = 0
+			else
+				score_structural_damage = get_percentage_of_fraction_and_whole(undamaged_areas,num_station_areas)
+		else
+			score_structural_damage = get_percentage_of_fraction_and_whole(undamaged_areas,num_station_areas)
 
 		score_power_outages = clamp(score_power_outages,0,100)
 		score_structural_damage = clamp(score_structural_damage,0,100)
@@ -135,7 +143,7 @@ var/datum/score_tracker/score_tracker
 			else
 				score_expenses = get_percentage_of_fraction_and_whole(totalfunds,profit_target)
 
-		score_cleanliness = get_percentage_of_fraction_and_whole(clean_areas,station_areas)
+		score_cleanliness = get_percentage_of_fraction_and_whole(clean_areas,num_station_areas)
 
 		score_expenses = clamp(score_expenses,0,100)
 		score_cleanliness = clamp(score_cleanliness,0,100)
@@ -223,7 +231,7 @@ var/datum/score_tracker/score_tracker
 		command_pets_escaped = list()
 		pets_escaped = list()
 
-		for (var/pet in pets)
+		for (var/pet in by_cat[TR_CAT_PETS])
 			if(iscritter(pet))
 				var/obj/critter/P = pet
 				if (in_centcom(P) && P.alive)
@@ -263,9 +271,9 @@ var/datum/score_tracker/score_tracker
 		. += "<B>Heisenbee's hat:</B> "
 		var/found_hb = 0
 		var/tier = world.load_intra_round_value("heisenbee_tier")
-		for(var/obj/critter/domestic_bee/heisenbee/HB in pets)
-			var/obj/item/hat = locate(HB.original_hat_ref)
-			if(hat)
+		for(var/obj/critter/domestic_bee/heisenbee/HB in by_cat[TR_CAT_PETS])
+			var/obj/item/hat = HB.original_hat
+			if(hat && !hat.disposed)
 				if(hat.loc != HB)
 					var/atom/movable/L = hat.loc
 					while(istype(L) && !istype(L, /mob))
@@ -284,12 +292,12 @@ var/datum/score_tracker/score_tracker
 				else
 					. += "[hat][inline_bicon(getFlatIcon(HB, no_anim=TRUE))](tier [HB.original_tier])"
 			else if(HB.alive)
-				if(HB.original_tier)
-					. += "\[DESTROYED!\]"
+				if(hat)
+					. += "[inline_bicon(getFlatIcon(hat, no_anim=TRUE))] \[DESTROYED!\]"
 				else
 					. += "No hat yet."
-			else if(HB.original_tier)
-				. += "\[DESTROYED!\] \[🐝 MURDERED!\]"
+			else if(hat)
+				. += "[inline_bicon(getFlatIcon(hat, no_anim=TRUE))] \[DESTROYED!\] \[🐝 MURDERED!\]"
 			else
 				. += "No hat yet. \[🐝 MURDERED!\]"
 			found_hb = 1
@@ -380,8 +388,7 @@ var/datum/score_tracker/score_tracker
 		if(data_core.tickets.len)
 			var/list/people_with_tickets = list()
 			for (var/datum/ticket/T in data_core.tickets)
-				if(!(T.target in people_with_tickets))
-					people_with_tickets += T.target
+				people_with_tickets |= T.target
 
 			for(var/N in people_with_tickets)
 				score_tracker.tickets_text += "<b>[N]</b><br><br>"
@@ -397,8 +404,7 @@ var/datum/score_tracker/score_tracker
 		if(data_core.fines.len)
 			var/list/people_with_fines = list()
 			for (var/datum/fine/F in data_core.fines)
-				if(!(F.target in people_with_fines))
-					people_with_fines += F.target
+				people_with_fines |= F.target
 
 			for(var/N in people_with_fines)
 				score_tracker.tickets_text += "<b>[N]</b><br><br>"

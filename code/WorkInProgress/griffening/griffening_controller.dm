@@ -39,6 +39,7 @@
 	var/phase_arguments = null
 
 	New(var/obj/griffening_central/F)
+		..()
 		field_center = F
 
 	proc/announce(message)
@@ -98,7 +99,7 @@
 						card = stack.draw_card(card, null, 1)
 						if (card.loc != M)
 							if (!M.put_in_hand(card))
-								card.loc = M.loc
+								card.set_loc(M.loc)
 				else
 					boutput(M, "<span class='alert'>You cannot draw cards right now.</span>")
 			if (HOLDER_ROLE_GIBBED)
@@ -144,7 +145,7 @@
 					phase_arguments--
 					holder.card = card
 					M.u_equip(card)
-					card.loc = holder
+					card.set_loc(holder)
 					update_game_status("Player [active_player] plays [face_up ? "creature [card.card_name]" : "a creature face down"].")
 		show_informational()
 
@@ -166,7 +167,7 @@
 		M.eye = area_indicator
 		var/obj/griffening_card_holder/deck_area = deck_holder[playerid]
 		deck_area.card = deck
-		deck.loc = deck_area
+		deck.set_loc(deck_area)
 		if (!game_id)
 			game_id = next_game_id
 			next_game_id++
@@ -459,10 +460,10 @@
 			field_decoration += R
 			if (R.x == x - 3 && !(abs(R.y - y) % 3))
 				var/obj/LT = new /obj/machinery/light(R)
-				LT.dir = 8
+				LT.set_dir(8)
 			if (R.x == x + 3 && !(abs(R.y - y) % 3))
 				var/obj/LT = new /obj/machinery/light(R)
-				LT.dir = 4
+				LT.set_dir(4)
 			if (R.y == y - 5 || R.y == y + 4 || R.y == y + 5 || R.y == y - 4)
 				var/obj/griffening_card_holder/GCH = new /obj/griffening_card_holder(R, src)
 				if (R.y > y)
@@ -847,6 +848,7 @@ td, th {
 	var/datum/griffening_controller/controller = null
 
 	New()
+		..()
 		controller = new(src)
 		controller.spawn_field()
 

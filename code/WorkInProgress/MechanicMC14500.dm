@@ -30,6 +30,7 @@ var/list/hex_digit_values = list("0" = 0, "1" = 1, "2" = 2, "3" = 3, "4" = 4, "5
 	name = "Control Unit"
 	icon = 'icons/obj/networked.dmi'
 	icon_state = "genericsmall0"
+	plane = PLANE_DEFAULT
 	var/ROM = ""
 	var/ioPins = 1 //Bitfield. Low byte is IO, high byte is internal memory flags, lowest bit is read as complement of RR
 	var/RR = 0 //Result register.  It's the accumulator.  Look, motorola picked these names.
@@ -58,7 +59,7 @@ var/list/hex_digit_values = list("0" = 0, "1" = 1, "2" = 2, "3" = 3, "4" = 4, "5
 
 	proc/setROM(obj/item/W as obj, mob/user as mob)
 		. = adminscrub(strip_html(input(user, "What should the ROM be set to?  This better be hexadecimal and an even number of characters!!", "Terrible debug ROM panel", src.ROM) as text))
-		if(!in_range(src, user) || user.stat)
+		if(!in_interact_range(src, user) || user.stat)
 			return
 		. = uppertext(copytext(ckey(.), 1, 1+MAX_ROM_SIZE))
 		if (length(.)%2 || !is_hex(.))
@@ -77,7 +78,7 @@ var/list/hex_digit_values = list("0" = 0, "1" = 1, "2" = 2, "3" = 3, "4" = 4, "5
 	process()
 		if (..() || !running || !level)
 			return
-
+		SPAWN_DBG(0) src.light_up_housing()
 		. = length(ROM)
 		if (. < 2 || . % 2) //Too short or an odd length and we're out of here.
 			running = 0
@@ -326,7 +327,7 @@ function update_mem_lights(mem)
 			if(level == 2)
 				return
 
-			if (anInput && anInput.isTrue())
+			if (anInput?.isTrue())
 				ioPins |= 2
 
 			else
@@ -338,7 +339,7 @@ function update_mem_lights(mem)
 			if(level == 2)
 				return
 
-			if (anInput && anInput.isTrue())
+			if (anInput?.isTrue())
 				ioPins |= 4
 
 			else
@@ -350,7 +351,7 @@ function update_mem_lights(mem)
 			if(level == 2)
 				return
 
-			if (anInput && anInput.isTrue())
+			if (anInput?.isTrue())
 				ioPins |= 8
 
 			else
@@ -362,7 +363,7 @@ function update_mem_lights(mem)
 			if(level == 2)
 				return
 
-			if (anInput && anInput.isTrue())
+			if (anInput?.isTrue())
 				ioPins |= 16
 
 			else
@@ -374,7 +375,7 @@ function update_mem_lights(mem)
 			if(level == 2)
 				return
 
-			if (anInput && anInput.isTrue())
+			if (anInput?.isTrue())
 				ioPins |= 32
 
 			else
@@ -386,7 +387,7 @@ function update_mem_lights(mem)
 			if(level == 2)
 				return
 
-			if (anInput && anInput.isTrue())
+			if (anInput?.isTrue())
 				ioPins |= 64
 
 			else
@@ -398,7 +399,7 @@ function update_mem_lights(mem)
 			if(level == 2)
 				return
 
-			if (anInput && anInput.isTrue())
+			if (anInput?.isTrue())
 				ioPins |= 128
 
 			else

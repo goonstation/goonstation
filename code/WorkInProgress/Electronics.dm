@@ -12,13 +12,12 @@
 	flags = FPRINT | TABLEPASS | CONDUCT
 
 /obj/item/electronics/New()
+	..()
 	desc = "A [src.name] used in electronic projects."
-	return
 
 /obj/item/electronics/proc/randompix()
 	src.pixel_x = rand(8, 12)
 	src.pixel_y = rand(8, 12)
-	return
 
 ////////////////////////////////////////////////////////////////
 /obj/item/electronics/battery
@@ -137,7 +136,9 @@
 
 
 	disposing()
-		deconstructed_thing = null
+		if(deconstructed_thing)
+			deconstructed_thing.dispose()
+			deconstructed_thing = null
 		store_type = null
 		..()
 
@@ -149,6 +150,7 @@
 			user.u_equip(E)
 			//parts.Add(E)
 			boutput(user, "<span class='notice'>You add the [E.name] to the [src].</span>")
+			needed_parts[E.type] -= 1
 			return
 		else if(istype(E,/obj/item/electronics/soldering))
 			if(!secured)
@@ -168,9 +170,20 @@
 				actions.start(new/datum/action/bar/icon/build_electronics_frame(src), user)
 				//deploy()
 			return
+		else if(istype(E,/obj/item/electronics/scanner) && !secured)
+			if(!parts_check())
+				boutput(user, "<span class='notice'>Missing components:</span>")
+				for(var/part in needed_parts)
+					var/obj/item/electronics/_part = part
+					if(needed_parts[part] > 0)
+						boutput(user, "<span class='notice'>[initial(_part.name)]: [needed_parts[part]]</span>")
+			else
+				boutput(user, "<span class='notice'>All components present</span>")
+			return
+
 	if (ispryingtool(W))
 		if (!anchored)
-			src.dir = turn(src.dir, 90)
+			src.set_dir(turn(src.dir, 90))
 			return
 	else if (iswrenchingtool(W))
 		boutput(user, "<span class='alert'>You deconstruct [src] into its base materials!</span>")
@@ -231,13 +244,13 @@
 				var/dirr = input("Select A Direction!", "UDLR", null, null) in list("Up","Down","Left","Right")
 				switch(dirr)
 					if("Up")
-						src.dir = 1
+						src.set_dir(1)
 					if("Down")
-						src.dir = 2
+						src.set_dir(2)
 					if("Left")
-						src.dir = 8
+						src.set_dir(8)
 					if("Right")
-						src.dir = 4
+						src.set_dir(4)
 			boutput(user, "Ready to deploy!")
 			switch(alert("Ready to deploy?",,"Yes","No"))
 				if("Yes")
@@ -253,7 +266,7 @@
 /obj/item/electronics/frame/Topic(href, href_list)
 	if (usr.stat)
 		return
-	if ((usr.contents.Find(src) || usr.contents.Find(src.master) || in_range(src, usr) && istype(src.loc, /turf)))
+	if ((usr.contents.Find(src) || usr.contents.Find(src.master) || in_interact_range(src, usr) && istype(src.loc, /turf)))
 		src.add_dialog(usr)
 
 		switch(href_list["tp"])
@@ -265,6 +278,7 @@
 						T = T.loc
 					Z.set_loc(T)
 					//parts.Remove(Z)
+					needed_parts[Z.type] += 1
 
 
 		updateDialog()
@@ -279,12 +293,12 @@
 	if (deconstructed_thing)
 		O = deconstructed_thing
 		O.set_loc(T)
-		O.dir = src.dir
+		O.set_dir(src.dir)
 		O.was_built_from_frame(user, 0)
 		deconstructed_thing = null
 	else
 		O = new store_type(T)
-		O.dir = src.dir
+		O.set_dir(src.dir)
 		O.was_built_from_frame(user, 1)
 	//O.mats = "Built"
 	O.deconstruct_flags |= DECON_BUILT
@@ -360,47 +374,9 @@
 
 
 /obj/item/electronics/frame/proc/parts_check()
-//	if(src.contents.len != needed_parts.len)
-//		return 0
-
-	//for(var/tracker = 1, tracker <= parts:len, tracker ++)
-	var/list/checkList = needed_parts.Copy()
-	for(var/tracker = 1, tracker <= src.contents:len, tracker ++)
-		var/partID
-		//var/obj/T = parts[tracker]
-		var/obj/T = src.contents[tracker]
-		if(istype(T,/obj/item/electronics/battery))
-			partID = "battery"
-		else if(istype(T,/obj/item/electronics/fuse))
-			partID = "fuse"
-		else if(istype(T,/obj/item/electronics/switc))
-			partID = "switch"
-		else if(istype(T,/obj/item/electronics/capacitor))
-			partID = "capacitor"
-		else if(istype(T,/obj/item/electronics/resistor))
-			partID = "resistor"
-		else if(istype(T,/obj/item/electronics/bulb))
-			partID = "bulb"
-		else if(istype(T,/obj/item/electronics/relay))
-			partID = "relay"
-		else if(istype(T,/obj/item/electronics/board))
-			partID = "board"
-		else if(istype(T,/obj/item/electronics/keypad))
-			partID = "keypad"
-		else if(istype(T,/obj/item/electronics/screen))
-			partID = "screen"
-		else if(istype(T,/obj/item/electronics/buzzer))
-			partID = "buzzer"
-
-		if (!isnum(checkList[partID]) || (checkList[partID] < 1))
-			continue
-
-		checkList[partID] = checkList[partID] - 1
-
-	for (var/i in checkList)
-		if (checkList[i] > 0)
+	for(var/part in needed_parts)
+		if(needed_parts[part]>0)
 			return 0
-
 	return 1
 
 ////////////////////////////////////////////////////////////////?
@@ -451,10 +427,10 @@
 		is_syndicate = 1
 
 /obj/item/electronics/scanner/afterattack(var/obj/O, mob/user as mob)
-	if(istype(O,/obj/machinery/rkit))
+	if(istype(O,/obj/machinery/rkit) || istype(O, /obj/item/electronics/frame))
 		return
 	if(istype(O,/obj/))
-		if(O.mats == 0 || (O.is_syndicate != 0 && src.is_syndicate == 0))
+		if(O.mats == 0 || isnull(O.mats) || O.disposed || (O.is_syndicate != 0 && src.is_syndicate == 0))
 			// if this item doesn't have mats defined or was constructed or
 			// attempting to scan a syndicate item and this is a normal scanner
 			boutput(user, "<span class='alert'>The structure of this object is not compatible with the scanner.</span>")
@@ -492,6 +468,7 @@
 	var/frequency = 1149
 	var/datum/radio_frequency/radio_connection
 	var/no_print_spam = 1 // In relation to world.time.
+	var/olde = 0
 
 /obj/machinery/rkit/New()
 	..()
@@ -504,8 +481,7 @@
 			mechanic_controls.rkit_addresses += src.net_id
 
 /obj/machinery/rkit/disposing()
-	if(radio_controller)
-		radio_controller.remove_object(src, "[frequency]")
+	radio_controller?.remove_object(src, "[frequency]")
 	radio_connection = null
 
 	if (src.net_id)
@@ -554,8 +530,8 @@
 				newsignal.data["command"] = "text_message"
 				newsignal.data["sender_name"] = "RKIT-MAILBOT"
 				newsignal.data["message"] = "Notice: Item already in database."
-
 				newsignal.data["address_1"] = target
+				newsignal.data["group"] = list(MGO_MECHANIC, MGA_RKIT)
 				newsignal.data["sender"] = src.net_id
 
 				radio_connection.post_signal(src, newsignal)
@@ -570,8 +546,8 @@
 		newsignal.data["command"] = "text_message"
 		newsignal.data["sender_name"] = "RKIT-MAILBOT"
 		newsignal.data["message"] = "Notice: Item entered into database."
-
 		newsignal.data["address_1"] = target
+		newsignal.data["group"] = list(MGO_MECHANIC, MGA_RKIT)
 		newsignal.data["sender"] = src.net_id
 
 		radio_connection.post_signal(src, newsignal)
@@ -616,7 +592,9 @@
 	for(var/datum/electronics/scanned_item/S in mechanic_controls.scanned_items)
 		dat += "<u>[S.name]</u><small> "
 		//dat += "<A href='?src=\ref[src];op=\ref[S];tp=done'>Frame</A>"
-		if (S.blueprint)
+		if (S.item_mats && src.olde)
+			dat += " * <A href='?src=\ref[src];op=\ref[S];tp=done'>Frame</A>"
+		else if (S.blueprint)
 			dat += " * <A href='?src=\ref[src];op=\ref[S];tp=blueprint'>Blueprint</A>"
 		dat += "</small><br>"
 	dat += "<br>"
@@ -630,7 +608,7 @@
 /obj/machinery/rkit/Topic(href, href_list)
 	if (usr.stat)
 		return
-	if ((in_range(src, usr) && istype(src.loc, /turf)) || (issilicon(usr)))
+	if ((in_interact_range(src, usr) && istype(src.loc, /turf)) || (issilicon(usr)))
 		src.add_dialog(usr)
 
 		switch(href_list["tp"])
@@ -646,16 +624,16 @@
 
 			if("blueprint")
 				if(href_list["op"])
-					if (src.no_print_spam && world.time < src.no_print_spam + 50)
+					if (src.no_print_spam && world.time < src.no_print_spam + 25)
 						usr.show_text("[src] isn't done with the previous print job.", "red")
 					else
 						var/datum/electronics/scanned_item/O = locate(href_list["op"]) in mechanic_controls.scanned_items
 						if (istype(O.blueprint, /datum/manufacture/mechanics/))
 							usr.show_text("Print job started...", "blue")
 							var/datum/manufacture/mechanics/M = O.blueprint
-							playsound(src.loc, 'sound/machines/printer_thermal.ogg', 50, 1)
+							playsound(src.loc, 'sound/machines/printer_thermal.ogg', 25, 1)
 							src.no_print_spam = world.time
-							SPAWN_DBG (50)
+							SPAWN_DBG(2.5 SECONDS)
 								if (src)
 									new /obj/item/paper/manufacturer_blueprint(src.loc, M)
 
@@ -840,5 +818,5 @@
 	throwforce = 0
 	hitsound = 'sound/impact_sounds/Generic_Hit_1.ogg'
 	hit_type = DAMAGE_BLUNT
-	tool_flags = null
+	tool_flags = 0
 	w_class = 3.0

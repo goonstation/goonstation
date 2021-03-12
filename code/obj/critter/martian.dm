@@ -13,7 +13,7 @@
 	aggressive = 0
 	defensive = 1
 	wanderer = 1
-	opensdoors = 1
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_ANY
 	atkcarbon = 1
 	atksilicon = 1
 	firevuln = 1.5
@@ -28,7 +28,8 @@
 				src.visible_message("<span class='alert'><b>[src]</b> teleports away!</span>")
 				CritterTeleport(8, 1, 0)
 
-	on_pet()
+	on_pet(mob/user)
+		..()
 		for(var/mob/O in hearers(src, null))
 			O.show_message("<b>[src]</b> screeches, 'KXBQUB IJFDQVW??'", 1)
 

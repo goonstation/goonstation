@@ -1,4 +1,4 @@
-/obj/screen
+/atom/movable/screen
 	name = "screen"
 	icon = 'icons/mob/screen1.dmi'
 	layer = HUD_LAYER
@@ -6,15 +6,14 @@
 	mat_changename = 0
 	mat_changedesc = 0
 
-/obj/screen/proc/clicked(list/params, mob/user = null)
+/atom/movable/screen/proc/clicked(list/params, mob/user = null)
 
-/obj/screen/proc/add_to_client(var/client/C)
+/atom/movable/screen/proc/add_to_client(var/client/C)
 	if (clients)
-		clients -= C
-		clients += C
+		clients |= C
 	C.screen += src
 
-/obj/screen/disposing()
+/atom/movable/screen/disposing()
 	if (clients)
 		for(var/client/C in clients)
 			if (C.mob)
@@ -28,15 +27,15 @@
 	clients = null
 	..()
 
-/obj/screen/grab
+/atom/movable/screen/grab
 	name = "grab"
 
-/obj/screen/intent_sel
+/atom/movable/screen/intent_sel
 	name = "Intent Select"
 	icon = 'icons/mob/screen1.dmi'
 	icon_state = "help"
 
-/obj/screen/stamina_background
+/atom/movable/screen/stamina_background
 	name = "stamina"
 	icon = 'icons/mob/screen1.dmi'
 	icon_state = "stamina"
@@ -53,7 +52,7 @@
 	if (src.hud && src.hud.stamina)
 		src.hud.stamina.desc = newDesc
 
-/obj/screen/stamina_bar
+/atom/movable/screen/stamina_bar
 	name = "Stamina"
 	desc = ""
 	icon = 'icons/mob/hud_human_new.dmi'
@@ -63,7 +62,8 @@
 	layer = HUD_LAYER-1
 
 	New(var/mob/living/carbon/C)
-		..()
+		..(null)
+		src.loc = null
 		if (C && istype(C))
 			src.desc = src.getDesc(C)
 		if (ishuman(C))
@@ -73,7 +73,7 @@
 					src.icon = hud_style
 
 	proc/getDesc(var/mob/living/C)
-		return "[C.stamina] / [C.stamina_max] Stamina. Regeneration rate : [(C.stamina_regen + C.get_stam_mod_regen())]"
+		return "[C.stamina] / [C.stamina_max] Stamina. Regeneration rate : [(C.stamina_regen + GET_MOB_PROPERTY(C, PROP_STAMINA_REGEN_BONUS))]"
 
 	proc/update_value(var/mob/living/C)
 		if(C.stamina == last_val) return //No need to change anything
@@ -118,7 +118,7 @@
 		if (usr.client.tooltipHolder)
 			usr.client.tooltipHolder.hideHover()
 
-/obj/screen/intent_sel/clicked(list/params)
+/atom/movable/screen/intent_sel/clicked(list/params)
 	var/icon_x = text2num(params["icon-x"])
 	var/icon_y = text2num(params["icon-y"])
 
@@ -148,7 +148,7 @@
 
 	boutput(user, "<span class='hint'>Your intent is now set to '[user.a_intent]'.</span>")
 
-/obj/screen/clicked(list/params)
+/atom/movable/screen/clicked(list/params)
 	switch(src.name)
 		if("stamina")
 			out(usr, src.desc)

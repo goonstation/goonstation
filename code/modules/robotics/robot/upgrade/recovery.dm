@@ -1,6 +1,6 @@
 /obj/item/roboupgrade/aware
 	name = "cyborg recovery upgrade"
-	desc = "Allows a cyborg to immediatley reboot its systems if incapacitated in any way."
+	desc = "Allows a cyborg to immediateley reboot its systems if incapacitated in any way."
 	icon_state = "up-aware"
 	active = 1
 	drainrate = 3333

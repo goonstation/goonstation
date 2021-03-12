@@ -62,5 +62,5 @@
 				affected_mob.playsound_local(affected_mob.loc, "heartbeat.ogg", 50, 1)
 				affected_mob.emote("collapse")
 
-				affected_mob.make_vampire()
+				affected_mob.make_vampire(FALSE, TRUE)
 				affected_mob.cure_disease(D)

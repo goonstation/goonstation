@@ -23,18 +23,6 @@ var/list/chessboard = list()
 var/chess_enpassant = 0
 var/chess_in_progress = 0
 
-turf/simulated/floor/chess
-
-	var/obj/item/chesspiece/enpassant = null
-
-	New()
-		..()
-		chessboard += src
-
-	disposing()
-		chessboard -= src
-		..()
-
 turf/unsimulated/floor/chess
 
 	var/obj/item/chesspiece/enpassant = null
@@ -43,7 +31,7 @@ turf/unsimulated/floor/chess
 		..()
 		chessboard += src
 
-	disposing()
+	Del()
 		chessboard -= src
 		..()
 
@@ -62,7 +50,7 @@ obj/chessbutton
 			logTheThing("admin", user, null, "has reset the chessboard. Hope nobody was playing chess.")
 			logTheThing("diary", user, null, "has reset the chessboard. Hope nobody was playing chess.", "admin")
 
-			for(var/turf/simulated/floor/chess/T in chessboard)
+			for(var/turf/unsimulated/floor/chess/T in chessboard)
 				T.enpassant = null // almost forgot this, gotte get that sweet GC
 				for(var/obj/item/O in T)
 					qdel(O)
@@ -75,6 +63,8 @@ obj/chessbutton
 
 
 obj/landmark/chess
+	add_to_landmarks = FALSE
+	deleted_on_start = FALSE
 
 	proc/lets_fuckin_start_this_party()
 		switch(src.name)
@@ -126,7 +116,7 @@ obj/item/chesspiece
 		if(!Tb | !Ta)
 			return
 		else
-			if(istype(Tb,/turf/simulated/floor/chess) && validmove(Ta,Tb))
+			if(istype(Tb,/turf/unsimulated/floor/chess) && validmove(Ta,Tb))
 				chessmove(Tb,user)
 			else
 				src.visible_message("<span class='alert'>Invalid move dorkus.</span>") // seems USER here is not actually the mob, but the click proc itself, so im regressing to a visible message for now
@@ -152,9 +142,9 @@ obj/item/chesspiece
 				src.visible_message("<span class='notice'>[src] has captured [C].</span>")
 				C.gib()
 		src.visible_message("<span class='notice'>The [chess_color ? "black" : "white" ] commander has moved [src].</span>")
-		src.loc = T
+		src.set_loc(T)
 		if(chess_enpassant)
-			for(var/turf/simulated/floor/chess/CB in chessboard)
+			for(var/turf/unsimulated/floor/chess/CB in chessboard)
 				CB.enpassant = null
 				chess_enpassant = 0
 
@@ -175,7 +165,7 @@ obj/item/chesspiece/pawn
 	var/movdir = 0
 	var/opened = 0
 	var/promoteX = 0
-	var/turf/simulated/floor/chess/EP = null
+	var/turf/unsimulated/floor/chess/EP = null
 
 	black
 		chess_color = 1
@@ -197,7 +187,7 @@ obj/item/chesspiece/pawn
 			if((abs(start_pos.y - end_pos.y) == 1) && (end_pos.x - start_pos.x) == movdir )
 				for(var/obj/item/chesspiece/C in end_pos)
 					return 1
-				var/turf/simulated/floor/chess/Tep = end_pos
+				var/turf/unsimulated/floor/chess/Tep = end_pos
 				if(Tep.enpassant)
 					qdel(Tep.enpassant)
 					src.visible_message("<span class='notice'>[src] has made a capture en passant.</span>")
@@ -254,11 +244,11 @@ obj/item/chesspiece/king
 							return 0
 						src.visible_message("<span class='notice'>[src] has castled with [C].</span>")
 						if(start_pos.y>end_pos.y)
-							C.loc = locate(src.x,(src.y - 1),src.z)
-							src.loc = locate(src.x,(src.y - 2),src.z)
+							C.set_loc(locate(src.x,(src.y - 1),src.z))
+							src.set_loc(locate(src.x,(src.y - 2),src.z))
 						else
-							C.loc = locate(src.x,(src.y + 1),src.z)
-							src.loc = locate(src.x,(src.y + 2),src.z)
+							C.set_loc(locate(src.x,(src.y + 1),src.z))
+							src.set_loc(locate(src.x,(src.y + 2),src.z))
 						castling = 1 // this is a dirty way to do this but
 						return 1
 		return 0
@@ -270,7 +260,7 @@ obj/item/chesspiece/king
 		else // i guess it should work?
 			castling = 0 // in theory
 			if(chess_enpassant)
-				for(var/turf/simulated/floor/chess/CB in chessboard)
+				for(var/turf/unsimulated/floor/chess/CB in chessboard)
 					CB.enpassant = null
 					chess_enpassant = 0
 

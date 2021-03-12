@@ -1,5 +1,5 @@
 
-/turf/var/obj/fluid/active_airborne_liquid = 0
+/turf/var/obj/fluid/active_airborne_liquid = null
 
 var/list/ban_from_airborne_fluid = list()
 
@@ -41,7 +41,7 @@ var/list/ban_from_airborne_fluid = list()
 
 		set_loc(newloc)
 		src.loc = newloc
-		src.loc:active_airborne_liquid = src//the dreaded :
+		src.loc:active_airborne_liquid = src //the dreaded :
 
 	done_init()
 		var/i = 0
@@ -54,6 +54,9 @@ var/list/ban_from_airborne_fluid = list()
 				break
 			LAGCHECK(LAG_MED)
 
+	turf_remove_cleanup(turf/the_turf)
+		the_turf.active_airborne_liquid = null
+
 	pooled()
 		src.pooled = 1
 
@@ -64,9 +67,6 @@ var/list/ban_from_airborne_fluid = list()
 
 		src.group = 0
 		opacity = 0
-
-		if (isturf(src.loc))
-			src.loc:active_airborne_liquid = 0
 
 		name = "cloud"
 		icon_state = "airborne"
@@ -88,24 +88,20 @@ var/list/ban_from_airborne_fluid = list()
 		is_setup = 0
 		blocked_dirs = 0
 		blocked_perspective_objects["[dir]"] = 0
-		src.loc = null
 		my_depth_level = 0
-
-	unpooled()
-		if (isturf(src.loc))
-			var/turf/T = src.loc
-			T.active_airborne_liquid = 0
 		..()
 
+	unpooled()
+		..()
 		src.step_sound = 0
 
 	//ALTERNATIVE to force ingest in life
-	proc/just_do_the_apply_thing(var/mob/M,var/hasmask = 0)
+	proc/just_do_the_apply_thing(var/mob/M, var/mult = 1, var/hasmask = 0)
 		if (!M) return
 		if (!src.group || !src.group.reagents || !src.group.reagents.reagent_list || src.group.waitforit) return
 
 		var/react_volume = src.amt > 10 ? (src.amt-10) / 3 + 10 : (src.amt)
-		react_volume = min(react_volume,20)
+		react_volume = min(react_volume,20) * mult
 		if (M.reagents)
 			react_volume = min(react_volume, abs(M.reagents.maximum_volume - M.reagents.total_volume)) //don't push out other reagents if we are full
 
@@ -122,12 +118,12 @@ var/list/ban_from_airborne_fluid = list()
 			src.group.reagents.reaction(M, INGEST, react_volume/2,1,src.group.members.len, paramslist = plist)
 			src.group.reagents.trans_to(M, react_volume)
 
-	force_mob_to_ingest(var/mob/M)//called when mob is drowning/standing in the smoke
+	force_mob_to_ingest(var/mob/M, var/mult = 1)//called when mob is drowning/standing in the smoke
 		if (!M) return
 		if (!src.group || !src.group.reagents || !src.group.reagents.reagent_list || src.group.waitforit) return
 
 		var/react_volume = src.amt > 10 ? (src.amt-10) / 3 + 10 : (src.amt)
-		react_volume = min(react_volume,20)
+		react_volume = min(react_volume,20) * mult
 		if (M.reagents)
 			react_volume = min(react_volume, abs(M.reagents.maximum_volume - M.reagents.total_volume)) //don't push out other reagents if we are full
 
@@ -376,7 +372,7 @@ var/list/ban_from_airborne_fluid = list()
 
 	var/turf/T = get_turf(oldloc)
 	var/turf/currentloc = get_turf(src)
-	if (currentloc != T && T && T.active_airborne_liquid)
+	if (currentloc != T && T?.active_airborne_liquid)
 		entered_group = 0
 
 	if (entered_group)
@@ -388,13 +384,12 @@ var/list/ban_from_airborne_fluid = list()
 
 	var/turf/T = get_turf(oldloc)
 	var/turf/currentloc = get_turf(src)
-	if (currentloc != T && T && T.active_airborne_liquid)
+	if (currentloc != T && T?.active_airborne_liquid)
 		entered_group = 0
 
 	if (entered_group)
 		if (!src.clothing_protects_from_chems())
-			var/protected = (src.wear_mask && (src.wear_mask.c_flags & BLOCKSMOKE || (src.wear_mask.c_flags & MASKINTERNALS && src.internal)))
-			F.just_do_the_apply_thing(src, hasmask = protected)
+			F.just_do_the_apply_thing(src, hasmask = issmokeimmune(src))
 
 /mob/living/silicon/EnteredAirborneFluid(obj/fluid/airborne/F as obj, atom/oldloc)
 	.=0

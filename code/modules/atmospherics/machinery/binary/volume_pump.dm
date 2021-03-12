@@ -53,11 +53,9 @@ obj/machinery/atmospherics/binary/volume_pump
 
 		air2.merge(removed)
 
-		if(network1)
-			network1.update = 1
+		network1?.update = 1
 
-		if(network2)
-			network2.update = 1
+		network2?.update = 1
 
 		return 1
 

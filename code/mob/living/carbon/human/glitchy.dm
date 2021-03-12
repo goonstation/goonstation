@@ -4,19 +4,17 @@
 
 	New()
 		..()
-		SPAWN_DBG(0)
-			src.rename_self()
-			sound_burp = pick(glitchy_noises)
-			sound_scream = pick(glitchy_noises)
-			//sound_femalescream = pick(glitchy_noises)
-			sound_fart = pick(glitchy_noises)
-			sound_snap = pick(glitchy_noises)
-			sound_fingersnap = pick(glitchy_noises)
-			src.reagents.add_reagent("stimulants", 200)
-			src.equip_new_if_possible(/obj/item/clothing/shoes/red, slot_shoes)
-			src.equip_new_if_possible(/obj/item/clothing/under/misc/chaplain, slot_w_uniform)
-			sleep(1 SECOND)
-			bioHolder.mobAppearance.UpdateMob()
+		src.rename_self()
+		sound_burp = pick(glitchy_noises)
+		sound_scream = pick(glitchy_noises)
+		//sound_femalescream = pick(glitchy_noises)
+		sound_fart = pick(glitchy_noises)
+		sound_snap = pick(glitchy_noises)
+		sound_fingersnap = pick(glitchy_noises)
+		src.changeStatus("stimulants", 15 MINUTES)
+		src.equip_new_if_possible(/obj/item/clothing/shoes/red, slot_shoes)
+		src.equip_new_if_possible(/obj/item/clothing/under/misc/chaplain, slot_w_uniform)
+		bioHolder.mobAppearance.update_colorful_parts()
 
 	Life(datum/controller/process/mobs/parent)
 		if (..(parent))
@@ -42,7 +40,7 @@
 		return 1.0 + 0.5*(30 - rand(1,120))/80
 
 	proc/rename_self()
-		var/assembled_name = pick(first_names_male) + " " + pick(last_names)
+		var/assembled_name = pick_string_autokey("names/first_male.txt") + " " + pick_string_autokey("names/last.txt")
 		assembled_name = corruptText(assembled_name,75)
 		src.real_name = assembled_name
 

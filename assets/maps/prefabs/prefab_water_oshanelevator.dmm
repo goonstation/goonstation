@@ -1,4 +1,4 @@
-"a" = (/turf/variableTurf/wall,/area)
+"a" = (/turf/variableTurf/wall,/area/space)
 "b" = (/turf/unsimulated/wall/setpieces/leadwall{dir = 9},/area/shuttle/sea_elevator)
 "c" = (/obj/wingrille_spawn/auto/crystal,/turf/space/fluid,/area/shuttle/sea_elevator)
 "d" = (/turf/unsimulated/wall/setpieces/leadwall{dir = 4},/area/shuttle/sea_elevator)

@@ -1,13 +1,10 @@
-//Defines don't work correctly here because FUCK BYOND ARGH
-//#define effectTypeMutantRace 1
-//#define effectTypeDisability 2
-//#define effectTypePower 3
-//SO INSTEAD , GLOBAL VARS. GEE THANKS BYOND.
-var/const/effectTypeMutantRace = 1
-var/const/effectTypeDisability = 2
-var/const/effectTypePower = 3
-var/const/effectTypeFood = 4
+//Effect type defines in _std/_defines/bioeffect.dm
 
+//If the icon sprite sheet is changed, also update:
+// tgui/packages/tgui/assets/genetics_powers.png
+// tgui/packages/tgui/components/GeneIcon.scss
+
+ABSTRACT_TYPE(/datum/bioEffect)
 /datum/bioEffect
 	var/name = "" //Name of the effect.
 	var/id = "goddamn_it"   //Internal ID of the effect.
@@ -15,11 +12,10 @@ var/const/effectTypeFood = 4
 	var/researched_desc = null // You get this in mutation research if you've activated the effect
 	var/datum/bioEffect/global_instance = null // bioeffectlist version of this effect
 	var/datum/bioEffect/power/global_instance_power = null //just a power casted version of global instance
-	var/research_level = 0
-	// 0 = not, 1 = in progress, 2 = done, 3 = activated
+	var/research_level = EFFECT_RESEARCH_NONE
 	var/research_finish_time = 0
 
-	var/effectType = effectTypeDisability //Used to categorize effects. Mostly used for MutantRaces to prevent the mob from getting more than one.
+	var/effectType = EFFECT_TYPE_DISABILITY //Used to categorize effects. Mostly used for MutantRaces to prevent the mob from getting more than one.
 	var/mutantrace_option = null
 	var/isBad = 0         //Is this a bad effect? Used to determine which effects to use for certain things (radiation etc).
 
@@ -73,11 +69,10 @@ var/const/effectTypeFood = 4
 
 	var/removed = 0
 
-
 	var/icon = 'icons/mob/genetics_powers.dmi'
 	var/icon_state = "unknown"
 
-	New(var/for_global_list = 0)
+	New(for_global_list = 0)
 		if (!for_global_list)
 			global_instance = bioEffectList[src.id]
 			if (istype(global_instance, /datum/bioEffect/power))
@@ -86,12 +81,14 @@ var/const/effectTypeFood = 4
 		return ..()
 
 	disposing()
+		if(src.holder)
+			src.holder.RemovePoolEffect(src)
+			src.holder.RemoveEffect(src.id)
 		if(!removed)
 			src.OnRemove()
 		holder = null
 		owner = null
-		if(dnaBlocks)
-			dnaBlocks.dispose()
+		dnaBlocks?.dispose()
 		dnaBlocks = null
 		..()
 
@@ -138,12 +135,12 @@ var/const/effectTypeFood = 4
 
 /datum/dnaBlocks
 	var/datum/bioEffect/owner = null
-	var/list/blockList = new/list()
-	//List of CORRECT blocks for this mutation. This is global and should not be modified since it represents the correct solution.
-	var/list/blockListCurr = new/list()
-	// List of CURRENT blocks for this mutation. This is local and represents the research people are doing.
+	/// List of CORRECT blocks for this mutation. This is global and should not be modified since it represents the correct solution.
+	var/list/datum/basePair/blockList = list()
+	/// List of CURRENT blocks for this mutation. This is local and represents the research people are doing.
+	var/list/datum/basePair/blockListCurr = list()
 
-	New(var/holder)
+	New(holder)
 		owner = holder
 		return ..()
 
@@ -154,7 +151,7 @@ var/const/effectTypeFood = 4
 		..()
 
 	proc/sequenceCorrect()
-		if(blockList.len != blockListCurr.len)
+		if(length(blockList) != length(blockListCurr))
 			//Things went completely and entirely wrong and everything is broken HALP.
 			//Some dickwad probably messed with the global sequence.
 			return 0
@@ -162,41 +159,47 @@ var/const/effectTypeFood = 4
 			var/datum/basePair/correct = blockList[i+1]
 			var/datum/basePair/current = blockListCurr[i+1]
 			if(correct.bpp1 != current.bpp1 || correct.bpp2 != current.bpp2) //NOPE
-				return 0
-		return 1
+				return FALSE
+		return TRUE
 
 	proc/pairCorrect(var/pair_index)
 		if(blockList.len != blockListCurr.len || !pair_index)
-			return 0
+			return FALSE
 		var/datum/basePair/correct = blockList[pair_index]
 		var/datum/basePair/current = blockListCurr[pair_index]
 		if(correct.bpp1 != current.bpp1 || correct.bpp2 != current.bpp2) //NOPE
-			return 0
-		return 1
+			return FALSE
+		return TRUE
 
 	proc/ModBlocks() //Gets the normal sequence for this mutation and then "corrupts" it locally.
-		for(var/datum/basePair/bp in blockList)
+		for(var/datum/basePair/bp as() in blockList)
 			var/datum/basePair/bpNew = new()
 			bpNew.bpp1 = bp.bpp1
 			bpNew.bpp2 = bp.bpp2
 			blockListCurr.Add(bpNew)
 
-		for(var/datum/basePair/bp in blockListCurr)
+		for(var/datum/basePair/bp as() in blockListCurr)
 			if(prob(33))
 				if(prob(50))
-					bp.bpp1 = "X"
+					bp.bpp1 = "?"
 				else
-					bp.bpp2 = "X"
+					bp.bpp2 = "?"
+				bp.style = "X"
+
 
 		var/list/gapList = new/list()
 		//Make sure you don't have more gaps than basepairs or youll get an error.
 		//But at that point the mutation would be unsolvable.
 
+		if(owner.blockGaps > length(blockListCurr))
+			CRASH("bioEffect [owner.name] has [owner.blockGaps] block gaps but only [length(blockListCurr)] blocks")
+
 		for(var/i=0, i<owner.blockGaps, i++)
 			var/datum/basePair/bp = pick(blockListCurr - gapList)
 			gapList.Add(bp)
-			bp.bpp1 = "X"
-			bp.bpp2 = "X"
+			bp.bpp1 = "?"
+			bp.bpp2 = "?"
+			bp.style = "X"
 
 		for(var/i=0, i<owner.lockedGaps, i++)
 			if (!prob(owner.lockProb))
@@ -220,19 +223,21 @@ var/const/effectTypeFood = 4
 					if(31 to 50) diff = 4
 					if(51 to INFINITY) diff = 5
 
-			bp.bpp1 = "Unk[diff]"
-			bp.bpp2 = "Unk[diff]"
+			bp.bpp1 = "?"
+			bp.bpp2 = "?"
+			bp.style = "[diff]"
 			bp.marker = "locked"
 
 		return sequenceCorrect()
 
-	proc/GenerateBlocks() //Generate DNA blocks. This sequence will be used globally.
-		for(var/i=0, i < owner.blockCount, i++)
-			for(var/a=0, a < 4, a++) //4 pairs per block.
-				var/S = pick("G", "T", "C" , "A")
+	/// Generate DNA blocks. This sequence will be used globally.
+	proc/GenerateBlocks()
+		for(var/i in 1 to owner.blockCount)
+			for(var/j in 1 to 4) //4 pairs per block.
+				var/symbol = pick("G", "T", "C" , "A")
 				var/datum/basePair/B = new()
-				B.bpp1 = S
-				switch(S)
+				B.bpp1 = symbol
+				switch(symbol)
 					if("G")
 						B.bpp2 = "C"
 					if("C")
@@ -242,23 +247,23 @@ var/const/effectTypeFood = 4
 					if("A")
 						B.bpp2 = "T"
 				blockList.Add(B)
-		return
 
 	proc/ChangeAllMarkers(var/sprite_state)
 		if(!istext(sprite_state))
 			sprite_state = "white"
-		for(var/datum/basePair/bp in blockListCurr)
+		for(var/datum/basePair/bp as() in blockListCurr)
 			bp.marker = sprite_state
-		return
+			bp.style = ""
 
 /datum/basePair
 	var/bpp1 = ""
 	var/bpp2 = ""
 	var/marker = "green"
+	var/style = ""
 	var/lockcode = ""
 	var/locktries = 0
 
-/obj/screen/ability/topBar/genetics
+/atom/movable/screen/ability/topBar/genetics
 	tens_offset_x = 19
 	tens_offset_y = 7
 	secs_offset_x = 23
@@ -305,7 +310,7 @@ var/const/effectTypeFood = 4
 	var/mob/living/owner = null
 
 	New()
-		var/obj/screen/ability/topBar/genetics/B = new /obj/screen/ability/topBar/genetics(null)
+		var/atom/movable/screen/ability/topBar/genetics/B = new /atom/movable/screen/ability/topBar/genetics(null)
 		B.icon = src.icon
 		B.icon_state = src.icon_state
 		B.name = src.name
@@ -324,7 +329,7 @@ var/const/effectTypeFood = 4
 			last_cast = world.time + linked_power.cooldown
 			if (linked_power.cooldown > 0)
 				SPAWN_DBG(linked_power.cooldown)
-					if (src && H && H.hud)
+					if (src && H?.hud)
 						H.hud.update_ability_hotbar()
 
 	tryCast(atom/target)
@@ -387,6 +392,6 @@ var/const/effectTypeFood = 4
 	afterCast()
 		if (ishuman(owner))
 			var/mob/living/carbon/human/H = owner
-			if (H && H.hud)
+			if (H?.hud)
 				H.hud.update_ability_hotbar()
 		return 0

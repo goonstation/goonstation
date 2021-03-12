@@ -360,7 +360,7 @@
 				F.holding_folder = src
 				src.contents_mirror += F
 				arc.contained_files -= F
-				//boutput(world, "Scooting over \ref[F] [F && F.disposed]")
+				//boutput(world, "Scooting over \ref[F] [F?.disposed]")
 				if (!F.metadata)
 					F.metadata = list()
 
@@ -2407,7 +2407,7 @@
 			if ("poke") //Set an arbitrary (device-specific) configuration value on the device.
 				if (!isnull(data["field"]) && !isnull(data["value"]))
 					if (isnum(data["value"]))
-						data["value"] = round(max(1, min(data["value"], 255)))
+						data["value"] = round(max(1, min(data["value"], 400))) // 400 is highest stimulus value for heater
 
 					var/sessionid = "[world.timeofday%100][rand(0,9)]"
 					sessions["[sessionid]"] = sendid

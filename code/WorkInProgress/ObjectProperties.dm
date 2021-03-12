@@ -1,3 +1,13 @@
+#define ASSOCIATE_MOB_PROPERTY(PROP) \
+	updateMob(obj/item/owner, mob/user, value, oldValue=null) { \
+		. = ..(); \
+		APPLY_MOB_PROPERTY(user, PROP, owner, value); \
+	} \
+	removeFromMob(obj/item/owner, mob/user, value) { \
+		. = ..(); \
+		REMOVE_MOB_PROPERTY(user, PROP, owner); \
+	}
+
 /obj/item/proc/dbg_objectprop()
 	set name = "Give Property"
 	var/list/ids = list()
@@ -101,6 +111,9 @@ var/list/globalPropList = null
 	var/tooltipImg = "" //Stored in browserassets\images\tooltips
 	var/defaultValue = 1 //Default value. Used to get an idea of what's "normal" for any given property.
 	var/goodDirection = 1 //Dumb name. Tells us which direction the number should grow in for it to be considered "good", 1=positive, -1 negative
+	var/hidden = 0 //does not get printed in item tooltips
+	var/inline = 0 //For use on properties on blocks only: gets printed in the the blocking-inline section of tooltips
+				   //ignores hidden (and should be used with hidden unless you want it printed both in the inline section and with the rest of the properties)
 
 	proc/onAdd(var/obj/owner, var/value) //When property is added to an object
 		return
@@ -241,15 +254,6 @@ var/list/globalPropList = null
 		getTooltipDesc(var/obj/propOwner, var/propVal)
 			return "[propVal] max. stamina"
 
-	stamregen
-		name = "Stamina regen."
-		id = "stamregen"
-		desc = "Affects stamina regenration." //Value is flat effective change to stamina regeneration.
-		tooltipImg = "stamregen.png"
-		defaultValue = 1
-		getTooltipDesc(var/obj/propOwner, var/propVal)
-			return "[propVal] stamina regen."
-
 	stamcost
 		name = "Stamina cost"
 		id = "stamcost"
@@ -304,7 +308,26 @@ var/list/globalPropList = null
 		getTooltipDesc(var/obj/propOwner, var/propVal)
 			return "[propVal]%"
 
+	enchantweapon
+		hidden = 1
+		name = "Enchantment"
+		id = "enchantweapon"
+		desc = "Magical improvements to melee weaponry"
+		tooltipImg = "bleed.png"
+		defaultValue = 1
+		onAdd(obj/item/owner, value)
+			if(istype(owner))
+				owner.force += value
+		onChange(obj/item/owner, oldValue, newValue)
+			if(istype(owner))
+				owner.force += (newValue - oldValue)
+		onRemove(obj/item/owner, value)
+			if(istype(owner))
+				owner.force -= value
+
 	inline //Seriously, if anyone has a better idea, tell me.
+		inline = 1
+		hidden = 1
 		disorient_resist
 			name = "Body Insulation (Disorient Resist)"
 			id = "I_disorient_resist"
@@ -404,21 +427,11 @@ to say if there's demand for that.
 
 	body
 		id = "meleeprot"
-		updateMob(obj/item/owner, mob/user, value, oldValue=null)
-			. = ..()
-			APPLY_MOB_PROPERTY(user, PROP_MELEEPROT_BODY, owner, value)
-		removeFromMob(obj/item/owner, mob/user, value)
-			. = ..()
-			REMOVE_MOB_PROPERTY(user, PROP_MELEEPROT_BODY, owner)
+		ASSOCIATE_MOB_PROPERTY(PROP_MELEEPROT_BODY)
 
 	head //ugly hack im sorry, this is used for head, mask, glasses and ear clothing
 		id = "meleeprot_head"
-		updateMob(obj/item/owner, mob/user, value, oldValue=null)
-			. = ..()
-			APPLY_MOB_PROPERTY(user, PROP_MELEEPROT_HEAD, owner, value)
-		removeFromMob(obj/item/owner, mob/user, value)
-			. = ..()
-			REMOVE_MOB_PROPERTY(user, PROP_MELEEPROT_HEAD, owner)
+		ASSOCIATE_MOB_PROPERTY(PROP_MELEEPROT_HEAD)
 
 	all //ugly hack but I'm not sorry, this is used for barriers
 		id = "meleeprot_all"
@@ -440,12 +453,7 @@ to say if there's demand for that.
 	getTooltipDesc(var/obj/propOwner, var/propVal)
 		return "[propVal] prot."
 
-	updateMob(obj/item/owner, mob/user, value, oldValue=null)
-		. = ..()
-		APPLY_MOB_PROPERTY(user, PROP_RANGEDPROT, owner, value)
-	removeFromMob(obj/item/owner, mob/user, value)
-		. = ..()
-		REMOVE_MOB_PROPERTY(user, PROP_RANGEDPROT, owner)
+	ASSOCIATE_MOB_PROPERTY(PROP_RANGEDPROT)
 
 /datum/objectProperty/equipment/radiationprot
 	name = "Resistance (Radiation)"
@@ -456,12 +464,7 @@ to say if there's demand for that.
 	getTooltipDesc(var/obj/propOwner, var/propVal)
 		return "[propVal]%"
 
-	updateMob(obj/item/owner, mob/user, value, oldValue=null)
-		. = ..()
-		APPLY_MOB_PROPERTY(user, PROP_RADPROT, owner, value)
-	removeFromMob(obj/item/owner, mob/user, value)
-		. = ..()
-		REMOVE_MOB_PROPERTY(user, PROP_RADPROT, owner)
+	ASSOCIATE_MOB_PROPERTY(PROP_RADPROT)
 
 /datum/objectProperty/equipment/coldprot
 	name = "Resistance (Cold)"
@@ -472,12 +475,7 @@ to say if there's demand for that.
 	getTooltipDesc(var/obj/propOwner, var/propVal)
 		return "[propVal]%"
 
-	updateMob(obj/item/owner, mob/user, value, oldValue=null)
-		. = ..()
-		APPLY_MOB_PROPERTY(user, PROP_COLDPROT, owner, value)
-	removeFromMob(obj/item/owner, mob/user, value)
-		. = ..()
-		REMOVE_MOB_PROPERTY(user, PROP_COLDPROT, owner)
+	ASSOCIATE_MOB_PROPERTY(PROP_COLDPROT)
 
 /datum/objectProperty/equipment/heatprot
 	name = "Resistance (Heat)"
@@ -488,12 +486,7 @@ to say if there's demand for that.
 	getTooltipDesc(var/obj/propOwner, var/propVal)
 		return "[propVal]%"
 
-	updateMob(obj/item/owner, mob/user, value, oldValue=null)
-		. = ..()
-		APPLY_MOB_PROPERTY(user, PROP_HEATPROT, owner, value)
-	removeFromMob(obj/item/owner, mob/user, value)
-		. = ..()
-		REMOVE_MOB_PROPERTY(user, PROP_HEATPROT, owner)
+	ASSOCIATE_MOB_PROPERTY(PROP_HEATPROT)
 
 /datum/objectProperty/equipment/exploprot
 	name = "Resistance (Explosion)"
@@ -502,14 +495,9 @@ to say if there's demand for that.
 	tooltipImg = "explosion.png"
 	defaultValue = 10
 	getTooltipDesc(var/obj/propOwner, var/propVal)
-		return "[propVal]"
+		return "[propVal]%"
 
-	updateMob(obj/item/owner, mob/user, value, oldValue=null)
-		. = ..()
-		APPLY_MOB_PROPERTY(user, PROP_EXPLOPROT, owner, value)
-	removeFromMob(obj/item/owner, mob/user, value)
-		. = ..()
-		REMOVE_MOB_PROPERTY(user, PROP_EXPLOPROT, owner)
+	ASSOCIATE_MOB_PROPERTY(PROP_EXPLOPROT)
 
 
 
@@ -522,10 +510,34 @@ to say if there's demand for that.
 	getTooltipDesc(var/obj/propOwner, var/propVal)
 		return "Reflecting projectiles"
 
+	// no ASSOCIATE_MOB_PROPERTY because this one is simple, valueless
 	updateMob(obj/item/owner, mob/user, value, oldValue=null)
 		. = ..()
 		APPLY_MOB_PROPERTY(user, PROP_REFLECTPROT, owner)
-
 	removeFromMob(obj/item/owner, mob/user, value)
 		. = ..()
 		REMOVE_MOB_PROPERTY(user, PROP_REFLECTPROT, owner)
+
+/datum/objectProperty/equipment/enchantarmor
+	hidden = 1
+	name = "Enchantment"
+	id = "enchantarmor"
+	desc = "Magical improvements to defensive clothing"
+	tooltipImg = "block.png"
+	defaultValue = 1
+
+	ASSOCIATE_MOB_PROPERTY(PROP_ENCHANT_ARMOR)
+
+/datum/objectProperty/equipment/stamregen
+	name = "Stamina regen."
+	id = "stamregen"
+	desc = "Affects stamina regenration." //Value is flat effective change to stamina regeneration.
+	tooltipImg = "stamregen.png"
+	defaultValue = 1
+	
+	getTooltipDesc(var/obj/propOwner, var/propVal)
+		return "[propVal] stamina regen."
+
+	ASSOCIATE_MOB_PROPERTY(PROP_STAMINA_REGEN_BONUS)
+
+#undef ASSOCIATE_MOB_PROPERTY

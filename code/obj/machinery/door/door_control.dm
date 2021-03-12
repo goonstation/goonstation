@@ -284,7 +284,7 @@
 
 	logTheThing("station", user, null, "toggled the [src.name] at [log_loc(src)].")
 
-	for (var/obj/machinery/door/poddoor/M in doors)
+	for (var/obj/machinery/door/poddoor/M in by_type[/obj/machinery/door])
 		if (M.id == src.id)
 			if (M.density)
 				M.open()
@@ -297,14 +297,14 @@
 					SPAWN_DBG(src.timer)
 						M.open()
 
-	for (var/obj/machinery/door/airlock/M in doors)
+	for (var/obj/machinery/door/airlock/M in by_type[/obj/machinery/door])
 		if (M.id == src.id)
 			if (M.density)
 				M.open()
 			else
 				M.close()
 
-	for (var/obj/machinery/conveyor/M in machine_registry[MACHINES_CONVEYORS]) // Workaround for the stacked conveyor belt issue (Convair880).
+	for (var/obj/machinery/conveyor/M as() in machine_registry[MACHINES_CONVEYORS]) // Workaround for the stacked conveyor belt issue (Convair880).
 		if (M.id == src.id)
 			if (M.operating)
 				M.operating = 0
@@ -321,7 +321,7 @@
 	SPAWN_DBG(1.5 SECONDS)
 		if(!(status & NOPOWER))
 			icon_state = "doorctrl0"
-	src.add_fingerprint(usr)
+	src.add_fingerprint(user)
 
 /obj/machinery/door_control/power_change()
 	..()
@@ -363,19 +363,19 @@
 	active = 1
 	icon_state = "launcheract"
 
-	for(var/obj/machinery/door/poddoor/M in doors)
+	for(var/obj/machinery/door/poddoor/M in by_type[/obj/machinery/door])
 		if (M.id == src.id)
 			M.open()
 
 	sleep(2 SECONDS)
 
-	for(var/obj/machinery/mass_driver/M in machine_registry[MACHINES_MASSDRIVERS])
+	for(var/obj/machinery/mass_driver/M as() in machine_registry[MACHINES_MASSDRIVERS])
 		if(M.id == src.id)
 			M.drive()
 
 	sleep(5 SECONDS)
 
-	for(var/obj/machinery/door/poddoor/M in doors)
+	for(var/obj/machinery/door/poddoor/M in by_type[/obj/machinery/door])
 		if (M.id == src.id)
 			M.close()
 
@@ -725,7 +725,7 @@
 			return
 		use_power(5)
 
-		for(var/obj/machinery/door/poddoor/M in doors)
+		for(var/obj/machinery/door/poddoor/M in by_type[/obj/machinery/door])
 			if (M.id == src.id)
 				if (M.density)
 					M.open()
@@ -749,7 +749,7 @@
 					return
 				use_power(5)
 
-				for(var/obj/machinery/door/poddoor/M in doors)
+				for(var/obj/machinery/door/poddoor/M in by_type[/obj/machinery/door])
 					if (M.id == src.id)
 						if (M.density)
 							M.open()

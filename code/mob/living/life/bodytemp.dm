@@ -47,6 +47,17 @@
 		if (istype(owner.loc, /obj/machinery/atmospherics/unary/cryo_cell))
 			return ..()
 
+		//shivering status chance
+		if (isalive(owner) && ((owner.bodytemperature + owner.temp_tolerance) < owner.base_body_temp) && !owner.is_cold_resistant())
+			var/diff = owner.base_body_temp - (owner.bodytemperature + owner.temp_tolerance)
+			var/scaling_factor = max((owner.base_body_temp - T0C)*6,1)
+			var/chance = round((diff/scaling_factor)*100)
+			chance = clamp(chance,0,100)
+			if(prob(percentmult(chance, get_multiplier())))
+				owner.changeStatus("shivering", 6 SECONDS)
+		else
+			owner.delStatus("shivering")
+
 		// lets give them a fair bit of leeway so they don't just start dying
 		//as that may be realistic but it's no fun
 		if ((owner.bodytemperature > owner.base_body_temp + (owner.temp_tolerance * 1.7) && environment.temperature > owner.base_body_temp + (owner.temp_tolerance * 1.7)) || (owner.bodytemperature < owner.base_body_temp - (owner.temp_tolerance * 1.7) && environment.temperature < owner.base_body_temp - (owner.temp_tolerance * 1.7)))
@@ -87,4 +98,3 @@
 		if (ARMS)
 			TakeDamage("l_arm", 0, 0.4*discomfort, 0, DAMAGE_BURN)
 			TakeDamage("r_arm", 0, 0.4*discomfort, 0, DAMAGE_BURN)
-

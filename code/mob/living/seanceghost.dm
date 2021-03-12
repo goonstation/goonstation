@@ -60,7 +60,7 @@
 		if(!canmove) return
 
 		if (NewLoc && isrestrictedz(src.z) && !restricted_z_allowed(src, NewLoc) && !(src.client && src.client.holder))
-			var/OS = observer_start.len ? pick(observer_start) : locate(1, 1, 1)
+			var/OS = pick_landmark(LANDMARK_OBSERVER, locate(1, 1, 1))
 			if (OS)
 				src.set_loc(OS)
 			else
@@ -70,11 +70,11 @@
 		if (!isturf(src.loc))
 			src.set_loc(get_turf(src))
 		if (NewLoc)
-			dir = get_dir(loc, NewLoc)
+			set_dir(get_dir(loc, NewLoc))
 			src.set_loc(NewLoc)
 			return
 
-		dir = direct
+		set_dir(direct)
 		if((direct & NORTH) && src.y < world.maxy)
 			src.y++
 		if((direct & SOUTH) && src.y > 1)
@@ -160,7 +160,7 @@
 
 		var/turf/T = get_turf(src)
 		if (!(T && isturf(T)) || ((isrestrictedz(T.z) || T.z != 1) && !(src.client && src.client.holder)))
-			var/OS = observer_start.len ? pick(observer_start) : locate(1, 1, 1)
+			var/OS = pick_landmark(LANDMARK_OBSERVER, locate(1, 1, 1))
 			if (OS)
 				Z.set_loc(OS)
 			else
@@ -187,6 +187,7 @@
 				src.client.mob = Z
 			Z.originalmob = originalg
 			Z.mind = new /datum/mind()
+			Z.mind.ckey = ckey
 			Z.mind.key = key
 			Z.mind.current = Z
 			ticker.minds += Z.mind

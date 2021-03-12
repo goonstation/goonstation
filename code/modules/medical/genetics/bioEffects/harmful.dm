@@ -6,7 +6,7 @@
 	name = "Blindness"
 	desc = "Disconnects the optic nerves from the brain, rendering the subject unable to see."
 	id = "blind"
-	effectType = effectTypeDisability
+	effectType = EFFECT_TYPE_DISABILITY
 	isBad = 1
 	probability = 33
 	msgGain = "You can't seem to see anything!"
@@ -25,7 +25,7 @@
 	name = "Frontal Gyrus Suspension"
 	desc = "Completely shuts down the speech center of the subject's brain."
 	id = "mute"
-	effectType = effectTypeDisability
+	effectType = EFFECT_TYPE_DISABILITY
 	isBad = 1
 	probability = 33
 	msgGain = "You feel unable to express yourself at all."
@@ -43,7 +43,7 @@
 	name = "Deafness"
 	desc = "Diminishes the subject's tympanic membrane, rendering them unable to hear."
 	id = "deaf"
-	effectType = effectTypeDisability
+	effectType = EFFECT_TYPE_DISABILITY
 	isBad = 1
 	probability = 33
 	blockCount = 4
@@ -75,7 +75,7 @@
 	name = "Dyspraxia"
 	desc = "Hinders transmissions in the subject's nervous system, causing poor motor skills."
 	id = "clumsy"
-	effectType = effectTypeDisability
+	effectType = EFFECT_TYPE_DISABILITY
 	probability = 66
 	isBad = 1
 	msgGain = "You feel kind of off-balance and disoriented."
@@ -88,7 +88,7 @@
 	name = "Narcolepsy"
 	desc = "Alters the sleep center of the subject's brain, causing bouts of involuntary sleepiness."
 	id = "narcolepsy"
-	effectType = effectTypeDisability
+	effectType = EFFECT_TYPE_DISABILITY
 	probability = 66
 	isBad = 1
 	msgGain = "You feel a bit sleepy."
@@ -120,14 +120,14 @@
 	can_reclaim = 0
 	can_scramble = 0
 	curable_by_mutadone = 0
-	sleep_prob = 35
+	sleep_prob = 10 //reduced from 35
 	icon_state  = "bad"
 
 /datum/bioEffect/coprolalia
 	name = "Coprolalia"
 	desc = "Causes involuntary outbursts from the subject."
 	id = "coprolalia"
-	effectType = effectTypeDisability
+	effectType = EFFECT_TYPE_DISABILITY
 	probability = 99
 	isBad = 1
 	msgGain = "You can't seem to shut up!"
@@ -147,47 +147,11 @@
 		if (prob(talk_prob))
 			L.say(pick(talk_strings))
 
-/datum/bioEffect/fat
-	name = "Obesity"
-	desc = "Greatly slows the subject's metabolism, enabling greater buildup of lipid tissue."
-	id = "fat"
-	probability = 99
-	effectType = effectTypeDisability
-	isBad = 1
-	msgGain = "You feel blubbery and lethargic!"
-	msgLose = "You feel fit!"
-	reclaim_fail = 15
-	stability_loss = -5
-	icon_state  = "bad"
-
-	OnAdd()
-		..()
-		if (ishuman(owner))
-			var/mob/living/carbon/human/H = owner
-			H.set_body_icon_dirty()
-			H.unlock_medal("Space Ham", 1)
-			APPLY_MOVEMENT_MODIFIER(H, /datum/movement_modifier/spaceham, src.type)
-
-	OnRemove()
-		..()
-		if (ishuman(owner))
-			var/mob/living/carbon/human/H = owner
-			H.set_body_icon_dirty()
-			REMOVE_MOVEMENT_MODIFIER(H, /datum/movement_modifier/spaceham, src.type)
-
-	OnLife()
-		if(..()) return
-		if (ishuman(owner))
-			var/mob/living/carbon/human/H = owner
-			if (prob(1) && !H.find_ailment_by_type(/datum/ailment/malady/heartdisease))
-				H.contract_disease(/datum/ailment/malady/heartdisease,null,null,1)
-		return
-
 /datum/bioEffect/shortsighted
 	name = "Diminished Optic Nerves"
 	desc = "Reduces the subject's ability to see clearly without glasses or other visual aids."
 	id = "bad_eyesight"
-	effectType = effectTypeDisability
+	effectType = EFFECT_TYPE_DISABILITY
 	probability = 99
 	isBad = 1
 	msgGain = "Your vision blurs."
@@ -229,7 +193,7 @@
 	name = "Epilepsy"
 	desc = "Causes damage to the subject's brain structure, resulting in occasional siezures from brain misfires."
 	id = "epilepsy"
-	effectType = effectTypeDisability
+	effectType = EFFECT_TYPE_DISABILITY
 	isBad = 1
 	probability = 66
 	blockCount = 3
@@ -253,7 +217,7 @@
 	name = "Thermal Vulnerability"
 	desc = "Cripples the subject's thermoregulation, rendering them more vulnerable to abnormal temperatures."
 	id = "thermal_vuln"
-	effectType = effectTypeDisability
+	effectType = EFFECT_TYPE_DISABILITY
 	isBad = 1
 	probability = 40
 	blockCount = 3
@@ -279,7 +243,7 @@
 	name = "Blood Toxification"
 	desc = "Impairs the subject's blood filtration, resulting in gradual toxic buildup that must be purged by outside assistance."
 	id = "toxification"
-	effectType = effectTypeDisability
+	effectType = EFFECT_TYPE_DISABILITY
 	isBad = 1
 	probability = 13
 	blockCount = 3
@@ -296,13 +260,13 @@
 		if (iscarbon(owner))
 			var/mob/living/carbon/C = owner
 			if (prob(tox_prob))
-				C.toxloss += tox_amount
+				C.take_toxin_damage(tox_amount)
 
 /datum/bioEffect/tourettes
 	name = "Tourettes"
 	desc = "Alters the subject's brain structure, causing periodic involuntary movements and outbursts."
 	id = "tourettes"
-	effectType = effectTypeDisability
+	effectType = EFFECT_TYPE_DISABILITY
 	isBad = 1
 	probability = 66
 	msgGain = "You feel like you can't control your actions fully."
@@ -337,7 +301,7 @@
 	desc = "Enhances the sensitivity of nerves in the subject's throat, causing periodic coughing fits."
 	id = "cough"
 	probability = 99
-	effectType = effectTypeDisability
+	effectType = EFFECT_TYPE_DISABILITY
 	isBad = 1
 	msgGain = "You feel an irritating itch in your throat."
 	msgLose = "Your throat clears up."
@@ -350,7 +314,7 @@
 			return
 		if ((prob(5) && !owner.getStatusDuration("paralysis")))
 			owner:drop_item()
-			SPAWN_DBG (0)
+			SPAWN_DBG(0)
 				owner:emote("cough")
 				return
 		return
@@ -361,7 +325,7 @@
 	name = "Motor Neuron Signal Enhancement" // heh
 	desc = "Causes involuntary muscle contractions in limbs, due to a loss of inhibition of motor neurons."
 	id = "funky_limb"
-	effectType = effectTypeDisability
+	effectType = EFFECT_TYPE_DISABILITY
 	isBad = 1
 	probability = 33
 	blockCount = 4
@@ -453,7 +417,7 @@
 	name = "Radioactive"
 	desc = "The subject suffers from constant radiation sickness and causes the same on nearby organics."
 	id = "radioactive"
-	effectType = effectTypeDisability
+	effectType = EFFECT_TYPE_DISABILITY
 	probability = 66
 	blockCount = 3
 	blockGaps = 3
@@ -484,7 +448,7 @@
 	name = "Mutagenic Field"
 	desc = "The subject emits low-level radiation that may cause everyone in range to mutate."
 	id = "mutagenic_field"
-	effectType = effectTypeDisability
+	effectType = EFFECT_TYPE_DISABILITY
 	isBad = 1
 	probability = 33
 	blockCount = 3
@@ -526,7 +490,7 @@
 	name = "Spatial Destabilization"
 	desc = "Causes the subject's molecular structure to become partially unstuck in space."
 	id = "involuntary_teleporting"
-	effectType = effectTypeDisability
+	effectType = EFFECT_TYPE_DISABILITY
 	isBad = 1
 	probability = 33
 	blockCount = 3
@@ -569,7 +533,7 @@
 	name = "Irritable Bowels"
 	desc = "Causes the subject to experience frequent involuntary flatus."
 	id = "farty"
-	effectType = effectTypeDisability
+	effectType = EFFECT_TYPE_DISABILITY
 	isBad = 1
 	msgGain = "Your guts are rumbling."
 	msgLose = "Your guts settle down."
@@ -587,6 +551,69 @@
 			return
 		if (prob(emote_prob))
 			L.emote(emote_type)
+
+/datum/bioEffect/colorblindness
+	name = "Protanopia"
+	desc = "Selectively inhibits the L-cones in the subject's eyes, causing red-green colorblindness."
+	id = "protanopia"
+	effectType = EFFECT_TYPE_DISABILITY
+	isBad = 1
+	msgGain = "Everything starts looking a lot more yellow."
+	msgLose = "You notice a few extra colors."
+	probability = 99
+	icon_state  = "bad"
+
+	OnAdd()
+		src.removed = 0
+		owner.apply_color_matrix(COLOR_MATRIX_PROTANOPIA, COLOR_MATRIX_PROTANOPIA_LABEL)
+		return
+
+	OnRemove()
+		src.removed = 1
+		owner.remove_color_matrix(COLOR_MATRIX_PROTANOPIA_LABEL)
+		return
+
+/datum/bioEffect/colorblindness/greenblind
+	name = "Deuteranopia"
+	desc = "Selectively inhibits the L-cones in the subject's eyes, causing green to be indistinguishable from red."
+	id = "deuteranopia"
+	effectType = EFFECT_TYPE_DISABILITY
+	isBad = 1
+	msgGain = "Everything starts looking a lot less green."
+	msgLose = "You notice a few extra colors."
+	probability = 99
+	icon_state  = "bad"
+
+	OnAdd()
+		src.removed = 0
+		owner.apply_color_matrix(COLOR_MATRIX_DEUTERANOPIA, COLOR_MATRIX_DEUTERANOPIA_LABEL)
+		return
+
+	OnRemove()
+		src.removed = 1
+		owner.remove_color_matrix(COLOR_MATRIX_DEUTERANOPIA_LABEL)
+		return
+
+/datum/bioEffect/colorblindness/blueblind
+	name = "Tritanopia"
+	desc = "Selectively inhibits the L-cones in the subject's eyes, causing blue colorblindness."
+	id = "tritanopia"
+	effectType = EFFECT_TYPE_DISABILITY
+	isBad = 1
+	msgGain = "Everything starts looking a lot less blue."
+	msgLose = "You notice a few extra colors."
+	probability = 99
+	icon_state  = "bad"
+
+	OnAdd()
+		src.removed = 0
+		owner.apply_color_matrix(COLOR_MATRIX_TRITANOPIA, COLOR_MATRIX_TRITANOPIA_LABEL)
+		return
+
+	OnRemove()
+		src.removed = 1
+		owner.remove_color_matrix(COLOR_MATRIX_TRITANOPIA_LABEL)
+		return
 
 /datum/bioEffect/emoter/screamer
 	name = "Paranoia"
@@ -644,7 +671,7 @@
 	name = "Nectar Perspiration"
 	desc = "Causes the subject to perspire nectar that attracts abnormally small bees."
 	id = "buzz"
-	effectType = effectTypeDisability
+	effectType = EFFECT_TYPE_DISABILITY
 	isBad = 1
 	msgGain = "Your guts are rumbling."
 	msgLose = "Your guts settle down."
@@ -670,7 +697,7 @@
 	name = "Electromagnetic Field"
 	desc = "The subject produces small, random electromagnetic pulses around it."
 	id = "emp_field"
-	effectType = effectTypeDisability
+	effectType = EFFECT_TYPE_DISABILITY
 	msgGain = "You feel more connected to electromagnetic fields."
 	msgLose = "You feel less connected to electromagnetic fields."
 	blockCount = 1
@@ -698,7 +725,7 @@
 		pulse.icon_state = "emppulse"
 		pulse.name = "emp pulse"
 		pulse.anchored = 1
-		SPAWN_DBG (20)
+		SPAWN_DBG(2 SECONDS)
 			if (pulse) qdel(pulse)
 
 		//maybe have this only emp some things on the tile.
@@ -712,7 +739,7 @@
 	id = "fitness_debuff"
 	probability = 60
 	isBad = 1
-	effectType = effectTypePower
+	effectType = EFFECT_TYPE_POWER
 	blockCount = 2
 	blockGaps = 3
 	reclaim_mats = 30
@@ -726,18 +753,18 @@
 	icon_state  = "bad"
 
 	OnAdd()
-		src.owner.add_stam_mod_regen("g-fitness-debuff", -2)
+		APPLY_MOB_PROPERTY(src.owner, PROP_STAMINA_REGEN_BONUS, "g-fitness-debuff", -2)
 		src.owner.add_stam_mod_max("g-fitness-debuff", -30)
 
 	OnRemove()
-		src.owner.remove_stam_mod_regen("g-fitness-debuff")
+		REMOVE_MOB_PROPERTY(src.owner, PROP_STAMINA_REGEN_BONUS, "g-fitness-debuff")
 		src.owner.remove_stam_mod_max("g-fitness-debuff")
 
 /datum/bioEffect/tinnitus
 	name = "Tinnitus"
 	desc = "Causes the subject to almost constantly hear a terrible/annoying ringing in their ears."
 	id = "tinnitus"
-	effectType = effectTypeDisability
+	effectType = EFFECT_TYPE_DISABILITY
 	isBad = 1
 	msgGain = "You hear a ringing in your ears."
 	msgLose = "The ringing has stopped...Finally. Thank the Space-Gods."
@@ -757,7 +784,7 @@
 	id = "anemia"
 	probability = 55
 	isBad = 1
-	effectType = effectTypePower
+	effectType = EFFECT_TYPE_POWER
 	msgGain = "You feel lightheaded."
 	msgLose = "Your lightheadedness fades."
 	stability_loss = -5
@@ -777,7 +804,7 @@
 	id = "polycythemia"
 	probability = 45
 	isBad = 1
-	effectType = effectTypePower
+	effectType = EFFECT_TYPE_POWER
 	msgGain = "Your breathing quickens."
 	msgLose = "Your breathing returns to normal."
 	stability_loss = -5
@@ -801,7 +828,7 @@
 	name = "Meta-Neural Transferral"
 	desc = "The subject's brainwaves will occasionally involuntarily switch with those of another near them."
 	id = "mind_jockey"
-	effectType = effectTypeDisability
+	effectType = EFFECT_TYPE_DISABILITY
 	occur_in_genepools = 0
 	probability = 0
 	scanner_visibility = 0
@@ -910,7 +937,7 @@
 	desc = "Enhances the sensitivity of nerves in the subject's nose, causing periodic sneezing."
 	id = "sneeze"
 	probability = 66
-	effectType = effectTypeDisability
+	effectType = EFFECT_TYPE_DISABILITY
 	isBad = 1
 	msgGain = "You feel an irritating itch in your nose."
 	msgLose = "Your nose clears up."

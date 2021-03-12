@@ -26,14 +26,14 @@
 	stamina_crit_chance = 1
 	module_research = list("efficiency" = 1)
 	module_research_type = /obj/item/spacecash
-
+	inventory_counter_enabled = 1
 	var/default_min_amount = 0
 	var/default_max_amount = 0
 
 	New(var/atom/loc, var/amt = 1 as num)
-		..(loc)
 		var/default_amount = default_min_amount == default_max_amount ? default_min_amount : rand(default_min_amount, default_max_amount)
 		src.amount = max(amt,default_amount) //take higher
+		..(loc)
 		src.update_stack_appearance()
 
 	proc/setup(var/atom/L, var/amt = 1 as num)
@@ -49,7 +49,7 @@
 		..()
 		var/default_amount = default_min_amount == default_max_amount ? default_min_amount : rand(default_min_amount, default_max_amount)
 		src.amount = max(1, default_amount) //take higher
-		//src.update_stack_appearance()
+		src.update_stack_appearance()
 
 	pooled()
 		if (usr)
@@ -59,6 +59,7 @@
 
 	update_stack_appearance()
 		src.UpdateName()
+		src.inventory_counter.update_number(src.amount)
 		switch (src.amount)
 			if (-INFINITY to 9)
 				src.icon_state = "cashgreen"
@@ -170,18 +171,15 @@
 
 	New()
 		..()
-		if (!(src in processing_items))
-			processing_items.Add(src)
+		processing_items |= src
 
 	pooled()
-		if ((src in processing_items))
-			processing_items.Remove(src)
+		processing_items -= src
 		..()
 
 	unpooled()
 		..()
-		if (!(src in processing_items))
-			processing_items.Add(src)
+		processing_items |= src
 
 	update_stack_appearance()
 		return
@@ -307,6 +305,7 @@
 
 	update_stack_appearance()
 		src.UpdateName()
+		src.inventory_counter?.update_number(amount)
 		animate(src, transform = null, time = 1, easing = SINE_EASING, flags = ANIMATION_END_NOW)
 		switch (src.amount)
 			if (1000000 to INFINITY)
@@ -339,10 +338,10 @@
 
 	UpdateName()
 		if (src.amount >= 1000000)
-			src.name = "\improper ONE MILLION SPACEBUX!!! HOLY SHIT!!!"
+			src.name = "\proper ONE MILLION SPACEBUX!!! HOLY SHIT!!!"
 			src.desc = "what the fuck are you <strong>DOING</strong> stop reading this stupid description and <em>slam this shit into the nearest ATM!</em>"
 		else
-			src.name = "[src.amount] [initial(src.name)]"
+			src.name = "\improper [src.amount] [initial(src.name)]"
 			src.desc = initial(src.desc)
 
 	before_stack(atom/movable/O as obj, mob/user as mob)
