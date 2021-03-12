@@ -37,9 +37,7 @@
 						H.health_mon.icon_state = "0"
 
 			var/turf/T = get_turf(H)
-			H.health_mon.alpha = T.RL_GetBrightness() * 255
-			//var/turfbrightness = T.RL_GetBrightness() * 255
-			//H.health_mon.color = rgb(turfbrightness,turfbrightness,turfbrightness)
+			H.health_mon.alpha = T.RL_GetBrightness() * 255 //The heart gets fainter in the dark, but isn't (as) discoloured by lighting colour
 		if (H.health_implant)
 			if (locate(/obj/item/implant/health) in H.implant)
 				H.health_implant.icon_state = "implant"
