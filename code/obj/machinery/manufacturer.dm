@@ -1076,10 +1076,10 @@
 			src.output_target = O.loc
 			boutput(usr, "<span class='notice'>You set the manufacturer to output on top of [O]!</span>")
 
-		else if (istype(over_object,/turf/simulated/floor/))
+		else if (istype(over_object,/turf/simulated/floor/) || istype(over_object,/turf/unsimulated/floor/))
 			src.output_target = over_object
 			boutput(usr, "<span class='notice'>You set the manufacturer to output to [over_object]!</span>")
-
+		
 		else
 			boutput(usr, "<span class='alert'>You can't use that as an output target.</span>")
 		return
