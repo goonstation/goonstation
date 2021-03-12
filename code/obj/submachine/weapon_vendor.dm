@@ -388,13 +388,13 @@
 	name = "Infiltrator"
 	path = /obj/storage/crate/classcrate/infiltrator
 	category = "Loadout"
-	description = "Tranquilizer pistol with a pouch of dart magazines, tools to help you blend in with the crew and an electromagnetic card (EMAG)."
+	description = "Tranquilizer pistol with a pouch of darts, emag, tools to help you blend in with the crew and pod beacon deployer to help get your team closer to the target location."
 
 /datum/materiel/loadout/scout
 	name = "Scout"
 	path = /obj/storage/crate/classcrate/scout
 	category = "Loadout"
-	description = "Burst-fire submachine gun, personal cloaking device and an electromagnetic card (EMAG)."
+	description = "Burst-fire submachine gun, personal cloaking device, light breaker and an emag for sneaky flanking actions."
 
 /datum/materiel/loadout/medic
 	name = "Field Medic"
@@ -418,7 +418,7 @@
 	name = "Marksman"
 	path = /obj/storage/crate/classcrate/sniper
 	category = "Loadout"
-	description = "High-powered sniper rifle that can fire through two solid walls,optical thermal scanner and a pouch of smoke grenades"
+	description = "High-powered sniper rifle that can fire through two solid walls, optical thermal scanner and a pouch of smoke grenades"
 
 /datum/materiel/loadout/custom
 	name = "Custom Class Uplink"

@@ -238,6 +238,14 @@ var/global/list/warp_beacons = list() //wow you should've made one for warp beac
 		depbeac.beaconid = src.beaconid
 		qdel(src)
 
+/obj/beacon_deployer/syndicate
+	name = "syndicate warp buoy unit"
+
+	New()
+		src.beaconid = rand(1000,9999)
+		src.name = "syndicate warp buoy unit [beaconid]"
+		..()
+
 /obj/beaconkit
 	name = "warp buoy frame"
 	desc = "A partially completed frame for a deployable warp buoy. It's missing rods for its stand."

@@ -431,6 +431,7 @@
 		desc = "A crate containing a Specialist Operative loadout."
 		spawn_contents = list(/obj/item/gun/kinetic/tranq_pistol,
 		/obj/item/storage/pouch/tranq_pistol_dart,
+		/obj/beacon_deployer/syndicate,
 		/obj/item/genetics_injector/dna_scrambler,
 		/obj/item/voice_changer,
 		/obj/item/card/emag,
@@ -447,6 +448,7 @@
 		/obj/item/clothing/glasses/nightvision,
 		/obj/item/cloaking_device,
 		/obj/item/card/emag,
+		/obj/item/lightbreaker,
 		/obj/item/clothing/suit/space/syndicate/specialist/infiltrator,
 		/obj/item/clothing/head/helmet/space/syndicate/specialist/infiltrator)
 
