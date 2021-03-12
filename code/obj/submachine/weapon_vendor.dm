@@ -28,6 +28,7 @@
 	var/list/credits = list("Sidearm" = 0, "Loadout" = 0, "Utility" = 0, "Assistant" = 0)
 	var/list/datum/materiel_stock = list()
 	var/token_accepted = /obj/item/requisition_token
+	var/log_purchase = FALSE
 
 	attackby(var/obj/item/I, var/mob/user)
 		if(istype(I, token_accepted))
@@ -41,6 +42,8 @@
 		src.updateUsrDialog()
 		playsound(src.loc, sound_token, 80, 1)
 		boutput(user, "<span class='notice'>You insert the requisition token into [src].</span>")
+		if(log_purchase)
+			logTheThing("debug", user, null, "inserted [token] into [src] at [log_loc(get_turf(src))]")
 
 	attack_hand(var/mob/user as mob)
 		if(..())
@@ -58,6 +61,8 @@
 		onclose(user, "swv")
 
 	proc/vended(var/atom/A)
+		if(log_purchase)
+			logTheThing("debug", usr, null, "bought [A] from [src] at [log_loc(get_turf(src))]")
 		.= 0
 
 	proc/redeem_menu()
@@ -196,6 +201,8 @@
 	icon_state = "weapon"
 	desc = "An automated quartermaster service for supplying your nuclear operative team with weapons and gear."
 	token_accepted = /obj/item/requisition_token/syndicate
+	log_purchase = TRUE
+
 	New()
 		..()
 		// List of avaliable objects for purchase
