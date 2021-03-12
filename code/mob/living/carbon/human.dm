@@ -1389,6 +1389,10 @@
 	if (mutantrace?.override_language)
 		say_language = mutantrace.override_language
 
+	if (istype(src.wear_mask, /obj/item/clothing/mask/monkey_translator))
+		var/obj/item/clothing/mask/monkey_translator/mask = src.wear_mask
+		say_language = mask.new_language
+
 	message = copytext(message, 1, MAX_MESSAGE_LEN)
 
 	if (src.fakedead)
