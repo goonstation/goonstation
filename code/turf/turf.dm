@@ -1166,3 +1166,18 @@
 	name = "concrete floor"
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "concrete"
+
+/turf/unsimulated/wall/griffening
+	icon = 'icons/misc/griffening/area_wall.dmi'
+	icon_state = null
+	density = 1
+	opacity = 0
+	name = "wall"
+	desc = "A holographic projector wall."
+
+/turf/unsimulated/floor/griffening
+	icon = 'icons/misc/griffening/area_floor.dmi'
+	icon_state = null
+	opacity = 0
+	name = "floor"
+	desc = "A holographic projector floor."
