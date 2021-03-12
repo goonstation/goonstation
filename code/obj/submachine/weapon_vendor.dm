@@ -202,7 +202,6 @@
 		materiel_stock += new/datum/materiel/loadout/assist_eng
 		materiel_stock += new/datum/materiel/loadout/assist_med
 		materiel_stock += new/datum/materiel/loadout/assist_res
-		materiel_stock += new/datum/materiel/loadout/assist_sec
 
 	accepted_token()
 		src.credits["Loadout"]++
@@ -403,13 +402,6 @@
 	category = "Loadout"
 	description = "A boxed kit for assisting research staff."
 //supplementary items: gas mask, latex gloves, lab coat, beaker, reagent analyzer
-
-/datum/materiel/loadout/assist_sec
-	name = "Security"
-	path = /obj/item/storage/box/staffkit/sec
-	category = "Loadout"
-	description = "A boxed kit for assisting onboard security."
-//supplementary items: flash, handcuffs, whistle, forensic analyzer
 
 //SYNDIE
 

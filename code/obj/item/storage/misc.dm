@@ -131,14 +131,3 @@
 		/obj/item/reagent_containers/glass/beaker,
 		/obj/item/device/reagentscanner)
 
-/obj/item/storage/box/staffkit/sec
-	name = "security assistant kit"
-	desc = "A slightly stale-smelling set of equipment."
-	spawn_contents = list(/obj/item/clothing/under/rank/staffsec,
-		/obj/item/device/radio/headset/security,
-		/obj/item/clothing/head/helmet/siren,
-		/obj/item/device/flash,
-		/obj/item/handcuffs,
-		/obj/item/instrument/whistle,
-		/obj/item/device/detective_scanner)
-
