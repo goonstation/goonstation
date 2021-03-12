@@ -23,7 +23,7 @@
 			return
 
 		var/player_count = 0
-		for (var/client/cl as() in clients)
+		for (var/client/cl as anything in clients)
 			var/mob/living/L = cl.mob
 			if(!istype(L) || isdead(L))
 				continue
