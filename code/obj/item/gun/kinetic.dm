@@ -953,9 +953,10 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		ammo.amount_left = 0
 		update_icon()
 /obj/item/gun/kinetic/smg
-	name = "submachine gun"
-	desc = "An automatic submachine gun"
-	icon_state = "walthery1"
+	name = "Bellatrix submachine gun"
+	desc = "A semi-automatic, 9mm submachine gun, developed by Almagest Weapons Fabrication."
+	icon = 'icons/obj/48x32.dmi'
+	icon_state = "mp52"
 	w_class = 2
 	force = 3
 	contraband = 4
@@ -964,7 +965,6 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	auto_eject = 1
 	spread_angle = 12.5
 	has_empty_state = 1
-	fire_animation = TRUE
 
 	New()
 		ammo = new/obj/item/ammo/bullets/bullet_9mm/smg
@@ -1082,7 +1082,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	force = 5
 	caliber = 0.308
 	max_ammo_capacity = 100
-	auto_eject = 1
+	auto_eject = 0
 
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY | ONBACK
 	object_flags = NO_ARM_ATTACH

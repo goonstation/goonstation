@@ -30,6 +30,10 @@
 			name = "small pistol magazine pouch"
 			spawn_contents = list(/obj/item/ammo/bullets/bullet_9mm = 2)
 
+		smg
+			name = "smg magazine pouch"
+			spawn_contents = list(/obj/item/ammo/bullets/bullet_9mm/smg = 5)
+
 	tranq_pistol_dart
 		name = "tranq pistol dart pouch"
 		icon_state = "ammopouch-double"

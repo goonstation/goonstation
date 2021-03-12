@@ -206,6 +206,7 @@
 		materiel_stock += new/datum/materiel/loadout/heavy
 		materiel_stock += new/datum/materiel/loadout/grenadier
 		materiel_stock += new/datum/materiel/loadout/infiltrator
+		materiel_stock += new/datum/materiel/loadout/scout
 		materiel_stock += new/datum/materiel/loadout/medic
 		materiel_stock += new/datum/materiel/loadout/firebrand
 		materiel_stock += new/datum/materiel/loadout/engineer
@@ -385,9 +386,15 @@
 
 /datum/materiel/loadout/infiltrator
 	name = "Infiltrator"
-	path = /obj/storage/crate/classcrate/agent_rework
+	path = /obj/storage/crate/classcrate/infiltrator
 	category = "Loadout"
-	description = "Tranquilizer pistol with a pouch of dart magazines, five use cloaking device, electromagnetic card and night-vision goggles."
+	description = "Tranquilizer pistol with a pouch of dart magazines, tools to help you blend in with the crew and an electromagnetic card (EMAG)."
+
+/datum/materiel/loadout/scout
+	name = "Scout"
+	path = /obj/storage/crate/classcrate/scout
+	category = "Loadout"
+	description = "Burst-fire submachine gun, personal cloaking device and an electromagnetic card (EMAG)."
 
 /datum/materiel/loadout/medic
 	name = "Field Medic"

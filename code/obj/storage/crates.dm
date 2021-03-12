@@ -426,7 +426,7 @@
 		/obj/item/clothing/suit/space/syndicate/specialist/infiltrator,
 		/obj/item/clothing/head/helmet/space/syndicate/specialist/infiltrator)
 
-	agent_rework
+	infiltrator
 		name = "Class Crate - Infiltrator" // for actually fitting in among the crew.
 		desc = "A crate containing a Specialist Operative loadout."
 		spawn_contents = list(/obj/item/gun/kinetic/tranq_pistol,
@@ -434,15 +434,18 @@
 		/obj/item/genetics_injector/dna_scrambler,
 		/obj/item/voice_changer,
 		/obj/item/card/emag,
-		/obj/item/clothing/under/chameleon)
+		/obj/item/clothing/under/chameleon,
+		/obj/item/device/chameleon,
+		/obj/item/clothing/suit/space/syndicate/specialist,
+		/obj/item/clothing/head/helmet/space/syndicate/specialist/infiltrator)
 
-	assassin
-		name = "Class Crate - Assassin" // sneaky invisible flanker
-		desc = "A crate containing a Specialist Operative loadout. Includes a tranquilizer pistol with a fast acting payload, a cloaking device with 5 uses, a combat knife and an electromagnetic card (EMAG)."
-		spawn_contents = list(/obj/item/gun/kinetic/tranq_pistol,
-		/obj/item/storage/pouch/tranq_pistol_dart,
+	scout
+		name = "Class Crate - Scout" // sneaky invisible flanker
+		desc = "A crate containing a Specialist Operative loadout. Includes a submachine gun, a cloaking device and an electromagnetic card (EMAG)."
+		spawn_contents = list(/obj/item/gun/kinetic/smg,
+		/obj/item/storage/pouch/bullet_9mm/smg,
 		/obj/item/clothing/glasses/nightvision,
-		/obj/item/cloaking_device/limited,
+		/obj/item/cloaking_device,
 		/obj/item/card/emag,
 		/obj/item/clothing/suit/space/syndicate/specialist/infiltrator,
 		/obj/item/clothing/head/helmet/space/syndicate/specialist/infiltrator)
