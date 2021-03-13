@@ -585,7 +585,7 @@ var/global
 	//SpyGuy: Oh my fucking god the QM shit. *cry *wail *sob *weep *vomit *scream
 	list/datum/supply_packs/qm_supply_cache = list()
 
-	//Assistant recruitment role datums
+	//Assistant recruitment role datum instantiation for token and ID modification
 	list/datum/recruitment_role/recruitment_roles = list()
 
 	//Used for QM Ordering Categories

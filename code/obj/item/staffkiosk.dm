@@ -89,8 +89,9 @@
 
 			src.authed = 1
 			src.role_name = choice
-			src.role_datum = pickableRoles[choice]
-			src.icon_state = pickableRoles[choice].tokenIcon
+			var/datum/recruitment_role/calibrateRole = pickableRoles[choice]
+			src.role_datum = calibrateRole
+			src.icon_state = calibrateRole.tokenIcon
 			src.desc = "An activated recruitment token, ready for use in the recruitment kiosk. It's configured for the [role_name] role."
 
 			boutput(user, "<span class='notice'>You authorize the token for the [choice] role.</span>")
@@ -99,12 +100,12 @@
 			..()
 
 
-//datum? I hardly know em
-
 /proc/build_recruitment_role_cache()
 	recruitment_roles.Cut()
 	for(var/S in concrete_typesof(/datum/recruitment_role))
 		recruitment_roles += new S()
+
+//datum? I hardly know em
 
 ABSTRACT_TYPE(/datum/recruitment_role)
 /datum/recruitment_role
