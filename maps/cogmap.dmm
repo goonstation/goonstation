@@ -38707,6 +38707,9 @@
 /turf/simulated/floor/yellow/side,
 /area/station/engine/engineering)
 "bJq" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/yellow/corner{
 	dir = 8
 	},
