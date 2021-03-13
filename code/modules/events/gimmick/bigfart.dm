@@ -91,7 +91,8 @@
 			ThrowRandom(B, dist = 6, speed = 1)
 		H.visible_message("<span class='alert'><b>[H]</b>'s [magical ? "arse" : "ass"] tears itself away from \his body[magical ? " in a magical explosion" : null]!</span>",\
 		"<span class='alert'>[changer ? "Our" : "Your"] [magical ? "arse" : "ass"] tears itself away from [changer ? "our" : "your"] body[magical ? " in a magical explosion" : null]!</span>")
-		H.changeStatus("weakened", 2 SECONDS)
+		if (!magical || prob(10))
+			H.changeStatus("weakened", 2 SECONDS)
 		severed_something = TRUE
 		H.force_laydown_standup()
 
@@ -157,7 +158,11 @@
 		boutput(H, "<span class='notification'>[changer ? "We" : "You"] hear an otherworldly force let out a short, disappointed cluck at [changer ? "our" : "your"] lack of an arse.</span>")
 	H.visible_message("<span class='alert'>[is_bot ? "Oily chunks of twisted shrapnel" : "Wadded hunks of blood and gore"] burst out of where <b>[H]</b>'s [magical ? "arse" : "ass"] used to be!</span>",\
 	"<span class='alert'>[nobutt_phrase[assmagic]]</span>")
-	H.changeStatus("weakened", 3 SECONDS)
+	if (!magical || prob(10))
+		H.changeStatus("weakened", 3 SECONDS)
+	else
+		H.lying = 1
+		H.update_lying()
 	H.force_laydown_standup()
 	if(!severed_something)
 		H.emote("scream")
