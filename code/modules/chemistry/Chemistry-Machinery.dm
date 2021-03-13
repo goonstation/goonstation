@@ -783,11 +783,11 @@ datum/chemicompiler_core/stationaryCore
 	var/obj/item/reagent_containers/user_beaker = null
 
 	New()
+		..()
 		src.bottoms = new
 		src.tops = new
 		src.feed = new
 		src.overflow = new
-		..()
 
 	disposing()
 		if (src.bottoms)
@@ -833,7 +833,6 @@ datum/chemicompiler_core/stationaryCore
 			for(var/datum/reagent/reggie in R)
 				if(reggie.can_crack)
 					reggie.crack(amount)
-
 
 	proc/distill(var/amount)
 		var/vapour_list = get_vapours(bottoms)
