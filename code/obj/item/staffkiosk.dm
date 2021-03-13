@@ -8,7 +8,6 @@
 	anchored = 1
 	var/sound_token = 'sound/machines/capsulebuy.ogg'
 	var/sound_dispense = 'sound/machines/chime.ogg'
-	var/sound_cardslot = 'sound/items/Deconstruct.ogg'
 
 	attackby(var/obj/item/I, var/mob/user)
 		if(istype(I, /obj/item/assistant_token) && ishuman(user))
