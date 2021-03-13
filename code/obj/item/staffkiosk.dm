@@ -93,15 +93,14 @@
 	name = "recruitment token"
 	desc = "A token issued to assistants that faciliates recruitment into departments. It has a small ID reader and selection wheel."
 	icon = 'icons/obj/items/items.dmi'
-	icon_state = "req-token-sec"
-	//icon_state = "req-token-staff"
+	icon_state = "assist-token"
 	w_class = 1.0
 	var/authed = 0
 	var/role_name = null
 	var/role_datum = null
 
 	attackby(var/obj/item/I, var/mob/user)
-		if(src.authed == 0 && istype(I, /obj/item/card/id))
+		if(istype(I, /obj/item/card/id))
 			var/obj/item/card/id/ID = I
 			var/pickableRoles = list()
 			var/frontEndList = list()
@@ -111,7 +110,7 @@
 					pickableRoles[ROL.name] = ROL
 					frontEndList += ROL.name
 
-			if (frontEndList.len == 0)
+			if (!length(frontEndList))
 				boutput(user, "<span class='alert'>This card can't authorize any available token roles.</span>")
 				return
 
@@ -122,6 +121,7 @@
 			src.authed = 1
 			src.role_name = choice
 			src.role_datum = pickableRoles[choice]
+			src.icon_state = pickableRoles[choice].tokenIcon
 			src.desc = "An activated recruitment token, ready for use in the recruitment kiosk. It's configured for the [role_name] role."
 
 			boutput(user, "<span class='notice'>You authorize the token for the [choice] role.</span>")
@@ -143,6 +143,7 @@ ABSTRACT_TYPE(/datum/recruitment_role)
 	var/accessParent = "Clown" //job whose access this mimics
 	var/canAuthorize = list("Clown") //who is allowed to give out this job
 	var/cardIcon = "id_clown" //what icon state the card should receive
+	var/tokenIcon = "assist-token"
 	var/dispensedKit = /obj/item/storage/box/staffkit/med //what kit should be dispensed (lo and behold)
 
 /datum/recruitment_role/medical
@@ -150,6 +151,7 @@ ABSTRACT_TYPE(/datum/recruitment_role)
 	accessParent = "Medical Doctor"
 	canAuthorize = list("Medical Doctor","Geneticist","Roboticist","Medical Director","Head of Personnel","Captain")
 	cardIcon = "id_res"
+	tokenIcon = "assist-token-med"
 	dispensedKit = /obj/item/storage/box/staffkit/med
 
 /datum/recruitment_role/robo
@@ -157,6 +159,7 @@ ABSTRACT_TYPE(/datum/recruitment_role)
 	accessParent = "Roboticist"
 	canAuthorize = list("Roboticist","Medical Director","Head of Personnel","Captain")
 	cardIcon = "id_res"
+	tokenIcon = "assist-token-robo"
 	dispensedKit = /obj/item/storage/box/staffkit/robo
 
 /datum/recruitment_role/engineer
@@ -164,6 +167,7 @@ ABSTRACT_TYPE(/datum/recruitment_role)
 	accessParent = "Engineer"
 	canAuthorize = list("Engineer","Chief Engineer","Head of Personnel","Captain")
 	cardIcon = "id_eng"
+	tokenIcon = "assist-token-eng"
 	dispensedKit = /obj/item/storage/box/staffkit/eng
 
 /datum/recruitment_role/mechanic
@@ -171,6 +175,7 @@ ABSTRACT_TYPE(/datum/recruitment_role)
 	accessParent = "Mechanic"
 	canAuthorize = list("Mechanic","Chief Engineer","Head of Personnel","Captain")
 	cardIcon = "id_eng"
+	tokenIcon = "assist-token-mech"
 	dispensedKit = /obj/item/storage/box/staffkit/mech
 
 /datum/recruitment_role/mining
@@ -178,6 +183,7 @@ ABSTRACT_TYPE(/datum/recruitment_role)
 	accessParent = "Miner"
 	canAuthorize = list("Miner","Chief Engineer","Head of Personnel","Captain")
 	cardIcon = "id_eng"
+	tokenIcon = "assist-token-mine"
 	dispensedKit = /obj/item/storage/box/staffkit/miner
 
 /datum/recruitment_role/sci
@@ -185,6 +191,7 @@ ABSTRACT_TYPE(/datum/recruitment_role)
 	accessParent = "Scientist"
 	canAuthorize = list("Scientist","Research Director","Head of Personnel","Captain")
 	cardIcon = "id_res"
+	tokenIcon = "assist-token-sci"
 	dispensedKit = /obj/item/storage/box/staffkit/res
 
 /datum/recruitment_role/chef
@@ -192,6 +199,7 @@ ABSTRACT_TYPE(/datum/recruitment_role)
 	accessParent = "Chef"
 	canAuthorize = list("Chef","Head of Personnel","Captain")
 	cardIcon = "id_civ"
+	tokenIcon = "assist-token-chef"
 	dispensedKit = /obj/item/storage/box/staffkit/chef
 
 /datum/recruitment_role/bar
@@ -199,13 +207,15 @@ ABSTRACT_TYPE(/datum/recruitment_role)
 	accessParent = "Bartender"
 	canAuthorize = list("Bartender","Head of Personnel","Captain")
 	cardIcon = "id_civ"
+	tokenIcon = "assist-token-bar"
 	dispensedKit = /obj/item/storage/box/staffkit/bar
 
 /datum/recruitment_role/botany
 	name = "Botanical Assistant"
-	accessParent = "Bartender"
-	canAuthorize = list("Bartender","Head of Personnel","Captain")
+	accessParent = "Botanist"
+	canAuthorize = list("Botanist","Head of Personnel","Captain")
 	cardIcon = "id_civ"
+	tokenIcon = "assist-token-hyd"
 	dispensedKit = /obj/item/storage/box/staffkit/botany
 
 
