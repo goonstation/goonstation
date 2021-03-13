@@ -4,6 +4,11 @@
 	id = "abom_devour"
 	icon = 'icons/mob/critter_ui.dmi'
 	icon_state = "devour_over"
+	bar_icon_state = "bar-changeling"
+	border_icon_state = "border-changeling"
+	color_active = "#d73715"
+	color_success = "#3fb54f"
+	color_failure = "#8d1422"
 	var/mob/living/target
 	var/datum/targetable/changeling/devour/devour
 
@@ -94,6 +99,11 @@
 	id = "change_absorb"
 	icon = 'icons/mob/critter_ui.dmi'
 	icon_state = "devour_over"
+	bar_icon_state = "bar-changeling"
+	border_icon_state = "border-changeling"
+	color_active = "#d73715"
+	color_success = "#3fb54f"
+	color_failure = "#8d1422"
 	var/mob/living/target
 	var/datum/targetable/changeling/absorb/devour
 	var/last_complete = 0

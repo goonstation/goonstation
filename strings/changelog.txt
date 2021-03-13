@@ -1,5 +1,25 @@
 
 (t)sat mar 13 21
+(u)Penny
+(p)3997
+(e)|
+(+)Adds the tape drive to hacked CompTech vendors.
+(u)TTerc
+(p)3885
+(e)⚖|balance
+(*)Stun melee artifacts are now stamina damage based.
+(u)Flaborized
+(p)3992
+(e)🎨|sprites
+(*)Updated the action bar sprite, added several variants.
+(u)Kubius
+(p)3985
+(e)🐛🆕🗺|bug, feature, mapping
+(+)Kondaru airbridge issue introduced in upgrade Tau has been fixed, partially by adding a new Book Nook, the home of the persistent bookshelf. See PR 3973 for Tau's changes.
+(u)Chickenish
+(p)3954
+(e)🐛|bug
+(+)The Rad-Wick food effect works again.
 (u)Gannets
 (p)3978
 (e)⚖🆕🔄🎨|balance, feature, rework, sprites
