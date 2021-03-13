@@ -343,6 +343,9 @@
 					SPAWN_DBG(0)
 						pull_new_source()
 
+		proc/get_encounter(var/rarity_mod)
+			return mining_controls.select_encounter(rarity_mod)
+
 		pull_new_source(var/selectable_encounter_id = null)
 			if (!target)
 				return
@@ -383,9 +386,9 @@
 					mining_controls.remove_selectable_encounter(selectable_encounter_id)
 				else
 					boutput(usr, "Uh oh, something's gotten really fucked up with the magnet system. Please report this to a coder! (ERROR: INVALID ENCOUNTER)")
-					MC = mining_controls.select_encounter(rarity_mod)
+					MC = get_encounter(rarity_mod)
 			else
-				MC = mining_controls.select_encounter(rarity_mod)
+				MC = get_encounter(rarity_mod)
 
 			if(MC)
 				MC.generate(target)
@@ -415,6 +418,8 @@
 
 		small
 			marker_type = /obj/magnet_target_marker/small
+			get_encounter(rarity_mod)
+				return mining_controls.select_small_encounter(rarity_mod)
 
 	New()
 		..()
