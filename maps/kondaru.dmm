@@ -20903,7 +20903,9 @@
 /turf/simulated/floor/darkblue,
 /area/station/medical/medbay/lobby)
 "bgg" = (
-/obj/health_scanner/floor,
+/obj/health_scanner/floor{
+	dir = 1
+	},
 /turf/simulated/floor/darkblue,
 /area/station/medical/medbay/lobby)
 "bgh" = (
@@ -55256,15 +55258,9 @@
 	},
 /obj/machinery/light_switch/north,
 /obj/table/reinforced/auto,
-/obj/item/reagent_containers/food/snacks/chicken_feed_bag{
-	rand_pos = 1
-	},
-/obj/item/reagent_containers/food/snacks/chicken_feed_bag{
-	rand_pos = 1
-	},
-/obj/item/reagent_containers/food/snacks/chicken_feed_bag{
-	rand_pos = 1
-	},
+/obj/item/reagent_containers/food/snacks/chicken_feed_bag,
+/obj/item/reagent_containers/food/snacks/chicken_feed_bag,
+/obj/item/reagent_containers/food/snacks/chicken_feed_bag,
 /turf/simulated/floor/grasstodirt{
 	dir = 8
 	},
