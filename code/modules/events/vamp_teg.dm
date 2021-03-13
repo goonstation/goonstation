@@ -1,11 +1,12 @@
 /datum/random_event/major/vampire_teg
-	name = "Vampire TEG"
+	name = "Haunted TEG"
 	required_elapsed_round_time = 40 MINUTES
 	weight = 50
 	var/obj/machinery/power/generatorTemp/generator
 	var/list/circulators_to_relube
 	var/event_active
 	var/target_grump
+	var/datum/radio_frequency/pda_connection
 
 #ifdef RP_MODE
 	disabled = 1
@@ -29,6 +30,8 @@
 			message_admins("The Vampire TEG event failed to find TEG!")
 			return
 
+		pda_connection = radio_controller.return_frequency("1149")
+
 		var/list/obj/machinery/station_switches = list()
 		for(var/area_key as() in stationAreas)
 			var/obj/machinery/light_switch/S
@@ -51,13 +54,17 @@
 			C.reagents.add_reagent("black_goop", 10)
 			C.reagents.add_reagent("black_goop", 10)
 
-		// Delayed Warning
+		// Delayed Warning and Instruction
 		SPAWN_DBG(rand(10 SECONDS, 50 SECONDS))
 			if(event_active)
 				command_alert("Reports indicate that the engine on-board [station_name()] is behaving unusually. Stationwide power failures may occur or worse.", "Engine Warning")
-			sleep(30 SECONDS)
+				sleep(30 SECONDS)
 			if(event_active)
 				command_alert("Onsite Engineers inform us a sympathetic connection exists between the furances and the engine. Considering burning something it might enjoy food, people, weed, we are grasping at straws here. ", "Engine Suggestion")
+				sleep(rand(1 MINUTE, 2.5 MINUTES))
+
+			if(event_active)
+				pda_msg("Unknown substance detected in Themo-Electric Generator Circulators. Please drains and replace lubricants.")
 
 		// FAILURE EVENT
 		SPAWN_DBG(2 MINUTES) //rand( 7 MINUTES, 9 MINUTES )
@@ -73,9 +80,16 @@
 			var/area/A = get_area(generator)
 			var/obj/machinery/teg_light_switch = locate(/obj/machinery/light_switch) in A.machines
 
+			// Set stage by turning off lights to engine room
 			if(teg_light_switch)
 				elecflash(teg_light_switch)
 				teg_light_switch.attack_hand(null)
+			else
+				elecflash(A.area_apc)
+				if(!A.area_apc.lighting)
+					A.area_apc.lighting = 0
+					SPAWN_DBG(rand(5 SECONDS,10 SECONDS))
+						A.area_apc.lighting = 3
 
 			while(event_active)
 				//Bail on event if something happened to TEG
@@ -96,13 +110,13 @@
 						if(2)
 							animate_levitate(pick(generator,generator.circ1,generator.circ2), 1, 50, random_side = FALSE)
 						if(3)
-							//Turn off light switches
+							// Turn off light switches
 							for (var/obj/machinery/light_switch/L as() in station_switches)
 								if(L.on && prob(5))
 									elecflash(L)
 									L.attack_hand(null)
 						if(4)
-							//Electrify Doors
+							// Electrify Doors
 							for_by_tcl(D, /obj/machinery/door/airlock)
 								if (D.z == Z_LEVEL_STATION && D.powered() && prob(5))
 									if (D.secondsElectrified == 0)
@@ -112,7 +126,7 @@
 											if (D)
 												D.secondsElectrified = 0
 						if(5)
-							//Reduced APC EMP
+							// Reduced APC EMP
 							var/obj/machinery/power/apc/apc
 							A = pick(stationAreas)
 							apc = stationAreas[A].area_apc
@@ -129,12 +143,26 @@
 									apc.equipment = 3
 									apc.environ = 3
 
+				// Check if circulator lubricant has been replaced to remove the "black goop"
 				for(var/obj/machinery/atmospherics/binary/circulatorTemp/C in circulators_to_relube)
 					if( !C.reagents.has_reagent("black_goop") && (C.reagents.total_volume > (C.reagents.maximum_volume/10) ))
 						circulators_to_relube -= C
 						target_grump += 25
 
 				sleep(rand(5.8 SECONDS, rand(25 SECONDS)))
+
+	proc/pda_msg(event_string)
+		var/datum/signal/signal = get_free_signal()
+		signal.source = src.generator
+		signal.transmission_method = TRANSMISSION_RADIO
+		signal.data["command"] = "text_message"
+		signal.data["sender_name"] = "ENGINE-MAILBOT"
+		signal.data["group"] = list(MGO_ENGINEER, MGA_ENGINE)
+		signal.data["message"] = "Notice: [event_string]"
+		signal.data["sender"] = "00000000" // surely this isn't going to be a problem
+		signal.data["address_1"] = "00000000"
+
+		pda_connection.post_signal(src, signal)
 
 
 datum/teg_transformation/vampire
@@ -162,6 +190,8 @@ datum/teg_transformation/vampire
 			abilities[A.name] = A
 		RegisterSignal(src.teg, COMSIG_ATOM_HITBY_PROJ, .proc/projectile_collide)
 		RegisterSignal(src.teg, COMSIG_ATTACKBY, .proc/attackby)
+		RegisterSignal(src.teg.circ1, COMSIG_ATTACKBY, .proc/attackby)
+		RegisterSignal(src.teg.circ2, COMSIG_ATTACKBY, .proc/attackby)
 
 		var/image/mask = image('icons/obj/clothing/item_masks.dmi', "death")
 		mask.appearance_flags = RESET_COLOR | RESET_ALPHA
@@ -188,6 +218,8 @@ datum/teg_transformation/vampire
 		teg.UpdateOverlays(null, "mask")
 		UnregisterSignal(src.teg, COMSIG_ATOM_HITBY_PROJ)
 		UnregisterSignal(src.teg, COMSIG_ATTACKBY)
+		UnregisterSignal(src.teg.circ1, COMSIG_ATTACKBY)
+		UnregisterSignal(src.teg.circ2, COMSIG_ATTACKBY)
 		var/volume = src.teg.circ1.reagents.total_volume
 		if(volume)
 			leaked = src.teg.circ1.reagents.remove_any_to(volume)
@@ -199,6 +231,8 @@ datum/teg_transformation/vampire
 		animate(src.teg)
 		animate(src.teg.circ1)
 		animate(src.teg.circ2)
+		for(var/mob/M in abilityHolder.ghouls)
+			remove_mindslave_status(M)
 		. = ..()
 
 	on_grump()
@@ -280,6 +314,7 @@ datum/teg_transformation/vampire
 		if(health <= 0) // thou haft defeated the beast
 			on_revert()
 
+	// Implement attackby to handle objects and attacks to Generator and Circulators
 	proc/attackby(obj/T, obj/item/I as obj, mob/user as mob)
 		var/force = I.force
 		if(istype(I,/obj/item/storage/bible) && user.traitHolder.hasTrait("training_chaplain"))
@@ -296,6 +331,7 @@ datum/teg_transformation/vampire
 				force = force / 7
 		health -= force
 
+	// Customized implementation of collision with vamp blood and be susceptable to projectiles
 	proc/projectile_collide(owner, obj/projectile/P)
 		if (("vamp" in P.special_data))
 			var/bitesize = 10
@@ -312,7 +348,21 @@ datum/teg_transformation/vampire
 					victim.blood_volume = 0
 				else
 					victim.blood_volume -= bitesize
+		else
+			if(P.proj_data.damage_type & (D_KINETIC | D_ENERGY | D_SLASHING))
+				var/damage = P.power*P.proj_data.ks_ratio
 
+				switch (P.proj_data.damage_type)
+					if (D_KINETIC)
+						damage /= 5
+					if (D_SLASHING)
+						damage /= 7
+					if (D_ENERGY)
+						damage /= 10
+
+				health -= round(damage, 1.0)
+
+	// Talk like a vampire
 	proc/say_ghoul(var/message)
 		var/name = src.teg.name
 		var/alt_name = " (VAMPIRE)"
@@ -324,6 +374,7 @@ datum/teg_transformation/vampire
 		for (var/mob/M in src.abilityHolder.ghouls)
 			boutput(M, rendered)
 
+	// Look at others like a vampire
 	proc/glare(mob/living/carbon/target)
 		var/obj/O = src.teg
 		if (!target || !ismob(target))
@@ -393,7 +444,7 @@ datum/teg_transformation/vampire
 					VZ.master = H
 
 				boutput(target, __red("<b>You awaken filled with purpose - you must serve your master \"vampire\", [src.teg]!</B>"))
-				boutput(target, __red("<b>You are bound to the [src.teg]. It hungers for blood! You must be protect it and feed it!</B>"))
+				boutput(target, __red("<b>You are bound to the [src.teg]. It hungers for blood! You must protect it and feed it!</B>"))
 				SHOW_MINDSLAVE_TIPS(target)
 			else
 				target.full_heal()
