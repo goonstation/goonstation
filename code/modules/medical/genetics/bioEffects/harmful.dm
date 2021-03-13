@@ -707,17 +707,17 @@
 	stability_loss = -10
 	var/const/radius = 2
 	icon_state  = "bad"
+	var/roundedmultremainder
 
 	OnLife(var/mult)
 		..()
-		var/roundedmult
-		var/roundedmultremainder
+		var/roundedmult = round(mult)
 		roundedmultremainder += (mult % 1)
 		if (roundedmultremainder >= 1)
 			roundedmult += round(roundedmultremainder)
 			roundedmultremainder = roundedmultremainder % 1
 		var/turf/T
-		for (roundedmult = round(mult), roundedmult > 0, roundedmult --)
+		for (roundedmult = roundedmult, roundedmult > 0, roundedmult --)
 			if (prob(50))
 				if (prob(5)) //don't really need this but to make it more harmful to the user.
 					T = get_turf(owner)

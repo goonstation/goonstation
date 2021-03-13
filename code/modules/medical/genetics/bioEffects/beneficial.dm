@@ -224,6 +224,7 @@
 	msgLose = "Your skin tightens."
 	var/heal_per_tick = 1
 	var/regrow_prob = 250
+	var/roundedmultremainder
 	degrade_to = "mutagenic_field"
 	icon_state  = "regen"
 
@@ -232,7 +233,6 @@
 		var/mob/living/L = owner
 		L.HealDamage("All", heal_per_tick * mult, heal_per_tick * mult)
 		var/roundedmult = round(mult)
-		var/roundedmultremainder
 		roundedmultremainder += (mult % 1)
 		if (roundedmultremainder >= 1)
 			roundedmult += round(roundedmultremainder)
