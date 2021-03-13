@@ -131,6 +131,9 @@ var/datum/action_controller/actions
 	var/obj/actions/border/border
 	var/bar_icon_state = "bar"
 	var/border_icon_state = "border"
+	var/color_active = "#4444FF"
+	var/color_success = "#00CC00"
+	var/color_failure = "#CC0000"
 
 	onStart()
 		..()
@@ -146,7 +149,7 @@ var/datum/action_controller/actions
 			A.vis_contents += bar
 			A.vis_contents += border
 			// this will absolutely obviously cause no problems.
-			bar.color = "#4444FF"
+			bar.color = src.color_active
 			updateBar()
 
 	onRestart()
@@ -188,7 +191,7 @@ var/datum/action_controller/actions
 	onEnd()
 		if (bar)
 			bar.color = "#FFFFFF"
-			animate( bar, color = "#00CC00", time = 2.5 , flags = ANIMATION_END_NOW)
+			animate( bar, color = src.color_success, time = 2.5 , flags = ANIMATION_END_NOW)
 			bar.transform = matrix() //Tiny cosmetic fix. Makes it so the bar is completely filled when the action ends.
 		..()
 
@@ -197,13 +200,13 @@ var/datum/action_controller/actions
 			if (bar)
 				updateBar(0)
 				bar.color = "#FFFFFF"
-				animate( bar, color = "#CC0000", time = 2.5 )
+				animate( bar, color = src.color_failure, time = 2.5 )
 		..()
 
 	onResume()
 		if (bar)
 			updateBar()
-			bar.color = "#4444FF"
+			bar.color = src.color_active
 		..()
 
 	onUpdate()
