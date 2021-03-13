@@ -1,6 +1,8 @@
 // Stuff for O.Chem
 // Fossil fuels, volatile organics, fats and fucky solvents can go here
 
+ABSTRACT_TYPE(/datum/reagent/organic)
+
 /datum/reagent/organic
 	name = "crude organic fluid"
 	id = "organic"
