@@ -142,6 +142,7 @@
 /obj/shrub{
 	dir = 8
 	},
+/obj/item/storage/pill_bottle/cyberpunk,
 /turf/simulated/floor/grass/random/alt,
 /area/station/garden/aviary)
 "aaA" = (
@@ -641,15 +642,16 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/southeast)
 "acq" = (
+/obj/grille/catwalk{
+	dir = 4
+	},
 /obj/cable{
-	icon_state = "0-2"
+	icon_state = "4-8"
 	},
-/obj/machinery/power/solar/west,
-/turf/simulated/floor/airless{
-	icon_state = "solarbase";
-	name = "solar paneling"
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 4
 	},
-/area/space)
+/area/station/solar/east)
 "acs" = (
 /obj/machinery/portableowl/attached{
 	name = "an Owl with a chip out of his beak"
@@ -657,8 +659,19 @@
 /turf/simulated/floor/grass/random/alt,
 /area/station/garden/aviary)
 "acu" = (
-/turf/space,
-/area/station/solar/west)
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/obj/decal/tile_edge/line/green{
+	dir = 1;
+	icon_state = "line1"
+	},
+/obj/machinery/light/incandescent/harsh{
+	dir = 1;
+	nostick = 1
+	},
+/turf/simulated/floor/black,
+/area/station/hallway/primary/southeast)
 "acD" = (
 /obj/machinery/photocopier,
 /obj/machinery/light{
@@ -3196,7 +3209,7 @@
 	},
 /obj/machinery/power/tracker/west,
 /turf/simulated/floor/plating/airless,
-/area/space)
+/area/station/solar/west)
 "amr" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -3863,9 +3876,21 @@
 	},
 /area/station/chapel/sanctuary)
 "aoX" = (
-/turf/space,
-/turf/space,
-/area/station/solar/west)
+/obj/wingrille_spawn/reinforced,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/door/poddoor/pyro{
+	density = 0;
+	dir = 1;
+	icon_state = "pdoor0";
+	id = "chem_shutters";
+	layer = 4;
+	name = "Chemistry Shutter";
+	opacity = 0
+	},
+/turf/simulated/floor/plating/random,
+/area/station/science/chemistry)
 "aoZ" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet{
@@ -3890,18 +3915,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/primary/central)
-"apc" = (
-/obj/cable,
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/machinery/power/solar/west,
-/turf/space,
-/turf/simulated/floor/airless{
-	icon_state = "solarbase";
-	name = "solar paneling"
-	},
-/area/space)
 "apd" = (
 /obj/disposalpipe/segment/mail,
 /obj/cable{
@@ -4086,14 +4099,6 @@
 	},
 /turf/simulated/floor/grass/random/alt,
 /area/station/garden/aviary)
-"apP" = (
-/obj/cable,
-/obj/machinery/power/solar/west,
-/turf/simulated/floor/airless{
-	icon_state = "solarbase";
-	name = "solar paneling"
-	},
-/area/space)
 "apR" = (
 /turf/simulated/wall/auto/reinforced/gannets,
 /area/station/maintenance/central)
@@ -12333,7 +12338,7 @@
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4
 	},
-/area/space)
+/area/station/solar/west)
 "aWq" = (
 /obj/wingrille_spawn/reinforced,
 /obj/cable{
@@ -14178,6 +14183,15 @@
 	icon_state = "0-4"
 	},
 /obj/disposalpipe/segment,
+/obj/machinery/door/poddoor/pyro{
+	density = 0;
+	dir = 1;
+	icon_state = "pdoor0";
+	id = "chem_shutters";
+	layer = 4;
+	name = "Chemistry Shutter";
+	opacity = 0
+	},
 /turf/simulated/floor/plating/random,
 /area/station/science/chemistry)
 "bgS" = (
@@ -15298,6 +15312,15 @@
 	},
 /obj/cable{
 	icon_state = "0-8"
+	},
+/obj/machinery/door/poddoor/pyro{
+	density = 0;
+	dir = 1;
+	icon_state = "pdoor0";
+	id = "chem_shutters";
+	layer = 4;
+	name = "Chemistry Shutter";
+	opacity = 0
 	},
 /turf/simulated/floor/plating/random,
 /area/station/science/chemistry)
@@ -20838,11 +20861,12 @@
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "cWS" = (
+/obj/machinery/door/firedoor/border_only,
 /obj/machinery/door/airlock/gannets/chemistry{
 	name = "airlock-'Chemistry'";
 	req_access_txt = "33"
 	},
-/turf/simulated/wall/auto/reinforced/gannets,
+/turf/simulated/floor/plating/random,
 /area/station/science/chemistry)
 "cXd" = (
 /obj/decal/tile_edge/line/white{
@@ -25110,6 +25134,7 @@
 	},
 /area/station/crew_quarters/heads)
 "fuc" = (
+/obj/machinery/door/firedoor/border_only,
 /obj/machinery/door/airlock/gannets/maintenance{
 	name = "airlock-'West Maintenance'"
 	},
@@ -26199,9 +26224,13 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/storage/secure/closet/command/hos,
 /obj/cable{
 	icon_state = "1-4"
+	},
+/obj/machinery/computer/announcement{
+	dir = 8;
+	name = "Security Announcement Computer";
+	req_access_txt = "19"
 	},
 /turf/simulated/floor/white/checker{
 	dir = 5
@@ -32564,6 +32593,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/storage/secure/closet/command/hos,
 /turf/simulated/floor/white/checker{
 	dir = 5
 	},
@@ -32844,7 +32874,7 @@
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4
 	},
-/area/space)
+/area/station/solar/east)
 "kgg" = (
 /obj/machinery/door/firedoor/border_only,
 /obj/machinery/door/airlock/gannets/medical/alt{
@@ -33283,6 +33313,15 @@
 	icon_state = "0-8"
 	},
 /obj/disposalpipe/segment,
+/obj/machinery/door/poddoor/pyro{
+	density = 0;
+	dir = 1;
+	icon_state = "pdoor0";
+	id = "chem_shutters";
+	layer = 4;
+	name = "Chemistry Shutter";
+	opacity = 0
+	},
 /turf/simulated/floor/plating/random,
 /area/station/science/chemistry)
 "kqZ" = (
@@ -35501,11 +35540,6 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
-/obj/machinery/computer/announcement{
-	dir = 4;
-	name = "Security Announcement Computer";
-	req_access_txt = "19"
-	},
 /turf/simulated/floor/white/checker{
 	dir = 5
 	},
@@ -36282,11 +36316,6 @@
 "meR" = (
 /obj/disposalpipe/segment,
 /obj/submachine/chem_extractor,
-/obj/machinery/firealarm{
-	layer = 3.5;
-	pixel_x = -5;
-	pixel_y = 28
-	},
 /turf/simulated/floor/purplewhite{
 	dir = 1
 	},
@@ -38482,7 +38511,7 @@
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4
 	},
-/area/space)
+/area/station/solar/west)
 "nqT" = (
 /obj/decal/tile_edge/line/green{
 	dir = 1;
@@ -43230,7 +43259,8 @@
 /area/station/hallway/primary/central)
 "pQx" = (
 /obj/item/storage/wall/emergency{
-	pixel_x = -26;
+	dir = 4;
+	pixel_x = -32;
 	pixel_y = 2
 	},
 /obj/cable{
@@ -48370,6 +48400,11 @@
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/southwest{
 	dir = 4
 	},
+/obj/machinery/door_control{
+	id = "chem_shutters";
+	name = "Chemistry Lockdown Shutters";
+	pixel_x = 22
+	},
 /turf/simulated/floor/purplewhite{
 	dir = 4
 	},
@@ -52328,18 +52363,6 @@
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
-"uFa" = (
-/obj/grille/catwalk{
-	dir = 4
-	},
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/machinery/light/runway_light,
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 4
-	},
-/area/space)
 "uFs" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -55484,6 +55507,11 @@
 	},
 /obj/disposalpipe/segment/mail{
 	dir = 4
+	},
+/obj/machinery/firealarm{
+	dir = 4;
+	layer = 3.5;
+	pixel_x = 26
 	},
 /turf/simulated/floor/purplewhite{
 	dir = 5
@@ -96198,19 +96226,19 @@ aaa
 aaa
 aaa
 aaa
-acq
-aii
-aii
-aii
-aii
-aii
+sPs
+alw
+alw
+alw
+alw
+alw
 sxU
-aii
-aii
-aii
-aii
-aii
-apP
+alw
+alw
+alw
+alw
+alw
+fhk
 aaa
 aaa
 aaa
@@ -96802,19 +96830,19 @@ aaa
 aaa
 aaa
 aaa
-acu
-acu
-acu
-acu
-acu
-acu
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 asq
-acu
-acu
-acu
-acu
-acu
-acu
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -97104,19 +97132,19 @@ aaa
 aaa
 aaa
 aaa
-acq
-aii
-aii
-aii
-aii
-aii
+sPs
+alw
+alw
+alw
+alw
+alw
 sxU
-aii
-aii
-aii
-aii
-aii
-apP
+alw
+alw
+alw
+alw
+alw
+fhk
 aaa
 aaa
 aaa
@@ -97708,19 +97736,19 @@ aaa
 aaa
 aaa
 aaa
-acu
-acu
-acu
-acu
-acu
-acu
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 asq
-acu
-aoX
-acu
-acu
-acu
-acu
+aaa
+bze
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -98010,19 +98038,19 @@ aaa
 aaa
 aaa
 aaa
-acq
-aii
-aii
-aii
-aii
-aii
+sPs
+alw
+alw
+alw
+alw
+alw
 sxU
-aii
-apc
-aii
-aii
-aii
-apP
+alw
+rIQ
+alw
+alw
+alw
+fhk
 aaa
 aaa
 aaa
@@ -98614,19 +98642,19 @@ aaa
 aaa
 aaa
 aaa
-acu
-acu
-acu
-acu
-acu
-acu
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 asq
-acu
-aoX
-acu
-acu
-acu
-acu
+aaa
+bze
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -98916,19 +98944,19 @@ aaa
 aaa
 aaa
 aaa
-acq
-aii
-aii
-aii
-aii
-aii
+sPs
+alw
+alw
+alw
+alw
+alw
 sxU
-aii
-apc
-aii
-aii
-aii
-apP
+alw
+rIQ
+alw
+alw
+alw
+fhk
 aaa
 aaa
 aaa
@@ -99520,19 +99548,19 @@ aaa
 aaa
 aaa
 aaa
-acu
-acu
-acu
-acu
-acu
-acu
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 asq
-acu
-aoX
-acu
-acu
-acu
-acu
+aaa
+bze
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -99822,19 +99850,19 @@ aaa
 aaa
 aaa
 aaa
-acq
-aii
-aii
-aii
-aii
-aii
+sPs
+alw
+alw
+alw
+alw
+alw
 sxU
+alw
+rIQ
+alw
 aii
-apc
-aii
-aii
-aii
-apP
+alw
+fhk
 aaa
 aaa
 aaa
@@ -100426,19 +100454,19 @@ aaa
 aaa
 aaa
 aaa
-acu
-acu
-acu
-acu
-acu
-acu
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 asq
-acu
-aoX
-acu
-acu
-acu
-acu
+aaa
+bze
+aaa
+aaa
+aaa
+aaa
 aag
 aag
 aaa
@@ -100734,7 +100762,7 @@ aaa
 aaa
 aaa
 aaa
-uFa
+asq
 aaa
 bze
 aag
@@ -108326,7 +108354,7 @@ eYq
 pmK
 wJE
 gVu
-tgI
+acu
 dTm
 bMM
 aDi
@@ -109190,7 +109218,7 @@ aag
 aaa
 aaa
 aaa
-nqM
+acq
 aaa
 bze
 aaa
@@ -121029,7 +121057,7 @@ eGp
 pfV
 baR
 bcg
-bdV
+aoX
 iKa
 bgT
 gSn
