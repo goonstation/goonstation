@@ -995,7 +995,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	map_can_autooverride = 0
 	slot_jump = /obj/item/clothing/under/rank
 	slot_foot = /obj/item/clothing/shoes/black
-	//slot_poc1 = /obj/item/requisition_token/staff //this should be enabled alongside implementation of Staff Assignment Kiosks
+	//slot_poc1 = /obj/item/assistant_token //this should be enabled alongside implementation of Staff Recruitment Kiosks
 
 	New()
 		..()

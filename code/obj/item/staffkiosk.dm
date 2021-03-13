@@ -9,25 +9,31 @@
 	var/sound_token = 'sound/machines/capsulebuy.ogg'
 	var/sound_dispense = 'sound/machines/chime.ogg'
 	var/sound_cardslot = 'sound/items/Deconstruct.ogg'
-	var/obj/item/card/id/ID_card = null
 
 	attackby(var/obj/item/I, var/mob/user)
 		if(istype(I, /obj/item/assistant_token) && ishuman(user))
 			var/obj/item/assistant_token/AT = I
 			var/mob/living/carbon/human/H = user
-			if(H.wear_id && H.wear_id.assignment == "Staff Assistant")
+
+			if(H.wear_id)
+				var/obj/item/card/id/userid = H.wear_id
+
+				if(userid.assignment != "Staff Assistant")
+					boutput(user, "<span class='alert'>The token slot won't accept the token. A small label over the slot says 'PLEASE WEAR STAFF ASSISTANT ID'.</span>")
+					return
+
 				if(AT.authed && AT.role_datum)
 					user.drop_item(AT)
-					var/TD = AT.role_datum
+					var/datum/recruitment_role/TD = AT.role_datum
 					qdel(AT)
 
 					playsound(src.loc, sound_token, 80, 1)
 					boutput(user, "<span class='notice'>You insert the recruitment token into [src]. A small beam passes over your ID, then the machine dispenses a box.</span>")
 
-					H.wear_id.assignment = TD.name
-					H.wear_id.access = get_access(TD.accessParent)
-					H.wear_id.icon_state = TD.cardIcon
-					H.wear_id.name = "[ID_card.registered]'s ID Card ([ID_card.assignment])"
+					userid.assignment = TD.name
+					userid.access = get_access(TD.accessParent)
+					userid.icon_state = TD.cardIcon
+					userid.name = "[userid.registered]'s ID Card ([userid.assignment])"
 
 					SPAWN_DBG(5)
 						playsound(src.loc, sound_dispense, 80, 1)
