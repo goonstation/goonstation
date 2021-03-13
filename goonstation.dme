@@ -1326,6 +1326,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\obj\item\space_cash.dm"
 #include "code\obj\item\sparklers.dm"
 #include "code\obj\item\sponge_capsule.dm"
+#include "code\obj\item\staffkiosk.dm"
 #include "code\obj\item\stickers.dm"
 #include "code\obj\item\stun_baton.dm"
 #include "code\obj\item\table_rack_parts.dm"
