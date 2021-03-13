@@ -646,14 +646,11 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		. = ..()
 		src.icon_state = "shotty" + (gilded ? "-golden" : "") + (racked_slide ? "" : "-empty" )
 
-	canshoot()
-		if (src.racked_slide)
-			return ..()
-		else
-			boutput(usr, "<span class='notice'>You need to rack the slide before you can fire!</span>") //Pain
-			return FALSE
 
 	shoot(var/target,var/start ,var/mob/user)
+		if(canshoot() && !racked_slide)
+			boutput(user, "<span class='notice'>You need to rack the slide before you can fire!</span>") //Pain
+			return
 		..()
 		src.racked_slide = FALSE
 		if (src.ammo.amount_left == 0) // change icon_state to empty if 0 shells left
