@@ -684,20 +684,7 @@
 		// calculate 0-100% insulation from rads
 		if (!src)
 			return 0
-
-		var/rad_protection = 0
-
-		// Resistance from Clothing
-		rad_protection += GET_MOB_PROPERTY(src, PROP_RADPROT)
-
-		if (bioHolder?.HasEffect("food_rad_resist"))
-			rad_protection += 100
-
-		if (src.hasStatus("food_rad_resist"))
-			rad_protection += 80 // 80 because that's what "food_disease_resist" does
-
-		rad_protection = clamp(rad_protection, 0, 100)
-		return rad_protection
+		return clamp(GET_MOB_PROPERTY(src, PROP_RADPROT), 0, 100)
 
 	get_ranged_protection()
 		if (!src)

@@ -368,6 +368,18 @@
 	maxDuration = 6000
 	unique = 1
 
+	onAdd(optional = 80)
+		. = ..()
+		if(ismob(owner))
+			var/mob/M = owner
+			APPLY_MOB_PROPERTY(M, PROP_RADPROT, src, optional)
+
+	onRemove()
+		. = ..()
+		if(ismob(owner))
+			var/mob/M = owner
+			REMOVE_MOB_PROPERTY(M, PROP_RADPROT, src)
+
 /datum/statusEffect/space_farts
 	id = "food_space_farts"
 	name = "Food (Fart Thrust)"
