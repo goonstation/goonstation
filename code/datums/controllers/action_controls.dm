@@ -1002,7 +1002,7 @@ var/datum/action_controller/actions
 		overlays.len = 0
 		..()
 
-	proc/set_icon_state(new_state)
+	set_icon_state(new_state)
 		..()
 		src.img.icon_state = new_state
 
@@ -1028,7 +1028,7 @@ var/datum/action_controller/actions
 		overlays.len = 0
 		..()
 
-	proc/set_icon_state(new_state)
+	set_icon_state(new_state)
 		..()
 		src.img.icon_state = new_state
 
