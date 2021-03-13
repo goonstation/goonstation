@@ -190,23 +190,6 @@
 			src.credits["Utility"]++
 		..()
 
-/obj/submachine/weapon_vendor/staff
-	name = "Staff Assignment Kiosk"
-	icon = 'icons/obj/vending.dmi'
-	icon_state = "staffkiosk"
-	desc = "An automated quartermaster service to equip staff assistants for departmental work."
-	token_accepted = /obj/item/requisition_token/staff
-	New()
-		..()
-		materiel_stock += new/datum/materiel/loadout/assist_civ
-		materiel_stock += new/datum/materiel/loadout/assist_eng
-		materiel_stock += new/datum/materiel/loadout/assist_med
-		materiel_stock += new/datum/materiel/loadout/assist_res
-
-	accepted_token()
-		src.credits["Loadout"]++
-		..()
-
 /obj/submachine/weapon_vendor/syndicate
 	name = "Syndicate Weapons Vendor"
 	icon = 'icons/obj/vending.dmi'
@@ -368,42 +351,6 @@
 	cost = 0.9
 	description = "One belt containing a security barrier, a forensic scanner, and a security ticket writer."
 
-//STAFF
-
-//boxes will contain:
-//an alternate jumpsuit with departmental stripe
-//an "access chip" that permits department members to share access
-//a departmental headset
-//a set of supplementary items appropriate for the task
-
-/datum/materiel/loadout/assist_civ
-	name = "Catering"
-	path = /obj/item/storage/box/staffkit/civ
-	category = "Loadout"
-	description = "A boxed kit for assisting catering and hydroponic staff."
-//supplementary items: sous chef's hat, latex gloves, produce satchel, cleaner spray bottle
-
-/datum/materiel/loadout/assist_eng
-	name = "Engineering"
-	path = /obj/item/storage/box/staffkit/eng
-	category = "Loadout"
-	description = "A boxed kit for assisting engineering and mining staff."
-//supplementary items: crowbar, emergency spacesuit set, power pick
-
-/datum/materiel/loadout/assist_med
-	name = "Medical"
-	path = /obj/item/storage/box/staffkit/med
-	category = "Loadout"
-	description = "A boxed kit for assisting medical staff."
-//supplementary items: epi injector, health analyzer, salbutamol pill
-
-/datum/materiel/loadout/assist_res
-	name = "Research"
-	path = /obj/item/storage/box/staffkit/res
-	category = "Loadout"
-	description = "A boxed kit for assisting research staff."
-//supplementary items: gas mask, latex gloves, beaker, reagent analyzer
-
 //SYNDIE
 
 /datum/materiel/sidearm/pistol
@@ -552,7 +499,3 @@
 
 		assistant
 			desc = "An NT-provided token compatible with the Security Weapons Vendor. This one says <i>for security assistant use only</i>."
-
-	staff
-		desc = "An NT-provided token compatible with the Staff Assignment Kiosk."
-		icon_state = "req-token-sec"

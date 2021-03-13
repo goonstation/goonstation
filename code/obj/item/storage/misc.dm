@@ -93,7 +93,7 @@
 	name = "catering assistant kit"
 	desc = "A slightly stale-smelling set of equipment."
 	spawn_contents = list(/obj/item/clothing/under/rank/staffciv,
-		//obj/item/access_authchip/catering,
+		//obj/item/device/access_authchip/catering,
 		/obj/item/device/radio/headset/civilian,
 		/obj/item/clothing/head/souschefhat,
 		/obj/item/clothing/gloves/latex,
@@ -104,7 +104,7 @@
 	name = "engineering assistant kit"
 	desc = "A slightly stale-smelling set of equipment."
 	spawn_contents = list(/obj/item/clothing/under/rank/staffeng,
-		//obj/item/access_authchip/engineering,
+		//obj/item/device/access_authchip/engineering,
 		/obj/item/device/radio/headset/engineer,
 		/obj/item/crowbar,
 		/obj/item/clothing/head/emerg,
@@ -115,7 +115,7 @@
 	name = "medical assistant kit"
 	desc = "A slightly stale-smelling set of equipment."
 	spawn_contents = list(/obj/item/clothing/under/rank/staffmed,
-		//obj/item/access_authchip/medical,
+		//obj/item/device/access_authchip/medical,
 		/obj/item/device/radio/headset/medical,
 		/obj/item/reagent_containers/emergency_injector/epinephrine,
 		/obj/item/device/analyzer/healthanalyzer,
@@ -125,7 +125,7 @@
 	name = "research assistant kit"
 	desc = "A slightly stale-smelling set of equipment."
 	spawn_contents = list(/obj/item/clothing/under/rank/staffres,
-		//obj/item/access_authchip/research,
+		//obj/item/device/access_authchip/research,
 		/obj/item/device/radio/headset/research,
 		/obj/item/clothing/mask/gas,
 		/obj/item/clothing/gloves/latex,
