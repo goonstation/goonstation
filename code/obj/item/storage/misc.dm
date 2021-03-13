@@ -86,4 +86,3 @@
 	spawn_contents = list(/obj/item/reagent_containers/glass/bottle/mercury = 3,
 	/obj/item/reagent_containers/food/drinks/bottle/wine = 3,
 	/obj/item/reagent_containers/glass/bottle/holywater)
-
