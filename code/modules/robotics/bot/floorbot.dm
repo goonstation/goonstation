@@ -309,7 +309,7 @@
 		src.search_range = 1
 
 		// are we there yet
-		if (get_turf(src.loc) == get_turf(src.target))
+		if (IN_RANGE(get_turf(src), get_turf(src.target), 1))
 			do_the_thing()
 			return
 
