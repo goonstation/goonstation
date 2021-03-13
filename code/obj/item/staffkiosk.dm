@@ -7,16 +7,18 @@
 	opacity = 0
 	anchored = 1
 	var/sound_token = 'sound/machines/capsulebuy.ogg'
+	var/sound_dispense = 'sound/machines/chime.ogg'
 	var/obj/item/card/id/ID_card = null
 
 	attackby(var/obj/item/I, var/mob/user)
 		if(istype(I, /obj/item/assistant_token))
 			var/obj/item/assistant_token/AT = I
 			if(src.ID_card)
-				if(AT.authed)
+				if(AT.authed && AT.role_datum)
 					user.drop_item(AT)
+					var/datum/recruitment_role/ATINFO = AT.role_datum
 					qdel(AT)
-					accepted_token(AT, user)
+					accepted_token(ATINFO, user)
 				else
 					boutput(user, "The kiosk won't accept the token. It has to be authorized by a department staff member first.")
 			else
@@ -62,10 +64,17 @@
 			user.u_equip(ID)
 		ID.set_loc(src)
 
-	accepted_token()
-		src.updateUsrDialog()
+	accepted_token(var/tokendata, var/mob/user)
 		playsound(src.loc, sound_token, 80, 1)
-		boutput(user, "<span class='notice'>You insert the recruitment token into [src]. It dispenses a box and a small chip.</span>")
+		boutput(user, "<span class='notice'>You insert the recruitment token into [src]. The ID slot whirs softly, then the machine dispenses a box.</span>")
+
+		src.ID_card.assignment = tokendata.name
+		src.ID_card.access = get_access(tokendata.accessParent)
+		src.ID_card.icon_state = tokendata.cardIcon
+
+		SPAWN_DBG(10)
+			playsound(src.loc, sound_dispense, 80, 1)
+			var/atom/A = new tokendata.dispensedKit(src.loc)
 
 //assignment protocol
 
@@ -85,14 +94,34 @@
 	icon_state = "req-token-sec"
 	//icon_state = "req-token-staff"
 	w_class = 1.0
-	var/authed = null
+	var/authed = 0
+	var/role_name = null
+	var/role_datum = null
 
+	attackby(var/obj/item/I, var/mob/user)
+		if(!src.authed && istype(I, /obj/item/card/id))
+			var/obj/item/card/id/ID = I
+			var/pickableRoles = list()
+			var/frontEndList = list()
 
+			for(var/datum/recruitment_role/ROL in concrete_typesof(/datum/recruitment_role))
+				if(ID.assignment in ROL.canAuthorize)
+					pickableRoles[ROL.name] = ROL
+					frontEndList += ROL.name
 
+			var/choice = input(user, "Which role to authorize on token?", "Selection") as null|anything in frontEndList
+			if (!choice)
+				return
 
+			src.authed = 1
+			src.role_name = choice
+			src.role_datum = pickableRoles[choice]
+			src.desc = "An activated recruitment token, ready for use in the recruitment kiosk. It's configured for the [role_name] role."
 
-
-
+			boutput(user, "<span class='notice'>You authorize the token for the [choice] role.</span>")
+			return
+		else
+			..()
 
 
 //ok I'm doing it this way for some reason I hope the performance isn't terrible
@@ -108,49 +137,49 @@ ABSTRACT_TYPE(/datum/recruitment_role)
 /datum/recruitment_role/medical
 	name = "Medical Assistant"
 	accessParent = "Medical Doctor"
-  canAuthorize = list("Medical Doctor","Geneticist","Roboticist","Medical Director","Head of Personnel","Captain")
+	canAuthorize = list("Medical Doctor","Geneticist","Roboticist","Medical Director","Head of Personnel","Captain")
 	cardIcon = "id_res"
 	dispensedKit = /obj/item/storage/box/staffkit/med
 
 /datum/recruitment_role/robo
 	name = "Robotics Assistant"
 	accessParent = "Roboticist"
-  canAuthorize = list("Roboticist","Medical Director","Head of Personnel","Captain")
+	canAuthorize = list("Roboticist","Medical Director","Head of Personnel","Captain")
 	cardIcon = "id_res"
 	dispensedKit = /obj/item/storage/box/staffkit/robo
 
 /datum/recruitment_role/engineer
 	name = "Engineering Assistant"
 	accessParent = "Engineer"
-  canAuthorize = list("Engineer","Chief Engineer","Head of Personnel","Captain")
+	canAuthorize = list("Engineer","Chief Engineer","Head of Personnel","Captain")
 	cardIcon = "id_eng"
 	dispensedKit = /obj/item/storage/box/staffkit/eng
 
 /datum/recruitment_role/mechanic
 	name = "Mechanics Assistant"
 	accessParent = "Mechanic"
-  canAuthorize = list("Mechanic","Chief Engineer","Head of Personnel","Captain")
+	canAuthorize = list("Mechanic","Chief Engineer","Head of Personnel","Captain")
 	cardIcon = "id_eng"
 	dispensedKit = /obj/item/storage/box/staffkit/mech
 
 /datum/recruitment_role/mining
 	name = "Mining Assistant"
 	accessParent = "Miner"
-  canAuthorize = list("Miner","Chief Engineer","Head of Personnel","Captain")
+	canAuthorize = list("Miner","Chief Engineer","Head of Personnel","Captain")
 	cardIcon = "id_eng"
 	dispensedKit = /obj/item/storage/box/staffkit/miner
 
 /datum/recruitment_role/sci
 	name = "Research Assistant"
 	accessParent = "Scientist"
-  canAuthorize = list("Scientist","Research Director","Head of Personnel","Captain")
+	canAuthorize = list("Scientist","Research Director","Head of Personnel","Captain")
 	cardIcon = "id_res"
 	dispensedKit = /obj/item/storage/box/staffkit/res
 
 /datum/recruitment_role/chef
 	name = "Culinary Assistant"
 	accessParent = "Chef"
-  canAuthorize = list("Chef","Head of Personnel","Captain")
+	canAuthorize = list("Chef","Head of Personnel","Captain")
 	cardIcon = "id_civ"
 	dispensedKit = /obj/item/storage/box/staffkit/chef
 
@@ -164,7 +193,7 @@ ABSTRACT_TYPE(/datum/recruitment_role)
 /datum/recruitment_role/botany
 	name = "Bar Assistant"
 	accessParent = "Bartender"
-  canAuthorize = list("Bartender","Head of Personnel","Captain")
+	canAuthorize = list("Bartender","Head of Personnel","Captain")
 	cardIcon = "id_civ"
 	dispensedKit = /obj/item/storage/box/staffkit/botany
 
