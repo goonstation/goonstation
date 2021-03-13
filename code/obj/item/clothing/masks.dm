@@ -10,7 +10,6 @@
 	compatible_species = list("human", "cow", "werewolf")
 	var/is_muzzle = 0
 	var/use_bloodoverlay = 1
-	var/acid_proof = 0	//Is this mask immune to flouroacid?
 	var/stapled = 0
 	var/allow_staple = 1
 	var/path_prot = 1 // protection from airborne pathogens, multiplier for chance to be infected
