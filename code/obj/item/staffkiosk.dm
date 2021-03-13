@@ -111,6 +111,10 @@
 					pickableRoles[ROL.name] = ROL
 					frontEndList += ROL.name
 
+			if (frontEndList.len == 0)
+				boutput(user, "<span class='alert'>This card can't authorize any available token roles.</span>")
+				return
+
 			var/choice = input(user, "Which role to authorize on token?", "Selection") as null|anything in frontEndList
 			if (!choice)
 				return
