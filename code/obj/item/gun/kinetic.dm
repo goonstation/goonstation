@@ -932,7 +932,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	name = "Branwen pistol"
 	desc = "A semi-automatic, 9mm caliber service pistol, developed by Mabinogi Firearms Company."
 	icon_state = "9mm_pistol"
-	w_class = 2
+	w_class = 3
 	force = 3
 	contraband = 4
 	caliber = 0.355
