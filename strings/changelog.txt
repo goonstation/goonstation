@@ -1,5 +1,9 @@
 
 (t)sat mar 13 21
+(u)TTerc
+(p)3885
+(e)⚖|balance
+(*)Stun melee artifacts are now stamina damage based.
 (u)Flaborized
 (p)3992
 (e)🎨|sprites
