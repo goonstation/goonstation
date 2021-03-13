@@ -313,6 +313,9 @@ var/global/list/mapNames = list(
 	rwalls = /turf/simulated/wall/auto/reinforced/gannets
 	auto_walls = 1
 
+	ext_airlocks = /obj/machinery/door/airlock/pyro/external
+	airlock_style = "pyro"
+
 	escape_centcom = /area/shuttle/escape/centcom/destiny
 	escape_transit = /area/shuttle/escape/transit/destiny
 	escape_station = /area/shuttle/escape/station/destiny
