@@ -776,13 +776,36 @@ datum/chemicompiler_core/stationaryCore
 	var/heating = 0
 	var/distilling = 0
 	var/cracking = 0
-	var/obj/item/reagent_containers/glass/beaker/extractor_tank/thick/bottoms = new
-	var/obj/item/reagent_containers/glass/beaker/extractor_tank/tops = new
-	var/obj/item/reagent_containers/glass/beaker/extractor_tank/feed = new
-	var/obj/item/reagent_containers/glass/beaker/extractor_tank/overflow = new
+	var/obj/item/reagent_containers/glass/beaker/extractor_tank/thick/bottoms = null
+	var/obj/item/reagent_containers/glass/beaker/extractor_tank/tops = null
+	var/obj/item/reagent_containers/glass/beaker/extractor_tank/feed = null
+	var/obj/item/reagent_containers/glass/beaker/extractor_tank/overflow = null
 	var/obj/item/reagent_containers/user_beaker = null
 
 	New()
+		..()
+		src.bottoms = new
+		src.tops = new
+		src.feed = new
+		src.overflow = new
+
+	disposing()
+		if (src.bottoms)
+			qdel(src.bottoms)
+			src.bottoms = null
+		if (src.tops)
+			qdel(src.tops)
+			src.tops = null
+		if (src.feed)
+			qdel(src.feed)
+			src.feed = null
+		if (src.overflow)
+			qdel(src.overflow)
+			src.overflow = null
+		if (src.user_beaker)
+			qdel(src.user_beaker)
+			src.user_beaker = null
+		UnsubscribeProcess()
 		..()
 
 	process(var/mult)
@@ -795,6 +818,7 @@ datum/chemicompiler_core/stationaryCore
 		if(cracking)
 			do_cracking(bottoms,mult)
 		bottoms.reagents.temperature_reagents(T20C, 1)
+		..()
 
 	proc/check_tank(var/obj/item/reagent_containers/tank,var/headroom)
 		if(tank.reagents.total_volume >= tank.reagents.maximum_volume - headroom)
@@ -809,7 +833,6 @@ datum/chemicompiler_core/stationaryCore
 			for(var/datum/reagent/reggie in R)
 				if(reggie.can_crack)
 					reggie.crack(amount)
-
 
 	proc/distill(var/amount)
 		var/vapour_list = get_vapours(bottoms)
@@ -857,6 +880,3 @@ datum/chemicompiler_core/stationaryCore
 					. = reggie
 			return
 		else return null
-
-
-

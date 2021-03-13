@@ -2657,20 +2657,21 @@
 				continue
 			else
 				if (force_instead || alert(src, "Use the name [newname]?", newname, "Yes", "No") == "Yes")
-					var/datum/data/record/B = FindBankAccountByName(src.real_name)
-					if (B?.fields["name"])
-						B.fields["name"] = newname
-					for (var/obj/item/card/id/ID in src.contents)
-						ID.registered = newname
-						ID.update_name()
-					for (var/obj/item/device/pda2/PDA in src.contents)
-						PDA.registered = newname
-						PDA.owner = newname
-						PDA.name = "PDA-[newname]"
-						if(PDA.ID_card)
-							var/obj/item/card/id/ID = PDA.ID_card
+					if(!src.traitHolder.hasTrait("immigrant"))// stowaway entertainers shouldn't be on the manifest
+						var/datum/data/record/B = FindBankAccountByName(src.real_name)
+						if (B?.fields["name"])
+							B.fields["name"] = newname
+						for (var/obj/item/card/id/ID in src.contents)
 							ID.registered = newname
 							ID.update_name()
+						for (var/obj/item/device/pda2/PDA in src.contents)
+							PDA.registered = newname
+							PDA.owner = newname
+							PDA.name = "PDA-[newname]"
+							if(PDA.ID_card)
+								var/obj/item/card/id/ID = PDA.ID_card
+								ID.registered = newname
+								ID.update_name()
 					src.real_name = newname
 					src.name = newname
 					return 1
@@ -2972,7 +2973,7 @@
 		if (I.loc == get_turf(I))
 			items += I
 	if (items.len)
-		var/atom/A = input(usr, "What do you want to pick up?") as() in items
+		var/atom/A = input(usr, "What do you want to pick up?") as anything in items
 		A.interact(src)
 
 /// 'A' is the thing being eaten, user is the thing using the thing, and src is of course the thing eating it
@@ -2980,9 +2981,28 @@
 	if(!istype(A) || !user)
 		return FALSE // who's eating what, now?
 
-	/// Making sure the thing actually exists and isn't cheating the bite-rate. And is also edible, so we don't get people trying to stuff multitools in their mouth
+	// Apparently you could feed things to ghosts. So spooky everyone loses their appetite
+	if (isobserver(src))
+		if(isAIeye(src))
+			src.can_not_eat(A, user, "is_aieye")
+		else
+			src.can_not_eat(A, user, "is_ghost")
+		return FALSE
+
+	// Science still hasn't found a way to install a cyberstomach into a cyberperson
+	if (issilicon(src))
+		src.can_not_eat(A, user, "is_silicon")
+		return FALSE
+
+	// And just in case we're something that isnt caught by the above and isnt something that's supposed to eat things
+	if (!isliving(src))
+		src.can_not_eat(A, user, null)
+		return FALSE
+
+	// Making sure the thing actually exists and isn't cheating the bite-rate. And is also edible, so we don't get people trying to stuff multitools in their mouth
 	if(!src.bioHolder?.HasEffect("mattereater") && GET_COOLDOWN(src, "eat") && (A.edible || A.material?.edible))
-		src.can_not_eat(A, user, "on_cooldown")
+		if(!ON_COOLDOWN(src, "eat_cooldown_cooldown", EAT_COOLDOWN))
+			src.can_not_eat(A, user, "on_cooldown")
 		return FALSE
 	else if (!A.amount)
 		src.can_not_eat(A, user, "all_gone")
@@ -3057,6 +3077,30 @@
 			user.tri_message("<span class='alert'>[user] tries to feed [A] to [src], but nothing happens!</span>",\
 			user, "<span class='alert'>You try to feed [A] to [src], but nothing happens!</span>",\
 			src, "<span class='alert'>[user] tries to feed [A] to you, but nothing happens!</span>")
+		if("is_silicon")
+			var/must_scream = prob(1)
+			var/has_head = 1 // most non-borg silicons are basically just a floating headmobile
+			if(isrobot(src))
+				var/mob/living/silicon/robot/R = src
+				has_head = istype(R.part_head)
+			user.tri_message("<span class='alert'>[user] waves [A] in front of [src]'s [has_head ? "head assembly" : "mass of exposed neckwires"], but it [has_head ? "[must_scream ? "has no mouth" : "doesn't have a mouth"]" : "doesn't have a head"]!</span>",\
+			user, "<span class='alert'>You hold [A] in front of [src]'s [has_head ? "cranial unit" : "mass of exposed neckwires"], but you can't seem to find a [has_head ? "mouth" : "place to put it"]!</span>",\
+			src, "<span class='alert'>[user] wishes for you to consume [A]. [must_scream ? "You are unable to comply, as it is incompatible with your cybernetic physiology." : "<b><i>But you don't have a mouth!</b></i>"]</span>")
+			if(must_scream)
+				src.emote("scream")
+		if("is_aieye")
+			user.tri_message("<span class='notice'>[user] waves [A] at a camera.</span>",\
+			user, "<span class='notice'>You hold [A] in front of one of [src]'s cameras. You're not sure what you were expecting to happen.</span>",\
+			src, "<span class='notice'>[user] shows [his_or_her(user)] [A] to you. It looks unappetizing.</span>")
+		if("is_ghost")
+			user.tri_message("<span class='alert'>[user] waves [A] around in front of [him_or_her(user)]self...?</span>",\
+			user, "<span class='alert'>You make an offering of [A] to the restless spirit of [src]. You feel vaguely uneasy and \the [A] starts to look a bit spooky, but otherwise, nothing seems to happen.</span>",\
+			src, "<span class='alert'>[user] waggles [A] around inside your phantom head, but you're not hungry.</span>")
+			if(istype(A))
+				if(!A.reagents)
+					A.create_reagents(5)
+				var/datum/reagents/reag = A.reagents
+				reag.add_reagent("ectoplasm", 5)
 		else
 			boutput(user, "<span class='alert'>You can't eat that!</span>")
 

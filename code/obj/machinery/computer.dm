@@ -51,8 +51,11 @@
 
 	if(glow_in_dark_screen)
 		src.screen_image = image('icons/obj/computer_screens.dmi', src.icon_state, -1)
-		src.UpdateOverlays(screen_image, "screen_image")
 		screen_image.plane = PLANE_LIGHTING
+		screen_image.blend_mode = BLEND_ADD
+		screen_image.layer = LIGHTING_LAYER_BASE
+		screen_image.color = list(0.33,0.33,0.33, 0.33,0.33,0.33, 0.33,0.33,0.33)
+		src.UpdateOverlays(screen_image, "screen_image")
 
 /obj/machinery/computer/meteorhit(var/obj/O as obj)
 	if(status & BROKEN)	qdel(src)
@@ -107,8 +110,11 @@
 		status &= ~NOPOWER
 		light.enable()
 		if(glow_in_dark_screen)
-			src.UpdateOverlays(screen_image, "screen_image")
 			screen_image.plane = PLANE_LIGHTING
+			screen_image.blend_mode = BLEND_ADD
+			screen_image.layer = LIGHTING_LAYER_BASE
+			screen_image.color = list(0.33,0.33,0.33, 0.33,0.33,0.33, 0.33,0.33,0.33)
+			src.UpdateOverlays(screen_image, "screen_image")
 	else
 		SPAWN_DBG(rand(0, 15))
 			//src.icon_state = "c_unpowered"

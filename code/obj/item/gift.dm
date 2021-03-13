@@ -282,7 +282,7 @@ var/global/list/generic_gift_paths = list(/obj/item/basketball,
 	/obj/item/storage/firstaid/regular,
 	/obj/item/storage/pill_bottle/cyberpunk,
 	/obj/item/toy/sword,
-	/obj/item/card_box/trading,
+	/obj/item/stg_box,
 	/obj/item/clothing/suit/jacket/plastic/random_color)
 
 var/global/list/questionable_generic_gift_paths = list(/obj/item/relic,

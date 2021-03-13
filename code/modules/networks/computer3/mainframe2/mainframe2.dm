@@ -946,7 +946,7 @@
 	if (!the_message)
 		return 1
 
-	for (var/obj/machinery/networked/mainframe/aMainframe as() in machine_registry[MACHINES_MAINFRAMES])
+	for (var/obj/machinery/networked/mainframe/aMainframe as anything in machine_registry[MACHINES_MAINFRAMES])
 		LAGCHECK(LAG_LOW)
 		if (aMainframe.z != 1)
 			continue

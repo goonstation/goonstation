@@ -8,7 +8,7 @@
 // returns true if hit
 /atom/movable/proc/hit_check(datum/thrown_thing/thr)
 	if(src.throwing)
-		for (var/atom/A as() in get_turf(src))
+		for (var/atom/A as anything in get_turf(src))
 			if (!src.throwing)
 				break
 			if(A == src) continue

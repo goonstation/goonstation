@@ -269,7 +269,7 @@ proc/gas_text_color(gas_id)
 
 /datum/gas_mixture/proc/total_moles_full()
 	. = BASE_GASES_TOTAL_MOLES(src)
-	for(var/datum/gas/trace_gas as() in trace_gases)
+	for(var/datum/gas/trace_gas as anything in trace_gases)
 		. += trace_gas.moles
 
 /// Returns total moles of a given gas mixture
@@ -282,7 +282,7 @@ proc/gas_text_color(gas_id)
 #define ADD_MIXTURE_PRESSURE(MIXTURE, VAR) do { \
 	var/_moles = BASE_GASES_TOTAL_MOLES(MIXTURE); \
 	if(length(MIXTURE.trace_gases)) { \
-		for(var/datum/gas/trace_gas as() in MIXTURE.trace_gases) { \
+		for(var/datum/gas/trace_gas as anything in MIXTURE.trace_gases) { \
 			_moles += trace_gas.moles; \
 		} \
 	} \
@@ -297,14 +297,14 @@ proc/gas_text_color(gas_id)
 
 /datum/gas_mixture/proc/heat_capacity_full()
 	. = BASE_GASES_HEAT_CAPACITY(src)
-	for(var/datum/gas/trace_gas as() in trace_gases)
+	for(var/datum/gas/trace_gas as anything in trace_gases)
 		. += trace_gas.moles * trace_gas.specific_heat
 
 #define HEAT_CAPACITY(MIXTURE) (length((MIXTURE).trace_gases) ? (MIXTURE).heat_capacity_full() : BASE_GASES_HEAT_CAPACITY(MIXTURE))
 
 /datum/gas_mixture/proc/heat_capacity_archived_full()
 	. = BASE_GASES_HEAT_CAPACITY(src)
-	for(var/datum/gas/trace_gas as() in trace_gases)
+	for(var/datum/gas/trace_gas as anything in trace_gases)
 		. += trace_gas.ARCHIVED(moles) * trace_gas.specific_heat
 
 #define HEAT_CAPACITY_ARCHIVED(MIXTURE) (length((MIXTURE).trace_gases) ? (MIXTURE).heat_capacity_archived_full() : BASE_GASES_ARCH_HEAT_CAPACITY(MIXTURE))

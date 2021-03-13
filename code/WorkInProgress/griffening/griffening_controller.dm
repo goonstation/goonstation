@@ -1,3 +1,10 @@
+/*
+
+	Unused, dead code, saved here for posterity
+
+*/
+
+#error DO NOT INCLUDE THIS FILE IT IS JUST FOR HISTORICAL PURPOSES IN CASE SOMEONE WANTS TO ADD IT thanks bye
 #define HOLDER_ROLE_UNUSED 0
 #define HOLDER_ROLE_CREATURE 1
 #define HOLDER_ROLE_EFFECT 2

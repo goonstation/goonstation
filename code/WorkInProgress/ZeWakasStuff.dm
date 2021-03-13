@@ -7,7 +7,7 @@
 
 
 /* 514 checklist
-	`as() in` -> `as anything in`
+	`as anything in` -> `as anything in`
 	?[] experimentation perhaps
 	hsv/hsl/hcy destruction
 	make some lib animate stuff better with spaces? (better rainbow anyone?)
