@@ -129,6 +129,8 @@ var/datum/action_controller/actions
 /datum/action/bar //This subclass has a progressbar that attaches to the owner to show how long we need to wait.
 	var/obj/actions/bar/bar
 	var/obj/actions/border/border
+	var/bar_icon_state = "bar"
+	var/border_icon_state = "border"
 
 	onStart()
 		..()
@@ -136,6 +138,8 @@ var/datum/action_controller/actions
 		if(owner != null)
 			bar = unpool(/obj/actions/bar)
 			border = unpool(/obj/actions/border)
+			border.set_icon_state(src.border_icon_state)
+			bar.set_icon_state(src.bar_icon_state)
 			bar.pixel_y = 5
 			bar.pixel_x = 0
 			border.pixel_y = 5
@@ -998,6 +1002,10 @@ var/datum/action_controller/actions
 		overlays.len = 0
 		..()
 
+	proc/set_icon_state(new_state)
+		src.icon_state = new_state
+		src.img.icon_state = new_state
+
 /obj/actions/border
 	layer = 100
 	icon_state = "border"
@@ -1019,6 +1027,10 @@ var/datum/action_controller/actions
 		attached_objs = list()
 		overlays.len = 0
 		..()
+
+	proc/set_icon_state(new_state)
+		src.icon_state = new_state
+		src.img.icon_state = new_state
 
 //Use this to start the action
 //actions.start(new/datum/action/bar/private/icon/magPicker(item, picker), usr)
