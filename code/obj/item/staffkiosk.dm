@@ -27,8 +27,12 @@
 				boutput(user, "<span class='notice'>The kiosk already has an ID inside it.</span>")
 				return
 			else if (!src.ID_card)
-				src.insert_id_card(ID, user)
-				boutput(user, "<span class='notice'>You insert [ID] into [src]. The token slot opens up.</span>")
+				if(ID.assignment == "Staff Assistant")
+					src.insert_id_card(ID, user)
+					boutput(user, "<span class='notice'>You insert [ID] into [src]. The token slot opens up.</span>")
+				else
+					boutput(user, "<span class='notice'>The kiosk refuses to accept the identification card. It appears to only accept staff assistant IDs.</span>")
+					return
 		else
 			..()
 
@@ -47,7 +51,6 @@
 				var/turf/T = get_turf(src)
 				src.ID_card.set_loc(T)
 			src.ID_card = null
-			src.icon_state = "accessgun"
 
 	proc/insert_id_card(var/obj/item/card/id/ID as obj, var/mob/user as mob)
 		if (!istype(ID))
@@ -151,6 +154,20 @@ ABSTRACT_TYPE(/datum/recruitment_role)
 	cardIcon = "id_civ"
 	dispensedKit = /obj/item/storage/box/staffkit/chef
 
+/datum/recruitment_role/bar
+	name = "Bar Assistant"
+	accessParent = "Bartender"
+  canAuthorize = list("Bartender","Head of Personnel","Captain")
+	cardIcon = "id_civ"
+	dispensedKit = /obj/item/storage/box/staffkit/bar
+
+/datum/recruitment_role/botany
+	name = "Bar Assistant"
+	accessParent = "Bartender"
+  canAuthorize = list("Bartender","Head of Personnel","Captain")
+	cardIcon = "id_civ"
+	dispensedKit = /obj/item/storage/box/staffkit/botany
+
 
 //equipment kits
 
@@ -159,11 +176,11 @@ ABSTRACT_TYPE(/datum/recruitment_role)
 	desc = "A slightly stale-smelling set of equipment."
 	spawn_contents = list(/obj/item/clothing/under/rank/staffmed,
 		/obj/item/device/radio/headset/medical,
-		/obj/item/reagent_containers/emergency_injector/epinephrine,
 		/obj/item/disk/data/cartridge/medical,
+		/obj/item/reagent_containers/emergency_injector/epinephrine,
 		/obj/item/reagent_containers/mender/brute,
 		/obj/item/reagent_containers/mender/burn,
-		/obj/item/reagent_containers/pill/salbutamol)
+		/obj/item/bandage)
 
 /obj/item/storage/box/staffkit/robo
 	name = "robotics assistant kit"
@@ -240,13 +257,12 @@ ABSTRACT_TYPE(/datum/recruitment_role)
 		/obj/item/reagent_containers/food/drinks/cocktailshaker,
 		/obj/item/spraybottle/cleaner)
 
-/obj/item/storage/box/staffkit/
+/obj/item/storage/box/staffkit/botany
 	name = "botanical assistant kit"
 	desc = "A slightly stale-smelling set of equipment."
 	spawn_contents = list(/obj/item/clothing/under/rank/staffciv,
 		/obj/item/device/radio/headset/civilian,
-		/obj/item/clothing/suit/wcoat,
+		/obj/item/disk/data/cartridge/botanist,
 		/obj/item/clothing/gloves/black,
-		/obj/item/device/reagentscanner,
-		/obj/item/reagent_containers/food/drinks/cocktailshaker,
-		/obj/item/spraybottle/cleaner)
+		/obj/item/satchel/hydro,
+		/obj/item/device/reagentscanner)
