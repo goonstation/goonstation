@@ -1,4 +1,11 @@
 
+(t)sat mar 13 21
+(u)Gannets
+(p)3978
+(e)⚖🆕🔄🎨|balance, feature, rework, sprites
+(*)Splits the Infiltrator nuclear operative class crate in to two kits. Infiltrator & Scout, details in minor changes.
+(+)Infiltrator kit now comes with: tranq pistol + ammo pouch, pod beacon deployer, dna scrambler, voice changer, emag, chameleon jumpsuit, chameleon projector
+(+)Scout kit comes with: burst fire smg + ammo pouch, light breaker, cloaking device, emag, nvg
 (t)fri mar 12 21
 (u)AwkwardDryad
 (p)3740
