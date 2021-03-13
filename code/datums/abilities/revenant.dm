@@ -16,7 +16,7 @@
 
 	generatePoints(var/mult = 1)
 		if (relay)
-			relay.generatePoints(mult = 1)
+			relay.generatePoints(mult)
 
 	deductPoints(cost)
 		if (relay)
@@ -176,7 +176,7 @@
 		if (!src.wraith)
 			return
 		if (ghoulTouchActive)
-			ghoulTouchActive -= mult
+			ghoulTouchActive = max (ghoulTouchActive - mult, 0)
 			if (!ghoulTouchActive)
 				owner.show_message("<span class='alert'>You are no longer empowered by the netherworld.</span>")
 
