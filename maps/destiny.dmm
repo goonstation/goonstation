@@ -29335,6 +29335,14 @@
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/primary/west)
+"hZs" = (
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 5;
+	name = "autoname  - SS13"
+	},
+/turf/simulated/floor/plating/random,
+/area/station/maintenance/south)
 "hZH" = (
 /obj/decal/tile_edge/line/yellow{
 	dir = 8;
@@ -98430,7 +98438,7 @@ sEl
 lME
 vPE
 ych
-bZv
+hZs
 qgQ
 dYS
 wqx
@@ -110208,7 +110216,7 @@ usG
 sVb
 rgz
 vbS
-bZv
+hZs
 wdx
 qcZ
 mGu
