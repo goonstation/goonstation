@@ -1,5 +1,9 @@
 
 (t)sat mar 13 21
+(u)Flaborized
+(p)3992
+(e)🎨|sprites
+(*)Updated the action bar sprite, added several variants.
 (u)Kubius
 (p)3985
 (e)🐛🆕🗺|bug, feature, mapping
