@@ -690,6 +690,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 					update_icon() // Slide already open? Just close the slide
 				boutput(user, "<span class='notice'>You rack the slide of the shotgun!</span>")
 				playsound(user.loc, "sound/weapons/shotgunpump.ogg", 50, 1)
+				src.casings_to_eject = 0
 				if (src.ammo.amount_left < 8) // Do not eject shells if you're racking a full "clip"
 					var/turf/T = get_turf(src)
 					if (T) // Eject shells on rack instead of on shoot()
