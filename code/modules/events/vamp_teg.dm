@@ -1,6 +1,7 @@
 /datum/random_event/major/vampire_teg
 	name = "Haunted TEG"
 	required_elapsed_round_time = 40 MINUTES
+	customization_available = 1
 	weight = 50
 	var/obj/machinery/power/generatorTemp/generator
 	var/list/circulators_to_relube
@@ -19,7 +20,28 @@
 			if( !generator || generator.grump < 100 )
 				. = FALSE
 
-	event_effect(var/source,var/turf/T,var/delay,var/duration)
+	admin_call(var/source)
+		if (..())
+			return
+
+		// delay to warning
+		// duration of event
+		// grump to mitigate
+
+		var/warning_delay = input(usr,"Delay for warning? (Seconds)",src.name, 25) as num|null
+		if (!isnum(warning_delay) || warning_delay < 1)
+			return
+		var/event_duration = input(usr,"Duration of event? (Minutes)",src.name, 9) as num|null
+		if (!isnum(event_duration) || event_duration < 1)
+			return
+		var/grump_to_overcome = input(usr,"Grump to overcome?",src.name, 100) as num|null
+		if (!isnum(grump_to_overcome) || grump_to_overcome < 1)
+			return
+
+		src.event_effect(warning_delay, event_duration, grump_to_overcome)
+		return
+
+	event_effect(warning_delay, event_duration, grump_to_overcome)
 		..()
 		var/list/spooky_sounds = list("sound/ambience/nature/Wind_Cold1.ogg", "sound/ambience/nature/Wind_Cold2.ogg", "sound/ambience/nature/Wind_Cold3.ogg","sound/ambience/nature/Cave_Bugs.ogg", "sound/ambience/nature/Glacier_DeepRumbling1.ogg", "sound/effects/bones_break.ogg",	"sound/effects/gust.ogg", "sound/effects/static_horror.ogg", "sound/effects/blood.ogg")
 		var/list/area/stationAreas = get_accessible_station_areas()
@@ -29,6 +51,17 @@
 		if (!generator || generator.disposed || generator.z != Z_LEVEL_STATION )
 			message_admins("The Vampire TEG event failed to find TEG!")
 			return
+
+		if (!isnum(warning_delay))
+			warning_delay = rand(10, 50)
+		warning_delay = warning_delay SECONDS
+
+		if (!isnum(event_duration))
+			event_duration = rand(7, 9)
+		event_duration = event_duration MINUTES
+
+		if (!isnum(grump_to_overcome))
+			grump_to_overcome = 100
 
 		pda_connection = radio_controller.return_frequency("1149")
 
@@ -42,7 +75,7 @@
 
 		event_active = TRUE
 		target_grump =  max(generator.grump-50, 50)
-		generator.grump += 100
+		generator.grump += grump_to_overcome
 		var/datum/effects/system/harmless_smoke_spread/smoke = new /datum/effects/system/harmless_smoke_spread()
 		smoke.set_up(1, 0, generator.loc)
 		smoke.attach(generator)
@@ -55,7 +88,7 @@
 			C.reagents.add_reagent("black_goop", 10)
 
 		// Delayed Warning and Instruction
-		SPAWN_DBG(rand(10 SECONDS, 50 SECONDS))
+		SPAWN_DBG(warning_delay)
 			if(event_active)
 				command_alert("Reports indicate that the engine on-board [station_name()] is behaving unusually. Stationwide power failures may occur or worse.", "Engine Warning")
 				sleep(30 SECONDS)
@@ -67,7 +100,7 @@
 				pda_msg("Unknown substance detected in Themo-Electric Generator Circulators. Please drains and replace lubricants.")
 
 		// FAILURE EVENT
-		SPAWN_DBG(2 MINUTES) //rand( 7 MINUTES, 9 MINUTES )
+		SPAWN_DBG(event_duration)
 			if(event_active)
 				event_active = FALSE
 				for (var/obj/machinery/light_switch/L as() in station_switches)
@@ -149,7 +182,7 @@
 						circulators_to_relube -= C
 						target_grump += 25
 
-				sleep(rand(5.8 SECONDS, rand(25 SECONDS)))
+				sleep(rand(5.8 SECONDS, 25 SECONDS))
 
 	proc/pda_msg(event_string)
 		var/datum/signal/signal = get_free_signal()
