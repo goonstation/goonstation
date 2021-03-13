@@ -1,5 +1,9 @@
 
 (t)sat mar 13 21
+(u)Penny
+(p)3997
+(e)|
+(+)Adds the tape drive to hacked CompTech vendors.
 (u)TTerc
 (p)3885
 (e)⚖|balance
