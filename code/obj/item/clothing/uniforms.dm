@@ -434,12 +434,6 @@
 	icon_state = "detective"
 	item_state = "detective"
 
-/obj/item/clothing/under/rank/staffsec
-	name = "security assistant's jumpsuit"
-	desc = "The haute couture for Nanotrasen's finest cannon fodder."
-	icon_state = "staff-sec"
-	item_state = "staff-sec"
-
 // Research
 
 /obj/item/clothing/under/rank/medical
