@@ -53,7 +53,6 @@ var/list/dangerousVerbs = list(\
 /client/proc/show_camera_paths, \
 /*/client/proc/remove_camera_paths_verb, \*/
 /client/proc/check_gang_scores,\
-/client/proc/scenario,\
 /client/proc/critter_creator_debug,\
 /client/proc/debug_deletions,\
 /client/proc/cmd_modify_controller_variables,\

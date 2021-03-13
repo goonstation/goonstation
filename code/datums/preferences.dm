@@ -377,7 +377,7 @@ $(updateCharacterPreviewPos);
 		cursor: help;
 		}
 </style>"}
-			LAGCHECK(LAG_HIGH)
+			LAGCHECK(80)
 		if (rebuild_data["profile_name"])
 			rebuild_data["profile_name"] = 0
 			data_cache["profile_name"] = {"
@@ -395,7 +395,7 @@ $(updateCharacterPreviewPos);
 			<a href="[pref_link]profile_name=input">[src.profile_name ? src.profile_name : "Unnamed"]
 		</td>
 	</tr>"}
-			LAGCHECK(LAG_HIGH)
+			LAGCHECK(80)
 		if (rebuild_data["character_name"])
 			rebuild_data["character_name"] = 0
 			data_cache["character_name"] = {"
@@ -408,7 +408,7 @@ $(updateCharacterPreviewPos);
 			<br><a href="[pref_link]b_random_name=1" class="toggle">[crap_checkbox(src.be_random_name)] Use a random name instead</a>
 		</td>
 	</tr>"}
-			LAGCHECK(LAG_HIGH)
+			LAGCHECK(80)
 		if (rebuild_data["gender"])
 			rebuild_data["gender"] = 0
 			data_cache["gender"] = {"
@@ -420,7 +420,7 @@ $(updateCharacterPreviewPos);
 			<a href="[pref_link]gender=input">[display_gender]</a>
 		</td>
 	</tr>"}
-			LAGCHECK(LAG_HIGH)
+			LAGCHECK(80)
 		if (rebuild_data["age_blood"])
 			rebuild_data["age_blood"] = 0
 			data_cache["age_blood"] = {"
@@ -438,7 +438,7 @@ $(updateCharacterPreviewPos);
 			<a href='[pref_link]blType=input'>[src.random_blood ? "Random" : src.blType]</a>
 		</td>
 	</tr>"}
-			LAGCHECK(LAG_HIGH)
+			LAGCHECK(80)
 		if (rebuild_data["bank"])
 			rebuild_data["bank"] = 0
 			data_cache["bank"] = {"
@@ -450,7 +450,7 @@ $(updateCharacterPreviewPos);
 			<a href="[pref_link]pin=random" class="toggle">[crap_checkbox(!(src.pin))] Random</a> &middot; <a href='[pref_link]pin=input' class="toggle">[src.pin ? (crap_checkbox(1) + " Set: [src.pin]") : (crap_checkbox(0) + " Set")]</a>
 		</td>
 	</tr>"}
-			LAGCHECK(LAG_HIGH)
+			LAGCHECK(80)
 		if (rebuild_data["flavortext"])
 			rebuild_data["flavortext"] = 0
 			data_cache["flavortext"] = {"
@@ -463,7 +463,7 @@ $(updateCharacterPreviewPos);
 			[length(src.flavor_text) ? src.flavor_text : "<em>None</em>"]
 		</td>
 	</tr>"}
-			LAGCHECK(LAG_HIGH)
+			LAGCHECK(80)
 		if (rebuild_data["security_note"])
 			rebuild_data["security_note"] = 0
 			data_cache["security_note"] = {"
@@ -476,7 +476,7 @@ $(updateCharacterPreviewPos);
 			[length(src.security_note) ? src.security_note : "<em>None</em>"]
 		</td>
 	</tr>"}
-			LAGCHECK(LAG_HIGH)
+			LAGCHECK(80)
 		if (rebuild_data["medical_note"])
 			rebuild_data["medical_note"] = 0
 			data_cache["medical_note"] = {"
@@ -489,7 +489,7 @@ $(updateCharacterPreviewPos);
 			[length(src.medical_note) ? src.medical_note : "<em>None</em>"]
 		</td>
 	</tr>"}
-			LAGCHECK(LAG_HIGH)
+			LAGCHECK(80)
 		if (rebuild_data["occupation"])
 			rebuild_data["occupation"] = 1 //always rebuild egh
 			data_cache["occupation"] = {"
@@ -501,7 +501,7 @@ $(updateCharacterPreviewPos);
 			<a href="[pref_link]jobswindow=1">Change occupation preferences...</a><br><em>Favorite job: [favoriteJob ? "<strong>[favoriteJob]</strong>" : "(unset)"]</em>
 		</td>
 	</tr>"}
-			LAGCHECK(LAG_HIGH)
+			LAGCHECK(80)
 		if (rebuild_data["traits"])
 			rebuild_data["traits"] = 1 //always rebuild egh
 			data_cache["traits"] = {"
@@ -513,7 +513,7 @@ $(updateCharacterPreviewPos);
 			<a href="[pref_link]traitswindow=1">Choose traits...</a>
 		</td>
 	</tr>"}
-			LAGCHECK(LAG_HIGH)
+			LAGCHECK(80)
 		if (rebuild_data["fartsound"])
 			rebuild_data["fartsound"] = 0
 			data_cache["fartsound"] = {"
@@ -525,7 +525,7 @@ $(updateCharacterPreviewPos);
 			<a href='[pref_link]fartsound=input'>[AH.fartsound]</a>
 		</td>
 	</tr>"}
-			LAGCHECK(LAG_HIGH)
+			LAGCHECK(80)
 		if (rebuild_data["screamsound"])
 			rebuild_data["screamsound"] = 0
 			data_cache["screamsound"] = {"
@@ -537,7 +537,7 @@ $(updateCharacterPreviewPos);
 			<a href='[pref_link]screamsound=input'>[AH.screamsound]</a>
 		</td>
 	</tr>"}
-			LAGCHECK(LAG_HIGH)
+			LAGCHECK(80)
 		if (rebuild_data["chatsound"])
 			rebuild_data["chatsound"] = 0
 			data_cache["chatsound"] = {"
@@ -549,7 +549,7 @@ $(updateCharacterPreviewPos);
 			<a href='[pref_link]voicetype=input'>[AH.voicetype]</a>
 		</td>
 	</tr>"}
-			LAGCHECK(LAG_HIGH)
+			LAGCHECK(80)
 		if (rebuild_data["PDAcolor"])
 			rebuild_data["PDAcolor"] = 0
 			data_cache["PDAcolor"] = {"
@@ -562,7 +562,7 @@ $(updateCharacterPreviewPos);
 			<span class='colorbit' style="background-color: [src.PDAcolor];">[src.PDAcolor]</span>
 		</td>
 	</tr>"}
-			LAGCHECK(LAG_HIGH)
+			LAGCHECK(80)
 		if (rebuild_data["PDA_ringtone"])
 			rebuild_data["PDA_ringtone"] = 0
 			data_cache["PDA_ringtone"] = {"
@@ -574,7 +574,7 @@ $(updateCharacterPreviewPos);
 			<a href="[pref_link]ringtonewindow=1">[src.pda_ringtone_index]</a> - <a href="[pref_link]previewringtone=1">Preview!</a>
 		</td>
 	</tr>"}
-			LAGCHECK(LAG_HIGH)
+			LAGCHECK(80)
 		if (rebuild_data["skintone"])
 			rebuild_data["skintone"] = 0
 			data_cache["skintone"] = {"
@@ -598,7 +598,7 @@ $(updateCharacterPreviewPos);
 			<a href="[pref_link]rotate_clockwise=1">&#x27f3;</a>
 		</th>
 	</tr>"}
-			LAGCHECK(LAG_HIGH)
+			LAGCHECK(80)
 		if (rebuild_data["eyecolor"])
 			rebuild_data["eyecolor"] = 0
 			data_cache["eyecolor"] = {"
@@ -611,7 +611,7 @@ $(updateCharacterPreviewPos);
 			<span class='colorbit' style="background-color: [AH.e_color];">[AH.e_color]</span>
 		</td>
 	</tr>"}
-			LAGCHECK(LAG_HIGH)
+			LAGCHECK(80)
 		if (rebuild_data["hair_top"])
 			rebuild_data["hair_top"] = 0
 			data_cache["hair_top"] = {"
@@ -625,7 +625,7 @@ $(updateCharacterPreviewPos);
 			[generate_select_table("custom_third", AH.customization_third, customization_styles)]
 		</td>
 	</tr>"}
-			LAGCHECK(LAG_HIGH)
+			LAGCHECK(80)
 		if (rebuild_data["hair_mid"])
 			rebuild_data["hair_mid"] = 0
 			data_cache["hair_mid"] = {"
@@ -639,7 +639,7 @@ $(updateCharacterPreviewPos);
 			[generate_select_table("custom_second", AH.customization_second, customization_styles)]
 		</td>
 	</tr>"}
-			LAGCHECK(LAG_HIGH)
+			LAGCHECK(80)
 		if (rebuild_data["hair_bottom"])
 			rebuild_data["hair_bottom"] = 0
 			data_cache["hair_bottom"] = {"
@@ -653,7 +653,7 @@ $(updateCharacterPreviewPos);
 			[generate_select_table("custom_first", AH.customization_first, customization_styles)]
 		</td>
 	</tr>"}
-			LAGCHECK(LAG_HIGH)
+			LAGCHECK(80)
 		if (rebuild_data["underwear"])
 			rebuild_data["underwear"] = 0
 			data_cache["underwear"] = {"
@@ -667,7 +667,7 @@ $(updateCharacterPreviewPos);
 			[generate_select_table("underwear", AH.underwear, underwear_styles)]
 		</td>
 	</tr>"}
-			LAGCHECK(LAG_HIGH)
+			LAGCHECK(80)
 		if (rebuild_data["randomize"])
 			rebuild_data["randomize"] = 0
 			data_cache["randomize"] = {"
@@ -679,7 +679,7 @@ $(updateCharacterPreviewPos);
 			<a href="[pref_link]b_random_look=1" class="toggle">[crap_checkbox(src.be_random_look)] Always use a randomized appearance</a>
 		</td>
 	</tr>"}
-			LAGCHECK(LAG_HIGH)
+			LAGCHECK(80)
 		if (rebuild_data["font_size"])
 			rebuild_data["font_size"] = 0
 			data_cache["font_size"] = {"
@@ -698,7 +698,7 @@ $(updateCharacterPreviewPos);
 			<a href="[pref_link]font_size=input">[src.font_size ? "[src.font_size]%" : "Default"]
 		</td>
 	</tr>"}
-			LAGCHECK(LAG_HIGH)
+			LAGCHECK(80)
 		if (rebuild_data["messages"])
 			rebuild_data["messages"] = 0
 			data_cache["messages"] = {"
@@ -715,7 +715,7 @@ $(updateCharacterPreviewPos);
 			<a href="[pref_link]local_deadchat=1" class="toggle">[crap_checkbox(src.local_deadchat)] Local ghost hearing</a><span class="info-thing" title="You'll only hear chat messages from living people on your screen as a ghost.">?</span>
 		</td>
 	</tr>"}
-			LAGCHECK(LAG_HIGH)
+			LAGCHECK(80)
 		if (rebuild_data["hud"])
 			rebuild_data["hud"] = 0
 			data_cache["hud"] = {"
@@ -736,7 +736,7 @@ $(updateCharacterPreviewPos);
 			</div>
 		</td>
 	</tr>"}
-			LAGCHECK(LAG_HIGH)
+			LAGCHECK(80)
 		if (rebuild_data["tooltips"])
 			rebuild_data["tooltips"] = 0
 			data_cache["tooltips"] = {"
@@ -750,7 +750,7 @@ $(updateCharacterPreviewPos);
 			<br><a href="[pref_link]tooltip=3" class="toggle">[crap_checkbox(src.tooltip_option == TOOLTIP_NEVER)] Never Show</a>
 		</td>
 	</tr>"}
-			LAGCHECK(LAG_HIGH)
+			LAGCHECK(80)
 		if (rebuild_data["tgui"])
 			rebuild_data["tgui"] = 0
 			data_cache["tgui"] = {"
@@ -763,7 +763,7 @@ $(updateCharacterPreviewPos);
 			<br><a href="[pref_link]tgui_lock=1" class="toggle">[crap_checkbox(src.tgui_lock)] Lock initial placement of windows</a>
 		</td>
 	</tr>"}
-			LAGCHECK(LAG_HIGH)
+			LAGCHECK(80)
 		if (rebuild_data["popups"])
 			rebuild_data["popups"] = 0
 			data_cache["popups"] = {"
@@ -777,7 +777,7 @@ $(updateCharacterPreviewPos);
 			<br><a href="[pref_link]tickets=1" class="toggle">[crap_checkbox(src.view_tickets)] Auto-open end-of-round ticket summary</a><span class="info-thing" title="The end-of-round ticketing summary shows the various tickets and fines that were handed out. If this option is off, you can still see them on Goonhub (goonhub.com).">?</span>
 		</td>
 	</tr>"}
-			LAGCHECK(LAG_HIGH)
+			LAGCHECK(80)
 		if (rebuild_data["controls"])
 			rebuild_data["controls"] = 0
 			data_cache["controls"] = {"
@@ -792,7 +792,7 @@ $(updateCharacterPreviewPos);
 			<br>Familiar with /tg/station controls? You can enable/disable them under the Game/Interface menu in the top left.
 		</td>
 	</tr>"}
-			LAGCHECK(LAG_HIGH)
+			LAGCHECK(80)
 		if (rebuild_data["map"])
 			rebuild_data["map"] = 0
 			data_cache["map"] = {"
