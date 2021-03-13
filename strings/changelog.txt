@@ -1,5 +1,9 @@
 
 (t)sat mar 13 21
+(u)Chickenish
+(p)3954
+(e)🐛|bug
+(+)The Rad-Wick food effect works again.
 (u)Gannets
 (p)3978
 (e)⚖🆕🔄🎨|balance, feature, rework, sprites
