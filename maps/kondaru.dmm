@@ -24631,7 +24631,6 @@
 	dir = 4
 	},
 /obj/access_spawn/rancher,
-/obj/access_spawn/hydro,
 /obj/firedoor_spawn,
 /turf/simulated/floor/green/side{
 	dir = 8
