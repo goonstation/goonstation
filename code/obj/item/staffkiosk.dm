@@ -46,7 +46,7 @@
 			playsound(src.loc, sound_cardslot, 60, 1)
 			src.eject_id_card(user)
 		else
-			boutput(user, "<span class='notice'>The kiosk doesn't have an identification card inserted.</span>")
+			boutput(user, "<span class='alert'>The kiosk doesn't have an identification card inserted.</span>")
 
 	proc/eject_id_card(var/mob/user as mob)
 		if (src.ID_card)
@@ -74,6 +74,7 @@
 		src.ID_card.assignment = TD.name
 		src.ID_card.access = get_access(TD.accessParent)
 		src.ID_card.icon_state = TD.cardIcon
+		src.ID_card.name = "[ID_card.registered]'s ID Card ([ID_card.assignment])"
 
 		SPAWN_DBG(10)
 			playsound(src.loc, sound_dispense, 80, 1)
@@ -87,8 +88,6 @@
 //an alternate jumpsuit with departmental stripe
 //a departmental headset
 //a set of supplementary items roughly appropriate for the tasks at hand
-
-
 
 /obj/item/assistant_token
 	name = "recruitment token"
@@ -107,7 +106,7 @@
 			var/pickableRoles = list()
 			var/frontEndList = list()
 
-			for(var/ROL in recruitment_roles)
+			for(var/datum/recruitment_role/ROL in recruitment_roles)
 				if(ID.assignment in ROL.canAuthorize)
 					pickableRoles[ROL.name] = ROL
 					frontEndList += ROL.name
