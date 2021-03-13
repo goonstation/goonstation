@@ -30313,6 +30313,9 @@
 	dir = 1
 	},
 /obj/item/razor_blade,
+/obj/item/razor_blade{
+	pixel_x = -6
+	},
 /turf/simulated/floor/carpet/red,
 /area/station/crew_quarters/barber_shop)
 "iOH" = (
