@@ -19959,6 +19959,7 @@
 	},
 /obj/table/reinforced/auto,
 /obj/random_item_spawner/tools,
+/obj/item/clothing/suit/hi_vis,
 /turf/simulated/floor/yellow,
 /area/station/hallway/secondary/construction)
 "cxX" = (
@@ -30032,6 +30033,8 @@
 /obj/item/item_box/medical_patches/silver_sulf{
 	pixel_y = 5
 	},
+/obj/item/clothing/suit/hi_vis,
+/obj/item/clothing/suit/hi_vis,
 /turf/simulated/floor/yellow,
 /area/station/engine/engineering)
 "iuu" = (
