@@ -186,6 +186,19 @@
 	is_syndicate = 1
 	mats = 6
 
+/obj/item/clothing/mask/monkey_translator
+	name = "vocal translator"
+	desc = "Nanotechnology and questionable science combine to make a face-hugging translator, capable of making monkeys speak human lanauge. Or whoever wears this."
+	icon = 'icons/obj/items/items.dmi'
+	wear_image_icon = 'icons/mob/mask.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_headgear.dmi'
+	icon_state = "voicechanger"
+	item_state = "muzzle"			// @TODO new sprite ok
+	mats = 12	// 2x voice changer cost. It's complicated ok
+	w_class = 2
+	c_flags = COVERSMOUTH	// NOT usable for internals.
+	var/new_language = "english"	// idk maybe you can varedit one so that humans speak monkey instead. who knows
+
 /obj/item/clothing/mask/breath
 	desc = "A close-fitting mask that can be connected to an air supply but does not work very well in hard vacuum without a helmet."
 	name = "Breath Mask"

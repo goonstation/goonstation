@@ -174,7 +174,7 @@
 	if (c_west)
 		c_west.referrers -= src
 
-	for(var/obj/machinery/camera/C as() in referrers)
+	for(var/obj/machinery/camera/C as anything in referrers)
 		if (C.c_north == src)
 			C.c_north = null
 		if (C.c_east == src)
@@ -400,7 +400,7 @@
 /proc/name_autoname_cameras()
 	var/list/counts_by_area = list()
 	var/list/obj/machinery/camera/first_cam_by_area = list()
-	for(var/obj/machinery/camera/C as() in by_type[/obj/machinery/camera])
+	for(var/obj/machinery/camera/C as anything in by_type[/obj/machinery/camera])
 		if(!istype(C)) continue
 		if (dd_hasprefix(C.name, "autoname"))
 			var/area/where = get_area(C)
@@ -444,7 +444,7 @@
 
 	logTheThing("debug", null, null, "<B>SpyGuy/Camnet:</B> Starting to connect cameras")
 	var/count = 0
-	for(var/obj/machinery/camera/C as() in camlist)
+	for(var/obj/machinery/camera/C as anything in camlist)
 		if(QDELETED(C) || !isturf(C.loc)) //This is one of those weird internal cameras, or it's been deleted and hasn't had the decency to go away yet
 			continue
 

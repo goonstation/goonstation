@@ -31,7 +31,7 @@
 			overlays += /image/fullbright
 		else
 			overlays -= /image/fullbright
-			for (var/turf/T as() in src)
+			for (var/turf/T as anything in src)
 				T.RL_Init()
 
 /turf

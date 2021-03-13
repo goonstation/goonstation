@@ -472,7 +472,7 @@
 		if (src.getStatusDuration("burning"))
 
 			if (src.getStatusDuration("burning") > 200)
-				for (var/atom/A as() in src.contents)
+				for (var/atom/A as anything in src.contents)
 					if (A.event_handler_flags & HANDLE_STICKER)
 						if (A:active)
 							src.visible_message("<span class='alert'><b>[A]</b> is burnt to a crisp and destroyed!</span>")
@@ -623,7 +623,7 @@
 		thermal_protection += GET_MOB_PROPERTY(src, PROP_COLDPROT)
 
 /*
-		for (var/obj/item/C as() in src.get_equipped_items())
+		for (var/obj/item/C as anything in src.get_equipped_items())
 			thermal_protection += C.getProperty("coldprot")*/
 
 		/*
@@ -671,7 +671,7 @@
 					if (src.eyes_protected_from_light())
 						resist_prob += 190
 
-		for (var/obj/item/C as() in src.get_equipped_items())
+		for (var/obj/item/C as anything in src.get_equipped_items())
 			resist_prob += C.getProperty("viralprot")
 
 		if(src.getStatusDuration("food_disease_resist"))
@@ -743,7 +743,7 @@
 		var/protection = 0
 
 		// Resistance from Clothing
-		for (var/obj/item/C as() in src.get_equipped_items())
+		for (var/obj/item/C as anything in src.get_equipped_items())
 			if(C.hasProperty("deflection"))
 				var/curr = C.getProperty("deflection")
 				protection += curr

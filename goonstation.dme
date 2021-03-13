@@ -1715,7 +1715,6 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\WorkInProgress\dialogue\dialogueTraders.dm"
 #include "code\WorkInProgress\fluid_pipes\fluid_pipe.dm"
 #include "code\WorkInProgress\griffening\griffening_cards.dm"
-#include "code\WorkInProgress\griffening\griffening_controller.dm"
 #include "code\WorkInProgress\nuclear_engine\nuclear_engine.dm"
 #include "code\WorkInProgress\optics\beamline.dm"
 #include "code\WorkInProgress\recycling\conveyor.dm"

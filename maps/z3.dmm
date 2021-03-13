@@ -8074,7 +8074,7 @@
 /obj/decal/cleanable/dirt,
 /obj/item/electronics/capacitor,
 /obj/item/light/tube/blacklight,
-/obj/item/playing_cards/trading,
+/obj/item/card_group/stg,
 /obj/storage/crate{
 	name = "Dented Crate"
 	},
@@ -16825,7 +16825,7 @@
 	pixel_x = 6;
 	pixel_y = 6
 	},
-/obj/item/card_box/suit{
+/obj/item/card_box/plain{
 	pixel_x = -2;
 	pixel_y = 4
 	},

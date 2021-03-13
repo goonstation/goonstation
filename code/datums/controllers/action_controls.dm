@@ -129,6 +129,11 @@ var/datum/action_controller/actions
 /datum/action/bar //This subclass has a progressbar that attaches to the owner to show how long we need to wait.
 	var/obj/actions/bar/bar
 	var/obj/actions/border/border
+	var/bar_icon_state = "bar"
+	var/border_icon_state = "border"
+	var/color_active = "#4444FF"
+	var/color_success = "#00CC00"
+	var/color_failure = "#CC0000"
 
 	onStart()
 		..()
@@ -136,13 +141,15 @@ var/datum/action_controller/actions
 		if(owner != null)
 			bar = unpool(/obj/actions/bar)
 			border = unpool(/obj/actions/border)
+			border.set_icon_state(src.border_icon_state)
+			bar.set_icon_state(src.bar_icon_state)
 			bar.pixel_y = 5
 			bar.pixel_x = 0
 			border.pixel_y = 5
 			A.vis_contents += bar
 			A.vis_contents += border
 			// this will absolutely obviously cause no problems.
-			bar.color = "#4444FF"
+			bar.color = src.color_active
 			updateBar()
 
 	onRestart()
@@ -184,7 +191,7 @@ var/datum/action_controller/actions
 	onEnd()
 		if (bar)
 			bar.color = "#FFFFFF"
-			animate( bar, color = "#00CC00", time = 2.5 , flags = ANIMATION_END_NOW)
+			animate( bar, color = src.color_success, time = 2.5 , flags = ANIMATION_END_NOW)
 			bar.transform = matrix() //Tiny cosmetic fix. Makes it so the bar is completely filled when the action ends.
 		..()
 
@@ -193,13 +200,13 @@ var/datum/action_controller/actions
 			if (bar)
 				updateBar(0)
 				bar.color = "#FFFFFF"
-				animate( bar, color = "#CC0000", time = 2.5 )
+				animate( bar, color = src.color_failure, time = 2.5 )
 		..()
 
 	onResume()
 		if (bar)
 			updateBar()
-			bar.color = "#4444FF"
+			bar.color = src.color_active
 		..()
 
 	onUpdate()
@@ -998,6 +1005,10 @@ var/datum/action_controller/actions
 		overlays.len = 0
 		..()
 
+	set_icon_state(new_state)
+		..()
+		src.img.icon_state = new_state
+
 /obj/actions/border
 	layer = 100
 	icon_state = "border"
@@ -1019,6 +1030,10 @@ var/datum/action_controller/actions
 		attached_objs = list()
 		overlays.len = 0
 		..()
+
+	set_icon_state(new_state)
+		..()
+		src.img.icon_state = new_state
 
 //Use this to start the action
 //actions.start(new/datum/action/bar/private/icon/magPicker(item, picker), usr)

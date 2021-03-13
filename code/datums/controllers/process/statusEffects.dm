@@ -21,7 +21,7 @@ datum/controller/process/statusEffects
 
 		var/list/notifyUiUpdate = list() //List of objects that need to update their status ui.
 
-		for (var/datum/statusEffect/S as() in globalStatusInstances)
+		for (var/datum/statusEffect/S as anything in globalStatusInstances)
 			if(S == null) continue
 			if(S.owner)
 				S.onUpdate(actual)

@@ -160,9 +160,9 @@
 			thishud.remove_object(stamina_bar)
 		stamina_bar = null
 
-	for (var/atom/A as() in stomach_process)
+	for (var/atom/A as anything in stomach_process)
 		qdel(A)
-	for (var/atom/A as() in skin_process)
+	for (var/atom/A as anything in skin_process)
 		qdel(A)
 	stomach_process = null
 	skin_process = null
@@ -1008,7 +1008,7 @@
 	var/list/heard_a = list() // understood us
 	var/list/heard_b = list() // didn't understand us
 
-	for (var/mob/M as() in listening)
+	for (var/mob/M as anything in listening)
 		if(M.mob_flags & MOB_HEARS_ALL)
 			continue
 		else if (M.say_understands(src, forced_language))
@@ -1123,7 +1123,7 @@
 // helper proooocs
 
 /mob/proc/send_hear_talks(var/message_range, var/messages, var/heardname, var/lang_id)	//helper to send hear_talk to all mob, obj, and turf
-	for (var/atom/A as() in all_view(message_range, src))
+	for (var/atom/A as anything in all_view(message_range, src))
 		A.hear_talk(src,messages,heardname,lang_id)
 
 /mob/proc/get_heard_name()

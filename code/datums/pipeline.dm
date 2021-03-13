@@ -72,7 +72,7 @@ datum/pipeline
 			member.air_temporary.temperature = air.temperature
 
 			if(length(air.trace_gases))
-				for(var/datum/gas/trace_gas as() in air.trace_gases)
+				for(var/datum/gas/trace_gas as anything in air.trace_gases)
 					var/datum/gas/corresponding = member.air_temporary.get_or_add_trace_gas_by_type(trace_gas.type)
 					corresponding.moles = trace_gas.moles*member.volume/air.volume
 

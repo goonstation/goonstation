@@ -12121,7 +12121,7 @@
 	pixel_x = -2;
 	pixel_y = 3
 	},
-/obj/item/card_box/suit{
+/obj/item/card_box/plain{
 	pixel_x = 7;
 	pixel_y = 13
 	},
@@ -21962,7 +21962,7 @@
 	pixel_x = 11;
 	pixel_y = 10
 	},
-/obj/item/card_box/suit{
+/obj/item/card_box/plain{
 	pixel_x = -8;
 	pixel_y = 12
 	},
@@ -52621,7 +52621,7 @@
 	},
 /obj/table/glass/auto,
 /obj/random_item_spawner/desk_stuff,
-/obj/item/card_box/suit,
+/obj/item/card_box/plain,
 /turf/simulated/floor/escape,
 /area/station/hallway/secondary/exit)
 "cnJ" = (
