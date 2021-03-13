@@ -1651,6 +1651,7 @@
 						actions.interrupt(src, INTERRUPT_ACT)
 					if (src.lying)
 						message = "<B>[src]</B> flops on the floor like a fish."
+						maptext_out = "<I>flops on the floor like a fish</I>"
 					// If there is a chest item, see if its reagents can be dumped into the body
 					if(src.chest_item != null)
 						src.chest_item_dump_reagents_on_flip()
