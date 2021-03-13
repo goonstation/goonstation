@@ -13,6 +13,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	var/auto_eject = 0 // Do we eject casings on firing, or on reload?
 	var/casings_to_eject = 0 // If we don't automatically ejected them, we need to keep track (Convair880).
 
+
 	add_residue = 1 // Does this gun add gunshot residue when fired? Kinetic guns should (Convair880).
 
 	var/allowReverseReload = 1 //Use gun on ammo to reload
@@ -637,6 +638,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	var/racked_slide = FALSE
 
 
+
 	New()
 		ammo = new/obj/item/ammo/bullets/abg
 		set_current_projectile(new/datum/projectile/bullet/abg)
@@ -651,12 +653,14 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 
 	shoot(var/target,var/start ,var/mob/user)
 		if(ammo.amount_left > 0 && !racked_slide)
-			boutput(user, "<span class='notice'>You need to rack the slide before you can fire!</span>") 
+			boutput(user, "<span class='notice'>You need to rack the slide before you can fire!</span>")
 		..()
 		src.racked_slide = FALSE
+		src.casings_to_eject = 1
 		if (src.ammo.amount_left == 0) // change icon_state to empty if 0 shells left
 			src.update_icon()
-		src.casings_to_eject = 0
+			src.casings_to_eject = 0
+
 
 	attack_self(mob/user as mob)
 		..()
