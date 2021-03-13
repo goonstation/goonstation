@@ -1003,7 +1003,7 @@ var/datum/action_controller/actions
 		..()
 
 	proc/set_icon_state(new_state)
-		src.icon_state = new_state
+		..()
 		src.img.icon_state = new_state
 
 /obj/actions/border
@@ -1029,7 +1029,7 @@ var/datum/action_controller/actions
 		..()
 
 	proc/set_icon_state(new_state)
-		src.icon_state = new_state
+		..()
 		src.img.icon_state = new_state
 
 //Use this to start the action
