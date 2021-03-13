@@ -528,7 +528,7 @@
 		if (new_tile)
 			// Make a new tile
 			var/obj/item/tile/T = new /obj/item/tile/steel
-			T.build(master.loc)
+			T.build(target)
 		else
 			// Fix yo shit
 			var/turf/simulated/floor/F = target
