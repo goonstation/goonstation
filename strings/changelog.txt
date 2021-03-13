@@ -4,6 +4,10 @@
 (p)3997
 (e)|
 (+)Adds the tape drive to hacked CompTech vendors.
+(u)comradef191
+(p)2523
+(e)⛔|removal
+(*)Removed the Construction Worker job. Added QM crate containing most of their equipment.
 (u)TTerc
 (p)3885
 (e)⚖|balance
