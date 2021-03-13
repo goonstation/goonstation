@@ -334,7 +334,6 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		playsound(A, "sound/effects/ExplosionFirey.ogg", 100, 1)
 		fireflash_sm(get_turf(A), blast_size, temperature)
 
-
 /datum/projectile/special/howitzer
 	name = "plasma howitzer"
 	sname = "plasma howitzer"
@@ -505,6 +504,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	var/easemult = 0.1
 
 	var/auto_find_targets = 1
+	var/homing_active = 1
 
 	var/desired_x = 0
 	var/desired_y = 0
@@ -550,7 +550,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 			.= 1
 
 	tick(var/obj/projectile/P)
-		if (!P)
+		if (!P || !src.homing_active)
 			return
 
 		desired_x = 0
@@ -676,6 +676,83 @@ ABSTRACT_TYPE(/datum/projectile/special)
 					dropme.set_loc(get_turf(P))
 					boutput(dropme, __red("Your coffin was lost or destroyed! Oh no!!!"))
 		..()
+
+/datum/projectile/special/homing/magicmissile
+	name = "magic missile"
+	sname = "magic missile"
+	icon = 'icons/obj/wizard.dmi'
+	icon_state = "magicm"
+	shot_sound = null
+	power = 15
+	cost = 1
+	damage_type = D_KINETIC
+	dissipation_delay = 0
+	dissipation_rate = 0
+	ks_ratio = 1
+	brightness = 2
+	projectile_speed = 1.5
+	is_magical = 1 // It passes right through them, but just for consistency
+	auto_find_targets = 0
+	min_speed = 2
+	max_speed = 2
+	goes_through_walls = 0 // It'll stop homing when it hits something, then go bouncy
+	var/max_bounce_count = 3 // putting the I in ICEE BEEYEM
+	var/weaken_length = 5 SECONDS
+	var/slam_text = "The magic missile SLAMS into you!"
+	var/hit_sound = 'sound/effects/mag_magmisimpact_bounce.ogg'
+	var/cat_sound = 'sound/voice/animal/cat.ogg'
+	var/last_sound_time = 0
+
+	on_pre_hit(var/atom/hit, var/angle, var/obj/projectile/O)
+		if(istype(O) && !(hit in O.hitlist))
+			if(ismob(hit))
+				var/mob/M = hit
+				if(iswizard(M) || M.traitHolder?.hasTrait("training_chaplain"))
+					boutput(M, "The magic missile passes right through you!")
+					. = TRUE
+
+			if(isobj(hit) || (isturf(hit) && !hit.density))
+				. = TRUE
+
+			if(.)
+				O.hitlist += hit
+
+			// Missiles home into their targets until they hit a wall. Then they forget their target and just bounce around
+			else if(length(O.targets) && isturf(hit) && hit?.density)
+				O.targets = list()
+
+	on_hit(atom/A, direction, var/obj/projectile/projectile)
+		. = ..()
+		if(isliving(A)) // pre_hit should filter out any spacemagic people
+			var/mob/living/M = A
+			M.changeStatus("weakened", src.weaken_length)
+			M.force_laydown_standup()
+			boutput(M, text("<span class='notice'>[slam_text]</span>"))
+			playsound(M.loc, 'sound/effects/mag_magmisimpact.ogg', 25, 1, -1)
+			M.lastattacker = src.master?.shooter
+			M.lastattackertime = TIME
+		else if(projectile.reflectcount < src.max_bounce_count)
+			shoot_reflected_bounce(projectile, A, src.max_bounce_count, PROJ_RAPID_HEADON_BOUNCE)
+			var/turf/T = get_turf(A)
+			if(TIME >= last_sound_time + 1 DECI SECOND)
+				last_sound_time = TIME
+				if(prob(1))
+					playsound(T, src.cat_sound, 60, 1)
+				else
+					playsound(T, src.hit_sound, 60, 1)
+		else
+			playsound(get_turf(A), 'sound/effects/mag_magmisimpact.ogg', 25, 1, -1)
+
+/datum/projectile/special/homing/magicmissile/weak
+	name = "magic minimissile"
+	sname = "magic minimissile"
+	power = 10
+	projectile_speed = 1
+	min_speed = 2
+	max_speed = 2
+	max_bounce_count = 2 // putting the Y in ICEE BEEYEM
+	weaken_length = 3 SECONDS
+	slam_text = "The magic missile bumps into you!"
 
 /datum/projectile/special/homing/orbiter
 	icon_state = "bloodproj"

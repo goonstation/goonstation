@@ -11,7 +11,7 @@ on:
 jobs:
   lint:
     name: Run Linters
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-20.04
     if: "!contains(github.event.head_commit.message, 'skip ci')"
     steps:
       - uses: actions/checkout@v2
@@ -54,14 +54,13 @@ jobs:
 
   compile:
     name: Compile
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-20.04
     if: "!contains(github.event.head_commit.message, 'skip ci')"
     steps:
       - uses: actions/checkout@v2
 
       - name: Install Dependencies
         run: |
-          curl https://raw.githubusercontent.com/goonstation/goonstation/master/tools/ci/sources.list | sudo tee /etc/apt/sources.list
           sudo dpkg --add-architecture i386
           sudo apt-get update
           sudo apt install libstdc++6:i386
@@ -102,14 +101,13 @@ jobs:
 
   compile_ass:
     name: "Compile for Ass Day"
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-20.04
     if: "${{ false }}" # "!contains(github.event.head_commit.message, 'skip ci')"
     steps:
       - uses: actions/checkout@v2
 
       - name: Install Dependencies
         run: |
-          curl https://raw.githubusercontent.com/goonstation/goonstation/master/tools/ci/sources.list | sudo tee /etc/apt/sources.list
           sudo dpkg --add-architecture i386
           sudo apt-get update
           sudo apt install libstdc++6:i386
@@ -151,7 +149,6 @@ jobs:
 
       - name: Install Dependencies
         run: |
-          curl https://raw.githubusercontent.com/goonstation/goonstation/master/tools/ci/sources.list | sudo tee /etc/apt/sources.list
           sudo dpkg --add-architecture i386
           sudo apt-get update
           sudo apt install libstdc++6:i386

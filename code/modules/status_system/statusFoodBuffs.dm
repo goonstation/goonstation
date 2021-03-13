@@ -54,7 +54,7 @@
 		var/multi_process_mult = skin_process.len > 1 ? (skin_process.len * 1.5) : 1
 		var/use_volume = 0.35 * mult * multi_process_mult
 
-		for (var/atom/A as() in skin_process)
+		for (var/atom/A as anything in skin_process)
 
 			if (A.loc != src)
 				skin_process -= A

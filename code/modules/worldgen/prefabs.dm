@@ -379,6 +379,15 @@ ABSTRACT_TYPE(/datum/generatorPrefab)
 		prefabSizeX = 16
 		prefabSizeY = 9
 
+	grill //test post do not bonk
+		maxNum = 1
+		prefabPath = "assets/maps/prefabs/prefab_grill.dmm"
+		probability = 30
+		prefabSizeX = 10
+		prefabSizeY = 10
+
+
+
 #if defined(MAP_OVERRIDE_OSHAN)
 	sea_miner
 		underwater = 1

@@ -363,7 +363,7 @@
 				if(!floor.on)
 					floor.on()
 			src.start_floorrunning()
-	else if(src.floorrunning)
+	else if(keys && src.floorrunning)
 		src.end_floorrunning()
 	. = ..()
 

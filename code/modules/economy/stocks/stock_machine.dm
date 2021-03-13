@@ -58,7 +58,7 @@
 	dat += "<h3>Listed stocks</h3>"
 
 	if (vmode == 0)
-		for (var/datum/stock/ticker/S as() in stockExchange.stocks)
+		for (var/datum/stock/ticker/S as anything in stockExchange.stocks)
 			var/mystocks = 0
 			if (logged_in && (logged_in in S.shareholders))
 				mystocks = S.shareholders[logged_in]
@@ -97,12 +97,12 @@
 			if (logged_in)
 				var/list/LR = stockExchange.last_read[S]
 				var/lrt = LR[logged_in]
-				for (var/datum/stock/article/A as() in S.articles)
+				for (var/datum/stock/article/A as anything in S.articles)
 					if (A.ticks > lrt)
 						news = 1
 						break
 				if (!news)
-					for (var/datum/stock/event/E as() in S.events)
+					for (var/datum/stock/event/E as anything in S.events)
 						if (E.last_change > lrt && !E.hidden)
 							news = 1
 							break
@@ -110,7 +110,7 @@
 	else if (vmode == 1)
 		dat += "<b>Actions:</b> + Buy, - Sell, (A)rchives, (H)istory<br><br>"
 		dat += "<table class='stable'><tr><th>&nbsp;</th><th>Name</th><th>Value</th><th>Owned/Avail</th><th>Actions</th></tr>"
-		for (var/datum/stock/ticker/S as() in stockExchange.stocks)
+		for (var/datum/stock/ticker/S as anything in stockExchange.stocks)
 			var/mystocks = 0
 			if (logged_in && (logged_in in S.shareholders))
 				mystocks = S.shareholders[logged_in]
@@ -122,12 +122,12 @@
 			if (logged_in)
 				var/list/LR = stockExchange.last_read[S]
 				var/lrt = LR[logged_in]
-				for (var/datum/stock/article/A as() in S.articles)
+				for (var/datum/stock/article/A as anything in S.articles)
 					if (A.ticks > lrt)
 						news = 1
 						break
 				if (!news)
-					for (var/datum/stock/event/E as() in S.events)
+					for (var/datum/stock/event/E as anything in S.events)
 						if (E.last_change > lrt && !E.hidden)
 							news = 1
 							break
@@ -285,7 +285,7 @@
 		var/dat = "<html><head><title>News feed for [S.name]</title></head><body><h2>News feed for [S.name]</h2><div><a href='?src=\ref[src];archive=\ref[S]'>Refresh</a></div>"
 		dat += "<div><h3>Events</h3>"
 		var/p = 0
-		for (var/datum/stock/event/E as() in S.events)
+		for (var/datum/stock/event/E as anything in S.events)
 			if (E.hidden)
 				continue
 			if (p > 0)
@@ -294,7 +294,7 @@
 			p++
 		dat += "</div><hr><div><h3>Articles</h3>"
 		p = 0
-		for (var/datum/stock/article/A as() in S.articles)
+		for (var/datum/stock/article/A as anything in S.articles)
 			if (p > 0)
 				dat += "<hr>"
 			dat += "<div><b style='font-size:1.25em'>[A.headline]</b><br><i>[A.subtitle]</i><br><br>[A.article]<br>- [A.author], [A.spacetime] (via <i>[A.outlet]</i>)</div>"

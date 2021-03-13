@@ -28,9 +28,5 @@
 				H.visible_message("<span class='alert'>[H] magically farts the spell away!</span>")
 				playsound(H, 'sound/vox/poo.ogg', 25, 1)
 				continue
-			var/datum/effects/system/harmless_smoke_spread/smoke = new /datum/effects/system/harmless_smoke_spread()
-			smoke.set_up(5, 0, H:loc)
-			smoke.attach(H)
-			smoke.start()
 			ass_explosion(H, 1, 30)
 // See bigfart.dm for the ass_explosion() proc. The third value represents the probability of limb loss in percent.

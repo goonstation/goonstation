@@ -380,6 +380,8 @@ var/global
 	"Yesteryear",
 	"Zeyada")
 
+	list/selectable_ringtones = list()
+
 	//april fools
 	manualbreathing = 0
 	manualblinking = 0

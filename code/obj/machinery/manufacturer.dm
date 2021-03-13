@@ -560,11 +560,15 @@
 					for(var/obj/item/O in src.contents)
 						if (O.material && O.material.mat_id == mat_id)
 							if (!ejectamt)
-								ejectamt = input(usr,"How many units do you want to eject?","Eject Materials") as num
-								if (ejectamt > O.amount || ejectamt <= 0 || src.mode != "ready" || get_dist(src, usr) > 1)
+								ejectamt = input(usr,"How many material pieces (10 units per) do you want to eject?","Eject Materials") as num
+								if (ejectamt <= 0 || src.mode != "ready" || get_dist(src, usr) > 1)
 									break
 							if (!ejectturf)
 								break
+							if (ejectamt > O.amount)
+								playsound(src.loc, src.sound_grump, 50, 1)
+								boutput(usr, "<span class='alert'>There's not that much material in [name]. It has ejected what it could.</span>")
+								ejectamt = O.amount
 							src.update_resource_amount(mat_id, -ejectamt * 10) // ejectamt will always be <= actual amount
 							if (ejectamt == O.amount)
 								O.set_loc(get_output_location(O,1))
@@ -2144,6 +2148,7 @@
 		/datum/manufacture/scrubs_orange,
 		/datum/manufacture/scrubs_pink,
 		/datum/manufacture/patient_gown,
+		/datum/manufacture/eyepatch,
 		/datum/manufacture/blindfold,
 		/datum/manufacture/muzzle,
 		/datum/manufacture/body_bag,
@@ -2218,7 +2223,8 @@
 	hidden = list(/datum/manufacture/RCD,
 	/datum/manufacture/RCDammo,
 	/datum/manufacture/RCDammomedium,
-	/datum/manufacture/RCDammolarge)
+	/datum/manufacture/RCDammolarge,
+	/datum/manufacture/sds)
 
 /obj/machinery/manufacturer/hangar
 	name = "Ship Component Fabricator"
@@ -2253,6 +2259,10 @@
 		/datum/manufacture/pod/lock,
 		/datum/manufacture/beaconkit
 	)
+	hidden = list(
+		/datum/manufacture/pod/sps,
+		/datum/manufacture/pod/srs
+		)
 
 /obj/machinery/manufacturer/uniform // add more stuff to this as needed, but it should be for regular uniforms the HoP might hand out, not tons of gimmicks. -cogwerks
 	name = "Uniform Manufacturer"
@@ -2518,7 +2528,7 @@
 
 /proc/build_manufacturer_icons()
 	// pre-build all the icons for shit manufacturers make
-	for (var/datum/manufacture/P as() in typesof(/datum/manufacture))
+	for (var/datum/manufacture/P as anything in typesof(/datum/manufacture))
 		if (ispath(P, /datum/manufacture/mechanics))
 			var/datum/manufacture/mechanics/M = P
 			if (!initial(M.frame_path))

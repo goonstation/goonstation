@@ -777,7 +777,7 @@
 	upperfluc = 100
 	lowerfluc = -100
 
-/datum/commodity/drugs/lsd_bee
+/datum/commodity/drug/lsd_bee
 	comname = "LSBee (1x patch)"
 	comtype = /obj/item/reagent_containers/patch/lsd_bee
 	desc = "A highly potent hallucinogenic substance. It smells like honey."
@@ -2748,3 +2748,12 @@
 	baseprice = 2000
 	upperfluc = 1700
 	lowerfluc = -1700
+
+/datum/commodity/expensive_card
+	comname = "Incredibly Expensive Card"
+	desc = "Wow...people really pay a lot for these cards..."
+	comtype = /obj/item/playing_card/expensive
+	onmarket = 1
+	price = 21000
+	upperfluc = 20000
+	lowerfluc = -28500

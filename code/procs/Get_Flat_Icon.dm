@@ -118,7 +118,7 @@
 		// Dimensions of overlay being added
 		var/list/add_size[4]
 
-		for (var/image/I as() in layers)
+		for (var/image/I as anything in layers)
 			if(I.alpha == 0)
 				continue
 

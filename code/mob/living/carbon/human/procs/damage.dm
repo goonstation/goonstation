@@ -310,14 +310,14 @@
 	src.UpdateDamageIcon()
 	return
 
-/mob/living/carbon/human/TakeDamage(zone, brute, burn, tox, damage_type, disallow_limb_loss)
+/mob/living/carbon/human/TakeDamage(zone, brute, burn, tox, damage_type, disallow_limb_loss, var/bypass_reversal = FALSE)
 	if (src.nodamage) return
 
 	hit_twitch(src)
 
-	if (src.traitHolder && src.traitHolder.hasTrait("reversal"))
-		brute *= -1
-		burn *= -1
+	if (src.traitHolder && src.traitHolder.hasTrait("reversal") && !bypass_reversal)
+		src.HealDamage(zone, brute, burn, tox, TRUE)
+		return
 
 	if (src.traitHolder && src.traitHolder.hasTrait("deathwish"))
 		brute *= 2
@@ -425,12 +425,10 @@
 	*///Begone, message spam. Nobody asked for this
 	TakeDamage(zone, max(brute, 0), max(burn, 0), 0, damage_type)
 
-/mob/living/carbon/human/HealDamage(zone, brute, burn, tox)
+/mob/living/carbon/human/HealDamage(zone, brute, burn, tox, var/bypass_reversal = FALSE)
 
 	if (src.traitHolder && src.traitHolder.hasTrait("reversal"))
-		brute *= -1
-		burn *= -1
-		tox *= -1
+		src.TakeDamage(zone, brute, burn, tox, null, FALSE, TRUE)
 
 	if (zone == "All")
 		var/bruteOrganCount = 0.0 		//How many organs have brute damage?

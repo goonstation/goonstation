@@ -353,7 +353,7 @@
 		var/lube_efficiency = 0.0
 
 		if(src.reagents?.total_volume)
-			for(var/reagent_id as() in src.reagents.reagent_list)
+			for(var/reagent_id as anything in src.reagents.reagent_list)
 				var/datum/reagent/R = src.reagents.reagent_list[reagent_id]
 				// Iterate over reagents looking for sweet sweet lube
 				if (reagent_id in circulator_preferred_reagents)
@@ -919,7 +919,7 @@ datum/pump_ui/circulator_ui
 			if(grump < 0) grump = 0 // no negative grump plz
 			grump++ // get grump'd
 
-		for(var/obj/machinery/power/furnace/F as() in src.furnaces)
+		for(var/obj/machinery/power/furnace/F as anything in src.furnaces)
 			if( F.active ) stoked_sum += F.stoked
 
 		if(stoked_sum > 10)
