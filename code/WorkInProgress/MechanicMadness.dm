@@ -1465,8 +1465,8 @@
 	name = "Dispatch Component"
 	desc = ""
 	icon_state = "comp_disp"
-	var/exact_match = 0
-	var/single_output = 0
+	var/exact_match = FALSE
+	var/single_output = FALSE
 
 	//This stores all the relevant filters per output
 	//Notably, this list doesn't remove entries when an output is removed.
