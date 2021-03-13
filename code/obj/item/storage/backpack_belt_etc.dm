@@ -514,6 +514,7 @@
 	item_state = "machobelt"
 	contraband = 8
 	is_syndicate = 1
+	item_function_flags = IMMUNE_TO_ACID
 	mats = 18 //SPACE IS THE PLACE FOR WRESTLESTATION 13
 	var/fake = 0		//So the moves are all fake.
 
