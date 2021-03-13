@@ -231,8 +231,13 @@
 		if(..()) return
 		var/mob/living/L = owner
 		L.HealDamage("All", heal_per_tick * mult, heal_per_tick * mult)
-		var/roundedmult
-		for (roundedmult = round(mult), roundedmult > 0, roundedmult --)
+		var/roundedmult = round(mult)
+		var/roundedmultremainder
+		roundedmultremainder += (mult % 1)
+		if (roundedmultremainder >= 1)
+			roundedmult += round(roundedmultremainder)
+			roundedmultremainder = roundedmultremainder % 1
+		for (roundedmult = roundedmult, roundedmult > 0, roundedmult --)
 			if (rand(1, regrow_prob) == 1)
 				if (ishuman(L))
 					var/mob/living/carbon/human/H = L

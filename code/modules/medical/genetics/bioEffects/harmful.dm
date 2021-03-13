@@ -711,6 +711,11 @@
 	OnLife(var/mult)
 		..()
 		var/roundedmult
+		var/roundedmultremainder
+		roundedmultremainder += (mult % 1)
+		if (roundedmultremainder >= 1)
+			roundedmult += round(roundedmultremainder)
+			roundedmultremainder = roundedmultremainder % 1
 		var/turf/T
 		for (roundedmult = round(mult), roundedmult > 0, roundedmult --)
 			if (prob(50))
