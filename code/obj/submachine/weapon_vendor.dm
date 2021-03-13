@@ -213,6 +213,7 @@
 		materiel_stock += new/datum/materiel/loadout/heavy
 		materiel_stock += new/datum/materiel/loadout/grenadier
 		materiel_stock += new/datum/materiel/loadout/infiltrator
+		materiel_stock += new/datum/materiel/loadout/scout
 		materiel_stock += new/datum/materiel/loadout/medic
 		materiel_stock += new/datum/materiel/loadout/firebrand
 		materiel_stock += new/datum/materiel/loadout/engineer
@@ -392,9 +393,15 @@
 
 /datum/materiel/loadout/infiltrator
 	name = "Infiltrator"
-	path = /obj/storage/crate/classcrate/agent_rework
+	path = /obj/storage/crate/classcrate/infiltrator
 	category = "Loadout"
-	description = "Tranquilizer pistol with a pouch of dart magazines, five use cloaking device, electromagnetic card and night-vision goggles."
+	description = "Tranquilizer pistol with a pouch of darts, emag, tools to help you blend in with the crew and pod beacon deployer to help get your team closer to the target location."
+
+/datum/materiel/loadout/scout
+	name = "Scout"
+	path = /obj/storage/crate/classcrate/scout
+	category = "Loadout"
+	description = "Burst-fire submachine gun, personal cloaking device, light breaker and an emag for sneaky flanking actions."
 
 /datum/materiel/loadout/medic
 	name = "Field Medic"
@@ -418,7 +425,7 @@
 	name = "Marksman"
 	path = /obj/storage/crate/classcrate/sniper
 	category = "Loadout"
-	description = "High-powered sniper rifle that can fire through two solid walls,optical thermal scanner and a pouch of smoke grenades"
+	description = "High-powered sniper rifle that can fire through two solid walls, optical thermal scanner and a pouch of smoke grenades"
 
 /datum/materiel/loadout/custom
 	name = "Custom Class Uplink"
