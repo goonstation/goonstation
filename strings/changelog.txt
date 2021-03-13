@@ -1,5 +1,9 @@
 
 (t)sat mar 13 21
+(u)Kubius
+(p)3985
+(e)🐛🆕🗺|bug, feature, mapping
+(+)Kondaru airbridge issue introduced in upgrade Tau has been fixed, partially by adding a new Book Nook, the home of the persistent bookshelf. See PR 3973 for Tau's changes.
 (u)Chickenish
 (p)3954
 (e)🐛|bug
