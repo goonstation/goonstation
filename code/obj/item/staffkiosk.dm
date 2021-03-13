@@ -2,7 +2,7 @@
 	name = "Staff Recruitment Kiosk"
 	icon = 'icons/obj/vending.dmi'
 	icon_state = "staffkiosk"
-	desc = "An automated quartermaster service to equip staff assistants for departmental work. It appears to accept tokens and an ID."
+	desc = "An automated quartermaster service to equip staff assistants for departmental work. It has no front buttons, only a small slot."
 	density = 1
 	opacity = 0
 	anchored = 1
@@ -12,73 +12,36 @@
 	var/obj/item/card/id/ID_card = null
 
 	attackby(var/obj/item/I, var/mob/user)
-		if(istype(I, /obj/item/assistant_token))
+		if(istype(I, /obj/item/assistant_token) && ishuman(user))
 			var/obj/item/assistant_token/AT = I
-			if(src.ID_card)
+			var/mob/living/carbon/human/H = user
+			if(H.wear_id && H.wear_id.assignment == "Staff Assistant")
 				if(AT.authed && AT.role_datum)
 					user.drop_item(AT)
-					var/ATINFO = AT.role_datum
+					var/TD = AT.role_datum
 					qdel(AT)
-					accepted_token(ATINFO, user)
+
+					playsound(src.loc, sound_token, 80, 1)
+					boutput(user, "<span class='notice'>You insert the recruitment token into [src]. A small beam passes over your ID, then the machine dispenses a box.</span>")
+
+					H.wear_id.assignment = TD.name
+					H.wear_id.access = get_access(TD.accessParent)
+					H.wear_id.icon_state = TD.cardIcon
+					H.wear_id.name = "[ID_card.registered]'s ID Card ([ID_card.assignment])"
+
+					SPAWN_DBG(5)
+						playsound(src.loc, sound_dispense, 80, 1)
+						var/vended = new TD.dispensedKit(src.loc)
+						H.put_in_hand_or_eject(vended)
 				else
 					boutput(user, "<span class='alert'>The kiosk won't accept the token. It has to be authorized by a department staff member first.</span>")
 			else
-				boutput(user, "<span class='alert'>The token slot is closed. It looks like an identification card has to be inserted.</span>")
-		else if(istype(I, /obj/item/card/id))
-			var/obj/item/card/id/ID = I
-			if (src.ID_card)
-				boutput(user, "<span class='alert'>The kiosk already has an ID inside it.</span>")
-				return
-			else if (!src.ID_card)
-				if(ID.assignment == "Staff Assistant")
-					src.insert_id_card(ID, user)
-					playsound(src.loc, sound_cardslot, 60, 1)
-					boutput(user, "<span class='notice'>You insert [ID] into [src]. The token slot opens up.</span>")
-				else
-					boutput(user, "<span class='alert'>The kiosk refuses to accept the identification card. It appears to only accept staff assistant IDs.</span>")
-					return
+				boutput(user, "<span class='alert'>The token slot won't accept the token. A small label over the slot says 'PLEASE WEAR STAFF ASSISTANT ID'.</span>")
 		else
 			..()
 
 	attack_hand(var/mob/user as mob)
-		if (src.ID_card)
-			boutput(user, "<span class='notice'>You eject [ID_card] from [src]. The token slot closes.</span>")
-			playsound(src.loc, sound_cardslot, 60, 1)
-			src.eject_id_card(user)
-		else
-			boutput(user, "<span class='alert'>The kiosk doesn't have an identification card inserted.</span>")
-
-	proc/eject_id_card(var/mob/user as mob)
-		if (src.ID_card)
-			if (istype(user))
-				user.put_in_hand_or_drop(src.ID_card)
-			else
-				var/turf/T = get_turf(src)
-				src.ID_card.set_loc(T)
-			src.ID_card = null
-
-	proc/insert_id_card(var/obj/item/card/id/ID as obj, var/mob/user as mob)
-		if (!istype(ID))
-			return
-		if (src.ID_card)
-			src.eject_id_card(istype(user) ? user : null)
-		src.ID_card = ID
-		if (user)
-			user.u_equip(ID)
-		ID.set_loc(src)
-
-	proc/accepted_token(var/datum/recruitment_role/TD, var/mob/user)
-		playsound(src.loc, sound_token, 80, 1)
-		boutput(user, "<span class='notice'>You insert the recruitment token into [src]. The ID slot whirs softly, then the machine dispenses a box.</span>")
-
-		src.ID_card.assignment = TD.name
-		src.ID_card.access = get_access(TD.accessParent)
-		src.ID_card.icon_state = TD.cardIcon
-		src.ID_card.name = "[ID_card.registered]'s ID Card ([ID_card.assignment])"
-
-		SPAWN_DBG(10)
-			playsound(src.loc, sound_dispense, 80, 1)
-			new TD.dispensedKit(src.loc)
+		boutput(user, "<span class='alert'>The kiosk has no controls - it seems to be solely token-operated.</span>")
 
 //assignment protocol
 
@@ -115,7 +78,7 @@
 				return
 
 			var/choice = input(user, "Which role to authorize on token?", "Selection") as null|anything in frontEndList
-			if (!choice)
+			if (!choice || get_dist(src,user) > 1)
 				return
 
 			src.authed = 1
