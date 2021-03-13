@@ -585,6 +585,9 @@ var/global
 	//SpyGuy: Oh my fucking god the QM shit. *cry *wail *sob *weep *vomit *scream
 	list/datum/supply_packs/qm_supply_cache = list()
 
+	//Assistant recruitment role datums
+	list/datum/recruitment_role/recruitment_roles = list()
+
 	//Used for QM Ordering Categories
 	list/QM_CategoryList = list()
 

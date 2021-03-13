@@ -8,6 +8,7 @@
 	anchored = 1
 	var/sound_token = 'sound/machines/capsulebuy.ogg'
 	var/sound_dispense = 'sound/machines/chime.ogg'
+	var/sound_cardslot = 'sound/items/Deconstruct.ogg'
 	var/obj/item/card/id/ID_card = null
 
 	attackby(var/obj/item/I, var/mob/user)
@@ -16,24 +17,25 @@
 			if(src.ID_card)
 				if(AT.authed && AT.role_datum)
 					user.drop_item(AT)
-					var/datum/recruitment_role/ATINFO = AT.role_datum
+					var/ATINFO = AT.role_datum
 					qdel(AT)
 					accepted_token(ATINFO, user)
 				else
-					boutput(user, "The kiosk won't accept the token. It has to be authorized by a department staff member first.")
+					boutput(user, "<span class='alert'>The kiosk won't accept the token. It has to be authorized by a department staff member first.</span>")
 			else
-				boutput(user, "The token slot is closed. It looks like an identification card has to be inserted.")
+				boutput(user, "<span class='alert'>The token slot is closed. It looks like an identification card has to be inserted.</span>")
 		else if(istype(I, /obj/item/card/id))
 			var/obj/item/card/id/ID = I
 			if (src.ID_card)
-				boutput(user, "<span class='notice'>The kiosk already has an ID inside it.</span>")
+				boutput(user, "<span class='alert'>The kiosk already has an ID inside it.</span>")
 				return
 			else if (!src.ID_card)
 				if(ID.assignment == "Staff Assistant")
 					src.insert_id_card(ID, user)
+					playsound(src.loc, sound_cardslot, 60, 1)
 					boutput(user, "<span class='notice'>You insert [ID] into [src]. The token slot opens up.</span>")
 				else
-					boutput(user, "<span class='notice'>The kiosk refuses to accept the identification card. It appears to only accept staff assistant IDs.</span>")
+					boutput(user, "<span class='alert'>The kiosk refuses to accept the identification card. It appears to only accept staff assistant IDs.</span>")
 					return
 		else
 			..()
@@ -41,6 +43,7 @@
 	attack_hand(var/mob/user as mob)
 		if (src.ID_card)
 			boutput(user, "<span class='notice'>You eject [ID_card] from [src]. The token slot closes.</span>")
+			playsound(src.loc, sound_cardslot, 60, 1)
 			src.eject_id_card(user)
 		else
 			boutput(user, "<span class='notice'>The kiosk doesn't have an identification card inserted.</span>")
@@ -64,17 +67,17 @@
 			user.u_equip(ID)
 		ID.set_loc(src)
 
-	accepted_token(var/tokendata, var/mob/user)
+	proc/accepted_token(var/datum/recruitment_role/TD, var/mob/user)
 		playsound(src.loc, sound_token, 80, 1)
 		boutput(user, "<span class='notice'>You insert the recruitment token into [src]. The ID slot whirs softly, then the machine dispenses a box.</span>")
 
-		src.ID_card.assignment = tokendata.name
-		src.ID_card.access = get_access(tokendata.accessParent)
-		src.ID_card.icon_state = tokendata.cardIcon
+		src.ID_card.assignment = TD.name
+		src.ID_card.access = get_access(TD.accessParent)
+		src.ID_card.icon_state = TD.cardIcon
 
 		SPAWN_DBG(10)
 			playsound(src.loc, sound_dispense, 80, 1)
-			var/atom/A = new tokendata.dispensedKit(src.loc)
+			new TD.dispensedKit(src.loc)
 
 //assignment protocol
 
@@ -99,12 +102,12 @@
 	var/role_datum = null
 
 	attackby(var/obj/item/I, var/mob/user)
-		if(!src.authed && istype(I, /obj/item/card/id))
+		if(src.authed == 0 && istype(I, /obj/item/card/id))
 			var/obj/item/card/id/ID = I
 			var/pickableRoles = list()
 			var/frontEndList = list()
 
-			for(var/datum/recruitment_role/ROL in concrete_typesof(/datum/recruitment_role))
+			for(var/ROL in recruitment_roles)
 				if(ID.assignment in ROL.canAuthorize)
 					pickableRoles[ROL.name] = ROL
 					frontEndList += ROL.name
@@ -124,7 +127,12 @@
 			..()
 
 
-//ok I'm doing it this way for some reason I hope the performance isn't terrible
+//datum? I hardly know em
+
+/proc/build_recruitment_role_cache()
+	recruitment_roles.Cut()
+	for(var/S in concrete_typesof(/datum/recruitment_role))
+		recruitment_roles += new S()
 
 ABSTRACT_TYPE(/datum/recruitment_role)
 /datum/recruitment_role
@@ -132,7 +140,7 @@ ABSTRACT_TYPE(/datum/recruitment_role)
 	var/accessParent = "Clown" //job whose access this mimics
 	var/canAuthorize = list("Clown") //who is allowed to give out this job
 	var/cardIcon = "id_clown" //what icon state the card should receive
-	var/dispensedKit = /obj/item/storage/box/staffkit/civ //what kit should be dispensed (lo and behold)
+	var/dispensedKit = /obj/item/storage/box/staffkit/med //what kit should be dispensed (lo and behold)
 
 /datum/recruitment_role/medical
 	name = "Medical Assistant"
@@ -186,12 +194,12 @@ ABSTRACT_TYPE(/datum/recruitment_role)
 /datum/recruitment_role/bar
 	name = "Bar Assistant"
 	accessParent = "Bartender"
-  canAuthorize = list("Bartender","Head of Personnel","Captain")
+	canAuthorize = list("Bartender","Head of Personnel","Captain")
 	cardIcon = "id_civ"
 	dispensedKit = /obj/item/storage/box/staffkit/bar
 
 /datum/recruitment_role/botany
-	name = "Bar Assistant"
+	name = "Botanical Assistant"
 	accessParent = "Bartender"
 	canAuthorize = list("Bartender","Head of Personnel","Captain")
 	cardIcon = "id_civ"
