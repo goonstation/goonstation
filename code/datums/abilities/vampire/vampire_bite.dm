@@ -352,6 +352,11 @@
 	id = "vamp_blood_suck_ranged"
 	icon = 'icons/ui/actions.dmi'
 	icon_state = "blood"
+	bar_icon_state = "bar-vampire"
+	border_icon_state = "border-vampire"
+	color_active = "#d73715"
+	color_success = "#f21b1b"
+	color_failure = "#8d1422"
 	var/mob/living/carbon/human/M
 	var/datum/abilityHolder/vampire/H
 	var/mob/living/carbon/human/HH
@@ -495,6 +500,11 @@
 	id = "vamp_blood_suck"
 	icon = 'icons/ui/actions.dmi'
 	icon_state = "blood"
+	bar_icon_state = "bar-vampire"
+	border_icon_state = "border-vampire"
+	color_active = "#d73715"
+	color_success = "#f21b1b"
+	color_failure = "#8d1422"
 	var/mob/living/carbon/human/M
 	var/datum/abilityHolder/vampire/H
 	var/mob/living/carbon/human/HH
