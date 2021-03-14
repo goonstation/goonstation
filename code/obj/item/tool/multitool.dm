@@ -63,9 +63,8 @@
 		if (hasvar(target, "beacon_freq"))
 			beacon = target:beacon_freq
 	else if (hasvar(target, "radio_connection"))
-		//Always check when using : or you could runtime
-		if(hasvar(target:radio_connection,"frequency"))
-			frequency = target:radio_connection.frequency
+		var/datum/radio_frequency/radiofreq = target:radio_connection
+		frequency = radiofreq.frequency
 	else if (hasvar(target, "frequency"))
 		if(isnum(target:frequency))
 			frequency = target:frequency
