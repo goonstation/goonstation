@@ -114,7 +114,8 @@ Broken RCD + Effects
 	var/shits_sparks = 1
 
 	var/material_name = "steel"
-
+	// list of materials that the RCD can deconstruct, if empty no restriction.
+	var/list/restricted_materials
 	// List of what this RCD is working on.
 	// If you try to do something when something is in this the RCD ignores you.
 	// No more easily flooding airlocks, jerks. Do it one at a time. >8)
@@ -128,7 +129,7 @@ Broken RCD + Effects
 	var/internal_mode = 1
 
 	get_desc()
-		. += "<br>It holds [matter]/[max_matter] matter units. It is currently set to "
+		. += "<br>It holds [matter]/[max_matter][istype(src, /obj/item/rcd/material) ? src.material_name : "matter"]  units. It is currently set to "
 		switch (src.mode)
 			if (RCD_MODE_FLOORSWALLS)
 				. += "Floors/Walls"
@@ -158,24 +159,27 @@ Broken RCD + Effects
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/rcd_ammo))
 			var/obj/item/rcd_ammo/R = W
-			if (!R.matter)
+			if (!restricted_materials || (R?.material.mat_id in restricted_materials))
+				if (!R.matter)
+					return
+				if (matter == max_matter)
+					boutput(user, "\The [src] can't hold any more matter.")
+					return
+				if (src.matter + R.matter > src.max_matter)
+					R.matter -= (src.max_matter - src.matter)
+					boutput(user, "The cartridge now contains [R.matter] units of matter.")
+					src.matter = src.max_matter
+				else
+					src.matter += R.matter
+					R.matter = 0
+					qdel(R)
+				R.tooltip_rebuild = 1
+				src.update_icon()
+				playsound(get_turf(src), "sound/machines/click.ogg", 50, 1)
+				boutput(user, "\The [src] now holds [src.matter]/[src.max_matter] matter-units.")
 				return
-			if (matter == max_matter)
-				boutput(user, "\The [src] can't hold any more matter.")
-				return
-			if (src.matter + R.matter > src.max_matter)
-				R.matter -= (src.max_matter - src.matter)
-				boutput(user, "The cartridge now contains [R.matter] units of matter.")
-				src.matter = src.max_matter
 			else
-				src.matter += R.matter
-				R.matter = 0
-				qdel(R)
-			R.tooltip_rebuild = 1
-			src.update_icon()
-			playsound(get_turf(src), "sound/machines/click.ogg", 50, 1)
-			boutput(user, "\The [src] now holds [src.matter]/[src.max_matter] matter-units.")
-			return
+				boutput(user, "This cartridge is not made of the proper material to be used in \The [src].")
 
 	attack_self(mob/user as mob)
 		playsound(get_turf(src), "sound/effects/pop.ogg", 50, 0)
@@ -274,6 +278,9 @@ Broken RCD + Effects
 
 			if (RCD_MODE_DECONSTRUCT)
 
+				if(restricted_materials && !(A.material.mat_id in restricted_materials))
+					boutput(user, "Target object is not made of a material this RCD can deconstruct.")
+					return
 				if (istype(A, /turf/simulated/wall/r_wall) || istype(A, /turf/simulated/wall/auto/reinforced))
 					if (do_thing(user, A, "removing the reinforcement from \the [A]", matter_unreinforce_wall, time_unreinforce_wall))
 						var/turf/simulated/wall/T = A:ReplaceWithWall()
@@ -296,7 +303,7 @@ Broken RCD + Effects
 						A:ReplaceWithSpace()
 						return
 
-				if (istype(A, /obj/machinery/door/airlock))
+				if (istype(A, /obj/machinery/door/airlock)||istype(A, /obj/machinery/door/unpowered/wood))
 					var/obj/machinery/door/airlock/AL = A
 					if (AL.hardened == 1)
 						boutput(user, "<span class='alert'>\The [AL] is reinforced against rapid deconstruction!</span>")
@@ -689,6 +696,125 @@ Broken RCD + Effects
 			else
 				T.req_access = null
 				T.req_access_txt = null
+
+/obj/item/rcd/material
+
+	New()
+		..()
+		src.setMaterial(getMaterial(material_name))
+
+	afterattack(atom/A, mob/user as mob)
+		if (get_dist(get_turf(src), get_turf(A)) > 1)
+			return
+		if (mode == RCD_MODE_WINDOWS)
+			if (istype(A, /turf/simulated/floor) || istype(A, /obj/grille/))
+				if (istype(A, /obj/grille/))
+					// You can do this with normal windows. So now you can do it with RCD windows. Honke.
+					A = get_turf(A)
+					if (!istype(A, /turf/simulated/floor))
+						return
+				if (do_thing(user, A, "building a window", matter_create_window, time_create_window))
+					// Is /auto always the one to use here? hm.
+					var/obj/window/T = new (get_turf(A))
+					log_construction(user, "builds a window")
+					T.setMaterial(getMaterial(material_name))
+					return
+		else
+			..()
+
+	create_door(var/turf/A, mob/user as mob)
+		var/turf/L = get_turf(user)
+		var/door_dir = user.dir
+
+		if (A in src.working_on)
+			return
+
+		if (user.loc != L)
+			boutput(user, "<span class='alert'>Door build cancelled - you moved.</span>")
+			return
+
+		if (do_thing(user, A, "building a door", matter_create_door, 5 SECONDS))
+			var/obj/machinery/door/unpowered/wood/T = new (A)
+			T.set_dir(door_dir)
+			T.setMaterial(getMaterial(material_name))
+			log_construction(user, null, "builds a door ([T]")
+
+
+
+/obj/item/rcd/material/cardboard
+	name = "Realistic Cardboard Device"
+	desc = "This highly realistic cardboard imitation of a Rapid Construction Device is able to rapidly construct cardboard props."
+	mats = list("DEN-3" = 10, "POW-2" = 10, "cardboard" = 30)
+	matter_create_floor = 0.5
+	time_create_floor = 0 SECONDS
+
+	matter_create_wall = 3
+	time_create_wall = 5 SECONDS
+
+	matter_reinforce_wall = 2.5
+	time_reinforce_wall = 5 SECONDS
+
+	matter_create_wall_girder = 2
+	time_create_wall_girder = 2 SECONDS
+
+	matter_create_door = 4
+	time_create_door = 5 SECONDS
+
+	matter_create_window = 2
+	time_create_window = 2 SECONDS
+
+	matter_remove_door = -2
+	time_remove_door = 5 SECONDS
+
+	matter_remove_floor = 0
+	time_remove_floor = 5 SECONDS
+
+	matter_remove_lattice = 0
+	time_remove_lattice = 5 SECONDS
+
+	matter_remove_wall = -1
+	time_remove_wall = 5 SECONDS
+
+	matter_unreinforce_wall = -1
+	time_unreinforce_wall = 5 SECONDS
+
+	matter_remove_girder = -1
+	time_remove_girder = 2 SECONDS
+
+	matter_remove_window = -1
+	time_remove_window = 5 SECONDS
+
+
+	shits_sparks = 0
+
+	material_name = "cardboard"
+	restricted_materials = list("cardboard")
+
+	modes = list(RCD_MODE_FLOORSWALLS, RCD_MODE_AIRLOCK, RCD_MODE_DECONSTRUCT, RCD_MODE_WINDOWS)
+
+	New()
+		..()
+		src.setMaterial(getMaterial("cardboard"))
+
+	attackby(obj/item/W as obj, mob/user as mob)
+		if (istype(W, /obj/item/rcd_ammo))
+			..()
+		else if (W?.material?.mat_id == "cardboard")
+			matter += 10
+			boutput(user, "\The [src] recycles [W], and now holds [src.matter]/[src.max_matter] [material_name]-units.")
+			qdel(W)
+		else if (istype(W, /obj/item/paper/book))
+			matter += 5
+			boutput(user, "\The [src] recycles [W], and now holds [src.matter]/[src.max_matter] [material_name]-units.")
+			qdel(W)
+		else if (istype(W, /obj/item/paper))
+			matter += 0.5
+			boutput(user, "\The [src] recycles [W], and now holds [src.matter]/[src.max_matter] [material_name]-units.")
+			qdel(W)
+		else if (W?.material?.mat_id == "wood")
+			matter += 20
+			boutput(user, "\The [src] pulps [W], and now holds [src.matter]/[src.max_matter] [material_name]-units.")
+			qdel(W)
 
 ////////
 //AMMO//
