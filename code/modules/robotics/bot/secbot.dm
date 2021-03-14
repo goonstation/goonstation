@@ -649,7 +649,7 @@
 				else // his dad, though...
 					if(!ON_COOLDOWN(src, SECBOT_CAGE_RAGE_COOLDOWN, 1.5 SECONDS))
 						src.weeoo()
-						YellAtPerp(impotent_rage = 0)
+						YellAtPerp(impotent_rage = 1)
 						if(isobj(src.loc))
 							var/obj/O = src.loc
 							var/wiggle = 6
