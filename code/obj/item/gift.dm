@@ -28,6 +28,8 @@
 		src.icon_state = "wrap_paper-[src.style]"
 
 /obj/item/wrapping_paper/attackby(obj/item/W as obj, mob/user as mob)
+	if(W.cant_drop || W.cant_self_remove)
+		return
 	if (!( locate(/obj/table, src.loc) ))
 		boutput(user, "<span class='notice'>You MUST put the paper on a table!</span>")
 		return
