@@ -73933,13 +73933,15 @@
 /turf/unsimulated/floor/circuit/vintage,
 /area/centcom/offices/aphtonites)
 "dzg" = (
-/obj/machinery/light{
+/obj/cabinet/restrictedmedical,
+/turf/unsimulated/floor/bluewhite{
 	dir = 1
 	},
-/turf/unsimulated/floor/wood/two,
-/area/space)
+/area/centcom/offices/varshie)
 "dzi" = (
-/obj/admin_plaque,
+/obj/admin_plaque{
+	name = "Varshie's Office"
+	},
 /turf/unsimulated/wall{
 	icon = 'icons/misc/worlds.dmi';
 	icon_state = "leadwall"
@@ -74180,11 +74182,10 @@
 "dzS" = (
 /obj/machinery/door/unpowered/wood{
 	icon = 'icons/obj/doors/door_office.dmi';
-	lock_dir = 8;
-	locked = 1
+	lock_dir = 8
 	},
 /turf/unsimulated/floor/wood/two,
-/area/space)
+/area/centcom/offices/varshie)
 "dzT" = (
 /obj/machinery/door/unpowered/wood{
 	dir = 1;
@@ -74385,12 +74386,41 @@
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/ines)
 "dAw" = (
+/obj/shrub{
+	icon = 'icons/obj/stationobjs.dmi';
+	icon_state = "plant";
+	layer = 3;
+	pixel_x = -11;
+	pixel_y = 1
+	},
 /obj/machinery/light,
-/turf/unsimulated/floor/wood/two,
-/area/space)
+/turf/unsimulated/floor/bluewhite{
+	dir = 10
+	},
+/area/centcom/offices/varshie)
 "dAz" = (
-/turf/unsimulated/floor/wood/two,
-/area/space)
+/obj/decal/fakeobjects/bookcase{
+	pixel_y = 24
+	},
+/obj/stool/bee_bed{
+	desc = "A soft little bed the general size and shape of a space moth.";
+	name = "moth bed"
+	},
+/obj/shrub{
+	dir = 4;
+	icon = 'icons/obj/stationobjs.dmi';
+	icon_state = "plant";
+	layer = 3;
+	pixel_x = -11;
+	pixel_y = 15
+	},
+/obj/critter/domestic_bee/moth,
+/turf/unsimulated/floor/carpet{
+	dir = 9;
+	icon_state = "fblue2";
+	tag = "icon-fblue2 (NORTHWEST)"
+	},
+/area/centcom/offices/varshie)
 "dAA" = (
 /obj/shrub{
 	dir = 4;
@@ -82974,6 +83004,9 @@
 /obj/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
 /area/shuttle/merchant_shuttle/left_centcom/cogmap2)
+"gJV" = (
+/turf/unsimulated/floor/bluewhite,
+/area/centcom/offices/varshie)
 "gKc" = (
 /obj/machinery/light/small/frostedred{
 	dir = 1;
@@ -83909,6 +83942,21 @@
 	name = "Fleshy Floor"
 	},
 /area/meat_derelict/guts)
+"khD" = (
+/obj/item/reagent_containers/food/snacks/beefood{
+	desc = "A bowl of \"moth kibble.\" It is probably best not to think too hard about its composition.";
+	name = "moth kibble";
+	pixel_x = 9;
+	pixel_y = 16
+	},
+/obj/stool/chair/comfy/blue{
+	dir = 4
+	},
+/turf/unsimulated/floor/carpet{
+	dir = 10;
+	icon_state = "fblue2"
+	},
+/area/centcom/offices/varshie)
 "khH" = (
 /obj/item/organ/eye/left{
 	pixel_x = -4;
@@ -84076,6 +84124,11 @@
 /obj/machinery/bot/medbot/no_camera,
 /turf/unsimulated/floor/red,
 /area/syndicate_station/battlecruiser)
+"kJJ" = (
+/turf/unsimulated/floor/bluewhite{
+	dir = 4
+	},
+/area/centcom/offices/varshie)
 "kKt" = (
 /obj/table/wood/auto/desk,
 /obj/item/reagent_containers/food/drinks/cola{
@@ -84880,6 +84933,12 @@
 	},
 /turf/unsimulated/outdoors/grass,
 /area/shuttle/merchant_shuttle/right_centcom/destiny)
+"nyc" = (
+/obj/stool/chair{
+	dir = 8
+	},
+/turf/simulated/floor/white,
+/area/centcom/offices/varshie)
 "nyz" = (
 /obj/decal/fakeobjects/dreambeach/big/palm1,
 /turf/unsimulated/floor/dream/beach,
@@ -85114,6 +85173,21 @@
 	icon_state = "shore-36"
 	},
 /area/titlescreen)
+"oiq" = (
+/obj/table/wood/auto/desk,
+/obj/item/clipboard,
+/obj/item/paper_bin,
+/obj/item/pen/fancy{
+	pixel_x = 2;
+	pixel_y = 2
+	},
+/obj/item/pen,
+/obj/item/stamp/centcom,
+/turf/unsimulated/floor/carpet{
+	dir = 6;
+	icon_state = "fblue2"
+	},
+/area/centcom/offices/varshie)
 "oju" = (
 /obj/landmark{
 	name = "lobby_leftside"
@@ -85232,6 +85306,15 @@
 	icon_state = "wall"
 	},
 /area/hospital/samostrel)
+"oHI" = (
+/obj/machinery/vending/medical,
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/unsimulated/floor/bluewhite{
+	dir = 5
+	},
+/area/centcom/offices/varshie)
 "oIM" = (
 /obj/admin_plaque{
 	name = "yass's Office"
@@ -86287,6 +86370,14 @@
 	icon_state = "wall3dir"
 	},
 /area/shuttle/merchant_shuttle/left_centcom/destiny)
+"rXO" = (
+/obj/machinery/sleeper/compact{
+	dir = 4
+	},
+/turf/unsimulated/floor/bluewhite{
+	dir = 6
+	},
+/area/centcom/offices/varshie)
 "rZN" = (
 /obj/wingrille_spawn/auto,
 /obj/machinery/shuttle/engine/heater{
@@ -86847,6 +86938,27 @@
 /turf/space,
 /turf/unsimulated/floor/caution/corner/ne,
 /area/hospital/samostrel)
+"uwC" = (
+/obj/table/wood/auto/desk,
+/obj/machinery/light/lamp/green{
+	pixel_x = -5;
+	pixel_y = 8;
+	switchon = 1
+	},
+/obj/item/clothing/head/NTberet{
+	desc = "You can tell that this beret has been well looked after.";
+	name = "Karu Karim's Nanotrasen Beret";
+	plane = -98
+	},
+/obj/item/luggable_computer/personal{
+	plane = -99
+	},
+/turf/unsimulated/floor/carpet{
+	dir = 5;
+	icon_state = "fblue2";
+	tag = "icon-fblue2 (NORTHEAST)"
+	},
+/area/centcom/offices/varshie)
 "uxv" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-39"
@@ -87443,6 +87555,14 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/escape/centcom/donut3)
+"wSZ" = (
+/obj/decal/poster/wallsign/poster_ptoe,
+/turf/unsimulated/wall/setpieces/leadwall{
+	dir = 4
+	},
+/area/centcom/offices{
+	icon_state = "blue"
+	})
 "wWU" = (
 /turf/unsimulated/wall/setpieces/leadwall{
 	dir = 10
@@ -159226,7 +159346,7 @@ dBF
 dCf
 dvw
 dAz
-dAz
+khD
 dAw
 dvw
 dvQ
@@ -159526,10 +159646,10 @@ dvw
 dAX
 dBG
 dAZ
-dvw
-dAz
-dAz
-dAz
+wSZ
+uwC
+oiq
+gJV
 dvw
 dvR
 dww
@@ -159830,8 +159950,8 @@ dBH
 dBH
 dvw
 dzg
-dAz
-dAz
+nyc
+gJV
 dvw
 dvS
 dwx
@@ -160131,9 +160251,9 @@ dAZ
 dBI
 dCg
 dvw
-dAz
-dAz
-dAz
+oHI
+kJJ
+rXO
 dvw
 dvT
 dwy
