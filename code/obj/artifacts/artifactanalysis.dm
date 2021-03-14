@@ -2,7 +2,7 @@
 	name = "artifact analysis form"
 	icon = 'icons/obj/writing.dmi'
 	icon_state = "artifact_form"
-	desc = "A standardized form for classifying different alien artifacts."
+	desc = "A standardized form for classifying different alien artifacts, with some extra strong adhesive on the back."
 	appearance_flags = RESET_TRANSFORM | RESET_COLOR | RESET_ALPHA
 	var/artifactName = ""
 	var/artifactOrigin = ""
