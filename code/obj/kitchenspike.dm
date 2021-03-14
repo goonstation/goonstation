@@ -27,7 +27,7 @@
 		G.affecting.unequip_all()
 		qdel(G.affecting)
 		qdel(G)
-		if ((user.mind.assigned_role == "Chef") && (prob(25)))
+		if (prob(25))
 			JOB_XP(user, "Chef", 1)
 
 	else
