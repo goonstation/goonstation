@@ -19753,14 +19753,6 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/southeast)
-"cqK" = (
-/obj/submachine/chef_sink{
-	name = "utility sink";
-	pixel_y = 18
-	},
-/obj/machinery/drainage/big,
-/turf/simulated/floor/white,
-/area/space)
 "cqX" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
@@ -51758,17 +51750,6 @@
 /obj/item/stamp,
 /turf/simulated/floor/black,
 /area/station/mining/staff_room)
-"uqt" = (
-/obj/disposalpipe/segment,
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/machinery/light/incandescent/harsh{
-	dir = 8;
-	nostick = 1
-	},
-/turf/simulated/floor/carpet/blue/standard,
-/area/space)
 "uqL" = (
 /obj/disposalpipe/segment/mail{
 	dir = 1;
@@ -54753,10 +54734,6 @@
 	dir = 1
 	},
 /area/station/hallway/secondary/exit)
-"vUB" = (
-/obj/submachine/laundry_machine,
-/turf/simulated/floor/white,
-/area/space)
 "vUQ" = (
 /obj/decal/tile_edge/stripe,
 /obj/machinery/light_switch/west{
@@ -135030,7 +135007,7 @@ aaa
 aaa
 aaa
 aaa
-uqt
+aaa
 aaa
 aaa
 aaa
@@ -136834,7 +136811,7 @@ aaa
 aaa
 aaa
 aaa
-vUB
+aaa
 aaa
 aaa
 aaa
@@ -138042,7 +138019,7 @@ aaa
 aaa
 aaa
 aaa
-cqK
+aaa
 aaa
 aaa
 aaa
