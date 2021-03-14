@@ -20,7 +20,7 @@ proc/pick_landmark(name, default=null)
 	ex_act()
 		return
 
-/obj/landmark/New()
+/obj/landmark/proc/init()
 	if(src.add_to_landmarks)
 		if(!landmarks)
 			landmarks = list()
@@ -30,8 +30,16 @@ proc/pick_landmark(name, default=null)
 		landmarks[name][src.loc] = src.data
 	if(src.deleted_on_start)
 		qdel(src)
-	else
+
+/obj/landmark/New()
+	if(current_state > GAME_STATE_MAP_LOAD)
+		SPAWN_DBG(0)
+			src.init()
 		..()
+	else
+		src.init()
+		if(!src.disposed)
+			..()
 
 var/global/list/job_start_locations = list()
 
@@ -133,6 +141,7 @@ var/global/list/job_start_locations = list()
 	var/static/list/name_to_type = list(
 		"shitty_bill" = /mob/living/carbon/human/biker,
 		"john_bill" = /mob/living/carbon/human/john,
+		"pariah" = /mob/living/carbon/human/pariah,
 		"big_yank" = /mob/living/carbon/human/big_yank,
 		"father_jack" = /mob/living/carbon/human/fatherjack,
 		"don_glab" = /mob/living/carbon/human/don_glab,
@@ -141,7 +150,7 @@ var/global/list/job_start_locations = list()
 		"monkeyspawn_rathen" = /mob/living/carbon/human/npc/monkey/mr_rathen,
 		"monkeyspawn_mrmuggles" = /mob/living/carbon/human/npc/monkey/mr_muggles,
 		"monkeyspawn_mrsmuggles" = /mob/living/carbon/human/npc/monkey/mrs_muggles,
-		"monkeyspawn_syndicate" = /mob/living/carbon/human/npc/monkey/von_braun,
+		"monkeyspawn_syndicate" = /mob/living/carbon/human/npc/monkey/oppenheimer,
 		"monkeyspawn_horse" = /mob/living/carbon/human/npc/monkey/horse,
 		"monkeyspawn_krimpus" = /mob/living/carbon/human/npc/monkey/krimpus,
 		"monkeyspawn_tanhony" = /mob/living/carbon/human/npc/monkey/tanhony,
@@ -156,9 +165,10 @@ var/global/list/job_start_locations = list()
 	)
 
 	New()
-		if(current_state >= GAME_STATE_WORLD_INIT && prob(spawnchance))
+		if(current_state >= GAME_STATE_WORLD_INIT && prob(spawnchance) && !src.disposed)
 			SPAWN_DBG(6 SECONDS) // bluh, replace with some `initialize` variant later when someone makes it (needs to work with dmm loader)
-				initialize()
+				if(!src.disposed)
+					initialize()
 		..()
 
 	initialize()
@@ -208,11 +218,15 @@ var/global/list/job_start_locations = list()
 /obj/landmark/viscontents_spawn
 	name = "visual mirror spawn"
 	desc = "Links a pair of corresponding turfs in holy Viscontent Matrimony. You shouldnt be seeing this."
+	icon = 'icons/effects/mapeditor.dmi'
+	icon_state = "landmark"
+	color = "#D1CFAE"
 	var/targetZ = 1 // target z-level to push it's contents to
 	var/xOffset = 0 // use only for pushing to the same z-level
 	var/yOffset = 0 // use only for pushing to the same z-level
 	add_to_landmarks = FALSE
 	var/warptarget_modifier = LANDMARK_VM_WARP_ALL
+	var/novis = FALSE
 
 	New(var/loc, var/man_xOffset, var/man_yOffset, var/man_targetZ, var/man_warptarget_modifier)
 		if (man_xOffset) src.xOffset = man_xOffset
@@ -221,11 +235,22 @@ var/global/list/job_start_locations = list()
 		if (!isnull(man_warptarget_modifier)) src.warptarget_modifier = man_warptarget_modifier
 		var/turf/T = get_turf(src)
 		if (!T) return
-		T.appearance_flags |= KEEP_TOGETHER
-		T.vistarget = locate(src.x + xOffset, src.y + yOffset, src.targetZ)
-		if(warptarget_modifier) T.vistarget.warptarget = T
-		T.updateVis()
+		if(novis)
+			var/turf/W = locate(src.x + xOffset, src.y + yOffset, src.targetZ)
+			W.warptarget = T
+		else
+			T.appearance_flags |= KEEP_TOGETHER
+			T.vistarget = locate(src.x + xOffset, src.y + yOffset, src.targetZ)
+			if(warptarget_modifier) T.vistarget.warptarget = T
+			T.updateVis()
+			T.vistarget.fullbright = TRUE
+			T.vistarget.RL_Init()
 		..()
+
+/obj/landmark/viscontents_spawn/no_vis
+	name = "instant hole spawn"
+	desc = "Point it at a turf. Stuff that goes there? goes here instead. Got it?"
+	novis = TRUE
 
 /obj/landmark/viscontents_spawn/no_warp
 	warptarget_modifier = LANDMARK_VM_WARP_NONE

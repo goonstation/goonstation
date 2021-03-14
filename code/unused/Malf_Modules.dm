@@ -96,7 +96,7 @@ rcd light flash thingy on matter drain
 			blackout.uses --
 			for(var/obj/machinery/power/apc/apc in machine_registry[MACHINES_POWER])
 				if(prob(30))
-				 apc.overload_lighting()
+					apc.overload_lighting()
 		if(blackout.uses <= 0)
 			usr.verbs -= /client/proc/blackout
 

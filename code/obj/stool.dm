@@ -125,7 +125,7 @@
 		qdel(src)
 		return
 
-	Move()
+	Move(atom/target)
 		. = ..()
 		if (. && islist(scoot_sounds) && scoot_sounds.len && prob(75))
 			playsound( get_turf(src), pick( scoot_sounds ), 50, 1 )
@@ -287,9 +287,12 @@
 		. = ..()
 		if (. && src.buckled_guy)
 			var/mob/living/carbon/C = src.buckled_guy
-			C.buckled = null
-			C.Move(src.loc)
-			C.buckled = src
+			if(src.buckled_guy.loc == src.loc)
+				C.buckled = null
+				C.Move(src.loc)
+				C.buckled = src
+			else
+				src.unbuckle()
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/clothing/suit/bedsheet))
@@ -330,7 +333,7 @@
 		if (get_dist(src, user) > 1)
 			user.show_text("[src] is too far away!", "red")
 			return 0
-		if ((!(iscarbon(C)) || C.loc != src.loc || user.restrained() || user.stat || user.getStatusDuration("paralysis") || user.getStatusDuration("stunned") || user.getStatusDuration("weakened") ))
+		if ((!(iscarbon(C)) || C.loc != src.loc || user.restrained() || is_incapacitated(user) ))
 			return 0
 
 		return 1
@@ -443,9 +446,9 @@
 		return
 
 	MouseDrop_T(atom/A as mob|obj, mob/user as mob)
-		..()
-
-		if (istype(A, /obj/item/clothing/suit/bedsheet))
+		if (get_dist(src, user) > 1 || A.loc != src.loc || user.restrained() || !isalive(user))
+			..()
+		else if (istype(A, /obj/item/clothing/suit/bedsheet))
 			if ((!src.Sheet || (src.Sheet && src.Sheet.loc != src.loc)) && A.loc == src.loc)
 				src.tuck_sheet(A, user)
 				return
@@ -565,7 +568,6 @@
 			W.master = E
 			user.u_equip(W)
 			W.layer = initial(W.layer)
-			//SN src = null
 			qdel(src)
 			return
 		else
@@ -630,8 +632,8 @@
 
 	MouseDrop_T(mob/M as mob, mob/user as mob)
 		..()
-		if (M == usr)
-			if (usr.a_intent == INTENT_GRAB)
+		if (M == user)
+			if (user.a_intent == INTENT_GRAB)
 				if(climbable)
 					buckle_in(M, user, 1)
 				else
@@ -655,7 +657,7 @@
 		if (!ticker)
 			boutput(user, "You can't buckle anyone in before the game starts.")
 			return 0
-		if ((!( iscarbon(M) ) || get_dist(src, user) > 1 || M.loc != src.loc || user.restrained() || usr.stat))
+		if (!( iscarbon(M) ) || get_dist(src, user) > 1 || M.loc != src.loc || user.restrained() || !isalive(user))
 			return 0
 		if(src.buckled_guy && src.buckled_guy.buckled == src && src.buckled_guy != M)
 			user.show_text("There's already someone buckled in [src]!", "red")
@@ -685,7 +687,7 @@
 				to_buckle.setStatus("buckled", duration = INFINITE_STATUS)
 				H.start_chair_flip_targeting()
 		else
-			if (to_buckle == usr)
+			if (to_buckle == user)
 				user.visible_message("<span class='notice'><b>[to_buckle]</b> buckles in!</span>", "<span class='notice'>You buckle yourself in.</span>")
 			else
 				user.visible_message("<span class='notice'><b>[to_buckle]</b> is buckled in by [user].</span>", "<span class='notice'>You buckle in [to_buckle].</span>")
@@ -762,6 +764,13 @@
 				src.buckled_guy = null
 		..()
 		return
+
+	Move(atom/target)
+		if(src.buckled_guy?.loc != src.loc)
+			src.unbuckle()
+		. = ..()
+		if(src.buckled_guy?.loc != src.loc)
+			src.unbuckle()
 
 	Click(location,control,params)
 		var/lpm = params2list(params)
@@ -859,12 +868,7 @@
 		return
 
 /obj/item/chair/folded/attack(atom/target, mob/user as mob)
-	var/mob/living/carbon/human/H = user
-	var/mob/living/M = target
 	if (ishuman(target))
-		if (iswrestler(H))
-			M.changeStatus("stunned", 4 SECONDS)
-			H.emote("scream")
 		//M.TakeDamage("chest", 5, 0) //what???? we have 'force' var
 		playsound(src.loc, pick(sounds_punch), 100, 1)
 	..()
@@ -1048,7 +1052,8 @@
 			APPLY_MOVEMENT_MODIFIER(to_buckle, /datum/movement_modifier/wheelchair, src.type)
 
 	unbuckle()
-		REMOVE_MOVEMENT_MODIFIER(src.buckled_guy, /datum/movement_modifier/wheelchair, src.type)
+		if(src.buckled_guy)
+			REMOVE_MOVEMENT_MODIFIER(src.buckled_guy, /datum/movement_modifier/wheelchair, src.type)
 		return ..()
 
 /* ======================================================= */
@@ -1327,12 +1332,12 @@
 
 			user.Browse("<TITLE>Electric Chair</TITLE><b>Electric Chair</b><BR>[dat]", "window=e_chair;size=180x180")
 
-			onclose(usr, "e_chair")
+			onclose(user, "e_chair")
 		return
 
 	Topic(href, href_list)
 		if (usr.getStatusDuration("stunned") || usr.getStatusDuration("weakened") || usr.stat || usr.restrained()) return
-		if (!in_range(src, usr)) return
+		if (!in_interact_range(src, usr)) return
 
 		if (href_list["on"])
 			toggle_active()

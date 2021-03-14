@@ -46,3 +46,7 @@
 	name = "crowbar"
 	desc = "A tool used as a lever to pry objects. This one appears to have been painted red as an indicator of it's important emergency tool status, or maybe someone forgot to clean the blood off."
 	icon_state = "crowbar-red"
+
+/obj/item/crowbar/yellow
+	desc = "A tool used as a lever to pry objects. This one's a nice lemon color."
+	icon_state = "crowbar-yellow"

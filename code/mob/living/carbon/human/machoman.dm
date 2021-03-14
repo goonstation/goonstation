@@ -25,7 +25,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 		if (!src.reagents)
 			src.create_reagents(1000)
 
-		src.reagents.add_reagent("stimulants", 200)
+		src.changeStatus("stimulants", 15 MINUTES)
 
 		src.equip_new_if_possible(/obj/item/clothing/shoes/macho, slot_shoes)
 		src.equip_new_if_possible(/obj/item/clothing/under/gimmick/macho, slot_w_uniform)
@@ -65,8 +65,8 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 		if (src.stance == "defensive")
 			src.visible_message("<span class='alert'><B>[user] attempts to attack [src]!</B></span>")
 			playsound(src.loc, "sound/impact_sounds/Generic_Swing_1.ogg", 50, 1)
-			sleep(0.2 SECONDS)
-			macho_parry(user)
+			SPAWN_DBG(0.2 SECONDS)
+				macho_parry(user)
 			return
 		..()
 		return
@@ -689,8 +689,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 					src.verbs += /mob/living/carbon/human/machoman/verb/macho_touch
 					SPAWN_DBG(0)
 						if (H)
-							H.desc = "A really dumb looking statue. Very shiny, though."
-							H.become_gold_statue()
+							H.become_statue(getMaterial("gold"), "A really dumb looking statue. Very shiny, though.")
 							H.transforming = 0
 
 /*	verb/macho_minions()
@@ -1323,7 +1322,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 		playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 75, 1)
 		var/obj/decal/cleanable/blood/gibs/gib = null
 		gib = make_cleanable(/obj/decal/cleanable/blood/gibs,src.loc)
-		gib.streak(list(NORTH, NORTHEAST, NORTHWEST))
+		gib.streak_cleanable(NORTH)
 		qdel(src)
 
 
@@ -1340,6 +1339,9 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 	wear_image_icon = 'icons/mob/overcoats/worn_suit_gimmick.dmi'
 	icon_state = "machovest"
 	item_state = "machovest"
+
+	attack_self(mob/user as mob)
+		return
 
 /obj/item/clothing/glasses/macho
 	name = "Yellow Shades"
@@ -1380,8 +1382,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 			sleep(2.5 SECONDS)
 			playsound(target.loc, "sound/voice/macho/macho_freakout.ogg", 50, 1)
 			target.visible_message("<span class='alert'>[target] appears visibly stronger!</span>")
-			if (target.reagents)
-				target.reagents.add_reagent("stimulants", 100)
+			target.changeStatus("stimulants", 7.5 MINUTES)
 			if (ishuman(target))
 				var/mob/living/carbon/human/machoman/H = target
 				for (var/A in H.organs)
@@ -1448,28 +1449,5 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 						A.ex_act(3)
 		else
 			..()
-
-/mob/living/proc/become_gold_statue()
-	var/obj/overlay/goldman = new /obj/overlay(get_turf(src))
-	src.pixel_x = 0
-	src.pixel_y = 0
-	src.set_loc(goldman)
-	goldman.name = "golden statue of [src.name]"
-	goldman.desc = src.desc
-	goldman.anchored = 0
-	goldman.set_density(1)
-	goldman.layer = MOB_LAYER
-	goldman.set_dir(src.dir)
-
-	var/ist = "body_f"
-	if (src.gender == "male")
-		ist = "body_m"
-	var/icon/composite = icon('icons/mob/human.dmi', ist, null, 1)
-	for (var/O in src.overlays)
-		var/image/I = O
-		composite.Blend(icon(I.icon, I.icon_state, null, 1), ICON_OVERLAY)
-	composite.ColorTone( rgb(255,215,0) ) // gold
-	goldman.icon = composite
-	src.remove()
 
 //#undef MAX_MINIONS_PER_SPAWN

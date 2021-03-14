@@ -52,7 +52,8 @@ const Module = props => {
               <Button
                 key={id}
                 onClick={() => onResetModule(id)}
-                title={name}>
+                title={name}
+              >
                 {name}
               </Button>
             );

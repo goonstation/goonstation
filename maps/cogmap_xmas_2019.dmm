@@ -1582,7 +1582,7 @@
 /area/station/security/armory)
 "adP" = (
 /obj/storage/secure/crate/plasma/armory/anti_biological,
-/obj/item/flamethrower/assembled/loaded,
+/obj/item/gun/flamethrower/assembled/loaded,
 /turf/simulated/floor/caution/west,
 /area/station/security/armory)
 "adQ" = (
@@ -7128,7 +7128,7 @@
 /obj/machinery/door/firedoor/pyro{
 	dir = 4
 	},
-/obj/item/reagent_containers/food/snacks/cake/fruit,
+/obj/item/reagent_containers/food/snacks/fruit_cake,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/cafeteria)
 "aqm" = (
@@ -54027,7 +54027,7 @@
 /obj/item/plate,
 /obj/item/decoration/ashtray,
 /obj/item/kitchen/utensil/fork,
-/obj/item/reagent_containers/food/snacks/cake/fruit,
+/obj/item/reagent_containers/food/snacks/fruit_cake,
 /turf/simulated/floor/carpet/purple/fancy/edge/east,
 /area/station/crew_quarters/cafeteria)
 "cje" = (

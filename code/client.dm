@@ -27,7 +27,7 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 	var/player_mode_mhelp = 0
 	var/only_local_looc = 0
 	var/deadchatoff = 0
-	var/local_deadchat = 0
+	var/mute_ghost_radio = FALSE
 	var/queued_click = 0
 	var/joined_date = null
 	var/adventure_view = 0
@@ -99,7 +99,7 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 	var/datum/interfaceSizeHelper/screen/screenSizeHelper = null
 	var/datum/interfaceSizeHelper/map/mapSizeHelper = null
 
-	var/obj/screen/screenHolder //Invisible, holds images that are used as render_sources.
+	var/atom/movable/screen/screenHolder //Invisible, holds images that are used as render_sources.
 
 	var/experimental_intents = 0
 
@@ -546,7 +546,7 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 	if (widescreen_checked)
 		if (splitter_value < 67.0)
 			src.set_widescreen(1)
-	
+
 	src.screenSizeHelper.registerOnLoadCallback(CALLBACK(src, .proc/checkHiRes))
 
 	var/is_vert_splitter = winget( src, "menu.horiz_split", "is-checked" ) != "true"
@@ -901,17 +901,17 @@ var/global/curr_day = null
 	var/serverURL
 	var/serverName
 	switch (server)
-		if (1, "rp")
-			serverName = "Goonstation Roleplay"
+		if (1, "main1")
+			serverName = "Goonstation 1 Classic: Heisenbee"
 			serverURL = "byond://goon1.goonhub.com:26100"
-		if (2, "main")
-			serverName = "Goonstation"
+		if (2, "main2")
+			serverName = "Goonstation 2 Classic: Bombini"
 			serverURL = "byond://goon2.goonhub.com:26200"
-		if (3, "main2")
-			serverName = "Goonstation Roleplay Overflow"
+		if (3, "main3")
+			serverName = "Goonstation 3 Roleplay: Morty"
 			serverURL = "byond://goon3.goonhub.com:26300"
-		if (4, "main3")
-			serverName = "Goonstation Overflow"
+		if (4, "main4")
+			serverName = "Goonstation 4 Roleplay: Sylvester"
 			serverURL = "byond://goon4.goonhub.com:26400"
 
 	if (serverURL)
@@ -925,7 +925,7 @@ var/global/curr_day = null
 	if (!(ishuman(usr))) return
 	var/mob/living/carbon/human/H = usr
 	if (istype(H.wear_suit, /obj/item/clothing/suit/wizrobe/abuttontest))
-		var/obj/screen/ability_button/spell/U = H.wear_suit.ability_buttons[2]
+		var/atom/movable/screen/ability_button/spell/U = H.wear_suit.ability_buttons[2]
 		U.execute_ability()
 */
 
@@ -974,7 +974,7 @@ var/global/curr_day = null
 
 			var/ircmsg[] = new()
 			ircmsg["key"] = src.mob && src ? src.key : ""
-			ircmsg["name"] = src.mob.real_name
+			ircmsg["name"] = stripTextMacros(src.mob.real_name)
 			ircmsg["key2"] = target
 			ircmsg["name2"] = "Discord"
 			ircmsg["msg"] = html_decode(t)
@@ -1008,7 +1008,7 @@ var/global/curr_day = null
 
 			var/ircmsg[] = new()
 			ircmsg["key"] = src.mob && src ? src.key : ""
-			ircmsg["name"] = src.mob.real_name
+			ircmsg["name"] = stripTextMacros(src.mob.real_name)
 			ircmsg["key2"] = target
 			ircmsg["name2"] = "Discord"
 			ircmsg["msg"] = html_decode(t)
@@ -1058,9 +1058,9 @@ var/global/curr_day = null
 
 				var/ircmsg[] = new()
 				ircmsg["key"] = src.mob && src ? src.key : ""
-				ircmsg["name"] = src.mob.real_name
+				ircmsg["name"] = stripTextMacros(src.mob.real_name)
 				ircmsg["key2"] = (M != null && M.client != null && M.client.key != null) ? M.client.key : ""
-				ircmsg["name2"] = (M != null && M.real_name != null) ? M.real_name : ""
+				ircmsg["name2"] = (M != null && M.real_name != null) ? stripTextMacros(M.real_name) : ""
 				ircmsg["msg"] = html_decode(t)
 				ircbot.export("mentorpm", ircmsg)
 
@@ -1165,7 +1165,7 @@ var/global/curr_day = null
 
 	var/multip_color = rgb(si_r * 255, si_g * 255, si_b * 255)
 
-	var/obj/screen/S = new
+	var/atom/movable/screen/S = new
 	S.icon = 'icons/mob/whiteview.dmi'
 	S.blend_mode = BLEND_SUBTRACT
 	S.color = subtr_color
@@ -1175,7 +1175,7 @@ var/global/curr_day = null
 
 	C.screen += S
 
-	var/obj/screen/M = new
+	var/atom/movable/screen/M = new
 	M.icon = 'icons/mob/whiteview.dmi'
 	M.blend_mode = BLEND_MULTIPLY
 	M.color = multip_color
@@ -1454,7 +1454,7 @@ var/global/curr_day = null
 </head>
 <body>
 <video autoplay style="position:fixed;top:0px;right:0px;left:0px;bottom:0px">
-<source src="http://cdn.goonhub.com/misc/cinematics/[name].mp4" type="video/mp4">
+<source src="[config.cdn]/misc/cinematics/[name].mp4" type="video/mp4">
 </video>
 
 <script type="text/javascript">

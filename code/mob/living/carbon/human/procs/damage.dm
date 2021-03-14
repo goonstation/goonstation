@@ -19,10 +19,7 @@
 	if (P.proj_data) //Wire: Fix for: Cannot read null.damage_type
 		switch(P.proj_data.damage_type)
 			if (D_KINETIC)
-				if (armor_value_bullet > 1)
-					if (!P.proj_data.nomsg)
-						show_message("<span class='alert'>Your armor softens the hit!</span>", 4)
-				else
+				if (armor_value_bullet <= 1)
 					if (src.organHolder && prob(50))
 						src.organHolder.damage_organ(damage, 0, 0, target_organ)
 					src.set_clothing_icon_dirty()
@@ -57,8 +54,6 @@
 							//implanted.implanted(src, null, min(20, max(0, round(damage / 10) ) ))
 			if (D_PIERCING)
 				if (armor_value_bullet > 1)
-					if (!P.proj_data.nomsg)
-						show_message("<span class='alert'>[P] pierces through your armor!</span>", 4)
 					if (src.organHolder && prob(50))
 						src.organHolder.damage_organ(damage/max(armor_value_bullet/3), 0, 0, target_organ)
 				else
@@ -93,8 +88,6 @@
 
 			if (D_SLASHING)
 				if (armor_value_bullet > 1)
-					if (!P.proj_data.nomsg)
-						show_message("<span class='alert'>Your armor softens the hit!</span>", 4)
 					if (src.organHolder && prob(50))
 						src.organHolder.damage_organ(damage/armor_value_bullet, 0, 0, target_organ)
 				else
@@ -103,8 +96,6 @@
 
 			if (D_ENERGY)
 				if (armor_value_bullet > 1)
-					if (!P.proj_data.nomsg)
-						show_message("<span class='alert'>Your armor softens the hit!</span>", 4)
 					if (src.organHolder && prob(50))
 						src.organHolder.damage_organ(0, damage/armor_value_bullet, 0, target_organ)
 				else
@@ -113,8 +104,6 @@
 
 			if (D_BURNING)
 				if (armor_value_bullet > 1)
-					if (!P.proj_data.nomsg)
-						show_message("<span class='alert'>Your armor softens the hit!</span>", 4)
 					if (src.organHolder && prob(50))
 						src.organHolder.damage_organ(0, damage/armor_value_bullet, 0, target_organ)
 				else
@@ -123,9 +112,6 @@
 
 			if (D_TOXIC)
 				if (P.proj_data.reagent_payload)
-					if (armor_value_bullet > 1)
-						if (!P.proj_data.nomsg)
-							show_message("<span class='alert'>Your armor softens the hit!</span>", 4)
 					if (P.implanted)
 						if (istext(P.implanted))
 							P.implanted = text2path(P.implanted)
@@ -324,14 +310,14 @@
 	src.UpdateDamageIcon()
 	return
 
-/mob/living/carbon/human/TakeDamage(zone, brute, burn, tox, damage_type, disallow_limb_loss)
+/mob/living/carbon/human/TakeDamage(zone, brute, burn, tox, damage_type, disallow_limb_loss, var/bypass_reversal = FALSE)
 	if (src.nodamage) return
 
 	hit_twitch(src)
 
-	if (src.traitHolder && src.traitHolder.hasTrait("reversal"))
-		brute *= -1
-		burn *= -1
+	if (src.traitHolder && src.traitHolder.hasTrait("reversal") && !bypass_reversal)
+		src.HealDamage(zone, brute, burn, tox, TRUE)
+		return
 
 	if (src.traitHolder && src.traitHolder.hasTrait("deathwish"))
 		brute *= 2
@@ -439,12 +425,10 @@
 	*///Begone, message spam. Nobody asked for this
 	TakeDamage(zone, max(brute, 0), max(burn, 0), 0, damage_type)
 
-/mob/living/carbon/human/HealDamage(zone, brute, burn, tox)
+/mob/living/carbon/human/HealDamage(zone, brute, burn, tox, var/bypass_reversal = FALSE)
 
 	if (src.traitHolder && src.traitHolder.hasTrait("reversal"))
-		brute *= -1
-		burn *= -1
-		tox *= -1
+		src.TakeDamage(zone, brute, burn, tox, null, FALSE, TRUE)
 
 	if (zone == "All")
 		var/bruteOrganCount = 0.0 		//How many organs have brute damage?
@@ -701,9 +685,6 @@
 	if (!isnum(amount) || amount == 0)
 		return 1
 
-	//old way that has damage attached to var on /mob/living/carbon/human not on /obj/item/organ/brain
-	// src.brainloss = max(0,min(src.brainloss + amount,120))
-
 	if (src.organHolder && src.organHolder.brain)
 		if (amount > 0)
 			src.organHolder.damage_organ(amount, 0, 0, "brain")
@@ -712,10 +693,7 @@
 
 	if (src.organHolder && src.organHolder.brain && src.organHolder.brain.get_damage() >= 120 && isalive(src))
 		src.visible_message("<span class='alert'><b>[src.name]</b> goes limp, their facial expression utterly blank.</span>")
-		src.death()
-		return
-	return
-
+		INVOKE_ASYNC(src, /mob/living/carbon/human.proc/death)
 
 /mob/living/carbon/human/get_brain_damage()
 	if (src.organHolder && src.organHolder.brain)

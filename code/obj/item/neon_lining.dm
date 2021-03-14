@@ -114,7 +114,7 @@
 	if (issnippingtool(W) && src.amount > 1)
 		src.amount--
 		tooltip_rebuild = 1
-		take(1, usr.loc)
+		take(1, user.loc)
 		boutput(user, "You cut a piece off the [base_name].")
 		return
 

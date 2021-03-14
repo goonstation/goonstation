@@ -54,6 +54,7 @@ var/
 *.egg-info/
 .installed.cfg
 *.egg
+.cache
 
 # Local Map Backups
 /maps/**/backup/

@@ -68,12 +68,12 @@ Important Procedures
 
 		if (src.checkingcanpass > 0)
 			for(var/obj/obstacle as() in src)
-				if(!obstacle.CanPass(mover, target, height, air_group))
+				if((obstacle.event_handler_flags & USE_CANPASS) && !obstacle.CanPass(mover, target, height, air_group))
 					return 0
 
 		if (target?.checkingcanpass > 0)
 			for(var/obj/obstacle as() in target)
-				if(!obstacle.CanPass(mover, src, height, air_group))
+				if((obstacle.event_handler_flags & USE_CANPASS) && !obstacle.CanPass(mover, src, height, air_group))
 					return 0
 
 		return 1
@@ -148,10 +148,7 @@ datum/controller/air_system
 
 	proc/update_space_sample()
 		if (!space_sample || !(space_sample.turf_flags & CAN_BE_SPACE_SAMPLE))
-			if (map_currently_underwater)
-				space_sample = locate(/turf/space/fluid)
-			else
-				space_sample = locate(/turf/space)
+			space_sample = locate(/turf/space)
 		return space_sample
 
 	setup(datum/controller/process/air_system/controller)
@@ -186,7 +183,7 @@ datum/controller/air_system
 				test.length_space_border = 0
 				for(var/direction in cardinal)
 					var/turf/T = get_step(test,direction)
-					if(T && !members.Find(T) && test.CanPass(null, T, null,1))
+					if(T && !(T in members) && test.CanPass(null, T, null,1))
 						if(istype(T,/turf/simulated))
 							if(!T:parent)
 								possible_members += T
@@ -194,7 +191,7 @@ datum/controller/air_system
 							else
 								LAZYLISTINIT(possible_borders)
 								possible_borders |= test
-						else if(istype(T, /turf/space))
+						else if(istype(T, /turf/space) && !istype(T, /turf/space/fluid))
 							LAZYLISTINIT(possible_space_borders)
 							possible_space_borders |= test
 							test.length_space_border++
@@ -228,7 +225,7 @@ datum/controller/air_system
 						test.dist_to_space = dist
 
 			// Allow groups to determine if group processing is applicable after FEA setup
-			if(current_cycle) group.group_processing = 0
+			if(current_cycle) group.group_processing = FALSE
 			group.members = members
 			air_groups += group
 
@@ -249,13 +246,14 @@ datum/controller/air_system
 		process_tiles_to_space()
 		is_busy = TRUE
 
-		if(groups_to_rebuild.len > 0)
-			process_rebuild_select_groups()
-		LAGCHECK(LAG_HIGH)
+		if(!explosions.exploding)
+			if(groups_to_rebuild.len > 0)
+				process_rebuild_select_groups()
+			LAGCHECK(LAG_HIGH)
 
-		if(tiles_to_update.len > 0)
-			process_update_tiles()
-		LAGCHECK(LAG_HIGH)
+			if(tiles_to_update.len > 0)
+				process_update_tiles()
+			LAGCHECK(LAG_HIGH)
 
 		process_groups()
 		LAGCHECK(LAG_HIGH)

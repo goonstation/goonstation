@@ -15,8 +15,14 @@ datum/controller/process/mobs
 		detailed_count = new
 		src.mobs = global.mobs
 
-	copyStateFrom(var/datum/controller/process/mobs/other)
-		detailed_count = other.detailed_count
+	copyStateFrom(datum/controller/process/target)
+		var/datum/controller/process/mobs/old_mobs = target
+		src.detailed_count = old_mobs.detailed_count
+		src.tick_counter = old_mobs.tick_counter
+		src.mobs = old_mobs.mobs
+		src.wraiths = old_mobs.wraiths
+		src.adminghosts = old_mobs.adminghosts
+		src.nextpopcheck = old_mobs.nextpopcheck
 
 	doWork()
 		src.mobs = global.mobs

@@ -20,6 +20,9 @@
 
 	New(atom/loc, mob/assailant = null, mob/affecting = null)
 		..()
+		if(!affecting || affecting.disposed)
+			qdel(src)
+			return
 
 		var/icon/hud_style = hud_style_selection[get_hud_style(src.assailant)]
 		if (isicon(hud_style))
@@ -830,6 +833,10 @@
 						var/mob/living/carbon/human/H = user
 						if (H.shoes)
 							damage += H.shoes.kick_bonus
+						else if (H.limbs.r_leg)
+							damage += H.limbs.r_leg.limb_hit_bonus
+						else if (H.limbs.l_leg)
+							damage += H.limbs.l_leg.limb_hit_bonus
 
 					dive_attack_hit.TakeDamageAccountArmor("chest", damage, 0, 0, DAMAGE_BLUNT)
 					playsound(get_turf(user), 'sound/impact_sounds/Generic_Hit_2.ogg', 50, 1, -1)

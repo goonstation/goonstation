@@ -59,6 +59,7 @@
 	name = "plating"
 	icon_state = "plating"
 	intact = 0
+	layer = PLATING_LAYER
 	step_material = "step_plating"
 	step_priority = STEP_PRIORITY_MED
 

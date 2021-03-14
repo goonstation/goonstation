@@ -71,7 +71,7 @@
 			var/sleep_counter = 0
 			for(var/key in aiImagesLowPriority)
 				var/image/I = aiImagesLowPriority[key]
-				cl.images -= I
+				cl?.images -= I
 				if(sleep_counter++ % (300 * 10) == 0)
 					LAGCHECK(LAG_LOW)
 
@@ -144,7 +144,7 @@
 				O.receive_silicon_hotkey(src)
 				return
 
-		//var/inrange = in_range(target, src)
+		//var/inrange = in_interact_range(target, src)
 		//var/obj/item/equipped = src.equipped()
 
 		if (!src.client.check_any_key(KEY_EXAMINE | KEY_OPEN | KEY_BOLT | KEY_SHOCK | KEY_POINT) ) // ugh
@@ -513,15 +513,10 @@
 
 	if (prev_tiles)
 		for(var/turf/O as() in (prev_tiles - new_tiles))
-			//O.removeCameraCoverage(src)
-			//removeCameraCoverage copy+paste begin!
+			//copy+paste begin!
 			if(O.cameras == null) continue
 
-			//if(O.cameras.Find(src))
-			//	O.cameras.Remove(src)
 			O.cameras -= src
-			//if(src.coveredTiles.Find(O))
-			//	src.coveredTiles.Remove(O)
 			src.coveredTiles -= O
 
 			if(!O.cameras.len)
@@ -534,27 +529,19 @@
 			//copy paste end!
 
 	for(var/turf/t as() in (new_tiles - prev_tiles))
-
-		//t.addCameraCoverage(src)
-		//add camera coverage copy+paste begin!
+		//copy+paste begin!
 		var/cam_amount = t.cameras ? t.cameras.len : 0
 		if(t.cameras == null)
 			t.cameras = list(src)
 			if(src.coveredTiles == null)
 				src.coveredTiles = list(t)
 			else
-				//if(!src.coveredTiles.Find(t))
-				//	src.coveredTiles.Add(t)
 				src.coveredTiles += t
 		else
-			//if(!t.cameras.Find(src))
-			//	t.cameras.Add(src)
 			t.cameras += src
 			if(src.coveredTiles == null)
 				src.coveredTiles = list(t)
 			else
-				//if(!src.coveredTiles.Find(t))
-				//	src.coveredTiles.Add(t)
 				src.coveredTiles += t
 
 		if (cam_amount < t.cameras.len)
@@ -562,9 +549,7 @@
 				t.aiImage.loc = null
 		//copy paste end!
 
-
-		//t.adjustCameraImage()
-		//adjustCameraImage copy+paste begin!
+		//copy+paste begin!
 		if(!istype(t.aiImage)) continue
 
 		if( t.cameras.len >= 1 )
@@ -653,7 +638,8 @@ world/proc/updateCameraVisibility()
 			t.aiImage.loc = t
 	aiDirty = 1
 
-	world.updateCameraVisibility()
+	if(!global.explosions.exploding)
+		world.updateCameraVisibility()
 
 /obj/machinery/camera/proc/add_to_turfs() //chck if turf cameras is 1
 	aiDirty = 1

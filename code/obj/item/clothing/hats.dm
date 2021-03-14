@@ -7,9 +7,10 @@
 	wear_image_icon = 'icons/mob/head.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_headgear.dmi'
 	body_parts_covered = HEAD
-	compatible_species = list("human", "monkey", "werewolf", "flubber")
+	compatible_species = list("human", "cow", "werewolf", "flubber")
 	var/seal_hair = 0 // best variable name I could come up with, if 1 it forms a seal with a suit so no hair can stick out
 	block_vision = 0
+	var/path_prot = 1 // protection from airborne pathogens, multiplier for chance to be infected
 
 
 	setupProperties()
@@ -81,6 +82,7 @@
 	c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH | BLOCKCHOKE
 	desc = "This hood protects you from harmful biological contaminants."
 	seal_hair = 1
+	path_prot = 0
 
 	setupProperties()
 		..()
@@ -115,6 +117,7 @@
 	c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH | BLOCKCHOKE
 	desc = "Helps protect from vacuum for a short period of time."
 	seal_hair = 1
+	path_prot = 0
 
 	setupProperties()
 		..()
@@ -183,12 +186,14 @@
 			src.on = !src.on
 
 		if (src.on)
+			src.firesource = TRUE
 			src.force = 10
 			src.hit_type = DAMAGE_BURN
 			src.icon_state = "cakehat1"
 			light.enable()
 			processing_items |= src
 		else
+			src.firesource = FALSE
 			src.force = 3
 			src.hit_type = DAMAGE_BLUNT
 			src.icon_state = "cakehat0"
@@ -215,7 +220,7 @@
 
 	afterattack(atom/target, mob/user as mob)
 		if (src.on && !ismob(target) && target.reagents)
-			boutput(usr, "<span class='notice'>You heat \the [target.name]</span>")
+			boutput(user, "<span class='notice'>You heat \the [target.name]</span>")
 			target.reagents.temperature_reagents(2500,10)
 		return
 
@@ -758,7 +763,7 @@
 						if (istype(the_head))
 							H.visible_message("<span class='combat'><b>[H]'s head flies right off [his_or_her(H)] shoulders![prob(33) ? " HOLY SHIT!" : null]</b></span>")
 							var/the_dir = src.last_move ? src.last_move : alldirs//istype(src.throw_source) ? get_dir(src.throw_source, H) : alldirs
-							the_head.streak(the_dir, the_head.created_decal)
+							the_head.streak_object(the_dir, the_head.created_decal)
 							src.throw_source = null
 					else
 						M.TakeDamageAccountArmor("chest", 10, 0)
@@ -917,7 +922,7 @@
 			return 0
 		if (ishuman(user))
 			var/mob/living/carbon/human/H = user
-			if (istype(H.head, /obj/item/clothing/head/bighat/syndicate) && !(H.stat || H.getStatusDuration("paralysis") || H.getStatusDuration("stunned") || H.getStatusDuration("weakened") || H.restrained()))
+			if (istype(H.head, /obj/item/clothing/head/bighat/syndicate) && !is_incapacitated(H) && !H.restrained())
 				H.visible_message("<span class='alert'><b>[H] is totally and absolutely robusted by the [src.name]!</b></span>")
 				var/turf/T = get_turf(H)
 				T.fluid_react_single("blood",1000)
@@ -950,7 +955,7 @@
 			return 0
 		if (ishuman(user))
 			var/mob/living/carbon/human/H = user
-			if (istype(H.head, /obj/item/clothing/head/bighat/syndicate) && !(H.stat || H.getStatusDuration("paralysis") || H.getStatusDuration("stunned") || H.getStatusDuration("weakened") || H.restrained()))
+			if (istype(H.head, /obj/item/clothing/head/bighat/syndicate) && !is_incapacitated(H) && !H.restrained())
 				H.visible_message("<span class='notice'><b>[H] becomes one with the [src.name]!</b></span>")
 				H.gib()
 				explosion_new(src, T, 50) // like a really mean double macro
@@ -1222,3 +1227,23 @@
 	item_state = "antlers"
 	w_class = 1.0
 	throwforce = 0
+
+/obj/item/clothing/head/pajama_cap
+	name = "nightcap"
+	desc = "Is it truly a good night without one?"
+	icon_state = "pajama_hat"
+	item_state = "pajama_hat"
+
+/obj/item/clothing/head/that/white
+	name = "white hat"
+	desc = "A white tophat."
+	wear_image_icon = 'icons/mob/fruithat.dmi'
+	icon_state = "whtophat"
+	item_state = "whtophat"
+
+/obj/item/clothing/head/headsprout
+	name = "leaf hairclip"
+	desc = "A sign of a healthy, growing Staff Assistant."
+	wear_image_icon = 'icons/mob/fruithat.dmi'
+	icon_state = "headsprout"
+	item_state = "headsprout"

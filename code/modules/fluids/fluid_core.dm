@@ -138,6 +138,8 @@ var/mutable_appearance/fluid_ma
 				src.HasEntered(O,O.loc)
 		*/
 
+	proc/turf_remove_cleanup(turf/the_turf)
+		the_turf.active_liquid = null
 
 	disposing()
 		src.pooled = 1
@@ -145,7 +147,7 @@ var/mutable_appearance/fluid_ma
 		if (src.group)
 			src.group.members -= src
 
-		src.group = 0
+		src.group = null
 
 		/*for (var/atom/A in src.floated_atoms) // ehh i dont like doing this, but I think we need it.
 			if (!A) continue
@@ -154,7 +156,7 @@ var/mutable_appearance/fluid_ma
 		src.floated_atoms.len = 0*/
 
 		if (isturf(src.loc))
-			src.loc:active_liquid = null
+			src.turf_remove_cleanup(src.loc)
 
 		name = "fluid"
 		fluid_ma.icon_state = "15"
@@ -192,8 +194,7 @@ var/mutable_appearance/fluid_ma
 		src.step_sound = "sound/misc/splash_1.ogg"
 
 		if (isturf(src.loc))
-			var/turf/T = src.loc
-			T.active_liquid = null
+			turf_remove_cleanup(src.loc)
 		..()
 
 	get_desc(dist, mob/user)
@@ -209,7 +210,7 @@ var/mutable_appearance/fluid_ma
 			return
 
 		//floor overrides some construction clicks
-		if (istype(W,/obj/item/rcd) || istype(W,/obj/item/tile) || istype(W,/obj/item/sheet) || istype(W,/obj/item/crowbar) || istype(W,/obj/item/pen))
+		if (istype(W,/obj/item/rcd) || istype(W,/obj/item/tile) || istype(W,/obj/item/sheet) || ispryingtool(W) || istype(W,/obj/item/pen))
 			var/turf/T = get_turf(src)
 			T.attackby(W,user)
 			W.afterattack(T,user)
@@ -789,7 +790,7 @@ var/mutable_appearance/fluid_ma
 
 		for(var/current_id in reacted_ids)
 			if (!src.group) return
-			var/datum/reagent/current_reagent = F.group.reagents.reagent_list[current_id]
+			var/datum/reagent/current_reagent = F?.group.reagents.reagent_list[current_id]
 			if (!current_reagent) continue
 			F.group.reagents.remove_reagent(current_id, current_reagent.volume * volume_fraction)
 		/*
@@ -831,7 +832,7 @@ var/mutable_appearance/fluid_ma
 
 	var/do_reagent_reaction = 1
 
-	if (F.my_depth_level == 1 && src.shoes)
+	if (F.my_depth_level <= 1 && src.shoes)
 		do_reagent_reaction = 0
 	if (F.my_depth_level == 2 || F.my_depth_level == 3)
 		if (src.wear_suit && src.wear_suit.permeability_coefficient <= 0.01)

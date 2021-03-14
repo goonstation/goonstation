@@ -6,6 +6,7 @@
 	var/health = 100.0
 	flags = FPRINT | CONDUCT | TGUI_INTERACTIVE
 	p_class = 2
+	status = REQ_PHYSICAL_ACCESS
 
 	var/has_valve = 1
 	var/valve_open = 0
@@ -345,7 +346,7 @@
 				overlay_state = "overlay_safety_on"
 				src.det = Det
 				src.det.attachedTo = src
-				src.det.builtBy = usr
+				src.det.builtBy = user
 				logTheThing("bombing", user, null, "builds a canister bomb [log_atmos(src)] at [log_loc(src)].")
 				message_admins("[key_name(user)] builds a canister bomb at [log_loc(src)]. See bombing logs for atmos readout.")
 				tgui_process.update_uis(src)
@@ -437,15 +438,6 @@
 			has_paper = true
 		. += list("hasPaper" = has_paper)
 
-/obj/machinery/portable_atmospherics/canister/ui_state(mob/user)
-	return tgui_physical_state
-
-/obj/machinery/portable_atmospherics/canister/ui_status(mob/user)
-  return min(
-		tgui_physical_state.can_use_topic(src, user),
-		tgui_not_incapacitated_state.can_use_topic(src, user)
-	)
-
 /obj/machinery/portable_atmospherics/canister/ui_act(action, params)
 	. = ..()
 	if (.)
@@ -530,7 +522,7 @@
 
 	if(tool == TOOL_SNIPPING)
 		if(!user.find_tool_in_hand(tool))
-			usr.show_message("<span class='alert'>You need to have a snipping tool equipped for this.</span>")
+			user.show_message("<span class='alert'>You need to have a snipping tool equipped for this.</span>")
 		else
 			if(src.det.shocked)
 				var/mob/living/carbon/human/H = user
@@ -590,17 +582,17 @@
 
 				src.det.WireStatus[which_wire] = 0
 	else if(tool == TOOL_PULSING)
-		if (!usr.find_tool_in_hand(TOOL_PULSING))
-			usr.show_message("<span class='alert'>You need to have a multitool or similar equipped for this.</span>")
+		if (!user.find_tool_in_hand(TOOL_PULSING))
+			user.show_message("<span class='alert'>You need to have a multitool or similar equipped for this.</span>")
 		else
 			if (src.det.shocked)
-				var/mob/living/carbon/human/H = usr
+				var/mob/living/carbon/human/H = user
 				H.show_message("<span class='alert'>You tried to pulse a wire on the bomb, but got burned by it.</span>")
 				H.TakeDamage("chest", 0, 30)
 				H.changeStatus("stunned", 150)
 				H.UpdateDamageIcon()
 			else
-				src.visible_message("<b><font color=#B7410E>[usr.name] pulses the [src.det.WireNames[which_wire]] on the detonator.</font></b>")
+				src.visible_message("<b><font color=#B7410E>[user.name] pulses the [src.det.WireNames[which_wire]] on the detonator.</font></b>")
 				switch (src.det.WireFunctions[which_wire])
 					if ("detonate")
 						if (src.det.part_fs.timing)
@@ -718,10 +710,7 @@
 
 	..()
 
-	var/datum/gas/sleeping_agent/trace_gas = new
-	if(!air_contents.trace_gases)
-		air_contents.trace_gases = list()
-	air_contents.trace_gases += trace_gas
+	var/datum/gas/sleeping_agent/trace_gas = air_contents.get_or_add_trace_gas_by_type(/datum/gas/sleeping_agent)
 	trace_gas.moles = (src.maximum_pressure*filled)*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
 
 	src.update_icon()

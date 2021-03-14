@@ -33,8 +33,8 @@ var/global/list/bible_contents = list()
 		if (isvampire(M) || iswraith(M) || M.bioHolder.HasEffect("revenant"))
 			M.visible_message("<span class='alert'><B>[M] burns!</span>", 1)
 			var/zone = "chest"
-			if (usr.zone_sel)
-				zone = usr.zone_sel.selecting
+			if (user.zone_sel)
+				zone = user.zone_sel.selecting
 			M.TakeDamage(zone, 0, heal_amt)
 			JOB_XP(user, "Chaplain", 2)
 		else
@@ -43,13 +43,13 @@ var/global/list/bible_contents = list()
 				if( prob(25) )
 					H.delStatus("bloodcurse")
 					H.cure_disease_by_path(/datum/ailment/disease/cluwneing_around/cluwne)
-				if( prob(25) )
+				if(prob(25))
 					H.cure_disease_by_path(/datum/ailment/disability/clumsy/cluwne)
 			M.HealDamage("All", heal_amt, heal_amt)
-			if(prob(5))
+			if(prob(30))
 				JOB_XP(user, "Chaplain", 1)
 
-	attackby(var/obj/item/W, var/mob/user)
+	attackby(var/obj/item/W, var/mob/user, obj/item/storage/T)
 		if (istype(W, /obj/item/storage/bible))
 			user.show_text("You try to put \the [W] in \the [src]. It doesn't work. You feel dumber.", "red")
 		else

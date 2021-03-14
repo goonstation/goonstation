@@ -8061,10 +8061,7 @@
 	p_open = 1
 	},
 /obj/item/plate,
-/obj/item/reagent_containers/food/snacks/cake/chocolate{
-	desc = "Holy shit! This cake probably costs more than the gross domestic product of Bulgaria!";
-	name = "Extravagant Chocolate Gateau"
-	},
+/obj/item/reagent_containers/food/snacks/cake/chocolate/gateau,
 /obj/machinery/door/firedoor/pyro{
 	dir = 4
 	},

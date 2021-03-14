@@ -411,19 +411,14 @@
 		playsound(location, "sound/impact_sounds/Flesh_Break_2.ogg", 50, 1)
 	var/obj/decal/cleanable/blood/splatter/extra/blood = null
 
-	var/list/dirlist = list(list(NORTH, NORTHEAST, NORTHWEST),
-		list(SOUTH, SOUTHEAST, SOUTHWEST),
-		list(WEST, NORTHWEST, SOUTHWEST),
-		list(EAST, NORTHEAST, SOUTHEAST))
-
 	var/list/bloods = list()
 
-	for (var/i = 1, i <= 4, i++)
+	for (var/i in cardinal)
 		blood = make_cleanable(/obj/decal/cleanable/blood/splatter/extra, location)
 		blood.blood_DNA = bDNA
 		blood.blood_type = btype
 		blood.color = random_saturated_hex_color()
-		blood.streak(dirlist[i], 1)
+		blood.streak_cleanable(i, 1)
 		bloods += blood
 
 	var/extra = rand(2,4)
@@ -432,7 +427,7 @@
 		blood.blood_DNA = bDNA
 		blood.blood_type = btype
 		blood.color = random_saturated_hex_color()
-		blood.streak(alldirs, 1)
+		blood.streak_cleanable(cardinal, 1)
 		bloods += blood
 
 	var/turf/Q = get_turf(location)

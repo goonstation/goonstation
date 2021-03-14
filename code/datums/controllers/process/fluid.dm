@@ -17,6 +17,11 @@ datum/controller/process/fluid_group
 		src.processing_fluid_spreads = global.processing_fluid_spreads
 		src.processing_fluid_drains = global.processing_fluid_drains
 
+	copyStateFrom(datum/controller/process/target)
+		var/datum/controller/process/fluid_group/old_fluids = target
+		src.processing_fluid_drains = old_fluids.processing_fluid_drains
+		src.processing_fluid_groups = old_fluids.processing_fluid_groups
+		src.processing_fluid_spreads = old_fluids.processing_fluid_spreads
 
 	doWork()
 

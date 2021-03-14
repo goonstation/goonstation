@@ -1,6 +1,16 @@
 atom/movable/var/pressure_resistance = 20
 atom/movable/var/last_forced_movement = 0
 
+#ifdef KEEP_A_LIST_OF_HOTLY_PROCESSED_TURFS
+var/global/list/turf/hotly_processed_turfs = list()
+proc/filter_out_hotly_processed_turfs()
+	. = list()
+	for(var/turf/T as() in hotly_processed_turfs)
+		if(istype(T) && T?.atmos_operations > air_master.current_cycle * KEEP_A_LIST_OF_HOTLY_PROCESSED_TURFS)
+			. += T
+	global.hotly_processed_turfs = .
+#endif
+
 atom/movable/proc/experience_pressure_difference(pressure_difference, direction)
 	if(last_forced_movement >= air_master.current_cycle)
 		return 0
@@ -47,6 +57,15 @@ turf
 	var/tmp/pressure_direction = 0
 	var/tmp/obj/hotspot/active_hotspot
 
+#ifdef ATMOS_PROCESS_CELL_STATS_TRACKING
+	var/tmp/process_cell_operations = 0
+	var/static/max_process_cell_operations = 0
+#endif
+#ifdef ATMOS_TILE_STATS_TRACKING
+	var/tmp/atmos_operations = 0
+	var/static/max_atmos_operations = 0
+#endif
+
 	proc
 		high_pressure_movements()
 			if( !loc:sanctuary )
@@ -83,8 +102,17 @@ turf
 turf
 	simulated
 
+		var/static/list/mutable_appearance/gas_overlays = list(
+				#ifdef ALPHA_GAS_OVERLAYS
+				mutable_appearance('icons/effects/tile_effects.dmi', "plasma-alpha", FLY_LAYER, PLANE_NOSHADOW_ABOVE),
+				mutable_appearance('icons/effects/tile_effects.dmi', "sleeping_agent-alpha", FLY_LAYER, PLANE_NOSHADOW_ABOVE)
+				#else
+				mutable_appearance('icons/effects/tile_effects.dmi', "plasma", FLY_LAYER, PLANE_NOSHADOW_ABOVE),
+				mutable_appearance('icons/effects/tile_effects.dmi', "sleeping_agent", FLY_LAYER, PLANE_NOSHADOW_ABOVE)
+				#endif
+			)
+
 		var/tmp/dist_to_space = null
-		var/tmp/current_graphic = null
 
 		var/tmp
 			datum/gas_mixture/air
@@ -124,40 +152,18 @@ turf
 				if (disposed)
 					return
 
-				//overlays.len = 0
-
-				var/list/graphics = params2list(model.graphic)//splittext(model.graphic, ";")
-
-				if(!graphics || !graphics.len)
-					if (gas_icon_overlay)
-						pool(gas_icon_overlay)
-						gas_icon_overlay = null
-					return
-
-				var/new_visuals_state = 0
-
-				for(var/str in graphics)
-					switch(str)
-						if("plasma")
-							new_visuals_state |= 1
-						if("n2o")
-							new_visuals_state |= 2
-						else
-							continue
-
-				if (new_visuals_state)
-					if (new_visuals_state != visuals_state)
+				if (model.graphic)
+					if (model.graphic != visuals_state)
 						if(!gas_icon_overlay)
 							gas_icon_overlay = unpool(/obj/overlay/tile_gas_effect)
 							gas_icon_overlay.set_loc(src)
 						else
 							gas_icon_overlay.overlays.len = 0
 
-						visuals_state = new_visuals_state
-						if (visuals_state & 1)
-							gas_icon_overlay.overlays.Add(plmaster)
-						if (visuals_state & 2)
-							gas_icon_overlay.overlays.Add(slmaster)
+						visuals_state = model.graphic
+						UPDATE_TILE_GAS_OVERLAY(visuals_state, gas_icon_overlay, GAS_IMG_PLASMA)
+						UPDATE_TILE_GAS_OVERLAY(visuals_state, gas_icon_overlay, GAS_IMG_N2O)
+						gas_icon_overlay.dir = pick(cardinal)
 				else
 					if (gas_icon_overlay)
 						pool(gas_icon_overlay)
@@ -206,6 +212,9 @@ turf
 					if(air_master && istype(tile) && !tile.blocks_air)
 						air_master.tiles_to_update |= tile
 			pool(air)
+			if (gas_icon_overlay)
+				pool(gas_icon_overlay)
+				gas_icon_overlay = null
 			air = null
 			parent = null
 			..()
@@ -297,22 +306,21 @@ turf
 						if(!istype(T) || (T.parent!=parent))
 
 							//See what kind of border it is
-							if(istype(T,/turf/space))
+							if(istype(T,/turf/space) && !istype(T,/turf/space/fluid))
 								if(parent.space_borders)
-									parent.space_borders -= src
-									parent.space_borders += src
+									parent.space_borders |= src
 								else
 									parent.space_borders = list(src)
 								length_space_border++
+								group_border |= direction
 
-							else
+							else if(issimulatedturf(T))
 								if(parent.borders)
-									parent.borders -= src
-									parent.borders += src
+									parent.borders |= src
 								else
 									parent.borders = list(src)
+								group_border |= direction
 
-							group_border |= direction
 
 				parent.length_space_border += length_space_border
 
@@ -324,6 +332,11 @@ turf
 				processing = 0
 
 		process_cell()
+#ifdef ATMOS_PROCESS_CELL_STATS_TRACKING
+			src.process_cell_operations++
+			max_process_cell_operations = max(max_process_cell_operations, src.process_cell_operations)
+#endif
+			ATMOS_TILE_OPERATION_DEBUG(src)
 			var/list/turf/simulated/possible_fire_spreads
 			if(src.processing && src.air)
 #ifdef ATMOS_ARCHIVING
@@ -359,7 +372,7 @@ turf
 								if(!possible_fire_spreads)
 									possible_fire_spreads = list()
 								possible_fire_spreads += enemy_tile
-						else
+						else if(!istype(enemy_tile, /turf/space/fluid))
 							connection_difference = mimic_air_with_tile(enemy_tile)
 								//bordering a tile with fixed air properties
 
@@ -373,7 +386,10 @@ turf
 				return
 
 
-			src.air.react()
+			if(src.air.react() & CATALYST_ACTIVE)
+				src.active_hotspot?.catalyst_active = TRUE
+			else
+				src.active_hotspot?.catalyst_active = FALSE
 
 			if(src.active_hotspot && possible_fire_spreads)
 				src.active_hotspot.process(possible_fire_spreads)

@@ -227,7 +227,7 @@
 				return
 
 			if (!src.hd)
-				boutput(usr, "<span class='alert'>The memory core has already been removed.</span>")
+				boutput(user, "<span class='alert'>The memory core has already been removed.</span>")
 				return
 
 			status |= MAINT
@@ -236,7 +236,7 @@
 			src.hd = null
 			src.posted = 0
 
-			boutput(usr, "You pry out the memory core.")
+			boutput(user, "You pry out the memory core.")
 			src.updateUsrDialog()
 			return
 

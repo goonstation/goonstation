@@ -5,9 +5,9 @@
 	var/list/authorized = list(  )
 	desc = "A computer that controls the movement of the nearby shuttle."
 
-	lr = 0.6
-	lg = 1
-	lb = 0.1
+	light_r =0.6
+	light_g = 1
+	light_b = 0.1
 
 /obj/machinery/computer/shuttle/embedded
 	icon_state = "shuttle-embed"
@@ -207,8 +207,7 @@
 				if(emergency_shuttle.timeleft() < 60)
 					boutput(user, "The shuttle is already leaving in less than 60 seconds!")
 					return
-				src.authorized -= W:registered
-				src.authorized += W:registered
+				src.authorized |= W:registered
 				if (src.auth_need - src.authorized.len > 0)
 					boutput(world, text("<span class='notice'><B>Alert: [] authorizations needed until shuttle is launched early</B></span>", src.auth_need - src.authorized.len))
 				else
@@ -256,7 +255,7 @@
 /obj/machinery/computer/mining_shuttle/Topic(href, href_list)
 	if(..())
 		return
-	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
+	if ((usr.contents.Find(src) || (in_interact_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
 		src.add_dialog(usr)
 
 		if (href_list["send"])
@@ -325,7 +324,7 @@
 /obj/machinery/computer/prison_shuttle/Topic(href, href_list)
 	if(..())
 		return
-	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
+	if ((usr.contents.Find(src) || (in_interact_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
 		src.add_dialog(usr)
 
 		if (href_list["send"])
@@ -417,7 +416,7 @@
 /obj/machinery/computer/research_shuttle/Topic(href, href_list)
 	if(..())
 		return
-	if ((usr.contents.Find(src) || (isturf(src.loc) && in_range(src, usr))) || (issilicon(usr)))
+	if ((usr.contents.Find(src) || (isturf(src.loc) && in_interact_range(src, usr))) || (issilicon(usr)))
 		src.add_dialog(usr)
 		if (href_list["send"])
 			for(var/obj/machinery/shuttle/engine/propulsion/eng as() in machine_registry[MACHINES_SHUTTLEPROPULSION]) // ehh
@@ -506,7 +505,7 @@
 /obj/machinery/computer/asylum_shuttle/Topic(href, href_list)
 	if(..())
 		return
-	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
+	if ((usr.contents.Find(src) || (in_interact_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
 		src.add_dialog(usr)
 
 		if(href_list["asylum"])
@@ -594,7 +593,7 @@
 /obj/machinery/computer/icebase_elevator/Topic(href, href_list)
 	if(..())
 		return
-	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
+	if ((usr.contents.Find(src) || (in_interact_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
 		src.add_dialog(usr)
 
 		if (href_list["send"])
@@ -658,7 +657,7 @@
 /obj/machinery/computer/biodome_elevator/Topic(href, href_list)
 	if(..())
 		return
-	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
+	if ((usr.contents.Find(src) || (in_interact_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
 		src.add_dialog(usr)
 
 		if (href_list["send"])

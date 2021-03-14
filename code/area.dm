@@ -110,6 +110,7 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
 	var/workplace = 0
 
 	var/list/obj/critter/registered_critters = list()
+	var/list/obj/critter/registered_mob_critters = list()
 	var/waking_critters = 0
 
 	// this chunk zone is for Area Ambience
@@ -141,6 +142,9 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
 
 	/// Local list of obj/machines found in the area
 	var/list/machines = list()
+
+	///This datum, if set, allows terrain generation behavior to be ran on world/proc/init()
+	var/datum/map_generator/map_generator
 
 	proc/CanEnter(var/atom/movable/A)
 		if( blocked )
@@ -281,6 +285,15 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
 				return null
 		return R
 
+	/*
+	 * returns a list of objects matching type in an area
+	 */
+	proc/get_type(var/type)
+		. = list()
+		for (var/A in src)
+			if(istype(A, type))
+				. += A
+
 	proc/build_sims_score()
 		if (name == "Space" || src.name == "Ocean" || area_space_nopower(src) || skip_sims)
 			return
@@ -301,10 +314,12 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
 		sims_score = max(sims_score, 0)
 
 	proc/wake_critters()
-		if(waking_critters || !registered_critters.len) return
+		if(waking_critters || (!length(src.registered_critters) && !length(src.registered_mob_critters))) return
 		waking_critters = 1
 		for(var/obj/critter/C in src.registered_critters)
 			C.wake_from_hibernation()
+		for (var/mob/living/critter/M as() in src.registered_mob_critters)
+			M.wake_from_hibernation()
 		waking_critters = 0
 
 	proc/calculate_area_value()
@@ -435,8 +450,9 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
 /area/titlescreen
 	name = "The Title Screen"
 	teleport_blocked = 2
-	force_fullbright = 1
+	force_fullbright = 0
 	expandable = 0
+	ambient_light = rgb(79, 164, 184)
 	// filler_turf = "/turf/unsimulated/floor/setpieces/gauntlet"
 
 /area/cavetiny
@@ -905,10 +921,7 @@ ABSTRACT_TYPE(/area/adventure)
 	Entered(atom/movable/Obj,atom/OldLoc)
 		..()
 		if(ismob(Obj))
-			if (!soundSubscribers:Find(Obj))
-				soundSubscribers += Obj
-
-		return
+			soundSubscribers |= Obj
 
 	core
 		Entered(atom/movable/O)
@@ -1093,6 +1106,7 @@ ABSTRACT_TYPE(/area/prefab)
 /area/prefab
 	name = "Prefab"
 	icon_state = "orange"
+	requires_power = FALSE
 
 /area/prefab/discount_dans_asteroid
 	name = "Discount Dan's Delivery Asteroid"
@@ -1113,6 +1127,16 @@ ABSTRACT_TYPE(/area/prefab)
 /area/prefab/drug_den/party
 	name ="Drug Den"
 	icon_state = "purple"
+
+/area/prefab/sequestered_cloner
+	name = "Sequestered Cloner"
+
+/area/prefab/sequestered_cloner/puzzle
+	requires_power = TRUE
+
+/area/prefab/von_ricken
+	name ="Von Ricken"
+	icon_state = "blue"
 
 // Sealab trench areas //
 
@@ -1222,6 +1246,7 @@ ABSTRACT_TYPE(/area/prefab)
 /area/station/turret_protected/sea_crashed //dumb area pathing aRRGHHH
 	name = "Crashed Transport"
 	icon_state = "purple"
+	requires_power = FALSE
 
 /area/prefab/water_treatment
 	name = "Water Treatment Facility"
@@ -2108,6 +2133,11 @@ ABSTRACT_TYPE(/area/station/crew_quarters/radio)
 	icon_state = "yellow"
 	sound_environment = 0
 
+/area/station/crew_quarters/supplylobby
+	name = "Supply Lobby"
+	icon_state = "yellow"
+	sound_environment = 0
+
 /area/station/crew_quarters/garden
 	name = "Public Garden"
 	icon_state = "park"
@@ -2320,6 +2350,10 @@ ABSTRACT_TYPE(/area/station/medical)
 	name = "Pharmacy"
 	icon_state = "chem"
 
+/area/station/medical/medbay/psychiatrist
+	name = "Psychiatrist's Office"
+	icon_state = "psychiatrist"
+
 /area/station/medical/medbay/treatment1
 	name = "Treatment Room 1"
 	icon_state = "treat1"
@@ -2423,6 +2457,7 @@ ABSTRACT_TYPE(/area/station/security)
 	icon_state = "brigcell"
 	sound_environment = 3
 	teleport_blocked = 0
+	do_not_irradiate = 1
 
 /area/station/security/brig/cell_block_control
 		name = "Cell Block Control"
@@ -2741,6 +2776,11 @@ ABSTRACT_TYPE(/area/station/chapel)
 	icon_state = "chapeloffice"
 	sound_environment = 11
 
+/area/station/chapel/funeral_parlor
+	name = "Funeral Parlor"
+	icon_state = "funeralparlor"
+	sound_environment = 7
+
 /area/station/storage
 	name = "Storage Area"
 	icon_state = "storage"
@@ -2967,6 +3007,10 @@ ABSTRACT_TYPE(/area/station/catwalk)
 /area/research_outpost/toxins
 		name = "Research Outpost Toxins"
 		icon_state = "green"
+
+/area/research_outpost/pathology
+		name = "Research Outpost Pathology"
+		icon_state = "pink"
 
 // end station areas //
 
@@ -3358,6 +3402,7 @@ ABSTRACT_TYPE(/area/mining)
 
 	proc/SetName(var/name)
 		src.name = name
+		global.area_list_is_up_to_date = 0 // our area cache could no longer be accurate!
 		for(var/obj/machinery/power/apc/apc in src)
 			apc.name = "[name] APC"
 			apc.area = src
@@ -3401,6 +3446,7 @@ ABSTRACT_TYPE(/area/mining)
 		power_environ = 1
 	else
 		luminosity = 0
+	global.area_list_is_up_to_date = 0
 
 	SPAWN_DBG(1.5 SECONDS)
 		src.power_change()		// all machines set to current power level, also updates lighting icon
@@ -3434,18 +3480,16 @@ ABSTRACT_TYPE(/area/mining)
 		src.updateicon()
 		src.mouse_opacity = 0
 		var/list/cameras = list()
-		for (var/obj/machinery/firealarm/F in src)
-			F.icon_state = "fire1"
-			LAGCHECK(LAG_HIGH)
+		for_by_tcl(F, /obj/machinery/firealarm)
+			if(get_area(F) == src)
+				F.icon_state = "fire1"
 		for (var/obj/machinery/camera/C in src)
 			cameras += C
 			LAGCHECK(LAG_HIGH)
 		for_by_tcl(aiPlayer, /mob/living/silicon/ai)
 			aiPlayer.triggerAlarm("Fire", src, cameras, src)
-			LAGCHECK(LAG_HIGH)
 		for (var/obj/machinery/computer/atmosphere/alerts/a as() in machine_registry[MACHINES_ATMOSALERTS])
 			a.triggerAlarm("Fire", src, cameras, src)
-			LAGCHECK(LAG_HIGH)
 
 /**
   * Resets the fire alert in the area. Notifies AIs.
@@ -3456,15 +3500,13 @@ ABSTRACT_TYPE(/area/mining)
 		src.mouse_opacity = 0
 		src.updateicon()
 
-		for (var/obj/machinery/firealarm/F in src)
-			F.icon_state = "fire0"
-			LAGCHECK(LAG_HIGH)
+		for_by_tcl(F, /obj/machinery/firealarm)
+			if(get_area(F) == src)
+				F.icon_state = "fire0"
 		for_by_tcl(aiPlayer, /mob/living/silicon/ai)
 			aiPlayer.cancelAlarm("Fire", src, src)
-			LAGCHECK(LAG_HIGH)
 		for (var/obj/machinery/computer/atmosphere/alerts/a as() in machine_registry[MACHINES_ATMOSALERTS])
 			a.cancelAlarm("Fire", src, src)
-			LAGCHECK(LAG_HIGH)
 
 /**
   * Updates the icon of the area. Mainly used for flashing it red or blue. See: old party lights

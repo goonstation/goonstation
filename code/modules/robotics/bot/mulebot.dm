@@ -27,7 +27,6 @@
 	var/destination = ""		// destination description
 	var/home_destination = "" 	// tag of home beacon
 	req_access = list(access_cargo)
-	var/list/path = null
 
 	var/mode = 0		//0 = idle/ready
 						//1 = loading/unloading
@@ -278,7 +277,7 @@
 			return
 		if (usr.stat)
 			return
-		if ((in_range(src, usr) && istype(src.loc, /turf)) || (issilicon(usr)))
+		if ((in_interact_range(src, usr) && istype(src.loc, /turf)) || (issilicon(usr)))
 			src.add_dialog(usr)
 
 			switch(href_list["op"])
@@ -429,7 +428,7 @@
 
 	// called to load a crate
 	proc/load(var/atom/movable/C)
-		if (istype(C, /obj/screen) || C.anchored)
+		if (istype(C, /atom/movable/screen) || C.anchored)
 			return
 
 		if(get_dist(C, src) > 1 || load || !on)
@@ -494,6 +493,7 @@
 	var/last_process_time
 
 	process()
+		. = ..()
 		var/time_since_last = TIME - last_process_time
 		last_process_time = TIME
 		if(!has_power())

@@ -145,10 +145,12 @@
 			return
 
 		working = 1
+		var/holder = src.loc
 		var/the_reagent = input("Which reagent do you want to manipulate?","Mini-ChemMaster",null,null) in B.reagents.reagent_list
-		if (!the_reagent) return
+		if (src.loc != holder || !the_reagent)
+			return
 		var/action = input("What do you want to do with the [the_reagent]?","Mini-ChemMaster",null,null) in list("Isolate","Purge","Remove One Unit","Remove Five Units","Create Pill","Create Pill Bottle","Create Bottle","Do Nothing")
-		if (!action || action == "Do Nothing")
+		if (src.loc != holder || !action || action == "Do Nothing")
 			working = 0
 			return
 
@@ -159,30 +161,39 @@
 			if("Remove Five Units") B.reagents.remove_reagent(the_reagent, 5)
 			if("Create Pill")
 				var/obj/item/reagent_containers/pill/P = new/obj/item/reagent_containers/pill(user.loc)
-				var/name = copytext(html_encode(input(usr,"Name:","Name your pill!",B.reagents.get_master_reagent_name())), 1, 32)
-				if(!name || name == " ") name = B.reagents.get_master_reagent_name()
+				var/default = B.reagents.get_master_reagent_name()
+				var/name = copytext(html_encode(input(user,"Name:","Name your pill!",default)), 1, 32)
+				if(!name || name == " ") name = default
+				if(name && name != default)
+					phrase_log.log_phrase("pill", name, no_duplicates=TRUE)
 				P.name = "[name] pill"
 				B.reagents.trans_to(P,B.reagents.total_volume)
 			if("Create Pill Bottle")
 				// copied from chem_master because fuck fixing everything at once jeez
-				var/pillname = copytext( html_encode( input( usr, "Name:", "Name the pill!", B.reagents.get_master_reagent_name() ) ), 1, 32)
+				var/default = B.reagents.get_master_reagent_name()
+				var/pillname = copytext( html_encode( input( user, "Name:", "Name the pill!", default ) ), 1, 32)
 				if(!pillname || pillname == " ")
-					pillname = B.reagents.get_master_reagent_name()
+					pillname = default
+				if(pillname && pillname != default)
+					phrase_log.log_phrase("pill", pillname, no_duplicates=TRUE)
 
-				var/pillvol = input( usr, "Volume:", "Volume of chemical per pill!", "5" ) as num
+				var/pillvol = input( user, "Volume:", "Volume of chemical per pill!", "5" ) as num
 				if( !pillvol || !isnum(pillvol) || pillvol < 5 )
 					pillvol = 5
 
 				var/pillcount = round( B.reagents.total_volume / pillvol ) // round with a single parameter is actually floor because byond
 				if(!pillcount)
-					boutput(usr, "[src] makes a weird grinding noise. That can't be good.")
+					boutput(user, "[src] makes a weird grinding noise. That can't be good.")
 				else
 					var/obj/item/chem_pill_bottle/pillbottle = new /obj/item/chem_pill_bottle(user.loc)
 					pillbottle.create_from_reagents(B.reagents, pillname, pillvol, pillcount)
 			if("Create Bottle")
 				var/obj/item/reagent_containers/glass/bottle/P = new/obj/item/reagent_containers/glass/bottle(user.loc)
-				var/name = copytext(html_encode(input(usr,"Name:","Name your bottle!",B.reagents.get_master_reagent_name())), 1, 32)
-				if(!name || name == " ") name = B.reagents.get_master_reagent_name()
+				var/default = B.reagents.get_master_reagent_name()
+				var/name = copytext(html_encode(input(user,"Name:","Name your bottle!",default)), 1, 32)
+				if(!name || name == " ") name = default
+				if(name && name != default)
+					phrase_log.log_phrase("bottle", name, no_duplicates=TRUE)
 				P.name = "[name] bottle"
 				B.reagents.trans_to(P,30)
 
@@ -198,7 +209,10 @@
 
 	attack_self(var/mob/user as mob)
 		if (!vend_this)
+			var/holder = src.loc
 			var/pickme = input("Please make your selection!", "Item selection", src.vend_this) in list("Burger", "Cheeseburger", "Meat sandwich", "Cheese sandwich", "Snack", "Cola", "Water")
+			if (src.loc != holder)
+				return
 			src.vend_this = pickme
 			user.show_text("[pickme] selected. Click with the synthesizer on yourself to pick a different item.", "blue")
 			return

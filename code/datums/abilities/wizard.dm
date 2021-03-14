@@ -155,7 +155,7 @@
 
 //////////////////////////////////////////// Ability holder /////////////////////////////////////////
 
-/obj/screen/ability/topBar/spell
+/atom/movable/screen/ability/topBar/spell
 	clicked(params)
 		var/datum/targetable/spell/spell = owner
 		var/datum/abilityHolder/holder = owner.holder
@@ -288,7 +288,7 @@
 		if (!holder || !holder.owner)
 			qdel(src)
 		if (!src.object)
-			src.object = new /obj/screen/ability/topBar/spell()
+			src.object = new /atom/movable/screen/ability/topBar/spell()
 		object.icon = src.icon
 		if (src.last_cast > world.time)
 			object.name = "[src.name] ([round((src.last_cast-world.time)/10)])"
@@ -299,7 +299,7 @@
 		object.owner = src
 
 	castcheck()
-		return !istype(src, /datum/targetable/spell/prismatic_spray/admin) && holder.owner.wizard_castcheck(src)
+		return holder.owner.wizard_castcheck(src)
 
 	cast(atom/target)
 		if(ishuman(holder.owner))

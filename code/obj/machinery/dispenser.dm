@@ -7,6 +7,7 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "dispenser-empty"
 	density = 1
+	status = REQ_PHYSICAL_ACCESS
 	var/o2tanks = 10
 	var/pltanks = 10
 	anchored = 1.0

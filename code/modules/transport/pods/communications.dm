@@ -131,7 +131,7 @@
 		//	qdel(signal)
 
 	proc/open_hangar(mob/user as mob)
-		var/pass = input(usr, "Please enter panel access number.", "Access Number") as text
+		var/pass = input(user, "Please enter panel access number.", "Access Number") as text
 		pass = copytext(html_encode(pass), 1, 32)
 		if(!pass)
 			return

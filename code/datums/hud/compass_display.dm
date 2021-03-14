@@ -1,10 +1,10 @@
 //Add this screen object to a hud or screen with a supplied owner and target and set up some loop to call proc/process()
 //Example for if you were adding this from inside an abilityHolder
-//compass = new/obj/screen/compass_display(src,owner=owner,target=get_turf(owner))
+//compass = new/atom/movable/screen/compass_display(src,owner=owner,target=get_turf(owner))
 //hud.add_object(compass)
 //Then call compass.process() from datum/abilityHolder/proc/onLife
 
-obj/screen/compass_display
+atom/movable/screen/compass_display
 	name = "compass"
 	icon = 'icons/mob/mob.dmi'
 	icon_state = "compass_border"
@@ -13,7 +13,7 @@ obj/screen/compass_display
 	var/atom/owner
 	var/atom/target
 	var/degree = 0
-	
+
 
 	New(turf/loc, var/owner, var/target)
 		..()
@@ -25,7 +25,7 @@ obj/screen/compass_display
 		needle.layer = src.layer + 1
 		needle.vis_flags = VIS_INHERIT_PLANE
 		src.vis_contents += needle
-		
+
 	proc/process()
 		message_admins("[owner]||[target]")
 		if (!owner || !target) return
@@ -62,5 +62,5 @@ obj/screen/compass_display
 
 // /mob
 // 	verb/test_compass()
-// 		var/obj/screen/compass/P = new/obj/screen/compass(src,owner=src,target=new/obj/warp_portal(src.loc))
+// 		var/atom/movable/screen/compass/P = new/atom/movable/screen/compass(src,owner=src,target=new/obj/warp_portal(src.loc))
 // 		src.client.screen += P

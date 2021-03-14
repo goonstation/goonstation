@@ -4,7 +4,7 @@
 	cast_while_dead = 1
 	var/corpsecount = 0
 
-/obj/screen/ability/topBar/wraith
+/atom/movable/screen/ability/topBar/wraith
 	tens_offset_x = 19
 	tens_offset_y = 7
 	secs_offset_x = 23
@@ -33,7 +33,7 @@
 	theme = "wraith"
 
 	New()
-		var/obj/screen/ability/topBar/wraith/B = new /obj/screen/ability/topBar/wraith(null)
+		var/atom/movable/screen/ability/topBar/wraith/B = new /atom/movable/screen/ability/topBar/wraith(null)
 		B.icon = src.icon
 		B.icon_state = src.icon_state
 		B.owner = src
@@ -516,8 +516,8 @@
 				var/count = rand(5,9)
 				var/turf/trgloc = get_turf(holder.owner)
 				var/list/affected = block(locate(trgloc.x - 8,trgloc.y - 8,trgloc.z), locate(trgloc.x + 8,trgloc.y + 8,trgloc.z))
-				for (var/i = 0, i < count, i++)
-					new/obj/item/reagent_containers/food/snacks/ectoplasm(pick(affected))
+				for (var/i in 1 to count)
+					new /obj/item/reagent_containers/food/snacks/ectoplasm(pick(affected))
 				return 0
 			if (5)
 				var/sapped_amt = src.holder.regenRate * 100

@@ -1,4 +1,5 @@
 var/list/genescanner_addresses = list()
+var/list/genetek_hair_styles = null
 
 /obj/machinery/genetics_scanner
 	name = "GeneTek scanner"
@@ -8,6 +9,7 @@ var/list/genescanner_addresses = list()
 	mats = 15
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
 	var/mob/occupant = null
+	var/datum/character_preview/multiclient/occupant_preview = null
 	var/locked = 0
 	anchored = 1.0
 	soundproofing = 10
@@ -235,6 +237,12 @@ var/list/genescanner_addresses = list()
 		M.set_loc(src)
 		src.occupant = M
 		src.icon_state = "scanner_1"
+		src.update_occupant()
+
+		// open the computer UI so the person in the scanner can watch.
+		var/obj/machinery/computer/genetics/C = locate(/obj/machinery/computer/genetics, orange(1, src))
+		if (istype(C))
+			C.ui_interact(M, null)
 
 		playsound(src.loc, "sound/machines/sleeper_close.ogg", 50, 1)
 		return
@@ -264,12 +272,20 @@ var/list/genescanner_addresses = list()
 			return 1
 		..()
 
+	proc/update_occupant()
+		var/mob/living/carbon/human/H = src.occupant
+		if (istype(H))
+			if (src.occupant_preview)
+				src.occupant_preview.update_appearance(H.bioHolder.mobAppearance, H.mutantrace)
+		else
+			qdel(src.occupant_preview)
+			src.occupant_preview = null
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /datum/genetics_appearancemenu
-	var/client/usercl = null
-
 	var/mob/living/carbon/human/target_mob = null
+	var/direction = SOUTH
 
 	var/customization_first = "Short Hair"
 	var/customization_second = "None"
@@ -282,83 +298,94 @@ var/list/genescanner_addresses = list()
 
 	var/s_tone = "#FAD7D0"
 
-	var/icon/preview_icon = null
+	var/datum/character_preview/multiclient/preview = null
 
-	New(var/client/newuser, var/mob/target)
+	New(mob/target)
 		..()
-		if(!newuser || !ishuman(target))
+		if(!ishuman(target))
 			qdel(src)
 			return
 
 		src.target_mob = target
-		src.usercl = newuser
+		src.preview = new()
 		src.load_mob_data(src.target_mob)
-		src.update_menu()
-		src.process()
 		return
 
 	disposing()
-		if(usercl?.mob)
-			usercl.mob.Browse(null, "window=geneticsappearance")
-			usercl = null
-		target_mob = null
-		..()
+		. = ..()
+		qdel(src.preview)
 
-	Topic(href, href_list)
-		if(href_list["close"])
-			qdel(src)
+	ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+		. = ..()
+		if (.)
 			return
+		switch (action)
+			if("editappearance")
+				. = TRUE
+				var/fixColors = !!(src.target_mob.mutantrace?.mutant_appearance_flags & FIX_COLORS)
+				if (params["skin"])
+					src.s_tone = sanitize_color(params["skin"], FALSE)
+				if (params["eyes"])
+					src.e_color = sanitize_color(params["eyes"], FALSE)
+				if (params["color1"])
+					src.customization_first_color = sanitize_color(params["color1"], fixColors)
+				if (params["color2"])
+					src.customization_second_color = sanitize_color(params["color2"], fixColors)
+				if (params["color3"])
+					src.customization_third_color = sanitize_color(params["color3"], fixColors)
+				if (params["style1"])
+					src.customization_first = sanitize_hairstyle(params["style1"])
+				if (params["style2"])
+					src.customization_second = sanitize_hairstyle(params["style2"])
+				if (params["style3"])
+					src.customization_third = sanitize_hairstyle(params["style3"])
+				if (params["apply"] || params["cancel"])
+					if (params["apply"])
+						src.copy_to_target()
+					qdel(src)
+					return
+				src.update_preview_icon()
 
-		else if (href_list["customization_first"])
-			var/new_style = input(usr, "Please select detail style", "Appearance Menu")  as null|anything in customization_styles + customization_styles_gimmick
+	ui_data(mob/user)
+		src.preview?.add_client(user?.client)
 
-			if (new_style)
-				src.customization_first = new_style
+		if (isnull(genetek_hair_styles))
+			genetek_hair_styles = list()
+			for (var/S as() in customization_styles)
+				genetek_hair_styles += S
+			for (var/S as() in customization_styles_gimmick)
+				genetek_hair_styles += S
 
-		else if (href_list["customization_second"])
-			var/new_style = input(usr, "Please select detail style", "Appearance Menu")  as null|anything in customization_styles + customization_styles_gimmick
+		var/fixColors = !!(src.target_mob.mutantrace?.mutant_appearance_flags & FIX_COLORS)
+		var/hasHumanEyes = !src.target_mob.mutantrace || (src.target_mob.mutantrace.mutant_appearance_flags & HAS_HUMAN_EYES)
+		var/hasHumanSkintone = !src.target_mob.mutantrace || (src.target_mob.mutantrace.mutant_appearance_flags & HAS_HUMAN_SKINTONE)
+		var/hasHumanHair = !src.target_mob.mutantrace || (src.target_mob.mutantrace.mutant_appearance_flags & HAS_HUMAN_HAIR)
+		var/colorChannels = list("Bottom Detail", "Mid Detail", "Top Detail")
+		if (!hasHumanHair)
+			colorChannels = src.target_mob.mutantrace.color_channel_names
 
-			if (new_style)
-				src.customization_second = new_style
+		return list(
+			"preview" = src.preview.preview_id,
+			"hairStyles" = genetek_hair_styles,
+			"direction" = src.direction,
+			"skin" = src.s_tone,
+			"eyes" = src.e_color,
+			"color1" = src.customization_first_color,
+			"color2" = src.customization_second_color,
+			"color3" = src.customization_third_color,
+			"style1" = src.customization_first,
+			"style2" = src.customization_second,
+			"style3" = src.customization_third,
+			"fixColors" = fixColors,
+			"hasEyes" = hasHumanEyes,
+			"hasSkin" = hasHumanSkintone,
+			"hasHair" = hasHumanHair,
+			"channels" = colorChannels,
+		)
 
-		else if (href_list["customization_third"])
-			var/new_style = input(usr, "Please select detail style", "Appearance Menu")  as null|anything in customization_styles + customization_styles_gimmick
-
-			if (new_style)
-				src.customization_third = new_style
-
-		else if (href_list["hair"])
-			var/new_hair = input(usr, "Please select hair color.", "Appearance Menu") as color
-			if(new_hair)
-				src.customization_first_color = new_hair
-
-		else if (href_list["facial"])
-			var/new_facial = input(usr, "Please select detail 1 color.", "Appearance Menu") as color
-			if(new_facial)
-				src.customization_second_color = new_facial
-
-		else if (href_list["detail"])
-			var/new_detail = input(usr, "Please select detail 2 color.", "Appearance Menu") as color
-			if(new_detail)
-				src.customization_third_color = new_detail
-
-		else if (href_list["eyes"])
-			var/new_eyes = input(usr, "Please select eye color.", "Appearance Menu") as color
-			if(new_eyes)
-				src.e_color = new_eyes
-
-		else if (href_list["s_tone"])
-			var/new_tone = input(usr, "Please select skin color.", "Appearance Menu")  as color
-
-			if (new_tone)
-				src.s_tone = new_tone
-
-		else if(href_list["apply"])
-			src.copy_to_target()
-			qdel(src)
-
-		src.update_menu()
-		return
+	ui_close(mob/user)
+		. = ..()
+		src.preview?.remove_client(user?.client)
 
 	proc
 		load_mob_data(var/mob/living/carbon/human/H)
@@ -390,53 +417,19 @@ var/list/genescanner_addresses = list()
 
 			return
 
-		update_menu()
-			set background = 1
-			if(!usercl)
-				qdel(src)
-				return
-			var/mob/user = usercl.mob
-			src.update_preview_icon()
-			user << browse_rsc(preview_icon, "polymorphicon.png")
-
-			var/dat = "<html><body><title>GeneTek Appearance Modifier</title>"
-
-			dat += "<table><tr><td>"
-			dat += "<b>Appearance:</b><br>"
-			dat += "<a href='byond://?src=\ref[src];s_tone=input'><b>Skin Tone:</b></a> <font face=\"fixedsys\" size=\"3\" color=\"[src.s_tone]\"><b>#</b></font></a><br>"
-			dat += "<a href='byond://?src=\ref[src];eyes=input'><b>Eye Color:</b> <font face=\"fixedsys\" size=\"3\" color=\"[src.e_color]\"><b>#</b></font></a><br>"
-
-			dat += "<a href='byond://?src=\ref[src];customization_first=input'><b>Bottom Detail:</b></a> [src.customization_first] "
-			dat += "<a href='byond://?src=\ref[src];hair=input'><font face=\"fixedsys\" size=\"3\" color=\"[src.customization_first_color]\"><b>#</b></font></a><br>"
-
-			dat += "<a href='byond://?src=\ref[src];customization_second=input'><b>Mid Detail:</b></a> [src.customization_second] "
-			dat += "<a href='byond://?src=\ref[src];facial=input'><font face=\"fixedsys\" size=\"3\" color=\"[src.customization_second_color]\"><b>#</b></font></a><br>"
-
-			dat += "<a href='byond://?src=\ref[src];customization_third=input'><b>Top Detail:</b></a> [src.customization_third] "
-			dat += "<a href='byond://?src=\ref[src];detail=input'><font face=\"fixedsys\" size=\"3\" color=\"[src.customization_third_color]\"><b>#</b></font></a><br>"
-
-			dat += "</td><td>"
-			dat += "<center><b>Preview</b>:<br>"
-			dat += "<img src=polymorphicon.png height=64 width=64></center>"
-			dat += "</td></tr></table>"
-			dat += "<hr>"
-
-			dat += "<a href='byond://?src=\ref[src];apply=1'>Apply</a><br>"
-			dat += "</body></html>"
-
-			user.Browse(dat, "window=geneticsappearance;size=300x250;can_resize=0;can_minimize=0")
-			onclose(user, "geneticsappearance", src)
-			return
-
 		copy_to_target()
 			if(!target_mob)
 				return
 
 			sanitize_null_values()
 			target_mob.bioHolder.mobAppearance.e_color = e_color
+			target_mob.bioHolder.mobAppearance.e_color_original = e_color
 			target_mob.bioHolder.mobAppearance.customization_first_color = customization_first_color
+			target_mob.bioHolder.mobAppearance.customization_first_color_original = customization_first_color
 			target_mob.bioHolder.mobAppearance.customization_second_color = customization_second_color
+			target_mob.bioHolder.mobAppearance.customization_second_color_original = customization_second_color
 			target_mob.bioHolder.mobAppearance.customization_third_color = customization_third_color
+			target_mob.bioHolder.mobAppearance.customization_third_color_original = customization_third_color
 
 			target_mob.bioHolder.mobAppearance.s_tone = s_tone
 			target_mob.bioHolder.mobAppearance.s_tone_original = s_tone
@@ -444,8 +437,11 @@ var/list/genescanner_addresses = list()
 				target_mob.limbs.reset_stone()
 
 			target_mob.bioHolder.mobAppearance.customization_first = customization_first
+			target_mob.bioHolder.mobAppearance.customization_first_original = customization_first
 			target_mob.bioHolder.mobAppearance.customization_second = customization_second
+			target_mob.bioHolder.mobAppearance.customization_second_original = customization_second
 			target_mob.bioHolder.mobAppearance.customization_third = customization_third
+			target_mob.bioHolder.mobAppearance.customization_third_original = customization_third
 
 			target_mob.cust_one_state = customization_styles[customization_first]
 			if(!target_mob.cust_one_state)
@@ -469,6 +465,18 @@ var/list/genescanner_addresses = list()
 			target_mob.set_face_icon_dirty()
 			target_mob.set_body_icon_dirty()
 
+		sanitize_color(color, fix)
+			if (fix)
+				. = fix_colors(color)
+			else
+				var/list/L = hex_to_rgb_list(color)
+				. = rgb(L[1], L[2], L[3])
+
+		sanitize_hairstyle(style)
+			. = style
+			if (!customization_styles[.] && !customization_styles_gimmick[.])
+				. = "None"
+
 		sanitize_null_values()
 			if (customization_first_color == null)
 				customization_first_color = "#101010"
@@ -487,67 +495,25 @@ var/list/genescanner_addresses = list()
 			if (s_tone == null || s_tone == "#ffffff")
 				s_tone = "#FEFEFE"
 
-		process()
-			set background = 1
-			if(!usercl || !target_mob)
-				qdel(src)
-				return
-			SPAWN_DBG(2 SECONDS)
-				src.process()
-			return
-
 		update_preview_icon()
-			set background = 1
-			qdel(src.preview_icon)
+			var/datum/appearanceHolder/AH = new()
 
-			var/customization_first_r = null
-			var/customization_second_r = null
-			var/customization_third_r = null
+			AH.CopyOther(src.target_mob.bioHolder.mobAppearance)
+			AH.e_color = src.e_color
+			AH.e_color_original = src.e_color
+			AH.customization_first_color = src.customization_first_color
+			AH.customization_first_color_original = src.customization_first_color
+			AH.customization_second_color = src.customization_second_color
+			AH.customization_second_color_original = src.customization_second_color
+			AH.customization_third_color = src.customization_third_color
+			AH.customization_third_color_original = src.customization_third_color
+			AH.s_tone = src.s_tone
+			AH.s_tone_original = src.s_tone
+			AH.customization_first = src.customization_first
+			AH.customization_first_original = src.customization_first
+			AH.customization_second = src.customization_second
+			AH.customization_second_original = src.customization_second
+			AH.customization_third = src.customization_third
+			AH.customization_third_original = src.customization_third
 
-			var/gender = ""
-			if(target_mob.gender == "male") gender = "m"
-			else gender = "f"
-
-			src.preview_icon = new /icon('icons/mob/human.dmi', "body_[gender]")
-
-			if (src.s_tone != "#FFFFFF")
-				src.preview_icon.Blend(target_mob.bioHolder.mobAppearance.s_tone, ICON_MULTIPLY)
-
-			var/icon/eyes_s = new/icon("icon" = 'icons/mob/human_hair.dmi', "icon_state" = "eyes")
-
-			customization_first_r = customization_styles[customization_first]
-			if(!customization_first_r)
-				customization_first_r = customization_styles_gimmick[customization_first]
-				if(!customization_first_r)
-					customization_first_r = "None"
-
-			customization_second_r = customization_styles[customization_second]
-			if(!customization_second_r)
-				customization_second_r = customization_styles_gimmick[customization_second]
-				if(!customization_second_r)
-					customization_second_r = "None"
-
-			customization_third_r = customization_styles[customization_third]
-			if(!customization_third_r)
-				customization_third_r = customization_styles_gimmick[customization_third]
-				if(!customization_third_r)
-					customization_third_r = "None"
-
-			var/icon/hair_s = new/icon("icon" = 'icons/mob/human_hair.dmi', "icon_state" = customization_first_r)
-			hair_s.Blend(src.customization_first_color, ICON_MULTIPLY)
-			eyes_s.Blend(hair_s, ICON_OVERLAY)
-			qdel(hair_s)
-
-			var/icon/facial_s = new/icon("icon" = 'icons/mob/human_hair.dmi', "icon_state" = customization_second_r)
-			facial_s.Blend(src.customization_second_color, ICON_MULTIPLY)
-			eyes_s.Blend(facial_s, ICON_OVERLAY)
-			qdel(facial_s)
-
-			var/icon/detail_s = new/icon("icon" = 'icons/mob/human_hair.dmi', "icon_state" = customization_third_r)
-			detail_s.Blend(src.customization_third_color, ICON_MULTIPLY)
-			eyes_s.Blend(detail_s, ICON_OVERLAY)
-			qdel(detail_s)
-
-			src.preview_icon.Blend(eyes_s, ICON_OVERLAY)
-			qdel(eyes_s)
-			return
+			src.preview.update_appearance(AH, src.target_mob.mutantrace, src.direction)

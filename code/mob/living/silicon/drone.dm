@@ -124,7 +124,7 @@
 				return
 			var/obj/item/cable_coil/C = W
 			if (get_fraction_of_percentage_and_whole(src.health,src.health_max) >= 33)
-				boutput(usr, "<span class='alert'>The cabling looks fine. Use a welder to repair the rest of the damage.</span>")
+				boutput(user, "<span class='alert'>The cabling looks fine. Use a welder to repair the rest of the damage.</span>")
 				return
 			C.use(1)
 			src.health = max(1,min(src.health + 10,src.health_max))
@@ -180,7 +180,7 @@
 
 	click(atom/target, params)
 		var/obj/item/equipped = src.active_tool
-		var/use_delay = !(target in src.contents) && !istype(target,/obj/screen) && (!disable_next_click || ismob(target) || (target && target.flags & USEDELAY) || (equipped && equipped.flags & USEDELAY))
+		var/use_delay = !(target in src.contents) && !istype(target,/atom/movable/screen) && (!disable_next_click || ismob(target) || (target && target.flags & USEDELAY) || (equipped && equipped.flags & USEDELAY))
 		if (use_delay && world.time < src.next_click)
 			return src.next_click - world.time
 
@@ -380,7 +380,7 @@
 				part_propulsion = null
 				change_stage(5)
 			else
-				boutput(usr, "You can't figure out what to do with it. Maybe a closer examination is in order.")
+				boutput(user, "You can't figure out what to do with it. Maybe a closer examination is in order.")
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if(isweldingtool(W))

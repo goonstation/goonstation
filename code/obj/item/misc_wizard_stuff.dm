@@ -45,7 +45,7 @@
 	var/mob/living/carbon/human/H = usr
 	if (!( ishuman(H)))
 		return 1
-	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))))
+	if ((usr.contents.Find(src) || (in_interact_range(src, usr) && istype(src.loc, /turf))))
 		src.add_dialog(usr)
 		if (href_list["spell_teleport"])
 			if (src.uses >= 1 && usr.teleportscroll(0, 1, src) == 1)
@@ -75,6 +75,7 @@
 	flags = FPRINT | TABLEPASS | NOSHIELD
 	object_flags = NO_ARM_ATTACH
 	var/wizard_key = "" // The owner of this staff.
+	var/eldritch = 0	//was for robe and wizard hat, now nothing.
 
 	New()
 		..()
@@ -163,6 +164,7 @@
 	item_state = "staffcthulhu"
 	force = 14
 	hitsound = 'sound/effects/ghost2.ogg'
+	eldritch = 1
 
 	New()
 		. = ..()

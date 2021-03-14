@@ -26,7 +26,8 @@
 
 /datum/artifact/attack_wand
 	associated_object = /obj/item/artifact/attack_wand
-	rarity_class = 3
+	type_name = "Elemental Wand"
+	rarity_weight = 200
 	validtypes = list("wizard")
 	validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/electric,/datum/artifact_trigger/heat,
 	/datum/artifact_trigger/radiation,/datum/artifact_trigger/force)

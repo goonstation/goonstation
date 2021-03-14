@@ -1,4 +1,4 @@
-#include "..\clarion_xmas_2020.dmm"
+#include "..\clarion.dmm"
 #include "..\z2.dmm"
 #include "..\z3.dmm"
 #include "z4.dm"

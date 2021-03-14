@@ -5,6 +5,7 @@
 	icon_state = "PAG_0"
 	anchored = 0
 	var/mob/occupant = null
+	var/datum/character_preview/multiclient/occupant_preview = null
 	var/locked = 0
 	var/homeloc = null
 
@@ -157,7 +158,7 @@
 				return
 
 			if (src.locked)
-				boutput(usr, "<span class='alert'><B>You need to unlock the scanner first.</B></span>")
+				boutput(user, "<span class='alert'><B>You need to unlock the scanner first.</B></span>")
 				return
 
 			if(!iscarbon(G.affecting))
@@ -262,21 +263,42 @@
 		if (src.locked)
 			return
 
+		src.ui_interact(M, null)
+
 		M.set_loc(src)
 		src.occupant = M
 		src.icon_state = "PAG_1"
 		playsound(src.loc, "sound/machines/sleeper_close.ogg", 50, 1)
 		return
 
+	ui_status(mob/user)
+		if (user in src)
+			return UI_UPDATE
+		return ..()
+
 	get_scan_subject()
 		if (!src)
 			return null
-		if (occupant)
-			return occupant
-		else
-			return null
+		return occupant
 
 	get_scanner()
 		if (!src)
 			return null
 		return src
+
+	get_occupant_preview()
+		if (!src)
+			return null
+		if (!src.occupant_preview)
+			src.occupant_preview = new()
+			src.update_occupant_preview()
+		return src.occupant_preview
+
+	update_occupant_preview()
+		var/mob/living/carbon/human/H = src.occupant
+		if (istype(H))
+			if (src.occupant_preview)
+				src.occupant_preview.update_appearance(H.bioHolder.mobAppearance, H.mutantrace)
+		else
+			qdel(src.occupant_preview)
+			src.occupant_preview = null

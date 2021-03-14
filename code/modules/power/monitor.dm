@@ -26,11 +26,10 @@
 
 /obj/machinery/power/monitor/proc/interacted(mob/user)
 
-	if ( (get_dist(src, user) > 1 ) || (status & (BROKEN|NOPOWER)) )
-		if (!issilicon(user))
-			src.remove_dialog(user)
-			user.Browse(null, "window=[window_tag]")
-			return
+	if ( (!in_interact_range(src, user)) || (status & (BROKEN|NOPOWER)) )
+		src.remove_dialog(user)
+		user.Browse(null, "window=[window_tag]")
+		return
 
 	src.add_dialog(user)
 	var/t = "<TT><B>Power Monitoring</B><HR>"
@@ -41,8 +40,8 @@
 
 		var/list/L = list()
 		for(var/obj/machinery/power/terminal/term in powernet.nodes)
-			if(istype(term.master, /obj/machinery/power/apc))
-				var/obj/machinery/power/apc/A = term.master
+			var/obj/machinery/power/apc/A = term.master
+			if(istype(A) && (!A.area || A.area.requires_power))
 				L += A
 
 		t += "<PRE>Total power: [engineering_notation(powernet.avail)]W<BR>Total load:  [engineering_notation(powernet.viewload)]W<BR>"
@@ -53,14 +52,14 @@
 
 			t += "Area                           Eqp./Lgt./Env.  Load   Cell  | Area                           Eqp./Lgt./Env.  Load   Cell<HR>"
 
-			var/list/S = list(" Off","AOff","  On", " AOn")
+			var/list/S = list("<span style='background-color: #f88'> Off</span>","<span style='background-color: #fa6'>AOff</span>","<span style='background-color: #8f8'>  On</span>", "<span style='background-color: #ccf'> AOn</span>")
 			var/list/chg = list("N","C","F")
 
 			var/do_newline = 0
 			for(var/obj/machinery/power/apc/A in L)
 
 				t += copytext(add_tspace(A.area.name, 30), 1, 30)
-				t += " [S[A.equipment+1]] [S[A.lighting+1]] [S[A.environ+1]] [add_lspace(A.lastused_total, 6)]  [A.cell ? "[add_lspace(round(A.cell.percent()), 3)]% [chg[A.charging+1]]" : "  N/C"][do_newline ? "<BR>" : " | "]"
+				t += " [S[A.equipment+1]] [S[A.lighting+1]] [S[A.environ+1]] [add_lspace(A.lastused_total, 6)]  [A.cell ? "[add_lspace(round(A.cell.percent()), 3)]% [chg[A.charging+1]]" : "   N/C"][do_newline ? "<BR>" : " | "]"
 				do_newline = !do_newline
 
 		t += "</FONT></PRE>"
@@ -142,16 +141,13 @@
 
 /obj/machinery/power/monitor/smes/interacted(mob/user)
 
-	if ( (get_dist(src, user) > 1 ) || (status & (BROKEN|NOPOWER)) )
-		if (!issilicon(user))
-			src.remove_dialog(user)
-			user.Browse(null, "window=[window_tag]")
-			return
-
+	if ( (!in_interact_range(src,user)) || (status & (BROKEN|NOPOWER)) )
+		src.remove_dialog(user)
+		user.Browse(null, "window=[window_tag]")
+		return
 
 	src.add_dialog(user)
 	var/t = "<TT><B>Engine and SMES Monitoring</B><HR>"
-
 
 	if(!powernet)
 		t += "<span style=\"color:red\">No connection</span>"

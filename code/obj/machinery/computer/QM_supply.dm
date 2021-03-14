@@ -62,47 +62,53 @@ var/global/datum/rockbox_globals/rockbox_globals = new /datum/rockbox_globals
 
 	proc/receive_pathogen_samples(obj/storage/crate/biohazard/cdc/sell_crate)
 		for (var/R in sell_crate)
-			if (istype(R, /obj/item/reagent_containers) || ishuman(R)) //heh
+			var/list/patho = null
+			if (istype(R, /obj/item/reagent_containers))
 				var/obj/item/reagent_containers/RC = R
-				var/list/patho = RC.reagents.aggregate_pathogens()
-				for (var/uid in patho)
-					if (!(uid in src.analysis_by_uid))
-						var/datum/pathogen/P = patho[uid]
-						var/datum/cdc_contact_analysis/D = new
-						D.uid = uid
-						var/sym_count = max(min(length(P.effects), 7), 2)
-						D.time_factor = sym_count * rand(10, 15) // 200, 600
-						D.cure_cost = sym_count * rand(25, 40) // 2100, 4300
-						D.name = P.name
-						var/rating = max(P.advance_speed, P.suppression_threshold, P.spread)
-						var/ds = "weak"
-						switch (P.stages)
-							if (4)
-								ds = "potent"
-							if (5)
-								ds = "deadly"
-						var/df = "a relatively one-sided"
-						switch (sym_count)
-							if (3 to 4)
-								df = "a somewhat colorful"
-							if (5 to 6)
-								df = "a rather diverse"
-							if (7)
-								df = "an incredibly symptomatic"
-						D.desc = "It is [df] pathogen with a hazard rating of [rating]. We identify it to be a [ds] organism made up of [P.body_type.plural]. [P.suppressant.desc]"
-						var/datum/pathogen/copy = unpool(/datum/pathogen)
-						copy.setup(0, P, 0, null)
-						D.assoc_pathogen = copy
-						src.analysis_by_uid[uid] = D
-						src.ready_to_analyze += D
-				if (ishuman(RC))
-					var/mob/living/carbon/human/H = RC
-					H.ghostize()
+				patho = RC.reagents.aggregate_pathogens()
 				qdel(RC)
+			else if (ishuman(R)) // heh
+				var/mob/living/carbon/human/H = R
+				patho = H.reagents.aggregate_pathogens()
+				H.ghostize()
+				qdel(H)
+			else
+				qdel(R)
+				continue
+			for (var/uid in patho)
+				if (!(uid in src.analysis_by_uid))
+					var/datum/pathogen/P = patho[uid]
+					var/datum/cdc_contact_analysis/D = new
+					D.uid = uid
+					var/sym_count = max(min(length(P.effects), 7), 2)
+					D.time_factor = sym_count * rand(10, 15) // 200, 600
+					D.cure_cost = sym_count * rand(25, 40) // 2100, 4300
+					D.name = P.name
+					var/rating = max(P.advance_speed, P.suppression_threshold, P.spread)
+					var/ds = "weak"
+					switch (P.stages)
+						if (4)
+							ds = "potent"
+						if (5)
+							ds = "deadly"
+					var/df = "a relatively one-sided"
+					switch (sym_count)
+						if (3 to 4)
+							df = "a somewhat colorful"
+						if (5 to 6)
+							df = "a rather diverse"
+						if (7)
+							df = "an incredibly symptomatic"
+					D.desc = "It is [df] pathogen with a hazard rating of [rating]. We identify it to be a [ds] organism made up of [P.body_type.plural]. [P.suppressant.desc]"
+					var/datum/pathogen/copy = unpool(/datum/pathogen)
+					copy.setup(0, P, 0, null)
+					D.assoc_pathogen = copy
+					src.analysis_by_uid[uid] = D
+					src.ready_to_analyze += D
 			qdel(sell_crate)
 		var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency("1149")
 		var/datum/signal/pdaSignal = get_free_signal()
-		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=MGD_CARGO, "sender"="00000000", "message"="Notification: Pathogen sample crate delivered to the CDC.")
+		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=list(MGD_CARGO, MGA_SHIPPING), "sender"="00000000", "message"="Notification: Pathogen sample crate delivered to the CDC.")
 		pdaSignal.transmission_method = TRANSMISSION_RADIO
 		if(transmit_connection != null)
 			transmit_connection.post_signal(null, pdaSignal)
@@ -128,9 +134,9 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 	var/last_market_update = -INFINITY
 	var/price_list = null
 
-	lr = 1
-	lg = 0.7
-	lb = 0.03
+	light_r =1
+	light_g = 0.7
+	light_b = 0.03
 
 	disposing()
 		radio_controller.remove_object(src, "1435")
@@ -431,9 +437,9 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 			src.temp += "We have no unanalyzed pathogen samples from your station.<br>"
 	else
 		src.temp += "We're currently analyzing the pathogen sample [QM_CDC.current_analysis.name]. We can <A href='[topicLink("cdc_analyze")]'>analyze something different</A>, if you want."
-		if (QM_CDC.current_analysis.description_available > ticker.round_elapsed_ticks)
+		if (QM_CDC.current_analysis.description_available <= ticker.round_elapsed_ticks)
 			src.temp += "Here's what we have so far: <br>[QM_CDC.current_analysis.desc]<br>"
-			if (QM_CDC.current_analysis.cure_available > ticker.round_elapsed_ticks)
+			if (QM_CDC.current_analysis.cure_available <= ticker.round_elapsed_ticks)
 				src.temp += "We've also discovered a method to synthesize a cure for this pathogen.<br>"
 				QM_CDC.completed_analysis += QM_CDC.current_analysis
 				QM_CDC.current_analysis = null
@@ -649,7 +655,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 	if(..())
 		return
 
-	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
+	if ((usr.contents.Find(src) || (in_interact_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
 		src.add_dialog(usr)
 
 	var/subaction = (href_list["subaction"] ? href_list["subaction"] : null)
@@ -705,7 +711,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 				boutput(usr, "<span class='alert'>Severe signal interference is preventing contact with the CDC.</span>")
 				return
 			if (ticker.round_elapsed_ticks < QM_CDC.next_crate)
-				last_cdc_message = "<span style=\"color:red; font-style: italic\">We are fresh out of crates right now to send you. Check back in [(QM_CDC.next_crate - ticker.round_elapsed_ticks)] seconds!</span>"
+				last_cdc_message = "<span style=\"color:red; font-style: italic\">We are fresh out of crates right now to send you. Check back in [ceil((QM_CDC.next_crate - ticker.round_elapsed_ticks) / (1 SECOND))] seconds!</span>"
 			else
 				if (wagesystem.shipping_budget < 5)
 					last_cdc_message = "<span style=\"color:red; font-style: italic\">You're completely broke. You cannot even afford a crate.</span>"
@@ -747,11 +753,12 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 					if (QM_CDC.current_analysis)
 						var/datum/cdc_contact_analysis/A = QM_CDC.current_analysis
 						A.time_done += ticker.round_elapsed_ticks - A.begun_at
-						if (A.cure_available >= ticker.round_elapsed_ticks)
+						if (A.cure_available <= ticker.round_elapsed_ticks)
 							QM_CDC.completed_analysis += A
 						else
 							QM_CDC.ready_to_analyze += A
 					QM_CDC.current_analysis = C
+					QM_CDC.ready_to_analyze -= C
 					C.begun_at = ticker.round_elapsed_ticks
 					C.description_available = C.begun_at + C.time_factor - C.time_done
 					C.cure_available = C.description_available + C.time_factor

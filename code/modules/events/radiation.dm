@@ -16,11 +16,12 @@
 		var/pulse_lifespan = null
 		var/turf/pulseloc = null
 
-		for (var/pulses = pulse_amt, pulses > 0, pulses--)
-			pulseloc = pick(wormholeturfs)
-			pulse_lifespan = rand(min_pulse_lifespan,max_pulse_lifespan)
-			pick(prob(90); new /obj/anomaly/radioactive_burst(pulseloc,lifespan = pulse_lifespan), prob(50); new /obj/anomaly/neutron_burst(pulseloc,lifespan = pulse_lifespan))
-			sleep(pulse_delay)
+		SPAWN_DBG(0)
+			for (var/pulses = pulse_amt, pulses > 0, pulses--)
+				pulseloc = pick(wormholeturfs)
+				pulse_lifespan = rand(min_pulse_lifespan,max_pulse_lifespan)
+				pick(prob(90); new /obj/anomaly/radioactive_burst(pulseloc,lifespan = pulse_lifespan), prob(50); new /obj/anomaly/neutron_burst(pulseloc,lifespan = pulse_lifespan))
+				sleep(pulse_delay)
 
 
 

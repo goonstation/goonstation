@@ -64,7 +64,7 @@
 	isfiring = 1
 	if(uses_ammunition)
 		if (remaining_ammunition < ship.AmmoPerShot())
-			boutput(usr, "[ship.ship_message("You need [ship.AmmoPerShot()] to fire the weapon. You currently have [remaining_ammunition] loaded.")]")
+			boutput(user, "[ship.ship_message("You need [ship.AmmoPerShot()] to fire the weapon. You currently have [remaining_ammunition] loaded.")]")
 			isfiring  = 0
 			return
 
@@ -74,7 +74,7 @@
 	//if (!istype(ship,/obj/machinery/vehicle/tank)) //Tanks are allowed to shoot diagonally!
 	//	if ((rdir - 1) & rdir)
 	//		rdir &= 12
-	logTheThing("combat", usr, null, "driving [ship.name] fires [src.name] (<b>Dir:</b> <i>[dir2text(rdir)]</i>, <b>Projectile:</b> <i>[src.current_projectile]</i>) at [log_loc(ship)].") // Similar to handguns, but without target coordinates (Convair880).
+	logTheThing("combat", user, null, "driving [ship.name] fires [src.name] (<b>Dir:</b> <i>[dir2text(rdir)]</i>, <b>Projectile:</b> <i>[src.current_projectile]</i>) at [log_loc(ship)].") // Similar to handguns, but without target coordinates (Convair880).
 	ship.ShootProjectiles(user, current_projectile, rdir)
 	remaining_ammunition -= ship.AmmoPerShot()
 	SPAWN_DBG (firerate)
@@ -255,7 +255,7 @@
 		if(..())
 			return
 
-		if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
+		if ((usr.contents.Find(src) || (in_interact_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
 			src.add_dialog(usr)
 
 		if (href_list["heat"])
@@ -299,7 +299,7 @@
 				playsound(src.loc, "sound/machines/mixer.ogg", 50, 1)
 
 				// Necessary, as the foamer doesn't use the global fire proc (Convair880).
-				logTheThing("combat", usr, null, "driving [ship.name] fires [src.name], creating metal foam at [log_loc(ship)].")
+				logTheThing("combat", user, null, "driving [ship.name] fires [src.name], creating metal foam at [log_loc(ship)].")
 
 				SPAWN_DBG(0)
 					step_towards(D, get_step(D, D.dir))
@@ -343,7 +343,7 @@
 		if(..())
 			return
 
-		if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
+		if ((usr.contents.Find(src) || (in_interact_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
 			src.add_dialog(usr)
 
 		if (href_list["foam"])

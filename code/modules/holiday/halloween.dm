@@ -41,8 +41,9 @@
  */
 
 /obj/tombstone
-	name = "Tombstone"
-	desc = "Here lies Tango N. Vectif, killed by a circus bear.  RIP."
+	name = "tombstone"
+	//desc = "Here lies Tango N. Vectif, killed by a circus bear.  RIP." // changing for spawnability
+	desc = "Rest in peace."
 	icon = 'icons/misc/halloween.dmi'
 	icon_state = "tombstone"
 	anchored = 1
@@ -526,7 +527,7 @@
 				for (var/atom/A in range(4,user))
 					if (isarea(A))
 						continue
-					if (istype(A,/obj/particle/) || istype(A,/obj/screen))
+					if (istype(A,/obj/particle/) || istype(A,/atom/movable/screen))
 						continue
 					if (ismob(A))
 						var/mob/M = A

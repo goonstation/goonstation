@@ -34,8 +34,7 @@ datum/controller/radio
 			frequency.frequency = new_frequency
 			frequencies[new_frequency] = frequency
 
-		if( !frequency.devices.Find(device) )
-			frequency.devices += device
+		frequency.devices |= device
 		return frequency
 
 	proc/remove_object(obj/device, old_frequency)
@@ -51,7 +50,7 @@ datum/controller/radio
 		return 1
 
 	proc/return_frequency(frequency)
-		return frequencies[frequency]
+		. = frequencies[frequency]
 
 /*
 mob/verb/listfreq()
@@ -66,6 +65,7 @@ mob/verb/listfreq()
 
 
 var/global/list/datum/signal/reusable_signals = list()
+
 proc/get_free_signal()
 	if (length(reusable_signals))
 		while (. == null && reusable_signals.len)

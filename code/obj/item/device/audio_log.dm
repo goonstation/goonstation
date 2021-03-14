@@ -213,7 +213,7 @@
 			..()
 
 	MouseDrop_T(obj/item/W as obj, mob/user as mob)
-		if (istype(W, /obj/item/audio_tape) && in_range(src, user) && in_range(W, user))
+		if (istype(W, /obj/item/audio_tape) && in_interact_range(src, user) && in_interact_range(W, user))
 			return src.attackby(W, user)
 		return ..()
 
@@ -233,7 +233,7 @@
 		..()
 		if (usr.stat || usr.restrained() || usr.lying)
 			return
-		if ((usr.contents.Find(src) || usr.contents.Find(src.master) || in_range(src, usr) && istype(src.loc, /turf)))
+		if ((usr.contents.Find(src) || usr.contents.Find(src.master) || in_interact_range(src, usr) && istype(src.loc, /turf)))
 			src.add_dialog(usr)
 			switch(href_list["command"])
 				if("rec")

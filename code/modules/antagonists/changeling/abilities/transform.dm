@@ -47,6 +47,7 @@
 				H.update_body()
 				H.update_clothing()
 				H.real_name = last_used_name
+				H.abilityHolder.updateButtons()
 				logTheThing("combat", H, null, "leaves lesser form as a changeling, [log_loc(H)].")
 				return 0
 			else if (isabomination(H))
@@ -60,6 +61,7 @@
 				return 1
 			last_used_name = H.real_name
 			H.monkeyize()
+			H.abilityHolder.updateButtons()
 			logTheThing("combat", H, null, "enters lesser form as a changeling, [log_loc(H)].")
 			return 0
 

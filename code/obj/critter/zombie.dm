@@ -101,7 +101,7 @@
 				src.attacking = 0
 			return
 
-		if (M.health > 40 && !M.getStatusDuration("weakened"))
+		if (!M.getStatusDuration("weakened") && !M.lying)
 			src.visible_message("<span class='alert'><B>[src]</B> punches [src.target]!</span>")
 			playsound(M.loc, "punch", 25, 1, -1)
 

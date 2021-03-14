@@ -4,11 +4,13 @@
 
 /datum/artifact/augmentor
 	associated_object = /obj/artifact/augmentor
-	rarity_class = 2
+	type_name = "Surgery machine"
+	rarity_weight = 350
 	validtypes = list("ancient","precursor")
 	validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/electric,/datum/artifact_trigger/heat,
 	/datum/artifact_trigger/radiation,/datum/artifact_trigger/carbon_touch,/datum/artifact_trigger/silicon_touch,
 	/datum/artifact_trigger/cold)
+	fault_blacklist = list(ITEM_ONLY_FAULTS)
 	activ_text = "opens up, revealing an array of strange tools!"
 	deact_text = "closes itself up."
 	react_xray = list(6,75,60,11,"SEGMENTED")
@@ -45,6 +47,7 @@
 				return augmentation
 
 	post_setup()
+		. = ..()
 		recharge_time = rand(5,10) * 10
 		// decide what augmentation this does
 		switch(artitype.name)
@@ -118,6 +121,7 @@
 			H.emote("scream")
 			random_brute_damage(user, 30)
 			bleed(H, 5, 5)
+			O.ArtifactFaultUsed(H)
 			T.visible_message("<b>[O]</b> withdraws its instruments and slams shut.")
 			working = 0
 			recharging = 1

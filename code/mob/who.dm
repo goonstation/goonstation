@@ -116,5 +116,4 @@
 	if(!usr.client.holder)
 		logTheThing("admin", usr, null, "used adminwho and saw [adwnum] admins.")
 		logTheThing("diary", usr, null, "used adminwho and saw [adwnum] admins.", "admin")
-		if(adwnum < 1)
-			message_admins("<span class='internal'>[key_name(usr)] used adminwho and saw [adwnum] admins.</span>")
+		message_admins("<span class='internal'>[key_name(usr)] used adminwho and saw [adwnum] admins.</span>")

@@ -1,5 +1,5 @@
 /datum/hud/vision // generic overlays for modifying the mobs vision
-	var/obj/screen/hud
+	var/atom/movable/screen/hud
 		scan
 		color_mod
 		dither
@@ -54,7 +54,7 @@
 
 		set_color_mod(color)
 			color_mod.color = color
-			if (color == "#000000")
+			if (color == "#000000" || color == "#ffffff")
 				remove_screen(color_mod)
 			else
 				add_screen(color_mod)
@@ -64,7 +64,7 @@
 			if(color_mod.color == color)
 				return
 
-			if (color == "#000000")
+			if (color == "#000000" || color == "#ffffff")
 				remove_screen(color_mod)
 			else
 				add_screen(color_mod)
@@ -72,7 +72,7 @@
 
 			animate(color_mod, color = color, time = duration)
 			SPAWN_DBG(duration + 1)
-				if (color == "#000000")
+				if (color == "#000000" || color == "#ffffff")
 					remove_screen(color_mod)
 				else
 					add_screen(color_mod)

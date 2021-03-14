@@ -49,7 +49,7 @@
 			if (move_dir)
 				master.set_dir(move_dir)
 				master.facing = move_dir
-				user.attempt_move()
+				attempt_move(user)
 
 	process_move(mob/owner, keys)
 		// stub

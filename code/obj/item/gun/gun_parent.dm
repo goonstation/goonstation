@@ -105,14 +105,13 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 			suppress_fire_msg = 0
 
 /obj/item/gun/proc/CreateID() //Creates a new tracking id for the gun and returns it.
-	var/newID = ""
+	. = ""
 
 	do
 		for(var/i = 1 to 10) // 20 characters are way too fuckin' long for anyone to care about
-			newID += "[pick(numbersAndLetters)]"
-	while(forensic_IDs.Find(newID))
+			. += "[pick(numbersAndLetters)]"
+	while(. in forensic_IDs)
 
-	return newID
 
 ///CHECK_LOCK
 ///Call to run a weaponlock check vs the users implant
@@ -145,9 +144,10 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	return 0
 
 /obj/item/gun/attack_self(mob/user as mob)
+	..()
 	if(src.projectiles && src.projectiles.len > 1)
 		src.current_projectile_num = ((src.current_projectile_num) % src.projectiles.len) + 1
-		src.current_projectile = src.projectiles[src.current_projectile_num]
+		src.set_current_projectile(src.projectiles[src.current_projectile_num])
 		boutput(user, "<span class='notice'>you set the output to [src.current_projectile.sname].</span>")
 	return
 
@@ -251,11 +251,11 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 
 /obj/item/gun/proc/shoot_point_blank(var/mob/M as mob, var/mob/user as mob, var/second_shot = 0)
 	if (!M || !user)
-		return
+		return FALSE
 
 	if (isghostdrone(user))
 		user.show_text("<span class='combat bold'>Your internal law subroutines kick in and prevent you from using [src]!</span>")
-		return
+		return FALSE
 
 	//Ok. i know it's kind of dumb to add this param 'second_shot' to the shoot_point_blank proc just to make sure pointblanks don't repeat forever when we could just move these checks somewhere else.
 	//but if we do the double-gun checks here, it makes stuff like double-hold-at-gunpoint-pointblanks easier!
@@ -284,7 +284,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 			playsound(user, "sound/weapons/Gunclick.ogg", 60, 1)
 		else
 			user.show_text("*click* *click*", "red")
-		return
+		return FALSE
 
 	if (ishuman(user) && src.add_residue) // Additional forensic evidence for kinetic firearms (Convair880).
 		var/mob/living/carbon/human/H = user
@@ -295,24 +295,24 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 			if (O.client)
 				O.show_message("<span class='alert'><B>[user] shoots [user == M ? "[him_or_her(user)]self" : M] point-blank with [src]!</B></span>")
 	else
-		user.show_text("<span class='alert'>You silently shoot [user == M ? "yourself" : M] point-blank with [src]!</span>") // Was non-functional (Convair880).
+		boutput(user, "<span class='alert'>You silently shoot [user == M ? "yourself" : M] point-blank with [src]!</span>")
 
 	if (!process_ammo(user))
-		return
+		return FALSE
 
 	if (src.muzzle_flash)
 		if (isturf(user.loc))
 			muzzle_flash_attack_particle(user, user.loc, M, src.muzzle_flash)
 
 
-	if(slowdown)
+	if(slowdown && ismob(user))
 		SPAWN_DBG(-1)
 			user.movement_delay_modifier += slowdown
 			sleep(slowdown_time)
 			user.movement_delay_modifier -= slowdown
 
 	var/spread = 0
-	if (user.reagents)
+	if (ismob(user) && user.reagents)
 		var/how_drunk = 0
 		var/amt = user.reagents.get_reagent_amount("ethanol")
 		switch(amt)
@@ -327,7 +327,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	for (var/i = 0; i < current_projectile.shot_number; i++)
 		var/obj/projectile/P = initialize_projectile_pixel_spread(user, current_projectile, M, 0, 0, spread, alter_proj = new/datum/callback(src, .proc/alter_projectile))
 		if (!P)
-			return
+			return FALSE
 		if (user == M)
 			P.shooter = null
 			P.mob_shooter = user
@@ -358,19 +358,19 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 /obj/item/gun/proc/shoot(var/target,var/start,var/mob/user,var/POX,var/POY)
 	if (isghostdrone(user))
 		user.show_text("<span class='combat bold'>Your internal law subroutines kick in and prevent you from using [src]!</span>")
-		return
+		return FALSE
 	if (!canshoot())
 		if (ismob(user))
 			user.show_text("*click* *click*", "red") // No more attack messages for empty guns (Convair880).
 			if (!silenced)
 				playsound(user, "sound/weapons/Gunclick.ogg", 60, 1)
-		return
+		return FALSE
 	if (!process_ammo(user))
-		return
+		return FALSE
 	if (!isturf(target) || !isturf(start))
-		return
+		return FALSE
 	if (!istype(src.current_projectile,/datum/projectile/))
-		return
+		return FALSE
 
 	if (src.muzzle_flash)
 		if (isturf(user.loc))
@@ -414,7 +414,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 				user.show_text("<span class='alert'>You silently fire the [src] at [target]!</span>") // Some user feedback for silenced guns would be nice (Convair880).
 
 		var/turf/T = target
-		logTheThing("combat", user, null, "fires \a [src] from [log_loc(user)], vector: ([T.x - user.x], [T.y - user.y]), dir: <I>[dir2text(get_dir(user, target))]</I>, projectile: <I>[P.name]</I>[P.proj_data && P.proj_data.type ? ", [P.proj_data.type]" : null]")
+		src.log_shoot(user, T, P)
 
 	if (ismob(user))
 		var/mob/M = user
@@ -426,6 +426,9 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 
 /obj/item/gun/proc/canshoot()
 	return 0
+
+/obj/item/gun/proc/log_shoot(mob/user, turf/T, obj/projectile/P)
+	logTheThing("combat", user, null, "fires \a [src] from [log_loc(user)], vector: ([T.x - user.x], [T.y - user.y]), dir: <I>[dir2text(get_dir(user, T))]</I>, projectile: <I>[P.name]</I>[P.proj_data && P.proj_data.type ? ", [P.proj_data.type]" : null]")
 
 /obj/item/gun/examine()
 	if (src.artifact)
@@ -480,3 +483,9 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 		user.visible_message("<span class='alert'><b>[user] accidentally shoots [him_or_her(user)]self with [src]!</b></span>")
 		src.shoot_point_blank(user, user)
 		JOB_XP(user, "Clown", 3)
+
+
+///setter for current_projectile so we can have a signal attached. do not set current_projectile on guns without this proc
+/obj/item/gun/proc/set_current_projectile(datum/projectile/newProj)
+	src.current_projectile = newProj
+	SEND_SIGNAL(src, COMSIG_GUN_PROJECTILE_CHANGED, newProj)

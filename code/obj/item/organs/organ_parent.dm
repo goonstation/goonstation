@@ -51,6 +51,10 @@
 	var/burn_dam = 0
 	var/tox_dam = 0
 
+	/// How much damage does this take if someone takes a bite out of it?
+	/// Set to 0 to default to 110% of FAIL_DAMAGE
+	var/bite_damage = 0
+
 	var/robotic = 0
 	var/emagged = 0
 	var/synthetic = 0
@@ -61,7 +65,9 @@
 	var/FAIL_DAMAGE = 65	//Total damage amount at which organ failure starts
 
 	var/created_decal = /obj/decal/cleanable/blood // what kinda mess it makes.  mostly so cyberhearts can splat oil on the ground, but idk maybe you wanna make something that creates a broken balloon or something on impact vOv
-	var/decal_done = 0 // fuckers are tossing these around a lot so I guess they're only gunna make one, ever now
+	var/blood_color = null
+	var/blood_reagent = null
+	var/decal_done = FALSE // fuckers are tossing these around a lot so I guess they're only gunna make one, ever now
 	var/body_side = null // L_ORGAN/1 for left, R_ORGAN/2 for right
 	var/datum/bone/bones = null
 	rand_pos = 1
@@ -101,10 +107,7 @@
 			attack_particle(user,src)
 			hit_twitch(src)
 			playsound(get_turf(src), "sound/impact_sounds/Flesh_Stab_2.ogg", 100, 1)
-			if (istype(src.loc, /turf) && !src.decal_done && ispath(src.created_decal))
-				playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 100, 1)
-				make_cleanable(src.created_decal, get_turf(src))
-				src.decal_done = 1
+			src.splat(get_turf(src))
 			if(W.hit_type == DAMAGE_BURN)
 				src.take_damage(0, W.force, 0, W.hit_type)
 			else
@@ -129,7 +132,14 @@
 				src.donor_name = src.donor.name
 				src.name = "[src.donor_name]'s [initial(src.name)]"
 			src.donor_DNA = src.donor.bioHolder ? src.donor.bioHolder.Uid : null
+			src.blood_DNA = src.donor_DNA
+			src.blood_type = src.donor.bioHolder?.bloodType
+			src.blood_color = src.donor.bioHolder?.bloodColor
+			src.blood_reagent = src.donor.blood_id
 		src.setMaterial(getMaterial(made_from), appearance = 0, setname = 0)
+		if(src.bite_damage == 0)
+			src.bite_damage = src.FAIL_DAMAGE * 1.1
+		src.AddComponent(/datum/component/consume/bitemask)
 
 	disposing()
 		if (src.holder)
@@ -150,15 +160,29 @@
 			bones.dispose()
 
 		holder = null
+		var/datum/component/D = src.GetComponent(/datum/component/consume/bitemask)
+		D?.RemoveComponent(/datum/component/consume/bitemask)
 		..()
+
+	proc/splat(turf/T)
+		if(!istype(T) || src.decal_done || !ispath(src.created_decal))
+			return FALSE
+		playsound(T, "sound/impact_sounds/Slimy_Splat_1.ogg", 100, 1)
+		var/obj/decal/cleanable/cleanable = make_cleanable(src.created_decal, T)
+		cleanable.blood_DNA = src.blood_DNA
+		cleanable.blood_type = src.blood_type
+		if(istype(cleanable, /obj/decal/cleanable/blood))
+			var/obj/decal/cleanable/blood/blood = cleanable
+			blood.set_sample_reagent_custom(src.blood_reagent, 10)
+			if(!isnull(src.blood_color))
+				blood.color = src.blood_color
+		src.decal_done = TRUE
+		return cleanable
 
 	throw_impact(atom/A, datum/thrown_thing/thr)
 		var/turf/T = get_turf(A) //
 		playsound(src.loc, "sound/impact_sounds/Flesh_Stab_2.ogg", 100, 1)
-		if (T && !src.decal_done && ispath(src.created_decal))
-			playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 100, 1)
-			make_cleanable(src.created_decal,T)
-			src.decal_done = 1
+		src.splat(T)
 		..() // call your goddamn parents
 
 	//Returns true if the organ is broken or damage is over max health.
@@ -220,6 +244,10 @@
 
 		if (!src.donor_DNA && src.donor && src.donor.bioHolder)
 			src.donor_DNA = src.donor.bioHolder.Uid
+			src.blood_DNA = src.donor_DNA
+			src.blood_type = src.donor.bioHolder?.bloodType
+		src.blood_color = src.donor?.bioHolder?.bloodColor
+		src.blood_reagent = src.donor?.blood_id
 		if (islist(src.organ_abilities) && src.organ_abilities.len)// && src.donor.abilityHolder)
 			var/datum/abilityHolder/aholder
 			if (src.donor && src.donor.abilityHolder)
@@ -374,3 +402,8 @@
 			for (var/abil in src.organ_abilities)
 				src.add_ability(A, abil)
 		src.broken = 0
+
+	get_desc()
+		. = ..()
+		if(src.broken || src.get_damage() > src.FAIL_DAMAGE)
+			. +="<br>It looks pretty banged up."

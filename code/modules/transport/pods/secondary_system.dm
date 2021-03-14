@@ -8,7 +8,7 @@
 	icon_state= "sec_system"
 
 	proc/Use(mob/user as mob)
-		boutput(usr, "[ship.ship_message("No special function for this ship!")]")
+		boutput(user, "[ship.ship_message("No special function for this ship!")]")
 		return
 
 	proc/Clickdrag_PodToObject(var/mob/living/user,var/atom/A)
@@ -139,7 +139,8 @@
 	/obj/machinery/space_heater,
 	/obj/machinery/oreaccumulator,
 	/obj/machinery/bot,
-	/obj/machinery/nuclearbomb)
+	/obj/machinery/nuclearbomb,
+	/obj/bomb_decoy)
 
 	hud_state = "cargo"
 	f_active = 1
@@ -204,7 +205,7 @@
 
 	var/inrange = 0
 	for(var/turf/ST in src.ship.locs)
-		if (in_range(T,ST) && in_range(user,ST))
+		if (in_interact_range(T,ST) && in_interact_range(user,ST))
 			inrange = 1
 			break
 	if (!inrange)
@@ -216,7 +217,7 @@
 			boutput(user, "<span class='alert'>That tile is blocked by [O].</span>")
 			return
 
-	var/crate = input(usr, "Choose which cargo to unload..", "Choose cargo")  as null|anything in load
+	var/crate = input(user, "Choose which cargo to unload..", "Choose cargo")  as null|anything in load
 	if(!crate)
 		return
 	unload(crate,T)
@@ -256,7 +257,7 @@
 
 	var/inrange = 0
 	for (var/turf/T in src.ship.locs)
-		if (in_range(T,C) && in_range(usr,C))
+		if (in_interact_range(T,C) && in_interact_range(usr,C))
 			inrange = 1
 			break
 	if (!inrange)
@@ -487,7 +488,7 @@
 	hud_state = "abductor"
 
 	Use(mob/user as mob)
-		var/mob/target = input(usr, "Choose Who to Abduct", "Choose Target")  as mob in view(ship.loc)
+		var/mob/target = input(user, "Choose Who to Abduct", "Choose Target")  as mob in view(ship.loc)
 		if(target)
 			boutput(target, "<span class='alert'><B>You have been abducted!</B></span>")
 			showswirl(get_turf(target))
@@ -506,7 +507,7 @@
 		if(..())
 			return
 
-		if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
+		if ((usr.contents.Find(src) || (in_interact_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
 			src.add_dialog(usr)
 		if (href_list["release"])
 			for(var/mob/M in ship)
@@ -660,7 +661,7 @@
 		if(..())
 			return
 
-		if ((usr.contents.Find(src) || (in_range(ship, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
+		if ((usr.contents.Find(src) || (in_interact_range(ship, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
 			src.add_dialog(usr)
 
 		if (href_list["enter"])
@@ -822,7 +823,8 @@
 /obj/item/shipcomponent/secondary_system/crash/proc/crashtime(atom/A)
 	var/tempstate = ship.icon_state
 	ship.icon_state = "flaming"
-	A.meteorhit(ship)
+	if(!istype(A, /obj/critter/gunbot/drone))
+		A.meteorhit(ship)
 	playsound(ship.loc, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 40, 1)
 	ship.icon_state = tempstate
 	crashhits --
@@ -898,7 +900,7 @@
 				qdel(O)
 			if (istype(O, /obj/machinery/door) || istype(O, /obj/structure/girder) || istype(O, /obj/foamedmetal))
 				qdel(O)
-			if (istype(O, /obj/critter))
+			if (istype(O, /obj/critter) && !istype(O, /obj/critter/gunbot/drone)) // ugly hack to make this not instakill drones and stuff
 				O:CritterDeath()
 			in_bump = 0
 	if (crashhits <= 0)

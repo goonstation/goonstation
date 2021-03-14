@@ -43,6 +43,8 @@
 			H.delStatus("disorient")
 			H.force_laydown_standup()
 
+			H.abilityHolder.updateButtons()
+
 			logTheThing("combat", H, null, "enters horror form as a changeling, [log_loc(H)].")
 			return 0
 
@@ -67,6 +69,7 @@
 		H.update_face()
 		H.update_body()
 		H.update_clothing()
+		H.abilityHolder.updateButtons()
 		C?.transferOwnership(H)
 		logTheThing("combat", H, null, "voluntarily leaves horror form as a changeling, [log_loc(H)].")
 		return 0

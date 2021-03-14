@@ -25,7 +25,8 @@
 
 /datum/artifact/mining
 	associated_object = /obj/item/artifact/mining_tool
-	rarity_class = 1
+	type_name = "Mining Tool"
+	rarity_weight = 450
 	validtypes = list("ancient","martian","wizard","eldritch","precursor")
 	react_xray = list(12,80,95,5,"DENSE")
 	examine_hint = "It seems to have a handle you're supposed to hold it by."

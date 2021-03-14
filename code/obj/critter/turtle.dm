@@ -18,6 +18,18 @@
 	chase_text = "charges into"
 	crit_text = "rams really hard into"
 	var/shell_count = 0		//Count down to 0. Measured in process cycles. If they are in their shell when this is 0, exit.
+	var/wandering_count = 0		//Make them move less frequently when wandering... They're slow.
+	var/rigged = FALSE
+	var/rigger = null
+	var/exploding = FALSE
+
+	New(loc)
+		. = ..()
+		START_TRACKING
+
+	disposing()
+		. = ..()
+		STOP_TRACKING
 
 	ai_think()
 		if (shell_count > 0)
@@ -27,7 +39,6 @@
 			src.attack = 0
 			src.target = null
 			exit_shell()
-
 
 		..()
 
@@ -83,9 +94,48 @@
 		if (prob(20))
 			enter_shell()
 		..()
+
 	CritterDeath()
 		..()
 		shell_count = 0
+
+	attackby(obj/item/I, mob/living/user)
+		if(istype(I, /obj/item/reagent_containers/syringe))
+			var/obj/item/reagent_containers/syringe/S = I
+
+			boutput(user, "You inject the solution into [src].")
+
+			if(S.reagents.has_reagent("plasma", 1))
+				message_admins("[key_name(user)] rigged [src] to explode in [user.loc.loc], [showCoords(user.x, user.y, user.z)].")
+				logTheThing("combat", user, null, "rigged [src] to explode in [user.loc.loc] ([showCoords(user.x, user.y, user.z)])")
+				rigged = TRUE
+				rigger = user
+
+				S.reagents.clear_reagents()
+
+				var/area/A = get_area(src)
+				if(A?.lightswitch && A?.power_light)
+					src.explode()
+		else
+			. = ..()
+
+	// explode the turtle
+
+	proc/explode()
+		SPAWN_DBG(0)
+			src.rigged = FALSE
+			src.rigger = null
+			enter_shell()	//enter shell first to give a warning
+			src.exploding = TRUE
+			sleep(0.2 SECONDS)
+			explosion(src, get_turf(src), 0, 1, 2, 2)
+			sleep(4 SECONDS)
+			src.exploding = FALSE
+			var/message = "Check please!"
+			var/chat_text = make_chat_maptext(src, message)
+			for (var/mob/O in all_hearers(7, get_turf(src)))
+				O.show_message("<span class='game say bold'><span class='name'>[src]</span></span> says, <span class='message'>\"[message]\"</span>", 2, assoc_maptext = chat_text)
+			playsound(src.loc, "sound/misc/rimshot.ogg", 50, 1)
 
 	//sets the turtle to sleep inside their shell. Will exit their shell if hit again
 	proc/enter_shell()
@@ -101,7 +151,7 @@
 		icon_state = "turtle-shell"
 		density = 0
 
-		src.visible_message("<span class='alert'><b>[src]</b> retreats into their shell!")
+		src.visible_message("<span class='alert'><b>[src]</b> retreats into [his_or_her()] shell!")
 		return 1
 
 	//sets shellcount to 0 and changes task to "thinking". changes icon state and protections.
@@ -115,12 +165,13 @@
 		icon_state = "turtle"
 		density = 1
 
-		src.visible_message("<span class='notice'><b>[src]</b> comes out of their shell!")
+		src.visible_message("<span class='notice'><b>[src]</b> comes out of [his_or_her()] shell!")
 		return 1
 
 	//Just completely override this to change values of severity. Kinda ugly, but it's what I want!
 	ex_act(severity)
-
+		if(src.exploding)
+			return
 		if (src.shell_count)
 			shell_count = 0
 			on_wake()
@@ -141,6 +192,16 @@
 		if (src.health <= 0)
 			src.CritterDeath()
 
+//Yes, I stole this from mobprocs cause that one only works on mobs and I didn't think it worthwhile to change it to work on objects too.
+/obj/critter/turtle/proc/his_or_her()
+	switch (src.gender)
+		if ("male")
+			return "his"
+		if ("female")
+			return "her"
+		else
+			return "their"
+
 
 //The HoS's pet turtle. He can wear the beret!
 /obj/critter/turtle/sylvester
@@ -150,6 +211,6 @@
 	health = 100
 	generic = 0
 	is_pet = 2
+	gender = MALE
 //Starts with the beret on!
 /obj/critter/turtle/sylvester/HoS
-

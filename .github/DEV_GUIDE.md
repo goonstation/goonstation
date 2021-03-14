@@ -208,7 +208,7 @@ There's buttons for pretty much anything you want to do with Git. When you're al
 
 Ok. We're almost there!
 :::info
-This can also be done (somewhat easier) using the GitHub interface, but this guide's goal is to stay in-editor.
+This can also be done using the GitHub interface ***(which is easier, and more simple + powerful)*** , but this guide's goal is to stay in-editor.
 :::
 Click the GitHub icon on the left sidebar. It looks like a cat in  circle. Now, you'll want to click the + sign that appears in the top left, like this:
 
@@ -255,6 +255,10 @@ Changes will be made to the upstream repo and it's a good idea to keep your mast
     ![](https://i.imgur.com/maQ0CAw.png)
 
 If you've done everything correctly this should finish without any problems and now your master is in the same state as upstream/master. But you probably also want to sync up your feature branch.
+
+:::warning
+  Resolving icon and map conflicts might be annoying when done manually. You can install an automatic merge driver for these files by running the `tools/hooks/install.bat` file first.
+:::
 
 1. Checkout your feature branch (as above)
 2. Press **Ctrl + Shift + P** and type in "git merge", choose the Git: Merge Branch... command

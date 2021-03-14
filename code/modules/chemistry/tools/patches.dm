@@ -190,7 +190,7 @@
 
 		if (reagents?.total_volume)
 			if (!borg)
-				user.drop_item(src)
+				user?.drop_item(src)
 				//user.u_equip(src)
 				//qdel(src)
 				src.set_loc(M)
@@ -462,7 +462,8 @@
 	var/tampered = 0
 	var/borg = 0
 	initial_volume = 200
-	flags = FPRINT | TABLEPASS | OPENCONTAINER | ONBELT | NOSPLASH
+	flags = FPRINT | TABLEPASS | OPENCONTAINER | ONBELT | NOSPLASH | ATTACK_SELF_DELAY
+	click_delay = 0.7 SECONDS
 	rc_flags = RC_SCALE | RC_VISIBLE | RC_SPECTRO
 	module_research = list("medicine" = 4, "science" = 4)
 	module_research_type = /obj/item/reagent_containers/patch
@@ -497,13 +498,14 @@
 		.= (iscarbon(A) || ismobcritter(A))
 
 	proc/update_icon()
-		src.overlays = null
 		if (reagents.total_volume)
 			if (!src.fluid_image)
 				src.fluid_image = image('icons/obj/chemical.dmi', "mender-fluid", -1)
 			var/datum/color/average = reagents.get_average_color()
 			src.fluid_image.color = average.to_rgba()
-			src.overlays += src.fluid_image
+			src.UpdateOverlays(src.fluid_image, "fluid")
+		else
+			src.UpdateOverlays(null, "fluid")
 		signal_event("icon_updated")
 
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
@@ -578,12 +580,18 @@
 		name = "brute auto-mender"
 		borg = 1
 
+	high_capacity
+		initial_volume = 500
+
 /obj/item/reagent_containers/mender/burn
 	initial_reagents = "silver_sulfadiazine"
 
 	medbot
 		name = "burn auto-mender"
 		borg = 1
+
+	high_capacity
+		initial_volume = 500
 
 /obj/item/reagent_containers/mender/both
 	initial_reagents = "synthflesh"

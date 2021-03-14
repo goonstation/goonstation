@@ -99,7 +99,7 @@
 					src.updateIntDialog()
 					return
 
-				if (!in_range(src, usr) || usr.stat || usr.restrained())
+				if (!in_interact_range(src, usr) || usr.stat || usr.restrained())
 					return
 
 				if(length(t) != 8 || !is_hex(t))

@@ -10,13 +10,13 @@
 
 	for (var/i = 1, i <= 4, i++)
 		var/obj/item/reagent_containers/food/snacks/plant/P = new PT(T)
-		P.streak(dirlist[i])
+		P.streak_object(dirlist[i])
 		produce += P
 
 	var/extra = rand(2,4)
 	for (var/i = 1, i <= extra, i++)
 		var/obj/item/reagent_containers/food/snacks/plant/P = new PT(T)
-		P.streak(alldirs)
+		P.streak_object(alldirs)
 		produce += P
 
 	return produce

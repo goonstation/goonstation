@@ -7,7 +7,7 @@
 "aab" = (
 /obj/table/glass/reinforced/auto,
 /obj/item/plate,
-/obj/item/reagent_containers/food/snacks/donut/cinnamon,
+/obj/item/reagent_containers/food/snacks/donut/custom/cinnamon,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/south)
 "aac" = (
@@ -8413,7 +8413,8 @@
 /turf/simulated/floor/blue/checker,
 /area/station/medical/medbay)
 "asm" = (
-/obj/machinery/atmospherics/pipe/simple/insulated{
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	can_rupture = 0;
 	dir = 6
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -23786,9 +23787,8 @@
 	name = "Mounted Igniter";
 	pixel_x = -24
 	},
-/obj/machinery/atmospherics/pipe/simple/insulated{
-	can_rupture = 0;
-	dir = 1
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	can_rupture = 0
 	},
 /turf/simulated/floor/engine/vacuum{
 	icon_state = "engine_caution_corners"
@@ -26344,10 +26344,7 @@
 "biZ" = (
 /obj/table/reinforced/bar/auto,
 /obj/machinery/light/incandescent/warm,
-/obj/item/reagent_containers/food/snacks/cake/chocolate{
-	desc = "Holy shit! This cake probably costs more than the gross domestic product of Bulgaria!";
-	name = "Extravagant Chocolate Gateau"
-	},
+/obj/item/reagent_containers/food/snacks/cake/chocolate/gateau,
 /turf/simulated/floor/carpet/blue/fancy/narrow/nw,
 /area/station/crew_quarters/bar)
 "bja" = (
@@ -43689,7 +43686,7 @@
 /turf/simulated/floor,
 /area/research_outpost/toxins)
 "bYt" = (
-/obj/item/reagent_containers/food/snacks/donut/robust{
+/obj/item/reagent_containers/food/snacks/donut/custom/robust{
 	pixel_y = 4;
 	rand_pos = 0
 	},
@@ -45774,7 +45771,7 @@
 /obj/item/gun/kinetic/flaregun,
 /obj/item/ammo/bullets/flare,
 /obj/item/ammo/bullets/flare,
-/obj/item/flamethrower/assembled/loaded,
+/obj/item/gun/flamethrower/assembled/loaded,
 /turf/simulated/floor/delivery,
 /area/station/security/main)
 "ceU" = (
@@ -48467,6 +48464,12 @@
 /obj/decal/garland,
 /turf/simulated/floor/plating/random,
 /area/station/hydroponics/bay)
+"gRq" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	can_rupture = 0
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/research_outpost/toxins)
 "hat" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -134351,7 +134354,7 @@ aqn
 afh
 afh
 asm
-aDx
+gRq
 anK
 bZn
 bZE
@@ -135862,7 +135865,7 @@ asg
 ase
 aun
 bcr
-afm
+gRq
 bbF
 bZn
 awB

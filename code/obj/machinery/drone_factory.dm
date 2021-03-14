@@ -39,12 +39,14 @@
 			out(G, "<span class='bold alert'>You are already #[position] in the ghostdrone queue!</span>")
 			return ..()
 
-		if (alert(G, "Add yourself to the ghostdrone queue?", "Confirmation", "Yes", "No") == "No")
-			return ..()
+		. = ..()
+		SPAWN_DBG(0)
+			if (alert(G, "Add yourself to the ghostdrone queue?", "Confirmation", "Yes", "No") == "No")
+				return
 
-		ghostdrone_candidates += M
-		position = ghostdrone_candidates.len
-		out(G, "<span class='bold notice'>You have been added to the ghostdrone queue. Now position #[position].</span>")
+			ghostdrone_candidates += M
+			position = ghostdrone_candidates.len
+			out(G, "<span class='bold notice'>You have been added to the ghostdrone queue. Now position #[position].</span>")
 
 	process()
 		..()

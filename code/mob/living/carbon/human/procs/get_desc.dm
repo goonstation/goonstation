@@ -96,12 +96,12 @@
 
 	if (src.wear_id)
 		if (istype(src.wear_id, /obj/item/card/id))
-			if (src.wear_id:registered != src.real_name && in_range(src, usr) && prob(10))
+			if (src.wear_id:registered != src.real_name && in_interact_range(src, usr) && prob(10))
 				. += "<br><span class='alert'>[src.name] is wearing [bicon(src.wear_id)] [src.wear_id.name] yet doesn't seem to be that person!!!</span>"
 			else
 				. += "<br><span class='notice'>[src.name] is wearing [bicon(src.wear_id)] [src.wear_id.name].</span>"
 		else if (istype(src.wear_id, /obj/item/device/pda2) && src.wear_id:ID_card)
-			if (src.wear_id:ID_card:registered != src.real_name && in_range(src, usr) && prob(10))
+			if (src.wear_id:ID_card:registered != src.real_name && in_interact_range(src, usr) && prob(10))
 				. += "<br><span class='alert'>[src.name] is wearing [bicon(src.wear_id)] [src.wear_id.name] with [bicon(src.wear_id:ID_card)] [src.wear_id:ID_card:name] in it yet doesn't seem to be that person!!!</span>"
 			else
 				. += "<br><span class='notice'>[src.name] is wearing [bicon(src.wear_id)] [src.wear_id.name] with [bicon(src.wear_id:ID_card)] [src.wear_id:ID_card:name] in it.</span>"
@@ -281,7 +281,7 @@
 	if (C?.in_fakedeath)
 		changeling_fakedeath = 1
 
-	if ((isdead(src)) || changeling_fakedeath || (src.reagents.has_reagent("capulettium") && src.getStatusDuration("paralysis")) || (src.reagents.has_reagent("capulettium_plus") && src.getStatusDuration("weakened")))
+	if ((isdead(src)) || changeling_fakedeath || (src.reagents.has_reagent("capulettium") && src.getStatusDuration("paralysis")) || (src.reagents.has_reagent("capulettium_plus") && src.hasStatus("resting")))
 		if (!src.decomp_stage)
 			. += "<br><span class='alert'>[src] is limp and unresponsive, a dull lifeless look in [t_his] eyes.</span>"
 	else
@@ -305,7 +305,7 @@
 			if (src.get_brain_damage() >= 60)
 				. += "<br><span class='alert'>[src.name] has a blank expression on [his_or_her(src)] face.</span>"
 
-			if (!src.client)
+			if (!src.client && !src.ai_active)
 				. += "<br>[src.name] seems to be staring blankly into space."
 
 	switch (src.decomp_stage)

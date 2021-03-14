@@ -629,7 +629,8 @@ ABSTRACT_TYPE(/datum/objective/crew/staffassistant)
 		check_completion()
 			if(owner.current && !isdead(owner.current) && ishuman(owner.current))
 				var/mob/living/carbon/human/H = owner.current
-				if(in_centcom(H) && H.head && H.head.name == "[H.real_name]'s butt") return 1
+				var/obj/item/clothing/head/butt/B = H.head
+				if(in_centcom(H) && B && istype(B) && B.donor_name == H.real_name) return 1
 			return 0
 	promotion
 		explanation_text = "Escape on the shuttle alive with a non-assistant ID registered to you."

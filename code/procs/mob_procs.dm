@@ -318,7 +318,9 @@
 				D.disrupt(src)
 				src.visible_message("<span class='notice'><b>[src]'s disguiser is disrupted!</b></span>")
 
-	return
+	if (safety)
+		return 0
+	return 1
 
 /mob/proc/hearing_check(var/consciousness_check = 0)
 	return 1
@@ -524,7 +526,7 @@
 	return 0
 
 /mob/living/carbon/human/get_explosion_resistance()
-	return GET_MOB_PROPERTY(src, PROP_EXPLOPROT)/100
+	return min(GET_MOB_PROPERTY(src, PROP_EXPLOPROT), 100) / 100
 
 /mob/proc/spread_blood_clothes(mob/whose)
 	return

@@ -14908,15 +14908,6 @@
 	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/bar)
-"azC" = (
-/obj/machinery/door/firedoor/border_only,
-/obj/table/reinforced/auto,
-/obj/disposalpipe/segment/food{
-	dir = 4
-	},
-/obj/item/reagent_containers/food/snacks/cake/fruit,
-/turf/simulated/floor/black,
-/area/station/crew_quarters/kitchen)
 "azD" = (
 /obj/disposalpipe/segment,
 /obj/disposalpipe/segment/food{
@@ -21274,30 +21265,6 @@
 	dir = 1
 	},
 /area/station/hallway/secondary/central)
-"aMr" = (
-/obj/disposalpipe/segment{
-	dir = 4;
-	pixel_y = 0
-	},
-/obj/storage/secure/closet/fridge,
-/obj/item/storage/box/donkpocket_kit,
-/obj/item/reagent_containers/food/drinks/bottle/fancy_beer,
-/obj/item/reagent_containers/food/snacks/sandwich/pb,
-/obj/item/reagent_containers/food/snacks/sandwich/cheese,
-/obj/item/reagent_containers/food/snacks/salad{
-	desc = "Someone wrote 'DAVE' on the container.";
-	name = "Dave's salad";
-	quality = 80
-	},
-/obj/machinery/light{
-	dir = 1;
-	pixel_x = -1
-	},
-/obj/item/reagent_containers/food/snacks/cake/fruit,
-/turf/simulated/floor/black/side{
-	dir = 1
-	},
-/area/station/hallway/secondary/central)
 "aMs" = (
 /obj/disposalpipe/segment{
 	dir = 8;
@@ -25501,7 +25468,7 @@
 	},
 /obj/table/wood/auto,
 /obj/item/device/radio/intercom/medical{
-
+	
 	},
 /turf/simulated/floor/carpet{
 	icon_state = "fblue2";
@@ -36133,44 +36100,6 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "N APC";
-	pixel_y = 24
-	},
-/turf/simulated/floor/greenwhite{
-	dir = 1
-	},
-/area/station/medical/medbay/cloner)
-"blk" = (
-/obj/machinery/light_switch/north,
-/obj/machinery/computer/cloning,
-/obj/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/obj/cable{
-	d2 = 4;
-	icon_state = "0-4";
-	pixel_y = 0
-	},
-/turf/simulated/floor/greenwhite{
-	dir = 1
-	},
-/area/station/medical/medbay/cloner)
-"bll" = (
-/obj/machinery/clonepod{
-	gen_analysis = 0
-	},
-/obj/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/obj/cable{
-	d2 = 4;
-	icon_state = "0-4";
-	pixel_y = 0
-	},
-/obj/machinery/firealarm{
-	dir = 2;
-	layer = 3.5;
 	pixel_y = 24
 	},
 /turf/simulated/floor/greenwhite{
@@ -51464,6 +51393,77 @@
 	layer = 2
 	},
 /area/listeningpost/solars)
+"iqO" = (
+/obj/machinery/clonepod,
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4";
+	pixel_y = 0
+	},
+/obj/machinery/firealarm{
+	dir = 2;
+	layer = 3.5;
+	pixel_y = 24
+	},
+/turf/simulated/floor/greenwhite{
+	dir = 1
+	},
+/area/station/medical/medbay/cloner)
+"ocQ" = (
+/obj/machinery/light_switch/north,
+/obj/machinery/computer/cloning{
+	gen_analysis = 0
+	},
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4";
+	pixel_y = 0
+	},
+/turf/simulated/floor/greenwhite{
+	dir = 1
+	},
+/area/station/medical/medbay/cloner)
+"tkM" = (
+/obj/machinery/door/firedoor/border_only,
+/obj/table/reinforced/auto,
+/obj/disposalpipe/segment/food{
+	dir = 4
+	},
+/obj/item/reagent_containers/food/snacks/fruit_cake,
+/turf/simulated/floor/black,
+/area/station/crew_quarters/kitchen)
+"uTS" = (
+/obj/disposalpipe/segment{
+	dir = 4;
+	pixel_y = 0
+	},
+/obj/storage/secure/closet/fridge,
+/obj/item/storage/box/donkpocket_kit,
+/obj/item/reagent_containers/food/drinks/bottle/fancy_beer,
+/obj/item/reagent_containers/food/snacks/sandwich/pb,
+/obj/item/reagent_containers/food/snacks/sandwich/cheese,
+/obj/item/reagent_containers/food/snacks/salad{
+	desc = "Someone wrote 'DAVE' on the container.";
+	name = "Dave's salad";
+	quality = 80
+	},
+/obj/machinery/light{
+	dir = 1;
+	pixel_x = -1
+	},
+/obj/item/reagent_containers/food/snacks/fruit_cake,
+/turf/simulated/floor/black/side{
+	dir = 1
+	},
+/area/station/hallway/secondary/central)
 
 (1,1,1) = {"
 aaa
@@ -76809,7 +76809,7 @@ aWp
 aOg
 biH
 bkb
-blk
+ocQ
 bmy
 bnQ
 boM
@@ -77066,7 +77066,7 @@ aWp
 aOg
 biI
 bkb
-bll
+iqO
 bmy
 bnQ
 bGK
@@ -82186,7 +82186,7 @@ aGP
 aGP
 aKw
 aHq
-aMr
+uTS
 aNo
 aOp
 aPC
@@ -86029,7 +86029,7 @@ awI
 axx
 ayl
 ayX
-azC
+tkM
 aAv
 aBn
 aCx

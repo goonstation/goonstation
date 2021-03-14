@@ -1,94 +1,76 @@
 /// Base item. These are objects you can hold, generally.
 /obj/item
+	/*_____*/
+	/*Basic*/
+	/*‾‾‾‾‾*/
 	name = "item"
 	icon = 'icons/obj/items/items.dmi'
 	text = ""
 	var/icon_old = null
 	var/uses_multiple_icon_states = 0
-	var/force = null
 	var/item_state = null
-	/// for bleeding system things, options: DAMAGE_BLUNT, DAMAGE_CUT, DAMAGE_STAB in order of how much it affects the chances to increase bleeding
-	var/hit_type = DAMAGE_BLUNT
-	throwforce = 1
-	var/r_speed = 1.0
-	var/health = 4 // burn faster
-	var/burn_point = 15000  // this already exists but nothing uses it???
-	var/burn_possible = 1 //cogwerks fire project - can object catch on fire - let's have all sorts of shit burn at hellish temps
-	//MBC : im shit. change burn_possible to '2' if you want it to pool itself instead of qdeling when burned
-
-	var/burn_output = 1500 //how hot should it burn
-	/// 0 = ash, 1 = melt
-	var/burn_type = 0
-	var/burning = null
-	var/burning_last_process = 0
-	var/hitsound = 'sound/impact_sounds/Generic_Hit_1.ogg'
-	/// how big they are, determines if they can fit in backpacks and pockets and the like
-	var/w_class = 3.0
-	/// how hard they are to pull around, determines how much something slows you down while pulling it
-	p_class = 1.5
-	/// Can't remove from non-hand slots
-	var/cant_self_remove = 0
-	/// Can't be removed from non-hand slots by others
-	var/cant_other_remove = 0
-	/// Cant' be removed in general. I guess.
-	var/cant_drop = 0
-
-	flags = FPRINT | TABLEPASS
-	var/tool_flags = 0
-	var/c_flags = null
-	var/tooltip_flags = null
-	var/item_function_flags = null
-	var/force_use_as_tool = 0
-
-	pressure_resistance = 50
-	var/obj/item/master = null
-	var/amount = 1
-	var/max_stack = 1
-	/// if null, only current type. otherwise uses this
-	var/stack_type = null
-	/// If nonzero, bots consider this a thing people shouldn't be carrying without authorization
-	var/contraband = 0
-	var/hide_attack = 0 //If 1, hide the attack animation + particles. Used for hiding attacks with silenced .22 and sleepy pen
-						//If 2, play the attack animation but hide the attack particles.
-
-	var/needOnMouseMove = 0 //If 1, we check all the stuff required for onMouseMove for this. Leave this off unless required. Might cause extra lag.
-
 	var/image/wear_image = null
 	var/wear_image_icon = 'icons/mob/belt.dmi'
 	var/image/inhand_image = null
 	var/inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
+	/// set to a colour to make the inhand image be that colour. if the item is coloured though that takes priority over this variable
+	var/inhand_color = null
 
-	var/equipped_in_slot = null // null if not equipped, otherwise contains the slot in which it is
+	/*_______*/
+	/*Burning*/
+	/*‾‾‾‾‾‾‾*/
+	var/burn_possible = 1 //cogwerks fire project - can object catch on fire - let's have all sorts of shit burn at hellish temps
+	//MBC : im shit. change burn_possible to '2' if you want it to pool itself instead of qdeling when burned
+	var/burning = null
+	var/health = 4 //burn faster
+	var/burn_point = 15000  //this already exists but nothing uses it???
+	var/burn_output = 1500 //how hot should it burn
+	var/burn_type = 0 //0 = ash, 1 = melt
+	var/burning_last_process = 0
+	var/firesource = FALSE //TRUE or FALSE : dictates whether or not the item can be used as a valid source of fire
 
-	var/arm_icon = "" //set to an icon state in human.dmi minus _s/_l and l_arm_/r_arm_ to allow use as an arm
-	var/over_clothes = 0 //draw over clothes when used as a limb
-	var/override_attack_hand = 1 //when used as an arm, attack with item rather than using attack_hand
-	var/can_hold_items = 0 //when used as an arm, can it hold things?
-
+	/*______*/
+	/*Combat*/
+	/*‾‾‾‾‾‾*/
+	var/force = null
+	var/hit_type = DAMAGE_BLUNT // for bleeding system things, options: DAMAGE_BLUNT, DAMAGE_CUT, DAMAGE_STAB in order of how much it affects the chances to increase bleeding
+	throwforce = 1
+	var/r_speed = 1.0
+	var/hitsound = 'sound/impact_sounds/Generic_Hit_1.ogg'
 	var/stamina_damage = STAMINA_ITEM_DMG //amount of stamina removed from target per hit.
 	var/stamina_cost = STAMINA_ITEM_COST  //amount of stamina removed from USER per hit. This cant bring you below 10 points and you will not be able to attack if it would.
+
 	var/stamina_crit_chance = STAMINA_CRIT_CHANCE //Crit chance when attacking with this.
+	var/datum/item_special/special = null // Contains the datum which executes the items special, if it has one, when used beyond melee range.
+	var/hide_attack = 0 //If 1, hide the attack animation + particles. Used for hiding attacks with silenced .22 and sleepy pen
+						//If 2, play the attack animation but hide the attack particles.
+	var/click_delay = DEFAULT_CLICK_DELAY //Delay before next click after using this.
+	var/combat_click_delay = COMBAT_CLICK_DELAY
 
-	var/list/module_research = null//list()
-	var/module_research_type = null
-	var/module_research_no_diminish = 0
+	var/can_disarm = 0
+	var/useInnerItem = 0 // Should this item use a contained item (in contents) to attack with instead?
+	var/obj/item/grab/chokehold = null
+	var/obj/item/grab/special_grab = null
 
-	/// can you eat the thing?
-	var/edible = 0
+	/*_________*/
+	/*Inventory*/
+	/*‾‾‾‾‾‾‾‾‾*/
+	var/pickup_sfx = 0 //if null, we auto-pick from a list based on w_class
+	var/w_class = 3.0 // how big they are, determines if they can fit in backpacks and pockets and the like
+	p_class = 1.5 // how hard they are to pull around, determines how much something slows you down while pulling it
 
+	var/cant_self_remove = 0 // Can't remove from non-hand slots
+	var/cant_other_remove = 0 // Can't be removed from non-hand slots by others
+	var/cant_drop = 0 // Cant' be removed in general. I guess.
+
+	var/amount = 1
+	var/max_stack = 1
+	var/stack_type = null // if null, only current type. otherwise uses this
+
+	var/equipped_in_slot = null // null if not equipped, otherwise contains the slot in which it is
+	var/two_handed = 0 // Requires both hands. Do not change while equipped. Use proc for that (TBI)
 	var/duration_put    = -1 // If set to something other than -1 these will control
 	var/duration_remove = -1 // how long it takes to remove or put the item onto a person. 1/10ths of a second.
-
-	var/rand_pos = 0
-	/// Should this item use a contained item (in contents) to attack with instead?
-	var/useInnerItem = 0
-	var/obj/item/holding = null
-
-	/// Requires both hands. Do not change while equipped. Use proc for that (TBI)
-	var/two_handed = 0
-	///Delay before next click after using this.
-	var/click_delay = DEFAULT_CLICK_DELAY
-	var/combat_click_delay = COMBAT_CLICK_DELAY
 
 	var/showTooltip = 1
 	var/showTooltipDesc = 1
@@ -99,28 +81,48 @@
 	var/tmp/lastTooltipUser = null
 	var/tmp/lastTooltipSpectro = null
 	var/tmp/tooltip_rebuild = 1
-	/// Just a little thing to indicate item rarity. RPG fluff.
-	var/rarity = ITEM_RARITY_COMMON
 
-	/// Contains the datum which executes the items special, if it has one, when used beyond melee range.
-	var/datum/item_special/special = null
+	var/inventory_counter_enabled = 0 // Inventory count display. Call create_inventory_counter in New()
+	var/obj/overlay/inventory_counter/inventory_counter = null
 
-	var/pickup_sfx = 0 //if null, we auto-pick from a list based on w_class
-
-	var/can_disarm = 0
+	/*_____*/
+	/*Flags*/
+	/*‾‾‾‾‾*/
+	flags = FPRINT | TABLEPASS
+	var/tool_flags = 0
+	var/c_flags = null
+	var/tooltip_flags = null
+	var/item_function_flags = null
+	var/force_use_as_tool = 0
 
 	var/block_hearing_when_worn = HEARING_NORMAL
-	 //fuck me mbc why you do this | | ok i did it to reduce type checking in a proc that gets called A LOT and idk what else to do ok help
-
-
-	var/obj/item/grab/chokehold = null
-	var/obj/item/grab/special_grab = null
-
+	//fuck me mbc why you do this | | ok i did it to reduce type checking in a proc that gets called A LOT and idk what else to do ok help
 	var/block_vision = 0 //cannot see when worn
+	var/needOnMouseMove = 0 //If 1, we check all the stuff required for onMouseMove for this. Leave this off unless required. Might cause extra lag.
+	var/contraband = 0 // If nonzero, bots consider this a thing people shouldn't be carrying without authorization
+	var/edible = 0 // can you eat the thing?
 
-	/// Inventory count display. Call create_inventory_counter in New()
-	var/inventory_counter_enabled = 0
-	var/obj/overlay/inventory_counter/inventory_counter = null
+	/*_____*/
+	/*Other*/
+	/*‾‾‾‾‾*/
+	var/arm_icon = "" //set to an icon state in human.dmi minus _s/_l and l_arm_/r_arm_ to allow use as an arm
+	var/over_clothes = 0 //draw over clothes when used as a limb
+	var/override_attack_hand = 1 //when used as an arm, attack with item rather than using attack_hand
+	var/limb_hit_bonus = 0 // attack bonus for when you have this item as a limb and hit someone with it
+	var/can_hold_items = 0 //when used as an arm, can it hold things?
+
+	var/list/module_research = null
+	var/module_research_type = null
+	var/module_research_no_diminish = 0
+
+	var/rand_pos = 0
+	var/obj/item/holding = null
+	var/rarity = ITEM_RARITY_COMMON // Just a little thing to indicate item rarity. RPG fluff.
+	pressure_resistance = 50
+	var/obj/item/master = null
+
+	var/last_tick_duration = 1 // amount of time spent between previous tick and this one (1 = normal)
+	var/last_processing_tick = -1
 
 	/// This is the safe way of changing 2-handed-ness at runtime. Use this please.
 	proc/setTwoHanded(var/twohanded = 1)
@@ -241,7 +243,7 @@
 	onMaterialChanged()
 		..()
 		if (istype(src.material))
-			force = material.hasProperty("hard") ? force + round(material.getProperty("hard") / 20) : force
+			force = material.hasProperty("hard") ? initial(force) + round(material.getProperty("hard") / 20) : initial(force)
 			burn_possible = src.material.getProperty("flammable") > 50 ? 1 : 0
 			if (src.material.material_flags & MATERIAL_METAL || src.material.material_flags & MATERIAL_CRYSTAL || src.material.material_flags & MATERIAL_RUBBER)
 				burn_type = 1
@@ -249,17 +251,17 @@
 				burn_type = 0
 
 		if (src.material.triggersOnLife.len)
-			src.AddComponent(/datum/component/holdertargeting/mat_triggersonlife)
+			src.AddComponent(/datum/component/loctargeting/mat_triggersonlife)
 		else
-			var/datum/component/C = src.GetComponent(/datum/component/holdertargeting/mat_triggersonlife)
+			var/datum/component/C = src.GetComponent(/datum/component/loctargeting/mat_triggersonlife)
 			if (C)
-				C.RemoveComponent(/datum/component/holdertargeting/mat_triggersonlife)
+				C.RemoveComponent(/datum/component/loctargeting/mat_triggersonlife)
 
 	removeMaterial()
 		if (src.material && src.material.triggersOnLife.len)
-			var/datum/component/C = src.GetComponent(/datum/component/holdertargeting/mat_triggersonlife)
+			var/datum/component/C = src.GetComponent(/datum/component/loctargeting/mat_triggersonlife)
 			if (C)
-				C.RemoveComponent(/datum/component/holdertargeting/mat_triggersonlife)
+				C.RemoveComponent(/datum/component/loctargeting/mat_triggersonlife)
 		..()
 
 /obj/item/New()
@@ -376,76 +378,193 @@
 	..()
 
 
-//disgusting proc. merge with foods later. PLEASE
-/obj/item/proc/Eat(var/mob/M as mob, var/mob/user)
-	if (!iscarbon(M) && !ismobcritter(M))
-		return 0
-	if (M?.bioHolder && !M.bioHolder.HasEffect("mattereater"))
-		if(ON_COOLDOWN(M, "eat", EAT_COOLDOWN))
-			return 0
-	var/edibility_override = SEND_SIGNAL(M, COMSIG_ITEM_CONSUMED_PRE, user, src)
-	if (!src.edible && !(src.material && src.material.edible) && !(edibility_override & FORCE_EDIBILITY))
+/obj/item/proc/Eat(var/mob/M as mob, var/mob/user, var/bypass_utensils = 0)
+	if(!M.can_eat(src, user, bypass_utensils))
 		return 0
 
-	if (M == user)
-		M.visible_message("<span class='notice'>[M] takes a bite of [src]!</span>",\
-		"<span class='notice'>You take a bite of [src]!</span>")
+	actions.start(new/datum/action/bar/icon/eatstuff(src, M, user), user)
+	return 1
 
-		if (src.material && src.material.edible)
-			src.material.triggerEat(M, src)
+/datum/action/bar/icon/eatstuff
+	duration = 3 SECONDS
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
+	id = "eatstuff"
+	icon = null
+	icon_state = null
+	/// the thing
+	var/obj/item/master
+	/// the one eating the thing
+	var/mob/M
+	/// the one using the thing
+	var/mob/user
+	var/is_it_organs = 0
+	var/M_is_user = 0
+	var/is_awful_monsterthing = 0
+	var/static/list/grody_adj = list("horrifying", "disgusting", "monstrous", "soulless", "grody", "depraved", "wild", "savage", "big, bad")
+	var/static/list/grody_noun = list("animal", "beast", "monster", "ghoul", "abomination", "bear", "lizard", "weirdo", "creep")
 
-		if (src.reagents && src.reagents.total_volume)
-			src.reagents.reaction(M, INGEST)
-			SPAWN_DBG(0.5 SECONDS) // Necessary.
-				src.reagents.trans_to(M, src.reagents.total_volume/src.amount)
+	New(var/obj/item/thing2eat, var/mob/_M, var/mob/_user)
+		..()
+		src.master = thing2eat
+		src.M = _M
+		src.user = _user
+		if(ishuman(M))
+			var/mob/living/carbon/human/H = M
+			if(istype(H?.mutantrace, /datum/mutantrace/lizard) || istype(H?.mutantrace, /datum/mutantrace/werewolf))
+				src.is_awful_monsterthing = 1
+		src.is_it_organs = (istype(master, /obj/item/organ) || istype(master, /obj/item/clothing/head/butt))
+		src.M_is_user = (M == user)
+		if(M_is_user && !is_it_organs)
+			src.icon = null // action/bar/icon
+			src.icon_state = null // minus the action bar icon
+			duration = 0 // pretty much instant
+			REMOVE_FLAG(src.interrupt_flags, INTERRUPT_MOVE) // take it to go
+			REMOVE_FLAG(src.interrupt_flags, INTERRUPT_ACT) // And spam it if you want
+		else
+			src.icon = master.icon
+			src.icon_state = master.icon_state
+			if(is_it_organs) // feeding someone else organs?
+				src.duration *= 1.5 // no snacking on transplants in the OR, please
+
+	onStart()
+		..()
+		if(src.failchecks())
+			interrupt(INTERRUPT_ALWAYS)
+
+		if(M_is_user && !is_it_organs)
+			bar.icon = null // Action bars
+			border.icon = null // minus action bar
+		else
+			eat_twitch(M)
+
+		M.on_eat(master)
+
+		if (src.M_is_user)
+			if(is_it_organs)
+				M.visible_message("<span class='alert'><b>[M]</b> starts cramming \the [master] into [his_or_her(M)] mouth[prob(30) ? " like a [pick(src.grody_adj)] [pick(src.grody_noun)]" : ""]!</span>",\
+				"<span class='[is_awful_monsterthing ? "notice" : "alert"]'>You start cramming \the [master] into your mouth!</span>")
+			else
+				boutput(M, "<span class='notice'>You go to take a bite out of [master].</span>")
+		else
+			user.tri_message("<span class='alert'><b>[user]</b> tries to feed [M] [master]!</span>",\
+			user, "<span class='alert'>You try to feed [M] [master]!</span>",\
+			M, "<span class='[is_awful_monsterthing ? "notice" : "alert"]'><b>[user]</b> tries to feed you [master]!</span>")
+		logTheThing("combat", user, M, "attempts to feed [constructTarget(M,"combat")] [master] [log_reagents(master)]")
+
+	onInterrupt(flag)
+		. = ..()
+		if(src.M_is_user)
+			if(src.is_it_organs)
+				M.visible_message("<span class='alert'>[M] spits out \the [master].</span>","<span class='[is_awful_monsterthing ? "alert" : "notice"]'>You spit out \the [master].</span>")
+			else
+				boutput(M, "<span class='notice'>You stop trying to eat [master].</span>")
+		else
+			if(src.is_it_organs)
+				user.tri_message("<span class='alert'><b>[user]</b> stops forcing \the [master] down [M]'s throat!</span>",\
+				user, "<span class='alert'>You remove \the [master] from [M]'s face!</span>",\
+				M, "<span class='[is_awful_monsterthing ? "alert" : "notice"]'><b>[user]</b> stops forcing \the [master] down your throat!</span>")
+			else
+				user.tri_message("<span class='alert'><b>[user]</b> stops trying to shove \the [master] down [M]'s throat!</span>",\
+				user, "<span class='alert'>You remove \the [master] from [M]'s face!</span>",\
+				M, "<span class='alert'><b>[user]</b> stops trying to shove \the [master] down your throat!</span>")
+
+	onUpdate()
+		..()
+		if(src.failchecks())
+			interrupt(INTERRUPT_ALWAYS)
+
+	onEnd()
+		..()
+		if(src.failchecks())
+			interrupt(INTERRUPT_ALWAYS)
+
+		if(src.M_is_user)
+			if(src.is_it_organs)
+				M.visible_message("<span class='alert'>[M] takes a visceral bite out of \the [master][prob(30) ? " like a [pick(src.grody_adj)] [pick(src.grody_noun)]" : ""]!</span>",\
+				"<span class='[is_awful_monsterthing ? "notice" : "alert"]'>You take a bite of [master][(prob(30) && !is_awful_monsterthing )? ", you [pick(src.grody_adj)] [pick(src.grody_noun)]" : ""]!</span>")
+			else
+				M.visible_message("<span class='notice'>[M] takes a bite of \the [master].</span>",\
+				"<span class='notice'>You take a bite of [master].</span>")
+
+		else
+			if(src.is_it_organs)
+				user.tri_message("<span class='alert'><b>[user]</b> forces a chunk of [master] down [M]'s throat[prob(30) ? " like a [pick(src.grody_adj)] [pick(src.grody_noun)]" : ""]!</span>",\
+				user, "<span class='alert'>You force [M] too eat a chunk of [master]!</span>",\
+				M, "<span class='[is_awful_monsterthing ? "notice" : "alert"]'><b>[user]</b> feeds you [master]!</span>")
+			else
+				user.tri_message("<span class='alert'><b>[user]</b> feeds [M] [master]!</span>",\
+				user, "<span class='alert'>You feed [M] [master]!</span>",\
+				M, "<span class='alert'><b>[user]</b> feeds you [master]!</span>")
+			logTheThing("combat", user, M, "feeds [constructTarget(M,"combat")] [master] [log_reagents(master)]")
+
+		if (master.material && master.material.edible)
+			master.material.triggerEat(M, master)
+
+		if (master.reagents && master.reagents.total_volume)
+			master.reagents.reaction(M, INGEST)
+			master.reagents.trans_to(M, master.reagents.total_volume/master.amount)
 
 		playsound(M.loc,"sound/items/eatfood.ogg", rand(10, 50), 1)
 		eat_twitch(M)
-		SPAWN_DBG(1 SECOND)
-			if (!src || !M || !user)
-				return
-			M.visible_message("<span class='alert'>[M] finishes eating [src].</span>",\
-			"<span class='alert'>You finish eating [src].</span>")
-			SEND_SIGNAL(M, COMSIG_ITEM_CONSUMED, user, src)
-			user.u_equip(src)
-			qdel(src)
+		M.on_eat(master)
+
+		var/ate_the_whole_thing = 0
+		if(src.is_it_organs && !istype(master, /obj/item/clothing/head/butt))
+			var/obj/item/organ/O = master
+			O.take_damage(O.bite_damage)
+			if(O.get_damage() > O.MAX_DAMAGE)
+				ate_the_whole_thing = 1
+		else if((master.amount -= 1) < 1)
+			ate_the_whole_thing = 1
+		ON_COOLDOWN(M, "eat", EAT_COOLDOWN)
+		SEND_SIGNAL(master, COMSIG_ITEM_CONSUMED_PARTIAL, M, user)
+		SEND_SIGNAL(M, COMSIG_ITEM_CONSUMED_PARTIAL, user, master)
+
+		if(ate_the_whole_thing)
+			SEND_SIGNAL(master, COMSIG_ITEM_CONSUMED_ALL, M, user)
+			SEND_SIGNAL(M, COMSIG_ITEM_CONSUMED_ALL, user, master)
+			M.visible_message("<span class='alert'>[M] finishes eating [master].</span>",\
+			"<span class='alert'>You finish eating [master].</span>")
+
+			if (istype(master, /obj/item/reagent_containers/food/snacks/plant/) && prob(20))
+				var/obj/item/reagent_containers/food/snacks/plant/P = master
+				var/datum/plantgenes/SRCDNA = P?.plantgenes
+				if (SRCDNA && !HYPCheckCommut(SRCDNA,"Seedless"))
+					var/datum/plant/stored = P.planttype
+					if (istype(stored) && !stored.isgrass)
+						var/obj/item/seed/S
+						if (stored.unique_seed)
+							S = unpool(stored.unique_seed)
+							S.set_loc(user.loc)
+						else
+							S = unpool(/obj/item/seed)
+							S.set_loc(user.loc)
+							S.removecolor()
+						var/datum/plantgenes/DNA = P.plantgenes
+						var/datum/plantgenes/PDNA = S.plantgenes
+						S.generic_seed_setup(stored)
+						HYPpassplantgenes(DNA,PDNA)
+						if (stored.hybrid)
+							var/datum/plant/hybrid = new /datum/plant(S)
+							for (var/V in stored.vars)
+								if (issaved(stored.vars[V]) && V != "holder")
+									hybrid.vars[V] = stored.vars[V]
+							S.planttype = hybrid
+						user.visible_message("<span class='notice'><b>[user]</b> spits out a seed.</span>",\
+						"<span class='notice'>You spit out a seed.</span>")
+			user.u_equip(master)
+			qdel(master)
+		else
+			boutput(user, "<span class='notice'>There's still some left!</span>")
 		return 1
 
-	else
-		user.tri_message("<span class='alert'><b>[user]</b> tries to feed [M] [src]!</span>",\
-		user, "<span class='alert'>You try to feed [M] [src]!</span>",\
-		M, "<span class='alert'><b>[user]</b> tries to feed you [src]!</span>")
-		logTheThing("combat", user, M, "attempts to feed [constructTarget(M,"combat")] [src] [log_reagents(src)]")
-
-		if (!do_mob(user, M))
-			return 0
-		if (get_dist(user,M) > 1)
-			return 0
-
-		user.tri_message("<span class='alert'><b>[user]</b> feeds [M] [src]!</span>",\
-		user, "<span class='alert'>You feed [M] [src]!</span>",\
-		M, "<span class='alert'><b>[user]</b> feeds you [src]!</span>")
-		logTheThing("combat", user, M, "feeds [constructTarget(M,"combat")] [src] [log_reagents(src)]")
-
-		if (src.material && src.material.edible)
-			src.material.triggerEat(M, src)
-
-		if (src.reagents && src.reagents.total_volume)
-			src.reagents.reaction(M, INGEST)
-			SPAWN_DBG(0.5 SECONDS) // Necessary.
-				src.reagents.trans_to(M, src.reagents.total_volume)
-
-		playsound(M.loc, "sound/items/eatfood.ogg", rand(10, 50), 1)
-		eat_twitch(M)
-		SPAWN_DBG(1 SECOND)
-			if (!src || !M || !user)
-				return
-			M.visible_message("<span class='alert'>[M] finishes eating [src].</span>",\
-			"<span class='alert'>You finish eating [src].</span>")
-			SEND_SIGNAL(M, COMSIG_ITEM_CONSUMED, user, src)
-			user.u_equip(src)
-			qdel(src)
-		return 1
+	proc/failchecks()
+		if(!M || !user || !master)
+			return 1
+		if(!in_interact_range(M, user))
+			return 1
+		if(is_incapacitated(user))
+			return 1
 
 /obj/item/proc/take_damage(brute, burn, tox, disallow_limb_loss)
 	// this is a helper for organs and limbs
@@ -462,18 +581,26 @@
 /obj/item/proc/equipment_click(atom/source, atom/target, params, location, control, origParams, slot) //Called through hand_range_attack on items the mob is wearing that have HAS_EQUIP_CLICK in flags.
 	return 0
 
-/obj/item/proc/combust_ended()
-	processing_items.Remove(src)
-
 /obj/item/proc/combust() // cogwerks- flammable items project
+	if(processing_items.Find(src)) //processing items cant be lit on fire to avoid weird bugs
+		return
 	if (!src.burning)
+		START_TRACKING_CAT(TR_CAT_BURNING_ITEMS)
 		src.visible_message("<span class='alert'>[src] catches on fire!</span>")
 		src.burning = 1
+		src.firesource = TRUE
 		if (src.burn_output >= 1000)
-			src.overlays += image('icons/effects/fire.dmi', "2old")
+			UpdateOverlays(image('icons/effects/fire.dmi', "2old"),"burn_overlay")
 		else
-			src.overlays += image('icons/effects/fire.dmi', "1old")
+			UpdateOverlays(image('icons/effects/fire.dmi', "1old"),"burn_overlay")
 		processing_items.Add(src)
+
+/obj/item/proc/combust_ended()
+	processing_items.Remove(src)
+	burning = null
+	firesource = FALSE
+	ClearSpecificOverlays("burn_overlay")
+	name = "[pick("charred","burned","scorched")] [name]"
 
 		/*if (src.reagents && src.reagents.reagent_list && src.reagents.reagent_list.len)
 
@@ -531,16 +658,11 @@
 	inventory_counter.update_number(amount)
 	if (amount > 0)
 		update_stack_appearance()
-	else if (!issilicon(usr))
-		// Zamu change - added if (!issilicon(usr))
-		// I have no idea if this matters - issilicon() is used in other places to prevent
-		// dropping or deleting items in some places.
-		// good thing I have no clue what I'm doing
-		// Potential issue for later: may end up not deleting external-to-player stacks
-		// maybe check for src.loc = usr? ???
-		SPAWN_DBG(0)
-			usr.u_equip(src)
-			pool(src)
+	else if(!isrobot(src.loc)) // aaaaaa borgs
+		if(ismob(src.loc))
+			var/mob/holding_mob = src.loc
+			holding_mob.u_equip(src)
+		pool(src)
 
 /obj/item/proc/stack_item(obj/item/other)
 	var/added = 0
@@ -644,7 +766,7 @@
 	else
 
 		if (isturf(over_object))
-			if (on_turf && in_range(over_object,src) && !src.anchored) //drag from floor to floor == slide
+			if (on_turf && in_interact_range(over_object,src) && !src.anchored) //drag from floor to floor == slide
 				if (istype(over_object,/turf/simulated/floor) || istype(over_object,/turf/unsimulated/floor))
 					step_to(src,over_object)
 					//this would be cool ha ha h
@@ -659,7 +781,7 @@
 				return
 
 		var/is_storage = istype(over_object,/obj/item/storage)
-		if (is_storage || istype(over_object, /obj/screen/hud))
+		if (is_storage || istype(over_object, /atom/movable/screen/hud))
 			if (on_turf && isturf(over_object.loc) && is_storage)
 				try_equip_to_inventory_object(usr, over_object, params)
 			else if (on_turf)
@@ -677,7 +799,7 @@
 
 //equip an item, given an inventory hud object or storage item UI thing
 /obj/item/proc/try_equip_to_inventory_object(var/mob/user, var/atom/over_object, var/params)
-	var/obj/screen/hud/S = over_object
+	var/atom/movable/screen/hud/S = over_object
 	if (istype(S))
 		if (S.master && istype(S.master,/datum/hud/storage))
 			var/datum/hud/storage/hud = S.master
@@ -686,7 +808,7 @@
 	if (istype(over_object,/obj/item/storage) && over_object != src)
 		var/obj/item/storage/storage = over_object
 		if (istype(storage.loc, /turf))
-			if (!(in_range(src,user) && in_range(storage,user)))
+			if (!(in_interact_range(src,user) && in_interact_range(storage,user)))
 				return
 
 		src.pick_up_by(user)
@@ -761,7 +883,7 @@
 	if (src.material)
 		src.material.triggerTemp(src ,1500)
 	if (src.burn_possible && src.burn_point <= 1500)
-		if ((isweldingtool(W) && W:try_weld(user,0,-1,0,0)) || (istype(W, /obj/item/clothing/head/cakehat) && W:on) || (istype(W, /obj/item/device/igniter)) || (istype(W, /obj/item/device/light/zippo) && W:on) || (istype(W, /obj/item/match) && (W:on > 0)) || W.burning)
+		if (W.firesource)
 			src.combust()
 		else
 			..(W, user)
@@ -769,6 +891,12 @@
 		..(W, user)
 
 /obj/item/proc/process()
+	SHOULD_NOT_SLEEP(TRUE)
+	if (src.last_processing_tick < 0)
+		src.last_tick_duration = 1
+	else
+		src.last_tick_duration = (ticker.round_elapsed_ticks - src.last_processing_tick) / (2.9 SECONDS)
+	src.last_processing_tick = ticker.round_elapsed_ticks
 	if (src.burning)
 		if (src.material)
 			src.material.triggerTemp(src, src.burn_output + rand(1,200))
@@ -794,6 +922,7 @@
 				src.health -= 2
 
 		if (src.health <= 0)
+			STOP_TRACKING_CAT(TR_CAT_BURNING_ITEMS)
 			if (burn_type == 1)
 				make_cleanable( /obj/decal/cleanable/molten_item,get_turf(src))
 			else
@@ -817,7 +946,7 @@
 			else
 				src.overlays -= image('icons/effects/fire.dmi', "1old")
 			return
-
+		STOP_TRACKING_CAT(TR_CAT_BURNING_ITEMS)
 		processing_items.Remove(src)
 
 	burning_last_process = src.burning
@@ -955,6 +1084,7 @@
 		src.attack_self(user)
 	else
 		src.pick_up_by(user)
+
 /obj/item/proc/pick_up_by(var/mob/M)
 
 	if (world.time < M.next_click)
@@ -963,7 +1093,7 @@
 	if (isdead(M) || (!iscarbon(M) && !ismobcritter(M)))
 		return
 
-	if (!istype(src.loc, /turf) || !isalive(M) || M.getStatusDuration("paralysis") || M.getStatusDuration("stunned") || M.getStatusDuration("weakened") || M.restrained())
+	if (!istype(src.loc, /turf) || is_incapacitated(M) || M.restrained())
 		return
 
 	if (!can_reach(M, src))
@@ -1487,6 +1617,9 @@
 		src.equipped(user, user.get_slot_from_item(src))
 
 /obj/item/proc/intent_switch_trigger(mob/user)
+	return
+
+/obj/item/proc/firesource_interact() //usually called after interacting with an object on attack and using the if(firesource) check. This can be used to, for instance, decrase the fuel of a welding tool after lighting a candle.
 	return
 
 /obj/item/proc/can_pickup(mob/user)

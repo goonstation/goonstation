@@ -6,6 +6,9 @@ proc/BeginSpacePush(var/atom/movable/A)
 		A.temp_flags |= SPACE_PUSHING
 
 proc/EndSpacePush(var/atom/movable/A)
+	if(ismob(A))
+		var/mob/M = A
+		M.inertia_dir = 0
 	spacePushList -= A
 	A.temp_flags &= ~SPACE_PUSHING
 
@@ -39,8 +42,8 @@ datum/controller/process/fMove
 			if(!M)
 				continue
 
-			var/turf/T = get_turf(M)
-			if (T && (!(T.turf_flags & CAN_BE_SPACE_SAMPLE || T.throw_unlimited) || T != M.loc)) //ZeWaka: Added T null check re: (forcedMovement.dm,44: Cannot read null.turf_flags)
+			var/turf/T = M.loc
+			if (!istype(T) || (!(T.turf_flags & CAN_BE_SPACE_SAMPLE || T.throw_unlimited) || T != M.loc) && !M.no_gravity)
 				EndSpacePush(M)
 				continue
 
@@ -50,7 +53,7 @@ datum/controller/process/fMove
 					EndSpacePush(M)
 					continue
 
-				if (T && T.turf_flags & CAN_BE_SPACE_SAMPLE)
+				if (T && T.turf_flags & CAN_BE_SPACE_SAMPLE || M.no_gravity)
 					var/prob_slip = 5
 
 					if (tmob.hasStatus("handcuffed"))
@@ -60,7 +63,7 @@ datum/controller/process/fMove
 						prob_slip = 100
 
 					for (var/atom/AA in oview(1,tmob))
-						if (AA.stops_space_move)
+						if (AA.stops_space_move && (!M.no_gravity || !isfloor(AA)))
 							if (!( tmob.l_hand ))
 								prob_slip -= 3
 							else if (tmob.l_hand.w_class <= 2)
@@ -87,7 +90,7 @@ datum/controller/process/fMove
 				else
 					var/end = 0
 					for (var/atom/AA in oview(1,tmob))
-						if (AA.stops_space_move)
+						if (AA.stops_space_move && (!M.no_gravity || !isfloor(AA)))
 							end = 1
 							break
 					if (end)
@@ -133,6 +136,9 @@ datum/controller/process/fMove
 				EndSpacePush(M)
 				continue
 
+			if(M.loc == T) // we didn't move, probably hit something
+				EndSpacePush(M)
+				continue
 
 
 

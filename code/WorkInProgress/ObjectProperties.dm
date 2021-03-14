@@ -1,3 +1,13 @@
+#define ASSOCIATE_MOB_PROPERTY(PROP) \
+	updateMob(obj/item/owner, mob/user, value, oldValue=null) { \
+		. = ..(); \
+		APPLY_MOB_PROPERTY(user, PROP, owner, value); \
+	} \
+	removeFromMob(obj/item/owner, mob/user, value) { \
+		. = ..(); \
+		REMOVE_MOB_PROPERTY(user, PROP, owner); \
+	}
+
 /obj/item/proc/dbg_objectprop()
 	set name = "Give Property"
 	var/list/ids = list()
@@ -244,15 +254,6 @@ var/list/globalPropList = null
 		getTooltipDesc(var/obj/propOwner, var/propVal)
 			return "[propVal] max. stamina"
 
-	stamregen
-		name = "Stamina regen."
-		id = "stamregen"
-		desc = "Affects stamina regenration." //Value is flat effective change to stamina regeneration.
-		tooltipImg = "stamregen.png"
-		defaultValue = 1
-		getTooltipDesc(var/obj/propOwner, var/propVal)
-			return "[propVal] stamina regen."
-
 	stamcost
 		name = "Stamina cost"
 		id = "stamcost"
@@ -426,21 +427,11 @@ to say if there's demand for that.
 
 	body
 		id = "meleeprot"
-		updateMob(obj/item/owner, mob/user, value, oldValue=null)
-			. = ..()
-			APPLY_MOB_PROPERTY(user, PROP_MELEEPROT_BODY, owner, value)
-		removeFromMob(obj/item/owner, mob/user, value)
-			. = ..()
-			REMOVE_MOB_PROPERTY(user, PROP_MELEEPROT_BODY, owner)
+		ASSOCIATE_MOB_PROPERTY(PROP_MELEEPROT_BODY)
 
 	head //ugly hack im sorry, this is used for head, mask, glasses and ear clothing
 		id = "meleeprot_head"
-		updateMob(obj/item/owner, mob/user, value, oldValue=null)
-			. = ..()
-			APPLY_MOB_PROPERTY(user, PROP_MELEEPROT_HEAD, owner, value)
-		removeFromMob(obj/item/owner, mob/user, value)
-			. = ..()
-			REMOVE_MOB_PROPERTY(user, PROP_MELEEPROT_HEAD, owner)
+		ASSOCIATE_MOB_PROPERTY(PROP_MELEEPROT_HEAD)
 
 	all //ugly hack but I'm not sorry, this is used for barriers
 		id = "meleeprot_all"
@@ -462,12 +453,7 @@ to say if there's demand for that.
 	getTooltipDesc(var/obj/propOwner, var/propVal)
 		return "[propVal] prot."
 
-	updateMob(obj/item/owner, mob/user, value, oldValue=null)
-		. = ..()
-		APPLY_MOB_PROPERTY(user, PROP_RANGEDPROT, owner, value)
-	removeFromMob(obj/item/owner, mob/user, value)
-		. = ..()
-		REMOVE_MOB_PROPERTY(user, PROP_RANGEDPROT, owner)
+	ASSOCIATE_MOB_PROPERTY(PROP_RANGEDPROT)
 
 /datum/objectProperty/equipment/radiationprot
 	name = "Resistance (Radiation)"
@@ -478,12 +464,7 @@ to say if there's demand for that.
 	getTooltipDesc(var/obj/propOwner, var/propVal)
 		return "[propVal]%"
 
-	updateMob(obj/item/owner, mob/user, value, oldValue=null)
-		. = ..()
-		APPLY_MOB_PROPERTY(user, PROP_RADPROT, owner, value)
-	removeFromMob(obj/item/owner, mob/user, value)
-		. = ..()
-		REMOVE_MOB_PROPERTY(user, PROP_RADPROT, owner)
+	ASSOCIATE_MOB_PROPERTY(PROP_RADPROT)
 
 /datum/objectProperty/equipment/coldprot
 	name = "Resistance (Cold)"
@@ -494,12 +475,7 @@ to say if there's demand for that.
 	getTooltipDesc(var/obj/propOwner, var/propVal)
 		return "[propVal]%"
 
-	updateMob(obj/item/owner, mob/user, value, oldValue=null)
-		. = ..()
-		APPLY_MOB_PROPERTY(user, PROP_COLDPROT, owner, value)
-	removeFromMob(obj/item/owner, mob/user, value)
-		. = ..()
-		REMOVE_MOB_PROPERTY(user, PROP_COLDPROT, owner)
+	ASSOCIATE_MOB_PROPERTY(PROP_COLDPROT)
 
 /datum/objectProperty/equipment/heatprot
 	name = "Resistance (Heat)"
@@ -510,12 +486,7 @@ to say if there's demand for that.
 	getTooltipDesc(var/obj/propOwner, var/propVal)
 		return "[propVal]%"
 
-	updateMob(obj/item/owner, mob/user, value, oldValue=null)
-		. = ..()
-		APPLY_MOB_PROPERTY(user, PROP_HEATPROT, owner, value)
-	removeFromMob(obj/item/owner, mob/user, value)
-		. = ..()
-		REMOVE_MOB_PROPERTY(user, PROP_HEATPROT, owner)
+	ASSOCIATE_MOB_PROPERTY(PROP_HEATPROT)
 
 /datum/objectProperty/equipment/exploprot
 	name = "Resistance (Explosion)"
@@ -526,12 +497,7 @@ to say if there's demand for that.
 	getTooltipDesc(var/obj/propOwner, var/propVal)
 		return "[propVal]%"
 
-	updateMob(obj/item/owner, mob/user, value, oldValue=null)
-		. = ..()
-		APPLY_MOB_PROPERTY(user, PROP_EXPLOPROT, owner, value)
-	removeFromMob(obj/item/owner, mob/user, value)
-		. = ..()
-		REMOVE_MOB_PROPERTY(user, PROP_EXPLOPROT, owner)
+	ASSOCIATE_MOB_PROPERTY(PROP_EXPLOPROT)
 
 
 
@@ -544,10 +510,10 @@ to say if there's demand for that.
 	getTooltipDesc(var/obj/propOwner, var/propVal)
 		return "Reflecting projectiles"
 
+	// no ASSOCIATE_MOB_PROPERTY because this one is simple, valueless
 	updateMob(obj/item/owner, mob/user, value, oldValue=null)
 		. = ..()
 		APPLY_MOB_PROPERTY(user, PROP_REFLECTPROT, owner)
-
 	removeFromMob(obj/item/owner, mob/user, value)
 		. = ..()
 		REMOVE_MOB_PROPERTY(user, PROP_REFLECTPROT, owner)
@@ -559,10 +525,19 @@ to say if there's demand for that.
 	desc = "Magical improvements to defensive clothing"
 	tooltipImg = "block.png"
 	defaultValue = 1
-	updateMob(obj/item/owner, mob/user, value, oldValue=null)
-		. = ..()
-		APPLY_MOB_PROPERTY(user, PROP_ENCHANT_ARMOR, owner, value)
 
-	removeFromMob(obj/item/owner, mob/user, value)
-		. = ..()
-		REMOVE_MOB_PROPERTY(user, PROP_ENCHANT_ARMOR, owner)
+	ASSOCIATE_MOB_PROPERTY(PROP_ENCHANT_ARMOR)
+
+/datum/objectProperty/equipment/stamregen
+	name = "Stamina regen."
+	id = "stamregen"
+	desc = "Affects stamina regenration." //Value is flat effective change to stamina regeneration.
+	tooltipImg = "stamregen.png"
+	defaultValue = 1
+	
+	getTooltipDesc(var/obj/propOwner, var/propVal)
+		return "[propVal] stamina regen."
+
+	ASSOCIATE_MOB_PROPERTY(PROP_STAMINA_REGEN_BONUS)
+
+#undef ASSOCIATE_MOB_PROPERTY

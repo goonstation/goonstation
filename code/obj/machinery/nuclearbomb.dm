@@ -41,9 +41,12 @@
 		src.maptext_y = 4
 
 		src.maptext_width = 64
+
+		START_TRACKING
 		..()
 
 	disposing()
+		STOP_TRACKING
 		if(ticker?.mode && istype(ticker.mode, /datum/game_mode/nuclear))
 			var/datum/game_mode/nuclear/NUKEMODE = ticker.mode
 			NUKEMODE.the_bomb = null
@@ -134,7 +137,7 @@
 						if (!((ispath(target_area) && istype(A, target_area)) || (islist(target_area) && (A.type in target_area))))
 							boutput(user, "<span class='alert'>You need to deploy the bomb in [target_name].</span>")
 						else
-							if (alert("Deploy and arm [src.name] here?", src.name, "Yes", "No") == "Yes" && !src.armed && get_dist(src, user) <= 1 && !(user.getStatusDuration("stunned") > 0 || user.getStatusDuration("weakened") || user.getStatusDuration("paralysis") > 0 || !isalive(user) || user.restrained()))
+							if (alert("Deploy and arm [src.name] here?", src.name, "Yes", "No") == "Yes" && !src.armed && get_dist(src, user) <= 1 && !(is_incapacitated(user) || user.restrained()))
 								src.armed = 1
 								src.anchored = 1
 								if (!src.image_light)
@@ -423,3 +426,28 @@
 	anyone_can_activate = 1
 	target_override = /area
 	target_override_name = "anywhere"
+
+/obj/bomb_decoy
+	name = "nuclear bomb"
+	desc = "An extremely powerful balloon capable of deceiving the whole station."
+	icon = 'icons/obj/stationobjs.dmi'
+	icon_state = "nuclearbomb"
+	density = 1
+	anchored = 0
+	var/health = 10
+
+	proc/checkhealth()
+		if (src.health <= 0)
+			src.visible_message("<span class='alert'><b>[src] pops!</b></span>")
+			playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 100, 1)
+			var/obj/decal/cleanable/balloon/decal = make_cleanable(/obj/decal/cleanable/balloon,src.loc)
+			decal.icon_state = "balloon_green_pop"
+			qdel(src)
+
+	attackby(var/obj/item/W as obj, mob/user as mob)
+		..()
+		user.lastattacked = src
+		playsound(src.loc, 'sound/impact_sounds/Slimy_Hit_1.ogg', 100, 1)
+		src.health -= W.force
+		checkhealth()
+		return

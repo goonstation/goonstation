@@ -74,7 +74,8 @@ const ModuleView = props => {
                         key={moduleRef}
                         onClick={() => onSelectModule(moduleRef)}
                         rightSlot={ejectButton}
-                        selected={moduleRef === selectedModuleRef}>
+                        selected={moduleRef === selectedModuleRef}
+                      >
                         {name}
                       </Tabs.Tab>
                     );

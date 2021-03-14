@@ -39,7 +39,7 @@
 
 //////////////////////////////////////////// Ability holder /////////////////////////////////////////
 
-/obj/screen/ability/topBar/grinch
+/atom/movable/screen/ability/topBar/grinch
 	clicked(params)
 		var/datum/targetable/grinch/spell = owner
 		if (!istype(spell))
@@ -82,7 +82,7 @@
 	var/not_when_handcuffed = 0
 
 	New()
-		var/obj/screen/ability/topBar/grinch/B = new /obj/screen/ability/topBar/grinch(null)
+		var/atom/movable/screen/ability/topBar/grinch/B = new /atom/movable/screen/ability/topBar/grinch(null)
 		B.icon = src.icon
 		B.icon_state = src.icon_state
 		B.owner = src
@@ -94,7 +94,7 @@
 	updateObject()
 		..()
 		if (!src.object)
-			src.object = new /obj/screen/ability/topBar/grinch()
+			src.object = new /atom/movable/screen/ability/topBar/grinch()
 			object.icon = src.icon
 			object.owner = src
 		if (src.last_cast > world.time)

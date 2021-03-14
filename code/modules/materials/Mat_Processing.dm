@@ -166,7 +166,7 @@
 		return
 
 	MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
-		if (get_dist(user, src) > 1 || get_dist(user, O) > 1 || user.stat || user.getStatusDuration("paralysis") || user.getStatusDuration("stunned") || user.getStatusDuration("weakened") || isAI(user))
+		if (get_dist(user, src) > 1 || get_dist(user, O) > 1 || is_incapacitated(user) || isAI(user))
 			return
 
 		if (istype(O, /obj/storage/crate/) || istype(O, /obj/storage/cart/))

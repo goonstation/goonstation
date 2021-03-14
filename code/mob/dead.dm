@@ -27,7 +27,7 @@
 		src.examine_verb(target)
 
 /mob/dead/process_move(keys)
-	if (!istype(src.loc,/turf)) //Pop observers and Follow-Thingers out!!
+	if(keys && src.move_dir && !src.use_movement_controller && !istype(src.loc, /turf)) //Pop observers and Follow-Thingers out!!
 		var/mob/dead/O = src
 		O.set_loc(get_turf(src))
 	. = ..()
@@ -53,6 +53,7 @@
 	if(src?.client?.preferences.auto_capitalization)
 		message = capitalize(message)
 
+	phrase_log.log_phrase("deadsay", message)
 	. = src.say_dead(message)
 
 	for (var/mob/M in hearers(null, null))
@@ -168,10 +169,19 @@
 
 #endif
 		logTheThing("say", src, null, "EMOTE: [html_encode(message)]")
-		/*for (var/mob/dead/O in viewers(src, null))
-			O.show_*/src.visible_message("<span class='game deadsay'><span class='prefix'>DEAD:</span> <span class='message'>[message]</span></span>",group = "[src]_[lowertext(act)]")
+		src.visible_message("<span class='game deadsay'><span class='prefix'>DEAD:</span> <span class='message'>[message]</span></span>",group = "[src]_[lowertext(act)]")
 		return 1
 	return 0
+
+/mob/dead/visible_message(var/message, var/self_message, var/blind_message, var/group = "")
+	for (var/mob/M in viewers(src))
+		if (!M.client)
+			continue
+		var/msg = message
+		if (self_message && M == src)
+			M.show_message(self_message, 1, self_message, 2, group)
+		else
+			M.show_message(msg, 1, blind_message, 2, group)
 
 #ifdef HALLOWEEN
 /mob/dead/proc/animate_surroundings(var/type="fart", var/range = 2)

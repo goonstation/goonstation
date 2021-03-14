@@ -82,13 +82,12 @@
 				src.visible_to += observer.client*/
 
 	proc/measure(var/client/who)
-		if(!istype(who))
-			for(var/C in clients)
-				if(C)
-					who = C
-					break
-		if(!who) return 8
-		var/measured = who.MeasureText(src.maptext, width = src.maptext_width)
+		var/measured = 8
+		if(istype(who)) // client's a client
+			measured = who.MeasureText(src.maptext, width = src.maptext_width)
+		else if(length(clients) >= 1) // even if it isnt *your* client
+			var/client/C = pick(clients)
+			measured = C.MeasureText(src.maptext, width = src.maptext_width)
 		src.measured_height = text2num(splittext(measured, "x")[2])
 
 proc/make_chat_maptext(atom/target, msg, style = "", alpha = 255)
@@ -96,8 +95,8 @@ proc/make_chat_maptext(atom/target, msg, style = "", alpha = 255)
 	animate(text, maptext_y = 28, time = 0.01) // this shouldn't be necessary but it keeps breaking without it
 	msg = copytext(msg, 1, 128) // 4 lines, seems fine to me
 	text.maptext = "<span class='pixel c ol' style=\"[style]\">[msg]</span>"
-	if(istype(target, /mob/living))
-		var/mob/living/L = target
+	if(istype(target, /atom/movable))
+		var/atom/movable/L = target
 		text.loc = L.chat_text
 		if(length(L.chat_text.lines) && L.chat_text.lines[length(L.chat_text.lines)].maptext == text.maptext)
 			L.chat_text.lines[length(L.chat_text.lines)].transform *= 1.05

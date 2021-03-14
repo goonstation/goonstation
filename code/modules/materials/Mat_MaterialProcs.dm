@@ -18,6 +18,8 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 	var/max_generations = 2
 	/// Optional simple sentence that describes how the traits appears on the material. i.e. "It is shiny."
 	var/desc = ""
+	/// The material that owns this trigger
+	var/datum/material/owner = null
 
 	proc/execute()
 		return
@@ -312,35 +314,57 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 
 /datum/materialProc/telecrystal_entered
 	execute(var/atom/owner, var/atom/movable/entering)
-		if(prob(50) && owner && isturf(owner) && !isrestrictedz(owner.z))
+		var/turf/T = get_turf(entering)
+		if(prob(50) && owner && isturf(owner) && !isrestrictedz(T.z))
 			. = get_offset_target_turf(get_turf(entering), rand(-2, 2), rand(-2, 2))
 			entering.visible_message("<span class='alert'>[entering] is warped away!</span>")
-			boutput(entering, "<span class='alert'>You suddenly teleport ...</span>")
+			playsound(owner.loc, "warp", 50)
+			boutput(entering, "<span class='alert'>You suddenly teleport...</span>")
 			entering.set_loc(.)
 		return
 
 
 /datum/materialProc/telecrystal_onattack
 	execute(var/obj/item/owner, var/mob/attacker, var/mob/attacked)
-		if(prob(50))
-			if(istype(attacked) && !isrestrictedz(attacked.z)) // Haine fix for undefined proc or verb /turf/simulated/floor/set loc()
+		var/turf/T = get_turf(attacked)
+		if(prob(33))
+			if(istype(attacked) && !isrestrictedz(T.z)) // Haine fix for undefined proc or verb /turf/simulated/floor/set loc()
 				. = get_offset_target_turf(get_turf(attacked), rand(-8, 8), rand(-8, 8))
+				var/fail_msg = ""
+				if (prob(25) && attacker == attacked)
+					fail_msg = " but you lose [owner]!"
+					attacker.drop_item(owner)
+					playsound(attacker.loc, "sound/effects/poof.ogg", 90)
+				else
+					playsound(attacker.loc, "warp", 50)
 				attacked.visible_message("<span class='alert'>[attacked] is warped away!</span>")
-				boutput(attacked, "<span class='alert'>You suddenly teleport ...</span>")
+				boutput(attacked, "<span class='alert'>You suddenly teleport... [fail_msg]</span>")
 				attacked.set_loc(.)
 		return
 
 /datum/materialProc/telecrystal_life
 	execute(var/mob/M, var/obj/item/I, mult)
-		if(prob(percentmult(5, mult)) && M && !isrestrictedz(M.z))
+		var/turf/T = get_turf(M)
+		if(prob(percentmult(5, mult)) && M && !isrestrictedz(T.z))
 			. = get_offset_target_turf(get_turf(M), rand(-8, 8), rand(-8, 8))
 			M.visible_message("<span class='alert'>[M] is warped away!</span>")
-			boutput(M, "<span class='alert'>You suddenly teleport ...</span>")
+			playsound(M.loc, "warp", 50)
+			boutput(M, "<span class='alert'>You suddenly teleport...</span>")
 			M.set_loc(.)
 		return
 
 /datum/materialProc/plasmastone
+	var/total_plasma = 500
+
 	execute(var/location) //exp and temp both have the location as first argument so i can use this for both.
+		var/turf/T = get_turf(location)
+		if(T.density)
+			return
+		if(total_plasma <= 0)
+			if(prob(2))
+				src.owner.owner.visible_message("<span class='alert>[src.owner.owner] dissipates.</span>")
+				qdel(src.owner.owner)
+			return
 		for (var/turf/simulated/floor/target in range(1,location))
 			if(ON_COOLDOWN(target, "plasmastone_plasma_generate", 10 SECONDS)) continue
 			if(!target.blocks_air && target.air)
@@ -349,10 +373,62 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 
 				var/datum/gas_mixture/payload = unpool(/datum/gas_mixture)
 				payload.toxins = 25
+				total_plasma -= payload.toxins
 				payload.temperature = T20C
 				payload.volume = R_IDEAL_GAS_EQUATION * T20C / 1000
 				target.air.merge(payload)
 		return
+
+/datum/materialProc/moltiz_temp
+	var/total_oxygen = 200
+
+	execute(var/atom/location, var/temp, var/agent_b=FALSE)
+		if(total_oxygen <= 0) return
+		var/turf/target = get_turf(location)
+		if(ON_COOLDOWN(target, "moltiz_oxy_generate", 8 SECONDS)) return
+
+		var/datum/gas_mixture/air = target.return_air()
+		if(!air) return
+
+		var/datum/gas_mixture/payload = unpool(/datum/gas_mixture)
+		payload.temperature = T20C
+		payload.volume = R_IDEAL_GAS_EQUATION * T20C / 1000
+
+		if(agent_b && temp > 500 && air.toxins > MINIMUM_REACT_QUANTITY )
+			var/datum/gas/oxygen_agent_b/trace_gas = payload.get_or_add_trace_gas_by_type(/datum/gas/oxygen_agent_b)
+			payload.temperature = T0C // Greatly reduce temperature to simulate an endothermic reaction
+
+			// Itr 1: 0.125 Agent B, 10 Oxy
+			// Itr 2: 0.0605 Agent B
+			// 0.1855moles/12cells=0.0155moles per cell
+			// At 0.0155 moles per cell it will take 20 iterations for reaction rate to drop below MINIMUM_REACT_QUANTITY
+			// Providing 1.3 minutes of catalyst assuming 4 sec ATMOS for a 12 cell burn chamber
+			trace_gas.moles += min(total_oxygen/1024,0.125)
+			total_oxygen -= min(trace_gas.moles*1024,total_oxygen)
+			animate_flash_color_fill_inherit(location,"#FF0000",4, 2 SECONDS)
+		else
+			animate_flash_color_fill_inherit(location,"#0000FF",4, 2 SECONDS)
+
+		payload.oxygen = min(total_oxygen,10)
+		total_oxygen -= payload.oxygen
+
+		target.assume_air(payload)
+		return
+
+/datum/materialProc/moltiz_temp/agent_b
+	execute(var/atom/location, var/temp)
+		..(location, temp, TRUE)
+		return
+
+/datum/materialProc/moltiz_exp
+	execute(var/atom/location, var/sev)
+		var/turf/target = get_turf(location)
+		if(sev > 0 && sev < 4)
+			var/datum/gas_mixture/payload = unpool(/datum/gas_mixture)
+			payload.oxygen = 25
+			payload.temperature = T20C
+			payload.volume = R_IDEAL_GAS_EQUATION * T20C / 1000
+			target.assume_air(payload)
 
 /datum/materialProc/miracle_add
 	execute(var/location)
@@ -459,11 +535,6 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 				qdel(I)
 		return
 
-/datum/materialProc/soulsteel_add
-	execute(var/atom/owner)
-		owner.event_handler_flags |= USE_HASENTERED
-		return
-
 /datum/materialProc/soulsteel_entered
 	var/lastTrigger = 0
 	execute(var/obj/item/owner, var/atom/movable/entering)
@@ -487,7 +558,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 /datum/materialProc/reflective_onbullet
 	execute(var/obj/item/owner, var/atom/attacked, var/obj/projectile/projectile)
 		if(projectile.proj_data.damage_type & D_BURNING || projectile.proj_data.damage_type & D_ENERGY)
-			shoot_reflected_true(projectile, projectile) //shoot_reflected_to_sender()
+			shoot_reflected_bounce(projectile, owner) //shoot_reflected_to_sender()
 		return
 
 /datum/materialProc/negative_add

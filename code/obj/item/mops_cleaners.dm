@@ -296,6 +296,8 @@ WET FLOOR SIGN
 		boutput(user, "<span class='notice'>Your mop is dry!</span>", group = "mop")
 		return
 
+	if(istype(A, /obj/fluid/airborne)) // no mopping up smoke
+		A = get_turf(A)
 	if (istype(A, /turf/simulated) || istype(A, /obj/decal/cleanable) || istype(A, /obj/fluid))
 		//user.visible_message("<span class='alert'><B>[user] begins to clean [A].</B></span>")
 		actions.start(new/datum/action/bar/icon/mop_thing(src,A), user)
@@ -516,6 +518,8 @@ WET FLOOR SIGN
 	if (!src.reagents)
 		return ..()
 
+	if(istype(target, /obj/fluid/airborne)) // no sponging up smoke
+		target = get_turf(target)
 	if (!isarea(target))
 		var/list/choices = list()
 		var/target_is_fluid = istype(target,/obj/fluid)
@@ -569,11 +573,11 @@ WET FLOOR SIGN
 					else
 						F.removed()
 					user.visible_message("[user] soaks up [F] with [src].",\
-					"<span class='notice'>You soak up [F] with [src].</span>")
+					"<span class='notice'>You soak up [F] with [src].</span>", group="soak")
 				else
 					target.reagents.trans_to(src, 15)
 					user.visible_message("[user] soaks up the mess on [target] with [src].",\
-					"<span class='notice'>You soak up the mess on [target] with [src].</span>")
+					"<span class='notice'>You soak up the mess on [target] with [src].</span>", group="soak")
 
 				JOB_XP(user, "Janitor", 1)
 				return
@@ -664,7 +668,7 @@ WET FLOOR SIGN
 	New()
 		. = ..()
 		payload = new /obj/item/reagent_containers/glass/bucket/red(src)
-		payload.reagents.add_reagent("superlube", payload.reagents.maximum_volume)
+		payload.reagents.add_reagent("invislube", payload.reagents.maximum_volume)
 		src.create_reagents(1)
 
 	attackby(obj/item/W, mob/user, params)
@@ -773,7 +777,7 @@ WET FLOOR SIGN
 	anchored = 1
 	layer = EFFECTS_LAYER_BASE
 	var/datum/light/light
-	var/obj/holoparticles/particles
+	var/obj/holoparticles/holoparticles
 
 	New(var/_loc)
 		set_loc(_loc)
@@ -790,14 +794,15 @@ WET FLOOR SIGN
 			animate(src, pixel_y=10, time=15, flags=ANIMATION_PARALLEL, easing=SINE_EASING, loop=-1)
 			animate(pixel_y=16, easing=SINE_EASING, time=15)
 
-		particles = new/obj/holoparticles(src.loc)
-		attached_objs = list(particles)
+		holoparticles = new/obj/holoparticles(src.loc)
+		attached_objs = list(holoparticles)
 		..(_loc)
 
 	disposing()
-		if(particles)
-			particles.invisibility = 101
-			qdel(particles)
+		if(holoparticles)
+			holoparticles.invisibility = 101
+			qdel(holoparticles)
+			holoparticles = null
 		..()
 
 /obj/holoparticles
@@ -809,3 +814,314 @@ WET FLOOR SIGN
 	alpha= 230
 	pixel_y = 14
 	layer = EFFECTS_LAYER_BASE
+
+
+// handheld vacuum
+
+/obj/item/handheld_vacuum
+	name = "handheld vacuum"
+	desc = "Sucks smoke. Sucks small items. Sucks just in general!"
+	icon = 'icons/obj/janitor.dmi'
+	icon_state = "handvac"
+	mats = list("bamboo"=3, "MET-1"=10)
+	w_class = 2
+	flags = FPRINT | TABLEPASS | SUPPRESSATTACK
+	item_function_flags = USE_SPECIALS_ON_ALL_INTENTS
+	var/obj/item/reagent_containers/glass/bucket/bucket
+	var/obj/item/clothing/under/trash_bag/trashbag
+
+	New()
+		..()
+		src.setItemSpecial(/datum/item_special/suck)
+		src.bucket = new(src)
+		src.trashbag = new(src)
+
+	get_desc(dist, mob/user)
+		. = ..()
+		if(src.trashbag)
+			. += "<br>It contains \the [src.trashbag]. [src.trashbag.get_desc(dist, user)]"
+		else
+			. += "<br>The trashbag is missing."
+		if(src.bucket)
+			. += "<br>It contains \the [src.bucket]. [src.bucket.get_desc(dist, user)]"
+		else
+			. += "<br>The bucket is missing."
+
+	attack_self(mob/user)
+		. = ..()
+		var/list/removed_things = list()
+		if(src.trashbag)
+			removed_things += src.trashbag
+			src.trashbag.set_loc(user.loc)
+			user.put_in_hand_or_drop(src.trashbag)
+			src.trashbag = null
+		if(src.bucket)
+			removed_things += src.bucket
+			src.bucket.set_loc(user.loc)
+			user.put_in_hand_or_drop(src.bucket)
+			src.bucket = null
+		if(length(removed_things) == 0)
+			boutput(user, "<span class='notice'>\The [src] has no bucket nor trashbag.</span>")
+		else if(length(removed_things) == 1)
+			boutput(user, "<span class='notice'>You remove \the [removed_things[1]] from \the [src]</span>")
+		else
+			boutput(user, "<span class='notice'>You remove \the [removed_things[1]] and \the [removed_things[2]] from \the [src]</span>")
+
+	attack_hand(mob/user)
+		if(!(src.loc == user && user.find_in_hand(src)))
+			. = ..()
+		else if(src.trashbag)
+			src.trashbag.set_loc(user.loc)
+			user.put_in_hand_or_drop(src.trashbag)
+			boutput(user, "<span class='notice'>You remove \the [src.trashbag] from \the [src]</span>")
+			src.trashbag = null
+		else if(src.bucket)
+			src.bucket.set_loc(user.loc)
+			user.put_in_hand_or_drop(src.bucket)
+			boutput(user, "<span class='notice'>You remove \the [src.bucket] from \the [src]</span>")
+			src.bucket = null
+		else
+			boutput(user, "<span class='alert'>\The [src] has neither trashbag nor bucket.</span>")
+
+	afterattack(atom/target, mob/user, reach, params)
+		if(!isturf(user.loc))
+			return
+		if(ismob(target))
+			special.pixelaction(target, params, user, reach) // a hack to let people disarm when clicking at close range
+		else if(istype(target, /obj/storage) && src.trashbag)
+			var/obj/storage/storage = target
+			for(var/obj/item/I in src.trashbag)
+				I.set_loc(storage)
+			src.trashbag.calc_w_class(null)
+			boutput(user, "<span class='notice'>You empty \the [src] into \the [target].</span>")
+			return
+		else if(istype(target, /obj/machinery/disposal))
+			var/obj/machinery/disposal/disposal = target
+			if(src.trashbag)
+				for(var/obj/item/I in src.trashbag)
+					I.set_loc(disposal)
+				src.trashbag.calc_w_class(null)
+				boutput(user, "<span class='notice'>You empty \the [src] into \the [target].</span>")
+				disposal.update()
+				return
+		else if(istype(target, /obj/submachine/chef_sink))
+			if(src.bucket.reagents.total_volume > 0)
+				boutput(user, "<span class='notice'>You empty \the [src] into \the [target].</span>")
+				src.bucket.reagents.clear_reagents()
+			else
+				boutput(user, "<span class='notice'>[src]'s bucket is empty.</span>")
+			return
+		else if(istype(target, /obj/mopbucket) && src.bucket)
+			if(src.bucket.reagents.total_volume > 0)
+				boutput(user, "<span class='notice'>You empty \the [src] into \the [target].</span>")
+				src.bucket.transfer_all_reagents(target, user)
+			else
+				boutput(user, "<span class='notice'>[src]'s bucket is empty.</span>")
+			return
+		if(ON_COOLDOWN(src, "suck", 0.3 SECONDS))
+			return
+		var/turf/T = get_turf(target)
+		if(isnull(T)) // fluids getting disposed or something????
+			return
+		new/obj/effect/suck(T, get_dir(T, user))
+		if(src.suck(T, user))
+			playsound(T, "sound/effects/suck.ogg", 20, TRUE, 0, 1.5)
+		else
+			playsound(T, "sound/effects/brrp.ogg", 20, TRUE, 0, 0.8)
+
+	proc/suck(turf/T, mob/user)
+		. = TRUE
+		var/success = FALSE
+		if(T.active_airborne_liquid)
+			if(isnull(src.bucket))
+				boutput(user, "<span class='alert'>\The [src] tries to suck up \the [T.active_airborne_liquid] but has no bucket!</span>")
+				. = FALSE
+			else if(src.bucket.reagents.is_full())
+				boutput(user, "<span class='alert'>\The [src] tries to suck up \the [T.active_airborne_liquid] but its bucket is full!</span>")
+				. = FALSE
+			else
+				var/obj/fluid/airborne/F = T.active_airborne_liquid
+				F.group.reagents.skip_next_update = 1
+				F.group.update_amt_per_tile()
+				var/amt = min(F.group.amt_per_tile, src.bucket.reagents.maximum_volume - src.bucket.reagents.total_volume)
+				F.group.drain(F, amt / F.group.amt_per_tile, src.bucket)
+				if(src.bucket.reagents.is_full())
+					boutput(user, "<span class='notice'>[src]'s [src.bucket] is now full.</span>")
+				success = TRUE
+
+		var/obj/reagent_dispensers/cleanable/ants/ants = locate(/obj/reagent_dispensers/cleanable/ants) in T
+		if(ants)
+			if(isnull(src.bucket))
+				boutput(user, "<span class='alert'>\The [src] tries to suck up the ants but has no bucket!</span>")
+				. = FALSE
+			else if(src.bucket.reagents.is_full())
+				boutput(user, "<span class='alert'>\The [src] tries to suck up the ants but its bucket is full!</span>")
+				. = FALSE
+			else
+				qdel(ants)
+				src.bucket.reagents.add_reagent("ants", 5)
+				success = TRUE
+
+		var/list/obj/item/items_to_suck = list()
+		for(var/obj/item/I in T)
+			if((I.w_class <= 1 || istype(I, /obj/item/raw_material/shard)) && !I.anchored)
+				items_to_suck += I
+		if(length(items_to_suck))
+			var/item_desc = length(items_to_suck) > 1 ? "some items" : "\the [items_to_suck[1]]"
+			if(isnull(src.trashbag))
+				boutput(user, "<span class='alert'>\The [src] tries to suck up [item_desc] but has no trashbag!</span>")
+				. = FALSE
+			else if(src.trashbag.current_stuff >= src.trashbag.max_stuff)
+				boutput(user, "<span class='alert'>\The [src] tries to suck up [item_desc] but its [src.trashbag] is full!</span>")
+				. = FALSE
+			else
+				for(var/obj/item/I as() in items_to_suck)
+					I.set_loc(get_turf(user))
+				success = TRUE
+				SPAWN_DBG(0.5 SECONDS)
+					for(var/obj/item/I as() in items_to_suck) // yes, this can go over capacity of the bag, that's intended
+						I.set_loc(src.trashbag)
+					src.trashbag.calc_w_class(null)
+					if(src.trashbag.current_stuff >= src.trashbag.max_stuff)
+						boutput(user, "<span class='notice'>[src]'s [src.trashbag] is now full.</span>")
+
+		. |= success
+
+	attackby(obj/item/W, mob/user, params, is_special=0)
+		if(istype(W, /obj/item/clothing/under/trash_bag))
+			if(isnull(src.trashbag))
+				boutput(user, "<span class='notice'>You insert \the [W] into \the [src].")
+				src.trashbag = W
+				src.trashbag.set_loc(src)
+			else
+				boutput(user, "<span class='notice'>You swap the trash bags.")
+				var/obj/item/old_trashbag = src.trashbag
+				src.trashbag = W
+				src.trashbag.set_loc(src)
+				old_trashbag.set_loc(user.loc)
+				user.put_in_hand_or_drop(old_trashbag)
+			user.u_equip(W)
+			W.dropped()
+		else if(istype(W, /obj/item/reagent_containers/glass/bucket))
+			if(isnull(src.bucket))
+				boutput(user, "<span class='notice'>You insert \the [W] into \the [src].")
+				src.bucket = W
+				src.bucket.set_loc(src)
+			else
+				boutput(user, "<span class='notice'>You swap the buckets.")
+				var/obj/item/old_bucket = src.bucket
+				src.bucket = W
+				src.bucket.set_loc(src)
+				old_bucket.set_loc(user.loc)
+				user.put_in_hand_or_drop(old_bucket)
+			user.u_equip(W)
+			W.dropped()
+		else
+			. = ..()
+
+/obj/item/handheld_vacuum/overcharged
+	name = "overcharged handheld vacuum"
+	mats = list("neutronium"=3, "MET-1"=10)
+	color = list(0,0,1, 0,1,0, 1,0,0)
+	New()
+		..()
+		var/datum/item_special/suck/suck = src.special
+		suck.suck_mobs = TRUE
+		suck.range = 10
+		suck.suck_in_range = 3
+		suck.throw_range = 10
+		suck.throw_speed = 1
+
+/datum/item_special/suck
+	cooldown = 30
+	staminaCost = 10
+	moveDelay = 8
+	moveDelayDuration = 10
+	var/range = 3
+	var/suck_in_range = 1
+	var/throw_range = 2
+	var/throw_speed = 0.3
+	var/suck_mobs = FALSE
+
+	image = "suck"
+	name = "Suck"
+	desc = "Suck stuff towards you in a 3 tile range."
+
+	pixelaction(atom/target, params, mob/user, reach)
+		if(!isturf(target.loc) && !isturf(target)) return
+		if(!usable(user)) return
+		if(!isturf(user.loc)) return
+		var/turf/target_turf = get_turf(target)
+		var/turf/master_turf = get_turf(master)
+		if(params["left"] && master && (get_dist(master_turf, target_turf) > 1 || ismob(target) && target != user))
+			if(ON_COOLDOWN(master, "suck", src.cooldown)) return
+			preUse(user)
+			var/direction = get_dir_pixel(user, target, params)
+
+			var/list/turf_list = list()
+			var/turf/last = get_turf(master)
+			var/hit_target = FALSE
+			for(var/i = 1 to src.range)
+				if(last == target)
+					hit_target = TRUE
+				var/turf/current
+				if(hit_target)
+					current = get_step(last, direction)
+				else
+					current = get_step_towards(last, target)
+				turf_list += current
+				last = current
+
+			last = get_turf(master)
+			var/sucking_in = src.suck_in_range
+			for(var/turf/T in turf_list)
+				if(T.density)
+					break
+				if(sucking_in && istype(master, /obj/item/handheld_vacuum))
+					sucking_in--
+					var/obj/item/handheld_vacuum/vacuum = master
+					vacuum.suck(T, user)
+				var/end_now
+				for(var/atom/movable/A in T)
+					if(A.density && !istype(A, /obj/table))
+						end_now = TRUE
+					if(!A.anchored)
+						if(!ismob(A) || src.suck_mobs)
+							A.throw_at(T == turf_list[1] ? get_turf(master) : turf_list[1], src.throw_range, src.throw_speed)
+							if(ismob(A))
+								var/mob/M = A
+								M.changeStatus("weakened", 0.9 SECONDS)
+								M.force_laydown_standup()
+								boutput(M, "<span class='alert'>You are pulled by the force of [user]'s [master].</span>")
+						else
+							var/mob/M = A
+							if(!issilicon(M) && M.equipped() && prob(25))
+								var/obj/item/I = M.equipped()
+								if(!I.cant_drop)
+									I.set_loc(M.loc)
+									M.u_equip(I)
+									I.dropped()
+									boutput(M, "<span class='alert'>Your [I] is pulled from your hands by the force of [user]'s [master].</span>")
+				new/obj/effect/suck(T, get_dir(T, last))
+				last = T
+				if(end_now)
+					break
+
+			afterUse(user)
+			playsound(get_turf(master), "sound/effects/suck.ogg", 40, TRUE, 0, 0.5)
+
+/obj/effect/suck
+	anchored = 2
+	mouse_opacity = FALSE
+	plane = PLANE_NOSHADOW_BELOW
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "push"
+
+	New(atom/loc, dir)
+		..()
+		src.dir = dir
+		src.alpha = 0
+		animate(src, alpha=255, time=0.21 SECONDS, easing=SINE_EASING)
+		animate(alpha=0, time=0.21 SECONDS, easing=SINE_EASING)
+		SPAWN_DBG(0.5 SECONDS)
+			qdel(src)

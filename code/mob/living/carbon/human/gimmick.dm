@@ -96,6 +96,7 @@
 
 		src.bioHolder.AddEffect("horns", 0, 0, 1)
 		src.bioHolder.AddEffect("hell_fire", 0, 0, 1)
+		abilityHolder.addAbility(/datum/targetable/gimmick/spawncontractsatan)
 		abilityHolder.addAbility(/datum/targetable/gimmick/go2hell)
 		abilityHolder.addAbility(/datum/targetable/gimmick/highway2hell)
 		abilityHolder.addAbility(/datum/targetable/gimmick/reveal)
@@ -107,6 +108,7 @@
 			src.equip_new_if_possible(/obj/item/clothing/suit/labcoat/hitman/satansuit, slot_wear_suit)
 			src.equip_new_if_possible(/obj/item/clothing/shoes/red, slot_shoes)
 			src.equip_new_if_possible(/obj/item/storage/backpack, slot_back)
+			src.equip_new_if_possible(/obj/item/clothing/gloves/ring/wizard/teleport, slot_gloves) //Yes I could make a special satan teleport power, or I can give him a ring. Fuck it right?
 			src.equip_new_if_possible(/obj/item/device/radio/headset, slot_ears)
 			src.put_in_hand_or_drop(new /obj/item/storage/briefcase/satan)
 
@@ -159,6 +161,37 @@ mob/living/carbon/human/cluwne/satan/megasatan //someone can totally use this fo
 		SPAWN_DBG(0)
 			src.unkillable = 1 //for the megasatan in you
 
+/*
+ * Chicken man belongs in human zone, not ai zone
+ */
+/mob/living/carbon/human/chicken
+	name = "chicken man"
+	real_name = "chicken man"
+	desc = "half man, half BWAHCAWCK!"
+#ifdef IN_MAP_EDITOR
+	icon_state = "m-none"
+#endif
+	New()
+		. = ..()
+		SPAWN_DBG(0.5 SECONDS)
+			if (!src.disposed)
+				src.bioHolder.AddEffect("chicken", 0, 0, 1)
+
+/mob/living/carbon/human/chicken/ai_controlled
+	is_npc = TRUE
+	uses_mobai = TRUE
+	New()
+		. = ..()
+		src.ai = new /datum/aiHolder/wanderer(src)
+
+/datum/aiHolder/wanderer
+	New()
+		. = ..()
+		var/datum/aiTask/timed/wander/W =  get_instance(/datum/aiTask/timed/wander, list(src))
+		W.transition_task = W
+		default_task = W
+
+
 // how you gonna have father ted and father jack and not father dougal? smh
 
 /mob/living/carbon/human/fatherted
@@ -202,9 +235,10 @@ mob/living/carbon/human/cluwne/satan/megasatan //someone can totally use this fo
 		..()
 
 	was_harmed(var/mob/M as mob, var/obj/item/weapon = 0, var/special = 0, var/intent = null)
+		. = ..()
 		if (special) //vamp or ling
 			src.target = M
-			src.ai_state = 2
+			src.ai_state = AI_ATTACKING
 			src.ai_threatened = world.timeofday
 			src.ai_target = M
 
@@ -241,7 +275,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 
 	if (src.client)
 		for (var/atom/I in src.hud.inventory_bg)
-			if (istype(I,/obj/screen/hud))
+			if (istype(I,/atom/movable/screen/hud))
 				hudlist += I
 
 	for (var/obj/item/I in src.contents)
@@ -278,8 +312,8 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 
 		var/obj/item/W = src.equipped()
 		if (!src.restrained())
-			if (istype(picked,/obj/screen/hud))
-				var/obj/screen/hud/HUD = picked
+			if (istype(picked,/atom/movable/screen/hud))
+				var/atom/movable/screen/hud/HUD = picked
 				var/list/params = empty_mouse_params()
 				HUD.clicked(HUD.id, src, params)
 			else if (istype(picked,/obj/ability_button))
@@ -622,9 +656,10 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 
 
 	was_harmed(var/mob/M as mob, var/obj/item/weapon = 0, var/special = 0, var/intent = null)
+		. = ..()
 		if (special) //vamp or ling
 			src.target = M
-			src.ai_state = 2
+			src.ai_state = AI_ATTACKING
 			src.ai_threatened = world.timeofday
 			src.ai_target = M
 			src.a_intent = INTENT_HARM
@@ -771,9 +806,10 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 		..()
 
 	was_harmed(var/mob/M as mob, var/obj/item/weapon = 0, var/special = 0, var/intent = null)
+		. = ..()
 		if (special) //vamp or ling
 			src.target = M
-			src.ai_state = 2
+			src.ai_state = AI_ATTACKING
 			src.ai_threatened = world.timeofday
 			src.ai_target = M
 
@@ -881,6 +917,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 			gender = pick(MALE,FEMALE)
 
 	was_harmed(var/mob/M as mob, var/obj/item/weapon = 0, var/special = 0, var/intent = null)
+		. = ..()
 		if(isdead(src))
 			return
 		if(prob(10))
@@ -936,6 +973,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 		..()
 
 	was_harmed(var/mob/M as mob, var/obj/item/weapon = 0, var/special = 0, var/intent = null)
+		. = ..()
 		if(isdead(src))
 			return
 		if(prob(20))

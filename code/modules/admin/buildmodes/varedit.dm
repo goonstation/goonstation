@@ -34,7 +34,7 @@ Hold down CTRL, ALT or SHIFT to modify, call or reset variable bound to those ke
 		if (!newvn)
 			return
 
-		var/vartype = input("Choose variable type[ctrl ? " (CTRL)" : alt ? " (ALT)" : shift ? " (SHIFT)" : null]:","Variable Type[ctrl ? " (CTRL)" : alt ? " (ALT)" : shift ? " (SHIFT)" : null]") as null|anything in list("text", "num", "type", "reference", "mob reference", "turf by coordinates", "reference picker", "new instance of a type", "icon", "file", "color")
+		var/vartype = input("Choose variable type[ctrl ? " (CTRL)" : alt ? " (ALT)" : shift ? " (SHIFT)" : null]:","Variable Type[ctrl ? " (CTRL)" : alt ? " (ALT)" : shift ? " (SHIFT)" : null]") as null|anything in list("text", "num", "type", "reference", "mob reference", "turf by coordinates", "reference picker", "new instance of a type", "icon", "file", "color", "json", "ref")
 		is_refpicking = 0
 		var/newvalue = null
 		var/is_newinst = 0
@@ -63,6 +63,15 @@ Hold down CTRL, ALT or SHIFT to modify, call or reset variable bound to those ke
 			if ("color")
 				newvalue = input("Pick color:","Color") as null|color
 
+			if ("json")
+				newvalue = json_decode(input("Enter json:") as text|null)
+
+			if ("ref")
+				var/inp = input("Enter ref:","Ref") as null|text
+				newvalue = locate(inp)
+				if(isnull(newvalue))
+					newvalue = locate("\[inp\]")
+
 			if ("turf by coordinates")
 				var/x = input("X coordinate", "Set to turf at \[_, ?, ?\]", 1) as num
 				var/y = input("Y coordinate", "Set to turf at \[[x], _, ?\]", 1) as num
@@ -85,7 +94,7 @@ Hold down CTRL, ALT or SHIFT to modify, call or reset variable bound to those ke
 					var/basetype = /obj
 					if (holder.owner.holder.rank in list("Host", "Coder", "Administrator"))
 						basetype = /datum
-					var/match = get_one_match(typename, basetype)
+					var/match = get_one_match(typename, basetype, use_concrete_types = FALSE)
 					if (match)
 						newvalue = match
 						is_newinst = 1

@@ -151,14 +151,19 @@
 		eye_damage = src.eye_damage_mod + rand(0, (1 * flash_power))
 
 	// We're flashing somebody directly, hence the 100% chance to disrupt cloaking device at the end.
-	M.apply_flash(animation_duration, weakened, 0, 0, eye_blurry, eye_damage, 0, burning, 100, stamina_damage = 70 * flash_power, disorient_time = 30)
+	var/blind_success = M.apply_flash(animation_duration, weakened, 0, 0, eye_blurry, eye_damage, 0, burning, 100, stamina_damage = 70 * flash_power, disorient_time = 30)
 	if (src.emagged)
 		user.apply_flash(animation_duration, weakened, 0, 0, eye_blurry, eye_damage, 0, burning, 100, stamina_damage = 70 * flash_power, disorient_time = 30)
 
 	convert(M,user)
 
 	// Log entry.
-	M.visible_message("<span class='alert'>[user] blinds [M] with the [src.name]!</span>")
+	var/blind_msg_target = "!"
+	var/blind_msg_others = "!"
+	if (!blind_success)
+		blind_msg_target = " but your eyes are protected!"
+		blind_msg_others = " but [his_or_her(M)] eyes are protected!"
+	M.visible_message("<span class='alert'>[user] blinds [M] with \the [src][blind_msg_others]</span>", "<span class='alert'>You are blinded by \the [src][blind_msg_target]</span>")
 	logTheThing("combat", user, M, "blinds [constructTarget(M,"combat")] with [src] at [log_loc(user)].")
 	if (src.emagged)
 		logTheThing("combat", user, user, "blinds themself with [src] at [log_loc(user)].")

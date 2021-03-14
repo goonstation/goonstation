@@ -55,7 +55,7 @@
 	if(get_dist(M, CM) > 1 || M == null || CM == null)
 		interrupt(INTERRUPT_ALWAYS)
 		return
-	if(prob(10))
+	if(prob(10) && !M.traitHolder?.hasTrait("claw"))
 		playsound(get_turf(CM), 'sound/machines/claw_machine_fail.ogg', 80, 1)
 		M.visible_message("<span class='alert'>[M] flubs up and the claw drops [his_or_her(M)] prize!</spawn>")
 		interrupt(INTERRUPT_ALWAYS)
@@ -88,13 +88,10 @@
 	CM.icon_state = "claw"
 	playsound(get_turf(CM), 'sound/machines/claw_machine_success.ogg', 80, 1)
 	M.visible_message("<span class='notice'>[M] successfully secures their precious goodie, and it drops into the prize chute with a satisfying <i>plop</i>.</span>")
-	var/obj/item/P = pick(prob(20) ? (prob(20) ? CM.prizes_ultra_rare : CM.prizes_rare) : CM.prizes)
+	var/obj/item/P = pick(prob(20) ? (prob(33) ? CM.prizes_ultra_rare : CM.prizes_rare) : CM.prizes)
 	P = new P(get_turf(src.M))
 	P.desc = "Your new best friend, rescued from a cold and lonely claw machine."
 	P.throw_at(M, 16, 3)
-
-
-
 
 /obj/item/toy/plush
 	name = "plush toy"
@@ -107,9 +104,7 @@
 	throw_range = 3
 	rand_pos = 1
 
-/obj/item/toy/plush/attack_self(mob/user as mob)
-	if (!ishuman(user))
-		return
+/obj/item/toy/plush/proc/say_something(mob/user as mob)
 	var/message = input("What should [src] say?")
 	message = trim(copytext(sanitize(html_encode(message)), 1, MAX_MESSAGE_LEN))
 	if (!message || get_dist(src, user) > 1)
@@ -119,6 +114,9 @@
 	var/mob/living/carbon/human/H = user
 	if (H.sims)
 		H.sims.affectMotive("fun", 1)
+
+/obj/item/toy/plush/attack_self(mob/user as mob)
+	src.say_something(user)
 
 /obj/item/toy/plush/attack(mob/M as mob, mob/user as mob)
 	if (user.a_intent == INTENT_HELP)
@@ -216,11 +214,25 @@
 /obj/item/toy/plush/small/arthur
 	name = "Arthur the bumblespider"
 	icon_state = "arthur"
-	var/spam_flag = 0
 
-/obj/item/toy/plush/small/arthur/attack_hand(mob/user as mob)
-	if (user == src.loc && spam_flag < world.time)
+/obj/item/toy/plush/small/arthur/attack_self(mob/user as mob)
+	var/menuchoice = alert("What would you like to do with [src]?",,"Awoo","Say")
+	if (menuchoice == "Awoo")
 		playsound(user, "sound/voice/babynoise.ogg", 50, 1)
 		src.audible_message("<span class='emote'>[src] awoos!</span>")
-		spam_flag = world.time + 2 SECONDS
-	else return ..()
+	else if (menuchoice == "Say")
+		src.say_something(user)
+
+/obj/item/toy/plush/small/stress_ball
+	name = "stress ball"
+	desc = "Talk and fidget things out. It'll be okay."
+	icon_state = "stress_ball"
+	throw_range = 10
+
+/obj/item/toy/plush/small/stress_ball/attack_self(mob/user as mob)
+	var/menuchoice = alert("What would you like to do with [src]?",,"Fidget","Say")
+	if (menuchoice == "Fidget")
+		user.visible_message("<span class='emote'>[user] fidgets with [src].</span>")
+		boutput(user, "<span class='notice'>You feel [pick("a bit", "slightly", "a teeny bit", "somewhat", "surprisingly", "")] [pick("better", "more calm", "more composed", "less stressed")].</span>")
+	else if (menuchoice == "Say")
+		src.say_something(user)

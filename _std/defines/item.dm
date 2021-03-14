@@ -42,6 +42,9 @@
 #define HAS_EQUIP_CLICK			 (1<<18)
 /// Has the possibility for a TGUI interface
 #define TGUI_INTERACTIVE		 (1<<19)
+/// Has a click delay for attack_self()
+#define ATTACK_SELF_DELAY		 (1<<20)
+
 
 //Item function flags
 
@@ -96,7 +99,92 @@
 #define ITEM_RARITY_MYTHIC 7
 
 // item comp defs
-#define FORCE_EDIBILITY 1
+// For COMSIG_ITEM_CONSUMED_PRE returns
+/// Turns out its edible
+#define THING_IS_EDIBLE		(1<<0)
+/// Needs a fork
+#define EATING_NEEDS_A_FORK					(1<<1)
+/// Needs a spoon
+#define EATING_NEEDS_A_SPOON				(1<<2)
+
+// on_bite defs
+/// Mob can be healed by this food-thing
+#define MOB_HEALTH_ABOVE_FOODHEAL_CUTOFF (1<<0)
+
+// mob health foodheal threshold checks
+/// The typical food-heal health cutoff, if the mob's current health is less than their max health divided by this, food wont heal them
+/// So for a mob with 100 max health, they'll be healed by food as long as their current health is above ~55 HP
+#define FOODHEAL_CUTOFF_DIVISOR 1.8
+/// Same as above, but if the mob has the survivalist trait.
+/// For the same 100 max health mob, they'll be healed by food until their current health is below 10 HP
+#define FOODHEAL_CUTOFF_DIVISOR_SURVIVALIST 10
+
 //item attack bitflags
 /// The pre-attack signal doesnt want the attack to continue, so don't
 #define ATTACK_PRE_DONT_ATTACK 1
+
+// Limb Kind Bitflags, to avoid the funky typecheck spam limbs usually need
+/// Limb typically belongs to one of the normal-ass mutantraces
+#define LIMB_MUTANT   (1<<0)
+/// Limb is robotic in nature
+#define LIMB_ROBOT    (1<<1)
+/// Limb lighter than the average limb
+#define LIMB_LIGHT    (1<<2)
+/// Limb heavier than the average limb
+#define LIMB_HEAVY    (1<<3)
+/// Limb is really heavy
+#define LIMB_HEAVIER  (1<<4)
+/// Limb is actually tank treads
+#define LIMB_TREADS   (1<<5)
+/// Limb typically belongs to a shambling abomination
+#define LIMB_ABOM     (1<<6)
+/// Limb is made of plants
+#define LIMB_PLANT    (1<<7)
+/// Limb is whatever the heck a hot limb is
+#define LIMB_HOT      (1<<8)
+/// Limb typically belongs to the restless undead
+#define LIMB_ZOMBIE   (1<<9)
+/// Limb typically belongs to hunters
+#define LIMB_HUNTER   (1<<10)
+/// Limb is actually an item stuck to a stump
+#define LIMB_ITEM     (1<<11)
+/// Limb is made of stone
+#define LIMB_STONE    (1<<12)
+/// Limb typically belongs to a vicious bear
+#define LIMB_BEAR     (1<<13)
+/// Limb typically belongs to a wendigo
+#define LIMB_WENDIGO  (1<<14)
+/// Limb typically belongs to a large angry dog
+#define LIMB_WOLF     (1<<15)
+/// Limb is kinda boney
+#define LIMB_SKELLY   (1<<16)
+
+// islimb macros
+#define ismutantlimb(x)   HAS_FLAG(x:kind_of_limb, LIMB_MUTANT)
+#define isrobotlimb(x)    HAS_FLAG(x:kind_of_limb, LIMB_ROBOT)
+#define islightlimb(x)    HAS_FLAG(x:kind_of_limb, LIMB_LIGHT)
+#define isheavyrlimb(x)   HAS_FLAG(x:kind_of_limb, LIMB_HEAVY)
+#define isheavierlimb(x)  HAS_FLAG(x:kind_of_limb, LIMB_HEAVIER)
+#define istread(x)        HAS_FLAG(x:kind_of_limb, LIMB_TREADS)
+#define isabomlimb(x)     HAS_FLAG(x:kind_of_limb, LIMB_ABOM)
+#define isplantlimb(x)    HAS_FLAG(x:kind_of_limb, LIMB_PLANT)
+#define ishotlimb(x)      HAS_FLAG(x:kind_of_limb, LIMB_HOT)
+#define iszombielimb(x)   HAS_FLAG(x:kind_of_limb, LIMB_ZOMBIE)
+#define ishunterlimb(x)   HAS_FLAG(x:kind_of_limb, LIMB_HUNTER)
+#define isitemlimb(x)     HAS_FLAG(x:kind_of_limb, LIMB_ITEM)
+#define isstonelimb(x)    HAS_FLAG(x:kind_of_limb, LIMB_STONE)
+#define isbearlimb(x)     HAS_FLAG(x:kind_of_limb, LIMB_BEAR)
+#define iswendigolimb(x)  HAS_FLAG(x:kind_of_limb, LIMB_WENDIGO)
+#define iswolflimb(x)     HAS_FLAG(x:kind_of_limb, LIMB_WOLF)
+#define isskeletonlimb(x) HAS_FLAG(x:kind_of_limb, LIMB_SKELLY)
+#define ismonsterlimb(x) (HAS_FLAG(x:kind_of_limb, LIMB_ZOMBIE) |\
+                          HAS_FLAG(x:kind_of_limb, LIMB_HUNTER) |\
+                          HAS_FLAG(x:kind_of_limb, LIMB_BEAR) |\
+                          HAS_FLAG(x:kind_of_limb, LIMB_WENDIGO) |\
+                          HAS_FLAG(x:kind_of_limb, LIMB_ABOM) |\
+                          HAS_FLAG(x:kind_of_limb, LIMB_WOLF))
+#define isrobolimb(x) (HAS_FLAG(x:kind_of_limb, LIMB_ROBOT) |\
+                       HAS_FLAG(x:kind_of_limb, LIMB_LIGHT) |\
+                       HAS_FLAG(x:kind_of_limb, LIMB_HEAVY) |\
+                       HAS_FLAG(x:kind_of_limb, LIMB_HEAVIER) |\
+                       HAS_FLAG(x:kind_of_limb, LIMB_TREADS))

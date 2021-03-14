@@ -54,6 +54,9 @@ var/list/ban_from_airborne_fluid = list()
 				break
 			LAGCHECK(LAG_MED)
 
+	turf_remove_cleanup(turf/the_turf)
+		the_turf.active_airborne_liquid = null
+
 	pooled()
 		src.pooled = 1
 
@@ -64,9 +67,6 @@ var/list/ban_from_airborne_fluid = list()
 
 		src.group = 0
 		opacity = 0
-
-		if (isturf(src.loc))
-			src.loc:active_airborne_liquid = null
 
 		name = "cloud"
 		icon_state = "airborne"
@@ -92,11 +92,7 @@ var/list/ban_from_airborne_fluid = list()
 		..()
 
 	unpooled()
-		if (isturf(src.loc))
-			var/turf/T = src.loc
-			T.active_airborne_liquid = null
 		..()
-
 		src.step_sound = 0
 
 	//ALTERNATIVE to force ingest in life

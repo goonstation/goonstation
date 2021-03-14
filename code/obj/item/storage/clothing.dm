@@ -265,6 +265,31 @@
 		/obj/item/device/pda2/clown,
 	)
 
+/obj/item/storage/box/costume/mime
+	name = "mime costume"
+	icon_state = "mime"
+	item_state = "box-mime"
+	desc = "There's a mime trapped in this box! Wait... no it's just a bunch of mime clothes."
+	spawn_contents = list(
+		/obj/item/clothing/head/mime_bowler,
+		/obj/item/clothing/mask/mime,
+		/obj/item/clothing/gloves/latex,
+		/obj/item/clothing/under/misc/mime/alt,
+		/obj/item/clothing/suit/scarf,
+		/obj/item/clothing/shoes/black,
+	)
+
+/obj/item/storage/box/costume/mime/alt //people can have either the normal clothes or the other clothes
+	spawn_contents = list(
+		/obj/item/clothing/head/mime_beret,
+		/obj/item/clothing/mask/mime,
+		/obj/item/clothing/gloves/latex,
+		/obj/item/clothing/under/misc/mime,
+		/obj/item/clothing/suit/suspenders,
+		/obj/item/clothing/shoes/black,
+	)
+
+
 /obj/item/storage/box/costume/robuddy
 	name = "guardbuddy costume"
 	spawn_contents = list(/obj/item/clothing/suit/robuddy)

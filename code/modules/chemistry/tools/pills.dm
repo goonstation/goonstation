@@ -11,7 +11,7 @@
 	icon_state = "pill0"
 	item_state = "pill"
 	rc_flags = RC_SPECTRO		// only spectroscopic analysis
-	flags = NOSPLASH
+	flags = NOSPLASH | TABLEPASS
 	module_research = list("medicine" = 0.5, "science" = 0.5)
 	module_research_type = /obj/item/reagent_containers/pill
 	rand_pos = 1

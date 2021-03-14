@@ -135,9 +135,10 @@
 				src.reagents.reaction(U)
 				src.create_reagents(0)
 				src.update_icon()
-			var/new_name = input(usr, "Enter new name for [O]", "Rename [O]", O.name) as null|text
+			var/new_name = input(user, "Enter new name for [O]", "Rename [O]", O.name) as null|text
 			if (isnull(new_name) || !length(new_name) || new_name == " ")
 				return
+			phrase_log.log_phrase("vehicle", new_name, no_duplicates=TRUE)
 			logTheThing("station", user, null, "renamed [O] to [new_name] in [get_area(user)] ([showCoords(user.x, user.y, user.z)])")
 			new_name = copytext(strip_html(new_name), 1, 32)
 			O.name = new_name

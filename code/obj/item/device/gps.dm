@@ -142,7 +142,7 @@
 		..()
 		if (usr.stat || usr.restrained() || usr.lying)
 			return
-		if ((usr.contents.Find(src) || usr.contents.Find(src.master) || in_range(src, usr)))
+		if ((usr.contents.Find(src) || usr.contents.Find(src.master) || in_interact_range(src, usr)))
 			src.add_dialog(usr)
 			var/turf/T = get_turf(usr)
 			if(href_list["getcords"])

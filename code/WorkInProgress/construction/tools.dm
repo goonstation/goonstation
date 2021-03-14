@@ -112,17 +112,16 @@
 				T.control = src
 
 	attack_hand(var/mob/user as mob)
-		if ( (get_dist(src, user) > 1 ))
-			if (!issilicon(user))
-				boutput(user, text("Too far away."))
-				src.remove_dialog(user)
-				user.Browse(null, "window=turretid")
-				return
+		if (!in_interact_range(src,user))
+			boutput(user, text("Too far away."))
+			src.remove_dialog(user)
+			user.Browse(null, "window=turretid")
+			return
 
 		src.add_dialog(user)
 		var/t = "<TT><B>Turret Control Panel</B><BR><B>Controlled turrets:</B> [turrets.len] (<A href='?src=\ref[src];rescan=1'>Rescan</a>)<HR>"
 
-		if(src.locked && (!issilicon(user)))
+		if(src.locked && !can_access_remotely(user))
 			t += "<I>(Swipe ID card to unlock control panel.)</I><BR>"
 		else
 			t += text("Turrets [] - <A href='?src=\ref[];toggleOn=1'>[]?</a><br><br>", src.enabled?"activated":"deactivated", src, src.enabled?"Disable":"Enable")
@@ -135,7 +134,7 @@
 
 	Topic(href, href_list)
 		if (src.locked)
-			if (!issilicon(usr))
+			if (!can_access_remotely(usr))
 				boutput(usr, "Control panel is locked!")
 				return
 		if (href_list["rescan"])
@@ -276,11 +275,11 @@
 			var/be_glass = 0
 			if (!metal)
 				be_metal = 1
-			else if (metal.mat_id == DM.mat_id)
+			else if (isSameMaterial(metal, DM))
 				be_metal = 1
 			if (!glass)
 				be_glass = 1
-			else if (glass.mat_id == DM.mat_id)
+			else if (isSameMaterial(glass, DM))
 				be_glass = 1
 			if (be_metal && be_glass)
 				which = input("Use [D] as?", "Pick", null) in list("metal", "glass")
@@ -295,7 +294,7 @@
 		else if (DM.material_flags & MATERIAL_METAL)
 			if (!metal)
 				which = "metal"
-			else if (metal.mat_id == DM.mat_id)
+			else if (isSameMaterial(metal, DM))
 				which = "metal"
 			else
 				playsound(src.loc, sound_grump, 40, 1)
@@ -304,7 +303,7 @@
 		else if (DM.material_flags & MATERIAL_CRYSTAL)
 			if (!glass)
 				which = "glass"
-			else if (glass.mat_id == DM.mat_id)
+			else if (isSameMaterial(glass, DM))
 				which = "glass"
 			else
 				playsound(src.loc, sound_grump, 40, 1)
@@ -429,7 +428,7 @@
 				var/datum/material/MT = M.material
 				if (!MT)
 					continue
-				if (MT.mat_id == DM.mat_id)
+				if (isSameMaterial(MT, DM))
 					playsound(src.loc, sound_process, 40, 1)
 					if (which == "metal")
 						metal_count += 10

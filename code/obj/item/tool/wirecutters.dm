@@ -55,3 +55,8 @@
 	icon = 'icons/obj/items/tools/wirecutters.dmi'
 	icon_state = "wirecutters-vr"
 	item_state = "wirecutters"
+
+/obj/item/wirecutters/yellow
+	desc = "A tool used to cut wires and bars of metal. This pair has a yellow handle."
+	icon_state = "wirecutters-yellow"
+	item_state = "wirecutters-yellow"

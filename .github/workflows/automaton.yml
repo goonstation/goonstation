@@ -59,22 +59,22 @@ jobs:
       - name: Compile map
         if: "matrix.map != 'SPACE_PREFAB' && matrix.map != 'UNDERWATER_PREFAB' && matrix.map != 'FULL'"
         run: |
-          tools/ci/dm.sh -DTRAVISBUILDING -DMAP_OVERRIDE_${{ matrix.map}} -DRUNTIME_CHECKING -DIM_REALLY_IN_A_FUCKING_HURRY_HERE goonstation.dme
+          tools/ci/dm.sh -DCIBUILD -DMAP_OVERRIDE_${{ matrix.map}} -DRUNTIME_CHECKING -DIM_REALLY_IN_A_FUCKING_HURRY_HERE goonstation.dme
 
       - name: Compile space prefabs
         if: "matrix.map == 'SPACE_PREFAB'"
         run: |
-          tools/ci/dm.sh -DTRAVISBUILDING -DSPACE_PREFAB_RUNTIME_CHECKING  -DIM_REALLY_IN_A_FUCKING_HURRY_HERE goonstation.dme
+          tools/ci/dm.sh -DCIBUILD -DSPACE_PREFAB_RUNTIME_CHECKING  -DIM_REALLY_IN_A_FUCKING_HURRY_HERE goonstation.dme
 
       - name: Compile underwater prefabs
         if: "matrix.map == 'UNDERWATER_PREFAB'"
         run: |
-          tools/ci/dm.sh -DTRAVISBUILDING -DUNDERWATER_PREFAB_RUNTIME_CHECKING  -DIM_REALLY_IN_A_FUCKING_HURRY_HERE goonstation.dme
+          tools/ci/dm.sh -DCIBUILD -DUNDERWATER_PREFAB_RUNTIME_CHECKING  -DIM_REALLY_IN_A_FUCKING_HURRY_HERE goonstation.dme
 
       - name: Compile with full pre-round setup
         if: "matrix.map == 'FULL'"
         run: |
-          tools/ci/dm.sh -DTRAVISBUILDING -DRUNTIME_CHECKING goonstation.dme
+          tools/ci/dm.sh -DCIBUILD -DRUNTIME_CHECKING goonstation.dme
 
       - name: Run map and check for runtime errors
         run: |
@@ -134,22 +134,22 @@ jobs:
       - name: Compile map
         if: "matrix.map != 'SPACE_PREFAB' && matrix.map != 'UNDERWATER_PREFAB' && matrix.map != 'FULL'"
         run: |
-          tools/ci/dm.sh -DTRAVISBUILDING -DMAP_OVERRIDE_${{ matrix.map}} -DRUNTIME_CHECKING -DIM_REALLY_IN_A_FUCKING_HURRY_HERE goonstation.dme
+          tools/ci/dm.sh -DCIBUILD -DMAP_OVERRIDE_${{ matrix.map}} -DRUNTIME_CHECKING -DIM_REALLY_IN_A_FUCKING_HURRY_HERE goonstation.dme
 
       - name: Compile space prefabs
         if: "matrix.map == 'SPACE_PREFAB'"
         run: |
-          tools/ci/dm.sh -DTRAVISBUILDING -DSPACE_PREFAB_RUNTIME_CHECKING  -DIM_REALLY_IN_A_FUCKING_HURRY_HERE goonstation.dme
+          tools/ci/dm.sh -DCIBUILD -DSPACE_PREFAB_RUNTIME_CHECKING  -DIM_REALLY_IN_A_FUCKING_HURRY_HERE goonstation.dme
 
       - name: Compile underwater prefabs
         if: "matrix.map == 'UNDERWATER_PREFAB'"
         run: |
-          tools/ci/dm.sh -DTRAVISBUILDING -DUNDERWATER_PREFAB_RUNTIME_CHECKING  -DIM_REALLY_IN_A_FUCKING_HURRY_HERE goonstation.dme
+          tools/ci/dm.sh -DCIBUILD -DUNDERWATER_PREFAB_RUNTIME_CHECKING  -DIM_REALLY_IN_A_FUCKING_HURRY_HERE goonstation.dme
 
       - name: Compile with full pre-round setup
         if: "matrix.map == 'FULL'"
         run: |
-          tools/ci/dm.sh -DTRAVISBUILDING -DRUNTIME_CHECKING goonstation.dme
+          tools/ci/dm.sh -DCIBUILD -DRUNTIME_CHECKING goonstation.dme
 
       - name: Run map and check for runtime errors
         run: |

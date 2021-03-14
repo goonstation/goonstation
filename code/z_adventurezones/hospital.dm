@@ -34,12 +34,9 @@ var/list/hospital_fx_sounds = list('sound/ambience/spooky/Hospital_Chords.ogg', 
 				process()
 
 	Entered(atom/movable/Obj,atom/OldLoc)
-		..()
+		. = ..()
 		if(ambientSound && ismob(Obj))
-			if (!soundSubscribers:Find(Obj))
-				soundSubscribers += Obj
-
-		return
+			soundSubscribers |= Obj
 
 	proc/process()
 		if (!soundSubscribers)

@@ -298,7 +298,10 @@
 			src.overlays -= image(src.pie.icon, src.pie.icon_state)
 			src.pie.layer = initial(src.pie.layer)
 			src.pie.set_loc(get_turf(target))
-			src.pie.throw_impact(target)
+			var/datum/thrown_thing/thr = new
+			thr.user = usr // ew gross
+			thr.thing = src.pie
+			src.pie.throw_impact(target, thr)
 			src.pie = null
 
 		return

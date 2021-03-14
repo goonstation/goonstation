@@ -339,8 +339,6 @@ Contains:
 			src.part5.set_loc(T)
 			src.part5.master = null
 			src.part5 = null
-
-		//SN src = null
 		user.u_equip(src)
 		qdel(src)
 		return

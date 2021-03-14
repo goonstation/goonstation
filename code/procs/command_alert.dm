@@ -5,7 +5,7 @@
 	if (title && length(title) > 0)
 		boutput(world, "<h2 class='alert'>[title]</h2>")
 
-	boutput(world, "<span class='alert'>[text]</span>")
+	boutput(world, "<span class='alert'>[replacetext(text, "\n", "<br>\n")]</span>")
 	boutput(world, "<br>")
 	if (sound_to_play && length(sound_to_play) > 0)
 		world << csound(sound_to_play)

@@ -23,13 +23,12 @@
 	var/health_burn = 10
 	var/health_burn_vuln = 2
 
-	var/water_need = 0 // 0, 1, or 2; 1 and 2 just differ in intensity
-	var/in_water_to_out_of_water = 0 // did they enter an area with sufficient water from an area with insufficient water?
 	var/out_of_water_debuff = 1 // debuff amount for being out of water
-	var/out_of_water_to_in_water = 0 // did they enter an area with insufficient water from an area with sufficient water?
 	var/in_water_buff = 1 // buff amount for being in water
 
 	var/is_pet = null // null for automatic detection
+
+	var/datum/lifeprocess/aquatic_breathing/aquabreath_process = null
 
 /mob/living/critter/aquatic/New(loc)
 	if(isnull(src.is_pet))
@@ -38,8 +37,8 @@
 		src.is_pet = 0
 	if(src.is_pet)
 		START_TRACKING_CAT(TR_CAT_PETS)
-	src.update_water_status(loc)
 	..()
+	aquabreath_process = add_lifeprocess(/datum/lifeprocess/aquatic_breathing,src.in_water_buff,src.out_of_water_debuff)
 	remove_lifeprocess(/datum/lifeprocess/blood) // caused lag, not sure why exactly
 
 /mob/living/critter/aquatic/disposing()
@@ -47,6 +46,7 @@
 	ai = null
 	if(src.is_pet)
 		STOP_TRACKING_CAT(TR_CAT_PETS)
+	remove_lifeprocess(/datum/lifeprocess/aquatic_breathing)
 	..()
 
 /mob/living/critter/aquatic/setup_healths()
@@ -63,68 +63,13 @@
 		return
 	if (..())
 		return 1
-	if(src.water_need)
-		if(prob(10 * src.water_need) && !src.nodamage) // question: this gets rid of like one proc call; worth it?
-			var/datum/healthHolder/Br = get_health_holder("brute")
-			Br?.TakeDamage(water_need * out_of_water_debuff)
-			var/datum/healthHolder/Bu = get_health_holder("burn")
-			if(Bu && !is_heat_resistant())
-				Bu.TakeDamage(water_need * out_of_water_debuff)
-			hit_twitch(src)
-	else if(src.max_health > src.health && prob(10 * src.in_water_buff))
-		var/datum/healthHolder/Br = get_health_holder("brute")
-		if (Br && Br.maximum_value > Br.value)
-			Br.TakeDamage(-in_water_buff)
-		var/datum/healthHolder/Bu = get_health_holder("burn")
-		if (Bu && Bu.maximum_value > Bu.value && !is_heat_resistant())
-			Bu.TakeDamage(-in_water_buff)
 
-/mob/living/critter/aquatic/set_loc(newloc)
-	. = ..()
-	src.update_water_status()
-
-/mob/living/critter/aquatic/EnteredFluid(obj/fluid/F, atom/oldloc)
-	. = ..()
-	src.update_water_status()
-
-/mob/living/critter/aquatic/Move(NewLoc, direct)
-	. = ..()
-	src.update_water_status()
-
-/mob/living/critter/aquatic/proc/update_water_status(loc = null)
-	if(isnull(loc))
-		loc = src.loc
-	if(istype(loc, /turf/space/fluid)) // question: is this logic viable? too messy?
-		if(src.water_need)
-			src.water_need = 0
-			src.out_of_water_to_in_water = 1
-	else if(isturf(loc))
-		var/turf/T = loc
-		if (T.active_liquid)
-			if(T.active_liquid.last_depth_level > 3)
-				if(src.water_need)
-					src.water_need = 0
-					src.out_of_water_to_in_water = 1
-			else
-				if(src.water_need != 1)
-					if(!src.water_need)
-						src.in_water_to_out_of_water = 1
-					src.water_need = 1
-		else
-			if(src.water_need != 2)
-				if(!src.water_need)
-					src.in_water_to_out_of_water = 1
-				src.water_need = 2
-	else // so, like, in a vehicle or something; this does not work for being inside large storages
-		if(src.water_need != 2)
-			if(!src.water_need)
-				src.in_water_to_out_of_water = 1
-			src.water_need = 2
-
+/* This bit seems to be duplicated in update_water_status? Scream at me if this breaks something
 /mob/living/critter/aquatic/TakeDamage(zone, brute, burn, tox, damage_type, disallow_limb_loss)
 	..()
 	if(prob(10 * src.in_water_buff) && !src.water_need)
 		src.HealDamage("All", in_water_buff, in_water_buff)
+*/
 
 /mob/living/critter/aquatic/proc/harmed_by(var/mob/M) // copying cirr for this stuff
 	if(isdead(src))
@@ -144,6 +89,77 @@
 	..()
 	if(P.mob_shooter)
 		src.harmed_by(P.mob_shooter)
+
+/datum/lifeprocess/aquatic_breathing
+	var/water_need = 0 // 0, 1, or 2; 1 and 2 just differ in intensity
+	var/in_water_to_out_of_water = 0 // did they enter an area with sufficient water from an area with insufficient water?
+	var/out_of_water_debuff = 1 // debuff amount for being out of water
+	var/out_of_water_to_in_water = 0 // did they enter an area with insufficient water from an area with sufficient water?
+	var/in_water_buff = 1 // buff amount for being in water
+
+	New(new_owner,arguments)
+		..()
+		if(length(arguments) >= 2)
+			in_water_buff = arguments[1]
+			out_of_water_debuff = arguments[2]
+
+	process()
+		src.update_water_status()
+		if(src.critter_owner)
+			if(src.water_need)
+				if(prob(50 * src.water_need) && !critter_owner.nodamage) // question: this gets rid of like one proc call; worth it?
+					var/datum/healthHolder/Br = critter_owner.get_health_holder("brute")
+					Br?.TakeDamage(src.water_need * src.out_of_water_debuff)
+					var/datum/healthHolder/Bu = critter_owner.get_health_holder("burn")
+					if(Bu && !critter_owner.is_heat_resistant())
+						Bu.TakeDamage(src.water_need * src.out_of_water_debuff)
+					hit_twitch(critter_owner)
+			else if(critter_owner.max_health > critter_owner.health && prob(10 * src.in_water_buff))
+				var/datum/healthHolder/Br = critter_owner.get_health_holder("brute")
+				if (Br && Br.maximum_value > Br.value)
+					Br.TakeDamage(-src.in_water_buff)
+				var/datum/healthHolder/Bu = critter_owner.get_health_holder("burn")
+				if (Bu && Bu.maximum_value > Bu.value && !critter_owner.is_heat_resistant())
+					Bu.TakeDamage(-src.in_water_buff)
+		else if(src.human_owner)
+			if(src.water_need)
+				if(prob(50 * src.water_need) && !human_owner.nodamage) // question: this gets rid of like one proc call; worth it?
+					human_owner.take_oxygen_deprivation(10*src.water_need)
+					hit_twitch(critter_owner)
+			else if(human_owner.max_health > human_owner.health && prob(10 * src.in_water_buff))
+				human_owner.HealDamage("All", src.in_water_buff, src.in_water_buff,0)
+				human_owner.take_oxygen_deprivation(-10)
+
+
+	proc/update_water_status(loc = null)
+		if(isnull(loc))
+			loc = owner.loc
+		if(istype(loc, /turf/space/fluid)) // question: is this logic viable? too messy?
+			if(src.water_need)
+				src.water_need = 0
+				src.out_of_water_to_in_water = 1
+		else if(isturf(loc))
+			var/turf/T = loc
+			if (T.active_liquid)
+				if(T.active_liquid.last_depth_level > 3)
+					if(src.water_need)
+						src.water_need = 0
+						src.out_of_water_to_in_water = 1
+				else
+					if(src.water_need != 1)
+						if(!src.water_need)
+							src.in_water_to_out_of_water = 1
+						src.water_need = 1
+			else
+				if(src.water_need != 2)
+					if(!src.water_need)
+						src.in_water_to_out_of_water = 1
+					src.water_need = 2
+		else // so, like, in a vehicle or something; this does not work for being inside large storages
+			if(src.water_need != 2)
+				if(!src.water_need)
+					src.in_water_to_out_of_water = 1
+				src.water_need = 2
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 //fish
@@ -191,13 +207,13 @@
 
 /mob/living/critter/aquatic/fish/Move(NewLoc, direct)
 	. = ..()
-	if(src.out_of_water_to_in_water)
+	if(src.aquabreath_process.out_of_water_to_in_water)
 		animate_bumble(src)
-		out_of_water_to_in_water = 0
-	else if(src.in_water_to_out_of_water)
+		src.aquabreath_process.out_of_water_to_in_water = 0
+	else if(src.aquabreath_process.in_water_to_out_of_water)
 		animate(src)
-		in_water_to_out_of_water = 0
-	else if(src.water_need && prob(2 * src.water_need))
+		src.aquabreath_process.in_water_to_out_of_water = 0
+	else if(src.aquabreath_process.water_need && prob(20 * src.aquabreath_process.water_need))
 		hit_twitch(src)
 		src.visible_message("<b>[src]</b> [pick("flops around desperately","gasps","shudders")].")
 
@@ -208,12 +224,12 @@
 
 /mob/living/critter/aquatic/fish/throw_impact(atom/hit_atom, datum/thrown_thing/thr)
 	..()
-	if(!water_need && !isdead(src))
+	if(!src.aquabreath_process.water_need && !isdead(src))
 		animate_bumble(src)
 
 /mob/living/critter/aquatic/fish/harmed_by(var/mob/M)
 	..()
-	if(src.is_npc && !isdead(src) && !water_need && !swimming_away) // todo: add this to AI to make things cleaner?
+	if(src.is_npc && !isdead(src) && !src.aquabreath_process.water_need && !swimming_away) // todo: add this to AI to make things cleaner?
 		walk_away(src,M,6,4)
 		swimming_away = 1
 		if(src)
@@ -230,7 +246,7 @@
 /mob/living/critter/aquatic/fish/specific_emotes(var/act, var/param = null, var/voluntary = 0)
 	switch (act)
 		if ("flip")
-			if (src.emote_check(voluntary, 50) && !src.water_need)
+			if (src.emote_check(voluntary, 50) && !src.aquabreath_process.water_need)
 				SPAWN_DBG(1 SECOND)
 					animate_bumble(src)
 				return null
@@ -245,7 +261,7 @@
 						src.pixel_x-= 2
 						src.set_dir(turn(src.dir, 90))
 						sleep(0.2 SECONDS)
-					if(!src.water_need)
+					if(!src.aquabreath_process.water_need)
 						animate_bumble(src)
 				return "<b>[src]</b> dances!"
 	return null
@@ -414,15 +430,15 @@
 
 /mob/living/critter/aquatic/king_crab/Move(NewLoc, direct)
 	. = ..()
-	if(src.out_of_water_to_in_water)
+	if(src.aquabreath_process.out_of_water_to_in_water)
 		base_move_delay = 1
-		out_of_water_to_in_water = 0
-	else if(src.in_water_to_out_of_water)
+		src.aquabreath_process.out_of_water_to_in_water = 0
+	else if(src.aquabreath_process.in_water_to_out_of_water)
 		animate_shake(src)
 		src.emote("scream")
 		base_move_delay = 2
-		in_water_to_out_of_water = 0
-	else if(src.water_need && prob(src.water_need))
+		src.aquabreath_process.in_water_to_out_of_water = 0
+	else if(src.aquabreath_process.water_need && prob(src.aquabreath_process.water_need))
 		hit_twitch(src)
 		src.visible_message("<b>[src]</b> [pick("shudders","clinks heavily","gasps","looks dazed")].")
 

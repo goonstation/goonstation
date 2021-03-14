@@ -255,7 +255,7 @@ var/global/icon/wanted_poster_unknown = icon('icons/obj/decals/posters.dmi', "wa
 
 	examine(mob/user)
 		if (src.popup_win)
-			src.show_popup_win(usr)
+			src.show_popup_win(user)
 			return list()
 		else
 			return ..()

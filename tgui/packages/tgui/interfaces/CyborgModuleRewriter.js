@@ -8,7 +8,7 @@
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 import ModuleView from './CyborgModuleRewriter/ModuleView';
-import { BlockCn } from './CyborgModuleRewriter/style';
+import * as styles from './CyborgModuleRewriter/style';
 
 export const CyborgModuleRewriter = (props, context) => {
   const { act, data } = useBackend(context);
@@ -39,8 +39,8 @@ export const CyborgModuleRewriter = (props, context) => {
     <Window
       width={670}
       height={640}
-      resizable>
-      <Window.Content className={BlockCn} scrollable>
+    >
+      <Window.Content className={styles.Block} scrollable>
         <ModuleView
           modules={modules}
           onEjectModule={handleEjectModule}

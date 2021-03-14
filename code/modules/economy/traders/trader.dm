@@ -163,7 +163,7 @@
 		src.currently_selling = 0 //At this point the shopping cart has been processed
 		var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency("1149")
 		var/datum/signal/pdaSignal = get_free_signal()
-		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=MGD_CARGO, "sender"="00000000", "message"="Deal with \"[src.name]\" concluded. Total Cost: [total_price] credits")
+		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT", "group"=list(MGD_CARGO, MGA_SALES), "sender"="00000000", "message"="Deal with \"[src.name]\" concluded. Total Cost: [total_price] credits")
 		pdaSignal.transmission_method = TRANSMISSION_RADIO
 		transmit_connection.post_signal(null, pdaSignal)
 		shippingmarket.receive_crate(S)

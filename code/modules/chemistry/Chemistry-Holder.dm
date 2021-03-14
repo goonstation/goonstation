@@ -58,6 +58,7 @@ datum
 		var/temperature_min = 0
 
 		var/postfoam = 0 //attempt at killing infinite foam
+		var/can_be_heated = TRUE //can be heated by external sources
 
 		New(maximum=100)
 			..()
@@ -114,6 +115,8 @@ datum
 
 		proc/temperature_reagents(exposed_temperature, exposed_volume, divisor = 35, change_cap = 15) //This is what you use to change the temp of a reagent holder.
 			                                                      //Do not manually change the reagent unless you know what youre doing.
+			if (!src.can_be_heated)
+				return
 			last_temp = total_temperature
 			var/difference = abs(total_temperature - exposed_temperature)
 			if (!difference)
@@ -563,9 +566,10 @@ datum
 			for(var/current_id in reagent_list)
 				var/datum/reagent/current_reagent = reagent_list[current_id]
 				if(current_reagent)
-					if(current_reagent.volume <= 0)
+					if(current_reagent.volume <= 0.001)
 						del_reagent(current_id)
 					else
+						current_reagent.volume = max(round(current_reagent.volume, 0.001), 0.001)
 						total_volume += current_reagent.volume
 			if(isitem(my_atom))
 				var/obj/item/I = my_atom
@@ -624,15 +628,15 @@ datum
 						if(temp_to_burn_with > H.base_body_temp + (H.temp_tolerance * 4) && !H.is_heat_resistant())
 							if (chem_helmet_check(H, "hot"))
 								boutput(H, "<span class='alert'>You are scalded by the hot chemicals!</span>")
-								H.TakeDamage("head", 0, round(log(temp_to_burn_with / 50) * 10) * dmg_multiplier, 0, DAMAGE_BURN) // lol this caused brute damage
+								H.TakeDamage("head", 0, round(log(max((temp_to_burn_with - (H.base_body_temp + (H.temp_tolerance * 4))), 1) / 50) * 10) * dmg_multiplier, 0, DAMAGE_BURN) // lol this caused brute damage
 								H.emote("scream")
-								H.bodytemperature += min(max((temp_to_burn_with - T0C) - 20, 5),500)
+								H.bodytemperature += min(max((temp_to_burn_with - (H.base_body_temp + (H.temp_tolerance * 4))) - 20, 5),500)
 						else if(temp_to_burn_with < H.base_body_temp - (H.temp_tolerance * 4) && !H.is_cold_resistant())
 							if (chem_helmet_check(H, "cold"))
 								boutput(H, "<span class='alert'>You are frostbitten by the freezing cold chemicals!</span>")
-								H.TakeDamage("head", 0, round(log(T0C - temp_to_burn_with / 50) * 10) * dmg_multiplier, 0, DAMAGE_BURN)
+								H.TakeDamage("head", 0, round(log(max(((H.base_body_temp - (H.temp_tolerance * 4)) - temp_to_burn_with), 1) / 50) * 10) * dmg_multiplier, 0, DAMAGE_BURN)
 								H.emote("scream")
-								H.bodytemperature -= min(max(T0C - temp_to_burn_with - 20, 5), 500)
+								H.bodytemperature -= min(max((H.base_body_temp - (H.temp_tolerance * 4)) - temp_to_burn_with - 20, 5), 500)
 
 					for(var/current_id in reagent_list)
 						var/datum/reagent/current_reagent = reagent_list[current_id]
@@ -718,12 +722,16 @@ datum
 				fluid_turf.fluid_react(temp_fluid_reagents, temp_fluid_reagents.total_volume)
 
 		proc/add_reagent(var/reagent, var/amount, var/sdata, var/temp_new=T20C, var/donotreact = 0, var/donotupdate = 0)
-			if(!isnum(amount) || amount <= 0)
+			if(!isnum(amount) || amount <= 0 || src.disposed)
 				return 1
 			var/added_new = 0
 			if (!donotupdate)
 				update_total()
-			if(total_volume + amount > maximum_volume) amount = (maximum_volume - total_volume) //Doesnt fit in. Make it disappear. Shouldnt happen. Will happen.
+			amount = round(amount, CHEM_EPSILON)
+			if(amount < CHEM_EPSILON)
+				return 0
+			if(total_volume + amount > maximum_volume)
+				amount = (maximum_volume - total_volume) //Doesnt fit in. Make it disappear. Shouldnt happen. Will happen.
 
 			var/datum/reagent/current_reagent = reagent_list[reagent]
 
@@ -1055,9 +1063,9 @@ datum
 				logTheThing("combat", our_user, null, "Smoke reaction ([my_atom ? log_reagents(my_atom) : log_reagents(src)]) at [T ? "[log_loc(T)]" : "null"].[our_fingerprints ? " Container last touched by: [our_fingerprints]." : ""]")
 
 			if (classic)
-				classic_smoke_reaction(src, min(round(volume / 5) + 1, 4), location = my_atom ? get_turf(my_atom) : 0)
+				classic_smoke_reaction(src, min(round(volume / 5), 4), location = my_atom ? get_turf(my_atom) : 0)
 			else
-				smoke_reaction(src, round(min(5, volume/10)), location = my_atom ? get_turf(my_atom) : 0)
+				smoke_reaction(src, round(min(5, round(volume/10))), location = my_atom ? get_turf(my_atom) : 0)
 
 ///////////////////////////////////////////////////////////////////////////////////
 

@@ -25,7 +25,7 @@
 	var/obj/item/organ/tail = null
 	var/lungs_changed = 2				//for changing lung stamina debuffs if it has changed since last cycle. starts at 2 for having 2 working lungs
 
-	var/list/organ_list = list("all", "head", "skull", "brain", "left_eye", "right_eye", "chest", "heart", "left_lung", "right_lung", "butt", "left_kidney", "right_kidney", "liver", "stomach", "intestines", "spleen", "pancreas", "appendix")
+	var/list/organ_list = list("all", "head", "skull", "brain", "left_eye", "right_eye", "chest", "heart", "left_lung", "right_lung", "butt", "left_kidney", "right_kidney", "liver", "stomach", "intestines", "spleen", "pancreas", "appendix", "tail")
 
 	var/list/organ_type_list = list(
 		"head"="/obj/item/organ/head",
@@ -557,7 +557,7 @@
 				var/obj/item/organ/heart/myHeart = src.heart
 				//Commented this out for some reason I forget. I'm sure I'll remember what it is one day. -kyle
 				// if (src.heart.robotic)
-				// 	src.donor.remove_stam_mod_regen("heart")
+				// 	REMOVE_MOB_PROPERTY(src.donor, PROP_STAMINA_REGEN_BONUS, "heart")
 				// 	src.donor.remove_stam_mod_max("heart")
 				myHeart.set_loc(location)
 				myHeart.on_removal()
@@ -712,6 +712,40 @@
 				src.donor.update_body()
 				src.organ_list["tail"] = null
 				return mytail
+
+	/// drops the organ, then hurls it somewhere
+	proc/drop_and_throw_organ(var/organ, var/location, var/direction, var/dist, var/speed, var/showtext)
+		. = src.drop_organ(organ, location)
+		if(istype(., /obj))
+			var/obj/organ_toss = .
+			if (!location)
+				location = src.donor.loc
+
+			if(direction in alldirs)
+				var/atom/target = get_edge_target_turf(organ_toss, direction)
+				organ_toss.throw_at(target, dist, speed)
+			else
+				ThrowRandom(organ_toss, dist, speed)
+
+			if(showtext && ishuman(src.donor))
+				var/grody_arc = "bloody"
+				if(istype(organ_toss, /obj/item/parts))
+					var/obj/item/parts/limb = organ_toss
+					grody_arc = limb.streak_descriptor
+				else if(istype(organ_toss, /obj/item/organ))
+					var/obj/item/organ/orgn = organ_toss
+					if(orgn.robotic)
+						grody_arc = "oily"
+					else
+						grody_arc = "bloody"
+				else if(istype(organ_toss, /obj/item/clothing/head/butt))
+					if(istype(organ_toss, /obj/item/clothing/head/butt/cyberbutt))
+						grody_arc = "greasy"
+					else
+						grody_arc = "floppy"
+				src.donor.visible_message("<span class='alert'>[src.donor.name]'s [organ_toss.name] flies off in a [grody_arc] arc!</span>")
+				src.donor.emote("scream")
+				src.donor.update_clothing()
 
 	proc/receive_organ(var/obj/item/I, var/organ, var/op_stage = 0.0, var/force = 0)
 		if (!src.donor || !I || !organ)
@@ -892,10 +926,10 @@
 						src.donor.contract_disease(/datum/ailment/malady/flatline,null,null,1)
 					//Like above, I commented this out for a reason I cannot remember. might just be because I changed how that stamina modifier works, I dunno.
 					// if (newHeart.emagged)
-					// 	src.donor.add_stam_mod_regen("heart", 20)
+					// 	APPLY_MOB_PROPERTY(src.donor, PROP_STAMINA_REGEN_BONUS, "heart", 20)
 					// 	src.donor.add_stam_mod_max("heart", 100)
 					// else
-					// 	src.donor.add_stam_mod_regen("heart", 10)
+					// 	APPLY_MOB_PROPERTY(src.donor, PROP_STAMINA_REGEN_BONUS, "heart", 10)
 					// 	src.donor.add_stam_mod_max("heart", 50)
 				newHeart.op_stage = op_stage
 				src.heart = newHeart
@@ -1090,7 +1124,7 @@
 		if (islist(organ_list))
 			for (var/i in organ_list)
 				//ignore these things which can't be robotic for a regular human atm. And butts cause they aren't real organs, plus removing butts is a crime.
-				if (i =="all" || i == "head" || i == "skull" || i == "brain" || i == "chest" || i == "butt")
+				if (i =="all" || i == "head" || i == "skull" || i == "brain" || i == "chest" || i == "butt" || i == "tail")
 					continue
 				var/obj/item/organ/O = organ_list[i]
 				//if it's not robotic we're done, return 0
@@ -1115,9 +1149,9 @@
 		switch (working_lungs)
 			if (0)
 				if (working_lungs != lungs_changed)
-					donor.remove_stam_mod_regen("single_lung_removal")
+					REMOVE_MOB_PROPERTY(donor, PROP_STAMINA_REGEN_BONUS, "single_lung_removal")
 					donor.remove_stam_mod_max("single_lung_removal")
-					donor.add_stam_mod_regen("double_lung_removal", -6)
+					APPLY_MOB_PROPERTY(donor, PROP_STAMINA_REGEN_BONUS, "double_lung_removal", -6)
 					donor.add_stam_mod_max("double_lung_removal", -150)
 					lungs_changed = 0
 
@@ -1125,9 +1159,9 @@
 				donor.losebreath+=rand(1,5) * mult
 			if (1)
 				if (working_lungs != lungs_changed)
-					donor.remove_stam_mod_regen("double_lung_removal")
+					REMOVE_MOB_PROPERTY(donor, PROP_STAMINA_REGEN_BONUS, "double_lung_removal")
 					donor.remove_stam_mod_max("double_lung_removal")
-					donor.add_stam_mod_regen("single_lung_removal", -3)
+					APPLY_MOB_PROPERTY(donor, PROP_STAMINA_REGEN_BONUS, "single_lung_removal", -3)
 					donor.add_stam_mod_max("single_lung_removal", -75)
 					lungs_changed = 1
 
@@ -1136,9 +1170,9 @@
 					donor.losebreath+=(1 * mult)
 			if (2)
 				if (working_lungs != lungs_changed)
-					donor.remove_stam_mod_regen("single_lung_removal")
+					REMOVE_MOB_PROPERTY(donor, PROP_STAMINA_REGEN_BONUS, "single_lung_removal")
 					donor.remove_stam_mod_max("single_lung_removal")
-					donor.remove_stam_mod_regen("double_lung_removal")
+					REMOVE_MOB_PROPERTY(donor, PROP_STAMINA_REGEN_BONUS, "double_lung_removal")
 					donor.remove_stam_mod_max("double_lung_removal")
 					lungs_changed = 2
 
@@ -1174,6 +1208,11 @@
 	if (!src.organHolder || !organ)
 		return 0
 	return src.organHolder.drop_organ(organ, location)
+
+/mob/living/carbon/human/proc/drop_and_throw_organ(var/organ, var/location, var/direction, var/dist, var/speed, var/showtext)
+	if (!src.organHolder || !organ)
+		return 0
+	return src.organHolder.drop_and_throw_organ(organ, location, direction, dist, speed, showtext)
 
 /mob/living/carbon/human/proc/receive_organ(var/obj/item/I, var/organ, var/op_stage = 0.0, var/force = 0)
 	if (!src.organHolder || !I || !organ)
@@ -1269,7 +1308,7 @@
 	regenRate = 0
 	tabName = "Body"
 
-/obj/screen/ability/topBar/organ
+/atom/movable/screen/ability/topBar/organ
 	clicked(params)
 		var/datum/targetable/organAbility/spell = owner
 		if (!istype(spell))
@@ -1303,7 +1342,7 @@
 	var/obj/item/organ/linked_organ = null
 
 	New()
-		var/obj/screen/ability/topBar/organ/B = new /obj/screen/ability/topBar/organ(null)
+		var/atom/movable/screen/ability/topBar/organ/B = new /atom/movable/screen/ability/topBar/organ(null)
 		B.name = src.name
 		B.desc = src.desc
 		B.icon = src.icon
@@ -1314,7 +1353,7 @@
 	updateObject()
 		..()
 		if (!src.object)
-			src.object = new /obj/screen/ability/topBar/organ()
+			src.object = new /atom/movable/screen/ability/topBar/organ()
 			object.icon = src.icon
 			object.owner = src
 		if (disabled)
@@ -1336,7 +1375,7 @@
 
 	proc/incapacitationCheck()
 		var/mob/living/M = holder.owner
-		return M.restrained() || M.stat || M.getStatusDuration("paralysis") || M.getStatusDuration("stunned") || M.getStatusDuration("weakened")
+		return M.restrained() || is_incapacitated(M)
 
 	castcheck()
 		if (!linked_organ || (!islist(src.linked_organ) && linked_organ.loc != holder.owner))

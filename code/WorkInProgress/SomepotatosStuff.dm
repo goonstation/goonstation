@@ -41,10 +41,26 @@
 			boutput( user, "<span class='notice'>You attach the [CLEAN(src)] to the [CLEAN(what)].</span>" )
 		*/
 
+/// Define: GPS_MAP_TESTING
+/// Enable definition to provide the following information for MAP review when the GPS verb is used:
+/// * Sorted List of GPS Waypoints
+/// * Duplicate GPS waypoints with the same name (provides X,Y)
+/// * List of AREAs that would NOT be listed in GPS list due to distance and what criteria would allow them to be (up to 1000 iterations)
+//#define GPS_MAP_TESTING
+
 
 /obj/landmark/gps_waypoint
 	icon_state = "gps"
 	name = LANDMARK_GPS_WAYPOINT
+	name_override = LANDMARK_GPS_WAYPOINT
+
+	New()
+		if(name != name_override)
+			src.data = name
+		else
+			var/area/area = get_area(src)
+			src.data = area.name
+		..()
 
 /client/var/list/GPS_Path
 /client/var/list/GPS_Images
@@ -55,12 +71,39 @@
 	var/list/wtfbyond = list()
 	var/turf/OT = get_turf(src)
 	for(var/turf/wp in landmarks[LANDMARK_GPS_WAYPOINT])
-		var/path = AStar(OT, get_turf(wp), /turf/proc/AllDirsTurfsWithAccess, /turf/proc/Distance, adjacent_param = ID, maxtraverse=175)
+		var/path = AStar(OT, get_turf(wp), /turf/proc/AllDirsTurfsWithAccess, /turf/proc/Distance, adjacent_param = ID, maxtraverse=300)
 		if(path)
-			var/area/area = get_area(wp)
-			var/name = area.name
+			var/name = landmarks[LANDMARK_GPS_WAYPOINT][wp]
+			if(!name)
+				var/area/area = get_area(wp)
+				name = area.name
+#ifdef GPS_MAP_TESTING
+			if(targets[name])
+				boutput( usr, "*** Duplicate waypoint in ([name]): ([targets[name].x],[targets[name].y]) and ([wp.x],[wp.y])" )
+#endif
+
 			targets[name] = wp
 			wtfbyond[++wtfbyond.len] = name
+
+#ifdef GPS_MAP_TESTING
+		else
+			var/area/area = get_area(wp)
+			var/max_trav
+			boutput( usr, "Area ([area.name]) not found in 300 or not accessable" )
+			for(max_trav=300; max_trav<500;max_trav=max_trav+100)
+				path = AStar(OT, get_turf(wp), /turf/proc/AllDirsTurfsWithAccess, /turf/proc/Distance, adjacent_param = ID, maxtraverse=max_trav)
+				if(path)
+					boutput( usr, "Area ([area.name]) found in [length(path)] with maxtraverse of [max_trav]" )
+					break
+
+	var/list/sorted_names = list()
+	for(var/turf/wp in landmarks[LANDMARK_GPS_WAYPOINT])
+		sorted_names += landmarks[LANDMARK_GPS_WAYPOINT][wp]
+	sorted_names = sortList(sorted_names)
+	boutput( usr, "::Sorted GPS Waypoints::" )
+	for(var/N in sorted_names)
+		boutput( usr, "[N]" )
+#endif
 
 	if(!targets.len)
 		boutput( usr, "No targets found! Try again later!" )
@@ -95,8 +138,11 @@
 			var/turf/t = path[i]
 			var/turf/next = path[i+1]
 			var/image/img = image('icons/obj/power_cond.dmi')
+
 			img.loc = t
-			img.layer = 101
+			img.layer = DECAL_LAYER
+			img.plane = PLANE_NOSHADOW_BELOW
+
 			img.color = "#5555ff"
 			var/D1=turn(angle2dir(get_angle(next, t)),180)
 			var/D2=turn(angle2dir(get_angle(prev,t)),180)
@@ -106,10 +152,25 @@
 			img.icon_state = "[D1]-[D2]"
 			client.images += img
 			client.GPS_Images[++client.GPS_Images.len] = img
+
+			var/image/img2 = image('icons/obj/power_cond.dmi')
+			img2.loc = img.loc
+			img2.layer = img.layer
+			img2.plane = PLANE_SELFILLUM
+			img2.color = "#55a4ff"
+			img2.icon_state = img.icon_state
+			client.images += img2
+			client.GPS_Images[++client.GPS_Images.len] = img2
+
 			img.alpha=0
 			var/matrix/xf = matrix()
 			img.transform = xf/2
-			animate(img,alpha=255,transform=xf,time=2)
+			animate(img, alpha= 255, transform=xf,time=2)
+
+			img2.alpha = 0
+			animate(img2, time = 0.5 SECONDS, loop = -1 ) //noop to delay for img and maintain illuminated state
+			animate(alpha = 0, time = 2 SECONDS, loop = -1, easing = CUBIC_EASING | EASE_OUT )
+			animate(alpha = 80, time = 1 SECONDS, loop = -1, easing = BACK_EASING | EASE_OUT )
 			sleep(0.1 SECONDS)
 
 /mob/proc/removeGpsPath(doText = 1)

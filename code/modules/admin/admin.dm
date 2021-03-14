@@ -21,11 +21,11 @@ var/global/noir = 0
 			continue
 		if (C.player_mode)
 			if (asay && C.player_mode_asay)
-				boutput(C, replacetext(rendered, "%admin_ref%", "\ref[C.holder]"))
+				boutput(C, replacetext(replacetext(rendered, "%admin_ref%", "\ref[C.holder]"), "%client_ref%", "\ref[C]"))
 			else
 				continue
 		else
-			boutput(C, replacetext(rendered, "%admin_ref%", "\ref[C.holder]")) //this doesnt fail if the placeholder doesnt exist ok dont worry
+			boutput(C, replacetext(replacetext(rendered, "%admin_ref%", "\ref[C.holder]"), "%client_ref%", "\ref[C]"))
 
 /proc/message_coders(var/text) //Shamelessly adapted from message_admins
 	var/rendered = "<span class=\"admin\"><span class=\"prefix\">CODER LOG:</span> <span class=\"message\">[text]</span></span>"
@@ -149,6 +149,18 @@ var/global/noir = 0
 				var/client/C = locate(href_list["target"])
 				if(istype(C))
 					C.cloud_put("mentorhelp_banner", "")
+					src.show_chatbans(C)
+		if ("pr_mute")
+			if (src.level >= LEVEL_PA)
+				var/client/C = locate(href_list["target"])
+				if(istype(C))
+					C.cloud_put("prayer_banner", usr.client.key)
+					src.show_chatbans(C)
+		if ("pr_unmute")
+			if (src.level >= LEVEL_PA)
+				var/client/C = locate(href_list["target"])
+				if(istype(C))
+					C.cloud_put("prayer_banner", "")
 					src.show_chatbans(C)
 
 		if ("load_admin_prefs")
@@ -360,7 +372,7 @@ var/global/noir = 0
 				// someone forgetting about leaving shuttle calling disabled would be bad so let's inform the Admin Crew if it happens, just in case
 				var/ircmsg[] = new()
 				ircmsg["key"] = src.owner:key
-				ircmsg["name"] = (usr?.real_name) ? usr.real_name : "NULL"
+				ircmsg["name"] = (usr?.real_name) ? stripTextMacros(usr.real_name) : "NULL"
 				ircmsg["msg"] = "Has [emergency_shuttle.disabled ? "dis" : "en"]abled calling the Emergency Shuttle"
 				ircbot.export("admin", ircmsg)
 			else
@@ -412,7 +424,7 @@ var/global/noir = 0
 
 							var/ircmsg[] = new()
 							ircmsg["key"] = src.owner:key
-							ircmsg["name"] = (usr?.real_name) ? usr.real_name : "NULL"
+							ircmsg["name"] = (usr?.real_name) ? stripTextMacros(usr.real_name) : "NULL"
 							ircmsg["msg"] = "Deleted note [noteId] belonging to [player]"
 							ircbot.export("admin", ircmsg)
 
@@ -434,7 +446,7 @@ var/global/noir = 0
 
 					var/ircmsg[] = new()
 					ircmsg["key"] = src.owner:key
-					ircmsg["name"] = (usr?.real_name) ? usr.real_name : "NULL"
+					ircmsg["name"] = (usr?.real_name) ? stripTextMacros(usr.real_name) : "NULL"
 					ircmsg["msg"] = "Added a note for [player]: [the_note]"
 					ircbot.export("admin", ircmsg)
 
@@ -588,7 +600,7 @@ var/global/noir = 0
 						if(player.cached_jobbans.Find("Engineering Department"))
 							alert("This person is banned from Engineering Department. You must lift that ban first.")
 							return
-					if(job in list("Security Officer","Vice Officer","Detective"))
+					if(job in list("Security Officer","Security Assistant","Vice Officer","Part-time Vice Officer","Detective"))
 						if(player.cached_jobbans.Find("Security Department"))
 							alert("This person is banned from Security Department. You must lift that ban first.")
 							return
@@ -622,7 +634,7 @@ var/global/noir = 0
 							if(player.cached_jobbans.Find("[Trank2]"))
 								jobban_unban(M,Trank2)
 					else if(job == "Security Department")
-						for(var/Trank3 in list("Security Officer","Vice Officer","Detective"))
+						for(var/Trank3 in list("Security Officer","Security Assistant","Vice Officer","Part-time Vice Officer","Detective"))
 							if(player.cached_jobbans.Find("[Trank3]"))
 								jobban_unban(M,Trank3)
 					else if(job == "Heads of Staff")
@@ -648,7 +660,7 @@ var/global/noir = 0
 						if(cache.Find("Engineering Department"))
 							alert("This person is banned from Engineering Department. You must lift that ban first.")
 							return
-					if(job in list("Security Officer","Vice Officer","Detective"))
+					if(job in list("Security Officer","Security Assistant","Vice Officer","Part-time Vice Officer","Detective"))
 						if(cache.Find("Security Department"))
 							alert("This person is banned from Security Department. You must lift that ban first.")
 							return
@@ -681,7 +693,7 @@ var/global/noir = 0
 							if(cache.Find("[Trank2]"))
 								jobban_unban(M,Trank2)
 					else if(job == "Security Department")
-						for(var/Trank3 in list("Security Officer","Vice Officer","Detective"))
+						for(var/Trank3 in list("Security Officer","Security Assistant","Vice Officer","Part-time Vice Officer","Detective"))
 							if(cache.Find("[Trank3]"))
 								jobban_unban(M,Trank3)
 					else if(job == "Heads of Staff")
@@ -815,15 +827,14 @@ var/global/noir = 0
 					world.save_mode(requestedMode)
 					master_mode = requestedMode
 					if(master_mode == "battle_royale")
-						lobby_titlecard.icon_state += "_battle_royale"
-					else
-						lobby_titlecard.icon_state = "title_main"
-					#ifdef MAP_OVERRIDE_OSHAN
-						lobby_titlecard.icon_state = "title_oshan"
-					#endif
-					#ifdef MAP_OVERRIDE_MANTA
-						lobby_titlecard.icon_state = "title_manta"
-					#endif
+						lobby_titlecard = new /datum/titlecard/battleroyale()
+						lobby_titlecard.set_pregame_html()
+					else if(master_mode == "disaster")
+						lobby_titlecard = new /datum/titlecard/disaster()
+						lobby_titlecard.set_pregame_html()
+					else if (lobby_titlecard.is_game_mode)
+						lobby_titlecard = new /datum/titlecard()
+						lobby_titlecard.set_pregame_html()
 					if (alert("Declare mode change to all players?","Mode Change","Yes","No") == "Yes")
 						boutput(world, "<span class='notice'><b>The mode is now: [requestedMode]</b></span>")
 				else
@@ -861,8 +872,8 @@ var/global/noir = 0
 				alert("You need to be at least a Secondary Adminstrator to monkeyize players.")
 
 		if ("forcespeech")
-			if (src.level >= LEVEL_PA)
-				var/mob/M = locate(href_list["target"])
+			var/mob/M = locate(href_list["target"])
+			if (src.level >= LEVEL_PA || isnull(M.client) && src.level >= LEVEL_SA)
 				if (ismob(M))
 					var/speech = input("What will [M] say?", "Force speech", "")
 					if(!speech)
@@ -871,7 +882,8 @@ var/global/noir = 0
 					speech = copytext(sanitize(speech), 1, MAX_MESSAGE_LEN)
 					logTheThing("admin", usr, M, "forced [constructTarget(M,"admin")] to say: [speech]")
 					logTheThing("diary", usr, M, "forced [constructTarget(M,"diary")] to say: [speech]", "admin")
-					message_admins("<span class='internal'>[key_name(usr)] forced [key_name(M)] to say: [speech]</span>")
+					if(M.client)
+						message_admins("<span class='internal'>[key_name(usr)] forced [key_name(M)] to say: [speech]</span>")
 			else
 				alert("You need to be at least a Primary Administrator to force players to say things.")
 
@@ -1889,6 +1901,17 @@ var/global/noir = 0
 				ticker.mode.Agimmicks += mind
 				F.antagonist_overlay_refresh(1, 0)
 
+		if("makefloorgoblin")
+			if( src.level < LEVEL_PA)
+				alert("You must be at least a Primary Administrator to make someone a floor goblin.")
+				return
+			if(!ticker || !ticker.mode)
+				alert("The game hasn't started yet!")
+				return
+			var/mob/M = locate(href_list["target"])
+			if (!M) return
+			if (alert("Make [M] a floor goblin?", "Make Floor Goblin", "Yes", "No") == "Yes")
+				evilize(M, "floor_goblin")
 
 		if ("remove_traitor")
 			if ( src.level < LEVEL_SA )
@@ -2021,19 +2044,19 @@ var/global/noir = 0
 				alert("Cannot make this mob a traitor")
 
 		if ("create_object")
-			if (src.level >= LEVEL_PA)
+			if (src.level >= LEVEL_SA)
 				create_object(usr)
 			else
 				alert("You need to be at least a Primary Adminstrator to create objects.")
 
 		if ("create_turf")
-			if (src.level >= LEVEL_PA)
+			if (src.level >= LEVEL_SA)
 				create_turf(usr)
 			else
 				alert("You need to be at least a Primary Adminstrator to create turfs.")
 
 		if ("create_mob")
-			if (src.level >= LEVEL_PA) // Moved from SG to PA. They can do this through build mode anyway (Convair880).
+			if (src.level >= LEVEL_SA)
 				create_mob(usr)
 			else
 				alert("You need to be at least a Primary Administrator to create mobs.")
@@ -2092,7 +2115,7 @@ var/global/noir = 0
 
 					var/ircmsg[] = new()
 					ircmsg["key"] = usr.client.key
-					ircmsg["name"] = (usr?.real_name) ? usr.real_name : "NULL"
+					ircmsg["name"] = (usr?.real_name) ? stripTextMacros(usr.real_name) : "NULL"
 					ircmsg["msg"] = "has removed [C]'s adminship"
 					ircbot.export("admin", ircmsg)
 
@@ -2107,7 +2130,7 @@ var/global/noir = 0
 
 					var/ircmsg[] = new()
 					ircmsg["key"] = usr.client.key
-					ircmsg["name"] = (usr?.real_name) ? usr.real_name : "NULL"
+					ircmsg["name"] = (usr?.real_name) ? stripTextMacros(usr.real_name) : "NULL"
 					ircmsg["msg"] = "has made [C] a [rank]"
 					ircbot.export("admin", ircmsg)
 
@@ -2117,8 +2140,8 @@ var/global/noir = 0
 				alert("You need to be at least a Primary Adminstrator to promote or demote.")
 
 		if ("object_list")
-			if (src.level >= LEVEL_PA)
-				if (config.allow_admin_spawning && (src.state == 2 || src.level >= LEVEL_PA))
+			if (src.level >= LEVEL_SA)
+				if (config.allow_admin_spawning && (src.state == 2 || src.level >= LEVEL_SA))
 					var/atom/loc = usr.loc
 
 					var/type = href_list["type"]
@@ -2136,7 +2159,7 @@ var/global/noir = 0
 							removed_paths += dirty_path
 						else if (!ispath(path, /obj) && !ispath(path, /turf) && !ispath(path, /mob))
 							removed_paths += dirty_path
-						else if (ispath(path, /mob) && src.level < LEVEL_PA)
+						else if (ispath(path, /mob) && src.level < LEVEL_SA)
 							removed_paths += dirty_path
 						else
 							paths += path
@@ -4030,7 +4053,7 @@ var/global/noir = 0
 			dat += "<b>Force players to use random appearances:</b> <A href='?src=\ref[src];action=secretsfun;type=forcerandomlooks'>[force_random_looks ? "Yes" : "No"]</a><br>"
 			//dat += "<A href='?src=\ref[src];action=secretsfun;type=forcerandomnames'>Politely suggest all players use random names</a>" // lol
 
-	if (src.level >= LEVEL_PA)
+	if (src.level >= LEVEL_SA)
 		dat += "<hr>"
 		dat += "<A href='?src=\ref[src];action=create_object'>Create Object</A><br>"
 		dat += "<A href='?src=\ref[src];action=create_turf'>Create Turf</A><br>"
@@ -4206,7 +4229,7 @@ var/global/noir = 0
 
 		var/ircmsg[] = new()
 		ircmsg["key"] = usr.client.key
-		ircmsg["name"] = (usr?.real_name) ? usr.real_name : "NULL"
+		ircmsg["name"] = (usr?.real_name) ? stripTextMacros(usr.real_name) : "NULL"
 		ircmsg["msg"] = "manually restarted the server."
 		ircbot.export("admin", ircmsg)
 
@@ -4286,7 +4309,7 @@ var/global/noir = 0
 
 		var/ircmsg[] = new()
 		ircmsg["key"] = (usr?.client) ? usr.client.key : "NULL"
-		ircmsg["name"] = (usr?.real_name) ? usr.real_name : "NULL"
+		ircmsg["name"] = (usr?.real_name) ? stripTextMacros(usr.real_name) : "NULL"
 		ircmsg["msg"] = "has delayed the server restart."
 		ircbot.export("admin", ircmsg)
 
@@ -4299,7 +4322,7 @@ var/global/noir = 0
 
 		var/ircmsg[] = new()
 		ircmsg["key"] = (usr?.client) ? usr.client.key : "NULL"
-		ircmsg["name"] = (usr?.real_name) ? usr.real_name : "NULL"
+		ircmsg["name"] = (usr?.real_name) ? stripTextMacros(usr.real_name) : "NULL"
 		ircmsg["msg"] = "has removed the server restart delay."
 		ircbot.export("admin", ircmsg)
 
@@ -4487,6 +4510,11 @@ var/global/noir = 0
 				M.mind.special_role = "grinch"
 				M.make_grinch()
 				M.show_text("<h2><font color=red><B>You have become a grinch!</B></font></h2>", "red")
+			if("floor_goblin")
+				M.mind.special_role = "floor_goblin"
+				M.make_floor_goblin()
+				SHOW_TRAITOR_HARDMODE_TIPS(M)
+				M.show_text("<h2><font color=red><B>You have become a floor goblin!</B></font></h2>", "red")
 			if("gang leader")
 				// hi so this tried in the past to make someone a gang leader without, uh, giving them a gang
 				// seeing as gang leaders are only allowed during the gang gamemode, this should work
@@ -4589,8 +4617,12 @@ var/global/noir = 0
 
 	return chosen
 
-/proc/get_matches(var/object, var/base = /atom)
-	var/list/types = concrete_typesof(base)
+/proc/get_matches(var/object, var/base = /atom, use_concrete_types = TRUE)
+	var/list/types
+	if(use_concrete_types)
+		types = concrete_typesof(base)
+	else
+		types = childrentypesof(base)
 
 	var/list/matches = new()
 
@@ -4598,24 +4630,24 @@ var/global/noir = 0
 		if(findtext("[path]", object))
 			matches += path
 
-	return matches
+	. = matches
 
-/proc/get_one_match(var/object, var/base = /atom)
-	var/list/matches = get_matches(object, base)
+/proc/get_one_match(var/object, var/base = /atom, use_concrete_types = TRUE)
+	var/list/matches = get_matches(object, base, use_concrete_types)
 
-	if(matches.len==0)
+	if(!matches.len)
 		return null
 
 	var/chosen
-	if(matches.len==1)
+	if(matches.len == 1)
 		chosen = matches[1]
 	else
 		var/safe_matches = matches - list(/database, /client, /icon, /sound, /savefile)
-		chosen = input("Select an atom type", "Matches for pattern", null) as null|anything in safe_matches
+		chosen = tgui_input_list(usr, "Select an atom type", "Matches for pattern", safe_matches)
 		if(!chosen)
 			return null
 
-	return chosen
+	. = chosen
 
 /datum/admins/proc/spawn_atom(var/object as text)
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
@@ -4624,8 +4656,10 @@ var/global/noir = 0
 	if(!object)
 		return
 
-	if (usr.client.holder.level >= LEVEL_PA)
-		var/chosen = get_one_match(object)
+	var/client/client = usr.client
+
+	if (client.holder.level >= LEVEL_PA)
+		var/chosen = get_one_match(object, use_concrete_types = FALSE)
 
 		if (chosen)
 			if (ispath(chosen, /turf))
@@ -4634,11 +4668,11 @@ var/global/noir = 0
 					location.ReplaceWith(chosen, handle_air = 0)
 			else
 				var/atom/movable/A
-				if (usr.client.holder.spawn_in_loc)
+				if (client.holder.spawn_in_loc)
 					A = new chosen(usr.loc)
 				else
 					A = new chosen(get_turf(usr))
-				if (usr.client.flourish)
+				if (client.flourish)
 					spawn_animation1(A)
 			logTheThing("admin", usr, null, "spawned [chosen] at ([showCoords(usr.x, usr.y, usr.z)])")
 			logTheThing("diary", usr, null, "spawned [chosen] at ([showCoords(usr.x, usr.y, usr.z, 1)])", "admin")
@@ -4727,6 +4761,13 @@ var/global/noir = 0
 	else
 		built += "<a href='?src=\ref[src];target=\ref[C];action=mh_mute'>Mentorhelp Mute</a><br/>"
 		logTheThing("admin", src, C, "muted [constructTarget(C,"admin")] from mentorhelping.")
+
+	if(C.cloud_get( "prayer_banner" ))
+		built += "<a href='?src=\ref[src];target=\ref[C];action=pr_unmute' class='alert'>Prayer Mute</a> (Last by [C.cloud_get( "prayer_banner" )])<br/>"
+		logTheThing("admin", src, C, "unmuted [constructTarget(C,"admin")] from praying.")
+	else
+		built += "<a href='?src=\ref[src];target=\ref[C];action=pr_mute'>Prayer Mute</a><br/>"
+		logTheThing("admin", src, C, "muted [constructTarget(C,"admin")] from praying.")
 
 	usr.Browse(built, "window=chatban;size=500x100")
 
@@ -4954,7 +4995,7 @@ var/global/noir = 0
 	set popup_menu = 0
 	if (!M) return
 
-	if (!forced && alert(src, "Respawn [M]?", "Confirmation", "Yes", "No") != "Yes")
+	if (!forced && tgui_alert(src, "Respawn [M]?", "Confirmation", list("Yes", "No")) != "Yes")
 		return
 
 	logTheThing("admin", src, M, "respawned [constructTarget(M,"admin")]")

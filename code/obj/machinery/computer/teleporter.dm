@@ -6,9 +6,9 @@
 	var/id = null
 	desc = "A computer that sets which beacon the connected teleporter attempts to create a portal to."
 
-	lr = 1
-	lg = 0.3
-	lb = 0.9
+	light_r =1
+	light_g = 0.3
+	light_b = 0.9
 
 /obj/machinery/computer/teleporter/New()
 	src.id = text("[]", rand(1000, 9999))

@@ -122,7 +122,7 @@
 
 /proc/lootbox(var/mob/user, var/obj_path)
 	var/mob/living/carbon/human/H = user
-	if(istype(H)) H.hud.add_screen(new/obj/screen/lootcrateicon/crate(user, obj_path))
+	if(istype(H)) H.hud.add_screen(new/atom/movable/screen/lootcrateicon/crate(user, obj_path))
 	return
 
 /proc/makeRandomLootTrash()
@@ -226,7 +226,7 @@
 
 	return I
 
-/obj/screen/lootcratepreview
+/atom/movable/screen/lootcratepreview
 	icon = null
 	screen_loc = "1,1"
 	name = ""
@@ -241,7 +241,7 @@
 			filters += filter(type="drop_shadow", x=0, y=0, size=5, offset=0, color=rgb(240,202,133))
 		..()
 
-/obj/screen/lootcrateicon
+/atom/movable/screen/lootcrateicon
 	icon = 'icons/effects/320x320.dmi'
 	screen_loc = "1,1"
 	name = ""
@@ -287,9 +287,9 @@
 				else
 					AM = makeRandomLootTrash()
 				if(istype(H))
-					var/obj/screen/lootcrateicon/background/B = new/obj/screen/lootcrateicon/background(src)
-					var/obj/screen/lootcrateicon/sparks/S = new/obj/screen/lootcrateicon/sparks(src)
-					var/obj/screen/lootcratepreview/P = new/obj/screen/lootcratepreview(src)
+					var/atom/movable/screen/lootcrateicon/background/B = new/atom/movable/screen/lootcrateicon/background(src)
+					var/atom/movable/screen/lootcrateicon/sparks/S = new/atom/movable/screen/lootcrateicon/sparks(src)
+					var/atom/movable/screen/lootcratepreview/P = new/atom/movable/screen/lootcratepreview(src)
 					P.icon = AM.icon
 					P.icon_state = AM.icon_state
 					P.color = AM.color

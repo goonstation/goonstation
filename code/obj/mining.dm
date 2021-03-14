@@ -26,19 +26,19 @@
 		..()
 
 	attackby(obj/item/W as obj, mob/user as mob)
+		#ifndef UNDERWATER_MAP
 		if (istype(W,/obj/item/magnet_parts))
 			if (istype(src.linked_magnet))
 				boutput(user, "<span class='alert'>There's already a magnet installed.</span>")
 				return
 			user.visible_message("<b>[user]</b> begins constructing a new magnet.")
-			var/turf/T = get_turf(user)
-			sleep(24 SECONDS)
-			if (user.loc == T && user.equipped() == W && !user.stat)
+			if (do_after(user, 24 SECONDS) && user.equipped() == W)
 				var/obj/magnet = new W:constructed_magnet(get_turf(src))
 				magnet.set_dir(src.dir)
 				qdel(W)
 		else
 			..()
+		#endif
 
 	ex_act()
 		return
@@ -60,6 +60,7 @@
 			src.bound_height = 32
 			src.bound_width = 64
 
+#ifndef UNDERWATER_MAP
 /obj/item/magnet_parts
 	name = "mineral magnet parts"
 	desc = "Used to construct a new magnet on a magnet chassis."
@@ -73,6 +74,7 @@
 	small
 		name = "small mineral magnet parts"
 		constructed_magnet = /obj/machinery/mining_magnet/construction/small
+#endif
 
 /obj/magnet_target_marker
 	name = "mineral magnet target"
@@ -104,7 +106,7 @@
 					qdel(O)
 			T.overlays.len = 0
 			if (!istype(T, /turf/space))
-				new /turf/space(T)
+				T.ReplaceWithSpaceForce()
 
 	proc/generate_walls()
 		var/list/walls = list()
@@ -474,7 +476,7 @@
 
 		if (isweldingtool(W))
 			if (src.health < 50)
-				boutput(usr, "<span class='alert'>You need to use wire to fix the cabling first.</span>")
+				boutput(user, "<span class='alert'>You need to use wire to fix the cabling first.</span>")
 				return
 			if(W:try_weld(user, 1))
 				src.damage(-10)
@@ -486,7 +488,7 @@
 		else if (istype(W,/obj/item/cable_coil/))
 			var/obj/item/cable_coil/C = W
 			if (src.health > 50)
-				boutput(usr, "<span class='alert'>The cabling looks fine. Use a welder to repair the rest of the damage.</span>")
+				boutput(user, "<span class='alert'>The cabling looks fine. Use a welder to repair the rest of the damage.</span>")
 				return
 			C.use(1)
 			src.damage(-10)
@@ -686,8 +688,8 @@
 			override_text = "Disable Cooldown Override"
 		dat += "<A href='?src=\ref[src];override_cooldown=1'>[override_text]</A><BR>"
 		dat += "<BR><A href='?action=mach_close&window=computer'>Close</A>"
-		usr.Browse(dat, "window=computer;size=300x400")
-		onclose(usr, "computer")
+		user.Browse(dat, "window=computer;size=300x400")
+		onclose(user, "computer")
 		return null
 
 	Topic(href, href_list)
@@ -794,6 +796,7 @@
 	var/obj/machinery/mining_magnet/linked_magnet = null
 	req_access = list(access_engineering_chief)
 	object_flags = CAN_REPROGRAM_ACCESS
+	can_reconnect = 1 //IDK why you'd want to but for consistency's sake
 
 	New()
 		..()
@@ -833,7 +836,7 @@
 					A.anchored = 1
 					qdel(src)
 		else
-			src.attack_hand(user)
+			..()
 		return
 
 	attack_hand(var/mob/user as mob)
@@ -865,7 +868,7 @@
 		if(..())
 			return
 
-		if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
+		if ((usr.contents.Find(src) || (in_interact_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
 			src.add_dialog(usr)
 
 		src.add_fingerprint(usr)
@@ -891,25 +894,30 @@
 		src.updateUsrDialog()
 		return
 
-	proc/connection_scan()
-		linked_magnets = list()
-		var/badmagnets = 0
-		for (var/obj/machinery/magnet_chassis/MC in range(20,src))
-			if (MC.linked_magnet)
-				linked_magnets += MC.linked_magnet
-			else
-				badmagnets++
-		if (linked_magnets.len)
-			return 0
-		if (badmagnets)
-			return 1
-		return 2
+/obj/machinery/computer/magnet/connection_scan()
+	linked_magnets = list()
+	var/badmagnets = 0
+	for (var/obj/machinery/magnet_chassis/MC in range(20,src))
+		if (MC.linked_magnet)
+			linked_magnets += MC.linked_magnet
+		else
+			badmagnets++
+	if (linked_magnets.len)
+		return 0
+	if (badmagnets)
+		return 1
+	return 2
 
 // Turf Defines
 
 /turf/simulated/wall/asteroid
+#ifdef UNDERWATER_MAP
+	name = "cavern wall"
+	desc = "A cavern wall, possibly flowing with mineral deposits."
+#else
 	name = "asteroid"
 	desc = "A free-floating mineral deposit from space."
+#endif
 	icon = 'icons/turf/asteroid.dmi'
 	icon_state = "ast1"
 	plane = PLANE_FLOOR
@@ -942,13 +950,8 @@
 	fullbright = 1
 #endif
 
-	trench
-		name = "cavern wall"
-		desc = "A cavern wall, possibly flowing with mineral deposits."
-		space_overlays()
-			return
-		build_icon()
-			return
+	consider_superconductivity(starting)
+		return FALSE
 
 	dark
 		fullbright = 0
@@ -1047,11 +1050,16 @@
 
 
 
-	New(var/loc,var/do_overlays_now = 1)
+	New(var/loc)
 		src.icon_state = pick("ast1","ast2","ast3")
 		..()
-		if (do_overlays_now)
-			src.space_overlays()
+		worldgenCandidates += src
+		if(current_state <= GAME_STATE_PREGAME)
+			src.build_icon()
+
+	generate_worldgen()
+		. = ..()
+		src.space_overlays()
 
 	ex_act(severity)
 		switch(severity)
@@ -1170,17 +1178,23 @@
 		return
 
 	proc/build_icon(var/wipe_overlays = 0)
+		/*
 		if (wipe_overlays)
 			src.overlays = list()
 		var/image/coloration = image(src.icon,"color_overlay")
 		coloration.blend_mode = 4
 		coloration.color = src.stone_color
 		src.overlays += coloration
+		*/
+		src.color = src.stone_color
 
 	proc/space_overlays()
 		for (var/turf/space/A in orange(src,1))
 			var/image/edge_overlay = image('icons/turf/asteroid.dmi', "edge[get_dir(A,src)]")
+			edge_overlay.appearance_flags = PIXEL_SCALE | TILE_BOUND | RESET_COLOR | RESET_ALPHA
 			edge_overlay.layer = src.layer + 1
+			edge_overlay.plane = PLANE_FLOOR
+			edge_overlay.layer = TURF_EFFECTS_LAYER
 			edge_overlay.color = src.stone_color
 			A.overlays += edge_overlay
 			src.space_overlays += edge_overlay
@@ -1350,8 +1364,9 @@
 	temperature = TCMB
 	step_material = "step_plating"
 	step_priority = STEP_PRIORITY_MED
+	has_material = FALSE
 	var/sprite_variation = 1
-	var/stone_color = null
+	var/stone_color = "#CCCCCC"
 	var/image/coloration_overlay = null
 	var/list/space_overlays = list()
 	turf_flags = MOB_SLIP | MOB_STEP | IS_TYPE_SIMULATED | FLUID_MOVE
@@ -1381,12 +1396,17 @@
 
 	New()
 		..()
+		src.name = initial(src.name)
 		src.sprite_variation = rand(1,3)
 		icon_state = "astfloor" + "[sprite_variation]"
 		coloration_overlay = image(src.icon,"color_overlay")
 		coloration_overlay.blend_mode = 4
 		update_icon()
-		space_overlays()
+		worldgenCandidates += src
+
+	generate_worldgen()
+		. = ..()
+		src.space_overlays()
 
 	ex_act(severity)
 		return
@@ -1406,33 +1426,37 @@
 
 	update_icon()
 		src.overlays = list()
+		/*
 		if (!coloration_overlay)
 			coloration_overlay = image(src.icon, "color_overlay")
 		coloration_overlay.color = src.stone_color
 		src.overlays += coloration_overlay
-		SPAWN_DBG(1 DECI SECOND)
+		*/
+		src.color = src.stone_color
+		#ifndef UNDERWATER_MAP
+		if (fullbright)
+			src.overlays += /image/fullbright //Fixes perma-darkness
+		#endif
+		SPAWN_DBG(0)
 			if (istype(src)) //Wire note: just roll with this ok
 				for (var/turf/simulated/wall/asteroid/A in orange(src,1))
 					src.apply_edge_overlay(get_dir(src, A))
 				for (var/turf/space/A in orange(src,1))
 					src.apply_edge_overlay(get_dir(src, A))
 
-				#ifdef UNDERWATER_MAP //FUCK THIS SHIT. NO FULLBRIGHT ON THE MINING LEVEL, I DONT CARE.
-				if (z == AST_ZLEVEL) return
-				#endif
-				if (fullbright)
-					src.overlays += /image/fullbright //Fixes perma-darkness
-
 	proc/apply_edge_overlay(var/thedir) //For overlays ON THE FLOOR TILE
 		var/image/dig_overlay = image('icons/turf/asteroid.dmi', "edge[thedir]")
 		dig_overlay.color = src.stone_color
+		dig_overlay.appearance_flags = PIXEL_SCALE | TILE_BOUND | RESET_COLOR | RESET_ALPHA
 		//dig_overlay.layer = src.layer + 1
 		src.overlays += dig_overlay
 
 	proc/space_overlays() //For overlays ON THE SPACE TILE
 		for (var/turf/space/A in orange(src,1))
 			var/image/edge_overlay = image('icons/turf/asteroid.dmi', "edge[get_dir(A,src)]")
-			//edge_overlay.layer = src.layer + 1
+			edge_overlay.appearance_flags = PIXEL_SCALE | TILE_BOUND | RESET_COLOR | RESET_ALPHA
+			edge_overlay.plane = PLANE_FLOOR
+			edge_overlay.layer = TURF_EFFECTS_LAYER
 			edge_overlay.color = src.stone_color
 			A.overlays += edge_overlay
 			src.space_overlays += edge_overlay
@@ -1889,9 +1913,10 @@ obj/item/clothing/gloves/concussive
 			return
 		if (!cargopads.len) boutput(usr, "<span class='alert'>No receivers available.</span>")
 		else
-		//here i set up an empty var that can take any object, and tell it to look for absolutely anything in the list
+			var/holder = src.loc
+			//here i set up an empty var that can take any object, and tell it to look for absolutely anything in the list
 			var/selection = input("Select Cargo Pad Location:", "Cargo Pads", null, null) as null|anything in cargopads
-			if(!selection)
+			if (src.loc != holder || !selection)
 				return
 			var/turf/T = get_turf(selection)
 			//get the turf of the pad itself
@@ -2117,16 +2142,16 @@ obj/item/clothing/gloves/concussive
 
 				src.cell = null
 			else if (action == "Change the destination")
-				if (!cargopads.len) boutput(usr, "<span class='alert'>No receivers available.</span>")
+				if (!cargopads.len) boutput(user, "<span class='alert'>No receivers available.</span>")
 				else
 					var/selection = input("Select Cargo Pad Location:", "Cargo Pads", null, null) as null|anything in cargopads
 					if(!selection)
 						return
 					var/turf/T = get_turf(selection)
 					if (!T)
-						boutput(usr, "<span class='alert'>Target not set!</span>")
+						boutput(user, "<span class='alert'>Target not set!</span>")
 						return
-					boutput(usr, "Target set to [T.loc].")
+					boutput(user, "Target set to [T.loc].")
 					src.target = T
 			else if (action == "Flip the power switch")
 				if (!src.active)
@@ -2348,7 +2373,7 @@ var/global/list/cargopads = list()
 	icon_state = "ancient"
 
 	attackby(obj/item/W as obj, mob/user as mob)
-		boutput(usr, "<span class='combat'>You attack [src] with [W] but fail to even make a dent!</span>")
+		boutput(user, "<span class='combat'>You attack [src] with [W] but fail to even make a dent!</span>")
 		return
 
 	ex_act(severity)
@@ -2368,7 +2393,7 @@ var/global/list/cargopads = list()
 	step_priority = STEP_PRIORITY_MED
 
 	attackby(obj/item/W as obj, mob/user as mob)
-		boutput(usr, "<span class='combat'>You attack [src] with [W] but fail to even make a dent!</span>")
+		boutput(user, "<span class='combat'>You attack [src] with [W] but fail to even make a dent!</span>")
 		return
 
 	ex_act(severity)
@@ -2382,7 +2407,7 @@ var/global/list/cargopads = list()
 	step_priority = STEP_PRIORITY_MED
 
 	attackby(obj/item/W as obj, mob/user as mob)
-		boutput(usr, "<span class='combat'>You attack [src] with [W] but fail to even make a dent!</span>")
+		boutput(user, "<span class='combat'>You attack [src] with [W] but fail to even make a dent!</span>")
 		return
 
 	ex_act(severity)

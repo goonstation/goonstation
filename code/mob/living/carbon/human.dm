@@ -42,7 +42,6 @@
 	var/image/fire_standing = null
 	//var/image/face_standing = null
 	var/image/hands_standing = null
-	var/list/inhands_standing = list()
 
 	var/image/body_damage_standing = null
 	var/image/head_damage_standing = null
@@ -93,6 +92,8 @@
 	var/uses_damage_overlays = 1 //If set to 0, the mob won't receive any damage overlays.
 
 	var/datum/mutantrace/mutantrace = null
+	/// used by werewolf TF to store and restore what you were before TFing into a werewolf
+	var/datum/mutantrace/coreMR = null // There are two wolves inside you. One's a wolf, the other's probably some kind of lizard. Also one's actually you, and they trade places Hannah Montana style
 
 	var/emagged = 0 //What the hell is wrong with me?
 	var/spiders = 0 // SPIDERS
@@ -112,6 +113,7 @@
 	var/ai_default_intent = INTENT_DISARM
 	var/ai_calm_down = 0 // do we chill out after a while?
 	var/ai_picking_pocket = 0
+	var/ai_offhand_pickup_chance = 50
 
 	max_health = 100
 
@@ -232,6 +234,7 @@
 	src.update_body()
 	src.update_face()
 	src.UpdateDamageIcon()
+	START_TRACKING
 
 	// for pope
 	if (microbombs_4_everyone)
@@ -485,6 +488,8 @@
 			hud.master = null
 		hud.inventory_bg = null
 		hud.inventory_items = null
+		qdel(hud)
+	STOP_TRACKING
 
 
 	for(var/obj/item/implant/imp in src.implant)
@@ -604,7 +609,7 @@
 		return
 
 	//Zombies just rise again (after a delay)! Oh my!
-	if (src.mutantrace && src.mutantrace.onDeath())
+	if (src.mutantrace && src.mutantrace.onDeath(gibbed))
 		return
 
 	if (src.bioHolder && src.bioHolder.HasEffect("revenant"))
@@ -685,7 +690,7 @@
 
 	if (istype(src.wear_suit, /obj/item/clothing/suit/armor/suicide_bomb))
 		var/obj/item/clothing/suit/armor/suicide_bomb/A = src.wear_suit
-		A.trigger(src)
+		INVOKE_ASYNC(A, /obj/item/clothing/suit/armor/suicide_bomb.proc/trigger, src)
 
 	src.time_until_decomposition = rand(4 MINUTES, 10 MINUTES)
 
@@ -697,6 +702,9 @@
 			remove_mindslave_status(src, "vthrall", "death")
 		else if (src.mind.master)
 			remove_mindslave_status(src, "otherslave", "death")
+#ifdef DATALOGGER
+		game_stats.Increment("playerdeaths")
+#endif
 
 	logTheThing("combat", src, null, "dies [log_health(src)] at [log_loc(src)].")
 	//src.icon_state = "dead"
@@ -769,7 +777,7 @@
 	if (!antag_removal && src.spell_soulguard)
 		boutput(src, "<span class='notice'>Your Soulguard enchantment activates and saves you...</span>")
 		//soulguard ring puts you in the same spot
-		if(istype(src.gloves, /obj/item/clothing/gloves/ring/wizard/teleport))
+		if(src.spell_soulguard == 2)	//istype(src.gloves, /obj/item/clothing/gloves/ring/wizard/teleport)
 			reappear_turf = get_turf(src)
 		else
 			reappear_turf = pick(job_start_locations["wizard"])
@@ -966,8 +974,6 @@
 	//	return
 
 	var/obj/item/I = src.equipped()
-	if("npc_throw" in params)
-		I = src.r_hand
 
 	if (!I || !isitem(I) || I.cant_drop) return
 
@@ -1300,6 +1306,7 @@
 	if (LinkBlocked(usr.loc,src.loc)) return
 	if (isAI(usr) || isAI(src)) return
 	if (isghostcritter(usr) && !isdead(src)) return
+	if(!isliving(usr)) return
 	src.show_inv(usr)
 
 /mob/living/carbon/human/verb/fuck()
@@ -1321,7 +1328,7 @@
 		if (G.state == GRAB_PIN)
 			canmove_or_pinning = 1
 
-	if (!usr.stat && canmove_or_pinning && !usr.restrained() && in_range(src, usr) && ticker && usr.can_strip(src))
+	if (!usr.stat && canmove_or_pinning && !usr.restrained() && in_interact_range(src, usr) && ticker && usr.can_strip(src))
 		if (href_list["slot"] == "handcuff")
 			actions.start(new/datum/action/bar/icon/handcuffRemovalOther(src), usr)
 		else if (href_list["slot"] == "internal")
@@ -1411,7 +1418,7 @@
 	if (src.stamina < STAMINA_WINDED_SPEAK_MIN && !ignore_stamina_winded)
 		//src.emote(pick("gasp", "choke", "cough"))
 		//boutput(src, "<span class='alert'>You are too exhausted to speak.</span>")
-		whisper(message)
+		whisper(message, forced=TRUE)
 		src.say_language = original_language
 		return
 
@@ -1468,7 +1475,7 @@
 	return ..(text,special)
 
 //Lallander was here
-/mob/living/carbon/human/whisper(message as text)
+/mob/living/carbon/human/whisper(message as text, forced=FALSE)
 	if (src.bioHolder.HasEffect("revenant"))
 		return src.say(message)
 	var/message_mode = null
@@ -1613,6 +1620,8 @@
 		processed = saylist(messages[2], heard_b, olocs, thickness, italics, processed, 1)
 
 	message = messages[1]
+	if(src.client && !forced)
+		phrase_log.log_phrase("whisper", message)
 	for (var/mob/M in eavesdropping)
 		if (M.say_understands(src, lang_id))
 			var/message_c = stars(message)
@@ -1650,7 +1659,7 @@
 	for (var/mob/M in mobs)
 		if (istype(M, /mob/new_player))
 			continue
-		if (M.stat > 1 && !(M in heard_a) && !istype(M, /mob/dead/target_observer))
+		if (M.stat > 1 && !(M in heard_a) && !istype(M, /mob/dead/target_observer) && !(M?.client?.preferences?.local_deadchat))
 			M.show_message(rendered, 2)
 
 	//mbc FUCK why doesn't this have any parent to call
@@ -1857,6 +1866,15 @@
 				src.r_hand = I
 	src.update_inhands()
 	return 1
+
+/mob/living/carbon/human/has_any_hands()
+	. = ..()
+	if (src.limbs && src.limbs.l_arm && !istype(src.limbs.l_arm, /obj/item/parts/human_parts/arm/left/item))
+		. = TRUE
+	else if (src.limbs && src.limbs.r_arm && !istype(src.limbs.r_arm, /obj/item/parts/human_parts/arm/right/item))
+		. = TRUE
+	else if (istype(src.l_hand, /obj/item/magtractor) || istype(src.r_hand, /obj/item/magtractor))
+		. = TRUE
 
 /mob/living/carbon/human/put_in_hand(obj/item/I, hand)
 	if (!istype(I))
@@ -2137,7 +2155,7 @@
 		if (slot_wear_mask) // It's not pretty, but the mutantrace check will do for the time being (Convair880).
 			if (istype(I, /obj/item/clothing/mask))
 				var/obj/item/clothing/M = I
-				if ((src.mutantrace && !src.mutantrace.uses_human_clothes && !M.compatible_species.Find(src.mutantrace.name)) || (!ismonkey(src) && M.monkey_clothes))
+				if ((src.mutantrace && !src.mutantrace.uses_human_clothes && !M.compatible_species.Find(src.mutantrace.name)))
 					//DEBUG_MESSAGE("[src] can't wear [I].")
 					return 0
 				else
@@ -2154,7 +2172,7 @@
 		if (slot_head)
 			if (istype(I, /obj/item/clothing/head))
 				var/obj/item/clothing/H = I
-				if ((src.mutantrace && !src.mutantrace.uses_human_clothes && !H.compatible_species.Find(src.mutantrace.name)) || (!ismonkey(src) && H.monkey_clothes))
+				if ((src.mutantrace && !src.mutantrace.uses_human_clothes && !(src.mutantrace.name in H.compatible_species)))
 					//DEBUG_MESSAGE("[src] can't wear [I].")
 					return 0
 				else
@@ -2162,7 +2180,7 @@
 		if (slot_shoes)
 			if (istype(I, /obj/item/clothing/shoes))
 				var/obj/item/clothing/SH = I
-				if ((src.mutantrace && !src.mutantrace.uses_human_clothes && !SH.compatible_species.Find(src.mutantrace.name)) || (!ismonkey(src) && SH.monkey_clothes))
+				if ((src.mutantrace && !src.mutantrace.uses_human_clothes && !(src.mutantrace.name in SH.compatible_species)))
 					//DEBUG_MESSAGE("[src] can't wear [I].")
 					return 0
 				else
@@ -2170,7 +2188,7 @@
 		if (slot_wear_suit)
 			if (istype(I, /obj/item/clothing/suit))
 				var/obj/item/clothing/SU = I
-				if ((src.mutantrace && !src.mutantrace.uses_human_clothes && !SU.compatible_species.Find(src.mutantrace.name)) || (!ismonkey(src) && SU.monkey_clothes))
+				if ((src.mutantrace && !src.mutantrace.uses_human_clothes && !(src.mutantrace.name in SU.compatible_species)))
 					//DEBUG_MESSAGE("[src] can't wear [I].")
 					return 0
 				else
@@ -2178,7 +2196,7 @@
 		if (slot_w_uniform)
 			if (istype(I, /obj/item/clothing/under))
 				var/obj/item/clothing/U = I
-				if ((src.mutantrace && !src.mutantrace.uses_human_clothes && !U.compatible_species.Find(src.mutantrace.name)) || (!ismonkey(src) && U.monkey_clothes))
+				if ((src.mutantrace && !src.mutantrace.uses_human_clothes && !(src.mutantrace.name in U.compatible_species)))
 					//DEBUG_MESSAGE("[src] can't wear [I].")
 					return 0
 				else
@@ -2211,14 +2229,22 @@
 		return 0
 
 /mob/living/carbon/human/swap_hand(var/specify=-1)
+	if(src.hand == specify)
+		return
 	var/obj/item/grab/block/B = src.check_block(ignoreStuns = 1)
-	if(B && hand != specify)
+	if(B)
 		qdel(B)
+	var/obj/item/old = src.equipped()
 	if (specify >= 0)
 		src.hand = specify
 	else
 		src.hand = !src.hand
 	hud.update_hands()
+	if(old != src.equipped())
+		if(old)
+			SEND_SIGNAL(old, COMSIG_ITEM_SWAP_AWAY, src)
+		if(src.equipped())
+			SEND_SIGNAL(src.equipped(), COMSIG_ITEM_SWAP_TO, src)
 	if(src.equipped() && (src.equipped().item_function_flags & USE_INTENT_SWITCH_TRIGGER) && !src.equipped().two_handed)
 		src.equipped().intent_switch_trigger(src)
 
@@ -2344,6 +2370,22 @@
 	if (P.pathogen_uid in src.immunities)
 		return 0
 	if (!(P.pathogen_uid in src.pathogens))
+		var/maxTierExisting = 0
+		for (var/uid in src.pathogens)
+			var/datum/pathogen/PA = src.pathogens[uid]
+			maxTierExisting = max(maxTierExisting, PA.getHighestTier())
+		var/maxTierNew = P.getHighestTier()
+
+		// thanks, we already got strong pathogen, go away
+		if(maxTierNew <= maxTierExisting)
+			return 0
+
+		// wow, strong pathogen, let's kick out all the other ones
+		for (var/uid in src.pathogens)
+			var/datum/pathogen/PA = src.pathogens[uid]
+			src.cured(PA)
+
+		// and get the new one instead
 		var/datum/pathogen/Q = unpool(/datum/pathogen)
 		Q.setup(0, P, 1)
 		pathogen_controller.mob_infected(Q, src)
@@ -2533,7 +2575,7 @@
 		playsound(src.loc, 'sound/impact_sounds/Slimy_Hit_4.ogg', 100, 1)
 		SPAWN_DBG(1 SECOND)
 			make_cleanable(/obj/decal/cleanable/vomit/spiders,src.loc)
-			for (var/I = 0, I < 4, I++)
+			for (var/i in 1 to 4)
 				new /obj/critter/spider/baby(src.loc)
 
 	if (src.mind || src.client)
@@ -2674,7 +2716,7 @@
 	for (var/atom/movable/A in contents)
 		if (A in processed)
 			continue
-		if (istype(A, /obj/screen)) // maybe people will stop gibbing out their stamina bars now  :|
+		if (istype(A, /atom/movable/screen)) // maybe people will stop gibbing out their stamina bars now  :|
 			continue
 		if (prob(dump_contents_chance) || istype(A, /obj/item/reagent_containers/food/snacks/shell)) //For dudes who got fried and eaten so they eject -ZeWaka
 			ret += A
@@ -2842,10 +2884,7 @@
 	return .
 
 /mob/living/carbon/human/Bump(atom/movable/AM as mob|obj, yes)
-	//Could just do a wearing_football_gear() check here, but I don't wanna deal with proc call overhead on every Bump()
-	if ( (src.wear_suit && istype(src.wear_suit,/obj/item/clothing/suit/armor/football)) \
-			&& (src.shoes && istype(src.shoes,/obj/item/clothing/shoes/cleats)) \
-			&& (src.w_uniform && istype(src.w_uniform,/obj/item/clothing/under/football)) )
+	if (wearing_football_gear())
 		src.tackle(AM)
 	..()
 
@@ -3169,7 +3208,7 @@
 						if (priority > 0)
 							priority = "[NewLoc.step_material]"
 						else if (priority < 0)
-							priority = src.shoes ? src.shoes.step_sound : "step_barefoot"
+							priority = src.shoes ? src.shoes.step_sound : (src.mutantrace && src.mutantrace.step_override ? src.mutantrace.step_override : "step_barefoot")
 
 						playsound(NewLoc, priority, src.m_intent == "run" ? 65 : 40, 1, extrarange = 3)
 
@@ -3250,7 +3289,7 @@
 		if (T.turf_flags & CAN_BE_SPACE_SAMPLE)
 			. -= space_movement
 
-		if (!(src.mutantrace && src.mutantrace.aquatic))
+		if (!(src.mutantrace && src.mutantrace.aquatic) && !src.hasStatus("aquabreath"))
 			if (aquatic_movement > 0)
 				if (T.active_liquid || T.turf_flags & FLUID_MOVE)
 					. -= aquatic_movement
@@ -3281,7 +3320,7 @@
 	if(((src.in_throw_mode && src.a_intent == "help") || src.client?.check_key(KEY_THROW)) && !src.equipped())
 		if((src.hand && (!src.limbs.l_arm)) || (!src.hand && (!src.limbs.r_arm)) || src.hasStatus("handcuffed") || (prob(60) && src.bioHolder.HasEffect("clumsy")) || ismob(AM) || (thr?.get_throw_travelled() <= 1 && AM.last_throw_x == AM.x && AM.last_throw_y == AM.y))
 			src.visible_message("<span class='alert'>[src] has been hit by [AM].</span>")
-			logTheThing("combat", src, thr.user, "is struck by [AM] [AM.is_open_container() ? "[log_reagents(AM)]" : ""] at [log_loc(src)] (likely thrown by [thr?.user ? thr.user : "a non-mob"]).")
+			logTheThing("combat", src, null, "is struck by [AM] [AM.is_open_container() ? "[log_reagents(AM)]" : ""] at [log_loc(src)] (likely thrown by [thr?.user ? thr.user : "a non-mob"]).")
 			random_brute_damage(src, AM.throwforce,1)
 			if(thr?.user)
 				src.was_harmed(thr.user, AM)

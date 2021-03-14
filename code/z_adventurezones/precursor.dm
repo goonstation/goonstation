@@ -979,7 +979,7 @@
 /obj/portrait_sneaky
 	name = "crooked portrait"
 	anchored = 1
-	icon = 'icons/obj/decals/misc.dmi'
+	icon = 'icons/obj/decals/wallsigns.dmi'
 	icon_state = "portrait"
 	desc = "A portrait of a man wearing a ridiculous merchant hat. That must be Discount Dan."
 

@@ -49,6 +49,7 @@
 		F["[profileNum]_screamsound"] << AH.screamsound
 		F["[profileNum]_voicetype"] << AH.voicetype
 		F["[profileNum]_PDAcolor"] << src.PDAcolor
+		F["[profileNum]_pda_ringtone_index"] << src.pda_ringtone_index
 		F["[profileNum]_random_blood"] << src.random_blood
 		F["[profileNum]_blood_type"] << src.blType
 
@@ -122,6 +123,7 @@
 		F["preferred_map"] << src.preferred_map
 		F["flying_chat_hidden"] << src.flying_chat_hidden
 		F["auto_capitalization"] << src.auto_capitalization
+		F["local_deachat"] << src.local_deadchat
 
 		if (returnSavefile)
 			return F
@@ -203,6 +205,7 @@
 		F["[profileNum]_screamsound"] >> AH.screamsound
 		F["[profileNum]_voicetype"] >> AH.voicetype
 		F["[profileNum]_PDAcolor"] >> src.PDAcolor
+		F["[profileNum]_pda_ringtone_index"] >> src.pda_ringtone_index
 		F["[profileNum]_random_blood"] >> src.random_blood
 		F["[profileNum]_blood_type"] >> src.blType
 
@@ -281,6 +284,7 @@
 		F["preferred_map"] >> src.preferred_map
 		F["flying_chat_hidden"] >> src.flying_chat_hidden
 		F["auto_capitalization"] >> src.auto_capitalization
+		F["local_deachat"] >> src.local_deadchat
 
 
 		if (isnull(src.name_first) || !length(src.name_first) || isnull(src.name_last) || !length(src.name_last))
@@ -297,6 +301,10 @@
 
 		if(!is_valid_color_string(src.PDAcolor)) //how?
 			src.PDAcolor = "#6F7961"
+		
+		get_all_character_setup_ringtones()
+		if(!(src.pda_ringtone_index in selectable_ringtones))
+			src.pda_ringtone_index = "Two-Beep"
 
 		if (!istext(src.hud_style))
 			src.hud_style = "New"
@@ -308,8 +316,8 @@
 		if (src.traitPreferences.traits_selected == null)
 			src.traitPreferences.traits_selected = list()
 
-		for (var/T in src.traitPreferences.traits_selected)
-			if (!traitList.Find(T)) src.traitPreferences.traits_selected.Remove(T)
+		for (var/T as() in src.traitPreferences.traits_selected)
+			if (!(T in traitList)) src.traitPreferences.traits_selected.Remove(T)
 
 		if (!src.traitPreferences.isValid())
 			src.traitPreferences.traits_selected.Cut()

@@ -477,7 +477,6 @@ var/linenums = 0
 				makepowernets()
 
 		//src.master = null
-		//SN src = null
 		qdel(src)
 		return
 
@@ -528,8 +527,6 @@ var/linenums = 0
 	//src.master = null
 	defer_powernet_rebuild = 0
 	makepowernets()
-
-	//SN src = null
 	qdel(src)
 	return
 */

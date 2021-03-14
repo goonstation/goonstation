@@ -255,6 +255,31 @@
 	heal_per_tick = 7 // decrease to 5 if extreme narcolepsy doesn't counterbalance this enough
 	regrow_prob = 50 //increase to 100 if not counterbalanced
 
+/datum/bioEffect/regenerator/wolf
+	name = "Lupine Regeneration"
+	desc = "Subject's cells are programmed to reshape itself into a canine form."
+	id = "regenerator_wolf"
+	occur_in_genepools = 0
+	probability = 0
+	scanner_visibility = 0
+	can_research = 0
+	can_make_injector = 0
+	can_copy = 0
+	can_reclaim = 0
+	can_scramble = 0
+	curable_by_mutadone = 0
+	stability_loss = 0
+	msgGain = "You feel oddly feral."
+	msgLose = "You feel more comfortable in your own skin."
+	heal_per_tick = 2
+	regrow_prob = 50
+
+	OnAdd()
+		. = ..()
+		if(ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			if(!istype(H.mutantrace, /datum/mutantrace/werewolf))
+				H.contract_disease(/datum/ailment/disease/lycanthropy,null,null,0) // awoo
 
 /datum/bioEffect/detox
 	name = "Natural Anti-Toxins"
@@ -537,11 +562,11 @@ var/list/radio_brains = list()
 	icon_state  = "strong"
 
 	OnAdd()
-		src.owner.add_stam_mod_regen("g-fitness-buff", 2)
+		APPLY_MOB_PROPERTY(src.owner, PROP_STAMINA_REGEN_BONUS, "g-fitness-buff", 2)
 		src.owner.add_stam_mod_max("g-fitness-buff", 30)
 
 	OnRemove()
-		src.owner.remove_stam_mod_regen("g-fitness-buff")
+		REMOVE_MOB_PROPERTY(src.owner, PROP_STAMINA_REGEN_BONUS, "g-fitness-buff")
 		src.owner.remove_stam_mod_max("g-fitness-buff")
 
 /datum/bioEffect/blood_overdrive

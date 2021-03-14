@@ -14,6 +14,13 @@ var/global/meteor_shower_active = 0
 	var/meteor_speed = 8
 	var/meteor_speed_variance = 4
 	var/list/valid_directions = list(NORTH, EAST, SOUTH, WEST)
+#ifdef UNDERWATER_MAP
+	var/shower_name = "cybershark attack"
+	var/meteor_type = /obj/newmeteor/massive/shark
+#else
+	var/shower_name = "meteor shower"
+	var/meteor_type = /obj/newmeteor/massive
+#endif
 
 	event_effect(var/source, var/amount, var/direction, var/delay, var/warning_time, var/speed)
 		..()
@@ -55,7 +62,7 @@ var/global/meteor_shower_active = 0
 		var/commins = round((ticker.round_elapsed_ticks + warning_delay - ticker.round_elapsed_ticks)/10 ,1)
 		commins = max(0,commins)
 		if (random_events.announce_events)
-			command_alert("[comsev] meteor shower approaching [comdir]. Impact in [commins] seconds.", "Meteor Alert")
+			command_alert("[comsev] [shower_name] approaching [comdir]. Impact in [commins] seconds.", "Meteor Alert")
 			world << 'sound/machines/engine_alert2.ogg'
 			meteor_shower_active = direction
 			for (var/obj/machinery/shield_generator/S as() in machine_registry[MACHINES_SHIELDGENERATORS])
@@ -63,7 +70,7 @@ var/global/meteor_shower_active = 0
 
 		SPAWN_DBG(warning_delay)
 			if (random_events.announce_events)
-				command_alert("The meteor shower has reached the [station_or_ship()]. Brace for impact.", "Meteor Alert")
+				command_alert("The [shower_name] has reached the [station_or_ship()]. Brace for impact.", "Meteor Alert")
 				world << 'sound/machines/engine_alert1.ogg'
 
 			var/start_x
@@ -108,7 +115,7 @@ var/global/meteor_shower_active = 0
 
 				var/turf/pickedstart = locate(start_x, start_y, 1)
 				var/target = locate(targ_x, targ_y, 1)
-				var/obj/newmeteor/massive/M = new /obj/newmeteor/massive(pickedstart,target)
+				var/obj/newmeteor/M = new meteor_type(pickedstart,target)
 				M.pix_speed = meteor_speed + rand(0 - meteor_speed_variance,meteor_speed_variance)
 				sleep(delay_between_meteors)
 
@@ -172,10 +179,18 @@ var/global/meteor_shower_active = 0
 	var/list/oredrops = list(/obj/item/raw_material/rock)
 	var/list/oredrops_rare = list(/obj/item/raw_material/rock)
 
+	shark
+		name = "shark chunk"
+		desc = "A chunk of shark debris. You might want to stop staring at it and run. Trust me, this came from a shark."
+
 	small
 		name = "small meteor"
 		icon_state = "smallf"
 		hits = 9
+
+		shark
+			name = "small shark chunk"
+			desc = "A chunk of shark debris. You might want to stop staring at it and run. Trust me, this came from a shark."
 
 	New(var/atom/my_spawn, var/atom/trg)
 		if(!my_spawn || !trg)
@@ -292,7 +307,6 @@ var/global/meteor_shower_active = 0
 			SPAWN_DBG(1 DECI SECOND)
 				explosion(src, get_turf(src), exp_dev, exp_hvy, exp_lit, exp_fsh)
 		var/atom/source = src
-		src = null
 		qdel(source)
 
 	proc/dump_ore()
@@ -306,7 +320,6 @@ var/global/meteor_shower_active = 0
 			A.name = "meteor chunk"
 
 		var/atom/source = src
-		src = null
 		qdel(source)
 
 /////////////////////////HUGE
@@ -330,6 +343,13 @@ var/global/meteor_shower_active = 0
 	exp_fsh = 3
 	oredrops = list(/obj/item/raw_material/char, /obj/item/raw_material/molitz, /obj/item/raw_material/rock)
 	oredrops_rare = list(/obj/item/raw_material/starstone, /obj/item/raw_material/syreline)
+	var/shatter_types = list(/obj/newmeteor, /obj/newmeteor/small)
+
+	shark
+		name = "robotic shark"
+		icon = 'icons/misc/64x32.dmi'
+		icon_state = "gunshark"
+		shatter_types = list(/obj/newmeteor/shark, /obj/newmeteor/small/shark)
 
 	shatter()
 		playsound(src.loc, sound_explode, 50, 1)
@@ -339,9 +359,8 @@ var/global/meteor_shower_active = 0
 		for(var/A in alldirs)
 			if(prob(15))
 				continue
-			var/type = pick(/obj/newmeteor, /obj/newmeteor/small)
+			var/type = pick(shatter_types)
 			var/atom/trg = get_step(src, A)
 			new type(src.loc, trg)
 		var/atom/source = src
-		src = null
 		qdel(source)

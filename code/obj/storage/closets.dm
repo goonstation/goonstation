@@ -77,7 +77,8 @@
 							/obj/item/reagent_containers/glass/bottle/cleaner,
 							/obj/item/storage/box/body_bag,
 							/obj/item/caution = 6,
-							/obj/item/clothing/gloves/long)
+							/obj/item/clothing/gloves/long,
+							/obj/item/handheld_vacuum)
 
 /obj/storage/closet/law
 	name = "\improper Legal closet"
@@ -517,3 +518,18 @@
 					/obj/item/clothing/suit/nursedress = 1,
 					/obj/item/clothing/head/headmirror = 1,
 					/obj/item/clothing/suit/labcoat/medical = 2)
+
+/obj/storage/closet/command/ruined //replacements for azones and mining level flavor
+	name = "Dented command locker"
+	desc = "This thing looks ransacked."
+	icon = 'icons/obj/large_storage.dmi'
+	icon_state = "dented_c"
+	icon_closed = "dented_c"
+	icon_opened = "dented_c-open"
+	spawn_contents = list()
+
+/obj/storage/closet/command/ruined/hos //rejoice HoS players
+	name = "Dented Head of Security's locker"
+	desc = "A banged up Head of Security locker. Looks like somebody took the law into their own hands."
+	spawn_contents = list(/obj/item/clothing/shoes/brown,
+	/obj/item/paper/iou)

@@ -68,9 +68,8 @@ var/list/rollList = list()
 			src.pixel_y = rand(-8,8)
 			src.pixel_x = rand(-8,8)
 
-		src.name = initialName//initial(src.name)
-		src.desc = initialDesc//initial(src.desc)
-		//src.overlays = null
+		src.name = initialName
+		src.desc = initialDesc
 		if(src.colorcache)
 			src.color = src.colorcache
 			src.colorcache = null
@@ -448,9 +447,8 @@ var/list/rollList = list()
 			src.pixel_y = rand(-8,8)
 			src.pixel_x = rand(-8,8)
 
-		src.name = initialName//initial(src.name)
-		src.desc = initialDesc//initial(src.desc)
-		//src.overlays = null
+		src.name = initialName
+		src.desc = initialDesc
 
 		if (src.sides && isnum(src.sides))
 			src.last_roll = rand(1, src.sides)

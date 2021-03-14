@@ -9,7 +9,7 @@
 	var/obj/item/item							// the item being worn in this slot
 
 	var/list/type_filters = list()				// a list of parent types whose subtypes are equippable
-	var/obj/screen/hud/screenObj				// ease of life
+	var/atom/movable/screen/hud/screenObj				// ease of life
 
 	var/mob/holder = null
 

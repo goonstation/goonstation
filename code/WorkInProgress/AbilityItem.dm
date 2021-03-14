@@ -773,7 +773,7 @@
 		if(!the_mob) return
 		the_mob.item_abilities = list()
 
-//HEY this should be moved over to use /obj/screen/ability_button but it breaks a few paths and needs different procs and its outta my depth tbh
+//HEY this should be moved over to use /atom/movable/screen/ability_button but it breaks a few paths and needs different procs and its outta my depth tbh
 /obj/ability_button
 	name = "baseButton"
 	desc = ""
@@ -838,9 +838,9 @@
 			return 0
 		if (!src.the_mob)
 			return 0
-		if (src.the_mob.hasStatus(list("paralysis", "stunned", "weakened"))) //stun check
+		if (is_incapacitated(src.the_mob)) //stun check
 			return 0
-		if (src.the_mob && ishuman(src.the_mob)) //cuff, straightjacket, nolimb check
+		if (ishuman(src.the_mob)) //cuff, straightjacket, nolimb check
 			var/mob/living/carbon/human/H = the_mob
 			if (H.restrained())
 				return 0

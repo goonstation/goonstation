@@ -45,6 +45,32 @@
 
 	return
 
+/proc/equip_conspirator(mob/living/carbon/human/traitor_mob)
+	if (!(traitor_mob && ishuman(traitor_mob)))
+		return
+
+	if (ticker?.mode && istype(ticker.mode, /datum/game_mode/conspiracy))
+		var/datum/game_mode/conspiracy/C = ticker.mode
+		var/the_frequency = C.agent_radiofreq
+
+		var/obj/item/device/radio/headset/H
+		if (istype(traitor_mob.ears, /obj/item/device/radio/headset))
+			H = traitor_mob.ears
+		else
+			H = new /obj/item/device/radio/headset(traitor_mob)
+			if (!traitor_mob.r_store)
+				traitor_mob.equip_if_possible(H, traitor_mob.slot_r_store)
+			else if (!traitor_mob.l_store)
+				traitor_mob.equip_if_possible(H, traitor_mob.slot_l_store)
+			else if (istype(traitor_mob.back, /obj/item/storage/) && traitor_mob.back.contents.len < 7)
+				traitor_mob.equip_if_possible(H, traitor_mob.slot_in_backpack)
+			else
+				traitor_mob.put_in_hand_or_drop(H)
+		H.secure_classes["z"] = RADIOCL_SYNDICATE
+		H.set_secure_frequency("z",the_frequency)
+
+	SHOW_CONSPIRACY_TIPS(traitor_mob)
+
 /proc/equip_traitor(mob/living/carbon/human/traitor_mob)
 	if (!(traitor_mob && ishuman(traitor_mob)))
 		return
@@ -128,8 +154,8 @@
 			T.setup(traitor_mob.mind, P)
 			pda_pass = T.lock_code
 
-			boutput(traitor_mob, "The Syndicate have cunningly disguised a Syndicate Uplink as your [P.name] [loc]. Simply enter the code \"[pda_pass]\" into the ringtone select to unlock its hidden features.")
-			traitor_mob.mind.store_memory("<B>Set your ringtone to:</B> [pda_pass] (In the Messenger menu in the [P.name] [loc]).")
+			boutput(traitor_mob, "The Syndicate have cunningly disguised a Syndicate Uplink as your [P.name] [loc]. Simply enter the code \"[pda_pass]\" into the ring message select to unlock its hidden features.")
+			traitor_mob.mind.store_memory("<B>Set your ring message to:</B> [pda_pass] (In the Messenger menu in the [P.name] [loc]).")
 
 		else
 			var/obj/item/uplink/syndicate/T = new(get_turf(traitor_mob))
@@ -170,6 +196,9 @@
 	if (!R && istype(traitor_mob.l_store, /obj/item/device/pda2))
 		R = traitor_mob.l_store
 		loc = "In your pocket"
+	if (!R && istype(traitor_mob.wear_id, /obj/item/device/pda2))
+		R = traitor_mob.wear_id
+		loc = "In your ID slot"
 	if (!R && istype(traitor_mob.l_hand, /obj/item/storage))
 		var/obj/item/storage/S = traitor_mob.l_hand
 		var/list/L = S.get_contents()
@@ -206,8 +235,8 @@
 		pda_pass = T.lock_code
 
 		SHOW_SPY_THIEF_TIPS(traitor_mob)
-		boutput(traitor_mob, "The Syndicate have cunningly disguised a Spy Uplink as your [P.name] [loc]. Simply enter the code \"[pda_pass]\" into the ringtone select to unlock its hidden features.")
-		traitor_mob.mind.store_memory("<B>Set your ringtone to:</B> [pda_pass] (In the Messenger menu in the [P.name] [loc]).")
+		boutput(traitor_mob, "The Syndicate have cunningly disguised a Spy Uplink as your [P.name] [loc]. Simply enter the code \"[pda_pass]\" into the ring message select to unlock its hidden features.")
+		traitor_mob.mind.store_memory("<B>Set your ring message to:</B> [pda_pass] (In the Messenger menu in the [P.name] [loc]).")
 	else
 		boutput(traitor_mob, "Something is BUGGED and we couldn't find you a PDA. Tell a coder.")
 
@@ -223,16 +252,19 @@
 		synd_mob.equip_if_possible(new /obj/item/katana_sheath/nukeop(synd_mob), synd_mob.slot_l_hand)
 		synd_mob.equip_if_possible(new /obj/item/remote/nuke_summon_remote(synd_mob), synd_mob.slot_r_hand)
 	else
-		synd_mob.equip_if_possible(new /obj/item/clothing/head/helmet/swat(synd_mob), synd_mob.slot_head)
-		synd_mob.equip_if_possible(new /obj/item/clothing/suit/armor/vest(synd_mob), synd_mob.slot_wear_suit)
+		//synd_mob.equip_if_possible(new /obj/item/clothing/head/helmet/swat(synd_mob), synd_mob.slot_head)
+		//synd_mob.equip_if_possible(new /obj/item/clothing/suit/armor/vest(synd_mob), synd_mob.slot_wear_suit)
 		synd_mob.equip_if_possible(new /obj/item/device/radio/headset/syndicate(synd_mob), synd_mob.slot_ears)
 
+	//synd_mob.equip_if_possible(new /obj/item/reagent_containers/pill/tox(synd_mob), synd_mob.slot_in_backpack)
 	synd_mob.equip_if_possible(new /obj/item/clothing/under/misc/syndicate(synd_mob), synd_mob.slot_w_uniform)
 	synd_mob.equip_if_possible(new /obj/item/clothing/shoes/swat(synd_mob), synd_mob.slot_shoes)
 	synd_mob.equip_if_possible(new /obj/item/clothing/gloves/swat(synd_mob), synd_mob.slot_gloves)
 	synd_mob.equip_if_possible(new /obj/item/storage/backpack/syndie/tactical(synd_mob), synd_mob.slot_back)
-	synd_mob.equip_if_possible(new /obj/item/reagent_containers/pill/tox(synd_mob), synd_mob.slot_in_backpack)
+	synd_mob.equip_if_possible(new /obj/item/clothing/mask/breath(synd_mob), synd_mob.slot_wear_mask)
+	synd_mob.equip_if_possible(new /obj/item/clothing/glasses/sunglasses(synd_mob), synd_mob.slot_glasses)
 	synd_mob.equip_if_possible(new /obj/item/requisition_token/syndicate(synd_mob), synd_mob.slot_r_store)
+	synd_mob.equip_if_possible(new /obj/item/tank/emergency_oxygen(synd_mob), synd_mob.slot_l_store)
 /*
 	var/obj/item/uplink/syndicate/U = new /obj/item/uplink/syndicate/alternate(synd_mob)
 	if (synd_mob.mind && istype(synd_mob.mind))
@@ -301,7 +333,7 @@
 
 	for(var/client/C)
 		var/mob/M = C.mob
-		if(!M) continue
+		if(!M || isnewplayer(M)) continue
 		if (isdead(M) && !isliving(M))
 			dead++
 			if (M.mind?.joined_observer)

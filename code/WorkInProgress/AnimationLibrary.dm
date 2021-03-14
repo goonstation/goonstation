@@ -730,7 +730,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	SPAWN_DBG(rand(1,10))
 		if (A)
 			var/initial_y = A.pixel_y
-			animate(A, pixel_y = initial_y + 4, transform = matrix(floatdegrees * (side == 1 ? 1:-1), MATRIX_ROTATE), time = floatspeed, loop = loopnum, easing = SINE_EASING)
+			animate(A, pixel_y = initial_y + 4, transform = matrix(floatdegrees * (side == 1 ? 1:-1), MATRIX_ROTATE), time = floatspeed, loop = loopnum, easing = SINE_EASING, flags = ANIMATION_PARALLEL)
 			animate(pixel_y = initial_y, transform = null, time = floatspeed, loop = loopnum, easing = SINE_EASING)
 	return
 
@@ -902,7 +902,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	if (dir == "R")
 		turn = 90
 
-	animate(A, transform = matrix(M, turn, MATRIX_ROTATE | MATRIX_MODIFY), time = T, loop = looping)
+	animate(A, transform = matrix(M, turn, MATRIX_ROTATE | MATRIX_MODIFY), time = T, loop = looping, flags=ANIMATION_PARALLEL)
 	animate(transform = matrix(M, turn, MATRIX_ROTATE | MATRIX_MODIFY), time = T, loop = looping)
 	animate(transform = matrix(M, turn, MATRIX_ROTATE | MATRIX_MODIFY), time = T, loop = looping)
 	animate(transform = matrix(M, turn, MATRIX_ROTATE | MATRIX_MODIFY), time = T, loop = looping)
@@ -1179,10 +1179,11 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	layer = EFFECTS_LAYER
 	blend_mode = BLEND_ADD
 
-/proc/demonic_spawn(var/obj/A)
+/proc/demonic_spawn(var/atom/movable/A, var/size = 1, var/play_sound = TRUE)
 	if (!A) return
 	var/was_anchored = A.anchored
 	var/original_plane = A.plane
+	var/original_density = A.density
 	var/matrix/M1 = matrix()
 	A.transform = M1.Scale(0,0)
 	var/turf/center = get_turf(A)
@@ -1190,10 +1191,15 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 
 	A.plane = PLANE_UNDERFLOOR
 	A.anchored = TRUE
-	playsound(center,"sound/effects/darkspawn.ogg",50,0)
+	A.density = FALSE
+	if (ismob(A))
+		var/mob/M = A
+		APPLY_MOB_PROPERTY(M, PROP_CANTMOVE, M.type)
+	if (play_sound)
+		playsound(center,"sound/effects/darkspawn.ogg",50,0)
 	SPAWN_DBG(5 SECONDS)
-		var/turf/TA = locate(A.x - 1, A.y - 1, A.z)
-		var/turf/TB = locate(A.x + 1, A.y + 1, A.z)
+		var/turf/TA = locate(A.x - size, A.y - size, A.z)
+		var/turf/TB = locate(A.x + size, A.y + size, A.z)
 		if (!TA || !TB) return
 
 		var/list/fake_hells = list()
@@ -1202,13 +1208,17 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 			var/x_modifier = (T.x - center.x)
 			var/y_modifier = (T.y - center.y)
 			if (x_modifier || y_modifier)
-				animate(T, pixel_x = (32 * x_modifier), pixel_y = (32 * y_modifier), 7.5 SECONDS, easing = SINE_EASING)
+				animate(T, pixel_x = ((32 * (x_modifier / max(1, abs(x_modifier)))) * (size - abs(x_modifier) + 1)), pixel_y = ((32 * (y_modifier / max(1, abs(y_modifier)))) * (size - abs(y_modifier) + 1)), 7.5 SECONDS, easing = SINE_EASING)
 			else // center tile
 				animate(T, transform = M1.Scale(0,0), 5 SECONDS, easing = SINE_EASING)
 		sleep(7.5 SECONDS)
 		animate(A, transform = null, time=20, easing = SINE_EASING)
 		A.plane = original_plane
 		A.anchored = was_anchored
+		A.density = original_density
+		if (ismob(A))
+			var/mob/M = A
+			REMOVE_MOB_PROPERTY(M, PROP_CANTMOVE, M.type)
 		for (var/turf/T in block(TA, TB))
 			animate(T, transform = null, pixel_x = 0, pixel_y = 0, 7.5 SECONDS, easing = SINE_EASING)
 		sleep(7.5 SECONDS)
@@ -1253,19 +1263,16 @@ var/global/icon/scanline_icon = icon('icons/effects/scanning.dmi', "scanline")
 	SPAWN_DBG(time)
 		target.filters -= filter
 
-/proc/animate_storage_thump(var/atom/A)
+/proc/animate_storage_thump(var/atom/A, wiggle=6)
 	if(!istype(A))
 		return
 	playsound(get_turf(A), "sound/impact_sounds/Metal_Hit_Heavy_1.ogg", 50, 1)
-	var/wiggle = 6
-	SPAWN_DBG(-1)
-		while(wiggle > 0)
-			wiggle--
-			A.pixel_x = rand(-3,3)
-			A.pixel_y = rand(-3,3)
-			sleep(0.1 SECONDS)
-		A.pixel_x = 0
-		A.pixel_y = 0
+	var/orig_x = A.pixel_x
+	var/orig_y = A.pixel_y
+	animate(A, pixel_x=orig_x, pixel_y=orig_y, flags=ANIMATION_PARALLEL, time=0)
+	for(var/i in 1 to wiggle)
+		animate(pixel_x=orig_x + rand(-3, 3), pixel_y=orig_y + rand(-3, 3), flags=ANIMATION_PARALLEL, easing=JUMP_EASING, time=0.1 SECONDS)
+	animate(pixel_x=orig_x, pixel_y=orig_y, flags=ANIMATION_PARALLEL)
 
 /obj/overlay/tile_effect/fake_fullbright
 	icon = 'icons/effects/white.dmi'

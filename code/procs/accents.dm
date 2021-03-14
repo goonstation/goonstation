@@ -120,13 +120,11 @@
 	if (!istext(text))
 		CRASH("YOU HAVE TO PASS TEXT TO THE FUNCTIONS THAT DEAL WITH TEXT, IDIOT.")
 
-	var/regex/R = regex(@"([^&]|&(?:[a-z0-9_-]+|#x?[0-9a-f]+);)", "gi")
-	var/list/C = new()
+	var/regex/our_regex = regex(@"([^&]|&(?:[a-z0-9_-]+|#x?[0-9a-f]+);)", "gi")
+	. = list()
 
-	while (R.Find(text) != 0)
-		C.Add(R.group[1])
-
-	return C
+	while (our_regex.Find(text) != 0)
+		. += our_regex.group[1]
 
 
 /proc/elvis_parse(var/datum/text_roamer/R)

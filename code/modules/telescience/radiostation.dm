@@ -130,59 +130,107 @@
 	icon_state = "mixtable-2"
 	anchored = 1.0
 	density = 1
-	var/state = 0
-	var/state_name = "OFF"
-	var/voice = 0
-	var/last_voice = ""
+	flags = TGUI_INTERACTIVE
+	var/static/list/accents
+	var/list/voices
+	var/selected_voice = 0
+	var/const/max_voices = 9
+	var/say_popup = FALSE
 
-/obj/submachine/mixing_desk/attack_hand(mob/user as mob)
+/obj/submachine/mixing_desk/New()
+	. = ..()
+	src.voices = list()
+	if(!src.accents)
+		src.accents = list()
+		for(var/bio_type in concrete_typesof(/datum/bioEffect/speech, FALSE))
+			var/datum/bioEffect/speech/effect = new bio_type()
+			if(!effect.acceptable_in_mutini || !effect.occur_in_genepools)
+				continue
+			var/name = effect.id
+			if(length(name) >= 7 && copytext(name, 1, 8) == "accent_")
+				name = copytext(name, 8)
+			name = replacetext(name, "_", " ")
+			accents[name] = effect
+
+/obj/submachine/mixing_desk/ui_status(mob/user, datum/ui_state/state)
+	return min(
+		state.can_use_topic(src, user),
+		tgui_not_incapacitated_state.can_use_topic(src, user)
+	)
+
+/obj/submachine/mixing_desk/ui_interact(mob/user, datum/tgui/ui)
+	ui = tgui_process.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "MixingDesk", "[src]")
+		ui.open()
+
+/obj/submachine/mixing_desk/ui_data(mob/user)
+	. = list(
+		"voices" = src.voices,
+		"selected_voice" = src.selected_voice,
+		"say_popup" = src.say_popup
+	)
+
+/obj/submachine/mixing_desk/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
 	if(..())
 		return
-	src.add_dialog(user)
-	var/dat = "<a href='byond://?src=\ref[src];state=1'>[src.state_name]</a>"
-	if(state)
-		dat += "<center><h4>Mixing Desk</h4></center>"
-		if(voice)
-			dat += "<br><center><h3>Voice synthesized: [src.voice]</h3></center>"
-		else
-			dat += "<br><center><h3>Error: no voice</h3></center>"
-		dat += "<center><b><a href='byond://?src=\ref[src];voice=1'>Voice</a> | "
-		dat += "<a href='byond://?src=\ref[src];say=1'>Say</a>"
-
-	user.Browse(dat, "window=mixing_desk")
-	onclose(user, "mixing_desk")
-	return
-
-/obj/submachine/mixing_desk/Topic(href, href_list)
-	if(..()) return
-	if(usr.stat || usr.restrained()) return
-	if(!in_range(src, usr)) return
-
-	if (href_list["state"])
-		if(state)
-			state = 0
-			state_name = "OFF"
-		else
-			state = 1
-			state_name = "ON"
-
-	else if (href_list["voice"])
-		voice = html_encode(input("Choose a voice to synthesize:","Voice",last_voice) as null|text)
-		last_voice = voice
-
-	else if (href_list["say"])
-		if (!voice)
-			return
-		var/message = html_encode(input("Choose something to say:","Message","") as null|text)
-		logTheThing("say", usr, voice, "SAY: [message] (Synthesizing the voice of <b>([constructTarget(voice,"say")])</b>)")
-		var/original_name = usr.real_name
-		usr.real_name = copytext(voice, 1, MOB_NAME_MAX_LENGTH)
-		usr.say(message)
-		usr.real_name = original_name
-
-	src.add_fingerprint(usr)
-	src.updateUsrDialog()
-	return
+	switch(action)
+		if("add_voice")
+			if(length(src.voices) >= src.max_voices)
+				return FALSE
+			var/name = input("Enter voice name:", "Voice name")
+			if(!name)
+				return FALSE
+			phrase_log.log_phrase("voice-radiostation", name, no_duplicates=TRUE)
+			if(length(name) > FULLNAME_MAX)
+				name = copytext(name, 1, FULLNAME_MAX)
+			var/accent = input("Pick an accent:", "Accent") as null|anything in list("none") + src.accents
+			if(accent == "none")
+				accent = null
+			src.voices += list(list("name"=name, "accent"=accent))
+			. = TRUE
+		if("remove_voice")
+			var/id = params["id"]
+			if(id <= 0 || id > length(voices))
+				return FALSE
+			if(id == src.selected_voice)
+				src.selected_voice = 0
+			else if(id < src.selected_voice)
+				src.selected_voice--
+			src.voices.Cut(id, id + 1)
+			. = TRUE
+		if("switch_voice")
+			var/id = params["id"]
+			if(id <= 0 || id > length(voices))
+				src.selected_voice = 0
+			else
+				src.selected_voice = id
+			. = TRUE
+		if("say_popup")
+			if("id" in params)
+				src.selected_voice = params["id"]
+			src.say_popup = TRUE
+			. = TRUE
+		if("cancel_say")
+			src.say_popup = FALSE
+			. = TRUE
+		if("say")
+			src.say_popup = FALSE
+			var/message = html_encode(params["message"])
+			if(src.selected_voice <= 0 || src.selected_voice > length(voices))
+				usr.say(message)
+				return TRUE
+			var/name = voices[src.selected_voice]["name"]
+			var/accent_id = voices[src.selected_voice]["accent"]
+			if(!isnull(accent_id))
+				var/datum/bioEffect/speech/accent = src.accents[accent_id]
+				message = accent.OnSpeak(message)
+			logTheThing("say", usr, name, "SAY: [message] (Synthesizing the voice of <b>([constructTarget(name,"say")])</b> with accent [accent_id])")
+			var/original_name = usr.real_name
+			usr.real_name = copytext(name, 1, MOB_NAME_MAX_LENGTH)
+			usr.say(message)
+			usr.real_name = original_name
+			. = TRUE
 
 // Record player
 /obj/submachine/record_player
@@ -207,25 +255,27 @@
 			W.set_loc(src)
 			src.record_inside = W
 			src.has_record = 1
-			src.is_playing = 1
 			var/R = html_encode(input("What is the name of this record?","Record Name") as null|text)
+			if(R)
+				phrase_log.log_phrase("record", R)
 			if (!R)
 				R = record_inside.record_name ? record_inside.record_name : pick("rad tunes","hip jams","cool music","neat sounds","magnificent melodies","fantastic farts")
 			user.client.play_music_radio(record_inside.song, R)
 			/// PDA message ///
 			var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency("1149")
 			var/datum/signal/pdaSignal = get_free_signal()
-			pdaSignal.data = list("command"="text_message", "sender_name"="RADIO-STATION", "sender"="00000000", "message"="Now playing: [R].")
+			pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="RADIO-STATION", "sender"="00000000", "message"="Now playing: [R].", "group" = MGA_RADIO)
 			pdaSignal.transmission_method = TRANSMISSION_RADIO
 			if(transmit_connection != null)
 				transmit_connection.post_signal(src, pdaSignal)
 			//////
+			src.is_playing = 1
 #ifdef UNDERWATER_MAP
-				sleep(5000) // mbc : underwater map has the radio on-station instead of in space. so it gets played a lot more often + is breaking my immersion
+			sleep(5000) // mbc : underwater map has the radio on-station instead of in space. so it gets played a lot more often + is breaking my immersion
 #else
-				sleep(3000)
+			sleep(3000)
 #endif
-			is_playing = 0
+			src.is_playing = 0
 	else
 		..()
 
@@ -606,7 +656,7 @@ ABSTRACT_TYPE(/obj/item/record/random/chronoquest)
 			/// PDA message ///
 			var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency("1149")
 			var/datum/signal/pdaSignal = get_free_signal()
-			pdaSignal.data = list("command"="text_message", "sender_name"="RADIO-STATION", "sender"="00000000", "message"="Now playing: [src.tape_inside.audio_type] for [src.tape_inside.name_of_thing].")
+			pdaSignal.data = list("command"="text_message", "sender_name"="RADIO-STATION", "sender"="00000000", "message"="Now playing: [src.tape_inside.audio_type] for [src.tape_inside.name_of_thing].", "group" = MGA_RADIO)
 			pdaSignal.transmission_method = TRANSMISSION_RADIO
 			if(transmit_connection != null)
 				transmit_connection.post_signal(src, pdaSignal)

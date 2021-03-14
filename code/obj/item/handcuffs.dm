@@ -78,7 +78,7 @@
 	return 1
 
 /obj/item/handcuffs/attack(mob/M as mob, mob/user as mob)
-	if (user.bioHolder && user.bioHolder.HasEffect("clumsy") && prob(50))//!usr.bioHolder.HasEffect("lost_left_arm") && !usr.bioHolder.HasEffect("lost_right_arm"))
+	if (user.bioHolder && user.bioHolder.HasEffect("clumsy") && prob(50))//!user.bioHolder.HasEffect("lost_left_arm") && !user.bioHolder.HasEffect("lost_right_arm"))
 		boutput(user, "<span class='alert'>Uh ... how do those things work?!</span>")
 		if (ishuman(user))
 			var/mob/living/carbon/human/H = user

@@ -48,3 +48,8 @@
 	force = 10.0
 	stamina_damage = 35
 	//todo: new sprites
+
+/obj/item/wrench/yellow
+	desc = "A tool used to apply torque to turn nuts and bolts. This one has a bright yellow handle."
+	icon_state = "wrench-yellow"
+	item_state = "wrench"

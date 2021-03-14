@@ -265,9 +265,9 @@
 			return 0.75 + movement_delay_modifier
 
 	click(atom/target, params)
-		if (istype(target,/obj/screen/blob/))
+		if (istype(target,/atom/movable/screen/blob/))
 			if (params["middle"])
-				var/obj/screen/blob/B = target
+				var/atom/movable/screen/blob/B = target
 				if (B.ability)
 					B.ability.onUse()
 					return
@@ -435,7 +435,7 @@
 			return
 
 		//src.client.screen -= src.item_abilities
-		for(var/obj/screen/blob/B in src.client.screen)
+		for(var/atom/movable/screen/blob/B in src.client.screen)
 			src.client.screen -= B
 
 		var/pos_x = 1
@@ -574,7 +574,7 @@
 		hat.set_loc(src)
 
 
-/obj/screen/blob
+/atom/movable/screen/blob
 	plane = PLANE_HUD
 	var/datum/blob_ability/ability = null
 	var/datum/blob_upgrade/upgrade = null
@@ -584,8 +584,8 @@
 	var/image/cooldown = null
 	var/image/darkener = null
 
-	var/obj/screen/pseudo_overlay/point_overlay
-	var/obj/screen/pseudo_overlay/cooldown_overlay
+	var/atom/movable/screen/pseudo_overlay/point_overlay
+	var/atom/movable/screen/pseudo_overlay/cooldown_overlay
 
 	New()
 		..()
@@ -596,10 +596,10 @@
 		var/image/I = image('icons/mob/blob_ui.dmi',"darkener")
 		I.alpha = 100
 		darkener = I
-		//var/obj/screen/pseudo_overlay/T = new /obj/screen/pseudo_overlay(src)
-		//var/obj/screen/pseudo_overlay/S = new /obj/screen/pseudo_overlay(src)
-		point_overlay = new /obj/screen/pseudo_overlay()
-		cooldown_overlay = new /obj/screen/pseudo_overlay()
+		//var/atom/movable/screen/pseudo_overlay/T = new /atom/movable/screen/pseudo_overlay(src)
+		//var/atom/movable/screen/pseudo_overlay/S = new /atom/movable/screen/pseudo_overlay(src)
+		point_overlay = new /atom/movable/screen/pseudo_overlay()
+		cooldown_overlay = new /atom/movable/screen/pseudo_overlay()
 		src.vis_contents += point_overlay
 		src.vis_contents += cooldown_overlay
 		cooldown_overlay.icon = 'icons/mob/spell_buttons.dmi'
@@ -622,9 +622,9 @@
 
 
 	MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
-		if (!istype(O,/obj/screen/blob/) || !isblob(user))
+		if (!istype(O,/atom/movable/screen/blob/) || !isblob(user))
 			return
-		var/obj/screen/blob/source = O
+		var/atom/movable/screen/blob/source = O
 		if (!istype(src.ability) || !istype(source.ability))
 			boutput(user, "<span class='alert'>You may only switch the places of ability buttons.</span>")
 			return
@@ -755,6 +755,10 @@
 	MouseExited()
 		if (usr.client.tooltipHolder)
 			usr.client.tooltipHolder.hideHover()
+
+/mob/living/intangible/blob_overmind/checkContextActions(atom/target)
+	// a bit oh a hack, no multicontext for blobs now because it keeps overriding attacking pods :/
+	return list()
 
 /mob/proc/make_blob()
 	if (!src.client && !src.mind)

@@ -143,7 +143,7 @@
 			return 1
 */
 	proc/create(var/object)
-		if(src.glass_amt < 1 || ((object == "pitcher" || object == "largebeaker") && src.glass_amt < 2))
+		if(src.glass_amt < 1 || ((object == "pitcher" || object == "largebeaker" || object == "round" || object == "plate") && src.glass_amt < 2))
 			src.visible_message("<span class='alert'>[src] doesn't have enough glass to make that!</span>")
 			return
 

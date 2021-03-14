@@ -142,6 +142,7 @@ var/global/first_adminhelp_happened = 0
 	// Insert message
 	if(message)
 		entry += "<br>[message]" // |GOONSTATION-CHANGE| (\n->br)
+	entry += "<br>" // |GOONSTATION-CHANGE| (br)
 	WRITE_LOG(roundLog_name, entry)
 
 /* Close open log handles. This should be called as late as possible, and no logging should hapen after. */

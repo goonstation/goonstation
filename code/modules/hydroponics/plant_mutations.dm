@@ -145,14 +145,14 @@
 /datum/plantmutation/melon/balloon
 	name = "Balloon Melons"
 	name_prefix = "Balloon "
-	crop = /obj/item/reagent_containers/balloon
+	crop = /obj/item/reagent_containers/balloon/naturally_grown
 	iconmod = "MelonBalloon"
 	assoc_reagents = list("helium")
 
 /datum/plantmutation/melon/hindenballoon
 	name = "Balloon... Melons?"
 	name_prefix = "Balloon "
-	crop = /obj/item/reagent_containers/balloon
+	crop = /obj/item/reagent_containers/balloon/naturally_grown
 	iconmod = "MelonBalloon"
 	assoc_reagents = list("hydrogen")
 
@@ -478,6 +478,7 @@
 	harvest_override = 1
 	crop = /obj/item/reagent_containers/food/snacks/plant/lashberry/
 	chance = 20
+
 
 // Radweed Mutations
 

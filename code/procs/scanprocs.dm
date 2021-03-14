@@ -577,8 +577,8 @@
 		var/obj/item/assembly/proximity_bomb/PB = A
 		if (PB.part3)
 			check_me = PB.part3.air_contents
-	if (istype(A, /obj/item/flamethrower/assembled/))
-		var/obj/item/flamethrower/assembled/FT = A
+	if (istype(A, /obj/item/gun/flamethrower/assembled/))
+		var/obj/item/gun/flamethrower/assembled/FT = A
 		if (FT.gastank)
 			check_me = FT.gastank.air_contents
 

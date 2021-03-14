@@ -134,7 +134,7 @@ obj/machinery/air_vendor
 			return
 		if (usr.stat || usr.restrained())
 			return
-		if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))))
+		if ((usr.contents.Find(src) || (in_interact_range(src, usr) && istype(src.loc, /turf))))
 			src.add_dialog(usr)
 			src.add_fingerprint(usr)
 

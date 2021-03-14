@@ -18,8 +18,8 @@
 
 	var/last_move_trigger = 0
 
-	var/obj/screen/internals = null
-	var/obj/screen/stamina_bar/stamina_bar = null
+	var/atom/movable/screen/internals = null
+	var/atom/movable/screen/stamina_bar/stamina_bar = null
 	var/last_overlay_refresh = 1 // In relation to world time. Used for traitor/nuke ops overlays certain mobs can see.
 
 	var/robot_talk_understand = 0
@@ -31,7 +31,7 @@
 
 	var/last_resist = 0
 
-	//var/obj/screen/zone_sel/zone_sel = null
+	//var/atom/movable/screen/zone_sel/zone_sel = null
 	var/datum/hud/zone_sel/zone_sel = null
 
 	var/obj/item/device/energy_shield/energy_shield = null
@@ -71,6 +71,7 @@
 	var/lying_old = 0
 	var/can_lie = 0
 	var/canmove = 1.0
+	var/incrit = 0
 	var/timeofdeath = 0.0
 	var/fakeloss = 0
 	var/fakedead = 0
@@ -246,6 +247,8 @@
 	src.lastattacked = src //idk but it fixes bug
 	render_target = "\ref[src]"
 	mob_properties = list()
+	src.chat_text = new
+	START_TRACKING
 
 /// do you want your mob to have custom hairstyles and stuff? don't use spawns but set all of those properties here
 /mob/proc/initializeBioholder()
@@ -257,7 +260,7 @@
 	return 0
 
 /mob/Move(a, b, flag)
-	if (src.buckled && src.buckled.anchored)
+	if (src.buckled?.anchored && istype(src.buckled))
 		return
 
 	if (src.dir_locked)
@@ -267,7 +270,7 @@
 	if (src.restrain_time > TIME)
 		return
 
-	if (src.buckled)
+	if (src.buckled && istype(src.buckled))
 		var/glide_size = src.glide_size
 		src.buckled.Move(a, b, flag)
 		src.buckled.glide_size = glide_size // dumb hack
@@ -276,6 +279,13 @@
 
 	src.closeContextActions()
 
+	src.update_grab_loc()
+
+	if (src.s_active && !(s_active.master in src))
+		src.detach_hud(src.s_active)
+		src.s_active = null
+
+/mob/proc/update_grab_loc()
 	//robust grab : keep em close
 	for (var/obj/item/grab/G in equipped_list(check_for_magtractor = 0))
 		if (G.state < GRAB_NECK) continue
@@ -288,11 +298,8 @@
 		G.set_affected_loc()
 		G.affecting.glide_size = src.glide_size
 
-	if (src.s_active && !(s_active.master in src))
-		src.detach_hud(src.s_active)
-		src.s_active = null
-
 /mob/disposing()
+	STOP_TRACKING
 	for(var/mob/dead/target_observer/TO in observers)
 		observers -= TO
 		TO.ghostize()
@@ -315,15 +322,15 @@
 		bioHolder = null
 
 	for (var/datum/hud/H in huds)
-		for (var/obj/screen/hud/S in H.objects)
+		for (var/atom/movable/screen/hud/S in H.objects)
 			if (S:master == src)
 				S:master = null
 //KYLE: KEELIN, LOOK. Something like this? I dunno, it's so slow too:
-		// for (var/obj/screen/S in H.objects)
-		// 	if (istype(S, /obj/screen/hud))
+		// for (var/atom/movable/screen/S in H.objects)
+		// 	if (istype(S, /atom/movable/screen/hud))
 		// 		if (S:master == src)
 		// 			S:master = null
-		// 	else if (istype(S, /obj/screen/statusEffect))
+		// 	else if (istype(S, /atom/movable/screen/statusEffect))
 		// 		src.delStatus(S:ownerStatus)
 
 		//if (islist(H.objects)) //possibly causing bug where gibbed persons UI persistss on ghosts
@@ -496,8 +503,6 @@
 
 	src.client?.color = src.active_color_matrix
 
-	return
-
 /mob/Logout()
 
 	//logTheThing("diary", src, null, "logged out", "access") <- sometimes shits itself and has been known to out traitors. Disabling for now.
@@ -510,7 +515,7 @@
 
 	..()
 
-	return 1
+	. = 1
 
 /mob/proc/deliver_move_trigger(ev)
 	return
@@ -524,18 +529,33 @@
 /mob/proc/onMouseUp(object,location,control,params)
 	return
 
-/mob/Bump(atom/movable/AM as mob|obj, yes)
+/mob/Bump(atom/A, yes)
 	if ((!( yes ) || src.now_pushing))
 		return
+
+	var/atom/movable/AM = A
 
 	if(istype(AM, /mob/dead/target_observer) || istype(src, /mob/dead/target_observer))
 		return
 	src.now_pushing = 1
 
+	if(isturf(A))
+		if((A.reagents?.get_reagent_amount("flubber") + src.reagents?.get_reagent_amount("flubber") > 0) || src.hasStatus("sugar_rush") || A.hasStatus("sugar_rush"))
+			if(!(src.next_spammable_chem_reaction_time > world.time) || src.hasStatus("sugar_rush"))
+				src.next_spammable_chem_reaction_time = world.time + 1
+				src.now_pushing = 0
+				var/atom/source = A
+				src.visible_message("<span class='alert'><B>[src]</B>'s bounces off [A]!</span>")
+				playsound(source, 'sound/misc/boing/6.ogg', 100, 1)
+				src.throw_at(get_edge_cheap(source, turn(get_dir(A, src),rand(-1,1)*45)),  20, 3)
+				return
+
 	if (ismob(AM))
 		var/mob/tmob = AM
 		if (ishuman(tmob))
-			src:viral_transmission(AM,"Contact",1)
+			if(isliving(src))
+				var/mob/living/L = src
+				L.viral_transmission(AM,"Contact",1)
 
 			if ((tmob.bioHolder.HasEffect("magnets_pos") && src.bioHolder.HasEffect("magnets_pos")) || (tmob.bioHolder.HasEffect("magnets_neg") && src.bioHolder.HasEffect("magnets_neg")))
 				//prevent ping-pong loops by deactivating for a second, as they can crash the server under some circumstances
@@ -558,7 +578,7 @@
 					tmob.throw_at(get_edge_cheap(source, get_dir(src, tmob)),  20, 3)
 					src.throw_at(get_edge_cheap(source, get_dir(tmob, src)),  20, 3)
 					return
-			if(tmob.reagents?.get_reagent_amount("flubber") + src.reagents?.get_reagent_amount("flubber") > 0)
+			if((tmob.reagents?.get_reagent_amount("flubber") + src.reagents?.get_reagent_amount("flubber") > 0) || src.hasStatus("sugar_rush") || tmob.hasStatus("sugar_rush"))
 				if(src.next_spammable_chem_reaction_time > world.time || tmob.next_spammable_chem_reaction_time > world.time)
 					src.now_pushing = 0
 					return
@@ -634,6 +654,7 @@
 					logTheThing("combat", src, tmob, "trades places with (Help Intent) [constructTarget(tmob,"combat")], pushing them into a fire.")
 				deliver_move_trigger("swap")
 				tmob.deliver_move_trigger("swap")
+				tmob.update_grab_loc()
 				src.now_pushing = 0
 
 				return
@@ -679,19 +700,19 @@
 				pulling += src.pulling
 			for (var/obj/item/grab/G in src.equipped_list(check_for_magtractor = 0))
 				pulling += G.affecting
-			for (var/atom/movable/A in pulling)
-				if (get_dist(src, A) == 0) // if we're moving onto the same tile as what we're pulling, don't pull
+			for (var/atom/movable/pulled in pulling)
+				if (get_dist(src, pulled) == 0) // if we're moving onto the same tile as what we're pulling, don't pull
 					continue
-				if (A == src || A == AM)
+				if (pulled == src || pulled == AM)
 					continue
-				if (!isturf(A.loc) || A.anchored)
+				if (!isturf(pulled.loc) || pulled.anchored)
 					src.now_pushing = null
 					continue // whoops
-				A.animate_movement = SYNC_STEPS
-				A.glide_size = src.glide_size
-				step(A, get_dir(A, old_loc))
-				A.glide_size = src.glide_size
-				A.OnMove(src)
+				pulled.animate_movement = SYNC_STEPS
+				pulled.glide_size = src.glide_size
+				step(pulled, get_dir(pulled, old_loc))
+				pulled.glide_size = src.glide_size
+				pulled.OnMove(src)
 		////////////////////////////////////// end suck
 		src.now_pushing = null
 
@@ -705,7 +726,7 @@
 	return 1
 
 /mob/proc/attach_hud(datum/hud/hud)
-	if (!huds.Find(hud))
+	if (!(hud in huds))
 		huds += hud
 		hud.mobs += src
 		if (src.client)
@@ -1120,8 +1141,7 @@
 		respawn_controller.subscribeNewRespawnee(src.ckey)
 
 /mob/proc/restrained()
-	if (src.hasStatus("handcuffed"))
-		return 1
+	. = src.hasStatus("handcuffed")
 
 /mob/proc/drop_from_slot(obj/item/item, turf/T)
 	if (!item)
@@ -1142,7 +1162,6 @@
 		if (item)
 			item.layer = initial(item.layer)
 	T.Entered(item)
-	return
 
 /mob/proc/drop_item(obj/item/W)
 	.= 0
@@ -1265,11 +1284,6 @@
 	return
 
 /mob/proc/u_equip(obj/item/W)
-
-// I think this bit is handled by each method of dropping it, and it prevents dropping items in your hands and other procs using u_equip so I'll get rid of it for now.
-//	if (hasvar(W,"cant_self_remove"))
-//		if (W:cant_self_remove) return
-
 	if (W == src.r_hand)
 		src.r_hand = null
 	if (W == src.l_hand)
@@ -1290,16 +1304,6 @@
 
 	W.dropped(src)
 
-/*
-/mob/verb/dump_source()
-
-	var/master = "<PRE>"
-	for(var/t in typesof(/area))
-		master += text("[]<br>", t)
-		//Foreach goto(26)
-	src.Browse(master)
-	return
-*/
 
 /mob/verb/memory()
 	set name = "Notes"
@@ -1447,11 +1451,14 @@
 
 /mob/proc/update_inhands()
 
+/mob/proc/has_any_hands()
+	. = FALSE
+
 /mob/proc/put_in_hand(obj/item/I, hand)
-	return 0
+	. = 0
 
 /mob/proc/get_damage()
-	return src.health
+	. = src.health
 
 /mob/bullet_act(var/obj/projectile/P)
 	var/damage = 0
@@ -1521,18 +1528,23 @@
 	return
 
 /mob/proc/can_use_hands()
+	. = TRUE
 	if (src.hasStatus("handcuffed"))
-		return 0
+		return FALSE
 	if (src.buckled && istype(src.buckled, /obj/stool/bed)) // buckling does not restrict hands
-		return 0
-	return 1
+		return FALSE
 
 /mob/proc/is_active()
-	return (0 >= usr.stat)
+	. = (0 >= usr.stat)
 
 /mob/proc/updatehealth()
 	if (src.nodamage == 0)
 		src.health = max_health - src.get_oxygen_deprivation() - src.get_toxin_damage() - src.get_burn_damage() - src.get_brute_damage()
+		if (src.health < 0 && !src.incrit)
+			src.incrit = 1
+			logTheThing("combat", src, null, "goes into crit [log_health(src)] at [log_loc(src)].")
+		else if (src.incrit && src.health >= 0)
+			src.incrit = 0
 	else
 		src.health = max_health
 		setalive(src)
@@ -1656,19 +1668,51 @@
 	var/list/viral_list = list()
 	for (var/datum/ailment_data/AD in src.ailments)
 		viral_list += AD
-	var/list/ejectables = list()
+	var/list/ejectables = list_ejectables()
+	for(var/obj/item/organ/organ in ejectables)
+		if(organ.donor == src)
+			organ.on_removal()
 	if (!custom_gib_handler)
 		if (iscarbon(src))
-			ejectables = list_ejectables()
 			if (bdna && btype)
-				. = gibs(src.loc, viral_list, ejectables, bdna, btype) // For forensics (Convair880).
+				. = gibs(src.loc, viral_list, ejectables, bdna, btype, source=src) // For forensics (Convair880).
 			else
-				. = gibs(src.loc, viral_list, ejectables)
+				. = gibs(src.loc, viral_list, ejectables, source=src)
 		else
 			. = robogibs(src.loc, viral_list)
 	else
-		ejectables = list_ejectables()
 		. = call(custom_gib_handler)(src.loc, viral_list, ejectables, bdna, btype)
+
+	// splash our fluids around
+	if(src.reagents && src.reagents.total_volume)
+		var/list/obj/get_our_fluids_here = list()
+		for(var/obj/O in (. + ejectables))
+			if(istype(O, /obj/decal/cleanable))
+				var/obj/decal/cleanable/decal = O
+				if(!decal.can_fluid_absorb)
+					continue
+			else if(istype(O, /obj/item/organ/heart))
+				// heart can have a little reagents, as a treat
+			else if(istype(O, /obj/item/reagent_containers))
+				// some of our fluids got into a beaker, oh no!
+			else
+				continue
+			get_our_fluids_here += O
+		get_our_fluids_here += get_turf(src)
+
+		var/transfer_amount = src.reagents.total_volume / length(get_our_fluids_here)
+		for(var/atom/A in get_our_fluids_here)
+			if(isturf(A))
+				var/turf/T = A
+				T.fluid_react(src.reagents, src.reagents.total_volume, airborne=prob(10))
+				continue
+			if(istype(A, /obj/decal/cleanable)) // expand reagents
+				if(isnull(A.reagents))
+					A.create_reagents(transfer_amount)
+				else if(A.reagents.maximum_volume - A.reagents.total_volume < transfer_amount)
+					A.reagents.maximum_volume = A.reagents.total_volume + transfer_amount
+			if(A.reagents)
+				src.reagents.trans_to(A, transfer_amount)
 
 	for(var/obj/item/implant/I in src) qdel(I)
 
@@ -1677,7 +1721,6 @@
 	qdel(src)
 	if( include_ejectables )
 		. += ejectables
-	//return .
 
 /mob/proc/elecgib()
 	if (isobserver(src)) return
@@ -1866,7 +1909,7 @@
 			make_cleanable(/obj/decal/cleanable/ash, src.loc)
 
 		if (!forbid_abberation && prob(50))
-			new /obj/critter/aberration(src.loc)
+			new /obj/critter/aberration(get_turf(src))
 
 	else
 		gibs(src.loc)
@@ -2041,84 +2084,83 @@
 // Man, there's a lot of possible inventory spaces to store crap. This should get everything under normal circumstances.
 // Well, it's hard to account for every possible matryoshka scenario (Convair880).
 /mob/proc/get_all_items_on_mob()
-	if (!src || !ismob(src))
-		return 0
+	if (!src)
+		return null
 
-	var/list/L = list()
-	L += src.contents // Item slots.
+	. = list()
+	. += src.contents // Item slots.
 
 	for (var/obj/item/storage/S in src.contents) // Backpack, belt, briefcases etc.
 		var/list/T1 = S.get_all_contents()
 		for (var/obj/O1 in T1)
-			if (!L.Find(O1)) L.Add(O1)
+			. |= O1
 
 	for (var/obj/item/gift/G in src.contents)
-		if (!L.Find(G.gift)) L += G.gift
+		. |= G.gift
 		if (istype(G.gift, /obj/item/storage))
 			var/obj/item/storage/S2 = G.gift
 			var/list/T2 = S2.get_all_contents()
 			for (var/obj/O2 in T2)
-				if (!L.Find(O2)) L.Add(O2)
+				. |= O2
 
 	for (var/obj/item/storage/backpack/BP in src.contents) // Backpack boxes etc.
 		for (var/obj/item/storage/S3 in BP.contents)
 			var/list/T3 = S3.get_all_contents()
 			for (var/obj/O3 in T3)
-				if (!L.Find(O3)) L.Add(O3)
+				. |= O3
 
 		for (var/obj/item/gift/G2 in BP.contents)
-			if (!L.Find(G2.gift)) L += G2.gift
+			. |= G2.gift
 			if (istype(G2.gift, /obj/item/storage))
 				var/obj/item/storage/S4 = G2.gift
 				var/list/T4 = S4.get_all_contents()
 				for (var/obj/O4 in T4)
-					if (!L.Find(O4)) L.Add(O4)
+					. |= 04
 
 	for (var/obj/item/storage/belt/BL in src.contents) // Stealth storage in belts etc.
 		for (var/obj/item/storage/S5 in BL.contents)
 			var/list/T5 = S5.get_all_contents()
 			for (var/obj/O5 in T5)
-				if (!L.Find(O5)) L.Add(O5)
+				. |= O5
 
 		for (var/obj/item/gift/G3 in BL.contents)
-			if (!L.Find(G3.gift)) L += G3.gift
+			. |= G3.gift
 			if (istype(G3.gift, /obj/item/storage))
 				var/obj/item/storage/S6 = G3.gift
 				var/list/T6 = S6.get_all_contents()
 				for (var/obj/O6 in T6)
-					if (!L.Find(O6)) L.Add(O6)
+					. |= O6
 
-	for (var/obj/item/storage/box/syndibox/SB in L) // For those "belt-in-stealth storage-in-backpack" situations.
+	for (var/obj/item/storage/box/syndibox/SB in .) // For those "belt-in-stealth storage-in-backpack" situations.
 		for (var/obj/item/storage/S7 in SB.contents)
 			var/list/T7 = S7.get_all_contents()
 			for (var/obj/O7 in T7)
-				if (!L.Find(O7)) L.Add(O7)
+				. |= O7
 
 		for (var/obj/item/gift/G4 in SB.contents)
-			if (!L.Find(G4.gift)) L += G4.gift
+			. |= G4.gift
 			if (istype(G4.gift, /obj/item/storage))
 				var/obj/item/storage/S8 = G4.gift
 				var/list/T8 = S8.get_all_contents()
 				for (var/obj/O8 in T8)
-					if (!L.Find(O8)) L.Add(O8)
-
-	return L
+					. |= O8
 
 // Made these three procs use get_all_items_on_mob(). "Steal X" objective should work more reliably as a result (Convair880).
 /mob/proc/check_contents_for(A, var/accept_subtypes = 0)
-	if (!src || !ismob(src) || !A)
-		return 0
+ . = FALSE
+	if (!src || !A)
+		return
 
 	var/list/L = src.get_all_items_on_mob()
 	if (length(L))
 		for (var/obj/B in L)
 			if (B.type == A || (accept_subtypes && istype(B, A)))
-				return 1
-	return 0
+				return TRUE
 
 /mob/proc/check_contents_for_num(A, X, var/accept_subtypes = 0)
-	if (!src || !ismob(src) || !A)
-		return 0
+	. = FALSE
+	if (!src || !A)
+		return
 
 	var/tally = 0
 	var/list/L = src.get_all_items_on_mob()
@@ -2128,9 +2170,7 @@
 				tally++
 
 	if (tally >= X)
-		return 1
-
-	return 0
+		. = TRUE
 
 #define REFRESH "* Refresh list"
 /mob/proc/print_contents(var/mob/output_target)
@@ -2673,25 +2713,24 @@
 		last_pulled_time = world.time
 
 /mob/proc/on_centcom()
-	var mob_loc = src.loc
+	. = FALSE
+	var/mob_loc = src.loc
 	if (isobj(src.loc))
 		var/obj/O = src.loc
 		mob_loc = O.loc
 
 	var/turf/location = get_turf(mob_loc)
 	if (!location)
-		return 0
+		return
 
 	var/area/check_area = location.loc
 	if (istype(check_area, map_settings.escape_centcom))
-		return 1
-
-	return 0
+		. = TRUE
 
 /mob/proc/is_hulk()
+	. = FALSE
 	if (src.bioHolder && src.bioHolder.HasEffect("hulk"))
-		return 1
-	return 0
+		. = TRUE
 
 /mob/proc/update_equipped_modifiers()
 
@@ -2837,6 +2876,9 @@
 /mob/proc/handle_stamina_updates()
 	.= 0
 
+/mob/proc/update_canmove()
+	return
+
 /*/mob/proc/glove_weaponcheck()
 	if (ishuman(src))
 		var/mob/living/carbon/human/H = src
@@ -2847,6 +2889,8 @@
 
 /mob/proc/sell_soul(var/amount, var/reduce_health=1, var/allow_overflow=0)
 	if(!src.mind)
+		return 0
+	if(isnpcmonkey(src))
 		return 0
 	if(allow_overflow)
 		amount = max(1, min(src.mind.soul, amount)) // can't sell less than 1
@@ -2866,9 +2910,7 @@
 	src.mind.soul -= amount
 
 	if(src.mind.soul <= 0)
-		total_souls_sold++
-		total_souls_value++
-
+		souladjust(1)
 	return 1
 
 /mob/proc/get_id()
@@ -2916,7 +2958,7 @@
 	boutput(src, result.Join("\n"))
 
 
-/mob/living/verb/interact_verb(obj/A as obj in view(1))
+/mob/living/verb/interact_verb(atom/A as mob|obj|turf in view(1))
 	set name = "Pick Up / Left Click"
 	set category = "Local"
 	A.interact(src)
@@ -2933,8 +2975,96 @@
 		var/atom/A = input(usr, "What do you want to pick up?") as() in items
 		A.interact(src)
 
-/mob/proc/can_eat(var/atom/A)
-	return 1
+/// 'A' is the thing being eaten, user is the thing using the thing, and src is of course the thing eating it
+/mob/proc/can_eat(var/obj/item/A, var/mob/user, var/bypass_utensils = 0)
+	if(!istype(A) || !user)
+		return FALSE // who's eating what, now?
+
+	/// Making sure the thing actually exists and isn't cheating the bite-rate. And is also edible, so we don't get people trying to stuff multitools in their mouth
+	if(!src.bioHolder?.HasEffect("mattereater") && GET_COOLDOWN(src, "eat") && (A.edible || A.material?.edible))
+		src.can_not_eat(A, user, "on_cooldown")
+		return FALSE
+	else if (!A.amount)
+		src.can_not_eat(A, user, "all_gone")
+		return FALSE
+
+	/// Special cases with special circumstances, mostly so awful monsters can eat awful monster food
+	var/edibility_check = SEND_SIGNAL(src, COMSIG_ITEM_CONSUMED_PRE, src, user, A)
+	if(HAS_FLAG(edibility_check, THING_IS_EDIBLE))
+		return TRUE
+
+	/// Now we can check if the thing is actually, in fact, supposed to be edible
+	if(!(A.edible || (A.material && A.material.edible)))
+		return FALSE
+
+	/// Godmode
+	if(src != user && check_target_immunity(src))
+		src.can_not_eat(A, user, "godmode")
+		return FALSE
+
+	/// Finally, check if we have proper etiquette
+	if(HAS_FLAG(edibility_check, EATING_NEEDS_A_FORK))
+		src.can_not_eat(A, user, "lack_fork")
+		return FALSE
+	if(HAS_FLAG(edibility_check, EATING_NEEDS_A_SPOON))
+		src.can_not_eat(A, user, "lack_spoon")
+		return FALSE
+
+	/// And finally finally, if it should actually be edible, do we have somewhere to put it?
+	if (ishuman(src))
+		var/mob/living/carbon/human/H = src
+		var/obj/item/organ/stomach/tummy = H.get_organ("stomach")
+		if (!istype(tummy) || (tummy.broken || tummy.get_damage() > tummy.MAX_DAMAGE))
+			src.can_not_eat(A, user, "busted_guts")
+			return FALSE
+
+	/// okay eat the darn thing
+	return TRUE
+
+/// Oh no, we can't eat that! Let's tell the mob why
+/mob/proc/can_not_eat(var/atom/A, var/mob/user, var/fail_reason)
+	if(!istype(A) || !user) return
+	switch(fail_reason)
+		if("on_cooldown")
+			if(src == user)
+				boutput(src, "<span class='alert'>Hold on! You're still getting the last bit down!</span>")
+			else
+				user.tri_message("<span class='notice'>[user] tries to stuff [A] into [src]'s mouth, but it's still full!</span>",\
+				user, "<span class='notice'>You try to stuff [A] into [src]'s mouth, but it's still full!</span>",\
+				src, "<span class='notice'>[user] tries to stuff [A] into your mouth, but you're still working on the last bite!</span>")
+		if("all_gone")
+			if(src == user)
+				boutput(src, "<span class='alert'>None of [A] left, oh no!</span>")
+			else
+				user.tri_message("<span class='alert'>[user] tries to feed [A] to [src], but there's nothing left of it!</span>",\
+				user, "<span class='alert'>You try to feed [A] to [src], but there's nothing left of it!</span>",\
+				src, "<span class='alert'>[user] tries to feed [A] to you, but there's nothing left of it!</span>")
+			user.u_equip(A)
+			qdel(A)
+		if("busted_guts")
+			if(src == user)
+				boutput(src, "<span class='alert'>You can't eat that! Or anything else, at least until you fix your stomach!</span>")
+			else
+				user.tri_message("<span class='alert'>[user] tries to feed [A] to [src], but there's nowhere for it to go!</span>",\
+				user, "<span class='alert'>You try to feed [A] to [src], but [his_or_her(src)] throat seems blocked off!</span>",\
+				src, "<span class='alert'>[user] tries to feed [A] to you, but your lack of a working stomach bounces it off the back of your mouth!</span>")
+		if("lack_fork", "lack_spoon")
+			var/missing = fail_reason == "lack_fork" ? "fork" : "spoon"
+			var/literal_beast = HAS_FLAG(src.mob_flags, SHOULD_HAVE_A_TAIL)
+			user.visible_message("<span class='alert'>[user] stares glumly at [src].</span>",
+			"<span class='alert'>You can't just cram that in your [literal_beast ? "filthy snout" : "mouth"] you [literal_beast ? "literal" : "greedy"] beast! You need a [missing] to eat [A]!</span>")
+		if("godmode")
+			user.tri_message("<span class='alert'>[user] tries to feed [A] to [src], but nothing happens!</span>",\
+			user, "<span class='alert'>You try to feed [A] to [src], but nothing happens!</span>",\
+			src, "<span class='alert'>[user] tries to feed [A] to you, but nothing happens!</span>")
+		else
+			boutput(user, "<span class='alert'>You can't eat that!</span>")
 
 /mob/proc/on_eat(var/atom/A)
 	return
+
+/mob/set_density(var/newdensity)
+	if(HAS_MOB_PROPERTY(src, PROP_NEVER_DENSE))
+		..(0)
+	else
+		..(newdensity)

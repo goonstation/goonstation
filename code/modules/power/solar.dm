@@ -139,14 +139,10 @@
 	return
 
 /obj/machinery/power/solar/proc/updateicon()
-	//overlays = null
 	if(status & BROKEN)
 		icon_state = "solar_panel-b"
-		//overlays += image('icons/obj/power.dmi', icon_state = "solar_panel-b", layer = FLY_LAYER)
 	else
-		//overlays += image('icons/obj/power.dmi', icon_state = "solar_panel", layer = FLY_LAYER)
 		src.icon_state = "solar_panel"
-		// src.set_dir(angle2dir(adir))
 		src.set_dir(NORTH)
 		animate(src, time=rand(0.1 SECONDS, 9 SECONDS))
 		animate(transform=matrix(adir, MATRIX_ROTATE), time=rand(1 SECOND, 4 SECONDS))
@@ -272,23 +268,12 @@
 /obj/machinery/power/solar_control/proc/updateicon()
 	if(status & BROKEN)
 		icon_state = "broken"
-		//overlays = null
 		return
 	if(status & NOPOWER)
 		icon_state = "c_unpowered"
-		//overlays = null
 		return
 
 	icon_state = "solar"
-	/*
-	overlays = null
-	if(cdir > 0)
-		if (!solcon)
-			solcon = new /obj/overlay {icon='icons/obj/computer.dmi'; icon_state="solcon-o";} (src)
-
-		solcon.set_dir(angle2dir(cdir))
-		overlays += solcon
-	*/
 	return
 
 /obj/machinery/power/solar_control/attack_ai(mob/user)
@@ -431,7 +416,6 @@
 /obj/machinery/power/solar_control/ex_act(severity)
 	switch(severity)
 		if(1.0)
-			//SN src = null
 			qdel(src)
 			return
 		if(2.0)

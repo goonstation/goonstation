@@ -1,5 +1,5 @@
 /datum/hud/pod
-	var/obj/screen/hud
+	var/atom/movable/screen/hud
 		engine
 		life_support
 		comms
@@ -248,7 +248,7 @@
 				user.client.tooltipHolder.inPod = 0
 
 			return
-		if (user.getStatusDuration("stunned") > 0 || user.getStatusDuration("weakened") || user.getStatusDuration("paralysis") > 0 || !isalive(user))
+		if (is_incapacitated(user))
 			boutput(user, "<span class='alert'>Not when you are incapacitated.</span>")
 			return
 		// WHAT THE FUCK PAST MARQUESAS
@@ -274,9 +274,9 @@
 					if(master.com_system.active)
 						master.com_system.External()
 					else
-						boutput(usr, "[master.ship_message("SYSTEM OFFLINE")]")
+						boutput(user, "[master.ship_message("SYSTEM OFFLINE")]")
 				else
-					boutput(usr, "[master.ship_message("System not installed in ship!")]")
+					boutput(user, "[master.ship_message("System not installed in ship!")]")
 			if ("weapon")
 				if (master.m_w_system)
 					master.m_w_system.toggle()
@@ -288,7 +288,7 @@
 					master.sensors.toggle()
 			if ("sensors_use")
 				if (master.sensors && master.sensors.active)
-					master.sensors.opencomputer(usr)
+					master.sensors.opencomputer(user)
 			if ("lock")
 				if (master.lock)
 					if (!master.lock.code || master.lock.code == "")
@@ -297,32 +297,32 @@
 							master.locked = 0
 						master.lock.code = ""
 
-						boutput(usr, "<span class='notice'>Code reset.  Please type new code and press enter.</span>")
-						master.lock.show_lock_panel(usr)
+						boutput(user, "<span class='notice'>Code reset.  Please type new code and press enter.</span>")
+						master.lock.show_lock_panel(user)
 					else if (!master.locked)
 						master.locked = 1
-						boutput(usr, "<span class='alert'>The lock mechanism clunks locked.</span>")
+						boutput(user, "<span class='alert'>The lock mechanism clunks locked.</span>")
 					else if (master.locked)
 						master.locked = 0
-						boutput(usr, "<span class='alert'>The ship mechanism clicks unlocked.</span>")
+						boutput(user, "<span class='alert'>The ship mechanism clicks unlocked.</span>")
 			if ("set_code")
 				if (master.lock)
 					master.lock.configure_mode = 1
 					if (master)
 						master.locked = 0
 					master.lock.code = ""
-					boutput(usr, "<span class='notice'>Code reset.  Please type new code and press enter.</span>")
-					master.lock.show_lock_panel(usr)
+					boutput(user, "<span class='notice'>Code reset.  Please type new code and press enter.</span>")
+					master.lock.show_lock_panel(user)
 			if ("return_to_station")
 				if(master.com_system)
 					if(master.com_system.active)
 						master.going_home = 1
 					else
-						boutput(usr, "[master.ship_message("SYSTEM OFFLINE")]")
+						boutput(user, "[master.ship_message("SYSTEM OFFLINE")]")
 				else
-					boutput(usr, "[master.ship_message("System not installed in ship!")]")
+					boutput(user, "[master.ship_message("System not installed in ship!")]")
 			if ("leave")
-				master.leave_pod(usr)
+				master.leave_pod(user)
 			if ("wormhole") //HEY THIS DOES SAMETHING AS CLIENT WORMHOLE PROC IN VEHICLE.DM
 				if(master.engine && !istype(master,/obj/machinery/vehicle/tank/car))
 					if(master.engine.active)
@@ -331,13 +331,13 @@
 							if (istype(T) && T.allows_vehicles)
 								master.engine.Wormhole()
 							else
-								boutput(usr, "[master.ship_message("Cannot create wormhole on this flooring!")]")
+								boutput(user, "[master.ship_message("Cannot create wormhole on this flooring!")]")
 						else
-							boutput(usr, "[master.ship_message("Engine recharging wormhole capabilities!")]")
+							boutput(user, "[master.ship_message("Engine recharging wormhole capabilities!")]")
 					else
-						boutput(usr, "[master.ship_message("SYSTEM OFFLINE")]")
+						boutput(user, "[master.ship_message("SYSTEM OFFLINE")]")
 				else
-					boutput(usr, "[master.ship_message("System not installed in ship!")]")
+					boutput(user, "[master.ship_message("System not installed in ship!")]")
 			if ("lights")
 				if (master.lights)
 					master.lights.toggle()

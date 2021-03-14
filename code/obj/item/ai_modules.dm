@@ -237,6 +237,8 @@ AI MODULES
 
 	attack_self(var/mob/user)
 		input_law_info(user, "Freeform", "Please enter anything you want the AI to do. Anything. Serious.", (lawTarget ? lawTarget : "Eat shit and die"))
+		if(src.lawTarget && src.lawTarget != "Eat shit and die")
+			phrase_log.log_phrase("ailaw", src.get_law_text(), no_duplicates=TRUE)
 
 /******************** Reset ********************/
 
@@ -251,6 +253,7 @@ AI MODULES
 		sender.unlock_medal("Format Complete", 1)
 		ticker.centralized_ai_laws.set_zeroth_law("")
 		ticker.centralized_ai_laws.clear_supplied_laws()
+		page_departments -= "Silicon"
 		for (var/mob/living/silicon/S in mobs)
 			if (isghostdrone(S))
 				return
@@ -285,6 +288,7 @@ AI MODULES
 	attack_self(var/mob/user)
 		input_law_info(user, "Rename", "What will the AI be renamed to?", pick_string_autokey("names/ai.txt"))
 		lawTarget = replacetext(copytext(html_encode(lawTarget),1, 128), "http:","")
+		phrase_log.log_phrase("name-ai", lawTarget, no_duplicates=TRUE)
 
 	install(obj/machinery/computer/aiupload/comp)
 		if (comp.status & NOPOWER)
@@ -363,6 +367,10 @@ AI MODULES
 		input_law_info(user, "Designate as Human", "Which silicons would you like to make Human?")
 		return
 
+	transmitInstructions(mob/sender)
+		. = ..()
+		page_departments["Silicon"] = MGO_SILICON
+
 /obj/item/aiModule/experimental/equality/b
 	name = "Experimental 'Equality' AI Module"
 
@@ -373,15 +381,19 @@ AI MODULES
 		input_law_info(user, "Designate as Human", "Which silicons would you like to make Human?")
 		return
 
+	transmitInstructions(mob/sender)
+		. = ..()
+		page_departments["Silicon"] = MGO_SILICON
+
 
 
 /obj/machinery/computer/aiupload
 	attack_hand(mob/user as mob)
 		if (src.status & NOPOWER)
-			boutput(usr, "\The [src] has no power.")
+			boutput(user, "\The [src] has no power.")
 			return
 		if (src.status & BROKEN)
-			boutput(usr, "\The [src] computer is broken.")
+			boutput(user, "\The [src] computer is broken.")
 			return
 
 		var/datum/ai_laws/LAWS = ticker.centralized_ai_laws

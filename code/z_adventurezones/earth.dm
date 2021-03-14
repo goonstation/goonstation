@@ -256,6 +256,12 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 	urs
 		ckey = "ursulamajor"
 		name = "Office of UrsulaMajor"
+	virvatuli
+		ckey = "virvatuli"
+		name = "Office of Virvatuli"
+		New()
+			..()
+			overlays += image(icon = 'icons/turf/areas.dmi', icon_state = "snowverlay", layer = EFFECTS_LAYER_BASE)
 	wire
 		ckey = "wirewraith"
 		name = "Office of Wire"

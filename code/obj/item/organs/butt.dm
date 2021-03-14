@@ -159,17 +159,15 @@
 			qdel(W)
 			qdel(src)
 		else if (istype(W, /obj/item/parts/robot_parts/arm))
-			var/obj/machinery/bot/buttbot/B = new /obj/machinery/bot/buttbot
-			if (src.toned)
-				B.toned = 1
-				B.s_tone = src.s_tone
-
+			var/obj/machinery/bot/buttbot/B = new /obj/machinery/bot/buttbot(src, W)
 			if (src.donor || src.donor_name)
 				B.name = "[src.donor_name ? "[src.donor_name]" : "[src.donor.real_name]"] buttbot"
 			user.show_text("You add [W] to [src]. Fantastic.", "blue")
-			B.set_loc(get_turf(user))
-			qdel(W)
-			qdel(src)
+			B.set_loc(get_turf(src))
+			src.set_loc(B)
+			user.u_equip(src)
+			W.set_loc(B)
+			user.u_equip(W)
 
 		else if (istype(W, /obj/item/spacecash) && W.type != /obj/item/spacecash/buttcoin)
 			user.u_equip(W)
@@ -201,12 +199,15 @@
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/parts/robot_parts/arm))
-			var/obj/machinery/bot/buttbot/cyber/B = new /obj/machinery/bot/buttbot/cyber(get_turf(user))
+			var/obj/machinery/bot/buttbot/cyber/B = new /obj/machinery/bot/buttbot/cyber(src, W)
 			if (src.donor || src.donor_name)
 				B.name = "[src.donor_name ? "[src.donor_name]" : "[src.donor.real_name]"] robuttbot"
 			user.show_text("You add [W] to [src]. Fantastic.", "blue")
-			qdel(W)
-			qdel(src)
+			B.set_loc(get_turf(src))
+			src.set_loc(B)
+			user.u_equip(src)
+			W.set_loc(B)
+			user.u_equip(W)
 		else
 			return ..()
 

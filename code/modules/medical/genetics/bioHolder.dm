@@ -401,7 +401,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 
 		var/datum/bioEffect/global_BE = E.get_global_instance()
 		if (grant_research)
-			if (global_BE.research_level < 2)
+			if (global_BE.research_level < EFFECT_RESEARCH_DONE)
 				genResearch.mutations_researched++
 			global_BE.research_level = max(global_BE.research_level, EFFECT_RESEARCH_ACTIVATED)
 
@@ -429,7 +429,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 			return 0
 
 		var/datum/bioEffect/newEffect = bioEffectList[idToAdd]
-		newEffect = new newEffect.type //New new new york
+		newEffect = newEffect.GetCopy()
 		if (istype(newEffect))
 			effectPool[newEffect.id] = newEffect
 			newEffect.holder = src
@@ -570,7 +570,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 		do
 			for(var/i = 1 to 20)
 				newUid += "[pick(numbersAndLetters)]"
-		while(bioUids.Find(newUid))
+		while(newUid in bioUids)
 
 		return newUid
 
@@ -643,7 +643,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 		newEffect = new newEffect.type
 
 		if(istype(newEffect))
-			for(var/datum/bioEffect/curr_id in effects)
+			for(var/datum/bioEffect/curr_id as() in effects)
 				var/datum/bioEffect/curr = effects[curr_id]
 				if(curr?.type == EFFECT_TYPE_MUTANTRACE && newEffect.type == EFFECT_TYPE_MUTANTRACE)
 					//Can only have one mutant race.
@@ -728,7 +728,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 		return 0
 
 	proc/RemoveAllEffects(var/type = null)
-		for(var/D in effects)
+		for(var/D as() in effects)
 			var/datum/bioEffect/BE = effects[D]
 			if(BE && (isnull(type) || BE.effectType == type))
 				RemoveEffect(BE.id)
@@ -741,7 +741,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 		return 1
 
 	proc/RemoveAllPoolEffects(var/type = null)
-		for(var/D in effectPool)
+		for(var/D as() in effectPool)
 			var/datum/bioEffect/BE = effectPool[D]
 			if(BE && (isnull(type) || BE.effectType == type))
 				effectPool.Remove(D)
@@ -755,7 +755,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 
 	proc/HasAnyEffect(var/type = null)
 		if(type)
-			for(var/D in effects)
+			for(var/D as() in effects)
 				var/datum/bioEffect/BE = effects[D]
 				if(BE && BE.effectType == type)
 					return 1
@@ -795,14 +795,14 @@ var/list/datum/bioEffect/mutini_effects = list()
 
 	proc/HasAllOfTheseEffects()
 		var/tally = 0 //We cannot edit the args list directly, so just keep a count.
-		for (var/datum/bioEffect/D in effects)
+		for (var/datum/bioEffect/D as() in effects)
 			if (lowertext(D) in args)
 				tally++
 
 		return tally >= args.len
 
 	proc/GetASubtypeEffect(type)
-		for(var/id in effects)
+		for(var/id as() in effects)
 			var/datum/bioEffect/BE = effects[id]
 			if(istype(BE, type))
 				return BE
@@ -851,7 +851,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 	proc/DegradeRandomEffect()
 		var/list/eligible_effects = list()
 		var/datum/bioEffect/BE = null
-		for (var/X in effects)
+		for (var/X as() in effects)
 			BE = effects[X]
 			if (!BE.degrade_to) // doesn't turn into anything
 				continue

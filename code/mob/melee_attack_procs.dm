@@ -20,7 +20,7 @@
 		src.help_put_out_fire(M)
 	else if (src == M && src.getStatusDuration("burning"))
 		M.resist()
-	else if (M.health <= 0 && src.health >= -75.0)
+	else if ((M.health <= 0 || M.find_ailment_by_type(/datum/ailment/malady/flatline)) && src.health >= -75.0)
 		if (src == M && src.is_bleeding())
 			src.staunch_bleeding(M) // if they've got SOMETHING to do let's not just harass them for trying to do CPR on themselves
 		else
@@ -159,21 +159,15 @@
 
 	src.visible_message("<span class='alert'><B>[src] is trying to perform CPR on [target]!</B></span>")
 	if (do_mob(src, target, 40)) //todo : unfuck this into a progres bar or something that happens automatically over time
-		if (target.health < 0)
+		if (target.health < 0 || target.find_ailment_by_type(/datum/ailment/malady/flatline))
 			target.take_oxygen_deprivation(-15)
 			target.losebreath = 0
 			target.changeStatus("paralysis", -20)
 
-			/*if(prob(50)) // this doesn't work yet
-				for(var/datum/ailment/disability/D in src.target.ailments)
-					if(istype(D,/datum/ailment/disease/heartfailure))
-						src.target.resistances += D.type
-						src.target.ailments -= D
-						boutput(world, "<span class='alert'>CURED [D] in [src.target]</span>")
-					if(istype(D,/datum/ailment/disease/flatline))
-						src.target.resistances += D.type
-						src.target.ailments -= D
-						boutput(world, "<span class='alert'>CURED [D] in [src.target]</span>")*/
+			if(target.find_ailment_by_type(/datum/ailment/malady/flatline) && target.health > -50)
+				if ((target.reagents?.has_reagent("epinephrine") || target.reagents?.has_reagent("atropine")) ? prob(5) : prob(2))
+					target.cure_disease_by_path(/datum/ailment/malady/flatline)
+
 			if (src)
 				src.visible_message("<span class='alert'>[src] performs CPR on [target]!</span>")
 
@@ -246,14 +240,6 @@
 		return 0
 
 	var/mob/living/carbon/human/H = src
-
-	if (istype(H))
-		if (H.sims)
-			var/mult = H.sims.getMoodActionMultiplier()
-			if (mult < 0.5)
-				if (prob((0.5 - mult) * 200))
-					boutput(src, pick("<span class='alert'>You're not in the mood to grab that.</span>", "<span class='alert'>You don't feel like doing that.</span>"))
-					return
 
 	logTheThing("combat", src, target, "grabs [constructTarget(target,"combat")] at [log_loc(src)].")
 
@@ -363,6 +349,10 @@
 
 	var/damage = rand(base_damage_low, base_damage_high) * extra_damage
 	var/mult = 1
+	var/target_stamina = STAMINA_MAX //uses stamina?
+	if (isliving(target))
+		var/mob/living/L = target
+		target_stamina = L.stamina
 
 	if (damage > 0)
 		def_zone = target.check_target_zone(def_zone)
@@ -381,13 +371,10 @@
 	else if ( !(HAS_MOB_PROPERTY(target, PROP_CANTMOVE)) )
 		var/armor_mod = 0
 		armor_mod = target.get_melee_protection(def_zone)
-		msgs.stamina_target -= max(STAMINA_HTH_DMG - (armor_mod*0.5), 0) //armor vs barehanded disarm doesnt get full reduction
-		msgs.force_stamina_target = 1
+		if(target_stamina >= 0)
+			msgs.stamina_target -= max(STAMINA_DISARM_DMG - (armor_mod*0.5), 0) //armor vs barehanded disarm gives flat reduction
+			msgs.force_stamina_target = 1
 
-	var/target_stamina = STAMINA_MAX //uses stamina?
-	if (isliving(target))
-		var/mob/living/L = target
-		target_stamina = L.stamina
 
 	if (ishuman(src))
 		var/mob/living/carbon/human/H = src
@@ -637,6 +624,12 @@
 		msgs.affecting = def_zone
 
 	var/punchmult = get_base_damage_multiplier(def_zone)
+	if(ishuman(src))
+		var/mob/living/carbon/human/LM = src
+		for (var/uid in LM.pathogens)
+			var/datum/pathogen/P = LM.pathogens[uid]
+			punchmult *= P.onpunch(target, def_zone)
+
 	var/punchedmult = target.get_taken_base_damage_multiplier(src, def_zone)
 
 	if (!punchedmult)
@@ -662,6 +655,10 @@
 			var/mob/living/carbon/human/H = src
 			if (H.shoes)
 				damage += H.shoes.kick_bonus
+			else if (H.limbs.r_leg)
+				damage += H.limbs.r_leg.limb_hit_bonus
+			else if (H.limbs.l_leg)
+				damage += H.limbs.l_leg.limb_hit_bonus
 		#if STAMINA_LOW_COST_KICK == 1
 		msgs.stamina_self += STAMINA_HTH_COST / 3
 		#endif
@@ -757,7 +754,8 @@
 			else
 				user.visible_message("<span class='alert'><B>[user] pounds on [BORG.name]'s head furiously!</B></span>")
 				playsound(user.loc, "sound/impact_sounds/Metal_Clang_3.ogg", 50, 1)
-				BORG.part_head.ropart_take_damage(rand(20,40),0)
+				if (BORG.part_head.ropart_take_damage(rand(20,40),0) == 1)
+					BORG.compborg_lose_limb(BORG.part_head)
 				if (!BORG.anchored && prob(30))
 					user.visible_message("<span class='alert'><B>...and sends them flying!</B></span>")
 					send_flying = 2
@@ -1080,7 +1078,7 @@
 			hit_chance = 90
 		else if (def_zone == "head")
 			hit_chance = 70
-		if(!client || stat || getStatusDuration("paralysis") || getStatusDuration("stunned") || getStatusDuration("weakened"))
+		if(!client || is_incapacitated(src))
 			hit_chance = 100
 		if (!prob(hit_chance))
 			playsound(loc, "sound/impact_sounds/Generic_Swing_1.ogg", 50, 1, 1)
@@ -1133,10 +1131,6 @@
 
 /mob/living/carbon/human/get_base_damage_multiplier(var/def_zone)
 	var/punchmult = 1
-
-	for (var/uid in src.pathogens)
-		var/datum/pathogen/P = src.pathogens[uid]
-		punchmult *= P.onpunch(target, def_zone)
 
 	if (sims)
 		punchmult *= sims.getMoodActionMultiplier()

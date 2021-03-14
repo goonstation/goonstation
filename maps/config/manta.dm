@@ -1,4 +1,4 @@
-#include "..\manta_xmas.dmm"
+#include "..\manta.dmm"
 #include "..\z2.dmm"
 #include "..\z3_blank.dmm"
 #include "z4.dm"
