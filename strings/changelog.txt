@@ -1,5 +1,9 @@
 
 (t)sun mar 14 21
+(u)ThePotato97
+(p)4017
+(e)📄|tgui
+(+)Fixed saving clone records to disks and alignment of damage indicators
 (u)Flappybat
 (p)4013
 (e)⚖|balance
