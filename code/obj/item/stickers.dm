@@ -120,7 +120,6 @@
 		. = "<br><span class='notice'>It says:</span><br><blockquote style='margin: 0 0 0 1em;'>[words]</blockquote>"
 
 	attack_hand(mob/user as mob)
-		//boutput(user, "fart")
 		user.lastattacked = user
 		if (src.attached)
 			if (user.a_intent == INTENT_HELP)
