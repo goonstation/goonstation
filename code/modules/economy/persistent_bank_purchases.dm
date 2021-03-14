@@ -29,6 +29,8 @@ var/global/list/persistent_bank_purchaseables =	list(\
 	new /datum/bank_purchaseable/bp_anello,\
 	new /datum/bank_purchaseable/nt_backpack,\
 
+	new /datum/bank_purchaseable/lizard_tail,\
+	new /datum/bank_purchaseable/monkey_tail,\
 	new /datum/bank_purchaseable/limbless,\
 	new /datum/bank_purchaseable/legless,\
 	new /datum/bank_purchaseable/corpse,\
