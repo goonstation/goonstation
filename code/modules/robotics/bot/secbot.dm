@@ -47,6 +47,8 @@
 #define SECBOT_GUARDMOVE_COOLDOWN "secbot_mill_about_delay"
 #define SECBOT_HELPME_COOLDOWN "secbot_is_under_attack"
 #define SECBOT_CHATSPAM_COOLDOWN "secbot_tenfourtenfourtenfour_etcetera"
+#define SECBOT_CAGE_RAGE_COOLDOWN "secbot_no_like_crate"
+#define SECBOT_TONSIL_TAZE_COOLDOWN "secbot_waggles_its_baton_in_ur_guts"
 
 /obj/machinery/bot/secbot
 	name = "Securitron"
@@ -637,6 +639,98 @@
 			src.KillPathAndGiveUp(KPAGU_CLEAR_ALL)
 			return
 
+		if (!isturf(src.loc)) // Oh no we're in a thing!
+			SPAWN_DBG(0)
+				var/ismad = 0
+				if(src.emagged || ismob(src.loc)) // eating an officer of the law is a crime ...right?
+					ismad = 1
+				if(!ismad)
+					return // Beepsky doesnt mind chilling in his squad car(binet)
+				else // his dad, though...
+					if(!ON_COOLDOWN(src, SECBOT_CAGE_RAGE_COOLDOWN, 1.5 SECONDS))
+						src.weeoo()
+						YellAtPerp(impotent_rage = 0)
+						if(isobj(src.loc))
+							var/obj/O = src.loc
+							var/wiggle = 6
+							while(wiggle > 0)
+								wiggle--
+								O.pixel_x = rand(-3,3)
+								O.pixel_y = rand(-3,3)
+								sleep(0.1 SECONDS)
+							O.pixel_x = initial(O.pixel_x)
+							O.pixel_y = initial(O.pixel_y)
+							if(prob(33))
+								src.visible_message("<span class='alert'><b>[src]</b> emits a loud thump and rattles a bit.</span>")
+								playsound(get_turf(O), "sound/impact_sounds/Metal_Hit_Heavy_1.ogg", 50, 1)
+								if(prob(75) && istype(O, /obj/storage))
+									var/obj/storage/C = O
+									if (C.can_flip_bust == 1 || prob(50)) // he really doesnt like getting stuck in things
+										boutput(src, "<span class='alert'>[C] [pick("cracks","bends","shakes","groans")].</span>")
+										C.bust_out()
+										return
+							else
+								for (var/mob/M in hearers(O, null))
+									M.show_text("<font size=[max(0, 5 - get_dist(get_turf(src), M))]>THUD, thud!</font>")
+								playsound(get_turf(O), "sound/impact_sounds/Wood_Hit_1.ogg", 15, 1, -3)
+							var/wiggle = 6
+							while(wiggle > 0)
+								wiggle--
+								O.pixel_x = rand(-3,3)
+								O.pixel_y = rand(-3,3)
+								sleep(0.1 SECONDS)
+							O.pixel_x = initial(O.pixel_x)
+							O.pixel_y = initial(O.pixel_y)
+						else if(ismob(src.loc)) // ew
+							var/mob/M = src.loc
+							src.weeoo()
+							if(prob(25))
+								YellAtPerp(impotent_rage = 1)
+							if(prob(50))
+								hit_twitch(M)
+								if(prob(33) && !ON_COOLDOWN(src, SECBOT_TONSIL_TAZE_COOLDOWN, 10 SECONDS))
+									SPAWN_DBG(0)
+										src.baton_attack(M, force_attack = 1)
+										var/zap_word = pick("zap", "jolt", "taze", "frazzle")
+										var/zapped_bit = pick("guts", "innards", "lunch", "insides", "guff", "soul", "permanent record", "everything", "shit right the fuck up")
+										var/jab_verb = pick("stab", "jab", "whack", "swish", "swizzle", "thwhack")
+										M.visible_message("<span class='alert'>[M] suddenly violently convulses!</span>",
+										"<span class='alert'><b>AAAAGH!!<b> You feel [src] [zap_word] your [zapped_bit] with a swift [jab_verb] of its baton!</span>[prob(50) ? " oh fuck it hurts..." : ""]")
+										M.emote("scream", 0)
+								else
+									playsound(get_turf(src), "swing_hit", 50, 1, -1)
+									M.TakeDamage("All", 10, 0, 0, DAMAGE_BLUNT, 1)
+									random_brute_damage(M, 10, 0)
+									var/hit_word = pick("slam", "thrust", "swing", "whack")
+									var/hit_bit = pick("guts", "innards", "lunch", "insides", "guff", "soul", "permanent record", "everything", "shit right the fuck up")
+									M.visible_message("<span class='alert'>Something inside [M] suddenly kicks!</span>",
+									"<span class='alert'>Agh... You feel [src] [hit_word] its baton into your [hit_bit]!</span>[prob(50) ? " ouch..." : ""]")
+									M.emote("scream", 0)
+								M.remove_stamina(50)
+								M.stamina_stun()
+							if(is_incapacitated(M) && M.health <= 0 && prob(20))
+								src.set_loc(get_turf(M))
+								playsound(get_turf(src), "swing_hit", 50, 1, -1)
+								M.TakeDamage("All", 60, 0, 0, DAMAGE_BLUNT, 1)
+								random_brute_damage(M, 50, 0)
+								var/its_ass = "ass"
+								if(ishuman(M))
+									var/mob/living/carbon/human/H = M
+									if(istype(H.organHolder.butt))
+										its_ass = H.organHolder.butt.name
+									else
+										its_ass = "behind"
+									H.organHolder?.drop_and_throw_organ("butt")
+								gibs(get_turf(M), headbits = 0)
+								M.visible_message("<span class='alert'>[src] suddenly explodes out of [M]'s [its_ass]![prob(80) ? " He does NOT look happy!" : ""]</span>",
+								"<span class='alert'><b>AAAAGH!! [src] just exploded out of your ass!<b>[prob(50) ? " IT HURTS!!" : ""]</span>")
+								M.emote("scream", 0)
+								src.threatlevel = 8
+								src.target = M
+								src.EngageTarget(M)
+								src.process() // now he's mad!
+			return
+
 		switch(mode)
 			/// No guard orders, start patrol if allowed, also look for people to heck up
 			if(SECBOT_IDLE)
@@ -883,18 +977,22 @@
 		weeoo()
 		process()	// ensure bot quickly responds to a perp
 
-	proc/YellAtPerp()
-		src.point(src.target, 1)
-		src.speak("Level [src.threatlevel] infraction alert!")
+	proc/YellAtPerp(impotent_rage = 0)
+		if(!impotent_rage)
+			src.point(src.target, 1)
+			src.speak("Level [src.threatlevel] infraction alert!")
 		var/saything = pick('sound/voice/bcriminal.ogg', 'sound/voice/bjustice.ogg', 'sound/voice/bfreeze.ogg')
 		switch(saything)
 			if('sound/voice/bcriminal.ogg')
-				src.speak("CRIMINAL DETECTED.")
+				if(!impotent_rage)
+					src.speak("CRIMINAL DETECTED.")
 			if('sound/voice/bjustice.ogg')
-				src.speak("PREPARE FOR JUSTICE.")
+				if(!impotent_rage)
+					src.speak("PREPARE FOR JUSTICE.")
 			if('sound/voice/bfreeze.ogg')
-				src.speak("FREEZE. SCUMBAG.")
-		playsound(src.loc, saything, 50, 0)
+				if(!impotent_rage)
+					src.speak("FREEZE. SCUMBAG.")
+		playsound(get_turf(src), saything, 50, 0)
 
 	proc/weeoo()
 		if(weeooing)
@@ -902,7 +1000,7 @@
 		SPAWN_DBG(0)
 			weeooing = 1
 			var/weeoo = 10
-			playsound(src.loc, "sound/machines/siren_police.ogg", 50, 1)
+			playsound(get_turf(src), "sound/machines/siren_police.ogg", 50, 1)
 			while (weeoo)
 				add_simple_light("secbot", list(255 * 0.9, 255 * 0.1, 255 * 0.1, 0.8 * 255))
 				sleep(0.3 SECONDS)
