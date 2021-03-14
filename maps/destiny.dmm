@@ -3376,18 +3376,12 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/central)
 "amN" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/disposalpipe/segment{
-	dir = 4
-	},
 /obj/disposalpipe/segment/mail{
-	dir = 1;
+	dir = 2;
 	icon_state = "pipe-c"
 	},
-/turf/simulated/floor/black,
-/area/station/hallway/primary/central)
+/turf/simulated/wall/auto/gannets,
+/area/station/crew_quarters/arcade)
 "amP" = (
 /obj/machinery/door/firedoor/border_only,
 /obj/cable{
@@ -11289,6 +11283,13 @@
 	dir = 1;
 	icon_state = "line1"
 	},
+/obj/disposalpipe/trunk/mail,
+/obj/machinery/disposal/mail{
+	mail_tag = "buddy_depot";
+	mailgroup = "science";
+	message = "1";
+	name = "mail chute-'Robot Depot'"
+	},
 /turf/simulated/floor,
 /area/station/science/bot_storage)
 "aRJ" = (
@@ -15196,7 +15197,8 @@
 	icon_state = "line1"
 	},
 /obj/disposalpipe/segment/mail{
-	dir = 4
+	dir = 8;
+	icon_state = "pipe-c"
 	},
 /turf/simulated/floor,
 /area/station/science/bot_storage)
@@ -16773,9 +16775,6 @@
 "bwb" = (
 /obj/decal/tile_edge/line/black{
 	icon_state = "line1"
-	},
-/obj/disposalpipe/segment/mail{
-	dir = 4
 	},
 /obj/disposalpipe/segment,
 /turf/simulated/floor,
@@ -19078,19 +19077,10 @@
 /obj/decal/tile_edge/line/black{
 	icon_state = "line1"
 	},
-/obj/machinery/disposal/mail{
-	mail_tag = "buddy_depot";
-	mailgroup = "science";
-	message = "1";
-	name = "mail chute-'Robot Depot'"
-	},
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 1;
 	name = "autoname - SS13"
-	},
-/obj/disposalpipe/trunk/mail{
-	dir = 8
 	},
 /turf/simulated/floor,
 /area/station/science/bot_storage)
@@ -22426,10 +22416,6 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/disposalpipe/segment/mail{
-	dir = 2;
-	icon_state = "pipe-c"
-	},
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -22442,6 +22428,7 @@
 	dir = 1;
 	nostick = 1
 	},
+/obj/disposalpipe/segment/mail,
 /turf/simulated/floor/black,
 /area/station/hallway/primary/central)
 "dWg" = (
@@ -28100,8 +28087,11 @@
 /area/station/hallway/primary/central)
 "hlp" = (
 /obj/machinery/door/firedoor/border_only,
-/obj/disposalpipe/segment/mail,
 /obj/machinery/door/airlock/gannets/glass,
+/obj/disposalpipe/segment/mail{
+	dir = 1;
+	icon_state = "pipe-c"
+	},
 /turf/simulated/floor/black,
 /area/station/hallway/primary/central)
 "hlu" = (
@@ -45737,6 +45727,15 @@
 	},
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/toilets)
+"rgs" = (
+/obj/disposalpipe/segment/food{
+	dir = 4
+	},
+/obj/machinery/door/firedoor/border_only,
+/obj/machinery/door/airlock/gannets/glass,
+/obj/disposalpipe/segment/mail,
+/turf/simulated/floor/black,
+/area/station/hallway/primary/central)
 "rgt" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -105648,7 +105647,7 @@ oGd
 akB
 dEp
 hlp
-amN
+xXb
 vry
 ekr
 ekr
@@ -105949,7 +105948,7 @@ biH
 biH
 biH
 amg
-biH
+amN
 dWa
 omH
 mqM
@@ -105983,7 +105982,7 @@ fjE
 akB
 akB
 akB
-wjb
+rgs
 omH
 akA
 amJ
