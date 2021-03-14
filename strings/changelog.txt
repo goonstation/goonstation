@@ -1,5 +1,9 @@
 
 (t)sun mar 14 21
+(u)Fosstar
+(p)3860
+(e)⚖|balance
+(+)The detective's scanner (not their PDA) can now scan objects up to two tiles away.
 (u)ThePotato97
 (p)4017
 (e)📄|tgui
