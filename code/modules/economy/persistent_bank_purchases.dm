@@ -366,10 +366,10 @@ var/global/list/persistent_bank_purchaseables =	list(\
 			if (ishuman(M))
 				var/mob/living/carbon/human/H = M
 				SPAWN_DBG(6 SECONDS)
+					// If you buy this and already have a tail, RIP. No refunds.
 					if (H.organHolder.receive_organ(new/obj/item/organ/tail/lizard, "tail", 0.0, 0))
 						boutput( H, "<span class='notice'><b>Your sprout a lizard tail! Huh!</b></span>" )
-						return 1
-					return 0
+				return 1
 			return 0
 
 	monkey_tail
@@ -380,10 +380,10 @@ var/global/list/persistent_bank_purchaseables =	list(\
 			if (ishuman(M))
 				var/mob/living/carbon/human/H = M
 				SPAWN_DBG(6 SECONDS)
+					// If you buy this and already have a tail, RIP. No refunds.
 					if (H.organHolder.receive_organ(new/obj/item/organ/tail/monkey, "tail", 0.0, 0))
 						boutput( H, "<span class='notice'><b>Your sprout a monkey tail! Weird!</b></span>" )
-						return 1
-					return 0
+				return 1
 			return 0
 
 	limbless
