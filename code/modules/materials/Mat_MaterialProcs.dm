@@ -550,6 +550,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 					if(MO.mind)
 						boutput(entering, "<span class='alert'>[owner] already has a soul controlling it!</span>")
 						return
+					MO.ai?.enabled = FALSE
 					boutput(entering, "<span class='alert'>You possess [owner]! Keep in mind you are not an antagonist!</span>")
 					O.mind.transfer_to(MO)
 		return
