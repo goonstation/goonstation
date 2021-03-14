@@ -377,7 +377,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	desc = "A hefty combat revolver developed by Cormorant Precision Arms. Uses .357 caliber rounds."
 	icon_state = "revolver"
 	item_state = "revolver"
-	force = 8
+	force = 10
 	caliber = list(0.38, 0.357) // Just like in RL (Convair880).
 	max_ammo_capacity = 7
 
@@ -418,7 +418,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	name = "Faith"
 	desc = "'Cause ya gotta have Faith."
 	icon_state = "faith"
-	force = 5
+	force = 6
 	caliber = 0.22
 	max_ammo_capacity = 4
 	auto_eject = 1
@@ -505,7 +505,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	item_state = "glock"
 	shoot_delay = 2
 	w_class = 2.0
-	force = 5
+	force = 6
 	caliber = 0.355
 	max_ammo_capacity = 18
 	auto_eject = 1
@@ -544,7 +544,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 /obj/item/gun/kinetic/clock_188/boomerang
 	desc = "Jokingly called a \"Gunarang\" in some circles. Uses 9mm NATO rounds."
 	name = "Clock 180"
-	force = 5
+	force = 6
 	throw_range = 10
 	throwforce = 1
 	throw_speed = 1
@@ -588,7 +588,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	desc = "Multi-purpose high-grade military shotgun. Very spiffy."
 	icon_state = "spas"
 	item_state = "spas"
-	force = 15
+	force = 12
 	contraband = 7
 	caliber = 0.72
 	max_ammo_capacity = 8
@@ -713,7 +713,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	icon = 'icons/obj/48x32.dmi' // big guns get big icons
 	icon_state = "ak47"
 	item_state = "ak47"
-	force = 15
+	force = 12
 	contraband = 8
 	caliber = 0.308
 	max_ammo_capacity = 30 // It's magazine-fed (Convair880).
@@ -733,7 +733,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	icon = 'icons/obj/48x32.dmi'
 	icon_state = "ohr"
 	item_state = "ohr"
-	force = 15
+	force = 12
 	contraband = 8
 	caliber = 0.308
 	max_ammo_capacity = 4 // It's magazine-fed (Convair880).
@@ -772,7 +772,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	name = "Zip Gun"
 	desc = "An improvised and unreliable gun."
 	icon_state = "zipgun"
-	force = 5
+	force = 6
 	contraband = 6
 	caliber = null // use any ammo at all BA HA HA HA HA
 	max_ammo_capacity = 2
@@ -811,7 +811,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	icon_state = "silenced"
 	w_class = 2
 	silenced = 1
-	force = 5
+	force = 6
 	contraband = 4
 	caliber = 0.22
 	max_ammo_capacity = 10
@@ -830,7 +830,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	name = "Virtual Pistol"
 	desc = "This thing would be better if it wasn't such a piece of shit."
 	icon_state = "railgun"
-	force = 5
+	force = 6
 	contraband = 0
 	max_ammo_capacity = 200
 
@@ -853,7 +853,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	name = "Flare Gun"
 	icon_state = "flare"
 	item_state = "flaregun"
-	force = 5
+	force = 6
 	contraband = 2
 	caliber = 0.72
 	max_ammo_capacity = 1
@@ -869,7 +869,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	name = "Riot launcher"
 	icon_state = "40mm"
 	//item_state = "flaregun"
-	force = 10
+	force = 8
 	contraband = 7
 	caliber = 1.57
 	max_ammo_capacity = 1
@@ -993,7 +993,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	desc = "A semi-automatic, 9mm caliber service pistol, developed by Mabinogi Firearms Company."
 	icon_state = "9mm_pistol"
 	w_class = 3
-	force = 5
+	force = 6
 	contraband = 4
 	caliber = 0.355
 	max_ammo_capacity = 15
@@ -1044,7 +1044,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	icon_state = "tranq_pistol"
 	item_state = "tranq_pistol"
 	w_class = 2
-	force = 5
+	force = 6
 	contraband = 4
 	caliber = 0.355
 	max_ammo_capacity = 15
@@ -1083,7 +1083,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	icon = 'icons/obj/64x32.dmi'
 	icon_state = "assault_rifle"
 	item_state = "assault_rifle"
-	force = 15
+	force = 12
 	contraband = 8
 	caliber = 0.223
 	max_ammo_capacity = 30
@@ -1139,7 +1139,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	icon_state = "lmg"
 	item_state = "lmg"
 	wear_image_icon = 'icons/mob/back.dmi'
-	force = 15
+	force = 12
 	caliber = 0.308
 	max_ammo_capacity = 100
 	auto_eject = 0
@@ -1173,7 +1173,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	icon_state = "cannon"
 	item_state = "cannon"
 	wear_image_icon = 'icons/mob/back.dmi'
-	force = 25
+	force = 20
 	caliber = 0.787
 	max_ammo_capacity = 1
 	auto_eject = 1
@@ -1210,7 +1210,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	icon = 'icons/obj/64x32.dmi'
 	icon_state = "grenade_launcher"
 	item_state = "grenade_launcher"
-	force = 15
+	force = 12
 	contraband = 7
 	caliber = 1.57
 	max_ammo_capacity = 4 // to fuss with if i want 6 packs of ammo
@@ -1373,7 +1373,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	icon_state = "sniper"
 	item_state = "sniper"
 	wear_image_icon = 'icons/mob/back.dmi'
-	force = 15
+	force = 12
 	caliber = 0.308
 	max_ammo_capacity = 4
 	auto_eject = 1
@@ -1503,7 +1503,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	desc = "A powerful antique flintlock pistol."
 	icon_state = "flintlock"
 	item_state = "flintlock"
-	force = 5
+	force = 6
 	contraband = 0 //It's so old that futuristic security scanners don't even recognize it.
 	caliber = 0.58
 	max_ammo_capacity = 1 // It's magazine-fed (Convair880).
@@ -1537,7 +1537,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	w_class = 4
 	throw_speed = 2
 	throw_range = 4
-	force = 15
+	force = 10
 	caliber = 1.12 //Based on APILAS
 	max_ammo_capacity = 1
 	can_dual_wield = 0
@@ -1563,7 +1563,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	w_class = 3
 	caliber = 3//fuck if i know lol, derringers are about 3 inches in size so ill just set this to 3
 	max_ammo_capacity = 6 //6 guns
-	force = 5
+	force = 6
 
 	New()
 		ammo = new /obj/item/ammo/bullets/gun
