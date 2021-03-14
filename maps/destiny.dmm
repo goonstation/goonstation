@@ -9384,10 +9384,6 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/disposalpipe/segment/food{
-	dir = 4;
-	icon_state = "pipe-c"
-	},
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
@@ -11681,11 +11677,13 @@
 /area/station/hallway/primary/west)
 "aTR" = (
 /obj/disposalpipe/segment/food{
-	dir = 8;
-	icon_state = "pipe-c"
+	dir = 4
 	},
-/turf/simulated/wall/auto/reinforced/gannets,
-/area/station/ai_monitored/storage/eva)
+/obj/machinery/door/firedoor/border_only,
+/obj/machinery/door/airlock/gannets/glass,
+/obj/disposalpipe/segment/mail,
+/turf/simulated/floor/black,
+/area/station/hallway/primary/central)
 "aTS" = (
 /obj/blind_switch/area/north{
 	pixel_y = 28
@@ -36750,6 +36748,10 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
+/obj/disposalpipe/segment/food{
+	dir = 8;
+	icon_state = "pipe-c"
+	},
 /turf/simulated/floor/plating/random,
 /area/station/storage/tools)
 "mqM" = (
@@ -38067,7 +38069,6 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/obj/disposalpipe/segment/food,
 /obj/cable,
 /obj/cable{
 	icon_state = "0-2"
@@ -39317,7 +39318,6 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/disposalpipe/segment/food,
 /obj/potted_plant/potted_plant2{
 	dir = 1;
 	pixel_y = 32
@@ -39329,6 +39329,10 @@
 	icon_state = "1-8"
 	},
 /obj/machinery/drainage,
+/obj/disposalpipe/segment/food{
+	dir = 4;
+	icon_state = "pipe-c"
+	},
 /turf/simulated/floor/black,
 /area/station/hallway/primary/west)
 "nKA" = (
@@ -41410,6 +41414,10 @@
 "oQW" = (
 /turf/simulated/wall/auto/reinforced/gannets,
 /area/station/storage/tech)
+"oRc" = (
+/obj/disposalpipe/segment/food,
+/turf/simulated/wall/auto/reinforced/gannets,
+/area/station/storage/tools)
 "oRh" = (
 /obj/machinery/door/firedoor/border_only,
 /obj/machinery/door/airlock/gannets/engineering/alt{
@@ -45727,15 +45735,6 @@
 	},
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/toilets)
-"rgs" = (
-/obj/disposalpipe/segment/food{
-	dir = 4
-	},
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/gannets/glass,
-/obj/disposalpipe/segment/mail,
-/turf/simulated/floor/black,
-/area/station/hallway/primary/central)
 "rgt" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -56189,6 +56188,9 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/disposalpipe/segment/food{
+	dir = 4
+	},
 /turf/simulated/floor/black,
 /area/station/hallway/primary/west)
 "wEA" = (
@@ -56961,9 +56963,6 @@
 	name = "medbay mail router"
 	},
 /obj/machinery/light{
-	dir = 4
-	},
-/obj/disposalpipe/segment/food{
 	dir = 4
 	},
 /turf/simulated/floor/black,
@@ -99950,8 +99949,8 @@ lkF
 lkF
 lkF
 lkF
-aTR
-jxv
+lkF
+oRc
 mqo
 aOX
 auX
@@ -105982,7 +105981,7 @@ fjE
 akB
 akB
 akB
-rgs
+aTR
 omH
 akA
 amJ
