@@ -96,7 +96,7 @@ file_save - Save file to local disk."}
 							src.net_number = new_net_number
 
 					src.peripheral_command("subnet[src.net_number]", null, "\ref[src.netcard]")
-				if (length(command_list) > 0)
+				if (length(command_list))
 					src.ping_filter = lowertext(command_list[1])
 				else
 					src.ping_filter = null
