@@ -744,7 +744,8 @@ TRAYS
 				else
 					M.changeStatus("weakened", 1 SECONDS)
 					M.force_laydown_standup()
-					M.changeStatus("disorient", 1 SECONDS)
+			else //borgs, ghosts, whatever
+				M.changeStatus("disorient", 1 SECONDS)
 
 			unique_attack_garbage_fuck(M, user)
 		else
