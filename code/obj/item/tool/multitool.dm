@@ -45,15 +45,14 @@
 		var/obj/computer = target
 		var/obj/item/peripheral/network/peripheral = locate(/obj/item/peripheral/network) in computer.contents
 		var/obj/item/peripheral/network/radio/radioperipheral = locate(/obj/item/peripheral/network/radio) in computer.contents
+		var/obj/item/peripheral/network/omni/omniperipheral = locate(/obj/item/peripheral/network/omni) in computer.contents
 		if (peripheral)
 			net_id = peripheral.net_id
 		if (radioperipheral)
 			frequency = radioperipheral.frequency
-		else
 		//laptops are special too!
-			var/obj/item/peripheral/network/omni/omniperipheral = locate(/obj/item/peripheral/network/omni) in computer.contents
-			if(omniperipheral)
-				frequency = omniperipheral.frequency
+		if(omniperipheral)
+			frequency = omniperipheral.frequency
 
 	if (hasvar(target, "alarm_frequency"))
 		frequency = target:alarm_frequency
