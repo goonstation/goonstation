@@ -256,6 +256,9 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 	urs
 		ckey = "ursulamajor"
 		name = "Office of UrsulaMajor"
+	varshie
+		ckey = "varshie"
+		name = "Office of Varshie"
 	virvatuli
 		ckey = "virvatuli"
 		name = "Office of Virvatuli"
