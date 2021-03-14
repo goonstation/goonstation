@@ -286,7 +286,7 @@
 					G.throw_at(target,5,1)
 					src.visible_message("<b>[src]</B> farts out a...glowstick?")
 
-			if ("salute","bow","hug","wave", "blowkiss","sidehug")
+			if ("salute","bow","hug","wave", "blowkiss","sidehug","boop")
 				// visible targeted emotes
 				if (!src.restrained())
 					var/mob/M = null
@@ -313,6 +313,9 @@
 							if ("blowkiss")
 								message = "<B>[src]</B> blows a kiss to [param]."
 								maptext_out = "<I>blows a kiss to [param]</I>"
+							if ("boop")
+								message = "<B>[src]</B> boops [param] on the nose!"
+								maptext_out = "<I>boops [param] on the nose!"
 								//var/atom/U = get_turf(param)
 								//shoot_projectile_ST(src, new/datum/projectile/special/kiss(), U) //I gave this all of 5 minutes of my time I give up
 							else
@@ -326,6 +329,9 @@
 							if ("blowkiss")
 								message = "<B>[src]</b> blows a kiss to... [himself_or_herself(src)]?"
 								maptext_out = "<I> blows a kiss to... [himself_or_herself(src)]?</I>"
+							if ("boop")
+								message = "<B>[src]</b> reaches out with [himself_or_herself(src)] pointer finger, poised to strike..."
+								maptext_out = "<I>reaches out with [himself_or_herself(src)] pointer finger, poised to strike..."
 							else
 								message = "<B>[src]</b> [act]s."
 								maptext_out = "<I>[act]s [param]</I>"
@@ -337,7 +343,7 @@
 
 				m_type = 1
 
-			if ("nod","glare","stare","look","leer")
+			if ("nod","glare","stare","look","leer","squint")
 				var/M = null
 				if (param)
 					for (var/mob/A in view(null, null))
@@ -458,14 +464,14 @@
 
 			if ("listbasic")
 				src.show_text("smile, grin, smirk, frown, scowl, grimace, sulk, pout, blink, drool, shrug, tremble, quiver, shiver, shudder, shake, \
-				think, ponder, clap, flap, aflap, laugh, chuckle, giggle, chortle, guffaw, cough, hiccup, sigh, mumble, grumble, groan, moan, sneeze, \
+				think, ponder, clap, flap, aflap, laugh, chuckle, giggle, chortle, guffaw, cough, hiccup, sigh, mumble, grumble, groan, grunt, moan, sneeze, \
 				sniff, snore, whimper, yawn, choke, gasp, weep, sob, wail, whine, gurgle, gargle, blush, flinch, blink_r, eyebrow, shakehead, shakebutt, \
 				pale, flipout, rage, shame, raisehand, crackknuckles, stretch, rude, cry, retch, raspberry, tantrum, gesticulate, wgesticulate, smug, \
-				nosepick, flex, facepalm, panic, snap, airquote, twitch, twitch_v, faint, deathgasp, signal, wink, collapse, trip, dance, scream, \
+				nosepick, flex, facepalm, panic, snap, airquote, twitch, twitch_v, raise_item, faint, deathgasp, signal, wink, collapse, trip, dance, scream, \
 				burp, fart, monologue, contemplate, custom")
 
 			if ("listtarget")
-				src.show_text("salute, bow, hug, wave, glare, stare, look, leer, nod, tweak, flipoff, doubleflip, shakefist, handshake, daps, slap, boggle, highfive")
+				src.show_text("salute, bow, hug, boop, wave, glare, stare, squint, look, leer, nod, tweak, flipoff, doubleflip, shakefist, handshake, daps, slap, boggle, highfive")
 
 			if ("suicide")
 				src.show_text("Suicide is a command, not an emote.  Please type 'suicide' in the input bar at the bottom of the game window to kill yourself.", "red")
@@ -606,6 +612,25 @@
 				else
 					message = "<B>[src]</B> struggles to move."
 					maptext_out = "<I>struggles to move</I>"
+
+			if ("raise_item")
+				if (!src.restrained())
+					if (src.emote_check(voluntary, 25))
+						m_type = 1
+
+						var/obj/item/thing = src.equipped()
+						if (!thing)
+							if (src.l_hand)
+								thing = src.l_hand
+							else if (src.r_hand)
+								thing = src.r_hand
+						if (thing)
+							message = "<B>[src]</B> holds up [his_or_her(src)] [thing]."
+							maptext_out = "<I>holds up [his_or_her(src)] [thing]"
+						else
+							message = "<B>[src]</B> [pick("proudly", "stupidly", "goofily", "foolishly", "naively")] shows off [his_or_her(src)]... nothing!"
+							maptext_out = "<I>[pick("proudly", "stupidly", "goofily", "foolishly", "naively")] shows off [his_or_her(src)]... nothing!"
+
 
 			if ("tip")
 				if (!src.restrained() && !src.stat)
@@ -753,7 +778,7 @@
 					maptext_out = "<I>struggles to move</I>"
 				m_type = 1
 
-			if ("cough","hiccup","sigh","mumble","grumble","groan","moan","sneeze","sniff","snore","whimper","yawn","choke","gasp","weep","sob","wail","whine","gurgle","gargle")
+			if ("cough","hiccup","sigh","mumble","grumble","grunt","groan","moan","sneeze","sniff","snore","whimper","yawn","choke","gasp","weep","sob","wail","whine","gurgle","gargle")
 				// basic audible single-word emotes
 				if (!muzzled)
 					if (lowertext(act) == "sigh" && prob(1)) act = "singh" //1% chance to change sigh to singh. a bad joke for drsingh fans.
