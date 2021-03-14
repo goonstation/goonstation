@@ -526,14 +526,15 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 				qdel(I)
 		return
 
+#define SOULSTEEL_COOLDOWN 1800
 /datum/materialProc/soulsteel_entered
-	var/lastTrigger = 0
+	var/lastTrigger = -SOULSTEEL_COOLDOWN
 	execute(var/obj/item/owner, var/atom/movable/entering)
 		if (!isobj(owner) && !ismob(owner)) return
 		if (istype(entering, /mob/dead/observer) && prob(33))
 			var/mob/dead/observer/O = entering
 			if(O.observe_round) return
-			if(world.time - lastTrigger < 1800)
+			if(world.time - lastTrigger < SOULSTEEL_COOLDOWN)
 				boutput(entering, "<span class='alert'>[owner] can not be possessed again so soon!</span>")
 				return
 			lastTrigger = world.time
@@ -554,6 +555,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 					boutput(entering, "<span class='alert'>You possess [owner]! Keep in mind you are not an antagonist!</span>")
 					O.mind.transfer_to(MO)
 		return
+#undef SOULSTEEL_COOLDOWN
 
 /datum/materialProc/reflective_onbullet
 	execute(var/obj/item/owner, var/atom/attacked, var/obj/projectile/projectile)
