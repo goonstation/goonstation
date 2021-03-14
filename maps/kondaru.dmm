@@ -21053,8 +21053,9 @@
 /area/station/crew_quarters/cafeteria)
 "bgQ" = (
 /obj/table/reinforced/bar/auto,
-/obj/item/device/radio/beacon,
-/obj/item/clothing/head/cakehat,
+/obj/item_dispenser/icedispenser{
+	pixel_y = 11
+	},
 /turf/simulated/floor/carpet/green/standard/narrow/northsouth,
 /area/station/crew_quarters/cafeteria)
 "bgU" = (
@@ -50016,6 +50017,7 @@
 	pixel_x = -4;
 	pixel_y = 8
 	},
+/obj/item/clothing/head/cakehat,
 /turf/simulated/floor/carpet/green/standard/narrow/northsouth,
 /area/station/crew_quarters/cafeteria)
 "kBY" = (
@@ -53378,6 +53380,17 @@
 /obj/stool/chair,
 /turf/simulated/floor,
 /area/station/crew_quarters/quarters_south)
+"oIR" = (
+/obj/table/reinforced/bar/auto,
+/obj/machinery/computer/security/wooden_tv/small{
+	pixel_y = 8
+	},
+/obj/item/device/radio/beacon{
+	pixel_x = 1;
+	pixel_y = -4
+	},
+/turf/simulated/floor/carpet/green/standard/narrow/northsouth,
+/area/station/crew_quarters/cafeteria)
 "oIX" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/maintenance/central)
@@ -53757,17 +53770,8 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "ppQ" = (
-<<<<<<< HEAD
-/obj/table/reinforced/bar/auto,
-/obj/item_dispenser/icedispenser{
-	pixel_y = 10
-	},
-/turf/simulated/floor/carpet/green/standard/narrow/northsouth,
-/area/station/crew_quarters/cafeteria)
-=======
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
->>>>>>> e15efb0cc01d0a02c1f8357815808c05742f905b
 "pqx" = (
 /obj/rack,
 /obj/item/clothing/suit/space/emerg,
@@ -56132,8 +56136,6 @@
 	dir = 4
 	},
 /turf/simulated/floor/carpet/arcade,
-<<<<<<< HEAD
-=======
 /area/station/crew_quarters/arcade)
 "sml" = (
 /obj/table/reinforced/bar/auto,
@@ -56172,7 +56174,6 @@
 /obj/machinery/r_door_control/podbay/security/new_walls/east,
 /turf/simulated/floor/engine,
 /area/station/hangar/sec)
->>>>>>> e15efb0cc01d0a02c1f8357815808c05742f905b
 "soA" = (
 /obj/stool,
 /obj/decal/xmas_lights/ephemeral{
@@ -58509,6 +58510,12 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
+"vdG" = (
+/obj/wingrille_spawn/auto/crystal,
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
 /obj/machinery/door/poddoor/pyro{
 	density = 0;
 	icon_state = "pdoor0";
@@ -58524,6 +58531,7 @@
 	density = 0;
 	dir = 4;
 	icon_state = "pdoor0";
+	id = "kitchen";
 	layer = 4;
 	name = "Kitchen Shutter";
 	opacity = 0;
@@ -119021,8 +119029,13 @@ cWM
 cWM
 lrT
 ppQ
+uMr
+uzb
+bkC
+fbZ
 bnd
 uzb
+gkQ
 pJk
 pJk
 pJk
@@ -119312,12 +119325,21 @@ aWV
 aXW
 bsk
 aZY
+ppQ
+bcp
+ppQ
+oIf
+ppQ
+ppQ
+biN
+uzb
 oGM
 fbZ
 bne
 uzb
 nQp
 bqU
+sxG
 btK
 jsY
 rOU
@@ -121121,7 +121143,7 @@ gda
 bUk
 bfK
 bgQ
-boy
+oIR
 sml
 xCW
 blR
