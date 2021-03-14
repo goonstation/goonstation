@@ -738,7 +738,7 @@ ABSTRACT_TYPE(/datum/job/engineering)
 	slot_poc1 = /obj/item/material_shaper
 	slot_poc2 = /obj/item/room_planner
 
-	items_in_backpack = list(/obj/item/rcd/construction/safe, /obj/item/rcd_ammo/big, /obj/item/rcd_ammo/big, /obj/item/caution, /obj/item/lamp_manufacturer/organic)
+	items_in_backpack = list(/obj/item/rcd/construction/chiefEngineer, /obj/item/rcd_ammo/, /obj/item/rcd_ammo/, /obj/item/caution, /obj/item/lamp_manufacturer/organic)
 
 	special_setup(var/mob/living/carbon/human/M)
 		..()
