@@ -53,10 +53,7 @@
 		//laptops are special too!
 		if(omniperipheral)
 			frequency = omniperipheral.frequency
-
-	if (hasvar(target, "alarm_frequency"))
-		frequency = target:alarm_frequency
-	else if (hasvar(target, "freq"))
+	if (hasvar(target, "freq"))
 		frequency = target:freq
 	else if (hasvar(target, "control_freq"))
 		control = target:control_freq
@@ -69,7 +66,7 @@
 	else if (hasvar(target, "frequency"))
 		if(isnum(target:frequency))
 			frequency = target:frequency
-	//We'll do lockers safely since nothing else seems to store netid's exactly like this
+	//We'll do lockers safely since nothing else seems to store the frequency exactly like this
 	else if (istype(target,/obj/storage/secure))
 		var/obj/storage/secure/lockerfreq = target
 		frequency = lockerfreq.radio_control.frequency
