@@ -57,6 +57,10 @@
 		O.real_name = src.artifactName
 		O.UpdateName()
 
+	attack_hand(mob/user)
+		if(src.attached)
+			src.attached.attack_hand(user)
+
 	stick_to(atom/A, pox, poy)
 		. = ..()
 		if(isobj(A))
@@ -65,6 +69,11 @@
 	attackby(obj/item/W, mob/living/user)
 		if(istype(W, /obj/item/pen))
 			ui_interact(user)
+		else if((iscuttingtool(W) || issnippingtool(W)) && user.a_intent == INTENT_HELP)
+			boutput(user, "You manage to scrape \the [src] off of \the [src.attached].")
+			src.remove_from_attached()
+			src.add_fingerprint(user)
+			user.put_in_hand_or_drop(src)
 		else if (src.attached)
 			src.attached.attackby(W, user)
 			user.lastattacked = user
