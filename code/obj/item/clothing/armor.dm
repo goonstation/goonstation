@@ -269,6 +269,7 @@
 		setProperty("meleeprot", 4)
 		setProperty("rangedprot", 0.8)
 		setProperty("movespeed", 0.5)
+		setProperty("disorient_resist", 15)
 
 /obj/item/clothing/suit/armor/captain
 	name = "captain's armor"
