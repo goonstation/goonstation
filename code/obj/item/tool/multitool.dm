@@ -32,6 +32,11 @@
 	//There's a lot of local vars so this is somewhat evil code
 	//Tried to keep it self contained, read only, and tried to do the appropriate checks
 	var/net_id
+	//And the wifi frequency
+	var/frequency
+	//Beacon and control frequencies for bots!
+	var/control
+	var/beacon
 	if (hasvar(target, "net_id"))
 		net_id = target:net_id
 	else if (hasvar(target, "botnet_id"))
@@ -39,13 +44,17 @@
 	else if (istype(target,/obj/machinery/computer3))
 		var/obj/computer = target
 		var/obj/item/peripheral/network/peripheral = locate(/obj/item/peripheral/network) in computer.contents
+		var/obj/item/peripheral/network/radio/radioperipheral = locate(/obj/item/peripheral/network/radio) in computer.contents
 		if (peripheral)
 			net_id = peripheral.net_id
-	//And the wifi frequency
-	var/frequency
-	//Beacon and control frequencies for bots!
-	var/control
-	var/beacon
+		if (radioperipheral)
+			frequency = radioperipheral.frequency
+		else
+		//laptops are special too!
+			var/obj/item/peripheral/network/omni/omniperipheral = locate(/obj/item/peripheral/network/omni) in computer.contents
+			if(omniperipheral)
+				frequency = omniperipheral.frequency
+
 	if (hasvar(target, "alarm_frequency"))
 		frequency = target:alarm_frequency
 	else if (hasvar(target, "freq"))
@@ -61,18 +70,7 @@
 	else if (hasvar(target, "frequency"))
 		if(isnum(target:frequency))
 			frequency = target:frequency
-	//Everything is in peripheral cards in computers
-	else if (istype(target,/obj/machinery/computer3))
-		var/obj/computer = target
-		var/obj/item/peripheral/network/radio/peripheral = locate(/obj/item/peripheral/network/radio) in computer.contents
-		if (peripheral)
-			frequency = peripheral.frequency
-		else
-			//laptops are special too!
-			var/obj/item/peripheral/network/omni/omniperipheral = locate(/obj/item/peripheral/network/omni) in computer.contents
-			if(omniperipheral)
-				frequency = omniperipheral.frequency
-	//We'll do lockers safety since nothing else seems to store netid's exactly like this
+	//We'll do lockers safely since nothing else seems to store netid's exactly like this
 	else if (istype(target,/obj/storage/secure))
 		var/obj/storage/secure/lockerfreq = target
 		frequency = lockerfreq.radio_control.frequency
