@@ -129,7 +129,7 @@ Broken RCD + Effects
 	var/internal_mode = 1
 
 	get_desc()
-		. += "<br>It holds [matter]/[max_matter][istype(src, /obj/item/rcd/material) ? src.material_name : "matter"]  units. It is currently set to "
+		. += "<br>It holds [matter]/[max_matter][istype(src, /obj/item/rcd/material) ? material_name : "matter"]  units. It is currently set to "
 		switch (src.mode)
 			if (RCD_MODE_FLOORSWALLS)
 				. += "Floors/Walls"
@@ -278,7 +278,7 @@ Broken RCD + Effects
 
 			if (RCD_MODE_DECONSTRUCT)
 
-				if(restricted_materials && !(A.material.mat_id in restricted_materials))
+				if(restricted_materials && !(A.material?.mat_id in restricted_materials))
 					boutput(user, "Target object is not made of a material this RCD can deconstruct.")
 					return
 				if (istype(A, /turf/simulated/wall/r_wall) || istype(A, /turf/simulated/wall/auto/reinforced))
@@ -293,7 +293,8 @@ Broken RCD + Effects
 						return
 					if (do_thing(user, A, "deconstructing \the [A]", matter_remove_wall, time_remove_wall))
 						var/turf/simulated/floor/T = A:ReplaceWithFloor()
-						T.setMaterial(getMaterial(material_name))
+						if (!istype(src, /obj/item/rcd/material/cardboard))
+							T.setMaterial(getMaterial(material_name))
 						log_construction(user, "deconstructs a wall ([A])")
 						return
 
