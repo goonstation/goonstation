@@ -123,7 +123,7 @@
 		user.lastattacked = user
 		if (src.attached)
 			if (user.a_intent == INTENT_HELP)
-				boutput(user, "You peel \the [src] off of [src.attached].")
+				boutput(user, "You peel \the [src] off of \the [src.attached].")
 				src.remove_from_attached()
 				src.add_fingerprint(user)
 				user.put_in_hand_or_drop(src)
