@@ -439,7 +439,7 @@ var/datum/action_controller/actions
 			INVOKE_ASYNC(src.owner, src.proc_path, src.proc_args)
 
 /datum/action/bar/icon/build
-	duration = 30
+	duration = 20
 	var/obj/item/sheet/sheet
 	var/objtype
 	var/cost
@@ -450,6 +450,7 @@ var/datum/action_controller/actions
 	var/obj/item/sheet/sheet2 // in case you need to pull from more than one sheet
 	var/cost2 // same as above
 	var/spot
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED //now you can build multiple girders at once
 	New(var/obj/item/sheet/csheet, var/cobjtype, var/ccost, var/datum/material/cmat, var/camount, var/cicon, var/cicon_state, var/cobjname, var/post_action_callback = null, var/obj/item/sheet/csheet2, var/ccost2, var/spot)
 		..()
 		icon = cicon
