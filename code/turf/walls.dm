@@ -111,7 +111,7 @@
 		playsound(src, "sound/items/Screwdriver.ogg", 50, 1)
 		boutput(user, "You begin to attach the light fixture to [src]...")
 
-		if (!do_after(user, 4 SECONDS))
+		if (!do_after(user, 2 SECONDS))
 			user.show_text("You were interrupted!", "red")
 			return
 
