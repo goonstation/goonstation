@@ -780,7 +780,7 @@
 
 	proc/cooltime()
 		if (src.warm)
-			SPAWN_DBG( 4200 )
+			SPAWN_DBG( 420 SECONDS )
 				src.warm = 0
 				src.name = "donk-pocket"
 		return
@@ -813,6 +813,11 @@
 		name = "warm honk-pocket"
 		warm = 1
 
+		New()
+			..()
+			src.cooltime()
+			return
+
 	on_bite(obj/item/I, mob/M, mob/user)
 		if(src.warm && M.reagents)
 			M.reagents.add_reagent("honk_fart",15)
@@ -823,7 +828,7 @@
 
 	cooltime()
 		if (src.warm)
-			SPAWN_DBG( 4200 )
+			SPAWN_DBG( 420 SECONDS )
 				src.warm = 0
 				src.name = "honk-pocket"
 		return
