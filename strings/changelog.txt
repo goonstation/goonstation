@@ -1,4 +1,10 @@
 
+(t)sun mar 14 21
+(u)Kapu1178 & Virvatuli
+(p)3804
+(e)⚖🆕|balance, feature
+(*)Riot Shotguns now require racking between shots to fire
+(+)New shotgun sounds by Virvatuli
 (t)sat mar 13 21
 (u)Penny
 (p)3997
