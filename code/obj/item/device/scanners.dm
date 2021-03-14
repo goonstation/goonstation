@@ -129,7 +129,7 @@ that cannot be itched
 
 /obj/item/device/detective_scanner
 	name = "forensic scanner"
-	desc = "Used to scan objects for DNA and fingerprints. This model seems to have an upgrade that lets it scan for prints at a distance."
+	desc = "Used to scan objects for DNA and fingerprints."
 	icon_state = "fs"
 	w_class = 2 // PDA fits in a pocket, so why not the dedicated scanner (Convair880)?
 	item_state = "electronic"
@@ -137,6 +137,7 @@ that cannot be itched
 	mats = 3
 	hide_attack = 2
 	var/active = 0
+	var/distancescan = 0
 	var/target = null
 
 	attack_self(mob/user as mob)
@@ -166,10 +167,11 @@ that cannot be itched
 		return
 
 	pixelaction(atom/target, params, mob/user, reach)
-		if(get_dist(user, target) > 1 && get_dist(user, target) <= 2)
-			user.visible_message("<span class='notice'><b>[user]</b> takes a distant forensic scan of [target].</span>")
-			boutput(user, scan_forensic(target, visible = 1))
-			src.add_fingerprint(user)
+		if(distancescan)
+			if(!IN_RANGE(user, target, 1) && IN_RANGE(user, target, 3))
+				user.visible_message("<span class='notice'><b>[user]</b> takes a distant forensic scan of [target].</span>")
+				boutput(user, scan_forensic(target, visible = 1))
+				src.add_fingerprint(user)
 
 	afterattack(atom/A as mob|obj|turf|area, mob/user as mob)
 
@@ -217,6 +219,11 @@ that cannot be itched
 				icon_state = "fs_pinfar"
 		SPAWN_DBG(0.5 SECONDS)
 			.(T)
+
+/obj/item/device/detective_scanner/unique
+	name = "cool forensic scanner"
+	desc = "Used to scan objects for DNA and fingerprints. This model seems to have an upgrade that lets it scan for prints at a distance. You feel cool holding it."
+	distancescan = 1
 
 ///////////////////////////////////// Health analyzer ////////////////////////////////////////
 
