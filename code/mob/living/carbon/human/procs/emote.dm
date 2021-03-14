@@ -286,13 +286,13 @@
 					G.throw_at(target,5,1)
 					src.visible_message("<b>[src]</B> farts out a...glowstick?")
 
-			if ("salute","bow","hug","wave", "blowkiss","sidehug","boop")
+			if ("salute","bow","hug","wave","blowkiss","sidehug","boop","hand_shoulder")
 				// visible targeted emotes
 				if (!src.restrained())
 					var/mob/M = null
 					if (param)
 						var/range = 8
-						if (act == "hug" || act == "sidehug")
+						if (act == "hug" || act == "sidehug" || act == "boop" || act == "hand_shoulder")
 							range = 1
 						for (var/mob/A in view(range, src))
 							if (ckey(param) == ckey(A.name))
@@ -316,6 +316,9 @@
 							if ("boop")
 								message = "<B>[src]</B> boops [param] on the nose!"
 								maptext_out = "<I>boops [param] on the nose!"
+							if ("hand_shoulder")
+								message = "<B>[src]</B> puts [his_or_her(src)] hand on [param]'s shoulder."
+								maptext_out = "<I> puts [his_or_her(src)] hand on [param]'s shoulder"
 								//var/atom/U = get_turf(param)
 								//shoot_projectile_ST(src, new/datum/projectile/special/kiss(), U) //I gave this all of 5 minutes of my time I give up
 							else
@@ -330,8 +333,11 @@
 								message = "<B>[src]</b> blows a kiss to... [himself_or_herself(src)]?"
 								maptext_out = "<I> blows a kiss to... [himself_or_herself(src)]?</I>"
 							if ("boop")
-								message = "<B>[src]</b> reaches out with [himself_or_herself(src)] pointer finger, poised to strike..."
-								maptext_out = "<I>reaches out with [himself_or_herself(src)] pointer finger, poised to strike..."
+								message = "<B>[src]</b> reaches out with [his_or_her(src)] pointer finger, poised to strike..."
+								maptext_out = "<I>reaches out with [his_or_her(src)] pointer finger, poised to strike..."
+							if ("hand_shoulder")
+								message = "<B>[src]</b> looks like [he_or_she(src)] want to reassure someone, but nobody's there..."
+								maptext_out = "<I>looks like [he_or_she(src)] want to reassure someone, but nobody's there..."
 							else
 								message = "<B>[src]</b> [act]s."
 								maptext_out = "<I>[act]s [param]</I>"
@@ -343,7 +349,7 @@
 
 				m_type = 1
 
-			if ("nod","glare","stare","look","leer","squint")
+			if ("nod","glare","stare","look","leer","squint","sneer")
 				var/M = null
 				if (param)
 					for (var/mob/A in view(null, null))
@@ -359,12 +365,31 @@
 						if ("nod")
 							message = "<B>[src]</B> [act]s to [param]."
 							maptext_out = "<I>[act]s to [param]</I>"
-						if ("glare","stare","look","leer")
+						if ("glare","stare","squint","sneer","look","leer")
 							message = "<B>[src]</B> [act]s at [param]."
 							maptext_out = "<I>[act]s at [param]</I>"
 				else
 					message = "<B>[src]</b> [act]s."
 					maptext_out = "<I>[act]s</I>"
+
+				m_type = 1
+
+			if ("roll_eyes")
+				var/M = null
+				if (param)
+					for (var/mob/A in view(null, null))
+						if (ckey(param) == ckey(A.name))
+							M = A
+							break
+				if (!M)
+					param = null
+
+				if (param)
+					message = "<B>[src]</B> rolls [his_or_her(src)] eyes at [param]."
+					maptext_out = "<I>rolls [his_or_her(src)] eyes at [param]"
+				else
+					message = "<B>[src]</B> rolls [his_or_her(src)] eyes."
+					maptext_out = "<I>rolls [his_or_her(src)] eyes"
 
 				m_type = 1
 
@@ -467,11 +492,11 @@
 				think, ponder, clap, flap, aflap, laugh, chuckle, giggle, chortle, guffaw, cough, hiccup, sigh, mumble, grumble, groan, grunt, moan, sneeze, \
 				sniff, snore, whimper, yawn, choke, gasp, weep, sob, wail, whine, gurgle, gargle, gulp, blush, flinch, blink_r, eyebrow, shakehead, shakebutt, \
 				pale, flipout, rage, shame, raisehand, crackknuckles, stretch, rude, cry, retch, raspberry, tantrum, gesticulate, wgesticulate, smug, \
-				nosepick, flex, facepalm, panic, snap, airquote, twitch, twitch_v, raise_item, faint, deathgasp, signal, wink, collapse, trip, dance, scream, \
+				nosepick, flex, facepalm, panic, snap, airquote, twitch, twitch_v, hold_up, faint, deathgasp, signal, wink, collapse, trip, dance, scream, \
 				burp, fart, monologue, contemplate, custom")
 
 			if ("listtarget")
-				src.show_text("salute, bow, hug, boop, wave, glare, stare, squint, look, leer, nod, tweak, flipoff, doubleflip, shakefist, handshake, daps, slap, boggle, highfive")
+				src.show_text("salute, bow, hug, boop, hand_shoulder, wave, glare, stare, squint, sneer, roll_eyes, look, leer, nod, tweak, flipoff, doubleflip, shakefist, handshake, daps, slap, boggle, highfive")
 
 			if ("suicide")
 				src.show_text("Suicide is a command, not an emote.  Please type 'suicide' in the input bar at the bottom of the game window to kill yourself.", "red")
@@ -613,7 +638,7 @@
 					message = "<B>[src]</B> struggles to move."
 					maptext_out = "<I>struggles to move</I>"
 
-			if ("raise_item")
+			if ("hold_up")
 				if (!src.restrained())
 					if (src.emote_check(voluntary, 25))
 						m_type = 1
@@ -625,8 +650,8 @@
 							else if (src.r_hand)
 								thing = src.r_hand
 						if (thing)
-							message = "<B>[src]</B> holds up [his_or_her(src)] [thing]."
-							maptext_out = "<I>holds up [his_or_her(src)] [thing]"
+							message = "<B>[src]</B> holds up [thing]."
+							maptext_out = "<I>holds up [thing]"
 						else
 							message = "<B>[src]</B> [pick("proudly", "stupidly", "goofily", "foolishly", "naively")] shows off [his_or_her(src)]... nothing!"
 							maptext_out = "<I>[pick("proudly", "stupidly", "goofily", "foolishly", "naively")] shows off [his_or_her(src)]... nothing!"
