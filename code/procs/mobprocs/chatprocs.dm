@@ -836,14 +836,17 @@
 		return
 
 	// We have procs to check for this stuff, you know. Ripped out a bunch of duplicate code, which also fixed earmuffs (Convair880).
+	var/check_failed = FALSE
 	if (type)
 		if ((type & 1) && !src.sight_check(1))
+			check_failed = TRUE
 			if (!alt)
 				return
 			else
 				msg = alt
 				type = alt_type
 		if ((type & 2) && !src.hearing_check(1))
+			check_failed = TRUE
 			if (!alt)
 				return
 			else
@@ -861,19 +864,21 @@
 	else
 		if(!just_maptext)
 			boutput(src, msg, group)
-		if(assoc_maptext && src.client && !src.client.preferences?.flying_chat_hidden)
-			assoc_maptext.show_to(src.client)
 
 		var/psychic_link = src.get_psychic_link()
 		if (ismob(psychic_link))
 			boutput(psychic_link, msg, group)
 
-		if (isliving(src))
-			for (var/mob/dead/target_observer/observer in src:observers)
-				if(!just_maptext)
-					boutput(observer, msg, group)
-				if(assoc_maptext && observer.client && !observer.client.preferences.flying_chat_hidden)
-					assoc_maptext.show_to(observer.client)
+		if(!check_failed)
+			if(assoc_maptext && src.client && !src.client.preferences?.flying_chat_hidden)
+				assoc_maptext.show_to(src.client)
+
+			if (isliving(src))
+				for (var/mob/dead/target_observer/observer in src:observers)
+					if(!just_maptext)
+						boutput(observer, msg, group)
+					if(assoc_maptext && observer.client && !observer.client.preferences.flying_chat_hidden)
+						assoc_maptext.show_to(observer.client)
 
 // Show a message to all mobs in sight of this one
 // This would be for visible actions by the src mob
