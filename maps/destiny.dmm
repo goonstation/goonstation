@@ -55845,7 +55845,7 @@
 /area/station/science/artifact)
 "wyY" = (
 /obj/machinery/light/emergency,
-/obj/storage/crate/rcd,
+/obj/storage/crate/rcd/CE,
 /turf/simulated/floor/carpet{
 	icon_state = "fblue6"
 	},

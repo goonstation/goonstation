@@ -3544,7 +3544,7 @@
 /turf/simulated/floor/carpet/green/fancy/edge/south,
 /area/station/engine/engineering/ce)
 "aoH" = (
-/obj/storage/crate/rcd,
+/obj/storage/crate/rcd/CE,
 /obj/machinery/light{
 	dir = 8;
 	layer = 9.1;

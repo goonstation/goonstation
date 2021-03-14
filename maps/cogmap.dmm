@@ -41607,7 +41607,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/storage/crate/rcd,
+/obj/storage/crate/rcd/CE,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 9;
@@ -61488,6 +61488,9 @@
 	pixel_x = 2
 	},
 /obj/table/wood/auto,
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/yellow/side,
 /area/station/engine/engineering)
 "lel" = (

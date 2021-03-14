@@ -50903,7 +50903,7 @@
 /turf/space,
 /area/space)
 "cjs" = (
-/obj/storage/crate/rcd,
+/obj/storage/crate/rcd/CE,
 /obj/item/clothing/shoes/magnetic,
 /obj/item/clothing/gloves/yellow,
 /turf/simulated/floor/yellowblack,

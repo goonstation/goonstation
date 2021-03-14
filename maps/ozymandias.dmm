@@ -70180,7 +70180,7 @@
 /turf/simulated/floor/plating,
 /area/station/security/brig/cell_block)
 "tWd" = (
-/obj/storage/crate/rcd,
+/obj/storage/crate/rcd/CE,
 /turf/simulated/floor/grey,
 /area/station/engine/engineering/ce)
 "tWe" = (

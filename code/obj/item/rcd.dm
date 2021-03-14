@@ -559,6 +559,21 @@ Broken RCD + Effects
 /obj/item/rcd/safe
 	shits_sparks = 0
 
+///Chief Engineer RCD has fancy door functions and a mild discount, but no capacity increase
+/obj/item/rcd/construction/chiefEngineer
+	name = "rapid construction device custom"
+	desc = "Also known as an RCD, this is capable of rapidly constructing walls, flooring, windows, and doors. This device was customized by the Chief Engineer to have an enhanced feature set and work more efficiently."
+
+	max_matter = 50
+	matter_create_wall = 1
+	matter_create_door = 4
+	matter_create_window = 1
+	matter_remove_door = 10
+	matter_remove_floor = 6
+	matter_remove_wall = 6
+	matter_remove_girder = 6
+	matter_remove_window = 6
+
 /obj/item/rcd/construction
 	afterattack(atom/A, mob/user as mob)
 		..()

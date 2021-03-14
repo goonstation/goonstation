@@ -25464,7 +25464,7 @@
 /turf/simulated/floor/darkpurple,
 /area/station/crew_quarters/data)
 "bfe" = (
-/obj/storage/crate/rcd,
+/obj/storage/crate/rcd/CE,
 /obj/machinery/firealarm{
 	dir = 4;
 	pixel_x = 26;
