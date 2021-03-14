@@ -873,10 +873,19 @@
 			maptext_prefix = "<span class='c pixel sh'>Mentorhelps:\n<span class='vga'>"
 			ding_sound = "sound/voice/animal/mouse_squeak.ogg"
 
+		prayers
+			monitored_var = "prayers"
+			maptext_prefix = "<span class='c pixel sh'>Prayers:\n<span class='vga'>"
+			ding_sound = "sound/voice/heavenly.ogg"
+
 		violence
 			monitored_var = "violence"
 			maptext_prefix = "<span class='c pixel sh'>Acts of violence:\n<span class='vga'>"
 			update_delay = 1 SECOND
+
+		clones
+			monitored_var = "clones"
+			maptext_prefix = "<span class='c pixel sh'>Clones:\n<span class='vga'>"
 
 	budget
 		New()
@@ -965,7 +974,7 @@
 				if (0.8 to INFINITY)
 					lagc = "#ff0000; -dm-text-outline: 1px #000000 solid"
 
-			. = "<span style='color: [lagc];'>[world.cpu]% @ [world.tick_lag / 10]s</span>"
+			. = "<span style='color: [lagc];'>[round(world.cpu)]% @ [world.tick_lag / 10]s</span>"
 
 
 /obj/overlay/zamujasa/football_wave_timer

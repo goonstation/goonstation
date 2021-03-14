@@ -650,7 +650,7 @@ This is basically useless for anyone but miners.
 	item = /obj/item/stimpack
 	cost = 4
 	desc = "When top agents need energy, they turn to our new line of X-Cite 500 stimulants. This all-natural* and worry-free** blend accelerates perception, endurance, and reaction time to superhuman levels! Shrug off even the cruelest of blows without a scratch! <br><br><font size=-1>*Contains less than 0.5 grams unnatural material per 0.49 gram serving.<br>**May cause dizziness, blurred vision, heart failure, renal compaction, adenoid calcification, or death. Women who are currently pregnant or may be pregnant should not handle X-Cite due to the risk of a specific birth defect.</font>"
-	job = list("Medical Doctor","Medical Director","Scientist","Geneticist","Research Director")
+	job = list("Medical Doctor","Medical Director","Scientist","Geneticist","Pathologist","Research Director")
 	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/revolution)
 
 /datum/syndicate_buylist/traitor/syringegun
@@ -861,7 +861,7 @@ This is basically useless for anyone but miners.
 	cost = 6
 	vr_allowed = 0
 	desc = "A barrel of bloodthirsty apes. Careful!"
-	job = list("Staff Assistant","Test Subject","Geneticist")
+	job = list("Staff Assistant","Test Subject","Geneticist","Pathologist")
 	blockedmode = list(/datum/game_mode/revolution)
 
 /datum/syndicate_buylist/traitor/mindslave_module

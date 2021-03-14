@@ -449,6 +449,19 @@
 			return
 
 		if (ismob(target))
+			var/mob/M = target
+			//total hack. from attack_hand in mob/living/silicon/robot
+			if (istype(M, /mob/living/silicon/robot))
+				if(user.a_intent == INTENT_HARM)
+					M.TakeDamage("All", rand(3,6), 0)
+					if (prob(10))
+						var/turf/T = get_edge_target_turf(user, user.dir)
+						if (isturf(T))
+							M.visible_message("<span class='alert'><B>[user] savagely punches [M], sending them flying!</B></span>")
+							M.throw_at(T, 6, 2)
+					else
+						M.visible_message("<span class='alert'><B>[user] punches [M]!</B></span>")
+					return
 			..()
 			return
 
@@ -461,7 +474,7 @@
 				playsound(user.loc, O.hitsound, 50, 1, pitch = 1.6)
 				O.take_damage(20, user) //Like 30ish hits to break a normal airlock?
 
-			if(istype(target, /obj/grille))
+			else if(istype(target, /obj/grille))
 				var/obj/grille/O = target
 				user.lastattacked = O
 				if (!O.shock(user, 70))
@@ -469,26 +482,26 @@
 					playsound(O.loc, "sound/impact_sounds/Metal_Hit_Light_1.ogg", 80, 1)
 					O.damage_slashing(10)
 
-			if(istype(target, /obj/window))
+			else if(istype(target, /obj/window))
 				var/obj/window/O = target
 				user.lastattacked = O
 				O.visible_message("<span class='alert'>[user] smashes into the window.</span>", "<span class='notice'>You mash yourself against the window.</span>")
 				O.damage_blunt(15)
 				playsound(user.loc, O.hitsound, 50, 1, pitch = 1.6)
 
-			if(istype(target, /obj/table))
+			else if(istype(target, /obj/table))
 				var/obj/table/O = target
 				user.lastattacked = O
 				O.visible_message("<span class='alert'><b>[user]</b> violently rips apart the [O]!</span>")
 				playsound(O.loc, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 40, 1)
 				O.deconstruct()
 
-			if(istype(target, /obj/structure/woodwall))
+			else if(istype(target, /obj/structure/woodwall))
 				var/obj/window/O = target
 				user.lastattacked = O
 				O.attack_hand(user)
 
-			if(istype(target, /obj/machinery/bot))
+			else if(istype(target, /obj/machinery/bot))
 				var/obj/machinery/bot/O = target
 				user.lastattacked = O
 				O.explode()

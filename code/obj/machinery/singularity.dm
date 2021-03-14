@@ -9,6 +9,12 @@ Contains:
 */
 // I came here with good intentions, I swear, I didn't know what this code was like until I was already waist deep in it
 #define SINGULARITY_TIME 11
+#define SINGULARITY_MAX_DIMENSION 11//defines the maximum dimension possible by a player created singularity.
+#define MIN_TO_CONTAIN 4
+#define DEFAULT_AREA 25
+#define EVENT_GROWTH 3//the rate at which the event proc radius is scaled relative to the radius of the singularity
+#define EVENT_MINIMUM 5//the base value added to the event proc radius, serves as the radius of a 1x1
+
 // I'm sorry
 //////////////////////////////////////////////////// Singularity generator /////////////////////
 
@@ -21,16 +27,18 @@ Contains:
 	density = 1
 	mats = 250
 	var/bhole = 0 // it is time. we can trust people to use the singularity For Good - cirr
-/* no
-/obj/machinery/the_singularitygen/New()
-	..()
-*/
+
 /obj/machinery/the_singularitygen/process()
-	var/checkpointC = 0
-	for (var/obj/X in orange(4,src))
-		if (istype(X, /obj/machinery/containment_field))
-			checkpointC ++
-	if (checkpointC >= 20)
+	var/goodgenerators = 0 //ensures that there are 4 generators in place with at least 2 links. note that false positives are very possible and will result in a loose singularity
+	var/smallestdimension = 13//determines the radius of the produced singularity,starts higher than is possible
+
+	for_by_tcl(gen, /obj/machinery/field_generator)//this loop checks for valid field generators
+		if(get_dist(gen,loc)<(SINGULARITY_MAX_DIMENSION/2)+1)
+			if(gen.active_dirs >= 2)
+				goodgenerators++
+				smallestdimension = min(smallestdimension, gen.shortestlink)
+
+	if (goodgenerators>=4)
 
 		// Did you know this thing still works? And wasn't logged (Convair880)?
 		logTheThing("bombing", src.fingerprintslast, null, "A [src.name] was activated, spawning a singularity at [log_loc(src)]. Last touched by: [src.fingerprintslast ? "[src.fingerprintslast]" : "*null*"]")
@@ -41,7 +49,9 @@ Contains:
 		if (src.bhole)
 			new /obj/bhole(T, 3000)
 		else
-			new /obj/machinery/the_singularity(T, 100)
+			if(!(smallestdimension % 2))
+				smallestdimension--
+			new /obj/machinery/the_singularity(T, 100,,round(smallestdimension/2))
 		qdel(src)
 
 /obj/machinery/the_singularitygen/attackby(obj/item/W, mob/user)
@@ -76,24 +86,24 @@ Contains:
 	event_handler_flags = IMMUNE_SINGULARITY
 	deconstruct_flags = DECON_WELDER | DECON_MULTITOOL
 
-	bound_width = 96
-	bound_height = 96
-	bound_x = -32
-	bound_y = -32
 
-	var/has_moved = FALSE
+	pixel_x = -64
+	pixel_y = -64
+
 	var/maxboom = 0
-
-	var/active = 0
+	var/has_moved
+	var/active = 0 //determines if the singularity is contained
 	var/energy = 10
-	var/warp = 5
 	var/lastT = 0
-	var/warp_delay = 30
 	var/Dtime = null
 	var/Wtime = 0
 	var/dieot = 0
 	var/selfmove = 1
 	var/grav_pull = 6
+	var/radius = 0 //the variable used for all calculations involving size.this is the current size
+	var/maxradius = INFINITY//the maximum size the singularity can grow to
+
+
 
 #ifdef SINGULARITY_TIME
 /*
@@ -101,14 +111,24 @@ hello I've lost my remaining sanity by dredging this code from the depths of hel
 for some reason I brought it back and tried to clean it up a bit and I regret everything but it's too late now I can't put it back please forgive me
 - haine
 */
-/obj/machinery/the_singularity/New(loc, var/E = 100, var/Ti = null)
+/obj/machinery/the_singularity/New(loc, var/E = 100, var/Ti = null,var/rad = 2)
+	START_TRACKING
 	src.energy = E
-	pixel_x = -32 * 2
-	pixel_y = -32 * 2
+	maxradius = rad
+	if(maxradius<2)
+		radius = maxradius
+	else
+		radius = 2
+	SafeScale((radius+1)/3.0,(radius+1)/3.0)
+	grav_pull = (radius+1)*3
 	event()
 	if (Ti)
 		src.Dtime = Ti
 	..()
+
+/obj/machinery/the_singularity/disposing()
+	STOP_TRACKING
+	. = ..()
 
 /obj/machinery/the_singularity/process()
 	eat()
@@ -135,13 +155,14 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		move()
 		SPAWN_DBG(1.1 SECONDS) // slowing this baby down a little -drsingh
 			move()
-	else
+	else//this should probably be modified to use the enclosed test of the generator
 		var/checkpointC = 0
-		for (var/obj/machinery/containment_field/X in orange(3,src))
+		for (var/obj/machinery/containment_field/X in orange(maxradius+2,src))
 			checkpointC ++
-		if (checkpointC < 18)
+		if (checkpointC < max(MIN_TO_CONTAIN,(radius*8)))//as radius of a 5x5 should be 2, 16 tiles are needed to hold it in, this allows for 4 failures before the singularity is loose
 			src.active = 1
-			grav_pull = 8
+			maxradius = INFINITY
+
 
 /obj/machinery/the_singularity/emp_act()
 	return // No action required this should be the one doing the EMPing
@@ -164,7 +185,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 				continue
 
 		if (!isarea(X))
-			if (get_dist(src.get_center(), X) <= 2) // why was this a switch before ffs
+			if (get_dist(src.get_center(), X) <= radius) // why was this a switch before ffs
 				src.Bumped(A)
 			else if (istype(X, /atom/movable))
 				var/atom/movable/AM = X
@@ -180,13 +201,13 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		var/dir = pick(cardinal)
 
 		var/checkloc = get_step(src.get_center(), dir)
-		for (var/dist = 0, dist < 3, dist ++)
+		for (var/dist = 0, dist < max(2,radius+1), dist ++)
 			if (locate(/obj/machinery/containment_field) in checkloc)
 				return
 			checkloc = get_step(checkloc, dir)
 
 		step(src, dir)
-		has_moved = TRUE
+
 
 /obj/machinery/the_singularity/ex_act(severity, last_touched, power)
 	if(!maxboom)
@@ -223,6 +244,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 					if ("Clown")
 						// Hilarious.
 						gain = 500
+						grow()
 					if ("Lawyer")
 						// Satan.
 						gain = 250
@@ -270,10 +292,8 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	src.energy += gain
 
 /obj/machinery/the_singularity/proc/get_center()
-	. = get_turf(src)
-	//if(!(get_step(., SOUTHWEST) in src.locs)) // I hate this, neither `loc` nor `get_turf` behave consistently, sometimes they are the center tile and sometimes they are the south west tile, aaaa
-	if(has_moved)
-		. = get_step(., NORTHEAST)
+	return src.loc
+
 
 /obj/machinery/the_singularity/attackby(var/obj/item/I as obj, var/mob/user as mob)
 	if (istype(I, /obj/item/clothing/mask/cigarette))
@@ -285,6 +305,11 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	else
 		return ..()
 
+/obj/machinery/the_singularity/proc/grow()
+	if(radius<maxradius)
+		radius++
+		SafeScale((radius+0.5)/(radius-0.5),(radius+0.5)/(radius-0.5))
+
 // totally rewrote this proc from the ground-up because it was puke but I want to keep this comment down here vvv so we can bask in the glory of What Used To Be - haine
 		/* uh why was lighting a cig causing the singularity to have an extra process()?
 		   this is dumb as hell, commenting this. the cigarette will get processed very soon. -drsingh
@@ -295,6 +320,8 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 /////////////////////////////////////////////Controls which "event" is called
 /obj/machinery/the_singularity/proc/event()
 	var/numb = rand(1,4)
+	if(prob(25))
+		grow()
 	switch (numb)
 		if (1)//EMP
 			Zzzzap()
@@ -309,20 +336,21 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			Mezzer()
 			return
 
+
 /obj/machinery/the_singularity/proc/Toxmob()
 
-	for (var/mob/living/carbon/M in orange(7, src.get_center()))
+	for (var/mob/living/carbon/M in orange(radius*EVENT_GROWTH+EVENT_MINIMUM, src.get_center()))
 		if (ishuman(M))
 			var/mob/living/carbon/human/H = M
 			if (H.wear_suit)
 				return
 		M.take_toxin_damage(3)
-		M.changeStatus("radiation", 100)
+		M.changeStatus("radiation", 20*(radius+1))
 		M.show_text("You feel odd.", "red")
 
 /obj/machinery/the_singularity/proc/Mezzer()
 
-	for (var/mob/living/carbon/M in oviewers(8, src.get_center()))
+	for (var/mob/living/carbon/M in oviewers(radius*EVENT_GROWTH+EVENT_MINIMUM, src.get_center()))
 		if (ishuman(M))
 			var/mob/living/carbon/human/H = M
 			if (istype(H.glasses,/obj/item/clothing/glasses/meson))
@@ -334,11 +362,11 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 
 /obj/machinery/the_singularity/proc/BHolerip()
 
-	for (var/turf/T in orange(6, src.get_center()))
+	for (var/turf/T in orange(radius*EVENT_GROWTH+EVENT_MINIMUM, src.get_center()))
 		LAGCHECK(LAG_LOW)
 		if (prob(70))
 			continue
-		if (T && !(T.turf_flags & CAN_BE_SPACE_SAMPLE) && (get_dist(src.get_center(),T) == 4 || get_dist(src.get_center(),T) == 5)) // I'm very tired and this is the least dumb thing I can make of what was here for now
+		if (T && !(T.turf_flags & CAN_BE_SPACE_SAMPLE) && (get_dist(src.get_center(),T) == radius+1 || get_dist(src.get_center(),T) == radius+2)) // I'm very tired and this is the least dumb thing I can make of what was here for now.   This needs to get updated for the variable size singularity at some point
 			if (T.turf_flags & IS_TYPE_SIMULATED)
 				if (istype(T,/turf/simulated/floor) && !istype(T,/turf/simulated/floor/plating))
 					var/turf/simulated/floor/F = T
@@ -419,7 +447,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	var/obj/machinery/power/data_terminal/link = null
 	mats = 14
 	var/active_dirs = 0
-
+	var/shortestlink = 0
 
 	proc/set_active(var/act)
 		if (src.active != act)
@@ -462,12 +490,17 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	src.add_fingerprint(user)
 
 /obj/machinery/field_generator/New()
+	START_TRACKING
 	..()
 	SPAWN_DBG(0.6 SECONDS)
 		if(!src.link && (state == 3))
 			src.get_link()
 
 		src.net_id = format_net_id("\ref[src]")
+
+/obj/machinery/field_generator/disposing()
+	STOP_TRACKING
+	. = ..()
 
 /obj/machinery/field_generator/process()
 
@@ -515,6 +548,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	var/steps = 0
 	var/oNSEW = 0
 
+
 	if(!NSEW)//Make sure its ran right
 		return
 
@@ -527,13 +561,17 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	else if(NSEW == 8)
 		oNSEW = 4
 
-	for(var/dist = 0, dist <= 9, dist += 1) // checks out to 8 tiles away for another generator
+	for(var/dist = 0, dist <= SINGULARITY_MAX_DIMENSION, dist += 1) // checks out to max dimension tiles away for another generator to link to
 		T = get_step(T2, NSEW)
 		T2 = T
 		steps += 1
 		if(locate(/obj/machinery/field_generator) in T)
 			G = (locate(/obj/machinery/field_generator) in T)
 			steps -= 1
+			if(shortestlink==0)
+				shortestlink = dist
+			else if (shortestlink > dist)
+				shortestlink = dist
 			if(!G.active)
 				return
 			if(G.active_dirs & oNSEW)
@@ -1311,8 +1349,9 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		CAS = locate(/obj/machinery/power/collector_array) in get_step(src,SOUTH)
 		CAE = locate(/obj/machinery/power/collector_array) in get_step(src,EAST)
 		CAW = locate(/obj/machinery/power/collector_array) in get_step(src,WEST)
-		for(var/obj/machinery/the_singularity/S in orange(12,src))
-			S1 = S
+		for_by_tcl(singu, /obj/machinery/the_singularity)//this loop checks for valid singularities
+			if(get_dist(singu,loc)<SINGULARITY_MAX_DIMENSION+2)
+				S1 = singu
 
 		if(!isnull(CAN))
 			CA1 = CAN
@@ -1397,7 +1436,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			var/power_p = 0
 
 			if(!isnull(S1))
-				power_s += S1.energy
+				power_s += S1.energy*max((S1.radius**2),1)/4
 			if(P1?.air_contents)
 				if(CA1.active != 0)
 					power_p += P1.air_contents.toxins
@@ -1423,7 +1462,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		var/power_s = 0
 		var/power_p = 0
 		if(!isnull(S1))
-			power_s += S1.energy
+			power_s += S1.energy*((S1.radius*2+1)**2)/DEFAULT_AREA  //should give the area of the singularity and divide it by the area of a standard singularity(a 5x5)
 		power_p += 50
 		power_a = power_p*power_s*50
 		src.lastpower = power_a

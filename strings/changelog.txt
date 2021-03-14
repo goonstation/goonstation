@@ -1,5 +1,232 @@
 
+(t)sun mar 14 21
+(u)Kapu1178 & Virvatuli
+(p)3804
+(e)⚖🆕|balance, feature
+(*)Riot Shotguns now require racking between shots to fire
+(+)New shotgun sounds by Virvatuli
+(u)Zamujasa
+(e)🆕|feature
+(+)Sick of being totally human but not ready for the full new race experience? I guess some tails can be bought with spacebux now. I dunno if this will last though.
+(t)sat mar 13 21
+(u)Penny
+(p)3997
+(e)|
+(+)Adds the tape drive to hacked CompTech vendors.
+(u)comradef191
+(p)2523
+(e)⛔|removal
+(*)Removed the Construction Worker job. Added QM crate containing most of their equipment.
+(u)TTerc
+(p)3885
+(e)⚖|balance
+(*)Stun melee artifacts are now stamina damage based.
+(u)Flaborized
+(p)3992
+(e)🎨|sprites
+(*)Updated the action bar sprite, added several variants.
+(u)Kubius
+(p)3985
+(e)🐛🆕🗺|bug, feature, mapping
+(+)Kondaru airbridge issue introduced in upgrade Tau has been fixed, partially by adding a new Book Nook, the home of the persistent bookshelf. See PR 3973 for Tau's changes.
+(u)Chickenish
+(p)3954
+(e)🐛|bug
+(+)The Rad-Wick food effect works again.
+(u)Gannets
+(p)3978
+(e)⚖🆕🔄🎨|balance, feature, rework, sprites
+(*)Splits the Infiltrator nuclear operative class crate in to two kits. Infiltrator & Scout, details in minor changes.
+(+)Infiltrator kit now comes with: tranq pistol + ammo pouch, pod beacon deployer, dna scrambler, voice changer, emag, chameleon jumpsuit, chameleon projector
+(+)Scout kit comes with: burst fire smg + ammo pouch, light breaker, cloaking device, emag, nvg
+(t)fri mar 12 21
+(u)AwkwardDryad
+(p)3740
+(e)🆕🗺🔄🎨|feature, mapping, rework, sprites
+(*)reworked playing cards and gave them a makeover! have fuuuun!
+(u)Zamujasa
+(e)🆕|feature
+(*)Monkey Translator added.
+(*)Mask slot item that doesn't count as internals.
+(*)Monkeys wearing this will speak human.
+(*)Test Subjects start with one. There are also two in the Animal Control locker in Genetics, one in the monkey crate from cargo, and they can be scanned by mechanics.
+(u)zjdtmkhzt
+(p)3856
+(e)🆕🎨|feature, sprites
+(+)Added visual effect to plant helper artifacts.
+(u)Nefarious6th
+(p)3756
+(e)🗺🔄|mapping, rework
+(*)Destiny has received some significant remapping; highlights include layout changes to Security and Medical and the addition of a Ranch. See PR for extended details.
+(t)thu mar 11 21
+(u)Comradef191
+(p)3724
+(e)🗺|mapping
+(*)Re-Added AI Displays to all currenty in-rotation maps.
+(u)BatElite
+(p)3711
+(e)🆕🎨|feature, sprites
+(+)The floor and wall planner now has a mode for reverting changes to turfs, so you can undo the avant-garde redecorating of any construction worker you manage to catch!
+(u)Chickenish
+(p)3922
+(e)⚖🆕|balance, feature
+(+)Stowaways are no longer in the manifest.
+(t)wed mar 10 21
+(u)Camryn Buttes
+(p)3909
+(e)🆕|feature
+(+)Claw machines are now scannable by mechanics.
+(u)Camryn Buttes
+(p)3907
+(e)🐛🆕🗺|bug, feature, mapping
+(*)Added a cargo teleporter and recharger to the artifact lab on donut 3
+(+)Made a whole bunch of other smaller changes to donut 3, see if you can spot them!
+(u)TTerc
+(p)3955
+(e)⚖|balance
+(+)Removed opossums from wizard polymorph list.
+(u)Flaborized
+(p)3956
+(e)🎨|sprites
+(*)Most computer screens now glow in the dark.
+(t)tue mar 09 21
+(u)Nebulacrity
+(p)3666
+(e)⚖🆕🎨|balance, feature, sprites
+(*)After a raid on [REDACTED], there have been several sightings of what appeared to be a deep space beacon far away from the station. Not much information is amassed on it currently.
+(u)zjdtmkhzt
+(p)3789
+(e)⚖🆕|balance, feature
+(+)Artifact Guns can now sometimes have multiple different firing modes.
+(u)Sidewinder7
+(p)3930
+(e)🆕|feature
+(*)The term_ping command now accepts a filter argument.
+(t)sun mar 07 21
+(u)Comradef191
+(p)3934
+(e)🐛🗺|bug, mapping
+(*)Firedoors will once again appear in Hallways, Inner Engineering & the Customs Desk on Cogmap 1.
+(t)sat mar 06 21
+(u)Stonepillar
+(p)3931
+(e)🆕|feature
+(*)Added a rapid crayon creation device. It makes crayons. Purchase with spacebux or find in artistic toolboxes.
+(u)Camryn Buttes
+(p)3859
+(e)🐛🆕|bug, feature
+(*)Clown cars now have a car horn and a brake and should move much more smoothly (along with most other non-pod/sub/truck vehicles)! HONK HONK HONK!
+(t)fri mar 05 21
+(u)Azrun
+(p)3776
+(e)|
+(+)Improve tour guide floating chat display.
+(u)Superlagg
+(p)3692
+(e)🆕|feature
+(*)You can now pick your PDA's ringtone in character setup! Comes with a free copy of that ringtone's parent program.
+(u)Carbadox
+(p)3855
+(e)🆕|feature
+(+)Added 2x rubber shell cartridges to hacked booze vendor menu.
+(u)TTerc
+(p)3903
+(e)🆕|feature
+(+)Added medical eyepatches to medbay manufacturers.
+(u)zjdtmkhzt
+(p)3837
+(e)|
+(+)Sprinting into railings will make you start the process of vaulting over them.
+(u)Walpvrgis
+(p)3872
+(e)🎨|sprites
+(*)Adds new clothing to Clothing Booth/Vendor (30 outfits, 9 shoes and 2 hats)! Time for a makeover?
+(u)Fosstar
+(p)3861
+(e)|
+(+)Reagents are now clamped to the nearest 1000th, or 0.001
+(t)thu mar 04 21
+(u)Carbadox
+(p)3841
+(e)|
+(+)The industrial cryogenic unit has been renamed to the industrial cryogenic sleep unit and the Medical cyrogenic cell has been renamed to the cryogenic healing pod. This should make it easier to distinguish them from each other.
+(u)Superlagg
+(p)3852
+(e)🐛|bug
+(*)Securitrons will no longer attack you if you're tucked away inside something.
+(u)Chickenish
+(p)3749
+(e)⚖🆕|balance, feature
+(+)Recovery over time from blindness, eye blur, deafness, stuttering, and drug haze is now lag adjusted.
+(t)wed mar 03 21
+(u)Kyle
+(e)⚖|balance
+(+)Lizards now have a Regrow Tail ability. It lets you regrow your tail...
+(u)Zamuajasa
+(e)⚖|balance
+(+)Arse Nath/Rathen's Secret no longer causes clouds of smoke.
+(u)Sord
+(p)3797
+(e)⚖|balance
+(+)Morphine, ether, and sulfonal now reduce stimulants active time
+(u)Superlagg
+(p)3313
+(e)🆕🔄|feature, rework
+(+)Magic missiles are now speedier, bouncier, and more electrifying.
+(u)zjdtmkhzt
+(p)3836
+(e)|
+(+)The artlab folder on Dwaine now has some scripts that should make working with gptio less cumbersome.
+(u)Camryn Buttes
+(p)3681
+(e)🐛🆕🔄|bug, feature, rework
+(*)Revamped and rebalanced chaplain contracts. Replaced reversal contract with psychic meatcube contract.  Monkey soul farming is gone too. RIP
+(u)zjdtmkhzt
+(p)3377
+(e)⚖🆕🗺🎨|balance, feature, mapping, sprites
+(*)Cog1 now has chemistry equipment in the actual pharmacy.
+(+)Added a dedicated Pathologist job. Snazzy clothing sprites made by nefarious6th!
+(+)Medical Doctors/Geneticists/Roboticists/Scientists no longer have access to the pathology facilities when Pathology is enabled.
+(+)Which it is not.
+(t)sun feb 28 21
+(u)Stonepillar
+(p)3781
+(e)🗺|mapping
+(*)Added the HoP's golden crayon, which can be found in their office on most maps. Beware of possible theft!
+(u)DimWhat
+(p)3858
+(e)🆕|feature
+(+)Many mutantraces can now wear underwear.
+(t)fri feb 26 21
+(u)zjdtmkhzt
+(p)3818
+(e)⚖🆕|balance, feature
+(*)Artifacts are now sellable, more details below in the minor entries.
+(+)Money depends on artifact rarity.
+(+)Artlab has these forms you can fill out. If you fill it out correctly and slap it on an artifact, you'll get a lot more money for it.
+(+)Sometimes cargo might get new artifacts sent in if they previously sent nice ones out.
+(u)Superlagg
+(p)3419
+(e)⚖🆕|balance, feature
+(*)Added an action bar to feeding other people things, and made organs take multiple bites to eat.
+(+)Metachroitic factor now only has a 30% chance of being granted per point per bite.
 (t)thu feb 25 21
+(u)Carbadox
+(p)3717
+(e)|
+(+)Using a screwdriver / wrench on a credit transfer devices will now unanchor and let you move them.
+(u)Azrun
+(p)3807
+(e)|
+(*)Multitools now provide encoded information about the network a powered cable is connected to.
+(u)Ludolf
+(p)3827
+(e)🎨|sprites
+(+)New sprite for soldering irons.
+(u)Anachroniser
+(p)3423
+(e)⚖🆕|balance, feature
+(*)Singularities now come in variable sizes and can generate more power as they grow. Keep in mind the risks of a giant singularity.
 (u)Luxizzle
 (p)3777
 (e)🆕🗺🎨|feature, mapping, sprites

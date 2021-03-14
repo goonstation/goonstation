@@ -225,6 +225,9 @@
 			// attackby(obj/item/W as obj, mob/user as mob)
 			// 	user.visible_message("<span class='combat'><B>[user] pokes [src] with \the [W]!</B></span>") //No weldergibs. Krampus is truly a fiend.
 
+			telekinetic //this one has the wraith click-drag to throw item ability
+				name = "Krampus 3.1 III Turbo Edition: Alpha Strike"
+				desc = "abominably godawful"
 
 	metal
 		name = "metal cube"

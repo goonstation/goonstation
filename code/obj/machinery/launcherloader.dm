@@ -73,7 +73,7 @@
 
 				sleep(door ? 20 : 10)
 				if (driver)
-					for(var/obj/machinery/mass_driver/D as() in machine_registry[MACHINES_MASSDRIVERS])
+					for(var/obj/machinery/mass_driver/D as anything in machine_registry[MACHINES_MASSDRIVERS])
 						if(D.id == driver.id)
 							D.drive()
 	process()
@@ -415,10 +415,10 @@
 
 	destinations = list("North","South")
 
-/obj/machinery/computer/barcode/qm/donut3
+/obj/machinery/computer/barcode/qm/no_belthell
 	name = "Barcode Computer"
 	desc = "Used to print barcode stickers for the off-station merchants."
-	destinations = list()
+	destinations = list("Shipping Market")
 
 /obj/item/sticker/barcode
 	name = "barcode sticker"

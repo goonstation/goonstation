@@ -94,7 +94,7 @@ Hold down CTRL, ALT or SHIFT to modify, call or reset variable bound to those ke
 					var/basetype = /obj
 					if (holder.owner.holder.rank in list("Host", "Coder", "Administrator"))
 						basetype = /datum
-					var/match = get_one_match(typename, basetype)
+					var/match = get_one_match(typename, basetype, use_concrete_types = FALSE)
 					if (match)
 						newvalue = match
 						is_newinst = 1

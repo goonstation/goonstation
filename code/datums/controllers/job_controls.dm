@@ -822,14 +822,14 @@ var/datum/job_controller/job_controls
 
 		if(href_list["GetAccess"])
 			var/picker = input("Make this job's access comparable to which job?","Job Creator") in list("Captain","Head of Security",
-			"Head of Personnel","Chief Engineer","Research Director","Security Officer","Detective","Geneticist","Roboticist","Scientist",
+			"Head of Personnel","Chief Engineer","Research Director","Security Officer","Detective","Geneticist","Pathologist","Roboticist","Scientist",
 			"Medical Doctor","Quartermaster","Miner","Mechanic","Engineer","Chef","Bartender","Botanist","Janitor","Chaplain","Staff Assistant","No Access")
 			src.job_creator.access = get_access(picker)
 			src.job_creator()
 
 		if(href_list["AddAccess"])
 			var/picker = input("Make this job's access comparable to which job?","Job Creator") in list("Captain","Head of Security",
-			"Head of Personnel","Chief Engineer","Research Director","Security Officer","Detective","Geneticist","Roboticist","Scientist",
+			"Head of Personnel","Chief Engineer","Research Director","Security Officer","Detective","Geneticist","Pathologist","Roboticist","Scientist",
 			"Medical Doctor","Quartermaster","Miner","Mechanic","Engineer","Chef","Bartender","Botanist","Janitor","Chaplain","Staff Assistant","No Access")
 			src.job_creator.access |= get_access(picker)
 			src.job_creator()

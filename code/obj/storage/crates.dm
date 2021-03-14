@@ -98,6 +98,12 @@
 	spawn_contents = list(/obj/item/rcd_ammo = 5,
 	/obj/item/rcd)
 
+/obj/storage/crate/rcd/CE
+	name = "\improper RCD crate"
+	desc = "A crate for the Chief Engineer's personal RCD."
+	spawn_contents = list(/obj/item/rcd_ammo = 5,
+	/obj/item/rcd/construction/chiefEngineer)
+
 /obj/storage/crate/abcumarker
 	name = "\improper ABCU-Marker crate"
 	desc = "A crate for ABCU marker devices."
@@ -426,14 +432,29 @@
 		/obj/item/clothing/suit/space/syndicate/specialist/infiltrator,
 		/obj/item/clothing/head/helmet/space/syndicate/specialist/infiltrator)
 
-	agent_rework
-		name = "Class Crate - Infiltrator"
-		desc = "A crate containing a Specialist Operative loadout. Includes a tranquilizer pistol with a fast acting payload, a cloaking device with 5 uses, a combat knife and an electromagnetic card (EMAG)."
+	infiltrator
+		name = "Class Crate - Infiltrator" // for actually fitting in among the crew.
+		desc = "A crate containing a Specialist Operative loadout."
 		spawn_contents = list(/obj/item/gun/kinetic/tranq_pistol,
 		/obj/item/storage/pouch/tranq_pistol_dart,
-		/obj/item/clothing/glasses/nightvision,
-		/obj/item/cloaking_device/limited,
+		/obj/beacon_deployer/syndicate,
+		/obj/item/genetics_injector/dna_scrambler,
+		/obj/item/voice_changer,
 		/obj/item/card/emag,
+		/obj/item/clothing/under/chameleon,
+		/obj/item/device/chameleon,
+		/obj/item/clothing/suit/space/syndicate/specialist,
+		/obj/item/clothing/head/helmet/space/syndicate/specialist/infiltrator)
+
+	scout
+		name = "Class Crate - Scout" // sneaky invisible flanker
+		desc = "A crate containing a Specialist Operative loadout. Includes a submachine gun, a cloaking device and an electromagnetic card (EMAG)."
+		spawn_contents = list(/obj/item/gun/kinetic/smg,
+		/obj/item/storage/pouch/bullet_9mm/smg,
+		/obj/item/clothing/glasses/nightvision,
+		/obj/item/cloaking_device,
+		/obj/item/card/emag,
+		/obj/item/lightbreaker,
 		/obj/item/clothing/suit/space/syndicate/specialist/infiltrator,
 		/obj/item/clothing/head/helmet/space/syndicate/specialist/infiltrator)
 

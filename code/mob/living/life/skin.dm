@@ -11,7 +11,7 @@
 			var/multi_process_mult = owner.skin_process.len > 1 ? (owner.skin_process.len * 1.5) : 1
 			var/use_volume = 0.35 * mult * multi_process_mult
 
-			for (var/atom/A as() in owner.skin_process)
+			for (var/atom/A as anything in owner.skin_process)
 
 				if (A.loc != owner)
 					owner.skin_process -= A

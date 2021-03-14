@@ -106,6 +106,18 @@
 	degrade_to = "radioactive"
 	icon_state  = "rad_res"
 
+	OnAdd()
+		. = ..()
+		if(ismob(owner))
+			var/mob/M = owner
+			APPLY_MOB_PROPERTY(M, PROP_RADPROT, src, 100)
+
+	OnRemove()
+		. = ..()
+		if(ismob(owner))
+			var/mob/M = owner
+			REMOVE_MOB_PROPERTY(M, PROP_RADPROT, src)
+
 /datum/bioEffect/alcres
 	name = "Alcohol Resistance"
 	desc = "Strongly reinforces the subject's nervous system against alcoholic intoxication."

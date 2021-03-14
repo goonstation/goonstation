@@ -147,7 +147,7 @@ var/mutable_appearance/fluid_ma
 		if (src.group)
 			src.group.members -= src
 
-		src.group = 0
+		src.group = null
 
 		/*for (var/atom/A in src.floated_atoms) // ehh i dont like doing this, but I think we need it.
 			if (!A) continue
@@ -314,7 +314,7 @@ var/mutable_appearance/fluid_ma
 		else
 			pool(src)
 
-		for(var/atom/A as() in src.loc)
+		for(var/atom/A as anything in src.loc)
 			if (A && A.flags & FLUID_SUBMERGE)
 				var/mob/living/M = A
 				var/obj/O = A
@@ -790,7 +790,7 @@ var/mutable_appearance/fluid_ma
 
 		for(var/current_id in reacted_ids)
 			if (!src.group) return
-			var/datum/reagent/current_reagent = F.group.reagents.reagent_list[current_id]
+			var/datum/reagent/current_reagent = F?.group.reagents.reagent_list[current_id]
 			if (!current_reagent) continue
 			F.group.reagents.remove_reagent(current_id, current_reagent.volume * volume_fraction)
 		/*
@@ -832,7 +832,7 @@ var/mutable_appearance/fluid_ma
 
 	var/do_reagent_reaction = 1
 
-	if (F.my_depth_level == 1 && src.shoes)
+	if (F.my_depth_level <= 1 && src.shoes)
 		do_reagent_reaction = 0
 	if (F.my_depth_level == 2 || F.my_depth_level == 3)
 		if (src.wear_suit && src.wear_suit.permeability_coefficient <= 0.01)

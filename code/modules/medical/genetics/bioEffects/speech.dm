@@ -222,6 +222,35 @@
 		return message
 		// just let this one handle itself for now
 
+/datum/bioEffect/speech/badmin
+	name = "Frontal Gyrus Alteration Type-Badmin"
+	desc = "Spooky. Red."
+	id = "accent_badmin"
+	effectType = EFFECT_TYPE_POWER
+	isBad = 0
+	msgGain = "You now speak with black and red text."
+	msgLose = "Back to normal text."
+	probability = 0 // NO
+	occur_in_genepools = 0 // NO ALSO
+	can_make_injector = 0
+	can_copy = 0
+
+	OnAdd()
+		var/mob/living/L = owner
+		if (istype(L))
+			L.speechpopupstyle = "font-family: 'XFont 6x9'; font-size: 6px; color: black !important; -dm-text-outline: 1px #ff0000;"
+
+	OnRemove()
+		var/mob/living/L = owner
+		if (istype(L))
+			L.speechpopupstyle = ""
+
+	OnSpeak(var/message)
+		if (!istext(message))
+			return ""
+		return message
+		// just let this one handle itself for now
+
 /datum/bioEffect/speech/slurring
 	name = "Frontal Gyrus Alteration Type-D"
 	desc = "Causes the subject to have impaired control over their oral muscles, resulting in malformed speech."

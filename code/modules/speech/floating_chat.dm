@@ -85,9 +85,8 @@
 		var/measured = 8
 		if(istype(who)) // client's a client
 			measured = who.MeasureText(src.maptext, width = src.maptext_width)
-		else if(length(clients) >= 1) // even if it isnt *your* client
-			var/client/C = pick(clients)
-			measured = C.MeasureText(src.maptext, width = src.maptext_width)
+		else // bots can't be trusted with a soul. proably.
+			return measured * (1 + round(length(src.maptext_width) / 128))
 		src.measured_height = text2num(splittext(measured, "x")[2])
 
 proc/make_chat_maptext(atom/target, msg, style = "", alpha = 255)

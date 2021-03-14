@@ -708,7 +708,7 @@
 /obj/trait/immigrant
 	name = "Stowaway (+1) \[Background\]"
 	cleanName = "Stowaway"
-	desc = "You spawn hidden away on-station without an ID or PDA."
+	desc = "You spawn hidden away on-station without an ID, PDA, or entry in NT records."
 	id = "immigrant"
 	icon_state = "stowaway"
 	category = "background"
@@ -1064,3 +1064,22 @@ obj/trait/pilot
 	category = "species"
 	mutantRace = /datum/mutantrace/roach
 
+//Infernal Contract Traits
+/obj/trait/hair
+	name = "Wickedly Good Hair"
+	desc = "Sold your soul for the best hair around"
+	id = "contract_hair"
+	points = 0
+	isPositive = 1
+	unselectable = 1
+
+	onAdd(var/mob/owner)
+		if(ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			omega_hairgrownium_grow_hair(H, 1)
+		return
+
+	onLife(var/mob/owner) //Just to be safe.
+		if(ishuman(owner) && prob(35))
+			var/mob/living/carbon/human/H = owner
+			omega_hairgrownium_grow_hair(H, 1)

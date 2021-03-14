@@ -76,6 +76,7 @@
 //		jobs["Vice Officer"] = PAY_TRADESMAN
 		jobs["Detective"] = PAY_TRADESMAN
 		jobs["Geneticist"] = PAY_DOCTORATE
+		jobs["Pathologist"] = PAY_DOCTORATE
 		jobs["Scientist"] = PAY_DOCTORATE
 		jobs["Medical Doctor"] = PAY_DOCTORATE
 		jobs["Medical Director"] = PAY_IMPORTANT
@@ -471,7 +472,7 @@
 					boutput(usr, "<span class='alert'>No.</span>")
 					src.updateUsrDialog()
 					return
-				var/client/C = input("Who do you wish to give [amount] to?", "Spacebux Transfer") as() in clients|null
+				var/client/C = input("Who do you wish to give [amount] to?", "Spacebux Transfer") as anything in clients|null
 				if(alert("You are about to send [amount] to [C]. Are you sure?",,"Yes","No") == "Yes")
 					if(!usr.client.bank_can_afford(amount))
 						boutput(usr, "<span class='alert'>Insufficient Funds</span>")
@@ -964,7 +965,7 @@
 					boutput(usr, "<span class='alert'>No.</span>")
 					src.updateUsrDialog()
 					return
-				var/client/C = input("Who do you wish to give [amount] to?", "Spacebux Transfer") as() in clients|null
+				var/client/C = input("Who do you wish to give [amount] to?", "Spacebux Transfer") as anything in clients|null
 				if(alert("You are about to send [amount] to [C]. Are you sure?",,"Yes","No") == "Yes")
 					if(!usr.client.bank_can_afford(amount))
 						boutput(usr, "<span class='alert'>Insufficient Funds</span>")

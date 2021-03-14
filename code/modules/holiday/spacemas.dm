@@ -521,11 +521,12 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 				make_cleanable( /obj/decal/cleanable/water,get_turf(src))
 			qdel(src)
 
-	heal(var/mob/living/M)
-		if (!M || !isliving(M))
+	on_bite(obj/item/I, mob/M, mob/user)
+		if (!isliving(M))
 			return
-		M.bodytemperature -= rand(1, 10)
-		M.show_text("That was chilly!", "blue")
+		var/mob/living/L = M
+		L.bodytemperature -= rand(1, 10)
+		L.show_text("That was chilly!", "blue")
 
 	proc/hit(var/mob/living/M as mob, var/message = 1)
 		if (!M || !isliving(M))

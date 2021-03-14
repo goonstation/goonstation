@@ -4,6 +4,7 @@
 
 /datum/artifact/cloner
 	associated_object = /obj/artifact/cloner
+	type_name = "Cloner"
 	rarity_weight = 90
 	min_triggers = 2
 	max_triggers = 2

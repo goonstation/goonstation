@@ -33,10 +33,10 @@
 	use_bite_mask = 0
 	var/charcoaliness = 0 // how long it cooked - can be used to quickly check grill level
 
-	on_finish(mob/eater)
+	on_finish_eating(var/mob/M)
 		..()
-		if(iscarbon(eater))
-			var/mob/living/carbon/C = eater
+		if(iscarbon(M))
+			var/mob/living/carbon/C = M
 			for(var/atom/movable/MO as mob|obj in src)
 				MO.set_loc(C)
 				C.stomach_contents += MO
@@ -134,6 +134,7 @@
 				P.num = src.num
 				P.add_topping(num)
 			src.reagents.trans_to(P, src.reagents.total_volume/makeslices)
+			P.AddComponent(/datum/component/consume/foodheal, P.heal_amt)
 			P.pixel_x = rand(-6, 6)
 			P.pixel_y = rand(-6, 6)
 			. += P
@@ -542,7 +543,7 @@
 	food_color = "#808080"
 	food_effects = list("food_sweaty")
 
-	heal(var/mob/M)
+	on_bite(obj/item/I, mob/M, mob/user)
 		if (prob(15)) boutput(M, "<span class='alert'>You feel depressed.</span>")
 
 /obj/item/reagent_containers/food/snacks/soup/porridge
@@ -576,7 +577,7 @@
 		icon_state = "oatmeal-fun"
 		randomized = 0
 
-		heal(var/mob/M)
+		on_bite(obj/item/I, mob/M, mob/user)
 			var/dinosaur = pick("Ohmdenosaurus","Velafrons","Saurophaganax","Bissektipelta","Aardonyx","Tsintaosaurus","Barapasaurus","Rahonavis")
 			boutput(M, "<span class='notice'>You found a marshmallow [dinosaur] in this bite!</span>")
 			..()
@@ -710,7 +711,7 @@
 		else
 			src.name = "[src.dry ? "dry" : "soggy"] cereal"
 
-	heal(var/mob/M)
+	on_bite(obj/item/I, mob/M, mob/user)
 		M.reagents.add_reagent("sugar",15)
 		if(src.dry)
 			boutput(M, "<span class='alert'>It cuts the roof of your mouth! WHY DID YOU TRY EATING THIS DRY?!</span>")
@@ -732,10 +733,6 @@
 			new /obj/item/razor_blade( get_turf(src) )
 		..()
 
-	disposing()
-		if (src.amount < 1)
-			new /obj/item/reagent_containers/food/drinks/bowl(get_turf(src))
-		..()
 
 	is_open_container()
 		return 1
@@ -767,7 +764,7 @@
 			src.cooltime()
 			return
 
-	heal(var/mob/M)
+	on_bite(obj/item/I, mob/M, mob/user)
 		if(src.warm && M.reagents)
 			M.reagents.add_reagent("omnizine",15)
 		else
@@ -797,7 +794,8 @@
 	icon_state = "donkpocket"
 	heal_amt = 25
 	amount = 1
-	heal(var/mob/M)
+
+	on_bite(obj/item/I, mob/M, mob/user)
 		if(M.reagents)
 			M.reagents.add_reagent("omnizine",15)
 			M.reagents.add_reagent("teporone", 15)
@@ -815,7 +813,7 @@
 		name = "warm honk-pocket"
 		warm = 1
 
-	heal(var/mob/M)
+	on_bite(obj/item/I, mob/M, mob/user)
 		if(src.warm && M.reagents)
 			M.reagents.add_reagent("honk_fart",15)
 		else
@@ -909,8 +907,7 @@
 		processing_items.Remove(src)
 		..()
 
-
-	heal(var/mob/M)
+	on_bite(obj/item/I, mob/M, mob/user)
 		if (M.bioHolder.HasEffect("accent_swedish"))
 			boutput(M, "<span class='notice'>It tastes just like the old country!</span>")
 			M.reagents.add_reagent("love", 5)
@@ -1070,7 +1067,7 @@
 		else
 			return ..()
 
-	heal(var/mob/M) // ditto goddammit - arrabiata is not fuckin bland you dorks
+	on_bite(obj/item/I, mob/M, mob/user)
 		if (icon_state == "spag_plain")
 			boutput(M, "<span class='alert'>This is really bland.</span>")
 		. = ..()
@@ -1121,6 +1118,7 @@
 			var/obj/item/reagent_containers/food/snacks/spaghetti/spicy/D = new/obj/item/reagent_containers/food/snacks/spaghetti/pizzaghetti(W.loc)
 			D.food_effects += P.food_effects
 			D.food_effects += src.food_effects
+			D.AddComponent(/datum/component/consume/food_effects, D.food_effects)
 			user.u_equip(W)
 			user.put_in_hand_or_drop(D)
 			qdel(W)
@@ -1172,7 +1170,7 @@
 		. = ..()
 		name = "pizza-ghetti"
 
-	heal(var/mob/M)
+	on_bite(obj/item/I, mob/M, mob/user)
 		boutput(M, "<span class='alert'>Tastes like pizza and spaghetti, but way less convenient.</span>")
 		. = ..()
 
@@ -1191,13 +1189,23 @@
 	var/list/styles = list("icing", "sprinkles")
 	var/style_step = 1
 
-	heal(var/mob/M)
-		if(ishuman(M) && (M.job in list("Security Officer", "Head of Security", "Detective")))
-			src.heal_amt *= 2
-			..()
-			src.heal_amt /= 2
-		else
-			..()
+	on_bite(obj/item/I, mob/M, mob/user)
+		if(HAS_FLAG(..(), MOB_HEALTH_ABOVE_FOODHEAL_CUTOFF))
+			var/healing = src.heal_amt
+			if(ishuman(M))
+				var/mob/living/carbon/human/H = M
+				if (H.job in list("Security Officer", "Head of Security", "Detective"))
+					healing *= 2
+
+					if (src.reagents && src.reagents.has_reagent("THC"))
+						boutput(H, "<span class='notice'>Whoah, this tastes like crime!!</span>")
+						healing *= 2
+
+					if (H.reagents && H.reagents.has_reagent("coffee"))
+						boutput(H, "<span class='notice'>Ahh... great way to [world.time < 20 MINUTES ? "start" : "end"] a shift!</span>")
+						healing *= 2
+
+					H.HealDamage("All", healing, healing)
 
 	proc/add_frosting(var/obj/item/reagent_containers/food/drinks/drinkingglass/icing/tube, var/mob/user)
 		if (!src.can_add_frosting)
@@ -1265,6 +1273,7 @@
 					src.icon_state = "donut2"
 					src.name = "frosted donut"
 					src.heal_amt = 2
+					src.AddComponent(/datum/component/consume/foodheal, src.heal_amt)
 				..()
 
 	custom_suicide = 1
@@ -1358,7 +1367,7 @@
 		flick("ectoplasm-a", src)
 		src.setMaterial(getMaterial("ectoplasm"), appearance = 0, setname = 0)
 
-	heal(mob/M)
+	on_bite(obj/item/I, mob/M, mob/user)
 		..()
 		var/ughmessage = pick("Your mouth feels haunted. Haunted with bad flavors.","It tastes like flavor died.", "It tastes like a ghost fart.", "It has the texture of ham aspic.  From the 1950s.  Left out in the sun.")
 		boutput(M, "<span class='alert'>Ugh, why did you eat that? [ughmessage]</span>")
@@ -1428,7 +1437,7 @@
 	on_reagent_change()
 		src.update_icon()
 
-	heal(var/mob/M)
+	on_bite(obj/item/I, mob/M, mob/user)
 		if (src.bun == 4) M.bioHolder.AddEffect("accent_elvis", timeleft = 180)
 		..()
 
@@ -1496,6 +1505,8 @@
 				src.bun = 1
 				src.desc = "A hotdog! A staple of both sporting events and space stations."
 				food_effects = list("food_all")
+			src.AddComponent(/datum/component/consume/foodheal, src.heal_amt)
+			src.AddComponent(/datum/component/consume/food_effects, src.food_effects)
 
 			qdel(W)
 			user.visible_message("[user] adds a bun to [src].","You add a bun to [src].")
@@ -1710,7 +1721,7 @@
 	food_color = "#FFFF33"
 	initial_volume = 100
 
-	heal(var/mob/M)
+	on_bite(obj/item/I, mob/M, mob/user)
 		if(!src.salsa)
 			boutput(M, "<span class='alert'>Could use sauce...</span>")
 		..()
@@ -1737,6 +1748,8 @@
 			desc = "A meat taco. Pretty plain, really."
 			boutput(user, "<span class='notice'>You add [W] to [src]!</span>")
 			food_effects += W:food_effects
+			src.AddComponent(/datum/component/consume/foodheal, src.heal_amt)
+			src.AddComponent(/datum/component/consume/food_effects, src.food_effects)
 			qdel (W)
 
 		else if(istype(W,/obj/item/reagent_containers/food/snacks/condiment/hotsauce) || istype(W,/obj/item/reagent_containers/food/snacks/condiment/coldsauce))
@@ -1744,7 +1757,7 @@
 			if(!src.salsa)
 				src.heal_amt++
 				src.salsa = 1
-
+				src.AddComponent(/datum/component/consume/foodheal, src.heal_amt)
 			return
 
 		else if (istype(W, /obj/item/reagent_containers/food/snacks/ingredient/cheese))
@@ -1759,6 +1772,8 @@
 					src.icon_state = "taco2"
 					src.desc = "A complete taco. Looks pretty good."
 					food_effects += "food_energized_big"
+					src.AddComponent(/datum/component/consume/foodheal, src.heal_amt)
+					src.AddComponent(/datum/component/consume/food_effects, src.food_effects)
 				if(2)
 					boutput(user, "<span class='alert'>It can't hold any more!</span>")
 			return
@@ -1862,9 +1877,10 @@
 			desc = "They look delicious!"
 			user.u_equip(W)
 			qdel (W)
+			src.AddComponent(/datum/component/consume/foodheal, src.heal_amt)
 		else return ..()
 
-	heal(var/mob/M)
+	on_bite(obj/item/I, mob/M, mob/user)
 		..()
 		if(!syrup)
 			boutput(M, "<span class='alert'>[src] seem a bit dry.</span>")
@@ -1891,7 +1907,7 @@
 	food_color = "#FF6699"
 	food_effects = list("food_hp_up_big")
 
-	heal(var/mob/M as mob)
+	on_bite(obj/item/I, mob/M, mob/user)
 		..()
 		if(quality >= 1)
 			if(ishuman(M))
@@ -2014,7 +2030,7 @@
 		src.pixel_x = rand(-6, 6)
 		src.pixel_y = rand(-6, 6)
 
-	heal(var/mob/M)
+	on_bite(obj/item/I, mob/M, mob/user)
 		boutput(M, "<span class='alert'>Ugh, you really should've cooked that first.</span>")
 		if(prob(25))
 			M.reagents.add_reagent("salmonella",15)
@@ -2094,7 +2110,7 @@
 	heal_amt = 0
 	food_color = "#6A532D"
 
-	heal(var/mob/M)
+	on_bite(obj/item/I, mob/M, mob/user)
 		boutput(M, "<span class='alert'>OH GOD! You bite down and break a few teeth!</span>")
 		random_brute_damage(M, 2)
 		M.emote("scream")
@@ -2185,12 +2201,14 @@
 			else
 				. += "A big ol' meat pudding, wrapped up in a synthetic stomach stuffed nearly to bursting. Gusty!"
 
-	heal(var/mob/M)
-		if (M.bioHolder.HasEffect("accent_scots"))
-			heal_amt *= 2
-			boutput(M, "<span class='notice'>Och aye! That's th' stuff!</span>")
-			..()
-			heal_amt /= 2
+	on_bite(obj/item/I, mob/M, mob/user)
+		if(HAS_FLAG(..(), MOB_HEALTH_ABOVE_FOODHEAL_CUTOFF))
+			var/healing = src.heal_amt
+			if (M.bioHolder?.HasEffect("accent_scots"))
+				healing *= 2
+				boutput(M, "<span class='notice'>Och aye! That's th' stuff!</span>")
+
+				M.HealDamage("All", healing, healing)
 
 /obj/item/reagent_containers/food/snacks/haggis/ass
 	name = "haggass"
@@ -2332,6 +2350,7 @@
 					if(src.food_effects[b] in S.food_effects)
 						continue
 					S.food_effects += src.food_effects[b]
+				S.AddComponent(/datum/component/consume/food_effects, S.food_effects)
 				S.set_loc(spawnloc)
 				makepieces--
 			qdel(src)

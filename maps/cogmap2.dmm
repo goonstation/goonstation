@@ -4239,6 +4239,9 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/machinery/ai_status_display{
+	pixel_y = 28
+	},
 /turf/simulated/floor/caution/west,
 /area/station/turret_protected/ai_upload_foyer)
 "ajs" = (
@@ -4289,6 +4292,9 @@
 	dir = 4;
 	layer = 9.1;
 	pixel_x = 10
+	},
+/obj/machinery/ai_status_display{
+	pixel_y = 28
 	},
 /turf/simulated/floor/caution/east,
 /area/station/turret_protected/ai_upload_foyer)
@@ -5087,7 +5093,7 @@
 	pixel_x = -24
 	},
 /obj/item/storage/firstaid/toxin,
-/obj/item/card_box/suit,
+/obj/item/card_box/plain,
 /obj/storage/crate,
 /obj/item/reagent_containers/emergency_injector/calomel,
 /obj/item/reagent_containers/emergency_injector/calomel,
@@ -10147,6 +10153,9 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/machinery/ai_status_display{
+	pixel_y = 28
+	},
 /turf/simulated/floor/blueblack{
 	dir = 4
 	},
@@ -13858,7 +13867,7 @@
 /area/station/crew_quarters/cafeteria)
 "aES" = (
 /obj/table/reinforced/bar/auto,
-/obj/item/card_box/suit,
+/obj/item/card_box/plain,
 /turf/simulated/floor/carpet{
 	icon_state = "fpurple1"
 	},
@@ -17585,7 +17594,7 @@
 /area/station/hallway/secondary/entry)
 "aOf" = (
 /obj/table/auto,
-/obj/item/card_box/suit,
+/obj/item/card_box/plain,
 /turf/simulated/floor/neutral/side,
 /area/station/hallway/secondary/entry)
 "aOg" = (
@@ -26377,7 +26386,7 @@
 /obj/item/mop,
 /obj/item/storage/box/mousetraps,
 /obj/item/storage/box/balloonbox,
-/obj/item/card_box/suit,
+/obj/item/card_box/plain,
 /obj/item/basketball,
 /obj/disposalpipe/segment/mail/bent/south,
 /obj/item/clothing/under/gimmick/yay,
@@ -34041,6 +34050,7 @@
 	},
 /obj/table/wood/auto,
 /obj/item/storage/firstaid/regular,
+/obj/item/pen/crayon/golden,
 /turf/simulated/floor/carpet{
 	icon_state = "fblue2"
 	},
@@ -35598,6 +35608,9 @@
 	dir = 4
 	},
 /obj/item/storage/secure/sbriefcase,
+/obj/machinery/ai_status_display{
+	pixel_y = 28
+	},
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
@@ -36119,6 +36132,9 @@
 	dir = 1;
 	layer = 9.1;
 	pixel_y = 21
+	},
+/obj/machinery/ai_status_display{
+	pixel_y = 28
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/ce)
@@ -42577,7 +42593,7 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/ce)
 "bNC" = (
-/obj/storage/crate/rcd,
+/obj/storage/crate/rcd/CE,
 /obj/cable{
 	d1 = 1;
 	d2 = 4;
@@ -44939,7 +44955,7 @@
 	icon_state = "chair_couch-blue";
 	name = "ratty blue couch"
 	},
-/obj/item/playing_cards/suit,
+/obj/item/card_group/plain,
 /turf/simulated/floor/plating/damaged3,
 /area/station/routing/depot)
 "bSA" = (
@@ -47876,7 +47892,7 @@
 /area/station/security/brig)
 "bYM" = (
 /obj/table/reinforced/auto,
-/obj/item/card_box/suit,
+/obj/item/card_box/plain,
 /obj/disposalpipe/segment,
 /obj/disposalpipe/segment/brig{
 	dir = 4
@@ -55663,6 +55679,9 @@
 /area/station/medical/robotics)
 "cqq" = (
 /obj/machinery/computer/robot_module_rewriter,
+/obj/machinery/ai_status_display{
+	pixel_y = 28
+	},
 /turf/simulated/floor/caution/south,
 /area/station/medical/robotics)
 "cqr" = (
@@ -72163,6 +72182,10 @@
 /obj/machinery/light,
 /obj/item/hand_labeler,
 /obj/item/hand_labeler,
+/obj/artifact_paper_dispenser{
+	pixel_x = -5;
+	pixel_y = 10
+	},
 /turf/simulated/floor/purple,
 /area/station/science/artifact)
 "daF" = (
@@ -73248,6 +73271,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/access_spawn/pathology,
 /turf/simulated/floor/delivery,
 /area/station/medical/cdc)
 "dcS" = (
@@ -73328,6 +73352,7 @@
 	dir = 4
 	},
 /obj/disposalpipe/segment/mail/horizontal,
+/obj/access_spawn/pathology,
 /turf/simulated/floor/delivery,
 /area/station/medical/cdc)
 "dcZ" = (
@@ -73929,8 +73954,9 @@
 /obj/machinery/door/firedoor/pyro,
 /obj/machinery/door/airlock/pyro/glass{
 	name = "Quarantine Ward";
-	req_access_txt = "5"
+	req_access_txt = null
 	},
+/obj/access_spawn/pathology,
 /turf/simulated/floor/delivery,
 /area/station/medical/cdc)
 "deD" = (
@@ -79151,6 +79177,21 @@
 "mBI" = (
 /turf/simulated/floor/dirt,
 /area/station/ranch)
+"mDn" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/ai_status_display{
+	pixel_y = 28
+	},
+/turf/simulated/floor/blueblack{
+	dir = 8
+	},
+/area/station/crew_quarters/info{
+	name = "Net Cafe"
+	})
 "nbd" = (
 /obj/window/auto/reinforced,
 /obj/grille/steel,
@@ -79205,6 +79246,15 @@
 	dir = 10
 	},
 /area/station/ranch)
+"ojq" = (
+/obj/stool/chair/office{
+	dir = 4
+	},
+/obj/landmark/start{
+	name = "Pathologist"
+	},
+/turf/simulated/floor/white,
+/area/station/medical/cdc)
 "oxp" = (
 /turf/simulated/floor/grasstodirt{
 	dir = 9
@@ -79220,6 +79270,12 @@
 	},
 /turf/simulated/floor/bot,
 /area/station/hydroponics/bay)
+"ppH" = (
+/obj/machinery/ai_status_display{
+	pixel_y = 28
+	},
+/turf/simulated/floor/black,
+/area/station/turret_protected/ai_upload)
 "pFA" = (
 /obj/submachine/weapon_vendor/security,
 /turf/simulated/floor/specialroom/bar,
@@ -79358,12 +79414,8 @@
 /area/station/ranch)
 "tTd" = (
 /obj/table/wood/auto,
-/obj/item/reagent_containers/food/snacks/chicken_feed_bag{
-	rand_pos = 1
-	},
-/obj/item/reagent_containers/food/snacks/chicken_feed_bag{
-	rand_pos = 1
-	},
+/obj/item/reagent_containers/food/snacks/chicken_feed_bag,
+/obj/item/reagent_containers/food/snacks/chicken_feed_bag,
 /turf/simulated/floor/dirt,
 /area/station/ranch)
 "viA" = (
@@ -117489,7 +117541,7 @@ cOh
 cQR
 cNU
 cTY
-cVz
+ojq
 nKf
 cXZ
 cZc
@@ -135812,7 +135864,7 @@ aaB
 aaB
 aaB
 avU
-aAo
+mDn
 ayW
 aAn
 aBQ
@@ -136096,7 +136148,7 @@ acv
 abv
 acS
 abf
-adW
+ppH
 aeA
 afo
 agn
@@ -137304,7 +137356,7 @@ acx
 abv
 acS
 abf
-adW
+ppH
 aeC
 afs
 agq

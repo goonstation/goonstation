@@ -1168,7 +1168,7 @@
 /turf/simulated/floor/yellow,
 /area/station/quartermaster/office)
 "cW" = (
-/obj/machinery/computer/barcode/qm,
+/obj/machinery/computer/barcode/qm/no_belthell,
 /obj/machinery/door_control{
 	id = "cargo_inbound";
 	name = "Cargo Inbound Door Control";
@@ -2271,13 +2271,13 @@
 	},
 /area/station/hallway/secondary/exit)
 "fJ" = (
-/obj/storage/closet/wardrobe/black/chaplain,
 /obj/item/ghostboard,
 /obj/machinery/light_switch/auto,
 /obj/machinery/crema_switch{
 	pixel_x = 5;
 	pixel_y = 28
 	},
+/obj/storage/secure/closet/civilian/chaplain,
 /turf/simulated/grimycarpet,
 /area/station/chapel/office)
 "fK" = (
@@ -5553,7 +5553,7 @@
 /area/station/hallway/primary/west)
 "nF" = (
 /obj/table/auto,
-/obj/item/card_box/suit,
+/obj/item/card_box/plain,
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/cafeteria)
 "nG" = (
@@ -9575,7 +9575,7 @@
 /area/station/engine/engineering)
 "wG" = (
 /obj/table/auto,
-/obj/item/playing_cards/suit,
+/obj/item/card_group/plain,
 /obj/machinery/light{
 	dir = 4;
 	layer = 9.1;
@@ -12762,7 +12762,7 @@
 "Ft" = (
 /obj/table/auto,
 /obj/item/game_kit,
-/obj/item/playing_cards/suit,
+/obj/item/card_group/plain,
 /turf/simulated/floor/black,
 /area/station/hallway/primary/east)
 "Fu" = (
@@ -13473,6 +13473,7 @@
 /obj/machinery/guardbot_dock,
 /obj/cable,
 /obj/machinery/bot/guardbot/ranger,
+/obj/machinery/power/data_terminal,
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "Hd" = (
@@ -14453,7 +14454,6 @@
 /obj/machinery/door/airlock/pyro/medical/alt{
 	name = "Pathology"
 	},
-/obj/access_spawn/medical,
 /obj/firedoor_spawn,
 /obj/disposalpipe/segment,
 /obj/cable{
@@ -14461,6 +14461,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/access_spawn/pathology,
 /turf/simulated/floor/blue,
 /area/station/medical/cdc)
 "JA" = (
@@ -14663,7 +14664,6 @@
 	dir = 4;
 	name = "Pathology"
 	},
-/obj/access_spawn/medical,
 /obj/firedoor_spawn,
 /obj/disposalpipe/segment{
 	dir = 4
@@ -14671,6 +14671,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/access_spawn/pathology,
 /turf/simulated/floor/blue,
 /area/station/medical/cdc)
 "JZ" = (
@@ -14754,6 +14755,9 @@
 /area/station/medical/cdc)
 "Km" = (
 /obj/stool/chair/office/purple,
+/obj/landmark/start{
+	name = "Pathologist"
+	},
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
 "Kn" = (
@@ -17267,7 +17271,7 @@
 /obj/item/reagent_containers/food/snacks/pie/cream,
 /obj/item/storage/pill_bottle/cyberpunk,
 /obj/item/instrument/bikehorn,
-/obj/item/playing_cards/tarot,
+/obj/item/card_group/tarot,
 /obj/machinery/light_switch/west,
 /obj/item/chair/folded{
 	layer = 2;
@@ -17997,6 +18001,9 @@
 /obj/item/disk/data/tape{
 	pixel_y = -5
 	},
+/obj/artifact_paper_dispenser{
+	pixel_x = 10
+	},
 /turf/simulated/floor/purple,
 /area/station/science/artifact)
 "TE" = (
@@ -18059,6 +18066,8 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "TT" = (
+/obj/rack,
+/obj/item/pen/crayon/golden,
 /turf/simulated/floor/blue,
 /area/station/crew_quarters/heads)
 "TV" = (

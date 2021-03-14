@@ -9859,6 +9859,9 @@
 	layer = 3.5
 	},
 /obj/machinery/light_switch/auto,
+/obj/artifact_paper_dispenser{
+	pixel_x = 15
+	},
 /turf/simulated/floor/black,
 /area/station/science/artifact)
 "awT" = (
@@ -17826,7 +17829,7 @@
 /obj/item/reagent_containers/glass/beaker/large,
 /obj/item/reagent_containers/dropper,
 /obj/item/storage/firstaid/toxin,
-/obj/item/card_box/suit,
+/obj/item/card_box/plain,
 /obj/storage/crate,
 /obj/item/reagent_containers/emergency_injector/calomel,
 /obj/item/reagent_containers/emergency_injector/calomel,
@@ -23321,7 +23324,7 @@
 /turf/simulated/floor/darkpurple,
 /area/station/crew_quarters/data)
 "bfe" = (
-/obj/storage/crate/rcd,
+/obj/storage/crate/rcd/CE,
 /obj/machinery/firealarm{
 	dir = 4;
 	pixel_x = 26;
@@ -24988,7 +24991,6 @@
 /turf/simulated/floor,
 /area/station/storage/emergency)
 "bjs" = (
-/obj/table/auto,
 /obj/table/auto,
 /obj/item/storage/belt/utility{
 	pixel_y = 4
@@ -31119,6 +31121,7 @@
 /obj/item/storage/box/accessimp_kit{
 	pixel_y = 9
 	},
+/obj/item/pen/crayon/golden,
 /turf/simulated/floor/carpet{
 	icon_state = "green1"
 	},
@@ -37312,7 +37315,7 @@
 	pixel_x = -4;
 	pixel_y = 2
 	},
-/obj/item/card_box/suit{
+/obj/item/card_box/plain{
 	pixel_x = 6
 	},
 /turf/simulated/floor,
@@ -41790,9 +41793,8 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door/airlock/pyro/sci_alt,
-/obj/access_spawn/research,
-/obj/access_spawn/medical,
 /obj/firedoor_spawn,
+/obj/access_spawn/pathology,
 /turf/simulated/floor/green,
 /area/research_outpost/pathology)
 "bYs" = (
@@ -45000,7 +45002,7 @@
 /area/station/maintenance/southwest)
 "cio" = (
 /obj/table/reinforced/auto,
-/obj/item/playing_cards,
+/obj/item/card_group/plain,
 /turf/simulated/floor/carpet/arcade/half,
 /area/station/crew_quarters/clown)
 "cip" = (
@@ -46456,6 +46458,10 @@
 /obj/machinery/light/incandescent/netural,
 /turf/simulated/floor,
 /area/research_outpost)
+"dVf" = (
+/obj/access_spawn/pathology,
+/turf/simulated/floor,
+/area/research_outpost)
 "dWG" = (
 /obj/disposalpipe/segment,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -46896,6 +46902,9 @@
 /obj/stool/chair/office/purple{
 	dir = 4
 	},
+/obj/landmark/start{
+	name = "Pathologist"
+	},
 /turf/simulated/floor/green,
 /area/research_outpost/pathology)
 "jkr" = (
@@ -47034,9 +47043,8 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door/airlock/pyro/sci_alt,
-/obj/access_spawn/research,
-/obj/access_spawn/medical,
 /obj/firedoor_spawn,
+/obj/access_spawn/pathology,
 /turf/simulated/floor/green,
 /area/research_outpost/maint)
 "knq" = (
@@ -130194,7 +130202,7 @@ bcL
 wJK
 uah
 nSl
-bcL
+dVf
 bcL
 bcL
 bds
