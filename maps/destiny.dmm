@@ -2303,7 +2303,8 @@
 	name = "autoname - SS13"
 	},
 /obj/decal/tile_edge/stripe{
-	icon_state = "xtra_bigstripe-edge"
+	icon_state = "xtra_bigstripe-edge";
+	pixel_y = 10
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/lounge/starboard)
@@ -8828,7 +8829,8 @@
 	dir = 4
 	},
 /obj/decal/tile_edge/stripe{
-	icon_state = "xtra_bigstripe-edge"
+	icon_state = "xtra_bigstripe-edge";
+	pixel_y = 10
 	},
 /obj/cable{
 	icon_state = "1-2"
@@ -24120,6 +24122,9 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
+/obj/decal/stage_edge/alt{
+	pixel_y = 10
+	},
 /turf/simulated/floor,
 /area/station/crew_quarters/lounge/port)
 "eRv" = (
@@ -24363,7 +24368,8 @@
 	icon_state = "pipe-c"
 	},
 /obj/decal/tile_edge/stripe{
-	icon_state = "xtra_bigstripe-edge"
+	icon_state = "xtra_bigstripe-edge";
+	pixel_y = 10
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/lounge/port)
@@ -30458,7 +30464,8 @@
 /area/station/crew_quarters/kitchen)
 "iHi" = (
 /obj/decal/tile_edge/stripe{
-	icon_state = "xtra_bigstripe-edge"
+	icon_state = "xtra_bigstripe-edge";
+	pixel_y = 10
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/lounge/starboard)
@@ -31457,7 +31464,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/turf/simulated/floor/black,
+/turf/simulated/floor,
 /area/station/hangar/sec)
 "joO" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
@@ -34997,7 +35004,7 @@
 	dir = 10;
 	icon_state = "xtra_bigstripe-corner2"
 	},
-/turf/simulated/floor/black,
+/turf/simulated/floor,
 /area/station/hangar/sec)
 "loJ" = (
 /obj/machinery/power/apc/autoname_north,
@@ -35095,6 +35102,15 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/engine/engineering/ce)
+"lrv" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/decal/stage_edge/alt{
+	pixel_y = 10
+	},
+/turf/simulated/floor,
+/area/station/crew_quarters/lounge/starboard)
 "lrx" = (
 /obj/wingrille_spawn/reinforced,
 /obj/cable{
@@ -40653,6 +40669,12 @@
 /obj/item/stamp,
 /turf/simulated/floor/black,
 /area/station/security/interrogation)
+"ows" = (
+/obj/decal/stage_edge/alt{
+	pixel_y = 10
+	},
+/turf/simulated/floor,
+/area/station/crew_quarters/lounge/starboard)
 "owv" = (
 /obj/machinery/portable_atmospherics/canister/toxins,
 /obj/cable{
@@ -44508,6 +44530,12 @@
 	dir = 1
 	},
 /area/station/medical/medbay)
+"qDz" = (
+/obj/decal/stage_edge,
+/turf/simulated/floor/wood{
+	icon_state = "wooden"
+	},
+/area/station/crew_quarters/courtroom)
 "qDM" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -45811,6 +45839,7 @@
 /area/station/maintenance/disposal)
 "rls" = (
 /obj/machinery/light,
+/obj/decal/stage_edge,
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
@@ -53217,6 +53246,12 @@
 /obj/stool/bench/blue/auto,
 /turf/simulated/floor/black,
 /area/station/hallway/primary/central)
+"uZV" = (
+/obj/decal/stage_edge/alt{
+	pixel_y = 10
+	},
+/turf/simulated/floor,
+/area/station/crew_quarters/lounge/port)
 "uZZ" = (
 /obj/machinery/light/emergency{
 	dir = 8
@@ -100512,7 +100547,7 @@ lao
 ylj
 bFJ
 nAo
-exr
+qDz
 vyf
 dfn
 ylR
@@ -100814,7 +100849,7 @@ wdt
 fIX
 mFm
 iwu
-exr
+qDz
 fgz
 xnn
 ojm
@@ -103755,7 +103790,7 @@ kJe
 tYJ
 aGF
 eZo
-kJe
+uZV
 tkJ
 apT
 xas
@@ -106775,7 +106810,7 @@ aFL
 aiW
 chI
 iHi
-ajJ
+ows
 opk
 apT
 kTa
@@ -107077,7 +107112,7 @@ aFY
 aiX
 ajh
 aiL
-gXC
+lrv
 aJb
 apT
 aAl
