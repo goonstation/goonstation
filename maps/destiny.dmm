@@ -2306,6 +2306,9 @@
 	icon_state = "xtra_bigstripe-edge";
 	pixel_y = 10
 	},
+/obj/railing/yellow{
+	pixel_y = 10
+	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/lounge/starboard)
 "aiM" = (
@@ -2354,6 +2357,9 @@
 	dir = 1;
 	icon_state = "xtra_bigstripe-edge"
 	},
+/obj/railing/yellow{
+	dir = 1
+	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/lounge/starboard)
 "aiX" = (
@@ -2371,6 +2377,9 @@
 /obj/decal/tile_edge/stripe{
 	dir = 1;
 	icon_state = "xtra_bigstripe-edge"
+	},
+/obj/railing/yellow{
+	dir = 1
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/lounge/starboard)
@@ -2572,6 +2581,9 @@
 	},
 /obj/cable{
 	icon_state = "1-2"
+	},
+/obj/railing/yellow{
+	dir = 1
 	},
 /turf/simulated/floor/bot,
 /area/station/crew_quarters/lounge/port)
@@ -8834,6 +8846,9 @@
 	},
 /obj/cable{
 	icon_state = "1-2"
+	},
+/obj/railing/yellow{
+	pixel_y = 10
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/lounge/port)
@@ -24371,6 +24386,9 @@
 	icon_state = "xtra_bigstripe-edge";
 	pixel_y = 10
 	},
+/obj/railing/yellow{
+	pixel_y = 10
+	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/lounge/port)
 "eZD" = (
@@ -27056,6 +27074,7 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai)
 "gCx" = (
@@ -27920,10 +27939,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/wall/auto/reinforced/gannets{
-	explosion_resistance = 20;
-	name = "very reinforced wall"
-	},
+/turf/simulated/floor/black,
 /area/station/turret_protected/ai)
 "hfq" = (
 /obj/decal/tile_edge/line/black{
@@ -30467,6 +30483,9 @@
 	icon_state = "xtra_bigstripe-edge";
 	pixel_y = 10
 	},
+/obj/railing/yellow{
+	pixel_y = 10
+	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/lounge/starboard)
 "iHk" = (
@@ -30517,11 +30536,11 @@
 /turf/simulated/floor/grass/random,
 /area/station/hydroponics/bay)
 "iJy" = (
-/obj/machinery/door/window/northleft{
-	req_access = null;
+/obj/machinery/door/firedoor/border_only,
+/obj/machinery/door/airlock/gannets/glass/command/alt{
+	name = "airlock-'AI Core'";
 	req_access_txt = "19"
 	},
-/obj/landmark/gps_waypoint,
 /turf/simulated/floor/blueblack{
 	dir = 1
 	},
@@ -48562,6 +48581,7 @@
 	name = "Bridge Lockdown Door";
 	opacity = 0
 	},
+/obj/disposalpipe/segment/mail,
 /turf/simulated/floor/plating/random,
 /area/station/bridge)
 "sLL" = (
@@ -51145,6 +51165,9 @@
 /obj/decal/tile_edge/stripe{
 	dir = 1;
 	icon_state = "xtra_bigstripe-edge"
+	},
+/obj/railing/yellow{
+	dir = 1
 	},
 /turf/simulated/floor/delivery,
 /area/station/crew_quarters/lounge/port)
