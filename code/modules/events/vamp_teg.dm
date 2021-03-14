@@ -24,10 +24,6 @@
 		if (..())
 			return
 
-		// delay to warning
-		// duration of event
-		// grump to mitigate
-
 		var/warning_delay = input(usr,"Delay for warning? (Seconds)",src.name, 25) as num|null
 		if (!isnum(warning_delay) || warning_delay < 1)
 			return
