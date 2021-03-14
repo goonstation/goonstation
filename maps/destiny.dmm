@@ -6946,9 +6946,6 @@
 /turf/space,
 /area/station/science/lab)
 "aAR" = (
-/obj/window/cubicle{
-	dir = 4
-	},
 /obj/machinery/light{
 	dir = 1
 	},
@@ -15640,9 +15637,7 @@
 	name = "glass airlock-'Engineering'";
 	req_access_txt = "44"
 	},
-/turf/simulated/floor/caution/corner/misc{
-	dir = 6
-	},
+/turf/simulated/floor,
 /area/station/engine/gas)
 "bqp" = (
 /obj/cable{
@@ -21059,7 +21054,7 @@
 /obj/machinery/door/airlock/gannets/maintenance{
 	name = "airlock-'Maintenance'"
 	},
-/turf/simulated/floor/plating/random,
+/turf/simulated/floor/black,
 /area/station/maintenance/south)
 "dbw" = (
 /obj/cable{
@@ -21523,15 +21518,14 @@
 /turf/simulated/floor/black,
 /area/station/hangar/qm)
 "drb" = (
-/obj/machinery/shower{
-	dir = 4;
-	pixel_y = 6
+/obj/machinery/atmospherics/pipe/simple/insulated,
+/obj/machinery/door/firedoor/border_only,
+/obj/machinery/door/airlock/gannets/toxins{
+	name = "airlock-'Toxins'";
+	req_access_txt = "7"
 	},
-/obj/window/cubicle{
-	dir = 1
-	},
-/turf/simulated/floor/sanitary,
-/area/station/science/restroom)
+/turf/simulated/floor/plating/random,
+/area/station/science/storage)
 "drQ" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -21946,6 +21940,9 @@
 	},
 /obj/item/reagent_containers/bath_bomb,
 /obj/item/reagent_containers/bath_bomb,
+/obj/decal/poster/wallsign/chsl{
+	pixel_y = 32
+	},
 /turf/simulated/floor/sanitary,
 /area/station/science/restroom)
 "dHb" = (
@@ -26639,17 +26636,6 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/hangar/qm)
-"goi" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/machinery/door/firedoor/border_only,
-/obj/plasticflaps{
-	layer = 3
-	},
-/obj/machinery/door/airlock/gannets/security,
-/turf/simulated/floor/plating/random,
-/area/station/security/beepsky)
 "gox" = (
 /obj/item/device/radio/intercom{
 	name = "Station Intercom";
@@ -26763,7 +26749,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/turf/simulated/floor/plating/random,
+/turf/simulated/floor,
 /area/station/janitor/office)
 "gso" = (
 /obj/cable{
@@ -26874,7 +26860,7 @@
 /obj/machinery/door/airlock/gannets/security{
 	name = "airlock-'West Pod Bay'"
 	},
-/turf/simulated/floor/plating/random,
+/turf/simulated/floor,
 /area/station/hangar/sec)
 "gwX" = (
 /obj/table/reinforced/chemistry/auto,
@@ -27482,7 +27468,7 @@
 	name = "airlock-'Ranch'";
 	req_access_txt = "83"
 	},
-/turf/simulated/floor/plating/random,
+/turf/simulated/floor,
 /area/station/ranch)
 "gRh" = (
 /obj/airbridge_controller{
@@ -27900,7 +27886,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/plating/random,
+/turf/simulated/floor/white,
 /area/station/medical/medbay/treatment)
 "hdY" = (
 /obj/critter/nicespider,
@@ -28382,7 +28368,7 @@
 	layer = 3
 	},
 /obj/machinery/door/airlock/gannets/security,
-/turf/simulated/floor/plating/random,
+/turf/simulated/floor/specialroom/bar,
 /area/station/security/main)
 "hul" = (
 /obj/disposalpipe/segment{
@@ -28833,16 +28819,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/primary/east)
-"hKD" = (
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/gannets/medical{
-	name = "airlock-'Operating Theater'"
-	},
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/plating/random,
-/area/station/medical/medbay/surgery)
 "hKF" = (
 /obj/stool/chair/comfy/blue{
 	dir = 4
@@ -29237,7 +29213,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/plating/random,
+/turf/simulated/floor,
 /area/station/science/bot_storage)
 "hXg" = (
 /obj/decal/poster/wallsign/engineering,
@@ -33082,6 +33058,10 @@
 /area/station/security/interrogation)
 "kkr" = (
 /obj/machinery/drainage,
+/obj/machinery/shower{
+	dir = 4;
+	pixel_y = 6
+	},
 /turf/simulated/floor/sanitary,
 /area/station/science/restroom)
 "kkC" = (
@@ -34634,7 +34614,7 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
-/turf/simulated/floor/plating/random,
+/turf/simulated/floor,
 /area/station/engine/power)
 "lfd" = (
 /obj/disposalpipe/segment/brig,
@@ -36672,7 +36652,7 @@
 	name = "airlock-'Computer Core'";
 	req_access_txt = "19"
 	},
-/turf/simulated/floor/plating/random,
+/turf/simulated/floor,
 /area/station/turret_protected/Zeta)
 "mom" = (
 /obj/disposalpipe/segment/food{
@@ -37224,7 +37204,7 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
-/turf/simulated/floor/caution/northsouth,
+/turf/simulated/floor,
 /area/station/engine/core)
 "mEY" = (
 /obj/wingrille_spawn,
@@ -37874,13 +37854,6 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/solar/west)
-"mXM" = (
-/obj/machinery/atmospherics/pipe/simple/insulated,
-/obj/decal/poster/wallsign/chsl{
-	pixel_y = -32
-	},
-/turf/simulated/wall/auto/reinforced/gannets,
-/area/station/science/storage)
 "mXO" = (
 /obj/table/auto,
 /obj/random_item_spawner/tools,
@@ -38995,7 +38968,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/black,
+/turf/simulated/floor,
 /area/station/science/bot_storage)
 "nAo" = (
 /obj/decal/tile_edge/stripe,
@@ -40525,12 +40498,6 @@
 	},
 /turf/simulated/floor,
 /area/station/mining/staff_room)
-"otg" = (
-/obj/machinery/door/window/eastleft{
-	dir = 1
-	},
-/turf/simulated/floor/sanitary,
-/area/station/science/restroom)
 "otk" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -42651,10 +42618,6 @@
 	dir = 8
 	},
 /area/station/turret_protected/Zeta)
-"pzR" = (
-/obj/machinery/door/window/eastleft,
-/turf/simulated/floor/sanitary,
-/area/station/science/restroom)
 "pzY" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -46900,7 +46863,7 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/turf/simulated/floor/plating/random,
+/turf/simulated/floor/black,
 /area/station/maintenance/east)
 "rNq" = (
 /obj/critter/turtle/sylvester/HoS,
@@ -47216,7 +47179,7 @@
 /obj/machinery/door/airlock/gannets/maintenance{
 	name = "airlock-'Maintenance'"
 	},
-/turf/simulated/floor/plating/random,
+/turf/simulated/floor/black,
 /area/station/hallway/primary/central)
 "rWb" = (
 /obj/machinery/light/small,
@@ -47719,7 +47682,7 @@
 	name = "airlock-'Ranch'";
 	req_access_txt = "83"
 	},
-/turf/simulated/floor/plating/random,
+/turf/simulated/floor,
 /area/station/ranch)
 "skn" = (
 /turf/simulated/wall/auto/gannets,
@@ -52842,7 +52805,7 @@
 	name = "airlock-'Chief Engineer's Office'";
 	req_access_txt = "49"
 	},
-/turf/simulated/floor/white,
+/turf/simulated/floor/engine,
 /area/station/engine/core)
 "uQU" = (
 /obj/disposalpipe/segment,
@@ -54549,9 +54512,7 @@
 	dir = 5;
 	level = 2
 	},
-/turf/simulated/floor/bluewhite{
-	dir = 1
-	},
+/turf/simulated/floor/specialroom/arcade,
 /area/station/crew_quarters/lounge)
 "vJj" = (
 /obj/cable{
@@ -56475,7 +56436,7 @@
 	name = "airlock-'West SMES'";
 	req_access_txt = "44|50"
 	},
-/turf/simulated/floor/plating/random,
+/turf/simulated/floor,
 /area/station/engine/power)
 "wNu" = (
 /turf/simulated/floor/specialroom/cafeteria,
@@ -58312,9 +58273,6 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/north)
 "xGH" = (
-/obj/window/cubicle{
-	dir = 4
-	},
 /obj/landmark{
 	icon_state = "x3";
 	name = "peststart"
@@ -58825,7 +58783,7 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/turf/simulated/floor/plating/random,
+/turf/simulated/floor,
 /area/station/engine/engineering)
 "xUM" = (
 /obj/decal/boxingrope{
@@ -93299,7 +93257,7 @@ eov
 fWj
 wtR
 cuo
-hKD
+meH
 ibO
 nfn
 jny
@@ -98171,7 +98129,7 @@ sMO
 jqb
 tyD
 vPE
-goi
+bFn
 wNe
 lto
 wne
@@ -122007,7 +121965,7 @@ ogs
 aAR
 uhu
 xGH
-pzR
+uhu
 wEP
 jTu
 wEP
@@ -122307,8 +122265,8 @@ sDD
 dzj
 brT
 dGZ
-otg
-drb
+uhu
+uhu
 kkr
 xlm
 oRI
@@ -122608,8 +122566,8 @@ tlU
 kGD
 kGD
 uAq
-mXM
 qmA
+drb
 qmA
 ogs
 xlm
