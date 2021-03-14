@@ -42585,7 +42585,7 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/ce)
 "bNC" = (
-/obj/storage/crate/rcd,
+/obj/storage/crate/rcd/CE,
 /obj/cable{
 	d1 = 1;
 	d2 = 4;

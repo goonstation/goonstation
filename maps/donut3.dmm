@@ -75559,7 +75559,7 @@
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "wmX" = (
-/obj/storage/crate/rcd,
+/obj/storage/crate/rcd/CE,
 /obj/cable{
 	d1 = 1;
 	d2 = 8;

@@ -98,6 +98,12 @@
 	spawn_contents = list(/obj/item/rcd_ammo = 5,
 	/obj/item/rcd)
 
+/obj/storage/crate/rcd/CE
+	name = "\improper RCD crate"
+	desc = "A crate for the Chief Engineer's personal RCD."
+	spawn_contents = list(/obj/item/rcd_ammo = 5,
+	/obj/item/rcd/construction/chiefEngineer)
+
 /obj/storage/crate/abcumarker
 	name = "\improper ABCU-Marker crate"
 	desc = "A crate for ABCU marker devices."

@@ -54158,7 +54158,7 @@
 /turf/simulated/floor/grime,
 /area/station/routing/depot)
 "pMI" = (
-/obj/storage/crate/rcd,
+/obj/storage/crate/rcd/CE,
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
