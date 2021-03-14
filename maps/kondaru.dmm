@@ -56112,18 +56112,6 @@
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/quarters_south)
-<<<<<<< HEAD
-"shR" = (
-/obj/machinery/power/apc/autoname_west,
-/obj/cable{
-	d2 = 2;
-	icon_state = "0-2"
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/central)
-/area/station/crew_quarters/cafeteria)
-"snN" = (
-=======
 "shZ" = (
 /obj/storage/secure/closet/brig,
 /turf/simulated/floor/red/side,
@@ -56137,7 +56125,6 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
->>>>>>> e15efb0cc01d0a02c1f8357815808c05742f905b
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -58522,18 +58509,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
-<<<<<<< HEAD
-"vcI" = (
-/obj/item/device/radio/beacon,
-/turf/simulated/floor/specialroom/bar,
-/area/station/crew_quarters/cafeteria)
-=======
-"vdG" = (
-/obj/wingrille_spawn/auto/crystal,
-/obj/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
 /obj/machinery/door/poddoor/pyro{
 	density = 0;
 	icon_state = "pdoor0";
@@ -58543,14 +58518,12 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/security/brig)
->>>>>>> e15efb0cc01d0a02c1f8357815808c05742f905b
 "vej" = (
 /obj/wingrille_spawn/auto,
 /obj/machinery/door/poddoor/pyro{
 	density = 0;
 	dir = 4;
 	icon_state = "pdoor0";
-	id = "kitchen";
 	layer = 4;
 	name = "Kitchen Shutter";
 	opacity = 0;
@@ -119048,18 +119021,8 @@ cWM
 cWM
 lrT
 ppQ
-<<<<<<< HEAD
-slG
-bje
-=======
-uMr
-uzb
->>>>>>> e15efb0cc01d0a02c1f8357815808c05742f905b
-bkC
-fbZ
 bnd
 uzb
-gkQ
 pJk
 pJk
 pJk
@@ -119349,30 +119312,12 @@ aWV
 aXW
 bsk
 aZY
-<<<<<<< HEAD
-blO
-bcl
-blO
-bey
-vcI
-bpI
-=======
-ppQ
-bcp
-ppQ
-oIf
-ppQ
-ppQ
->>>>>>> e15efb0cc01d0a02c1f8357815808c05742f905b
-biN
-uzb
 oGM
 fbZ
 bne
 uzb
 nQp
 bqU
-sxG
 btK
 jsY
 rOU
