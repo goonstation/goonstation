@@ -651,6 +651,7 @@
 						src.weeoo()
 						YellAtPerp(impotent_rage = 1)
 						if(isobj(src.loc))
+							var/obj/O = src.loc
 							if(prob(33))
 								src.visible_message("<span class='alert'><b>[src]</b> emits a loud thump and rattles a bit.</span>")
 								playsound(get_turf(O), "sound/impact_sounds/Metal_Hit_Heavy_1.ogg", 50, 1)
