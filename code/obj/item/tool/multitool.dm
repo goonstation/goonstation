@@ -53,7 +53,10 @@
 		//laptops are special too!
 		if(omniperipheral)
 			frequency = omniperipheral.frequency
-	if (hasvar(target, "freq"))
+
+	if (hasvar(target, "alarm_frequency"))
+		frequency = target:alarm_frequency
+	else if (hasvar(target, "freq"))
 		frequency = target:freq
 	else if (hasvar(target, "control_freq"))
 		control = target:control_freq
