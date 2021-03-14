@@ -7,11 +7,12 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	var/obj/item/ammo/bullets/ammo = null
 	var/max_ammo_capacity = 1 // How much ammo can this gun hold? Don't make this null (Convair880).
 	var/caliber = null // Can be a list too. The .357 Mag revolver can also chamber .38 Spc rounds, for instance (Convair880).
-	var/has_empty_state = 0 //does this gun have a special icon state for having no ammo lefT?
-	var/gildable = 0 //can this gun be affected by the [Helios] medal reward?
-
+	var/has_empty_state = 0 //Does this gun have a special icon state for having no ammo lefT?
+	var/gildable = 0 //Can this gun be affected by the [Helios] medal reward?
+	var/gilded = FALSE //Is this gun currently gilded by the [Helios] medal reward?
 	var/auto_eject = 0 // Do we eject casings on firing, or on reload?
 	var/casings_to_eject = 0 // If we don't automatically ejected them, we need to keep track (Convair880).
+
 
 	add_residue = 1 // Does this gun add gunshot residue when fired? Kinetic guns should (Convair880).
 
@@ -630,22 +631,80 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	name = "Riot Shotgun"
 	desc = "A police-issue shotgun meant for suppressing riots."
 	icon = 'icons/obj/48x32.dmi'
-	icon_state = "shotty"
+	icon_state = "shotty-empty"
 	item_state = "shotty"
 	force = 15.0
 	contraband = 5
 	caliber = 0.72
 	max_ammo_capacity = 8
-	auto_eject = 1
+	auto_eject = 0
 	can_dual_wield = 0
 	two_handed = 1
 	has_empty_state = 1
 	gildable = 1
+	var/racked_slide = FALSE
+
+
 
 	New()
 		ammo = new/obj/item/ammo/bullets/abg
 		set_current_projectile(new/datum/projectile/bullet/abg)
 		..()
+
+	update_icon()
+		. = ..()
+		src.icon_state = "shotty" + (gilded ? "-golden" : "") + (racked_slide ? "" : "-empty" )
+
+	canshoot()
+		return(..() && src.racked_slide)
+
+	shoot(var/target,var/start ,var/mob/user)
+		if(ammo.amount_left > 0 && !racked_slide)
+			boutput(user, "<span class='notice'>You need to rack the slide before you can fire!</span>")
+		..()
+		src.racked_slide = FALSE
+		src.casings_to_eject = 1
+		if (src.ammo.amount_left == 0) // change icon_state to empty if 0 shells left
+			src.update_icon()
+			src.casings_to_eject = 0
+
+	shoot_point_blank(user, user)
+		if(ammo.amount_left > 0 && !racked_slide)
+			boutput(user, "<span class='notice'>You need to rack the slide before you can fire!</span>")
+			return
+		..()
+		src.racked_slide = FALSE
+		src.casings_to_eject = 1
+		if (src.ammo.amount_left == 0) // change icon_state to empty if 0 shells left
+			src.update_icon()
+			src.casings_to_eject = 0
+
+
+
+	attack_self(mob/user as mob)
+		..()
+		if (!src.racked_slide) //Are we racked?
+			if (src.ammo.amount_left == 0)
+				boutput(user, "<span class ='notice'>You are out of shells!</span>")
+				update_icon()
+			else
+				src.racked_slide = TRUE
+				if (src.icon_state == "shotty[src.gilded ? "-golden" : ""]") //"animated" racking
+					src.icon_state = "shotty[src.gilded ? "-golden-empty" : "-empty"]" // having update_icon() here breaks
+					animate(src, time = 0.2 SECONDS)
+					animate(icon_state = "shotty[gilded ? "-golden" : ""]")
+				else
+					update_icon() // Slide already open? Just close the slide
+				boutput(user, "<span class='notice'>You rack the slide of the shotgun!</span>")
+				playsound(user.loc, "sound/weapons/shotgunpump.ogg", 50, 1)
+				src.casings_to_eject = 0
+				if (src.ammo.amount_left < 8) // Do not eject shells if you're racking a full "clip"
+					var/turf/T = get_turf(src)
+					if (T) // Eject shells on rack instead of on shoot()
+						var/obj/item/casing/C = new src.current_projectile.casing(T)
+						C.forensic_ID = src.forensic_ID
+						C.set_loc(T)
+
 
 /obj/item/gun/kinetic/ak47
 	name = "AK-744 Rifle"
