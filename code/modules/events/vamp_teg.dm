@@ -192,15 +192,13 @@
 		signal.data["sender_name"] = "ENGINE-MAILBOT"
 		signal.data["group"] = list(MGO_ENGINEER, MGA_ENGINE)
 		signal.data["message"] = "Notice: [event_string]"
-		signal.data["sender"] = "00000000" // surely this isn't going to be a problem
+		signal.data["sender"] = "00000000"
 		signal.data["address_1"] = "00000000"
 
 		pda_connection.post_signal(src, signal)
 
-
 datum/teg_transformation/vampire
 	mat_id = "bone"
-	required_reagents = list("vampire_serum"=5) /// TODO Azrun - REMOVE PRIOR TO UNDRAFT, For zee testing
 	var/datum/abilityHolder/vampire/abilityHolder
 	var/list/datum/targetable/vampire/abilities = list()
 	var/health = 150
@@ -268,17 +266,17 @@ datum/teg_transformation/vampire
 			remove_mindslave_status(M)
 		. = ..()
 
-	on_grump()
+	on_grump(mult)
 		var/mob/living/carbon/human/H
 		var/list/mob/living/carbon/targets = list()
 
-		if(prob(50)) // Azrun LOWER THIS ZOMG
+		if(probmult(20))
 			for(var/mob/living/carbon/M in orange(5, teg))
 				if(M.blood_volume >= 0 && !M.traitHolder.hasTrait("training_chaplain"))
 					targets += M
 
 		if(length(targets))
-			if(prob(30))
+			if(probmult(30))
 				if( !ON_COOLDOWN(src.teg,"blood", 30 SECONDS) )
 					playsound(src.teg, "sound/effects/blood.ogg", rand(10,20), 0, -1)
 
@@ -301,11 +299,11 @@ datum/teg_transformation/vampire
 				if(isdead(H) && abilityHolder.points > 100 && !ON_COOLDOWN(src.teg,"enthrall",30 SECONDS))
 					enthrall(H)
 
-		if(prob(10))
+		if(probmult(10))
 			var/list/responses = list("I hunger! Bring us food so we may eat!", "Blood... I needs it.", "I HUNGER!", "Summon them here so we may feast!")
 			say_ghoul(pick(responses))
 
-		if(prob(20) && abilityHolder.points > 100)
+		if(probmult(20) && abilityHolder.points > 100)
 			var/datum/reagents/reagents = pick(src.teg.circ1.reagents, src.teg.circ2.reagents)
 			var/transfer_volume = clamp(reagents.maximum_volume - reagents.total_volume, 0, abilityHolder.points - 100)
 
@@ -322,11 +320,10 @@ datum/teg_transformation/vampire
 					if(src.teg?.active_form == src)
 						src.teg?.efficiency_controller -= 5
 		else
-			switch(rand(1,3))
-				if(1)
-					var/list/stationAreas = get_accessible_station_areas()
-					var/area/A = stationAreas[pick(stationAreas)]
-					A?.area_apc?.emp_act()
+			if(probmult(33))
+				var/list/stationAreas = get_accessible_station_areas()
+				var/area/A = stationAreas[pick(stationAreas)]
+				A?.area_apc?.emp_act()
 
 		checkhealth()
 		return TRUE

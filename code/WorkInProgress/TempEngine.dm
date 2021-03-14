@@ -917,22 +917,22 @@ datum/pump_ui/circulator_ui
 		var/stoked_sum = 0
 		if(lastgenlev > 0)
 			if(grump < 0) grump = 0 // no negative grump plz
-			grump++ // get grump'd
+			grump += mult
 
 		for(var/obj/machinery/power/furnace/F as anything in src.furnaces)
 			if( F.active ) stoked_sum += F.stoked
 
 		if(stoked_sum > 10)
-			if(prob(50)) grump -= mult
-			if(prob(5)) grump -= (min(stoked_sum/10, 15)*mult)
+			if(probmult(50)) grump -= mult
+			if(probmult(5)) grump -= (min(stoked_sum/10, 15)*mult)
 
 		// Use classic grump if not handled by variant
-		if(!src.active_form?.on_grump(src))
-			classic_grump()
+		if(!src.active_form?.on_grump(src, mult))
+			classic_grump(mult)
 
 	// engine looping sounds and hazards
-	proc/classic_grump()
-		if(grump >= 100 && prob(5))
+	proc/classic_grump(mult)
+		if(grump >= 100 && probmult(5))
 			playsound(src.loc, pick(sounds_enginegrump), 70, 0)
 			src.audible_message("<span class='alert'>[src] makes [pick(grump_prefix)] [pick(grump_suffix)]!</span>")
 			grump -= 5
@@ -953,27 +953,27 @@ datum/pump_ui/circulator_ui
 					elecflash(src, power = 3)
 			if(19 to 21)
 				playsound(src.loc, sound_warningbuzzer, 50, 0)
-				if (prob(5))
+				if (probmult(5))
 					var/datum/effects/system/bad_smoke_spread/smoke = new /datum/effects/system/bad_smoke_spread()
 					smoke.set_up(1, 0, src.loc)
 					smoke.attach(src)
 					smoke.start()
 					src.visible_message("<span class='alert'>[src] starts smoking!</span>")
-				if (grump >= 100 && prob(5))
+				if (grump >= 100 && probmult(5))
 					playsound(src.loc, "sound/machines/engine_grump1.ogg", 50, 0)
 					src.visible_message("<span class='alert'>[src] erupts in flame!</span>")
 					fireflash(src, 1)
 					grump -= 10
 			if(22 to 23)
 				playsound(src.loc, sound_engine_alert1, 55, 0)
-				if (prob(5)) zapStuff()
-				if (prob(5))
+				if (probmult(5)) zapStuff()
+				if (probmult(5))
 					var/datum/effects/system/bad_smoke_spread/smoke = new /datum/effects/system/bad_smoke_spread()
 					smoke.set_up(1, 0, src.loc)
 					smoke.attach(src)
 					smoke.start()
 					src.visible_message("<span class='alert'>[src] starts smoking!</span>")
-				if (grump >= 100 && prob(5))
+				if (grump >= 100 && probmult(5))
 					playsound(src.loc, "sound/machines/engine_grump1.ogg", 50, 0)
 					src.visible_message("<span class='alert'>[src] erupts in flame!</span>")
 					fireflash(src, rand(1,3))
@@ -981,15 +981,15 @@ datum/pump_ui/circulator_ui
 
 			if(24 to 25)
 				playsound(src.loc, sound_engine_alert1, 55, 0)
-				if (prob(10)) // lowering a bit more
+				if (probmult(10)) // lowering a bit more
 					zapStuff()
-				if (prob(5))
+				if (probmult(5))
 					var/datum/effects/system/bad_smoke_spread/smoke = new /datum/effects/system/bad_smoke_spread()
 					smoke.set_up(1, 0, src.loc)
 					smoke.attach(src)
 					smoke.start()
 					src.visible_message("<span class='alert'>[src] starts smoking!</span>")
-				if (grump >= 100 && prob(10)) // probably not good if this happens several times in a row
+				if (grump >= 100 && probmult(10)) // probably not good if this happens several times in a row
 					playsound(src.loc, "sound/weapons/rocket.ogg", 50, 0)
 					src.visible_message("<span class='alert'>[src] explodes in flame!</span>")
 					var/firesize = rand(1,4)
@@ -1001,14 +1001,14 @@ datum/pump_ui/circulator_ui
 						if(ismob(M))
 							var/atom/targetTurf = get_edge_target_turf(M, get_dir(src, get_step_away(M, src)))
 							M.throw_at(targetTurf, 200, 4)
-						else if (prob(15)) // cut down the number of other junk things that get blown around
+						else if (probmult(15)) // cut down the number of other junk things that get blown around
 							var/atom/targetTurf = get_edge_target_turf(M, get_dir(src, get_step_away(M, src)))
 							M.throw_at(targetTurf, 200, 4)
 					grump -= 30
 
 			if(26 to INFINITY)
 				playsound(src.loc, sound_engine_alert3, 55, 0)
-				if(grump >= 100 && prob(6))
+				if(grump >= 100 && probmult(6))
 					src.audible_message("<span class='alert'><b>[src] [pick("resonates", "shakes", "rumbles", "grumbles", "vibrates", "roars")] [pick("dangerously", "strangely", "ominously", "frighteningly", "grumpily")]!</b></span>")
 					playsound(src.loc, "sound/effects/explosionfar.ogg", 65, 1)
 					for (var/obj/window/W in range(6, src.loc)) // smash nearby windows
@@ -1033,14 +1033,14 @@ datum/pump_ui/circulator_ui
 							var/T_effect_prob = 100 * (1 - (max(T_dist-1,1) / 5))
 
 							for (var/obj/item/I in T)
-								if ( prob(T_effect_prob) )
+								if ( probmult(T_effect_prob) )
 									animate_float(I, 1, 3)
 
-				if (prob(33)) // lowered because all the DEL procs related to zap are stacking up in the profiler
+				if (probmult(33)) // lowered because all the DEL procs related to zap are stacking up in the profiler
 					zapStuff()
-				if(prob(5))
+				if(probmult(5))
 					src.audible_message("<span class='alert'>[src] [pick("rumbles", "groans", "shudders", "grustles", "hums", "thrums")] [pick("ominously", "oddly", "strangely", "oddly", "worringly", "softly", "loudly")]!</span>")
-				else if (prob(2))
+				else if (probmult(2))
 					src.visible_message("<span class='alert'><b>[src] hungers!</b></span>")
 				// todo: sorta run happily at this extreme level as long as it gets a steady influx of corpses OR WEED into the furnaces
 
