@@ -220,7 +220,7 @@ that cannot be itched
 		SPAWN_DBG(0.5 SECONDS)
 			.(T)
 
-/obj/item/device/detective_scanner/unique
+/obj/item/device/detective_scanner/detective
 	name = "cool forensic scanner"
 	desc = "Used to scan objects for DNA and fingerprints. This model seems to have an upgrade that lets it scan for prints at a distance. You feel cool holding it."
 	distancescan = 1
