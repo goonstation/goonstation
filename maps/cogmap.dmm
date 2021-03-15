@@ -10073,11 +10073,7 @@
 /area/station/crew_quarters/cafeteria)
 "ayN" = (
 /obj/table/reinforced/bar/auto,
-/obj/item/wrapping_paper,
-/obj/item/scissors{
-	pixel_x = -5;
-	pixel_y = 9
-	},
+/obj/item/clothing/head/cakehat,
 /turf/simulated/floor/carpet{
 	dir = 1;
 	icon_state = "fred2"
@@ -10088,7 +10084,9 @@
 /obj/window/reinforced{
 	dir = 2
 	},
-/obj/item/clothing/head/cakehat,
+/obj/machinery/computer/security/wooden_tv/small{
+	pixel_y = 7
+	},
 /turf/simulated/floor/carpet{
 	dir = 1;
 	icon_state = "fred2"
@@ -12857,7 +12855,9 @@
 	dir = 4
 	},
 /obj/table/reinforced/bar/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/item_dispenser/icedispenser{
+	dir = 8;
+	pixel_x = 19;
 	pixel_y = 8
 	},
 /turf/simulated/floor/specialroom/bar/edge{

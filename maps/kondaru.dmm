@@ -21053,8 +21053,9 @@
 /area/station/crew_quarters/cafeteria)
 "bgQ" = (
 /obj/table/reinforced/bar/auto,
-/obj/item/device/radio/beacon,
-/obj/item/clothing/head/cakehat,
+/obj/item_dispenser/icedispenser{
+	pixel_y = 11
+	},
 /turf/simulated/floor/carpet/green/standard/narrow/northsouth,
 /area/station/crew_quarters/cafeteria)
 "bgU" = (
@@ -50016,6 +50017,7 @@
 	pixel_x = -4;
 	pixel_y = 8
 	},
+/obj/item/clothing/head/cakehat,
 /turf/simulated/floor/carpet/green/standard/narrow/northsouth,
 /area/station/crew_quarters/cafeteria)
 "kBY" = (
@@ -53378,6 +53380,17 @@
 /obj/stool/chair,
 /turf/simulated/floor,
 /area/station/crew_quarters/quarters_south)
+"oIR" = (
+/obj/table/reinforced/bar/auto,
+/obj/machinery/computer/security/wooden_tv/small{
+	pixel_y = 8
+	},
+/obj/item/device/radio/beacon{
+	pixel_x = 1;
+	pixel_y = -4
+	},
+/turf/simulated/floor/carpet/green/standard/narrow/northsouth,
+/area/station/crew_quarters/cafeteria)
 "oIX" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/maintenance/central)
@@ -121130,7 +121143,7 @@ gda
 bUk
 bfK
 bgQ
-boy
+oIR
 sml
 xCW
 blR

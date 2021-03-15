@@ -42915,8 +42915,10 @@
 /area/station/hallway/secondary/exit)
 "bSA" = (
 /obj/table/reinforced/bar/auto,
-/obj/item/storage/box/glassbox,
 /obj/machinery/atmospherics/pipe/simple/color_pipe/green_pipe/vertical,
+/obj/item_dispenser/icedispenser{
+	pixel_y = 13
+	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/bar)
 "bSB" = (
@@ -46464,6 +46466,7 @@
 /obj/item/kitchen/utensil/fork,
 /obj/item/reagent_containers/food/drinks/drinkingglass,
 /obj/machinery/atmospherics/pipe/simple/color_pipe/green_pipe/horizontal,
+/obj/item/reagent_containers/food/drinks/drinkingglass,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "bar-edge"
@@ -46474,8 +46477,8 @@
 /obj/disposalpipe/segment/transport{
 	dir = 4
 	},
-/obj/item/reagent_containers/food/drinks/drinkingglass,
 /obj/machinery/atmospherics/pipe/simple/color_pipe/green_pipe/horizontal,
+/obj/item/storage/box/glassbox,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/bar)
 "cac" = (
