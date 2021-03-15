@@ -525,7 +525,6 @@
 				if (O.aiImage)
 					O.aiImage.loc = O
 
-			LAGCHECK(LAG_HIGH)
 			//copy paste end!
 
 	for(var/turf/t as anything in (new_tiles - prev_tiles))
@@ -557,7 +556,6 @@
 		else if( t.cameras == null )
 			t.aiImage.loc = t
 
-		LAGCHECK(LAG_HIGH)
 		//copy paste end!
 
 	return
