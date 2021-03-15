@@ -11149,10 +11149,6 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/item_dispenser/icedispenser{
-	pixel_x = -1;
-	pixel_y = 9
-	},
 /obj/disposalpipe/segment/food,
 /obj/cable{
 	icon_state = "1-2"
