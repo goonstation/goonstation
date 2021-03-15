@@ -81,4 +81,3 @@
 		boutput(user, "<span class='alert'>CTRLFREQ#[control]</span>")
 	if(beacon)
 		boutput(user, "<span class='alert'>BCKNFREQ#[beacon]</span>")
-	return
