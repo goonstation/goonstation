@@ -42,3 +42,6 @@
 
 			SPAWN_DBG(0.5 SECONDS)
 				attack_self(user)
+
+/obj/item/device/camera_viewer/ranch
+	network = "ranch"

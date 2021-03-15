@@ -15834,6 +15834,7 @@
 	pixel_y = 24;
 	text = "NF"
 	},
+/obj/machinery/camera/ranch,
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "aLe" = (
@@ -46567,6 +46568,12 @@
 /obj/machinery/light/incandescent/netural,
 /turf/simulated/floor/shuttlebay,
 /area/research_outpost/hangar)
+"gCF" = (
+/obj/machinery/camera/ranch{
+	dir = 1
+	},
+/turf/simulated/floor/grass/leafy,
+/area/station/ranch)
 "gEE" = (
 /obj/rack,
 /obj/item/clothing/suit/fire,
@@ -76523,7 +76530,7 @@ aia
 eIq
 aMd
 aKY
-mip
+gCF
 aPZ
 aPW
 aQC

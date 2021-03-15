@@ -23180,6 +23180,9 @@
 /obj/machinery/light/incandescent/netural{
 	nostick = 1
 	},
+/obj/machinery/camera/ranch{
+	dir = 1
+	},
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "evT" = (
@@ -49289,6 +49292,7 @@
 /obj/landmark/start{
 	name = "Rancher"
 	},
+/obj/machinery/camera/ranch,
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "tir" = (
