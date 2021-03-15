@@ -93,19 +93,17 @@
 				return /obj/disposalpipe/mechanics_sensor
 		return
 
-	// clickdrag with crowbar in hand to flip the pipe
-	MouseDrop(mob/user)
-		var/obj/item/I = user.equipped()
-		if(in_interact_range(src, user) && !anchored)
-			if(ispryingtool(I))
+	// click the junction with empty hand to change direction
+	attack_hand(mob/user)
+		if(!anchored)
+			if(ptype == 2)
+				ptype = 3
 				set_dir(turn(dir, 180))
-				if(ptype == 2)
-					ptype = 3
-				else if(ptype == 3)
-					ptype = 2
-				update()
-			else
-				boutput(user, "You need a crowbar to flip the pipe!")
+			else if (ptype == 3)
+				ptype = 2
+				set_dir(turn(dir, 180))
+			boutput(user, "You change the pipe junction's direction.")
+			update()
 
 	// attackby item
 	// crowbar: rotate
