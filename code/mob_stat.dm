@@ -102,7 +102,7 @@
 				stats["Time To Start:"] = 0
 				var/shiftTime = round(ticker.round_elapsed_ticks / 600)
 				saveStat("Shift Time:", "[shiftTime] minute[shiftTime == 1 ? "" : "s"]")
-				saveStat("Local Time:", time2text(world.timeofday, "hh:mm", world.timezone))
+				saveStat("Local Time:", time2text(world.timeofday, "hh:mm"))
 
 				//MBC : nah we don't run construction anyway
 				//if (ticker.mode && istype(ticker.mode, /datum/game_mode/construction))
