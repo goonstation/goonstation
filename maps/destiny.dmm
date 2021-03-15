@@ -6209,13 +6209,31 @@
 /obj/machinery/drainage,
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/bar)
-"axE" = (
-/obj/machinery/chem_dispenser,
-/obj/item/reagent_containers/glass/beaker/large,
-/obj/item/clothing/glasses/spectro{
-	pixel_y = -3
+"axD" = (
+/obj/decal/tile_edge/stripe{
+	dir = 1;
+	icon_state = "xtra_bigstripe-edge"
 	},
-/turf/simulated/floor/black,
+/obj/landmark/start{
+	name = "Bartender"
+	},
+/obj/decal/poster/wallsign/fire{
+	desc = "Please remember to drink responsibly.";
+	layer = 3;
+	name = "MIXOLOGY HAZARD"
+	},
+/turf/simulated/floor/specialroom/bar,
+/area/station/crew_quarters/bar)
+"axE" = (
+/obj/decal/tile_edge/stripe{
+	dir = 1;
+	icon_state = "xtra_bigstripe-edge"
+	},
+/obj/machinery/chem_master{
+	dir = 4;
+	pixel_x = -4
+	},
+/turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/bar)
 "axG" = (
 /obj/machinery/door/firedoor/border_only,
@@ -6225,7 +6243,7 @@
 	req_access_txt = "25"
 	},
 /obj/item_dispenser/icedispenser{
-	pixel_y = 11
+	pixel_y = 14
 	},
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/bar)
@@ -10466,8 +10484,8 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
-/turf/simulated/floor/specialroom/bar,
-/area/station/crew_quarters/bar)
+/turf/simulated/floor/black,
+/area/station/hallway/primary/north)
 "aME" = (
 /obj/machinery/computer/genetics,
 /obj/decal/tile_edge/line/purple{
@@ -44846,7 +44864,9 @@
 	dir = 1;
 	icon_state = "xtra_bigstripe-edge"
 	},
-/obj/submachine/chem_extractor,
+/obj/submachine/chem_extractor{
+	dir = 8
+	},
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/bar)
 "qOx" = (
@@ -46332,13 +46352,13 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/item/hand_labeler,
-/obj/item/stamp,
-/obj/item/pen,
+/obj/item/clipboard,
 /obj/item/paper_bin{
 	pixel_y = 3
 	},
-/obj/item/clipboard,
+/obj/item/pen,
+/obj/item/stamp,
+/obj/item/hand_labeler,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/baroffice)
 "rGo" = (
@@ -102948,7 +102968,7 @@ gqn
 iVd
 qNV
 rwq
-ixA
+axD
 xfn
 oLP
 hlu
