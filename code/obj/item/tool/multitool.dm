@@ -66,7 +66,7 @@
 		var/datum/radio_frequency/radiofreq = target:radio_connection
 		frequency = radiofreq.frequency
 	else if (hasvar(target, "frequency"))
-		if(isnum(target:frequency)|istext(target:frequency))
+		if(isnum(target:frequency) || istext(target:frequency))
 			frequency = target:frequency
 	//We'll do lockers safely since nothing else seems to store the frequency exactly like this
 	else if (istype(target,/obj/storage/secure))
