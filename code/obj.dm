@@ -203,7 +203,10 @@
 			if(!src.anchored && isitem(src))
 				src.throw_at(over_object, 7, 1)
 				logTheThing("combat", usr, null, "throws [src] with wtk.")
-
+		else if (ismegakrampus(usr))
+			if(!src.anchored && isitem(src))
+				src.throw_at(over_object, 7, 1)
+				logTheThing("combat", usr, null, "throws [src] with k_tk.")
 		else if(usr.bioHolder && usr.bioHolder.HasEffect("telekinesis_drag") && istype(src, /obj) && isturf(src.loc) && isalive(usr)  && usr.canmove && get_dist(src,usr) <= 7 )
 			var/datum/bioEffect/TK = usr.bioHolder.GetEffect("telekinesis_drag")
 

@@ -3544,7 +3544,7 @@
 /turf/simulated/floor/carpet/green/fancy/edge/south,
 /area/station/engine/engineering/ce)
 "aoH" = (
-/obj/storage/crate/rcd,
+/obj/storage/crate/rcd/CE,
 /obj/machinery/light{
 	dir = 8;
 	layer = 9.1;
@@ -35707,7 +35707,7 @@
 	layer = 9.1;
 	pixel_x = -10
 	},
-/obj/item/card_box/suit,
+/obj/item/card_box/plain,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "carpet2";

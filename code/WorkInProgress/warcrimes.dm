@@ -67,6 +67,31 @@ var/fartcount = 0
 
 
 
+/obj/machinery/vending/meat //MEAT VENDING MACHINE
+	name = "Meat4cash"
+	desc = "An exotic meat vendor."
+	icon_state = "steak"
+	icon_panel = "standard-panel"
+	icon_off = "monkey-off"
+	icon_broken = "monkey-broken"
+	icon_fallen = "monkey-fallen"
+	pay = 1
+	acceptcard = 1
+	slogan_list = list("It's meat you can buy!",
+	"Trade your money for meat!",
+	"Buy the meat! It's meat!",
+	"Why not buy the meat?",
+	"Please, please buy meat.")
+
+	light_r = 0.9
+	light_g = 0.1
+	light_b = 0.1
+
+	create_products()
+		..()
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/ingredient/meat, 20, cost=PAY_UNTRAINED/5)
+
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat, 2, cost=PAY_UNTRAINED, hidden=1)
 
 
 
@@ -104,7 +129,7 @@ var/fartcount = 0
 /area/adventure/urs_dungeon/john_talk = list("This place smells like my bro.","Huh, Always wondered what those goggles did.","Huh, Always wondered what those goggles did.","Your hubris will be punished. Will you kill your fellow man to save yourself? Who harvests the harvestmen? What did it feel like when you lost your mind?")
 /area/grillnasium/grill_chamber/john_talk = list("You better know what you've started.","This is where it happens.")
 
-/mob/living/carbon/human/pariah
+
 
 // bus driver
 /mob/living/carbon/human/john
@@ -224,8 +249,15 @@ var/fartcount = 0
 					src.visible_message("<span class='alert'>[src] horks up a lump from his stomach... </span>")
 			snacc.Eat(src,src,1)
 
+	proc/pacify()
+		src.a_intent = INTENT_HELP
+		src.target = null
+		src.ai_state = 0
+		src.ai_target = null
 
 	proc/speak()
+		if(nude)
+			return // nude john is for looking at, not listening to.
 		SPAWN_DBG(0)
 			var/list/grills = list()
 
@@ -386,10 +418,7 @@ var/fartcount = 0
 			SPAWN_DBG(1 DECI SECOND)
 				say("Oh? [W] eh?")
 				say(pick("No kiddin' fer me?","I guess I could go fer a quick one yeah!","Oh dang dang dang! Haven't had one of these babies in a while!","Well I never get tired of those!","You're offering this to me? Don't mind if i do, [JOHN_PICK("people")]"))
-				src.a_intent = INTENT_HELP // pacify a juicer with food, obviously
-				src.target = null
-				src.ai_state = 0
-				src.ai_target = null
+				pacify()
 
 				if (istype(W, /obj/item/clothing/mask/cigarette/cigarillo/juicer))
 					gotsmokes = 1
@@ -854,3 +883,19 @@ Urs' Hauntdog critter
 							"NSS Horizon",
 							"???")
 
+
+/mob/living/carbon/human/geneticist
+	is_npc = 1
+	uses_mobai = 1
+	real_name = "Juicer Gene"
+	gender = NEUTER
+	max_health = 50
+
+	New()
+		..()
+		src.ai = new /datum/aiHolder/human/geneticist(src)
+		src.equip_new_if_possible(/obj/item/clothing/shoes/dress_shoes, slot_shoes)
+		src.equip_new_if_possible(/obj/item/clothing/under/rank/geneticist, slot_w_uniform)
+		src.equip_new_if_possible(/obj/item/clothing/suit/labcoat/pathology, slot_wear_suit)
+		if(prob(50))
+			src.equip_new_if_possible(/obj/item/clothing/glasses/regular, slot_glasses)

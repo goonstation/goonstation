@@ -1,5 +1,5 @@
 /obj/machinery/atmospherics/unary/cryo_cell
-	name = "cryo cell"
+	name = "cryogenic healing pod"
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "celltop-P"
 	density = 1

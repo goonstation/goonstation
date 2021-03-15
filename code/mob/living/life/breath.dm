@@ -1,6 +1,8 @@
 
 /datum/lifeprocess/breath
 	var/breathtimer = 0
+	var/breathtimerstage = 0
+	var/breathtimernotifredundant = 0
 	var/breathstate = 0
 
 	//consider these temporary...hopefully
@@ -22,26 +24,42 @@
 
 		//special (read: stupid) manual breathing stuff. weird numbers are so that messages don't pop up at the same time as manual blinking ones every time
 		if (manualbreathing && human_owner)
-			breathtimer++
+			breathtimer += get_multiplier()
+
 			switch(breathtimer)
 				if (0 to 15)
 					breathe(environment)
-				if (34)
-					boutput(owner, "<span class='alert'>You need to breathe!</span>")
-				if (35 to 51)
+					breathtimerstage = 0
+					breathtimernotifredundant = 0
+				if (15 to 34)
+					// this statement is intentionally left blank
+				if (34 to 51)
 					if (prob(5)) owner.emote("gasp")
-				if (52)
-					boutput(owner, "<span class='alert'>Your lungs start to hurt. You really need to breathe!</span>")
-				if (53 to 61)
+					if (!breathtimernotifredundant)
+						breathtimerstage = 1
+				if (52 to 61)
 					update_oxy(1)
 					owner.take_oxygen_deprivation(breathtimer/12)
-				if (62)
-					update_oxy(1)
-					boutput(owner, "<span class='alert'>Your lungs are burning and the need to take a breath is almost unbearable!</span>")
-					owner.take_oxygen_deprivation(10)
-				if (63 to INFINITY)
+					if (breathtimernotifredundant < 2)
+						breathtimerstage = 2
+				if (62 to INFINITY)
 					update_oxy(1)
 					owner.take_oxygen_deprivation(breathtimer/6)
+					if (breathtimernotifredundant < 3)
+						breathtimerstage = 3
+			switch(breathtimerstage)
+				if (0)
+					// this statement is intentionally left blank
+				if (1)
+					boutput(owner, "<span class='alert'>You need to breathe!</span>")
+					breathtimernotifredundant = 1
+				if (2)
+					boutput(owner, "<span class='alert'>Your lungs start to hurt. You really need to breathe!</span>")
+					breathtimernotifredundant = 2
+				if (3)
+					boutput(owner, "<span class='alert'>Your lungs are burning and the need to take a breath is almost unbearable!</span>")
+					breathtimernotifredundant = 3
+			breathtimerstage = 0
 		else // plain old automatic breathing
 			breathe(environment)
 

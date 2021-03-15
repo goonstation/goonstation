@@ -1145,7 +1145,7 @@
 		if (O.move_triggered)
 			O.move_trigger(src, ev)
 	reagents?.move_trigger(src, ev)
-	for (var/datum/statusEffect/S as() in statusEffects)
+	for (var/datum/statusEffect/S as anything in statusEffects)
 		if (S?.move_triggered)
 			S.move_trigger(src, ev)
 
@@ -1388,6 +1388,10 @@
 	var/original_language = src.say_language
 	if (mutantrace?.override_language)
 		say_language = mutantrace.override_language
+
+	if (istype(src.wear_mask, /obj/item/clothing/mask/monkey_translator))
+		var/obj/item/clothing/mask/monkey_translator/mask = src.wear_mask
+		say_language = mask.new_language
 
 	message = copytext(message, 1, MAX_MESSAGE_LEN)
 
@@ -2966,6 +2970,8 @@
 
 	if(ispath(mutantrace_type, /datum/mutantrace) )	//Set a new mutantrace only if passed one
 		src.mutantrace = new mutantrace_type(src)
+		src.mutantrace.MutateMutant(src, "set")
+
 		. = 1
 
 	if(.)

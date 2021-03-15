@@ -566,9 +566,10 @@ datum
 			for(var/current_id in reagent_list)
 				var/datum/reagent/current_reagent = reagent_list[current_id]
 				if(current_reagent)
-					if(current_reagent.volume <= 0)
+					if(current_reagent.volume <= 0.001)
 						del_reagent(current_id)
 					else
+						current_reagent.volume = max(round(current_reagent.volume, 0.001), 0.001)
 						total_volume += current_reagent.volume
 			if(isitem(my_atom))
 				var/obj/item/I = my_atom
@@ -726,10 +727,11 @@ datum
 			var/added_new = 0
 			if (!donotupdate)
 				update_total()
+			amount = round(amount, CHEM_EPSILON)
+			if(amount < CHEM_EPSILON)
+				return 0
 			if(total_volume + amount > maximum_volume)
 				amount = (maximum_volume - total_volume) //Doesnt fit in. Make it disappear. Shouldnt happen. Will happen.
-			if(amount <= CHEM_EPSILON)
-				return 0
 
 			var/datum/reagent/current_reagent = reagent_list[reagent]
 

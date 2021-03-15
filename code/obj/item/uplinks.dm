@@ -350,6 +350,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 				src.uses = max(0, src.uses - I.cost)
 				if (usr.mind)
 					usr.mind.purchased_traitor_items += I
+				logTheThing("debug", usr, null, "bought this from uplink: [I.name]")
 
 			if (I.item)
 				var/obj/item = new I.item(get_turf(src))
@@ -548,6 +549,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 				src.uses = max(0, src.uses - I.cost)
 				if (usr.mind)
 					usr.mind.purchased_traitor_items += I
+				logTheThing("debug", usr, null, "bought this from uplink: [I.name]")
 
 			if (I.item)
 				var/obj/item = new I.item(get_turf(src.hostpda))

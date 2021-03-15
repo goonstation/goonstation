@@ -2,8 +2,12 @@
 /// Also eating stuff in general
 
 /// M = mob eating the thing
-/// user = mob using the thing
-/// I = thing being eaten -- only does anything on components with a mob parent
+// user = mob using the thing
+// I = thing being eaten -- only does anything on components with a mob parent
+
+//--// Argument formats! Any signals should really use these args in this order
+// Eatsignal w/ mob parent  - M, user, I
+// Eatsignal w/ item parent - I, M, user
 
 /* CONTENTS:
 * Can-eat inedible organs          - mob parent  - pre-eat check            - (Can it eat heads too?)
@@ -331,7 +335,7 @@
 		if (isnum_safe(_new_base_heal)) // C(duplicate component) wasn't initialized, so we don't know if the raw argument _new_base_heal is actually a number
 			src.base_heal = _new_base_heal
 
-/datum/component/consume/foodheal/proc/eat_stuff_get_heal(var/obj/item/I, var/obj/item/I, var/mob/M)
+/datum/component/consume/foodheal/proc/eat_stuff_get_heal(var/obj/item/I, var/mob/M, var/mob/user)
 	var/healing = src.base_heal
 
 	if (ishuman(M))
@@ -385,7 +389,7 @@
 	if(!istype(parent, /obj/item))
 		return COMPONENT_INCOMPATIBLE
 	src.food_parent = parent
-
+	src.start_amount = food_parent.amount
 	src.original_filters = food_parent.filters
 	RegisterSignal(parent, list(COMSIG_ITEM_CONSUMED_PARTIAL), .proc/apply_bitemask)
 
@@ -410,20 +414,15 @@
 /// Puts partially digested chunks in your mob
 /datum/component/consume/food_chunk
 	var/obj/item/food_parent
-	var/start_amount = 1
-	var/current_mask = 5
-	var/list/original_filters = list()
 
 /datum/component/consume/food_chunk/Initialize()
 	..()
 	if(!istype(parent, /obj/item))
 		return COMPONENT_INCOMPATIBLE
 	src.food_parent = parent
-	src.start_amount = food_parent.amount
-	src.original_filters = food_parent.filters
 	RegisterSignal(parent, list(COMSIG_ITEM_CONSUMED_PARTIAL, COMSIG_ITEM_CONSUMED_ALL), .proc/make_food_chunk)
 
-/datum/component/consume/food_chunk/proc/make_food_chunk(var/obj/item/I, var/mob/M)
+/datum/component/consume/food_chunk/proc/make_food_chunk(var/obj/item/I, var/mob/M, var/mob/user)
 	if (isliving(M))
 		if (food_parent.reagents && food_parent.reagents.total_volume) //only create food chunks for reagents
 			var/obj/item/reagent_containers/food/snacks/bite/B = unpool(/obj/item/reagent_containers/food/snacks/bite)
@@ -461,7 +460,7 @@
 			src.status_effects |= new_sfx
 
 
-/datum/component/consume/food_effects/proc/apply_food_effects(var/obj/item/I, var/mob/M)
+/datum/component/consume/food_effects/proc/apply_food_effects(var/obj/item/I, var/mob/M, var/mob/user)
 	if (src.status_effects.len && isliving(M) && M.bioHolder)
 		var/mob/living/L = M
 		for (var/effect in src.status_effects)
@@ -491,7 +490,7 @@
 		if (isnum_safe(_new_festivity))
 			src.festiveness = _new_festivity
 
-/datum/component/consume/festive_food/proc/alter_festivity(var/obj/item/I, var/mob/M)
+/datum/component/consume/festive_food/proc/alter_festivity(var/obj/item/I, var/mob/M, var/mob/user)
 	if (src.festiveness)
 		modify_christmas_cheer(src.festiveness)
 
@@ -566,7 +565,7 @@
 		if (_new_medal)
 			src.medal = _new_medal
 
-/datum/component/consume/unlock_medal_on_eaten/proc/give_medal(var/obj/item/I, var/mob/M)
+/datum/component/consume/unlock_medal_on_eaten/proc/give_medal(var/obj/item/I, var/mob/M, var/mob/user)
 	M.unlock_medal(src.medal, 1)
 
 /datum/component/consume/unlock_medal_on_eaten/UnregisterFromParent()

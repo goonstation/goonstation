@@ -247,7 +247,7 @@ var/obj/item/dummy/click_dummy = new
 
 	. = viewers(Depth, Center) + get_viewing_AIs(Center, 7)
 	if(length(by_cat[TR_CAT_OMNIPRESENT_MOBS]))
-		for(var/mob/M as() in by_cat[TR_CAT_OMNIPRESENT_MOBS])
+		for(var/mob/M as anything in by_cat[TR_CAT_OMNIPRESENT_MOBS])
 			if(get_step(M, 0)?.z == get_step(Center, 0)?.z)
 				. |= M
 
@@ -570,7 +570,7 @@ var/obj/item/dummy/click_dummy = new
 
 	var/src_min_x = 0
 	var/src_min_y = 0
-	for (var/turf/T as() in turfs_src)
+	for (var/turf/T as anything in turfs_src)
 		if(T.x < src_min_x || !src_min_x) src_min_x	= T.x
 		if(T.y < src_min_y || !src_min_y) src_min_y	= T.y
 	DEBUG_MESSAGE("src_min_x = [src_min_x], src_min_y = [src_min_y]")
@@ -578,7 +578,7 @@ var/obj/item/dummy/click_dummy = new
 	var/trg_min_x = 0
 	var/trg_min_y = 0
 	var/trg_z = 0
-	for (var/turf/T as() in turfs_trg)
+	for (var/turf/T as anything in turfs_trg)
 		if(T.x < trg_min_x || !trg_min_x) trg_min_x	= T.x
 		if(T.y < trg_min_y || !trg_min_y) trg_min_y	= T.y
 		trg_z = T.z
@@ -594,7 +594,7 @@ var/obj/item/dummy/click_dummy = new
 
 	for (var/turf/S in turfs_src)
 		var/turf/T = locate(S.x - src_min_x + trg_min_x, S.y - src_min_y + trg_min_y, trg_z)
-		for (var/atom/movable/AM as() in S)
+		for (var/atom/movable/AM as anything in S)
 			if (istype(AM, /obj/forcefield) || istype(AM, /obj/overlay/tile_effect)) continue
 			if (!ignore_fluid && istype(AM, /obj/fluid)) continue
 			AM.set_loc(T)

@@ -522,15 +522,8 @@
 	update()
 	return
 
-/obj/vehicle/marsrover/relaymove(mob/user as mob, dir)
-	if(rider)
-		if(istype(src.loc, /turf/space))
-			return
-		icon_state = "marsrover2"
-		walk(src, dir, 2)
-	else
-		for(var/mob/M in src.contents)
-			M.set_loc(src.loc)
+/obj/vehicle/marsrover/do_special_on_relay(mob/user as mob, dir)
+	icon_state = "marsrover2"
 
 /obj/vehicle/marsrover/MouseDrop_T(mob/living/carbon/human/target, mob/user)
 	if (rider || !istype(target) || target.buckled || LinkBlocked(target.loc,src.loc) || get_dist(user, src) > 1 || is_incapacitated(user) || isAI(user))

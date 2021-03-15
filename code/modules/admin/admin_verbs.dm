@@ -74,6 +74,7 @@ var/list/admin_verbs = list(
 		// LEVEL_SA, secondary administrator
 		/client/proc/stealth,
 		/datum/admins/proc/pixelexplosion,
+		/datum/admins/proc/turn_off_pixelexplosion,
 		/datum/admins/proc/camtest,
 		/client/proc/alt_key,
 		/client/proc/create_portal,
@@ -540,7 +541,7 @@ var/list/special_pa_observing_verbs = list(
 		if ("Inactive")
 			src.holder.dispose()
 			src.holder = null
-			boutput(src, "<span style='color:red;font-size:150%'><b>You are set to Inactive admin status! Please join #ss13admin on irc.synirc.net if you would like to become active again!</b></span>")
+			boutput(src, "<span style='color:red;font-size:150%'><b>You are set to Inactive admin status! Please join the Goonstation Discord if you would like to become active again!</b></span>")
 			return
 
 		if ("Banned")
@@ -861,16 +862,27 @@ var/list/fun_images = list()
 	set name = "Show Rules to Player"
 	set popup_menu = 0
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
+
+	var/crossness = input("How cross are we with this guy?", "Enter Crossness", "A bit") as anything in list("A bit", "A lot", "Cancel")
+	if (!crossness || crossness == "Cancel")
+		return
+
+	message_admins(crossness)
 	if(!M.client)
 		alert("[M] is logged out, so you should probably ban them!")
 		return
 	logTheThing("admin", src, M, "forced [constructTarget(M,"admin")] to view the rules")
 	logTheThing("diary", src, M, "forced [constructTarget(M,"diary")] to view the rules", "admin")
 	message_admins("[key_name(src)] forced [key_name(M)] to view the rules.")
-	M << csound("sound/misc/klaxon.ogg")
-	boutput(M, "<span class='alert'><B>WARNING: An admin is likely very cross with you and wants you to read the rules right fucking now!</B></span>")
-	// M.Browse(rules, "window=rules;size=480x320")
-	M << browse(rules, "window=rules;size=480x320")
+	switch(crossness)
+		if ("A bit")
+			M << csound("sound/misc/newsting.ogg")
+			boutput(M, "<span class='alert'><B>Here are the rules, you can read this, you have a good chance of being able to read them too.</B></span>")
+		if ("A lot")
+			M << csound("sound/misc/klaxon.ogg")
+			boutput(M, "<span class='alert'><B>WARNING: An admin is likely very cross with you and wants you to read the rules right fucking now!</B></span>")
+
+	M << browse(rules, "window=rules;size=800x1000")
 
 /client/proc/view_fingerprints(obj/O as obj in world)
 	set name = "View Object Fingerprints"
@@ -1491,7 +1503,7 @@ var/list/fun_images = list()
 	if (!pet_path)
 		return
 
-	for (var/client/cl as() in clients)
+	for (var/client/cl as anything in clients)
 		var/mob/living/L = cl.mob
 		if(!istype(L) || isdead(L))
 			continue
@@ -1922,7 +1934,7 @@ var/list/fun_images = list()
 		var/y_shift = round(text2num(parameters["icon-y"]) / 32)
 		clicked_turf = locate(clicked_turf.x + x_shift, clicked_turf.y + y_shift, clicked_turf.z)
 		var/list/atom/atoms = list(clicked_turf)
-		for(var/atom/thing as() in clicked_turf)
+		for(var/atom/thing as anything in clicked_turf)
 			atoms += thing
 		if (atoms.len)
 			A = input(usr, "Which item to admin-interact with?") as null|anything in atoms

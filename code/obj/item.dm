@@ -243,7 +243,7 @@
 	onMaterialChanged()
 		..()
 		if (istype(src.material))
-			force = material.hasProperty("hard") ? force + round(material.getProperty("hard") / 20) : force
+			force = material.hasProperty("hard") ? initial(force) + round(material.getProperty("hard") / 20) : initial(force)
 			burn_possible = src.material.getProperty("flammable") > 50 ? 1 : 0
 			if (src.material.material_flags & MATERIAL_METAL || src.material.material_flags & MATERIAL_CRYSTAL || src.material.material_flags & MATERIAL_RUBBER)
 				burn_type = 1
@@ -382,12 +382,13 @@
 	if(!M.can_eat(src, user, bypass_utensils))
 		return 0
 
-	actions.start(new/datum/action/bar/icon/eatstuff(src, M, user), user)
-	return 1
+	if(!actions.hasAction(user, "eatstuff"))
+		actions.start(new/datum/action/bar/icon/eatstuff(src, M, user), user)
+		return 1
 
 /datum/action/bar/icon/eatstuff
 	duration = 3 SECONDS
-	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	id = "eatstuff"
 	icon = null
 	icon_state = null
@@ -418,8 +419,6 @@
 			src.icon = null // action/bar/icon
 			src.icon_state = null // minus the action bar icon
 			duration = 0 // pretty much instant
-			REMOVE_FLAG(src.interrupt_flags, INTERRUPT_MOVE) // take it to go
-			REMOVE_FLAG(src.interrupt_flags, INTERRUPT_ACT) // And spam it if you want
 		else
 			src.icon = master.icon
 			src.icon_state = master.icon_state
@@ -431,42 +430,22 @@
 		if(src.failchecks())
 			interrupt(INTERRUPT_ALWAYS)
 
-		if(M_is_user && !is_it_organs)
-			bar.icon = null // Action bars
-			border.icon = null // minus action bar
-		else
-			eat_twitch(M)
-
-		M.on_eat(master)
-
-		if (src.M_is_user)
-			if(is_it_organs)
+		eat_twitch(M)
+		if(src.M_is_user)
+			if(!src.is_it_organs)
+				bar.icon = null // Action bars
+				border.icon = null // minus action bar
+			else
 				M.visible_message("<span class='alert'><b>[M]</b> starts cramming \the [master] into [his_or_her(M)] mouth[prob(30) ? " like a [pick(src.grody_adj)] [pick(src.grody_noun)]" : ""]!</span>",\
 				"<span class='[is_awful_monsterthing ? "notice" : "alert"]'>You start cramming \the [master] into your mouth!</span>")
-			else
-				boutput(M, "<span class='notice'>You go to take a bite out of [master].</span>")
+				logTheThing("diary", user, M, "attempts to eat [master], an organ. [log_reagents(master)]", "game") // Gotta keep track on who's eating who's brain
 		else
 			user.tri_message("<span class='alert'><b>[user]</b> tries to feed [M] [master]!</span>",\
 			user, "<span class='alert'>You try to feed [M] [master]!</span>",\
 			M, "<span class='[is_awful_monsterthing ? "notice" : "alert"]'><b>[user]</b> tries to feed you [master]!</span>")
-		logTheThing("combat", user, M, "attempts to feed [constructTarget(M,"combat")] [master] [log_reagents(master)]")
+			logTheThing("combat", user, M, "attempts to feed [constructTarget(M,"combat")] [master] [log_reagents(master)]")
 
-	onInterrupt(flag)
-		. = ..()
-		if(src.M_is_user)
-			if(src.is_it_organs)
-				M.visible_message("<span class='alert'>[M] spits out \the [master].</span>","<span class='[is_awful_monsterthing ? "alert" : "notice"]'>You spit out \the [master].</span>")
-			else
-				boutput(M, "<span class='notice'>You stop trying to eat [master].</span>")
-		else
-			if(src.is_it_organs)
-				user.tri_message("<span class='alert'><b>[user]</b> stops forcing \the [master] down [M]'s throat!</span>",\
-				user, "<span class='alert'>You remove \the [master] from [M]'s face!</span>",\
-				M, "<span class='[is_awful_monsterthing ? "alert" : "notice"]'><b>[user]</b> stops forcing \the [master] down your throat!</span>")
-			else
-				user.tri_message("<span class='alert'><b>[user]</b> stops trying to shove \the [master] down [M]'s throat!</span>",\
-				user, "<span class='alert'>You remove \the [master] from [M]'s face!</span>",\
-				M, "<span class='alert'><b>[user]</b> stops trying to shove \the [master] down your throat!</span>")
+		M.on_eat(master)
 
 	onUpdate()
 		..()
@@ -521,8 +500,10 @@
 		SEND_SIGNAL(M, COMSIG_ITEM_CONSUMED_PARTIAL, user, master)
 
 		if(ate_the_whole_thing)
-			SEND_SIGNAL(master, COMSIG_ITEM_CONSUMED_ALL, M, user)
-			SEND_SIGNAL(M, COMSIG_ITEM_CONSUMED_ALL, user, master)
+			// procs effects specific to the item (master) onto whoever eats it (M)
+			SEND_SIGNAL(master, COMSIG_ITEM_CONSUMED_ALL, M, user) // item parent, format: I (thing being eaten), M (mob eating it), user (mob making M eat it)
+			// procs effects specific to the mob (M) when eating the item (master) if applicable
+			SEND_SIGNAL(M, COMSIG_ITEM_CONSUMED_ALL, user, master) // mob parent, format: M (mob eating it), user (mob making M eat it), I (thing being eaten)
 			M.visible_message("<span class='alert'>[M] finishes eating [master].</span>",\
 			"<span class='alert'>You finish eating [master].</span>")
 
@@ -836,6 +817,9 @@
 
 /obj/item/proc/try_put_hand_mousedrop(mob/user)
 	var/oldloc = src.loc
+
+	if(src.equipped_in_slot && src.cant_self_remove)
+		return 0
 
 	if (!src.anchored)
 		if (!user.r_hand || !user.l_hand || (user.r_hand == src) || (user.l_hand == src))

@@ -75,6 +75,28 @@ var/global/list/job_start_locations = list()
 		src.data = src.shuttle// save dir
 		..()
 
+	north
+		dir = NORTH
+		shuttle = SHUTTLE_NORTH
+
+		donut3
+			shuttle = SHUTTLE_DONUT3
+
+	south
+		dir = SOUTH
+		shuttle = SHUTTLE_SOUTH
+
+	east
+		dir = EAST
+		shuttle = SHUTTLE_EAST
+
+		oshan
+			shuttle = SHUTTLE_OSHAN
+
+	west
+		dir = WEST
+		shuttle = SHUTTLE_WEST
+
 /obj/landmark/tutorial_start
 	name = LANDMARK_TUTORIAL_START
 
@@ -139,9 +161,9 @@ var/global/list/job_start_locations = list()
 	var/type_to_spawn = null
 	var/spawnchance = 100
 	var/static/list/name_to_type = list(
+		"juicer_gene" = /mob/living/carbon/human/geneticist,
 		"shitty_bill" = /mob/living/carbon/human/biker,
 		"john_bill" = /mob/living/carbon/human/john,
-		"pariah" = /mob/living/carbon/human/pariah,
 		"big_yank" = /mob/living/carbon/human/big_yank,
 		"father_jack" = /mob/living/carbon/human/fatherjack,
 		"don_glab" = /mob/living/carbon/human/don_glab,

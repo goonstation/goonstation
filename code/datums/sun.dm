@@ -48,15 +48,11 @@
 
 	for(var/obj/machinery/power/tracker/T in machine_registry[MACHINES_POWER])
 		T.set_angle(angle)
-		LAGCHECK(LAG_LOW)
 
 	for(var/obj/machinery/power/solar/S in machine_registry[MACHINES_POWER])
 		occlusion(S)
-		LAGCHECK(LAG_LOW)
-
 
 // for a solar panel, trace towards sun to see if we're in shadow
-
 /datum/sun/proc/occlusion(var/obj/machinery/power/solar/S)
 
 	var/ax = S.x		// start at the solar panel

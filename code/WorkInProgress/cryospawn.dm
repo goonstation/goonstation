@@ -12,7 +12,7 @@
 
 //Special destiny spawn point doodad
 /obj/cryotron
-	name = "industrial cryogenics unit"
+	name = "industrial cryogenic sleep unit"
 	desc = "The terminus of a large underfloor cryogenic storage complex."
 	anchored = 1
 	density = 1
@@ -125,7 +125,7 @@
 			if (thePerson)
 				thePerson.hibernating = 0
 				if (thePerson.mind && thePerson.mind.assigned_role && be_loud)
-					for (var/obj/machinery/computer/announcement/A as() in machine_registry[MACHINES_ANNOUNCEMENTS])
+					for (var/obj/machinery/computer/announcement/A as anything in machine_registry[MACHINES_ANNOUNCEMENTS])
 						if (!A.status && A.announces_arrivals)
 							A.announce_arrival(thePerson)
 

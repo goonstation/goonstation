@@ -17378,7 +17378,7 @@
 /area/station/science/testchamber)
 "aEV" = (
 /obj/table/wood/auto,
-/obj/item/card_box/suit,
+/obj/item/card_box/plain,
 /obj/item/a_gift/festive,
 /turf/simulated/floor/carpet{
 	icon_state = "fpurple1";
@@ -35504,7 +35504,7 @@
 "bkl" = (
 /obj/table/reinforced/auto,
 /obj/decal/cleanable/dirt,
-/obj/item/card_box/suit,
+/obj/item/card_box/plain,
 /obj/disposalpipe/segment/brig,
 /turf/simulated/floor/grime,
 /area/station/security/brig)
@@ -36993,7 +36993,7 @@
 	},
 /obj/table/reinforced/auto,
 /obj/decal/cleanable/dirt,
-/obj/item/card_box/suit,
+/obj/item/card_box/plain,
 /obj/machinery/computer3/generic/personal,
 /obj/machinery/power/data_terminal,
 /obj/disposalpipe/segment/brig{

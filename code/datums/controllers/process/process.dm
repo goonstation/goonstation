@@ -72,6 +72,7 @@
 	var/tmp/run_start = 0
 
 	// Records the world.tick_usage (0 to 100) at which the process last began running
+	// drsingh - as of byond 514, world.map_cpu is also included in this via APPROX_TICK_USE
 	var/tmp/tick_start = 0
 
 	// Records the total usage of the current run, each 100 = 1 byond tick
@@ -118,7 +119,7 @@ datum/controller/process/proc/started()
 	run_start = TimeOfHour
 
 	// Initialize tick_start so we can know when to sleep
-	tick_start = world.tick_usage
+	tick_start = APPROX_TICK_USE
 
 	// Initialize the cpu usage counter
 	current_usage = 0
@@ -135,7 +136,7 @@ datum/controller/process/proc/started()
 
 datum/controller/process/proc/finished()
 	ticks++
-	current_usage += world.tick_usage - tick_start
+	current_usage += APPROX_TICK_USE - tick_start
 	last_usage = current_usage
 	current_usage = 0
 	idle()
@@ -186,7 +187,7 @@ datum/controller/process/proc/handleHung()
 	// If world.timeofday has rolled over, then we need to adjust.
 	if (TimeOfHour < run_start)
 		run_start -= 36000
-	var/msg = "[name] process hung at tick #[ticks]. Process was unresponsive for [(TimeOfHour - run_start) / 10] seconds and was restarted. Last task: [last_task]. Last Object Type: [lastObjType]"
+	var/msg = "[name] process hung at tick #[ticks]. Process was unresponsive for [(TimeOfHour - run_start) / 10] seconds and was restarted. Last task: [last_task]. Last Object Type: [lastObjType]. Last object: <a href='byond://?src=%client_ref%;Vars=\ref[lastObj]'>[lastObj]</a>"
 	logTheThing("debug", null, null, msg)
 	logTheThing("diary", null, null, msg, "debug")
 	message_admins(msg)
@@ -219,12 +220,12 @@ datum/controller/process/proc/scheck()
 
 	// For each tick the process defers, it increments the cpu_defer_count so we don't
 	// defer indefinitely
-	if (world.tick_usage > MAX_TICK_USAGE || ( (world.tick_usage - tick_start) > tick_allowance ))
-		current_usage += world.tick_usage - tick_start
+	if (APPROX_TICK_USE > MAX_TICK_USAGE || ( (APPROX_TICK_USE - tick_start) > tick_allowance ))
+		current_usage += APPROX_TICK_USE - tick_start
 		sleep( world.tick_lag * main.running.len )
 		cpu_defer_count++
 		last_slept = TimeOfHour
-		tick_start = world.tick_usage
+		tick_start = APPROX_TICK_USE
 
 		return 1
 

@@ -121,7 +121,7 @@
 		HTML += "<hr>"
 
 		HTML += "<div class='gps group'><b>Beacons</b></div>"
-		for (var/obj/machinery/beacon/B as() in machine_registry[MACHINES_BEACONS])
+		for (var/obj/machinery/beacon/B as anything in machine_registry[MACHINES_BEACONS])
 			if (B.enabled == 1)
 				var/turf/T = get_turf(B.loc)
 				HTML += "<div class='gps'><span><b>[B.sname]</b><br><span>located at: [T.x], [T.y]</span><span style='float: right'>[src.get_z_info(T)]</span></span></div>"

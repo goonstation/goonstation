@@ -248,8 +248,8 @@
 	can_scramble = 0
 	curable_by_mutadone = 0
 	reagent_to_add = "bee"
-	reagent_threshold = 40
-	add_per_tick = 1.2
+	reagent_threshold = 12
+	add_per_tick = 6 //ensures we always have bee sickness
 
 /datum/bioEffect/drunk/pentetic
 	name = "Pentetic Acid Production"
@@ -267,7 +267,7 @@
 	can_scramble = 0
 	curable_by_mutadone = 0
 	reagent_to_add = "penteticacid"
-	reagent_threshold = 40
+	reagent_threshold = 12
 	add_per_tick = 4
 
 /datum/bioEffect/drunk/random
