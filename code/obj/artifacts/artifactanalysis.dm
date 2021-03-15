@@ -58,8 +58,10 @@
 		O.UpdateName()
 
 	attack_hand(mob/user)
+		user.lastattacked = src.attached
 		if(src.attached)
 			src.attached.attack_hand(user)
+			user.lastattacked = src.attached
 
 	stick_to(atom/A, pox, poy)
 		. = ..()
