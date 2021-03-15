@@ -5,7 +5,11 @@
  */
 
 const createBabelConfig = options => {
-  const { presets = [], plugins = [] } = options;
+  const {
+    // mode, // uncomment if future config needs to depend on environment
+    presets = [],
+    plugins = [],
+  } = options;
   return {
     presets: [
       [require.resolve('@babel/preset-typescript'), {
