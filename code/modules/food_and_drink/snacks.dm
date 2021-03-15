@@ -814,7 +814,7 @@
 		warm = 1
 
 		New()
-			..()
+			. = ..()
 			src.cooltime()
 			return
 
