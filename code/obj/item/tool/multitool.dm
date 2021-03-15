@@ -69,7 +69,7 @@
 		if(isnum(target:frequency) || istext(target:frequency))
 			frequency = target:frequency
 	//We'll do lockers safely since nothing else seems to store the frequency exactly like this
-	else if (istype(target,/obj/storage/secure))
+	else if (istype(target, /obj/storage/secure))
 		var/obj/storage/secure/lockerfreq = target
 		frequency = lockerfreq.radio_control.frequency
 
