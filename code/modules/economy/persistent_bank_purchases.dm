@@ -29,8 +29,6 @@ var/global/list/persistent_bank_purchaseables =	list(\
 	new /datum/bank_purchaseable/bp_anello,\
 	new /datum/bank_purchaseable/nt_backpack,\
 
-	new /datum/bank_purchaseable/lizard_tail,\
-	new /datum/bank_purchaseable/monkey_tail,\
 	new /datum/bank_purchaseable/limbless,\
 	new /datum/bank_purchaseable/legless,\
 	new /datum/bank_purchaseable/corpse,\
@@ -176,7 +174,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 			name = "Plaid Paint Can"
 			cost = 3000
 			path = /obj/item/paint_can/rainbow/plaid
-
+		
 		crayon_box
 			name = "Crayon Creator"
 			cost = 2500
@@ -356,34 +354,6 @@ var/global/list/persistent_bank_purchaseables =	list(\
 						return 1
 				return 0
 
-			return 0
-
-	lizard_tail
-		name = "Lizard Tail"
-		cost = 5000
-
-		Create(var/mob/living/M)
-			if (ishuman(M))
-				var/mob/living/carbon/human/H = M
-				SPAWN_DBG(6 SECONDS)
-					// If you buy this and already have a tail, RIP. No refunds.
-					if (H.organHolder.receive_organ(new/obj/item/organ/tail/lizard, "tail", 0.0, 0))
-						boutput( H, "<span class='notice'><b>Your sprout a lizard tail! Huh!</b></span>" )
-				return 1
-			return 0
-
-	monkey_tail
-		name = "Monkey Tail"
-		cost = 5000
-
-		Create(var/mob/living/M)
-			if (ishuman(M))
-				var/mob/living/carbon/human/H = M
-				SPAWN_DBG(6 SECONDS)
-					// If you buy this and already have a tail, RIP. No refunds.
-					if (H.organHolder.receive_organ(new/obj/item/organ/tail/monkey, "tail", 0.0, 0))
-						boutput( H, "<span class='notice'><b>Your sprout a monkey tail! Weird!</b></span>" )
-				return 1
 			return 0
 
 	limbless

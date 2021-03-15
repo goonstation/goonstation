@@ -1755,7 +1755,6 @@
 /area/jones/radiation)
 "afN" = (
 /obj/overlay{
-	anchored = 1;
 	density = 1;
 	desc = "You have no idea what this does.";
 	icon = 'icons/misc/worlds.dmi';
@@ -12600,7 +12599,6 @@
 /area/hospital/underground)
 "aFC" = (
 /obj/overlay{
-	anchored = 1;
 	density = 1;
 	desc = "Somebody removed the control board without unlatching the door bolts.  Rude";
 	icon = 'icons/obj/doors/Door1.dmi';
@@ -16893,7 +16891,6 @@
 /area/lower_arctic/lower)
 "aQm" = (
 /obj/overlay{
-	anchored = 1;
 	density = 1;
 	desc = "It probably has something to do with the elevator.";
 	icon = 'icons/obj/machines/nuclear.dmi';
@@ -18965,7 +18962,6 @@
 /area/lower_arctic/lower)
 "aVU" = (
 /obj/overlay{
-	anchored = 1;
 	density = 1;
 	desc = "It probably has something to do with the elevator.";
 	icon = 'icons/obj/machines/nuclear.dmi';
@@ -19179,7 +19175,6 @@
 /area/upper_arctic/hall)
 "aWB" = (
 /obj/overlay{
-	anchored = 1;
 	density = 1;
 	icon = 'icons/obj/doors/Doorext.dmi';
 	icon_state = "door_closed";
@@ -19455,7 +19450,6 @@
 	icon_state = "1-2"
 	},
 /obj/overlay{
-	anchored = 1;
 	density = 1;
 	desc = "";
 	dir = 4;
@@ -19561,7 +19555,6 @@
 /area/crater/biodome/research)
 "aXB" = (
 /obj/overlay{
-	anchored = 1;
 	icon = 'icons/misc/beach2.dmi';
 	icon_state = "palm2";
 	layer = 10;
@@ -25097,7 +25090,6 @@
 "bkQ" = (
 /obj/table/wood/auto,
 /obj/overlay{
-	anchored = 1;
 	desc = "A portrait of a man in a business suit. You don't recognize him.";
 	icon = 'icons/obj/decals/wallsigns.dmi';
 	icon_state = "portrait";
@@ -25620,7 +25612,6 @@
 /area/drone)
 "bmg" = (
 /obj/overlay{
-	anchored = 1;
 	density = 1;
 	desc = "It probably makes some sort of drone part. Who knows.";
 	icon = 'icons/mob/hivebot.dmi';
@@ -26359,7 +26350,6 @@
 /area/crater/biodome/south)
 "bnL" = (
 /obj/overlay{
-	anchored = 1;
 	density = 1;
 	desc = "You have no idea what this does.";
 	icon = 'icons/obj/recycling.dmi';
@@ -26370,7 +26360,6 @@
 /area/drone/office)
 "bnM" = (
 /obj/overlay{
-	anchored = 1;
 	density = 1;
 	desc = "You have no idea what this does.";
 	icon = 'icons/obj/recycling.dmi';
@@ -26381,7 +26370,6 @@
 /area/drone/office)
 "bnN" = (
 /obj/overlay{
-	anchored = 1;
 	density = 1;
 	desc = "You have no idea what this does.";
 	icon = 'icons/obj/recycling.dmi';
@@ -26670,7 +26658,6 @@
 /area/drone/assembly)
 "bot" = (
 /obj/overlay{
-	anchored = 1;
 	density = 1;
 	desc = "The chassis of an HK-class drone.";
 	dir = 1;
@@ -26685,7 +26672,6 @@
 /area/drone/assembly)
 "bov" = (
 /obj/overlay{
-	anchored = 1;
 	density = 1;
 	desc = "The chassis of an HK-class drone.";
 	dir = 4;
@@ -26997,7 +26983,6 @@
 /area/drone)
 "bpl" = (
 /obj/overlay{
-	anchored = 1;
 	density = 1;
 	desc = "The chassis of an SC-class drone.";
 	icon = 'icons/obj/ship.dmi';
@@ -27130,7 +27115,6 @@
 /area/iomoon)
 "bpB" = (
 /obj/overlay{
-	anchored = 1;
 	density = 1;
 	icon = 'icons/obj/doors/Doorext.dmi';
 	icon_state = "door_closed";
@@ -28039,7 +28023,6 @@
 /area/drone/assembly)
 "brQ" = (
 /obj/overlay{
-	anchored = 1;
 	bound_height = 96;
 	bound_width = 96;
 	density = 1;
@@ -28314,7 +28297,6 @@
 	dir = 4
 	},
 /obj/overlay{
-	anchored = 1;
 	density = 1;
 	desc = "You have no idea what this does.";
 	icon = 'icons/misc/worlds.dmi';
@@ -28769,7 +28751,6 @@
 /area/iomoon/base)
 "btu" = (
 /obj/overlay{
-	anchored = 1;
 	density = 1;
 	desc = "It wont budge.";
 	icon = 'icons/obj/doors/Door1.dmi';
@@ -28793,7 +28774,6 @@
 /area/iomoon/base/underground)
 "btw" = (
 /obj/overlay{
-	anchored = 1;
 	density = 1;
 	desc = "It wont budge.";
 	icon = 'icons/obj/doors/Door1.dmi';
@@ -29335,7 +29315,6 @@
 "buO" = (
 /obj/stool/chair,
 /obj/overlay{
-	anchored = 1;
 	desc = "A portrait of a man in a business suit. You don't recognize him.";
 	icon = 'icons/obj/decals/wallsigns.dmi';
 	icon_state = "portrait";
@@ -30502,7 +30481,6 @@
 "bxu" = (
 /obj/decal/fakeobjects/firelock_broken,
 /obj/overlay{
-	anchored = 1;
 	desc = "It seems to be rusted open.";
 	icon = 'icons/misc/rstation.dmi';
 	icon_state = "eng-open";
@@ -31607,7 +31585,6 @@
 	pixel_y = -6
 	},
 /obj/overlay{
-	anchored = 1;
 	density = 1;
 	desc = "You have no idea what this does.";
 	icon = 'icons/misc/worlds.dmi';
@@ -31866,7 +31843,6 @@
 /area/space)
 "bAM" = (
 /obj/overlay{
-	anchored = 1;
 	desc = "It seems to be rusted open.";
 	icon = 'icons/misc/rstation.dmi';
 	icon_state = "eng-open";
@@ -31898,7 +31874,6 @@
 /area/iomoon/base/underground)
 "bAQ" = (
 /obj/overlay{
-	anchored = 1;
 	density = 1;
 	desc = "A networked tape drive.  It looks to be in fairly poor condition.  I bet the vacuum columns don't work worth a damn.";
 	icon = 'icons/obj/networked.dmi';
@@ -32141,7 +32116,6 @@
 	icon_state = "0-2"
 	},
 /obj/overlay{
-	anchored = 1;
 	density = 1;
 	desc = "A networked tape drive.  It looks to be in fairly poor condition.  I bet the vacuum columns don't work worth a damn.";
 	icon = 'icons/obj/networked.dmi';
@@ -32574,7 +32548,6 @@
 /area/precursor)
 "bCm" = (
 /obj/overlay{
-	anchored = 1;
 	density = 1;
 	desc = "You have no idea what this does.";
 	icon = 'icons/misc/worlds.dmi';
@@ -32585,7 +32558,6 @@
 /area/iomoon/base/underground)
 "bCn" = (
 /obj/overlay{
-	anchored = 1;
 	density = 1;
 	desc = "You have no idea what this does.";
 	icon = 'icons/misc/worlds.dmi';
@@ -32596,7 +32568,6 @@
 /area/iomoon/base/underground)
 "bCo" = (
 /obj/overlay{
-	anchored = 1;
 	density = 1;
 	desc = "You have no idea what this does.";
 	icon = 'icons/misc/worlds.dmi';
@@ -32607,7 +32578,6 @@
 /area/iomoon/base/underground)
 "bCp" = (
 /obj/overlay{
-	anchored = 1;
 	density = 1;
 	desc = "You have no idea what this does.";
 	icon = 'icons/misc/worlds.dmi';
@@ -33020,7 +32990,6 @@
 /area/iomoon)
 "bDg" = (
 /obj/overlay{
-	anchored = 1;
 	density = 1;
 	desc = "You have no idea what this does.";
 	icon = 'icons/misc/worlds.dmi';
@@ -33031,7 +33000,6 @@
 /area/iomoon/base/underground)
 "bDh" = (
 /obj/overlay{
-	anchored = 1;
 	density = 1;
 	desc = "You have no idea what this does.";
 	icon = 'icons/misc/worlds.dmi';
@@ -33043,7 +33011,6 @@
 /area/iomoon/base/underground)
 "bDi" = (
 /obj/overlay{
-	anchored = 1;
 	density = 1;
 	desc = "You have no idea what this does.";
 	icon = 'icons/misc/worlds.dmi';
@@ -34850,7 +34817,6 @@
 /area/iomoon)
 "bHa" = (
 /obj/overlay{
-	anchored = 1;
 	density = 1;
 	desc = "It wont budge.";
 	icon = 'icons/obj/doors/Door1.dmi';
@@ -35319,7 +35285,6 @@
 	name = "power conduit"
 	},
 /obj/overlay{
-	anchored = 1;
 	bound_height = 64;
 	bound_width = 64;
 	desc = "An enormous artifact of some sort. You feel uncomfortable just being near it.";
@@ -35513,7 +35478,6 @@
 /area/iomoon/robot_ruins/boss_chamber)
 "bIB" = (
 /obj/overlay{
-	anchored = 1;
 	bound_height = 160;
 	bound_width = 160;
 	desc = "An enormous artifact of some sort. You feel uncomfortable just being near it.";
@@ -35614,7 +35578,6 @@
 /area/solarium)
 "bIO" = (
 /obj/overlay{
-	anchored = 1;
 	density = 1;
 	desc = "You have no idea what this does.";
 	icon = 'icons/obj/machines/nuclear.dmi';
@@ -36084,7 +36047,6 @@
 /area/solarium)
 "bKi" = (
 /obj/overlay{
-	anchored = 1;
 	density = 1;
 	desc = "You have no idea what this does.";
 	icon = 'icons/obj/machines/nuclear.dmi';
@@ -36557,7 +36519,6 @@
 "bLD" = (
 /obj/decal/fakeobjects/firelock_broken,
 /obj/overlay{
-	anchored = 1;
 	desc = "You could probably squeeze through.";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "bloodydoor";
@@ -36568,7 +36529,6 @@
 /area/crunch)
 "bLE" = (
 /obj/overlay{
-	anchored = 1;
 	density = 1;
 	desc = "A networked tape drive.  It looks to be in fairly poor condition.  I bet the vacuum columns don't work worth a damn.";
 	icon = 'icons/obj/networked.dmi';
@@ -36684,7 +36644,6 @@
 	dir = 8
 	},
 /obj/overlay{
-	anchored = 1;
 	desc = "You could probably squeeze through.";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "bloodydoor";
@@ -36969,7 +36928,6 @@
 /area/crunch)
 "bMD" = (
 /obj/overlay{
-	anchored = 1;
 	density = 1;
 	desc = "";
 	dir = 4;
@@ -37296,7 +37254,6 @@
 /area/crunch)
 "bNy" = (
 /obj/overlay{
-	anchored = 1;
 	density = 1;
 	desc = "It looks pretty crusty in there.";
 	icon = 'icons/mob/hivebot.dmi';
@@ -37994,7 +37951,6 @@
 	id = "ddan"
 	},
 /obj/overlay{
-	anchored = 1;
 	density = 1;
 	desc = "It would not be surprising if this was rusty when it WAS in operation, as well.";
 	icon = 'icons/obj/machines/nuclear.dmi';
@@ -38586,7 +38542,6 @@
 	location = "tour1"
 	},
 /obj/overlay{
-	anchored = 1;
 	desc = "A portrait of a man wearing a ridiculous merchant hat.  That must be Discount Dan.";
 	icon = 'icons/obj/decals/wallsigns.dmi';
 	icon_state = "portrait";
@@ -38700,7 +38655,6 @@
 /area/crunch)
 "bRd" = (
 /obj/overlay{
-	anchored = 1;
 	density = 1;
 	desc = "It wont budge.";
 	icon = 'icons/obj/doors/Door1.dmi';
@@ -38725,7 +38679,6 @@
 /area/crunch)
 "bRg" = (
 /obj/overlay{
-	anchored = 1;
 	density = 1;
 	desc = "It looks pretty gooey in there.";
 	icon = 'icons/mob/hivebot.dmi';
@@ -39191,7 +39144,6 @@
 /area/crunch)
 "bSB" = (
 /obj/overlay{
-	anchored = 1;
 	density = 1;
 	desc = "It wont budge.";
 	icon = 'icons/obj/doors/Door1.dmi';
@@ -39560,8 +39512,7 @@
 /area/gauntlet/staging)
 "bTG" = (
 /obj/tombstone{
-	desc = "In memory of Stephanie Mir, who vanished in pursuit of answers.";
-	name = "tombstone"
+	desc = "In memory of Stephanie Mir, who vanished in pursuit of answers."
 	},
 /turf/unsimulated/floor/grass/random,
 /area/afterlife/heaven)
@@ -39776,7 +39727,6 @@
 /area/crypt/sigma)
 "bUk" = (
 /obj/overlay{
-	anchored = 1;
 	density = 1;
 	desc = "It probably has something to do with the elevator.";
 	icon = 'icons/obj/machines/nuclear.dmi';
@@ -39988,7 +39938,6 @@
 /area/gauntlet/staging)
 "bUO" = (
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 4;
 	icon = 'icons/turf/martian.dmi';
@@ -40151,7 +40100,6 @@
 /area/gauntlet/viewing)
 "bVp" = (
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 1;
 	icon = 'icons/turf/martian.dmi';
@@ -40167,7 +40115,6 @@
 	pixel_x = 30
 	},
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 1;
 	icon = 'icons/turf/martian.dmi';
@@ -40192,7 +40139,6 @@
 	name = "martian machine"
 	},
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 8;
 	icon = 'icons/turf/martian.dmi';
@@ -40296,7 +40242,6 @@
 /area/gauntlet/viewing)
 "bVI" = (
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 8;
 	icon = 'icons/turf/martian.dmi';
@@ -41465,7 +41410,6 @@
 /area/meat_derelict/guts)
 "bYO" = (
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 4;
 	icon = 'icons/turf/martian.dmi';
@@ -41473,7 +41417,6 @@
 	name = "organic wall"
 	},
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 1;
 	icon = 'icons/turf/martian.dmi';
@@ -41858,7 +41801,6 @@
 "bZH" = (
 /obj/map/light/dimred,
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 4;
 	icon = 'icons/turf/martian.dmi';
@@ -41874,7 +41816,6 @@
 	pixel_x = 30
 	},
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 8;
 	icon = 'icons/turf/martian.dmi';
@@ -41955,15 +41896,13 @@
 /area/afterlife/heaven/hydroponics)
 "bZU" = (
 /obj/tombstone{
-	desc = "In memory of Ada O'Hara, who one day vanished without a trace.";
-	name = "tombstone"
+	desc = "In memory of Ada O'Hara, who one day vanished without a trace."
 	},
 /turf/unsimulated/floor/grass/random,
 /area/afterlife/heaven)
 "bZV" = (
 /obj/tombstone{
-	desc = "You can't quite make out what this one says.";
-	name = "tombstone"
+	desc = "You can't quite make out what this one says."
 	},
 /turf/unsimulated/floor/grass/random,
 /area/afterlife/heaven)
@@ -41989,22 +41928,19 @@
 /area/owlery/staffhall)
 "bZZ" = (
 /obj/tombstone{
-	desc = "Here lies Emily Geon Claire. (The other 416 graves are in storage.)";
-	name = "tombstone"
+	desc = "Here lies Emily Geon Claire. (The other 416 graves are in storage.)"
 	},
 /turf/unsimulated/floor/grass/random,
 /area/afterlife/heaven)
 "caa" = (
 /obj/tombstone{
-	desc = "Here lies Drago Kitterson. ...There seems to be some sort of mohawk etched into the tombstone?";
-	name = "tombstone"
+	desc = "Here lies Drago Kitterson. ...There seems to be some sort of mohawk etched into the tombstone?"
 	},
 /turf/unsimulated/floor/grass/random,
 /area/afterlife/heaven)
 "cab" = (
 /obj/tombstone{
-	desc = "Here lies Jeni Denton. Insisted she was a dragon, and ended up being slain like one.";
-	name = "tombstone"
+	desc = "Here lies Jeni Denton. Insisted she was a dragon, and ended up being slain like one."
 	},
 /turf/unsimulated/floor/grass/random,
 /area/afterlife/heaven)
@@ -43173,7 +43109,6 @@
 /area/sim/tdome/tdome2)
 "cdA" = (
 /obj/overlay{
-	anchored = 1;
 	density = 1;
 	desc = "A networked tape drive.  It looks to be in fairly poor condition.  I bet the vacuum columns don't work worth a damn.";
 	icon = 'icons/obj/networked.dmi';
@@ -43184,7 +43119,6 @@
 /area/meat_derelict/entry)
 "cdB" = (
 /obj/overlay{
-	anchored = 1;
 	density = 1;
 	desc = "A networked tape drive.  It looks to be in fairly poor condition.  I bet the vacuum columns don't work worth a damn.";
 	icon = 'icons/obj/networked.dmi';
@@ -44633,7 +44567,6 @@
 /area/meat_derelict/entry)
 "che" = (
 /obj/overlay{
-	anchored = 1;
 	density = 1;
 	desc = "You have no idea what this does.";
 	icon = 'icons/misc/worlds.dmi';
@@ -44644,7 +44577,6 @@
 /area/meat_derelict/entry)
 "chf" = (
 /obj/overlay{
-	anchored = 1;
 	density = 1;
 	desc = "You have no idea what this does.";
 	icon = 'icons/misc/worlds.dmi';
@@ -45338,14 +45270,12 @@
 /area/centcom/offices/bubs)
 "cja" = (
 /obj/overlay{
-	anchored = 1;
 	desc = "";
 	icon = 'icons/misc/racing.dmi';
 	icon_state = "finishline_strip";
 	name = "finish line"
 	},
 /obj/overlay{
-	anchored = 1;
 	desc = "";
 	icon = 'icons/misc/racing.dmi';
 	icon_state = "finishline_strip";
@@ -45359,7 +45289,6 @@
 /area/sim/racing_track)
 "cjb" = (
 /obj/overlay{
-	anchored = 1;
 	desc = "";
 	icon = 'icons/misc/racing.dmi';
 	icon_state = "car_mark";
@@ -45386,7 +45315,6 @@
 /area/sim/racing_track)
 "cjd" = (
 /obj/overlay{
-	anchored = 1;
 	desc = "";
 	icon = 'icons/misc/racing.dmi';
 	icon_state = "car_mark";
@@ -45412,7 +45340,6 @@
 /area/sim/racing_track)
 "cjf" = (
 /obj/overlay{
-	anchored = 1;
 	desc = "";
 	icon = 'icons/misc/racing.dmi';
 	icon_state = "car_mark";
@@ -45611,14 +45538,12 @@
 /area/iomoon)
 "cjG" = (
 /obj/overlay{
-	anchored = 1;
 	desc = "";
 	icon = 'icons/misc/racing.dmi';
 	icon_state = "finishline_strip";
 	name = "finish line"
 	},
 /obj/overlay{
-	anchored = 1;
 	desc = "";
 	icon = 'icons/misc/racing.dmi';
 	icon_state = "finishline_strip";
@@ -45800,14 +45725,12 @@
 /area/sim/racing_entry)
 "ckc" = (
 /obj/overlay{
-	anchored = 1;
 	icon = 'icons/misc/beach2.dmi';
 	icon_state = "palm2";
 	layer = 10;
 	name = "palm tree"
 	},
 /obj/overlay{
-	anchored = 1;
 	icon = 'icons/misc/beach.dmi';
 	icon_state = "coconuts";
 	name = "coconuts"
@@ -45885,14 +45808,12 @@
 /area/cavetiny)
 "ckk" = (
 /obj/overlay{
-	anchored = 1;
 	desc = "";
 	icon = 'icons/misc/racing.dmi';
 	icon_state = "finishline_strip";
 	name = "finish line"
 	},
 /obj/overlay{
-	anchored = 1;
 	desc = "";
 	icon = 'icons/misc/racing.dmi';
 	icon_state = "finishline_strip";
@@ -45907,7 +45828,6 @@
 /area/sim/racing_track)
 "ckl" = (
 /obj/overlay{
-	anchored = 1;
 	desc = "";
 	icon = 'icons/misc/racing.dmi';
 	icon_state = "car_mark";
@@ -45935,7 +45855,6 @@
 /area/sim/racing_track)
 "ckn" = (
 /obj/overlay{
-	anchored = 1;
 	desc = "";
 	icon = 'icons/misc/racing.dmi';
 	icon_state = "car_mark";
@@ -45964,7 +45883,6 @@
 /area/sim/racing_track)
 "ckp" = (
 /obj/overlay{
-	anchored = 1;
 	desc = "";
 	icon = 'icons/misc/racing.dmi';
 	icon_state = "car_mark";
@@ -46251,7 +46169,6 @@
 /area/sim/racing_entry)
 "clc" = (
 /obj/overlay{
-	anchored = 1;
 	icon = 'icons/misc/beach2.dmi';
 	icon_state = "palm1";
 	layer = 10;
@@ -46738,7 +46655,6 @@
 /area/sim/racing_entry)
 "cmi" = (
 /obj/overlay{
-	anchored = 1;
 	icon = 'icons/misc/beach.dmi';
 	icon_state = "crab2";
 	name = "crab"
@@ -50402,7 +50318,6 @@
 	id = "ddan"
 	},
 /obj/overlay{
-	anchored = 1;
 	density = 1;
 	desc = "Part of a drone chassis.";
 	dir = 8;
@@ -57787,11 +57702,6 @@
 	},
 /turf/unsimulated/floor/yellowblack/corner{
 	dir = 8
-	},
-/area/owlery/gangzone)
-"cNB" = (
-/turf/unsimulated/floor/yellowblack{
-	dir = 1
 	},
 /area/owlery/gangzone)
 "cNC" = (
@@ -68757,9 +68667,7 @@
 /turf/space/shuttle_transit,
 /area/shuttle/escape/transit/destiny)
 "dkP" = (
-/obj/landmark/escape_pod_succ{
-	shuttle = SHUTTLE_SOUTH
-	},
+/obj/landmark/escape_pod_succ/south,
 /turf/space/shuttle_transit,
 /area/shuttle_transit_space/north)
 "dkQ" = (
@@ -68777,10 +68685,7 @@
 /turf/space/shuttle_transit,
 /area/shuttle/escape/transit/cogmap)
 "dkT" = (
-/obj/landmark/escape_pod_succ{
-	dir = 8;
-	shuttle = SHUTTLE_WEST
-	},
+/obj/landmark/escape_pod_succ/west,
 /turf/space/shuttle_transit,
 /area/shuttle_transit_space/east)
 "dkU" = (
@@ -68790,10 +68695,7 @@
 /turf/space/shuttle_transit,
 /area/shuttle_particle_spawn/east)
 "dkW" = (
-/obj/landmark/escape_pod_succ{
-	dir = 1;
-	shuttle = SHUTTLE_NORTH
-	},
+/obj/landmark/escape_pod_succ/north,
 /turf/space/shuttle_transit,
 /area/shuttle_transit_space/south)
 "dkX" = (
@@ -69036,10 +68938,7 @@
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/escape/transit/battle_shuttle)
 "dlJ" = (
-/obj/landmark/escape_pod_succ{
-	dir = 4;
-	shuttle = SHUTTLE_OSHAN
-	},
+/obj/landmark/escape_pod_succ/east/oshan,
 /turf/space/shuttle_transit,
 /area/shuttle_transit_space/west)
 "dlK" = (
@@ -75226,19 +75125,31 @@
 	dir = 4;
 	tag = "icon-chair_comfy-blue (EAST)"
 	},
-/turf/unsimulated/floor/wood/three,
+/obj/machinery/light/small/floor/purpleish,
+/turf/unsimulated/floor/wood/six,
 /area/centcom/offices/zamujasa)
 "dCD" = (
 /obj/table/wood/auto,
 /obj/very_important_wire,
+/obj/item/device/speechtotext,
+/obj/item/reagent_containers/vape{
+	desc = "Highly used, used highly.";
+	name = "weed vape";
+	safe_smokables = list("THC")
+	},
 /turf/unsimulated/floor/plating,
 /area/centcom/offices/zamujasa)
 "dCE" = (
-/obj/item/clothing/head/maid,
-/turf/unsimulated/floor/wood/three,
+/obj/item/paper/blueprint{
+	desc = "A blueprint of what looks like an old adventure zone..?";
+	name = "Blueprint - Nomad"
+	},
+/obj/machinery/light/small/floor/purpleish,
+/turf/unsimulated/floor/wood/six,
 /area/centcom/offices/zamujasa)
 "dCF" = (
-/turf/unsimulated/floor/wood/three,
+/obj/machinery/light/small/floor/purpleish,
+/turf/unsimulated/floor/wood/six,
 /area/centcom/offices/zamujasa)
 "dCG" = (
 /obj/admin_plaque{
@@ -75554,14 +75465,7 @@
 /turf/unsimulated/floor/black,
 /area/centcom/offices/zamujasa)
 "dDq" = (
-/obj/decal/cleanable/paper,
-/obj/item/paper{
-	icon_state = "paper";
-	name = "paper-'THE SUN'";
-	pixel_x = 10;
-	pixel_y = -8
-	},
-/turf/unsimulated/floor/wood/three,
+/turf/unsimulated/floor/wood/six,
 /area/centcom/offices/zamujasa)
 "dDr" = (
 /obj/machinery/door/unpowered/wood{
@@ -75707,7 +75611,8 @@
 	icon_state = "offbroken";
 	name = "busted computer"
 	},
-/turf/unsimulated/floor/wood/three,
+/obj/machinery/light/small/floor/purpleish,
+/turf/unsimulated/floor/wood/six,
 /area/centcom/offices/zamujasa)
 "dDF" = (
 /turf/unsimulated/floor/wood/two,
@@ -75772,7 +75677,8 @@
 	})
 "dDN" = (
 /obj/potted_plant/potted_plant3,
-/turf/unsimulated/floor/wood/three,
+/obj/machinery/light/small/floor/purpleish,
+/turf/unsimulated/floor/wood/six,
 /area/centcom/offices/zamujasa)
 "dDO" = (
 /obj/admin_plaque{
@@ -78293,7 +78199,6 @@
 /area/centcom/garden)
 "dKw" = (
 /obj/overlay{
-	anchored = 1;
 	icon = 'icons/misc/beach2.dmi';
 	icon_state = "palm1";
 	layer = 10;
@@ -78391,7 +78296,6 @@
 /area/centcom/garden)
 "dKH" = (
 /obj/overlay{
-	anchored = 1;
 	icon = 'icons/misc/beach2.dmi';
 	icon_state = "palm1";
 	layer = 10;
@@ -78782,7 +78686,6 @@
 	icon_state = "line1"
 	},
 /obj/overlay{
-	anchored = 1;
 	icon = 'icons/misc/beach2.dmi';
 	icon_state = "palm1";
 	layer = 10;
@@ -78852,7 +78755,6 @@
 /area/centcom/garden)
 "dLJ" = (
 /obj/overlay{
-	anchored = 1;
 	icon = 'icons/misc/beach2.dmi';
 	icon_state = "palm1";
 	layer = 10;
@@ -79626,7 +79528,6 @@
 /area/centcom/garden)
 "dNr" = (
 /obj/overlay{
-	anchored = 1;
 	icon = 'icons/misc/beach2.dmi';
 	icon_state = "palm1";
 	layer = 10;
@@ -80187,7 +80088,6 @@
 /area/centcom/garden)
 "dOJ" = (
 /obj/overlay{
-	anchored = 1;
 	icon = 'icons/misc/beach2.dmi';
 	icon_state = "palm1";
 	layer = 10;
@@ -80220,7 +80120,6 @@
 /area/centcom/garden)
 "dOL" = (
 /obj/overlay{
-	anchored = 1;
 	icon = 'icons/misc/beach2.dmi';
 	icon_state = "palm1";
 	layer = 10;
@@ -81385,11 +81284,12 @@
 	icon_state = "blue"
 	})
 "dRO" = (
-/obj/machinery/light{
-	dir = 1
+/obj/stool/chair{
+	desc = "it's not the same if it's not in its usual spot, though.";
+	dir = 4;
+	name = "replica of that one chair on cogmap 1"
 	},
-/obj/item/clothing/under/gimmick/maid,
-/turf/unsimulated/floor/wood/three,
+/turf/unsimulated/floor/wood/six,
 /area/centcom/offices/zamujasa)
 "dRP" = (
 /obj/admin_plaque{
@@ -81403,23 +81303,14 @@
 	icon_state = "blue"
 	})
 "dRQ" = (
-/obj/item/paper{
-	icon_state = "paper";
-	info = "<p>It's covered in angry scrawls and scratched-out notes.</p>";
-	name = "paper-'Powernet research'";
-	pixel_x = 2;
-	pixel_y = -4
-	},
-/obj/item/paper{
-	icon_state = "paper";
-	info = "<p>The paper is covered in incomprehensible runes.</p>";
-	name = "paper-'UI designs'";
-	pixel_x = 7;
-	pixel_y = 2
-	},
 /obj/storage/crate/bin,
-/obj/machinery/light,
-/turf/unsimulated/floor/wood/three,
+/obj/item/paper{
+	icon_state = "paper";
+	name = "paper-'THE SUN'";
+	pixel_x = 10;
+	pixel_y = -8
+	},
+/turf/unsimulated/floor/wood/six,
 /area/centcom/offices/zamujasa)
 "dRR" = (
 /obj/machinery/light{
@@ -82602,7 +82493,13 @@
 /area/hospital/samostrel)
 "eTm" = (
 /obj/item/clothing/under/pride/ace,
-/turf/unsimulated/floor/wood/three,
+/obj/storage/closet{
+	name = "typical wardrobe"
+	},
+/obj/item/clothing/under/gimmick/maid,
+/obj/item/clothing/head/maid,
+/obj/item/clothing/head/nyan/red,
+/turf/unsimulated/floor/wood/six,
 /area/centcom/offices/zamujasa)
 "eTR" = (
 /obj/wingrille_spawn/auto,
@@ -85872,10 +85769,7 @@
 /turf/unsimulated/floor/carpet/red/fancy/narrow/west,
 /area/titlescreen)
 "qDq" = (
-/obj/landmark/escape_pod_succ{
-	dir = 4;
-	shuttle = SHUTTLE_EAST
-	},
+/obj/landmark/escape_pod_succ/east,
 /turf/space/shuttle_transit,
 /area/shuttle_transit_space/west)
 "qGG" = (
@@ -86879,10 +86773,7 @@
 	icon_state = "blue"
 	})
 "umY" = (
-/obj/landmark/escape_pod_succ{
-	dir = 1;
-	shuttle = SHUTTLE_DONUT3
-	},
+/obj/landmark/escape_pod_succ/north/donut3,
 /turf/space/shuttle_transit,
 /area/shuttle_transit_space/south)
 "unx" = (
@@ -105523,7 +105414,7 @@ cTz
 cWl
 cSy
 cKc
-cNB
+cTI
 cUq
 cUG
 cRY
@@ -105825,7 +105716,7 @@ cTW
 cGK
 cSW
 cKc
-cNB
+cTI
 cGK
 cUH
 cVK
@@ -106415,7 +106306,7 @@ cLG
 cMh
 cKc
 cNi
-cNB
+cTI
 cBn
 cOo
 cOL
@@ -106429,7 +106320,7 @@ cRU
 cOP
 cXE
 cMK
-cNB
+cTI
 cGK
 cWp
 cVf
@@ -107939,7 +107830,7 @@ cIF
 cSx
 cSZ
 cKc
-cNB
+cTI
 cGK
 cWu
 cVf
@@ -108241,7 +108132,7 @@ cRU
 cSy
 cTa
 cMI
-cNB
+cTI
 cGK
 cXG
 cYa
@@ -162364,7 +162255,7 @@ dxP
 dxP
 dvw
 dCC
-dCF
+dDq
 dDN
 dvw
 pCx
