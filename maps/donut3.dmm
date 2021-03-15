@@ -10574,12 +10574,6 @@
 	},
 /turf/simulated/floor/carpet/red/fancy,
 /area/station/security/hos)
-"cQf" = (
-/obj/landmark/start{
-	name = "Rancher"
-	},
-/turf/simulated/floor/dirt,
-/area/station/ranch)
 "cQh" = (
 /obj/storage/closet{
 	name = "light bulb closet"
@@ -15046,13 +15040,13 @@
 	},
 /area/station/bridge/customs)
 "egd" = (
-/obj/stool/chair/green{
-	dir = 4
-	},
 /obj/machinery/light/incandescent/netural,
 /obj/machinery/light_switch{
 	name = "W light switch";
 	pixel_x = -24
+	},
+/obj/machinery/plantpot{
+	anchored = 1
 	},
 /turf/simulated/floor/dirt,
 /area/station/ranch)
@@ -18742,6 +18736,14 @@
 	},
 /turf/simulated/floor/black,
 /area/station/medical/dome)
+"fms" = (
+/obj/table/reinforced/auto,
+/obj/item/reagent_containers/food/snacks/chicken_feed_bag{
+	rand_pos = 1
+	},
+/obj/machinery/door/airlock/pyro/glass/windoor,
+/turf/simulated/floor,
+/area/station/ranch)
 "fmu" = (
 /obj/machinery/door/poddoor/blast/pyro{
 	id = "tox_waste"
@@ -21200,6 +21202,9 @@
 /obj/decal/tile_edge/line/green{
 	dir = 5;
 	icon_state = "line2"
+	},
+/obj/machinery/light/incandescent/netural{
+	dir = 1
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/garden)
@@ -24457,21 +24462,18 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/solar/west)
 "gZi" = (
+/obj/table/reinforced/auto,
+/obj/access_spawn/rancher,
 /obj/item/reagent_containers/food/snacks/chicken_feed_bag{
 	rand_pos = 1
 	},
 /obj/item/reagent_containers/food/snacks/chicken_feed_bag{
 	rand_pos = 1
 	},
-/obj/item/reagent_containers/food/snacks/chicken_feed_bag{
-	rand_pos = 1
+/obj/machinery/door/airlock/pyro/glass/windoor{
+	dir = 1
 	},
-/obj/railing/orange/reinforced{
-	dir = 8
-	},
-/turf/simulated/floor/grasstodirt{
-	dir = 8
-	},
+/turf/simulated/floor/plating/jen,
 /area/station/ranch)
 "gZp" = (
 /obj/decal/tile_edge/line/red{
@@ -25414,6 +25416,20 @@
 "hmI" = (
 /turf/simulated/wall/auto/reinforced/jen/purple,
 /area/station/crew_quarters/hor)
+"hmW" = (
+/obj/table/reinforced/auto,
+/obj/access_spawn/hydro,
+/obj/item/clothing/glasses/sunglasses{
+	pixel_x = 1;
+	pixel_y = 11
+	},
+/obj/item/device/light/zippo{
+	pixel_x = -3;
+	pixel_y = -2
+	},
+/obj/machinery/door/airlock/pyro/glass/windoor,
+/turf/simulated/floor,
+/area/station/hydroponics/bay)
 "hna" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/cable{
@@ -35179,12 +35195,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
-"ksz" = (
-/obj/machinery/plantpot{
-	anchored = 1
-	},
-/turf/simulated/floor/dirt,
-/area/station/ranch)
 "ksF" = (
 /turf/simulated/wall/auto/shuttle{
 	icon_state = "4"
@@ -36211,6 +36221,15 @@
 	},
 /turf/simulated/floor/black/grime,
 /area/station/security/brig/north_side)
+"kJV" = (
+/obj/stool/chair/green{
+	dir = 4
+	},
+/obj/landmark/start{
+	name = "Rancher"
+	},
+/turf/simulated/floor/dirt,
+/area/station/ranch)
 "kJX" = (
 /obj/table/reinforced/auto,
 /obj/item/clipboard{
@@ -45630,13 +45649,6 @@
 /obj/item/device/radio/intercom/medical,
 /turf/simulated/floor/wood/five,
 /area/station/medical/asylum/main)
-"nzI" = (
-/obj/submachine/chef_sink/chem_sink{
-	dir = 4;
-	pixel_x = -4
-	},
-/turf/simulated/floor/grass/leafy,
-/area/station/ranch)
 "nzJ" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/disposalpipe/segment/mail,
@@ -48295,9 +48307,6 @@
 /obj/decal/tile_edge/line/green{
 	dir = 9;
 	icon_state = "line2"
-	},
-/obj/machinery/light/incandescent/netural{
-	dir = 1
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/garden)
@@ -55415,18 +55424,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/medical/medbay)
-"qpb" = (
-/obj/submachine/chicken_feed_grinder,
-/obj/item/reagent_containers/food/snacks/plant/corn{
-	doants = 0
-	},
-/obj/railing/orange/reinforced{
-	dir = 4
-	},
-/turf/simulated/floor/grasstodirt{
-	dir = 4
-	},
-/area/station/ranch)
 "qpf" = (
 /obj/decal/tile_edge/line/yellow{
 	dir = 6;
@@ -55628,18 +55625,6 @@
 	},
 /turf/simulated/floor/grime,
 /area/station/security/brig/south_side)
-"qrA" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/disposalpipe/segment,
-/obj/submachine/chef_sink/chem_sink{
-	dir = 8
-	},
-/turf/simulated/floor/grass/leafy,
-/area/station/ranch)
 "qrB" = (
 /obj/cable{
 	d1 = 2;
@@ -56975,6 +56960,13 @@
 	dir = 8
 	},
 /area/station/science/lobby)
+"qLT" = (
+/obj/submachine/chef_sink/chem_sink{
+	layer = 3;
+	pixel_y = 8
+	},
+/turf/simulated/floor/grass/leafy,
+/area/station/ranch)
 "qLV" = (
 /obj/table/auto,
 /obj/item/reagent_containers/glass/beaker/cryoxadone{
@@ -57288,6 +57280,18 @@
 	},
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/catering)
+"qPD" = (
+/obj/machinery/plantpot{
+	anchored = 1
+	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 1;
+	name = "autoname - SS13";
+	tag = ""
+	},
+/turf/simulated/floor/grass/random,
+/area/station/hydroponics/bay)
 "qPJ" = (
 /obj/disposalpipe/segment/morgue{
 	name = "crematorium pipe"
@@ -60399,6 +60403,13 @@
 	},
 /turf/simulated/floor/red,
 /area/listeningpost)
+"rHp" = (
+/obj/submachine/chicken_feed_grinder,
+/obj/item/reagent_containers/food/snacks/plant/corn{
+	doants = 0
+	},
+/turf/simulated/floor/dirt,
+/area/station/ranch)
 "rHt" = (
 /obj/disposalpipe/segment/transport{
 	dir = 4
@@ -67584,15 +67595,6 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/east)
-"tRV" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 1;
-	name = "autoname - SS13";
-	tag = ""
-	},
-/turf/simulated/floor/grass/random,
-/area/station/hydroponics/bay)
 "tRW" = (
 /obj/cable{
 	d1 = 1;
@@ -81097,10 +81099,12 @@
 /turf/simulated/floor/dojo/sand/circle,
 /area/station/crew_quarters/captain)
 "xPC" = (
-/obj/wingrille_spawn/auto,
-/obj/wingrille_spawn/auto,
-/turf/simulated/floor/plating,
-/area/station/ranch)
+/obj/decal/cleanable/dirt/jen,
+/obj/machinery/light/small/sticky{
+	dir = 8
+	},
+/turf/simulated/floor/plating/jen,
+/area/station/maintenance/outer/ne)
 "xPF" = (
 /obj/rack,
 /obj/item/storage/toolbox/mechanical{
@@ -129006,8 +129010,8 @@ mke
 mke
 mke
 mke
-tRV
-txZ
+mke
+hmW
 ope
 qDS
 bxb
@@ -129598,7 +129602,7 @@ mfs
 iTF
 mBB
 ewc
-nzI
+mBB
 mBB
 rqW
 egd
@@ -129610,7 +129614,7 @@ kHx
 kHx
 mke
 olP
-kHx
+qPD
 txZ
 fYJ
 nvb
@@ -129896,15 +129900,15 @@ kyD
 kUF
 uvY
 wYJ
-mfs
+sJC
 xmA
 mBB
 mBB
 mBB
 mBB
 qEb
-cQf
-sJC
+orn
+jLx
 mwk
 iba
 kHx
@@ -130198,15 +130202,15 @@ kyD
 lnq
 uvY
 dxa
-sJC
-mBB
-mBB
+mfs
+mfs
+qLT
 mBB
 mBB
 rmq
 qEb
 kMI
-jLx
+fms
 mwk
 iba
 kHx
@@ -130507,7 +130511,7 @@ pav
 pav
 pav
 psO
-orn
+kJV
 sJC
 gJz
 lBH
@@ -130802,14 +130806,14 @@ aUm
 bzZ
 nAO
 bRk
-xPC
-qpb
+aRI
+gZi
 rog
 rog
 rog
 rog
 mUk
-orn
+rHp
 sJC
 pOG
 iba
@@ -131104,14 +131108,14 @@ kLH
 aRI
 pba
 mwv
-sJC
-mBB
-mBB
+mfs
+mfs
+qLT
 mBB
 mBB
 wSK
 oJP
-ksz
+orn
 mfs
 wln
 aoH
@@ -131406,7 +131410,7 @@ kkV
 aRI
 bAX
 wYJ
-mfs
+sJC
 xmA
 mBB
 mBB
@@ -131712,7 +131716,7 @@ mfs
 tGW
 ngk
 afz
-qrA
+dgp
 dgp
 gcm
 gzz
@@ -132014,9 +132018,9 @@ kkV
 kkV
 kkV
 kkV
+vWw
+vWw
 kkV
-vWw
-vWw
 eOR
 wqJ
 pKl
