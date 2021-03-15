@@ -109,7 +109,7 @@
 /obj/machinery/bot/buttbot/proc/scoot()
 	if(moving) return
 	if(src.emagged)
-		for(var/atom/A as() in view(5, src))
+		for(var/atom/A as anything in view(5, src))
 			if(!(A.event_handler_flags & IS_FARTABLE) && !(A in src.fart_memory))
 				src.navigate_to(A, BUTTBOT_MOVE_SPEED, 0, 30)
 				break
@@ -388,7 +388,7 @@
 			playsound(get_turf(src), pick(src.fartsounds), 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 
 	var/fart_on_other = 0
-	for (var/atom/A as() in src.loc)
+	for (var/atom/A as anything in src.loc)
 		if(A.event_handler_flags & IS_FARTABLE)
 			if(istype(A,/mob/living))
 				var/mob/living/M = A

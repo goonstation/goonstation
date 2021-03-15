@@ -313,6 +313,9 @@ var/global/list/mapNames = list(
 	rwalls = /turf/simulated/wall/auto/reinforced/gannets
 	auto_walls = 1
 
+	ext_airlocks = /obj/machinery/door/airlock/pyro/external
+	airlock_style = "pyro"
+
 	escape_centcom = /area/shuttle/escape/centcom/destiny
 	escape_transit = /area/shuttle/escape/transit/destiny
 	escape_station = /area/shuttle/escape/station/destiny
@@ -328,7 +331,7 @@ var/global/list/mapNames = list(
 		"the central research sector hub" = list(/area/station/science/lobby),
 		"the cargo bay (QM)" = list(/area/station/quartermaster/office),
 		"the thermo-electric generator room" = list(/area/station/engine/core),
-		"the refinery (arc smelter)" = list(/area/station/mining/refinery),
+		//"the refinery (arc smelter)" = list(/area/station/mining/refinery),
 		"the courtroom" = list(/area/station/crew_quarters/courtroom),
 		"the medbay" = list(/area/station/medical/medbay, /area/station/medical/medbay/lobby),
 		"the bar" = list(/area/station/crew_quarters/bar),

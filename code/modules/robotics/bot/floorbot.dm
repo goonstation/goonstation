@@ -309,7 +309,7 @@
 		src.search_range = 1
 
 		// are we there yet
-		if (get_turf(src.loc) == get_turf(src.target))
+		if (IN_RANGE(get_turf(src), get_turf(src.target), 1))
 			do_the_thing()
 			return
 
@@ -528,7 +528,7 @@
 		if (new_tile)
 			// Make a new tile
 			var/obj/item/tile/T = new /obj/item/tile/steel
-			T.build(master.loc)
+			T.build(target)
 		else
 			// Fix yo shit
 			var/turf/simulated/floor/F = target

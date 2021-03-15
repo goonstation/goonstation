@@ -560,11 +560,15 @@
 					for(var/obj/item/O in src.contents)
 						if (O.material && O.material.mat_id == mat_id)
 							if (!ejectamt)
-								ejectamt = input(usr,"How many units do you want to eject?","Eject Materials") as num
-								if (ejectamt > O.amount || ejectamt <= 0 || src.mode != "ready" || get_dist(src, usr) > 1)
+								ejectamt = input(usr,"How many material pieces (10 units per) do you want to eject?","Eject Materials") as num
+								if (ejectamt <= 0 || src.mode != "ready" || get_dist(src, usr) > 1)
 									break
 							if (!ejectturf)
 								break
+							if (ejectamt > O.amount)
+								playsound(src.loc, src.sound_grump, 50, 1)
+								boutput(usr, "<span class='alert'>There's not that much material in [name]. It has ejected what it could.</span>")
+								ejectamt = O.amount
 							src.update_resource_amount(mat_id, -ejectamt * 10) // ejectamt will always be <= actual amount
 							if (ejectamt == O.amount)
 								O.set_loc(get_output_location(O,1))
@@ -2524,7 +2528,7 @@
 
 /proc/build_manufacturer_icons()
 	// pre-build all the icons for shit manufacturers make
-	for (var/datum/manufacture/P as() in typesof(/datum/manufacture))
+	for (var/datum/manufacture/P as anything in typesof(/datum/manufacture))
 		if (ispath(P, /datum/manufacture/mechanics))
 			var/datum/manufacture/mechanics/M = P
 			if (!initial(M.frame_path))

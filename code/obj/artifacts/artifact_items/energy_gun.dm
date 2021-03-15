@@ -27,7 +27,7 @@
 
 
 			if(forceBullets)
-				for(var/datum/projectile/artifact/forceBullet as() in forceBullets)
+				for(var/datum/projectile/artifact/forceBullet as anything in forceBullets)
 					forceBullet.turretArt = null // not making this trigger faults on people who are shot, to prevent guns from feeling too unfair
 				AS.bullets = forceBullets
 			set_current_projectile(pick(AS.bullets))

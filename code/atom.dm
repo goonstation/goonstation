@@ -155,7 +155,7 @@
 		tag = null
 
 		if(length(src.statusEffects))
-			for(var/datum/statusEffect/effect as() in src.statusEffects)
+			for(var/datum/statusEffect/effect as anything in src.statusEffects)
 				src.delStatus(effect)
 			src.statusEffects = null
 		..()
@@ -477,7 +477,7 @@
 	if (A != src.loc && A?.z == src.z)
 		src.last_move = get_dir(A, src.loc)
 		if (length(src.attached_objs))
-			for (var/atom/movable/M as() in attached_objs)
+			for (var/atom/movable/M as anything in attached_objs)
 				M.set_loc(src.loc)
 		if (islist(src.tracked_blood))
 			src.track_blood()

@@ -520,7 +520,7 @@
 				ret["moles"] = TOTAL_MOLES(G)
 
 				if(length(G.trace_gases))
-					for(var/datum/gas/T as() in G.trace_gases)
+					for(var/datum/gas/T as anything in G.trace_gases)
 						if(istype(T, /datum/gas/sleeping_agent))
 							ret["n2o"] = T.moles
 						else if(istype(T, /datum/gas/oxygen_agent_b))
@@ -545,7 +545,7 @@
 					ret["moles"] = TOTAL_MOLES(G)
 
 				if(G && length(G.trace_gases))
-					for(var/datum/gas/T as() in G.trace_gases)
+					for(var/datum/gas/T as anything in G.trace_gases)
 						if(istype(T, /datum/gas/sleeping_agent))
 							ret["n2o"] = T.ARCHIVED(moles)
 						else if(istype(T, /datum/gas/oxygen_agent_b))
