@@ -9,6 +9,9 @@
 		"tgui/.yarn": true,
 		"tgui/.pnp.*": true
 	},
+	"editor.codeActionsOnSave": {
+		"source.fixAll.eslint": true
+	},
 	// Lets you preview .dmi files in the editor
 	"workbench.editorAssociations": [
 		{
@@ -16,5 +19,4 @@
 				"viewType": "imagePreview.previewEditor"
 		}
 	]
-
 }
