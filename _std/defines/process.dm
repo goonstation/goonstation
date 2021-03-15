@@ -12,4 +12,5 @@
 #define PROCESS_DEFAULT_HANG_RESTART_TIME 	25 SECONDS
 #define PROCESS_DEFAULT_SCHEDULE_INTERVAL 	50  // 50 ticks
 #define PROCESS_DEFAULT_TICK_ALLOWANCE		20	// 20% of one tick
-#define MAX_TICK_USAGE 95 // 95% of a tick
+#define PROCESS_MAX_TICK_USAGE 95 // 95% of a tick
+#define PROCESS_MAX_DEFER_COUNT 5 // how many times to sleep in a row before forcing a tick

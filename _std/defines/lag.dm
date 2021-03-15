@@ -21,15 +21,15 @@
 #endif
 
 //for light queue - when should we queue? and when should we pause processing our dowork loop?
-#define LIGHTING_MAX_TICKUSAGE 92
+#define LIGHTING_MAX_TICKUSAGE 80
 
 //LAGCHECK parameter levels. "when the tick is this% complete, sleep here."
 //lower numbers will sleep more often, and should be used for lower priority tasks.
 //higher numbers will sleep less often, and should be used for high priority tasks.
-#define LAG_LOW 66
-#define LAG_MED 75
-#define LAG_HIGH 83
-#define LAG_REALTIME 99
+#define LAG_LOW 50
+#define LAG_MED 66
+#define LAG_HIGH 75
+#define LAG_REALTIME 90
 
 /// Waits until a given condition is true, tg-style async
 #define UNTIL(X) while(!(X)) sleep(1)
