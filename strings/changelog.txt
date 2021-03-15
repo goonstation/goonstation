@@ -1,13 +1,27 @@
 
+(t)mon mar 15 21
+(u)TTerc
+(p)3957
+(e)🎨|sprites
+(+)Janitors can now turn their Head of Sanitation beret into a hat, similarly to HoS beret! Sprites by Arthur Holiday.
 (t)sun mar 14 21
+(u)Fosstar
+(p)3860
+(e)⚖|balance
+(+)The detective's scanner (not their PDA) can now scan objects up to two tiles away.
+(u)ThePotato97
+(p)4017
+(e)📄|tgui
+(+)Fixed saving clone records to disks and alignment of damage indicators
+(u)Flappybat
+(p)4013
+(e)⚖|balance
+(+)Stopped Boom Boots spawning in syndicate Surplus Crate.
 (u)Kapu1178 & Virvatuli
 (p)3804
 (e)⚖🆕|balance, feature
 (*)Riot Shotguns now require racking between shots to fire
 (+)New shotgun sounds by Virvatuli
-(u)Zamujasa
-(e)🆕|feature
-(+)Sick of being totally human but not ready for the full new race experience? I guess some tails can be bought with spacebux now. I dunno if this will last though.
 (t)sat mar 13 21
 (u)Penny
 (p)3997
