@@ -52,6 +52,7 @@ If this does not work, search for the following extensions:
  - GitHub Pull Requests - lets you make a pull request directly from the editor
  - Bracket Pair Colorizer 2 - paints matching brackets the same color
  - Git Graph - lets you work with branches visually for ease of use
+ - ESLint - lets you see some code errors in your editor as you work, also auto-fixes code style items on save
 :::
 
 For the GitHub Pull Requests extension, you'll have to sign in to GitHub to link it properly. Also, sometime is just breaks. :shrug:
@@ -59,6 +60,14 @@ For the GitHub Pull Requests extension, you'll have to sign in to GitHub to link
 :::warning
 If it errors, try again by launching `Sign in to GitHub` from the command palette.
 :::
+
+For the ESLint extension, you may need to select a Node environment (e.g. if you already have one installed on your computer). A box like the below may appear in the bottom right of your VS Code window.
+
+![](https://i.imgur.com/nKaS47A.png)
+
+If that happens, click `Select Node Path` in it, then `Use NODE_PATH value defined via setting ./tgui/.yarn/sdks` in the dropdown that appears.
+
+If you navigate to a `.js` or `.tsx` file (e.g. `tgui/packages/tgui/components/Section.tsx`) the word `ESLINT` should appear in the bottom right of your window, along the bar at the bottom, like below. Simply click it and choose `Allow` in the popup to let it loose on your Goonstation files.
 
 Now, let's connect the main goonstation repository to your client.
 

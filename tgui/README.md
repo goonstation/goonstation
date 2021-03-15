@@ -145,6 +145,12 @@ hallucinating.
 
 To fix this kind of problem, run `bin/tgui --clean` and try again.
 
+**Error: Unable to locate pnpapi, the module '...\goonstation\tgui\packages\tgui-dev-server\index.js' is controlled by multiple pnpapi instances.**
+
+At present, due to an issue with yarn the dev server cannot be ran if the path to your repo contains spaces. This could be caused if you have the repo in your Documents folder and your Windows user is your first name and last name (e.g. `C:\Users\Firstname Lastname\Documents\goonstation`).
+
+For now, you'll have to move the whole repo to a different location without spaces (e.g. `C:\Dev\goonstation`). Moving the whole `goonstation` folder in this way shouldn't cause any issues, but make sure to close down VS Code and anything else you have that might be accessing the files within.
+
 ## Developer Tools
 
 When developing with `tgui-dev-server`, you will have access to certain
