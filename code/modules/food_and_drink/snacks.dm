@@ -816,7 +816,6 @@
 		New()
 			. = ..()
 			src.cooltime()
-			return
 
 	on_bite(obj/item/I, mob/M, mob/user)
 		if(src.warm && M.reagents)
