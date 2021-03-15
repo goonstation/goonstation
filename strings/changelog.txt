@@ -1,4 +1,9 @@
 
+(t)mon mar 15 21
+(u)TTerc
+(p)3957
+(e)🎨|sprites
+(+)Janitors can now turn their Head of Sanitation beret into a hat, similarly to HoS beret! Sprites by Arthur Holiday.
 (t)sun mar 14 21
 (u)Fosstar
 (p)3860
