@@ -219,4 +219,4 @@ datum/mind
 
 /datum/mind/proc/add_karma(how_much)
 	src.karma += how_much
-	clamp(src.karma,karma_min,karma_max)
+	src.karma = clamp(src.karma, karma_min, karma_max)
