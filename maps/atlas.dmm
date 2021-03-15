@@ -17987,6 +17987,7 @@
 /obj/item/reagent_containers/food/snacks/ingredient/egg{
 	rand_pos = 0
 	},
+/obj/machinery/camera/ranch,
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "TD" = (

@@ -6231,13 +6231,9 @@
 /obj/machinery/door/window/eastleft{
 	req_access_txt = "25"
 	},
-/obj/item/clipboard,
-/obj/item/paper_bin{
-	pixel_y = 3
+/obj/item_dispenser/icedispenser{
+	pixel_y = 14
 	},
-/obj/item/pen,
-/obj/item/stamp,
-/obj/item/hand_labeler,
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/bar)
 "axJ" = (
@@ -23186,6 +23182,9 @@
 /obj/item/reagent_containers/food/snacks/ingredient/egg,
 /obj/machinery/light/incandescent/netural{
 	nostick = 1
+	},
+/obj/machinery/camera/ranch{
+	dir = 1
 	},
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
@@ -46543,6 +46542,13 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
+/obj/item/clipboard,
+/obj/item/paper_bin{
+	pixel_y = 3
+	},
+/obj/item/pen,
+/obj/item/stamp,
+/obj/item/hand_labeler,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/baroffice)
 "rGo" = (
@@ -49513,6 +49519,7 @@
 /obj/landmark/start{
 	name = "Rancher"
 	},
+/obj/machinery/camera/ranch,
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "tir" = (

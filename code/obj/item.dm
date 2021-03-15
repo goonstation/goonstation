@@ -818,6 +818,9 @@
 /obj/item/proc/try_put_hand_mousedrop(mob/user)
 	var/oldloc = src.loc
 
+	if(src.equipped_in_slot && src.cant_self_remove)
+		return 0
+
 	if (!src.anchored)
 		if (!user.r_hand || !user.l_hand || (user.r_hand == src) || (user.l_hand == src))
 			if (!user.hand) //big messy ugly bad if() chunk here because we want to prefer active hand

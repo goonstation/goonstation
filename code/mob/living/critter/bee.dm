@@ -141,7 +141,6 @@
 		if (!gibbed)
 			animate(src)
 		for (var/obj/critter/domestic_bee/fellow_bee in view(7,src)) // once mobcritters have AI we can change this to the mob version of bees, but for now we do this
-			LAGCHECK(LAG_HIGH)
 			if (fellow_bee?.alive)
 				fellow_bee.aggressive = 1
 				SPAWN_DBG(0.7 SECONDS)
@@ -725,6 +724,18 @@
 	icon_state_dead = "madbee-dead"
 	icon_state_sleep = "madbee-sleep"
 	icon_body = "madbee"
+
+/mob/living/critter/small_animal/bee/moth
+	name = "moth"
+	desc = "It appears to be a hybrid of a domestic space-bee and a moth. How cute!"
+	icon_state = "moth-wings"
+	icon_state_dead = "moth-dead"
+	icon_state_sleep = "moth-sleep"
+	icon_body = "moth"
+	honey_color = rgb(207, 207, 207)
+	speechverb_say = "flutters"
+	speechverb_exclaim = "squeaks"
+	speechverb_ask = "flutters"
 
 /mob/living/critter/small_animal/bee/zombee
 	name = "zombee"

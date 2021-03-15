@@ -184,7 +184,6 @@
 			if (!F) continue
 			if (F.pooled) continue
 			src.remove(F,0,1,1)
-			LAGCHECK(LAG_MED)
 
 		if (!src.pooled)
 			qdel(src)
@@ -325,12 +324,10 @@
 		return R
 
 	proc/displace(var/obj/fluid/F) //fluid has been displaced from its tile - delete this object and try to move my contents to adjacent tiles
-		LAGCHECK(LAG_HIGH)
 		if (!members || !F) return
 		if (length(src.members) == 1)
 			var/turf/T
 			for( var/dir in cardinal )
-				LAGCHECK(LAG_MED)
 				T = get_step( F, dir )
 				if (! (istype(T,/turf/simulated/floor) || istype (T,/turf/unsimulated/floor)) ) continue
 				if (T.canpass())
@@ -344,7 +341,6 @@
 		else
 			var/turf/T
 			for( var/dir in cardinal )
-				LAGCHECK(LAG_MED)
 				T = get_step( F, dir )
 				if (T.active_liquid && T.active_liquid.group == src)
 					spread_member = T.active_liquid
@@ -669,7 +665,6 @@
 		var/fluids_removed_avg_viscosity = 0
 
 		for (var/i = length(members), i > 0, i--)
-			LAGCHECK(LAG_HIGH)
 			if (src.qdeled) return
 			if (i > length(src.members)) continue
 			if (!members[i]) continue
@@ -684,7 +679,6 @@
 
 		var/removed_len = fluids_removed.len
 
-		LAGCHECK(LAG_MED)
 		if (transfer_to && transfer_to.reagents && src.reagents)
 			src.reagents.skip_next_update = 1
 			src.reagents.trans_to_direct(transfer_to.reagents,src.amt_per_tile * removed_len)
@@ -696,7 +690,6 @@
 
 		for (var/obj/fluid/F as anything in fluids_removed)
 			src.remove(F,0,src.updating)
-			LAGCHECK(LAG_HIGH)
 
 		//fluids_removed_avg_viscosity = fluids_removed ? (fluids_removed_avg_viscosity / fluids_removed) : 1
 		return src.avg_viscosity
@@ -708,7 +701,6 @@
 		join_with.qdeled = 1 //hacky but stop updating
 
 		for (var/obj/fluid/F as anything in join_with.members)
-			LAGCHECK(LAG_HIGH)
 			if (!F) continue
 			F.group = src
 			src.members += F
@@ -761,7 +753,6 @@
 			FG.members += F
 			F.group = FG
 			F.last_spread_was_blocked = 0
-			LAGCHECK(LAG_REALTIME)
 		src.members -= FG.members
 
 		if (FG)

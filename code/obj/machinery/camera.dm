@@ -32,6 +32,11 @@
 	var/oldx = 0
 	var/oldy = 0
 
+	ranch
+		name = "baby monitor"
+		network = "ranch"
+		color = "#AAFF99"
+
 /obj/machinery/camera/process()
 	.=..()
 	if(!isturf(src.loc)) //This will end up removing coverage if camera is inside a thing.

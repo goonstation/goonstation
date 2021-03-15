@@ -941,7 +941,7 @@
 			if(M == src) continue
 			throwstuff(M)
 			if(count > 50) return
-			if(world.tick_usage > 100) return //fuck it, failsafe
+			if(APPROX_TICK_USE > 100) return //fuck it, failsafe
 
 	proc/activateproc(var/datum/mechanicsMessage/input)
 		if(level == 2) return

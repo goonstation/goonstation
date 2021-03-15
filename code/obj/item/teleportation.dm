@@ -207,7 +207,11 @@ Frequency:
 			return
 
 		users += user // We're about to show the UI
-		var/t1 = input(user, "Please select a teleporter to lock in on.", "Target Selection") in L
+		var/t1
+		if(user.client)
+			t1 = input(user, "Please select a teleporter to lock in on.", "Target Selection") in L
+		else
+			t1 = pick(L)
 		users -= user // We're done showing the UI
 
 		if (user.stat || user.restrained())

@@ -1290,6 +1290,15 @@
 	icon_body = "madbee"
 	sleeping_icon_state = "madbee-sleep"
 
+/obj/critter/domestic_bee/moth
+	name = "moth"
+	desc = "It appears to be a hybrid of a domestic space-bee and a moth. How cute!"
+	icon_state = "moth-wings"
+	sleeping_icon_state = "moth-sleep"
+	icon_body = "moth"
+	honey_color = rgb(207, 207, 207)
+	angertext = "squeaks threateningly at"
+
 /obj/critter/domestic_bee/zombee
 	name = "zombee"
 	desc = "Genetically engineered for extreme size and indistinct segmentation and bred for docility, the greater domestic space-bee is increasingly popular among space traders and science-types.<br>This one seems kinda sick, poor thing."

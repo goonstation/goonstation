@@ -10557,6 +10557,10 @@
 /obj/item/shaker/ketchup{
 	pixel_x = 6
 	},
+/obj/item_dispenser/icedispenser{
+	dir = 1;
+	pixel_y = 0
+	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/bar)
 "axS" = (
@@ -12721,7 +12725,7 @@
 /obj/disposaloutlet{
 	layer = 4;
 	name = "slop chute";
-	pixel_x = 4
+	pixel_y = 21
 	},
 /obj/table/reinforced/bar/auto,
 /obj/machinery/light/emergency{
@@ -13279,9 +13283,12 @@
 /area/station/crew_quarters/kitchen)
 "aDF" = (
 /obj/table/reinforced/bar/auto,
-/obj/item/clothing/head/cakehat,
 /obj/disposalpipe/segment/food{
 	dir = 4
+	},
+/obj/item_dispenser/icedispenser{
+	pixel_x = -1;
+	pixel_y = 10
 	},
 /turf/simulated/floor/carpet{
 	dir = 8;
@@ -13869,6 +13876,7 @@
 /obj/table/reinforced/bar/auto,
 /obj/random_item_spawner/tableware,
 /obj/disposalpipe/segment/food,
+/obj/item/clothing/head/cakehat,
 /turf/simulated/floor/carpet{
 	dir = 4;
 	icon_state = "fpurple2"
@@ -79061,6 +79069,15 @@
 	icon_state = "fgreen2"
 	},
 /area/station/hydroponics/bay)
+"idv" = (
+/obj/submachine/chef_sink/chem_sink{
+	dir = 4
+	},
+/obj/machinery/camera/ranch{
+	dir = 1
+	},
+/turf/simulated/floor/grass/leafy,
+/area/station/ranch)
 "iko" = (
 /obj/submachine/chem_extractor{
 	dir = 4;
@@ -79445,6 +79462,7 @@
 /obj/submachine/chef_sink/chem_sink{
 	dir = 4
 	},
+/obj/machinery/camera/ranch,
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "vRi" = (
@@ -100837,7 +100855,7 @@ wcj
 saK
 saK
 saK
-vNO
+idv
 xfw
 aaa
 aaa
