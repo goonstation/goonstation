@@ -99,10 +99,11 @@
 			if(ptype == 2)
 				ptype = 3
 				set_dir(turn(dir, 180))
+				boutput(user, "You change the pipe junction's direction.")
 			else if (ptype == 3)
 				ptype = 2
 				set_dir(turn(dir, 180))
-			boutput(user, "You change the pipe junction's direction.")
+				boutput(user, "You change the pipe junction's direction.")
 			update()
 
 	// attackby item
