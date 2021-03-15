@@ -394,7 +394,6 @@
 		if(S.id != id) continue
 		S.control = src
 		S.ndir = cdir
-		LAGCHECK(LAG_HIGH)
 
 /obj/machinery/power/solar_control/power_change()
 	if(powered())
