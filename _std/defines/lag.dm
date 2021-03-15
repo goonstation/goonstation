@@ -4,11 +4,14 @@
 #define MIN_DELETE_CHUNK_SIZE 1
 #define MAX_DELETE_CHUNK_SIZE 100
 
+//close only counts in horseshoes and byond
+#define EXTRA_TICK_SPACE 2
+#define APPROX_TICK_USE (world.tick_usage + world.map_cpu + EXTRA_TICK_SPACE)
 //lagcheck stuff
 #ifdef SPACEMAN_DMM
 #define LAGCHECK(x) // this is wrong and bad, but it'd be way too much effort to remove lagchecks from everything :/
 #else
-#define LAGCHECK(x) if (lagcheck_enabled && world.tick_usage + world.map_cpu > x) sleep(world.tick_lag)
+#define LAGCHECK(x) if (lagcheck_enabled && APPROX_TICK_USE > x) sleep(world.tick_lag)
 #endif
 
 //for light queue - when should we queue? and when should we pause processing our dowork loop?

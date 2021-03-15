@@ -109,8 +109,8 @@ proc/get_moving_lights_stats()
 #define D_ENABLE 8
 #define D_MOVE 16
 						//only if lag				OR we already have stuff queued  OR lighting is suspeded 	also game needs to be started lol		and not doing a queue process currently
-//#define SHOULD_QUEUE (((world.tick_usage + world.cpu) > LIGHTING_MAX_TICKUSAGE || light_update_queue.cur_size) && current_state > GAME_STATE_SETTING_UP && !queued_run)
-#define SHOULD_QUEUE (( light_update_queue.cur_size || (world.tick_usage + world.cpu) > LIGHTING_MAX_TICKUSAGE || RL_Suspended) && !queued_run && current_state > GAME_STATE_SETTING_UP)
+//#define SHOULD_QUEUE ((APPROX_TICK_USE > LIGHTING_MAX_TICKUSAGE || light_update_queue.cur_size) && current_state > GAME_STATE_SETTING_UP && !queued_run)
+#define SHOULD_QUEUE (( light_update_queue.cur_size || APPROX_TICK_USE > LIGHTING_MAX_TICKUSAGE || RL_Suspended) && !queued_run && current_state > GAME_STATE_SETTING_UP)
 datum/light
 	var/x
 	var/y
