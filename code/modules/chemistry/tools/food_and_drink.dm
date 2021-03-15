@@ -907,7 +907,7 @@
 				"You add [W] to [src].")
 				src.reagents.add_reagent("ice", 5, null, (T0C - 1))
 				pool(W)
-				if ((user.mind.assigned_role == "Bartender") && (prob(20)))
+				if ((user.mind.assigned_role == "Bartender") && (prob(40)))
 					JOB_XP(user, "Bartender", 1)
 				return
 
@@ -921,7 +921,7 @@
 			W.set_loc(src)
 			src.wedge = W
 			src.update_icon()
-			if ((user.mind.assigned_role == "Bartender") && (prob(20)))
+			if ((user.mind.assigned_role == "Bartender") && (prob(40)))
 				JOB_XP(user, "Bartender", 1)
 			return
 
@@ -967,7 +967,7 @@
 				W.reagents.remove_reagent("salt", 5)
 				src.salted = 1
 				src.update_icon()
-				if ((user.mind.assigned_role == "Bartender") && (prob(20)))
+				if ((user.mind.assigned_role == "Bartender") && (prob(40)))
 					JOB_XP(user, "Bartender", 1)
 				return
 			else
