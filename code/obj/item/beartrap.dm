@@ -4,9 +4,10 @@
 	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "bear_trap-close"
 	item_state = "bear_trap"
+	flags = FPRINT
 	w_class = 2
-	force = null
-	throwforce = null
+	force = 5
+	throwforce = 5
 	var/armed = FALSE
 	stamina_damage = 0
 	stamina_cost = 0
@@ -68,6 +69,7 @@
 	proc/arm(var/proc_args)
 		if (!src.armed)
 			var/mob/M = proc_args[1]
+			logTheThing("combat", src, null, "armed a beartrap at [src.loc]")
 			set_icon_state("bear_trap-open")
 			M.drop_item(src)
 			src.armed = TRUE
@@ -89,6 +91,7 @@
 
 		if (target && ishuman(target))
 			var/mob/living/carbon/human/H = target
+			logTheThing("combat", H, null, "stood on a [src] at [log_loc(src)].")
 			H.changeStatus("stunned", 4 SECONDS)
 			random_brute_damage(H, 50, 0)
 			take_bleeding_damage(H, null, 15, DAMAGE_CUT)
