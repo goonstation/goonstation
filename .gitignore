@@ -82,3 +82,4 @@ Desktop.ini
 
 # Dedicated unversioned folder
 /unversioned/**/*
+cfg/admin.txt

@@ -172,13 +172,13 @@ ABSTRACT_TYPE(/datum/bioEffect)
 		return TRUE
 
 	proc/ModBlocks() //Gets the normal sequence for this mutation and then "corrupts" it locally.
-		for(var/datum/basePair/bp as() in blockList)
+		for(var/datum/basePair/bp as anything in blockList)
 			var/datum/basePair/bpNew = new()
 			bpNew.bpp1 = bp.bpp1
 			bpNew.bpp2 = bp.bpp2
 			blockListCurr.Add(bpNew)
 
-		for(var/datum/basePair/bp as() in blockListCurr)
+		for(var/datum/basePair/bp as anything in blockListCurr)
 			if(prob(33))
 				if(prob(50))
 					bp.bpp1 = "?"
@@ -251,7 +251,7 @@ ABSTRACT_TYPE(/datum/bioEffect)
 	proc/ChangeAllMarkers(var/sprite_state)
 		if(!istext(sprite_state))
 			sprite_state = "white"
-		for(var/datum/basePair/bp as() in blockListCurr)
+		for(var/datum/basePair/bp as anything in blockListCurr)
 			bp.marker = sprite_state
 			bp.style = ""
 

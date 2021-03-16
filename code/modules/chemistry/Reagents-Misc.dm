@@ -863,7 +863,7 @@ datum
 					if (!target)
 						return
 
-				for (var/atom/A as() in target)
+				for (var/atom/A as anything in target)
 					if (A.event_handler_flags & HANDLE_STICKER)
 						if (A:active)
 							target.visible_message("<span class='alert'><b>[A]</b> dissolves completely!</span>")
@@ -2523,7 +2523,7 @@ datum
 						M.visible_message("<span class='emote'><B>[M]</B> flaps [his_or_her(M)] arms ANGRILY!</span>")
 					if (ishuman(M))
 						var/mob/living/carbon/human/H = M
-						if (H.sound_list_flap && H.sound_list_flap.len)
+						if (H.sound_list_flap && length(H.sound_list_flap))
 							playsound(get_turf(H), pick(H.sound_list_flap), 80, 0, 0, H.get_age_pitch())
 				..()
 				return

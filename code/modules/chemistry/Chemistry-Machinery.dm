@@ -303,7 +303,7 @@
 
 	New()
 		..()
-		if (!src.emagged && islist(chem_whitelist) && chem_whitelist.len)
+		if (!src.emagged && islist(chem_whitelist) && length(chem_whitelist))
 			src.whitelist = chem_whitelist
 		output_target = src.loc
 
@@ -623,7 +623,7 @@
 		return 1
 
 	proc/check_whitelist(var/datum/reagents/R)
-		if (src.emagged || !R || !src.whitelist || (islist(src.whitelist) && !src.whitelist.len))
+		if (src.emagged || !R || !src.whitelist || (islist(src.whitelist) && !length(src.whitelist)))
 			return 1
 		var/all_safe = 1
 		for (var/reagent_id in R.reagent_list)
@@ -773,25 +773,80 @@ datum/chemicompiler_core/stationaryCore
 	var/active = 0
 	var/overall_temp = T20C
 	var/target_temp = T20C
-	var/obj/item/reagent_containers/glass/beaker/extractor_tank/thick/bottoms = new
-	var/obj/item/reagent_containers/glass/beaker/extractor_tank/tops = new
-	var/obj/item/reagent_containers/glass/beaker/extractor_tank/feed = new
+	var/heating = 0
+	var/distilling = 0
+	var/cracking = 0
+	var/obj/item/reagent_containers/glass/beaker/extractor_tank/thick/bottoms = null
+	var/obj/item/reagent_containers/glass/beaker/extractor_tank/tops = null
+	var/obj/item/reagent_containers/glass/beaker/extractor_tank/feed = null
+	var/obj/item/reagent_containers/glass/beaker/extractor_tank/overflow = null
 	var/obj/item/reagent_containers/user_beaker = null
 
 	New()
+		..()
+		src.bottoms = new
+		src.tops = new
+		src.feed = new
+		src.overflow = new
+
+	disposing()
+		if (src.bottoms)
+			qdel(src.bottoms)
+			src.bottoms = null
+		if (src.tops)
+			qdel(src.tops)
+			src.tops = null
+		if (src.feed)
+			qdel(src.feed)
+			src.feed = null
+		if (src.overflow)
+			qdel(src.overflow)
+			src.overflow = null
+		if (src.user_beaker)
+			qdel(src.user_beaker)
+			src.user_beaker = null
+		UnsubscribeProcess()
 		..()
 
 	process(var/mult)
 		if(!active)
 			UnsubscribeProcess()
-		heat_up()
-		distill(mult)
+		if(heating)
+			heat_up()
+		if(distilling)
+			distill(mult)
+		if(cracking)
+			do_cracking(bottoms,mult)
+		bottoms.reagents.temperature_reagents(T20C, 1)
+		..()
+
+	proc/check_tank(var/obj/item/reagent_containers/tank,var/headroom)
+		if(tank.reagents.total_volume >= tank.reagents.maximum_volume - headroom)
+			tank.reagents.trans_to(overflow,(headroom*0.1))
+		if(overflow.reagents.total_volume >= overflow.reagents.maximum_volume - headroom)
+			src.visible_message("<span class='alert'>The internal overflow safety dumps its contents all over the floor!.</span>","<span class='alert'>You hear a tremendous gushing sound.</span>")
+			var/turf/T = get_turf(src)
+			overflow.reagents.reaction(T)
+
+	proc/do_cracking(var/obj/item/reagent_containers/R, var/amount)
+		if(R && R.reagents)
+			for(var/datum/reagent/reggie in R)
+				if(reggie.can_crack)
+					reggie.crack(amount)
 
 	proc/distill(var/amount)
-		for(var/datum/reagent/R in get_vapours(bottoms))
-			bottoms.reagents.remove_reagent(R.id,amount)
-			tops.reagents.add_reagent(R.id,amount)
-			feed.reagents.trans_to(bottoms,amount)
+		var/vapour_list = get_vapours(bottoms)
+		if(vapour_list)
+			heating = 0
+			for(var/datum/reagent/R in vapour_list)
+				bottoms.reagents.remove_reagent(R.id,amount)
+				tops.reagents.add_reagent(R.id,amount)
+				check_tank(tops,50)
+				feed.reagents.trans_to(bottoms,amount)
+				check_tank(bottoms,100)
+		else
+			if(bottoms.reagents && length(bottoms.reagents.reagent_list))
+				heating = 1
 
 	proc/heat_up()
 		var/vapor_temp = min(get_lowest_temp(bottoms),target_temp)
@@ -825,6 +880,3 @@ datum/chemicompiler_core/stationaryCore
 					. = reggie
 			return
 		else return null
-
-
-
