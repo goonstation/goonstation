@@ -230,6 +230,21 @@
 	color_r = 1
 	color_g = 0.8 // red tint
 	color_b = 0.8
+	var/upgraded = 0 // for seeing through walls
+
+	equipped(mob/user, slot)
+		. = ..()
+		if(upgraded)
+			APPLY_MOB_PROPERTY(user, PROP_THERMALSIGHT_MK2, src)
+		else
+			APPLY_MOB_PROPERTY(user, PROP_THERMALSIGHT, src)
+
+	unequipped(mob/user)
+		. = ..()
+		if(upgraded)
+			REMOVE_MOB_PROPERTY(user, PROP_THERMALSIGHT_MK2, src)
+		else
+			REMOVE_MOB_PROPERTY(user, PROP_THERMALSIGHT, src)
 
 	emp_act()
 		if (ishuman(src.loc))
@@ -239,8 +254,17 @@
 				H.take_eye_damage(3, 1)
 				H.change_eye_blurry(5)
 				H.bioHolder.AddEffect("bad_eyesight")
+				if(upgraded)
+					REMOVE_MOB_PROPERTY(H, PROP_THERMALSIGHT_MK2, src)
+				else
+					REMOVE_MOB_PROPERTY(H, PROP_THERMALSIGHT, src)
+
 				SPAWN_DBG(10 SECONDS)
 					H.bioHolder.RemoveEffect("bad_eyesight")
+					if(upgraded)
+						APPLY_MOB_PROPERTY(H, PROP_THERMALSIGHT_MK2, src)
+					else
+						APPLY_MOB_PROPERTY(H, PROP_THERMALSIGHT, src)
 		return
 
 /obj/item/clothing/glasses/thermal/traitor //sees people through walls
@@ -248,6 +272,7 @@
 	color_r = 1
 	color_g = 0.75 // slightly more red?
 	color_b = 0.75
+	upgraded = 1
 
 /obj/item/clothing/glasses/thermal/orange
 	name = "orange-tinted glasses"

@@ -25,6 +25,14 @@
 		..()
 		src.vchange = new(src) // Built-in voice changer (Convair880).
 
+	equipped(mob/user)
+		. = ..()
+		APPLY_MOB_PROPERTY(user, PROP_THERMALSIGHT_MK2, src)
+
+	unequipped(mob/user)
+		REMOVE_MOB_PROPERTY(user, PROP_THERMALSIGHT_MK2, src)
+		. = ..()
+
 /obj/item/clothing/under/gimmick/hunter
 	name = "Hunter Suit"
 	desc = "Fishnets, bandoliers and plating? What the hell?"
