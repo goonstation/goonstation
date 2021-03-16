@@ -1,5 +1,10 @@
 
 (t)tue mar 16 21
+(u)Penny
+(p)4002
+(e)|
+(+)The term_ping command now accepts a filter as the first option
+(+)The TermOS help command now documents the term_ping filter
 (u)Virvatuli
 (p)4028
 (e)🎨|sprites
