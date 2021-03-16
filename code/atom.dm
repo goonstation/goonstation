@@ -103,7 +103,7 @@
 			return
 		if (islist(src.name_prefixes) && length(src.name_prefixes))
 			for (var/i in src.name_prefixes)
-				if (num <= 0 || !src.name_prefixes.len)
+				if (num <= 0 || !length(src.name_prefixes))
 					return
 				src.name_prefixes -= i
 				num --
@@ -116,7 +116,7 @@
 			return
 		if (islist(src.name_suffixes) && length(src.name_suffixes))
 			for (var/i in src.name_suffixes)
-				if (num <= 0 || !src.name_suffixes.len)
+				if (num <= 0 || !length(src.name_suffixes))
 					return
 				src.name_suffixes -= i
 				num --

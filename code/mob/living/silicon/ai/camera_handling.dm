@@ -121,7 +121,7 @@
 	src.tracker.begin_track(target)
 
 /proc/camera_sort(var/list/L, var/start=1, var/end=-1)
-	if(!L || !L.len) return //Fucka you
+	if(!L || !length(L)) return //Fucka you
 	if(end == -1) end = L.len	//Called without start / end parameters
 	if( start < end)
 		var/obj/machinery/camera/C

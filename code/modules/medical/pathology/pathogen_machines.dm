@@ -1214,7 +1214,7 @@
 		src.reagents = new(100)
 		src.reagents.my_atom = src
 		flags |= NOSPLASH
-		if (!pathogen_controller || !pathogen_controller.cure_bases || !pathogen_controller.cure_bases.len)
+		if (!pathogen_controller || !pathogen_controller.cure_bases || !length(pathogen_controller.cure_bases))
 			SPAWN_DBG(2 SECONDS)
 				for (var/C in pathogen_controller.cure_bases)
 					src.reagents.add_reagent(C, 1)
@@ -1465,9 +1465,9 @@
 
 
 			if (sane)
-				if (!antiagent || !antiagent.reagents.reagent_list.len)
+				if (!antiagent || !length(antiagent.reagents.reagent_list))
 					output_text += "<i><b>NOTICE:</b> Serums manufactured without the appropriate antiagent may lead to an epidemic.</i><br>"
-				if (!suppressant || !suppressant.reagents.reagent_list.len)
+				if (!suppressant || !length(suppressant.reagents.reagent_list))
 					if (has_module("vaccine"))
 						output_text += "<i><b>NOTICE:</b> Serums and vaccines manufactured without the appropriate suppression agent may lead to an epidemic.</i><br>"
 					else

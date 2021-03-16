@@ -1576,7 +1576,7 @@
 						O.throw_at(target, 8, 3, bonus_throwforce=5)
 						linked_organ.take_damage(3)
 						sleep(0.1 SECONDS)
-						if(linked_organ.broken || !L.stomach_process.len)
+						if(linked_organ.broken || !length(L.stomach_process))
 							break
 			else
 				boutput(L, "<span class='alert'>You try to vomit, but your cyberstomach has nothing left inside!</span>")

@@ -35,11 +35,11 @@
 				for (amt, amt>0, amt--)
 					closet_check_spawn(new_item)
 
-		if (!islist(src.items2spawn) || !src.items2spawn.len)
+		if (!islist(src.items2spawn) || !length(src.items2spawn))
 			logTheThing("debug", src, null, "has an invalid items2spawn list")
 			return
 		if (rare_chance)
-			if (!islist(src.rare_items2spawn) || !src.rare_items2spawn.len)
+			if (!islist(src.rare_items2spawn) || !length(src.rare_items2spawn))
 				logTheThing("debug", src, null, "has an invalid rare_items2spawn list")
 				return
 		if (amt2spawn == 0)

@@ -1274,7 +1274,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 		BLOCK_SETUP(BLOCK_KNIFE)
 
 	attack(mob/living/carbon/M as mob, mob/user as mob)
-		if (!ismob(M) || !M.contents.len)
+		if (!ismob(M) || !length(M.contents))
 			return ..()
 		var/atom/movable/AM = pick(M.contents)
 		if (!AM)

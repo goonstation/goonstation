@@ -98,7 +98,7 @@
 							message_server("command=print&args=index")
 							sleep(0.8 SECONDS)
 							var/dat = "Known Printers:"
-							if (!src.known_printers || !src.known_printers.len)
+							if (!src.known_printers || !length(src.known_printers))
 								dat += "<br> \[__] No printers known."
 
 							else
@@ -335,7 +335,7 @@
 						return
 
 					var/list/commandList = splittext(data["command"], "|n")
-					if (!commandList || !commandList.len)
+					if (!commandList || !length(commandList))
 						return
 
 					switch (commandList[1])
@@ -447,7 +447,7 @@
 			return 0
 
 		network_print(var/print_title = "Printout")
-			if (!connected || !netCard || !selected_printer || !server_netid || !src.notelist || !src.notelist.len)
+			if (!connected || !netCard || !selected_printer || !server_netid || !src.notelist || !length(src.notelist))
 				return 1
 
 			var/datum/computer/file/record/printRecord = new
@@ -464,7 +464,7 @@
 
 		local_print(var/print_title = "Printout")
 			var/obj/item/peripheral/printcard = find_peripheral("LAR_PRINTER")
-			if(!printcard || !src.notelist || !src.notelist.len)
+			if(!printcard || !src.notelist || !length(src.notelist))
 				return 1
 
 			var/datum/signal/signal = get_free_signal()

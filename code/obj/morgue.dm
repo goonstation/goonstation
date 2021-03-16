@@ -313,7 +313,7 @@
 		return
 	if (src.cremating)
 		return //don't let you cremate something twice or w/e
-	if (!src.contents || !src.contents.len)
+	if (!src.contents || !length(src.contents))
 		src.visible_message("<span class='alert'>You hear a hollow crackle, but nothing else happens.</span>")
 		return
 
@@ -559,7 +559,7 @@
 			return
 		if (src.cremating)
 			return //don't let you cremate something twice or w/e
-		if (!src.contents || !src.contents.len)
+		if (!src.contents || !length(src.contents))
 			src.visible_message("<span class='alert'>You hear the lights turn on for a second, then turn off.</span>")
 			return
 

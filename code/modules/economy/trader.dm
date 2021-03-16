@@ -401,7 +401,7 @@
 		var/found = 0
 
 		var/list/area_turfs = get_area_turfs(trader_area)
-		if (!area_turfs || !area_turfs.len)
+		if (!area_turfs || !length(area_turfs))
 			area_turfs = get_area_turfs( get_area(src) )
 
 		for(var/turf/T in area_turfs)

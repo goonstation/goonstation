@@ -901,7 +901,7 @@ proc/get_angle(atom/a, atom/b)
 
 // extends pick() to associated lists
 /proc/alist_pick(var/list/L)
-	if(!L || !L.len)
+	if(!L || !length(L))
 		return null
 	return L[pick(L)]
 
@@ -1430,7 +1430,7 @@ proc/filter_blacklisted_chem(type)
 	return !initial(fakeInstance.random_chem_blacklisted)
 
 proc/reagent_id_to_name(var/reagent_id)
-	if (!reagent_id || !reagents_cache.len)
+	if (!reagent_id || !length(reagents_cache))
 		return
 	var/datum/reagent/R = reagents_cache[reagent_id]
 	if (!R)
@@ -1589,7 +1589,7 @@ var/list/english_num = list("0" = "zero", "1" = "one", "2" = "two", "3" = "three
 "20" = "twenty", "30" = "thirty", "40" = "forty", "50" = "fifty", "60" = "sixty", "70" = "seventy", "80" = "eighty", "90" = "ninety")
 
 /proc/get_english_num(var/num, var/sep) // can only do up to 999,999 because of scientific notation kicking in after 6 digits
-	if (!num || !english_num.len)
+	if (!num || !length(english_num))
 		return
 
 	DEBUG_MESSAGE("<b>get_english_num recieves num \"[num]\"</b>")
@@ -2118,7 +2118,7 @@ var/global/list/allowed_restricted_z_areas
 	if (!center || !isnum(range) || range <= 0)
 		return 0
 
-	if (!islist(smash) || !smash.len)
+	if (!islist(smash) || !length(smash))
 		return 0
 
 	var/turf/CT

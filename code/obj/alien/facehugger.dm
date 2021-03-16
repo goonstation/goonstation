@@ -259,7 +259,7 @@
 					if(next in range(1,src))
 						path_attack(target)
 
-					if(!path_target || !path_target.len)
+					if(!path_target || !length(path_target))
 						src.frustration += 5
 					else
 						next = path_target[1]
@@ -288,7 +288,7 @@
 			SPAWN_DBG(cycle_pause) idle()
 			return
 
-		if(!path_idle || !path_idle.len)
+		if(!path_idle || !length(path_idle))
 
 			if(isalien(trg_idle))
 				if(can_see(src,trg_idle,viewrange))

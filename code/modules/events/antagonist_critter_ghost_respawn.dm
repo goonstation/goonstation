@@ -174,7 +174,7 @@
 				src.num_critters = rand(1,min(3,candidates.len))
 
 			for (var/i in 1 to src.num_critters)
-				if (!candidates || !candidates.len)
+				if (!candidates || !length(candidates))
 					break
 
 				var/datum/mind/M = pick(candidates)
