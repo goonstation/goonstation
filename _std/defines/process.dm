@@ -12,5 +12,5 @@
 #define PROCESS_DEFAULT_HANG_RESTART_TIME 	45 SECONDS
 #define PROCESS_DEFAULT_SCHEDULE_INTERVAL 	50  // 50 ticks
 #define PROCESS_DEFAULT_TICK_ALLOWANCE		10	// try to use no more than 10% of a tick
-#define PROCESS_MAX_TICK_USAGE 95 // defer processing if we're already at 95% of a tick
+#define PROCESS_MAX_TICK_USAGE 85 // defer processing if we're already at 85% of a tick
 #define PROCESS_MAX_DEFER_COUNT 5 // how many times to defer in a row before forcing a tick

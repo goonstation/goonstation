@@ -27,9 +27,9 @@
 //lower numbers will sleep more often, and should be used for lower priority tasks.
 //higher numbers will sleep less often, and should be used for high priority tasks.
 #define LAG_LOW 70
-#define LAG_MED 80
-#define LAG_HIGH 90
-#define LAG_REALTIME 100
+#define LAG_MED 77
+#define LAG_HIGH 84
+#define LAG_REALTIME 91
 
 /// Waits until a given condition is true, tg-style async
 #define UNTIL(X) while(!(X)) sleep(1)
