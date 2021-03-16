@@ -5,6 +5,8 @@ var/global/list/detailed_delete_gc_count = list()
 
 #ifdef MACHINE_PROCESSING_DEBUG
 var/global/list/detailed_machine_timings = list()
+var/global/list/detailed_machine_power = list()
+var/global/list/detailed_machine_power_prev = list()
 #endif
 
 #ifdef QUEUE_STAT_DEBUG

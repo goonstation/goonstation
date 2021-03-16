@@ -73,6 +73,10 @@
 				PN.reset()
 	#ifdef MACHINE_PROCESSING_DEBUG
 				register_machine_time(PN, world.time - t)
+
+				if(length(detailed_machine_power))
+					detailed_machine_power_prev = detailed_machine_power
+					detailed_machine_power = list()
 	#endif
 				if (!(c++ % 100))
 					scheck()
