@@ -75783,6 +75783,9 @@
 	dir = 1
 	},
 /obj/decal/cleanable/dirt/jen,
+/obj/machinery/light/small/sticky{
+	dir = 1
+	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/ne)
 "wnj" = (
