@@ -3149,8 +3149,63 @@
 
 	if (head)
 		worn += head.name
-	else
-		worn += "hair"
+	else if (!src.mutantrace || istype(src.mutantrace, /datum/mutantrace/dwarf) || istype(src.mutantrace, /datum/mutantrace/flashy))
+		if (src.bioHolder.mobAppearance.customization_first in /list/hair_styles || src.bioHolder.mobAppearance.customization_second in /list/hair_styles || src.bioHolder.mobAppearance.customization_third in /list/hair_styles)
+			worn += "hair"
+		else
+			worn += "bald head"
+		if (src.bioHolder.mobAppearance.customization_first in /list/moustache_styles || src.bioHolder.mobAppearance.customization_second in /list/moustache_styles || src.bioHolder.mobAppearance.customization_third in /list/moustache_styles)
+			worn += "moustache"
+		if (src.bioHolder.mobAppearance.customization_first in /list/beard_styles || src.bioHolder.mobAppearance.customization_second in /list/beard_styles || src.bioHolder.mobAppearance.customization_third in /list/beard_styles)
+			worn += "beard"
+
+	if (src.mutantrace)
+		if (istype(src.mutantrace, /datum/mutantrace/lizard))
+			worn += "tail"
+		else if (istype(src.mutantrace, /datum/mutantrace/skeleton))
+			worn += "ribs"
+		else if (istype(src.mutantrace, /datum/mutantrace/ithillid))
+			worn += "tentacles"
+		else if (istype(src.mutantrace, /datum/mutantrace/roach))
+			worn += "antennae"
+		else if (istype(src.mutantrace, /datum/mutantrace/monkey))
+			worn += "tail"
+		else if (istype(src.mutantrace, /datum/mutantrace/seamonkey))
+			worn += "tail"
+		else if (istype(src.mutantrace, /datum/mutantrace/cat))
+			worn += "tail"
+		else if (istype(src.mutantrace, /datum/mutantrace/cow))
+			worn += "tail"
+		else if (istype(src.mutantrace, /datum/mutantrace/chicken))
+			worn += "feathers"
+		else if (istype(src.mutantrace, /datum/mutantrace/blob))
+			worn += "pseudopod"
+		else if (istype(src.mutantrace, /datum/mutantrace/flubber))
+			worn += "goop"
+		else if (istype(src.mutantrace, /datum/mutantrace/virtual))
+			worn += "virtual hair"
+		else if (istype(src.mutantrace, /datum/mutantrace/blank))
+			worn += "bald head"
+		else if (istype(src.mutantrace, /datum/mutantrace/grey))
+			worn += "bald head"
+		else if (istype(src.mutantrace, /datum/mutantrace/zombie))
+			worn += "decaying flesh"
+		else if (istype(src.mutantrace, /datum/mutantrace/vamp_zombie))
+			worn += "decaying flesh"
+		else if (istype(src.mutantrace, /datum/mutantrace/nostalgic))
+			worn += "bald head"
+		else if (istype(src.mutantrace, /datum/mutantrace/abomination))
+			worn += "protruding flesh"
+		else if (istype(src.mutantrace, /datum/mutantrace/werewolf))
+			worn += "tail"
+		else if (istype(src.mutantrace, /datum/mutantrace/hunter))
+			worn += "dreads"
+		else if (istype(src.mutantrace, /datum/mutantrace/amphibian))
+			worn += "frills"
+		else if (istype(src.mutantrace, /datum/mutantrace/kudzu))
+			worn += "leaves"
+		else //Assume anyone else is bald. This prevents the list from being empty.
+			worn += "bald head"
 
 	.= pick(worn)
 
