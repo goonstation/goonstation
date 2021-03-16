@@ -271,7 +271,7 @@ var/fartcount = 0
 			var/area/A = get_area(src)
 			var/list/alive_mobs = list()
 			var/list/dead_mobs = list()
-			if (A && A.population && A.population.len)
+			if (A && A.population && length(A.population))
 				for(var/mob/living/M in oview(5,src))
 					if(!isdead(M))
 						alive_mobs += M

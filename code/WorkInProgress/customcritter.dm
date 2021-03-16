@@ -1598,7 +1598,7 @@ var/global/datum/critterCreatorHolder/critter_creator_controller = new()
 		for (var/mob/living/M in view(7, C))
 			affected += M
 		var/curr_W = lightning_wattage / mobs_struck
-		while (strike > 0 && affected.len)
+		while (strike > 0 && length(affected))
 			strike--
 			var/mob/M = pick(affected)
 			arcFlash(C, M, curr_W)

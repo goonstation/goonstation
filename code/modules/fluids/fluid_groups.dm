@@ -564,7 +564,7 @@
 							dirs |= dir
 					fluid_ma.icon_state = num2text(dirs)
 
-					if (F.overlay_refs && F.overlay_refs.len)
+					if (F.overlay_refs && length(F.overlay_refs))
 						if (F)
 							F.ClearAllOverlays()
 

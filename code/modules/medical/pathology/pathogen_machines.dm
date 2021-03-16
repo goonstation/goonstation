@@ -33,7 +33,7 @@
 						output_text += "The [src.source] contains no viable sample.<BR><BR>"
 					else
 						var/datum/reagent/blood/B = src.source.reagents.reagent_list["blood"]
-						if (B.volume && B.pathogens.len)
+						if (B.volume && length(B.pathogens))
 							if (B.pathogens.len > 1)
 								output_text += "The centrifuge is calibrated to isolate a sample of [src.isolated ? src.isolated.name : "all pathogens"].<br><br>"
 								output_text += "The blood in the [src.source] contains multiple pathogens. Calibrate to isolate a sample of:<br>"

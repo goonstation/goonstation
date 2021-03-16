@@ -50,7 +50,7 @@
 
 	process()
 		..()
-		if (available_ghostdrones.len && ghostdrone_candidates.len)
+		if (available_ghostdrones.len && length(ghostdrone_candidates))
 			src.icon_state = "ghostcatcher1"
 
 			SPAWN_DBG(0)

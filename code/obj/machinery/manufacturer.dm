@@ -2520,7 +2520,7 @@
 	onDelete()
 		..()
 		MA.action_bar = null
-		if (src.completed && MA.queue.len)
+		if (src.completed && length(MA.queue))
 			SPAWN_DBG(0.1 SECONDS)
 				MA.begin_work(1)
 

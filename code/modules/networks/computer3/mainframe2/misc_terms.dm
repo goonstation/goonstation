@@ -1883,7 +1883,7 @@
 				src.timeout_alert = 1
 				src.post_status(src.host_id, "command","term_ping","data","reply")
 
-		if(!printing && print_buffer.len)
+		if(!printing && length(print_buffer))
 			src.print()
 
 		return
@@ -3948,7 +3948,7 @@
 			var/stimforce = M.throwforce
 			src.sensed[1] = stimforce * ARTDATA.react_mpct[1]
 			src.sensed[2] = stimforce * ARTDATA.react_mpct[2]
-			if (src.sensed[2] != 0 && ARTDATA.faults.len)
+			if (src.sensed[2] != 0 && length(ARTDATA.faults))
 				src.sensed[2] += rand(ARTDATA.faults.len / 2,ARTDATA.faults.len * 2)
 			var/datum/artifact_trigger/AT = ARTDATA.get_trigger_by_string("force")
 			if (AT)
@@ -3967,7 +3967,7 @@
 			src.sensed[1] = stimforce * ARTDATA.react_mpct[1]
 			src.sensed[2] = stimforce * ARTDATA.react_mpct[2]
 
-			if (src.sensed[2] != 0 && ARTDATA.faults.len)
+			if (src.sensed[2] != 0 && length(ARTDATA.faults))
 				src.sensed[2] += rand(ARTDATA.faults.len / 2,ARTDATA.faults.len * 2)
 
 			var/datum/artifact_trigger/AT = ARTDATA.get_trigger_by_string("force")

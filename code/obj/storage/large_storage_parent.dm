@@ -97,7 +97,7 @@
 			src.UpdateOverlays(null, "welded")
 
 	emp_act()
-		if (!src.open && src.contents.len)
+		if (!src.open && length(src.contents))
 			for (var/atom/A in src.contents)
 				if (ismob(A))
 					var/mob/M = A

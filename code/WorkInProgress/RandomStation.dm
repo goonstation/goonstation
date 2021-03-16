@@ -254,7 +254,7 @@ proc/create_random_station()
 
 	var/rooms_left = RANDOM_Z_LEVEL_MAXROOMS
 
-	while(rooms_left > 0 && unconnected.len && multi_rooms.len)
+	while(rooms_left > 0 && unconnected.len && length(multi_rooms))
 		LAGCHECK(LAG_LOW)
 		var/obj/room_connection/newcon = pick(unconnected)
 		unconnected.Remove(newcon)

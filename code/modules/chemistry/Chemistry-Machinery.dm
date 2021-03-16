@@ -303,7 +303,7 @@
 
 	New()
 		..()
-		if (!src.emagged && islist(chem_whitelist) && chem_whitelist.len)
+		if (!src.emagged && islist(chem_whitelist) && length(chem_whitelist))
 			src.whitelist = chem_whitelist
 		output_target = src.loc
 
@@ -845,7 +845,7 @@ datum/chemicompiler_core/stationaryCore
 				feed.reagents.trans_to(bottoms,amount)
 				check_tank(bottoms,100)
 		else
-			if(bottoms.reagents && bottoms.reagents.reagent_list.len)
+			if(bottoms.reagents && length(bottoms.reagents.reagent_list))
 				heating = 1
 
 	proc/heat_up()

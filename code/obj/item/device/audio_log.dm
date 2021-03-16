@@ -31,7 +31,7 @@
 
 		get_message(continuous)
 			if (log_line > messages.len)
-				if (continuous && messages.len)
+				if (continuous && length(messages))
 					log_line = 1
 				else
 					return null
@@ -40,7 +40,7 @@
 
 		next(continuous)
 			if (log_line >= messages.len)
-				if (continuous && messages.len)
+				if (continuous && length(messages))
 					log_line = 1
 				else
 					return 0
@@ -222,10 +222,10 @@
 		SPAWN_DBG(1 SECOND)
 			if (!src.tape)
 				src.tape = new /obj/item/audio_tape(src)
-			if (src.audiolog_messages && src.audiolog_messages.len)
+			if (src.audiolog_messages && length(src.audiolog_messages))
 				src.tape.messages = src.audiolog_messages
 				src.audiolog_messages = null
-			if (src.audiolog_speakers && src.audiolog_speakers.len)
+			if (src.audiolog_speakers && length(src.audiolog_speakers))
 				src.tape.speakers = src.audiolog_speakers
 				src.audiolog_speakers = null
 

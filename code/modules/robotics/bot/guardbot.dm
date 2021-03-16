@@ -50,7 +50,7 @@
 				return
 
 			master.path = thePath
-			if(adjacent && master.path && master.path.len) //Make sure to check it isn't null!!
+			if(adjacent && master.path && length(master.path)) //Make sure to check it isn't null!!
 				master.path.len-- //Only go UP to the target, not the same tile.
 			if(!master.path || !master.path.len || !the_target || (ismob(the_target) && master.path.len >= 21))
 				master.task?.task_input("path_error")

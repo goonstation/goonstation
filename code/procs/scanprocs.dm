@@ -515,7 +515,7 @@
 
 		if (istype(A, /turf/simulated/wall))
 			var/turf/simulated/wall/W = A
-			if (W.forensic_impacts && islist(W.forensic_impacts) && W.forensic_impacts.len)
+			if (W.forensic_impacts && islist(W.forensic_impacts) && length(W.forensic_impacts))
 				for(var/i in W.forensic_impacts)
 					forensic_data += "<br><span class='notice'>Forensic signature found:</span> [i]"
 

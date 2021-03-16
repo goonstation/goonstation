@@ -675,7 +675,7 @@ Returns:
 	for(var/atom/T in oneContents)
 		if(istype(T, /obj/machinery/door))
 			var/obj/machinery/door/D = T
-			if(D.req_access && D.req_access.len)
+			if(D.req_access && length(D.req_access))
 				oneAccess |= D.req_access
 
 		if(isturf(T))
@@ -685,7 +685,7 @@ Returns:
 	for(var/atom/T in twoContents)
 		if(istype(T, /obj/machinery/door))
 			var/obj/machinery/door/D = T
-			if(D.req_access && D.req_access.len)
+			if(D.req_access && length(D.req_access))
 				twoAccess |= D.req_access
 
 		if(isturf(T))

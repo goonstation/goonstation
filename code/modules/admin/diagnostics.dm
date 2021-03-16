@@ -528,7 +528,7 @@ proc/debug_color_of(var/thing)
 		name = "camera coverage"
 		help = {"blue - tile visible by a camera<br>without overlay - tile not visible by a camera<br>number - number of cameras seeing the tile"}
 		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
-			if(theTurf.cameras && theTurf.cameras.len)
+			if(theTurf.cameras && length(theTurf.cameras))
 				img.app.overlays = list(src.makeText(theTurf.cameras.len))
 				img.app.color = "#0000ff"
 			else

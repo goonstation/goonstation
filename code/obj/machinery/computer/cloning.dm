@@ -262,7 +262,7 @@
 		R.fields["abilities"] = A
 
 	R.fields["traits"] = list()
-	if(subject.traitHolder && subject.traitHolder.traits.len)
+	if(subject.traitHolder && length(subject.traitHolder.traits))
 		R.fields["traits"] = subject.traitHolder.traits.Copy()
 
 	//Add an implant if needed

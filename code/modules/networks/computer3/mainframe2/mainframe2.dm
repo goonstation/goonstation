@@ -494,7 +494,7 @@
 					return 0
 
 			if(!(program in src.processing))
-				if (src.os == program && src.processing.len)
+				if (src.os == program && length(src.processing))
 					src.processing.len++
 					for (var/x = src.processing.len, x > 0, x--)
 						var/datum/computer/file/mainframe_program/P = src.processing[x]

@@ -23,7 +23,7 @@
 			qdel(src)
 
 	proc/spawn_items()
-		if (islist(src.guaranteed) && src.guaranteed.len)
+		if (islist(src.guaranteed) && length(src.guaranteed))
 			for (var/obj/new_item in src.guaranteed)
 				if (!ispath(new_item))
 					logTheThing("debug", src, null, "has a non-path item in its guaranteed list, [new_item]")

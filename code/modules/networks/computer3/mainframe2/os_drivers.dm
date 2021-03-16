@@ -1798,7 +1798,7 @@
 	disposing()
 		for (var/a_user_id in radio_users)
 			var/list/id_stuff = radio_users[a_user_id]
-			if (istype(id_stuff) && id_stuff.len)
+			if (istype(id_stuff) && length(id_stuff))
 				signal_program(1, list("command"=DWAINE_COMMAND_TKILL, "target"=id_stuff[1]))
 
 		if (radio_users)
@@ -2848,7 +2848,7 @@
 					var/printerName = copytext(ckeyEx(initlist[2]), 1,33)
 					var/datum/computer/file/record/printerStatus = signal_program(1, list("command"=DWAINE_COMMAND_FGET,"path"="/mnt/lp-[printerName]/status"))
 					var/theStatus = "???"
-					if (istype(printerStatus) && printerStatus.fields && printerStatus.fields.len)
+					if (istype(printerStatus) && printerStatus.fields && length(printerStatus.fields))
 						theStatus = "[printerStatus.fields[1]]"
 					message_user("print_status|n[theStatus]","multiline")
 

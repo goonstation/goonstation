@@ -220,7 +220,7 @@ REACTOR
 					// This count to see if there already exists
 					// a radiation trace gas
 					var/count = 0
-					if(T:air:trace_gases && T:air:trace_gases.len)
+					if(T:air:trace_gases && length(T:air:trace_gases))
 						for(var/datum/gas/G in T:air:trace_gases)
 							if(istype(G, /datum/gas/rad_particles))
 								count++
@@ -294,7 +294,7 @@ REACTOR
 			// This count to see if there already exists
 			// a radiation trace gas
 			var/count = 0
-			if(T:air:trace_gases && T:air:trace_gases.len)
+			if(T:air:trace_gases && length(T:air:trace_gases))
 				for(var/datum/gas/G in T:air:trace_gases)
 					if(istype(G, /datum/gas/rad_particles))
 						count++

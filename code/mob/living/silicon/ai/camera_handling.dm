@@ -248,7 +248,7 @@
 		if(!failedToTrack) //We don't have a premature failure
 			failedToTrack = 1 //Assume failure
 			var/turf/T = get_turf(tracking)
-			if (T.cameras && T.cameras.len)
+			if (T.cameras && length(T.cameras))
 				failedToTrack = 0
 
 		if (failedToTrack)

@@ -618,7 +618,7 @@
 						if (!T.density)
 							sfloors += T
 					var/arcs = 8
-					while (arcs > 0 && sfloors.len)
+					while (arcs > 0 && length(sfloors))
 						arcs--
 						var/turf/Q = pick(sfloors)
 						arcFlashTurf(src, Q, 3000)

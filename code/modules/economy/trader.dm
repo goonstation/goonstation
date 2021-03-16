@@ -414,7 +414,7 @@
 			found = 1
 			pickedloc = get_turf(C)
 		if (!found)
-			if (islist(markers) && markers.len)
+			if (islist(markers) && length(markers))
 				pickedloc = get_turf(pick(markers))
 			else
 				pickedloc = get_turf(src) // put it SOMEWHERE

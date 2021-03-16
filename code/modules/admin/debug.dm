@@ -309,12 +309,12 @@ var/global/debug_messages = 0
 	for(var/actual_proc in name_list)
 		try
 			if (target)
-				if(islist(listargs) && listargs.len)
+				if(islist(listargs) && length(listargs))
 					returnval = call(target,actual_proc)(arglist(listargs))
 				else
 					returnval = call(target,actual_proc)()
 			else
-				if(islist(listargs) && listargs.len)
+				if(islist(listargs) && length(listargs))
 					returnval = call(actual_proc)(arglist(listargs))
 				else
 					returnval = call(actual_proc)()

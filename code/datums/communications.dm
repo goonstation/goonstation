@@ -68,7 +68,7 @@ var/global/list/datum/signal/reusable_signals = list()
 
 proc/get_free_signal()
 	if (length(reusable_signals))
-		while (. == null && reusable_signals.len)
+		while (. == null && length(reusable_signals))
 			. = reusable_signals[reusable_signals.len]
 			reusable_signals.len--
 		if (. == null)

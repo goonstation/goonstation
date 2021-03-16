@@ -49,7 +49,7 @@
 	// I wandered in and made things hopefully a bit easier to work with since we have multiple maps now - Haine
 	var/list/list/target_locations = null
 
-	if (map_settings && islist(map_settings.valid_nuke_targets) && map_settings.valid_nuke_targets.len)
+	if (map_settings && islist(map_settings.valid_nuke_targets) && length(map_settings.valid_nuke_targets))
 		target_locations = map_settings.valid_nuke_targets
 	else
 		if (ismap("COGMAP2"))

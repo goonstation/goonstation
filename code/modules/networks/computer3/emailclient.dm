@@ -769,7 +769,7 @@ SUBJECT: [ckeyEx(headerList["subj"]) ? copytext(uppertext(headerList["subj"]), 1
 
 		mailbox_text()
 			. = "Message List:"
-			if (istype(mail_index) && mail_index.len)
+			if (istype(mail_index) && length(mail_index))
 				var/leadingZeroCount = length("[mail_index.len]")
 				for (var/i = 1, i <= mail_index.len, i++)
 					var/iTitle = mail_index[i]

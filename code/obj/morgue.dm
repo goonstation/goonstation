@@ -672,7 +672,7 @@
 				light.set_color(tanningtube.color_r, tanningtube.color_g, tanningtube.color_b)
 				light.set_brightness(0.5)
 
-		if (ispryingtool(P) && src.contents.len) //pry out the tube with a crowbar
+		if (ispryingtool(P) && length(src.contents)) //pry out the tube with a crowbar
 			boutput(user, "<span class='notice'>You pry out \the [src.tanningtube.name] from \the [src.name].</span>")
 			src.tanningtube.set_loc(src.loc)
 			src.tanningtube = null

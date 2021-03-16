@@ -172,7 +172,7 @@
 		if (max_uses > 0 && ((last_use + time_between_uses) < world.time) && prob(spawn_chance))
 			var/something = null
 
-			if (override_default_behaviour && islist(additional_items) && additional_items.len)
+			if (override_default_behaviour && islist(additional_items) && length(additional_items))
 				something = pick(additional_items)
 			else
 				something = pick(trinket_safelist)

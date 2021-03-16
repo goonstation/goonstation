@@ -522,7 +522,7 @@ proc/accesslog_digest(var/datum/computer/file/record/R, formatted = 0)
 			return
 
 		if (opts["a"])
-			if (opts["s"] && opts["t"] && opts["m"] && params.len)
+			if (opts["s"] && opts["t"] && opts["m"] && length(params))
 				if (!(opts["m"] in list("open","close","lock","unlock","reject")))
 					message_user("")
 				var/mylog = nextlog
@@ -642,7 +642,7 @@ proc/accesslog_digest(var/datum/computer/file/record/R, formatted = 0)
 							continue
 
 				var/list/printing = list()
-				while (printed < count && records.len)
+				while (printed < count && length(records))
 					max = -1
 					for (var/datum/computer/file/record/R in records)
 						var/TS = R.fields["timestamp"]

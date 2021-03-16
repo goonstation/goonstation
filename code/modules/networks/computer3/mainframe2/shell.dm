@@ -132,7 +132,7 @@
 			var/list/command_list = parse_string(text, src.scriptvars)
 			var/command = lowertext(command_list[1])
 			command_list.Cut(1,2) //Remove the command that we are now processing.
-			while (!command && command_list.len)
+			while (!command && length(command_list))
 				command = command_list[1]
 				command_list.Cut(1,2)
 
