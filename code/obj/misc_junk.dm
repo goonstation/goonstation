@@ -323,7 +323,7 @@
 
 
 	proc/check_whitelist(var/mob/user as mob)
-		if (src.emagged || !src.safe_smokables || (islist(src.safe_smokables) && !src.safe_smokables.len))
+		if (src.emagged || !src.safe_smokables || (islist(src.safe_smokables) && !length(src.safe_smokables)))
 			return
 
 		var/found = 0

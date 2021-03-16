@@ -441,7 +441,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 	proc/AddRandomNewPoolEffect()
 		var/list/filteredList = list()
 
-		if (!bioEffectList || !bioEffectList.len)
+		if (!bioEffectList || !length(bioEffectList))
 			logTheThing("debug", null, null, {"<b>Genetics:</b> Tried to add new random effect to pool for
 			 [owner ? "\ref[owner] [owner.name]" : "*NULL*"], but bioEffectList is empty!"})
 			return 0
@@ -481,7 +481,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 			qdel(BE)
 		effectPool.Cut()
 
-		if (!bioEffectList || !bioEffectList.len)
+		if (!bioEffectList || !length(bioEffectList))
 			logTheThing("debug", null, null, {"<b>Genetics:</b> Tried to build effect pool for
 			 [owner ? "\ref[owner] [owner.name]" : "*NULL*"], but bioEffectList is empty!"})
 
@@ -503,7 +503,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 					filteredGood.Add(instance)
 					filteredGood[instance] = instance.probability
 
-		if(!filteredGood.len || !filteredBad.len)
+		if(!filteredGood.len || !length(filteredBad))
 			logTheThing("debug", null, null, {"<b>Genetics:</b> Unable to build effect pool for
 			 [owner ? "\ref[owner] [owner.name]" : "*NULL*"]. (filteredGood.len = [filteredGood.len],
 			  filteredBad.len = [filteredBad.len])"})
@@ -799,7 +799,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 			if (lowertext(D) in args)
 				tally++
 
-		return tally >= args.len
+		return tally >= length(args)
 
 	proc/GetASubtypeEffect(type)
 		for(var/id as anything in effects)

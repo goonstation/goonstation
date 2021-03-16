@@ -45,12 +45,12 @@
 				return
 
 			ghostdrone_candidates += M
-			position = ghostdrone_candidates.len
+			position = length(ghostdrone_candidates)
 			out(G, "<span class='bold notice'>You have been added to the ghostdrone queue. Now position #[position].</span>")
 
 	process()
 		..()
-		if (available_ghostdrones.len && ghostdrone_candidates.len)
+		if (available_ghostdrones.len && length(ghostdrone_candidates))
 			src.icon_state = "ghostcatcher1"
 
 			SPAWN_DBG(0)

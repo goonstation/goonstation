@@ -73,7 +73,7 @@
 		src.UpdateName()
 
 	proc/get_stains()
-		if (src.can_stain && islist(src.stains) && src.stains.len)
+		if (src.can_stain && islist(src.stains) && length(src.stains))
 			for (var/i in src.stains)
 				. += i + " "
 

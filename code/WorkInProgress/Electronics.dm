@@ -763,7 +763,7 @@
 			var/datum/contextAction/deconstruction/pulse/newcon = new
 			decon_contexts += newcon
 
-		.+= decon_contexts.len
+		.+= length(decon_contexts)
 
 
 /datum/action/bar/icon/deconstruct_obj

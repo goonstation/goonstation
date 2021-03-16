@@ -331,7 +331,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		New()
 			..()
 			SPAWN_DBG(rand(3, 6))
-				playsound(src.loc, "sound/weapons/casings/casing-shell-0[rand(1,7)].ogg", 30, 0.1, 0.8)
+				playsound(src.loc, "sound/weapons/casings/casing-xl-0[rand(1,6)].ogg", 15, 0.1)
 
 
 
@@ -868,8 +868,8 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	desc = "A 40mm riot control launcher."
 	name = "Riot launcher"
 	icon_state = "40mm"
-	//item_state = "flaregun"
-	force = 8
+	item_state = "40mm"
+	force = 5.0
 	contraband = 7
 	caliber = 1.57
 	max_ammo_capacity = 1

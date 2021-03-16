@@ -109,8 +109,8 @@ proc/get_moving_lights_stats()
 #define D_ENABLE 8
 #define D_MOVE 16
 						//only if lag				OR we already have stuff queued  OR lighting is suspeded 	also game needs to be started lol		and not doing a queue process currently
-//#define SHOULD_QUEUE ((world.tick_usage > LIGHTING_MAX_TICKUSAGE || light_update_queue.cur_size) && current_state > GAME_STATE_SETTING_UP && !queued_run)
-#define SHOULD_QUEUE (( light_update_queue.cur_size || world.tick_usage > LIGHTING_MAX_TICKUSAGE || RL_Suspended) && !queued_run && current_state > GAME_STATE_SETTING_UP)
+//#define SHOULD_QUEUE ((APPROX_TICK_USE > LIGHTING_MAX_TICKUSAGE || light_update_queue.cur_size) && current_state > GAME_STATE_SETTING_UP && !queued_run)
+#define SHOULD_QUEUE (( light_update_queue.cur_size || APPROX_TICK_USE > LIGHTING_MAX_TICKUSAGE || RL_Suspended) && !queued_run && current_state > GAME_STATE_SETTING_UP)
 datum/light
 	var/x
 	var/y
@@ -351,7 +351,7 @@ datum/light
 		remove_from_turf()
 			var/turf/T = locate(src.x, src.y, src.z)
 			if (T)
-				if (T.RL_Lights && T.RL_Lights.len) //ZeWaka: Fix for null.len
+				if (T.RL_Lights && length(T.RL_Lights)) //ZeWaka: Fix for length(null)
 					T.RL_Lights -= src
 					if (!T.RL_Lights.len)
 						T.RL_Lights = null
@@ -551,7 +551,7 @@ datum/light
 
 			//account for blocked visibility (try to worm me way around somethin) also lol this is shit and doesnt work. maybe fix later :)
 			/*
-			if (dist_cast < radius && turfline.len)
+			if (dist_cast < radius && length(turfline))
 				var/turf/blockedturf = turfline[turfline.len]
 				if (vx)
 					if (vx > 0) vx -= dist_cast

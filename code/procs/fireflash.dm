@@ -63,8 +63,6 @@
 						C.check_health()
 				LAGCHECK(LAG_REALTIME)
 
-		LAGCHECK(LAG_REALTIME)
-
 	SPAWN_DBG(3 SECONDS)
 		for (var/obj/hotspot/A as anything in hotspots)
 			if (!A.pooled)

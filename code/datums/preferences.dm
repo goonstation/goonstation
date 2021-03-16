@@ -952,7 +952,7 @@ $(updateCharacterPreviewPos);
 		if (isnull(src.jobs_med_priority) || isnull(src.jobs_low_priority) || isnull(src.jobs_unwanted))
 			src.ResetAllPrefsToDefault(user)
 			boutput(user, "<span class='alert'><b>Your Job Preferences were null, and have been reset.</b></span>")
-		else if (isnull(src.job_favorite) && !src.jobs_med_priority.len && !src.jobs_low_priority.len && !src.jobs_unwanted.len)
+		else if (isnull(src.job_favorite) && !src.jobs_med_priority.len && !src.jobs_low_priority.len && !length(src.jobs_unwanted))
 			src.ResetAllPrefsToDefault(user)
 			boutput(user, "<span class='alert'><b>Your Job Preferences were empty, and have been reset.</b></span>")
 		else

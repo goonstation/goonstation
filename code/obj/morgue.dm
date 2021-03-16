@@ -313,7 +313,7 @@
 		return
 	if (src.cremating)
 		return //don't let you cremate something twice or w/e
-	if (!src.contents || !src.contents.len)
+	if (!src.contents || !length(src.contents))
 		src.visible_message("<span class='alert'>You hear a hollow crackle, but nothing else happens.</span>")
 		return
 
@@ -559,7 +559,7 @@
 			return
 		if (src.cremating)
 			return //don't let you cremate something twice or w/e
-		if (!src.contents || !src.contents.len)
+		if (!src.contents || !length(src.contents))
 			src.visible_message("<span class='alert'>You hear the lights turn on for a second, then turn off.</span>")
 			return
 
@@ -659,7 +659,7 @@
 
 	attackby(var/obj/item/P as obj, mob/user as mob)
 		..()
-		if (istype(P, /obj/item/light/tube) && !src.contents.len)
+		if (istype(P, /obj/item/light/tube) && !length(src.contents))
 			var/obj/item/light/tube/G = P
 			boutput(user, "<span class='notice'>You put \the [G.name] into \the [src.name].</span>")
 			user.drop_item()
@@ -672,7 +672,7 @@
 				light.set_color(tanningtube.color_r, tanningtube.color_g, tanningtube.color_b)
 				light.set_brightness(0.5)
 
-		if (ispryingtool(P) && src.contents.len) //pry out the tube with a crowbar
+		if (ispryingtool(P) && length(src.contents)) //pry out the tube with a crowbar
 			boutput(user, "<span class='notice'>You pry out \the [src.tanningtube.name] from \the [src.name].</span>")
 			src.tanningtube.set_loc(src.loc)
 			src.tanningtube = null

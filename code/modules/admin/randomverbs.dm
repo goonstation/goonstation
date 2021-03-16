@@ -2550,7 +2550,7 @@ var/global/night_mode_enabled = 0
 		//search all offices for an office with the same ckey variable as the usr.
 		if (office.ckey == src.ckey)
 			var/list/turfs = get_area_turfs(office.type)
-			if (islist(turfs) && turfs.len)
+			if (islist(turfs) && length(turfs))
 
 				for (var/turf/T in turfs)
 					//search all turfs for a chair if we can't find one, put em anywhere (might make personalized chairs in the future...)

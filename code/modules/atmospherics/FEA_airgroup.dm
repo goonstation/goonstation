@@ -76,7 +76,7 @@
 		var/datum/gas_mixture/sample_air = sample_member:air
 
 		air.copy_from(sample_air)
-		air.group_multiplier = members.len
+		air.group_multiplier = length(members)
 
 	return 1
 

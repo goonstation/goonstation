@@ -55,7 +55,7 @@ RACK PARTS
 		return newThing
 
 	proc/deconstruct(var/reinforcement = 0)
-		if (src.contained_storage && src.contained_storage.contents.len)
+		if (src.contained_storage && length(src.contained_storage.contents))
 			var/turf/T = get_turf(src)
 			for (var/atom/movable/A in src.contained_storage)
 				A.set_loc(T)
@@ -86,7 +86,7 @@ RACK PARTS
 		actions.start(new /datum/action/bar/icon/furniture_build(src, src.furniture_name, src.build_duration), user)
 
 	disposing()
-		if (src.contained_storage && src.contained_storage.contents.len)
+		if (src.contained_storage && length(src.contained_storage.contents))
 			var/turf/T = get_turf(src)
 			for (var/atom/movable/A in src.contained_storage)
 				A.set_loc(T)

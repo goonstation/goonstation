@@ -249,28 +249,28 @@ datum/controller/air_system
 		if(!explosions.exploding)
 			if(groups_to_rebuild.len > 0)
 				process_rebuild_select_groups()
-			LAGCHECK(LAG_HIGH)
+			LAGCHECK(LAG_REALTIME)
 
 			if(tiles_to_update.len > 0)
 				process_update_tiles()
-			LAGCHECK(LAG_HIGH)
+			LAGCHECK(LAG_REALTIME)
 
 		process_groups()
-		LAGCHECK(LAG_HIGH)
+		LAGCHECK(LAG_REALTIME)
 
 		process_singletons()
-		LAGCHECK(LAG_HIGH)
+		LAGCHECK(LAG_REALTIME)
 
 		process_super_conductivity()
-		LAGCHECK(LAG_HIGH)
+		LAGCHECK(LAG_REALTIME)
 
 		process_high_pressure_delta()
-		LAGCHECK(LAG_HIGH)
+		LAGCHECK(LAG_REALTIME)
 
 		if(current_cycle % 7 == 0) //Check for groups of tiles to resume group processing every 7 cycles
 			for(var/datum/air_group/AG as anything in air_groups)
 				AG.check_regroup()
-				LAGCHECK(LAG_HIGH)
+				LAGCHECK(LAG_REALTIME)
 
 		is_busy = FALSE
 		return 1
@@ -297,37 +297,37 @@ datum/controller/air_system
 				turf_list += T
 			air_master.air_groups -= turf_AG
 			turf_AG.members.len = 0
-		LAGCHECK(LAG_HIGH)
+		LAGCHECK(LAG_REALTIME)
 
 		for(var/turf/simulated/S as anything in turf_list) // Have old members try to form new groups
 			if(!S.parent)
 				assemble_group_turf(S)
-		LAGCHECK(LAG_HIGH)
+		LAGCHECK(LAG_REALTIME)
 
 		for(var/turf/simulated/S as anything in turf_list)
 			S.update_air_properties()
-		LAGCHECK(LAG_HIGH)
+		LAGCHECK(LAG_REALTIME)
 
 		groups_to_rebuild.len = 0
 
 	process_groups()
 		for(var/datum/air_group/AG as anything in air_groups)
 			AG?.process_group(parent_controller)
-			LAGCHECK(LAG_HIGH)
+			LAGCHECK(LAG_REALTIME)
 
 	process_singletons()
 		for(var/turf/simulated/loner as anything in active_singletons)
 			loner.process_cell()
-			LAGCHECK(LAG_HIGH)
+			LAGCHECK(LAG_REALTIME)
 
 	process_super_conductivity()
 		for(var/turf/simulated/hot_potato as anything in active_super_conductivity)
 			hot_potato.super_conduct()
-			LAGCHECK(LAG_HIGH)
+			LAGCHECK(LAG_REALTIME)
 
 	process_high_pressure_delta()
 		for(var/turf/simulated/pressurized as anything in high_pressure_delta)
 			pressurized.high_pressure_movements()
-			LAGCHECK(LAG_HIGH)
+			LAGCHECK(LAG_REALTIME)
 
 		high_pressure_delta.len = 0
