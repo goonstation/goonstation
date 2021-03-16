@@ -6,24 +6,30 @@
 
 //close only counts in horseshoes and byond
 #define EXTRA_TICK_SPACE 2
+
+#ifndef SPACEMAN_DMM
 #define APPROX_TICK_USE (world.tick_usage + world.map_cpu + EXTRA_TICK_SPACE)
-//lagcheck stuff
-#ifdef SPACEMAN_DMM
-#define LAGCHECK(x) // this is wrong and bad, but it'd be way too much effort to remove lagchecks from everything :/
 #else
+#define APPROX_TICK_USE (world.tick_usage + EXTRA_TICK_SPACE)
+#endif
+
+//lagcheck stuff
+#ifndef SPACEMAN_DMM
 #define LAGCHECK(x) if (lagcheck_enabled && APPROX_TICK_USE > x) sleep(world.tick_lag)
+#else
+#define LAGCHECK(x) // this is wrong and bad, but it'd be way too much effort to remove lagchecks from everything :/
 #endif
 
 //for light queue - when should we queue? and when should we pause processing our dowork loop?
-#define LIGHTING_MAX_TICKUSAGE 92
+#define LIGHTING_MAX_TICKUSAGE 80
 
 //LAGCHECK parameter levels. "when the tick is this% complete, sleep here."
 //lower numbers will sleep more often, and should be used for lower priority tasks.
 //higher numbers will sleep less often, and should be used for high priority tasks.
-#define LAG_LOW 66
-#define LAG_MED 75
-#define LAG_HIGH 83
-#define LAG_REALTIME 99
+#define LAG_LOW 70
+#define LAG_MED 80
+#define LAG_HIGH 90
+#define LAG_REALTIME 100
 
 /// Waits until a given condition is true, tg-style async
 #define UNTIL(X) while(!(X)) sleep(1)

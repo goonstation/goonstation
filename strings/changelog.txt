@@ -1,4 +1,16 @@
 
+(t)mon mar 15 21
+(u)warc, or whoever you prefer, you pick
+(e)™|feature, mapping,
+(+)Ranchers now start with a babby monitor on which they can look at they're burds. You can use this to uh, not make them died. Added the cams to most maps, minus those with pending ranch PRs.
+(u)Carbadox and Gannets
+(p)3698
+(e)🆕🗺🎨|feature, mapping, sprites
+(+)Added an ice dispenser to most bars.
+(u)TTerc
+(p)3957
+(e)🎨|sprites
+(+)Janitors can now turn their Head of Sanitation beret into a hat, similarly to HoS beret! Sprites by Arthur Holiday.
 (t)sun mar 14 21
 (u)Fosstar
 (p)3860

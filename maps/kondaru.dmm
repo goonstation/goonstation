@@ -21053,8 +21053,9 @@
 /area/station/crew_quarters/cafeteria)
 "bgQ" = (
 /obj/table/reinforced/bar/auto,
-/obj/item/device/radio/beacon,
-/obj/item/clothing/head/cakehat,
+/obj/item_dispenser/icedispenser{
+	pixel_y = 11
+	},
 /turf/simulated/floor/carpet/green/standard/narrow/northsouth,
 /area/station/crew_quarters/cafeteria)
 "bgU" = (
@@ -48222,6 +48223,12 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
+"iul" = (
+/obj/machinery/camera/ranch{
+	dir = 1
+	},
+/turf/simulated/floor/grass/leafy,
+/area/station/ranch)
 "iut" = (
 /obj/machinery/light,
 /turf/simulated/floor/grey,
@@ -50016,6 +50023,7 @@
 	pixel_x = -4;
 	pixel_y = 8
 	},
+/obj/item/clothing/head/cakehat,
 /turf/simulated/floor/carpet/green/standard/narrow/northsouth,
 /area/station/crew_quarters/cafeteria)
 "kBY" = (
@@ -53378,6 +53386,17 @@
 /obj/stool/chair,
 /turf/simulated/floor,
 /area/station/crew_quarters/quarters_south)
+"oIR" = (
+/obj/table/reinforced/bar/auto,
+/obj/machinery/computer/security/wooden_tv/small{
+	pixel_y = 8
+	},
+/obj/item/device/radio/beacon{
+	pixel_x = 1;
+	pixel_y = -4
+	},
+/turf/simulated/floor/carpet/green/standard/narrow/northsouth,
+/area/station/crew_quarters/cafeteria)
 "oIX" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/maintenance/central)
@@ -57394,6 +57413,14 @@
 	dir = 4
 	},
 /area/station/hallway/secondary/exit)
+"tGO" = (
+/obj/submachine/chicken_incubator,
+/obj/item/reagent_containers/food/snacks/ingredient/egg{
+	rand_pos = 0
+	},
+/obj/machinery/camera/ranch,
+/turf/simulated/floor/grass/leafy,
+/area/station/ranch)
 "tHm" = (
 /obj/machinery/power/apc/autoname_east,
 /obj/cable{
@@ -110273,7 +110300,7 @@ buI
 fJL
 bvI
 aup
-emI
+iul
 buI
 xmr
 bDA
@@ -112987,7 +113014,7 @@ bpu
 bqJ
 bQo
 buI
-bvI
+tGO
 etm
 emI
 ltn
@@ -121130,7 +121157,7 @@ gda
 bUk
 bfK
 bgQ
-boy
+oIR
 sml
 xCW
 blR

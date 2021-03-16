@@ -3460,7 +3460,6 @@ ABSTRACT_TYPE(/area/mining)
 		var/list/cameras = list()
 		for (var/obj/machinery/camera/C in orange(source, 7))
 			cameras += C
-			LAGCHECK(LAG_HIGH)
 		for_by_tcl(aiPlayer, /mob/living/silicon/ai)
 			if (state == 1)
 				aiPlayer.cancelAlarm("Power", src, source)

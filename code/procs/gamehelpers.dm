@@ -81,7 +81,6 @@ var/list/stinkThingies = list("ass","taint","armpit","excretions","leftovers","R
 /proc/get_area_name(N) //get area by it's name
 
 	for(var/area/A in world)
-		LAGCHECK(LAG_LOW)
 		if(A.name == N)
 			return A
 	return 0
