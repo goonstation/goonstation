@@ -371,19 +371,6 @@
 		JOB_XP(usr, "Medical Doctor", 15)
 		src.menu = 1
 
-/obj/machinery/computer/cloning/power_change()
-
-	if(status & BROKEN)
-		icon_state = "commb"
-	else
-		if( powered() )
-			icon_state = initial(icon_state)
-			status &= ~NOPOWER
-		else
-			SPAWN_DBG(rand(0, 15))
-				src.icon_state = "c_unpowered"
-				status |= NOPOWER
-
 /// find a ghost mob (or a ghost respawned as critter in vr/afterlife bar)
 proc/find_ghost_by_key(var/find_key)
 	if (!find_key)
