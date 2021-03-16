@@ -1207,7 +1207,7 @@ ABSTRACT_TYPE(/obj/vehicle)
 		rider.buckled = null
 		rider = null
 		icon_state = "clowncar"
-		if(prob(40) && src.contents.len)
+		if(prob(40) && length(src.contents))
 			for(var/mob/O in AIviewers(src, null))
 				O.show_message(text("<span class='alert'><B>Everything in the [] flies out!</B></span>", src), 1)
 			for(var/atom/A in src.contents)
@@ -1898,7 +1898,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 			C.show_message("<span class='alert'><B>[rider] is flung through the [src]'s windshield!</B></span>", 1)
 		var/turf/target = get_edge_target_turf(src, src.dir)
 		rider.throw_at(target, 5, 1)
-		if(prob(40) && src.contents.len)
+		if(prob(40) && length(src.contents))
 			src.visible_message("<span class='alert'><B>Everything in the [src] flies out!</B></span>")
 			for(var/atom/A in src.contents)
 				if(ismob(A))

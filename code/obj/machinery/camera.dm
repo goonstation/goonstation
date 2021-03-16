@@ -327,7 +327,7 @@
 	.= 0
 	if (isturf(M.loc))
 		var/turf/T = M.loc
-		.= (T.cameras && T.cameras.len)
+		.= (T.cameras && length(T.cameras))
 
 
 /obj/machinery/camera/motion

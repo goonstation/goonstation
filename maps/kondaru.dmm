@@ -20905,7 +20905,9 @@
 /turf/simulated/floor/darkblue,
 /area/station/medical/medbay/lobby)
 "bgg" = (
-/obj/health_scanner/floor,
+/obj/health_scanner/floor{
+	dir = 1
+	},
 /turf/simulated/floor/darkblue,
 /area/station/medical/medbay/lobby)
 "bgh" = (
@@ -26441,7 +26443,6 @@
 	},
 /obj/firedoor_spawn,
 /obj/access_spawn/rancher,
-/obj/submachine/chicken_incubator,
 /turf/simulated/floor/dirt,
 /area/station/ranch)
 "byq" = (

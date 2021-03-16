@@ -129,7 +129,7 @@ var/global/list/adventure_elements_by_id = list()
 	serialize(var/savefile/F, var/path, var/datum/sandbox/sandbox)
 		..()
 
-		F["[path].triggered.COUNT"] << triggered.len
+		F["[path].triggered.COUNT"] << length(triggered)
 		for(var/i = 1, i <= triggered.len, i++)
 			var/obj/adventurepuzzle/triggerable/target = triggered[i]
 			var/act = triggered[target]
@@ -188,7 +188,7 @@ var/global/list/adventure_elements_by_id = list()
 	serialize(var/savefile/F, var/path, var/datum/sandbox/sandbox)
 		..()
 
-		F["[path].triggered.COUNT"] << triggered.len
+		F["[path].triggered.COUNT"] << length(triggered)
 		for(var/i = 1, i <= triggered.len, i++)
 			var/obj/adventurepuzzle/triggerable/target = triggered[i]
 			var/act = triggered[target]
@@ -265,7 +265,7 @@ var/global/list/adventure_elements_by_id = list()
 	serialize(var/savefile/F, var/path, var/datum/sandbox/sandbox)
 		..()
 
-		F["[path].triggered.COUNT"] << triggered.len
+		F["[path].triggered.COUNT"] << length(triggered)
 		for(var/i = 1, i <= triggered.len, i++)
 			var/obj/adventurepuzzle/triggerable/target = triggered[i]
 			var/act = triggered[target]
@@ -341,7 +341,7 @@ var/global/list/adventure_elements_by_id = list()
 	serialize(var/savefile/F, var/path, var/datum/sandbox/sandbox)
 		..()
 
-		F["[path].triggered_unpress.COUNT"] << triggered_unpress.len
+		F["[path].triggered_unpress.COUNT"] << length(triggered_unpress)
 		for(var/i = 1, i <= triggered_unpress.len, i++)
 			var/obj/adventurepuzzle/triggerable/target = triggered_unpress[i]
 			var/act = triggered_unpress[target]

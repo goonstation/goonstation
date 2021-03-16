@@ -17,7 +17,7 @@
 
 	New()
 		..()
-		if (islist(src.random_icons) && src.random_icons.len)
+		if (islist(src.random_icons) && length(src.random_icons))
 			src.icon_state = pick(src.random_icons)
 		pixel_y = rand(-8, 8)
 		pixel_x = rand(-8, 8)

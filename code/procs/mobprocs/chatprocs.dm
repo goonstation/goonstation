@@ -47,7 +47,7 @@
 				choices += channel_name
 				channels[channel_name] = ":[i]"
 
-			if (istype(R.secure_frequencies) && R.secure_frequencies.len)
+			if (istype(R.secure_frequencies) && length(R.secure_frequencies))
 				for (var/sayToken in R.secure_frequencies)
 					channel_name = "[format_frequency(R.secure_frequencies[sayToken])] - " + (headset_channel_lookup["[R.secure_frequencies[sayToken]]"] ? headset_channel_lookup["[R.secure_frequencies[sayToken]]"] : "(Unknown)")
 
@@ -84,7 +84,7 @@
 		var/list/choices = list()
 		choices += "[ headset_channel_lookup["[R.frequency]"] ? headset_channel_lookup["[R.frequency]"] : "???" ]: \[[format_frequency(R.frequency)]]"
 
-		if (istype(R.secure_frequencies) && R.secure_frequencies.len)
+		if (istype(R.secure_frequencies) && length(R.secure_frequencies))
 			for (var/sayToken in R.secure_frequencies)
 				choices += "[ headset_channel_lookup["[R.secure_frequencies["[sayToken]"]]"] ? headset_channel_lookup["[R.secure_frequencies["[sayToken]"]]"] : "???" ]: \[[format_frequency(R.secure_frequencies["[sayToken]"])]]"
 

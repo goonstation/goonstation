@@ -34,7 +34,7 @@
 
 	// spawn a pill, returns a pill or null if there aren't any left in the bottle
 	proc/create_pill()
-		var/totalpills = src.pcount + src.contents.len
+		var/totalpills = src.pcount + length(src.contents)
 
 		if(totalpills <= 0)
 			return null
@@ -68,7 +68,7 @@
 		return P
 
 	proc/rebuild_desc()
-		var/totalpills = src.pcount + src.contents.len
+		var/totalpills = src.pcount + length(src.contents)
 		if(totalpills > 15)
 			src.desc = "A [src.pname] pill bottle. There are too many to count."
 			src.inventory_counter.update_text("**")

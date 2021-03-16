@@ -344,7 +344,7 @@
 	// AI ticks are handled in mob_ai.dm, as they ought to be
 
 /mob/living/critter/flock/drone/process_move(keys)
-	if(keys && src.grabbed_by.len)
+	if(keys && length(src.grabbed_by))
 		// someone is grabbing us, and we want to move
 		++src.antigrab_counter
 		if(src.antigrab_counter >= src.antigrab_fires_at)

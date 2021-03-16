@@ -72,7 +72,7 @@
 
 /mob/living/vomit(var/nutrition=0, var/specialType=null)
 	..()
-	if (src.stomach_process && src.stomach_process.len)
+	if (src.stomach_process && length(src.stomach_process))
 		var/obj/gross = pick(src.stomach_process)
 		src.stomach_process -= gross
 		gross.set_loc(src.loc)

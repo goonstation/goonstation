@@ -74,7 +74,7 @@
 
 	var/curblend = A.blend_mode || defblend
 
-	if(A.overlays.len || A.underlays.len)
+	if(A.overlays.len || length(A.underlays))
 		var/icon/flat = BLANK
 		// Layers will be a sorted list of icons/overlays, based on the order in which they are displayed
 		var/list/layers = list()

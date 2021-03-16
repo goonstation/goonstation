@@ -301,7 +301,7 @@
 						src.post_status(sender, "command", "device_reply", status_string)
 				if("setmode")
 					var/list/L = params2list(signal.data["data"])
-					if(!L || !L.len) return
+					if(!L || !length(L)) return
 					var/new_lethal_state = text2num(L["lethal"])
 					var/new_enabled_state = text2num(L["active"])
 					if(!isnull(new_lethal_state))
