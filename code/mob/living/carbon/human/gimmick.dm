@@ -521,7 +521,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 			var/area/A = get_area(src)
 			var/list/alive_mobs = list()
 			var/list/dead_mobs = list()
-			if (A.population && A.population.len)
+			if (A.population && length(A.population))
 				for(var/mob/living/M in oview(5,src))
 					if(!isdead(M))
 						alive_mobs += M
@@ -546,6 +546,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 					switch(speech_type)
 						if(1)
 							say("[BILL_PICK("greetings")] [M.name].")
+							M.add_karma(2)
 
 						if(2)
 							say("[BILL_PICK("question")] you lookin' at, [BILL_PICK("insults")]?")
@@ -671,6 +672,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 			if (get_dist(J,src) <= 7)
 				if((!J.ai_active) || prob(25))
 					J.say("That's my brother, you [pick_string("johnbill.txt", "insults")]!")
+					M.add_karma(-1)
 				J.target = M
 				J.ai_set_active(1)
 				J.a_intent = INTENT_HARM

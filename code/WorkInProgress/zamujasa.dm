@@ -802,7 +802,7 @@
 	proc/get_value()
 		if (src.monitored_list && !src.monitored_var)
 			var/list/monlist = monitored.vars[src.monitored_list]
-			. = monlist.len
+			. = length(monlist)
 		else if (src.monitored_list)
 			. = monitored.vars[src.monitored_list][src.monitored_var]
 		else

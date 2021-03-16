@@ -294,7 +294,7 @@ var/mutable_appearance/fluid_ma
 
 	temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 		..()
-		if (!src.group || !src.group.reagents || !src.group.members.len) return
+		if (!src.group || !src.group.reagents || !length(src.group.members)) return
 		src.group.last_temp_change = world.time
 		//reduce exposed temperature by amt of members in the group
 		src.group.reagents.temperature_reagents(exposed_temperature, exposed_volume, (70 - (35 / (src.group.members.len))), 15)
@@ -324,7 +324,7 @@ var/mutable_appearance/fluid_ma
 				else if (istype(O))
 					if (O.submerged_images)
 						src.HasExited(O,O.loc)
-						if ((O.submerged_images && O.submerged_images.len) && (O.is_submerged != 0))
+						if ((O.submerged_images && length(O.submerged_images)) && (O.is_submerged != 0))
 							O.show_submerged_image(0)
 
 	var/spawned_any = 0
@@ -458,7 +458,7 @@ var/mutable_appearance/fluid_ma
 
 				//New method : Add the liquid at a specific index. To check whether the node has already been visited, just compare the len of the visited group from before + after the index has been set.
 				//Probably slower for small groups and much faster for large groups.
-				visited_changed = visited.len
+				visited_changed = length(visited)
 				visited["[t.active_liquid.x]_[t.active_liquid.y]_[t.active_liquid.z]"] = t.active_liquid
 				visited_changed = (visited.len != visited_changed)
 
@@ -499,7 +499,7 @@ var/mutable_appearance/fluid_ma
 
 				//New method : Add the liquid at a specific index. To check whether the node has already been visited, just compare the len of the visited group from before + after the index has been set.
 				//Probably slower for small groups and much faster for large groups.
-				visited_changed = visited.len
+				visited_changed = length(visited)
 				visited["[t.active_liquid.x]_[t.active_liquid.y]_[t.active_liquid.z]"] = t.active_liquid
 				visited_changed = (visited.len != visited_changed)
 
@@ -590,7 +590,7 @@ var/mutable_appearance/fluid_ma
 					dirs |= dir
 			icon_state = num2text(dirs)
 
-			if (src.overlay_refs && src.overlay_refs.len)
+			if (src.overlay_refs && length(src.overlay_refs))
 				src.clear_overlay()
 
 		if ((color_changed || last_icon != icon_state) && last_spread_was_blocked)
@@ -615,7 +615,7 @@ var/mutable_appearance/fluid_ma
 		if (!blocked) //Nothing adjacent!
 			clear_overlay()
 
-		if (src.overlay_refs && src.overlay_refs.len)
+		if (src.overlay_refs && length(src.overlay_refs))
 			if (src.overlay_refs["1"] && src.overlay_refs["8"]) //north, east
 				display_overlay("9",-32,32) //northeast
 			else
@@ -681,7 +681,7 @@ var/mutable_appearance/fluid_ma
 		for (var/image/I in src.submerged_images)
 			I.color = F.finalcolor
 			I.alpha = F.finalalpha
-		if ((src.submerged_images && src.submerged_images.len))
+		if ((src.submerged_images && length(src.submerged_images)))
 			src.show_submerged_image(F.my_depth_level)
 
 	..()

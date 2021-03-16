@@ -890,7 +890,7 @@ var/list/fun_images = list()
 	set popup_menu = 0
 
 	admin_only
-	if(!O.fingerprintshidden || !O.fingerprintshidden.len)
+	if(!O.fingerprintshidden || !length(O.fingerprintshidden))
 		alert("There are no fingerprints on this object.", null, null, null, null, null)
 		return
 

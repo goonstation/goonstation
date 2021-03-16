@@ -59094,6 +59094,13 @@
 /area/station/engine/power{
 	name = "Engineering Control Room"
 	})
+"npX" = (
+/obj/item/disk/data/tape/artifact_research{
+	color = "#FFDDBB";
+	name = "forgotten ThinkTape-'Artifact Research'"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/east)
 "ntf" = (
 /obj/cable{
 	d2 = 8;
@@ -59437,6 +59444,9 @@
 	dir = 10;
 	name = "autoname - SS13";
 	tag = ""
+	},
+/obj/machinery/camera/ranch{
+	dir = 1
 	},
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
@@ -134046,7 +134056,7 @@ czU
 cCQ
 aVm
 aGD
-cBL
+npX
 cCe
 arH
 bmU

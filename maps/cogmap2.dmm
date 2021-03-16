@@ -79069,6 +79069,15 @@
 	icon_state = "fgreen2"
 	},
 /area/station/hydroponics/bay)
+"idv" = (
+/obj/submachine/chef_sink/chem_sink{
+	dir = 4
+	},
+/obj/machinery/camera/ranch{
+	dir = 1
+	},
+/turf/simulated/floor/grass/leafy,
+/area/station/ranch)
 "iko" = (
 /obj/submachine/chem_extractor{
 	dir = 4;
@@ -79453,6 +79462,7 @@
 /obj/submachine/chef_sink/chem_sink{
 	dir = 4
 	},
+/obj/machinery/camera/ranch,
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "vRi" = (
@@ -100845,7 +100855,7 @@ wcj
 saK
 saK
 saK
-vNO
+idv
 xfw
 aaa
 aaa

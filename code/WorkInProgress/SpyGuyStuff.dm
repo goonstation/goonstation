@@ -59,7 +59,7 @@ Fibre wire
 					possible_targets.Add(O)
 
 
-		if(!priority_targets.len && !possible_targets.len) return //Gotta have a ghostie
+		if(!priority_targets.len && !length(possible_targets)) return //Gotta have a ghostie
 
 		being_mean = 1
 		H.canmove = 0

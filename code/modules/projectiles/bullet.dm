@@ -1185,7 +1185,7 @@ toxic - poisons
 	power = 25
 	dissipation_delay = 20
 	cost = 1
-	shot_sound = 'sound/weapons/rocket.ogg'
+	shot_sound = 'sound/weapons/launcher.ogg'
 	ks_ratio = 1.0
 	caliber = 1.57 // 40mm grenade shell
 	icon_turf_hit = "bhole-large"

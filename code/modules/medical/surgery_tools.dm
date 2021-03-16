@@ -1109,7 +1109,7 @@ CONTAINS:
 			src.w_class = 4.0
 		else if (!src.open)
 			src.overlays -= src.open_image
-			if (src.contents && src.contents.len)
+			if (src.contents && length(src.contents))
 				src.icon_state = "bodybag-closed1"
 			else
 				src.icon_state = "bodybag-closed0"
@@ -1524,7 +1524,7 @@ keeping this here because I want to make something else with it eventually
 		if (.)
 			if (prob(75))
 				playsound(get_turf(src), "sound/misc/chair/office/scoot[rand(1,5)].ogg", 40, 1)
-			if (islist(bring_this_stuff) && bring_this_stuff.len)
+			if (islist(bring_this_stuff) && length(bring_this_stuff))
 				var/stuff_moved = 0
 				for (var/obj/item/I in bring_this_stuff)
 					LAGCHECK(LAG_HIGH)

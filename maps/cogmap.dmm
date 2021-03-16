@@ -10328,6 +10328,9 @@
 	dir = 1;
 	icon_state = "pipe-c"
 	},
+/obj/machinery/camera/ranch{
+	dir = 4
+	},
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "azm" = (
@@ -60169,6 +60172,17 @@
 	dir = 1
 	},
 /area/station/engine/elect)
+"flp" = (
+/obj/disposalpipe/segment,
+/obj/submachine/chef_sink/chem_sink{
+	dir = 4;
+	pixel_x = -4
+	},
+/obj/machinery/camera/ranch{
+	dir = 4
+	},
+/turf/simulated/floor/grass/leafy,
+/area/station/ranch)
 "fnq" = (
 /obj/machinery/hydro_growlamp,
 /turf/simulated/floor/grass{
@@ -123049,7 +123063,7 @@ awz
 atV
 swx
 cDI
-avl
+flp
 sTC
 baL
 aJZ

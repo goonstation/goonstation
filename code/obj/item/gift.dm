@@ -146,7 +146,7 @@
 	festive
 		icon_state = "gift2-g"
 		attack_self(mob/M as mob)
-			if (!islist(giftpaths) || !giftpaths.len)
+			if (!islist(giftpaths) || !length(giftpaths))
 				src.giftpaths = generic_gift_paths + xmas_gift_paths
 			..()
 
@@ -162,18 +162,18 @@
 		icon_state = "easter_egg"
 		random_icons = 0
 		attack_self(mob/M as mob)
-			if (!islist(giftpaths) || !giftpaths.len)
+			if (!islist(giftpaths) || !length(giftpaths))
 				src.giftpaths = generic_gift_paths
 			..()
 
 	easter/dangerous
 		attack_self(mob/M as mob)
-			if (!islist(giftpaths) || !giftpaths.len)
+			if (!islist(giftpaths) || !length(giftpaths))
 				src.giftpaths = generic_gift_paths + questionable_generic_gift_paths
 			..()
 
 /obj/item/a_gift/attack_self(mob/M as mob)
-	if (!islist(giftpaths) || !giftpaths.len)
+	if (!islist(giftpaths) || !length(giftpaths))
 		boutput(M, "<span class='notice'>[src] was empty!</span>")
 		qdel(src)
 		return

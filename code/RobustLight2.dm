@@ -351,7 +351,7 @@ datum/light
 		remove_from_turf()
 			var/turf/T = locate(src.x, src.y, src.z)
 			if (T)
-				if (T.RL_Lights && T.RL_Lights.len) //ZeWaka: Fix for null.len
+				if (T.RL_Lights && length(T.RL_Lights)) //ZeWaka: Fix for length(null)
 					T.RL_Lights -= src
 					if (!T.RL_Lights.len)
 						T.RL_Lights = null
@@ -551,7 +551,7 @@ datum/light
 
 			//account for blocked visibility (try to worm me way around somethin) also lol this is shit and doesnt work. maybe fix later :)
 			/*
-			if (dist_cast < radius && turfline.len)
+			if (dist_cast < radius && length(turfline))
 				var/turf/blockedturf = turfline[turfline.len]
 				if (vx)
 					if (vx > 0) vx -= dist_cast

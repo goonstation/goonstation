@@ -20905,7 +20905,9 @@
 /turf/simulated/floor/darkblue,
 /area/station/medical/medbay/lobby)
 "bgg" = (
-/obj/health_scanner/floor,
+/obj/health_scanner/floor{
+	dir = 1
+	},
 /turf/simulated/floor/darkblue,
 /area/station/medical/medbay/lobby)
 "bgh" = (
@@ -26441,7 +26443,6 @@
 	},
 /obj/firedoor_spawn,
 /obj/access_spawn/rancher,
-/obj/submachine/chicken_incubator,
 /turf/simulated/floor/dirt,
 /area/station/ranch)
 "byq" = (
@@ -48223,6 +48224,12 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
+"iul" = (
+/obj/machinery/camera/ranch{
+	dir = 1
+	},
+/turf/simulated/floor/grass/leafy,
+/area/station/ranch)
 "iut" = (
 /obj/machinery/light,
 /turf/simulated/floor/grey,
@@ -57407,6 +57414,14 @@
 	dir = 4
 	},
 /area/station/hallway/secondary/exit)
+"tGO" = (
+/obj/submachine/chicken_incubator,
+/obj/item/reagent_containers/food/snacks/ingredient/egg{
+	rand_pos = 0
+	},
+/obj/machinery/camera/ranch,
+/turf/simulated/floor/grass/leafy,
+/area/station/ranch)
 "tHm" = (
 /obj/machinery/power/apc/autoname_east,
 /obj/cable{
@@ -110286,7 +110301,7 @@ buI
 fJL
 bvI
 aup
-emI
+iul
 buI
 xmr
 bDA
@@ -113000,7 +113015,7 @@ bpu
 bqJ
 bQo
 buI
-bvI
+tGO
 etm
 emI
 ltn

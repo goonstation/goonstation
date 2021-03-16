@@ -280,7 +280,7 @@
 	initialize()
 		..()
 		update_status()
-		if (starts_established && links.len)
+		if (starts_established && length(links))
 			SPAWN_DBG(1 SECOND)
 				do_initial_extend()
 
@@ -302,7 +302,7 @@
 	process()
 		..()
 		update_status()
-		if (starts_established && links.len)
+		if (starts_established && length(links))
 			SPAWN_DBG(1 SECOND)
 				do_initial_extend()
 		return
