@@ -328,6 +328,7 @@ var/fartcount = 0
 					switch(speech_type)
 						if(1)
 							say("[JOHN_PICK("greetings")] [M.name].")
+							M.add_karma(2)
 
 						if(2)
 							say("[JOHN_PICK("question")] you lookin' at, [JOHN_PICK("insults")]?")
@@ -480,6 +481,7 @@ var/fartcount = 0
 			if (get_dist(S,src) <= 7)
 				if(!(S.ai_active) || (prob(25)))
 					S.say("That's my brother, you [JOHN_PICK("insults")]!")
+					M.add_karma(-1)
 				S.target = M
 				S.ai_set_active(1)
 				S.a_intent = INTENT_HARM
@@ -592,6 +594,7 @@ var/bombini_saved = 0
 						playsound(T, "sound/impact_sounds/Machinery_Break_1.ogg", 60, 1)
 						for(var/mob/living/M in range(src.loc, 10))
 							shake_camera(M, 5, 8)
+							M.add_karma(0.1)
 
 						sleep(2 SECONDS)
 						playsound(T, "sound/effects/creaking_metal2.ogg", 70, 1)
@@ -859,6 +862,7 @@ Urs' Hauntdog critter
 			"You screams!")
 			var/hogg = pick("sound/voice/hagg_vorbis.ogg","sound/voice/hogg_vorbis.ogg","sound/voice/hogg_vorbis_the.ogg","sound/voice/hogg_vorbis_screams.ogg","sound/voice/hogg_with_scream.ogg","sound/voice/hoooagh2.ogg","sound/voice/hoooagh.ogg",)
 			playsound(T, hogg, 60, 1)
+			user.add_karma(1.5)
 
 // ########################
 // # Horizon  audio  logs #

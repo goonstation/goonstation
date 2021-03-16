@@ -630,6 +630,7 @@
 		var/pmsg = islist(src.pet_text) ? pick(src.pet_text) : src.pet_text
 		src.visible_message("<span class='notice'><b>[user] [pmsg] [src]!</b></span>",\
 		"<span class='notice'><b>[user] [pmsg] you!</b></span>")
+		user.add_karma(0.5)
 		return
 
 	proc/get_active_hand()

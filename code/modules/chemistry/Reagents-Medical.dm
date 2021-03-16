@@ -1012,6 +1012,7 @@ datum
 					boutput(M, "<span class='alert'>You feel sick...</span>")
 					if (volume_passed > 0)
 						M.take_toxin_damage(volume_passed/2)
+						M.add_karma(0.5)
 
 
 		medical/mutadone // COGWERKS CHEM REVISION PROJECT. - marked for revision. Magic bullshit chem, ought to be related to mutagen somehow
@@ -1113,6 +1114,7 @@ datum
 					if( effect <= 2)
 						M.visible_message("<span class='alert'>[M.name] suddenly and violently vomits!</span>")
 						M.vomit()
+						M.add_karma(1)
 					else if (effect <= 5)
 						M.visible_message("<span class='alert'><b>[M.name]</b> staggers and drools, their eyes bloodshot!</span>")
 						M.dizziness += 8
