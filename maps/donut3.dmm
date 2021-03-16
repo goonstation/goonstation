@@ -28685,6 +28685,18 @@
 	dir = 6
 	},
 /area/station/security/hos)
+"ilq" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment,
+/obj/machinery/camera/ranch{
+	dir = 9
+	},
+/turf/simulated/floor/grass/leafy,
+/area/station/ranch)
 "ilz" = (
 /turf/simulated/floor/carpet{
 	icon_state = "fred2"
@@ -33660,6 +33672,12 @@
 	},
 /turf/simulated/floor/sand,
 /area/station/engine/engineering/ce)
+"jQH" = (
+/obj/machinery/camera/ranch{
+	dir = 5
+	},
+/turf/simulated/floor/grass/leafy,
+/area/station/ranch)
 "jQK" = (
 /obj/stool,
 /obj/cable{
@@ -42903,6 +42921,15 @@
 /obj/access_spawn/medical,
 /turf/simulated/floor/blue,
 /area/station/medical/medbay/surgery/storage)
+"mIv" = (
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 1;
+	name = "autoname  - SS13";
+	tag = ""
+	},
+/turf/simulated/floor/dirt,
+/area/station/ranch)
 "mIy" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -43907,9 +43934,6 @@
 "mYu" = (
 /obj/railing/orange/reinforced{
 	dir = 1
-	},
-/obj/machinery/camera{
-	dir = 5
 	},
 /obj/machinery/firealarm{
 	dir = 8;
@@ -129606,7 +129630,7 @@ mfs
 hBd
 mBB
 ewc
-mBB
+jQH
 mBB
 mYu
 ksp
@@ -131119,7 +131143,7 @@ mBB
 mBB
 nPz
 oJP
-orn
+mIv
 mfs
 qjI
 jMA
@@ -131720,7 +131744,7 @@ mfs
 hyd
 eHU
 xtT
-ygW
+ilq
 ygW
 crX
 bAs
