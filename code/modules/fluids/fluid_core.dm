@@ -314,7 +314,7 @@ var/mutable_appearance/fluid_ma
 		else
 			pool(src)
 
-		for(var/atom/A as() in src.loc)
+		for(var/atom/A as anything in src.loc)
 			if (A && A.flags & FLUID_SUBMERGE)
 				var/mob/living/M = A
 				var/obj/O = A
@@ -442,19 +442,15 @@ var/mutable_appearance/fluid_ma
 		var/obj/fluid/current_fluid = 0
 		var/visited_changed = 0
 		while(queue.len)
-			LAGCHECK(LAG_HIGH)
 			current_fluid = queue[1]
 			queue.Cut(1, 2)
 
 			for( var/dir in cardinal )
-				LAGCHECK(LAG_HIGH)
 				t = get_step( current_fluid, dir )
 				if (!VALID_FLUID_CONNECTION(current_fluid, t)) continue
 				if (!t.active_liquid.group)
 					t.active_liquid.removed()
 					continue
-
-				LAGCHECK(LAG_HIGH)
 
 				//Old method : search through 'visited' for 't.active_liquid'. Probably slow when you have big groups!!
 				//if(t.active_liquid in visited) continue
@@ -475,8 +471,6 @@ var/mutable_appearance/fluid_ma
 							adjacent_match_quit--
 							if (adjacent_match_quit <= 0)
 								return 0 //bud nippin
-
-			LAGCHECK(LAG_HIGH)
 
 	//sorry for copy paste, this ones a bit diff. return turfs of members nearby, stop at a number
 	proc/get_connected_fluid_members(var/stop_at = 0)
@@ -568,7 +562,6 @@ var/mutable_appearance/fluid_ma
 						break
 	*/
 	proc/update_icon(var/neighbor_was_removed = 0)  //BE WARNED THIS PROC HAS A REPLICA UP ABOVE IN FLUID GROUP UPDATE_LOOP. DO NOT CHANGE THIS ONE WITHOUT MAKING THE SAME CHANGES UP THERE OH GOD I HATE THIS
-		LAGCHECK(LAG_HIGH)
 		if (!src.group || !src.group.reagents) return
 
 		src.name = src.group.master_reagent_name ? src.group.master_reagent_name : src.group.reagents.get_master_reagent_name() //maybe obscure later?
@@ -581,8 +574,6 @@ var/mutable_appearance/fluid_ma
 			color_changed = 1
 		animate( src, color = finalcolor, alpha = finalalpha, time = 5 )
 
-		LAGCHECK(LAG_MED)
-
 		if (neighbor_was_removed)
 			last_spread_was_blocked = 0
 			src.clear_overlay()
@@ -594,18 +585,15 @@ var/mutable_appearance/fluid_ma
 		else
 			var/dirs = 0
 			for (var/dir in cardinal)
-				LAGCHECK(LAG_MED)
 				var/turf/simulated/T = get_step(src, dir)
 				if (T && T.active_liquid && T.active_liquid.group == src.group)
 					dirs |= dir
 			icon_state = num2text(dirs)
 
 			if (src.overlay_refs && src.overlay_refs.len)
-				LAGCHECK(LAG_MED)
 				src.clear_overlay()
 
 		if ((color_changed || last_icon != icon_state) && last_spread_was_blocked)
-			LAGCHECK(LAG_MED)
 			src.update_perspective_overlays()
 
 	proc/update_perspective_overlays() // fancy perspective overlaying

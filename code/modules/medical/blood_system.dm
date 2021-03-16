@@ -794,7 +794,7 @@ this is already used where it needs to be used, you can probably ignore it.
 	var/damage_type = DAMAGE_CUT
 
 	attack_self(mob/user as mob)
-		var/selection = input("Select damage type", "Damage Type", "CUT") as() in list("STAB", "CUT", "BLUNT", "BURN")
+		var/selection = input("Select damage type", "Damage Type", "CUT") as anything in list("STAB", "CUT", "BLUNT", "BURN")
 		if (!selection)
 			return
 		switch (selection)

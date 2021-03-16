@@ -52,7 +52,6 @@
 
 	proc/get_link()
 		for_by_tcl(C, /obj/airbridge_controller)
-			LAGCHECK(LAG_LOW)
 			if(C.z == src.z && C.id == src.id && C != src)
 				linked = C
 				break

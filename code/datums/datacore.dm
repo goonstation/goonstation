@@ -195,7 +195,7 @@
 
 		var/username = format_username(H.real_name)
 		if (!src.mainframe || !src.mainframe.hd || !(src.mainframe.hd in src.mainframe))
-			for (var/obj/machinery/networked/mainframe/newMainframe as() in machine_registry[MACHINES_MAINFRAMES])
+			for (var/obj/machinery/networked/mainframe/newMainframe as anything in machine_registry[MACHINES_MAINFRAMES])
 				if (newMainframe.z != 1 || newMainframe.status)
 					continue
 

@@ -131,6 +131,7 @@
 			src.bioHolder.AddEffect("accent_void", 0, 0, 1)
 			abilityHolder.addAbility(/datum/targetable/gimmick/spooky)
 			abilityHolder.addAbility(/datum/targetable/gimmick/Jestershift)
+			abilityHolder.addAbility(/datum/targetable/gimmick/scribble)
 
 		SPAWN_DBG(1 SECOND)
 			abilityHolder.updateButtons()
@@ -149,11 +150,11 @@ mob/living/carbon/human/cluwne/satan
 	New()
 		..()
 		SPAWN_DBG(0)
-			src.bioHolder.AddEffect("horns", 0, 0, 1)
-			src.bioHolder.AddEffect("aura_fire", 0, 0, 1)
+			src.bioHolder.AddEffect("horns", 0, 0, 0, 1)
+			src.bioHolder.AddEffect("aura_fire", 0, 0, 0, 1)
 			src.bioHolder.AddEffect("superfartgriff")
-			src.bioHolder.AddEffect("bigpuke", 0, 0, 1)
-			src.bioHolder.AddEffect("melt", 0, 0, 1)
+			src.bioHolder.AddEffect("bigpuke", 0, 0, 0, 1)
+			src.bioHolder.AddEffect("melt", 0, 0, 0, 1)
 
 mob/living/carbon/human/cluwne/satan/megasatan //someone can totally use this for an admin gimmick.
 	New()
