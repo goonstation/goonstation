@@ -722,15 +722,20 @@
 				if (prob(5)) //don't really need this but to make it more harmful to the user.
 					T = get_turf(owner)
 				else
-					T = locate(owner.x + rand(-radius/2,radius+2), owner.y+rand(-radius/2,radius/2), 1)
+					T = locate(owner.x + rand(-radius/2,radius+2), owner.y+rand(-radius/2,radius/2), owner.z)
 
-				var/obj/overlay/pulse = new/obj/overlay(T)
-				pulse.icon = 'icons/effects/effects.dmi'
-				pulse.icon_state = "emppulse"
-				pulse.name = "emp pulse"
-				pulse.anchored = 1
-				SPAWN_DBG(2 SECONDS)
-					if (pulse) qdel(pulse)
+				var/duplicateisnotpresent = TRUE
+				for(var/obj/overlay/overlay in T)
+					if (overlay?.name == "emp pulse" && overlay.icon_state == "emppulse")
+						duplicateisnotpresent = FALSE
+				if (duplicateisnotpresent)
+					var/obj/overlay/pulse = new/obj/overlay(T)
+					pulse.icon = 'icons/effects/effects.dmi'
+					pulse.icon_state = "emppulse"
+					pulse.name = "emp pulse"
+					pulse.anchored = 1
+					SPAWN_DBG(2 SECONDS)
+						if (pulse) qdel(pulse)
 
 				//maybe have this only emp some things on the tile.
 				if(istype(T))
