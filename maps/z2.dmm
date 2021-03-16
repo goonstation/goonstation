@@ -18077,7 +18077,6 @@
 	dir = 5;
 	name = "B. FREDRICKKSEN"
 	},
-/obj/decal/snowbits,
 /turf/unsimulated/floor/arctic/snow,
 /area/upper_arctic/exterior/surface)
 "aTG" = (
@@ -34490,16 +34489,6 @@
 	dir = 1
 	},
 /area/crypt/graveyard)
-"bGl" = (
-/obj/tombstone{
-	desc = "The name on this tombstone has been etched off. Strange.";
-	special = /obj/item/device/sat_crash_caller
-	},
-/obj/map/light/graveyard,
-/turf/unsimulated/grasstodirt{
-	dir = 1
-	},
-/area/crypt/graveyard)
 "bGm" = (
 /obj/tombstone{
 	desc = "The inscription has eroded away."
@@ -34531,16 +34520,6 @@
 "bGp" = (
 /obj/stone{
 	dir = 9
-	},
-/obj/map/light/graveyard,
-/turf/unsimulated/grasstodirt{
-	dir = 1
-	},
-/area/crypt/graveyard)
-"bGq" = (
-/obj/tombstone{
-	desc = "The inscription has eroded away.";
-	special = /obj/critter/magiczombie
 	},
 /obj/map/light/graveyard,
 /turf/unsimulated/grasstodirt{
@@ -35437,21 +35416,17 @@
 	},
 /area/crypt/graveyard)
 "bIv" = (
-/obj/tombstone/memorial{
-	desc = "The inscription has eroded away.";
-	special = /obj/decal/skeleton
-	},
 /obj/map/light/graveyard,
+/obj/tombstone/memorial,
 /turf/unsimulated/grasstodirt{
 	dir = 1
 	},
 /area/crypt/graveyard)
 "bIw" = (
-/obj/tombstone{
-	desc = "The inscription has eroded away.";
-	special = /obj/item/goldbar
-	},
 /obj/map/light/graveyard,
+/obj/tombstone/memorial{
+	dir = 4
+	},
 /turf/unsimulated/grasstodirt{
 	dir = 1
 	},
@@ -39513,7 +39488,8 @@
 /area/gauntlet/staging)
 "bTG" = (
 /obj/tombstone{
-	desc = "In memory of Stephanie Mir, who vanished in pursuit of answers."
+	desc = "In memory of Stephanie Mir, who vanished in pursuit of answers.";
+	dir = 6
 	},
 /turf/unsimulated/floor/grass/random,
 /area/afterlife/heaven)
@@ -41903,12 +41879,13 @@
 /area/afterlife/heaven)
 "bZV" = (
 /obj/tombstone{
-<<<<<<< HEAD
 	desc = "You can't quite make out what this one says.";
-	dir = 10
-=======
-	desc = "You can't quite make out what this one says."
+	dir = 1
+	},
+/turf/unsimulated/floor/grass/random,
+/area/afterlife/heaven)
 "bZW" = (
+/obj/submachine/GTM/void,
 /turf/simulated/wall,
 /area/crunch)
 "bZX" = (
@@ -41929,25 +41906,22 @@
 /area/owlery/staffhall)
 "bZZ" = (
 /obj/tombstone{
-<<<<<<< HEAD
 	desc = "Here lies Emily Geon Claire. (The other 416 graves are in storage.)";
-	dir = 1
-=======
-	desc = "Here lies Emily Geon Claire. (The other 416 graves are in storage.)"
->>>>>>> ccd00977a3f8c930d50088e85ad4103d53fc57ca
+	dir = 4
 	},
 /turf/unsimulated/floor/grass/random,
 /area/afterlife/heaven)
 "caa" = (
 /obj/tombstone{
-	desc = "Here lies Drago Kitterson. ...There seems to be some sort of mohawk etched into the tombstone?"
+	desc = "Here lies Drago Kitterson. ...There seems to be some sort of mohawk etched into the tombstone?";
+	dir = 10
 	},
 /turf/unsimulated/floor/grass/random,
 /area/afterlife/heaven)
 "cab" = (
 /obj/tombstone{
 	desc = "Here lies Jeni Denton. Insisted she was a dragon, and ended up being slain like one.";
-	dir = 6
+	dir = 8
 	},
 /turf/unsimulated/floor/grass/random,
 /area/afterlife/heaven)
@@ -82474,15 +82448,6 @@
 "eFV" = (
 /turf/unsimulated/wall/setpieces/leadwall,
 /area/space)
-"eHB" = (
-/obj/tombstone/memorial{
-	desc = "The inscription has eroded away.";
-	},
-/obj/map/light/graveyard,
-/turf/unsimulated/grasstodirt{
-	dir = 1
-	},
-/area/crypt/graveyard)
 "eHC" = (
 /obj/machinery/light{
 	dir = 4
@@ -82831,6 +82796,10 @@
 /obj/trigger/lovefill,
 /turf/unsimulated/floor/wood/six,
 /area/centcom/offices/rodney)
+"gjq" = (
+/obj/decal/snowbits,
+/turf/unsimulated/floor/arctic/snow,
+/area/upper_arctic/exterior/surface)
 "gjY" = (
 /obj/stool/chair/comfy/shuttle{
 	dir = 8
@@ -83166,17 +83135,6 @@
 	icon_state = "floor3"
 	},
 /area/hospital/samostrel)
-"hMX" = (
-/obj/map/light/graveyard,
-/obj/tombstone/memorial{
-	desc = "The inscription has eroded away.";
-	dir = 4;
-	special = /obj/decal/skeleton
-	},
-/turf/unsimulated/grasstodirt{
-	dir = 1
-	},
-/area/crypt/graveyard)
 "hNS" = (
 /obj/decal/fakeobjects/dreambeach/seashells,
 /turf/unsimulated/floor/dream/beach,
@@ -83651,12 +83609,6 @@
 	opacity = 0
 	},
 /area/titlescreen)
-"jAT" = (
-/obj/tombstone{
-	dir = 6
-	},
-/turf/unsimulated/grass,
-/area/centcom/lounge)
 "jBr" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-32"
@@ -84015,12 +83967,6 @@
 	dir = 4
 	},
 /area/centcom/offices/cogwerks)
-"kBf" = (
-/obj/tombstone{
-	dir = 10
-	},
-/turf/unsimulated/grass,
-/area/centcom/lounge)
 "kCH" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-22"
@@ -84342,12 +84288,6 @@
 	dir = 5
 	},
 /area/retentioncenter)
-"lJu" = (
-/obj/tombstone{
-	dir = 8
-	},
-/turf/unsimulated/grass,
-/area/centcom/lounge)
 "lLo" = (
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
@@ -84388,6 +84328,12 @@
 /obj/stool/chair/office/syndie,
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/mrfishstick)
+"lTp" = (
+/obj/tombstone{
+	dir = 4
+	},
+/turf/unsimulated/grass,
+/area/centcom/lounge)
 "lUK" = (
 /obj/decal/fakeobjects/dreambeach/seashells,
 /turf/unsimulated/floor/dream/beach{
@@ -84411,16 +84357,6 @@
 	icon_state = "red2"
 	},
 /area/afterlife/bar)
-"mak" = (
-/obj/tombstone/memorial{
-	desc = "The inscription has eroded away.";
-	dir = 1
-	},
-/obj/map/light/graveyard,
-/turf/unsimulated/grasstodirt{
-	dir = 1
-	},
-/area/crypt/graveyard)
 "maI" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "wall3dir"
@@ -84714,6 +84650,15 @@
 	icon_state = "floor3"
 	},
 /area/hospital/samostrel)
+"ngk" = (
+/obj/map/light/graveyard,
+/obj/tombstone/memorial{
+	dir = 1
+	},
+/turf/unsimulated/grasstodirt{
+	dir = 1
+	},
+/area/crypt/graveyard)
 "ngq" = (
 /obj/stool/bed{
 	desc = "Looks well used.";
@@ -85426,6 +85371,12 @@
 	},
 /turf/unsimulated/floor/delivery,
 /area/centcom)
+"pnm" = (
+/obj/tombstone{
+	dir = 6
+	},
+/turf/unsimulated/grass,
+/area/centcom/lounge)
 "pqf" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "wall3"
@@ -85461,12 +85412,6 @@
 	name = "plating"
 	},
 /area/hospital/samostrel)
-"pvG" = (
-/obj/tombstone{
-	dir = 1
-	},
-/turf/unsimulated/grass,
-/area/centcom/lounge)
 "pBy" = (
 /obj/item/storage/wall/emergency{
 	pixel_y = 32
@@ -85543,12 +85488,6 @@
 	},
 /turf/unsimulated/outdoors/grass,
 /area/shuttle/merchant_shuttle/right_centcom/cogmap)
-"pMg" = (
-/obj/tombstone{
-	dir = 4
-	},
-/turf/unsimulated/grass,
-/area/centcom/lounge)
 "pNh" = (
 /obj/item/reagent_containers/food/snacks/plant/glowfruit/spawnable{
 	pixel_x = -11;
@@ -85981,6 +85920,12 @@
 	opacity = 0
 	},
 /area/titlescreen)
+"rih" = (
+/obj/tombstone{
+	dir = 10
+	},
+/turf/unsimulated/grass,
+/area/centcom/lounge)
 "riq" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 4
@@ -86911,6 +86856,12 @@
 	tag = "icon-fblue2 (NORTHEAST)"
 	},
 /area/centcom/offices/varshie)
+"uwK" = (
+/obj/tombstone{
+	dir = 8
+	},
+/turf/unsimulated/grass,
+/area/centcom/lounge)
 "uxv" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-39"
@@ -87166,6 +87117,12 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/escape/centcom/donut3)
+"vrR" = (
+/obj/tombstone{
+	dir = 1
+	},
+/turf/unsimulated/grass,
+/area/centcom/lounge)
 "vss" = (
 /obj/critter/monster_door,
 /turf/unsimulated/floor{
@@ -87391,6 +87348,12 @@
 "wvy" = (
 /turf/unsimulated/floor/carpet/red/fancy/narrow/nw,
 /area/centcom/offices/sovexe)
+"wxG" = (
+/obj/tombstone{
+	dir = 9
+	},
+/turf/unsimulated/grass,
+/area/centcom/lounge)
 "wxJ" = (
 /obj/machinery/door/airlock/external,
 /turf/unsimulated/floor/shuttle{
@@ -97395,7 +97358,7 @@ aLO
 aLN
 aLN
 aLN
-aLN
+gjq
 aLN
 aLN
 aLN
@@ -97999,7 +97962,7 @@ aLN
 aLN
 aLN
 aLN
-aLN
+gjq
 aUp
 aLN
 aLN
@@ -128583,7 +128546,7 @@ bFr
 aaa
 aaa
 bFS
-bGl
+bIw
 bGG
 bGG
 bGG
@@ -130401,7 +130364,7 @@ bGG
 bHe
 bFS
 bFR
-mak
+ngk
 bGG
 bGG
 bHe
@@ -130703,7 +130666,7 @@ bGG
 bHe
 bFS
 bFR
-hMX
+bIw
 bGG
 bGG
 bGG
@@ -130999,7 +130962,7 @@ bBa
 bCv
 aaa
 bFR
-eHB
+bIv
 bGG
 bGG
 bHi
@@ -131307,7 +131270,7 @@ bGU
 bHh
 bFS
 bFR
-bGm
+ngk
 bGG
 bGG
 bGG
@@ -131603,13 +131566,13 @@ bva
 bva
 aaa
 bFS
-bGm
+bIv
 bGG
 bGG
 bHe
 bFS
 bFR
-bGm
+bIv
 bGG
 bGG
 bGG
@@ -133717,7 +133680,7 @@ bpo
 bpo
 aaa
 bFS
-bGq
+bIw
 bGG
 bGG
 bHe
@@ -134321,7 +134284,7 @@ bpo
 bpo
 aaa
 bFS
-bGm
+bIv
 bGG
 bGG
 bHe
@@ -157706,9 +157669,9 @@ aES
 dmx
 dvd
 dEr
-pvG
+vrR
 dEr
-dFr
+uwK
 dEr
 dvd
 dGR
@@ -158008,9 +157971,9 @@ dpP
 dmx
 dvd
 dFn
-pMg
+rih
 dvd
-jAT
+wxG
 dvd
 dvd
 dGR
@@ -158310,9 +158273,9 @@ dnS
 dGy
 dvd
 dvd
-lJu
+dFr
 dvd
-kBf
+lTp
 dvd
 dvd
 dGR
@@ -158914,9 +158877,9 @@ dnS
 dGy
 dvd
 dvd
-pvG
+pnm
 dvd
-pvG
+wxG
 dvd
 dvd
 dGR
@@ -159216,9 +159179,9 @@ dGt
 dmx
 dvd
 dFn
-dFr
+vrR
 dvd
-lJu
+lTp
 dvd
 dvd
 dGR
@@ -159518,9 +159481,9 @@ aES
 dmx
 dvd
 dEr
-jAT
+uwK
 dEr
-pMg
+rih
 dEr
 dvd
 dGR
