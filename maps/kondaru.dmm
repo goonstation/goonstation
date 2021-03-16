@@ -26441,7 +26441,6 @@
 	},
 /obj/firedoor_spawn,
 /obj/access_spawn/rancher,
-/obj/submachine/chicken_incubator,
 /turf/simulated/floor/dirt,
 /area/station/ranch)
 "byq" = (
