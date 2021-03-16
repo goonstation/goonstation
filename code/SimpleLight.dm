@@ -59,9 +59,9 @@
 		avg_b += simple_light_rgbas[id][3]
 		sum_a += simple_light_rgbas[id][4]
 
-	avg_r /= simple_light_rgbas.len
-	avg_g /= simple_light_rgbas.len
-	avg_b /= simple_light_rgbas.len
+	avg_r /= length(simple_light_rgbas)
+	avg_g /= length(simple_light_rgbas)
+	avg_b /= length(simple_light_rgbas)
 	sum_a = min(255,sum_a)
 
 	simple_light.color = rgb(avg_r, avg_g, avg_b, sum_a)
@@ -166,9 +166,9 @@
 		avg_b += medium_light_rgbas[id][3]
 		sum_a += medium_light_rgbas[id][4]
 
-	avg_r /= medium_light_rgbas.len
-	avg_g /= medium_light_rgbas.len
-	avg_b /= medium_light_rgbas.len
+	avg_r /= length(medium_light_rgbas)
+	avg_g /= length(medium_light_rgbas)
+	avg_b /= length(medium_light_rgbas)
 
 	for(var/obj/overlay/simple_light/medium/medium_light in src.medium_lights)
 		if(medium_light.icon_state == "medium_center")
@@ -287,9 +287,9 @@
 		avg_b += mdir_light_rgbas[id][3]
 		sum_a += mdir_light_rgbas[id][4]
 
-	avg_r /= mdir_light_rgbas.len
-	avg_g /= mdir_light_rgbas.len
-	avg_b /= mdir_light_rgbas.len
+	avg_r /= length(mdir_light_rgbas)
+	avg_g /= length(mdir_light_rgbas)
+	avg_b /= length(mdir_light_rgbas)
 
 	for(var/obj/overlay/simple_light/medium/directional/mdir_light in src.mdir_lights)
 		if(mdir_light.dist == mdir_light_dists[mdir_light_dists.len])

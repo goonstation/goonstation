@@ -49,9 +49,9 @@
 		src.current_message = pick(src.dialogue_greet)
 		src.patience = rand(src.base_patience[1],src.base_patience[2])
 		if (src.max_goods_buy > src.base_goods_buy.len)
-			src.max_goods_buy = src.base_goods_buy.len
+			src.max_goods_buy = length(src.base_goods_buy)
 		if (src.max_goods_sell > src.base_goods_sell.len)
-			src.max_goods_sell = src.base_goods_sell.len
+			src.max_goods_sell = length(src.base_goods_sell)
 		src.set_up_goods()
 
 	proc/set_up_goods()

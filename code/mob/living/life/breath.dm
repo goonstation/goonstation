@@ -79,7 +79,7 @@
 			else if (T.active_liquid)
 				var/obj/fluid/F = T.active_liquid
 
-				var/depth_to_breathe_from = depth_levels.len
+				var/depth_to_breathe_from = length(depth_levels)
 				if (owner.lying)
 					depth_to_breathe_from = depth_levels.len-1
 

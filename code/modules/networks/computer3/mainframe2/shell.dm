@@ -91,7 +91,7 @@
 		var/list/subcommands = list()
 		var/list/piped_list = command2list(text, "^", scriptvars, subcommands)//scripting ? scriptvars : null)
 		piped_list.len = min(piped_list.len, setup_max_piped_commands)
-		piping = piped_list.len
+		piping = length(piped_list)
 		pipetemp = ""
 		var/script_counter = 0
 		//script_iteration = 0//reset stack each time someone types stuff
@@ -345,7 +345,7 @@
 								var/elsePosition = piped_list.Find("else")
 								if (elsePosition)
 									piped_list.Cut(elsePosition)
-									piping = piped_list.len
+									piping = length(piped_list)
 								continue //Continue processing any piped commands following this.
 							if (0)
 								scriptstat &= ~SCRIPT_IF_TRUE
@@ -353,7 +353,7 @@
 								var/elsePosition = piped_list.Find("else")
 								if (elsePosition)
 									piped_list.Cut(1,elsePosition+1)
-									piping = piped_list.len
+									piping = length(piped_list)
 									pipetemp = null
 									continue
 
@@ -507,7 +507,7 @@
 					. += "[. ? " " : null][command_list[i]]"
 
 				scriptvarsToPass["*"] = .
-				scriptvarsToPass["argc"] = command_list.len
+				scriptvarsToPass["argc"] = length(command_list)
 
 				var/list/childScript = script_format( exec.fields.Copy() )
 				//boutput(world, "bloop script loaded, pip")

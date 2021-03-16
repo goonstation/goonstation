@@ -520,7 +520,7 @@
 
 					if (!success)
 						src.processing += program
-						program.progid = src.processing.len
+						program.progid = length(src.processing)
 
 			if (user && !allow_fork)
 				program.useracc = user

@@ -677,7 +677,7 @@
 			if (fluids_removed.len >= fluids_to_remove)
 				break
 
-		var/removed_len = fluids_removed.len
+		var/removed_len = length(fluids_removed)
 
 		if (transfer_to && transfer_to.reagents && src.reagents)
 			src.reagents.skip_next_update = 1

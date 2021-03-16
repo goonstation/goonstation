@@ -229,7 +229,7 @@
 								user.show_message("<span class='notice'>The petri dish cannot be used for cultivating pathogens, due to: </span>")
 								user.show_message(PD.dirty_reason)
 						var/list/path_list = src.target.reagents.aggregate_pathogens()
-						var/pcount = path_list.len
+						var/pcount = length(path_list)
 						if (pcount > 0)
 							var/uid
 							var/datum/pathogen/P
@@ -274,7 +274,7 @@
 					else
 						var/list/path_list = src.target.reagents.aggregate_pathogens()
 						user.show_message("<span class='notice'>You look at the [target] through the microscope.</span>")
-						var/pcount = path_list.len
+						var/pcount = length(path_list)
 						if (pcount > 0)
 							var/uid
 							var/datum/pathogen/P

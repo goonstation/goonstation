@@ -45,7 +45,7 @@
 				return
 
 			ghostdrone_candidates += M
-			position = ghostdrone_candidates.len
+			position = length(ghostdrone_candidates)
 			out(G, "<span class='bold notice'>You have been added to the ghostdrone queue. Now position #[position].</span>")
 
 	process()

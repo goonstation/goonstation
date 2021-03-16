@@ -799,7 +799,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 			if (lowertext(D) in args)
 				tally++
 
-		return tally >= args.len
+		return tally >= length(args)
 
 	proc/GetASubtypeEffect(type)
 		for(var/id as anything in effects)

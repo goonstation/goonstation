@@ -326,7 +326,7 @@
 					data = "<span class='alert'>ERR: SPECTROSCOPIC ANALYSIS OF THIS SUBSTANCE IS NOT POSSIBLE.</span>"
 					return data
 
-			var/reagents_length = reagents.reagent_list.len
+			var/reagents_length = length(reagents.reagent_list)
 			data = "<span class='notice'>[reagents_length] chemical agent[reagents_length > 1 ? "s" : ""] found in [A].</span>"
 
 			for (var/current_id in reagents.reagent_list)

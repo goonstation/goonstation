@@ -3730,7 +3730,7 @@
 
 			if ("activate")
 				if (src.contents.len)
-					active = src.contents.len
+					active = length(src.contents)
 					message_host("command=ack")
 					src.update_icon()
 				else

@@ -730,7 +730,7 @@ datum
 				var/list/covered = holder.covered_turf()
 
 				for(var/turf/location in covered)
-					var/our_amt = holder.get_reagent_amount(src.id) / covered.len
+					var/our_amt = holder.get_reagent_amount(src.id) / length(covered)
 
 					if (our_amt < 10 && covered.len > 5)
 						if (prob(min(covered.len/3,85)))

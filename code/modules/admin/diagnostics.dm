@@ -25,7 +25,7 @@ proc/debug_color_of(var/thing)
 			for(var/obj/machinery/power/apc/current_apc in area)
 				if (!apcs.Find(current_apc)) apcs += current_apc
 
-			apc_count = apcs.len
+			apc_count = length(apcs)
 			if (apc_count != 1)
 				area_txt += "[area.name] [area.type] has [apc_count] APCs.<br>"
 			apcs.len = 0
@@ -41,7 +41,7 @@ proc/debug_color_of(var/thing)
 		if(!processScheduler)
 			usr << alert("Process Scheduler not found.")
 
-		var/mobs = global.mobs.len
+		var/mobs = length(global.mobs)
 
 
 		var/output = {"<B>GENERAL SYSTEMS REPORT</B><HR>
@@ -70,7 +70,7 @@ proc/debug_color_of(var/thing)
 				active_groups++
 			else
 				inactive_groups++
-				active_tiles += group.members.len
+				active_tiles += length(group.members)
 
 		var/hotspots = 0
 		for(var/obj/hotspot/hotspot in world)
@@ -514,7 +514,7 @@ proc/debug_color_of(var/thing)
 				pipe_image.appearance_flags = RESET_ALPHA | RESET_COLOR
 				var/n_objects = 0
 				for(var/obj/disposalholder/DH in pipe)
-					n_objects += DH.contents.len
+					n_objects += length(DH.contents)
 					if(DH.active)
 						pipe_image.color = "#0000ff"
 					else
@@ -639,9 +639,9 @@ proc/debug_color_of(var/thing)
 		GetInfo(turf/theTurf, image/debugoverlay/img)
 			// I should probably also count overlays on overlays but I'm lazy
 			img.app.alpha = 0
-			var/num = 1 + theTurf.overlays.len + theTurf.underlays.len
+			var/num = 1 + theTurf.overlays.len + length(theTurf.underlays)
 			for (var/atom/A as anything in theTurf)
-				num += 1 + A.overlays.len + A.underlays.len
+				num += 1 + A.overlays.len + length(A.underlays)
 			img.app.overlays = list(src.makeText(num, RESET_ALPHA))
 
 	count_atoms_plus_overlays_rec
@@ -650,9 +650,9 @@ proc/debug_color_of(var/thing)
 			img.app.alpha = 0
 			var/num = 0
 			for (var/atom/A as anything in theTurf.contents + theTurf)
-				num += 1 + A.overlays.len + A.underlays.len
+				num += 1 + A.overlays.len + length(A.underlays)
 				for (var/atom/A2 as anything in A.overlays + A.underlays)
-					num += A2.overlays.len + A2.underlays.len
+					num += A2.overlays.len + length(A2.underlays)
 			img.app.overlays = list(src.makeText(num, RESET_ALPHA))
 
 	count_atoms

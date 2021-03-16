@@ -351,7 +351,7 @@ datum/light
 		remove_from_turf()
 			var/turf/T = locate(src.x, src.y, src.z)
 			if (T)
-				if (T.RL_Lights && T.RL_Lights.len) //ZeWaka: Fix for null.len
+				if (T.RL_Lights && T.RL_Lights.len) //ZeWaka: Fix for length(null)
 					T.RL_Lights -= src
 					if (!T.RL_Lights.len)
 						T.RL_Lights = null

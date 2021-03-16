@@ -2647,7 +2647,7 @@
 
 				if (!isnull(readData))
 					if (knownReadings.len < knownReadingFields.len)
-						knownReadings.len = knownReadingFields.len
+						knownReadings.len = length(knownReadingFields)
 
 					for (var/i = 1, i <= knownReadingFields.len && i <= readData.len, i++)
 						knownReadings[i] = readData[i]

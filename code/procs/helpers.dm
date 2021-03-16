@@ -448,7 +448,7 @@ proc/get_angle(atom/a, atom/b)
 	* Given a list, returns a text string representation of the list's contents.
 	*/
 /proc/english_list(var/list/input, nothing_text = "nothing", and_text = " and ", comma_text = ", ", final_comma_text = "," )
-	var/total = input.len
+	var/total = length(input)
 	if (!total)
 		return "[nothing_text]"
 	else if (total == 1)
@@ -1448,7 +1448,7 @@ proc/RarityClassRoll(var/scalemax = 100, var/mod = 0, var/list/category_boundari
 
 	var/picker = rand(1,scalemax)
 	picker += mod
-	var/list_counter = category_boundaries.len
+	var/list_counter = length(category_boundaries)
 
 	for (var/X in category_boundaries)
 		if (!isnum(X))

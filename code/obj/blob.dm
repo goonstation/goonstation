@@ -394,7 +394,7 @@
 					if (B)
 						spread += B
 			if (spread.len)
-				var/amt = poison / spread.len
+				var/amt = poison / length(spread)
 				for (var/obj/blob/B in spread)
 					B.poison += amt
 		for (var/obj/material_deposit/M in src.loc)

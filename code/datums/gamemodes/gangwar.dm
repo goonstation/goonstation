@@ -59,7 +59,7 @@
 
 	var/list/leaders_possible = get_possible_leaders(num_teams)
 	if (num_teams > leaders_possible.len)
-		num_teams = leaders_possible.len
+		num_teams = length(leaders_possible)
 
 	if (!leaders_possible.len)
 		return 0

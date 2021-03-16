@@ -119,7 +119,7 @@
 				react_amount = react_amount / (1 + ((FG.contained_amt - diminishing_returns_thingymabob) * 0.1))//MBC MAGIC NUMBERS :)
 				//boutput(world,"[react_amount]")
 
-		var/divisor = covered.len
+		var/divisor = length(covered)
 		if (covered.len > 4)
 			divisor += 0.2
 		source.fluid_react(holder, react_amount/divisor, airborne = 1)

@@ -458,7 +458,7 @@ var/mutable_appearance/fluid_ma
 
 				//New method : Add the liquid at a specific index. To check whether the node has already been visited, just compare the len of the visited group from before + after the index has been set.
 				//Probably slower for small groups and much faster for large groups.
-				visited_changed = visited.len
+				visited_changed = length(visited)
 				visited["[t.active_liquid.x]_[t.active_liquid.y]_[t.active_liquid.z]"] = t.active_liquid
 				visited_changed = (visited.len != visited_changed)
 
@@ -499,7 +499,7 @@ var/mutable_appearance/fluid_ma
 
 				//New method : Add the liquid at a specific index. To check whether the node has already been visited, just compare the len of the visited group from before + after the index has been set.
 				//Probably slower for small groups and much faster for large groups.
-				visited_changed = visited.len
+				visited_changed = length(visited)
 				visited["[t.active_liquid.x]_[t.active_liquid.y]_[t.active_liquid.z]"] = t.active_liquid
 				visited_changed = (visited.len != visited_changed)
 
