@@ -40809,9 +40809,6 @@
 	dir = 4
 	},
 /obj/disposalpipe/segment/morgue,
-/obj/cable{
-	icon_state = "1-2"
-	},
 /turf/simulated/floor/wood/eight{
 	dir = 4
 	},
