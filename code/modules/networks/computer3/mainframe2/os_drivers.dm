@@ -478,7 +478,7 @@
 		return 0
 
 	process()
-		if (..() || !initialized || !to_print.len)
+		if (..() || !initialized || !length(to_print))
 			return
 
 		if (printer_wait)
@@ -769,7 +769,7 @@
 			return
 
 		var/list/initlist = splittext(initparams, " ")
-		if (!initparams || !initlist.len)
+		if (!initparams || !length(initlist))
 			message_user("Invalid commmand argument.|nValid Commands:|n (Coords) to set target coordinates. Specify x y z.|n (Send) to send to target.|n (Receive) to receive from target.|n (Portal) to open bidirectional portal to target.|n (Scan) to scan target atmosphere.","multiline")
 			mainframe_prog_exit
 			return
@@ -1176,7 +1176,7 @@
 			return
 
 		var/list/initlist = splittext(initparams, " ")
-		if (!initparams || !initlist.len)
+		if (!initparams || !length(initlist))
 			message_user("Invalid commmand argument.|nValid Commands:|n (Status) for detonator status.|n (Auth) to authorize detonation.|n (Deauth) to revoke authorizations.|n (Time) to set charge timer.|n (Activate) to activate detonation sequence|n (Abort) to halt activation sequence.","multiline")
 			mainframe_prog_exit
 			return
@@ -1580,13 +1580,13 @@
 			return
 
 		var/list/initlist = splittext(initparams, " ")
-		if (!initparams || !initlist.len)
+		if (!initparams || !length(initlist))
 			message_user("Invalid commmand argument.|nValid Arguments:|n \"list\" to list known docking stations.|n \"stat (PR-6 Net ID)\" to view unit status. |n \"upload (PR-6 Net ID) (task filepath) \[configuration filepath]\" to upload task.|n \"wake (PR-6 Net ID)\" to wake unit.|n \"wipe (PR-6 Net ID)\" to clear unit memory.|n \"recall (PR-6 Net ID | \'all\')\" to recall unit.","multiline")
 			mainframe_prog_exit
 			return
 
 		var/list/driverlist = signal_program(1, list("command"=DWAINE_COMMAND_DLIST, "dtag"="pr6_charg", "mode"=1))
-		if (!istype(driverlist) || !driverlist.len)
+		if (!istype(driverlist) || !length(driverlist))
 			message_user("Error: Could not detect PR-6 driver(s).")
 			mainframe_prog_exit
 			return
@@ -1812,7 +1812,7 @@
 			return 1
 
 		var/list/dataList = params2list(data)
-		if (!dataList || !dataList.len)
+		if (!dataList || !length(dataList))
 			return 1
 
 		if (dataList["sender"])
@@ -2234,7 +2234,7 @@
 			return
 
 		var/list/initlist = splittext(initparams, " ")
-		if (!initparams || !initlist.len)
+		if (!initparams || !length(initlist))
 			message_user("Invalid commmand argument.|nValid Commands:|n (Status) for emitter status.|n (Activate) to activate emitter|n (Deactivate) to shut down emitter.","multiline")
 			mainframe_prog_exit
 			return
@@ -2823,7 +2823,7 @@
 
 		var/command = null
 		var/list/initlist = splittext(initparams, " ")
-		if (!initparams || !initlist.len)
+		if (!initparams || !length(initlist))
 			command = "index"
 		else
 			command = ckey(initlist[1])

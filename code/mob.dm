@@ -1564,7 +1564,7 @@
 
 /// Removes whichever matrix is associated with the label. Must be a string!
 /mob/proc/remove_color_matrix(var/label)
-	if (!label || !src.color_matrices.len)
+	if (!label || !length(src.color_matrices))
 		return
 
 	if(label == "all")

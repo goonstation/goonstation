@@ -376,7 +376,7 @@ proc/make_cleanable(var/type,var/loc,var/list/viral_list)
 			. = " It's [src.dry == DRY_BLOOD ? "dry and flakey" : "fresh"]."
 
 	proc/handle_reagent_list(var/list/reagent_list)
-		if (!reagent_list || !reagent_list.len)
+		if (!reagent_list || !length(reagent_list))
 			return
 
 		if (reagent_list["bloodc"])

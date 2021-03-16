@@ -1,4 +1,9 @@
 
+(t)tue mar 16 21
+(u)Virvatuli
+(p)4028
+(e)🎨|sprites
+(+)The 40mm Riot Launcher has been given both visual and audio upgrades, have fun lobbing grenades around!
 (t)mon mar 15 21
 (u)warc, or whoever you prefer, you pick
 (e)™|feature, mapping,

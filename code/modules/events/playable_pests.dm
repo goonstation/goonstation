@@ -85,7 +85,7 @@
 				src.num_pests = length(candidates)
 
 			for (var/i in 1 to src.num_pests)
-				if (!candidates || !candidates.len)
+				if (!candidates || !length(candidates))
 					break
 
 				var/datum/mind/M = pick(candidates)

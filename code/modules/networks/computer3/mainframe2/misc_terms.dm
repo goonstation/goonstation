@@ -1642,7 +1642,7 @@
 
 				var/newFreq = round(max(1000, min(text2num(data["_freq"]), 1500)))
 				data -= "_freq"
-				if (!newFreq || !radio_controller || !data.len)
+				if (!newFreq || !radio_controller || !length(data))
 					src.post_status(target,"command","term_message","data","command=status&status=failure")
 					return
 				var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency("[newFreq]")
@@ -2011,7 +2011,7 @@
 				return 0
 			if(!src.host_id)
 				return 0
-			if(src.printing || !print_buffer.len)
+			if(src.printing || !length(print_buffer))
 				return 0
 
 			var/print_text = print_buffer[1]

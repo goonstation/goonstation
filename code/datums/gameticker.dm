@@ -522,7 +522,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 	//logTheThing("debug", null, null, "Zamujasa: [world.timeofday] Processing crew objectives")
 	var/list/successfulCrew = list()
 	for (var/datum/mind/crewMind in minds)
-		if (!crewMind.current || !crewMind.objectives.len)
+		if (!crewMind.current || !length(crewMind.objectives))
 			continue
 
 		var/count = 0

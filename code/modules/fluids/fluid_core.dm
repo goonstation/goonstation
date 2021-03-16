@@ -294,7 +294,7 @@ var/mutable_appearance/fluid_ma
 
 	temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 		..()
-		if (!src.group || !src.group.reagents || !src.group.members.len) return
+		if (!src.group || !src.group.reagents || !length(src.group.members)) return
 		src.group.last_temp_change = world.time
 		//reduce exposed temperature by amt of members in the group
 		src.group.reagents.temperature_reagents(exposed_temperature, exposed_volume, (70 - (35 / (src.group.members.len))), 15)

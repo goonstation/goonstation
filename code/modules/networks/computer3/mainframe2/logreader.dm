@@ -709,7 +709,7 @@ proc/accesslog_digest(var/datum/computer/file/record/R, formatted = 0)
 
 
 		var/list/dataList = params2list(data)
-		if (!dataList || !dataList.len)
+		if (!dataList || !length(dataList))
 			return 1
 
 

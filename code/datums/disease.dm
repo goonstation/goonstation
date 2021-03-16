@@ -465,7 +465,7 @@
 	if (!src || !target || !istext(spread_type))
 		return
 
-	if (!src.ailments || !src.ailments.len)
+	if (!src.ailments || !length(src.ailments))
 		return
 
 	for (var/datum/ailment_data/disease/AD in src.ailments)

@@ -692,7 +692,7 @@ Returns:
 			if(!T.density)
 				twoTurfs.Add(T)
 
-	if(!twoTurfs.len || !oneTurfs.len)
+	if(!twoTurfs.len || !length(oneTurfs))
 		return
 
 	var/list/oneTurfsExpend = oneTurfs.Copy()

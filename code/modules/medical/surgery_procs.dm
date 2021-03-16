@@ -214,7 +214,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 	if (user && user.a_intent != INTENT_HELP)
 		return 0
 
-	if (!islist(H.bandaged) || !H.bandaged.len)
+	if (!islist(H.bandaged) || !length(H.bandaged))
 		return 0
 
 	var/removing = pick(H.bandaged)

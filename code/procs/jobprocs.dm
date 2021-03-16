@@ -257,7 +257,7 @@
 			//Promote Chief Engineer
 			if (istype(JOB, /datum/job/command/chief_engineer))
 				var/list/picks = FindPromotionCandidates(engineering_staff, JOB)
-				if (!picks || !picks.len)
+				if (!picks || !length(picks))
 					continue
 				var/mob/new_player/candidate = pick(picks)
 				logTheThing("debug", null, null, "<b>kyle:</b> [candidate] took [JOB.name] from Job Promotion Picker")
@@ -267,7 +267,7 @@
 			//Promote Research Director
 			else if (istype(JOB, /datum/job/command/research_director))
 				var/list/picks = FindPromotionCandidates(research_staff, JOB)
-				if (!picks || !picks.len)
+				if (!picks || !length(picks))
 					continue
 				var/mob/new_player/candidate = pick(picks)
 				logTheThing("debug", null, null, "<b>kyle:</b> [candidate] took [JOB.name] from Job Promotion Picker")
@@ -277,7 +277,7 @@
 			//Promote Medical Director
 			else if (istype(JOB, /datum/job/command/medical_director))
 				var/list/picks = FindPromotionCandidates(medical_staff, JOB)
-				if (!picks || !picks.len)
+				if (!picks || !length(picks))
 					continue
 				var/mob/new_player/candidate = pick(picks)
 				logTheThing("debug", null, null, "<b>kyle:</b> [candidate] took [JOB.name] from Job Promotion Picker")

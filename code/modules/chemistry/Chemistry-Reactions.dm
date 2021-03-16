@@ -11,7 +11,7 @@
 			break
 
 	var/list/covered = holder.covered_turf()
-	if (!covered || !covered.len)
+	if (!covered || !length(covered))
 		covered = list(get_turf(holder.my_atom))
 
 	var/howmany = clamp(covered.len / 2.2, 1, 15)
@@ -49,7 +49,7 @@
 		return 0
 
 	var/list/covered = holder.covered_turf()
-	if (!covered || !covered.len)
+	if (!covered || !length(covered))
 		covered = list(get_turf(holder.my_atom))
 
 	var/howmany = clamp(covered.len / 2.2, 1, 15)
@@ -85,7 +85,7 @@
 	var/og_smoke_size = smoke_size
 
 	var/list/covered = holder.covered_turf()
-	if (!covered || !covered.len)
+	if (!covered || !length(covered))
 		covered = list(get_turf(holder.my_atom))
 
 	var/howmany = max(1,covered.len / 4)
@@ -153,7 +153,7 @@
 		playsound(location, 'sound/effects/smoke.ogg', 50, 1, -3)
 
 	var/list/covered = holder.covered_turf()
-	if (!covered || !covered.len)
+	if (!covered || !length(covered))
 		covered = list(get_turf(holder.my_atom))
 
 	var/howmany = max(1,covered.len / 5)

@@ -496,7 +496,7 @@
 	proc/toggle()
 		src.on = !(src.on)
 		src.icon_state = "light[!(src.on)]"
-		if (!islist(myBlinds) || !myBlinds.len)
+		if (!islist(myBlinds) || !length(myBlinds))
 			return
 		for (var/obj/window_blinds/blind in myBlinds)
 			blind.toggle(src.on)

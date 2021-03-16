@@ -2380,7 +2380,7 @@
 			return 0
 
 		configure(var/list/confList)
-			if (!confList || !confList.len)
+			if (!confList || !length(confList))
 				return 1
 
 			return 0
