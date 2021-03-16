@@ -3150,13 +3150,13 @@
 	if (head)
 		worn += head.name
 	else if (!src.mutantrace || istype(src.mutantrace, /datum/mutantrace/dwarf) || istype(src.mutantrace, /datum/mutantrace/flashy))
-		if (src.bioHolder.mobAppearance.customization_first in /list/hair_styles || src.bioHolder.mobAppearance.customization_second in /list/hair_styles || src.bioHolder.mobAppearance.customization_third in /list/hair_styles)
+		if ((src.bioHolder.mobAppearance.customization_first in hair_styles) || (src.bioHolder.mobAppearance.customization_second in hair_styles) || (src.bioHolder.mobAppearance.customization_third in hair_styles))
 			worn += "hair"
 		else
 			worn += "bald head"
-		if (src.bioHolder.mobAppearance.customization_first in /list/moustache_styles || src.bioHolder.mobAppearance.customization_second in /list/moustache_styles || src.bioHolder.mobAppearance.customization_third in /list/moustache_styles)
+		if ((src.bioHolder.mobAppearance.customization_first in moustache_styles) || (src.bioHolder.mobAppearance.customization_second in moustache_styles) || (src.bioHolder.mobAppearance.customization_third in moustache_styles))
 			worn += "moustache"
-		if (src.bioHolder.mobAppearance.customization_first in /list/beard_styles || src.bioHolder.mobAppearance.customization_second in /list/beard_styles || src.bioHolder.mobAppearance.customization_third in /list/beard_styles)
+		if ((src.bioHolder.mobAppearance.customization_first in beard_styles) || (src.bioHolder.mobAppearance.customization_second in beard_styles) || (src.bioHolder.mobAppearance.customization_third in beard_styles))
 			worn += "beard"
 
 	if (src.mutantrace)
@@ -3169,8 +3169,6 @@
 		else if (istype(src.mutantrace, /datum/mutantrace/roach))
 			worn += "antennae"
 		else if (istype(src.mutantrace, /datum/mutantrace/monkey))
-			worn += "tail"
-		else if (istype(src.mutantrace, /datum/mutantrace/seamonkey))
 			worn += "tail"
 		else if (istype(src.mutantrace, /datum/mutantrace/cat))
 			worn += "tail"
