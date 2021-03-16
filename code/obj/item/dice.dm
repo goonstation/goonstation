@@ -38,7 +38,7 @@ var/list/rollList = list()
 			initialDesc = desc
 
 	get_desc()
-		if (src.last_roll && !src.dicePals.len)
+		if (src.last_roll && !length(src.dicePals))
 			if (isnum(src.last_roll))
 				. += "<br>[src] currently shows [get_english_num(src.last_roll)]."
 			else

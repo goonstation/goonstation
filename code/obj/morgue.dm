@@ -659,7 +659,7 @@
 
 	attackby(var/obj/item/P as obj, mob/user as mob)
 		..()
-		if (istype(P, /obj/item/light/tube) && !src.contents.len)
+		if (istype(P, /obj/item/light/tube) && !length(src.contents))
 			var/obj/item/light/tube/G = P
 			boutput(user, "<span class='notice'>You put \the [G.name] into \the [src.name].</span>")
 			user.drop_item()

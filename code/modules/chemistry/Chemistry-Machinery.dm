@@ -623,7 +623,7 @@
 		return 1
 
 	proc/check_whitelist(var/datum/reagents/R)
-		if (src.emagged || !R || !src.whitelist || (islist(src.whitelist) && !src.whitelist.len))
+		if (src.emagged || !R || !src.whitelist || (islist(src.whitelist) && !length(src.whitelist)))
 			return 1
 		var/all_safe = 1
 		for (var/reagent_id in R.reagent_list)

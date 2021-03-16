@@ -947,7 +947,7 @@
 		for(var/obj/machinery/vehicle/pod_smooth/P in view(firing_range, src))
 			targets_secondary += P
 
-		if (!targets_primary.len && !targets_secondary.len)
+		if (!targets_primary.len && !length(targets_secondary))
 			return 1
 
 		var/atom/Target = null

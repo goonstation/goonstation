@@ -36,7 +36,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	New()
 		..()
 		SPAWN_DBG(1 SECOND)
-			if (src && istype(src) && (!src.items_general.len && !src.items_job.len && !src.items_objective.len))
+			if (src && istype(src) && (!src.items_general.len && !src.items_job.len && !length(src.items_objective)))
 				src.setup()
 
 	proc/generate_code()

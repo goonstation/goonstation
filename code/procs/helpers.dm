@@ -2456,7 +2456,7 @@ proc/angle_to_vector(ang)
   * * TA: Target Atom. The thing that the user is adding the reagent to
   */
 proc/check_whitelist(var/atom/TA, var/list/whitelist, var/mob/user as mob, var/custom_message = "")
-	if (!whitelist || (!TA || !TA.reagents) || (islist(whitelist) && !whitelist.len))
+	if (!whitelist || (!TA || !TA.reagents) || (islist(whitelist) && !length(whitelist)))
 		return
 	if (!custom_message)
 		custom_message = "<span class='alert'>[TA] identifies and removes a harmful substance.</span>"
