@@ -7,7 +7,7 @@
 //close only counts in horseshoes and byond
 #define EXTRA_TICK_SPACE 2
 
-#ifndef SPACEMAN_DMM
+#if DM_VERSION >= 514
 #define APPROX_TICK_USE (world.tick_usage + world.map_cpu + EXTRA_TICK_SPACE)
 #else
 #define APPROX_TICK_USE (world.tick_usage + EXTRA_TICK_SPACE)
