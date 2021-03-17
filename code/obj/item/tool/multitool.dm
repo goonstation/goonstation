@@ -46,6 +46,15 @@
 		var/obj/item/peripheral/network/peripheral = locate(/obj/item/peripheral/network) in computer.contents
 		var/obj/item/peripheral/network/radio/radioperipheral = locate(/obj/item/peripheral/network/radio) in computer.contents
 		var/obj/item/peripheral/network/omni/omniperipheral = locate(/obj/item/peripheral/network/omni) in computer.contents
+		// GAHH
+		var/obj/machinery/power/data_terminal/deviceterm
+		if (hasvar(peripheral, "link"))
+			deviceterm = peripheral:link
+		if(deviceterm)
+			if(deviceterm.powernet.cables.len > 1)
+				boutput(user, "<span class='alert'>ON[net_id]</span>")
+			else
+				boutput(user, "<span class='alert'>OFF</span>")
 		if (peripheral)
 			net_id = peripheral.net_id
 		if (radioperipheral)
