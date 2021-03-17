@@ -29,16 +29,15 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 
 	var/skull_key_assigned = 0
 
+	var/tmp/last_try_dilate = 0
 	var/tmp/useTimeDilation = TIME_DILATION_ENABLED
 	var/tmp/timeDilationLowerBound = MIN_TICKLAG
 	var/tmp/timeDilationUpperBound = OVERLOADED_WORLD_TICKLAG
-	var/tmp/last_tick_realtime = 0
-	var/tmp/last_tick_byondtime = 0
-	var/tmp/last_interval_tick_offset = 0 //how far off the last tick (byondtime - realtime)
-	var/tmp/last_try_dilate = 0
+	var/tmp/highMapCpuCount = 0 // how many times in a row has the map_cpu been high
 
-	var/tmp/threshold_dilation = TICKLAG_DILATION_THRESHOLD	//remove later
-	var/tmp/threshold_normalization = TICKLAG_NORMALIZATION_THRESHOLD //remove later
+	var/tmp/threshold_bad_mapcpu = TICKLAG_MAPCPU_MAX //remove later
+	var/tmp/threshold_increase = TICKLAG_INCREASE_THRESHOLD	//remove later
+	var/tmp/threshold_decrease = TICKLAG_DECREASE_THRESHOLD //remove later
 
 /datum/controller/gameticker/proc/pregame()
 
@@ -385,17 +384,23 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 			if (world.time > last_try_dilate + TICKLAG_DILATE_INTERVAL) //interval separate from the process loop. maybe consider moving this for cleanup later (its own process loop with diff. interval?)
 				last_try_dilate = world.time
 
-				last_interval_tick_offset = max(0, (world.timeofday - last_tick_realtime) - (world.time - last_tick_byondtime))
-				last_tick_realtime = world.timeofday
-				last_tick_byondtime = world.time
+				// adjust the counter up or down and keep it within the set boundaries
+				if (world.map_cpu >= threshold_bad_mapcpu)
+					if (highMapCpuCount < threshold_increase)
+						highMapCpuCount++
+				else if (highMapCpuCount > -threshold_decrease)
+					highMapCpuCount--
 
+				// adjust the tick_lag, if needed
 				var/dilated_tick_lag = world.tick_lag
+				if (highMapCpuCount >= threshold_increase)
+					dilated_tick_lag = min(world.tick_lag + TICKLAG_DILATION_INC,	timeDilationUpperBound)
+				else if (highMapCpuCount <= -threshold_decrease)
+					dilated_tick_lag = max(world.tick_lag - TICKLAG_DILATION_DEC, timeDilationLowerBound)
 
-				if (last_interval_tick_offset >= threshold_dilation)
-					dilated_tick_lag = 	min(world.tick_lag + TICKLAG_DILATION_INC,	timeDilationUpperBound)
-				else if (last_interval_tick_offset <= threshold_normalization)
-					dilated_tick_lag =	max(world.tick_lag - TICKLAG_DILATION_DEC, timeDilationLowerBound)
-
+				// only set the value if it changed! earlier iteration of this was
+				// setting world.tick_lag very often, which caused instability with
+				// the networking. do not spam change world.tick_lag! you will regret it!
 				if (world.tick_lag != dilated_tick_lag)
 					world.tick_lag = dilated_tick_lag
 

@@ -34,7 +34,7 @@
 /// Waits until a given condition is true, tg-style async
 #define UNTIL(X) while(!(X)) sleep(1)
 
-//ticklag stuff
+//ticklag stuff. code lives in gameticker's process() in datums/gameticker.dm
 #define TIME_DILATION_ENABLED 1
 /// min value ticklag can be
 #define MIN_TICKLAG 0.4
@@ -44,8 +44,13 @@
 #define TICKLAG_DILATION_INC 0.2
 /// how much to decrease by when appropriate //MBCX I DONT KNOW WHY BUT MOST VALUES CAUSE ROUNDING ERRORS, ITS VERY IMPORTANT THAT THIS REMAINS 0.2 FIOR NOW
 #define TICKLAG_DILATION_DEC 0.2
-#define TICKLAG_DILATION_THRESHOLD 5 // these values dont make sense to you? read the math in gameticker
-#define TICKLAG_NORMALIZATION_THRESHOLD 0.3 // these values dont make sense to you? read the math in gameticker
+/// what map_cpu percent is too laggy in the dilation check
+#define TICKLAG_MAPCPU_MAX 50
+/// number of times the dilation check needs to see lag in a row to slow down the ticker
+#define TICKLAG_INCREASE_THRESHOLD 5
+/// number of times to see no lag in a row to speed up the ticker
+#define TICKLAG_DECREASE_THRESHOLD 10
+/// how often to check for time dilation, against world.time, so counted in game ticks.
 #define TICKLAG_DILATE_INTERVAL 20
 
 /// when pcount is above this number on round start, increase ticklag to OVERLOADED_WORLD_TICKLAG to try to maintain smoothness
