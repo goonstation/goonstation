@@ -62,7 +62,7 @@
 		control = target:control_freq
 		if (hasvar(target, "beacon_freq"))
 			beacon = target:beacon_freq
-	else if (hasvar(target, "radio_connection"))
+	else if (hasvar(target, "radio_connection.frequency"))
 		var/datum/radio_frequency/radiofreq = target:radio_connection
 		frequency = radiofreq.frequency
 	else if (hasvar(target, "frequency"))
