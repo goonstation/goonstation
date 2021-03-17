@@ -551,7 +551,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 			if (BE)
 				BE.OnLife(mult)
 				if(BE.timeLeft != -1)
-					BE.timeLeft -= mult
+					BE.timeLeft -= 1*mult
 					if(BE.timeLeft <= 0)
 						RemoveEffect(BE.id)
 		return
