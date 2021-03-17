@@ -804,6 +804,8 @@ Broken RCD + Effects
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/rcd_ammo))
 			..()
+		else if (isExploitableObject(W))
+			boutput(user, "Recycling [W] just doesn't work.")
 		else if (W?.material?.mat_id == "cardboard")
 			matter += 10
 			boutput(user, "\The [src] recycles [W], and now holds [src.matter]/[src.max_matter] [material_name]-units.")
