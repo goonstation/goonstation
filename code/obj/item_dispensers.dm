@@ -115,6 +115,6 @@
 	filled_icon_state = "dispenser_ice"
 	withdraw_type = /obj/item/raw_material/ice
 	deposit_type = null
-	amount = 1000
+	amount = 10000
 	display_amount = 0
 	pixel_y = 0
