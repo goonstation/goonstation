@@ -182,7 +182,7 @@ ABSTRACT_TYPE(/datum/generatorPrefab)
 
 	candy_shop //Ryn's store from out of time and out of place
 		maxNum = 1
-		probability = 60 //for initial release, reset to 30 or 25 after a week or so
+		probability = 25
 		prefabPath = "assets/maps/prefabs/prefab_candy_shop.dmm"
 		prefabSizeX = 20
 		prefabSizeY = 20
