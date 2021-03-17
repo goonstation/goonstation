@@ -818,6 +818,9 @@ Broken RCD + Effects
 			matter += 0.5
 			boutput(user, "\The [src] recycles [W], and now holds [src.matter]/[src.max_matter] [material_name]-units.")
 			qdel(W)
+		else if (istype(W, /obj/item/paper_booklet))
+			var/obj/item/paper_booklet/booklet = W
+			matter += booklet.pages.len/2
 		else if (W?.material?.mat_id == "wood")
 			matter += 20
 			boutput(user, "\The [src] pulps [W], and now holds [src.matter]/[src.max_matter] [material_name]-units.")
