@@ -230,7 +230,8 @@
 	color_r = 1
 	color_g = 0.8 // red tint
 	color_b = 0.8
-	var/upgraded = 0 // for seeing through walls
+	/// For seeing through walls
+	var/upgraded = FALSE 
 
 	equipped(mob/user, slot)
 		. = ..()
