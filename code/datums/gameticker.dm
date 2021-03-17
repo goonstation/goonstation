@@ -384,12 +384,14 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 			if (world.time > last_try_dilate + TICKLAG_DILATE_INTERVAL) //interval separate from the process loop. maybe consider moving this for cleanup later (its own process loop with diff. interval?)
 				last_try_dilate = world.time
 
+				#if DM_VERSION >= 514
 				// adjust the counter up or down and keep it within the set boundaries
 				if (world.map_cpu >= threshold_bad_mapcpu)
 					if (highMapCpuCount < threshold_increase)
 						highMapCpuCount++
 				else if (highMapCpuCount > -threshold_decrease)
 					highMapCpuCount--
+				#endif
 
 				// adjust the tick_lag, if needed
 				var/dilated_tick_lag = world.tick_lag
