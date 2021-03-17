@@ -3701,6 +3701,20 @@ datum
 			on_plant_life(var/obj/machinery/plantpot/P)
 				P.HYPdamageplant("poison",1)
 
+			syndicate
+				name = "syndicate miasma"
+				id = "miasma_s"
+				description = "Gross miasma produced by unwashed nerd."
+				fluid_r = 180
+				fluid_b = 60
+				fluid_g = 80
+
+				on_add()
+					..()
+					if (holder && prob(50) && ismob(holder.my_atom))
+						var/mob/bipbip = holder.my_atom
+						bipbip.playsound_local(bipbip.loc, pick("explosion", "punch", 'sound/vox/poo-vox.ogg', "clownstep", 'sound/weapons/armbomb.ogg', 'sound/weapons/Gunshot.ogg'), 30, 1)
+
 		sakuride
 			name = "sakuride"
 			id = "sakuride"

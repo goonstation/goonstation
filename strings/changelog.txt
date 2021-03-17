@@ -1,5 +1,7 @@
 
 (t)tue mar 16 21
+(u)The Laundry (warc)
+(+)Ugh, that hat fuckin' REEKS dude, don't make me murder it off of you!
 (u)Flaborized
 (p)4030
 (e)🎨|sprites
