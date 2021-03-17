@@ -1632,6 +1632,7 @@ Present 	Unscrewed  Connected 	Unconnected		Missing
 			radio_connection = radio_controller.add_object(src, "[frequency]")
 
 	initialize()
+		..()
 		set_frequency(frequency)
 
 #undef PUMP_POWERLEVEL_1

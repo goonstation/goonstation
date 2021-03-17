@@ -563,6 +563,7 @@ Broken RCD + Effects
 /obj/item/rcd/construction/chiefEngineer
 	name = "rapid construction device custom"
 	desc = "Also known as an RCD, this is capable of rapidly constructing walls, flooring, windows, and doors. This device was customized by the Chief Engineer to have an enhanced feature set and work more efficiently."
+	icon_state = "base_CE"
 
 	max_matter = 50
 	matter_create_wall = 1

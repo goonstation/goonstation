@@ -1,4 +1,4 @@
-#define ALIVE_ANTAGS_THRESHOLD 0.06 //value copied from antag spawn event
+#define ALIVE_ANTAGS_THRESHOLD 0.08 //8 percent
 #define ALIVE_CREW_THRESHOLD 30
 /datum/random_event/major/syndicate_retribution
 	name = "Syndicate Retribution"

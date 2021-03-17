@@ -32,6 +32,11 @@
 	var/oldx = 0
 	var/oldy = 0
 
+	ranch
+		name = "baby monitor"
+		network = "ranch"
+		color = "#AAFF99"
+
 /obj/machinery/camera/process()
 	.=..()
 	if(!isturf(src.loc)) //This will end up removing coverage if camera is inside a thing.
@@ -322,7 +327,7 @@
 	.= 0
 	if (isturf(M.loc))
 		var/turf/T = M.loc
-		.= (T.cameras && T.cameras.len)
+		.= (T.cameras && length(T.cameras))
 
 
 /obj/machinery/camera/motion

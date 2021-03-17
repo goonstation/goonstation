@@ -257,7 +257,7 @@
 			//Promote Chief Engineer
 			if (istype(JOB, /datum/job/command/chief_engineer))
 				var/list/picks = FindPromotionCandidates(engineering_staff, JOB)
-				if (!picks || !picks.len)
+				if (!picks || !length(picks))
 					continue
 				var/mob/new_player/candidate = pick(picks)
 				logTheThing("debug", null, null, "<b>kyle:</b> [candidate] took [JOB.name] from Job Promotion Picker")
@@ -267,7 +267,7 @@
 			//Promote Research Director
 			else if (istype(JOB, /datum/job/command/research_director))
 				var/list/picks = FindPromotionCandidates(research_staff, JOB)
-				if (!picks || !picks.len)
+				if (!picks || !length(picks))
 					continue
 				var/mob/new_player/candidate = pick(picks)
 				logTheThing("debug", null, null, "<b>kyle:</b> [candidate] took [JOB.name] from Job Promotion Picker")
@@ -277,7 +277,7 @@
 			//Promote Medical Director
 			else if (istype(JOB, /datum/job/command/medical_director))
 				var/list/picks = FindPromotionCandidates(medical_staff, JOB)
-				if (!picks || !picks.len)
+				if (!picks || !length(picks))
 					continue
 				var/mob/new_player/candidate = pick(picks)
 				logTheThing("debug", null, null, "<b>kyle:</b> [candidate] took [JOB.name] from Job Promotion Picker")
@@ -401,7 +401,7 @@
 					qdel(snappedDrone)
 				V.finish_board_pod(src)
 
-			if (prob(10) && islist(random_pod_codes) && random_pod_codes.len)
+			if (prob(10) && islist(random_pod_codes) && length(random_pod_codes))
 				var/obj/machinery/vehicle/V = pick(random_pod_codes)
 				random_pod_codes -= V
 				if (V?.lock?.code)
@@ -461,7 +461,7 @@
 					R.fields["abilities"] = A
 
 				SPAWN_DBG(0)
-					if(src.traitHolder && src.traitHolder.traits.len)
+					if(src.traitHolder && length(src.traitHolder.traits))
 						R.fields["traits"] = src.traitHolder.traits.Copy()
 
 				R.fields["imp"] = null
@@ -667,7 +667,7 @@
 
 	if (JOB.slot_back)
 		src.equip_new_if_possible(JOB.slot_back, slot_back)
-	if (JOB.slot_back && JOB?.items_in_backpack.len)
+	if (JOB.slot_back && length(JOB?.items_in_backpack))
 		for (var/X in JOB.items_in_backpack)
 			if(ispath(X))
 				src.equip_new_if_possible(X, slot_in_backpack)

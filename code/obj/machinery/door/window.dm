@@ -22,7 +22,7 @@
 	New()
 		..()
 
-		if (src.req_access && src.req_access.len)
+		if (src.req_access && length(src.req_access))
 			src.icon_state = "[src.icon_state]"
 			src.base_state = src.icon_state
 		return

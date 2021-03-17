@@ -72,6 +72,7 @@
 	var/tmp/run_start = 0
 
 	// Records the world.tick_usage (0 to 100) at which the process last began running
+	// drsingh - as of byond 514, world.map_cpu is also included in this via APPROX_TICK_USE
 	var/tmp/tick_start = 0
 
 	// Records the total usage of the current run, each 100 = 1 byond tick
@@ -118,7 +119,7 @@ datum/controller/process/proc/started()
 	run_start = TimeOfHour
 
 	// Initialize tick_start so we can know when to sleep
-	tick_start = world.tick_usage
+	tick_start = APPROX_TICK_USE
 
 	// Initialize the cpu usage counter
 	current_usage = 0
@@ -135,7 +136,7 @@ datum/controller/process/proc/started()
 
 datum/controller/process/proc/finished()
 	ticks++
-	current_usage += world.tick_usage - tick_start
+	current_usage += APPROX_TICK_USE - tick_start
 	last_usage = current_usage
 	current_usage = 0
 	idle()
@@ -217,14 +218,18 @@ datum/controller/process/proc/scheck()
 		handleHung()
 		CRASH("Process [name] hung and was restarted.")
 
-	// For each tick the process defers, it increments the cpu_defer_count so we don't
-	// defer indefinitely
-	if (world.tick_usage > MAX_TICK_USAGE || ( (world.tick_usage - tick_start) > tick_allowance ))
-		current_usage += world.tick_usage - tick_start
+  // Allow the process to continue if it's already been waiting to run for a while.
+	if (cpu_defer_count >= PROCESS_MAX_DEFER_COUNT)
+		cpu_defer_count = 0
+		return 0
+
+	// Check the current server load and decide if the process should wait
+	if (APPROX_TICK_USE > PROCESS_MAX_TICK_USAGE || ( (APPROX_TICK_USE - tick_start) > tick_allowance ))
+		current_usage += APPROX_TICK_USE - tick_start
 		sleep( world.tick_lag * main.running.len )
 		cpu_defer_count++
 		last_slept = TimeOfHour
-		tick_start = world.tick_usage
+		tick_start = APPROX_TICK_USE
 
 		return 1
 
@@ -329,7 +334,6 @@ datum/controller/process/proc/copyStateFrom(var/datum/controller/process/target)
 datum/controller/process/proc/onKill()
 
 datum/controller/process/proc/onStart()
-	LAGCHECK(LAG_HIGH)
 
 datum/controller/process/proc/onFinish()
 

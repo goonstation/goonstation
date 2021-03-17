@@ -94,5 +94,5 @@
 			var/list/bin
 			for(var/i=1,i<=queue.len,i++)
 				bin = queue[i]
-				count += bin.len
+				count += length(bin)
 			return count

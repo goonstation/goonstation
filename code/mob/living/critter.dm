@@ -126,7 +126,7 @@
 		health_update_queue |= src
 
 		src.abilityHolder = new /datum/abilityHolder/critter(src)
-		if (islist(src.add_abilities) && src.add_abilities.len)
+		if (islist(src.add_abilities) && length(src.add_abilities))
 			for (var/abil in src.add_abilities)
 				if (ispath(abil))
 					abilityHolder.addAbility(abil)
@@ -630,6 +630,7 @@
 		var/pmsg = islist(src.pet_text) ? pick(src.pet_text) : src.pet_text
 		src.visible_message("<span class='notice'><b>[user] [pmsg] [src]!</b></span>",\
 		"<span class='notice'><b>[user] [pmsg] you!</b></span>")
+		user.add_karma(0.5)
 		return
 
 	proc/get_active_hand()
