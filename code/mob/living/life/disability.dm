@@ -30,11 +30,11 @@
 
 		if (owner.mind && isvampire(owner))
 			if (istype(get_area(owner), /area/station/chapel) && owner.check_vampire_power(3) != 1)
-				if (probmult(33))
+				if (prob(33))
 					boutput(owner, "<span class='alert'>The holy ground burns you!</span>")
 				owner.TakeDamage("chest", 0, 5 * mult, 0, DAMAGE_BURN)
 			if (owner.loc && istype(owner.loc, /turf/space))
-				if (probmult(33))
+				if (prob(33))
 					boutput(owner, "<span class='alert'>The starlight burns you!</span>")
 				owner.TakeDamage("chest", 0, 2 * mult, 0, DAMAGE_BURN)
 
