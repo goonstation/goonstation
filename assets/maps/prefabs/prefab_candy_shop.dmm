@@ -536,9 +536,12 @@
 /obj/machinery/light/incandescent/cool/very{
 	dir = 8
 	},
-/obj/item/reagent_containers/food/snacks/candy/nougat,
 /obj/item/reagent_containers/food/snacks/candy/nougat{
-	pixel_y = 8
+	rand_pos = 0
+	},
+/obj/item/reagent_containers/food/snacks/candy/nougat{
+	pixel_y = 4;
+	rand_pos = 0
 	},
 /obj/item/reagent_containers/food/snacks/candy/nougat{
 	pixel_y = 8;
