@@ -148,7 +148,7 @@ ClearSpecificOverlays(1, "key0", "key1", "key2") 	//Same as above but retains ca
 
 	if(I)
 		src.overlays += I
-		index = src.overlays.len
+		index = length(src.overlays)
 		prev_data[P_INDEX] = index
 
 		prev_data[P_IMAGE] = I

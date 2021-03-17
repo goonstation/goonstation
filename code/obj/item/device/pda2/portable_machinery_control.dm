@@ -198,7 +198,7 @@
 				var/turf/our_loc = get_turf(PDA)
 				if (isAIeye(usr))
 					our_loc = get_turf(usr)
-					if (!(our_loc.cameras && our_loc.cameras.len))
+					if (!(our_loc.cameras && length(our_loc.cameras)))
 						boutput(usr, "<span class='alert'>This area is not within your range of influence.</span>")
 						return
 

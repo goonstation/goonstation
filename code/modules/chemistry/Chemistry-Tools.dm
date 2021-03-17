@@ -59,9 +59,9 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 		if (!src.reagents)
 			src.initial_reagents = null // don't need you no mo
 			return
-		if ((islist(new_reagents) && new_reagents.len) || istext(new_reagents))
+		if ((islist(new_reagents) && length(new_reagents)) || istext(new_reagents))
 			src.initial_reagents = new_reagents
-		if (islist(src.initial_reagents) && src.initial_reagents.len)
+		if (islist(src.initial_reagents) && length(src.initial_reagents))
 			for (var/current_id in src.initial_reagents)
 				if (!istext(current_id)) // we can't do shit hereeee
 					continue

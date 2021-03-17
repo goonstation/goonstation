@@ -301,7 +301,7 @@ var/global/datum/controller/processScheduler/processScheduler
 	return data
 
 /datum/controller/processScheduler/proc/getProcessCount()
-	return processes.len
+	return length(processes)
 
 /datum/controller/processScheduler/proc/hasProcess(var/processName as text)
 	if (nameToProcessMap[processName])

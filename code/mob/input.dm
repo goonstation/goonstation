@@ -84,7 +84,7 @@
 		if (src.canmove)
 			if (src.restrained())
 				for(var/mob/M in range(src, 1))
-					if ((M.pulling == src && (!M.restrained() && isalive(M))) || src.grabbed_by.len)
+					if ((M.pulling == src && (!M.restrained() && isalive(M))) || length(src.grabbed_by))
 						boutput(src, "<span class='notice'>You're restrained! You can't move!</span>")
 						return
 

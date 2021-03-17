@@ -202,7 +202,7 @@
 								count++
 							. += "</ul>"
 
-							if (count == 0 && !page_departments.len)
+							if (count == 0 && !length(page_departments))
 								. += "None detected.<br>"
 
 					else if (src.message_mode == 1)

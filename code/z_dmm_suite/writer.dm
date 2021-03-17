@@ -43,7 +43,7 @@ dmm_suite
 					var/templateNumber = templates.Find(testTemplate)
 					if(!templateNumber)
 						templates.Add(testTemplate)
-						templateNumber = templates.len
+						templateNumber = length(templates)
 					var/compoundIndex = 1 + (posX) + (posY*width) + (posZ*width*height)
 					templateBuffer[compoundIndex] = templateNumber
 		// Compile List of Keys mapped to Models
@@ -81,7 +81,7 @@ dmm_suite
 					var/templateNumber = templates.Find(testTemplate)
 					if(!templateNumber)
 						templates.Add(testTemplate)
-						templateNumber = templates.len
+						templateNumber = length(templates)
 					var/compoundIndex = 1 + (posX) + (posY*width) + (posZ*width*height)
 					templateBuffer[compoundIndex] = templateNumber
 		// Compile List of Keys mapped to Models
@@ -134,7 +134,7 @@ dmm_suite
 					var/templateNumber = templates.Find(testTemplate)
 					if(!templateNumber)
 						templates.Add(testTemplate)
-						templateNumber = templates.len
+						templateNumber = length(templates)
 					var compoundIndex = 1 + (posX) + (posY*width) + (posZ*width*height)
 					templateBuffer[compoundIndex] = templateNumber
 		// Create dmm_suite comments to store in map file

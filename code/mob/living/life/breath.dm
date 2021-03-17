@@ -79,7 +79,7 @@
 			else if (T.active_liquid)
 				var/obj/fluid/F = T.active_liquid
 
-				var/depth_to_breathe_from = depth_levels.len
+				var/depth_to_breathe_from = length(depth_levels)
 				if (owner.lying)
 					depth_to_breathe_from = depth_levels.len-1
 
@@ -136,7 +136,7 @@
 		if (breathtimer > 15)
 			owner.losebreath += (0.7 * mult)
 
-		if (owner.grabbed_by && owner.grabbed_by.len)
+		if (owner.grabbed_by && length(owner.grabbed_by))
 			breath = get_breath_grabbed_by(BREATH_VOLUME)
 
 		if (!breath)

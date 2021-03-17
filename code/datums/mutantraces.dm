@@ -1562,6 +1562,7 @@
 					game_stats.Increment("farts")
 	#endif
 					mob.expel_fart_gas(0)
+					mob.add_karma(0.5)
 					SPAWN_DBG(1 SECOND)
 						mob.emote_allowed = 1
 

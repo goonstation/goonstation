@@ -713,7 +713,7 @@
 		return
 
 	var/list/audience = hearers(src, null)
-	if (!audience || !audience.len)
+	if (!audience || !length(audience))
 		return
 
 	var/fontSize = 1

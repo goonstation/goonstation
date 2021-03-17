@@ -117,7 +117,7 @@ proc/create_fluff(var/datum/mind/target)
 
 	//Pick which flufftext we want to use
 	var/flufftext
-	if(general_fluff && special_fluff.len)
+	if(general_fluff && length(special_fluff))
 		flufftext = pick(prob(50) ? general_fluff : special_fluff)
 	else if (general_fluff)
 		flufftext = pick(general_fluff)
