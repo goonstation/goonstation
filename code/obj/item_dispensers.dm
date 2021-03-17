@@ -35,7 +35,7 @@
 			user.u_equip(W)
 			src.amount++
 			src.update_icon()
-			boutput(user, "<span class='notice'>You put \the [W] into \the [src]. [display_amount ? "There's [src.amount] left.":]</span>")
+			boutput(user, "<span class='notice'>You put \the [W] into \the [src]. [display_amount ? "There's [src.amount] left.": null ]</span>")
 			qdel(W)
 
 	attack_hand(mob/user as mob)
@@ -47,7 +47,7 @@
 			src.amount--
 			src.update_icon()
 			var/obj/item/I = new src.withdraw_type
-			boutput(user, "<span class='notice'>You put \the [I] into \the [src]. [display_amount ? "There's [src.amount] left.":]</span>")
+			boutput(user, "<span class='notice'>You put \the [I] into \the [src]. [display_amount ? "There's [src.amount] left.": null ]</span>")
 			user.put_in_hand_or_drop(I)
 		else
 			boutput(user, "<span class='alert'>There's nothing in \the [src] to take!</span>")
