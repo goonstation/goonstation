@@ -10073,11 +10073,7 @@
 /area/station/crew_quarters/cafeteria)
 "ayN" = (
 /obj/table/reinforced/bar/auto,
-/obj/item/wrapping_paper,
-/obj/item/scissors{
-	pixel_x = -5;
-	pixel_y = 9
-	},
+/obj/item/clothing/head/cakehat,
 /turf/simulated/floor/carpet{
 	dir = 1;
 	icon_state = "fred2"
@@ -10088,7 +10084,9 @@
 /obj/window/reinforced{
 	dir = 2
 	},
-/obj/item/clothing/head/cakehat,
+/obj/machinery/computer/security/wooden_tv/small{
+	pixel_y = 7
+	},
 /turf/simulated/floor/carpet{
 	dir = 1;
 	icon_state = "fred2"
@@ -10329,6 +10327,9 @@
 /obj/disposalpipe/segment{
 	dir = 1;
 	icon_state = "pipe-c"
+	},
+/obj/machinery/camera/ranch{
+	dir = 4
 	},
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
@@ -12857,7 +12858,9 @@
 	dir = 4
 	},
 /obj/table/reinforced/bar/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/item_dispenser/icedispenser{
+	dir = 8;
+	pixel_x = 19;
 	pixel_y = 8
 	},
 /turf/simulated/floor/specialroom/bar/edge{
@@ -60169,6 +60172,17 @@
 	dir = 1
 	},
 /area/station/engine/elect)
+"flp" = (
+/obj/disposalpipe/segment,
+/obj/submachine/chef_sink/chem_sink{
+	dir = 4;
+	pixel_x = -4
+	},
+/obj/machinery/camera/ranch{
+	dir = 4
+	},
+/turf/simulated/floor/grass/leafy,
+/area/station/ranch)
 "fnq" = (
 /obj/machinery/hydro_growlamp,
 /turf/simulated/floor/grass{
@@ -123049,7 +123063,7 @@ awz
 atV
 swx
 cDI
-avl
+flp
 sTC
 baL
 aJZ

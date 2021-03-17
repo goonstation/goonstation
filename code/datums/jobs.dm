@@ -901,7 +901,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_glov = /obj/item/clothing/gloves/black
 	slot_poc1 = /obj/item/paper/ranch_guide
 	slot_ears = /obj/item/device/radio/headset/civilian
-	items_in_backpack = list(/obj/item/fishing_rod, /obj/item/chicken_carrier)
+	items_in_backpack = list(/obj/item/fishing_rod, /obj/item/chicken_carrier, /obj/item/device/camera_viewer/ranch)
 
 	New()
 		..()

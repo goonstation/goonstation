@@ -902,7 +902,7 @@ todo: add more small animals!
 
 		if (apply_random)
 			var/list/rand_s = initial(info.subspecies)
-			if (islist(rand_s) && rand_s.len)
+			if (islist(rand_s) && length(rand_s))
 				info = pick(rand_s)
 
 		src.name = initial(info.name)

@@ -191,7 +191,7 @@
 				generator_metrics[++generator_metrics.len] = g_metric
 				return
 
-			last = generator_metrics.len
+			last = length(generator_metrics)
 
 			g_metric["output_d2x"] = g_metric["output_dx"] - generator_metrics[last]["output_dx"]
 
@@ -342,7 +342,7 @@
 				chamber_metrics[++chamber_metrics.len] = c_metric
 				return
 
-			last = chamber_metrics.len
+			last = length(chamber_metrics)
 
 			/* averaged values */
 			c_metric["o2_d2x"] = c_metric["o2_dx"] - chamber_metrics[last]["o2_dx"]
@@ -469,7 +469,7 @@
 				meter_metrics["[p_tag]"][++meter_metrics["[p_tag]"].len] = m_metric
 				return
 
-			last = meter_metrics["[p_tag]"].len
+			last = length(meter_metrics["[p_tag]"])
 
 			m_metric["o2_d2x"] = m_metric["o2_dx"] - meter_metrics["[p_tag]"][last]["o2_dx"]
 			m_metric["toxins_d2x"] = m_metric["toxins_dx"] - meter_metrics["[p_tag]"][last]["toxins_dx"]

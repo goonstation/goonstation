@@ -133,7 +133,7 @@
 				else
 					boutput(user, "<span class='alert'>There is no more room for peripheral cards.</span>")
 
-			if (ispryingtool(P) && src.peripherals.len)
+			if (ispryingtool(P) && length(src.peripherals))
 				playsound(src.loc, "sound/items/Crowbar.ogg", 50, 1)
 				boutput(user, "<span class='notice'>You remove the peripheral boards.</span>")
 				for(var/obj/item/peripheral/W in src.peripherals)

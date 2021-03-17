@@ -2523,7 +2523,7 @@ datum
 						M.visible_message("<span class='emote'><B>[M]</B> flaps [his_or_her(M)] arms ANGRILY!</span>")
 					if (ishuman(M))
 						var/mob/living/carbon/human/H = M
-						if (H.sound_list_flap && H.sound_list_flap.len)
+						if (H.sound_list_flap && length(H.sound_list_flap))
 							playsound(get_turf(H), pick(H.sound_list_flap), 80, 0, 0, H.get_age_pitch())
 				..()
 				return
@@ -3700,6 +3700,20 @@ datum
 
 			on_plant_life(var/obj/machinery/plantpot/P)
 				P.HYPdamageplant("poison",1)
+
+			syndicate
+				name = "syndicate miasma"
+				id = "miasma_s"
+				description = "Gross miasma produced by unwashed nerd."
+				fluid_r = 180
+				fluid_b = 60
+				fluid_g = 80
+
+				on_add()
+					..()
+					if (holder && prob(50) && ismob(holder.my_atom))
+						var/mob/bipbip = holder.my_atom
+						bipbip.playsound_local(bipbip.loc, pick("explosion", "punch", 'sound/vox/poo-vox.ogg', "clownstep", 'sound/weapons/armbomb.ogg', 'sound/weapons/Gunshot.ogg'), 30, 1)
 
 		sakuride
 			name = "sakuride"

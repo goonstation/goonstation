@@ -319,7 +319,7 @@
 			. += "<br><span class='alert'>[src]'s remains are completely skeletonized.</span>"
 
 	if(usr.traitHolder && (usr.traitHolder.hasTrait("observant") || istype(usr, /mob/dead/observer)))
-		if(src.traitHolder && src.traitHolder.traits.len)
+		if(src.traitHolder && length(src.traitHolder.traits))
 			. += "<br><span class='notice'>[src] has the following traits:</span>"
 			for(var/X in src.traitHolder.traits)
 				var/obj/trait/T = getTraitById(X)

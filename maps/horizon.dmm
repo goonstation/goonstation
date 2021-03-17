@@ -42915,8 +42915,10 @@
 /area/station/hallway/secondary/exit)
 "bSA" = (
 /obj/table/reinforced/bar/auto,
-/obj/item/storage/box/glassbox,
 /obj/machinery/atmospherics/pipe/simple/color_pipe/green_pipe/vertical,
+/obj/item_dispenser/icedispenser{
+	pixel_y = 13
+	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/bar)
 "bSB" = (
@@ -46464,6 +46466,7 @@
 /obj/item/kitchen/utensil/fork,
 /obj/item/reagent_containers/food/drinks/drinkingglass,
 /obj/machinery/atmospherics/pipe/simple/color_pipe/green_pipe/horizontal,
+/obj/item/reagent_containers/food/drinks/drinkingglass,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "bar-edge"
@@ -46474,8 +46477,8 @@
 /obj/disposalpipe/segment/transport{
 	dir = 4
 	},
-/obj/item/reagent_containers/food/drinks/drinkingglass,
 /obj/machinery/atmospherics/pipe/simple/color_pipe/green_pipe/horizontal,
+/obj/item/storage/box/glassbox,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/bar)
 "cac" = (
@@ -59091,6 +59094,13 @@
 /area/station/engine/power{
 	name = "Engineering Control Room"
 	})
+"npX" = (
+/obj/item/disk/data/tape/artifact_research{
+	color = "#FFDDBB";
+	name = "forgotten ThinkTape-'Artifact Research'"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/east)
 "ntf" = (
 /obj/cable{
 	d2 = 8;
@@ -59434,6 +59444,9 @@
 	dir = 10;
 	name = "autoname - SS13";
 	tag = ""
+	},
+/obj/machinery/camera/ranch{
+	dir = 1
 	},
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
@@ -134043,7 +134056,7 @@ czU
 cCQ
 aVm
 aGD
-cBL
+npX
 cCe
 arH
 bmU

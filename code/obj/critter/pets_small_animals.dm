@@ -967,7 +967,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 		var/thing_to_say = ""
 		if (islist(src.learned_phrases) && src.learned_phrases.len && prob(20))
 			thing_to_say = pick(src.learned_phrases)
-		else if (islist(src.learned_words) && src.learned_words.len)
+		else if (islist(src.learned_words) && length(src.learned_words))
 			thing_to_say = pick(src.learned_words) // :monocle:
 			thing_to_say = "[capitalize(thing_to_say)][pick(".", "!", "?", "...")]"
 		// format
