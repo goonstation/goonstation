@@ -272,7 +272,7 @@
 	color_r = 1
 	color_g = 0.75 // slightly more red?
 	color_b = 0.75
-	upgraded = 1
+	upgraded = TRUE
 
 /obj/item/clothing/glasses/thermal/orange
 	name = "orange-tinted glasses"
