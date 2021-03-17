@@ -93,7 +93,7 @@ datum/controller/process/fluid_group
 			for (var/datum/fluid_group/FG in processing_fluid_groups)
 				LAGCHECK(LAG_MED)
 				if (!FG) continue
-				if (!FG.members || !FG.members.len) continue
+				if (!FG.members || !length(FG.members)) continue
 
 				//temperature stuff
 

@@ -459,7 +459,7 @@
 		faultprob *= 2 // eldritch artifacts fucking hate you and are twice as likely to go faulty
 	faultprob = max(0,min(faultprob,100))
 
-	if (prob(faultprob) && A.fault_types.len)
+	if (prob(faultprob) && length(A.fault_types))
 		var/new_fault = weighted_pick(A.fault_types)
 		if (ispath(new_fault))
 			var/datum/artifact_fault/F = new new_fault(A)

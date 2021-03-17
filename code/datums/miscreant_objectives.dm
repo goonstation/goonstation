@@ -23,7 +23,7 @@
 
 		var/obj_count = 1
 		var/assignCount = 1 //min(rand(1,3), objectiveTypes.len)
-		while (assignCount && objectiveTypes.len)
+		while (assignCount && length(objectiveTypes))
 			assignCount--
 			var/selectedType = pick(objectiveTypes)
 			var/datum/objective/miscreant/newObjective = new selectedType

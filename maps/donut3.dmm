@@ -13803,6 +13803,10 @@
 "dPv" = (
 /obj/table/reinforced/bar/auto,
 /obj/firedoor_spawn,
+/obj/item_dispenser/icedispenser{
+	pixel_x = -1;
+	pixel_y = 11
+	},
 /obj/machinery/door/poddoor/pyro{
 	dir = 5;
 	id = "bar_shutter";
@@ -75559,7 +75563,7 @@
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "wmX" = (
-/obj/storage/crate/rcd,
+/obj/storage/crate/rcd/CE,
 /obj/cable{
 	d1 = 1;
 	d2 = 8;

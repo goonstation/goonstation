@@ -130,7 +130,7 @@ proc/semi_deep_copy(orig, new_arg=null, list/environment=null, root=null, copy_f
 			var/atom/result_atom = result
 			result_atom.overlays = null
 			var/list/overlays = list()
-			overlays.len = result_atom.overlay_refs.len
+			overlays.len = length(result_atom.overlay_refs)
 			for(var/key in result_atom.overlay_refs)
 				var/list/overlay_ref = result_atom.overlay_refs[key]
 				var/image/I = overlay_ref[2]

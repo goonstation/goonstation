@@ -1212,6 +1212,17 @@
 	containertype = /obj/storage/crate/classcrate/qm
 	containername = "Anti-Singularity Supply Pack"
 
+/datum/supply_packs/conworksupplies
+	name = "Construction Equipment"
+	desc = "The mothballed tools of our former Construction Workers, in a crate, for you!"
+	category = "Engineering Department"
+	contains = list(/obj/item/lamp_manufacturer/organic,/obj/item/material_shaper,/obj/item/room_planner,/obj/item/clothing/under/rank/orangeoveralls)
+	//i was going to add a version of the construction visualliser w/o seeing invisible monsters but FUCK SIGHT CODE WHAT THE FUCK
+	cost = 8000
+	containertype = /obj/storage/secure/crate
+	containername = "Construction Equipment (Cardlocked \[Engineering])"
+	access = access_engineering
+
 /* ================================================= */
 /* -------------------- Complex -------------------- */
 /* ================================================= */

@@ -137,7 +137,7 @@
 		if(cardnumber < 0)
 			cardnumber = 0
 		else if(cardnumber > cards.len)
-			cardnumber = cards.len
+			cardnumber = length(cards)
 		carddraw(user, cardnumber)
 		src.inuse = 0
 

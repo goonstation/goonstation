@@ -34,7 +34,7 @@
 	return 1
 
 /datum/game_mode/waldo/post_setup()
-	var/num_waldos = waldos.len
+	var/num_waldos = length(waldos)
 	for(var/turf/T in landmarks[LANDMARK_TELEPORT_SCROLL])
 		for(var/scrollcount in 1 to num_waldos)
 			new /obj/item/teleportation_scroll(T)

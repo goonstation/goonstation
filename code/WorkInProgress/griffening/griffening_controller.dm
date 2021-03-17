@@ -99,7 +99,7 @@
 				if (phase == PHASE_DRAW)
 					var/obj/item/playing_cards/stack = holder.card
 					for (var/i = 1, i <= phase_arguments, i++)
-						if (!stack || !stack.cards.len)
+						if (!stack || !length(stack.cards))
 							boutput(M, "<span class='alert'>You lose.</span>")
 							// @todo
 							return

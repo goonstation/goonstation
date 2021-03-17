@@ -112,7 +112,7 @@
 			src.oldtarget = null
 		return
 
-	if(src.target && (!src.path || !src.path.len))
+	if(src.target && (!src.path || !length(src.path)))
 		src.buildPath()
 
 	if(src.path && src.path.len && src.target)

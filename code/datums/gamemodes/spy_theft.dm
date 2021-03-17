@@ -85,12 +85,12 @@
 		var/list/possible_items = list()
 		for (var/datum/syndicate_buylist/S in syndi_buylist_cache)
 			var/blocked = 0
-			if (ticker?.mode && S.blockedmode && islist(S.blockedmode) && S.blockedmode.len)
+			if (ticker?.mode && S.blockedmode && islist(S.blockedmode) && length(S.blockedmode))
 				if (/datum/game_mode/spy_theft in S.blockedmode) //Spies can show up in modes outside spy_theft, so just check if the item would be blocked
 					blocked = 1
 					continue
 
-			if (ticker?.mode && S.exclusivemode && islist(S.exclusivemode) && S.exclusivemode.len)
+			if (ticker?.mode && S.exclusivemode && islist(S.exclusivemode) && length(S.exclusivemode))
 				if (!(/datum/game_mode/spy_theft in S.exclusivemode))
 					blocked = 1
 					continue
@@ -319,7 +319,7 @@
 			personal_bounties += list(list(H.wear_id, H.job))
 
 
-		if (H.client && H.organs.len)
+		if (H.client && length(H.organs))
 			if (H.organs["l_arm"])
 				organ_bounties += list(list(H.organs["l_arm"], H.job))
 			if (H.organs["r_arm"])

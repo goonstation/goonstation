@@ -150,7 +150,7 @@
 			. += "<div><img src='[resource("images/tooltips/stamina.png")]' alt='' class='icon' /><span>Stamina: [src.stamina_damage ? src.stamina_damage : "0"] dmg, [stamina_cost] consumed per swing</span></div>"
 
 		//standard object properties
-		if(src.properties && src.properties.len)
+		if(src.properties && length(src.properties))
 			for(var/datum/objectProperty/P in src.properties)
 				if(!P.hidden)
 					. += "<br><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/[P.tooltipImg]")]\" width=\"12\" height=\"12\" /> [P.name]: [P.getTooltipDesc(src, src.properties[P])]"
@@ -159,7 +159,7 @@
 		if(src.c_flags & HAS_GRAB_EQUIP)
 			. += "<br><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/prot.png")]\" width=\"12\" height=\"12\" /> Block+: "
 			for(var/obj/item/grab/block/B in src)
-				if(B.properties && B.properties.len)
+				if(B.properties && length(B.properties))
 					//inline-blocking-based properties (disorient resist and damage-type blocks)
 					for(var/datum/objectProperty/P in B.properties)
 						if(P.inline)
@@ -258,7 +258,7 @@
 				C.RemoveComponent(/datum/component/loctargeting/mat_triggersonlife)
 
 	removeMaterial()
-		if (src.material && src.material.triggersOnLife.len)
+		if (src.material && length(src.material.triggersOnLife))
 			var/datum/component/C = src.GetComponent(/datum/component/loctargeting/mat_triggersonlife)
 			if (C)
 				C.RemoveComponent(/datum/component/loctargeting/mat_triggersonlife)
@@ -583,7 +583,7 @@
 	ClearSpecificOverlays("burn_overlay")
 	name = "[pick("charred","burned","scorched")] [name]"
 
-		/*if (src.reagents && src.reagents.reagent_list && src.reagents.reagent_list.len)
+		/*if (src.reagents && src.reagents.reagent_list && length(src.reagents.reagent_list))
 
 			//boutput(world, "<span class='alert'><b>[src] is releasing chemsmoke!</b></span>")
 			//cogwerks note for drsingh: this was causing infinite server-killing problems
@@ -817,6 +817,9 @@
 
 /obj/item/proc/try_put_hand_mousedrop(mob/user)
 	var/oldloc = src.loc
+
+	if(src.equipped_in_slot && src.cant_self_remove)
+		return 0
 
 	if (!src.anchored)
 		if (!user.r_hand || !user.l_hand || (user.r_hand == src) || (user.l_hand == src))

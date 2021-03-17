@@ -119,9 +119,6 @@
 	return
 
 /obj/machinery/alarm/proc/post_alert(alert_level)
-
-	LAGCHECK(LAG_LOW)
-
 	var/datum/radio_frequency/frequency = radio_controller.return_frequency(alarm_frequency)
 
 	if(!frequency) return

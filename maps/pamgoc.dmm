@@ -47613,7 +47613,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/obj/storage/crate/rcd,
+/obj/storage/crate/rcd/CE,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 5;

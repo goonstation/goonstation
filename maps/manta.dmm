@@ -7894,7 +7894,7 @@
 /turf/simulated/floor/plating,
 /area/station/engine/engineering/ce)
 "awN" = (
-/obj/storage/crate/rcd,
+/obj/storage/crate/rcd/CE,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -10411,8 +10411,9 @@
 /area/station/crew_quarters/captain)
 "aDm" = (
 /obj/table/reinforced/bar/auto,
-/obj/item/storage/box/cutlery,
-/obj/item/storage/box/plates,
+/obj/item_dispenser/icedispenser{
+	pixel_y = 10
+	},
 /turf/simulated/floor/wood/seven,
 /area/station/crew_quarters/cafeteria/the_rising_tide_bar)
 "aDn" = (
@@ -11545,6 +11546,8 @@
 	dir = 8;
 	icon_state = "line1"
 	},
+/obj/item/storage/box/plates,
+/obj/item/storage/box/cutlery,
 /turf/simulated/floor/wood/seven,
 /area/station/crew_quarters/cafeteria/the_rising_tide_bar)
 "aGo" = (
