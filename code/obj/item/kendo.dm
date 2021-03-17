@@ -29,7 +29,9 @@
         setProperty("meleeprot", 4)
         setProperty("rangedprot", 0.4)
         setProperty("pierceprot", 1)
+				setProperty("disorient_resist", 10)
         setProperty("movespeed", 1)
+
 
 /obj/item/clothing/gloves/kote
     name = "kote"
