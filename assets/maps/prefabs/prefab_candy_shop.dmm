@@ -517,11 +517,15 @@
 /obj/table/wood/round/auto,
 /obj/item/reagent_containers/food/snacks/candy/negativeonebar{
 	pixel_y = 8
+	rand_pos = 0
 	},
 /obj/item/reagent_containers/food/snacks/candy/negativeonebar{
 	pixel_y = 4
+	rand_pos = 0
 	},
-/obj/item/reagent_containers/food/snacks/candy/negativeonebar,
+/obj/item/reagent_containers/food/snacks/candy/negativeonebar{
+	rand_pos = 0
+},
 /turf/simulated/floor/wood/four,
 /area/prefab/candy_shop)
 "RU" = (
