@@ -259,7 +259,7 @@
 		if(..()) return
 		if (iscarbon(owner))
 			var/mob/living/carbon/C = owner
-			if (probmult(tox_prob))
+			if (prob(tox_prob))
 				C.take_toxin_damage(tox_amount*mult)
 
 /datum/bioEffect/tourettes
