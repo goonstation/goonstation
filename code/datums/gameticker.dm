@@ -35,10 +35,6 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 	var/tmp/timeDilationUpperBound = OVERLOADED_WORLD_TICKLAG
 	var/tmp/highMapCpuCount = 0 // how many times in a row has the map_cpu been high
 
-	var/tmp/threshold_bad_mapcpu = TICKLAG_MAPCPU_MAX //remove later
-	var/tmp/threshold_increase = TICKLAG_INCREASE_THRESHOLD	//remove later
-	var/tmp/threshold_decrease = TICKLAG_DECREASE_THRESHOLD //remove later
-
 /datum/controller/gameticker/proc/pregame()
 
 	pregame_timeleft = PREGAME_LOBBY_TICKS
@@ -380,24 +376,24 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 
 		emergency_shuttle.process()
 
+		#if DM_VERSION >= 514
 		if (useTimeDilation)//TIME_DILATION_ENABLED set this
 			if (world.time > last_try_dilate + TICKLAG_DILATE_INTERVAL) //interval separate from the process loop. maybe consider moving this for cleanup later (its own process loop with diff. interval?)
 				last_try_dilate = world.time
 
-				#if DM_VERSION >= 514
 				// adjust the counter up or down and keep it within the set boundaries
-				if (world.map_cpu >= threshold_bad_mapcpu)
-					if (highMapCpuCount < threshold_increase)
+				if (world.map_cpu >= TICKLAG_MAPCPU_MAX)
+					if (highMapCpuCount < TICKLAG_INCREASE_THRESHOLD)
 						highMapCpuCount++
-				else if (highMapCpuCount > -threshold_decrease)
-					highMapCpuCount--
-				#endif
+				else if (world.map_cpu <= TICKLAG_MAPCPU_MIN)
+					if (highMapCpuCount > -TICKLAG_DECREASE_THRESHOLD)
+						highMapCpuCount--
 
 				// adjust the tick_lag, if needed
 				var/dilated_tick_lag = world.tick_lag
-				if (highMapCpuCount >= threshold_increase)
+				if (highMapCpuCount >= TICKLAG_INCREASE_THRESHOLD)
 					dilated_tick_lag = min(world.tick_lag + TICKLAG_DILATION_INC,	timeDilationUpperBound)
-				else if (highMapCpuCount <= -threshold_decrease)
+				else if (highMapCpuCount <= -TICKLAG_DECREASE_THRESHOLD)
 					dilated_tick_lag = max(world.tick_lag - TICKLAG_DILATION_DEC, timeDilationLowerBound)
 
 				// only set the value if it changed! earlier iteration of this was
@@ -405,7 +401,8 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 				// the networking. do not spam change world.tick_lag! you will regret it!
 				if (world.tick_lag != dilated_tick_lag)
 					world.tick_lag = dilated_tick_lag
-
+					highMapCpuCount = 0
+		#endif
 
 		// Minds are sometimes kicked out of the global list, hence the fallback (Convair880).
 		if (src.last_readd_lost_minds_to_ticker && world.time > src.last_readd_lost_minds_to_ticker + 1800)

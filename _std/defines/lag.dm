@@ -44,8 +44,10 @@
 #define TICKLAG_DILATION_INC 0.2
 /// how much to decrease by when appropriate //MBCX I DONT KNOW WHY BUT MOST VALUES CAUSE ROUNDING ERRORS, ITS VERY IMPORTANT THAT THIS REMAINS 0.2 FIOR NOW
 #define TICKLAG_DILATION_DEC 0.2
-/// what map_cpu percent is too laggy in the dilation check
-#define TICKLAG_MAPCPU_MAX 50
+/// what map_cpu percent is too high in the dilation check
+#define TICKLAG_MAPCPU_MAX 60
+/// what map_cpu percent is low enough in the dilation check
+#define TICKLAG_MAPCPU_MIN 40
 /// number of times the dilation check needs to see lag in a row to slow down the ticker
 #define TICKLAG_INCREASE_THRESHOLD 5
 /// number of times to see no lag in a row to speed up the ticker
