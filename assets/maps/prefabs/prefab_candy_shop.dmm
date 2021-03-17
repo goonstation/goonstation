@@ -36,7 +36,6 @@
 /area/prefab/candy_shop)
 "hD" = (
 /obj/lattice{
-	dir = 2;
 	icon_state = "lattice-dir-b"
 	},
 /obj/machinery/light/runway_light/delay3,
@@ -542,7 +541,8 @@
 	pixel_y = 8
 	},
 /obj/item/reagent_containers/food/snacks/candy/nougat{
-	pixel_y = 4
+	pixel_y = 8;
+	rand_pos = 0
 	},
 /turf/simulated/floor/wood/four,
 /area/prefab/candy_shop)
