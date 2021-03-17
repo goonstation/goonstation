@@ -138,13 +138,17 @@
 /obj/table/wood/round/auto,
 /obj/item/reagent_containers/food/snacks/candy/candy_apple{
 	pixel_x = -6;
-	pixel_y = 5
+	pixel_y = 5;
+	rand_pos = 0
 	},
 /obj/item/reagent_containers/food/snacks/candy/candy_apple{
 	pixel_x = 6;
-	pixel_y = 3
+	pixel_y = 3;
+	rand_pos = 0
 	},
-/obj/item/reagent_containers/food/snacks/candy/candy_apple,
+/obj/item/reagent_containers/food/snacks/candy/candy_apple{
+	rand_pos = 0
+	},
 /turf/simulated/floor/wood/four,
 /area/prefab/candy_shop)
 "nE" = (
@@ -168,15 +172,18 @@
 	dir = 4
 	},
 /obj/item/reagent_containers/food/snacks/pie/pumpkin{
-	pixel_y = -7
+	pixel_y = -7;
+	rand_pos = 0
 	},
 /obj/item/reagent_containers/food/snacks/yellow_cake_uranium_cake{
 	pixel_x = 5;
-	pixel_y = 5
+	pixel_y = 5;
+	rand_pos = 0
 	},
 /obj/item/reagent_containers/food/snacks/moon_pie/spooky{
 	pixel_x = -9;
-	pixel_y = 12
+	pixel_y = 12;
+	rand_pos = 0
 	},
 /turf/simulated/floor/wood/four,
 /area/prefab/candy_shop)
@@ -187,7 +194,8 @@
 "oP" = (
 /obj/table/wood/round/auto,
 /obj/item/reagent_containers/food/snacks/breadloaf/corn/sweet/honey{
-	pixel_y = 7
+	pixel_y = 7;
+	rand_pos = 0
 	},
 /turf/simulated/floor/wood/four,
 /area/prefab/candy_shop)
@@ -224,6 +232,9 @@
 /obj/item/clothing/suit/lshirt/dan_blue,
 /obj/item/ticket/golden,
 /obj/item/reagent_containers/food/snacks/ice_cream/gross,
+/obj/item/kitchen/plasticpackage,
+/obj/item/kitchen/plasticpackage,
+/obj/item/kitchen/plasticpackage,
 /obj/storage/crate/bin{
 	desc = "Buy one, get the rest free.";
 	name = "bargain bin"
@@ -233,7 +244,8 @@
 "rV" = (
 /obj/table/wood/round/auto,
 /obj/item/reagent_containers/food/snacks/cake/chocolate/gateau{
-	pixel_y = 10
+	pixel_y = 10;
+	rand_pos = 0
 	},
 /turf/simulated/floor/wood/four,
 /area/prefab/candy_shop)
@@ -264,7 +276,9 @@
 "we" = (
 /obj/table/wood/round/auto,
 /obj/table/wood/round/auto,
-/obj/item/reagent_containers/food/snacks/bagel,
+/obj/item/reagent_containers/food/snacks/bagel{
+	rand_pos = 0
+	},
 /turf/simulated/floor/wood/four,
 /area/prefab/candy_shop)
 "xC" = (
@@ -332,12 +346,16 @@
 "Ag" = (
 /obj/table/wood/round/auto,
 /obj/item/reagent_containers/food/snacks/candy/wrapped_pbcup{
-	pixel_x = 6
+	pixel_x = 6;
+	rand_pos = 0
 	},
-/obj/item/reagent_containers/food/snacks/candy/wrapped_pbcup,
+/obj/item/reagent_containers/food/snacks/candy/wrapped_pbcup{
+	rand_pos = 0
+	},
 /obj/item/reagent_containers/food/snacks/candy/wrapped_pbcup{
 	pixel_x = -4;
-	pixel_y = 6
+	pixel_y = 6;
+	rand_pos = 0
 	},
 /turf/simulated/floor/wood/four,
 /area/prefab/candy_shop)
@@ -406,27 +424,32 @@
 /obj/table/wood/round/auto,
 /obj/item/reagent_containers/food/snacks/candy/candy_cane{
 	dir = 8;
-	pixel_x = 4
+	pixel_x = 4;
+	rand_pos = 0
 	},
 /obj/item/reagent_containers/food/snacks/candy/candy_cane{
 	dir = 8;
 	pixel_x = 13;
-	pixel_y = -6
+	pixel_y = -6;
+	rand_pos = 0
 	},
 /obj/item/reagent_containers/food/snacks/candy/candy_cane{
 	dir = 8;
 	pixel_x = 14;
-	pixel_y = 4
+	pixel_y = 4;
+	rand_pos = 0
 	},
 /obj/item/reagent_containers/food/snacks/candy/candy_cane{
 	dir = 8;
 	pixel_x = 5;
-	pixel_y = 6
+	pixel_y = 6;
+	rand_pos = 0
 	},
 /obj/item/reagent_containers/food/snacks/candy/candy_cane{
 	dir = 8;
 	pixel_x = 14;
-	pixel_y = 10
+	pixel_y = 10;
+	rand_pos = 0
 	},
 /turf/simulated/floor/wood/four,
 /area/prefab/candy_shop)
@@ -463,12 +486,16 @@
 	dir = 8
 	},
 /obj/item/reagent_containers/food/snacks/candy/butterscotch{
-	pixel_y = 8
+	pixel_y = 8;
+	rand_pos = 0
 	},
 /obj/item/reagent_containers/food/snacks/candy/butterscotch{
-	pixel_y = 4
+	pixel_y = 4;
+	rand_pos = 0
 	},
-/obj/item/reagent_containers/food/snacks/candy/butterscotch,
+/obj/item/reagent_containers/food/snacks/candy/butterscotch{
+	rand_pos = 0
+	},
 /turf/simulated/floor/wood/four,
 /area/prefab/candy_shop)
 "Jr" = (
@@ -589,7 +616,8 @@
 "Vt" = (
 /obj/item/reagent_containers/food/snacks/candy/candy_corn{
 	pixel_x = -10;
-	pixel_y = -9
+	pixel_y = -9;
+	rand_pos = 0
 	},
 /obj/item/storage/toilet/random{
 	dir = 8
