@@ -6669,7 +6669,7 @@
 /area/station/maintenance/inner/sw)
 "bGh" = (
 /obj/disposalpipe/switch_junction/left/west{
-	mail_tag = ranch
+	mail_tag = "ranch"
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/garden)
@@ -35264,7 +35264,7 @@
 /area/station/hallway/primary/south)
 "ksz" = (
 /obj/machinery/disposal/mail/small{
-	mail_tag = ranch;
+	mail_tag = "ranch";
 	name = "mail chute - Ranch"
 	},
 /obj/disposalpipe/trunk/mail{
