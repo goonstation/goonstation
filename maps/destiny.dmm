@@ -56943,7 +56943,7 @@
 "wqL" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 4;
+	dir = 6;
 	name = "autoname - SS13"
 	},
 /obj/machinery/power/apc/autoname_north,
