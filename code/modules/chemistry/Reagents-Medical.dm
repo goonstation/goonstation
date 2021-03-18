@@ -782,12 +782,16 @@ datum
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
 					APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "r_epinephrine", 3)
+					APPLY_MOVEMENT_MODIFIER(M, /datum/movement_modifier/reagent/epinepherine, src.type)
 				..()
+
+
 
 			on_remove()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
 					REMOVE_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "r_epinephrine")
+					REMOVE_MOVEMENT_MODIFIER(M, /datum/movement_modifier/reagent/epinepherine, src.type)
 				..()
 
 			on_mob_life(var/mob/M, var/mult = 1)
