@@ -610,6 +610,7 @@ ABSTRACT_TYPE(/datum/ore_cluster)
 		if (!user)
 			return	//don't log if damage isn't done by a user (like it's critters are turrets)
 
+#ifdef MAP_OVERRIDE_POD_WARS
 		//Friendly fire check
 		var/friendly_fire = 0
 		if (get_pod_wars_team(user) == team_num)
@@ -618,7 +619,7 @@ ABSTRACT_TYPE(/datum/ore_cluster)
 
 		if (friendly_fire)
 			logTheThing("combat", user, "\[POD WARS\][user] attacks their own team's critical system [src].")
-
+#endif
 
 //////////////special clone pod///////////////
 
@@ -1036,19 +1037,20 @@ ABSTRACT_TYPE(/obj/machinery/macrofab/pod_wars)
 	desc = "A sophisticated machine that fabricates short-range emergency pods from a nearby reserve of supplies."
 	createdObject = /obj/machinery/vehicle/arrival_pod
 	itemName = "emergency pod"
-	var/team = 0
+	var/team_num = 0
 
 #ifdef MAP_OVERRIDE_POD_WARS
 	attack_hand(var/mob/user as mob)
-		if (get_pod_wars_team(user) != team)
+		if (get_pod_wars_team(user) != team_num)
 			boutput(user, "<span class='alert'>This machine's design makes no sense to you, you can't figure out how to use it!</span>")
 			return
 
 		..()
 #endif
+
 	nanotrasen
 		createdObject = /obj/machinery/vehicle/pod_wars_dingy/nanotrasen
-		team = 1
+		team_num = 1
 
 		mining
 			name = "Emergency Mining  Pod Fabricator"
@@ -1057,7 +1059,7 @@ ABSTRACT_TYPE(/obj/machinery/macrofab/pod_wars)
 
 	syndicate
 		createdObject = /obj/machinery/vehicle/pod_wars_dingy/syndicate
-		team = 2
+		team_num = 2
 
 		mining
 			name = "Emergency Mining Pod Fabricator"
@@ -1179,6 +1181,8 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 	icon_state = "fab-hangar"
 	icon_base = "hangar"
 	free_resource_amt = 20
+	var/team_num = 0			//NT = 1, SY = 2
+	
 	free_resources = list(
 		/obj/item/material_piece/mauxite,
 		/obj/item/material_piece/pharosium,
@@ -1222,6 +1226,15 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 
 	proc/add_team_armor()
 		return
+
+#ifdef MAP_OVERRIDE_POD_WARS
+	attack_hand(var/mob/user as mob)
+		if (get_pod_wars_team(user) != src.team_num)
+			boutput(user, "<span class='alert'>This machine's design makes no sense to you, you can't figure out how to use it!</span>")
+			return
+
+		..()
+#endif
 
 /obj/machinery/manufacturer/pod_wars/nanotrasen
 	name = "NanoTrasen Ship Component Fabricator"
