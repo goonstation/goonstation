@@ -21,15 +21,15 @@
 #endif
 
 //for light queue - when should we queue? and when should we pause processing our dowork loop?
-#define LIGHTING_MAX_TICKUSAGE 80
+#define LIGHTING_MAX_TICKUSAGE 90
 
 //LAGCHECK parameter levels. "when the tick is this% complete, sleep here."
 //lower numbers will sleep more often, and should be used for lower priority tasks.
 //higher numbers will sleep less often, and should be used for high priority tasks.
-#define LAG_LOW 70
-#define LAG_MED 77
-#define LAG_HIGH 84
-#define LAG_REALTIME 91
+#define LAG_LOW 90
+#define LAG_MED 90
+#define LAG_HIGH 90
+#define LAG_REALTIME 90
 
 /// Waits until a given condition is true, tg-style async
 #define UNTIL(X) while(!(X)) sleep(1)
@@ -45,9 +45,9 @@
 /// how much to decrease by when appropriate //MBCX I DONT KNOW WHY BUT MOST VALUES CAUSE ROUNDING ERRORS, ITS VERY IMPORTANT THAT THIS REMAINS 0.2 FIOR NOW
 #define TICKLAG_DILATION_DEC 0.2
 /// what map_cpu percent is too high in the dilation check
-#define TICKLAG_MAPCPU_MAX 60
+#define TICKLAG_MAPCPU_MAX 70
 /// what map_cpu percent is low enough in the dilation check
-#define TICKLAG_MAPCPU_MIN 40
+#define TICKLAG_MAPCPU_MIN 55
 /// number of times the dilation check needs to see lag in a row to slow down the ticker
 #define TICKLAG_INCREASE_THRESHOLD 5
 /// number of times to see no lag in a row to speed up the ticker
@@ -56,7 +56,7 @@
 #define TICKLAG_DILATE_INTERVAL 20
 
 /// when pcount is above this number on round start, increase ticklag to OVERLOADED_WORLD_TICKLAG to try to maintain smoothness
-#define OVERLOAD_PLAYERCOUNT 95
+#define OVERLOAD_PLAYERCOUNT 120
 /// when pcount is above this number on game load, dont generate lighting surrounding the station because it lags the map to heck
 #define OSHAN_LIGHT_OVERLOAD 18
 /// whenn pcount is >= this number, slow Life() processing a bit
