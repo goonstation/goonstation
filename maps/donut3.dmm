@@ -2444,10 +2444,6 @@
 	},
 /turf/simulated/floor/white/checker,
 /area/station/medical/medbay)
-"arq" = (
-/obj/wingrille_spawn/auto,
-/turf/simulated/floor/plating,
-/area/station/maintenance/outer/ne)
 "ars" = (
 /obj/table/auto,
 /obj/item/game_kit,
@@ -40602,7 +40598,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating/jen,
-/area/station/maintenance/outer/ne)
+/area/station/ranch)
 "lUS" = (
 /obj/rack,
 /obj/item/clothing/glasses/meson{
@@ -41424,9 +41420,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/disposalpipe/switch_junction/left/north{
-	mail_tag = ranch
-	},
+/obj/disposalpipe/switch_junction/left/north,
 /turf/simulated/floor/redblack{
 	dir = 4
 	},
@@ -49974,9 +49968,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/disposalpipe/switch_junction/left/north{
-	mail_tag = ranch
-	},
+/obj/disposalpipe/switch_junction/left/north,
 /turf/simulated/floor/black{
 	icon_state = "respect6"
 	},
@@ -132125,15 +132117,15 @@ kkV
 mkF
 rVM
 jKD
-kkV
-kkV
-kkV
-kkV
-arq
-arq
-kkV
+mfs
+mfs
+mfs
+mfs
+sJC
+sJC
+mfs
 lUK
-wqJ
+mfs
 rLj
 fDl
 ssI
