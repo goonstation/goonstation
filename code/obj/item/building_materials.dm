@@ -530,9 +530,7 @@ MATERIAL
 
 				if("displaycase")
 					if (!amount_check(3,usr)) return
-					a_type = /obj/displaycase{
-						capgun = 0
-					}
+					a_type = /obj/displaycase
 					a_amount = 1
 					a_cost = 3
 					a_icon = 'icons/obj/stationobjs.dmi'

@@ -9965,7 +9965,9 @@
 /turf/space,
 /area/space)
 "xI" = (
-/obj/displaycase,
+/obj/displaycase{
+	displayed = new /obj/item/captaingun
+},
 /turf/simulated/floor/blue,
 /area/station/bridge/captain)
 "xL" = (

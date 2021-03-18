@@ -5359,7 +5359,7 @@
 "txE" = (/obj/machinery/disposal,/obj/machinery/light_switch/east,/obj/disposalpipe/trunk{dir = 4},/obj/cable{icon_state = "1-2"},/turf/simulated/floor/grass,/area/station/hydroponics/bay)
 "txK" = (/obj/submachine/cargopad/podbay,/turf/simulated/floor/delivery/caution,/area/station/hangar/main)
 "txM" = (/obj/table/auto,/obj/item/bandage,/obj/item/bandage,/obj/item/reagent_containers/iv_drip/saline,/obj/item/hand_labeler,/obj/machinery/power/apc/autoname_west,/obj/cable{icon_state = "0-2"},/turf/simulated/floor/blue/checker,/area/station/medical/medbooth)
-"txP" = (/obj/window/reinforced/west{dir = 2},/obj/displaycase,/turf/simulated/floor,/area/station/crew_quarters/captain)
+"txP" = (/obj/window/reinforced/west{dir = 2},/obj/displaycase{displayed = new /obj/item/captaingun},/turf/simulated/floor,/area/station/crew_quarters/captain)
 "tyd" = (/obj/machinery/camera{c_tag = "autotag"; dir = 5; name = "autoname - SS13"; pixel_x = -10; tag = ""},/obj/submachine/chef_sink/chem_sink{dir = 4; pixel_x = -6},/turf/simulated/floor/grime,/area/station/crew_quarters/barber_shop)
 "tyO" = (/obj/machinery/computer/secure_data,/obj/disposalpipe/segment/brig{dir = 4},/obj/machinery/power/data_terminal,/obj/cable{d2 = 4; icon_state = "0-4"},/turf/simulated/floor/redblack/corner,/area/station/security/checkpoint/arrivals)
 "tzf" = (/obj/lattice,/obj/decal/glow{brightness = 3; color_b = 0.3; color_g = 0.4; color_r = 0.45; invisibility = 101; name = "glow - YELLOWISH"},/turf/space,/area/space)

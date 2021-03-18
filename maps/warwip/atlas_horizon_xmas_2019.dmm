@@ -29915,7 +29915,9 @@
 /area/station/bridge/captain)
 "boK" = (
 /obj/table/wood/auto,
-/obj/displaycase,
+/obj/displaycase{
+	displayed = new /obj/item/captaingun
+},
 /turf/simulated/floor/carpet/blue/fancy/innercorner/south,
 /area/station/bridge/captain)
 "boL" = (

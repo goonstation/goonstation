@@ -2387,7 +2387,7 @@
 "aTU" = (/obj/machinery/camera{c_tag = "autotag"; dir = 9; name = "autoname - SS13"; pixel_x = 10; tag = ""},/obj/machinery/computer/bank_data{dir = 8},/obj/cable{d2 = 8; icon_state = "0-8"},/obj/machinery/power/data_terminal,/obj/machinery/door_control{id = "lockdown"; name = "Bridge Lockdown Control"; pixel_x = 22},/turf/simulated/floor/carpet/blue/fancy/edge/sw,/area/station/bridge)
 "aTV" = (/turf/simulated/wall/auto/supernorn,/area/station/bridge/captain)
 "aTW" = (/obj/disposalpipe/trunk,/obj/machinery/disposal,/turf/simulated/floor/carpet/blue/fancy/innercorner/south,/area/station/bridge/captain)
-"aTX" = (/obj/table/wood/auto,/obj/displaycase,/turf/simulated/floor/carpet/blue/fancy/innercorner/south,/area/station/bridge/captain)
+"aTX" = (/obj/table/wood/auto,/obj/displaycase{displayed = new /obj/item/captaingun},/turf/simulated/floor/carpet/blue/fancy/innercorner/south,/area/station/bridge/captain)
 "aTY" = (/obj/stool/bed,/obj/item/clothing/suit/bedsheet{bcolor = "captain"; desc = "This colorful and somewhat childish bedsheet helps the captain sleep at night."; icon_state = "bedsheet-captain"; name = "special bedsheet"},/obj/cable{icon_state = "4-9"},/obj/landmark/start{name = "Captain"},/turf/simulated/floor/carpet/blue/fancy/innercorner/south,/area/station/bridge/captain)
 "aTZ" = (/obj/machinery/light,/obj/table/wood/auto,/obj/cable{d2 = 8; icon_state = "0-8"},/obj/machinery/power/apc/autoname_east,/obj/item/handcuffs,/obj/item/item_box/award_ribbon/participant,/obj/item/pinpointer/disk,/turf/simulated/floor/carpet/blue/fancy/innercorner/se_triple,/area/station/bridge/captain)
 "aUa" = (/obj/decal/fakeobjects/firealarm_broken{dir = 4; pixel_x = -24},/turf/simulated/floor/plating/random,/area/station/maintenance/north)

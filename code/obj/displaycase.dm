@@ -8,16 +8,13 @@
 	var/health = 30
 	var/obj/item/displayed = null // The item held within.
 	var/destroyed = 0
-	var/capgun = 1 // Set to 1 by default because I didn't want to edit all of the maps that used it. Set to 0 when created by a player.
 
 	New()
-		if (capgun == 1)
-			displayed = new /obj/item/captaingun
+		if (displayed)
 			displayed.set_loc(src)
 			displayed.pixel_x = 0
 			displayed.pixel_y = 0
 			displayed.transform *= 0.8
-			desc = "A display case for antique possessions. There is \an [displayed.name] inside of it."
 			overlays += displayed
 		..()
 		return

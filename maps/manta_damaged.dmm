@@ -747,6 +747,7 @@
 /area/station/bridge)
 "abw" = (
 /obj/displaycase{
+	displayed = new /obj/item/captaingun
 	pixel_y = 8
 	},
 /obj/table/wood/auto,
