@@ -22393,6 +22393,7 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/sw)
 "grh" = (
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/grasstodirt{
 	dir = 9
 	},
@@ -51687,7 +51688,9 @@
 	pixel_y = 24;
 	text = "NF"
 	},
-/obj/submachine/seed_manipulator,
+/obj/submachine/seed_manipulator{
+	dir = 4
+	},
 /turf/simulated/floor,
 /area/station/hydroponics/bay)
 "pmj" = (
@@ -60374,9 +60377,12 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/se)
 "rFi" = (
-/obj/landmark/gps_waypoint,
 /obj/disposalpipe/segment/mail{
 	dir = 4
+	},
+/obj/stool/chair/green,
+/obj/landmark/start{
+	name = "Rancher"
 	},
 /turf/simulated/floor/dirt,
 /area/station/ranch)
@@ -63249,6 +63255,21 @@
 /obj/access_spawn,
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
+"syP" = (
+/obj/table/reinforced/auto,
+/obj/access_spawn/rancher,
+/obj/item/reagent_containers/food/snacks/chicken_feed_bag{
+	rand_pos = 1
+	},
+/obj/item/reagent_containers/food/snacks/chicken_feed_bag{
+	rand_pos = 1
+	},
+/obj/machinery/door/airlock/pyro/glass/windoor{
+	dir = 1
+	},
+/obj/machinery/cashreg,
+/turf/simulated/floor/plating/jen,
+/area/station/ranch)
 "syR" = (
 /obj/wingrille_spawn/auto/tuff,
 /obj/window_blinds/cog2/middle{
@@ -65352,10 +65373,7 @@
 	dir = 8
 	},
 /obj/stool/chair/green{
-	dir = 4
-	},
-/obj/landmark/start{
-	name = "Rancher"
+	dir = 1
 	},
 /turf/simulated/floor/grasstodirt{
 	dir = 8
@@ -81235,6 +81253,11 @@
 	},
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/main)
+"xQp" = (
+/obj/disposalpipe/segment/mail,
+/obj/stool/chair/green,
+/turf/simulated/floor/grass/random,
+/area/station/hydroponics/bay)
 "xQr" = (
 /obj/wingrille_spawn/auto/tuff,
 /turf/simulated/floor/plating,
@@ -129384,7 +129407,7 @@ uNZ
 rAb
 uNZ
 uNZ
-uNZ
+xQp
 bwC
 wiL
 uNs
@@ -130879,7 +130902,7 @@ bzZ
 nAO
 bRk
 aRI
-oQe
+syP
 vzA
 vzA
 vzA
