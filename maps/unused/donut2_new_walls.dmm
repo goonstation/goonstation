@@ -41935,6 +41935,9 @@
 /area/station/quartermaster/refinery)
 "loM" = (
 /obj/stool/chair/yellow,
+/obj/landmark/start{
+	name = "Miner"
+	},
 /turf/simulated/floor,
 /area/station/mining/staff_room)
 "ltc" = (
@@ -43153,6 +43156,9 @@
 /obj/stool/chair/yellow{
 	dir = 8
 	},
+/obj/landmark/start{
+	name = "Miner"
+	},
 /turf/simulated/floor,
 /area/station/mining/staff_room)
 "thY" = (
@@ -43183,6 +43189,9 @@
 "tmp" = (
 /obj/stool/chair/yellow{
 	dir = 1
+	},
+/obj/landmark/start{
+	name = "Miner"
 	},
 /turf/simulated/floor,
 /area/station/mining/staff_room)
@@ -43223,6 +43232,9 @@
 /area/station/maintenance/south)
 "tAY" = (
 /obj/stool/chair/yellow,
+/obj/landmark/start{
+	name = "Miner"
+	},
 /turf/simulated/floor/yellow/corner{
 	dir = 4
 	},
