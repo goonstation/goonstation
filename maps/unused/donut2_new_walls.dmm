@@ -7892,8 +7892,13 @@
 /turf/simulated/floor/plating/random,
 /area/ghostdrone_factory)
 "arL" = (
-/obj/machinery/secscanner,
 /obj/firedoor_spawn,
+/obj/machinery/door/airlock/pyro/glass{
+	name = "Pod Bay"
+	},
+/obj/machinery/secscanner{
+	pixel_y = 11
+	},
 /turf/simulated/floor/stairs{
 	dir = 1
 	},
@@ -8416,13 +8421,18 @@
 /turf/simulated/floor/delivery,
 /area/station/quartermaster/office)
 "asR" = (
-/obj/machinery/secscanner,
 /obj/cable{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/firedoor_spawn,
+/obj/machinery/door/airlock/pyro/glass{
+	name = "Pod Bay"
+	},
+/obj/machinery/secscanner{
+	pixel_y = 11
+	},
 /turf/simulated/floor/stairs{
 	dir = 1
 	},
@@ -13591,9 +13601,6 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/landmark/start{
-	name = "Engineer"
-	},
 /turf/simulated/floor/grime,
 /area/station/engine/substation/north)
 "aEU" = (
@@ -15340,15 +15347,7 @@
 	dir = 4;
 	icon_state = "pipe-s"
 	},
-/obj/window/reinforced{
-	dir = 1;
-	icon_state = "rwindow"
-	},
 /obj/table/reinforced/auto,
-/obj/window/reinforced{
-	dir = 4;
-	icon_state = "rwindow"
-	},
 /obj/item/clipboard,
 /obj/item/paper_bin,
 /obj/item/pen{
@@ -15356,6 +15355,10 @@
 	},
 /obj/item/stamp,
 /obj/firedoor_spawn,
+/obj/machinery/door/airlock/pyro/glass/windoor{
+	dir = 4
+	},
+/obj/access_spawn/robotics,
 /turf/simulated/floor/black/side{
 	dir = 8
 	},
@@ -22295,16 +22298,9 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/substation/west)
 "aXc" = (
-/obj/landmark/start{
-	name = "Engineer"
-	},
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
+/obj/wingrille_spawn/auto,
 /turf/simulated/floor,
-/area/station/engine/substation/west)
+/area/station/hallway/primary/east)
 "aXd" = (
 /obj/cable{
 	d1 = 1;
@@ -23849,9 +23845,6 @@
 	pixel_x = -24;
 	pixel_y = 0
 	},
-/obj/landmark/start{
-	name = "Engineer"
-	},
 /turf/simulated/floor,
 /area/station/engine/substation/east)
 "aZU" = (
@@ -24121,7 +24114,6 @@
 	},
 /area/station/medical/medbay/lobby)
 "bar" = (
-/obj/machinery/door/firedoor/pyro,
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
@@ -24131,6 +24123,7 @@
 	dir = 4
 	},
 /obj/access_spawn/maint,
+/obj/firedoor_spawn,
 /turf/simulated/floor,
 /area/station/maintenance/inner/central)
 "bas" = (
@@ -31601,12 +31594,6 @@
 	},
 /area/station/crew_quarters/courtroom)
 "bqq" = (
-/obj/machinery/ignition_switch{
-	id = "securitychamber";
-	name = "Solitary Sparker Switch";
-	pixel_x = -24;
-	pixel_y = 0
-	},
 /obj/item/wrench,
 /turf/simulated/floor,
 /area/station/security/brig)
@@ -31828,19 +31815,6 @@
 /obj/reagent_dispensers/fueltank,
 /turf/simulated/floor,
 /area/station/engine/storage)
-"bqR" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/machinery/light/small{
-	brightness = 2;
-	dir = 4
-	},
-/obj/firedoor_spawn,
-/turf/simulated/floor/grime,
-/area/station/engine/engineering)
 "bqS" = (
 /obj/shrub{
 	dir = 10;
@@ -32281,6 +32255,7 @@
 	dir = 4
 	},
 /obj/access_spawn/engineering,
+/obj/firedoor_spawn,
 /turf/simulated/floor,
 /area/station/engine/engineering)
 "brS" = (
@@ -37067,12 +37042,6 @@
 "bCr" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/atmos/highcap_storage)
-"bCs" = (
-/obj/machinery/door/firedoor/pyro,
-/obj/machinery/door/airlock/pyro/engineering/alt,
-/obj/access_spawn/engineering_atmos,
-/turf/simulated/floor/grime,
-/area/station/atmos/highcap_storage)
 "bCt" = (
 /obj/cable{
 	d1 = 1;
@@ -37081,6 +37050,7 @@
 	},
 /obj/machinery/door/airlock/pyro/engineering/alt,
 /obj/access_spawn/engineering,
+/obj/firedoor_spawn,
 /turf/simulated/floor,
 /area/station/engine/engineering)
 "bCu" = (
@@ -40838,14 +40808,6 @@
 	},
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/science)
-"efc" = (
-/obj/machinery/firealarm{
-	dir = 1;
-	layer = 3.5;
-	pixel_y = -24
-	},
-/turf/simulated/floor/circuit/red,
-/area/station/turret_protected/AIsat)
 "efQ" = (
 /obj/cable{
 	d1 = 4;
@@ -41860,17 +41822,6 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/science/lab)
-"kKM" = (
-/obj/machinery/door/poddoor/pyro{
-	density = 0;
-	icon_state = "pdoor0";
-	id = "lockdown";
-	name = "Bridge Lockdown Doors";
-	opacity = 0
-	},
-/obj/wingrille_spawn/auto,
-/turf/simulated/floor,
-/area/station/hallway/primary/east)
 "kMs" = (
 /obj/machinery/power/apc{
 	dir = 4;
@@ -42229,11 +42180,6 @@
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/science)
 "nlS" = (
-/obj/machinery/firealarm{
-	dir = 1;
-	layer = 3.5;
-	pixel_y = -24
-	},
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 1;
@@ -42506,13 +42452,6 @@
 	dir = 4
 	},
 /area/station/hallway/primary/south)
-"oTV" = (
-/obj/machinery/firealarm{
-	dir = 8;
-	pixel_x = -24
-	},
-/turf/simulated/floor/circuit/red,
-/area/station/turret_protected/AIsat)
 "pcA" = (
 /obj/storage/closet/emergency,
 /turf/simulated/floor/plating,
@@ -42602,6 +42541,9 @@
 	},
 /obj/railing/orange/reinforced{
 	dir = 8
+	},
+/obj/landmark/start{
+	name = "Rancher"
 	},
 /turf/simulated/floor/grasstodirt{
 	dir = 8;
@@ -42741,10 +42683,6 @@
 /turf/simulated/floor/engine/vacuum,
 /area/station/science/lab)
 "qgX" = (
-/obj/machinery/firealarm{
-	dir = 8;
-	pixel_x = -24
-	},
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 4;
@@ -42861,7 +42799,6 @@
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai)
 "qNg" = (
-/obj/machinery/door/firedoor/pyro,
 /obj/machinery/door/airlock/pyro/engineering/alt,
 /obj/access_spawn/engineering_atmos,
 /obj/firedoor_spawn,
@@ -43300,18 +43237,6 @@
 /obj/machinery/door/airlock/pyro/external,
 /turf/simulated/floor,
 /area/station/hangar/arrivals)
-"tpk" = (
-/obj/machinery/door/firedoor/pyro,
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/machinery/door/airlock/pyro/engineering/alt,
-/obj/access_spawn/engineering_atmos,
-/obj/firedoor_spawn,
-/turf/simulated/floor/grime,
-/area/station/atmos/highcap_storage)
 "tpV" = (
 /obj/shrub{
 	dir = 6
@@ -44227,7 +44152,6 @@
 /turf/simulated/floor/grime,
 /area/station/security/brig)
 "yjg" = (
-/obj/machinery/door/firedoor/pyro,
 /obj/cable{
 	d1 = 1;
 	d2 = 2;
@@ -44235,6 +44159,7 @@
 	},
 /obj/machinery/door/airlock/pyro/engineering/alt,
 /obj/access_spawn/engineering_atmos,
+/obj/firedoor_spawn,
 /turf/simulated/floor/grime,
 /area/station/atmos/highcap_storage)
 
@@ -64956,7 +64881,7 @@ aEY
 azU
 aVx
 aWr
-aXc
+aXL
 aXL
 aXL
 aXL
@@ -73459,7 +73384,7 @@ bBB
 qNg
 bDf
 bDf
-bCs
+qNg
 bER
 bFp
 bFP
@@ -73758,7 +73683,7 @@ bzi
 bAa
 buN
 bBC
-tpk
+yjg
 bDI
 gPo
 yjg
@@ -74047,7 +73972,7 @@ bnW
 boG
 boG
 bpZ
-bqR
+bnW
 brS
 bsM
 bCt
@@ -84592,8 +84517,8 @@ aYO
 aJC
 aRB
 aSr
-aVJ
 aJC
+aVJ
 bbY
 aJC
 aJC
@@ -84894,8 +84819,8 @@ aMf
 aJC
 aJC
 aJC
-kKM
 aJC
+aXc
 aJC
 aJC
 aJC
@@ -85196,8 +85121,8 @@ aPx
 aQf
 aQM
 aQM
-aVK
 aQM
+aVK
 bbZ
 aQf
 aQM
@@ -116635,7 +116560,7 @@ btl
 bul
 bvy
 kWD
-efc
+bGF
 bFg
 pNA
 bzH
@@ -119663,7 +119588,7 @@ kWD
 bGF
 bGF
 bGF
-oTV
+bGF
 bEa
 qgX
 bGF
