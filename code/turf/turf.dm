@@ -991,6 +991,13 @@
 
 #ifdef MAP_OVERRIDE_POD_WARS
 /turf/proc/edge_step(var/atom/movable/A, var/newx, var/newy)
+	
+	//testing pali's solution for getting the direction opposite of the map edge you are nearest to.
+	// A.set_loc(A.loc)
+	var/atom/target = get_edge_target_turf(A, (A.x + A.y > world.maxx ? SOUTH | WEST : NORTH | EAST) & (A.x - A.y > 0 ? NORTH | WEST : SOUTH | EAST))
+	if (target && A)
+		A?.throw_at(target, 1, 1)
+
 	return
 #else
 /turf/proc/edge_step(var/atom/movable/A, var/newx, var/newy)
