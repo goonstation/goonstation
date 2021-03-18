@@ -775,7 +775,9 @@
 				else if (team_num == 2 && user?.mind?.special_role == "Syndicate")
 					return ..(target, start, user)
 				else
-					boutput(user, "<span class='alert'>You don't have to right DNA to fire this weapon! E-gad!</span><br>")
+					boutput(user, "<span class='alert'>You don't have to right DNA to fire this weapon!</span><br>")
+					playsound(get_turf(user), "sound/machines/buzz-sigh.ogg", 20, 1)
+
 					return
 			else
 				return ..(target, start, user)
