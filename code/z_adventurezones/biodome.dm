@@ -661,7 +661,7 @@ SYNDICATE DRONE FACTORY AREAS
 		setProperty("coldprot", 80)
 		setProperty("heatprot", 80)
 		setProperty("movespeed", 2)
-		setProperty("disorient_resist", 30)
+		setProperty("disorient_resist", 35)
 
 // scare the everliving fuck out of the player when they equip it
 // what else should this thing do? idk yet. maybe some crazy hallucinations with an ancient blood reagent or something? something like the obsidian crown?
