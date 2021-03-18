@@ -36,7 +36,7 @@
 			var/potential_donator_ckey = usr?.mind.ckey
 			var/donator_figtype = null
 			if (potential_donator_ckey) // check if the player has a figurine (therefore a donator)
-				for (var/datum/figure_info/patreon/fig as() in concrete_typesof(/datum/figure_info/patreon))
+				for (var/datum/figure_info/patreon/fig as anything in concrete_typesof(/datum/figure_info/patreon))
 					if (initial(fig.ckey) == potential_donator_ckey)
 						donator_figtype = fig
 						src.patreon_prob *= 2	// x2 chance of getting patreon figure
@@ -700,6 +700,11 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 		name = "\improper Hazel Adenine"
 		icon_state = "hazel"
 		ckey = "hazelmaecry"
+
+	vicky
+		name = "\improper Vicky Hudson"
+		icon_state = "vicky"
+		ckey = "mrprogamer96"
 
 /obj/item/item_box/figure_capsule
 	name = "capsule"

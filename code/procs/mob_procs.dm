@@ -526,7 +526,7 @@
 	return 0
 
 /mob/living/carbon/human/get_explosion_resistance()
-	return GET_MOB_PROPERTY(src, PROP_EXPLOPROT)/100
+	return min(GET_MOB_PROPERTY(src, PROP_EXPLOPROT), 100) / 100
 
 /mob/proc/spread_blood_clothes(mob/whose)
 	return
@@ -1035,7 +1035,7 @@
 	if (!src || !ismob(src) || !target || !isobj(target))
 		return 0
 
-	if (!islist(can_smash) || !can_smash.len)
+	if (!islist(can_smash) || !length(can_smash))
 		return 0
 
 	for (var/S in can_smash)

@@ -28,6 +28,8 @@
 		src.icon_state = "wrap_paper-[src.style]"
 
 /obj/item/wrapping_paper/attackby(obj/item/W as obj, mob/user as mob)
+	if(W.cant_drop || W.cant_self_remove)
+		return
 	if (!( locate(/obj/table, src.loc) ))
 		boutput(user, "<span class='notice'>You MUST put the paper on a table!</span>")
 		return
@@ -144,7 +146,7 @@
 	festive
 		icon_state = "gift2-g"
 		attack_self(mob/M as mob)
-			if (!islist(giftpaths) || !giftpaths.len)
+			if (!islist(giftpaths) || !length(giftpaths))
 				src.giftpaths = generic_gift_paths + xmas_gift_paths
 			..()
 
@@ -160,18 +162,18 @@
 		icon_state = "easter_egg"
 		random_icons = 0
 		attack_self(mob/M as mob)
-			if (!islist(giftpaths) || !giftpaths.len)
+			if (!islist(giftpaths) || !length(giftpaths))
 				src.giftpaths = generic_gift_paths
 			..()
 
 	easter/dangerous
 		attack_self(mob/M as mob)
-			if (!islist(giftpaths) || !giftpaths.len)
+			if (!islist(giftpaths) || !length(giftpaths))
 				src.giftpaths = generic_gift_paths + questionable_generic_gift_paths
 			..()
 
 /obj/item/a_gift/attack_self(mob/M as mob)
-	if (!islist(giftpaths) || !giftpaths.len)
+	if (!islist(giftpaths) || !length(giftpaths))
 		boutput(M, "<span class='notice'>[src] was empty!</span>")
 		qdel(src)
 		return
@@ -282,7 +284,7 @@ var/global/list/generic_gift_paths = list(/obj/item/basketball,
 	/obj/item/storage/firstaid/regular,
 	/obj/item/storage/pill_bottle/cyberpunk,
 	/obj/item/toy/sword,
-	/obj/item/card_box/trading,
+	/obj/item/stg_box,
 	/obj/item/clothing/suit/jacket/plastic/random_color)
 
 var/global/list/questionable_generic_gift_paths = list(/obj/item/relic,

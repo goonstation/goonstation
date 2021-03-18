@@ -445,7 +445,7 @@ ported and crapped up by: haine
 
 	get_desc(dist)
 		if (dist <= 0)
-			if (src.reagents && src.reagents.reagent_list.len)
+			if (src.reagents && length(src.reagents.reagent_list))
 				. += "<br>It contains:"
 				for (var/datum/reagent/R in src.reagents.reagent_list)
 					. += "[R.volume] units of [R.name]"

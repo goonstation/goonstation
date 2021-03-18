@@ -34,6 +34,7 @@
 #define isghostdrone(x) istype(x, /mob/living/silicon/ghostdrone)
 
 #define iscube(x) (istype(x, /mob/living/carbon/cube))
+#define ismegakrampus(x) (istype(x, /mob/living/carbon/cube/meat/krampus/telekinetic))
 #define isvirtual(x) istype(x, /mob/living/carbon/human/virtual)
 #define isVRghost(x) (istype(x, /mob/living/carbon/human/virtual) && x:isghost)
 #define issmallanimal(x) istype(x, /mob/living/critter/small_animal)

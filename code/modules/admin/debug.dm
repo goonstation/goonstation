@@ -30,7 +30,7 @@ var/global/debug_messages = 0
 	var/total = 0
 	for (var/b = 1; b <= DELQUEUE_SIZE; b++)
 		buckets += "<li style='[b == dp ? "background-color: #fcc;": ( b == cp ? "background-color: #bbf;" : "")]'><span style='display: inline-block; width: 6em; text-align: right;'>[global.delete_queue_2[b].len]</span><span style='display: inline-block; height: 1em; width: [round(global.delete_queue_2[b].len / 2.5)]px; background: black;'></span></li>"
-		total += global.delete_queue_2[b].len
+		total += length(global.delete_queue_2[b])
 
 	deletedJson += "]"
 	var/html = {"<!doctype html><html>
@@ -195,7 +195,7 @@ var/global/debug_messages = 0
 
 	if (!typename)
 		return
-	var/thetype = get_one_match(typename, /atom)
+	var/thetype = get_one_match(typename, /atom, use_concrete_types = FALSE)
 	if (thetype)
 		var/counter = 0
 		var/procname = input("Procpath","path:", null) as text
@@ -309,12 +309,12 @@ var/global/debug_messages = 0
 	for(var/actual_proc in name_list)
 		try
 			if (target)
-				if(islist(listargs) && listargs.len)
+				if(islist(listargs) && length(listargs))
 					returnval = call(target,actual_proc)(arglist(listargs))
 				else
 					returnval = call(target,actual_proc)()
 			else
-				if(islist(listargs) && listargs.len)
+				if(islist(listargs) && length(listargs))
 					returnval = call(actual_proc)(arglist(listargs))
 				else
 					returnval = call(actual_proc)()
@@ -359,7 +359,7 @@ var/global/debug_messages = 0
 				boutput(usr, "<span class='notice'>Type part of the path of the type.</span>")
 				var/typename = input("Part of type path.", "Part of type path.", "/obj") as null|text
 				if (typename)
-					var/match = get_one_match(typename, /datum)
+					var/match = get_one_match(typename, /datum, use_concrete_types = FALSE)
 					if (match)
 						listargs += match
 
@@ -787,7 +787,7 @@ body
 	set name = "Find One"
 	set desc = "Show the location of one instance of type."
 
-	var/thetype = get_one_match(typename, /atom)
+	var/thetype = get_one_match(typename, /atom, use_concrete_types = FALSE)
 	if (thetype)
 		var/atom/theinstance = locate(thetype) in world
 		if (!theinstance)
@@ -804,7 +804,7 @@ body
 	set name = "Find All"
 	set desc = "Show the location of all instances of a type. Performance warning!!"
 
-	var/thetype = get_one_match(typename, /atom)
+	var/thetype = get_one_match(typename, /atom, use_concrete_types = FALSE)
 	if (thetype)
 		var/counter = 0
 		boutput(usr, "<span class='notice'><b>All instances of [thetype]: </b></span>")
@@ -836,7 +836,7 @@ body
 	set name = "Count All"
 	set desc = "Returns the number of all instances of a type that exist."
 
-	var/thetype = get_one_match(typename, /atom)
+	var/thetype = get_one_match(typename, /atom, use_concrete_types = FALSE)
 	if (thetype)
 		var/counter = 0
 		for (var/atom/theinstance in world)
@@ -856,7 +856,7 @@ body
 	set popup_menu = 0
 	admin_only
 
-	var/new_level = input(src, null, "Choose New Rank", "Coder") as() in null|list("Host", "Coder", "Shit Guy", "Primary Admin", "Admin", "Secondary Admin", "Mod", "Babby")
+	var/new_level = input(src, null, "Choose New Rank", "Coder") as anything in null|list("Host", "Coder", "Shit Guy", "Primary Admin", "Admin", "Secondary Admin", "Mod", "Babby")
 	if (!new_level)
 		return
 	src.holder.rank = new_level
@@ -1168,7 +1168,7 @@ var/datum/flock/testflock
 	admin_only
 
 	if(alert("Really clear the string cache?","Invalidate String Cache","OK","Cancel") == "OK")
-		var/length = string_cache.len
+		var/length = length(string_cache)
 		string_cache = new
 		logTheThing("admin", usr, null, "cleared the string cache, clearing [length] existing list(s).")
 		logTheThing("diary", usr, null, "cleared the string cache, clearing [length] existing list(s).", "admin")

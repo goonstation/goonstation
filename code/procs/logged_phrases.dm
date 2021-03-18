@@ -93,6 +93,8 @@ var/global/datum/phrase_log/phrase_log = new
 		var/new_uncool = input("Upload a json list of uncool words.", "Uncool words", null) as null|file
 		if(isnull(new_uncool))
 			return
+		if(fexists(src.uncool_words_filename))
+			fdel(src.uncool_words_filename)
 		text2file(file2text(new_uncool), src.uncool_words_filename)
 		boutput(usr, "ok")
 

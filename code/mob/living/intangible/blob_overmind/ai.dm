@@ -237,7 +237,7 @@
 		SPAWN_DBG(0)
 			var/max_extra_ticks = 4
 			var/extra_ticks_left = max_extra_ticks
-			while(bio_points >= bio_points_max * 2/3 && ai_ticks_queued_up <= 4 && extra_ticks_left-- && world.tick_usage < 80)
+			while(bio_points >= bio_points_max * 2/3 && ai_ticks_queued_up <= 4 && extra_ticks_left-- && APPROX_TICK_USE < 80)
 				sleep(4 SECONDS / (max_extra_ticks + 1))
 				src.ai_process()
 			ai_ticks_queued_up--
@@ -251,9 +251,9 @@
 			closed.len = 0
 			open_low.len = 0
 			open_medium.len = 0
-			for (var/turf/C as() in all)
+			for (var/turf/C as anything in all)
 				evaluate(C)
-			for (var/turf/T as() in block(locate(src.x - 30, src.y - 30, src.z), locate(src.x + 30, src.y + 30, src.z)))
+			for (var/turf/T as anything in block(locate(src.x - 30, src.y - 30, src.z), locate(src.x + 30, src.y + 30, src.z)))
 				if (!(T in all))
 					evaluate(T)
 
@@ -636,7 +636,7 @@
 					break
 		while(length(current))
 			var/list/next = list()
-			for(var/obj/blob/blob as() in current)
+			for(var/obj/blob/blob as anything in current)
 				visited[blob] = 1
 				if(blob.type == /obj/blob)
 					final_target = blob

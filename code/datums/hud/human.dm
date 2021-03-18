@@ -135,7 +135,7 @@
 		for(var/atom/movable/screen/statusEffect/G in src.objects)
 			remove_screen(G)
 
-		for(var/datum/statusEffect/S as() in src.statusUiElements) //Remove stray effects.
+		for(var/datum/statusEffect/S as anything in src.statusUiElements) //Remove stray effects.
 			if(!master || !master.statusEffects || !(S in master.statusEffects))
 				pool(statusUiElements[S])
 				src.statusUiElements.Remove(S)
@@ -145,7 +145,7 @@
 		var/pos_x = spacing - 0.2
 
 		if(master?.statusEffects)
-			for(var/datum/statusEffect/S as() in master.statusEffects) //Add new ones, update old ones.
+			for(var/datum/statusEffect/S as anything in master.statusEffects) //Add new ones, update old ones.
 				if(!S.visible) continue
 				if((S in statusUiElements) && statusUiElements[S])
 					var/atom/movable/screen/statusEffect/U = statusUiElements[S]
@@ -757,6 +757,7 @@
 		newDesc += "<div><img src='[resource("images/tooltips/cold.png")]' alt='' class='icon' /><span>Total Resistance (Cold): [master.get_cold_protection()]%</span></div>"
 		newDesc += "<div><img src='[resource("images/tooltips/radiation.png")]' alt='' class='icon' /><span>Total Resistance (Radiation): [master.get_rad_protection()]%</span></div>"
 		newDesc += "<div><img src='[resource("images/tooltips/disease.png")]' alt='' class='icon' /><span>Total Resistance (Disease): [master.get_disease_protection()]%</span></div>"
+		newDesc += "<div><img src='[resource("images/tooltips/explosion.png")]' alt='' class='icon' /><span>Total Resistance (Explosion): [master.get_explosion_resistance() * 100]%</span></div>"
 		newDesc += "<div><img src='[resource("images/tooltips/bullet.png")]' alt='' class='icon' /><span>Total Ranged Protection: [master.get_ranged_protection()]</span></div>"
 		newDesc += "<div><img src='[resource("images/tooltips/melee.png")]' alt='' class='icon' /><span>Total Melee Armor (Body): [master.get_melee_protection("chest", DAMAGE_CRUSH)]</span></div>"
 		newDesc += "<div><img src='[resource("images/tooltips/melee.png")]' alt='' class='icon' /><span>Total Melee Armor (Head): [master.get_melee_protection("head", DAMAGE_CRUSH)]</span></div>"
@@ -839,16 +840,6 @@
 					pos_x = 1
 					pos_y++
 
-			if (istype(master.loc,/obj/vehicle/))
-				var/obj/vehicle/V = master.loc
-				for(var/obj/ability_button/B2 in V.ability_buttons)
-					B2.screen_loc = "NORTH-[pos_y],[pos_x]"
-					master.client.screen += B2
-					pos_x++
-					if(pos_x > 15)
-						pos_x = 1
-						pos_y++
-
 		if (current_ability_set == 2) // genetics
 			var/datum/bioEffect/power/P
 			for(var/ID in master.bioHolder.effects)
@@ -863,6 +854,18 @@
 				if(pos_x > 15)
 					pos_x = 1
 					pos_y++
+
+		if (istype(master.loc,/obj/vehicle/)) //so we always see vehicle buttons
+			var/obj/vehicle/V = master.loc
+			for(var/obj/ability_button/B2 in V.ability_buttons)
+				B2.screen_loc = "NORTH-[pos_y],[pos_x]"
+				master.client.screen += B2
+				B2.the_mob = master
+				pos_x++
+				if(pos_x > 15)
+					pos_x = 1
+					pos_y++
+
 
 	proc/update_sprinting()
 		if (!sprinting || !master.client) return 0

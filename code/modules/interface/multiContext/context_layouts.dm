@@ -70,7 +70,7 @@ var/list/datum/contextAction/globalContextActions = null
 		screenX += offsetX
 		screenY += offsetY
 
-		for(var/atom/movable/screen/contextButton/C as() in buttons)
+		for(var/atom/movable/screen/contextButton/C as anything in buttons)
 			C.screen_loc = "CENTER[(screenX) < 0 ? ":[screenX]":":[screenX]"],CENTER[(screenY) < 0 ? ":[screenY]":":[screenY]"]"
 
 			addButtonToHud(usr, C)
@@ -107,7 +107,7 @@ var/list/datum/contextAction/globalContextActions = null
 		var/finalOff = spacingX * (buttons.len-3)
 		offX -= finalOff/2
 
-		for(var/atom/movable/screen/contextButton/C as() in buttons)
+		for(var/atom/movable/screen/contextButton/C as anything in buttons)
 			C.screen_loc = "CENTER,CENTER+0.6"
 
 			addButtonToHud(usr, C)
@@ -148,7 +148,7 @@ var/list/datum/contextAction/globalContextActions = null
 
 		var/count = 0
 
-		for(var/atom/movable/screen/contextButton/C as() in buttons)
+		for(var/atom/movable/screen/contextButton/C as anything in buttons)
 			C.screen_loc = "CENTER:[screenX],CENTER:[screenY]"
 
 			addButtonToHud(usr, C)
@@ -177,7 +177,7 @@ var/list/datum/contextAction/globalContextActions = null
 		var/offX = 0
 		var/offY = 16
 
-		for(var/atom/movable/screen/contextButton/C as() in buttons)
+		for(var/atom/movable/screen/contextButton/C as anything in buttons)
 			C.screen_loc = "CENTER[(screenX) < 0 ? ":[screenX]":":[screenX]"],CENTER[(screenY) < 0 ? ":[screenY]":":[screenY]"]"
 
 			addButtonToHud(usr, C)
@@ -204,7 +204,7 @@ var/list/datum/contextAction/globalContextActions = null
 		var/offY = 16
 
 		var/first = 1
-		for(var/atom/movable/screen/contextButton/C as() in buttons)
+		for(var/atom/movable/screen/contextButton/C as anything in buttons)
 			C.screen_loc = "CENTER[(screenX) < 0 ? ":[screenX]":":[screenX]"],CENTER[(screenY) < 0 ? ":[screenY]":":[screenY]"]"
 
 			addButtonToHud(usr, C)
@@ -254,7 +254,7 @@ var/list/datum/contextAction/globalContextActions = null
 			return 0
 
 		var/count = count_start_pos
-		for(var/atom/movable/screen/contextButton/C as() in buttons)
+		for(var/atom/movable/screen/contextButton/C as anything in buttons)
 			//C.screen_loc = "CENTER[(screenX) < 0 ? ":[screenX]":":[screenX]"],CENTER[(screenY) < 0 ? ":[screenY]":":[screenY]"]"
 			C.screen_loc = "[lattitude_dir][targetx],[longitude_dir][targety]"
 

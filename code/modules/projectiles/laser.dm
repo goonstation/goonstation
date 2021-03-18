@@ -462,7 +462,9 @@ toxic - poisons
 
 	on_hit(atom/hit)
 		var/mob/living/L = hit
-		if(istype(L) && L.getStatusDuration("burning"))
+		if (!istype(L))
+			return
+		if(L.getStatusDuration("burning"))
 			L.changeStatus("burning", 70)
 		else
 			L.changeStatus("burning", 35)

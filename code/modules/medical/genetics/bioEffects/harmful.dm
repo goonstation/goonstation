@@ -120,7 +120,7 @@
 	can_reclaim = 0
 	can_scramble = 0
 	curable_by_mutadone = 0
-	sleep_prob = 35
+	sleep_prob = 10 //reduced from 35
 	icon_state  = "bad"
 
 /datum/bioEffect/coprolalia

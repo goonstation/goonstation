@@ -101,9 +101,9 @@
 		if (istext(num)) // :v
 			src.name_prefixes -= num
 			return
-		if (islist(src.name_prefixes) && src.name_prefixes.len)
+		if (islist(src.name_prefixes) && length(src.name_prefixes))
 			for (var/i in src.name_prefixes)
-				if (num <= 0 || !src.name_prefixes.len)
+				if (num <= 0 || !length(src.name_prefixes))
 					return
 				src.name_prefixes -= i
 				num --
@@ -114,9 +114,9 @@
 		if (istext(num))
 			src.name_suffixes -= num
 			return
-		if (islist(src.name_suffixes) && src.name_suffixes.len)
+		if (islist(src.name_suffixes) && length(src.name_suffixes))
 			for (var/i in src.name_suffixes)
-				if (num <= 0 || !src.name_suffixes.len)
+				if (num <= 0 || !length(src.name_suffixes))
 					return
 				src.name_suffixes -= i
 				num --
@@ -155,7 +155,7 @@
 		tag = null
 
 		if(length(src.statusEffects))
-			for(var/datum/statusEffect/effect as() in src.statusEffects)
+			for(var/datum/statusEffect/effect as anything in src.statusEffects)
 				src.delStatus(effect)
 			src.statusEffects = null
 		..()
@@ -477,7 +477,7 @@
 	if (A != src.loc && A?.z == src.z)
 		src.last_move = get_dir(A, src.loc)
 		if (length(src.attached_objs))
-			for (var/atom/movable/M as() in attached_objs)
+			for (var/atom/movable/M as anything in attached_objs)
 				M.set_loc(src.loc)
 		if (islist(src.tracked_blood))
 			src.track_blood()
@@ -833,7 +833,7 @@
 	if((my_area != new_area || !isturf(oldloc)) && isturf(newloc))
 		new_area.Entered(src, oldloc)
 
-	if (islist(src.attached_objs) && attached_objs.len)
+	if (islist(src.attached_objs) && length(attached_objs))
 		for (var/atom/movable/M in src.attached_objs)
 			M.set_loc(src.loc)
 
@@ -910,10 +910,10 @@
 
 //same as above :)
 /atom/movable/setMaterial(var/datum/material/mat1, var/appearance = 1, var/setname = 1, var/copy = 1, var/use_descriptors = 0)
-	var/prev_mat_triggeronentered = (src.material && src.material.triggersOnEntered && src.material.triggersOnEntered.len)
+	var/prev_mat_triggeronentered = (src.material && src.material.triggersOnEntered && length(src.material.triggersOnEntered))
 	var/prev_added_hasentered = src.material?.owner_hasentered_added
 	..(mat1,appearance,setname,copy,use_descriptors)
-	var/cur_mat_triggeronentered = (src.material && src.material.triggersOnEntered && src.material.triggersOnEntered.len)
+	var/cur_mat_triggeronentered = (src.material && src.material.triggersOnEntered && length(src.material.triggersOnEntered))
 	src.material?.owner_hasentered_added = prev_added_hasentered
 
 	if (prev_mat_triggeronentered != cur_mat_triggeronentered)

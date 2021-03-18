@@ -717,7 +717,7 @@
 		print_index()
 			src.master.temp = null
 			var/dat = ""
-			if(!src.record_list || !src.record_list.len)
+			if(!src.record_list || !length(src.record_list))
 				src.print_text("<b>Error:</b> No records found in database.")
 
 			else

@@ -55,7 +55,7 @@
 		// let's not spam eggs all the time
 		if(isnull(locate(/obj/flock_structure/egg) in F))
 			// if we can get a valid path to the target, include it for consideration
-			if(cirrAstar(get_turf(holder.owner), F, 0, null, /proc/heuristic, 40))
+			if(cirrAstar(get_turf(holder.owner), F, 0, 40))
 				. += F
 
 ////////
@@ -121,7 +121,7 @@
 	if(F?.flock)
 		// if we can go for a tile we already have reserved, go for it
 		var/turf/simulated/reserved = F.flock.busy_tiles[F.real_name]
-		if(istype(reserved) && !isfeathertile(reserved) && cirrAstar(get_turf(holder.owner), reserved, 1, null, /proc/heuristic, 20))
+		if(istype(reserved) && !isfeathertile(reserved) && cirrAstar(get_turf(holder.owner), reserved, 1, 20))
 			. += reserved
 			return
 		// if there's a priority tile we can go for, do it
@@ -129,7 +129,7 @@
 		if(length(priority_turfs))
 			for(var/turf/simulated/PT in priority_turfs)
 				// if we can get a valid path to the target, include it for consideration
-				if(cirrAstar(get_turf(holder.owner), PT, 1, null, /proc/heuristic, 80))
+				if(cirrAstar(get_turf(holder.owner), PT, 1, 80))
 					. += PT
 
 	// else just go for one nearby
@@ -139,7 +139,7 @@
 			if(F?.flock && !F.flock.isTurfFree(T, F.real_name))
 				continue // this tile's been claimed by someone else
 			// if we can get a valid path to the target, include it for consideration
-			if(cirrAstar(get_turf(holder.owner), T, 1, null, /proc/heuristic, 40))
+			if(cirrAstar(get_turf(holder.owner), T, 1, 40))
 				. += T
 
 ////////
@@ -210,7 +210,7 @@
 			continue
 		if(F.get_health_percentage() < 0.66 && !isdead(F))//yeesh dont try to repair something which is dead
 			// if we can get a valid path to the target, include it for consideration
-			if(cirrAstar(get_turf(holder.owner), get_turf(F), 1, null, /proc/heuristic, 40))
+			if(cirrAstar(get_turf(holder.owner), get_turf(F), 1, 40))
 				. += F
 
 ////////
@@ -275,7 +275,7 @@
 	for(var/obj/flock_structure/ghost/S in view(max_dist, F))
 		if(S.flock == F.flock && S.goal > S.currentmats)
 			// if we can get a valid path to the target, include it for consideration
-			if(cirrAstar(get_turf(F), get_turf(S), 1, null, /proc/heuristic, 40))
+			if(cirrAstar(get_turf(F), get_turf(S), 1, 40))
 				. += S
 
 ////////
@@ -331,7 +331,7 @@
 	for(var/obj/storage/S in view(max_dist, holder.owner))
 		if(!S.open && !S.welded && !S.locked)
 			// if we can get a valid path to the target, include it for consideration
-			if(cirrAstar(get_turf(holder.owner), get_turf(S), 1, null, /proc/heuristic, 10))
+			if(cirrAstar(get_turf(holder.owner), get_turf(S), 1, 10))
 				. += S
 
 ////////
@@ -385,9 +385,9 @@
 /datum/aiTask/sequence/goalbased/rummage/get_targets()
 	. = list()
 	for(var/obj/item/storage/I in view(max_dist, holder.owner))
-		if(I.contents.len > 0 && I.loc != holder.owner && I.does_not_open_in_pocket)
+		if(length(I.contents) && I.loc != holder.owner && I.does_not_open_in_pocket)
 			// if we can get a valid path to the target, include it for consideration
-			if(cirrAstar(get_turf(holder.owner), get_turf(I), 1, null, /proc/heuristic, 10))
+			if(cirrAstar(get_turf(holder.owner), get_turf(I), 1, 10))
 				. += I
 
 ////////
@@ -486,7 +486,7 @@
 				if(P.amount <= 0)
 					continue // do not try to fetch paper out of an empty paper bin forever
 			// if we can get a valid path to the target, include it for consideration
-			if(cirrAstar(get_turf(holder.owner), get_turf(I), 1, null, /proc/heuristic, 40))
+			if(cirrAstar(get_turf(holder.owner), get_turf(I), 1, 40))
 				. += I
 
 ////////
@@ -643,7 +643,7 @@
 				// mob is a valid target, check if they're not already in a cage
 				if(!istype(M.loc.type, /obj/icecube/flockdrone))
 					// if we can get a valid path to the target, include it for consideration
-					if(cirrAstar(get_turf(holder.owner), get_turf(M), 1, null, /proc/heuristic, 40))
+					if(cirrAstar(get_turf(holder.owner), get_turf(M), 1, 40))
 						// GO AND IMPRISON THEM
 						. += M
 
@@ -676,7 +676,7 @@
 			continue
 		if(isdead(F))
 			// if we can get a valid path to the target, include it for consideration
-			if(cirrAstar(get_turf(holder.owner), get_turf(F), 1, null, /proc/heuristic, 40))
+			if(cirrAstar(get_turf(holder.owner), get_turf(F), 1, 40))
 				. += F
 
 ////////

@@ -4,6 +4,7 @@ ABSTRACT_TYPE(/datum/artifact/)
 /datum/artifact/
 	var/associated_object = null
 	var/rarity_weight = 0
+	var/type_name = "buggy artifact code"
 	// weighted commonness, so a higher number will make it more likely
 	// 0 should not make it spawn at all, naturally
 
@@ -178,6 +179,7 @@ ABSTRACT_TYPE(/datum/artifact/art)
 		var/namep1 = pick("neutrino","meson","photon","quark","disruptor","atomic","zero point","tachyon","plasma","quantum","neutron","baryon","hadron","electron","positron")
 		var/namep2 = pick("bolt","ray","beam","wave","burst","blast","torpedo","missile","bomb","shard","stream","string")
 		src.name = "[namep1] [namep2]"
+		src.sname = src.name
 		// Now randomise the damage type, power, energy cost and other fun stuff
 
 		src.damage_type = pick(D_KINETIC,D_PIERCING,D_SLASHING,D_ENERGY,D_BURNING,D_RADIOACTIVE,D_TOXIC)

@@ -5,6 +5,8 @@
 #define DUCKBOT_ANNOY_TIMEOUT "duckbotnerdobsessionlength"
 #define DUCKBOT_ANNOY_LOCKOUT_TIMEOUT "duckbotforgetannoyednerds"
 #define DUCKBOT_ANNOY_PATHING_COOLDOWN "duckbotnospamastar"
+#define DUCKBOT_NATURAL_MIGRATION_COOLDOWN "duckbot_declare_migration"
+#define DUCKBOT_FORCED_MIGRATION_COOLDOWN "duckbot_forced_migration"
 
 /obj/machinery/bot/duckbot
 	name = "Amusing Duck"
@@ -29,11 +31,9 @@
 	/// Though maybe pick someone else after a while
 	var/annoy_timeout = 30 SECONDS
 	/// And forget about who you annoyed after a while
-	var/forget_annoyed_timeout = 3 MINUTES
+	var/forget_annoyed_timeout = 15 SECONDS
 	/// Don't spam that pathfinding
-	var/annoy_path_cooldown = 5 SECONDS
-	/// And don't just go back to pestering the same person
-	var/list/annoyed_nerds = list()
+	var/annoy_path_cooldown = 2 SECONDS
 	/// Location on the station where all these damn things migrate to for whatever reason
 	var/static/area/duck_migration_target
 	/// Someone set our migration path, let's go there instead of picking something
@@ -51,44 +51,22 @@
 /obj/machinery/bot/duckbot/proc/wakka_wakka()
 	if(moving) return
 	if(src.emagged)
-		if(src.annoy_target)
-			if(!ON_COOLDOWN(src, DUCKBOT_ANNOY_TIMEOUT, src.quack_cooldown))
+		if(ismob(src.annoy_target))
+			if(!GET_COOLDOWN(src, DUCKBOT_ANNOY_TIMEOUT))
 				src.KillPathAndGiveUp(1)
 			else if(!ON_COOLDOWN(src, DUCKBOT_ANNOY_PATHING_COOLDOWN, src.annoy_path_cooldown))
 				var/turf/randwander = get_step_rand(get_turf(src.annoy_target))
-				src.navigate_to(randwander, DUCKBOT_MOVE_SPEED, 1, 30)
+				src.navigate_to(randwander, DUCKBOT_MOVE_SPEED, 0, 30)
 		else
 			for_by_tcl(M, /mob)
 				if(IN_RANGE(src, M, 7))
-					if(M in src.annoyed_nerds)
-						if(!ON_COOLDOWN(src, "[DUCKBOT_ANNOY_LOCKOUT_TIMEOUT]-[M.name]", src.forget_annoyed_timeout))
-							src.annoyed_nerds -= M
-						else
-							continue
-					ON_COOLDOWN(src, DUCKBOT_ANNOY_TIMEOUT, src.quack_cooldown)
-					ON_COOLDOWN(src, "[DUCKBOT_ANNOY_LOCKOUT_TIMEOUT]-[M.name]", src.forget_annoyed_timeout)
-					src.annoy_target = M
-					src.annoyed_nerds[M] = TRUE
-					src.navigate_to(M, DUCKBOT_MOVE_SPEED, 1, 30)
-					break
+					if(!ON_COOLDOWN(src, "[DUCKBOT_ANNOY_LOCKOUT_TIMEOUT]-[M.name]", src.forget_annoyed_timeout))
+						src.annoy_target = M
+						src.navigate_to(get_turf(M), src.bot_move_delay, 0, 100)
+						break
 	else
-		step_rand(src,1)
-
-/// Sends all the duckbots to a random spot on the station
-/obj/machinery/bot/duckbot/proc/migrate()
-	var/list/stationAreas = get_accessible_station_areas()
-	if(!isarea(src.duck_migration_target))
-		var/A = pick(stationAreas)
-		src.duck_migration_target = stationAreas[A]
-	var/list/T = get_area_turfs(src.duck_migration_target, 1)
-	if(length(T) >= 1)
-		. = TRUE
-		SPAWN_DBG(rand(0,10 SECONDS)) // give em some time to spread out a bit
-			T = (pick(T))
-			src.mystical_access()
-			src.navigate_to(T, src.bot_move_delay, 0, 300)
-			if(length(src.path) < 1)
-				src.KillPathAndGiveUp(1)
+		SPAWN_DBG(0)
+			step_rand(src,1)
 
 /// Sends the duckbot to a random spot on the station
 /obj/machinery/bot/duckbot/proc/mystical_journey()
@@ -112,42 +90,38 @@
 /obj/machinery/bot/duckbot/process()
 	. = ..()
 	if(src.on == 1)
-		if(!ON_COOLDOWN(src, DUCKBOT_QUACK_COOLDOWN, src.quack_cooldown) && prob(60))
-			var/message = pick("wacka", "quack","quacky","gaggle")
-			src.speak(message, 1, 0)
-		if(!src.moving && prob(80))
-			wakka_wakka()
-		if(!ON_COOLDOWN(src, DUCKBOT_AMUSEMENT_COOLDOWN, src.amusement_cooldown) && prob(20))
-			playsound(src.loc, "sound/misc/amusingduck.ogg", 50, 0) // MUSIC
-		else if(prob (7) && src.eggs >= 1)
+		if(src.emagged == TRUE)
+			var/message = pick("QUacK", "WHaCKA", "quURK", "bzzACK", "quock", "queck", "WOcka", "wacKY","GOggEL","gugel","goEGL","GeGGal")
+			src.speak(message, 1, 1)
+			wakka_wakka(TRUE) // Seek loser is TRUE
+			if(prob(70))
+				playsound(src.loc, "sound/misc/amusingduck.ogg", 50, 1) // MUSIC
+		else
+			if(!ON_COOLDOWN(src, DUCKBOT_QUACK_COOLDOWN, src.quack_cooldown) && prob(60))
+				var/message = pick("wacka", "quack","quacky","gaggle")
+				src.speak(message, 1, 0)
+			if(!src.moving)
+				if(prob(1))
+					if(!ON_COOLDOWN(global, DUCKBOT_NATURAL_MIGRATION_COOLDOWN, 15 MINUTES)) // Time to fly south(ern solar array) for the winter
+						src.declare_migration()
+					else
+						src.mystical_journey() // Time to go on a mystical journey
+				else
+					wakka_wakka()
+			if(!ON_COOLDOWN(src, DUCKBOT_AMUSEMENT_COOLDOWN, src.amusement_cooldown) && prob(20))
+				playsound(src.loc, "sound/misc/amusingduck.ogg", 50, 0) // MUSIC
+		if(prob (7) && src.eggs >= 1)
 			var/obj/item/a_gift/easter/E = new /obj/item/a_gift/easter(src.loc)
 			E.name = "duck egg"
 			src.eggs--
 			playsound(src.loc, "sound/misc/eggdrop.ogg", 50, 0)
-	if(src.emagged == 1)
-		var/message = pick("QUacK", "WHaCKA", "quURK", "bzzACK", "quock", "queck", "WOcka", "wacKY","GOggEL","gugel","goEGL","GeGGal")
-		src.speak(message, 1, 1)
-		wakka_wakka(TRUE) // Seek loser is TRUE
-		if(prob(70))
-			playsound(src.loc, "sound/misc/amusingduck.ogg", 50, 1) // MUSIC
-		else if(prob (10) && src.eggs >= 1)
-			var/obj/item/a_gift/easter/E = new /obj/item/a_gift/easter(src.loc)
-			E.name = "duck egg"
-			src.eggs--
-			playsound(src.loc, "sound/misc/eggdrop.ogg", 50, 1)
-	if(prob(80))
-		src.egg_process++
-	if(src.egg_process >= 100 && prob(20))
-		src.eggs++
-		src.egg_process = 0
-	if(!src.moving)
-		if(prob(1) && src.declare_migration())
-			src.migrate()
-			return
-		if(prob(1) && src.mystical_journey()) // Time to go on a mystical journey
-			return
-	if(frustration >= 8)
-		src.KillPathAndGiveUp(1)
+		if(prob(80))
+			src.egg_process++
+		if(src.egg_process >= 100 && prob(20))
+			src.eggs++
+			src.egg_process = 0
+		if(frustration >= 8)
+			src.KillPathAndGiveUp(1)
 
 /obj/machinery/bot/duckbot/Topic(href, href_list)
 	if (!(usr in range(1)))
@@ -191,51 +165,75 @@
 	src.SubscribeToProcess()
 	return 1
 
+/// Sends all the duckbots to a random spot on the station
+/obj/machinery/bot/duckbot/proc/migrate()
+	var/list/stationAreas = get_accessible_station_areas()
+	if(!isarea(src.duck_migration_target))
+		var/A = pick(stationAreas)
+		src.duck_migration_target = stationAreas[A]
+	var/list/T = get_area_turfs(src.duck_migration_target, 1)
+	if(length(T) >= 1)
+		. = TRUE
+		SPAWN_DBG(rand(0,10 SECONDS)) // give em some time to spread out a bit
+			T = (pick(T))
+			src.mystical_access()
+			src.navigate_to(T, src.bot_move_delay, 0, 300)
+			if(length(src.path) < 1)
+				src.KillPathAndGiveUp(1)
+
 /// Tells all the other bots that it's time to migrate... somewhere
-/obj/machinery/bot/duckbot/proc/declare_migration(var/force)
-	if(!ON_COOLDOWN(global, "duckbot_declare_migration", 25 MINUTES) || force) // is it winter yet
-		if(!src.migration_override)
-			var/list/stationAreas = get_accessible_station_areas()
-			var/A = pick(stationAreas)
-			src.duck_migration_target = stationAreas[A]
+/obj/machinery/bot/duckbot/proc/declare_migration()
+	if(!src.migration_override || !isarea(src.duck_migration_target))
+		var/list/stationAreas = get_accessible_station_areas()
+		var/A = pick(stationAreas)
+		src.duck_migration_target = stationAreas[A]
 
-		var/datum/radio_frequency/frequency = radio_controller.return_frequency(FREQ_PDA)
-		if(!frequency) return FALSE
+	var/datum/radio_frequency/frequency = radio_controller.return_frequency(FREQ_PDA)
+	if(!frequency) return FALSE
 
-		var/datum/signal/signal = get_free_signal()
-		signal.source = src
-		signal.data["sender"] = src.botnet_id
-		signal.data["command"] = "migrate"
-		signal.data["sender_name"] = src
-		signal.data["message"] = "BUMP N GO TO [src.duck_migration_target]."
-		signal.transmission_method = TRANSMISSION_RADIO
-		frequency.post_signal(src, signal)
-		return TRUE
+	var/datum/signal/signal = get_free_signal()
+	signal.source = src
+	signal.data["sender"] = src.botnet_id
+	signal.data["sender_name"] = src
+	signal.data["message"] = "BUMP N GO TO [src.duck_migration_target]."
+	signal.data["target"] = src.duck_migration_target
+	signal.transmission_method = TRANSMISSION_RADIO
+	frequency.post_signal(src, signal)
+	return TRUE
 
 /obj/machinery/bot/duckbot/receive_signal(datum/signal/signal)
 	if(!on)
 		return
-	// migrate is true?
-	if(signal.data["command"] == "migrate")
-		var/message_to_send = "quack"
-		if(!ON_COOLDOWN(global, "duckbot_forced_migration", 5 MINUTES))
-			src.migrate()
-			message_to_send = "wacka"
-		if(signal.data["sender"])
-			src.send_confirm_signal(message_to_send, signal.data["sender"])
+
+	var/list/stationAreas = get_accessible_station_areas()
 	// in case someone wants to trick a flock of plastic birds to break you into security or something
 	if(signal.data["command"] == "set_migration_target")
 		var/message_to_send = "quack"
-		var/list/stationAreas = get_accessible_station_areas()
 		if(signal.data["message"] in stationAreas)
-			src.duck_migration_target = signal.data["message"]
+			src.duck_migration_target = stationAreas[signal.data["message"]]
 			message_to_send = "wacka"
 			src.migration_override = TRUE
 		if(signal.data["sender"])
 			src.send_confirm_signal(message_to_send, signal.data["sender"])
 
+	// migrate is true! Also to prevent people from asking just one duck to run off somewhere
+	if(isarea(signal.data["target"]))
+		src.migrate()
+		return
+
+	// Someone asked this bot to go on an adventure! Must be migration season, let everyone know
+	if(signal.data["command"] == "migrate")
+		var/message_to_send = "wacka"
+		if(ON_COOLDOWN(global, DUCKBOT_FORCED_MIGRATION_COOLDOWN, 3 MINUTES))
+			message_to_send = "quack"
+		else
+			src.declare_migration()
+			ON_COOLDOWN(global, DUCKBOT_NATURAL_MIGRATION_COOLDOWN, 15 MINUTES)
+		if(signal.data["sender"])
+			src.send_confirm_signal(message_to_send, signal.data["sender"])
+
 /obj/machinery/bot/duckbot/proc/send_confirm_signal(var/msg, var/target)
-	if(!ON_COOLDOWN(global, "duckbot_antispam_[target]", 5 SECONDS))
+	if(!ON_COOLDOWN(global, "duckbot_antispam_[target]", 1 SECOND))
 		var/datum/radio_frequency/frequency = radio_controller.return_frequency(FREQ_PDA)
 		if(!frequency) return FALSE
 		var/datum/signal/sigsend = get_free_signal()
@@ -252,12 +250,10 @@
 	. = ..()
 	if(give_up)
 		src.annoy_target = null
-		src.cooldowns = list()
-	if(src.access_lookup != initial(src.access_lookup))
-		src.access_lookup = initial(src.access_lookup)
-		qdel(src.botcard)
-		src.botcard = new /obj/item/card/id(src)
-		src.botcard.access = get_access(src.access_lookup)
+		src.migration_override = FALSE
+		if(src.access_lookup != initial(src.access_lookup))
+			src.access_lookup = initial(src.access_lookup)
+			src.botcard.access = get_access(src.access_lookup)
 
 /obj/machinery/bot/duckbot/attackby(obj/item/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/card/emag))

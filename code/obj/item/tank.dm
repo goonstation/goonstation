@@ -462,6 +462,7 @@ Contains:
 /obj/item/tank/plasma
 	name = "Gas Tank (BIOHAZARD)"
 	icon_state = "plasma"
+	item_state = "plasma"
 	desc = "This is a tank that can be hooked up to a compatible recepticle. When a mask is worn and the release valve on the tank is open, the user will breathe the gas inside the tank. This is labelled to contain deadly plasma."
 	module_research = list("atmospherics" = 2)
 

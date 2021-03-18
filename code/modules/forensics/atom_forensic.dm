@@ -146,6 +146,7 @@
 			#else
 			I.appearance_flags |= KEEP_TOGETHER
 			var/image/blood_overlay = image('icons/effects/blood.dmi', "itemblood")
+			blood_overlay.appearance_flags = PIXEL_SCALE | RESET_COLOR
 			blood_overlay.color = blood_color
 			blood_overlay.alpha = min(blood_overlay.alpha, 200)
 			blood_overlay.blend_mode = BLEND_INSET_OVERLAY

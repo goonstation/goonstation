@@ -1,6 +1,6 @@
 /obj/item/pinpointer
 	name = "pinpointer"
-	icon = 'icons/obj/items/device.dmi'
+	icon = 'icons/obj/items/pinpointers.dmi'
 	icon_state = "disk_pinoff"
 	flags = FPRINT | TABLEPASS| CONDUCT | ONBELT
 	w_class = 2.0
@@ -17,6 +17,11 @@
 	stamina_damage = 0
 	stamina_cost = 0
 	stamina_crit_chance = 1
+	var/image/arrow = null
+
+	New()
+		..()
+		arrow = image('icons/obj/items/pinpointers.dmi', icon_state = "")
 
 	attack_self()
 		if(!active)
@@ -28,7 +33,8 @@
 			boutput(usr, "<span class='notice'>You activate the pinpointer</span>")
 		else
 			active = 0
-			icon_state = "[src.icon_type]_pinoff"
+			arrow.icon_state = ""
+			UpdateOverlays(arrow, "arrow")
 			boutput(usr, "<span class='notice'>You deactivate the pinpointer</span>")
 
 	proc/work()
@@ -38,18 +44,20 @@
 				target = locate(target_criteria)
 			if(!target || target.qdeled)
 				active = 0
-				icon_state = "[src.icon_type]_pinonnull"
+				arrow.icon_state = ""
+				UpdateOverlays(arrow, "arrow")
 				return
 		src.set_dir(get_dir(src,target))
 		switch(get_dist(src,target))
 			if(0)
-				icon_state = "[src.icon_type]_pinondirect"
+				arrow.icon_state = "pinondirect"
 			if(1 to 8)
-				icon_state = "[src.icon_type]_pinonclose"
+				arrow.icon_state = "pinonclose"
 			if(9 to 16)
-				icon_state = "[src.icon_type]_pinonmedium"
+				arrow.icon_state = "pinonmedium"
 			if(16 to INFINITY)
-				icon_state = "[src.icon_type]_pinonfar"
+				arrow.icon_state = "pinonfar"
+		UpdateOverlays(arrow, "arrow")
 		SPAWN_DBG(0.5 SECONDS) .()
 
 /obj/item/pinpointer/nuke
@@ -66,9 +74,16 @@
 	icon_type = "disk"
 	target_criteria = /obj/item/disk/data/floppy/read_only/authentication
 
+/obj/item/pinpointer/teg_semi
+	name = "pinpointer (prototype semiconductor)"
+	desc = "Points in the direction of the NT Prototype Semiconductor."
+	icon_state = "semi_pinoff"
+	icon_type = "semi"
+	target_criteria = /obj/item/teg_semiconductor
+
 /obj/item/idtracker
 	name = "ID tracker"
-	icon = 'icons/obj/items/device.dmi'
+	icon = 'icons/obj/items/pinpointers.dmi'
 	icon_state = "id_pinoff"
 	flags = FPRINT | TABLEPASS| CONDUCT | ONBELT
 	w_class = 2.0
@@ -84,6 +99,11 @@
 	mats = 4
 	desc = "This little bad-boy has been pre-programmed to display the general direction of any assassination target you choose."
 	contraband = 3
+	var/image/arrow = null
+
+	New()
+		..()
+		arrow = image('icons/obj/items/pinpointers.dmi', icon_state = "")
 
 	attack_self()
 		if(!active)
@@ -109,25 +129,28 @@
 				boutput(usr, "<span class='notice'>You activate the target locator. Tracking [target]</span>")
 		else
 			active = 0
-			icon_state = "id_pinoff"
+			arrow.icon_state = ""
+			UpdateOverlays(arrow, "arrow")
 			boutput(usr, "<span class='notice'>You deactivate the target locator</span>")
 			target = null
 
 	proc/work()
 		if(!active) return
 		if(!target)
-			icon_state = "id_pinonnull"
+			arrow.icon_state = "pinonnull"
+			UpdateOverlays(arrow, "arrow")
 			return
 		src.set_dir(get_dir(src,target))
 		switch(get_dist(src,target))
 			if(0)
-				icon_state = "id_pinondirect"
+				arrow.icon_state = "pinondirect"
 			if(1 to 8)
-				icon_state = "id_pinonclose"
+				arrow.icon_state = "pinonclose"
 			if(9 to 16)
-				icon_state = "id_pinonmedium"
+				arrow.icon_state = "pinonmedium"
 			if(16 to INFINITY)
-				icon_state = "id_pinonfar"
+				arrow.icon_state = "pinonfar"
+		UpdateOverlays(arrow, "arrow")
 		SPAWN_DBG(0.5 SECONDS) .()
 
 /obj/item/idtracker/spy
@@ -138,7 +161,8 @@
 
 			//B LARGHHHHJHH
 			active = 0
-			icon_state = "id_pinoff"
+			arrow.icon_state = ""
+			UpdateOverlays(arrow, "arrow")
 			target = null
 			return
 
@@ -167,13 +191,14 @@
 				boutput(usr, "<span class='notice'>You activate the target locator. Tracking [target]</span>")
 		else
 			active = 0
-			icon_state = "id_pinoff"
+			arrow.icon_state = ""
+			UpdateOverlays(arrow, "arrow")
 			boutput(usr, "<span class='notice'>You deactivate the target locator</span>")
 			target = null
 
 /obj/item/bloodtracker
 	name = "BloodTrak"
-	icon = 'icons/obj/items/bloodtrak.dmi'
+	icon = 'icons/obj/items/pinpointers.dmi'
 	icon_state = "blood_pinoff"
 	flags = FPRINT | TABLEPASS| CONDUCT | ONBELT
 	w_class = 2.0
@@ -186,6 +211,11 @@
 	mats = 4
 	desc = "Tracks down people from their blood puddles!"
 	var/blood_timer = 0
+	var/image/arrow = null
+
+	New()
+		..()
+		arrow = image('icons/obj/items/pinpointers.dmi', icon_state = "")
 
 	afterattack(atom/A as mob|obj|turf|area, mob/user as mob)
 		if(!active && istype(A, /obj/decal/cleanable/blood))
@@ -208,25 +238,28 @@
 		if(!T)
 			T = get_turf(src)
 		if(TIME > blood_timer)
-			icon_state = "blood_pinoff"
+			arrow.icon_state = ""
+			UpdateOverlays(arrow, "arrow")
 			active = 0
 			boutput(usr, "<span class='alert'>[src] shuts down because the blood in it became too dry!</span>")
 			return
 		if(!target)
-			icon_state = "blood_pinonnull"
+			arrow.icon_state = "pinonnull"
+			UpdateOverlays(arrow, "arrow")
 			active = 0
 			boutput(usr, "<span class='alert'>No target found!</span>")
 			return
 		src.set_dir(get_dir(src,target))
 		switch(get_dist(src,target))
 			if(0)
-				icon_state = "blood_pinondirect"
+				arrow.icon_state = "pinondirect"
 			if(1 to 8)
-				icon_state = "blood_pinonclose"
+				arrow.icon_state = "pinonclose"
 			if(9 to 16)
-				icon_state = "blood_pinonmedium"
+				arrow.icon_state = "pinonmedium"
 			if(16 to INFINITY)
-				icon_state = "blood_pinonfar"
+				arrow.icon_state = "pinonfar"
+		UpdateOverlays(arrow, "arrow")
 		SPAWN_DBG(0.5 SECONDS)
 			.(T)
 
@@ -234,7 +267,6 @@
 
 /obj/item/pinpointer/secweapons
 	name = "security weapon pinpointer"
-	icon = 'icons/obj/items/device.dmi'
 	icon_state = "sec_pinoff"
 	icon_type = "sec"
 	var/list/itemrefs
@@ -273,5 +305,6 @@
 			boutput(usr, "<span class='notice'>You activate the pinpointer</span>")
 		else
 			active = 0
-			icon_state = "[src.icon_type]_pinoff"
+			arrow.icon_state = ""
+			UpdateOverlays(arrow, "arrow")
 			boutput(usr, "<span class='notice'>You deactivate the pinpointer</span>")

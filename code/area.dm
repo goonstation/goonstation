@@ -318,7 +318,7 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
 		waking_critters = 1
 		for(var/obj/critter/C in src.registered_critters)
 			C.wake_from_hibernation()
-		for (var/mob/living/critter/M as() in src.registered_mob_critters)
+		for (var/mob/living/critter/M as anything in src.registered_mob_critters)
 			M.wake_from_hibernation()
 		waking_critters = 0
 
@@ -3460,7 +3460,6 @@ ABSTRACT_TYPE(/area/mining)
 		var/list/cameras = list()
 		for (var/obj/machinery/camera/C in orange(source, 7))
 			cameras += C
-			LAGCHECK(LAG_HIGH)
 		for_by_tcl(aiPlayer, /mob/living/silicon/ai)
 			if (state == 1)
 				aiPlayer.cancelAlarm("Power", src, source)
@@ -3488,7 +3487,7 @@ ABSTRACT_TYPE(/area/mining)
 			LAGCHECK(LAG_HIGH)
 		for_by_tcl(aiPlayer, /mob/living/silicon/ai)
 			aiPlayer.triggerAlarm("Fire", src, cameras, src)
-		for (var/obj/machinery/computer/atmosphere/alerts/a as() in machine_registry[MACHINES_ATMOSALERTS])
+		for (var/obj/machinery/computer/atmosphere/alerts/a as anything in machine_registry[MACHINES_ATMOSALERTS])
 			a.triggerAlarm("Fire", src, cameras, src)
 
 /**
@@ -3505,7 +3504,7 @@ ABSTRACT_TYPE(/area/mining)
 				F.icon_state = "fire0"
 		for_by_tcl(aiPlayer, /mob/living/silicon/ai)
 			aiPlayer.cancelAlarm("Fire", src, src)
-		for (var/obj/machinery/computer/atmosphere/alerts/a as() in machine_registry[MACHINES_ATMOSALERTS])
+		for (var/obj/machinery/computer/atmosphere/alerts/a as anything in machine_registry[MACHINES_ATMOSALERTS])
 			a.cancelAlarm("Fire", src, src)
 
 /**

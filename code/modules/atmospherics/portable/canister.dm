@@ -428,7 +428,7 @@
 	)
 	if(src?.det?.attachments)
 		var/list/attach_names = list()
-		for(var/obj/item/I as() in src.det.attachments)
+		for(var/obj/item/I as anything in src.det.attachments)
 			attach_names += I.name
 		. += list("detonatorAttachments" = attach_names)
 

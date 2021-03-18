@@ -42,7 +42,7 @@
 	if(revs_possible.len >= 3)
 		rev_number = 3
 	else
-		rev_number = revs_possible.len
+		rev_number = length(revs_possible)
 
 	token_players = antag_token_list()
 	for(var/datum/mind/tplayer in token_players)
@@ -150,7 +150,7 @@
 	for(var/A in possible_modes)
 		intercepttext += i_text.build(A, pick(head_revolutionaries))
 /*
-	for (var/obj/machinery/computer/communications/comm as() in machine_registry[MACHINES_COMMSCONSOLES])
+	for (var/obj/machinery/computer/communications/comm as anything in machine_registry[MACHINES_COMMSCONSOLES])
 		if (!(comm.status & (BROKEN | NOPOWER)) && comm.prints_intercept)
 			var/obj/item/paper/intercept = new /obj/item/paper( comm.loc )
 			intercept.name = "paper- 'Cent. Com. Status Summary'"

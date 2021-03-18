@@ -36638,7 +36638,7 @@
 /area/station/security/armory)
 "bzD" = (
 /obj/table/auto,
-/obj/item/reagent_containers/glass/bottle/icing,
+/obj/item/reagent_containers/food/drinks/drinkingglass/icing,
 /obj/item/paper/book/cookbook,
 /obj/item/kitchen/utensil/knife,
 /turf/unsimulated/floor/specialroom/cafeteria,

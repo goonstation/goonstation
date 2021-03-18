@@ -4,6 +4,7 @@
 
 /datum/artifact/augmentor
 	associated_object = /obj/artifact/augmentor
+	type_name = "Surgery machine"
 	rarity_weight = 350
 	validtypes = list("ancient","precursor")
 	validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/electric,/datum/artifact_trigger/heat,

@@ -348,7 +348,7 @@ obj/machinery/atmospherics/pipe
 				ruptured = 4
 				src.destroyed = TRUE
 				src.desc = "The remnants of a section of pipe that needs to be replaced.  Perhaps rods would be sufficient?"
-				parent.mingle_with_turf(loc, volume)
+				parent?.mingle_with_turf(loc, volume)
 				node1?.disconnect(src)
 				node2?.disconnect(src)
 				update_icon()

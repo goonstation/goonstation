@@ -632,7 +632,7 @@
 	initial_reagents = "yuck"
 	festivity = 10
 
-	on_finish(mob/eater)
+	on_finish_eating(var/mob/M)
 		..()
 		eater.show_text("It's so hard it breaks one of your teeth AND it tastes disgusting! Why would you ever eat this?","red")
 		random_brute_damage(eater, 3)
@@ -649,7 +649,7 @@
 	icon_state = "cake1-base_cream"
 
 /obj/item/cake_item/attack(target as mob, mob/user as mob)
-	var/iteminside = src.contents.len
+	var/iteminside = length(src.contents)
 	if(!iteminside)
 		user.show_text("The cake crumbles away!","red")
 		qdel(src)

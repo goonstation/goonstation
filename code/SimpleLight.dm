@@ -59,9 +59,9 @@
 		avg_b += simple_light_rgbas[id][3]
 		sum_a += simple_light_rgbas[id][4]
 
-	avg_r /= simple_light_rgbas.len
-	avg_g /= simple_light_rgbas.len
-	avg_b /= simple_light_rgbas.len
+	avg_r /= length(simple_light_rgbas)
+	avg_g /= length(simple_light_rgbas)
+	avg_b /= length(simple_light_rgbas)
 	sum_a = min(255,sum_a)
 
 	simple_light.color = rgb(avg_r, avg_g, avg_b, sum_a)
@@ -166,9 +166,9 @@
 		avg_b += medium_light_rgbas[id][3]
 		sum_a += medium_light_rgbas[id][4]
 
-	avg_r /= medium_light_rgbas.len
-	avg_g /= medium_light_rgbas.len
-	avg_b /= medium_light_rgbas.len
+	avg_r /= length(medium_light_rgbas)
+	avg_g /= length(medium_light_rgbas)
+	avg_b /= length(medium_light_rgbas)
 
 	for(var/obj/overlay/simple_light/medium/medium_light in src.medium_lights)
 		if(medium_light.icon_state == "medium_center")
@@ -212,10 +212,10 @@
 	if(src.medium_lights[1].invisibility == 101) // toggled off
 		return
 	if(!isturf(src.loc))
-		for (var/obj/overlay/simple_light/medium/light as() in src.medium_lights)
+		for (var/obj/overlay/simple_light/medium/light as anything in src.medium_lights)
 			src:vis_contents -= light
 		return
-	for (var/obj/overlay/simple_light/medium/light as() in src.medium_lights)
+	for (var/obj/overlay/simple_light/medium/light as anything in src.medium_lights)
 		if(light.icon_state == "medium_center")
 			src:vis_contents += light
 			continue
@@ -287,9 +287,9 @@
 		avg_b += mdir_light_rgbas[id][3]
 		sum_a += mdir_light_rgbas[id][4]
 
-	avg_r /= mdir_light_rgbas.len
-	avg_g /= mdir_light_rgbas.len
-	avg_b /= mdir_light_rgbas.len
+	avg_r /= length(mdir_light_rgbas)
+	avg_g /= length(mdir_light_rgbas)
+	avg_b /= length(mdir_light_rgbas)
 
 	for(var/obj/overlay/simple_light/medium/directional/mdir_light in src.mdir_lights)
 		if(mdir_light.dist == mdir_light_dists[mdir_light_dists.len])
@@ -334,7 +334,7 @@
 	if(!length(src.mdir_lights) || src.mdir_lights[1].invisibility == 101) // toggled off
 		return
 	if(!isturf(src.loc))
-		for (var/obj/overlay/simple_light/medium/directional/light as() in src.mdir_lights)
+		for (var/obj/overlay/simple_light/medium/directional/light as anything in src.mdir_lights)
 			src:vis_contents -= light
 		return
 	if (!direct)
@@ -375,7 +375,7 @@
 	var/turf/TT = getlineopaqueblocked(src,T)
 	var/dist = get_dist(src,TT)-1
 
-	for (var/obj/overlay/simple_light/medium/directional/light as() in src.mdir_lights)
+	for (var/obj/overlay/simple_light/medium/directional/light as anything in src.mdir_lights)
 		if(light.icon_state == "medium_center" && light.dist == 0)
 			src:vis_contents += light
 			continue

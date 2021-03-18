@@ -429,6 +429,7 @@
 	id = "strangle_target"
 	icon = 'icons/mob/critter_ui.dmi'
 	icon_state = "neck_over"
+	color_active = "#d37610"
 	var/mob/living/target
 	var/obj/item/grab/G
 
@@ -474,6 +475,7 @@
 	id = "pin_target"
 	icon = 'icons/ui/actions.dmi'
 	icon_state = "pin"
+	color_active = "#d37610"
 	var/mob/living/target
 	var/obj/item/grab/G
 	var/turf/T

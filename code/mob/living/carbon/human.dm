@@ -702,6 +702,9 @@
 			remove_mindslave_status(src, "vthrall", "death")
 		else if (src.mind.master)
 			remove_mindslave_status(src, "otherslave", "death")
+#ifdef DATALOGGER
+		game_stats.Increment("playerdeaths")
+#endif
 
 	logTheThing("combat", src, null, "dies [log_health(src)] at [log_loc(src)].")
 	//src.icon_state = "dead"
@@ -774,7 +777,7 @@
 	if (!antag_removal && src.spell_soulguard)
 		boutput(src, "<span class='notice'>Your Soulguard enchantment activates and saves you...</span>")
 		//soulguard ring puts you in the same spot
-		if(istype(src.gloves, /obj/item/clothing/gloves/ring/wizard/teleport))
+		if(src.spell_soulguard == 2)	//istype(src.gloves, /obj/item/clothing/gloves/ring/wizard/teleport)
 			reappear_turf = get_turf(src)
 		else
 			reappear_turf = pick(job_start_locations["wizard"])
@@ -1142,7 +1145,7 @@
 		if (O.move_triggered)
 			O.move_trigger(src, ev)
 	reagents?.move_trigger(src, ev)
-	for (var/datum/statusEffect/S as() in statusEffects)
+	for (var/datum/statusEffect/S as anything in statusEffects)
 		if (S?.move_triggered)
 			S.move_trigger(src, ev)
 
@@ -1385,6 +1388,10 @@
 	var/original_language = src.say_language
 	if (mutantrace?.override_language)
 		say_language = mutantrace.override_language
+
+	if (istype(src.wear_mask, /obj/item/clothing/mask/monkey_translator))
+		var/obj/item/clothing/mask/monkey_translator/mask = src.wear_mask
+		say_language = mask.new_language
 
 	message = copytext(message, 1, MAX_MESSAGE_LEN)
 
@@ -2091,7 +2098,7 @@
 	if (equipped)
 		if (slot != slot_in_backpack && slot != slot_in_belt)
 			I.set_loc(src)
-		if (islist(I.ability_buttons) && I.ability_buttons.len)
+		if (islist(I.ability_buttons) && length(I.ability_buttons))
 			I.set_mob(src)
 			if (slot != slot_in_backpack && slot != slot_in_belt)
 				I.show_buttons()
@@ -2894,7 +2901,7 @@
 	bleeding = max(bleeding - amt, 0)
 
 /mob/living/carbon/human/proc/juggling()
-	if (islist(src.juggling) && src.juggling.len)
+	if (islist(src.juggling) && length(src.juggling))
 		return 1
 	return 0
 
@@ -2963,6 +2970,8 @@
 
 	if(ispath(mutantrace_type, /datum/mutantrace) )	//Set a new mutantrace only if passed one
 		src.mutantrace = new mutantrace_type(src)
+		src.mutantrace.MutateMutant(src, "set")
+
 		. = 1
 
 	if(.)

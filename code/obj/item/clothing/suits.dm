@@ -469,6 +469,18 @@
 		item_state = "MDlabcoat-alt"
 		coat_style = "MDlabcoat-alt"
 
+/obj/item/clothing/suit/labcoat/pathology
+	name = "pathologist's labcoat"
+	desc = "A protective laboratory coat with the orange markings of a Pathologist."
+	icon_state = "PTlabcoat"
+	item_state = "PTlabcoat"
+	coat_style = "PTlabcoat"
+
+	april_fools
+		icon_state = "PTlabcoat-alt"
+		item_state = "PTlabcoat-alt"
+		coat_style = "PTlabcoat-alt"
+
 /obj/item/clothing/suit/labcoat/science
 	name = "scientist's labcoat"
 	desc = "A protective laboratory coat with the purple markings of a Scientist."
@@ -1517,3 +1529,18 @@
 
 	attack_self(mob/user as mob)
 		user.visible_message("[user] flashes the badge: <br><span class='bold'>[bicon(src)] Nanotrasen's Finest [badge_owner_job]: [badge_owner_name].</span>", "You show off the badge: <br><span class='bold'>[bicon(src)] Nanotrasen's Finest [badge_owner_job] [badge_owner_name].</span>")
+
+/obj/item/clothing/suit/hosmedal
+	name = "war medal"
+	desc = ""
+	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
+	w_class = 1.0
+	wear_image_icon = 'icons/mob/overcoats/worn_suit_gimmick.dmi'
+	icon_state = "hosmedal"
+	icon_state = "hosmedal"
+
+	get_desc(var/dist, var/mob/user)
+		if (user.mind?.assigned_role == "Head of Security")
+			. = "It's your war medal, you remember when you got this for saving a man's life during the war."
+		else
+			. = "It's the HoS's old war medal, you heard they got it for their acts of heroism in the war."

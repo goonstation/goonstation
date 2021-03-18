@@ -19,7 +19,7 @@
 	attackby(obj/item/W as obj, mob/user as mob)
 		var/proceed = 0
 		for(var/check_path in src.allowed)
-			if(istype(W, check_path))
+			if(istype(W, check_path) && W.w_class < 4)
 				proceed = 1
 				break
 		if (!proceed)
@@ -53,7 +53,7 @@
 		// This is probably easily fixable by just running the check again
 		// but to be honest this is one of those funny bugs that can be fixed later
 
-		if (get_dist(user, src) <= 0 && src.contents.len)
+		if (get_dist(user, src) <= 0 && length(src.contents))
 			if (user.l_hand == src || user.r_hand == src)
 				var/obj/item/getItem = null
 
@@ -113,7 +113,8 @@
 	MouseDrop_T(atom/movable/O as obj, mob/user as mob)
 		var/proceed = 0
 		for(var/check_path in src.allowed)
-			if(istype(O, check_path))
+			var/obj/item/W = O
+			if(istype(O, check_path) && W.w_class < 4)
 				proceed = 1
 				break
 		if (!proceed)
@@ -176,7 +177,7 @@
 		icon_state = "hydrosatchel"
 		allowed = list(/obj/item/seed,
 		/obj/item/plant,
-		/obj/item/reagent_containers/food,
+		/obj/item/reagent_containers/food/snacks,
 		/obj/item/organ,
 		/obj/item/clothing/head/butt,
 		/obj/item/parts/human_parts/arm,

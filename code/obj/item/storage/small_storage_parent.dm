@@ -65,7 +65,7 @@
 		return
 
 	proc/make_my_stuff() // use this rather than overriding the container's New()
-		if (!islist(src.spawn_contents) || !src.spawn_contents.len)
+		if (!islist(src.spawn_contents) || !length(src.spawn_contents))
 			return 0
 		var/total_amt = 0
 		for (var/thing in src.spawn_contents)
@@ -103,7 +103,7 @@
 		.= 1
 		if (W.cant_drop)
 			return -1
-		if (islist(src.can_hold) && src.can_hold.len)
+		if (islist(src.can_hold) && length(src.can_hold))
 			var/ok = 0
 			if (src.in_list_or_max && W.w_class <= src.max_wclass)
 				ok = 1
@@ -256,7 +256,7 @@
 			animate_storage_rustle(src)
 		else
 			..()
-			for (var/mob/M as() in hud.mobs)
+			for (var/mob/M as anything in hud.mobs)
 				if (M != user)
 					M.detach_hud(hud)
 			hud.update(user)
@@ -268,7 +268,7 @@
 	proc/get_contents()
 		RETURN_TYPE(/list)
 		. = src.contents.Copy()
-		for(var/atom/A as() in .)
+		for(var/atom/A as anything in .)
 			if(!istype(A, /obj/item) || istype(A, /obj/item/grab))
 				. -= A
 

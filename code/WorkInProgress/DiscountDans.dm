@@ -48,7 +48,7 @@
 
 /datum/ticket_reward/donut
 	name = "Donut"
-	path = /obj/item/reagent_containers/food/snacks/donut/cinnamon
+	path = /obj/item/reagent_containers/food/snacks/donut/custom/cinnamon
 	description = "An absurdly delicious cinammon donut."
 
 /datum/ticket_reward/strudel

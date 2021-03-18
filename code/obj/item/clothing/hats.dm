@@ -872,11 +872,33 @@
 	desc = "A commitment."
 	icon_state = "syndicate_top"
 	item_state = "syndicate_top"
+	interesting = "It kinda stinks now..."
 	c_flags = SPACEWEAR // can't take it off, so may as well make it spaceworthy
 	contraband = 10 //let's set off some alarms, boys
 	is_syndicate = 1 //no easy replication thanks
 	cant_self_remove = 1
 	var/datum/component/holdertargeting/sm_light/light_c
+	var/processing = 0
+
+	process()
+		var/mob/living/host = src.loc
+		if (!istype(host))
+			processing_items.Remove(src)
+			processing = 0
+			return
+		if(prob(20))
+			var/turf/T = get_turf(src)
+			T.fluid_react_single("miasma_s", 5, airborne = 1)
+		if(prob(1))
+			host.real_name = "[prob(10)?SPACER_PICK("honorifics")+" ":""][prob(20)?SPACER_PICK("stuff")+" ":""][SPACER_PICK("firstnames")+" "][prob(80)?SPACER_PICK("nicknames")+" ":""][prob(50)?SPACER_PICK("firstnames"):SPACER_PICK("lastnames")]"
+			host.name = host.real_name
+			boutput(host, "<span class='notice'>You suddenly feel a lot more like, uh, well like [host.real_name]!</span>")
+		if(isdead(host))
+			host.visible_message("<span class='notice'>A fun surprise pops out of [host]!</span>")
+			new /obj/item/a_gift/festive(get_turf(src))
+			src.unequipped(host)
+			host.gib()
+			return
 
 	setupProperties()
 		..()
@@ -891,8 +913,18 @@
 			SPAWN_DBG( rand(300, 900) )
 				src.visible_message("<b>[src]</b> <i>says, \"I'm the boss.\"</i>")
 
+	unequipped(mob/user)
+		..()
+		processing_items.Remove(src)
+		processing = 0
+		return
+
+
 	equipped(var/mob/user, var/slot)
 		..()
+		if (!src.processing)
+			src.processing++
+			processing_items |= src
 		boutput(user, "<span class='notice'>You better start running! It's kill or be killed now, buddy!</span>")
 		SPAWN_DBG(1 SECOND)
 			playsound(src.loc, "sound/vox/time.ogg", 100, 1)
@@ -1217,6 +1249,23 @@
 	desc = "The Chief of Cleaning, the Superintendent of Scrubbing, whatever you call yourself, you know how to make those tiles shine. Good job."
 	icon_state = "janitorberet"
 	item_state = "janitorberet"
+	uses_multiple_icon_states = 1
+	var/folds = 0
+
+/obj/item/clothing/head/janiberet/attack_self(mob/user as mob)
+	if(src.folds)
+		src.folds = 0
+		src.name = "Head of Sanitation beret"
+		src.icon_state = "janitorberet"
+		src.item_state = "janitorberet"
+		boutput(user, "<span class='notice'>You fold the hat back into a beret.</span>")
+	else
+		src.folds = 1
+		src.name = "Head of Sanitation hat"
+		src.icon_state = "janitorcap"
+		src.item_state = "janitorcap"
+		boutput(user, "<span class='notice'>You unfold the beret into a hat.</span>")
+	return
 
 /obj/item/clothing/head/antlers
 	name = "antlers"
@@ -1233,3 +1282,17 @@
 	desc = "Is it truly a good night without one?"
 	icon_state = "pajama_hat"
 	item_state = "pajama_hat"
+
+/obj/item/clothing/head/that/white
+	name = "white hat"
+	desc = "A white tophat."
+	wear_image_icon = 'icons/mob/fruithat.dmi'
+	icon_state = "whtophat"
+	item_state = "whtophat"
+
+/obj/item/clothing/head/headsprout
+	name = "leaf hairclip"
+	desc = "A sign of a healthy, growing Staff Assistant."
+	wear_image_icon = 'icons/mob/fruithat.dmi'
+	icon_state = "headsprout"
+	item_state = "headsprout"
