@@ -60,11 +60,10 @@
 /obj/item/storage/box/detectivegun
 	name = ".38 revolver box"
 	icon_state = "hard_case"
-	desc = "A box containing a .38 caliber revolver and ammunition."
+	desc = "A box containing a .38 caliber revolver and non-lethal ammunition."
 	// Reduced the amount of ammo. The detective had four lethal and five stun speedloaders total in his closet, perhaps a bit too much (Convair880).
 	spawn_contents = list(/obj/item/gun/kinetic/detectiverevolver,\
-	/obj/item/ammo/bullets/a38 = 2,\
-	/obj/item/ammo/bullets/a38/stun = 2)
+	/obj/item/ammo/bullets/a38/stun = 3)
 
 /obj/item/storage/box/ak47 // cogwerks, terrorism update
 	name = "rifle box"
