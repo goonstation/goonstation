@@ -229,7 +229,7 @@ ABSTRACT_TYPE(/datum/objective/crew/botanist)
 		medal_name = "Bill Masen"
 		check_completion()
 			var/mutcount = 0
-			for(var/obj/machinery/plantpot/PP as() in machine_registry[MACHINES_PLANTPOTS])
+			for(var/obj/machinery/plantpot/PP as anything in machine_registry[MACHINES_PLANTPOTS])
 				if(PP.current)
 					var/datum/plantgenes/DNA = PP.plantgenes
 					var/datum/plantmutation/MUT = DNA.mutation
@@ -252,7 +252,7 @@ ABSTRACT_TYPE(/datum/objective/crew/botanist)
 				var/obj/item/seed/cannabis/S = X
 				if (istype(S) && istype(get_area(S), /area/station/hydroponics))
 					return 0
-			for (var/obj/machinery/plantpot/PP as() in machine_registry[MACHINES_PLANTPOTS])
+			for (var/obj/machinery/plantpot/PP as anything in machine_registry[MACHINES_PLANTPOTS])
 				if (PP.current && istype(PP.current, /datum/plant/herb/cannabis))
 					if (istype(get_area(PP), /area/station/hydroponics) || istype(get_area(PP), /area/station/hydroponics/lobby))
 						return 0
@@ -328,7 +328,7 @@ ABSTRACT_TYPE(/datum/objective/crew/mechanic)
 		medal_name = "It's not 'Door to Heaven'"
 		check_completion()
 			var/telecount = 0
-			for(var/obj/machinery/teleport/portal_generator/S as() in machine_registry[MACHINES_PORTALGENERATORS]) //really shitty, I know
+			for(var/obj/machinery/teleport/portal_generator/S as anything in machine_registry[MACHINES_PORTALGENERATORS]) //really shitty, I know
 				if(S.z != 1) continue
 				for(var/obj/machinery/teleport/portal_ring/H in orange(2,S))
 					for(var/obj/machinery/computer/teleporter/C in orange(2,S))
@@ -466,7 +466,7 @@ ABSTRACT_TYPE(/datum/objective/crew/medicaldirector)
 		explanation_text = "Have at least 5 people's DNA scanned in the cloning console at the end of the round."
 		medal_name = "Life, uh... finds a way"
 		check_completion()
-			for(var/obj/machinery/computer/cloning/C as() in machine_registry[MACHINES_CLONINGCONSOLES])
+			for(var/obj/machinery/computer/cloning/C as anything in machine_registry[MACHINES_CLONINGCONSOLES])
 				if(C.records.len > 4)
 					return 1
 			return 0
@@ -539,7 +539,7 @@ ABSTRACT_TYPE(/datum/objective/crew/geneticist)
 		explanation_text = "Have at least 5 people's DNA scanned in the cloning console at the end of the round."
 		medal_name = "Life, uh... finds a way"
 		check_completion()
-			for(var/obj/machinery/computer/cloning/C as() in machine_registry[MACHINES_CLONINGCONSOLES])
+			for(var/obj/machinery/computer/cloning/C as anything in machine_registry[MACHINES_CLONINGCONSOLES])
 				if(C.records.len > 4)
 					return 1
 			return 0

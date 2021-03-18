@@ -9485,7 +9485,7 @@
 	layer = 9.1;
 	pixel_x = -10
 	},
-/obj/item/card_box/suit,
+/obj/item/card_box/plain,
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/cafeteria)
 "wY" = (

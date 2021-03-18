@@ -2748,3 +2748,12 @@
 	baseprice = 2000
 	upperfluc = 1700
 	lowerfluc = -1700
+
+/datum/commodity/expensive_card
+	comname = "Incredibly Expensive Card"
+	desc = "Wow...people really pay a lot for these cards..."
+	comtype = /obj/item/playing_card/expensive
+	onmarket = 1
+	price = 21000
+	upperfluc = 20000
+	lowerfluc = -28500

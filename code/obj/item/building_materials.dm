@@ -323,7 +323,7 @@ MATERIAL
 			switch(href_list["make"])
 				if("rods")
 					var/makerods = min(src.amount,25)
-					var/rodsinput = input("Use how many sheets? (Get 2 rods for each sheet used)","Min: 2, Max: [makerods]",1) as num
+					var/rodsinput = input("Use how many sheets? (Get 2 rods for each sheet used)","Min: 1, Max: [makerods]",1) as num
 					if (rodsinput < 1) return
 					rodsinput = min(rodsinput,makerods)
 

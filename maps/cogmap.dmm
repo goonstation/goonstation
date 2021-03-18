@@ -12121,7 +12121,7 @@
 	pixel_x = -2;
 	pixel_y = 3
 	},
-/obj/item/card_box/suit{
+/obj/item/card_box/plain{
 	pixel_x = 7;
 	pixel_y = 13
 	},
@@ -17991,6 +17991,9 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
+/obj/machinery/ai_status_display{
+	pixel_y = 28
+	},
 /turf/simulated/floor,
 /area/station/bridge)
 "aPU" = (
@@ -21959,7 +21962,7 @@
 	pixel_x = 11;
 	pixel_y = 10
 	},
-/obj/item/card_box/suit{
+/obj/item/card_box/plain{
 	pixel_x = -8;
 	pixel_y = 12
 	},
@@ -34685,6 +34688,9 @@
 /area/station/turret_protected/ai_upload_foyer)
 "bAw" = (
 /obj/decal/tile_edge/stripe/extra_big,
+/obj/item/device/radio/intercom/AI{
+	dir = 8
+	},
 /turf/simulated/floor/neutral/side{
 	dir = 6
 	},
@@ -41603,7 +41609,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/storage/crate/rcd,
+/obj/storage/crate/rcd/CE,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 9;
@@ -43914,6 +43920,9 @@
 /obj/machinery/vending/cigarette,
 /obj/machinery/light/emergency{
 	dir = 1
+	},
+/obj/machinery/ai_status_display{
+	pixel_y = 28
 	},
 /turf/simulated/floor/greenwhite/other{
 	dir = 8
@@ -47503,9 +47512,11 @@
 /turf/simulated/floor/bot,
 /area/station/science/bot_storage)
 "cbO" = (
-/obj/machinery/light,
 /obj/storage/crate{
 	name = "Spare Parts"
+	},
+/obj/item/sheet/steel{
+	amount = 50
 	},
 /obj/item/guardbot_frame{
 	pixel_x = -9;
@@ -47534,6 +47545,7 @@
 	pixel_x = -7;
 	pixel_y = 6
 	},
+/obj/machinery/light,
 /turf/simulated/floor,
 /area/station/science/bot_storage)
 "cbP" = (
@@ -52611,7 +52623,7 @@
 	},
 /obj/table/glass/auto,
 /obj/random_item_spawner/desk_stuff,
-/obj/item/card_box/suit,
+/obj/item/card_box/plain,
 /turf/simulated/floor/escape,
 /area/station/hallway/secondary/exit)
 "cnJ" = (
@@ -57006,6 +57018,9 @@
 	dir = 0;
 	name = "autoname - SS13"
 	},
+/obj/machinery/ai_status_display{
+	pixel_y = 28
+	},
 /turf/simulated/floor/wood,
 /area/station/medical/medbay/lobby)
 "cwO" = (
@@ -60265,7 +60280,11 @@
 /area/station/engine/core)
 "fBI" = (
 /obj/item/device/radio/intercom/AI{
-	broadcasting = 0
+	broadcasting = 0;
+	dir = 1
+	},
+/obj/machinery/ai_status_display{
+	pixel_y = 28
 	},
 /turf/simulated/floor/stairs{
 	dir = 4
@@ -61281,11 +61300,12 @@
 /turf/simulated/floor/plating,
 /area/station/medical/medbay)
 "ktP" = (
-/obj/item/sheet/steel{
-	amount = 50
+/obj/machinery/light,
+/obj/machinery/ai_status_display{
+	pixel_y = -29
 	},
-/turf/simulated/wall/auto/supernorn,
-/area/station/science/bot_storage)
+/turf/simulated/floor,
+/area/station/crew_quarters/courtroom)
 "kvk" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold,
 /obj/wingrille_spawn/auto,
@@ -61341,6 +61361,10 @@
 /obj/access_spawn/pathology,
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
+"kBW" = (
+/obj/machinery/ai_status_display,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/ai_monitored/storage/eva)
 "kCn" = (
 /obj/machinery/door/airlock/pyro/security{
 	aiControlDisabled = 1;
@@ -61466,6 +61490,9 @@
 	pixel_x = 2
 	},
 /obj/table/wood/auto,
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/yellow/side,
 /area/station/engine/engineering)
 "lel" = (
@@ -62685,7 +62712,9 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
-/obj/item/device/radio/intercom/AI,
+/obj/machinery/ai_status_display{
+	pixel_y = 28
+	},
 /turf/simulated/floor/neutral/side{
 	dir = 5
 	},
@@ -96065,7 +96094,7 @@ aUk
 aUk
 aUi
 aUk
-aZf
+ktP
 baa
 bbd
 bcf
@@ -98238,7 +98267,7 @@ bXK
 bZj
 caC
 cbN
-ktP
+bWD
 cem
 cfA
 cgS
@@ -101212,7 +101241,7 @@ bhB
 biI
 blf
 blf
-blf
+kBW
 blI
 bmv
 bnc

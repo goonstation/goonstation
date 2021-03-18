@@ -372,9 +372,10 @@
 
 /datum/supply_packs/monkey4
 	name = "Lab Monkey Crate - 4 pack"
-	desc = "x4 Monkey"
+	desc = "x4 Monkey, x1 Monkey Translator"
 	category = "Research Department"
-	contains = list(/mob/living/carbon/human/npc/monkey = 4)
+	contains = list(/mob/living/carbon/human/npc/monkey = 4,
+						/obj/item/clothing/mask/monkey_translator)
 	cost = 500
 	containertype = /obj/storage/crate/medical
 	containername = "Lab Monkey Crate"
@@ -1210,6 +1211,17 @@
 	cost = 10000
 	containertype = /obj/storage/crate/classcrate/qm
 	containername = "Anti-Singularity Supply Pack"
+
+/datum/supply_packs/conworksupplies
+	name = "Construction Equipment"
+	desc = "The mothballed tools of our former Construction Workers, in a crate, for you!"
+	category = "Engineering Department"
+	contains = list(/obj/item/lamp_manufacturer/organic,/obj/item/material_shaper,/obj/item/room_planner,/obj/item/clothing/under/rank/orangeoveralls)
+	//i was going to add a version of the construction visualliser w/o seeing invisible monsters but FUCK SIGHT CODE WHAT THE FUCK
+	cost = 8000
+	containertype = /obj/storage/secure/crate
+	containername = "Construction Equipment (Cardlocked \[Engineering])"
+	access = access_engineering
 
 /* ================================================= */
 /* -------------------- Complex -------------------- */

@@ -4888,7 +4888,7 @@
 	layer = 9.1;
 	pixel_x = -10
 	},
-/obj/storage/crate/rcd,
+/obj/storage/crate/rcd/CE,
 /turf/simulated/floor/yellow/side{
 	dir = 8
 	},
@@ -47472,7 +47472,7 @@
 "bZJ" = (
 /obj/table/wood/auto,
 /obj/item/reagent_containers/food/drinks/bottle/tequila,
-/obj/item/playing_cards/suit,
+/obj/item/card_group/plain,
 /obj/item/spacecash/hundred,
 /turf/simulated/floor/orangeblack,
 /area/listeningpost)

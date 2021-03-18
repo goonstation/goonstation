@@ -27329,7 +27329,7 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
-/obj/storage/crate/rcd,
+/obj/storage/crate/rcd/CE,
 /obj/machinery/light/emergency,
 /turf/simulated/floor/yellow,
 /area/station/engine/engineering/ce)
@@ -39176,7 +39176,7 @@
 	},
 /obj/table/reinforced/auto,
 /obj/item/instrument/harmonica,
-/obj/item/card_box/suit,
+/obj/item/card_box/plain,
 /turf/simulated/floor/grime,
 /area/station/security/brig)
 "bnL" = (

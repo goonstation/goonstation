@@ -13120,7 +13120,7 @@
 /obj/table/reinforced/bar/auto,
 /obj/item/plate,
 /obj/item/kitchen/utensil/spoon,
-/obj/item/card_box/suit,
+/obj/item/card_box/plain,
 /turf/simulated/floor/specialroom/bar/edge,
 /area/station/crew_quarters/cafeteria)
 "aDd" = (
@@ -21722,7 +21722,7 @@
 /obj/stool/chair/comfy{
 	dir = 4
 	},
-/obj/item/card_box/suit,
+/obj/item/card_box/plain,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/jazz)
 "aUE" = (
@@ -56877,7 +56877,7 @@
 	},
 /obj/table/glass/auto,
 /obj/random_item_spawner/desk_stuff,
-/obj/item/card_box/suit,
+/obj/item/card_box/plain,
 /turf/simulated/floor/escape,
 /area/station/hallway/secondary/exit)
 "cnJ" = (

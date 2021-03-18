@@ -906,7 +906,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		set_current_projectile(new/datum/projectile/bullet/airzooka)
 		..()
 
-/obj/item/gun/kinetic/smg //testing keelin's continuous fire POC
+/obj/item/gun/kinetic/smg_old //testing keelin's continuous fire POC
 	name = "submachine gun"
 	desc = "An automatic submachine gun"
 	icon_state = "walthery1"
@@ -932,7 +932,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	name = "Branwen pistol"
 	desc = "A semi-automatic, 9mm caliber service pistol, developed by Mabinogi Firearms Company."
 	icon_state = "9mm_pistol"
-	w_class = 2
+	w_class = 3
 	force = 3
 	contraband = 4
 	caliber = 0.355
@@ -947,6 +947,31 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		..()
 
 /obj/item/gun/kinetic/pistol/empty
+
+	New()
+		..()
+		ammo.amount_left = 0
+		update_icon()
+/obj/item/gun/kinetic/smg
+	name = "Bellatrix submachine gun"
+	desc = "A semi-automatic, 9mm submachine gun, developed by Almagest Weapons Fabrication."
+	icon = 'icons/obj/48x32.dmi'
+	icon_state = "mp52"
+	w_class = 2
+	force = 3
+	contraband = 4
+	caliber = 0.355
+	max_ammo_capacity = 30
+	auto_eject = 1
+	spread_angle = 12.5
+	has_empty_state = 1
+
+	New()
+		ammo = new/obj/item/ammo/bullets/bullet_9mm/smg
+		set_current_projectile(new/datum/projectile/bullet/bullet_9mm/smg)
+		..()
+
+/obj/item/gun/kinetic/smg/empty
 
 	New()
 		..()
@@ -1057,7 +1082,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	force = 5
 	caliber = 0.308
 	max_ammo_capacity = 100
-	auto_eject = 1
+	auto_eject = 0
 
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY | ONBACK
 	object_flags = NO_ARM_ATTACH

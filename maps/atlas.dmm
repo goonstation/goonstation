@@ -5553,7 +5553,7 @@
 /area/station/hallway/primary/west)
 "nF" = (
 /obj/table/auto,
-/obj/item/card_box/suit,
+/obj/item/card_box/plain,
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/cafeteria)
 "nG" = (
@@ -9575,7 +9575,7 @@
 /area/station/engine/engineering)
 "wG" = (
 /obj/table/auto,
-/obj/item/playing_cards/suit,
+/obj/item/card_group/plain,
 /obj/machinery/light{
 	dir = 4;
 	layer = 9.1;
@@ -12764,7 +12764,7 @@
 "Ft" = (
 /obj/table/auto,
 /obj/item/game_kit,
-/obj/item/playing_cards/suit,
+/obj/item/card_group/plain,
 /turf/simulated/floor/black,
 /area/station/hallway/primary/east)
 "Fu" = (
@@ -17273,7 +17273,7 @@
 /obj/item/reagent_containers/food/snacks/pie/cream,
 /obj/item/storage/pill_bottle/cyberpunk,
 /obj/item/instrument/bikehorn,
-/obj/item/playing_cards/tarot,
+/obj/item/card_group/tarot,
 /obj/machinery/light_switch/west,
 /obj/item/chair/folded{
 	layer = 2;

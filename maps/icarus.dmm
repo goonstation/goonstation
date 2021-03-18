@@ -12669,7 +12669,7 @@
 /turf/simulated/floor/plating,
 /area/station/engine/engineering/ce)
 "aBu" = (
-/obj/storage/crate/rcd,
+/obj/storage/crate/rcd/CE,
 /turf/simulated/floor/yellowblack{
 	dir = 8
 	},
@@ -25776,7 +25776,7 @@
 "bcs" = (
 /obj/table/wood/auto,
 /obj/item/reagent_containers/food/drinks/bottle/tequila,
-/obj/item/playing_cards/suit,
+/obj/item/card_group/plain,
 /obj/item/spacecash/hundred,
 /turf/simulated/floor/orangeblack,
 /area/listeningpost)

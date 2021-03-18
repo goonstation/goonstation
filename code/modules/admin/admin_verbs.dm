@@ -862,7 +862,7 @@ var/list/fun_images = list()
 	set name = "Show Rules to Player"
 	set popup_menu = 0
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
-	
+
 	var/crossness = input("How cross are we with this guy?", "Enter Crossness", "A bit") as anything in list("A bit", "A lot", "Cancel")
 	if (!crossness || crossness == "Cancel")
 		return
@@ -1503,7 +1503,7 @@ var/list/fun_images = list()
 	if (!pet_path)
 		return
 
-	for (var/client/cl as() in clients)
+	for (var/client/cl as anything in clients)
 		var/mob/living/L = cl.mob
 		if(!istype(L) || isdead(L))
 			continue
@@ -1934,7 +1934,7 @@ var/list/fun_images = list()
 		var/y_shift = round(text2num(parameters["icon-y"]) / 32)
 		clicked_turf = locate(clicked_turf.x + x_shift, clicked_turf.y + y_shift, clicked_turf.z)
 		var/list/atom/atoms = list(clicked_turf)
-		for(var/atom/thing as() in clicked_turf)
+		for(var/atom/thing as anything in clicked_turf)
 			atoms += thing
 		if (atoms.len)
 			A = input(usr, "Which item to admin-interact with?") as null|anything in atoms
