@@ -1,0 +1,78 @@
+Metadata-Version: 2.1
+Name: pygit2
+Version: 1.0.1
+Summary: Python bindings for libgit2.
+Home-page: http://github.com/libgit2/pygit2
+Maintainer: J. David Ibáñez
+Maintainer-email: jdavid.ibp@gmail.com
+License: GPLv2 with linking exception
+Keywords: git
+Platform: UNKNOWN
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Intended Audience :: Developers
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.5
+Classifier: Programming Language :: Python :: 3.6
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: Implementation :: PyPy
+Classifier: Programming Language :: Python :: Implementation :: CPython
+Classifier: Topic :: Software Development :: Version Control
+Requires-Dist: cffi
+
+######################################################################
+pygit2 - libgit2 bindings in Python
+######################################################################
+
+Pygit2 is a set of Python bindings to the libgit2 shared library, libgit2
+implements Git plumbing.  Pygit2 works with Python 3.5 - 3.8 and PyPy 3.5
+
+.. image:: https://travis-ci.org/libgit2/pygit2.svg?branch=master
+   :target: http://travis-ci.org/libgit2/pygit2
+
+.. image:: https://ci.appveyor.com/api/projects/status/edmwc0dctk5nacx0/branch/master?svg=true
+   :target: https://ci.appveyor.com/project/jdavid/pygit2/branch/master
+
+Links:
+
+- Documentation - http://www.pygit2.org/
+
+  Install - http://www.pygit2.org/install.html
+
+- Download - https://pypi.python.org/pypi/pygit2
+
+- Source code and issue tracker - https://github.com/libgit2/pygit2
+
+- Changelog - https://github.com/libgit2/pygit2/blob/master/CHANGELOG.rst
+
+- Authors - https://github.com/libgit2/pygit2/blob/master/AUTHORS.rst
+
+
+License: GPLv2 with linking exception
+=====================================
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License,
+version 2, as published by the Free Software Foundation.
+
+In addition to the permissions in the GNU General Public License,
+the authors give you unlimited permission to link the compiled
+version of this file into combinations with other programs,
+and to distribute those combinations without any restriction
+coming from the use of this file.  (The General Public License
+restrictions do apply in other respects; for example, they cover
+modification of the file, and distribution when not linked into
+a combined executable.)
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; see the file COPYING.  If not, write to
+the Free Software Foundation, 51 Franklin Street, Fifth Floor,
+Boston, MA 02110-1301, USA.
+
+
