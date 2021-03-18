@@ -146,6 +146,8 @@ var/global/datum/phrase_log/phrase_log = new
 		)
 		while(max_tries-- > 0)
 			. = src.random_api_phrase("ai_laws")
+			if(!length(.))
+				continue
 			var/ok = TRUE
 			for(var/blacklisted in blacklist)
 				if(blacklisted in .)
