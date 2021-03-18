@@ -96,7 +96,7 @@
 		user.lastattacked = src
 		if (!src.alive)
 			// TODO: tie this into surgery()
-			if (istype(W, /obj/item/scalpel))
+			if (iscuttingtool(W))
 				if (user.zone_sel.selecting == "l_arm")
 					if (src.left_arm_stage == 0)
 						user.visible_message("<span class='alert'>[user] slices through the skin and flesh of [src]'s left arm with [W].</span>", "<span class='alert'>You slice through the skin and flesh of [src]'s left arm with [W].</span>")
@@ -117,6 +117,9 @@
 							src.left_arm.set_loc(location)
 							src.left_arm = null
 						src.update_dead_icon()
+
+					else if (src.left_arm_stage == 3)
+						boutput(user, "<span class='alert'>[src] has no left arm to remove!.</span>")
 
 				else if (user.zone_sel.selecting == "r_arm")
 					if (src.right_arm_stage == 0)
@@ -139,18 +142,34 @@
 							src.right_arm = null
 						src.update_dead_icon()
 
-			else if (istype(W, /obj/item/circular_saw))
+					else if (src.right_arm_stage == 3)
+						boutput(user, "<span class='alert'>[src] has no right arm to remove!.</span>")
+				else // only butcher if not targeting arms
+					..()
+
+			else if (istool(W, TOOL_SAWING))
 				if (user.zone_sel.selecting == "l_arm")
 					if (src.left_arm_stage == 1)
 						user.visible_message("<span class='alert'>[user] saws through the bone of [src]'s left arm with [W].</span>", "<span class='alert'>You saw through the bone of [src]'s left arm with [W].</span>")
 						src.left_arm_stage++
+
+					else if (src.right_arm_stage == 3)
+						boutput(user, "<span class='alert'>[src] has no left arm to remove!.</span>")
+					return 0
+
 				else if (user.zone_sel.selecting == "r_arm")
 					if (src.right_arm_stage == 1)
 						user.visible_message("<span class='alert'>[user] saws through the bone of [src]'s right arm with [W].</span>", "<span class='alert'>You saw through the bone of [src]'s right arm with [W].</span>")
 						src.right_arm_stage++
+
+					else if (src.right_arm_stage == 3)
+						boutput(user, "<span class='alert'>[src] has no right arm to remove!.</span>")
+				else
+					..()
 			else
-				..()
+			 ..()
 			return
+
 		var/attack_force = 0
 		var/damage_type = "brute"
 		if (istype(W, /obj/item/artifact/melee_weapon))

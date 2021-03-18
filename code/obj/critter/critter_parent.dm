@@ -218,7 +218,7 @@
 		..()
 		if (!src.alive)
 			if (src.skinresult && max_skins)
-				if (istype(W, /obj/item/circular_saw) || istype(W, /obj/item/kitchen/utensil/knife) || istype(W, /obj/item/scalpel) || istype(W, /obj/item/raw_material/shard) || istype(W, /obj/item/sword) || istype(W, /obj/item/saw) || issnippingtool(W))
+				if (istool(W, TOOL_SAWING) || iscuttingtool(W) || issnippingtool(W))
 
 					for(var/i, i<rand(1, max_skins), i++)
 						new src.skinresult (src.loc)
@@ -227,7 +227,7 @@
 
 					user.visible_message("<span class='alert'>[user] skins [src].</span>","You skin [src].")
 
-			if (src.butcherable && (istype(W, /obj/item/kitchen/utensil/knife) || istype(W, /obj/item/knife/butcher)))
+			if (src.butcherable && (iscuttingtool(W) || istype(W, /obj/item/kitchen/utensil/knife/pizza_cutter)))//pizza cutter behaviour retained
 				user.visible_message("<span class='alert'>[user] butchers [src].[src.butcherable == 2 ? "<b>WHAT A MONSTER</b>" : null]","You butcher [src].</span>")
 
 				var/i = rand(2,4)
