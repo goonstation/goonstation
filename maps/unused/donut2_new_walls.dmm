@@ -19291,7 +19291,6 @@
 	},
 /area/station/hallway/primary/east)
 "aQN" = (
-/obj/machinery/door/firedoor/pyro,
 /obj/cable{
 	d1 = 1;
 	d2 = 2;
@@ -19299,6 +19298,7 @@
 	},
 /obj/machinery/door/airlock/pyro/security/alt,
 /obj/access_spawn/forensics,
+/obj/firedoor_spawn,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "aQO" = (
