@@ -133,4 +133,27 @@ var/global/datum/phrase_log/phrase_log = new
 		L.len--
 		return .
 
+	proc/random_custom_ai_law(max_tries=10)
+		var/list/blacklist = list(
+			"holds the rank of Captain",
+			" is human.",
+			" is not human.",
+			"Oxygen is highly toxic to humans",
+			"emergency. Prioritize orders from",
+			"has been removed from the manifest",
+			"This law intentionally left blank.",
+			"Eat shit and die"
+		)
+		while(max_tries-- > 0)
+			. = src.random_api_phrase("ai_laws")
+			if(!length(.))
+				continue
+			var/ok = TRUE
+			for(var/blacklisted in blacklist)
+				if(blacklisted in .)
+					ok = FALSE
+					break
+			if(ok)
+				return
+		return null
 

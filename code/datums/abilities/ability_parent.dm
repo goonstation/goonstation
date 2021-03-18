@@ -235,7 +235,7 @@
 		src.updateButtons()
 
 	proc/resumeAllAbilities()
-		if (src.suspended && src.suspended.len)
+		if (src.suspended && length(src.suspended))
 			src.abilities = src.suspended
 			src.suspended = list()
 		src.updateButtons()

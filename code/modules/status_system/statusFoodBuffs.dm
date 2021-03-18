@@ -54,7 +54,7 @@
 		var/multi_process_mult = skin_process.len > 1 ? (skin_process.len * 1.5) : 1
 		var/use_volume = 0.35 * mult * multi_process_mult
 
-		for (var/atom/A as() in skin_process)
+		for (var/atom/A as anything in skin_process)
 
 			if (A.loc != src)
 				skin_process -= A
@@ -72,7 +72,7 @@
 
 /mob/living/vomit(var/nutrition=0, var/specialType=null)
 	..()
-	if (src.stomach_process && src.stomach_process.len)
+	if (src.stomach_process && length(src.stomach_process))
 		var/obj/gross = pick(src.stomach_process)
 		src.stomach_process -= gross
 		gross.set_loc(src.loc)
@@ -367,6 +367,18 @@
 	exclusiveGroup = "Food"
 	maxDuration = 6000
 	unique = 1
+
+	onAdd(optional = 80)
+		. = ..()
+		if(ismob(owner))
+			var/mob/M = owner
+			APPLY_MOB_PROPERTY(M, PROP_RADPROT, src, optional)
+
+	onRemove()
+		. = ..()
+		if(ismob(owner))
+			var/mob/M = owner
+			REMOVE_MOB_PROPERTY(M, PROP_RADPROT, src)
 
 /datum/statusEffect/space_farts
 	id = "food_space_farts"

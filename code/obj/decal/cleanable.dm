@@ -376,7 +376,7 @@ proc/make_cleanable(var/type,var/loc,var/list/viral_list)
 			. = " It's [src.dry == DRY_BLOOD ? "dry and flakey" : "fresh"]."
 
 	proc/handle_reagent_list(var/list/reagent_list)
-		if (!reagent_list || !reagent_list.len)
+		if (!reagent_list || !length(reagent_list))
 			return
 
 		if (reagent_list["bloodc"])
@@ -510,7 +510,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 
 	proc/create_overlay(var/list/icons_to_choose, var/add_color, var/direction)
 		var/blood_addition
-		if (islist(icons_to_choose) && icons_to_choose.len)
+		if (islist(icons_to_choose) && length(icons_to_choose))
 			blood_addition = pick(icons_to_choose)
 		else if (istext(icons_to_choose))
 			blood_addition = icons_to_choose

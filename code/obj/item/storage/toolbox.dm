@@ -131,7 +131,7 @@
 	desc = "A metal container designed to hold various tools. This variety holds art supplies."
 	icon_state = "green"
 	item_state = "toolbox-green"
-	spawn_contents = list(/obj/item/paint_can/random = 7)
+	spawn_contents = list(/obj/item/paint_can/random = 6, /obj/item/item_box/crayon = 1)
 
 /* -------------------- Memetic Toolbox -------------------- */
 

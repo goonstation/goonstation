@@ -44,7 +44,7 @@
 			var/atom/movable/screen/hud/H = create_screen("hand[i]", HH.name, HH.icon, "[HH.icon_state][i == master.active_hand ? 1 : 0]", SL, HUD_LAYER+1)
 			HH.screenObj = H
 			hands += H
-		nr = hand_s + master.hands.len
+		nr = hand_s + length(master.hands)
 		health = create_screen("health", "health", src.icon_hud, "health0", "EAST[next_topright()],NORTH", HUD_LAYER+1)
 
 		if (master.use_stamina)
@@ -255,7 +255,7 @@
 		for(var/atom/movable/screen/statusEffect/G in src.objects)
 			remove_screen(G)
 
-		for(var/datum/statusEffect/S as() in src.statusUiElements) //Remove stray effects.
+		for(var/datum/statusEffect/S as anything in src.statusUiElements) //Remove stray effects.
 			if(!master.statusEffects || !(S in master.statusEffects))
 				pool(statusUiElements[S])
 				src.statusUiElements.Remove(S)
@@ -265,7 +265,7 @@
 		var/pos_x = spacing - 0.2 - 1
 
 		if(master.statusEffects)
-			for(var/datum/statusEffect/S as() in master.statusEffects) //Add new ones, update old ones.
+			for(var/datum/statusEffect/S as anything in master.statusEffects) //Add new ones, update old ones.
 				if(!S.visible) continue
 				if((S in statusUiElements) && statusUiElements[S])
 					var/atom/movable/screen/statusEffect/U = statusUiElements[S]

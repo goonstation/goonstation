@@ -54,7 +54,7 @@
 		var/list_counter = 0
 		src.images = list()
 
-		for (var/C as() in src.component_images)
+		for (var/C as anything in src.component_images)
 			list_counter++
 			var/image/suit_image = image(icon = src.wear_image_icon, icon_state = C, layer = MOB_CLOTHING_LAYER)
 			suit_image.icon_state = C
@@ -847,8 +847,8 @@
 	blue
 		name = "blue basketball jersey"
 		desc = "A jersey with the Mississippi Singularities away colors."
-		icon_state = "jerseyB"
-		item_state = "jerseyB"
+		icon_state = "jerseyBl"
+		item_state = "jerseyBl"
 
 	purple
 		name = "purple basketball jersey"

@@ -114,7 +114,13 @@
 		..()
 
 		// Fuck up the AI's laws
-		var/pickedLaw = pick(new_laws)
+		var/pickedLaw
+		if(prob(33))
+			pickedLaw = phrase_log.random_custom_ai_law()
+		else
+			pickedLaw = pick(new_laws)
+		if(isnull(pickedLaw))
+			pickedLaw = pick(new_laws)
 		if (prob(50))
 			var/num = rand(1,15)
 			ticker.centralized_ai_laws.laws_sanity_check()

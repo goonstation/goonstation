@@ -85,16 +85,19 @@
 		var/measured = 8
 		if(istype(who)) // client's a client
 			measured = who.MeasureText(src.maptext, width = src.maptext_width)
-		else if(length(clients) >= 1) // even if it isnt *your* client
-			var/client/C = pick(clients)
-			measured = C.MeasureText(src.maptext, width = src.maptext_width)
+		else // bots can't be trusted with a soul. proably.
+			return measured * (1 + round(length(src.maptext_width) / 128))
 		src.measured_height = text2num(splittext(measured, "x")[2])
 
-proc/make_chat_maptext(atom/target, msg, style = "", alpha = 255)
+proc/make_chat_maptext(atom/target, msg, style = "", alpha = 255, force = 0)
 	var/image/chat_maptext/text = unpool(/image/chat_maptext)
 	animate(text, maptext_y = 28, time = 0.01) // this shouldn't be necessary but it keeps breaking without it
-	msg = copytext(msg, 1, 128) // 4 lines, seems fine to me
-	text.maptext = "<span class='pixel c ol' style=\"[style]\">[msg]</span>"
+	if (!force)
+		msg = copytext(msg, 1, 128) // 4 lines, seems fine to me
+		text.maptext = "<span class='pixel c ol' style=\"[style]\">[msg]</span>"
+	else
+		// force whatever it is to be shown. for not chat tings. honk.
+		text.maptext = msg
 	if(istype(target, /atom/movable))
 		var/atom/movable/L = target
 		text.loc = L.chat_text

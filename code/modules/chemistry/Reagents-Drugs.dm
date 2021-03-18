@@ -334,7 +334,7 @@ datum
 					boutput(M, "<span class='alert'><font face='[pick("Arial", "Georgia", "Impact", "Mucida Console", "Symbol", "Tahoma", "Times New Roman", "Verdana")]' size='[rand(3,6)]'>Holy shit, you start tripping balls!</font></span>")
 				return
 
-		drugs/lsd_bee
+		drug/lsd_bee
 			name = "lsbee"
 			id = "lsd_bee"
 			description = "A highly potent hallucinogenic substance. It smells like honey."
@@ -984,6 +984,7 @@ datum
 
 					if(!holder.has_reagent("triplemeth", 10 * mult))
 						holder.add_reagent("triplemeth", 10 * mult, null)
+						M.add_karma(10)
 
 					if (effect <= 2)
 						M.visible_message("<span class='alert'><b>[M.name]'s</b> hands flip out and flail everywhere!</span>")

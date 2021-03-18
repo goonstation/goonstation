@@ -84,7 +84,7 @@
 		if (src.canmove)
 			if (src.restrained())
 				for(var/mob/M in range(src, 1))
-					if ((M.pulling == src && (!M.restrained() && isalive(M))) || src.grabbed_by.len)
+					if ((M.pulling == src && (!M.restrained() && isalive(M))) || length(src.grabbed_by))
 						boutput(src, "<span class='notice'>You're restrained! You can't move!</span>")
 						return
 
@@ -114,7 +114,7 @@
 				for (var/obj/item/grab/G in src.equipped_list(check_for_magtractor = 0))
 					if (get_dist(src, G.affecting) > 1)
 						qdel(G)
-				for (var/obj/item/grab/G as() in src.grabbed_by)
+				for (var/obj/item/grab/G as anything in src.grabbed_by)
 					if (istype(G) && get_dist(src, G.assailant) > 1)
 						if (G.state > 1)
 							delay += G.assailant.p_class
@@ -183,7 +183,7 @@
 					src.pushing = 0
 
 					var/do_step = 1 //robust grab : don't even bother if we are in a chokehold. Assailant gets moved below. Makes the tile glide better without having a chain of step(src)->step(assailant)->step(me)
-					for (var/obj/item/grab/G as() in src.grabbed_by)
+					for (var/obj/item/grab/G as anything in src.grabbed_by)
 						if (G?.state < GRAB_NECK) continue
 						do_step = 0
 						break
@@ -202,7 +202,7 @@
 							for(var/obj/item/grab/gunpoint/G in grabbed_by)
 								G.shoot()
 
-						for (var/obj/item/grab/G as() in src.grabbed_by)
+						for (var/obj/item/grab/G as anything in src.grabbed_by)
 							if (G.assailant == pushing || G.affecting == pushing) continue
 							if (G.state < GRAB_NECK) continue
 							if (!G.assailant || !isturf(G.assailant.loc) || G.assailant.anchored)
@@ -220,7 +220,7 @@
 
 						var/list/pulling = list()
 						if (src.pulling)
-							if ((get_dist(old_loc, src.pulling) > 1 && get_dist(src, src.pulling) > 1)|| src.pulling == src) // fucks sake
+							if ((!IN_RANGE(old_loc, src.pulling, 1) && !IN_RANGE(src, src.pulling, 1)) || !isturf(src.pulling.loc) || src.pulling == src) // fucks sake
 								src.pulling = null
 								//hud.update_pulling() // FIXME
 							else

@@ -63,6 +63,11 @@
 	id = "vamp_hypno"
 	icon = 'icons/ui/actions.dmi'
 	icon_state = "hypno"
+	bar_icon_state = "bar-vampire"
+	border_icon_state = "border-vampire"
+	color_active = "#b320c3"
+	color_success = "#3fb54f"
+	color_failure = "#8d1422"
 	var/mob/living/carbon/human/M
 	var/mob/living/carbon/human/target
 	var/datum/targetable/vampire/hypnotize/hypno

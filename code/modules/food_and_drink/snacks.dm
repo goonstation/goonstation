@@ -733,10 +733,6 @@
 			new /obj/item/razor_blade( get_turf(src) )
 		..()
 
-	disposing()
-		if (src.amount < 1)
-			new /obj/item/reagent_containers/food/drinks/bowl(get_turf(src))
-		..()
 
 	is_open_container()
 		return 1
@@ -784,7 +780,7 @@
 
 	proc/cooltime()
 		if (src.warm)
-			SPAWN_DBG( 4200 )
+			SPAWN_DBG( 420 SECONDS )
 				src.warm = 0
 				src.name = "donk-pocket"
 		return
@@ -817,6 +813,10 @@
 		name = "warm honk-pocket"
 		warm = 1
 
+		New()
+			. = ..()
+			src.cooltime()
+
 	on_bite(obj/item/I, mob/M, mob/user)
 		if(src.warm && M.reagents)
 			M.reagents.add_reagent("honk_fart",15)
@@ -827,7 +827,7 @@
 
 	cooltime()
 		if (src.warm)
-			SPAWN_DBG( 4200 )
+			SPAWN_DBG( 420 SECONDS )
 				src.warm = 0
 				src.name = "honk-pocket"
 		return
