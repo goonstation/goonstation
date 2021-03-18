@@ -1081,7 +1081,7 @@
 	rotatable = 0
 	foldable = 0
 	comfort_value = 2
-	deconstructable = 1
+	deconstructable = TRUE
 	securable = 0
 	parts_type = /obj/item/furniture_parts/bench/pew
 	var/image/arm_image = null
