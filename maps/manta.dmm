@@ -36403,6 +36403,9 @@
 	anchored = 1
 	},
 /obj/railing/orange/reinforced,
+/obj/machinery/camera/ranch{
+	dir = 8
+	},
 /turf/simulated/floor/grasstodirt,
 /area/station/ranch)
 "cid" = (
@@ -41968,6 +41971,7 @@
 /obj/decal/tile_edge/stripe{
 	dir = 1
 	},
+/obj/item/device/camera_viewer/ranch,
 /turf/simulated/floor/wood,
 /area/station/ranch)
 "pwm" = (
