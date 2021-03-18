@@ -557,7 +557,7 @@
 			boutput(usr, "If a direction, direction is: [dir]")
 
 	var/class = input("What kind of variable?","Variable Type",default) as null|anything in list("text",
-		"num","type","reference","mob reference","turf by coordinates","reference picker","new instance of a type","icon","file","color","list","json","edit referenced object","create new list","restore to default")
+		"num","num adjust","type","reference","mob reference","turf by coordinates","reference picker","new instance of a type","icon","file","color","list","json","edit referenced object","create new list","restore to default")
 
 	if(!class)
 		return
@@ -598,6 +598,11 @@
 		if("num")
 			O.vars[variable] = input("Enter new number:","Num",\
 				O.vars[variable]) as num
+
+		if("num adjust")
+			if(!isnum(oldVal)) return
+			O.vars[variable] += input("Enter value to adjust by:","Num Adjust",\
+				O.vars[variable]) as null|num
 
 		if("type")
 			O.vars[variable] = input("Enter type:","Type",O.vars[variable]) \

@@ -735,7 +735,7 @@
 			boutput(usr, "If a direction, direction is: [dir]")
 
 	var/class = input("What kind of variable?","Variable Type",default) as null|anything in list("text",
-		"num","type","reference","mob reference","turf by coordinates","reference picker","new instance of a type","icon","file","color","list","json","edit referenced object","create new list", "matrix","null", "ref", "restore to default")
+		"num","num adjust","type","reference","mob reference","turf by coordinates","reference picker","new instance of a type","icon","file","color","list","json","edit referenced object","create new list", "matrix","null", "ref", "restore to default")
 
 	if(!class)
 		return
@@ -870,6 +870,21 @@
 					global.vars[variable] = theInput
 				else
 					D.vars[variable] = theInput
+
+		if("num adjust")
+			if(!isnum(oldVal)) return
+			var/val = input("Enter value to adjust by:","[variable]", D == "GLOB" ? global.vars[variable] : D.vars[variable]) as null|num
+			if(!isnull(val))
+				if(set_global)
+					for(var/x in world)
+						if(!istype(x, D.type)) continue
+						x:vars[variable] += val
+						LAGCHECK(LAG_LOW)
+				else
+					if(D == "GLOB")
+						global.vars[variable] += val
+					else
+						D.vars[variable] += val
 
 		if("type")
 			boutput(usr, "<span class='hint'>Type part of the path of the type.</span>")
