@@ -1,4 +1,7 @@
-(t)mon feb 03 08
+(t)tue mar 09 21
+(u)BatElite
+(*)Added revert turf visuals buildmode tool, which undoes floor and wall planner replacements.
+(t)mon mar 08 21
 (u)kyle
 (*)Change to Show Rules to Player verb. Now lets you choose between playing a pleasant ping sound and the loud klaxon.
 (t)mon feb 01 21

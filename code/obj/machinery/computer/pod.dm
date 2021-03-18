@@ -45,7 +45,7 @@
 	sleep(2 SECONDS)
 
 	//src.connected.drive()		*****RM from 40.93.3S
-	for(var/obj/machinery/mass_driver/M as() in machine_registry[MACHINES_MASSDRIVERS])
+	for(var/obj/machinery/mass_driver/M as anything in machine_registry[MACHINES_MASSDRIVERS])
 		if(M.id == src.id)
 			M.power = src.connected.power
 			M.drive()
@@ -61,7 +61,7 @@
 /obj/machinery/computer/pod/New()
 	..()
 	SPAWN_DBG( 5 )
-		for(var/obj/machinery/mass_driver/M as() in machine_registry[MACHINES_MASSDRIVERS])
+		for(var/obj/machinery/mass_driver/M as anything in machine_registry[MACHINES_MASSDRIVERS])
 			if (M.id == src.id)
 				src.connected = M
 			else

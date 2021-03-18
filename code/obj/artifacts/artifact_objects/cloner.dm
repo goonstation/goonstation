@@ -46,7 +46,7 @@
 			if(deep_count > 0 && prob(5))
 				deep_count--
 				clone = semi_deep_copy(H, O, copy_flags=COPY_SKIP_EXPLOITABLE) // admins made me do it
-				var/lastFilterIndex = clone.filters.len
+				var/lastFilterIndex = length(clone.filters)
 				if(lastFilterIndex)
 					clone.filters -= clone.filters[lastFilterIndex]
 			else
@@ -59,7 +59,7 @@
 					clone.abilityHolder = H.abilityHolder.deepCopy()
 					clone.abilityHolder.transferOwnership(clone)
 					clone.abilityHolder.remove_unlocks()
-				if(H.traitHolder && H.traitHolder.traits.len)
+				if(H.traitHolder && length(H.traitHolder.traits))
 					clone.traitHolder.traits = H.traitHolder.traits.Copy()
 				clone.real_name = user.real_name
 				clone.UpdateName()

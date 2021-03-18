@@ -176,7 +176,7 @@
 
 	disposing()
 		var/turf/OL = get_turf(src)
-		if (src.desk_drawer && src.desk_drawer.contents.len)
+		if (src.desk_drawer && length(src.desk_drawer.contents))
 			for (var/atom/movable/A in src.desk_drawer)
 				A.set_loc(OL)
 			var/obj/O = src.desk_drawer

@@ -65,7 +65,7 @@
 			if(can_be_adjacent_to_target)
 				var/list/tempPath = cirrAstar(get_turf(holder.owner), target_turf, 1, 40)
 				var/length_of_path = length(tempPath)
-				if(length_of_path) // fix runtime Cannot read null.len
+				if(length_of_path) // fix runtime Cannot read length(null)
 					M.move_target = tempPath[length_of_path]
 					if(M.move_target)
 						return

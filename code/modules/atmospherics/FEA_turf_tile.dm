@@ -5,7 +5,7 @@ atom/movable/var/last_forced_movement = 0
 var/global/list/turf/hotly_processed_turfs = list()
 proc/filter_out_hotly_processed_turfs()
 	. = list()
-	for(var/turf/T as() in hotly_processed_turfs)
+	for(var/turf/T as anything in hotly_processed_turfs)
 		if(istype(T) && T?.atmos_operations > air_master.current_cycle * KEEP_A_LIST_OF_HOTLY_PROCESSED_TURFS)
 			. += T
 	global.hotly_processed_turfs = .
