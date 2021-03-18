@@ -19428,6 +19428,7 @@
 	dir = 4;
 	name = "crematorium pipe"
 	},
+/obj/machinery/light/small/floor,
 /turf/simulated/floor/black,
 /area/station/medical/morgue)
 "aRb" = (
@@ -28439,7 +28440,6 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/pyro/glass,
 /obj/machinery/secscanner{
 	pixel_y = 10
 	},
@@ -28450,6 +28450,7 @@
 	icon_state = "2-8"
 	},
 /obj/firedoor_spawn,
+/obj/machinery/door/airlock/pyro/glass/security,
 /turf/simulated/floor/red,
 /area/station/security/main)
 "bjH" = (
@@ -33581,10 +33582,6 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/juryroom)
 "bve" = (
-/obj/machinery/light{
-	dir = 1;
-	pixel_x = -1
-	},
 /obj/disposalpipe/segment,
 /obj/stool/chair{
 	dir = 1;
@@ -33681,6 +33678,9 @@
 	c_tag = "autotag";
 	dir = 0;
 	name = "autoname - SS13"
+	},
+/obj/machinery/light{
+	dir = 1
 	},
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/sec)
@@ -34101,6 +34101,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/machinery/light,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/juryroom)
 "bwg" = (
@@ -34719,6 +34720,10 @@
 /obj/item/clothing/mask/breath{
 	pixel_x = -4;
 	pixel_y = 8
+	},
+/obj/machinery/light{
+	dir = 8;
+	icon_state = "tube1"
 	},
 /turf/simulated/floor/red/checker{
 	dir = 4
@@ -40855,6 +40860,10 @@
 	},
 /turf/simulated/wall/auto/supernorn,
 /area/station/ranch)
+"erP" = (
+/obj/machinery/light,
+/turf/simulated/floor/black,
+/area/station/crew_quarters/juryroom)
 "euy" = (
 /obj/securearea{
 	desc = "A warning sign which reads 'Outpost mail hub'";
@@ -41670,6 +41679,14 @@
 	},
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/captain)
+"jNf" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/simulated/floor/stairs{
+	dir = 4
+	},
+/area/station/hangar/sec)
 "jOp" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt,
 /obj/access_spawn/brig,
@@ -43065,6 +43082,10 @@
 "sfE" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/hangar/arrivals)
+"shz" = (
+/obj/machinery/light/small/floor,
+/turf/simulated/floor/white,
+/area/station/medical/medbay)
 "sih" = (
 /obj/cable{
 	d1 = 4;
@@ -43375,6 +43396,11 @@
 	},
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
+"tvL" = (
+/obj/disposalpipe/segment,
+/obj/machinery/light/small/floor,
+/turf/simulated/floor/white,
+/area/station/medical/medbay)
 "txI" = (
 /obj/cable{
 	d1 = 4;
@@ -43770,6 +43796,13 @@
 /turf/space,
 /turf/simulated/floor,
 /area/station/science/lab)
+"vrM" = (
+/obj/machinery/vehicle/pod_smooth/heavy{
+	dir = 4
+	},
+/obj/machinery/light,
+/turf/simulated/floor/shuttlebay,
+/area/station/hangar/sec)
 "vuf" = (
 /obj/machinery/light/small/floor,
 /turf/simulated/floor,
@@ -58422,7 +58455,7 @@ bjx
 aVj
 aVi
 aVZ
-aSE
+shz
 aXu
 aYl
 aSE
@@ -59328,7 +59361,7 @@ aUB
 aUA
 aZb
 aWa
-aZb
+tvL
 aXv
 aYm
 aZb
@@ -82920,7 +82953,7 @@ bre
 bzM
 btY
 bvd
-bwh
+erP
 btU
 bpw
 byF
@@ -88656,7 +88689,7 @@ bgL
 bgL
 bgL
 bgL
-bvo
+jNf
 bvo
 bwy
 buj
@@ -89869,7 +89902,7 @@ bvr
 byQ
 bvq
 bvq
-byQ
+vrM
 buj
 aaa
 aaa
