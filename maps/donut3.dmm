@@ -5278,6 +5278,16 @@
 	name = "reinforced plating"
 	},
 /area/station/science/chemistry)
+"bmL" = (
+/obj/machinery/disposal/mail/small{
+	mail_tag = ranch;
+	name = "mail chute - Ranch"
+	},
+/obj/disposalpipe/trunk/mail{
+	dir = 8
+	},
+/turf/simulated/floor/dirt,
+/area/station/ranch)
 "bmP" = (
 /obj/cable{
 	d1 = 1;
@@ -6262,6 +6272,10 @@
 	icon_state = "1-4"
 	},
 /obj/machinery/light/incandescent/netural,
+/obj/disposalpipe/segment{
+	dir = 1;
+	icon_state = "pipe-c"
+	},
 /turf/simulated/floor/dirt,
 /area/station/ranch)
 "bAt" = (
@@ -9098,6 +9112,10 @@
 /obj/railing/orange/reinforced{
 	dir = 1
 	},
+/obj/machinery/disposal/small{
+	dir = 8
+	},
+/obj/disposalpipe/trunk,
 /turf/simulated/floor/grasstodirt{
 	dir = 1
 	},
@@ -10222,7 +10240,9 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/disposalpipe/switch_junction/left/north,
+/obj/disposalpipe/switch_junction/left/north{
+	mail_tag = ranch
+	},
 /turf/simulated/floor/redblack{
 	dir = 4
 	},
@@ -10993,6 +11013,15 @@
 	dir = 4
 	},
 /area/station/security/quarters)
+"cWj" = (
+/obj/machinery/plantpot{
+	anchored = 1
+	},
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
+/turf/simulated/floor/grass/random,
+/area/station/hydroponics/bay)
 "cWk" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 10;
@@ -16679,18 +16708,6 @@
 	},
 /turf/simulated/floor/specialroom/clown,
 /area/station/crew_quarters/clown)
-"eHU" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/machinery/disposal/small{
-	dir = 8
-	},
-/obj/disposalpipe/trunk,
-/turf/simulated/floor/grass/leafy,
-/area/station/ranch)
 "eHV" = (
 /obj/cable{
 	d2 = 8;
@@ -26341,6 +26358,9 @@
 /obj/landmark/start{
 	name = "Rancher"
 	},
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
 /turf/simulated/floor/dirt,
 /area/station/ranch)
 "hAV" = (
@@ -28691,7 +28711,6 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/disposalpipe/segment,
 /obj/machinery/camera/ranch{
 	dir = 9
 	},
@@ -34107,6 +34126,9 @@
 /obj/item/reagent_containers/food/snacks/plant/corn{
 	doants = 0
 	},
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
 /turf/simulated/floor/dirt,
 /area/station/ranch)
 "jZz" = (
@@ -36236,6 +36258,12 @@
 	dir = 4
 	},
 /area/station/crew_quarters/stockex)
+"kIm" = (
+/obj/disposalpipe/switch_junction/left/north{
+	mail_tag = ranch
+	},
+/turf/simulated/floor/grass/random,
+/area/station/hydroponics/bay)
 "kIH" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/machinery/light/small/sticky,
@@ -36490,6 +36518,9 @@
 /area/station/hallway/primary/south)
 "kMI" = (
 /obj/landmark/gps_waypoint,
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
 /turf/simulated/floor/dirt,
 /area/station/ranch)
 "kMO" = (
@@ -41849,6 +41880,16 @@
 	dir = 8
 	},
 /area/station/chapel/sanctuary)
+"mqp" = (
+/obj/machinery/plantpot{
+	anchored = 1
+	},
+/obj/disposalpipe/segment/mail{
+	dir = 8;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/floor/grass/random,
+/area/station/hydroponics/bay)
 "mqx" = (
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/solar/west)
@@ -42924,6 +42965,9 @@
 	dir = 1;
 	name = "autoname  - SS13";
 	tag = ""
+	},
+/obj/disposalpipe/segment/mail{
+	dir = 4
 	},
 /turf/simulated/floor/dirt,
 /area/station/ranch)
@@ -48551,6 +48595,10 @@
 /turf/simulated/floor/white,
 /area/station/science/teleporter)
 "orn" = (
+/obj/disposalpipe/segment/mail{
+	dir = 4;
+	icon_state = "pipe-c"
+	},
 /turf/simulated/floor/dirt,
 /area/station/ranch)
 "oro" = (
@@ -68846,6 +68894,13 @@
 "umn" = (
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
+"umw" = (
+/obj/disposalpipe/segment{
+	dir = 8
+	},
+/obj/disposalpipe/segment/mail,
+/turf/simulated/floor/green/side,
+/area/station/hydroponics/bay)
 "umS" = (
 /obj/potted_plant/potted_plant2{
 	dir = 8;
@@ -72118,7 +72173,9 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/disposalpipe/switch_junction/left/north,
+/obj/disposalpipe/switch_junction/left/north{
+	mail_tag = ranch
+	},
 /turf/simulated/floor/black{
 	icon_state = "respect6"
 	},
@@ -73042,6 +73099,10 @@
 /obj/random_item_spawner/desk_stuff,
 /turf/simulated/grimycarpet,
 /area/station/crew_quarters/stockex)
+"vyk" = (
+/obj/disposalpipe/segment/mail,
+/turf/simulated/floor,
+/area/station/hydroponics/bay)
 "vyo" = (
 /obj/table/auto,
 /obj/bedsheetbin{
@@ -79702,7 +79763,6 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/disposalpipe/segment,
 /obj/machinery/light/incandescent/netural{
 	dir = 4
 	},
@@ -82354,7 +82414,6 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/disposalpipe/segment,
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "yhb" = (
@@ -129335,7 +129394,7 @@ mfs
 mfs
 sFl
 fBI
-uNZ
+kIm
 uNZ
 rAb
 uNZ
@@ -129637,7 +129696,7 @@ ksp
 sJC
 kea
 iba
-kHx
+cWj
 kHx
 kHx
 mke
@@ -129937,9 +129996,9 @@ mBB
 aZL
 orn
 jLx
-mwk
-iba
-kHx
+vyk
+umw
+mqp
 lPe
 kHx
 nVl
@@ -131445,7 +131504,7 @@ mBB
 mBB
 mBB
 oJP
-orn
+bmL
 mfs
 wqJ
 wqJ
@@ -131742,7 +131801,7 @@ bAX
 ybG
 mfs
 hyd
-eHU
+ygW
 xtT
 ilq
 ygW
