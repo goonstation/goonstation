@@ -1506,7 +1506,7 @@ var/f_color_selector_handler/F_Color_Selector
 				var/msgText = file2text(msgFile)
 
 				//Prints to every networked printer in the world
-				for (var/obj/machinery/networked/printer/P as() in machine_registry[MACHINES_PRINTERS])
+				for (var/obj/machinery/networked/printer/P as anything in machine_registry[MACHINES_PRINTERS])
 					P.print_buffer += "[msgTitle]&title;[msgText]"
 					P.print()
 

@@ -1,6 +1,6 @@
 /proc/most_applicable_trade(var/list/datum/commodity/goods_buy, var/obj/item/sell_item)
 	var/list/goods_buy_types = new /list(0)
-	for(var/datum/commodity/N as() in goods_buy)
+	for(var/datum/commodity/N as anything in goods_buy)
 		if (istype(sell_item, N.comtype))
 			goods_buy_types[N.comtype] = N
 	return goods_buy_types[maximal_subtype(goods_buy_types)]
@@ -401,7 +401,7 @@
 		var/found = 0
 
 		var/list/area_turfs = get_area_turfs(trader_area)
-		if (!area_turfs || !area_turfs.len)
+		if (!area_turfs || !length(area_turfs))
 			area_turfs = get_area_turfs( get_area(src) )
 
 		for(var/turf/T in area_turfs)
@@ -414,7 +414,7 @@
 			found = 1
 			pickedloc = get_turf(C)
 		if (!found)
-			if (islist(markers) && markers.len)
+			if (islist(markers) && length(markers))
 				pickedloc = get_turf(pick(markers))
 			else
 				pickedloc = get_turf(src) // put it SOMEWHERE

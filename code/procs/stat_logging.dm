@@ -150,7 +150,7 @@
 			if ("werewolf")
 				for (var/datum/objective/specialist/werewolf/feed/O in M.objectives)
 					if (O && istype(O, /datum/objective/specialist/werewolf/feed/))
-						special = O.mobs_fed_on.len
+						special = length(O.mobs_fed_on)
 			if ("vampthrall")
 				if (M.master)
 					var/mob/mymaster = whois_ckey_to_mob_reference(M.master)

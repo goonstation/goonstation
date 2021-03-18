@@ -171,7 +171,7 @@
 				src.attachments.Cut()
 				user.show_message("<span class='notice'>You disconnect the timer from the assembly, and reenable its external controls.</span>")
 			if (isscrewingtool(W))
-				if (!src.trigger && !src.attachments.len)
+				if (!src.trigger && !length(src.attachments))
 					user.show_message("<span class='alert'>You cannot remove any attachments, as there are none attached.</span>")
 					return
 				var/list/options = list(src.trigger)

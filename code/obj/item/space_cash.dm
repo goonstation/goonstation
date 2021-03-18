@@ -64,13 +64,13 @@
 			if (-INFINITY to 9)
 				src.icon_state = "cashgreen"
 			if (10 to 49)
-				src.icon_state = "spacecash"
-			if (50 to 499)
 				src.icon_state = "cashblue"
-			if (500 to 999)
+			if (50 to 499)
 				src.icon_state = "cashindi"
-			if (1000 to 999999)
+			if (500 to 999)
 				src.icon_state = "cashpurp"
+			if (1000 to 999999)
+				src.icon_state = "cashred"
 			else // 1mil bby
 				src.icon_state = "cashrbow"
 

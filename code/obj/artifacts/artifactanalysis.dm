@@ -28,7 +28,7 @@
 			lastAnalysis++
 
 		// check if trigger is one of the correct ones
-		for(var/datum/artifact_trigger/T as() in A.triggers)
+		for(var/datum/artifact_trigger/T as anything in A.triggers)
 			if(T.type_name == src.artifactTriggers)
 				lastAnalysis++
 				break

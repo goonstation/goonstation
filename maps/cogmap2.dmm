@@ -5093,7 +5093,7 @@
 	pixel_x = -24
 	},
 /obj/item/storage/firstaid/toxin,
-/obj/item/card_box/suit,
+/obj/item/card_box/plain,
 /obj/storage/crate,
 /obj/item/reagent_containers/emergency_injector/calomel,
 /obj/item/reagent_containers/emergency_injector/calomel,
@@ -10557,6 +10557,10 @@
 /obj/item/shaker/ketchup{
 	pixel_x = 6
 	},
+/obj/item_dispenser/icedispenser{
+	dir = 1;
+	pixel_y = 0
+	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/bar)
 "axS" = (
@@ -12721,7 +12725,7 @@
 /obj/disposaloutlet{
 	layer = 4;
 	name = "slop chute";
-	pixel_x = 4
+	pixel_y = 21
 	},
 /obj/table/reinforced/bar/auto,
 /obj/machinery/light/emergency{
@@ -13279,9 +13283,12 @@
 /area/station/crew_quarters/kitchen)
 "aDF" = (
 /obj/table/reinforced/bar/auto,
-/obj/item/clothing/head/cakehat,
 /obj/disposalpipe/segment/food{
 	dir = 4
+	},
+/obj/item_dispenser/icedispenser{
+	pixel_x = -1;
+	pixel_y = 10
 	},
 /turf/simulated/floor/carpet{
 	dir = 8;
@@ -13860,7 +13867,7 @@
 /area/station/crew_quarters/cafeteria)
 "aES" = (
 /obj/table/reinforced/bar/auto,
-/obj/item/card_box/suit,
+/obj/item/card_box/plain,
 /turf/simulated/floor/carpet{
 	icon_state = "fpurple1"
 	},
@@ -13869,6 +13876,7 @@
 /obj/table/reinforced/bar/auto,
 /obj/random_item_spawner/tableware,
 /obj/disposalpipe/segment/food,
+/obj/item/clothing/head/cakehat,
 /turf/simulated/floor/carpet{
 	dir = 4;
 	icon_state = "fpurple2"
@@ -17586,7 +17594,7 @@
 /area/station/hallway/secondary/entry)
 "aOf" = (
 /obj/table/auto,
-/obj/item/card_box/suit,
+/obj/item/card_box/plain,
 /turf/simulated/floor/neutral/side,
 /area/station/hallway/secondary/entry)
 "aOg" = (
@@ -26378,7 +26386,7 @@
 /obj/item/mop,
 /obj/item/storage/box/mousetraps,
 /obj/item/storage/box/balloonbox,
-/obj/item/card_box/suit,
+/obj/item/card_box/plain,
 /obj/item/basketball,
 /obj/disposalpipe/segment/mail/bent/south,
 /obj/item/clothing/under/gimmick/yay,
@@ -42585,7 +42593,7 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/ce)
 "bNC" = (
-/obj/storage/crate/rcd,
+/obj/storage/crate/rcd/CE,
 /obj/cable{
 	d1 = 1;
 	d2 = 4;
@@ -44947,7 +44955,7 @@
 	icon_state = "chair_couch-blue";
 	name = "ratty blue couch"
 	},
-/obj/item/playing_cards/suit,
+/obj/item/card_group/plain,
 /turf/simulated/floor/plating/damaged3,
 /area/station/routing/depot)
 "bSA" = (
@@ -47884,7 +47892,7 @@
 /area/station/security/brig)
 "bYM" = (
 /obj/table/reinforced/auto,
-/obj/item/card_box/suit,
+/obj/item/card_box/plain,
 /obj/disposalpipe/segment,
 /obj/disposalpipe/segment/brig{
 	dir = 4
@@ -79061,6 +79069,15 @@
 	icon_state = "fgreen2"
 	},
 /area/station/hydroponics/bay)
+"idv" = (
+/obj/submachine/chef_sink/chem_sink{
+	dir = 4
+	},
+/obj/machinery/camera/ranch{
+	dir = 1
+	},
+/turf/simulated/floor/grass/leafy,
+/area/station/ranch)
 "iko" = (
 /obj/submachine/chem_extractor{
 	dir = 4;
@@ -79445,6 +79462,7 @@
 /obj/submachine/chef_sink/chem_sink{
 	dir = 4
 	},
+/obj/machinery/camera/ranch,
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "vRi" = (
@@ -100837,7 +100855,7 @@ wcj
 saK
 saK
 saK
-vNO
+idv
 xfw
 aaa
 aaa

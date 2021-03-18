@@ -15,7 +15,7 @@
 		generateStocks()
 
 	proc/process()
-		for (var/datum/stock/ticker/S as() in stocks)
+		for (var/datum/stock/ticker/S as anything in stocks)
 			S.process()
 
 	proc/balanceLog(whose, net)

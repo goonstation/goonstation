@@ -81,7 +81,6 @@ var/list/stinkThingies = list("ass","taint","armpit","excretions","leftovers","R
 /proc/get_area_name(N) //get area by it's name
 
 	for(var/area/A in world)
-		LAGCHECK(LAG_LOW)
 		if(A.name == N)
 			return A
 	return 0
@@ -224,7 +223,7 @@ var/obj/item/dummy/click_dummy = new
 	for_by_tcl(theAI, /mob/living/silicon/ai)
 		if (theAI.deployed_to_eyecam)
 			var/mob/dead/aieye/AIeye = theAI.eyecam
-			if(IN_RANGE(center, AIeye, distance) && T.cameras && T.cameras.len)
+			if(IN_RANGE(center, AIeye, distance) && T.cameras && length(T.cameras))
 				. += AIeye
 				. += theAI
 
@@ -247,7 +246,7 @@ var/obj/item/dummy/click_dummy = new
 
 	. = viewers(Depth, Center) + get_viewing_AIs(Center, 7)
 	if(length(by_cat[TR_CAT_OMNIPRESENT_MOBS]))
-		for(var/mob/M as() in by_cat[TR_CAT_OMNIPRESENT_MOBS])
+		for(var/mob/M as anything in by_cat[TR_CAT_OMNIPRESENT_MOBS])
 			if(get_step(M, 0)?.z == get_step(Center, 0)?.z)
 				. |= M
 
@@ -286,7 +285,7 @@ var/obj/item/dummy/click_dummy = new
 			if (istype(S,/datum/bioEffect/speech/))
 				message = S.OnSpeak(message)
 
-	if (H.grabbed_by && H.grabbed_by.len)
+	if (H.grabbed_by && length(H.grabbed_by))
 		for (var/obj/item/grab/rag_muffle/RM in H.grabbed_by)
 			if (RM.state > 0)
 				message = mufflespeech(message)
@@ -570,7 +569,7 @@ var/obj/item/dummy/click_dummy = new
 
 	var/src_min_x = 0
 	var/src_min_y = 0
-	for (var/turf/T as() in turfs_src)
+	for (var/turf/T as anything in turfs_src)
 		if(T.x < src_min_x || !src_min_x) src_min_x	= T.x
 		if(T.y < src_min_y || !src_min_y) src_min_y	= T.y
 	DEBUG_MESSAGE("src_min_x = [src_min_x], src_min_y = [src_min_y]")
@@ -578,7 +577,7 @@ var/obj/item/dummy/click_dummy = new
 	var/trg_min_x = 0
 	var/trg_min_y = 0
 	var/trg_z = 0
-	for (var/turf/T as() in turfs_trg)
+	for (var/turf/T as anything in turfs_trg)
 		if(T.x < trg_min_x || !trg_min_x) trg_min_x	= T.x
 		if(T.y < trg_min_y || !trg_min_y) trg_min_y	= T.y
 		trg_z = T.z
@@ -594,7 +593,7 @@ var/obj/item/dummy/click_dummy = new
 
 	for (var/turf/S in turfs_src)
 		var/turf/T = locate(S.x - src_min_x + trg_min_x, S.y - src_min_y + trg_min_y, trg_z)
-		for (var/atom/movable/AM as() in S)
+		for (var/atom/movable/AM as anything in S)
 			if (istype(AM, /obj/forcefield) || istype(AM, /obj/overlay/tile_effect)) continue
 			if (!ignore_fluid && istype(AM, /obj/fluid)) continue
 			AM.set_loc(T)

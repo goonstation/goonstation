@@ -1,5 +1,4 @@
 #define SWORD_ATTACKING_RANGE 4
-#define SWORD_MOVE_SPEED 5
 /* ================================================== */
 /* --- Syndicate Weapon: Orion Retribution Device --- */
 /* ================================================== */
@@ -164,10 +163,11 @@
 
 			var/stay_awake = 0
 
+			if(src.target) stay_awake = TRUE
 			for (var/client/C)
 				var/mob/living/M = C.mob
 				if (isintangible(M)) continue
-				if (IN_RANGE(src, M, 32))
+				if (IN_RANGE(src, M, seekrange))
 					if (!isdead(M))
 						stay_awake = 1
 						break
@@ -226,8 +226,6 @@
 										for (var/turf/simulated/OV in oview(get_center(),stuck_increment))
 											tile_purge(OV.loc.x,OV.loc.y,3)
 
-							var/turf/olddist = get_dist(get_center(), src.target)
-
 							for (var/turf/simulated/wall/WT in range(2,get_center()))
 								leavescan(WT, 1)
 								new /obj/item/raw_material/scrap_metal(WT)
@@ -236,12 +234,15 @@
 								else
 									WT.ReplaceWithSpace()
 
-							walk_to(src, src.target,1,SWORD_MOVE_SPEED)
-
-							if ((get_dist(get_center(), src.target)) >= (olddist))
-								src.frustration++
-							else
-								src.frustration = 0
+							var/turf/olddist = get_dist(src, src.target)
+							walk_to(src, src.target,1,5)
+							SPAWN_DBG(5 DECI SECOND)
+								if ((get_dist(src, src.target)) >= (olddist))
+									src.frustration++
+									if(src.z == get_step(src.target, 0).z)
+										step_towards(src, src.target)
+								else
+									src.frustration = 0
 
 							ability_selection()
 
@@ -249,22 +250,21 @@
 				if("attacking")
 					if (!IN_RANGE(get_center(), src.target, SWORD_ATTACKING_RANGE) || (src.target:loc != src.target_lastloc))
 						src.task = "chasing"
+					else if (IN_RANGE(get_center(), src.target, SWORD_ATTACKING_RANGE))
+						var/mob/living/carbon/M = src.target
+						if (!src.attacking) CritterAttack(src.target)
+						if(M != null)
+							if (M.health <= 0)
+								src.task = "thinking"
+								src.target = null
+								src.last_found = TIME
+								src.frustration = 0
+								src.attacking = 0
+							else
+								ability_selection()
 					else
-						if (IN_RANGE(get_center(), src.target, SWORD_ATTACKING_RANGE))
-							var/mob/living/carbon/M = src.target
-							if (!src.attacking) CritterAttack(src.target)
-							if(M != null)
-								if (M.health <= 0)
-									src.task = "thinking"
-									src.target = null
-									src.last_found = TIME
-									src.frustration = 0
-									src.attacking = 0
-								else
-									ability_selection()
-						else
-							src.attacking = 0
-							src.task = "chasing"
+						src.attacking = 0
+						src.task = "chasing"
 				if("wandering")
 					patrol_step()
 		return 1
@@ -891,4 +891,3 @@
 		return center_tile
 
 #undef SWORD_ATTACKING_RANGE
-#undef SWORD_MOVE_SPEED

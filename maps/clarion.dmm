@@ -16128,7 +16128,7 @@
 /area/station/crew_quarters/bar)
 "aEy" = (
 /obj/table/wood/auto,
-/obj/item/card_box/suit,
+/obj/item/card_box/plain,
 /turf/simulated/floor/carpet{
 	dir = 5;
 	icon_state = "fpurple1"
@@ -32968,7 +32968,7 @@
 "bjS" = (
 /obj/table/reinforced/auto,
 /obj/decal/cleanable/dirt,
-/obj/item/card_box/suit,
+/obj/item/card_box/plain,
 /obj/disposalpipe/segment/brig,
 /turf/simulated/floor/grime,
 /area/station/security/brig)
@@ -34443,7 +34443,7 @@
 	},
 /obj/table/reinforced/auto,
 /obj/decal/cleanable/dirt,
-/obj/item/card_box/suit,
+/obj/item/card_box/plain,
 /obj/machinery/power/data_terminal,
 /obj/disposalpipe/segment/brig{
 	dir = 4
@@ -49294,6 +49294,12 @@
 	},
 /turf/simulated/floor/grass/random,
 /area/station/hydroponics/bay)
+"gYb" = (
+/obj/machinery/camera/ranch{
+	dir = 4
+	},
+/turf/simulated/floor/grass/leafy,
+/area/station/ranch)
 "hcl" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -87856,7 +87862,7 @@ atT
 auE
 avn
 awc
-axE
+gYb
 axE
 ayp
 ayX

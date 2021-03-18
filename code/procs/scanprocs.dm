@@ -326,7 +326,7 @@
 					data = "<span class='alert'>ERR: SPECTROSCOPIC ANALYSIS OF THIS SUBSTANCE IS NOT POSSIBLE.</span>"
 					return data
 
-			var/reagents_length = reagents.reagent_list.len
+			var/reagents_length = length(reagents.reagent_list)
 			data = "<span class='notice'>[reagents_length] chemical agent[reagents_length > 1 ? "s" : ""] found in [A].</span>"
 
 			for (var/current_id in reagents.reagent_list)
@@ -515,7 +515,7 @@
 
 		if (istype(A, /turf/simulated/wall))
 			var/turf/simulated/wall/W = A
-			if (W.forensic_impacts && islist(W.forensic_impacts) && W.forensic_impacts.len)
+			if (W.forensic_impacts && islist(W.forensic_impacts) && length(W.forensic_impacts))
 				for(var/i in W.forensic_impacts)
 					forensic_data += "<br><span class='notice'>Forensic signature found:</span> [i]"
 

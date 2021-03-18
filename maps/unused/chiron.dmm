@@ -22846,7 +22846,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
 "aTo" = (
-/obj/storage/crate/rcd,
+/obj/storage/crate/rcd/CE,
 /obj/machinery/light{
 	dir = 1;
 	name = "light fixture"

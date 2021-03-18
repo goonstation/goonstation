@@ -975,11 +975,11 @@ WET FLOOR SIGN
 				boutput(user, "<span class='alert'>\The [src] tries to suck up [item_desc] but its [src.trashbag] is full!</span>")
 				. = FALSE
 			else
-				for(var/obj/item/I as() in items_to_suck)
+				for(var/obj/item/I as anything in items_to_suck)
 					I.set_loc(get_turf(user))
 				success = TRUE
 				SPAWN_DBG(0.5 SECONDS)
-					for(var/obj/item/I as() in items_to_suck) // yes, this can go over capacity of the bag, that's intended
+					for(var/obj/item/I as anything in items_to_suck) // yes, this can go over capacity of the bag, that's intended
 						I.set_loc(src.trashbag)
 					src.trashbag.calc_w_class(null)
 					if(src.trashbag.current_stuff >= src.trashbag.max_stuff)

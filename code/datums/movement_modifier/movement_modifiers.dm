@@ -53,6 +53,9 @@
 /datum/movement_modifier/reagent/salicylic_acid
 	health_deficiency_adjustment = -25
 
+/datum/movement_modifier/reagent/epinepherine
+	health_deficiency_adjustment = -15
+
 /datum/movement_modifier/reagent/cocktail_triple
 	multiplicative_slowdown = 0.333
 

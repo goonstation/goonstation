@@ -1642,7 +1642,7 @@
 
 				var/newFreq = round(max(1000, min(text2num(data["_freq"]), 1500)))
 				data -= "_freq"
-				if (!newFreq || !radio_controller || !data.len)
+				if (!newFreq || !radio_controller || !length(data))
 					src.post_status(target,"command","term_message","data","command=status&status=failure")
 					return
 				var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency("[newFreq]")
@@ -1883,7 +1883,7 @@
 				src.timeout_alert = 1
 				src.post_status(src.host_id, "command","term_ping","data","reply")
 
-		if(!printing && print_buffer.len)
+		if(!printing && length(print_buffer))
 			src.print()
 
 		return
@@ -2011,7 +2011,7 @@
 				return 0
 			if(!src.host_id)
 				return 0
-			if(src.printing || !print_buffer.len)
+			if(src.printing || !length(print_buffer))
 				return 0
 
 			var/print_text = print_buffer[1]
@@ -3730,7 +3730,7 @@
 
 			if ("activate")
 				if (src.contents.len)
-					active = src.contents.len
+					active = length(src.contents)
 					message_host("command=ack")
 					src.update_icon()
 				else
@@ -3948,7 +3948,7 @@
 			var/stimforce = M.throwforce
 			src.sensed[1] = stimforce * ARTDATA.react_mpct[1]
 			src.sensed[2] = stimforce * ARTDATA.react_mpct[2]
-			if (src.sensed[2] != 0 && ARTDATA.faults.len)
+			if (src.sensed[2] != 0 && length(ARTDATA.faults))
 				src.sensed[2] += rand(ARTDATA.faults.len / 2,ARTDATA.faults.len * 2)
 			var/datum/artifact_trigger/AT = ARTDATA.get_trigger_by_string("force")
 			if (AT)
@@ -3967,7 +3967,7 @@
 			src.sensed[1] = stimforce * ARTDATA.react_mpct[1]
 			src.sensed[2] = stimforce * ARTDATA.react_mpct[2]
 
-			if (src.sensed[2] != 0 && ARTDATA.faults.len)
+			if (src.sensed[2] != 0 && length(ARTDATA.faults))
 				src.sensed[2] += rand(ARTDATA.faults.len / 2,ARTDATA.faults.len * 2)
 
 			var/datum/artifact_trigger/AT = ARTDATA.get_trigger_by_string("force")
@@ -4768,7 +4768,7 @@
 
 					var/tgmoles = 0
 					if(length(air_sample.trace_gases))
-						for(var/datum/gas/trace_gas as() in air_sample.trace_gases)
+						for(var/datum/gas/trace_gas as anything in air_sample.trace_gases)
 							tgmoles += trace_gas.moles
 					sensed.Add(round(100*tgmoles/total_moles, 0.1))
 				else

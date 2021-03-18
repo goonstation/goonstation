@@ -56,7 +56,7 @@
 						mainframe_prog_exit
 						return
 
-		if (!initparams || !initlist.len)
+		if (!initparams || !length(initlist))
 			message_user("Invalid commmand argument.|nValid Commands:|n \"List\" to list known devices.|n \"Info (Device ID)\"  to list device information.|n \"Poke (Device ID) (Field Name) (Value)\" to configure device variables.|n \"Peek (Device ID) (Field Name)\" to view device variables.|n \"(De)Activate (Device ID)\" to activate/deactivate device.|n \"Pulse (Device ID) (Duration)\" to activate device for specified duration.|n \"Sense (Device ID)\" to take sensor readings.|n \"Read (Device ID)\" to read sense results.|n Device name may be used in place of ID.","multiline")
 			mainframe_prog_exit
 			return
