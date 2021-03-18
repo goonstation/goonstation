@@ -4119,9 +4119,11 @@
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/main)
 "aSY" = (
-/obj/grille/catwalk/jen/side,
 /obj/decal/cleanable/dirt/jen,
 /obj/disposalpipe/junction/left/north,
+/obj/grille/catwalk/jen/side{
+	dir = 10
+	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/ne)
 "aTe" = (
@@ -23097,12 +23099,14 @@
 /area/station/crew_quarters/fitness)
 "gCt" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
 /obj/disposalpipe/segment{
 	dir = 1
 	},
 /obj/cable{
 	icon_state = "1-2"
+	},
+/obj/grille/catwalk/jen/side{
+	dir = 8
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/ne)
@@ -68968,6 +68972,13 @@
 	dir = 4
 	},
 /area/station/hallway/primary/west)
+"umX" = (
+/obj/decal/cleanable/dirt/jen,
+/obj/grille/catwalk/jen/side{
+	dir = 9
+	},
+/turf/simulated/floor/plating/jen,
+/area/station/maintenance/outer/ne)
 "unb" = (
 /obj/machinery/light/incandescent/warm{
 	dir = 8
@@ -127845,7 +127856,7 @@ rdj
 rdj
 uuS
 gYk
-bzi
+umX
 qGq
 gJt
 aRI
