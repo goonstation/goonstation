@@ -38,7 +38,7 @@
 	var/i = rand(5)
 	var/num_teams = max(setup_min_teams, min(round((num_players + i) / 7), setup_max_teams))
 	if (num_teams > leaders_possible.len)
-		num_teams = leaders_possible.len
+		num_teams = length(leaders_possible)
 
 	var/list/chosen_spies = antagWeighter.choose(pool = leaders_possible, role = "spy", amount = num_teams, recordChosen = 1)
 	for (var/datum/mind/spy in chosen_spies)

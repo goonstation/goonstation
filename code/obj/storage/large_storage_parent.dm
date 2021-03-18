@@ -97,7 +97,7 @@
 			src.UpdateOverlays(null, "welded")
 
 	emp_act()
-		if (!src.open && src.contents.len)
+		if (!src.open && length(src.contents))
 			for (var/atom/A in src.contents)
 				if (ismob(A))
 					var/mob/M = A
@@ -172,7 +172,7 @@
 			return
 
 		else if (istype(W, /obj/item/satchel/))
-			var/amt = W.contents.len
+			var/amt = length(W.contents)
 			if (amt)
 				user.visible_message("<span class='notice'>[user] dumps out [W]'s contents into [src]!</span>")
 				var/amtload = 0

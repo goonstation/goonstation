@@ -303,7 +303,7 @@
 
 	New()
 		..()
-		if (!src.emagged && islist(chem_whitelist) && chem_whitelist.len)
+		if (!src.emagged && islist(chem_whitelist) && length(chem_whitelist))
 			src.whitelist = chem_whitelist
 		output_target = src.loc
 
@@ -623,7 +623,7 @@
 		return 1
 
 	proc/check_whitelist(var/datum/reagents/R)
-		if (src.emagged || !R || !src.whitelist || (islist(src.whitelist) && !src.whitelist.len))
+		if (src.emagged || !R || !src.whitelist || (islist(src.whitelist) && !length(src.whitelist)))
 			return 1
 		var/all_safe = 1
 		for (var/reagent_id in R.reagent_list)
@@ -845,7 +845,7 @@ datum/chemicompiler_core/stationaryCore
 				feed.reagents.trans_to(bottoms,amount)
 				check_tank(bottoms,100)
 		else
-			if(bottoms.reagents && bottoms.reagents.reagent_list.len)
+			if(bottoms.reagents && length(bottoms.reagents.reagent_list))
 				heating = 1
 
 	proc/heat_up()

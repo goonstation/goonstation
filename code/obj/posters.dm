@@ -555,7 +555,7 @@ var/global/icon/wanted_poster_unknown = icon('icons/obj/decals/posters.dmi', "wa
 			if (!istype(R))
 				boutput(usr, "<span class='alert'>No record found for \"[ptext]\".</span>")
 				return
-			if (!islist(R.fields) || !R.fields.len)
+			if (!islist(R.fields) || !length(R.fields))
 				boutput(usr, "<span class='alert'>Records for \"[ptext]\" are corrupt.</span>")
 				return
 			var/datum/computer/file/image/IMG = R.fields["file_photo"]

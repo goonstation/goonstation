@@ -42,7 +42,7 @@
 	if(revs_possible.len >= 3)
 		rev_number = 3
 	else
-		rev_number = revs_possible.len
+		rev_number = length(revs_possible)
 
 	token_players = antag_token_list()
 	for(var/datum/mind/tplayer in token_players)

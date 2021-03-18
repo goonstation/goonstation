@@ -1,4 +1,41 @@
 
+(t)wed mar 17 21
+(u)kyle
+(+)epinephrine has a similar effect to salicylic acid where it negates some of the movement speed penalty from damage.
+(+)Werewolf thrash tries to keep you in the same place as where you start. Werewolf feast will rip out some of the targets non-vital organs for an extra snack!
+(u)Zamujasa
+(*)Health analyzers will show a flying-chat-esque health readout when used, with the overall health percentage and oxy-tox-burn-brute numbers.
+(*)The readout in the chat panel is unaffected.
+(*)This also follows the "flying chat" toggle, if you want to turn it off.
+(*)Feedback is appreciated. I may add this to the stationary floor scanners in Medbay as well...
+(t)tue mar 16 21
+(u)The Laundry (warc)
+(+)Ugh, that hat fuckin' REEKS dude, don't make me murder it off of you!
+(u)Flaborized
+(p)4030
+(e)🎨|sprites
+(+)Resprited disposal pipes.
+(u)Penny
+(p)4002
+(e)|
+(+)The term_ping command now accepts a filter as the first option
+(+)The TermOS help command now documents the term_ping filter
+(u)Virvatuli
+(p)4028
+(e)🎨|sprites
+(+)The 40mm Riot Launcher has been given both visual and audio upgrades, have fun lobbing grenades around!
+(t)mon mar 15 21
+(u)warc, or whoever you prefer, you pick
+(e)™|feature, mapping,
+(+)Ranchers now start with a babby monitor on which they can look at they're burds. You can use this to uh, not make them died. Added the cams to most maps, minus those with pending ranch PRs.
+(u)Carbadox and Gannets
+(p)3698
+(e)🆕🗺🎨|feature, mapping, sprites
+(+)Added an ice dispenser to most bars.
+(u)TTerc
+(p)3957
+(e)🎨|sprites
+(+)Janitors can now turn their Head of Sanitation beret into a hat, similarly to HoS beret! Sprites by Arthur Holiday.
 (t)sun mar 14 21
 (u)Fosstar
 (p)3860

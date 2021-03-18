@@ -104,7 +104,7 @@ datum/pipeline
 			for(var/obj/machinery/atmospherics/pipe/borderline in possible_expansions)
 
 				var/list/result = borderline.pipeline_expansion()
-				var/edge_check = result.len
+				var/edge_check = length(result)
 
 				if(result.len>0)
 					for(var/obj/machinery/atmospherics/pipe/item in result)

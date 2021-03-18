@@ -117,7 +117,7 @@
 			..()
 
 	attack_hand(mob/user as mob)
-		if ((user.r_hand == src || user.l_hand == src) && src.contents && src.contents.len)
+		if ((user.r_hand == src || user.l_hand == src) && src.contents && length(src.contents))
 			if (src.can_swap_cell && src.cell&&!src.rechargeable)
 				var/obj/item/ammo/power_cell/W = src.cell
 				user.put_in_hand_or_drop(W)

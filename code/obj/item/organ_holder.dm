@@ -1545,7 +1545,7 @@
 		linked_organ.take_damage(20, 20) //not safe
 		if(istype(holder.owner, /mob/living))
 			var/mob/living/L = holder.owner
-			if (L.stomach_process && L.stomach_process.len)
+			if (L.stomach_process && length(L.stomach_process))
 				boutput(L, "<span class='notice'>You force your cyberintestines to rapidly process the contents of your stomach.</span>")
 				for(var/obj/item/reagent_containers/food/snacks/bite/B in L.stomach_process)
 					B.process_stomach(L, (B.reagents.total_volume)) //all of the food!
@@ -1568,7 +1568,7 @@
 
 		if(istype(holder.owner, /mob/living))
 			var/mob/living/L = holder.owner
-			if (L.stomach_process && L.stomach_process.len)
+			if (L.stomach_process && length(L.stomach_process))
 				L.visible_message("<span class='alert'>[L] convulses and vomits right at [target]!</span>", "<span class='alert'>You upchuck some of your cyberstomach contents at [target]!</span>")
 				SPAWN_DBG(0)
 					for (var/i in 1 to 3)
@@ -1576,7 +1576,7 @@
 						O.throw_at(target, 8, 3, bonus_throwforce=5)
 						linked_organ.take_damage(3)
 						sleep(0.1 SECONDS)
-						if(linked_organ.broken || !L.stomach_process.len)
+						if(linked_organ.broken || !length(L.stomach_process))
 							break
 			else
 				boutput(L, "<span class='alert'>You try to vomit, but your cyberstomach has nothing left inside!</span>")

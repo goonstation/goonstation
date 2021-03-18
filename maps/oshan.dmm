@@ -15834,6 +15834,7 @@
 	pixel_y = 24;
 	text = "NF"
 	},
+/obj/machinery/camera/ranch,
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "aLe" = (
@@ -24694,11 +24695,16 @@
 "biZ" = (
 /obj/table/reinforced/bar/auto,
 /obj/machinery/light/incandescent/warm,
-/obj/item/reagent_containers/food/snacks/cake/chocolate/gateau,
+/obj/item_dispenser/icedispenser{
+	dir = 4;
+	pixel_x = -18;
+	pixel_y = 8
+	},
 /turf/simulated/floor/carpet/blue/fancy/narrow/nw,
 /area/station/crew_quarters/bar)
 "bja" = (
 /obj/table/reinforced/bar/auto,
+/obj/item/reagent_containers/food/snacks/cake/chocolate/gateau,
 /turf/simulated/floor/carpet/blue/fancy/narrow/T_north,
 /area/station/crew_quarters/bar)
 "bjb" = (
@@ -46562,6 +46568,12 @@
 /obj/machinery/light/incandescent/netural,
 /turf/simulated/floor/shuttlebay,
 /area/research_outpost/hangar)
+"gCF" = (
+/obj/machinery/camera/ranch{
+	dir = 1
+	},
+/turf/simulated/floor/grass/leafy,
+/area/station/ranch)
 "gEE" = (
 /obj/rack,
 /obj/item/clothing/suit/fire,
@@ -76518,7 +76530,7 @@ aia
 eIq
 aMd
 aKY
-mip
+gCF
 aPZ
 aPW
 aQC

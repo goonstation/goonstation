@@ -803,7 +803,7 @@
 							//any non-divisible amounts go to the shipping budget
 							var/leftovers = 0
 							if(accounts.len)
-								leftovers = subtotal%accounts.len
+								leftovers = length(subtotal%accounts)
 								var/divisible_amount = subtotal - leftovers
 								if(divisible_amount)
 									var/amount_per_account = divisible_amount/length(accounts)
@@ -2520,7 +2520,7 @@
 	onDelete()
 		..()
 		MA.action_bar = null
-		if (src.completed && MA.queue.len)
+		if (src.completed && length(MA.queue))
 			SPAWN_DBG(0.1 SECONDS)
 				MA.begin_work(1)
 

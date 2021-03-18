@@ -738,7 +738,7 @@ Code:
 
 		if (isAIeye(usr))
 			var/turf/eye_loc = get_turf(usr)
-			if (!(eye_loc.cameras && eye_loc.cameras.len))
+			if (!(eye_loc.cameras && length(eye_loc.cameras)))
 				an_area = get_area(eye_loc)
 
 		signal.data["message"] = "<b><span class='alert'>***CRISIS ALERT*** Location: [an_area ? an_area.name : "nowhere"]!</span></b>"

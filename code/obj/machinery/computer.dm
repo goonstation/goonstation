@@ -5,7 +5,7 @@
 	anchored = 1.0
 	power_usage = 250
 	var/datum/light/light
-	var/light_r =1
+	var/light_r = 1
 	var/light_g = 1
 	var/light_b = 1
 

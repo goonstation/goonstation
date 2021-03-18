@@ -236,7 +236,7 @@ var/makingpowernetssince = 0
         if( istype(O, /obj/cable) )
             var/obj/cable/C = O
             if(C.netnum > 0)
-                if(!more || !more.len) return
+                if(!more || !length(more)) return
                 O = more[more.len]
                 more -= O
                 continue
@@ -248,7 +248,7 @@ var/makingpowernetssince = 0
 
             var/obj/machinery/power/M = O
             if(M.netnum > 0)
-                if(!more || !more.len) return
+                if(!more || !length(more)) return
                 O = more[more.len]
                 more -= O
                 continue
@@ -331,7 +331,7 @@ var/makingpowernetssince = 0
 		var/datum/powernet/PN = new()
 		//PN.tag = "powernet #[L]"
 		powernets += PN
-		PN.number = powernets.len
+		PN.number = length(powernets)
 
 		for(var/obj/cable/OC as anything in cables)
 			if(!OC.netnum)		// non-connected cables will have netnum==0, since they weren't reached by propagation

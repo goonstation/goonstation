@@ -218,9 +218,13 @@ datum/controller/process/proc/scheck()
 		handleHung()
 		CRASH("Process [name] hung and was restarted.")
 
-	// For each tick the process defers, it increments the cpu_defer_count so we don't
-	// defer indefinitely
-	if (APPROX_TICK_USE > MAX_TICK_USAGE || ( (APPROX_TICK_USE - tick_start) > tick_allowance ))
+  // Allow the process to continue if it's already been waiting to run for a while.
+	if (cpu_defer_count >= PROCESS_MAX_DEFER_COUNT)
+		cpu_defer_count = 0
+		return 0
+
+	// Check the current server load and decide if the process should wait
+	if (APPROX_TICK_USE > PROCESS_MAX_TICK_USAGE || ( (APPROX_TICK_USE - tick_start) > tick_allowance ))
 		current_usage += APPROX_TICK_USE - tick_start
 		sleep( world.tick_lag * main.running.len )
 		cpu_defer_count++
@@ -330,7 +334,6 @@ datum/controller/process/proc/copyStateFrom(var/datum/controller/process/target)
 datum/controller/process/proc/onKill()
 
 datum/controller/process/proc/onStart()
-	LAGCHECK(LAG_HIGH)
 
 datum/controller/process/proc/onFinish()
 
