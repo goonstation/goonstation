@@ -1241,7 +1241,13 @@ $(updateCharacterPreviewPos);
 					return
 			else
 				return
+				//
+		//works for now, maybe move this to something on game mode to decide proper jobs... -kyle
+#ifdef MAP_OVERRIDE_POD_WARS
+		if (!find_job_in_controller_by_string(job,0))
+#else
 		if (!find_job_in_controller_by_string(job,1))
+#endif
 			boutput(user, "<span class='alert'><b>The game could not find that job in the internal list of jobs.</b></span>")
 			switch(occ)
 				if (1) src.job_favorite = null
