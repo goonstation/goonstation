@@ -67,7 +67,7 @@ For the ESLint extension, you may need to select a Node environment (e.g. if you
 
 If that happens, click `Select Node Path` in it, then `Use NODE_PATH value defined via setting ./tgui/.yarn/sdks` in the dropdown that appears.
 
-If you navigate to a `.js` or `.tsx` file (e.g. `tgui/packages/tgui/components/Section.tsx`) the word `ESLINT` should appear in the bottom right of your window, along the bar at the bottom, like below. Simply click it and choose `Allow` in the popup to let it loose on your Goonstation files.
+If you navigate to a `.js` or `.tsx` file (e.g. `tgui/packages/tgui/components/Section.tsx`) the word `ESLINT` should appear in the bottom right of your window, along the bar at the bottom. Simply click it and choose `Allow` in the popup to let it loose on your Goonstation files.
 
 Now, let's connect the main goonstation repository to your client.
 
