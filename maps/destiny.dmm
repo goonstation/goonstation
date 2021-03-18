@@ -8817,6 +8817,7 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor,
 /area/station/turret_protected/Zeta)
 "aIq" = (
@@ -10840,25 +10841,6 @@
 /turf/simulated/floor,
 /area/station/quartermaster/cargobay)
 "aRv" = (
-/obj/storage/crate{
-	name = "Spare Parts"
-	},
-/obj/item/guardbot_frame,
-/obj/item/device/guardbot_tool/taser{
-	pixel_x = -8;
-	pixel_y = -4
-	},
-/obj/item/device/guardbot_tool/smoker{
-	pixel_x = 7;
-	pixel_y = 4
-	},
-/obj/item/device/guardbot_tool/medicator,
-/obj/item/guardbot_core,
-/obj/item/sheet/steel{
-	amount = 50
-	},
-/obj/item/parts/robot_parts/arm/right,
-/obj/item/parts/robot_parts/arm/right,
 /obj/decal/tile_edge/line/grey{
 	dir = 8;
 	icon_state = "line1"
@@ -10869,6 +10851,10 @@
 	},
 /obj/cable{
 	icon_state = "1-2"
+	},
+/obj/machinery/dispenser{
+	o2tanks = 5;
+	pltanks = 15
 	},
 /turf/simulated/floor,
 /area/station/science/bot_storage)
@@ -11375,13 +11361,10 @@
 /turf/simulated/floor,
 /area/station/medical/medbay/lobby)
 "aUy" = (
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/gannets/glass/chemistry{
-	name = "glass airlock-'Guardbot Depot'";
-	req_access_txt = "33"
-	},
-/turf/simulated/floor,
-/area/station/science/bot_storage)
+/obj/disposalpipe/segment/mail,
+/obj/machinery/recharge_station,
+/turf/simulated/floor/circuit,
+/area/station/turret_protected/ai)
 "aUB" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 6;
@@ -19333,13 +19316,29 @@
 	name = "Genetic Research"
 	})
 "cmZ" = (
-/obj/machinery/dispenser{
-	o2tanks = 5;
-	pltanks = 15
-	},
 /obj/decal/tile_edge/line/black{
 	dir = 1;
 	icon_state = "line1"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/table/reinforced/auto,
+/obj/item/device/radio/signaler{
+	pixel_x = 7;
+	pixel_y = 6
+	},
+/obj/item/device/radio/signaler{
+	pixel_x = 7;
+	pixel_y = 6
+	},
+/obj/item/device/radio/signaler{
+	pixel_x = 7;
+	pixel_y = 6
+	},
+/obj/item/device/radio/signaler{
+	pixel_x = 7;
+	pixel_y = 6
 	},
 /turf/simulated/floor,
 /area/station/science/bot_storage)
@@ -19379,6 +19378,13 @@
 /obj/machinery/light/incandescent{
 	dir = 4;
 	nostick = 1
+	},
+/obj/machinery/light_switch/north{
+	pixel_x = -15;
+	pixel_y = 28
+	},
+/obj/cable{
+	icon_state = "0-4"
 	},
 /turf/simulated/floor,
 /area/station/science/bot_storage)
@@ -19476,6 +19482,9 @@
 	},
 /obj/disposalpipe/segment/mail{
 	dir = 4
+	},
+/obj/cable{
+	icon_state = "1-4"
 	},
 /turf/simulated/floor,
 /area/station/science/bot_storage)
@@ -20535,9 +20544,8 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/machinery/firealarm{
-	dir = 8;
-	pixel_x = -28
+/obj/potted_plant/potted_plant2{
+	dir = 8
 	},
 /turf/simulated/floor/bot,
 /area/station/science/bot_storage)
@@ -21299,9 +21307,6 @@
 "dgl" = (
 /obj/table/reinforced/auto,
 /obj/item/paper/book/guardbot_guide,
-/obj/machinery/light_switch/north{
-	pixel_y = 28
-	},
 /obj/item/toy/plush/small/buddy{
 	pixel_y = 5
 	},
@@ -21313,6 +21318,10 @@
 	},
 /obj/cable{
 	icon_state = "1-2"
+	},
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = 28
 	},
 /turf/simulated/floor,
 /area/station/science/bot_storage)
@@ -21976,6 +21985,9 @@
 "dwj" = (
 /obj/cable{
 	icon_state = "1-2"
+	},
+/obj/machinery/light{
+	dir = 8
 	},
 /turf/simulated/floor/stairs{
 	icon_state = "medstairs_alone"
@@ -32836,6 +32848,12 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/surgery)
+"iUg" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/purpleblack,
+/area/station/science/lobby)
 "iUs" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -34165,14 +34183,15 @@
 	},
 /area/station/crew_quarters/quartersA)
 "jGC" = (
-/obj/disposalpipe/segment/mail,
 /obj/wingrille_spawn/reinforced,
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/cable,
+/obj/cable{
+	icon_state = "0-8"
+	},
 /turf/simulated/floor/plating/random,
-/area/station/science/research_director)
+/area/station/science/bot_storage)
 "jGF" = (
 /obj/decal/cleanable/dirt/dirt3,
 /turf/simulated/floor,
@@ -35096,6 +35115,9 @@
 /obj/machinery/light/incandescent{
 	dir = 4;
 	nostick = 1
+	},
+/obj/cable{
+	icon_state = "0-4"
 	},
 /turf/simulated/floor/bot,
 /area/station/science/bot_storage)
@@ -36685,6 +36707,11 @@
 /obj/cable,
 /turf/simulated/floor/plating/random,
 /area/station/crew_quarters/hos)
+"liw" = (
+/obj/wingrille_spawn/reinforced,
+/obj/cable,
+/turf/simulated/floor/plating/random,
+/area/station/science/teleporter)
 "liA" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -37530,6 +37557,9 @@
 	icon_state = "2-4"
 	},
 /obj/disposalpipe/segment/mail,
+/obj/cable{
+	icon_state = "2-8"
+	},
 /turf/simulated/floor/purpleblack,
 /area/station/science/lobby)
 "lGs" = (
@@ -39320,25 +39350,6 @@
 /obj/decal/tile_edge/line/black{
 	dir = 1;
 	icon_state = "line1"
-	},
-/obj/table/reinforced/auto,
-/obj/item/device/radio/signaler,
-/obj/item/device/radio/signaler{
-	pixel_x = -6;
-	pixel_y = -3
-	},
-/obj/item/device/radio/signaler{
-	pixel_x = -3;
-	pixel_y = 4
-	},
-/obj/item/device/radio/signaler{
-	pixel_x = 7;
-	pixel_y = 6
-	},
-/obj/decal/poster/wallsign/statistics2{
-	desc = "A poster with the Robuddy control sign-in password on it. Well okay then.";
-	icon_state = "wall_statistics3";
-	pixel_y = 32
 	},
 /turf/simulated/floor,
 /area/station/science/bot_storage)
@@ -42855,9 +42866,6 @@
 	dir = 4;
 	icon_state = "line3"
 	},
-/obj/machinery/light{
-	dir = 4
-	},
 /obj/machinery/power/apc/autoname_north,
 /obj/cable{
 	icon_state = "0-8"
@@ -43382,6 +43390,13 @@
 	},
 /turf/simulated/floor/white,
 /area/station/maintenance/outer/sw)
+"oUL" = (
+/obj/wingrille_spawn/reinforced,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/plating/random,
+/area/station/science/teleporter)
 "oUR" = (
 /obj/landmark/start{
 	name = "Medical Doctor"
@@ -46288,6 +46303,12 @@
 	},
 /obj/machinery/bot/guardbot,
 /obj/cable,
+/obj/potted_plant/potted_plant2{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
 /turf/simulated/floor/bot,
 /area/station/science/bot_storage)
 "qDc" = (
@@ -47957,6 +47978,31 @@
 	dir = 1;
 	icon_state = "line1"
 	},
+/obj/decal/poster/wallsign/statistics2{
+	desc = "A poster with the Robuddy control sign-in password on it. Well okay then.";
+	icon_state = "wall_statistics3";
+	pixel_y = 32
+	},
+/obj/storage/crate{
+	name = "Spare Parts"
+	},
+/obj/item/guardbot_frame,
+/obj/item/device/guardbot_tool/taser{
+	pixel_x = -8;
+	pixel_y = -4
+	},
+/obj/item/device/guardbot_tool/smoker{
+	pixel_x = 7;
+	pixel_y = 4
+	},
+/obj/item/device/guardbot_tool/medicator,
+/obj/item/guardbot_core,
+/obj/item/sheet/steel{
+	amount = 50
+	},
+/obj/item/parts/robot_parts/arm/right,
+/obj/item/parts/robot_parts/arm/right,
+/obj/item/storage/box/costume/robuddy,
 /turf/simulated/floor,
 /area/station/science/bot_storage)
 "rAk" = (
@@ -49910,6 +49956,14 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/science/storage)
+"sJq" = (
+/obj/machinery/door/firedoor/border_only,
+/obj/machinery/door/airlock/gannets/glass/chemistry{
+	name = "glass airlock-'Guardbot Depot'";
+	req_access_txt = "33"
+	},
+/turf/simulated/floor,
+/area/station/science/bot_storage)
 "sJu" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -53704,6 +53758,17 @@
 	},
 /turf/simulated/floor/blue,
 /area/station/science/lab)
+"uIa" = (
+/obj/wingrille_spawn/reinforced,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/cable,
+/turf/simulated/floor/plating/random,
+/area/station/science/teleporter)
 "uIi" = (
 /obj/landmark/start/latejoin,
 /turf/simulated/floor/carpet/blue/fancy/edge/north,
@@ -57118,10 +57183,6 @@
 	},
 /area/station/medical/robotics)
 "wCa" = (
-/obj/disposalpipe/segment/mail{
-	dir = 2;
-	icon_state = "pipe-c"
-	},
 /obj/wingrille_spawn/reinforced,
 /obj/cable{
 	icon_state = "0-8"
@@ -106746,7 +106807,7 @@ amN
 dWa
 omH
 mqM
-mqM
+aUy
 mqM
 mqM
 mqM
@@ -114937,11 +114998,11 @@ jbg
 vma
 aFu
 aPB
-xYC
+qKu
 veC
 qWY
 xYC
-xYC
+sJq
 xYC
 qYv
 rVl
@@ -115239,7 +115300,7 @@ atv
 vma
 aBc
 iuc
-xYC
+jGC
 cmZ
 cpP
 cRs
@@ -115541,7 +115602,7 @@ atv
 vma
 ucd
 xvg
-xYC
+sJq
 mFl
 kNO
 oCR
@@ -116145,7 +116206,7 @@ igc
 vma
 sWK
 pvA
-aUy
+xYC
 rAi
 dZq
 uzO
@@ -116750,15 +116811,15 @@ vma
 vGm
 cnk
 xYC
+qit
 xYC
+qit
+sJq
+qit
 xYC
-xYC
-xYC
-xYC
-xYC
-wQT
-wQT
-wQT
+oUL
+uIa
+liw
 wQT
 kEM
 uyd
@@ -117059,7 +117120,7 @@ dPb
 vgX
 dPb
 ndP
-wkV
+iUg
 vgX
 nfe
 fqr
@@ -117659,7 +117720,7 @@ lsB
 mre
 ddu
 wCa
-jGC
+nVL
 nVL
 xhi
 nVL
