@@ -75,6 +75,7 @@ datum
 					explode(list(get_turf(M)), "splash on [key_name(M)]")
 
 			reaction_obj(var/obj/O, var/volume)
+				return_if_overlay_or_effect(O)
 				if(reagent_state == LIQUID || prob(2 * volume - min(14 + T0C - holder.total_temperature, 100) * 0.1))
 					explode(list(get_turf(O)), "splash on [key_name(O)]")
 
