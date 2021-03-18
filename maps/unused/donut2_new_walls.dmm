@@ -8363,14 +8363,6 @@
 /turf/simulated/floor/plating,
 /area/station/quartermaster/office)
 "asL" = (
-/obj/window/reinforced{
-	dir = 2;
-	icon_state = "rwindow"
-	},
-/obj/window/reinforced{
-	dir = 4;
-	icon_state = "rwindow"
-	},
 /obj/table/reinforced,
 /obj/cable{
 	d1 = 4;
@@ -8379,6 +8371,8 @@
 	},
 /obj/item/hand_labeler,
 /obj/firedoor_spawn,
+/obj/machinery/door/airlock/pyro/glass/windoor,
+/obj/access_spawn/cargo,
 /turf/simulated/floor/yellow,
 /area/station/quartermaster/office)
 "asM" = (
@@ -8576,7 +8570,6 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment/mail,
-/obj/machinery/door/firedoor/pyro,
 /obj/machinery/door/airlock/pyro/glass,
 /obj/access_spawn/cargo,
 /obj/cable{
@@ -30303,7 +30296,6 @@
 /area/station/maintenance/southwest)
 "bnF" = (
 /obj/disposalpipe/segment/mail,
-/obj/machinery/door/firedoor/pyro,
 /obj/machinery/door/airlock/pyro/alt,
 /obj/access_spawn/kitchen,
 /turf/simulated/floor/specialroom/freezer,
@@ -32838,6 +32830,9 @@
 "btr" = (
 /obj/table/reinforced/auto,
 /obj/firedoor_spawn,
+/obj/machinery/door/airlock/pyro/glass/windoor{
+	dir = 8
+	},
 /turf/simulated/floor,
 /area/station/crew_quarters/kitchen)
 "bts" = (
@@ -35175,15 +35170,11 @@
 /area/station/security/brig)
 "byl" = (
 /obj/table/reinforced/auto,
-/obj/window/reinforced{
-	dir = 4;
-	icon_state = "rwindow"
-	},
-/obj/window/reinforced{
-	dir = 2;
-	icon_state = "rwindow"
-	},
 /obj/firedoor_spawn,
+/obj/machinery/door/airlock/pyro/glass/windoor{
+	dir = 4
+	},
+/obj/access_spawn/hydro,
 /turf/simulated/floor/green,
 /area/station/hydroponics/bay)
 "bym" = (
@@ -35539,14 +35530,9 @@
 	pixel_y = 0
 	},
 /obj/table/reinforced/auto,
-/obj/window/reinforced{
-	dir = 8;
-	icon_state = "rwindow"
-	},
-/obj/window/reinforced{
-	dir = 1
-	},
 /obj/disposalpipe/segment/mail,
+/obj/machinery/door/airlock/pyro/glass/windoor,
+/obj/access_spawn/engineering_mechanic,
 /obj/firedoor_spawn,
 /turf/simulated/floor/yellow,
 /area/station/engine/elect)
@@ -36502,14 +36488,6 @@
 	icon_state = "pipe-s"
 	},
 /obj/table/reinforced/auto,
-/obj/window/reinforced{
-	dir = 1;
-	icon_state = "rwindow"
-	},
-/obj/window/reinforced{
-	dir = 4;
-	icon_state = "rwindow"
-	},
 /obj/item/clipboard,
 /obj/item/pen/marker/blue,
 /obj/item/pen/marker/red,
@@ -36523,6 +36501,10 @@
 	name = "do-it-yourself joint construction kit"
 	},
 /obj/firedoor_spawn,
+/obj/machinery/door/airlock/pyro/glass/windoor{
+	dir = 4
+	},
+/obj/access_spawn/hydro,
 /turf/simulated/floor/green,
 /area/station/hydroponics/bay)
 "bBp" = (
@@ -38415,13 +38397,6 @@
 /area/station/solar/east)
 "bFC" = (
 /obj/table/reinforced/auto,
-/obj/window/reinforced{
-	dir = 4;
-	icon_state = "rwindow"
-	},
-/obj/window/reinforced{
-	dir = 1
-	},
 /obj/item/clipboard,
 /obj/item/paper_bin,
 /obj/item/pen/marker/blue,
@@ -38430,6 +38405,8 @@
 	pixel_x = -7
 	},
 /obj/item/stamp,
+/obj/machinery/door/airlock/pyro/glass/windoor,
+/obj/access_spawn/engineering_mechanic,
 /obj/firedoor_spawn,
 /turf/simulated/floor/yellow,
 /area/station/engine/elect)
