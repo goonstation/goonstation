@@ -33315,6 +33315,7 @@
 /obj/firedoor_spawn,
 /obj/access_spawn/rancher,
 /obj/decal/mule/dropoff,
+/obj/disposalpipe/segment/mail,
 /turf/simulated/floor,
 /area/station/ranch)
 "jLD" = (
