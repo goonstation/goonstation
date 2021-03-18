@@ -1699,3 +1699,9 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 			icon_state="guncase"
 		else
 			icon_state="secure"
+
+#undef MELEE_DMG_PISTOL
+#undef MELEE_DMG_REVOLVER
+#undef MELEE_DMG_SMG
+#undef MELEE_DMG_RIFLE
+#undef MELEE_DMG_LARGE
