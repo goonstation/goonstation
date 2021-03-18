@@ -11013,15 +11013,6 @@
 	dir = 4
 	},
 /area/station/security/quarters)
-"cWj" = (
-/obj/machinery/plantpot{
-	anchored = 1
-	},
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
-/turf/simulated/floor/grass/random,
-/area/station/hydroponics/bay)
 "cWk" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 10;
@@ -12039,8 +12030,9 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/disposalpipe/segment{
-	dir = 4
+/obj/disposalpipe/segment/mail{
+	dir = 2;
+	icon_state = "pipe-c"
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/garden)
@@ -18195,12 +18187,13 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/disposalpipe/segment{
-	dir = 4
-	},
 /obj/machinery/light/emergency{
 	dir = 1;
 	pixel_y = 16
+	},
+/obj/disposalpipe/segment{
+	dir = 4;
+	icon_state = "pipe-c"
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/garden)
@@ -19315,6 +19308,7 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/light/small/floor,
+/obj/disposalpipe/segment/mail,
 /turf/simulated/floor,
 /area/station/crew_quarters/garden)
 "ftV" = (
@@ -19693,6 +19687,14 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn/blackred,
 /area/station/security/brig/north_side)
+"fAh" = (
+/obj/machinery/plantpot{
+	anchored = 1
+	},
+/obj/disposalpipe/segment/mail,
+/obj/disposalpipe/segment/mail,
+/turf/simulated/floor/grass/random,
+/area/station/hydroponics/bay)
 "fAA" = (
 /obj/cable{
 	d2 = 4;
@@ -21942,7 +21944,6 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/disposalpipe/segment,
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
@@ -23483,9 +23484,6 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/disposalpipe/segment{
-	dir = 4
-	},
 /turf/simulated/floor,
 /area/station/crew_quarters/garden)
 "gIT" = (
@@ -24452,6 +24450,9 @@
 	icon_state = "line1"
 	},
 /obj/machinery/light/incandescent/netural,
+/obj/disposalpipe/segment{
+	dir = 4
+	},
 /turf/simulated/floor,
 /area/station/crew_quarters/garden)
 "gZh" = (
@@ -36258,12 +36259,6 @@
 	dir = 4
 	},
 /area/station/crew_quarters/stockex)
-"kIm" = (
-/obj/disposalpipe/switch_junction/left/north{
-	mail_tag = ranch
-	},
-/turf/simulated/floor/grass/random,
-/area/station/hydroponics/bay)
 "kIH" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/machinery/light/small/sticky,
@@ -38399,6 +38394,12 @@
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/se)
+"lpV" = (
+/obj/disposalpipe/switch_junction/left/west{
+	mail_tag = ranch
+	},
+/turf/simulated/floor,
+/area/station/crew_quarters/garden)
 "lpZ" = (
 /obj/item/storage/toilet/random{
 	dir = 8
@@ -40183,6 +40184,7 @@
 /area/station/maintenance/inner/nw)
 "lPe" = (
 /obj/machinery/hydro_growlamp,
+/obj/disposalpipe/segment/mail,
 /turf/simulated/floor/grass/random,
 /area/station/hydroponics/bay)
 "lPi" = (
@@ -41884,10 +41886,7 @@
 /obj/machinery/plantpot{
 	anchored = 1
 	},
-/obj/disposalpipe/segment/mail{
-	dir = 8;
-	icon_state = "pipe-c"
-	},
+/obj/disposalpipe/segment/mail,
 /turf/simulated/floor/grass/random,
 /area/station/hydroponics/bay)
 "mqx" = (
@@ -46609,6 +46608,11 @@
 	name = "test chamber plating"
 	},
 /area/station/science/testchamber)
+"nPf" = (
+/obj/wingrille_spawn/auto/tuff,
+/obj/disposalpipe/segment/mail,
+/turf/simulated/floor/plating,
+/area/station/hydroponics/bay)
 "nPk" = (
 /turf/simulated/wall/auto/reinforced/jen,
 /area/station/crew_quarters/arcade/dungeon)
@@ -47133,6 +47137,7 @@
 /obj/landmark/spawner{
 	name = "monkeyspawn_krimpus"
 	},
+/obj/disposalpipe/segment/mail,
 /turf/simulated/floor/grass/random,
 /area/station/hydroponics/bay)
 "nVE" = (
@@ -50945,9 +50950,6 @@
 /obj/wingrille_spawn/auto/tuff,
 /turf/simulated/floor/plating,
 /area/station/chapel/office)
-"pcF" = (
-/turf/simulated/floor,
-/area/station/crew_quarters/garden)
 "pdm" = (
 /obj/machinery/r_door_control/podbay{
 	id = "habitat_bay"
@@ -52929,9 +52931,8 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/disposalpipe/segment{
-	dir = 4;
-	icon_state = "pipe-c"
+/obj/disposalpipe/segment/mail{
+	dir = 4
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/garden)
@@ -62605,6 +62606,9 @@
 	dir = 1;
 	pixel_y = -24
 	},
+/obj/disposalpipe/segment{
+	dir = 4
+	},
 /turf/simulated/floor,
 /area/station/crew_quarters/garden)
 "snQ" = (
@@ -67654,6 +67658,7 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
+/obj/disposalpipe/segment,
 /turf/simulated/floor,
 /area/station/crew_quarters/garden)
 "tQW" = (
@@ -69855,6 +69860,17 @@
 "uBA" = (
 /turf/simulated/floor/carpet/grime,
 /area/station/medical/asylum/computer)
+"uBE" = (
+/obj/decorative_pot{
+	anchored = 1
+	},
+/obj/machinery/light/emergency{
+	dir = 1;
+	pixel_y = 16
+	},
+/obj/disposalpipe/segment/mail,
+/turf/simulated/grass,
+/area/station/crew_quarters/garden)
 "uBH" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/grille/catwalk/jen/side{
@@ -75497,6 +75513,10 @@
 	dir = 4;
 	pixel_x = 12
 	},
+/obj/disposalpipe/segment{
+	dir = 8;
+	icon_state = "pipe-c"
+	},
 /turf/simulated/floor,
 /area/station/crew_quarters/garden)
 "wim" = (
@@ -80130,7 +80150,10 @@
 /obj/decal/tile_edge/line/green{
 	icon_state = "line1"
 	},
-/obj/disposalpipe/segment,
+/obj/disposalpipe/segment{
+	dir = 4;
+	icon_state = "pipe-c"
+	},
 /turf/simulated/floor,
 /area/station/crew_quarters/garden)
 "xzQ" = (
@@ -81050,6 +81073,7 @@
 	anchored = 1
 	},
 /obj/machinery/light/incandescent/netural,
+/obj/disposalpipe/segment/mail,
 /turf/simulated/floor/grass/random,
 /area/station/hydroponics/bay)
 "xNv" = (
@@ -129394,7 +129418,7 @@ mfs
 mfs
 sFl
 fBI
-kIm
+uNZ
 uNZ
 rAb
 uNZ
@@ -129696,7 +129720,7 @@ ksp
 sJC
 kea
 iba
-cWj
+kHx
 kHx
 kHx
 mke
@@ -130000,15 +130024,15 @@ vyk
 umw
 mqp
 lPe
-kHx
+fAh
 nVl
-mke
+uNZ
 xNi
-txZ
-sfc
-lns
+nPf
+uBE
+wiL
 ftS
-pcF
+sAb
 wUv
 nLL
 kpV
@@ -130613,7 +130637,7 @@ vHl
 amI
 lOr
 dkY
-jMq
+lpV
 gYS
 leg
 qFg
