@@ -37,9 +37,15 @@ __pycache__/
 # Ignore compiled linux libs in the root folder, e.g. librust_g.so
 /*.so
 
-# Local Map Backups
+# Build tools cache
+/tools/**/.cache
+
+# Local map backups
 /maps/**/backup/
 *.dmm.backup
+
+# Assets build files
+/browserassets/build/
 
 # Local tgui dev server files
 /browserassets/tgui/.tmp/**/*
