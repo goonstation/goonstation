@@ -1,5 +1,9 @@
 
 (t)fri mar 19 21
+(u)Sidewinder7
+(p)3980
+(e)🆕|feature
+(*)Added a single-output mode to the mechcomp dispatch component.
 (u)Flaborized
 (p)4052
 (e)🎨|sprites
