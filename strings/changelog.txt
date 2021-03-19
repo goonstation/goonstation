@@ -4,6 +4,9 @@
 (p)4014
 (e)🐛🆕|bug, feature
 (+)Pews are now deconstructaable
+(u)kyle
+(e)⚖|balance
+(+)Werewolves are now able to feast on dead bodies as long as they aren't too decomposed. Formaldehyde also will make corpses unpaletable for wolves.
 (t)wed mar 17 21
 (u)kyle
 (+)epinephrine has a similar effect to salicylic acid where it negates some of the movement speed penalty from damage.

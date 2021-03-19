@@ -67,14 +67,18 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
-		// It's okay when the victim expired half-way through the feast, but plain corpses are too cheap.
+		// What do we do if the body is dead?
 		if (target.stat == 2)
-			boutput(M, __red("Urgh, this cadaver tasted horrible. Better find some fresh meat."))
-			//target.visible_message("<span class='alert'><B>[M] completely rips [target]'s corpse to pieces!</B></span>")
-			//target.gib()
-			//nah this sucks for the guy being eaten.
-			interrupt(INTERRUPT_ALWAYS)
-			return
+			if (target.reagents)
+				if (target.reagents.get_reagent_amount("formaldehyde") >= 15)
+					boutput(M, __red("Urgh, this cadaver tastes horrible. Better find some chemical free meat."))
+					return
+
+			var/mob/living/carbon/human/H = target
+			//If they are at the decay or greater decomp stage, no eat
+			if (istype(H) && H.decomp_stage >= 2)
+				boutput(M, __red("Urgh, this cadaver tastes horrible. Better find some fresh meat."))
+				return
 
 		A.locked = 1
 		playsound(M.loc, pick('sound/voice/animal/werewolf_attack1.ogg', 'sound/voice/animal/werewolf_attack2.ogg', 'sound/voice/animal/werewolf_attack3.ogg'), 50, 1)
