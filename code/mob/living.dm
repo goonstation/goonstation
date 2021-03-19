@@ -2,7 +2,7 @@
 
 /mob/living
 	event_handler_flags = USE_FLUID_ENTER | USE_CANPASS | IS_FARTABLE
-	var/spell_soulguard = 0
+	var/spell_soulguard = 0		//0 = none, 1 = normal_soulgruard, 2 = wizard_ring_soulguard
 
 	// this is a read only variable. do not set it directly.
 	// use set_burning or update_burning instead.
@@ -160,9 +160,9 @@
 			thishud.remove_object(stamina_bar)
 		stamina_bar = null
 
-	for (var/atom/A as() in stomach_process)
+	for (var/atom/A as anything in stomach_process)
 		qdel(A)
-	for (var/atom/A as() in skin_process)
+	for (var/atom/A as anything in skin_process)
 		qdel(A)
 	stomach_process = null
 	skin_process = null
@@ -1008,7 +1008,7 @@
 	var/list/heard_a = list() // understood us
 	var/list/heard_b = list() // didn't understand us
 
-	for (var/mob/M as() in listening)
+	for (var/mob/M as anything in listening)
 		if(M.mob_flags & MOB_HEARS_ALL)
 			continue
 		else if (M.say_understands(src, forced_language))
@@ -1024,15 +1024,16 @@
 		if(!last_heard_name || src.get_heard_name() != src.last_heard_name)
 			var/num = hex2num(copytext(md5(src.get_heard_name()), 1, 7))
 			src.last_chat_color = hsv2rgb(num % 360, (num / 360) % 10 / 100 + 0.18, num / 360 / 10 % 15 / 100 + 0.85)
-		/*
+
 		var/turf/T = get_turf(src)
-		for(var/i = 0; i < 3; i++) T = get_step(T, WEST)
-		for(var/i = 0; i < 7; i++)
-			for(var/mob/living/M in T)
-				for(var/image/chat_maptext/I in M.chat_text.lines)
-					I.bump_up()
+		for(var/i = 0; i < 2; i++) T = get_step(T, WEST)
+		for(var/i = 0; i < 5; i++)
+			for(var/mob/living/L in T)
+				if(L != src)
+					for(var/image/chat_maptext/I in L.chat_text.lines)
+						I.bump_up()
 			T = get_step(T, EAST)
-		*/
+
 		var/singing_italics = singing ? " font-style: italic;" : ""
 		var/maptext_color
 		if (singing)
@@ -1123,7 +1124,7 @@
 // helper proooocs
 
 /mob/proc/send_hear_talks(var/message_range, var/messages, var/heardname, var/lang_id)	//helper to send hear_talk to all mob, obj, and turf
-	for (var/atom/A as() in all_view(message_range, src))
+	for (var/atom/A as anything in all_view(message_range, src))
 		A.hear_talk(src,messages,heardname,lang_id)
 
 /mob/proc/get_heard_name()

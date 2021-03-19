@@ -35,7 +35,7 @@
 	// the sanity check detects that an artifact doesn't have the proper shit set up it'll just wipe out the artifact and stop
 	// the rest of the proc from occurring.
 	// This proc should be called in an if statement at the start of every artifact proc, since it returns 0 or 1.
-	if (!src.artifact)
+	if (!src.artifact || src.disposed)
 		return 0
 	// if the artifact var isn't set at all, it's probably not an artifact so don't bother continuing
 	if (!istype(src.artifact,/datum/artifact/))
@@ -130,9 +130,6 @@
 	if (!src.ArtifactSanityCheck())
 		return 1
 	var/datum/artifact/A = src.artifact
-	if(A.internal_name)
-		src.real_name = A.internal_name
-		UpdateName()
 	if (A.activated)
 		return 1
 	if (A.triggers.len < 1 && !A.automatic_activation)
@@ -422,10 +419,6 @@
 
 	var/datum/artifact/A = src.artifact
 
-	ArtifactLogs(usr, null, src, "destroyed", null, 0)
-
-	artifact_controls.artifacts -= src
-
 	var/turf/T = get_turf(src)
 	if (istype(T,/turf/))
 		switch(A.artitype.name)
@@ -439,6 +432,12 @@
 				T.visible_message("<span class='alert'><B>[src] warps in on itself and vanishes!</B></span>")
 			if("precursor")
 				T.visible_message("<span class='alert'><B>[src] implodes, crushing itself into dust!</B></span>")
+
+	src.ArtifactDeactivated()
+
+	ArtifactLogs(usr, null, src, "destroyed", null, 0)
+
+	artifact_controls.artifacts -= src
 
 	qdel(src)
 	return
@@ -460,7 +459,7 @@
 		faultprob *= 2 // eldritch artifacts fucking hate you and are twice as likely to go faulty
 	faultprob = max(0,min(faultprob,100))
 
-	if (prob(faultprob) && A.fault_types.len)
+	if (prob(faultprob) && length(A.fault_types))
 		var/new_fault = weighted_pick(A.fault_types)
 		if (ispath(new_fault))
 			var/datum/artifact_fault/F = new new_fault(A)

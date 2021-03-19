@@ -102,14 +102,14 @@ Hold down CTRL, ALT or SHIFT to modify, call or view proc bound to those keys.<b
 			var/returnval = null
 			if (targeted)
 				boutput(usr, "<span class='notice'>Calling '[proc2call]' with [islist(args2use) ? args2use.len : "0"] arguments on '[object]'</span>")
-				if (islist(args2use) && args2use.len)
+				if (islist(args2use) && length(args2use))
 					returnval = call(object,proc2call)(arglist(args2use))
 				else
 					returnval = call(object,proc2call)()
 				blink(get_turf(object))
 			else
 				boutput(usr, "<span class='notice'>Calling '[proc2call]' with [islist(args2use) ? args2use.len : "0"] arguments</span>")
-				if (islist(args2use) && args2use.len)
+				if (islist(args2use) && length(args2use))
 					returnval = call(proc2call)(arglist(args2use))
 				else
 					returnval = call(proc2call)()
@@ -156,7 +156,7 @@ Hold down CTRL, ALT or SHIFT to modify, call or view proc bound to those keys.<b
 			info2print += "<br><span class='notice'>Modifier key: [modkey ? modkey : "None"]</span>"
 			info2print += "<br><span class='notice'>Proc name: [proc2list]</span>"
 			info2print += "<br><span class='notice'>Global: [targeted ? "NO" : "YES"] (will [targeted ? null : " not"]be called on the clicked target)</span>"
-			if (islist(args2list) && args2list.len)
+			if (islist(args2list) && length(args2list))
 				var/argnum = 0
 				for (var/thing in args2list)
 					argnum++

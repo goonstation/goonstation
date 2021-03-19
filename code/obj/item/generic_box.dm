@@ -106,6 +106,28 @@
 		desc = "It's like a box that a pile of sticky notes would come in, but it's actually the pile, too. So there's a pile in the box. Or the pile... IS the box? Quantum sticky note pile-box? Whatever, I've been trying to get this to work for a few hours and making a special little sticky note container is the last thing I want to do right now. Fuck."
 		contained_item = /obj/item/sticker/postit
 
+	crayon // stonepillar's crayon project
+		name = "rapid crayon creation device"
+		desc = "It's the StephiMatic(tm) rapid crayon creation device! Perfect for the budding artist. Ages 5 and up!"
+		contained_item = /obj/item/pen/crayon
+
+		add_to(var/obj/item/I)
+			if(..())
+				qdel(I)
+				return 1
+			return 0
+
+		take_from()
+			var/newColor = input("Pick crayon color:","Crayon color") as null|color
+			if(!isnull(newColor))
+				var/obj/item/pen/crayon/newCrayon = new /obj/item/pen/crayon
+				newCrayon.color = newColor
+				newCrayon.font_color = newColor
+				newCrayon.name = "cheap-looking [hex2color_name(newColor)] crayon"
+				return newCrayon
+			return 0
+
+
 	assorted
 		name = "box of assorted things"
 		desc = "Wow! A marvel of technology, this box doesn't store just ONE item, but an assortment of items! The future really is here."
@@ -283,7 +305,7 @@
 					logTheThing("debug", src, null, "has a non-path contained_item, \"[src.contained_item]\", and is being disposed of to prevent errors")
 					qdel(src)
 					return
-				else if (src.item_amount == 0 && src.contents.len) // count if we already have things inside!
+				else if (src.item_amount == 0 && length(src.contents)) // count if we already have things inside!
 					for (var/obj/item/thing in src.contents)
 						if (istype(thing, src.contained_item))
 							src.item_amount++

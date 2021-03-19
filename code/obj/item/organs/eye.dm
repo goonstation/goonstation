@@ -210,6 +210,14 @@
 	color_b = 0.9
 	change_iris = 0
 
+	on_transplant(mob/M)
+		. = ..()
+		APPLY_MOB_PROPERTY(M, PROP_THERMALSIGHT, src)
+
+	on_removal()
+		REMOVE_MOB_PROPERTY(donor, PROP_THERMALSIGHT, src)
+		. = ..()
+
 /obj/item/organ/eye/cyber/meson
 	name = "mesonic imager cybereye"
 	organ_name = "mesonic imager cybereye"

@@ -232,6 +232,10 @@
 
 		src.eject_wait = 10 SECONDS
 
+#ifdef DATALOGGER
+		game_stats.Increment("clones")
+#endif
+
 		if (istype(oldholder))
 			oldholder.clone_generation++
 			src.occupant.bioHolder.CopyOther(oldholder, copyActiveEffects = connected?.gen_analysis)
@@ -828,7 +832,7 @@
 		if (!islist(src.pods))
 			src.pods = list()
 		if (!isnull(src.id) && genResearch && islist(genResearch.clonepods) && length(genResearch.clonepods))
-			for (var/obj/machinery/clonepod/pod as() in genResearch.clonepods)
+			for (var/obj/machinery/clonepod/pod as anything in genResearch.clonepods)
 				if (pod.id == src.id && !src.pods.Find(pod))
 					src.pods += pod
 					DEBUG_MESSAGE("[src] adds pod [log_loc(pod)] (ID [src.id]) in genResearch.clonepods")
@@ -875,7 +879,7 @@
 			if (prob(2))
 				src.reagents.add_reagent("beff", 1 * process_per_tick)
 
-		if (src.reagents.total_volume && islist(src.pods) && pods.len)
+		if (src.reagents.total_volume && islist(src.pods) && length(pods))
 			// Distribute reagents to cloning pods nearby
 			// Changed from before to distribute while grinding rather than all at once
 			// give an equal amount of reagents to each pod that happens to be around

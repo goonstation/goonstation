@@ -12,7 +12,7 @@ jobs:
 
   runtime:
     name: Runtime Checker
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-20.04
     if: "!contains(github.event.head_commit.message, 'skip ci')"
     strategy:
       fail-fast: false
@@ -24,7 +24,6 @@ jobs:
 
       - name: Install Dependencies
         run: |
-          curl https://raw.githubusercontent.com/goonstation/goonstation/master/tools/ci/sources.list | sudo tee /etc/apt/sources.list
           sudo dpkg --add-architecture i386
           sudo apt-get update
           sudo apt install libstdc++6:i386 libssl1.1:i386
@@ -82,7 +81,7 @@ jobs:
 
   runtime_full:
     name: "Runtime Checker with Secret Submodule"
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-20.04
     if: |
       ((github.event_name == 'push' && github.repository == 'goonstation/goonstation') || (github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == 'goonstation/goonstation')) && !contains(github.event.head_commit.message, 'skip ci')
     strategy:
@@ -99,7 +98,6 @@ jobs:
 
       - name: Install Dependencies
         run: |
-          curl https://raw.githubusercontent.com/goonstation/goonstation/master/tools/ci/sources.list | sudo tee /etc/apt/sources.list
           sudo dpkg --add-architecture i386
           sudo apt-get update
           sudo apt install libstdc++6:i386 libssl1.1:i386

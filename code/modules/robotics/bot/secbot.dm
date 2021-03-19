@@ -73,8 +73,8 @@
 	var/oldtarget_name
 	var/threatlevel = 0
 	var/target_lastloc //Loc of target when arrested.
-	/// Time after being emagged before they'll consider going after their emagger
-	var/last_target_cooldown = 20 SECONDS
+	/// Time after giving up on assaulting someone before they'll consider assaulting them again
+	var/last_target_cooldown = 10 SECONDS
 	emagged = 0 //Emagged Secbots view everyone as a criminal
 	health = 25
 	bot_voice = 'sound/misc/talk/bottalk_2.ogg'
@@ -145,8 +145,6 @@
 	var/static/chatspam_cooldown = 1 SECOND
 	/// Was on guard duty, apprehended someone, then went to return to guard duty? Keep it to yourself please
 	var/guard_start_no_announce
-	/// These people get a pass on getting secbotted. For a while
-	var/static/list/secbot_ignore = list()
 	var/static/image/bothat
 	var/static/image/chargepic
 
@@ -757,11 +755,19 @@
 
 		/// Tango never up to begin with? Or some kind of not-human? Eh whatever give up
 		if(!istype(src.target, /mob/living/carbon/human))
+			speak("???", just_float = 1)
+			src.KillPathAndGiveUp(kpagu)
+			return
+
+		/// Tango hidden inside something or someone? Welp, can't hit them through a locker, so may as well give up!
+		if(src.target?.loc && !isturf(src.target.loc))
+			speak("?", just_float = 1)
 			src.KillPathAndGiveUp(kpagu)
 			return
 
 		/// Tango down or tango hecked off or tango behind a bunch of stuff, give up and get back to work
 		if (src.target.hasStatus("handcuffed") || src.frustration >= 8)
+			speak("...", just_float = 1)
 			src.KillPathAndGiveUp(kpagu)
 			return
 
@@ -803,16 +809,11 @@
 	// look for a criminal in range of the bot
 	proc/look_for_perp()
 		src.anchored = 0
-		for_by_tcl(C, /mob/living/carbon) //Let's find us a criminal
-			if(!IN_RANGE(src, C, 7)) // We've made a plea bargain with opaque objects to turn in criminals hiding behind them
-				continue
+		for(var/mob/living/carbon/C in view(7, get_turf(src))) //Let's find us a criminal
 			if ((C.stat) || (C.hasStatus("handcuffed")))
 				continue
-			if (C.name in src.secbot_ignore)
-				if(src.secbot_ignore[C.name] <= TIME)
-					src.secbot_ignore -= C.name
-				else
-					continue
+			if(GET_COOLDOWN(src, "[SECBOT_LASTTARGET_COOLDOWN]-[C.name]"))
+				continue
 			if (ishuman(C))
 				src.threatlevel = src.assess_perp(C)
 			if (src.guard_area_lockdown && isarea(src.guard_area) && get_area(C) == src.guard_area)
@@ -992,9 +993,9 @@
 
 			var/perpname = see_face ? perp.real_name : perp.name
 
-			for (var/datum/data/record/E as() in data_core.general)
+			for (var/datum/data/record/E as anything in data_core.general)
 				if (E.fields["name"] == perpname)
-					for (var/datum/data/record/R as() in data_core.security)
+					for (var/datum/data/record/R as anything in data_core.security)
 						if ((R.fields["id"] == E.fields["id"]) && (R.fields["criminal"] == "*Arrest*"))
 							threatcount = 7
 							break
@@ -1017,12 +1018,14 @@
 		src.anchored = 0
 		src.icon_state = "secbot[src.on][(src.on && src.emagged >= 2) ? "-wild" : null]"
 		if(give_up == KPAGU_RETURN_TO_GUARD || give_up == KPAGU_CLEAR_ALL)
-			src.target = null
 			src.oldtarget_name = src.target?.name
+			src.target = null
+			ON_COOLDOWN(src, "[SECBOT_LASTTARGET_COOLDOWN]-[src.oldtarget_name]", src.last_target_cooldown)
 			src.mode = SECBOT_GUARD_IDLE
 		if(give_up == KPAGU_RETURN_TO_PATROL || give_up == KPAGU_CLEAR_ALL)
-			src.target = null
 			src.oldtarget_name = src.target?.name
+			src.target = null
+			ON_COOLDOWN(src, "[SECBOT_LASTTARGET_COOLDOWN]-[src.oldtarget_name]", src.last_target_cooldown)
 			src.guard_area = null
 			src.guard_area_lockdown = FALSE
 			src.mode = SECBOT_IDLE
@@ -1247,7 +1250,7 @@
 					qbert += "[pick("!","?")]"
 				src.speak("[qbert]")
 		playsound(get_turf(src), say_thing, 50, 0, 0, 1)
-		src.secbot_ignore[src.target?.name] = (TIME + src.last_target_cooldown) // darn cooldowns
+		ON_COOLDOWN(src, "[SECBOT_LASTTARGET_COOLDOWN]-[src.target?.name]", src.last_target_cooldown)
 
 //secbot handcuff bar thing
 /datum/action/bar/icon/secbot_cuff

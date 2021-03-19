@@ -50,6 +50,14 @@ var/global/crew_creds = null
 					round_science.Add(M)
 					continue
 
+				// Pathology?
+				if("Pathologist")
+					#ifdef SCIENCE_PATHO_MAP
+					round_science.Add(M)
+					#else
+					round_medical.Add(M)
+					#endif
+
 				// Engineering?
 				if("Chief Engineer","Engineer","Quartermaster","Miner","Mechanic","Construction Worker")
 					round_engineering.Add(M)

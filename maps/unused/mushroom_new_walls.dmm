@@ -530,9 +530,6 @@
 /obj/cable,
 /turf/simulated/floor/plating,
 /area/station/quartermaster/office)
-"acp" = (
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/quartermaster/office)
 "acq" = (
 /turf/simulated/floor,
 /area/station/hangar/main)
@@ -3547,7 +3544,7 @@
 /turf/simulated/floor/carpet/green/fancy/edge/south,
 /area/station/engine/engineering/ce)
 "aoH" = (
-/obj/storage/crate/rcd,
+/obj/storage/crate/rcd/CE,
 /obj/machinery/light{
 	dir = 8;
 	layer = 9.1;
@@ -3932,9 +3929,6 @@
 "apY" = (
 /turf/simulated/floor/orangeblack/corner,
 /area/station/hallway/primary/north)
-"apZ" = (
-/turf/simulated/floor,
-/area/station/quartermaster/office)
 "aqa" = (
 /obj/wingrille_spawn/auto,
 /obj/cable{
@@ -5250,11 +5244,6 @@
 	dir = 8
 	},
 /area/station/turret_protected/AIsat)
-"auT" = (
-/turf/simulated/floor/orangeblack/side{
-	dir = 1
-	},
-/area/station/quartermaster/office)
 "auU" = (
 /obj/machinery/bot/mulebot{
 	home_destination = "QM #1"
@@ -6786,9 +6775,6 @@
 	icon_state = "carpet2"
 	},
 /area/station/crew_quarters/bar)
-"aAU" = (
-/turf/simulated/floor/orangeblack/side,
-/area/station/quartermaster/office)
 "aAV" = (
 /obj/machinery/disposal,
 /obj/disposalpipe/trunk{
@@ -7068,9 +7054,6 @@
 	dir = 1
 	},
 /area/station/quartermaster/office)
-"aBV" = (
-/turf/simulated/wall/auto/supernorn,
-/area/station/quartermaster/office)
 "aBX" = (
 /obj/wingrille_spawn/auto,
 /obj/cable{
@@ -7214,11 +7197,6 @@
 	},
 /obj/access_spawn/cargo,
 /turf/simulated/floor,
-/area/station/quartermaster/office)
-"aCy" = (
-/turf/simulated/floor/orangeblack/side{
-	dir = 8
-	},
 /area/station/quartermaster/office)
 "aCz" = (
 /obj/wingrille_spawn/auto,
@@ -19833,11 +19811,11 @@
 	pixel_x = -4;
 	pixel_y = 11
 	},
-/obj/item/reagent_containers/glass/bottle/icing{
+/obj/item/reagent_containers/food/drinks/drinkingglass/icing{
 	pixel_x = 15;
 	pixel_y = -4
 	},
-/obj/item/reagent_containers/glass/bottle/icing{
+/obj/item/reagent_containers/food/drinks/drinkingglass/icing{
 	pixel_x = 15;
 	pixel_y = 6
 	},
@@ -35729,7 +35707,7 @@
 	layer = 9.1;
 	pixel_x = -10
 	},
-/obj/item/card_box/suit,
+/obj/item/card_box/plain,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "carpet2";
@@ -74915,14 +74893,14 @@ aaa
 aaa
 aaa
 aaa
-acp
+aJw
 bqH
 aja
 bqG
 aja
 aAR
-acp
-acp
+aJw
+aJw
 aaa
 aaa
 aaa
@@ -75217,14 +75195,14 @@ aaa
 aaa
 aaa
 aaa
-acp
+aJw
 axh
 aok
 arl
 aok
 aok
 aBp
-acp
+aJw
 aaa
 aaa
 aaa
@@ -75519,16 +75497,16 @@ aaa
 aaa
 aaa
 aaa
-acp
+aJw
 afk
 aok
 arl
 aok
 aok
 aBp
-acp
-acp
-acp
+aJw
+aJw
+aJw
 aaa
 aaa
 aaa
@@ -75821,7 +75799,7 @@ aaa
 aaa
 aaa
 aaa
-acp
+aJw
 axi
 aok
 arl
@@ -75830,7 +75808,7 @@ aok
 aok
 aBU
 apM
-acp
+aJw
 aaa
 aaa
 aaa
@@ -76130,9 +76108,9 @@ arl
 aok
 aok
 aBt
-aBV
+aCm
 aCw
-aBV
+aCm
 aaa
 aaa
 aaa
@@ -76725,9 +76703,9 @@ alA
 ahN
 ahN
 ahN
-acp
-acp
-acp
+aJw
+aJw
+aJw
 afn
 arb
 arp
@@ -76740,8 +76718,8 @@ aDA
 aCz
 aFi
 aHr
-acp
-acp
+aJw
+aJw
 aKa
 aqE
 aqE
@@ -77027,7 +77005,7 @@ aqz
 arC
 asY
 ahU
-acp
+aJw
 auO
 avR
 agW
@@ -77037,13 +77015,13 @@ aAm
 aAm
 aBD
 aCa
-aCy
+aDJ
 aDB
-aCy
+aDJ
 aFs
 aHs
 aIw
-acp
+aJw
 aKm
 aKm
 aqE
@@ -77343,9 +77321,9 @@ aAn
 aAn
 aAn
 aFt
-apZ
+aCH
 aIy
-acp
+aJw
 axD
 axD
 aMI
@@ -77631,8 +77609,8 @@ alS
 alS
 alS
 alS
-acp
-auT
+aJw
+aCg
 avT
 bsh
 akM
@@ -77933,23 +77911,23 @@ alS
 apT
 ata
 anX
-acp
+aJw
 auU
 avU
-apZ
-apZ
-apZ
-apZ
+aCH
+aCH
+aCH
+aCH
 aor
 aBF
 aCb
-apZ
+aCH
 aDC
 lhf
 aFx
 aHu
-aAU
-acp
+aIG
+aJw
 aKy
 axD
 aqE
@@ -78235,13 +78213,13 @@ alS
 arI
 anY
 anY
-acp
+aJw
 auV
 avV
-apZ
+aCH
 ayq
-apZ
-apZ
+aCH
+aCH
 aCI
 bsu
 aCc
@@ -78537,11 +78515,11 @@ alS
 apX
 aoW
 atn
-acp
-acp
-acp
-acp
-acp
+aJw
+aJw
+aJw
+aJw
+aJw
 azl
 azl
 aAV
@@ -79749,11 +79727,11 @@ aur
 aur
 aur
 auw
-acp
-acp
-acp
-acp
-acp
+aJw
+aJw
+aJw
+aJw
+aJw
 aCm
 aCM
 aDP

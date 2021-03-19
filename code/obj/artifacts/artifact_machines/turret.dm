@@ -2,8 +2,15 @@
 	name = "artifact turret"
 	associated_datum = /datum/artifact/turret
 
+	ArtifactDestroyed()
+		var/datum/artifact/turret/A = src.artifact
+		new /obj/item/gun/energy/artifact(get_turf(src), A.artitype.name, list(A.bullet))
+		. = ..()
+
+
 /datum/artifact/turret
 	associated_object = /obj/machinery/artifact/turret
+	type_name = "Turret"
 	rarity_weight = 200
 	validtypes = list("wizard","eldritch","precursor")
 	validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/electric,/datum/artifact_trigger/heat,

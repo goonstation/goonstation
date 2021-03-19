@@ -7,11 +7,12 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	var/obj/item/ammo/bullets/ammo = null
 	var/max_ammo_capacity = 1 // How much ammo can this gun hold? Don't make this null (Convair880).
 	var/caliber = null // Can be a list too. The .357 Mag revolver can also chamber .38 Spc rounds, for instance (Convair880).
-	var/has_empty_state = 0 //does this gun have a special icon state for having no ammo lefT?
-	var/gildable = 0 //can this gun be affected by the [Helios] medal reward?
-
+	var/has_empty_state = 0 //Does this gun have a special icon state for having no ammo lefT?
+	var/gildable = 0 //Can this gun be affected by the [Helios] medal reward?
+	var/gilded = FALSE //Is this gun currently gilded by the [Helios] medal reward?
 	var/auto_eject = 0 // Do we eject casings on firing, or on reload?
 	var/casings_to_eject = 0 // If we don't automatically ejected them, we need to keep track (Convair880).
+
 
 	add_residue = 1 // Does this gun add gunshot residue when fired? Kinetic guns should (Convair880).
 
@@ -205,6 +206,11 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 				if (src.casings_to_eject < 0)
 					src.casings_to_eject = 0
 				src.casings_to_eject += src.current_projectile.shot_number
+
+		if (fire_animation)
+			if(src.ammo?.amount_left > 1)
+				flick(icon_state, src)
+
 		..()
 
 	proc/ejectcasings()
@@ -325,7 +331,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		New()
 			..()
 			SPAWN_DBG(rand(3, 6))
-				playsound(src.loc, "sound/weapons/casings/casing-shell-0[rand(1,7)].ogg", 30, 0.1, 0.8)
+				playsound(src.loc, "sound/weapons/casings/casing-xl-0[rand(1,6)].ogg", 15, 0.1)
 
 
 
@@ -505,6 +511,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	auto_eject = 1
 	has_empty_state = 1
 	gildable = 1
+	fire_animation = TRUE
 
 	New()
 		if (prob(70))
@@ -541,6 +548,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	throwforce = 1
 	throw_speed = 1
 	throw_return = 1
+	fire_animation = TRUE
 	var/prob_clonk = 0
 
 	throw_begin(atom/target)
@@ -623,22 +631,80 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	name = "Riot Shotgun"
 	desc = "A police-issue shotgun meant for suppressing riots."
 	icon = 'icons/obj/48x32.dmi'
-	icon_state = "shotty"
+	icon_state = "shotty-empty"
 	item_state = "shotty"
 	force = 15.0
 	contraband = 5
 	caliber = 0.72
 	max_ammo_capacity = 8
-	auto_eject = 1
+	auto_eject = 0
 	can_dual_wield = 0
 	two_handed = 1
 	has_empty_state = 1
 	gildable = 1
+	var/racked_slide = FALSE
+
+
 
 	New()
 		ammo = new/obj/item/ammo/bullets/abg
 		set_current_projectile(new/datum/projectile/bullet/abg)
 		..()
+
+	update_icon()
+		. = ..()
+		src.icon_state = "shotty" + (gilded ? "-golden" : "") + (racked_slide ? "" : "-empty" )
+
+	canshoot()
+		return(..() && src.racked_slide)
+
+	shoot(var/target,var/start ,var/mob/user)
+		if(ammo.amount_left > 0 && !racked_slide)
+			boutput(user, "<span class='notice'>You need to rack the slide before you can fire!</span>")
+		..()
+		src.racked_slide = FALSE
+		src.casings_to_eject = 1
+		if (src.ammo.amount_left == 0) // change icon_state to empty if 0 shells left
+			src.update_icon()
+			src.casings_to_eject = 0
+
+	shoot_point_blank(user, user)
+		if(ammo.amount_left > 0 && !racked_slide)
+			boutput(user, "<span class='notice'>You need to rack the slide before you can fire!</span>")
+			return
+		..()
+		src.racked_slide = FALSE
+		src.casings_to_eject = 1
+		if (src.ammo.amount_left == 0) // change icon_state to empty if 0 shells left
+			src.update_icon()
+			src.casings_to_eject = 0
+
+
+
+	attack_self(mob/user as mob)
+		..()
+		if (!src.racked_slide) //Are we racked?
+			if (src.ammo.amount_left == 0)
+				boutput(user, "<span class ='notice'>You are out of shells!</span>")
+				update_icon()
+			else
+				src.racked_slide = TRUE
+				if (src.icon_state == "shotty[src.gilded ? "-golden" : ""]") //"animated" racking
+					src.icon_state = "shotty[src.gilded ? "-golden-empty" : "-empty"]" // having update_icon() here breaks
+					animate(src, time = 0.2 SECONDS)
+					animate(icon_state = "shotty[gilded ? "-golden" : ""]")
+				else
+					update_icon() // Slide already open? Just close the slide
+				boutput(user, "<span class='notice'>You rack the slide of the shotgun!</span>")
+				playsound(user.loc, "sound/weapons/shotgunpump.ogg", 50, 1)
+				src.casings_to_eject = 0
+				if (src.ammo.amount_left < 8) // Do not eject shells if you're racking a full "clip"
+					var/turf/T = get_turf(src)
+					if (T) // Eject shells on rack instead of on shoot()
+						var/obj/item/casing/C = new src.current_projectile.casing(T)
+						C.forensic_ID = src.forensic_ID
+						C.set_loc(T)
+
 
 /obj/item/gun/kinetic/ak47
 	name = "AK-744 Rifle"
@@ -752,6 +818,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	hide_attack = 1
 	muzzle_flash = null
 	has_empty_state = 1
+	fire_animation = TRUE
 
 	New()
 		ammo = new/obj/item/ammo/bullets/bullet_22HP
@@ -800,7 +867,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	desc = "A 40mm riot control launcher."
 	name = "Riot launcher"
 	icon_state = "40mm"
-	//item_state = "flaregun"
+	item_state = "40mm"
 	force = 5.0
 	contraband = 7
 	caliber = 1.57
@@ -898,7 +965,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		set_current_projectile(new/datum/projectile/bullet/airzooka)
 		..()
 
-/obj/item/gun/kinetic/smg //testing keelin's continuous fire POC
+/obj/item/gun/kinetic/smg_old //testing keelin's continuous fire POC
 	name = "submachine gun"
 	desc = "An automatic submachine gun"
 	icon_state = "walthery1"
@@ -924,13 +991,14 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	name = "Branwen pistol"
 	desc = "A semi-automatic, 9mm caliber service pistol, developed by Mabinogi Firearms Company."
 	icon_state = "9mm_pistol"
-	w_class = 2
+	w_class = 3
 	force = 3
 	contraband = 4
 	caliber = 0.355
 	max_ammo_capacity = 15
 	auto_eject = 1
 	has_empty_state = 1
+	fire_animation = TRUE
 
 	New()
 		ammo = new/obj/item/ammo/bullets/bullet_9mm
@@ -938,6 +1006,31 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		..()
 
 /obj/item/gun/kinetic/pistol/empty
+
+	New()
+		..()
+		ammo.amount_left = 0
+		update_icon()
+/obj/item/gun/kinetic/smg
+	name = "Bellatrix submachine gun"
+	desc = "A semi-automatic, 9mm submachine gun, developed by Almagest Weapons Fabrication."
+	icon = 'icons/obj/48x32.dmi'
+	icon_state = "mp52"
+	w_class = 2
+	force = 3
+	contraband = 4
+	caliber = 0.355
+	max_ammo_capacity = 30
+	auto_eject = 1
+	spread_angle = 12.5
+	has_empty_state = 1
+
+	New()
+		ammo = new/obj/item/ammo/bullets/bullet_9mm/smg
+		set_current_projectile(new/datum/projectile/bullet/bullet_9mm/smg)
+		..()
+
+/obj/item/gun/kinetic/smg/empty
 
 	New()
 		..()
@@ -1048,7 +1141,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	force = 5
 	caliber = 0.308
 	max_ammo_capacity = 100
-	auto_eject = 1
+	auto_eject = 0
 
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY | ONBACK
 	object_flags = NO_ARM_ATTACH

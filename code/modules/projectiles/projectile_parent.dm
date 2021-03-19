@@ -100,6 +100,8 @@
 		if (!A) return // you never know ok??
 		if (disposed || pooled) return // if disposed = true, pooled or set for garbage collection and shouldn't process bumps
 		if (!proj_data) return // this apparently happens sometimes!! (more than you think!)
+		if (proj_data?.on_pre_hit(A, src.angle, src))
+			return // Our bullet doesnt want to hit this
 		if (A in hitlist)
 			return
 		else
@@ -603,6 +605,9 @@ datum/projectile
 	var/ie_type = "T"	//K, E, T
 	// var/type = "K"					//3 types, K = Kinetic, E = Energy, T = Taser
 
+	/// for on_pre_hit. Causes it to early-return TRUE if the thing checked was already cleared for pass-thru
+	var/atom/last_thing_hit
+
 	proc
 		impact_image_effect(var/type, atom/hit, angle, var/obj/projectile/O)		//3 types, K = Kinetic, E = Energy, T = Taser
 			var/obj/itemspecialeffect/impact/E = null
@@ -645,6 +650,10 @@ datum/projectile
 		on_end(var/obj/projectile/O)
 			return
 		on_max_range_die(var/obj/projectile/O)
+			return
+		/// Check if we want to do something before actually hitting the thing we hit
+		/// Return TRUE for it to more or less skip collide()
+		on_pre_hit(atom/hit, angle, var/obj/projectile/O)
 			return
 
 		on_canpass(var/obj/projectile/O, atom/movable/passing_thing)

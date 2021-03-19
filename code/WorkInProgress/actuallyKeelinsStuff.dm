@@ -675,7 +675,7 @@ Returns:
 	for(var/atom/T in oneContents)
 		if(istype(T, /obj/machinery/door))
 			var/obj/machinery/door/D = T
-			if(D.req_access && D.req_access.len)
+			if(D.req_access && length(D.req_access))
 				oneAccess |= D.req_access
 
 		if(isturf(T))
@@ -685,14 +685,14 @@ Returns:
 	for(var/atom/T in twoContents)
 		if(istype(T, /obj/machinery/door))
 			var/obj/machinery/door/D = T
-			if(D.req_access && D.req_access.len)
+			if(D.req_access && length(D.req_access))
 				twoAccess |= D.req_access
 
 		if(isturf(T))
 			if(!T.density)
 				twoTurfs.Add(T)
 
-	if(!twoTurfs.len || !oneTurfs.len)
+	if(!twoTurfs.len || !length(oneTurfs))
 		return
 
 	var/list/oneTurfsExpend = oneTurfs.Copy()
@@ -1596,10 +1596,10 @@ Returns:
 			call(procpath)(arglist(argcopy))
 
 /datum/admins/proc/pixelexplosion()
-	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
-	set name = "Pixel animation mode"
-	set desc="Enter pixel animation mode"
-	alert("Due to me being a lazy fuck you have to close & reopen your client to exit this mode. ITS A DEBUG THING OKAY")
+	SET_ADMIN_CAT(ADMIN_CAT_FUN)
+	set name = "Pixel explosion mode"
+	set desc = "Enter pixel explosion mode."
+	alert("Clicking on things will now explode them into pixels!")
 	pixelmagic()
 
 /datum/targetable/pixelpicker
@@ -1626,9 +1626,17 @@ Returns:
 	M.update_cursor()
 
 /proc/dothepixelthing(var/atom/A)
+	if (isturf(A)) //deleting turfs is bad!
+		return
+
+	if (ismob(A)) //deleting mobs crashes them - lets transfer their client to a ghost first
+		var/mob/M = A
+		M.ghostize()
+
 	var/list/pixels = list()
-	var/icon/I = icon(A.icon, A.icon_state, A.dir)
+	var/icon/I = getFlatIcon(A)
 	var/atom/movable/AT = A.loc
+
 	playsound(AT, 'sound/effects/ExplosionFirey.ogg', 75, 1)
 	for(var/y = 1, y <= I.Height(), y++)
 		for(var/x = 1, x <= I.Width(), x++)
@@ -1668,6 +1676,18 @@ Returns:
 		alpha = 255
 		transform = matrix()
 		..()
+
+/datum/admins/proc/turn_off_pixelexplosion()
+	SET_ADMIN_CAT(ADMIN_CAT_FUN)
+	set name = "Turn off pixel explosion mode"
+	set desc = "Turns off pixel explosion mode."
+
+	var/mob/M = usr
+	if (istype(M.targeting_ability, /datum/targetable/pixelpicker))
+		var/datum/targetable/pixelpicker/pixel_picker = M.targeting_ability
+		M.targeting_ability = null
+		qdel(pixel_picker)
+		M.update_cursor()
 
 /obj/item/craftedmelee/spear
 	name = "spear"

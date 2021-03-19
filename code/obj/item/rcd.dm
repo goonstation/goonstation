@@ -13,6 +13,8 @@ Broken RCD + Effects
 #define RCD_MODE_AIRLOCK 2
 #define RCD_MODE_DECONSTRUCT 3
 #define RCD_MODE_WINDOWS 4
+#define RCD_MODE_LIGHTBULBS 7
+#define RCD_MODE_LIGHTTUBES 8
 #define RCD_MODE_PODDOORCONTROL 5
 #define RCD_MODE_PODDOOR 6
 
@@ -62,16 +64,52 @@ Broken RCD + Effects
 	// (matter cost) x (this) = (power cell charge used)
 	var/const/silicon_cost_multiplier = 100
 
+	/* construction cost and time */
 	var/matter_create_floor = 1
+	var/time_create_floor = 0 SECONDS
+
 	var/matter_create_wall = 2
+	var/time_create_wall = 5 SECONDS
+
+	var/matter_reinforce_wall = 2
+	var/time_reinforce_wall = 5 SECONDS
+
 	var/matter_create_wall_girder = 1
+	var/time_create_wall_girder = 2 SECONDS
+
 	var/matter_create_door = 5
+	var/time_create_door = 5 SECONDS
+
 	var/matter_create_window = 2
+	var/time_create_window = 2 SECONDS
+
+	var/matter_create_light_fixture = 2
+	var/time_create_light_fixture = 2 SECONDS
+
+	/* deconstruction cost and time */
 	var/matter_remove_door = 15
+	var/time_remove_door = 5 SECONDS
+
 	var/matter_remove_floor = 8
+	var/time_remove_floor = 5 SECONDS
+
+	var/matter_remove_lattice = 8
+	var/time_remove_lattice = 5 SECONDS
+
 	var/matter_remove_wall = 8
+	var/time_remove_wall = 5 SECONDS
+
+	var/matter_unreinforce_wall = 8
+	var/time_unreinforce_wall = 5 SECONDS
+
 	var/matter_remove_girder = 8
+	var/time_remove_girder = 2 SECONDS
+
 	var/matter_remove_window = 8
+	var/time_remove_window = 5 SECONDS
+
+	var/matter_remove_light_fixture = 1
+	var/time_remove_light_fixture = 3 SECONDS
 
 	var/shits_sparks = 1
 
@@ -83,11 +121,14 @@ Broken RCD + Effects
 	var/tmp/list/working_on = list()
 
 	// The modes that this RCD has available to it
-	var/list/modes = list(RCD_MODE_FLOORSWALLS, RCD_MODE_AIRLOCK, RCD_MODE_DECONSTRUCT, RCD_MODE_WINDOWS)
+	var/list/modes = list(RCD_MODE_FLOORSWALLS, RCD_MODE_AIRLOCK, RCD_MODE_DECONSTRUCT, RCD_MODE_WINDOWS, RCD_MODE_LIGHTBULBS, RCD_MODE_LIGHTTUBES)
 	// The actual selected mode
 	var/mode = 1
 	// What index into mode list we are (used for updating)
 	var/internal_mode = 1
+
+	/// do we really actually for real want this to work in adventure zones?? just do this with varedit dont make children with this on
+	var/really_actually_bypass_z_restriction = false
 
 	get_desc()
 		. += "<br>It holds [matter]/[max_matter] matter units. It is currently set to "
@@ -104,9 +145,13 @@ Broken RCD + Effects
 				. += "Pod Door Controls"
 			if (RCD_MODE_PODDOOR)
 				. += "Pod Doors"
+			if (RCD_MODE_LIGHTBULBS)
+				. += "Light Bulb Fixture"
+			if (RCD_MODE_LIGHTTUBES)
+				. += "Light Tube Fixture"
 			else
 				. += "???"
-		. += "mode."
+		. += " mode."
 
 	New()
 		..()
@@ -158,6 +203,13 @@ Broken RCD + Effects
 				boutput(user, "Changed mode to 'Pod Door Control'")
 				boutput(user, "<span class='notice'>Place a door control on a wall, then place any amount of pod doors on floors.</span>")
 				boutput(user, "<span class='notice'>You can also select an existing door control by whacking it with \the [src].</span>")
+
+			if (RCD_MODE_LIGHTBULBS)
+				boutput(user, "Changed mode to 'Light Bulb Fixture'")
+
+			if (RCD_MODE_LIGHTTUBES)
+				boutput(user, "Changed mode to 'Light Tube Fixture'")
+
 		// Gonna change this so it doesn't shit sparks when mode switched
 		// Just that it does it only after actually doing something
 		//src.shitSparks()
@@ -165,6 +217,10 @@ Broken RCD + Effects
 		return
 
 	afterattack(atom/A, mob/user as mob)
+		if ((isrestrictedz(user.z) || isrestrictedz(A.z)) && !src.really_actually_bypass_z_restriction)
+			boutput(user, "\The [src] won't work here for some reason. Oh well!")
+			return
+
 		if (get_dist(get_turf(src), get_turf(A)) > 1)
 			return
 
@@ -176,7 +232,7 @@ Broken RCD + Effects
 						if (!istype(L, /turf/space)) return
 						A = L
 
-					if (do_thing(user, A, "building a floor", matter_create_floor, 0 SECONDS))
+					if (do_thing(user, A, "building a floor", matter_create_floor, time_create_floor))
 						var/turf/simulated/floor/T = A:ReplaceWithFloor()
 						T.inherit_area()
 						T.setMaterial(getMaterial(material_name))
@@ -184,28 +240,25 @@ Broken RCD + Effects
 
 
 				if (istype(A, /turf/simulated/floor))
-					if (do_thing(user, A, "building a wall", matter_create_wall, 5 SECONDS))
-						var/datum/material/M = A:material
+					if (do_thing(user, A, "building a wall", matter_create_wall, time_create_wall))
 						var/turf/simulated/wall/T = A:ReplaceWithWall()
 						T.inherit_area()
-						T.setMaterial(M ? M : getMaterial(material_name))
+						T.setMaterial(getMaterial(material_name))
 						log_construction(user, "builds a wall ([T])")
 						return
 
 				if (istype(A, /turf/simulated/wall))
 					if (istype(A, /turf/simulated/wall/r_wall) || istype(A, /turf/simulated/wall/auto/reinforced) || istype(A, /turf/simulated/wall/auto/shuttle))
 						return	// You can't go reinforcing stuff that's already reinforced you dope.
-					if (do_thing(user, A, "reinforcing the wall", matter_create_wall, 5 SECONDS))
-						var/datum/material/M = A:material
+					if (do_thing(user, A, "reinforcing the wall", matter_reinforce_wall, time_reinforce_wall))
 						var/turf/simulated/wall/T = A:ReplaceWithRWall()
 						T.inherit_area()
-						T.setMaterial(M ? M : getMaterial(material_name))
+						T.setMaterial(getMaterial(material_name))
 						log_construction(user, "reinforces a wall ([T])")
 						return
 
 				if (istype(A, /obj/structure/girder) && !istype(A, /obj/structure/girder/displaced))
-					if (do_thing(user, A, "turning \the [A] into a wall", matter_create_wall_girder, 2 SECONDS))
-						var/datum/material/M = A:material
+					if (do_thing(user, A, "turning \the [A] into a wall", matter_create_wall_girder, time_create_wall_girder))
 						var/turf/wallTurf = get_turf(A)
 
 						var/turf/simulated/wall/T
@@ -214,7 +267,7 @@ Broken RCD + Effects
 						else
 							T = wallTurf:ReplaceWithWall()
 
-						T.setMaterial(M ? M : getMaterial(material_name))
+						T.setMaterial(getMaterial(material_name))
 
 						log_construction(user, "builds a wall ([T]) on girder ([A])")
 						qdel(A)
@@ -229,25 +282,23 @@ Broken RCD + Effects
 			if (RCD_MODE_DECONSTRUCT)
 
 				if (istype(A, /turf/simulated/wall/r_wall) || istype(A, /turf/simulated/wall/auto/reinforced))
-					if (do_thing(user, A, "removing the reinforcement from \the [A]", matter_remove_wall, 5 SECONDS))
-						var/datum/material/M = A:material
+					if (do_thing(user, A, "removing the reinforcement from \the [A]", matter_unreinforce_wall, time_unreinforce_wall))
 						var/turf/simulated/wall/T = A:ReplaceWithWall()
-						T.setMaterial(M ? M : getMaterial(material_name))
+						T.setMaterial(getMaterial(material_name))
 						log_construction(user, "deconstructs a reinforced wall into a normal wall ([T])")
 						return
 
 				if (istype(A, /turf/simulated/wall))
 					if (istype(A, /turf/simulated/wall/auto/shuttle))
 						return
-					if (do_thing(user, A, "deconstructing \the [A]", matter_remove_wall, 5 SECONDS))
-						var/datum/material/M = A:material
+					if (do_thing(user, A, "deconstructing \the [A]", matter_remove_wall, time_remove_wall))
 						var/turf/simulated/floor/T = A:ReplaceWithFloor()
-						T.setMaterial(M ? M : getMaterial(material_name))
+						T.setMaterial(getMaterial(material_name))
 						log_construction(user, "deconstructs a wall ([A])")
 						return
 
 				if (istype(A, /turf/simulated/floor))
-					if (do_thing(user, A, "removing \the [A]", matter_remove_floor, 5 SECONDS))
+					if (do_thing(user, A, "removing \the [A]", matter_remove_floor, time_remove_floor))
 						log_construction(user, "removes flooring ([A])")
 						A:ReplaceWithSpace()
 						return
@@ -257,27 +308,33 @@ Broken RCD + Effects
 					if (AL.hardened == 1)
 						boutput(user, "<span class='alert'>\The [AL] is reinforced against rapid deconstruction!</span>")
 						return
-					if (do_thing(user, AL, "deconstructing \the [AL]", matter_remove_door, 5 SECONDS))
+					if (do_thing(user, AL, "deconstructing \the [AL]", matter_remove_door, time_remove_door))
 						log_construction(user, "deconstructs an airlock ([AL])")
 						qdel(AL)
 						return
 
 				if (istype(A, /obj/structure/girder))
-					if (do_thing(user, A, "deconstructing \the [A]", matter_remove_girder, 2 SECONDS))
+					if (do_thing(user, A, "deconstructing \the [A]", matter_remove_girder, time_remove_girder))
 						log_construction(user, "deconstructs a girder ([A])")
 						qdel(A)
 						return
 
 				if (istype(A, /obj/window))
-					if (do_thing(user, A, "deconstructing \the [A]", matter_remove_window, 5 SECONDS))
+					if (do_thing(user, A, "deconstructing \the [A]", matter_remove_window, time_remove_window))
 						log_construction(user, "deconstructs a window ([A])")
 						qdel(A)
 						return
 
 				if (istype(A, /obj/lattice))
 					// really? why in the world are lattices so damn expensive. honk
-					if (do_thing(user, A, "deconstructing \the [A]", matter_remove_floor, 5 SECONDS))
+					if (do_thing(user, A, "deconstructing \the [A]", matter_remove_lattice, time_remove_lattice))
 						log_construction(user, "deconstructs a lattice ([A])")
+						qdel(A)
+						return
+
+				if (istype(A, /obj/machinery/light))
+					if (do_thing(user, A, "deconstructing \the [A]", matter_remove_light_fixture, time_remove_light_fixture))
+						log_construction(user, "deconstructs a light fixture ([A])")
 						qdel(A)
 						return
 
@@ -288,11 +345,62 @@ Broken RCD + Effects
 						A = get_turf(A)
 						if (!istype(A, /turf/simulated/floor))
 							return
-					if (do_thing(user, A, "building a window", matter_create_window, 2 SECONDS))
+					if (do_thing(user, A, "building a window", matter_create_window, time_create_window))
 						// Is /auto always the one to use here? hm.
 						new map_settings.windows(get_turf(A))
 						log_construction(user, "builds a window")
 						return
+			if (RCD_MODE_LIGHTBULBS)
+				if (istype(A, /turf/simulated/wall))
+					if((locate(/obj/machinery/light) in A) || (locate(/obj/machinery/light) in get_turf(user)))
+						boutput(user, "There's already a lamp there!") // stacking lights simply can't be good for the environment
+						return
+					var/dir
+					for (var/d in cardinal)
+						if (get_step(user,d) == A)
+							dir = d
+							break
+					if(!dir) // lights only apply themselves if standing at a cardinal direction from the wall
+						boutput(user, "You can't seem to reach that part of \the [A]. Try standing right up against it.")
+						return
+					var/turf/simulated/wall/W = A
+					if (do_thing(user, W, "attaching a light bulb fixture to \the [W]", matter_create_light_fixture, time_create_light_fixture))
+						var/obj/item/light_parts/bulb/LB = new /obj/item/light_parts/bulb(get_turf(W))
+						LB.setMaterial(getMaterial(material_name))
+						W.attach_light_fixture_parts(user, LB, TRUE)
+						log_construction(user, "built a light fixture to a wall ([W])")
+
+				if (istype(A, /turf/simulated/floor))
+					if((locate(/obj/machinery/light) in A)) // Just check the floor, not the user
+						boutput(user, "There's already a light there!") // stacking lights simply can't be good for the environment
+						return
+					var/turf/simulated/floor/F = A
+					if (do_thing(user, F, "building a floor lamp on \the [F]", matter_create_light_fixture, time_create_light_fixture))
+						var/obj/item/light_parts/floor/FL = new /obj/item/light_parts/floor(get_turf(F))
+						FL.setMaterial(getMaterial(material_name))
+						F.attach_light_fixture_parts(user, FL, TRUE)
+						log_construction(user, "built a floor lamp on a floor ([F])")
+
+			if (RCD_MODE_LIGHTTUBES)
+				if((locate(/obj/machinery/light) in A) || (locate(/obj/machinery/light) in get_turf(user)))
+					boutput(user, "There's already a lamp there!")
+					return
+				if (istype(A, /turf/simulated/wall))
+					var/dir
+					for (var/d in cardinal)
+						if (get_step(user,d) == A)
+							dir = d
+							break
+					if(!dir)
+						boutput(user, "You can't seem to reach that part of \the [A]. Try standing right up against it.")
+						return
+					var/turf/simulated/wall/W = A
+					if (do_thing(user, W, "attaching a light bulb fixture to \the [W]", matter_create_light_fixture, time_create_light_fixture))
+						var/obj/item/light_parts/LB = new /obj/item/light_parts(get_turf(W))
+						LB.setMaterial(getMaterial(material_name))
+						W.attach_light_fixture_parts(user, LB, TRUE)
+						log_construction(user, "built a light fixture to a wall ([W])")
+
 
 /* flesh wall creation code
 // holy jesus christ
@@ -376,7 +484,7 @@ Broken RCD + Effects
 		logTheThing("station", user, null, "[what] using \the [src] at [user.loc.loc] ([showCoords(user.x, user.y, user.z)])")
 
 	proc/create_door(var/turf/A, mob/user as mob)
-		if(do_thing(user, A, "building an airlock", matter_create_door, 5 SECONDS))
+		if(do_thing(user, A, "building an airlock", matter_create_door, time_create_door))
 			var/interim = fetchAirlock()
 			var/obj/machinery/door/airlock/T = new interim(A)
 			log_construction(user, "builds an airlock ([T])")
@@ -457,6 +565,22 @@ Broken RCD + Effects
 
 /obj/item/rcd/safe
 	shits_sparks = 0
+
+///Chief Engineer RCD has fancy door functions and a mild discount, but no capacity increase
+/obj/item/rcd/construction/chiefEngineer
+	name = "rapid construction device custom"
+	desc = "Also known as an RCD, this is capable of rapidly constructing walls, flooring, windows, and doors. This device was customized by the Chief Engineer to have an enhanced feature set and work more efficiently."
+	icon_state = "base_CE"
+
+	max_matter = 50
+	matter_create_wall = 1
+	matter_create_door = 4
+	matter_create_window = 1
+	matter_remove_door = 10
+	matter_remove_floor = 6
+	matter_remove_wall = 6
+	matter_remove_girder = 6
+	matter_remove_window = 6
 
 /obj/item/rcd/construction
 	afterattack(atom/A, mob/user as mob)

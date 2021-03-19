@@ -97,6 +97,8 @@ datum
 				if(!M) M = holder.my_atom
 				if(!counter) counter = 1
 				M.jitteriness = max(M.jitteriness-25,0)
+				if(M.hasStatus("stimulants"))
+					M.changeStatus("stimulants", -7.5 SECONDS * mult)
 
 				switch(counter += 1 * mult)
 					if(1 to 15)
@@ -145,6 +147,8 @@ datum
 				if(!M) M = holder.my_atom
 				if(!counter) counter = 1
 				M.jitteriness = max(M.jitteriness-25,0)
+				if(M.hasStatus("stimulants"))
+					M.changeStatus("stimulants", -7.5 SECONDS * mult)
 
 				switch(counter += 1 * mult)
 					if(1 to 15)
@@ -778,12 +782,16 @@ datum
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
 					APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "r_epinephrine", 3)
+					APPLY_MOVEMENT_MODIFIER(M, /datum/movement_modifier/reagent/epinepherine, src.type)
 				..()
+
+
 
 			on_remove()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
 					REMOVE_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "r_epinephrine")
+					REMOVE_MOVEMENT_MODIFIER(M, /datum/movement_modifier/reagent/epinepherine, src.type)
 				..()
 
 			on_mob_life(var/mob/M, var/mult = 1)
@@ -1008,6 +1016,7 @@ datum
 					boutput(M, "<span class='alert'>You feel sick...</span>")
 					if (volume_passed > 0)
 						M.take_toxin_damage(volume_passed/2)
+						M.add_karma(0.5)
 
 
 		medical/mutadone // COGWERKS CHEM REVISION PROJECT. - marked for revision. Magic bullshit chem, ought to be related to mutagen somehow
@@ -1023,7 +1032,7 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
-				if(M.bioHolder && M.bioHolder.effects && M.bioHolder.effects.len) //One per cycle. We're having superpowered hellbastards and this is their kryptonite.
+				if(M.bioHolder && M.bioHolder.effects && length(M.bioHolder.effects)) //One per cycle. We're having superpowered hellbastards and this is their kryptonite.
 					var/datum/bioEffect/B = M.bioHolder.effects[pick(M.bioHolder.effects)]
 					if (B?.curable_by_mutadone)
 						M.bioHolder.RemoveEffect(B.id)
@@ -1109,6 +1118,7 @@ datum
 					if( effect <= 2)
 						M.visible_message("<span class='alert'>[M.name] suddenly and violently vomits!</span>")
 						M.vomit()
+						M.add_karma(1)
 					else if (effect <= 5)
 						M.visible_message("<span class='alert'><b>[M.name]</b> staggers and drools, their eyes bloodshot!</span>")
 						M.dizziness += 8
@@ -1533,3 +1543,13 @@ datum
 					L.contract_disease(/datum/ailment/disease/food_poisoning, null, null, 1)
 				..()
 				return
+
+		medical/necrovirus_cure // Necrotic Degeneration
+			name = "necrovirus_cure"
+			id = "necrovirus_cure"
+			description = "The cure for the necrovirus/Zombie Disease. Can be used to totally cure infected below stage 4."
+			reagent_state = LIQUID
+			fluid_r = 200
+			fluid_g = 220
+			fluid_b = 200
+			transparency = 230

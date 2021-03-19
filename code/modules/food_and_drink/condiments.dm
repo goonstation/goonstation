@@ -7,7 +7,7 @@
 	amount = 1
 	heal_amt = 0
 
-	heal(var/mob/M)
+	on_bite(obj/item/I, mob/M, mob/user)
 		boutput(M, "<span class='alert'>It's just not good enough on its own...</span>")
 
 	afterattack(atom/target, mob/user, flag)

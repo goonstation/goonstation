@@ -146,6 +146,7 @@
 			#else
 			I.appearance_flags |= KEEP_TOGETHER
 			var/image/blood_overlay = image('icons/effects/blood.dmi', "itemblood")
+			blood_overlay.appearance_flags = PIXEL_SCALE | RESET_COLOR
 			blood_overlay.color = blood_color
 			blood_overlay.alpha = min(blood_overlay.alpha, 200)
 			blood_overlay.blend_mode = BLEND_INSET_OVERLAY
@@ -167,8 +168,8 @@
 	else
 		var/list/blood_list = params2list(src.blood_DNA)
 		blood_list -= b_uid
-		while(blood_list.len >= 6) // Increased from 3 (Convair880).
-			blood_list -= blood_list[1]
+		if(blood_list.len >= 6)
+			blood_list = blood_list.Copy(blood_list.len - 5, 0)
 		blood_list += b_uid
 		src.blood_DNA = list2params(blood_list)
 

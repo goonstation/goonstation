@@ -323,7 +323,7 @@
 
 
 	proc/check_whitelist(var/mob/user as mob)
-		if (src.emagged || !src.safe_smokables || (islist(src.safe_smokables) && !src.safe_smokables.len))
+		if (src.emagged || !src.safe_smokables || (islist(src.safe_smokables) && !length(src.safe_smokables)))
 			return
 
 		var/found = 0
@@ -467,11 +467,11 @@
 			playsound(src.loc,"sound/misc/Boxingbell.ogg",50,1)
 
 /obj/item/trophy
-	name = "Solarium Trophy"
-	desc = "Awarded for bravely solving the Solarium after 42 people got to it first"
-	anchored = 1
-	density = 1
-	icon = 'icons/obj/32x64.dmi'
+	name = "trophy"
+	desc = "You're winner! You did it! You did the thing! Good job!"
+	anchored = 0
+	density = 0
+	icon = 'icons/obj/junk.dmi'
 	icon_state = "trophy"
 
 /obj/item/battlepass

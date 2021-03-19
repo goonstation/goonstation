@@ -158,7 +158,7 @@
 			obj_count++
 
 	proc/gen_numbers()
-		var/num_numbers = numbers.len
+		var/num_numbers = length(numbers)
 		numbers.len = 0
 		for(var/i = 0, i < num_numbers, i++)
 			numbers += rand(1,99)
