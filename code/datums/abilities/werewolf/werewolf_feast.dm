@@ -70,7 +70,7 @@
 		// What do we do if the body is dead?
 		if (target.stat == 2)
 			if (target.reagents)
-				if (target.reagents.get_reagent_amount("formaldehyde") >= 15)
+				if (target.reagents.has_reagent("formaldehyde", 15))
 					boutput(M, __red("Urgh, this cadaver tastes horrible. Better find some chemical free meat."))
 					return
 
