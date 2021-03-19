@@ -35850,8 +35850,10 @@
 	d2 = 4;
 	icon_state = "2-10"
 	},
-/obj/grille/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
+/obj/grille/catwalk/jen/side{
+	dir = 1
+	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/ne)
 "kBk" = (
@@ -57124,6 +57126,13 @@
 	},
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/main)
+"qLj" = (
+/obj/decal/cleanable/dirt/jen,
+/obj/grille/catwalk/jen/side{
+	dir = 1
+	},
+/turf/simulated/floor/plating/jen,
+/area/station/maintenance/outer/ne)
 "qLm" = (
 /obj/machinery/light/incandescent{
 	dir = 8
@@ -134530,7 +134539,7 @@ aUm
 kyD
 kyD
 aUm
-btN
+qLj
 cMy
 svU
 svU
