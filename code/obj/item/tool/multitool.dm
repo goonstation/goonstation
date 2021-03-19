@@ -37,6 +37,7 @@
 	//Beacon and control frequencies for bots!
 	var/control
 	var/beacon
+	//net_id block, except computers, where we do it all in one go
 	if (hasvar(target, "net_id"))
 		net_id = target:net_id
 	else if (hasvar(target, "botnet_id"))
@@ -46,15 +47,6 @@
 		var/obj/item/peripheral/network/peripheral = locate(/obj/item/peripheral/network) in computer.contents
 		var/obj/item/peripheral/network/radio/radioperipheral = locate(/obj/item/peripheral/network/radio) in computer.contents
 		var/obj/item/peripheral/network/omni/omniperipheral = locate(/obj/item/peripheral/network/omni) in computer.contents
-		// GAHH
-		var/obj/machinery/power/data_terminal/deviceterm
-		if (hasvar(peripheral, "link"))
-			deviceterm = peripheral:link
-		if(deviceterm)
-			if(deviceterm.powernet.cables.len > 1)
-				boutput(user, "<span class='alert'>ON[net_id]</span>")
-			else
-				boutput(user, "<span class='alert'>OFF</span>")
 		if (peripheral)
 			net_id = peripheral.net_id
 		if (radioperipheral)
@@ -62,7 +54,7 @@
 		//laptops are special too!
 		if(omniperipheral)
 			frequency = omniperipheral.frequency
-
+	//frequency block
 	if (hasvar(target, "alarm_frequency"))
 		frequency = target:alarm_frequency
 	else if (hasvar(target, "freq"))
@@ -81,7 +73,6 @@
 	else if (istype(target, /obj/storage/secure))
 		var/obj/storage/secure/lockerfreq = target
 		frequency = lockerfreq.radio_control.frequency
-
 	if(net_id)
 		boutput(user, "<span class='alert'>NETID#[net_id]</span>")
 	if(frequency)
@@ -90,3 +81,13 @@
 		boutput(user, "<span class='alert'>CTRLFREQ#[control]</span>")
 	if(beacon)
 		boutput(user, "<span class='alert'>BCKNFREQ#[beacon]</span>")
+	//Powernet Test Block
+	var/turf/T = get_turf(target.loc)
+	var/obj/machinery/power/data_terminal/test_link = locate() in T
+	//If we have a net_id but no wireless frequency, we're probably a powernet device
+	if(isturf(T) && net_id && !frequency)
+		if(!test_link || !DATA_TERMINAL_IS_VALID_MASTER(test_link, test_link.master))
+			boutput(user, "<span class='alert'>ERR#NOLINK</span>")
+	if (test_link)
+		if (test_link.powernet?.cables?.len < 1)
+			boutput(user, "<span class='alert'>ERR#NOTATERM</span>")
