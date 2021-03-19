@@ -814,7 +814,7 @@ proc/is_teleportation_allowed(var/turf/T)
 						var/obj/critter/zombie/P = new /obj/critter/zombie
 						P.set_loc(src.loc)
 					if("bear")
-						var/obj/critter/bear/P = new /obj/critter/bear
+						var/obj/critter/limbed_critter/bear/P = new /obj/critter/limbed_critter/bear
 						P.set_loc(src.loc)
 					if("syndicate")
 						var/mob/living/carbon/human/npc/syndicate/P = new /mob/living/carbon/human/npc/syndicate

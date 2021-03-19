@@ -26,9 +26,9 @@
 /obj/item/toy/sponge_capsule/syndicate
 	colors = list("#FF0000", "#7F0000", "#FF6A00", "#FFD800", "#7F3300", "#7F6A00")
 	animals = list(/obj/critter/microman,
-					/obj/critter/bear,
+					/obj/critter/limbed_critter/bear,
 					/obj/critter/spider/aggressive,
-					/obj/critter/wendigo,
+					/obj/critter/limbed_critter/wendigo,
 					/obj/critter/bat/buff,
 					/obj/critter/spider/ice,
 					/obj/critter/townguard/passive,

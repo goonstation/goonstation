@@ -1076,7 +1076,7 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 		name = "Bear"
 		point_cost = 4
 		count = 2
-		types = list(/obj/critter/bear)
+		types = list(/obj/critter/limbed_critter/bear)
 
 	tomato
 		name = "Killer Tomato"
@@ -1178,13 +1178,13 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 		name = "Wendigo"
 		point_cost = 4
 		count = 2
-		types = list(/obj/critter/wendigo)
+		types = list(/obj/critter/limbed_critter/wendigo)
 
 	wendigoking
 		name = "Wendigo King"
 		point_cost = 6
 		count = 0.05
-		types = list(/obj/critter/wendigo/king)
+		types = list(/obj/critter/limbed_critter/wendigo/king)
 
 	badbot
 		name = "Security Zapbot"

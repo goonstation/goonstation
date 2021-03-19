@@ -55,8 +55,8 @@
 			H.visible_message("<span class='alert'><B>[H] steps on the bear trap!</B></span>",\
 			"<span class='alert'><B>You step on the bear trap!</B></span>")
 
-		else if (istype(AM, /obj/critter/bear) && (src.armed))
-			var/obj/critter/bear/M = AM
+		else if (istype(AM, /obj/critter/limbed_critter/bear) && (src.armed))
+			var/obj/critter/limbed_critter/bear/M = AM
 			playsound(src.loc, "sound/impact_sounds/Generic_Snap_1.ogg", 80, 1)
 			set_icon_state("bear_trap-close")
 			src.armed = FALSE

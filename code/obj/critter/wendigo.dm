@@ -1,6 +1,6 @@
 /////////// cogwerks - hideous wendigo beast
 
-/obj/critter/wendigo
+/obj/critter/limbed_critter/wendigo
 	name = "wendigo"
 	desc = "Oh god."
 	icon_state = "wendigo"
@@ -22,10 +22,7 @@
 	var/frenzied = 0
 	var/king = 0
 
-	var/left_arm_stage = 0
-	var/right_arm_stage = 0
-	var/obj/item/parts/human_parts/arm/left/wendigo/left_arm
-	var/obj/item/parts/human_parts/arm/right/wendigo/right_arm
+
 
 	skinresult = /obj/item/material_piece/cloth/wendigohide
 
@@ -409,7 +406,7 @@
 //////king wendigo, why not
 ///////////////
 
-/obj/critter/wendigo/king
+/obj/critter/limbed_critter/wendigo/king
 	name = "wendigo king"
 	desc = "You should run."
 	death_text = "%src% collapses in a heap!"
@@ -435,6 +432,6 @@
 /obj/item/reagent_containers/food/snacks/ingredient/egg/critter/wendigo
 	name = "wendigo egg"
 	desc = "They lay eggs?!"
-	critter_type = /obj/critter/wendigo
+	critter_type = /obj/critter/limbed_critter/wendigo
 	warm_count = 100
 	critter_reagent = "ice"

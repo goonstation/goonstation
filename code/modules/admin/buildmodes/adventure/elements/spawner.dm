@@ -52,7 +52,7 @@
 	density = 0
 	opacity = 0
 	anchored = 1
-	var/critter = /obj/critter/bear
+	var/critter = /obj/critter/limbed_critter/bear
 	var/spawn_delay = 20
 	var/tmp/next_spawn = 0
 	var/spawn_count = 1

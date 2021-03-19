@@ -52,8 +52,8 @@
 					picker = rand(1,2)
 					switch(picker)
 						if(1)
-							items += pick(/obj/critter/bear,/obj/critter/domestic_bee,
-							/obj/critter/wendigo,/obj/critter/nicespider) // 1/2 chance for scary thing that has cool arms you can use, 1/2 chance for cute thing!!
+							items += pick(/obj/critter/limbed_critter/bear,/obj/critter/domestic_bee,
+							/obj/critter/limbed_critter/wendigo,/obj/critter/nicespider) // 1/2 chance for scary thing that has cool arms you can use, 1/2 chance for cute thing!!
 							item_amounts += 1
 						if(2)
 							items += pick(/obj/item/injector_belt,/obj/item/clothing/mask/gas/injector_mask)

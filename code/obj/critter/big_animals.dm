@@ -1,4 +1,4 @@
-/obj/critter/bear
+/obj/critter/limbed_critter/bear
 	name = "space bear"
 	desc = "WOORGHHH"
 	icon_state = "abear"
@@ -18,10 +18,7 @@
 	crit_text = "digs its claws into"
 	var/loveometer = 0
 
-	var/left_arm_stage = 0
-	var/right_arm_stage = 0
-	var/obj/item/parts/human_parts/arm/left/bear/left_arm
-	var/obj/item/parts/human_parts/arm/right/bear/right_arm
+
 
 	skinresult = /obj/item/material_piece/cloth/leather
 	max_skins = 2
@@ -140,7 +137,7 @@
 		M.changeStatus("stunned", 2 SECONDS)
 		random_brute_damage(M, rand(2,5),1)
 
-obj/critter/bear/care
+obj/critter/limbed_critter/bear/care
 	name = "space carebear"
 	desc = "I love you!"
 	icon_state = "carebear"

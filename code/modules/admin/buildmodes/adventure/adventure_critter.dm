@@ -28,9 +28,9 @@
 
 	var/static/list/critters = list(
 		"Angry Bat" = /obj/critter/bat/buff,
-		"Bear" = /obj/critter/bear,
+		"Bear" = /obj/critter/limbed_critter/bear,
 		"Bee" = /obj/critter/domestic_bee,
-		"Carebear" = /obj/critter/bear/care,
+		"Carebear" = /obj/critter/limbed_critter/bear/care,
 		"Darkness" = /obj/critter/shade,
 		"Door (chompy)" = /obj/critter/monster_door,
 		"Drone (CR)" = /obj/critter/gunbot/drone/buzzdrone,
@@ -61,8 +61,8 @@
 		"Transposed Particle Field" = /obj/critter/aberration,
 		"Transposed Scientist" = /obj/critter/crunched,
 		"Weird Thing" = /obj/critter/ancient_thing,
-		"Wendigo" = /obj/critter/wendigo,
-		"Wendigo (king)" = /obj/critter/wendigo/king,
+		"Wendigo" = /obj/critter/limbed_critter/wendigo,
+		"Wendigo (king)" = /obj/critter/limbed_critter/wendigo/king,
 		"Zapping Robot" = /obj/critter/ancient_repairbot/security,
 		"Zombie" = /obj/critter/zombie,
 		"Zombie (science)"  = /obj/critter/zombie/scientist,
