@@ -90,5 +90,5 @@
 		if(!test_link || !DATA_TERMINAL_IS_VALID_MASTER(test_link, test_link.master))
 			boutput(user, "<span class='alert'>ERR#NOLINK</span>")
 	if (test_link)
-		if (test_link.powernet?.cables?.len < 1)
+		if (length(test_link.powernet.cables) < 1)
 			boutput(user, "<span class='alert'>ERR#NOTATERM</span>")
