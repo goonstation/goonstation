@@ -154,7 +154,10 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 [Make_view_variabls_style()]</head>
 <body>
-	<a style="display:block;position:fixed;right:0;" href='byond://?src=\ref[src];Refresh=\ref[D]'>🔄</a>
+	<div class="refresh_controls">
+		<a href='byond://?src=\ref[src];Pause=\ref[D]'>⏯</a>
+		<a href='byond://?src=\ref[src];Refresh=\ref[D]'>🔄</a>
+	</div>
 	<strong>[title]</strong>
 "})
 
@@ -298,6 +301,11 @@
 			white-space: nowrap;
 			font-size: 80%;
 		}
+		.refresh_controls {
+			display:block;
+			position:fixed;
+			right:0;
+		}
 </style>"}
 
 /client/proc/debug_variable(name, value, var/fullvar, level, max_list_len=150)
@@ -398,13 +406,19 @@
 	return html
 
 /client/Topic(href, href_list, hsrc)
+	if (href_list["Pause"])
+		usr_admin_only
+		src.refresh_varedit_onchange = !src.refresh_varedit_onchange
+		return
 	if (href_list["Refresh"])
 		usr_admin_only
 		src.debug_variables(locate(href_list["Refresh"]))
+		return
 	if (href_list["Refresh-Global-Var"])
 		usr_admin_only
 		src.debug_global_variable(href_list["Refresh-Global-Var"])
 		// src.debug_variable(S, V, V, 0)
+		return
 	if (href_list["JumpToThing"])
 		usr_admin_only
 		var/atom/A = locate(href_list["JumpToThing"])
@@ -1080,7 +1094,8 @@
 	SPAWN_DBG(0)
 		if (istype(D, /datum))
 			D.onVarChanged(variable, oldVal, D.vars[variable])
-	src.debug_variables(D)
+	if(src.refresh_varedit_onchange)
+		src.debug_variables(D)
 
 /mob/proc/Delete(atom/A in view())
 	set category = "Debug"
