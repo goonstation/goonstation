@@ -63,7 +63,6 @@ export const getRoutedComponent = store => {
         throw err;
       }
     }
-    throw err;
   }
   const Component = esModule[name];
   if (!Component) {
