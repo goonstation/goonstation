@@ -37,6 +37,9 @@
 	//Beacon and control frequencies for bots!
 	var/control
 	var/beacon
+	//turf and data_terminal for powernet check
+	var/turf/T = get_turf(target.loc)
+	var/obj/machinery/power/data_terminal/test_link = locate() in T
 	//net_id block, except computers, where we do it all in one go
 	if (hasvar(target, "net_id"))
 		net_id = target:net_id
@@ -82,8 +85,6 @@
 	if(beacon)
 		boutput(user, "<span class='alert'>BCKNFREQ#[beacon]</span>")
 	//Powernet Test Block
-	var/turf/T = get_turf(target.loc)
-	var/obj/machinery/power/data_terminal/test_link = locate() in T
 	//If we have a net_id but no wireless frequency, we're probably a powernet device
 	if(isturf(T) && net_id && !frequency)
 		if(!test_link || !DATA_TERMINAL_IS_VALID_MASTER(test_link, test_link.master))
