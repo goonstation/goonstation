@@ -217,7 +217,7 @@
 	var/turf/coffin_turf = 0
 
 	//contains the reference to the coffin if we're currently travelling to it, otherwise null
-	var/obj/storage/closet/coffin/vampire/traveling_to_coffin = null
+	var/obj/storage/closet/coffin/vampire/the_coffin = null
 	//theres a bug where projectiles get unpooled and moved elsewhere before theyre done with their currnent firing
 	//badly affects 'travel' projectile. band aid.
 
@@ -230,11 +230,11 @@
 
 	onLife(var/mult = 1)
 		..()
-		if (!(traveling_to_coffin?.disposed) && isturf(owner.loc) && istype(traveling_to_coffin,/obj/storage/closet/coffin))
-			owner.set_loc(traveling_to_coffin)
+		if (!(the_coffin?.disposed) && isturf(owner.loc) && istype(the_coffin,/obj/storage/closet/coffin))
+			owner.set_loc(the_coffin)
 
 		if (istype(owner.loc,/obj/storage/closet/coffin))
-			traveling_to_coffin = null
+			the_coffin = null
 			if (isdead(owner))
 				owner.full_heal()
 			else
@@ -243,7 +243,7 @@
 	set_loc_callback(newloc)
 		if (istype(newloc,/obj/storage/closet/coffin))
 			//var/obj/storage/closet/coffin/C = newloc
-			traveling_to_coffin = null
+			the_coffin = null
 
 	proc/blood_tracking_output(var/deduct = 0)
 		if (!src.owner || !ismob(src.owner))
