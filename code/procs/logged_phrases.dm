@@ -147,6 +147,13 @@ var/global/datum/phrase_log/phrase_log = new
 		var/list/L = src.cached_api_phrases[category]
 		. = L[length(L)]
 		L.len--
+		while(src.is_uncool(.))
+			. = null
+			if(length(L))
+				. = L[length(L)]
+				L.len--
+			else
+				break
 		return .
 
 	proc/random_custom_ai_law(max_tries=10)
