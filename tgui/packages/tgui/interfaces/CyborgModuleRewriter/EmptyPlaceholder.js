@@ -6,9 +6,9 @@
  */
 
 import { classes, pureComponentHooks } from 'common/react';
-import * as styles from '../style';
+import * as styles from './style';
 
-const EmptyPlaceholder = props => {
+export const EmptyPlaceholder = props => {
   const {
     children,
     className,
@@ -23,5 +23,3 @@ const EmptyPlaceholder = props => {
 };
 
 EmptyPlaceholder.defaultHooks = pureComponentHooks;
-
-export default EmptyPlaceholder;
