@@ -37,6 +37,7 @@ var/global/datum/phrase_log/phrase_log = new
 	var/regex/uncool_words
 	var/api_cache_size = 20
 	var/static/regex/non_freeform_laws
+	var/static/regex/name_regex = new(@"\b[A-Z][a-z]* [A-Z][a-z]*\b", "g")
 
 	New()
 		..()
@@ -158,10 +159,18 @@ var/global/datum/phrase_log/phrase_log = new
 				break
 		return .
 
-	proc/random_custom_ai_law(max_tries=10)
+	proc/random_station_name_replacement_proc(old_name)
+		if(!length(data_core.general))
+			return old_name
+		var/datum/data/record/record = pick(data_core.general)
+		return record.fields["name"]
+
+	proc/random_custom_ai_law(max_tries=10, replace_names=FALSE)
 		while(max_tries-- > 0)
 			. = src.random_api_phrase("ai_laws")
 			if(length(.) && !findtext(., src.non_freeform_laws))
+				if(replace_names)
+					. = src.name_regex.Replace(., .proc/random_station_name_replacement_proc)
 				return
 		return null
 

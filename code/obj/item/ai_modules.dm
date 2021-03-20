@@ -248,7 +248,7 @@ AI MODULES
 
 	New()
 		..()
-		src.law_text = global.phrase_log.random_custom_ai_law()
+		src.law_text = global.phrase_log.random_custom_ai_law(replace_names=TRUE)
 		src.lawNumber = rand(4, 100)
 
 	get_law_text()
