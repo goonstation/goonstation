@@ -610,6 +610,7 @@ MATERIAL
 	icon = 'icons/obj/metal.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	icon_state = "rods_5"
+	item_state = "rods"
 	flags = FPRINT | TABLEPASS| CONDUCT
 	w_class = 3.0
 	force = 9.0
@@ -942,6 +943,7 @@ MATERIAL
 	icon = 'icons/obj/metal.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	icon_state = "tile_5"
+	item_state = "tile"
 	w_class = 3.0
 	m_amt = 937.5
 	throw_speed = 3
