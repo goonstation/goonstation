@@ -1,5 +1,9 @@
 
 (t)sat mar 20 21
+(u)TTerc
+(p)3971
+(e)|
+(+)Removed the flip/rotate window for disposal pipes. Instead, you can click the pipe with a crowbar to rotate it and click the junction with empty hand to change its direction.
 (u)DimWhat
 (p)4067
 (e)|
