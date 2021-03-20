@@ -115,6 +115,9 @@ Broken RCD + Effects
 
 	var/material_name = "steel"
 	// list of materials that the RCD can deconstruct, if empty no restriction.
+	var/safe_deconstruct = FALSE // whether deconstructing a wall will make the material
+	// of the floor be different than the material of the wall
+	// used to prevent venting with a material RCD by building a wall, deconstructing it, and then deconstructing the floor.
 	var/list/restricted_materials
 	// List of what this RCD is working on.
 	// If you try to do something when something is in this the RCD ignores you.
@@ -293,12 +296,12 @@ Broken RCD + Effects
 						return
 					if (do_thing(user, A, "deconstructing \the [A]", matter_remove_wall, time_remove_wall))
 						var/turf/simulated/floor/T = A:ReplaceWithFloor()
-						if (!restricted_materials)
+						if (!restricted_materials || !safe_deconstruct)
 							T.setMaterial(getMaterial(material_name))
-						else if(!("steel" in restricted_materials))
-							T.setMaterial(getMaterial("steel"))
-						else
-							T.setMaterial(getMaterial("negativematter"))
+							else if(!("steel" in restricted_materials))
+								T.setMaterial(getMaterial("steel"))
+							else
+								T.setMaterial(getMaterial("negativematter"))
 						log_construction(user, "deconstructs a wall ([A])")
 						return
 
@@ -794,6 +797,7 @@ Broken RCD + Effects
 
 	material_name = "cardboard"
 	restricted_materials = list("cardboard")
+	safe_deconstruct = TRUE
 
 	modes = list(RCD_MODE_FLOORSWALLS, RCD_MODE_AIRLOCK, RCD_MODE_DECONSTRUCT, RCD_MODE_WINDOWS)
 
