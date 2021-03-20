@@ -27,18 +27,19 @@
 	skinresult = /obj/item/material_piece/cloth/wendigohide
 
 	New()
-		src.left_arm = new /obj/item/parts/human_parts/arm/left/wendigo(src)
-		src.right_arm = new /obj/item/parts/human_parts/arm/right/wendigo(src)
 		..()
+		src.limbs.l_arm = new /obj/item/parts/human_parts/arm/left/wendigo(src)
+		src.limbs.r_arm = new /obj/item/parts/human_parts/arm/right/wendigo(src)
+
 
 	on_revive()
-		if (!src.left_arm)
-			src.left_arm = new /obj/item/parts/human_parts/arm/left/wendigo(src)
-			src.left_arm_stage = 0
+		if (!src.limbs.l_arm)
+			src.limbs.l_arm = new /obj/item/parts/human_parts/arm/left/wendigo(src)
+			src.limbs.l_arm.remove_stage = 0
 			src.visible_message("<span class='alert'>[src]'s left arm regrows!</span>")
-		if (!src.right_arm)
-			src.right_arm = new /obj/item/parts/human_parts/arm/right/wendigo(src)
-			src.right_arm_stage = 0
+		if (!src.limbs.r_arm)
+			src.limbs.r_arm = new /obj/item/parts/human_parts/arm/right/wendigo(src)
+			src.limbs.r_arm.remove_stage = 0
 			src.visible_message("<span class='alert'>[src]'s right arm regrows!</span>")
 		..()
 
@@ -78,94 +79,26 @@
 				src.visible_message("<span class='alert'><b>[src] roars!</b></span>", 1)
 			break
 
-	proc/update_dead_icon()
-		if (src.alive)
-			return
-		. = "wendigo"
-		if (!src.left_arm)
-			. += "-l"
-		if (!src.right_arm)
-			. += "-r"
-		. += "-dead"
-		icon_state = .
 
 	attackby(obj/item/W as obj, mob/living/user as mob) //ARRRRGH WHY
 		user.lastattacked = src
-		if (!src.alive)
-			// TODO: tie this into surgery()
-			if (iscuttingtool(W))
-				if (user.zone_sel.selecting == "l_arm")
-					if (src.left_arm_stage == 0)
-						user.visible_message("<span class='alert'>[user] slices through the skin and flesh of [src]'s left arm with [W].</span>", "<span class='alert'>You slice through the skin and flesh of [src]'s left arm with [W].</span>")
-						src.left_arm_stage++
-					else if (src.left_arm_stage == 2)
-						user.visible_message("<span class='alert'>[user] cuts through the remaining strips of skin holding [src]'s left arm on with [W].</span>", "<span class='alert'>You cut through the remaining strips of skin holding [src]'s left arm on with [W].</span>")
-						src.left_arm_stage++
+		var/limb_status = critter_limb_removal(W, user)// limb removal done, custom damage proc next.
 
-						src.left_arm.quality = (src.quality + 150) / 350.0
-						var/nickname = "king"
-						if (src.quality < 200)
-							nickname = src.quality_name
-						if (nickname)
-							src.left_arm.name = "[nickname] [initial(src.left_arm.name)]"
-
-						var/turf/location = get_turf(src)
-						if (location)
-							src.left_arm.set_loc(location)
-							src.left_arm = null
-						src.update_dead_icon()
-
-					else if (src.left_arm_stage == 3)
-						boutput(user, "<span class='alert'>[src] has no left arm to remove!.</span>")
-
-				else if (user.zone_sel.selecting == "r_arm")
-					if (src.right_arm_stage == 0)
-						user.visible_message("<span class='alert'>[user] slices through the skin and flesh of [src]'s right arm with [W].</span>", "<span class='alert'>You slice through the skin and flesh of [src]'s right arm with [W].</span>")
-						src.right_arm_stage++
-					else if (src.right_arm_stage == 2)
-						user.visible_message("<span class='alert'>[user] cuts through the remaining strips of skin holding [src]'s right arm on with [W].</span>", "<span class='alert'>You cut through the remaining strips of skin holding [src]'s right arm on with [W].</span>")
-						src.right_arm_stage++
-
-						src.right_arm.quality = (src.quality + 100) / 350.0
-						var/nickname = "king"
-						if (src.quality < 200)
-							nickname = src.quality_name
-						if (nickname)
-							src.right_arm.name = "[nickname] [initial(src.right_arm.name)]"
-
-						var/turf/location = get_turf(src)
-						if (location)
-							src.right_arm.set_loc(location)
-							src.right_arm = null
-						src.update_dead_icon()
-
-					else if (src.right_arm_stage == 3)
-						boutput(user, "<span class='alert'>[src] has no right arm to remove!.</span>")
-				else // only butcher if not targeting arms
-					..()
-
-			else if (istool(W, TOOL_SAWING))
-				if (user.zone_sel.selecting == "l_arm")
-					if (src.left_arm_stage == 1)
-						user.visible_message("<span class='alert'>[user] saws through the bone of [src]'s left arm with [W].</span>", "<span class='alert'>You saw through the bone of [src]'s left arm with [W].</span>")
-						src.left_arm_stage++
-
-					else if (src.right_arm_stage == 3)
-						boutput(user, "<span class='alert'>[src] has no left arm to remove!.</span>")
-					return 0
-
-				else if (user.zone_sel.selecting == "r_arm")
-					if (src.right_arm_stage == 1)
-						user.visible_message("<span class='alert'>[user] saws through the bone of [src]'s right arm with [W].</span>", "<span class='alert'>You saw through the bone of [src]'s right arm with [W].</span>")
-						src.right_arm_stage++
-
-					else if (src.right_arm_stage == 3)
-						boutput(user, "<span class='alert'>[src] has no right arm to remove!.</span>")
-				else
-					..()
-			else
-			 ..()
+		if (!limb_status)
+			..()
 			return
+		if (limb_status)
+			if (istype(limb_status, /obj/item/parts/human_parts))
+				var/obj/item/parts/human_parts/returned_limb = limb_status
+				returned_limb.quality = (src.quality + 150) / 35 //makes King Wendigo arms quality 100, scales down from there.
+				var/nickname = "king"
+				if (src.quality < 200)
+					nickname = src.quality_name
+				if (nickname)
+					returned_limb.name = "[nickname] [initial(returned_limb.name)]"
+			if (limb_status != 2)
+				return
+
 
 		var/attack_force = 0
 		var/damage_type = "brute"
