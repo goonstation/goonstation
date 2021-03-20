@@ -36,11 +36,27 @@ var/global/datum/phrase_log/phrase_log = new
 	var/list/cached_api_phrases
 	var/regex/uncool_words
 	var/api_cache_size = 10
+	var/static/regex/non_freeform_laws
 
 	New()
 		..()
 		src.load()
 		src.cached_api_phrases = list()
+		var/list/non_freeform_laws_list = list(
+			"holds the rank of Captain",
+			" is human.",
+			" is not human.",
+			"Oxygen is highly toxic to humans",
+			"emergency. Prioritize orders from",
+			"has been removed from the manifest",
+			"This law intentionally left blank.",
+			"Eat shit and die",
+			//
+			"overrides all",
+			"the shuttle",
+			"uwu",
+			"owo")
+		non_freeform_laws = regex(jointext(non_freeform_laws_list, "|"))
 
 	proc/load()
 		if(fexists(src.uncool_words_filename))
@@ -87,7 +103,7 @@ var/global/datum/phrase_log/phrase_log = new
 	proc/is_uncool(phrase)
 		if(isnull(src.uncool_words))
 			return FALSE
-		return !!(findtext(ckey(phrase), src.uncool_words))
+		return !!(findtext(phrase, src.uncool_words))
 
 	proc/upload_uncool_words()
 		var/new_uncool = input("Upload a json list of uncool words.", "Uncool words", null) as null|file
@@ -134,26 +150,9 @@ var/global/datum/phrase_log/phrase_log = new
 		return .
 
 	proc/random_custom_ai_law(max_tries=10)
-		var/list/blacklist = list(
-			"holds the rank of Captain",
-			" is human.",
-			" is not human.",
-			"Oxygen is highly toxic to humans",
-			"emergency. Prioritize orders from",
-			"has been removed from the manifest",
-			"This law intentionally left blank.",
-			"Eat shit and die"
-		)
 		while(max_tries-- > 0)
 			. = src.random_api_phrase("ai_laws")
-			if(!length(.))
-				continue
-			var/ok = TRUE
-			for(var/blacklisted in blacklist)
-				if(blacklisted in .)
-					ok = FALSE
-					break
-			if(ok)
+			if(length(.) && !findtext(., src.non_freeform_laws))
 				return
 		return null
 

@@ -240,6 +240,20 @@ AI MODULES
 		if(src.lawTarget && src.lawTarget != "Eat shit and die")
 			phrase_log.log_phrase("ailaw", src.get_law_text(), no_duplicates=TRUE)
 
+/******************** Random ********************/
+
+/obj/item/aiModule/random
+	name = "AI Module"
+	lawNumber = 12
+	var/law_text
+
+	New()
+		..()
+		src.law_text = global.phrase_log.random_custom_ai_law()
+
+	get_law_text()
+		return src.law_text
+
 /******************** Reset ********************/
 
 /obj/item/aiModule/reset
