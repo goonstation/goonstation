@@ -7,7 +7,7 @@
 "aj" = (/obj/decal/skeleton,/obj/decal/skeleton,/obj/decal/cleanable/blood/drip/high,/obj/item/toy/sponge_capsule/syndicate{pixel_y = 9; pixel_x = -8},/obj/machinery/light/small/warm/very{dir = 8; pixel_x = -12},/obj/decal/cleanable/cobweb,/obj/decal/cleanable/dirt,/turf/simulated/floor/plating,/area/prefab/water_treatment)
 "al" = (/obj/decal/cleanable/blood/tracks{icon_state = "drip3"},/obj/critter/bat/buff,/turf/simulated/floor/plating,/area/prefab/water_treatment)
 "am" = (/obj/machinery/door/airlock/pyro/classic{dir = 4},/obj/decal/cleanable/blood/tracks{dir = 8},/turf/simulated/floor/black/grime,/area/prefab/water_treatment)
-"an" = (/obj/critter/bear,/obj/map/light/dimred,/obj/machinery/light/small/warm/very{dir = 1; pixel_y = 10},/turf/simulated/floor/circuit/red,/area/prefab/water_treatment)
+"an" = (/obj/critter/limbed_critter/bear,/obj/map/light/dimred,/obj/machinery/light/small/warm/very{dir = 1; pixel_y = 10},/turf/simulated/floor/circuit/red,/area/prefab/water_treatment)
 "ap" = (/obj/decal/cleanable/blood/tracks{dir = 8},/turf/simulated/floor/redblack{dir = 8},/area/prefab/water_treatment)
 "aq" = (/obj/decal/cleanable/blood/drip/high{icon_state = "drip4b"},/obj/item/reagent_containers/food/drinks/water,/turf/simulated/floor/red,/area/prefab/water_treatment)
 "ar" = (/obj/decal/cleanable/blood/tracks{dir = 8},/obj/decal/cleanable/blood/gibs{color = "#990000"},/turf/simulated/floor/plating,/area/prefab/water_treatment)

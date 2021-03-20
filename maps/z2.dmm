@@ -19423,7 +19423,7 @@
 	dir = 6;
 	icon_state = "lattice-dir"
 	},
-/obj/critter/wendigo{
+/obj/critter/limbed_critter/wendigo{
 	wanderer = 0
 	},
 /turf/unsimulated/floor/arctic/snow,
@@ -21410,7 +21410,7 @@
 /turf/unsimulated/wall/setpieces/leadwall,
 /area/lower_arctic/pod1)
 "bbT" = (
-/obj/critter/wendigo,
+/obj/critter/limbed_critter/wendigo,
 /turf/unsimulated/floor/arctic/snow/ice,
 /area/lower_arctic/lower)
 "bbU" = (
@@ -21548,7 +21548,7 @@
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
 "bcp" = (
-/obj/critter/bear,
+/obj/critter/limbed_critter/bear,
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
 "bcq" = (
@@ -21725,7 +21725,7 @@
 /area/lower_arctic/pod1)
 "bcE" = (
 /obj/decal/icefloor,
-/obj/critter/wendigo,
+/obj/critter/limbed_critter/wendigo,
 /turf/unsimulated/floor/arctic/snow/lake,
 /area/lower_arctic/lower)
 "bcF" = (
@@ -22493,7 +22493,7 @@
 /area/marsoutpost)
 "bee" = (
 /obj/decal/icefloor,
-/obj/critter/wendigo/king,
+/obj/critter/limbed_critter/wendigo/king,
 /turf/unsimulated/floor/arctic/snow/lake,
 /area/lower_arctic/lower)
 "bef" = (
@@ -22586,7 +22586,7 @@
 	},
 /area/marsoutpost)
 "bet" = (
-/obj/critter/wendigo,
+/obj/critter/limbed_critter/wendigo,
 /obj/lattice{
 	dir = 9;
 	icon_state = "lattice-dir"
@@ -23265,7 +23265,7 @@
 /area/lower_arctic/lower)
 "bgl" = (
 /obj/decal/cleanable/blood,
-/obj/critter/wendigo,
+/obj/critter/limbed_critter/wendigo,
 /turf/unsimulated/floor/arctic/snow/ice,
 /area/lower_arctic/lower)
 "bgm" = (
@@ -23867,7 +23867,7 @@
 /turf/unsimulated/floor/arctic/snow/ice,
 /area/lower_arctic/lower)
 "bhY" = (
-/obj/critter/wendigo,
+/obj/critter/limbed_critter/wendigo,
 /obj/decal/cleanable/blood,
 /turf/unsimulated/floor/arctic/snow/ice,
 /area/lower_arctic/lower)
@@ -23932,7 +23932,7 @@
 /turf/unsimulated/floor/arctic/snow,
 /area/upper_arctic/exterior/surface)
 "bii" = (
-/obj/critter/wendigo{
+/obj/critter/limbed_critter/wendigo{
 	wanderer = 0
 	},
 /turf/unsimulated/floor/arctic/snow,
@@ -75964,7 +75964,7 @@
 	desc = "A pad used for virtual reality experimentation.";
 	name = "virtualizer pad"
 	},
-/obj/critter/bear{
+/obj/critter/limbed_critter/bear{
 	aggressive = 0;
 	desc = "Wow, you haven't seen this guy since 2014!";
 	generic = 0;

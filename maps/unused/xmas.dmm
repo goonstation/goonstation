@@ -45759,7 +45759,7 @@
 	name = "Biomedical Laboratory"
 	})
 "bOD" = (
-/obj/critter/bear,
+/obj/critter/limbed_critter/bear,
 /turf/simulated/floor/black,
 /area/ab_res{
 	name = "Biomedical Laboratory"

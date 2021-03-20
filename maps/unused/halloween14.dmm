@@ -46221,7 +46221,7 @@
 	icon_state = "lattice-dir";
 	dir = 6
 	},
-/obj/critter/wendigo{
+/obj/critter/limbed_critter/wendigo{
 	wanderer = 0
 	},
 /turf/unsimulated/floor/arctic/snow,
@@ -48384,7 +48384,7 @@
 /turf/unsimulated/wall/setpieces/leadwall,
 /area/lower_arctic/pod1)
 "bVI" = (
-/obj/critter/wendigo,
+/obj/critter/limbed_critter/wendigo,
 /turf/unsimulated/floor/arctic/snow/ice,
 /area/lower_arctic/lower)
 "bVJ" = (
@@ -48536,7 +48536,7 @@
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
 "bWe" = (
-/obj/critter/bear,
+/obj/critter/limbed_critter/bear,
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
 "bWf" = (
@@ -48732,7 +48732,7 @@
 /area/lower_arctic/pod1)
 "bWt" = (
 /obj/decal/icefloor,
-/obj/critter/wendigo,
+/obj/critter/limbed_critter/wendigo,
 /turf/unsimulated/floor/arctic/snow/lake,
 /area/lower_arctic/lower)
 "bWu" = (
@@ -49563,7 +49563,7 @@
 /area/marsoutpost)
 "bXS" = (
 /obj/decal/icefloor,
-/obj/critter/wendigo/king,
+/obj/critter/limbed_critter/wendigo/king,
 /turf/unsimulated/floor/arctic/snow/lake,
 /area/lower_arctic/lower)
 "bXT" = (
@@ -49665,7 +49665,7 @@
 	},
 /area/marsoutpost)
 "bYh" = (
-/obj/critter/wendigo,
+/obj/critter/limbed_critter/wendigo,
 /obj/lattice{
 	tag = "icon-lattice-dir (NORTHWEST)";
 	icon_state = "lattice-dir";
@@ -50394,7 +50394,7 @@
 /area/lower_arctic/lower)
 "bZU" = (
 /obj/decal/cleanable/blood,
-/obj/critter/wendigo,
+/obj/critter/limbed_critter/wendigo,
 /turf/unsimulated/floor/arctic/snow/ice,
 /area/lower_arctic/lower)
 "bZV" = (
@@ -51077,7 +51077,7 @@
 /turf/unsimulated/floor/arctic/snow/ice,
 /area/lower_arctic/lower)
 "cbG" = (
-/obj/critter/wendigo,
+/obj/critter/limbed_critter/wendigo,
 /obj/decal/cleanable/blood,
 /turf/unsimulated/floor/arctic/snow/ice,
 /area/lower_arctic/lower)
@@ -51156,7 +51156,7 @@
 /turf/unsimulated/floor/arctic/snow,
 /area/upper_arctic/exterior/surface)
 "cbQ" = (
-/obj/critter/wendigo{
+/obj/critter/limbed_critter/wendigo{
 	wanderer = 0
 	},
 /turf/unsimulated/floor/arctic/snow,

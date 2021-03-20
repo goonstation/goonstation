@@ -4,7 +4,7 @@
 "d" = (/obj/critter/zombie,/turf/simulated/floor/grass{name = "astroturf"},/area/prefab/zoo)
 "e" = (/turf/simulated/floor/grass{name = "astroturf"},/area/prefab/zoo)
 "f" = (/obj/critter/microman,/turf/simulated/floor/grass{name = "astroturf"},/area/prefab/zoo)
-"g" = (/obj/critter/wendigo,/turf/simulated/floor/grass{name = "astroturf"},/area/prefab/zoo)
+"g" = (/obj/critter/limbed_critter/wendigo,/turf/simulated/floor/grass{name = "astroturf"},/area/prefab/zoo)
 "h" = (/obj/critter/maneater,/turf/simulated/floor/grass{name = "astroturf"},/area/prefab/zoo)
 "i" = (/obj/item/raw_material/gold,/obj/item/clothing/glasses/macho{pixel_x = 4; pixel_y = -4},/obj/item/raw_material/gold{pixel_x = -3; pixel_y = 4},/turf/simulated/floor/grass{name = "astroturf"},/area/prefab/zoo)
 "j" = (/obj/item/boomerang,/obj/item/raw_material/scrap_metal,/obj/item/clothing/head/safari,/turf/simulated/floor/grass{name = "astroturf"},/area/prefab/zoo)
@@ -28,7 +28,7 @@
 "B" = (/obj/critter/lion,/turf/simulated/floor/grass{name = "astroturf"},/area/prefab/zoo)
 "C" = (/obj/critter/killertomato,/turf/simulated/floor/grass{name = "astroturf"},/area/prefab/zoo)
 "D" = (/obj/critter/fermid,/turf/simulated/floor/grass{name = "astroturf"},/area/prefab/zoo)
-"E" = (/obj/critter/bear,/turf/simulated/floor/grass{name = "astroturf"},/area/prefab/zoo)
+"E" = (/obj/critter/limbed_critter/bear,/turf/simulated/floor/grass{name = "astroturf"},/area/prefab/zoo)
 
 (1,1,1) = {"
 bbbbbbbbbbbbbbbbbbbb
