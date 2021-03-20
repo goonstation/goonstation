@@ -35,7 +35,8 @@ MATERIAL
 /obj/item/sheet
 	name = "sheet"
 	icon = 'icons/obj/metal.dmi'
-	icon_state = "sheet"
+	icon_state = "sheet-m_5"
+	var/icon_state_base = "sheet"
 	desc = "Thin sheets of building material. Can be used to build many things."
 	flags = FPRINT | TABLEPASS
 	throwforce = 5.0
@@ -81,6 +82,7 @@ MATERIAL
 			qdel(src)
 		else
 			src.inventory_counter?.update_number(amount)
+			update_stack_appearance()
 		return TRUE
 
 	proc/set_reinforcement(var/datum/material/M)
@@ -95,19 +97,42 @@ MATERIAL
 
 	proc/update_appearance()
 		src.name = initial(name)
-		src.icon_state = initial(icon_state)
+		src.icon_state_base = initial(icon_state_base)
 		if (istype(material))
 			if (src.material.material_flags & MATERIAL_CRYSTAL)
-				src.icon_state += "-g"
+				src.icon_state_base += "-g"
 			else
-				src.icon_state += "-m"
+				src.icon_state_base += "-m"
 			src.name = "[material.name] " + src.name
 			if (istype(reinforcement))
 				src.name = "[reinforcement.name]-reinforced " + src.name
-				src.icon_state += "-r"
-			src.color = src.material.color
+				src.icon_state_base += "-r"
+				//A couple of things going on with this matrix:
+				//There's no red on the base sprites so the third argument does nothing, it's just there because the color_mapping_matrix needs lists of 3
+				//The blue chosen is lighter than anything on the base sprites, which has the effect of making the reinforcement darker if it's made of the same material.
+				var/col = color_mapping_matrix(
+					list("#FFFFFF", "#B296FF", "#FF0000"),
+					list(material.color, reinforcement.color, "#FF0000"))
+				src.color = col
+			else
+				src.color = src.material.color
 			src.alpha = src.material.alpha
 		inventory_counter?.update_number(amount)
+		update_stack_appearance()
+
+	update_stack_appearance()
+		if (amount <= 10)
+			icon_state = "[icon_state_base]_1"
+		else if (amount <= 20)
+			icon_state = "[icon_state_base]_2"
+		else if (amount <= 30)
+			icon_state = "[icon_state_base]_3"
+		else if (amount <= 40)
+			icon_state = "[icon_state_base]_4"
+		else
+			icon_state = "[icon_state_base]_5"
+
+
 
 	attack_hand(mob/user as mob)
 		if((user.r_hand == src || user.l_hand == src) && src.amount > 1)
@@ -242,7 +267,7 @@ MATERIAL
 
 	examine()
 		. = ..()
-		. += "There are [src.amount] sheet\s on the stack."
+		. += "There [src.amount > 1 ? "are" : "is"] [src.amount] sheet\s on the stack."
 
 	attack_self(mob/user as mob)
 		var/t1 = text("<HTML><HEAD></HEAD><TT>Amount Left: [] <BR>", src.amount)
@@ -575,7 +600,7 @@ MATERIAL
 		src.setMaterial(M)
 
 	reinforced
-
+		icon_state = "sheet-m-r_5"
 		New()
 			..()
 			var/datum/material/M = getMaterial("steel")
@@ -583,6 +608,7 @@ MATERIAL
 
 /obj/item/sheet/glass
 
+	icon_state = "sheet-g_5" //overriden in-game but shows up in map editors
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "sheet-glass"
 
@@ -592,7 +618,7 @@ MATERIAL
 		src.setMaterial(M)
 
 	reinforced
-
+		icon_state = "sheet-g-r_5"
 		New()
 			..()
 			var/datum/material/M = getMaterial("steel")
@@ -606,7 +632,7 @@ MATERIAL
 			src.setMaterial(M)
 
 		reinforced
-
+			icon_state = "sheet-g-r_5"
 			New()
 				..()
 				var/datum/material/M = getMaterial("steel")
@@ -651,11 +677,21 @@ MATERIAL
 		return 1
 
 	proc/update_icon()
-		if (src.amount > 5)
+		if (amount <= 10)
+			icon_state = "rods_1"
+		else if (amount <= 20)
+			icon_state = "rods_2"
+		else if (amount <= 30)
+			icon_state = "rods_3"
+		else if (amount <= 40)
+			icon_state = "rods_4"
+		else
+			icon_state = "rods_5"
+		/*if (src.amount > 5)
 			icon_state = "rods"
 		else
 			icon_state = "rods_[src.amount]"
-			item_state = "rods"
+			item_state = "rods"*/
 		src.inventory_counter.update_number(amount)
 
 	before_stack(atom/movable/O as obj, mob/user as mob)
@@ -997,6 +1033,7 @@ MATERIAL
 		src.pixel_x = rand(0, 14)
 		src.pixel_y = rand(0, 14)
 		src.inventory_counter.update_number(amount)
+		update_stack_appearance()
 		return
 
 	check_valid_stack(atom/movable/O as obj)
@@ -1008,6 +1045,24 @@ MATERIAL
 		if (!isSameMaterial(S.material, src.material))
 			return 0
 		return 1
+
+	update_stack_appearance()
+		if (amount <= 10)
+			icon_state = "tile_1"
+		else if (amount <= 20)
+			icon_state = "tile_2"
+		else if (amount <= 30)
+			icon_state = "tile_3"
+		else if (amount <= 40)
+			icon_state = "tile_4"
+		else if (amount <= 50)
+			icon_state = "tile_5"
+		else if (amount <= 60)
+			icon_state = "tile_6"
+		else if (amount <= 70)
+			icon_state = "tile_7"
+		else
+			icon_state = "tile_8"
 
 	get_desc(dist)
 		if (dist <= 3)
