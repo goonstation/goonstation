@@ -244,12 +244,12 @@ AI MODULES
 
 /obj/item/aiModule/random
 	name = "AI Module"
-	lawNumber = 12
 	var/law_text
 
 	New()
 		..()
 		src.law_text = global.phrase_log.random_custom_ai_law()
+		src.lawNumber = rand(4, 100)
 
 	get_law_text()
 		return src.law_text
