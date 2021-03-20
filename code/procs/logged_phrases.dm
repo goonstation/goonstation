@@ -35,7 +35,7 @@ var/global/datum/phrase_log/phrase_log = new
 	var/list/original_lengths
 	var/list/cached_api_phrases
 	var/regex/uncool_words
-	var/api_cache_size = 10
+	var/api_cache_size = 20
 	var/static/regex/non_freeform_laws
 
 	New()
@@ -140,7 +140,8 @@ var/global/datum/phrase_log/phrase_log = new
 			for(var/list/entry in data["entries"])
 				switch(category)
 					if("ai_laws")
-						new_phrases += entry["law_text"]
+						if(entry["uploader_key"] != "Random Event")
+							new_phrases += entry["law_text"]
 					if("tickets", "fines")
 						new_phrases += entry["reason"]
 			src.cached_api_phrases[category] = new_phrases
