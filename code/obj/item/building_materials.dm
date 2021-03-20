@@ -98,15 +98,7 @@ MATERIAL
 			if (istype(reinforcement))
 				src.name = "[reinforcement.name]-reinforced " + src.name
 				src.icon_state_base += "-r"
-				//A couple of things going on with this matrix:
-				//There's no red on the base sprites so the third argument does nothing, it's just there because the color_mapping_matrix needs lists of 3
-				//The blue chosen is lighter than anything on the base sprites, which has the effect of making the reinforcement darker if it's made of the same material.
-				var/col = color_mapping_matrix(
-					list("#FFFFFF", "#006DFF", "#FF0000"),
-					list(material.color, reinforcement.color, "#FF0000"))
-				src.color = col
-			else
-				src.color = src.material.color
+			src.color = src.material.color
 			src.alpha = src.material.alpha
 		inventory_counter?.update_number(amount)
 		update_stack_appearance()
