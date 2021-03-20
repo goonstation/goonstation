@@ -1596,7 +1596,9 @@
 	"Prepared in moments!",
 	"I'm a chef who works 24 hours a day!")
 	var/sharpen = FALSE
-
+	create_products()
+		..()
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/ingredient/pizza3/random_self_cooking, 100)
 	light_r =1
 	light_g = 0.6
 	light_b = 0.2
