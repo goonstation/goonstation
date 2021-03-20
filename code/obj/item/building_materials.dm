@@ -1035,20 +1035,11 @@ MATERIAL
 
 		if ((user.r_hand == src || user.l_hand == src))
 			src.add_fingerprint(user)
-			var/obj/item/tile/F = new /obj/item/tile( user )
-			if (src.material)
-				F.setMaterial(src.material)
-			else
-				F.setMaterial(getMaterial("steel"))
-			F.amount = 1
-			src.amount--
+			var/obj/item/tile/F = split_stack(1)
+			if (!istype(F))
+				return
 			tooltip_rebuild = 1
 			user.put_in_hand_or_drop(F)
-			F.inventory_counter?.update_number(F.amount)
-			if (src.amount < 1)
-				qdel(src)
-				return
-			src.inventory_counter?.update_number(src.amount)
 		else
 			..()
 		return
@@ -1076,28 +1067,14 @@ MATERIAL
 
 		if (!( istype(W, /obj/item/tile) ))
 			return
-		if(!check_valid_stack(W))
+		var/success = stack_item(W)
+		if(!success)
 			boutput(user, "<span class='alert'>You cannot combine [src] with [W] as they contain different materials!</span>")
 			return
-		if (W.amount == src.max_stack)
-			return
-		W.add_fingerprint(user)
-		if (W.amount + src.amount > src.max_stack)
-			src.amount = W.amount + src.amount - src.max_stack
-			W.amount = src.max_stack
-			tooltip_rebuild = 1
+		tooltip_rebuild = 1
+		if (!W.pooled)
+			W.add_fingerprint(user)
 			W.tooltip_rebuild = 1
-			inventory_counter?.update_number(amount)
-			W.inventory_counter?.update_number(amount)
-
-		else
-			W.amount += src.amount
-			W.tooltip_rebuild = 1
-			W.inventory_counter?.update_number(W.amount)
-			// @TODO Zamu here -- in the future we should probably make this like update_amount,
-			// so we can have multiple icon states for varying stack amounts. Ah well. Not today.
-			qdel(src)
-			return
 		return
 
 	before_stack(atom/movable/O as obj, mob/user as mob)
