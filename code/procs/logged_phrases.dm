@@ -51,6 +51,7 @@ var/global/datum/phrase_log/phrase_log = new
 			"has been removed from the manifest",
 			"This law intentionally left blank.",
 			"Eat shit and die",
+			"The AI is the head of this department.",
 			//
 			"overrides all",
 			"the shuttle",
