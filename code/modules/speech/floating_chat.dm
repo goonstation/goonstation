@@ -85,7 +85,6 @@
 		var/measured = 8
 		// MeasureText sleeps and that fucks up a lot, removing for now
 		return measured * (1 + round(length(src.maptext_width) / 128))
-		src.measured_height = text2num(splittext(measured, "x")[2])
 
 proc/make_chat_maptext(atom/target, msg, style = "", alpha = 255, force = 0)
 	var/image/chat_maptext/text = unpool(/image/chat_maptext)
