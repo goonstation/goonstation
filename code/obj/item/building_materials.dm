@@ -120,23 +120,13 @@ MATERIAL
 	attack_hand(mob/user as mob)
 		if((user.r_hand == src || user.l_hand == src) && src.amount > 1)
 			var/splitnum = round(input("How many sheets do you want to take from the stack?","Stack of [src.amount]",1) as num)
-			var/diff = src.amount - splitnum
-			if (splitnum >= amount || splitnum < 1)
+			var/obj/item/sheet/new_stack = split_stack(splitnum)
+			if (!istype(new_stack))
 				boutput(user, "<span class='alert'>Invalid entry, try again.</span>")
 				return
-			boutput(user, "<span class='notice'>You take [splitnum] sheets from the stack, leaving [diff] sheets behind.</span>")
-			src.amount = diff
-			var/obj/item/sheet/new_stack = new /obj/item/sheet(get_turf(user))
-			if(src.material)
-				new_stack.setMaterial(src.material)
-			if (src.reinforcement)
-				new_stack.set_reinforcement(src.reinforcement)
-			new_stack.amount = splitnum
-			new_stack.attack_hand(user)
+			user.put_in_hand_or_drop(new_stack)
 			new_stack.add_fingerprint(user)
-			new_stack.update_appearance()
-			src.inventory_counter.update_number(amount)
-			new_stack.inventory_counter.update_number(new_stack.amount)
+			boutput(user, "<span class='notice'>You take [splitnum] sheets from the stack, leaving [src.amount] sheets behind.</span>")
 		else
 			..(user)
 
@@ -165,24 +155,16 @@ MATERIAL
 				else
 					boutput(user, "<span class='alert'>You can't mix different materials!</span>")
 					return
+
 			if (S.reinforcement != src.reinforcement || (S.reinforcement && src.reinforcement && !isSameMaterial(S.reinforcement, src.reinforcement)))
 				boutput(user, "<span class='alert'>You can't mix different reinforcements!</span>")
 				return
-			if (S.amount >= src.max_stack)
+			var/success = stack_item(W)
+			if (!success)
 				boutput(user, "<span class='alert'>You can't put any more sheets in this stack!</span>")
-				return
-			if (S.amount + src.amount > src.max_stack)
-				src.amount = S.amount + src.amount - src.max_stack
-				S.amount = src.max_stack
-				src.inventory_counter.update_number(amount)
-				S.inventory_counter.update_number(S.amount)
-				boutput(user, "<span class='notice'>You add [S] to the stack. It now has [S.amount] sheets.</span>")
 			else
-				S.amount += src.amount
-				S.inventory_counter.update_number(S.amount)
 				boutput(user, "<span class='notice'>You add [S] to the stack. It now has [S.amount] sheets.</span>")
-				qdel(src)
-				return
+			return
 
 		else if (istype(W,/obj/item/rods))
 			var/obj/item/rods/R = W
