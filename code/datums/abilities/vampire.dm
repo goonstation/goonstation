@@ -52,7 +52,7 @@
 			SHOW_VAMPIRE_TIPS(src)
 
 		if(shitty || nonantag)
-			boutput(src, "<span class='alert'><h2>You are not an antagonist!</h2> Your vampireness was achieved by in-game means, you still have the powers but are <i>not</i> an antagonist.</span>")
+			boutput(src, "<span class='alert'><h2>You've been turned into a vampire!</h2> Your vampireness was achieved by in-game means, you are <i>not</i> an antagonist unless you already were one.</span>")
 
 	else return
 
