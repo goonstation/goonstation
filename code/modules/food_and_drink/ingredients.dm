@@ -583,35 +583,38 @@
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/reagent_containers/food/snacks/))
-			var/obj/item/reagent_containers/food/snacks/F = W
-			if(!F.custom_food)
-				return
-			boutput(user, "<span class='notice'>You add [W] to [src].</span>")
-			topping = 1
-			food_effects += F.food_effects
-			src.AddComponent(/datum/component/consume/food_effects, src.food_effects)
-			if (F.real_name)
-				toppings += F.real_name
-			else
-				toppings += W.name
-			toppingstext = copytext(html_encode(english_list(toppings)), 1, 512)
-			name = "uncooked [toppingstext] pizza"
-			desc = "A pizza with [toppingstext] toppings. You need to bake it..."
-			if(istype(W,/obj/item/reagent_containers/food/snacks/ingredient/))
-				heal_amt += 4
-			else
-				heal_amt += round((F.heal_amt * F.amount)/amount) + 1
-			src.AddComponent(/datum/component/consume/foodheal, src.heal_amt)
-			topping_color = F.food_color
-			if(num < 3)
-				num ++
-				add_topping(src.num)
-			W.reagents.trans_to(src, W.reagents.total_volume)
-			user.u_equip(W)
-			qdel (W)
+			add_ingredient(W, user)
 		else
 			return
-
+	proc/add_ingredient(obj/item/W as obj, mob/user as mob)
+		var/obj/item/reagent_containers/food/snacks/F = W
+		if(!F.custom_food)
+			return
+		if(user)
+			boutput(user, "<span class='notice'>You add [W] to [src].</span>")
+		topping = 1
+		food_effects += F.food_effects
+		src.AddComponent(/datum/component/consume/food_effects, src.food_effects)
+		if (F.real_name)
+			toppings += F.real_name
+		else
+			toppings += W.name
+		toppingstext = copytext(html_encode(english_list(toppings)), 1, 512)
+		name = "uncooked [toppingstext] pizza"
+		desc = "A pizza with [toppingstext] toppings. You need to bake it..."
+		if(istype(W,/obj/item/reagent_containers/food/snacks/ingredient/))
+			heal_amt += 4
+		else
+			heal_amt += round((F.heal_amt * F.amount)/amount) + 1
+		src.AddComponent(/datum/component/consume/foodheal, src.heal_amt)
+		topping_color = F.food_color
+		if(num < 3)
+			num ++
+			add_topping(src.num)
+		W.reagents.trans_to(src, W.reagents.total_volume)
+		if(user)
+			user.u_equip(W)
+		qdel (W)
 	proc/add_topping(var/num)
 		var/icon/I
 		I = new /icon('icons/obj/foodNdrink/food_meals.dmi',"pizza_topping_[num]")
@@ -627,6 +630,20 @@
 		else
 			user.visible_message("<span class='alert'><b>[user]</b> futilely attempts to shove [src] into [M]'s mouth!</span>")
 			return
+/obj/item/reagent_containers/food/snacks/ingredient/pizza3/random_self_cooking
+	name = "not quite a pizza"
+	desc = "A pizza that somehow generates its own toppings and cooks itself! Oh the marvels of technology"
+
+	New ()
+		..()
+		var/num_ingredients = rand(1,3)
+		for (var/i = 1, i <= num_ingredients, i++)
+			var/snack_type =  pick(concrete_typesof(/obj/item/reagent_containers/food/snacks))
+			var/obj/item/reagent_containers/R = new snack_type
+			src.add_ingredient(R, null)
+		var/datum/cookingrecipe/pizza/recipe = new
+		var/new_pizza = recipe.specialOutput(src)
+		new new_pizza
 
 /obj/item/reagent_containers/food/snacks/ingredient/pasta
 	// generic uncooked pasta parent
