@@ -1,9 +1,3 @@
-#define MELEE_DMG_PISTOL 6
-#define MELEE_DMG_REVOLVER 8
-#define MELEE_DMG_SMG 8
-#define MELEE_DMG_RIFLE 12
-#define MELEE_DMG_LARGE 15
-
 ABSTRACT_TYPE(/obj/item/gun/kinetic)
 /obj/item/gun/kinetic
 	name = "kinetic weapon"
@@ -1699,9 +1693,3 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 			icon_state="guncase"
 		else
 			icon_state="secure"
-
-#undef MELEE_DMG_PISTOL
-#undef MELEE_DMG_REVOLVER
-#undef MELEE_DMG_SMG
-#undef MELEE_DMG_RIFLE
-#undef MELEE_DMG_LARGE
