@@ -111,7 +111,7 @@ MATERIAL
 				//There's no red on the base sprites so the third argument does nothing, it's just there because the color_mapping_matrix needs lists of 3
 				//The blue chosen is lighter than anything on the base sprites, which has the effect of making the reinforcement darker if it's made of the same material.
 				var/col = color_mapping_matrix(
-					list("#FFFFFF", "#B296FF", "#FF0000"),
+					list("#FFFFFF", "#006DFF", "#FF0000"),
 					list(material.color, reinforcement.color, "#FF0000"))
 				src.color = col
 			else
@@ -225,7 +225,7 @@ MATERIAL
 				S.set_reinforcement(R.material)
 				S.amount = sheetsinput
 				S.inventory_counter.update_number(S.amount)
-				R.consume_rods(sheetsinput)
+				R.change_stack_amount(-sheetsinput)
 				src.consume_sheets(sheetsinput)
 			else
 				boutput(user, "<span class='alert'>You may only reinforce metal or crystal sheets.</span>")
@@ -644,7 +644,7 @@ MATERIAL
 	desc = "A set of metal rods, useful for constructing grilles and other objects, and decent for hitting people."
 	icon = 'icons/obj/metal.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
-	icon_state = "rods"
+	icon_state = "rods_5"
 	flags = FPRINT | TABLEPASS| CONDUCT
 	w_class = 3.0
 	force = 9.0
@@ -661,7 +661,8 @@ MATERIAL
 
 	New()
 		..()
-		update_icon()
+		SPAWN_DBG(0)
+			update_stack_appearance()
 		BLOCK_SETUP(BLOCK_ROD)
 
 	check_valid_stack(atom/movable/O as obj)
@@ -676,7 +677,7 @@ MATERIAL
 			return 0
 		return 1
 
-	proc/update_icon()
+	update_stack_appearance()
 		if (amount <= 10)
 			icon_state = "rods_1"
 		else if (amount <= 20)
@@ -687,18 +688,13 @@ MATERIAL
 			icon_state = "rods_4"
 		else
 			icon_state = "rods_5"
-		/*if (src.amount > 5)
-			icon_state = "rods"
-		else
-			icon_state = "rods_[src.amount]"
-			item_state = "rods"*/
 		src.inventory_counter.update_number(amount)
 
 	before_stack(atom/movable/O as obj, mob/user as mob)
 		user.visible_message("<span class='notice'>[user] begins gathering up [src]!</span>")
 
 	after_stack(atom/movable/O as obj, mob/user as mob, var/added)
-		update_icon()
+		update_stack_appearance()
 		boutput(user, "<span class='notice'>You finish gathering rods.</span>")
 
 	examine()
@@ -708,20 +704,13 @@ MATERIAL
 	attack_hand(mob/user as mob)
 		if((user.r_hand == src || user.l_hand == src) && src.amount > 1)
 			var/splitnum = round(input("How many rods do you want to take from the stack?","Stack of [src.amount]",1) as num)
-			var/diff = src.amount - splitnum
-			if (splitnum >= amount || splitnum < 1)
+			var/obj/item/rods/new_stack = split_stack(splitnum)
+			if (!istype(new_stack))
 				boutput(user, "<span class='alert'>Invalid entry, try again.</span>")
 				return
-			boutput(user, "<span class='notice'>You take [splitnum] rods from the stack, leaving [diff] rods behind.</span>")
-			src.amount = diff
-			var/obj/item/rods/new_stack = new src.type(user.loc, diff)
-			if(src.material)
-				new_stack.setMaterial(src.material)
-			new_stack.amount = splitnum
-			new_stack.attack_hand(user)
+			user.put_in_hand_or_drop(new_stack)
 			new_stack.add_fingerprint(user)
-			new_stack.update_icon()
-			src.update_icon()
+			boutput(user, "<span class='notice'>You take [splitnum] rods from the stack, leaving [src.amount] rods behind.</span>")
 		else
 			..(user)
 
@@ -749,31 +738,25 @@ MATERIAL
 			var/obj/item/sheet/M = new /obj/item/sheet/steel(user.loc)
 			if(src.material) M.setMaterial(src.material)
 			M.amount = weldinput
-			src.consume_rods(weldinput * 2)
+			src.change_stack_amount(-(weldinput * 2))
 
 			user.visible_message("<span class='alert'><B>[user]</B> welds the rods together into sheets.</span>")
-			update_icon()
+			update_stack_appearance()
 			if(src.amount < 1)	qdel(src)
 			return
+
 		if (istype(W, /obj/item/rods))
-			var/obj/item/rods/R = W
-			if (R.amount == src.max_stack)
-				boutput(user, "<span class='alert'>You can't put any more rods in this stack!</span>")
-				return
+			// stack_item won't succeed if the materials differ but we want a specific error message
 			if (W.material && src.material && !isSameMaterial(W.material, src.material))
 				boutput(user, "<span class='alert'>You can't mix 2 stacks of different metals!</span>")
 				return
-			if (R.amount + src.amount > src.max_stack)
-				src.amount = R.amount + src.amount - src.max_stack
-				R.amount = src.max_stack
-				boutput(user, "<span class='notice'>You add the rods to the stack. It now has [R.amount] rods.</span>")
-				update_icon()
+			var/success = stack_item(W)
+			if (!success)
+				boutput(user, "<span class='alert'>You can't put any more rods in this stack!</span>")
 			else
-				R.amount += src.amount
-				boutput(user, "<span class='notice'>You add [R.amount] rods to the stack. It now has [R.amount] rods.</span>")
-				R.update_icon()
-				qdel(src)
-				return
+				boutput(user, "<span class='notice'>You add [success] rods to the stack. It now has [src.amount] rods.</span>")
+			return
+
 		if (istype(W, /obj/item/organ/head))
 			user.visible_message("<span class='alert'><B>[user] impales [W.name] on a spike!</B></span>")
 			var/obj/head_on_spike/HS = new /obj/head_on_spike(get_turf(src))
@@ -782,9 +765,7 @@ MATERIAL
 			W.set_loc(HS)
 			/*	Can't do this because it colours the heads as well as the spike itself.
 			if(src.material) HS.setMaterial(src.material)*/
-			src.amount -= 1
-			update_icon()
-			if(src.amount < 1)	qdel(src)
+			change_stack_amount(-1)
 		return
 
 	attack_self(mob/user as mob)
@@ -808,7 +789,7 @@ MATERIAL
 					if(src.material)
 						G.setMaterial(src.material)
 					boutput(user, "<span class='notice'>You repair the broken grille.</span>")
-					src.consume_rods(1)
+					src.change_stack_amount(-1)
 				else
 					boutput(user, "<span class='alert'>There is already a grille here.</span>")
 				break
@@ -822,29 +803,10 @@ MATERIAL
 				if (T == user.loc && !user.getStatusDuration("weakened") && !user.getStatusDuration("stunned") && src.amount >= 2)
 					var/atom/G = new /obj/grille(user.loc)
 					G.setMaterial(src.material)
-					src.consume_rods(2)
+					src.change_stack_amount(-2)
 					logTheThing("station", user, null, "builds a grille (<b>Material:</b> [G.material && G.material.mat_id ? "[G.material.mat_id]" : "*UNKNOWN*"]) at [log_loc(user)].")
 		src.add_fingerprint(user)
 		return
-
-	proc/consume_rods(var/use_amount)
-		. = 0
-		if (!isnum(amount))
-			return 0
-		if(amount < 1)
-			return 0
-		if(amount < use_amount)
-			. = 0
-		else
-			src.amount = max(0,amount - use_amount)
-			. = 1
-		if (amount < 1)
-			if (isliving(src.loc))
-				var/mob/living/L = src.loc
-				L.u_equip(src)
-			qdel(src)
-		else
-			update_icon()
 
 /obj/head_on_spike
 	name = "head on a spike"
@@ -1014,7 +976,7 @@ MATERIAL
 	desc = "They keep the floor in a good and walkable condition."
 	icon = 'icons/obj/metal.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
-	icon_state = "tile"
+	icon_state = "tile_5"
 	w_class = 3.0
 	m_amt = 937.5
 	throw_speed = 3
@@ -1028,12 +990,13 @@ MATERIAL
 	tooltip_flags = REBUILD_DIST
 	inventory_counter_enabled = 1
 
-	New()
+	New(make_amount = 0)
 		..()
 		src.pixel_x = rand(0, 14)
 		src.pixel_y = rand(0, 14)
 		src.inventory_counter.update_number(amount)
-		update_stack_appearance()
+		SPAWN_DBG(0)
+			update_stack_appearance()
 		return
 
 	check_valid_stack(atom/movable/O as obj)
