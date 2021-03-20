@@ -840,6 +840,8 @@
 	if(src.client)
 		if(singing)
 			phrase_log.log_phrase("sing", message)
+		else if(message_mode)
+			phrase_log.log_phrase("radio", message)
 		else
 			phrase_log.log_phrase("say", message)
 
