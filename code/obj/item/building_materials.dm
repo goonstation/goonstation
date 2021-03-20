@@ -36,6 +36,7 @@ MATERIAL
 	name = "sheet"
 	icon = 'icons/obj/metal.dmi'
 	icon_state = "sheet-m_5"
+	//Used to determine the right icon_state: combined with suffixes for material/reinforcement in update_appearance and one for amount in change_stack_appearance
 	var/icon_state_base = "sheet"
 	desc = "Thin sheets of building material. Can be used to build many things."
 	flags = FPRINT | TABLEPASS
@@ -67,23 +68,13 @@ MATERIAL
 		else
 			return 1
 
-	proc/consume_sheets(var/use_amount)
-		if (!isnum(amount))
-			return FALSE
-		if (amount < use_amount)
-			return FALSE
-		src.amount = max(0,amount - use_amount)
+	change_stack_amount(diff)
+		. = ..()
 		if (amount < 1)
 			if (isliving(src.loc))
 				var/mob/living/L = src.loc
-				L.u_equip(src)
 				L.Browse(null, "window=met_sheet")
 				onclose(L, "met_sheet")
-			qdel(src)
-		else
-			src.inventory_counter?.update_number(amount)
-			update_stack_appearance()
-		return TRUE
 
 	proc/set_reinforcement(var/datum/material/M)
 		if (!istype(M))
@@ -226,7 +217,7 @@ MATERIAL
 				S.amount = sheetsinput
 				S.inventory_counter.update_number(S.amount)
 				R.change_stack_amount(-sheetsinput)
-				src.consume_sheets(sheetsinput)
+				src.change_stack_amount(-sheetsinput)
 			else
 				boutput(user, "<span class='alert'>You may only reinforce metal or crystal sheets.</span>")
 				return
@@ -333,7 +324,7 @@ MATERIAL
 
 		if (href_list["make"])
 			if (src.amount < 1)
-				src.consume_sheets(1)
+				src.change_stack_amount(0) //Basically "clean up and pool"
 				return
 
 			var/a_type = null
@@ -582,7 +573,7 @@ MATERIAL
 						R.setMaterial(src.reinforcement)
 					C.amount = 1
 					R.amount = 1
-					src.consume_sheets(1)
+					src.change_stack_amount(-1)
 			if (a_type)
 				actions.start(new /datum/action/bar/icon/build(src, a_type, a_cost, src.material, a_amount, a_icon, a_icon_state, a_name, a_callback), usr)
 
@@ -1112,7 +1103,7 @@ MATERIAL
 		..()
 		setMaterial(getMaterial("electrum"))
 
-	consume_sheets(var/use_amount)
+	change_stack_amount(var/use_amount)
 		if (!isnum(use_amount))
 			return
 		if (isrobot(usr))
