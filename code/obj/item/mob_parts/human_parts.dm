@@ -18,9 +18,6 @@
 	var/show_on_examine = 0
 
 	take_damage(brute, burn, tox, damage_type, disallow_limb_loss)
-		if	(src.original_holder?.traitHolder?.hasTrait("athletic"))
-			brute *=1.33
-
 		if (brute <= 0 && burn <= 0)// && tox <= 0)
 			return 0
 

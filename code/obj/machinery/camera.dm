@@ -33,9 +33,10 @@
 	var/oldy = 0
 
 	ranch
-		name = "baby monitor"
+		name = "autoname"
 		network = "ranch"
 		color = "#AAFF99"
+		c_tag = "autotag"
 
 /obj/machinery/camera/process()
 	.=..()

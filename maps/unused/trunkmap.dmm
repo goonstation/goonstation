@@ -6432,7 +6432,9 @@
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/captain)
 "atu" = (
-/obj/displaycase,
+/obj/displaycase{
+	displayed = new /obj/item/captaingun
+},
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/captain)
 "atv" = (

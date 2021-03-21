@@ -135,11 +135,26 @@ var/global/list/mapNames = list(
 /datum/map_settings/donut2
 	name = "DONUT2"
 	goonhub_map = "https://goonhub.com/maps/donut2"
+	airlock_style = "pyro"
+	walls = /turf/simulated/wall/auto/supernorn
+	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
+
 	escape_centcom = /area/shuttle/escape/centcom/donut2
 	escape_transit = /area/shuttle/escape/transit/donut2
 	escape_station = /area/shuttle/escape/station/donut2
 	escape_def = SHUTTLE_WEST
 	escape_dir = WEST
+
+	windows = /obj/window/auto
+	windows_thin = /obj/window/pyro
+	rwindows = /obj/window/auto/reinforced
+	rwindows_thin = /obj/window/reinforced/pyro
+	windows_crystal = /obj/window/auto/crystal
+	windows_rcrystal = /obj/window/auto/crystal/reinforced
+	window_layer_full = COG2_WINDOW_LAYER
+	window_layer_north = GRILLE_LAYER+0.1
+	window_layer_south = FLY_LAYER+1
+	auto_windows = 1
 
 	merchant_left_centcom = /area/shuttle/merchant_shuttle/left_centcom/donut2
 	merchant_left_station = /area/shuttle/merchant_shuttle/left_station/donut2
