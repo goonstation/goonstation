@@ -71,7 +71,7 @@
 				return
 			boutput(user, "<span class='notice'>You take [splitnum] ores from the stack, leaving [src.amount - splitnum] ores behind.</span>")
 			var/obj/item/raw_material/new_stack = split_stack(splitnum)
-			new_stack.attack_hand(user)
+			user.put_in_hand(new_stack)
 			new_stack.add_fingerprint(user)
 		else
 			..(user)
