@@ -50,7 +50,7 @@
 				boutput(user, "<span class='alert'>Invalid entry, try again.</span>")
 				return
 			var/obj/item/material_piece/new_stack = split_stack(splitnum)
-			user.put_in_hand(new_stack)
+			user.put_in_hand_or_drop(new_stack)
 			new_stack.add_fingerprint(user)
 		else
 			..(user)
