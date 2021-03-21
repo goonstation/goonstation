@@ -837,6 +837,14 @@
 		if ((n >= 0 && n <= 20) || n == 420)
 			speech_bubble.icon_state = "[n]"
 
+	if(src.client)
+		if(singing)
+			phrase_log.log_phrase("sing", message)
+		else if(message_mode)
+			phrase_log.log_phrase("radio", message)
+		else
+			phrase_log.log_phrase("say", message)
+
 	if (src.stuttering)
 		message = stutter(message)
 
@@ -1056,12 +1064,6 @@
 
 	if (length(heard_b))
 		processed = saylist(messages[2], heard_b, olocs, thickness, italics, processed, 1)
-
-	if(src.client)
-		if(singing)
-			phrase_log.log_phrase("sing", messages[1])
-		else
-			phrase_log.log_phrase("say", messages[1])
 
 	message = src.say_quote(messages[1])
 

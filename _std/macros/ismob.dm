@@ -16,6 +16,7 @@
 
 #define iscarbon(x) istype(x, /mob/living/carbon)
 #define ismonkey(x) (istype(x, /mob/living/carbon/human) && istype(x:mutantrace, /datum/mutantrace/monkey))
+#define isnpc(x) istype(x, /mob/living/carbon/human/npc)
 #define isnpcmonkey(x) (istype(x,/mob/living/carbon/human/npc/monkey) && istype(x:mutantrace, /datum/mutantrace/monkey))
 #define ishuman(x) istype(x, /mob/living/carbon/human)
 #define iscow(x) (istype(x, /mob/living/carbon/human) && istype(x:mutantrace, /datum/mutantrace/cow))

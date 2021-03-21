@@ -1,5 +1,50 @@
 
+(t)sat mar 20 21
+(u)TTerc
+(p)3971
+(e)|
+(+)Removed the flip/rotate window for disposal pipes. Instead, you can click the pipe with a crowbar to rotate it and click the junction with empty hand to change its direction.
+(u)DimWhat
+(p)4067
+(e)|
+(+)Added Hi-Vis to CE, mechanic, and engineer lockers. Safety first!
+(u)DimWhat
+(p)4061
+(e)⚖|balance
+(+)Added disorient resistance to several suits.
+(t)fri mar 19 21
+(u)Sidewinder7
+(p)3980
+(e)🆕|feature
+(*)Added a single-output mode to the mechcomp dispatch component.
+(u)Flaborized
+(p)4052
+(e)🎨|sprites
+(+)Resprited lattices and catwalks.
+(t)thu mar 18 21
+(u)Carbadox
+(p)4014
+(e)🐛🆕|bug, feature
+(+)Pews are now deconstructaable
+(u)kyle
+(e)⚖|balance
+(+)Werewolves are now able to feast on dead bodies as long as they aren't too decomposed. Formaldehyde also will make corpses unpaletable for wolves.
+(t)wed mar 17 21
+(u)kyle
+(+)epinephrine has a similar effect to salicylic acid where it negates some of the movement speed penalty from damage.
+(+)Werewolf thrash tries to keep you in the same place as where you start. Werewolf feast will rip out some of the targets non-vital organs for an extra snack!
+(u)Zamujasa
+(*)Health analyzers will show a flying-chat-esque health readout when used, with the overall health percentage and oxy-tox-burn-brute numbers.
+(*)The readout in the chat panel is unaffected.
+(*)This also follows the "flying chat" toggle, if you want to turn it off.
+(*)Feedback is appreciated. I may add this to the stationary floor scanners in Medbay as well...
 (t)tue mar 16 21
+(u)The Laundry (warc)
+(+)Ugh, that hat fuckin' REEKS dude, don't make me murder it off of you!
+(u)Flaborized
+(p)4030
+(e)🎨|sprites
+(+)Resprited disposal pipes.
 (u)Penny
 (p)4002
 (e)|
