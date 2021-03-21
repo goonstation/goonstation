@@ -48,7 +48,6 @@
 			stack_item(W)
 			if(!user.is_in_hands(src))
 				user.put_in_hand(src)
-			boutput(user, "<span class='notice'>You add the ores to the stack. It now has [src.amount] ores.</span>")
 			return
 		if (istype(W, /obj/item/satchel/mining/))
 			if (W.contents.len < W:maxitems)
@@ -63,12 +62,11 @@
 		else ..()
 
 	attack_hand(mob/user as mob)
-		if((user.r_hand == src || user.l_hand == src) && src.amount > 1)
+		if(user.is_in_hands(src) && src.amount > 1)
 			var/splitnum = round(input("How many ores do you want to take from the stack?","Stack of [src.amount]",1) as num)
 			if (splitnum >= amount || splitnum < 1)
 				boutput(user, "<span class='alert'>Invalid entry, try again.</span>")
 				return
-			boutput(user, "<span class='notice'>You take [splitnum] ores from the stack, leaving [src.amount - splitnum] ores behind.</span>")
 			var/obj/item/raw_material/new_stack = split_stack(splitnum)
 			user.put_in_hand(new_stack)
 			new_stack.add_fingerprint(user)

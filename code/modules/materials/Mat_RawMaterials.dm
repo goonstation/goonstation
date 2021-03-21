@@ -44,12 +44,11 @@
 		return P
 
 	attack_hand(mob/user as mob)
-		if((user.r_hand == src || user.l_hand == src) && src.amount > 1)
+		if(user.is_in_hands(src) && src.amount > 1)
 			var/splitnum = round(input("How many material pieces do you want to take from the stack?","Stack of [src.amount]",1) as num)
 			if (splitnum >= amount || splitnum < 1)
 				boutput(user, "<span class='alert'>Invalid entry, try again.</span>")
 				return
-			boutput(user, "<span class='notice'>You take [splitnum] material pieces from the stack, leaving [src.amount - splitnum] pieces behind.</span>")
 			var/obj/item/material_piece/new_stack = split_stack(splitnum)
 			user.put_in_hand(new_stack)
 			new_stack.add_fingerprint(user)
@@ -61,7 +60,6 @@
 			stack_item(W)
 			if(!user.is_in_hands(src))
 				user.put_in_hand(src)
-			boutput(user, "<span class='notice'>You add the material to the stack. It now has [src.amount] pieces.</span>")
 			return
 
 	MouseDrop(over_object, src_location, over_location) //src dragged onto over_object
