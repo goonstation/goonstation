@@ -14,7 +14,6 @@
 	var/scoopable = 1
 	burn_type = 1
 	var/wiggle = 6 // how much we want the sprite to be deviated fron center
-	inventory_counter_enabled = 1
 	max_stack = INFINITY
 	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER
 

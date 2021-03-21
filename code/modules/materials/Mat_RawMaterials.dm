@@ -6,7 +6,6 @@
 	icon_state = "bar"
 	max_stack = INFINITY
 	stack_type = /obj/item/material_piece
-	inventory_counter_enabled = 1
 	/// used for prefab bars
 	var/default_material = null
 
