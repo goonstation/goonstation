@@ -60153,16 +60153,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hangar/main)
-"ybQ" = (
-/obj/disposalpipe/segment{
-	dir = 4
-	},
-/obj/machinery/light/incandescent/cool{
-	dir = 1;
-	nostick = 1
-	},
-/turf/simulated/floor/plating/random,
-/area/station/maintenance/southwest)
 "ycg" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -94050,7 +94040,7 @@ kIn
 uMz
 eUO
 ykB
-ybQ
+xAQ
 gUa
 biv
 fcj
@@ -97674,7 +97664,7 @@ aKL
 enR
 wqa
 fRJ
-shS
+vty
 ltO
 eRz
 wNj
