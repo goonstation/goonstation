@@ -44591,7 +44591,9 @@
 /turf/simulated/floor,
 /area/wreckage/bridge)
 "bKH" = (
-/obj/displaycase,
+/obj/displaycase{
+	displayed = new /obj/item/captaingun
+},
 /turf/simulated/floor,
 /area/wreckage/bridge)
 "bKI" = (

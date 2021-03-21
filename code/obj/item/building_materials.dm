@@ -274,6 +274,7 @@ MATERIAL
 		if (src?.material.material_flags & MATERIAL_CRYSTAL)
 			L["smallwindow"] = "Thin Window"
 			L["bigwindow"] = "Large Window (2 Sheets)"
+			L["displaycase"] = "Display Case (3 Sheets)"
 			if (istype(src.reinforcement))
 				L["remetal"] = "Remove Reinforcement"
 		if (src?.material.mat_id == "cardboard")
@@ -526,6 +527,15 @@ MATERIAL
 					a_icon_state = "window"
 					a_name = "a full window"
 					a_callback = /proc/window_reinforce_full_callback
+
+				if("displaycase")
+					if (!amount_check(3,usr)) return
+					a_type = /obj/displaycase
+					a_amount = 1
+					a_cost = 3
+					a_icon = 'icons/obj/stationobjs.dmi'
+					a_icon_state = "glassbox0"
+					a_name = "a display case"
 
 				if("retable")
 					if (!amount_check(2,usr)) return
