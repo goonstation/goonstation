@@ -58,10 +58,10 @@
 
 	attackby(obj/item/W, mob/user)
 		if(W.type == src.type)
-			var/obj/item/material_piece/G = W
-			qdel(src)
-			G.change_stack_amount(src.amount)
-			boutput(user, "<span class='notice'>You add the material to the stack. It now has [G.amount] pieces.</span>")
+			stack_item(W)
+			if(!user.is_in_hands(src))
+				user.put_in_hand(src)
+			boutput(user, "<span class='notice'>You add the material to the stack. It now has [src.amount] pieces.</span>")
 			return
 
 	MouseDrop(over_object, src_location, over_location) //src dragged onto over_object

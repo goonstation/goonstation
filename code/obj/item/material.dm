@@ -45,10 +45,10 @@
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if(W.type == src.type)
-			var/obj/item/raw_material/G = W
-			qdel(src)
-			G.change_stack_amount(src.amount)
-			boutput(user, "<span class='notice'>You add the ores to the stack. It now has [G.amount] ores.</span>")
+			stack_item(W)
+			if(!user.is_in_hands(src))
+				user.put_in_hand(src)
+			boutput(user, "<span class='notice'>You add the ores to the stack. It now has [src.amount] ores.</span>")
 			return
 		if (istype(W, /obj/item/satchel/mining/))
 			if (W.contents.len < W:maxitems)
