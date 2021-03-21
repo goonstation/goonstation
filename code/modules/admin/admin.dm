@@ -3877,6 +3877,112 @@ var/global/noir = 0
 
 ///////////////////////////////////////////////////////////////////////////////////////////////Panels
 
+/datum/player_panel
+	var/list/key = list()
+	var/list/name = list()
+	var/list/real_name = list()
+	var/list/assigned_role = list()
+	var/list/special_role = list()
+	var/list/player_type = list()
+	var/list/computer_id = list()
+	var/list/ip = list()
+	var/list/joined = list()
+	var/list/player_location = list()
+
+/datum/player_panel/ui_state(mob/user)
+	return tgui_always_state
+
+/datum/player_panel/ui_status(mob/user)
+  return tgui_admin_state.can_use_topic(src, user)
+
+/datum/player_panel/ui_interact(mob/user, datum/tgui/ui)
+	ui = tgui_process.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "PlayerPanel")
+		ui.open()
+
+/datum/player_panel/ui_data(mob/user)
+	. = list()
+	var/list/players = list()
+	for (var/mob/M in mobs)
+		if (M.ckey)
+			players[M.ckey] = list(
+				"ckey" = M.ckey,
+				"name" = M.name ? M.name : "N/A",
+				"realName" = M.real_name ? M.real_name : "N/A",
+				"assignedRole" = M.mind?.assigned_role ? M.mind.assigned_role : "N/A",
+				"specialRole" = M.mind?.special_role ? M.mind.special_role : "N/A",
+				"playerType" = M.type,
+				"computerId" = M.computer_id ? M.computer_id : "N/A",
+				"ip" = M.lastKnownIP ? M.lastKnownIP : "N/A",
+				"joined" = M.client?.joined_date ? M.client.joined_date : "N/A",
+				"playerLocation" = get_area_name(M) ? get_area_name(M) : "N/A",
+			)
+	.["players"] = players
+
+
+// lgtm - zewaka
+
+
+/* 	//wipe the lists clean
+	key.len = 0
+	name.len = 0
+	real_name.len = 0
+	assigned_role.len = 0
+	special_role.len = 0
+	player_type.len = 0
+	computer_id.len = 0
+	ip.len = 0
+	joined.len = 0
+	player_location.len = 0
+
+	for(var/mob/M in mobs)
+		if (M.ckey)
+			src.key += M.ckey
+			src.name += M.name ? M.name : "N/A"
+			src.real_name += M.real_name ? M.real_name : "N/A"
+			src.assigned_role += M.mind?.assigned_role ? M.mind.assigned_role : "N/A"
+			src.special_role += M.mind?.special_role ? M.mind.special_role : "N/A"
+			src.player_type += M.type
+			src.computer_id += M.computer_id ? M.computer_id : "N/A"
+			src.ip += M.lastKnownIP ? M.lastKnownIP : "N/A"
+			src.joined += M.client?.joined_date ? M.client.joined_date : "N/A"
+			src.player_location += get_area_name(M) ? get_area_name(M) : "N/A"
+
+	. = list(
+		"Key" = src.key,
+		"Name" = src.name,
+		"Real Name" = src.real_name,
+		"Assigned Role" = src.assigned_role,
+		"Special Role" = src.special_role,
+		"Type" = src.player_type,
+		"Computer ID" = src.computer_id,
+		"IP" = src.ip,
+		"Joined" = src.joined,
+		"Location" = src.player_location,
+	) */
+
+/datum/player_panel/ui_act(action, params)
+	. = ..()
+	if (.)
+		return
+/*
+	switch(action)
+
+		if("set-file")
+			var/foundsound = input(usr, "Upload a file:", "File Uploader - No 50MB songs!", null) as null|sound
+			loaded_sound = foundsound
+			. = TRUE
+
+		if("set-volume")
+			var/new_volume = params["volume"]
+			if(new_volume  == "reset")
+				sound_volume = initial(sound_volume)
+				. = TRUE
+			else if(text2num(new_volume) != null)
+				sound_volume = clamp(text2num(new_volume), 0, 100)
+				. = TRUE
+ */
 /datum/admins/proc/player()
 	var/dat = {"<html>
 <head>

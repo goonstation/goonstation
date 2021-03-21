@@ -661,6 +661,7 @@ var/list/special_pa_observing_verbs = list(
 	set name = "Player Panel"
 	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
 	if (src.holder && !src.holder.tempmin)
+		global.player_panel.ui_interact(src.mob)
 		src.holder.player()
 	return
 
