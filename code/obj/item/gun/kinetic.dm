@@ -929,6 +929,9 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 			src.item_state = "rpg7_empty"
 		else
 			src.item_state = "rpg7"
+		if (ishuman(src.loc))
+			var/mob/living/carbon/human/H = src.loc
+			H.update_inhands()
 
 	loaded
 		New()
