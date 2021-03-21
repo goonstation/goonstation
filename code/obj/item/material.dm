@@ -47,11 +47,9 @@
 	attackby(obj/item/W as obj, mob/user as mob)
 		if(W.type == src.type)
 			var/obj/item/raw_material/G = W
-			G.amount += src.amount
-			boutput(user, "<span class='notice'>You add the ores to the stack. It now has [G.amount] ores.</span>")
 			qdel(src)
-			G.update_stack_appearance()
-			G.inventory_counter.update_number(G.amount)
+			G.change_stack_amount(src.amount)
+			boutput(user, "<span class='notice'>You add the ores to the stack. It now has [G.amount] ores.</span>")
 			return
 		if (istype(W, /obj/item/satchel/mining/))
 			if (W.contents.len < W:maxitems)
@@ -68,20 +66,13 @@
 	attack_hand(mob/user as mob)
 		if((user.r_hand == src || user.l_hand == src) && src.amount > 1)
 			var/splitnum = round(input("How many ores do you want to take from the stack?","Stack of [src.amount]",1) as num)
-			var/diff = src.amount - splitnum
 			if (splitnum >= amount || splitnum < 1)
 				boutput(user, "<span class='alert'>Invalid entry, try again.</span>")
 				return
-			boutput(user, "<span class='notice'>You take [splitnum] ores from the stack, leaving [diff] ores behind.</span>")
-			src.amount = diff
-			var/obj/item/raw_material/new_stack = new src.type(user.loc, diff)
-			new_stack.amount = splitnum
+			boutput(user, "<span class='notice'>You take [splitnum] ores from the stack, leaving [src.amount - splitnum] ores behind.</span>")
+			var/obj/item/raw_material/new_stack = split_stack(splitnum)
 			new_stack.attack_hand(user)
 			new_stack.add_fingerprint(user)
-			new_stack.update_stack_appearance()
-			new_stack.inventory_counter.update_number(new_stack.amount)
-			src.update_stack_appearance()
-			src.inventory_counter.update_number(amount)
 		else
 			..(user)
 

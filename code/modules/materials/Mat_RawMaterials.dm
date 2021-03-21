@@ -47,31 +47,22 @@
 	attack_hand(mob/user as mob)
 		if((user.r_hand == src || user.l_hand == src) && src.amount > 1)
 			var/splitnum = round(input("How many material pieces do you want to take from the stack?","Stack of [src.amount]",1) as num)
-			var/diff = src.amount - splitnum
 			if (splitnum >= amount || splitnum < 1)
 				boutput(user, "<span class='alert'>Invalid entry, try again.</span>")
 				return
-			boutput(user, "<span class='notice'>You take [splitnum] material pieces from the stack, leaving [diff] pieces behind.</span>")
-			src.amount = diff
-			var/obj/item/material_piece/new_stack = new src.type(user.loc, diff)
-			new_stack.amount = splitnum
+			boutput(user, "<span class='notice'>You take [splitnum] material pieces from the stack, leaving [src.amount - splitnum] pieces behind.</span>")
+			var/obj/item/material_piece/new_stack = split_stack(splitnum)
 			new_stack.attack_hand(user)
 			new_stack.add_fingerprint(user)
-			new_stack.update_stack_appearance()
-			new_stack.inventory_counter.update_number(new_stack.amount)
-			src.update_stack_appearance()
-			src.inventory_counter.update_number(amount)
 		else
 			..(user)
 
 	attackby(obj/item/W, mob/user)
 		if(W.type == src.type)
 			var/obj/item/material_piece/G = W
-			G.amount += src.amount
-			boutput(user, "<span class='notice'>You add the material to the stack. It now has [G.amount] pieces.</span>")
 			qdel(src)
-			G.update_stack_appearance()
-			G.inventory_counter.update_number(G.amount)
+			G.change_stack_amount(src.amount)
+			boutput(user, "<span class='notice'>You add the material to the stack. It now has [G.amount] pieces.</span>")
 			return
 
 	MouseDrop(over_object, src_location, over_location) //src dragged onto over_object
