@@ -1,5 +1,9 @@
 
 (t)sun mar 21 21
+(u)Sovexe
+(p)4019
+(e)⚖|balance
+(+)Reduced stuns from plates and trays. Plates and trays respect helmet protection
 (u)Camryn Buttes
 (p)3845
 (e)🐛🆕🔄|bug, feature, rework
