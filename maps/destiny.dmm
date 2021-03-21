@@ -14706,7 +14706,16 @@
 "bpd" = (
 /obj/decal/stage_edge,
 /obj/table/reinforced/bar/auto,
-/obj/item/clothing/head/merchant_hat,
+/obj/item/clothing/head/merchant_hat{
+	pixel_x = -8;
+	pixel_y = -3
+	},
+/obj/item/clothing/head/that/white{
+	pixel_y = 5
+	},
+/obj/item/clothing/head/that{
+	pixel_x = 8
+	},
 /turf/simulated/floor/carpet/red/fancy/edge{
 	dir = 9
 	},
@@ -14770,7 +14779,9 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/plating/random,
+/turf/simulated/floor/wood{
+	icon_state = "wooden"
+	},
 /area/station/engine/core)
 "bpp" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
@@ -51756,6 +51767,7 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
+/obj/item/clothing/head/helmet/space/engineer,
 /turf/simulated/floor/yellowblack/corner{
 	dir = 8
 	},
@@ -52007,6 +52019,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
+/obj/storage/crate,
 /turf/simulated/floor,
 /area/station/mining/staff_room)
 "tLM" = (
@@ -56612,12 +56625,6 @@
 	},
 /obj/machinery/door/airlock/gannets/maintenance{
 	name = "airlock-'Maintenance'"
-	},
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/cable{
-	icon_state = "4-8"
 	},
 /turf/simulated/floor/black,
 /area/station/maintenance/south)
