@@ -1,5 +1,9 @@
 
 (t)sun mar 21 21
+(u)Camryn Buttes
+(p)3845
+(e)🐛🆕🔄|bug, feature, rework
+(*)Significantly improved consistency of stimuli interactions across different artifact types. Enabled usage of flyswatters, igniters, and multitools for improvised artifact testing.
 (u)Lythine
 (p)4000
 (e)🆕🗺|feature, mapping
