@@ -60,6 +60,7 @@
 			stack_item(W)
 			if(!user.is_in_hands(src))
 				user.put_in_hand(src)
+			boutput(user, "<span class='notice'>You add the material to the stack. It now has [src.amount] pieces.</span>")
 			return
 
 	MouseDrop(over_object, src_location, over_location) //src dragged onto over_object

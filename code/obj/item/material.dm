@@ -48,6 +48,7 @@
 			stack_item(W)
 			if(!user.is_in_hands(src))
 				user.put_in_hand(src)
+			boutput(user, "<span class='notice'>You add the ores to the stack. It now has [src.amount] ores.</span>")
 			return
 		if (istype(W, /obj/item/satchel/mining/))
 			if (W.contents.len < W:maxitems)
