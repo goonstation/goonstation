@@ -9859,7 +9859,7 @@
 "cEO" = (
 /obj/displaycase{
 	displayed = new /obj/item/captaingun
-},
+	},
 /obj/machinery/light/incandescent/greenish{
 	dir = 1
 	},
@@ -21727,15 +21727,9 @@
 /turf/simulated/floor/sanitary,
 /area/station/chapel/sanctuary)
 "ggs" = (
-/obj/item/reagent_containers/food/snacks/chicken_feed_bag{
-	rand_pos = 1
-	},
-/obj/item/reagent_containers/food/snacks/chicken_feed_bag{
-	rand_pos = 1
-	},
-/obj/item/reagent_containers/food/snacks/chicken_feed_bag{
-	rand_pos = 1
-	},
+/obj/item/reagent_containers/food/snacks/chicken_feed_bag,
+/obj/item/reagent_containers/food/snacks/chicken_feed_bag,
+/obj/item/reagent_containers/food/snacks/chicken_feed_bag,
 /obj/machinery/light/incandescent/netural,
 /turf/simulated/floor/dirt,
 /area/station/ranch)
@@ -22265,10 +22259,17 @@
 	pixel_x = 2;
 	pixel_y = 8
 	},
+/obj/item/device/light/zippo{
+	pixel_y = -8
+	},
 /obj/machinery/light/lamp/green{
 	pixel_x = -5;
 	pixel_y = 4;
 	switchon = 1
+	},
+/obj/item/cigpacket/propuffs{
+	pixel_x = 9;
+	pixel_y = -6
 	},
 /turf/simulated/floor/carpet,
 /area/station/security/detectives_office)
@@ -61975,6 +61976,8 @@
 	dir = 4;
 	pixel_x = 24
 	},
+/obj/storage/cart/forensic,
+/obj/item/storage/box/body_bag,
 /turf/simulated/floor/wood/seven,
 /area/station/security/detectives_office)
 "siB" = (
