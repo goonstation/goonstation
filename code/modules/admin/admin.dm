@@ -3966,6 +3966,26 @@ var/global/noir = 0
 	. = ..()
 	if (.)
 		return
+
+	switch(action)
+		if("PlayerOpt")
+			for(var/mob/M in mobs)
+				if(M.ckey == params["ckey"])
+					usr.client.holder.playeropt(M)
+					break
+
+		if("PM")
+			for(var/mob/M in mobs)
+				if(M.ckey == params["ckey"])
+					do_admin_pm(M, usr)
+					break
+
+		if("SpecialRole")
+			for(var/mob/M in mobs)
+				if(M.ckey == params["ckey"])
+				//oh god this did a lot of stuff before, need to figure it out
+					. = TRUE
+
 /*
 	switch(action)
 

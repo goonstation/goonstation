@@ -7,20 +7,35 @@
 
 import { InfernoNode } from 'inferno';
 import { useBackend } from '../backend';
-import { Button, Box, Table } from '../components';
+import { Button, Table } from '../components';
 import { Window } from '../layouts';
-
-const defaultTemplate = ({ column, row }) => row[column.field];
 
 interface Column {
   name: string,
   field: string,
-  template?: ({ row, column: Column }) => InfernoNode,
+  template?: (config: CellTemplateConfig) => InfernoNode,
 }
+
+interface CellTemplateConfig {
+  act: (action: string, payload?: object) => void,
+  column: Column,
+  row: PlayerData,
+}
+
+const defaultTemplate = (config: CellTemplateConfig) => config.row[config.column.field];
+const nameTemplate = (config: CellTemplateConfig) => (
+  <Button
+    onClick={() => config.act('open-player-options', {
+      ckey: config.row.ckey,
+    })}
+  >
+    {config.row[config.column.field]}
+  </Button>
+);
 
 const columns: Column[] = [
   { name: 'CKey', field: 'ckey' },
-  { name: 'Name', field: 'name' },
+  { name: 'Name', field: 'name', template: nameTemplate },
   { name: 'Real Name', field: 'realName' },
   { name: 'Assigned Role', field: 'assignedRole' },
   { name: 'Special Role', field: 'specialRole' },
@@ -53,7 +68,6 @@ export const PlayerPanel = (props, context) => {
   const {
     players,
   } = data;
-
   return (
     <Window width={670} height={640}>
       <Window.Content scrollable>
@@ -66,22 +80,28 @@ export const PlayerPanel = (props, context) => {
               </Table.Cell>
             ))}
           </Table.Row>
-          {players.map(player => (
-            <Table.Row>
-              {columns.map(column => {
-                const {
-                  field,
-                  template = defaultTemplate,
-                } = column;
-                <Table.Cell key={field}>
-                  {template({
-                    column,
-                    row: player,
-                   })}
-                </Table.Cell>
-              })}
-            </Table.Row>
-          ))}
+          {Object.keys(players).map(ckey => {
+            const player = players[ckey];
+            return (
+              <Table.Row key={ckey}>
+                {columns.map(column => {
+                  const {
+                    field,
+                    template = defaultTemplate,
+                  } = column;
+                  return (
+                    <Table.Cell key={field}>
+                      {template({
+                        act,
+                        column,
+                        row: player,
+                      })}
+                    </Table.Cell>
+                  );
+                })}
+              </Table.Row>
+            );
+          })}
         </Table>
       </Window.Content>
     </Window>
