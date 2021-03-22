@@ -3887,12 +3887,11 @@ var/global/noir = 0
 
 /datum/player_panel/ui_interact(mob/user, datum/tgui/ui)
 	ui = tgui_process.try_update_ui(user, src, ui)
-	if(!ui)
+	if (!ui)
 		ui = new(user, src, "PlayerPanel")
 		ui.open()
 
 /datum/player_panel/ui_data(mob/user)
-	. = list()
 	var/list/players = list()
 	for (var/mob/M in mobs)
 		if (M.ckey)
@@ -3908,7 +3907,9 @@ var/global/noir = 0
 				"joined" = M.client?.joined_date ? M.client.joined_date : "N/A",
 				"playerLocation" = (get_area(M)).name ? (get_area(M)).name : "N/A",
 			)
-	.["players"] = players
+	. = list(
+		"players" = players
+	)
 
 /datum/player_panel/ui_act(action, params)
 	. = ..()
