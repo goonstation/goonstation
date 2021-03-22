@@ -18605,6 +18605,10 @@
 /area/station/hallway/primary/west)
 "fkB" = (
 /obj/table/auto,
+/obj/item/item_box/pens{
+	pixel_x = -7;
+	pixel_y = 9
+	},
 /obj/item/device/audio_log{
 	pixel_y = 1
 	},
