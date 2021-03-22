@@ -593,7 +593,7 @@
 "ack" = (
 /obj/table/wood/auto,
 /obj/displaycase{
-	displayed = new /obj/item/captaingun
+	displayed = new /obj/item/captaingun;
 	pixel_y = 8
 	},
 /obj/machinery/light/incandescent{
@@ -13522,9 +13522,9 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/stool/chair/comfy/blue,
 /obj/machinery/atmospherics/pipe/simple/color_pipe/green_pipe,
 /obj/decal/stage_edge,
+/obj/stool/chair/comfy/blue,
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
@@ -44747,8 +44747,9 @@
 	dir = 5;
 	icon_state = "xtra_bigstripe-corner2"
 	},
-/obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	dir = 6
+/obj/machinery/atmospherics/pipe/manifold{
+	dir = 1;
+	level = 2
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
