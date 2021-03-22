@@ -17669,6 +17669,7 @@
 /obj/table/reinforced/bar/auto{
 	name = "table"
 	},
+/obj/item/storage/toolbox/artistic,
 /obj/item/matchbook{
 	pixel_x = -7;
 	pixel_y = 6
