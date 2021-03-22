@@ -16609,7 +16609,9 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/captain)
 "aGK" = (
-/obj/displaycase,
+/obj/displaycase{
+	displayed = new /obj/item/captaingun
+},
 /turf/simulated/floor,
 /area/station/crew_quarters/captain)
 "aGL" = (

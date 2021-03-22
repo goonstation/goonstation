@@ -234,13 +234,15 @@
 								else
 									WT.ReplaceWithSpace()
 
-							var/turf/olddist = get_dist(get_center(), src.target)
+							var/turf/olddist = get_dist(src, src.target)
 							walk_to(src, src.target,1,5)
-							if ((get_dist(src, src.target)) >= (olddist))
-								src.frustration++
-								step_towards(src, src.target)
-							else
-								src.frustration = 0
+							SPAWN_DBG(5 DECI SECOND)
+								if ((get_dist(src, src.target)) >= (olddist))
+									src.frustration++
+									if(src.z == get_step(src.target, 0).z)
+										step_towards(src, src.target)
+								else
+									src.frustration = 0
 
 							ability_selection()
 

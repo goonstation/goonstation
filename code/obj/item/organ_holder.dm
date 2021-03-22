@@ -350,11 +350,11 @@
 	proc/get_organ(var/organ)
 		RETURN_TYPE(/obj/item)
 		if (!organ)
-			return 0
+			return null
 		var/obj/item/return_organ = organ_list[organ]
 		if (istype(return_organ))
 			return return_organ
-		return 0
+		return null
 
 	proc/drop_organ(var/organ, var/location)
 		if (!src.donor || !organ)

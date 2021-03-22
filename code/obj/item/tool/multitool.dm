@@ -58,6 +58,7 @@
 		if(omniperipheral)
 			frequency = omniperipheral.frequency
 	//frequency block
+
 	if (hasvar(target, "alarm_frequency"))
 		frequency = target:alarm_frequency
 	else if (hasvar(target, "freq"))
@@ -76,6 +77,7 @@
 	else if (istype(target, /obj/storage/secure))
 		var/obj/storage/secure/lockerfreq = target
 		frequency = lockerfreq.radio_control.frequency
+
 	if(net_id)
 		boutput(user, "<span class='alert'>NETID#[net_id]</span>")
 	if(frequency)
@@ -92,3 +94,4 @@
 	if (test_link)
 		if (length(test_link.powernet.cables) < 1)
 			boutput(user, "<span class='alert'>ERR#NOTATERM</span>")
+			
