@@ -28004,6 +28004,7 @@
 /turf/simulated/floor/sanitary/blue,
 /area/station/crew_quarters/bathroom)
 "ibI" = (
+/obj/storage/closet/biohazard,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 1;
@@ -30240,6 +30241,11 @@
 /obj/decal/cleanable/rust/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/se)
+"iMe" = (
+/obj/decal/cleanable/dirt/jen,
+/obj/storage/closet/biohazard,
+/turf/simulated/floor/plating/jen,
+/area/station/maintenance/inner/sw)
 "iMh" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/disposalpipe/junction/middle/south,
@@ -116852,7 +116858,7 @@ mCx
 suS
 qnq
 lnO
-hzf
+iMe
 ugO
 oLI
 vMF
