@@ -43209,6 +43209,16 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/science/storage)
+"mPm" = (
+/obj/grille/catwalk/jen/side{
+	dir = 1
+	},
+/obj/decal/cleanable/dirt/jen,
+/obj/submachine/GTM{
+	pixel_y = 32
+	},
+/turf/simulated/floor/plating/jen,
+/area/station/maintenance/outer/se)
 "mPQ" = (
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/white,
@@ -61365,6 +61375,11 @@
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/garden)
+"rZl" = (
+/obj/decal/cleanable/dirt/jen,
+/obj/storage/closet/biohazard,
+/turf/simulated/floor/plating/jen,
+/area/station/maintenance/inner/sw)
 "rZv" = (
 /obj/access_spawn/maint,
 /obj/decal/mule/dropoff,
@@ -78427,11 +78442,6 @@
 /obj/machinery/vending/standard,
 /turf/simulated/floor/orangeblack,
 /area/station/engine/elect)
-"xal" = (
-/obj/decal/cleanable/dirt/jen,
-/obj/storage/closet/biohazard,
-/turf/simulated/floor/plating/jen,
-/area/station/maintenance/inner/sw)
 "xay" = (
 /obj/disposalpipe/segment/transport,
 /turf/simulated/wall/auto/reinforced/jen/red,
@@ -116861,7 +116871,7 @@ mCx
 suS
 qnq
 lnO
-xal
+rZl
 ugO
 oLI
 vMF
@@ -142203,7 +142213,7 @@ lVy
 wPF
 qwP
 nxQ
-wPF
+mPm
 vfx
 nxQ
 qtx
