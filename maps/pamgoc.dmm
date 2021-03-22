@@ -16750,7 +16750,9 @@
 /turf/simulated/floor/plating/airless,
 /area/station/quartermaster/refinery)
 "aBB" = (
-/obj/displaycase,
+/obj/displaycase{
+	displayed = new /obj/item/captaingun
+},
 /obj/window/reinforced{
 	dir = 2
 	},

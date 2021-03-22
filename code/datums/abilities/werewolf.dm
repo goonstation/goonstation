@@ -331,7 +331,7 @@
 				var/obj/item/organ/organ = null
 				var/count = 0
 				//Do this search 5 times or until you find an organ.
-				while (!organ || count >= 5)
+				while (!organ && count <= 5)
 					count++
 					var/organ_name = pick(choosable_organs)
 					organ = H.organHolder.get_organ(organ_name)
