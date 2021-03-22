@@ -25236,6 +25236,7 @@
 /obj/disposalpipe/segment/morgue{
 	dir = 4
 	},
+/obj/item/device/camera_viewer,
 /turf/simulated/floor/carpet,
 /area/station/security/detectives_office)
 "hki" = (
@@ -61202,6 +61203,7 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
+/obj/item/storage/secure/sbriefcase,
 /turf/simulated/floor/wood/seven,
 /area/station/security/detectives_office)
 "rWx" = (
