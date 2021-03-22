@@ -33009,6 +33009,7 @@
 "bwL" = (
 /obj/table/wood/round/auto,
 /obj/displaycase{
+	displayed = new /obj/item/captaingun
 	pixel_y = 8
 	},
 /obj/machinery/light/incandescent/warm,

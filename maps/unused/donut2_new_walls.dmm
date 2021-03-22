@@ -20742,7 +20742,9 @@
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/captain)
 "aTR" = (
-/obj/displaycase,
+/obj/displaycase{
+	displayed = new /obj/item/captaingun
+},
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/captain)
 "aTS" = (

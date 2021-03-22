@@ -1,4 +1,11 @@
 
+(t)sun mar 21 21
+(u)Lythine
+(p)4000
+(e)🆕🗺|feature, mapping
+(*)Added the ability to make display cases out of sheets of glass that any item can be stored in.
+(+)Display cases can now be unanchored and anchored with a screwdriver.
+(+)Broken display cases can now be repaired by using a glass sheet or removed by using a wrench.
 (t)sat mar 20 21
 (u)TTerc
 (p)3971
