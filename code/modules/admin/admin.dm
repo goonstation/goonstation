@@ -3920,48 +3920,6 @@ var/global/noir = 0
 			)
 	.["players"] = players
 
-
-// lgtm - zewaka
-
-
-/* 	//wipe the lists clean
-	key.len = 0
-	name.len = 0
-	real_name.len = 0
-	assigned_role.len = 0
-	special_role.len = 0
-	player_type.len = 0
-	computer_id.len = 0
-	ip.len = 0
-	joined.len = 0
-	player_location.len = 0
-
-	for(var/mob/M in mobs)
-		if (M.ckey)
-			src.key += M.ckey
-			src.name += M.name ? M.name : "N/A"
-			src.real_name += M.real_name ? M.real_name : "N/A"
-			src.assigned_role += M.mind?.assigned_role ? M.mind.assigned_role : "N/A"
-			src.special_role += M.mind?.special_role ? M.mind.special_role : "N/A"
-			src.player_type += M.type
-			src.computer_id += M.computer_id ? M.computer_id : "N/A"
-			src.ip += M.lastKnownIP ? M.lastKnownIP : "N/A"
-			src.joined += M.client?.joined_date ? M.client.joined_date : "N/A"
-			src.player_location += get_area_name(M) ? get_area_name(M) : "N/A"
-
-	. = list(
-		"Key" = src.key,
-		"Name" = src.name,
-		"Real Name" = src.real_name,
-		"Assigned Role" = src.assigned_role,
-		"Special Role" = src.special_role,
-		"Type" = src.player_type,
-		"Computer ID" = src.computer_id,
-		"IP" = src.ip,
-		"Joined" = src.joined,
-		"Location" = src.player_location,
-	) */
-
 /datum/player_panel/ui_act(action, params)
 	. = ..()
 	if (.)
@@ -3986,23 +3944,6 @@ var/global/noir = 0
 				//oh god this did a lot of stuff before, need to figure it out
 					. = TRUE
 
-/*
-	switch(action)
-
-		if("set-file")
-			var/foundsound = input(usr, "Upload a file:", "File Uploader - No 50MB songs!", null) as null|sound
-			loaded_sound = foundsound
-			. = TRUE
-
-		if("set-volume")
-			var/new_volume = params["volume"]
-			if(new_volume  == "reset")
-				sound_volume = initial(sound_volume)
-				. = TRUE
-			else if(text2num(new_volume) != null)
-				sound_volume = clamp(text2num(new_volume), 0, 100)
-				. = TRUE
- */
 /datum/admins/proc/player()
 	var/dat = {"<html>
 <head>
