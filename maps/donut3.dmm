@@ -896,6 +896,7 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
+/obj/item/storage/wall/office,
 /turf/simulated/floor/carpet{
 	dir = 1;
 	icon_state = "fblue6"
@@ -9683,6 +9684,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/item/storage/wall/office,
 /turf/simulated/floor/wood/five,
 /area/station/hydroponics/bay)
 "cBR" = (
@@ -30463,11 +30465,6 @@
 	dir = 1
 	},
 /area/station/medical/medbay/lobby)
-"iQJ" = (
-/obj/decal/cleanable/dirt/jen,
-/obj/storage/closet/biohazard,
-/turf/simulated/floor/plating/jen,
-/area/station/maintenance/inner/sw)
 "iQK" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 4
@@ -38237,6 +38234,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/item/storage/wall/office,
 /turf/simulated/floor/carpet/arcade/half,
 /area/station/crew_quarters/arcade/dungeon)
 "loJ" = (
@@ -39474,6 +39472,16 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/ne)
+"lGM" = (
+/obj/grille/catwalk/jen/side{
+	dir = 1
+	},
+/obj/decal/cleanable/dirt/jen,
+/obj/submachine/GTM{
+	pixel_y = 32
+	},
+/turf/simulated/floor/plating/jen,
+/area/station/maintenance/outer/se)
 "lGU" = (
 /obj/indestructible/shuttle_corner{
 	dir = 4
@@ -61245,6 +61253,7 @@
 "rWD" = (
 /obj/table/round/auto,
 /obj/random_item_spawner/desk_stuff/few,
+/obj/item/storage/wall/office,
 /turf/simulated/floor/carpet/red/fancy/narrow/north,
 /area/station/quartermaster/office)
 "rWM" = (
@@ -61773,6 +61782,11 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/se)
+"sev" = (
+/obj/decal/cleanable/dirt/jen,
+/obj/storage/closet/biohazard,
+/turf/simulated/floor/plating/jen,
+/area/station/maintenance/inner/sw)
 "sew" = (
 /obj/machinery/light/emergency{
 	dir = 4;
@@ -70592,16 +70606,6 @@
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/chapel/office)
-"uPL" = (
-/obj/grille/catwalk/jen/side{
-	dir = 1
-	},
-/obj/decal/cleanable/dirt/jen,
-/obj/submachine/GTM{
-	pixel_y = 32
-	},
-/turf/simulated/floor/plating/jen,
-/area/station/maintenance/outer/se)
 "uPQ" = (
 /obj/stool/chair{
 	dir = 8
@@ -78590,6 +78594,11 @@
 /area/station/maintenance/inner/north)
 "xdq" = (
 /obj/machinery/light/incandescent/netural,
+/obj/item/storage/wall/office{
+	dir = 8;
+	pixel_x = 32;
+	pixel_y = 0
+	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/market)
 "xdw" = (
@@ -116876,7 +116885,7 @@ mCx
 suS
 qnq
 lnO
-iQJ
+sev
 ugO
 oLI
 vMF
@@ -142218,7 +142227,7 @@ lVy
 wPF
 qwP
 nxQ
-uPL
+lGM
 vfx
 nxQ
 qtx
