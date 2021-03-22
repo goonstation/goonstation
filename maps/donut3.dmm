@@ -30463,6 +30463,11 @@
 	dir = 1
 	},
 /area/station/medical/medbay/lobby)
+"iQJ" = (
+/obj/decal/cleanable/dirt/jen,
+/obj/storage/closet/biohazard,
+/turf/simulated/floor/plating/jen,
+/area/station/maintenance/inner/sw)
 "iQK" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 4
@@ -37717,11 +37722,6 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/ne)
-"lhu" = (
-/obj/decal/cleanable/dirt/jen,
-/obj/storage/closet/biohazard,
-/turf/simulated/floor/plating/jen,
-/area/station/maintenance/inner/sw)
 "lhv" = (
 /obj/table/auto,
 /obj/item/storage/box/evidence{
@@ -70592,6 +70592,16 @@
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/chapel/office)
+"uPL" = (
+/obj/grille/catwalk/jen/side{
+	dir = 1
+	},
+/obj/decal/cleanable/dirt/jen,
+/obj/submachine/GTM{
+	pixel_y = 32
+	},
+/turf/simulated/floor/plating/jen,
+/area/station/maintenance/outer/se)
 "uPQ" = (
 /obj/stool/chair{
 	dir = 8
@@ -73190,16 +73200,6 @@
 "vBF" = (
 /turf/simulated/wall/auto/reinforced/jen/blue,
 /area/station/hallway/primary/southeast)
-"vBG" = (
-/obj/grille/catwalk/jen/side{
-	dir = 1
-	},
-/obj/decal/cleanable/dirt/jen,
-/obj/submachine/GTM{
-	pixel_y = 32
-	},
-/turf/simulated/floor/plating/jen,
-/area/station/maintenance/outer/se)
 "vBJ" = (
 /turf/simulated/wall/auto/shuttle{
 	icon_state = "12"
@@ -81459,6 +81459,10 @@
 	dir = 10;
 	name = "autoname - SS13";
 	tag = ""
+	},
+/obj/item/storage/box/trackimp_kit2{
+	pixel_x = 8;
+	pixel_y = 3
 	},
 /obj/item/gun/implanter{
 	pixel_x = -3;
@@ -116872,7 +116876,7 @@ mCx
 suS
 qnq
 lnO
-lhu
+iQJ
 ugO
 oLI
 vMF
@@ -142214,7 +142218,7 @@ lVy
 wPF
 qwP
 nxQ
-vBG
+uPL
 vfx
 nxQ
 qtx
