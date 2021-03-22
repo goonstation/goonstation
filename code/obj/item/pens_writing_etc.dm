@@ -311,7 +311,7 @@
 		color = "#FF00FF"
 		font_color = "#FF00FF"
 		color_name = "pink"
-	
+
 	golden // HoP's crayon
 		name = "golden crayon"
 		desc = "The result of years of bribes and extreme bureaucracy."
