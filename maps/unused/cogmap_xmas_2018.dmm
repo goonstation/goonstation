@@ -14041,7 +14041,7 @@
 /obj/table/reinforced/bar/auto,
 /obj/item/plate,
 /obj/item/kitchen/utensil/spoon,
-/obj/item/card_box/suit,
+/obj/item/card_box/plain,
 /turf/simulated/floor/carpet/green/standard/edge/east,
 /area/station/crew_quarters/cafeteria)
 "aEC" = (
@@ -21989,7 +21989,7 @@
 /obj/stool/chair/comfy{
 	dir = 4
 	},
-/obj/item/card_box/suit,
+/obj/item/card_box/plain,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/jazz)
 "aUF" = (
@@ -28256,7 +28256,9 @@
 /turf/simulated/floor/plating,
 /area/space)
 "bgN" = (
-/obj/displaycase,
+/obj/displaycase{
+	displayed = new /obj/item/captaingun
+},
 /obj/window/reinforced{
 	dir = 2
 	},
@@ -61857,7 +61859,7 @@
 	},
 /obj/table/glass/auto,
 /obj/random_item_spawner/desk_stuff,
-/obj/item/card_box/suit,
+/obj/item/card_box/plain,
 /obj/item/a_gift/festive,
 /turf/simulated/floor/escape,
 /area/station/hallway/secondary/exit)

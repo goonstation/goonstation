@@ -10794,7 +10794,7 @@
 /area/station/security/checkpoint/medical)
 "axE" = (
 /obj/table/reinforced/auto,
-/obj/item/playing_cards,
+/obj/item/card_group/plain,
 /turf/simulated/floor/carpet/arcade/half,
 /area/station/crew_quarters/clown)
 "axF" = (
@@ -18694,7 +18694,7 @@
 /obj/item/reagent_containers/glass/beaker/large,
 /obj/item/reagent_containers/dropper,
 /obj/item/storage/firstaid/toxin,
-/obj/item/card_box/suit,
+/obj/item/card_box/plain,
 /obj/storage/crate,
 /obj/item/reagent_containers/emergency_injector/calomel,
 /obj/item/reagent_containers/emergency_injector/calomel,
@@ -24775,7 +24775,7 @@
 /turf/simulated/floor/darkpurple,
 /area/station/crew_quarters/data)
 "bfe" = (
-/obj/storage/crate/rcd,
+/obj/storage/crate/rcd/CE,
 /obj/machinery/firealarm{
 	dir = 4;
 	pixel_x = 26;
@@ -32141,6 +32141,7 @@
 "bwL" = (
 /obj/table/wood/round/auto,
 /obj/displaycase{
+	displayed = new /obj/item/captaingun
 	pixel_y = 8
 	},
 /obj/machinery/light/incandescent/warm,
@@ -39119,7 +39120,7 @@
 	pixel_x = -4;
 	pixel_y = 2
 	},
-/obj/item/card_box/suit{
+/obj/item/card_box/plain{
 	pixel_x = 6
 	},
 /turf/simulated/floor,

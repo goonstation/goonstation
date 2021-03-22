@@ -799,7 +799,8 @@
 	desc = "Caution - fragile."
 	icon = 'icons/obj/foodNdrink/drinks.dmi'
 	icon_state = "glass-drink"
-	item_state = "drink_glass"
+	item_state = "glass-drink"
+	var/icon_style = "drink"
 	rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
 	g_amt = 30
 	var/glass_style = "drink"
@@ -829,21 +830,22 @@
 		..()
 
 	on_reagent_change()
-		..()
 		src.update_icon()
 
 	proc/update_icon()
-		if (src.reagents.total_volume <= 0)
-			icon_state = "glass-[glass_style]"
-			src.UpdateOverlays(null, "fluid")
-		else
-			icon_state = "glass-[glass_style]1"
-
-			var/datum/color/average = reagents.get_average_color()
+		src.underlays = null
+		if (reagents.total_volume)
+			var/fluid_state = round(clamp((src.reagents.total_volume / src.reagents.maximum_volume * 3 + 1), 1, 3))
 			if (!src.fluid_image)
-				src.fluid_image = image(src.icon, "fluid-[glass_style]", layer = FLOAT_LAYER + 0.3)
+				src.fluid_image = image(src.icon, "fluid-[src.glass_style][fluid_state]", -1)
+			else
+				src.fluid_image.icon_state = "fluid-[src.glass_style][fluid_state]"
+			src.icon_state = "glass-[src.glass_style][fluid_state]"
+			var/datum/color/average = reagents.get_average_color()
 			src.fluid_image.color = average.to_rgba()
-			src.UpdateOverlays(src.fluid_image, "fluid")
+			src.underlays += src.fluid_image
+		else
+			src.icon_state = "glass-[src.glass_style]"
 
 		if (src.salted)
 			if (!src.image_salt)

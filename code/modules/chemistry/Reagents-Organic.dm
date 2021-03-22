@@ -1,6 +1,8 @@
 // Stuff for O.Chem
 // Fossil fuels, volatile organics, fats and fucky solvents can go here
 
+ABSTRACT_TYPE(/datum/reagent/organic)
+
 /datum/reagent/organic
 	name = "crude organic fluid"
 	id = "organic"
@@ -11,10 +13,93 @@
 	fluid_b = 0
 	transparency = 220
 	value = 3
-	viscosity = 0.95
+	viscosity = 0.8
 	hunger_value = -0.1
 	thirst_value = -0.1
 	random_chem_blacklisted = 1 //this is pobably temporarily 1 just so I can work out the details
+	can_crack = 1
+
+
+	petroleum // the crude black milk of mother natures chapped tit
+		name = "petroleum"
+		id = "petroleum"
+		description = "A yellowish-black liquid found in geological formations beneath the Earth's surface."
+		taste = "acrid"
+		fluid_r = 15
+		fluid_g = 10
+		fluid_b = 0
+		transparency = 220
+		viscosity = 0.9
+		hunger_value = -0.1
+		thirst_value = -0.1
+
+		crack(var/amount = 1)
+			if(!holder)
+				return
+			holder.remove_reagent(id,amount)
+			if(holder.has_reagent("oxygen"))
+				holder.remove_reagent("oxygen",amount)
+				return
+			if(holder.total_temperature >= (T0C+1000))
+				holder.add_reagent("ethylene",(4*amount/3))
+				return
+			if(holder.total_temperature >= (T0C+600))
+				holder.add_reagent("fuel",(amount))
+				holder.add_reagent("bitumen",(amount/2))
+				return
+
+	bitumen
+		name = "bitumen"
+		id = "bitumen"
+		description = "A dark, viscous oil rich in sulfur."
+		taste = "brimstone"
+		transparency = 250
+		fluid_r = 5
+		fluid_g = 0
+		fluid_b = 10
+
+		crack(var/amount = 1)
+			if(!holder)
+				return
+			if(holder.total_temperature <= (T0C+1500))
+				return
+			holder.remove_reagent(id,amount)
+			if(holder.has_reagent("oxygen"))
+				holder.remove_reagent("oxygen",amount)
+				return
+			if(holder.has_reagent("hydrogen"))
+				holder.remove_reagent("hydrogen",amount*2)
+				holder.add_reagent("badgrease",(amount))
+				return
+			else
+				holder.add_reagent("fuel",(amount/2))
+				holder.add_reagent("potash",(amount/2)) //replace this with pitch tar, and then pitch tar to ash.
+				return
+
+	ethylene
+		name = "ethylene"
+		id = "ethylene"
+		description = "A colorless flammable gas."
+		taste = "sweet, musky"
+		transparency = 5
+		fluid_r = 255
+		fluid_g = 255
+		fluid_b = 255
+
+		crack(var/amount = 1)
+			if(!holder)
+				return
+			if(volume<amount)
+				amount = volume
+			if(holder.has_reagent("oxygen"))
+				holder.remove_reagent("oxygen",amount)
+				holder.remove_reagent(id,amount)
+				return
+			if(holder.has_reagent("hydrogen"))
+				holder.remove_reagent(id,amount)
+				holder.remove_reagent("hydrogen",amount*2)
+				holder.add_reagent("ethanol",(amount))
+				return
 
 	hambrein // an extract of hamburgris
 		name = "hambrein"

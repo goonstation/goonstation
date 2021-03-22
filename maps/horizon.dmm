@@ -3409,7 +3409,7 @@
 	pixel_x = -12
 	},
 /obj/table/wood/auto,
-/obj/item/card_box/booster,
+/obj/item/stg_booster,
 /obj/decal/cleanable/cobweb,
 /turf/simulated/floor/grey/blackgrime,
 /area/tech_outpost)
@@ -4636,7 +4636,7 @@
 /turf/space,
 /area/station/engine/substation/pylon)
 "alI" = (
-/obj/item/card_box/suit,
+/obj/item/card_box/plain,
 /obj/item/crowbar,
 /obj/stool/chair/comfy/shuttle{
 	dir = 8
@@ -5444,7 +5444,7 @@
 /area/station/science/gen_storage)
 "anM" = (
 /obj/table/reinforced/auto,
-/obj/item/playing_cards/trading/booster,
+/obj/item/stg_booster,
 /obj/item/pen,
 /obj/item/device/radio,
 /turf/simulated/floor/grey/whitegrime,
@@ -5593,7 +5593,7 @@
 "aoc" = (
 /obj/machinery/light_switch/north,
 /obj/table/reinforced/auto,
-/obj/item/card_box/trading,
+/obj/item/stg_box,
 /turf/simulated/floor/black,
 /area/station/storage/emergency{
 	name = "Hilarious Storage A"
@@ -19334,7 +19334,9 @@
 /area/station/bridge/captain)
 "aTX" = (
 /obj/table/wood/auto,
-/obj/displaycase,
+/obj/displaycase{
+	displayed = new /obj/item/captaingun
+},
 /turf/simulated/floor/carpet/blue/fancy/innercorner/south,
 /area/station/bridge/captain)
 "aTY" = (
@@ -31812,7 +31814,7 @@
 /obj/disposalpipe/segment/transport{
 	dir = 4
 	},
-/obj/machinery/computer/barcode/qm,
+/obj/machinery/computer/barcode/qm/no_belthell,
 /turf/simulated/floor/carpet/blue/fancy/edge/east,
 /area/station/quartermaster/office)
 "buC" = (
@@ -42915,8 +42917,10 @@
 /area/station/hallway/secondary/exit)
 "bSA" = (
 /obj/table/reinforced/bar/auto,
-/obj/item/storage/box/glassbox,
 /obj/machinery/atmospherics/pipe/simple/color_pipe/green_pipe/vertical,
+/obj/item_dispenser/icedispenser{
+	pixel_y = 13
+	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/bar)
 "bSB" = (
@@ -43066,7 +43070,7 @@
 /area/station/crew_quarters/quarters_south)
 "bSS" = (
 /obj/table/wood/auto,
-/obj/item/card_box/suit,
+/obj/item/card_box/plain,
 /obj/item/clothing/gloves/black,
 /obj/machinery/light{
 	dir = 1;
@@ -46464,6 +46468,7 @@
 /obj/item/kitchen/utensil/fork,
 /obj/item/reagent_containers/food/drinks/drinkingglass,
 /obj/machinery/atmospherics/pipe/simple/color_pipe/green_pipe/horizontal,
+/obj/item/reagent_containers/food/drinks/drinkingglass,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "bar-edge"
@@ -46474,8 +46479,8 @@
 /obj/disposalpipe/segment/transport{
 	dir = 4
 	},
-/obj/item/reagent_containers/food/drinks/drinkingglass,
 /obj/machinery/atmospherics/pipe/simple/color_pipe/green_pipe/horizontal,
+/obj/item/storage/box/glassbox,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/bar)
 "cac" = (
@@ -50903,7 +50908,7 @@
 /turf/space,
 /area/space)
 "cjs" = (
-/obj/storage/crate/rcd,
+/obj/storage/crate/rcd/CE,
 /obj/item/clothing/shoes/magnetic,
 /obj/item/clothing/gloves/yellow,
 /turf/simulated/floor/yellowblack,
@@ -55373,7 +55378,7 @@
 "cvG" = (
 /obj/table/wood/auto,
 /obj/item/reagent_containers/food/drinks/bottle/tequila,
-/obj/item/playing_cards/suit,
+/obj/item/card_group/plain,
 /obj/item/spacecash/hundred,
 /turf/simulated/floor/carpet/red/fancy/edge/north,
 /area/listeningpost/power)
@@ -59091,6 +59096,13 @@
 /area/station/engine/power{
 	name = "Engineering Control Room"
 	})
+"npX" = (
+/obj/item/disk/data/tape/artifact_research{
+	color = "#FFDDBB";
+	name = "forgotten ThinkTape-'Artifact Research'"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/east)
 "ntf" = (
 /obj/cable{
 	d2 = 8;
@@ -59434,6 +59446,9 @@
 	dir = 10;
 	name = "autoname - SS13";
 	tag = ""
+	},
+/obj/machinery/camera/ranch{
+	dir = 1
 	},
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
@@ -134043,7 +134058,7 @@ czU
 cCQ
 aVm
 aGD
-cBL
+npX
 cCe
 arH
 bmU

@@ -169,7 +169,6 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 
 /obj/machinery/the_singularity/proc/eat()
 	for (var/X in range(grav_pull, src.get_center()))
-		LAGCHECK(LAG_LOW)
 		if (!X)
 			continue
 		if (X == src)
@@ -363,7 +362,6 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 /obj/machinery/the_singularity/proc/BHolerip()
 
 	for (var/turf/T in orange(radius*EVENT_GROWTH+EVENT_MINIMUM, src.get_center()))
-		LAGCHECK(LAG_LOW)
 		if (prob(70))
 			continue
 		if (T && !(T.turf_flags & CAN_BE_SPACE_SAMPLE) && (get_dist(src.get_center(),T) == radius+1 || get_dist(src.get_center(),T) == radius+2)) // I'm very tired and this is the least dumb thing I can make of what was here for now.   This needs to get updated for the variable size singularity at some point

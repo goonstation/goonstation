@@ -637,7 +637,7 @@
 		return //???
 	var/list/zones = themob.get_valid_target_zones()
 	if(checkarmor)
-		if (!zones || !zones.len)
+		if (!zones || !length(zones))
 			themob.TakeDamageAccountArmor("All", damage, 0, 0, DAMAGE_BLUNT)
 		else
 			if (prob(100 / zones.len + 1))
@@ -646,7 +646,7 @@
 				var/zone=pick(zones)
 				themob.TakeDamageAccountArmor(zone, damage, 0, 0, DAMAGE_BLUNT)
 	else
-		if (!zones || !zones.len)
+		if (!zones || !length(zones))
 			themob.TakeDamage("All", damage, 0, 0, DAMAGE_BLUNT)
 		else
 			if (prob(100 / zones.len + 1))
@@ -659,7 +659,7 @@
 	if (!themob || !ismob(themob))
 		return //???
 	var/list/zones = themob.get_valid_target_zones()
-	if (!zones || !zones.len)
+	if (!zones || !length(zones))
 		themob.TakeDamage("All", 0, damage, 0, DAMAGE_BURN)
 	else
 		if (prob(100 / zones.len + 1))

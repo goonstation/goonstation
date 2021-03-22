@@ -57,7 +57,7 @@
 	proc/on_life()
 
 	proc/update_overlay()
-		if (!overlay_icon || !threshold_icon_states.len || !threshold_values.len)
+		if (!overlay_icon || !threshold_icon_states.len || !length(threshold_values))
 			return
 		var/next_overlay = 0
 		while (next_overlay < threshold_values.len && value < threshold_values[next_overlay + 1])

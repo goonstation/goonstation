@@ -462,7 +462,7 @@
 		return
 	var/input2 = input(usr, "Add a headline for this alert?", "What?", "") as null|text
 /*
-	for (var/obj/machinery/computer/communications/C as() in machine_registry[MACHINES_COMMSCONSOLES])
+	for (var/obj/machinery/computer/communications/C as anything in machine_registry[MACHINES_COMMSCONSOLES])
 		if(! (C.status & (BROKEN|NOPOWER) ) )
 			var/obj/item/paper/P = new /obj/item/paper( C.loc )
 			P.name = "paper- '[command_name()] Update.'"
@@ -2550,7 +2550,7 @@ var/global/night_mode_enabled = 0
 		//search all offices for an office with the same ckey variable as the usr.
 		if (office.ckey == src.ckey)
 			var/list/turfs = get_area_turfs(office.type)
-			if (islist(turfs) && turfs.len)
+			if (islist(turfs) && length(turfs))
 
 				for (var/turf/T in turfs)
 					//search all turfs for a chair if we can't find one, put em anywhere (might make personalized chairs in the future...)
@@ -2679,7 +2679,7 @@ var/global/mirrored_physical_zone_created = FALSE //enables secondary code branc
 	if(holder && src.holder.level >= LEVEL_ADMIN)
 		switch(alert("Set every light on the station to a random color?",,"Yes","No"))
 			if("Yes")
-				for (var/obj/machinery/light/L as() in stationLights)
+				for (var/obj/machinery/light/L as anything in stationLights)
 					R = rand(100)/100
 					G = rand(100)/100
 					B = rand(100)/100

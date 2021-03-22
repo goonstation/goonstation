@@ -902,7 +902,7 @@ todo: add more small animals!
 
 		if (apply_random)
 			var/list/rand_s = initial(info.subspecies)
-			if (islist(rand_s) && rand_s.len)
+			if (islist(rand_s) && length(rand_s))
 				info = pick(rand_s)
 
 		src.name = initial(info.name)
@@ -978,7 +978,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		..()
 		SPAWN_DBG(0)
 			if (!src.species && src.client && islist(parrot_species) && islist(special_parrot_species))
-				var/new_species = input(src, "Select Species", "Select Species") as() in (parrot_species + special_parrot_species)
+				var/new_species = input(src, "Select Species", "Select Species") as anything in (parrot_species + special_parrot_species)
 				if (new_species)
 					src.apply_species(new_species)
 

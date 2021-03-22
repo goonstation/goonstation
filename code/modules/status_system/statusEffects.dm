@@ -617,7 +617,7 @@
 				if(istype(owner, /mob/living))
 					var/mob/living/L = owner
 					L.update_burning_icon()
-				else
+				else if(onfire)
 					onfire.icon_state = "onfire[getStage()]"
 					owner.UpdateOverlays(onfire, "onfire")
 

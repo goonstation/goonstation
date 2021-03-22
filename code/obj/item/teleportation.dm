@@ -181,7 +181,7 @@ Frequency:
 		if (length(random_turfs))
 			L["None (Dangerous)"] += pick(random_turfs)
 
-		for(var/obj/machinery/teleport/portal_generator/PG as() in machine_registry[MACHINES_PORTALGENERATORS])
+		for(var/obj/machinery/teleport/portal_generator/PG as anything in machine_registry[MACHINES_PORTALGENERATORS])
 			if (!PG.linked_computer || !PG.linked_rings)
 				continue
 			var/turf/PG_loc = get_turf(PG)
@@ -207,7 +207,11 @@ Frequency:
 			return
 
 		users += user // We're about to show the UI
-		var/t1 = input(user, "Please select a teleporter to lock in on.", "Target Selection") in L
+		var/t1
+		if(user.client)
+			t1 = input(user, "Please select a teleporter to lock in on.", "Target Selection") in L
+		else
+			t1 = pick(L)
 		users -= user // We're done showing the UI
 
 		if (user.stat || user.restrained())

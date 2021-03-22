@@ -142,7 +142,7 @@
 
 	New()
 		..()
-		if (src.safe && islist(global.chem_whitelist) && global.chem_whitelist.len)
+		if (src.safe && islist(global.chem_whitelist) && length(global.chem_whitelist))
 			src.ammo_reagents = global.chem_whitelist
 
 	emag_act(var/mob/user, var/obj/item/card/emag/E)

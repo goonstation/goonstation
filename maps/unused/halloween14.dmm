@@ -19948,7 +19948,9 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/captain)
 "aOx" = (
-/obj/displaycase,
+/obj/displaycase{
+	displayed = new /obj/item/captaingun
+},
 /turf/simulated/floor,
 /area/station/crew_quarters/captain)
 "aOy" = (

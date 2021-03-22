@@ -564,6 +564,11 @@
 
 //The owner is the blob tile object...
 /datum/action/bar/blob_absorb //This is used when you try to set someones internals
+	bar_icon_state = "bar-blob"
+	border_icon_state = "border-blob"
+	color_active = "#d73715"
+	color_success = "#167935"
+	color_failure = "#8d1422"
 	duration = 10 SECONDS
 
 	// interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION

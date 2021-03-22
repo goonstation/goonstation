@@ -262,7 +262,7 @@
 		R.fields["abilities"] = A
 
 	R.fields["traits"] = list()
-	if(subject.traitHolder && subject.traitHolder.traits.len)
+	if(subject.traitHolder && length(subject.traitHolder.traits))
 		R.fields["traits"] = subject.traitHolder.traits.Copy()
 
 	//Add an implant if needed
@@ -370,19 +370,6 @@
 		qdel(C)
 		JOB_XP(usr, "Medical Doctor", 15)
 		src.menu = 1
-
-/obj/machinery/computer/cloning/power_change()
-
-	if(status & BROKEN)
-		icon_state = "commb"
-	else
-		if( powered() )
-			icon_state = initial(icon_state)
-			status &= ~NOPOWER
-		else
-			SPAWN_DBG(rand(0, 15))
-				src.icon_state = "c_unpowered"
-				status |= NOPOWER
 
 /// find a ghost mob (or a ghost respawned as critter in vr/afterlife bar)
 proc/find_ghost_by_key(var/find_key)
@@ -594,7 +581,7 @@ proc/find_ghost_by_key(var/find_key)
 		if (!islist(src.pods))
 			src.pods = list()
 		if (!isnull(src.id) && genResearch && islist(genResearch.clonepods) && length(genResearch.clonepods))
-			for (var/obj/machinery/clonepod/pod as() in genResearch.clonepods)
+			for (var/obj/machinery/clonepod/pod as anything in genResearch.clonepods)
 				if (pod.id == src.id && !src.pods.Find(pod))
 					src.pods += pod
 					DEBUG_MESSAGE("[src] adds pod [log_loc(pod)] (ID [src.id]) in genResearch.clonepods")

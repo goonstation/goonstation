@@ -1255,7 +1255,7 @@
 		theMind = M.mind
 
 	var/mob/living/silicon/ghostdrone/G
-	if (pickNew && islist(available_ghostdrones) && available_ghostdrones.len)
+	if (pickNew && islist(available_ghostdrones) && length(available_ghostdrones))
 		for (var/mob/living/silicon/ghostdrone/T in available_ghostdrones)
 			if (T.newDrone)
 				G = T

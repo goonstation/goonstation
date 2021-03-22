@@ -150,7 +150,7 @@
 			. += "<div><img src='[resource("images/tooltips/stamina.png")]' alt='' class='icon' /><span>Stamina: [src.stamina_damage ? src.stamina_damage : "0"] dmg, [stamina_cost] consumed per swing</span></div>"
 
 		//standard object properties
-		if(src.properties && src.properties.len)
+		if(src.properties && length(src.properties))
 			for(var/datum/objectProperty/P in src.properties)
 				if(!P.hidden)
 					. += "<br><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/[P.tooltipImg]")]\" width=\"12\" height=\"12\" /> [P.name]: [P.getTooltipDesc(src, src.properties[P])]"
@@ -159,7 +159,7 @@
 		if(src.c_flags & HAS_GRAB_EQUIP)
 			. += "<br><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/prot.png")]\" width=\"12\" height=\"12\" /> Block+: "
 			for(var/obj/item/grab/block/B in src)
-				if(B.properties && B.properties.len)
+				if(B.properties && length(B.properties))
 					//inline-blocking-based properties (disorient resist and damage-type blocks)
 					for(var/datum/objectProperty/P in B.properties)
 						if(P.inline)
@@ -258,7 +258,7 @@
 				C.RemoveComponent(/datum/component/loctargeting/mat_triggersonlife)
 
 	removeMaterial()
-		if (src.material && src.material.triggersOnLife.len)
+		if (src.material && length(src.material.triggersOnLife))
 			var/datum/component/C = src.GetComponent(/datum/component/loctargeting/mat_triggersonlife)
 			if (C)
 				C.RemoveComponent(/datum/component/loctargeting/mat_triggersonlife)
@@ -382,12 +382,13 @@
 	if(!M.can_eat(src, user, bypass_utensils))
 		return 0
 
-	actions.start(new/datum/action/bar/icon/eatstuff(src, M, user), user)
-	return 1
+	if(!actions.hasAction(user, "eatstuff"))
+		actions.start(new/datum/action/bar/icon/eatstuff(src, M, user), user)
+		return 1
 
 /datum/action/bar/icon/eatstuff
 	duration = 3 SECONDS
-	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	id = "eatstuff"
 	icon = null
 	icon_state = null
@@ -418,8 +419,6 @@
 			src.icon = null // action/bar/icon
 			src.icon_state = null // minus the action bar icon
 			duration = 0 // pretty much instant
-			REMOVE_FLAG(src.interrupt_flags, INTERRUPT_MOVE) // take it to go
-			REMOVE_FLAG(src.interrupt_flags, INTERRUPT_ACT) // And spam it if you want
 		else
 			src.icon = master.icon
 			src.icon_state = master.icon_state
@@ -431,42 +430,22 @@
 		if(src.failchecks())
 			interrupt(INTERRUPT_ALWAYS)
 
-		if(M_is_user && !is_it_organs)
-			bar.icon = null // Action bars
-			border.icon = null // minus action bar
-		else
-			eat_twitch(M)
-
-		M.on_eat(master)
-
-		if (src.M_is_user)
-			if(is_it_organs)
+		eat_twitch(M)
+		if(src.M_is_user)
+			if(!src.is_it_organs)
+				bar.icon = null // Action bars
+				border.icon = null // minus action bar
+			else
 				M.visible_message("<span class='alert'><b>[M]</b> starts cramming \the [master] into [his_or_her(M)] mouth[prob(30) ? " like a [pick(src.grody_adj)] [pick(src.grody_noun)]" : ""]!</span>",\
 				"<span class='[is_awful_monsterthing ? "notice" : "alert"]'>You start cramming \the [master] into your mouth!</span>")
-			else
-				boutput(M, "<span class='notice'>You go to take a bite out of [master].</span>")
+				logTheThing("diary", user, M, "attempts to eat [master], an organ. [log_reagents(master)]", "game") // Gotta keep track on who's eating who's brain
 		else
 			user.tri_message("<span class='alert'><b>[user]</b> tries to feed [M] [master]!</span>",\
 			user, "<span class='alert'>You try to feed [M] [master]!</span>",\
 			M, "<span class='[is_awful_monsterthing ? "notice" : "alert"]'><b>[user]</b> tries to feed you [master]!</span>")
-		logTheThing("combat", user, M, "attempts to feed [constructTarget(M,"combat")] [master] [log_reagents(master)]")
+			logTheThing("combat", user, M, "attempts to feed [constructTarget(M,"combat")] [master] [log_reagents(master)]")
 
-	onInterrupt(flag)
-		. = ..()
-		if(src.M_is_user)
-			if(src.is_it_organs)
-				M.visible_message("<span class='alert'>[M] spits out \the [master].</span>","<span class='[is_awful_monsterthing ? "alert" : "notice"]'>You spit out \the [master].</span>")
-			else
-				boutput(M, "<span class='notice'>You stop trying to eat [master].</span>")
-		else
-			if(src.is_it_organs)
-				user.tri_message("<span class='alert'><b>[user]</b> stops forcing \the [master] down [M]'s throat!</span>",\
-				user, "<span class='alert'>You remove \the [master] from [M]'s face!</span>",\
-				M, "<span class='[is_awful_monsterthing ? "alert" : "notice"]'><b>[user]</b> stops forcing \the [master] down your throat!</span>")
-			else
-				user.tri_message("<span class='alert'><b>[user]</b> stops trying to shove \the [master] down [M]'s throat!</span>",\
-				user, "<span class='alert'>You remove \the [master] from [M]'s face!</span>",\
-				M, "<span class='alert'><b>[user]</b> stops trying to shove \the [master] down your throat!</span>")
+		M.on_eat(master)
 
 	onUpdate()
 		..()
@@ -521,8 +500,10 @@
 		SEND_SIGNAL(M, COMSIG_ITEM_CONSUMED_PARTIAL, user, master)
 
 		if(ate_the_whole_thing)
-			SEND_SIGNAL(master, COMSIG_ITEM_CONSUMED_ALL, M, user)
-			SEND_SIGNAL(M, COMSIG_ITEM_CONSUMED_ALL, user, master)
+			// procs effects specific to the item (master) onto whoever eats it (M)
+			SEND_SIGNAL(master, COMSIG_ITEM_CONSUMED_ALL, M, user) // item parent, format: I (thing being eaten), M (mob eating it), user (mob making M eat it)
+			// procs effects specific to the mob (M) when eating the item (master) if applicable
+			SEND_SIGNAL(M, COMSIG_ITEM_CONSUMED_ALL, user, master) // mob parent, format: M (mob eating it), user (mob making M eat it), I (thing being eaten)
 			M.visible_message("<span class='alert'>[M] finishes eating [master].</span>",\
 			"<span class='alert'>You finish eating [master].</span>")
 
@@ -602,7 +583,7 @@
 	ClearSpecificOverlays("burn_overlay")
 	name = "[pick("charred","burned","scorched")] [name]"
 
-		/*if (src.reagents && src.reagents.reagent_list && src.reagents.reagent_list.len)
+		/*if (src.reagents && src.reagents.reagent_list && length(src.reagents.reagent_list))
 
 			//boutput(world, "<span class='alert'><b>[src] is releasing chemsmoke!</b></span>")
 			//cogwerks note for drsingh: this was causing infinite server-killing problems
@@ -837,6 +818,9 @@
 /obj/item/proc/try_put_hand_mousedrop(mob/user)
 	var/oldloc = src.loc
 
+	if(src.equipped_in_slot && src.cant_self_remove)
+		return 0
+
 	if (!src.anchored)
 		if (!user.r_hand || !user.l_hand || (user.r_hand == src) || (user.l_hand == src))
 			if (!user.hand) //big messy ugly bad if() chunk here because we want to prefer active hand
@@ -1058,8 +1042,7 @@
 /obj/item/blob_act(var/power)
 	if (src.artifact)
 		if (!src.ArtifactSanityCheck()) return
-		src.ArtifactStimulus("force", power)
-		src.ArtifactStimulus("carbtouch", 1)
+		src.Artifact_blob_act(power)
 	return
 
 //nah

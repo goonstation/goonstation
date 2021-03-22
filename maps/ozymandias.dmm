@@ -6176,6 +6176,7 @@
 "bRA" = (
 /obj/table/wood/auto,
 /obj/displaycase{
+	displayed = new /obj/item/captaingun
 	pixel_y = 6
 	},
 /obj/machinery/light/small{
@@ -9805,7 +9806,7 @@
 	name = "speedo"
 	},
 /obj/item/clothing/head/apprentice,
-/obj/item/card_box/suit,
+/obj/item/card_box/plain,
 /obj/machinery/light/small{
 	dir = 1;
 	pixel_y = 21
@@ -13715,7 +13716,7 @@
 "dZM" = (
 /obj/table/wood/auto,
 /obj/item/storage/box/nerd_kit,
-/obj/item/card_box/suit,
+/obj/item/card_box/plain,
 /obj/machinery/light/small{
 	dir = 4;
 	pixel_x = 12
@@ -25891,7 +25892,7 @@
 /area/station/security/main)
 "hzu" = (
 /obj/table/wood/auto,
-/obj/item/playing_cards/suit{
+/obj/item/card_group/plain{
 	pixel_x = -5
 	},
 /obj/item/matchbook{
@@ -37601,7 +37602,7 @@
 	},
 /obj/item/dice,
 /obj/item/dice/coin,
-/obj/item/card_box/suit,
+/obj/item/card_box/plain,
 /obj/machinery/light/small{
 	dir = 1;
 	pixel_y = 21
@@ -63958,7 +63959,7 @@
 	icon_state = "chair_couch-blue";
 	name = "ratty blue couch"
 	},
-/obj/item/playing_cards/suit,
+/obj/item/card_group/plain,
 /obj/landmark/start{
 	name = "Staff Assistant"
 	},
@@ -70180,7 +70181,7 @@
 /turf/simulated/floor/plating,
 /area/station/security/brig/cell_block)
 "tWd" = (
-/obj/storage/crate/rcd,
+/obj/storage/crate/rcd/CE,
 /turf/simulated/floor/grey,
 /area/station/engine/engineering/ce)
 "tWe" = (
