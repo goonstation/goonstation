@@ -1,5 +1,9 @@
 
 (t)sun mar 21 21
+(u)Nefarious6th
+(p)4055
+(e)🐛🗺|bug, mapping
+(*)Research on the NSS Destiny has gotten an overhaul.
 (u)Sovexe
 (p)4019
 (e)⚖|balance
