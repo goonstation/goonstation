@@ -8,17 +8,6 @@ var/fartcount = 0
 	icon_state = "green"
 	name = "Big Yank's Cheap Tug"
 
-/area/shuttle/john/diner
-	icon_state = "shuttle"
-
-/area/shuttle/john/owlery
-	icon_state = "shuttle2"
-
-/area/shuttle/john/mining
-	icon_state = "shuttle2"
-
-/area/shuttle/john/grillnasium
-	icon_state = "shuttle"
 
 /obj/item/clothing/head/paper_hat/john
 	name = "John Bill's paper bus captain hat"
