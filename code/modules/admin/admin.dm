@@ -3878,16 +3878,6 @@ var/global/noir = 0
 ///////////////////////////////////////////////////////////////////////////////////////////////Panels
 
 /datum/player_panel
-	var/list/key = list()
-	var/list/name = list()
-	var/list/real_name = list()
-	var/list/assigned_role = list()
-	var/list/special_role = list()
-	var/list/player_type = list()
-	var/list/computer_id = list()
-	var/list/ip = list()
-	var/list/joined = list()
-	var/list/player_location = list()
 
 /datum/player_panel/ui_state(mob/user)
 	return tgui_always_state
