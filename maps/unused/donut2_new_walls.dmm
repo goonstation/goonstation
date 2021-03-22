@@ -20898,7 +20898,9 @@
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/captain)
 "aTR" = (
-/obj/displaycase,
+/obj/displaycase{
+	displayed = new /obj/item/captaingun
+},
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/captain)
 "aTS" = (
@@ -41508,26 +41510,6 @@
 	dir = 10
 	},
 /area/station/mining/staff_room)
-"fjA" = (
-/obj/decal/tile_edge/floorguide/qm{
-	dir = 1
-	},
-/obj/decal/tile_edge/floorguide/botany{
-	dir = 8
-	},
-/turf/simulated/floor/black,
-/area/space)
-"fkb" = (
-/obj/decal/tile_edge/floorguide{
-	dir = 8
-	},
-/obj/decal/tile_edge/floorguide{
-	dir = 4
-	},
-/turf/simulated/floor/black/corner{
-	dir = 4
-	},
-/area/space)
 "fpl" = (
 /obj/decal/tile_edge/floorguide/arrow_s{
 	dir = 4
@@ -41845,17 +41827,6 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/station/security/armory)
-"hcK" = (
-/obj/decal/tile_edge/floorguide{
-	dir = 8
-	},
-/obj/decal/tile_edge/floorguide{
-	dir = 4
-	},
-/turf/simulated/floor/black/corner{
-	dir = 8
-	},
-/area/space)
 "hfe" = (
 /obj/machinery/nanofab/refining,
 /turf/simulated/floor/yellow/side,
@@ -42854,15 +42825,6 @@
 	dir = 6
 	},
 /area/station/mining/staff_room)
-"mLK" = (
-/obj/decal/tile_edge/floorguide/command{
-	dir = 4
-	},
-/obj/decal/tile_edge/floorguide/security{
-	dir = 1
-	},
-/turf/simulated/floor/black,
-/area/space)
 "mNm" = (
 /turf/simulated/floor/plating,
 /area/station/quartermaster/refinery)
@@ -43227,15 +43189,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/central)
-"oGW" = (
-/obj/decal/tile_edge/floorguide,
-/obj/decal/tile_edge/floorguide{
-	dir = 1
-	},
-/turf/simulated/floor/black/corner{
-	dir = 1
-	},
-/area/space)
 "oIp" = (
 /obj/reagent_dispensers/fueltank,
 /turf/simulated/floor,
@@ -43849,19 +43802,6 @@
 /obj/machinery/r_door_control/podbay/research,
 /turf/simulated/wall/auto/supernorn,
 /area/station/hangar/science)
-"rBX" = (
-/obj/decal/tile_edge/floorguide/evac{
-	dir = 8
-	},
-/obj/decal/tile_edge/floorguide/evac{
-	dir = 4
-	},
-/obj/decal/tile_edge/floorguide{
-	dir = 1
-	},
-/obj/decal/tile_edge/floorguide,
-/turf/simulated/floor/black,
-/area/space)
 "rDK" = (
 /obj/lattice{
 	dir = 10;
@@ -43914,13 +43854,6 @@
 	},
 /turf/simulated/floor/grime,
 /area/station/security/brig)
-"rYU" = (
-/obj/decal/tile_edge/floorguide/engineering,
-/obj/decal/tile_edge/floorguide/hop{
-	dir = 4
-	},
-/turf/simulated/floor/black,
-/area/space)
 "rZP" = (
 /obj/lattice,
 /obj/warp_beacon{
@@ -44224,13 +44157,6 @@
 	},
 /turf/simulated/floor,
 /area/station/mining/staff_room)
-"tde" = (
-/obj/decal/tile_edge/floorguide{
-	dir = 1
-	},
-/obj/decal/tile_edge/floorguide,
-/turf/simulated/floor/black/corner,
-/area/space)
 "tfu" = (
 /obj/grille/catwalk{
 	dir = 6
@@ -44356,13 +44282,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hydroponics/bay)
-"tNh" = (
-/obj/decal/tile_edge/floorguide/mining,
-/obj/decal/tile_edge/floorguide/medbay{
-	dir = 8
-	},
-/turf/simulated/floor/black,
-/area/space)
 "tTO" = (
 /obj/grille/catwalk{
 	dir = 6
@@ -80018,9 +79937,9 @@ aaa
 aaa
 aaa
 aaa
-oGW
-tNh
-fkb
+aaa
+aaa
+aaa
 aCy
 aCy
 aCy
@@ -80320,9 +80239,9 @@ aap
 acK
 aaa
 aaa
-fjA
-rBX
-rYU
+aaa
+aaa
+aaa
 aCy
 aBK
 aDm
@@ -80622,9 +80541,9 @@ bcj
 bcj
 aCy
 aaa
-hcK
-mLK
-tde
+aaa
+aaa
+aaa
 aCy
 azU
 aEQ
