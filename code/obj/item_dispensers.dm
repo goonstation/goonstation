@@ -118,3 +118,17 @@
 	amount = 10000
 	display_amount = 0
 	pixel_y = 0
+	flags = FPRINT | NOSPLASH
+
+	New()
+		..()
+		src.create_reagents(10)
+
+	attackby(obj/item/W as obj, mob/user as mob)
+		if (istype(W, /obj/item/reagent_containers/glass) || istype(W, /obj/item/reagent_containers/food/drinks))
+			if (W.reagents.total_volume <= (W.reagents.maximum_volume - 10))
+				W.reagents.add_reagent("ice", 10, null, (T0C - 50))
+				user.visible_message("[user] adds some ice to the [W].",\
+			"<span class='notice'>You add some ice to the [W].</span>")
+			else
+				boutput(user, "<span class='alert'>[W] is too full!</span>")
