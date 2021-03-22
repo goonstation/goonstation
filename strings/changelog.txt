@@ -1,5 +1,9 @@
 
 (t)sun mar 21 21
+(u)Penny
+(p)4012
+(e)|
+(*)Multitools now show the netid and wifi frequency of devices they're used on
 (u)Nefarious6th
 (p)4055
 (e)🐛🗺|bug, mapping
