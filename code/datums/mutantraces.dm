@@ -980,7 +980,7 @@
 					mob.blood_volume = 500
 
 					if (!mob.organHolder)
-						mob.organHolder = new(src)
+						mob.organHolder = new(mob)
 					mob.organHolder.create_organs()
 
 					if (mob.get_stamina() != (STAMINA_MAX + mob.get_stam_mod_max()))

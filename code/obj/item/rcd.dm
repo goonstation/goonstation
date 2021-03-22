@@ -127,6 +127,9 @@ Broken RCD + Effects
 	// What index into mode list we are (used for updating)
 	var/internal_mode = 1
 
+	/// do we really actually for real want this to work in adventure zones?? just do this with varedit dont make children with this on
+	var/really_actually_bypass_z_restriction = false
+
 	get_desc()
 		. += "<br>It holds [matter]/[max_matter] matter units. It is currently set to "
 		switch (src.mode)
@@ -214,6 +217,10 @@ Broken RCD + Effects
 		return
 
 	afterattack(atom/A, mob/user as mob)
+		if ((isrestrictedz(user.z) || isrestrictedz(A.z)) && !src.really_actually_bypass_z_restriction)
+			boutput(user, "\The [src] won't work here for some reason. Oh well!")
+			return
+
 		if (get_dist(get_turf(src), get_turf(A)) > 1)
 			return
 

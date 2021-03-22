@@ -434,9 +434,9 @@ var/datum/action_controller/actions
 
 		src.owner.visible_message("[src.end_message]")
 		if (src.target)
-			INVOKE_ASYNC(src.target, src.proc_path, src.proc_args)
+			INVOKE_ASYNC(arglist(list(src.target, src.proc_path) + src.proc_args))
 		else
-			INVOKE_ASYNC(src.owner, src.proc_path, src.proc_args)
+			INVOKE_ASYNC(arglist(list(src.owner, src.proc_path) + src.proc_args))
 
 /datum/action/bar/icon/build
 	duration = 30

@@ -31,6 +31,8 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 	var/queued_click = 0
 	var/joined_date = null
 	var/adventure_view = 0
+	/// controls whether or not the varedit page is refreshed after altering variables
+	var/refresh_varedit_onchange = TRUE
 	var/list/hidden_verbs = null
 
 	var/datum/buildmode_holder/buildmode = null

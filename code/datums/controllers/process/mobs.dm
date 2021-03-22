@@ -42,6 +42,7 @@ datum/controller/process/mobs
 				footstep_extrarange = 0
 
 		for(var/X in src.mobs)
+			last_object = X
 			if(istype(X, /mob/living))
 				var/mob/living/M = X
 				if( M.z == 4 && !Z4_ACTIVE ) continue
