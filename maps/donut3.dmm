@@ -37682,6 +37682,7 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
+/obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
 "lhf" = (
@@ -37716,6 +37717,11 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/ne)
+"lhu" = (
+/obj/decal/cleanable/dirt/jen,
+/obj/storage/closet/biohazard,
+/turf/simulated/floor/plating/jen,
+/area/station/maintenance/inner/sw)
 "lhv" = (
 /obj/table/auto,
 /obj/item/storage/box/evidence{
@@ -43209,16 +43215,6 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/science/storage)
-"mPm" = (
-/obj/grille/catwalk/jen/side{
-	dir = 1
-	},
-/obj/decal/cleanable/dirt/jen,
-/obj/submachine/GTM{
-	pixel_y = 32
-	},
-/turf/simulated/floor/plating/jen,
-/area/station/maintenance/outer/se)
 "mPQ" = (
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/white,
@@ -61375,11 +61371,6 @@
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/garden)
-"rZl" = (
-/obj/decal/cleanable/dirt/jen,
-/obj/storage/closet/biohazard,
-/turf/simulated/floor/plating/jen,
-/area/station/maintenance/inner/sw)
 "rZv" = (
 /obj/access_spawn/maint,
 /obj/decal/mule/dropoff,
@@ -73199,6 +73190,16 @@
 "vBF" = (
 /turf/simulated/wall/auto/reinforced/jen/blue,
 /area/station/hallway/primary/southeast)
+"vBG" = (
+/obj/grille/catwalk/jen/side{
+	dir = 1
+	},
+/obj/decal/cleanable/dirt/jen,
+/obj/submachine/GTM{
+	pixel_y = 32
+	},
+/turf/simulated/floor/plating/jen,
+/area/station/maintenance/outer/se)
 "vBJ" = (
 /turf/simulated/wall/auto/shuttle{
 	icon_state = "12"
@@ -116871,7 +116872,7 @@ mCx
 suS
 qnq
 lnO
-rZl
+lhu
 ugO
 oLI
 vMF
@@ -142213,7 +142214,7 @@ lVy
 wPF
 qwP
 nxQ
-mPm
+vBG
 vfx
 nxQ
 qtx
