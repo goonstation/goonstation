@@ -208,7 +208,23 @@
 				src.topping_holder -= topping_color
 				I.Blend(topping_color, ICON_ADD)
 				src.overlays += I
+/obj/item/reagent_containers/food/snacks/pizza/random
+	desc = "A pizza that somehow generates its own toppings and cooks itself! Oh the marvels of technology"
 
+	New()
+		..()
+		var/obj/item/reagent_containers/food/snacks/ingredient/pizza3/pizzabase = new /obj/item/reagent_containers/food/snacks/ingredient/pizza3
+		var/num_ingredients = rand(1,3)
+		for (var/i = 1, i <= num_ingredients, i++)
+			var/snack_type =  pick(concrete_typesof(/obj/item/reagent_containers/food))
+			var/obj/item/reagent_containers/R = new snack_type
+			pizzabase.add_ingredient(R, null)
+		var/datum/cookingrecipe/pizza/recipe = new
+		recipe.cook_pizza(pizzabase,src)
+		var/toppingstext = pizzabase.toppingstext
+		src.desc = "A pizza with [toppingstext] toppings. Looks ... [pick("disturbing","interesting","awful","grody","kinda good","alright", "like a pizza","cursed","perfect","cruel","bland","old","unholy","squishy","wonderful","organic","fancy","traditional","rustic","experimental","enchanted","eldritch","horrific","palatable")][pick("?",".")]"
+		qdel(pizzabase)
+		src.add_topping(0)
 /obj/item/reagent_containers/food/snacks/pizza/pepperoni
 	name = "pepperoni pizza"
 	desc = "A typical pepperoni pizza."
@@ -218,7 +234,6 @@
 	New()
 		..()
 		src.add_topping(0)
-
 /obj/item/reagent_containers/food/snacks/pizza/meatball
 	name = "meatball pizza"
 	desc = "A typical meatball pizza."

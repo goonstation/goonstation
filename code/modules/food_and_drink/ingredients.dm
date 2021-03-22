@@ -593,8 +593,9 @@
 		if(user)
 			boutput(user, "<span class='notice'>You add [W] to [src].</span>")
 		topping = 1
-		food_effects += F.food_effects
-		src.AddComponent(/datum/component/consume/food_effects, src.food_effects)
+		if(F.food_effects)
+			food_effects += F.food_effects
+			src.AddComponent(/datum/component/consume/food_effects, src.food_effects)
 		if (F.real_name)
 			toppings += F.real_name
 		else
@@ -642,8 +643,10 @@
 			var/obj/item/reagent_containers/R = new snack_type
 			src.add_ingredient(R, null)
 		var/datum/cookingrecipe/pizza/recipe = new
-		var/new_pizza = recipe.specialOutput(src)
-		new new_pizza
+		var/obj/item/reagent_containers/food/snacks/pizza/new_pizza = recipe.specialOutput(null,src)
+		src.name = new_pizza.name
+		new_pizza.loc = src.loc
+		qdel(src)
 
 /obj/item/reagent_containers/food/snacks/ingredient/pasta
 	// generic uncooked pasta parent
