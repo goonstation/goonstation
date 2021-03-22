@@ -45873,6 +45873,7 @@
 /obj/item/suture,
 /obj/item/hemostat,
 /obj/item/scissors/surgical_scissors,
+/obj/item/surgical_spoon,
 /obj/machinery/light/incandescent/netural,
 /turf/simulated/floor/bluewhite{
 	dir = 6
