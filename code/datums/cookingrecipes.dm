@@ -668,31 +668,32 @@
 	cookbonus = 18
 	output = null
 
-	specialOutput(obj/submachine/ourCooker)
+	specialOutput(obj/submachine/ourCooker,obj/item/reagent_containers/food/snacks/ingredient/pizza3/ourPizza)
 		if (!ourCooker)
-			return null
+			return
 
 		var/obj/item/reagent_containers/food/snacks/pizza/customPizza = new /obj/item/reagent_containers/food/snacks/pizza (ourCooker)
 
 		for (var/obj/item/reagent_containers/food/snacks/ingredient/pizza3/P in ourCooker)
-			var/toppingstext = null
-			if(P.toppingstext)
-				toppingstext = P.toppingstext
-				customPizza.name = "[toppingstext] pizza"
-				customPizza.desc = "A pizza with [toppingstext] toppings. Looks pretty [pick("good","dang good","delicious","scrumptious","heavenly","alright")]."
-			else
-				customPizza.name = "pizza"
-				customPizza.desc = 	"A plain cheese and tomato pizza. Looks pretty alright."
-			customPizza.overlays += P.overlays
-			customPizza.num = P.num
-			customPizza.topping = P.topping
-			customPizza.topping_colors = P.topping_colors
-			customPizza.heal_amt = P.heal_amt
-			P.reagents.trans_to(customPizza, P.reagents.total_volume)
-			customPizza.food_effects += P.food_effects
-			customPizza.AddComponent(/datum/component/consume/food_effects, customPizza.food_effects)
-			customPizza.AddComponent(/datum/component/consume/foodheal, customPizza.heal_amt)
-
+			cook_pizza(P, customPizza)
+	proc/cook_pizza(var/obj/item/reagent_containers/food/snacks/ingredient/pizza3/P, var/obj/item/reagent_containers/food/snacks/pizza/customPizza)
+		var/toppingstext = null
+		if(P.toppingstext)
+			toppingstext = P.toppingstext
+			customPizza.name = "[toppingstext] pizza"
+			customPizza.desc = "A pizza with [toppingstext] toppings. Looks pretty [pick("good","dang good","delicious","scrumptious","heavenly","alright")]."
+		else
+			customPizza.name = "pizza"
+			customPizza.desc = 	"A plain cheese and tomato pizza. Looks pretty alright."
+		customPizza.overlays += P.overlays
+		customPizza.num = P.num
+		customPizza.topping = P.topping
+		customPizza.topping_colors = P.topping_colors
+		customPizza.heal_amt = P.heal_amt
+		P.reagents.trans_to(customPizza, P.reagents.total_volume)
+		customPizza.food_effects += P.food_effects
+		customPizza.AddComponent(/datum/component/consume/food_effects, customPizza.food_effects)
+		customPizza.AddComponent(/datum/component/consume/foodheal, customPizza.heal_amt)
 		return customPizza
 
 /datum/cookingrecipe/cheesetoast
