@@ -61986,6 +61986,7 @@
 /obj/item/device/audio_log,
 /obj/item/audio_tape,
 /obj/item/audio_tape,
+/obj/item/hand_labeler,
 /turf/simulated/floor/wood/seven,
 /area/station/security/detectives_office)
 "siB" = (
