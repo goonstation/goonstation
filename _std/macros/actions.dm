@@ -10,9 +10,13 @@
 * for instance, callback actionbars have an "args" variable you can modify to call the callback proc with arguements.
 *
 * just make sure to start it once its been made!
+
+	// Update: you can set target to null to make it call the proc on owner and not do the distance check,
+	// and you now want to set proc_args in the macro, unless you have no args.var
+	// if you have no args, set proc_args to null, otherwise it's a list of the args.
 */
-#define SETUP_GENERIC_ACTIONBAR(owner, target, duration, proc_path, action_icon, action_icon_state, end_message) \
-	actions.start(new /datum/action/bar/icon/callback(owner, target, duration, proc_path, action_icon, action_icon_state,\
+#define SETUP_GENERIC_ACTIONBAR(owner, target, duration, proc_path, proc_args, action_icon, action_icon_state, end_message) \
+	actions.start(new /datum/action/bar/icon/callback(owner, target, duration, proc_path, proc_args, action_icon, action_icon_state,\
 	end_message), owner)
 
 /* example that uses the macro:
@@ -24,7 +28,7 @@
 
 	attack_self(var/mob/M)
 		M.visible_message("[M] starts fiddling with \the [src].")
-		SETUP_GENERIC_ACTIONBAR(M, src, 5 SECONDS, /obj/item/foo/proc/cool_proc, src.icon, src.icon_state,\
+		SETUP_GENERIC_ACTIONBAR(M, src, 5 SECONDS, /obj/item/foo/proc/cool_proc, null, src.icon, src.icon_state,\
 		"[M] finishes fiddling with \the [src]")
 
 	proc/cool_proc()
@@ -41,8 +45,7 @@
 	attack_self(var/mob/M)
 		M.visible_message("[M] starts fiddling with \the [src].")
 		var/datum/action/bar/icon/callback/action_bar = new /datum/action/bar/icon/callback(M, src, 5 SECONDS, /obj/item/foo/proc/cool_proc,\
-		src.icon, src.icon_state, "[M] finishes fiddling with \the [src]")
-		action_bar.proc_args = list("[M]")
+		list(M), src.icon, src.icon_state, "[M] finishes fiddling with \the [src]")
 		actions.start(action_bar, M)
 
 	proc/cool_proc(var/arg_1)
