@@ -481,7 +481,7 @@ This is basically useless for anyone but miners.
 	desc = "These big red boots have an explosive step sound. The entire station is sure to want to show you their appreciation."
 	job = list("Clown")
 	not_in_crates = 1
-	blockedmode = list(/datum/game_mode/spy)
+	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/spy_theft)
 
 /datum/syndicate_buylist/traitor/clown_mask
 	name = "Clown Mask"
@@ -780,7 +780,7 @@ This is basically useless for anyone but miners.
 	cost = 2
 	desc = "A box of shot glasses that hold WAAAY more that normal. Cheat at drinking games!"
 	job = list("Bartender")
-	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/revolution)
+	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/spy_theft, /datum/game_mode/revolution)
 
 /datum/syndicate_buylist/traitor/vuvuzelagun
 	name = "Vuvuzela Gun"
@@ -872,7 +872,7 @@ This is basically useless for anyone but miners.
 	vr_allowed = 0
 	desc = "An add on to the genetics cloning pod that make anyone cloned loyal to whoever installed it."
 	job = list("Geneticist", "Medical Doctor", "Medical Director")
-	blockedmode = list(/datum/game_mode/revolution)
+	blockedmode = list(/datum/game_mode/revolution, /datum/game_mode/spy_theft)
 
 /datum/syndicate_buylist/traitor/deluxe_mindslave_module
 	name = "Deluxe Mindslave Cloning Module Kit"
@@ -890,7 +890,7 @@ This is basically useless for anyone but miners.
 	vr_allowed = 0
 	desc = "A device that allows PR-6S Guardbuddy units to use their internal charge to replenish kinetic ammunition."
 	job = list("Research Director")
-	blockedmode = list(/datum/game_mode/revolution)
+	blockedmode = list(/datum/game_mode/revolution, /datum/game_mode/spy_theft)
 
 /datum/syndicate_buylist/traitor/wiretap
 	name = "Wiretap Radio Upgrade"
@@ -967,7 +967,7 @@ This is basically useless for anyone but miners.
 	item = /obj/item/storage/box/banana_grenade_kit
 	cost = 2
 	desc = "Honk."
-	blockedmode = list(/datum/game_mode/spy)
+	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/spy_theft)
 
 /datum/syndicate_buylist/surplus/turboflash_box
 	name = "Flash/cell assembly box"
