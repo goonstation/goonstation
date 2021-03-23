@@ -33,6 +33,13 @@
 	var/const/life_tick_spacing = 20
 	var/haunt_duration = 300
 	var/death_icon_state = "wraith-die"
+
+	var/list/poltergeists
+	//holy water, formaldehyde tolerances. 
+	//probably will change these around, but these might be alright to start. -kyle
+	var/holy_water_tol = 0		//unused presently
+	var/formaldehyde_tol = 25
+
 	//////////////
 	// Wraith Overrides
 	//////////////
@@ -58,6 +65,7 @@
 
 	New(var/mob/M)
 		. = ..()
+		src.poltergeists = list()
 		src.invisibility = 16
 		//src.sight |= SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
 		src.sight |= SEE_SELF // let's not make it see through walls
@@ -99,6 +107,7 @@
 				plane.alpha = 255
 
 	disposing()
+		poltergeists = null
 		..()
 
 	Stat()
@@ -331,6 +340,8 @@
 				SPAWN_DBG(1 MINUTE) //one minute
 					src.makeIncorporeal()
 
+		//if ((marker && get_dist(src, marker) > 15) && (master && get_dist(P,src) > 12 ))
+
 			return
 
 		//Z level boundary stuff
@@ -344,6 +355,20 @@
 			src.x--
 		OnMove()
 
+
+	OnMove()
+		..()
+
+		//Transfer step/distance to poltergeists
+		if (length(src.poltergeists))
+			for (var/mob/wraith/poltergeist/P in src.poltergeists)
+				P.update_well_dist(TRUE, FALSE)
+				if (P.following_master)
+					if (P.dist_from_master <= P.max_dist_master)
+						step(P, move_dir)
+					else
+						P.following_master = 0
+						boutput(P, "<span class='alert'>You are too far from your master to continue following them!</span>")
 
 	can_use_hands()
 		if (src.density) return 1
@@ -366,6 +391,34 @@
 			return 100
 		if (!density)
 			src.examine_verb(target)
+
+	examine_verb(atom/A as mob|obj|turf in view())
+		..()
+		
+		//Special info (that might eventually) be pertinent to the wraith.
+		//the target's chaplain training, formaldehyde (in use), and holy water amounts. 
+		if (ismob(A))
+			var/string = ""
+			var/mob/M = A
+			if (M.traitHolder.hasTrait("training_chaplain"))
+				string += "<span class='alert'>This creature is <b><i>vile</i></b>!</span>\n"
+			
+			if (M.reagents)
+				var/f_amt = M.reagents.get_reagent_amount("formaldehyde")
+				if (f_amt >= src.formaldehyde_tol)
+					string += "<span class='blue'>This creature is <i>saturated</i> with a most unpleasant substance!</span>\n"
+				else if (f_amt > 0)
+					string += "<span class='blue'>This creature has a somewhat unpleasant <i>taste</i>.</span>\n"
+
+				var/hw_amt = M.reagents.get_reagent_amount("water_holy")
+				if (hw_amt >= src.holy_water_tol)
+					string += "<span class='blue'>This creature exudes a truly vile <i>aroma</i>!</span>\n"
+				else if (hw_amt > 0)
+					string += "<span class='blue'>This creature has a somewhat vile <i>fragrance</i>!</span>\n"
+
+			if (length(string))
+				boutput(src, string)
+
 
 	say(var/message)
 		message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
