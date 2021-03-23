@@ -395,6 +395,8 @@ var/datum/action_controller/actions
 			src.proc_path = proc_path
 		else //no proc, dont do the thing
 			CRASH("no proc was specified to be called once the action bar ends")
+		if (proc_args)
+			src.proc_args = proc_args
 		if (icon) //optional, dont always want an icon
 			src.icon = icon
 			if (icon_state) //optional, dont always want an icon state
