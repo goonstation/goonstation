@@ -635,7 +635,7 @@
 	desc = "x4 Paper Bins, x2 Clipboards, x1 Sticky Note Stacks, x5 Writing Implement Sets, x1 Stapler, x1 Scissors"
 	contains = list(/obj/item/paper_bin = 4,
 		/obj/item/clipboard = 2,
-		/obj/item/postit_stack,
+		/obj/item/item_box/postit,
 		/obj/item/storage/box/pen,
 		/obj/item/storage/box/marker/basic,
 		/obj/item/storage/box/marker,
