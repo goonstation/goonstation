@@ -392,14 +392,8 @@ var/f_color_selector_handler/F_Color_Selector
 
 /world/New()
 	Z_LOG_DEBUG("World/New", "World New()")
-	TgsNew(new /datum/tgs_event_handler/impl, TGS_SECURITY_TRUSTED)
 	tick_lag = MIN_TICKLAG//0.4//0.25
-//	loop_checks = 0
 
-	// Load in the current commit SHA from TGS if avail, by MCterra10
-	if(TgsAvailable())
-		var/datum/tgs_revision_information/rev = TgsRevision()
-		vcs_revision = rev.commit
 
 	if(world.load_intra_round_value("heisenbee_tier") >= 15 && prob(50) || prob(3))
 		lobby_titlecard = new /datum/titlecard/heisenbee()
@@ -635,7 +629,6 @@ var/f_color_selector_handler/F_Color_Selector
 #endif
 
 	Z_LOG_DEBUG("World/Init", "Init() complete")
-	TgsInitializationComplete()
 	//sleep_offline = 1
 
 	// Biodome elevator accident stats
@@ -824,7 +817,6 @@ var/f_color_selector_handler/F_Color_Selector
 
 /// world Topic. This is where external shit comes into byond and does shit.
 /world/Topic(T, addr, master, key)
-	TGS_TOPIC	// logging for these is done in TGS
 	logDiary("TOPIC: \"[T]\", from:[addr], master:[master], key:[key]")
 	Z_LOG_DEBUG("World", "TOPIC: \"[T]\", from:[addr], master:[master], key:[key]")
 

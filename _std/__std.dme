@@ -113,8 +113,6 @@
 #include "pathfinding.dm"
 #include "plane.dm"
 #include "text.dm"
-#include "tgs.config.dm" // this needs to be above tgs.dm in the compile order, ugh. can we fix this?
-#include "tgs.dm"
 #include "tgui.dm"
 #include "types.dm"
 #include "vox.dm"
