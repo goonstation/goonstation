@@ -16,7 +16,7 @@ Contains:
 #define EVENT_MINIMUM 5//the base value added to the event proc radius, serves as the radius of a 1x1
 #define UNWRENCHED 0
 #define WRENCHED 1
-#define WELDED 3
+#define WELDED 2
 
 // I'm sorry
 //////////////////////////////////////////////////// Singularity generator /////////////////////
