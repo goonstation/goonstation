@@ -1080,7 +1080,6 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			if(M == user)	continue
 			M.show_message("<span class='alert'>The [src.name] has been hit with the [W.name] by [user.name]!</span>")
 
-
 /obj/machinery/emitter/proc/weld_action(mob/user)
 	if(state == 1)
 		state = 3
