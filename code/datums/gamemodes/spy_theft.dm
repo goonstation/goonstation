@@ -721,9 +721,15 @@
 	possible_areas = get_areas_with_unblocked_turfs(/area/station)
 	possible_areas += get_areas_with_unblocked_turfs(/area/diner)
 	possible_areas -= get_areas_with_unblocked_turfs(/area/diner/tug)
+	possible_areas -= get_areas_with_unblocked_turfs(/area/station/medical/asylum)
+	possible_areas -= get_areas_with_unblocked_turfs(/area/station/security)
+	possible_areas -= get_areas_with_unblocked_turfs(/area/station/hangar/sec)
+	possible_areas -= get_areas_with_unblocked_turfs(/area/station/turret_protected)
+	possible_areas -= get_areas_with_unblocked_turfs(/area/station/ai_monitored/armory)
 	possible_areas -= get_areas_with_unblocked_turfs(/area/station/maintenance)
 	possible_areas -= get_areas_with_unblocked_turfs(/area/station/hallway)
 	possible_areas -= get_areas_with_unblocked_turfs(/area/station/engine/substation)
+	possible_areas -= get_areas_with_unblocked_turfs(/area/station/engine/singcore)
 	possible_areas -= /area/sim/test_area
 
 	for (var/area/A in possible_areas)
@@ -731,7 +737,7 @@
 		if (A.virtual)
 			possible_areas -= A
 			break
-		if (A.name == "AI Perimeter Defenses" || A.name == "VR Test Area") //I have no idea what this "AI Perimeter Defenses" is, can't find it in code! All I know is that it's an area that the game can choose that DOESNT HAVE ANY TURFS
+		if (A.name == "AI Perimeter Defenses" || A.name == "VR Test Area" || A.name == "Ocean") //I have no idea what "AI Perimeter Defenses" or "Ocean" is, can't find it in code! All I know is that it's an area that the game can choose that DOESNT HAVE ANY TURFS
 			possible_areas -= A
 			break
 
