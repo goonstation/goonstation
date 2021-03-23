@@ -36163,6 +36163,10 @@
 	dir = 5;
 	icon_state = "line2"
 	},
+/obj/mug_rack{
+	pixel_x = 6;
+	pixel_y = 29
+	},
 /obj/machinery/portable_atmospherics/canister/sleeping_agent,
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
@@ -43387,7 +43391,8 @@
 	},
 /obj/machinery/recharger/wall/sticky{
 	dir = 4;
-	pixel_x = 23
+	pixel_x = 23;
+	pixel_y = 10
 	},
 /obj/decal/tile_edge/line/red{
 	dir = 4;
@@ -51776,7 +51781,8 @@
 	},
 /obj/machinery/recharger/wall/sticky{
 	dir = 4;
-	pixel_x = 23
+	pixel_x = 23;
+	pixel_y = 8
 	},
 /obj/decal/tile_edge/line/red{
 	dir = 5;
@@ -56673,6 +56679,13 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/chapel/sanctuary)
+"wfk" = (
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/wingrille_spawn/reinforced_crystal/full,
+/turf/simulated/floor/plating/random,
+/area/station/security/beepsky)
 "wft" = (
 /obj/machinery/power/apc/autoname_north,
 /obj/cable{
@@ -99692,7 +99705,7 @@ sEl
 lME
 dYq
 ych
-pPI
+wfk
 jAa
 lYO
 laR
