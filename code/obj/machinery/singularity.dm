@@ -1059,7 +1059,8 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			return
 
 	if(isweldingtool(W))
-		var/datum/action/bar/icon/callback/action_bar = new /datum/action/bar/icon/callback(user, src, 2 SECONDS, /obj/machinery/emitter/proc/welding, W.icon, W.icon_state, null)
+		var/datum/action/bar/icon/callback/action_bar = new /datum/action/bar/icon/callback(user, src, 2 SECONDS, /obj/machinery/emitter/proc/welding,\
+		W.icon, W.icon_state, "[user] finishes using their [W] on \the [src].")
 		action_bar.proc_args = list(user)
 		if(state == 1)
 			if(!W:try_weld(user, 1, noisy = 2))
