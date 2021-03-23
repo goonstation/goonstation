@@ -35,14 +35,9 @@
 ///Seeds the rust-g perlin noise with a random number.
 /datum/map_generator/jungle_generator/generate_terrain(var/list/turfs)
 	. = ..()
-	var/height_seed = rand(0, 50000)
-	var/humidity_seed = rand(0, 50000)
-	var/heat_seed = rand(0, 50000)
 
 	for(var/t in turfs) //Go through all the turfs and generate them
 		var/turf/gen_turf = t
-		var/drift_x = (gen_turf.x + rand(-BIOME_RANDOM_SQUARE_DRIFT, BIOME_RANDOM_SQUARE_DRIFT)) / perlin_zoom
-		var/drift_y = (gen_turf.y + rand(-BIOME_RANDOM_SQUARE_DRIFT, BIOME_RANDOM_SQUARE_DRIFT)) / perlin_zoom
 
 		var/height = rand(0, 1)
 
