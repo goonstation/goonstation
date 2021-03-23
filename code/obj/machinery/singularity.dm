@@ -1059,17 +1059,20 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			return
 
 	if(isweldingtool(W))
-		var/datum/action/bar/icon/callback/action_bar = new /datum/action/bar/icon/callback(user, src, 2 SECONDS, /obj/machinery/emitter/proc/welding,W.icon, W.icon_state, null)
+		var/datum/action/bar/icon/callback/action_bar = new /datum/action/bar/icon/callback(user, src, 2 SECONDS, /obj/machinery/emitter/proc/welding, W.icon, W.icon_state, null)
 		action_bar.proc_args = list(user)
-		if(!W:try_weld(user, 1, noisy = 2))
-			return
 		if(state == 1)
+			if(!W:try_weld(user, 1, noisy = 2))
+				return
 			boutput(user, "You start to weld the emitter to the floor.")
 			actions.start(action_bar, user)
+			return
 		else if(state == 3)
+			if(!W:try_weld(user, 1, noisy = 2))
+				return
 			boutput(user, "You start to unweld the emitter from the floor.")
 			actions.start(action_bar, user)
-		return
+			return
 	if (istype(W, /obj/item/device/pda2) && W:ID_card)
 		W = W:ID_card
 	if (istype(W, /obj/item/card/id))
