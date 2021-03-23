@@ -642,19 +642,18 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			return
 
 	if(isweldingtool(W))
-		var/datum/action/bar/icon/callback/action_bar = new /datum/action/bar/icon/callback(user, src, 2 SECONDS, /obj/machinery/field_generator/proc/weld_action,\
-		list(user), W.icon, W.icon_state, "[user] finishes using their [W.name] on the field generator.")
+		if(state != UNWRENCHED)
+			SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/machinery/field_generator/proc/weld_action,\
+			list(user), W.icon, W.icon_state, "[user] finishes using their [W.name] on the field generator.")
 		if(state == WRENCHED)
 			if(!W:try_weld(user, 1, noisy = 2))
 				return
 			boutput(user, "You start to weld the field generator to the floor.")
-			actions.start(action_bar, user)
 			return
 		else if(state == WELDED)
 			if(!W:try_weld(user, 1, noisy = 2))
 				return
 			boutput(user, "You start to cut the field generator free from the floor.")
-			actions.start(action_bar, user)
 			return
 
 	if (istype(W, /obj/item/device/pda2) && W:ID_card)
@@ -1050,19 +1049,18 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			return
 
 	if(isweldingtool(W))
-		var/datum/action/bar/icon/callback/action_bar = new /datum/action/bar/icon/callback(user, src, 2 SECONDS, /obj/machinery/emitter/proc/weld_action,\
-		list(user), W.icon, W.icon_state, "[user] finishes using their [W.name] on the emitter.")
+		if(state != UNWRENCHED)
+			SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/machinery/emitter/proc/weld_action,\
+			list(user), W.icon, W.icon_state, "[user] finishes using their [W.name] on the emitter.")
 		if(state == WRENCHED)
 			if(!W:try_weld(user, 1, noisy = 2))
 				return
 			boutput(user, "You start to weld the emitter to the floor.")
-			actions.start(action_bar, user)
 			return
 		else if(state == WELDED)
 			if(!W:try_weld(user, 1, noisy = 2))
 				return
 			boutput(user, "You start to cut the emitter free from the floor.")
-			actions.start(action_bar, user)
 			return
 
 	if (istype(W, /obj/item/device/pda2) && W:ID_card)
