@@ -16327,11 +16327,6 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 6;
-	name = "autoname  - SS13"
-	},
 /obj/cable{
 	icon_state = "2-8"
 	},
@@ -20352,17 +20347,6 @@
 /obj/item/raw_material/ice,
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/catering)
-"cMp" = (
-/obj/cable{
-	icon_state = "2-8"
-	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 6;
-	name = "autoname  - SS13"
-	},
-/turf/simulated/floor/plating/random,
-/area/station/maintenance/east)
 "cMt" = (
 /obj/table/wood/auto,
 /obj/item/reagent_containers/food/drinks/bottle/hobo_wine,
@@ -30175,6 +30159,9 @@
 	name = "Cyborg"
 	},
 /obj/disposalpipe/segment/morgue,
+/obj/disposalpipe/segment{
+	dir = 4
+	},
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "hkY" = (
@@ -30760,9 +30747,11 @@
 	},
 /area/station/medical/medbay)
 "hzg" = (
-/obj/machinery/computer/operating{
-	dir = 4;
-	id = "robotics"
+/obj/machinery/disposal/small{
+	dir = 4
+	},
+/obj/disposalpipe/trunk{
+	dir = 4
 	},
 /turf/simulated/floor/blackwhite{
 	dir = 4
@@ -37285,7 +37274,6 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/disposalpipe/segment,
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "lsX" = (
@@ -44834,10 +44822,6 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/disposalpipe/segment{
-	dir = 2;
-	icon_state = "pipe-c"
-	},
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "pEC" = (
@@ -46451,9 +46435,6 @@
 /obj/disposalpipe/segment/morgue{
 	dir = 4;
 	icon_state = "pipe-c"
-	},
-/obj/disposalpipe/segment{
-	dir = 4
 	},
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
@@ -56123,11 +56104,9 @@
 /turf/simulated/floor/engine/vacuum,
 /area/station/science/lab)
 "vJZ" = (
-/obj/machinery/disposal/small{
-	dir = 4
-	},
-/obj/disposalpipe/trunk{
-	dir = 4
+/obj/machinery/computer/operating{
+	dir = 4;
+	id = "robotics"
 	},
 /turf/simulated/floor/blackwhite{
 	dir = 4
@@ -58478,7 +58457,10 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/disposalpipe/segment,
+/obj/disposalpipe/segment{
+	dir = 2;
+	icon_state = "pipe-c"
+	},
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "xaP" = (
@@ -115076,7 +115058,7 @@ aaa
 aOw
 pBO
 pBO
-cMp
+dmd
 aSy
 esr
 esr
