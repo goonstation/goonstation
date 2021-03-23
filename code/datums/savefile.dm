@@ -18,8 +18,6 @@
 	// returnSaveFile returns the file rather than writing it
 	// used for cloud saves
 	savefile_save(client/user, profileNum = 1, returnSavefile = 0)
-		if (IsGuestKey(user.key))
-			return 0
 
 		profileNum = max(1, min(profileNum, SAVEFILE_PROFILES_MAX))
 
@@ -139,9 +137,6 @@
 	savefile_load(client/user, var/profileNum = 1, var/savefile/loadFrom = null)
 		if (ismob(user))
 			CRASH("[user] isnt a client. please give me a client. please. i beg you.")
-
-		if (IsGuestKey(user.key))
-			return 0
 
 		var/savefile/F
 		var/path
@@ -355,8 +350,6 @@
 
 	//This might be a bad way of doing it IDK
 	savefile_get_profile_name(client/user, var/profileNum = 1)
-		if (IsGuestKey(user.key))
-			return 0
 
 		LAGCHECK(LAG_REALTIME)
 

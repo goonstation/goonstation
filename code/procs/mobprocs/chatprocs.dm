@@ -543,9 +543,6 @@
 			boutput(src, "<span class='notice'>You are no longer listening to messages on the OOC channel.</span>")
 
 /mob/verb/ooc(msg as text)
-	if (IsGuestKey(src.key))
-		boutput(src, "You are not authorized to communicate over these channels.")
-		return
 	if (oocban_isbanned(src))
 		boutput(src, "You are currently banned from using OOC and LOOC, you may appeal at https://forum.ss13.co/index.php")
 		return
@@ -629,9 +626,6 @@
 			boutput(src, "<span class='notice'>You are no longer listening to messages on the LOOC channel.</span>")
 
 /mob/verb/looc(msg as text)
-	if (IsGuestKey(src.key))
-		boutput(src, "You are not authorized to communicate over these channels.")
-		return
 	if (oocban_isbanned(src))
 		boutput(src, "You are currently banned from using OOC and LOOC, you may appeal at https://forum.ss13.co/index.php")
 		return

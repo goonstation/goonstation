@@ -803,8 +803,6 @@
 /mob/proc/revoke_medal(title, debug)
 	if (!debug && (!src.client || !src.key))
 		return
-	else if (IsGuestKey(src.key))
-		return
 	else if (!config || !config.medal_hub || !config.medal_password)
 		return
 
@@ -812,8 +810,6 @@
 
 /mob/proc/unlock_medal(title, announce, debug)
 	if (!debug && (!src.client || !src.key))
-		return
-	else if (IsGuestKey(src.key))
 		return
 	else if (!config || !config.medal_hub || !config.medal_password)
 		return

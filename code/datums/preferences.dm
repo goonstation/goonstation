@@ -211,7 +211,7 @@ datum/preferences
 
 		//var/profile_menu[]
 
-		if (user && !IsGuestKey(user.key)) //ZeWaka: Fix for null.key
+		if (user) //ZeWaka: Fix for null.key
 			var/client/client = ismob( user ) ? user.client : user
 
 			if (!client) return // b r u h

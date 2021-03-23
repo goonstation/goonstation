@@ -6,11 +6,6 @@
 
 	var/client/client = src.client
 
-	if (IsGuestKey(client.key))
-		boutput(client.mob, "You are not authorized to communicate over these channels.")
-		gib(client.mob)
-		return
-
 	if (client.cloud_available() && client.cloud_get("adminhelp_banner"))
 		boutput(client.mob, "You have been banned from using this command.")
 		return
@@ -74,11 +69,6 @@
 	set name = "mentorhelp"
 
 	var/client/client = src.client
-
-	if (IsGuestKey(client.key))
-		boutput(client.mob, "You are not authorized to communicate over these channels.")
-		gib(client.mob)
-		return
 
 	var/mob/dead/target_observer/mentor_mouse_observer/mmouse = locate() in src
 	if(mmouse) // mouse in your pocket takes precedence over mhelps
@@ -157,11 +147,6 @@
 		return
 	if(client.cloud_available() && client.cloud_get( "prayer_banner" ))
 		boutput(client.mob, "You have been banned from using this command.")
-		return
-
-	if (IsGuestKey(client.key))
-		boutput(client.mob, "You are not authorized to communicate over these channels.")
-		gib(client.mob)
 		return
 
 	if(ON_COOLDOWN(client.player, "ahelp", ADMINHELP_DELAY))
