@@ -18030,7 +18030,7 @@
 	dir = 4;
 	icon_state = "line1"
 	},
-/obj/machinery/portable_atmospherics/canister/sleeping_agent,
+/obj/deployable_turret/riot,
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
 "bFE" = (
@@ -36163,13 +36163,7 @@
 	dir = 5;
 	icon_state = "line2"
 	},
-/obj/table/reinforced/auto,
-/obj/item/reagent_containers/food/drinks/drinkingglass/cocktail,
-/obj/item/reagent_containers/food/drinks/drinkingglass/cocktail,
-/obj/item/reagent_containers/food/drinks/drinkingglass/cocktail,
-/obj/item/reagent_containers/food/drinks/drinkingglass/cocktail,
-/obj/item/reagent_containers/food/drinks/drinkingglass/cocktail,
-/obj/item/reagent_containers/food/drinks/drinkingglass/cocktail,
+/obj/machinery/portable_atmospherics/canister/sleeping_agent,
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
 "kOS" = (
@@ -47543,11 +47537,6 @@
 	dir = 6;
 	icon_state = "line1"
 	},
-/obj/deployable_turret/riot{
-	active = 1;
-	anchored = 1
-	},
-/obj/access_spawn/hos,
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
 "rdR" = (
@@ -59978,9 +59967,11 @@
 /turf/simulated/floor,
 /area/station/mining/staff_room)
 "xRy" = (
-/obj/landmark/start{
-	name = "Head of Security"
+/obj/machinery/turret{
+	dir = 9;
+	name = "armory turret"
 	},
+/obj/access_spawn/security,
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
 "xRI" = (
