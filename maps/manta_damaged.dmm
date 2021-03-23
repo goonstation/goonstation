@@ -747,6 +747,7 @@
 /area/station/bridge)
 "abw" = (
 /obj/displaycase{
+	displayed = new /obj/item/captaingun
 	pixel_y = 8
 	},
 /obj/table/wood/auto,
@@ -10799,7 +10800,7 @@
 /turf/simulated/floor/engine/glow/blue,
 /area/station/engine/singcore)
 "ayW" = (
-/obj/storage/crate/rcd,
+/obj/storage/crate/rcd/CE,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "yellowblackcorner"

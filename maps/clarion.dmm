@@ -29439,6 +29439,7 @@
 	},
 /obj/table/wood/auto,
 /obj/displaycase{
+	displayed = new /obj/item/captaingun
 	pixel_y = 8
 	},
 /turf/simulated/floor/carpet/arcade,
@@ -49294,6 +49295,12 @@
 	},
 /turf/simulated/floor/grass/random,
 /area/station/hydroponics/bay)
+"gYb" = (
+/obj/machinery/camera/ranch{
+	dir = 4
+	},
+/turf/simulated/floor/grass/leafy,
+/area/station/ranch)
 "hcl" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -87856,7 +87863,7 @@ atT
 auE
 avn
 awc
-axE
+gYb
 axE
 ayp
 ayX

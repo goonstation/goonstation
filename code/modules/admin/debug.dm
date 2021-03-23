@@ -30,7 +30,7 @@ var/global/debug_messages = 0
 	var/total = 0
 	for (var/b = 1; b <= DELQUEUE_SIZE; b++)
 		buckets += "<li style='[b == dp ? "background-color: #fcc;": ( b == cp ? "background-color: #bbf;" : "")]'><span style='display: inline-block; width: 6em; text-align: right;'>[global.delete_queue_2[b].len]</span><span style='display: inline-block; height: 1em; width: [round(global.delete_queue_2[b].len / 2.5)]px; background: black;'></span></li>"
-		total += global.delete_queue_2[b].len
+		total += length(global.delete_queue_2[b])
 
 	deletedJson += "]"
 	var/html = {"<!doctype html><html>
@@ -309,12 +309,12 @@ var/global/debug_messages = 0
 	for(var/actual_proc in name_list)
 		try
 			if (target)
-				if(islist(listargs) && listargs.len)
+				if(islist(listargs) && length(listargs))
 					returnval = call(target,actual_proc)(arglist(listargs))
 				else
 					returnval = call(target,actual_proc)()
 			else
-				if(islist(listargs) && listargs.len)
+				if(islist(listargs) && length(listargs))
 					returnval = call(actual_proc)(arglist(listargs))
 				else
 					returnval = call(actual_proc)()
@@ -1168,7 +1168,7 @@ var/datum/flock/testflock
 	admin_only
 
 	if(alert("Really clear the string cache?","Invalidate String Cache","OK","Cancel") == "OK")
-		var/length = string_cache.len
+		var/length = length(string_cache)
 		string_cache = new
 		logTheThing("admin", usr, null, "cleared the string cache, clearing [length] existing list(s).")
 		logTheThing("diary", usr, null, "cleared the string cache, clearing [length] existing list(s).", "admin")

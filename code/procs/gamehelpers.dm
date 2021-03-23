@@ -81,7 +81,6 @@ var/list/stinkThingies = list("ass","taint","armpit","excretions","leftovers","R
 /proc/get_area_name(N) //get area by it's name
 
 	for(var/area/A in world)
-		LAGCHECK(LAG_LOW)
 		if(A.name == N)
 			return A
 	return 0
@@ -224,7 +223,7 @@ var/obj/item/dummy/click_dummy = new
 	for_by_tcl(theAI, /mob/living/silicon/ai)
 		if (theAI.deployed_to_eyecam)
 			var/mob/dead/aieye/AIeye = theAI.eyecam
-			if(IN_RANGE(center, AIeye, distance) && T.cameras && T.cameras.len)
+			if(IN_RANGE(center, AIeye, distance) && T.cameras && length(T.cameras))
 				. += AIeye
 				. += theAI
 
@@ -286,7 +285,7 @@ var/obj/item/dummy/click_dummy = new
 			if (istype(S,/datum/bioEffect/speech/))
 				message = S.OnSpeak(message)
 
-	if (H.grabbed_by && H.grabbed_by.len)
+	if (H.grabbed_by && length(H.grabbed_by))
 		for (var/obj/item/grab/rag_muffle/RM in H.grabbed_by)
 			if (RM.state > 0)
 				message = mufflespeech(message)

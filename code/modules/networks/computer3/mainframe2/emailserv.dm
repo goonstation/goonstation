@@ -19,7 +19,7 @@
 
 		var/command = null
 		var/list/initlist = splittext(initparams, " ")
-		if (!initparams || !initlist.len)
+		if (!initparams || !length(initlist))
 			command = "index"
 		else
 			command = ckey(initlist[1])
@@ -116,7 +116,7 @@
 			return newMail
 
 		send_mail_to(var/datum/computer/file/record/mail)
-			if (!istype(mail) || !mail.fields.len)
+			if (!istype(mail) || !length(mail.fields))
 				return 1
 
 			var/list/mailHeader = params2list(mail.fields[1])

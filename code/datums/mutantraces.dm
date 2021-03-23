@@ -980,7 +980,7 @@
 					mob.blood_volume = 500
 
 					if (!mob.organHolder)
-						mob.organHolder = new(src)
+						mob.organHolder = new(mob)
 					mob.organHolder.create_organs()
 
 					if (mob.get_stamina() != (STAMINA_MAX + mob.get_stam_mod_max()))
@@ -1562,6 +1562,7 @@
 					game_stats.Increment("farts")
 	#endif
 					mob.expel_fart_gas(0)
+					mob.add_karma(0.5)
 					SPAWN_DBG(1 SECOND)
 						mob.emote_allowed = 1
 

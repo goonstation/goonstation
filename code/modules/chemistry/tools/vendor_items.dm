@@ -119,7 +119,7 @@
 		SPAWN_DBG(0)
 			if (src.reagents)
 				var/chem = null
-				if (islist(all_functional_reagent_ids) && all_functional_reagent_ids.len)
+				if (islist(all_functional_reagent_ids) && length(all_functional_reagent_ids))
 					chem = pick(all_functional_reagent_ids)
 				else
 					chem = "water"
@@ -131,7 +131,7 @@
 		SPAWN_DBG(0)
 			if (src.reagents)
 				var/chem = null
-				if (islist(all_functional_reagent_ids) && all_functional_reagent_ids.len)
+				if (islist(all_functional_reagent_ids) && length(all_functional_reagent_ids))
 					chem = pick(all_functional_reagent_ids)
 				else
 					chem = "water"

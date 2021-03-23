@@ -101,11 +101,11 @@
 				var/message = pick("wacka", "quack","quacky","gaggle")
 				src.speak(message, 1, 0)
 			if(!src.moving)
-				if(prob(1))
+				if(prob(1))/* This is a clusterfuck no thanks
 					if(!ON_COOLDOWN(global, DUCKBOT_NATURAL_MIGRATION_COOLDOWN, 15 MINUTES)) // Time to fly south(ern solar array) for the winter
 						src.declare_migration()
-					else
-						src.mystical_journey() // Time to go on a mystical journey
+					else*/
+					src.mystical_journey() // Time to go on a mystical journey
 				else
 					wakka_wakka()
 			if(!ON_COOLDOWN(src, DUCKBOT_AMUSEMENT_COOLDOWN, src.amusement_cooldown) && prob(20))
@@ -176,7 +176,7 @@
 		. = TRUE
 		SPAWN_DBG(rand(0,10 SECONDS)) // give em some time to spread out a bit
 			T = (pick(T))
-			src.mystical_access()
+			//src.mystical_access() AB SO FUC KING LUTE LEY NOT THANK YOU VERRY MOUCHE - warc
 			src.navigate_to(T, src.bot_move_delay, 0, 300)
 			if(length(src.path) < 1)
 				src.KillPathAndGiveUp(1)
@@ -228,6 +228,7 @@
 			message_to_send = "quack"
 		else
 			src.declare_migration()
+			message_admins("[signal.data["sender"]] has triggered a mass migration of duckbots. Maybe see if this is a promble.")
 			ON_COOLDOWN(global, DUCKBOT_NATURAL_MIGRATION_COOLDOWN, 15 MINUTES)
 		if(signal.data["sender"])
 			src.send_confirm_signal(message_to_send, signal.data["sender"])

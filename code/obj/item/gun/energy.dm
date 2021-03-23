@@ -117,7 +117,7 @@
 			..()
 
 	attack_hand(mob/user as mob)
-		if ((user.r_hand == src || user.l_hand == src) && src.contents && src.contents.len)
+		if ((user.r_hand == src || user.l_hand == src) && src.contents && length(src.contents))
 			if (src.can_swap_cell && src.cell&&!src.rechargeable)
 				var/obj/item/ammo/power_cell/W = src.cell
 				user.put_in_hand_or_drop(W)
@@ -1491,7 +1491,7 @@
 
 /obj/item/gun/energy/pulse_rifle
 	name = "pulse rifle"
-	desc = "todo"
+	desc = "A sleek energy rifle with two different pulse settings: Kinetic and Electromagnetic."
 	icon_state = "pulse_rifle"
 	uses_multiple_icon_states = 1
 	item_state = "pulse_rifle"

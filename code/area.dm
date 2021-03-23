@@ -609,6 +609,18 @@ ABSTRACT_TYPE(/area/shuttle)
 /area/shuttle/mining/space
 	icon_state = "shuttle2"
 
+/area/shuttle/john/diner
+	icon_state = "shuttle"
+
+/area/shuttle/john/owlery
+	icon_state = "shuttle2"
+
+/area/shuttle/john/mining
+	icon_state = "shuttle2"
+
+/area/shuttle/john/grillnasium
+	icon_state = "shuttle"
+
 /area/shuttle/icebase_elevator/upper
 	icon_state = "shuttle"
 	filler_turf = "/turf/simulated/floor/arctic/abyss"
@@ -3460,7 +3472,6 @@ ABSTRACT_TYPE(/area/mining)
 		var/list/cameras = list()
 		for (var/obj/machinery/camera/C in orange(source, 7))
 			cameras += C
-			LAGCHECK(LAG_HIGH)
 		for_by_tcl(aiPlayer, /mob/living/silicon/ai)
 			if (state == 1)
 				aiPlayer.cancelAlarm("Power", src, source)

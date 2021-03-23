@@ -7,9 +7,9 @@
 
 		// moved drowsy, confusion and such from handle_chemicals because it seems better here
 		if (owner.drowsyness)
-			owner.drowsyness--
-			owner.change_eye_blurry(2)
-			if (prob(5))
+			owner.drowsyness = max(0, owner.drowsyness - mult)
+			owner.change_eye_blurry(2*mult)
+			if (probmult(5))
 				owner.sleeping = 1
 				owner.changeStatus("paralysis", 5 SECONDS)
 
@@ -22,11 +22,11 @@
 
 		// The value at which this stuff is capped at can be found in mob.dm
 		if (owner.hasStatus("resting"))
-			owner.dizziness = max(0, owner.dizziness - 5)
-			owner.jitteriness = max(0, owner.jitteriness - 5)
+			owner.dizziness = max(0, owner.dizziness - 5*mult)
+			owner.jitteriness = max(0, owner.jitteriness - 5*mult)
 		else
-			owner.dizziness = max(0, owner.dizziness - 2)
-			owner.jitteriness = max(0, owner.jitteriness - 2)
+			owner.dizziness = max(0, owner.dizziness - 2*mult)
+			owner.jitteriness = max(0, owner.jitteriness - 2*mult)
 
 		if (owner.mind && isvampire(owner))
 			if (istype(get_area(owner), /area/station/chapel) && owner.check_vampire_power(3) != 1)
@@ -41,7 +41,7 @@
 		if (owner.loc && isarea(owner.loc.loc))
 			var/area/A = owner.loc.loc
 			if (A.irradiated)
-				owner.changeStatus("radiation", (A.irradiated * 10) SECONDS)
+				owner.changeStatus("radiation", (A.irradiated * 10 * mult) SECONDS)
 
 		if (owner.bioHolder)
 			var/total_stability = owner.bioHolder.genetic_stability
@@ -49,10 +49,10 @@
 			if (owner.reagents && owner.reagents.has_reagent("mutadone"))
 				total_stability += 60
 
-			if (total_stability <= 40 && prob(5))
+			if (total_stability <= 40 && probmult(5))
 				owner.bioHolder.DegradeRandomEffect()
 
-			if (total_stability <= 20 && prob(10))
+			if (total_stability <= 20 && probmult(10))
 				owner.bioHolder.DegradeRandomEffect()
 
 		..()

@@ -24775,7 +24775,7 @@
 /turf/simulated/floor/darkpurple,
 /area/station/crew_quarters/data)
 "bfe" = (
-/obj/storage/crate/rcd,
+/obj/storage/crate/rcd/CE,
 /obj/machinery/firealarm{
 	dir = 4;
 	pixel_x = 26;
@@ -32141,6 +32141,7 @@
 "bwL" = (
 /obj/table/wood/round/auto,
 /obj/displaycase{
+	displayed = new /obj/item/captaingun
 	pixel_y = 8
 	},
 /obj/machinery/light/incandescent/warm,

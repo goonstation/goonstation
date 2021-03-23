@@ -231,7 +231,7 @@
 			else
 				other_options += (M)
 
-		if (mob_options.len && (prob(80) || (src.emagged && prob(90)) || !other_options.len)) // idk how other_options would be empty but y'know whatever, just in case
+		if (mob_options.len && (prob(80) || (src.emagged && prob(90)) || !length(other_options))) // idk how other_options would be empty but y'know whatever, just in case
 			src.target = pick(mob_options)
 			return
 		else if (other_options.len)

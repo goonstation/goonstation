@@ -204,7 +204,7 @@
 		interacted(user, 1)
 
 	attack_hand(var/mob/user)
-		if (isnpcmonkey(user))
+		if (isnpc(user))
 			return
 		interacted(user, 0)
 

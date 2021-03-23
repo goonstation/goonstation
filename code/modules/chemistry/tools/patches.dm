@@ -2,7 +2,7 @@
 
 
 /mob/living/proc/handle_skin(var/mult = 1)
-	if (src.skin_process && src.skin_process.len)
+	if (src.skin_process && length(src.skin_process))
 		for(var/obj/item/reagent_containers/patch/P in skin_process)
 			//P.process_skin(src, XXX * mult)
 			continue
@@ -476,7 +476,7 @@
 
 	New()
 		..()
-		if (!tampered && islist(chem_whitelist) && chem_whitelist.len)
+		if (!tampered && islist(chem_whitelist) && length(chem_whitelist))
 			src.whitelist = chem_whitelist
 		if (src.reagents)
 			src.reagents.temperature_cap = 330
