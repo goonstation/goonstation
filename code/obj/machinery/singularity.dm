@@ -639,43 +639,16 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			return
 
 	if(isweldingtool(W))
-
-		var/turf/T = user.loc
-
+		var/datum/action/bar/icon/callback/action_bar = new /datum/action/bar/icon/callback(user, src, 2 SECONDS, /obj/machinery/field_generator/proc/welding,\
+		null, W.icon, W.icon_state, "[user] finishes using their [W.name] on the field generator.")
+		action_bar.proc_args = list(W,user)
 		if(state == 1)
-			if(!W:try_weld(user, 1, noisy = 2))
-				return
 			boutput(user, "You start to weld the field generator to the floor.")
-			sleep(2 SECONDS)
-
-			if ((user.loc == T && user.equipped() == W))
-				state = 3
-				boutput(user, "You weld the field generator to the floor.")
-				src.get_link() //Set up a link, now that we're secure!
-			else if((isrobot(user) && (user.loc == T)))
-				state = 3
-				boutput(user, "You weld the field generator to the floor.")
-				src.get_link()
+			actions.start(action_bar, user)
 			return
-
-		if(state == 3)
-			if(!W:try_weld(user, 1, noisy = 2))
-				return
+		else if(state == 3)
 			boutput(user, "You start to cut the field generator free from the floor.")
-			sleep(2 SECONDS)
-
-			if ((user.loc == T && user.equipped() == W))
-				state = 1
-				if(src.link) //Clear active link.
-					src.link.master = null
-					src.link = null
-				boutput(user, "You cut the field generator free from the floor.")
-			else if((isrobot(user) && (user.loc == T)))
-				state = 1
-				if(src.link) //Clear active link.
-					src.link.master = null
-					src.link = null
-				boutput(user, "You cut the field generator free from the floor.")
+			actions.start(action_bar, user)
 			return
 
 	if (istype(W, /obj/item/device/pda2) && W:ID_card)
@@ -693,6 +666,22 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		for(var/mob/M in AIviewers(src))
 			if(M == user)	continue
 			M.show_message("<span class='alert'>The [src.name] has been hit with the [W.name] by [user.name]!</span>")
+
+/obj/machinery/field_generator/proc/welding(obj/item/W, mob/user)
+	if(state == 1)
+		if(!W:try_weld(user, 1, noisy = 2))
+			return
+		state = 3
+		src.get_link() //Set up a link, now that we're secure!
+		boutput(user, "You weld the field generator to the floor.")
+	else if(state == 3)
+		if(!W:try_weld(user, 1, noisy = 2))
+			return
+		state = 1
+		if(src.link) //Clear active link.
+			src.link.master = null
+			src.link = null
+		boutput(user, "You cut the field generator free from the floor.")
 
 /obj/machinery/field_generator/proc/cleanup(var/NSEW)
 	var/obj/machinery/containment_field/F
@@ -1060,14 +1049,14 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 
 	if(isweldingtool(W))
 		var/datum/action/bar/icon/callback/action_bar = new /datum/action/bar/icon/callback(user, src, 2 SECONDS, /obj/machinery/emitter/proc/welding,\
-		null, W.icon, W.icon_state, "[user] finishes using their [W.name] on the [src].")
+		null, W.icon, W.icon_state, "[user] finishes using their [W.name] on the emitter.")
 		action_bar.proc_args = list(W,user)
 		if(state == 1)
 			boutput(user, "You start to weld the emitter to the floor.")
 			actions.start(action_bar, user)
 			return
 		else if(state == 3)
-			boutput(user, "You start to unweld the emitter from the floor.")
+			boutput(user, "You start to cut the emitter free from the floor.")
 			actions.start(action_bar, user)
 			return
 
@@ -1106,7 +1095,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			src.link.master = null
 			src.link = null
 		desc = "Shoots a high power laser when active, it has been bolted to the floor."
-		boutput(user, "You unweld the emitter from the floor.")
+		boutput(user, "You cut the emitter free from the floor.")
 
 //Send a signal over our link, if possible.
 /obj/machinery/emitter/proc/post_status(var/target_id, var/key, var/value, var/key2, var/value2, var/key3, var/value3)
