@@ -17981,12 +17981,6 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northeast)
 "bEs" = (
-/obj/disposalpipe/trunk{
-	dir = 4
-	},
-/obj/machinery/disposal/small{
-	dir = 4
-	},
 /turf/simulated/floor/red,
 /area/station/security/main)
 "bEx" = (
@@ -28268,13 +28262,13 @@
 	},
 /area/station/security/hos)
 "gmM" = (
-/obj/disposalpipe/segment{
-	dir = 8;
-	icon_state = "pipe-c"
-	},
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/disposalpipe/trunk{
+	dir = 1
+	},
+/obj/machinery/disposal,
 /turf/simulated/floor/red,
 /area/station/security/main)
 "gmO" = (
