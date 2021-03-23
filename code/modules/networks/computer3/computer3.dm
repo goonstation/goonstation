@@ -644,27 +644,16 @@ function lineEnter (ev)
 		icon_state = src.base_icon_state
 		src.icon_state += "b"
 		light.disable()
-		if(glow_in_dark_screen)
-			src.ClearSpecificOverlays("screen_image")
-
 	else if(powered())
 		icon_state = src.base_icon_state
 		status &= ~NOPOWER
 		light.enable()
-		if(glow_in_dark_screen)
-			screen_image.plane = PLANE_LIGHTING
-			screen_image.blend_mode = BLEND_ADD
-			screen_image.layer = LIGHTING_LAYER_BASE
-			screen_image.color = list(0.33,0.33,0.33, 0.33,0.33,0.33, 0.33,0.33,0.33)
-			src.UpdateOverlays(screen_image, "screen_image")
 	else
 		SPAWN_DBG(rand(0, 15))
 			icon_state = src.base_icon_state
 			src.icon_state += "0"
 			status |= NOPOWER
 			light.disable()
-			if(glow_in_dark_screen)
-				src.ClearSpecificOverlays("screen_image")
 
 /obj/machinery/computer3/attackby(obj/item/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/disk/data/floppy)) //INSERT SOME DISKETTES
