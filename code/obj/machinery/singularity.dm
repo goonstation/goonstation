@@ -1060,20 +1060,16 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 
 	if(isweldingtool(W))
 		var/datum/action/bar/icon/callback/action_bar = new /datum/action/bar/icon/callback(user, src, 2 SECONDS, /obj/machinery/emitter/proc/welding,\
-		W.icon, W.icon_state, "[user] finishes using their [W] on \the [src].")
-		action_bar.proc_args = list(user)
+		list(W,user),W.icon, W.icon_state, "[user] finishes using their [W] on the [src].")
 		if(state == 1)
-			if(!W:try_weld(user, 1, noisy = 2))
-				return
 			boutput(user, "You start to weld the emitter to the floor.")
 			actions.start(action_bar, user)
 			return
 		else if(state == 3)
-			if(!W:try_weld(user, 1, noisy = 2))
-				return
 			boutput(user, "You start to unweld the emitter from the floor.")
 			actions.start(action_bar, user)
 			return
+
 	if (istype(W, /obj/item/device/pda2) && W:ID_card)
 		W = W:ID_card
 	if (istype(W, /obj/item/card/id))
@@ -1093,13 +1089,17 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			M.show_message("<span class='alert'>The [src.name] has been hit with the [W.name] by [user.name]!</span>")
 
 
-/obj/machinery/emitter/proc/welding(mob/user)
+/obj/machinery/emitter/proc/welding(obj/item/W, mob/user)
 	if(state == 1)
+		if(!W:try_weld(user, 1, noisy = 2))
+			return
 		state = 3
 		src.get_link()
 		desc = "Shoots a high power laser when active, it has been bolted and welded to the floor."
 		boutput(user, "You weld the emitter to the floor.")
 	else if(state == 3)
+		if(!W:try_weld(user, 1, noisy = 2))
+			return
 		state = 1
 		if(src.link) //Time to clear our link.
 			src.link.master = null
