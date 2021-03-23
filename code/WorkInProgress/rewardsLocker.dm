@@ -766,6 +766,7 @@
 			A.custom_emotions = ai_emotions | list("Tetris (reward)" = "ai-tetris")
 			A.faceEmotion = "ai-tetris"
 			A.set_color("#111111")
+			A.update_appearance()
 			return 1
 		else
 			boutput(activator, "<span class='alert'>You need to be an AI to use this, you goof!</span>")
