@@ -639,14 +639,18 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			return
 
 	if(isweldingtool(W))
-		var/datum/action/bar/icon/callback/action_bar = new /datum/action/bar/icon/callback(user, src, 2 SECONDS, /obj/machinery/field_generator/proc/welding,\
+		var/datum/action/bar/icon/callback/action_bar = new /datum/action/bar/icon/callback(user, src, 2 SECONDS, /obj/machinery/field_generator/proc/weld_action,\
 		null, W.icon, W.icon_state, "[user] finishes using their [W.name] on the field generator.")
 		action_bar.proc_args = list(W,user)
 		if(state == 1)
+			if(!W:try_weld(user, 1, noisy = 2))
+				return
 			boutput(user, "You start to weld the field generator to the floor.")
 			actions.start(action_bar, user)
 			return
 		else if(state == 3)
+			if(!W:try_weld(user, 1, noisy = 2))
+				return
 			boutput(user, "You start to cut the field generator free from the floor.")
 			actions.start(action_bar, user)
 			return
@@ -667,16 +671,12 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			if(M == user)	continue
 			M.show_message("<span class='alert'>The [src.name] has been hit with the [W.name] by [user.name]!</span>")
 
-/obj/machinery/field_generator/proc/welding(obj/item/W, mob/user)
+/obj/machinery/field_generator/proc/weld_action(obj/item/W, mob/user)
 	if(state == 1)
-		if(!W:try_weld(user, 1, noisy = 2))
-			return
 		state = 3
 		src.get_link() //Set up a link, now that we're secure!
 		boutput(user, "You weld the field generator to the floor.")
 	else if(state == 3)
-		if(!W:try_weld(user, 1, noisy = 2))
-			return
 		state = 1
 		if(src.link) //Clear active link.
 			src.link.master = null
@@ -1048,14 +1048,18 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			return
 
 	if(isweldingtool(W))
-		var/datum/action/bar/icon/callback/action_bar = new /datum/action/bar/icon/callback(user, src, 2 SECONDS, /obj/machinery/emitter/proc/welding,\
+		var/datum/action/bar/icon/callback/action_bar = new /datum/action/bar/icon/callback(user, src, 2 SECONDS, /obj/machinery/emitter/proc/weld_action,\
 		null, W.icon, W.icon_state, "[user] finishes using their [W.name] on the emitter.")
 		action_bar.proc_args = list(W,user)
 		if(state == 1)
+			if(!W:try_weld(user, 1, noisy = 2))
+				return
 			boutput(user, "You start to weld the emitter to the floor.")
 			actions.start(action_bar, user)
 			return
 		else if(state == 3)
+			if(!W:try_weld(user, 1, noisy = 2))
+				return
 			boutput(user, "You start to cut the emitter free from the floor.")
 			actions.start(action_bar, user)
 			return
@@ -1079,17 +1083,13 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			M.show_message("<span class='alert'>The [src.name] has been hit with the [W.name] by [user.name]!</span>")
 
 
-/obj/machinery/emitter/proc/welding(obj/item/W, mob/user)
+/obj/machinery/emitter/proc/weld_action(obj/item/W, mob/user)
 	if(state == 1)
-		if(!W:try_weld(user, 1, noisy = 2))
-			return
 		state = 3
 		src.get_link()
 		desc = "Shoots a high power laser when active, it has been bolted and welded to the floor."
 		boutput(user, "You weld the emitter to the floor.")
 	else if(state == 3)
-		if(!W:try_weld(user, 1, noisy = 2))
-			return
 		state = 1
 		if(src.link) //Time to clear our link.
 			src.link.master = null
