@@ -38,7 +38,7 @@
   * * _headers - Associative list of HTTP headers to send, if applicable
 	* * _output_file - File path to save the response body to, if applicable
   */
-/datum/http_request/proc/prepare(_method, _url, _body = "", list/_headers, /_output_file)
+/datum/http_request/proc/prepare(_method, _url, _body = "", list/_headers, _output_file)
 	if(!length(_headers))
 		_headers = ""
 	else
