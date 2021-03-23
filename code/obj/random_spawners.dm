@@ -538,7 +538,7 @@
 	/obj/item/paper_bin,
 	/obj/decal/cleanable/generic,
 	/obj/item/reagent_containers/food/drinks/mug/random_color,
-	/obj/item/item_box/postit,
+	/obj/item/postit_stack,
 	/obj/item/staple_gun/red)
 
 	one
@@ -604,7 +604,7 @@
 	/obj/item/paper,
 	/obj/decal/cleanable/generic,
 	/obj/item/reagent_containers/food/drinks/mug/random_color,
-	/obj/item/item_box/postit,
+	/obj/item/postit_stack,
 	/obj/item/staple_gun/red)
 
 	one
@@ -670,7 +670,7 @@
 	/obj/item/paper,
 	/obj/decal/cleanable/generic,
 	/obj/item/reagent_containers/food/drinks/mug/random_color,
-	/obj/item/item_box/postit,
+	/obj/item/postit_stack,
 	/obj/item/staple_gun/red)
 
 	one

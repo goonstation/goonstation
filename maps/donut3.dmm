@@ -23640,7 +23640,7 @@
 	pixel_x = 5;
 	pixel_y = 2
 	},
-/obj/item/item_box/postit{
+/obj/item/postit_stack{
 	pixel_x = -6;
 	pixel_y = 4
 	},

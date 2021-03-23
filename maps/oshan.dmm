@@ -9515,7 +9515,7 @@
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/item_box/postit,
+/obj/item/postit_stack,
 /obj/item/pen,
 /obj/disposalpipe/segment{
 	dir = 4
@@ -30910,7 +30910,7 @@
 "bxS" = (
 /obj/table/wood/round/auto,
 /obj/item/paper_bin,
-/obj/item/item_box/postit,
+/obj/item/postit_stack,
 /obj/item/pen/fancy,
 /obj/item/stamp,
 /turf/simulated/floor/carpet/blue/fancy/junction/nw_e,
@@ -31724,7 +31724,7 @@
 /obj/item/storage/box/crayon{
 	pixel_x = -6
 	},
-/obj/item/item_box/postittit,
+/obj/item/postit_stack,
 /obj/machinery/light/incandescent/warm,
 /turf/simulated/floor/carpet{
 	dir = 9;

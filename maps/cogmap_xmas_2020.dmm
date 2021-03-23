@@ -5679,7 +5679,7 @@
 "amU" = (
 /obj/table/reinforced/auto,
 /obj/machinery/cashreg,
-/obj/item/item_box/postit,
+/obj/item/postit_stack,
 /obj/cable{
 	d1 = 1;
 	d2 = 2;
@@ -19547,7 +19547,7 @@
 /obj/machinery/light/emergency{
 	dir = 1
 	},
-/obj/item/item_box/postit,
+/obj/item/postit_stack,
 /turf/simulated/floor/black,
 /area/station/bridge)
 "aPN" = (
@@ -26812,7 +26812,7 @@
 	tag = ""
 	},
 /obj/item/stamp,
-/obj/item/item_box/postit,
+/obj/item/postit_stack,
 /obj/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/security/checkpoint)
@@ -45185,7 +45185,7 @@
 /obj/item/clipboard,
 /obj/item/device/radio/headset/engineer,
 /obj/item/device/radio/headset/engineer,
-/obj/item/item_box/postit,
+/obj/item/postit_stack,
 /turf/simulated/floor/yellow/side{
 	dir = 8
 	},
@@ -59601,7 +59601,7 @@
 /obj/machinery/networked/printer{
 	print_id = "Information"
 	},
-/obj/item/item_box/postit{
+/obj/item/postit_stack{
 	pixel_x = 5;
 	pixel_y = 3
 	},
@@ -64031,7 +64031,7 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
-/obj/item/item_box/postit,
+/obj/item/postit_stack,
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/head)
 "cCJ" = (

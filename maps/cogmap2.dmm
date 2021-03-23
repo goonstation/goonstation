@@ -58879,7 +58879,7 @@
 "cxy" = (
 /obj/table/reinforced/auto,
 /obj/item/paper/book/dwainedummies,
-/obj/item/item_box/postit,
+/obj/item/postit_stack,
 /obj/item/device/radio/headset/research,
 /obj/item/device/radio/headset/research,
 /turf/simulated/floor/carpet{
