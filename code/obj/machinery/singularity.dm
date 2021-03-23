@@ -640,7 +640,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 
 	if(isweldingtool(W))
 		var/datum/action/bar/icon/callback/action_bar = new /datum/action/bar/icon/callback(user, src, 2 SECONDS, /obj/machinery/field_generator/proc/weld_action,\
-		list(W,user), W.icon, W.icon_state, "[user] finishes using their [W.name] on the field generator.")
+		list(user), W.icon, W.icon_state, "[user] finishes using their [W.name] on the field generator.")
 		if(state == 1)
 			if(!W:try_weld(user, 1, noisy = 2))
 				return
@@ -670,7 +670,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			if(M == user)	continue
 			M.show_message("<span class='alert'>The [src.name] has been hit with the [W.name] by [user.name]!</span>")
 
-/obj/machinery/field_generator/proc/weld_action(obj/item/W, mob/user)
+/obj/machinery/field_generator/proc/weld_action(mob/user)
 	if(state == 1)
 		state = 3
 		src.get_link() //Set up a link, now that we're secure!
@@ -1048,7 +1048,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 
 	if(isweldingtool(W))
 		var/datum/action/bar/icon/callback/action_bar = new /datum/action/bar/icon/callback(user, src, 2 SECONDS, /obj/machinery/emitter/proc/weld_action,\
-		list(W,user), W.icon, W.icon_state, "[user] finishes using their [W.name] on the emitter.")
+		list(user), W.icon, W.icon_state, "[user] finishes using their [W.name] on the emitter.")
 		if(state == 1)
 			if(!W:try_weld(user, 1, noisy = 2))
 				return
@@ -1081,7 +1081,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			M.show_message("<span class='alert'>The [src.name] has been hit with the [W.name] by [user.name]!</span>")
 
 
-/obj/machinery/emitter/proc/weld_action(obj/item/W, mob/user)
+/obj/machinery/emitter/proc/weld_action(mob/user)
 	if(state == 1)
 		state = 3
 		src.get_link()
