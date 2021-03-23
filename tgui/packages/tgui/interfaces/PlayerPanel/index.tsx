@@ -2,43 +2,18 @@
  * @file
  * @copyright 2021
  * @author Sovexe (https://github.com/Sovexe)
+ * @author Mordent (https://github.com/mordent-goonstation)
  * @license ISC
  */
 
-import { InfernoNode } from 'inferno';
 import { useBackend, useLocalState } from '../../backend';
-import { Box, Button, Icon, Input, Table } from '../../components';
+import { Button, Input, Table } from '../../components';
 import { Window } from '../../layouts';
-import { Action, SortDirection } from './constants';
+import { Header } from './Header';
+import { Action, SortDirection } from './constant';
+import { CellTemplateConfig, CellValueSelectorConfig, Column, PlayerData, PlayerPanelData, SortConfig, SorterConfig } from './type';
 
-interface Column<Row, Value> {
-  field?: string,
-  name: string,
-  sorter?: (a: Value, b: Value) => number,
-  template?: (config: CellTemplateConfig<Row, Value>) => InfernoNode,
-  valueSelector?: (config: CellValueSelectorConfig<Row, Value>) => Value,
-}
-
-interface CellTemplateConfig<Row, Value> {
-  act: (action: string, payload?: object) => void,
-  column: Column<Row, Value>,
-  row: Row,
-  value: Value,
-}
-
-interface CellValueSelectorConfig<Row, Value> {
-  column: Column<Row, Value>,
-  row: Row,
-}
-
-interface SortConfig {
-  field: string,
-  dir: SortDirection,
-}
-
-const defaultValueSelector = (config: CellValueSelectorConfig<PlayerData, string>) => config.row[config.column.field];
-
-const defaultTemplate = (config: CellTemplateConfig<PlayerData, string>) => config.value;
+const defaultTemplate = <Row extends object, Value>(config: CellTemplateConfig<Row, Value>) => `${config.value}`;
 const ckeyTemplate = (config: CellTemplateConfig<PlayerData, string>) => {
   const {
     act,
@@ -55,82 +30,94 @@ const ckeyTemplate = (config: CellTemplateConfig<PlayerData, string>) => {
   );
 };
 
-const alphabeticalSort = (a: string, b: string) => a.localeCompare(b);
-const ipSort = (a: string, b: string) => 0; // TODO
-const dateStringSort = (a: string, b: string) => 0; // TODO
+const alphabeticalSorter = (a: string, b: string) => a.localeCompare(b);
+const ipSorter = (a: string, b: string) => 0; // TODO
+const dateStringSorter = (a: string, b: string) => 0; // TODO
 
-const columns: Column<PlayerData, any>[] = [
-  { name: 'CKey', field: 'ckey', sorter: alphabeticalSort, template: ckeyTemplate },
-  { name: 'Name', field: 'name', sorter: alphabeticalSort },
-  { name: 'Real Name', field: 'realName', sorter: alphabeticalSort },
-  { name: 'Assigned Role', field: 'assignedRole', sorter: alphabeticalSort },
-  { name: 'Special Role', field: 'specialRole', sorter: alphabeticalSort },
-  { name: 'Player Type', field: 'playerType', sorter: alphabeticalSort },
-  { name: 'CID', field: 'computerID', sorter: alphabeticalSort },
-  { name: 'IP', field: 'ip', sorter: ipSort },
-  { name: 'Join Date', field: 'joined', sorter: dateStringSort },
-  { name: 'Player location', field: 'playerLocation', sorter: alphabeticalSort },
+const createDefaultValueSelector = <Row extends object, Value>(field: string) => (
+  (config: CellValueSelectorConfig<Row, Value>): Value => config.row[field]
+);
+
+const createDefaultColumnConfig = <Row extends object, Value>(field: string) => ({
+  id: field,
+  sorter: alphabeticalSorter,
+  template: defaultTemplate,
+  valueSelector: createDefaultValueSelector<Row, Value>(field),
+});
+
+const columns: Column<PlayerData, unknown>[] = [
+  { ...createDefaultColumnConfig('ckey'), name: 'CKey', template: ckeyTemplate },
+  { ...createDefaultColumnConfig('name'), name: 'Name' },
+  { ...createDefaultColumnConfig('realName'), name: 'Real Name' },
+  { ...createDefaultColumnConfig('assignedRole'), name: 'Assigned Role' },
+  { ...createDefaultColumnConfig('specialRole'), name: 'Special Role' },
+  { ...createDefaultColumnConfig('playerType'), name: 'Player Type' },
+  { ...createDefaultColumnConfig('computerId'), name: 'CID' },
+  { ...createDefaultColumnConfig('ip'), name: 'IP', sorter: ipSorter },
+  { ...createDefaultColumnConfig('joined'), name: 'Join Date', sorter: dateStringSorter },
+  { ...createDefaultColumnConfig('playerLocation'), name: 'Player Location' },
 ];
-
-interface PlayerData {
-  assignedRole: string,
-  computerId: string,
-  ckey: string,
-  ip: string,
-  joined: string,
-  name: string,
-  playerLocation: string,
-  playerType: string,
-  realName: string,
-  specialRole: string,
-}
-
-interface PlayerPanelData {
-  players: {
-    [ckey: string]: PlayerData,
-  },
-}
-
-interface SortableHeaderProps {
-  children: InfernoNode,
-  onClick: () => any,
-  sortDirection?: SortDirection | null,
-}
-
-const SortableHeader = (props: SortableHeaderProps) => {
-  const {
-    children,
-    onClick,
-    sortDirection,
-    ...rest
-  } = props;
-  const iconName = sortDirection
-    ? (sortDirection === SortDirection.Asc ? 'sort-alpha-down' : 'sort-alpha-up')
-    : 'sort';
-  return (
-    <Box onClick={onClick} {...rest}>
-      {children}
-      <Icon name={iconName} />
-    </Box>
-  );
-};
 
 export const PlayerPanel = (props, context) => {
   const { act, data } = useBackend<PlayerPanelData>(context);
   const { players } = data;
+  // temporary data to check seach/sort
+  players['nerd'] = {
+    computerId: '123',
+    ckey: 'nerd',
+    assignedRole: 'Nerd',
+    playerLocation: 'Nerd Dungeon',
+    ip: '69.420.69.420',
+    realName: 'Nerd Nerdson',
+    name: 'Nerd Nerdson',
+    joined: '2000-01-01',
+    playerType: '/mob/dork',
+    specialRole: 'Vampire',
+  };
   const [search, setSearch] = useLocalState(context, 'search', '');
-  const [sort, setSort] = useLocalState<Array<SortConfig>>(context, 'sort', []);
+  const [sort, setSort] = useLocalState<SortConfig>(context, 'sort', null);
   let resolvedPlayers = Object.keys(players).map(ckey => players[ckey]);
+  // generate all values up front (to avoid having to generate multiple times)
+  const playerValues: { [ckey: string]: {
+    [id: string]: unknown,
+  } } = resolvedPlayers.reduce((prevPlayerValues, currPlayer) => {
+    prevPlayerValues[currPlayer.ckey] = columns.reduce((prevValues, currColumn) => {
+      const {
+        id,
+        valueSelector,
+      } = currColumn;
+      prevValues[id] = valueSelector({
+        column: currColumn,
+        row: currPlayer,
+      });
+      return prevValues;
+    }, {});
+    return prevPlayerValues;
+  }, {});
   if (search) {
     const lowerSearch = search.toLowerCase();
-    // filter player data strings by search string, case-insensitive
-    resolvedPlayers = resolvedPlayers.filter(player => (
-      Object.values(player)
-        .some(value => typeof value === 'string' && value.toLowerCase().includes(lowerSearch))
-    ));
+    resolvedPlayers = resolvedPlayers.filter(player => {
+      const values = Object.values(playerValues[player.ckey]);
+      return values.some(value => typeof value === 'string' && value.toLowerCase().includes(lowerSearch));
+    });
+  }
+  if (sort) {
+    const sortColumn = columns.find(column => column.id === sort.id);
+    if (sortColumn) {
+      resolvedPlayers.sort((a, b) => {
+        let comparison = sortColumn.sorter(
+          playerValues[a.ckey][sortColumn.id],
+          playerValues[b.ckey][sortColumn.id],
+        );
+        if (sort.dir === SortDirection.Desc) {
+          comparison *= -1;
+        }
+        return comparison;
+      });
+    }
   }
   return (
-    <Window width={670} height={640}>
+    <Window width={1000} height={640}>
       <Window.Content scrollable>
         <Input
           autoFocus
@@ -141,39 +128,41 @@ export const PlayerPanel = (props, context) => {
         />
         <Table>
           <Table.Row header>
-            {columns.map(column => (
-              <Table.Cell key={column.field}>
-                <SortableHeader
-                  onClick={() => {}}
-                  sortDirection={(sort.find(s => s.field === column.field) || {}).dir}
-                >
-                  {column.name}
-                </SortableHeader>
-              </Table.Cell>
-            ))}
+            {columns.map(column => {
+              const columnSort = sort?.id === column.id ? sort : null;
+              return (
+                <Table.Cell key={column.field}>
+                  <Header
+                    onSortClick={column.sorter ? () => setSort({
+                      dir: columnSort?.dir
+                        ? (columnSort.dir === SortDirection.Asc ? SortDirection.Desc : SortDirection.Asc)
+                        : SortDirection.Asc,
+                      id: column.id,
+                    }) : null}
+                    sortDirection={columnSort?.dir}
+                  >
+                    {column.name}
+                  </Header>
+                </Table.Cell>
+              );
+            })}
           </Table.Row>
           {resolvedPlayers.map(player => {
             const { ckey } = player;
             return (
               <Table.Row key={ckey}>
-                {columns.map((column, i) => {
+                {columns.map(column => {
                   const {
-                    field,
-                    name,
-                    template = defaultTemplate,
-                    valueSelector = defaultValueSelector,
+                    id,
+                    template,
                   } = column;
-                  const value = valueSelector({
-                    column,
-                    row: player,
-                  });
                   return (
-                    <Table.Cell key={`${name}${field ? `__${field}` : `__${i}`}`}>
+                    <Table.Cell key={id}>
                       {template({
                         act,
                         column,
                         row: player,
-                        value,
+                        value: playerValues[ckey][id],
                       })}
                     </Table.Cell>
                   );
