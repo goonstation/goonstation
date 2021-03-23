@@ -1060,7 +1060,8 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 
 	if(isweldingtool(W))
 		var/datum/action/bar/icon/callback/action_bar = new /datum/action/bar/icon/callback(user, src, 2 SECONDS, /obj/machinery/emitter/proc/welding,\
-		list(W,user),W.icon, W.icon_state, "[user] finishes using their [W] on the [src].")
+		null, W.icon, W.icon_state, "[user] finishes using their [W.name] on the [src].")
+		action_bar.proc_args = list(W,user)
 		if(state == 1)
 			boutput(user, "You start to weld the emitter to the floor.")
 			actions.start(action_bar, user)
