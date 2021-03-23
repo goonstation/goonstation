@@ -16478,6 +16478,9 @@
 /obj/stool/chair/couch/blue{
 	dir = 4
 	},
+/obj/machinery/phone/wall{
+	pixel_y = 32
+	},
 /turf/simulated/floor/specialroom/arcade,
 /area/station/crew_quarters/lounge)
 "bxC" = (
@@ -25866,6 +25869,7 @@
 	icon_state = "0-2"
 	},
 /obj/table/wood/auto,
+/obj/machinery/phone,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "ffK" = (
@@ -33024,6 +33028,9 @@
 /area/station/maintenance/solar/west)
 "iXB" = (
 /obj/fitness/speedbag,
+/obj/machinery/phone/wall{
+	pixel_y = 32
+	},
 /turf/simulated/floor/grime,
 /area/station/security/brig)
 "iXY" = (
@@ -40458,6 +40465,13 @@
 	dir = 10
 	},
 /area/station/crew_quarters/fitness)
+"niz" = (
+/obj/table/reinforced/auto,
+/obj/machinery/phone,
+/turf/simulated/floor/yellow/side{
+	dir = 1
+	},
+/area/station/engine/engineering)
 "niN" = (
 /obj/disposalpipe/segment/brig,
 /turf/simulated/floor/black,
@@ -41013,6 +41027,9 @@
 	pixel_y = 5
 	},
 /obj/item/pen,
+/obj/machinery/phone/wall{
+	pixel_y = 32
+	},
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
@@ -41960,6 +41977,7 @@
 /obj/item/device/matanalyzer,
 /obj/item/paper/book/materials,
 /obj/item/paper/book/minerals,
+/obj/item/storage/firstaid/fire,
 /turf/simulated/floor,
 /area/station/mining/staff_room)
 "nZL" = (
@@ -46888,11 +46906,11 @@
 	name = "mail chute-'Mining'"
 	},
 /obj/table/reinforced/auto,
-/obj/item/storage/firstaid/fire,
 /obj/decal/tile_edge/line/yellow{
 	dir = 4;
 	icon_state = "line1"
 	},
+/obj/machinery/phone,
 /turf/simulated/floor,
 /area/station/mining/staff_room)
 "qKu" = (
@@ -103622,7 +103640,7 @@ yag
 dHP
 yag
 uJW
-gIg
+niz
 efC
 hju
 oVe
