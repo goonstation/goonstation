@@ -480,8 +480,6 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 	statlog_traitors()
 	//logTheThing("debug", null, null, "Zamujasa: [world.timeofday] statlog_ailaws")
 	statlog_ailaws(0)
-	//logTheThing("debug", null, null, "Zamujasa: [world.timeofday] round_end_data")
-	round_end_data(1) //Export round end packet (normal completion)
 
 	var/pets_rescued = 0
 	for(var/pet in by_cat[TR_CAT_PETS])

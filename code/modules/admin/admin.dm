@@ -4231,9 +4231,7 @@ var/global/noir = 0
 		ircmsg["key"] = usr.client.key
 		ircmsg["name"] = (usr?.real_name) ? stripTextMacros(usr.real_name) : "NULL"
 		ircmsg["msg"] = "manually restarted the server."
-		ircbot.export("admin", ircmsg)
-
-		round_end_data(2) //Wire: Export round end packet (manual restart)
+		ircbot.export("admin", ircmsg)re: Export round end packet (manual restart)
 
 		sleep(3 SECONDS)
 		Reboot_server()

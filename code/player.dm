@@ -111,15 +111,7 @@
 
 	/// Sets a cloud key value pair and sends it to goonhub
 	proc/cloud_put(key, value)
-		if(!clouddata)
-			return FALSE
-		clouddata[key] = "[value]"
-
-		// Via rust-g HTTP
-		var/datum/http_request/request = new() //If it fails, oh well...
-		request.prepare(RUSTG_HTTP_METHOD_GET, "http://spacebee.goonhub.com/api/cloudsave?dataput&api_key=[config.ircbot_api]&ckey=[ckey]&key=[url_encode(key)]&value=[url_encode(clouddata[key])]", "", "")
-		request.begin_async()
-		return TRUE // I guess
+		return
 
 	/// Returns some cloud data on the client
 	proc/cloud_get( var/key )
@@ -131,26 +123,7 @@
 
 	/// Downloads cloud data from goonhub
 	proc/cloud_fetch()
-		if(!cdn)
-			return
-		var/datum/http_request/request = new()
-		request.prepare(RUSTG_HTTP_METHOD_GET, "http://spacebee.goonhub.com/api/cloudsave?list&ckey=[ckey]&api_key=[config.ircbot_api]", "", "")
-		request.begin_async()
-		UNTIL(request.is_complete())
-		var/datum/http_response/response = request.into_response()
-
-		if (response.errored || !response.body)
-			logTheThing("debug", src.key, null, "failed to have their cloud data loaded: Couldn't reach Goonhub")
-			return FALSE
-
-		var/list/ret = json_decode(response.body)
-		if(ret["status"] == "error")
-			logTheThing( "debug", src.key, null, "failed to have their cloud data loaded: [ret["error"]["error"]]" )
-			return FALSE
-		else
-			cloudsaves = ret["saves"]
-			clouddata = ret["cdata"]
-			return TRUE
+		return
 
 /// returns a reference to a player datum based on the ckey you put into it
 /proc/find_player(key)

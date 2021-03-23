@@ -11,8 +11,8 @@ Example out of game log call:
 //We save this as html because the non-diary logging currently has html tags in place
 
 
-#define WRITE_LOG(log, text) rustg_log_write(log, text, "true")
-#define WRITE_LOG_NO_FORMAT(log, text) rustg_log_write(log, text, "false")
+#define WRITE_LOG(log, text) text2file(text, log)
+#define WRITE_LOG_NO_FORMAT(log, text) text2file(text, log)
 
 var/global/roundLog_date = time2text(world.realtime, "YYYY-MM-DD-hh-mm")
 var/global/roundLog_name = "data/logs/full/[roundLog_date].html"
@@ -144,10 +144,6 @@ var/global/first_adminhelp_happened = 0
 		entry += "<br>[message]" // |GOONSTATION-CHANGE| (\n->br)
 	entry += "<br>" // |GOONSTATION-CHANGE| (br)
 	WRITE_LOG(roundLog_name, entry)
-
-/* Close open log handles. This should be called as late as possible, and no logging should hapen after. */
-/proc/shutdown_logging()
-	rustg_log_close_all()
 
 /proc/constructTarget(ref,type)
 	if (type == "diary") . = constructName(ref, type)

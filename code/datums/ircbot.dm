@@ -54,60 +54,7 @@ var/global/datum/ircbot/ircbot = new /datum/ircbot()
 
 		//Send a message to an irc bot! Yay!
 		export(iface, args)
-			if (src.debugging)
-				src.logDebug("Export called with <b>iface:</b> [iface]. <b>args:</b> [list2params(args)]. <b>src.interface:</b> [src.interface]. <b>src.loaded:</b> [src.loaded]")
-
-			if (!config || !src.loaded)
-				src.queue += list(list("iface" = iface, "args" = args))
-
-				if (src.debugging)
-					src.logDebug("Export, message queued due to unloaded config")
-
-				SPAWN_DBG(1 SECOND)
-					if (!src.loaded)
-						src.load()
-				return "queued"
-			else
-				if (config.env == "dev" || !apikey) // If we have no API key, why even bother
-					return 0
-
-				args = (args == null ? list() : args)
-				args["server_name"] = (config.server_name ? replacetext(config.server_name, "#", "") : null)
-				args["server"] = serverKey
-				args["api_key"] = (src.apikey ? src.apikey : null)
-
-				if (src.debugging)
-					src.logDebug("Export, final args: [list2params(args)]. Final route: [src.interface]/[iface]?[list2params(args)]")
-
-				// Via rust-g HTTP
-				var/datum/http_request/request = new()
-				request.prepare(RUSTG_HTTP_METHOD_GET, "[src.interface]/[iface]?[list2params(args)]", "", "")
-				request.begin_async()
-				UNTIL(request.is_complete())
-				var/datum/http_response/response = request.into_response()
-
-				if (response.errored || !response.body)
-					logTheThing("debug", null, null, "<b>IRCBOT:</b> No return data from export. <b>iface:</b> [iface]. <b>args:</b> [list2params(args)]")
-					return
-
-				var/content = response.body
-
-				if (src.debugging)
-					src.logDebug("Export, returned data: [content]")
-
-				//Handle the response
-				var/list/contentJson = json_decode(content)
-				if (!contentJson["status"])
-					logTheThing("debug", null, null, "<b>IRCBOT:</b> Object missing status parameter in export response: [list2params(contentJson)]")
-					return 0
-				if (contentJson["status"] == "error")
-					var/log = ""
-					if (contentJson["errormsg"])
-						log = "Error returned from export: [contentJson["errormsg"]][(contentJson["error"] ? ". Error code: [contentJson["error"]]": "")]"
-					else
-						log = "An unknown error was returned from export: [list2params(contentJson)]"
-					logTheThing("debug", null, null, "<b>IRCBOT:</b> [log]")
-				return 1
+			return
 
 
 		//Format the response to an irc request juuuuust right

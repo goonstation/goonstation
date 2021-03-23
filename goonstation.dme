@@ -84,7 +84,6 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\datums\ehjax.dm"
 #include "code\datums\embedded_controller.dm"
 #include "code\datums\gameticker.dm"
-#include "code\datums\http.dm"
 #include "code\datums\hud.dm"
 #include "code\datums\intercept_text.dm"
 #include "code\datums\interfaceSizeHelper.dm"

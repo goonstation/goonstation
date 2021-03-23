@@ -50,45 +50,4 @@ var/global/datum/apiHandler/apiHandler
 	 *
 	 */
 	proc/queryAPI(route = "", query = list(), forceResponse = 0, attempt = 1, forceErrorException = 0)
-		if (!enabled || !route)
-			src.apiError("API Error: Cancelled query due to [!enabled ? "disabled apiHandler" : "missing route parameter"]", forceErrorException)
-			return
-
-		var/req = "[config.goonhub_api_endpoint]/[route]/?[query ? "[list2params(query)]&" : ""]" //Necessary
-		req += "[forceResponse ? "bypass=1&" : ""]" //Force a response RIGHT NOW y/n
-		req += "data_server=[serverKey]&data_id=[config.server_id]&" //Append server number and ID
-		req += "data_version=[config.goonhub_api_version]&" //Append API version
-		var/safeReq = req //for outputting errors without the auth code
-		req += "auth=[md5(config.goonhub_api_token)]" //Append auth code
-
-		// Fetch via HTTP from goonhub
-		var/datum/http_request/request = new()
-		request.prepare(RUSTG_HTTP_METHOD_GET, req, "", "")
-		request.begin_async()
-		UNTIL(request.is_complete())
-		var/datum/http_response/response = request.into_response()
-
-		if (response.errored || !response.body)
-			logTheThing("debug", null, null, "<b>API Error</b>: No response from server during query [!response.body ? "during" : "to"] <b>[safeReq]</b> (Attempt: [attempt])")
-			logTheThing("diary", null, null, "API Error: No response from server during query [!response.body ? "during" : "to"] [safeReq] (Attempt: [attempt])", "debug")
-
-			if (attempt < maxApiRetries)
-				return retryApiQuery(args, attempt = attempt)
-
-			src.apiError("API Error: No response from server during query [!response.body ? "during" : "to"] [safeReq]")
-
-		if (forceResponse)
-			// Parse the response
-			var/list/data = json_decode(response.body)
-
-			if (!data)
-				logTheThing("debug", null, null, "<b>API Error</b>: JSON decode error during <b>[safeReq]</b> (Attempt: [attempt])")
-				logTheThing("diary", null, null, "API Error: JSON decode error during [safeReq] (Attempt: [attempt])", "debug")
-
-				if (attempt < maxApiRetries)
-					return retryApiQuery(args, attempt = attempt)
-
-				src.apiError("API Error: JSON decode error during [safeReq]")
-
-			return data
-		return 1
+		return

@@ -35,17 +35,12 @@
 			Z_LOG_DEBUG("Resource/Grab", "[path] - requesting from CDN")
 
 			//Actually get the file contents from the CDN
-			var/datum/http_request/request = new()
-			request.prepare(RUSTG_HTTP_METHOD_GET, "[cdn]/[path]?serverrev=[vcs_revision]", "", "")
-			request.begin_async()
-			UNTIL(request.is_complete())
-			var/datum/http_response/response = request.into_response()
-
-			if (response.errored || !response.body)
+			var/http[] = world.Export("[cdn]/[path]?serverrev=[vcs_revision]")
+			if (!http || !http["CONTENT"])
 				Z_LOG_ERROR("Resource/Grab", "[path] - failed to get from CDN")
 				CRASH("CDN DEBUG: No file found for path: [path]")
 
-			file = response.body
+			file = file2text(http["CONTENT"])
 
 		else //No CDN, grab from local directory
 			Z_LOG_DEBUG("Resource/Grab", "[path] - locally loaded, parsing")

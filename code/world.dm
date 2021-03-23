@@ -758,11 +758,6 @@ var/f_color_selector_handler/F_Color_Selector
 
 		world.Reboot()
 
-/world/Reboot()
-	TgsReboot()
-	shutdown_logging()
-	return ..()
-
 /world/proc/update_status()
 	Z_LOG_DEBUG("World/Status", "Updating status")
 

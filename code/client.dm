@@ -874,24 +874,7 @@ var/global/curr_day = null
 	return 0
 
 /client/proc/setJoinDate()
-	joined_date = ""
-
-	// Get join date from BYOND members page
-	var/datum/http_request/request = new()
-	request.prepare(RUSTG_HTTP_METHOD_GET, "http://byond.com/members/[src.ckey]?format=text", "", "")
-	request.begin_async()
-	UNTIL(request.is_complete())
-	var/datum/http_response/response = request.into_response()
-
-	if (response.errored || !response.body)
-		logTheThing("debug", null, null, "setJoinDate: Failed to get join date response for [src.ckey].")
-		return
-
-	var/savefile/save = new
-	save.ImportText("/", response.body)
-	save.cd = "general"
-	joined_date = save["joined"]
-	jd_warning(joined_date)
+	return
 
 /client/verb/ping()
 	set name = "Ping"

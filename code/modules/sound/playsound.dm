@@ -225,30 +225,4 @@ var/global/admin_sound_channel = 1014 //Ranges from 1014 to 1024
 		src.verbs += /client/verb/stop_all_sounds
 
 /client/proc/play_youtube_audio()
-	if (!config.youtube_audio_key)
-		alert("You don't have access to the youtube audio converter")
-		return 0
-
-	var/video = input("Input the Youtube video information\nEither the full URL e.g. https://www.youtube.com/watch?v=145RCdUwAxM\nOr just the video ID e.g. 145RCdUwAxM", "Play Youtube Audio") as null|text
-	if (!video)
-		return
-
-	// Fetch via HTTP from goonhub
-	var/datum/http_request/request = new()
-	request.prepare(RUSTG_HTTP_METHOD_GET, "http://yt.goonhub.com/index.php?server=[config.server_id]&key=[src.key]&video=[video]&auth=[config.youtube_audio_key]", "", "")
-	request.begin_async()
-	UNTIL(request.is_complete())
-	var/datum/http_response/response = request.into_response()
-
-	if (response.errored || !response.body)
-		boutput(src, "<span class='bold' class='notice'>Something went wrong with the youtube thing! Yell at Wire.</span>")
-		logTheThing("debug", null, null, "<b>Youtube Error</b>: No response from server with video: <b>[video]</b>")
-		logTheThing("diary", null, null, "Youtube Error: No response from server with video: [video]", "debug")
-		return
-
-	var/data = json_decode(response.body)
-	if (data["error"])
-		boutput(src, "<span class='bold' class='notice'>Error returned from youtube server thing: [data["error"]].</span>")
-		return
-
-	boutput(src, "<span class='bold' class='notice'>Youtube audio loading started. This may take some time to play and a second message will be displayed when it finishes.</span>")
+	return
