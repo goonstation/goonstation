@@ -1059,47 +1059,17 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			return
 
 	if(isweldingtool(W))
-
-		var/turf/T = user.loc
-
+		var/datum/action/bar/icon/callback/action_bar = new /datum/action/bar/icon/callback(user, src, 2 SECONDS, /obj/machinery/emitter/proc/welding,W.icon, W.icon_state, null)
+		action_bar.proc_args = list(user)
+		if(!W:try_weld(user, 1, noisy = 2))
+			return
 		if(state == 1)
-			if(!W:try_weld(user, 1, noisy = 2))
-				return
 			boutput(user, "You start to weld the emitter to the floor.")
-			sleep(2 SECONDS)
-
-			if ((user.loc == T && user.equipped() == W))
-				state = 3
-				src.get_link()
-				boutput(user, "You weld the emitter to the floor.")
-			else if((isrobot(user) && (user.loc == T)))
-				state = 3
-				src.get_link()
-				desc = "Shoots a high power laser when active, it has been bolted and welded to the floor."
-				boutput(user, "You weld the emitter to the floor.")
-			return
-
-		if(state == 3)
-			if(!W:try_weld(user, 1, noisy = 2))
-				return
-			boutput(user, "You start to cut the emitter free from the floor.")
-			sleep(2 SECONDS)
-			if ((user.loc == T && user.equipped() == W))
-				state = 1
-				if(src.link) //Time to clear our link.
-					src.link.master = null
-					src.link = null
-					desc = "Shoots a high power laser when active, it has been bolted to the floor."
-				boutput(user, "You cut the emitter free from the floor.")
-			else if((isrobot(user) && (user.loc == T)))
-				state = 1
-				if(src.link)
-					src.link.master = null
-					src.link = null
-					desc = "Shoots a high power laser when active, it has been bolted to the floor."
-				boutput(user, "You cut the emitter free from the floor.")
-			return
-
+			actions.start(action_bar, user)
+		else if(state == 3)
+			boutput(user, "You start to unweld the emitter from the floor.")
+			actions.start(action_bar, user)
+		return
 	if (istype(W, /obj/item/device/pda2) && W:ID_card)
 		W = W:ID_card
 	if (istype(W, /obj/item/card/id))
@@ -1118,6 +1088,20 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			if(M == user)	continue
 			M.show_message("<span class='alert'>The [src.name] has been hit with the [W.name] by [user.name]!</span>")
 
+
+/obj/machinery/emitter/proc/welding(mob/user)
+	if(state == 1)
+		state = 3
+		src.get_link()
+		desc = "Shoots a high power laser when active, it has been bolted and welded to the floor."
+		boutput(user, "You weld the emitter to the floor.")
+	else if(state == 3)
+		state = 1
+		if(src.link) //Time to clear our link.
+			src.link.master = null
+			src.link = null
+		desc = "Shoots a high power laser when active, it has been bolted to the floor."
+		boutput(user, "You unweld the emitter from the floor.")
 
 //Send a signal over our link, if possible.
 /obj/machinery/emitter/proc/post_status(var/target_id, var/key, var/value, var/key2, var/value2, var/key3, var/value3)
