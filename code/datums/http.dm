@@ -23,8 +23,6 @@
 	var/url
 	/// The raw response, which will be decoeded into a [/datum/http_response]
 	var/_raw_response
-	/// If present response body will be saved to this file.
-	var/output_file
 
 /**
   * Preparation handler
@@ -36,9 +34,8 @@
   * * _url - The URL to send the request to
   * * _body - The body of the request, if applicable
   * * _headers - Associative list of HTTP headers to send, if applicable
-	* * _output_file - File path to save the response body to, if applicable
   */
-/datum/http_request/proc/prepare(_method, _url, _body = "", list/_headers, _output_file)
+/datum/http_request/proc/prepare(_method, _url, _body = "", list/_headers)
 	if(!length(_headers))
 		_headers = ""
 	else
@@ -48,7 +45,6 @@
 	url = _url
 	body = _body
 	headers = _headers
-	output_file = _output_file
 
 /**
   * Blocking executor
@@ -58,7 +54,7 @@
   */
 /datum/http_request/proc/execute_blocking()
 	CRASH("Attempted to execute a blocking HTTP request")
-	// _raw_response = rustg_http_request_blocking(method, url, body, headers, build_options())
+	// _raw_response = rustg_http_request_blocking(method, url, body, headers)
 
 /**
   * Async execution starter
@@ -70,21 +66,13 @@
 	if(in_progress)
 		CRASH("Attempted to re-use a request object.")
 
-	id = rustg_http_request_async(method, url, body, headers, build_options())
+	id = rustg_http_request_async(method, url, body, headers)
 
 	if(isnull(text2num(id)))
 		_raw_response = "Proc error: [id]"
 		CRASH("Proc error: [id]")
 	else
 		in_progress = TRUE
-
-/// Builds the http options
-/// Just supports output file for now
-/datum/http_request/proc/build_options()
-	if(!output_file)
-		return
-	else
-		return json_encode(list("output_filename"=output_file, "body_filename"=null))
 
 /**
   * Async completion checker
