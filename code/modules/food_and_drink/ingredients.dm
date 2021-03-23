@@ -582,7 +582,7 @@
 	var/toppingstext = null
 
 	attackby(obj/item/W as obj, mob/user as mob)
-		if (istype(W, /obj/item/reagent_containers/food/snacks/))
+		if (istype(W, /obj/item/reagent_containers/food))
 			add_ingredient(W, user)
 		else
 			return
@@ -593,7 +593,7 @@
 		if(user)
 			boutput(user, "<span class='notice'>You add [W] to [src].</span>")
 		topping = 1
-		if(F.food_effects)
+		if(hasvar(F, "food_effects"))
 			food_effects += F.food_effects
 			src.AddComponent(/datum/component/consume/food_effects, src.food_effects)
 		if (F.real_name)

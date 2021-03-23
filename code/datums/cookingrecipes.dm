@@ -668,7 +668,7 @@
 	cookbonus = 18
 	output = null
 
-	specialOutput(obj/submachine/ourCooker,obj/item/reagent_containers/food/snacks/ingredient/pizza3/ourPizza)
+	specialOutput(obj/submachine/ourCooker)
 		if (!ourCooker)
 			return
 

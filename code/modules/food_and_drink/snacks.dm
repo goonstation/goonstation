@@ -215,14 +215,18 @@
 		..()
 		var/obj/item/reagent_containers/food/snacks/ingredient/pizza3/pizzabase = new /obj/item/reagent_containers/food/snacks/ingredient/pizza3
 		var/num_ingredients = rand(1,3)
+		var/snack_type = 0
 		for (var/i = 1, i <= num_ingredients, i++)
-			var/snack_type =  pick(concrete_typesof(/obj/item/reagent_containers/food))
+			if (prob(80))
+				snack_type =  pick(concrete_typesof(/obj/item/reagent_containers/food/snacks))
+			else
+				snack_type = pick(concrete_typesof(/obj/item/reagent_containers/food/drinks))
 			var/obj/item/reagent_containers/R = new snack_type
 			pizzabase.add_ingredient(R, null)
 		var/datum/cookingrecipe/pizza/recipe = new
 		recipe.cook_pizza(pizzabase,src)
 		var/toppingstext = pizzabase.toppingstext
-		src.desc = "A pizza with [toppingstext] toppings. Looks ... [pick("disturbing","interesting","awful","grody","kinda good","alright", "like a pizza","cursed","perfect","cruel","bland","old","unholy","squishy","wonderful","organic","fancy","traditional","rustic","experimental","enchanted","eldritch","horrific","palatable")][pick("?",".")]"
+		src.desc = "A pizza with [toppingstext] toppings. Looks...[pick("disturbing","interesting","awful","grody","kinda good","alright", "like a pizza","cursed","perfect","cruel","bland","old","unholy","squishy","wonderful","organic","fancy","traditional","rustic","experimental","enchanted","eldritch","horrific","palatable")][pick("?",".")]"
 		qdel(pizzabase)
 		src.add_topping(0)
 /obj/item/reagent_containers/food/snacks/pizza/pepperoni
