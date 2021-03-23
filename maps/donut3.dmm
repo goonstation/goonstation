@@ -29669,6 +29669,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/item/storage/wall/office,
 /turf/simulated/floor/wood/five,
 /area/station/hydroponics/bay)
 "iCd" = (
