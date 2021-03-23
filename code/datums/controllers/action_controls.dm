@@ -379,7 +379,7 @@ var/datum/action_controller/actions
 	/// a list of args for the proc thats called once the action bar finishes, if needed.
 	var/list/proc_args = null
 
-	New(var/owner, var/target, var/duration, var/proc_path, var/icon, var/icon_state, var/end_message)
+	New(var/owner, var/target, var/duration, var/proc_path, var/proc_args, var/icon, var/icon_state, var/end_message)
 		..()
 		if (owner)
 			src.owner = owner
