@@ -640,8 +640,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 
 	if(isweldingtool(W))
 		var/datum/action/bar/icon/callback/action_bar = new /datum/action/bar/icon/callback(user, src, 2 SECONDS, /obj/machinery/field_generator/proc/weld_action,\
-		null, W.icon, W.icon_state, "[user] finishes using their [W.name] on the field generator.")
-		action_bar.proc_args = list(W,user)
+		list(W,user), W.icon, W.icon_state, "[user] finishes using their [W.name] on the field generator.")
 		if(state == 1)
 			if(!W:try_weld(user, 1, noisy = 2))
 				return
@@ -1049,8 +1048,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 
 	if(isweldingtool(W))
 		var/datum/action/bar/icon/callback/action_bar = new /datum/action/bar/icon/callback(user, src, 2 SECONDS, /obj/machinery/emitter/proc/weld_action,\
-		null, W.icon, W.icon_state, "[user] finishes using their [W.name] on the emitter.")
-		action_bar.proc_args = list(W,user)
+		list(W,user), W.icon, W.icon_state, "[user] finishes using their [W.name] on the emitter.")
 		if(state == 1)
 			if(!W:try_weld(user, 1, noisy = 2))
 				return
