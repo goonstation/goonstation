@@ -16475,12 +16475,10 @@
 /turf/simulated/floor/plating/random,
 /area/station/security/brig)
 "bxx" = (
-/obj/stool/chair/couch/blue{
-	dir = 4
-	},
 /obj/machinery/phone/wall{
 	pixel_y = 32
 	},
+/obj/reagent_dispensers/watertank/fountain,
 /turf/simulated/floor/specialroom/arcade,
 /area/station/crew_quarters/lounge)
 "bxC" = (
@@ -18193,11 +18191,11 @@
 /area/station/maintenance/east)
 "bKX" = (
 /obj/decal/stage_edge,
-/obj/machinery/bot/firebot,
 /obj/machinery/firealarm{
 	dir = 4;
 	pixel_x = 28
 	},
+/obj/machinery/photocopier,
 /turf/simulated/floor/carpet/red/fancy/edge{
 	dir = 5
 	},
@@ -20731,7 +20729,10 @@
 	})
 "cUq" = (
 /obj/disposalpipe/segment,
-/turf/simulated/wall/auto/gannets,
+/turf/simulated/wall/auto/reinforced/gannets{
+	explosion_resistance = 20;
+	name = "very reinforced wall"
+	},
 /area/station/security/equipment)
 "cUy" = (
 /turf/simulated/floor/carpet/blue/standard/innercorner/east,
@@ -23549,6 +23550,10 @@
 /obj/table/reinforced/auto,
 /obj/machinery/coffeemaker/security,
 /obj/machinery/light/emergency,
+/obj/decal/tile_edge/line/red{
+	dir = 10;
+	icon_state = "line2"
+	},
 /turf/simulated/floor/specialroom/bar,
 /area/station/security/main)
 "ejA" = (
@@ -28516,7 +28521,7 @@
 /obj/machinery/door/firedoor/border_only,
 /obj/machinery/door/airlock/gannets/chemistry{
 	name = "airlock-'Chemistry'";
-	req_access_txt = "33"
+	req_access_txt = "33|12"
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/southeast)
@@ -28895,7 +28900,9 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/external{
+	req_access_txt = "12"
+	},
 /obj/cable{
 	icon_state = "1-8"
 	},
@@ -35307,7 +35314,9 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/item/instrument/large/jukebox,
+/obj/stool/chair/couch/blue{
+	dir = 8
+	},
 /turf/simulated/floor/specialroom/arcade,
 /area/station/crew_quarters/lounge)
 "koq" = (
@@ -36725,6 +36734,9 @@
 /obj/landmark/start{
 	name = "Security Assistant"
 	},
+/obj/decal/tile_edge/line/red{
+	icon_state = "line1"
+	},
 /turf/simulated/floor/specialroom/bar,
 /area/station/security/main)
 "ldJ" = (
@@ -36764,9 +36776,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/obj/stool/chair/couch/blue{
-	dir = 8
-	},
+/obj/stool/chair/couch/blue,
 /turf/simulated/floor/specialroom/arcade,
 /area/station/crew_quarters/lounge)
 "leZ" = (
@@ -38675,7 +38685,9 @@
 	pixel_x = 8;
 	pixel_y = 28
 	},
-/obj/stool/chair/couch/blue,
+/obj/stool/chair/couch/blue{
+	dir = 4
+	},
 /turf/simulated/floor/specialroom/arcade,
 /area/station/crew_quarters/lounge)
 "mhN" = (
@@ -46782,9 +46794,11 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/external,
 /obj/disposalpipe/segment/mineral{
 	dir = 4
+	},
+/obj/machinery/door/airlock/external{
+	req_access_txt = "12"
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/southeast)
@@ -54350,16 +54364,12 @@
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "uNn" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 8;
-	name = "autoname  - SS13"
+/obj/decal/tile_edge/line/black{
+	icon_state = "line1"
 	},
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/plating/random,
-/area/station/maintenance/outer/sw)
+/obj/machinery/bot/firebot,
+/turf/simulated/floor/wood,
+/area/station/crew_quarters/fitness)
 "uNs" = (
 /obj/decal/fakeobjects{
 	desc = "Looks like it needs to be replaced.";
@@ -56889,9 +56899,6 @@
 /obj/decal/boxingrope,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
-"wjQ" = (
-/turf/simulated/wall/auto/gannets,
-/area/station/security/equipment)
 "wki" = (
 /obj/disposalpipe/segment/mail{
 	dir = 8;
@@ -57623,6 +57630,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/storage/closet/office,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "wDE" = (
@@ -59822,7 +59830,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/obj/reagent_dispensers/watertank/fountain,
+/obj/item/instrument/large/jukebox,
 /turf/simulated/floor/specialroom/arcade,
 /area/station/crew_quarters/lounge)
 "xMa" = (
@@ -59883,8 +59891,8 @@
 	icon_state = "1-2"
 	},
 /obj/decal/tile_edge/line/red{
-	dir = 4;
-	icon_state = "line1"
+	dir = 6;
+	icon_state = "line2"
 	},
 /turf/simulated/floor/specialroom/bar,
 /area/station/security/main)
@@ -83984,7 +83992,7 @@ tfR
 fuT
 iqL
 tYa
-uNn
+tYa
 tYa
 tYa
 vVU
@@ -97590,7 +97598,7 @@ gca
 cWt
 nRn
 tai
-wjQ
+juJ
 syk
 iAM
 jUW
@@ -98496,7 +98504,7 @@ nmA
 cXM
 mTv
 eOF
-wjQ
+juJ
 ruN
 jqb
 ydh
@@ -98798,8 +98806,8 @@ nmA
 eeA
 fvv
 gGr
-wjQ
-wjQ
+juJ
+juJ
 juJ
 juJ
 juJ
@@ -109660,7 +109668,7 @@ ybt
 uSD
 bNR
 yfp
-rfx
+uNn
 rQk
 twD
 pQQ
