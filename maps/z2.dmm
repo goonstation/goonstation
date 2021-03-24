@@ -50277,6 +50277,9 @@
 	layer = 9.1;
 	pixel_x = -10
 	},
+/obj/item/paper/book/from_file/commanders_diary{
+	layer = 0
+	},
 /turf/unsimulated/floor/carpet/red/fancy/edge/west,
 /area/syndicate_station/battlecruiser)
 "cvO" = (
@@ -85012,6 +85015,11 @@
 	icon_state = "floor3"
 	},
 /area/hospital/samostrel)
+"nWL" = (
+/obj/table/auto,
+/obj/item/paper/book/from_file/syndies_guide,
+/turf/unsimulated/floor/darkblue,
+/area/syndicate_station/firing_range)
 "oaM" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -119276,7 +119284,7 @@ cIe
 cIe
 acn
 dep
-dex
+nWL
 dfa
 btf
 dgi
