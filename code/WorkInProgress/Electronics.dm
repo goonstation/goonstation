@@ -597,7 +597,7 @@
 		if (S.item_mats && src.olde)
 			dat += " * <A href='?src=\ref[src];op=\ref[S];tp=done'>Frame</A>"
 		else if (S.blueprint)
-			if(!S.locked || hide_allowed)
+			if(!S.locked || hide_allowed || src.olde)
 				dat += " * <A href='?src=\ref[src];op=\ref[S];tp=blueprint'>Blueprint</A>"
 			else
 				dat += " * Blueprint Disabled"

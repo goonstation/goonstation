@@ -358,7 +358,10 @@
 				right: 0;
 				}
 			.product .delete {
-				color: #f66;
+				color: #c44;
+				background: #222;
+				padding: 0.25em 0.5em;
+				border-radius: 10px;
 				}
 			.required div {
 				position: absolute;
