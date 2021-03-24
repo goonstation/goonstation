@@ -174,20 +174,7 @@
 				WO.onWeakened()
 
 		//When a master wraith dies, any of its poltergeists who are following it are thrown out. also send a message
-		if (src.poltergeists)
-			for (var/mob/wraith/poltergeist/P in src.poltergeists)
-				if (P.following_master && locate(P) in src.poltergeists)	//just to be safe
-					var/tx = get_turf(src) + rand(3 * -1, 3)
-					var/ty = get_turf(src) + rand(3 * -1, 3)
-
-					var/turf/tmploc = locate(tx, ty, 1)
-					if (isturf(tmploc))
-						P.set_loc(locate(tx, ty, 1))
-					else
-						P.set_loc(get_turf(src))
-					P.makeCorporeal()
-					boutput(P, "<span class='alert'><b>Oh no! Your master has died and you've been ejected outside into the material plane!</b></span>")
-				boutput(P, "<span class='alert'><b>Your master has died!</b></span>")
+		drop_following_poltergeists()
 
 		if (deaths < 2)
 			boutput(src, "<span class='alert'><b>You have been defeated...for now. The strain of banishment has weakened you, and you will not survive another.</b></span>")
@@ -216,6 +203,24 @@
 
 			src.ghostize()
 			qdel(src)
+
+	//When a master wraith dies, any of its poltergeists who are following it are thrown out. also send a message
+	proc/drop_following_poltergeists()
+		if (src.poltergeists)
+			for (var/mob/wraith/poltergeist/P in src.poltergeists)
+				if (P.following_master && locate(P) in src.poltergeists)	//just to be safe
+					var/turf/T1 = get_turf(src)
+					var/tx = T1.x + rand(3 * -1, 3)
+					var/ty = T1.y + rand(3 * -1, 3)
+
+					var/turf/tmploc = locate(tx, ty, 1)
+					if (isturf(tmploc))
+						P.exit_master(tmploc)
+					else
+						P.exit_master(T1)
+					P.makeCorporeal()
+					boutput(P, "<span class='alert'><b>Oh no! Your master has died and you've been ejected outside into the material plane!</b></span>")
+				boutput(P, "<span class='alert'><b>Your master has died!</b></span>")
 
 	proc/onAbsorb(var/mob/M)
 		if (src.mind)

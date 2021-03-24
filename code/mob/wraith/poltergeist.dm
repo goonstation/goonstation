@@ -59,6 +59,7 @@
 		orbit_anchor.icon_state = "blank"
 		orbit_anchor.icon = 'icons/mob/mob.dmi'
 		orbit_anchor.master = src
+		orbit_anchor.mouse_opacity = 0
 
 	Life(parent)
 		..()
@@ -76,7 +77,7 @@
 				denom = master?.poltergeists.len
 			src.abilityHolder.points += master.abilityHolder.regenRate/min(2, denom+1)
 
-		else if (dist_from_master > max_dist_marker && dist_from_marker > max_dist_master && health > 10)
+		else if (dist_from_master > max_dist_marker && dist_from_marker > max_dist_master && health > 50)
 			TakeDamage("all", 5, 0)
 			// boutput(src, "<span class='alert'>You are damaged from being too far from a well of power!</span>")
 		//else
@@ -149,11 +150,18 @@
 		if (!isnull(master) && src.loc != master)
 			src:following_master = 1
 			src.set_loc(master)
+			//to turn the poltergeist to face the direction they are orbitting
+			var/orbit_direction = pick("L", "R")
+			var/turn_angle = 90
+			if (orbit_direction == "L")
+				turn_angle = -90
 
 			//animate the ghost moving in and out
 			var/matrix/min = matrix()
+			min.Turn(turn_angle)
 			min.Translate(0, rand(32, 64))
 			var/matrix/max = matrix()
+			max.Turn(turn_angle)
 			max.Translate(0, rand(96, 128))
 
 			var/t1 = rand(10, 30)
@@ -162,7 +170,7 @@
 
 			//attach ghost to orbit anchor and spin it
 			orbit_anchor.vis_contents += src
-			animate_spin(orbit_anchor, pick("L", "R"), rand(14, 25), -1)
+			animate_spin(orbit_anchor, orbit_direction, rand(14, 25), -1)
 
 			//attach orbit anchor to the master wraith
 			master.vis_contents += orbit_anchor
@@ -175,11 +183,15 @@
 			return 1
 		return 0
 
+	//desination, where to deposit you. on master's tile if null
 	//returns success/failure
-	proc/exit_master()
+	proc/exit_master(var/turf/destination = null)
 		if (src.loc == master)
 			src:following_master = 0
-			src.set_loc(get_turf(master))
+			if (!isturf(destination))
+				src.set_loc(get_turf(master))
+			else
+				src.set_loc(destination)
 
 			//stop orbitting animations, remove from vis_contents
 			animate(src, transform = null)
