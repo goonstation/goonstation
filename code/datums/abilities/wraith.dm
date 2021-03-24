@@ -31,7 +31,7 @@
 	target_anything = 1
 	preferred_holder_type = /datum/abilityHolder/wraith
 	theme = "wraith"
-	var/power_well_dist = 1		//What minimum distance from your power well (marker/wraith master) the poltergeist needs to case this spell.
+	var/min_req_dist = INFINITY		//What minimum distance from your power well (marker/wraith master) the poltergeist needs to case this spell.
 
 	New()
 		var/atom/movable/screen/ability/topBar/wraith/B = new /atom/movable/screen/ability/topBar/wraith(null)
@@ -47,8 +47,8 @@
 			return 1
 		if (ispoltergeist(holder.owner))
 			var/mob/wraith/poltergeist/P = holder.owner
-			if (src.power_well_dist > P.power_well_dist)
-				boutput(holder.owner, "<span class='alert'>You are too far from your well of power or master to perform this task.</span>")
+			if (src.min_req_dist <= P.power_well_dist)
+				boutput(holder.owner, "<span class='alert'>You must be within [min_req_dist] tiles from a well of power to perform this task.</span>")
 				return 1
 		return 0
 
@@ -257,6 +257,7 @@
 	target_anything = 1
 	pointCost = 30
 	cooldown = 1 MINUTE //1 minute
+	min_req_dist = 15
 
 	cast(atom/T)
 		if (..())
@@ -313,6 +314,7 @@
 	target_anything = 1
 	pointCost = 50
 	cooldown = 20 SECONDS
+	min_req_dist = 15
 
 	cast(atom/T)
 		var/list/thrown = list()
@@ -385,6 +387,7 @@
 	target_anything = 1
 	pointCost = 100
 	cooldown = 30 SECONDS
+	min_req_dist = 10
 
 	cast(atom/T)
 		if (..())
@@ -432,6 +435,7 @@
 	targeted = 0
 	pointCost = 0
 	cooldown = 1 MINUTE
+	min_req_dist = INFINITY
 
 	cast()
 		if (..())
@@ -455,6 +459,7 @@
 	pointCost = 0
 	cooldown = 20 SECONDS
 	special_screen_loc="NORTH,EAST-1"
+	min_req_dist = 10
 
 	var/datum/radio_frequency/pda_connection
 	var/obj/spookMarker/marker = new /obj/spookMarker()		//removed for now
@@ -589,7 +594,7 @@
 	target_anything = 1
 	pointCost = 1
 	cooldown = 2 SECONDS
-
+	min_req_dist = 20
 	proc/ghostify_message(var/message)
 		return message
 
@@ -623,6 +628,7 @@
 	target_anything = 1
 	pointCost = 10
 	cooldown = 5 SECONDS
+	min_req_dist = 10
 	var/in_use = 0
 
 	// cast(turf/target, params)

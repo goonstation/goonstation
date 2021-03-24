@@ -245,7 +245,7 @@
 	target_anything = 1
 	pointCost = 100
 	cooldown = 1 MINUTES
-	power_well_dist = INFINITY
+	min_req_dist = INFINITY
 
 	cast(atom/target)
 		if (..())
