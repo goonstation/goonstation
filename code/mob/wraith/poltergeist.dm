@@ -60,7 +60,7 @@
 		orbit_anchor.icon = 'icons/mob/mob.dmi'
 		orbit_anchor.master = src
 
-	Life()
+	Life(parent)
 		..()
 		if (!marker && !master)
 			death()
@@ -68,6 +68,11 @@
 
 		if (loc == master && src.health < src.max_health)
 			HealDamage("chest", 5, 0)
+			//get more points when following your master
+			var/denom = 1
+			if (islist(master?.poltergeists))
+				denom = master?.poltergeists.len
+			src.abilityHolder.points += master.abilityHolder.regenRate/min(2, denom+1)
 
 		else if (dist_from_master > max_dist_marker && dist_from_marker > max_dist_master && health > 10)
 			TakeDamage("all", 5, 0)
@@ -162,7 +167,7 @@
 			master.vis_contents += orbit_anchor
 
 
-			if (istype(hud) == hud_path)
+			if (istype(hud, /datum/hud/wraith/poltergeist))
 				var/datum/hud/wraith/poltergeist/p_hud = hud
 				p_hud.set_leave_master(1)
 			return 1
@@ -181,7 +186,7 @@
 			orbit_anchor.vis_contents -= src
 			master.vis_contents -= orbit_anchor
 
-			if (istype(hud) == hud_path)
+			if (istype(hud, /datum/hud/wraith/poltergeist))
 				var/datum/hud/wraith/poltergeist/p_hud = hud
 				p_hud.set_leave_master(0)
 			return 1
@@ -199,12 +204,12 @@
 		power_well_dist = min(dist_from_master, dist_from_marker)
 		//Maybe display, but that could be too fast...
 		// hud_path needs to be /datum/hud/wraith/poltergeist here
-		if (istype(hud) == hud_path)
+		if (istype(hud, /datum/hud/wraith/poltergeist))
 			var/datum/hud/wraith/poltergeist/p_hud = hud
 			p_hud.update_well_dist(power_well_dist)
 
 //switch to poltergeist after testing
-/mob/wraith/set_loc(atom/new_loc, new_pixel_x = 0, new_pixel_y = 0)
+/mob/wraith/poltergeist/set_loc(atom/new_loc, new_pixel_x = 0, new_pixel_y = 0)
 	if (use_movement_controller && isobj(src.loc) && src.loc:get_movement_controller())
 		use_movement_controller = null
 
@@ -221,11 +226,10 @@
 	if (iswraith(src.loc))	//&& src.loc == src.master
 		use_movement_controller = src.loc
 		//Remove this shit after testing --kyle
-		if (ispoltergeist(src))
-			src:following_master = 1
+		src.following_master = 1
 	else
-		if (ispoltergeist(src))
-			src:following_master = 0
+		use_movement_controller = null
+		src.following_master = 0
 
 
 	if (isobj(src.loc))
