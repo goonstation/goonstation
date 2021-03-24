@@ -780,7 +780,7 @@ This is basically useless for anyone but miners.
 	cost = 2
 	desc = "A box of shot glasses that hold WAAAY more that normal. Cheat at drinking games!"
 	job = list("Bartender")
-	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/spy_theft, /datum/game_mode/revolution)
+	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/revolution)
 
 /datum/syndicate_buylist/traitor/vuvuzelagun
 	name = "Vuvuzela Gun"
@@ -872,7 +872,7 @@ This is basically useless for anyone but miners.
 	vr_allowed = 0
 	desc = "An add on to the genetics cloning pod that make anyone cloned loyal to whoever installed it."
 	job = list("Geneticist", "Medical Doctor", "Medical Director")
-	blockedmode = list(/datum/game_mode/revolution, /datum/game_mode/spy_theft)
+	blockedmode = list(/datum/game_mode/revolution)
 
 /datum/syndicate_buylist/traitor/deluxe_mindslave_module
 	name = "Deluxe Mindslave Cloning Module Kit"
@@ -890,7 +890,7 @@ This is basically useless for anyone but miners.
 	vr_allowed = 0
 	desc = "A device that allows PR-6S Guardbuddy units to use their internal charge to replenish kinetic ammunition."
 	job = list("Research Director")
-	blockedmode = list(/datum/game_mode/revolution, /datum/game_mode/spy_theft)
+	blockedmode = list(/datum/game_mode/revolution)
 
 /datum/syndicate_buylist/traitor/wiretap
 	name = "Wiretap Radio Upgrade"
