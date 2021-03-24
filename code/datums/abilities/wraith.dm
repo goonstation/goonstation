@@ -438,6 +438,12 @@
 			return 1
 
 		var/mob/wraith/W = src.holder.owner
+
+		//check done in case a poltergeist uses this from within their master.
+		if (iswraith(W.loc))
+			boutput(W, "You can't become corporeal while inside another wraith! How would that even work?!")
+			return 1
+
 		usr.playsound_local(usr.loc, "sound/voice/wraith/wraithhaunt.ogg", 100, 0)
 		return W.haunt()
 

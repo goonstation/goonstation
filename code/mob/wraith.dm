@@ -22,6 +22,7 @@
 
 	var/deaths = 0
 	var/datum/hud/wraith/hud
+	var/hud_path = /datum/hud/wraith
 
 	var/atom/movable/overlay/animation = null
 
@@ -35,10 +36,12 @@
 	var/death_icon_state = "wraith-die"
 
 	var/list/poltergeists
-	//holy water, formaldehyde tolerances. 
+	//holy water, formaldehyde tolerances.
 	//probably will change these around, but these might be alright to start. -kyle
 	var/holy_water_tol = 0		//unused presently
 	var/formaldehyde_tol = 25
+
+	var/datum/movement_controller/movement_controller
 
 	//////////////
 	// Wraith Overrides
@@ -62,6 +65,8 @@
 		theName = theName  + "[pick(" the Impaler", " the Tormentor", " the Forsaken", " the Destroyer", " the Devourer", " the Tyrant", " the Overlord", " the Damned", " the Desolator", " the Exiled")]"
 		return theName
 
+	proc/get_movement_controller(mob/user)
+		return movement_controller
 
 	New(var/mob/M)
 		. = ..()
@@ -76,8 +81,11 @@
 		src.abilityHolder.points = 50
 		src.addAllAbilities()
 		last_life_update = world.timeofday
-		src.hud = new(src)
+		src.hud = new hud_path (src)
 		src.attach_hud(hud)
+
+		if (!movement_controller)
+			movement_controller = new /datum/movement_controller/poltergeist (src)
 
 		name = make_name()
 		real_name = name
@@ -164,6 +172,23 @@
 		if (src.mind)
 			for (var/datum/objective/specialist/wraith/WO in src.mind.objectives)
 				WO.onWeakened()
+
+		//When a master wraith dies, any of its poltergeists who are following it are thrown out. also send a message
+		if (src.poltergeists)
+			for (var/mob/wraith/poltergeist/P in src.poltergeists)
+				if (P.following_master && locate(P) in src.poltergeists)	//just to be safe
+					var/tx = get_turf(src) + rand(3 * -1, 3)
+					var/ty = get_turf(src) + rand(3 * -1, 3)
+
+					var/turf/tmploc = locate(tx, ty, 1)
+					if (isturf(tmploc))
+						P.set_loc(locate(tx, ty, 1))
+					else
+						P.set_loc(get_turf(src))
+					P.makeCorporeal()
+					boutput(P, "<span class='alert'><b>Oh no! Your master has died and you've been ejected outside into the material plane!</b></span>")
+				boutput(P, "<span class='alert'><b>Your master has died!</b></span>")
+
 		if (deaths < 2)
 			boutput(src, "<span class='alert'><b>You have been defeated...for now. The strain of banishment has weakened you, and you will not survive another.</b></span>")
 			src.justdied = 1
@@ -355,21 +380,6 @@
 			src.x--
 		OnMove()
 
-
-	OnMove()
-		..()
-
-		//Transfer step/distance to poltergeists
-		if (length(src.poltergeists))
-			for (var/mob/wraith/poltergeist/P in src.poltergeists)
-				P.update_well_dist(TRUE, FALSE)
-				if (P.following_master)
-					if (P.dist_from_master <= P.max_dist_master)
-						step(P, move_dir)
-					else
-						P.following_master = 0
-						boutput(P, "<span class='alert'>You are too far from your master to continue following them!</span>")
-
 	can_use_hands()
 		if (src.density) return 1
 		else return 0
@@ -394,15 +404,15 @@
 
 	examine_verb(atom/A as mob|obj|turf in view())
 		..()
-		
+
 		//Special info (that might eventually) be pertinent to the wraith.
-		//the target's chaplain training, formaldehyde (in use), and holy water amounts. 
+		//the target's chaplain training, formaldehyde (in use), and holy water amounts.
 		if (ismob(A))
 			var/string = ""
 			var/mob/M = A
 			if (M.traitHolder.hasTrait("training_chaplain"))
 				string += "<span class='alert'>This creature is <b><i>vile</i></b>!</span>\n"
-			
+
 			if (M.reagents)
 				var/f_amt = M.reagents.get_reagent_amount("formaldehyde")
 				if (f_amt >= src.formaldehyde_tol)
