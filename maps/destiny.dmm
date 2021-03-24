@@ -4142,14 +4142,11 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northeast)
 "aqc" = (
-/obj/storage/closet/coffin,
-/obj/item/device/radio/intercom/security,
-/obj/machinery/light{
+/obj/machinery/light_switch/west{
 	dir = 4
 	},
-/obj/item/reagent_containers/food/drinks/bottle/hobo_wine,
-/turf/simulated/floor/black,
-/area/station/medical/crematorium)
+/turf/simulated/floor/carpet/grime,
+/area/station/chapel/office)
 "aqd" = (
 /obj/stool/chair/wooden,
 /turf/simulated/floor/grass/random/alt,
@@ -4789,16 +4786,12 @@
 	name = "Crew Quarters M03"
 	})
 "asj" = (
-/obj/morgue{
-	dir = 8
-	},
-/obj/machinery/camera{
-	c_tag = "autotag";
+/obj/machinery/firealarm{
 	dir = 8;
-	name = "autoname  - SS13"
+	pixel_x = -28
 	},
-/turf/simulated/floor/black,
-/area/station/medical/crematorium)
+/turf/simulated/floor/carpet/grime,
+/area/station/chapel/office)
 "asl" = (
 /obj/decal/tile_edge/line/blue{
 	dir = 1;
@@ -7230,6 +7223,11 @@
 	dir = 4;
 	id = "chapelgun";
 	name = "Chapel Mass Driver"
+	},
+/obj/machinery/mass_driver{
+	dir = 4;
+	drive_range = 100;
+	id = "chapelgun"
 	},
 /turf/simulated/floor/plating/random,
 /area/station/chapel/sanctuary)
@@ -10072,6 +10070,10 @@
 	})
 "aMB" = (
 /obj/storage/closet/coffin/wood,
+/obj/item/device/radio/intercom/security,
+/obj/machinery/light{
+	dir = 4
+	},
 /turf/simulated/floor/black,
 /area/station/medical/crematorium)
 "aMC" = (
@@ -19455,9 +19457,6 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/light_switch/west{
-	dir = 4
-	},
 /turf/simulated/floor/carpet/grime,
 /area/station/chapel/office)
 "cpv" = (
@@ -19639,10 +19638,6 @@
 /turf/simulated/floor/plating/random,
 /area/station/science/storage)
 "csb" = (
-/obj/machinery/firealarm{
-	dir = 8;
-	pixel_x = -28
-	},
 /obj/cable{
 	icon_state = "1-4"
 	},
@@ -19872,10 +19867,6 @@
 /turf/simulated/floor/red,
 /area/station/science/lab)
 "cyj" = (
-/obj/disposalpipe/segment/mail{
-	dir = 2;
-	icon_state = "pipe-c"
-	},
 /obj/cable{
 	icon_state = "1-8"
 	},
@@ -20219,16 +20210,19 @@
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/toilets)
 "cJG" = (
-/obj/machinery/disposal/mail/small{
-	dir = 4;
-	mail_tag = "chapel";
-	name = "mail chute-'Chapel'"
+/obj/machinery/door/firedoor/border_only,
+/obj/disposalpipe/segment/mail{
+	dir = 4
 	},
-/obj/disposalpipe/trunk/mail{
-	dir = 1
+/obj/machinery/door/airlock/gannets/morgue/alt{
+	name = "airlock-'Crematorium'";
+	req_access_txt = "27"
 	},
-/turf/simulated/floor/carpet/grime,
-/area/station/chapel/office)
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/black,
+/area/station/medical/crematorium)
 "cJZ" = (
 /obj/lattice{
 	dir = 5;
@@ -20904,6 +20898,10 @@
 /obj/decal/tile_edge/line/purple{
 	dir = 10;
 	icon_state = "line2"
+	},
+/obj/machinery/atmospherics/portables_connector{
+	dir = 1;
+	name = "Mixing West"
 	},
 /turf/simulated/floor,
 /area/station/science/lab)
@@ -23211,11 +23209,6 @@
 /turf/simulated/floor/purple,
 /area/station/science/research_director)
 "dZk" = (
-/obj/machinery/atmospherics/binary/pump{
-	icon_state = "intact_on";
-	on = 1;
-	target_pressure = 250
-	},
 /obj/machinery/portable_atmospherics/pump,
 /turf/simulated/floor/plating/random,
 /area/station/science/storage)
@@ -34668,6 +34661,7 @@
 /area/station/medical/medbay)
 "jUr" = (
 /obj/storage/closet/coffin,
+/obj/item/reagent_containers/food/drinks/bottle/hobo_wine,
 /turf/simulated/floor/black,
 /area/station/medical/crematorium)
 "jUN" = (
@@ -34995,6 +34989,9 @@
 	icon_state = "xtra_bigstripe-edge"
 	},
 /obj/disposalpipe/segment/mail,
+/obj/machinery/dispenser{
+	pltanks = 0
+	},
 /turf/simulated/floor,
 /area/station/science/lab)
 "kgw" = (
@@ -40835,19 +40832,15 @@
 	name = "Genetic Research"
 	})
 "nsV" = (
-/obj/machinery/door/firedoor/border_only,
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
-/obj/machinery/door/airlock/gannets/morgue/alt{
-	name = "airlock-'Crematorium'";
-	req_access_txt = "27"
-	},
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/black,
-/area/station/medical/crematorium)
+/obj/disposalpipe/segment/mail{
+	dir = 2;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/floor/carpet/grime,
+/area/station/chapel/office)
 "ntz" = (
 /obj/stool/bar,
 /obj/landmark/start{
@@ -44706,6 +44699,17 @@
 	},
 /turf/simulated/floor/circuit/green,
 /area/station/turret_protected/Zeta)
+"pAo" = (
+/obj/disposalpipe/trunk/mail{
+	dir = 1
+	},
+/obj/machinery/disposal/mail/small{
+	dir = 4;
+	mail_tag = "chapel";
+	name = "mail chute-'Chapel'"
+	},
+/turf/simulated/floor/carpet/grime,
+/area/station/chapel/office)
 "pBg" = (
 /turf/simulated/floor/yellow,
 /area/station/hallway/secondary/construction)
@@ -48751,6 +48755,17 @@
 "rMl" = (
 /turf/simulated/wall/auto/reinforced/gannets,
 /area/station/engine/core)
+"rMt" = (
+/obj/morgue{
+	dir = 8
+	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 8;
+	name = "autoname  - SS13"
+	},
+/turf/simulated/floor/black,
+/area/station/medical/crematorium)
 "rMN" = (
 /obj/lattice{
 	dir = 4;
@@ -109955,7 +109970,7 @@ jcO
 wXU
 aMB
 ylC
-eeV
+rMt
 csz
 qPF
 kll
@@ -110255,9 +110270,9 @@ aoW
 qQc
 cec
 wXU
-aqc
-ylC
-asj
+wXU
+cJG
+wXU
 csz
 pLl
 aZS
@@ -110556,10 +110571,10 @@ aCQ
 rec
 qQc
 rGK
-wXU
-wXU
+aqc
+asj
 nsV
-wXU
+pAo
 csz
 sey
 wNu
@@ -110861,7 +110876,7 @@ aJB
 cpo
 csb
 cyj
-cJG
+rGK
 csz
 dAT
 wNu
