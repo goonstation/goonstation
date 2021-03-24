@@ -45,6 +45,7 @@ export interface PlayerData {
   ckey: string,
   ip: string,
   joined: string,
+  mobRef: string,
   name: string,
   playerLocation: string,
   playerType: string,

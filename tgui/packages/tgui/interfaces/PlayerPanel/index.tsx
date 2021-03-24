@@ -7,7 +7,7 @@
  */
 
 import { useBackend, useLocalState } from '../../backend';
-import { Button, Input, Table } from '../../components';
+import { Button, Input, Stack, Table } from '../../components';
 import { Window } from '../../layouts';
 import { Header } from './Header';
 import { Action, SortDirection } from './constant';
@@ -17,12 +17,46 @@ const defaultTemplate = <Row extends object, Value>(config: CellTemplateConfig<R
 const ckeyTemplate = (config: CellTemplateConfig<PlayerData, string>) => {
   const {
     act,
+    row,
+    value,
+  } = config;
+  return (
+    <Stack>
+      <Stack.Item grow={1}>
+        <Button
+          onClick={() => act(Action.OpenPlayerOptions, {
+            ckey: value,
+            mobRef: row.mobRef,
+          })}
+        >
+          {value}
+        </Button>
+      </Stack.Item>
+      <Stack.Item>
+        <Button
+          icon="envelope"
+          color="bad"
+          onClick={() => act(Action.PrivateMessagePlayer, {
+            ckey: value,
+            mobRef: row.mobRef,
+          })}
+        />
+      </Stack.Item>
+    </Stack>
+  );
+};
+
+const playerLocationTemplate = (config: CellTemplateConfig<PlayerData, string>) => {
+  const {
+    act,
+    row,
     value,
   } = config;
   return (
     <Button
-      onClick={() => act(Action.OpenPlayerOptions, {
-        ckey: value,
+      onClick={() => act(Action.JumpToPlayerLocation, {
+        ckey: row.ckey,
+        mobRef: row.mobRef,
       })}
     >
       {value}
@@ -55,7 +89,7 @@ const columns: Column<PlayerData, unknown>[] = [
   { ...createDefaultColumnConfig('computerId'), name: 'CID' },
   { ...createDefaultColumnConfig('ip'), name: 'IP', sorter: ipSorter },
   { ...createDefaultColumnConfig('joined'), name: 'Join Date', sorter: dateStringSorter },
-  { ...createDefaultColumnConfig('playerLocation'), name: 'Player Location' },
+  { ...createDefaultColumnConfig('playerLocation'), name: 'Player Location', template: playerLocationTemplate },
 ];
 
 export const PlayerPanel = (props, context) => {
@@ -69,6 +103,7 @@ export const PlayerPanel = (props, context) => {
     playerLocation: 'Nerd Dungeon',
     ip: '69.420.69.420',
     realName: 'Nerd Nerdson',
+    mobRef: null,
     name: 'Nerd Nerdson',
     joined: '2000-01-01',
     playerType: '/mob/dork',

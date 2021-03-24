@@ -3896,6 +3896,7 @@ var/global/noir = 0
 	for (var/mob/M in mobs)
 		if (M.ckey)
 			players[M.ckey] = list(
+				"mobRef" = "\ref[M]",
 				"ckey" = M.ckey,
 				"name" = M.name ? M.name : "N/A",
 				"realName" = M.real_name ? M.real_name : "N/A",
@@ -3917,23 +3918,48 @@ var/global/noir = 0
 		return
 
 	switch(action)
-		if("PlayerOpt")
-			for(var/mob/M in mobs)
-				if(M.ckey == params["ckey"])
-					usr.client.holder.playeropt(M)
-					break
+		if("open-player-options")
+			if(!usr.client) return
+			var/mobRef = params["mobRef"]
+			var/mob/M = locate(mobRef)
+			if(ismob(M) && M.ckey == params["ckey"])
+				usr.client.holder.playeropt(M)
+			else //mob ref was no good
+				for(M in mobs)
+					if(M.ckey == params["ckey"])
+						usr.client.holder.playeropt(M)
+						break
 
-		if("PM")
-			for(var/mob/M in mobs)
-				if(M.ckey == params["ckey"])
-					do_admin_pm(M, usr)
-					break
+		if("private-message-player")
+			if(!usr.client) return
+			var/mobRef = params["mobRef"]
+			var/mob/M = locate(mobRef)
+			if(ismob(M) && M.ckey == params["ckey"])
+				do_admin_pm(M.ckey, usr)
+			else
+				for(M in mobs)
+					if(M.ckey == params["ckey"])
+						do_admin_pm(M.ckey, usr)
+						break
 
 		if("SpecialRole")
 			for(var/mob/M in mobs)
 				if(M.ckey == params["ckey"])
 				//oh god this did a lot of stuff before, need to figure it out
 					. = TRUE
+
+		if("jump-to-player-location")
+			if(!usr.client) return
+			var/mobRef = params["mobRef"]
+			var/mob/M = locate(mobRef)
+			if(ismob(M) && M.ckey == params["ckey"])
+				usr.client.jumptomob(M)
+				message_admins("beep")
+			else
+				for(M in mobs)
+					if(M.ckey == params["ckey"])
+						usr.client.jumptomob(M)
+						break
 
 /datum/admins/proc/player()
 	var/dat = {"<html>
