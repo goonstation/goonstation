@@ -150,38 +150,41 @@
 		if (!isnull(master) && src.loc != master)
 			src:following_master = 1
 			src.set_loc(master)
-			//to turn the poltergeist to face the direction they are orbitting
-			var/orbit_direction = pick("L", "R")
-			var/turn_angle = 90
-			if (orbit_direction == "L")
-				turn_angle = -90
+			orbit_master_animation()
 
-			//animate the ghost moving in and out
-			var/matrix/min = matrix()
-			min.Turn(turn_angle)
-			min.Translate(0, rand(32, 64))
-			var/matrix/max = matrix()
-			max.Turn(turn_angle)
-			max.Translate(0, rand(96, 128))
-
-			var/t1 = rand(10, 30)
-			animate(src, transform = max, time = t1, loop = -1)
-			animate(transform = min, time = t1)
-
-			//attach ghost to orbit anchor and spin it
-			orbit_anchor.vis_contents += src
-			animate_spin(orbit_anchor, orbit_direction, rand(14, 25), -1)
-
-			//attach orbit anchor to the master wraith
-			master.vis_contents += orbit_anchor
-
-
+			
 			if (istype(hud, /datum/hud/wraith/poltergeist))
 				var/datum/hud/wraith/poltergeist/p_hud = hud
 				p_hud.set_leave_master(1)
 			boutput(src, "<span class='alert'>You start following your master. You can leave by pressing the 'X' Button at the top right and can move around slightly with your movement keys!</span>")
 			return 1
 		return 0
+
+	proc/orbit_master_animation()
+		//to turn the poltergeist to face the direction they are orbitting
+		var/orbit_direction = pick("L", "R")
+		var/turn_angle = 90
+		if (orbit_direction == "L")
+			turn_angle = -90
+
+		//animate the ghost moving in and out
+		var/matrix/min = matrix()
+		min.Turn(turn_angle)
+		min.Translate(0, rand(32, 64))
+		var/matrix/max = matrix()
+		max.Turn(turn_angle)
+		max.Translate(0, rand(96, 128))
+
+		var/t1 = rand(10, 30)
+		animate(src, transform = max, time = t1, loop = -1)
+		animate(transform = min, time = t1)
+
+		//attach ghost to orbit anchor and spin it
+		orbit_anchor.vis_contents += src
+		animate_spin(orbit_anchor, orbit_direction, rand(14, 25), -1)
+
+		//attach orbit anchor to the master wraith
+		master.vis_contents += orbit_anchor
 
 	//desination, where to deposit you. on master's tile if null
 	//returns success/failure
