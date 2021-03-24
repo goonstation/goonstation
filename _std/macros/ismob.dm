@@ -4,8 +4,6 @@
 
 //this is the home for checks of mob types
 
-/// Returns true if the given x is a mob
-#define ismob(x) istype(x, /mob)
 /// Returns true if the given x is an observer
 #define isobserver(x) istype(x, /mob/dead)
 /// Returns true if the given x is an observer and an admin
