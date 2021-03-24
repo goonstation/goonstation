@@ -141,7 +141,6 @@
 		. = ..()
 		if (target == master)
 			src.enter_master()
-			boutput(src, "You start following your master... You can leave by teleporting to your anchor, if it still exists.")
 
 	//returns success/failure
 	proc/enter_master()
@@ -170,6 +169,7 @@
 			if (istype(hud, /datum/hud/wraith/poltergeist))
 				var/datum/hud/wraith/poltergeist/p_hud = hud
 				p_hud.set_leave_master(1)
+			boutput(src, "<span class='alert'>You start following your master. You can leave by pressing the 'X' Button at the top right and can move around slightly with your movement keys!</span>")
 			return 1
 		return 0
 
@@ -263,7 +263,6 @@
 				if ("Master")
 					if (!isnull(P.master))
 						P.enter_master()
-						boutput(P, "You start following your master... You can leave by teleporting to your anchor, if it still exists. Otherwise, you're stuck here...")
 					else
 						boutput(P, "Your master has been banished from this plane of existence! You cannot follow them yet!")
 						return 1
