@@ -210,25 +210,30 @@
 				src.overlays += I
 /obj/item/reagent_containers/food/snacks/pizza/random
 	desc = "A pizza that somehow generates its own toppings and cooks itself! Oh the marvels of technology"
+	var/static/list/blacklist
+	proc/filter_food(food_type)
+		return !(food_type in src.blacklist)
 
 	New()
 		..()
+		blacklist = list(/obj/item/reagent_containers/food/drinks/bottle/bojackson,/obj/item/reagent_containers/food/drinks/moonshine,/obj/item/reagent_containers/food/snacks/condiment/syndisauce,/obj/item/reagent_containers/food/drinks/tea/mugwort,/obj/item/reagent_containers/food/drinks/milk/clownspider,/obj/item/reagent_containers/food/drinks/milk/cluwnespider,/obj/item/reagent_containers/food/snacks/ice_cream/random,/obj/item/reagent_containers/food/snacks/plant/slurryfruit/omega,/obj/item/reagent_containers/food/snacks/burger/roburger,/obj/item/reagent_containers/food/snacks/cereal_box/syndie,/obj/item/reagent_containers/food/snacks/healgoo,/obj/item/reagent_containers/food/drinks/reserve,/obj/item/reagent_containers/food/drinks/drinkingglass,/obj/item/reagent_containers/food/snacks/soup/custom,/obj/item/reagent_containers/food/drinks/paper_cup,/obj/item/reagent_containers/food/drinks/fueltank,/obj/item/reagent_containers/food/drinks/bottle/empty,/obj/item/reagent_containers/food/drinks/carafe,/obj/item/reagent_containers/food/drinks/detflask,/obj/item/reagent_containers/food/drinks/cocktailshaker,/obj/item/reagent_containers/food/drinks/bowl,/obj/item/reagent_containers/food/drinks/drinkingglass,/obj/item/reagent_containers/food/drinks/duo,/obj/item/reagent_containers/food/drinks/skull_chalice,/obj/item/reagent_containers/food/drinks/mug,/obj/item/reagent_containers/food/drinks/espressocup)
 		var/obj/item/reagent_containers/food/snacks/ingredient/pizza3/pizzabase = new /obj/item/reagent_containers/food/snacks/ingredient/pizza3
 		var/num_ingredients = rand(1,3)
-		var/snack_type = 0
+		var/snack_type
 		for (var/i = 1, i <= num_ingredients, i++)
 			if (prob(80))
-				snack_type =  pick(concrete_typesof(/obj/item/reagent_containers/food/snacks))
+				snack_type =  pick(filtered_concrete_typesof(/obj/item/reagent_containers/food/snacks, .proc/filter_food))
 			else
-				snack_type = pick(concrete_typesof(/obj/item/reagent_containers/food/drinks))
+				snack_type = pick(filtered_concrete_typesof(/obj/item/reagent_containers/food/drinks, .proc/filter_food))
 			var/obj/item/reagent_containers/R = new snack_type
+			pizzabase.toppingstext += "[(R.type)] "
 			pizzabase.add_ingredient(R, null)
 		var/datum/cookingrecipe/pizza/recipe = new
 		recipe.cook_pizza(pizzabase,src)
 		var/toppingstext = pizzabase.toppingstext
-		src.desc = "A pizza with [toppingstext] toppings. Looks...[pick("disturbing","interesting","awful","grody","kinda good","alright", "like a pizza","cursed","perfect","cruel","bland","old","unholy","squishy","wonderful","organic","fancy","traditional","rustic","experimental","enchanted","eldritch","horrific","palatable")][pick("?",".")]"
+		src.desc = "A pizza with [toppingstext] toppings. Looks...[pick("disturbing","interesting","awful","grody","kinda good","alright", "like a pizza","cursed","perfect","cruel","bland","old","unholy","squishy","wonderful","organic","fancy","traditional","rustic","experimental","enchanting","eldritch","horrific","palatable")][pick("?",".","!")]"
 		qdel(pizzabase)
-		src.add_topping(0)
+		//src.add_topping(0)
 /obj/item/reagent_containers/food/snacks/pizza/pepperoni
 	name = "pepperoni pizza"
 	desc = "A typical pepperoni pizza."
