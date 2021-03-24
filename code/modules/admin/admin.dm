@@ -3942,11 +3942,11 @@ var/global/noir = 0
 						do_admin_pm(M.ckey, usr)
 						break
 
-		if("SpecialRole")
+/* 		if("SpecialRole")
 			for(var/mob/M in mobs)
 				if(M.ckey == params["ckey"])
 				//oh god this did a lot of stuff before, need to figure it out
-					. = TRUE
+					. = TRUE */
 
 		if("jump-to-player-location")
 			if(!usr.client) return
@@ -3954,7 +3954,6 @@ var/global/noir = 0
 			var/mob/M = locate(mobRef)
 			if(ismob(M) && M.ckey == params["ckey"])
 				usr.client.jumptomob(M)
-				message_admins("beep")
 			else
 				for(M in mobs)
 					if(M.ckey == params["ckey"])
