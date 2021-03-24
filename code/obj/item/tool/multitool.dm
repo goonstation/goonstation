@@ -40,6 +40,7 @@
 	//turf and data_terminal for powernet check
 	var/turf/T = get_turf(target.loc)
 	var/obj/machinery/power/data_terminal/test_link = locate() in T
+	var/obj/item/implant/tracking/targetimplant = locate() in target.contents
 	//net_id block, except computers, where we do it all in one go
 	if (hasvar(target, "net_id"))
 		net_id = target:net_id
@@ -57,8 +58,11 @@
 		//laptops are special too!
 		if(omniperipheral)
 			frequency = omniperipheral.frequency
-	//frequency block
+	else if (targetimplant)
+		net_id = targetimplant.net_id
+		frequency = targetimplant.pda_alert_frequency
 
+	//frequency block
 	if (hasvar(target, "alarm_frequency"))
 		frequency = target:alarm_frequency
 	else if (hasvar(target, "freq"))
@@ -94,4 +98,3 @@
 	if (test_link)
 		if (length(test_link.powernet.cables) < 1)
 			boutput(user, "<span class='alert'>ERR#NOTATERM</span>")
-			
