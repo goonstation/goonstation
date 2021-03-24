@@ -210,30 +210,35 @@
 				src.overlays += I
 /obj/item/reagent_containers/food/snacks/pizza/random
 	desc = "A pizza that somehow generates its own toppings and cooks itself! Oh the marvels of technology"
-	var/static/list/blacklist
+	var/static/list/blacklist = list(/obj/item/reagent_containers/food/drinks/bottle/bojackson,/obj/item/reagent_containers/food/drinks/moonshine,/obj/item/reagent_containers/food/snacks/condiment/syndisauce,/obj/item/reagent_containers/food/drinks/tea/mugwort,/obj/item/reagent_containers/food/drinks/milk/clownspider,/obj/item/reagent_containers/food/drinks/milk/cluwnespider,/obj/item/reagent_containers/food/snacks/ice_cream/random,/obj/item/reagent_containers/food/snacks/plant/slurryfruit/omega,/obj/item/reagent_containers/food/snacks/burger/roburger,/obj/item/reagent_containers/food/snacks/cereal_box/syndie,/obj/item/reagent_containers/food/snacks/healgoo,/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/,/obj/item/reagent_containers/food/snacks/soup/custom,/obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat,/obj/item/reagent_containers/food/snacks/ingredient/flour/,/obj/item/reagent_containers/food/snacks/ingredient/rice,/obj/item/reagent_containers/food/snacks/ingredient/sugar,/obj/item/reagent_containers/food/snacks/ingredient/royal_jelly,/obj/item/reagent_containers/food/snacks/ingredient/dough/,/obj/item/reagent_containers/food/snacks/ingredient/dough_strip,/obj/item/reagent_containers/food/snacks/ingredient/tortilla,/obj/item/reagent_containers/food/snacks/ingredient/pizza1,/obj/item/reagent_containers/food/snacks/ingredient/pizza2,/obj/item/reagent_containers/food/snacks/ingredient/pizza3)
+	var/static/list/drinkwhitelist = list(/obj/item/reagent_containers/food/drinks/energyshake,/obj/item/reagent_containers/food/drinks/bottle/red,/obj/item/reagent_containers/food/drinks/bottle/blue,/obj/item/reagent_containers/food/drinks/bottle/pink,/obj/item/reagent_containers/food/drinks/bottle/lime,/obj/item/reagent_containers/food/drinks/bottle/spooky,/obj/item/reagent_containers/food/drinks/bottle/spooky2,/obj/item/reagent_containers/food/drinks/bottle/xmas,/obj/item/reagent_containers/food/drinks/bottle/bottledwater,/obj/item/reagent_containers/food/drinks/bottle/softsoft_pizza,/obj/item/reagent_containers/food/drinks/bottle/grones,/obj/item/reagent_containers/food/drinks/bottle/orange,/obj/item/reagent_containers/food/drinks/bottle/gingerale,/obj/item/reagent_containers/food/drinks/bottle/drowsy,/obj/item/reagent_containers/food/drinks/water,/obj/item/reagent_containers/food/drinks/tea,/obj/item/reagent_containers/food/drinks/coffee,/obj/item/reagent_containers/food/drinks/eggnog,/obj/item/reagent_containers/food/drinks/chickensoup,/obj/item/reagent_containers/food/drinks/weightloss_shake,/obj/item/reagent_containers/food/drinks/cola,/obj/item/reagent_containers/food/drinks/cola/random,/obj/item/reagent_containers/food/drinks/peach,/obj/item/reagent_containers/food/drinks/milk,/obj/item/reagent_containers/food/drinks/milk/rancid,/obj/item/reagent_containers/food/drinks/milk/soy,/obj/item/reagent_containers/food/drinks/covfefe,/obj/item/reagent_containers/food/drinks/bottle/beer,/obj/item/reagent_containers/food/drinks/bottle/fancy_beer,/obj/item/reagent_containers/food/drinks/bottle/wine,/obj/item/reagent_containers/food/drinks/bottle/hobo_wine,/obj/item/reagent_containers/food/drinks/bottle/champagne,/obj/item/reagent_containers/food/drinks/bottle/cider,/obj/item/reagent_containers/food/drinks/bottle/rum,/obj/item/reagent_containers/food/drinks/rum_spaced,/obj/item/reagent_containers/food/drinks/bottle/mead,/obj/item/reagent_containers/food/drinks/bottle/vintage,/obj/item/reagent_containers/food/drinks/bottle/vodka,/obj/item/reagent_containers/food/drinks/bottle/tequila,/obj/item/reagent_containers/food/drinks/bottle/gin,/obj/item/reagent_containers/food/drinks/bottle/ntbrew,/obj/item/reagent_containers/food/drinks/bottle/thegoodstuff,/obj/item/reagent_containers/food/drinks/curacao,)
 	proc/filter_food(food_type)
-		return !(food_type in src.blacklist)
+		for (var/food_filter in src.blacklist)
+			return !(istype(food_type,food_filter))
 
 	New()
 		..()
-		blacklist = list(/obj/item/reagent_containers/food/drinks/bottle/bojackson,/obj/item/reagent_containers/food/drinks/moonshine,/obj/item/reagent_containers/food/snacks/condiment/syndisauce,/obj/item/reagent_containers/food/drinks/tea/mugwort,/obj/item/reagent_containers/food/drinks/milk/clownspider,/obj/item/reagent_containers/food/drinks/milk/cluwnespider,/obj/item/reagent_containers/food/snacks/ice_cream/random,/obj/item/reagent_containers/food/snacks/plant/slurryfruit/omega,/obj/item/reagent_containers/food/snacks/burger/roburger,/obj/item/reagent_containers/food/snacks/cereal_box/syndie,/obj/item/reagent_containers/food/snacks/healgoo,/obj/item/reagent_containers/food/drinks/reserve,/obj/item/reagent_containers/food/drinks/drinkingglass,/obj/item/reagent_containers/food/snacks/soup/custom,/obj/item/reagent_containers/food/drinks/paper_cup,/obj/item/reagent_containers/food/drinks/fueltank,/obj/item/reagent_containers/food/drinks/bottle/empty,/obj/item/reagent_containers/food/drinks/carafe,/obj/item/reagent_containers/food/drinks/detflask,/obj/item/reagent_containers/food/drinks/cocktailshaker,/obj/item/reagent_containers/food/drinks/bowl,/obj/item/reagent_containers/food/drinks/drinkingglass,/obj/item/reagent_containers/food/drinks/duo,/obj/item/reagent_containers/food/drinks/skull_chalice,/obj/item/reagent_containers/food/drinks/mug,/obj/item/reagent_containers/food/drinks/espressocup)
 		var/obj/item/reagent_containers/food/snacks/ingredient/pizza3/pizzabase = new /obj/item/reagent_containers/food/snacks/ingredient/pizza3
 		var/num_ingredients = rand(1,3)
 		var/snack_type
+		var/ingredient_quality = 0.6
 		for (var/i = 1, i <= num_ingredients, i++)
 			if (prob(80))
 				snack_type =  pick(filtered_concrete_typesof(/obj/item/reagent_containers/food/snacks, .proc/filter_food))
 			else
-				snack_type = pick(filtered_concrete_typesof(/obj/item/reagent_containers/food/drinks, .proc/filter_food))
+				snack_type = pick(drinkwhitelist)
 			var/obj/item/reagent_containers/R = new snack_type
-			pizzabase.toppingstext += "[(R.type)] "
+			var/pizzapath
+			pizzapath = "[(R.type)]"
+			boutput(world,"[R.name] [pizzapath]")
 			pizzabase.add_ingredient(R, null)
+			ingredient_quality += R.quality
 		var/datum/cookingrecipe/pizza/recipe = new
 		recipe.cook_pizza(pizzabase,src)
 		var/toppingstext = pizzabase.toppingstext
 		src.desc = "A pizza with [toppingstext] toppings. Looks...[pick("disturbing","interesting","awful","grody","kinda good","alright", "like a pizza","cursed","perfect","cruel","bland","old","unholy","squishy","wonderful","organic","fancy","traditional","rustic","experimental","enchanting","eldritch","horrific","palatable")][pick("?",".","!")]"
+		src.quality = ingredient_quality
 		qdel(pizzabase)
-		//src.add_topping(0)
 /obj/item/reagent_containers/food/snacks/pizza/pepperoni
 	name = "pepperoni pizza"
 	desc = "A typical pepperoni pizza."
