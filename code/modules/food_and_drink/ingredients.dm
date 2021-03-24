@@ -608,7 +608,8 @@
 		else
 			heal_amt += round((F.heal_amt * F.amount)/amount) + 1
 		src.AddComponent(/datum/component/consume/foodheal, src.heal_amt)
-		topping_color = F.food_color
+		if(F.food_color)
+			topping_color = F.food_color
 		if(num < 3)
 			num ++
 			add_topping(src.num)
@@ -619,8 +620,9 @@
 	proc/add_topping(var/num)
 		var/icon/I
 		I = new /icon('icons/obj/foodNdrink/food_meals.dmi',"pizza_topping_[num]")
-		I.Blend(topping_color, ICON_ADD)
-		src.topping_colors += topping_color
+		if (topping_color)
+			I.Blend(topping_color, ICON_ADD)
+			src.topping_colors += topping_color
 		src.overlays += I
 
 	attack(mob/M as mob, mob/user as mob, def_zone)
@@ -631,23 +633,6 @@
 		else
 			user.visible_message("<span class='alert'><b>[user]</b> futilely attempts to shove [src] into [M]'s mouth!</span>")
 			return
-/obj/item/reagent_containers/food/snacks/ingredient/pizza3/random_self_cooking
-	name = "not quite a pizza"
-	desc = "A pizza that somehow generates its own toppings and cooks itself! Oh the marvels of technology"
-
-	New ()
-		..()
-		var/num_ingredients = rand(1,3)
-		for (var/i = 1, i <= num_ingredients, i++)
-			var/snack_type =  pick(concrete_typesof(/obj/item/reagent_containers/food/snacks))
-			var/obj/item/reagent_containers/R = new snack_type
-			src.add_ingredient(R, null)
-		var/datum/cookingrecipe/pizza/recipe = new
-		var/obj/item/reagent_containers/food/snacks/pizza/new_pizza = recipe.specialOutput(null,src)
-		src.name = new_pizza.name
-		new_pizza.loc = src.loc
-		qdel(src)
-
 /obj/item/reagent_containers/food/snacks/ingredient/pasta
 	// generic uncooked pasta parent
 	name = "pasta sheet"
