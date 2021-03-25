@@ -7140,6 +7140,10 @@
 	icon_state = "catwalk_cross"
 	},
 /area/pod_wars/spacejunk/uvb67/central)
+"Hk" = (
+/obj/machinery/light,
+/turf/unsimulated/floor/wood/seven,
+/area/pod_wars/spacejunk/fstation/bar)
 "Hl" = (
 /obj/shrub,
 /turf/simulated/floor/yellow/side{
@@ -7309,6 +7313,15 @@
 /area/pod_wars/team1/bridge)
 "HU" = (
 /obj/stool/bar,
+/turf/unsimulated/floor/wood/seven,
+/area/pod_wars/spacejunk/fstation/bar)
+"HV" = (
+/obj/stool/chair/wooden{
+	dir = 4
+	},
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/unsimulated/floor/wood/seven,
 /area/pod_wars/spacejunk/fstation/bar)
 "HW" = (
@@ -7691,6 +7704,7 @@
 /obj/stool/chair/wooden{
 	dir = 4
 	},
+/obj/machinery/light,
 /turf/unsimulated/floor/wood/seven,
 /area/pod_wars/spacejunk/fstation/bar)
 "JJ" = (
@@ -9247,6 +9261,12 @@
 	},
 /turf/space,
 /area/space)
+"RC" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/unsimulated/floor/wood/seven,
+/area/pod_wars/spacejunk/fstation/bar)
 "RD" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/pod_wars/spacejunk/fstation/power)
@@ -175394,7 +175414,7 @@ RD
 jK
 RD
 RD
-Em
+RC
 Em
 Em
 Em
@@ -175899,7 +175919,7 @@ dO
 Fz
 Kq
 Kq
-Em
+Hk
 dO
 JW
 JW
@@ -177402,7 +177422,7 @@ ch
 jJ
 vc
 dO
-JI
+HV
 ZE
 Em
 Em
