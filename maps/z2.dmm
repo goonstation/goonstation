@@ -36560,7 +36560,7 @@
 /turf/unsimulated/floor/carpet/grime,
 /area/crypt/sigma/rd)
 "bXD" = (
-/turf/unsimulated/floor/key_floor/jones,
+/turf/unsimulated/floor,
 /area/crypt/sigma/storage)
 "bXE" = (
 /obj/racing_boosterstrip{
@@ -80914,7 +80914,6 @@
 	name = "grungy HoS suit"
 	},
 /obj/item/clothing/head/centhat/ada,
-/obj/item/hairball/inert,
 /turf/unsimulated/floor/wood/eight{
 	dir = 4
 	},
