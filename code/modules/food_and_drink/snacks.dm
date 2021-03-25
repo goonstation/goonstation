@@ -1889,6 +1889,9 @@
 		if(!syrup)
 			boutput(M, "<span class='alert'>[src] seem a bit dry.</span>")
 
+/obj/item/reagent_containers/food/snacks/pancake/classic
+	icon = 'icons/obj/foodNdrink/food_shitty.dmi'
+
 /obj/item/reagent_containers/food/snacks/mashedpotatoes
 	name ="mashed potatoes"
 	desc = "A classic dish."
