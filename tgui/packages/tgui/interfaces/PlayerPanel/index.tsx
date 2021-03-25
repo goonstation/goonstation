@@ -95,20 +95,6 @@ const columns: Column<PlayerData, unknown>[] = [
 export const PlayerPanel = (props, context) => {
   const { act, data } = useBackend<PlayerPanelData>(context);
   const { players } = data;
-  // temporary data to check seach/sort
-  players['nerd'] = {
-    computerId: '123',
-    ckey: 'nerd',
-    assignedRole: 'Nerd',
-    playerLocation: 'Nerd Dungeon',
-    ip: '69.420.69.420',
-    realName: 'Nerd Nerdson',
-    mobRef: null,
-    name: 'Nerd Nerdson',
-    joined: '2000-01-01',
-    playerType: '/mob/dork',
-    specialRole: 'Vampire',
-  };
   const [search, setSearch] = useLocalState(context, 'search', '');
   const [sort, setSort] = useLocalState<SortConfig>(context, 'sort', null);
   let resolvedPlayers = Object.keys(players).map(ckey => players[ckey]);

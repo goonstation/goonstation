@@ -3880,7 +3880,7 @@ var/global/noir = 0
 /datum/player_panel
 
 /datum/player_panel/ui_state(mob/user)
-	return tgui_always_state
+	return tgui_admin_state.can_use_topic(src, user)
 
 /datum/player_panel/ui_status(mob/user)
   return tgui_admin_state.can_use_topic(src, user)
@@ -3941,12 +3941,6 @@ var/global/noir = 0
 					if(M.ckey == params["ckey"])
 						do_admin_pm(M.ckey, usr)
 						break
-
-/* 		if("SpecialRole")
-			for(var/mob/M in mobs)
-				if(M.ckey == params["ckey"])
-				//oh god this did a lot of stuff before, need to figure it out
-					. = TRUE */
 
 		if("jump-to-player-location")
 			if(!usr.client) return
