@@ -1135,7 +1135,6 @@
 						F.amount *= 2
 					else if(quality_status == "rotten")
 						F.heal_amt = 0
-					F.AddComponent(/datum/component/consume/foodheal, F.heal_amt)
 
 					HYPadd_harvest_reagents(F,growing,DNA,quality_status)
 					// We also want to put any reagents the plant produces into the new item.
@@ -1183,7 +1182,6 @@
 						M.amount *= 2
 					else if(quality_status == "rotten")
 						M.heal_amt = 0
-					M.AddComponent(/datum/component/consume/foodheal, M.heal_amt)
 
 					HYPadd_harvest_reagents(CROP,growing,DNA,quality_status)
 

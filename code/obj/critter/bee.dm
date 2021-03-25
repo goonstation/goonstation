@@ -1740,7 +1740,7 @@
 					icon_state = "sunbee_egg"
 					bee_name = "sun larva"
 
-		on_bite(obj/item/I, mob/M, mob/user)
+		heal(var/mob/M)
 			boutput(M, "<span class='alert'>You feel as if you have made a grave mistake.  Perhaps a doorway has closed forever.</span>")
 
 		attack_self(mob/user as mob)

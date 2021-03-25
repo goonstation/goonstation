@@ -99,26 +99,7 @@
 #define ITEM_RARITY_MYTHIC 7
 
 // item comp defs
-// For COMSIG_ITEM_CONSUMED_PRE returns
-/// Turns out its edible
-#define THING_IS_EDIBLE		(1<<0)
-/// Needs a fork
-#define EATING_NEEDS_A_FORK					(1<<1)
-/// Needs a spoon
-#define EATING_NEEDS_A_SPOON				(1<<2)
-
-// on_bite defs
-/// Mob can be healed by this food-thing
-#define MOB_HEALTH_ABOVE_FOODHEAL_CUTOFF (1<<0)
-
-// mob health foodheal threshold checks
-/// The typical food-heal health cutoff, if the mob's current health is less than their max health divided by this, food wont heal them
-/// So for a mob with 100 max health, they'll be healed by food as long as their current health is above ~55 HP
-#define FOODHEAL_CUTOFF_DIVISOR 1.8
-/// Same as above, but if the mob has the survivalist trait.
-/// For the same 100 max health mob, they'll be healed by food until their current health is below 10 HP
-#define FOODHEAL_CUTOFF_DIVISOR_SURVIVALIST 10
-
+#define FORCE_EDIBILITY 1
 //item attack bitflags
 /// The pre-attack signal doesnt want the attack to continue, so don't
 #define ATTACK_PRE_DONT_ATTACK 1
