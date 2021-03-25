@@ -517,8 +517,6 @@
 		else if((master.amount -= 1) < 1)
 			ate_the_whole_thing = 1
 		ON_COOLDOWN(M, "eat", EAT_COOLDOWN)
-		SEND_SIGNAL(master, COMSIG_ITEM_CONSUMED_PARTIAL, M, user)
-		SEND_SIGNAL(M, COMSIG_ITEM_CONSUMED_PARTIAL, user, master)
 
 		if(ate_the_whole_thing)
 			SEND_SIGNAL(master, COMSIG_ITEM_CONSUMED_ALL, M, user)
@@ -555,6 +553,8 @@
 			user.u_equip(master)
 			qdel(master)
 		else
+			SEND_SIGNAL(master, COMSIG_ITEM_CONSUMED_PARTIAL, M, user)
+			SEND_SIGNAL(M, COMSIG_ITEM_CONSUMED_PARTIAL, user, master)
 			boutput(user, "<span class='notice'>There's still some left!</span>")
 		return 1
 
