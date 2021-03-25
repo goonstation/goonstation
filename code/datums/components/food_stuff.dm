@@ -453,12 +453,15 @@
 /datum/component/consume/food_effects/InheritComponent(datum/component/consume/food_effects/C, i_am_original, _new_status_effects)
 	if(C?.status_effects)
 		src.status_effects = C.status_effects
+		boutput(world, "[C] was already init'd. heal amt on it was [C.status_effects] is now [src.status_effects], supposed to be [_new_status_effects]")
 	else
 		if (islist(_new_status_effects)) // C(duplicate component) wasn't initialized, so we don't know if the raw argument _new_status_effects is a string / list
 			src.status_effects |= _new_status_effects
+			boutput(world, "[_new_status_effects] was list. [src.status_effects]")
 		else if(istext(_new_status_effects))
 			var/list/new_sfx = list(_new_status_effects)
 			src.status_effects |= new_sfx
+			boutput(world, "[_new_status_effects] not list. [src.status_effects]")
 
 
 /datum/component/consume/food_effects/proc/apply_food_effects(var/obj/item/I, var/mob/M)
