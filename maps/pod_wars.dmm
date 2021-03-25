@@ -250,6 +250,12 @@
 	},
 /turf/simulated/floor/airless/plating,
 /area/pod_wars/spacejunk/nancy/warehouse)
+"bk" = (
+/obj/forcefield/energyshield/perma/pod_wars/nanotrasen,
+/turf/unsimulated/floor/blue/side{
+	dir = 9
+	},
+/area/pod_wars/team1/bridge)
 "bl" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -1551,6 +1557,9 @@
 	hardened = 1
 	},
 /obj/access_spawn/heads,
+/obj/forcefield/energyshield/perma/pod_wars/nanotrasen{
+	dir = 8
+	},
 /turf/unsimulated/floor/white,
 /area/pod_wars/team1/medbay)
 "hk" = (
@@ -1756,6 +1765,7 @@
 	hardened = 1
 	},
 /obj/access_spawn/heads,
+/obj/forcefield/energyshield/perma/pod_wars/nanotrasen,
 /turf/unsimulated/floor/white,
 /area/pod_wars/team1/medbay)
 "id" = (
@@ -3095,6 +3105,7 @@
 /area/pod_wars/team2/bridge)
 "oH" = (
 /obj/window/auto/reinforced/indestructible/extreme,
+/obj/forcefield/energyshield/perma/pod_wars/syndicate,
 /turf/unsimulated/floor/plating,
 /area/pod_wars/team2/cloning)
 "oI" = (
@@ -4555,6 +4566,10 @@
 	icon_state = "catwalk_cross"
 	},
 /area/pod_wars/spacejunk/reliant/landingpads)
+"uX" = (
+/obj/forcefield/energyshield/perma/pod_wars/nanotrasen,
+/turf/unsimulated/floor/white,
+/area/pod_wars/team1/medbay)
 "uZ" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -5304,6 +5319,7 @@
 	hardened = 1
 	},
 /obj/access_spawn/syndie_shuttle,
+/obj/forcefield/energyshield/perma/pod_wars/syndicate,
 /turf/unsimulated/floor/white,
 /area/pod_wars/team2/cloning)
 "yJ" = (
@@ -5399,6 +5415,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
+/obj/forcefield/energyshield/perma/pod_wars/nanotrasen,
 /turf/unsimulated/floor/white,
 /area/pod_wars/team1/medbay)
 "zg" = (
@@ -6192,6 +6209,17 @@
 	dir = 10
 	},
 /area/pod_wars/team1/bridge)
+"CV" = (
+/obj/machinery/door/airlock/pyro/glass/med{
+	dir = 4;
+	hardened = 1
+	},
+/obj/access_spawn/heads,
+/obj/forcefield/energyshield/perma/pod_wars/nanotrasen{
+	dir = 4
+	},
+/turf/unsimulated/floor/white,
+/area/pod_wars/team1/medbay)
 "CZ" = (
 /turf/simulated/floor,
 /area/pod_wars/spacejunk/fstation/crewquarters)
@@ -8942,6 +8970,7 @@
 /area/space)
 "Qf" = (
 /obj/window/auto/reinforced/indestructible/extreme,
+/obj/forcefield/energyshield/perma/pod_wars/nanotrasen,
 /turf/unsimulated/floor/plating,
 /area/pod_wars/team1/medbay)
 "Qg" = (
@@ -9805,6 +9834,7 @@
 	hardened = 1
 	},
 /obj/access_spawn/heads,
+/obj/forcefield/energyshield/perma/pod_wars/nanotrasen,
 /turf/unsimulated/floor/white,
 /area/pod_wars/team1/medbay)
 "TY" = (
@@ -9828,6 +9858,7 @@
 	hardened = 1
 	},
 /obj/access_spawn/syndie_shuttle,
+/obj/forcefield/energyshield/perma/pod_wars/syndicate,
 /turf/unsimulated/floor/white,
 /area/pod_wars/team2/cloning)
 "Ug" = (
@@ -42251,7 +42282,7 @@ Az
 VK
 ed
 ed
-ed
+uX
 ed
 ed
 Qf
@@ -45261,7 +45292,7 @@ HT
 HT
 DF
 bW
-hh
+CV
 hh
 gE
 Mj
@@ -45763,7 +45794,7 @@ HT
 HT
 yp
 rK
-pv
+bk
 FA
 fK
 gx

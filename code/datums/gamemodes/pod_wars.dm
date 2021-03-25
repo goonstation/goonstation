@@ -675,7 +675,29 @@ ABSTRACT_TYPE(/datum/ore_cluster)
 						team.equip_player(src.occupant)
 				break
 
+////////////////////////////////////////////////
+#ifdef MAP_OVERRIDE_POD_WARS
 
+/obj/forcefield/energyshield/perma/pod_wars
+	name = "Permanent Military-Grade Forcefield"
+	desc = "A permanent force field that prevents non-authorized entities from passing through it."
+	var/team_num = 0		//1 = NT, 2 = SY
+
+	CanPass(atom/A, turf/T)
+		if (ismob(A))
+			var/mob/M = A
+			if (team_num == get_pod_wars_team(M))
+				return 1
+		return 0
+
+/obj/forcefield/energyshield/perma/pod_wars/nanotrasen
+	team_num = 1
+	color = "#6666FF"
+/obj/forcefield/energyshield/perma/pod_wars/syndicate
+	team_num = 2
+	color = "#FF6666"
+
+#endif
 //////////////////SCOREBOARD STUFF//////////////////
 //only the board really need to be a hud.  I guess the others could too, but it doesn't matter.
 /atom/movable/screen/hud/score_board
