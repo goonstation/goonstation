@@ -152,7 +152,7 @@
 			src.set_loc(master)
 			orbit_master_animation()
 
-			
+
 			if (istype(hud, /datum/hud/wraith/poltergeist))
 				var/datum/hud/wraith/poltergeist/p_hud = hud
 				p_hud.set_leave_master(1)
@@ -274,6 +274,9 @@
 
 		if (ispoltergeist(holder.owner))
 			var/mob/wraith/poltergeist/P = holder.owner
+			if (P.density)
+				boutput(P, "<span class='alert'>You cannot retreat while corporeal!</span>")
+				return 1
 
 			var/I = input(holder.owner, "Where to retreat", "Where to retreat", "Master") as anything in list("Master", "Anchor")
 			switch (I)
