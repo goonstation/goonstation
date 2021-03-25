@@ -119,6 +119,8 @@ obj/machinery/atmospherics/binary/volume_pump
 obj/machinery/atmospherics/binary/volume_pump/attackby(obj/item/W, mob/user)
 	if(ispulsingtool(W))
 		ui.show_ui(user)
+	else
+		..()
 
 datum/pump_ui/volume_pump_ui
 	value_name = "Flow Rate"

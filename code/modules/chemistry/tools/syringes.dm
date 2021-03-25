@@ -70,6 +70,7 @@
 		update_icon()
 
 	attackby(obj/item/I as obj, mob/user as mob)
+		..()
 		return
 
 	afterattack(var/atom/target, mob/user, flag)

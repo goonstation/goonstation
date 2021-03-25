@@ -121,6 +121,8 @@
 				src.root = new /datum/computer/folder
 				src.root.holder = src
 				src.root.name = "root"
+		else
+			..()
 
 /obj/item/disk/data/tape
 	name = "ThinkTape"

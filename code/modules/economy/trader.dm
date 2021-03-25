@@ -110,6 +110,8 @@
 			else
 				boutput(usr, "<span class='alert'>No bank account associated with this ID found.</span>")
 				src.scan = null
+		else
+			..()
 
 	attack_hand(var/mob/user as mob)
 		if(..())

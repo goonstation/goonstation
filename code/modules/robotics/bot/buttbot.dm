@@ -172,7 +172,7 @@
 	if(istype(W, /obj/item/card/emag))
 		//Do not hit the buttbot with the emag tia
 	else
-		src.visible_message("<span class='alert'>[user] hits [src] with [W]!</span>")
+		..()
 		src.health -= W.force * 0.5
 		if(src.health <= 0)
 			src.explode()

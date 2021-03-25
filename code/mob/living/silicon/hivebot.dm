@@ -1185,3 +1185,5 @@ Frequency:
 				still_needed += "an AI interface board"
 			boutput(user, "\The [src] needs [still_needed.len ? english_list(still_needed) : "bugfixing (please call a coder)"] before you can activate it.")
 			return
+	else
+		..()

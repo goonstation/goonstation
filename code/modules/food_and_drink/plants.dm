@@ -919,6 +919,8 @@
 			var/obj/item/clothing/head/pumpkin/P = new /obj/item/clothing/head/pumpkin(user.loc)
 			P.name = "carved [src.name]"
 			pool (src)
+		else
+			..()
 
 /obj/item/reagent_containers/food/snacks/plant/pumpkin/summon
 	New()

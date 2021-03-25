@@ -108,6 +108,8 @@
 		qdel(src)
 		return
 
+	else
+		..()
 	src.add_fingerprint(user)
 	return
 

@@ -434,7 +434,7 @@
 							purge_sps(destruction_point_x, destruction_point_y)
 							destruction_point_y = ship.loc.y + 1
 						purge_sps(destruction_point_x, destruction_point_y)
-				
+
 				else boutput(ship.pilot, "<span class='alert'><B>Shooting diagonally is unsupported.</B></span>")
 
 
@@ -460,6 +460,8 @@
 			desc = "After a delay, fires a destructive beam capable of penetrating walls. The core is installed."
 			tooltip_rebuild = 1
 			return
+		else
+			..()
 
 	proc/purge_sps(var/point_x, var/point_y)
 		for (var/mob/M in locate(point_x,point_y,ship.loc.z))

@@ -223,6 +223,8 @@
 			loaded = 1
 			boutput(user, "<span class='notice'>You charge the magnetizer with the plasmastone.</span>")
 			pool(W)
+		else
+			..()
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
 		if (!magnet)
@@ -1148,6 +1150,7 @@
 			boutput(user, message)
 
 		else
+			..()
 			boutput(user, "<span class='alert'>You hit the [src.name] with [W], but nothing happens!</span>")
 		return
 
@@ -1423,6 +1426,8 @@
 	attackby(obj/item/W as obj, mob/user as mob)
 		if(ispryingtool(W))
 			src.ReplaceWithSpace()
+		else
+			..()
 
 	update_icon()
 		src.overlays = list()

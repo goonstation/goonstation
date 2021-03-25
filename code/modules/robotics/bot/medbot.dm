@@ -877,5 +877,7 @@
 			return
 
 		src.created_name = t
+	else
+		..()
 
 #undef MEDBOT_MOVE_SPEED

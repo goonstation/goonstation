@@ -960,7 +960,7 @@
 					boutput(ship.pilot, "<span class='alert'><B>Snapshot discarded!</B></span>")
 				return
 		return
-	
+
 	attackby(obj/item/W, mob/user)
 		if (isscrewingtool(W) && core_inserted)
 			core_inserted = false
@@ -978,3 +978,5 @@
 			desc = "After a delay, rewinds the ship's integrity to the state it was in at the moment of activation. The core is installed."
 			tooltip_rebuild = 1
 			return
+		else
+			..()

@@ -112,6 +112,8 @@
 			S:part2 = null
 			//S = null
 			qdel(S)
+		else
+			..()
 
 // warcrimes: Why the fuck is autothrow a feature why would this ever be a feature WHY. Now it wont do it unless it's primed i think.
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)

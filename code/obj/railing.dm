@@ -142,6 +142,8 @@
 					src.icon_state = "railing-reinforced"
 			else
 				user.show_text("[src] is already reinforced!", "red")
+		else
+			..()
 
 	attack_hand(mob/user)
 		src.try_vault(user)

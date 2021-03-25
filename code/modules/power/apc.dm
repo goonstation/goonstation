@@ -424,6 +424,8 @@ var/zapLimiter = 0
 				else
 					boutput(user, "<span class='alert'>You need to repair and tune the autotransformer before resetting the control board.</span>")
 			return
+		else
+			..()
 
 		return
 	if (ispryingtool(W))	// crowbar means open or close the cover
@@ -512,6 +514,8 @@ var/zapLimiter = 0
 				updateicon()
 			else
 				boutput(user, "<span class='alert'>Access denied.</span>")
+	else
+		..()
 
 
 /obj/machinery/power/apc/attack_ai(mob/user)

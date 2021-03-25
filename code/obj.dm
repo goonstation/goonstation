@@ -277,6 +277,8 @@
 		if (istype(W, /obj/item/clothing/suit/bedsheet))
 			qdel(W)
 			src.amount++
+		else
+			..()
 		return
 
 	attack_hand(mob/user as mob)
@@ -304,6 +306,8 @@
 		if (istype(W, /obj/item/clothing/under/towel))
 			qdel(W)
 			src.amount++
+		else
+			..()
 		return
 
 	attack_hand(mob/user as mob)
@@ -365,13 +369,15 @@
 			boutput(user, "<span class='notice'>Slicing lattice joints ...</span>")
 			new /obj/item/rods/steel(src.loc)
 			qdel(src)
+			return
 		if (istype(C, /obj/item/rods))
 			var/obj/item/rods/R = C
 			if (R.consume_rods(2))
 				boutput(user, "<span class='notice'>You assemble a barricade from the lattice and rods.</span>")
 				new /obj/lattice/barricade(src.loc)
 				qdel(src)
-		return
+			return
+		..()
 
 /obj/lattice/barricade
 	name = "barricade"

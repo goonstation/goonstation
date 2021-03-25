@@ -517,6 +517,8 @@ ABSTRACT_TYPE(/obj/item/record/random/chronoquest)
 		boutput(user, "<span class='notice'>You examine the record with the magnifying glass.</span>")
 		sleep(2 SECONDS)
 		boutput(user, "The scratch on the record, upon close examination, is actually tiny lettering. It says, <i>Fuck Discount Dan's. I hope more of your factories go under and you all drown in your toxic sewage.</i>")
+	else
+		..()
 
 /obj/item/record/atlas
 	desc = "Ode to a space ship."
@@ -663,6 +665,8 @@ ABSTRACT_TYPE(/obj/item/record/random/chronoquest)
 			//////
 			sleep(6000)
 			is_playing = 0
+	else
+		..()
 
 /obj/submachine/tape_deck/attack_hand(mob/user as mob)
 	if(has_tape)

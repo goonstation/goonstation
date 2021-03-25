@@ -112,6 +112,8 @@
 			if (src.icon_state != "fig-shelterfrog-dead")
 				make_cleanable(/obj/decal/cleanable/blood,get_turf(src))
 				src.icon_state = "fig-shelterfrog-dead"
+		else
+			..()
 		user.lastattacked = src
 		return 0
 

@@ -1308,6 +1308,7 @@
 				src.part1 = null
 			qdel(src)
 			return
+		else ..()
 
 	verb/controls()
 		set src in oview(1)

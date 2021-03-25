@@ -1526,6 +1526,8 @@
 			return
 
 		src.created_name = t
+	else
+		..()
 
 #undef IS_NOT_BEEPSKY_AND_HAS_SOME_GENERIC_BATON
 #undef IS_BEEPSKY_AND_HAS_HIS_SPECIAL_BATON

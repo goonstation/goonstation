@@ -143,6 +143,7 @@ obj/machinery/atmospherics/binary/pump
 obj/machinery/atmospherics/binary/pump/attackby(obj/item/W as obj, mob/user as mob)
 	if(ispulsingtool(W) || iswrenchingtool(W))
 		ui.show_ui(user)
+	else ..()
 
 datum/pump_ui/basic_pump_ui
 	value_name = "Target Pressure"

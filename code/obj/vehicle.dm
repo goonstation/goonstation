@@ -109,6 +109,8 @@ ABSTRACT_TYPE(/obj/vehicle)
 			if (attacks_fast_eject || rider.hasStatus(list("weakened", "paralysis", "stunned")))
 				eject_rider()
 			W.visible_message("<span class='alert'>[user] swings at [rider] with [W]!</span>")
+		else
+			..()
 		return
 
 	Exited(atom/movable/thing, atom/newloc)

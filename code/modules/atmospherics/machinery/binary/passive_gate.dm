@@ -61,6 +61,8 @@ obj/machinery/atmospherics/binary/passive_gate
 obj/machinery/atmospherics/binary/passive_gate/attackby(obj/item/W, mob/user)
 	if(ispulsingtool(W))
 		ui.show_ui(user)
+	else
+		..()
 
 datum/pump_ui/passive_gate_ui
 	value_name = "Release Pressure"

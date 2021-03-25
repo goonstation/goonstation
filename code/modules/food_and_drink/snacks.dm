@@ -110,6 +110,8 @@
 			if (src.name == "cheese keyzza")
 				boutput(user, "<i>You feel as though something of value has been lost...</i>")
 			src.make_slices()
+		else
+			..()
 
 	proc/make_slices()
 		var/makeslices = src.amount
@@ -787,6 +789,8 @@
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/reagent_containers/food/snacks/condiment/)) src.amount += 1
+		else
+			..()
 
 /obj/item/reagent_containers/food/snacks/donkpocket_w
 	name = "donk-pocket"
@@ -2233,6 +2237,7 @@
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/reagent_containers/food/snacks/condiment/)) src.amount += 1
+		else ..()
 
 /obj/item/reagent_containers/food/snacks/rice_ball
 	name = "rice ball"
@@ -2272,6 +2277,8 @@
 			else
 				nigiri.set_loc(spawnloc)
 			qdel(src)
+		else
+			..()
 
 /obj/item/reagent_containers/food/snacks/rice_ball/onigiri
 	name = "onigiri"
@@ -2307,6 +2314,8 @@
 				S.pixel_y = rand(-6, 6)
 				makepieces--
 			qdel (src)
+		else
+			..()
 
 	attack(mob/M as mob, mob/user as mob, def_zone)
 		if (!src.cut)

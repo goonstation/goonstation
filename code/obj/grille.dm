@@ -404,7 +404,7 @@
 		else
 			user.lastattacked = src
 			attack_particle(user,src)
-			src.visible_message("<span class='alert'><b>[usr]</b> attacks [src] with [W].</span>")
+			..()
 			playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 80, 1)
 
 			switch(W.hit_type)

@@ -76,7 +76,7 @@
 					boutput(user, "<span class='notice'>You wrench the frame into place.</span>")
 					src.anchored = 1
 					src.state = 1
-			if(isweldingtool(P))
+			else if (isweldingtool(P))
 				playsound(src.loc, "sound/items/Welder.ogg", 50, 1)
 				if(do_after(user, 2 SECONDS))
 					boutput(user, "<span class='notice'>You deconstruct the frame.</span>")
@@ -88,6 +88,8 @@
 						A.setMaterial(M)
 					A.amount = src.metal_given
 					qdel(src)
+			else
+				..()
 		if(1)
 			if (iswrenchingtool(P))
 				playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
@@ -95,36 +97,39 @@
 					boutput(user, "<span class='notice'>You unfasten the frame.</span>")
 					src.anchored = 0
 					src.state = 0
-			if (istype(P, /obj/item/motherboard) && !mainboard)
+			else if (istype(P, /obj/item/motherboard) && !mainboard)
 				playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
 				boutput(user, "<span class='notice'>You place the mainboard inside the frame.</span>")
 				src.icon_state = "1"
 				src.mainboard = P
 				user.drop_item()
 				P.set_loc(src)
-			if (isscrewingtool(P) && mainboard)
+			else if (isscrewingtool(P) && mainboard)
 				playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
 				boutput(user, "<span class='notice'>You screw the mainboard into place.</span>")
 				src.state = 2
 				src.icon_state = "2"
-			if (ispryingtool(P) && mainboard)
+			else if (ispryingtool(P) && mainboard)
 				playsound(src.loc, "sound/items/Crowbar.ogg", 50, 1)
 				boutput(user, "<span class='notice'>You remove the mainboard.</span>")
 				src.state = 1
 				src.icon_state = "0"
 				mainboard.set_loc(src.loc)
 				src.mainboard = null
-			if (istype(P, /obj/item/circuitboard))
+			else if (istype(P, /obj/item/circuitboard))
 				boutput(user, "<span class='alert'>This is the wrong type of frame, it won't fit!</span>")
+			else
+				..()
 
 		if(2)
+			var/obj/item/cable_coil/C = P
 			if (isscrewingtool(P) && mainboard && (!peripherals.len))
 				playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
 				boutput(user, "<span class='notice'>You unfasten the mainboard.</span>")
 				src.state = 1
 				src.icon_state = "1"
 
-			if (istype(P, /obj/item/peripheral))
+			else if (istype(P, /obj/item/peripheral))
 				if(src.peripherals.len < src.max_peripherals)
 					user.drop_item()
 					src.peripherals.Add(P)
@@ -133,7 +138,7 @@
 				else
 					boutput(user, "<span class='alert'>There is no more room for peripheral cards.</span>")
 
-			if (ispryingtool(P) && length(src.peripherals))
+			else if (ispryingtool(P) && length(src.peripherals))
 				playsound(src.loc, "sound/items/Crowbar.ogg", 50, 1)
 				boutput(user, "<span class='notice'>You remove the peripheral boards.</span>")
 				for(var/obj/item/peripheral/W in src.peripherals)
@@ -141,14 +146,15 @@
 					src.peripherals.Remove(W)
 					W.uninstalled()
 
-			var/obj/item/cable_coil/C = P
-			if (istype(C))
+			else if (istype(C))
 				if (C.amount >= 5)
 					playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
 					if (do_after(user, 2 SECONDS) && C?.use(5))
 						boutput(user, "<span class='notice'>You add cables to the frame.</span>")
 						src.state = 3
 						src.icon_state = "3"
+			else
+				..()
 		if(3)
 			if (issnippingtool(P))
 				playsound(src.loc, "sound/items/Wirecutter.ogg", 50, 1)
@@ -161,19 +167,19 @@
 					src.hd.set_loc(src.loc)
 					src.hd = null
 
-			if (istype(P, /obj/item/disk/data/fixed_disk) && !src.hd)
+			else if (istype(P, /obj/item/disk/data/fixed_disk) && !src.hd)
 				user.drop_item()
 				src.hd = P
 				P.set_loc(src)
 				boutput(user, "<span class='notice'>You connect the drive to the cabling.</span>")
 
-			if (ispryingtool(P) && src.hd)
+			else if (ispryingtool(P) && src.hd)
 				playsound(src.loc, "sound/items/Crowbar.ogg", 50, 1)
 				boutput(user, "<span class='notice'>You remove the hard drive.</span>")
 				src.hd.set_loc(src.loc)
 				src.hd = null
 
-			if (istype(P, /obj/item/sheet))
+			else if (istype(P, /obj/item/sheet))
 				var/obj/item/sheet/S = P
 				if (S.material && S.material.material_flags & MATERIAL_CRYSTAL)
 					if (S.amount >= src.glass_needed)
@@ -186,6 +192,8 @@
 						boutput(user, "<span class='alert'>There's not enough sheets on the stack.</span>")
 				else
 					boutput(user, "<span class='alert'>You need sheets of some kind of crystal or glass for this.</span>")
+			else
+				..()
 		if(4)
 			if (ispryingtool(P))
 				playsound(src.loc, "sound/items/Crowbar.ogg", 50, 1)
@@ -195,7 +203,7 @@
 				var/obj/item/sheet/glass/A = new /obj/item/sheet/glass(src.loc)
 				A.amount = src.glass_needed
 
-			if (isscrewingtool(P))
+			else if (isscrewingtool(P))
 				playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
 				boutput(user, "<span class='notice'>You connect the monitor.</span>")
 				var/obj/machinery/computer3/C= new /obj/machinery/computer3( src.loc )
@@ -215,3 +223,5 @@
 					W.installed(C) //Set C as their host, etc
 				//dispose()
 				src.dispose()
+			else
+				..()

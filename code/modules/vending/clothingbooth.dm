@@ -149,6 +149,8 @@ var/list/clothingbooth_items = list()
 					logTheThing("combat", user, GM, "places [constructTarget(GM,"combat")] into [src] at [log_loc(src)].")
 					actions.interrupt(G.affecting, INTERRUPT_MOVE)
 					actions.interrupt(user, INTERRUPT_ACT)
+		else
+			..()
 
 /obj/machinery/clothingbooth/proc/set_open(var/new_open)
 	if(new_open == src.open)

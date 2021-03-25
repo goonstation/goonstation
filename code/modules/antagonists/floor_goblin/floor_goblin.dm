@@ -45,6 +45,7 @@
 	attackby(obj/item/W as obj, mob/user as mob)
 		if(!istype(W, /obj/item/clothing/shoes))
 			boutput(user, "<span class='alert'>\The [W] doesn't seem to fit in the bag. Weird!</span>")
+			..()
 			return
 		user.u_equip(W)
 		W.set_loc(src)

@@ -81,6 +81,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 	attackby(obj/item/I as obj, mob/user as mob)
 		if (reagents)
 			reagents.physical_shock(I.force)
+		..()
 		return
 	afterattack(obj/target, mob/user , flag)
 		return

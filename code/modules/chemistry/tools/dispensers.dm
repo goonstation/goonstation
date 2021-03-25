@@ -20,6 +20,8 @@
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/cargotele))
 			W:cargoteleport(src, user)
+		else
+			..()
 		return
 
 	New()
@@ -178,6 +180,8 @@
 				playsound(src.loc, "sound/items/Screwdriver.ogg", 100, 1)
 				src.anchored = 0
 			return
+		else
+			..()
 
 	New()
 		..()

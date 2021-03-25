@@ -425,5 +425,7 @@
 			return
 
 		src.created_name = t
+	else
+		..()
 
 #undef FIREBOT_MOVE_SPEED

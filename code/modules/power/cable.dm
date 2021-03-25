@@ -249,6 +249,7 @@
 
 	else
 		shock(user, 10)
+		..()
 
 	src.add_fingerprint(user)
 

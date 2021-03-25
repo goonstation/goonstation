@@ -945,6 +945,7 @@
 			var/repair_time_adj = round(repair_time * health_adj)
 			actions.start(new/datum/action/bar/icon/cruiser_repair(src, W, repair_time_adj), user)
 			return 1
+		..()
 		return 0
 
 	proc/reboot() //Called when the device is rebooted / in override mode.

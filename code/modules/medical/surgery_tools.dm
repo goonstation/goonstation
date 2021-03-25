@@ -686,6 +686,8 @@ CONTAINS:
 		user.lastattacked = src
 		if (W == src.defib)
 			src.defib.move_callback(user,get_turf(user),get_turf(src))
+		else
+			..()
 
 	proc/put_back_defib(var/mob/living/M)
 		if (src.defib)

@@ -350,6 +350,7 @@
 
 		if (letgo_hp <= 0)
 			src.eject_occupant(add_power = 0)
+		..()
 
 //next :
 	//sound effects

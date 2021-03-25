@@ -1483,6 +1483,8 @@ proc/get_colosseum_message(var/name, var/message)
 				visible_message("<span class='notice'><b>[user]</b> repairs some dents on [src]!</span>")
 				message_pilot("<b>[user]</b> repairs some dents on [src]!")
 				repair_by(10)
+		else
+			..()
 
 	proc/add_armor(var/value)
 		armor += value

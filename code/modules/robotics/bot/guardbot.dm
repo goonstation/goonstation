@@ -5017,6 +5017,9 @@
 
 			qdel(src)
 			return
+		else
+			spawn(0)
+				..()
 
 /obj/item/guardbot_core/old
 	name = "Robuddy mainboard"
@@ -5093,6 +5096,8 @@
 				tohug.hug_target = user
 				buddy.add_task(tohug, 1, 0)
 				buddy.navigate_to(get_turf(user))
+		else
+			..()
 
 /obj/item/token/hug_token
 	name = "Hug Token"

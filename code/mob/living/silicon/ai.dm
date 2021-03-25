@@ -2378,3 +2378,4 @@ proc/get_mobs_trackable_by_AI()
 				still_needed += "a pane of glass"
 			boutput(user, "\The [src] needs [still_needed.len ? english_list(still_needed) : "bugfixing (please call a coder)"] before you can activate it.")
 			return
+	else ..()

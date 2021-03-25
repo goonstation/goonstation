@@ -772,30 +772,32 @@ obj/decoration/ceilingfan
 				src.lit = 1
 				update_icon()
 
-			if (istype(W, /obj/item/clothing/head/cakehat) && W:on)
+			else if (istype(W, /obj/item/clothing/head/cakehat) && W:on)
 				boutput(user, "<span class='alert'>Did [user] just light \his [src] with [W]? Holy Shit.</span>")
 				src.lit = 1
 				update_icon()
 
-			if (istype(W, /obj/item/device/igniter))
+			else if (istype(W, /obj/item/device/igniter))
 				boutput(user, "<span class='alert'><b>[user]</b> fumbles around with [W]; a small flame erupts from [src].</span>")
 				src.lit = 1
 				update_icon()
 
-			if (istype(W, /obj/item/device/light/zippo) && W:on)
+			else if (istype(W, /obj/item/device/light/zippo) && W:on)
 				boutput(user, "<span class='alert'>With a single flick of their wrist, [user] smoothly lights [src] with [W]. Damn they're cool.</span>")
 				src.lit = 1
 				update_icon()
 
-			if ((istype(W, /obj/item/match) || istype(W, /obj/item/device/light/candle)) && W:on)
+			else if ((istype(W, /obj/item/match) || istype(W, /obj/item/device/light/candle)) && W:on)
 				boutput(user, "<span class='alert'><b>[user] lights [src] with [W].</span>")
 				src.lit = 1
 				update_icon()
 
-			if (W.burning)
+			else if (W.burning)
 				boutput(user, "<span class='alert'><b>[user]</b> lights [src] with [W]. Goddamn.</span>")
 				src.lit = 1
 				update_icon ()
+			else
+				..()
 
 	attack_hand(mob/user as mob)
 		if (src.lit)

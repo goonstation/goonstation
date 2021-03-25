@@ -690,6 +690,8 @@
 			user.put_in_hand_or_drop(D)
 			qdel(W)
 			qdel(src)
+		else
+			..()
 
 	on_bite(obj/item/I, mob/M, mob/user)
 		boutput(M, "<span class='alert'>The noodles taste terrible uncooked...</span>")
@@ -738,6 +740,8 @@ obj/item/reagent_containers/food/snacks/ingredient/pepperoni_log
 			for (var/i in 1 to 4)
 				new /obj/item/reagent_containers/food/snacks/ingredient/pepperoni(T)
 			qdel (src)
+		else
+		 ..()
 
 /obj/item/reagent_containers/food/snacks/ingredient/seaweed
 	name = "seaweed sheets"

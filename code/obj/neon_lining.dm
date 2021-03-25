@@ -100,21 +100,21 @@
 			new /obj/item/neon_lining(get_turf(user))
 			qdel(src)
 			return
-		if (iswrenchingtool(W))
+		else if (iswrenchingtool(W))
 			if (lining_shape > 0 && lining_shape < 6)
 				lining_shape++
 			else
 				lining_shape = 1
 			lining_update_icon()
 			return
-		if (isscrewingtool(W))
+		else if (isscrewingtool(W))
 			if (lining_rotation >-1 && lining_rotation <3)
 				lining_rotation++
 			else
 				lining_rotation = 0
 			lining_update_icon()
 			return
-		if (issnippingtool(W))
+		else if (issnippingtool(W))
 			if (lining_neOn == 0)
 				lining_neOn++
 				glow.icon_state = "off"
@@ -125,11 +125,13 @@
 				light.set_brightness(0.1)
 				lining_update_icon()
 			return
-		if (ispulsingtool(W))
+		else if (ispulsingtool(W))
 			if (lining_pattern > -1 && lining_pattern < 7)
 				lining_pattern++
 			else
 				lining_pattern = 0
 			lining_update_icon()
 			return
+		else
+			..()
 		return

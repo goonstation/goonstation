@@ -93,7 +93,7 @@
 				//		qdel(temp_term)
 				//		terminal = null
 		updateicon()
-	
+
 	else if (integrity_state == 2 && ispryingtool(W) && core_inserted)
 		if (user.hasStatus(list("weakened", "paralysis", "stunned")) || !isalive(user))
 			user.show_text("Not when you're incapacitated.", "red")
@@ -114,6 +114,8 @@
 		online = 0
 		charging = 0
 		updateicon()
+	else
+		..()
 
 
 /obj/machinery/power/sword_engine/emp_act()

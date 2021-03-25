@@ -648,6 +648,8 @@
 			else
 				boutput(user, "<span class='alert'>The smelter can only use metals or minerals in raw form.</span>")
 				return
+		else
+			..()
 		return
 
 	ex_act(severity) // bloo bloo we blew it up and nobody gets to have fun
