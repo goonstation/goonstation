@@ -1,5 +1,9 @@
 
 (t)thu mar 25 21
+(u)Jan.antilles
+(p)4132
+(e)🎨|sprites
+(+)Resprite of Omelette, Mashed Potatoes, and Mashed Brains.
 (u)Mean Bitch Warc
 (p)4136
 (e)|
