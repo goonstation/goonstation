@@ -18,6 +18,7 @@
 	rc_flags = RC_SCALE
 	module_research = list("science" = 2, "engineering" = 2, "fuels" = 10)
 	initial_volume = 400
+	can_recycle = 0
 	initial_reagents = "fuel"
 
 /obj/item/reagent_containers/food/drinks/fueltank/empty

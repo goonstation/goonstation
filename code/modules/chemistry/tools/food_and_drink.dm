@@ -1260,6 +1260,7 @@
 	icon_state = "icing_tube"
 	initial_volume = 50
 	amount_per_transfer_from_this = 5
+	can_recycle = 0
 	rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
 	var/image/chem = new /image('icons/obj/foodNdrink/food.dmi',"icing_tube_chem")
 
@@ -1393,6 +1394,7 @@
 	icon_state = "duo"
 	item_state = "duo"
 	initial_volume = 30
+	can_recycle = 0
 	var/image/fluid_image
 
 	New()
@@ -1425,6 +1427,7 @@
 	icon_state = "skullchalice"
 	item_state = "skullchalice"
 	rc_flags = RC_SPECTRO
+	can_recycle = 0
 
 /obj/item/reagent_containers/food/drinks/mug
 	name = "mug"
@@ -1599,6 +1602,7 @@
 	rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
 	g_amt = 30
 	initial_volume = 50
+	can_recycle = 0
 	initial_reagents = list("coconut_milk"=20)
 
 /obj/item/reagent_containers/food/drinks/energyshake
@@ -1624,6 +1628,7 @@
 	rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
 	g_amt = 5
 	initial_volume = 40
+	can_recycle = 0
 	initial_reagents = list("bojack"=40)
 
 /obj/item/reagent_containers/food/drinks/cocktailshaker
