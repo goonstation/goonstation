@@ -6,7 +6,6 @@
 	module_research_no_diminish = 1
 	mat_changename = 0
 	mat_changedesc = 0
-	can_recycle = 0
 
 	New(var/loc, var/forceartiorigin)
 		..()

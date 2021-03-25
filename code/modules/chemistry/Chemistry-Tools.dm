@@ -139,6 +139,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 	icon_state = "null"
 	item_state = "null"
 	amount_per_transfer_from_this = 10
+	var/can_recycle = 1 //can this be put in a glass recycler?
 	var/splash_all_contents = 1
 	flags = FPRINT | TABLEPASS | OPENCONTAINER | SUPPRESSATTACK
 
