@@ -135,11 +135,15 @@
 		particleMaster.SpawnSystem(new /datum/particleSystem/blobattack(T,overmind.color))
 		if (T?.density)
 			T.blob_act(overmind.attack_power * 20)
+			T.material?.triggerOnBlobHit(T, overmind.attack_power * 20)
+
 		else
 			for (var/mob/M in T.contents)
 				M.blob_act(overmind.attack_power * 20)
 			for (var/obj/O in T.contents)
 				O.blob_act(overmind.attack_power * 20)
+				O.material?.triggerOnBlobHit(O, overmind.attack_power * 20)
+
 
 	proc/attack_random()
 		var/list/allowed = list()
