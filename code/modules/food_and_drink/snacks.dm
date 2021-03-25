@@ -235,7 +235,7 @@
 		var/datum/cookingrecipe/pizza/recipe = new
 		recipe.cook_pizza(pizzabase,src)
 		var/toppingstext = pizzabase.toppingstext
-		src.desc = "A pizza with [toppingstext] toppings. Looks...[pick("disturbing","interesting","awful","grody","kinda good","alright", "like a pizza","cursed","perfect","cruel","bland","old","unholy","squishy","wonderful","organic","fancy","traditional","rustic","experimental","enchanting","eldritch","horrific","palatable")][pick("?",".","!")]"
+		src.desc = "A pizza with [toppingstext] toppings. Looks...[pick("disturbing","interesting","awful","grody","kinda good","alright", "like a pizza","cursed","perfect","cruel","bland","old","unholy","squishy","wonderful","organic","fancy","traditional","rustic","experimental","enchanting","eldritch","horrific","palatable","questionable ","unnatural","forbidden","amateur","expensive","unweildy","alive","fake","broken","famous","blessed","tepid","round","cool","cute","radical","stylish","dry","moist","counterfeit","illegal","sour","transparent","used","digital","unhealthy","greasy","chewy","thin","cold","infectious","spicy")][pick("?",".","!")]"
 		src.quality = ingredient_quality
 		qdel(pizzabase)
 /obj/item/reagent_containers/food/snacks/pizza/pepperoni
