@@ -24,7 +24,7 @@
 			return
 
 		var/success = 0 //did we successfully recycle a thing?
-		if(istype(W, /obj/reagent_containers/glass))
+		if(istype(W, /obj/item/reagent_containers/glass))
 			if (istype(W, /obj/item/reagent_containers/glass/beaker))
 				success = 1
 				if (istype(W, /obj/item/reagent_containers/glass/beaker/large))
@@ -44,7 +44,6 @@
 					var/obj/item/reagent_containers/food/drinks/drinkingglass/DG = W
 					glass_amt += DG.shard_amt
 				else
-					var/obj/item/reagent_containers/food/drinks/D = W
 					if (istype(W,/obj/item/reagent_containers/food/drinks/bottle))
 						var/obj/item/reagent_containers/food/drinks/bottle/B = W
 						if (!B.broken) glass_amt += 1
