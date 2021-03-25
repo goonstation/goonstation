@@ -304,6 +304,34 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 	name = "NT Retention Center (depot)"
 	icon_state = "green"
 
+/area/retentioncenter/blue
+	name = "NT Retention Center (BLU)"
+	icon_state = "blue"
+
+/area/retentioncenter/green
+	name = "NT Retention Center (GRN)"
+	icon_state = "green"
+
+/area/retentioncenter/yellow
+	name = "NT Retention Center (YLW)"
+	icon_state = "yellow"
+
+/area/retentioncenter/orange
+	name = "NT Retention Center (ORG)"
+	icon_state = "orange"
+
+/area/retentioncenter/red
+	name = "NT Retention Center (RED)"
+	icon_state = "red"
+
+/area/retentioncenter/black
+	name = "NT Retention Center (BLK)"
+	icon_state = "purple"
+
+/area/retentioncenter/restricted
+	name = "NT Retention Center (Restricted)"
+	icon_state = "death"
+
 /area/retentioncenter/disposals
 	name = "NT Retention Center (disposals)"
 	icon_state = "red"
