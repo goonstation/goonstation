@@ -3389,7 +3389,7 @@ var/list/lag_list = new/list()
 /proc/get_lag_average()
 	boutput(usr, "<span class='success'>[average_tenth] at [lag_list.len] samples.</span>")
 
-
+/*
 /obj/mirror
 	//Expect those to be laggy as fuck.
 	name = "Mirror"
@@ -3547,6 +3547,7 @@ var/list/lag_list = new/list()
 		update()
 			rebuild_icon()
 			SPAWN_DBG(0.5 SECONDS) update()
+*/
 
 /obj/spook
 	var/active = 0
