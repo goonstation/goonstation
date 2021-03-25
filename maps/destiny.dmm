@@ -2602,9 +2602,6 @@
 	icon_state = "2-8"
 	},
 /obj/cable{
-	icon_state = "1-2"
-	},
-/obj/cable{
 	icon_state = "2-4"
 	},
 /obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon8,
@@ -12451,7 +12448,6 @@
 /obj/item/device/radio,
 /obj/item/clothing/ears/earmuffs,
 /obj/item/chem_grenade/firefighting,
-/obj/machinery/phone,
 /obj/item/device/transfer_valve{
 	pixel_x = 14;
 	pixel_y = 4
@@ -12801,6 +12797,21 @@
 	},
 /obj/cable{
 	icon_state = "1-2"
+	},
+/obj/table/glass/reinforced/auto,
+/obj/item/clothing/shoes/flippers,
+/obj/item/clothing/shoes/flippers,
+/obj/item/inner_tube/random{
+	pixel_y = 8
+	},
+/obj/item/inner_tube/random{
+	pixel_y = 8
+	},
+/obj/item/clothing/gloves/water_wings{
+	pixel_y = 8
+	},
+/obj/item/clothing/gloves/water_wings{
+	pixel_y = 8
 	},
 /turf/simulated/floor/bluewhite{
 	dir = 9
@@ -20636,9 +20647,6 @@
 /obj/decal/tile_edge/line/blue{
 	icon_state = "line1"
 	},
-/obj/table/glass/reinforced/auto,
-/obj/item/decoration/flower_vase,
-/obj/item/reagent_containers/food/drinks/peach,
 /obj/cable{
 	icon_state = "1-4"
 	},
@@ -21837,6 +21845,7 @@
 /area/station/science/artifact)
 "dtd" = (
 /obj/table/reinforced/industrial,
+/obj/machinery/phone,
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "dtg" = (
@@ -50691,6 +50700,9 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
+/obj/machinery/phone/wall{
+	pixel_y = 32
+	},
 /turf/simulated/floor/purpleblack/corner,
 /area/station/science/lobby)
 "sXf" = (
@@ -53796,7 +53808,6 @@
 /obj/machinery/light/emergency{
 	dir = 1
 	},
-/obj/machinery/phone,
 /obj/item/instrument/harmonica,
 /turf/simulated/floor/grime,
 /area/station/security/brig)
@@ -57191,21 +57202,6 @@
 /turf/simulated/floor/white,
 /area/station/science/artifact)
 "wsb" = (
-/obj/item/clothing/shoes/flippers,
-/obj/item/clothing/shoes/flippers,
-/obj/item/inner_tube/random{
-	pixel_y = 8
-	},
-/obj/item/inner_tube/random{
-	pixel_y = 8
-	},
-/obj/item/clothing/gloves/water_wings{
-	pixel_y = 8
-	},
-/obj/item/clothing/gloves/water_wings{
-	pixel_y = 8
-	},
-/obj/table/glass/reinforced/auto,
 /obj/decal/tile_edge/line/blue{
 	color = "#485e81";
 	icon_state = "line1"
@@ -60603,6 +60599,9 @@
 	dir = 4;
 	pixel_x = -32
 	},
+/obj/table/glass/reinforced/auto,
+/obj/item/decoration/flower_vase,
+/obj/item/reagent_containers/food/drinks/peach,
 /turf/simulated/floor/darkblue,
 /area/station/crew_quarters/pool)
 "yhz" = (
