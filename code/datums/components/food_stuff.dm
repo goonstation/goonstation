@@ -385,7 +385,7 @@
 	if(!istype(parent, /obj/item))
 		return COMPONENT_INCOMPATIBLE
 	src.food_parent = parent
-	src.start_amount = food_parent.amount
+
 	src.original_filters = food_parent.filters
 	RegisterSignal(parent, list(COMSIG_ITEM_CONSUMED_PARTIAL), .proc/apply_bitemask)
 
@@ -410,12 +410,17 @@
 /// Puts partially digested chunks in your mob
 /datum/component/consume/food_chunk
 	var/obj/item/food_parent
+	var/start_amount = 1
+	var/current_mask = 5
+	var/list/original_filters = list()
 
 /datum/component/consume/food_chunk/Initialize()
 	..()
 	if(!istype(parent, /obj/item))
 		return COMPONENT_INCOMPATIBLE
 	src.food_parent = parent
+	src.start_amount = food_parent.amount
+	src.original_filters = food_parent.filters
 	RegisterSignal(parent, list(COMSIG_ITEM_CONSUMED_PARTIAL, COMSIG_ITEM_CONSUMED_ALL), .proc/make_food_chunk)
 
 /datum/component/consume/food_chunk/proc/make_food_chunk(var/obj/item/I, var/mob/M)
