@@ -461,6 +461,7 @@
 	rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
 	module_research = list("tools" = 2, "hydroponics" = 4)
 	initial_volume = 120
+	can_recycle = 0
 
 	New()
 		..()
