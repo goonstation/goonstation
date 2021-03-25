@@ -19,8 +19,8 @@
 
 	heal(var/mob/living/M)
 		if (prob(33))
-			boutput(L, "<span class='alert'>You briefly think you probably shouldn't be eating raw meat.</span>")
-			L.contract_disease(/datum/ailment/disease/food_poisoning, null, null, 1) // path, name, strain, bypass resist
+			boutput(M, "<span class='alert'>You briefly think you probably shouldn't be eating raw meat.</span>")
+			M.contract_disease(/datum/ailment/disease/food_poisoning, null, null, 1) // path, name, strain, bypass resist
 
 	throw_impact(atom/A, datum/thrown_thing/thr)
 		var/turf/T = get_turf(A)
