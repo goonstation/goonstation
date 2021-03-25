@@ -230,9 +230,6 @@
 			else
 				snack_type = pick(drinkwhitelist)
 			var/obj/item/reagent_containers/R = new snack_type
-			var/pizzapath
-			pizzapath = "[(R.type)]"
-			boutput (world,"[R.name] [pizzapath]")
 			pizzabase.add_ingredient(R, null)
 			ingredient_quality += R.quality
 		var/datum/cookingrecipe/pizza/recipe = new
