@@ -261,8 +261,9 @@
 
 	New()
 		..()
+		#ifdef CREATE_PATHOGENS // PATHOLOGY REMOVAL
 		wrap_pathogen(reagents, generate_random_pathogen(), 15)
-
+		#endif
 /obj/item/reagent_containers/food/snacks/burger/roburger
 	name = "roburger"
 	desc = "The lettuce is the only organic component. Beep."
