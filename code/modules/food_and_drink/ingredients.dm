@@ -596,10 +596,8 @@
 		if(hasvar(F, "food_effects"))
 			food_effects += F.food_effects
 			src.AddComponent(/datum/component/consume/food_effects, src.food_effects)
-		if (F.real_name)
-			toppings += F.real_name
-		else
-			toppings += W.name
+		//We can't actually use realname because tons of foods change their name and don't update it
+		toppings += W.name
 		toppingstext = copytext(html_encode(english_list(toppings)), 1, 512)
 		name = "uncooked [toppingstext] pizza"
 		desc = "A pizza with [toppingstext] toppings. You need to bake it..."
