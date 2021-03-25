@@ -356,7 +356,7 @@ proc/build_syndi_buylist_cache()
 	cost = 12
 	vr_allowed = 0
 	desc = "A crate containing 18-24 credits worth of whatever junk we had lying around."
-	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/revolution)
+	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/spy_theft, /datum/game_mode/revolution)
 
 	run_on_spawn(var/obj/storage/crate/syndicate_surplus/crate, var/mob/living/owner, in_surplus_crate)
 		crate.spawn_items(owner)
