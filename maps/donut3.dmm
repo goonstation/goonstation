@@ -75174,6 +75174,15 @@
 "wbv" = (
 /turf/simulated/wall/auto/reinforced/jen,
 /area/station/hallway/primary/east)
+"wbD" = (
+/mob/living/critter/small_animal/butterfly/moth{
+	desc = "The station's resident moth. Look at her all aflutter!";
+	health = 20;
+	max_health = 20;
+	name = "Charlie"
+	},
+/turf/simulated/grass,
+/area/station/crew_quarters/garden)
 "wbG" = (
 /obj/cable{
 	d2 = 2;
@@ -131533,7 +131542,7 @@ wqJ
 owU
 wqJ
 wqJ
-cLT
+wbD
 qNn
 yjy
 rxE
@@ -131835,7 +131844,7 @@ uug
 aNn
 hFD
 wqJ
-qNn
+cLT
 qNn
 yjy
 rni
