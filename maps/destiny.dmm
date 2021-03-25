@@ -15197,7 +15197,7 @@
 	},
 /obj/decal/mule/beacon,
 /obj/machinery/navbeacon{
-	codes_txt = "delivery;dir=4";
+	codes_txt = "delivery;dir=8";
 	location = "Kitchen"
 	},
 /turf/simulated/floor/specialroom/cafeteria,
@@ -32747,7 +32747,7 @@
 	},
 /obj/decal/mule/beacon,
 /obj/machinery/navbeacon{
-	codes_txt = "delivery;dir=2";
+	codes_txt = "delivery;dir=8";
 	location = "Arcade"
 	},
 /turf/simulated/floor/black,
@@ -53248,7 +53248,7 @@
 	dir = 4
 	},
 /obj/machinery/navbeacon{
-	codes_txt = "delivery;dir=2";
+	codes_txt = "delivery;dir=8";
 	location = "Refinery"
 	},
 /obj/decal/mule/beacon,
