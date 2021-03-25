@@ -82,7 +82,7 @@
 	pixel_y = 32
 	spawn_contents = list(/obj/item/paper_bin = 2,
 	/obj/item/hand_labeler,
-	/obj/item/postit_stack,
+	/obj/item/item_box/postit,
 	/obj/item/pen,
 	/obj/item/staple_gun/red,
 	/obj/item/scissors,
