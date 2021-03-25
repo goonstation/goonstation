@@ -1,5 +1,22 @@
 
+(t)thu mar 25 21
+(u)Jan.antilles
+(p)4132
+(e)🎨|sprites
+(+)Resprite of Omelette, Mashed Potatoes, and Mashed Brains.
+(u)Mean Bitch Warc
+(p)4136
+(e)|
+(*)Reverted buggy eating changes and various dependencies, pending rework.
+(u)Azrun
+(p)4127
+(e)⚖🐛|balance, bug
+(+)Spliced and normal mutations can now coexist in the Gene Booth.  Charge the crew accordingly.
 (t)wed mar 24 21
+(u)Nihisohel
+(p)4045
+(e)⚖|balance
+(*)Replaces Part Time Viceoffs token with Assistant token
 (u)pali
 (*)Books from the February monthly contest have been added into the game. Most are in the Books4u vending machine, two are in Cairngorm.
 (t)tue mar 23 21

@@ -606,8 +606,6 @@ Urs' Hauntdog critter
 		if (H.reagents)
 			H.reagents.add_reagent("ectoplasm", 10)
 		H.update_icon()
-		H.AddComponent(/datum/component/consume/foodheal, H.heal_amt)
-
 
 		qdel(src)
 
