@@ -1,4 +1,9 @@
 
+(t)thu mar 25 21
+(u)Azrun
+(p)4127
+(e)⚖🐛|balance, bug
+(+)Spliced and normal mutations can now coexist in the Gene Booth.  Charge the crew accordingly.
 (t)wed mar 24 21
 (u)Nihisohel
 (p)4045
