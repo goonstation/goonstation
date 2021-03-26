@@ -183,9 +183,9 @@
 	#define ACCEL_FACTOR 69 //our acceleration factor towards cap
 	#define STEAL_FACTOR 4 //Adjusts the curve of the stealing EQ (2nd deriv/concavity)
 
-	//For equation + explaination, https://www.desmos.com/calculator/sgpk5aj6hy
+	//For equation + explanation, https://www.desmos.com/calculator/r8bsyz5gf9
 	//Adjusted to give a decent amt. of cash/tick @ 50GW (said to be average hellburn)
-	var/generated_moolah =   (2*output_mw*BUX_PER_WORK_CAP)/(2*output_mw + BUX_PER_WORK_CAP*ACCEL_FACTOR) //used if output_mw > 0
+	var/generated_moolah = (2*output_mw*BUX_PER_WORK_CAP)/(2*output_mw+BUX_PER_WORK_CAP*ACCEL_FACTOR) //used if output_mw > 0
 	generated_moolah += (4*output_mw*LOW_CAP)/(4*output_mw + LOW_CAP)
 
 	if (output_mw < 0) //steals money since you emagged it
@@ -209,7 +209,7 @@
 
 		for(var/datum/data/record/t in accounts)
 			t.fields["current_money"] += round(generated_moolah/accounts.len)
-		undistributed_earnings += generated_moolah-(round(generated_moolah/accounts.len) * (accounts.len))
+		undistributed_earnings += generated_moolah-(round(generated_moolah/accounts.len) * (length(accounts)))
 	else
 		undistributed_earnings += generated_moolah
 
