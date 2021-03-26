@@ -676,6 +676,7 @@
 
 		for (var/obj/item/reagent_containers/food/snacks/ingredient/pizza3/P in ourCooker)
 			cook_pizza(P, customPizza)
+
 	proc/cook_pizza(var/obj/item/reagent_containers/food/snacks/ingredient/pizza3/P, var/obj/item/reagent_containers/food/snacks/pizza/customPizza)
 		var/toppingstext = null
 		if(P.toppingstext)
