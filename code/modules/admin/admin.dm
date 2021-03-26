@@ -3942,7 +3942,7 @@ var/global/noir = 0
 						do_admin_pm(M.ckey, usr)
 						break
 
-		if("jump-to-player-location")
+		if("jump-to-player-loc")
 			if(!usr.client) return
 			var/mobRef = params["mobRef"]
 			var/mob/M = locate(mobRef)

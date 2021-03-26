@@ -98,6 +98,7 @@ export const PlayerPanel = (props, context) => {
   const [search, setSearch] = useLocalState(context, 'search', '');
   const [sort, setSort] = useLocalState<SortConfig>(context, 'sort', null);
   let resolvedPlayers = Object.keys(players).map(ckey => players[ckey]);
+
   // generate all values up front (to avoid having to generate multiple times)
   const playerValues: { [ckey: string]: {
     [id: string]: unknown,
