@@ -592,7 +592,7 @@
 		if (user)
 			boutput(user, "<span class='notice'>You add [W] to [src].</span>")
 		topping = 1
-		if (F.food_effects)
+		if (istype(F,/obj/item/reagent_containers/food/snacks))
 			food_effects += (F.food_effects)
 			src.AddComponent(/datum/component/consume/food_effects, src.food_effects)
 		//We can't actually use realname because tons of foods change their name and don't update it
