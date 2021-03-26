@@ -584,16 +584,15 @@
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/reagent_containers/food))
 			add_ingredient(W, user)
-		else
-			return
+
 	proc/add_ingredient(obj/item/W as obj, mob/user as mob)
 		var/obj/item/reagent_containers/food/snacks/F = W
-		if(!F.custom_food)
+		if(!F?.custom_food)
 			return
 		if(user)
 			boutput(user, "<span class='notice'>You add [W] to [src].</span>")
 		topping = 1
-		if(istype(F,/obj/item/reagent_containers/food/snacks))
+		if(F)
 			food_effects += F.food_effects
 			src.AddComponent(/datum/component/consume/food_effects, src.food_effects)
 		//We can't actually use realname because tons of foods change their name and don't update it
@@ -612,8 +611,7 @@
 			num ++
 			add_topping(src.num)
 		W.reagents.trans_to(src, W.reagents.total_volume)
-		if(user)
-			user.u_equip(W)
+		user?.u_equip(W)
 		qdel (W)
 	proc/add_topping(var/num)
 		var/icon/I
