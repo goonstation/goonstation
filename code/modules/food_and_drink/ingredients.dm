@@ -587,27 +587,27 @@
 
 	proc/add_ingredient(obj/item/W as obj, mob/user as mob)
 		var/obj/item/reagent_containers/food/snacks/F = W
-		if(!F?.custom_food)
+		if (!F?.custom_food)
 			return
-		if(user)
+		if (user)
 			boutput(user, "<span class='notice'>You add [W] to [src].</span>")
 		topping = 1
-		if(F)
-			food_effects += F.food_effects
+		if (F.food_effects)
+			food_effects += (F.food_effects)
 			src.AddComponent(/datum/component/consume/food_effects, src.food_effects)
 		//We can't actually use realname because tons of foods change their name and don't update it
 		toppings += W.name
 		toppingstext = copytext(html_encode(english_list(toppings)), 1, 512)
 		name = "uncooked [toppingstext] pizza"
 		desc = "A pizza with [toppingstext] toppings. You need to bake it..."
-		if(istype(W,/obj/item/reagent_containers/food/snacks/ingredient/))
+		if (istype(W,/obj/item/reagent_containers/food/snacks/ingredient/))
 			heal_amt += 4
 		else
 			heal_amt += round((F.heal_amt * F.amount)/amount) + 1
 		src.AddComponent(/datum/component/consume/foodheal, src.heal_amt)
-		if(F.food_color)
+		if (F.food_color)
 			topping_color = F.food_color
-		if(num < 3)
+		if (num < 3)
 			num ++
 			add_topping(src.num)
 		W.reagents.trans_to(src, W.reagents.total_volume)
