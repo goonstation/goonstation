@@ -1,7 +1,7 @@
 /**
  * tgui state: secondary_admin_state
  *
- * Checks that the user is a secondary admin, end-of-story.
+ * Checks that the user is a secondary admin or above, end-of-story.
  */
 var/global/datum/ui_state/tgui_secondary_admin_state/tgui_secondary_admin_state = new /datum/ui_state/tgui_secondary_admin_state
 
