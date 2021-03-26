@@ -801,14 +801,14 @@
 	if(length(item_name_to_throw))
 		for(var/datum/data/vending_product/R in src.product_list)
 			if(item_name_to_throw == R.product_name_cache[R.product_path])
-				if(R.product_amount > 0)
+				if(R.product_amount > 0 || !src.freestuff)
 					throw_item_act(R, target)
 					return R
 				return
 	else
 		var/list/datum/data/vending_product/valid_products = list()
 		for(var/datum/data/vending_product/R in src.product_list)
-			if(R.product_amount <= 0) //Try to use a record that actually has something to dump.
+			if(R.product_amount <= 0 || !src.freestuff) //Try to use a record that actually has something to dump.
 				continue
 			valid_products.Add(R)
 		if(length(valid_products))
@@ -847,7 +847,7 @@
 			return 1
 
 	if (throw_item)
-		R.product_amount--
+		if (!src.freestuff) R.product_amount--
 		use_power(10)
 		if (src.icon_vend) //Show the vending animation if needed
 			flick(src.icon_vend,src)
@@ -1592,13 +1592,15 @@
 	acceptcard = 0
 	pay = 1
 	credit = 100
+	freestuff = 1
 	slogan_list = list("A revolution in the pizza industry!",
 	"Prepared in moments!",
 	"I'm a chef who works 24 hours a day!")
 	var/sharpen = FALSE
 	create_products()
 		..()
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/pizza/random/vendor, 1)
+		//If we get blown up, ten pizzas is a good amount. We use freestuff so we can throw more than ten
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/pizza/random/vendor, 10)
 	light_r =1
 	light_g = 0.6
 	light_b = 0.2
