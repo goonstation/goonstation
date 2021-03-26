@@ -1598,7 +1598,7 @@
 	var/sharpen = FALSE
 	create_products()
 		..()
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/pizza/random/vendor, 100)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/pizza/random/vendor, 1)
 	light_r =1
 	light_g = 0.6
 	light_b = 0.2

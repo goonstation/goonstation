@@ -244,10 +244,11 @@
 		src.desc = "A pizza with [toppingstext] toppings. Looks...[pick("disturbing","interesting","awful","grody","kinda good","alright", "like a pizza","cursed","perfect","cruel","bland","old","unholy","squishy","wonderful","organic","fancy","traditional","rustic","experimental","enchanting","eldritch","horrific","palatable","questionable ","unnatural","forbidden","amateur","expensive","unweildy","alive","fake","broken","famous","blessed","tepid","round","cool","cute","radical","stylish","dry","moist","counterfeit","illegal","sour","transparent","used","digital","unhealthy","greasy","chewy","thin","cold","infectious","spicy")][pick("?",".","!")]"
 		src.quality = ingredient_quality
 		qdel(pizzabase)
+
+/obj/item/reagent_containers/food/snacks/pizza/random/everything
 	New()
 		..()
 		randomize_pizza(altprob,foodprob,drinkwhitelist,blacklist)
-
 /obj/item/reagent_containers/food/snacks/pizza/random/vendor
 	var/static/myfoodprob = 95
 	var/static/myaltprob = 10
