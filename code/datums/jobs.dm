@@ -2624,9 +2624,9 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 	slot_belt = /obj/item/device/pda2/security
 	slot_jump = /obj/item/clothing/under/misc/vice
 	slot_foot = /obj/item/clothing/shoes/brown
-	slot_ears =  /obj/item/device/radio/headset/security
+	slot_ears = /obj/item/device/radio/headset/security
 	slot_poc1 = /obj/item/storage/security_pouch //replaces sec starter kit
-	slot_poc2 = /obj/item/requisition_token/security
+	slot_poc2 = /obj/item/requisition_token/security/assistant
 
 	New()
 		..()

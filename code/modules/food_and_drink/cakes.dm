@@ -632,7 +632,7 @@
 	initial_reagents = "yuck"
 	festivity = 10
 
-	on_finish_eating(var/mob/M)
+	on_finish(mob/eater)
 		..()
 		eater.show_text("It's so hard it breaks one of your teeth AND it tastes disgusting! Why would you ever eat this?","red")
 		random_brute_damage(eater, 3)

@@ -9515,7 +9515,7 @@
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/postit_stack,
+/obj/item/item_box/postit,
 /obj/item/pen,
 /obj/disposalpipe/segment{
 	dir = 4
@@ -30360,6 +30360,7 @@
 "bwL" = (
 /obj/table/wood/round/auto,
 /obj/displaycase{
+	displayed = new /obj/item/captaingun;
 	pixel_y = 8
 	},
 /obj/machinery/light/incandescent/warm,
@@ -30909,7 +30910,7 @@
 "bxS" = (
 /obj/table/wood/round/auto,
 /obj/item/paper_bin,
-/obj/item/postit_stack,
+/obj/item/item_box/postit,
 /obj/item/pen/fancy,
 /obj/item/stamp,
 /turf/simulated/floor/carpet/blue/fancy/junction/nw_e,
@@ -31723,7 +31724,7 @@
 /obj/item/storage/box/crayon{
 	pixel_x = -6
 	},
-/obj/item/postit_stack,
+/obj/item/item_box/postit,
 /obj/machinery/light/incandescent/warm,
 /turf/simulated/floor/carpet{
 	dir = 9;
@@ -47420,6 +47421,10 @@
 	},
 /turf/simulated/floor,
 /area/research_outpost)
+"oWj" = (
+/obj/item/paper/book/from_file/fun_facts_about_shelterfrogs,
+/turf/space/fluid,
+/area/space)
 "oWv" = (
 /obj/machinery/communications_dish,
 /obj/cable,
@@ -49501,7 +49506,7 @@ aTt
 aqn
 aTt
 aqn
-aqn
+oWj
 cgq
 cgq
 cgq

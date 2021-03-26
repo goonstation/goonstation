@@ -293,6 +293,7 @@
 		setProperty("meleeprot", 4)
 		setProperty("rangedprot", 2)
 		setProperty("movespeed", 1)
+		setProperty("disorient_resist", 35) //it's a special item
 
 /obj/item/clothing/suit/rad // re-added for Russian Station as there is a permarads area there!
 	name = "\improper Class II radiation suit"
@@ -318,6 +319,7 @@
 		setProperty("heatprot", 15)
 		setProperty("meleeprot", 3)
 		setProperty("rangedprot", 0.5)
+		setProperty("disorient_resist", 15)
 
 /obj/item/clothing/suit/det_suit
 	name = "coat"
@@ -840,6 +842,7 @@
 		setProperty("meleeprot", 3)
 		setProperty("rangedprot", 0.5)
 		setProperty("movespeed", 1)
+		setProperty("disorient_resist", 15)
 
 /obj/item/clothing/suit/fire/armored
 	name = "armored firesuit"
@@ -877,6 +880,7 @@
 		setProperty("meleeprot", 4)
 		setProperty("rangedprot", 0.8)
 		setProperty("movespeed", 2)
+		setProperty("disorient_resist", 25)
 
 /obj/item/clothing/suit/fire/old
 	name = "old firesuit"

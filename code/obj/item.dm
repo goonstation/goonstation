@@ -39,7 +39,7 @@
 	var/hitsound = 'sound/impact_sounds/Generic_Hit_1.ogg'
 	var/stamina_damage = STAMINA_ITEM_DMG //amount of stamina removed from target per hit.
 	var/stamina_cost = STAMINA_ITEM_COST  //amount of stamina removed from USER per hit. This cant bring you below 10 points and you will not be able to attack if it would.
-
+	
 	var/stamina_crit_chance = STAMINA_CRIT_CHANCE //Crit chance when attacking with this.
 	var/datum/item_special/special = null // Contains the datum which executes the items special, if it has one, when used beyond melee range.
 	var/hide_attack = 0 //If 1, hide the attack animation + particles. Used for hiding attacks with silenced .22 and sleepy pen
@@ -120,7 +120,7 @@
 	var/rarity = ITEM_RARITY_COMMON // Just a little thing to indicate item rarity. RPG fluff.
 	pressure_resistance = 50
 	var/obj/item/master = null
-
+	
 	var/last_tick_duration = 1 // amount of time spent between previous tick and this one (1 = normal)
 	var/last_processing_tick = -1
 
@@ -378,174 +378,72 @@
 	..()
 
 
-/obj/item/proc/Eat(var/mob/M as mob, var/mob/user, var/bypass_utensils = 0)
-	if(!M.can_eat(src, user, bypass_utensils))
+//disgusting proc. merge with foods later. PLEASE
+/obj/item/proc/Eat(var/mob/M as mob, var/mob/user)
+	if (!iscarbon(M) && !ismobcritter(M))
+		return 0
+	if (M?.bioHolder && !M.bioHolder.HasEffect("mattereater"))
+		if(ON_COOLDOWN(M, "eat", EAT_COOLDOWN))
+			return 0
+	var/edibility_override = SEND_SIGNAL(M, COMSIG_ITEM_CONSUMED_PRE, user, src)
+	if (!src.edible && !(src.material && src.material.edible) && !(edibility_override & FORCE_EDIBILITY))
 		return 0
 
-	if(!actions.hasAction(user, "eatstuff"))
-		actions.start(new/datum/action/bar/icon/eatstuff(src, M, user), user)
-		return 1
+	if (M == user)
+		M.visible_message("<span class='notice'>[M] takes a bite of [src]!</span>",\
+		"<span class='notice'>You take a bite of [src]!</span>")
 
-/datum/action/bar/icon/eatstuff
-	duration = 3 SECONDS
-	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	id = "eatstuff"
-	icon = null
-	icon_state = null
-	/// the thing
-	var/obj/item/master
-	/// the one eating the thing
-	var/mob/M
-	/// the one using the thing
-	var/mob/user
-	var/is_it_organs = 0
-	var/M_is_user = 0
-	var/is_awful_monsterthing = 0
-	var/static/list/grody_adj = list("horrifying", "disgusting", "monstrous", "soulless", "grody", "depraved", "wild", "savage", "big, bad")
-	var/static/list/grody_noun = list("animal", "beast", "monster", "ghoul", "abomination", "bear", "lizard", "weirdo", "creep")
+		if (src.material && src.material.edible)
+			src.material.triggerEat(M, src)
 
-	New(var/obj/item/thing2eat, var/mob/_M, var/mob/_user)
-		..()
-		src.master = thing2eat
-		src.M = _M
-		src.user = _user
-		if(ishuman(M))
-			var/mob/living/carbon/human/H = M
-			if(istype(H?.mutantrace, /datum/mutantrace/lizard) || istype(H?.mutantrace, /datum/mutantrace/werewolf))
-				src.is_awful_monsterthing = 1
-		src.is_it_organs = (istype(master, /obj/item/organ) || istype(master, /obj/item/clothing/head/butt))
-		src.M_is_user = (M == user)
-		if(M_is_user && !is_it_organs)
-			src.icon = null // action/bar/icon
-			src.icon_state = null // minus the action bar icon
-			duration = 0 // pretty much instant
-		else
-			src.icon = master.icon
-			src.icon_state = master.icon_state
-			if(is_it_organs) // feeding someone else organs?
-				src.duration *= 1.5 // no snacking on transplants in the OR, please
-
-	onStart()
-		..()
-		if(src.failchecks())
-			interrupt(INTERRUPT_ALWAYS)
-
-		eat_twitch(M)
-		if(src.M_is_user)
-			if(!src.is_it_organs)
-				bar.icon = null // Action bars
-				border.icon = null // minus action bar
-			else
-				M.visible_message("<span class='alert'><b>[M]</b> starts cramming \the [master] into [his_or_her(M)] mouth[prob(30) ? " like a [pick(src.grody_adj)] [pick(src.grody_noun)]" : ""]!</span>",\
-				"<span class='[is_awful_monsterthing ? "notice" : "alert"]'>You start cramming \the [master] into your mouth!</span>")
-				logTheThing("diary", user, M, "attempts to eat [master], an organ. [log_reagents(master)]", "game") // Gotta keep track on who's eating who's brain
-		else
-			user.tri_message("<span class='alert'><b>[user]</b> tries to feed [M] [master]!</span>",\
-			user, "<span class='alert'>You try to feed [M] [master]!</span>",\
-			M, "<span class='[is_awful_monsterthing ? "notice" : "alert"]'><b>[user]</b> tries to feed you [master]!</span>")
-			logTheThing("combat", user, M, "attempts to feed [constructTarget(M,"combat")] [master] [log_reagents(master)]")
-
-		M.on_eat(master)
-
-	onUpdate()
-		..()
-		if(src.failchecks())
-			interrupt(INTERRUPT_ALWAYS)
-
-	onEnd()
-		..()
-		if(src.failchecks())
-			interrupt(INTERRUPT_ALWAYS)
-
-		if(src.M_is_user)
-			if(src.is_it_organs)
-				M.visible_message("<span class='alert'>[M] takes a visceral bite out of \the [master][prob(30) ? " like a [pick(src.grody_adj)] [pick(src.grody_noun)]" : ""]!</span>",\
-				"<span class='[is_awful_monsterthing ? "notice" : "alert"]'>You take a bite of [master][(prob(30) && !is_awful_monsterthing )? ", you [pick(src.grody_adj)] [pick(src.grody_noun)]" : ""]!</span>")
-			else
-				M.visible_message("<span class='notice'>[M] takes a bite of \the [master].</span>",\
-				"<span class='notice'>You take a bite of [master].</span>")
-
-		else
-			if(src.is_it_organs)
-				user.tri_message("<span class='alert'><b>[user]</b> forces a chunk of [master] down [M]'s throat[prob(30) ? " like a [pick(src.grody_adj)] [pick(src.grody_noun)]" : ""]!</span>",\
-				user, "<span class='alert'>You force [M] too eat a chunk of [master]!</span>",\
-				M, "<span class='[is_awful_monsterthing ? "notice" : "alert"]'><b>[user]</b> feeds you [master]!</span>")
-			else
-				user.tri_message("<span class='alert'><b>[user]</b> feeds [M] [master]!</span>",\
-				user, "<span class='alert'>You feed [M] [master]!</span>",\
-				M, "<span class='alert'><b>[user]</b> feeds you [master]!</span>")
-			logTheThing("combat", user, M, "feeds [constructTarget(M,"combat")] [master] [log_reagents(master)]")
-
-		if (master.material && master.material.edible)
-			master.material.triggerEat(M, master)
-
-		if (master.reagents && master.reagents.total_volume)
-			master.reagents.reaction(M, INGEST)
-			master.reagents.trans_to(M, master.reagents.total_volume/master.amount)
+		if (src.reagents && src.reagents.total_volume)
+			src.reagents.reaction(M, INGEST)
+			SPAWN_DBG(0.5 SECONDS) // Necessary.
+				src.reagents.trans_to(M, src.reagents.total_volume/src.amount)
 
 		playsound(M.loc,"sound/items/eatfood.ogg", rand(10, 50), 1)
 		eat_twitch(M)
-		M.on_eat(master)
-
-		var/ate_the_whole_thing = 0
-		if(src.is_it_organs && !istype(master, /obj/item/clothing/head/butt))
-			var/obj/item/organ/O = master
-			O.take_damage(O.bite_damage)
-			if(O.get_damage() > O.MAX_DAMAGE)
-				ate_the_whole_thing = 1
-		else if((master.amount -= 1) < 1)
-			ate_the_whole_thing = 1
-		ON_COOLDOWN(M, "eat", EAT_COOLDOWN)
-		SEND_SIGNAL(master, COMSIG_ITEM_CONSUMED_PARTIAL, M, user)
-		SEND_SIGNAL(M, COMSIG_ITEM_CONSUMED_PARTIAL, user, master)
-
-		if(ate_the_whole_thing)
-			// procs effects specific to the item (master) onto whoever eats it (M)
-			SEND_SIGNAL(master, COMSIG_ITEM_CONSUMED_ALL, M, user) // item parent, format: I (thing being eaten), M (mob eating it), user (mob making M eat it)
-			// procs effects specific to the mob (M) when eating the item (master) if applicable
-			SEND_SIGNAL(M, COMSIG_ITEM_CONSUMED_ALL, user, master) // mob parent, format: M (mob eating it), user (mob making M eat it), I (thing being eaten)
-			M.visible_message("<span class='alert'>[M] finishes eating [master].</span>",\
-			"<span class='alert'>You finish eating [master].</span>")
-
-			if (istype(master, /obj/item/reagent_containers/food/snacks/plant/) && prob(20))
-				var/obj/item/reagent_containers/food/snacks/plant/P = master
-				var/datum/plantgenes/SRCDNA = P?.plantgenes
-				if (SRCDNA && !HYPCheckCommut(SRCDNA,"Seedless"))
-					var/datum/plant/stored = P.planttype
-					if (istype(stored) && !stored.isgrass)
-						var/obj/item/seed/S
-						if (stored.unique_seed)
-							S = unpool(stored.unique_seed)
-							S.set_loc(user.loc)
-						else
-							S = unpool(/obj/item/seed)
-							S.set_loc(user.loc)
-							S.removecolor()
-						var/datum/plantgenes/DNA = P.plantgenes
-						var/datum/plantgenes/PDNA = S.plantgenes
-						S.generic_seed_setup(stored)
-						HYPpassplantgenes(DNA,PDNA)
-						if (stored.hybrid)
-							var/datum/plant/hybrid = new /datum/plant(S)
-							for (var/V in stored.vars)
-								if (issaved(stored.vars[V]) && V != "holder")
-									hybrid.vars[V] = stored.vars[V]
-							S.planttype = hybrid
-						user.visible_message("<span class='notice'><b>[user]</b> spits out a seed.</span>",\
-						"<span class='notice'>You spit out a seed.</span>")
-			user.u_equip(master)
-			qdel(master)
-		else
-			boutput(user, "<span class='notice'>There's still some left!</span>")
+		SPAWN_DBG(1 SECOND)
+			if (!src || !M || !user)
+				return
+			SEND_SIGNAL(M, COMSIG_ITEM_CONSUMED, user, src)
+			user.u_equip(src)
+			qdel(src)
 		return 1
 
-	proc/failchecks()
-		if(!M || !user || !master)
-			return 1
-		if(!in_interact_range(M, user))
-			return 1
-		if(is_incapacitated(user))
-			return 1
+	else
+		user.tri_message("<span class='alert'><b>[user]</b> tries to feed [M] [src]!</span>",\
+		user, "<span class='alert'>You try to feed [M] [src]!</span>",\
+		M, "<span class='alert'><b>[user]</b> tries to feed you [src]!</span>")
+		logTheThing("combat", user, M, "attempts to feed [constructTarget(M,"combat")] [src] [log_reagents(src)]")
+
+		if (!do_mob(user, M))
+			return 0
+		if (get_dist(user,M) > 1)
+			return 0
+
+		user.tri_message("<span class='alert'><b>[user]</b> feeds [M] [src]!</span>",\
+		user, "<span class='alert'>You feed [M] [src]!</span>",\
+		M, "<span class='alert'><b>[user]</b> feeds you [src]!</span>")
+		logTheThing("combat", user, M, "feeds [constructTarget(M,"combat")] [src] [log_reagents(src)]")
+
+		if (src.material && src.material.edible)
+			src.material.triggerEat(M, src)
+
+		if (src.reagents && src.reagents.total_volume)
+			src.reagents.reaction(M, INGEST)
+			SPAWN_DBG(0.5 SECONDS) // Necessary.
+				src.reagents.trans_to(M, src.reagents.total_volume)
+
+		playsound(M.loc, "sound/items/eatfood.ogg", rand(10, 50), 1)
+		eat_twitch(M)
+		SPAWN_DBG(1 SECOND)
+			if (!src || !M || !user)
+				return
+			SEND_SIGNAL(M, COMSIG_ITEM_CONSUMED, user, src)
+			user.u_equip(src)
+			qdel(src)
+		return 1
 
 /obj/item/proc/take_damage(brute, burn, tox, disallow_limb_loss)
 	// this is a helper for organs and limbs
@@ -1042,8 +940,7 @@
 /obj/item/blob_act(var/power)
 	if (src.artifact)
 		if (!src.ArtifactSanityCheck()) return
-		src.ArtifactStimulus("force", power)
-		src.ArtifactStimulus("carbtouch", 1)
+		src.Artifact_blob_act(power)
 	return
 
 //nah

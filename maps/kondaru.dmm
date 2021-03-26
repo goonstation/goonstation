@@ -27931,6 +27931,7 @@
 "bCR" = (
 /obj/table/wood/auto,
 /obj/displaycase{
+	displayed = new /obj/item/captaingun
 	pixel_y = 6
 	},
 /turf/simulated/floor/carpet/arcade,
@@ -34109,7 +34110,7 @@
 	pixel_x = -4;
 	pixel_y = 8
 	},
-/obj/item/postit_stack{
+/obj/item/item_box/postit{
 	pixel_x = 3;
 	pixel_y = 1
 	},

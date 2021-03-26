@@ -385,6 +385,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 						boutput(user, "<span class='alert'>The [src.name] is full.</span>")
 				else
 					boutput(user, "The [W.name] is empty.")
+			else
+				boutput(user, "You need to slice open the [W.name] first!")
 
 			return
 		else

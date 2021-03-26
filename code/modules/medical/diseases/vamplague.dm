@@ -59,7 +59,7 @@
 		else
 			if (prob(40))
 				boutput(affected_mob, "<span class='alert'>Your heart stops...</span>")
-				affected_mob.playsound_local(affected_mob.loc, "heartbeat.ogg", 50, 1)
+				affected_mob.playsound_local(affected_mob.loc, "sound/effects/heartbeat.ogg", 50, 1)
 				affected_mob.emote("collapse")
 
 				affected_mob.make_vampire(FALSE, TRUE)
