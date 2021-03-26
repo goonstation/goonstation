@@ -1,4 +1,9 @@
 
+(t)fri mar 26 21
+(u)Azrun
+(p)3933
+(e)⚖🐛|balance, bug
+(+)Nanotrasen no longer pockets money from rounding down when paying out for PTL.  Lower end MW drastically improved.
 (t)thu mar 25 21
 (u)Jan.antilles
 (p)4132
