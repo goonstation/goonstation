@@ -131,7 +131,8 @@
 	proc/vendinput(var/datum/mechanicsMessage/inp)
 		if( world.time < lastvend ) return//aaaaaaa
 		lastvend = world.time + 2
-		var/datum/data/vending_product/R = throw_item()
+		var/datum/data/vending_product/R
+		if(freestuff) R = throw_item()
 		if(R?.logged_on_vend)
 			logTheThing("station", usr, null, "randomly vended a logged product ([R.product_name]) using mechcomp from [src] at [log_loc(src)].")
 
@@ -1588,7 +1589,7 @@
 	desc = "A vending machine that serves... pizza?"
 	var/pizcooking = 0
 	var/piztopping = "plain"
-	anchored = 1
+	anchored = 0
 	acceptcard = 0
 	pay = 1
 	credit = 100
