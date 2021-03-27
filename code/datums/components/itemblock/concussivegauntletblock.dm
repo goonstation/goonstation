@@ -5,10 +5,16 @@
 	. = ..()
 	RegisterSignal(parent, COMSIG_ITEM_SPECIAL_POST, .proc/used_special)
 
+/datum/component/wearertargeting/unarmedblock/concussive/on_unequip(datum/source, mob/user)
+	. = ..()
+	UnregisterSignal(parent, COMSIG_ITEM_SPECIAL_POST)
+	used_special(parent, null)
+
 
 /datum/component/wearertargeting/unarmedblock/concussive/on_block_begin(mob/living/carbon/source, obj/item/grab/block/B)
 	. = ..()
 	RegisterSignal(B, COMSIG_BLOCK_BLOCKED, .proc/blocked_hit)
+	RegisterSignal(B, COMSIG_TOOLTIP_BLOCKING_APPEND, .proc/append_to_tooltip)
 	hitcounter = 0
 
 
@@ -16,9 +22,9 @@
 /datum/component/wearertargeting/unarmedblock/concussive/on_block_end(mob/living/carbon/source, obj/item/grab/block/B)
 	. = ..()
 	UnregisterSignal(B, COMSIG_BLOCK_BLOCKED)
-	if(hitcounter > 3)
-		SPAWN_DBG(1 DECI SECOND)
-			used_special(parent, null)
+	UnregisterSignal(B, COMSIG_TOOLTIP_BLOCKING_APPEND)
+	SPAWN_DBG(1 DECI SECOND) //delay because blocks get ended before clicks fully register -> we want to be able to use the special out of the block
+		used_special(parent, null)
 
 
 /datum/component/wearertargeting/unarmedblock/concussive/proc/blocked_hit(obj/item/grab/block/B)
@@ -32,3 +38,6 @@
 		conc.setSpecialOverride(null, 0)
 		hitcounter = 0
 		playsound(get_turf(conc), "sound/items/miningtool_off.ogg", 20, 1, 0, 1.3)
+
+/datum/component/wearertargeting/unarmedblock/concussive/proc/append_to_tooltip(parent, list/tooltip)
+	tooltip += itemblock_tooltip_entry("special.png", "Absorbs attacks to charge up a kinetic slam attack.")
