@@ -1588,7 +1588,7 @@
 	desc = "A vending machine that serves... pizza?"
 	var/pizcooking = 0
 	var/piztopping = "plain"
-	anchored = 0
+	anchored = 1
 	acceptcard = 0
 	pay = 1
 	credit = 100
