@@ -31454,18 +31454,17 @@
 /turf/simulated/floor,
 /area/station/hallway/portlowerhallway)
 "bGX" = (
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4
+	},
+/obj/firedoor_spawn,
 /obj/cable{
 	icon_state = "4-8"
-	},
-/obj/machinery/light_switch/auto{
-	pixel_y = 24
 	},
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/turf/simulated/floor/greenblack{
-	dir = 4
-	},
+/turf/simulated/floor/black,
 /area/station/crew_quarters/market)
 "bGY" = (
 /obj/cable{
@@ -31723,12 +31722,14 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/upperport)
 "bHW" = (
-/obj/stool/chair/comfy/green{
+/obj/table/reinforced/auto,
+/obj/machinery/door/airlock/pyro/glass/windoor{
 	dir = 8
 	},
-/turf/simulated/floor/greenblack{
-	dir = 4
-	},
+/obj/item/paper_bin,
+/obj/firedoor_spawn,
+/obj/item/stamp,
+/turf/simulated/floor/black,
 /area/station/crew_quarters/market)
 "bId" = (
 /obj/machinery/drainage/big,
@@ -36369,6 +36370,7 @@
 	dir = 8
 	},
 /obj/machinery/cashreg,
+/obj/access_spawn/rancher,
 /obj/firedoor_spawn,
 /turf/simulated/floor/grasstodirt{
 	dir = 4
@@ -36784,17 +36786,17 @@
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay/lobby)
 "cZX" = (
-/obj/machinery/door/airlock/pyro/glass{
-	dir = 4
-	},
-/obj/firedoor_spawn,
-/obj/cable{
-	icon_state = "4-8"
-	},
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/turf/simulated/floor,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/decal/tile_edge/line/green{
+	dir = 9;
+	icon_state = "line2"
+	},
+/turf/simulated/floor/black,
 /area/station/crew_quarters/market)
 "dcc" = (
 /obj/machinery/light/incandescent/netural{
@@ -38000,16 +38002,18 @@
 /turf/simulated/floor,
 /area/station/hallway/centralhallway)
 "fKP" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/disposalpipe/segment/mail,
 /obj/machinery/light/incandescent/netural{
 	dir = 4;
 	pixel_x = 10
 	},
-/turf/simulated/floor,
-/area/station/hallway/portlowerhallway)
+/obj/decal/tile_edge/line/green{
+	dir = 9;
+	icon_state = "line2"
+	},
+/obj/table/glass/auto,
+/obj/machinery/phone,
+/turf/simulated/floor/grass/leafy,
+/area/station/crew_quarters/market)
 "fLf" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 8;
@@ -38093,6 +38097,11 @@
 	},
 /turf/simulated/floor/black,
 /area/station/security/checkpoint/sec_foyer)
+"fYb" = (
+/turf/simulated/floor/greenblack{
+	dir = 4
+	},
+/area/station/crew_quarters/market)
 "fZj" = (
 /obj/machinery/power/data_terminal,
 /obj/machinery/computer3/generic/secure_data{
@@ -38547,14 +38556,18 @@
 	dir = 8;
 	icon_state = "pipe-c"
 	},
-/obj/storage/crate/wooden,
-/turf/simulated/floor/green,
-/area/station/crew_quarters/market)
-"gXc" = (
-/obj/machinery/light/incandescent/netural,
 /turf/simulated/floor/greenblack{
 	dir = 4
 	},
+/area/station/crew_quarters/market)
+"gXc" = (
+/obj/table/reinforced/auto,
+/obj/machinery/door/airlock/pyro/glass/windoor{
+	dir = 8
+	},
+/obj/machinery/cashreg,
+/obj/firedoor_spawn,
+/turf/simulated/floor/black,
 /area/station/crew_quarters/market)
 "gYm" = (
 /obj/machinery/computer/shuttle_bus{
@@ -39942,14 +39955,15 @@
 /turf/simulated/floor/bot,
 /area/station/science/bot_storage)
 "kEJ" = (
-/obj/table/reinforced/auto,
-/obj/machinery/door/airlock/pyro/glass/windoor{
-	dir = 8
+/obj/decal/tile_edge/line/green{
+	dir = 8;
+	icon_state = "line1"
 	},
-/obj/item/paper_bin,
-/obj/firedoor_spawn,
-/obj/item/stamp,
-/turf/simulated/floor,
+/obj/decal/tile_edge/line/green{
+	dir = 8;
+	icon_state = "line1"
+	},
+/turf/simulated/floor/black,
 /area/station/crew_quarters/market)
 "kIf" = (
 /obj/cable,
@@ -42224,6 +42238,19 @@
 	dir = 4
 	},
 /area/station/security/secoffquarters)
+"qkT" = (
+/obj/machinery/light_switch/auto{
+	pixel_x = 5;
+	pixel_y = -24
+	},
+/obj/stool/chair/green{
+	dir = 8
+	},
+/obj/machinery/light/incandescent/netural,
+/turf/simulated/floor/greenblack{
+	dir = 4
+	},
+/area/station/crew_quarters/market)
 "qrl" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -43889,13 +43916,12 @@
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/mining)
 "uYx" = (
-/obj/table/reinforced/auto,
-/obj/machinery/door/airlock/pyro/glass/windoor{
-	dir = 8
+/obj/decal/tile_edge/line/green{
+	dir = 8;
+	icon_state = "line1"
 	},
-/obj/machinery/cashreg,
-/obj/firedoor_spawn,
-/turf/simulated/floor,
+/obj/potted_plant/potted_plant5,
+/turf/simulated/floor/black,
 /area/station/crew_quarters/market)
 "uYH" = (
 /obj/cable{
@@ -44483,6 +44509,7 @@
 /obj/machinery/door/airlock/pyro/glass/windoor{
 	dir = 8
 	},
+/obj/access_spawn/rancher,
 /obj/firedoor_spawn,
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
@@ -79214,7 +79241,7 @@ bta
 bym
 bta
 czS
-fKP
+bta
 hlB
 bta
 bta
@@ -79516,7 +79543,7 @@ bun
 bun
 nBS
 bEq
-xpG
+fKP
 cZX
 kEJ
 uYx
@@ -80122,8 +80149,8 @@ bBM
 bIM
 jYG
 gVQ
-ied
-ied
+fYb
+qkT
 aBj
 bJZ
 bKv
