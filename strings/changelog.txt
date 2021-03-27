@@ -1,4 +1,11 @@
 
+(t)sat mar 27 21
+(u)Tarmunora
+(p)4158
+(e)⚖|balance
+(*)Random dodge chance from blocking removed.
+(*)Blocking armor bonus and disorient resist buffed, and blocking now prevent stamina criticals ("devastating hit")
+(+)Deflection object property now provides passive block chance against disarm attempts
 (t)fri mar 26 21
 (u)Azrun
 (p)3933
