@@ -721,15 +721,17 @@
 	possible_areas = get_areas_with_unblocked_turfs(/area/station)
 	possible_areas += get_areas_with_unblocked_turfs(/area/diner)
 	possible_areas -= get_areas_with_unblocked_turfs(/area/diner/tug)
-	possible_areas -= get_areas_with_unblocked_turfs(/area/station/medical/asylum)
-	possible_areas -= get_areas_with_unblocked_turfs(/area/station/security)
-	possible_areas -= get_areas_with_unblocked_turfs(/area/station/hangar/sec)
-	possible_areas -= get_areas_with_unblocked_turfs(/area/station/turret_protected)
-	possible_areas -= get_areas_with_unblocked_turfs(/area/station/ai_monitored/armory)
+	possible_areas -= get_areas_with_unblocked_turfs(/area/station/medical/asylum)			// Donut 3 Asylum
+	possible_areas -= get_areas_with_unblocked_turfs(/area/station/security/hos)
+	possible_areas -= get_areas_with_unblocked_turfs(/area/station/security/armory)			// Cog1 armory
+	possible_areas -= get_areas_with_unblocked_turfs(/area/station/ai_monitored/armory)	// Other map armorys...
+	possible_areas -= get_areas_with_unblocked_turfs(/area/station/turret_protected)		// AI secure areas
 	possible_areas -= get_areas_with_unblocked_turfs(/area/station/maintenance)
 	possible_areas -= get_areas_with_unblocked_turfs(/area/station/hallway)
 	possible_areas -= get_areas_with_unblocked_turfs(/area/station/engine/substation)
+	possible_areas -= get_areas_with_unblocked_turfs(/area/station/engine/core)
 	possible_areas -= get_areas_with_unblocked_turfs(/area/station/engine/singcore)
+	possible_areas -= get_areas_with_unblocked_turfs(/area/station/engine/combustion_chamber)
 	possible_areas -= /area/sim/test_area
 
 	for (var/area/A in possible_areas)
