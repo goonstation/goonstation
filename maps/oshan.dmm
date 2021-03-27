@@ -29741,6 +29741,9 @@
 "bvh" = (
 /obj/machinery/light/incandescent/warm,
 /obj/table/auto,
+/obj/item/pinpointer/trench,
+/obj/item/pinpointer/trench,
+/obj/item/pinpointer/trench,
 /obj/item/trench_map,
 /obj/item/trench_map,
 /obj/item/trench_map,
@@ -31169,6 +31172,9 @@
 /area/station/mining/staff_room)
 "byA" = (
 /obj/table/reinforced/auto,
+/obj/item/pinpointer/trench,
+/obj/item/pinpointer/trench,
+/obj/item/pinpointer/trench,
 /obj/item/trench_map,
 /obj/item/trench_map,
 /obj/item/trench_map,
