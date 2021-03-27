@@ -1027,10 +1027,11 @@
 	icon = 'icons/obj/decals/posters.dmi'
 	icon_state = "pw_map"
 	popup_win = 1
-	imgw = 580
-	imgh = 587
+	imgw = 585
+	imgh = 590
 
 	show_popup_win(var/client/C)
 		if (!C || !src.popup_win)
 			return
-		C.Browse(resource("images/pw_map.png"),"window=Map;size=[imgw]x[imgh];title=Map")
+
+		C.Browse("<img src=\"[resource("images/pw_map.png")]\">","window=Map;size=[imgw]x[imgh];title=Map")

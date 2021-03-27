@@ -250,12 +250,6 @@
 	},
 /turf/simulated/floor/airless/plating,
 /area/pod_wars/spacejunk/nancy/warehouse)
-"bk" = (
-/obj/forcefield/energyshield/perma/pod_wars/nanotrasen,
-/turf/unsimulated/floor/blue/side{
-	dir = 9
-	},
-/area/pod_wars/team1/bridge)
 "bl" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -4566,10 +4560,6 @@
 	icon_state = "catwalk_cross"
 	},
 /area/pod_wars/spacejunk/reliant/landingpads)
-"uX" = (
-/obj/forcefield/energyshield/perma/pod_wars/nanotrasen,
-/turf/unsimulated/floor/white,
-/area/pod_wars/team1/medbay)
 "uZ" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -5415,7 +5405,6 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/obj/forcefield/energyshield/perma/pod_wars/nanotrasen,
 /turf/unsimulated/floor/white,
 /area/pod_wars/team1/medbay)
 "zg" = (
@@ -42302,7 +42291,7 @@ Az
 VK
 ed
 ed
-uX
+ed
 ed
 ed
 Qf
@@ -45814,7 +45803,7 @@ HT
 HT
 yp
 rK
-bk
+pv
 FA
 fK
 gx

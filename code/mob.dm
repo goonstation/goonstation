@@ -902,8 +902,10 @@
 	if (confirm == "Yes")
 		if (src.mind)
 			if (isliving(src) && !isdead(src))
-				boutput(src, "<span class='alert'>Can't set DNR while you are alive!</span>")
-				return
+				var/double_confirm = alert("Setting DNR here will kill you and remove you from your team. Do you still want to set DNR?", "Set Do Not Resuscitate", "Yes", "No")
+				if (double_confirm == "No")
+					return
+				src.death()
 			src.verbs -= list(/mob/verb/setdnr)
 			src.mind.dnr = 1
 			boutput(src, "<span class='alert'>DNR status set!</span>")
