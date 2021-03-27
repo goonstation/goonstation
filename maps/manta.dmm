@@ -503,7 +503,7 @@
 /area/station/bridge)
 "abw" = (
 /obj/displaycase{
-	displayed = new /obj/item/captaingun
+	displayed = new /obj/item/captaingun;
 	pixel_y = 8
 	},
 /obj/table/wood/auto,
@@ -31913,6 +31913,12 @@
 /area/station/quartermaster/cargobay)
 "bIM" = (
 /obj/chicken_nesting_box,
+/obj/disposalpipe/trunk/mail,
+/obj/machinery/disposal/mail/small{
+	dir = 3;
+	mail_tag = "Ranch";
+	name = "mail chute-'Ranch'"
+	},
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "bIO" = (
@@ -36767,17 +36773,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/portlowerhallway)
-"cZO" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 8;
-	name = "autoname - SS13";
-	pixel_x = 10;
-	tag = ""
-	},
-/obj/storage/secure/closet/personal,
-/turf/simulated/floor/green,
-/area/station/crew_quarters/market)
 "cZW" = (
 /obj/decal/tile_edge/line/blue{
 	icon_state = "line3"
@@ -37408,6 +37403,10 @@
 	},
 /turf/simulated/floor,
 /area/station/security/starboardtorpedoes)
+"eCS" = (
+/obj/storage/secure/closet/personal,
+/turf/simulated/floor/green,
+/area/station/crew_quarters/market)
 "eEa" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 1;
@@ -38538,14 +38537,6 @@
 	},
 /turf/simulated/floor/bot,
 /area/station/engine/storage)
-"gUN" = (
-/obj/storage/crate/wooden,
-/obj/machinery/firealarm{
-	dir = 4;
-	pixel_x = 24
-	},
-/turf/simulated/floor/green,
-/area/station/crew_quarters/market)
 "gVQ" = (
 /obj/machinery/power/apc/autoname_east,
 /obj/cable{
@@ -38553,8 +38544,10 @@
 	icon_state = "0-8"
 	},
 /obj/disposalpipe/segment/mail{
-	dir = 4
+	dir = 8;
+	icon_state = "pipe-c"
 	},
+/obj/storage/crate/wooden,
 /turf/simulated/floor/green,
 /area/station/crew_quarters/market)
 "gXc" = (
@@ -39002,12 +38995,8 @@
 	},
 /area/station/medical/medbay/lobby)
 "ied" = (
-/obj/item/feather,
-/obj/decal/cleanable/blood{
-	icon_state = "floor6"
-	},
-/turf/simulated/floor/plating/random,
-/area/station/ranch)
+/turf/simulated/floor/green,
+/area/station/crew_quarters/market)
 "ifi" = (
 /obj/wingrille_spawn/auto,
 /obj/cable{
@@ -39668,20 +39657,22 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/seaturtle)
 "jYl" = (
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget{
-	pixel_x = -3;
-	pixel_y = -10
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 8;
+	name = "autoname - SS13";
+	pixel_x = 10;
+	tag = ""
 	},
-/obj/decal/cleanable/blood{
-	icon_state = "floor5"
+/obj/machinery/light/incandescent/netural{
+	dir = 4;
+	nostick = 1;
+	pixel_x = 10
 	},
-/turf/simulated/floor/plating/random,
-/area/station/ranch)
+/turf/simulated/floor/green,
+/area/station/crew_quarters/market)
 "jYG" = (
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
+/obj/disposalpipe/segment/mail,
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/market)
 "kai" = (
@@ -39957,6 +39948,7 @@
 	},
 /obj/item/paper_bin,
 /obj/firedoor_spawn,
+/obj/item/stamp,
 /turf/simulated/floor,
 /area/station/crew_quarters/market)
 "kIf" = (
@@ -40795,6 +40787,7 @@
 "mXn" = (
 /obj/railing/orange/reinforced,
 /obj/submachine/chicken_feed_grinder,
+/obj/item/reagent_containers/food/snacks/plant/corn,
 /turf/simulated/floor/grasstodirt,
 /area/station/ranch)
 "mXU" = (
@@ -41351,10 +41344,8 @@
 /turf/simulated/floor/carpet/purple/fancy/narrow/T_west,
 /area/station/communications/bedroom)
 "omO" = (
-/obj/machinery/light/incandescent/netural{
-	dir = 4;
-	nostick = 1;
-	pixel_x = 10
+/obj/shrub{
+	dir = 1
 	},
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
@@ -41960,21 +41951,14 @@
 /turf/simulated/floor,
 /area/station/hallway/portlowerhallway)
 "pwc" = (
-/obj/table/auto,
-/obj/item/satchel/hydro{
-	pixel_y = 10
+/obj/rack,
+/obj/item/rubberduck,
+/obj/item/clothing/head/that{
+	pixel_x = -2;
+	pixel_y = 12
 	},
-/obj/item/storage/box/syringes,
-/obj/disposalpipe/segment/mail{
-	dir = 8;
-	icon_state = "pipe-c"
-	},
-/obj/decal/tile_edge/stripe{
-	dir = 1
-	},
-/obj/item/device/camera_viewer/ranch,
-/turf/simulated/floor/wood,
-/area/station/ranch)
+/turf/simulated/floor/green,
+/area/station/crew_quarters/market)
 "pwm" = (
 /obj/machinery/door/airlock/pyro/glass{
 	name = "Backroom"
@@ -42552,18 +42536,20 @@
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "rdQ" = (
-/obj/railing/orange/reinforced{
+/obj/table/auto,
+/obj/item/device/camera_viewer/ranch{
+	pixel_x = -4;
+	pixel_y = 13
+	},
+/obj/item/satchel/hydro{
+	pixel_x = 6;
+	pixel_y = 10
+	},
+/obj/item/storage/box/syringes,
+/obj/decal/tile_edge/stripe{
 	dir = 1
 	},
-/obj/machinery/disposal/mail/small{
-	dir = 4;
-	mail_tag = "Ranch";
-	name = "mail chute-'Ranch'"
-	},
-/obj/disposalpipe/trunk/mail,
-/turf/simulated/floor/grasstodirt{
-	dir = 1
-	},
+/turf/simulated/floor/wood,
 /area/station/ranch)
 "rfe" = (
 /obj/machinery/light/incandescent/netural,
@@ -43149,9 +43135,7 @@
 /turf/simulated/floor/plating,
 /area/station/science/chemistry)
 "sTM" = (
-/obj/shrub{
-	dir = 1
-	},
+/obj/railing/orange/reinforced,
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "sUk" = (
@@ -43515,6 +43499,12 @@
 	name = "autoname - SS13";
 	pixel_x = 10;
 	tag = ""
+	},
+/obj/railing/orange/reinforced,
+/obj/machinery/light/incandescent/netural{
+	dir = 4;
+	nostick = 1;
+	pixel_x = 10
 	},
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
@@ -45018,6 +45008,18 @@
 	},
 /turf/simulated/floor/wood,
 /area/station/hos/quarter)
+"xMu" = (
+/obj/machinery/firealarm{
+	pixel_x = 1;
+	pixel_y = 26;
+	text = "NF"
+	},
+/obj/rack,
+/obj/item/clipboard,
+/obj/item/pen/pencil,
+/obj/item/hand_labeler,
+/turf/simulated/floor/green,
+/area/station/crew_quarters/market)
 "xOq" = (
 /obj/machinery/door/airlock/pyro/engineering,
 /obj/access_spawn/engineering,
@@ -80118,10 +80120,10 @@ mfZ
 mXn
 bBM
 bIM
-xpG
+jYG
 gVQ
-gUN
-cZO
+ied
+ied
 aBj
 bJZ
 bKv
@@ -80421,9 +80423,9 @@ xlK
 bBM
 rTh
 xpG
-jYG
 xpG
-xpG
+pwc
+ied
 aBj
 bKa
 bKw
@@ -80723,8 +80725,8 @@ xlK
 bBM
 sTM
 rdQ
-pwc
-bDj
+xpG
+xMu
 ied
 aBk
 aBp
@@ -81024,9 +81026,9 @@ jlt
 chW
 omO
 tWT
-hDa
 kfv
-bDj
+xpG
+eCS
 jYl
 bJD
 aHx
@@ -81327,9 +81329,9 @@ bDj
 bDj
 bDj
 bDj
-bDj
-bDj
-bDj
+xpG
+xpG
+xpG
 bJD
 bKb
 bKz
