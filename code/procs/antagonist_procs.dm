@@ -301,7 +301,7 @@
 /// returns a decimal representing the percentage of alive crew that are also antags
 /proc/get_alive_antags_percentage()
 	var/alive = 0
-	var/alive_antags = ticker.mode.traitors.len + ticker.mode.Agimmicks.len
+	var/alive_antags = ticker.mode.traitors.len + length(ticker.mode.Agimmicks)
 
 	for (var/datum/mind/antag in ticker.mode.traitors)
 		var/mob/M = antag.current

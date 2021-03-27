@@ -96,6 +96,9 @@ proc/make_cleanable(var/type,var/loc,var/list/viral_list)
 
 		src.diseases.len = 0
 
+	pooled()
+		..()
+		src.sampled = initial(src.sampled) //I had to fix fire not resetting on magnesium, and now I find out sampled only resets on magnesium?
 
 	proc/process()
 		if (world.time > last_dry_start + dry_time)
@@ -274,10 +277,12 @@ proc/make_cleanable(var/type,var/loc,var/list/viral_list)
 		..()
 
 		SPAWN_DBG(0)
-			if (!src.pooled)
+			if (!src.pooled && length(src.loc.contents) < 15)
 				for (var/obj/O in src.loc)
 					LAGCHECK(LAG_LOW)
-					if (O && (!src.pooled) && prob(max(src?.reagents?.total_volume*5, 10)))
+					if(src.pooled || istype(O, /obj/decal/cleanable/blood) && O != src)
+						break
+					if(prob(max(src?.reagents?.total_volume*5, 10)))
 						O.add_blood(src)
 
 	proc/set_sample_reagent_custom(var/reagent_id, var/amt = 10)
@@ -376,7 +381,7 @@ proc/make_cleanable(var/type,var/loc,var/list/viral_list)
 			. = " It's [src.dry == DRY_BLOOD ? "dry and flakey" : "fresh"]."
 
 	proc/handle_reagent_list(var/list/reagent_list)
-		if (!reagent_list || !reagent_list.len)
+		if (!reagent_list || !length(reagent_list))
 			return
 
 		if (reagent_list["bloodc"])
@@ -510,7 +515,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 
 	proc/create_overlay(var/list/icons_to_choose, var/add_color, var/direction)
 		var/blood_addition
-		if (islist(icons_to_choose) && icons_to_choose.len)
+		if (islist(icons_to_choose) && length(icons_to_choose))
 			blood_addition = pick(icons_to_choose)
 		else if (istext(icons_to_choose))
 			blood_addition = icons_to_choose
@@ -1560,10 +1565,6 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 		var/turf/T = get_turf(src)
 		..()
 		updateSurroundingMagnesium(T)
-
-	pooled()
-		..()
-		src.sampled = 0 // stop fucking breaking butthead! >:(
 
 	Sample(var/obj/item/W as obj, var/mob/user as mob)
 		..()

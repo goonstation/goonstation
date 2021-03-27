@@ -47,7 +47,7 @@
 				w.tilenotify(src)
 
 	get_desc()
-		if (islist(src.proj_impacts) && src.proj_impacts.len)
+		if (islist(src.proj_impacts) && length(src.proj_impacts))
 			var/shots_taken = 0
 			for (var/i in src.proj_impacts)
 				shots_taken ++

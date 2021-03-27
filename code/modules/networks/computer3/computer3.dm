@@ -320,8 +320,11 @@
 
 		if(glow_in_dark_screen)
 			src.screen_image = image('icons/obj/computer_screens.dmi', src.icon_state, -1)
-			src.UpdateOverlays(screen_image, "screen_image")
 			screen_image.plane = PLANE_LIGHTING
+			screen_image.blend_mode = BLEND_ADD
+			screen_image.layer = LIGHTING_LAYER_BASE
+			screen_image.color = list(0.33,0.33,0.33, 0.33,0.33,0.33, 0.33,0.33,0.33)
+			src.UpdateOverlays(screen_image, "screen_image")
 
 		src.post_system()
 
@@ -649,8 +652,11 @@ function lineEnter (ev)
 		status &= ~NOPOWER
 		light.enable()
 		if(glow_in_dark_screen)
-			src.UpdateOverlays(screen_image, "screen_image")
 			screen_image.plane = PLANE_LIGHTING
+			screen_image.blend_mode = BLEND_ADD
+			screen_image.layer = LIGHTING_LAYER_BASE
+			screen_image.color = list(0.33,0.33,0.33, 0.33,0.33,0.33, 0.33,0.33,0.33)
+			src.UpdateOverlays(screen_image, "screen_image")
 	else
 		SPAWN_DBG(rand(0, 15))
 			icon_state = src.base_icon_state
@@ -1152,6 +1158,7 @@ function lineEnter (ev)
 	desc = "This fine piece of hardware sports an incredible 2 kilobytes of RAM, all for a price slightly higher than the whole economy of greece."
 	icon_state = "oldlapshut"
 	luggable_type = /obj/machinery/computer3/luggable/personal
+	w_class = 3.0
 
 
 /obj/machinery/computer3/luggable/personal

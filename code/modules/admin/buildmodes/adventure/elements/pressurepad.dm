@@ -50,7 +50,7 @@
 					selected_triggerable_untrigger -= object
 				else
 					var/list/actions = object:trigger_actions()
-					if (islist(actions) && actions.len)
+					if (islist(actions) && length(actions))
 						var/act_name = input("Do what on press?", "Do what?", actions[1]) in actions
 						var/act = actions[act_name]
 						var/unact_name = input("Do what on unpress?", "Do what?", actions[1]) in actions

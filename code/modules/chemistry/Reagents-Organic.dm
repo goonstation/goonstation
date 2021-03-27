@@ -1,6 +1,8 @@
 // Stuff for O.Chem
 // Fossil fuels, volatile organics, fats and fucky solvents can go here
 
+ABSTRACT_TYPE(/datum/reagent/organic)
+
 /datum/reagent/organic
 	name = "crude organic fluid"
 	id = "organic"
@@ -39,7 +41,7 @@
 				holder.remove_reagent("oxygen",amount)
 				return
 			if(holder.total_temperature >= (T0C+1000))
-				holder.add_reagent("ethylene",(4*amount/3))
+				holder.add_reagent("ethylene",(amount*4/3))
 				return
 			if(holder.total_temperature >= (T0C+600))
 				holder.add_reagent("fuel",(amount))
@@ -87,6 +89,8 @@
 		crack(var/amount = 1)
 			if(!holder)
 				return
+			if(volume<amount)
+				amount = volume
 			if(holder.has_reagent("oxygen"))
 				holder.remove_reagent("oxygen",amount)
 				holder.remove_reagent(id,amount)

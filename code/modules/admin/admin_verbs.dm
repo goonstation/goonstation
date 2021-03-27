@@ -425,6 +425,8 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_modify_respawn_variables,
 		/client/proc/set_nukie_score,
 
+		/client/proc/player_panel_tgui,
+
 #ifdef MACHINE_PROCESSING_DEBUG
 		/client/proc/cmd_display_detailed_machine_stats,
 #endif
@@ -664,6 +666,15 @@ var/list/special_pa_observing_verbs = list(
 		src.holder.player()
 	return
 
+/client/proc/player_panel_tgui()
+	set name = "Player Panel TGUI"
+	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
+	admin_only
+	if (src.holder.tempmin)
+		return
+	if (src.holder.level >= LEVEL_SA)
+		global.player_panel.ui_interact(src.mob)
+
 /client/proc/rspawn_panel()
 	set name = "Respawn Panel"
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
@@ -890,7 +901,7 @@ var/list/fun_images = list()
 	set popup_menu = 0
 
 	admin_only
-	if(!O.fingerprintshidden || !O.fingerprintshidden.len)
+	if(!O.fingerprintshidden || !length(O.fingerprintshidden))
 		alert("There are no fingerprints on this object.", null, null, null, null, null)
 		return
 

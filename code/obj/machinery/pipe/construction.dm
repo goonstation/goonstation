@@ -361,7 +361,7 @@ Buildable meters
 							OP.pl = PL1
 							OP.plnum = PL1.linenumber
 						PL1.nodes = plist
-						PL1.numnodes = plist.len
+						PL1.numnodes = length(plist)
 						PL1.capmult = plist.len+1
 
 

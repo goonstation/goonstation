@@ -767,7 +767,7 @@ datum
 					return
 				if (!ishuman(M))
 					return
-				if (!islist(mutini_effects) || !mutini_effects.len)
+				if (!islist(mutini_effects) || !length(mutini_effects))
 					return ..()
 				var/power_granted = pick(mutini_effects)
 				var/power_time = rand(1,10)
@@ -779,7 +779,7 @@ datum
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M)
 					M = holder.my_atom
-				if (!islist(mutini_effects) || !mutini_effects.len)
+				if (!islist(mutini_effects) || !length(mutini_effects))
 					return ..()
 				var/power_granted = pick(mutini_effects)
 				var/power_time = rand(1,10)

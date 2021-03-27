@@ -231,7 +231,7 @@
 			C.on_death = on_death.clone()
 			C.on_death.C = C
 
-		C.abil.len = abil.len
+		C.abil.len = length(abil)
 		for (var/i = 1, i <= abil.len, i++)
 			var/datum/critterAbility/A = abil[i]
 			if (istype(A))
@@ -265,7 +265,7 @@
 		F["[path].dead_change_icon"] << dead_change_icon
 		icon_serializer(F, "[path].dead_icon", sandbox, dead_icon, dead_icon_state)
 		loot_table.serialize(F, "[path].loot_table", sandbox)
-		F["[path].abil.LEN"] << abil.len
+		F["[path].abil.LEN"] << length(abil)
 		if (on_death)
 			F["[path].on_death.type"] << on_death.type
 			on_death.serialize(F, "[path].on_death", sandbox)
@@ -453,7 +453,7 @@ var/global/datum/critterCreatorHolder/critter_creator_controller = new()
 	proc/clone()
 		var/datum/critterLootTable/LT = new type()
 		LT.maxDropped = maxDropped
-		LT.loot.len = loot.len
+		LT.loot.len = length(loot)
 		for (var/i = 1, i <= loot.len, i++)
 			var/datum/critterLoot/L = loot[i]
 			var/datum/critterLoot/L2 = L.clone()
@@ -463,7 +463,7 @@ var/global/datum/critterCreatorHolder/critter_creator_controller = new()
 
 	proc/serialize(var/savefile/F, var/path, var/datum/sandbox/sandbox)
 		F["[path].maxDropped"] << maxDropped
-		F["[path].loot.LEN"] << loot.len
+		F["[path].loot.LEN"] << length(loot)
 		for (var/i = 1, i <= loot.len, i++)
 			var/datum/critterLoot/L = loot[i]
 			L.serialize(F, "[path].loot.[i]", sandbox)
@@ -1598,7 +1598,7 @@ var/global/datum/critterCreatorHolder/critter_creator_controller = new()
 		for (var/mob/living/M in view(7, C))
 			affected += M
 		var/curr_W = lightning_wattage / mobs_struck
-		while (strike > 0 && affected.len)
+		while (strike > 0 && length(affected))
 			strike--
 			var/mob/M = pick(affected)
 			arcFlash(C, M, curr_W)

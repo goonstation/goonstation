@@ -280,7 +280,7 @@
 "aaR" = (
 /obj/table/reinforced/auto,
 /obj/item/device/radio/intercom{
-
+	
 	},
 /obj/item/storage/toolbox/emergency,
 /obj/item/device/radio,
@@ -2607,21 +2607,6 @@
 /obj/machinery/computer3/generic/personal,
 /obj/item/item_box/assorted/stickers/stickers_limited,
 /turf/simulated/floor,
-/area/station/crew_quarters/quarters)
-"agk" = (
-/obj/table/auto,
-/obj/item/paper_bin,
-/obj/item/pen,
-/obj/machinery/light/emergency{
-	dir = 4
-	},
-/obj/item/pen/marker,
-/obj/item/camera{
-	pixel_y = -10
-	},
-/turf/simulated/floor/blue/side{
-	dir = 4
-	},
 /area/station/crew_quarters/quarters)
 "agl" = (
 /obj/stool/bed,
@@ -5756,20 +5741,6 @@
 	dir = 4
 	},
 /area/station/hallway/secondary/entry)
-"anh" = (
-/obj/table/reinforced/auto,
-/obj/machinery/door/firedoor/pyro{
-	dir = 4
-	},
-/obj/machinery/cashreg,
-/obj/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
-	},
-/obj/item/postit_stack,
-/turf/simulated/floor/red,
-/area/station/security/checkpoint/arrivals)
 "ani" = (
 /obj/landmark/start{
 	name = "Security Officer"
@@ -15146,20 +15117,6 @@
 "aHk" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/maintenance/central)
-"aHl" = (
-/obj/table/reinforced/auto,
-/obj/machinery/door/firedoor/pyro,
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 4;
-	name = "autoname - SS13";
-	tag = ""
-	},
-/obj/item/stamp,
-/obj/item/postit_stack,
-/obj/decal/garland,
-/turf/simulated/floor/black,
-/area/station/security/checkpoint)
 "aHm" = (
 /obj/table/reinforced/auto,
 /obj/machinery/door/firedoor/pyro,
@@ -19659,18 +19616,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/bridge)
-"aQk" = (
-/obj/table/wood/round/auto,
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
-/obj/item/storage/firstaid/regular,
-/obj/machinery/light/emergency{
-	dir = 1
-	},
-/obj/item/postit_stack,
-/turf/simulated/floor/black,
-/area/station/bridge)
 "aQl" = (
 /obj/table/wood/round/auto,
 /obj/machinery/recharger,
@@ -21416,13 +21361,6 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area/station/security/detectives_office)
-"aUc" = (
-/obj/table/wood/auto,
-/obj/item/storage/secure/sbriefcase,
-/obj/item/device/camera_viewer,
-/obj/item/camera,
-/turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "aUd" = (
 /obj/table/wood/auto,
@@ -26398,7 +26336,7 @@
 /area/station/crew_quarters/heads)
 "bdO" = (
 /obj/item/device/radio/intercom{
-
+	
 	},
 /obj/cable{
 	d1 = 4;
@@ -27794,7 +27732,7 @@
 	icon_state = "4-8"
 	},
 /obj/item/device/radio/intercom{
-
+	
 	},
 /obj/item/clothing/suit/bedsheet{
 	bcolor = "captain";
@@ -28227,15 +28165,6 @@
 /obj/item/matchbook,
 /turf/simulated/floor/caution/south,
 /area/station/maintenance/disposal)
-"bhp" = (
-/obj/decal/cleanable/dirt,
-/obj/item/tile/steel,
-/obj/disposalpipe/segment/ejection{
-	dir = 4
-	},
-/obj/item/camera,
-/turf/simulated/floor/caution/south,
-/area/station/maintenance/disposal)
 "bhq" = (
 /obj/item/storage/box/evidence,
 /obj/item/storage/box/evidence,
@@ -28267,13 +28196,6 @@
 "bht" = (
 /turf/simulated/floor/plating,
 /area/space)
-"bhu" = (
-/obj/displaycase,
-/obj/window/reinforced{
-	dir = 2
-	},
-/turf/simulated/floor/carpet/arcade,
-/area/station/crew_quarters/captain)
 "bhv" = (
 /obj/machinery/door/window/southleft{
 	req_access_txt = "20"
@@ -28997,7 +28919,7 @@
 "biX" = (
 /obj/machinery/space_heater,
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor/purple/side{
 	dir = 5
@@ -29056,20 +28978,6 @@
 /obj/item/pinpointer/disk,
 /obj/item/card/id/captains_spare,
 /obj/item/hand_tele,
-/turf/simulated/floor/black,
-/area/station/crew_quarters/captain)
-"bjh" = (
-/obj/table/auto,
-/obj/item/storage/photo_album{
-	pixel_y = -10
-	},
-/obj/item/camera,
-/obj/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
-	},
-/obj/machinery/light,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/captain)
 "bji" = (
@@ -33534,22 +33442,6 @@
 	icon_state = "fred2"
 	},
 /area/station/crew_quarters/info)
-"bsR" = (
-/obj/machinery/power/data_terminal,
-/obj/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/obj/table/wood/auto,
-/obj/machinery/networked/printer{
-	print_id = "Information"
-	},
-/obj/item/postit_stack,
-/turf/simulated/floor/carpet{
-	dir = 5;
-	icon_state = "fred2"
-	},
-/area/station/crew_quarters/info)
 "bsS" = (
 /obj/stool,
 /obj/disposalpipe/segment/mail,
@@ -34568,13 +34460,6 @@
 	name = "Engineering Intercom"
 	},
 /turf/simulated/floor/yellow/side,
-/area/station/crew_quarters/info)
-"bva" = (
-/obj/table/wood/auto,
-/obj/item/paper_bin,
-/obj/item/pen,
-/obj/item/camera,
-/turf/simulated/floor,
 /area/station/crew_quarters/info)
 "bvb" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -42330,31 +42215,6 @@
 	},
 /turf/simulated/floor/bot,
 /area/station/science/teleporter)
-"bLi" = (
-/obj/item/device/radio/headset/multifreq,
-/obj/item/device/radio/headset/multifreq,
-/obj/item/device/radio/headset/multifreq,
-/obj/item/device/radio/headset/multifreq,
-/obj/storage/crate{
-	desc = "Only distantly related to the Adventure Closet.";
-	name = "Adventure Crate"
-	},
-/obj/item/device/audio_log,
-/obj/item/camera,
-/obj/item/device/light/flashlight,
-/obj/item/device/light/flashlight,
-/obj/item/reagent_containers/food/drinks/milk,
-/obj/item/reagent_containers/food/snacks/sandwich/pb,
-/obj/item/paper{
-	desc = "Aw dang, mooom";
-	info = "Good luck on your adventure, sweetie! Love, Mom.<br> <i>Whose mom? Yours? Who knows.</i>";
-	name = "note from mom"
-	},
-/obj/item/paper/book/critter_compendium,
-/turf/simulated/floor/caution/north{
-	dir = 8
-	},
-/area/station/science/teleporter)
 "bLj" = (
 /obj/rack,
 /obj/item/clothing/suit/space/emerg,
@@ -42577,7 +42437,7 @@
 	icon_state = "pipe-c"
 	},
 /obj/item/device/radio/intercom{
-
+	
 	},
 /obj/cable{
 	d1 = 1;
@@ -44554,18 +44414,6 @@
 /obj/item/extinguisher,
 /turf/simulated/floor,
 /area/station/science/teleporter)
-"bPB" = (
-/obj/table/auto,
-/obj/item/device/radio/signaler,
-/obj/item/device/radio/signaler,
-/obj/item/device/audio_log,
-/obj/item/camera,
-/obj/item/device/gps,
-/obj/item/device/gps,
-/obj/item/device/gps,
-/obj/item/storage/box/trackimp_kit2,
-/turf/simulated/floor,
-/area/station/science/teleporter)
 "bPC" = (
 /obj/table/auto,
 /obj/item/clothing/suit/space/emerg,
@@ -44648,7 +44496,7 @@
 	icon_state = "1-8"
 	},
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor/white,
 /area/station/science/teleporter)
@@ -44846,16 +44694,6 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area/station/engine/engineering)
-"bQe" = (
-/obj/table/reinforced/auto,
-/obj/item/clipboard,
-/obj/item/device/radio/headset/engineer,
-/obj/item/device/radio/headset/engineer,
-/obj/item/postit_stack,
-/turf/simulated/floor/yellow/side{
-	dir = 8
-	},
 /area/station/engine/engineering)
 "bQf" = (
 /obj/stool/chair/yellow{
@@ -53155,20 +52993,6 @@
 	dir = 8
 	},
 /area/station/hallway/secondary/exit)
-"cht" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/simple{
-	dir = 4
-	},
-/obj/table/glass/auto,
-/obj/item/card_box/suit,
-/obj/item/a_gift/festive,
-/turf/simulated/floor/escape,
-/area/station/hallway/secondary/exit)
 "chu" = (
 /obj/grille/steel,
 /obj/cable{
@@ -53732,32 +53556,6 @@
 	dir = 10
 	},
 /area/station/hallway/secondary/exit)
-"ciG" = (
-/obj/cable{
-	d2 = 2;
-	icon_state = "0-2"
-	},
-/obj/machinery/power/data_terminal{
-	layer = 2
-	},
-/obj/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
-	},
-/obj/table/auto,
-/obj/machinery/computer3/generic/personal{
-	pixel_y = 5
-	},
-/obj/item/reagent_containers/hypospray,
-/obj/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
-/obj/item/postit_stack,
-/turf/simulated/floor/specialroom/medbay,
-/area/station/medical/head)
 "ciH" = (
 /obj/shrub,
 /obj/machinery/light{
@@ -54028,13 +53826,6 @@
 /obj/item/decoration/ashtray,
 /obj/item/kitchen/utensil/fork,
 /obj/item/reagent_containers/food/snacks/fruit_cake,
-/turf/simulated/floor/carpet/purple/fancy/edge/east,
-/area/station/crew_quarters/cafeteria)
-"cje" = (
-/obj/table/reinforced/bar/auto,
-/obj/item/plate,
-/obj/item/kitchen/utensil/spoon,
-/obj/item/card_box/suit,
 /turf/simulated/floor/carpet/purple/fancy/edge/east,
 /area/station/crew_quarters/cafeteria)
 "cjf" = (
@@ -55894,7 +55685,7 @@
 	icon_state = "4-8"
 	},
 /obj/item/device/radio/intercom{
-
+	
 	},
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
@@ -63904,13 +63695,6 @@
 	},
 /turf/space,
 /area/space)
-"cDt" = (
-/obj/stool/chair/comfy{
-	dir = 4
-	},
-/obj/item/card_box/suit,
-/turf/simulated/floor/snow,
-/area/station/crew_quarters/jazz)
 "cDu" = (
 /turf/simulated/floor/snow,
 /area/station/crew_quarters/jazz)
@@ -64390,6 +64174,224 @@
 	},
 /turf/simulated/floor/snow,
 /area/station/turret_protected/ai)
+"cGe" = (
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/table/wood/auto,
+/obj/machinery/networked/printer{
+	print_id = "Information"
+	},
+/obj/item/item_box/postit,
+/turf/simulated/floor/carpet{
+	dir = 5;
+	icon_state = "fred2"
+	},
+/area/station/crew_quarters/info)
+"gYh" = (
+/obj/displaycase{
+	displayed = new /obj/item/captaingun
+	},
+/obj/window/reinforced{
+	dir = 2
+	},
+/turf/simulated/floor/carpet/arcade,
+/area/station/crew_quarters/captain)
+"jTd" = (
+/obj/table/reinforced/bar/auto,
+/obj/item/plate,
+/obj/item/kitchen/utensil/spoon,
+/obj/item/card_box/plain,
+/turf/simulated/floor/carpet/purple/fancy/edge/east,
+/area/station/crew_quarters/cafeteria)
+"mAr" = (
+/obj/table/auto,
+/obj/item/device/radio/signaler,
+/obj/item/device/radio/signaler,
+/obj/item/device/audio_log,
+/obj/item/camera,
+/obj/item/device/gps,
+/obj/item/device/gps,
+/obj/item/device/gps,
+/obj/item/storage/box/trackimp_kit2,
+/turf/simulated/floor,
+/area/station/science/teleporter)
+"mSh" = (
+/obj/table/reinforced/auto,
+/obj/item/clipboard,
+/obj/item/device/radio/headset/engineer,
+/obj/item/device/radio/headset/engineer,
+/obj/item/item_box/postit,
+/turf/simulated/floor/yellow/side{
+	dir = 8
+	},
+/area/station/engine/engineering)
+"oed" = (
+/obj/table/wood/auto,
+/obj/item/storage/secure/sbriefcase,
+/obj/item/device/camera_viewer,
+/obj/item/camera,
+/turf/simulated/floor/carpet/grime,
+/area/station/security/detectives_office)
+"oWv" = (
+/obj/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/obj/machinery/power/data_terminal{
+	layer = 2
+	},
+/obj/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/obj/table/auto,
+/obj/machinery/computer3/generic/personal{
+	pixel_y = 5
+	},
+/obj/item/reagent_containers/hypospray,
+/obj/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/obj/item/item_box/postit,
+/turf/simulated/floor/specialroom/medbay,
+/area/station/medical/head)
+"pRD" = (
+/obj/table/auto,
+/obj/item/paper_bin,
+/obj/item/pen,
+/obj/machinery/light/emergency{
+	dir = 4
+	},
+/obj/item/pen/marker,
+/obj/item/camera{
+	pixel_y = -10
+	},
+/turf/simulated/floor/blue/side{
+	dir = 4
+	},
+/area/station/crew_quarters/quarters)
+"qgA" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple{
+	dir = 4
+	},
+/obj/table/glass/auto,
+/obj/item/card_box/plain,
+/obj/item/a_gift/festive,
+/turf/simulated/floor/escape,
+/area/station/hallway/secondary/exit)
+"qQT" = (
+/obj/table/auto,
+/obj/item/storage/photo_album{
+	pixel_y = -10
+	},
+/obj/item/camera,
+/obj/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/obj/machinery/light,
+/turf/simulated/floor/black,
+/area/station/crew_quarters/captain)
+"rjl" = (
+/obj/decal/cleanable/dirt,
+/obj/item/tile/steel,
+/obj/disposalpipe/segment/ejection{
+	dir = 4
+	},
+/obj/item/camera,
+/turf/simulated/floor/caution/south,
+/area/station/maintenance/disposal)
+"rzw" = (
+/obj/stool/chair/comfy{
+	dir = 4
+	},
+/obj/item/card_box/plain,
+/turf/simulated/floor/snow,
+/area/station/crew_quarters/jazz)
+"rSO" = (
+/obj/table/reinforced/auto,
+/obj/machinery/door/firedoor/pyro{
+	dir = 4
+	},
+/obj/machinery/cashreg,
+/obj/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/obj/item/item_box/postit,
+/turf/simulated/floor/red,
+/area/station/security/checkpoint/arrivals)
+"tUE" = (
+/obj/table/wood/round/auto,
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
+/obj/item/storage/firstaid/regular,
+/obj/machinery/light/emergency{
+	dir = 1
+	},
+/obj/item/item_box/postit,
+/turf/simulated/floor/black,
+/area/station/bridge)
+"vmD" = (
+/obj/table/reinforced/auto,
+/obj/machinery/door/firedoor/pyro,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 4;
+	name = "autoname - SS13";
+	tag = ""
+	},
+/obj/item/stamp,
+/obj/item/item_box/postit,
+/obj/decal/garland,
+/turf/simulated/floor/black,
+/area/station/security/checkpoint)
+"xeU" = (
+/obj/table/wood/auto,
+/obj/item/paper_bin,
+/obj/item/pen,
+/obj/item/camera,
+/turf/simulated/floor,
+/area/station/crew_quarters/info)
+"xPD" = (
+/obj/item/device/radio/headset/multifreq,
+/obj/item/device/radio/headset/multifreq,
+/obj/item/device/radio/headset/multifreq,
+/obj/item/device/radio/headset/multifreq,
+/obj/storage/crate{
+	desc = "Only distantly related to the Adventure Closet.";
+	name = "Adventure Crate"
+	},
+/obj/item/device/audio_log,
+/obj/item/camera,
+/obj/item/device/light/flashlight,
+/obj/item/device/light/flashlight,
+/obj/item/reagent_containers/food/drinks/milk,
+/obj/item/reagent_containers/food/snacks/sandwich/pb,
+/obj/item/paper{
+	desc = "Aw dang, mooom";
+	info = "Good luck on your adventure, sweetie! Love, Mom.<br> <i>Whose mom? Yours? Who knows.</i>";
+	name = "note from mom"
+	},
+/obj/item/paper/book/critter_compendium,
+/turf/simulated/floor/caution/north{
+	dir = 8
+	},
+/area/station/science/teleporter)
 
 (1,1,1) = {"
 aaa
@@ -89580,7 +89582,7 @@ aLG
 aMT
 aOb
 aKz
-aQk
+tUE
 aRl
 aRl
 aTs
@@ -89898,7 +89900,7 @@ bdE
 beD
 bfy
 bgv
-bhu
+gYh
 bia
 bjg
 bkn
@@ -90202,7 +90204,7 @@ bfz
 bgw
 bhv
 bib
-bjh
+qQT
 bko
 aaa
 aaa
@@ -95332,7 +95334,7 @@ aEZ
 bcM
 bdU
 beO
-aHl
+vmD
 bgC
 bhy
 bhy
@@ -95975,7 +95977,7 @@ aaa
 aaa
 aaa
 bJV
-bLi
+xPD
 bMy
 bMy
 bPA
@@ -96280,7 +96282,7 @@ bJW
 bLj
 bMy
 bNZ
-bPB
+mAr
 bQS
 bSk
 bTS
@@ -99880,10 +99882,10 @@ bqv
 bqW
 brA
 bsc
-bsR
+cGe
 btB
 buk
-bva
+xeU
 bsc
 bwK
 bxA
@@ -102336,7 +102338,7 @@ cfN
 cgX
 cis
 cjC
-ciG
+oWv
 cmm
 cnH
 coO
@@ -103744,7 +103746,7 @@ adi
 adT
 aeH
 afo
-agk
+pRD
 agZ
 ahR
 aiN
@@ -111328,7 +111330,7 @@ aaa
 aaa
 aNw
 aNw
-cDt
+rzw
 cDw
 cDy
 cDA
@@ -111905,7 +111907,7 @@ ajf
 akg
 alk
 aml
-anh
+rSO
 aoz
 apN
 aqZ
@@ -112219,7 +112221,7 @@ aqZ
 btG
 chP
 cjd
-cje
+jTd
 ckt
 cus
 aqZ
@@ -112605,7 +112607,7 @@ chr
 chr
 cjX
 cle
-cht
+qgA
 boO
 aaa
 cqv
@@ -113192,7 +113194,7 @@ bKy
 bLH
 bLH
 bOI
-bQe
+mSh
 bRx
 bSW
 bUB
@@ -114649,7 +114651,7 @@ aPU
 aQV
 aRZ
 aSY
-aUc
+oed
 aVq
 aSX
 aYf
@@ -121305,7 +121307,7 @@ bdy
 bey
 bfv
 bgq
-bhp
+rjl
 bhX
 bjb
 bkj

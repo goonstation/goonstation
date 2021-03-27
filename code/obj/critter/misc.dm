@@ -1396,7 +1396,7 @@
 			return
 
 	proc/contents_check()
-		if(!src.allow_empty && !src.contents.len)
+		if(!src.allow_empty && !length(src.contents))
 			src.visible_message("<span class='notice'><B>[src]</B> realizes that its material essence is missing and vanishes in a puff of logic!</span>")
 			qdel(src)
 

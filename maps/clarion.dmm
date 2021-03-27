@@ -12839,34 +12839,6 @@
 /obj/access_spawn/forensics,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
-"awS" = (
-/obj/table/wood/auto,
-/obj/item/camera,
-/obj/item/storage/box/evidence,
-/obj/item/storage/box/evidence,
-/obj/item/storage/secure/sbriefcase,
-/obj/item/device/audio_log,
-/obj/item/audio_tape{
-	pixel_y = 5
-	},
-/obj/item/audio_tape{
-	pixel_y = 5
-	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 6;
-	name = "autoname  - SS13";
-	pixel_y = 21
-	},
-/obj/machinery/light{
-	dir = 1;
-	pixel_x = -1;
-	pixel_y = 21
-	},
-/turf/simulated/floor/redblack{
-	dir = 9
-	},
-/area/station/security/detectives_office)
 "awT" = (
 /obj/machinery/light{
 	dir = 1;
@@ -16123,14 +16095,6 @@
 	dir = 4
 	},
 /turf/simulated/floor/carpet{
-	icon_state = "fpurple1"
-	},
-/area/station/crew_quarters/bar)
-"aEy" = (
-/obj/table/wood/auto,
-/obj/item/card_box/suit,
-/turf/simulated/floor/carpet{
-	dir = 5;
 	icon_state = "fpurple1"
 	},
 /area/station/crew_quarters/bar)
@@ -29413,36 +29377,6 @@
 	},
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/captain)
-"bdm" = (
-/obj/machinery/light/emergency,
-/obj/disposalpipe/segment{
-	dir = 4
-	},
-/obj/table/wood/auto,
-/obj/item/storage/photo_album{
-	pixel_y = -10
-	},
-/obj/item/pinpointer,
-/obj/item/camera{
-	pixel_y = 6
-	},
-/obj/item/hand_tele,
-/turf/simulated/floor/carpet/arcade,
-/area/station/crew_quarters/captain)
-"bdn" = (
-/obj/disposalpipe/segment{
-	dir = 8;
-	icon_state = "pipe-c"
-	},
-/obj/item/storage/secure/ssafe{
-	pixel_x = 26
-	},
-/obj/table/wood/auto,
-/obj/displaycase{
-	pixel_y = 8
-	},
-/turf/simulated/floor/carpet/arcade,
-/area/station/crew_quarters/captain)
 "bdo" = (
 /obj/disposalpipe/segment,
 /obj/machinery/light/emergency{
@@ -32965,13 +32899,6 @@
 /obj/stool/bench/red/auto,
 /turf/simulated/floor/grime,
 /area/station/security/brig)
-"bjS" = (
-/obj/table/reinforced/auto,
-/obj/decal/cleanable/dirt,
-/obj/item/card_box/suit,
-/obj/disposalpipe/segment/brig,
-/turf/simulated/floor/grime,
-/area/station/security/brig)
 "bjT" = (
 /obj/cable,
 /obj/cable{
@@ -34435,20 +34362,6 @@
 	dir = 1;
 	icon_state = "pipe-c"
 	},
-/turf/simulated/floor/grime,
-/area/station/security/brig)
-"bmq" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/table/reinforced/auto,
-/obj/decal/cleanable/dirt,
-/obj/item/card_box/suit,
-/obj/machinery/power/data_terminal,
-/obj/disposalpipe/segment/brig{
-	dir = 4
-	},
-/obj/machinery/phone,
 /turf/simulated/floor/grime,
 /area/station/security/brig)
 "bmr" = (
@@ -49216,6 +49129,13 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/quartermaster/office)
+"gDh" = (
+/obj/table/reinforced/auto,
+/obj/decal/cleanable/dirt,
+/obj/item/card_box/plain,
+/obj/disposalpipe/segment/brig,
+/turf/simulated/floor/grime,
+/area/station/security/brig)
 "gMH" = (
 /obj/cable{
 	d2 = 4;
@@ -49347,6 +49267,14 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/lobby)
+"hmJ" = (
+/obj/table/wood/auto,
+/obj/item/card_box/plain,
+/turf/simulated/floor/carpet{
+	dir = 5;
+	icon_state = "fpurple1"
+	},
+/area/station/crew_quarters/bar)
 "hnu" = (
 /obj/cable{
 	d1 = 4;
@@ -49529,6 +49457,34 @@
 	},
 /turf/simulated/floor/grass/random,
 /area/station/hydroponics/bay)
+"ipZ" = (
+/obj/table/wood/auto,
+/obj/item/camera,
+/obj/item/storage/box/evidence,
+/obj/item/storage/box/evidence,
+/obj/item/storage/secure/sbriefcase,
+/obj/item/device/audio_log,
+/obj/item/audio_tape{
+	pixel_y = 5
+	},
+/obj/item/audio_tape{
+	pixel_y = 5
+	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 6;
+	name = "autoname  - SS13";
+	pixel_y = 21
+	},
+/obj/machinery/light{
+	dir = 1;
+	pixel_x = -1;
+	pixel_y = 21
+	},
+/turf/simulated/floor/redblack{
+	dir = 9
+	},
+/area/station/security/detectives_office)
 "isb" = (
 /obj/decal/tile_edge/stripe{
 	icon_state = "xtra_bigstripe-edge"
@@ -49574,6 +49530,12 @@
 	},
 /turf/simulated/floor/white,
 /area/station/crew_quarters/pool)
+"iGq" = (
+/obj/machinery/camera/ranch{
+	dir = 4
+	},
+/turf/simulated/floor/grass/leafy,
+/area/station/ranch)
 "iIr" = (
 /obj/stool/chair/red{
 	dir = 8
@@ -49613,6 +49575,20 @@
 	icon_state = "engine_caution_corners"
 	},
 /area/station/science/teleporter)
+"iYM" = (
+/obj/disposalpipe/segment{
+	dir = 8;
+	icon_state = "pipe-c"
+	},
+/obj/item/storage/secure/ssafe{
+	pixel_x = 26
+	},
+/obj/table/wood/auto,
+/obj/displaycase{
+	displayed = new /obj/item/captaingunpixel_y = 8
+	},
+/turf/simulated/floor/carpet/arcade,
+/area/station/crew_quarters/captain)
 "iYT" = (
 /obj/disposalpipe/segment/mail,
 /obj/wingrille_spawn/auto,
@@ -50004,6 +49980,20 @@
 	},
 /turf/space,
 /area/station/engine/substation/east)
+"laN" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/table/reinforced/auto,
+/obj/decal/cleanable/dirt,
+/obj/item/card_box/plain,
+/obj/machinery/power/data_terminal,
+/obj/disposalpipe/segment/brig{
+	dir = 4
+	},
+/obj/machinery/phone,
+/turf/simulated/floor/grime,
+/area/station/security/brig)
 "lfI" = (
 /obj/window/auto/reinforced,
 /obj/grille/steel{
@@ -50777,6 +50767,22 @@
 /obj/access_spawn/medical,
 /turf/simulated/floor/blue,
 /area/station/medical/medbay)
+"qpT" = (
+/obj/machinery/light/emergency,
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/obj/table/wood/auto,
+/obj/item/storage/photo_album{
+	pixel_y = -10
+	},
+/obj/item/pinpointer,
+/obj/item/camera{
+	pixel_y = 6
+	},
+/obj/item/hand_tele,
+/turf/simulated/floor/carpet/arcade,
+/area/station/crew_quarters/captain)
 "qro" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -80697,7 +80703,7 @@ bhl
 biA
 bjP
 bjR
-bmq
+laN
 bhl
 boF
 bqb
@@ -81723,7 +81729,7 @@ iIr
 bgs
 bhr
 biE
-bjS
+gDh
 bld
 bmu
 bhl
@@ -85295,7 +85301,7 @@ azw
 aBj
 aCt
 aDq
-aEy
+hmJ
 aFD
 bsE
 aHw
@@ -87856,7 +87862,7 @@ atT
 auE
 avn
 awc
-axE
+iGq
 axE
 ayp
 ayX
@@ -87885,7 +87891,7 @@ bcL
 aWW
 baI
 bbS
-bdm
+qpT
 bep
 bfC
 bgK
@@ -88142,7 +88148,7 @@ aYK
 aWW
 baJ
 bbT
-bdn
+iYM
 bep
 bfD
 bgL
@@ -90169,7 +90175,7 @@ aEU
 aIg
 avu
 asN
-awS
+ipZ
 axK
 ayw
 ayX

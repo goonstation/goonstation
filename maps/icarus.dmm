@@ -3564,22 +3564,6 @@
 "aio" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/detectives_office)
-"aip" = (
-/obj/table/wood/auto,
-/obj/item/device/camera_viewer,
-/obj/item/camera,
-/obj/item/device/audio_log,
-/obj/item/device/detective_scanner,
-/obj/item/pen,
-/obj/machinery/light/small{
-	dir = 8;
-	pixel_x = -12
-	},
-/obj/machinery/phone/wall{
-	pixel_y = 32
-	},
-/turf/simulated/floor/carpet/grime,
-/area/station/security/detectives_office)
 "aiq" = (
 /obj/table/wood/auto,
 /obj/item/ammo/bullets/a38/stun,
@@ -12668,12 +12652,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/engineering/ce)
-"aBu" = (
-/obj/storage/crate/rcd,
-/turf/simulated/floor/yellowblack{
-	dir = 8
-	},
-/area/station/engine/engineering/ce)
 "aBv" = (
 /obj/storage/secure/closet/command/chief_engineer,
 /obj/machinery/light,
@@ -17358,17 +17336,6 @@
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/north,
 /area/station/bridge/captain)
-"aLE" = (
-/obj/machinery/light/small{
-	dir = 4;
-	pixel_x = 12
-	},
-/obj/table/wood/auto,
-/obj/displaycase{
-	pixel_y = 6
-	},
-/turf/simulated/floor/carpet/blue/fancy/edge/ne,
-/area/station/bridge/captain)
 "aLF" = (
 /obj/machinery/weapon_stand/rifle_rack/recharger,
 /turf/simulated/floor/wood,
@@ -21374,35 +21341,6 @@
 	dir = 1
 	},
 /area/station/science/lobby)
-"aTC" = (
-/obj/table/auto,
-/obj/item/device/radio/signaler,
-/obj/item/device/radio/signaler,
-/obj/item/device/audio_log,
-/obj/item/camera,
-/obj/item/device/gps,
-/obj/item/device/gps,
-/obj/item/device/gps,
-/obj/item/storage/box/trackimp_kit2,
-/obj/machinery/door_control{
-	id = "scienceteleporter2";
-	name = "Pad Access Door";
-	pixel_x = -24;
-	pixel_y = 6
-	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 4;
-	icon_state = "camera";
-	name = "autoname - SS13";
-	pixel_x = -10;
-	pixel_y = -20;
-	tag = ""
-	},
-/turf/simulated/floor/purplewhite{
-	dir = 9
-	},
-/area/station/science/teleporter)
 "aTD" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -22682,33 +22620,6 @@
 /turf/simulated/floor/purplewhite{
 	dir = 10
 	},
-/area/station/science/teleporter)
-"aVU" = (
-/obj/rack,
-/obj/item/clothing/suit/space/emerg,
-/obj/item/clothing/head/emerg,
-/obj/item/clothing/mask/breath,
-/obj/item/tank/air,
-/obj/item/device/light/flashlight,
-/obj/item/device/audio_log,
-/obj/item/camera,
-/obj/item/device/radio/headset/multifreq,
-/obj/machinery/light,
-/turf/simulated/floor/purplewhite{
-	dir = 6
-	},
-/area/station/science/teleporter)
-"aVV" = (
-/obj/rack,
-/obj/item/clothing/suit/space/emerg,
-/obj/item/clothing/head/emerg,
-/obj/item/clothing/mask/breath,
-/obj/item/tank/air,
-/obj/item/device/light/flashlight,
-/obj/item/device/audio_log,
-/obj/item/camera,
-/obj/item/device/radio/headset/multifreq,
-/turf/simulated/floor/purplewhite,
 /area/station/science/teleporter)
 "aVW" = (
 /obj/machinery/light,
@@ -25772,13 +25683,6 @@
 /obj/item/bandage,
 /turf/simulated/floor/orangeblack,
 /area/listeningpost)
-"bcs" = (
-/obj/table/wood/auto,
-/obj/item/reagent_containers/food/drinks/bottle/tequila,
-/obj/item/playing_cards/suit,
-/obj/item/spacecash/hundred,
-/turf/simulated/floor/orangeblack,
-/area/listeningpost)
 "bct" = (
 /obj/cable{
 	d1 = 1;
@@ -26337,6 +26241,22 @@
 	},
 /turf/simulated/floor/grey,
 /area/station/hallway/primary/north)
+"bLp" = (
+/obj/table/wood/auto,
+/obj/item/device/camera_viewer,
+/obj/item/camera,
+/obj/item/device/audio_log,
+/obj/item/device/detective_scanner,
+/obj/item/pen,
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
+	},
+/obj/machinery/phone/wall{
+	pixel_y = 32
+	},
+/turf/simulated/floor/carpet/grime,
+/area/station/security/detectives_office)
 "bPL" = (
 /obj/machinery/communications_dish,
 /obj/machinery/power/data_terminal,
@@ -26427,6 +26347,21 @@
 	},
 /turf/simulated/floor/white,
 /area/research_outpost/indigo_rye)
+"cEE" = (
+/obj/rack,
+/obj/item/clothing/suit/space/emerg,
+/obj/item/clothing/head/emerg,
+/obj/item/clothing/mask/breath,
+/obj/item/tank/air,
+/obj/item/device/light/flashlight,
+/obj/item/device/audio_log,
+/obj/item/camera,
+/obj/item/device/radio/headset/multifreq,
+/obj/machinery/light,
+/turf/simulated/floor/purplewhite{
+	dir = 6
+	},
+/area/station/science/teleporter)
 "cSo" = (
 /obj/machinery/door/unpowered/wood/pyro,
 /obj/cable{
@@ -26674,6 +26609,41 @@
 	dir = 8
 	},
 /area/research_outpost/indigo_rye)
+"grM" = (
+/obj/storage/crate/rcd/CE,
+/turf/simulated/floor/yellowblack{
+	dir = 8
+	},
+/area/station/engine/engineering/ce)
+"gEf" = (
+/obj/table/auto,
+/obj/item/device/radio/signaler,
+/obj/item/device/radio/signaler,
+/obj/item/device/audio_log,
+/obj/item/camera,
+/obj/item/device/gps,
+/obj/item/device/gps,
+/obj/item/device/gps,
+/obj/item/storage/box/trackimp_kit2,
+/obj/machinery/door_control{
+	id = "scienceteleporter2";
+	name = "Pad Access Door";
+	pixel_x = -24;
+	pixel_y = 6
+	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 4;
+	icon_state = "camera";
+	name = "autoname - SS13";
+	pixel_x = -10;
+	pixel_y = -20;
+	tag = ""
+	},
+/turf/simulated/floor/purplewhite{
+	dir = 9
+	},
+/area/station/science/teleporter)
 "gTq" = (
 /obj/machinery/door/unpowered/wood/pyro{
 	dir = 8
@@ -26907,6 +26877,13 @@
 /obj/machinery/light/small/floor,
 /turf/simulated/pool/no_animate,
 /area/station/crew_quarters/pool)
+"jqC" = (
+/obj/table/wood/auto,
+/obj/item/reagent_containers/food/drinks/bottle/tequila,
+/obj/item/card_group/plain,
+/obj/item/spacecash/hundred,
+/turf/simulated/floor/orangeblack,
+/area/listeningpost)
 "jrh" = (
 /obj/machinery/plantpot{
 	anchored = 1
@@ -26985,6 +26962,17 @@
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/carpet/purple/fancy/edge/se,
 /area/research_outpost/indigo_rye)
+"jTS" = (
+/obj/machinery/light/small{
+	dir = 4;
+	pixel_x = 12
+	},
+/obj/table/wood/auto,
+/obj/displaycase{
+	displayed = new /obj/item/captaingunpixel_y = 6
+	},
+/turf/simulated/floor/carpet/blue/fancy/edge/ne,
+/area/station/bridge/captain)
 "kck" = (
 /obj/stool/chair/office{
 	dir = 1
@@ -27543,6 +27531,18 @@
 /obj/machinery/light/small,
 /turf/simulated/floor/purpleblack,
 /area/research_outpost/indigo_rye)
+"qZt" = (
+/obj/rack,
+/obj/item/clothing/suit/space/emerg,
+/obj/item/clothing/head/emerg,
+/obj/item/clothing/mask/breath,
+/obj/item/tank/air,
+/obj/item/device/light/flashlight,
+/obj/item/device/audio_log,
+/obj/item/camera,
+/obj/item/device/radio/headset/multifreq,
+/turf/simulated/floor/purplewhite,
+/area/station/science/teleporter)
 "rdW" = (
 /obj/machinery/light/emergency{
 	dir = 4;
@@ -65617,7 +65617,7 @@ aQF
 aQF
 aQF
 aSV
-aTC
+gEf
 aUq
 aVg
 aVT
@@ -65922,7 +65922,7 @@ aSW
 aTD
 aUr
 aVh
-aVU
+cEE
 aWG
 aUA
 aUA
@@ -66210,7 +66210,7 @@ aIZ
 aJH
 aKp
 aKU
-aLE
+jTS
 aMr
 aNb
 aNS
@@ -66224,7 +66224,7 @@ aSX
 aTE
 aUs
 aVi
-aVV
+qZt
 aWG
 aUA
 aUA
@@ -66526,7 +66526,7 @@ aPW
 aTF
 aUt
 aVi
-aVV
+qZt
 aWG
 aUA
 aUA
@@ -66828,7 +66828,7 @@ aSY
 aTD
 aUu
 aVj
-aVV
+qZt
 aWG
 aUA
 aUA
@@ -70067,7 +70067,7 @@ ahG
 ahR
 aia
 agd
-aip
+bLp
 aiD
 aiN
 aio
@@ -71024,7 +71024,7 @@ auW
 azQ
 aAy
 aAU
-aBu
+grM
 aBL
 aCc
 aCG
@@ -108273,7 +108273,7 @@ bbR
 bbC
 bcb
 bch
-bcs
+jqC
 bcy
 bcK
 bbC

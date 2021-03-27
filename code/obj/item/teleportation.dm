@@ -52,8 +52,6 @@ Frequency:
 				src.temp += "<B>Located Beacons:</B><BR>"
 
 				for_by_tcl(W, /obj/item/device/radio/beacon)
-					if (istype(src, /obj/item/locator/jones) && istype(W, /obj/item/device/radio/beacon/jones)) //For Jones City
-						src.temp += "Unknown Location-[W.x], [W.y], [W.z]<BR>"
 					if (W.frequency == src.frequency)
 						var/turf/tr = get_turf(W)
 						if (tr.z == sr.z && tr)
@@ -207,7 +205,11 @@ Frequency:
 			return
 
 		users += user // We're about to show the UI
-		var/t1 = input(user, "Please select a teleporter to lock in on.", "Target Selection") in L
+		var/t1
+		if(user.client)
+			t1 = input(user, "Please select a teleporter to lock in on.", "Target Selection") in L
+		else
+			t1 = pick(L)
 		users -= user // We're done showing the UI
 
 		if (user.stat || user.restrained())
