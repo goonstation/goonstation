@@ -132,7 +132,8 @@
 		if( world.time < lastvend ) return//aaaaaaa
 		lastvend = world.time + 2
 		var/datum/data/vending_product/R
-		if(freestuff) R = throw_item()
+		//Mechanics must not have the power to throw infinite items
+		if(!freestuff) R = throw_item()
 		if(R?.logged_on_vend)
 			logTheThing("station", usr, null, "randomly vended a logged product ([R.product_name]) using mechcomp from [src] at [log_loc(src)].")
 
