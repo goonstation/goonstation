@@ -344,7 +344,7 @@
 
 	if(prob(target.get_deflection())) //chance to deflect disarm attempts entirely
 		msgs.played_sound = 'sound/impact_sounds/Generic_Swing_1.ogg'
-		msgs.base_attack_message = "<span class='alert'><B>[target] deflects [src]'s attempt to shove [him_or_her(target)] around!</B></span>"
+		msgs.base_attack_message = "<span class='alert'><B>[src] shoves at [target][DISARM_WITH_ITEM_TEXT]!</B></span>"
 		fuckup_attack_particle(src)
 		return msgs
 
@@ -424,7 +424,7 @@
 	if (I)
 		var/disarm_item_prob = 37
 		if (target.check_block() && !(HAS_MOB_PROPERTY(target, PROP_CANTMOVE)))
-			disarm_item_prob = 8
+			disarm_item_prob = 5
 
 		if (I.temp_flags & IS_LIMB_ITEM)
 			if (prob(disarm_item_prob * mult))
