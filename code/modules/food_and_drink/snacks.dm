@@ -217,10 +217,9 @@
 	var/static/foodprob = 80
 	var/static/altprob = 5
 	proc/filter_food(food_type)
-		for (var/food_filter in src.blacklist)
-			if (ispath(food_type,food_filter))
-				return FALSE
-			.= TRUE
+		if (ispath(food_type) in src.blacklist)
+			return FALSE
+		.= TRUE
 	proc/randomize_pizza(var/altprob,var/foodprob,var/static/list/drinkwhitelist,var/static/list/blacklist,var/static/list/altfoodlist,var/static/list/foodwhitelist)
 		var/obj/item/reagent_containers/food/snacks/ingredient/pizza3/pizzabase = new /obj/item/reagent_containers/food/snacks/ingredient/pizza3
 		var/num_ingredients = rand(1,3)
