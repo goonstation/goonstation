@@ -129,13 +129,13 @@
 	var/lastvend = 0
 
 	proc/vendinput(var/datum/mechanicsMessage/inp)
-		if( world.time < lastvend ) return//aaaaaaa
-		lastvend = world.time + 2
-		var/datum/data/vending_product/R
 		//Mechanics must not have the power to throw infinite items
-		if(!freestuff) R = throw_item()
-		if(R?.logged_on_vend)
-			logTheThing("station", usr, null, "randomly vended a logged product ([R.product_name]) using mechcomp from [src] at [log_loc(src)].")
+		if(src.freestuff == 0)
+			if( world.time < lastvend ) return//aaaaaaa
+			lastvend = world.time + 2
+			var/datum/data/vending_product/R = throw_item()
+			if(R?.logged_on_vend)
+				logTheThing("station", usr, null, "randomly vended a logged product ([R.product_name]) using mechcomp from [src] at [log_loc(src)].")
 
 	proc/vendname(var/datum/mechanicsMessage/inp)
 		if( world.time < lastvend || !inp) return//aaaaaaa
@@ -588,7 +588,7 @@
 				flick(src.icon_vend,src)
 
 			src.prevend_effect()
-			if(!src.freestuff) R.product_amount--
+			if(!src.freestuff == 0) R.product_amount--
 
 			if (src.pay)
 				if (src.acceptcard && account)
@@ -803,14 +803,14 @@
 	if(length(item_name_to_throw))
 		for(var/datum/data/vending_product/R in src.product_list)
 			if(item_name_to_throw == R.product_name_cache[R.product_path])
-				if(R.product_amount > 0 || !src.freestuff)
+				if(R.product_amount > 0 || !src.freestuff == 0)
 					throw_item_act(R, target)
 					return R
 				return
 	else
 		var/list/datum/data/vending_product/valid_products = list()
 		for(var/datum/data/vending_product/R in src.product_list)
-			if(R.product_amount <= 0 || !src.freestuff) //Try to use a record that actually has something to dump.
+			if(R.product_amount <= 0 || !src.freestuff == 0) //Try to use a record that actually has something to dump.
 				continue
 			valid_products.Add(R)
 		if(length(valid_products))
@@ -849,7 +849,7 @@
 			return 1
 
 	if (throw_item)
-		if (!src.freestuff) R.product_amount--
+		if (!src.freestuff == 0) R.product_amount--
 		use_power(10)
 		if (src.icon_vend) //Show the vending animation if needed
 			flick(src.icon_vend,src)
