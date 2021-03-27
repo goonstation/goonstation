@@ -9,3 +9,4 @@ package-lock.json
 !/.yarn/plugins
 !/.yarn/releases
 !/.yarn/sdks
+!/.yarn/lock.yml

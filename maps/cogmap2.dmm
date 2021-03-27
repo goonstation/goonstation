@@ -47411,6 +47411,7 @@
 "bXI" = (
 /obj/table/wood/auto,
 /obj/displaycase{
+	displayed = new /obj/item/captaingun
 	pixel_y = 6
 	},
 /obj/cable{
@@ -58878,7 +58879,7 @@
 "cxy" = (
 /obj/table/reinforced/auto,
 /obj/item/paper/book/dwainedummies,
-/obj/item/postit_stack,
+/obj/item/item_box/postit,
 /obj/item/device/radio/headset/research,
 /obj/item/device/radio/headset/research,
 /turf/simulated/floor/carpet{

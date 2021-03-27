@@ -1491,7 +1491,7 @@
 
 /obj/item/gun/energy/pulse_rifle
 	name = "pulse rifle"
-	desc = "todo"
+	desc = "A sleek energy rifle with two different pulse settings: Kinetic and Electromagnetic."
 	icon_state = "pulse_rifle"
 	uses_multiple_icon_states = 1
 	item_state = "pulse_rifle"

@@ -1,5 +1,4 @@
-import { Fragment } from 'inferno';
-import { Button, LabeledList, Section, Box, Flex, Divider } from '../../components';
+import { Box, Button, Divider, Flex, LabeledList, Section } from '../../components';
 import { DetonatorTimer } from './DetonatorTimer';
 
 export const Detonator = props => {

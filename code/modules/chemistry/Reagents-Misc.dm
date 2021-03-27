@@ -75,6 +75,7 @@ datum
 					explode(list(get_turf(M)), "splash on [key_name(M)]")
 
 			reaction_obj(var/obj/O, var/volume)
+				return_if_overlay_or_effect(O)
 				if(reagent_state == LIQUID || prob(2 * volume - min(14 + T0C - holder.total_temperature, 100) * 0.1))
 					explode(list(get_turf(O)), "splash on [key_name(O)]")
 
@@ -3711,9 +3712,9 @@ datum
 
 				on_add()
 					..()
-					if (holder && prob(50) && ismob(holder.my_atom))
+					if (holder && ismob(holder.my_atom))
 						var/mob/bipbip = holder.my_atom
-						bipbip.playsound_local(bipbip.loc, pick("explosion", "punch", 'sound/vox/poo-vox.ogg', "clownstep", 'sound/weapons/armbomb.ogg', 'sound/weapons/Gunshot.ogg'), 30, 1)
+						bipbip.playsound_local(bipbip.loc, "sound/musical_instruments/Vuvuzela_1.ogg", 50, 1)
 
 		sakuride
 			name = "sakuride"

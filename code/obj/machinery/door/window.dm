@@ -102,6 +102,13 @@
 				return 1
 
 		if (get_dir(loc, target) == dir) // Check for appropriate border.
+			if(density && mover && mover.flags & DOORPASS && !src.cant_emag)
+				if (ismob(mover) && mover:pulling && src.bumpopen(mover))
+					// If they're pulling something and the door would open anyway,
+					// just let the door open instead.
+					return 0
+				animate_door_squeeze(mover)
+				return 1 // they can pass through a closed door
 			return !density
 		else
 			return 1
@@ -113,6 +120,13 @@
 				return 1
 
 		if (get_dir(loc, target) == dir)
+			if(density && mover && mover.flags & DOORPASS && !src.cant_emag)
+				if (ismob(mover) && mover:pulling && src.bumpopen(mover))
+					// If they're pulling something and the door would open anyway,
+					// just let the door open instead.
+					return 0
+				animate_door_squeeze(mover)
+				return 1 // they can pass through a closed door
 			return !density
 		else
 			return 1

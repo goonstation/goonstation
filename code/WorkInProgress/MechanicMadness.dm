@@ -11,6 +11,7 @@
 #define WIFI_NOISE_COOLDOWN 5 SECONDS
 #define WIFI_NOISE_VOLUME 30
 #define LIGHT_UP_HOUSING SPAWN_DBG(0) src.light_up_housing()
+
 // mechanics containers for mechanics components (read: portable horn [read: vuvuzela] honkers! yaaaay!)
 //
 /obj/item/storage/mechanics // generic
@@ -1459,7 +1460,8 @@
 	name = "Dispatch Component"
 	desc = ""
 	icon_state = "comp_disp"
-	var/exact_match = 0
+	var/exact_match = FALSE
+	var/single_output = FALSE
 
 	//This stores all the relevant filters per output
 	//Notably, this list doesn't remove entries when an output is removed.
@@ -1467,7 +1469,7 @@
 	var/list/outgoing_filters
 
 	get_desc()
-		. += "<br><span class='notice'>Exact match mode: [exact_match ? "on" : "off"]</span>"
+		. += "<br><span class='notice'>Exact match mode: [exact_match ? "on" : "off"]<br>Single output mode: [single_output ? "on" : "off"]</span>"
 
 	New()
 		..()
@@ -1477,6 +1479,7 @@
 		RegisterSignal(src, list(_COMSIG_MECHCOMP_DISPATCH_VALIDATE), .proc/runFilter)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"dispatch", "dispatch")
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle exact matching","toggleExactMatching")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle single output mode","toggleSingleOutput")
 
 	disposing()
 		var/list/signals = list(\
@@ -1493,6 +1496,12 @@
 	proc/toggleExactMatching(obj/item/W as obj, mob/user as mob)
 		exact_match = !exact_match
 		boutput(user, "Exact match mode now [exact_match ? "on" : "off"]")
+		tooltip_rebuild = 1
+		return 1
+
+	proc/toggleSingleOutput(obj/item/W as obj, mob/user as mob)
+		single_output = !single_output
+		boutput(user, "Single output mode now [single_output ? "on" : "off"]")
 		tooltip_rebuild = 1
 		return 1
 
@@ -1524,13 +1533,13 @@
 	//Called when mechanics_holder tries to fire out signals
 	proc/runFilter(var/comsig_target, atom/receiver, var/signal)
 		if(!(receiver in src.outgoing_filters))
-			return 0 //Not filtering this output, let anything pass
+			return src.single_output? _MECHCOMP_VALIDATE_RESPONSE_HALT_AFTER : _MECHCOMP_VALIDATE_RESPONSE_GOOD //Not filtering this output, let anything pass
 		for (var/filter in src.outgoing_filters[receiver])
 			var/text_found = findtext(signal, filter)
 			if (exact_match)
 				text_found = text_found && (length(signal) == length(filter))
 			if (text_found)
-				return 0 //Signal validated, let it pass
+				return src.single_output? _MECHCOMP_VALIDATE_RESPONSE_HALT_AFTER : _MECHCOMP_VALIDATE_RESPONSE_GOOD //Signal validated, let it pass
 		return 1 //Signal invalid, halt it
 
 	updateIcon()

@@ -1742,7 +1742,6 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\z_adventurezones\hemera.dm"
 #include "code\z_adventurezones\hospital.dm"
 #include "code\z_adventurezones\icemoon.dm"
-#include "code\z_adventurezones\jonescity.dm"
 #include "code\z_adventurezones\lavamoon.dm"
 #include "code\z_adventurezones\luna.dm"
 #include "code\z_adventurezones\mad_mars.dm"
