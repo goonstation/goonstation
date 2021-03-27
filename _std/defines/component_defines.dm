@@ -123,7 +123,8 @@
 #define COMSIG_UNARMED_BLOCK_BEGIN "unarmed_block_begin"
 /// When an item block is created
 #define COMSIG_UNARMED_BLOCK_END "unarmed_block_end"
-
+/// When a block blocks damage at all
+#define COMSIG_BLOCK_BLOCKED "blockblock"
 // ---- human signals ----
 
 // ---- mob signals ----

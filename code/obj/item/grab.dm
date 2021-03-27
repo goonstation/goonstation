@@ -789,16 +789,21 @@
 		if(istype(P))
 			P.removeFromMob(src, src.assailant, propVal)
 
-	proc/can_block(var/hit_type = null)
-		.= DEFAULT_BLOCK_PROTECTION_BONUS
+	proc/can_block(var/hit_type = null, real_hit = 1)
+		.= UNARMED_BLOCK_PROTECTION_BONUS
 		if (isitem(src.loc) && hit_type)
 			.= 0
 			var/obj/item/I = src.loc
 
 			var/prop = DAMAGE_TYPE_TO_STRING(hit_type)
-			if(prop == "burn" && I?.reagents)
+			if(real_hit && prop == "burn" && I?.reagents)
 				I.reagents.temperature_reagents(2000,10)
 			.= src.getProperty("I_block_[prop]")
+		if(. && real_hit)
+			SEND_SIGNAL(src, COMSIG_BLOCK_BLOCKED)
+			block_spark(src.assailant)
+			fuckup_attack_particle()
+
 
 	proc/play_block_sound(var/hit_type = DAMAGE_BLUNT)
 		switch(hit_type)
