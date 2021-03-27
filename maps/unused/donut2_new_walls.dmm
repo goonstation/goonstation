@@ -28635,7 +28635,7 @@
 	name = "---Merge conflict marker---"
 	},
 /obj/table/wood/auto,
-/obj/item/camera_test{
+/obj/item/camera{
 	desc = "A one use - polaroid camera. 30 photos left.";
 	name = "detectives camera";
 	pictures_left = 30
