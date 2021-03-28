@@ -1,9 +1,104 @@
 
+(t)sun mar 28 21
+(u)BatElite
+(p)3833
+(e)🆕🎨|feature, sprites
+(+)You can now place butts on chairs. Pry them back off with a crowbar.
+(t)sat mar 27 21
+(u)zjdtmkhzt
+(p)3896
+(e)⚖🆕|balance, feature
+(+)Some minor changes to how artifact selling and the analysis forms work.
+(+)The research department now receives a score based on the accuracy of the artifact analysis forms they filled out.
+(u)Tarmunora
+(p)4158
+(e)⚖|balance
+(*)Random dodge chance from blocking removed.
+(*)Blocking armor bonus and disorient resist buffed, and blocking now prevent stamina criticals ("devastating hit")
+(+)Deflection object property now provides passive block chance against disarm attempts
+(t)fri mar 26 21
+(u)Azrun
+(p)3933
+(e)⚖🐛|balance, bug
+(+)Nanotrasen no longer pockets money from rounding down when paying out for PTL.  Lower end MW drastically improved.
+(t)thu mar 25 21
+(u)Jan.antilles
+(p)4132
+(e)🎨|sprites
+(+)Resprite of Omelette, Mashed Potatoes, and Mashed Brains.
+(u)Mean Bitch Warc
+(p)4136
+(e)|
+(*)Reverted buggy eating changes and various dependencies, pending rework.
+(u)Azrun
+(p)4127
+(e)⚖🐛|balance, bug
+(+)Spliced and normal mutations can now coexist in the Gene Booth.  Charge the crew accordingly.
+(t)wed mar 24 21
+(u)Nihisohel
+(p)4045
+(e)⚖|balance
+(*)Replaces Part Time Viceoffs token with Assistant token
+(u)pali
+(*)Books from the February monthly contest have been added into the game. Most are in the Books4u vending machine, two are in Cairngorm.
+(t)tue mar 23 21
+(u)DimWhat
+(p)4110
+(e)🗺|mapping
+(+)Bombini is back from their fishing trip in oshan. buzz buzz.
+(t)sun mar 21 21
+(u)Penny
+(p)4012
+(e)|
+(*)Multitools now show the netid and wifi frequency of devices they're used on
+(u)Nefarious6th
+(p)4055
+(e)🐛🗺|bug, mapping
+(*)Research on the NSS Destiny has gotten an overhaul.
+(u)Sovexe
+(p)4019
+(e)⚖|balance
+(+)Reduced stuns from plates and trays. Plates and trays respect helmet protection
+(u)Camryn Buttes
+(p)3845
+(e)🐛🆕🔄|bug, feature, rework
+(*)Significantly improved consistency of stimuli interactions across different artifact types. Enabled usage of flyswatters, igniters, and multitools for improvised artifact testing.
+(u)Lythine
+(p)4000
+(e)🆕🗺|feature, mapping
+(*)Added the ability to make display cases out of sheets of glass that any item can be stored in.
+(+)Display cases can now be unanchored and anchored with a screwdriver.
+(+)Broken display cases can now be repaired by using a glass sheet or removed by using a wrench.
+(t)sat mar 20 21
+(u)TTerc
+(p)3971
+(e)|
+(+)Removed the flip/rotate window for disposal pipes. Instead, you can click the pipe with a crowbar to rotate it and click the junction with empty hand to change its direction.
+(u)DimWhat
+(p)4067
+(e)|
+(+)Added Hi-Vis to CE, mechanic, and engineer lockers. Safety first!
+(u)DimWhat
+(p)4061
+(e)⚖|balance
+(+)Added disorient resistance to several suits.
+(t)fri mar 19 21
+(u)Sidewinder7
+(p)3980
+(e)🆕|feature
+(*)Added a single-output mode to the mechcomp dispatch component.
+(u)Flaborized
+(p)4052
+(e)🎨|sprites
+(+)Resprited lattices and catwalks.
 (t)thu mar 18 21
 (u)Carbadox
 (p)4014
 (e)🐛🆕|bug, feature
 (+)Pews are now deconstructaable
+(u)kyle
+(e)⚖|balance
+(+)Werewolves are now able to feast on dead bodies as long as they aren't too decomposed. Formaldehyde also will make corpses unpaletable for wolves.
 (t)wed mar 17 21
 (u)kyle
 (+)epinephrine has a similar effect to salicylic acid where it negates some of the movement speed penalty from damage.

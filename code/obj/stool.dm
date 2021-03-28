@@ -516,6 +516,8 @@
 	var/foldable = 1
 	var/climbable = 1
 	var/buckle_move_delay = 6 // this should have been a var somepotato WHY WASN'T IT A VAR
+	var/obj/item/clothing/head/butt/has_butt = null // time for mature humour
+	var/image/butt_img
 	securable = 1
 	anchored = 1
 	scoot_sounds = list( 'sound/misc/chair/normal/scoot1.ogg', 'sound/misc/chair/normal/scoot2.ogg', 'sound/misc/chair/normal/scoot3.ogg', 'sound/misc/chair/normal/scoot4.ogg', 'sound/misc/chair/normal/scoot5.ogg' )
@@ -527,6 +529,8 @@
 	New()
 		if (src.dir == NORTH)
 			src.layer = FLY_LAYER+1
+		butt_img = image('icons/obj/furniture/chairs.dmi')
+		butt_img.layer = OBJ_LAYER + 0.5 //In between OBJ_LAYER and MOB_LAYER
 		..()
 		return
 
@@ -557,6 +561,20 @@
 		return
 
 	attackby(obj/item/W as obj, mob/user as mob)
+		if (ispryingtool(W) && has_butt)
+			user.put_in_hand_or_drop(has_butt)
+			boutput(user, "<span class='notice'>You pry [has_butt.name] from [name].</span>")
+			has_butt = null
+			UpdateOverlays(null, "chairbutt")
+			return
+		if (istype(W, /obj/item/clothing/head/butt) && !has_butt)
+			has_butt = W
+			user.u_equip(has_butt)
+			has_butt.set_loc(src)
+			boutput(user, "<span class='notice'>You place [has_butt.name] on [name].</span>")
+			butt_img.icon_state = "chair_[has_butt.icon_state]"
+			UpdateOverlays(butt_img, "chairbutt")
+			return
 		if (istype(W, /obj/item/assembly/shock_kit))
 			var/obj/stool/chair/e_chair/E = new /obj/stool/chair/e_chair(src.loc)
 			if (src.material)
@@ -699,7 +717,10 @@
 			to_buckle.set_loc(src.loc)
 			src.buckledIn = 1
 			to_buckle.setStatus("buckled", duration = INFINITE_STATUS)
-		playsound(get_turf(src), "sound/misc/belt_click.ogg", 50, 1)
+		if (has_butt)
+			playsound(get_turf(src), (has_butt.sound_fart ? has_butt.sound_fart : 'sound/voice/farts/fart1.ogg'), 50, 1)
+		else
+			playsound(get_turf(src), "sound/misc/belt_click.ogg", 50, 1)
 
 
 	unbuckle()
@@ -762,6 +783,9 @@
 			if (M.buckled == src)
 				M.buckled = null
 				src.buckled_guy = null
+		if (has_butt)
+			has_butt.set_loc(loc)
+		has_butt = null
 		..()
 		return
 
@@ -912,6 +936,7 @@
 			var/mob/living/carbon/C = src.buckled_guy
 			C.set_dir(dir)
 		return
+
 
 	proc/update_icon()
 		if (src.dir == NORTH)

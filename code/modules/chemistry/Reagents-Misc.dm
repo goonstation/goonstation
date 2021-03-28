@@ -3712,9 +3712,9 @@ datum
 
 				on_add()
 					..()
-					if (holder && prob(50) && ismob(holder.my_atom))
+					if (holder && ismob(holder.my_atom))
 						var/mob/bipbip = holder.my_atom
-						bipbip.playsound_local(bipbip.loc, pick("explosion", "punch", 'sound/vox/poo-vox.ogg', "clownstep", 'sound/weapons/armbomb.ogg', 'sound/weapons/Gunshot.ogg'), 30, 1)
+						bipbip.playsound_local(bipbip.loc, "sound/musical_instruments/Vuvuzela_1.ogg", 50, 1)
 
 		sakuride
 			name = "sakuride"

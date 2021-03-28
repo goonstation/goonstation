@@ -39,7 +39,7 @@
 /// min value ticklag can be
 #define MIN_TICKLAG 0.4
 /// max value ticklag can be
-#define OVERLOADED_WORLD_TICKLAG 1
+#define OVERLOADED_WORLD_TICKLAG 1.4
 /// how ticklag much to increase by when appropriate
 #define TICKLAG_DILATION_INC 0.2
 /// how much to decrease by when appropriate //MBCX I DONT KNOW WHY BUT MOST VALUES CAUSE ROUNDING ERRORS, ITS VERY IMPORTANT THAT THIS REMAINS 0.2 FIOR NOW

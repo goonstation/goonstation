@@ -1158,6 +1158,7 @@ function lineEnter (ev)
 	desc = "This fine piece of hardware sports an incredible 2 kilobytes of RAM, all for a price slightly higher than the whole economy of greece."
 	icon_state = "oldlapshut"
 	luggable_type = /obj/machinery/computer3/luggable/personal
+	w_class = 3.0
 
 
 /obj/machinery/computer3/luggable/personal

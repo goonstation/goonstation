@@ -103,6 +103,7 @@
 	A.activ_sound = pick(AO.activation_sounds)
 	A.fault_types |= AO.fault_types - A.fault_blacklist
 	A.internal_name = AO.generate_name()
+	A.used_names[AO.type_name] = A.internal_name
 	A.nofx = AO.nofx
 
 	ArtifactDevelopFault(10)
@@ -166,6 +167,63 @@
 		src.UpdateOverlays(null, "activated")
 	A.effect_deactivate(src)
 
+/obj/proc/Artifact_emp_act()
+	if (!src.ArtifactSanityCheck())
+		return
+	src.ArtifactStimulus("elec", 800)
+	src.ArtifactStimulus("radiate", 3)
+
+/obj/proc/Artifact_blob_act(var/power)
+	if (!src.ArtifactSanityCheck())
+		return
+	src.ArtifactStimulus("force", power)
+	src.ArtifactStimulus("carbtouch", 1)
+
+/obj/proc/Artifact_reagent_act(var/reagent_id, var/volume)
+	if (!src.ArtifactSanityCheck())
+		return
+	var/datum/artifact/A = src.artifact
+	switch(reagent_id)
+		if("radium","porktonium")
+			src.ArtifactStimulus("radiate", round(volume / 10))
+		if("strange_reagent")
+			src.ArtifactStimulus("radiate", round(volume / 5))
+		if("uranium","polonium")
+			src.ArtifactStimulus("radiate", round(volume / 2))
+		if("dna_mutagen","mutagen","omega_mutagen")
+			if (A.artitype.name == "martian")
+				ArtifactDevelopFault(80)
+		if("phlogiston","el_diablo","thermite","thalmerite","argine")
+			src.ArtifactStimulus("heat", 310 + (volume * 5))
+		if("napalm_goo","kerosene","ghostchilijuice")
+			src.ArtifactStimulus("heat", 310 + (volume * 10))
+		if("infernite","foof","dbreath")
+			src.ArtifactStimulus("heat", 310 + (volume * 15))
+		if("cryostylane")
+			src.ArtifactStimulus("heat", 310 - (volume * 10))
+		if("freeze")
+			src.ArtifactStimulus("heat", 310 - (volume * 15))
+		if("voltagen","energydrink")
+			src.ArtifactStimulus("elec", volume * 50)
+		if("acid","acetic_acid")
+			src.ArtifactTakeDamage(volume * 2)
+		if("pacid","clacid","nitric_acid")
+			src.ArtifactTakeDamage(volume * 10)
+		if("george_melonium")
+			var/random_stimulus = pick("heat","force","radiate","elec")
+			var/random_strength = 0
+			switch(random_stimulus)
+				if ("heat")
+					random_strength = rand(200,400)
+				if ("elec")
+					random_strength = rand(5,5000)
+				if ("force")
+					random_strength = rand(3,30)
+				if ("radiate")
+					random_strength = rand(1,10)
+			src.ArtifactStimulus(random_stimulus,random_strength)
+	return
+
 /obj/proc/Artifact_attackby(obj/item/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/cargotele)) // Re-added (Convair880).
 		var/obj/item/cargotele/CT = W
@@ -207,6 +265,12 @@
 			src.visible_message("<span class='alert'>[user.name] burns the artifact with [ZIP]!</span>")
 			return 0
 
+	if(istype(W,/obj/item/device/igniter))
+		var/obj/item/device/igniter/igniter = W
+		src.ArtifactStimulus("elec", 700)
+		src.ArtifactStimulus("heat", 385)
+		src.visible_message("<span class='alert'>[user.name] sparks against \the [src] with \the [igniter]!</span>")
+
 	if (istype(W, /obj/item/robodefibrillator))
 		var/obj/item/robodefibrillator/R = W
 		if (R.do_the_shocky_thing(user))
@@ -223,6 +287,17 @@
 			src.visible_message("<span class='alert'>[user.name] beats the artifact with [BAT]!</span>")
 			BAT.process_charges(-1, user)
 			return 0
+
+	if(istype(W,/obj/item/device/flyswatter))
+		var/obj/item/device/flyswatter/swatter = W
+		src.ArtifactStimulus("elec", 1500)
+		src.visible_message("<span class='alert'>[user.name] shocks \the [src] with \the [swatter]!</span>")
+		return 0
+
+	if(ispulsingtool(W))
+		src.ArtifactStimulus("elec", 1000)
+		src.visible_message("<span class='alert'>[user.name] shocks \the [src] with \the [W]!</span>")
+		return 0
 
 	if (istype(W,/obj/item/parts/robot_parts))
 		var/obj/item/parts/robot_parts/THISPART = W

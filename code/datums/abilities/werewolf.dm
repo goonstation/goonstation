@@ -97,7 +97,7 @@
 
 			M.visible_message("<span class='alert'><B>[M] [pick("metamorphizes", "transforms", "changes")] into a werewolf! Holy shit!</B></span>")
 			if (M.find_ailment_by_type(/datum/ailment/disease/lycanthropy))
-				boutput(M, "<span class='notice'><h3>You are now a werewolf.</span></h3>")
+				boutput(M, "<span class='alert'><h2>You've been turned into a werewolf!</h2> Your transformation was achieved by in-game means, you are <i>not</i> an antagonist unless you already were one.</span>")
 			else
 				boutput(M, "<span class='notice'><h3>You are now a werewolf. You can remain in this form indefinitely or change back at any time.</span></h3>")
 
@@ -331,7 +331,7 @@
 				var/obj/item/organ/organ = null
 				var/count = 0
 				//Do this search 5 times or until you find an organ.
-				while (!organ || count >= 5)
+				while (!organ && count <= 5)
 					count++
 					var/organ_name = pick(choosable_organs)
 					organ = H.organHolder.get_organ(organ_name)

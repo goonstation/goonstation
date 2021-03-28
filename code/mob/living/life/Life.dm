@@ -704,23 +704,18 @@
 		var/a_zone = zone
 		if (a_zone in list("l_leg", "r_arm", "l_leg", "r_leg"))
 			a_zone = "chest"
-		if(a_zone=="All")
-			protection=(5*get_melee_protection("chest",damage_type)+get_melee_protection("head",damage_type))/6
-
-		else
-
 			//protection from clothing
-			if (a_zone == "chest")
-				protection = GET_MOB_PROPERTY(src, PROP_MELEEPROT_BODY)
-			else //can only be head
-				protection = GET_MOB_PROPERTY(src, PROP_MELEEPROT_HEAD)
-			protection += GET_MOB_PROPERTY(src, PROP_ENCHANT_ARMOR)/2
-			//protection from blocks
-			var/obj/item/grab/block/G = src.check_block()
-			if (G)
-				protection += 1
-				if (G != src.equipped()) // bare handed block is less protective
-					protection += G.can_block(damage_type)
+		if(a_zone == "All")
+			protection = (5 * GET_MOB_PROPERTY(src, PROP_MELEEPROT_BODY) + GET_MOB_PROPERTY(src, PROP_MELEEPROT_HEAD))/6
+		if (a_zone == "chest")
+			protection = GET_MOB_PROPERTY(src, PROP_MELEEPROT_BODY)
+		else //can only be head
+			protection = GET_MOB_PROPERTY(src, PROP_MELEEPROT_HEAD)
+		protection += GET_MOB_PROPERTY(src, PROP_ENCHANT_ARMOR)/2
+		//protection from blocks
+		var/obj/item/grab/block/G = src.check_block()
+		if (G && damage_type)
+			protection += G.can_block(damage_type)
 
 		if (isnull(protection)) //due to GET_MOB_PROPERTY returning null if it doesnt exist
 			protection = 0
