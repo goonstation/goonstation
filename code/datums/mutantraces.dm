@@ -21,6 +21,7 @@
 								// but they must explicitly specify if they're overriding via this var
 	var/override_language = null // set to a language ID to replace the language of the human
 	var/understood_languages = list() // additional understood languages (in addition to override_language if set, or english if not)
+	var/default_equip = "bald head" // default equip for flavor text, most mutants are bald
 	/** Mutant Appearance Flags - used to modify how the mob is drawn
 	*
 	* For a purely static-icon mutantrace (drawn from a single, non-chunked image), use:
@@ -649,6 +650,7 @@
 	voice_override = "bloop"
 	firevuln = 1.5
 	typevulns = list("cut" = 1.25, "stab" = 0.5, "blunt" = 0.75)
+	default_equip = "pseudopod"
 
 	say_verb()
 		return pick("burbles", "gurgles", "blurbs", "gloops")
@@ -661,6 +663,7 @@
 	uses_human_clothes = 0
 	head_offset = -7
 	voice_override = "bloop"
+	default_equip = "goop"
 
 	movement_modifier = /datum/movement_modifier/flubber
 
@@ -706,6 +709,7 @@
 	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_HUMAN_HAIR | HAS_HUMAN_EYES | HAS_NO_HEAD | WEARS_UNDERPANTS | USES_STATIC_ICON)
 	override_attack = 0
 	race_mutation = /datum/bioEffect/mutantrace/flashy
+	default_equip = "flashy skin"
 
 /datum/mutantrace/virtual
 	name = "virtual"
@@ -718,6 +722,7 @@
 	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/virtual/right
 	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/virtual/left
 	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_HUMAN_HAIR | HAS_HUMAN_EYES | BUILT_FROM_PIECES)
+	default_equip = "virtual hair"
 
 
 	New(var/mob/living/carbon/human/H)
@@ -800,6 +805,7 @@
 	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/lizard/left
 	race_mutation = /datum/bioEffect/mutantrace // Most mutants are just another form of lizard, didn't you know?
 	color_channel_names = list("Episcutus", "Ventral Aberration", "Sagittal Crest")
+	default_equip = "tail"
 
 	New(var/mob/living/carbon/human/H)
 		..()
@@ -848,6 +854,7 @@
 	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/right/zombie
 	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/left/zombie
 	var/strain = 0
+	default_equip = "decaying flesh"
 
 	//this is terrible, but I do anyway.
 	can_infect/bubs
@@ -1026,6 +1033,7 @@
 	mutant_folder = 'icons/mob/vamp_zombie.dmi'
 	special_head = HEAD_VAMPZOMBIE
 	jerk = 1
+	default_equip = "decaying flesh"
 
 	var/blood_points = 0
 	var/const/blood_decay = 0.5
@@ -1102,6 +1110,7 @@
 	special_head = HEAD_SKELETON
 	decomposes = FALSE
 	race_mutation = /datum/bioEffect/mutantrace/skeleton
+	default_equip = "ribs"
 
 	New(var/mob/living/carbon/human/M)
 		..()
@@ -1143,6 +1152,7 @@
 	ignore_missing_limbs = 1 //OVERRIDE_ARM_L | OVERRIDE_ARM_R
 	anchor_to_floor = 1
 	movement_modifier = /datum/movement_modifier/abomination
+	default_equip = "protruding flesh"
 
 	var/last_drain = 0
 	var/drains_dna_on_life = 1
@@ -1240,6 +1250,7 @@
 	mutant_folder = 'icons/mob/werewolf.dmi'
 	special_head = HEAD_WEREWOLF
 	mutant_organs = list("tail" = /obj/item/organ/tail/wolf)
+	default_equip = "tail"
 
 
 	New()
@@ -1349,6 +1360,7 @@
 	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/hunter/left
 	ignore_missing_limbs = 0
 	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_NO_EYES | BUILT_FROM_PIECES | HEAD_HAS_OWN_COLORS)
+	default_equip = "dreads"
 
 	// Gave them a minor stamina boost (Convair880).
 	New(var/mob/living/carbon/human/M)
@@ -1389,6 +1401,7 @@
 	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/ithillid/right
 	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/ithillid/left
 	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_NO_EYES | BUILT_FROM_PIECES | HAS_SPECIAL_HAIR | HEAD_HAS_OWN_COLORS | WEARS_UNDERPANTS)
+	default_equip = "tentacles"
 
 	say_verb()
 		return "glubs"
@@ -1402,6 +1415,7 @@
 	override_attack = 0
 	race_mutation = /datum/bioEffect/mutantrace/dwarf
 	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_HUMAN_SKINTONE | HAS_HUMAN_HAIR | HAS_HUMAN_EYES | HAS_NO_HEAD | WEARS_UNDERPANTS | USES_STATIC_ICON)
+	default_equip = "forehead"
 
 
 /datum/mutantrace/monkey
@@ -1434,6 +1448,7 @@
 	var/had_tablepass = 0
 	var/table_hide = 0
 	mutant_organs = list("tail" = /obj/item/organ/tail/monkey)
+	default_equip = "tail"
 
 	New(var/mob/living/carbon/human/M)
 		. = ..()
@@ -1588,7 +1603,7 @@
 	human_compatible = 0
 	uses_human_clothes = 0
 	override_language = "martian"
-
+	default_equip = "tentacles"
 
 
 /datum/mutantrace/stupidbaby
@@ -1597,6 +1612,7 @@
 	human_compatible = 0
 	uses_human_clothes = 0
 	jerk = 1
+	default_equip = "antennae"
 
 	New()
 		..()
@@ -1686,6 +1702,7 @@
 	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/roach/left
 	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_NO_EYES | BUILT_FROM_PIECES | HEAD_HAS_OWN_COLORS | WEARS_UNDERPANTS)
 	typevulns = list("blunt" = 1.66, "crush" = 1.66)
+	default_equip = "antennae"
 
 	New(mob/living/carbon/human/M)
 		. = ..()
@@ -1722,6 +1739,7 @@
 	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/cat/right
 	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/cat/left
 	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_NO_EYES | BUILT_FROM_PIECES | HEAD_HAS_OWN_COLORS | WEARS_UNDERPANTS)
+	default_equip = "tail"
 
 	New(mob/living/carbon/human/M)
 		. = ..()
@@ -1763,6 +1781,7 @@
 	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/amphibian/right
 	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/amphibian/left
 	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_NO_EYES | BUILT_FROM_PIECES | HEAD_HAS_OWN_COLORS)
+	default_equip = "frills"
 
 
 	say_verb()
@@ -1873,6 +1892,7 @@
 	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/kudzu/left
 	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_HUMAN_SKINTONE | TORSO_HAS_SKINTONE | HAS_HUMAN_HAIR | HAS_HUMAN_EYES | HAS_SPECIAL_HAIR | HAS_EXTRA_DETAILS | BUILT_FROM_PIECES)
 	override_attack = 1
+	default_equip = "leaves"
 
 	custom_attack(atom/target)
 		if(ishuman(target))
@@ -1982,6 +2002,7 @@
 	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/cow/left
 	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_NO_EYES | BUILT_FROM_PIECES | HAS_EXTRA_DETAILS | HAS_OVERSUIT_DETAILS | HAS_SPECIAL_HAIR | HEAD_HAS_OWN_COLORS | WEARS_UNDERPANTS)
 	color_channel_names = list("Horn Detail", "Hoof Detail")
+	default_equip = "tail"
 
 	New(var/mob/living/carbon/human/H)
 		..()
@@ -2070,6 +2091,7 @@
 	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/chicken/right
 	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/chicken/left
 	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_PARTIAL_SKINTONE | HAS_NO_EYES | BUILT_FROM_PIECES | HEAD_HAS_OWN_COLORS | TORSO_HAS_SKINTONE | WEARS_UNDERPANTS)
+	default_equip = "feathers"
 
 	emote(var/act, var/voluntary)
 		switch(act)
