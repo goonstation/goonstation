@@ -1,4 +1,9 @@
 
+(t)sun mar 28 21
+(u)BatElite
+(p)3833
+(e)🆕🎨|feature, sprites
+(+)You can now place butts on chairs. Pry them back off with a crowbar.
 (t)sat mar 27 21
 (u)zjdtmkhzt
 (p)3896
