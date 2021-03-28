@@ -8,9 +8,9 @@
 	/datum/matfab_recipe/bow,
 	/datum/matfab_recipe/quiver,
 	/datum/matfab_recipe/lens,
-	/datum/matfab_recipe/gears,
+	//datum/matfab_recipe/gears,
 	/datum/matfab_recipe/tripod,
-	/datum/matfab_recipe/aplates,
+	//datum/matfab_recipe/aplates,
 	/datum/matfab_recipe/glasses,
 	/datum/matfab_recipe/jumpsuit,
 	/datum/matfab_recipe/glovesins,
@@ -30,8 +30,8 @@
 	/datum/matfab_recipe/simple/insbag,
 	/datum/matfab_recipe/simple/insrod,
 	/datum/matfab_recipe/infusion,
-	/datum/matfab_recipe/fuel_rod,
-	/datum/matfab_recipe/fuel_rod_4,
+	//datum/matfab_recipe/fuel_rod,
+	//datum/matfab_recipe/fuel_rod_4,
 	/datum/matfab_recipe/spacesuit)
 
 /obj/machinery/nanofab/mining
