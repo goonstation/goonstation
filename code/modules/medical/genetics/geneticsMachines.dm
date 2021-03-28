@@ -248,18 +248,6 @@
 /obj/machinery/computer/genetics/proc/update_occupant_preview()
 	src.scanner?.update_occupant()
 
-/obj/machinery/computer/genetics/power_change()
-	if(status & BROKEN)
-		icon_state = "commb"
-	else
-		if( powered() )
-			icon_state = initial(icon_state)
-			status &= ~NOPOWER
-		else
-			SPAWN_DBG(rand(0, 15))
-				src.icon_state = "c_unpowered"
-				status |= NOPOWER
-
 // There weren't any (Convair880)!
 /obj/machinery/computer/genetics/proc/log_me(var/mob/M, var/action = "", var/datum/bioEffect/BE)
 	if (!src || !M || !ismob(M) || !action)
@@ -639,7 +627,7 @@
 			for_by_tcl(GB, /obj/machinery/genetics_booth)
 				var/already_has = 0
 				for (var/datum/geneboothproduct/P as anything in GB.offered_genes)
-					if (P.id == E.id)
+					if (P.id == E.id && P.name == E.name)
 						already_has = P
 						P.uses += 5
 						P.desc = booth_effect_desc

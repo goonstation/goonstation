@@ -41,7 +41,7 @@ ABSTRACT_TYPE(/datum/reagent/organic)
 				holder.remove_reagent("oxygen",amount)
 				return
 			if(holder.total_temperature >= (T0C+1000))
-				holder.add_reagent("ethylene",(4*amount/3))
+				holder.add_reagent("ethylene",(amount*4/3))
 				return
 			if(holder.total_temperature >= (T0C+600))
 				holder.add_reagent("fuel",(amount))

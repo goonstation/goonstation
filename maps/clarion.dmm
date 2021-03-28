@@ -29439,6 +29439,7 @@
 	},
 /obj/table/wood/auto,
 /obj/displaycase{
+	displayed = new /obj/item/captaingun
 	pixel_y = 8
 	},
 /turf/simulated/floor/carpet/arcade,
