@@ -1169,7 +1169,7 @@
 	if(SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_PRE, M, user) & ATTACK_PRE_DONT_ATTACK)
 		return
 	var/stam_crit_pow = src.stamina_crit_chance
-	if (prob(stam_crit_pow))
+	if (prob(stam_crit_pow) && !M.check_block()?.can_block(src.hit_type, 0))
 		msgs.stamina_crit = 1
 		msgs.played_sound = pick(sounds_punch)
 		//moved to item_attack_message
