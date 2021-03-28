@@ -1391,17 +1391,32 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 //costs a good bit more than the standard jetpack. for balance reasons here. to make jetpacks a commodity.
 /datum/manufacture/pod_wars/jetpack
 	name = "Jetpack"
-	item_paths = list("MET-3","CON-1")
-	item_amounts = list(20,30)
+	item_paths = list("MET-2","CON-1")
+	item_amounts = list(30,50)
 	item_outputs = list(/obj/item/tank/jetpack)
 	time = 60 SECONDS
 	create = 1
 	category = "Clothing"
 
+/datum/manufacture/pod_wars/industrialboots
+	name = "Mechanised Boots"
+	item_paths = list("MET-3","CON-2","POW-2", "DEN-2")
+	item_amounts = list(50,50,70,50)
+	item_outputs = list(/obj/item/clothing/shoes/industrial)
+	time = 120 SECONDS
+	create = 1
+	category = "Clothing"
+
+
 /obj/machinery/manufacturer/mining/pod_wars
 	New()
 		available -= /datum/manufacture/jetpack
 		available += /datum/manufacture/pod_wars/jetpack
+
+		available -= /datum/manufacture/industrialboots
+		available += /datum/manufacture/pod_wars/industrialboots
+
+		hidden = list()
 		..()
 
 
