@@ -977,15 +977,19 @@ $(updateCharacterPreviewPos);
 			for (var/datum/job/J in job_controls.special_jobs)
 				if (istype(J, /datum/job/special/pod_wars))
 					if (src.job_favorite != J.name && !(J.name in src.jobs_med_priority) && !(J.name in src.jobs_low_priority))
-						src.jobs_low_priority |= J.name
+						if (J.cant_allocate_unwanted)
+							src.jobs_low_priority |= J.name
+						else
+							src.jobs_unwanted |= J.name
+
 #else
 			for (var/datum/job/J in job_controls.staple_jobs)
 				if (istype(J, /datum/job/daily))
 					continue
 				if (src.job_favorite != J.name && !(J.name in src.jobs_med_priority) && !(J.name in src.jobs_low_priority))
 					src.jobs_unwanted |= J.name
-
 #endif
+
 			// remove duplicate jobs
 			var/list/seen_jobs = list()
 			if (src.job_favorite)
@@ -1275,7 +1279,12 @@ $(updateCharacterPreviewPos);
 				src.jobs_unwanted += job
 			return
 
+//pod wars only special jobs
+#ifdef MAP_OVERRIDE_POD_WARS
+		var/datum/job/temp_job = find_job_in_controller_by_string(job,0)
+#else
 		var/datum/job/temp_job = find_job_in_controller_by_string(job,1)
+#endif
 		if (temp_job.rounds_needed_to_play && (user.client && user.client.player))
 			var/round_num = user.client.player.get_rounds_participated()
 			if (!isnull(round_num) && round_num < temp_job.rounds_needed_to_play) //they havent played enough rounds!

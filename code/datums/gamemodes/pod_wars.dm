@@ -1892,11 +1892,19 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 			return 1
 		else
 			return 0
+	Bumped(atom/AM)
+		if (istype(AM, /obj/machinery/vehicle))
+			var/obj/machinery/vehicle/V = AM
+			V.health -= round(src.health/4)
+			V.checkhealth()
+			playsound(get_turf(src), "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 50, 1)
+			qdel(src)
+		..()
 
 	attackby(var/obj/item/W, var/mob/user)
 		attack_particle(user,src)
 		take_damage(W.force)
-		playsound(get_turf(src), "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 50, 1)
+		playsound(get_turf(src), "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 20, 1)
 		user.lastattacked = src
 		..()
 
