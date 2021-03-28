@@ -13967,9 +13967,9 @@
 "aTF" = (
 /obj/tombstone{
 	desc = "Seems one of the researchers was buried here.";
+	dir = 5;
 	name = "B. FREDRICKKSEN"
 	},
-/obj/decal/snowbits,
 /turf/unsimulated/floor/arctic/snow,
 /area/upper_arctic/exterior/surface)
 "aTG" = (
@@ -30229,16 +30229,6 @@
 	dir = 1
 	},
 /area/crypt/graveyard)
-"bGl" = (
-/obj/tombstone{
-	desc = "The name on this tombstone has been etched off. Strange.";
-	special = /obj/item/device/sat_crash_caller
-	},
-/obj/map/light/graveyard,
-/turf/unsimulated/grasstodirt{
-	dir = 1
-	},
-/area/crypt/graveyard)
 "bGm" = (
 /obj/tombstone{
 	desc = "The inscription has eroded away."
@@ -30270,16 +30260,6 @@
 "bGp" = (
 /obj/stone{
 	dir = 9
-	},
-/obj/map/light/graveyard,
-/turf/unsimulated/grasstodirt{
-	dir = 1
-	},
-/area/crypt/graveyard)
-"bGq" = (
-/obj/tombstone{
-	desc = "The inscription has eroded away.";
-	special = /obj/critter/magiczombie
 	},
 /obj/map/light/graveyard,
 /turf/unsimulated/grasstodirt{
@@ -31176,21 +31156,17 @@
 	},
 /area/crypt/graveyard)
 "bIv" = (
-/obj/tombstone{
-	desc = "The inscription has eroded away.";
-	special = /obj/decal/skeleton
-	},
 /obj/map/light/graveyard,
+/obj/tombstone/memorial,
 /turf/unsimulated/grasstodirt{
 	dir = 1
 	},
 /area/crypt/graveyard)
 "bIw" = (
-/obj/tombstone{
-	desc = "The inscription has eroded away.";
-	special = /obj/item/goldbar
-	},
 /obj/map/light/graveyard,
+/obj/tombstone/memorial{
+	dir = 4
+	},
 /turf/unsimulated/grasstodirt{
 	dir = 1
 	},
@@ -35149,7 +35125,8 @@
 /area/gauntlet/staging)
 "bTG" = (
 /obj/tombstone{
-	desc = "In memory of Stephanie Mir, who vanished in pursuit of answers."
+	desc = "In memory of Stephanie Mir, who vanished in pursuit of answers.";
+	dir = 6
 	},
 /turf/unsimulated/floor/grass/random,
 /area/afterlife/heaven)
@@ -37504,7 +37481,8 @@
 /area/afterlife/heaven)
 "bZV" = (
 /obj/tombstone{
-	desc = "You can't quite make out what this one says."
+	desc = "You can't quite make out what this one says.";
+	dir = 1
 	},
 /turf/unsimulated/floor/grass/random,
 /area/afterlife/heaven)
@@ -37530,19 +37508,22 @@
 /area/owlery/staffhall)
 "bZZ" = (
 /obj/tombstone{
-	desc = "Here lies Emily Geon Claire. (The other 416 graves are in storage.)"
+	desc = "Here lies Emily Geon Claire. (The other 416 graves are in storage.)";
+	dir = 4
 	},
 /turf/unsimulated/floor/grass/random,
 /area/afterlife/heaven)
 "caa" = (
 /obj/tombstone{
-	desc = "Here lies Drago Kitterson. ...There seems to be some sort of mohawk etched into the tombstone?"
+	desc = "Here lies Drago Kitterson. ...There seems to be some sort of mohawk etched into the tombstone?";
+	dir = 10
 	},
 /turf/unsimulated/floor/grass/random,
 /area/afterlife/heaven)
 "cab" = (
 /obj/tombstone{
-	desc = "Here lies Jeni Denton. Insisted she was a dragon, and ended up being slain like one."
+	desc = "Here lies Jeni Denton. Insisted she was a dragon, and ended up being slain like one.";
+	dir = 8
 	},
 /turf/unsimulated/floor/grass/random,
 /area/afterlife/heaven)
@@ -77940,6 +77921,10 @@
 /obj/trigger/lovefill,
 /turf/unsimulated/floor/wood/six,
 /area/centcom/offices/rodney)
+"gjq" = (
+/obj/decal/snowbits,
+/turf/unsimulated/floor/arctic/snow,
+/area/upper_arctic/exterior/surface)
 "gjY" = (
 /obj/stool/chair/comfy/shuttle{
 	dir = 8
@@ -79514,6 +79499,12 @@
 /obj/stool/chair/office/syndie,
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/mrfishstick)
+"lTp" = (
+/obj/tombstone{
+	dir = 4
+	},
+/turf/unsimulated/grass,
+/area/centcom/lounge)
 "lUK" = (
 /obj/decal/fakeobjects/dreambeach/seashells,
 /turf/unsimulated/floor/dream/beach{
@@ -79856,6 +79847,15 @@
 	icon_state = "floor3"
 	},
 /area/hospital/samostrel)
+"ngk" = (
+/obj/map/light/graveyard,
+/obj/tombstone/memorial{
+	dir = 1
+	},
+/turf/unsimulated/grasstodirt{
+	dir = 1
+	},
+/area/crypt/graveyard)
 "ngq" = (
 /obj/stool/bed{
 	desc = "Looks well used.";
@@ -80605,6 +80605,12 @@
 	},
 /turf/unsimulated/floor/delivery,
 /area/centcom)
+"pnm" = (
+/obj/tombstone{
+	dir = 6
+	},
+/turf/unsimulated/grass,
+/area/centcom/lounge)
 "pqf" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "wall3"
@@ -81156,6 +81162,12 @@
 	opacity = 0
 	},
 /area/titlescreen)
+"rih" = (
+/obj/tombstone{
+	dir = 10
+	},
+/turf/unsimulated/grass,
+/area/centcom/lounge)
 "riq" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 4
@@ -82075,6 +82087,12 @@
 	tag = "icon-fblue2 (NORTHEAST)"
 	},
 /area/centcom/offices/varshie)
+"uwK" = (
+/obj/tombstone{
+	dir = 8
+	},
+/turf/unsimulated/grass,
+/area/centcom/lounge)
 "uxv" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-39"
@@ -82346,6 +82364,12 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/escape/centcom/donut3)
+"vrR" = (
+/obj/tombstone{
+	dir = 1
+	},
+/turf/unsimulated/grass,
+/area/centcom/lounge)
 "vss" = (
 /obj/critter/monster_door,
 /turf/unsimulated/floor{
@@ -82585,6 +82609,12 @@
 "wvy" = (
 /turf/unsimulated/floor/carpet/red/fancy/narrow/nw,
 /area/centcom/offices/sovexe)
+"wxG" = (
+/obj/tombstone{
+	dir = 9
+	},
+/turf/unsimulated/grass,
+/area/centcom/lounge)
 "wxJ" = (
 /obj/machinery/door/airlock/external,
 /turf/unsimulated/floor/shuttle{
@@ -92649,7 +92679,7 @@ aLO
 aLN
 aLN
 aLN
-aLN
+gjq
 aLN
 aLN
 aLN
@@ -93253,7 +93283,7 @@ aLN
 aLN
 aLN
 aLN
-aLN
+gjq
 aUp
 aLN
 aLN
@@ -123837,7 +123867,7 @@ bFr
 aaa
 aaa
 bFS
-bGl
+bIw
 bGG
 bGG
 bGG
@@ -125655,7 +125685,7 @@ bGG
 bHe
 bFS
 bFR
-bGm
+ngk
 bGG
 bGG
 bHe
@@ -125957,7 +125987,7 @@ bGG
 bHe
 bFS
 bFR
-bIv
+bIw
 bGG
 bGG
 bGG
@@ -126253,7 +126283,7 @@ bBa
 bCv
 aaa
 bFR
-bGm
+bIv
 bGG
 bGG
 bHi
@@ -126561,7 +126591,7 @@ bGU
 bHh
 bFS
 bFR
-bGm
+ngk
 bGG
 bGG
 bGG
@@ -126857,13 +126887,13 @@ bva
 bva
 aaa
 bFS
-bGm
+bIv
 bGG
 bGG
 bHe
 bFS
 bFR
-bGm
+bIv
 bGG
 bGG
 bGG
@@ -128971,7 +129001,7 @@ bpo
 bpo
 aaa
 bFS
-bGq
+bIw
 bGG
 bGG
 bHe
@@ -129575,7 +129605,7 @@ bpo
 bpo
 aaa
 bFS
-bGm
+bIv
 bGG
 bGG
 bHe
@@ -152960,9 +152990,9 @@ aES
 dmx
 dvd
 dEr
-dFr
+vrR
 dEr
-dFr
+uwK
 dEr
 dvd
 dGR
@@ -153262,9 +153292,9 @@ dpP
 dmx
 dvd
 dFn
-dFr
+rih
 dvd
-dFr
+wxG
 dvd
 dvd
 dGR
@@ -153566,7 +153596,7 @@ dvd
 dvd
 dFr
 dvd
-dFr
+lTp
 dvd
 dvd
 dGR
@@ -154168,9 +154198,9 @@ dnS
 dGy
 dvd
 dvd
-dFr
+pnm
 dvd
-dFr
+wxG
 dvd
 dvd
 dGR
@@ -154470,9 +154500,9 @@ dGt
 dmx
 dvd
 dFn
-dFr
+vrR
 dvd
-dFr
+lTp
 dvd
 dvd
 dGR
@@ -154772,9 +154802,9 @@ aES
 dmx
 dvd
 dEr
-dFr
+uwK
 dEr
-dFr
+rih
 dEr
 dvd
 dGR
