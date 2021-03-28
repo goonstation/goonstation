@@ -1,5 +1,10 @@
 
 (t)sat mar 27 21
+(u)zjdtmkhzt
+(p)3896
+(e)⚖🆕|balance, feature
+(+)Some minor changes to how artifact selling and the analysis forms work.
+(+)The research department now receives a score based on the accuracy of the artifact analysis forms they filled out.
 (u)Tarmunora
 (p)4158
 (e)⚖|balance
