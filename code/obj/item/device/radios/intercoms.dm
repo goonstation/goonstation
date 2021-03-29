@@ -25,6 +25,7 @@
 				screen_image.color = new_color
 		screen_image.alpha = 180
 		src.UpdateOverlays(screen_image, "screen")
+		SPAWN_DBG(0.1) // OH GOD WHY
 		if(src.pixel_x == 0 && src.pixel_y == 0)
 			switch(src.dir)
 				if(NORTH)
