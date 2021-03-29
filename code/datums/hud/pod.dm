@@ -77,7 +77,7 @@
 		if (user.client.tg_layout)
 			leave.screen_loc = "SOUTH,EAST-6"
 		else
-			leave.screen_loc = "SOUTH, EAST"
+			leave.screen_loc = "SOUTH,EAST"
 
 	proc/update_health()
 		check_clients()
