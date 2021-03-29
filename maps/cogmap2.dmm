@@ -20358,12 +20358,6 @@
 "aUI" = (
 /turf/simulated/floor/green/corner,
 /area/station/crew_quarters/arcade)
-"aUL" = (
-/obj/disposalpipe/switch_junction/left/east{
-	mail_tag = ranch
-	},
-/turf/simulated/floor/green/side,
-/area/station/hydroponics/lobby)
 "aUM" = (
 /obj/potted_plant,
 /obj/disposalpipe/segment/mail/vertical,
@@ -78804,10 +78798,6 @@
 	icon_state = "fgreen4"
 	},
 /area/station/hydroponics/bay)
-"duT" = (
-/obj/item/reagent_containers/food/drinks/chickensoup,
-/turf/simulated/floor/plating/airless,
-/area/space)
 "dJs" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -102399,7 +102389,7 @@ aaa
 aaa
 aaa
 aam
-duT
+aan
 aaI
 aaa
 aaa
@@ -111145,7 +111135,7 @@ vyj
 ase
 aFV
 aHD
-aUL
+aJj
 aKE
 aLT
 aNn
