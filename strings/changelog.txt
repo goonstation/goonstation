@@ -1,5 +1,9 @@
 
 (t)sun mar 28 21
+(u)DisturbHerb
+(p)4023
+(e)🆕|feature
+(+)You can now check the time on your PDA or the status screen, hooray!
 (u)Gremy
 (p)3969
 (e)🗺|mapping
