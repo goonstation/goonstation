@@ -4610,14 +4610,6 @@
 	icon_state = "catwalk_cross"
 	},
 /area/space)
-"aZL" = (
-/obj/railing/orange/reinforced{
-	dir = 1
-	},
-/turf/simulated/floor/grasstodirt{
-	dir = 9
-	},
-/area/station/ranch)
 "aZQ" = (
 /obj/wingrille_spawn/auto/crystal,
 /obj/cable{
@@ -44068,7 +44060,7 @@
 	doants = 0
 	},
 /turf/simulated/floor/grasstodirt{
-	dir = 9
+	dir = 1
 	},
 /area/station/ranch)
 "mYx" = (
@@ -130047,7 +130039,7 @@ mBB
 mBB
 mBB
 mBB
-aZL
+oJP
 kWn
 jLx
 jkq
@@ -130349,7 +130341,7 @@ hPx
 mBB
 mBB
 rmq
-aZL
+oJP
 rFi
 emH
 mwk
