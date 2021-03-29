@@ -1969,10 +1969,8 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/computer3frame{
-	anchored = 1;
-	dir = 4;
-	state = 1
+/obj/machinery/computer3/generic/secure_data{
+	dir = 4
 	},
 /turf/simulated/floor/redblack,
 /area/station/security/prison)
@@ -3155,7 +3153,7 @@
 	},
 /obj/access_spawn/research,
 /obj/firedoor_spawn,
-/turf/simulated/floor/plating,
+/turf/simulated/floor,
 /area/station/science/lobby)
 "ahJ" = (
 /obj/disposalpipe/segment/mail{
@@ -3618,7 +3616,7 @@
 	icon_state = "1-4"
 	},
 /obj/wingrille_spawn/auto,
-/turf/simulated/floor,
+/turf/simulated/floor/plating,
 /area/station/science/lobby)
 "aiq" = (
 /obj/cable{
@@ -3767,7 +3765,7 @@
 	},
 /obj/access_spawn/research,
 /obj/firedoor_spawn,
-/turf/simulated/floor/plating,
+/turf/simulated/floor,
 /area/station/science/lobby)
 "aiB" = (
 /obj/disposalpipe/segment/mail{
@@ -4051,7 +4049,7 @@
 	icon_state = "1-2"
 	},
 /obj/wingrille_spawn/auto,
-/turf/simulated/floor,
+/turf/simulated/floor/plating,
 /area/station/science/lobby)
 "ajf" = (
 /obj/cable{
@@ -7731,15 +7729,15 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/data_terminal,
-/obj/machinery/computer/security{
-	dir = 4
-	},
 /obj/item/device/flash,
 /obj/item/device/radio/intercom{
 	broadcasting = 0;
 	dir = 4;
 	frequency = 1485;
 	name = "Station Intercom (Security)"
+	},
+/obj/machinery/computer3/generic/secure_data{
+	dir = 4
 	},
 /turf/simulated/floor/redblack{
 	dir = 9
@@ -17839,9 +17837,10 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/grille/steel,
-/turf/simulated/floor/plating,
-/area/station/maintenance/northeast)
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/turret_protected/ai_upload{
+	name = "AI Module Storage"
+	})
 "aNz" = (
 /obj/cable{
 	d2 = 2;
@@ -17852,9 +17851,10 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/grille/steel,
-/turf/simulated/floor/plating,
-/area/station/maintenance/northeast)
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/turret_protected/ai_upload{
+	name = "AI Module Storage"
+	})
 "aNA" = (
 /obj/window/reinforced{
 	dir = 2;
@@ -18509,7 +18509,8 @@
 	})
 "aOW" = (
 /obj/machinery/light{
-	dir = 1
+	dir = 4;
+	icon_state = "tube1"
 	},
 /turf/simulated/floor,
 /area/station/turret_protected/ai_upload{
@@ -19377,7 +19378,6 @@
 /obj/item/aiModule/notHuman,
 /obj/item/aiModule/makeCaptain,
 /obj/item/aiModule/reset,
-/obj/machinery/door/window/northright,
 /turf/simulated/floor,
 /area/station/turret_protected/ai_upload{
 	name = "AI Module Storage"
@@ -22554,6 +22554,7 @@
 	dir = 4;
 	icon_state = "pipe-s"
 	},
+/obj/item/device/radio/beacon,
 /turf/simulated/floor/specialroom/medbay{
 	dir = 2
 	},
@@ -24291,6 +24292,9 @@
 	name = "Blast Door Control";
 	pixel_x = 25
 	},
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor,
 /area/station/bridge)
 "baD" = (
@@ -24480,7 +24484,6 @@
 /obj/table/auto,
 /obj/item/aiModule/freeform,
 /obj/item/aiModule/rename,
-/obj/machinery/door/window/northleft,
 /obj/item/aiModule/emergency,
 /obj/item/aiModule/removeCrew,
 /turf/simulated/floor,
@@ -25302,6 +25305,9 @@
 /turf/simulated/floor/caution/north,
 /area/station/engine/inner)
 "bcM" = (
+/obj/cable{
+	icon_state = "2-4"
+	},
 /turf/simulated/floor/carpet{
 	dir = 8;
 	icon_state = "fred6"
@@ -25311,6 +25317,9 @@
 /obj/stool/chair/comfy{
 	dir = 4;
 	icon_state = "chair_comfy"
+	},
+/obj/cable{
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/carpet{
 	dir = 8;
@@ -25323,6 +25332,9 @@
 /obj/item/decoration/ashtray,
 /obj/item/instrument/saxophone,
 /obj/item/clothing/glasses/sunglasses,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/carpet,
 /area/station/maintenance/inner/central)
 "bcP" = (
@@ -25330,18 +25342,27 @@
 	dir = 8;
 	icon_state = "chair_comfy"
 	},
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/carpet{
 	dir = 4;
 	icon_state = "fred3"
 	},
 /area/station/maintenance/inner/central)
 "bcQ" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/carpet{
 	dir = 4;
 	icon_state = "fred6"
 	},
 /area/station/maintenance/inner/central)
 "bcR" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/stairs{
 	dir = 8
 	},
@@ -25527,6 +25548,7 @@
 	dir = 10;
 	icon_state = "shrub"
 	},
+/obj/cable,
 /turf/simulated/floor/carpet{
 	dir = 10;
 	icon_state = "fred6"
@@ -26516,6 +26538,9 @@
 /obj/machinery/door/airlock/pyro/maintenance/alt{
 	dir = 4;
 	req_access = null
+	},
+/obj/cable{
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/central)
@@ -27657,6 +27682,9 @@
 "bhK" = (
 /obj/machinery/power/data_terminal,
 /obj/machinery/computer/security,
+/obj/cable{
+	icon_state = "0-2"
+	},
 /turf/simulated/floor/carpet{
 	dir = 5;
 	icon_state = "fred2"
@@ -27888,6 +27916,9 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "1-8"
 	},
 /turf/simulated/floor/carpet{
 	dir = 4;
@@ -40845,6 +40876,12 @@
 	},
 /turf/simulated/floor/yellow,
 /area/station/engine/elect)
+"eho" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/engine,
+/area/station/turret_protected/AIsat)
 "ejB" = (
 /obj/grille/catwalk/cross{
 	dir = 6
@@ -41527,6 +41564,16 @@
 	},
 /turf/simulated/floor/black,
 /area/station/security/hos)
+"hGg" = (
+/obj/machinery/firealarm{
+	pixel_y = 24;
+	text = "NF"
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/engine,
+/area/station/turret_protected/AIsat)
 "hIv" = (
 /obj/machinery/light,
 /turf/simulated/floor,
@@ -41970,6 +42017,13 @@
 	},
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai)
+"jYV" = (
+/obj/table/auto,
+/obj/item/circuitboard/aiupload,
+/turf/simulated/floor,
+/area/station/turret_protected/ai_upload{
+	name = "AI Module Storage"
+	})
 "jZO" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -41981,9 +42035,12 @@
 /turf/simulated/floor/engine,
 /area/station/turret_protected/AIsat)
 "kav" = (
-/obj/machinery/computer/secure_data{
-	dir = 4
+/obj/machinery/computer3/generic/secure_data{
+	dir = 4;
+	tag = ""
 	},
+/obj/cable,
+/obj/machinery/power/data_terminal,
 /turf/simulated/floor/engine,
 /area/station/turret_protected/AIsat)
 "kbT" = (
@@ -42043,6 +42100,11 @@
 	dir = 4
 	},
 /obj/access_spawn/security,
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/engine,
 /area/station/turret_protected/AIsat)
 "kvs" = (
@@ -42803,11 +42865,11 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
-/obj/machinery/computer/secure_data,
 /obj/machinery/power/data_terminal,
 /obj/cable{
 	icon_state = "0-10"
 	},
+/obj/machinery/computer3/generic/secure_data,
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai)
 "nOr" = (
@@ -42822,6 +42884,12 @@
 	},
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/sec)
+"nPY" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/inner/central)
 "nWJ" = (
 /obj/cable{
 	d1 = 4;
@@ -42963,6 +43031,10 @@
 	layer = 2
 	},
 /area/station/quartermaster/refinery)
+"oqx" = (
+/obj/item/device/radio/beacon,
+/turf/simulated/floor/grime,
+/area/station/security/brig)
 "otU" = (
 /obj/cable{
 	icon_state = "5-9"
@@ -43385,7 +43457,7 @@
 	icon_state = "4-8"
 	},
 /obj/wingrille_spawn/auto,
-/turf/simulated/floor,
+/turf/simulated/floor/plating,
 /area/station/science/lobby)
 "qdy" = (
 /obj/stool/bed,
@@ -43935,6 +44007,17 @@
 	layer = 2
 	},
 /area/station/solar/west)
+"sov" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/inner/central)
 "spf" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -44464,6 +44547,10 @@
 	intact = 0
 	},
 /area/station/quartermaster/refinery)
+"uqt" = (
+/obj/item/device/radio/beacon,
+/turf/simulated/floor/grime,
+/area/station/quartermaster/refinery)
 "uqL" = (
 /obj/lattice{
 	dir = 2;
@@ -44568,6 +44655,13 @@
 /obj/item/raw_material/shard/glass,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
+"uJX" = (
+/obj/table/auto,
+/obj/item/circuitboard/robotics,
+/turf/simulated/floor,
+/area/station/turret_protected/ai_upload{
+	name = "AI Module Storage"
+	})
 "uMP" = (
 /obj/tree1,
 /turf/simulated/wall{
@@ -44698,6 +44792,22 @@
 /turf/space,
 /turf/simulated/floor,
 /area/station/science/lab)
+"vnU" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/engine,
+/area/station/turret_protected/AIsat)
 "vrM" = (
 /obj/machinery/vehicle/pod_smooth/heavy{
 	dir = 4
@@ -75805,7 +75915,7 @@ lis
 bGX
 bGX
 bHg
-bHs
+uqt
 bHs
 bHy
 bGU
@@ -83605,7 +83715,7 @@ aXT
 bbz
 bbW
 bcv
-azU
+nPY
 aCy
 aGx
 aCy
@@ -83907,7 +84017,7 @@ aXT
 kCq
 aBS
 aBS
-aBS
+sov
 aBS
 aBS
 aBS
@@ -88111,7 +88221,7 @@ aKE
 aLx
 aJf
 aMT
-aDG
+aNB
 aNB
 aNB
 aNB
@@ -88414,7 +88524,7 @@ aLx
 aJf
 aIx
 aNy
-aNB
+jYV
 aOV
 aPG
 aQk
@@ -88716,7 +88826,7 @@ aLz
 aJf
 aMU
 aNz
-aNB
+uJX
 aOW
 aPH
 aQl
@@ -89964,7 +90074,7 @@ bkM
 blV
 bmN
 bnB
-bkP
+oqx
 bpb
 bpF
 bgL
@@ -118078,7 +118188,7 @@ bCN
 bGB
 cjG
 bGL
-pSU
+vnU
 pSU
 pSU
 bGL
@@ -118682,8 +118792,8 @@ wEi
 pNA
 bGF
 bul
-thY
-nEX
+hGg
+eho
 kav
 nbJ
 nEX
@@ -120063,7 +120173,7 @@ agw
 agY
 aht
 aib
-ajb
+adW
 aib
 ajg
 ajg
