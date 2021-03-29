@@ -591,7 +591,6 @@
 		topping = 1
 		if (istype(F,/obj/item/reagent_containers/food/snacks))
 			food_effects += (F.food_effects)
-			src.AddComponent(/datum/component/consume/food_effects, src.food_effects)
 		//We can't actually use realname because tons of foods change their name and don't update it
 		toppings += W.name
 		toppingstext = copytext(html_encode(english_list(toppings)), 1, 512)

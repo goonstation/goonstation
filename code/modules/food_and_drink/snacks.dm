@@ -220,7 +220,8 @@
 		.= TRUE
 	proc/randomize_pizza(var/foodprob,var/static/list/blacklist,var/static/list/altfoodlist,var/static/list/foodwhitelist)
 		var/obj/item/reagent_containers/food/snacks/ingredient/pizza3/pizzabase = new /obj/item/reagent_containers/food/snacks/ingredient/pizza3
-		var/num_ingredients = rand(1,3)
+		var/num_ingredients =  text2num(weighted_pick(list("1" = 16,"2" = 4,"3" = 1)))
+
 		var/snack_type
 		var/ingredient_quality = 0.6
 		for (var/i = 1, i <= num_ingredients, i++)
@@ -245,9 +246,9 @@
 		..()
 		randomize_pizza(foodprob,blacklist)
 /obj/item/reagent_containers/food/snacks/pizza/random/vendor
-	var/static/myfoodprob = 85
-	var/static/list/myfoodwhitelist = list(/obj/item/reagent_containers/food/snacks/ingredient/pepperoni,/obj/item/reagent_containers/food/snacks/condiment/ketchup,/obj/item/reagent_containers/food/snacks/mushroom,/obj/item/reagent_containers/food/snacks/meatball,/obj/item/reagent_containers/food/snacks/plant/onion)
-	var/static/list/myaltfoodlist = list(/obj/item/reagent_containers/food/drinks/bottle/grones,/obj/item/reagent_containers/food/drinks/bottle/softsoft_pizza,/obj/item/reagent_containers/food/drinks/bottle/spooky,/obj/item/reagent_containers/food/drinks/bottle/spooky2,/obj/item/reagent_containers/food/drinks/bottle/xmas,/obj/item/reagent_containers/food/drinks/noodlecup,/obj/item/reagent_containers/food/snacks/burrito,/obj/item/reagent_containers/food/snacks/plant/tomato/,/obj/item/reagent_containers/food/snacks/plant/corn,/obj/item/reagent_containers/food/snacks/yuck,/obj/item/reagent_containers/food/snacks/plant/banana,/obj/item/reagent_containers/food/snacks/plant/pineapple,/obj/item/reagent_containers/food/snacks/ingredient/meat/bacon,/obj/item/reagent_containers/food/drinks/coffee,/obj/item/reagent_containers/food/drinks/tea,/obj/item/reagent_containers/food/drinks/bottle/beer,/obj/item/reagent_containers/food/drinks/milk,/obj/item/reagent_containers/food/snacks/condiment/chocchips)
+	var/static/myfoodprob = 80
+	var/static/list/myfoodwhitelist = list(/obj/item/reagent_containers/food/snacks/ingredient/pepperoni,/obj/item/reagent_containers/food/snacks/mushroom/terran,/obj/item/reagent_containers/food/snacks/meatball,/obj/item/reagent_containers/food/snacks/plant/onion)
+	var/static/list/myaltfoodlist = list(/obj/item/reagent_containers/food/drinks/bottle/grones,/obj/item/reagent_containers/food/drinks/bottle/softsoft_pizza,/obj/item/reagent_containers/food/drinks/bottle/spooky,/obj/item/reagent_containers/food/drinks/bottle/spooky2,/obj/item/reagent_containers/food/drinks/bottle/xmas,/obj/item/reagent_containers/food/drinks/noodlecup,/obj/item/reagent_containers/food/snacks/burrito,/obj/item/reagent_containers/food/snacks/plant/tomato/,/obj/item/reagent_containers/food/snacks/plant/corn,/obj/item/reagent_containers/food/snacks/yuck,/obj/item/reagent_containers/food/snacks/plant/banana,/obj/item/reagent_containers/food/snacks/plant/pineapple,/obj/item/reagent_containers/food/snacks/ingredient/meat/bacon,/obj/item/reagent_containers/food/drinks/coffee,/obj/item/reagent_containers/food/drinks/tea,/obj/item/reagent_containers/food/drinks/bottle/beer,/obj/item/reagent_containers/food/drinks/milk,/obj/item/reagent_containers/food/snacks/condiment/chocchips,/obj/item/reagent_containers/food/snacks/condiment/ketchup)
 
 	New()
 		..()
@@ -1351,6 +1352,10 @@
 	amount = 1
 	heal_amt = 0
 	food_effects = list("food_disease_resist")
+
+/obj/item/reagent_containers/food/snacks/mushroom/terran
+		name = "mushroom"
+		desc = "The gross canned kind you find on pizzas."
 
 /obj/item/reagent_containers/food/snacks/mushroom/amanita
 	name = "space mushroom"
