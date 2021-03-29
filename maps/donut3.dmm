@@ -5893,6 +5893,10 @@
 /obj/decal/tile_edge/line/green{
 	icon_state = "line1"
 	},
+/obj/disposalpipe/segment/mail{
+	dir = 1;
+	icon_state = "pipe-c"
+	},
 /turf/simulated/floor,
 /area/station/crew_quarters/garden)
 "buS" = (
@@ -9498,14 +9502,6 @@
 	},
 /turf/simulated/floor/grime,
 /area/station/security/brig/south_side)
-"cwy" = (
-/obj/machinery/plantpot{
-	anchored = 1
-	},
-/obj/disposalpipe/segment/mail,
-/obj/disposalpipe/segment/mail,
-/turf/simulated/floor/grass/random,
-/area/station/hydroponics/bay)
 "cwW" = (
 /obj/machinery/vending/medical,
 /obj/disposalpipe/segment/mail,
@@ -15410,7 +15406,6 @@
 	anchored = 1
 	},
 /obj/machinery/light/incandescent/netural,
-/obj/disposalpipe/segment/mail,
 /turf/simulated/floor/grass/random,
 /area/station/hydroponics/bay)
 "emj" = (
@@ -16276,6 +16271,9 @@
 	dir = 10;
 	icon_state = "line1"
 	},
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
 /turf/simulated/floor,
 /area/station/crew_quarters/garden)
 "eBC" = (
@@ -16910,7 +16908,6 @@
 /obj/landmark/spawner{
 	name = "monkeyspawn_krimpus"
 	},
-/obj/disposalpipe/segment/mail,
 /turf/simulated/floor/grass/random,
 /area/station/hydroponics/bay)
 "eKr" = (
@@ -19663,7 +19660,6 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/light/small/floor,
-/obj/disposalpipe/segment/mail,
 /turf/simulated/floor,
 /area/station/crew_quarters/garden)
 "fzB" = (
@@ -23787,6 +23783,13 @@
 	},
 /turf/simulated/floor,
 /area/station/hangar/main)
+"gOu" = (
+/obj/disposalpipe/segment/mail{
+	dir = 2;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/floor,
+/area/station/crew_quarters/garden)
 "gOw" = (
 /obj/decal/tile_edge/line/blue{
 	dir = 8;
@@ -24716,6 +24719,15 @@
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/sw)
+"hcX" = (
+/obj/decal/tile_edge/line/green{
+	icon_state = "line1"
+	},
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/station/crew_quarters/garden)
 "hda" = (
 /obj/table/auto,
 /obj/machinery/light/incandescent/netural{
@@ -25911,10 +25923,8 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/disposalpipe/switch_junction/left/west{
-	mail_tag = "hydroponics"
-	},
 /obj/item/device/radio/beacon,
+/obj/disposalpipe/segment/mail,
 /turf/simulated/floor,
 /area/station/crew_quarters/garden)
 "hvd" = (
@@ -31645,7 +31655,10 @@
 /turf/simulated/floor/sanitary,
 /area/station/security/hos)
 "jkq" = (
-/obj/disposalpipe/segment/mail,
+/obj/disposalpipe/segment/mail{
+	dir = 8;
+	icon_state = "pipe-c"
+	},
 /turf/simulated/floor,
 /area/station/hydroponics/bay)
 "jks" = (
@@ -34389,6 +34402,10 @@
 "kea" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 1
+	},
+/obj/disposalpipe/segment/mail{
+	dir = 4;
+	icon_state = "pipe-c"
 	},
 /turf/simulated/floor,
 /area/station/hydroponics/bay)
@@ -37145,7 +37162,6 @@
 /area/station/maintenance/inner/se)
 "kXP" = (
 /obj/machinery/hydro_growlamp,
-/obj/disposalpipe/segment/mail,
 /turf/simulated/floor/grass/random,
 /area/station/hydroponics/bay)
 "kXR" = (
@@ -41893,6 +41909,7 @@
 /obj/access_spawn/hydro,
 /obj/firedoor_spawn,
 /obj/decal/mule/dropoff,
+/obj/disposalpipe/segment/mail,
 /turf/simulated/floor/wood,
 /area/station/hydroponics/bay)
 "mpG" = (
@@ -48188,6 +48205,7 @@
 /area/shuttle/arrival/station)
 "olP" = (
 /obj/landmark/gps_waypoint,
+/obj/disposalpipe/segment/mail,
 /turf/simulated/floor/grass/random,
 /area/station/hydroponics/bay)
 "olQ" = (
@@ -61026,6 +61044,15 @@
 /obj/disposalpipe/junction/middle/west,
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
+"rOA" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment/mail,
+/turf/simulated/floor,
+/area/station/crew_quarters/garden)
 "rOI" = (
 /obj/decal/tile_edge/check{
 	dir = 6;
@@ -61659,14 +61686,14 @@
 /turf/simulated/floor/plating,
 /area/station/engine/singcore)
 "rZh" = (
-/obj/disposalpipe/segment/mail{
-	dir = 2;
-	icon_state = "pipe-c"
-	},
 /obj/machinery/navbeacon{
 	codes_txt = "patrol;next_patrol=fuq3";
 	location = "garden";
 	name = "bot navigation beacon"
+	},
+/obj/disposalpipe/segment/mail{
+	dir = 1;
+	icon_state = "pipe-c"
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/garden)
@@ -63368,13 +63395,6 @@
 	icon_state = "fblue2"
 	},
 /area/station/medical/head)
-"sAb" = (
-/obj/disposalpipe/segment/mail{
-	dir = 1;
-	icon_state = "pipe-c"
-	},
-/turf/simulated/floor,
-/area/station/crew_quarters/garden)
 "sAi" = (
 /obj/shrub{
 	desc = "It's probably not suspicious that this plant is not only still alive, but thriving.";
@@ -65023,7 +65043,6 @@
 /obj/machinery/light/incandescent/netural{
 	dir = 1
 	},
-/obj/disposalpipe/segment/mail,
 /turf/simulated/floor,
 /area/station/crew_quarters/garden)
 "tcH" = (
@@ -73946,7 +73965,6 @@
 	dir = 5;
 	icon_state = "line1"
 	},
-/obj/disposalpipe/segment/mail,
 /turf/simulated/floor,
 /area/station/crew_quarters/garden)
 "vIw" = (
@@ -79148,6 +79166,9 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/disposalpipe/switch_junction/left/west{
+	mail_tag = "hydroponics"
+	},
 /turf/simulated/floor,
 /area/station/crew_quarters/garden)
 "xhH" = (
@@ -80116,11 +80137,6 @@
 	},
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade/dungeon)
-"xyw" = (
-/obj/wingrille_spawn/auto/tuff,
-/obj/disposalpipe/segment/mail,
-/turf/simulated/floor/plating,
-/area/station/hydroponics/bay)
 "xyx" = (
 /obj/lattice{
 	dir = 9;
@@ -128525,7 +128541,7 @@ txZ
 abO
 lns
 bxb
-jMq
+gOu
 buJ
 jQS
 ltD
@@ -128827,8 +128843,8 @@ txZ
 sfc
 lns
 bxb
-jMq
-buJ
+nvb
+hcX
 fCM
 ltD
 mjG
@@ -129129,7 +129145,7 @@ icO
 qeB
 qDS
 bxb
-jMq
+nvb
 eBt
 ryI
 ltD
@@ -129722,19 +129738,19 @@ mYu
 ksp
 sJC
 kea
-iba
-kHx
-kHx
-kHx
-mke
+iZc
+avb
+avb
+avb
+uNZ
 olP
-mke
+uNZ
 mpE
-lns
-nvb
-bxb
+wiL
+uNs
+rOA
 rZh
-sAb
+jMq
 pPW
 vPe
 olr
@@ -130024,18 +130040,18 @@ aZL
 kWn
 jLx
 jkq
-iZc
-avb
+iba
+kHx
 kXP
-cwy
+kHx
 eKn
-uNZ
+mke
 emi
-xyw
+txZ
 tch
 vIr
 fzn
-sAb
+jMq
 wUv
 nLL
 kpV
