@@ -36,7 +36,7 @@
 	throw_range = 5
 	w_class = 2.0
 	flags = FPRINT | TABLEPASS | NOSHIELD | USEDELAY
-	tool_flags - TOOL_CUTTING
+	tool_flags = TOOL_CUTTING
 	is_syndicate = 1
 	mats = 35
 	contraband = 5
