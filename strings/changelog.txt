@@ -1,5 +1,9 @@
 
 (t)sun mar 28 21
+(u)Lythine
+(p)4113
+(e)🆕🎨|feature, sprites
+(*)Added the Block Stacker medal and a Tetris AI skin reward for it.
 (u)TTerc
 (p)4162
 (e)⛔|removal
