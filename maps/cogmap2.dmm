@@ -13723,11 +13723,6 @@
 /obj/window/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/hydroponics/bay)
-"aEE" = (
-/obj/grille/steel,
-/obj/window/auto/reinforced,
-/turf/simulated/floor,
-/area/station/ranch)
 "aEF" = (
 /turf/simulated/floor,
 /area/station/hydroponics/bay)
@@ -79095,11 +79090,6 @@
 	},
 /turf/simulated/floor/dirt,
 /area/station/ranch)
-"jJK" = (
-/obj/window/auto/reinforced,
-/obj/grille/steel,
-/turf/simulated/floor,
-/area/station/ranch)
 "jNp" = (
 /obj/item/paper/book/monster_manual_revised,
 /turf/simulated/wall/asteroid,
@@ -79421,14 +79411,6 @@
 "qmv" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/crew_quarters/arcade/dungeon)
-"qvI" = (
-/obj/window/auto/reinforced,
-/obj/grille/steel,
-/turf/simulated/floor/carpet{
-	dir = 10;
-	icon_state = "blue2"
-	},
-/area/station/hydroponics/bay)
 "qBq" = (
 /obj/railing/orange/reinforced{
 	dir = 8
@@ -102979,9 +102961,9 @@ aaa
 acq
 nbd
 xfw
-jJK
-aEE
-jJK
+nbd
+dpq
+nbd
 xfw
 nbd
 acq
@@ -103905,7 +103887,7 @@ qfX
 dpq
 xfw
 xfw
-aaa
+xfw
 aaa
 aaa
 aaa
@@ -104196,7 +104178,7 @@ azn
 aAH
 aPA
 awc
-qvI
+awc
 aaa
 xfw
 iRa
