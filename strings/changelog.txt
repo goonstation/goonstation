@@ -1,5 +1,9 @@
 
 (t)mon mar 29 21
+(u)Gremy
+(p)4167
+(e)🗺|mapping
+(*)Revamps the Atlas, Cog2 and Horizon ranches to include two pens, more access to other departments and extra amenities. Also chicken masks. Bok!
 (u)TTerc
 (p)3974
 (e)🗺|mapping
