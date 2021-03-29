@@ -12333,6 +12333,9 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
+/obj/machinery/plantpot{
+	anchored = 1
+	},
 /turf/simulated/floor/dirt,
 /area/station/ranch)
 "doF" = (
@@ -35269,15 +35272,22 @@
 /turf/simulated/wall/auto/jen/blue,
 /area/station/maintenance/inner/sw)
 "ksp" = (
+/obj/storage/closet{
+	name = "rancher supply closet"
+	},
+/obj/item/paper/ranch_guide,
+/obj/item/fishing_rod,
+/obj/item/chicken_carrier,
+/obj/machinery/light_switch/auto{
+	pixel_x = -24;
+	pixel_y = 5
+	},
 /obj/machinery/light/incandescent/netural,
-/obj/machinery/light_switch{
-	name = "W light switch";
-	pixel_x = -24
-	},
-/obj/submachine/chicken_feed_grinder,
-/obj/item/reagent_containers/food/snacks/plant/corn{
-	doants = 0
-	},
+/obj/item/device/camera_viewer/ranch,
+/obj/item/storage/box/syringes,
+/obj/item/satchel/hydro,
+/obj/item/clothing/mask/chicken,
+/obj/item/storage/box/clothing/rancher,
 /turf/simulated/floor/dirt,
 /area/station/ranch)
 "ksu" = (
@@ -35295,7 +35305,7 @@
 "ksz" = (
 /obj/machinery/disposal/mail/small{
 	mail_tag = "ranch";
-	name = "mail chute - Ranch"
+	name = "mail chute (ranch)"
 	},
 /obj/disposalpipe/trunk/mail{
 	dir = 8
@@ -44053,8 +44063,9 @@
 	pixel_x = -26;
 	pixel_y = -1
 	},
-/obj/machinery/plantpot{
-	anchored = 1
+/obj/submachine/chicken_feed_grinder,
+/obj/item/reagent_containers/food/snacks/plant/corn{
+	doants = 0
 	},
 /turf/simulated/floor/grasstodirt{
 	dir = 9
