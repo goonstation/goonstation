@@ -58780,6 +58780,11 @@
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/carpet/blue/fancy/edge/nw,
 /area/station/chapel/sanctuary)
+"gqE" = (
+/obj/chicken_nesting_box,
+/obj/item/device/radio/intercom/catering,
+/turf/simulated/floor/grass/leafy,
+/area/station/ranch)
 "gug" = (
 /turf/simulated/shuttle/wall{
 	dir = 8;
@@ -59357,8 +59362,8 @@
 	anchored = 1
 	},
 /obj/railing/orange/reinforced,
-/turf/simulated/floor/grasstodirt,
 /turf/unsimulated/grasstodirt,
+/turf/simulated/floor/grasstodirt,
 /area/station/ranch)
 "rGC" = (
 /obj/cable{
@@ -59488,10 +59493,10 @@
 /obj/machinery/plantpot{
 	anchored = 1
 	},
-/turf/simulated/floor/grasstodirt{
+/turf/unsimulated/grasstodirt{
 	dir = 1
 	},
-/turf/unsimulated/grasstodirt{
+/turf/simulated/floor/grasstodirt{
 	dir = 1
 	},
 /area/station/ranch)
@@ -93131,7 +93136,7 @@ bUY
 bUL
 aaa
 qfu
-lkp
+gqE
 rxZ
 vpa
 viZ
