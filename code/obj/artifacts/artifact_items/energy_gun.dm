@@ -51,6 +51,16 @@
 		if (src.Artifact_attackby(W,user))
 			..()
 
+	reagent_act(reagent_id,volume)
+		if (..())
+			return
+		src.Artifact_reagent_act(reagent_id, volume)
+		return
+
+	emp_act()
+		src.Artifact_emp_act()
+		..()
+
 	process_ammo(var/mob/user)
 		if(isrobot(user))
 			var/mob/living/silicon/robot/R = user

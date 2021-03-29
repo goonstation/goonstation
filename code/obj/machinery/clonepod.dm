@@ -15,7 +15,7 @@
 	icon = 'icons/obj/cloning.dmi'
 	icon_state = "pod_0_lowmeat"
 	object_flags = CAN_REPROGRAM_ACCESS
-	mats = list("MET-1"=20, "uqill"=10, "beeswax"=5)
+	mats = list("MET-1"=35, "beeswax"=5)
 	var/meat_used_per_tick = DEFAULT_MEAT_USED_PER_TICK
 	var/mob/living/occupant
 	var/heal_level = 10 //The clone is released once its health^W damage (maxHP - HP) reaches this level.
@@ -613,7 +613,7 @@
 				return
 			boutput(user, "<span class='notice'>You begin detatching the mindslave cloning module...</span>")
 			playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
-			if(do_after(user,50))
+			if (do_after(user, 50) && cloneslave)
 				new /obj/item/cloneModule/mindslave_module( src.loc )
 				cloneslave = 0
 				implant_master = null

@@ -289,7 +289,7 @@
 		else
 			..()
 
-	on_bite(obj/item/I, mob/M, mob/user)
+	heal(var/mob/M)
 		if (prob(5))
 			if (M.mind && M.mind.ckey)
 				boutput(M, "<span class='notice'>You find a shiny golden ticket in this bite!</span>")
@@ -552,7 +552,7 @@
 		user.add_karma(-6)
 		return
 
-	on_bite(obj/item/I, mob/M, mob/user)
+	heal(var/mob/M)
 		if (prob(8))
 			if (M.mind && M.mind.ckey)
 				boutput(M, "<span class='notice'>You find a shiny golden ticket in this bite!</span>")
@@ -580,7 +580,7 @@
 			reagents.add_reagent(pick("beff","sugar","eggnog","chocolate","cleaner","luminol","poo","urine","nicotine","mint","tea","juice_lemon","juice_lime","juice_apple","juice_cherry","guacamole","egg","sewage","uranium"), 3)
 
 
-	on_bite(obj/item/I, mob/M, mob/user)
+	heal(var/mob/M)
 		if (prob(5))
 			if (M.mind && M.mind.ckey)
 				boutput(M, "<span class='notice'>You find a shiny golden ticket in this bite!</span>")

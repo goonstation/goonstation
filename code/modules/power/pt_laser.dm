@@ -33,6 +33,7 @@
 	var/output_multi = 1e6
 	var/emagged = FALSE
 	var/lifetime_earnings = 0
+	var/undistributed_earnings = 0
 	var/excess = null //for tgui readout
 	var/is_charging = FALSE //for tgui readout
 
@@ -144,7 +145,7 @@
 				dont_update = 1 //so the firing animation runs
 				charge -= adj_output
 				if(selling)
-					power_sold()
+					power_sold(adj_output)
 		else if(charge < adj_output && (adj_output >= PTLMINOUTPUT)) //firing but not enough charge to sustain
 			stop_firing()
 		else //firing and have enough power to carry on
@@ -177,18 +178,22 @@
 
 	var/output_mw = adjusted_output / 1e6
 
-	#define BUX_PER_SEC_CAP 5000 //at inf power, generate 5000$/tick, also max amt to drain/tick
+	#define LOW_CAP (20) //provide a nice scalar for deminishing returns instead of a slow steady climb
+	#define BUX_PER_WORK_CAP (5000-LOW_CAP) //at inf power, generate 5000$/tick, also max amt to drain/tick
 	#define ACCEL_FACTOR 69 //our acceleration factor towards cap
 	#define STEAL_FACTOR 4 //Adjusts the curve of the stealing EQ (2nd deriv/concavity)
 
-	//For equation + explaination, https://www.desmos.com/calculator/62w5igbqwo
+	//For equation + explanation, https://www.desmos.com/calculator/r8bsyz5gf9
 	//Adjusted to give a decent amt. of cash/tick @ 50GW (said to be average hellburn)
-	var/generated_moolah =   (2*output_mw*BUX_PER_SEC_CAP)/(2*output_mw + BUX_PER_SEC_CAP*ACCEL_FACTOR) //used if output_mw > 0
+	var/generated_moolah = (2*output_mw*BUX_PER_WORK_CAP)/(2*output_mw+BUX_PER_WORK_CAP*ACCEL_FACTOR) //used if output_mw > 0
+	generated_moolah += (4*output_mw*LOW_CAP)/(4*output_mw + LOW_CAP)
 
 	if (output_mw < 0) //steals money since you emagged it
-		generated_moolah = (-2*output_mw*BUX_PER_SEC_CAP)/(2*STEAL_FACTOR*output_mw - BUX_PER_SEC_CAP*STEAL_FACTOR*ACCEL_FACTOR)
+		generated_moolah = (-2*output_mw*BUX_PER_WORK_CAP)/(2*STEAL_FACTOR*output_mw - BUX_PER_WORK_CAP*STEAL_FACTOR*ACCEL_FACTOR)
 
 	lifetime_earnings += generated_moolah
+	generated_moolah += undistributed_earnings
+	undistributed_earnings = 0
 
 	var/list/accounts = list()
 	for(var/datum/data/record/t in data_core.bank)
@@ -204,10 +209,13 @@
 
 		for(var/datum/data/record/t in accounts)
 			t.fields["current_money"] += round(generated_moolah/accounts.len)
+		undistributed_earnings += generated_moolah-(round(generated_moolah/accounts.len) * (length(accounts)))
+	else
+		undistributed_earnings += generated_moolah
 
 	#undef STEAL_FACTOR
 	#undef ACCEL_FACTOR
-	#undef BUX_PER_SEC_CAP
+	#undef BUX_PER_WORK_CAP
 
 /obj/machinery/power/pt_laser/proc/get_barrel_turf()
 	var/x_off = 0

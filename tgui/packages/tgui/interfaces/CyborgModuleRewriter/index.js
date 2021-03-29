@@ -5,10 +5,10 @@
  * @license ISC
  */
 
-import { useBackend } from '../backend';
-import { Window } from '../layouts';
-import ModuleView from './CyborgModuleRewriter/ModuleView';
-import * as styles from './CyborgModuleRewriter/style';
+import { useBackend } from '../../backend';
+import { Window } from '../../layouts';
+import { ModuleView } from './ModuleView';
+import * as styles from './style';
 
 export const CyborgModuleRewriter = (props, context) => {
   const { act, data } = useBackend(context);
