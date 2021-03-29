@@ -37,7 +37,7 @@
 	w_class = 2.0
 	flags = FPRINT | TABLEPASS | NOSHIELD | USEDELAY
 	is_syndicate = 1
-	mats = 18
+	mats = 35
 	tool_flags = TOOL_CUTTING
 	contraband = 5
 	desc = "An illegal weapon that, when activated, uses cyalume to create an extremely dangerous saber. Can be concealed when deactivated."
