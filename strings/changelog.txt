@@ -1,4 +1,9 @@
 
+(t)mon mar 29 21
+(u)Sovexe
+(p)4157
+(e)🆕🗺🎨|feature, mapping, sprites
+(+)New handheld sea elevator pinpointers are now available on Oshan.
 (t)sun mar 28 21
 (u)DisturbHerb
 (p)4023
