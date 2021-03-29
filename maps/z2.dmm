@@ -30231,7 +30231,8 @@
 /area/crypt/graveyard)
 "bGm" = (
 /obj/tombstone{
-	desc = "The inscription has eroded away."
+	desc = "The inscription has eroded away.";
+	special = /obj/decal/skeleton
 	},
 /obj/map/light/graveyard,
 /turf/unsimulated/grasstodirt{
@@ -80227,6 +80228,27 @@
 /obj/item/paper/book/from_file/syndies_guide,
 /turf/unsimulated/floor/darkblue,
 /area/syndicate_station/firing_range)
+"nYR" = (
+/obj/map/light/graveyard,
+/obj/tombstone/memorial{
+	desc = "The name on this tombstone has been etched off. Strange.";
+	dir = 4;
+	special = /obj/item/device/sat_crash_caller
+	},
+/turf/unsimulated/grasstodirt{
+	dir = 1
+	},
+/area/crypt/graveyard)
+"oad" = (
+/obj/map/light/graveyard,
+/obj/tombstone/memorial{
+	desc = "The inscription has eroded away.";
+	special = /obj/critter/magiczombie
+	},
+/turf/unsimulated/grasstodirt{
+	dir = 1
+	},
+/area/crypt/graveyard)
 "oaM" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -82609,6 +82631,9 @@
 "wvy" = (
 /turf/unsimulated/floor/carpet/red/fancy/narrow/nw,
 /area/centcom/offices/sovexe)
+"wvK" = (
+/turf/cordon,
+/area/centcom/outside)
 "wxG" = (
 /obj/tombstone{
 	dir = 9
@@ -92671,7 +92696,7 @@ aKX
 aKX
 aKX
 aLq
-aLN
+aLO
 aLN
 aLN
 aLN
@@ -123867,7 +123892,7 @@ bFr
 aaa
 aaa
 bFS
-bIw
+nYR
 bGG
 bGG
 bGG
@@ -126893,7 +126918,7 @@ bGG
 bHe
 bFS
 bFR
-bIv
+oad
 bGG
 bGG
 bGG
@@ -154312,7 +154337,7 @@ aES
 aES
 dFl
 aES
-dFc
+aES
 dFc
 aaa
 dkY
@@ -154614,7 +154639,7 @@ dFl
 aES
 aES
 aES
-dFc
+aES
 dFc
 aaa
 dkY
@@ -154916,7 +154941,7 @@ aES
 aES
 aES
 aES
-dFc
+aES
 dFc
 aaa
 dkY
@@ -155218,7 +155243,7 @@ dFl
 aES
 aES
 aES
-dFc
+aES
 dFc
 aaa
 dkY
@@ -155520,7 +155545,7 @@ aES
 aES
 aES
 aES
-dFc
+aES
 dFc
 aaa
 dkY
@@ -155822,7 +155847,7 @@ aES
 aES
 dFl
 aES
-dFc
+aES
 dFc
 aaa
 dkY
@@ -156124,7 +156149,7 @@ aES
 aES
 aES
 aES
-dFc
+aES
 dFc
 aaa
 dkY
@@ -156426,7 +156451,7 @@ aES
 dFl
 aES
 aES
-dFc
+aES
 dFc
 aaa
 dkY
@@ -156728,7 +156753,7 @@ aES
 aES
 aES
 aES
-dFc
+aES
 dFc
 aaa
 dkY
@@ -157030,7 +157055,7 @@ aES
 aES
 aES
 aES
-dFc
+aES
 dFc
 aaa
 dkY
@@ -157332,7 +157357,7 @@ aES
 aES
 aES
 dFl
-dFc
+aES
 dFc
 aaa
 dkY
@@ -157634,7 +157659,7 @@ aES
 aES
 aES
 aES
-dFc
+aES
 dFc
 aaa
 dkY
@@ -157936,7 +157961,7 @@ aES
 aES
 dFl
 aES
-dFc
+aES
 dFc
 aaa
 dkY
@@ -158238,7 +158263,7 @@ aES
 aES
 aES
 aES
-dFc
+aES
 dFc
 aaa
 dkY
@@ -158540,7 +158565,7 @@ aES
 aES
 aES
 aES
-dFc
+aES
 dFc
 aaa
 dkY
@@ -158842,7 +158867,7 @@ aES
 aES
 aES
 aES
-dFc
+aES
 dFc
 aaa
 dkY
@@ -159144,7 +159169,7 @@ aES
 aES
 dFl
 aES
-dFc
+aES
 dFc
 aaa
 dkY
@@ -159446,7 +159471,7 @@ aES
 aES
 aES
 aES
-dFc
+aES
 dFc
 aaa
 dkY
@@ -159748,7 +159773,7 @@ aES
 aES
 aES
 aES
-dFc
+aES
 dFc
 aaa
 dkY
@@ -160050,7 +160075,7 @@ aES
 dFl
 aES
 aES
-dFc
+aES
 dFc
 aaa
 dkY
@@ -160352,7 +160377,7 @@ aES
 aES
 aES
 aES
-dFc
+aES
 dFc
 aaa
 dkY
@@ -160654,7 +160679,7 @@ aES
 aES
 aES
 aES
-dFc
+aES
 dFc
 aaa
 dkY
@@ -160956,7 +160981,7 @@ aES
 aES
 aES
 aES
-dFc
+aES
 dFc
 aaa
 dkY
@@ -161258,7 +161283,7 @@ aES
 aES
 dFl
 aES
-dFc
+aES
 dFc
 aaa
 dkY
@@ -161560,7 +161585,7 @@ aES
 aES
 aES
 aES
-dFc
+aES
 dFc
 aaa
 dkY
@@ -161862,7 +161887,7 @@ aES
 aES
 aES
 aES
-dFc
+aES
 dFc
 aaa
 dkY
@@ -162457,17 +162482,17 @@ aaa
 aaa
 aaa
 aaa
-dFc
-dFc
-dFc
-dFc
-dFc
-dFc
-dFc
-dFc
-dFc
-dFc
-dFc
+wvK
+wvK
+wvK
+wvK
+wvK
+wvK
+wvK
+wvK
+wvK
+wvK
+wvK
 aaa
 aaa
 aaa
