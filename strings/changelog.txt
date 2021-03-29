@@ -1,5 +1,9 @@
 
 (t)sun mar 28 21
+(u)Gremy
+(p)3969
+(e)🗺|mapping
+(*)Expands the Manta ranch and changes the construction area below it to be a market stall with a cute little duck with a hat in it.
 (u)Lythine
 (p)4113
 (e)🆕🎨|feature, sprites
