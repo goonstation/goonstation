@@ -1,5 +1,9 @@
 
 (t)mon mar 29 21
+(u)Flappybat
+(p)4016
+(e)⚖|balance
+(*)Rebalanced firearm melee damage
 (u)Sovexe
 (p)4157
 (e)🆕🗺🎨|feature, mapping, sprites
