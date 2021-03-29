@@ -75,7 +75,7 @@
 
 	proc/check_hud_layout(mob/user)
 		if (user.client.tg_layout)
-			leave.screen_loc = "SOUTH,EAST-5"
+			leave.screen_loc = "SOUTH,EAST-6"
 		else
 			leave.screen_loc = "SOUTH, EAST"
 
