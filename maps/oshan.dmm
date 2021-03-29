@@ -29741,9 +29741,27 @@
 "bvh" = (
 /obj/machinery/light/incandescent/warm,
 /obj/table/auto,
-/obj/item/trench_map,
-/obj/item/trench_map,
-/obj/item/trench_map,
+/obj/item/pinpointer/trench{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/item/pinpointer/trench{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/item/pinpointer/trench{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/item/trench_map{
+	pixel_x = 3
+	},
+/obj/item/trench_map{
+	pixel_x = 3
+	},
+/obj/item/trench_map{
+	pixel_x = 3
+	},
 /turf/simulated/floor,
 /area/station/hangar/main)
 "bvi" = (
@@ -31169,10 +31187,30 @@
 /area/station/mining/staff_room)
 "byA" = (
 /obj/table/reinforced/auto,
-/obj/item/trench_map,
-/obj/item/trench_map,
-/obj/item/trench_map,
-/obj/item/trench_map,
+/obj/item/pinpointer/trench{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/item/pinpointer/trench{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/item/pinpointer/trench{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/item/trench_map{
+	pixel_x = 3
+	},
+/obj/item/trench_map{
+	pixel_x = 3
+	},
+/obj/item/trench_map{
+	pixel_x = 3
+	},
+/obj/item/trench_map{
+	pixel_x = 3
+	},
 /turf/simulated/floor/caution/westeast,
 /area/station/mining/staff_room)
 "byB" = (
