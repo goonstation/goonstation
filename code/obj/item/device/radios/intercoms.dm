@@ -35,6 +35,8 @@
 					pixel_x = -21
 				if(WEST)
 					pixel_x = 21
+	mats = 3
+	deconstruct_flags = 102
 
 /obj/item/device/radio/intercom/attack_ai(mob/user as mob)
 	src.add_fingerprint(user)
