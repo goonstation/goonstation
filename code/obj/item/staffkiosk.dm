@@ -199,7 +199,7 @@ ABSTRACT_TYPE(/datum/recruitment_role)
 		/obj/item/reagent_containers/emergency_injector/epinephrine,
 		/obj/item/reagent_containers/mender/brute,
 		/obj/item/reagent_containers/mender/burn,
-		/obj/item/bandage)
+		/obj/item/paper/book/pocketguide/medical)
 
 /obj/item/storage/box/staffkit/robo
 	name = "robotics assistant kit"
@@ -216,7 +216,7 @@ ABSTRACT_TYPE(/datum/recruitment_role)
 	desc = "A slightly stale-smelling set of equipment."
 	spawn_contents = list(/obj/item/clothing/under/rank/staffeng,
 		/obj/item/device/radio/headset/engineer,
-		/obj/item/disk/data/cartridge/engineer,
+		/obj/item/device/analyzer/atmospheric/upgraded,
 		/obj/item/clothing/head/helmet/hardhat,
 		/obj/item/crowbar,
 		/obj/item/screwdriver,
@@ -240,9 +240,9 @@ ABSTRACT_TYPE(/datum/recruitment_role)
 		/obj/item/device/radio/headset/engineer,
 		/obj/item/clothing/head/emerg,
 		/obj/item/clothing/suit/space/emerg,
-		/obj/item/crowbar,
 		/obj/item/mining_tool/power_pick,
-		/obj/item/satchel/mining)
+		/obj/item/paper/book/pocketguide/mining1,
+		/obj/item/paper/book/pocketguide/mining2)
 
 /obj/item/storage/box/staffkit/res
 	name = "research assistant kit"
@@ -260,10 +260,10 @@ ABSTRACT_TYPE(/datum/recruitment_role)
 	spawn_contents = list(/obj/item/clothing/under/rank/staffciv,
 		/obj/item/device/radio/headset/civilian,
 		/obj/item/clothing/head/souschefhat,
-		/obj/item/clothing/gloves/latex,
-		/obj/item/satchel/hydro,
+		/obj/item/clothing/suit/apron,
 		/obj/item/reagent_containers/food/drinks/drinkingglass/icing,
-		/obj/item/spraybottle/cleaner)
+		/obj/item/sponge,
+		/obj/item/paper/book/cookbook)
 
 /obj/item/storage/box/staffkit/bar
 	name = "bar assistant kit"
@@ -271,10 +271,10 @@ ABSTRACT_TYPE(/datum/recruitment_role)
 	spawn_contents = list(/obj/item/clothing/under/rank/staffciv,
 		/obj/item/device/radio/headset/civilian,
 		/obj/item/clothing/suit/wcoat,
-		/obj/item/clothing/gloves/black,
 		/obj/item/device/reagentscanner,
 		/obj/item/reagent_containers/food/drinks/cocktailshaker,
-		/obj/item/spraybottle/cleaner)
+		/obj/item/spraybottle/cleaner,
+		/obj/item/paper/book/pocketguide/bartending)
 
 /obj/item/storage/box/staffkit/botany
 	name = "botanical assistant kit"
@@ -283,5 +283,5 @@ ABSTRACT_TYPE(/datum/recruitment_role)
 		/obj/item/device/radio/headset/civilian,
 		/obj/item/disk/data/cartridge/botanist,
 		/obj/item/clothing/gloves/black,
-		/obj/item/satchel/hydro,
-		/obj/item/device/reagentscanner)
+		/obj/item/device/reagentscanner,
+		/obj/item/paper/botany_guide)
