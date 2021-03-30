@@ -1,5 +1,9 @@
 
 (t)tue mar 30 21
+(u)Tarmunora
+(p)4160
+(e)⚖🆕|balance, feature
+(*)Blocking unarmed while wearing concussive gauntlets will charge up a slam attack, similar to the power hammer.
 (u)TTerc
 (p)4119
 (e)|
