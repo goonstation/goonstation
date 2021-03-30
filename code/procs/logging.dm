@@ -247,6 +247,7 @@ proc/log_shot(var/obj/projectile/P,var/obj/SHOT, var/target_is_immune = 0)
 	if (istype(P.shooter, /obj/critter/))
 		return
 
+	message_admins("[P.name]|[P.mob_shooter]|[P.shooter]|[SHOT.name]|[shooter_data]")
 //Pod wars friendly fire check
 #ifdef MAP_OVERRIDE_POD_WARS
 	var/friendly_fire = 0
