@@ -386,7 +386,7 @@ ABSTRACT_TYPE(/datum/ore_cluster)
 
 	// output the player stats on its own popup.
 
-
+	stats_manager?.display_HTML_to_clients()
 	// for(var/datum/mind/leader_mind in commanders)
 
 	..()
@@ -2114,18 +2114,18 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 	proc/inc_death(var/mob/M)
 		if (!ismob(M))
 			return
-		var/datum/pw_player_stats/stat = player_stats[ckey]
+		var/datum/pw_player_stats/stat = player_stats[M.ckey]
 		if (istype(stat))
 			stat.death_count ++
 
 		src.inc_longest_life(M)
 
 	//uses shift time
-	//only called from inc_death and the loop through the player_stats list of pw_player_stats datum 
-	proc/inc_longest_life(var/datum/pw_player_stats/stat)
+	//only called from inc_death and the loop through the player_stats list of pw_player_stats datum
+	proc/inc_longest_life(var/mob/M)
 		// if (!ismob(M))
 		// 	return
-		var/datum/pw_player_stats/stat = player_stats[ckey]
+		var/datum/pw_player_stats/stat = player_stats[M.ckey]
 		if (istype(stat))
 			var/shift_time = round(ticker.round_elapsed_ticks / 600)
 
@@ -2146,15 +2146,62 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 		if (istype(stat))
 			stat.farts ++
 
+	//has a variable increment amount cause not every tic of ethanol metabolize metabolizes the same amount of alcohol.
+	proc/inc_alcohol_metabolized(var/mob/M, var/inc_amt = 1)
+		if (!ismob(M))
+			return
+		var/datum/pw_player_stats/stat = player_stats[M.ckey]
+		if (istype(stat))
+			stat.alcohol_metabolized += inc_amt
+
 	//called on round end to output the stats. returns the HTML as a string.
 	proc/build_HTML()
-		. = {""}
+		. = {"<h2>
+Player Stats
+</h2>
+<table id=\"myTable\">
+  <tr>
+    <th>Team</th>
+    <th>Name</th>
+    <th>Deaths</th>
+    <th>Friendly Fire</th>
+    <th>Longest Life</th>
+    <th>Alcohol Metabolized (u)</th>
+    <th>Farts</th>
+    <th>Ctrl Pts</th>
+  </tr>
+  <tr>
+    <td>Berglunds snabbkop</td>
+    <td>Sweden</td>
+  </tr>
+"}
 
+		var/dat = ""
+		for (var/datum/pw_player_stats/stat in player_stats)
+			dat += {"
+<tr>
+ <td>[stat.team_num]</td>
+ <td>[stat.initial_name] ([stat.ckey])</td>
+ <td>[stat.death_count]</td>
+ <td>[stat.friendly_fire_count]</td>
+ <td>[stat.longest_life]</td>
+ <td>[round(stat.alcohol_metabolized, 0.01)]</td>
+ <td>[stat.farts]</td>
+ <td>[stat.control_point_capture_count]</th>  d
+</tr>
+"}
+		. += "</table>"
+
+	proc/display_HTML_to_clients()
+		var/string = build_HTML()
+		for (var/client/C in clients)
+			C.Browse(string, "window=scores;size=700x500;title=Scores" )
 
 //for displaying info about players on round end to everyone.
 /datum/pw_player_stats
 	var/datum/mind/mind
 	var/initial_name
+	var/ckey 			//this and initial_name are mostly for safety
 	var/team_num 		//valid values, 1 = NT, 2 = SY
 	var/rank			//current valid values include "Commander", "Pilot"
 	var/time_of_last_death = 0
@@ -2164,6 +2211,7 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 	var/friendly_fire_count = 0
 	var/control_point_capture_count = 0			//should be determined by being in the control point area when captured
 	var/longest_life = 0
+	var/alcohol_metabolized = 0
 	var/farts = 0
 
 	New(var/datum/mind/mind, var/initial_name, var/team_num, var/rank)
@@ -2172,3 +2220,5 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 		src.initial_name = initial_name
 		src.team_num = team_num
 		src.rank = rank
+
+		src.ckey = mind?.ckey
