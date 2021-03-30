@@ -350,7 +350,7 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 						data = json_decode(html_decode(data["response"]))
 
 						// VPN checker service returns error responses in a "message" property
-						if (data["message"])
+						if (data["success"] == false)
 							// Yes, we're forcing a cache for a no-VPN response here on purpose
 							// Reasoning: The goonhub API has cached the VPN checker error response for the foreseeable future and further queries won't change that
 							//			  so we want to avoid spamming the goonhub API this round for literally no gain
@@ -359,24 +359,21 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 							logTheThing("diary", src, null, "unable to check VPN status of [src.address] because: [data["message"]]", "debug")
 
 						// Successful VPN check
+						// IP is a known VPN, cache locally and kick
+						else if (data["proxy"] == true)
+							global.vpn_ip_checks["[src.address]"] = true
+							logTheThing("admin", src, null, "[src.address] is using a vpn. vpn info: [json_encode(data["network"])]")
+							logTheThing("diary", src, null, "[src.address] is using a vpn. vpn info: [json_encode(data["network"])]", "admin")
+							message_admins("[key_name(src)] [src.address] attempted to connect with a VPN or proxy but was kicked!")
+							src.mob.Browse(vpn_kick_string, "window=vpnbonked")
+							sleep(3 SECONDS)
+							if (src)
+								del(src)
+							return
+
+						// IP is not a known VPN
 						else
-							var/list/security_info = data["security"]
-
-							// IP is a known VPN, cache locally and kick
-							if (security_info["vpn"] == true)
-								global.vpn_ip_checks["[src.address]"] = true
-								logTheThing("admin", src, null, "[src.address] is using a vpn. vpn info: [json_encode(data["network"])]")
-								logTheThing("diary", src, null, "[src.address] is using a vpn. vpn info: [json_encode(data["network"])]", "admin")
-								message_admins("[key_name(src)] [src.address] attempted to connect with a VPN or proxy but was kicked!")
-								src.mob.Browse(vpn_kick_string, "window=vpnbonked")
-								sleep(3 SECONDS)
-								if (src)
-									del(src)
-								return
-
-							// IP is not a known VPN
-							else
-								global.vpn_ip_checks["[src.address]"] = false
+							global.vpn_ip_checks["[src.address]"] = false
 
 			catch(var/exception/e)
 				logTheThing("admin", src, null, "unable to check VPN status of [src.address] because: [e.name]")
