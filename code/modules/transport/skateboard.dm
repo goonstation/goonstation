@@ -320,17 +320,7 @@
 	*/
 	return
 
-/obj/vehicle/skateboard/bullet_act(flag, A as obj)
-	if(rider)
-		rider.bullet_act(flag, A)
-		eject_rider()
-	return
 
-/obj/vehicle/skateboard/meteorhit()
-	if(rider)
-		eject_rider()
-		rider.meteorhit()
-	return
 
 /obj/vehicle/skateboard/disposing()
 	if(rider)
