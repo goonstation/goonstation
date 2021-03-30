@@ -1768,6 +1768,7 @@
 /turf/space,
 /area/space)
 "if" = (
+/mob/living/carbon/human/npc/monkey/oppenheimer,
 /turf/unsimulated/floor/red/side{
 	dir = 10
 	},
@@ -8182,6 +8183,12 @@
 /obj/machinery/light,
 /turf/simulated/floor/black,
 /area/pod_wars/spacejunk/nancy)
+"Mm" = (
+/obj/critter/turtle/sylvester/Commander,
+/turf/unsimulated/floor/blue/side{
+	dir = 5
+	},
+/area/pod_wars/team1/bridge)
 "Mn" = (
 /obj/machinery/shuttle/engine/heater/seaheater_right,
 /obj/machinery/shuttle/engine/heater/seaheater,
@@ -46806,7 +46813,7 @@ JW
 JW
 JW
 Mr
-vg
+Mm
 nF
 HT
 nt
