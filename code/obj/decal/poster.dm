@@ -632,7 +632,7 @@
 
 		teaparty
 			name = "Weird poster"
-			desc = "Huh."
+			desc = "Seems to be a poster of some sort."
 			icon = 'icons/obj/decals/posters.dmi'
 			icon_state = "teaparty"
 
