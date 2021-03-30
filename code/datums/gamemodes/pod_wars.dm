@@ -2118,14 +2118,14 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 		if (istype(stat))
 			stat.death_count ++
 
-		src.inc_longest_life(M)
+		src.inc_longest_life(M.ckey)
 
 	//uses shift time
 	//only called from inc_death and the loop through the player_stats list of pw_player_stats datum
-	proc/inc_longest_life(var/mob/M)
+	proc/inc_longest_life(var/ckey)
 		// if (!ismob(M))
 		// 	return
-		var/datum/pw_player_stats/stat = player_stats[M.ckey]
+		var/datum/pw_player_stats/stat = player_stats[ckey]
 		if (istype(stat))
 			var/shift_time = round(ticker.round_elapsed_ticks / 600)
 
@@ -2178,6 +2178,9 @@ Player Stats
 
 		var/dat = ""
 		for (var/datum/pw_player_stats/stat in player_stats)
+			//first update longest life
+			inc_longest_life(stat.ckey)
+
 			dat += {"
 <tr>
  <td>[stat.team_num]</td>
