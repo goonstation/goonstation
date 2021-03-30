@@ -1,5 +1,7 @@
 
 (t)tue mar 30 21
+(u)pali
+(*)January monthly contest posters have been added to the game!
 (u)Tarmunora
 (p)4160
 (e)⚖🆕|balance, feature
