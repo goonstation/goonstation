@@ -18,8 +18,7 @@
 	escape_possible = 0
 	var/list/frequencies_used = list()
 	var/list/control_points = list()		//list of /datum/control_point
-	var/list/player_stats = list()			//list of /datum/pw_player_stats
-
+	var/datum/pw_stats_manager/stats_manager
 
 	var/datum/pod_wars_team/team_NT
 	var/datum/pod_wars_team/team_SY
@@ -40,6 +39,7 @@
 	if (!setup_teams())
 		return 0
 
+	stats_manager = new()
 	//just to move the bar to the right place.
 	handle_point_change(team_NT, team_NT.points)	//HAX. am
 	handle_point_change(team_SY, team_SY.points)	//HAX. am
@@ -291,7 +291,9 @@ ABSTRACT_TYPE(/datum/ore_cluster)
 
 	var/team_string = "[team_num == 1 ? "NanoTrasen" : team_num == 2 ? "The Syndicate" : "Something Eldritch"]"
 	boutput(world, "<h4><span class='[team_num == 1 ? "notice":"alert"]'>[user] captured [name] for [team_string]!</span></h4>")
-	world << sound('sound/misc/newsting.ogg')
+
+	//do one sound for the capturing team, one for the losing
+	world << sound('sound/misc/newsting.ogg')	//change this sound.
 
 /datum/game_mode/pod_wars/proc/handle_point_change(var/datum/pod_wars_team/team)
 	var/fraction = round (team.points/team.max_points, 0.01)
@@ -325,6 +327,7 @@ ABSTRACT_TYPE(/datum/ore_cluster)
 			team_SY.change_points(-1)
 		team_NT.change_points(1)
 
+	src.stats_manager?.inc_death(M)
 
 /datum/game_mode/pod_wars/proc/announce_critical_system_destruction(var/team_num, var/obj/pod_base_critical_system/CS)
 	var/datum/pod_wars_team/team
@@ -528,7 +531,8 @@ ABSTRACT_TYPE(/datum/ore_cluster)
 		// bestow_objective(player,/datum/objective/battle_royale/win)
 		// SHOW_TIPS(H)
 
-		mode.player_stats += new/datum/pw_player_stats(mind = M.mind, initial_name = M.real_name, team_num = src.team_num, rank = (M.mind == commander ? "Commander" : "Pilot") )
+		if (mode.stats_manager)
+			mode.stats_manager.add_player(M.mind, M.real_name, src.team_num, (M.mind == commander ? "Commander" : "Pilot"))
 
 /obj/pod_base_critical_system
 	name = "Critical System"
@@ -1843,15 +1847,8 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 		mode.handle_control_pt_change(src.true_name, user, pw_team, team_num)
 
 		//log player_stats. Increment nearby player's capture point stat
-		for (var/datum/pw_player_stats/stat in mode.player_stats)
-			if (stat.team_num != team_num)
-				continue
-
-			//if they are within 30 tiles of the capture point computer, it counts as helping!
-			//I do the get_turf on the current mob in case they are in a pod. This is called Pod Wars after all...
-			if (get_dist(get_turf(stat.mind?.current), computer) <= 30)
-				stat.control_point_capture_count ++
-
+		if (mode.stats_manager)
+			mode.stats_manager.inc_control_point_caps(team_num, src.computer)
 
 
 //I'll probably remove this all cause it's so shit, but in case I want to come back and finish it, I leave - kyle
@@ -2088,12 +2085,79 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 #endif
 
 ////////////////////////////player stats tracking datum//////////////////
+/datum/pw_stats_manager
+	var/list/player_stats = list()			//assoc list of ckey to /datum/pw_player_stats
+
+	proc/add_player(var/datum/mind/mind, var/initial_name, var/team_num, var/rank)
+		//only add new stat tracker datum if one doesn't exist
+		if (player_stats[mind.ckey] == null && mind.ckey)
+			player_stats[mind.ckey] = new/datum/pw_player_stats(mind = mind, initial_name = initial_name, team_num = team_num, rank = rank )
+
+	//team_num = team that just captured this point
+	//computer = computer object for the point that has been captured. used for distance check currently.
+	proc/inc_control_point_caps(var/team_num, var/obj/computer)
+		for (var/datum/pw_player_stats/stat in player_stats)
+			if (stat.team_num != team_num)
+				continue
+			//if they are within 30 tiles of the capture point computer, it counts as helping!
+			//I do the get_turf on the current mob in case they are in a pod. This is called Pod Wars after all...
+			if (get_dist(get_turf(stat.mind?.current), computer) <= 30)
+				stat.control_point_capture_count ++
+
+	proc/inc_friendly_fire(var/mob/M)
+		if (!ismob(M))
+			return
+		var/datum/pw_player_stats/stat = player_stats[M.ckey]
+		if (istype(stat))
+			stat.friendly_fire_count ++
+
+	proc/inc_death(var/mob/M)
+		if (!ismob(M))
+			return
+		var/datum/pw_player_stats/stat = player_stats[ckey]
+		if (istype(stat))
+			stat.death_count ++
+
+		src.inc_longest_life(M)
+
+	//uses shift time
+	//only called from inc_death and the loop through the player_stats list of pw_player_stats datum 
+	proc/inc_longest_life(var/datum/pw_player_stats/stat)
+		// if (!ismob(M))
+		// 	return
+		var/datum/pw_player_stats/stat = player_stats[ckey]
+		if (istype(stat))
+			var/shift_time = round(ticker.round_elapsed_ticks / 600)
+
+			//I feel like I should explain this, but I'm not gonna cause it's not confusing enough to need it. Just the long names make it look weird.
+			if (!stat.longest_life)
+				stat.time_of_last_death = shift_time
+			else
+				if (stat.time_of_last_death < shift_time - stat.time_of_last_death)
+					stat.time_of_last_death = shift_time - stat.time_of_last_death
+
+
+			stat.longest_life = TIME - stat.longest_life
+
+	proc/inc_farts(var/mob/M)
+		if (!ismob(M))
+			return
+		var/datum/pw_player_stats/stat = player_stats[M.ckey]
+		if (istype(stat))
+			stat.farts ++
+
+	//called on round end to output the stats. returns the HTML as a string.
+	proc/build_HTML()
+		. = {""}
+
+
 //for displaying info about players on round end to everyone.
 /datum/pw_player_stats
 	var/datum/mind/mind
 	var/initial_name
 	var/team_num 		//valid values, 1 = NT, 2 = SY
 	var/rank			//current valid values include "Commander", "Pilot"
+	var/time_of_last_death = 0
 
 	//silly stats
 	var/death_count = 0

@@ -914,10 +914,13 @@
 			var/friendly_fire = 0
 			if (owner != target && get_pod_wars_team(owner) == get_pod_wars_team(target))
 				friendly_fire = 1
-				message_admins("[owner] just committed friendly fire against [target]!")
+				if (istype(ticker.mode, /datum/game_mode/pod_wars))
+					var/datum/game_mode/pod_wars/mode = ticker.mode
+					mode.stats_manager?.inc_friendly_fire(owner)
+				// message_admins("[owner] just committed friendly fire against [target]!")
 
 			for (var/message in logs)
-				logTheThing("combat", owner, target, "[friendly_fire ? "FRIENDLY FIRE!":""][message] at [log_loc(owner)].")
+				logTheThing("combat", owner, target, "[friendly_fire ? "<span class='alert'>Friendly Fire!</span>":""][message] at [log_loc(owner)].")
 #else
 			for (var/message in logs)
 				logTheThing("combat", owner, target, "[message] at [log_loc(owner)].")
