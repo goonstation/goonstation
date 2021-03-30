@@ -13,6 +13,19 @@
 	rand_pos = 0
 	desc = "A wall-mounted radio intercom, used to communicate with the specified frequency. Usually turned off except during emergencies."
 	hardened = 0
+/obj/item/device/radio/intercom/set_dir(new_dir)
+	. = ..()
+	src.pixel_x = 0
+	src.pixel_y = 0
+	switch(src.dir)
+		if(NORTH)
+			pixel_y = -21
+		if(SOUTH)
+			pixel_y = 24
+		if(EAST)
+			pixel_x = -21
+		if(WEST)
+			pixel_x = 21
 
 /obj/item/device/radio/intercom/New()
 	. = ..()
@@ -25,19 +38,11 @@
 				screen_image.color = new_color
 		screen_image.alpha = 180
 		src.UpdateOverlays(screen_image, "screen")
-		SPAWN_DBG(0.1) // OH GOD WHY
 		if(src.pixel_x == 0 && src.pixel_y == 0)
-			switch(src.dir)
-				if(NORTH)
-					pixel_y = -21
-				if(SOUTH)
-					pixel_y = 24
-				if(EAST)
-					pixel_x = -21
-				if(WEST)
-					pixel_x = 21
+			set_dir(src.dir)
 	mats = 3
 	deconstruct_flags = 102
+
 
 /obj/item/device/radio/intercom/attack_ai(mob/user as mob)
 	src.add_fingerprint(user)
