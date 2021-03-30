@@ -11883,9 +11883,6 @@
 	dir = 4
 	},
 /obj/table/glass/auto,
-/obj/machinery/light_switch/auto{
-	pixel_y = 24
-	},
 /turf/simulated/floor,
 /area/station/crewquarters/cryotron)
 "aHg" = (
@@ -39808,11 +39805,12 @@
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay/lobby)
 "kkK" = (
-/obj/wingrille_spawn/auto,
-/obj/stool/chair/green{
-	dir = 8
+/obj/machinery/light_switch/auto{
+	pixel_y = 24
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/arrival{
+	dir = 1
+	},
 /area/station/crewquarters/cryotron)
 "kly" = (
 /obj/cable{
@@ -77119,7 +77117,7 @@ boV
 bgr
 box
 acV
-aGZ
+kkK
 aHf
 btS
 bEy
@@ -78630,7 +78628,7 @@ bhQ
 bqk
 acT
 acT
-kkK
+acV
 bBS
 acV
 ghs
