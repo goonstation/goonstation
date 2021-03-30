@@ -10199,11 +10199,11 @@
 /obj/item/clothing/under/suit/pinstripe,
 /obj/item/clothing/under/suit,
 /obj/item/clothing/under/gimmick/rainbow,
-/obj/item/clothing/under/misc/america,
 /obj/machinery/power/apc/autoname_north,
 /obj/cable{
 	icon_state = "0-2"
 	},
+/obj/item/clothing/under/pride/special,
 /turf/simulated/floor,
 /area/station/crew_quarters/quartersC)
 "aCC" = (
@@ -25377,9 +25377,6 @@
 	icon_state = "1-4"
 	},
 /obj/disposalpipe/junction/right/east,
-/obj/machinery/light_switch/auto{
-	pixel_y = 24
-	},
 /turf/simulated/floor,
 /area/station/hallway/portlowerhallway)
 "bqj" = (
@@ -42844,6 +42841,15 @@
 	dir = 1
 	},
 /area/station/science/teleporter)
+"rSo" = (
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
+/obj/machinery/light_switch/auto{
+	pixel_y = 24
+	},
+/turf/simulated/floor,
+/area/station/hallway/portlowerhallway)
 "rTh" = (
 /obj/submachine/chicken_incubator,
 /obj/item/reagent_containers/food/snacks/ingredient/egg{
@@ -76208,7 +76214,7 @@ blw
 bmE
 bnJ
 aCb
-bgr
+rSo
 box
 arS
 ain
