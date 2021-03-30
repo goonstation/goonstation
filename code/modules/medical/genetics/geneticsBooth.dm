@@ -42,7 +42,7 @@
 	density = 1
 	event_handler_flags = USE_FLUID_ENTER | USE_CANPASS
 	appearance_flags = TILE_BOUND | PIXEL_SCALE | LONG_GLIDE
-	req_access = list(access_heads)
+	req_access = list(access_captain, access_head_of_personnel, access_maxsec, access_medical_director)
 
 	var/letgo_hp = 50
 	var/mob/living/carbon/human/occupant = null
