@@ -18,6 +18,7 @@
 	escape_possible = 0
 	var/list/frequencies_used = list()
 	var/list/control_points = list()		//list of /datum/control_point
+	var/list/player_stats = list()			//list of /datum/pw_player_stats
 
 
 	var/datum/pod_wars_team/team_NT
@@ -47,8 +48,8 @@
 
 
 /datum/game_mode/pod_wars/proc/setup_teams()
-	team_NT = new/datum/pod_wars_team(mode = src, team = 1)
-	team_SY = new/datum/pod_wars_team(mode = src, team = 2)
+	team_NT = new/datum/pod_wars_team(mode = src, team_num = TEAM_NANOTRASEN)
+	team_SY = new/datum/pod_wars_team(mode = src, team_num = TEAM_SYNDICATE)
 
 	//get all ready players and split em into two equal teams,
 	var/list/readied_minds = list()
@@ -285,7 +286,7 @@ ABSTRACT_TYPE(/datum/ore_cluster)
 //team = the team datum
 //team_num = 1 or 2 for NT or SY respectively
 /datum/game_mode/pod_wars/proc/handle_control_pt_change(var/true_name, var/mob/user, var/datum/pod_wars_team/team, var/team_num)
-	
+
 	board.change_control_point_owner(true_name, team, team_num)
 
 	var/team_string = "[team_num == 1 ? "NanoTrasen" : team_num == 2 ? "The Syndicate" : "Something Eldritch"]"
@@ -374,20 +375,38 @@ ABSTRACT_TYPE(/datum/ore_cluster)
 	var/datum/pod_wars_team/winner = team_NT.points > team_SY.points ? team_NT.name : team_SY.name
 	var/datum/pod_wars_team/loser = team_NT.points < team_SY.points ? team_NT.name : team_SY.name
 	// var/text = ""
-	boutput(world, "<FONT size = 2><B>The winner was the [winner.name], commanded by [winner.commander.current]:</B></FONT><br>")
-	boutput(world, "<FONT size = 2><B>The loser was the [loser.name], commanded by [loser.commander.current]:</B></FONT><br>")
+	boutput(world, "<FONT size = 3><B>The winner was the [winner.name], commanded by [winner.commander.current] ([winner.commander.current.ckey]):</B></FONT><br>")
+	output_team_members(winner)
+
+	boutput(world, "<FONT size = 3><B>The loser was the [loser.name], commanded by [loser.commander.current]:</B></FONT><br>")
+	output_team_members(loser)
+
+	// output the player stats on its own popup.
+
 
 	// for(var/datum/mind/leader_mind in commanders)
 
-	..() // Admin-assigned antagonists or whatever.
+	..()
 
+//outputs the team members to world for declare_completion
+/datum/game_mode/pod_wars/proc/output_team_members(var/datum/pod_wars_team/pw_team)
+	var/list/L = list()
+	var/active_players = 0
+	for (var/datum/mind/m in pw_team.members)
+		if (m.current?.ckey)
+			active_players ++
+		if (m == pw_team.commander)
+			continue 		//count em for active players, but don't display em here, they already got their name up there!
+		L += "<b>[m.current]</b> ([m.ckey])<br>"
+	boutput(world, "[active_players] active players/[length(pw_team.members)] total players")
+	boutput(world, "")	//L.something
 
 /datum/pod_wars_team
 	var/name = "NanoTrasen"
 	var/comms_frequency = 0		//used in datum/job/pod_wars/proc/setup_headset (in Jobs.dm) to tune the radio as it's first equipped
 	var/area/base_area = null		//base ship area
 	var/datum/mind/commander = null
-	var/list/members = list()
+	var/list/members = list()		//list of minds
 	var/team_num = 0
 
 	var/points = 100
@@ -395,16 +414,16 @@ ABSTRACT_TYPE(/datum/ore_cluster)
 	var/list/mcguffins = list()		//Should have 4 AND ONLY 4
 	var/datum/game_mode/pod_wars/mode
 
-	New(var/datum/game_mode/pod_wars/mode, team)
+	New(var/datum/game_mode/pod_wars/mode, team_num)
 		..()
 		src.mode = mode
-		src.team_num = team
-		if (team_num == TEAM_NANOTRASEN)
+		src.team_num = team_num
+		if (src.team_num == TEAM_NANOTRASEN)
 			name = "NanoTrasen"
 #ifdef MAP_OVERRIDE_POD_WARS
 			base_area = /area/pod_wars/team1 //area north, NT crew
 #endif
-		else if (team_num == TEAM_SYNDICATE)
+		else if (src.team_num == TEAM_SYNDICATE)
 			name = "Syndicate"
 #ifdef MAP_OVERRIDE_POD_WARS
 			base_area = /area/pod_wars/team2 //area south, Syndicate crew
@@ -460,6 +479,7 @@ ABSTRACT_TYPE(/datum/ore_cluster)
 		else
 			return candidates
 
+	//this initializes the player with all their equipment, edits to their mind, showing antag popup, and initializing player_stats
 	proc/equip_player(var/mob/M)
 		var/mob/living/carbon/human/H = M
 		var/datum/job/special/pod_wars/JOB
@@ -507,6 +527,8 @@ ABSTRACT_TYPE(/datum/ore_cluster)
 		boutput(H, "You're in the [name] faction!")
 		// bestow_objective(player,/datum/objective/battle_royale/win)
 		// SHOW_TIPS(H)
+
+		mode.player_stats += new/datum/pw_player_stats(mind = M.mind, initial_name = M.real_name, team_num = src.team_num, rank = (M.mind == commander ? "Commander" : "Pilot") )
 
 /obj/pod_base_critical_system
 	name = "Critical System"
@@ -736,7 +758,7 @@ ABSTRACT_TYPE(/datum/ore_cluster)
 		control_points.Add(new/atom/movable/screen/control_point/ubc67())
 		control_points.Add(new/atom/movable/screen/control_point/reliant())
 		control_points.Add(new/atom/movable/screen/control_point/fortuna())
-		
+
 		//add em all to vis_contents
 		src.vis_contents += bar_NT
 		src.vis_contents += bar_SY
@@ -805,7 +827,7 @@ ABSTRACT_TYPE(/datum/ore_cluster)
 			else
 				color = null
 
-	//You might be asking yourself "What are all these random pixel_x values?" They are the pixel coords ~ 1/4, 1/2, and 3/4 
+	//You might be asking yourself "What are all these random pixel_x values?" They are the pixel coords ~ 1/4, 1/2, and 3/4
 	//accross the bar. Then you might ask, "Why didn't you just divide by the length of the bar?" Of course I tried that, but I couldn't
 	//fucking FIND that value. Why does that not exist? it seems like it should, after all, the mouse knows the bounds? Well, I don't know.
 
@@ -1204,7 +1226,7 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 	icon_base = "hangar"
 	free_resource_amt = 20
 	var/team_num = 0			//NT = 1, SY = 2
-	
+
 	free_resources = list(
 		/obj/item/material_piece/mauxite,
 		/obj/item/material_piece/pharosium,
@@ -1663,23 +1685,17 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 		return
 
 	//called from the action bar completion in src.attack_hand()
-	proc/capture(var/mob/user, var/team_num)
+	proc/capture(var/mob/user)
+		var/team_num = get_pod_wars_team(user)
 		owner_team = team_num
 		update_light_color()
 
 		ctrl_pt.receive_capture(user, team_num)
 
 	attack_hand(mob/user as mob)
-		var/user_team_string = user?.mind?.special_role
-		var/user_team = 0
-		if (user_team_string == "NanoTrasen")
-			user_team = TEAM_NANOTRASEN
-		else if (user_team_string == "Syndicate")
-			user_team = TEAM_SYNDICATE
-
-		if (owner_team != user_team)
+		if (owner_team != get_pod_wars_team(user))
 			var/duration = is_commander(user) ? 7 SECONDS : 15 SECONDS
-			SETUP_GENERIC_ACTIONBAR(user, src, duration, /obj/control_point_computer/proc/capture, list(user, user_team),\
+			SETUP_GENERIC_ACTIONBAR(user, src, duration, /obj/control_point_computer/proc/capture, list(user),\
 			 null, null, "[user] successfully enters [his_or_her(user)] command code into \the [src]!")
 
 		// old thing I was doing for capture system where it captured over time instead of all at once.
@@ -1779,7 +1795,7 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 	spacejunk
 		name = "spacejunk warp_beacon"
 		invisibility = 101
-		alpha = 100			//just to be clear 
+		alpha = 100			//just to be clear
 
 
 /datum/control_point
@@ -1815,17 +1831,27 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 		for (var/obj/warp_beacon/pod_wars/B in beacons)
 			B.current_owner = team_num
 
+		var/datum/pod_wars_team/pw_team
 		//This needs to give the actual team up to the control point datum, which in turn gives it to the game_mode datum to handle it
 		//I don't think I do anything special with the team there yet, but I might want it for something eventually. Most things are just fine with the team_num.
+		if (get_pod_wars_team(user) == TEAM_NANOTRASEN)
+			pw_team = mode.team_NT
+		else if (get_pod_wars_team(user) == TEAM_NANOTRASEN)
+			pw_team = mode.team_SY
 
-		var/datum/pod_wars_team/team = null
-		if (locate(user.mind) in mode.team_NT.members)
-			team = mode.team_NT
-		else if (locate(user.mind) in mode.team_SY.members)
-			team = mode.team_SY
+		//update scoreboard
+		mode.handle_control_pt_change(src.true_name, user, pw_team, team_num)
 
-		//update scoreboard 
-		mode.handle_control_pt_change(src.true_name, user, team, team_num)
+		//log player_stats. Increment nearby player's capture point stat
+		for (var/datum/pw_player_stats/stat in mode.player_stats)
+			if (stat.team_num != team_num)
+				continue
+
+			//if they are within 30 tiles of the capture point computer, it counts as helping!
+			//I do the get_turf on the current mob in case they are in a pod. This is called Pod Wars after all...
+			if (get_dist(get_turf(stat.mind?.current), computer) <= 30)
+				stat.control_point_capture_count ++
+
 
 
 //I'll probably remove this all cause it's so shit, but in case I want to come back and finish it, I leave - kyle
@@ -2060,3 +2086,25 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 	else if (user_team_string == "Syndicate")
 		return TEAM_SYNDICATE
 #endif
+
+////////////////////////////player stats tracking datum//////////////////
+//for displaying info about players on round end to everyone.
+/datum/pw_player_stats
+	var/datum/mind/mind
+	var/initial_name
+	var/team_num 		//valid values, 1 = NT, 2 = SY
+	var/rank			//current valid values include "Commander", "Pilot"
+
+	//silly stats
+	var/death_count = 0
+	var/friendly_fire_count = 0
+	var/control_point_capture_count = 0			//should be determined by being in the control point area when captured
+	var/longest_life = 0
+	var/farts = 0
+
+	New(var/datum/mind/mind, var/initial_name, var/team_num, var/rank)
+		..()
+		src.mind = mind
+		src.initial_name = initial_name
+		src.team_num = team_num
+		src.rank = rank
