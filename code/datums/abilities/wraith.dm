@@ -31,6 +31,7 @@
 	target_anything = 1
 	preferred_holder_type = /datum/abilityHolder/wraith
 	theme = "wraith"
+	var/min_req_dist = INFINITY		//What minimum distance from your power well (marker/wraith master) the poltergeist needs to case this spell.
 
 	New()
 		var/atom/movable/screen/ability/topBar/wraith/B = new /atom/movable/screen/ability/topBar/wraith(null)
@@ -44,9 +45,11 @@
 	cast(atom/target)
 		if (!holder || !holder.owner)
 			return 1
-		//if (!iswraith(holder.owner))
-		//	boutput(holder.owner, "<span class='alert'>Yo, you're not a wraith, stop that. (like how the hell did you get this. report this to a coder asap)</span>")
-		//	return 1
+		if (ispoltergeist(holder.owner))
+			var/mob/wraith/poltergeist/P = holder.owner
+			if (src.min_req_dist <= P.power_well_dist)
+				boutput(holder.owner, "<span class='alert'>You must be within [min_req_dist] tiles from a well of power to perform this task.</span>")
+				return 1
 		return 0
 
 	doCooldown()
@@ -112,6 +115,17 @@
 			if (!isdead(M))
 				boutput(holder.owner, "<span class='alert'>The living consciousness controlling this body shields it from being absorbed.</span>")
 				return 1
+
+			//check for formaldehyde. if there's more than the wraith's tol amt, we can't absorb right away.
+			else if (M.decomp_stage != 4)
+				if (M.reagents)
+					var/mob/wraith/W = src.holder.owner
+					var/amt = M.reagents.get_reagent_amount("formaldehyde")
+					if (amt >= W.formaldehyde_tol)
+						M.reagents.remove_reagent("formaldehyde", amt)
+						boutput(holder.owner, "<span class='alert'>This vessel is tainted with an... unpleasant substance... It is now removed...</span>")
+						particleMaster.SpawnSystem(new /datum/particleSystem/localSmoke("#FFFFFF", 2, locate(M.x, M.y, M.z)))
+						return 0
 			else if (M.decomp_stage == 4)
 				M = null
 				error = 1
@@ -243,6 +257,7 @@
 	target_anything = 1
 	pointCost = 30
 	cooldown = 1 MINUTE //1 minute
+	min_req_dist = 15
 
 	cast(atom/T)
 		if (..())
@@ -299,6 +314,7 @@
 	target_anything = 1
 	pointCost = 50
 	cooldown = 20 SECONDS
+	min_req_dist = 15
 
 	cast(atom/T)
 		var/list/thrown = list()
@@ -371,6 +387,7 @@
 	target_anything = 1
 	pointCost = 100
 	cooldown = 30 SECONDS
+	min_req_dist = 10
 
 	cast(atom/T)
 		if (..())
@@ -418,12 +435,19 @@
 	targeted = 0
 	pointCost = 0
 	cooldown = 1 MINUTE
+	min_req_dist = INFINITY
 
 	cast()
 		if (..())
 			return 1
 
 		var/mob/wraith/W = src.holder.owner
+
+		//check done in case a poltergeist uses this from within their master.
+		if (iswraith(W.loc))
+			boutput(W, "You can't become corporeal while inside another wraith! How would that even work?!")
+			return 1
+
 		usr.playsound_local(usr.loc, "sound/voice/wraith/wraithhaunt.ogg", 100, 0)
 		return W.haunt()
 
@@ -435,6 +459,7 @@
 	pointCost = 0
 	cooldown = 20 SECONDS
 	special_screen_loc="NORTH,EAST-1"
+	min_req_dist = 10
 
 	var/datum/radio_frequency/pda_connection
 	var/obj/spookMarker/marker = new /obj/spookMarker()		//removed for now
@@ -569,7 +594,7 @@
 	target_anything = 1
 	pointCost = 1
 	cooldown = 2 SECONDS
-
+	min_req_dist = 20
 	proc/ghostify_message(var/message)
 		return message
 
@@ -603,6 +628,7 @@
 	target_anything = 1
 	pointCost = 10
 	cooldown = 5 SECONDS
+	min_req_dist = 10
 	var/in_use = 0
 
 	// cast(turf/target, params)
@@ -674,6 +700,7 @@
 		if (!istype(W))
 			boutput(W, "something went terribly wrong, call 1-800-CODER")
 			return
+
 		var/obj/spookMarker/marker = new /obj/spookMarker(T)
 		var/list/text_messages = list()
 		text_messages.Add("Would you like to respawn as a poltergeist? Your name will be added to the list of eligible candidates and set to DNR if selected.")
@@ -699,6 +726,7 @@
 			return
 		var/datum/mind/lucky_dude = pick(candidates)
 
+		//add poltergeist to master's list is done in /mob/wraith/potergeist/New
 		var/mob/wraith/poltergeist/P = new /mob/wraith/poltergeist(T, W, marker)
 		lucky_dude.special_role = "poltergeist"
 		lucky_dude.dnr = 1
@@ -731,4 +759,3 @@
 		var/matrix/M = matrix()
 		M.Scale(0.75,0.75)
 		animate(src, transform = M, time = 3 SECONDS, loop = -1,easing = ELASTIC_EASING)
-

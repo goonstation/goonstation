@@ -752,6 +752,25 @@
 		else
 			boutput(activator, "<span class='alert'>You need to be an AI to use this, you goof!</span>")
 
+/datum/achievementReward/ai_tetris
+	title = "(AI Skin) Tetris"
+	desc = "Turns you into a tetris-playing machine!"
+	required_medal = "Block Stacker"
+
+	rewardActivate(var/mob/activator)
+		if (isAI(activator))
+			var/mob/living/silicon/ai/A = activator
+			if (isAIeye(activator))
+				var/mob/dead/aieye/AE = activator
+				A = AE.mainframe
+			A.custom_emotions = ai_emotions | list("Tetris (reward)" = "ai-tetris")
+			A.faceEmotion = "ai-tetris"
+			A.set_color("#111111")
+			A.update_appearance()
+			return 1
+		else
+			boutput(activator, "<span class='alert'>You need to be an AI to use this, you goof!</span>")
+
 /datum/achievementReward/borg_automoton
 	title = "(Cyborg Skin) Automaton"
 	desc = "Turns you into the mysterious Automaton! Only in appearance, of course. Keys not included."

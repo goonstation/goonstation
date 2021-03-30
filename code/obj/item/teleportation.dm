@@ -52,8 +52,6 @@ Frequency:
 				src.temp += "<B>Located Beacons:</B><BR>"
 
 				for_by_tcl(W, /obj/item/device/radio/beacon)
-					if (istype(src, /obj/item/locator/jones) && istype(W, /obj/item/device/radio/beacon/jones)) //For Jones City
-						src.temp += "Unknown Location-[W.x], [W.y], [W.z]<BR>"
 					if (W.frequency == src.frequency)
 						var/turf/tr = get_turf(W)
 						if (tr.z == sr.z && tr)
