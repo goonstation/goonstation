@@ -599,3 +599,5 @@
 	name = "water pipe"
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bong"
+
+	filled

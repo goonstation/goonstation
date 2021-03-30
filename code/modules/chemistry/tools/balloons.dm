@@ -19,10 +19,10 @@
 
 	New()
 		..()
-		if (prob(1) && islist(rare_colors) && rare_colors.len)
+		if (prob(1) && islist(rare_colors) && length(rare_colors))
 			balloon_color = pick(rare_colors)
 			update_icon()
-		else if (islist(available_colors) && available_colors.len)
+		else if (islist(available_colors) && length(available_colors))
 			balloon_color = pick(available_colors)
 			update_icon()
 

@@ -491,6 +491,7 @@ var/global
 	list/warned_keys = list()	// tracking warnings per round, i guess
 
 	datum/dj_panel/dj_panel = new()
+	datum/player_panel/player_panel = new()
 
 	list/prisonwarped = list()	//list of players already warped
 	list/wormholeturfs = list()

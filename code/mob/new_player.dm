@@ -664,7 +664,7 @@ a.latejoin-card:hover {
 							break
 
 					var/bad_type = null
-					if (islist(ticker.mode.latejoin_antag_roles) && ticker.mode.latejoin_antag_roles.len)
+					if (islist(ticker.mode.latejoin_antag_roles) && length(ticker.mode.latejoin_antag_roles))
 						bad_type = pick(ticker.mode.latejoin_antag_roles)
 					else
 						bad_type = "traitor"

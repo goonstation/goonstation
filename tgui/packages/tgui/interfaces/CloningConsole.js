@@ -371,7 +371,7 @@ const Records = (props, context) => {
                 style={{
                   position: 'absolute',
                   left: '50%',
-                  top: '50%',
+                  top: '20%',
                   transform: 'translate(-40%, 22px)',
                 }}
                 fontSize="9px"
@@ -451,7 +451,7 @@ const Records = (props, context) => {
                     )}
                     {!!disk && (
                       <Button
-                        icon={(!!diskReadOnly || !!record.saved) ? '' : ''}
+                        icon={(!!diskReadOnly || !!record.saved) ? '' : 'save'}
                         color="blue"
                         alignText="center"
                         width="22px"
@@ -488,7 +488,7 @@ const Records = (props, context) => {
 };
 
 const Pods = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { data } = useBackend(context);
   const {
     completion,
     meatLevels,

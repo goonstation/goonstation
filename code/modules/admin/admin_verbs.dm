@@ -425,6 +425,8 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_modify_respawn_variables,
 		/client/proc/set_nukie_score,
 
+		/client/proc/player_panel_tgui,
+
 #ifdef MACHINE_PROCESSING_DEBUG
 		/client/proc/cmd_display_detailed_machine_stats,
 #endif
@@ -664,6 +666,15 @@ var/list/special_pa_observing_verbs = list(
 		src.holder.player()
 	return
 
+/client/proc/player_panel_tgui()
+	set name = "Player Panel TGUI"
+	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
+	admin_only
+	if (src.holder.tempmin)
+		return
+	if (src.holder.level >= LEVEL_SA)
+		global.player_panel.ui_interact(src.mob)
+
 /client/proc/rspawn_panel()
 	set name = "Respawn Panel"
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
@@ -862,7 +873,7 @@ var/list/fun_images = list()
 	set name = "Show Rules to Player"
 	set popup_menu = 0
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
-	
+
 	var/crossness = input("How cross are we with this guy?", "Enter Crossness", "A bit") as anything in list("A bit", "A lot", "Cancel")
 	if (!crossness || crossness == "Cancel")
 		return
@@ -890,7 +901,7 @@ var/list/fun_images = list()
 	set popup_menu = 0
 
 	admin_only
-	if(!O.fingerprintshidden || !O.fingerprintshidden.len)
+	if(!O.fingerprintshidden || !length(O.fingerprintshidden))
 		alert("There are no fingerprints on this object.", null, null, null, null, null)
 		return
 
@@ -1503,7 +1514,7 @@ var/list/fun_images = list()
 	if (!pet_path)
 		return
 
-	for (var/client/cl as() in clients)
+	for (var/client/cl as anything in clients)
 		var/mob/living/L = cl.mob
 		if(!istype(L) || isdead(L))
 			continue
@@ -1934,7 +1945,7 @@ var/list/fun_images = list()
 		var/y_shift = round(text2num(parameters["icon-y"]) / 32)
 		clicked_turf = locate(clicked_turf.x + x_shift, clicked_turf.y + y_shift, clicked_turf.z)
 		var/list/atom/atoms = list(clicked_turf)
-		for(var/atom/thing as() in clicked_turf)
+		for(var/atom/thing as anything in clicked_turf)
 			atoms += thing
 		if (atoms.len)
 			A = input(usr, "Which item to admin-interact with?") as null|anything in atoms

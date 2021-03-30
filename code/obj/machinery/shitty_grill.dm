@@ -256,7 +256,6 @@
 		else
 			if (istype(src.grillitem, /obj/item/reagent_containers/food/snacks))
 				shittysteak.food_effects += grillitem:food_effects
-				shittysteak.AddComponent(/datum/component/consume/food_effects, shittysteak.food_effects)
 
 		var/icon/composite = new(src.grillitem.icon, src.grillitem.icon_state)//, src.grillitem.dir, 1)
 		for(var/O in src.grillitem.underlays + src.grillitem.overlays)

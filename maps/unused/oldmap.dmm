@@ -3640,7 +3640,9 @@
 /turf/simulated/floor,
 /area/crew_quarters/captain)
 "id" = (
-/obj/displaycase,
+/obj/displaycase{
+	displayed = new /obj/item/captaingun
+},
 /turf/simulated/floor,
 /area/crew_quarters/captain)
 "ie" = (

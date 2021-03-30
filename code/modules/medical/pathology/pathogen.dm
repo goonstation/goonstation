@@ -545,7 +545,7 @@ datum/controller/pathogen
 								output += " -- None -- <br>"
 							output += "<a href='?src=\ref[src];action=pathogen_creator;do=add;topic_holder=\ref[topic_holder]'>Add effect</a><br><br>"
 					output += "<a href='?src=\ref[src];action=pathogen_creator;do=reset;topic_holder=\ref[topic_holder]'>Reset pathogen</a>"
-					if (P.body_type && P.suppressant && P.effects.len)
+					if (P.body_type && P.suppressant && length(P.effects))
 						output += " -- <a href='?src=\ref[src];action=pathogen_creator;do=create;topic_holder=\ref[topic_holder]'>Create pathogen</a>"
 				else
 					output += "<h1>NOTHING TO SEE HERE YET</h1>"

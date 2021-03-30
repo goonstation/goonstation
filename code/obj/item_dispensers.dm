@@ -121,9 +121,18 @@
 	filled_icon_state = "dispenser_id"
 	deposit_type = /obj/item/paper
 	withdraw_type = /obj/item/card/id
-	amount = 7 
+	amount = 7
 
 	attack_hand(mob/user as mob)
 		if (!src.cant_withdraw && src.amount >= 1)
 			playsound(src.loc, "sound/machines/printer_dotmatrix.ogg", 25, 1)
 		..()
+
+/obj/item_dispenser/icedispenser
+	name = "ice dispenser"
+	desc = "It's a small freezer unit that produces ice. Looks like it's hooked into the station water mains."
+	icon_state = "dispenser_ice"
+	filled_icon_state = "dispenser_ice"
+	withdraw_type = /obj/item/raw_material/ice
+	deposit_type = null
+	amount = 100

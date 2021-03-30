@@ -25,13 +25,13 @@
 			if (continuous && (log_line > max_lines))
 				messages.Cut(1,2)
 				speakers.Cut(1,2)
-				log_line = messages.len
+				log_line = length(messages)
 
 			return 1
 
 		get_message(continuous)
 			if (log_line > messages.len)
-				if (continuous && messages.len)
+				if (continuous && length(messages))
 					log_line = 1
 				else
 					return null
@@ -40,7 +40,7 @@
 
 		next(continuous)
 			if (log_line >= messages.len)
-				if (continuous && messages.len)
+				if (continuous && length(messages))
 					log_line = 1
 				else
 					return 0
@@ -100,7 +100,7 @@
 			src.audiolog_messages += "NanoTrasen has been causing us significant trouble recently."
 			src.audiolog_messages += "You are to detonate their station with a nuclear device."
 			src.audiolog_messages += "You must arm the bomb in [nuke_area]. Good luck and god speed."
-			src.audiolog_speakers.len = src.audiolog_messages.len
+			src.audiolog_speakers.len = length(src.audiolog_messages)
 
 			if (!src.tape)
 				src.tape = new /obj/item/audio_tape(src)
@@ -133,7 +133,7 @@
 			src.audiolog_messages += "Some crew members have reported strange noises on the station ever since we recovered the artifact, but I'm su---"
 			audiolog_speakers += "*static*"
 			src.audiolog_messages += "ZZZZZZZZZZZZZZZZZZZZZZZ"
-			src.audiolog_speakers.len = src.audiolog_messages.len
+			src.audiolog_speakers.len = length(src.audiolog_messages)
 			return
 
 	wjam_office_log
@@ -222,10 +222,10 @@
 		SPAWN_DBG(1 SECOND)
 			if (!src.tape)
 				src.tape = new /obj/item/audio_tape(src)
-			if (src.audiolog_messages && src.audiolog_messages.len)
+			if (src.audiolog_messages && length(src.audiolog_messages))
 				src.tape.messages = src.audiolog_messages
 				src.audiolog_messages = null
-			if (src.audiolog_speakers && src.audiolog_speakers.len)
+			if (src.audiolog_speakers && length(src.audiolog_speakers))
 				src.tape.speakers = src.audiolog_speakers
 				src.audiolog_speakers = null
 

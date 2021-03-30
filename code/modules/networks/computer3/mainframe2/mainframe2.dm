@@ -494,7 +494,7 @@
 					return 0
 
 			if(!(program in src.processing))
-				if (src.os == program && src.processing.len)
+				if (src.os == program && length(src.processing))
 					src.processing.len++
 					for (var/x = src.processing.len, x > 0, x--)
 						var/datum/computer/file/mainframe_program/P = src.processing[x]
@@ -520,7 +520,7 @@
 
 					if (!success)
 						src.processing += program
-						program.progid = src.processing.len
+						program.progid = length(src.processing)
 
 			if (user && !allow_fork)
 				program.useracc = user
@@ -946,7 +946,7 @@
 	if (!the_message)
 		return 1
 
-	for (var/obj/machinery/networked/mainframe/aMainframe as() in machine_registry[MACHINES_MAINFRAMES])
+	for (var/obj/machinery/networked/mainframe/aMainframe as anything in machine_registry[MACHINES_MAINFRAMES])
 		LAGCHECK(LAG_LOW)
 		if (aMainframe.z != 1)
 			continue

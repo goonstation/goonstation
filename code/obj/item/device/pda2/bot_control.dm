@@ -105,7 +105,7 @@
 		var/turf/summon_turf = get_turf(PDA)
 		if (isAIeye(usr))
 			summon_turf = get_turf(usr)
-			if (!(summon_turf.cameras && summon_turf.cameras.len))
+			if (!(summon_turf.cameras && length(summon_turf.cameras)))
 				summon_turf = get_turf(PDA)
 
 		if(href_list["active"])

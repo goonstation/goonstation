@@ -83,7 +83,7 @@ GAUNTLET CARDS
 	var/emagged = 0
 	var/datum/reagent_group_account/reagent_account = null
 	/// this determines if the icon_state of the ID changes if it is given a new job
-	var/keep_icon = FALSE 
+	var/keep_icon = FALSE
 
 	// YOU START WITH  NO  CREDITS
 	// WOW
@@ -142,7 +142,6 @@ GAUNTLET CARDS
 	registered = "Member"
 	assignment = "Member"
 	keep_icon = TRUE
-	var/jones_swiped = 0
 
 /obj/item/card/id/captains_spare
 	name = "Captain's spare ID"
