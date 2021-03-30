@@ -484,7 +484,6 @@
 /area/space)
 "cs" = (
 /obj/landmark/start,
-/obj/landmark/start/latejoin,
 /turf/unsimulated/floor/blue,
 /area/pod_wars/team1/manufacturing)
 "cu" = (
@@ -1856,6 +1855,7 @@
 /area/pod_wars/spacejunk/nancy/warehouse)
 "iy" = (
 /obj/stool/bench/green,
+/obj/landmark/start/latejoin,
 /turf/simulated/floor,
 /area/pod_wars/spacejunk/fstation/mess)
 "iz" = (
@@ -7900,6 +7900,7 @@
 /obj/stool/chair{
 	dir = 1
 	},
+/obj/landmark/start/latejoin,
 /turf/simulated/floor/purple/side{
 	dir = 1
 	},
@@ -8320,6 +8321,13 @@
 	icon_state = "floor"
 	},
 /area/pod_wars/team2/hangar)
+"MX" = (
+/obj/stool/chair{
+	dir = 8
+	},
+/obj/landmark/start/latejoin,
+/turf/simulated/floor/black,
+/area/pod_wars/spacejunk/fstation/observatory)
 "Nc" = (
 /obj/control_point_computer{
 	name = "UBV-67 Control Console"
@@ -8660,6 +8668,7 @@
 "OL" = (
 /obj/stool/bench/green,
 /obj/stool/bench/green,
+/obj/landmark/start/latejoin,
 /turf/simulated/floor,
 /area/pod_wars/spacejunk/fstation/mess)
 "OM" = (
@@ -9142,6 +9151,7 @@
 /area/pod_wars/team1/hangar)
 "QZ" = (
 /obj/stool/bench/green,
+/obj/landmark/start/latejoin,
 /turf/simulated/floor/green/side{
 	dir = 1
 	},
@@ -9661,6 +9671,7 @@
 	dir = 1
 	},
 /obj/stool/chair,
+/obj/landmark/start/latejoin,
 /turf/simulated/floor/purple,
 /area/pod_wars/spacejunk/fstation/crewquarters)
 "Tj" = (
@@ -10701,6 +10712,7 @@
 /area/pod_wars/spacejunk/miningoutpost/crewquarters)
 "XY" = (
 /obj/stool/chair,
+/obj/landmark/start/latejoin,
 /turf/simulated/floor/purple,
 /area/pod_wars/spacejunk/fstation/crewquarters)
 "XZ" = (
@@ -169368,8 +169380,8 @@ JW
 JW
 Hs
 Hs
-oL
-oL
+MX
+MX
 Hs
 Hs
 JW
