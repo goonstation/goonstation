@@ -23,10 +23,10 @@
 			boutput(user, "<span class='alert'>You cannot put [W] into [src]!</span>")
 			return
 
-		var/success = 0 //did we successfully recycle a thing?
+		var/success = FALSE //did we successfully recycle a thing?
 		if(istype(W, /obj/item/reagent_containers/glass))
 			if (istype(W, /obj/item/reagent_containers/glass/beaker))
-				success = 1
+				success = TRUE
 				if (istype(W, /obj/item/reagent_containers/glass/beaker/large))
 					glass_amt += 2
 				else
@@ -34,12 +34,12 @@
 			else
 				var/obj/item/reagent_containers/glass/G = W
 				if (G.can_recycle)
-					success = 1
+					success = TRUE
 					glass_amt += 1
 		else if (istype(W, /obj/item/reagent_containers/food/drinks/))
 			var/obj/item/reagent_containers/food/drinks/D = W
 			if (D.can_recycle)
-				success = 1
+				success = TRUE
 				if (istype(W,/obj/item/reagent_containers/food/drinks/drinkingglass))
 					var/obj/item/reagent_containers/food/drinks/drinkingglass/DG = W
 					glass_amt += DG.shard_amt
@@ -50,16 +50,16 @@
 					else
 						glass_amt += W.amount
 		else if (istype(W, /obj/item/material_piece) && W.material?.material_flags & MATERIAL_CRYSTAL && W.material?.alpha <= 180)
-			success = 1
+			success = TRUE
 			glass_amt += W.amount * 10
 		else if (istype(W, /obj/item/raw_material/shard))
-			success = 1
+			success = TRUE
 			glass_amt += W.amount
 		else if (istype(W, /obj/item/plate))
-			success = 1
+			success = TRUE
 			glass_amt += PLATE_COST
 		else if (istype(W, /obj/item/platestack))
-			success = 1
+			success = TRUE
 			var/obj/item/platestack/PS = W
 			var/plateCount = PS.platenum + 1
 			glass_amt += plateCount * PLATE_COST

@@ -139,7 +139,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 	icon_state = "null"
 	item_state = "null"
 	amount_per_transfer_from_this = 10
-	var/can_recycle = 1 //can this be put in a glass recycler?
+	var/can_recycle = TRUE //can this be put in a glass recycler?
 	var/splash_all_contents = 1
 	flags = FPRINT | TABLEPASS | OPENCONTAINER | SUPPRESSATTACK
 
@@ -434,7 +434,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 	initial_volume = 50
 	flags = FPRINT | OPENCONTAINER | SUPPRESSATTACK
 	rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
-	can_recycle = 0
+	can_recycle = FALSE
 	var/helmet_bucket_type = /obj/item/clothing/head/helmet/bucket
 	var/hat_bucket_type = /obj/item/clothing/head/helmet/bucket/hat
 	var/bucket_sensor_type = /obj/item/bucket_sensor
