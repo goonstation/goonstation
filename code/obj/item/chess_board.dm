@@ -40,6 +40,11 @@
 	var/spawnType
 	var/pieceTotal
 
+	// context menu vars
+	contextLayout = new /datum/contextLayout/instrumental(16)
+	var/list/datum/contextAction/chessActions
+
+	// box contents and the pieces that are spawned
 	var/list/boxContents
 	var/list/possiblePieces = list("king","queen","bishop","knight","rook","pawn","draughtsman")
 
@@ -49,6 +54,34 @@
 		piece.pieceType = "[spawnType]" // sets created piece type
 		piece.setPieceInfo(src) // set piece information based on box and type
 		piece.set_loc(src)
+
+	/* proc/setExamine()
+		desc = "An ornate wooden box designed to contain [affinity] pieces for chess and checkers."
+		if(pieceTotal <= 0)
+			desc == "[desc] There is nothing in it."
+		else
+		var/list/pieceCountList == null
+			desc == "[desc] It contains [pieceCountList]" */
+
+	proc/updateChessActions()
+		chessActions = list()
+		chessActions += new /datum/contextAction/chess/takeOne
+		chessActions += new /datum/contextAction/chess/takeMultiple
+		chessActions += new /datum/contextAction/chess/dispenseChess
+		chessActions += new /datum/contextAction/chess/dispenseDraughts
+		chessActions += new /datum/contextAction/chess/closeBox
+		chessActions += new /datum/contextAction/chess/close
+
+	proc/grabOne(var/mob/user,var/obj/item/chessman/piece)
+		// return if box is empty
+		if(pieceTotal <= 0)
+			boutput(user, "The box is completely empty!")
+			return
+		var/selectedType = input(usr,"Pick a piece type:","CHEEEESS") in contents
+		user.put_in_hand_or_drop(selectedType)
+		//contents.sortPieces()
+		pieceTotal = contents.len
+		src.visible_message("[usr] removes [selectedType] from the [affinity] chess box.")
 
 	New() // sets piece numbers and icon state on instantiaion
 		icon_state = "[affinity]box"
@@ -70,27 +103,12 @@
 			icon_state = "[affinity]box"
 
 	attack_hand(mob/user as mob)
-		// return if box is empty
-		if(pieceTotal == 0)
-			boutput(user, "The box is completely empty!")
-			return
-
 		// open box if closed
 		if(icon_state == "[affinity]box")
 			icon_state = "[affinity]box-open"
 
-		// grabbing pieces from the box
-		var/selectedType = input(usr,"Pick a piece type:","CHEEEESS") in possiblePieces
-		var/wasPieceDrawn = 0 // probably really amateurish but i gotta have that condition SOMEHOW
-		for(var/i in 1 to contents.len)	// hellish for loop for iterating through every entry in the box contents to find your dang piece
-			if("[src.affinity] [selectedType]" == contents[i].name)
-				user.put_in_hand_or_drop(contents[i])
-				src.visible_message("[usr] removes a [affinity] [selectedType] from the [affinity] chess box.")
-				wasPieceDrawn = 1
-				return
-		if(wasPieceDrawn != 1)
-			boutput(user, "The box doesn't have another [selectedType]!")
-			return
+		updateChessActions()
+		user.showContextActions(chessActions, src)
 
 	attackby(var/obj/item/W, var/mob/user)
 		// check chess piece for correct affinity, then places it into box's contents
@@ -98,7 +116,7 @@
 			if(findtext(W.name,src.affinity))
 				user.u_equip(W)
 				W.set_loc(src)
-				src.visible_message("[usr] places a [W] in the [affinity] chess box.")
+				src.visible_message("[usr] places [W] in the [affinity] chess box.")
 			else
 				boutput(user, "That doesn't belong in this box!")
 
@@ -109,10 +127,8 @@
 	// black box
 	black
 		name = "black chess box"
-		desc = "An ornate wooden box containing black pieces for chess and checkers."
 		affinity = "black"
 
 	white
 		name = "white chess box"
-		desc = "An ornate wooden box containing white pieces for chess and checkers."
 		affinity = "white"

@@ -791,7 +791,7 @@
 	name = "Card action"
 	desc = "You shouldn't be reading this, bug."
 	icon_state = "wrench"
-	
+
 	checkRequirements(var/atom/target, var/mob/user)
 		return TRUE
 
@@ -988,3 +988,54 @@
 			target.addContextAction(/datum/contextAction/testfour)
 			return 0
 */
+
+/datum/contextAction/chess
+	icon = 'icons/ui/context16x16.dmi'
+	name = "Chess action"
+	desc = "You shouldn't be reading this, bug."
+
+	checkRequirements(var/atom/target, var/mob/user)
+		return TRUE
+
+	takeOne
+		name = "take one"
+		desc = "remove one piece from the box"
+		icon_state = "piece"
+
+		execute(var/atom/target, var/mob/user)
+			var/obj/item/chessbox/box = target
+			box.grabOne(user)
+
+	takeMultiple
+		name = "take multiple"
+		desc = "remove multiple pieces from the box"
+		icon_state = "piece_multiple"
+
+		execute(var/atom/target, var/mob/user)
+			var/obj/item/chessbox/box = target
+
+	dispenseChess
+		name = "take all chessmen"
+		desc = "removes all chessmen from the box"
+		icon_state = "chess"
+
+	dispenseDraughts
+	name = "take all draughtsmen"
+	desc = "removes all draughtsmen from the box"
+	icon_state = "draughts"
+
+	closeBox
+		name = "close box"
+		desc = "Close the box."
+		icon_state = "chessbox_close"
+
+		execute(var/atom/target, var/mob/user)
+			var/obj/item/chessbox/box = target
+
+	close
+		name = "close"
+		desc = "close this menu."
+		icon_state = "close"
+
+		execute(var/atom/target, var/mob/user)
+			user.closeContextActions()
