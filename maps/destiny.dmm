@@ -9265,7 +9265,8 @@
 "aKc" = (
 /obj/machinery/computer/card,
 /obj/item/device/radio/intercom/security{
-	pixel_x = 8
+	pixel_x = 8;
+	pixel_y = 28
 	},
 /obj/blind_switch/area/north{
 	pixel_x = -10;
@@ -9295,7 +9296,8 @@
 /obj/machinery/computer3/generic/communications,
 /obj/item/device/radio/intercom/bridge{
 	broadcasting = 0;
-	pixel_x = -7
+	pixel_x = -7;
+	pixel_y = 28
 	},
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -21840,9 +21842,6 @@
 "dta" = (
 /obj/cable{
 	icon_state = "1-2"
-	},
-/obj/machinery/light_switch/east{
-	dir = 4
 	},
 /turf/simulated/floor/purplewhite{
 	dir = 8
