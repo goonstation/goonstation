@@ -760,7 +760,7 @@
 			return
 
 		// If the target is or goes invisible, give up, securitrons don't have thermal vision! :p
-		if((src.target.invisibility > 0)  && (src.is_beepsky == 0))
+		if((src.target.invisibility > 0)  && (!src.is_beepsky))
 			speak("?!", just_float = 1)
 			src.KillPathAndGiveUp(kpagu)
 			return
