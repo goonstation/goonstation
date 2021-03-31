@@ -12417,8 +12417,9 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/maintenance/east)
 "aFy" = (
-/turf/space,
-/area/shuttle/mining/station)
+/obj/machinery/door/airlock/external,
+/turf/simulated/floor/plating/random,
+/area/space)
 "aFz" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "wall_space"
@@ -19402,6 +19403,7 @@
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
 	},
+/obj/access_spawn/mining,
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
@@ -19431,6 +19433,7 @@
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
 	},
+/obj/access_spawn/mining,
 /turf/simulated/floor/yellow/side,
 /area/station/mining/staff_room)
 "aVw" = (
@@ -19466,15 +19469,13 @@
 /turf/simulated/floor/plating/airless/random,
 /area/station/mining/magnet)
 "aVB" = (
-/obj/machinery/door/airlock/pyro/external,
-/obj/access_spawn/mining,
+/obj/structure/woodwall,
 /turf/simulated/floor/yellow/side{
 	dir = 8
 	},
 /area/station/mining/staff_room)
 "aVC" = (
-/obj/machinery/door/airlock/pyro/external,
-/obj/access_spawn/mining,
+/obj/structure/woodwall,
 /turf/simulated/floor/yellow/side{
 	dir = 4
 	},
@@ -32245,7 +32246,7 @@
 /turf/simulated/floor/grass,
 /area/station/garden/owlery)
 "bAc" = (
-/turf/simulated/floor/wood/two,
+/turf/simulated/floor/yellow/side,
 /area/station/hallway/secondary/west)
 "bAd" = (
 /obj/cable{
@@ -36748,14 +36749,14 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
-/turf/simulated/floor/wood/two,
+/turf/simulated/floor/yellow/side,
 /area/station/hallway/secondary/west)
 "bLM" = (
 /obj/machinery/disposal/small/west,
 /obj/disposalpipe/trunk{
 	dir = 1
 	},
-/turf/simulated/floor/wood/two,
+/turf/simulated/floor/yellow/side,
 /area/station/hallway/secondary/west)
 "bLN" = (
 /obj/machinery/light{
@@ -41939,7 +41940,6 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/storage/closet/wardrobe/orange,
 /obj/machinery/light{
 	dir = 8;
 	layer = 9.1;
@@ -42879,6 +42879,7 @@
 	dir = 1;
 	pixel_y = 32
 	},
+/obj/machinery/port_a_brig,
 /turf/simulated/floor/black,
 /area/station/security/main)
 "caE" = (
@@ -42906,7 +42907,6 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/storage/secure/closet/brig,
 /turf/simulated/floor/black,
 /area/station/security/brig)
 "caL" = (
@@ -54213,6 +54213,11 @@
 /obj/disposalpipe/junction/left/east,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
+"cPv" = (
+/obj/window/auto/reinforced,
+/obj/grille/steel,
+/turf/simulated/floor/plating,
+/area/station/hallway/secondary/west)
 "cPK" = (
 /obj/cable{
 	d1 = 4;
@@ -55028,6 +55033,10 @@
 	},
 /turf/simulated/floor,
 /area/station/hangar/escape)
+"fCV" = (
+/obj/storage/closet/wardrobe/orange,
+/turf/simulated/floor/black,
+/area/station/security/brig)
 "fEt" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -55353,6 +55362,7 @@
 /area/station/hallway/primary/central)
 "gYJ" = (
 /obj/disposalpipe/junction/right/east,
+/obj/storage/secure/closet/brig,
 /turf/simulated/floor/black,
 /area/station/security/main)
 "gZC" = (
@@ -57270,6 +57280,16 @@
 	},
 /turf/simulated/floor/carpet/red/standard/edge/se,
 /area/station/crew_quarters/fitness)
+"nbp" = (
+/obj/grille/catwalk,
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
+	},
+/turf/simulated/floor/yellow/side{
+	dir = 8
+	},
+/area/station/mining/staff_room)
 "ncb" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe/southeast,
 /obj/cable{
@@ -57688,6 +57708,9 @@
 /obj/burning_barrel,
 /turf/simulated/floor/plating/random,
 /area/station/security/hos/horizon)
+"ojv" = (
+/turf/simulated/floor/yellow,
+/area/station/hallway/secondary/west)
 "old" = (
 /obj/stool/chair{
 	dir = 4
@@ -58316,6 +58339,12 @@
 	dir = 4
 	},
 /area/station/maintenance/southeast)
+"qtP" = (
+/turf/simulated/shuttle/wall{
+	dir = 4;
+	icon_state = "wall3"
+	},
+/area/space)
 "qvw" = (
 /obj/grille/steel,
 /obj/window/auto/reinforced,
@@ -58324,6 +58353,10 @@
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating/random,
 /area/station/janitor/office)
+"qvI" = (
+/obj/machinery/door/airlock/pyro/external,
+/turf/simulated/floor/yellow,
+/area/station/hallway/secondary/west)
 "qvL" = (
 /obj/disposalpipe/segment/ejection,
 /obj/lattice{
@@ -58982,6 +59015,9 @@
 	},
 /turf/simulated/floor/wood,
 /area/station/hallway/secondary/west)
+"swg" = (
+/turf/space,
+/area/shuttle/mining/station)
 "swx" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -75285,17 +75321,17 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+cvw
+acn
 aFy
 aFy
-aFy
-aFy
-aFy
-aFy
+acn
+acn
+acn
+acn
+acn
+acn
+cvN
 aaa
 aaa
 asM
@@ -75318,9 +75354,9 @@ aaQ
 aaa
 aaa
 aaa
+aal
 aaa
-aaa
-aaa
+aal
 aaa
 aaa
 aaa
@@ -75585,21 +75621,21 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aFy
-aFy
-aFy
-aFy
-aFy
-aFy
-aFy
-aaa
+cvw
+acn
+acn
+abI
+abI
+abI
+abI
+abI
+abI
+abI
+abI
+abI
+acn
+acn
+cvN
 asM
 aYF
 aPT
@@ -75620,9 +75656,9 @@ aaQ
 aaa
 aaa
 aaa
+aal
 aaa
-aaa
-aaa
+aal
 aaa
 aaa
 aaa
@@ -75887,21 +75923,21 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aFy
-aFy
-aFy
-aFy
-aFy
-aFy
-aFy
-aFy
+qtP
+abI
+abI
+abI
+abI
+abI
+abI
+abI
+abI
+abI
+abI
+abI
+abI
+abI
+qtP
 asM
 aPT
 aPT
@@ -75922,9 +75958,9 @@ aaQ
 aaa
 aaa
 aaa
+aal
 aaa
-aaa
-aaa
+aal
 aaa
 aaa
 aaa
@@ -76189,21 +76225,21 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aFy
-aFy
-aFy
-aFy
-aFy
-aFy
-aFy
-aFy
+qtP
+abI
+abI
+abI
+abI
+abI
+abI
+abI
+abI
+abI
+abI
+abI
+abI
+abI
+qtP
 asM
 aSM
 bbI
@@ -76220,15 +76256,15 @@ aXW
 bAa
 bBK
 bFB
-aaQ
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+aad
+aai
+aai
+aai
+alE
+aai
+alE
+aai
+aDh
 aaa
 aaa
 aaa
@@ -76491,21 +76527,21 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aFy
-aFy
-aFy
-aFy
-aFy
-aFy
-aFy
-aFy
+qtP
+abI
+abI
+abI
+abI
+abI
+abI
+abI
+abI
+abI
+abI
+abI
+abI
+abI
+qtP
 asM
 aSM
 bbJ
@@ -76525,12 +76561,12 @@ bFB
 arn
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+swg
+swg
+swg
+swg
+swg
+swg
 aaa
 aaa
 aaa
@@ -76793,21 +76829,21 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aFy
-aFy
-aFy
-aFy
-aFy
-aFy
-aFy
-aaa
+aco
+acn
+acn
+abI
+abI
+abI
+abI
+abI
+abI
+abI
+abI
+abI
+acn
+acn
+afh
 aPT
 aPT
 bbK
@@ -76827,13 +76863,13 @@ bAc
 bxF
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+swg
+swg
+swg
+swg
+swg
+swg
+swg
 aaa
 aaa
 aaa
@@ -77097,17 +77133,17 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+aco
+acn
+acn
+acn
+acn
+acn
+acn
 aFy
 aFy
-aFy
-aFy
-aFy
-aFy
+acn
+afh
 aaa
 aaa
 aSM
@@ -77127,16 +77163,16 @@ bFD
 bIF
 bAc
 bOO
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+cPv
+cPv
+swg
+swg
+swg
+swg
+swg
+swg
+swg
+swg
 aaa
 aaa
 aaa
@@ -77428,17 +77464,17 @@ bCT
 bFE
 bIG
 bLK
-bOP
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+qvI
+ojv
+qvI
+swg
+swg
+swg
+swg
+swg
+swg
+swg
+swg
 aaa
 aaa
 aaa
@@ -77710,7 +77746,7 @@ aaa
 aPT
 aVt
 aVw
-aDF
+nbp
 aDF
 aDF
 aDF
@@ -77731,16 +77767,16 @@ bFF
 bIH
 bAc
 bOP
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+cPv
+cPv
+swg
+swg
+swg
+swg
+swg
+swg
+swg
+swg
 aaa
 aaa
 aaa
@@ -78035,13 +78071,13 @@ bLM
 bxF
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+swg
+swg
+swg
+swg
+swg
+swg
+swg
 aaa
 aaa
 aaa
@@ -78337,12 +78373,12 @@ bCW
 bOQ
 bOQ
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+swg
+swg
+swg
+swg
+swg
+swg
 aaa
 aaa
 aaa
@@ -78638,13 +78674,13 @@ boV
 bLN
 bOR
 bOQ
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+aai
+aai
+aaC
+aai
+aaC
+aai
+aDh
 aaa
 aaa
 aaa
@@ -78942,9 +78978,9 @@ bOR
 bRI
 aaa
 aaa
+aal
 aaa
-aaa
-aaa
+aal
 aaa
 aaa
 aaa
@@ -79242,12 +79278,12 @@ bIM
 bGG
 bOR
 bRJ
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+aai
+aai
+alE
+aai
+alE
+aai
 aaa
 aaa
 aaa
@@ -126659,7 +126695,7 @@ bTT
 bWq
 bYL
 vEt
-cct
+fCV
 bCl
 dEu
 cgk
