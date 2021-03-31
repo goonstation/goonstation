@@ -101,6 +101,9 @@
 #define COMSIG_ITEM_SWAP_TO "itm_swap_to"
 /// When an item is swapped away from [does not include being picked up/taken out of bags/etc] (user)
 #define COMSIG_ITEM_SWAP_AWAY "itm_swap_away"
+/// After an item's itemspecial is used (user)
+#define COMSIG_ITEM_SPECIAL_POST "itm_special_post"
+
 
 // ---- implant signals ----
 /// When implanted
