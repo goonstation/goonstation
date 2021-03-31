@@ -89,6 +89,7 @@
 	ai_calm_down = FALSE
 	ai_default_intent = INTENT_HARM
 	ai_aggression_timeout = 0
+	var/preferred_card_type = /obj/item/card/id/syndicate
 
 	New()
 		..()
@@ -96,10 +97,22 @@
 			src.equip_new_if_possible(/obj/item/clothing/suit/space/syndicate, slot_wear_suit)
 			src.equip_new_if_possible(/obj/item/clothing/head/helmet/space, slot_head)
 
+
 	ai_is_valid_target(mob/M)
 		if(!isliving(M) || !isalive(M))
 			return FALSE
-		return !istype(M.get_id(), /obj/item/card/id/syndicate)
+		return !istype(M.get_id(), preferred_card_type)
+
+#ifdef MAP_OVERRIDE_POD_WARS
+/mob/living/carbon/human/npc/monkey/oppenheimer/pod_wars
+	preferred_card_type = /obj/item/card/id/pod_wars/syndicate
+
+	New()
+		START_TRACKING_CAT(TR_CAT_PW_PETS)
+		..()
+	disposing()
+		STOP_TRACKING_CAT(TR_CAT_PW_PETS)
+		..()
 
 /mob/living/carbon/human/npc/monkey/horse
 	name = "????"

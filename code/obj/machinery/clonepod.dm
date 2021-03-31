@@ -60,6 +60,7 @@
 	var/static/list/sounds_function = list('sound/machines/engine_grump1.ogg','sound/machines/engine_grump2.ogg','sound/machines/engine_grump3.ogg',
 	'sound/impact_sounds/Metal_Clang_1.ogg','sound/impact_sounds/Metal_Hit_Heavy_1.ogg')
 
+	var/perfect_clone = 0		//if TRUE, then clones always keep normal name and recieve no health debuffs
 
 	New()
 		..()
@@ -258,7 +259,7 @@
 		if(src.occupant.client) // gross hack for resetting tg layout bleh bluh
 			src.occupant.client.set_layout(src.occupant.client.tg_layout)
 
-		if(src.occupant.bioHolder.clone_generation > 1)
+		if(!src.perfect_clone && src.occupant.bioHolder.clone_generation > 1)
 			var/health_penalty = (src.occupant.bioHolder.clone_generation - 1) * 15
 			src.occupant.setStatus("maxhealth-", null, -health_penalty)
 			if(health_penalty >= 100)
@@ -296,7 +297,7 @@
 			boutput(src.occupant, "<span class='notice'><b>Clone generation process initiated.</b> This might take a moment, please hold.</span>")
 
 		if (clonename)
-			if (prob(15))
+			if (!src.perfect_clone && prob(15))
 				src.occupant.real_name = "[pick("Almost", "Sorta", "Mostly", "Kinda", "Nearly", "Pretty Much", "Roughly", "Not Quite", "Just About", "Something Resembling", "Somewhat")] [clonename]"
 			else
 				src.occupant.real_name = clonename

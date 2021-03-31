@@ -26,6 +26,7 @@
 	var/atom/movable/screen/hud/score_board/board
 	var/round_limit = 40 MINUTES
 	var/force_end = 0
+	var/slow_delivery_process = 0			//number of ticks to skip the extra gang process loops
 
 
 /datum/game_mode/pod_wars/announce()
@@ -36,10 +37,10 @@
 //setup teams and commanders
 /datum/game_mode/pod_wars/pre_setup()
 	board = new()
+	stats_manager = new()
 	if (!setup_teams())
 		return 0
 
-	stats_manager = new()
 	//just to move the bar to the right place.
 	handle_point_change(team_NT, team_NT.points)	//HAX. am
 	handle_point_change(team_SY, team_SY.points)	//HAX. am
@@ -64,6 +65,7 @@
 		shuffle_list(readied_minds)
 		if (length < 2)
 			if (prob(100))	//change to 50 - KYLE
+				var/CHANGE_TO_50
 				team_NT.accept_initial_players(readied_minds)
 			else
 				team_SY.accept_initial_players(readied_minds)
@@ -115,24 +117,7 @@
 		// add_control_point(/area/pod_wars/spacejunk/fstation, FORTUNA)
 		// add_control_point(/area/pod_wars/spacejunk/uvb67, UBV67)
 
-		//hacky way. lame, but fast (for me). What else is going on in the post_setup anyway?
-		for (var/obj/control_point_computer/CPC in world)
-			var/area/A = get_area(CPC)
-			var/name = ""
-			var/true_name = ""
-			if (istype(A, /area/pod_wars/spacejunk/reliant))
-				name = "The NSV Reliant"
-				true_name = RELIANT
-			else if (istype(A, /area/pod_wars/spacejunk/fstation))
-				name = "Fortuna Station"
-				true_name = FORTUNA
-			else if (istype(A, /area/pod_wars/spacejunk/uvb67))
-				name = "UBV-67"
-				true_name = UBV67
-			var/datum/control_point/P = new/datum/control_point(CPC, A, name, true_name, src)
-
-			CPC.ctrl_pt = P 		//computer's reference to datum
-			control_points += P 	//game_mode's reference to the point
+		setup_control_points()
 
 	SPAWN_DBG(-1)
 		setup_asteroid_ores()
@@ -149,6 +134,25 @@
 				M.emote("fart")
 			force_end = 1
 
+/datum/game_mode/pod_wars/proc/setup_control_points()
+	//hacky way. lame, but fast (for me). What else is going on in the post_setup anyway?
+	for (var/obj/control_point_computer/CPC in world)
+		var/area/A = get_area(CPC)
+		var/name = ""
+		var/true_name = ""
+		if (istype(A, /area/pod_wars/spacejunk/reliant))
+			name = "The NSV Reliant"
+			true_name = RELIANT
+		else if (istype(A, /area/pod_wars/spacejunk/fstation))
+			name = "Fortuna Station"
+			true_name = FORTUNA
+		else if (istype(A, /area/pod_wars/spacejunk/uvb67))
+			name = "UBV-67"
+			true_name = UBV67
+		var/datum/control_point/P = new/datum/control_point(CPC, A, name, true_name, src)
+
+		CPC.ctrl_pt = P 		//computer's reference to datum
+		control_points += P 	//game_mode's reference to the point
 
 
 /datum/game_mode/pod_wars/proc/setup_asteroid_ores()
@@ -290,10 +294,12 @@ ABSTRACT_TYPE(/datum/ore_cluster)
 	board.change_control_point_owner(true_name, team, team_num)
 
 	var/team_string = "[team_num == 1 ? "NanoTrasen" : team_num == 2 ? "The Syndicate" : "Something Eldritch"]"
-	boutput(world, "<h4><span class='[team_num == 1 ? "notice":"alert"]'>[user] captured [name] for [team_string]!</span></h4>")
+	boutput(world, "<h4><span class='[team_num == 1 ? "notice":"alert"]'>[user] captured [team.name] for [team_string]!</span></h4>")
 
 	//do one sound for the capturing team, one for the losing
-	world << sound('sound/misc/newsting.ogg')	//change this sound.
+	//change this sound.		KYLEEEE
+	for(var/client/C in clients)
+		C.mob?.playsound_local(C.mob, "sound/misc/newsting.ogg", 50, 0)
 
 /datum/game_mode/pod_wars/proc/handle_point_change(var/datum/pod_wars_team/team)
 	var/fraction = round (team.points/team.max_points, 0.01)
@@ -314,6 +320,9 @@ ABSTRACT_TYPE(/datum/ore_cluster)
 
 //check which team they are on and iff they are a commander for said team. Deduct/award points
 /datum/game_mode/pod_wars/on_human_death(var/mob/M)
+	src.stats_manager?.inc_death(M)
+
+	//should probably just replace this based on Mind.special role, but idk.
 	var/nt = locate(M.mind) in team_NT.members
 	if (nt)
 		if (M.mind == team_NT.commander)
@@ -326,8 +335,8 @@ ABSTRACT_TYPE(/datum/ore_cluster)
 		if (M.mind == team_SY.commander)
 			team_SY.change_points(-1)
 		team_NT.change_points(1)
+		return
 
-	src.stats_manager?.inc_death(M)
 
 /datum/game_mode/pod_wars/proc/announce_critical_system_destruction(var/team_num, var/obj/pod_base_critical_system/CS)
 	var/datum/pod_wars_team/team
@@ -341,7 +350,7 @@ ABSTRACT_TYPE(/datum/ore_cluster)
 	team.change_points(-25)
 	for (var/datum/mind/M in team.members)
 		if (M.current)
-			M.current.client << sound('sound/effects/ship_alert_major.ogg')
+			M.current.playsound_local(M.current, "sound/effects/ship_alert_major.ogg", 50, 0)
 
 	var/team_name_string = team?.name
 	if (team.team_num == TEAM_SYNDICATE)
@@ -358,7 +367,7 @@ ABSTRACT_TYPE(/datum/ore_cluster)
 	for (var/datum/mind/M in team.members)
 		if (M.current)
 			boutput(M.current, "<h3><span class='alert'>Your team's [CS] is under attack!</span></h3>")
-			M.current.client << sound('sound/effects/ship_alert_minor.ogg')
+			M.current.playsound_local(M.current, "sound/effects/ship_alert_minor.ogg", 50, 0)
 
 
 /datum/game_mode/pod_wars/check_finished()
@@ -373,15 +382,32 @@ ABSTRACT_TYPE(/datum/ore_cluster)
 
 /datum/game_mode/pod_wars/process()
 	..()
+	slow_delivery_process ++
+	if (slow_delivery_process >= 60)
+		slow_delivery_process = 0
+		src.handle_control_point_rewards()
+
+/datum/game_mode/pod_wars/proc/handle_control_point_rewards()
+
+	for (var/datum/control_point/P in src.control_points)
+		if (!P.computer)
+			message_admins("SOMETHING WENT TERRIBLY WRONG WITH THE CONTROL POINTS!!!")
+			logTheThing("debug", null, null, "PW CONTROL POINT has null computer var.!!!")
+			continue
+
+		var/turf/T = get_step(P.computer, P.computer.dir)
+
+/datum/game_mode/pod_wars/proc/do_item_delivery()
+
 
 /datum/game_mode/pod_wars/declare_completion()
-	var/datum/pod_wars_team/winner = team_NT.points > team_SY.points ? team_NT.name : team_SY.name
-	var/datum/pod_wars_team/loser = team_NT.points < team_SY.points ? team_NT.name : team_SY.name
+	var/datum/pod_wars_team/winner = team_NT.points > team_SY.points ? team_NT : team_SY
+	var/datum/pod_wars_team/loser = team_NT.points < team_SY.points ? team_NT : team_SY
 	// var/text = ""
-	boutput(world, "<FONT size = 3><B>The winner was the [winner.name], commanded by [winner.commander.current] ([winner.commander.current.ckey]):</B></FONT><br>")
+	boutput(world, "<FONT size = 3><B>The winner was the [winner.name], commanded by [winner.commander?.current] ([winner.commander?.current?.ckey]):</B></FONT><br>")
 	output_team_members(winner)
 
-	boutput(world, "<FONT size = 3><B>The loser was the [loser.name], commanded by [loser.commander.current]:</B></FONT><br>")
+	boutput(world, "<FONT size = 3><B>The loser was the [loser.name], commanded by [loser.commander?.current] ([loser.commander?.current?.ckey]):</B></FONT><br>")
 	output_team_members(loser)
 
 	// output the player stats on its own popup.
@@ -393,14 +419,14 @@ ABSTRACT_TYPE(/datum/ore_cluster)
 
 //outputs the team members to world for declare_completion
 /datum/game_mode/pod_wars/proc/output_team_members(var/datum/pod_wars_team/pw_team)
-	var/list/L = list()
+	var/string = ""
 	var/active_players = 0
 	for (var/datum/mind/m in pw_team.members)
 		if (m.current?.ckey)
 			active_players ++
 		if (m == pw_team.commander)
 			continue 		//count em for active players, but don't display em here, they already got their name up there!
-		L += "<b>[m.current]</b> ([m.ckey])<br>"
+		string += "<b>[m.current]</b> ([m.ckey])</b><br>"
 	boutput(world, "[active_players] active players/[length(pw_team.members)] total players")
 	boutput(world, "")	//L.something
 
@@ -530,9 +556,9 @@ ABSTRACT_TYPE(/datum/ore_cluster)
 		boutput(H, "You're in the [name] faction!")
 		// bestow_objective(player,/datum/objective/battle_royale/win)
 		// SHOW_TIPS(H)
-
-		if (mode.stats_manager)
-			mode.stats_manager.add_player(M.mind, M.real_name, src.team_num, (M.mind == commander ? "Commander" : "Pilot"))
+		if (istype(mode))
+			boutput(H, "<h1> KYELELLELELE</h1>")
+			mode.stats_manager?.add_player(H.mind, H.real_name, team_num, (H.mind == commander ? "Commander" : "Pilot"))
 
 /obj/pod_base_critical_system
 	name = "Critical System"
@@ -657,7 +683,7 @@ ABSTRACT_TYPE(/datum/ore_cluster)
 	var/team_num		//used for getting the team datum, this is set to 1 or 2 in the map editor. 1 = NT, 2 = Syndicate
 	var/datum/pod_wars_team/team
 	// is_speedy = 1	//setting this var does nothing atm, its effect is done and it is set by being hit with the object
-
+	perfect_clone = 1
 
 	process()
 
@@ -2090,13 +2116,14 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 
 	proc/add_player(var/datum/mind/mind, var/initial_name, var/team_num, var/rank)
 		//only add new stat tracker datum if one doesn't exist
-		if (player_stats[mind.ckey] == null && mind.ckey)
+		if (mind.ckey && player_stats[mind.ckey] == null)
 			player_stats[mind.ckey] = new/datum/pw_player_stats(mind = mind, initial_name = initial_name, team_num = team_num, rank = rank )
 
 	//team_num = team that just captured this point
 	//computer = computer object for the point that has been captured. used for distance check currently.
 	proc/inc_control_point_caps(var/team_num, var/obj/computer)
-		for (var/datum/pw_player_stats/stat in player_stats)
+		for (var/ckey in player_stats)
+			var/datum/pw_player_stats/stat = player_stats[ckey]
 			if (stat.team_num != team_num)
 				continue
 			//if they are within 30 tiles of the capture point computer, it counts as helping!
@@ -2105,18 +2132,21 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 				stat.control_point_capture_count ++
 
 	proc/inc_friendly_fire(var/mob/M)
-		if (!ismob(M))
+		if (!ismob(M) || !M.ckey)
 			return
 		var/datum/pw_player_stats/stat = player_stats[M.ckey]
 		if (istype(stat))
 			stat.friendly_fire_count ++
 
 	proc/inc_death(var/mob/M)
-		if (!ismob(M))
+		if (!ismob(M) || !M.ckey)
 			return
+		message_admins("1.[M]")
 		var/datum/pw_player_stats/stat = player_stats[M.ckey]
+		message_admins("2.[stat]")
 		if (istype(stat))
 			stat.death_count ++
+			message_admins("3.[stat.death_count]")
 
 		src.inc_longest_life(M.ckey)
 
@@ -2136,11 +2166,8 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 				if (stat.time_of_last_death < shift_time - stat.time_of_last_death)
 					stat.time_of_last_death = shift_time - stat.time_of_last_death
 
-
-			stat.longest_life = TIME - stat.longest_life
-
 	proc/inc_farts(var/mob/M)
-		if (!ismob(M))
+		if (!ismob(M) || !M.ckey)
 			return
 		var/datum/pw_player_stats/stat = player_stats[M.ckey]
 		if (istype(stat))
@@ -2148,7 +2175,7 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 
 	//has a variable increment amount cause not every tic of ethanol metabolize metabolizes the same amount of alcohol.
 	proc/inc_alcohol_metabolized(var/mob/M, var/inc_amt = 1)
-		if (!ismob(M))
+		if (!ismob(M) || !M.ckey)
 			return
 		var/datum/pw_player_stats/stat = player_stats[M.ckey]
 		if (istype(stat))
@@ -2156,9 +2183,44 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 
 	//called on round end to output the stats. returns the HTML as a string.
 	proc/build_HTML()
+
+		//calculate pet survival first.
+		var/pet_dat = "<h4>Pet Stats:</h4>"
+		for(var/pet in by_cat[TR_CAT_PW_PETS])
+			if(istype(pet, /obj/critter/turtle/sylvester/Commander))
+				var/obj/critter/P = pet
+				if(P.alive)
+					if (istype(get_area(P), /area/pod_wars/team1))
+						pet_dat += "<span class='notice'>Sylvester is safe and sound on the Pytheas! Good job NanoTrasen!</span><br>"
+					else if (istype(get_area(P), /area/pod_wars/team2))
+						pet_dat += "<span class='alert'>Sylvester was captured by the Syndicate! Oh no!</span><br>"
+					else
+						pet_dat += "<span class='notice'>Sylvester survived! Yay!</span><br>"
+
+				else
+					pet_dat += "<span class='alert'>Sylvester was killed! Oh no!</span><br>"
+
+			else if(istype(pet, /mob/living/carbon/human/npc/monkey/oppenheimer/pod_wars))
+				var/mob/living/carbon/human/opp = pet
+				if (isalive(opp))
+					if (istype(get_area(opp), /area/pod_wars/team2))
+						pet_dat += "<span class='notice'>Oppenhimer is safe and sound on the Lodbrok! Good job Syndicates!</span><br>"
+					else if (istype(get_area(opp), /area/pod_wars/team1))
+						pet_dat += "<span class='alert'>Oppenhimer was captured by NanoTrasen! Oh no!</span><br>"
+					else
+						pet_dat += "<span class='notice'>Oppenhimer survived! Yay!</span><br>"
+
+				else
+					pet_dat += "<span class='alert'>Oppenhimer was killed! Oh no!</span><br>"
+
+
 		. = {"<h2>
-Player Stats
+Game Stats
 </h2>
+<p>[pet_dat]</p>
+<h3>
+Player Stats
+</h3>
 <table id=\"myTable\">
   <tr>
     <th>Team</th>
@@ -2170,20 +2232,19 @@ Player Stats
     <th>Farts</th>
     <th>Ctrl Pts</th>
   </tr>
-  <tr>
-    <td>Berglunds snabbkop</td>
-    <td>Sweden</td>
-  </tr>
+  
 "}
-
+		message_admins("player stats loop")
 		var/dat = ""
-		for (var/datum/pw_player_stats/stat in player_stats)
+		for (var/ckey in player_stats)
+			var/datum/pw_player_stats/stat = player_stats[ckey]
+			message_admins("[stat.team_num], [stat.initial_name]")
 			//first update longest life
 			inc_longest_life(stat.ckey)
 
 			dat += {"
 <tr>
- <td>[stat.team_num]</td>
+ <td>[stat.team_num == 1? "NT" : stat.team_num == 2 ? "SY" : ""]</td>
  <td>[stat.initial_name] ([stat.ckey])</td>
  <td>[stat.death_count]</td>
  <td>[stat.friendly_fire_count]</td>
@@ -2193,7 +2254,7 @@ Player Stats
  <td>[stat.control_point_capture_count]</th>  d
 </tr>
 "}
-		. += "</table>"
+		. += "[dat]</table>"
 
 	proc/display_HTML_to_clients()
 		var/string = build_HTML()
@@ -2225,3 +2286,42 @@ Player Stats
 		src.rank = rank
 
 		src.ckey = mind?.ckey
+
+
+/obj/storage/crate/pod_wars_rewards
+	var/ready = 0
+	grab_stuff_on_spawn = FALSE
+	req_access = list(access_maxsec)
+	New()
+		..()
+		SPAWN_DBG(2 SECONDS)
+			if (!ready)
+				spawn_items()
+
+	proc/spawn_items(var/mob/owner)
+		ready = 1
+		var/telecrystals = 0
+		var/list/possible_items = list()
+
+		if (islist(syndi_buylist_cache))
+			for (var/datum/syndicate_buylist/S in syndi_buylist_cache)
+				var/blocked = 0
+				if (ticker?.mode && S.blockedmode && islist(S.blockedmode) && length(S.blockedmode))
+					for (var/V in S.blockedmode)
+						if (ispath(V) && istype(ticker.mode, V))
+							blocked = 1
+							break
+
+				if (blocked == 0 && !S.not_in_crates)
+					possible_items += S
+
+		if (islist(possible_items) && length(possible_items))
+			while(telecrystals < 18)
+				var/datum/syndicate_buylist/item_datum = pick(possible_items)
+				if(telecrystals + item_datum.cost > 24) continue
+				var/obj/item/I = new item_datum.item(src)
+				if (owner)
+					item_datum.run_on_spawn(I, owner, TRUE)
+					if (owner.mind)
+						owner.mind.traitor_crate_items += item_datum
+				telecrystals += item_datum.cost

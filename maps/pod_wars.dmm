@@ -1768,7 +1768,7 @@
 /turf/space,
 /area/space)
 "if" = (
-/mob/living/carbon/human/npc/monkey/oppenheimer,
+/mob/living/carbon/human/npc/monkey/oppenheimer/pod_wars,
 /turf/unsimulated/floor/red/side{
 	dir = 10
 	},
