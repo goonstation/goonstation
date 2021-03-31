@@ -1226,7 +1226,6 @@
 	icon_state = "werewolf"
 	human_compatible = 0
 	uses_human_clothes = 0
-	head_offset = -1
 	var/original_name
 	jerk = 1
 	override_attack = 0
@@ -1241,6 +1240,9 @@
 	special_head = HEAD_WEREWOLF
 	mutant_organs = list("tail" = /obj/item/organ/tail/wolf)
 
+	head_offset = 5
+	hand_offset = 3
+	arm_offset = 3
 
 	New()
 		..()
