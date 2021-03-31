@@ -222,3 +222,154 @@ datum/teg_transformation
 		on_revert()
 			src.teg.efficiency_controller = prev_efficiency
 			. = ..()
+
+// CE's pet rock! A true hellburn companion
+obj/item/rocko
+	name = "Rocko"
+	icon = 'icons/obj/materials.dmi'
+	icon_state = "rock1"
+	var/static/list/rocko_is
+	var/smile = TRUE
+	var/painted
+	var/bright = FALSE
+	var/awakened = TRUE // SHOULD BE FALSE
+	var/area/prev_area
+	var/list/area/visited
+	var/list/obj/item/device/key/keys_touched
+
+	New()
+		. = ..()
+		visited = list()
+		keys_touched = list()
+		var/matrix/xf = matrix()
+		if(prob(20))
+			bright = TRUE
+
+		src.chat_text = new
+		src.vis_contents += src.chat_text
+
+		src.icon_state = "rock[pick(1,3)]"
+		src.transform = xf*1.2
+		src.rocko_is = list("a great listener", "a good friend", "trustworthy", "wise", "sweet", "great at parties")
+		update_icon()
+		processing_items |= src
+
+	set_loc(var/newloc as turf|mob|obj in world)
+		var/atom/oldloc = src.loc
+		. = ..()
+		if(src && !src.disposed && src.loc && (!istype(src.loc, /turf) || !istype(oldloc, /turf)))
+			if(src.chat_text.vis_locs.len)
+				var/atom/movable/AM = src.chat_text.vis_locs[1]
+				AM.vis_contents -= src.chat_text
+			if(istype(src.loc, /turf))
+				src.vis_contents += src.chat_text
+
+	disposing()
+		processing_items -= src
+		qdel(chat_text)
+		chat_text = null
+		..()
+
+	attackby(obj/item/W as obj, mob/living/user as mob)
+		if (istype(W, /obj/item/device/key))
+			var/obj/item/device/key/K = W
+
+			if(!keys_touched.Find(K))
+				keys_touched += K
+				if(!particleMaster.CheckSystemExists(/datum/particleSystem/sparkles, src))
+					particleMaster.SpawnSystem(new /datum/particleSystem/sparkles(src))
+					SPAWN_DBG(20 SECONDS)
+						particleMaster.RemoveSystem(/datum/particleSystem/sparkles, src)
+				if(ismob(src.loc))
+					var/mob/M = src.loc
+					boutput(M,"<B>[src]</B> glows brightly momentarily and begins to sparkle.")
+				else
+					src.visible_message("<B>[src]</B> glows brightly momentarily and begins to sparkle.")
+
+	process()
+		// if(prob(95))
+		// 	return
+		var/area/current_area = get_area(src)
+		if(src.prev_area != current_area)
+			src.visited |= current_area
+			src.prev_area = get_area(src)
+
+		var/view_chance = 0
+		if(ismob(src.loc) || src.awakened)
+			var/mob/M = src.loc
+			if(istype(M))
+				if(M.job in list("Engineer", "Chief Engineer", "Mechanic"))
+					view_chance += 50
+				if(M.job == "Chief Engineer")
+					view_chance += 45
+			else
+				M = null
+
+			switch(pick( 200;1, 10;2, 10;3, 10;4, 200;5))
+				if(1)
+					emote(M,"<B>[src]</B> winks.", "<I>winks</I>")
+				if(2)
+					boutput(M,"<B>[src]</B> feels warm.")
+				if(3)
+					boutput(M,"<B>[src]</B> whispers something about a hellburn.")
+				if(4)
+					boutput(M,"<B>[src]</B> rants about job site safety.")
+				if(5)
+					speak(M,"We really need to do something about the [pick("captain", "head of personnel", "clown", "research director", "head of security", "medical director", "AI")].")
+
+		 get_area(src)
+
+	proc/speak(mob/target, message)
+		var/list/targets
+		var/image/chat_maptext/chat_text = null
+
+		if(awakened)
+			targets = hearers(src, null)
+			chat_text = make_chat_maptext(src, message, "color: ["#bfd6d8"];", alpha = 200)
+		else
+			targets = list(target)
+
+		for (var/mob/O in targets)
+			O.show_message("<span class='game say bold'><span class='name'>[src.name]</span> says, <span class='message'>\"[message]\"</span></span>", 2, assoc_maptext = chat_text)
+
+	proc/emote(mob/target, message, maptext_out)
+		var/list/targets
+		var/image/chat_maptext/chat_text = null
+
+		if(awakened)
+			targets = viewers(src, null)
+			chat_text = make_chat_maptext(src, maptext_out, "color: #C2BEBE;", alpha = 120)
+		else
+			targets = list(target)
+
+		for (var/mob/O in targets)
+			O.show_message("<span class='emote'>[message]</span>", assoc_maptext = chat_text)
+
+	proc/update_icon()
+		var/icon/smiley_icon = icon('icons/misc/stickers.dmi', src.smile ? "smile2" : "frown2")
+		smiley_icon.Shift(SOUTH,3)
+		var/image/smiley = image(smiley_icon)
+		smiley.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
+
+		if(bright)
+			smiley.blend_mode = BLEND_ADD
+			painted = pick(list("#FF0","#0FF","#FFF"))
+		else
+			smiley.blend_mode = BLEND_SUBTRACT
+			painted = pick(list("#3F3", "#FFF","#5F0","#0F5","#F50"))
+
+		smiley.color = color_mapping_matrix(
+			list("#663300", "#FFAA00", "#FFE924"),
+			list(painted, "#000", "#000")
+			)
+		src.UpdateOverlays(smiley, "face")
+
+	get_desc(dist, mob/user)
+		if(ismob(user) &&	user.job == "Chief Engineer")
+			. = "A rock but also [pick(rocko_is)]."
+		else if(ismob(user) && user.job in list("Engineer", "Mechanic", "Quarter Master", "Quartermaster", "Captain"))
+			. = "The chief Engineer loves this rock.  Maybe it's to make up for their lack of a pet."
+		else
+			. = "A rock with a [src.smile ? "smiley" : "frowny"] face painted on it."
+
+
