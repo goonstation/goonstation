@@ -8,7 +8,7 @@
 // returns true if hit
 /atom/movable/proc/hit_check(datum/thrown_thing/thr)
 	if(src.throwing)
-		for (var/atom/A as() in get_turf(src))
+		for (var/atom/A as anything in get_turf(src))
 			if (!src.throwing)
 				break
 			if(A == src) continue
@@ -90,6 +90,15 @@
 		return
 	var/target_true_x = targets_turf.x
 	var/target_true_y = targets_turf.y
+	if(islist(params))
+		params["icon-x"] = text2num(params["icon-x"])
+		if(params["icon-x"] > 32)
+			target_true_x += round(params["icon-x"] / 32)
+			params["icon-x"] = params["icon-x"] % 32
+		params["icon-y"] = text2num(params["icon-y"])
+		if(params["icon-y"] > 32)
+			target_true_y += round(params["icon-y"] / 32)
+			params["icon-y"] = params["icon-y"] % 32
 
 	var/dist_x = abs(target_true_x - src.x)
 	var/dist_y = abs(target_true_y - src.y)

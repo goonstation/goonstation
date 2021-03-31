@@ -27,7 +27,7 @@
 
 
 			if(forceBullets)
-				for(var/datum/projectile/artifact/forceBullet as() in forceBullets)
+				for(var/datum/projectile/artifact/forceBullet as anything in forceBullets)
 					forceBullet.turretArt = null // not making this trigger faults on people who are shot, to prevent guns from feeling too unfair
 				AS.bullets = forceBullets
 			set_current_projectile(pick(AS.bullets))
@@ -50,6 +50,16 @@
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (src.Artifact_attackby(W,user))
 			..()
+
+	reagent_act(reagent_id,volume)
+		if (..())
+			return
+		src.Artifact_reagent_act(reagent_id, volume)
+		return
+
+	emp_act()
+		src.Artifact_emp_act()
+		..()
 
 	process_ammo(var/mob/user)
 		if(isrobot(user))

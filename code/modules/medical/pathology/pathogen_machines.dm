@@ -33,7 +33,7 @@
 						output_text += "The [src.source] contains no viable sample.<BR><BR>"
 					else
 						var/datum/reagent/blood/B = src.source.reagents.reagent_list["blood"]
-						if (B.volume && B.pathogens.len)
+						if (B.volume && length(B.pathogens))
 							if (B.pathogens.len > 1)
 								output_text += "The centrifuge is calibrated to isolate a sample of [src.isolated ? src.isolated.name : "all pathogens"].<br><br>"
 								output_text += "The blood in the [src.source] contains multiple pathogens. Calibrate to isolate a sample of:<br>"
@@ -229,7 +229,7 @@
 								user.show_message("<span class='notice'>The petri dish cannot be used for cultivating pathogens, due to: </span>")
 								user.show_message(PD.dirty_reason)
 						var/list/path_list = src.target.reagents.aggregate_pathogens()
-						var/pcount = path_list.len
+						var/pcount = length(path_list)
 						if (pcount > 0)
 							var/uid
 							var/datum/pathogen/P
@@ -274,7 +274,7 @@
 					else
 						var/list/path_list = src.target.reagents.aggregate_pathogens()
 						user.show_message("<span class='notice'>You look at the [target] through the microscope.</span>")
-						var/pcount = path_list.len
+						var/pcount = length(path_list)
 						if (pcount > 0)
 							var/uid
 							var/datum/pathogen/P
@@ -1214,7 +1214,7 @@
 		src.reagents = new(100)
 		src.reagents.my_atom = src
 		flags |= NOSPLASH
-		if (!pathogen_controller || !pathogen_controller.cure_bases || !pathogen_controller.cure_bases.len)
+		if (!pathogen_controller || !pathogen_controller.cure_bases || !length(pathogen_controller.cure_bases))
 			SPAWN_DBG(2 SECONDS)
 				for (var/C in pathogen_controller.cure_bases)
 					src.reagents.add_reagent(C, 1)
@@ -1465,9 +1465,9 @@
 
 
 			if (sane)
-				if (!antiagent || !antiagent.reagents.reagent_list.len)
+				if (!antiagent || !length(antiagent.reagents.reagent_list))
 					output_text += "<i><b>NOTICE:</b> Serums manufactured without the appropriate antiagent may lead to an epidemic.</i><br>"
-				if (!suppressant || !suppressant.reagents.reagent_list.len)
+				if (!suppressant || !length(suppressant.reagents.reagent_list))
 					if (has_module("vaccine"))
 						output_text += "<i><b>NOTICE:</b> Serums and vaccines manufactured without the appropriate suppression agent may lead to an epidemic.</i><br>"
 					else

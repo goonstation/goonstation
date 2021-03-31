@@ -23,7 +23,7 @@
 			qdel(src)
 
 	proc/spawn_items()
-		if (islist(src.guaranteed) && src.guaranteed.len)
+		if (islist(src.guaranteed) && length(src.guaranteed))
 			for (var/obj/new_item in src.guaranteed)
 				if (!ispath(new_item))
 					logTheThing("debug", src, null, "has a non-path item in its guaranteed list, [new_item]")
@@ -35,11 +35,11 @@
 				for (amt, amt>0, amt--)
 					closet_check_spawn(new_item)
 
-		if (!islist(src.items2spawn) || !src.items2spawn.len)
+		if (!islist(src.items2spawn) || !length(src.items2spawn))
 			logTheThing("debug", src, null, "has an invalid items2spawn list")
 			return
 		if (rare_chance)
-			if (!islist(src.rare_items2spawn) || !src.rare_items2spawn.len)
+			if (!islist(src.rare_items2spawn) || !length(src.rare_items2spawn))
 				logTheThing("debug", src, null, "has an invalid rare_items2spawn list")
 				return
 		if (amt2spawn == 0)
@@ -538,7 +538,7 @@
 	/obj/item/paper_bin,
 	/obj/decal/cleanable/generic,
 	/obj/item/reagent_containers/food/drinks/mug/random_color,
-	/obj/item/postit_stack,
+	/obj/item/item_box/postit,
 	/obj/item/staple_gun/red)
 
 	one
@@ -604,7 +604,7 @@
 	/obj/item/paper,
 	/obj/decal/cleanable/generic,
 	/obj/item/reagent_containers/food/drinks/mug/random_color,
-	/obj/item/postit_stack,
+	/obj/item/item_box/postit,
 	/obj/item/staple_gun/red)
 
 	one
@@ -670,7 +670,7 @@
 	/obj/item/paper,
 	/obj/decal/cleanable/generic,
 	/obj/item/reagent_containers/food/drinks/mug/random_color,
-	/obj/item/postit_stack,
+	/obj/item/item_box/postit,
 	/obj/item/staple_gun/red)
 
 	one
@@ -797,7 +797,6 @@
 	/obj/item/device/radio,
 	/obj/item/device/timer,
 	/obj/item/folder,
-	/obj/item/hairball,
 	/obj/item/hand_labeler,
 	/obj/item/light/bulb/neutral,
 	/obj/item/light/tube/neutral,

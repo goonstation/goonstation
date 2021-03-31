@@ -45,6 +45,8 @@
 
 // ---- global signals ----
 #define COMSIG_GLOBAL_REBOOT "global_reboot"
+//When a drone dies. Y'know, the critter ones.
+#define COMSIG_GLOBAL_DRONE_DEATH "global_drone_death"
 
 //  ---- datum signals ----
 
@@ -85,6 +87,8 @@
 #define COMSIG_ITEM_ATTACK_POST "itm_atk_post"
 /// Just before an item is eaten
 #define COMSIG_ITEM_CONSUMED_PRE "itm_atk_consumed_pre"
+/// When an item is eaten
+#define COMSIG_ITEM_CONSUMED "itm_atk_consumed"
 /// After an item's been eaten, but there's still some left
 #define COMSIG_ITEM_CONSUMED_PARTIAL "itm_atk_consumed_partial"
 /// After we've consumed an item
@@ -97,6 +101,9 @@
 #define COMSIG_ITEM_SWAP_TO "itm_swap_to"
 /// When an item is swapped away from [does not include being picked up/taken out of bags/etc] (user)
 #define COMSIG_ITEM_SWAP_AWAY "itm_swap_away"
+/// After an item's itemspecial is used (user)
+#define COMSIG_ITEM_SPECIAL_POST "itm_special_post"
+
 
 // ---- implant signals ----
 /// When implanted
@@ -119,7 +126,8 @@
 #define COMSIG_UNARMED_BLOCK_BEGIN "unarmed_block_begin"
 /// When an item block is created
 #define COMSIG_UNARMED_BLOCK_END "unarmed_block_end"
-
+/// When a block blocks damage at all
+#define COMSIG_BLOCK_BLOCKED "blockblock"
 // ---- human signals ----
 
 // ---- mob signals ----

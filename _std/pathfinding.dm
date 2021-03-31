@@ -60,7 +60,7 @@
 		openSet -= current
 		closedSet += current
 		var/list/turf/neighbors = getNeighbors(current, alldirs, heuristic, heuristic_args)
-		for(var/turf/neighbor as() in neighbors)
+		for(var/turf/neighbor as anything in neighbors)
 			if(neighbor in closedSet)
 				continue // already checked this one
 			var/tentativeGScore = gScore[current] + get_dist(current, neighbor)

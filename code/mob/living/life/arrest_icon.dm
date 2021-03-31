@@ -19,7 +19,7 @@
 				see_face = 0
 			var/visibleName = see_face ? H.real_name : H.name
 
-			for (var/datum/data/record/R as() in data_core.security)
+			for (var/datum/data/record/R as anything in data_core.security)
 				if ((R.fields["name"] == visibleName) && ((R.fields["criminal"] == "*Arrest*") || R.fields["criminal"] == "Parolled" || R.fields["criminal"] == "Incarcerated" || R.fields["criminal"] == "Released"))
 					arrestState = R.fields["criminal"] // Found a record of some kind
 					break

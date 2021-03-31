@@ -1,5 +1,298 @@
 
+(t)tue mar 30 21
+(u)w arc
+(e)🗺|mappig
+(*)compl,ete re-pipe of jhorizon, a;so remodele secuty , please repot bugs @ discod
+(u)pali
+(*)January monthly contest posters have been added to the game!
+(u)Tarmunora
+(p)4160
+(e)⚖🆕|balance, feature
+(*)Blocking unarmed while wearing concussive gauntlets will charge up a slam attack, similar to the power hammer.
+(u)TTerc
+(p)4119
+(e)|
+(+)Added actionbars to welding/unwelding singularity emitters and field generators.
+(t)mon mar 29 21
+(u)kyle
+(p)4129
+(e)⚖🆕🎨|balance, feature, sprites
+(*)Injecting the right amount of formaldehyde into a corpse can now temporarily prevent a wraith from absorbing it.
+(+)Slight rework to Poltergeists. Now they aren't strictly bound to X distance from their anchor/master, instead they can travel wherever and just take a bit of damage (up to 50%) and certain abilities require being close to their anchor/master.
+(+)Poltergeists also have a new ability that lets them teleport to their anchor or inside their master Wraith. When inside their master they can use all their spells and get increased point generation. Clicking on the master also makes em start following em.
+(u)Gremy
+(p)4167
+(e)🗺|mapping
+(*)Revamps the Atlas, Cog2 and Horizon ranches to include two pens, more access to other departments and extra amenities. Also chicken masks. Bok!
+(u)TTerc
+(p)3974
+(e)🗺|mapping
+(*)Donut 3: Expanded and improved the botany and ranch areas.
+(u)Flappybat
+(p)4016
+(e)⚖|balance
+(*)Rebalanced firearm melee damage
+(u)Sovexe
+(p)4157
+(e)🆕🗺🎨|feature, mapping, sprites
+(+)New handheld sea elevator pinpointers are now available on Oshan.
+(t)sun mar 28 21
+(u)DisturbHerb
+(p)4023
+(e)🆕|feature
+(+)You can now check the time on your PDA or the status screen, hooray!
+(u)Gremy
+(p)3969
+(e)🗺|mapping
+(*)Expands the Manta ranch and changes the construction area below it to be a market stall with a cute little duck with a hat in it.
+(u)Lythine
+(p)4113
+(e)🆕🎨|feature, sprites
+(*)Added the Block Stacker medal and a Tetris AI skin reward for it.
+(u)TTerc
+(p)4162
+(e)⛔|removal
+(+)Removed unused matsci recipes from the refining nanofab.
+(u)BatElite
+(p)3833
+(e)🆕🎨|feature, sprites
+(+)You can now place butts on chairs. Pry them back off with a crowbar.
+(t)sat mar 27 21
+(u)zjdtmkhzt
+(p)3896
+(e)⚖🆕|balance, feature
+(+)Some minor changes to how artifact selling and the analysis forms work.
+(+)The research department now receives a score based on the accuracy of the artifact analysis forms they filled out.
+(u)Tarmunora
+(p)4158
+(e)⚖|balance
+(*)Random dodge chance from blocking removed.
+(*)Blocking armor bonus and disorient resist buffed, and blocking now prevent stamina criticals ("devastating hit")
+(+)Deflection object property now provides passive block chance against disarm attempts
+(t)fri mar 26 21
+(u)Azrun
+(p)3933
+(e)⚖🐛|balance, bug
+(+)Nanotrasen no longer pockets money from rounding down when paying out for PTL.  Lower end MW drastically improved.
+(t)thu mar 25 21
+(u)Jan.antilles
+(p)4132
+(e)🎨|sprites
+(+)Resprite of Omelette, Mashed Potatoes, and Mashed Brains.
+(u)Mean Bitch Warc
+(p)4136
+(e)|
+(*)Reverted buggy eating changes and various dependencies, pending rework.
+(u)Azrun
+(p)4127
+(e)⚖🐛|balance, bug
+(+)Spliced and normal mutations can now coexist in the Gene Booth.  Charge the crew accordingly.
+(t)wed mar 24 21
+(u)Nihisohel
+(p)4045
+(e)⚖|balance
+(*)Replaces Part Time Viceoffs token with Assistant token
+(u)pali
+(*)Books from the February monthly contest have been added into the game. Most are in the Books4u vending machine, two are in Cairngorm.
+(t)tue mar 23 21
+(u)DimWhat
+(p)4110
+(e)🗺|mapping
+(+)Bombini is back from their fishing trip in oshan. buzz buzz.
+(t)sun mar 21 21
+(u)Penny
+(p)4012
+(e)|
+(*)Multitools now show the netid and wifi frequency of devices they're used on
+(u)Nefarious6th
+(p)4055
+(e)🐛🗺|bug, mapping
+(*)Research on the NSS Destiny has gotten an overhaul.
+(u)Sovexe
+(p)4019
+(e)⚖|balance
+(+)Reduced stuns from plates and trays. Plates and trays respect helmet protection
+(u)Camryn Buttes
+(p)3845
+(e)🐛🆕🔄|bug, feature, rework
+(*)Significantly improved consistency of stimuli interactions across different artifact types. Enabled usage of flyswatters, igniters, and multitools for improvised artifact testing.
+(u)Lythine
+(p)4000
+(e)🆕🗺|feature, mapping
+(*)Added the ability to make display cases out of sheets of glass that any item can be stored in.
+(+)Display cases can now be unanchored and anchored with a screwdriver.
+(+)Broken display cases can now be repaired by using a glass sheet or removed by using a wrench.
+(t)sat mar 20 21
+(u)TTerc
+(p)3971
+(e)|
+(+)Removed the flip/rotate window for disposal pipes. Instead, you can click the pipe with a crowbar to rotate it and click the junction with empty hand to change its direction.
+(u)DimWhat
+(p)4067
+(e)|
+(+)Added Hi-Vis to CE, mechanic, and engineer lockers. Safety first!
+(u)DimWhat
+(p)4061
+(e)⚖|balance
+(+)Added disorient resistance to several suits.
+(t)fri mar 19 21
+(u)Sidewinder7
+(p)3980
+(e)🆕|feature
+(*)Added a single-output mode to the mechcomp dispatch component.
+(u)Flaborized
+(p)4052
+(e)🎨|sprites
+(+)Resprited lattices and catwalks.
+(t)thu mar 18 21
+(u)Carbadox
+(p)4014
+(e)🐛🆕|bug, feature
+(+)Pews are now deconstructaable
+(u)kyle
+(e)⚖|balance
+(+)Werewolves are now able to feast on dead bodies as long as they aren't too decomposed. Formaldehyde also will make corpses unpaletable for wolves.
+(t)wed mar 17 21
+(u)kyle
+(+)epinephrine has a similar effect to salicylic acid where it negates some of the movement speed penalty from damage.
+(+)Werewolf thrash tries to keep you in the same place as where you start. Werewolf feast will rip out some of the targets non-vital organs for an extra snack!
+(u)Zamujasa
+(*)Health analyzers will show a flying-chat-esque health readout when used, with the overall health percentage and oxy-tox-burn-brute numbers.
+(*)The readout in the chat panel is unaffected.
+(*)This also follows the "flying chat" toggle, if you want to turn it off.
+(*)Feedback is appreciated. I may add this to the stationary floor scanners in Medbay as well...
+(t)tue mar 16 21
+(u)The Laundry (warc)
+(+)Ugh, that hat fuckin' REEKS dude, don't make me murder it off of you!
+(u)Flaborized
+(p)4030
+(e)🎨|sprites
+(+)Resprited disposal pipes.
+(u)Penny
+(p)4002
+(e)|
+(+)The term_ping command now accepts a filter as the first option
+(+)The TermOS help command now documents the term_ping filter
+(u)Virvatuli
+(p)4028
+(e)🎨|sprites
+(+)The 40mm Riot Launcher has been given both visual and audio upgrades, have fun lobbing grenades around!
+(t)mon mar 15 21
+(u)warc, or whoever you prefer, you pick
+(e)™|feature, mapping,
+(+)Ranchers now start with a babby monitor on which they can look at they're burds. You can use this to uh, not make them died. Added the cams to most maps, minus those with pending ranch PRs.
+(u)Carbadox and Gannets
+(p)3698
+(e)🆕🗺🎨|feature, mapping, sprites
+(+)Added an ice dispenser to most bars.
+(u)TTerc
+(p)3957
+(e)🎨|sprites
+(+)Janitors can now turn their Head of Sanitation beret into a hat, similarly to HoS beret! Sprites by Arthur Holiday.
+(t)sun mar 14 21
+(u)Fosstar
+(p)3860
+(e)⚖|balance
+(+)The detective's scanner (not their PDA) can now scan objects up to two tiles away.
+(u)ThePotato97
+(p)4017
+(e)📄|tgui
+(+)Fixed saving clone records to disks and alignment of damage indicators
+(u)Flappybat
+(p)4013
+(e)⚖|balance
+(+)Stopped Boom Boots spawning in syndicate Surplus Crate.
+(u)Kapu1178 & Virvatuli
+(p)3804
+(e)⚖🆕|balance, feature
+(*)Riot Shotguns now require racking between shots to fire
+(+)New shotgun sounds by Virvatuli
+(t)sat mar 13 21
+(u)Penny
+(p)3997
+(e)|
+(+)Adds the tape drive to hacked CompTech vendors.
+(u)comradef191
+(p)2523
+(e)⛔|removal
+(*)Removed the Construction Worker job. Added QM crate containing most of their equipment.
+(u)TTerc
+(p)3885
+(e)⚖|balance
+(*)Stun melee artifacts are now stamina damage based.
+(u)Flaborized
+(p)3992
+(e)🎨|sprites
+(*)Updated the action bar sprite, added several variants.
+(u)Kubius
+(p)3985
+(e)🐛🆕🗺|bug, feature, mapping
+(+)Kondaru airbridge issue introduced in upgrade Tau has been fixed, partially by adding a new Book Nook, the home of the persistent bookshelf. See PR 3973 for Tau's changes.
+(u)Chickenish
+(p)3954
+(e)🐛|bug
+(+)The Rad-Wick food effect works again.
+(u)Gannets
+(p)3978
+(e)⚖🆕🔄🎨|balance, feature, rework, sprites
+(*)Splits the Infiltrator nuclear operative class crate in to two kits. Infiltrator & Scout, details in minor changes.
+(+)Infiltrator kit now comes with: tranq pistol + ammo pouch, pod beacon deployer, dna scrambler, voice changer, emag, chameleon jumpsuit, chameleon projector
+(+)Scout kit comes with: burst fire smg + ammo pouch, light breaker, cloaking device, emag, nvg
+(t)fri mar 12 21
+(u)AwkwardDryad
+(p)3740
+(e)🆕🗺🔄🎨|feature, mapping, rework, sprites
+(*)reworked playing cards and gave them a makeover! have fuuuun!
+(u)Zamujasa
+(e)🆕|feature
+(*)Monkey Translator added.
+(*)Mask slot item that doesn't count as internals.
+(*)Monkeys wearing this will speak human.
+(*)Test Subjects start with one. There are also two in the Animal Control locker in Genetics, one in the monkey crate from cargo, and they can be scanned by mechanics.
+(u)zjdtmkhzt
+(p)3856
+(e)🆕🎨|feature, sprites
+(+)Added visual effect to plant helper artifacts.
+(u)Nefarious6th
+(p)3756
+(e)🗺🔄|mapping, rework
+(*)Destiny has received some significant remapping; highlights include layout changes to Security and Medical and the addition of a Ranch. See PR for extended details.
+(t)thu mar 11 21
+(u)Comradef191
+(p)3724
+(e)🗺|mapping
+(*)Re-Added AI Displays to all currenty in-rotation maps.
+(u)BatElite
+(p)3711
+(e)🆕🎨|feature, sprites
+(+)The floor and wall planner now has a mode for reverting changes to turfs, so you can undo the avant-garde redecorating of any construction worker you manage to catch!
+(u)Chickenish
+(p)3922
+(e)⚖🆕|balance, feature
+(+)Stowaways are no longer in the manifest.
+(t)wed mar 10 21
+(u)Camryn Buttes
+(p)3909
+(e)🆕|feature
+(+)Claw machines are now scannable by mechanics.
+(u)Camryn Buttes
+(p)3907
+(e)🐛🆕🗺|bug, feature, mapping
+(*)Added a cargo teleporter and recharger to the artifact lab on donut 3
+(+)Made a whole bunch of other smaller changes to donut 3, see if you can spot them!
+(u)TTerc
+(p)3955
+(e)⚖|balance
+(+)Removed opossums from wizard polymorph list.
+(u)Flaborized
+(p)3956
+(e)🎨|sprites
+(*)Most computer screens now glow in the dark.
 (t)tue mar 09 21
+(u)Nebulacrity
+(p)3666
+(e)⚖🆕🎨|balance, feature, sprites
+(*)After a raid on [REDACTED], there have been several sightings of what appeared to be a deep space beacon far away from the station. Not much information is amassed on it currently.
 (u)zjdtmkhzt
 (p)3789
 (e)⚖🆕|balance, feature

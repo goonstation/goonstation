@@ -157,7 +157,7 @@
 		return
 
 	var/list/cardaccess = W:access
-	if(!istype(cardaccess, /list) || !cardaccess.len) //no access
+	if(!istype(cardaccess, /list) || !length(cardaccess)) //no access
 		boutput(user, "The access level of [W] is not high enough.")
 		return
 

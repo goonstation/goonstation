@@ -18,6 +18,9 @@
 	var/has_material = TRUE
 	var/plate_mat = null
 	var/reinforced = FALSE
+	//Stuff for the floor & wall planner undo mode that initial() doesn't resolve.
+	var/roundstart_icon_state
+	var/roundstart_dir
 
 	New()
 		..()
@@ -25,6 +28,8 @@
 			if (isnull(plate_mat))
 				plate_mat = getMaterial("steel")
 			setMaterial(plate_mat)
+		roundstart_icon_state = icon_state
+		roundstart_dir = dir
 		var/obj/plan_marker/floor/P = locate() in src
 		if (P)
 			src.icon = P.icon

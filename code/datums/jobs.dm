@@ -711,46 +711,6 @@ ABSTRACT_TYPE(/datum/job/engineering)
 	linkcolor = "#FF9900"
 	slot_card = /obj/item/card/id/engineering
 
-/datum/job/engineering/construction_worker
-	name = "Construction Worker"
-	allow_traitors = 0
-	cant_spawn_as_rev = 1
-	limit = 1
-	wages = PAY_TRADESMAN
-
-	slot_back = /obj/item/storage/backpack/withO2
-	slot_belt = /obj/item/storage/belt/utility/prepared
-	slot_jump = /obj/item/clothing/under/rank/orangeoveralls
-	slot_foot = /obj/item/clothing/shoes/magnetic
-	slot_glov = /obj/item/clothing/gloves/black
-	slot_ears = /obj/item/device/radio/headset/engineer
-	slot_rhan = /obj/item/tank/jetpack
-	slot_eyes = /obj/item/clothing/glasses/construction
-#ifdef UNDERWATER_MAP
-	slot_suit = /obj/item/clothing/suit/space/diving/engineering
-	slot_head = /obj/item/clothing/head/helmet/space/engineer/diving
-#else
-	slot_suit = /obj/item/clothing/suit/space/engineer
-	slot_head = /obj/item/clothing/head/helmet/space/engineer
-#endif
-	slot_mask = /obj/item/clothing/mask/breath
-
-	slot_poc1 = /obj/item/material_shaper
-	slot_poc2 = /obj/item/room_planner
-
-	items_in_backpack = list(/obj/item/rcd/construction/safe, /obj/item/rcd_ammo/big, /obj/item/rcd_ammo/big, /obj/item/caution, /obj/item/lamp_manufacturer/organic)
-
-	special_setup(var/mob/living/carbon/human/M)
-		..()
-		if (!M)
-			return
-		M.traitHolder.addTrait("training_engineer")
-
-	New()
-		..()
-		src.access = get_access("Construction Worker")
-		return
-
 /datum/job/engineering/quartermaster
 	name = "Quartermaster"
 	limit = 3
@@ -941,7 +901,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_glov = /obj/item/clothing/gloves/black
 	slot_poc1 = /obj/item/paper/ranch_guide
 	slot_ears = /obj/item/device/radio/headset/civilian
-	items_in_backpack = list(/obj/item/fishing_rod, /obj/item/chicken_carrier)
+	items_in_backpack = list(/obj/item/fishing_rod, /obj/item/chicken_carrier, /obj/item/device/camera_viewer/ranch)
 
 	New()
 		..()
@@ -1531,6 +1491,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	name = "Test Subject"
 	wages = PAY_DUMBCLOWN
 	slot_jump = /obj/item/clothing/under/shorts
+	slot_mask = /obj/item/clothing/mask/monkey_translator
 	change_name_on_spawn = 1
 	starting_mutantrace = /datum/mutantrace/monkey
 
@@ -2663,9 +2624,9 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 	slot_belt = /obj/item/device/pda2/security
 	slot_jump = /obj/item/clothing/under/misc/vice
 	slot_foot = /obj/item/clothing/shoes/brown
-	slot_ears =  /obj/item/device/radio/headset/security
+	slot_ears = /obj/item/device/radio/headset/security
 	slot_poc1 = /obj/item/storage/security_pouch //replaces sec starter kit
-	slot_poc2 = /obj/item/requisition_token/security
+	slot_poc2 = /obj/item/requisition_token/security/assistant
 
 	New()
 		..()

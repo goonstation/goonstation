@@ -93,6 +93,9 @@ ABSTRACT_TYPE(/obj/vehicle)
 
 
 	disposing()
+		if(rider)
+			boutput(rider, "<span class='alert'><B>Your [src] is destroyed!</B></span>")
+			eject_rider()
 		. = ..()
 		STOP_TRACKING
 
@@ -103,13 +106,48 @@ ABSTRACT_TYPE(/obj/vehicle)
 		return src.loc.return_air()
 
 	attackby(obj/item/W as obj, mob/user as mob)
-		if(rider && rider_visible && W.force)
-			W.attack(rider, user)
+		if(src.rider && src.rider_visible && W.force)
+			W.attack(src.rider, user)
 			user.lastattacked = src
 			if (attacks_fast_eject || rider.hasStatus(list("weakened", "paralysis", "stunned")))
 				eject_rider()
-			W.visible_message("<span class='alert'>[user] swings at [rider] with [W]!</span>")
+			W.visible_message("<span class='alert'>[user] swings at [src.rider] with [W]!</span>")
 		return
+
+	bullet_act(flag, A as obj)
+		if(src.rider)
+			rider.bullet_act(flag, A)
+			eject_rider()
+		else
+			..()
+
+	meteorhit()
+		if (src.rider && ismob(src.rider))
+			src.rider.meteorhit()
+			src.eject_rider()
+		return
+
+	ex_act(severity)
+		switch(severity)
+			if(1.0)
+				for(var/atom/movable/A as mob|obj in src)
+					A.set_loc(src.loc)
+					A.ex_act(severity)
+				qdel(src)
+
+			if(2.0)
+				if (prob(50))
+					for(var/atom/movable/A as mob|obj in src)
+						A.set_loc(src.loc)
+						A.ex_act(severity)
+					qdel(src)
+
+			if(3.0)
+				if (prob(25))
+					for(var/atom/movable/A as mob|obj in src)
+						A.set_loc(src.loc)
+						A.ex_act(severity)
+					qdel(src)
 
 	Exited(atom/movable/thing, atom/newloc)
 		. = ..()
@@ -167,38 +205,10 @@ ABSTRACT_TYPE(/obj/vehicle)
 	proc/do_special_on_relay(mob/user as mob, dir) //empty placeholder for when we successfully have the rider relay a move
 		return
 
-	ex_act(severity)
-		switch(severity)
-			if(1.0)
-				for(var/atom/movable/A as mob|obj in src)
-					A.set_loc(src.loc)
-					A.ex_act(severity)
-					//Foreach goto(35)
-				qdel(src)
-				return
-			if(2.0)
-				if (prob(50))
-					for(var/atom/movable/A as mob|obj in src)
-						A.set_loc(src.loc)
-						A.ex_act(severity)
-						//Foreach goto(108)
-					qdel(src)
-					return
-			if(3.0)
-				if (prob(25))
-					for(var/atom/movable/A as mob|obj in src)
-						A.set_loc(src.loc)
-						A.ex_act(severity)
-						//Foreach goto(181)
-					qdel(src)
-					return
-			else
-		return
 
 	proc/Stopped()
 		src.overlays -= src.booster_image //so we don't see thrusters firing on a parked vehicle
 		return
-
 
 	proc/stop()
 		walk(src,0)
@@ -562,18 +572,6 @@ ABSTRACT_TYPE(/obj/vehicle)
 				src.visible_message("<span class='alert'><B>[M] has attempted to shove [rider] off of the [src]!</B></span>")
 	return
 
-/obj/vehicle/segway/bullet_act(flag, A as obj)
-	if(rider)
-		rider.bullet_act(flag, A)
-		eject_rider()
-	return
-
-/obj/vehicle/segway/meteorhit()
-	if(rider)
-		eject_rider()
-		rider.meteorhit()
-	return
-
 /obj/vehicle/segway/disposing()
 	if(rider)
 		boutput(rider, "<span class='alert'><B>Your segway is destroyed!</B></span>")
@@ -879,18 +877,6 @@ ABSTRACT_TYPE(/obj/vehicle)
 			else
 				playsound(src.loc, "sound/impact_sounds/Generic_Swing_1.ogg", 25, 1, -1)
 				src.visible_message("<span class='alert'><B>[M] has attempted to yank [rider] off of \the [src]!</B></span>")
-	return
-
-/obj/vehicle/floorbuffer/bullet_act(flag, A as obj)
-	if (src.rider && ismob(src.rider))
-		src.rider.bullet_act(flag, A)
-		src.eject_rider()
-	return
-
-/obj/vehicle/floorbuffer/meteorhit()
-	if (src.rider && ismob(src.rider))
-		src.rider.meteorhit()
-		src.eject_rider()
 	return
 
 /obj/vehicle/floorbuffer/disposing()
@@ -1207,7 +1193,7 @@ ABSTRACT_TYPE(/obj/vehicle)
 		rider.buckled = null
 		rider = null
 		icon_state = "clowncar"
-		if(prob(40) && src.contents.len)
+		if(prob(40) && length(src.contents))
 			for(var/mob/O in AIviewers(src, null))
 				O.show_message(text("<span class='alert'><B>Everything in the [] flies out!</B></span>", src), 1)
 			for(var/atom/A in src.contents)
@@ -1528,17 +1514,6 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 				src.visible_message("<span class='alert'><B>[M] has attempted to shove [rider] off of the [src]!</B></span>")
 	return
 
-/obj/vehicle/cat/bullet_act(flag, A as obj)
-	if(rider)
-		eject_rider()
-		rider.bullet_act(flag, A)
-	return
-
-/obj/vehicle/cat/meteorhit()
-	if(rider)
-		eject_rider()
-		rider.meteorhit()
-	return
 
 /obj/vehicle/cat/disposing()
 	if(rider)
@@ -1898,7 +1873,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 			C.show_message("<span class='alert'><B>[rider] is flung through the [src]'s windshield!</B></span>", 1)
 		var/turf/target = get_edge_target_turf(src, src.dir)
 		rider.throw_at(target, 5, 1)
-		if(prob(40) && src.contents.len)
+		if(prob(40) && length(src.contents))
 			src.visible_message("<span class='alert'><B>Everything in the [src] flies out!</B></span>")
 			for(var/atom/A in src.contents)
 				if(ismob(A))
@@ -2493,5 +2468,6 @@ obj/vehicle/forklift/attackby(var/obj/item/I, var/mob/user)
 /obj/vehicle/forklift/bullet_act(flag, A as obj)
 	if(rider && rider_visible)
 		rider.bullet_act(flag, A)
+		//do not eject!
 	else
 		..()

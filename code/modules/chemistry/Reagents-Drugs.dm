@@ -984,6 +984,7 @@ datum
 
 					if(!holder.has_reagent("triplemeth", 10 * mult))
 						holder.add_reagent("triplemeth", 10 * mult, null)
+						M.add_karma(10)
 
 					if (effect <= 2)
 						M.visible_message("<span class='alert'><b>[M.name]'s</b> hands flip out and flail everywhere!</span>")

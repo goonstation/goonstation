@@ -80,11 +80,11 @@
 	/// Periodic function to check if transformation by reagent is possible
 	proc/check_reagent_transformation()
 		if(generator?.active_form?.skip_transformation_checks) return
-		for(var/datum/teg_transformation/T as() in possible_transformations)
+		for(var/datum/teg_transformation/T as anything in possible_transformations)
 			if(generator.active_form?.type == T.type) continue // Skip current form
 
 			var/reagents_present = length(T.required_reagents)
-			for(var/R as() in T.required_reagents)
+			for(var/R as anything in T.required_reagents)
 				if(generator.circ1.reagents.get_reagent_amount(R) + generator.circ2.reagents.get_reagent_amount(R) >= T.required_reagents[R])
 				else
 					reagents_present = FALSE

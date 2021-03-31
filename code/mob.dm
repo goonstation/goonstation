@@ -618,7 +618,7 @@
 						if (!T.density)
 							sfloors += T
 					var/arcs = 8
-					while (arcs > 0 && sfloors.len)
+					while (arcs > 0 && length(sfloors))
 						arcs--
 						var/turf/Q = pick(sfloors)
 						arcFlashTurf(src, Q, 3000)
@@ -1564,7 +1564,7 @@
 
 /// Removes whichever matrix is associated with the label. Must be a string!
 /mob/proc/remove_color_matrix(var/label)
-	if (!label || !src.color_matrices.len)
+	if (!label || !length(src.color_matrices))
 		return
 
 	if(label == "all")
@@ -2657,20 +2657,21 @@
 				continue
 			else
 				if (force_instead || alert(src, "Use the name [newname]?", newname, "Yes", "No") == "Yes")
-					var/datum/data/record/B = FindBankAccountByName(src.real_name)
-					if (B?.fields["name"])
-						B.fields["name"] = newname
-					for (var/obj/item/card/id/ID in src.contents)
-						ID.registered = newname
-						ID.update_name()
-					for (var/obj/item/device/pda2/PDA in src.contents)
-						PDA.registered = newname
-						PDA.owner = newname
-						PDA.name = "PDA-[newname]"
-						if(PDA.ID_card)
-							var/obj/item/card/id/ID = PDA.ID_card
+					if(!src.traitHolder.hasTrait("immigrant"))// stowaway entertainers shouldn't be on the manifest
+						var/datum/data/record/B = FindBankAccountByName(src.real_name)
+						if (B?.fields["name"])
+							B.fields["name"] = newname
+						for (var/obj/item/card/id/ID in src.contents)
 							ID.registered = newname
 							ID.update_name()
+						for (var/obj/item/device/pda2/PDA in src.contents)
+							PDA.registered = newname
+							PDA.owner = newname
+							PDA.name = "PDA-[newname]"
+							if(PDA.ID_card)
+								var/obj/item/card/id/ID = PDA.ID_card
+								ID.registered = newname
+								ID.update_name()
 					src.real_name = newname
 					src.name = newname
 					return 1
@@ -2890,7 +2891,7 @@
 /mob/proc/sell_soul(var/amount, var/reduce_health=1, var/allow_overflow=0)
 	if(!src.mind)
 		return 0
-	if(isnpcmonkey(src))
+	if(isnpc(src))
 		return 0
 	if(allow_overflow)
 		amount = max(1, min(src.mind.soul, amount)) // can't sell less than 1
@@ -2972,93 +2973,11 @@
 		if (I.loc == get_turf(I))
 			items += I
 	if (items.len)
-		var/atom/A = input(usr, "What do you want to pick up?") as() in items
+		var/atom/A = input(usr, "What do you want to pick up?") as anything in items
 		A.interact(src)
 
-/// 'A' is the thing being eaten, user is the thing using the thing, and src is of course the thing eating it
-/mob/proc/can_eat(var/obj/item/A, var/mob/user, var/bypass_utensils = 0)
-	if(!istype(A) || !user)
-		return FALSE // who's eating what, now?
-
-	/// Making sure the thing actually exists and isn't cheating the bite-rate. And is also edible, so we don't get people trying to stuff multitools in their mouth
-	if(!src.bioHolder?.HasEffect("mattereater") && GET_COOLDOWN(src, "eat") && (A.edible || A.material?.edible))
-		src.can_not_eat(A, user, "on_cooldown")
-		return FALSE
-	else if (!A.amount)
-		src.can_not_eat(A, user, "all_gone")
-		return FALSE
-
-	/// Special cases with special circumstances, mostly so awful monsters can eat awful monster food
-	var/edibility_check = SEND_SIGNAL(src, COMSIG_ITEM_CONSUMED_PRE, src, user, A)
-	if(HAS_FLAG(edibility_check, THING_IS_EDIBLE))
-		return TRUE
-
-	/// Now we can check if the thing is actually, in fact, supposed to be edible
-	if(!(A.edible || (A.material && A.material.edible)))
-		return FALSE
-
-	/// Godmode
-	if(src != user && check_target_immunity(src))
-		src.can_not_eat(A, user, "godmode")
-		return FALSE
-
-	/// Finally, check if we have proper etiquette
-	if(HAS_FLAG(edibility_check, EATING_NEEDS_A_FORK))
-		src.can_not_eat(A, user, "lack_fork")
-		return FALSE
-	if(HAS_FLAG(edibility_check, EATING_NEEDS_A_SPOON))
-		src.can_not_eat(A, user, "lack_spoon")
-		return FALSE
-
-	/// And finally finally, if it should actually be edible, do we have somewhere to put it?
-	if (ishuman(src))
-		var/mob/living/carbon/human/H = src
-		var/obj/item/organ/stomach/tummy = H.get_organ("stomach")
-		if (!istype(tummy) || (tummy.broken || tummy.get_damage() > tummy.MAX_DAMAGE))
-			src.can_not_eat(A, user, "busted_guts")
-			return FALSE
-
-	/// okay eat the darn thing
-	return TRUE
-
-/// Oh no, we can't eat that! Let's tell the mob why
-/mob/proc/can_not_eat(var/atom/A, var/mob/user, var/fail_reason)
-	if(!istype(A) || !user) return
-	switch(fail_reason)
-		if("on_cooldown")
-			if(src == user)
-				boutput(src, "<span class='alert'>Hold on! You're still getting the last bit down!</span>")
-			else
-				user.tri_message("<span class='notice'>[user] tries to stuff [A] into [src]'s mouth, but it's still full!</span>",\
-				user, "<span class='notice'>You try to stuff [A] into [src]'s mouth, but it's still full!</span>",\
-				src, "<span class='notice'>[user] tries to stuff [A] into your mouth, but you're still working on the last bite!</span>")
-		if("all_gone")
-			if(src == user)
-				boutput(src, "<span class='alert'>None of [A] left, oh no!</span>")
-			else
-				user.tri_message("<span class='alert'>[user] tries to feed [A] to [src], but there's nothing left of it!</span>",\
-				user, "<span class='alert'>You try to feed [A] to [src], but there's nothing left of it!</span>",\
-				src, "<span class='alert'>[user] tries to feed [A] to you, but there's nothing left of it!</span>")
-			user.u_equip(A)
-			qdel(A)
-		if("busted_guts")
-			if(src == user)
-				boutput(src, "<span class='alert'>You can't eat that! Or anything else, at least until you fix your stomach!</span>")
-			else
-				user.tri_message("<span class='alert'>[user] tries to feed [A] to [src], but there's nowhere for it to go!</span>",\
-				user, "<span class='alert'>You try to feed [A] to [src], but [his_or_her(src)] throat seems blocked off!</span>",\
-				src, "<span class='alert'>[user] tries to feed [A] to you, but your lack of a working stomach bounces it off the back of your mouth!</span>")
-		if("lack_fork", "lack_spoon")
-			var/missing = fail_reason == "lack_fork" ? "fork" : "spoon"
-			var/literal_beast = HAS_FLAG(src.mob_flags, SHOULD_HAVE_A_TAIL)
-			user.visible_message("<span class='alert'>[user] stares glumly at [src].</span>",
-			"<span class='alert'>You can't just cram that in your [literal_beast ? "filthy snout" : "mouth"] you [literal_beast ? "literal" : "greedy"] beast! You need a [missing] to eat [A]!</span>")
-		if("godmode")
-			user.tri_message("<span class='alert'>[user] tries to feed [A] to [src], but nothing happens!</span>",\
-			user, "<span class='alert'>You try to feed [A] to [src], but nothing happens!</span>",\
-			src, "<span class='alert'>[user] tries to feed [A] to you, but nothing happens!</span>")
-		else
-			boutput(user, "<span class='alert'>You can't eat that!</span>")
+/mob/proc/can_eat(var/atom/A)
+	return 1
 
 /mob/proc/on_eat(var/atom/A)
 	return

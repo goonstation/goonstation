@@ -31,7 +31,7 @@ var/global/list/datum/keybind_style/keybind_styles = null
 		keybind_styles.Add(/datum/keybind_style) //So the base is at the top, and not the bottom.
 		keybind_styles.Add(childrentypesof(/datum/keybind_style))
 
-	for (var/datum/keybind_style/found_style as() in keybind_styles)
+	for (var/datum/keybind_style/found_style as anything in keybind_styles)
 		if (initial(found_style.name) == style_name)
 			return found_style
 	logTheThing("debug", null, null, "<B>ZeWaka/Keybinds:</B> No keybind style found with the name [style_name].")

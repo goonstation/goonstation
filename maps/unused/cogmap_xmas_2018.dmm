@@ -5807,7 +5807,7 @@
 	d1 = 2;
 	d2 = 4
 	},
-/obj/item/postit_stack,
+/obj/item/item_box/postit,
 /turf/simulated/floor/red,
 /area/station/security/checkpoint/arrivals)
 "amT" = (
@@ -14041,7 +14041,7 @@
 /obj/table/reinforced/bar/auto,
 /obj/item/plate,
 /obj/item/kitchen/utensil/spoon,
-/obj/item/card_box/suit,
+/obj/item/card_box/plain,
 /turf/simulated/floor/carpet/green/standard/edge/east,
 /area/station/crew_quarters/cafeteria)
 "aEC" = (
@@ -19673,7 +19673,7 @@
 	icon_state = "ebulb1";
 	dir = 1
 	},
-/obj/item/postit_stack,
+/obj/item/item_box/postit,
 /turf/simulated/floor/black,
 /area/station/bridge)
 "aPN" = (
@@ -21989,7 +21989,7 @@
 /obj/stool/chair/comfy{
 	dir = 4
 	},
-/obj/item/card_box/suit,
+/obj/item/card_box/plain,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/jazz)
 "aUF" = (
@@ -28256,7 +28256,9 @@
 /turf/simulated/floor/plating,
 /area/space)
 "bgN" = (
-/obj/displaycase,
+/obj/displaycase{
+	displayed = new /obj/item/captaingun
+},
 /obj/window/reinforced{
 	dir = 2
 	},
@@ -31278,7 +31280,7 @@
 	tag = ""
 	},
 /obj/item/stamp,
-/obj/item/postit_stack,
+/obj/item/item_box/postit,
 /obj/item/item_box/assorted/ornaments/ornaments_limited,
 /turf/simulated/floor/black,
 /area/station/security/checkpoint)
@@ -33891,7 +33893,7 @@
 /obj/machinery/networked/printer{
 	print_id = "Information"
 	},
-/obj/item/postit_stack,
+/obj/item/item_box/postit,
 /turf/simulated/floor/carpet{
 	icon_state = "fred2";
 	dir = 5
@@ -45537,7 +45539,7 @@
 /obj/item/clipboard,
 /obj/item/device/radio/headset/engineer,
 /obj/item/device/radio/headset/engineer,
-/obj/item/postit_stack,
+/obj/item/item_box/postit,
 /turf/simulated/floor/yellow/side{
 	dir = 8
 	},
@@ -55602,7 +55604,7 @@
 	d1 = 2;
 	d2 = 8
 	},
-/obj/item/postit_stack,
+/obj/item/item_box/postit,
 /turf/simulated/floor/specialroom/medbay{
 	dir = 2
 	},
@@ -61857,7 +61859,7 @@
 	},
 /obj/table/glass/auto,
 /obj/random_item_spawner/desk_stuff,
-/obj/item/card_box/suit,
+/obj/item/card_box/plain,
 /obj/item/a_gift/festive,
 /turf/simulated/floor/escape,
 /area/station/hallway/secondary/exit)

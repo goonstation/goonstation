@@ -213,8 +213,8 @@
 
 /obj/item/material_piece/iridiumalloy
 	icon_state = "iridium"
-	name = "iridium-alloy plate"
-	desc = "A chunk of some sort of iridium-alloy plating."
+	name = "iridium alloy plate"
+	desc = "A chunk of some sort of iridium alloy plating."
 	amount = 5
 	setup_material()
 		src.setMaterial(getMaterial("iridiumalloy"), appearance = 0, setname = 0)
@@ -257,10 +257,13 @@
 		..()
 	attackby(obj/item/W as obj, mob/user as mob)
 		if ((istool(W, TOOL_CUTTING | TOOL_SAWING)))
-			user.visible_message("[user] cuts [src] into a plank.", "You cut the [src] into a plank.")
+			user.visible_message("[user] cuts a plank from the [src].", "You cut a plank from the [src].")
 			var/obj/item/plankobj = new /obj/item/plank(user.loc)
 			plankobj.setMaterial(getMaterial("wood"), appearance = 0, setname = 0)
-			qdel (src)
+			if (src.amount > 1)
+				change_stack_amount(-1)
+			else
+				qdel (src)
 
 /obj/item/material_piece/organic/bamboo
 	name = "bamboo stalk"
@@ -270,10 +273,13 @@
 		src.setMaterial(getMaterial("bamboo"), appearance = 0, setname = 0)
 		..()
 	attackby(obj/item/W as obj, mob/user as mob)
-		if (istype(W, /obj/item/axe) || istype(W, /obj/item/circular_saw) || istype(W, /obj/item/kitchen/utensil/knife) || istype(W, /obj/item/scalpel) || istype(W, /obj/item/sword) || istype(W,/obj/item/saw) || istype(W,/obj/item/knife/butcher))
+		if ((istool(W, TOOL_CUTTING | TOOL_SAWING)))
 			user.visible_message("[user] carefully extracts a shoot from [src].", "You carefully cut a shoot from [src].")
 			new /obj/item/reagent_containers/food/snacks/plant/bamboo/(user.loc)
-			qdel (src)
+			if (src.amount > 1)
+				change_stack_amount(-1)
+			else
+				qdel (src)
 
 /obj/item/material_piece/cloth/spidersilk
 	name = "space spider silk"
