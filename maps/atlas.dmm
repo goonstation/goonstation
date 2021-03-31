@@ -11309,13 +11309,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
-"Bp" = (
-/obj/potted_plant{
-	dir = 1;
-	pixel_y = 28
-	},
-/turf/space,
-/area/station/shield_zone)
 "Bq" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -14813,12 +14806,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/science/storage)
-"Kf" = (
-/obj/shrub{
-	dir = 1
-	},
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/maintenance/southwest)
 "Kh" = (
 /obj/machinery/atmospherics/portables_connector/north,
 /obj/machinery/portable_atmospherics/canister/empty,
@@ -16755,13 +16742,6 @@
 	},
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
-"Ph" = (
-/obj/potted_plant{
-	dir = 1;
-	pixel_y = 28
-	},
-/turf/space,
-/area/space)
 "Pi" = (
 /obj/disposalpipe/segment,
 /obj/machinery/light{
@@ -17038,7 +17018,7 @@
 	icon_state = "4-8"
 	},
 /obj/item/device/radio/intercom/medical,
-/obj/machinery/vending/medical,
+/obj/stool/bench/blue/auto,
 /turf/simulated/floor/bluewhite{
 	dir = 1
 	},
@@ -18306,13 +18286,13 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/science/storage)
 "Ug" = (
-/obj/stool/bench/blue/auto,
 /obj/machinery/light{
 	dir = 8;
 	layer = 9.1;
 	light_type = /obj/item/light/tube/blueish;
 	pixel_x = -10
 	},
+/obj/machinery/vending/medical,
 /turf/simulated/floor/bluewhite{
 	dir = 9
 	},
@@ -54084,7 +54064,7 @@ PS
 PS
 PS
 PS
-Bp
+PS
 aa
 aa
 aa
@@ -54386,7 +54366,7 @@ PS
 aa
 aa
 aa
-Ph
+aa
 iW
 iW
 iW
@@ -54688,7 +54668,7 @@ aa
 iW
 iW
 iW
-Kf
+ii
 iX
 jW
 jY
