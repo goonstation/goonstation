@@ -362,8 +362,8 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 						// IP is a known VPN, cache locally and kick
 						else if (data["proxy"] == true)
 							global.vpn_ip_checks["[src.address]"] = true
-							logTheThing("admin", src, null, "[src.address] is using a vpn. vpn info: [json_encode(data["host"])]")
-							logTheThing("diary", src, null, "[src.address] is using a vpn. vpn info: [json_encode(data["host"])]", "admin")
+							logTheThing("admin", src, null, "[src.address] is using a vpn. vpn info: host: [data["host"]], ASN: [data["ASN"]], org: [data["organization"]]")
+							logTheThing("diary", src, null, "[src.address] is using a vpn. vpn info: host: [data["host"]], ASN: [data["ASN"]], org: [data["organization"]]", "admin")
 							message_admins("[key_name(src)] [src.address] attempted to connect with a VPN or proxy but was kicked!")
 							src.mob.Browse(vpn_kick_string, "window=vpnbonked")
 							sleep(3 SECONDS)
