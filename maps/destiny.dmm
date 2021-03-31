@@ -31172,15 +31172,14 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
+/obj/cable{
+	icon_state = "2-8"
+	},
 /obj/machinery/door/poddoor/pyro{
 	density = 0;
-	icon_state = "pdoor0";
 	id = "interrogation";
 	name = "Interrogation Room";
 	opacity = 0
-	},
-/obj/cable{
-	icon_state = "2-8"
 	},
 /turf/simulated/floor/black,
 /area/station/security/interrogation)
