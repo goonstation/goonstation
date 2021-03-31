@@ -12617,7 +12617,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/disposalpipe/segment,
+/obj/disposalpipe/junction/left/south,
 /turf/simulated/floor/escape{
 	dir = 8
 	},
@@ -12669,6 +12669,10 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "aGi" = (
+/obj/machinery/disposal/cart_port,
+/obj/disposalpipe/trunk{
+	dir = 4
+	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northeast)
 "aGj" = (
@@ -22230,6 +22234,9 @@
 	name = "autoname - SS13";
 	pixel_y = 20;
 	tag = ""
+	},
+/obj/disposalpipe/segment{
+	dir = 4
 	},
 /turf/simulated/floor/stairs/wide/other{
 	dir = 8
@@ -52326,6 +52333,9 @@
 	req_access_txt = "5;12"
 	},
 /obj/access_spawn/maint,
+/obj/disposalpipe/segment{
+	dir = 4
+	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northeast)
 "cyU" = (
@@ -55188,7 +55198,7 @@
 /area/station/hallway/primary/west)
 "ggF" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe/horizontal,
-/obj/disposalpipe/segment/bent/south,
+/obj/disposalpipe/junction/middle/south,
 /turf/simulated/floor/shuttlebay,
 /area/station/maintenance/southeast)
 "gir" = (
@@ -57918,6 +57928,16 @@
 /obj/disposalpipe/segment/ejection,
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
+"pjl" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment{
+	dir = 1;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/northeast)
 "pjs" = (
 /obj/cable{
 	d1 = 4;
@@ -59466,8 +59486,19 @@
 /turf/simulated/floor/carpet/blue/fancy/innercorner/omni,
 /area/station/hallway/primary/east)
 "uhZ" = (
+/obj/disposalpipe/segment{
+	dir = 2;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/floor/plating/random,
+/area/station/maintenance/northeast)
+"uiD" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe/horizontal,
-/turf/simulated/floor/shuttlebay,
+/obj/disposalpipe/trunk{
+	dir = 8
+	},
+/obj/machinery/disposal/cart_port,
+/turf/simulated/floor/plating/random,
 /area/station/maintenance/southeast)
 "uls" = (
 /obj/cable{
@@ -60551,6 +60582,15 @@
 	},
 /turf/simulated/wall/auto/supernorn,
 /area/station/medical/morgue)
+"xSr" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/turf/simulated/floor/plating/random,
+/area/station/maintenance/northeast)
 "xTu" = (
 /obj/machinery/light{
 	dir = 1;
@@ -120053,7 +120093,7 @@ bYt
 cau
 ccb
 cdB
-uhZ
+ceR
 cfV
 cgW
 arE
@@ -120657,7 +120697,7 @@ xAP
 cav
 ccd
 mGp
-eHZ
+ceM
 cfX
 aKD
 arE
@@ -120959,7 +120999,7 @@ bYv
 caw
 cce
 mGp
-pKg
+cgi
 ceH
 bBN
 arE
@@ -121261,7 +121301,7 @@ tfj
 caw
 jtm
 mGp
-pKg
+uiD
 ceH
 cgZ
 cit
@@ -126665,7 +126705,7 @@ aaa
 aaa
 aaa
 aBI
-aGi
+wIm
 kSB
 aHN
 aIY
@@ -126967,7 +127007,7 @@ aaa
 aaa
 aaa
 aBJ
-aGi
+wIm
 aGh
 aDp
 aIZ
@@ -127269,8 +127309,8 @@ aaa
 aaa
 aaa
 arn
-aGi
-aGh
+uhZ
+pjl
 aDp
 aKZ
 aLc
@@ -127572,7 +127612,7 @@ aaa
 aaa
 arn
 aJn
-aDM
+xSr
 aHO
 aKZ
 aLd
@@ -127874,7 +127914,7 @@ aaa
 aaa
 arn
 aLk
-aDM
+xSr
 aHP
 aKZ
 aLe

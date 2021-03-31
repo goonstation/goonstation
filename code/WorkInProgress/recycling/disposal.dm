@@ -7,7 +7,7 @@
 #define PIPEC_PRODUCE "#b2ff4f"
 #define PIPEC_TRANSPORT "#ffbef6"
 #define PIPEC_MINERAL "#a5fffc"
-#define PIPEC_CARGO "#f4ffb4"
+#define PIPEC_CARGO "#f4ff53"
 
 // virtual disposal object
 // travels through pipes in lieu of actual items
