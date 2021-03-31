@@ -2221,7 +2221,7 @@ Game Stats
 <h3>
 Player Stats
 </h3>
-<table id=\"myTable\">
+<table id=\"myTable\" cellspacing=\"0\"; cellpadding=\"5\">
   <tr>
     <th>Team</th>
     <th>Name</th>
@@ -2255,6 +2255,17 @@ Player Stats
 </tr>
 "}
 		. += "[dat]</table>"
+		. += {"
+<style>
+ body {background-color: #448;}
+ h2 {color:white}
+ td, th 
+ {
+  border: 1px solid #66A;
+  text-align: center;
+  color:white;
+ }
+</style>"}
 
 	proc/display_HTML_to_clients()
 		var/string = build_HTML()
