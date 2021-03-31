@@ -21517,19 +21517,16 @@
 	},
 /area/station/science/teleporter)
 "dkN" = (
-/obj/machinery/power/apc/autoname_north,
-/obj/cable{
-	icon_state = "0-4"
-	},
-/obj/cable{
-	icon_state = "0-8"
-	},
 /obj/rack,
 /obj/item/clothing/shoes/magnetic,
 /obj/item/tank/jetpack,
 /obj/item/clothing/suit/space/engineer,
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/head/helmet/space/engineer,
+/obj/machinery/power/apc/autoname_north,
+/obj/cable{
+	icon_state = "0-8"
+	},
 /turf/simulated/floor/neutral/side{
 	dir = 5
 	},
@@ -26140,6 +26137,14 @@
 /obj/item/storage/box/syringes,
 /obj/item/reagent_containers/glass/beaker/large,
 /obj/item/reagent_containers/glass/beaker/large,
+/obj/item/reagent_containers/dropper/mechanical{
+	pixel_x = -20;
+	pixel_y = 5
+	},
+/obj/item/reagent_containers/dropper/mechanical{
+	pixel_x = -20;
+	pixel_y = 5
+	},
 /turf/simulated/floor/white,
 /area/station/science/chemistry)
 "fms" = (
@@ -27548,6 +27553,12 @@
 /obj/item/audio_tape{
 	pixel_y = 5
 	},
+/obj/item/reagent_containers/dropper{
+	pixel_y = 10
+	},
+/obj/item/reagent_containers/dropper{
+	pixel_y = 10
+	},
 /turf/simulated/floor/purplewhite,
 /area/station/science/chemistry)
 "fUR" = (
@@ -28120,6 +28131,9 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/west)
 "gje" = (
+/obj/cable{
+	icon_state = "5-8"
+	},
 /turf/simulated/floor/neutral/side{
 	dir = 8
 	},
@@ -30115,17 +30129,9 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/southeast)
 "hju" = (
-/obj/machinery/power/terminal{
-	dir = 8
-	},
 /obj/cable{
-	icon_state = "0-4"
+	icon_state = "1-4"
 	},
-/obj/machinery/firealarm{
-	layer = 3.5;
-	pixel_y = 28
-	},
-/obj/machinery/portable_atmospherics/pump,
 /turf/simulated/floor/neutral/side,
 /area/station/engine/power)
 "hjC" = (
@@ -34333,11 +34339,17 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/central)
 "jJa" = (
+/obj/stool/chair/office/yellow{
+	dir = 4
+	},
+/obj/landmark/start{
+	name = "Engineer"
+	},
 /obj/cable{
 	icon_state = "4-8"
 	},
 /obj/cable{
-	icon_state = "2-4"
+	icon_state = "2-8"
 	},
 /turf/simulated/floor/yellow,
 /area/station/engine/engineering)
@@ -36375,13 +36387,13 @@
 	},
 /area/station/science/lobby)
 "kUB" = (
-/obj/cable{
-	icon_state = "0-8"
-	},
 /obj/machinery/power/smes,
 /obj/machinery/light/incandescent/harsh{
 	dir = 1;
 	nostick = 1
+	},
+/obj/cable{
+	icon_state = "0-8"
 	},
 /turf/simulated/floor/neutral/side,
 /area/station/engine/power)
@@ -40283,6 +40295,10 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/machinery/firealarm{
+	layer = 3.5;
+	pixel_y = 28
+	},
 /turf/simulated/floor/neutral/side{
 	dir = 9
 	},
@@ -40507,8 +40523,9 @@
 	},
 /area/station/crew_quarters/fitness)
 "niz" = (
-/obj/table/reinforced/auto,
-/obj/machinery/phone,
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
@@ -43604,10 +43621,10 @@
 /area/station/medical/medbay/surgery)
 "oTg" = (
 /obj/cable{
-	icon_state = "4-8"
+	icon_state = "2-4"
 	},
 /obj/cable{
-	icon_state = "2-4"
+	icon_state = "4-10"
 	},
 /turf/simulated/wall/auto/reinforced/gannets{
 	explosion_resistance = 20;
@@ -43702,6 +43719,12 @@
 /turf/simulated/floor/black,
 /area/station/hangar/sec)
 "oVe" = (
+/obj/machinery/power/terminal{
+	dir = 1
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
 /turf/simulated/floor,
 /area/station/engine/power)
 "oVF" = (
@@ -44975,12 +44998,12 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/north)
 "pHC" = (
-/obj/cable{
-	icon_state = "1-8"
-	},
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	can_rupture = 0;
 	dir = 5
+	},
+/obj/cable{
+	icon_state = "1-8"
 	},
 /turf/simulated/wall/auto/reinforced/gannets{
 	explosion_resistance = 20;
@@ -45432,6 +45455,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/machinery/portable_atmospherics/pump,
 /turf/simulated/floor/neutral/side{
 	dir = 10
 	},
@@ -46096,9 +46120,8 @@
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/courtroom)
 "qnP" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
+/obj/table/reinforced/auto,
+/obj/machinery/phone,
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
@@ -51182,14 +51205,14 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
-/obj/machinery/light_switch/north{
-	pixel_y = 28
-	},
 /obj/machinery/power/data_terminal,
 /obj/cable{
 	icon_state = "0-4"
 	},
 /obj/machinery/power/monitor,
+/obj/machinery/light_switch/north{
+	pixel_y = 28
+	},
 /turf/simulated/floor/neutral/side,
 /area/station/engine/power)
 "tdf" = (
@@ -56203,6 +56226,12 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
+"vIc" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor,
+/area/station/engine/power)
 "vIw" = (
 /obj/machinery/shower{
 	dir = 4;
@@ -59664,6 +59693,9 @@
 /obj/machinery/door/airlock/gannets/engineering{
 	name = "airlock-'West SMES'";
 	req_access_txt = "44"
+	},
+/obj/cable{
+	icon_state = "1-2"
 	},
 /obj/cable{
 	icon_state = "1-2"
@@ -102858,9 +102890,9 @@ yag
 yag
 dHP
 yag
-jJa
+dHP
 qnP
-xCW
+efC
 ncb
 lck
 pTf
@@ -103764,11 +103796,11 @@ yag
 yag
 dHP
 yag
-uJW
+jJa
 niz
-efC
+xCW
 hju
-oVe
+vIc
 gld
 oHB
 iMF
