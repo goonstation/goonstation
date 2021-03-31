@@ -7,7 +7,7 @@
 	var/custom_file = null
 
 	attack_self(var/mob/user as mob)
-		if (PROC_ON_COOLDOWN(1 SECOND))
+		if (ON_COOLDOWN(src, "attack_self", 1 SECOND))
 			return
 		if(custom_file)
 			playsound(src.loc, custom_file, 100, 1)

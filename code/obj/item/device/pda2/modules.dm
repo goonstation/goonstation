@@ -321,7 +321,7 @@
 		if (!src.host)
 			boutput(usr, "<span class='alert'>No PDA detected.")
 			return
-		if (PROC_ON_COOLDOWN(5 MINUTES))
+		if (ON_COOLDOWN(src, 5 MINUTES, "send_alert"))
 			boutput(usr, "<span class='alert'>[src] is still on cooldown mode!</span>")
 			return
 		var/datum/signal/signal = get_free_signal()
