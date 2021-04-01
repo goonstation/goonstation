@@ -227,10 +227,12 @@
 		for (var/i = 1, i <= num_ingredients, i++)
 			if (prob(foodprob) && foodwhitelist)
 				snack_type = pick(foodwhitelist)
-			else if (prob(foodprob) && !foodwhitelist)
+			else if (prob(foodprob) && !foodwhitelist?.len > 0)
 				snack_type =  pick(filtered_concrete_typesof(/obj/item/reagent_containers/food/snacks, .proc/filter_food))
-			else
+			else if (altfoodlist?.len > 0)
 				snack_type = pick(altfoodlist)
+			else
+				snack_type = /obj/item/reagent_containers/food/snacks/ingredient/cheese
 			var/obj/item/reagent_containers/R = new snack_type
 			pizzabase.add_ingredient(R, null)
 			ingredient_quality += R.quality
@@ -247,6 +249,13 @@
 		randomize_pizza(foodprob,blacklist)
 /obj/item/reagent_containers/food/snacks/pizza/random/vendor
 	var/static/myfoodprob = 80
+	var/static/list/myfoodwhitelist = list(/obj/item/reagent_containers/food/snacks/ingredient/pepperoni,/obj/item/reagent_containers/food/snacks/mushroom/terran,/obj/item/reagent_containers/food/snacks/meatball)
+
+	New()
+		..()
+		randomize_pizza(myfoodprob,null,null,myfoodwhitelist)
+/obj/item/reagent_containers/food/snacks/pizza/random/hacked
+	var/static/myfoodprob = 70
 	var/static/list/myfoodwhitelist = list(/obj/item/reagent_containers/food/snacks/ingredient/pepperoni,/obj/item/reagent_containers/food/snacks/mushroom/terran,/obj/item/reagent_containers/food/snacks/meatball,/obj/item/reagent_containers/food/snacks/plant/onion)
 	var/static/list/myaltfoodlist = list(/obj/item/reagent_containers/food/drinks/bottle/grones,/obj/item/reagent_containers/food/drinks/bottle/softsoft_pizza,/obj/item/reagent_containers/food/drinks/bottle/spooky,/obj/item/reagent_containers/food/drinks/bottle/spooky2,/obj/item/reagent_containers/food/drinks/bottle/xmas,/obj/item/reagent_containers/food/drinks/noodlecup,/obj/item/reagent_containers/food/snacks/burrito,/obj/item/reagent_containers/food/snacks/plant/tomato/,/obj/item/reagent_containers/food/snacks/plant/corn,/obj/item/reagent_containers/food/snacks/yuck,/obj/item/reagent_containers/food/snacks/plant/banana,/obj/item/reagent_containers/food/snacks/plant/pineapple,/obj/item/reagent_containers/food/snacks/ingredient/meat/bacon,/obj/item/reagent_containers/food/drinks/coffee,/obj/item/reagent_containers/food/drinks/tea,/obj/item/reagent_containers/food/drinks/bottle/beer,/obj/item/reagent_containers/food/drinks/milk,/obj/item/reagent_containers/food/snacks/condiment/chocchips,/obj/item/reagent_containers/food/snacks/condiment/ketchup)
 

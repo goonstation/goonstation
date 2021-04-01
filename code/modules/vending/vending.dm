@@ -588,7 +588,7 @@
 				flick(src.icon_vend,src)
 
 			src.prevend_effect()
-			if(!src.freestuff == 0) R.product_amount--
+			R.product_amount--
 
 			if (src.pay)
 				if (src.acceptcard && account)
@@ -849,7 +849,7 @@
 			return 1
 
 	if (throw_item)
-		if (!src.freestuff == 0) R.product_amount--
+		if (!src.freestuff == 1) R.product_amount--
 		use_power(10)
 		if (src.icon_vend) //Show the vending animation if needed
 			flick(src.icon_vend,src)
@@ -1609,7 +1609,8 @@
 	create_products()
 		..()
 		//If we get blown up, ten pizzas is a good amount. We use freestuff so we can throw more than ten
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/pizza/random/vendor, 10)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/pizza/random/vendor, rand(4,6))
+
 	light_r =1
 	light_g = 0.6
 	light_b = 0.2
@@ -1697,6 +1698,22 @@
 			add_fingerprint(usr)
 			updateUsrDialog()
 		return
+/obj/machinery/vending/pizza/pulse(wireColor)
+	. = ..()
+	if (src.extended_inventory == 0)
+		src.product_list = new()
+		src.product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/pizza/random/vendor, rand(6,10))
+	else
+		src.product_list = new()
+		src.product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/pizza/random/hacked, rand(6,10))
+/obj/machinery/vending/pizza/cut(wireColor)
+	. = ..()
+	if (src.extended_inventory == 0)
+		src.product_list = new()
+		src.product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/pizza/random/vendor, rand(6,10))
+	else
+		src.product_list = new()
+		src.product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/pizza/random/hacked, rand(6,10))
 
 /obj/machinery/vending/pizza/fallen
 	New()
