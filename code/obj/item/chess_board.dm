@@ -71,30 +71,63 @@
 		chessActions += new /datum/contextAction/chess/closeBox
 		chessActions += new /datum/contextAction/chess/close
 
-	proc/grabPiece()
+	proc/checkEmpty()
 		// return if box is empty
 		if(contents.len <= 0)
 			boutput(usr, "The box is completely empty!")
 			return false
 
-		// create an alphabeticall sorted list of pieces in the box
-		var/list/pieceListSorted = sortNames(contents)
-		pieceListSorted.Add("CANCEL")
-		var/selectedType = input(usr,"Pick a piece type:","CHEEEESS") in pieceListSorted
-		if(selectedType == "CANCEL")
-			return false
-		// return if you walk away >:(
-		else if(!in_interact_range(src, usr))
-			return false
+	proc/pieceInput()
+		if(checkEmpty() != null)
+			return
+		else
+			// create an alphabeticall sorted list of pieces in the box
+			var/list/pieceListSorted = sortNames(contents)
+			pieceListSorted.Add("CANCEL")
+			var/selectedType = input(usr,"Pick a piece type:","CHEEEESS") in pieceListSorted
+			return selectedType
 
-		for(var/i in 1 to contents.len)
-			if(selectedType == contents[i].name)
-				usr.put_in_hand_or_drop(contents[i])
-				src.visible_message("[usr] removes the [selectedType] from the [src.name].")
-				if(contents.len <=0 ) // bodge because FUCK
+	proc/grabPiece(var/obj/item/chessman/piece)
+		if(checkEmpty() != null)
+			return
+		else
+			piece = pieceInput()
+			if(piece == "CANCEL")
+				return false
+			// return if you walk away >:(
+			if(!in_interact_range(src, usr))
+				return false
+			for(var/i in 1 to contents.len)
+				if(piece == contents[i].name)
+					usr.put_in_hand_or_drop(contents[i])
+					src.visible_message("[usr] removes the [piece] from the [src.name].")
+					if(contents.len <=0 ) // bodge because FUCK
+						return false
+					else
+						return
+
+	proc/grabSet(chosenSet)
+		if(checkEmpty() != null)
+			return false
+		else
+			var/pieceFound
+			for(var/i in 1 to contents.len)
+				if(contents.len <= 0)
 					return false
-				else
-					return
+				if(chosenSet == 1)
+					if(contents[i].name != "[affinity] draughtsman")
+						usr.put_in_hand_or_drop(contents[i])
+						pieceFound = true
+						break
+				else if(chosenSet == 2)
+					if(contents[i].name == "[affinity] draughtsman")
+						usr.put_in_hand_or_drop(contents[i])
+						pieceFound = true
+						break
+			if(pieceFound == true)
+				return
+			else
+				return false
 
 	proc/grabOne()
 		grabPiece()
@@ -102,12 +135,17 @@
 
 	proc/grabMany()
 		while(grabPiece() == null)
-			grabPiece()
-		setExamine(src)
+			setExamine(src)
 
 	proc/grabChess()
+		while(grabSet(chosenSet = 1) == null)
+		setExamine(src)
+		src.visible_message("[usr] removes all of the remaining chessmen from [src.name].")
 
 	proc/grabDraughts()
+		while(grabSet(chosenSet = 2) == null)
+		setExamine(src)
+		src.visible_message("[usr] removes all of the remaining draughtsmen from [src.name].")
 
 	New() // sets piece numbers and icon state on instantiaion
 		..()
@@ -144,7 +182,7 @@
 
 	MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob) //handles piling pieces into a chessbox
 		if(istype(O,/obj/item/chessman))
-			user.visible_message("[user.name] scoops chess pieces into the [src.name]!")
+			user.visible_message("[user.name] scoops pieces into the [src.name]!")
 			SPAWN_DBG(0.05 SECONDS)
 				for(var/obj/item/chessman/piece in range(1, user))
 					if(piece.pieceAffinity != affinity)
