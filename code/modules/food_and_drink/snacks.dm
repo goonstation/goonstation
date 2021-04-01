@@ -255,7 +255,7 @@
 		..()
 		randomize_pizza(myfoodprob,null,null,myfoodwhitelist)
 /obj/item/reagent_containers/food/snacks/pizza/random/hacked
-	var/static/myfoodprob = 70
+	var/static/myfoodprob = 78
 	var/static/list/myfoodwhitelist = list(/obj/item/reagent_containers/food/snacks/ingredient/pepperoni,/obj/item/reagent_containers/food/snacks/mushroom/terran,/obj/item/reagent_containers/food/snacks/meatball,/obj/item/reagent_containers/food/snacks/plant/onion)
 	var/static/list/myaltfoodlist = list(/obj/item/reagent_containers/food/drinks/bottle/grones,/obj/item/reagent_containers/food/drinks/bottle/softsoft_pizza,/obj/item/reagent_containers/food/drinks/bottle/spooky,/obj/item/reagent_containers/food/drinks/bottle/spooky2,/obj/item/reagent_containers/food/drinks/bottle/xmas,/obj/item/reagent_containers/food/drinks/noodlecup,/obj/item/reagent_containers/food/snacks/burrito,/obj/item/reagent_containers/food/snacks/plant/tomato/,/obj/item/reagent_containers/food/snacks/plant/corn,/obj/item/reagent_containers/food/snacks/yuck,/obj/item/reagent_containers/food/snacks/plant/banana,/obj/item/reagent_containers/food/snacks/plant/pineapple,/obj/item/reagent_containers/food/snacks/ingredient/meat/bacon,/obj/item/reagent_containers/food/drinks/coffee,/obj/item/reagent_containers/food/drinks/tea,/obj/item/reagent_containers/food/drinks/bottle/beer,/obj/item/reagent_containers/food/drinks/milk,/obj/item/reagent_containers/food/snacks/condiment/chocchips,/obj/item/reagent_containers/food/snacks/condiment/ketchup)
 
