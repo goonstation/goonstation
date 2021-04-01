@@ -1,18 +1,38 @@
-slurm - Host
-gibbed - Host
-stuntwaffle - Host
-pantaloons - Host
-darsant - Host
-nannek - Host
+wirewraith - Host
 
-exadv1 - Coder
-0staf - Coder
-justicefries - Coder
-sniperchance - Coder
-angriestibm - Coder
-hobnob - Coder
-enallyniv - Coder
-lallander - Coder
 keelin - Coder
-brianoblivion - Coder
-arthurmuggins - Coder
+emarl - Coder
+angriestibm - Coder
+magicmountain - Coder
+drcogwerks - Coder
+burntcornmuffin - Coder
+daeren - Coder
+mybluecorners - Coder
+zewaka - Coder
+grayshift - Coder
+mordent - Coder
+flourish - Coder
+kremlins - Coder
+gannets - Coder
+hydrofloric - Coder
+kyle2143 - Coder
+johnwarcrimes - Coder
+zamujasa - Coder
+dionsu - Coder
+gerhazo - Coder
+
+hukhukhuk - Primary Administrator
+popecrunch - Primary Administrator
+mrfishstick - Primary Administrator
+hufflaw - Primary Administrator
+shotgunbill - Primary Administrator
+souricelle - Primary Administrator
+
+lison - Primary Administrator
+ines - Primary Administrator
+flaborized - Primary Administrator
+reginaldhj - Primary Administrator
+questx - Primary Administrator
+simianc - Primary Administrator
+sageacrin - Primary Administrator
+pali6 - Primary Administrator
