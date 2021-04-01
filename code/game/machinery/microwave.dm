@@ -39,10 +39,10 @@
 	flour_amount = 2
 	creates = "/obj/item/weapon/reagent_containers/food/snacks/waffles"
 
-/datum/recipe/faggot
+/datum/recipe/meatball
 	monkeymeat_amount = 1
 	humanmeat_amount = 1
-	creates = "/obj/item/weapon/reagent_containers/food/snacks/faggot"
+	creates = "/obj/item/weapon/reagent_containers/food/snacks/meatball"
 
 /datum/recipe/pie
 	flour_amount = 2
@@ -51,7 +51,7 @@
 
 /datum/recipe/donkpocket
 	flour_amount = 1
-	extra_item = /obj/item/weapon/reagent_containers/food/snacks/faggot
+	extra_item = /obj/item/weapon/reagent_containers/food/snacks/meatball
 	creates = "/obj/item/weapon/reagent_containers/food/snacks/donkpocket"
 
 /datum/recipe/donkpocket_warm
@@ -66,7 +66,7 @@
 	src.available_recipes += new /datum/recipe/humanburger(src)
 	src.available_recipes += new /datum/recipe/waffles(src)
 	src.available_recipes += new /datum/recipe/brainburger(src)
-	src.available_recipes += new /datum/recipe/faggot(src)
+	src.available_recipes += new /datum/recipe/meatball(src)
 	src.available_recipes += new /datum/recipe/roburger(src)
 	src.available_recipes += new /datum/recipe/donkpocket(src)
 	src.available_recipes += new /datum/recipe/donkpocket_warm(src)

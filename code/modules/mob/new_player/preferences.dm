@@ -76,7 +76,7 @@ datum/preferences
 				h_style_r = "hair_d"
 			if("Balding")
 				h_style_r = "hair_e"
-			if("Fag")
+			if("Mop")
 				h_style_r = "hair_f"
 			if("Bedhead")
 				h_style_r = "hair_bedhead"
@@ -470,7 +470,7 @@ datum/preferences
 				src.s_tone =  -src.s_tone + 35
 
 		if (link_tags["h_style"])
-			var/new_style = input(user, "Please select hair style", "Character Generation")  as null|anything in list( "Cut Hair", "Short Hair", "Long Hair", "Mohawk", "Balding", "Fag", "Bedhead", "Dreadlocks", "Bald" )
+			var/new_style = input(user, "Please select hair style", "Character Generation")  as null|anything in list( "Cut Hair", "Short Hair", "Long Hair", "Mohawk", "Balding", "Mop", "Bedhead", "Dreadlocks", "Bald" )
 
 			if (new_style)
 				src.h_style = new_style
@@ -574,7 +574,7 @@ datum/preferences
 				character.hair_icon_state = "hair_d"
 			if("Balding")
 				character.hair_icon_state = "hair_e"
-			if("Fag")
+			if("Mop")
 				character.hair_icon_state = "hair_f"
 			if("Bedhead")
 				character.hair_icon_state = "hair_bedhead"

@@ -1127,10 +1127,10 @@
 	amount = 5
 	heal_amt = 2
 
-/obj/item/weapon/reagent_containers/food/snacks/faggot
-	name = "faggot"
+/obj/item/weapon/reagent_containers/food/snacks/meatball
+	name = "meatball"
 	desc = "A great meal all round."
-	icon_state = "faggot"
+	icon_state = "meatball"
 	amount = 1
 	heal_amt = 2
 	heal(var/mob/M)

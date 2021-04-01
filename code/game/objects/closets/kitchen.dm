@@ -34,10 +34,10 @@
 	new /obj/item/kitchen/egg_box(src)
 
 	if(rand(20))
-		new /obj/item/weapon/reagent_containers/food/snacks/faggot(src)
-		new /obj/item/weapon/reagent_containers/food/snacks/faggot(src)
-		new /obj/item/weapon/reagent_containers/food/snacks/faggot(src)
-		new /obj/item/weapon/reagent_containers/food/snacks/faggot(src)
+		new /obj/item/weapon/reagent_containers/food/snacks/meatball(src)
+		new /obj/item/weapon/reagent_containers/food/snacks/meatball(src)
+		new /obj/item/weapon/reagent_containers/food/snacks/meatball(src)
+		new /obj/item/weapon/reagent_containers/food/snacks/meatball(src)
 	else
 		new /obj/item/weapon/reagent_containers/food/snacks/monkeyburger(src)
 		new /obj/item/weapon/reagent_containers/food/snacks/monkeyburger(src)
