@@ -1064,6 +1064,17 @@ obj/trait/pilot
 	category = "species"
 	mutantRace = /datum/mutantrace/roach
 
+/obj/trait/cat
+	name = "Felinid (-5) \[Species\]"
+	cleanName = "cat"
+	icon_state = "catseyeG"
+	desc = "Wait, this isnt a felinid..."
+	id = "cat"
+	points = -5
+	isPositive = TRUE
+	category = "species"
+	mutantRace = /datum/mutantrace/cat
+
 //Infernal Contract Traits
 /obj/trait/hair
 	name = "Wickedly Good Hair"
