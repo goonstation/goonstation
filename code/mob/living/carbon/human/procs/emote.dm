@@ -2085,28 +2085,7 @@
 /mob/living/carbon/human/emote(var/act, var/voluntary = 0, var/emoteTarget = null)
 #endif
 
-/mob/living/carbon/human/proc/expel_fart_gas(var/oxyplasmafart)
-	var/turf/T = get_turf(src)
-	var/datum/gas_mixture/gas = unpool(/datum/gas_mixture)
-	gas.vacuum()
-	if(oxyplasmafart == 1)
-		gas.toxins += 1
-	if(oxyplasmafart == 2)
-		gas.oxygen += 1
-	if(src.reagents && src.reagents.get_reagent_amount("fartonium") > 6.9)
-		gas.farts = 6.9
-	else if(src.reagents && src.reagents.get_reagent_amount("egg") > 6.9)
-		gas.farts = 2.69
-	else if(src.reagents && src.reagents.get_reagent_amount("refried_beans") > 6.9)
-		gas.farts = 1.69
-	else
-		gas.farts = 0.69
-	gas.temperature = T20C
-	gas.volume = R_IDEAL_GAS_EQUATION * T20C / 1000
-	if (T)
-		T.assume_air(gas)
 
-	src.remove_stamina(STAMINA_DEFAULT_FART_COST)
 
 /mob/living/carbon/human/proc/dabbify(var/mob/living/carbon/human/H)
 	if(PROC_ON_COOLDOWN(2 SECONDS))
