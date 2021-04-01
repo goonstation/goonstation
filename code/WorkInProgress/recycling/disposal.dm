@@ -341,6 +341,7 @@
 // travels through pipes in lieu of actual items
 // contents will be items flushed by the disposal
 // this allows the gas flushed to be tracked
+// [IGNORE THIS COMMENT, NOT r4407, GIT PLEASE]
 
 /obj/disposalholder
 	invisibility = 101
