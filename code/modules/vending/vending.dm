@@ -1707,11 +1707,9 @@
 /obj/machinery/vending/pizza/cut(wireColor)
 	. = ..()
 	if (src.extended_inventory == 0)
-		src.product_list = new()
-		src.product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/pizza/random/vendor, rand(6,10))
+		src.product_list += list(new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/pizza/random/vendor, rand(6,10)))
 	else
-		src.product_list = new()
-		src.product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/pizza/random/hacked, rand(6,10))
+		src.product_list += list(new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/pizza/random/hacked, rand(6,10)))
 
 /obj/machinery/vending/pizza/fallen
 	New()
