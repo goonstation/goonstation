@@ -124,11 +124,11 @@ FLASHBANG
 				C.name = "psychedelic"
 				C.desc = "Groovy!"
 				C.icon_state = "psyche"
-				C.color = "psyche"
+				C.colxr = "psyche"
 				spawn(200)
 					C.name = "Black Jumpsuit"
 					C.icon_state = "bl_suit"
-					C.color = "black"
+					C.colxr = "black"
 					C.desc = null
 
 		M << "\red <B>BZZZT</B>"

@@ -6,7 +6,7 @@
 	src.camera.status = 0.0
 
 	if(src.blind)
-		src.blind.layer = 0
+		src.blind.layer = BACKGROUND_LAYER
 	src.sight |= SEE_TURFS
 	src.sight |= SEE_MOBS
 	src.sight |= SEE_OBJS

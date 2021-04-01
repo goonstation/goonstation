@@ -138,7 +138,7 @@
 		icon_state = "door0"
 	return
 
-/obj/machinery/door/proc/animate(animation)
+/obj/machinery/door/proc/animaxe(animation)
 	switch(animation)
 		if("opening")
 			if(p_open)
@@ -164,7 +164,7 @@
 	if(!src.operating) //in case of emag
 		src.operating = 1
 
-	animate("opening")
+	animaxe("opening")
 	sleep(10)
 	src.density = 0
 	update_icon()
@@ -187,7 +187,7 @@
 		return
 	src.operating = 1
 
-	animate("closing")
+	animaxe("closing")
 	src.density = 1
 	sleep(10)
 	update_icon()

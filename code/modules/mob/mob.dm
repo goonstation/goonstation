@@ -272,7 +272,7 @@
 /obj/proc/hide(h)
 	return
 
-/obj/item/weapon/grab/proc/throw()
+/obj/item/weapon/grab/proc/throw_via_grab_weapon()
 	if(src.affecting)
 		var/grabee = src.affecting
 		spawn(0)

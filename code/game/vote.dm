@@ -123,7 +123,7 @@
 
 
 		for(var/w in winners)
-			if(lentext(ret) > 0)
+			if(length(ret) > 0)
 				ret += "/"
 			if(w=="default")
 				winners = list("default")

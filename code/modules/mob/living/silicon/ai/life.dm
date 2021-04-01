@@ -54,8 +54,8 @@
 
 				if (!blind)
 					//stage = 4.5
-					if (src.blind.layer!=0)
-						src.blind.layer = 0
+					if (src.blind.layer!=BACKGROUND_LAYER)
+						src.blind.layer = BACKGROUND_LAYER
 					src.sight |= SEE_TURFS
 					src.sight |= SEE_MOBS
 					src.sight |= SEE_OBJS

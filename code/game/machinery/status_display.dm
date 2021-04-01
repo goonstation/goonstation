@@ -72,7 +72,7 @@
 					displayloc = "ETA "
 
 				var/displaytime = get_shuttle_timer()
-				if(lentext(displaytime) > 5)
+				if(length(displaytime) > 5)
 					displaytime = "**~**"
 
 				update_display(displayloc, displaytime)
@@ -86,7 +86,7 @@
 			var/disp2
 			if(supply_shuttle_moving)
 				disp1 = get_supply_shuttle_timer()
-				if(lentext(disp1) > 5)
+				if(length(disp1) > 5)
 					disp1 = "**~**"
 				disp2 = null
 
@@ -110,14 +110,14 @@
 				line1 = message1
 			else
 				line1 = copytext(message1+message1, index1, index1+5)
-				if(index1++ > (lentext(message1)))
+				if(index1++ > (length(message1)))
 					index1 = 1
 
 			if(!index2)
 				line2 = message2
 			else
 				line2 = copytext(message2+message2, index2, index2+5)
-				if(index2++ > (lentext(message2)))
+				if(index2++ > (length(message2)))
 					index2 = 1
 
 			update_display(line1, line2)
@@ -133,14 +133,14 @@
 
 	proc/set_message(var/m1, var/m2)
 		if(m1)
-			index1 = (lentext(m1) > 5)
+			index1 = (length(m1) > 5)
 			message1 = uppertext(m1)
 		else
 			message1 = ""
 			index1 = 0
 
 		if(m2)
-			index2 = (lentext(m2) > 5)
+			index2 = (length(m2) > 5)
 			message2 = uppertext(m2)
 		else
 			message2 = null
@@ -196,7 +196,7 @@
 		var/image/I = image('status_display.dmi', "blank")
 
 
-		var/len = lentext(tn)
+		var/len = length(tn)
 
 		for(var/d = 1 to len)
 

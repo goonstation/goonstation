@@ -519,7 +519,7 @@
 				if ((src.blinded))
 					src.blind.layer = 18
 				else
-					src.blind.layer = 0
+					src.blind.layer = BACKGROUND_LAYER
 
 					if (src.disabilities & 1)
 						src.client.screen += src.hud_used.vimpaired

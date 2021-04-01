@@ -46,8 +46,8 @@
 
 		if (!blind)
 
-			if (src.blind.layer!=0)
-				src.blind.layer = 0
+			if (src.blind.layer!=BACKGROUND_LAYER)
+				src.blind.layer = BACKGROUND_LAYER
 			src.see_in_dark = 8
 			src.see_invisible = 2
 

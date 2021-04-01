@@ -28,7 +28,7 @@
 	item.loc = src.loc
 
 	if (istype(item, /obj/item/weapon/grab))
-		item = item:throw() //throw the person instead of the grab
+		item = item:throw_via_grab_weapon() //throw the person instead of the grab
 
 	if(istype(item, /obj/item))
 		item:dropped(src) // let it know it's been dropped
