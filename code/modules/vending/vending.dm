@@ -588,7 +588,7 @@
 				flick(src.icon_vend,src)
 
 			src.prevend_effect()
-			R.product_amount--
+			if(!src.freestuff) R.product_amount--
 
 			if (src.pay)
 				if (src.acceptcard && account)
@@ -1707,9 +1707,9 @@
 /obj/machinery/vending/pizza/cut(wireColor)
 	. = ..()
 	if (src.extended_inventory == 0)
-		src.product_list += list(new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/pizza/random/vendor, rand(6,10)))
+		src.product_list = list(new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/pizza/random/vendor, rand(6,10)))
 	else
-		src.product_list += list(new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/pizza/random/hacked, rand(6,10)))
+		src.product_list = list(new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/pizza/random/hacked, rand(6,10)))
 
 /obj/machinery/vending/pizza/fallen
 	New()
