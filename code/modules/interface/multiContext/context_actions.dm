@@ -1013,28 +1013,38 @@
 
 		execute(var/atom/target, var/mob/user)
 			var/obj/item/chessbox/box = target
+			box.grabMany(user)
 
 	dispenseChess
 		name = "take all chessmen"
 		desc = "removes all chessmen from the box"
 		icon_state = "chess"
 
+		execute(var/atom/target, var/mob/user)
+			var/obj/item/chessbox/box = target
+			box.grabChess(user)
+
 	dispenseDraughts
-	name = "take all draughtsmen"
-	desc = "removes all draughtsmen from the box"
-	icon_state = "draughts"
+		name = "take all draughtsmen"
+		desc = "removes all draughtsmen from the box"
+		icon_state = "draughts"
+
+		execute(var/atom/target, var/mob/user)
+			var/obj/item/chessbox/box = target
+			box.grabDraughts(user)
 
 	closeBox
 		name = "close box"
-		desc = "Close the box."
+		desc = "close the box"
 		icon_state = "chessbox_close"
 
 		execute(var/atom/target, var/mob/user)
 			var/obj/item/chessbox/box = target
+			box.closeBox()
 
 	close
 		name = "close"
-		desc = "close this menu."
+		desc = "close this menu"
 		icon_state = "close"
 
 		execute(var/atom/target, var/mob/user)

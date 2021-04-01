@@ -12,7 +12,6 @@
 	w_class = 1
 	var/pieceAffinity // black, white
 	var/pieceType // king, queen, bishop, etc.
-	var/pieceName // string for naming a piece based on colour and type
 
 	proc/setPieceInfo()
 		// determining piece colour based on pieceAffinity
@@ -30,7 +29,6 @@
 		else
 			icon_state = "king"
 			name = "broken chessman"
-		..()
 
 /obj/item/chessbox
 	name = "chessmen box"
@@ -38,7 +36,6 @@
 	icon = 'icons/obj/items/chess.dmi'
 	var/affinity //black or white, for setting the piece colour dispensed by a box
 	var/spawnType
-	var/pieceTotal
 
 	// context menu vars
 	contextLayout = new /datum/contextLayout/instrumental(16)
@@ -48,6 +45,9 @@
 	var/list/boxContents
 	var/list/possiblePieces = list("king","queen","bishop","knight","rook","pawn","draughtsman")
 
+	proc/closeBox()
+		icon_state = "[affinity]box"
+
 	proc/spawnPiece(spawnType)
 		var/obj/item/chessman/piece = new
 		piece.pieceAffinity = "[affinity]" // sets created piece affinity
@@ -55,15 +55,14 @@
 		piece.setPieceInfo(src) // set piece information based on box and type
 		piece.set_loc(src)
 
-	/* proc/setExamine()
-		desc = "An ornate wooden box designed to contain [affinity] pieces for chess and checkers."
-		if(pieceTotal <= 0)
-			desc == "[desc] There is nothing in it."
+	/proc/setExamine(var/obj/item/chessbox/box)
+		box.desc = "An ornate wooden box designed to contain [box.affinity] pieces for chess and checkers."
+		if(box.contents.len <= 0)
+			box.desc = "[box.desc] There is nothing in it."
 		else
-		var/list/pieceCountList == null
-			desc == "[desc] It contains [pieceCountList]" */
+			box.desc = "[box.desc] It contains [box.contents.len] pieces."
 
-	proc/updateChessActions()
+	proc/updateChessActions() // the name of this proc is very apt.
 		chessActions = list()
 		chessActions += new /datum/contextAction/chess/takeOne
 		chessActions += new /datum/contextAction/chess/takeMultiple
@@ -72,18 +71,46 @@
 		chessActions += new /datum/contextAction/chess/closeBox
 		chessActions += new /datum/contextAction/chess/close
 
-	proc/grabOne(var/mob/user,var/obj/item/chessman/piece)
+	proc/grabPiece()
 		// return if box is empty
-		if(pieceTotal <= 0)
-			boutput(user, "The box is completely empty!")
-			return
-		var/selectedType = input(usr,"Pick a piece type:","CHEEEESS") in contents
-		user.put_in_hand_or_drop(selectedType)
-		//contents.sortPieces()
-		pieceTotal = contents.len
-		src.visible_message("[usr] removes [selectedType] from the [affinity] chess box.")
+		if(contents.len <= 0)
+			boutput(usr, "The box is completely empty!")
+			return false
+
+		// create an alphabeticall sorted list of pieces in the box
+		var/list/pieceListSorted = sortNames(contents)
+		pieceListSorted.Add("CANCEL")
+		var/selectedType = input(usr,"Pick a piece type:","CHEEEESS") in pieceListSorted
+		if(selectedType == "CANCEL")
+			return false
+		// return if you walk away >:(
+		else if(!in_interact_range(src, usr))
+			return false
+
+		for(var/i in 1 to contents.len)
+			if(selectedType == contents[i].name)
+				usr.put_in_hand_or_drop(contents[i])
+				src.visible_message("[usr] removes the [selectedType] from the [src.name].")
+				if(contents.len <=0 ) // bodge because FUCK
+					return false
+				else
+					return
+
+	proc/grabOne()
+		grabPiece()
+		setExamine(src)
+
+	proc/grabMany()
+		while(grabPiece() == null)
+			grabPiece()
+		setExamine(src)
+
+	proc/grabChess()
+
+	proc/grabDraughts()
 
 	New() // sets piece numbers and icon state on instantiaion
+		..()
 		icon_state = "[affinity]box"
 		boxContents = list(1,2,2,2,2,8,12)
 
@@ -94,13 +121,7 @@
 			for(var/j in 1 to pieceTypeAmount) // for the number of pieces of a single type
 				spawnPiece(possiblePieces[i])
 
-		pieceTotal = contents.len
-
-	attack_self(mob/user as mob)
-		if(icon_state == "[affinity]box")
-			icon_state = "[affinity]box-open"
-		else
-			icon_state = "[affinity]box"
+		setExamine(src)
 
 	attack_hand(mob/user as mob)
 		// open box if closed
@@ -110,15 +131,28 @@
 		updateChessActions()
 		user.showContextActions(chessActions, src)
 
-	attackby(var/obj/item/W, var/mob/user)
+	attackby(var/obj/item/chessman/piece, var/mob/user)
 		// check chess piece for correct affinity, then places it into box's contents
-		if(istype(W,/obj/item/chessman))
-			if(findtext(W.name,src.affinity))
-				user.u_equip(W)
-				W.set_loc(src)
-				src.visible_message("[usr] places [W] in the [affinity] chess box.")
-			else
+		if(istype(piece,/obj/item/chessman))
+			if(piece.pieceAffinity != affinity)
 				boutput(user, "That doesn't belong in this box!")
+				return
+			else
+				user.u_equip(piece)
+				piece.set_loc(src)
+				src.visible_message("[usr] places [piece.name] in the [src.name].")
+
+	MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob) //handles piling pieces into a chessbox
+		if(istype(O,/obj/item/chessman))
+			user.visible_message("[user.name] scoops chess pieces into the [src.name]!")
+			SPAWN_DBG(0.05 SECONDS)
+				for(var/obj/item/chessman/piece in range(1, user))
+					if(piece.pieceAffinity != affinity)
+						continue
+					if(piece.loc == user)
+						user.u_equip(piece)
+					piece.set_loc(src)
+					sleep(0.05 SECONDS)
 
 	MouseDrop(mob/user as mob) // because picking up boxes is cool
 		if((istype(user,/mob/living/carbon/human))&&(!user.stat)&&!(src in user.contents))
