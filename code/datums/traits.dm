@@ -1064,6 +1064,18 @@ obj/trait/pilot
 	category = "species"
 	mutantRace = /datum/mutantrace/roach
 
+/obj/trait/moth
+	name = "GOON MOTH?! (-1) \[Species\]"
+	cleanName = "moth"
+	icon_state = "placeholder"
+	desc = "GOON MOTH GOON MOTH GOON MOTH"
+	id = "cat"
+	points = -1
+	isPositive = TRUE
+	category = "species"
+	mutantRace = /datum/mutantrace/moth
+
+
 //Infernal Contract Traits
 /obj/trait/hair
 	name = "Wickedly Good Hair"

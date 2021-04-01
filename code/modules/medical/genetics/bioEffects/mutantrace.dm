@@ -177,3 +177,13 @@
 	can_scramble = 0
 	curable_by_mutadone = 0
 	reclaim_fail = 100
+
+/datum/bioEffect/mutantrace/moth
+	name = "Lepidopteran Genetics"
+	desc = "placeholder furry-related joke"
+	id = "moth"
+	mutantrace_option = "Moth"
+	mutantrace_path = /datum/mutantrace/moth
+	msgGain = "You feel a sudden strange attraction to the station's lighting."
+	msgLose = "You feel less fluffy."
+	icon_state  = "moth"

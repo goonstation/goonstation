@@ -2117,3 +2117,48 @@
 	partlistPart = "foot_right"
 	step_image_state = "footprintsR"
 
+////MOTH PARTS////
+//////PARENT//////
+/obj/item/parts/human_parts/arm/mutant/moth
+	icon = 'TGStation/moth.dmi'
+	partIcon = 'TGStation/moth.dmi'
+
+/obj/item/parts/human_parts/leg/mutant/moth
+	icon = 'TGStation/moth.dmi'
+	partIcon = 'TGStation/moth.dmi'
+
+
+//// ACTUAL MOTH LIMBS ////
+/obj/item/parts/human_parts/arm/mutant/moth/left
+	name = "left moth arm"
+	desc = "A moth's left arm."
+	icon_state = "arm_left"
+	slot = "l_arm"
+	side = "left"
+	handlistPart = "hand_left"
+
+/obj/item/parts/human_parts/arm/mutant/moth/right
+	name = "right moth arm"
+	desc = "A moth's right arm."
+	icon_state = "arm_right"
+	slot = "r_arm"
+	side = "right"
+	handlistPart = "hand_right"
+
+/obj/item/parts/human_parts/leg/mutant/moth/left
+	name = "left moth leg"
+	desc = "A moth's left leg."
+	icon_state = "leg_left"
+	slot = "l_leg"
+	side = "left"
+	partlistPart = "foot_left"
+	step_image_state = "footprintsL"
+
+/obj/item/parts/human_parts/leg/mutant/moth/right
+	name = "right moth leg"
+	desc = "A moth's right leg."
+	icon_state = "leg_right"
+	slot = "r_leg"
+	side = "right"
+	partlistPart = "foot_right"
+	step_image_state = "footprintsR"

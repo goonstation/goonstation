@@ -17,6 +17,7 @@
 #define HEAD_HUNTER 14
 #define HEAD_ITHILLID 15
 #define HEAD_VIRTUAL 16
+#define HEAD_MOTH 17
 
 //tail defines
 #define TAIL_NONE 0
@@ -28,6 +29,7 @@
 #define TAIL_SEAMONKEY 6
 #define TAIL_CAT 7
 #define TAIL_ROACH 8
+#define TAIL_MOTH 9
 
 /// appearanceholder color vars. Tells mutant races to stick this color into the specified special hair / limb overlay color slot
 #define CUST_1 1

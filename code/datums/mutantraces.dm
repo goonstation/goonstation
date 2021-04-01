@@ -2078,6 +2078,28 @@
 					. = "<B>[mob]</B> BWAHCAWCKs!"
 					playsound(get_turf(mob), "sound/voice/screams/chicken_bawk.ogg", 50, 0, 0, mob.get_age_pitch())
 
+
+/datum/mutantrace/moth
+	name = "moff"
+	icon_state = "moth"
+	override_attack = 0
+	firevuln = 2
+	race_mutation = /datum/bioEffect/mutantrace/moth
+	mutant_folder = 'TGStation/moth.dmi'
+	special_head = HEAD_MOTH
+	mutant_organs = list("tail" = /obj/item/organ/tail/moth)
+	special_hair_1_icon = 'TGStation/moth.dmi'
+	special_hair_1_state = "head-detail1"
+	special_hair_1_color = CUST_1
+	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/moth/right
+	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/moth/left
+	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/moth/right
+	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/moth/left
+	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_EYES | HAS_NO_SKINTONE | BUILT_FROM_PIECES | HEAD_HAS_OWN_COLORS | HAS_SPECIAL_HAIR | HAS_EXTRA_DETAILS)
+
+	say_verb()
+		return "flutters"
+
 #undef OVERRIDE_ARM_L
 #undef OVERRIDE_ARM_R
 #undef OVERRIDE_LEG_R

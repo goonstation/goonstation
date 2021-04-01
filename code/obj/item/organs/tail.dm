@@ -266,3 +266,13 @@
 	organ_image_under_suit_1 = "roach_under_suit"
 	organ_image_under_suit_2 = null
 	organ_image_over_suit = "roach_over_suit"
+
+/obj/item/organ/tail/moth
+	name = "moth wings debug"
+	desc = "a fluffy pair of wings"
+	icon_state = "tail-moth"
+	organ_image_icon = 'TGStation/moth.dmi'
+	tail_num = TAIL_MOTH
+	organ_image_under_suit_1 = "moth_under_suit"
+	organ_image_under_suit_2 = null
+	organ_image_over_suit = "moth_over_suit"
