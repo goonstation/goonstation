@@ -1,4 +1,9 @@
 
+(t)wed apr 01 21
+(u)Goonstation Coding Team
+(e)🆕🎨|feature, sprites
+(*)A lot of people have brought up how the game has lost its 'soul' as of recent, especially with how the game looks. As such, we've made some changes to the sprites in the game to be more in-line with our classic ones.
+(+)Something's going wrong with the changelog, weird.
 (t)tue mar 30 21
 (u)w arc
 (e)🗺|mappig
