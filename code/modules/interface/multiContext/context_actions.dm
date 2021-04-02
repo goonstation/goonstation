@@ -1033,6 +1033,15 @@
 			var/obj/item/chessbox/box = target
 			box.grabDraughts(user)
 
+	grabBox
+		name = "pick up box"
+		desc = "pick up the box. with your hands."
+		icon_state = "up_arrow"
+
+		execute(var/atom/target, var/mob/user)
+			var/obj/item/chessbox/box = target
+			box.grabBox(user)
+
 	closeBox
 		name = "close box"
 		desc = "close the box"
