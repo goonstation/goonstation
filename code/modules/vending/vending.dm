@@ -1,3 +1,7 @@
+#define WIRE_EXTEND 1
+#define WIRE_SCANID 2
+#define WIRE_SHOCK 3
+#define WIRE_SHOOTINV 4
 /datum/data/vending_product
 	var/product_name = "generic"
 	var/atom/product_path = null
@@ -208,11 +212,6 @@
 
 		else
 			return src.loc
-
-#define WIRE_EXTEND 1
-#define WIRE_SCANID 2
-#define WIRE_SHOCK 3
-#define WIRE_SHOOTINV 4
 
 /obj/machinery/vending/ex_act(severity)
 	switch(severity)
@@ -992,11 +991,6 @@
 
 			for(var/mob/M in AIviewers(src.owner))
 				M.show_message("<span class='notice'><B>[src.owner] manages to stand \the [src.vendor] back upright!</B></span>", 1)
-
-#undef WIRE_EXTEND
-#undef WIRE_SCANID
-#undef WIRE_SHOCK
-#undef WIRE_SHOOTINV
 
 /obj/machinery/vending/coffee
 	name = "coffee machine"
@@ -2201,4 +2195,7 @@
 		product_list += new/datum/data/vending_product(/obj/item/clothing/gloves/long, 2)
 
 		product_list += new/datum/data/vending_product(/obj/item/sponge/cheese, 2, hidden=1)
-
+#undef WIRE_EXTEND
+#undef WIRE_SCANID
+#undef WIRE_SHOCK
+#undef WIRE_SHOOTINV
