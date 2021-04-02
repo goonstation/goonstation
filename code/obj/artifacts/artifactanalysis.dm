@@ -2,7 +2,7 @@
 	name = "artifact analysis form"
 	icon = 'icons/obj/writing.dmi'
 	icon_state = "artifact_form"
-	desc = "A standardized form for classifying different alien artifacts."
+	desc = "A standardized form for classifying different alien artifacts, with some extra strong adhesive on the back."
 	appearance_flags = RESET_TRANSFORM | RESET_COLOR | RESET_ALPHA
 	var/artifactName = ""
 	var/artifactOrigin = ""
@@ -36,16 +36,32 @@
 		if(!length(A.triggers) || A.automatic_activation)
 			lastAnalysis++
 
-		if(lastAnalysis < 3)
-			src.artifactName = ""
-			icon_state = "artifact_form_incorrect"
-			return // you didn't get it all correct, so no cool name for you
+		// ok, let's make a name
+		// start with obscured name
+		src.artifactName = O.real_name
+		// get an instance of the artifact origin
+		for(var/datum/artifact_origin/origin as() in artifact_controls.artifact_origins)
+			if(origin.type_name == src.artifactOrigin)
+				// have we already generated a name for that origin?
+				// the actual name with the actual origin should be in the list by default
+				if(!A.used_names[src.artifactOrigin])
+					// no, generate new one and store it
+					src.artifactName = origin.generate_name()
+					A.used_names[src.artifactOrigin] = src.artifactName
+				else
+					// yes, use it
+					src.artifactName = A.used_names[src.artifactOrigin]
+				break
 
 		// all correct, let's set the name!
-		src.icon_state = "artifact_form_correct"
-		src.artifactName = A.internal_name
-		O.real_name = A.internal_name
+		O.real_name = src.artifactName
 		O.UpdateName()
+
+	attack_hand(mob/user)
+		user.lastattacked = src.attached
+		if(src.attached)
+			src.attached.attack_hand(user)
+			user.lastattacked = src.attached
 
 	stick_to(atom/A, pox, poy)
 		. = ..()
@@ -55,6 +71,11 @@
 	attackby(obj/item/W, mob/living/user)
 		if(istype(W, /obj/item/pen))
 			ui_interact(user)
+		else if((iscuttingtool(W) || issnippingtool(W)) && user.a_intent == INTENT_HELP)
+			boutput(user, "You manage to scrape \the [src] off of \the [src.attached].")
+			src.remove_from_attached()
+			src.add_fingerprint(user)
+			user.put_in_hand_or_drop(src)
 		else if (src.attached)
 			src.attached.attackby(W, user)
 			user.lastattacked = user

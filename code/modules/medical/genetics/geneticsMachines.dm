@@ -627,7 +627,7 @@
 			for_by_tcl(GB, /obj/machinery/genetics_booth)
 				var/already_has = 0
 				for (var/datum/geneboothproduct/P as anything in GB.offered_genes)
-					if (P.id == E.id)
+					if (P.id == E.id && P.name == E.name)
 						already_has = P
 						P.uses += 5
 						P.desc = booth_effect_desc

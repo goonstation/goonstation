@@ -609,6 +609,18 @@ ABSTRACT_TYPE(/area/shuttle)
 /area/shuttle/mining/space
 	icon_state = "shuttle2"
 
+/area/shuttle/john/diner
+	icon_state = "shuttle"
+
+/area/shuttle/john/owlery
+	icon_state = "shuttle2"
+
+/area/shuttle/john/mining
+	icon_state = "shuttle2"
+
+/area/shuttle/john/grillnasium
+	icon_state = "shuttle"
+
 /area/shuttle/icebase_elevator/upper
 	icon_state = "shuttle"
 	filler_turf = "/turf/simulated/floor/arctic/abyss"
@@ -2562,6 +2574,9 @@ ABSTRACT_TYPE(/area/station/security)
 	icon_state = "HOS"
 	sound_environment = 4
 	workplace = 0 //As does the hos
+
+/area/station/security/hos/horizon
+	name = "Hovel of Security"
 
 /area/station/security/visitation
 	name ="Visitation"
