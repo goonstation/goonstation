@@ -809,7 +809,7 @@
 	else
 		var/list/datum/data/vending_product/valid_products = list()
 		for(var/datum/data/vending_product/R in src.product_list)
-			if(R.product_amount <= 0 || !src.freestuff == 0) //Try to use a record that actually has something to dump.
+			if(R.product_amount <= 0 || !src.freestuff == 1) //Try to use a record that actually has something to dump.
 				continue
 			valid_products.Add(R)
 		if(length(valid_products))
@@ -1692,18 +1692,22 @@
 			add_fingerprint(usr)
 			updateUsrDialog()
 		return
+/obj/machinery/vending/pizza/proc/toggleInventory(wireColor)
+	if(APCWireColorToIndex[wireColor] == WIRE_EXTEND)
+		if (src.extended_inventory == 0)
+			src.product_list = list(new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/pizza/random/vendor, rand(6,10)))
+		else
+			src.product_list = list(new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/pizza/random/hacked, rand(6,10)))
+//Vending machines always throw hidden items, so swap the inventory if the user touches the extend wire
 /obj/machinery/vending/pizza/pulse(wireColor)
 	. = ..()
-	if (src.extended_inventory == 0)
-		src.product_list = list(new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/pizza/random/vendor, rand(6,10)))
-	else
-		src.product_list = list(new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/pizza/random/hacked, rand(6,10)))
+	toggleInventory(wireColor)
 /obj/machinery/vending/pizza/cut(wireColor)
 	. = ..()
-	if (src.extended_inventory == 0)
-		src.product_list = list(new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/pizza/random/vendor, rand(6,10)))
-	else
-		src.product_list = list(new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/pizza/random/hacked, rand(6,10)))
+	toggleInventory(wireColor)
+/obj/machinery/vending/pizza/mend(wireColor)
+	. = ..()
+	toggleInventory(wireColor)
 
 /obj/machinery/vending/pizza/fallen
 	New()
