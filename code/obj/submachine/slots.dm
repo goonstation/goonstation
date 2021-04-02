@@ -462,7 +462,7 @@
 						//src.money = 0
 					else if (roll > 1 && roll <= 5)
 						for(var/mob/O in hearers(src, null))
-							O.show_message(text("<span class='subtle'><b>[]</b> says, 'Big Winner! You have has won a hundred thousand credits!'</span>", src), 1)
+							O.show_message(text("<span class='subtle'><b>[]</b> says, 'Big Winner! You have won a hundred thousand credits!'</span>", src), 1)
 						playsound(src.loc, "sound/misc/klaxon.ogg", 55, 1)
 						src.play_money += 100000
 						//src.money -= 100000

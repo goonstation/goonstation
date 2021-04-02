@@ -29741,9 +29741,27 @@
 "bvh" = (
 /obj/machinery/light/incandescent/warm,
 /obj/table/auto,
-/obj/item/trench_map,
-/obj/item/trench_map,
-/obj/item/trench_map,
+/obj/item/pinpointer/trench{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/item/pinpointer/trench{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/item/pinpointer/trench{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/item/trench_map{
+	pixel_x = 3
+	},
+/obj/item/trench_map{
+	pixel_x = 3
+	},
+/obj/item/trench_map{
+	pixel_x = 3
+	},
 /turf/simulated/floor,
 /area/station/hangar/main)
 "bvi" = (
@@ -31169,10 +31187,30 @@
 /area/station/mining/staff_room)
 "byA" = (
 /obj/table/reinforced/auto,
-/obj/item/trench_map,
-/obj/item/trench_map,
-/obj/item/trench_map,
-/obj/item/trench_map,
+/obj/item/pinpointer/trench{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/item/pinpointer/trench{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/item/pinpointer/trench{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/item/trench_map{
+	pixel_x = 3
+	},
+/obj/item/trench_map{
+	pixel_x = 3
+	},
+/obj/item/trench_map{
+	pixel_x = 3
+	},
+/obj/item/trench_map{
+	pixel_x = 3
+	},
 /turf/simulated/floor/caution/westeast,
 /area/station/mining/staff_room)
 "byB" = (
@@ -37694,6 +37732,7 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
+/obj/mopbucket,
 /turf/simulated/floor/purple/side{
 	dir = 4
 	},
@@ -38063,10 +38102,6 @@
 	},
 /area/station/janitor/supply)
 "bPO" = (
-/obj/mopbucket,
-/turf/simulated/floor/purple/side,
-/area/station/janitor/supply)
-"bPP" = (
 /obj/storage/crate,
 /obj/item/storage/box/mousetraps,
 /obj/item/sponge,
@@ -38075,6 +38110,10 @@
 /obj/item/reagent_containers/glass/bottle/cleaner,
 /obj/item/spraybottle/cleaner,
 /obj/item/chem_grenade/cleaner,
+/turf/simulated/floor/purple/side,
+/area/station/janitor/supply)
+"bPP" = (
+/obj/storage/secure/closet/civilian/janitor,
 /turf/simulated/floor/purple/side{
 	dir = 6
 	},

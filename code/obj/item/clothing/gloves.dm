@@ -186,6 +186,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 		src.overridespecial = active
 		S.onAdd()
 		src.specialoverride = S
+		src.tooltip_rebuild = true;
 		return S
 
 

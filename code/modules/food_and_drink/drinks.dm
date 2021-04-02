@@ -207,6 +207,7 @@
 	heal_amt = 1
 	rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
 	initial_volume = 50
+	can_recycle = FALSE
 	initial_reagents = list("chickensoup"=30)
 
 /obj/item/reagent_containers/food/drinks/weightloss_shake
