@@ -425,7 +425,7 @@
 					playsound(get_turf(src), "sound/impact_sounds/Energy_Hit_3.ogg", 30, 1, -1)
 					user.do_disorient(baton.stamina_damage, weakened = baton.stun_normal_weakened * 10, disorient = 80) //cut from batoncode to bypass all the logging stuff
 					user.emote("scream")
-					ThrowRandom(baton, 5)
+					ThrowRandom(baton, 3)
 			else
 				boutput(user, "<span class='notice'>You [user.a_intent == "harm" ? "beat" : "prod"] the dough. The dough doesn't react.</span>")
 
