@@ -7,6 +7,7 @@
 	heal_amt = 1
 	var/activated = 0
 	initial_volume = 60
+	can_recycle = FALSE
 	initial_reagents = list("chickensoup"=10,"msg"=9,"salt"=10,"nicotine"=8)
 
 	New()
