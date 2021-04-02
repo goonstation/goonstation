@@ -300,7 +300,7 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 
 	Z_LOG_DEBUG("Client/New", "[src.ckey] - Ban check complete")
 
-//vpn check (for ban evasion purposes) api documentation: https://vpnapi.io/api-documentation
+//vpn check (for ban evasion purposes)
 #ifdef DO_VPN_CHECKS
 	if (vpn_blacklist_enabled)
 		var/vpn_kick_string = {"
@@ -333,7 +333,7 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 		if (isnull(is_vpn_address) && (src.player.rounds_participated < 5 || src.player.rounds_seen < 20))
 			var/list/data
 			try
-				data = apiHandler.queryAPI("vpncheck", list("ip" = src.address, "ckey" = src.ckey), 1, 1, 1)
+				data = apiHandler.queryAPI("vpncheck2", list("ip" = src.address, "ckey" = src.ckey), 1, 1, 1)
 
 				// Goonhub API error encountered
 				if (data["error"])
@@ -350,7 +350,7 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 						data = json_decode(html_decode(data["response"]))
 
 						// VPN checker service returns error responses in a "message" property
-						if (data["message"])
+						if (data["success"] == false)
 							// Yes, we're forcing a cache for a no-VPN response here on purpose
 							// Reasoning: The goonhub API has cached the VPN checker error response for the foreseeable future and further queries won't change that
 							//			  so we want to avoid spamming the goonhub API this round for literally no gain
@@ -359,25 +359,22 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 							logTheThing("diary", src, null, "unable to check VPN status of [src.address] because: [data["message"]]", "debug")
 
 						// Successful VPN check
+						// IP is a known VPN, cache locally and kick
+						else if (data["proxy"] == true)
+							global.vpn_ip_checks["[src.address]"] = true
+							addPlayerNote(src.ckey, "VPN Blocker", "[src.address] attempted to connect via vpn or proxy. Info: [data["host"]], ASN: [data["ASN"]], org: [data["organization"]]")
+							logTheThing("admin", src, null, "[src.address] is using a vpn. vpn info: host: [data["host"]], ASN: [data["ASN"]], org: [data["organization"]]")
+							logTheThing("diary", src, null, "[src.address] is using a vpn. vpn info: host: [data["host"]], ASN: [data["ASN"]], org: [data["organization"]]", "admin")
+							message_admins("[key_name(src)] [src.address] attempted to connect with a VPN or proxy but was kicked!")
+							src.mob.Browse(vpn_kick_string, "window=vpnbonked")
+							sleep(3 SECONDS)
+							if (src)
+								del(src)
+							return
+
+						// IP is not a known VPN
 						else
-							var/list/security_info = data["security"]
-
-							// IP is a known VPN, cache locally and kick
-							if (security_info["vpn"] == true)
-								global.vpn_ip_checks["[src.address]"] = true
-								addPlayerNote(src.ckey, "VPN Blocker", "[src.address] attempted to connect via vpn or proxy. Info: [json_encode(data["network"])]")
-								logTheThing("admin", src, null, "[src.address] is using a vpn. vpn info: [json_encode(data["network"])]")
-								logTheThing("diary", src, null, "[src.address] is using a vpn. vpn info: [json_encode(data["network"])]", "admin")
-								message_admins("[key_name(src)] [src.address] attempted to connect with a VPN or proxy but was kicked!")
-								src.mob.Browse(vpn_kick_string, "window=vpnbonked")
-								sleep(3 SECONDS)
-								if (src)
-									del(src)
-								return
-
-							// IP is not a known VPN
-							else
-								global.vpn_ip_checks["[src.address]"] = false
+							global.vpn_ip_checks["[src.address]"] = false
 
 			catch(var/exception/e)
 				logTheThing("admin", src, null, "unable to check VPN status of [src.address] because: [e.name]")
