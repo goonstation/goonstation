@@ -397,15 +397,6 @@
 			user.put_in_hand_or_drop(F)
 			qdel(src)
 		else if (istype(W, /obj/item/baton))
-			/*TODO testing
-			mobcritters- traitholder runtime?
-			all cases-
-				on/nonharm/trained
-				on/nonharm/untrained
-				on/harm
-				off/nonharm
-				off/harm
-			*/
 			var/obj/item/baton/baton = W
 			if (!baton.uses_electricity)
 				..()
@@ -427,8 +418,6 @@
 					user.emote("scream")
 			else
 				boutput(user, "<span class='notice'>You [user.a_intent == "harm" ? "beat" : "prod"] the dough. The dough doesn't react.</span>")
-
-
 		else ..()
 
 /obj/item/reagent_containers/food/snacks/ingredient/dough/semolina
