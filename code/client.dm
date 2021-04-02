@@ -365,6 +365,7 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 							// IP is a known VPN, cache locally and kick
 							if (security_info["vpn"] == true)
 								global.vpn_ip_checks["[src.address]"] = true
+								addPlayerNote(src.ckey, "VPN Blocker", "[src.address] attempted to connect via vpn or proxy. Info: [json_encode(data["network"])]")
 								logTheThing("admin", src, null, "[src.address] is using a vpn. vpn info: [json_encode(data["network"])]")
 								logTheThing("diary", src, null, "[src.address] is using a vpn. vpn info: [json_encode(data["network"])]", "admin")
 								message_admins("[key_name(src)] [src.address] attempted to connect with a VPN or proxy but was kicked!")
