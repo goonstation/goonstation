@@ -792,14 +792,13 @@
 	proc/can_block(var/hit_type = null, real_hit = 1)
 		.= UNARMED_BLOCK_PROTECTION_BONUS
 		if (isitem(src.loc) && hit_type)
-			.= 0
 			var/obj/item/I = src.loc
 
 			var/prop = DAMAGE_TYPE_TO_STRING(hit_type)
 			if(real_hit && prop == "burn" && I?.reagents)
 				I.reagents.temperature_reagents(2000,10)
 			.= src.getProperty("I_block_[prop]")
-		if(. && real_hit)
+		if(real_hit)
 			SEND_SIGNAL(src, COMSIG_BLOCK_BLOCKED)
 			block_spark(src.assailant)
 			fuckup_attack_particle()

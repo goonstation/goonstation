@@ -503,7 +503,7 @@ obj/item/gun/reagent/syringe/lovefilled
 		. = ..()
 
 	proc/process()
-		if(!PROC_ON_COOLDOWN(30 SECONDS))
+		if(!ON_COOLDOWN(src, "process", 30 SECONDS))
 			for (var/mob/living/M in view(src, 5))
 				if (M.bioHolder)
 					M.bioHolder.AddEffect("cold_resist", 0, 45)

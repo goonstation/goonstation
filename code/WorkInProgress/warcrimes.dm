@@ -10,7 +10,7 @@ var/fartcount = 0
 
 /area/diner/jucer_trader
 	icon_state = "green"
-	name = "Placeholder Pete's $STORE_NAME.shuttle"
+	name = "Placeholder Paul's $STORE_NAME.shuttle"
 
 /obj/item/clothing/head/paper_hat/john
 	name = "John Bill's paper bus captain hat"

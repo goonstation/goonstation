@@ -155,7 +155,20 @@
 				if(!P.hidden)
 					. += "<br><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/[P.tooltipImg]")]\" width=\"12\" height=\"12\" /> [P.name]: [P.getTooltipDesc(src, src.properties[P])]"
 
-		//Blocking section
+		//unarmed block
+		if(istype(src, /obj/item/grab/block))
+			. += "<br><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/prot.png")]\" width=\"12\" height=\"12\" /> Block+: "
+			//inline-blocking-based properties (disorient resist and damage-type blocks)
+			for(var/datum/objectProperty/P in src.properties)
+				if(P.inline)
+					. += "<img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/[P.tooltipImg]")]\" width=\"12\" height=\"12\" /> "
+			//blocking-based properties
+			for(var/datum/objectProperty/P in src.properties)
+				if(!P.hidden)
+					. += "<br><img style=\"display:inline;margin:0\" width=\"12\" height=\"12\" /><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/[P.tooltipImg]")]\" width=\"12\" height=\"12\" /> [P.name]: [P.getTooltipDesc(src, src.properties[P])]"
+			SEND_SIGNAL(src, COMSIG_TOOLTIP_BLOCKING_APPEND, .)
+
+		//Item block section
 		if(src.c_flags & HAS_GRAB_EQUIP)
 			. += "<br><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/prot.png")]\" width=\"12\" height=\"12\" /> Block+: "
 			for(var/obj/item/grab/block/B in src)

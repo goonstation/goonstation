@@ -557,7 +557,7 @@
 			boutput(usr, "If a direction, direction is: [dir]")
 
 	var/class = input("What kind of variable?","Variable Type",default) as null|anything in list("text",
-		"num","num adjust","type","reference","mob reference","turf by coordinates","reference picker","new instance of a type","icon","file","color","list","json","edit referenced object","create new list","restore to default")
+		"num","num adjust","type","ref","reference","mob reference","turf by coordinates","reference picker","new instance of a type","icon","file","color","list","json","edit referenced object","create new list","restore to default")
 
 	if(!class)
 		return
@@ -607,6 +607,12 @@
 		if("type")
 			O.vars[variable] = input("Enter type:","Type",O.vars[variable]) \
 				in typesof(/obj,/mob,/area,/turf)
+
+		if("ref")
+			var/input = input("Enter ref:") as null|text
+			var/target = locate(input)
+			if (!target) target = locate("\[[input]\]")
+			O.vars[variable] = target
 
 		if("reference")
 			O.vars[variable] = input("Select reference:","Reference",\

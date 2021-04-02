@@ -1,5 +1,42 @@
 
+(t)wed apr 01 21
+(u)Goonstation Coding Team
+(e)🆕🎨|feature, sprites
+(*)A lot of people have brought up how the game has lost its 'soul' as of recent, especially with how the game looks. As such, we've made some changes to the sprites in the game to be more in-line with our classic ones.
+(+)Something's going wrong with the changelog, weird.
+(t)tue mar 30 21
+(u)w arc
+(e)🗺|mappig
+(*)compl,ete re-pipe of jhorizon, a;so remodele secuty , please repot bugs @ discod
+(u)pali
+(*)January monthly contest posters have been added to the game!
+(u)Tarmunora
+(p)4160
+(e)⚖🆕|balance, feature
+(*)Blocking unarmed while wearing concussive gauntlets will charge up a slam attack, similar to the power hammer.
+(u)TTerc
+(p)4119
+(e)|
+(+)Added actionbars to welding/unwelding singularity emitters and field generators.
 (t)mon mar 29 21
+(u)kyle
+(p)4129
+(e)⚖🆕🎨|balance, feature, sprites
+(*)Injecting the right amount of formaldehyde into a corpse can now temporarily prevent a wraith from absorbing it.
+(+)Slight rework to Poltergeists. Now they aren't strictly bound to X distance from their anchor/master, instead they can travel wherever and just take a bit of damage (up to 50%) and certain abilities require being close to their anchor/master.
+(+)Poltergeists also have a new ability that lets them teleport to their anchor or inside their master Wraith. When inside their master they can use all their spells and get increased point generation. Clicking on the master also makes em start following em.
+(u)Gremy
+(p)4167
+(e)🗺|mapping
+(*)Revamps the Atlas, Cog2 and Horizon ranches to include two pens, more access to other departments and extra amenities. Also chicken masks. Bok!
+(u)TTerc
+(p)3974
+(e)🗺|mapping
+(*)Donut 3: Expanded and improved the botany and ranch areas.
+(u)Flappybat
+(p)4016
+(e)⚖|balance
+(*)Rebalanced firearm melee damage
 (u)Sovexe
 (p)4157
 (e)🆕🗺🎨|feature, mapping, sprites
