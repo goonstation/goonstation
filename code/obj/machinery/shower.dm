@@ -2,7 +2,7 @@
 //And also makes people cleaner.
 
 /obj/machinery/shower
-	name = "Shower head"
+	name = "shower head"
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "showerhead"
 	desc = "A shower head, for showering."
@@ -11,6 +11,7 @@
 
 	var/on = 0 //Are we currently spraying???
 	var/default_reagent = "cleaner" //Some water will also be added.
+	var/add_water = 1 // ...unless this is 0
 	var/tmp/last_spray = 0
 
 #define SPRAY_DELAY 5 //Delay between sprays, in tenths of a second.
@@ -30,7 +31,7 @@
 			SubscribeToProcess()
 		else
 			UnsubscribeProcess()
-		boutput(user, "You turn [src.on ? "on" : "off"] the shower head.")
+		boutput(user, "You turn [src.on ? "on" : "off"] \the [src].")
 
 #ifdef HALLOWEEN
 		if(halloween_mode && prob(15))
@@ -53,7 +54,8 @@
 		if (src?.default_reagent)
 			src.reagents.add_reagent(default_reagent,120)
 			//also add some water for ~wet floor~ immersion
-			src.reagents.add_reagent("water",40)
+			if (src.add_water)
+				src.reagents.add_reagent("water",40)
 
 		if (src?.reagents.total_volume) //We still have reagents after, I dunno, a potassium reaction
 
