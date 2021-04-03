@@ -13,21 +13,24 @@
 	rand_pos = 0
 	desc = "A wall-mounted radio intercom, used to communicate with the specified frequency. Usually turned off except during emergencies."
 	hardened = 0
-/obj/item/device/radio/intercom/set_dir(new_dir)
-	. = ..()
+
+/obj/item/device/radio/intercom/proc/change_dir(obj/item/AM, old_dir, new_dir)
 	src.pixel_x = 0
 	src.pixel_y = 0
-	switch(src.dir)
+	switch(new_dir)
 		if(NORTH)
-			pixel_y = -21
+			src.pixel_y = -21
 		if(SOUTH)
-			pixel_y = 24
+			src.pixel_y = 24
 		if(EAST)
-			pixel_x = -21
+			src.pixel_x = -21
 		if(WEST)
-			pixel_x = 21
+			src.pixel_x = 21
 
 /obj/item/device/radio/intercom/New()
+	//Register before calling our parent
+	//There's a possible race condition in assembly from a frame if you don't
+	RegisterSignal(src, COMSIG_ATOM_DIR_CHANGED, .proc/change_dir)
 	. = ..()
 	if(src.icon_state == "intercom") // if something overrides the icon we don't want this
 		var/image/screen_image = image(src.icon, "intercom-screen")
@@ -39,10 +42,9 @@
 		screen_image.alpha = 180
 		src.UpdateOverlays(screen_image, "screen")
 		if(src.pixel_x == 0 && src.pixel_y == 0)
-			set_dir(src.dir)
+			change_dir(src,null,src.dir)
 	mats = 3
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WIRECUTTERS | DECON_MULTITOOL
-
 
 /obj/item/device/radio/intercom/attack_ai(mob/user as mob)
 	src.add_fingerprint(user)
