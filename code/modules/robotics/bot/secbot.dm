@@ -247,10 +247,6 @@
 		if (!src.our_baton || !istype(src.our_baton))
 			src.our_baton = new our_baton_type(src)
 
-
-		if (src.tacticool || prob(20))
-			make_tacticool()
-
 		add_simple_light("secbot", list(255, 255, 255, 0.4 * 255))
 		chargepic = image('icons/effects/electile.dmi', "6c")
 		START_TRACKING
