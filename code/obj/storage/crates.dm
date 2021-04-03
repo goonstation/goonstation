@@ -518,12 +518,12 @@
 		/obj/item/clothing/head/helmet/space/syndicate/specialist/sniper)
 
 	melee //wip, not ready for use
-		name = "Class Crate - Templar"
+		name = "Class Crate - Knight"
 		desc = "A crate containing a Specialist Operative loadout."
 		spawn_contents = list(/obj/item/heavy_power_sword,
-		/obj/item/clothing/shoes/swat/superheavy,
-		/obj/item/clothing/suit/space/syndicate/heavy,
-		/obj/item/clothing/head/helmet/space/syndicate/specialist)
+		/obj/item/clothing/shoes/swat/super_heavy,
+		/obj/item/clothing/suit/space/syndicate/super_heavy,
+		/obj/item/clothing/head/helmet/space/syndicate/specialist/heavy)
 
 	qm //Hi Gannets, I like your crate and wanted to use it for some QM stuff. Come yell at Azungar if this is not ok.
 		name = "Weapons crate"

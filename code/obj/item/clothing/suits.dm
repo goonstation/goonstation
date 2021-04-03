@@ -1075,7 +1075,7 @@
 			setProperty("meleeprot", 6)
 			setProperty("rangedprot", 3)
 
-	heavy // nukie melee class armor
+	super_heavy // nukie melee class armor
 		name = "citadel heavy combat armor"
 		desc = "A syndicate issue heavy combat dress system, pressurized for space travel and reinforced for greater protection in firefights."
 		icon_state = "syndie_specialist-heavy"

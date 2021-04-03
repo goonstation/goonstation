@@ -446,7 +446,7 @@
 			. = "Looks like some big shoes to fill!"
 		. = ..()
 
-/obj/item/clothing/shoes/swat/superheavy // so heavy you can't get shoved!
+/obj/item/clothing/shoes/swat/super_heavy // so heavy you can't get shoved!
 	name = "hi-grip assault boots"
 	desc = "Specialist combat boots designed to provide enhanced grip and ankle stability."
 	icon_state = "swatheavy"
