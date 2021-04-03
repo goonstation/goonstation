@@ -31910,7 +31910,6 @@
 /obj/chicken_nesting_box,
 /obj/disposalpipe/trunk/mail,
 /obj/machinery/disposal/mail/small{
-	dir = 3;
 	mail_tag = "Ranch";
 	name = "mail chute-'Ranch'"
 	},
@@ -39776,6 +39775,9 @@
 /obj/decal/tile_edge/stripe{
 	dir = 1
 	},
+/obj/railing/orange/reinforced{
+	dir = 1
+	},
 /turf/simulated/floor/wood,
 /area/station/ranch)
 "kfz" = (
@@ -42571,6 +42573,9 @@
 /obj/decal/tile_edge/stripe{
 	dir = 1
 	},
+/obj/railing/orange/reinforced{
+	dir = 1
+	},
 /turf/simulated/floor/wood,
 /area/station/ranch)
 "rfe" = (
@@ -43165,10 +43170,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/science/chemistry)
-"sTM" = (
-/obj/railing/orange/reinforced,
-/turf/simulated/floor/grass/leafy,
-/area/station/ranch)
 "sUk" = (
 /obj/machinery/computer/riotgear{
 	dir = 4;
@@ -43531,7 +43532,6 @@
 	pixel_x = 10;
 	tag = ""
 	},
-/obj/railing/orange/reinforced,
 /obj/machinery/light/incandescent/netural{
 	dir = 4;
 	nostick = 1;
@@ -80754,7 +80754,7 @@ bBM
 hDa
 xlK
 bBM
-sTM
+bBM
 rdQ
 xpG
 xMu
