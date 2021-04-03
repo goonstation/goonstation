@@ -446,6 +446,12 @@
 			. = "Looks like some big shoes to fill!"
 		. = ..()
 
+/obj/item/clothing/shoes/swat/superheavy // so heavy you can't get shoved!
+	name = "hi-grip assault boots"
+	desc = "Specialist combat boots designed to provide enhanced grip and ankle stability."
+	icon_state = "swatheavy"
+	magnetic = 1
+
 /obj/item/clothing/shoes/fuzzy //not boolean slippers
 	name = "fuzzy slippers"
 	desc = "A pair of cute little pink rabbit slippers."

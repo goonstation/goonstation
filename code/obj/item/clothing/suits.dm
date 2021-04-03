@@ -1085,7 +1085,11 @@
 			..()
 			setProperty("meleeprot", 8)
 			setProperty("rangedprot", 2)
-			setProperty("movespeed", 0.5)
+			setProperty("exploprot", 40)
+			setProperty("movespeed", 0.3)
+			setProperty("disorient_resist", 65)
+			setProperty("disorient_resist_eye", 50)
+			setProperty("disorient_resist_ear", 50)
 
 	specialist
 		name = "specialist operative combat dress"

@@ -521,8 +521,7 @@
 		name = "Class Crate - Templar"
 		desc = "A crate containing a Specialist Operative loadout."
 		spawn_contents = list(/obj/item/heavy_power_sword,
-		/obj/item/syndicate_barrier,
-		/obj/item/clothing/shoes/magnetic,
+		/obj/item/clothing/shoes/swat/superheavy,
 		/obj/item/clothing/suit/space/syndicate/heavy,
 		/obj/item/clothing/head/helmet/space/syndicate/specialist)
 
