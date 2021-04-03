@@ -1669,7 +1669,7 @@
 							if("meatball") P.topping_color ="#663300"
 							if("mushroom")
 								P.topping_color ="#DFCC99"
-								P.quality = rand(-1,5)/5
+								P.quality = rand(-1,6)/5
 							if("pepperoni") P.topping_color ="#C90E0E"
 						P.topping = 1
 						P.add_topping(0)

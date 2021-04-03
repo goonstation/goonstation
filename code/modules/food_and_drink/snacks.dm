@@ -1364,6 +1364,7 @@
 /obj/item/reagent_containers/food/snacks/mushroom/terran
 	name = "mushroom"
 	desc = "The gross canned kind you find on pizzas."
+	//icon courtesy Erinexx#2054
 	icon_state = "mushroom-canned"
 	food_color = "#DFCC99"
 	New()
