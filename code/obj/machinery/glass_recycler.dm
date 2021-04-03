@@ -23,74 +23,63 @@
 			boutput(user, "<span class='alert'>You cannot put [W] into [src]!</span>")
 			return
 
-		if (istype(W, /obj/item/reagent_containers/glass/beaker))
-			if (istype(W, /obj/item/reagent_containers/glass/beaker/large))
-				glass_amt += 2
-			else
-				glass_amt += 1
-			user.visible_message("<span class='notice'>[user] inserts [W] into [src].</span>")
-			user.u_equip(W)
-			qdel(W)
-			return 1
-		else if (istype(W, /obj/item/reagent_containers/food/drinks/drinkingglass))
-			if (istype(W, /obj/item/reagent_containers/food/drinks/drinkingglass/pitcher))
-				glass_amt += 2
-			else
-				glass_amt += 1
-			user.visible_message("<span class='notice'>[user] inserts [W] into [src].</span>")
-			user.u_equip(W)
-			qdel(W)
-			return 1
-		else if (istype(W, /obj/item/material_piece) && W.material?.material_flags & MATERIAL_CRYSTAL && W.material?.alpha <= 180)
-			glass_amt += W.amount * 10
-			user.visible_message("<span class='notice'>[user] inserts [W] into [src].</span>")
-			user.u_equip(W)
-			qdel(W)
-			return 1
-		else if (istype(W, /obj/item/raw_material/shard) || istype(W, /obj/item/reagent_containers/glass) || istype(W, /obj/item/reagent_containers/food/drinks))
-			if (istype(W,/obj/item/reagent_containers/food/drinks))
-				var/obj/item/reagent_containers/food/drinks/D = W
-				if (!D.can_recycle)
-					boutput(user, "<span class='alert'>[src] only accepts crystals, glass shards or glassware!</span>")
-					return
-				if (istype(W,/obj/item/reagent_containers/food/drinks/bottle))
-					var/obj/item/reagent_containers/food/drinks/bottle/B = W
-					if (!B.broken) glass_amt += 1
+		var/success = FALSE //did we successfully recycle a thing?
+		if(istype(W, /obj/item/reagent_containers/glass))
+			if (istype(W, /obj/item/reagent_containers/glass/beaker))
+				success = TRUE
+				if (istype(W, /obj/item/reagent_containers/glass/beaker/large))
+					glass_amt += 2
 				else
-					glass_amt += W.amount
+					glass_amt += 1
 			else
-				glass_amt += W.amount
-			user.visible_message("<span class='notice'>[user] inserts [W] into [src].</span>")
-			user.u_equip(W)
-
-			if (istype(W, /obj/item/raw_material))
-				pool(W)
-			else
-				qdel(W)
-			return 1
+				var/obj/item/reagent_containers/glass/G = W
+				if (G.can_recycle)
+					success = TRUE
+					glass_amt += 1
+		else if (istype(W, /obj/item/reagent_containers/food/drinks/))
+			var/obj/item/reagent_containers/food/drinks/D = W
+			if (D.can_recycle)
+				success = TRUE
+				if (istype(W,/obj/item/reagent_containers/food/drinks/drinkingglass))
+					var/obj/item/reagent_containers/food/drinks/drinkingglass/DG = W
+					glass_amt += DG.shard_amt
+				else
+					if (istype(W,/obj/item/reagent_containers/food/drinks/bottle))
+						var/obj/item/reagent_containers/food/drinks/bottle/B = W
+						if (!B.broken) glass_amt += 1
+					else
+						glass_amt += W.amount
+		else if (istype(W, /obj/item/material_piece) && W.material?.material_flags & MATERIAL_CRYSTAL && W.material?.alpha <= 180)
+			success = TRUE
+			glass_amt += W.amount * 10
+		else if (istype(W, /obj/item/raw_material/shard))
+			success = TRUE
+			glass_amt += W.amount
 		else if (istype(W, /obj/item/plate))
+			success = TRUE
 			glass_amt += PLATE_COST
-			user.visible_message("<span class='notice'>[user] inserts [W] into [src].</span>")
-			user.u_equip(W)
-			qdel(W)
-			return 1
 		else if (istype(W, /obj/item/platestack))
+			success = TRUE
 			var/obj/item/platestack/PS = W
 			var/plateCount = PS.platenum + 1
 			glass_amt += plateCount * PLATE_COST
-			user.visible_message("<span class='notice'>[user] inserts [plateCount] plates into [src].</span>")
-			user.u_equip(W)
-			qdel(W)
-			return 1
-
 		else if (istype(W, /obj/item/storage/box))
 			var/obj/item/storage/S = W
 			for (var/obj/item/I in S.get_contents())
 				if (!.(I, user))
 					break
+
+		if (success)
+			user.visible_message("<span class='notice'>[user] inserts [W] into [src].</span>")
+			user.u_equip(W)
+			if (istype(W, /obj/item/raw_material/shard))
+				pool(W)
+			else
+				qdel(W)
+			return 1
 		else
-			boutput(user, "<span class='alert'>[src] only accepts glass shards or glassware!</span>")
-			return
+			boutput(user, "<span class='alert'>You cannot put [W] into [src]!</span>")
+			return 0
 
 	attack_hand(mob/user as mob)
 		var/dat = {"<b>Glass Left</b>: [glass_amt]<br>

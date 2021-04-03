@@ -603,6 +603,7 @@
 			speed_bonus = DEFAULT_SPEED_BONUS
 			meat_used_per_tick = DEFAULT_MEAT_USED_PER_TICK
 			light.enable()
+			src.update_icon()
 			user.drop_item()
 			qdel(W)
 			return
@@ -620,6 +621,7 @@
 				boutput(user,"<span class='alert'>The mindslave cloning module falls to the floor with a dull thunk!</span>")
 				playsound(src.loc, "sound/effects/thunk.ogg", 50, 0)
 				light.disable()
+				src.update_icon()
 			else
 				boutput(user,"<span class='alert'>You were interrupted!</span>")
 			return

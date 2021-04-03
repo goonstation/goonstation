@@ -173,6 +173,9 @@
 	else if (isobserver(src))
 		name = "Ghost"
 		alt_name = " ([src.real_name])"
+	else if (ispoltergeist(src))
+		name = "Poltergeist"
+		alt_name = " ([src.real_name])"
 	else if (iswraith(src))
 		name = "Wraith"
 		alt_name = " ([src.real_name])"

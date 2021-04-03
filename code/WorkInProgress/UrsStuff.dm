@@ -10,6 +10,7 @@
 /mob/living/critter/small_animal/chicken
 
 /obj/item/reagent_containers/food/snacks/chicken_feed_bag
+	rand_pos = 0
 
 /obj/dialogueobj/dreambee
 

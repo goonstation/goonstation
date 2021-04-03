@@ -797,7 +797,6 @@
 	/obj/item/device/radio,
 	/obj/item/device/timer,
 	/obj/item/folder,
-	/obj/item/hairball,
 	/obj/item/hand_labeler,
 	/obj/item/light/bulb/neutral,
 	/obj/item/light/tube/neutral,

@@ -2575,6 +2575,9 @@ ABSTRACT_TYPE(/area/station/security)
 	sound_environment = 4
 	workplace = 0 //As does the hos
 
+/area/station/security/hos/horizon
+	name = "Hovel of Security"
+
 /area/station/security/visitation
 	name ="Visitation"
 	icon_state = "red"
