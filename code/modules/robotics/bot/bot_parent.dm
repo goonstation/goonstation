@@ -359,6 +359,8 @@
 							if (I && !I.disposed) pool(I)
 
 					step_to(master, master?.path[1])
+					if(isnull(master))
+						break
 					if(length(master?.path) && master.loc != master.path[1])
 						master.frustration++
 						sleep(delay)
