@@ -128,10 +128,12 @@
 
 	proc/CheckIfVisible()
 		var/turf/T = get_turf(src)
+		if(isnull(T))
+			return FALSE
 		for (var/mob/M in GET_NEARBY(T, src.hash_check_range))
 			if(M.client)
-				. = 1
-				break
+				return TRUE
+		return FALSE
 
 	// Generic default. Override for specific bots as needed.
 	bullet_act(var/obj/projectile/P)
@@ -361,7 +363,7 @@
 						master.frustration++
 						sleep(delay)
 						continue
-					
+
 					master.path -= master.path[1]
 					sleep(delay)
 				else
