@@ -41,7 +41,7 @@
 		if(src.pixel_x == 0 && src.pixel_y == 0)
 			set_dir(src.dir)
 	mats = 3
-	deconstruct_flags = 102
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WIRECUTTERS | DECON_MULTITOOL
 
 
 /obj/item/device/radio/intercom/attack_ai(mob/user as mob)
