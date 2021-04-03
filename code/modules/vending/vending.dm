@@ -1667,13 +1667,11 @@
 					if(piztopping != "plain")
 						switch(piztopping)
 							if("meatball") P.topping_color ="#663300"
-							if("mushroom")
-								P.topping_color ="#DFCC99"
-								P.quality = rand(-1,6)/5
+							if("mushroom") P.topping_color ="#DFCC99"
 							if("pepperoni") P.topping_color ="#C90E0E"
 						P.topping = 1
 						P.add_topping(0)
-
+						if(piztopping == "mushroom") P.quality = rand(-1,6)/5
 					if (src.sharpen)
 						var/list/slices = P.make_slices()
 						for(var/obj/item/reagent_containers/food/snacks/pizza/slice in slices)

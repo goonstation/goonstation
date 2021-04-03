@@ -288,9 +288,8 @@
 	food_effects = list("food_disease_resist")
 	New()
 		..()
-		src.quality = rand(-1,5)/5
 		src.add_topping(0)
-
+		src.quality = rand(-1,6)/5
 /obj/item/reagent_containers/food/snacks/pizza/xmas
 	name = "\improper Spacemas pizza"
 	desc = "A traditional Spacemas pizza! It has ham, mashed potatoes, gingerbread and candy canes on it, with eggnog sauce and a fruitcake crust! Yum!"
