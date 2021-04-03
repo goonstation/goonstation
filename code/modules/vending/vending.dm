@@ -1658,7 +1658,7 @@
 					sleep(20 SECONDS)
 					playsound(src.loc, 'sound/machines/ding.ogg', 50, 1, -1)
 					var/obj/item/reagent_containers/food/snacks/pizza/P = new /obj/item/reagent_containers/food/snacks/pizza(src.loc)
-					P.quality = 0.6
+					P.quality = 0.8
 					P.heal_amt = 2
 					P.sharpened = src.sharpen
 					P.desc = "A typical [piztopping] pizza."
@@ -1667,7 +1667,9 @@
 					if(piztopping != "plain")
 						switch(piztopping)
 							if("meatball") P.topping_color ="#663300"
-							if("mushroom") P.topping_color ="#CFCFCF"
+							if("mushroom")
+								P.topping_color ="#DFCC99"
+								P.quality = rand(-1,5)/5
 							if("pepperoni") P.topping_color ="#C90E0E"
 						P.topping = 1
 						P.add_topping(0)
