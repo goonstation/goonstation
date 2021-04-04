@@ -722,14 +722,11 @@
 	possible_areas += get_areas_with_unblocked_turfs(/area/diner)
 	possible_areas -= get_areas_with_unblocked_turfs(/area/diner/tug)
 	possible_areas -= get_areas_with_unblocked_turfs(/area/station/medical/asylum)					// Donut 3 Asylum
-	possible_areas -= get_areas_with_unblocked_turfs(/area/station/security/armory)					// Cog1 armory
-	possible_areas -= get_areas_with_unblocked_turfs(/area/station/ai_monitored/armory)			// Other map armorys...
 	possible_areas -= get_areas_with_unblocked_turfs(/area/station/turret_protected/ai)			// AI core
 	possible_areas -= get_areas_with_unblocked_turfs(/area/station/turret_protected/AIsat)	// AI satellite
 	possible_areas -= get_areas_with_unblocked_turfs(/area/station/maintenance)
 	possible_areas -= get_areas_with_unblocked_turfs(/area/station/hallway)
 	possible_areas -= get_areas_with_unblocked_turfs(/area/station/engine/substation)
-	possible_areas -= get_areas_with_unblocked_turfs(/area/station/engine/core)
 	possible_areas -= get_areas_with_unblocked_turfs(/area/station/engine/singcore)
 	possible_areas -= get_areas_with_unblocked_turfs(/area/station/engine/combustion_chamber)
 	possible_areas -= /area/sim/test_area
