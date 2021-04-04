@@ -507,6 +507,13 @@
 	item_state = "ntberet"
 	c_flags = SPACEWEAR
 
+/obj/item/clothing/head/NTberet/commander
+	name = "Nanotrasen Beret"
+	desc = "For the inner space commander in you."
+	icon_state = "ntberet_commander"
+	item_state = "ntberet_commander"
+	c_flags = SPACEWEAR
+
 /obj/item/clothing/head/XComHair
 	name = "Rookie Scalp"
 	desc = "Some unfortunate soldier's charred scalp. The hair is intact."

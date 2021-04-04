@@ -51,6 +51,12 @@
 	var/robbed = 0
 	var/special = null //The path of whatever special loot is robbed from this grave.
 
+	memorial
+		name = "memorial marker"
+		desc = "Rest in peace."
+		icon = 'icons/misc/halloween.dmi'
+		icon_state = "memorial"
+
 /*
  *	Some sort of bizarre mind gizmo!
  */
