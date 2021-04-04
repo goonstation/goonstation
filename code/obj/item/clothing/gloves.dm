@@ -331,7 +331,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 
 	setupProperties()
 		..()
-setProperty("deflection", 50)
+		setProperty("deflection", 50)
 
 /obj/item/clothing/gloves/swat/NT
 	desc = "A pair of Nanotrasen tactical gloves that are quite fire and electrically-resistant. They also help you block attacks. They do not specifically help you block against blocking though. Just regular attacks."

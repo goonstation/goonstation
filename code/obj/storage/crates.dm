@@ -522,7 +522,7 @@
 		desc = "A crate containing a Specialist Operative loadout."
 		spawn_contents = list(/obj/item/heavy_power_sword,
 		/obj/item/clothing/shoes/swat/super_heavy,
-		/obj/item/clothing/gloves/swat/heavy
+		/obj/item/clothing/gloves/swat/heavy,
 		/obj/item/clothing/suit/space/syndicate/super_heavy,
 		/obj/item/clothing/head/helmet/space/syndicate/specialist/heavy)
 
