@@ -97,6 +97,12 @@
 		var/area/A = locate(target_area)
 		target_ref = "\ref[A.find_middle()]"
 
+	attack_self()
+		if(!target_ref)
+			. = ..()
+			var/area/A = locate(target_area)
+			target_ref = "\ref[A.find_middle()]"
+
 /obj/item/idtracker
 	name = "ID tracker"
 	icon = 'icons/obj/items/pinpointers.dmi'

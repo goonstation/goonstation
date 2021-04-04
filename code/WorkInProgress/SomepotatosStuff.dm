@@ -188,8 +188,8 @@
 	set name = "GPS"
 	set category = "Commands"
 	set desc = "Find your way around with ease!"
-	if(PROC_ON_COOLDOWN(10 SECONDS))
-		boutput(src, "Verb on cooldown for [time_to_text(PROC_ON_COOLDOWN(0))].")
+	if(ON_COOLDOWN(src, "gps", 10 SECONDS))
+		boutput(src, "Verb on cooldown for [time_to_text(ON_COOLDOWN(src, "gps", 0))].")
 		return
 	if(hasvar(src,"wear_id"))
 		DoGPS(src:wear_id)
@@ -197,8 +197,8 @@
 	set name = "GPS"
 	set category = "Commands"
 	set desc = "Find your way around with ease!"
-	if(PROC_ON_COOLDOWN(10 SECONDS))
-		boutput(src, "Verb on cooldown for [time_to_text(PROC_ON_COOLDOWN(0 SECONDS))].")
+	if(ON_COOLDOWN(src, "gps", 10 SECONDS))
+		boutput(src, "Verb on cooldown for [time_to_text(ON_COOLDOWN(src, "gps", 0 SECONDS))].")
 		return
 	DoGPS(src.botcard)
 /*

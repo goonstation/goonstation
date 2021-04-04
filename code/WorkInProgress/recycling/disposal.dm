@@ -7,6 +7,7 @@
 #define PIPEC_PRODUCE "#b2ff4f"
 #define PIPEC_TRANSPORT "#ffbef6"
 #define PIPEC_MINERAL "#a5fffc"
+#define PIPEC_CARGO "#f4ff53"
 
 // virtual disposal object
 // travels through pipes in lieu of actual items
@@ -539,6 +540,11 @@
 		name = "mineral pipe"
 		desc = "An underfloor mineral pipe."
 		color = PIPEC_MINERAL
+
+	cargo
+		name = "cargo pipe"
+		desc = "An underfloor cargo pipe."
+		color = PIPEC_CARGO
 
 	New()
 		..()

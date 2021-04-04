@@ -1498,6 +1498,8 @@
 		var/weighting = 0.035 * mult
 		weighted_average = (1 - weighting) * weighted_average + weighting * how_miasma
 		var/mob/living/L = owner
+		if(!isalive(L))
+			return
 		var/puke_prob = 0
 		var/tox = 0
 		switch(how_miasma)

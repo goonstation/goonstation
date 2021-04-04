@@ -10199,11 +10199,11 @@
 /obj/item/clothing/under/suit/pinstripe,
 /obj/item/clothing/under/suit,
 /obj/item/clothing/under/gimmick/rainbow,
-/obj/item/clothing/under/misc/america,
 /obj/machinery/power/apc/autoname_north,
 /obj/cable{
 	icon_state = "0-2"
 	},
+/obj/item/clothing/under/pride/special,
 /turf/simulated/floor,
 /area/station/crew_quarters/quartersC)
 "aCC" = (
@@ -11883,9 +11883,6 @@
 	dir = 4
 	},
 /obj/table/glass/auto,
-/obj/machinery/light_switch/auto{
-	pixel_y = 24
-	},
 /turf/simulated/floor,
 /area/station/crewquarters/cryotron)
 "aHg" = (
@@ -25380,9 +25377,6 @@
 	icon_state = "1-4"
 	},
 /obj/disposalpipe/junction/right/east,
-/obj/machinery/light_switch/auto{
-	pixel_y = 24
-	},
 /turf/simulated/floor,
 /area/station/hallway/portlowerhallway)
 "bqj" = (
@@ -31916,7 +31910,6 @@
 /obj/chicken_nesting_box,
 /obj/disposalpipe/trunk/mail,
 /obj/machinery/disposal/mail/small{
-	dir = 3;
 	mail_tag = "Ranch";
 	name = "mail chute-'Ranch'"
 	},
@@ -39782,6 +39775,9 @@
 /obj/decal/tile_edge/stripe{
 	dir = 1
 	},
+/obj/railing/orange/reinforced{
+	dir = 1
+	},
 /turf/simulated/floor/wood,
 /area/station/ranch)
 "kfz" = (
@@ -39808,11 +39804,12 @@
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay/lobby)
 "kkK" = (
-/obj/wingrille_spawn/auto,
-/obj/stool/chair/green{
-	dir = 8
+/obj/machinery/light_switch/auto{
+	pixel_y = 24
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/arrival{
+	dir = 1
+	},
 /area/station/crewquarters/cryotron)
 "kly" = (
 /obj/cable{
@@ -42576,6 +42573,9 @@
 /obj/decal/tile_edge/stripe{
 	dir = 1
 	},
+/obj/railing/orange/reinforced{
+	dir = 1
+	},
 /turf/simulated/floor/wood,
 /area/station/ranch)
 "rfe" = (
@@ -42846,6 +42846,15 @@
 	dir = 1
 	},
 /area/station/science/teleporter)
+"rSo" = (
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
+/obj/machinery/light_switch/auto{
+	pixel_y = 24
+	},
+/turf/simulated/floor,
+/area/station/hallway/portlowerhallway)
 "rTh" = (
 /obj/submachine/chicken_incubator,
 /obj/item/reagent_containers/food/snacks/ingredient/egg{
@@ -43161,10 +43170,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/science/chemistry)
-"sTM" = (
-/obj/railing/orange/reinforced,
-/turf/simulated/floor/grass/leafy,
-/area/station/ranch)
 "sUk" = (
 /obj/machinery/computer/riotgear{
 	dir = 4;
@@ -43527,7 +43532,6 @@
 	pixel_x = 10;
 	tag = ""
 	},
-/obj/railing/orange/reinforced,
 /obj/machinery/light/incandescent/netural{
 	dir = 4;
 	nostick = 1;
@@ -76210,7 +76214,7 @@ blw
 bmE
 bnJ
 aCb
-bgr
+rSo
 box
 arS
 ain
@@ -77119,7 +77123,7 @@ boV
 bgr
 box
 acV
-aGZ
+kkK
 aHf
 btS
 bEy
@@ -78630,7 +78634,7 @@ bhQ
 bqk
 acT
 acT
-kkK
+acV
 bBS
 acV
 ghs
@@ -80750,7 +80754,7 @@ bBM
 hDa
 xlK
 bBM
-sTM
+bBM
 rdQ
 xpG
 xMu
