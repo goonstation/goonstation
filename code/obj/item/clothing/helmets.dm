@@ -317,10 +317,18 @@
 			item_state = "syndie_specialist-sniper"
 
 		heavy
-			name = "heavy specialist combat helmet"
-			desc = "A modified combat helmet for syndicate operative specialists."
-			icon_state = "syndie_specialist"
-			item_state = "syndie_specialist"
+			name = "heavy specialist great helm"
+			desc = "A menacing full-face helmet for syndicate super-heavies."
+			icon_state = "syndie_specialist" //todo
+			item_state = "syndie_specialist" //todo
+
+		setupProperties()
+			..()
+			setProperty("meleeprot", 2)
+			setProperty("rangedprot", 1)
+			setProperty("exploprot", 10)
+			setProperty("disorient_resist_eye", 50)
+			setProperty("disorient_resist_ear", 50)
 
 /obj/item/clothing/head/helmet/space/ntso //recoloured nuke class suits for ntso vs syndicate specialist
 	name = "NT-SO combat helmet"

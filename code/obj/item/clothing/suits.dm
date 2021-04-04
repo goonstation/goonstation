@@ -1076,20 +1076,18 @@
 			setProperty("rangedprot", 3)
 
 	super_heavy // nukie melee class armor
-		name = "citadel heavy combat armor"
-		desc = "A syndicate issue heavy combat dress system, pressurized for space travel and reinforced for greater protection in firefights."
+		name = "citadel heavy combat cuirass"
+		desc = "A syndicate issue super-heavy combat armor suit, pressurized for space travel and reinforced for superior staying-power in extended battle."
 		icon_state = "syndie_specialist-heavy"
 		item_state = "syndie_specialist-heavy"
 
 		setupProperties()
 			..()
-			setProperty("meleeprot", 8)
-			setProperty("rangedprot", 2)
-			setProperty("exploprot", 40)
+			setProperty("meleeprot", 6)
+			setProperty("rangedprot", 1)
+			setProperty("exploprot", 30)
 			setProperty("movespeed", 0.3)
 			setProperty("disorient_resist", 65)
-			setProperty("disorient_resist_eye", 50)
-			setProperty("disorient_resist_ear", 50)
 
 	specialist
 		name = "specialist operative combat dress"

@@ -447,10 +447,11 @@
 		. = ..()
 
 /obj/item/clothing/shoes/swat/super_heavy // so heavy you can't get shoved!
-	name = "hi-grip assault boots"
-	desc = "Specialist combat boots designed to provide enhanced grip and ankle stability."
+	name = "combat sabatons"
+	desc = "Massive, armored footwear for syndicate super-heavies."
 	icon_state = "swatheavy"
 	magnetic = 1
+	c_flags = NOSLIP
 
 /obj/item/clothing/shoes/fuzzy //not boolean slippers
 	name = "fuzzy slippers"

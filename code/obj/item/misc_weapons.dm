@@ -1457,6 +1457,7 @@ obj/item/whetstone
 	New()
 		..()
 		src.setItemSpecial(/datum/item_special/swipe)
+		AddComponent(/datum/component/itemblock/saberblock)
 		BLOCK_SETUP(BLOCK_SWORD)
 
 	attack(mob/M as mob, mob/user as mob, def_zone)
