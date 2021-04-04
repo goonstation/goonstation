@@ -5128,7 +5128,7 @@
 "amU" = (
 /obj/table/reinforced/auto,
 /obj/machinery/cashreg,
-/obj/item/postit_stack,
+/obj/item/item_box/postit,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -17901,7 +17901,7 @@
 	pixel_x = -4;
 	pixel_y = 7
 	},
-/obj/item/postit_stack{
+/obj/item/item_box/postit{
 	pixel_x = 7;
 	pixel_y = 4
 	},
@@ -24739,7 +24739,7 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
-/obj/item/postit_stack{
+/obj/item/item_box/postit{
 	pixel_x = -8;
 	pixel_y = 6
 	},
@@ -25595,7 +25595,9 @@
 /turf/simulated/floor/plating,
 /area/space)
 "bgH" = (
-/obj/displaycase,
+/obj/displaycase{
+	displayed = new /obj/item/captaingun
+},
 /obj/window/reinforced{
 	dir = 2
 	},
@@ -41551,7 +41553,7 @@
 	pixel_x = 7;
 	pixel_y = 5
 	},
-/obj/item/postit_stack{
+/obj/item/item_box/postit{
 	pixel_x = 10;
 	pixel_y = 5
 	},
@@ -55083,7 +55085,7 @@
 /obj/machinery/networked/printer{
 	print_id = "Information"
 	},
-/obj/item/postit_stack{
+/obj/item/item_box/postit{
 	pixel_x = 5;
 	pixel_y = 3
 	},
@@ -59257,7 +59259,7 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
-/obj/item/postit_stack,
+/obj/item/item_box/postit,
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/head)
 "cCJ" = (
@@ -63423,6 +63425,20 @@
 	icon_state = "swampgrass_edge"
 	},
 /area/station/ranch)
+"usA" = (
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/power/apc{
+	areastring = "Medbay";
+	name = "Medbay APC";
+	pixel_y = -24
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/southwest)
 "uvz" = (
 /obj/cable{
 	icon_state = "0-2"
@@ -102300,7 +102316,7 @@ bWU
 bYj
 bLG
 ahf
-cbV
+usA
 cbQ
 cey
 cfH

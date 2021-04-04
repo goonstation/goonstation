@@ -10147,7 +10147,9 @@
 /turf/simulated/floor/sanitary/blue,
 /area/station/crew_quarters/captain)
 "cEO" = (
-/obj/displaycase,
+/obj/displaycase{
+	displayed = new /obj/item/captaingun
+},
 /obj/machinery/light/incandescent/greenish{
 	dir = 1
 	},
@@ -24065,7 +24067,7 @@
 	pixel_x = 5;
 	pixel_y = 2
 	},
-/obj/item/postit_stack{
+/obj/item/item_box/postit{
 	pixel_x = -6;
 	pixel_y = 4
 	},

@@ -662,7 +662,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	tick(var/obj/projectile/P)
 		..()
 
-		if (!(P.targets && P.targets.len && P.targets[1]))
+		if (!(P.targets && P.targets.len && P.targets[1] && !(P.targets[1]:disposed)))
 			P.die()
 
 	on_end(var/obj/projectile/P)

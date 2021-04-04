@@ -391,29 +391,25 @@
 	name = "elevator shaft"
 	desc = "It looks like it goes down a long ways."
 	icon_state = "moon_shaft"
+	var/const/area_type = /area/shuttle/sea_elevator/upper
 
 	New()
 		..()
 
-		var/turf/n = null
-		var/turf/e = null
-		var/turf/w = null
-		var/turf/s = null
+		var/turf/n = get_step(src,NORTH)
+		var/turf/e = get_step(src,EAST)
+		var/turf/w = get_step(src,WEST)
+		var/turf/s = get_step(src,SOUTH)
 
-		n = get_step(src,NORTH)
-		if (!istype(n,/turf/simulated/floor/specialroom/sea_elevator_shaft))
+		if (!istype(get_area(n),area_type))
 			n = null
-		e = get_step(src,EAST)
-		if (!istype(e,/turf/simulated/floor/specialroom/sea_elevator_shaft))
+		if (!istype(get_area(e),area_type))
 			e = null
-		w = get_step(src,WEST)
-		if (!istype(w,/turf/simulated/floor/specialroom/sea_elevator_shaft))
+		if (!istype(get_area(w),area_type))
 			w = null
-		s = get_step(src,SOUTH)
-		if (!istype(s,/turf/simulated/floor/specialroom/sea_elevator_shaft))
+		if (!istype(get_area(s),area_type))
 			s = null
 
-		//have fun reading this! also fuck youu!
 		if (e && s)
 			set_dir(SOUTH)
 			e.set_dir(NORTH)
@@ -430,7 +426,6 @@
 			set_dir(EAST)
 			w.set_dir(WEST)
 			n.set_dir(NORTH)
-
 
 	ex_act(severity)
 		return

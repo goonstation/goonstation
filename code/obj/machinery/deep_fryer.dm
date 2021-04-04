@@ -35,17 +35,16 @@
 			boutput(user, "<span class='alert'>Your cooking skills are not up to the legendary Doublefry technique.</span>")
 			return
 
-		else if (istype(W, /obj/item/reagent_containers/) && !istype(W, /obj/item/reagent_containers/food))
-			var/obj/item/reagent_containers/R = W
-			if (!R.reagents.total_volume)
-				boutput(user, "<span class='alert'>There is nothing in [R] to pour!</span>")
+		else if (istype(W, /obj/item/reagent_containers/glass/) || istype(W, /obj/item/reagent_containers/food/drinks/))
+			if (!W.reagents.total_volume)
+				boutput(user, "<span class='alert'>There is nothing in [W] to pour!</span>")
 
 			else
-				logTheThing("combat", user, null, "pours chemicals [log_reagents(R)] into the [src] at [log_loc(src)].") // Logging for the deep fryer (Convair880).
-				src.visible_message("<span class='notice'>[user] pours [R.amount_per_transfer_from_this] units of [R]'s contents into [src].</span>")
+				logTheThing("combat", user, null, "pours chemicals [log_reagents(W)] into the [src] at [log_loc(src)].") // Logging for the deep fryer (Convair880).
+				src.visible_message("<span class='notice'>[user] pours [W:amount_per_transfer_from_this] units of [W]'s contents into [src].</span>")
 				playsound(src.loc, "sound/impact_sounds/Liquid_Slosh_1.ogg", 100, 1)
-				R.reagents.trans_to(src, R.amount_per_transfer_from_this)
-				if (!R.reagents.total_volume) boutput(user, "<span class='alert'><b>[R] is now empty.</b></span>")
+				W.reagents.trans_to(src, W:amount_per_transfer_from_this)
+				if (!W.reagents.total_volume) boutput(user, "<span class='alert'><b>[W] is now empty.</b></span>")
 
 			return
 
@@ -197,13 +196,11 @@
 
 			thing.reagents.add_reagent("grease", 50)
 			fryholder.desc = "A heavily fried...something.  Who can tell anymore?"
-		if (istype(src.fryitem, /obj/item/reagent_containers/food/snacks))
-			var/obj/item/reagent_containers/food/snacks/food_snack = src.fryitem
-			fryholder.food_effects += food_snack.food_effects
-			fryholder.AddComponent(/datum/component/consume/food_effects, fryholder.food_effects)
+		if (istype(thing, /obj/item/reagent_containers/food/snacks))
+			fryholder.food_effects += thing:food_effects
 
 		var/icon/composite = new(thing.icon, thing.icon_state)
-		for(var/O in src.fryitem.underlays + thing.overlays)
+		for(var/O in thing.underlays + thing.overlays)
 			var/image/I = O
 			composite.Blend(icon(I.icon, I.icon_state, I.dir, 1), ICON_OVERLAY)
 

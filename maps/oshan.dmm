@@ -9515,7 +9515,7 @@
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/postit_stack,
+/obj/item/item_box/postit,
 /obj/item/pen,
 /obj/disposalpipe/segment{
 	dir = 4
@@ -29741,9 +29741,27 @@
 "bvh" = (
 /obj/machinery/light/incandescent/warm,
 /obj/table/auto,
-/obj/item/trench_map,
-/obj/item/trench_map,
-/obj/item/trench_map,
+/obj/item/pinpointer/trench{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/item/pinpointer/trench{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/item/pinpointer/trench{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/item/trench_map{
+	pixel_x = 3
+	},
+/obj/item/trench_map{
+	pixel_x = 3
+	},
+/obj/item/trench_map{
+	pixel_x = 3
+	},
 /turf/simulated/floor,
 /area/station/hangar/main)
 "bvi" = (
@@ -30360,6 +30378,7 @@
 "bwL" = (
 /obj/table/wood/round/auto,
 /obj/displaycase{
+	displayed = new /obj/item/captaingun;
 	pixel_y = 8
 	},
 /obj/machinery/light/incandescent/warm,
@@ -30909,7 +30928,7 @@
 "bxS" = (
 /obj/table/wood/round/auto,
 /obj/item/paper_bin,
-/obj/item/postit_stack,
+/obj/item/item_box/postit,
 /obj/item/pen/fancy,
 /obj/item/stamp,
 /turf/simulated/floor/carpet/blue/fancy/junction/nw_e,
@@ -31168,10 +31187,30 @@
 /area/station/mining/staff_room)
 "byA" = (
 /obj/table/reinforced/auto,
-/obj/item/trench_map,
-/obj/item/trench_map,
-/obj/item/trench_map,
-/obj/item/trench_map,
+/obj/item/pinpointer/trench{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/item/pinpointer/trench{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/item/pinpointer/trench{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/item/trench_map{
+	pixel_x = 3
+	},
+/obj/item/trench_map{
+	pixel_x = 3
+	},
+/obj/item/trench_map{
+	pixel_x = 3
+	},
+/obj/item/trench_map{
+	pixel_x = 3
+	},
 /turf/simulated/floor/caution/westeast,
 /area/station/mining/staff_room)
 "byB" = (
@@ -31723,7 +31762,7 @@
 /obj/item/storage/box/crayon{
 	pixel_x = -6
 	},
-/obj/item/postit_stack,
+/obj/item/item_box/postit,
 /obj/machinery/light/incandescent/warm,
 /turf/simulated/floor/carpet{
 	dir = 9;
@@ -37693,6 +37732,7 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
+/obj/mopbucket,
 /turf/simulated/floor/purple/side{
 	dir = 4
 	},
@@ -38062,10 +38102,6 @@
 	},
 /area/station/janitor/supply)
 "bPO" = (
-/obj/mopbucket,
-/turf/simulated/floor/purple/side,
-/area/station/janitor/supply)
-"bPP" = (
 /obj/storage/crate,
 /obj/item/storage/box/mousetraps,
 /obj/item/sponge,
@@ -38074,6 +38110,10 @@
 /obj/item/reagent_containers/glass/bottle/cleaner,
 /obj/item/spraybottle/cleaner,
 /obj/item/chem_grenade/cleaner,
+/turf/simulated/floor/purple/side,
+/area/station/janitor/supply)
+"bPP" = (
+/obj/storage/secure/closet/civilian/janitor,
 /turf/simulated/floor/purple/side{
 	dir = 6
 	},
@@ -47420,6 +47460,10 @@
 	},
 /turf/simulated/floor,
 /area/research_outpost)
+"oWj" = (
+/obj/item/paper/book/from_file/fun_facts_about_shelterfrogs,
+/turf/space/fluid,
+/area/space)
 "oWv" = (
 /obj/machinery/communications_dish,
 /obj/cable,
@@ -49501,7 +49545,7 @@ aTt
 aqn
 aTt
 aqn
-aqn
+oWj
 cgq
 cgq
 cgq

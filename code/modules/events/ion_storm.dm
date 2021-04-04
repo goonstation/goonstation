@@ -116,7 +116,7 @@
 		// Fuck up the AI's laws
 		var/pickedLaw
 		if(prob(33))
-			pickedLaw = phrase_log.random_custom_ai_law()
+			pickedLaw = phrase_log.random_custom_ai_law(replace_names=TRUE)
 		else
 			pickedLaw = pick(new_laws)
 		if(isnull(pickedLaw))

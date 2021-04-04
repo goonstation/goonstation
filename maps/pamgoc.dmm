@@ -885,7 +885,7 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
-/obj/item/postit_stack,
+/obj/item/item_box/postit,
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/head)
 "abr" = (
@@ -16750,7 +16750,9 @@
 /turf/simulated/floor/plating/airless,
 /area/station/quartermaster/refinery)
 "aBB" = (
-/obj/displaycase,
+/obj/displaycase{
+	displayed = new /obj/item/captaingun
+},
 /obj/window/reinforced{
 	dir = 2
 	},
@@ -50650,7 +50652,7 @@
 /obj/machinery/networked/printer{
 	print_id = "Information"
 	},
-/obj/item/postit_stack{
+/obj/item/item_box/postit{
 	pixel_x = -5;
 	pixel_y = 3
 	},
@@ -62860,7 +62862,7 @@
 	pixel_x = -7;
 	pixel_y = 5
 	},
-/obj/item/postit_stack{
+/obj/item/item_box/postit{
 	pixel_x = -10;
 	pixel_y = 5
 	},
@@ -63285,7 +63287,7 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
-/obj/item/postit_stack{
+/obj/item/item_box/postit{
 	pixel_x = 8;
 	pixel_y = 6
 	},
@@ -63377,7 +63379,7 @@
 "cmo" = (
 /obj/table/reinforced/auto,
 /obj/machinery/cashreg,
-/obj/item/postit_stack,
+/obj/item/item_box/postit,
 /obj/cable{
 	d1 = 1;
 	d2 = 2;
@@ -64978,7 +64980,7 @@
 	pixel_x = 4;
 	pixel_y = 7
 	},
-/obj/item/postit_stack{
+/obj/item/item_box/postit{
 	pixel_x = -7;
 	pixel_y = 4
 	},

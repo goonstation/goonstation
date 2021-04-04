@@ -138,5 +138,7 @@ var/global/ci_dm_version_minor = "100"
 #define BUILD_TIME_SECOND 30
 #define BUILD_TIME_UNIX 1234567890 // Unix epoch, second precision
 
+#define SERVER_NUMBER 0
+
 // Uncomment and set to a URL with a zip of the RSC to offload RSC sending to an external webserver/CDN.
 //#define PRELOAD_RSC_URL ""
