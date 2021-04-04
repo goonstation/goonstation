@@ -277,7 +277,7 @@ proc/make_cleanable(var/type,var/loc,var/list/viral_list)
 		..()
 
 		SPAWN_DBG(0)
-			if (!src.pooled && length(src.loc.contents) < 15)
+			if (!src.pooled && !src.disposed && src.loc && length(src.loc.contents) < 15)
 				for (var/obj/O in src.loc)
 					LAGCHECK(LAG_LOW)
 					if(src.pooled || istype(O, /obj/decal/cleanable/blood) && O != src)
