@@ -1,5 +1,9 @@
 
 (t)sun apr 04 21
+(u)TTerc
+(p)3963
+(e)🐛|bug
+(+)You can now split material stacks (ores, bars) by clicking them with empty hand and click material stacks with each other to stack them together, similarly to sheets.
 (u)Azrun
 (p)4152
 (e)⚖🆕|balance, feature
