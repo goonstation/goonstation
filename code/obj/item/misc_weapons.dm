@@ -1438,7 +1438,7 @@ obj/item/whetstone
 	icon_state = "hadar_sword1" //todo new sprite
 	item_state = "hadar_sword1" //todo new sprite
 	flags = ONBACK
-	hit_type = DAMAGE_CUT
+	hit_type = DAMAGE_CUT | DAMAGE_STAB
 	tool_flags = TOOL_CUTTING | TOOL_CHOPPING
 	contraband = 5
 	w_class = 4
@@ -1448,7 +1448,7 @@ obj/item/whetstone
 	stamina_cost = 30
 	stamina_crit_chance = 15
 	pickup_sfx = "sound/items/blade_pull.ogg" // could use a cool lasery sfx
-	two_handed = 1
+	two_handed = 0
 	uses_multiple_icon_states = 1
 
 	var/mode = 1
@@ -1466,15 +1466,14 @@ obj/item/whetstone
 			if(force <= maximum_force)
 				force += 5
 				boutput(user, "<span class='alert'>[src]'s generator builds charge!</span>")
-				take_bleeding_damage(M, user, 5, DAMAGE_STAB)
 		playsound(M, "sound/impact_sounds/Blade_Small_Bloody.ogg", 60, 1)
 		..()
 
 	dropped(mob/user)
 		..()
 		if (isturf(src.loc))
-			user.visible_message("<span class='alert'>[src] fdrops from [user]'s hands and powers down!</span>")
-			force = 25
+			user.visible_message("<span class='alert'>[src] drops from [user]'s hands and powers down!</span>")
+			force = initial(src.force)
 			return
 
 	attack_self(mob/user as mob)
@@ -1486,6 +1485,7 @@ obj/item/whetstone
 				src.mode = 2
 				user.update_inhands()
 				src.setItemSpecial(/datum/item_special/rangestab)
+				tooltip_rebuild = TRUE
 			if(2)
 				boutput(user, "<span class='alert'>[src] transforms in order to swing wide!</span>")
 				icon_state = "hadar_sword2"
@@ -1493,6 +1493,7 @@ obj/item/whetstone
 				src.mode = 1
 				user.update_inhands()
 				src.setItemSpecial(/datum/item_special/swipe)
+				tooltip_rebuild = TRUE
 		..()
 
 // switch statements? multiple switching attack modes?
