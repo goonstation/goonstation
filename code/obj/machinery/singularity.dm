@@ -80,7 +80,7 @@ Contains:
 
 /obj/machinery/the_singularity/
 	name = "gravitational singularity"
-	desc = "A Gravitational Singularity."
+	desc = "Perhaps the densest thing in existence, except for you."
 
 	icon = 'icons/effects/160x160.dmi'
 	icon_state = "Sing2"
