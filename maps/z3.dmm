@@ -25316,7 +25316,7 @@
 /area/space)
 "uxS" = (
 /obj/table/auto,
-/obj/item/camera{
+/obj/item/camera_test{
 	pixel_y = 6
 	},
 /turf/simulated/floor/white/grime,

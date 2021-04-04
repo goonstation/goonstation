@@ -49555,7 +49555,7 @@
 /obj/item/audio_tape{
 	pixel_y = 5
 	},
-/obj/item/camera,
+/obj/item/camera_test,
 /obj/decoration/clock{
 	pixel_y = 32
 	},
@@ -49570,7 +49570,7 @@
 /obj/item/storage/photo_album{
 	pixel_y = -10
 	},
-/obj/item/camera,
+/obj/item/camera_test,
 /obj/machinery/light/incandescent/warm{
 	dir = 1;
 	nostick = 1
@@ -49584,7 +49584,7 @@
 /obj/table/wood/auto,
 /obj/item/paper_bin,
 /obj/item/pen,
-/obj/item/camera,
+/obj/item/camera_test,
 /turf/simulated/floor/darkblue/checker/other,
 /area/station/communications)
 "vpE" = (

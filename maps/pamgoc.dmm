@@ -68400,7 +68400,7 @@
 /obj/disposalpipe/segment/ejection{
 	dir = 8
 	},
-/obj/item/camera,
+/obj/item/camera_test,
 /obj/decal/tile_edge/stripe/extra_big,
 /turf/simulated/floor/grime,
 /area/station/maintenance/disposal)
@@ -68435,7 +68435,7 @@
 /obj/item/device/radio/signaler{
 	pixel_x = -9
 	},
-/obj/item/camera{
+/obj/item/camera_test{
 	pixel_x = 7;
 	pixel_y = -4
 	},
@@ -68627,11 +68627,11 @@
 /area/station/ranch)
 "fTf" = (
 /obj/table/wood/auto,
-/obj/item/camera{
+/obj/item/camera_test{
 	pixel_x = -6;
 	pixel_y = 5
 	},
-/obj/item/camera{
+/obj/item/camera_test{
 	pixel_x = 3;
 	pixel_y = 3
 	},
@@ -68850,7 +68850,7 @@
 	pixel_x = -7;
 	pixel_y = 1
 	},
-/obj/item/camera{
+/obj/item/camera_test{
 	pixel_x = 1;
 	pixel_y = 5
 	},
@@ -69030,7 +69030,7 @@
 	pixel_x = 2;
 	pixel_y = 17
 	},
-/obj/item/camera{
+/obj/item/camera_test{
 	pixel_x = -4;
 	pixel_y = -2
 	},
@@ -69116,7 +69116,7 @@
 /obj/item/storage/photo_album{
 	pixel_y = -6
 	},
-/obj/item/camera{
+/obj/item/camera_test{
 	pixel_x = -5;
 	pixel_y = 10
 	},
@@ -69533,7 +69533,7 @@
 /obj/table/wood/auto,
 /obj/item/storage/secure/sbriefcase,
 /obj/item/device/camera_viewer,
-/obj/item/camera,
+/obj/item/camera_test,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "vbk" = (

@@ -23146,7 +23146,7 @@
 /obj/item/tank/air,
 /obj/item/device/light/flashlight,
 /obj/item/device/audio_log,
-/obj/item/camera,
+/obj/item/camera_test,
 /obj/item/device/radio/headset/multifreq,
 /obj/cable{
 	d2 = 4;
@@ -23281,7 +23281,7 @@
 "Tr" = (
 /obj/table/wood/auto,
 /obj/item/device/camera_viewer,
-/obj/item/camera,
+/obj/item/camera_test,
 /obj/item/device/audio_log,
 /obj/item/audio_tape,
 /obj/item/audio_tape,
@@ -23503,7 +23503,7 @@
 /obj/item/tank/air,
 /obj/item/device/light/flashlight,
 /obj/item/device/audio_log,
-/obj/item/camera,
+/obj/item/camera_test,
 /obj/item/device/radio/headset/multifreq,
 /turf/simulated/floor/purplewhite{
 	dir = 9

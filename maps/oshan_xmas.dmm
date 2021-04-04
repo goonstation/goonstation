@@ -48217,8 +48217,8 @@
 /area/shuttle/sea_elevator_room)
 "dLM" = (
 /obj/table/auto,
-/obj/item/camera,
-/obj/item/camera,
+/obj/item/camera_test,
+/obj/item/camera_test,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -49014,7 +49014,7 @@
 /obj/item/storage/photo_album{
 	pixel_y = -10
 	},
-/obj/item/camera,
+/obj/item/camera_test,
 /obj/item/stamp/cap,
 /turf/simulated/floor/carpet/purple/standard/narrow/T_south,
 /area/station/crew_quarters/captain)
@@ -49038,7 +49038,7 @@
 	name = "Security Records"
 	},
 /obj/item/device/camera_viewer,
-/obj/item/camera,
+/obj/item/camera_test,
 /obj/machinery/power/data_terminal,
 /obj/cable{
 	d2 = 4;
@@ -49200,13 +49200,13 @@
 /area/station/maintenance/inner/central)
 "vVw" = (
 /obj/table/wood/auto,
-/obj/item/camera{
+/obj/item/camera_test{
 	pixel_y = 8
 	},
-/obj/item/camera{
+/obj/item/camera_test{
 	pixel_y = 4
 	},
-/obj/item/camera,
+/obj/item/camera_test,
 /obj/machinery/light/incandescent/warm,
 /turf/simulated/floor,
 /area/station/crew_quarters/info)

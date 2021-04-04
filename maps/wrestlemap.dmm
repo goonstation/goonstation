@@ -12092,7 +12092,7 @@
 /obj/machinery/light,
 /obj/table/glass/auto,
 /obj/item/device/audio_log,
-/obj/item/camera,
+/obj/item/camera_test,
 /obj/item/device/radio/headset/multifreq,
 /obj/item/device/radio/headset/multifreq,
 /obj/item/device/radio/headset/multifreq,
@@ -18788,7 +18788,7 @@
 "hSg" = (
 /obj/table/wood/auto,
 /obj/item/storage/secure/sbriefcase,
-/obj/item/camera,
+/obj/item/camera_test,
 /obj/item/storage/box/evidence,
 /obj/decal/cleanable/dirt/dirt4,
 /obj/decal/cleanable/dirt,
@@ -35322,7 +35322,7 @@
 /obj/table/auto,
 /obj/table/auto,
 /obj/item/clipboard,
-/obj/item/camera,
+/obj/item/camera_test,
 /turf/simulated/floor,
 /area/station/crew_quarters/quarters_south)
 "pdP" = (
@@ -35398,7 +35398,7 @@
 	})
 "pgs" = (
 /obj/table/auto,
-/obj/item/camera,
+/obj/item/camera_test,
 /obj/cable{
 	icon_state = "1-2"
 	},

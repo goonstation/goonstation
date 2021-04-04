@@ -29455,9 +29455,27 @@
 "bvh" = (
 /obj/machinery/light/incandescent/warm,
 /obj/table/auto,
-/obj/item/trench_map,
-/obj/item/trench_map,
-/obj/item/trench_map,
+/obj/item/pinpointer/trench{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/item/pinpointer/trench{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/item/pinpointer/trench{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/item/trench_map{
+	pixel_x = 3
+	},
+/obj/item/trench_map{
+	pixel_x = 3
+	},
+/obj/item/trench_map{
+	pixel_x = 3
+	},
 /turf/simulated/floor,
 /area/station/hangar/main)
 "bvi" = (
@@ -30845,10 +30863,30 @@
 /area/station/mining/staff_room)
 "byA" = (
 /obj/table/reinforced/auto,
-/obj/item/trench_map,
-/obj/item/trench_map,
-/obj/item/trench_map,
-/obj/item/trench_map,
+/obj/item/pinpointer/trench{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/item/pinpointer/trench{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/item/pinpointer/trench{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/item/trench_map{
+	pixel_x = 3
+	},
+/obj/item/trench_map{
+	pixel_x = 3
+	},
+/obj/item/trench_map{
+	pixel_x = 3
+	},
+/obj/item/trench_map{
+	pixel_x = 3
+	},
 /turf/simulated/floor/caution/westeast,
 /area/station/mining/staff_room)
 "byB" = (
@@ -37341,6 +37379,7 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
+/obj/mopbucket,
 /turf/simulated/floor/purple/side{
 	dir = 4
 	},
@@ -37710,10 +37749,6 @@
 	},
 /area/station/janitor/supply)
 "bPO" = (
-/obj/mopbucket,
-/turf/simulated/floor/purple/side,
-/area/station/janitor/supply)
-"bPP" = (
 /obj/storage/crate,
 /obj/item/storage/box/mousetraps,
 /obj/item/sponge,
@@ -37722,6 +37757,10 @@
 /obj/item/reagent_containers/glass/bottle/cleaner,
 /obj/item/spraybottle/cleaner,
 /obj/item/chem_grenade/cleaner,
+/turf/simulated/floor/purple/side,
+/area/station/janitor/supply)
+"bPP" = (
+/obj/storage/secure/closet/civilian/janitor,
 /turf/simulated/floor/purple/side{
 	dir = 6
 	},
@@ -46337,13 +46376,13 @@
 /area/research_outpost/maint)
 "huZ" = (
 /obj/table/wood/auto,
-/obj/item/camera{
+/obj/item/camera_test{
 	pixel_y = 8
 	},
-/obj/item/camera{
+/obj/item/camera_test{
 	pixel_y = 4
 	},
-/obj/item/camera,
+/obj/item/camera_test,
 /obj/machinery/light/incandescent/warm,
 /turf/simulated/floor,
 /area/station/crew_quarters/info)
@@ -46698,7 +46737,7 @@
 /obj/item/storage/photo_album{
 	pixel_y = -10
 	},
-/obj/item/camera,
+/obj/item/camera_test,
 /obj/item/stamp/cap,
 /turf/simulated/floor/carpet/purple/standard/narrow/T_south,
 /area/station/crew_quarters/captain)
@@ -47711,7 +47750,7 @@
 	name = "Security Records"
 	},
 /obj/item/device/camera_viewer,
-/obj/item/camera,
+/obj/item/camera_test,
 /obj/machinery/power/data_terminal,
 /obj/cable{
 	d2 = 4;
@@ -48151,8 +48190,8 @@
 /area/station/hangar/sec)
 "wBu" = (
 /obj/table/auto,
-/obj/item/camera,
-/obj/item/camera,
+/obj/item/camera_test,
+/obj/item/camera_test,
 /obj/cable{
 	icon_state = "1-2"
 	},

@@ -12791,7 +12791,7 @@
 /area/station/solar/small_backup1)
 "drK" = (
 /obj/table/wood/auto,
-/obj/item/camera{
+/obj/item/camera_test{
 	pixel_x = 3;
 	pixel_y = 2
 	},
@@ -70888,7 +70888,7 @@
 	pixel_x = -1;
 	pixel_y = -4
 	},
-/obj/item/camera{
+/obj/item/camera_test{
 	pixel_y = 11
 	},
 /turf/simulated/floor/white,
