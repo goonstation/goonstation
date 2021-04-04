@@ -70,7 +70,7 @@
 	if(in_progress)
 		CRASH("Attempted to re-use a request object.")
 
-	id = rustg_http_request_async(method, url, body, headers, build_options())
+	id = rustg_http_request_async(method, url, body, headers, "")
 
 	if(isnull(text2num(id)))
 		_raw_response = "Proc error: [id]"
