@@ -234,11 +234,13 @@ obj/item/rocko
 	var/painted
 	var/bright = FALSE
 	var/awakened = TRUE // SHOULD BE FALSE
+	var/power_level = 0
 	var/area/prev_area
 	var/list/area/visited
 	var/list/obj/item/device/key/keys_touched
 	var/mob/living/holder
 	var/obj/item/clothing/head/hat
+	var/dna_collected
 
 	New()
 		. = ..()
@@ -294,7 +296,6 @@ obj/item/rocko
 				else
 					src.visible_message("<B>[src]</B> glows brightly momentarily and begins to sparkle.")
 
-
 	proc/can_mob_observe(/var/mob/M)
 		if(src.awakened)
 			. = TRUE
@@ -307,6 +308,7 @@ obj/item/rocko
 			if(src.holder == M)
 				view_chance += 5
 
+		// whoa dude!
 		if(M.reagents?.total_volume && (M.reagents.has_reagent("LSD") || M.reagents.has_reagent("lsd_bee") || M.reagents.has_reagent("psilocybin") || M.reagents?.has_reagent("bathsalts") || M.reagents?.has_reagent("THC")) )
 			view_chance += 20
 		if(M.hasStatus("drunk"))
@@ -318,8 +320,9 @@ obj/item/rocko
 		else
 			view_chance += 5
 
-	process()
+		return prob(view_chance)
 
+	process()
 		var/area/current_area = get_area(src)
 		if(src.prev_area != current_area)
 			src.visited |= current_area
@@ -425,3 +428,7 @@ obj/item/rocko
 			src.hat = null
 			update_hat()
 		user.visible_message("[.].")
+
+	proc/calculate_power_level()
+		power_level = length(src.visited) * 1
+		power_level += length(src.keys_touched) * 10
