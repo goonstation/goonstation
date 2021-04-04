@@ -1494,6 +1494,8 @@
 
 	onUpdate(var/timePassed)
 		changeState()
+		if(!isalive(owner))
+			return
 		var/mult = timePassed / (2 SECONDS)
 		var/weighting = 0.035 * mult
 		weighted_average = (1 - weighting) * weighted_average + weighting * how_miasma
