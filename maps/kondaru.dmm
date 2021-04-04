@@ -50629,7 +50629,7 @@
 /area/station/quartermaster/office)
 "lAU" = (
 /obj/table/wood/auto,
-/obj/item/camera_test,
+/obj/item/camera,
 /obj/item/clothing/head/det_hat{
 	desc = "Ugh, gross.";
 	name = "fedora"
@@ -55792,7 +55792,7 @@
 "rXc" = (
 /obj/table/wood/auto,
 /obj/item/device/camera_viewer,
-/obj/item/camera_test,
+/obj/item/camera,
 /obj/item/device/audio_log,
 /obj/item/audio_tape,
 /obj/item/audio_tape,
@@ -56047,7 +56047,7 @@
 /obj/item/tank/air,
 /obj/item/device/light/flashlight,
 /obj/item/device/audio_log,
-/obj/item/camera_test,
+/obj/item/camera,
 /obj/item/device/radio/headset/multifreq,
 /turf/simulated/floor/purplewhite{
 	dir = 8

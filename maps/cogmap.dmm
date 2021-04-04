@@ -59025,7 +59025,7 @@
 /obj/item/device/radio/signaler{
 	pixel_x = 9
 	},
-/obj/item/camera_test{
+/obj/item/camera{
 	pixel_x = -7;
 	pixel_y = -4
 	},
@@ -59159,7 +59159,7 @@
 	pixel_x = 7;
 	pixel_y = 1
 	},
-/obj/item/camera_test{
+/obj/item/camera{
 	pixel_x = -1;
 	pixel_y = 5
 	},
@@ -59655,7 +59655,7 @@
 	pixel_x = -2;
 	pixel_y = 17
 	},
-/obj/item/camera_test{
+/obj/item/camera{
 	pixel_x = 4;
 	pixel_y = -2
 	},
@@ -61715,7 +61715,7 @@
 /obj/item/storage/photo_album{
 	pixel_y = -6
 	},
-/obj/item/camera_test{
+/obj/item/camera{
 	pixel_x = 5;
 	pixel_y = 10
 	},
@@ -61818,11 +61818,11 @@
 /area/station/routing/medsci)
 "nNu" = (
 /obj/table/wood/auto,
-/obj/item/camera_test{
+/obj/item/camera{
 	pixel_x = 6;
 	pixel_y = 5
 	},
-/obj/item/camera_test{
+/obj/item/camera{
 	pixel_x = -3;
 	pixel_y = 3
 	},
@@ -62491,7 +62491,7 @@
 /obj/disposalpipe/segment/ejection{
 	dir = 4
 	},
-/obj/item/camera_test,
+/obj/item/camera,
 /obj/decal/tile_edge/stripe/extra_big,
 /turf/simulated/floor/grime,
 /area/station/maintenance/disposal)
@@ -63278,7 +63278,7 @@
 /obj/table/wood/auto,
 /obj/item/storage/secure/sbriefcase,
 /obj/item/device/camera_viewer,
-/obj/item/camera_test,
+/obj/item/camera,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "tZB" = (

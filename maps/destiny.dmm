@@ -2124,7 +2124,7 @@
 /obj/item/storage/photo_album{
 	pixel_y = -10
 	},
-/obj/item/camera_test{
+/obj/item/camera{
 	pixel_y = 6
 	},
 /obj/item/pinpointer,
@@ -25296,7 +25296,7 @@
 "eWY" = (
 /obj/table/wood/auto,
 /obj/item/device/camera_viewer,
-/obj/item/camera_test,
+/obj/item/camera,
 /obj/item/storage/box/evidence,
 /obj/item/storage/box/evidence,
 /obj/item/storage/secure/sbriefcase,

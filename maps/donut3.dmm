@@ -14905,14 +14905,14 @@
 /area/station/medical/asylum/kitchen)
 "eeq" = (
 /obj/table/wood/auto,
-/obj/item/camera_test{
+/obj/item/camera{
 	pixel_x = 2
 	},
-/obj/item/camera_test{
+/obj/item/camera{
 	pixel_x = -1;
 	pixel_y = 3
 	},
-/obj/item/camera_test{
+/obj/item/camera{
 	pixel_x = -4;
 	pixel_y = 6
 	},
@@ -49859,7 +49859,7 @@
 	pixel_x = -1;
 	pixel_y = -4
 	},
-/obj/item/camera_test{
+/obj/item/camera{
 	pixel_y = 11
 	},
 /turf/simulated/floor/white,
@@ -73887,7 +73887,7 @@
 /area/station/crew_quarters/courtroom)
 "vIK" = (
 /obj/storage/secure/closet/security/forensics,
-/obj/item/camera_test,
+/obj/item/camera,
 /turf/simulated/floor/wood/seven,
 /area/station/security/detectives_office)
 "vIN" = (

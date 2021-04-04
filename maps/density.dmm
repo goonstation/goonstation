@@ -7111,7 +7111,7 @@
 /obj/item/device/detective_scanner,
 /obj/item/storage/box/evidence,
 /obj/item/spraybottle/detective,
-/obj/item/camera_test,
+/obj/item/camera,
 /obj/item/clothing/under/suit{
 	name = "Mortician Suit"
 	},
