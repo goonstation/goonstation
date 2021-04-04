@@ -1,5 +1,9 @@
 
 (t)sun apr 04 21
+(u)Camryn Buttes
+(p)3967
+(e)🐛🆕🗺|bug, feature, mapping
+(*)Added a new prefab to the pool of space prefabs: the candy shop! Complete with an open-ended mystery and some clues that don't quite add up. (also lots of candy)
 (u)TTerc
 (p)3963
 (e)🐛|bug
