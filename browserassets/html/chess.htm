@@ -3,10 +3,17 @@
 	<head>
 		<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1' />
 		<link rel="stylesheet" type="text/css" href="{{resource("css/chess.css")}}">
+		<script src="{{resource("js/jquery.min.js")}}"></script>
 	</head>
 <body>
-	<div id = "main" class = "gridclass">
-		<p>hi fuck you this is chess</p>
+	<p id="debug"></p>
+	<div class="chessboard">
+		<div id="chesspieces"></div>
+		<canvas id="chessboard" width="480" height="480"></canvas>
 	</div>
+	<script>
+		var imagesPath = "{{resource('images/chessboard/)}}";
+	</script>
+	<script src="{{resource("js/chess.js")}}"></script>
 </body>
 </html>

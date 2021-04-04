@@ -7,7 +7,7 @@
 	var/list/piecelist = list()
 
 	proc/uiSetup()
-		usr.Browse((grabResource("html/chess.htm")), "window=chess;size=595x595;border=0;can_resize=0;can_minimize=1;")
+		usr.Browse((grabResource("html/chess.htm")), "window=chess;size=496x496;border=0;can_resize=0;can_minimize=1;")
 
 	attack_hand(mob/user as mob)
 		if(!(user in src.openwindows) && istype(user,/mob/living/carbon/human) && !(src in user.contents))
@@ -102,13 +102,13 @@
 			var/selectedType = input(user,"Pick a piece type:","CHEEEESS") in pieceListSorted
 			return selectedType
 
-	proc/ejectPiece(var/obj/spawnedPiece, var/mob/user)
+	proc/ejectPiece(var/obj/spawnedPiece, var/mob/user) // if there's an output target, eject it to that. else, put it in the user's hand or eject onto same turf
 		if(isnull(outputTarget))
 			user.put_in_hand_or_eject(spawnedPiece)
 		else
 			spawnedPiece.set_loc(outputTarget)
 
-	proc/grabPiece(var/mob/user, var/obj/item/chessman/piece)
+	proc/grabPiece(var/mob/user, var/obj/item/chessman/piece) // checks if the box is empty, then iterates through every piece in contents to grab the ONE PIECE YOU INPUTTED AAA
 		if(!isnull(checkEmpty()))
 			return
 		else

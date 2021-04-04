@@ -2,28 +2,32 @@
 	overflow: hidden;
 }
 
-body{
-	background: #332B1B;
+body {
+	background: #5f3d2d;
 }
 
-map {
+canvas, .chesspieces {
 	position: absolute;
-	top: 0px;
-	left: 0px;
-}
-
-.gridclass {
-	display: grid;
-	width: 595px;
-	height: 595px;
-}
-
-.fit {
-	position: absolute;
-	width: 595px;
-	height: 595px;
 	top: 0;
 	left: 0;
-	grid-column: 1;
-	grid-row: 1;
+}
+
+canvas {
+	z-index: -1;
+}
+
+.chessboard {
+	position: relative;
+	width: 480px;
+	height: 480px;
+
+	left: 50%;
+	transform: translateX(-50%);
+
+	text-align: center;
+}
+
+.piece {
+	position: absolute;
+	left: 0;
 }
