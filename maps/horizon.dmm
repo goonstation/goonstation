@@ -20525,6 +20525,7 @@
 /obj/machinery/door/airlock/pyro/glass/command{
 	name = "Director's Office"
 	},
+/obj/access_spawn/medical_director,
 /turf/simulated/floor/white,
 /area/station/crew_quarters/md)
 "aXu" = (
