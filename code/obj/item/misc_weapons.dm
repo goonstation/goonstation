@@ -1448,7 +1448,7 @@ obj/item/whetstone
 	stamina_cost = 30
 	stamina_crit_chance = 15
 	pickup_sfx = "sound/items/blade_pull.ogg" // could use a cool lasery sfx
-	two_handed = 0
+	two_handed = 1
 	uses_multiple_icon_states = 1
 
 	var/mode = 1
