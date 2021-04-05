@@ -57864,11 +57864,12 @@
 /turf/simulated/floor,
 /area/station/mining/staff_room)
 "wHL" = (
-/obj/machinery/atmospherics/pipe/simple/insulated{
-	dir = 4
-	},
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/valve{
+	dir = 4;
+	name = "Purge Valve"
 	},
 /turf/simulated/floor/plating/random,
 /area/station/science/storage)
