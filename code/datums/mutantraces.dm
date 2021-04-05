@@ -1132,6 +1132,7 @@
 
 /datum/mutantrace/abomination
 	name = "abomination"
+	icon = 'icons/mob/abomination.dmi'
 	icon_state = "abomination"
 	human_compatible = 0
 	uses_human_clothes = 0
