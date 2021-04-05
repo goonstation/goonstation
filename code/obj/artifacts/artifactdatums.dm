@@ -15,6 +15,8 @@ ABSTRACT_TYPE(/datum/artifact/)
 	// any sense such as martian robot builders or ancient robot plant seeds.
 
 	var/internal_name = null
+	// one name for each origin
+	var/used_names = list()
 	var/image/fx_image = null
 	// var/image/effects_overlay = null
 	var/obj/holder = null

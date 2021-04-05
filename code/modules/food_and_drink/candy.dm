@@ -25,7 +25,7 @@
 			..()
 		return
 
-	on_bite(obj/item/I, mob/M, mob/user)
+	heal(var/mob/M)
 		if(src.razor_blade && ishuman(M))
 			var/mob/living/carbon/human/H = M
 			var/obj/item/affecting = H.organs["head"]
@@ -35,6 +35,7 @@
 			H.UpdateDamageIcon()
 			src.razor_blade = 0
 			new /obj/item/razor_blade( get_turf(src) )
+		..()
 
 /obj/item/reagent_containers/food/snacks/candy/nougat
 	name = "nougat bar"
@@ -42,7 +43,7 @@
 	real_name = "nougat"
 	icon_state = "nougat0"
 
-	on_bite(obj/item/I, mob/M, mob/user)
+	heal(var/mob/M)
 		..()
 		if (icon_state == "nougat0")
 			icon_state = "nougat1"
@@ -97,7 +98,7 @@
 	initial_reagents = list("badgrease"=5)
 	food_effects = list("food_sweaty")
 
-	on_bite(obj/item/I, mob/M, mob/user)
+	heal(var/mob/M)
 		..()
 		boutput(M, "It tastes disappointing.")
 		return
@@ -188,8 +189,6 @@
 				else if (prob(33))
 					src.reagents.add_reagent(pick("bilk", "beff", "vomit", "gvomit", "porktonium", "badgrease", "yuck", "carbon", "salt", "pepper", "ketchup", "mustard"), 10)
 					src.heal_amt = 0
-				src.AddComponent(/datum/component/consume/foodheal, src.heal_amt)
-
 
 				src.food_color = src.reagents.get_master_color()
 				src.icon += src.food_color
@@ -208,7 +207,7 @@
 				phrase = pick("Yum", "Wow", "MMM", "Delicious", "Scrumptious", "Fantastic", "Oh yeah")
 				tastesbad = 0
 
-	on_bite(obj/item/I, mob/M, mob/user)
+	heal(var/mob/M)
 		if (tastesbad)
 			boutput(M, "<span class='alert'>[phrase]! That tasted like [flavor]...</span>")
 		else
@@ -236,7 +235,6 @@
 					else
 						flavor = "sugar"
 					src.reagents.add_reagent(flavor, 50)
-				src.AddComponent(/datum/component/consume/foodheal, src.heal_amt)
 
 				src.food_color = src.reagents.get_master_color()
 				src.icon += src.food_color // apparently this is a thing you can do?  neat!

@@ -51,10 +51,6 @@
 	var/burn_dam = 0
 	var/tox_dam = 0
 
-	/// How much damage does this take if someone takes a bite out of it?
-	/// Set to 0 to default to 110% of FAIL_DAMAGE
-	var/bite_damage = 0
-
 	var/robotic = 0
 	var/emagged = 0
 	var/synthetic = 0
@@ -137,9 +133,6 @@
 			src.blood_color = src.donor.bioHolder?.bloodColor
 			src.blood_reagent = src.donor.blood_id
 		src.setMaterial(getMaterial(made_from), appearance = 0, setname = 0)
-		if(src.bite_damage == 0)
-			src.bite_damage = src.FAIL_DAMAGE * 1.1
-		src.AddComponent(/datum/component/consume/bitemask)
 
 	disposing()
 		if (src.holder)
@@ -160,8 +153,6 @@
 			bones.dispose()
 
 		holder = null
-		var/datum/component/D = src.GetComponent(/datum/component/consume/bitemask)
-		D?.RemoveComponent(/datum/component/consume/bitemask)
 		..()
 
 	proc/splat(turf/T)
@@ -402,8 +393,3 @@
 			for (var/abil in src.organ_abilities)
 				src.add_ability(A, abil)
 		src.broken = 0
-
-	get_desc()
-		. = ..()
-		if(src.broken || src.get_damage() > src.FAIL_DAMAGE)
-			. +="<br>It looks pretty banged up."

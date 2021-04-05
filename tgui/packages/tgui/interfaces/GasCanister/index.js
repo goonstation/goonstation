@@ -1,11 +1,11 @@
-import { useBackend } from '../backend';
 import { Component } from 'inferno';
-import { Divider, Box, Section, Flex } from '../components';
-import { Window } from '../layouts';
-import { PaperSheetView } from './PaperSheet';
-import { PortableBasicInfo, PortableHoldingTank } from './common/PortableAtmos';
-import { ReleaseValve } from './common/ReleaseValve';
-import { Detonator } from './GasCanister/Detonator';
+import { useBackend } from '../../backend';
+import { Box, Divider, Flex, Section } from '../../components';
+import { Window } from '../../layouts';
+import { PortableBasicInfo, PortableHoldingTank } from '../common/PortableAtmos';
+import { ReleaseValve } from '../common/ReleaseValve';
+import { PaperSheetView } from '../PaperSheet';
+import { Detonator } from './Detonator';
 
 export const GasCanister = (props, context) => {
   const { act, data } = useBackend(context);
@@ -158,4 +158,3 @@ class PaperView extends Component {
     );
   }
 }
-

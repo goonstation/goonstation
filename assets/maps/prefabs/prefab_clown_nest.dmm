@@ -17,7 +17,7 @@
 "mM" = (/obj/item/material_piece/cloth/spidersilk{pixel_x = 3; pixel_y = 2},/turf/simulated/floor/plating/airless/asteroid,/area/prefab/clown_nest)
 "om" = (/turf/simulated/floor/airless/solar,/area/noGenerate)
 "oz" = (/turf/simulated/wall/asteroid{name_old = "hardened"},/area/prefab/clown_nest)
-"oS" = (/obj/decal/cleanable/vomit/spiders,/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat{icon = 'icons/effects/blood.dmi'; icon_state = "gibhead"; name = "grody thing"},/obj/item/reagent_containers/food/drinks/milk/cluwnespider{pixel_x = 4; pixel_y = 4},/turf/simulated/floor/plating/airless/asteroid,/area/prefab/clown_nest)
+"oS" = (/obj/decal/cleanable/vomit/spiders,/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat{icon = 'icons/effects/blood.dmi'; icon_state = "gibhead"; name = "grody thing"},/obj/item/reagent_containers/food/drinks/milk/clownspider{pixel_x = 4; pixel_y = 4},/turf/simulated/floor/plating/airless/asteroid,/area/prefab/clown_nest)
 "pG" = (/obj/decal/cleanable/dirt/dirt3,/turf/simulated/floor/plating/airless/asteroid,/area/prefab/clown_nest)
 "rg" = (/obj/item/clothing/gloves/latex/pink{pixel_x = 3; pixel_y = 3},/obj/item/reagent_containers/food/drinks/milk/clownspider{layer = 2; pixel_x = -2; pixel_y = 5},/turf/simulated/floor/plating/airless/asteroid,/area/prefab/clown_nest)
 "rj" = (/obj/wingrille_spawn/auto/tuff,/turf/simulated/floor/airless/plating,/area/prefab/clown_nest)

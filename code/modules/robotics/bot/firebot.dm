@@ -191,7 +191,7 @@
 	if(src.frustration > 8)
 		src.KillPathAndGiveUp(1)
 
-	if(!src.target)
+	if(!src.target || src.target.disposed)
 		src.doing_something = 0
 		src.target = src.look_for_fire()
 

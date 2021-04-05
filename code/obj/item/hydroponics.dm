@@ -461,6 +461,7 @@
 	rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
 	module_research = list("tools" = 2, "hydroponics" = 4)
 	initial_volume = 120
+	can_recycle = FALSE
 
 	New()
 		..()
@@ -599,3 +600,5 @@
 	name = "water pipe"
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bong"
+
+	filled
