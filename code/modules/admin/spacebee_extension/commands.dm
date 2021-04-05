@@ -269,3 +269,21 @@
 		target.name = src.new_name
 		target.choose_name(1, null, target.real_name, force_instead=TRUE)
 		return TRUE
+
+
+/datum/spacebee_extension_command/vpn_whitelist
+	name = "vpnwhitelist"
+	help_message = "Whitelists a given ckey from the VPN checker."
+	argument_types = list(/datum/command_argument/string/ckey="ckey")
+	server_targeting = COMMAND_TARGETING_SINGLE_SERVER
+
+	execute(user, ckey)
+		try
+			apiHandler.queryAPI("vpncheck-whitelist/add", list("ckey" = ckey, "akey" = user + " (Discord)"))
+		catch(var/exception/e)
+			system.reply("Error while adding ckey [ckey] to the VPN whitelist: [e.name]")
+			return FALSE
+		global.vpn_ip_checks?.Cut() // to allow them to reconnect this round
+		message_admins("Ckey [ckey] added to the VPN whitelist by [user] (Discord).")
+		logTheThing("admin", "[user] (Discord)", null, "Ckey [ckey] added to the VPN whitelist.")
+		return TRUE
