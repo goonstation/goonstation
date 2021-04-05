@@ -322,11 +322,15 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 			logTheThing("admin", src, null, "[src.address] is using a vpn that they've already logged in with during this round.")
 			logTheThing("diary", src, null, "[src.address] is using a vpn that they've already logged in with during this round.", "admin")
 			message_admins("[key_name(src)] [src.address] attempted to connect with a VPN or proxy but was kicked!")
-			src.mob.Browse(vpn_kick_string, "window=vpnbonked")
-			sleep(3 SECONDS)
+			if(do_compid_analysis)
+				do_computerid_test(src) //Will ban yonder fucker in case they are prix
+				check_compid_list(src) //Will analyze their computer ID usage patterns for aberrations
 			if (src)
-				del(src)
-			return
+				src.mob.Browse(vpn_kick_string, "window=vpnbonked")
+				sleep(3 SECONDS)
+				if (src)
+					del(src)
+				return
 
 		// Client has not been checked for VPN status this round, go do so, but only for relatively new accounts
 		// NOTE: adjust magic numbers here if we approach vpn checker api rate limits
@@ -366,11 +370,15 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 							logTheThing("admin", src, null, "[src.address] is using a vpn. vpn info: host: [data["host"]], ASN: [data["ASN"]], org: [data["organization"]]")
 							logTheThing("diary", src, null, "[src.address] is using a vpn. vpn info: host: [data["host"]], ASN: [data["ASN"]], org: [data["organization"]]", "admin")
 							message_admins("[key_name(src)] [src.address] attempted to connect with a VPN or proxy but was kicked!")
-							src.mob.Browse(vpn_kick_string, "window=vpnbonked")
-							sleep(3 SECONDS)
+							if(do_compid_analysis)
+								do_computerid_test(src) //Will ban yonder fucker in case they are prix
+								check_compid_list(src) //Will analyze their computer ID usage patterns for aberrations
 							if (src)
-								del(src)
-							return
+								src.mob.Browse(vpn_kick_string, "window=vpnbonked")
+								sleep(3 SECONDS)
+								if (src)
+									del(src)
+								return
 
 						// IP is not a known VPN
 						else
