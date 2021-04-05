@@ -1346,6 +1346,7 @@ var/f_color_selector_handler/F_Color_Selector
 
 				if (M?.client)
 					boutput(M, "<span class='mhelp'><b>MENTOR PM: FROM <a href=\"byond://?action=mentor_msg_irc&nick=[ckey(nick)]\">[nick]</a> (Discord)</b>: <span class='message'>[game_msg]</span></span>")
+					M << sound('sound/misc/mentorhelp.ogg', volume=100, wait=0)
 					logTheThing("admin", null, M, "Discord: [nick] Mentor PM'd [constructTarget(M,"admin")]: [msg]")
 					logTheThing("diary", null, M, "Discord: [nick] Mentor PM'd [constructTarget(M,"diary")]: [msg]", "admin")
 					for (var/client/C)
