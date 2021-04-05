@@ -340,22 +340,15 @@ obj/item/rocko
 				O.show_message("<span class='emote'>[message]</span>", assoc_maptext = chat_text)
 
 	proc/update_icon()
-		var/icon/smiley_icon = icon('icons/misc/stickers.dmi', src.smile ? "smile2" : "frown2")
-		smiley_icon.Shift(SOUTH,3)
-		var/image/smiley = image(smiley_icon)
+		var/image/smiley = image('icons/misc/rocko.dmi', src.smile ? "smile" : "frown")
+		if(bright)
+			painted = pick(list("#EE2","#2EE", "#E2E","#EEE"))
+		else
+			painted = pick(list("#000","#151","#514","#511","#218"))
+
+		smiley.color = painted
 		smiley.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
 
-		if(bright)
-			smiley.blend_mode = BLEND_ADD
-			painted = pick(list("#FF0","#0FF","#FFF"))
-		else
-			smiley.blend_mode = BLEND_SUBTRACT
-			painted = pick(list("#3F3", "#FFF","#5F0","#0F5","#F50"))
-
-		smiley.color = color_mapping_matrix(
-			list("#663300", "#FFAA00", "#FFE924"),
-			list(painted, "#000", "#000")
-			)
 		src.UpdateOverlays(smiley, "face")
 		update_hat()
 
