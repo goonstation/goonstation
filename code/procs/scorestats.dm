@@ -328,16 +328,6 @@ var/datum/score_tracker/score_tracker
 		. += "<BR>"
 		return jointext(., "")
 
-	proc/rocko_stats()
-		. = list()
-		. += "<B>Rocko's Worldliness:</B> "
-		var/found_rocko = FALSE
-		//var/tier = world.load_intra_round_value("rocko_tier") //Should this even be a thing?
-		for(var/obj/item/rocko/R in by_cat[TR_CAT_PETS])
-			found_rocko = TRUE
-		if(!found_rocko)
-			. += "Something terrible happened to Rocko."
-
 	proc/escapee_facts()
 		. = list()
 		//Richest Escapee | Most Damaged Escapee | Dr. Acula Blood Total | Clown Beatings

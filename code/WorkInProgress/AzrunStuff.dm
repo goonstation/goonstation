@@ -233,19 +233,11 @@ obj/item/rocko
 	var/smile = TRUE
 	var/painted
 	var/bright = FALSE
-	var/awakened = TRUE // SHOULD BE FALSE
-	var/power_level = 0
-	var/area/prev_area
-	var/list/area/visited
-	var/list/obj/item/device/key/keys_touched
 	var/mob/living/holder
 	var/obj/item/clothing/head/hat
-	var/dna_collected
 
 	New()
 		. = ..()
-		visited = list()
-		keys_touched = list()
 		var/matrix/xf = matrix()
 		if(prob(20))
 			bright = TRUE
@@ -260,7 +252,7 @@ obj/item/rocko
 		START_TRACKING_CAT(TR_CAT_PETS)
 		processing_items |= src
 
-	set_loc(var/newloc as turf|mob|obj in world)
+	set_loc(newloc as turf|mob|obj in world)
 		var/atom/oldloc = src.loc
 		src.holder = null
 		. = ..()
@@ -280,58 +272,34 @@ obj/item/rocko
 		STOP_TRACKING_CAT(TR_CAT_PETS)
 		..()
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
-		if (istype(W, /obj/item/device/key))
-			var/obj/item/device/key/K = W
-
-			if(!keys_touched.Find(K))
-				keys_touched += K
-				if(!particleMaster.CheckSystemExists(/datum/particleSystem/sparkles, src))
-					particleMaster.SpawnSystem(new /datum/particleSystem/sparkles(src))
-					SPAWN_DBG(20 SECONDS)
-						particleMaster.RemoveSystem(/datum/particleSystem/sparkles, src)
-				if(ismob(src.loc))
-					var/mob/M = src.loc
-					boutput(M,"<B>[src]</B> glows brightly momentarily and begins to sparkle.")
-				else
-					src.visible_message("<B>[src]</B> glows brightly momentarily and begins to sparkle.")
-
-	proc/can_mob_observe(/var/mob/M)
-		if(src.awakened)
-			. = TRUE
-			return
+	proc/can_mob_observe(mob/M)
+		// ignore things we don't care about
+		if(isnull(M.client))
+			return FALSE
 
 		var/view_chance = 0
-
 		if(M.job == "Chief Engineer")
 			view_chance += 2
 			if(src.holder == M)
 				view_chance += 5
+		else if(M.job in list("Engineer", "Mechanic"))
+			view_chance += 1
+			if(src.holder == M)
+				view_chance += 1
 
 		// whoa dude!
 		if(M.reagents?.total_volume && (M.reagents.has_reagent("LSD") || M.reagents.has_reagent("lsd_bee") || M.reagents.has_reagent("psilocybin") || M.reagents?.has_reagent("bathsalts") || M.reagents?.has_reagent("THC")) )
 			view_chance += 20
 		if(M.hasStatus("drunk"))
-			view_chance += 10
-
-		//when above powered theshold
-		if(M.job in list("Engineer", "Chief Engineer", "Mechanic"))
-			view_chance += 10
-		else
 			view_chance += 5
 
 		return prob(view_chance)
 
 	process()
-		var/area/current_area = get_area(src)
-		if(src.prev_area != current_area)
-			src.visited |= current_area
-			src.prev_area = get_area(src)
-
 		if(prob(95))
 			return
 
-		switch(pick( 200;1, 10;2, 10;3, 10;4, 200;5))
+		switch(pick( 200;1, 200;2, 50;3, 10;4, 100;5))
 			if(1)
 				emote("<B>[src]</B> winks.", "<I>winks</I>")
 			if(2)
@@ -395,14 +363,16 @@ obj/item/rocko
 		if(istype(src.hat))
 			var/icon/working_icon = icon(src.hat.wear_image_icon, src.hat.icon_state, SOUTH )
 			working_icon.Shift(SOUTH, 10)
-			src.UpdateOverlays(image(working_icon), "hat")
+			var/image/working_hat = image(working_icon)
+			working_hat.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
+			src.UpdateOverlays(working_hat, "hat")
 		else
 			src.UpdateOverlays(null, "hat")
 
 	get_desc(dist, mob/user)
 		if(ismob(user) &&	user.job == "Chief Engineer")
 			. = "A rock but also [pick(rocko_is)]."
-		else if(ismob(user) && (user.job in list("Engineer", "Mechanic", "Quarter Master", "Quartermaster", "Captain")))
+		else if(ismob(user) && (user.job in list("Engineer", "Mechanic", "Quartermaster", "Captain")))
 			. = "The Chief Engineer loves this rock.  Maybe it's to make up for their lack of a pet."
 		else
 			. = "A rock with a [src.smile ? "smiley" : "frowny"] face painted on it."
@@ -410,7 +380,7 @@ obj/item/rocko
 	attackby(obj/item/W, mob/living/user)
 		if(istype(W,/obj/item/clothing/head))
 			if(src.hat)
-				src.set_loc(get_turf(src))
+				src.hat.set_loc(get_turf(src))
 				src.hat = null
 
 			src.hat = W
@@ -428,7 +398,3 @@ obj/item/rocko
 			src.hat = null
 			update_hat()
 		user.visible_message("[.].")
-
-	proc/calculate_power_level()
-		power_level = length(src.visited) * 1
-		power_level += length(src.keys_touched) * 10
