@@ -446,7 +446,7 @@
 			. = "Looks like some big shoes to fill!"
 		. = ..()
 
-/obj/item/clothing/shoes/swat/super_heavy // so heavy you can't get shoved!
+/obj/item/clothing/shoes/swat/knight // so heavy you can't get shoved!
 	name = "combat sabatons"
 	desc = "Massive, armored footwear for syndicate super-heavies."
 	icon_state = "swatheavy"

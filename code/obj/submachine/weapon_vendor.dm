@@ -218,6 +218,7 @@
 		materiel_stock += new/datum/materiel/loadout/firebrand
 		materiel_stock += new/datum/materiel/loadout/engineer
 		materiel_stock += new/datum/materiel/loadout/marksman
+		materiel_stock += new/datum/materiel/loadout/knight
 		materiel_stock += new/datum/materiel/loadout/custom
 /*
 		materiel_stock += new/datum/materiel/storage/rucksack
@@ -426,6 +427,12 @@
 	path = /obj/storage/crate/classcrate/sniper
 	category = "Loadout"
 	description = "High-powered sniper rifle that can fire through two solid walls, optical thermal scanner and a pouch of smoke grenades"
+
+/datum/materiel/loadout/knight
+	name = "Knight (Prototype)"
+	path = /obj/storage/crate/classcrate/melee
+	category = "Loadout"
+	description = "A prototype melee focused class. Equipped with massive, heavy armour and a versatile sword that can switch special attack modes."
 
 /datum/materiel/loadout/custom
 	name = "Custom Class Uplink"

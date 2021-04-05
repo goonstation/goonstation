@@ -316,11 +316,11 @@
 			icon_state = "syndie_specialist-sniper"
 			item_state = "syndie_specialist-sniper"
 
-		heavy
+		knight
 			name = "heavy specialist great helm"
 			desc = "A menacing full-face helmet for syndicate super-heavies."
-			icon_state = "syndie_specialist" //todo
-			item_state = "syndie_specialist" //todo
+			icon_state = "syndie_specialist-knight" //todo
+			item_state = "syndie_specialist-knight" //todo
 
 		setupProperties()
 			..()
