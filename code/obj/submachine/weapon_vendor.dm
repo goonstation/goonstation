@@ -319,7 +319,7 @@
 	name = "Crowd Dispersal Grenades"
 	path = /obj/item/storage/box/crowdgrenades
 	category = "Utility"
-	description = "Four 'Crowd Dispersal' pepper gas grenades, capable of clearing out riots. Also seasons food quite well! "
+	description = "Four 'Crowd Dispersal' pepper gas grenades, capable of clearing out riots. Also seasons food quite well!"
 
 /datum/materiel/utility/detscanner
 	name = "Forensics Scanner"
@@ -331,14 +331,13 @@
 	name = "First Aid Kit"
 	path = /obj/item/storage/firstaid/regular/doctor_spawn
 	category = "Utility"
-	description = "An advanced first aid kit, typically used in first responder scenarios before doctors arrive"
+	description = "An advanced first aid kit, typically used in first responder scenarios before doctors arrive."
 
 /datum/materiel/utility/medcappowercell
 	name = "Spare Power Cell"
-	path = /obj/item/ammo/power_cell/high_power
+	path = /obj/item/ammo/power_cell/self_charging/disruptor
 	category = "Utility"
-	description = "An additional high capacity power cell for your weapons. Note: Security Officers already spawn with one in their Security Pouch"
-	cost = 2
+	description = "A small(100u) self-charging power cell repurposed from a decommissioned distruptor blaster."
 
 /datum/materiel/utility/nightvisiongoggles
 	name = "Night Vision Goggles"

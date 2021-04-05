@@ -2,6 +2,7 @@
 (t)mon apr 05 21
 (u)tarmunora
 (e)⚖|balance
+(*)Replaced high-capacity power cell from sec vendor with distuptor charger power cell, reduced cost to 1 token
 (+)shivering status shorter duration at milder temperatures
 (t)sun apr 04 21
 (u)Camryn Buttes
