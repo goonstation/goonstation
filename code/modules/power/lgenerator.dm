@@ -76,7 +76,7 @@
 			light.disable()
 
 		if (src.P)
-			tank_sprite.icon_state = "ggen_tank[src.anchored]"
+			tank_sprite.icon_state = "ggen-tank"
 			src.UpdateOverlays(tank_sprite, "tank")
 		else
 			src.UpdateOverlays(null, "tank")
