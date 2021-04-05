@@ -110,6 +110,7 @@ var/list/xp_cache = list()
 	if(!key) return null
 	var/actual = round(amount * XP_GLOBAL_MOD)
 
+	command_announcement("YOU JUST GOT [amount] JOB XP! CONGRATS!", "good job")
 	if(is_eligible_xp(key, amount) || (amount >= XP_THROTTLE_AMT) || ignore_caps)
 		if(xp_earned[key] && !ignore_caps)
 			if(xp_earned[key] + (amount * XP_GLOBAL_MOD) > XP_ROUND_CAP)
