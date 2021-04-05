@@ -593,7 +593,7 @@
 
 				boutput(usr, "<span class='notice'>Splice successful.</span>")
 				//0 xp for a 100% splice, 4 xp for a 10% splice
-				JOB_XP(usr, "Botanist", round((100 - splice_chance) / 20))
+				JOB_XP(usr, "Botanist", clamp(round((100 - splice_chance) / 20), 0, 4))
 				if (!src.seedoutput) src.seeds.Add(S)
 				else S.set_loc(src.loc)
 
