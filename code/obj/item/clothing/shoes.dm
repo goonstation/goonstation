@@ -446,6 +446,13 @@
 			. = "Looks like some big shoes to fill!"
 		. = ..()
 
+/obj/item/clothing/shoes/swat/knight // so heavy you can't get shoved!
+	name = "combat sabatons"
+	desc = "Massive, armored footwear for syndicate super-heavies."
+	icon_state = "swatheavy"
+	magnetic = 1
+	c_flags = NOSLIP
+
 /obj/item/clothing/shoes/fuzzy //not boolean slippers
 	name = "fuzzy slippers"
 	desc = "A pair of cute little pink rabbit slippers."

@@ -1430,31 +1430,34 @@ obj/item/whetstone
 */
 
 /obj/item/heavy_power_sword
-	name = "crusader heavy power-sword mkII"
-	desc = "A heavy cyalume saber variant, builds generator charge when used in combat & supports multiple stance types."
-	icon = 'icons/obj/items/weapons.dmi'
-	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
+	name = "Hadar heavy power-sword"
+	desc = "A heavy cyalume saber variant, builds generator charge when used in combat & supports multiple attack types."
+	icon = 'icons/obj/64x32.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_cswords.dmi'
 	wear_image_icon = 'icons/mob/back.dmi' //todo back sprites
-	icon_state = "claymore" //todo new sprite
-	item_state = "longsword" //todo new sprite
+	icon_state = "hadar_sword1" //todo new sprite
+	item_state = "hadar_sword1" //todo new sprite
 	flags = ONBACK
-	hit_type = DAMAGE_CUT
-	tool_flags = TOOL_CUTTING | TOOL_CHOPPING // cuts doors like the fire-axe
+	hit_type = DAMAGE_CUT | DAMAGE_STAB
+	tool_flags = TOOL_CUTTING | TOOL_CHOPPING
 	contraband = 5
 	w_class = 4
-	force = 50 // almost as good as a csaber before it builds charge
+	force = 25
 	throwforce = 25
 	stamina_damage = 25
 	stamina_cost = 30
 	stamina_crit_chance = 15
 	pickup_sfx = "sound/items/blade_pull.ogg" // could use a cool lasery sfx
+	two_handed = 1
+	uses_multiple_icon_states = 1
 
-	var/mode = 0
-	var/maximum_force = 100 // not as bad as the bloodthirsty blade
+	var/mode = 1
+	var/maximum_force = 100
 
 	New()
 		..()
 		src.setItemSpecial(/datum/item_special/swipe)
+		AddComponent(/datum/component/itemblock/saberblock)
 		BLOCK_SETUP(BLOCK_SWORD)
 
 	attack(mob/M as mob, mob/user as mob, def_zone)
@@ -1464,27 +1467,37 @@ obj/item/whetstone
 			if(force <= maximum_force)
 				force += 5
 				boutput(user, "<span class='alert'>[src]'s generator builds charge!</span>")
-				take_bleeding_damage(M, user, 5, DAMAGE_STAB)
 		playsound(M, "sound/impact_sounds/Blade_Small_Bloody.ogg", 60, 1)
 		..()
 
 	dropped(mob/user)
 		..()
 		if (isturf(src.loc))
-			user.visible_message("<span class='alert'>[src] falls from [user]'s hands and powers down!</span>")
-			force = 50
+			user.visible_message("<span class='alert'>[src] drops from [user]'s hands and powers down!</span>")
+			force = initial(src.force)
 			return
 
 	attack_self(mob/user as mob)
-		if(src.mode == 0)
-			boutput(user, "<span class='alert'>You switch your grip on [src] enabling a ranged stab!</span>")
-			src.mode = 1
-			src.setItemSpecial(/datum/item_special/rangestab)
-		else
-			boutput(user, "<span class='alert'>You switch your grip on [src] in order to swing wide!</span>")
-			src.mode = 0
-			src.setItemSpecial(/datum/item_special/swipe)
+		switch(src.mode) // switch in-case i want to add more modes later
+			if(1)
+				boutput(user, "<span class='alert'>[src] transforms enabling a ranged stab!</span>")
+				icon_state = "hadar_sword1"
+				item_state = "hadar_sword1"
+				src.mode = 2
+				user.update_inhands()
+				src.setItemSpecial(/datum/item_special/rangestab)
+				tooltip_rebuild = TRUE
+			if(2)
+				boutput(user, "<span class='alert'>[src] transforms in order to swing wide!</span>")
+				icon_state = "hadar_sword2"
+				item_state = "hadar_sword2"
+				src.mode = 1
+				user.update_inhands()
+				src.setItemSpecial(/datum/item_special/swipe)
+				tooltip_rebuild = TRUE
 		..()
+
+// switch statements? multiple switching attack modes?
 
 // Battering ram - a door breeching melee tool for the armory
 
