@@ -1101,7 +1101,7 @@ var/global/curr_day = null
 			ehjax.topic("main", href_list, src)
 
 		if("resourcePreloadComplete")
-			bout(src, "<span class='notice'><b>Preload completed.</b></span>")
+			boutput(src, "<span class='notice'><b>Preload completed.</b></span>")
 			src.Browse(null, "window=resourcePreload")
 			return
 
