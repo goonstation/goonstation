@@ -1,4 +1,8 @@
 
+(t)mon apr 05 21
+(u)tarmunora
+(e)⚖|balance
+(+)shivering status shorter duration at milder temperatures
 (t)sun apr 04 21
 (u)Camryn Buttes
 (p)3967
