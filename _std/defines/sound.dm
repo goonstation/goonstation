@@ -31,3 +31,6 @@ var/global/list/audio_channel_name_to_id = list(
 #define AMBIENCE_LOOPING 1
 #define AMBIENCE_FX_1 2
 #define AMBIENCE_FX_2 3
+
+//playsound flags
+#define SOUND_IGNORE_SPACE
