@@ -1587,6 +1587,91 @@
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/breakfast, rand(2, 4), hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/snack_cake, rand(1, 3), hidden=1)
 
+/datum/data/vending_product/player_product
+	var/contents = list()
+	var/product_type
+	var/real_name
+	New(obj/item/product)
+		..()
+		product_type = product.type
+		product_name = product.name
+		real_name = product.real_name
+		contents += product
+//The burden of these machinations weighs on my shoulders
+//And thus you will be burdened
+/obj/machinery/vending/player
+	name = "YouVend"
+	icon_state = "player"
+	desc = "Sells your stuff!"
+	pay = 1
+	var/player_list = list()
+	create_products()
+		..()
+
+	attackby(obj/item/target, mob/user)
+		..()
+		user.u_equip(target)
+		target.set_loc(src)
+		var/existed = 0
+		for (var/datum/data/vending_product/player_product/R in src.player_list)
+			if(istype(target,R.product_type) && R.real_name == target.real_name)
+				R.contents += target
+				existed = 1
+				break
+		if(existed == 0)
+			player_list += new/datum/data/vending_product/player_product(target)
+		src.generate_HTML(1)
+
+	generate_vending_HTML()
+		var/list/html_parts = list()
+		html_parts += "<b>Welcome!</b><br>"
+
+		if (src.paying_for && (!istype(src.paying_for, /datum/data/vending_product) || !src.pay))
+			src.paying_for = null
+
+		if (src.pay && src.acceptcard)
+			if (src.paying_for && !src.scan)
+				html_parts += "<B>You have selected the following item:</b><br>"
+				html_parts += "&emsp;<b>[src.paying_for.product_name]</b><br>"
+				html_parts += "Please swipe your card to authorize payment.<br>"
+				html_parts += "<B>Current ID:</B> None<BR>"
+			else if (src.scan)
+				if (src.paying_for)
+					html_parts += "<B>You have selected the following item for purchase:</b><br>"
+					html_parts += "&emsp;[src.paying_for.product_name]<br>"
+					html_parts += "<B>Please swipe your card to authorize payment.</b><br>"
+				var/datum/data/record/account = null
+				account = FindBankAccountByName(src.scan.registered)
+				html_parts += "<B>Current ID:</B> <a href='byond://?src=\ref[src];logout=1'><u>([src.scan])</u></A><BR>"
+				html_parts += "<B>Credits on Account: [account.fields["current_money"]] Credits</B> <BR>"
+			else
+				html_parts += "<B>Current ID:</B> None<BR>"
+
+		if (length(src.player_list) == 0)
+			html_parts += "<font color = 'red'>No product loaded!</font>"
+		else if (src.paying_for)
+			html_parts += "<a href='byond://?src=\ref[src];vend=\ref[src.paying_for]'><u><b>Continue</b></u></a>"
+			html_parts += " | <a href='byond://?src=\ref[src];cancel_payfor=1;logout=1'><u><b>Cancel</b></u></a>"
+
+		else
+			html_parts += "<table style='width: 100%; border: none; border-collapse: collapse;'><thead><tr><th>Product</th><th>Amt.</th><th>Price</th></tr></thead>"
+			for (var/datum/data/vending_product/player_product/R in src.player_list)
+				if (/*R.product_amount > 0*/true)
+					var/loaded = length(R.contents)
+					html_parts += "<tr><td>[R.name]</a></td><td colspan='2' style='text-align: center;'><strong>[loaded]</strong></td></tr>"
+				else
+					html_parts += "<tr><td>[R.name]</a></td><td colspan='2' style='text-align: center;'><strong>SOLD OUT</strong></td></tr>"
+
+			html_parts += "</table>";
+
+			if (src.pay)
+				html_parts += "<BR><B>Available Credits:</B> $[src.credit] <a href='byond://?src=\ref[src];return_credits=1'>Return Credits</A>"
+				if (!src.acceptcard)
+					html_parts += "<BR>This machine only takes credit bills."
+
+		src.vending_HTML = jointext(html_parts, "")
+
+
 //Somewhere out in the vast nothingness of space, a chef (and an admin) is crying.
 
 /obj/machinery/vending/pizza
