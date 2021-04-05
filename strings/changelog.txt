@@ -6,6 +6,9 @@
 (+)Removes the following items from spy rewards: Boom Boots, Banana Grenades, Surplus crate
 (u)tarmunora
 (e)⚖|balance
+(*)Wizard den teleport computer now puts the teleport spell on cooldown if the person being teleported knows the spell.
+(u)tarmunora
+(e)⚖|balance
 (*)Replaced high-capacity power cell from sec vendor with distuptor charger power cell, reduced cost to 1 token
 (+)shivering status shorter duration at milder temperatures
 (t)sun apr 04 21
