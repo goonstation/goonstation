@@ -1,5 +1,9 @@
 
 (t)mon apr 05 21
+(u)Flappybat
+(p)4116
+(e)⚖|balance
+(+)Removes the following items from spy rewards: Boom Boots, Banana Grenades, Surplus crate
 (u)tarmunora
 (e)⚖|balance
 (*)Replaced high-capacity power cell from sec vendor with distuptor charger power cell, reduced cost to 1 token
