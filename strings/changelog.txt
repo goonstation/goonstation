@@ -1,5 +1,10 @@
 
 (t)mon apr 05 21
+(u)Gannets
+(p)4212
+(e)🆕🎨|feature, sprites
+(*)The long awaited nuclear operatives melee class is being added in a prototype state.
+(*)It's listed in the syndicate weapons vendor under Knight (Prototype)
 (u)Flappybat
 (p)4116
 (e)⚖|balance
