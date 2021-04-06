@@ -116,6 +116,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\datums\sun.dm"
 #include "code\datums\supply_packs.dm"
 #include "code\datums\syndicate_buylist.dm"
+#include "code\datums\teg_transform.dm"
 #include "code\datums\teleport.dm"
 #include "code\datums\tgs_event_handler.dm"
 #include "code\datums\titlecard.dm"
