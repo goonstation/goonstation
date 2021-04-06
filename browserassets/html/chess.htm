@@ -6,14 +6,19 @@
 		<script src="{{resource("js/jquery.min.js")}}"></script>
 	</head>
 <body>
-	<p id="debug"></p>
 	<div class="chessboard">
 		<div id="chesspieces"></div>
+		<canvas id="selectionSquares" width="480" height="480"></canvas>
+		<canvas id="lastMoveSquares" width="480" height="480"></canvas>
 		<canvas id="chessboard" width="480" height="480"></canvas>
 	</div>
 	<script>
 		var imagesPath = "{{resource('images/chessboard/)}}";
 	</script>
-	<script src="{{resource("js/chess.js")}}"></script>
+	<script src="{{resource("js/chessVars.js")}}"></script>
+	<script src="{{resource("js/chessDrawBoard.js")}}"></script>
+	<script src="{{resource("js/chessDrawPieces.js")}}"></script>
+	<script src="{{resource("js/chessPieceMovement.js")}}"></script>
+	<script src="{{resource("js/chessMain.js")}}"></script>
 </body>
 </html>

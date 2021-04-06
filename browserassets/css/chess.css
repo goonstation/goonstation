@@ -12,7 +12,7 @@ canvas, .chesspieces {
 	left: 0;
 }
 
-canvas {
+#chessboard {
 	z-index: -1;
 }
 
@@ -28,6 +28,7 @@ canvas {
 }
 
 .piece {
+	z-index: 1;
 	position: absolute;
 	left: 0;
 }
