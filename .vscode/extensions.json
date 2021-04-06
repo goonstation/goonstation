@@ -4,13 +4,11 @@
 
 	// List of extensions which should be recommended for users of this workspace.
 	"recommendations": [
-		"gbasood.byond-dm-language-support",
-		"platymuus.dm-langclient",
+		"ss13.byond",
 		"coenraads.bracket-pair-colorizer-2",
 		"editorconfig.editorconfig",
 		"github.vscode-pull-request-github",
 		"mhutchie.git-graph",
-		"dbaeumer.vscode-eslint"
 	],
 	// List of extensions recommended by VS Code that should not be recommended for users of this workspace.
 	"unwantedRecommendations": [
