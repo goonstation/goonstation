@@ -30,7 +30,7 @@ const textWidth = (text, font, fontsize) => {
 const setFontinText = (text, font, color, bold=false) => {
   return "<span style=\""
     + "color:" + color + ";"
-    + "font-family:'" + font + "';"
+    + "font-family:" + font + ";"
     + ((bold)
       ? "font-weight: bold;"
       : "")
