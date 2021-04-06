@@ -46,11 +46,8 @@ Click the Extensions button on the left bar or press `Ctrl+Shift+X`. It looks li
 
 :::warning
 If this does not work, search for the following extensions:
- - BYOND - Extension pack with almost-necessary VSCode extensions for working with DM.
- - EditorConfig for VS Code - loads the standardized editor configuration for the codebase
- - GitHub Pull Requests - lets you make a pull request directly from the editor
- - Bracket Pair Colorizer 2 - paints matching brackets the same color
- - Git Graph - lets you work with branches visually for ease of use
+ - Goonstation Extension Pack - Extension pack with all the extensions we recommend using.
+ - GitHub Pull Requests - Lets you make a pull request directly from the editor for the purposes of this tutorial.
 :::
 
 For the GitHub Pull Requests extension, you'll have to sign in to GitHub to link it properly. Also, sometime is just breaks. :shrug:
