@@ -1388,6 +1388,7 @@ obj/item/fragile_sword
 	stamina_cost = 25
 	stamina_crit_chance = 15
 	pickup_sfx = "sound/items/blade_pull.ogg"
+
 	var/minimum_force = 5
 	var/maximum_force = 70
 
@@ -1434,24 +1435,26 @@ obj/item/whetstone
 	desc = "A heavy cyalume saber variant, builds generator charge when used in combat & supports multiple attack types."
 	icon = 'icons/obj/64x32.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_cswords.dmi'
-	wear_image_icon = 'icons/mob/back.dmi' //todo back sprites
-	icon_state = "hadar_sword1" //todo new sprite
-	item_state = "hadar_sword1" //todo new sprite
+	wear_image_icon = 'icons/mob/back.dmi'
+	icon_state = "hadar_sword2"
+	item_state = "hadar_sword2"
 	flags = ONBACK
 	hit_type = DAMAGE_CUT | DAMAGE_STAB
 	tool_flags = TOOL_CUTTING | TOOL_CHOPPING
+	object_flags = NO_ARM_ATTACH
 	contraband = 5
 	w_class = 4
 	force = 25
 	throwforce = 25
 	stamina_damage = 25
-	stamina_cost = 30
+	stamina_cost = 20
 	stamina_crit_chance = 15
-	pickup_sfx = "sound/items/blade_pull.ogg" // could use a cool lasery sfx
+	pickup_sfx = "sound/weapons/hadar-pickup.ogg"
+	hitsound = 'sound/impact_sounds/Blade_Small_Bloody.ogg'
 	two_handed = 1
 	uses_multiple_icon_states = 1
 
-	var/mode = 1
+	var/mode = 2
 	var/maximum_force = 100
 
 	New()
@@ -1460,44 +1463,46 @@ obj/item/whetstone
 		AddComponent(/datum/component/itemblock/saberblock)
 		BLOCK_SETUP(BLOCK_SWORD)
 
-	attack(mob/M as mob, mob/user as mob, def_zone)
-		if(istype (M) | !isdead(M))
-			var/turf/throw_target = get_edge_target_turf(M, get_dir(user,M))
-			M.throw_at(throw_target, 2, 2)
-			if(force <= maximum_force)
-				force += 5
-				boutput(user, "<span class='alert'>[src]'s generator builds charge!</span>")
-		playsound(M, "sound/impact_sounds/Blade_Small_Bloody.ogg", 60, 1)
-		..()
+/obj/item/heavy_power_sword/attack(mob/M as mob, mob/user as mob, def_zone)
 
-	dropped(mob/user)
-		..()
-		if (isturf(src.loc))
-			user.visible_message("<span class='alert'>[src] drops from [user]'s hands and powers down!</span>")
-			force = initial(src.force)
-			return
+	var/turf/t = get_turf(user) // no farming in the safety of the Cairngorm
+	if (t.loc:sanctuary)
+		return
 
-	attack_self(mob/user as mob)
-		switch(src.mode) // switch in-case i want to add more modes later
-			if(1)
-				boutput(user, "<span class='alert'>[src] transforms enabling a ranged stab!</span>")
-				icon_state = "hadar_sword1"
-				item_state = "hadar_sword1"
-				src.mode = 2
-				user.update_inhands()
-				src.setItemSpecial(/datum/item_special/rangestab)
-				tooltip_rebuild = TRUE
-			if(2)
-				boutput(user, "<span class='alert'>[src] transforms in order to swing wide!</span>")
-				icon_state = "hadar_sword2"
-				item_state = "hadar_sword2"
-				src.mode = 1
-				user.update_inhands()
-				src.setItemSpecial(/datum/item_special/swipe)
-				tooltip_rebuild = TRUE
-		..()
+	if(ishuman(M) && isalive(M) && src.force <= src.maximum_force) //build charge on living humans only, up to the cap
+		src.force += 5
+		boutput(user, "<span class='alert'>[src]'s generator builds charge!</span>")
+	if(src.mode == 1) // only knock back on the sweep attack
+		var/turf/throw_target = get_edge_target_turf(M, get_dir(user,M))
+		M.throw_at(throw_target, 2, 2)
+	..()
 
-// switch statements? multiple switching attack modes?
+/obj/item/heavy_power_sword/dropped(mob/user)
+	..()
+	if (isturf(src.loc))
+		user.visible_message("<span class='alert'>[src] drops from [user]'s hands and powers down!</span>")
+		force = initial(src.force)
+		return
+
+/obj/item/heavy_power_sword/attack_self(mob/user as mob)
+	switch(src.mode) // switch in-case i want to add more modes later
+		if(1)
+			boutput(user, "<span class='alert'>[src] transforms enabling a ranged stab!</span>")
+			icon_state = "hadar_sword1"
+			item_state = "hadar_sword1"
+			src.mode = 2
+			user.update_inhands()
+			src.setItemSpecial(/datum/item_special/rangestab)
+			tooltip_rebuild = TRUE
+		if(2)
+			boutput(user, "<span class='alert'>[src] transforms in order to swing wide!</span>")
+			icon_state = "hadar_sword2"
+			item_state = "hadar_sword2"
+			src.mode = 1
+			user.update_inhands()
+			src.setItemSpecial(/datum/item_special/swipe)
+			tooltip_rebuild = TRUE
+	..()
 
 // Battering ram - a door breeching melee tool for the armory
 
