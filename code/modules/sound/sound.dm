@@ -68,7 +68,7 @@ var/global/list/default_channel_volumes = list(1, 1, 0.1, 0.5, 0.5, 1, 1)
 
 /// Returns a list of friendly names for available sound channels
 /client/proc/getVolumeNames()
-	return list("Game", "Ambient", "Radio", "Admin", "Emote", "MentorPM")
+	return list("Game", "Ambient", "Radio", "Admin", "Emote", "Mentor PM")
 
 /// Returns the default volume for a channel, unattenuated for the master channel (0-1)
 /client/proc/getDefaultVolume(channel)
