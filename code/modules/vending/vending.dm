@@ -58,7 +58,7 @@
 	var/list/slogan_list = list()//new() //List of strings
 	var/list/product_list = new() //List of datum/data/vending_product
 	var/glitchy_slogans = 0 // do they come out aLL FunKY lIKe THIs?
-
+	var/player_list // For the player vending machines
 	//Replies when buying
 	var/vend_reply //Thank you for shopping!
 	var/last_reply = 0
@@ -510,6 +510,7 @@
 		return
 
 	if ((usr.contents.Find(src) || (in_interact_range(src, usr) && istype(src.loc, /turf))))
+		var/isplayer = 0
 		src.add_dialog(usr)
 		src.add_fingerprint(usr)
 		if ((href_list["vend"]) && (src.vend_ready))
@@ -522,7 +523,9 @@
 			src.vend_ready = 0 //One thing at a time!!
 
 			var/datum/data/vending_product/R = locate(href_list["vend"]) in src.product_list
-
+			if(!R)
+				R = locate(href_list["vend"]) in src.player_list
+				isplayer = 1
 			if (!R || !istype(R))
 				src.vend_ready = 1
 				return
@@ -534,7 +537,7 @@
 			if (istext(product_path))
 				product_path = text2path(product_path)
 
-			if (!product_path)
+			if (!product_path && isplayer == 0)
 				src.vend_ready = 1
 				return
 
@@ -543,7 +546,7 @@
 				return
 
 			//Wire: Fix for href exploit allowing for vending of arbitrary items
-			if (!(R in src.product_list))
+			if (!(R in src.product_list) && !(R in src.player_list))
 				src.vend_ready = 1
 
 				trigger_anti_cheat(usr, "tried to href exploit [src] to spawn an invalid item.")
@@ -604,6 +607,11 @@
 					if(isitem(vended))
 						usr.put_in_hand_or_eject(vended) // try to eject it into the users hand, if we can
 					// else, just let it spawn where it is
+				else if (player_list)
+					var/datum/data/vending_product/player_product/T = R
+					var/obj/item/vended = pick(T.contents)
+					usr.put_in_hand_or_eject(vended)
+					T.contents -= vended
 				else if (isicon(R.product_path))
 					var/icon/welp = icon(R.product_path)
 					if (welp.Width() > 32 || welp.Height() > 32)
@@ -1591,6 +1599,7 @@
 	var/contents = list()
 	var/product_type
 	var/real_name
+	product_amount = 1
 	New(obj/item/product)
 		..()
 		product_type = product.type
@@ -1604,7 +1613,8 @@
 	icon_state = "player"
 	desc = "Sells your stuff!"
 	pay = 1
-	var/player_list = list()
+
+	player_list = list()
 	create_products()
 		..()
 
@@ -1616,11 +1626,13 @@
 		for (var/datum/data/vending_product/player_product/R in src.player_list)
 			if(istype(target,R.product_type) && R.real_name == target.real_name)
 				R.contents += target
+				R.product_amount += 1
 				existed = 1
 				break
 		if(existed == 0)
 			player_list += new/datum/data/vending_product/player_product(target)
 		src.generate_HTML(1)
+	//Topic ()
 
 	generate_vending_HTML()
 		var/list/html_parts = list()
@@ -1656,12 +1668,8 @@
 		else
 			html_parts += "<table style='width: 100%; border: none; border-collapse: collapse;'><thead><tr><th>Product</th><th>Amt.</th><th>Price</th></tr></thead>"
 			for (var/datum/data/vending_product/player_product/R in src.player_list)
-				if (/*R.product_amount > 0*/true)
-					var/loaded = length(R.contents)
-					html_parts += "<tr><td>[R.name]</a></td><td colspan='2' style='text-align: center;'><strong>[loaded]</strong></td></tr>"
-				else
-					html_parts += "<tr><td>[R.name]</a></td><td colspan='2' style='text-align: center;'><strong>SOLD OUT</strong></td></tr>"
-
+				if (R.product_amount > 0)
+					html_parts += "<tr><td><a href='byond://?src=\ref[src];vend=\ref[R]'>[R.product_name]</a></td><td style='text-align: right;'>[R.product_amount]</td><td style='text-align: right;'> $[R.product_cost]</td></tr>"
 			html_parts += "</table>";
 
 			if (src.pay)
