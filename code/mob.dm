@@ -2665,9 +2665,6 @@
 									R.fields["name"] = newname
 									if (R.fields["full_name"])
 										R.fields["full_name"] = newname
-						// var/datum/data/record/B = FindBankAccountByName(src.real_name)
-						// if (B?.fields["name"])
-						// 	B.fields["name"] = newname
 						for (var/obj/item/card/id/ID in src.contents)
 							ID.registered = newname
 							ID.update_name()
