@@ -1601,7 +1601,8 @@
 
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/breakfast, rand(2, 4), hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/snack_cake, rand(1, 3), hidden=1)
-
+//The burden of these machinations weighs on my shoulders
+//And thus you will be burdened
 /datum/data/vending_product/player_product
 	var/contents = list()
 	var/product_type
@@ -1614,20 +1615,18 @@
 		real_name = product.real_name
 		contents += product
 		product_cost = price
-//The burden of these machinations weighs on my shoulders
-//And thus you will be burdened
+
 /obj/machinery/vending/player
 	name = "YouVend"
 	icon_state = "player"
 	desc = "Sells your stuff!"
 	pay = 1
-
+	var/loading = 0
 	player_list = list()
+
 	create_products()
 		..()
-
-	attackby(obj/item/target, mob/user)
-		..()
+	proc/addproduct(obj/item/target, mob/user)
 		user.u_equip(target)
 		target.set_loc(src)
 		var/existed = 0
@@ -1638,7 +1637,34 @@
 				existed = 1
 				break
 		if(existed == 0)
-			player_list += new/datum/data/vending_product/player_product(target, 200)
+			player_list += new/datum/data/vending_product/player_product(target, 15)
+
+	generate_wire_HTML()
+		. = ..()
+		var/list/html_parts = list()
+		html_parts += "<table border=\"1\" style=\"width:100%\"><tbody><tr><td><small>"
+		html_parts += "Loading Chute:  "
+		if(!loading == 0)
+			html_parts += "<a href='?src=\ref[src];loading=false'>Open</a> "
+		else
+			html_parts += "<a href='?src=\ref[src];loading=true'>Closed</a> "
+		html_parts += "</small></td></tr></tbody></table></TT><br>"
+		src.wire_HTML += jointext(html_parts, "")
+
+	Topic(href, href_list)
+		. = ..()
+		if (href_list["loading"] == "true")
+			loading = 1
+		else
+			loading = 0
+		src.generate_HTML(0, 1)
+
+	attackby(obj/item/target, mob/user)
+		if(!loading == 0 && !panel_open == 0)
+			. = ..()
+			addproduct(target, user)
+		else
+			. = ..()
 		src.generate_HTML(1)
 
 /obj/machinery/vending/player/fallen
