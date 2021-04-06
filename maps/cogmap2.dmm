@@ -42394,6 +42394,9 @@
 	mail_tag = "engineering";
 	name = "mail junction (engineering)"
 	},
+/obj/item/rocko{
+	pixel_y = 4
+	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/ce)
 "bND" = (

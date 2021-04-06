@@ -26521,6 +26521,10 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
+/obj/item/rocko{
+	pixel_x = 12;
+	pixel_y = 6
+	},
 /turf/simulated/floor/carpet{
 	dir = 9;
 	icon_state = "fblue6"

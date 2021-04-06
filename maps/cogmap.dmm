@@ -25597,7 +25597,7 @@
 "bgH" = (
 /obj/displaycase{
 	displayed = new /obj/item/captaingun
-},
+	},
 /obj/window/reinforced{
 	dir = 2
 	},
@@ -63898,6 +63898,10 @@
 	},
 /obj/item/deconstructor{
 	pixel_y = 3
+	},
+/obj/item/rocko{
+	pixel_x = 5;
+	pixel_y = 19
 	},
 /turf/simulated/floor/yellow/side{
 	dir = 8

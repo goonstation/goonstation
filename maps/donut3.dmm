@@ -9948,7 +9948,7 @@
 "cEO" = (
 /obj/displaycase{
 	displayed = new /obj/item/captaingun
-},
+	},
 /obj/machinery/light/incandescent/greenish{
 	dir = 1
 	},
@@ -34156,6 +34156,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/item/rocko,
 /turf/simulated/floor/carpet{
 	dir = 9;
 	icon_state = "fgreen2"

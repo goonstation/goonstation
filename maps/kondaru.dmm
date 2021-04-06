@@ -27931,7 +27931,7 @@
 "bCR" = (
 /obj/table/wood/auto,
 /obj/displaycase{
-	displayed = new /obj/item/captaingun
+	displayed = new /obj/item/captaingun;
 	pixel_y = 6
 	},
 /turf/simulated/floor/carpet/arcade,
@@ -44452,6 +44452,10 @@
 /obj/item/stamp/ce{
 	pixel_x = -12;
 	rand_pos = 0
+	},
+/obj/item/rocko{
+	pixel_x = 13;
+	pixel_y = 4
 	},
 /turf/simulated/floor/yellowblack{
 	dir = 1

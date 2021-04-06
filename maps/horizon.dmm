@@ -50508,6 +50508,9 @@
 /obj/table/auto,
 /obj/item/furniture_parts/table/reinforced,
 /obj/item/device/radio/intercom/engineering,
+/obj/item/rocko{
+	pixel_y = 5
+	},
 /turf/simulated/floor/yellowblack{
 	dir = 9
 	},

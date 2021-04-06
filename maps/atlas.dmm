@@ -12062,6 +12062,7 @@
 /obj/storage/secure/closet/command/chief_engineer,
 /obj/item/pinpointer/teg_semi,
 /obj/item/deconstructor,
+/obj/item/rocko,
 /obj/item/stamp/ce,
 /turf/simulated/floor/yellow,
 /area/station/engine/engineering/ce)

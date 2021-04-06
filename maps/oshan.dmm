@@ -17856,6 +17856,10 @@
 /obj/table/wood/auto,
 /obj/item/deconstructor,
 /obj/machinery/light/incandescent/warm,
+/obj/item/rocko{
+	pixel_x = -2;
+	pixel_y = 12
+	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/ce)
 "aQr" = (
