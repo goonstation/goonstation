@@ -1446,7 +1446,7 @@ obj/item/whetstone
 	force = 25
 	throwforce = 25
 	stamina_damage = 25
-	stamina_cost = 30
+	stamina_cost = 20
 	stamina_crit_chance = 15
 	pickup_sfx = "sound/items/blade_pull.ogg" // could use a cool lasery sfx
 	two_handed = 1
@@ -1460,24 +1460,19 @@ obj/item/whetstone
 		src.setItemSpecial(/datum/item_special/swipe)
 		AddComponent(/datum/component/itemblock/saberblock)
 		BLOCK_SETUP(BLOCK_SWORD)
-/*
+
 /obj/item/heavy_power_sword/attack(mob/M as mob, mob/user as mob, def_zone)
-	if(istype (M) | src.mode == 2)
-		var/turf/throw_target = get_edge_target_turf(M, get_dir(user,M))
-		M.throw_at(throw_target, 2, 2)
-		if(ishuman (M) | !isdead(M) | force <= maximum_force)
-			force += 5
-			boutput(user, "<span class='alert'>[src]'s generator builds charge!</span>")
-	playsound(M, "sound/impact_sounds/Blade_Small_Bloody.ogg", 60, 1)
-	..()
-*/
-/obj/item/heavy_power_sword/attack(mob/M as mob, mob/user as mob, def_zone)
-	if(ishuman(M) && isalive(M) && src.force <= src.maximum_force)
+
+	var/turf/t = get_turf(user) // no farming in the safety of the Cairngorm
+	if (t.loc:sanctuary)
+		return
+
+	if(ishuman(M) && isalive(M) && src.force <= src.maximum_force) //build charge on living humans only, up to the cap
 		src.force += 5
 		boutput(user, "<span class='alert'>[src]'s generator builds charge!</span>")
-		if(src.mode == 2)
-			var/turf/throw_target = get_edge_target_turf(M, get_dir(user,M))
-			M.throw_at(throw_target, 2, 2)
+	if(src.mode == 1) // only knock back on the sweep attack
+		var/turf/throw_target = get_edge_target_turf(M, get_dir(user,M))
+		M.throw_at(throw_target, 2, 2)
 	playsound(M, "sound/impact_sounds/Blade_Small_Bloody.ogg", 60, 1)
 	..()
 
@@ -1507,8 +1502,6 @@ obj/item/whetstone
 			src.setItemSpecial(/datum/item_special/swipe)
 			tooltip_rebuild = TRUE
 	..()
-
-// switch statements? multiple switching attack modes?
 
 // Battering ram - a door breeching melee tool for the armory
 
