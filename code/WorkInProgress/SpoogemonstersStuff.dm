@@ -86,6 +86,7 @@
 	var/list/temps = list()
 
 	New()
+		..()
 		UnsubscribeProcess()
 
 	ex_act(severity)

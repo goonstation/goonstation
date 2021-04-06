@@ -19,6 +19,7 @@
 	var/drunk = 0 //I find adding this var pretty hilarious in itself really
 	var/hear_prayers = 0 //Ok
 	var/audible_prayers = 0 // 0 = silent, 1 = ping, 2 = dectalk (oh god why)
+	var/audible_ahelps = PM_NO_ALERT
 	var/buildmode_view = 0 //change view when using buildmode?
 	var/spawn_in_loc = 0 //spawn verb spawning in loc?
 	var/priorRank = null
@@ -57,7 +58,8 @@
 			"View Fingerprints",\
 			"Delete",\
 			"Possess",\
-			"Create Poster"\
+			"Create Poster",\
+			"Copy Here",
 			)
 			admin_interact_verbs["mob"] = list(\
 			"Player Options",\
@@ -76,6 +78,7 @@
 			"Possess",\
 			"Create Poster",\
 			"Delete",\
+			"Copy Here",
 
 			"Gib",\
 			"Polymorph",\
@@ -121,6 +124,7 @@
 		HTML += "<b>Hide Attack Alerts?: <a href='?src=\ref[src];action=toggle_attack_messages'>[(src.attacktoggle ? "Yes" : "No")]</a></b><br>"
 		HTML += "<b>See Prayers?: <a href='?src=\ref[src];action=toggle_hear_prayers'>[(src.hear_prayers ? "Yes" : "No")]</a></b><br>"
 		HTML += "<b>Audible Prayers?: <a href='?src=\ref[src];action=toggle_audible_prayers'>[list("No", "Yes", "Dectalk")[src.audible_prayers + 1]]</a></b><br>"
+		HTML += "<b>Audible Admin Helps?: <a href='?src=\ref[src];action=toggle_audible_ahelps'>[src.audible_ahelps ? (src.audible_ahelps == PM_DECTALK_ALERT ? "Dectalk" : "Yes") : "No"]</a></b><br>"
 		HTML += "<b>Change view when using buildmode?: <a href='?src=\ref[src];action=toggle_buildmode_view'>[(src.buildmode_view ? "No" : "Yes")]</a></b><br>"
 		HTML += "<b>Spawn verb spawns in your loc?: <a href='?src=\ref[src];action=toggle_spawn_in_loc'>[(src.spawn_in_loc ? "Yes" : "No")]</a></b><br>"
 		HTML += "<hr>"
@@ -217,6 +221,12 @@
 			saved_audible_prayers = 0
 		audible_prayers = saved_audible_prayers
 
+		var/saved_audible_ahelps
+		AP["[ckey]_audible_ahelps"] >> saved_audible_ahelps
+		if (isnull(saved_audible_ahelps))
+			saved_audible_ahelps = 0
+		audible_ahelps = saved_audible_ahelps
+
 		var/saved_buildmode_view
 		AP["[ckey]_buildmode_view"] >> saved_buildmode_view
 		if (isnull(saved_buildmode_view))
@@ -265,6 +275,7 @@
 		AP["[ckey]_auto_alt_key_name"] << auto_alt_key_name
 		AP["[ckey]_hear_prayers"] << hear_prayers
 		AP["[ckey]_audible_prayers"] << audible_prayers
+		AP["[ckey]_audible_ahelps"] << audible_ahelps
 		AP["[ckey]_buildmode_view"] << buildmode_view
 		AP["[ckey]_spawn_in_loc"] << spawn_in_loc
 

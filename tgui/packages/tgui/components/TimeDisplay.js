@@ -78,7 +78,7 @@ export class TimeDisplay extends Component {
     if (this.props.format) {
       return this.props.format(val);
     } else {
-      return this.defaultFormat(val);
+      return TimeDisplay.defaultFormat(val);
     }
   }
 }

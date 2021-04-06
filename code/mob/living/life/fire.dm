@@ -4,8 +4,7 @@
 		var/duration = owner.getStatusDuration("burning")
 		if (duration)
 			if (duration > 200)
-				for(var/atom in owner.contents)
-					var/atom/A = atom
+				for (var/atom/A as anything in owner.contents)
 					if (A.event_handler_flags & HANDLE_STICKER)
 						if (A:active)
 							owner.visible_message("<span class='alert'><b>[A]</b> is burnt to a crisp and destroyed!</span>")

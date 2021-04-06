@@ -43,7 +43,6 @@ TILES
 			src.amount--
 			user.put_in_hand_or_drop(F)
 			if (src.amount < 1)
-				//SN src = null
 				qdel(src)
 				return
 		else
@@ -52,7 +51,7 @@ TILES
 
 	attack_self(mob/user as mob)
 
-		if (usr.stat)
+		if (user.stat)
 			return
 		var/T = user.loc
 		if (!( istype(T, /turf) ))
@@ -68,7 +67,6 @@ TILES
 				src.amount--
 		if (src.amount < 1)
 			user.u_equip(src)
-			//SN src = null
 			qdel(src)
 			return
 		src.add_fingerprint(user)
@@ -86,7 +84,6 @@ TILES
 			W.amount = src.max_stack
 		else
 			W.amount += src.amount
-			//SN src = null
 			qdel(src)
 			return
 		return

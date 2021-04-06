@@ -62,8 +62,7 @@ var/global/datum/controller/processScheduler/processScheduler
  * this treatment.
  */
 /datum/controller/processScheduler/proc/deferSetupFor(var/processPath)
-	if (!(processPath in deferredSetupList))
-		deferredSetupList += processPath
+	deferredSetupList |= processPath
 
 /datum/controller/processScheduler/proc/addNowSkipSetup(var/processPath)
 	src.alreadyCreatedPathsList += processPath
@@ -126,8 +125,7 @@ var/global/datum/controller/processScheduler/processScheduler
 					message_admins("Process '[p.name]' is hung and will be restarted.")
 
 /datum/controller/processScheduler/proc/queueProcesses()
-	for(var/X in processes)
-		var/datum/controller/process/p = X
+	for (var/datum/controller/process/p as anything in processes)
 		// Don't double-queue, don't queue running processes
 		if (p.disabled || p.running || p.queued || !p.idle)
 			continue
@@ -143,8 +141,7 @@ var/global/datum/controller/processScheduler/processScheduler
 /datum/controller/processScheduler/proc/runQueuedProcesses()
 	if (queued.len)
 		var/delay = 0
-		for(var/X in queued)
-			var/datum/controller/process/p = X
+		for (var/datum/controller/process/p as anything in queued)
 			runProcess(p, delay)
 			delay += process_run_interval * world.tick_lag
 		queued.len = 0
@@ -224,31 +221,22 @@ var/global/datum/controller/processScheduler/processScheduler
 	recordEnd(process)
 
 /datum/controller/processScheduler/proc/setIdleProcessState(var/datum/controller/process/process)
-	if (process in running)
-		running -= process
-	if (process in queued)
-		queued -= process
-	if (!(process in idle))
-		idle += process
+	running -= process
+	queued -= process
+	idle |= process
 
 /datum/controller/processScheduler/proc/setQueuedProcessState(var/datum/controller/process/process)
-	if (process in running)
-		running -= process
-	if (process in idle)
-		idle -= process
-	if (!(process in queued))
-		queued += process
+	running -= process
+	idle -= process
+	queued |= process
 
 	// The other state transitions are handled internally by the process.
 	process.queued()
 
 /datum/controller/processScheduler/proc/setRunningProcessState(var/datum/controller/process/process)
-	if (process in queued)
-		queued -= process
-	if (process in idle)
-		idle -= process
-	if (!(process in running))
-		running += process
+	queued -= process
+	idle -= process
+	running |= process
 
 /datum/controller/processScheduler/proc/recordStart(var/datum/controller/process/process, var/time = null)
 	if (isnull(time))
@@ -313,7 +301,7 @@ var/global/datum/controller/processScheduler/processScheduler
 	return data
 
 /datum/controller/processScheduler/proc/getProcessCount()
-	return processes.len
+	return length(processes)
 
 /datum/controller/processScheduler/proc/hasProcess(var/processName as text)
 	if (nameToProcessMap[processName])

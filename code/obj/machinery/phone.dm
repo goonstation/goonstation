@@ -18,6 +18,7 @@
 	var/emagged = 0
 	var/dialing = 0
 	var/labelling = 0
+	var/unlisted = FALSE
 	var/obj/item/phone_handset/handset = null
 	var/chui/window/phonecall/phonebook
 	var/phoneicon = "phone"
@@ -40,7 +41,7 @@
 			src.color = "#00aa00"
 		else if(istype(location, /area/station/engine) || istype(location, /area/station/quartermaster) || istype(location, /area/station/mining))
 			src.color = "#aaaa00"
-		else if(istype(location, /area/station/science) || istype(location, /area/station/chemistry))
+		else if(istype(location, /area/station/science))
 			src.color = "#9933ff"
 		else if(istype(location, /area/station/medical))
 			src.color = "#0000ff"
@@ -54,7 +55,7 @@
 			if(temp_name == initial(src.name) && location)
 				temp_name = location.name
 			var/name_counter = 1
-			for(var/obj/machinery/phone/M in by_type[/obj/machinery/phone])
+			for_by_tcl(M, /obj/machinery/phone)
 				if(M.phone_id && M.phone_id == temp_name)
 					name_counter++
 			if(name_counter > 1)
@@ -208,8 +209,7 @@
 		if(!src.handset)
 			return
 		src.dialing = 1
-		if(src.handset.holder)
-			src.handset.holder.playsound_local(src.handset.holder,"sound/machines/phones/dial.ogg" ,50,0)
+		src.handset.holder?.playsound_local(src.handset.holder,"sound/machines/phones/dial.ogg" ,50,0)
 		SPAWN_DBG(4 SECONDS)
 			// Is it busy?
 			if(target.answered || target.linked || target.connected == 0)
@@ -249,7 +249,8 @@
 
 	GetBody()
 		var/html = ""
-		for(var/obj/machinery/phone/P in by_type[/obj/machinery/phone])
+		for_by_tcl(P, /obj/machinery/phone)
+			if (P.unlisted) continue
 			html += "[theme.generateButton(P.phone_id, "[P.phone_id]")] <br/>"
 		return html
 
@@ -257,7 +258,7 @@
 		if(src.owner.dialing == 1 || src.owner.linked)
 			return
 		if(owner)
-			for(var/obj/machinery/phone/P in by_type[/obj/machinery/phone])
+			for_by_tcl(P, /obj/machinery/phone)
 				if(P.phone_id == id)
 					owner.call_other(P)
 					return
@@ -308,7 +309,7 @@
 			return
 		var/processed = "<span class='game say'><span class='bold'>[M.name] \[<span style=\"color:[src.color]\"> [bicon(src)] [src.parent.phone_id]</span>\] says, </span> <span class='message'>\"[text[1]]\"</span></span>"
 		var/mob/T = src.parent.linked.handset.holder
-		if(T && T.client)
+		if(T?.client)
 			T.show_message(processed, 2)
 			M.show_message(processed, 2)
 
@@ -333,6 +334,9 @@
 	ringingicon = "wallphone_ringing"
 	answeredicon = "wallphone_answered"
 	dialicon = "wallphone_dial"
+
+/obj/machinery/phone/unlisted
+	unlisted = TRUE
 
 //
 //		----------------- CELL PHONE STUFF STARTS HERE ---------------------

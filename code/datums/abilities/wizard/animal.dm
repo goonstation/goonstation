@@ -13,7 +13,6 @@ var/list/animal_spell_critter_paths = list(/mob/living/critter/small_animal/mous
 /mob/living/critter/small_animal/bird/goose/swan,
 /mob/living/critter/small_animal/cockroach,
 /mob/living/critter/small_animal/cockroach/robo,
-/mob/living/critter/small_animal/opossum,
 /mob/living/critter/small_animal/floateye,
 /mob/living/critter/small_animal/pig,
 /mob/living/critter/spider/clown,
@@ -63,6 +62,7 @@ var/list/animal_spell_critter_paths = list(/mob/living/critter/small_animal/mous
 			if (H.traitHolder.hasTrait("training_chaplain"))
 				boutput(holder.owner, "<span class='alert'>[H] has divine protection from magic.</span>")
 				H.visible_message("<span class='alert'>The spell has no effect on [H]!</span>")
+				JOB_XP(H, "Chaplain", 2)
 				return
 
 			if (iswizard(H))

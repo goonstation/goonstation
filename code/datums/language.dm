@@ -2,6 +2,7 @@
 	var/list/language_cache = list()
 
 	New()
+		..()
 		for (var/T in typesof(/datum/language))
 			var/datum/language/L = new T()
 			language_cache[L.id] = L
@@ -142,7 +143,7 @@ var/global/datum/languages/languages = new()
 	var/static/regex/getWords = new("\\b\\w+\\b", "g")
 
 	proc/translate(var/message)
-		. = getWords.Replace(message, /proc/genFeatherWord)	
+		. = getWords.Replace(message, /proc/genFeatherWord)
 
 	heard_not_understood(var/orig_message)
 		return translate(orig_message)
@@ -150,7 +151,7 @@ var/global/datum/languages/languages = new()
 // making that dumb prototype byond game that went nowhere finally led somewhere good
 // if anyone knows how i can make this not global scope, PLEASE HELP ME
 /proc/genFeatherWord(var/word)
-	. = ""	
+	. = ""
 	var/list/assembled = list()
 	var/loopIterations = max(3, length(word))
 	for(var/i = 1, i <= loopIterations, i++)

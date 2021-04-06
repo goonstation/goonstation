@@ -16,7 +16,7 @@
 		return 1
 
 	on_broken(var/mult = 1)
-		donor.take_toxin_damage(2*mult, 1)				
+		donor.take_toxin_damage(2*mult, 1)
 
 	disposing()
 		if (holder)
@@ -29,7 +29,9 @@
 	desc = "A fancy robotic liver to replace one that someone's lost!"
 	icon_state = "cyber-liver"
 	// item_state = "heart_robo1"
+	made_from = "pharosium"
 	robotic = 1
+	created_decal = /obj/decal/cleanable/oil
 	edible = 0
 	mats = 6
 	var/overloading = 0
@@ -54,7 +56,7 @@
 				donor.reagents.remove_reagent("ethanol", 5 * mult)
 				if(prob(20))
 					boutput(donor, "<span class='alert'>You feel painfully sober.</span>")
-				else if(prob(25)) //20% total 
+				else if(prob(25)) //20% total
 					boutput(donor, "<span class='alert'>You feel a burning in your liver!</span>")
 					src.take_damage(2 * mult, 2 * mult, 0)
 		return 1

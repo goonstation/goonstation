@@ -99,7 +99,7 @@
 			logTheThing("combat", user, M, "tries to blind [constructTarget(M,"combat")] with [src] (erebite power cell) at [log_loc(user)].")
 			var/turf/T = get_turf(src.loc)
 			explosion(src, T, 0, 1, 2, 2)
-			SPAWN_DBG (1)
+			SPAWN_DBG(0.1 SECONDS)
 				if (src) qdel(src)
 			return
 		if (src.cell)
@@ -151,14 +151,19 @@
 		eye_damage = src.eye_damage_mod + rand(0, (1 * flash_power))
 
 	// We're flashing somebody directly, hence the 100% chance to disrupt cloaking device at the end.
-	M.apply_flash(animation_duration, weakened, 0, 0, eye_blurry, eye_damage, 0, burning, 100, stamina_damage = 70 * flash_power, disorient_time = 30)
+	var/blind_success = M.apply_flash(animation_duration, weakened, 0, 0, eye_blurry, eye_damage, 0, burning, 100, stamina_damage = 70 * flash_power, disorient_time = 30)
 	if (src.emagged)
 		user.apply_flash(animation_duration, weakened, 0, 0, eye_blurry, eye_damage, 0, burning, 100, stamina_damage = 70 * flash_power, disorient_time = 30)
 
 	convert(M,user)
 
 	// Log entry.
-	M.visible_message("<span class='alert'>[user] blinds [M] with the [src.name]!</span>")
+	var/blind_msg_target = "!"
+	var/blind_msg_others = "!"
+	if (!blind_success)
+		blind_msg_target = " but your eyes are protected!"
+		blind_msg_others = " but [his_or_her(M)] eyes are protected!"
+	M.visible_message("<span class='alert'>[user] blinds [M] with \the [src][blind_msg_others]</span>", "<span class='alert'>You are blinded by \the [src][blind_msg_target]</span>")
 	logTheThing("combat", user, M, "blinds [constructTarget(M,"combat")] with [src] at [log_loc(user)].")
 	if (src.emagged)
 		logTheThing("combat", user, user, "blinds themself with [src] at [log_loc(user)].")
@@ -188,7 +193,7 @@
 	if (src.l_time && world.time < src.l_time + 10)
 		return
 
-	if (user && user.bioHolder && user.bioHolder.HasEffect("clumsy") && prob(50))
+	if (user?.bioHolder?.HasEffect("clumsy") && prob(50))
 		user.visible_message("<span class='alert'><b>[user]</b> tries to use [src], but slips and drops it!</span>")
 		user.drop_item()
 		JOB_XP(user, "Clown", 1)
@@ -210,7 +215,7 @@
 			logTheThing("combat", user, null, "tries to area-flash with [src] (erebite power cell) at [log_loc(user)].")
 			var/turf/T = get_turf(src.loc)
 			explosion(src, T, 0, 1, 2, 2)
-			SPAWN_DBG (1)
+			SPAWN_DBG(0.1 SECONDS)
 				if (src) qdel(src)
 			return
 
@@ -256,7 +261,7 @@
 
 /obj/item/device/flash/proc/convert(mob/living/M as mob, mob/user as mob)
 	.= 0
-	if (ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/revolution))
+	if (ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution))
 		var/datum/game_mode/revolution/R = ticker.mode
 		if (ishuman(M))
 			//playsound(get_turf(src), "sound/weapons/rev_flash_startup.ogg", 40, 1 , 0, 0.6) //moved to rev flash only
@@ -420,12 +425,12 @@
 
 	flash_mob(mob/living/M as mob, mob/user as mob, var/convert = 1)
 		if (!convert)
-			if (ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/revolution))
+			if (ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution))
 				var/datum/game_mode/revolution/R = ticker.mode
 				if (M.mind && (M.mind in R.head_revolutionaries))
 					user.show_text("[src] refuses to flash!", "red") //lol
 					return
-		else if (ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/revolution))
+		else if (ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution))
 			playsound(get_turf(src), "sound/weapons/rev_flash_startup.ogg", 60, 1 , 0, 0.6)
 			var/convert_result = convert(M,user)
 			if (convert_result == 0.5)

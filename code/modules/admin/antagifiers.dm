@@ -18,7 +18,7 @@
 			boutput(M, "Don't be greedy.")
 			return
 		*/
-		if (M && M.mind && !M.mind.special_role)
+		if (M?.mind && !M.mind.special_role)
 			makeAntag(M)
 			var/datum/objective/newObj = new /datum/objective(attachedObjective)
 			newObj.owner = M.mind
@@ -157,6 +157,13 @@
 	name = "SYNDIC~1.EXE"
 	desc = "Self-extracting archive containing some sweet Syndicate stuff!"
 	var/in_use = 0
+
+	//People keep blowing up the murderbox
+	ex_act(severity)
+		return
+
+	meteorhit(obj/meteor)
+		return
 
 	attack_hand(mob/M as mob)
 

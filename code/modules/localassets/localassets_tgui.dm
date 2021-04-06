@@ -11,13 +11,13 @@
 /// Common tgui assets
 /datum/asset/basic/tgui_common
 	local_assets = list(
-		"tgui-common.chunk.js",
+		"tgui-common.bundle.js",
 	)
 
 	init()
 		. = ..()
 		url_map = list(
-			"tgui/tgui-common.chunk.js" = "[resource("tgui/tgui-common.chunk.js")]",
+			"tgui/tgui-common.bundle.js" = "[resource("tgui/tgui-common.bundle.js")]",
 		)
 
 /// Normal base window tgui assets

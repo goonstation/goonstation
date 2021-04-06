@@ -5,6 +5,23 @@ chui/window/security_cameras
 	windowSize = "650x500"
 	flags = CHUI_FLAG_MOVABLE | CHUI_FLAG_CLOSABLE
 
+	proc/create_viewport(client/target_client, turf/T)
+		if(get_dist(owner,target_client.mob) > 1)
+			boutput(target_client,"<span class='alert'>You are too far to see the screen.</span>")
+		else
+			var/list/viewports = target_client.getViewportsByType("cameras: Viewport")
+			if(length(viewports))
+				boutput( target_client, "<b>You can only have 1 active viewport. Close the existing viewport to create another.</b>" )
+				return
+
+			var/datum/viewport/vp = new(target_client, "cameras: Viewport")
+			var/turf/startPos = null
+			for(var/i = 4, i >= 0 || !startPos, i--)
+				startPos = locate(T.x - i, T.y + i, T.z)
+				if(startPos) break
+			vp.clickToMove = 1
+			vp.SetViewport(startPos, 8, 8)
+
 	New(var/obj/machinery/computer/security/seccomp)
 		..()
 		owner = seccomp
@@ -12,7 +29,7 @@ chui/window/security_cameras
 	GetBody()
 		var/list/L = list()
 		var/bool = 1
-		for (var/obj/machinery/camera/C in by_type[/obj/machinery/camera])
+		for_by_tcl(C, /obj/machinery/camera)
 			if (bool)
 				owner.current = C
 				bool = 0
@@ -253,6 +270,9 @@ chui/window/security_cameras
 
 		var/dat = {"[script]
 		<body>
+			<div id='viewport_button'>
+			<a class='link' href='byond://?src=\ref[src];viewport=true'>Create viewport</a>
+			</div>
 			<div id='main_list'>
 			<input type='text' id='searchbar' onkeyup='filterTable()' placeholder=' Search for cameras..'>
 			<table id='cameraList'>
@@ -301,9 +321,12 @@ chui/window/security_cameras
 				return
 
 			else
-				owner.current = C
-				user.set_eye(C)
 				owner.use_power(50)
+				if (length(clint.getViewportsByType("cameras: Viewport")))
+					owner.move_viewport_to_camera(C, clint)
+				else
+					owner.current = C
+					user.set_eye(C)
 
 		else if (href_list["save"])
 			var/obj/machinery/camera/C = locate(href_list["save"])
@@ -315,6 +338,14 @@ chui/window/security_cameras
 
 			if (istype(C))
 				owner.favorites -= C
+
+		else if (href_list["viewport"])
+			if (!owner.current)
+				boutput(clint, "<b>You need to select a camera before creating a viewport.</b>")
+			else
+				create_viewport(clint, get_turf(owner.current))
+				clint.mob.set_eye(null)
+
 
 		//using arrowkeys/wasd/ijkl to move from camera to camera
 		else if (href_list["move"])
@@ -335,8 +366,9 @@ chui/window/security_cameras
 				else
 					return
 
-			owner.move_security_camera(direction,user)
+			owner.move_security_camera(direction,clint)
 
 	Unsubscribe( client/who )
 		..()
+		who.clearViewportsByType("cameras: Viewport")
 		who.mob.set_eye(null)

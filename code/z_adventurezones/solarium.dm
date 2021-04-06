@@ -27,6 +27,7 @@ var/global/the_sun = null
 	layer = EFFECTS_LAYER_UNDER_4
 	luminosity = 5
 	var/datum/light/light
+	anchored = 2 // This stopped being funny weeks ago.
 
 	New()
 		..()
@@ -36,7 +37,7 @@ var/global/the_sun = null
 		light.set_height(3)
 		light.set_color(0.9, 0.5, 0.3)
 		light.enable()
-		SPAWN_DBG (10)
+		SPAWN_DBG(1 SECOND)
 			if (!the_sun)
 				the_sun = src
 
@@ -55,7 +56,7 @@ var/global/the_sun = null
 			if (!O:on)
 				O:light(user, "<span class='alert'><b>[user]</b> lights [O] on [src] and casually takes a drag from it. Wow.</span>")
 				if (!user.is_heat_resistant())
-					SPAWN_DBG (10)
+					SPAWN_DBG(1 SECOND)
 						user.visible_message("<span class='alert'><b>[user]</b> burns away into ash! It's almost as though being that close to a star wasn't a great idea!</span>",\
 						"<span class='alert'><b>You burn away into ash! It's almost as though being that close to a star wasn't a great idea!</b></span>")
 						user.firegib()
@@ -98,7 +99,7 @@ var/global/derelict_mode = 0
 		src.breakdown()
 
 	bullet_act(var/obj/projectile/P)
-		if (P && P.proj_data.ks_ratio > 0)
+		if (P?.proj_data.ks_ratio > 0)
 			src.breakdown()
 
 	proc/eaten(var/mob/living/carbon/human/that_asshole)
@@ -140,10 +141,10 @@ var/global/derelict_mode = 0
 			SPAWN_DBG(1 DECI SECOND)
 				for(var/mob/living/carbon/human/H in mobs)
 					H.flash(3 SECONDS)
-					shake_camera(H, 210, 2)
+					shake_camera(H, 210, 16)
 					SPAWN_DBG(rand(1,10))
-						H.bodytemperature = 1000
-						H.update_burning(50)
+						// H.bodytemperature = 1000
+						H.update_burning(10)
 					SPAWN_DBG(rand(50,90))
 						H.emote("scream")
 			creepify_station() // creep as heck
@@ -154,22 +155,20 @@ var/global/derelict_mode = 0
 			cinematic.play("sadbuddy")
 			sleep(1 SECOND)
 			boutput(world, "<tt>BUG: CPU0 on fire!</tt>")
+			logTheThing("diary", null, null, "The server would have restarted, if I hadn't removed the line of code that does that. Instead, we play through.", "game")
 
-			sleep(15 SECONDS)
-			logTheThing("diary", null, null, "Rebooting due to completion of solarium quest.", "game")
-			Reboot_server()
+			SPAWN_DBG(5 SECONDS)
+				for (var/client/C in clients)
+					cinematic.remove_client(C)
+
+
+			// sleep(15 SECONDS)
+			// Reboot_server()
 
 proc/voidify_world()
-	var/turf/unsimulated/wall/the_ss13_screen = locate("the_ss13_screen")
-	if(istype(the_ss13_screen))
-		// change this when someone finds a widescreen sprite for disaster
-		var/image/broken_logo = new/image('icons/misc/fullscreen.dmi', "title_broken")
-		broken_logo.pixel_x = -the_ss13_screen.pixel_x
-		the_ss13_screen.overlays += broken_logo
+	lobby_titlecard = new /datum/titlecard/disaster()
+	lobby_titlecard.set_pregame_html()
 
-		/*the_ss13_screen.icon = 'icons/misc/fullscreen.dmi'
-		the_ss13_screen.icon_state = "title_broken"
-		the_ss13_screen.pixel_x = 0*/
 	SPAWN_DBG(3 SECONDS)
 		for (var/turf/space/space in world)
 			LAGCHECK(LAG_LOW)

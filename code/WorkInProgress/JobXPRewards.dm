@@ -20,7 +20,7 @@ mob/verb/checkrewards()
 
 			var/list/valid = list()
 			for(var/datum/jobXpReward/J in xpRewardButtons) //This could be cached later.
-				if(J.required_levels.Find(job))
+				if(job in J.required_levels)
 					valid.Add(J)
 					valid[J] = xpRewardButtons[J]
 
@@ -60,7 +60,7 @@ mob/verb/checkrewards()
 									return
 							if(rewardDatum.qualifies(usr.key))
 								rewardDatum.activate(usr.client)
-								if(rewardDatum.claimedNumbers.Find(usr.key))
+								if(usr.key in rewardDatum.claimedNumbers)
 									rewardDatum.claimedNumbers[usr.key] = (rewardDatum.claimedNumbers[usr.key] + 1)
 								else
 									rewardDatum.claimedNumbers[usr.key] = 1
@@ -80,7 +80,7 @@ mob/verb/checkrewards()
 		return
 
 /proc/qualifiesXpByName(var/key, var/name)
-	if(xpRewards.Find(name))
+	if(name in xpRewards)
 		var/datum/jobXpReward/R = xpRewards[name]
 		if(R.qualifies(key))
 			return 1
@@ -109,8 +109,29 @@ mob/verb/checkrewards()
 
 //JANITOR
 
+/datum/jobXpReward/janitor5
+	name = "Red Bucket"
+	desc = "A bucket! And it's red! Wow."
+	required_levels = list("Janitor"=5)
+	claimable = 1
+	var/path_to_spawn = /obj/item/reagent_containers/glass/bucket/red/
+
+	activate(var/client/C)
+		var/obj/item/reagent_containers/glass/bucket/bucket = locate(/obj/item/reagent_containers/glass/bucket) in C.mob.contents
+
+		if (istype(bucket))
+			C.mob.remove_item(bucket)
+			qdel(bucket)
+		else
+			boutput(C.mob, "You need to be holding a bucket in order to claim this reward")
+			return
+		var/obj/item/I = new path_to_spawn()
+		I.set_loc(get_turf(C.mob))
+		C.mob.put_in_hand_or_drop(I)
+		boutput(C.mob, "You turn around for just a second and your bucket is suddenly all red!")
+
 /datum/jobXpReward/janitor10
-	name = "Holographic signs (WIP)"
+	name = "Holographic Signs "
 	desc = "Gives access to a hologram emitter loaded with various signs."
 	required_levels = list("Janitor"=10)
 	icon_state = "holo"
@@ -124,41 +145,135 @@ mob/verb/checkrewards()
 		C.mob.put_in_hand(T)
 		return
 
-// /datum/jobXpReward/janitor15
-// 	name = "Tsunami-P3"
-// 	desc = "Gain access to the Tsunami-P3 spray bottle."
-// 	required_levels = list("Janitor"=15)
-// 	icon_state = "tsunami"
-// 	claimable = 1
-// 	claimPerRound = 1
+/datum/jobXpReward/janitor15
+	name = "Orange Mop"
+	desc = "A mop! And it's orange! Amazing."
+	required_levels = list("Janitor"=15)
+	claimable = 1
+	var/path_to_spawn = /obj/item/mop/orange
 
-// 	activate(var/client/C)
-// 		var/obj/item/spraybottle/cleaner/tsunami/T = new/obj/item/spraybottle/cleaner/tsunami()
-// 		T.set_loc(get_turf(C.mob))
-// 		C.mob.put_in_hand(T)
-// 		return
+	activate(var/client/C)
+		var/obj/item/mop/mop = locate(/obj/item/mop/) in C.mob.contents
 
-// /datum/jobXpReward/janitor20
-// 	name = "Antique Mop"
-// 	desc = "Gain access to an ancient mop."
-// 	required_levels = list("Janitor"=20)
-// 	icon_state = "tsunami"
-// 	claimable = 1
-// 	claimPerRound = 1
-
-// 	activate(var/client/C)
-// 		var/obj/item/mop/old/T = new/obj/item/mop/old()
-// 		T.set_loc(get_turf(C.mob))
-// 		C.mob.put_in_hand(T)
-// 		return
+		if (istype(mop))
+			C.mob.remove_item(mop)
+			qdel(mop)
+		else
+			boutput(C.mob, "You need to be holding a mop in order to claim this reward")
+			return
+		var/obj/item/I = new path_to_spawn()
+		I.set_loc(get_turf(C.mob))
+		C.mob.put_in_hand_or_drop(I)
+		boutput(C.mob, "An orange shade starts to crawl all over the mop's head.")
 
 /datum/jobXpReward/janitor20
-	name = "(TBI)"
-	desc = "(TBI)"
+	name = "Head of Sanitation beret"
+	desc = "You've seen it all.  You've seen entirely too much. Was it worth it? Maybe this hat will help you forget..."
 	required_levels = list("Janitor"=20)
-	icon_state = "?"
+	claimable = 1
+	claimPerRound = 1
+
+	activate(var/client/C)
+		var/obj/item/clothing/head/janiberet/T = new/obj/item/clothing/head/janiberet(get_turf(C.mob))
+		T.set_loc(get_turf(C.mob))
+		C.mob.put_in_hand(T)
+		return
 
 //JANITOR END
+
+//BOTANIST
+
+/datum/jobXpReward/botanist/seed
+	name = "Strange Seed"
+	desc = "You notice a strange looking seed and grab it instinctually before you realize what happened."
+	required_levels = list("Botanist"=0)
+	icon_state
+	claimable = 1
+	claimPerRound = 1
+
+	activate(var/client/C)
+		var/obj/item/seed/alien/S = new/obj/item/seed/alien(get_turf(C.mob))
+		S.set_loc(get_turf(C.mob))
+		C.mob.put_in_hand_or_drop(S)
+		return
+
+/datum/jobXpReward/botanist/wateringcan
+	name = "Golden Watering Can"
+	desc = "A Golden Watering can. Seems the same as normal otherwise..."
+	required_levels = list("Botanist"=3)
+	icon_state = "?"
+	claimable = 1
+	claimPerRound = 1
+	var/path_to_spawn = /obj/item/reagent_containers/glass/wateringcan/gold
+
+	activate(var/client/C)
+		var/obj/item/reagent_containers/glass/wateringcan/can = locate(/obj/item/reagent_containers/glass/wateringcan) in C.mob.contents
+
+		if (istype(can))
+			C.mob.remove_item(can)
+			qdel(can)
+		var/obj/item/I = new path_to_spawn()
+		I.set_loc(get_turf(C.mob))
+		C.mob.put_in_hand_or_drop(I)
+		boutput(C.mob, "You blink and your watering can seems different...")
+
+/datum/jobXpReward/botanist/apron
+	name = "Blue apron"
+	desc = "An apron to protect yourself from any workplace spills and messes."
+	required_levels = list("Botanist"=5)
+	icon_state
+	claimable = 1
+	claimPerRound = 1
+
+	activate(var/client/C)
+		boutput(C, "The apron pops into existance!")
+		var/obj/item/I = new/obj/item/clothing/suit/apron/botanist()
+		I.set_loc(get_turf(C.mob))
+		C.mob.put_in_hand(I)
+		return
+
+/datum/jobXpReward/botanist/wateringcan/weed
+	name = "Weed Watering Can"
+	desc = "A Watering can with the likeness of a certain plant on it. Seems the same as normal otherwise..."
+	required_levels = list("Botanist"=8)
+	path_to_spawn = /obj/item/reagent_containers/glass/wateringcan/weed
+
+/datum/jobXpReward/botanist/wateringcan/rainbow
+	name = "Rainbow Watering Can"
+	desc = "A Watering can that looks like it's made of rainbows... sorta. Seems the same as normal otherwise..."
+	required_levels = list("Botanist"=10)
+	path_to_spawn = /obj/item/reagent_containers/glass/wateringcan/rainbow
+
+/datum/jobXpReward/botanist/wateringcan/old
+	name = "Antique Watering Can"
+	desc = "A Watering can that looks like it's made of rainbows... sorta. Seems the same as normal otherwise..."
+	required_levels = list("Botanist"=20)
+	path_to_spawn = /obj/item/reagent_containers/glass/wateringcan/old
+
+
+
+//Botanist End
+
+/datum/jobXpReward/HeadofSecurity/mug
+	name = "Alternate Blue Mug"
+	desc = "It's your favourite coffee mug, but now its text is blue. Wow."
+	required_levels = list("Head of Security"=1)
+	claimable = 1
+	var/path_to_spawn = /obj/item/reagent_containers/food/drinks/mug/HoS/blue
+
+	activate(var/client/C)
+		var/mug = C.mob.find_type_in_hand(/obj/item/reagent_containers/food/drinks/mug/HoS)
+
+		if (mug)
+			C.mob.remove_item(mug)
+			qdel(mug)
+		else
+			boutput(C.mob, "You need to be holding your mug in order to claim this reward")
+			return
+		var/obj/item/I = new path_to_spawn()
+		I.set_loc(get_turf(C.mob))
+		C.mob.put_in_hand_or_drop(I)
+		boutput(C.mob, "The mug's colouring flips to blue")
 
 /datum/jobXpReward/head_of_security_LG
 	name = "The Lawbringer"
@@ -240,6 +355,10 @@ mob/verb/checkrewards()
 				boutput(C.mob, "This [sacrifice_name] is a replica and cannot be turned into a sword legally! Only an original, unscanned energy gun will work for this!")
 				src.claimedNumbers[usr.key] --
 				return
+			if (isnull(K.cell) || K.cell.charge < K.cell.max_charge * 0.9)
+				boutput(C.mob, "The [sacrifice_name] is depleted, you'll need to charge it up first!")
+				src.claimedNumbers[usr.key]--
+				return
 			C.mob.remove_item(K)
 			found = 1
 			qdel(K)
@@ -295,11 +414,11 @@ mob/verb/checkrewards()
 
 		if (tmp_ammo && tmp_current_projectile)
 			colt.ammo = tmp_ammo
-			colt.current_projectile = tmp_current_projectile
+			colt.set_current_projectile(tmp_current_projectile)
 		if (!colt.ammo)
 			colt.ammo = new/obj/item/ammo/bullets/a38/stun
 		if (!colt.current_projectile)
-			colt.current_projectile = new/datum/projectile/bullet/revolver_38/stunners
+			colt.set_current_projectile(new/datum/projectile/bullet/revolver_38/stunners)
 
 		colt.set_loc(get_turf(C.mob))
 		C.mob.put_in_hand(colt)
@@ -380,16 +499,18 @@ mob/verb/checkrewards()
 		return
 
 /datum/jobXpReward/clown10
-	name = "Nothing!!"
-	desc = "Nothing Again Again!!"
+	name = "Rubber Hammer"
+	desc = "Haha, hammer go 'boing'"
 	required_levels = list("Clown"=10)
 	icon_state = "?"
 	claimable = 1
 	claimPerRound = 1
 
 	activate(var/client/C)
-		boutput(C, "Nothing seems to happen!")
+		boutput(C, "You pull your rubber hammer out from your nose!")
+		new /obj/item/rubber_hammer(get_turf(C.mob))
 		return
+
 /datum/jobXpReward/clown15
 	name = "Nothing!!!"
 	desc = "Nothing Again Again Again!!!"
@@ -420,3 +541,48 @@ mob/verb/checkrewards()
 		banana.set_loc(get_turf(C.mob))
 		C.mob.put_in_hand(banana)
 		return
+
+/////////////Bartender////////////////
+
+/datum/jobXpReward/bartender/spectromonocle
+	name = "Spectroscopic Monocle"
+	desc = "Now you can look dapper and know which drinks you poisoned at the same time"
+	required_levels = list("Bartender"=5)
+	icon_state = "?"
+	claimable = 1
+	var/path_to_spawn = /obj/item/clothing/glasses/spectro/monocle
+
+	activate(var/client/C)
+		var/glasses = C.mob.find_type_in_hand(/obj/item/clothing/glasses/spectro)
+
+		if(!(glasses))
+			boutput(C.mob, "You need to be holding a pair of spectroscopic scanner goggles to claim this item")
+			return
+		C.mob.remove_item(glasses)
+		qdel(glasses)
+		var/obj/item/I = new path_to_spawn()
+		I.set_loc(get_turf(C.mob))
+		C.mob.put_in_hand_or_drop(I)
+		boutput(C.mob, "You break the goggles in half and fashion the lens into a monocle...somehow.")
+
+/datum/jobXpReward/bartender/goldenshaker
+	name = "Golden Cocktail Shaker"
+	desc = "After all your years of service, you've finally managed to gather enough money in tips to buy yourself a present! You regret every cent."
+	required_levels = list("Bartender"=20)
+	icon_state = "?"
+	claimable = 1
+	claimPerRound = 1
+	var/path_to_spawn = /obj/item/reagent_containers/food/drinks/cocktailshaker/golden
+
+	activate(var/client/C)
+		var/obj/item/reagent_containers/food/drinks/cocktailshaker/shaker = locate(/obj/item/reagent_containers/food/drinks/cocktailshaker) in C.mob.contents
+
+		if(!istype(shaker))
+			return
+		C.mob.remove_item(shaker)
+		qdel(shaker)
+		var/obj/item/I = new path_to_spawn()
+		I.set_loc(get_turf(C.mob))
+		C.mob.put_in_hand_or_drop(I)
+		boutput(C.mob, "You look away for a second and the shaker turns into golden from top to bottom!")
+

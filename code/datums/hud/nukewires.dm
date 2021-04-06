@@ -1,11 +1,12 @@
 /datum/hud/nukewires
-	var/obj/screen/hud
+	var/atom/movable/screen/hud
 		boxes
 		close
 	var/obj/machinery/nuclearbomb/master
 
 
 	New(master)
+		..()
 		src.master = master
 		src.boxes = create_screen("boxes", "Wiring Panel", 'icons/mob/screen1.dmi', "block", "6, 6 to 10, 10")
 		src.close = create_screen("close", "Close Panel", 'icons/mob/screen1.dmi', "x", "10, 11", HUD_LAYER+1)

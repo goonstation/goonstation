@@ -8,12 +8,28 @@
 	pressure_resistance = ONE_ATMOSPHERE
 	flags = FPRINT | TABLEPASS | OPENCONTAINER
 	var/rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
+	var/image/fluid_image
 	p_class = 1.2
 
+	New()
+		. = ..()
+		src.fluid_image = image(src.icon, "fluid", -1)
+
+	proc/update_icon()
+		if (reagents.total_volume)
+			var/datum/color/average = reagents.get_average_color()
+			src.fluid_image.color = average.to_rgba()
+			src.UpdateOverlays(src.fluid_image, "fluid")
+		else
+			src.ClearSpecificOverlays("fluid")
+
+	on_reagent_change()
+		..()
+		src.update_icon()
+
 /obj/mopbucket/New()
-	var/datum/reagents/R = new/datum/reagents(200)
-	reagents = R
-	R.my_atom = src
+	..()
+	create_reagents(200)
 	START_TRACKING
 
 /obj/mopbucket/disposing()
@@ -53,7 +69,7 @@
 	src.transfer_all_reagents(over_object, usr)
 
 /obj/mopbucket/MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
-	if (!in_range(user, src) || user.restrained() || user.getStatusDuration("paralysis") || user.sleeping || user.stat || user.lying || user.buckled)
+	if (!in_interact_range(user, src) || user.restrained() || user.getStatusDuration("paralysis") || user.sleeping || user.stat || user.lying || user.buckled)
 		return
 
 	if (O == user)

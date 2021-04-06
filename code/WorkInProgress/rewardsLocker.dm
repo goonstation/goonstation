@@ -6,9 +6,12 @@
 	var/mobonly = 1 //If the reward can only be redeemed if the player has a /mob/living.
 
 
-	proc/rewardActivate(var/mob/activator) //Called when the reward is claimed from the locker. Spawn item here / give verbs here / do whatever for reward.
+	///Called when the reward is claimed from the locker. Spawn item here / give verbs here / do whatever for reward. Return 1 on success or bugs will happen.
+	proc/rewardActivate(var/mob/activator)
 		boutput(activator, "This reward is undefined. Please inform a coder.")
-		return							   //You could even make one-time reward by stripping their medal here.
+		//You could even make one-time reward by stripping their medal here.
+		return
+
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// Rewards below
 /datum/achievementReward/satchel
@@ -132,6 +135,9 @@
 			M.name = "SWAT Gas Mask"
 			M.real_name = "SWAT Gas Mask"
 			M.desc = "A snazzy-looking black Gas Mask."
+			M.color_r = 1
+			M.color_g = 0.8
+			M.color_b = 0.8
 			activator.set_clothing_icon_dirty()
 			return 1
 		boutput(activator, "<span class='alert'>Unable to redeem... are you wearing a gas mask?</span>")
@@ -314,16 +320,25 @@
 				if (istype(M))
 					var/prev = M.name
 					M.icon = 'icons/obj/clothing/overcoats/item_suit.dmi'
-					M.inhand_image_icon = 'icons/mob/inhand/inhand_cl_suit.dmi'
-					if (M.inhand_image) M.inhand_image.icon = 'icons/mob/inhand/inhand_cl_suit.dmi'
+					M.inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit.dmi'
+					if (M.inhand_image) M.inhand_image.icon = 'icons/mob/inhand/overcoat/hand_suit.dmi'
 					M.wear_image_icon = 'icons/mob/overcoats/worn_suit.dmi'
 					if (M.wear_image) M.wear_image.icon = 'icons/mob/overcoats/worn_suit.dmi'
-					M.icon_state = findtext(M.icon_state, "_o") ? "MDlabcoat_o" : "MDlabcoat"
-					M.item_state = "MDlabcoat"
-					M.coat_style = "MDlabcoat"
+
+					//change the icon if you've bought the alt jumpsuit thing (so the coat matches the alt medical jumpsuit)
+					if (activator.mind && istype(activator.mind.purchased_bank_item, /datum/bank_purchaseable/altjumpsuit))
+						M.icon_state = findtext(M.icon_state, "_o") ? "MDlabcoat-alt_o" : "MDlabcoat-alt"
+						M.item_state = "MDlabcoat-alt"
+						M.coat_style = "MDlabcoat-alt"
+						M.desc = "A protective laboratory coat with the blue markings of a fancy Medical Doctor. (Base Item: [prev])"
+					else
+						M.icon_state = findtext(M.icon_state, "_o") ? "MDlabcoat_o" : "MDlabcoat"
+						M.item_state = "MDlabcoat"
+						M.coat_style = "MDlabcoat"
+						M.desc = "A protective laboratory coat with the red markings of a Medical Doctor. (Base Item: [prev])"
+
 					M.name = "doctor's labcoat"
 					M.real_name = "doctor's labcoat"
-					M.desc = "A protective laboratory coat with the red markings of a Medical Doctor. (Base Item: [prev])"
 					H.set_clothing_icon_dirty()
 					return 1
 
@@ -347,16 +362,25 @@
 				if (istype(M))
 					var/prev = M.name
 					M.icon = 'icons/obj/clothing/overcoats/item_suit.dmi'
-					M.inhand_image_icon = 'icons/mob/inhand/inhand_cl_suit.dmi'
-					if (M.inhand_image) M.inhand_image.icon = 'icons/mob/inhand/inhand_cl_suit.dmi'
+					M.inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit.dmi'
+					if (M.inhand_image) M.inhand_image.icon = 'icons/mob/inhand/overcoat/hand_suit.dmi'
 					M.wear_image_icon = 'icons/mob/overcoats/worn_suit.dmi'
 					if (M.wear_image) M.wear_image.icon = 'icons/mob/overcoats/worn_suit.dmi'
-					M.icon_state = findtext(M.icon_state, "_o") ? "SCIlabcoat_o" : "SCIlabcoat"
-					M.item_state = "SCIlabcoat"
-					M.coat_style = "SCIlabcoat"
+
+					//change the icon if you've bought the alt jumpsuit thing (so the coat matches the alt science jumpsuit)
+					if (activator.mind && istype(activator.mind.purchased_bank_item, /datum/bank_purchaseable/altjumpsuit))
+						M.icon_state = findtext(M.icon_state, "_o") ? "SCIlabcoat-alt_o" : "SCIlabcoat-alt"
+						M.item_state = "SCIlabcoat-alt"
+						M.coat_style = "SCIlabcoat-alt"
+						M.desc = "A protective laboratory coat with the green markings of a fancy Scientist. (Base Item: [prev])"
+					else
+						M.icon_state = findtext(M.icon_state, "_o") ? "SCIlabcoat_o" : "SCIlabcoat"
+						M.item_state = "SCIlabcoat"
+						M.coat_style = "SCIlabcoat"
+						M.desc = "A protective laboratory coat with the purple markings of a Scientist. (Base Item: [prev])"
+
 					M.name = "scientist's labcoat"
 					M.real_name = "scientist's labcoat"
-					M.desc = "A protective laboratory coat with the purple markings of a Scientist. (Base Item: [prev])"
 					H.set_clothing_icon_dirty()
 					return 1
 
@@ -380,8 +404,8 @@
 				if (istype(M))
 					var/prev = M.name
 					M.icon = 'icons/obj/clothing/overcoats/item_suit.dmi'
-					M.inhand_image_icon = 'icons/mob/inhand/inhand_cl_suit.dmi'
-					if (M.inhand_image) M.inhand_image.icon = 'icons/mob/inhand/inhand_cl_suit.dmi'
+					M.inhand_image_icon = 'icons/mob/inhand/hand_cl_suit.dmi'
+					if (M.inhand_image) M.inhand_image.icon = 'icons/mob/inhand/hand_cl_suit.dmi'
 					M.wear_image_icon = 'icons/mob/overcoats/worn_suit.dmi'
 					if (M.wear_image) M.wear_image.icon = 'icons/mob/overcoats/worn_suit.dmi'
 					M.icon_state = findtext(M.icon_state, "_o") ? "alchrobe_o" : "alchrobe"
@@ -391,6 +415,7 @@
 					M.real_name = "grand alchemist's robes"
 					M.desc = "Well you sure LOOK the part with these on. (Base Item: [prev])"
 					H.set_clothing_icon_dirty()
+					return 1
 			boutput(activator, "<span class='alert'>Unable to redeem... you need to be wearing a labcoat.</span>")
 			return
 
@@ -415,8 +440,8 @@
 					return
 				var/prev = M.name
 				M.icon = 'icons/obj/clothing/overcoats/item_suit.dmi'
-				M.inhand_image_icon = 'icons/mob/inhand/inhand_cl_suit.dmi'
-				if (M.inhand_image) M.inhand_image.icon = 'icons/mob/inhand/inhand_cl_suit.dmi'
+				M.inhand_image_icon = 'icons/mob/inhand/hand_cl_suit.dmi'
+				if (M.inhand_image) M.inhand_image.icon = 'icons/mob/inhand/hand_cl_suit.dmi'
 				M.wear_image_icon = 'icons/mob/overcoats/worn_suit.dmi'
 				if (M.wear_image) M.wear_image.icon = 'icons/mob/overcoats/worn_suit.dmi'
 				M.icon_state = "vclothes"
@@ -471,8 +496,8 @@
 					return
 				var/prev = M.name
 				M.icon = 'icons/obj/clothing/overcoats/item_suit.dmi'
-				M.inhand_image_icon = 'icons/mob/inhand/inhand_cl_suit.dmi'
-				if (M.inhand_image) M.inhand_image.icon = 'icons/mob/inhand/inhand_cl_suit.dmi'
+				M.inhand_image_icon = 'icons/mob/inhand/hand_cl_suit.dmi'
+				if (M.inhand_image) M.inhand_image.icon = 'icons/mob/inhand/hand_cl_suit.dmi'
 				M.wear_image_icon = 'icons/mob/overcoats/worn_suit.dmi'
 				if (M.wear_image) M.wear_image.icon = 'icons/mob/overcoats/worn_suit.dmi'
 				if (istype(M, /obj/item/clothing/suit/labcoat))
@@ -562,6 +587,16 @@
 					M.name = "commander's armor"
 					M.real_name = "commander's armor"
 					M.desc = "A suit of protective formal armor. It is made specifically for NanoTrasen commanders. (Base Item: [prev])"
+					H.set_clothing_icon_dirty()
+					succ = TRUE
+
+				if (istype(M, /obj/item/clothing/suit/armor/capcoat))
+					var/prev = M.name
+					M.icon_state = "centcoat"
+					M.item_state = "centcoat"
+					M.name = "commander's coat"
+					M.real_name = "commander's coat"
+					M.desc = "A luxorious formal coat. It is specifically made for Nanotrasen commanders.(Base Item: [prev])"
 					H.set_clothing_icon_dirty()
 					succ = TRUE
 
@@ -668,6 +703,16 @@
 					M.desc = "A suit of protective formal armor. It is made specifically for CENTCOM administrators. (Base Item: [prev])"
 					H.set_clothing_icon_dirty()
 
+				if (istype(M, /obj/item/clothing/suit/armor/capcoat))
+					var/prev = M.name
+					M.icon_state = "centcoat-red"
+					M.item_state = "centcoat-red"
+					M.name = "commander's coat"
+					M.real_name = "commander's coat"
+					M.desc = "A luxorious formal coat. It is specifically made for CENTCOM administrators.(Base Item: [prev])"
+					H.set_clothing_icon_dirty()
+					succ = TRUE
+
 				else if (istype(M, /obj/item/clothing/suit/space/captain))
 					var/prev = M.name
 					M.icon_state = "spacecap-red"
@@ -689,17 +734,39 @@
 */
 
 /datum/achievementReward/ai_malf
-	title = "(AI Skin) Malfuction"
+	title = "(AI Skin) Malfunction"
 	desc = "Turns you into a scary malfunctioning AI! Only in appearance, of course."
 	required_medal = "HUMANOID MUST NOT ESCAPE"
 
 	rewardActivate(var/mob/activator)
 		if (isAI(activator))
 			var/mob/living/silicon/ai/A = activator
+			if (isAIeye(activator))
+				var/mob/dead/aieye/AE = activator
+				A = AE.mainframe
 			A.custom_emotions = ai_emotions | list("ROGUE(reward)" = "ai-red")
 			A.faceEmotion = "ai-red"
 			A.set_color("#EE0000")
 			//A.icon_state = "ai-malf"
+			return 1
+		else
+			boutput(activator, "<span class='alert'>You need to be an AI to use this, you goof!</span>")
+
+/datum/achievementReward/ai_tetris
+	title = "(AI Skin) Tetris"
+	desc = "Turns you into a tetris-playing machine!"
+	required_medal = "Block Stacker"
+
+	rewardActivate(var/mob/activator)
+		if (isAI(activator))
+			var/mob/living/silicon/ai/A = activator
+			if (isAIeye(activator))
+				var/mob/dead/aieye/AE = activator
+				A = AE.mainframe
+			A.custom_emotions = ai_emotions | list("Tetris (reward)" = "ai-tetris")
+			A.faceEmotion = "ai-tetris"
+			A.set_color("#111111")
+			A.update_appearance()
 			return 1
 		else
 			boutput(activator, "<span class='alert'>You need to be an AI to use this, you goof!</span>")
@@ -753,16 +820,23 @@
 		if (ishuman(activator))
 			var/mob/living/carbon/human/H = activator
 			var/obj/item/gun/kinetic/gunmod
-			if (H.l_hand && (H.l_hand.type in list(/obj/item/gun/kinetic/detectiverevolver, /obj/item/gun/kinetic/riotgun, /obj/item/gun/kinetic/ak47, /obj/item/gun/kinetic/hunting_rifle)))
+			if (istype(H.l_hand, /obj/item/gun/kinetic))
 				gunmod = H.l_hand
-			else if (H.r_hand && (H.r_hand.type in list(/obj/item/gun/kinetic/detectiverevolver, /obj/item/gun/kinetic/riotgun, /obj/item/gun/kinetic/ak47, /obj/item/gun/kinetic/hunting_rifle)))
+			else if (istype(H.r_hand, /obj/item/gun/kinetic))
 				gunmod = H.r_hand
 			if (!gunmod)
 				boutput(activator, "<span class='alert'>You can't be the man with the golden gun if you ain't got a got dang gun!</span>")
 				return
+			if(!gunmod.gildable)
+				boutput(activator, "<span class='alert'>This gun doesn't seem to be gildable!</span>")
+				return
 
 			gunmod.name = "Golden [gunmod.name]"
-			gunmod.icon_state = "golden_[gunmod.icon_state]"
+			gunmod.icon_state = "[initial(gunmod.icon_state)]-golden"
+			gunmod.item_state = "[initial(gunmod.item_state)]-golden"
+			gunmod.gilded = TRUE
+			gunmod.update_icon()
+			H.update_inhands()
 			return 1
 
 
@@ -883,7 +957,7 @@
 		if (isdead(activator))
 			boutput(activator, "<span class='alert'>You uh, yeah no- you already popped, buddy.</span>")
 			return
-		if (activator.stat || activator.restrained() || activator.getStatusDuration("paralysis") || activator.getStatusDuration("stunned"))
+		if (activator.restrained() || is_incapacitated(activator))
 			boutput(activator, "<span style=\"color:red\">Absolutely Not. You can't be incapacitated.</span>")
 			return
 		var/blood_id = "blood"
@@ -905,14 +979,14 @@
 		logTheThing("combat", activator, null, "Activated the blood flood gib reward thing (Original Sin)")
 		if (result)
 			boutput(activator, "<span class='alert'>You feel your soul cleansed of sin.</span>")
-			playsound(T, 'sound/voice/farts/diarrhea.ogg', 50, 1 )
+			playsound(T, 'sound/voice/farts/diarrhea.ogg', 50, 1)
 		activator.gib()
 		return 1
 		/* This is dumb we just gibbed the mob
 		SPAWN_DBG(20 SECONDS)
 			if(activator && !isdead(activator))
 				activator.suiciding = 0*/
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// Management stuff below.
+/*                                  / Management stuff below. /              */
 /chui/window/contributorrewards
 	name = "Contributor Rewards"
 
@@ -962,7 +1036,7 @@
 		return 1 // i guess. who cares.
 
 
-/client/var/list/claimed_rewards = list() //Keeps track of once-per-round rewards
+/datum/player/var/list/claimed_rewards = list() //Keeps track of once-per-round rewards
 
 /client/verb/claimreward()
 	set background = 1
@@ -979,7 +1053,7 @@
 			var/datum/achievementReward/D = rewardDB[A]
 			var/result = usr.has_medal(D.required_medal)
 			if(result == 1)
-				if((D.once_per_round && !src.claimed_rewards.Find(D.type)) || !D.once_per_round)
+				if((D.once_per_round && !src.player.claimed_rewards.Find(D.type)) || !D.once_per_round)
 					if( D.mobonly && !istype( src.mob, /mob/living ) ) continue
 					eligible.Add(D.title)
 					eligible[D.title] = D
@@ -1005,14 +1079,19 @@
 
 		if(S == null)
 			boutput(usr, "<span class='alert'>Invalid Rewardtype after selection. Please inform a coder.</span>")
+			return
+
+		if(S.once_per_round && src.player.claimed_rewards.Find(S.type))
+			boutput(usr, "<span class='alert'>You already claimed this!</span>")
+			return
 
 		var/M = alert(usr,S.desc + "\n(Earned through the \"[S.required_medal]\" Medal)","Claim this Reward?","Yes","No")
 		src.verbs += /client/verb/claimreward
 		if(M == "Yes")
-			var/worked = S.rewardActivate(usr)
+			var/worked = S.rewardActivate(src.mob)
 			if (worked)
 				boutput(usr, "<span class='alert'>Successfully claimed \"[S.title]\".</span>")
 				if(S.once_per_round)
-					usr.client.claimed_rewards.Add(S.type)
+					src.player.claimed_rewards.Add(S.type)
 			else
 				boutput(usr, "<span class='alert'>Redemption of \"[S.title]\" failed.</span>")

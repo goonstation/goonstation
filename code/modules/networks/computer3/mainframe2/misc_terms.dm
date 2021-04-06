@@ -915,8 +915,7 @@
 
 			T.timing = 1
 			T.c_state(1)
-			if (!(T in processing_items))
-				processing_items.Add(T)
+			processing_items |= T
 			src.last_sim = world.time
 
 			var/area/to_reset = get_area(vrbomb) //Reset the magic vr turf.
@@ -1606,7 +1605,7 @@
 					src.post_status(target, "command","term_connect","data","noreply","device",src.device_tag)
 				src.updateUsrDialog()
 				SPAWN_DBG(0.5 SECONDS) //Sign up with the driver (if a mainframe contacted us)
-					src.post_status(target,"command","term_message","data","command=register[(frequencies && frequencies.len) ? "&freqs=[jointext(frequencies,",")]" : ""]")
+					src.post_status(target,"command","term_message","data","command=register[(length(frequencies)) ? "&freqs=[jointext(frequencies,",")]" : ""]")
 				return
 
 			if("term_message","term_file")
@@ -1643,7 +1642,7 @@
 
 				var/newFreq = round(max(1000, min(text2num(data["_freq"]), 1500)))
 				data -= "_freq"
-				if (!newFreq || !radio_controller || !data.len)
+				if (!newFreq || !radio_controller || !length(data))
 					src.post_status(target,"command","term_message","data","command=status&status=failure")
 					return
 				var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency("[newFreq]")
@@ -1884,7 +1883,7 @@
 				src.timeout_alert = 1
 				src.post_status(src.host_id, "command","term_ping","data","reply")
 
-		if(!printing && print_buffer.len)
+		if(!printing && length(print_buffer))
 			src.print()
 
 		return
@@ -2012,7 +2011,7 @@
 				return 0
 			if(!src.host_id)
 				return 0
-			if(src.printing || !print_buffer.len)
+			if(src.printing || !length(print_buffer))
 				return 0
 
 			var/print_text = print_buffer[1]
@@ -2215,7 +2214,7 @@
 				boutput(user, "<span class='alert'>There is already something in the scanner!</span>")
 				return
 
-			usr.drop_item()
+			user.drop_item()
 			W.set_loc(src)
 			scanned_thing = W
 			power_change()
@@ -2536,7 +2535,7 @@
 						return
 					src.scan_beam = new /obj/beam/ir_beam(beamTurf, setup_beam_length)
 					src.scan_beam.master = src
-					src.scan_beam.dir = src.dir
+					src.scan_beam.set_dir(src.dir)
 
 				return
 			if (2)
@@ -2774,7 +2773,7 @@
 
 				src.next = new src.type(nextTurf, src.limit-1)
 				//next.master = src.master
-				next.dir = src.dir
+				next.set_dir(src.dir)
 				for (var/atom/movable/hitAtom in nextTurf)
 					if (hitAtom.density && !hitAtom.anchored)
 						src.hit(hitAtom)
@@ -2845,7 +2844,7 @@
 
 			src.next = new /obj/beam/ir_beam(nextTurf, src.limit-1)
 			next:master = src.master
-			next.dir = src.dir
+			next.set_dir(src.dir)
 		return
 
 //Rather fancy science emitter gizmo
@@ -3190,7 +3189,7 @@
 					return 0
 				src.beam = new /obj/beam/h7_beam(beamTurf, setup_beam_length, crystalCount)
 				src.beam.master = src
-				src.beam.dir = src.dir
+				src.beam.set_dir(src.dir)
 				for (var/atom/movable/hitAtom in beamTurf)
 					if (hitAtom.density && !hitAtom.anchored)
 						src.beam.hit(hitAtom)
@@ -3369,7 +3368,7 @@
 
 			src.next = new /obj/beam/h7_beam(nextTurf, src.limit-1, src.power)
 			next:master = src.master
-			next.dir = src.dir
+			next.set_dir(src.dir)
 			for (var/atom/movable/hitAtom in nextTurf)
 				if (hitAtom.density && !hitAtom.anchored)
 					src.hit(hitAtom)
@@ -3461,6 +3460,7 @@
 	MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
 		if (!istype(O,/obj/) || O.anchored) return
 		if (get_dist(src,O) > 1 || !isturf(O.loc)) return
+		if (!in_interact_range(user, O) || !in_interact_range(user, src) || !isalive(user)) return
 		if (src.dragload)
 			if (src.contents.len)
 				boutput(user, "<span class='alert'>[src.name] is already loaded!</span>")
@@ -3471,16 +3471,25 @@
 		else return
 
 	MouseDrop(obj/over_object as obj, src_location, over_location)
-		var/mob/M = usr
-		if (!istype(over_object, /turf/)) return
-		if (!src.dragload) return
-		if (get_dist(src,over_object) > 1) return
-		if ((get_dist(src, M) > 1) || M.stat) return
+		ejectContents(usr, over_object)
+
+	verb/eject()
+		set name = "Eject"
+		set src in oview(1)
+		set category = "Local"
+
+		ejectContents(usr, get_turf(src))
+		return
+
+	proc/ejectContents(var/mob/unloader, var/target_location)
+		if (!istype(target_location, /turf/)) return
+		if (get_dist(src,target_location) > 1) return
+		if (!in_interact_range(unloader, target_location) || !in_interact_range(unloader, src) || !isalive(unloader)) return
 		if (src.active)
-			boutput(usr, "<span class='alert'>You can't unload it while it's active!</span>")
+			boutput(unloader, "<span class='alert'>You can't unload it while it's active!</span>")
 			return
-		for (var/atom/movable/O in src.contents) O.set_loc(over_object)
-		src.visible_message("<b>[M.name]</b> unloads [src.name]!")
+		for (var/atom/movable/O in src.contents) O.set_loc(target_location)
+		src.visible_message("<b>[unloader.name]</b> unloads [src.name]!")
 		src.update_icon()
 
 	Topic(href, href_list)
@@ -3721,7 +3730,7 @@
 
 			if ("activate")
 				if (src.contents.len)
-					active = src.contents.len
+					active = length(src.contents)
 					message_host("command=ack")
 					src.update_icon()
 				else
@@ -3914,15 +3923,15 @@
 
 		return
 
-	Bumped(M as mob|obj)
+	hitby(atom/movable/M, datum/thrown_thing/thr)
 		if (src.density)
 			for (var/obj/item/I in src.loc.contents)
-				I.Bumped(M)
+				I.hitby(M)
 				if (istype(I.artifact,/datum/artifact/) && isitem(M))
 					var/obj/item/ITM = M
 					var/obj/ART = I
 					src.impactpad_senseforce(ART, ITM)
-				return
+		..()
 
 	bullet_act(var/obj/projectile/P)
 		if (src.density)
@@ -3937,10 +3946,9 @@
 		if (istype(I.artifact,/datum/artifact/))
 			var/datum/artifact/ARTDATA = I.artifact
 			var/stimforce = M.throwforce
-			I.ArtifactStimulus("force", stimforce)
 			src.sensed[1] = stimforce * ARTDATA.react_mpct[1]
 			src.sensed[2] = stimforce * ARTDATA.react_mpct[2]
-			if (src.sensed[2] != 0 && ARTDATA.faults.len)
+			if (src.sensed[2] != 0 && length(ARTDATA.faults))
 				src.sensed[2] += rand(ARTDATA.faults.len / 2,ARTDATA.faults.len * 2)
 			var/datum/artifact_trigger/AT = ARTDATA.get_trigger_by_string("force")
 			if (AT)
@@ -3956,11 +3964,10 @@
 		if (istype(I.artifact,/datum/artifact/))
 			var/datum/artifact/ARTDATA = I.artifact
 			var/stimforce = P.power
-			I.ArtifactStimulus("force", stimforce)
 			src.sensed[1] = stimforce * ARTDATA.react_mpct[1]
 			src.sensed[2] = stimforce * ARTDATA.react_mpct[2]
 
-			if (src.sensed[2] != 0 && ARTDATA.faults.len)
+			if (src.sensed[2] != 0 && length(ARTDATA.faults))
 				src.sensed[2] += rand(ARTDATA.faults.len / 2,ARTDATA.faults.len * 2)
 
 			var/datum/artifact_trigger/AT = ARTDATA.get_trigger_by_string("force")
@@ -4027,18 +4034,21 @@
 				playsound(src.loc, "sound/machines/buzz-sigh.ogg", 50, 1)
 				src.update_icon()
 				return
-			var/current = src.wattage * src.voltage
-			if (locate(/mob/living/) in src.contents)
-				for (var/mob/living/carbon/OUCH in src.contents)
-					OUCH.TakeDamage("All",0,current / 500)
-			else
-				var/obj/M = pick(src.contents)
-				if (istype(M.artifact,/datum/artifact/))
-					M.ArtifactStimulus("elec", current)
+			src.electrify_contents()
 
 		else use_power(20)
 
 		return
+
+	proc/electrify_contents()
+		var/current = src.wattage * src.voltage
+		if (locate(/mob/living/) in src.contents)
+			for (var/mob/living/carbon/OUCH in src.contents)
+				OUCH.TakeDamage("All",0,current / 500)
+		else if(length(src.contents))
+			var/obj/O = pick(src.contents)
+			if (istype(O.artifact,/datum/artifact/))
+				O.ArtifactStimulus("elec", current)
 
 	attackby(var/obj/item/I, mob/user)
 		if (src.status & (NOPOWER|BROKEN))
@@ -4094,6 +4104,8 @@
 						return
 					src.wattage = pokeval
 
+				if (src.active)
+					src.electrify_contents()
 				message_host("command=ack")
 				return
 
@@ -4158,6 +4170,7 @@
 				if (src.contents.len && !src.active)
 					active = 1
 					src.timer = -1
+					src.electrify_contents()
 					message_host("command=ack")
 					src.update_icon()
 				else
@@ -4174,6 +4187,7 @@
 
 				src.active = 1
 				src.timer = duration
+				src.electrify_contents()
 				message_host("command=ack")
 				src.update_icon()
 
@@ -4420,7 +4434,7 @@
 				heat_overlay.icon_state = "heat-1"
 			if (250 to 269)
 				heat_overlay.icon_state = "heat-2"
-			if (230 to -99)
+			if (249 to -99)
 				heat_overlay.icon_state = "heat-3"
 			else
 				heat_overlay.icon_state = ""
@@ -4463,9 +4477,9 @@
 			use_power(80)
 
 			if (src.temperature < src.temptarget)
-				src.temperature += 5
+				src.temperature += min(5, src.temptarget-src.temperature)
 			else if (src.temperature > src.temptarget)
-				src.temperature -= 5
+				src.temperature -= min(5, src.temperature-src.temptarget)
 
 			if (src.temperature != 310)
 				for (var/obj/M in src.loc.contents)
@@ -4490,7 +4504,7 @@
 	message_interface(var/list/packetData)
 		switch (lowertext(packetData["command"]))
 			if ("info")
-				message_host("command=info&id=[src.setup_test_id]&capability=[setup_capability_value]&status=[src.active ? "1" : "0"]&valuelist=Temptarget,Temperature&readinglist=Target Temperature-K,Current Temperature-K,Artifact Temperature-K,Object Responds to Temperature,Details")
+				message_host("command=info&id=[src.setup_test_id]&capability=[setup_capability_value]&status=[src.active ? "1" : "0"]&valuelist=Temptarget,Temperature&readinglist=Target Temperature-K,Current Temperature-K,Artifact Temperature-K,Temperature Response,Details")
 
 			if ("status")
 				message_host("command=status&data=[src.active ? "1" : "0"]")
@@ -4575,8 +4589,9 @@
 
 			if ("pulse")
 				var/duration = text2num(packetData["duration"])
-				if (isnum(duration))
-					temptarget = duration
+				if (isnum(duration) )
+					if(duration >= 200 && duration <= 400)
+						temptarget = duration
 				else
 					message_host("command=nack")
 					return
@@ -4741,7 +4756,9 @@
 			if ("sense")
 				var/datum/gas_mixture/air_sample = return_air()
 				var/total_moles = max(TOTAL_MOLES(air_sample), 1)
-				sensed.Cut()
+				sensed?.Cut()
+				if(isnull(sensed))
+					sensed = list()
 				if (air_sample)
 					sensed.Add(round(MIXTURE_PRESSURE(air_sample), 0.1))
 					sensed.Add(round(air_sample.temperature, 0.1))
@@ -4751,7 +4768,7 @@
 
 					var/tgmoles = 0
 					if(length(air_sample.trace_gases))
-						for(var/datum/gas/trace_gas in air_sample.trace_gases)
+						for(var/datum/gas/trace_gas as anything in air_sample.trace_gases)
 							tgmoles += trace_gas.moles
 					sensed.Add(round(100*tgmoles/total_moles, 0.1))
 				else
@@ -4934,7 +4951,7 @@
 	proc
 		fire0(var/datum/mechanicsMessage/anInput)
 
-			if (anInput && anInput.isTrue())
+			if (anInput?.isTrue())
 				input_word |= 1
 
 			else
@@ -4944,7 +4961,7 @@
 
 		fire1(var/datum/mechanicsMessage/anInput)
 
-			if (anInput && anInput.isTrue())
+			if (anInput?.isTrue())
 				input_word |= 2
 
 			else
@@ -4954,7 +4971,7 @@
 
 		fire2(var/datum/mechanicsMessage/anInput)
 
-			if (anInput && anInput.isTrue())
+			if (anInput?.isTrue())
 				input_word |= 4
 
 			else
@@ -4964,7 +4981,7 @@
 
 		fire3(var/datum/mechanicsMessage/anInput)
 
-			if (anInput && anInput.isTrue())
+			if (anInput?.isTrue())
 				input_word |= 8
 
 			else
@@ -4974,7 +4991,7 @@
 
 		fire4(var/datum/mechanicsMessage/anInput)
 
-			if (anInput && anInput.isTrue())
+			if (anInput?.isTrue())
 				input_word |= 16
 
 			else
@@ -4984,7 +5001,7 @@
 
 		fire5(var/datum/mechanicsMessage/anInput)
 
-			if (anInput && anInput.isTrue())
+			if (anInput?.isTrue())
 				input_word |= 32
 
 			else
@@ -4992,7 +5009,7 @@
 
 		fire6(var/datum/mechanicsMessage/anInput)
 
-			if (anInput && anInput.isTrue())
+			if (anInput?.isTrue())
 				input_word |= 64
 
 			else
@@ -5002,7 +5019,7 @@
 
 		fire7(var/datum/mechanicsMessage/anInput)
 
-			if (anInput && anInput.isTrue())
+			if (anInput?.isTrue())
 				input_word |= 128
 
 			else

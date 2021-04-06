@@ -113,7 +113,7 @@ var/global/datum/antagWeighter/antagWeighter
 		if (!history.len)
 			throw EXCEPTION("Empty history given")
 
-		var/poolSize = history.len
+		var/poolSize = length(history)
 		var/targetPlayRate = config.play_antag_rates[role]
 		var/list/weightings = list()
 

@@ -41,6 +41,7 @@ CONTAINS:
 	stamina_crit_chance = 35
 	var/mob/Poisoner = null
 	module_research = list("tools" = 3, "medicine" = 3, "weapons" = 0.25)
+	move_triggered = 1
 
 	New()
 		..()
@@ -49,7 +50,7 @@ CONTAINS:
 		src.create_reagents(5)
 		AddComponent(/datum/component/transfer_on_attack)
 		setProperty("piercing", 80)
-		BLOCK_KNIFE
+		BLOCK_SETUP(BLOCK_KNIFE)
 
 
 	attack(mob/living/carbon/M as mob, mob/user as mob)
@@ -63,6 +64,10 @@ CONTAINS:
 			if (src.reagents && src.reagents.total_volume)//ugly but this is the sanest way I can see to make the surgical use 'ignore' armor
 				src.reagents.trans_to(M,5)
 			return
+
+	move_trigger(var/mob/M, kindof)
+		if (..() && reagents)
+			reagents.move_trigger(M, kindof)
 
 	custom_suicide = 1
 	suicide(var/mob/user as mob)
@@ -108,6 +113,7 @@ CONTAINS:
 	stamina_crit_chance = 35
 	var/mob/Poisoner = null
 	module_research = list("tools" = 3, "medicine" = 3, "weapons" = 0.25)
+	move_triggered = 1
 
 	New()
 		..()
@@ -116,7 +122,7 @@ CONTAINS:
 			icon_state = pick("saw1", "saw2", "saw3")
 		src.create_reagents(5)
 		AddComponent(/datum/component/transfer_on_attack)
-		BLOCK_LARGE
+		BLOCK_SETUP(BLOCK_LARGE)
 
 	attack(mob/living/carbon/M as mob, mob/user as mob)
 		if (src.reagents && src.reagents.total_volume)
@@ -141,6 +147,10 @@ CONTAINS:
 			if (user && !isdead(user))
 				user.suiciding = 0
 		return 1
+
+	move_trigger(var/mob/M, kindof)
+		if (..() && reagents)
+			reagents.move_trigger(M, kindof)
 
 /obj/item/circular_saw/vr
 	icon = 'icons/effects/VR.dmi'
@@ -172,6 +182,7 @@ CONTAINS:
 	stamina_crit_chance = 35
 	var/mob/Poisoner = null
 	module_research = list("tools" = 3, "medicine" = 3, "weapons" = 0.25)
+	move_triggered = 1
 
 	New()
 		..()
@@ -205,6 +216,10 @@ CONTAINS:
 			if (user && !isdead(user))
 				user.suiciding = 0
 		return 1
+
+	move_trigger(var/mob/M, kindof)
+		if (..() && reagents)
+			reagents.move_trigger(M, kindof)
 
 /* ==================================================== */
 /* -------------------- Staple Gun -------------------- */
@@ -302,9 +317,7 @@ CONTAINS:
 
 	attackby(obj/item/W, mob/user)
 		..()
-		#if ASS_JAM
-			//DISABLE ZIPGUN DURING ASSJAM
-		#else
+
 		if (istype(W,/obj/item/pipebomb/frame))
 			var/obj/item/pipebomb/frame/F = W
 			if (F.state < 2)
@@ -322,7 +335,7 @@ CONTAINS:
 			else
 				user.show_text("You can't seem to combine these two items this way.")
 		return
-		#endif
+
 
 // a mostly decorative thing from z2 areas I want to add to office closets
 /obj/item/staple_gun/red
@@ -649,6 +662,7 @@ CONTAINS:
 		..()
 
 	attack_hand(mob/living/user as mob)
+		if (isAI(user) || isintangible(user) || isobserver(user)) return
 		user.lastattacked = src
 		..()
 		if (!defib)
@@ -974,7 +988,7 @@ CONTAINS:
 		if (ishuman(M))
 			var/mob/living/carbon/human/H = M
 			if (H.blood_volume < 500)
-				H.tri_message("<span class='notice'><b>[user]</b> attaches [src]'s needle to [H == user ? </span>"[H.gender == "male" ? "his" : "her"]" : "[H]'s"] arm and begins transferring blood.",\
+				H.tri_message("<span class='notice'><b>[user]</b> attaches [src]'s needle to [H == user ? </span>"[his_or_her(H)]" : "[H]'s"] arm and begins transferring blood.",\
 				user, "<span class='notice'>You attach [src]'s needle to [H == user ? </span>"your" : "[H]'s"] arm and begin transferring blood.",\
 				H, "<span class='notice'>[H == user ? </span>"You attach" : "<b>[user]</b> attaches"] [src]'s needle to your arm and begin transferring blood.")
 				src.in_use = 1
@@ -1095,7 +1109,7 @@ CONTAINS:
 			src.w_class = 4.0
 		else if (!src.open)
 			src.overlays -= src.open_image
-			if (src.contents && src.contents.len)
+			if (src.contents && length(src.contents))
 				src.icon_state = "bodybag-closed1"
 			else
 				src.icon_state = "bodybag-closed0"
@@ -1110,6 +1124,8 @@ CONTAINS:
 			user.visible_message("<b>[user]</b> unfolds [src].",\
 			"You unfold [src].")
 			user.drop_item()
+			pixel_x = 0
+			pixel_y = 0
 			src.update_icon()
 		else
 			return
@@ -1136,9 +1152,17 @@ CONTAINS:
 		src.open()
 		src.visible_message("<span class='alert'><b>[user]</b> unzips themselves from [src]!</span>")
 
-	MouseDrop(mob/user as mob)
+	MouseDrop(atom/over_object)
+		if (!over_object) return
+		if(isturf(over_object))
+			..() //Lets it do the turf-to-turf slide
+			return
+		else if (istype(over_object, /atom/movable/screen/hud))
+			over_object = usr //Try to fold & pick up the bag with your mob instead
+		else if (!(over_object == usr))
+			return
 		..()
-		if (!(src.contents && src.contents.len) && (usr == user && !usr.restrained() && !usr.stat && in_range(src, usr) && !issilicon(usr)))
+		if (!length(src.contents) && usr.can_use_hands() && isalive(usr) && IN_RANGE(src, usr, 1) && !issilicon(usr))
 			if (src.icon_state != "bodybag")
 				usr.visible_message("<b>[usr]</b> folds up [src].",\
 				"You fold up [src].")
@@ -1238,7 +1262,7 @@ CONTAINS:
 	// todo: give people's limbs the ol' tappa tappa
 	// also make sure intent, force and armor matter
 	if (!def_zone)
-		def_zone = (user && user.zone_sel && user.zone_sel.selecting) ? user.zone_sel.selecting : "chest" // may as well default to head idk
+		def_zone = (user?.zone_sel?.selecting) ? user.zone_sel.selecting : "chest" // may as well default to head idk
 
 	var/my_damage = src.force
 	var/my_sound = "sound/impact_sounds/Generic_Stab_1.ogg"
@@ -1339,7 +1363,7 @@ CONTAINS:
 
 	attack(mob/M as mob, mob/user as mob, def_zone)
 		// todo: check zone, make sure people are shining the light 1) at a human 2) in the eyes, clauses for whatever else
-		if (!def_zone && user && user.zone_sel && user.zone_sel.selecting)
+		if (!def_zone && user?.zone_sel?.selecting)
 			def_zone = user.zone_sel.selecting
 		else if (!def_zone)
 			return ..()
@@ -1421,7 +1445,7 @@ CONTAINS:
 					// irl these things can affect either side of the brain but this will help differentiate them in a video game context I think
 					// (also: injuries to the brain show up as issues on the opposite side of the body, so a left injury affects the right eye, etc)
 					var/datum/ailment_data/malady/AD = H.find_ailment_by_type(/datum/ailment/malady/bloodclot)
-					if (AD && AD.state == "Active" && AD.affected_area == "head") // having a stroke!!
+					if (AD?.state == "Active" && AD.affected_area == "head") // having a stroke!!
 						if (leye)
 							lmove = "[His_Her] left eye doesn't follow the light at all!"
 							lpreact = "doesn't react to the light at all!"
@@ -1500,7 +1524,7 @@ keeping this here because I want to make something else with it eventually
 		if (.)
 			if (prob(75))
 				playsound(get_turf(src), "sound/misc/chair/office/scoot[rand(1,5)].ogg", 40, 1)
-			if (islist(bring_this_stuff) && bring_this_stuff.len)
+			if (islist(bring_this_stuff) && length(bring_this_stuff))
 				var/stuff_moved = 0
 				for (var/obj/item/I in bring_this_stuff)
 					LAGCHECK(LAG_HIGH)
@@ -1557,7 +1581,7 @@ keeping this here because I want to make something else with it eventually
 		else
 			return ..()
 
-	hitby(atom/movable/AM as mob|obj)
+	hitby(atom/movable/AM, datum/thrown_thing/thr)
 		..()
 		if (isitem(AM))
 			src.visible_message("[AM] lands on [src]!")
@@ -1587,6 +1611,13 @@ keeping this here because I want to make something else with it eventually
 	proc/detach(obj/item/I as obj) //remove from the attached items list and deregister signals
 		src.attached_objs.Remove(I)
 		UnregisterSignal(I, list(COMSIG_ITEM_PICKUP, COMSIG_MOVABLE_MOVED, COMSIG_PARENT_PRE_DISPOSING))
+
+	attack_hand(mob/user as mob)
+		if (!anchored)
+			boutput(user, "You apply \the [name]'s brake.")
+		else
+			boutput(user, "You release \the [name]'s brake.")
+		anchored = !anchored
 
 /* ---------- Surgery Tray Parts ---------- */
 /obj/item/furniture_parts/surgery_tray
@@ -1629,6 +1660,7 @@ keeping this here because I want to make something else with it eventually
 	throw_range = 5
 	var/mob/Poisoner = null
 	module_research = list("tools" = 3, "medicine" = 3, "weapons" = 0.25)
+	move_triggered = 1
 	var/image/handle = null
 
 	New()
@@ -1648,3 +1680,13 @@ keeping this here because I want to make something else with it eventually
 		handle = null
 		Poisoner = null
 		..()
+
+	move_trigger(var/mob/M, kindof)
+		if (..() && reagents)
+			reagents.move_trigger(M, kindof)
+
+	bloody
+		New()
+			. = ..()
+			SPAWN_DBG(1 DECI SECOND) //sync with the organs spawn
+				make_cleanable(/obj/decal/cleanable/blood/gibs, src.loc)

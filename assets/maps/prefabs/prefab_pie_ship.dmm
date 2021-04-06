@@ -1,4 +1,4 @@
-"a" = (/turf/variableTurf/clear,/area)
+"a" = (/turf/variableTurf/clear,/area/space)
 "b" = (/obj/decal/fakeobjects/shuttlethruster{real_name = "propulsion unit"; true_name = "propulsion unit"},/turf/variableTurf/clear,/area/noGenerate)
 "c" = (/turf/unsimulated/wall/setpieces/leadwall/gray{name = "Shielded Wall"; dir = 10},/area/noGenerate)
 "d" = (/turf/unsimulated/wall/setpieces/leadwall/gray{name = "Shielded Wall"; dir = 4},/area/noGenerate)

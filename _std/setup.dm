@@ -3,6 +3,10 @@
 //#define IM_REALLY_IN_A_FUCKING_HURRY_HERE 1 //Uncomment this to just skip everything possible and get into the game asap.
 //#define GOTTA_GO_FAST_BUT_ZLEVELS_TOO_SLOW 1 // uncomment this to use atlas as the single map. will horribly break things but speeds up compile/boot times.
 
+#ifdef RUNTIME_CHECKING
+#define ABSTRACT_VIOLATION_CRASH
+#endif
+
 #ifdef IM_REALLY_IN_A_FUCKING_HURRY_HERE
 #define SKIP_FEA_SETUP 1
 #define SKIP_Z5_SETUP 1
@@ -36,6 +40,7 @@
 // if you want to see all erebite explosions set this to 0 or -1 or something
 
 // gameticker
+#define GAME_STATE_MAP_LOAD   0
 #define GAME_STATE_WORLD_INIT	1
 #define GAME_STATE_PREGAME		2
 #define GAME_STATE_SETTING_UP	3
@@ -58,16 +63,20 @@
 #ifdef RP_MODE
 #define ASS_JAM 0
 #elif BUILD_TIME_DAY == 13 && defined(ASS_JAM_ENABLED)
-#define ASS_JAM 1
+#define ASS_JAM 0 // ASS JAM DISABLED! FOR NOW! -warc
 #else
 #define ASS_JAM 0
 #endif
 
 // holiday toggles!
 
-//#define HALLOWEEN 1
-//#define XMAS 1
-//#define CANADADAY 1
+#if (BUILD_TIME_MONTH == 10)
+#define HALLOWEEN 1
+#elif (BUILD_TIME_MONTH == 12)
+#define XMAS 1
+#elif (BUILD_TIME_MONTH == 7) && (BUILD_TIME_DAY == 1)
+#define CANADADAY 1
+#endif
 
 // other toggles
 
@@ -111,7 +120,7 @@ var/ZLOG_START_TIME
 #endif
 
 //Amount of 1 Second ticks to spend in the pregame lobby before roundstart. Has been 150 seconds for a couple years.
-#define PREGAME_LOBBY_TICKS 150	// raised from 120 to 180 to accomodate the v500 ads, then raised back down to 150 after Z5 was introduced.
+#define PREGAME_LOBBY_TICKS 180	// raised from 120 to 180 to accomodate the v500 ads, then raised back down to 150 after Z5 was introduced.
 
 //The value of mapvotes. A passive vote is one done through player preferences, an active vote is one where the player actively chooses a map
 #define MAPVOTE_PASSIVE_WEIGHT 1.0
@@ -126,6 +135,9 @@ var/ZLOG_START_TIME
 
 // IN_MAP_EDITOR macro is used to make some things appear visually more clearly in the map editor
 // this handles StrongDMM (and other editors using SpacemanDMM parser), toggle it manually if using a different editor
-#ifdef SPACEMAN_DMM
+#if (defined(SPACEMAN_DMM) || defined(FASTDMM))
 #define IN_MAP_EDITOR
 #endif
+
+//do we want to check incoming clients to see if theyre using a vpn?
+#define DO_VPN_CHECKS 1

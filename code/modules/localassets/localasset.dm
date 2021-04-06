@@ -19,6 +19,7 @@ ABSTRACT_TYPE(/datum/asset)
 	return list()
 
 /datum/asset/New()
+	..()
 	global_asset_datum_list[src.type] = src
 	init()
 

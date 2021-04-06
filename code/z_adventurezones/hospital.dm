@@ -19,7 +19,7 @@ var/list/hospital_fx_sounds = list('sound/ambience/spooky/Hospital_Chords.ogg', 
 		fxlist = hospital_fx_sounds
 		if (ambientSound)
 
-			SPAWN_DBG (60)
+			SPAWN_DBG(6 SECONDS)
 				var/sound/S = new/sound()
 				S.file = ambientSound
 				S.repeat = 0
@@ -34,12 +34,9 @@ var/list/hospital_fx_sounds = list('sound/ambience/spooky/Hospital_Chords.ogg', 
 				process()
 
 	Entered(atom/movable/Obj,atom/OldLoc)
-		..()
+		. = ..()
 		if(ambientSound && ismob(Obj))
-			if (!soundSubscribers:Find(Obj))
-				soundSubscribers += Obj
-
-		return
+			soundSubscribers |= Obj
 
 	proc/process()
 		if (!soundSubscribers)
@@ -168,7 +165,6 @@ var/list/hospital_fx_sounds = list('sound/ambience/spooky/Hospital_Chords.ogg', 
 	invisibility = 101
 	anchored = 1
 	density = 0
-	var/obj/chaser/master/master = null
 	event_handler_flags = USE_HASENTERED
 
 	HasEntered(atom/movable/AM as mob|obj)
@@ -237,10 +233,10 @@ var/list/hospital_fx_sounds = list('sound/ambience/spooky/Hospital_Chords.ogg', 
 			SPAWN_DBG(8 SECONDS)
 				aaah.repeat = 1
 				target << aaah
-				SPAWN_DBG(rand(100,400))
-					if(target)
-						target << sound('sound/ambience/loop/Static_Horror_Loop_End.ogg',channel=7)
-					qdel(src)
+				sleep(rand(100,400))
+				if(target)
+					target << sound('sound/ambience/loop/Static_Horror_Loop_End.ogg',channel=7)
+				qdel(src)
 			walk_towards(src, src.target, 3)
 
 		..()
@@ -489,7 +485,7 @@ var/list/hospital_fx_sounds = list('sound/ambience/spooky/Hospital_Chords.ogg', 
 #ifndef SAMOSTREL_LIVE
 		del(src)
 #endif
-		SPAWN_DBG (10)
+		SPAWN_DBG(1 SECOND)
 			if (src.botcard)
 				src.botcard.access += 1917
 

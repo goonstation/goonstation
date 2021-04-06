@@ -1,5 +1,5 @@
 
-/turf/var/obj/fluid/active_airborne_liquid = 0
+/turf/var/obj/fluid/active_airborne_liquid = null
 
 var/list/ban_from_airborne_fluid = list()
 
@@ -41,7 +41,7 @@ var/list/ban_from_airborne_fluid = list()
 
 		set_loc(newloc)
 		src.loc = newloc
-		src.loc:active_airborne_liquid = src//the dreaded :
+		src.loc:active_airborne_liquid = src //the dreaded :
 
 	done_init()
 		var/i = 0
@@ -52,7 +52,9 @@ var/list/ban_from_airborne_fluid = list()
 			i++
 			if (i > 40)
 				break
-			LAGCHECK(LAG_MED)
+
+	turf_remove_cleanup(turf/the_turf)
+		the_turf.active_airborne_liquid = null
 
 	pooled()
 		src.pooled = 1
@@ -64,9 +66,6 @@ var/list/ban_from_airborne_fluid = list()
 
 		src.group = 0
 		opacity = 0
-
-		if (isturf(src.loc))
-			src.loc:active_airborne_liquid = 0
 
 		name = "cloud"
 		icon_state = "airborne"
@@ -92,20 +91,16 @@ var/list/ban_from_airborne_fluid = list()
 		..()
 
 	unpooled()
-		if (isturf(src.loc))
-			var/turf/T = src.loc
-			T.active_airborne_liquid = 0
 		..()
-
 		src.step_sound = 0
 
 	//ALTERNATIVE to force ingest in life
-	proc/just_do_the_apply_thing(var/mob/M,var/hasmask = 0)
+	proc/just_do_the_apply_thing(var/mob/M, var/mult = 1, var/hasmask = 0)
 		if (!M) return
 		if (!src.group || !src.group.reagents || !src.group.reagents.reagent_list || src.group.waitforit) return
 
 		var/react_volume = src.amt > 10 ? (src.amt-10) / 3 + 10 : (src.amt)
-		react_volume = min(react_volume,20)
+		react_volume = min(react_volume,20) * mult
 		if (M.reagents)
 			react_volume = min(react_volume, abs(M.reagents.maximum_volume - M.reagents.total_volume)) //don't push out other reagents if we are full
 
@@ -122,12 +117,12 @@ var/list/ban_from_airborne_fluid = list()
 			src.group.reagents.reaction(M, INGEST, react_volume/2,1,src.group.members.len, paramslist = plist)
 			src.group.reagents.trans_to(M, react_volume)
 
-	force_mob_to_ingest(var/mob/M)//called when mob is drowning/standing in the smoke
+	force_mob_to_ingest(var/mob/M, var/mult = 1)//called when mob is drowning/standing in the smoke
 		if (!M) return
 		if (!src.group || !src.group.reagents || !src.group.reagents.reagent_list || src.group.waitforit) return
 
 		var/react_volume = src.amt > 10 ? (src.amt-10) / 3 + 10 : (src.amt)
-		react_volume = min(react_volume,20)
+		react_volume = min(react_volume,20) * mult
 		if (M.reagents)
 			react_volume = min(react_volume, abs(M.reagents.maximum_volume - M.reagents.total_volume)) //don't push out other reagents if we are full
 
@@ -278,19 +273,15 @@ var/list/ban_from_airborne_fluid = list()
 		var/obj/fluid/current_fluid = 0
 		var/visited_changed = 0
 		while(queue.len)
-			LAGCHECK(LAG_MED)
 			current_fluid = queue[1]
 			queue.Cut(1, 2)
 
 			for( var/dir in cardinal )
-				LAGCHECK(LAG_MED)
 				t = get_step( current_fluid, dir )
 				if (!VALID_FLUID_CONNECTION(current_fluid, t)) continue
 				if (!t.active_airborne_liquid.group)
 					t.active_airborne_liquid.removed()
 					continue
-
-				LAGCHECK(LAG_MED)
 
 				//Old method : search through 'visited' for 't.active_airborne_liquid'. Probably slow when you have big groups!!
 				//if(t.active_airborne_liquid in visited) continue
@@ -298,7 +289,7 @@ var/list/ban_from_airborne_fluid = list()
 
 				//New method : Add the liquid at a specific index. To check whether the node has already been visited, just compare the len of the visited group from before + after the index has been set.
 				//Probably slower for small groups and much faster for large groups.
-				visited_changed = visited.len
+				visited_changed = length(visited)
 				visited["[t.active_airborne_liquid.x]_[t.active_airborne_liquid.y]_[t.active_airborne_liquid.z]"] = t.active_airborne_liquid
 				visited_changed = (visited.len != visited_changed)
 
@@ -312,8 +303,6 @@ var/list/ban_from_airborne_fluid = list()
 							if (adjacent_match_quit <= 0)
 								return 0 //bud nippin
 
-			LAGCHECK(LAG_MED)
-
 	try_connect_to_adjacent()
 		var/turf/t
 		for( var/dir in cardinal )
@@ -322,11 +311,8 @@ var/list/ban_from_airborne_fluid = list()
 			if (!t.active_airborne_liquid || t.active_airborne_liquid.pooled) continue
 			if (t.active_airborne_liquid && t.active_airborne_liquid.group && src.group != t.active_airborne_liquid.group)
 				t.active_airborne_liquid.group.join(src.group)
-			LAGCHECK(LAG_MED)
-
 
 	update_icon(var/neighbor_was_removed = 0)  //BE WARNED THIS PROC HAS A REPLICA UP ABOVE IN FLUID GROUP UPDATE_LOOP. DO NOT CHANGE THIS ONE WITHOUT MAKING THE SAME CHANGES UP THERE OH GOD I HATE THIS
-		LAGCHECK(LAG_LOW)
 		if (!src.group || !src.group.reagents) return
 
 		src.name = src.group.master_reagent_name ? src.group.master_reagent_name : src.group.reagents.get_master_reagent_name() //maybe obscure later?
@@ -336,8 +322,6 @@ var/list/ban_from_airborne_fluid = list()
 		src.finalcolor = rgb(average.r, average.g, average.b)
 
 		animate( src, color = finalcolor, alpha = finalalpha, time = 5 )
-
-		LAGCHECK(LAG_LOW)
 
 		if (neighbor_was_removed)
 			last_spread_was_blocked = 0
@@ -376,7 +360,7 @@ var/list/ban_from_airborne_fluid = list()
 
 	var/turf/T = get_turf(oldloc)
 	var/turf/currentloc = get_turf(src)
-	if (currentloc != T && T && T.active_airborne_liquid)
+	if (currentloc != T && T?.active_airborne_liquid)
 		entered_group = 0
 
 	if (entered_group)
@@ -388,13 +372,12 @@ var/list/ban_from_airborne_fluid = list()
 
 	var/turf/T = get_turf(oldloc)
 	var/turf/currentloc = get_turf(src)
-	if (currentloc != T && T && T.active_airborne_liquid)
+	if (currentloc != T && T?.active_airborne_liquid)
 		entered_group = 0
 
 	if (entered_group)
 		if (!src.clothing_protects_from_chems())
-			var/protected = (src.wear_mask && (src.wear_mask.c_flags & BLOCKSMOKE || (src.wear_mask.c_flags & MASKINTERNALS && src.internal)))
-			F.just_do_the_apply_thing(src, hasmask = protected)
+			F.just_do_the_apply_thing(src, hasmask = issmokeimmune(src))
 
 /mob/living/silicon/EnteredAirborneFluid(obj/fluid/airborne/F as obj, atom/oldloc)
 	.=0

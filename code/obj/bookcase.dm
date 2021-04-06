@@ -203,7 +203,7 @@
 				boutput(user, "You can't take apart \the [src] if there's still books on it.")
 				return
 			user.visible_message("[user] starts to take apart \the [src].", "You start to take apart \the [src].")
-			if (!do_after(user, 20))
+			if (!do_after(user, 2 SECONDS))
 				return
 			user.visible_message("[user] takes \the [src] apart.", "You take \the [src] apart.")
 			playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
@@ -342,12 +342,15 @@
 
 /obj/bookshelf/persistent
 	desc = "This bookshelf doesn't get cleaned out between shifts. Neat!"
-//these two make em look good on maps
 	pixel_y = 24
 	density = 0
+	var/file_name = "data/persistent_bookshelf.json"
 
 	New()
 		..()
+		for_by_tcl(other_bookshelf, /obj/bookshelf/persistent)
+			if(other_bookshelf.file_name == src.file_name)
+				CRASH("Two persistent bookshelves targeting the same file [file_name].")
 		START_TRACKING
 		src.load_old_books()
 
@@ -357,7 +360,6 @@
 
 	proc/load_old_books()
 		var/list/old_contents = list()
-		var/file_name = "data/persistent_bookshelf.json"
 		if (fexists(file_name))
 			old_contents = json_decode(file2text(file_name))
 			build_old_contents(old_contents)
@@ -365,7 +367,6 @@
 	proc/file_curr_books(var/list/curr_contents)
 		if (!curr_contents.len)
 			return
-		var/file_name = "data/persistent_bookshelf.json"
 		if(fexists(file_name))
 			fdel(file_name) //we rly dont want a duplicate, or to accidentally output twice to the file, it could screw the whole thing up
 		text2file(json_encode(curr_contents), file_name)

@@ -46,7 +46,9 @@
 	desc = "A fancy robotic intestines to replace one that someone's lost!"
 	icon_state = "cyber-intestines"
 	// item_state = "heart_robo1"
+	made_from = "pharosium"
 	robotic = 1
+	created_decal = /obj/decal/cleanable/oil
 	edible = 0
 	mats = 6
 

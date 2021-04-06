@@ -33,6 +33,10 @@
 	var/setup_os_string = null
 	var/setup_font_color = "#19A319"
 	var/setup_bg_color = "#1B1E1B"
+	/// does it have a glow in the dark screen? see computer_screens.dmi
+	var/glow_in_dark_screen = TRUE
+	var/image/screen_image
+
 	power_usage = 250
 
 	generic //Generic computer, standard os and card scanner
@@ -63,11 +67,7 @@
 			setup_starting_peripheral2 = /obj/item/peripheral/printer
 			setup_starting_program = /datum/computer/file/terminal_program/medical_records
 
-#if ASS_JAM
-			New()
-				. = ..()
-				ADD_MORTY(6, 13, 9, 9)
-#endif
+
 
 			console_upper
 				icon = 'icons/obj/computerpanel.dmi'
@@ -318,6 +318,14 @@
 
 		src.base_icon_state = src.icon_state
 
+		if(glow_in_dark_screen)
+			src.screen_image = image('icons/obj/computer_screens.dmi', src.icon_state, -1)
+			screen_image.plane = PLANE_LIGHTING
+			screen_image.blend_mode = BLEND_ADD
+			screen_image.layer = LIGHTING_LAYER_BASE
+			screen_image.color = list(0.33,0.33,0.33, 0.33,0.33,0.33, 0.33,0.33,0.33)
+			src.UpdateOverlays(screen_image, "screen_image")
+
 		src.post_system()
 
 		switch(rand(1,3))
@@ -330,7 +338,7 @@
 	return
 
 /obj/machinery/computer3/attack_hand(mob/user as mob)
-	if(..())
+	if(..() && !istype(user, /mob/dead/target_observer/mentor_mouse_observer))
 		return
 
 	if(!user.literate)
@@ -587,7 +595,6 @@ function lineEnter (ev)
 				P.disk_ejected(src.diskette)
 
 			usr.put_in_hand_or_eject(src.diskette) // try to eject it into the users hand, if we can
-			src.diskette.set_loc(get_turf(src))
 			src.diskette = null
 			usr << output(url_encode("Disk: <a href='byond://?src=\ref[src];disk=1'>-----</a>"),"comp3.browser:setInternalDisk")
 		else
@@ -637,33 +644,47 @@ function lineEnter (ev)
 		icon_state = src.base_icon_state
 		src.icon_state += "b"
 		light.disable()
+		if(glow_in_dark_screen)
+			src.ClearSpecificOverlays("screen_image")
 
 	else if(powered())
 		icon_state = src.base_icon_state
 		status &= ~NOPOWER
 		light.enable()
+		if(glow_in_dark_screen)
+			screen_image.plane = PLANE_LIGHTING
+			screen_image.blend_mode = BLEND_ADD
+			screen_image.layer = LIGHTING_LAYER_BASE
+			screen_image.color = list(0.33,0.33,0.33, 0.33,0.33,0.33, 0.33,0.33,0.33)
+			src.UpdateOverlays(screen_image, "screen_image")
 	else
 		SPAWN_DBG(rand(0, 15))
 			icon_state = src.base_icon_state
 			src.icon_state += "0"
 			status |= NOPOWER
 			light.disable()
+			if(glow_in_dark_screen)
+				src.ClearSpecificOverlays("screen_image")
 
 /obj/machinery/computer3/attackby(obj/item/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/disk/data/floppy)) //INSERT SOME DISKETTES
 		if ((!src.diskette) && src.setup_has_internal_disk)
-			src.add_dialog(user)
 			user.drop_item()
 			W.set_loc(src)
 			src.diskette = W
 			boutput(user, "You insert [W].")
-			src.updateUsrDialog()
-			user << output(url_encode("Disk: <a href='byond://?src=\ref[src];eject=1'>Eject</a>"),"comp3.browser:setInternalDisk")
+			if(user.using_dialog_of(src))
+				src.updateUsrDialog()
+				user << output(url_encode("Disk: <a href='byond://?src=\ref[src];disk=1'>Eject</a>"),"comp3.browser:setInternalDisk")
 			return
+		else if(src.diskette)
+			boutput(user, "<span class='alert'>There's already a disk inside!</span>")
+		else if(!src.setup_has_internal_disk)
+			boutput(user, "<span class='alert'>There's no visible peripheral device to insert the disk into!</span>")
 
 	else if (isscrewingtool(W))
 		playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
-		if(do_after(user, 20))
+		if(do_after(user, 2 SECONDS))
 			if(!ispath(setup_frame_type, /obj/computer3frame))
 				src.setup_frame_type = /obj/computer3frame
 			var/obj/computer3frame/A = new setup_frame_type( src.loc )
@@ -874,8 +895,7 @@ function lineEnter (ev)
 			return
 		src.restarting = 1
 		src.active_program = null
-		if(src.host_program)
-			src.host_program.restart()
+		src.host_program?.restart()
 		src.host_program = null
 		src.processing_programs = new
 		src.temp = null
@@ -968,6 +988,8 @@ function lineEnter (ev)
 	name = "briefcase"
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "briefcase"
+	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
+	item_state = "briefcase"
 	desc = "A common item to find in an office.  Is that an antenna?"
 	flags = FPRINT | TABLEPASS| CONDUCT | NOSPLASH
 	force = 8.0
@@ -984,7 +1006,7 @@ function lineEnter (ev)
 				src.luggable = new luggable_type (src)
 				src.luggable.case = src
 				src.luggable.deployed = 0
-		BLOCK_LARGE
+		BLOCK_SETUP(BLOCK_LARGE)
 		return
 
 	attack_self(mob/user as mob)
@@ -1068,13 +1090,18 @@ function lineEnter (ev)
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/disk/data/floppy)) //INSERT SOME DISKETTES
 			if ((!src.diskette) && src.setup_has_internal_disk)
-				src.add_dialog(user)
 				user.drop_item()
 				W.set_loc(src)
 				src.diskette = W
 				boutput(user, "You insert [W].")
-				src.updateUsrDialog()
+				if(user.using_dialog_of(src))
+					src.updateUsrDialog()
+					user << output(url_encode("Disk: <a href='byond://?src=\ref[src];disk=1'>Eject</a>"),"comp3.browser:setInternalDisk")
 				return
+			else if(src.diskette)
+				boutput(user, "<span class='alert'>There's already a disk inside!</span>")
+			else if(!src.setup_has_internal_disk)
+				boutput(user, "<span class='alert'>There's no visible peripheral device to insert the disk into!</span>")
 
 		else if (ispryingtool(W))
 			if(!src.cell)
@@ -1131,6 +1158,7 @@ function lineEnter (ev)
 	desc = "This fine piece of hardware sports an incredible 2 kilobytes of RAM, all for a price slightly higher than the whole economy of greece."
 	icon_state = "oldlapshut"
 	luggable_type = /obj/machinery/computer3/luggable/personal
+	w_class = 3.0
 
 
 /obj/machinery/computer3/luggable/personal

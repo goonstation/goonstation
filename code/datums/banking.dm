@@ -31,7 +31,7 @@
 	var/clone_cost = 2500 // I wanted to make this a var on SOMETHING so that it can be changed during rounds
 
 	New()
-
+		..()
 		// 5 minutes = 3000 milliseconds
 		time_between_paydays = 3000
 		time_between_lotto = 5000 // this was way too fuckin high
@@ -68,38 +68,41 @@
 		// This is gonna throw up some crazy errors if it isn't done right!
 		// cogwerks - raising all of the paychecks, oh god
 
-		jobs["Engineer"] = 500
-		jobs["Miner"] = 550
-		jobs["Mechanic"] = 450
-//		jobs["Atmospheric Technician"] = 400
-		jobs["Security Officer"] = 700
-//		jobs["Vice Officer"] = 500
-		jobs["Detective"] = 300
-		jobs["Geneticist"] = 600
-		jobs["Scientist"] = 400
-		jobs["Medical Doctor"] = 400
-		jobs["Medical Director"] = 750
-		jobs["Head of Personnel"] = 750
-		jobs["Head of Security"] = 750
-//		jobs["Head of Security"] = 1
-		jobs["Chief Engineer"] = 750
-		jobs["Research Director"] = 750
-		jobs["Chaplain"] = 150
-		jobs["Roboticist"] = 450
-//		jobs["Hangar Mechanic"]= 40
-//		jobs["Elite Security"] = 300
-		jobs["Barman"] = 250
-		jobs["Chef"] = 250
-		jobs["Janitor"] = 200
-		jobs["Clown"] = 1
-//		jobs["Chemist"] = 50
-		jobs["Quartermaster"] = 350
-		jobs["Botanist"] = 250
-//		jobs["Attorney at Space-Law"] = 500
-		jobs["Staff Assistant"] = 100
-		jobs["Medical Assistant"] = 150
-		jobs["Technical Assistant"] = 150
-		jobs["Captain"] = 850
+		jobs["Engineer"] = PAY_TRADESMAN
+		jobs["Miner"] = PAY_TRADESMAN
+		jobs["Mechanic"] = PAY_DOCTORATE
+//		jobs["Atmospheric Technician"] = PAY_TRADESMAN
+		jobs["Security Officer"] = PAY_TRADESMAN
+//		jobs["Vice Officer"] = PAY_TRADESMAN
+		jobs["Detective"] = PAY_TRADESMAN
+		jobs["Geneticist"] = PAY_DOCTORATE
+		jobs["Pathologist"] = PAY_DOCTORATE
+		jobs["Scientist"] = PAY_DOCTORATE
+		jobs["Medical Doctor"] = PAY_DOCTORATE
+		jobs["Medical Director"] = PAY_IMPORTANT
+		jobs["Head of Personnel"] = PAY_IMPORTANT
+		jobs["Head of Security"] = PAY_IMPORTANT
+//		jobs["Head of Security"] = PAY_DUMBCLOWN
+		jobs["Chief Engineer"] = PAY_IMPORTANT
+		jobs["Research Director"] = PAY_IMPORTANT
+		jobs["Chaplain"] = PAY_UNTRAINED
+		jobs["Roboticist"] = PAY_DOCTORATE
+//		jobs["Hangar Mechanic"]= PAY_TRADESMAN
+//		jobs["Elite Security"] = PAY_TRADESMAN
+		jobs["Bartender"] = PAY_UNTRAINED
+		jobs["Chef"] = PAY_UNTRAINED
+		jobs["Janitor"] = PAY_TRADESMAN
+		jobs["Clown"] = PAY_DUMBCLOWN
+//		jobs["Chemist"] = PAY_DOCTORATE
+		jobs["Quartermaster"] = PAY_TRADESMAN
+		jobs["Botanist"] = PAY_TRADESMAN
+		jobs["Rancher"] = PAY_TRADESMAN
+//		jobs["Attorney at Space-Law"] = PAY_DOCTORATE
+		jobs["Staff Assistant"] = PAY_UNTRAINED
+		jobs["Medical Assistant"] = PAY_UNTRAINED
+		jobs["Technical Assistant"] = PAY_UNTRAINED
+		jobs["Security Assistant"] = PAY_UNTRAINED
+		jobs["Captain"] = PAY_EXECUTIVE
 
 		src.time_until_lotto = ( ticker ? ticker.round_elapsed_ticks : 0 ) + time_between_lotto
 		src.time_until_payday = ( ticker ? ticker.round_elapsed_ticks : 0 ) + time_between_paydays
@@ -170,8 +173,7 @@
 			winningNumbers[i][j] = rand(1,3)
 			dat += "[winningNumbers[i][j]] "
 
-		for(var/x in by_type[/obj/item/lotteryTicket])
-			var/obj/item/lotteryTicket/T = x
+		for_by_tcl(T, /obj/item/lotteryTicket)
 			// If the round associated on the lottery ticked is this round
 			if(lotteryRound == T.lotteryRound)
 				// Check the nubers
@@ -197,6 +199,7 @@
 */
 
 /obj/machinery/computer
+	var/can_reconnect = 0 //Set to 1 to make multitools call connection_scan. For consoles with associated equipment (cloner, genetek etc)
 	Topic(href, href_list)
 		if (..(href, href_list))
 			return 1
@@ -205,6 +208,22 @@
 	attack_hand(var/mob/user)
 		..()
 		interact_particle(user,src)
+
+	attackby(obj/item/W as obj, mob/user as mob)
+		if (can_reconnect)
+			if (istype(W, /obj/item/device/multitool) && !(status & (BROKEN|NOPOWER)))
+				boutput(user, "<span class='notice'>You pulse [src.name] to re-scan for equipment.</span>")
+				connection_scan()
+				return
+			else
+				src.attack_hand(user) //Previously the default behaviour for all affected computers
+		else
+			..()
+
+	proc/connection_scan()
+		//Placeholder so the multitool probing thing can go on this parent
+		//Put the code for finding the stuff your computer needs in this proc
+		return
 
 /obj/machinery/computer/ATM
 	name = "ATM"
@@ -340,7 +359,7 @@
 			<strong>&mdash; [user.client.key] Spacebux Menu &mdash;</strong>
 			<br><em>(This menu is only here for <strong>you</strong>. Other players cannot access your Spacebux!)</em>
 			<br>
-			<br>Current balance: <strong>[usr.client.persistent_bank]</strong> Spacebux <!-- <a href='?src=\ref[src];operation=view_spacebux_balance'>Check Spacebux Balance</a> -->
+			<br>Current balance: <strong>[user.client.persistent_bank]</strong> Spacebux <!-- <a href='?src=\ref[src];operation=view_spacebux_balance'>Check Spacebux Balance</a> -->
 			<br><a href='?src=\ref[src];operation=withdraw_spacebux'>Withdraw Spacebux</a>
 			<br><a href='?src=\ref[src];operation=transfer_spacebux'>Securely Send Spacebux</a>
 			<br>Deposit Spacebux at any time by inserting a token. It will always go to <strong>your</strong> account!
@@ -556,7 +575,7 @@
 		var/usr_is_robot = issilicon(usr) || isAIeye(usr)
 		if (!( data_core.bank.Find(src.active1) ))
 			src.active1 = null
-		if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (usr_is_robot))
+		if ((usr.contents.Find(src) || (in_interact_range(src, usr) && istype(src.loc, /turf))) || (usr_is_robot))
 			src.add_dialog(usr)
 			if (href_list["temp"])
 				src.temp = null
@@ -599,19 +618,19 @@
 					var/datum/data/record/R = locate(href_list["Fname"])
 					var/t1 = input("Please input name:", "Secure. records", R.fields["name"], null)  as null|text
 					t1 = copytext(html_encode(t1), 1, MAX_MESSAGE_LEN)
-					if ((!( t1 ) || !( src.authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && (!usr_is_robot)))) return
+					if ((!( t1 ) || !( src.authenticated ) || usr.stat || usr.restrained() || (!in_interact_range(src, usr) && (!usr_is_robot)))) return
 					R.fields["name"] = t1
 				else if(href_list["Fjob"])
 					var/datum/data/record/R = locate(href_list["Fjob"])
 					var/t1 = input("Please input name:", "Secure. records", R.fields["job"], null)  as null|text
 					t1 = copytext(html_encode(t1), 1, MAX_MESSAGE_LEN)
-					if ((!( t1 ) || !( src.authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && (!usr_is_robot)))) return
+					if ((!( t1 ) || !( src.authenticated ) || usr.stat || usr.restrained() || (!in_interact_range(src, usr) && (!usr_is_robot)))) return
 					R.fields["job"] = t1
 					playsound(src.loc, "keyboard", 50, 1, -15)
 				else if(href_list["Fwage"])
 					var/datum/data/record/R = locate(href_list["Fwage"])
 					var/t1 = input("Please input wage:", "Secure. records", R.fields["wage"], null)  as null|num
-					if ((!( src.authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && (!usr_is_robot)))) return
+					if ((!( src.authenticated ) || usr.stat || usr.restrained() || (!in_interact_range(src, usr) && (!usr_is_robot)))) return
 					if (t1 < 0)
 						t1 = 0
 						boutput(usr, "<span class='alert'>You cannot set a negative wage.</span>")
@@ -625,7 +644,7 @@
 					var/avail = null
 					var/t2 = input("Withdraw or Deposit?", "Secure Records", null, null) in list("Withdraw", "Deposit")
 					var/t1 = input("How much?", "Secure. records", R.fields["current_money"], null)  as null|num
-					if ((!( t1 ) || !( src.authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && (!usr_is_robot)))) return
+					if ((!( t1 ) || !( src.authenticated ) || usr.stat || usr.restrained() || (!in_interact_range(src, usr) && (!usr_is_robot)))) return
 					if (t2 == "Withdraw")
 						if (R.fields["name"] in FrozenAccounts)
 							boutput(usr, "<span class='alert'>This account cannot currently be liquidated due to active borrows.</span>")
@@ -830,7 +849,7 @@
 			<strong>&mdash; [user.client.key] Spacebux Menu &mdash;</strong>
 			<br><em>(This menu is only here for <strong>you</strong>. Other players cannot access your Spacebux!)</em>
 			<br>
-			<br>Current balance: <strong>[usr.client.persistent_bank]</strong> Spacebux <!-- <a href='?src=\ref[src];operation=view_spacebux_balance'>Check Spacebux Balance</a> -->
+			<br>Current balance: <strong>[user.client.persistent_bank]</strong> Spacebux <!-- <a href='?src=\ref[src];operation=view_spacebux_balance'>Check Spacebux Balance</a> -->
 			<br><a href='?src=\ref[src];operation=withdraw_spacebux'>Withdraw Spacebux</a>
 			<br><a href='?src=\ref[src];operation=transfer_spacebux'>Securely Send Spacebux</a>
 			<br>Deposit Spacebux at any time by inserting a token. It will always go to <strong>your</strong> account!
@@ -1025,6 +1044,7 @@
 
 	// Give a random set of numbers
 	New()
+		..()
 		START_TRACKING
 
 		lotteryRound = wagesystem.lotteryRound

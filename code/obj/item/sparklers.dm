@@ -96,8 +96,7 @@
 			src.icon_state = src.icon_on
 			src.item_state = src.item_on
 			light.enable()
-			if (!(src in processing_items))
-				processing_items.Add(src)
+			processing_items |= src
 			if(user)
 				user.update_inhands()
 		return
@@ -111,8 +110,7 @@
 			src.icon_state = src.icon_off
 			src.item_state = src.item_off
 			light.disable()
-			if (src in processing_items)
-				processing_items.Remove(src)
+			processing_items -= src
 			if(user)
 				user.update_inhands()
 		return
@@ -135,7 +133,7 @@
 				src.open = 1
 				src.icon_state = "sparkler_box-open"
 				playsound(src.loc, "sound/impact_sounds/Generic_Snap_1.ogg", 20, 1, -2)
-				boutput(usr, "<span class='notice'>You snap open the child-protective safety tape on [src].</span>")
+				boutput(user, "<span class='notice'>You snap open the child-protective safety tape on [src].</span>")
 		else
 			..()
 
@@ -146,11 +144,11 @@
 			src.open = 1
 			src.icon_state = "sparkler_box-open"
 			playsound(src.loc, "sound/impact_sounds/Generic_Snap_1.ogg", 20, 1, -2)
-			boutput(usr, "<span class='notice'>You snap open the child-protective safety tape on [src].</span>")
+			boutput(user, "<span class='notice'>You snap open the child-protective safety tape on [src].</span>")
 
 	MouseDrop(atom/over_object, src_location, over_location)
 		if(!src.open)
-			if (over_object == usr && in_range(src, usr) && isliving(usr) && !usr.stat)
+			if (over_object == usr && in_interact_range(src, usr) && isliving(usr) && !usr.stat)
 				return
 			if (usr.is_in_hands(src))
 				return

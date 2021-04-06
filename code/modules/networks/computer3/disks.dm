@@ -33,6 +33,7 @@
 	var/title = "Data Disk"
 
 	New()
+		..()
 		src.root = new /datum/computer/folder
 		src.root.holder = src
 		src.root.name = "root"
@@ -111,7 +112,7 @@
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (ispulsingtool(W))
 			user.visible_message("<span class='alert'><b>[user] begins to clear the [src]!</b></span>","You begin to clear the [src].")
-			if(do_after(user, 30))
+			if(do_after(user, 3 SECONDS))
 				user.visible_message("<span class='alert'><b>[user] clears the [src]!</b></span>","You clear the [src].")
 				//qdel(src.root)
 				if (src.root)
@@ -139,7 +140,7 @@
 		if (istype(W, /obj/item/pen))
 			var/t = input(user, "Enter new tape label", src.name, null) as text
 			t = copytext(strip_html(t), 1, 36)
-			if (!in_range(src, usr) && src.loc != usr)
+			if (!in_interact_range(src, user) && src.loc != user)
 				return
 			if (!t)
 				src.name = "ThinkTape"
@@ -277,7 +278,7 @@
 
 	New()
 		. = ..()
-		SPAWN_DBG (10) //Give time to actually generate network passes I guess.
+		SPAWN_DBG(1 SECOND) //Give time to actually generate network passes I guess.
 			if (!root) return
 			var/datum/computer/file/record/authrec = new /datum/computer/file/record {name = "GENAUTH";} (src)
 			authrec.fields = list("HEADS"="[netpass_heads]",

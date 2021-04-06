@@ -121,6 +121,7 @@
 	msgGain = "You don't feel quite right."
 	msgLose = "You feel normal again."
 	var/outOfPod = 0 //Out of the cloning pod.
+	var/timeInCryo = 0 // Time spent in a cryo tube
 
 	OnAdd()
 		..()
@@ -150,6 +151,21 @@
 				playsound(owner.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
 				random_brute_damage(owner, rand(5,8))
 				bleed(owner, rand(5,8), 5)
+
+			if (istype(owner.loc, /obj/machinery/atmospherics/unary/cryo_cell))
+				if (owner.bodytemperature < owner.base_body_temp - 80 && (owner.max_health - owner.health < 10))
+					// cryoxadone checks for 100 under; this is a little higher to account
+					// for the healing cryoxadone does (which increases temp), given that
+					// premature clones randomly take damage.
+					timeInCryo++
+
+					if (timeInCryo == 1)
+						boutput(owner, "<span class='notice'>You feel a little better.</span>")
+					else if (timeInCryo == 5)
+						// Being in cryo long enough will help fix your messed-up genes.
+						timeLeft = 1
+			else
+				timeInCryo = 0
 
 		else if (!istype(owner.loc, /obj/machinery/clonepod))
 			outOfPod = 1

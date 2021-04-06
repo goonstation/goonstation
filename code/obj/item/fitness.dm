@@ -6,13 +6,11 @@
 	anchored = 1
 	deconstruct_flags = DECON_SIMPLE
 	layer = MOB_LAYER_BASE+1 // TODO LAYER
-	var/list/hit_sounds = list('sound/impact_sounds/Generic_Hit_1.ogg', 'sound/impact_sounds/Generic_Hit_2.ogg', 'sound/impact_sounds/Generic_Hit_3.ogg',\
-	'sound/impact_sounds/Generic_Punch_2.ogg', 'sound/impact_sounds/Generic_Punch_3.ogg', 'sound/impact_sounds/Generic_Punch_4.ogg', 'sound/impact_sounds/Generic_Punch_5.ogg')
 
 	attack_hand(mob/user as mob)
 		user.lastattacked = src
 		flick("[icon_state]2", src)
-		playsound(src.loc, pick(src.hit_sounds), 25, 1, -1)
+		playsound(src.loc, pick(sounds_punch + sounds_hit), 25, 1, -1)
 		if (ishuman(user))
 			var/mob/living/carbon/human/H = user
 			if (H.sims)
@@ -43,7 +41,7 @@
 				playsound(src.loc, 'sound/vox/hit.ogg', 25, 1, -1)
 				playsound(src.loc, 'sound/vox/honk.ogg', 50, 1, -1)
 			else
-				playsound(src.loc, pick(src.hit_sounds), 25, 1, -1)
+				playsound(src.loc, pick(sounds_punch + sounds_hit), 25, 1, -1)
 				playsound(src.loc, 'sound/musical_instruments/Bikehorn_1.ogg', 50, 1, -1)
 			user.changeStatus("fitness_stam_regen",1000)
 
@@ -64,11 +62,12 @@
 		else
 			in_use = 1
 			icon_state = "fitnesslifter2"
+			APPLY_MOB_PROPERTY(user, PROP_CANTMOVE, "fitness_machine")
 			user.transforming = 1
-			user.dir = SOUTH
+			user.set_dir(SOUTH)
 			user.set_loc(src.loc)
 			var/bragmessage = pick("pushing it to the limit","going into overdrive","burning with determination","rising up to the challenge", "getting strong now","getting ripped")
-			usr.visible_message(text("<span class='alert'><B>[usr] is [bragmessage]!</B></span>"))
+			user.visible_message(text("<span class='alert'><B>[user] is [bragmessage]!</B></span>"))
 			var/lifts = 0
 			while (lifts++ < 6)
 				if (user.loc != src.loc)
@@ -83,6 +82,7 @@
 			playsound(user, 'sound/machines/click.ogg', 60, 1)
 			in_use = 0
 			user.transforming = 0
+			REMOVE_MOB_PROPERTY(user, PROP_CANTMOVE, "fitness_machine")
 			user.pixel_y = 0
 			if (ishuman(user))
 				var/mob/living/carbon/human/H = user
@@ -111,7 +111,8 @@
 			in_use = 1
 			icon_state = "fitnessweight-c"
 			user.transforming = 1
-			user.dir = SOUTH
+			APPLY_MOB_PROPERTY(user, PROP_CANTMOVE, "fitness_machine")
+			user.set_dir(SOUTH)
 			user.set_loc(src.loc)
 			var/obj/decal/W = new /obj/decal/
 			W.icon = 'icons/obj/stationobjs.dmi'
@@ -120,7 +121,7 @@
 			W.anchored = 1
 			W.layer = MOB_LAYER_BASE+1
 			var/bragmessage = pick("pushing it to the limit","going into overdrive","burning with determination","rising up to the challenge", "getting strong now","getting ripped")
-			usr.visible_message(text("<span class='alert'><B>[usr] is [bragmessage]!</B></span>"))
+			user.visible_message(text("<span class='alert'><B>[user] is [bragmessage]!</B></span>"))
 			var/reps = 0
 			user.pixel_y = 5
 			while (reps++ < 6)
@@ -139,6 +140,7 @@
 			playsound(user, 'sound/machines/click.ogg', 60, 1)
 			in_use = 0
 			user.transforming = 0
+			REMOVE_MOB_PROPERTY(user, PROP_CANTMOVE, "fitness_machine")
 			user.pixel_y = 0
 			if (ishuman(user))
 				var/mob/living/carbon/human/H = user

@@ -111,7 +111,7 @@
 				if (prob(30))
 					holder.owner.visible_message("<span class='combat'><b>[holder.owner] bites [MT]!</b></span>",\
 					"<span class='combat'><b>You bite [MT]!</b></span>")
-				holder.owner.dir = pick(cardinal)
+				holder.owner.set_dir(pick(cardinal))
 				holder.owner.pixel_x = rand(-2,2) * 2
 				holder.owner.pixel_y = rand(-2,2) * 2
 				sleep(0.4 SECONDS)
@@ -160,6 +160,9 @@
 			boutput(holder.owner, __red("That is too far away to drain."))
 			return 1
 		var/mob/living/carbon/human/H = target
+		if(!istype(H) || !isdead(H))
+			boutput(holder.owner, "<span class='alert'>That isn't a dead human.</span>")
+			return 1
 		var/mob/living/critter/spider/S = holder.owner
 		holder.owner.visible_message("<span class='combat'><b>[holder.owner] starts draining the fluids out of [H]!</b></span>",\
 		"<span class='combat'><b>You start draining the fluids out of [H]!</b></span>")
@@ -185,7 +188,9 @@
 				if (H.bioHolder)
 					H.bioHolder.AddEffect("husk")
 				playsound(get_turf(holder.owner), "sound/misc/fuse.ogg", 50, 1)
-				holder.owner.set_loc(get_step(holder.owner, pick(alldirs)))
+				var/list/turf/neightbors = getNeighbors(get_turf(holder.owner), alldirs)
+				if(length(neightbors))
+					holder.owner.set_loc(pick(neightbors))
 				SPAWN_DBG(0)
 					var/obj/icecube/cube = new /obj/icecube(get_turf(H), H)
 					H.set_loc(cube)
@@ -212,8 +217,7 @@
 								"<span class='combat'><b>You encase [H] in ice!</b></span>")
 
 				if (istype(S) && S.babyspider)
-					SPAWN_DBG(0)
-						S.grow_up()
+					S.grow_up()
 
 			doCooldown()
 			disabled = 0
@@ -330,7 +334,7 @@
 					MT.TakeDamageAccountArmor("All", rand(5,8), 0, 0, DAMAGE_STAB)
 				holder.owner.visible_message("<span class='combat'><b>[holder.owner] stomps on [MT]!</b></span>",\
 				"<span class='combat'><b>You stomp on [MT]!</b></span>")
-				holder.owner.dir = pick(cardinal)
+				holder.owner.set_dir(pick(cardinal))
 				holder.owner.pixel_x = rand(-2,2) * 2
 				holder.owner.pixel_y = rand(-2,2) * 2
 				sleep(0.4 SECONDS)

@@ -56,7 +56,7 @@
 
 		qdel(src)
 
-	throw_impact(var/atom/A)
+	throw_impact(atom/A, datum/thrown_thing/thr)
 		var/turf/T = get_turf(A)
 		..()
 		src.smash(T)
@@ -99,7 +99,7 @@
 		playsound(T, 'sound/impact_sounds/Slimy_Splat_1.ogg', 100, 1)
 		qdel(src)
 
-	throw_impact(var/atom/A)
+	throw_impact(atom/A, datum/thrown_thing/thr)
 		var/turf/T = get_turf(A)
 		..()
 		src.smash(T)
@@ -119,7 +119,7 @@
 		SPAWN_DBG(0)
 			if (src.reagents)
 				var/chem = null
-				if (islist(all_functional_reagent_ids) && all_functional_reagent_ids.len)
+				if (islist(all_functional_reagent_ids) && length(all_functional_reagent_ids))
 					chem = pick(all_functional_reagent_ids)
 				else
 					chem = "water"
@@ -131,7 +131,7 @@
 		SPAWN_DBG(0)
 			if (src.reagents)
 				var/chem = null
-				if (islist(all_functional_reagent_ids) && all_functional_reagent_ids.len)
+				if (islist(all_functional_reagent_ids) && length(all_functional_reagent_ids))
 					chem = pick(all_functional_reagent_ids)
 				else
 					chem = "water"

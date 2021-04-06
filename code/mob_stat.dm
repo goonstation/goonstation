@@ -11,10 +11,11 @@
 	var/is_construction_mode = 0
 
 	var/list/stats = list()
-	var/list/statNames = list("Map:","Next Map:","Map Vote Link:","Map Vote Time:","Map Vote Spacer","Vote Link:","Vote Time:","Vote Spacer","Game Mode:","Time To Start:","Server Load:","Shift Time Spacer","Shift Time:","Shuttle")
+	var/list/statNames = list("Map:","Next Map:","Map Vote Link:","Map Vote Time:","Map Vote Spacer","Vote Link:","Vote Time:","Vote Spacer","Game Mode:","Time To Start:","Server Load:","Shift Time Spacer","Shift Time:","Local Time:","Shuttle")
 	//above : ORDER IS IMPORANT
 
 	New()
+		..()
 		//-1 indicates a blank space to be inserted (These are set in update() but for ease of reading I have labeled the spacers here)
 		//this shit is kind of messy to read but it is Quicker than repopulating the list each update()
 		stats["Map:"] = 0
@@ -30,6 +31,7 @@
 		stats["Server Load:"] = 0
 		stats["Shift Time Spacer"] = -1
 		stats["Shift Time:"] = 0
+		stats["Local Time:"] = 0
 		stats["Shuttle:"] = 0
 
 	proc/update()
@@ -100,6 +102,7 @@
 				stats["Time To Start:"] = 0
 				var/shiftTime = round(ticker.round_elapsed_ticks / 600)
 				saveStat("Shift Time:", "[shiftTime] minute[shiftTime == 1 ? "" : "s"]")
+				saveStat("Local Time:", time2text(world.timeofday, "hh:mm"))
 
 				//MBC : nah we don't run construction anyway
 				//if (ticker.mode && istype(ticker.mode, /datum/game_mode/construction))
@@ -119,7 +122,7 @@
 		saveStat("Server Load:", world.cpu < 90 ? "No" : "Yes") //Yes very useful a++
 		//saveStat("Server Load:", ticklagtext)   //Yes, very useful! A+!
 
-		if (emergency_shuttle && emergency_shuttle.online && emergency_shuttle.location < SHUTTLE_LOC_RETURNED)
+		if (emergency_shuttle?.online && emergency_shuttle.location < SHUTTLE_LOC_RETURNED)
 			stats["Shift Time Spacer"] = -1
 			var/timeleft = emergency_shuttle.timeleft()
 			if (timeleft)
@@ -172,6 +175,9 @@ var/global/datum/mob_stat_thinker/mobStat = new
 				//BLUEGH ADMIN SHIT
 				if (mobStat.statNames[i] == "Server Load:")
 					stat("Server Load:", "[world.cpu]")
+					#if DM_VERSION >= 514
+					stat("Map CPU %:", "[world.map_cpu]")
+					#endif
 					#if TIME_DILATION_ENABLED == 1
 					stat("Variable Ticklag:", "[world.tick_lag]")
 					#endif
@@ -183,7 +189,7 @@ var/global/datum/mob_stat_thinker/mobStat = new
 					stat("Runtimes:", runtime_count)
 					continue
 				if (mobStat.statNames[i] == "Game Mode:")
-					stat("Game Mode:", (ticker && ticker.hide_mode) ? "[master_mode] **HIDDEN**" : "[master_mode]")
+					stat("Game Mode:", (ticker?.hide_mode) ? "[master_mode] **HIDDEN**" : "[master_mode]")
 					continue
 				//ADMIN SHIT END
 

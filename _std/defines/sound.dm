@@ -16,8 +16,23 @@
 #define VOLUME_CHANNEL_AMBIENT 2
 #define VOLUME_CHANNEL_RADIO 3
 #define VOLUME_CHANNEL_ADMIN 4
+#define VOLUME_CHANNEL_EMOTE 5
+#define VOLUME_CHANNEL_MENTORPM 6
+
+var/global/list/audio_channel_name_to_id = list(
+	"master" = VOLUME_CHANNEL_MASTER,
+	"game" = VOLUME_CHANNEL_GAME,
+	"ambient" = VOLUME_CHANNEL_AMBIENT,
+	"radio" = VOLUME_CHANNEL_RADIO,
+	"admin" = VOLUME_CHANNEL_ADMIN,
+	"emote" = VOLUME_CHANNEL_EMOTE,
+	"mentorpm" = VOLUME_CHANNEL_MENTORPM
+)
 
 //Area Ambience
 #define AMBIENCE_LOOPING 1
 #define AMBIENCE_FX_1 2
 #define AMBIENCE_FX_2 3
+
+//playsound flags
+#define SOUND_IGNORE_SPACE (1<<0)

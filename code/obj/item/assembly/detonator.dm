@@ -25,7 +25,6 @@
 	var/dfcode
 	var/dfcodeTries = 3 //How many code attempts before *boom*
 	var/mob/builtBy = null
-	var/note = null
 
 	flags = FPRINT | TABLEPASS | CONDUCT
 	force = 1.0
@@ -172,7 +171,7 @@
 				src.attachments.Cut()
 				user.show_message("<span class='notice'>You disconnect the timer from the assembly, and reenable its external controls.</span>")
 			if (isscrewingtool(W))
-				if (!src.trigger && !src.attachments.len)
+				if (!src.trigger && !length(src.attachments))
 					user.show_message("<span class='alert'>You cannot remove any attachments, as there are none attached.</span>")
 					return
 				var/list/options = list(src.trigger)
@@ -202,24 +201,20 @@
 				else
 					W.set_loc(src)
 					W.master = src
-					W.layer = initial(W.layer)
 					user.u_equip(W)
 					src.trigger = W
 					user.show_message("<span class='notice'>You attach the [W.name] to the trigger slot.</span>")
 					setDescription()
 			else if (istype(W, /obj/item/paper))
-				src.note = W:info
-				W.set_loc(null)
-				W.master = null
-				W.layer = null
+				W.set_loc(src)
+				W.master = src
 				user.u_equip(W)
+				src.attachments += W
 				user.show_message("<span class='notice'>You stick the note onto the detonator assembly.</span>")
-				pool(W)
 			else if (W.is_detonator_attachment())
 				if (src.attachments.len < 3)
 					W.set_loc(src)
 					W.master = src
-					W.layer = initial(W.layer)
 					user.u_equip(W)
 					src.attachments += W
 					W.detonator_act("attach", src)
@@ -307,10 +302,8 @@
 	src.safety = 0
 	src.part_fs.timing = 1
 	src.part_fs.c_state(1)
-	if (!(src in processing_items))
-		processing_items.Add(src)
-	if (!(src.part_fs in processing_items))
-		processing_items.Add(src.part_fs)
+	processing_items |= src
+	processing_items |= src.part_fs
 	src.dispatch_event("prime")
 
 	command_alert("A canister bomb is primed in [get_area(src)] at coordinates (<b>X</b>: [src.master.x], <b>Y</b>: [src.master.y], <b>Z</b>: [src.master.z])! It is set to go off in [src.part_fs.time] seconds.")

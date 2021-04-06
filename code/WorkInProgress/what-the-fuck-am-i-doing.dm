@@ -1,7 +1,7 @@
 /obj/machinery/portapuke
 	name = "Port-A-Puke"
 	icon = 'icons/obj/cloning.dmi'
-	icon_state = "pod_0"
+	icon_state = "puke_0"
 	desc = "A weapon of pure terror."
 	density = 1
 	anchored = 0
@@ -110,7 +110,7 @@
 			if (L.pulling == H)
 				L.pulling = null
 
-			src.add_fingerprint(usr)
+			src.add_fingerprint(user)
 			src.accept_occupant(H)
 			src.update_icon()
 			qdel(G)
@@ -138,8 +138,7 @@
 		if(!src.occupant)
 			src.occupant = M
 
-			if(M.bioHolder)
-				M.bioHolder.AddEffect("stinky")
+			M.bioHolder?.AddEffect("stinky")
 
 			for(var/obj/O in src)
 				O.set_loc(get_turf(src))
@@ -148,7 +147,7 @@
 
 
 	proc/update_icon()
-		icon_state = "[src.occupant ? "pod_g" : "pod_0"]"
+		icon_state = src.occupant ? "puke_1" : "puke_0"
 		return
 
 	verb/enter()

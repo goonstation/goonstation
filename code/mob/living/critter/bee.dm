@@ -1,4 +1,4 @@
-#define ADMIN_BEES_ONLY if(!src.non_admin_bee_allowed && src.client && !src.client.holder) return src.make_critter(/mob/living/critter/small_animal/wasp)
+#define ADMIN_BEES_ONLY if(!src.non_admin_bee_allowed && src.client && !src.client.holder) {src.make_critter(/mob/living/critter/small_animal/wasp); return}
 
 /* ============================================= */
 /* -------------------- Bee -------------------- */
@@ -57,6 +57,8 @@
 
 	New()
 		..()
+		// bee mobs should have their actual bee names
+		real_name = name
 		SPAWN_DBG(0)
 			ADMIN_BEES_ONLY
 			//statlog_bees(src)
@@ -70,7 +72,9 @@
 			if ("flip")
 				if (src.emote_check(voluntary, 50) && !src.shrunk)
 					SPAWN_DBG(1 SECOND)
-						animate_bumble(src)
+						// animate_bumble(src)
+						// either stays put or bumbles
+						src.animate_lying(src.lying)
 					return null
 			if ("snap","buzz")
 				if (src.emote_check(voluntary, 30))
@@ -82,6 +86,10 @@
 			if ("smile","bumble","bomble")
 				if (src.emote_check(voluntary, 50))
 					return "<b>[src]</b> [act == "smile" ? pick("bumbles","bombles") : "[act]s"] happily!"
+			if ("sleep")
+				if (src.hasStatus("resting"))
+					src.sleeping = 2
+					return null
 		return null
 
 	specific_emote_type(var/act)
@@ -93,6 +101,8 @@
 			if ("dance")
 				return 1
 			if ("smile","bumble","bomble")
+				return 1
+			if ("sleep")
 				return 1
 		return ..()
 
@@ -131,14 +141,13 @@
 		if (!gibbed)
 			animate(src)
 		for (var/obj/critter/domestic_bee/fellow_bee in view(7,src)) // once mobcritters have AI we can change this to the mob version of bees, but for now we do this
-			LAGCHECK(LAG_HIGH)
-			if (fellow_bee && fellow_bee.alive)
+			if (fellow_bee?.alive)
 				fellow_bee.aggressive = 1
 				SPAWN_DBG(0.7 SECONDS)
 					fellow_bee.aggressive = 0
 		..()
 
-	throw_impact(atom/hit_atom)
+	throw_impact(atom/hit_atom, datum/thrown_thing/thr)
 		..()
 		if (!isdead(src))
 			animate_bumble(src) // please keep bumbling tia
@@ -154,6 +163,25 @@
 			"<span class='notice'>[src] hugs you back!</span>")
 			if (user.reagents)
 				user.reagents.add_reagent("hugs", 10)
+
+
+	// force_laydown_standup()
+	// 	..()
+	// 	if (src.sleeping > 0)
+	// 	return
+
+	animate_lying(is_lying)
+		if (is_lying)
+			// stop the bumbling animation
+			animate(src, pixel_y = -4, time = 1)
+		else
+			animate_bumble(src)
+
+
+	on_sleep()
+		..()
+		src.update_icon()
+		return
 
 	on_wake()
 		..()
@@ -245,7 +273,10 @@
 			"You regurgitate a blob of honey!")
 
 		if (honey.reagents)
-			honey.reagents.maximum_volume = honey_production_amount
+			// Increase the reagent container by the amount of honey we're generating
+			// as honey starts with 15/50 and bees have 50
+			// (meant that reagent transfers often didn't work since honey was too full)
+			honey.reagents.maximum_volume += honey_production_amount
 
 		src.reagents.trans_to(honey, honey_production_amount)
 		playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
@@ -268,7 +299,8 @@
 		animate_beespin(src, dir_choice, time_time, 1)
 
 		sleep(time_time * 8)
-		animate_bumble(src)
+		src.animate_lying(src.lying)
+		// animate_bumble(src)
 		src.is_dancing = 0
 
 	proc/update_icon()
@@ -279,18 +311,19 @@
 			src.UpdateOverlays(null, "coverlay")
 
 		if (isdead(src))
-			src.icon_state = "[src.icon_body]-dead"
+			// src.icon_state = "[src.icon_body]-dead"
+			src.icon_state = icon_state_dead
 			src.UpdateOverlays(null, "zzzs")
 			if (src.icon_color)
 				if (!src.image_color_overlay)
 					src.image_color_overlay = image(src.icon)
-				src.image_color_overlay.icon_state = "[src.icon_body]-dead-color"
+				src.image_color_overlay.icon_state = "[src.icon_state_dead]-color"
 				src.image_color_overlay.color = src.icon_color
 				src.UpdateOverlays(src.image_color_overlay, "coverlay")
 
 		else
 			if (src.sleeping)
-				src.icon_state = "[src.icon_body]-sleep"
+				src.icon_state = icon_state_sleep // "[src.icon_body]-sleep"
 				if (src.icon_state_zzzs)
 					if (!src.image_sleep_overlay)
 						src.image_sleep_overlay = image(src.icon, src.icon_state_zzzs)
@@ -298,7 +331,7 @@
 				if (src.icon_color)
 					if (!src.image_color_overlay)
 						src.image_color_overlay = image(src.icon)
-					src.image_color_overlay.icon_state = "[src.icon_body]-sleep-color"
+					src.image_color_overlay.icon_state = "[src.icon_state_sleep]-color"
 					src.image_color_overlay.color = src.icon_color
 					src.UpdateOverlays(src.image_color_overlay, "coverlay")
 			else
@@ -344,9 +377,9 @@
 			if (nectarTransferAmt <= 0)
 				return
 
-			if (planter.current.assoc_reagents.len || (planter.plantgenes && planter.plantgenes.mutation && planter.plantgenes.mutation.assoc_reagents.len))
+			if (planter.current.assoc_reagents.len || (planter.plantgenes && planter.plantgenes.mutation && length(planter.plantgenes.mutation.assoc_reagents)))
 				var/list/additional_reagents = planter.current.assoc_reagents
-				if (planter.plantgenes && planter.plantgenes.mutation && planter.plantgenes.mutation.assoc_reagents.len)
+				if (planter.plantgenes && planter.plantgenes.mutation && length(planter.plantgenes.mutation.assoc_reagents))
 					additional_reagents = additional_reagents | planter.plantgenes.mutation.assoc_reagents
 
 				planter.reagents.remove_reagent("nectar", nectarTransferAmt*0.75)
@@ -414,6 +447,7 @@
 /datum/targetable/critter/bee_sting
 	name = "Sting"
 	desc = "Sting a mob, injecting them with venom."
+	icon_state = "bee_sting"
 	cooldown = 50
 	targeted = 1
 	target_anything = 1
@@ -466,6 +500,7 @@
 /datum/targetable/critter/bite/bee
 	name = "Bite"
 	desc = "Bite down on a mob, causing a little damage."
+	icon_state = "bee_bite"
 	cooldown = 30
 	sound_bite = 'sound/impact_sounds/Flesh_Crush_1.ogg'
 	brute_damage = 4
@@ -490,6 +525,7 @@
 /datum/targetable/critter/bee_swallow
 	name = "Swallow"
 	desc = "Swallow a mob, trapping them in honey."
+	icon_state = "bee_swallow"
 	cooldown = 300
 	targeted = 1
 	target_anything = 1
@@ -536,9 +572,11 @@
 /datum/targetable/critter/bee_teleport
 	name = "Stare"
 	desc = "Stare at a mob, teleporting them away after a short time."
+	icon_state = "bee_teleport"
 	cooldown = 300
 	targeted = 1
 	target_anything = 1
+	var/do_buzz = 1
 
 	var/datum/projectile/slam/proj = new
 
@@ -559,7 +597,8 @@
 			boutput(holder.owner, __red("That is too far away to teleport away."))
 			return 1
 		holder.owner.visible_message("<span class='combat'><b>[holder.owner]</b> stares at [MT]!</span>")
-		playsound(get_turf(holder.owner), 'sound/voice/animal/buzz.ogg', 100, 1)
+		if(do_buzz)
+			playsound(get_turf(holder.owner), 'sound/voice/animal/buzz.ogg', 100, 1)
 		boutput(MT, "<span class='combat'>You feel a horrible pain in your head!</span>")
 		MT.changeStatus("stunned", 2 SECONDS)
 		SPAWN_DBG(2.5 SECONDS)
@@ -686,6 +725,18 @@
 	icon_state_sleep = "madbee-sleep"
 	icon_body = "madbee"
 
+/mob/living/critter/small_animal/bee/moth
+	name = "moth"
+	desc = "It appears to be a hybrid of a domestic space-bee and a moth. How cute!"
+	icon_state = "moth-wings"
+	icon_state_dead = "moth-dead"
+	icon_state_sleep = "moth-sleep"
+	icon_body = "moth"
+	honey_color = rgb(207, 207, 207)
+	speechverb_say = "flutters"
+	speechverb_exclaim = "squeaks"
+	speechverb_ask = "flutters"
+
 /mob/living/critter/small_animal/bee/zombee
 	name = "zombee"
 	desc = "Genetically engineered for extreme size and indistinct segmentation and bred for docility, the greater domestic space-bee is increasingly popular among space traders and science-types.<br>This one seems kinda sick, poor thing."
@@ -706,7 +757,7 @@
 		else if (src.playing_dead)
 			return
 		else
-			src.play_dead(rand(40,60))
+			src.play_dead(rand(5,15))
 
 	attackby(var/obj/item/I, var/mob/M)
 		..()
@@ -721,7 +772,7 @@
 				src.visible_message("<span class='alert'><b>[src]</b> dies!</span>",\
 				"<span class='alert'><b>You die!</b></span>")
 				src.set_density(0)
-			src.playing_dead = clamp((src.playing_dead + addtime), 0, 100)
+			src.playing_dead = clamp((src.playing_dead + addtime), 0, 30)
 		if (src.playing_dead <= 0)
 			return
 		if (src.playing_dead == 1)

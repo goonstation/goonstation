@@ -1,18 +1,18 @@
-// Highly modular HUD for critters.
+/// Highly modular HUD for critters.
 /datum/hud/critter
 	var/list/hands = list()
 	var/list/equipment = list()
-	var/obj/screen/hud/health
-	var/obj/screen/hud/oxygen
-	var/obj/screen/hud/fire
-	var/obj/screen/hud/intent
-	var/obj/screen/hud/mintent
-	var/obj/screen/hud/throwing
-	var/obj/screen/hud/pulling
-	var/obj/screen/hud/resist
-	var/obj/screen/hud/
+	var/atom/movable/screen/hud/health
+	var/atom/movable/screen/hud/oxygen
+	var/atom/movable/screen/hud/fire
+	var/atom/movable/screen/hud/intent
+	var/atom/movable/screen/hud/mintent
+	var/atom/movable/screen/hud/throwing
+	var/atom/movable/screen/hud/pulling
+	var/atom/movable/screen/hud/resist
+	var/atom/movable/screen/hud/
 
-	var/obj/screen/hud
+	var/atom/movable/screen/hud
 		stamina
 		stamina_back
 		bodytemp
@@ -23,7 +23,7 @@
 
 	var/mob/living/critter/master
 	var/icon/icon_hud = 'icons/mob/hud_human.dmi'
-	var/list/statusUiElements = list() //Assoc. List  STATUS EFFECT INSTANCE : UI ELEMENT add_screen(obj/screen/S). Used to hold the ui elements since they shouldnt be on the status effects themselves.
+	var/list/statusUiElements = list() //Assoc. List  STATUS EFFECT INSTANCE : UI ELEMENT add_screen(atom/movable/screen/S). Used to hold the ui elements since they shouldnt be on the status effects themselves.
 
 	var/nr = 0
 	var/nl = 0
@@ -32,6 +32,7 @@
 	var/tre = 0
 
 	New(M)
+		..()
 		master = M
 
 		var/hand_s = -round((master.hands.len - 1) / 2)
@@ -40,10 +41,10 @@
 			var/curr = hand_s + i - 1
 			var/datum/handHolder/HH = master.hands[i]
 			var/SL = "CENTER[curr < 0 ? curr : (curr > 0 ? "+[curr]" : null)],SOUTH"
-			var/obj/screen/hud/H = create_screen("hand[i]", HH.name, HH.icon, "[HH.icon_state][i == master.active_hand ? 1 : 0]", SL, HUD_LAYER+1)
+			var/atom/movable/screen/hud/H = create_screen("hand[i]", HH.name, HH.icon, "[HH.icon_state][i == master.active_hand ? 1 : 0]", SL, HUD_LAYER+1)
 			HH.screenObj = H
 			hands += H
-		nr = hand_s + master.hands.len
+		nr = hand_s + length(master.hands)
 		health = create_screen("health", "health", src.icon_hud, "health0", "EAST[next_topright()],NORTH", HUD_LAYER+1)
 
 		if (master.use_stamina)
@@ -88,7 +89,7 @@
 		for (var/i = 1, i <= master.equipment.len, i++)
 			var/datum/equipmentHolder/EH = master.equipment[i]
 			var/SL = loc_left()
-			var/obj/screen/hud/H = create_screen("equipment[i]", EH.name, EH.icon, EH.icon_state, SL, HUD_LAYER+1)
+			var/atom/movable/screen/hud/H = create_screen("equipment[i]", EH.name, EH.icon, EH.icon_state, SL, HUD_LAYER+1)
 			EH.screenObj = H
 			equipment += EH
 			if (EH.item)
@@ -143,7 +144,7 @@
 	proc/update_hands()
 		for (var/i = 1, i <= master.hands.len, i++)
 			var/datum/handHolder/HH = master.hands[i]
-			var/obj/screen/hud/H = HH.screenObj
+			var/atom/movable/screen/hud/H = HH.screenObj
 			if (master.active_hand == i)
 				H.icon_state = "[HH.icon_state]1"
 			else
@@ -208,6 +209,7 @@
 				if ("health")
 					boutput(master, "<span class='notice'>Your health: [master.health]/[master.max_health]</span>")
 				if ("rest")
+					if(ON_COOLDOWN(src.master, "toggle_rest", REST_TOGGLE_COOLDOWN)) return
 					if(master.ai_active && !master.hasStatus("resting"))
 						master.show_text("You feel too restless to do that!", "red")
 					else
@@ -250,11 +252,11 @@
 		pulling.icon_state = "pull[!!master.pulling]"
 
 	proc/update_status_effects()
-		for(var/obj/screen/statusEffect/G in src.objects)
+		for(var/atom/movable/screen/statusEffect/G in src.objects)
 			remove_screen(G)
 
-		for(var/datum/statusEffect/S in src.statusUiElements) //Remove stray effects.
-			if(!master.statusEffects || !(S in master.statusEffects) || !S.visible)
+		for(var/datum/statusEffect/S as anything in src.statusUiElements) //Remove stray effects.
+			if(!master.statusEffects || !(S in master.statusEffects))
 				pool(statusUiElements[S])
 				src.statusUiElements.Remove(S)
 				qdel(S)
@@ -263,10 +265,10 @@
 		var/pos_x = spacing - 0.2 - 1
 
 		if(master.statusEffects)
-			for(var/datum/statusEffect/S in master.statusEffects) //Add new ones, update old ones.
+			for(var/datum/statusEffect/S as anything in master.statusEffects) //Add new ones, update old ones.
 				if(!S.visible) continue
 				if((S in statusUiElements) && statusUiElements[S])
-					var/obj/screen/statusEffect/U = statusUiElements[S]
+					var/atom/movable/screen/statusEffect/U = statusUiElements[S]
 					U.icon = icon_hud
 					U.screen_loc = "EAST[pos_x < 0 ? "":"+"][pos_x],NORTH-0.7"
 					U.update_value()
@@ -274,7 +276,7 @@
 					pos_x -= spacing
 				else
 					if(S.visible)
-						var/obj/screen/statusEffect/U = new/obj/screen/statusEffect(master, S)
+						var/atom/movable/screen/statusEffect/U = new/atom/movable/screen/statusEffect(master, S)
 						U.init(master,S)
 						U.icon = icon_hud
 						statusUiElements.Add(S)

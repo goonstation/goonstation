@@ -34,29 +34,18 @@ __pycache__/
 *.py[cod]
 *$py.class
 
-# C extensions
-#*.so
+# Ignore compiled linux libs in the root folder, e.g. librust_g.so
+/*.so
 
-# Distribution / packaging
-.Python
-env/
-build/
-develop-eggs/
-dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-*.egg-info/
-.installed.cfg
-*.egg
+# Build tools cache
+/tools/**/.cache
 
-# Local Map Backups
+# Local map backups
 /maps/**/backup/
+*.dmm.backup
+
+# Assets build files
+/browserassets/build/
 
 # Local tgui dev server files
 /browserassets/tgui/.tmp/**/*
@@ -80,3 +69,4 @@ Desktop.ini
 
 # Dedicated unversioned folder
 /unversioned/**/*
+cfg/admin.txt

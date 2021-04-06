@@ -1,4 +1,20 @@
 
+(t)fri sep 18 20
+(u)UrsulaMajor
+(p)2211
+(e)🍑⚖|ass-jam, balance
+(*)Wages and vending machine prices have been standardized. Please give feedback on the PR if anything seems off.
+(t)sat sep 12 20
+(u)Sartorius7
+(p)2163
+(e)🍑|ass-jam
+(+)Two new assday items, screaming shoes and farting flipflops, adminspawn.
+(t)thu sep 10 20
+(u)pali
+(*)Temporary hotspots (e.g. from welderbombs, fireballs, shitty grills...) now more consistently affect atmos temperature. Let's test it out.
+(t)tue sep 08 20
+(u)pali
+(*)Burning items now release their contents as smoke. Bring back infinicheese 2020.
 (t)wed aug 26 20
 (u)pali
 (p)1962

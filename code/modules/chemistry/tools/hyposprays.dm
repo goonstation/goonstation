@@ -1,5 +1,5 @@
 var/global/list/chem_whitelist = list("antihol", "charcoal", "epinephrine", "insulin", "mutadone", "teporone",\
-"silver_sulfadiazine", "salbutamol", "perfluorodecalin", "omnizine", "stimulants", "synaptizine", "anti_rad",\
+"silver_sulfadiazine", "salbutamol", "perfluorodecalin", "omnizine", "synaptizine", "anti_rad",\
 "oculine", "mannitol", "penteticacid", "styptic_powder", "methamphetamine", "spaceacillin", "saline",\
 "salicylic_acid", "cryoxadone", "blood", "bloodc", "synthflesh",\
 "menthol", "cold_medicine", "antihistamine", "ipecac",\
@@ -38,7 +38,7 @@ var/global/list/chem_whitelist = list("antihol", "charcoal", "epinephrine", "ins
 
 	New()
 		..()
-		if (src.safe && islist(chem_whitelist) && chem_whitelist.len)
+		if (src.safe && islist(chem_whitelist) && length(chem_whitelist))
 			src.whitelist = chem_whitelist
 
 	proc/update_icon()
@@ -112,7 +112,7 @@ var/global/list/chem_whitelist = list("antihol", "charcoal", "epinephrine", "ins
 		if (user)
 			user.show_text("[src]'s safeties have been reactivated.", "blue")
 		safe = 1
-		src.overlays = null
+		src.UpdateOverlays(null, "emagged")
 		src.update_icon()
 		return 1
 

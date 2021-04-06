@@ -41,14 +41,21 @@
  */
 
 /obj/tombstone
-	name = "Tombstone"
-	desc = "Here lies Tango N. Vectif, killed by a circus bear.  RIP."
+	name = "tombstone"
+	//desc = "Here lies Tango N. Vectif, killed by a circus bear.  RIP." // changing for spawnability
+	desc = "Rest in peace."
 	icon = 'icons/misc/halloween.dmi'
 	icon_state = "tombstone"
 	anchored = 1
 	density = 1
 	var/robbed = 0
 	var/special = null //The path of whatever special loot is robbed from this grave.
+
+	memorial
+		name = "memorial marker"
+		desc = "Rest in peace."
+		icon = 'icons/misc/halloween.dmi'
+		icon_state = "memorial"
 
 /*
  *	Some sort of bizarre mind gizmo!
@@ -76,7 +83,7 @@
 		//This dude is no Fonz
 		if (user.a_intent == "harm")
 			user.visible_message("<span class='combat'><b>[user]</b> punches the [src]!</span>","You punch the [src].  Your hand hurts.")
-			playsound(src.loc, pick('sound/impact_sounds/Generic_Punch_2.ogg','sound/impact_sounds/Generic_Punch_3.ogg','sound/impact_sounds/Generic_Punch_4.ogg','sound/impact_sounds/Generic_Punch_5.ogg'), 100, 1)
+			playsound(src.loc, pick(sounds_punch), 100, 1)
 			user.TakeDamage(user.hand == 1 ? "l_arm" : "r_arm", 0, rand(1, 4))
 			return
 		else
@@ -184,13 +191,11 @@
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "beaker0"
 	item_state = "beaker"
+	initial_volume = 50
 
 	New()
-		..() // CALL YOUR GODDAMN PARENTS GODDAMNIT JESUS FUCKING CHRIST
-		var/datum/reagents/R = new/datum/reagents(50)
-		reagents = R
-		R.my_atom = src
-		R.add_reagent("strange_reagent", 50)
+		..()
+		reagents.add_reagent("strange_reagent", 50)
 
 /obj/item/storage/secure/ssafe/hjam
 	name = "Gun Storage"
@@ -339,8 +344,7 @@
 					stoneman.layer = MOB_LAYER
 
 					var/icon/composite = icon(M.icon, M.icon_state, M.dir, 1)
-					for(var/O in M.overlays)
-						var/image/I = O
+					for (var/image/I as anything in M.overlays)
 						composite.Blend(icon(I.icon, I.icon_state, I.dir, 1), ICON_OVERLAY)
 					composite.ColorTone( rgb(188,188,188) )
 					stoneman.icon = composite
@@ -424,8 +428,8 @@
 			if(!(src.client && src.client.holder))
 				src.emote_allowed = 0
 
-			if(src.gender == MALE) playsound(get_turf(src), "sound/voice/screams/male_scream.ogg", 100, 0, 0, 0.91)
-			else playsound(get_turf(src), "sound/voice/screams/female_scream.ogg", 100, 0, 0, 0.9)
+			if(src.gender == MALE) playsound(get_turf(src), "sound/voice/screams/male_scream.ogg", 100, 0, 0, 0.91, channel=VOLUME_CHANNEL_EMOTE)
+			else playsound(get_turf(src), "sound/voice/screams/female_scream.ogg", 100, 0, 0, 0.9, channel=VOLUME_CHANNEL_EMOTE)
 			SPAWN_DBG(5 SECONDS)
 				src.emote_allowed = 1
 			return "screams!"
@@ -498,14 +502,13 @@
 			stoneman.layer = MOB_LAYER
 
 			var/icon/composite = icon(M.icon, M.icon_state, M.dir, 1)
-			for(var/O in M.overlays)
-				var/image/I = O
+			for (var/image/I as anything in M.overlays)
 				composite.Blend(icon(I.icon, I.icon_state, I.dir, 1), ICON_OVERLAY)
 			composite.ColorTone( rgb(188,188,188) )
 			stoneman.icon = composite
 
 			holder.set_loc(stoneman)
-			stoneman.dir = get_dir(stoneman, src)
+			stoneman.set_dir(get_dir(stoneman, src))
 
 		else
 			. += desc
@@ -530,7 +533,7 @@
 				for (var/atom/A in range(4,user))
 					if (isarea(A))
 						continue
-					if (istype(A,/obj/particle/) || istype(A,/obj/screen))
+					if (istype(A,/obj/particle/) || istype(A,/atom/movable/screen))
 						continue
 					if (ismob(A))
 						var/mob/M = A
@@ -674,6 +677,6 @@
 	proc/spooky_shake()
 		set waitfor = 0
 		for (var/i=src.trigger_duration, i>0, i--)
-			src.dir = pick(cardinal)
+			src.set_dir(pick(cardinal))
 			src.pixel_x = rand(-3,3)
 			sleep(0.1 SECONDS)

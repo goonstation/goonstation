@@ -285,14 +285,11 @@ obj/machinery/atmospherics/retrofilter
 					removed.carbon_dioxide = 0
 			if (filter_mode & MODE_TRACE)
 				if(removed && length(removed.trace_gases))
-					for(var/datum/gas/trace_gas in removed.trace_gases)
+					for(var/datum/gas/trace_gas as anything in removed.trace_gases)
 						if(trace_gas)
-							removed.trace_gases -= trace_gas
-							if(!removed.trace_gases.len)
-								removed.trace_gases = null
-							if(!filtered_out.trace_gases)
-								filtered_out.trace_gases = list()
-							filtered_out.trace_gases += trace_gas
+							var/datum/gas/filtered_gas = filtered_out.get_or_add_trace_gas_by_type(trace_gas.type)
+							filtered_gas.moles = trace_gas.moles
+							removed.remove_trace_gas(trace_gas)
 
 			air_out1.merge(filtered_out)
 			air_out2.merge(removed)
@@ -301,8 +298,7 @@ obj/machinery/atmospherics/retrofilter
 			network_in.merge(network_out2)
 			network_out2 = network_in
 
-		if(network_out1)
-			network_out1.update = 1
+		network_out1?.update = 1
 
 		if(network_out2)
 			network_out2.update = 1
@@ -352,7 +348,7 @@ obj/machinery/atmospherics/retrofilter
 				return
 			src.add_fingerprint(user)
 			user.show_message("<span class='alert'>Now [src.open ? "re" : "un"]securing the access system panel...</span>", 1)
-			if (!do_after(user, 30))
+			if (!do_after(user, 3 SECONDS))
 				return
 			src.open = !src.open
 			user.show_message("<span class='alert'>Done!</span>",1)
@@ -380,7 +376,7 @@ obj/machinery/atmospherics/retrofilter
 		else if (issnippingtool(W) && hacked)
 			src.add_fingerprint(user)
 			user.show_message("<span class='alert'>Now removing the bypass wires... <I>(This may take a while)</I></span>", 1)
-			if (!do_after(user, 50))
+			if (!do_after(user, 5 SECONDS))
 				return
 			src.hacked = 0
 			src.update_overlays()

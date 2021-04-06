@@ -1,13 +1,13 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
 /turf/space,
-/area)
+/area/space)
 "ab" = (
 /turf/simulated/shuttle/wall/flock{
 	icon_state = "shuttle-wall";
 	dir = 9
 	},
-/area)
+/area/space)
 "ac" = (
 /turf/simulated/shuttle/wall/flock{
 	icon_state = "shuttle-wall";
@@ -23,7 +23,7 @@
 	icon_state = "shuttle-nose";
 	dir = 8
 	},
-/area)
+/area/space)
 "af" = (
 /obj/decal/cleanable/flock/drone_debris,
 /turf/simulated/floor/shuttle/flock,
@@ -34,7 +34,7 @@
 	dir = 5
 	},
 /turf/space,
-/area)
+/area/space)
 "ah" = (
 /obj/wingrille_spawn/flock,
 /turf/simulated/floor/shuttle/flock,
@@ -53,7 +53,7 @@
 	dir = 6
 	},
 /turf/space,
-/area)
+/area/space)
 "ak" = (
 /turf/simulated/shuttle/wall/flock{
 	icon_state = "shuttle-wall";
@@ -115,7 +115,7 @@
 	icon_state = "shuttle-wall";
 	dir = 5
 	},
-/area)
+/area/space)
 "as" = (
 /obj/stool/chair/comfy/flock,
 /obj/machinery/light/flock{
@@ -147,7 +147,7 @@
 "av" = (
 /obj/lattice/flock,
 /turf/space,
-/area)
+/area/space)
 "aw" = (
 /obj/machinery/door/feather/friendly{
 	icon_state = "door1";
@@ -209,39 +209,39 @@
 	dir = 8
 	},
 /turf/space,
-/area)
+/area/space)
 "aF" = (
 /obj/decal/fakeobjects/flock/antenna/end{
 	icon_state = "antenna-end";
 	dir = 4
 	},
 /turf/space,
-/area)
+/area/space)
 "aG" = (
 /obj/decal/fakeobjects/flock/wing/destroyed{
 	icon_state = "wing-destroyed";
 	dir = 9
 	},
 /turf/space,
-/area)
+/area/space)
 "aH" = (
 /obj/decal/fakeobjects/flock/wing{
 	icon_state = "wing";
 	dir = 8
 	},
 /turf/space,
-/area)
+/area/space)
 "aI" = (
 /obj/decal/fakeobjects/flock/antenna/end{
 	icon_state = "antenna-end";
 	dir = 1
 	},
 /turf/space,
-/area)
+/area/space)
 "aJ" = (
 /obj/decal/fakeobjects/flock/antenna,
 /turf/space,
-/area)
+/area/space)
 "aK" = (
 /obj/machinery/door/feather/trader{
 	icon_state = "door1";
@@ -255,7 +255,7 @@
 	dir = 5
 	},
 /turf/space,
-/area)
+/area/space)
 "aM" = (
 /obj/decal/fakeobjects/flock/telepad,
 /obj/map/light/cyan,
@@ -302,7 +302,7 @@
 	dir = 1
 	},
 /turf/space,
-/area)
+/area/space)
 "aU" = (
 /turf/simulated/shuttle/wall/flock{
 	icon_state = "shuttle-wall";
@@ -368,7 +368,7 @@
 	dir = 6
 	},
 /turf/space,
-/area)
+/area/space)
 "bb" = (
 /obj/decal/cleanable/flockdrone_debris/fluid,
 /turf/simulated/floor/shuttle/flock,
@@ -387,20 +387,20 @@
 	dir = 1
 	},
 /turf/space,
-/area)
+/area/space)
 "be" = (
 /obj/decal/fakeobjects/flock/antenna/broken{
 	icon_state = "antenna-broken-2";
 	dir = 4
 	},
 /turf/space,
-/area)
+/area/space)
 "bf" = (
 /obj/decal/fakeobjects/flock/antenna/broken{
 	icon_state = "atenna-broken-1"
 	},
 /turf/space,
-/area)
+/area/space)
 "bg" = (
 /obj/machinery/light/flock{
 	icon_state = "flock1";
@@ -423,7 +423,7 @@
 /area/flock_trader)
 "bj" = (
 /turf/simulated/floor/shuttlebay/flock/middle,
-/area)
+/area/space)
 "bk" = (
 /obj/machinery/light/flock,
 /turf/simulated/floor/shuttlebay/flock{
@@ -445,7 +445,7 @@
 	},
 /obj/lattice/flock,
 /turf/space,
-/area)
+/area/space)
 "bn" = (
 /obj/decal/fakeobjects/flock/antenna/end{
 	icon_state = "antenna-end";
@@ -453,7 +453,7 @@
 	},
 /obj/lattice/flock,
 /turf/space,
-/area)
+/area/space)
 "bo" = (
 /obj/decal/fakeobjects/flock/antenna/broken{
 	icon_state = "antenna-broken-2";
@@ -461,7 +461,7 @@
 	},
 /obj/lattice/flock,
 /turf/space,
-/area)
+/area/space)
 
 (1,1,1) = {"
 aa

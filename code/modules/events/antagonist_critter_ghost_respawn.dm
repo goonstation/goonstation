@@ -23,6 +23,7 @@
 		return dropped_items
 
 	New(potential_drop_items, remove_dropped_items = 0, number_of_rolls = 1, percent_droprate = 100, pity_drop_atleast_one = 0)
+		..()
 		src.potential_drop_items = potential_drop_items
 		src.remove_dropped_items = remove_dropped_items
 		src.number_of_rolls = number_of_rolls
@@ -46,6 +47,7 @@
 		return items_to_drop
 
 	New(critter_types, drop_tables)
+		..()
 		src.critter_types = critter_types
 		src.drop_tables = drop_tables
 
@@ -172,7 +174,7 @@
 				src.num_critters = rand(1,min(3,candidates.len))
 
 			for (var/i in 1 to src.num_critters)
-				if (!candidates || !candidates.len)
+				if (!candidates || !length(candidates))
 					break
 
 				var/datum/mind/M = pick(candidates)
@@ -186,6 +188,9 @@
 							M.current._AddComponent(list(/datum/component/drop_loot_on_death, items_to_drop))
 					else // only path provided
 						M.current.make_critter(picked_critter, pestlandmark)
+					var/obj/item/implant/access/infinite/assistant/O = new /obj/item/implant/access/infinite/assistant(M.current)
+					O.owner = M.current
+					O.implanted = 1
 					bad_traitorify(M.current)
 				candidates -= M
 

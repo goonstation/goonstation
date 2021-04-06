@@ -40,7 +40,8 @@
 			window_found = TRUE
 			break
 	if(!window_found)
-		log_tgui(user, "Error: Pool exhausted")
+		log_tgui(user, "Error: Pool exhausted",
+			context = "tgui_process/request_pooled_window")
 		return null
 	return window
 
@@ -52,7 +53,7 @@
  * required user mob
  */
 /datum/controller/process/tgui/proc/force_close_all_windows(mob/user)
-	log_tgui(user, "force_close_all_windows")
+	log_tgui(user, context = "tgui_process/force_close_all_windows")
 	if(user.client)
 		user.client.tgui_windows = list()
 		for(var/i in 1 to TGUI_WINDOW_HARD_LIMIT)
@@ -68,7 +69,7 @@
  * required window_id string
  */
 /datum/controller/process/tgui/proc/force_close_window(mob/user, window_id)
-	log_tgui(user, "force_close_window")
+	log_tgui(user, context = "tgui_process/force_close_window")
 	// Close all tgui datums based on window_id.
 	for(var/datum/tgui/ui in user.tgui_open_uis)
 		if(ui.window && ui.window.id == window_id)
@@ -115,7 +116,7 @@
  * return datum/tgui The found UI.
  */
 /datum/controller/process/tgui/proc/get_open_ui(mob/user, datum/src_object)
-	var/key = "\ref[src_object]" // REF doesn't exist |GOONSTATION-CHANGE|
+	var/key = "\ref[src_object]" // |GOONSTATION-CHANGE| (REF->\ref)
 	// No UIs opened for this src_object
 	if(isnull(open_uis_by_src[key]) || !istype(open_uis_by_src[key], /list))
 		return null
@@ -136,13 +137,13 @@
  */
 /datum/controller/process/tgui/proc/update_uis(datum/src_object)
 	var/count = 0
-	var/key = "\ref[src_object]" // REF doesn't exist |GOONSTATION-CHANGE|
+	var/key = "\ref[src_object]" // |GOONSTATION-CHANGE| (REF->\ref)
 	// No UIs opened for this src_object
 	if(isnull(open_uis_by_src[key]) || !istype(open_uis_by_src[key], /list))
 		return count
 	for(var/datum/tgui/ui in open_uis_by_src[key])
 		// Check if UI is valid.
-		if(ui && ui.src_object && ui.user && ui.src_object.ui_host(ui.user))
+		if(ui?.src_object && ui.user && ui.src_object.ui_host(ui.user))
 			ui.process(force = 1)
 			count++
 	return count
@@ -158,16 +159,32 @@
  */
 /datum/controller/process/tgui/proc/close_uis(datum/src_object)
 	var/count = 0
-	var/key = "\ref[src_object]" // REF doesn't exist |GOONSTATION-CHANGE|
+	var/key = "\ref[src_object]" // |GOONSTATION-CHANGE| (REF->\ref)
 	// No UIs opened for this src_object
 	if(isnull(open_uis_by_src[key]) || !istype(open_uis_by_src[key], /list))
 		return count
 	for(var/datum/tgui/ui in open_uis_by_src[key])
 		// Check if UI is valid.
-		if(ui && ui.src_object && ui.user && ui.src_object.ui_host(ui.user))
+		if(ui?.src_object && ui.user && ui.src_object.ui_host(ui.user))
 			ui.close()
 			count++
 	return count
+
+/**
+ * public
+ *
+ * return a list of all tgui UI datums attached to a src_object.
+ */
+/datum/controller/process/tgui/proc/get_uis(datum/src_object)
+	. = list()
+	var/key = "\ref[src_object]" // |GOONSTATION-CHANGE| (REF->\ref)
+	// No UIs opened for this src_object
+	if(isnull(open_uis_by_src[key]) || !istype(open_uis_by_src[key], /list))
+		return
+	for(var/datum/tgui/ui in open_uis_by_src[key])
+		// Check if UI is valid.
+		if(ui?.src_object && ui.user && ui.src_object.ui_host(ui.user))
+			. += ui
 
 /**
  * public
@@ -181,7 +198,7 @@
 	for(var/key in open_uis_by_src)
 		for(var/datum/tgui/ui in open_uis_by_src[key])
 			// Check if UI is valid.
-			if(ui && ui.src_object && ui.user && ui.src_object.ui_host(ui.user))
+			if(ui?.src_object && ui.user && ui.src_object.ui_host(ui.user))
 				ui.close()
 				count++
 	return count
@@ -234,7 +251,7 @@
  * required ui datum/tgui The UI to be added.
  */
 /datum/controller/process/tgui/proc/on_open(datum/tgui/ui)
-	var/key = "\ref[ui.src_object]" // REF doesn't exist |GOONSTATION-CHANGE|
+	var/key = "\ref[ui.src_object]" // |GOONSTATION-CHANGE| (REF->\ref)
 	if(isnull(open_uis_by_src[key]) || !istype(open_uis_by_src[key], /list))
 		open_uis_by_src[key] = list()
 	ui.user.tgui_open_uis |= ui
@@ -252,14 +269,13 @@
  * return bool If the UI was removed or not.
  */
 /datum/controller/process/tgui/proc/on_close(datum/tgui/ui)
-	var/key = "\ref[ui.src_object]" // REF doesn't exist |GOONSTATION-CHANGE|
+	var/key = "\ref[ui.src_object]" // |GOONSTATION-CHANGE| (REF->\ref)
 	if(isnull(open_uis_by_src[key]) || !istype(open_uis_by_src[key], /list))
 		return FALSE
 	// Remove it from the list of processing UIs.
 	open_uis.Remove(ui)
 	// If the user exists, remove it from them too.
-	if(ui.user)
-		ui.user.tgui_open_uis.Remove(ui)
+	ui.user?.tgui_open_uis.Remove(ui)
 	var/list/uis = open_uis_by_src[key]
 	uis.Remove(ui)
 	if(length(uis) == 0)

@@ -31,7 +31,7 @@
 
 		qdel(src)
 
-	TakeDamage(zone, brute, burn, no_brute_mult = 0, no_burn_mult = 0) // last two args used to ignore the health multipliers so that these things can still take damage from stun weapons
+	TakeDamage(zone, brute, burn, tox, damage_type, disallow_limb_loss, no_brute_mult = 0, no_burn_mult = 0) // last two args used to ignore the health multipliers so that these things can still take damage from stun weapons
 		hit_twitch(src)
 		if (nodamage)
 			return
@@ -57,7 +57,7 @@
 					user.visible_message("<span class='combat'><b>[user] shocks [src] with [B]!</b></span>", "<span class='combat'><b>While your baton passes through, [src] appears damaged!</b></span>")
 					B.process_charges(-1, user)
 
-					src.TakeDamage(null, 4, 4, 1, 1)
+					src.TakeDamage(null, 4, 4, no_brute_mult = 1, no_burn_mult = 1)
 					return
 
 			boutput(user, "<span class='combat'><b>[W] passes right through!</b></span>")
@@ -68,6 +68,6 @@
 		damage = round((P.power*(1-P.proj_data.ks_ratio)), 1.0)
 
 		if (P.proj_data.damage_type == D_ENERGY)
-			src.TakeDamage(null, damage, damage, 1, 1)
+			src.TakeDamage(null, damage, damage, no_brute_mult = 1, no_burn_mult = 1)
 		else
 			return

@@ -37,7 +37,7 @@
 	onEnd()
 		..()
 		var/mob/ownerMob = owner
-		if (owner && ownerMob && target && get_dist(owner, target) <= 1 && envelope && envelope.cooldowncheck())
+		if (ownerMob && target && IN_RANGE(owner, target, 1) && envelope?.cooldowncheck())
 			logTheThing("combat", target, ownerMob, "was enveloped by [constructTarget(ownerMob,"combat")] (mob) at [log_loc(ownerMob)].")
 			for (var/mob/O in AIviewers(ownerMob))
 				O.show_message("<span class='combat'><B>[ownerMob]</B> completely envelops [target]!</span>", 1)

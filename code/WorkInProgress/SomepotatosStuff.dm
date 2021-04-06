@@ -41,30 +41,69 @@
 			boutput( user, "<span class='notice'>You attach the [CLEAN(src)] to the [CLEAN(what)].</span>" )
 		*/
 
+/// Define: GPS_MAP_TESTING
+/// Enable definition to provide the following information for MAP review when the GPS verb is used:
+/// * Sorted List of GPS Waypoints
+/// * Duplicate GPS waypoints with the same name (provides X,Y)
+/// * List of AREAs that would NOT be listed in GPS list due to distance and what criteria would allow them to be (up to 1000 iterations)
+//#define GPS_MAP_TESTING
+
 
 /obj/landmark/gps_waypoint
+	icon_state = "gps"
 	name = LANDMARK_GPS_WAYPOINT
+	name_override = LANDMARK_GPS_WAYPOINT
+
+	New()
+		if(name != name_override)
+			src.data = name
+		else
+			var/area/area = get_area(src)
+			src.data = area.name
+		..()
 
 /client/var/list/GPS_Path
 /client/var/list/GPS_Images
 /mob/proc/DoGPS(var/ID)
-	if( client.GPS_Path )
-		client.GPS_Path = null
-		for( var/image/img in client.GPS_Images )
-			client.images -= img
-		client.GPS_Images = list()
-		boutput( usr, "Path removed!" )
+	if(removeGpsPath())
 		return
 	var/list/targets = list()
 	var/list/wtfbyond = list()
 	var/turf/OT = get_turf(src)
 	for(var/turf/wp in landmarks[LANDMARK_GPS_WAYPOINT])
-		var/path = AStar(OT, get_turf(wp), /turf/proc/AllDirsTurfsWithAccess, /turf/proc/Distance, adjacent_param = ID, maxtraverse=175)
+		var/path = AStar(OT, get_turf(wp), /turf/proc/AllDirsTurfsWithAccess, /turf/proc/Distance, adjacent_param = ID, maxtraverse=300)
 		if(path)
-			var/area/area = get_area(wp)
-			var/name = area.name
+			var/name = landmarks[LANDMARK_GPS_WAYPOINT][wp]
+			if(!name)
+				var/area/area = get_area(wp)
+				name = area.name
+#ifdef GPS_MAP_TESTING
+			if(targets[name])
+				boutput( usr, "*** Duplicate waypoint in ([name]): ([targets[name].x],[targets[name].y]) and ([wp.x],[wp.y])" )
+#endif
+
 			targets[name] = wp
 			wtfbyond[++wtfbyond.len] = name
+
+#ifdef GPS_MAP_TESTING
+		else
+			var/area/area = get_area(wp)
+			var/max_trav
+			boutput( usr, "Area ([area.name]) not found in 300 or not accessable" )
+			for(max_trav=300; max_trav<500;max_trav=max_trav+100)
+				path = AStar(OT, get_turf(wp), /turf/proc/AllDirsTurfsWithAccess, /turf/proc/Distance, adjacent_param = ID, maxtraverse=max_trav)
+				if(path)
+					boutput( usr, "Area ([area.name]) found in [length(path)] with maxtraverse of [max_trav]" )
+					break
+
+	var/list/sorted_names = list()
+	for(var/turf/wp in landmarks[LANDMARK_GPS_WAYPOINT])
+		sorted_names += landmarks[LANDMARK_GPS_WAYPOINT][wp]
+	sorted_names = sortList(sorted_names)
+	boutput( usr, "::Sorted GPS Waypoints::" )
+	for(var/N in sorted_names)
+		boutput( usr, "[N]" )
+#endif
 
 	if(!targets.len)
 		boutput( usr, "No targets found! Try again later!" )
@@ -73,16 +112,22 @@
 	var/target = input("Choose a destination!") in wtfbyond|null
 	if(!target || !src.client) return
 	target = targets[target]
-	var/turf/dest = target
-	if(dest.z != OT.z)
-		boutput(usr, "You are on a different z-level!")
+	gpsToTurf(target, param = ID)
+
+/mob/proc/gpsToTurf(var/turf/dest, var/doText = 1, var/heuristic = /turf/proc/AllDirsTurfsWithAccess, param = null)
+	removeGpsPath(doText)
+	var/turf/start = get_turf(src)
+	if(dest.z != start.z)
+		if(doText)
+			boutput(usr, "You are on a different z-level!")
 		return
-	OT = get_turf(src)
-	client.GPS_Path = AStar( OT, dest, /turf/proc/AllDirsTurfsWithAccess, /turf/proc/Distance, adjacent_param = ID, maxtraverse=175 )
-	if( client.GPS_Path )
-		boutput( usr, "Path located! Use the GPS verb again to clear the path!" )
+	client.GPS_Path = AStar(start, dest, heuristic, /turf/proc/Distance, adjacent_param = param, maxtraverse=175 )
+	if(client.GPS_Path)
+		if(doText)
+			boutput( usr, "Path located! Use the GPS verb again to clear the path!" )
 	else
-		boutput( usr, "Could not locate a path! Try moving around, or if its an area you don't have access to, get more access!" )
+		if(doText)
+			boutput( usr, "Could not locate a path! Try moving around, or if its an area you don't have access to, get more access!" )
 		return
 	client.GPS_Images = list()
 	SPAWN_DBG(0)
@@ -93,8 +138,11 @@
 			var/turf/t = path[i]
 			var/turf/next = path[i+1]
 			var/image/img = image('icons/obj/power_cond.dmi')
+
 			img.loc = t
-			img.layer = 101
+			img.layer = DECAL_LAYER
+			img.plane = PLANE_NOSHADOW_BELOW
+
 			img.color = "#5555ff"
 			var/D1=turn(angle2dir(get_angle(next, t)),180)
 			var/D2=turn(angle2dir(get_angle(prev,t)),180)
@@ -104,18 +152,44 @@
 			img.icon_state = "[D1]-[D2]"
 			client.images += img
 			client.GPS_Images[++client.GPS_Images.len] = img
+
+			var/image/img2 = image('icons/obj/power_cond.dmi')
+			img2.loc = img.loc
+			img2.layer = img.layer
+			img2.plane = PLANE_SELFILLUM
+			img2.color = "#55a4ff"
+			img2.icon_state = img.icon_state
+			client.images += img2
+			client.GPS_Images[++client.GPS_Images.len] = img2
+
 			img.alpha=0
 			var/matrix/xf = matrix()
 			img.transform = xf/2
-			animate(img,alpha=255,transform=xf,time=2)
+			animate(img, alpha= 255, transform=xf,time=2)
+
+			img2.alpha = 0
+			animate(img2, time = 0.5 SECONDS, loop = -1 ) //noop to delay for img and maintain illuminated state
+			animate(alpha = 0, time = 2 SECONDS, loop = -1, easing = CUBIC_EASING | EASE_OUT )
+			animate(alpha = 80, time = 1 SECONDS, loop = -1, easing = BACK_EASING | EASE_OUT )
 			sleep(0.1 SECONDS)
+
+/mob/proc/removeGpsPath(doText = 1)
+	if( client.GPS_Path )
+		client.GPS_Path = null
+		for( var/image/img in client.GPS_Images )
+			client.images -= img
+		client.GPS_Images = list()
+		if(doText)
+			boutput( usr, "Path removed!" )
+		return 1
+	return 0
 
 /mob/living/carbon/verb/GPS()
 	set name = "GPS"
 	set category = "Commands"
 	set desc = "Find your way around with ease!"
-	if(ON_COOLDOWN(src, /mob/living/carbon/verb/GPS, 10 SECONDS))
-		boutput(src, "Verb on cooldown for [time_to_text(ON_COOLDOWN(src, /mob/living/carbon/verb/GPS, 0))].")
+	if(ON_COOLDOWN(src, "gps", 10 SECONDS))
+		boutput(src, "Verb on cooldown for [time_to_text(ON_COOLDOWN(src, "gps", 0))].")
 		return
 	if(hasvar(src,"wear_id"))
 		DoGPS(src:wear_id)
@@ -123,8 +197,8 @@
 	set name = "GPS"
 	set category = "Commands"
 	set desc = "Find your way around with ease!"
-	if(ON_COOLDOWN(src, /mob/living/silicon/verb/GPS, 10 SECONDS)) // using ..... is very wacked
-		boutput(src, "Verb on cooldown for [time_to_text(ON_COOLDOWN(src, /mob/living/silicon/verb/GPS, 0))].")
+	if(ON_COOLDOWN(src, "gps", 10 SECONDS))
+		boutput(src, "Verb on cooldown for [time_to_text(ON_COOLDOWN(src, "gps", 0 SECONDS))].")
 		return
 	DoGPS(src.botcard)
 /*
@@ -169,7 +243,7 @@ world/proc/updateCameraVisibility()
 			t.aiImage.override = 1
 			t.aiImage.name = " "
 		aiDirty = 1
-	for(var/obj/machinery/camera/C in by_type[/obj/machinery/camera])
+	for_by_tcl(C, /obj/machinery/camera)
 		for(var/turf/t in view(7, C))
 			//var/dist = get_dist(t, C)
 			t.aiImage.alpha = 0
@@ -228,11 +302,11 @@ world/proc/updateCameraVisibility()
 		if (!isturf(src.loc))
 			src.set_loc(get_turf(src))
 		if (NewLoc)
-			dir = get_dir(loc, NewLoc)
+			set_dir(get_dir(loc, NewLoc))
 			src.set_loc(NewLoc)
 		else
 
-			dir = direct
+			set_dir(direct)
 			if((direct & NORTH) && src.y < world.maxy)
 				src.y++
 			if((direct & SOUTH) && src.y > 1)
@@ -261,7 +335,7 @@ world/proc/updateCameraVisibility()
 	.=..()
 	for(var/turf/t in range(7, src))
 		t.cameraTotal = 0
-	for(var/obj/machinery/camera/C in by_type[/obj/machinery/camera])
+	for_by_tcl(C, /obj/machinery/camera)
 		if( get_dist(C.loc, src) <= 7 )
 			var/list/inview = view(7,C)
 			for(var/turf/t in range(7, C))
@@ -291,7 +365,6 @@ world/proc/updateCameraVisibility()
 	desc = "To avoid arousing too much suspicion, this fella converts single-phase power to three-phase. Sure, that power is passed down via a 24 AWG USB cable, but it's probably fine."
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "vfd"
-	New()
 /obj/somepotato/billiards
 	name = "Billiards Table"
 	desc = "Who in God's name would get enjoyment at beating polyester spheres with wooden sticks???"

@@ -5,6 +5,9 @@
 	icon_state = "fire_extinguisher0"
 	var/safety = 1
 	var/extinguisher_special = 0
+	var/const/min_distance = 1
+	var/const/max_distance = 5
+	var/const/reagents_per_dist = 5
 	hitsound = 'sound/impact_sounds/Metal_Hit_1.ogg'
 	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT | OPENCONTAINER
 	tooltip_flags = REBUILD_DIST
@@ -22,6 +25,7 @@
 	module_research = list("tools" = 5, "science" = 1)
 	rand_pos = 1
 	inventory_counter_enabled = 1
+	move_triggered = 1
 	var/list/banned_reagents = list("vomit",
 	"blackpowder",
 	"blood",
@@ -48,12 +52,10 @@
 
 /obj/item/extinguisher/New()
 	..()
-	var/datum/reagents/R = new/datum/reagents(100)
-	reagents = R
-	R.my_atom = src
-	R.add_reagent("ff-foam", 100)
+	src.create_reagents(100)
+	reagents.add_reagent("ff-foam", 100)
 	src.inventory_counter.update_percent(src.reagents.total_volume, src.reagents.maximum_volume)
-	BLOCK_TANK
+	BLOCK_SETUP(BLOCK_TANK)
 
 /obj/item/extinguisher/get_desc(dist)
 	if (dist > 1)
@@ -79,10 +81,11 @@
 	//TODO; Add support for reagents in water.
 	if (!src.reagents)
 		boutput(user, "<span class='alert'>Man, the handle broke off, you won't spray anything with this.</span>")
+		return
 
 	if ( istype(target, /obj/reagent_dispensers) && get_dist(src,target) <= 1)
 		var/obj/o = target
-		o.reagents.trans_to(src, 75)
+		o.reagents.trans_to(src, (src.reagents.maximum_volume - src.reagents.total_volume))
 		src.inventory_counter.update_percent(src.reagents.total_volume, src.reagents.maximum_volume)
 		boutput(user, "<span class='notice'>Extinguisher refilled...</span>")
 		playsound(src.loc, "sound/effects/zzzt.ogg", 50, 1, -6)
@@ -144,31 +147,36 @@
 
 		var/list/the_targets = list(T,T1,T2)
 
+		var/datum/reagents/R = new
+		var/distance = clamp(get_dist(get_turf(src), get_turf(target)), min_distance, max_distance)
+		src.reagents.trans_to_direct(R, min(src.reagents.total_volume, (distance * reagents_per_dist)))
+		src.inventory_counter.update_percent(src.reagents.total_volume, src.reagents.maximum_volume)
+
 		logTheThing("combat", user, T, "sprays [src] at [constructTarget(T,"combat")], [log_reagents(src)] at [showCoords(user.x, user.y, user.z)] ([get_area(user)])")
 
 		user.lastattacked = target
 
-		for (var/a=0, a<5, a++)
-			SPAWN_DBG (0)
+		for (var/a = 0, a < reagents_per_dist, a++)
+			SPAWN_DBG(0)
 				if (disposed)
 					return
 				if (!src.reagents)
 					return
-				var/obj/effects/water/W = unpool(/obj/effects/water)
+				var/obj/effects/water/W = unpool(/obj/effects/water, user)
+				W.owner = user
 				if (!W) return
 				W.set_loc( get_turf(src) )
 				var/turf/my_target = pick(the_targets)
-				W.spray_at(my_target, src.reagents, try_connect_fluid = 1)
-				src.inventory_counter.update_percent(src.reagents.total_volume, src.reagents.maximum_volume)
+				W.spray_at(my_target, R, try_connect_fluid = 1)
 
-		if (istype(usr.loc, /turf/space))
+		if (istype(user.loc, /turf/space))
 			user.inertia_dir = get_dir(target, user)
 			step(user, user.inertia_dir)
-		else if( usr.buckled && !usr.buckled.anchored )
+		else if( user.buckled && !user.buckled.anchored )
 			var/wooshdir = get_dir( target, user )
 			SPAWN_DBG(0)
-				for( var/i = 1, (usr && usr.buckled && !usr.buckled.anchored && i <= rand(3,5)), i++ )
-					step( usr.buckled, wooshdir )
+				for( var/i = 1, (user?.buckled && !user.buckled.anchored && i <= rand(3,5)), i++ )
+					step( user.buckled, wooshdir )
 					sleep( rand(1,3) )
 
 	else
@@ -191,5 +199,9 @@
 		boutput(user, "The safety is on.")
 		safety = 1
 	return
+
+/obj/item/extinguisher/move_trigger(var/mob/M, kindof)
+	if (..() && reagents)
+		reagents.move_trigger(M, kindof)
 
 /obj/item/extinguisher/abilities = list(/obj/ability_button/extinguisher_ab)

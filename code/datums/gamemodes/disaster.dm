@@ -70,7 +70,7 @@
 						SPAWN_DBG(2 SECONDS)
 							G.on = 1
 							G.icon_state = "glowstick-on"
-							G.light.enable()
+							G.light?.enable()
 
 	var/start_wait = rand(waittime_l, waittime_h)
 
@@ -94,31 +94,31 @@
 		SPAWN_DBG(10 SECONDS)
 			world << sound('sound/effects/creaking_metal1.ogg')
 			for(var/mob/living/carbon/human/H in mobs)
-				shake_camera(H, 8, 3)
+				shake_camera(H, 8, 32)
 				H.change_misstep_chance(5)
 
 		SPAWN_DBG(20 SECONDS)
-			if(scarysounds && scarysounds.len)
+			if(length(scarysounds))
 				world << sound(pick(scarysounds))
 
 		SPAWN_DBG(30 SECONDS)
-			if(scarysounds && scarysounds.len)
+			if(length(scarysounds))
 				world << sound(pick(scarysounds))
 
 		SPAWN_DBG(40 SECONDS)
 			world << sound('sound/effects/creaking_metal1.ogg')
 			for(var/mob/living/carbon/human/H in mobs)
-				shake_camera(H, 8, 2)
+				shake_camera(H, 8, 24)
 				H.change_misstep_chance(5)
 
 		SPAWN_DBG(1 MINUTE)
 			world << sound('sound/effects/creaking_metal1.ogg')
 			for(var/mob/living/carbon/human/H in mobs)
-				shake_camera(H, 7, 1)
+				shake_camera(H, 7, 16)
 				H.change_misstep_chance(5)
 
 		SPAWN_DBG(80 SECONDS)
-			if(scarysounds && scarysounds.len)
+			if(length(scarysounds))
 				world << sound(pick(scarysounds))
 
 	return
@@ -182,7 +182,7 @@
 			SPAWN_DBG(50+rand(0,6250))
 				var/obj/vortex/P = new /obj/vortex( T )
 				P.name = disaster_name
-				if(prob(6) && scarysounds && scarysounds.len)
+				if(prob(6) && length(scarysounds))
 					world << sound(pick(scarysounds))
 		LAGCHECK(LAG_LOW)
 

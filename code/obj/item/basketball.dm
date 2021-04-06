@@ -29,7 +29,7 @@
 			user.suiciding = 0
 	return 1
 
-/obj/item/basketball/throw_impact(atom/hit_atom)
+/obj/item/basketball/throw_impact(atom/hit_atom, datum/thrown_thing/thr)
 	..(hit_atom)
 	src.icon_state = "bball"
 	if(hit_atom)
@@ -66,7 +66,7 @@
 		var/obj/item/plutonium_core/P = W
 		src.payload = W
 		if(src.loc == user)
-			P.plutonize(usr.verbs)
+			P.plutonize(user.verbs)
 		return
 	..(W, user)
 	return
@@ -75,7 +75,7 @@
 	..()
 	var/mob/living/carbon/human/H = user
 	if(istype(H) && payload && istype(payload))
-		payload.plutonize(usr.verbs)
+		payload.plutonize(user.verbs)
 	return
 
 /obj/item/basketball/unequipped(var/mob/usr)
@@ -100,7 +100,7 @@
 
 	New()
 		..()
-		BLOCK_ALL
+		BLOCK_SETUP(BLOCK_ALL)
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (iswrenchingtool(W) && mounted)
@@ -139,7 +139,7 @@
 					src.set_loc(get_turf(user))
 					src.mounted = 1
 					src.anchored = 1
-					src.dir = get_dir(src, target)
+					src.set_dir(get_dir(src, target))
 					switch (src.dir)
 						if (NORTH)
 							src.pixel_y = 20
@@ -257,7 +257,7 @@
 	if(user)
 		src.icon_state = "bloodbowlball"
 
-/obj/item/bloodbowlball/throw_impact(atom/hit_atom)
+/obj/item/bloodbowlball/throw_impact(atom/hit_atom, datum/thrown_thing/thr)
 	..(hit_atom)
 	src.icon_state = "bloodbowlball"
 	if(hit_atom)

@@ -12,6 +12,7 @@
 	var/next_next_next_char = ""
 
 	New(var/str)
+		..()
 		if(isnull(str))	qdel(src)
 		string = str
 		curr_char_pos = 1
@@ -119,13 +120,11 @@
 	if (!istext(text))
 		CRASH("YOU HAVE TO PASS TEXT TO THE FUNCTIONS THAT DEAL WITH TEXT, IDIOT.")
 
-	var/regex/R = regex(@"([^&]|&(?:[a-z0-9_-]+|#x?[0-9a-f]+);)", "gi")
-	var/list/C = new()
+	var/regex/our_regex = regex(@"([^&]|&(?:[a-z0-9_-]+|#x?[0-9a-f]+);)", "gi")
+	. = list()
 
-	while (R.Find(text) != 0)
-		C.Add(R.group[1])
-
-	return C
+	while (our_regex.Find(text) != 0)
+		. += our_regex.group[1]
 
 
 /proc/elvis_parse(var/datum/text_roamer/R)
@@ -2093,7 +2092,7 @@ var/list/zalgo_mid = list(
 			if(R.next_char == "e" || R.next_char == "i" || R.next_char == "y" ) // Soft "C"
 				new_string = "rh"
 				used = 2
-			else 
+			else
 				// (R.next_char == "a" || R.next_char == "o" || R.next_char == "l" || R.next_char == "r" || R.next_char == "u" ) // Hard "C" default
 				new_string = "rr"
 				used = 2
@@ -2101,7 +2100,7 @@ var/list/zalgo_mid = list(
 			if(R.next_char == "e" || R.next_char == "i" || R.next_char == "y" ) // Soft "C"
 				new_string = "Rh"
 				used = 2
-			else 
+			else
 				// (R.next_char == "a" || R.next_char == "o" || R.next_char == "l" || R.next_char == "r" || R.next_char == "u" ) // Hard "C" default
 				new_string = "Rr"
 				used = 2
@@ -2172,16 +2171,6 @@ var/list/zalgo_mid = list(
 				used = 1
 
 		if("l")
-			if(R.prev_char == "" && R.next_char == "")			// i
-				new_string = "rhi"
-				used = 3
-			else if(R.prev_char == "" && R.next_char == "'")	// i'm
-				new_string = "rhi"
-				used = 3
-			else if(R.prev_char == "" && R.next_char != "")		// First "i" in a word, and it ain't "i" or "i'm"
-				new_string = "rhy"
-				used = 3
-		if("l")
 			if(lowertext(R.next_char) == "l")		// "ll" - hello = herghlo
 				new_string = "rghl"
 				used = 4
@@ -2224,9 +2213,9 @@ var/list/zalgo_mid = list(
 			if(lowertext(R.next_char) == "o")	// "oo"
 				new_string = "rooh"				// oops = roohps
 				used = 4
-			if(lowertext(R.next_char) == "h")	// "oh"
+			else if(lowertext(R.next_char) == "h")	// "oh"
 				new_string = "roh"				// oh = roh
-				used = 3			
+				used = 3
 			else								// all other "o"
 				new_string = "rho"				// orange = rhorange
 				used = 3
@@ -2234,13 +2223,13 @@ var/list/zalgo_mid = list(
 			if(lowertext(R.next_char) == "o")	// "Oo"
 				new_string = "Rooh"				// Oops = Roohps
 				used = 4
-			if(lowertext(R.next_char) == "h")	// "Oh"
+			else if(lowertext(R.next_char) == "h")	// "Oh"
 				new_string = "Roh"				// Oh = Roh
-				used = 3			
+				used = 3
 			else								// all other "O"
 				new_string = "Rho"				// Orange = Rhorange
 				used = 3
-		
+
 		if("p")
 			if(R.prev_char == "")		// First "p" of a word
 				new_string = "rh"		// paul = rhaul
@@ -2253,7 +2242,7 @@ var/list/zalgo_mid = list(
 				new_string = "Rh"		// Paul = Rhaul
 				used = 2
 			else						// All other "p"
-				new_string = "Bh"		// 
+				new_string = "Bh"		//
 				used = 2
 
 		if("q")
@@ -2298,7 +2287,7 @@ var/list/zalgo_mid = list(
 				used = 4
 			else if(lowertext(R.next_char) == "y" || lowertext(R.next_char) == "i")	// ty, ti
 				new_string = "rhy"											// type = rhype
-				used = 3													
+				used = 3
 		if("T")
 			if(lowertext(R.next_char) == "e" && lowertext(R.next_next_char) == "e")	// tee
 				new_string = "Tree"											// teeth = treeth
@@ -2333,7 +2322,7 @@ var/list/zalgo_mid = list(
 			if(R.prev_char == "")		// First "z" of a word
 				new_string = "zhr"		// zebra = zhrebra
 				used = 3
-		
+
 
 	if(new_string == "")
 		new_string = R.curr_char
@@ -2347,7 +2336,7 @@ var/list/zalgo_mid = list(
 // this whole thing was originally copied over from the Scots entry
 // so its also gonna use a strings file: strings/language/scoob.txt
 
-/proc/scoobify(var/string)
+/proc/scoobify(var/string, var/less_shit)
 
 	var/list/tokens = splittext(string, " ")
 	var/list/modded_tokens = list()
@@ -2372,7 +2361,10 @@ var/list/zalgo_mid = list(
 			var/datum/text_roamer/T = new/datum/text_roamer(original_word)
 			for(var/i = 0, i < length(original_word), i=i)
 				var/datum/parse_result/P = scoob_parse(T)
-				modified_token += P.string
+				if(less_shit && prob(50))
+					modified_token = T.string
+				else
+					modified_token += P.string
 				i += P.chars_used
 				T.curr_char_pos = T.curr_char_pos + P.chars_used
 				T.update()

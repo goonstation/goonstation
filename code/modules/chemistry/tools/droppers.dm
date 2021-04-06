@@ -90,11 +90,11 @@
 
 					for (var/mob/O in AIviewers(world.view, user))
 						O.show_message(text("<span class='alert'><B>[] drips something onto []!</B></span>", user, target), 1)
-					src.reagents.reaction(target, TOUCH, -(src.reagents.total_volume - t)) // Modify it so that the reaction only happens with the actual transferred amount.
+					src.reagents.reaction(target, TOUCH, t) // Modify it so that the reaction only happens with the actual transferred amount.
 
 				src.log_me(user, target)
-				SPAWN_DBG (5)
-					if (src && src.reagents && target && target.reagents)
+				SPAWN_DBG(0.5 SECONDS)
+					if (src?.reagents && target?.reagents)
 						src.reagents.trans_to(target, t)
 
 				user.show_text("You transfer [t] units of the solution.", "blue")
@@ -131,7 +131,7 @@
 	Topic(href, href_list)
 		if (get_dist(src, usr) > 1 || !isliving(usr) || iswraith(usr) || isintangible(usr))
 			return
-		if (usr.getStatusDuration("stunned") > 0 || usr.getStatusDuration("weakened") || usr.getStatusDuration("paralysis") > 0 || !isalive(usr) || usr.restrained())
+		if (is_incapacitated(usr) || usr.restrained())
 			return
 
 		..()

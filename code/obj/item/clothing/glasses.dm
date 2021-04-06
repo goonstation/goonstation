@@ -12,7 +12,7 @@
 	block_vision = 0
 	var/block_eye = null // R or L
 	var/correct_bad_vision = 0
-	compatible_species = list("human", "werewolf", "flubber")
+	compatible_species = list("human", "cow", "werewolf", "flubber")
 
 /obj/item/clothing/glasses/crafted
 	name = "glasses"
@@ -186,8 +186,6 @@
 			if (loc != assigned.mob)
 				assigned.images.Remove(arrestIconsAll)
 				assigned = null
-		else
-			processing_items.Remove(src)
 
 	proc/addIcons()
 		if (assigned)
@@ -203,9 +201,7 @@
 		..()
 		if (slot == SLOT_GLASSES)
 			assigned = user.client
-			SPAWN_DBG(-1)
-				if (!(src in processing_items))
-					processing_items.Add(src)
+			processing_items |= src
 		return
 
 	unequipped(var/mob/user)
@@ -213,8 +209,17 @@
 		if (assigned)
 			assigned.images.Remove(arrestIconsAll)
 			assigned = null
-			processing_items.Remove(src)
+		processing_items.Remove(src)
 		return
+
+/obj/item/clothing/glasses/sunglasses/sechud/superhero
+	name = "superhero mask"
+	desc = "Perfect for hiding your identity while fighting crime."
+	icon_state = "superhero"
+	item_state = "superhero"
+	color_r = 1
+	color_g = 1
+	color_b = 1
 
 /obj/item/clothing/glasses/thermal
 	name = "optical thermal scanner"
@@ -225,6 +230,22 @@
 	color_r = 1
 	color_g = 0.8 // red tint
 	color_b = 0.8
+	/// For seeing through walls
+	var/upgraded = FALSE 
+
+	equipped(mob/user, slot)
+		. = ..()
+		if(upgraded)
+			APPLY_MOB_PROPERTY(user, PROP_THERMALSIGHT_MK2, src)
+		else
+			APPLY_MOB_PROPERTY(user, PROP_THERMALSIGHT, src)
+
+	unequipped(mob/user)
+		. = ..()
+		if(upgraded)
+			REMOVE_MOB_PROPERTY(user, PROP_THERMALSIGHT_MK2, src)
+		else
+			REMOVE_MOB_PROPERTY(user, PROP_THERMALSIGHT, src)
 
 	emp_act()
 		if (ishuman(src.loc))
@@ -234,8 +255,17 @@
 				H.take_eye_damage(3, 1)
 				H.change_eye_blurry(5)
 				H.bioHolder.AddEffect("bad_eyesight")
+				if(upgraded)
+					REMOVE_MOB_PROPERTY(H, PROP_THERMALSIGHT_MK2, src)
+				else
+					REMOVE_MOB_PROPERTY(H, PROP_THERMALSIGHT, src)
+
 				SPAWN_DBG(10 SECONDS)
 					H.bioHolder.RemoveEffect("bad_eyesight")
+					if(upgraded)
+						APPLY_MOB_PROPERTY(H, PROP_THERMALSIGHT_MK2, src)
+					else
+						APPLY_MOB_PROPERTY(H, PROP_THERMALSIGHT, src)
 		return
 
 /obj/item/clothing/glasses/thermal/traitor //sees people through walls
@@ -243,6 +273,7 @@
 	color_r = 1
 	color_g = 0.75 // slightly more red?
 	color_b = 0.75
+	upgraded = TRUE
 
 /obj/item/clothing/glasses/thermal/orange
 	name = "orange-tinted glasses"
@@ -364,7 +395,7 @@
 	equipped(var/mob/user, var/slot)
 		..()
 		var/mob/living/carbon/human/H = user
-		if(istype(H) && slot == SLOT_GLASSES && !H.network_device)
+		if(istype(H) && slot == SLOT_GLASSES && !H.network_device && !inafterlife(H))
 			user.network_device = src
 			//user.verbs += /mob/proc/jack_in
 			Station_VNet.Enter_Vspace(H, src,src.network)
@@ -399,7 +430,7 @@
 /obj/item/clothing/glasses/healthgoggles
 	name = "\improper ProDoc Healthgoggles"
 	desc = "Fitted with an advanced miniature sensor array that allows the user to quickly determine the physical condition of others."
-	icon_state = "ectoglasses"
+	icon_state = "prodocs"
 	uses_multiple_icon_states = 1
 	var/client/assigned = null
 	var/scan_upgrade = 0
@@ -423,10 +454,6 @@
 				assigned.images.Remove(health_mon_icons)
 				assigned = null
 
-			//sleep(2 SECONDS)
-		else
-			processing_items.Remove(src)
-
 	proc/addIcons()
 		if (assigned)
 			for (var/image/I in health_mon_icons)
@@ -441,10 +468,7 @@
 		..()
 		if (slot == SLOT_GLASSES)
 			assigned = user.client
-			SPAWN_DBG(-1)
-				//updateIcons()
-				if (!(src in processing_items))
-					processing_items.Add(src)
+		processing_items |= src
 		return
 
 	unequipped(var/mob/user)
@@ -452,7 +476,7 @@
 		if (assigned)
 			assigned.images.Remove(health_mon_icons)
 			assigned = null
-			processing_items.Remove(src)
+		processing_items.Remove(src)
 		return
 
 	attackby(obj/item/W as obj, mob/user as mob)
@@ -463,8 +487,7 @@
 			else
 				src.scan_upgrade = 1
 				src.health_scan = 1
-				src.icon_state = "prodocs"
-				src.item_state = "prodocs"
+				src.icon_state = "prodocs-upgraded"
 				boutput(user, "<span class='notice'>Health scan upgrade installed.</span>")
 				playsound(src.loc ,"sound/items/Deconstruct.ogg", 80, 0)
 				user.u_equip(W)
@@ -483,8 +506,7 @@
 			return
 
 /obj/item/clothing/glasses/healthgoggles/upgraded
-	icon_state = "prodocs"
-	item_state = "prodocs"
+	icon_state = "prodocs-upgraded"
 	scan_upgrade = 1
 	health_scan = 1
 
@@ -510,6 +532,12 @@
 	unequipped(mob/user)
 		. = ..()
 		REMOVE_MOB_PROPERTY(user, PROP_SPECTRO, src)
+
+/obj/item/clothing/glasses/spectro/monocle //used for bartender job reward
+	name = "spectroscopic monocle"
+	icon_state = "spectro_monocle"
+	item_state = "spectro_monocle"
+	desc = "Such a dapper eyepiece! And a practical one at that."
 
 // testing thing for static overlays
 /obj/item/clothing/glasses/staticgoggles
@@ -548,8 +576,7 @@
 			assigned = user.client
 			SPAWN_DBG(-1)
 				//updateIcons()
-				if (!(src in processing_items))
-					processing_items.Add(src)
+				processing_items |= src
 		return
 
 	unequipped(var/mob/user)

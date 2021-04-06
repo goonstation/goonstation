@@ -137,7 +137,7 @@ this is already used where it needs to be used, you can probably ignore it.
 
 	var/mob/living/H = some_idiot
 
-	if (H.stat ==  2 || H.nodamage || !H.can_bleed)
+	if (isdead(H) || H.nodamage || !H.can_bleed)
 		if (H.bleeding)
 			H.bleeding = 0
 			H.bleeding_internal = 0
@@ -288,7 +288,7 @@ this is already used where it needs to be used, you can probably ignore it.
 
 	var/mob/living/H = some_idiot
 
-	if (H.stat ==  2)
+	if (isdead(H))
 		//BLOOD_DEBUG("[H] is dead and their bleeding has been set to 0 and repair was canceled")
 		H.bleeding = 0 // no just stop bleeding entirely okay, you're dead, stop it
 		H.bleeding_internal = 0
@@ -366,20 +366,6 @@ this is already used where it needs to be used, you can probably ignore it.
 				H.show_text("<b>Your bleeding slows down!</b>", "blue")
 			if (4 to INFINITY)
 				H.show_text("<b>You can't go on very long with blood pouring out of you like this!</b>", "red")
-/*		switch (H.bleeding)
-			if (-INFINITY to 0)
-				H.show_text("<b>Your bleeding stops!</b>", "red")
-			if (1 to 8)
-				switch (repair_amount)
-					if (1 to 3)
-						H.show_text("<b>Your bleeding [pick("slows", "slows down", "slightly slows", "slows a little", "gets slightly slower", "barely slows")]!</b>", "red")
-					if (4 to 6)
-						H.show_text("<b>Your bleeding [pick("slows", "slows down", "slows a lot", "slows down a lot", "really slows down")]!</b>", "red")
-					if (7 to 10)
-						H.show_text("<b>Your bleeding [pick("slows", "slows down", "slows a lot", "slows down a lot", "really slows down", "slows way down", "nearly stops", "has almost stopped", "is barely a trickle now")]!</b>", "red")
-			if (9 to INFINITY)
-				H.show_text("<b>You can't go on very long with blood pouring out of you like this!</b>", "red")
-*/
 
 	//else
 		//BLOOD_DEBUG("[H] rolled no repair")
@@ -395,24 +381,22 @@ this is already used where it needs to be used, you can probably ignore it.
 
 	var/mob/living/H = some_idiot
 
+	var/blood_color_to_pass = DEFAULT_BLOOD_COLOR
+
+	if (istype(H))
+		blood_color_to_pass = H.blood_color
+
+	if (some_idiot.blood_id && (some_idiot.blood_id != "blood" && some_idiot.blood_id != "bloodc"))
+		var/datum/reagent/current_reagent= reagents_cache[some_idiot.blood_id]
+		blood_color_to_pass = rgb(current_reagent.fluid_r, current_reagent.fluid_g, current_reagent.fluid_b, max(current_reagent.transparency,255))
+
 	if (!blood_system) // we're here because we want to create a decal, so create it anyway
-
-
 		var/obj/decal/cleanable/blood/dynamic/B = null
 		if (T.messy > 0)
 			B = locate(/obj/decal/cleanable/blood/dynamic) in T
-		var/blood_color_to_pass = DEFAULT_BLOOD_COLOR
-
-		if (some_idiot.blood_id && (some_idiot.blood_id != "blood" && some_idiot.blood_id != "bloodc"))
-			var/datum/reagent/current_reagent= reagents_cache[some_idiot.blood_id]
-			blood_color_to_pass = rgb(current_reagent.fluid_r, current_reagent.fluid_g, current_reagent.fluid_b, max(current_reagent.transparency,255))
-
-		if (istype(H))
-			blood_color_to_pass = H.blood_color
 
 		if (!B) // look for an existing dynamic blood decal and add to it if you find one
 			B = make_cleanable( /obj/decal/cleanable/blood/dynamic,T)
-			B.color = blood_color_to_pass
 
 		if (ischangeling(H))
 			B.ling_blood = 1
@@ -453,9 +437,9 @@ this is already used where it needs to be used, you can probably ignore it.
 		if (!B) // look for an existing dynamic blood decal and add to it if you find one
 			B = make_cleanable( /obj/decal/cleanable/blood/dynamic,T)
 			if (H.blood_id)
-				B.set_sample_reagent_custom(H.blood_id,0)
-			if (H.blood_color)
-				B.color = H.blood_color
+				B.set_sample_reagent_custom(H.blood_id, 0)
+			else if (H.blood_color)
+				B.color = blood_color_to_pass
 
 		if (ischangeling(H))
 			B.ling_blood = 1
@@ -474,10 +458,10 @@ this is already used where it needs to be used, you can probably ignore it.
 				H.blood_volume = 0
 				//BLOOD_DEBUG("[H]'s blood volume dropped below 0 and was reset to 0")
 
-		B.add_volume(H.blood_color, H.blood_id, num_amount, vis_amount)
+		B.add_volume(blood_color_to_pass, H.blood_id, num_amount, vis_amount)
 		//BLOOD_DEBUG("[H] adds volume to existing blood decal")
 
-		if (B && B.reagents && H.reagents && H.reagents.total_volume)
+		if (B.reagents && H.reagents?.total_volume)
 			//BLOOD_DEBUG("[H] transfers reagents to blood decal [log_reagents(H)]")
 			H.reagents.trans_to(B, min(round(num_amount / 2, 1), 5))
 	else
@@ -553,7 +537,6 @@ this is already used where it needs to be used, you can probably ignore it.
 /* =================================== */
 
 /proc/blood_slash(var/mob/some_idiot as mob, var/bleed_amount as num, var/atom/A as mob|obj|turf, var/direction, var/splatters = 4)
-
 	var/turf/target
 	var/turf/end_target
 
@@ -579,7 +562,7 @@ this is already used where it needs to be used, you can probably ignore it.
 		direction = some_idiot.dir
 		//BLOOD_DEBUG("blood_slash: no direction specified, using [some_idiot]'s dir")
 
-	for (var/i = 0, i < splatters, i++)
+	for (var/i in 0 to splatters-1)
 		switch (direction)
 			if (NORTH)
 				end_target = locate(target.x, target.y+i, target.z)
@@ -670,7 +653,6 @@ this is already used where it needs to be used, you can probably ignore it.
 
 	if (isliving(some_idiot))
 		var/mob/living/H = some_idiot
-		var/his_her = "[H.gender == "male" ? "his" : "her"]"
 
 		if (H.being_staunched)
 			src.show_text("[H == src ? "You're" : "Someone's"] already putting pressure on [H == src ? "your" : "[H]'s"] wounds!", "red")
@@ -684,7 +666,7 @@ this is already used where it needs to be used, you can probably ignore it.
 
 		H.being_staunched = 1
 
-		src.tri_message("<span class='notice'><b>[src]</b> puts pressure on [src == H ? "[his_her]" : "[H]'s"] wounds, trying to stop the bleeding!</span>",\
+		src.tri_message("<span class='notice'><b>[src]</b> puts pressure on [src == H ? "[his_or_her(H)]" : "[H]'s"] wounds, trying to stop the bleeding!</span>",\
 		src, "<span class='notice'>You put pressure on [src == H ? "your" : "[H]'s"] wounds, trying to stop the bleeding!</span>",\
 		H, "<span class='notice'>[H == src ? "You put" : "<b>[src]</b> puts"] pressure on your wounds, trying to stop the bleeding!</span>")
 
@@ -700,13 +682,7 @@ this is already used where it needs to be used, you can probably ignore it.
 						src.show_text("The bleeding slows!", "blue")
 					if (4 to INFINITY)
 						src.show_text("It barely helps!", "red")
-/*					if (-INFINITY to 0)
-						src.show_text("The bleeding stops!", "blue")
-					if (1 to 8)
-						src.show_text("The bleeding slows!", "blue")
-					if (9 to INFINITY)
-						src.show_text("It barely helps!", "red")
-*/
+
 			else if (original_bleed == H.bleeding)
 				src.show_text("The bleeding doesn't slow at all!", "red")
 
@@ -777,7 +753,7 @@ this is already used where it needs to be used, you can probably ignore it.
 		if (5 to INFINITY)
 			if (haine_blood_debug) logTheThing("debug", H, null, "<b>HAINE BLOOD DEBUG:</b> [H]'s internal bleeding was already high and chance was not increased")
 
-	if (some_jerk && some_jerk.zone_sel && some_jerk.zone_sel.selecting)
+	if (some_jerk?.zone_sel?.selecting)
 		if (haine_blood_debug) logTheThing("debug", H, null, "<b>HAINE BLOOD DEBUG:</b> [some_jerk]'s target zone is [some_jerk.zone_sel.selecting]")
 		switch (some_jerk.zone_sel.selecting)
 			if ("head")
@@ -861,9 +837,9 @@ this is already used where it needs to be used, you can probably ignore it.
 
 	New()
 		..()
-		BLOCK_KNIFE
+		BLOCK_SETUP(BLOCK_KNIFE)
 
-	throw_impact(atom/A)
+	throw_impact(atom/A, datum/thrown_thing/thr)
 		if(iscarbon(A))
 			if (ismob(usr))
 				A:lastattacker = usr

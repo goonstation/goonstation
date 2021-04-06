@@ -2,114 +2,114 @@
 "a" = (
 /obj/item/organ/brain/flockdrone,
 /turf/unsimulated/floor/feather,
-/area)
+/area/space)
 "b" = (
 /turf/unsimulated/wall/auto/feather,
-/area)
+/area/space)
 "c" = (
 /turf/unsimulated/floor/feather,
-/area)
+/area/space)
 "d" = (
 /obj/machinery/door/feather,
 /turf/unsimulated/floor/feather,
-/area)
+/area/space)
 "e" = (
 /obj/machinery/door/feather{
 	icon_state = "door1";
 	dir = 4
 	},
 /turf/unsimulated/floor/feather,
-/area)
+/area/space)
 "f" = (
 /turf/unsimulated/wall/nothing,
-/area)
+/area/space)
 "g" = (
 /turf/unsimulated/floor/feather/broken,
-/area)
+/area/space)
 "h" = (
 /obj/window/feather,
 /turf/unsimulated/floor/feather,
-/area)
+/area/space)
 "i" = (
 /turf/unsimulated/floor/nothing,
-/area)
+/area/space)
 "j" = (
 /turf/unsimulated/wall/nothing{
 	icon_state = "platform1"
 	},
-/area)
+/area/space)
 "k" = (
 /turf/unsimulated/wall/nothing{
 	icon_state = "platform2"
 	},
-/area)
+/area/space)
 "l" = (
 /turf/unsimulated/floor/nothing{
 	icon_state = "platform";
 	dir = 9
 	},
-/area)
+/area/space)
 "m" = (
 /turf/unsimulated/floor/nothing{
 	icon_state = "platform";
 	dir = 5
 	},
-/area)
+/area/space)
 "n" = (
 /obj/decal/fakeobjects/brokendrone,
 /turf/unsimulated/floor/nothing,
-/area)
+/area/space)
 "o" = (
 /obj/decal/fakeobjects/brokendrone,
 /turf/unsimulated/floor/feather,
-/area)
+/area/space)
 "p" = (
 /obj/decal/cleanable/flockdrone_debris,
 /turf/unsimulated/floor/nothing,
-/area)
+/area/space)
 "q" = (
 /obj/decal/cleanable/flockdrone_debris,
 /turf/unsimulated/floor/feather,
-/area)
+/area/space)
 "r" = (
 /obj/decal/cleanable/flockdrone_debris{
 	pixel_x = 9;
 	pixel_y = 5
 	},
 /turf/unsimulated/floor/nothing,
-/area)
+/area/space)
 "s" = (
 /obj/decal/cleanable/flockdrone_debris{
 	pixel_x = -6;
 	pixel_y = -5
 	},
 /turf/unsimulated/floor/nothing,
-/area)
+/area/space)
 "t" = (
 /obj/decal/fakeobjects/brokendrone{
 	pixel_x = 7;
 	pixel_y = 4
 	},
 /turf/unsimulated/floor/nothing,
-/area)
+/area/space)
 "u" = (
 /obj/decal/cleanable/flockdrone_debris/fluid{
 	icon_state = "fluid1"
 	},
 /turf/unsimulated/floor/nothing,
-/area)
+/area/space)
 "v" = (
 /obj/decal/cleanable/flockdrone_debris/fluid{
 	icon_state = "fluid1"
 	},
 /turf/unsimulated/floor/feather,
-/area)
+/area/space)
 "w" = (
 /obj/decal/cleanable/flockdrone_debris/fluid{
 	icon_state = "fluid1"
 	},
 /turf/unsimulated/floor/feather/broken,
-/area)
+/area/space)
 "x" = (
 /obj/decal/cleanable/flockdrone_debris/fluid{
 	icon_state = "fluid1"
@@ -118,37 +118,37 @@
 	icon_state = "fluid1"
 	},
 /turf/unsimulated/floor/feather,
-/area)
+/area/space)
 "y" = (
 /obj/decal/fakeobjects/permanentcage,
 /turf/unsimulated/floor/feather,
-/area)
+/area/space)
 "z" = (
 /obj/decal/cleanable/flockdrone_debris/fluid{
 	icon_state = "fluid1"
 	},
 /obj/decal/fakeobjects/permanentcage,
 /turf/unsimulated/floor/feather,
-/area)
+/area/space)
 "A" = (
 /obj/decal/fakeobjects/permanentcage,
 /turf/unsimulated/floor/feather/broken,
-/area)
+/area/space)
 "B" = (
 /obj/decal/fakeobjects/brokendrone,
 /obj/decal/fakeobjects/permanentcage,
 /turf/unsimulated/floor/feather,
-/area)
+/area/space)
 "C" = (
 /obj/item/organ/brain/flockdrone,
 /obj/decal/fakeobjects/permanentcage,
 /turf/unsimulated/floor/feather,
-/area)
+/area/space)
 "D" = (
 /obj/decal/cleanable/flockdrone_debris,
 /obj/decal/fakeobjects/permanentcage,
 /turf/unsimulated/floor/feather,
-/area)
+/area/space)
 
 (1,1,1) = {"
 f

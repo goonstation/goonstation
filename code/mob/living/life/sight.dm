@@ -116,7 +116,7 @@
 				if (human_owner.see_invisible < 8)
 					human_owner.see_invisible = 8
 
-			else if (istype(human_owner.glasses, /obj/item/clothing/glasses/thermal/traitor))
+			else if (HAS_MOB_PROPERTY(human_owner, PROP_THERMALSIGHT_MK2))
 				human_owner.sight |= SEE_MOBS //traitor item can see through walls
 				human_owner.sight &= ~SEE_BLACKNESS
 				if (human_owner.see_in_dark < SEE_DARK_FULL)
@@ -127,7 +127,7 @@
 					human_owner.see_infrared = 1
 				human_owner.render_special.set_centerlight_icon("thermal", rgb(0.5 * 255, 0.5 * 255, 0.5 * 255))
 
-			else if ((istype(human_owner.glasses, /obj/item/clothing/glasses/thermal) || human_owner.eye_istype(/obj/item/organ/eye/cyber/thermal)))	//  && (T && !isrestrictedz(T.z))
+			else if (HAS_MOB_PROPERTY(human_owner, PROP_THERMALSIGHT))	//  && (T && !isrestrictedz(T.z))
 				// This kinda fucks up the ability to hide things in infra writing in adv zones
 				// so away the restricted z check goes.
 				// with mobs invisible it shouldn't matter anyway? probably? idk.
@@ -138,14 +138,6 @@
 					human_owner.see_invisible = 2
 				if (human_owner.see_infrared < 1)
 					human_owner.see_infrared = 1
-				human_owner.render_special.set_centerlight_icon("thermal", rgb(0.5 * 255, 0.5 * 255, 0.5 * 255))
-
-			else if (istype(human_owner.wear_mask, /obj/item/clothing/mask/hunter) && (T && !isrestrictedz(T.z)))
-				human_owner.sight |= SEE_MOBS // Hunters kinda need proper thermal vision, I've found in playtesting (Convair880).
-				if (human_owner.see_in_dark < SEE_DARK_FULL)
-					human_owner.see_in_dark = SEE_DARK_FULL
-				if (human_owner.see_invisible < 2)
-					human_owner.see_invisible = 2
 				human_owner.render_special.set_centerlight_icon("thermal", rgb(0.5 * 255, 0.5 * 255, 0.5 * 255))
 
 			else if (istype(human_owner.glasses, /obj/item/clothing/glasses/regular/ecto) || human_owner.eye_istype(/obj/item/organ/eye/cyber/ecto))

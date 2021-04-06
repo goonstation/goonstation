@@ -38,7 +38,7 @@
 
 /mob/proc/is_in_colosseum()
 	var/area/A = get_area(src)
-	if (A && A.type == /area/colosseum)
+	if (A?.type == /area/colosseum)
 		return 1
 	return 0
 
@@ -324,7 +324,7 @@
 		announceAll("The Pod Colosseum match concluded. Final score: [score].")
 		if (score > 10000)
 			var/command_report = "A Pod Colosseum match has concluded with score [score]. Congratulations to: [moblist_names]."
-			for (var/obj/machinery/communications_dish/C in by_type[/obj/machinery/communications_dish])
+			for_by_tcl(C, /obj/machinery/communications_dish)
 				C.add_centcom_report("[command_name()] Update", command_report)
 
 			command_alert(command_report, "Pod Colosseum match finished")
@@ -375,6 +375,7 @@
 		resetting = 0
 
 	New()
+		..()
 		SPAWN_DBG(0.5 SECONDS)
 			viewing = locate() in world
 			staging = locate() in world
@@ -495,8 +496,9 @@ var/global/datum/arena/colosseumController/colosseum_controller = new()
 	var/image/health_overlay
 
 	New(var/barLength = 4, var/is_left = 0)
+		..()
 		for (var/i = 1, i <= barLength, i++)
-			var/obj/screen/S = new /obj/screen()
+			var/atom/movable/screen/S = new /atom/movable/screen()
 			var/edge = is_left ? "WEST" : "EAST"
 			S.layer = HUD_LAYER
 			S.name = "health"
@@ -516,21 +518,21 @@ var/global/datum/arena/colosseumController/colosseum_controller = new()
 		health_overlay = image('icons/obj/colosseum.dmi', "health")
 
 	proc/add_to_hud(var/datum/hud/H)
-		for (var/obj/screen/S in barBits)
+		for (var/atom/movable/screen/S in barBits)
 			H.add_object(S)
 
 	proc/add_to(var/mob/M)
 		if (M.client)
-			for (var/obj/screen/S in barBits)
+			for (var/atom/movable/screen/S in barBits)
 				M.client.screen += S
 
 	proc/remove_from(var/mob/M)
 		if (M.client)
-			for (var/obj/screen/S in barBits)
+			for (var/atom/movable/screen/S in barBits)
 				M.client.screen -= S
 
 	proc/update_health_overlay(var/health_value, var/health_max, var/shield_value, var/shield_max)
-		for (var/obj/screen/S in barBits)
+		for (var/atom/movable/screen/S in barBits)
 			S.overlays.len = 0
 		add_overlay(health_value, health_max, 204, 0, 0, 0, 204, 0)
 		if (shield_value > 0)
@@ -542,7 +544,7 @@ var/global/datum/arena/colosseumController/colosseum_controller = new()
 	proc/add_overlay(value, max_value, r0, g0, b0, r1, g1, b1)
 		var/percentage = value / max_value
 		var/remaining = round(percentage * 100)
-		var/bars = barBits.len
+		var/bars = length(barBits)
 		var/eachBar = 100 / bars
 		var/missingBars = 0
 		health_overlay.color = rgb(lerp(r0, r1, percentage), lerp(g0, g1, percentage), lerp(b0, b1, percentage))
@@ -551,7 +553,7 @@ var/global/datum/arena/colosseumController/colosseum_controller = new()
 		missingBars--
 
 		for (var/i = 1, i <= bars, i++)
-			var/obj/screen/S = barBits[i]
+			var/atom/movable/screen/S = barBits[i]
 			if (i <= missingBars)
 				continue
 			else if (i == missingBars + 1)
@@ -570,7 +572,7 @@ var/global/datum/arena/colosseumController/colosseum_controller = new()
 				S.overlays += health_overlay
 
 	proc/add_counter(var/bit, var/value, var/textcolor)
-		var/obj/screen/counter = barBits[bit]
+		var/atom/movable/screen/counter = barBits[bit]
 		if (value < 0)
 			counter.overlays += image('icons/obj/colosseum.dmi', "INF")
 		else
@@ -594,8 +596,8 @@ var/global/datum/arena/colosseumController/colosseum_controller = new()
 			counter.overlays += right
 
 /datum/colosseumIndicator
-	var/obj/screen/hud/indicated_icon
-	var/obj/screen/counter
+	var/atom/movable/screen/hud/indicated_icon
+	var/atom/movable/screen/counter
 	var/datum/colosseumSystem/tracking
 	var/force_rebuild = 0
 	var/data_displayed = null
@@ -861,11 +863,11 @@ var/global/datum/arena/colosseumController/colosseum_controller = new()
 						var/dx = abs(T.x - Q.x)
 						var/dy = abs(T.y - Q.y)
 						if (dx == dy)
-							Wall.dir = get_dir(Q, T)
+							Wall.set_dir(get_dir(Q, T))
 						else if (dx > dy)
-							Wall.dir = 4
+							Wall.set_dir(4)
 						else
-							Wall.dir = 1
+							Wall.set_dir(1)
 						affected += Wall
 				SPAWN_DBG(forcewall_time)
 					for (var/obj/W in affected)
@@ -937,7 +939,7 @@ var/global/datum/arena/colosseumController/colosseum_controller = new()
 				icon_state = "seeker"
 				rarity_class = 2
 
-/obj/screen/colosseumHelp
+/atom/movable/screen/colosseumHelp
 	name = "Help"
 	icon = 'icons/mob/blob_ui.dmi'
 	icon_state = "blob-help0"
@@ -992,7 +994,7 @@ proc/get_colosseum_message(var/name, var/message)
 	var/datum/colosseumIndicator/shotcount_indicator
 	var/datum/colosseumIndicator/shotdamage_indicator
 	var/datum/healthBar/health_bar
-	var/obj/screen/colosseumHelp/help
+	var/atom/movable/screen/colosseumHelp/help
 	var/obj/colosseum_radio/radio = null
 	var/next_fire_primary = 0
 	var/next_fire_secondary = 0
@@ -1139,7 +1141,7 @@ proc/get_colosseum_message(var/name, var/message)
 	Bump(atom/A)
 		//walk(src, 0)
 		flying = 0
-		dir = facing
+		src.set_dir(facing)
 
 	/*override_southeast(mob/user)
 		if (piloting != user)
@@ -1218,7 +1220,7 @@ proc/get_colosseum_message(var/name, var/message)
 					walk(src, src.dir, speed)
 					flying = src.dir
 			else
-				src.dir = direction
+				src.set_dir(direction)
 
 	*/
 	proc/broadcast(var/message)
@@ -1310,7 +1312,7 @@ proc/get_colosseum_message(var/name, var/message)
 		. = ..(NewLoc,Dir,step_x,step_y)
 
 		if (flying && facing != flying)
-			dir = facing
+			src.set_dir(facing)
 
 	proc/update_shield()
 		if (has_overlays & OVERLAY_SHIELD)
@@ -1352,8 +1354,7 @@ proc/get_colosseum_message(var/name, var/message)
 			if(D_SLASHING)
 				damage /= 3
 			if(D_BURNING)
-				if(src.material)
-					src.material.triggerTemp(src, 5000)
+				src.material?.triggerTemp(src, 5000)
 				damage /= 2
 				damtype = 1
 		damage *= rand(75, 125) * 0.01
@@ -1722,7 +1723,7 @@ proc/get_colosseum_message(var/name, var/message)
 		if (!istype(M))
 			return
 		var/rendered = get_colosseum_message(M.real_name, messages[1])
-		for (var/X in by_type[/obj/colosseum_radio])
+		for_by_tcl(X, /obj/colosseum_radio)
 			var/obj/colosseum_radio/R = X
 			R.receive(rendered)
 

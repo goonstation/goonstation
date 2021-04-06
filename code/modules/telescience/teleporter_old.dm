@@ -189,7 +189,7 @@
 	var/m_blocked = 0
 
 
-	for (var/atom in teleport_jammers)
+	for (var/atom in by_cat[TR_CAT_TELEPORT_JAMMERS])
 		var/atom/A = atom
 		if (get_dist(tmploc,A) <= 5)
 			if (istype(atom, /obj/machinery/telejam))
@@ -214,7 +214,8 @@
 				break
 
 	//if((istype(tmploc,/area/wizard_station)) || (istype(tmploc,/area/syndicate_station)))
-	if ((istype(tmploc.loc, /area) && tmploc.loc:teleport_blocked) || m_blocked)
+	var/area/myArea = get_area(tmploc)
+	if (myArea?.teleport_blocked || m_blocked)
 		if(use_teleblocks)
 			if(isliving(M))
 				boutput(M, "<span class='alert'><b>Teleportation failed!</b></span>")
@@ -236,7 +237,7 @@ proc/splinch(var/mob/M as mob, var/probability)
 			var/mob/living/carbon/human/H = M
 			var/part_splinched
 
-			part_splinched = pick("l_arm", "r_arm", "l_leg", "l_leg","left_eye", "right_eye", "left_lung", "right_lung", "butt", "left_kidney", "right_kidney", "spleen", "pancreas", "appendix", "stomach", "intestines")
+			part_splinched = pick("l_arm", "r_arm", "l_leg", "l_leg","left_eye", "right_eye", "left_lung", "right_lung", "butt", "left_kidney", "right_kidney", "spleen", "pancreas", "appendix", "stomach", "intestines", "tail")
 			if (part_splinched == "l_arm" || part_splinched == "r_arm" || part_splinched == "l_leg" || part_splinched == "l_leg")
 				return H.sever_limb(part_splinched)
 			else

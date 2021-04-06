@@ -195,11 +195,11 @@ var/list/magnet_locations = list()
 				E.loc_x = rand(0, 640)
 				E.loc_y = rand(0, 431)
 			if(active)
-				if(!events_active.Find(E.id))
+				if(!(E.id in events_active))
 					events_active.Add(E.id)
 					events_active[E.id] = E
 			else
-				if(!events_inactive.Find(E.id))
+				if(!(E.id in events_inactive))
 					events_inactive.Add(E.id)
 					events_inactive[E.id] = E
 			return E

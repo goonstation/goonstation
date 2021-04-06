@@ -1,12 +1,48 @@
-"a" = (/turf/variableTurf/wall,/area/noGenerate)
-"b" = (/obj/rack,/obj/item/tank/oxygen,/obj/item/tank/emergency_oxygen,/turf/variableTurf/floor,/area/noGenerate)
-"c" = (/obj/rack,/obj/item/clothing/mask/gas/emergency,/turf/variableTurf/floor,/area/noGenerate)
-"d" = (/obj/item/cigbutt,/turf/variableTurf/floor,/area/noGenerate)
-"e" = (/obj/item/balloon_animal/random,/turf/variableTurf/floor,/area/noGenerate)
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/variableTurf/wall,
+/area/noGenerate)
+"b" = (
+/obj/rack,
+/obj/item/tank/oxygen,
+/obj/item/tank/emergency_oxygen,
+/turf/variableTurf/floor,
+/area/noGenerate)
+"c" = (
+/obj/rack,
+/obj/item/clothing/mask/gas/emergency,
+/turf/variableTurf/floor,
+/area/noGenerate)
+"d" = (
+/obj/item/cigbutt,
+/turf/variableTurf/floor,
+/area/noGenerate)
+"e" = (
+/obj/item/balloon_animal/random,
+/turf/variableTurf/floor,
+/area/noGenerate)
 
 (1,1,1) = {"
-aaaa
-abca
-adea
-aaaa
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+b
+d
+a
+"}
+(3,1,1) = {"
+a
+c
+e
+a
+"}
+(4,1,1) = {"
+a
+a
+a
+a
 "}

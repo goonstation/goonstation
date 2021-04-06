@@ -21,14 +21,30 @@
 	throw_range = 5
 	stamina_damage = 5
 	stamina_cost = 5
-	edible = 1
+	edible = 1	// currently overridden by material settings
 	module_research = list("medicine" = 2) // why would you put this below the throw_impact() stuff
 	module_research_type = /obj/item/organ // were you born in a fuckin barn
 	var/mob/living/carbon/human/donor = null // if I can't use "owner" I can at least use this
+	/// Whoever had this organ first, the original owner
+	var/mob/living/carbon/human/donor_original = null // So people'll know if a lizard's wearing someone else's tail
+	var/datum/appearanceHolder/donor_AH //
 	var/donor_name = null // so you don't get dumb "Unknown's skull mask" shit
 	var/donor_DNA = null
 	var/datum/organHolder/holder = null
 	var/list/organ_abilities = null
+
+	// So we can have an organ have a visible counterpart while inside someone, like a tail or some kind of krang
+	// if you're making a tail, you need to have at least organ_image_under_suit_1 defined, or else it wont work
+	var/organ_image_icon = null		// The icon group we'll be using, such as 'icons/effects/genetics.dmi'
+	var/organ_image_over_suit = null		// Shows up over our suit, usually while the mob is facing north
+	var/organ_image_under_suit_1 = null	// Shows up under our suit, usually while the mob is facing anywhere else
+	var/organ_image_under_suit_2 = null	// If our organ needs another picture, usually for another coloration
+
+	var/organ_color_1 = "#FFFFFF"		// Typically used to colorize the organ image
+	var/organ_color_2 = "#FFFFFF"		// Might also be usable to color organs if their owner has funky colored blood. Shrug.
+
+	/// If our organ's been severed and reattached. Used by heads to preserve their appearance across icon updates if reattached
+	var/transplanted = FALSE
 
 	var/op_stage = 0.0
 	var/brute_dam = 0
@@ -45,7 +61,9 @@
 	var/FAIL_DAMAGE = 65	//Total damage amount at which organ failure starts
 
 	var/created_decal = /obj/decal/cleanable/blood // what kinda mess it makes.  mostly so cyberhearts can splat oil on the ground, but idk maybe you wanna make something that creates a broken balloon or something on impact vOv
-	var/decal_done = 0 // fuckers are tossing these around a lot so I guess they're only gunna make one, ever now
+	var/blood_color = null
+	var/blood_reagent = null
+	var/decal_done = FALSE // fuckers are tossing these around a lot so I guess they're only gunna make one, ever now
 	var/body_side = null // L_ORGAN/1 for left, R_ORGAN/2 for right
 	var/datum/bone/bones = null
 	rand_pos = 1
@@ -81,7 +99,15 @@
 				return
 
 		else
-			src.take_damage(W.force, 0, 0, W.hit_type)
+			user.lastattacked = src
+			attack_particle(user,src)
+			hit_twitch(src)
+			playsound(get_turf(src), "sound/impact_sounds/Flesh_Stab_2.ogg", 100, 1)
+			src.splat(get_turf(src))
+			if(W.hit_type == DAMAGE_BURN)
+				src.take_damage(0, W.force, 0, W.hit_type)
+			else
+				src.take_damage(W.force, 0, 0, W.hit_type)
 
 		..()
 
@@ -92,6 +118,9 @@
 			src.holder = nholder
 			src.donor = nholder.donor
 		if (src.donor)
+			src.donor_original = src.donor
+			if (src.donor.bioHolder)
+				src.donor_AH = src.donor.bioHolder.mobAppearance
 			if (src.donor.real_name)
 				src.donor_name = src.donor.real_name
 				src.name = "[src.donor_name]'s [initial(src.name)]"
@@ -99,6 +128,10 @@
 				src.donor_name = src.donor.name
 				src.name = "[src.donor_name]'s [initial(src.name)]"
 			src.donor_DNA = src.donor.bioHolder ? src.donor.bioHolder.Uid : null
+			src.blood_DNA = src.donor_DNA
+			src.blood_type = src.donor.bioHolder?.bloodType
+			src.blood_color = src.donor.bioHolder?.bloodColor
+			src.blood_reagent = src.donor.blood_id
 		src.setMaterial(getMaterial(made_from), appearance = 0, setname = 0)
 
 	disposing()
@@ -112,7 +145,7 @@
 					holder.vars[thing] = null
 
 
-		if (donor && donor.organs) //not all mobs have organs/organholders (fish)
+		if (donor?.organs) //not all mobs have organs/organholders (fish)
 			donor.organs -= src
 		donor = null
 
@@ -122,13 +155,25 @@
 		holder = null
 		..()
 
-	throw_impact(var/atom/A)
+	proc/splat(turf/T)
+		if(!istype(T) || src.decal_done || !ispath(src.created_decal))
+			return FALSE
+		playsound(T, "sound/impact_sounds/Slimy_Splat_1.ogg", 100, 1)
+		var/obj/decal/cleanable/cleanable = make_cleanable(src.created_decal, T)
+		cleanable.blood_DNA = src.blood_DNA
+		cleanable.blood_type = src.blood_type
+		if(istype(cleanable, /obj/decal/cleanable/blood))
+			var/obj/decal/cleanable/blood/blood = cleanable
+			blood.set_sample_reagent_custom(src.blood_reagent, 10)
+			if(!isnull(src.blood_color))
+				blood.color = src.blood_color
+		src.decal_done = TRUE
+		return cleanable
+
+	throw_impact(atom/A, datum/thrown_thing/thr)
 		var/turf/T = get_turf(A) //
 		playsound(src.loc, "sound/impact_sounds/Flesh_Stab_2.ogg", 100, 1)
-		if (T && !src.decal_done && ispath(src.created_decal))
-			playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 100, 1)
-			make_cleanable(src.created_decal,T)
-			src.decal_done = 1
+		src.splat(T)
 		..() // call your goddamn parents
 
 	//Returns true if the organ is broken or damage is over max health.
@@ -139,7 +184,7 @@
 			return 0
 		return 1
 
-	//What should happen each life tick when an organ is broken.
+	/// What should happen each life tick when an organ is broken.
 	proc/on_broken(var/mult = 1)
 		//stupid check ikr? prolly remove.
 		if (broken)
@@ -161,6 +206,8 @@
 		var/mob/living/carbon/human/H = M
 		src.donor = H
 		src.holder = H.organHolder
+		if(!istype(src.donor_original)) // If we were spawned without an owner, they're our new original owner
+			src.donor_original = H
 
 
 		//Kinda repeated below too. Cure the organ failure disease if this organ is above a certain HP
@@ -168,7 +215,7 @@
 			if (!src.broken  && failure_disease)
 				src.donor.cure_disease(failure_disease)
 
-		if (!broken && islist(src.organ_abilities) && src.organ_abilities.len)
+		if (!broken && islist(src.organ_abilities) && length(src.organ_abilities))
 			var/datum/abilityHolder/organ/A = M.get_ability_holder(/datum/abilityHolder/organ)
 			if (!istype(A))
 				A = M.add_ability_holder(/datum/abilityHolder/organ)
@@ -188,7 +235,11 @@
 
 		if (!src.donor_DNA && src.donor && src.donor.bioHolder)
 			src.donor_DNA = src.donor.bioHolder.Uid
-		if (islist(src.organ_abilities) && src.organ_abilities.len)// && src.donor.abilityHolder)
+			src.blood_DNA = src.donor_DNA
+			src.blood_type = src.donor.bioHolder?.bloodType
+		src.blood_color = src.donor?.bioHolder?.bloodColor
+		src.blood_reagent = src.donor?.blood_id
+		if (islist(src.organ_abilities) && length(src.organ_abilities))// && src.donor.abilityHolder)
 			var/datum/abilityHolder/aholder
 			if (src.donor && src.donor.abilityHolder)
 				aholder = src.donor.abilityHolder
@@ -239,17 +290,15 @@
 
 	//damage/heal obj. Provide negative values for healing.	//maybe I'll change cause I don't like this. But this functionality is found in some other damage procs for other things, might as well keep it consistent.
 	take_damage(brute, burn, tox, damage_type)
-#if ASS_JAM //timestop stuff
-		if (ishuman(donor))
-			var/mob/living/carbon/human/H = donor
-			if (H.paused)
-				H.pausedburn = max(0, H.pausedburn + burn)
-				H.pausedbrute = max(0, H.pausedbrute + brute)
-				return 0
-#endif
+		if(isvampire(donor) && !(istype(src, /obj/item/organ/chest) || istype(src, /obj/item/organ/head) || istype(src, /obj/item/skull) || istype(src, /obj/item/clothing/head/butt)))
+			return //vampires are already dead inside
+
 		src.brute_dam += brute
 		src.burn_dam += burn
 		src.tox_dam += tox
+
+		if(src.robotic && (src.organ_name in cyberorgan_brute_threshold) && abs(src.brute_dam - cyberorgan_brute_threshold[src.organ_name]) <= 2 && abs(src.burn_dam - cyberorgan_burn_threshold[src.organ_name]) <= 5)
+			src.emag_act(null)
 
 		//I don't think this is used at all, but I'm afraid to get rid of it - Kyle
 		if (ishuman(donor))
@@ -323,7 +372,7 @@
 			return 0
 
 	proc/breakme()
-		if (!broken && islist(src.organ_abilities) && src.organ_abilities.len)// remove abilities when broken
+		if (!broken && islist(src.organ_abilities) && length(src.organ_abilities))// remove abilities when broken
 			var/datum/abilityHolder/aholder
 			if (src.donor && src.donor.abilityHolder)
 				aholder = src.donor.abilityHolder
@@ -335,7 +384,7 @@
 		src.broken = 1
 
 	proc/unbreakme()
-		if (broken && islist(src.organ_abilities) && src.organ_abilities.len) //put them back if fixed (somehow)
+		if (broken && islist(src.organ_abilities) && length(src.organ_abilities)) //put them back if fixed (somehow)
 			var/datum/abilityHolder/organ/A = donor?.get_ability_holder(/datum/abilityHolder/organ)
 			if (!istype(A))
 				A = donor?.add_ability_holder(/datum/abilityHolder/organ)

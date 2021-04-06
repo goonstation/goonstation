@@ -26,7 +26,7 @@
 
   // Components
   @include meta.load-css('../components/Button.scss', $with: (
-    'color-default': #E8E4C8,
+    'color-default': #E8E4C9,
     'color-disabled': #363636,
     'color-selected': #9d0808,
     'color-caution': #be6209,
@@ -47,7 +47,7 @@
   .Button {
     font-family: monospace;
     color: #161613;
-    border: base.em(2px) outset #E8E4C8;
+    border: base.em(2px) outset #E8E4C9;
     outline: base.em(1px) solid #161613;
   }
 

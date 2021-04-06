@@ -33,12 +33,13 @@
 
 	var/next_update = 0
 
-	var/obj/screen/abilitystat/abilitystat = null
+	var/atom/movable/screen/abilitystat/abilitystat = null
 
 	var/points_last = 0
 
 
 	New(var/mob/M)
+		..()
 		owner = M
 		hud = new()
 		if(owner)
@@ -48,7 +49,7 @@
 				H.hud?.update_ability_hotbar()
 
 	disposing()
-		for (var/obj/screen/S in hud.objects)
+		for (var/atom/movable/screen/S in hud.objects)
 			if (hasvar(S, "master") && S:master == src)
 				S:master = null
 		if (owner)
@@ -80,15 +81,15 @@
 		var/num = 0
 		//Z_LOG_DEBUG("Abilities", "updateCounters: [src], owner: [src.owner]")
 		for(var/datum/targetable/B in src.abilities)
-			//if(istype(B.object, /obj/screen/ability) && !istype(B.object, /obj/screen/ability/topBar))
-			if (istype(B.object, /obj/screen/ability/topBar))
-				var/obj/screen/ability/topBar/A = B.object
+			//if(istype(B.object, /atom/movable/screen/ability) && !istype(B.object, /atom/movable/screen/ability/topBar))
+			if (istype(B.object, /atom/movable/screen/ability/topBar))
+				var/atom/movable/screen/ability/topBar/A = B.object
 				A.update_cooldown_cost()
 				num++
 
 		if (ishuman(owner))
 			var/mob/living/carbon/human/H = owner
-			for(var/obj/screen/ability/topBar/genetics/G in H.hud.objects)
+			for(var/atom/movable/screen/ability/topBar/genetics/G in H.hud.objects)
 				G.update_cooldown_cost()
 				num++
 
@@ -109,19 +110,19 @@
 		if (src.topBarRendered && src.rendered)
 
 			if (!called_by_owner)
-				for(var/obj/screen/ability/A in src.hud)
-					src.hud -= A
+				for(var/atom/movable/screen/ability/A in src.hud.objects)
+					src.hud.objects -= A
 
 			var/pos_x = start_x
 			var/pos_y = start_y
 			for(var/datum/targetable/B in src.abilities)
-				if (!istype(B.object, /obj/screen/ability/topBar))
+				if (!istype(B.object, /atom/movable/screen/ability/topBar))
 					continue
 				if (!B.display_available())
 					B.object.screen_loc = null
 					continue
 				any_abilities_displayed = 1
-				var/obj/screen/ability/topBar/button = B.object
+				var/atom/movable/screen/ability/topBar/button = B.object
 				button.update_on_hud(pos_x,pos_y)
 				button.icon = B.icon
 				button.icon_state = B.icon_state
@@ -143,7 +144,7 @@
 				return
 
 			for(var/datum/targetable/B in src.abilities)
-				if(istype(B.object, /obj/screen/ability) && !istype(B.object, /obj/screen/ability/topBar))
+				if(istype(B.object, /atom/movable/screen/ability) && !istype(B.object, /atom/movable/screen/ability/topBar))
 					B.object.updateIcon()
 			return
 
@@ -187,8 +188,7 @@
 		bonus = 0
 
 	proc/transferOwnership(var/newbody)
-		if(owner)
-			owner.detach_hud(hud)
+		owner?.detach_hud(hud)
 		owner = newbody
 		if(owner)
 			owner.attach_hud(hud)
@@ -217,11 +217,17 @@
 	proc/onAbilityStat()
 		return
 
-	proc/deductPoints(cost)
+	proc/deductPoints(cost, target_ah_type)
 		if (!usesPoints || cost == 0)
 			return
 
 		points -= cost
+
+	proc/addPoints(add_points, target_ah_type)
+		if (!usesPoints)
+			return
+
+		points += add_points
 
 	proc/suspendAllAbilities()
 		src.suspended = src.abilities.Copy()
@@ -229,7 +235,7 @@
 		src.updateButtons()
 
 	proc/resumeAllAbilities()
-		if (src.suspended && src.suspended.len)
+		if (src.suspended && length(src.suspended))
 			src.abilities = src.suspended
 			src.suspended = list()
 		src.updateButtons()
@@ -239,7 +245,7 @@
 			abilityType = text2path(abilityType)
 		if (!ispath(abilityType))
 			return
-		if (src.abilities.Find(abilityType))
+		if (abilityType in src.abilities)
 			return
 		var/datum/targetable/A = new abilityType(src)
 		A.holder = src // redundant but can't hurt I guess
@@ -271,6 +277,12 @@
 			return
 		if (A in src.abilities)
 			src.abilities -= A
+			if (A == src.altPower)
+				src.altPower = null
+			if (A == src.ctrlPower)
+				src.ctrlPower = null
+			if (A == src.shiftPower)
+				src.shiftPower = null
 			qdel(A)
 			return
 		src.updateButtons()
@@ -384,7 +396,7 @@
 	proc/set_loc_callback(var/newloc)
 		.=0
 
-/obj/screen/ability
+/atom/movable/screen/ability
 	var/datum/targetable/owner
 	var/static/image/binding = image('icons/mob/spell_buttons.dmi',"binding")
 	//*screams*
@@ -439,7 +451,7 @@
 	// Switch to targeted only if multiple mobs are in range. All screen abilities customize their clicked(),
 	// and you have to call this proc there if you want to use it. You also need to set 'target_selection_check = 1'
 	// for every spell that should function in this manner.
-	// See /obj/screen/ability/wrestler/clicked() for a practical example (Convair880).
+	// See /atom/movable/screen/ability/wrestler/clicked() for a practical example (Convair880).
 	proc/do_target_selection_check()
 		var/datum/targetable/spell = owner
 		var/use_targeted = 0
@@ -467,7 +479,7 @@
 
 	//WIRE TOOLTIPS
 	MouseEntered(location, control, params)
-		if (src && src.owner && usr.client.tooltipHolder && control == "mapwindow.map")
+		if (src?.owner && usr.client.tooltipHolder && control == "mapwindow.map")
 			usr.client.tooltipHolder.showHover(src, list(
 				"params" = params,
 				"title" = src.name,
@@ -480,7 +492,7 @@
 		if (usr.client.tooltipHolder)
 			usr.client.tooltipHolder.hideHover()
 
-/obj/screen/abilitystat
+/atom/movable/screen/abilitystat
 	maptext_x = 6
 	maptext_y = -7
 	maptext_width = 120
@@ -491,13 +503,13 @@
 
 	New()
 		..()
-		SPAWN_DBG(10) //sorry, some race condition i couldt figure out
+		SPAWN_DBG(1 SECOND) //sorry, some race condition i couldt figure out
 			if (ishuman(owner?.owner))
 				var/mob/living/carbon/human/H = owner?.owner
 				H.hud?.update_ability_hotbar()
 
 	disposing()
-		if(owner && owner.hud)
+		if(owner?.hud)
 			owner.hud.remove_object(src)
 		..()
 
@@ -510,27 +522,27 @@
 	proc/update_on_hud(var/pos_x = 0,var/pos_y = 0)
 		src.screen_loc = "NORTH-[pos_y],[pos_x]"
 
-		if(owner && owner.hud)
+		if(owner?.hud)
 			owner.hud.remove_object(src)
 			owner.hud.add_object(src, HUD_LAYER, src.screen_loc)
 
 
-/obj/screen/ability/topBar
+/atom/movable/screen/ability/topBar
 	var/static/image/ctrl_highlight = image('icons/mob/spell_buttons.dmi',"ctrl")
 	var/static/image/shift_highlight = image('icons/mob/spell_buttons.dmi',"shift")
 	var/static/image/alt_highlight = image('icons/mob/spell_buttons.dmi',"alt")
 	var/static/image/cooldown = image('icons/mob/spell_buttons.dmi',"cooldown")
 	var/static/image/darkener = image('icons/mob/spell_buttons.dmi',"darkener")
 
-	var/obj/screen/pseudo_overlay/cd_tens
-	var/obj/screen/pseudo_overlay/cd_secs
+	var/atom/movable/screen/pseudo_overlay/cd_tens
+	var/atom/movable/screen/pseudo_overlay/cd_secs
 	var/tens_offset_x = 19
 	var/tens_offset_y = 7
 	var/secs_offset_x = 23
 	var/secs_offset_y = 7
 
-	var/obj/screen/pseudo_overlay/point_overlay
-	var/obj/screen/pseudo_overlay/cooldown_overlay
+	var/atom/movable/screen/pseudo_overlay/point_overlay
+	var/atom/movable/screen/pseudo_overlay/cooldown_overlay
 
 
 	//mbc : used for updates called without positioning - just use last poistion
@@ -539,11 +551,11 @@
 
 	New()
 		..()
-		var/obj/screen/pseudo_overlay/T = new /obj/screen/pseudo_overlay(src)
-		var/obj/screen/pseudo_overlay/S = new /obj/screen/pseudo_overlay(src)
+		var/atom/movable/screen/pseudo_overlay/T = new /atom/movable/screen/pseudo_overlay(src)
+		var/atom/movable/screen/pseudo_overlay/S = new /atom/movable/screen/pseudo_overlay(src)
 
-		point_overlay = new /obj/screen/pseudo_overlay()
-		cooldown_overlay = new /obj/screen/pseudo_overlay()
+		point_overlay = new /atom/movable/screen/pseudo_overlay()
+		cooldown_overlay = new /atom/movable/screen/pseudo_overlay()
 		src.vis_contents += point_overlay
 		src.vis_contents += cooldown_overlay
 		cooldown_overlay.icon = 'icons/mob/spell_buttons.dmi'
@@ -773,9 +785,9 @@
 	MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
 		if (!owner || !owner.holder || !owner.holder.topBarRendered)
 			return
-		if (!istype(O,/obj/screen/ability/topBar) || !owner.holder)
+		if (!istype(O,/atom/movable/screen/ability/topBar) || !owner.holder)
 			return
-		var/obj/screen/ability/source = O
+		var/atom/movable/screen/ability/source = O
 		if (!istype(src.owner) || !istype(source.owner))
 			boutput(src.owner, "<span class='alert'>You may only switch the places of ability buttons.</span>")
 			return
@@ -798,14 +810,14 @@
 		cooldown = 100
 		start_on_cooldown = 0
 		datum/abilityHolder/holder
-		obj/screen/ability/object
+		atom/movable/screen/ability/object
 		pointCost = 0
 		special_screen_loc = null
 		helpable = 1
 		cd_text_color = "#FFFFFF"
 		copiable = 1
 		target_nodamage_check = 0
-		target_selection_check = 0 // See comment in /obj/screen/ability.
+		target_selection_check = 0 // See comment in /atom/movable/screen/ability.
 		dont_lock_holder = 0 // Bypass holder lock when we cast this spell.
 		ignore_holder_lock = 0 // Can we cast this spell when the holder is locked?
 		restricted_area_check = 0 // Are we prohibited from casting this spell in 1 (all of Z2) or 2 (only the VR)?
@@ -828,10 +840,11 @@
 
 	//DON'T OVERRIDE THIS. OVERRIDE onAttach()!
 	New(datum/abilityHolder/holder)
+		SHOULD_CALL_PARENT(FALSE) // I hate this but refactoring /datum/targetable is a big project I'll do some other time
 		..()
 		src.holder = holder
 		if (src.icon && src.icon_state)
-			var/obj/screen/ability/topBar/B = new /obj/screen/ability/topBar(null)
+			var/atom/movable/screen/ability/topBar/B = new /atom/movable/screen/ability/topBar(null)
 			B.icon = src.icon
 			B.icon_state = src.icon_state
 			B.owner = src
@@ -995,7 +1008,7 @@
 
 			return 0
 
-		// See comment in /obj/screen/ability (Convair880).
+		// See comment in /atom/movable/screen/ability (Convair880).
 		target_reference_lookup()
 			var/list/mob/targets = list()
 
@@ -1017,7 +1030,7 @@
 		flip_callback()
 			.= 0
 
-/obj/screen/pseudo_overlay
+/atom/movable/screen/pseudo_overlay
 	// this is hack as all get out
 	// but since i cant directly alter the pixel offset of a screen overlay it'll have to do
 	name = ""
@@ -1025,7 +1038,7 @@
 	layer = 61
 	var/x_offset = 0
 	var/y_offset = 0
-	appearance_flags = RESET_COLOR
+	appearance_flags = RESET_COLOR | LONG_GLIDE | PIXEL_SCALE
 	vis_flags = VIS_INHERIT_ID
 
 /datum/abilityHolder/composite
@@ -1122,8 +1135,8 @@
 
 	updateButtons(var/called_by_owner = 0, var/start_x = 1, var/start_y = 0)
 		if (src.topBarRendered && src.rendered && src.hud)
-			for(var/obj/screen/ability/A in src.hud)
-				src.hud -= A
+			for(var/atom/movable/screen/ability/A in src.hud.objects)
+				src.hud.objects -= A
 
 		x_occupied = 1
 		y_occupied = 0
@@ -1187,9 +1200,17 @@
 		for (var/datum/abilityHolder/H in holders)
 			H.StatAbilities()
 
-	deductPoints(cost)
+	deductPoints(cost, target_ah_type)
 		for (var/datum/abilityHolder/H in holders)
+			if (target_ah_type && !istype(H, target_ah_type))
+				continue
 			H.deductPoints(cost)
+
+	addPoints(add_points, target_ah_type)
+		for (var/datum/abilityHolder/H in holders)
+			if (target_ah_type && !istype(H, target_ah_type))
+				continue
+			H.addPoints(add_points)
 
 	suspendAllAbilities()
 		for (var/datum/abilityHolder/H in holders)

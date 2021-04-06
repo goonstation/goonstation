@@ -12,6 +12,7 @@
 	var/number = 0
 	rand_pos = 0
 	desc = "A wall-mounted radio intercom, used to communicate with the specified frequency. Usually turned off except during emergencies."
+	hardened = 0
 
 /obj/item/device/radio/intercom/New()
 	. = ..()
@@ -37,12 +38,12 @@
 
 /obj/item/device/radio/intercom/attack_ai(mob/user as mob)
 	src.add_fingerprint(user)
-	SPAWN_DBG (0)
+	SPAWN_DBG(0)
 		attack_self(user)
 
 /obj/item/device/radio/intercom/attack_hand(mob/user as mob)
 	src.add_fingerprint(user)
-	SPAWN_DBG (0)
+	SPAWN_DBG(0)
 		attack_self(user)
 
 /obj/item/device/radio/intercom/send_hear()
@@ -72,7 +73,7 @@
 	name = "Medical Intercom"
 	frequency = R_FREQ_INTERCOM_MEDICAL
 	broadcasting = 0
-	device_color = "#0050FF"
+	device_color = "#0093FF"
 
 	initialize()
 		set_frequency(frequency)
@@ -99,7 +100,7 @@
 	name = "Research Intercom"
 	frequency = R_FREQ_INTERCOM_RESEARCH
 	broadcasting = 0
-	device_color = "#153E9E"
+	device_color = "#C652CE"
 
 	initialize()
 		set_frequency(frequency)
@@ -131,11 +132,20 @@
 	initialize()
 		set_frequency(frequency)
 
+/obj/item/device/radio/intercom/botany
+	name = "Botany Intercom"
+	frequency = R_FREQ_INTERCOM_BOTANY
+	broadcasting = 0
+	device_color = "#78ee48"
+
+	initialize()
+		set_frequency(frequency)
+
 /obj/item/device/radio/intercom/AI
 	name = "AI Intercom"
 	frequency = R_FREQ_INTERCOM_AI
 	broadcasting = 1
-	device_color = "#333399"
+	device_color = "#7F7FE2"
 
 	initialize()
 		set_frequency(frequency)

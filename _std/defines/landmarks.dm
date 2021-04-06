@@ -29,7 +29,8 @@
 
 // misc and unused
 
-#define LANDMARK_TWITCHY_BILL_RESPAWN "shitty_bill_respawn" // Twitch Plays Shitty Bill respawn points
+/// Twitch Plays Shitty Bill respawn points
+#define LANDMARK_TWITCHY_BILL_RESPAWN "shitty_bill_respawn"
 #define LANDMARK_PRISONWARP "prisonwarp"
 #define LANDMARK_PRISONSECURITYWARP "prisonsecuritywarp"
 #define LANDMARK_THUNDERDOME_1 "tdome1"
@@ -44,6 +45,10 @@
 #define LANDMARK_BIGBOOM "bigboom" // unfinished Manta event
 #define LANDMARK_TUTORIAL_START "tutorial_start_marker"
 #define LANDMARK_CRUISER_ENTRANCE "cruiser_entrance"
+// loading screen maptext landmarks
+#define LANDMARK_LOBBY_LEFTSIDE "lobby_leftside"
+#define LANDMARK_LOBBY_STATUS "lobby_status"
+#define LANDMARK_LOBBY_TIMER "lobby_timer"
 
 // VR networks
 
@@ -54,8 +59,10 @@
 
 // falling down holes
 
+#define LANDMARK_FALL_DEBUG "pit_debug" // locations to fall if you fucked up the warptarget on a hole_xy
 #define LANDMARK_FALL_ICE "icefall" // locations for people to fall if they enter the deep abyss on the ice moon
 #define LANDMARK_FALL_POLARIS "polarisfall" // locations for people to fall if they enter the deep in the trench
+#define LANDMARK_FALL_MARJ "marjfall" // locations for people to fall if they enter the deep in the trench
 #define LANDMARK_FALL_DEEP "deepfall" // locations for people to fall into the precursor pit area
 #define LANDMARK_FALL_ANCIENT "ancientfall" // locations for people to fall into the ancient pit area
 #define LANDMARK_FALL_GREEK "greekfall" // locations for people to fall into the greek pit area
@@ -64,10 +71,17 @@
 #define LANDMARK_FALL_MOON_HEMERA "moonfall_hemera" // Hemera lunar office elevator shaft
 #define LANDMARK_FALL_MOON_MUSEUM "moonfall_museum" // Lunar museum elevator shaft
 #define LANDMARK_FALL_SEA "seafall" // Oshan trench elevator
+#define LANDMARK_FALL_SPACEMAS "spacemasfall" // Merry Spacemas!
 
 // misc adventure zone stuff
 
-#define LANDMARK_TELESCI "telesci" // allowed turfs for telesci
+/// allowed turfs for telesci
+#define LANDMARK_TELESCI "telesci"
 #define LANDMARK_LRT "lrt landmark"
 #define LANDMARK_SAMOSTREL_WARP "samostrel"
 #define LANDMARK_EVIL_CHEF_CORPSE "evilchef_corpse"
+
+// Visual mirror warp modes
+#define LANDMARK_VM_WARP_NONE 0
+#define LANDMARK_VM_WARP_ALL 1
+#define LANDMARK_VM_WARP_NON_ADMINS 2

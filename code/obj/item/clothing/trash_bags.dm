@@ -14,7 +14,7 @@
 	tooltip_flags = REBUILD_DIST
 	body_parts_covered = TORSO
 	var/base_state = "trashbag"
-	var/max_stuff = 12 // can't hold more than this many stuff
+	var/max_stuff = 20 // can't hold more than this many stuff
 	var/current_stuff = 0 // w_class is added together here, not allowed to add something that would put this > max_stuff
 
 	get_desc(dist)
@@ -22,7 +22,6 @@
 		if (dist <= 2)
 			if (src.current_stuff > src.max_stuff)
 				. += "All the stuff inside is spilling out!"
-				src.remove_random_item() // dunno how this would even happen but uhh there, there you go. a way to remove items if there's too much in there! :v
 			else if (src.current_stuff == src.max_stuff)
 				. += "It's totally full."
 			else
@@ -42,6 +41,9 @@
 			src.item_state = src.base_state
 
 	attackby(obj/item/W as obj, mob/user as mob)
+		if(W.w_class > 3)
+			boutput(user, "<span class='alert'>\The [W] is too big to fit inside [src]!</span>")
+			return
 		if (W.cant_self_remove)
 			boutput(user, "<span class='alert'>You can't get [W] to come off of you!</span>")
 			return
@@ -101,7 +103,7 @@
 			src.w_class = max(I.w_class, src.w_class) // as it turns out there are some w_class things above 5 so fuck it this is just a max() now
 			src.current_stuff += I.w_class
 			tooltip_rebuild = 1
-		if (src.contents.len == 1)
+		if (src.contents.len >= 1)
 			src.icon_state = src.base_state
 			src.item_state = src.base_state
 			if (ismob(user))

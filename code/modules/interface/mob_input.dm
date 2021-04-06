@@ -3,7 +3,7 @@
 /mob/proc/key_up(var/key)
 
 /mob/proc/click(atom/target, params)
-	actions.interrupt(src, INTERRUPT_ACT) //Definitely not the best place for this.
+	//moved the 'actions.interrupt(src, INTERRUPT_ACT)' here to on mob/living
 
 	if (src.targeting_ability)
 		if (istype(src.targeting_ability, /datum/targetable))
@@ -83,7 +83,6 @@
 		if (abilityHolder.topBarRendered)
 			if (abilityHolder.click(target, params))
 				return 100
-
 	//Pull cancel 'hotkey'
 	if (src.pulling && get_dist(src,target) > 1)
 		if (!islist(params))
@@ -94,38 +93,31 @@
 			src.pulling = null
 
 	//circumvented by some rude hack in client.dm; uncomment if hack ceases to exist
-	//if (istype(target, /obj/screen/ability))
+	//if (istype(target, /atom/movable/screen/ability))
 	//	target:clicked(params)
 	if (get_dist(src, target) > 0)
-		if(!dir_locked)
-			dir = get_dir(src, target)
+		if(!src.dir_locked)
+			set_dir(get_dir(src, target))
 			if(dir & (dir-1))
 				if (dir & EAST)
-					dir = EAST
+					set_dir(EAST)
 				else if (dir & WEST)
-					dir = WEST
-			src.update_directional_lights()
-			if (src.mdir_lights)
-				src.update_mdir_light_visibility(dir)
+					set_dir(WEST)
 
-/mob/proc/hotkey(name)
+/mob/proc/hotkey(name) //if this gets laggy, look into adding a small spam cooldown like with resting / eating?
 	switch (name)
 		if ("look_n")
 			if(!dir_locked)
-				src.dir = NORTH
-				src.update_directional_lights()
+				src.set_dir(NORTH)
 		if ("look_s")
 			if(!dir_locked)
-				src.dir = SOUTH
-				src.update_directional_lights()
+				src.set_dir(SOUTH)
 		if ("look_e")
 			if(!dir_locked)
-				src.dir = EAST
-				src.update_directional_lights()
+				src.set_dir(EAST)
 		if ("look_w")
 			if(!dir_locked)
-				src.dir = WEST
-				src.update_directional_lights()
+				src.set_dir(WEST)
 		if ("admin_interact")
 			src.admin_interact_verb()
 		if ("stop_pull")
@@ -133,10 +125,13 @@
 				unpull_particle(src,pulling)
 			src.pulling = null
 
-/** build_keybind_styles: Additiviely applies keybind styles onto the client's keymap.
- *	To be extended upon in children types that want to have special keybind handling.
- *	Call this proc first, and then do your specific application of keybind styles.
- */
+/**
+	* Additiviely applies keybind styles onto the client's keymap.
+	*
+	* To be extended upon in children types that want to have special keybind handling.
+	*
+	* Call this proc first, and then do your specific application of keybind styles.
+	*/
 /mob/proc/build_keybind_styles(client/C)
 	SHOULD_CALL_PARENT(TRUE)
 
@@ -145,14 +140,16 @@
 
 	C.apply_keybind("base")
 
-	if (C.preferences?.use_azerty) //runtime : preferences is null? idk why, bandaid for now
+	if (C.preferences?.use_azerty) // runtime : preferences is null? idk why, bandaid for now
 		C.apply_keybind("base_azerty")
 	if (C.tg_controls)
 		C.apply_keybind("base_tg")
 
-/** apply_custom_keybinds: Applies the client's custom keybind changelist, fetched from the cloud.
- *	Called by build_keybind_styles if not resetting the custom keybinds of a u
- */
+/**
+	* Applies the client's custom keybind changelist, fetched from the cloud.
+	*
+	* Called by build_keybind_styles if not resetting the custom keybinds of a u
+	*/
 /mob/proc/apply_custom_keybinds(client/C)
 	PROTECTED_PROC(TRUE)
 
@@ -165,9 +162,11 @@
 		var/datum/keymap/new_map = new /datum/keymap(json_decode(fetched_keylist))
 		C.keymap.overwrite_by_action(new_map)
 
-/** reset_keymap: Builds the mob's keybind styles, checks for valid movement controllers, and finally sets the keymap.
- *  Called on: Login, Vehicle change, WASD/TG/AZERTY toggle, Keybind menu Reset
- */
+/**
+	* Builds the mob's keybind styles, checks for valid movement controllers, and finally sets the keymap.
+	*
+	* Called on: Login, Vehicle change, WASD/TG/AZERTY toggle, Keybind menu Reset
+	*/
 /mob/proc/reset_keymap()
 	if (src.client)
 		src.client.applied_keybind_styles = list() //Reset currently applied styles

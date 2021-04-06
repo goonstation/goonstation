@@ -213,8 +213,7 @@
 		owner.remove_stamina(5)
 
 		if (use_cloakofdarkness)
-			if (!(src in processing_items))
-				processing_items.Add(src)
+			processing_items |= src
 
 		SPAWN_DBG(-1)
 			var/reduc_count = 0

@@ -331,6 +331,13 @@ menu "menu"
 		is-checked = true
 		can-check = true
 		saved-params = "is-checked"
+	elem "set_tint"
+		name = "&View Tint"
+		command = "apply-view-tint"
+		category = "&Effects"
+		is-checked = true
+		can-check = true
+		saved-params = "is-checked"
 	elem
 		name = "&Interface"
 		command = ""
@@ -398,13 +405,38 @@ menu "menu"
 		command = ""
 		saved-params = "is-checked"
 	elem
+		name = "&Adjust Master Volume"
+		command = "change-volume master"
+		category = "&Audio"
+		saved-params = "is-checked"
+	elem
+		name = "&Adjust Game Volume"
+		command = "change-volume game"
+		category = "&Audio"
+		saved-params = "is-checked"
+	elem
+		name = "&Adjust Ambient Volume"
+		command = "change-volume ambient"
+		category = "&Audio"
+		saved-params = "is-checked"
+	elem
 		name = "&Adjust Radio Music Volume"
-		command = "Alter-Radio-Volume"
+		command = "change-volume radio"
 		category = "&Audio"
 		saved-params = "is-checked"
 	elem
 		name = "&Adjust Admin Music Volume"
-		command = "Alter-Music-Volume"
+		command = "change-volume admin"
+		category = "&Audio"
+		saved-params = "is-checked"
+	elem
+		name = "&Adjust Emote Volume"
+		command = "change-volume emote"
+		category = "&Audio"
+		saved-params = "is-checked"
+	elem
+		name = "&Adjust Mentor PM Volume"
+		command = "change-volume mentorpm"
 		category = "&Audio"
 		saved-params = "is-checked"
 	elem
@@ -914,7 +946,7 @@ window "pda2"
 		saved-params = "pos;size;is-minimized;is-maximized"
 		title = "Personal Data Assistant"
 		statusbar = false
-		can-resize = false
+		can-resize = true
 	elem "grido"
 		type = GRID
 		pos = 0,0
@@ -933,8 +965,8 @@ window "pda2"
 		type = BROWSER
 		pos = 0,0
 		size = 408x424
-		anchor1 = none
-		anchor2 = none
+		anchor1 = 0,0
+		anchor2 = 100,100
 		background-color = #6f7961
 		saved-params = ""
 
@@ -1495,45 +1527,55 @@ window "rpane"
 		saved-params = "is-checked"
 		text = "Menu"
 		command = ".winset \"mainwindow.menu='menu'; hide_menu.is-checked=false; menub.is-visible = false\""
-	elem "bugreportb"
-		type = BUTTON
-		pos = 380,5
-		size = 60x20
-		anchor1 = none
-		anchor2 = 100,0
-		saved-params = "is-checked"
-		text = "Bug Report"
-		command = "bugreport"
-		group = "rpaneutil"
-	elem "wikib"
-		type = BUTTON
-		pos = 445,5
-		size = 60x20
-		anchor1 = none
-		anchor2 = 100,0
-		saved-params = "is-checked"
-		text = "Wiki"
-		command = "wiki"
-		group = "rpaneutil"
 	elem "mapb"
 		type = BUTTON
-		pos = 510,5
+		pos = 315,5
 		size = 60x20
-		anchor1 = none
-		anchor2 = 100,0
+		anchor1 = 100,0
+		anchor2 = none
 		saved-params = "is-checked"
 		text = "Map"
 		command = "map"
 		group = "rpaneutil"
+	elem "wikib"
+		type = BUTTON
+		pos = 380,5
+		size = 60x20
+		anchor1 = 100,0
+		anchor2 = none
+		saved-params = "is-checked"
+		text = "Wiki"
+		command = "wiki"
+		group = "rpaneutil"
+	elem "githubb"
+		type = BUTTON
+		pos = 445,5
+		size = 60x20
+		anchor1 = 100,0
+		anchor2 = none
+		saved-params = "is-checked"
+		text = "GitHub"
+		command = "github"
+		group = "rpaneutil"
 	elem "forumb"
 		type = BUTTON
-		pos = 575,5
+		pos = 510,5
 		size = 60x20
-		anchor1 = none
-		anchor2 = 100,0
+		anchor1 = 100,0
+		anchor2 = none
 		saved-params = "is-checked"
 		text = "Forum"
 		command = "forum"
+		group = "rpaneutil"
+	elem "bugreportb"
+		type = BUTTON
+		pos = 575,5
+		size = 60x20
+		anchor1 = 100,0
+		anchor2 = none
+		saved-params = "is-checked"
+		text = "Bug Report"
+		command = "bugreport"
 		group = "rpaneutil"
 
 window "browserwindow"

@@ -1,3 +1,4 @@
+/// Job/tool modules for cyborgs
 /obj/item/robot_module
 	name = "blank cyborg module"
 	desc = "A blank cyborg module. It has minimal function in its current state."
@@ -15,8 +16,11 @@
 	var/included_cosmetic = null
 	var/radio_type = null
 	var/obj/item/device/radio/radio = null
+	var/list/mailgroups = list(MGO_SILICON, MGD_PARTY)
+	var/list/alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_DEATH)
 
 /obj/item/robot_module/New()
+	..()
 	// add contents
 	if (src.include_common_tools)
 		src.add_contents(/datum/robot/module_tool_creator/recursive/module/common)

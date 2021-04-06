@@ -1,24 +1,38 @@
 
+#define IS_NPC_HATED_ITEM(x) ( \
+		istype(x, /obj/item/clothing/suit/straight_jacket) || \
+		istype(x, /obj/item/handcuffs) || \
+		istype(x, /obj/item/device/radio/electropack) || \
+		x:block_vision \
+	)
+
 /mob/living/carbon/human/monkey //Please ignore how silly this path is.
 	name = "monkey"
+#ifdef IN_MAP_EDITOR
+	icon_state = "monkey"
+#endif
 	static_type_override = /datum/mutantrace/monkey
 
 	New()
 		..()
 		SPAWN_DBG(0.5 SECONDS)
 			if (!src.disposed)
-				cust_one_state = "None"
 				src.bioHolder.AddEffect("monkey")
 				src.get_static_image()
 				if (src.name == "monkey" || !src.name)
 					src.name = pick_string_autokey("names/monkey.txt")
 				src.real_name = src.name
 
+	initializeBioholder()
+		randomize_look(src, 1, 1, 1, 0, 1, 0)
+		. = ..()
+
 // special monkeys.
 /mob/living/carbon/human/npc/monkey/mr_muggles
 	name = "Mr. Muggles"
 	real_name = "Mr. Muggles"
 	gender = "male"
+	ai_offhand_pickup_chance = 1 // very civilized
 	New()
 		..()
 		SPAWN_DBG(1 SECOND)
@@ -28,6 +42,7 @@
 	name = "Mrs. Muggles"
 	real_name = "Mrs. Muggles"
 	gender = "female"
+	ai_offhand_pickup_chance = 1 // also very civilized
 	New()
 		..()
 		SPAWN_DBG(1 SECOND)
@@ -37,9 +52,7 @@
 	name = "Mr. Rathen"
 	real_name = "Mr. Rathen"
 	gender = "male"
-#if ASS_JAM
-	unkillable = 1
-#endif
+	ai_offhand_pickup_chance = 2 // learned that there's dangerous stuff in engineering!
 	New()
 		..()
 		SPAWN_DBG(1 SECOND)
@@ -49,6 +62,7 @@
 	name = "Albert"
 	real_name = "Albert"
 	gender = "male"
+	ai_offhand_pickup_chance = 10 // more curious than most monkeys
 	New()
 		..()
 		SPAWN_DBG(1 SECOND)
@@ -59,11 +73,33 @@
 	name = "Von Braun"
 	real_name = "Von Braun"
 	gender = "male"
+	ai_offhand_pickup_chance = 40 // went through training as a spy thief, skilled at snatching stuff
 	New()
 		..()
 		SPAWN_DBG(1 SECOND)
 			src.equip_new_if_possible(/obj/item/clothing/suit/space/syndicate, slot_wear_suit)
 			src.equip_new_if_possible(/obj/item/clothing/head/helmet/space, slot_head)
+
+/mob/living/carbon/human/npc/monkey/oppenheimer
+	name = "Oppenheimer"
+	real_name = "Oppenheimer"
+	gender = "male"
+	ai_offhand_pickup_chance = 40 // went through training as a spy thief, skilled at snatch- wait, I'm getting a feeling of deja vu
+	ai_aggressive = TRUE
+	ai_calm_down = FALSE
+	ai_default_intent = INTENT_HARM
+	ai_aggression_timeout = 0
+
+	New()
+		..()
+		SPAWN_DBG(1 SECOND)
+			src.equip_new_if_possible(/obj/item/clothing/suit/space/syndicate, slot_wear_suit)
+			src.equip_new_if_possible(/obj/item/clothing/head/helmet/space, slot_head)
+
+	ai_is_valid_target(mob/M)
+		if(!isliving(M) || !isalive(M))
+			return FALSE
+		return !istype(M.get_id(), /obj/item/card/id/syndicate)
 
 /mob/living/carbon/human/npc/monkey/horse
 	name = "????"
@@ -71,6 +107,7 @@
 	gender = "male"
 	New()
 		..()
+		ai_offhand_pickup_chance = rand(100) // an absolute wildcard
 		SPAWN_DBG(1 SECOND)
 			src.equip_new_if_possible(/obj/item/clothing/mask/horse_mask/cursed/monkey, slot_wear_mask)
 
@@ -78,6 +115,7 @@
 	name = "Tanhony"
 	real_name = "Tanhony"
 	gender = "female"
+	ai_offhand_pickup_chance = 5 // your base monkey
 	New()
 		..()
 		SPAWN_DBG(1 SECOND)
@@ -87,6 +125,7 @@
 	name = "Krimpus"
 	real_name = "Krimpus"
 	gender = "female"
+	ai_offhand_pickup_chance = 2.5 // some of the botany fruit is very dangerous, Krimpus learned not to eat
 	New()
 		..()
 		SPAWN_DBG(1 SECOND)
@@ -96,14 +135,23 @@
 	name = "Monsieur Stirstir"
 	real_name = "Monsieur Stirstir"
 	gender = "male"
+	ai_offhand_pickup_chance = 4 // a filthy thief but he's trying to play nice for now
 	New()
 		..()
 		SPAWN_DBG(1 SECOND)
 			src.equip_new_if_possible(/obj/item/clothing/under/color/orange, slot_w_uniform)
 			src.equip_new_if_possible(/obj/item/clothing/head/beret/prisoner, slot_head)
+			if(prob(80)) // couldnt figure out how to hide it in the debris field, so i just chucked it in a monkey
+				var/obj/item/disk/data/cartridge/ringtone_numbers/idk = new
+				idk.set_loc(src)
+				src.chest_item = idk
+				src.chest_item_sewn = 1
 
 /mob/living/carbon/human/npc/monkey // :getin:
 	name = "monkey"
+#ifdef IN_MAP_EDITOR
+	icon_state = "monkey"
+#endif
 	static_type_override = /datum/mutantrace/monkey
 	ai_aggressive = 0
 	ai_calm_down = 1
@@ -114,47 +162,80 @@
 	New()
 		..()
 		START_TRACKING
-		SPAWN_DBG(0.5 SECONDS)
-			if (!src.disposed)
-				src.bioHolder.mobAppearance.customization_first = "None"
-				src.cust_one_state = "None"
-				src.bioHolder.AddEffect("monkey")
-				if (src.name == "monkey" || !src.name)
-					src.name = pick_string_autokey("names/monkey.txt")
-				src.real_name = src.name
+		if (!src.disposed)
+			src.cust_one_state = "None"
+			src.bioHolder.AddEffect("monkey")
+			if (src.name == "monkey" || !src.name)
+				src.name = pick_string_autokey("names/monkey.txt")
+			src.real_name = src.name
 
 	disposing()
 		STOP_TRACKING
 		..()
 
+	initializeBioholder()
+		if (src.name == "monkey" || !src.name)
+			randomize_look(src, 1, 1, 1, 0, 1, 0)
+			src.gender = src.bioHolder?.mobAppearance.gender
+		. = ..()
+
 	ai_action()
 		if(ai_aggressive)
 			return ..()
 
-		if (src.ai_state == 2 && src.done_with_you(src.ai_target))
+		if (src.ai_state == AI_ATTACKING && src.done_with_you(src.ai_target))
 			return
 		..()
 		if (src.ai_state == 0)
-			if (prob(10))
-				src.ai_pickpocket()
-			else if (prob(10))
-				src.ai_knock_from_hand()
+			if (prob(50))
+				src.ai_pickpocket(priority_only=prob(80))
+			else if (prob(50))
+				src.ai_knock_from_hand(priority_only=prob(80))
+			if(!ai_target && prob(20))
+				for(var/obj/fitness/speedbag/bag in view(1, src))
+					if(!ON_COOLDOWN(src, "ai monkey punching bag", 1 MINUTE))
+						src.ai_target = bag
+						src.target = bag
+						src.ai_state = AI_ATTACKING
+						break
+			if(prob(1))
+				src.emote(pick("dance", "flip", "laugh"))
+			if(prob(0.5))
+				var/list/priority_targets = list()
+				var/list/targets = list()
+				for(var/atom/movable/AM in view(5, src))
+					if(ismob(AM) && AM != src)
+						priority_targets += AM
+					else if(isobj(AM) && isturf(AM.loc) && !istype(AM, /obj/overlay))
+						targets += AM
+				if(length(priority_targets) && prob(55))
+					src.point_at(pick(priority_targets))
+					if(prob(20))
+						src.emote("laugh")
+				else if(length(targets))
+					src.point_at(pick(targets))
 
 	ai_findtarget_new()
 		if (ai_aggressive || ai_aggression_timeout == 0 || (world.timeofday - ai_threatened) < ai_aggression_timeout)
 			..()
 
-	was_harmed(var/atom/T as mob|obj, var/obj/item/weapon = 0, var/special = 0)
+	was_harmed(var/atom/T as mob|obj, var/obj/item/weapon = 0, var/special = 0, var/intent = null)
+		// Dead monkeys can't hold a grude and stops emote
+		if(isdead(src) || T == src)
+			return ..()
+		if(ismonkey(T) && T:ai_active && prob(90))
+			return ..()
 		//src.ai_aggressive = 1
+		var/aggroed = src.ai_state != AI_ATTACKING
 		src.target = T
-		src.ai_state = 2
+		src.ai_state = AI_ATTACKING
 		src.ai_threatened = world.timeofday
 		src.ai_target = T
 		src.shitlist[T] ++
 		if (prob(40))
 			src.emote("scream")
 		var/pals = 0
-		for (var/mob/living/carbon/human/npc/monkey/pal in by_type[/mob/living/carbon/human/npc/monkey])
+		for_by_tcl(pal, /mob/living/carbon/human/npc/monkey)
 			if (get_dist(src, pal) > 7)
 				continue
 			if (pals >= 5)
@@ -163,16 +244,18 @@
 				continue
 			//pal.ai_aggressive = 1
 			pal.target = T
-			pal.ai_state = 2
+			pal.ai_state = AI_ATTACKING
 			pal.ai_threatened = world.timeofday
 			pal.ai_target = T
 			pal.shitlist[T] ++
 			pals ++
 			if (prob(40))
 				src.emote("scream")
+		if(aggroed)
+			walk_towards(src, ai_target, ai_movedelay)
 
 	proc/shot_by(var/atom/A as mob|obj)
-		if (src.ai_state == 2)
+		if (src.ai_state == AI_ATTACKING)
 			return
 		if (ishuman(A))
 			src.was_harmed(A)
@@ -184,10 +267,13 @@
 	proc/done_with_you(var/atom/T as mob|obj)
 		if (!T)
 			return 0
-		if (src.health <= 0 || (get_dist(src, T) >= 7))
-			src.target = null
-			src.ai_state = 0
-			src.ai_target = null
+		if (src.health <= 0 || (get_dist(src, T) >= 11))
+			if(src.health <= 0)
+				src.ai_state = AI_FLEEING
+			else
+				src.ai_state = 0
+				src.target = null
+				src.ai_target = null
 			src.ai_frustration = 0
 			walk_towards(src,null)
 			return 1
@@ -205,53 +291,133 @@
 		else
 			return 0
 
-	proc/ai_pickpocket()
+	proc/ai_pickpocket(priority_only=FALSE)
 		if (src.getStatusDuration("weakened") || src.getStatusDuration("stunned") || src.getStatusDuration("paralysis") || src.stat || src.ai_picking_pocket)
 			return
 		var/list/possible_targets = list()
+		var/list/priority_targets = list()
 		for (var/mob/living/carbon/human/H in view(1, src))
-			if (istype(H, /mob/living/carbon/human/npc/monkey))
+			if(H == src)
 				continue
-			if (!H.l_store && !H.r_store)
+			if (istype(H, /mob/living/carbon/human/npc/monkey))
+				if(H.handcuffs)
+					priority_targets += H
+					continue
+				for(var/obj/item/thing in H)
+					if(IS_NPC_HATED_ITEM(thing) && thing.equipped_in_slot)
+						priority_targets += H
+						break
+				continue
+			if (!H.l_store && !H.r_store && isalive(H))
 				continue
 			possible_targets += H
-		if (!possible_targets.len)
+		if(length(possible_targets) == 0 && length(priority_targets) == 0)
 			return
-		var/mob/living/carbon/human/theft_target = pick(possible_targets)
+		var/mob/living/carbon/human/theft_target
+		if(length(priority_targets))
+			theft_target = pick(priority_targets)
+		else if(!priority_only)
+			theft_target = pick(possible_targets)
 		var/obj/item/thingy
 		var/slot = 15
-		if (theft_target.l_store && theft_target.r_store)
-			thingy = pick(theft_target.l_store, theft_target.r_store)
-			if (thingy == theft_target.r_store)
-				slot = 16
-		else if (theft_target.l_store)
-			thingy = theft_target.l_store
-		else if (theft_target.r_store)
-			thingy = theft_target.r_store
-			slot = 16
-		else // ???
+		if(!theft_target)
 			return
+		if(ismonkey(theft_target))
+			if(theft_target.handcuffs)
+				actions.start(new/datum/action/bar/icon/handcuffRemovalOther(theft_target), src)
+				return
+			for(var/obj/item/thing in theft_target)
+				if(IS_NPC_HATED_ITEM(thing) && thing.equipped_in_slot)
+					thingy = thing
+					slot = thing.equipped_in_slot
+					break
+		if(!thingy)
+			if(!isalive(theft_target))
+				var/list/choices = theft_target.get_equipped_items()
+				if(!length(choices))
+					return
+				thingy = pick(choices)
+				slot = thingy.equipped_in_slot
+			else if (theft_target.l_store && theft_target.r_store)
+				thingy = pick(theft_target.l_store, theft_target.r_store)
+				if (thingy == theft_target.r_store)
+					slot = 16
+			else if (theft_target.l_store)
+				thingy = theft_target.l_store
+			else if (theft_target.r_store)
+				thingy = theft_target.r_store
+				slot = 16
+			else // ???
+				return
 		walk_towards(src, null)
-		src.say("[pick("Gimme", "Want", "Need")] [thingy.name].") // Monkeys don't know grammar!
+		if(ismonkey(theft_target))
+			src.say("I help!")
+		else if(isalive(theft_target))
+			src.say("[pick("Gimme", "Want", "Need")] [thingy.name].") // Monkeys don't know grammar!
 		actions.start(new/datum/action/bar/icon/filthyPickpocket(src, theft_target, slot), src)
 
-	proc/ai_knock_from_hand()
+	ai_move()
+		if(src.ai_picking_pocket)
+			return
+		. = ..()
+
+	proc/ai_knock_from_hand(priority_only=FALSE)
 		if (src.getStatusDuration("weakened") || src.getStatusDuration("stunned") || src.getStatusDuration("paralysis") || src.stat || src.ai_picking_pocket || src.r_hand)
 			return
 		var/list/possible_targets = list()
+		var/list/priority_targets = list()
 		for (var/mob/living/carbon/human/H in view(1, src))
 			if (istype(H, /mob/living/carbon/human/npc/monkey))
 				continue
 			if (!H.l_hand && !H.r_hand)
 				continue
 			possible_targets += H
-		if (!possible_targets.len)
+			if(H.equipped() && IS_NPC_HATED_ITEM(H.equipped()) || istype(H.equipped(), /obj/item/gun) && prob(60))
+				priority_targets += H
+		if(length(possible_targets) == 0 && length(priority_targets) == 0)
 			return
-		var/mob/living/carbon/human/theft_target = pick(possible_targets)
+		var/mob/living/carbon/human/theft_target
+		if(length(priority_targets))
+			theft_target = pick(priority_targets)
+		else if(!priority_only)
+			theft_target = pick(possible_targets)
+		if(!theft_target)
+			return
 		walk_towards(src, null)
 		src.a_intent = INTENT_DISARM
 		theft_target.attack_hand(src)
 		src.a_intent = src.ai_default_intent
+
+	hear_talk(mob/M as mob, messages, heardname, lang_id)
+		if (isalive(src) && messages)
+			if (M.singing)
+				if (M.singing & (BAD_SINGING | LOUD_SINGING))
+					if (prob(20))
+						// monkey is angered by singing
+						spawn(0.5 SECONDS)
+							was_harmed(M)
+							var/singing_modifier = (M.singing & BAD_SINGING) ? "bad" : "loud"
+							src.visible_message("<B>[name]</B> becomes furious at [M] for their [singing_modifier] singing!", 1)
+							src.say(pick("Must take revenge for insult to music!", "I now attack you like your singing attacked my ears!"))
+					else
+						spawn(0.5 SECONDS)
+							src.visible_message(pick("<B>[name]</B> doesn't seem to like [M]'s singing", \
+							"<B>[name]</B> puts their hands over their ears", \
+							), 1)
+						// monkey merely doesn't like the singing
+							src.say(pick("You human sing worse than a baboon!", \
+							"Me know gorillas with better vocal pitch than you!", \
+							"Monkeys ears too sensitive for this cacophony!", \
+							"You sound like you singing in two keys at same time!", \
+							"Monkey no like atonal music!")) // monkeys don't know grammar but naturally know concepts like "atonal" and "cacophony"
+							if (prob(40))
+								src.emote("scream")
+		..()
+
+	proc/pursuited_by(atom/movable/AM)
+		src.ai_state = AI_FLEEING
+		src.ai_target = AM
+		src.target = AM
 
 /datum/action/bar/icon/filthyPickpocket
 	id = "pickpocket"
@@ -294,8 +460,10 @@
 
 		logTheThing("combat", source, target, "tries to pickpocket \an [I] from [constructTarget(target,"combat")]")
 
-		for(var/mob/O in AIviewers(owner))
-			O.show_message("<B>[source]</B> rifles through [target]'s pockets!", 1)
+		if(slot == SLOT_L_STORE || slot == SLOT_R_STORE)
+			source.visible_message("<B>[source]</B> rifles through [target]'s pockets!", "You rifle through [target]'s pockets!")
+		else
+			source.visible_message("<B>[source]</B> rifles through [target]!", "You rifle through [target]!")
 
 		source.ai_picking_pocket = 1
 
@@ -310,8 +478,10 @@
 
 		if(I.handle_other_remove(source, target))
 			logTheThing("combat", source, target, "successfully pickpockets \an [I] from [constructTarget(target,"combat")]!")
-			for(var/mob/O in AIviewers(owner))
-				O.show_message("<B>[source]</B> grabs [I] from [target]'s pockets!", 1)
+			if(slot == SLOT_L_STORE || slot == SLOT_R_STORE)
+				source.visible_message("<B>[source]</B> grabs [I] from [target]'s pockets!", "You grab [I] from [target]'s pockets!")
+			else
+				source.visible_message("<B>[source]</B> grabs [I] from [target]!", "You grab [I] from [target]!")
 			target.u_equip(I)
 			I.dropped(target)
 			I.layer = initial(I.layer)
@@ -353,12 +523,12 @@
 	name = "sea monkey"
 	max_health = 150
 	static_type_override = /datum/mutantrace/monkey/seamonkey
+	ai_useitems = FALSE // or they eat all the floor pills and die before anyone visits
 
 	New()
 		..()
 		SPAWN_DBG(0.5 SECONDS)
 			if (!src.disposed)
-				cust_one_state = "None"
 				src.bioHolder.AddEffect("seamonkey")
 				src.get_static_image()
 				if (src.name == "sea monkey" || !src.name)
@@ -425,3 +595,5 @@
 		SPAWN_DBG(1 SECOND)
 			src.equip_new_if_possible(/obj/item/clothing/under/suit, src.slot_w_uniform)
 			src.equip_new_if_possible(/obj/item/clothing/shoes/black, src.slot_shoes)
+
+#undef IS_NPC_HATED_ITEM

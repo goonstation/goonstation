@@ -55,8 +55,7 @@
 				mode = 0
 				user.visible_message("[user] detaches the [src] from the data terminal.","You detach the [src] from the data terminal.")
 				icon_state = "sniffer0"
-				if(src.link)
-					src.link.master = null
+				src.link?.master = null
 				src.link = null
 				return
 		else
@@ -100,7 +99,7 @@
 					src.updateIntDialog()
 					return
 
-				if (!in_range(src, usr) || usr.stat || usr.restrained())
+				if (!in_interact_range(src, usr) || usr.stat || usr.restrained())
 					return
 
 				if(length(t) != 8 || !is_hex(t))
@@ -131,7 +130,7 @@
 		if(signal.transmission_method != TRANSMISSION_WIRE) //No radio for us thanks
 			return
 
-		var/target = signal.data["address_1"]
+		var/target = signal.data["sender"]
 		if(src.filter_id && src.filter_id != target)
 			return
 

@@ -9,10 +9,9 @@
  *   - a single digit signifying the amount of stages of a pathogen
  *   - a single digit signifying if the pathogen is symptomatic
  *     at the time of writing this documentation, the sequence of the numeric values is:
- *     mutativeness | mutation speed | advance speed | maliciousness | suppression threshold | stages
- *   EXAMPLE: A pathogen that is a virus, with a mutativeness of 19, a mutation speed of 6, an advance speed of 5, a maliciousness of 7
- *            and a suppression threshold of 5, 5 stages and symptomatic carries the following DNA sequence:
- *            00010013000600050007000551
+ *     advance speed | suppression threshold | stages
+ *   EXAMPLE: A pathogen that is a virus, with an advance speed of 5 and a suppression threshold of 5, 5 stages and symptomatic carries the following DNA sequence:
+ *            00010005000551
  *   DEVELOPER NOTE: The encoding is NOT two's complement as any coder would expect, due to the fact that I have no idea how
  *   BYOND numbers are represented. The encoding of the two bytes is 2 byte one's complement. (I think. Whatever.)
  *   NOTE: While any of these values are highly unlikely to ever pass 255, I'll leave it open for two bytes.
@@ -22,10 +21,10 @@
  *   - The suppressant of the pathogen. Each suppressant is given a round-randomized 3 quartet (1.5 byte) unique identifier by the pathogen controller upon round setup.
  *     A lookup table of available suppressants is available in the pathogen controller for fast processing.
  *   - A single separator to signal the end of suppressants and the beginning of carriers.
- *	 - All carriers, sequentially. Carriers are assigned 3 quartets as well, and they have their own lookup table.
+ *	 - All carriers, sequentially. Carriers are assigned 3 quartets as well, and they have their own lookup table. (Note: Carriers are not actually used or coded or anything.)
  *   - Anything I may have forgot to mention is also here.
  *   - A single separator to signal the beginning of the symptoms.
- *   - All symptoms of the pathogen sequentially. This might and will cause the DNA to inflate to a very large and complex sequence if a very mutative pathogen is introduced to the station.
+ *   - All symptoms of the pathogen sequentially.
  *     A symptom is composed of R * 3 quartets, where R represents rarity, followed by a 'DNA separator' marked by a | in the DNA.
  *     Rarity is a value from 1 to 5, where 1 is VERY COMMON and 5 is VERY RARE. All symptoms are assigned this value as their unique identifier and an unique identifier is generated for
  *     each symptom at round setup following this pattern:
@@ -61,21 +60,6 @@
  *   valid unique identifier.
  */
 
-/**
- * Pathogen mutate-and-effect graph
- *
- * When numeric values of pathogens are mutated, other values are mutated in the other direction. This graph defines the mutation of which values effect which other values.
- * (For every action, there is an equal and opposite reaction, except it's not equal because that would be annoying and I'm not trying to apply Newton's third law of motion)
- *
- * mutativeness ------------- advance_speed
- *     |                    /
- *     |        maliciousness
- *     |                    \
- * sthreshold --------------- mutation_speed
- *
- * ...sometimes I wish BYOND had pointers because it would be so much cleaner. I'm not going to use whatever twisted thing DM called refs.
- */
-
 datum/pathogendna
 	var/seqnumeric = "00000000000000000000000000"
 	var/seqsplice = ""
@@ -85,6 +69,7 @@ datum/pathogendna
 	var/datum/pathogen/reference = null
 
 	New(var/datum/pathogen/P)
+		..()
 		if (P)
 			reference = unpool(/datum/pathogen)
 			reference.setup(0, P, 0, src)
@@ -101,18 +86,6 @@ datum/pathogendna
 
 	proc/manipulate(value, direction)
 		var/datum/pathogendna/this = src
-		src = null
-		//I think the chance to mutate serves as a perfectly fine deterrent to overengineering your pathogen's DNA
-		/*
-		if (prob(2))
-			del this
-			return 0
-		*/
-		if (prob(4))
-			this.reference.mutate()
-			this.recalculate()
-			this.reverse_engineer()
-			return -1
 		if (direction > 0)
 			direction = 1
 		else
@@ -120,28 +93,12 @@ datum/pathogendna
 		if (!this)
 			return 0 // We somehow lost the DNA.
 		switch (value)
-			if ("mutativeness")
-				this.reference.mutativeness += rand(1, 3) * direction
-				this.reference.advance_speed -= rand(0, 1) * direction
-				this.reference.suppression_threshold -= rand(0, 1) * direction
 			if ("suppression_threshold")
-				this.reference.suppression_threshold += rand(1, 3) * direction
-				this.reference.mutation_speed -= rand(0, 1) * direction
-				this.reference.mutativeness -= rand(0, 1) * direction
-			if ("mutation_speed")
-				this.reference.mutation_speed += rand(1, 3) * direction
-				this.reference.suppression_threshold -= rand(0, 1) * direction
-				this.reference.maliciousness -= rand(0, 1) * direction
-			if ("maliciousness")
-				this.reference.maliciousness += rand(1, 3) * direction
-				this.reference.advance_speed -= rand(0, 1) * direction
-				this.reference.mutation_speed -= rand(0, 1) * direction
+				this.reference.suppression_threshold += direction
 			if ("advance_speed")
-				this.reference.advance_speed += rand(1, 3) * direction
-				this.reference.mutativeness -= rand(0, 1) * direction
-				this.reference.maliciousness -= rand(0, 1) * direction
-		if (this.reference.mutation_speed < 0)
-			this.reference.mutation_speed = 0
+				this.reference.advance_speed += direction
+			if ("spread")
+				this.reference.spread += direction
 		this.recalculate()
 		return 1
 
@@ -196,28 +153,22 @@ datum/pathogendna
 	proc/recalculate()
 		// BYOND number vars are unreliable. All numbers are rounded.
 		var/uid = num2hexoc(round(src.reference.body_type.uniqueid), 4)
-		var/mut = num2hexoc(round(src.reference.mutativeness), 4)
-		var/mts = num2hexoc(round(src.reference.mutation_speed), 4)
 		var/adv = num2hexoc(round(src.reference.advance_speed), 4)
-		var/mal = num2hexoc(round(src.reference.maliciousness), 4)
 		var/sup = num2hexoc(round(src.reference.suppression_threshold), 4)
-		src.seqnumeric = "[uid][mut][mts][adv][mal][sup][src.reference.stages][src.reference.symptomatic]"
+		var/spr = num2hexoc(round(src.reference.spread), 4)
+		src.seqnumeric = "[uid][adv][sup][spr][src.reference.stages][src.reference.symptomatic]"
 
 	// DNA/Private -> Pathogen numeric
 	proc/reevaluate_numeric()
 		var/uid = hex2numoc(copytext(seqnumeric, 1, 5))
-		var/mut = hex2numoc(copytext(seqnumeric, 5, 9))
-		var/mts = hex2numoc(copytext(seqnumeric, 9, 13))
-		var/adv = hex2numoc(copytext(seqnumeric, 13, 17))
-		var/mal = hex2numoc(copytext(seqnumeric, 17, 21))
-		var/sup = hex2numoc(copytext(seqnumeric, 21, 25))
-		var/stages = text2num(copytext(seqnumeric, 25, 26))
-		var/symptomatic = text2num(copytext(seqnumeric, 26, 27))
-		src.reference.mutativeness = mut
-		src.reference.mutation_speed = mts
+		var/adv = hex2numoc(copytext(seqnumeric, 5, 9))
+		var/sup = hex2numoc(copytext(seqnumeric, 9, 13))
+		var/spr = hex2numoc(copytext(seqnumeric, 13, 17))
+		var/stages = text2num(copytext(seqnumeric, 17, 18))
+		var/symptomatic = text2num(copytext(seqnumeric, 18, 19))
 		src.reference.advance_speed = adv
-		src.reference.maliciousness = mal
 		src.reference.suppression_threshold = sup
+		src.reference.spread = spr
 		src.reference.stages = stages
 		src.reference.symptomatic = symptomatic
 		for(var/T in pathogen_controller.path_to_microbody)
@@ -246,7 +197,6 @@ datum/pathogendna
 	proc/reevaluate()
 		// Move src reference so we can return false if evaluation fails (important for whatever is calling this)
 		var/datum/pathogendna/this = src
-		src = null
 		var/desc = this.reference.desc
 		var/name_base = this.reference.name_base
 		var/mutation = this.reference.mutation

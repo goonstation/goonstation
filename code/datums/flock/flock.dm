@@ -16,10 +16,12 @@
 	var/list/annotation_viewers = list()
 	var/list/annotations = list() // key is atom ref, value is image
 	var/mob/living/intangible/flock/flockmind/flockmind
-	var/snoop_clarity = 40 // how easily we can see silicon messages, how easily silicons can see this flock's messages
+	var/snoop_clarity = 80 // how easily we can see silicon messages, how easily silicons can see this flock's messages
+	var/snooping = 0 //are both sides of communication currently accessible?
 	var/chui/window/flockpanel/panel
 
 /datum/flock/New()
+	..()
 	src.name = "[pick(consonants_lower)][pick(vowels_lower)].[pick(consonants_lower)][pick(vowels_lower)]"
 	flocks[src.name] = src
 	processing_items |= src
@@ -60,8 +62,8 @@
 	// DESCRIBE VITALS (do this last so we can report list lengths)
 	var/list/vitals = list()
 	vitals["name"] = src.name
-	vitals["drones"] = dronelist.len
-	vitals["partitions"] = tracelist.len
+	vitals["drones"] = length(dronelist)
+	vitals["partitions"] = length(tracelist)
 	state["vitals"] = vitals
 
 	return state
@@ -351,7 +353,7 @@
 		return
 	if(src.busy_tiles[requester.name])
 		return src.busy_tiles[requester.name] // work on your claimed tile first you JERK
-	if(priority_tiles && priority_tiles.len)
+	if(length(priority_tiles))
 		var/list/available_tiles = priority_tiles
 		for(var/owner in src.busy_tiles)
 			available_tiles -= src.busy_tiles[owner]
@@ -442,7 +444,7 @@
 					for (var/mob/M in O)
 						M.set_loc(converted)
 					qdel(O)
-					converted.dir = dir
+					converted.set_dir(dir)
 					animate_flock_convert_complete(converted)
 
 	// if floor, turn to floor, if wall, turn to wall

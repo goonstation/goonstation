@@ -27,7 +27,7 @@
 				I.set_loc(src.oldposition)
 				src.number++
 				src.oldposition = get_turf(holder)
-				I.dir = src.holder.dir
+				I.set_dir(src.holder.dir)
 				SPAWN_DBG(1 SECOND)
 					if (I && !I.disposed) pool(I)
 					src.number--

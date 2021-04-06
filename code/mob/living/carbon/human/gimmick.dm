@@ -90,31 +90,35 @@
 
 	New()
 		..()
-		SPAWN_DBG(0)
-			src.add_ability_holder(/datum/abilityHolder/gimmick)
-			src.real_name = "Satan"
-			src.nodamage = 1
-			bioHolder.age = 400
-			bioHolder.mobAppearance.customization_first = "Pompadour"
-			bioHolder.mobAppearance.customization_first_color = "#000000"
-			bioHolder.mobAppearance.gender = "male"
-			bioHolder.mobAppearance.underwear = "boxers"
-			src.bioHolder.AddEffect("horns", 0, 0, 1)
-			src.bioHolder.AddEffect("hell_fire", 0, 0, 1)
-			abilityHolder.addAbility(/datum/targetable/gimmick/go2hell)
-			abilityHolder.addAbility(/datum/targetable/gimmick/highway2hell)
-			abilityHolder.addAbility(/datum/targetable/gimmick/reveal)
-			abilityHolder.addAbility(/datum/targetable/gimmick/movefloor)
-			SPAWN_DBG(1 SECOND)
-				bioHolder.mobAppearance.UpdateMob()
-				abilityHolder.updateButtons()
+		src.add_ability_holder(/datum/abilityHolder/gimmick)
+		src.real_name = "Satan"
+		src.nodamage = 1
 
-				src.equip_new_if_possible(/obj/item/clothing/under/misc/lawyer/red/demonic, src.slot_w_uniform)
-				src.equip_new_if_possible(/obj/item/clothing/suit/labcoat/hitman/satansuit, slot_wear_suit)
-				src.equip_new_if_possible(/obj/item/clothing/shoes/red, slot_shoes)
-				src.equip_new_if_possible(/obj/item/storage/backpack, slot_back)
-				src.equip_new_if_possible(/obj/item/device/radio/headset, slot_ears)
-				src.put_in_hand_or_drop(new /obj/item/storage/briefcase/satan)
+		src.bioHolder.AddEffect("horns", 0, 0, 1)
+		src.bioHolder.AddEffect("hell_fire", 0, 0, 1)
+		abilityHolder.addAbility(/datum/targetable/gimmick/spawncontractsatan)
+		abilityHolder.addAbility(/datum/targetable/gimmick/go2hell)
+		abilityHolder.addAbility(/datum/targetable/gimmick/highway2hell)
+		abilityHolder.addAbility(/datum/targetable/gimmick/reveal)
+		abilityHolder.addAbility(/datum/targetable/gimmick/movefloor)
+		SPAWN_DBG(1 SECOND)
+			abilityHolder.updateButtons()
+
+			src.equip_new_if_possible(/obj/item/clothing/under/misc/lawyer/red/demonic, src.slot_w_uniform)
+			src.equip_new_if_possible(/obj/item/clothing/suit/labcoat/hitman/satansuit, slot_wear_suit)
+			src.equip_new_if_possible(/obj/item/clothing/shoes/red, slot_shoes)
+			src.equip_new_if_possible(/obj/item/storage/backpack, slot_back)
+			src.equip_new_if_possible(/obj/item/clothing/gloves/ring/wizard/teleport, slot_gloves) //Yes I could make a special satan teleport power, or I can give him a ring. Fuck it right?
+			src.equip_new_if_possible(/obj/item/device/radio/headset, slot_ears)
+			src.put_in_hand_or_drop(new /obj/item/storage/briefcase/satan)
+
+	initializeBioholder()
+		bioHolder.age = 400
+		bioHolder.mobAppearance.customization_first = "Pompadour"
+		bioHolder.mobAppearance.customization_first_color = "#000000"
+		bioHolder.mobAppearance.gender = "male"
+		bioHolder.mobAppearance.underwear = "boxers"
+		. = ..()
 
 /mob/living/carbon/human/jester
 
@@ -127,9 +131,9 @@
 			src.bioHolder.AddEffect("accent_void", 0, 0, 1)
 			abilityHolder.addAbility(/datum/targetable/gimmick/spooky)
 			abilityHolder.addAbility(/datum/targetable/gimmick/Jestershift)
+			abilityHolder.addAbility(/datum/targetable/gimmick/scribble)
 
 		SPAWN_DBG(1 SECOND)
-			bioHolder.mobAppearance.UpdateMob()
 			abilityHolder.updateButtons()
 
 			src.equip_new_if_possible(/obj/item/clothing/under/gimmick/jester, src.slot_w_uniform)
@@ -146,11 +150,11 @@ mob/living/carbon/human/cluwne/satan
 	New()
 		..()
 		SPAWN_DBG(0)
-			src.bioHolder.AddEffect("horns", 0, 0, 1)
-			src.bioHolder.AddEffect("aura_fire", 0, 0, 1)
+			src.bioHolder.AddEffect("horns", 0, 0, 0, 1)
+			src.bioHolder.AddEffect("aura_fire", 0, 0, 0, 1)
 			src.bioHolder.AddEffect("superfartgriff")
-			src.bioHolder.AddEffect("bigpuke", 0, 0, 1)
-			src.bioHolder.AddEffect("melt", 0, 0, 1)
+			src.bioHolder.AddEffect("bigpuke", 0, 0, 0, 1)
+			src.bioHolder.AddEffect("melt", 0, 0, 0, 1)
 
 mob/living/carbon/human/cluwne/satan/megasatan //someone can totally use this for an admin gimmick.
 	New()
@@ -158,36 +162,62 @@ mob/living/carbon/human/cluwne/satan/megasatan //someone can totally use this fo
 		SPAWN_DBG(0)
 			src.unkillable = 1 //for the megasatan in you
 
+/*
+ * Chicken man belongs in human zone, not ai zone
+ */
+/mob/living/carbon/human/chicken
+	name = "chicken man"
+	real_name = "chicken man"
+	desc = "half man, half BWAHCAWCK!"
+#ifdef IN_MAP_EDITOR
+	icon_state = "m-none"
+#endif
+	New()
+		. = ..()
+		SPAWN_DBG(0.5 SECONDS)
+			if (!src.disposed)
+				src.bioHolder.AddEffect("chicken", 0, 0, 1)
+
+/mob/living/carbon/human/chicken/ai_controlled
+	is_npc = TRUE
+	uses_mobai = TRUE
+	New()
+		. = ..()
+		src.ai = new /datum/aiHolder/wanderer(src)
+
+/datum/aiHolder/wanderer
+	New()
+		. = ..()
+		var/datum/aiTask/timed/wander/W =  get_instance(/datum/aiTask/timed/wander, list(src))
+		W.transition_task = W
+		default_task = W
+
+
 // how you gonna have father ted and father jack and not father dougal? smh
 
 /mob/living/carbon/human/fatherted
 	New()
 		..()
-		SPAWN_DBG(0)
-			bioHolder.mobAppearance.gender = "male"
-			src.real_name = "Father Ted"
+		src.equip_new_if_possible(/obj/item/clothing/shoes/red, slot_shoes)
+		src.equip_new_if_possible(/obj/item/clothing/under/rank/chaplain, slot_w_uniform)
 
-			src.equip_new_if_possible(/obj/item/clothing/shoes/red, slot_shoes)
-
-			src.equip_new_if_possible(/obj/item/clothing/under/rank/chaplain, slot_w_uniform)
-
-			SPAWN_DBG(1 SECOND)
-				bioHolder.mobAppearance.UpdateMob()
+	initializeBioholder()
+		. = ..()
+		bioHolder.mobAppearance.gender = "male"
+		src.real_name = "Father Ted"
 
 /mob/living/carbon/human/fatherjack
 	New()
 		..()
-		SPAWN_DBG(0)
-			bioHolder.mobAppearance.gender = "male"
-			src.real_name = "Father Jack"
-			bioHolder.bloodType = "B+"
+		src.equip_new_if_possible(/obj/item/clothing/shoes/red, slot_shoes)
+		src.equip_new_if_possible(/obj/item/clothing/under/misc/chaplain, slot_w_uniform)
+		src.traitHolder.addTrait("training_chaplain")
 
-			src.equip_new_if_possible(/obj/item/clothing/shoes/red, slot_shoes)
-			src.equip_new_if_possible(/obj/item/clothing/under/misc/chaplain, slot_w_uniform)
-			src.traitHolder.addTrait("training_chaplain")
-
-			SPAWN_DBG(1 SECOND)
-				bioHolder.mobAppearance.UpdateMob()
+	initializeBioholder()
+		. = ..()
+		bioHolder.mobAppearance.gender = "male"
+		src.real_name = "Father Jack"
+		bioHolder.bloodType = "B+"
 
 	Life(datum/controller/process/mobs/parent)
 		if (..(parent))
@@ -205,10 +235,11 @@ mob/living/carbon/human/cluwne/satan/megasatan //someone can totally use this fo
 			return
 		..()
 
-	was_harmed(var/mob/M as mob, var/obj/item/weapon = 0, var/special = 0)
+	was_harmed(var/mob/M as mob, var/obj/item/weapon = 0, var/special = 0, var/intent = null)
+		. = ..()
 		if (special) //vamp or ling
 			src.target = M
-			src.ai_state = 2
+			src.ai_state = AI_ATTACKING
 			src.ai_threatened = world.timeofday
 			src.ai_target = M
 
@@ -245,7 +276,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 
 	if (src.client)
 		for (var/atom/I in src.hud.inventory_bg)
-			if (istype(I,/obj/screen/hud))
+			if (istype(I,/atom/movable/screen/hud))
 				hudlist += I
 
 	for (var/obj/item/I in src.contents)
@@ -282,8 +313,8 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 
 		var/obj/item/W = src.equipped()
 		if (!src.restrained())
-			if (istype(picked,/obj/screen/hud))
-				var/obj/screen/hud/HUD = picked
+			if (istype(picked,/atom/movable/screen/hud))
+				var/atom/movable/screen/hud/HUD = picked
 				var/list/params = empty_mouse_params()
 				HUD.clicked(HUD.id, src, params)
 			else if (istype(picked,/obj/ability_button))
@@ -339,40 +370,39 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 
 	New()
 		..()
-		shittybills += src
-		SPAWN_DBG(0)
-			bioHolder.mobAppearance.customization_second = "Tramp"
-			bioHolder.age = 62
-			bioHolder.bloodType = "A-"
-			bioHolder.mobAppearance.gender = "male"
-			bioHolder.mobAppearance.underwear = "briefs"
-			SPAWN_DBG(1 SECOND)
-				bioHolder.mobAppearance.UpdateMob()
+		START_TRACKING_CAT(TR_CAT_SHITTYBILLS)
+		src.equip_new_if_possible(/obj/item/clothing/shoes/brown, slot_shoes)
+		src.equip_new_if_possible(/obj/item/clothing/under/misc/head_of_security, slot_w_uniform)
+		src.equip_new_if_possible(/obj/item/paper/postcard/owlery, slot_l_hand)
+		//src.equip_new_if_possible(/obj/item/device/radio/headset/civilian, slot_ears)
+		//src.equip_new_if_possible(/obj/item/clothing/suit, slot_wear_suit)
+		//src.equip_new_if_possible(/obj/item/clothing/head/biker_cap, slot_head)
 
-			src.equip_new_if_possible(/obj/item/clothing/shoes/brown, slot_shoes)
-			src.equip_new_if_possible(/obj/item/clothing/under/misc/head_of_security, slot_w_uniform)
-			src.equip_new_if_possible(/obj/item/paper/postcard/owlery, slot_l_hand)
-			//src.equip_new_if_possible(/obj/item/device/radio/headset/civilian, slot_ears)
-			//src.equip_new_if_possible(/obj/item/clothing/suit, slot_wear_suit)
-			//src.equip_new_if_possible(/obj/item/clothing/head/biker_cap, slot_head)
+		var/obj/item/implant/access/infinite/shittybill/implant = new /obj/item/implant/access/infinite/shittybill(src)
+		implant.implanted(src, src)
 
-			var/obj/item/implant/access/infinite/shittybill/implant = new /obj/item/implant/access/infinite/shittybill(src)
-			implant.implanted(src, src)
+		var/obj/item/power_stones/G = new /obj/item/power_stones/Gall
+		G.set_loc(src)
+		src.chest_item = G
+		src.chest_item_sewn = 1
 
-			var/obj/item/power_stones/G = new /obj/item/power_stones/Gall
-			G.set_loc(src)
-			src.chest_item = G
-			src.chest_item_sewn = 1
+	initializeBioholder()
+		. = ..()
+		bioHolder.mobAppearance.customization_second = "Tramp"
+		bioHolder.age = 62
+		bioHolder.bloodType = "A-"
+		bioHolder.mobAppearance.gender = "male"
+		bioHolder.mobAppearance.underwear = "briefs"
 
 	disposing()
-		shittybills -= src
+		STOP_TRACKING_CAT(TR_CAT_SHITTYBILLS)
 		..()
 
 	// Shitty Bill always goes to the afterlife bar unless he has a client
 	death(gibbed)
 		..(gibbed)
 
-		shittybills -= src
+		STOP_TRACKING_CAT(TR_CAT_SHITTYBILLS)
 
 		if (!src.client && src.z != 2)
 			var/turf/target_turf = pick(get_area_turfs(/area/afterlife/bar/barspawn))
@@ -491,14 +521,14 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 			var/area/A = get_area(src)
 			var/list/alive_mobs = list()
 			var/list/dead_mobs = list()
-			if (A.population && A.population.len)
+			if (A.population && length(A.population))
 				for(var/mob/living/M in oview(5,src))
 					if(!isdead(M))
 						alive_mobs += M
 					else
 						dead_mobs += M
 
-			if(dead_mobs && dead_mobs.len > 0 && prob(60)) //SpyGuy for undefined var/len (what the heck)
+			if(length(dead_mobs) && prob(60)) //SpyGuy for undefined var/len (what the heck)
 				var/mob/M = pick(dead_mobs)
 				say("[BILL_PICK("deadguy")] [M.name]...")
 			else if (alive_mobs.len > 0)
@@ -506,7 +536,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 					greeted_murray = 1
 					say("[BILL_PICK("greetings")] Murray! How's it [BILL_PICK("verbs")]?")
 					SPAWN_DBG(rand(20,40))
-						if (murray && murray.on && !murray.idle)
+						if (murray?.on && !murray.idle)
 							murray.speak("Hi, Bill! It's [BILL_PICK("murraycompliment")] to see you again!")
 
 				else
@@ -516,6 +546,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 					switch(speech_type)
 						if(1)
 							say("[BILL_PICK("greetings")] [M.name].")
+							M.add_karma(2)
 
 						if(2)
 							say("[BILL_PICK("question")] you lookin' at, [BILL_PICK("insults")]?")
@@ -572,9 +603,9 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 											BT.say("Nah.")
 */
 
-					if (johnbills.len > 0 && prob(25))
+					if (length(by_cat[TR_CAT_JOHNBILLS]) && prob(25))
 						SPAWN_DBG(4 SECONDS)
-							var/mob/living/carbon/human/john/MJ = pick(johnbills)
+							var/mob/living/carbon/human/john/MJ = pick(by_cat[TR_CAT_JOHNBILLS])
 							switch (speech_type)
 								if (4)
 									MJ.say("You're a big boy now brud, find one yourself.")
@@ -626,20 +657,22 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 
 
 
-	was_harmed(var/mob/M as mob, var/obj/item/weapon = 0, var/special = 0)
+	was_harmed(var/mob/M as mob, var/obj/item/weapon = 0, var/special = 0, var/intent = null)
+		. = ..()
 		if (special) //vamp or ling
 			src.target = M
-			src.ai_state = 2
+			src.ai_state = AI_ATTACKING
 			src.ai_threatened = world.timeofday
 			src.ai_target = M
 			src.a_intent = INTENT_HARM
 			src.ai_set_active(1)
 
-		for (var/mob/JB in johnbills)
+		for (var/mob/JB in by_cat[TR_CAT_JOHNBILLS])
 			var/mob/living/carbon/human/john/J = JB
 			if (get_dist(J,src) <= 7)
 				if((!J.ai_active) || prob(25))
 					J.say("That's my brother, you [pick_string("johnbill.txt", "insults")]!")
+					M.add_karma(-1)
 				J.target = M
 				J.ai_set_active(1)
 				J.a_intent = INTENT_HARM
@@ -664,19 +697,13 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 /mob/living/carbon/human/myke
 	New()
 		..()
-		SPAWN_DBG(0)
-			src.gender = "male"
-			src.real_name = "Myke"
+		src.gender = "male"
+		src.real_name = "Myke"
+		src.equip_new_if_possible(/obj/item/clothing/shoes/red, slot_shoes)
+		src.equip_new_if_possible(/obj/item/clothing/under/color/lightred, slot_w_uniform)
+		src.equip_new_if_possible(/obj/item/clothing/mask/breath, slot_wear_mask)
+		src.internal = src.back
 
-			SPAWN_DBG(1 SECOND)
-				bioHolder.mobAppearance.UpdateMob()
-
-			src.equip_new_if_possible(/obj/item/clothing/shoes/red, slot_shoes)
-
-			src.equip_new_if_possible(/obj/item/clothing/under/color/lightred, slot_w_uniform)
-
-			src.equip_new_if_possible(/obj/item/clothing/mask/breath, slot_wear_mask)
-			src.internal = src.back
 	Life(datum/controller/process/mobs/parent)
 		if (..(parent))
 			return 1
@@ -707,26 +734,26 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 	nodamage = 1
 	New()
 		..()
-		SPAWN_DBG(0)
-			src.gender = "male"
-			src.bioHolder.mobAppearance.s_tone = pick("#FAD7D0", "#BD8A57", "#935D37")
-			src.real_name = "[pick(prob(150); "W", "V")][pick(prob(150); "a", "au", "o", "e")][pick(prob(150); "l", "ll")][pick(prob(150); "d", "t")][pick(prob(150); "o", "oh", "a", "e")]"
+		var/shoes = text2path("/obj/item/clothing/shoes/" + pick("black","brown","red"))
+		src.equip_new_if_possible(shoes, slot_shoes)
+		src.equip_new_if_possible(/obj/item/clothing/under/gimmick/fake_waldo, slot_w_uniform)
+		src.equip_new_if_possible(/obj/item/device/radio/headset, slot_ears)
+		src.equip_new_if_possible(/obj/item/storage/backpack, slot_back)
+		if(prob(75))
+			src.equip_new_if_possible(/obj/item/clothing/head/fake_waldohat, slot_head)
+		else if(prob(20))
+			src.equip_new_if_possible(/obj/item/clothing/glasses/sunglasses, slot_glasses)
+		walk(src, pick(cardinal), 1)
+		sleep(rand(150, 600))
+		illusion_expire()
 
-			SPAWN_DBG(1 SECOND)
-				bioHolder.mobAppearance.UpdateMob()
+	initializeBioholder()
+		. = ..()
+		src.bioHolder.mobAppearance.s_tone = pick("#FAD7D0", "#BD8A57", "#935D37")
+		src.bioHolder.mobAppearance.s_tone_original = src.bioHolder.mobAppearance.s_tone
+		src.gender = "male"
+		src.real_name = "[pick(prob(150); "W", "V")][pick(prob(150); "a", "au", "o", "e")][pick(prob(150); "l", "ll")][pick(prob(150); "d", "t")][pick(prob(150); "o", "oh", "a", "e")]"
 
-			var/shoes = text2path("/obj/item/clothing/shoes/" + pick("black","brown","red"))
-			src.equip_new_if_possible(shoes, slot_shoes)
-			src.equip_new_if_possible(/obj/item/clothing/under/gimmick/fake_waldo, slot_w_uniform)
-			src.equip_new_if_possible(/obj/item/device/radio/headset, slot_ears)
-			src.equip_new_if_possible(/obj/item/storage/backpack, slot_back)
-			if(prob(75))
-				src.equip_new_if_possible(/obj/item/clothing/head/fake_waldohat, slot_head)
-			else if(prob(20))
-				src.equip_new_if_possible(/obj/item/clothing/glasses/sunglasses, slot_glasses)
-			walk(src, pick(cardinal), 1)
-			sleep(rand(150, 600))
-			illusion_expire()
 	Life(datum/controller/process/mobs/parent)
 		if (..(parent))
 			return 1
@@ -759,20 +786,19 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 
 	New()
 		..()
-		SPAWN_DBG(0)
-			bioHolder.age = 44
-			bioHolder.bloodType = "Worchestershire"
-			bioHolder.mobAppearance.customization_first = "Pompadour"
-			bioHolder.mobAppearance.customization_first_color = "#F6D646"
-			bioHolder.mobAppearance.gender = "male"
-			bioHolder.mobAppearance.underwear = "boxers"
-			SPAWN_DBG(1 SECOND)
-				bioHolder.mobAppearance.UpdateMob()
+		src.equip_new_if_possible(/obj/item/clothing/shoes/orange, slot_shoes)
+		src.equip_new_if_possible(/obj/item/clothing/under/suit/red, slot_w_uniform)
+		src.equip_if_possible(new /obj/item/clothing/glasses/sunglasses, slot_glasses)
+		src.equip_new_if_possible(/obj/item/clothing/head/cowboy, slot_head)
 
-			src.equip_new_if_possible(/obj/item/clothing/shoes/orange, slot_shoes)
-			src.equip_new_if_possible(/obj/item/clothing/under/suit/red, slot_w_uniform)
-			src.equip_if_possible(new /obj/item/clothing/glasses/sunglasses, slot_glasses)
-			src.equip_new_if_possible(/obj/item/clothing/head/cowboy, slot_head)
+	initializeBioholder()
+		. = ..()
+		bioHolder.age = 44
+		bioHolder.bloodType = "Worchestershire"
+		bioHolder.mobAppearance.customization_first = "Pompadour"
+		bioHolder.mobAppearance.customization_first_color = "#F6D646"
+		bioHolder.mobAppearance.gender = "male"
+		bioHolder.mobAppearance.underwear = "boxers"
 
 	attackby(obj/item/W, mob/M)
 		if (istype(W, /obj/item/paper/postcard/owlery))
@@ -782,10 +808,11 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 				say("Oh yeah sure, I seen it. That ol- how would he say it, [BILL_PICK("insults")]? He won't stop going on and on and on...")
 		..()
 
-	was_harmed(var/mob/M as mob, var/obj/item/weapon = 0, var/special = 0)
+	was_harmed(var/mob/M as mob, var/obj/item/weapon = 0, var/special = 0, var/intent = null)
+		. = ..()
 		if (special) //vamp or ling
 			src.target = M
-			src.ai_state = 2
+			src.ai_state = AI_ATTACKING
 			src.ai_threatened = world.timeofday
 			src.ai_target = M
 
@@ -801,23 +828,23 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 
 	New()
 		..()
-		SPAWN_DBG(0)
-			src.real_name = Create_Tommyname()
+		src.equip_new_if_possible(/obj/item/clothing/shoes/black {cant_drop = 1; cant_other_remove = 1; cant_self_remove = 1} , slot_shoes)
+		src.equip_new_if_possible(/obj/item/clothing/under/suit {cant_drop = 1; cant_other_remove = 1; cant_self_remove = 1} , slot_w_uniform)
 
-			src.gender = "male"
-			bioHolder.mobAppearance.customization_first = "Dreadlocks"
-			bioHolder.mobAppearance.gender = "male"
-			bioHolder.mobAppearance.s_tone = "#FAD7D0"
-			bioHolder.AddEffect("accent_tommy")
-			SPAWN_DBG(1 SECOND)
-				bioHolder.mobAppearance.UpdateMob()
+		src.equip_new_if_possible(/obj/item/device/radio/headset, slot_ears)
+		src.equip_new_if_possible(/obj/item/storage/backpack, slot_back)
+		src.equip_new_if_possible(/obj/item/football, slot_in_backpack)
 
-			src.equip_new_if_possible(/obj/item/clothing/shoes/black {cant_drop = 1; cant_other_remove = 1; cant_self_remove = 1} , slot_shoes)
-			src.equip_new_if_possible(/obj/item/clothing/under/suit {cant_drop = 1; cant_other_remove = 1; cant_self_remove = 1} , slot_w_uniform)
+	initializeBioholder()
+		. = ..()
+		src.real_name = Create_Tommyname()
 
-			src.equip_new_if_possible(/obj/item/device/radio/headset, slot_ears)
-			src.equip_new_if_possible(/obj/item/storage/backpack, slot_back)
-			src.equip_new_if_possible(/obj/item/football, slot_in_backpack)
+		src.gender = "male"
+		bioHolder.mobAppearance.customization_first = "Dreadlocks"
+		bioHolder.mobAppearance.gender = "male"
+		bioHolder.mobAppearance.s_tone = "#FAD7D0"
+		bioHolder.mobAppearance.s_tone_original = "#FAD7D0"
+		bioHolder.AddEffect("accent_tommy")
 
 /mob/living/carbon/human/waiter
 	real_name = "Cade Plids"
@@ -854,6 +881,54 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 		A.transition_task = F
 		default_task = B
 
+
+
+
+/mob/living/carbon/human/proc/spacer_name(var/type = "spacer")
+	var/constructed_name = ""
+
+	switch(type)
+		if("spacer")
+			constructed_name = "[prob(10)?SPACER_PICK("honorifics")+" ":""][prob(80)?SPACER_PICK("pejoratives")+" ":SPACER_PICK("superlatives")+" "][prob(10)?SPACER_PICK("stuff")+" ":""][SPACER_PICK("firstnames")]"
+		if("juicer")
+			constructed_name = "[prob(10)?SPACER_PICK("honorifics")+" ":""][prob(20)?SPACER_PICK("stuff")+" ":""][SPACER_PICK("firstnames")+" "][prob(80)?SPACER_PICK("nicknames")+" ":""][prob(50)?SPACER_PICK("firstnames"):SPACER_PICK("lastnames")]"
+
+	return constructed_name
+
+
+/mob/living/carbon/human/spacer
+	is_npc = 1
+	uses_mobai = 1
+	New()
+		..()
+		src.say("Hey there [JOHN_PICK("insults")]")//debug
+
+		src.equip_new_if_possible(/obj/item/clothing/shoes/orange, slot_shoes)
+		src.equip_new_if_possible(/obj/item/clothing/under/rank/chief_engineer, slot_w_uniform)
+		src.equip_if_possible(new /obj/item/clothing/glasses/sunglasses, slot_glasses)
+
+		src.ai = new /datum/aiHolder/human/yank(src)
+		remove_lifeprocess(/datum/lifeprocess/blindness)
+		remove_lifeprocess(/datum/lifeprocess/viruses)
+		src.ai.enabled = 0
+
+	initializeBioholder()
+		. = ..()
+		SPAWN_DBG(0) // ok, this crap actually needs to be spawned (for now!) because of organHolders being initialized at weird times
+			randomize_look(src, 1, 1, 1, 1, 1, 0)
+			real_name = spacer_name(pick("spacer","juicer"))
+			gender = pick(MALE,FEMALE)
+
+	was_harmed(var/mob/M as mob, var/obj/item/weapon = 0, var/special = 0, var/intent = null)
+		. = ..()
+		if(isdead(src))
+			return
+		if(prob(10))
+			say(pick("Oh no you don't - not today, not ever!","Nice try fuckass, but I ain't goin' down so easy!","IMMA SCREAM BUDDY!","You wanna fuck around bucko? You wanna try your luck?"))
+			src.ai.interrupt()
+		src.ai.target = M
+		src.ai.enabled = 1
+
 // This is Big Yank, one of John Bill's old buds. Yank owes John a favor. He's a Juicer.
 /mob/living/carbon/human/big_yank
 	gender = MALE
@@ -862,31 +937,28 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 
 	New()
 		..()
-		SPAWN_DBG(0)
-			bioHolder.age = 49
-			bioHolder.mobAppearance.customization_first = "Full Beard"
-			bioHolder.mobAppearance.customization_first_color = "#555555"
-			bioHolder.mobAppearance.gender = "male"
-			bioHolder.mobAppearance.underwear = "boxers"
-			real_name = "[pick("Chut","Brendt","Franko","Steephe","Geames","Whitney","Thom","Cheddar")] \"Big Yank\" Whitney"
-			SPAWN_DBG(1 SECOND)
-				bioHolder.mobAppearance.UpdateMob()
+		src.equip_new_if_possible(/obj/item/clothing/shoes/orange, slot_shoes)
+		src.equip_new_if_possible(/obj/item/clothing/under/rank/chief_engineer, slot_w_uniform)
+		src.equip_if_possible(new /obj/item/clothing/glasses/sunglasses, slot_glasses)
 
-			src.equip_new_if_possible(/obj/item/clothing/shoes/orange, slot_shoes)
-			src.equip_new_if_possible(/obj/item/clothing/under/rank/chief_engineer, slot_w_uniform)
-			src.equip_if_possible(new /obj/item/clothing/glasses/sunglasses, slot_glasses)
+		src.ai = new /datum/aiHolder/human/yank(src)
+		remove_lifeprocess(/datum/lifeprocess/blindness)
+		remove_lifeprocess(/datum/lifeprocess/viruses)
+		src.ai.enabled = 0
 
-			src.ai = new /datum/aiHolder/human/yank(src)
-			remove_lifeprocess(/datum/lifeprocess/blindness)
-			remove_lifeprocess(/datum/lifeprocess/viruses)
-			src.ai.enabled = 0
+	initializeBioholder()
+		. = ..()
+		bioHolder.age = 49
+		bioHolder.mobAppearance.customization_first = "Full Beard"
+		bioHolder.mobAppearance.customization_first_color = "#555555"
+		bioHolder.mobAppearance.gender = "male"
+		bioHolder.mobAppearance.underwear = "boxers"
+		real_name = "[pick("Chut","Brendt","Franko","Steephe","Geames","Whitney","Thom","Cheddar")] \"Big Yank\" Whitney"
 
 
 	attack_hand(mob/M)
 		..()
-#if ASS_JAM
-		src.gib()
-#endif
+
 		if(isdead(src))
 			return
 		if (prob(30))
@@ -903,7 +975,8 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 			return
 		..()
 
-	was_harmed(var/mob/M as mob, var/obj/item/weapon = 0, var/special = 0)
+	was_harmed(var/mob/M as mob, var/obj/item/weapon = 0, var/special = 0, var/intent = null)
+		. = ..()
 		if(isdead(src))
 			return
 		if(prob(20))
@@ -912,12 +985,5 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 		src.ai.target = M
 		src.ai.enabled = 1
 
-
-
-#if ASS_JAM //explodey yank
-		say("Feel My Wrath.")
-		explosion_new(src, src.loc, 20)
-		src.gib()
-#endif
 
 #undef BILL_PICK

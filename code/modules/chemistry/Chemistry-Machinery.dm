@@ -89,7 +89,7 @@
 	Topic(href, href_list)
 		if(status & (NOPOWER|BROKEN)) return
 		if(usr.stat || usr.restrained()) return
-		if(!in_range(src, usr)) return
+		if(!in_interact_range(src, usr)) return
 
 		src.add_dialog(usr)
 		if (!beaker)
@@ -303,7 +303,7 @@
 
 	New()
 		..()
-		if (!src.emagged && islist(chem_whitelist) && chem_whitelist.len)
+		if (!src.emagged && islist(chem_whitelist) && length(chem_whitelist))
 			src.whitelist = chem_whitelist
 		output_target = src.loc
 
@@ -350,7 +350,7 @@
 	Topic(href, href_list)
 		if (status & BROKEN) return
 		if (usr.stat || usr.restrained()) return
-		if (!in_range(src, usr)) return
+		if (!in_interact_range(src, usr)) return
 
 		src.add_fingerprint(usr)
 
@@ -396,7 +396,10 @@
 			return
 
 		else if (href_list["createpill"])
-			var/input_name = input(usr, "Name the pill:", "Name", R.get_master_reagent_name()) as null|text
+			var/default = R.get_master_reagent_name()
+			var/input_name = input(usr, "Name the pill:", "Name", default) as null|text
+			if(input_name && input_name != default)
+				phrase_log.log_phrase("pill", input_name, no_duplicates=TRUE)
 			var/pillname = copytext(html_encode(input_name), 1, 32)
 			if (isnull(pillname) || !src.beaker || !R || !length(pillname) || pillname == " " || get_dist(usr, src) > 1)
 				return
@@ -415,8 +418,11 @@
 
 		else if (href_list["multipill"])
 			// get the pill name from the user
-			var/input_pillname = input(usr, "Name the pill:", "Name", R.get_master_reagent_name()) as null|text
+			var/default = R.get_master_reagent_name()
+			var/input_pillname = input(usr, "Name the pill:", "Name", default) as null|text
 			var/pillname = copytext(html_encode(input_pillname), 1, 32)
+			if(input_pillname && input_pillname != default)
+				phrase_log.log_phrase("pill", input_pillname, no_duplicates=TRUE)
 			if (isnull(pillname) || !src.beaker || !R || !length(pillname) || pillname == " " || get_dist(usr, src) > 1)
 				return
 			// get the pill volume from the user
@@ -441,14 +447,17 @@
 			else
 				for (var/i=pillcount, i>0, i--)
 					var/obj/item/reagent_containers/pill/P = new(src.output_target)
-					P.name = pillname
+					P.name = "[pillname] pill"
 					R.trans_to(P, pillvol)
 					color_icon(P)
 			src.updateUsrDialog()
 			return
 
 		else if (href_list["createbottle"])
-			var/input_name = input(usr, "Name the bottle:", "Name", R.get_master_reagent_name()) as null|text
+			var/default = R.get_master_reagent_name()
+			var/input_name = input(usr, "Name the bottle:", "Name", default) as null|text
+			if(input_name && input_name != default)
+				phrase_log.log_phrase("bottle", input_name, no_duplicates=TRUE)
 			var/bottlename = copytext(html_encode(input_name), 1, 32)
 			if (isnull(bottlename) || !src.beaker || !R || !length(bottlename) || bottlename == " " || get_dist(usr, src) > 1)
 				return
@@ -471,7 +480,7 @@
 				return
 			var/med = src.check_whitelist(R)
 			var/obj/item/reagent_containers/patch/P
-			if (R.total_volume <= 20)
+			if (R.total_volume <= 15)
 				P = new /obj/item/reagent_containers/patch/mini(src.output_target)
 				P.name = "[patchname] mini-patch"
 				R.trans_to(P, P.initial_volume)
@@ -512,10 +521,10 @@
 			if (isnull(patchname) || !src.beaker || !R || !length(patchname) || patchname == " " || get_dist(usr, src) > 1)
 				return
 			// get the pill volume from the user
-			var/patchvol = input(usr, "Volume of chemical per patch: (Min/Max 5/40)", "Volume", 5) as null|num
+			var/patchvol = input(usr, "Volume of chemical per patch: (Min/Max 5/30)", "Volume", 5) as null|num
 			if (!patchvol || !src.beaker || !R)
 				return
-			patchvol = clamp(patchvol, 5, 40)
+			patchvol = clamp(patchvol, 5, 30)
 			// maths
 			var/patchcount = round(R.total_volume / patchvol) // round with a single parameter is actually floor because byond
 			logTheThing("combat",usr,null,"created [patchcount] [patchname] patches from [log_reagents(R)].")
@@ -533,7 +542,9 @@
 				var/obj/item/item_box/medical_patches/B = new /obj/item/item_box/medical_patches(src.output_target)
 				B.name = "box of [patchname] [patchvol <= 15 ? "mini-" : null]patches"
 				patchloc = B
-				if (!med) // dangerrr
+				if (med)
+					B.build_overlay(average = R.get_average_color())
+				else // dangerrr
 					B.icon_state = "patchbox" // change icon
 					B.icon_closed = "patchbox"
 					B.icon_open = "patchbox-open"
@@ -588,7 +599,7 @@
 				dat += "<BR><A href='?src=\ref[src];createpill=1'>Create pill (100 units max)</A><BR>"
 				dat += "<A href='?src=\ref[src];multipill=1'>Create multiple pills (5 units min)</A> Bottle: <A href='?src=\ref[src];togglepillbottle=1'>[src.pill_bottle ? "Yes" : "No"]</A><BR>"
 				dat += "<A href='?src=\ref[src];createbottle=1'>Create bottle (50 units max)</A><BR>"
-				dat += "<A href='?src=\ref[src];createpatch=1'>Create patch (40 units max)</A><BR>"
+				dat += "<A href='?src=\ref[src];createpatch=1'>Create patch (30 units max)</A><BR>"
 				dat += "<A href='?src=\ref[src];multipatch=1'>Create multiple patches (5 units min)</A> Box: <A href='?src=\ref[src];togglepatchbox=1'>[src.patch_box ? "Yes" : "No"]</A><BR>"
 				dat += "<A href='?src=\ref[src];createampoule=1'>Create ampoule (5 units max)</A>"
 		user.Browse("<TITLE>Chemmaster 3000</TITLE>Chemmaster menu:<BR><BR>[dat]", "window=chem_master;size=575x400;title=Chemmaster 3000")
@@ -612,7 +623,7 @@
 		return 1
 
 	proc/check_whitelist(var/datum/reagents/R)
-		if (src.emagged || !R || !src.whitelist || (islist(src.whitelist) && !src.whitelist.len))
+		if (src.emagged || !R || !src.whitelist || (islist(src.whitelist) && !length(src.whitelist)))
 			return 1
 		var/all_safe = 1
 		for (var/reagent_id in R.reagent_list)
@@ -701,7 +712,7 @@ datum/chemicompiler_core/stationaryCore
 			return
 		src.add_dialog(user)
 		executor.panel()
-		onclose(usr, "chemicompiler")
+		onclose(user, "chemicompiler")
 		return
 
 	attackby(var/obj/item/reagent_containers/glass/B as obj, var/mob/user as mob)
@@ -747,3 +758,125 @@ datum/chemicompiler_core/stationaryCore
 
 		statusChange(oldStatus, newStatus)
 			power_change()
+
+
+// ORGONEIC CHAMISTREY FOR MUSTY JEANS
+/obj/item/reagent_containers/glass/beaker/extractor_tank/thick
+	initial_volume = 1000
+
+/obj/machinery/chem_fractioning_still/ //a huge column boiler for separating chems by boiling point
+	name = "fractional still"
+	desc = "A towering piece of industrial equipment. It reeks of hydrocarbons."
+	density = 1
+	anchored = 1
+	power_usage = 500
+	var/active = 0
+	var/overall_temp = T20C
+	var/target_temp = T20C
+	var/heating = 0
+	var/distilling = 0
+	var/cracking = 0
+	var/obj/item/reagent_containers/glass/beaker/extractor_tank/thick/bottoms = null
+	var/obj/item/reagent_containers/glass/beaker/extractor_tank/tops = null
+	var/obj/item/reagent_containers/glass/beaker/extractor_tank/feed = null
+	var/obj/item/reagent_containers/glass/beaker/extractor_tank/overflow = null
+	var/obj/item/reagent_containers/user_beaker = null
+
+	New()
+		..()
+		src.bottoms = new
+		src.tops = new
+		src.feed = new
+		src.overflow = new
+
+	disposing()
+		if (src.bottoms)
+			qdel(src.bottoms)
+			src.bottoms = null
+		if (src.tops)
+			qdel(src.tops)
+			src.tops = null
+		if (src.feed)
+			qdel(src.feed)
+			src.feed = null
+		if (src.overflow)
+			qdel(src.overflow)
+			src.overflow = null
+		if (src.user_beaker)
+			qdel(src.user_beaker)
+			src.user_beaker = null
+		UnsubscribeProcess()
+		..()
+
+	process(var/mult)
+		if(!active)
+			UnsubscribeProcess()
+		if(heating)
+			heat_up()
+		if(distilling)
+			distill(mult)
+		if(cracking)
+			do_cracking(bottoms,mult)
+		bottoms.reagents.temperature_reagents(T20C, 1)
+		..()
+
+	proc/check_tank(var/obj/item/reagent_containers/tank,var/headroom)
+		if(tank.reagents.total_volume >= tank.reagents.maximum_volume - headroom)
+			tank.reagents.trans_to(overflow,(headroom*0.1))
+		if(overflow.reagents.total_volume >= overflow.reagents.maximum_volume - headroom)
+			src.visible_message("<span class='alert'>The internal overflow safety dumps its contents all over the floor!.</span>","<span class='alert'>You hear a tremendous gushing sound.</span>")
+			var/turf/T = get_turf(src)
+			overflow.reagents.reaction(T)
+
+	proc/do_cracking(var/obj/item/reagent_containers/R, var/amount)
+		if(R && R.reagents)
+			for(var/datum/reagent/reggie in R)
+				if(reggie.can_crack)
+					reggie.crack(amount)
+
+	proc/distill(var/amount)
+		var/vapour_list = get_vapours(bottoms)
+		if(vapour_list)
+			heating = 0
+			for(var/datum/reagent/R in vapour_list)
+				bottoms.reagents.remove_reagent(R.id,amount)
+				tops.reagents.add_reagent(R.id,amount)
+				check_tank(tops,50)
+				feed.reagents.trans_to(bottoms,amount)
+				check_tank(bottoms,100)
+		else
+			if(bottoms.reagents && length(bottoms.reagents.reagent_list))
+				heating = 1
+
+	proc/heat_up()
+		var/vapor_temp = min(get_lowest_temp(bottoms),target_temp)
+		bottoms.reagents.temperature_reagents(vapor_temp, 10)
+		src.power_usage = 1000
+
+	proc/get_vapours(var/obj/item/reagent_containers/R)
+		var/datum/reagent/reg = list()
+		if(R && R.reagents)
+			for(var/datum/reagent/reggie in R)
+				if(reggie.boiling_point <= overall_temp)
+					reg += reggie
+			return reg
+		else return null
+
+	proc/get_lowest_temp(var/obj/item/reagent_containers/R)
+		var/top_temp = INFINITY
+		if(R && R.reagents)
+			for(var/datum/reagent/reggie in R)
+				if(reggie.boiling_point<top_temp)
+					top_temp=reggie.boiling_point
+			return top_temp
+		else return T0C
+
+	proc/get_lowest_temp_chem(var/obj/item/reagent_containers/R)
+		var/top_temp = INFINITY
+		if(R && R.reagents)
+			for(var/datum/reagent/reggie in R)
+				if(reggie.boiling_point<top_temp)
+					top_temp=reggie.boiling_point
+					. = reggie
+			return
+		else return null

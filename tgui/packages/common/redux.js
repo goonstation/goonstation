@@ -26,7 +26,9 @@ export const createStore = (reducer, enhancer) => {
 
   const dispatch = action => {
     currentState = reducer(currentState, action);
-    listeners.forEach(fn => fn());
+    for (let i = 0; i < listeners.length; i++) {
+      listeners[i]();
+    }
   };
 
   // This creates the initial store by causing each reducer to be called
@@ -106,15 +108,15 @@ export const combineReducers = reducersObj => {
  * returns the action type, allowing it to be used in reducer logic that
  * is looking for that action type.
  *
- * @param type The action type to use for created actions.
- * @param prepare (optional) a method that takes any number of arguments
+ * @param {string} type The action type to use for created actions.
+ * @param {any} prepare (optional) a method that takes any number of arguments
  * and returns { payload } or { payload, meta }. If this is given, the
  * resulting action creator will pass it's arguments to this method to
  * calculate payload & meta.
  *
  * @public
  */
-export const createAction = (type, prepare) => {
+export const createAction = (type, prepare = null) => {
   const actionCreator = (...args) => {
     if (!prepare) {
       return { type, payload: args[0] };
@@ -136,4 +138,16 @@ export const createAction = (type, prepare) => {
   actionCreator.type = type;
   actionCreator.match = action => action.type === type;
   return actionCreator;
+};
+
+
+// Implementation specific
+// --------------------------------------------------------
+
+export const useDispatch = context => {
+  return context.store.dispatch;
+};
+
+export const useSelector = (context, selector) => {
+  return selector(context.store.getState());
 };

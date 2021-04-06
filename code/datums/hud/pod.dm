@@ -1,5 +1,5 @@
 /datum/hud/pod
-	var/obj/screen/hud
+	var/atom/movable/screen/hud
 		engine
 		life_support
 		comms
@@ -13,6 +13,7 @@
 		wormhole
 		use_comms
 		leave
+		rcs
 		lights
 		tracking
 		sensor_lock
@@ -23,6 +24,7 @@
 	var/obj/machinery/vehicle/master
 
 	New(P)
+		..()
 		master = P
 		missing = image('icons/mob/hud_pod.dmi', "marker")
 		engine = create_screen("engine", "Engine", 'icons/mob/hud_pod.dmi', "engine-off", "NORTH+1,WEST", tooltipTheme = "pod-alt", desc = "Turn the pod's engine on or off (you probably don't want to turn it off)")
@@ -35,10 +37,11 @@
 		weapon = create_screen("weapon", "Main Weapon", 'icons/mob/hud_pod.dmi', "weapon-off", "NORTH+1,WEST+7", tooltipTheme = "pod-alt", desc = "Turn the main weapon on or off, if the pod is equipped with one")
 		lights = create_screen("lights", "Toggle Lights", 'icons/mob/hud_pod.dmi', "lights_off", "NORTH+1, WEST+8", tooltipTheme = "pod", desc = "Turn the pod's external lights on or off")
 		secondary = create_screen("secondary", "Secondary System", 'icons/mob/hud_pod.dmi', "blank", "NORTH+1,WEST+9", tooltipTheme = "pod", desc = "Enable or disable the secondary system installed in the pod, if there is one")
-		lock = create_screen("lock", "Lock", 'icons/mob/hud_pod.dmi', "weapon-off", "NORTH+1,WEST+10", tooltipTheme = "pod-alt", desc = "LOCK YOUR PODS YOU DOOFUSES")
+		lock = create_screen("lock", "Lock", 'icons/mob/hud_pod.dmi', "lock-locked", "NORTH+1,WEST+10", tooltipTheme = "pod-alt", desc = "LOCK YOUR PODS YOU DOOFUSES")
 		set_code = create_screen("set_code", "Set Lock code", 'icons/mob/hud_pod.dmi', "set-code", "NORTH+1,WEST+11", tooltipTheme = "pod", desc = "Set the code used to unlock the pod")
 		rts = create_screen("return_to_station", "Return To [capitalize(station_or_ship())]", 'icons/mob/hud_pod.dmi', "return-to-station", "NORTH+1,WEST+12", tooltipTheme = "pod", desc = "Using this will place you on the station Z-level the next time you fly off the edge of the current level")
 		leave = create_screen("leave", "Leave Pod", 'icons/mob/hud_pod.dmi', "leave", "SOUTH,EAST", tooltipTheme = "pod-alt", desc = "Get out of the pod")
+		rcs = create_screen("rcs", "Toggle RCS", 'icons/mob/hud_pod.dmi', "rcs-off", "NORTH+1,WEST+13", tooltipTheme = "pod-alt", desc = "Reduce the pod's relative velocity")
 		tracking = create_screen("tracking", "Tracking Indicator", 'icons/mob/hud_pod.dmi', "off", "CENTER, CENTER")
 		tracking.mouse_opacity = 0
 		sensor_lock = create_screen("sensor_lock", "Sensor Lock", 'icons/mob/hud_pod.dmi', "off", "SOUTH+1,EAST")
@@ -69,6 +72,12 @@
 
 				if (C.tooltipHolder)
 					C.tooltipHolder.inPod = 0
+
+	proc/check_hud_layout(mob/user)
+		if (user.client.tg_layout)
+			leave.screen_loc = "SOUTH,EAST-6"
+		else
+			leave.screen_loc = "SOUTH,EAST"
 
 	proc/update_health()
 		check_clients()
@@ -136,6 +145,11 @@
 				lights.icon_state = "lights_on"
 			else
 				lights.icon_state = "lights_off"
+
+		if (master.rcs)
+			rcs.icon_state = "rcs-on"
+		else
+			rcs.icon_state = "rcs-off"
 
 
 	proc/update_systems()
@@ -212,8 +226,13 @@
 			lock.name = master.lock.name
 			lock.overlays.len = 0
 			set_code.overlays.len = 0
+			if (master && master.locked)
+				lock.icon_state = "lock-locked"
+			else
+				lock.icon_state = "lock-unlocked"
 		else
 			lock.name = "Lock"
+			lock.icon_state = "lock-locked"
 			if (!lock.overlays.len)
 				lock.overlays += missing
 			if (!set_code.overlays.len)
@@ -235,7 +254,7 @@
 				user.client.tooltipHolder.inPod = 0
 
 			return
-		if (user.getStatusDuration("stunned") > 0 || user.getStatusDuration("weakened") || user.getStatusDuration("paralysis") > 0 || !isalive(user))
+		if (is_incapacitated(user))
 			boutput(user, "<span class='alert'>Not when you are incapacitated.</span>")
 			return
 		// WHAT THE FUCK PAST MARQUESAS
@@ -261,9 +280,9 @@
 					if(master.com_system.active)
 						master.com_system.External()
 					else
-						boutput(usr, "[master.ship_message("SYSTEM OFFLINE")]")
+						boutput(user, "[master.ship_message("SYSTEM OFFLINE")]")
 				else
-					boutput(usr, "[master.ship_message("System not installed in ship!")]")
+					boutput(user, "[master.ship_message("System not installed in ship!")]")
 			if ("weapon")
 				if (master.m_w_system)
 					master.m_w_system.toggle()
@@ -275,7 +294,7 @@
 					master.sensors.toggle()
 			if ("sensors_use")
 				if (master.sensors && master.sensors.active)
-					master.sensors.opencomputer(usr)
+					master.sensors.opencomputer(user)
 			if ("lock")
 				if (master.lock)
 					if (!master.lock.code || master.lock.code == "")
@@ -284,32 +303,32 @@
 							master.locked = 0
 						master.lock.code = ""
 
-						boutput(usr, "<span class='notice'>Code reset.  Please type new code and press enter.</span>")
-						master.lock.show_lock_panel(usr)
+						boutput(user, "<span class='notice'>Code reset.  Please type new code and press enter.</span>")
+						master.lock.show_lock_panel(user)
 					else if (!master.locked)
 						master.locked = 1
-						boutput(usr, "<span class='alert'>The lock mechanism clunks locked.</span>")
+						boutput(user, "<span class='alert'>The lock mechanism clunks locked.</span>")
 					else if (master.locked)
 						master.locked = 0
-						boutput(usr, "<span class='alert'>The ship mechanism clicks unlocked.</span>")
+						boutput(user, "<span class='alert'>The ship mechanism clicks unlocked.</span>")
 			if ("set_code")
 				if (master.lock)
 					master.lock.configure_mode = 1
 					if (master)
 						master.locked = 0
 					master.lock.code = ""
-					boutput(usr, "<span class='notice'>Code reset.  Please type new code and press enter.</span>")
-					master.lock.show_lock_panel(usr)
+					boutput(user, "<span class='notice'>Code reset.  Please type new code and press enter.</span>")
+					master.lock.show_lock_panel(user)
 			if ("return_to_station")
 				if(master.com_system)
 					if(master.com_system.active)
 						master.going_home = 1
 					else
-						boutput(usr, "[master.ship_message("SYSTEM OFFLINE")]")
+						boutput(user, "[master.ship_message("SYSTEM OFFLINE")]")
 				else
-					boutput(usr, "[master.ship_message("System not installed in ship!")]")
+					boutput(user, "[master.ship_message("System not installed in ship!")]")
 			if ("leave")
-				master.leave_pod(usr)
+				master.leave_pod(user)
 			if ("wormhole") //HEY THIS DOES SAMETHING AS CLIENT WORMHOLE PROC IN VEHICLE.DM
 				if(master.engine && !istype(master,/obj/machinery/vehicle/tank/car))
 					if(master.engine.active)
@@ -318,15 +337,18 @@
 							if (istype(T) && T.allows_vehicles)
 								master.engine.Wormhole()
 							else
-								boutput(usr, "[master.ship_message("Cannot create wormhole on this flooring!")]")
+								boutput(user, "[master.ship_message("Cannot create wormhole on this flooring!")]")
 						else
-							boutput(usr, "[master.ship_message("Engine recharging wormhole capabilities!")]")
+							boutput(user, "[master.ship_message("Engine recharging wormhole capabilities!")]")
 					else
-						boutput(usr, "[master.ship_message("SYSTEM OFFLINE")]")
+						boutput(user, "[master.ship_message("SYSTEM OFFLINE")]")
 				else
-					boutput(usr, "[master.ship_message("System not installed in ship!")]")
+					boutput(user, "[master.ship_message("System not installed in ship!")]")
 			if ("lights")
 				if (master.lights)
 					master.lights.toggle()
+			if ("rcs")
+				master.rcs = !master.rcs
+
 
 		update_states()

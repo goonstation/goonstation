@@ -66,7 +66,7 @@
 		switch(select)
 			if("Add")
 				var/t = input(user, "What text do you wish to add?", text("[]", src.name), null)  as message
-				if ((!in_range(src, usr) && src.loc != user && !( istype(src.loc, /obj/item/clipboard) ) && src.loc.loc != user && user.equipped() != P))
+				if ((!in_interact_range(src, user) && src.loc != user && !( istype(src.loc, /obj/item/clipboard) ) && src.loc.loc != user && user.equipped() != P))
 					return
 				t = copytext(html_encode(t), 1, MAX_MESSAGE_LEN)
 				t = replacetext(t, "\n", "<BR>")

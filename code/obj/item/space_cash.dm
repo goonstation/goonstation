@@ -49,7 +49,7 @@
 		..()
 		var/default_amount = default_min_amount == default_max_amount ? default_min_amount : rand(default_min_amount, default_max_amount)
 		src.amount = max(1, default_amount) //take higher
-		//src.update_stack_appearance()
+		src.update_stack_appearance()
 
 	pooled()
 		if (usr)
@@ -64,13 +64,13 @@
 			if (-INFINITY to 9)
 				src.icon_state = "cashgreen"
 			if (10 to 49)
-				src.icon_state = "spacecash"
-			if (50 to 499)
 				src.icon_state = "cashblue"
-			if (500 to 999)
+			if (50 to 499)
 				src.icon_state = "cashindi"
-			if (1000 to 999999)
+			if (500 to 999)
 				src.icon_state = "cashpurp"
+			if (1000 to 999999)
+				src.icon_state = "cashred"
 			else // 1mil bby
 				src.icon_state = "cashrbow"
 
@@ -171,18 +171,15 @@
 
 	New()
 		..()
-		if (!(src in processing_items))
-			processing_items.Add(src)
+		processing_items |= src
 
 	pooled()
-		if ((src in processing_items))
-			processing_items.Remove(src)
+		processing_items -= src
 		..()
 
 	unpooled()
 		..()
-		if (!(src in processing_items))
-			processing_items.Add(src)
+		processing_items |= src
 
 	update_stack_appearance()
 		return
@@ -308,7 +305,7 @@
 
 	update_stack_appearance()
 		src.UpdateName()
-		src.inventory_counter.update_number(amount)
+		src.inventory_counter?.update_number(amount)
 		animate(src, transform = null, time = 1, easing = SINE_EASING, flags = ANIMATION_END_NOW)
 		switch (src.amount)
 			if (1000000 to INFINITY)

@@ -119,6 +119,8 @@ obj/machinery/atmospherics/valve
 			icon_state = "valve[open]"
 
 	New()
+		..()
+		UnsubscribeProcess()
 		switch(dir)
 			if(NORTH, SOUTH)
 				initialize_directions = NORTH|SOUTH
@@ -136,7 +138,7 @@ obj/machinery/atmospherics/valve
 			if(open)
 				network_node1 = new_network
 
-		if(new_network.normal_members.Find(src))
+		if(src in new_network.normal_members)
 			return 0
 
 		new_network.normal_members += src
@@ -196,11 +198,9 @@ obj/machinery/atmospherics/valve
 		open = 0
 		update_icon()
 
-		if(network_node1)
-			network_node1.dispose()
+		network_node1?.dispose()
 		network_node1 = null
-		if(network_node2)
-			network_node2.dispose()
+		network_node2?.dispose()
 		network_node2 = null
 
 		build_network()
@@ -374,6 +374,8 @@ obj/machinery/atmospherics/manifold_valve
 			icon_state = "manifold_valve[divert]"
 
 	New()
+		..()
+		UnsubscribeProcess()
 		switch(dir)
 			if(SOUTH)
 				initialize_directions = EAST|WEST|NORTH

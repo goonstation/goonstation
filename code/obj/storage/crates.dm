@@ -9,7 +9,7 @@
 	soundproofing = 3
 	throwforce = 50 //ouch
 	can_flip_bust = 1
-	event_handler_flags = USE_FLUID_ENTER | USE_CHECKEXIT | USE_CANPASS
+	event_handler_flags = USE_FLUID_ENTER | USE_CHECKEXIT | USE_CANPASS | NO_MOUSEDROP_QOL
 
 	get_desc()
 		. = ..()
@@ -75,11 +75,7 @@
 	icon_state = "medicalcrate"
 	icon_opened = "medicalcrateopen"
 	icon_closed = "medicalcrate"
-#if ASS_JAM
-	update_icon()
-		. = ..()
-		ADD_MORTY(14, 5, 5, 5)
-#endif
+
 
 /obj/storage/crate/medical/morgue
 	name = "morgue supplies crate"
@@ -101,6 +97,12 @@
 	desc = "A crate for the storage of the RCD."
 	spawn_contents = list(/obj/item/rcd_ammo = 5,
 	/obj/item/rcd)
+
+/obj/storage/crate/rcd/CE
+	name = "\improper RCD crate"
+	desc = "A crate for the Chief Engineer's personal RCD."
+	spawn_contents = list(/obj/item/rcd_ammo = 5,
+	/obj/item/rcd/construction/chiefEngineer)
 
 /obj/storage/crate/abcumarker
 	name = "\improper ABCU-Marker crate"
@@ -249,7 +251,9 @@
 
 /obj/storage/crate/syndicate_surplus
 	var/ready = 0
+	grab_stuff_on_spawn = FALSE
 	New()
+		..()
 		SPAWN_DBG(2 SECONDS)
 			if (!ready)
 				spawn_items()
@@ -262,7 +266,7 @@
 		if (islist(syndi_buylist_cache))
 			for (var/datum/syndicate_buylist/S in syndi_buylist_cache)
 				var/blocked = 0
-				if (ticker && ticker.mode && S.blockedmode && islist(S.blockedmode) && S.blockedmode.len)
+				if (ticker?.mode && S.blockedmode && islist(S.blockedmode) && length(S.blockedmode))
 					for (var/V in S.blockedmode)
 						if (ispath(V) && istype(ticker.mode, V))
 							blocked = 1
@@ -271,13 +275,13 @@
 				if (blocked == 0 && !S.not_in_crates)
 					possible_items += S
 
-		if (islist(possible_items) && possible_items.len)
+		if (islist(possible_items) && length(possible_items))
 			while(telecrystals < 18)
 				var/datum/syndicate_buylist/item_datum = pick(possible_items)
 				if(telecrystals + item_datum.cost > 24) continue
 				var/obj/item/I = new item_datum.item(src)
 				if (owner)
-					item_datum.run_on_spawn(I, owner)
+					item_datum.run_on_spawn(I, owner, TRUE)
 					if (owner.mind)
 						owner.mind.traitor_crate_items += item_datum
 				telecrystals += item_datum.cost
@@ -345,6 +349,38 @@
 	desc = "A small, cuboid object with a hinged top and loot filled interior."
 	spawn_contents = list(/obj/random_item_spawner/loot_crate/surplus)
 
+/obj/storage/crate/chest
+	name = "treasure chest"
+	desc = "Glittering gold, trinkets and baubles, paid for in blood."
+	icon = 'icons/obj/32x48.dmi'
+	icon_state = "chest"
+	icon_opened = "chest-open"
+	icon_closed = "chest"
+
+	New()
+		..()
+		src.setMaterial(getMaterial("wood"), appearance = 0, setname = 0)
+
+/obj/storage/crate/chest/coins
+	var/coins_count_min = 5
+	var/coins_count_max = 50
+	New()
+		..()
+		var/coins_count = rand(coins_count_min, coins_count_max)
+		for(var/i in 1 to coins_count)
+			var/obj/item/coin/coin = new(src)
+			coin.pixel_x = rand(-9, 9)
+			coin.pixel_y = rand(0, 6)
+
+/obj/storage/crate/chest/spacebux
+	New()
+		..()
+		var/bux_count = rand(3, 10)
+		for(var/i in 1 to bux_count)
+			var/obj/item/spacebux/bux = new(src, pick(10, 20, 50, 100, 200, 500))
+			bux.pixel_x = rand(-9, 9)
+			bux.pixel_y = rand(0, 6)
+
 // Gannets' Nuke Ops Specialist Class Crates
 
 /obj/storage/crate/classcrate
@@ -361,7 +397,7 @@
 		spawn_contents = list(/obj/item/gun/kinetic/grenade_launcher,
 		/obj/item/storage/pouch/grenade_round,
 		/obj/item/storage/grenade_pouch/mixed_explosive,
-		/obj/item/clothing/suit/space/syndicate/specialist,
+		/obj/item/clothing/suit/space/syndicate/specialist/grenadier,
 		/obj/item/clothing/head/helmet/space/syndicate/specialist)
 
 	heavy
@@ -396,14 +432,29 @@
 		/obj/item/clothing/suit/space/syndicate/specialist/infiltrator,
 		/obj/item/clothing/head/helmet/space/syndicate/specialist/infiltrator)
 
-	agent_rework
-		name = "Class Crate - Infiltrator"
-		desc = "A crate containing a Specialist Operative loadout. Includes a tranquilizer pistol with a fast acting payload, a cloaking device with 5 uses, a combat knife and an electromagnetic card (EMAG)."
+	infiltrator
+		name = "Class Crate - Infiltrator" // for actually fitting in among the crew.
+		desc = "A crate containing a Specialist Operative loadout."
 		spawn_contents = list(/obj/item/gun/kinetic/tranq_pistol,
 		/obj/item/storage/pouch/tranq_pistol_dart,
-		/obj/item/clothing/glasses/nightvision,
-		/obj/item/cloaking_device/limited,
+		/obj/beacon_deployer/syndicate,
+		/obj/item/genetics_injector/dna_scrambler,
+		/obj/item/voice_changer,
 		/obj/item/card/emag,
+		/obj/item/clothing/under/chameleon,
+		/obj/item/device/chameleon,
+		/obj/item/clothing/suit/space/syndicate/specialist,
+		/obj/item/clothing/head/helmet/space/syndicate/specialist/infiltrator)
+
+	scout
+		name = "Class Crate - Scout" // sneaky invisible flanker
+		desc = "A crate containing a Specialist Operative loadout. Includes a submachine gun, a cloaking device and an electromagnetic card (EMAG)."
+		spawn_contents = list(/obj/item/gun/kinetic/smg,
+		/obj/item/storage/pouch/bullet_9mm/smg,
+		/obj/item/clothing/glasses/nightvision,
+		/obj/item/cloaking_device,
+		/obj/item/card/emag,
+		/obj/item/lightbreaker,
 		/obj/item/clothing/suit/space/syndicate/specialist/infiltrator,
 		/obj/item/clothing/head/helmet/space/syndicate/specialist/infiltrator)
 
@@ -411,10 +462,21 @@
 		name = "Class Crate - Combat Medic"
 		desc = "A crate containing a Specialist Operative loadout. This one is packed with medical supplies, some poison and a syringe gun delivery system."
 		spawn_contents = list(/obj/item/gun/reagent/syringe,
-		/obj/item/reagent_containers/glass/bottle/syringe_canister/neurotoxin,
+		/obj/item/reagent_containers/glass/bottle/syringe_canister/neurotoxin = 2,
 		/obj/item/reagent_containers/emergency_injector/high_capacity/juggernaut,
-		/obj/item/storage/box/donkpocket_w_kit,
+		/obj/item/reagent_containers/emergency_injector/high_capacity/donk_injector,
 		/obj/item/clothing/glasses/healthgoggles/upgraded,
+		/obj/item/device/analyzer/healthanalyzer/borg,
+		/obj/item/storage/medical_pouch,
+		/obj/item/storage/belt/syndicate_medic_belt,
+		/obj/item/storage/backpack/satchel/syndie/syndicate_medic_satchel,
+		/obj/item/clothing/suit/space/syndicate/specialist/medic,
+		/obj/item/clothing/head/helmet/space/syndicate/specialist/medic)
+
+	medic_rework
+		name = "Class Crate - Field Medic"
+		desc = "A crate containing a Specialist Operative loadout. This one is packed with medical supplies."
+		spawn_contents = list(/obj/item/clothing/glasses/healthgoggles/upgraded,
 		/obj/item/device/analyzer/healthanalyzer/borg,
 		/obj/item/storage/medical_pouch,
 		/obj/item/storage/belt/syndicate_medic_belt,
@@ -428,8 +490,8 @@
 		spawn_contents = list(/obj/item/paper/nast_manual,
 		/obj/item/turret_deployer,
 		/obj/item/wrench/battle,
-		/obj/item/gun/kinetic/spes,
-		/obj/item/storage/pouch/shotgun,
+		/obj/item/gun/kinetic/spes/engineer,
+		/obj/item/storage/pouch/shotgun/weak,
 		/obj/item/weldingtool/high_cap,
 		/obj/item/storage/belt/utility/prepared,
 		/obj/item/clothing/glasses/meson,
@@ -439,7 +501,7 @@
 	pyro
 		name = "Class Crate - Firebrand"
 		desc = "A crate containing a Specialist Operative loadout."
-		spawn_contents = list(/obj/item/flamethrower/backtank/napalm,
+		spawn_contents = list(/obj/item/gun/flamethrower/backtank/napalm,
 		/obj/item/fireaxe,
 		/obj/item/storage/grenade_pouch/incendiary,
 		/obj/item/clothing/suit/space/syndicate/specialist/firebrand,
@@ -456,13 +518,13 @@
 		/obj/item/clothing/head/helmet/space/syndicate/specialist/sniper)
 
 	melee //wip, not ready for use
-		name = "Class Crate - Templar"
+		name = "Class Crate - Knight"
 		desc = "A crate containing a Specialist Operative loadout."
 		spawn_contents = list(/obj/item/heavy_power_sword,
-		/obj/item/syndicate_barrier,
-		/obj/item/clothing/shoes/magnetic,
-		/obj/item/clothing/suit/space/syndicate/heavy,
-		/obj/item/clothing/head/helmet/space/syndicate/specialist)
+		/obj/item/clothing/shoes/swat/knight,
+		/obj/item/clothing/gloves/swat/knight,
+		/obj/item/clothing/suit/space/syndicate/knight,
+		/obj/item/clothing/head/helmet/space/syndicate/specialist/knight)
 
 	qm //Hi Gannets, I like your crate and wanted to use it for some QM stuff. Come yell at Azungar if this is not ok.
 		name = "Weapons crate"
@@ -614,4 +676,8 @@
 	weapons4
 		spawn_contents = list(/obj/item/gun/kinetic/zipgun,
 		/obj/item/ammo/bullets/a38 = 2)
+
+	cargonia
+		spawn_contents = list(/obj/item/radio_tape/advertisement/cargonia,
+		/obj/item/clothing/under/rank/cargo,/obj/decal/skeleton)
 

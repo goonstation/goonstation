@@ -47,15 +47,15 @@
 
 	New()
 		..()
-		SPAWN_DBG (5)
+		SPAWN_DBG(0.5 SECONDS)
 			if (src)
 				src.update_icon()
-		BLOCK_ROD
+		BLOCK_SETUP(BLOCK_ROD)
 		return
 
 	proc/check_health()
 		if (src.health <= 0 && src.takes_damage)
-			SPAWN_DBG (2)
+			SPAWN_DBG(0.2 SECONDS)
 				if (src)
 					usr.u_equip(src)
 					usr.update_inhands()
@@ -209,7 +209,13 @@
 /obj/item/saw/syndie/attack(mob/living/carbon/human/target as mob, mob/user as mob)
 	var/mob/living/carbon/human/H = target
 
-	if (H.organHolder && active == 1)
+	if(!active)
+		src.visible_message("<span class='notify'>[user] gently taps [target] with the turned off [src].</span>")
+
+	if(active && prob(35))
+		gibs(target.loc, blood_DNA=H.bioHolder.Uid, blood_type=H.bioHolder.bloodType, headbits=FALSE, source=H)
+
+	if (H.organHolder && active)
 		if (H.organHolder.appendix)
 			H.organHolder.drop_organ("appendix")
 			playsound(target.loc,'sound/impact_sounds/Slimy_Splat_2_Short.ogg', 50, 1)
@@ -355,8 +361,8 @@
 /obj/item/seedplanter
 	name = "Portable Seed Fabricator"
 	desc = "A tool for cyborgs used to create plant seeds."
-	icon = 'icons/obj/items/device.dmi'
-	icon_state = "forensic0"
+	icon = 'icons/obj/hydroponics/items_hydroponics.dmi'
+	icon_state = "portable_seed_fab"
 	var/datum/plant/selected = null
 
 
@@ -368,7 +374,10 @@
 				continue
 			usable += A
 
+		var/holder = src.loc
 		var/datum/plant/pick = input(usr, "Which seed do you want?", "Portable Seed Fabricator", null) in usable
+		if (src.loc != holder)
+			return
 		src.selected = pick
 
 	afterattack(atom/target as obj|mob|turf, mob/user as mob, flag)
@@ -422,7 +431,7 @@
 
 	New()
 		..()
-		BLOCK_KNIFE
+		BLOCK_SETUP(BLOCK_KNIFE)
 
 	afterattack(obj/target as obj, mob/user as mob)
 		if(istype(target, /obj/machinery/plantpot))
@@ -443,22 +452,47 @@
 		//check if target is a plant pot to paste in the cosmetic plant overlay
 ///////////////////////////////////// Watering can ///////////////////////////////////////////////
 
-/obj/item/reagent_containers/glass/wateringcan/
+/obj/item/reagent_containers/glass/wateringcan
 	name = "watering can"
 	desc = "Used to water things. Obviously."
 	icon = 'icons/obj/hydroponics/items_hydroponics.dmi'
-	icon_state = "watercan"
+	icon_state = "wateringcan"
+	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
+	item_state = "wateringcan"
 	amount_per_transfer_from_this = 60
 	w_class = 3.0
 	rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
 	module_research = list("tools" = 2, "hydroponics" = 4)
+	initial_volume = 120
+	can_recycle = FALSE
 
 	New()
 		..()
-		var/datum/reagents/R = new/datum/reagents(120)
-		reagents = R
-		R.my_atom = src
-		R.add_reagent("water", 120)
+		reagents.add_reagent("water", 120)
+
+/obj/item/reagent_containers/glass/wateringcan/old
+	name = "antique watering can"
+	desc = "Used to water things. Obviously. But in a sort of rustic way..."
+	icon_state = "watercan_old"
+	item_state = ""				//it didn't have an in-hand icon ever...
+
+/obj/item/reagent_containers/glass/wateringcan/gold
+	name = "golden watering can"
+	desc = "Used to water things. Obviously. But it's golden..."
+	icon_state = "wateringcan_gold"
+	item_state = "wateringcan_gold"
+
+/obj/item/reagent_containers/glass/wateringcan/weed
+	name = "weed watering can"
+	desc = "Used to water things. Obviously."
+	icon_state = "wateringcan_weed"
+	item_state = "wateringcan_weed"
+
+/obj/item/reagent_containers/glass/wateringcan/rainbow
+	name = "rainbow watering can"
+	desc = "Used to water things. Obviously. It's rainbow..."
+	icon_state = "wateringcan_rainbow"
+	item_state = "wateringcan_rainbow"
 
 /////////////////////////////////////////// Compost bag ////////////////////////////////////////////////
 
@@ -471,13 +505,11 @@
 	w_class = 3.0
 	rc_flags = 0
 	module_research = list("tools" = 1, "hydroponics" = 1)
+	initial_volume = 60
 
 	New()
 		..()
-		var/datum/reagents/R = new/datum/reagents(60)
-		reagents = R
-		R.my_atom = src
-		R.add_reagent("poo", 60)
+		reagents.add_reagent("poo", 60)
 
 /////////////////////////////////////////// Plant formulas /////////////////////////////////////
 
@@ -489,13 +521,11 @@
 	amount_per_transfer_from_this = 10
 	module_research = list("tools" = 1, "hydroponics" = 1, "science" = 1)
 	module_research_type = /obj/item/reagent_containers/glass/bottle/weedkiller
+	initial_volume = 40
 
 	New()
 		..()
-		var/datum/reagents/R = new/datum/reagents(40)
-		reagents = R
-		R.my_atom = src
-		R.add_reagent("weedkiller", 40)
+		reagents.add_reagent("weedkiller", 40)
 
 /obj/item/reagent_containers/glass/bottle/mutriant
 	name = "Mutagenic Plant Formula"
@@ -503,13 +533,11 @@
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle3"
 	amount_per_transfer_from_this = 10
+	initial_volume = 40
 
 	New()
 		..()
-		var/datum/reagents/R = new/datum/reagents(40)
-		reagents = R
-		R.my_atom = src
-		R.add_reagent("mutagen", 40)
+		reagents.add_reagent("mutagen", 40)
 
 /obj/item/reagent_containers/glass/bottle/groboost
 	name = "Ammonia Plant Formula"
@@ -517,13 +545,11 @@
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle3"
 	amount_per_transfer_from_this = 10
+	initial_volume = 40
 
 	New()
 		..()
-		var/datum/reagents/R = new/datum/reagents(40)
-		reagents = R
-		R.my_atom = src
-		R.add_reagent("ammonia", 40)
+		reagents.add_reagent("ammonia", 40)
 
 /obj/item/reagent_containers/glass/bottle/topcrop
 	name = "Potash Plant Formula"
@@ -531,13 +557,11 @@
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle3"
 	amount_per_transfer_from_this = 10
+	initial_volume = 40
 
 	New()
 		..()
-		var/datum/reagents/R = new/datum/reagents(40)
-		reagents = R
-		R.my_atom = src
-		R.add_reagent("potash", 40)
+		reagents.add_reagent("potash", 40)
 
 /obj/item/reagent_containers/glass/bottle/powerplant
 	name = "Saltpetre Plant Formula"
@@ -545,13 +569,11 @@
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle3"
 	amount_per_transfer_from_this = 10
+	initial_volume = 40
 
 	New()
 		..()
-		var/datum/reagents/R = new/datum/reagents(40)
-		reagents = R
-		R.my_atom = src
-		R.add_reagent("saltpetre", 40)
+		reagents.add_reagent("saltpetre", 40)
 
 /obj/item/reagent_containers/glass/bottle/fruitful
 	name = "Mutadone Plant Formula"
@@ -559,13 +581,11 @@
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle3"
 	amount_per_transfer_from_this = 10
+	initial_volume = 40
 
 	New()
 		..()
-		var/datum/reagents/R = new/datum/reagents(40)
-		reagents = R
-		R.my_atom = src
-		R.add_reagent("mutadone", 40)
+		reagents.add_reagent("mutadone", 40)
 
 /obj/item/reagent_containers/glass/happyplant
 	name = "Happy Plant Mixture"
@@ -578,3 +598,10 @@
 	rc_flags = RC_SCALE
 	initial_volume = 250
 	initial_reagents = list("saltpetre"=50, "ammonia"=50, "potash"=50, "poo"=50, "space_fungus"=50)
+
+/obj/item/reagent_containers/glass/water_pipe
+	name = "water pipe"
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "bong"
+
+	filled

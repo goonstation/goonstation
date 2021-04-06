@@ -12,7 +12,9 @@ client/proc/open_dj_panel()
 
 	global.dj_panel.ui_interact(src.mob)
 
-/** DJ Panel for Admins
+/**
+ * # DJ Panel for Admins
+ *
  *  Allows for easily accessible music/sound playing for admins/allowed players.
  */
 /datum/dj_panel
@@ -25,7 +27,7 @@ client/proc/open_dj_panel()
 	return tgui_always_state
 
 /datum/dj_panel/ui_status(mob/user)
-  return min(
+  return max(
 		tgui_admin_state.can_use_topic(src, user),
 		src.dj_access_check(user)
 	)
@@ -44,17 +46,17 @@ client/proc/open_dj_panel()
 		ui.open()
 
 /datum/dj_panel/ui_data(mob/user)
-	var/list/data = list()
-	data["adminChannel"] = admin_sound_channel
-	data["loadedSound"] = "[loaded_sound]"
-	data["volume"] = sound_volume
-	data["frequency"] = sound_frequency
-	data["announceMode"] = user.client?.djmode
-
-	return data
+	. = list(
+		"adminChannel" = admin_sound_channel,
+		"loadedSound" = "[loaded_sound]",
+		"volume" = sound_volume,
+		"frequency" = sound_frequency,
+		"announceMode" = user.client?.djmode,
+	)
 
 /datum/dj_panel/ui_act(action, params)
-	if(..())
+	. = ..()
+	if (.)
 		return
 
 	if (!config.allow_admin_sounds)
@@ -144,9 +146,10 @@ client/proc/open_dj_panel()
 					LAGCHECK(LAG_MED)
 
 
-/** Moves the global admin sound channel up or down one
+/**
+ * Moves the global admin sound channel up or down one
  *
- * backwards - Moves it backwards if true
+ * * backwards - Moves it backwards if true
  */
 /datum/dj_panel/proc/move_admin_sound_channel(backwards = FALSE)
 	if (backwards)
@@ -160,10 +163,11 @@ client/proc/open_dj_panel()
 		else //At 1024, set it back down 10.
 			admin_sound_channel = 1014
 
-/** Toggles the DJ Mode for a given client
+/**
+ * Toggles the DJ Mode for a given client
  *
- * required C - Client to toggle the DJ Mode of
- * required actor - The client actor toggled the DJ Mode
+ * * required C - Client to toggle the DJ Mode of
+ * * required actor - The client actor toggled the DJ Mode
  */
 /datum/dj_panel/proc/toggledj(client/C, client/actor)
 	C.non_admin_dj = !C.non_admin_dj

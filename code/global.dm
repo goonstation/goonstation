@@ -25,37 +25,31 @@ var/global
 
 	lagcheck_enabled = 0
 
-	datum/datacore/data_core = null
+	vpn_blacklist_enabled = TRUE
 
-	obj/overlay/plmaster = null
-	obj/overlay/slmaster = null
+	datum/datacore/data_core = null
 
 	turf/buzztile = null
 
-	list/list/by_type = list() // contains lists of objects indexed by their type based on START_TRACKING / STOP_TRACKING
-
-	obj/screen/renderSourceHolder
+	atom/movable/screen/renderSourceHolder
 	obj/overlay/zamujasa/round_start_countdown/game_start_countdown	// Countdown clock for round start
 	list/globalImages = list() //List of images that are always shown to all players. Management procs at the bottom of the file.
 	list/image/globalRenderSources = list() //List of images that are always attached invisibly to all player screens. This makes sure they can be used as rendersources.
 	list/aiImages = list() //List of images that are shown to all AIs. Management procs at the bottom of the file.
+	list/aiImagesLowPriority = list() //Same as above but these can wait a bit when sending to clients
 	list/clients = list()
 	list/mobs = list()
 	list/ai_mobs = list()
-	list/atmos_machines = list() // need another list to pull atmos machines out of the main machine loop and in with the pipe networks
 	list/processing_items = list()
 	list/health_update_queue = list()
 	list/processing_fluid_groups = list()
 	list/processing_fluid_spreads = list()
 	list/processing_fluid_drains = list()
 	list/processing_fluid_turfs = list()
-	list/light_generating_fluid_turfs = list()
 	list/warping_mobs = list()
 	datum/hotspot_controller/hotspot_controller = new
 		//items that ask to be called every cycle
 
-	list/critters = list()
-	list/pets = list() //station pets
 	list/muted_keys = list()
 
 	server_start_time = 0
@@ -88,11 +82,11 @@ var/global
 
 	list/random_pod_codes = list() // if /obj/random_pod_spawner exists on the map, this will be filled with refs to the pods they make, and people joining up will have a chance to start with the unlock code in their memory
 
-	list/pods_and_cruisers = list() //things that we want enemy gunbots or turrets etc to target that are not mobs (keep this list small and use it for vehicles mainly)
-
 	list/spacePushList = list()
-
-	list/nervous_mobs = list()
+	/// All the accessible areas on the station in one convenient place
+	list/station_areas = list()
+	/// The station_areas list is up to date. If something changes an area, make sure to set this to 0
+	area_list_is_up_to_date = 0
 
 	already_a_dominic = 0 // no just shut up right now, I don't care
 
@@ -115,7 +109,6 @@ var/global
 	"Old" = 'icons/mob/hud_human.dmi',
 	"Classic" = 'icons/mob/hud_human_classic.dmi',
 	"Mithril" = 'icons/mob/hud_human_quilty.dmi',
-	"Colorblind" = 'icons/mob/hud_human_new_colorblind.dmi',
 	"Vaporized" = 'icons/mob/hud_human_vapor.dmi')
 
 	list/customization_styles = list("None" = "none",
@@ -236,6 +229,7 @@ var/global
 	"Goatee" = "gt",
 	"Hipster" = "hip",
 	"Long Beard" = "longbeard",
+	"Motley" = "motley",
 	"Neckbeard" = "neckbeard",
 	"Puffy Beard" = "puffbeard",
 	"Tramp" = "tramp",
@@ -386,6 +380,8 @@ var/global
 	"Yesteryear",
 	"Zeyada")
 
+	list/selectable_ringtones = list()
+
 	//april fools
 	manualbreathing = 0
 	manualblinking = 0
@@ -401,7 +397,7 @@ var/global
 	diary = null
 	diary_name = null
 	hublog = null
-	game_version = "Goon Station 13 (r" + vcs_revision + ")"
+	game_version = "Goonstation 13 (r" + vcs_revision + ")"
 
 	master_mode = "traitor"
 
@@ -446,7 +442,7 @@ var/global
 	farty_party = 0
 	deep_farting = 0
 
-	turf/unsimulated/wall/titlecard/lobby_titlecard
+	datum/titlecard/lobby_titlecard
 
 	total_souls_sold = 0
 	total_souls_value = 0
@@ -459,6 +455,11 @@ var/global
 	netpass_banking = null
 	netpass_cargo = null
 	netpass_syndicate = null //Detomatix
+
+	///////////////
+	//cyberorgan damage thresholds for emagging without emag
+	list/cyberorgan_brute_threshold = list("heart" = 0, "left_lung" = 0, "right_lung" = 0, "left_kidney" = 0, "right_kidney" = 0, "liver" = 0, "stomach" = 0, "intestines" = 0, "spleen" = 0, "pancreas" = 0, "appendix" = 0)
+	list/cyberorgan_burn_threshold = list("heart" = 0, "left_lung" = 0, "right_lung" = 0, "left_kidney" = 0, "right_kidney" = 0, "liver" = 0, "stomach" = 0, "intestines" = 0, "spleen" = 0, "pancreas" = 0, "appendix" = 0)
 
 	///////////////
 	list/logs = list ( //Loooooooooogs
@@ -490,18 +491,12 @@ var/global
 	list/warned_keys = list()	// tracking warnings per round, i guess
 
 	datum/dj_panel/dj_panel = new()
+	datum/player_panel/player_panel = new()
 
 	list/prisonwarped = list()	//list of players already warped
 	list/wormholeturfs = list()
 	bioele_accidents = 0
 	bioele_shifts_since_accident = 0
-
-	list/shittybills = list()
-	list/johnbills = list()
-	list/otherbills = list()
-	list/teleport_jammers = list()
-
-
 
 	// Controllers
 	datum/research/disease/disease_research = new()
@@ -548,13 +543,6 @@ var/global
 	list/APCIndexToWireColor
 	list/APCWireColorToIndex
 
-	global_jobban_cache = ""		// once jobban list is ready this is set to a giant string of all the jobban data. the new panel chops it up for use client side with javascript
-	global_jobban_cache_rev = 0 	// increments every time the ban panel is built so clients know if they have the latest
-	global_jobban_cache_built = 0	// set to world.timeofday when the cache is built
-
-	building_jobbans = 0	// ditto
-	jobban_count = 0		// ditto
-
 	// drsingh global reaction cache to reduce cpu usage in handle_reactions (Chemistry-Holder.dm)
 	list/chemical_reactions_cache = list()
 
@@ -567,9 +555,6 @@ var/global
 
 	// list of miscreants since mode is irrelevant
 	list/miscreants = list()
-
-	// list of ghost-respawn critters for objective tracking
-	list/reincarnated_critters = list()
 
 	// Antag overlays for admin ghosts, Syndieborgs and the like (Convair880).
 	antag_generic = image('icons/mob/antag_overlays.dmi', icon_state = "generic")
@@ -643,7 +628,7 @@ var/global
 
 	pregameHTML = null
 
-	list/cooldowns = list()
+	list/cooldowns
 
 	syndicate_currency = "[pick("Syndie","Baddie","Evil","Spooky","Dread","Yee","Murder","Illegal","Totally-Legit","Crime","Awful")][pick("-"," ")][pick("credits","bux","tokens","cash","dollars","tokens","dollarydoos","tickets","souls","doubloons","Pesos","Rubles","Rupees")]"
 
@@ -691,10 +676,13 @@ var/global
 		globalImages.Remove(key)
 	return
 
-/proc/addAIImage(var/image/I, var/key)
+/proc/addAIImage(var/image/I, var/key, var/low_priority=FALSE)
 	if(I && length(key))
-		aiImages[key] = I
-		for(var/mob/M in by_type[/mob/living/silicon/ai])
+		if(low_priority)
+			aiImagesLowPriority[key] = I
+		else
+			aiImages[key] = I
+		for_by_tcl(M, /mob/living/silicon/ai)
 			if (M.client)
 				M << I
 		return I
@@ -702,6 +690,7 @@ var/global
 
 /proc/getAIImage(var/key)
 	if(length(key) && aiImages[key]) return aiImages[key]
+	else if(length(key) && aiImagesLowPriority[key]) return aiImagesLowPriority[key]
 	else return null
 
 /proc/removeAIImage(var/key)
@@ -710,6 +699,11 @@ var/global
 			C.images -= aiImages[key]
 		aiImages[key] = null
 		aiImages.Remove(key)
+	if(length(key) && aiImagesLowPriority[key])
+		for(var/client/C in clients)
+			C.images -= aiImagesLowPriority[key]
+		aiImagesLowPriority[key] = null
+		aiImagesLowPriority.Remove(key)
 	return
 
 /// Generates item icons for manufacturers and other things, used in UI dialogs. Sends to client if needed.
@@ -739,7 +733,6 @@ var/global
 /proc/sendItemIcons(var/client/C)
 	for (var/key in browse_item_icons)
 		getItemIcon(key = key, C = C)
-		LAGCHECK(LAG_HIGH)
 
 /// Sends all item icons to all clients. Used at world startup to preload things.
 /proc/sendItemIconsToAll()

@@ -117,7 +117,9 @@
 	desc = "A fancy robotic kidney to replace one that someone's lost!"
 	icon_state = "cyber-kidney-L"
 	// item_state = "heart_robo1"
+	made_from = "pharosium"
 	robotic = 1
+	created_decal = /obj/decal/cleanable/oil
 	edible = 0
 	mats = 6
 
@@ -134,7 +136,7 @@
 		if (!ispath(abil, /datum/targetable/organAbility/kidneypurge) || !aholder)
 			return ..()
 		var/datum/targetable/organAbility/kidneypurge/OA = aholder.getAbility(abil)//addAbility(abil)
-		if (istype(OA)) // already has an emagged kidney. having 2 makes it safer (damage is split between kidneys) and a little stronger 
+		if (istype(OA)) // already has an emagged kidney. having 2 makes it safer (damage is split between kidneys) and a little stronger
 			OA.linked_organ = list(OA.linked_organ, src)
 			OA.power = 9
 		else
@@ -164,7 +166,7 @@
 			chem_metabolism_modifier = clamp(chem_metabolism_modifier, 75, 150) / 100
 		else
 			. = ..()
-		
+
 /obj/item/organ/kidney/cyber/left
 	name = "left kidney"
 	desc = "A fancy robotic kidney to replace one that someone's lost! It's the left kidney!"

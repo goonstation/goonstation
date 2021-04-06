@@ -19,12 +19,13 @@ THAT STUPID GAME KIT
 	stamina_crit_chance = 5
 
 /obj/item/game_kit/New()
+	..()
 	src.board_stat = "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB"
 	src.selected = "CR"
-	BLOCK_BOOK
+	BLOCK_SETUP(BLOCK_BOOK)
 
 /obj/item/game_kit/MouseDrop(mob/user as mob)
-	if (user == usr && !usr.restrained() && !usr.stat && (usr.contents.Find(src) || in_range(src, usr)))
+	if (user == usr && !user.restrained() && !user.stat && (user.contents.Find(src) || in_interact_range(src, user)))
 		if (!user.put_in_hand(src))
 			return ..()
 
@@ -74,7 +75,7 @@ THAT STUPID GAME KIT
 	if ((usr.stat || usr.restrained()))
 		return
 
-	if (usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf)))
+	if (usr.contents.Find(src) || (in_interact_range(src, usr) && istype(src.loc, /turf)))
 		if (href_list["s_piece"])
 			src.selected = href_list["s_piece"]
 		else if (href_list["mode"])

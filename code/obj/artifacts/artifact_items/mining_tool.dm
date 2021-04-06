@@ -8,7 +8,7 @@
 	// mining.dm line 373
 	module_research_no_diminish = 1
 
-	New(var/loc, var/forceartitype)
+	New(var/loc, var/forceartiorigin)
 		..()
 		src.dig_power = rand(3,5) // It was 1-5, changed to 3-5 because what's the point of a mining artifact if it's crappier than stuff you can print roundstart?!
 		if (prob(33))
@@ -25,7 +25,8 @@
 
 /datum/artifact/mining
 	associated_object = /obj/item/artifact/mining_tool
-	rarity_class = 1
+	type_name = "Mining Tool"
+	rarity_weight = 450
 	validtypes = list("ancient","martian","wizard","eldritch","precursor")
 	react_xray = list(12,80,95,5,"DENSE")
 	examine_hint = "It seems to have a handle you're supposed to hold it by."

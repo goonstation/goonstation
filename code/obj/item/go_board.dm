@@ -179,7 +179,7 @@
 			boutput(user, "<span style=\"color:red\">This piece doesn't go in that bowl, silly!</span>")
 			return
 
-		src.visible_message("<span><b>[usr]</b> adds [total] [color] stones to the bowl!</span>")
+		src.visible_message("<span><b>[user]</b> adds [total] [color] stones to the bowl!</span>")
 
 /obj/item/gobowl/b
 	name = "bowl of black stones"

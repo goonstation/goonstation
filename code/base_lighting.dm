@@ -3,12 +3,14 @@
 	plane = PLANE_LIGHTING
 	layer = LIGHTING_LAYER_FULLBRIGHT
 	blend_mode = BLEND_OVERLAY
+	appearance_flags = PIXEL_SCALE | TILE_BOUND | RESET_ALPHA | RESET_COLOR
 
 /image/ambient
 	icon = 'icons/effects/white.dmi'
 	plane = PLANE_LIGHTING
 	layer = LIGHTING_LAYER_BASE
 	blend_mode = BLEND_ADD
+	appearance_flags = PIXEL_SCALE | TILE_BOUND | RESET_ALPHA | RESET_COLOR
 
 /area
 	var
@@ -29,8 +31,7 @@
 			overlays += /image/fullbright
 		else
 			overlays -= /image/fullbright
-			for(var/X in src)
-				var/turf/T = X
+			for (var/turf/T as anything in src)
 				T.RL_Init()
 
 /turf

@@ -12,11 +12,11 @@
 	var/desc_sound = list("strange", "odd", "bizarre", "weird", "offputting", "unusual")
 	var/desc_music = list("song", "ditty", "sound", "noise")
 
-	New(var/loc, var/forceartitype)
+	New(var/loc, var/forceartiorigin)
 		..()
 		SPAWN_DBG(1 SECOND)
 			var/datum/artifact/A = src.artifact
-			if(A && A.artitype)
+			if(A?.artitype)
 				sounds_instrument = A.artitype.instrument_sounds
 
 	// okay, i wanted to inherit from artifact, alright, not instrument
@@ -37,10 +37,12 @@
 	attack_self(mob/user as mob)
 		..()
 		src.play(user)
+		src.ArtifactFaultUsed(user)
 
 /datum/artifact/instrument
 	associated_object = /obj/item/artifact/instrument
+	type_name = "Instrument"
 	automatic_activation = 1
-	rarity_class = 1
+	rarity_weight = 450
 	validtypes = list("wizard","eldritch","precursor","martian","ancient")
 	react_xray = list(10,65,95,9,"TUBULAR")

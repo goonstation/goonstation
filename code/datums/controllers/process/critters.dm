@@ -2,18 +2,20 @@
 datum/controller/process/critters
 	var/tmp/list/detailed_count
 	var/tmp/tick_counter
-	var/tmp/list/critters
 
 	setup()
 		name = "Critter"
 		schedule_interval = 16 // 1.6 seconds
 
 		detailed_count = new
-		src.critters = global.critters
+
+	copyStateFrom(datum/controller/process/target)
+		var/datum/controller/process/critters/old_critters = target
+		src.detailed_count = old_critters.detailed_count
 
 	doWork()
 		var/i
-		for(var/datum/c in global.critters)
+		for(var/datum/c in by_cat[TR_CAT_CRITTERS])
 			if(c:z == 4 && !Z4_ACTIVE) continue
 			c:process()
 			if (!(i++ % 10))
@@ -32,7 +34,7 @@ datum/controller/process/critters
 			scheck(currentTick)*/
 
 	tickDetail()
-		if (detailed_count && detailed_count.len)
+		if (length(detailed_count))
 			var/stats = "<b>[name] ticks:</b>"
 			var/count
 			for (var/thing in detailed_count)

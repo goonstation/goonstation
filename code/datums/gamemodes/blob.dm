@@ -62,6 +62,7 @@
 				var/newname = input(blob.current, "You are a Blob. Please choose a name for yourself, it will show in the form: <name> the Blob", "Name change") as text
 
 				if (newname)
+					phrase_log.log_phrase("name-blob", newname, no_duplicates=TRUE)
 					if (length(newname) >= 26) newname = copytext(newname, 1, 26)
 					newname = strip_html(newname) + " the Blob"
 					blob.current.real_name = newname
@@ -87,7 +88,7 @@
 	for(var/A in possible_modes)
 		intercepttext += i_text.build(A, pick(ticker.minds))
 
-	for (var/obj/machinery/communications_dish/C in by_type[/obj/machinery/communications_dish])
+	for_by_tcl(C, /obj/machinery/communications_dish)
 		C.add_centcom_report("Cent. Com. Status Summary", intercepttext)
 
 	command_alert("Summary downloaded and printed out at all communications consoles.", "Enemy communication intercept. Security Level Elevated.")

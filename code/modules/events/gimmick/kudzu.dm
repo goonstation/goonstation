@@ -1,4 +1,4 @@
-#define KUDZU_TO_SPREAD_INITIAL 50
+#define KUDZU_TO_SPREAD_INITIAL 40
 /obj/item/kudzuseed//TODO: Move all this to respective files everything works right.
 	name = "kudzu seed"
 	desc = "So this is where Kudzu went. Plant on a floor to grow.<br/>The disclaimer seems faded out, though."
@@ -40,6 +40,7 @@
 	item = /obj/item/kudzuseed
 	cost = 4
 	desc = "Syndikudzu. Interesting. Plant on the floor to grow."
+	vr_allowed = 0
 	job = list("Botanist", "Staff Assistant")
 	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/revolution)
 
@@ -104,6 +105,7 @@
 	anchored = 1
 	density = 0
 	event_handler_flags = USE_FLUID_ENTER | USE_CANPASS
+	var/static/ideal_temp = 310		//same as blob, why not? I have no other reference point.
 	var/growth = 0
 	var/waittime = 40
 	var/run_life = 0 // I think we have some that spawns on the map so don't just default to growy stuff
@@ -112,6 +114,7 @@
 	var/current_stage = 0
 	var/aggressive = 0
 	var/to_spread = 10				//bascially the radius of child kudzu plants that any given kudzu object can create.
+
 
 	get_desc()
 		var/flavor
@@ -160,7 +163,7 @@
 	Move()
 		var/turf/T = get_turf(src)
 		T.temp_flags &= ~HAS_KUDZU
-		..()
+		. = ..()
 
 	disposing()
 		var/turf/T = get_turf(src)
@@ -186,11 +189,9 @@
 
 		dmg *= isnum(W.force) ? min((W.force / 2), 5) : 1
 		DEBUG_MESSAGE("[user] damaging [src] with [W] [log_loc(src)]: dmg is [dmg]")
-		src.growth -= dmg
-		if (src.growth < 1)
-			qdel (src)
-		else
-			src.update_self()
+
+		src.take_damage(dmg, "brute", user)
+
 		user.lastattacked  = src
 		..()
 
@@ -315,8 +316,24 @@
 		else
 	return
 
-/obj/spacevine/temperature_expose(null, temp, volume)
-	qdel(src)
+/obj/spacevine/proc/take_damage(var/amount, var/damtype = "brute",var/mob/user)
+	if (!isnum(amount) || amount <= 0)
+		return
+
+	src.growth -= amount
+	if (src.growth < 1)
+		qdel (src)
+	else
+		src.update_self()
+
+
+/obj/spacevine/temperature_expose(datum/gas_mixture/air, temperature, volume)
+	var/temp_diff = temperature - src.ideal_temp
+
+	if (temp_diff >= 300)
+		var/power = max(round(temp_diff /300), 5)
+
+		src.take_damage(power*10, 1, "burn")
 
 /obj/spacevine/living // these ones grow
 	run_life = 1
@@ -327,8 +344,9 @@
 	base_state = "avine"
 	vinepath = /obj/spacevine/alien/living
 	aggressive = 1
-	New()
-		if (..())
+
+	New(turf/loc, var/to_spread = KUDZU_TO_SPREAD_INITIAL)
+		if (..(loc, to_spread))
 			return 1
 		SPAWN_DBG(0)
 			if (prob(20) && !locate(/obj/spacevine/alien/flower) in get_turf(src))
@@ -347,7 +365,7 @@
 	New()
 		if (..())
 			return 1
-		src.dir = pick(alldirs)
+		src.set_dir(pick(alldirs))
 		src.pixel_y += rand(-8,8)
 		src.pixel_x += rand(-8,8)
 

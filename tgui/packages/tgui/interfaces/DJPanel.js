@@ -15,7 +15,7 @@ export const DJPanel = (props, context) => {
   const { act, data } = useBackend(context);
   const { loadedSound, adminChannel } = data;
   return (
-    <Window width={430} height={305} title="DJ Panel">
+    <Window width={430} height={306} title="DJ Panel">
       <Window.Content>
         <Section>
           <Box>

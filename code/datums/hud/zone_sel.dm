@@ -1,13 +1,13 @@
 
 /datum/hud/zone_sel
-	var/obj/screen/hud/background
-	var/obj/screen/hud/head
-	var/obj/screen/hud/chest
-	var/obj/screen/hud/l_arm
-	var/obj/screen/hud/r_arm
-	var/obj/screen/hud/l_leg
-	var/obj/screen/hud/r_leg
-	var/obj/screen/hud/selection
+	var/atom/movable/screen/hud/background
+	var/atom/movable/screen/hud/head
+	var/atom/movable/screen/hud/chest
+	var/atom/movable/screen/hud/l_arm
+	var/atom/movable/screen/hud/r_arm
+	var/atom/movable/screen/hud/l_leg
+	var/atom/movable/screen/hud/r_leg
+	var/atom/movable/screen/hud/selection
 
 	var/slocation = ui_zone_sel
 
@@ -17,6 +17,7 @@
 	var/icon/icon_hud = 'icons/mob/hud_human_new.dmi'
 
 	New(M, var/sloc, var/icon/I)
+		..()
 		master = M
 		if (sloc)
 			slocation = sloc
@@ -27,7 +28,7 @@
 				var/icon/hud_style = hud_style_selection[get_hud_style(master)]
 				if (isicon(hud_style))
 					icon_hud = hud_style
-			if (master.client && master.client.tg_layout)
+			if (master?.client?.tg_layout && ishuman(master))
 				slocation = tg_ui_zone_sel
 
 			background = create_screen("background", "Zone Selection", src.icon_hud, "zone_sel", src.slocation, HUD_LAYER)

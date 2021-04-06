@@ -4,7 +4,8 @@
 	icon = 'icons/mob/mob.dmi'
 	icon_state = "ghost"
 	layer = NOLIGHT_EFFECTS_LAYER_BASE
-	//event_handler_flags = 0//USE_FLUID_ENTER  //maybe? //Gerhazo : commented out due to ghosts having an interaction with the ectoplasmic destabilizer, this made their collision with the projectile not work
+	plane = PLANE_NOSHADOW_ABOVE
+	event_handler_flags = USE_CANPASS | IMMUNE_MANTA_PUSH | USE_FLUID_ENTER //maybe?
 	density = 0
 	canmove = 1
 	blinded = 0
@@ -18,7 +19,6 @@
 	var/delete_on_logout_reset = 1
 	var/obj/item/clothing/head/wig/wig = null
 	var/in_point_mode = 0
-
 	var/datum/hud/ghost_observer/hud
 
 	mob_flags = MOB_HEARS_ALL
@@ -86,16 +86,13 @@
 
 
 	src.visible_message("<span class='game deadsay'><span class='prefix'>DEAD:</span><b>[src]</b> points to [target].</span>")
-	var/obj/decal/point/P = new(get_turf(target))
-	P.pixel_x = target.pixel_x
-	P.pixel_y = target.pixel_y
-	P.color = "#5c00e6"
-	P.invisibility = src.invisibility
+	var/point_invisibility = src.invisibility
+#ifdef HALLOWEEN
+	if(prob(20))
+		point_invisibility = 0
+#endif
+	make_point(get_turf(target), pixel_x=target.pixel_x, pixel_y=target.pixel_y, color="#5c00e6", invisibility=point_invisibility)
 
-	src = null // required to make sure its deleted
-	SPAWN_DBG (20)
-		P.invisibility = 101
-		qdel(P)
 
 #define GHOST_LUM	1		// ghost luminosity
 
@@ -151,8 +148,14 @@
 /mob/dead/observer/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	if (src.icon_state != "doubleghost" && istype(mover, /obj/projectile))
 		var/obj/projectile/proj = mover
-		if (istype(proj.proj_data, /datum/projectile/energy_bolt_antighost))
+		if (proj.proj_data?.hits_ghosts)
 			return 0
+#ifdef HALLOWEEN
+	if (istype(src.abilityHolder, /datum/abilityHolder/ghost_observer))
+		var/datum/abilityHolder/ghost_observer/GH = src.abilityHolder
+		if (GH.spooking)
+			GH.stop_spooking()
+#endif
 
 	return 1
 
@@ -160,8 +163,20 @@
 	if (src.icon_state == "doubleghost")
 		return
 
+#ifdef HALLOWEEN
+	if (istype(src.abilityHolder, /datum/abilityHolder/ghost_observer))
+		var/datum/abilityHolder/ghost_observer/GH = src.abilityHolder
+		if (GH.spooking)
+			GH.stop_spooking()
+			//animate(src, )	explode?
+			src.visible_message("<span class='alert'><b>[src] is busted! Maybe?!</b></span>","<span class='alert'>You are knocked out of your powerful state and feel dead again!</span>")
+			log_shot(P,src)
+			return
+#endif
+
 	src.icon_state = "doubleghost"
 	src.visible_message("<span class='alert'><b>[src] is busted!</b></span>","<span class='alert'>You are demateralized into a state of further death!</span>")
+
 
 	if (wig)
 		wig.set_loc(src.loc)
@@ -267,7 +282,7 @@
 	RETURN_TYPE(/mob/dead/observer)
 	if(src.key || src.client)
 		if(src.mind && src.mind.damned) // Wow so much sin. Off to hell with you.
-			src.hell_respawn(src.mind)
+			INVOKE_ASYNC(src, /mob.proc/hell_respawn, src.mind)
 			return null
 		var/mob/dead/observer/O = new/mob/dead/observer(src)
 		O.bioHolder.CopyOther(src.bioHolder, copyActiveEffects = 0)
@@ -284,8 +299,7 @@
 		// so, fuck that, you're dead, shithead. get over it.
 		setdead(O)
 
-		if(src.mind)
-			src.mind.transfer_to(O)
+		src.mind?.transfer_to(O)
 		src.ghost = O
 		if(istype(get_area(src),/area/afterlife))
 			qdel(src)
@@ -295,10 +309,24 @@
 
 
 /mob/dead/observer/movement_delay()
-	if (src.client && src.client.check_key(KEY_RUN))
+#ifdef HALLOWEEN
+	if (istype(src.abilityHolder, /datum/abilityHolder/ghost_observer))
+		var/datum/abilityHolder/ghost_observer/GAH = src.abilityHolder
+		if (GAH.spooking)
+			return movement_delay_modifier + 1.5
+
+	if (src?.client.check_key(KEY_RUN))
 		return 0.4 + movement_delay_modifier
 	else
 		return 0.75 + movement_delay_modifier
+
+#else
+	if (src?.client.check_key(KEY_RUN))
+		return 0.4 + movement_delay_modifier
+	else
+		return 0.75 + movement_delay_modifier
+
+#endif
 
 /mob/dead/observer/build_keybind_styles(client/C)
 	..()
@@ -366,7 +394,7 @@
 	client.images.Remove(health_mon_icons)
 	if (!health_shown)
 		health_shown = 1
-		if(client && client.images)
+		if(client?.images)
 			for(var/image/I in health_mon_icons)
 				if (I && src && I.loc != src.loc)
 					client.images.Add(I)
@@ -378,7 +406,7 @@
 	set name = "Toggle Arrest Status"
 	if (!arrest_shown)
 		arrest_shown = 1
-		if(client && client.images)
+		if(client?.images)
 			for(var/image/I in arrestIconsAll)
 				if(I && src && I.loc != src.loc)
 					client.images.Add(I)
@@ -441,12 +469,12 @@
 	if (!isturf(src.loc))
 		src.set_loc(get_turf(src))
 	if (NewLoc)
-		dir = get_dir(loc, NewLoc)
+		set_dir(get_dir(loc, NewLoc))
 		src.set_loc(NewLoc)
 		OnMove()
 		return
 
-	dir = direct
+	set_dir(direct)
 	if((direct & NORTH) && src.y < world.maxy)
 		src.y++
 	if((direct & SOUTH) && src.y > 1)
@@ -511,7 +539,7 @@
 			continue
 		L+=T
 
-	if (L && L.len) //ZeWaka: Fix for pick() from empty list
+	if (length(L)) //ZeWaka: Fix for pick() from empty list
 		usr.set_loc(pick(L))
 		OnMove()
 	else
@@ -634,7 +662,7 @@
 
 	// Same thing you could do with the old auth disk. The bomb is equally important
 	// and should appear at the top of any unsorted list  (Convair880).
-	if (ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/nuclear))
+	if (ticker?.mode && istype(ticker.mode, /datum/game_mode/nuclear))
 		var/datum/game_mode/nuclear/N = ticker.mode
 		if (N.the_bomb && istype(N.the_bomb, /obj/machinery/nuclearbomb/))
 			var/name = "Nuclear bomb"
@@ -647,7 +675,7 @@
 			creatures[name] = N.the_bomb
 
 
-	if (ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/football))
+	if (ticker?.mode && istype(ticker.mode, /datum/game_mode/football))
 		var/datum/game_mode/football/F = ticker.mode
 		if (F.the_football && istype(F.the_football, /obj/item/football/the_big_one))
 			var/name = "THE FOOTBALL"
@@ -660,8 +688,7 @@
 			creatures[name] = F.the_football
 
 
-	for (var/X in by_type[/obj/observable])
-		var/obj/observable/O = X
+	for_by_tcl(O, /obj/observable)
 		LAGCHECK(LAG_LOW)
 		var/name = O.name
 		if (name in names)
@@ -672,8 +699,7 @@
 			namecounts[name] = 1
 		creatures[name] = O
 
-	for (var/X in by_type[/obj/item/ghostboard])
-		var/obj/item/ghostboard/GB = X
+	for_by_tcl(GB, /obj/item/ghostboard)
 		LAGCHECK(LAG_LOW)
 		var/name = "Ouija board"
 		if (name in names)
@@ -684,8 +710,7 @@
 			namecounts[name] = 1
 		creatures[name] = GB
 
-	for (var/X in by_type[/obj/item/gnomechompski])
-		var/obj/item/gnomechompski/G = X
+	for_by_tcl(G, /obj/item/gnomechompski)
 		var/name = "Gnome Chompski"
 		if (name in names)
 			namecounts[name]++
@@ -695,8 +720,7 @@
 			namecounts[name] = 1
 		creatures[name] = G
 
-	for (var/X in by_type[/obj/cruiser_camera_dummy])
-		var/obj/cruiser_camera_dummy/CR = X
+	for_by_tcl(CR, /obj/cruiser_camera_dummy)
 		var/name = CR.name
 		if (name in names)
 			namecounts[name]++
@@ -706,8 +730,7 @@
 			namecounts[name] = 1
 		creatures[name] = CR
 
-	for (var/X in by_type[/obj/item/reagent_containers/food/snacks/prison_loaf])
-		var/obj/item/reagent_containers/food/snacks/prison_loaf/L = X
+	for_by_tcl(L, /obj/item/reagent_containers/food/snacks/prison_loaf)
 		var/name = L.name
 		if (name != "strangelet loaf")
 			continue
@@ -774,7 +797,7 @@ mob/dead/observer/proc/insert_observer(var/atom/target)
 	newobs.my_ghost = src
 	delete_on_logout_reset = delete_on_logout
 	delete_on_logout = 0
-	if (target && target.invisibility)
+	if (target?.invisibility)
 		newobs.see_invisible = target.invisibility
 	if (src.corpse)
 		corpse.ghost = newobs

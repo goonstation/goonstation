@@ -168,7 +168,7 @@ obj/machinery/atmospherics/mixer
 				SET_SIGNAL_MIXTURE(in1)
 				var/tgmoles = 0
 				if(length(air_in1.trace_gases))
-					for(var/datum/gas/trace_gas in air_in1.trace_gases)
+					for(var/datum/gas/trace_gas as anything in air_in1.trace_gases)
 						tgmoles += trace_gas.moles
 				signal.data["in1tg"] = round(100*tgmoles/in1_total_moles)
 				signal.data["in1kpa"] = round(MIXTURE_PRESSURE(air_in1), 0.1)
@@ -183,7 +183,7 @@ obj/machinery/atmospherics/mixer
 				SET_SIGNAL_MIXTURE(in2)
 				var/tgmoles = 0
 				if(length(air_in2.trace_gases))
-					for(var/datum/gas/trace_gas in air_in2.trace_gases)
+					for(var/datum/gas/trace_gas as anything in air_in2.trace_gases)
 						tgmoles += trace_gas.moles
 				signal.data["in2tg"] = round(100*tgmoles/in2_total_moles)
 				signal.data["in2kpa"] = round(MIXTURE_PRESSURE(air_in2), 0.1)
@@ -202,7 +202,7 @@ obj/machinery/atmospherics/mixer
 				SET_SIGNAL_MIXTURE(out)
 				var/tgmoles = 0
 				if(length(air_out.trace_gases))
-					for(var/datum/gas/trace_gas in air_out.trace_gases)
+					for(var/datum/gas/trace_gas as anything in air_out.trace_gases)
 						tgmoles += trace_gas.moles
 				signal.data["outtg"] = round(100*tgmoles/out_total_moles)
 				signal.data["outkpa"] = round(MIXTURE_PRESSURE(air_out), 0.1)
@@ -272,8 +272,7 @@ obj/machinery/atmospherics/mixer
 		if(network_in2 && transfer_moles2)
 			network_in2.update = 1
 
-		if(network_out)
-			network_out.update = 1
+		network_out?.update = 1
 
 		return 1
 

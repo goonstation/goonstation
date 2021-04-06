@@ -27,7 +27,7 @@ RACK PARTS
 		if (storage_thing)
 			src.contained_storage = storage_thing
 			src.contained_storage.set_loc(src)
-		BLOCK_LARGE
+		BLOCK_SETUP(BLOCK_LARGE)
 
 	proc/construct(mob/user as mob, turf/T as turf)
 		var/obj/newThing = null
@@ -55,7 +55,7 @@ RACK PARTS
 		return newThing
 
 	proc/deconstruct(var/reinforcement = 0)
-		if (src.contained_storage && src.contained_storage.contents.len)
+		if (src.contained_storage && length(src.contained_storage.contents))
 			var/turf/T = get_turf(src)
 			for (var/atom/movable/A in src.contained_storage)
 				A.set_loc(T)
@@ -86,7 +86,7 @@ RACK PARTS
 		actions.start(new /datum/action/bar/icon/furniture_build(src, src.furniture_name, src.build_duration), user)
 
 	disposing()
-		if (src.contained_storage && src.contained_storage.contents.len)
+		if (src.contained_storage && length(src.contained_storage.contents))
 			var/turf/T = get_turf(src)
 			for (var/atom/movable/A in src.contained_storage)
 				A.set_loc(T)
@@ -200,7 +200,7 @@ RACK PARTS
 	name = "industrial table parts"
 	desc = "A collection of parts that can be used to make an industrial looking table."
 	icon = 'icons/obj/furniture/table_industrial.dmi'
-	furniture_type = /obj/table/round/auto
+	furniture_type = /obj/table/reinforced/industrial/auto
 
 /obj/item/furniture_parts/table/reinforced/bar
 	name = "bar table parts"
@@ -239,7 +239,7 @@ RACK PARTS
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/plank))
 			user.visible_message("[user] starts to reinforce \the [src] with wood.", "You start to reinforce \the [src] with wood.")
-			if (!do_after(user, 20))
+			if (!do_after(user, 2 SECONDS))
 				return
 			user.visible_message("[user] reinforces \the [src] with wood.",  "You reinforce \the [src] with wood.")
 			playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
@@ -270,6 +270,14 @@ RACK PARTS
 	furniture_type = /obj/stool/wooden
 	furniture_name = "wooden stool"
 
+
+/obj/item/furniture_parts/stool/bee_bed
+	name = "bee bed parts"
+	desc = "A collection of parts that can be used to make a bee bed."
+	icon = 'icons/obj/furniture/chairs.dmi'
+	icon_state = "comf_chair_parts-b"	// @TODO new icon, mprobably
+	furniture_type = /obj/stool/bee_bed
+	furniture_name = "bee bed"
 
 /obj/item/furniture_parts/stool/bar
 	name = "bar stool parts"
@@ -447,7 +455,7 @@ RACK PARTS
 			duration = duration_i
 		if (ishuman(owner))
 			var/mob/living/carbon/human/H = owner
-			if (H.traitHolder.hasTrait("carpenter"))
+			if (H.traitHolder.hasTrait("carpenter") || H.traitHolder.hasTrait("training_engineer"))
 				duration = round(duration / 2)
 
 	onUpdate()
@@ -497,7 +505,7 @@ RACK PARTS
 			duration = duration_i
 		if (ishuman(owner))
 			var/mob/living/carbon/human/H = owner
-			if (H.traitHolder.hasTrait("carpenter"))
+			if (H.traitHolder.hasTrait("carpenter") || H.traitHolder.hasTrait("training_engineer"))
 				duration = round(duration / 2)
 
 	onUpdate()

@@ -66,7 +66,7 @@
 				if(!king && iswerewolf(H))
 					src.visible_message("<span class='alert'><b>[src] backs away in fear!</b></span>")
 					step_away(src, H, 15)
-					src.dir = get_dir(src, H)
+					src.set_dir(get_dir(src, H))
 					continue
 
 			src.boredom_countdown = rand(2,5)
@@ -268,7 +268,8 @@
 				else
 					src.visible_message("<span class='alert'><B>[src]</B> pounds on [BORG.name]'s head furiously!</span>")
 					playsound(src.loc, "sound/impact_sounds/Wood_Hit_1.ogg", 50, 1)
-					BORG.part_head.ropart_take_damage(rand(20,40),0)
+					if (BORG.part_head.ropart_take_damage(rand(20,40),0) == 1)
+						BORG.compborg_lose_limb(BORG.part_head)
 					if (prob(33)) playsound(src.loc, "sound/voice/animal/wendigo_scream.ogg", 75, 1)
 					attack_delay = 5
 		else
@@ -350,7 +351,7 @@
 			while(flailing-- > 0)
 				src.pixel_x = rand(-2,2) * 2
 				src.pixel_y = rand(-2,2) * 2
-				src.dir = pick(alldirs)
+				src.set_dir(pick(alldirs))
 				sleep(0.4 SECONDS)
 			src.pixel_x = 0
 			src.pixel_y = 0
@@ -369,10 +370,10 @@
 			if(king)
 				playsound(src.loc, "sound/voice/animal/wendigo_roar.ogg", 80, 1)
 				src.visible_message("<span class='alert'><b>[src] roars!</b></span>")
-			SPAWN_DBG(1 DECI SECOND)
-				if(!flailing) src.flail()
 			src.set_loc(M.loc)
 			src.frenzied = 20
+			sleep(1 DECI SECOND)
+			if(!flailing) src.flail()
 			while(src.target && src.frenzied && src.alive && src.loc == M.loc )
 				src.visible_message("<span class='alert'><b>[src] [pick("mauls", "claws", "slashes", "tears at", "lacerates", "mangles")] [src.target]!</b></span>")
 				random_brute_damage(target, 10,1)

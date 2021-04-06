@@ -71,7 +71,7 @@
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
 		if (!src.emagged)
 			if (user)
-				usr.show_text("You short out the voltage regulator in the lighting circuit.", "blue")
+				user.show_text("You short out the voltage regulator in the lighting circuit.", "blue")
 			src.emagged = 1
 		else
 			if (user)
@@ -174,7 +174,7 @@
 			src.visible_message("<span class='alert'>[src] bursts open, spraying hot liquid on [src.loc]!</span>")
 			burst()
 
-	throw_impact(atom/A)
+	throw_impact(atom/A, datum/thrown_thing/thr)
 		..()
 		if (heated > 0 && on && prob(30 + (heated * 20)))
 			if(iscarbon(A))
@@ -326,8 +326,18 @@
 
 			else if (W.burning)
 				src.light(user, "<span class='alert'><b>[user]</b> lights [src] with [W]. Goddamn.</span>")
+
+			else if (W.firesource)
+				src.light(user, "<span class='alert'><b>[user]</b> lights [src] with [W].</span>")
+				W.firesource_interact()
 		else
 			return ..()
+
+	temperature_expose(datum/gas_mixture/air, temperature, volume)
+		if (src.on == 0)
+			if (temperature > (T0C + 430))
+				src.visible_message("<span class='alert'> [src] ignites!</span>", group = "candle_ignite")
+				src.light()
 
 	process()
 		if (src.on)
@@ -344,24 +354,24 @@
 		if (!src) return
 		if (!src.on)
 			src.on = 1
+			src.firesource = TRUE
 			src.hit_type = DAMAGE_BURN
 			src.force = 3
 			src.icon_state = src.icon_on
 			light.enable()
-			if (!(src in processing_items))
-				processing_items.Add(src)
+			processing_items |= src
 		return
 
 	proc/put_out(var/mob/user as mob)
 		if (!src) return
 		if (src.on)
 			src.on = 0
+			src.firesource = FALSE
 			src.hit_type = DAMAGE_BLUNT
 			src.force = 0
 			src.icon_state = src.icon_off
 			light.disable()
-			if (src in processing_items)
-				processing_items.Remove(src)
+			processing_items -= src
 		return
 
 /obj/item/device/light/candle/spooky
@@ -445,3 +455,10 @@
 		else
 			set_icon_state(src.icon_off)
 			src.light.disable()
+
+/obj/item/device/light/lava_lamp/activated
+	New()
+		..()
+		on = 1
+		set_icon_state(src.icon_on)
+		src.light.enable()

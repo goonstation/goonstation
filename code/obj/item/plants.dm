@@ -1,6 +1,5 @@
 
-// Inedible Produce
-
+/// Inedible Produce
 /obj/item/plant/
 	name = "plant"
 	var/crop_suffix = ""
@@ -17,13 +16,10 @@
 
 	proc/make_reagents()
 		if (!src.reagents)
-			var/datum/reagents/R = new/datum/reagents(100)
-			reagents = R
-			R.my_atom = src
+			src.create_reagents(100)
 
 	unpooled()
-		if(src.reagents)
-			src.reagents.clear_reagents()
+		src.reagents?.clear_reagents()
 		..()
 		make_reagents()
 		// hopefully prevent issues of "jumbo perfect large incredible nice perfect superb strawberry"
@@ -99,11 +95,9 @@
 
 /obj/item/plant/herb/cannabis/spawnable
 	make_reagents()
-		var/datum/reagents/R = new/datum/reagents(85)
-		reagents = R
-		R.my_atom = src
-		R.add_reagent("THC", 60)
-		R.add_reagent("CBD", 20)
+		src.create_reagents(85)
+		reagents.add_reagent("THC", 60)
+		reagents.add_reagent("CBD", 20)
 
 /obj/item/plant/herb/cannabis/mega
 	name = "cannabis leaf"
@@ -114,11 +108,9 @@
 
 /obj/item/plant/herb/cannabis/mega/spawnable
 	make_reagents()
-		var/datum/reagents/R = new/datum/reagents(85)
-		reagents = R
-		R.my_atom = src
-		R.add_reagent("THC", 40)
-		R.add_reagent("LSD", 40)
+		src.create_reagents(85)
+		reagents.add_reagent("THC", 40)
+		reagents.add_reagent("LSD", 40)
 
 /obj/item/plant/herb/cannabis/black
 	name = "cannabis leaf"
@@ -129,11 +121,9 @@
 
 /obj/item/plant/herb/cannabis/black/spawnable
 	make_reagents()
-		var/datum/reagents/R = new/datum/reagents(85)
-		reagents = R
-		R.my_atom = src
-		R.add_reagent("THC", 40)
-		R.add_reagent("cyanide", 40)
+		src.create_reagents(85)
+		reagents.add_reagent("THC", 40)
+		reagents.add_reagent("cyanide", 40)
 
 /obj/item/plant/herb/cannabis/white
 	name = "cannabis leaf"
@@ -144,11 +134,9 @@
 
 /obj/item/plant/herb/cannabis/white/spawnable
 	make_reagents()
-		var/datum/reagents/R = new/datum/reagents(85)
-		reagents = R
-		R.my_atom = src
-		R.add_reagent("THC", 40)
-		R.add_reagent("omnizine", 40)
+		src.create_reagents(85)
+		reagents.add_reagent("THC", 40)
+		reagents.add_reagent("omnizine", 40)
 
 /obj/item/plant/herb/cannabis/omega
 	name = "glowing cannabis leaf"
@@ -160,29 +148,27 @@
 
 /obj/item/plant/herb/cannabis/omega/spawnable
 	make_reagents()
-		var/datum/reagents/R = new/datum/reagents(800)
-		reagents = R
-		R.my_atom = src
-		R.add_reagent("THC", 40)
-		R.add_reagent("LSD", 40)
-		R.add_reagent("suicider", 40)
-		R.add_reagent("space_drugs", 40)
-		R.add_reagent("mercury", 40)
-		R.add_reagent("lithium", 40)
-		R.add_reagent("atropine", 40)
-		R.add_reagent("haloperidol", 40)
-		R.add_reagent("methamphetamine", 40)
-		R.add_reagent("THC", 40)
-		R.add_reagent("capsaicin", 40)
-		R.add_reagent("psilocybin", 40)
-		R.add_reagent("hairgrownium", 40)
-		R.add_reagent("ectoplasm", 40)
-		R.add_reagent("bathsalts", 40)
-		R.add_reagent("itching", 40)
-		R.add_reagent("crank", 40)
-		R.add_reagent("krokodil", 40)
-		R.add_reagent("catdrugs", 40)
-		R.add_reagent("histamine", 40)
+		src.create_reagents(800)
+		reagents.add_reagent("THC", 40)
+		reagents.add_reagent("LSD", 40)
+		reagents.add_reagent("suicider", 40)
+		reagents.add_reagent("space_drugs", 40)
+		reagents.add_reagent("mercury", 40)
+		reagents.add_reagent("lithium", 40)
+		reagents.add_reagent("atropine", 40)
+		reagents.add_reagent("haloperidol", 40)
+		reagents.add_reagent("methamphetamine", 40)
+		reagents.add_reagent("THC", 40)
+		reagents.add_reagent("capsaicin", 40)
+		reagents.add_reagent("psilocybin", 40)
+		reagents.add_reagent("hairgrownium", 40)
+		reagents.add_reagent("ectoplasm", 40)
+		reagents.add_reagent("bathsalts", 40)
+		reagents.add_reagent("itching", 40)
+		reagents.add_reagent("crank", 40)
+		reagents.add_reagent("krokodil", 40)
+		reagents.add_reagent("catdrugs", 40)
+		reagents.add_reagent("histamine", 40)
 
 /obj/item/plant/herb/tobacco
 	name = "tobacco leaf"
@@ -397,7 +383,7 @@
 		..()
 		return
 	//stolen from dagger, not much too it
-	throw_impact(atom/A)
+	throw_impact(atom/A, datum/thrown_thing/thr)
 		if(iswerewolf(A))
 			if (istype(usr, /mob))
 				A:lastattacker = usr

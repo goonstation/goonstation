@@ -39,6 +39,35 @@
 	var/spam_flag_sound = 0
 	var/spam_flag_message = 0 // one message appears for every five times you click the pen if you're just sitting there jamming on it
 	var/spam_timer = 20
+	var/symbol_setting = null
+	var/material_uses = 10
+	var/static/list/c_default = list("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z",
+	"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "Exclamation Point", "Question Mark", "Period", "Comma", "Colon", "Semicolon", "Ampersand", "Left Parenthesis", "Right Parenthesis",
+	"Left Bracket", "Right Bracket", "Percent", "Plus", "Minus", "Times", "Divided", "Equals", "Less Than", "Greater Than")
+	var/static/list/c_symbol = list("Dollar", "Euro", "Arrow North", "Arrow East", "Arrow South", "Arrow West",
+	"Square", "Circle", "Triangle", "Heart", "Star", "Smile", "Frown", "Neutral Face", "Bee", "Pentacle")
+	var/static/list/c_char_to_symbol = list(
+		"!" = "Exclamation Point",
+		"?" = "Question Mark",
+		"." = "Period",
+		"," = "Comma",
+		":" = "Colon",
+		";" = "Semicolon",
+		"&" = "Ampersand",
+		"(" = "Left Parenthesis",
+		")" = "Right Parenthesis",
+		"\[" = "Left Bracket",
+		"]" = "Right Bracket",
+		"%" = "Percent",
+		"+" = "Plus",
+		"-" = "Minus",
+		"*" = "Times",
+		"/" = "Divided",
+		"=" = "Equals",
+		"<" = "Less Than",
+		">" = "Greater Than"
+	)
+
 
 	attack_self(mob/user as mob)
 		..()
@@ -55,6 +84,16 @@
 				if (src)
 					src.spam_flag_sound = 0
 
+	proc/apply_material_to_drawing(obj/decal/cleanable/writing/drawing, mob/user)
+		if(src.material)
+			drawing.setMaterial(src.material)
+			src.material_uses--
+			if(src.material_uses <= 0)
+				boutput(user, "<span class='notify'>[src.material.name] rubs off of [src].</span>")
+				src.removeMaterial()
+			return TRUE
+		return FALSE
+
 	proc/write_on_turf(var/turf/T as turf, var/mob/user as mob, params)
 		if (!T || !user || src.in_use || get_dist(T, user) > 1 || isghostdrone(user))
 			return
@@ -66,6 +105,7 @@
 		if (!t || get_dist(T, user) > 1)
 			src.in_use = 0
 			return
+		phrase_log.log_phrase("floorpen", t)
 		var/obj/decal/cleanable/writing/G = make_cleanable( /obj/decal/cleanable/writing,T)
 		G.artist = user.key
 
@@ -73,10 +113,10 @@
 		t = copytext(html_encode(t), 1, MAX_MESSAGE_LEN)
 		if (src.font_color)
 			G.color = src.font_color
-		if (src.material)
-			G.setMaterial(src.material)
+		if(apply_material_to_drawing(G, user))
+			;
 		/* not used because it doesn't work (yet?)
-		if (src.uses_handwriting && user && user.mind && user.mind.handwriting)
+		if (src.uses_handwriting && user?.mind?.handwriting)
 			G.font = user.mind.handwriting
 			G.webfont = 1
 		*/
@@ -98,6 +138,8 @@
 		if (src.color != src.font_color)
 			src.font_color = src.color
 			src.color_name = hex2color_name(src.color)
+		if(src.material)
+			src.material_uses = initial(src.material_uses)
 
 	custom_suicide = 1
 	suicide(var/mob/user as mob)
@@ -213,6 +255,8 @@
 	color = "#333333"
 	font = "Comic Sans MS"
 	clicknoise = 0
+	var/maptext_crayon = FALSE
+	var/font_size = 32
 
 	white
 		name = "white crayon"
@@ -268,6 +312,19 @@
 		font_color = "#FF00FF"
 		color_name = "pink"
 
+	golden // HoP's crayon
+		name = "golden crayon"
+		desc = "The result of years of bribes and extreme bureaucracy."
+		color = "#D4AF37"
+		font_color = "#D4AF37"
+		mat_changename = 0
+		color_name = "golden"
+		material_uses = 123456 // it's not plated. its solid gold-wax alloy!
+
+		New()
+			..()
+			src.setMaterial(getMaterial("gold"))
+
 	random
 		New()
 			..()
@@ -286,9 +343,28 @@
 				src.color_name = hex2color_name(src.color)
 				src.name = "[src.color_name] crayon"
 				user.visible_message("<span class='notice'><b>\"Something\" special happens to [src]!</b></span>")
-				JOB_XP(user, "Clown", 1)
 
+		robot
+			desc = "Don't shove it up your nose, no matter how good of an idea that may seem to you. Wait, do you even have a nose? Maybe something else will happen if you try to stick it there."
 
+			attack(mob/M as mob, mob/user as mob, def_zone)
+				if (M == user)
+					src.color = random_color()
+					src.font_color = src.color
+					src.color_name = hex2color_name(src.color)
+					src.name = "[src.color_name] crayon"
+					user.visible_message("<span class='notice'><b>\"Something\" special happens to [src]!</b></span>")
+					return
+
+				return ..()
+
+		pixel
+			maptext_crayon = TRUE
+			font_size = 16
+			font = "Small Fonts"
+			New()
+				..()
+				src.name = "[src.color_name] pixel crayon"
 
 
 	rainbow
@@ -326,41 +402,140 @@
 				user.suiciding = 0
 		return 1
 
+	New()
+		. = ..()
+		src.create_inventory_counter()
+
+
+	proc/write_input(mob/user)
+		if(src.in_use)
+			return null
+		if(!user.client && ishuman(user))
+			var/mob/living/carbon/human/H = user
+			if(ismonkey(H) && H.ai_active)
+				if(prob(90))
+					return pick(src.c_symbol)
+				else
+					return pick(src.c_default)
+		src.in_use = 1
+		. = input(user, "What do you want to write?", null, null) as null|anything in ((isghostdrone(user) || !user.literate) ? src.c_symbol : (list("queue input") + src.c_default + src.c_symbol))
+		if(. == "queue input")
+			var/inp = input(user, "Type letters you want to write.", "Crayon Leter Queue", null)
+			inp = uppertext(inp)
+			. = list()
+			for(var/i = 1 to min(length(inp), 100))
+				var/c = copytext(inp, i, i + 1)
+				if(maptext_crayon && c != " " || (c in src.c_default) || (c in src.c_char_to_symbol))
+					. += c
+		src.in_use = 0
+
+	proc/update_inventory_counter()
+		if(islist(src.symbol_setting) && length(src.symbol_setting))
+			var/list/queue = src.symbol_setting
+			var/first = queue[1]
+			if(first == " ")
+				first = "_"
+			var/max_display_len = 5
+			var/rest = ""
+			for(var/i = 2 to min(max_display_len, length(queue)))
+				rest += queue[i]
+			if(length(queue) > max_display_len)
+				rest += "..."
+			src.inventory_counter.update_text("<span style='color:#ff000090;font-size:0.7em;-dm-text-outline: 1px #00000080;}'>[first]</span><span class='ol' style='color:#ffffff90;font-size:0.7em;-dm-text-outline: 1px #00000080;'>[rest]</span>")
+		else if(istext(src.symbol_setting))
+			src.inventory_counter.update_text(src.symbol_setting)
+		else
+			src.inventory_counter.update_text()
+
+	attack_self(mob/user as mob)
+		..()
+		if (!user)
+			return
+
+		var/write_thing = write_input(user)
+
+		if(write_thing)
+			src.symbol_setting = write_thing
+		else
+			src.symbol_setting = null // and thus the click-floor-2-pick-shit goes on
+		update_inventory_counter()
+
+
 	write_on_turf(var/turf/T as turf, var/mob/user as mob, params)
 		if (!T || !user || src.in_use || get_dist(T, user) > 1)
 			return
-		src.in_use = 1
-		var/list/c_default = list("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z",
-		"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "Exclamation Point", "Question Mark", "Period", "Comma", "Colon", "Semicolon", "Ampersand", "Left Parenthesis", "Right Parenthesis",
-		"Left Bracket", "Right Bracket", "Percent", "Plus", "Minus", "Times", "Divided", "Equals", "Less Than", "Greater Than")
-		var/list/c_symbol = list("Dollar", "Euro", "Arrow North", "Arrow East", "Arrow South", "Arrow West",
-		"Square", "Circle", "Triangle", "Heart", "Star", "Smile", "Frown", "Neutral Face", "Bee", "Pentacle")
 
-		var/t = input(user, "What do you want to write?", null, null) as null|anything in ((isghostdrone(user) || !user.literate) ? c_symbol : (c_default + c_symbol))
+		var/t // t is for what we're tdrawing
+
+		if (length(src.symbol_setting))
+			t = src.symbol_setting
+		else
+			t = write_input(user)
+
+		if(isnull(t) || !length(t))
+			return
+
+		if(islist(t))
+			var/list/queue = t
+			if(length(t) == 1)
+				src.symbol_setting = null
+				t = t[1]
+			else
+				src.symbol_setting = queue.Copy(2) // remove first
+				t = t[1]
+			update_inventory_counter()
 
 		if (!t || get_dist(T, user) > 1)
-			src.in_use = 0
 			return
-		var/obj/decal/cleanable/writing/G = make_cleanable(/obj/decal/cleanable/writing,T)
+
+		if(t == " ")
+			return
+
+		if(!src.maptext_crayon && (t in src.c_char_to_symbol))
+			t = c_char_to_symbol[t]
+
+		var/obj/decal/cleanable/writing/G
+		if(src.maptext_crayon)
+			G = make_cleanable(/obj/decal/cleanable/writing/maptext_dummy, T)
+		else
+			G = make_cleanable(/obj/decal/cleanable/writing, T)
 		G.artist = user.key
 
 		logTheThing("station", user, null, "writes on [T] with [src][src.material ? " (material: [src.material.name])" : null] [log_loc(T)]: [t]")
-		G.icon_state = "c[t]"
+
+		var/size = 32
+
+		if(src.maptext_crayon)
+			G.maptext = "<span class='c' style='font-family:\"[font]\";font-size:[font_size]pt'>[t]</span>"
+			G.maptext_width = 32 * 3
+			G.maptext_height = 32 * 3
+			G.maptext_x = -32
+			G.maptext_y = size / 2 - font_size / 2
+		else
+			G.icon_state = "c[t]"
+			if(src.font_size != 32)
+				G.Scale(src.font_size / 32, src.font_size / 32)
 		if (src.font_color && src.color_name)
 			G.color = src.font_color
 			G.color_name = src.color_name
 			G.real_name = t
 			G.UpdateName()
-		if (src.material)
-			G.setMaterial(src.material)
+		apply_material_to_drawing(G, user)
 		G.words = t
 		if (islist(params) && params["icon-y"] && params["icon-x"])
-			G.pixel_x = text2num(params["icon-x"]) - 16
-			G.pixel_y = text2num(params["icon-y"]) - 16
+			G.pixel_x = text2num(params["icon-x"]) - size / 2
+			G.pixel_y = text2num(params["icon-y"]) - size / 2
 		else
 			G.pixel_x = rand(-4,4)
 			G.pixel_y = rand(-4,4)
-		src.in_use = 0
+
+	get_desc()
+		. = ..()
+		if(islist(src.symbol_setting))
+			var/list/queue = src.symbol_setting
+			. += " It currently has '[queue.Join()]' queued up."
+		else if(src.symbol_setting)
+			. += " It is currently set to write '[src.symbol_setting]'."
 
 /* =============== CHALK (By Adhara) =============== */
 
@@ -381,6 +556,8 @@
 			src.name = "[src.color_name] chalk"
 
 	proc/assign_color(var/color)
+		if(isnull(color))
+			color = "#ffffff"
 		src.color = color
 		src.font_color = src.color
 		src.color_name = hex2color_name(color)
@@ -471,9 +648,9 @@
 		t = copytext(html_encode(t), 1, MAX_MESSAGE_LEN)
 		if (src.font_color)
 			G.color = src.font_color
-		if (src.material)
-			G.setMaterial(src.material)
-		/*if (src.uses_handwriting && user && user.mind && user.mind.handwriting)
+		if(apply_material_to_drawing(G, user))
+			;
+		/*if (src.uses_handwriting && user?.mind?.handwriting)
 			G.font = user.mind.handwriting
 			G.webfont = 1
 		*/
@@ -540,19 +717,24 @@
 			boutput(user, "<span class='alert'>You don't know how to write.</span>")
 			return
 		tooltip_rebuild = 1
-		var/str = copytext(html_encode(input(usr,"Label text?","Set label","") as null|text), 1, 32)
-		if(url_regex && url_regex.Find(str))
+		var/holder = src.loc
+		var/str = copytext(html_encode(input(user,"Label text?","Set label","") as null|text), 1, 32)
+		if(str)
+			phrase_log.log_phrase("label", str, no_duplicates=TRUE)
+		if (src.loc != holder)
+			return
+		if(url_regex?.Find(str))
 			str = null
 		if (!str || !length(str))
-			boutput(usr, "<span class='notice'>Label text cleared.</span>")
+			boutput(user, "<span class='notice'>Label text cleared.</span>")
 			src.label = null
 			return
 		if (length(str) > 30)
-			boutput(usr, "<span class='alert'>Text too long.</span>")
+			boutput(user, "<span class='alert'>Text too long.</span>")
 			return
 		src.label = "[str]"
-		boutput(usr, "<span class='notice'>You set the text to '[str]'.</span>")
-		logTheThing("combat", usr, null, "sets a hand labeler label to \"[str]\".")
+		boutput(user, "<span class='notice'>You set the text to '[str]'.</span>")
+		logTheThing("combat", user, null, "sets a hand labeler label to \"[str]\".")
 
 	proc/RemoveLabel(var/atom/A, var/mob/user, var/no_message = 0)
 		if(!islist(A.name_suffixes))
@@ -597,7 +779,7 @@
 		if (!src.user_can_suicide(user))
 			return 0
 		user.visible_message("<span class='alert'><b>[user] labels [him_or_her(user)]self \"DEAD\"!</b></span>")
-		src.label = "(DEAD)"
+		src.label = "DEAD"
 		Label(user,user,1)
 
 		user.TakeDamage("chest", 300, 0) //they have to die fast or it'd make even less sense
@@ -626,14 +808,14 @@
 
 	New()
 		..()
-		BLOCK_BOOK
+		BLOCK_SETUP(BLOCK_BOOK)
 
 	attack_self(mob/user as mob)
 		var/dat = "<B>Clipboard</B><BR>"
 		if (src.pen)
 			dat += "<A href='?src=\ref[src];pen=1'>Remove Pen</A><BR><HR>"
 		for(var/obj/item/paper/P in src)
-			dat += "<A href='?src=\ref[src];read=\ref[P]'>[P.name]</A> <A href='?src=\ref[src];write=\ref[P]'>Write</A> <A href='?src=\ref[src];title=\ref[P]'>Title</A> <A href='?src=\ref[src];remove=\ref[P]'>Remove</A><BR>"
+			dat += "<A href='?src=\ref[src];read=\ref[P]'>[P.name]</A> <A href='?src=\ref[src];title=\ref[P]'>Title</A> <A href='?src=\ref[src];remove=\ref[P]'>Remove</A><BR>"
 
 		for(var/obj/item/photo/P in src) //Todo: make it actually show the photo.  Currently, using [bicon()] just makes an egg image pop up (??)
 			dat += "<A href='?src=\ref[src];remove=\ref[P]'>[P.name]</A><br>"
@@ -647,7 +829,7 @@
 		if ((usr.stat || usr.restrained()))
 			return
 
-		if (!usr.contents.Find(src))
+		if (!(src in usr.contents))
 			return
 
 		src.add_dialog(usr)
@@ -665,13 +847,7 @@
 
 		else if (href_list["read"])
 			var/obj/item/paper/P = locate(href_list["read"])
-			if ((P && P.loc == src))
-				if (!( ishuman(usr) ))
-					usr.Browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", P.name, stars(P.info)), text("window=[]", P.name))
-					onclose(usr, "[P.name]")
-				else
-					usr.Browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", P.name, P.info), text("window=[]", P.name))
-					onclose(usr, "[P.name]")
+			P.ui_interact(usr)
 
 		else//Stuff that involves writing from here on down
 			if(!usr.literate)
@@ -706,7 +882,7 @@
 					if (length(str) > 30)
 						boutput(usr, "<span class='alert'>A title that long will never catch on!</span>") //We're actually checking because titles above a certain length get clipped, but where's the fun in that
 						return
-					if(url_regex && url_regex.Find(str))
+					if(url_regex?.Find(str))
 						return
 					P.name = str
 
@@ -722,15 +898,7 @@
 				src.update()
 			src.add_fingerprint(user)
 		else
-			/*
-			if (user.contents.Find(src))
-				SPAWN_DBG( 0 )
-					src.attack_self(user)
-					return
-			else
-			*/
 			return ..()
-		return
 
 	attackby(obj/item/P as obj, mob/user as mob)
 
@@ -764,6 +932,7 @@
 	New()
 		..()
 		src.pen = new /obj/item/pen(src)
+		src.update()
 		return
 
 /* =============== FOLDERS (wip) =============== */
@@ -795,9 +964,9 @@
 		show_window(user)
 
 	Topic(var/href, var/href_list)
-		if (get_dist(src, usr) > 1 || !isliving(usr) || iswraith(usr) || isintangible(usr))
+		if (get_dist(src, usr) > 1 || iswraith(usr) || isintangible(usr))
 			return
-		if (usr.hasStatus("paralysis", "stunned", "weakened", "resting"))
+		if (is_incapacitated(usr))
 			return
 		..()
 
@@ -863,11 +1032,15 @@
 		return
 
 	proc/display_booklet_contents(var/mob/user as mob, var/page = 1)
+		set src in view()
+		set category = "Local"
+
+		if (!length(pages))
+			return
+
 		var/obj/item/paper/cur_page = pages[page]
 		var/next_page = ""
 		var/prev_page = "     "
-		set src in view()
-		set category = "Local"
 
 		if(!user.literate)
 			. = html_encode(illiterateGarbleText(cur_page.info)) // deny them ANY useful information
@@ -889,7 +1062,7 @@
 
 		user.Browse("<HTML><HEAD><TITLE>[src.name] - [cur_page.name]</TITLE>[font_junk]</HEAD><BODY>Page [page] of [pages.len]<BR><a href='byond://?src=\ref[src];action=first_page'>First Page</a> <a href='byond://?src=\ref[src];action=title_book'>Title Book</a> <a href='byond://?src=\ref[src];action=last_page'>Last Page</a><BR>[prev_page]<a href='byond://?src=\ref[src];action=write;page=[page]'>Write</a> <a href='byond://?src=\ref[src];action=title_page;page=[page]'>Title</a> [next_page]<HR><TT>[.]</TT></BODY></HTML>", "window=[src.name]")
 
-		onclose(usr, "[src.name]")
+		onclose(user, "[src.name]")
 		return null
 
 	attack_self(var/mob/user)
@@ -931,7 +1104,7 @@
 	attackby(var/obj/item/P as obj, mob/user as mob)
 		if (istype(P, /obj/item/paper))
 			var/obj/item/staple_gun/S = user.find_type_in_hand(/obj/item/staple_gun)
-			if (S && S.ammo)
+			if (S?.ammo)
 				user.drop_item()
 				src.pages += P
 				P.set_loc(src)
@@ -941,7 +1114,7 @@
 				src.visible_message("[user] staples [P] at the back of [src].")
 				playsound(user,'sound/impact_sounds/Generic_Snap_1.ogg', 50, 1)
 			else
-				boutput(usr, "<span class='alert'>You need a loaded stapler in hand to add this paper to the booklet.</span>")
+				boutput(user, "<span class='alert'>You need a loaded stapler in hand to add this paper to the booklet.</span>")
 		else
 			..()
 		return
@@ -949,11 +1122,11 @@
 /* =============== STICKY NOTES =============== */
 
 /obj/item/postit_stack
-	name = "stack of crappy old sticky notes"
-	desc = "A little stack of notepaper that you can stick to things. These are the old ones that suck a lot."
+	name = "SHOULDN'T BE SEEING THIS"
+	desc = "OLD AND BAD"
 	icon = 'icons/obj/writing.dmi'
 	icon_state = "postit_stack"
-	force = 1
+	/* force = 1
 	throwforce = 1
 	w_class = 1
 	amount = 10
@@ -965,6 +1138,7 @@
 	// @TODO
 	// HOLY SHIT REMOVE THIS THESE OLD POST ITS ARE GONE or something idk fuck
 	New()
+		..()
 		new /obj/item/item_box/postit(get_turf(src))
 
 	afterattack(var/atom/A as mob|obj|turf, var/mob/user as mob, reach, params)
@@ -994,3 +1168,4 @@
 		if (src.amount < 0)
 			qdel(src)
 			return
+*/

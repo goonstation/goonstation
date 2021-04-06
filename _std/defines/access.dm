@@ -66,6 +66,8 @@
 
 #define access_centcom 57 // self-explanatory?  :v
 
+#define access_supply_console 58 // QM Console
+
 // skipping a few here to reserve a block
 // for terra 8 and syndicate security clearances
 #define access_syndicate_4 60
@@ -87,3 +89,19 @@
 #define access_polarisimportant 74
 
 #define access_contrabandpermit 75
+
+#define access_syndicate_commander 76
+
+//nt retention center access
+#define access_retention_blue 77
+#define access_retention_green 78
+#define access_retention_yellow 79
+#define access_retention_orange 80
+#define access_retention_red 81
+#define access_retention_black 82
+
+//rancher job
+#define access_ranch 83
+
+//pathologist job
+#define access_pathology 84

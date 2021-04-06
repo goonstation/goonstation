@@ -22,8 +22,6 @@
 		..()
 		metadata = list("date" = world.realtime, "owner"=null,"group"=null, "permission"=COMP_ALLACC)
 
-		return
-
 	folder
 		name = "Folder"
 		size = 0
@@ -109,6 +107,8 @@
 
 
 	file
+		/// Prevent it from piracy via PDA filehosting?
+		var/dont_copy = 0
 		name = "File"
 		var/extension = "FILE" //Differentiate between types of files, why not
 

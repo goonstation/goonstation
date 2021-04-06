@@ -100,8 +100,10 @@
 
 	//Are we limiting connected players to certain ckeys?
 	var/whitelistEnabled = 0
+	var/whitelist_path = "strings/whitelist.txt"
 
 /datum/configuration/New()
+	..()
 	var/list/L = childrentypesof(/datum/game_mode)
 	for (var/T in L)
 		// I wish I didn't have to instance the game modes in order to look up
@@ -358,6 +360,9 @@
 
 			if ("player_notes_auth")
 				config.player_notes_auth = trim(value)
+
+			if ("whitelist_path")
+				config.whitelist_path = trim(value)
 
 			else
 				logDiary("Unknown setting in configuration: '[name]'")

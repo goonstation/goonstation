@@ -16,8 +16,17 @@
 		if (!usr.client)
 			return "Something went wrong loading your bank! If the issue persists, try relogging or asking an admin for help."
 
+		var/found_held = FALSE
+		for(var/datum/bank_purchaseable/p in persistent_bank_purchaseables)
+			if(p.name == usr.client.persistent_bank_item)
+				found_held = TRUE
+				break
+		if(usr.client.persistent_bank_item && usr.client.persistent_bank_item != "none" && !found_held)
+			usr.client.set_last_purchase(null)
+			boutput( usr, "<span class='notice'><b>The thing you previously purchased has been removed from your inventory due to it no longer existing.</b></span>")
+
 		var/ret = "<p style=\"font-size:125%;\">BALANCE :  <b>[usr.client.persistent_bank]</b></p><br/>"
-		ret += "<p style=\"font-size:110%;\">HELD ITEM :  <b>[usr.client.persistent_bank_item ? usr.client.persistent_bank_item : "none"]</b></p><br/>"
+		ret += "<p style=\"font-size:110%;\">HELD ITEM :  <b>[usr.client.persistent_bank_item ? usr.client.persistent_bank_item : "Nothing!"]</b></p><br/>"
 		ret += "Purchase an item for the upcoming round. Earn more cash by completing rounds.<br/>"
 		ret += "A purchased item will persist until you die or fail to escape the station. If you have a Held Item, buying a new one will replace it.<br/><br/>"
 		for(var/i=1, i <= persistent_bank_purchaseables.len, i++)
@@ -103,9 +112,7 @@
 			ret += "<p style=\"text-align:left;\">Antagonist - No tax!</p>"
 		if (pilot)
 			ret += "<p style=\"text-align:left;\">Pilot's bonus ....<span style=\"float:right;\"><b>+ [pilot_bonus] </b></span> </p>"
-#if ASS_JAM
-			ret += "<p style=\"text-align:left;\">2X ASS DAY BONUS!</p>"
-#endif
+
 
 		ret += "<hr>"
 		ret += "<big><b><p style=\"text-align:left;\">PAYOUT ..... <span style=\"float:right;\">[final_payout]</span> </p></b></big><br>"
@@ -120,10 +127,18 @@
 	if (!purchase)
 		return
 
-	if (purchase.Create(src))
-		boutput( src, "<span class='notice'><b>[purchase.name] equipped successfully.</b></span>" )
+	if(purchase in persistent_bank_purchaseables)
+		if (purchase.Create(src))
+			boutput( src, "<span class='notice'><b>[purchase.name] equipped successfully.</b></span>" )
+		else
+			boutput( src, "<span class='notice'><b>[purchase.name] is not available for the job you rolled. It has been refunded.</b></span>" )
+			src.client.add_to_bank(purchase.cost)
+			src.client.set_last_purchase(null)
+			return
 	else
-		boutput( src, "<span class='notice'><b>[purchase.name] is not available for the job you rolled. It will remain as your held item if possible.</b></span>" )
+		boutput( src, "<span class='notice'><b>The thing you previously purchased has been removed from your inventory due to it no longer existing.</b></span>")
+		src.client.set_last_purchase(null)
+		return
 
 	if (src.client.persistent_bank_item != purchase.name) //Only sub_from_bank if the purchase does not match the Held Item
 		src.client.sub_from_bank(purchase)

@@ -1,16 +1,10 @@
-/*
-//reagent_container bit flags
-#define RC_SCALE 	1		// has a graduated scale, so total reagent volume can be read directly
-#define RC_VISIBLE	2		// reagent is visible inside, so color can be described
-#define RC_FULLNESS 4		// can estimate fullness of container
-#define RC_SPECTRO	8		// spectroscopic glasses can analyse contents
-*/
 /* ================================================================== */
 /* -------------------- Reagent Container Parent -------------------- */
 /* ================================================================== */
 
 // for some reason this very important parent item of a fucking thousand other things was planted down on line 700
 // I AM SCREAMING A LOT IN REAL LIFE ABOUT THIS CURRENTLY
+ABSTRACT_TYPE(/obj/item/reagent_containers)
 /obj/item/reagent_containers
 	name = "Container"
 	desc = "..."
@@ -65,9 +59,9 @@
 		if (!src.reagents)
 			src.initial_reagents = null // don't need you no mo
 			return
-		if ((islist(new_reagents) && new_reagents.len) || istext(new_reagents))
+		if ((islist(new_reagents) && length(new_reagents)) || istext(new_reagents))
 			src.initial_reagents = new_reagents
-		if (islist(src.initial_reagents) && src.initial_reagents.len)
+		if (islist(src.initial_reagents) && length(src.initial_reagents))
 			for (var/current_id in src.initial_reagents)
 				if (!istext(current_id)) // we can't do shit hereeee
 					continue
@@ -145,6 +139,7 @@
 	icon_state = "null"
 	item_state = "null"
 	amount_per_transfer_from_this = 10
+	var/can_recycle = TRUE //can this be put in a glass recycler?
 	var/splash_all_contents = 1
 	flags = FPRINT | TABLEPASS | OPENCONTAINER | SUPPRESSATTACK
 
@@ -223,7 +218,7 @@
 			playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, 1, 0.3)
 
 		else if (istype(target, /obj/reagent_dispensers) || (target.is_open_container() == -1 && target.reagents) || ((istype(target, /obj/fluid) && !istype(target, /obj/fluid/airborne)) && !src.reagents.total_volume)) //A dispenser. Transfer FROM it TO us.
-			if (!target.reagents.total_volume && target.reagents)
+			if (target.reagents && !target.reagents.total_volume)
 				boutput(user, "<span class='alert'>[target] is empty.</span>")
 				return
 
@@ -391,6 +386,8 @@
 						boutput(user, "<span class='alert'>The [src.name] is full.</span>")
 				else
 					boutput(user, "The [W.name] is empty.")
+			else
+				boutput(user, "You need to slice open the [W.name] first!")
 
 			return
 		else
@@ -399,10 +396,10 @@
 
 	attack_self(mob/user as mob)
 		if (src.splash_all_contents)
-			boutput(user, "<span class='notice'>You tighten your grip on the [src].</span>")
+			boutput(user, "<span class='notice'>You tighten your grip on the [src]. You will now splash in [src.amount_per_transfer_from_this] unit increments.</span>")
 			src.splash_all_contents = 0
 		else
-			boutput(user, "<span class='notice'>You loosen your grip on the [src].</span>")
+			boutput(user, "<span class='notice'>You loosen your grip on the [src]. You will now splash all of the [src]'s contents.</span>")
 			src.splash_all_contents = 1
 		return
 
@@ -439,6 +436,7 @@
 	initial_volume = 50
 	flags = FPRINT | OPENCONTAINER | SUPPRESSATTACK
 	rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
+	can_recycle = FALSE
 	var/helmet_bucket_type = /obj/item/clothing/head/helmet/bucket
 	var/hat_bucket_type = /obj/item/clothing/head/helmet/bucket/hat
 	var/bucket_sensor_type = /obj/item/bucket_sensor

@@ -123,10 +123,32 @@ There are two key points there:
 
 Remember: although this trade-off makes sense in many cases, it doesn't cover them all. Think carefully about your addition before deciding if you need to use it.
 
+### typecheckless for-loops
+
+When dealing with iterating over lists, you generally have two cases: where a list will only contain one type, and where a list will contain a multitude of types.
+
+For the _first case_, we can do some special optimization, in what we call a "typecheckless for-loop."
+
+The syntax looks like this:
+```js
+for (var/obj/foo/bar as() in my_list)
+	bar.boogie()
+```
+
+This ends up giving us a 50% increase in speed, as with a normal typed for-loop it performs an `istype(thing, obj/foo)` on the object every iteration.
+
+**Be warned:** If something in the list is not of the type provided, it will runtime!
+
+*Additional note*: If you are using `by_type[]`, there exists a macro to do this automagically:
+```js
+for_by_tcl(iterator, type)
+	loop stuff
+```
+As long as you don't want to filter out between specific children types of a by_type, you should be able to use this construction.
 
 ### for-in-to loops
 
-`for (var/i = 1, i <= some_value, i++)` is the standard way to write a for loop in most languages, but DM's `for(var/i in 1 to some_value)` syntax is actually faster in its implementation.
+`for (var/i = 1, i <= some_value, i++)` is the standard way to write a for-loop in most languages, but DM's `for(var/i in 1 to some_value)` syntax is actually faster in its implementation.
 
 So, where possible, it's advised to use DM's syntax. (Note: the to keyword is inclusive, so it automatically defaults to replacing `<=`; if you want `<` then you should write it as `1 to some_value-1`).
 
@@ -163,10 +185,30 @@ There is also an undocumented keyword called `static` that has the same behavior
 
 ### Debugging Overlays
 
+The Debug-Overlays verb ingame is your friend. It offers many modes to debug many things, such as atmos air groups, writing, areas, and more.
+
 ### Profiler
+
+The Open-Profiler verb ingame is also your friend. Be sure to literally type `.debug profile` in the second box.
+Once you refresh once, you'll get detailed performance measurements on all running procs.
+
+Guide to the categories:
+* Self CPU: The cost of the code in the proc.
+* Total CPU: Total cpu is the cost of self plus everything the proc calls.
+* Real Time How much time the proc actually ran.
+* Overtime: How much was spent past 100 tick_usage. This results in what we know as 'lag'.
+
+If total cpu and real time are the same the proc never sleeps, otherwise real time will be higher as it counts the time while the proc is waiting.
 
 ### Target Dummy
 * You can spawn in a target dummy (`/mob/living/carbon/human/tdummy`) to more easily test things that do damage - they have the ass day health percent and damage popups visible even if your build isn't set to ass day.
 
 ### Signals and Components
 * ninjanomnom from TG has written up a [useful primer](https://tgstation13.org/phpBB/viewtopic.php?f=5&t=22674) on signals and components. Most of the stuff there applies, although elements do not exist in this codebase.
+
+### Generic Action bar
+* Hate coding action bars? Making a new definition for an action bar datum just so you have visual feedback for your construction feel gross? Well fear not! You can now use the SETUP_GENERIC_ACTIONBAR() macro! Check [_std/macros/actions.dm`](https://github.com/goonstation/goonstation/blob/master/_std/macros/actions.dm) for more information.  
+
+### Turf Define Macro
+* Making multiple turfs can be a real pain sometimes. If you use the `DEFINE_FLOORS()` macro as documented, it will create a simulated, simulated airless, unsimulated and unsimulated airless turf with the specified path and variables at compile time. There are many variations on the definition, so I recommend checking out [_std/macros/turf.dm](https://github.com/goonstation/goonstation/blob/master/_std/macros/turf.dm)
+

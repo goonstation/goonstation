@@ -2,7 +2,7 @@
 /datum/lifeprocess/skin
 	//handle_skinstuff((life_time_passed / tick_spacing))
 	process(var/datum/gas_mixture/environment)
-		if (owner.skin_process && owner.skin_process.len)
+		if (owner.skin_process && length(owner.skin_process))
 
 			var/mult = get_multiplier()
 			//you absorb shit faster if you have lots of patches stacked
@@ -11,8 +11,7 @@
 			var/multi_process_mult = owner.skin_process.len > 1 ? (owner.skin_process.len * 1.5) : 1
 			var/use_volume = 0.35 * mult * multi_process_mult
 
-			for(var/atom in owner.skin_process)
-				var/atom/A = atom
+			for (var/atom/A as anything in owner.skin_process)
 
 				if (A.loc != owner)
 					owner.skin_process -= A

@@ -6,9 +6,9 @@
 	density = 1
 	anchored = 1.0
 
-	lr = 1
-	lg = 0.8
-	lb = 0.8
+	light_r =1
+	light_g = 0.8
+	light_b = 0.8
 
 	var/html = {"
 

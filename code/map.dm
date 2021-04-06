@@ -11,38 +11,39 @@ var/global/datum/map_settings/map_settings = null
 //id corresponds to the name of the /obj/landmark/map
 //playerPickable defines whether the map can be chosen by players when voting on a new map. Setting to ASS_JAM should allow it on the 13th only, and not on RP.
 var/global/list/mapNames = list(
-	"Clarion" = 		list("id" = "CLARION", 		"settings" = "destiny/clarion", "playerPickable" = 1,				"MaxPlayersAllowed" = 80),
+	"Clarion" = 		list("id" = "CLARION", 		"settings" = "destiny/clarion", "playerPickable" = 1,		"MaxPlayersAllowed" = 80),
 #ifdef RP_MODE
 	"Cogmap 1" = 		list("id" = "COGMAP", 		"settings" = "cogmap", 			"playerPickable" = 1, 	"MinPlayersAllowed" = 14),
 #else
-	"Cogmap 1" = 		list("id" = "COGMAP", 		"settings" = "cogmap", 			"playerPickable" = 1,				"MaxPlayersAllowed" = 80),
+	"Cogmap 1" = 		list("id" = "COGMAP", 		"settings" = "cogmap", 			"playerPickable" = 1,		"MaxPlayersAllowed" = 80),
 #endif
 	//"Construction" = list("id" = "CONSTRUCTION", "settings" = "construction"),
 	"Cogmap 1 (Old)" = 	list("id" = "COGMAP_OLD", 	"settings" = "cogmap_old"),
 	"Cogmap 2" = 		list("id" = "COGMAP2", 		"settings" = "cogmap2", 		"playerPickable" = 1, 	"MinPlayersAllowed" = 40),
-	"Destiny" = 		list("id" = "DESTINY", 		"settings" = "destiny", 		"playerPickable" = 1,				"MaxPlayersAllowed" = 80),
+	"Destiny" = 		list("id" = "DESTINY", 		"settings" = "destiny", 		"playerPickable" = 1,		"MaxPlayersAllowed" = 80),
 	"Donut 2" = 		list("id" = "DONUT2", 		"settings" = "donut2",			"playerPickable" = ASS_JAM),
 	"Donut 3" = 		list("id" = "DONUT3", 		"settings" = "donut3",			"playerPickable" = 1, 	"MinPlayersAllowed" = 40),
 	"Horizon" = 		list("id" = "HORIZON", 		"settings" = "horizon", 		"playerPickable" = 1),
-	"Linemap" = 		list("id" = "LINEMAP", 		"settings" = "linemap",			"playerPickable" = ASS_JAM),
 	"Mushroom" =		list("id" = "MUSHROOM", 	"settings" = "mushroom",		"playerPickable" = ASS_JAM),
 	"Trunkmap" = 		list("id" = "TRUNKMAP", 	"settings" = "trunkmap",		"playerPickable" = ASS_JAM),
 	"Oshan Laboratory"= list("id" = "OSHAN", 	"settings" = "oshan", 			"playerPickable" = 1),
-	"Samedi" = 			list("id" = "SAMEDI", 		"settings" = "samedi", 			"playerPickable" = ASS_JAM),
 	"1 pamgoC" = 		list("id" = "PAMGOC", 		"settings" = "pamgoc", 			"playerPickable" = ASS_JAM),
-	"Kondaru" = 		list("id" = "KONDARU", "settings" = "kondaru", 				"playerPickable" = 1,				"MaxPlayersAllowed" = 80),
-	"Ozymandias" = 		list("id" = "OZYMANDIAS", "settings" = "ozymandias", 				"playerPickable" = 0, 	"MinPlayersAllowed" = 40),
-	"Bellerophon Fleet" = list("id" = "FLEET", "settings" = "fleet", "playerPickable" = ASS_JAM),
+	"Kondaru" = 		list("id" = "KONDARU", 		"settings" = "kondaru", 		"playerPickable" = 1,		"MaxPlayersAllowed" = 80),
+	"Ozymandias" = 	list("id" = "OZYMANDIAS", "settings" = "ozymandias", 	"playerPickable" = 0, 	"MinPlayersAllowed" = 40),
+	//"Bellerophon Fleet" = list("id" = "FLEET", "settings" = "fleet", "playerPickable" = ASS_JAM),
 	"Icarus" = 			list("id" = "ICARUS",		"settings" = "icarus",				"playerPickable" = ASS_JAM),
-	"Density" = 		list("id" = "DENSITY", 	"settings" = "density", 			"playerPickable" = ASS_JAM,				"MaxPlayersAllowed" = 30),
+	//"Density" = 		list("id" = "DENSITY", 	"settings" = "density", 			"playerPickable" = ASS_JAM,	"MaxPlayersAllowed" = 30),
 	"Atlas" = 			list("id" = "ATLAS", 		"settings" = "atlas", 				"playerPickable" = 1,				"MaxPlayersAllowed" = 30),
 	"Manta" = 			list("id" = "MANTA", 		"settings" = "manta", 				"playerPickable" = 1,				"MaxPlayersAllowed" = 80),
-	"Wrestlemap" = 			list("id" = "WRESTLEMAP", 	"settings" = "wrestlemap", 		"playerPickable" = ASS_JAM)
+	"Wrestlemap" = 			list("id" = "WRESTLEMAP", 	"settings" = "wrestlemap", 		"playerPickable" = ASS_JAM),
+	"blank" = 			list("id" = "BLANK", "settings" = "", "playerPickable" = 0),
+	"blank_underwater" =  list("id" = "BLANK_UNDERWATER", "settings" = "", "playerPickable" = 0)
 )
 
 /obj/landmark/map
 	name = "map_setting"
 	icon_state = "x3"
+	add_to_landmarks = FALSE
 
 	New()
 		if (src.name != "map_setting")
@@ -53,7 +54,7 @@ var/global/list/mapNames = list(
 				var/mapID = mapNames[map]["id"]
 
 				if (mapID == map_setting)
-					var/path = text2path("/datum/map_settings/" + mapNames[map]["settings"])
+					var/path = (mapNames[map]["settings"] == "") ? /datum/map_settings : text2path("/datum/map_settings/" + mapNames[map]["settings"])
 					map_settings = new path
 					break
 
@@ -61,8 +62,7 @@ var/global/list/mapNames = list(
 			if (!map_settings)
 				map_settings = new /datum/map_settings
 				CRASH("A mapName entry for '[src.name]' wasn't found!")
-
-		qdel(src)
+		..()
 
 //Setting maps to be underwater is handled in the map config file, aka [mapname].dm
 
@@ -96,7 +96,9 @@ var/global/list/mapNames = list(
 	var/escape_centcom = /area/shuttle/escape/centcom
 	var/escape_transit = /area/shuttle/escape/transit
 	var/escape_station = /area/shuttle/escape/station
+	var/escape_def = SHUTTLE_NODEF
 	var/escape_dir = SOUTH
+
 	var/shuttle_map_turf = /turf/space
 
 	var/merchant_left_centcom = /area/shuttle/merchant_shuttle/left_centcom
@@ -105,7 +107,7 @@ var/global/list/mapNames = list(
 	var/merchant_right_station = /area/shuttle/merchant_shuttle/right_station
 
 	var/list/valid_nuke_targets = list("the main security room" = list(/area/station/security/main),
-		"the central research sector hub" = list(/area/station/science),
+		"the central research sector hub" = list(/area/station/science/lobby),
 		"the cargo bay (QM)" = list(/area/station/quartermaster/office),
 		"the engineering control room" = list(/area/station/engine/engineering, /area/station/engine/power),
 		"the central warehouse" = list(/area/station/storage/warehouse),
@@ -133,10 +135,26 @@ var/global/list/mapNames = list(
 /datum/map_settings/donut2
 	name = "DONUT2"
 	goonhub_map = "https://goonhub.com/maps/donut2"
+	airlock_style = "pyro"
+	walls = /turf/simulated/wall/auto/supernorn
+	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
+
 	escape_centcom = /area/shuttle/escape/centcom/donut2
 	escape_transit = /area/shuttle/escape/transit/donut2
 	escape_station = /area/shuttle/escape/station/donut2
-	escape_dir = WEST // FUCK YOU DONUT2 I WAS NEARLY DONE AND THEN YOU THROW THIS AT ME AND NOW I HAVE TO ADD YOUR GODDAMN WEST-FACING SHUTTLE TO THE MAP ARGH *SCREAM *SCREAM *SCREAM
+	escape_def = SHUTTLE_WEST
+	escape_dir = WEST
+
+	windows = /obj/window/auto
+	windows_thin = /obj/window/pyro
+	rwindows = /obj/window/auto/reinforced
+	rwindows_thin = /obj/window/reinforced/pyro
+	windows_crystal = /obj/window/auto/crystal
+	windows_rcrystal = /obj/window/auto/crystal/reinforced
+	window_layer_full = COG2_WINDOW_LAYER
+	window_layer_north = GRILLE_LAYER+0.1
+	window_layer_south = FLY_LAYER+1
+	auto_windows = 1
 
 	merchant_left_centcom = /area/shuttle/merchant_shuttle/left_centcom/donut2
 	merchant_left_station = /area/shuttle/merchant_shuttle/left_station/donut2
@@ -145,7 +163,7 @@ var/global/list/mapNames = list(
 
 /datum/map_settings/donut3
 	name = "DONUT3"
-	goonhub_map = "https://cdn.discordapp.com/attachments/469379618168897538/729919886524153916/donut3-30-FINAL4-the-unlucky-number.png"
+	goonhub_map = "http://goonhub.com/maps/donut3"
 	airlock_style = "pyro"
 	walls = /turf/simulated/wall/auto/jen
 	rwalls = /turf/simulated/wall/auto/reinforced/jen
@@ -153,6 +171,7 @@ var/global/list/mapNames = list(
 	escape_centcom = /area/shuttle/escape/centcom/donut3
 	escape_transit = /area/shuttle/escape/transit/donut3
 	escape_station = /area/shuttle/escape/station/donut3
+	escape_def = SHUTTLE_DONUT3
 	escape_dir = NORTH
 	auto_windows = 1
 
@@ -176,18 +195,24 @@ var/global/list/mapNames = list(
 		"inner engineering (surrounding the singularity, not in it)" = list(/area/station/engine/inner),
 		"the station's cafeteria" = list(/area/station/crew_quarters/cafeteria),
 		"the inner hall of the medbay" = list(/area/station/medical/medbay),
-		"the main hallway in research" = list(/area/station/science),
-		"the chapel" = list(/area/station/chapel/main),
+		"the main hallway in research" = list(/area/station/science/lobby),
+		"the chapel" = list(/area/station/chapel/sanctuary),
 		"the escape hallway" = list(/area/station/hallway/secondary/exit),
 		"the Research Director's office" = list(/area/station/crew_quarters/hor),
 		"the Chief Engineer's office" = list(/area/station/engine/engineering/ce),
-		"the kitchen" = list(/area/station/crew_quarters/kitchen))
+		"the kitchen" = list(/area/station/crew_quarters/kitchen),
+		"the bridge" = list(/area/station/bridge),
+		"the courtroom" = list(/area/station/crew_quarters/courtroom),
+		"the central room in security" = list(/area/station/security/main),
+		"the hydroponics bay" = list(/area/station/hydroponics/bay))
 
 /datum/map_settings/cogmap_old
 	name = "COGMAP_OLD"
 	escape_centcom = /area/shuttle/escape/centcom/cogmap
 	escape_transit = /area/shuttle/escape/transit/cogmap
 	escape_station = /area/shuttle/escape/station/cogmap
+	escape_def = SHUTTLE_SOUTH
+	escape_dir = SOUTH
 
 	merchant_left_centcom = /area/shuttle/merchant_shuttle/left_centcom/cogmap
 	merchant_left_station = /area/shuttle/merchant_shuttle/left_station/cogmap
@@ -218,11 +243,29 @@ var/global/list/mapNames = list(
 	escape_centcom = /area/shuttle/escape/centcom/cogmap
 	escape_transit = /area/shuttle/escape/transit/cogmap
 	escape_station = /area/shuttle/escape/station/cogmap
+	escape_def = SHUTTLE_SOUTH
+	escape_dir = SOUTH
 
 	merchant_left_centcom = /area/shuttle/merchant_shuttle/left_centcom/cogmap
 	merchant_left_station = /area/shuttle/merchant_shuttle/left_station/cogmap
 	merchant_right_centcom = /area/shuttle/merchant_shuttle/right_centcom/cogmap
 	merchant_right_station = /area/shuttle/merchant_shuttle/right_station/cogmap
+
+	valid_nuke_targets = list("the main security room" = list(/area/station/security/main),
+		"the central research sector hub" = list(/area/station/science/lobby),
+		"the cargo office (QM)" = list(/area/station/quartermaster/office),
+		"the engineering control room" = list(/area/station/engine/engineering, /area/station/engine/power),
+		"the central warehouse" = list(/area/station/storage/warehouse),
+		"the courtroom" = list(/area/station/crew_quarters/courtroom, /area/station/crew_quarters/juryroom),
+		"the medbay" = list(/area/station/medical/medbay, /area/station/medical/medbay/surgery, /area/station/medical/medbay/lobby),
+		"the station's cafeteria" = list(/area/station/crew_quarters/cafeteria),
+		"the EVA storage" = list(/area/station/ai_monitored/storage/eva),
+		"the robotics lab" = list(/area/station/medical/robotics),
+		"the bridge" = list(/area/station/bridge),
+		"the stock exchange at the public market" = list(/area/station/crew_quarters/stockex),
+		"the escape arm" = list(/area/station/hallway/secondary/exit),
+		"the central room of the crew lounge" = list(/area/station/crew_quarters/quarters),
+		"the chapel" = list(/area/station/chapel/sanctuary))
 
 /datum/map_settings/cogmap2
 	name = "COGMAP2"
@@ -248,6 +291,7 @@ var/global/list/mapNames = list(
 	escape_centcom = /area/shuttle/escape/centcom/cogmap2
 	escape_transit = /area/shuttle/escape/transit/cogmap2
 	escape_station = /area/shuttle/escape/station/cogmap2
+	escape_def = SHUTTLE_EAST
 	escape_dir = EAST
 
 	merchant_left_centcom = /area/shuttle/merchant_shuttle/left_centcom/cogmap2
@@ -256,15 +300,20 @@ var/global/list/mapNames = list(
 	merchant_right_station = /area/shuttle/merchant_shuttle/right_station/cogmap2
 
 	valid_nuke_targets = list("the main security room" = list(/area/station/security/main),
-		"the central research sector hub" = list(/area/station/science),
+		"the central research sector hub" = list(/area/station/science/lobby),
 		"the cargo bay (QM)" = list(/area/station/quartermaster/office),
-		"the thermo-electric generator room" = list(/area/station/engine/core),
+		//"the thermo-electric generator room" = list(/area/station/engine/core),
+		"the engine control room" = list(/area/station/engine/power),
 		"the refinery (arc smelter)" = list(/area/station/quartermaster/refinery),
 		"the medbay" = list(/area/station/medical/medbay, /area/station/medical/medbay/surgery),
 		"the station's cafeteria" = list(/area/station/crew_quarters/cafeteria),
 		"the net cafe" = list(/area/station/crew_quarters/info),
 		"the artifact lab" = list(/area/station/science/artifact),
-		"the genetics lab" = list(/area/station/medical/research))
+		"the genetics lab" = list(/area/station/medical/research),
+		"the chapel" = list(/area/station/chapel/sanctuary),
+		"the mining staff room" = list(/area/station/mining/staff_room),
+		"the bridge" = list(/area/station/bridge),
+		"the central warehouse, next to the refinery" = list(/area/station/storage/warehouse))
 
 /datum/map_settings/destiny
 	name = "DESTINY"
@@ -279,9 +328,13 @@ var/global/list/mapNames = list(
 	rwalls = /turf/simulated/wall/auto/reinforced/gannets
 	auto_walls = 1
 
+	ext_airlocks = /obj/machinery/door/airlock/pyro/external
+	airlock_style = "pyro"
+
 	escape_centcom = /area/shuttle/escape/centcom/destiny
 	escape_transit = /area/shuttle/escape/transit/destiny
 	escape_station = /area/shuttle/escape/station/destiny
+	escape_def = SHUTTLE_NORTH
 	escape_dir = NORTH
 
 	merchant_left_centcom = /area/shuttle/merchant_shuttle/left_centcom/destiny
@@ -290,32 +343,53 @@ var/global/list/mapNames = list(
 	merchant_right_station = /area/shuttle/merchant_shuttle/right_station/destiny
 
 	valid_nuke_targets = list("the main security room" = list(/area/station/security/main),
-		"the central research sector hub" = list(/area/station/science),
+		"the central research sector hub" = list(/area/station/science/lobby),
 		"the cargo bay (QM)" = list(/area/station/quartermaster/office),
 		"the thermo-electric generator room" = list(/area/station/engine/core),
-		"the refinery (arc smelter)" = list(/area/station/mining/refinery),
+		//"the refinery (arc smelter)" = list(/area/station/mining/refinery),
 		"the courtroom" = list(/area/station/crew_quarters/courtroom),
 		"the medbay" = list(/area/station/medical/medbay, /area/station/medical/medbay/lobby),
 		"the bar" = list(/area/station/crew_quarters/bar),
-		"the EVA storage" = list(/area/station/ai_monitored/storage/eva),
+		//"the EVA storage" = list(/area/station/ai_monitored/storage/eva),
 		"the artifact lab" = list(/area/station/science/artifact),
-		"the robotics lab" = list(/area/station/medical/robotics))
+		"the robotics lab" = list(/area/station/medical/robotics),
+		"the escape shuttle dock" = list(/area/station/hallway/secondary/exit),
+		"the kitchen" = list(/area/station/crew_quarters/kitchen))
 
 /datum/map_settings/destiny/clarion
 	name = "CLARION"
 	display_name = "NSS Clarion"
 	goonhub_map = "https://goonhub.com/maps/clarion"
 
+	walls = /turf/simulated/wall/auto/supernorn
+	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
+	auto_walls = 1
+
+	windows = /obj/window/auto
+	windows_thin = /obj/window/pyro
+	rwindows = /obj/window/auto/reinforced
+	rwindows_thin = /obj/window/reinforced/pyro
+	windows_crystal = /obj/window/auto/crystal
+	windows_rcrystal = /obj/window/auto/crystal/reinforced
+	window_layer_full = COG2_WINDOW_LAYER
+	window_layer_north = GRILLE_LAYER+0.1
+	window_layer_south = FLY_LAYER+1
+	auto_windows = 1
+
 	valid_nuke_targets = list("the main security room" = list(/area/station/security/main),
-		"the central research sector hub" = list(/area/station/science),
-		"the cargo bay (QM)" = list(/area/station/quartermaster/office),
+		"the central research sector hub" = list(/area/station/science/lobby),
+		"the quartermaster's office" = list(/area/station/quartermaster/office),
 		"the thermo-electric generator room" = list(/area/station/engine/core),
 		"the courtroom" = list(/area/station/crew_quarters/courtroom),
 		"the medbay" = list(/area/station/medical/medbay, /area/station/medical/medbay/lobby),
 		"the bar" = list(/area/station/crew_quarters/bar),
-		"the EVA storage" = list(/area/station/ai_monitored/storage/eva),
+		//"the EVA storage" = list(/area/station/ai_monitored/storage/eva),
 		"the artifact lab" = list(/area/station/science/artifact),
-		"the robotics lab" = list(/area/station/medical/robotics))
+		"the bridge" = list(/area/station/bridge),
+		"the community center (chapel)" = list(/area/station/chapel/sanctuary),
+		"the aviary" = list(/area/station/garden/aviary),
+		"the quartermaster's storage room" = list(/area/station/quartermaster/storage))
+		//"the robotics lab" = list(/area/station/medical/robotics))
 
 /datum/map_settings/horizon
 	name = "HORIZON"
@@ -343,6 +417,7 @@ var/global/list/mapNames = list(
 	escape_centcom = /area/shuttle/escape/centcom/cogmap2
 	escape_transit = /area/shuttle/escape/transit/cogmap2
 	escape_station = /area/shuttle/escape/station/cogmap2
+	escape_def = SHUTTLE_EAST
 	escape_dir = EAST
 
 	merchant_left_centcom = /area/shuttle/merchant_shuttle/left_centcom/cogmap
@@ -351,13 +426,38 @@ var/global/list/mapNames = list(
 	merchant_right_station = /area/shuttle/merchant_shuttle/right_station/cogmap
 
 	valid_nuke_targets = list("the courtroom" = list(/area/station/crew_quarters/courtroom),
-		"the chapel" = list(/area/station/chapel/main),
+		"the chapel" = list(/area/station/chapel/sanctuary),
 		"the main security room" = list(/area/station/security/main),
-		"the Quartermaster's Store (QM)" = list(/area/station/quartermaster),
+		"the Quartermaster's Store (QM)" = list(/area/station/quartermaster/office),
 		"the Engineering control room" = list(/area/station/engine/power),
 		"that snazzy-lookin' sports bar up front" = list(/area/station/crew_quarters/fitness),
 		"the main medical bay room" = list(/area/station/medical/medbay),
-		"the research artifact lounge" = list(/area/station/science/artifact))
+		"the research artifact lounge" = list(/area/station/science/artifact),
+		"the cloning lab" = list(/area/station/medical/medbay/cloner),
+		"the hot loop" = list(/area/station/engine/hotloop),
+		"the mechanics' lab" = list(/area/station/engine/elect),
+		"the mining staff room" = list(/area/station/mining/staff_room),
+		"the robotics lab" = list(/area/station/medical/robotics),
+		"the crew quarters on the south of the station" = list(/area/station/crew_quarters/quarters_south))
+
+	job_limits_override = list(
+		/datum/job/civilian/clown = 2,
+		/datum/job/security/security_officer = 6,
+		/datum/job/security/detective = 3,
+		/datum/job/research/geneticist = 3,
+		/datum/job/research/roboticist = 3,
+		/datum/job/research/scientist = 6,
+		/datum/job/research/medical_doctor = 7,
+		/datum/job/engineering/mechanic = 4,
+		/datum/job/engineering/miner = 4,
+		/datum/job/engineering/engineer = 6,
+		/datum/job/civilian/chef = 2,
+		/datum/job/civilian/bartender = 2,
+		/datum/job/civilian/janitor = 3,
+		/datum/job/civilian/chaplain = 2,
+		/datum/job/special/lawyer = 1,
+		/datum/job/special/atmospheric_technician = 1
+	)
 
 /datum/map_settings/manta
 	name = "MANTA"
@@ -387,6 +487,7 @@ var/global/list/mapNames = list(
 	escape_centcom = /area/shuttle/escape/centcom/manta
 	escape_transit = /area/shuttle/escape/transit/manta
 	escape_station = /area/shuttle/escape/station/manta
+	escape_def = SHUTTLE_MANTA
 	escape_dir = NORTH
 
 	merchant_left_centcom = /area/shuttle/merchant_shuttle/left_centcom/cogmap
@@ -398,9 +499,12 @@ var/global/list/mapNames = list(
 		"the cargo bay" = list(/area/station/quartermaster/cargobay),
 		"the bridge" = list(/area/station/bridge),
 		"the medbay lobby" = list(/area/station/medical/medbay/lobby),
-		"the engineering power room" = list(/area/station/engine/power),
-		"the chapel" = list(/area/station/chapel/main),
-		"the communications office" = list(/area/station/communications))
+		"the chapel" = list(/area/station/chapel/sanctuary),
+		"the communications office" = list(/area/station/communications/office),
+		"the courtroom" = list(/area/station/crew_quarters/courtroom),
+		"the chemistry lab" = list(/area/station/science/chemistry),
+		"the hydroponics bay" = list(/area/station/hydroponics/bay),
+		"the Rising Tide bar" = list(/area/station/crew_quarters/cafeteria/the_rising_tide_bar))
 
 /datum/map_settings/mushroom
 	name = "MUSHROOM"
@@ -425,6 +529,7 @@ var/global/list/mapNames = list(
 	escape_centcom = /area/shuttle/escape/centcom/cogmap2
 	escape_transit = /area/shuttle/escape/transit/cogmap2
 	escape_station = /area/shuttle/escape/station/cogmap2
+	escape_def = SHUTTLE_EAST
 	escape_dir = EAST
 
 /datum/map_settings/trunkmap
@@ -433,26 +538,8 @@ var/global/list/mapNames = list(
 	escape_centcom = /area/shuttle/escape/centcom/destiny
 	escape_transit = /area/shuttle/escape/transit/destiny
 	escape_station = /area/shuttle/escape/station/destiny
+	escape_def = SHUTTLE_NORTH
 	escape_dir = NORTH
-
-	merchant_left_centcom = /area/shuttle/merchant_shuttle/left_centcom/destiny
-	merchant_left_station = /area/shuttle/merchant_shuttle/left_station/destiny
-	merchant_right_centcom = /area/shuttle/merchant_shuttle/right_centcom/destiny
-	merchant_right_station = /area/shuttle/merchant_shuttle/right_station/destiny
-
-/datum/map_settings/linemap
-	name = "LINEMAP"
-	arrivals_type = MAP_SPAWN_CRYO
-	goonhub_map = "https://goonhub.com/maps/linemap"
-
-	walls = /turf/simulated/wall/auto/gannets
-	rwalls = /turf/simulated/wall/auto/reinforced/gannets
-	auto_walls = 1
-
-	escape_centcom = /area/shuttle/escape/centcom/donut2
-	escape_transit = /area/shuttle/escape/transit/donut2
-	escape_station = /area/shuttle/escape/station/donut2
-	escape_dir = WEST
 
 	merchant_left_centcom = /area/shuttle/merchant_shuttle/left_centcom/destiny
 	merchant_left_station = /area/shuttle/merchant_shuttle/left_station/destiny
@@ -475,6 +562,7 @@ var/global/list/mapNames = list(
 	escape_centcom = /area/shuttle/escape/centcom/cogmap2
 	escape_transit = /area/shuttle/escape/transit/cogmap2
 	escape_station = /area/shuttle/escape/station/cogmap2
+	escape_def = SHUTTLE_EAST
 	escape_dir = EAST
 
 	merchant_left_centcom = /area/shuttle/merchant_shuttle/left_centcom/cogmap
@@ -483,7 +571,7 @@ var/global/list/mapNames = list(
 	merchant_right_station = /area/shuttle/merchant_shuttle/right_station/cogmap
 
 	valid_nuke_targets = list("the main security room" = list(/area/station/security/main),
-		"the cargo bay (QM)" = list(/area/station/quartermaster/),
+		"the cargo bay (QM)" = list(/area/station/quartermaster/office/),
 		"the bridge" = list(/area/station/bridge/),
 		"the thermo-electric generator room" = list(/area/station/engine/core),
 		"the medbay" = list(/area/station/medical/medbay, /area/station/medical/medbay/surgery),
@@ -517,6 +605,7 @@ var/global/list/mapNames = list(
 	escape_centcom = /area/shuttle/escape/centcom/cogmap2
 	escape_transit = /area/shuttle/escape/transit/cogmap2
 	escape_station = /area/shuttle/escape/station/cogmap2
+	escape_def = SHUTTLE_EAST
 	escape_dir = EAST
 
 	merchant_left_centcom = /area/shuttle/merchant_shuttle/left_centcom/cogmap
@@ -532,7 +621,15 @@ var/global/list/mapNames = list(
 		"the medbay" = list(/area/station/medical/medbay, /area/station/medical/medbay/surgery),
 		"the station's cafeteria" = list(/area/station/crew_quarters/cafeteria),
 		"the artifact lab" = list(/area/station/science/artifact),
-		"the janitor's office" = list(/area/station/janitor))
+		"the janitor's office" = list(/area/station/janitor/office),
+		"the telescience lab" = list(/area/station/science/teleporter),
+		"the merchant docks" = list(/area/station/crew_quarters/market),
+		"the nerd dungeon" = list(/area/station/crew_quarters/arcade/dungeon),
+		"the chapel" = list(/area/station/chapel/sanctuary),
+		"the fitness room" = list(/area/station/crew_quarters/fitness),
+		"the news office" = list(/area/station/crew_quarters/radio/news_office),
+		"the central warehouse" = list(/area/station/storage/warehouse),
+		"the aviary" = list( /area/station/garden/aviary))
 
 /datum/map_settings/ozymandias
 	name = "OZYMANDIAS"
@@ -540,6 +637,14 @@ var/global/list/mapNames = list(
 	walls = /turf/simulated/wall/auto/supernorn
 	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
 	auto_walls = 1
+
+	job_limits_from_landmarks = 1
+	job_limits_override = list(
+		/datum/job/special/atmospheric_technician = 1,
+		/datum/job/special/barber = 1,
+		/datum/job/special/research_assistant = 2,
+		/datum/job/special/medical_assistant = 2
+	)
 
 	windows = /obj/window/auto
 	windows_thin = /obj/window/pyro
@@ -558,6 +663,7 @@ var/global/list/mapNames = list(
 	escape_centcom = /area/shuttle/escape/centcom/cogmap2
 	escape_transit = /area/shuttle/escape/transit/cogmap2
 	escape_station = /area/shuttle/escape/station/cogmap2
+	escape_def = SHUTTLE_EAST
 	escape_dir = EAST
 
 	merchant_left_centcom = /area/shuttle/merchant_shuttle/left_centcom/cogmap
@@ -566,7 +672,7 @@ var/global/list/mapNames = list(
 	merchant_right_station = /area/shuttle/merchant_shuttle/right_station/cogmap
 
 	valid_nuke_targets = list("the security equipment wing" = list(/area/station/security/equipment),
-		"the central research sector hub" = list(/area/station/science),
+		"the central research sector hub" = list(/area/station/science/lobby),
 		"the quartermasters' office" = list(/area/station/quartermaster/office),
 		"the thermo-electric generator room" = list(/area/station/engine/core),
 		"the basketball court" = list(/area/station/crew_quarters/fitness),
@@ -603,6 +709,7 @@ var/global/list/mapNames = list(
 	escape_centcom = /area/shuttle/escape/centcom/cogmap2
 	escape_transit = /area/shuttle/escape/transit/cogmap2
 	escape_station = /area/shuttle/escape/station/cogmap2
+	escape_def = SHUTTLE_EAST
 	escape_dir = EAST
 
 	merchant_left_centcom = /area/shuttle/merchant_shuttle/left_centcom/cogmap
@@ -610,8 +717,8 @@ var/global/list/mapNames = list(
 	merchant_right_centcom = /area/shuttle/merchant_shuttle/right_centcom/cogmap
 	merchant_right_station = /area/shuttle/merchant_shuttle/right_station/cogmap
 
-	valid_nuke_targets = list("the Demeter primary zone" = list(/area/station/aviary),
-		"the Tenebrae primary zone" = list(/area/station/science),
+	valid_nuke_targets = list("the Demeter primary zone" = list(/area/station/garden/aviary),
+		"the Tenebrae primary zone" = list(/area/station/science/lobby),
 		"the Asclepius primary zone" = list(/area/station/medical/medbay),
 		"the Meridian primary zone" = list(/area/station/crew_quarters/captain),
 		"the Dionysus primary zone" = list(/area/station/crew_quarters/cafeteria),
@@ -645,6 +752,7 @@ var/global/list/mapNames = list(
 	escape_centcom = /area/shuttle/escape/centcom/destiny
 	escape_transit = /area/shuttle/escape/transit/destiny
 	escape_station = /area/shuttle/escape/station/destiny
+	escape_def = SHUTTLE_NORTH
 	escape_dir = NORTH
 
 	merchant_left_centcom = /area/shuttle/merchant_shuttle/left_centcom/destiny
@@ -682,6 +790,7 @@ var/global/list/mapNames = list(
 	escape_centcom = /area/shuttle/escape/centcom/cogmap2
 	escape_transit = /area/shuttle/escape/transit/cogmap2
 	escape_station = /area/shuttle/escape/station/cogmap2
+	escape_def = SHUTTLE_EAST
 	escape_dir = EAST
 
 	merchant_left_centcom = /area/shuttle/merchant_shuttle/left_centcom/cogmap2
@@ -690,7 +799,7 @@ var/global/list/mapNames = list(
 	merchant_right_station = /area/shuttle/merchant_shuttle/right_station/cogmap2
 
 	valid_nuke_targets = list("the main security room" = list(/area/station/security/main),
-		"the central research sector hub" = list(/area/station/science),
+		"the central research sector hub" = list(/area/station/science/lobby),
 		"the cargo bay (QM)" = list(/area/station/quartermaster/office),
 		"the thermo-electric generator room" = list(/area/station/engine/core),
 		"the refinery (arc smelter)" = list(/area/station/quartermaster/refinery),
@@ -699,38 +808,6 @@ var/global/list/mapNames = list(
 		"the net cafe" = list(/area/station/crew_quarters/info),
 		"the artifact lab" = list(/area/station/science/artifact),
 		"the genetics lab" = list(/area/station/medical/research))
-
-/datum/map_settings/samedi
-	name = "SAMEDI"
-	goonhub_map = "https://goonhub.com/maps/samedi"
-
-	walls = /turf/simulated/wall/auto/supernorn
-	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
-	auto_walls = 1
-
-	windows = /obj/window/auto
-	windows_thin = /obj/window/pyro
-	rwindows = /obj/window/auto/reinforced
-	rwindows_thin = /obj/window/reinforced/pyro
-	windows_crystal = /obj/window/auto/crystal
-	windows_rcrystal = /obj/window/auto/crystal/reinforced
-	window_layer_full = COG2_WINDOW_LAYER
-	window_layer_north = GRILLE_LAYER+0.1
-	window_layer_south = FLY_LAYER+1
-	auto_windows = 1
-
-	ext_airlocks = /obj/machinery/door/airlock/pyro/external
-	airlock_style = "pyro"
-
-	escape_centcom = /area/shuttle/escape/centcom/cogmap2
-	escape_transit = /area/shuttle/escape/transit/cogmap2
-	escape_station = /area/shuttle/escape/station/cogmap2
-	escape_dir = EAST
-
-	merchant_left_centcom = /area/shuttle/merchant_shuttle/left_centcom/cogmap
-	merchant_left_station = /area/shuttle/merchant_shuttle/left_station/cogmap
-	merchant_right_centcom = /area/shuttle/merchant_shuttle/right_centcom/cogmap
-	merchant_right_station = /area/shuttle/merchant_shuttle/right_station/cogmap
 
 /datum/map_settings/pamgoc
 	name = "PAMGOC"
@@ -756,6 +833,8 @@ var/global/list/mapNames = list(
 	escape_centcom = /area/shuttle/escape/centcom/cogmap
 	escape_transit = /area/shuttle/escape/transit/cogmap
 	escape_station = /area/shuttle/escape/station/cogmap
+	escape_def = SHUTTLE_SOUTH
+	escape_dir = SOUTH
 
 	merchant_left_centcom = /area/shuttle/merchant_shuttle/left_centcom/cogmap
 	merchant_left_station = /area/shuttle/merchant_shuttle/left_station/cogmap
@@ -793,6 +872,8 @@ var/global/list/mapNames = list(
 	escape_centcom = /area/shuttle/escape/centcom/sealab
 	escape_transit = /area/shuttle/escape/transit/sealab
 	escape_station = /area/shuttle/escape/station/sealab
+	escape_def = SHUTTLE_OSHAN
+	escape_dir = EAST
 	shuttle_map_turf = /turf/space/fluid
 
 	merchant_left_centcom = /area/shuttle/merchant_shuttle/left_centcom/cogmap
@@ -806,8 +887,18 @@ var/global/list/mapNames = list(
 		"the courtroom" = list(/area/station/crew_quarters/courtroom),
 		"the medbay" = list(/area/station/medical/medbay),
 		"the bar" = list(/area/station/crew_quarters/bar),
-		"the chapel" = list(/area/station/chapel/main))
+		"the nerd dungeon" = list(/area/station/crew_quarters/arcade/dungeon),
+		"the chapel" = list(/area/station/chapel/sanctuary),
+		"the main security room" = list(/area/station/security/main),
+		"the main engineering room" = list(/area/station/engine/engineering, /area/station/hangar/engine),
+		"the research lobby" = list(/area/station/science/lobby),
+		"the crew quarters" = list(/area/station/crew_quarters/quartersA),
+		"the mining staff room" = list(/area/station/mining/staff_room))
 		//"the radio lab" = list(/area/station/crew_quarters/radio))
+
+	job_limits_override = list(
+		/datum/job/special/random/psychiatrist = 1
+	)
 
 /datum/map_settings/wrestlemap
 	name = "WRESTLEMAP"
@@ -834,6 +925,7 @@ var/global/list/mapNames = list(
 	escape_centcom = /area/shuttle/escape/centcom/destiny
 	escape_transit = /area/shuttle/escape/transit/destiny
 	escape_station = /area/shuttle/escape/station/destiny
+	escape_def = SHUTTLE_NORTH
 	escape_dir = NORTH
 
 	merchant_left_centcom = /area/shuttle/merchant_shuttle/left_centcom/cogmap
@@ -848,7 +940,7 @@ var/global/list/mapNames = list(
 		"outside the Ringularity" = list(/area/station/engine/inner),
 		"the courtroom" = list(/area/station/storage/warehouse),
 		"the medbay" = list(/area/station/medical/medbay, /area/station/medical/medbay),
-		"the security lobby" = list(/area/station/chapel/main),
+		"the security lobby" = list(/area/station/chapel/sanctuary),
 		"the chapel" = list(/area/station/security/secwing),
 		"the south crew quarters" = list(/area/station/crew_quarters/quarters_south))
 
@@ -870,7 +962,7 @@ var/global/list/mapNames = list(
 		icon_state = "shuttle_escape-sealab"
 	manta
 		icon_state = "shuttle_escape-manta"
-		filler_turf = "/turf/space/fluid/manta"
+		filler_turf = "/turf/space/fluid"
 	donut3
 		icon_state = "shuttle_escape-dnt3"
 

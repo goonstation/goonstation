@@ -6,6 +6,7 @@
 	var/datum/particle_maker_var_holder/P = null
 
 	New()
+		..()
 		P = new /datum/particle_maker_var_holder
 
 	proc/Run()

@@ -23,10 +23,10 @@
 	}
 
 /proc/uniquelist(var/list/L)
+	RETURN_TYPE(/list)
 	. = list()
 	for(var/item in L)
-		if(!(item in .))
-			. += item
+		. |= item
 
 proc/pickweight(list/L)    // make this global
 	var/total = 0
@@ -41,13 +41,14 @@ proc/pickweight(list/L)    // make this global
 	return null   // this should never happen, but it's a fallback
 
 /proc/reverse_list(var/list/the_list)
-	var/list/reverse = list()
-	for(var/i = the_list.len, i > 0, i--)
-		reverse.Add(the_list[i])
-	return reverse
+	RETURN_TYPE(/list)
+	. = list()
+	for(var/i = length(the_list), i > 0, i--)
+		. += the_list[i]
 
 //Based on code from Popisfizzy: http://www.byond.com/forum/?post=134331#comment750984
 proc/params2complexlist(params)
+	RETURN_TYPE(/list)
 	//This is a replacement for params2list that allows grouping with parentheses, to enable
 	//storing a list in a list.
 	//Example input: "name1=val1&name2=(name3=val3&name4=val4)&name5=val5"
@@ -56,7 +57,7 @@ proc/params2complexlist(params)
 	//name2 = name3=val3&name4=val4
 	//name5 = val5
 	if(!istext(params)) return
-	var/list/rlist = list()
+	. = list()
 	var/len = length(params)
 	var/element = null
 	var/a = 1,p_count = 1
@@ -64,7 +65,7 @@ proc/params2complexlist(params)
 		a++
 		//Found a separator for a parameter-value pair. Store it
 		if(findtext(params,"&",a,a+1))
-			rlist += params2list(copytext(params,1,a))
+			. += params2list(copytext(params,1,a))
 			params = copytext(params,a+1)
 			len = length(params)
 			a = 1
@@ -80,27 +81,26 @@ proc/params2complexlist(params)
 			p_count = 1
 			while(p_count)
 				a++
-				if(findtext(params,"(",a,a+1)) p_count ++
-				if(findtext(params,")",a,a+1)) p_count --
+				if(findtext(params,"(",a,a+1)) p_count++
+				if(findtext(params,")",a,a+1)) p_count--
 				if(a >= len && p_count)
 					//Didn't find matching parenthesis and at end of string
 					//Invalid params list
 					return
 
 			//Found a matching parenthesis. Store it and the value in the list
-			rlist[element] = copytext(params,1,a)
+			.[element] = copytext(params,1,a)
 
 			//Check if we need to parse more
 			if(a >= len)
-				return rlist
+				return
 			else
 				params = copytext(params,a+2)
 				len = length(params)
 				a = 1
 
 	//Parse the remaining param string for the last list element
-	rlist += params2list(copytext(params,1))
-	return rlist
+	. += params2list(copytext(params,1))
 
 /proc/next_in_list(var/thing, var/list)
 	if (thing == list[length(list)])

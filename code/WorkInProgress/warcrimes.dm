@@ -8,17 +8,9 @@ var/fartcount = 0
 	icon_state = "green"
 	name = "Big Yank's Cheap Tug"
 
-/area/shuttle/john/diner
-	icon_state = "shuttle"
-
-/area/shuttle/john/owlery
-	icon_state = "shuttle2"
-
-/area/shuttle/john/mining
-	icon_state = "shuttle2"
-
-/area/shuttle/john/grillnasium
-	icon_state = "shuttle"
+/area/diner/jucer_trader
+	icon_state = "green"
+	name = "Placeholder Paul's $STORE_NAME.shuttle"
 
 /obj/item/clothing/head/paper_hat/john
 	name = "John Bill's paper bus captain hat"
@@ -29,6 +21,7 @@ var/fartcount = 0
 	on = 1
 	put_out(var/mob/user as mob, var/message as text)
 		// how about we do literally nothing instead?
+		// please stop doing the thing you keep doing.
 
 /obj/item/clothing/shoes/thong
 	name = "garbage flip-flops"
@@ -64,7 +57,38 @@ var/fartcount = 0
 		setProperty("heatprot", 0)
 		setProperty("conductivity", 1)
 
-#define JOHN_PICK(WHAT) pick_string("johnbill.txt", WHAT)
+
+
+/obj/machinery/vending/meat //MEAT VENDING MACHINE
+	name = "Meat4cash"
+	desc = "An exotic meat vendor."
+	icon_state = "steak"
+	icon_panel = "standard-panel"
+	icon_off = "monkey-off"
+	icon_broken = "monkey-broken"
+	icon_fallen = "monkey-fallen"
+	pay = 1
+	acceptcard = 1
+	slogan_list = list("It's meat you can buy!",
+	"Trade your money for meat!",
+	"Buy the meat! It's meat!",
+	"Why not buy the meat?",
+	"Please, please buy meat.")
+
+	light_r = 0.9
+	light_g = 0.1
+	light_b = 0.1
+
+	create_products()
+		..()
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat, 10, cost=PAY_UNTRAINED/4)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat, 10, cost=PAY_UNTRAINED/5)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/ingredient/meat/synthmeat, 20, cost=PAY_UNTRAINED/6)
+
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat, 2, cost=PAY_UNTRAINED, hidden=1)
+
+
+
 
 // all of john's area specific lines here
 /area/var/john_talk = null
@@ -99,6 +123,8 @@ var/fartcount = 0
 /area/adventure/urs_dungeon/john_talk = list("This place smells like my bro.","Huh, Always wondered what those goggles did.","Huh, Always wondered what those goggles did.","Your hubris will be punished. Will you kill your fellow man to save yourself? Who harvests the harvestmen? What did it feel like when you lost your mind?")
 /area/grillnasium/grill_chamber/john_talk = list("You better know what you've started.","This is where it happens.")
 
+
+
 // bus driver
 /mob/living/carbon/human/john
 	real_name = "John Bill"
@@ -108,46 +134,48 @@ var/fartcount = 0
 	var/greeted_murray = 0
 	var/list/snacks = null
 	var/gotsmokes = 0
+	var/nude = 0
 
-
+	nude
+		nude = 1
 
 	New()
 		..()
-		johnbills += src
-		SPAWN_DBG(0)
-			bioHolder.mobAppearance.customization_first = "Tramp"
-			bioHolder.mobAppearance.customization_first_color = "#281400"
-			bioHolder.mobAppearance.customization_second = "Pompadour"
-			bioHolder.mobAppearance.customization_second_color = "#241200"
-			bioHolder.mobAppearance.customization_third = "Tramp: Beard Stains"
-			bioHolder.mobAppearance.customization_third_color = "#663300"
-			bioHolder.age = 63
-			bioHolder.bloodType = "A+"
-			bioHolder.mobAppearance.gender = "male"
-			bioHolder.mobAppearance.underwear = "briefs"
-			bioHolder.mobAppearance.u_color = "#996633"
+		START_TRACKING_CAT(TR_CAT_JOHNBILLS)
+		if(nude)
+			return
+		src.equip_new_if_possible(/obj/item/clothing/shoes/thong, slot_shoes)
+		src.equip_new_if_possible(/obj/item/clothing/under/color/orange, slot_w_uniform)
+		src.equip_new_if_possible(/obj/item/clothing/mask/cigarette/john, slot_wear_mask)
+		src.equip_new_if_possible(/obj/item/clothing/suit/labcoat, slot_wear_suit)
+		src.equip_new_if_possible(/obj/item/clothing/head/paper_hat/john, slot_head)
 
-			SPAWN_DBG(1 SECOND)
-				bioHolder.mobAppearance.UpdateMob()
-
-			src.equip_new_if_possible(/obj/item/clothing/shoes/thong, slot_shoes)
-			src.equip_new_if_possible(/obj/item/clothing/under/color/orange, slot_w_uniform)
-			src.equip_new_if_possible(/obj/item/clothing/mask/cigarette/john, slot_wear_mask)
-			src.equip_new_if_possible(/obj/item/clothing/suit/labcoat, slot_wear_suit)
-			src.equip_new_if_possible(/obj/item/clothing/head/paper_hat/john, slot_head)
-
-			var/obj/item/implant/access/infinite/shittybill/implant = new /obj/item/implant/access/infinite/shittybill(src)
-			implant.implanted(src, src)
+		var/obj/item/implant/access/infinite/shittybill/implant = new /obj/item/implant/access/infinite/shittybill(src)
+		implant.implanted(src, src)
 
 	disposing()
-		johnbills -= src
+		STOP_TRACKING_CAT(TR_CAT_JOHNBILLS)
 		..()
+
+	initializeBioholder()
+		bioHolder.mobAppearance.customization_first = "Tramp"
+		bioHolder.mobAppearance.customization_first_color = "#281400"
+		bioHolder.mobAppearance.customization_second = "Pompadour"
+		bioHolder.mobAppearance.customization_second_color = "#241200"
+		bioHolder.mobAppearance.customization_third = "Tramp: Beard Stains"
+		bioHolder.mobAppearance.customization_third_color = "#663300"
+		bioHolder.age = 63
+		bioHolder.bloodType = "A+"
+		bioHolder.mobAppearance.gender = "male"
+		bioHolder.mobAppearance.underwear = "briefs"
+		bioHolder.mobAppearance.u_color = "#996633"
+		. = ..()
 
 	// John Bill always goes to the afterlife bar.
 	death(gibbed)
 		..(gibbed)
 
-		johnbills.Remove(src)
+		STOP_TRACKING_CAT(TR_CAT_JOHNBILLS)
 
 		if (!src.client)
 			var/turf/target_turf = pick(get_area_turfs(/area/afterlife/bar/barspawn))
@@ -199,7 +227,7 @@ var/fartcount = 0
 			if(prob(15))
 				snacktime()
 			var/area/A = get_area(src)
-			if(prob(talk_prob) || A.john_talk)
+			if(prob(talk_prob) || A?.john_talk)
 				src.speak()
 
 	proc/snacktime()
@@ -215,8 +243,15 @@ var/fartcount = 0
 					src.visible_message("<span class='alert'>[src] horks up a lump from his stomach... </span>")
 			snacc.Eat(src,src,1)
 
+	proc/pacify()
+		src.a_intent = INTENT_HELP
+		src.target = null
+		src.ai_state = 0
+		src.ai_target = null
 
 	proc/speak()
+		if(nude)
+			return // nude john is for looking at, not listening to.
 		SPAWN_DBG(0)
 			var/list/grills = list()
 
@@ -230,7 +265,7 @@ var/fartcount = 0
 			var/area/A = get_area(src)
 			var/list/alive_mobs = list()
 			var/list/dead_mobs = list()
-			if (A.population && A.population.len)
+			if (A && A.population && length(A.population))
 				for(var/mob/living/M in oview(5,src))
 					if(!isdead(M))
 						alive_mobs += M
@@ -269,7 +304,7 @@ var/fartcount = 0
 					else
 						say("Anyone gonna fire up \the [G]?")
 
-			else if(prob(40) && dead_mobs && dead_mobs.len > 0) //SpyGuy for undefined var/len (what the heck)
+			else if(prob(40) && length(dead_mobs))
 				var/mob/M = pick(dead_mobs)
 				say("[JOHN_PICK("deadguy")] [M.name]...")
 			else if (alive_mobs.len > 0)
@@ -277,7 +312,7 @@ var/fartcount = 0
 					greeted_murray = 1
 					say("[JOHN_PICK("greetings")] Murray! How's it [JOHN_PICK("verbs")]?")
 					SPAWN_DBG(rand(20,40))
-						if (murray && murray.on && !murray.idle)
+						if (murray?.on && !murray.idle)
 							murray.speak("Hi, John! It's [JOHN_PICK("murraycompliment")] to see you here, of all places.")
 
 				else
@@ -287,6 +322,7 @@ var/fartcount = 0
 					switch(speech_type)
 						if(1)
 							say("[JOHN_PICK("greetings")] [M.name].")
+							M.add_karma(2)
 
 						if(2)
 							say("[JOHN_PICK("question")] you lookin' at, [JOHN_PICK("insults")]?")
@@ -319,11 +355,11 @@ var/fartcount = 0
 								say("Man, I sure don't miss [JOHN_PICK("dontmiss")].")
 
 						if(11)
-							say("I think my [JOHN_PICK("friends")] [JOHN_PICK("friendactions")].")
+							say("I think my [JOHN_PICK("friends")] [JOHN_PICK("friendsactions")].")
 
-					if (prob(25) && shittybills.len > 0)
+					if (prob(25) && length(by_cat[TR_CAT_SHITTYBILLS]))
 						SPAWN_DBG(3.5 SECONDS)
-							var/mob/living/carbon/human/biker/MB = pick(shittybills)
+							var/mob/living/carbon/human/biker/MB = pick(by_cat[TR_CAT_SHITTYBILLS])
 							switch (speech_type)
 								if (4)
 									MB.say("You borrowed mine fifty years ago, and I never got it back.")
@@ -377,10 +413,7 @@ var/fartcount = 0
 			SPAWN_DBG(1 DECI SECOND)
 				say("Oh? [W] eh?")
 				say(pick("No kiddin' fer me?","I guess I could go fer a quick one yeah!","Oh dang dang dang! Haven't had one of these babies in a while!","Well I never get tired of those!","You're offering this to me? Don't mind if i do, [JOHN_PICK("people")]"))
-				src.a_intent = INTENT_HELP // pacify a juicer with food, obviously
-				src.target = null
-				src.ai_state = 0
-				src.ai_target = null
+				pacify()
 
 				if (istype(W, /obj/item/clothing/mask/cigarette/cigarillo/juicer))
 					gotsmokes = 1
@@ -427,20 +460,22 @@ var/fartcount = 0
 			return
 		..()
 
-	was_harmed(var/mob/M as mob, var/obj/item/weapon = 0, var/special = 0)
+	was_harmed(var/mob/M as mob, var/obj/item/weapon = 0, var/special = 0, var/intent = null)
+		. = ..()
 		if (special) //vamp or ling
 			src.target = M
-			src.ai_state = 2
+			src.ai_state = AI_ATTACKING
 			src.ai_threatened = world.timeofday
 			src.ai_target = M
 			src.a_intent = INTENT_HARM
 			src.ai_set_active(1)
 
-		for (var/mob/SB in shittybills)
+		for (var/mob/SB in by_cat[TR_CAT_SHITTYBILLS])
 			var/mob/living/carbon/human/biker/S = SB
 			if (get_dist(S,src) <= 7)
 				if(!(S.ai_active) || (prob(25)))
 					S.say("That's my brother, you [JOHN_PICK("insults")]!")
+					M.add_karma(-1)
 				S.target = M
 				S.ai_set_active(1)
 				S.a_intent = INTENT_HARM
@@ -448,212 +483,6 @@ var/fartcount = 0
 
 
 
-var/bombini_saved = 0
-
-/obj/machinery/computer/shuttle_bus
-	name = "John's Bus"
-	icon_state = "shuttle"
-	machine_registry_idx = MACHINES_SHUTTLECOMPS
-
-/obj/machinery/computer/shuttle_bus/embedded
-	icon_state = "shuttle-embed"
-	density = 0
-	layer = EFFECTS_LAYER_1 // Must appear over cockpit shuttle wall thingy.
-
-
-	north
-		dir = NORTH
-		pixel_y = 25
-
-	east
-		dir = EAST
-		pixel_x = 25
-
-	south
-		dir = SOUTH
-		pixel_y = -25
-
-	west
-		dir = WEST
-		pixel_x = -25
-
-
-
-
-/obj/machinery/computer/shuttle_bus/attack_hand(mob/user as mob)
-	if(..())
-		return
-	var/dat = "<a href='byond://?src=\ref[src];close=1'>Close</a><BR><BR>"
-
-	switch(johnbus_location)
-		if(0)
-			dat += "Shuttle Location: Diner"
-		if(1)
-			dat += "Shuttle Location: Frontier Space Owlery"
-		if(2)
-			dat += "Shuttle Location: Old Mining Station"
-		if(3)
-			dat += "Shuttle Location: Juicer Schweet's"
-
-
-	dat += "<BR>"
-	switch(johnbus_destination)
-		if(0)
-			dat += "Shuttle Destination: Diner"
-		if(1)
-			dat += "Shuttle Destination: Frontier Space Owlery"
-		if(2)
-			dat += "Shuttle Destination: Old Mining Station"
-		if(3)
-			dat += "Shuttle Destination: Juicer Schweet's"
-
-	dat += "<BR><BR>"
-	if(johnbus_active)
-		dat += "Status: Cruisin"
-	else
-		dat += "<a href='byond://?src=\ref[src];dine=1'>Set Target: Diner</a><BR>"
-		dat += "<a href='byond://?src=\ref[src];owle=1'>Set Target: Owlery</a><BR>"
-#ifndef UNDERWATER_MAP
-		dat += "<a href='byond://?src=\ref[src];mine=1'>Set Target: Old Mining Station</a><BR>"
-#endif
-		if(johnbill_shuttle_fartnasium_active)
-			dat += "<a href='byond://?src=\ref[src];fart=1'>Set Target: Juicer Schweet's</a><BR>"
-		dat += "<BR>"
-		if (johnbus_location != johnbus_destination)
-			dat += "<a href='byond://?src=\ref[src];send=1'>Send It</a><BR><BR>"
-		else
-			dat += "Let's go somewhere else, ok?<BR>"
-
-	user.Browse(dat, "window=shuttle")
-	onclose(user, "shuttle")
-	return
-
-/obj/machinery/computer/shuttle_bus/Topic(href, href_list)
-	if(..())
-		return
-	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
-		src.add_dialog(usr)
-
-		if (href_list["send"])
-			if(!johnbus_active)
-				var/turf/T = get_turf(src)
-				johnbus_active = 1
-				for(var/obj/machinery/computer/shuttle_bus/C in machine_registry[MACHINES_SHUTTLECOMPS])
-
-					C.visible_message("<span class='alert'>John is starting up the engines, this could take a minute!</span>")
-
-				for(var/obj/machinery/computer/shuttle_bus/embedded/B in machine_registry[MACHINES_SHUTTLECOMPS])
-					T = get_turf(B)
-					SPAWN_DBG(1 DECI SECOND)
-						playsound(T, "sound/effects/ship_charge.ogg", 60, 1)
-						sleep(3 SECONDS)
-						playsound(T, "sound/machines/weaponoverload.ogg", 60, 1)
-						src.visible_message("<span class='alert'>The shuttle is making a hell of a racket!</span>")
-						sleep(5 SECONDS)
-						playsound(T, "sound/impact_sounds/Machinery_Break_1.ogg", 60, 1)
-						for(var/mob/living/M in range(src.loc, 10))
-							shake_camera(M, 5, 2)
-
-						sleep(2 SECONDS)
-						playsound(T, "sound/effects/creaking_metal2.ogg", 70, 1)
-						sleep(3 SECONDS)
-						src.visible_message("<span class='alert'>The shuttle engine alarms start blaring!</span>")
-						playsound(T, "sound/machines/pod_alarm.ogg", 60, 1)
-						var/obj/decal/fakeobjects/shuttleengine/smokyEngine = locate() in get_area(src)
-						var/datum/effects/system/harmless_smoke_spread/smoke = new /datum/effects/system/harmless_smoke_spread()
-						smoke.set_up(5, 0, smokyEngine)
-						smoke.start()
-						sleep(4 SECONDS)
-						playsound(T, "sound/machines/boost.ogg", 60, 1)
-						for(var/mob/living/M in range(src.loc, 10))
-							shake_camera(M, 10, 4)
-
-				T = get_turf(src)
-				SPAWN_DBG(25 SECONDS)
-					playsound(T, "sound/effects/flameswoosh.ogg", 70, 1)
-					call_shuttle()
-
-		else if (href_list["dine"])
-			if(!johnbus_active)
-				johnbus_destination = 0
-				var/turf/T = get_turf(src)
-				playsound(T, "sound/machines/glitch1.ogg", 60, 1)
-
-		else if (href_list["owle"])
-			if(!johnbus_active)
-				johnbus_destination = 1
-				var/turf/T = get_turf(src)
-				playsound(T, "sound/machines/glitch1.ogg", 60, 1)
-
-		else if (href_list["mine"])
-			if(!johnbus_active)
-				johnbus_destination = 2
-				var/turf/T = get_turf(src)
-				playsound(T, "sound/machines/glitch1.ogg", 60, 1)
-
-		else if (href_list["fart"])
-			if(!johnbus_active)
-				johnbus_destination = 3
-				var/turf/T = get_turf(src)
-				playsound(T, "sound/machines/glitch1.ogg", 60, 1)
-
-
-		else if (href_list["close"])
-			src.remove_dialog(usr)
-			usr.Browse(null, "window=shuttle")
-
-	src.add_fingerprint(usr)
-	src.updateUsrDialog()
-	return
-
-
-/obj/machinery/computer/shuttle_bus/proc/call_shuttle()
-	var/area/end_location = null
-	var/area/start_location = null
-
-	switch(johnbus_destination)
-		if(0)
-			end_location = locate(/area/shuttle/john/diner)
-		if(1)
-			end_location = locate(/area/shuttle/john/owlery)
-		if(2)
-			end_location = locate(/area/shuttle/john/mining)
-		if(3)
-			end_location = locate(/area/shuttle/john/grillnasium)
-
-	switch(johnbus_location)
-		if(0)
-			start_location = locate(/area/shuttle/john/diner)
-			start_location.move_contents_to(end_location)
-
-		if(1)
-			start_location = locate(/area/shuttle/john/owlery)
-
-			if(!bombini_saved)
-				for(var/obj/npc/trader/bee/b in start_location)
-					bombini_saved = 1
-					for(var/mob/M in start_location)
-						boutput(M, "<span class='notice'>It would be great if things worked that way, but they don't. You'll need to find what <b>Bombini</b> is missing, now.</span>")
-
-			start_location.move_contents_to(end_location)
-
-		if(2)
-			start_location = locate(/area/shuttle/john/mining)
-			start_location.move_contents_to(end_location)
-
-		if(3)
-			start_location = locate(/area/shuttle/john/grillnasium)
-			start_location.move_contents_to(end_location)
-
-	johnbus_location = johnbus_destination
-
-	johnbus_active = 0
-
-	for(var/obj/machinery/computer/shuttle_bus/C in machine_registry[MACHINES_TURRETS])
-
-		C.visible_message("<span class='alert'>John's Juicin' Bus has Moved!</span>")
-
-	return
 
 obj/decal/fakeobjects/thrust
 	icon = 'icons/effects/effects.dmi'
@@ -799,7 +628,7 @@ Urs' Hauntdog critter
 		if(act == "scream" && src.emote_check(voluntary, 50))
 			var/turf/T = get_turf(src)
 			var/hogg = pick("sound/voice/hagg_vorbis.ogg","sound/voice/hogg_vorbis.ogg","sound/voice/hogg_vorbis_the.ogg","sound/voice/hogg_vorbis_screams.ogg","sound/voice/hogg_with_scream.ogg","sound/voice/hoooagh2.ogg","sound/voice/hoooagh.ogg",)
-			playsound(T, hogg, 60, 1)
+			playsound(T, hogg, 60, 1, channel=VOLUME_CHANNEL_EMOTE)
 			return "<span class='emote'><b>[src]</b> screeeams!</span>"
 		return null
 
@@ -818,6 +647,7 @@ Urs' Hauntdog critter
 			"You screams!")
 			var/hogg = pick("sound/voice/hagg_vorbis.ogg","sound/voice/hogg_vorbis.ogg","sound/voice/hogg_vorbis_the.ogg","sound/voice/hogg_vorbis_screams.ogg","sound/voice/hogg_with_scream.ogg","sound/voice/hoooagh2.ogg","sound/voice/hoooagh.ogg",)
 			playsound(T, hogg, 60, 1)
+			user.add_karma(1.5)
 
 // ########################
 // # Horizon  audio  logs #
@@ -843,5 +673,18 @@ Urs' Hauntdog critter
 							"???")
 
 
+/mob/living/carbon/human/geneticist
+	is_npc = 1
+	uses_mobai = 1
+	real_name = "Juicer Gene"
+	gender = NEUTER
+	max_health = 50
 
-#undef JOHN_PICK
+	New()
+		..()
+		src.ai = new /datum/aiHolder/human/geneticist(src)
+		src.equip_new_if_possible(/obj/item/clothing/shoes/dress_shoes, slot_shoes)
+		src.equip_new_if_possible(/obj/item/clothing/under/rank/geneticist, slot_w_uniform)
+		src.equip_new_if_possible(/obj/item/clothing/suit/labcoat/pathology, slot_wear_suit)
+		if(prob(50))
+			src.equip_new_if_possible(/obj/item/clothing/glasses/regular, slot_glasses)

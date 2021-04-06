@@ -311,8 +311,8 @@ var/reverse_mode = 0
 	var/beingUsed = 0
 
 	New()
+		..()
 		loop()
-		return
 
 	proc/loop()
 		if (!active)
@@ -577,6 +577,7 @@ var/reverse_mode = 0
 				boutput(O, "<span class='alert'><B>[my_target] stumbles around.</B></span>")
 
 /obj/fake_attacker/New(location, target)
+	..()
 	SPAWN_DBG(30 SECONDS)	qdel(src)
 	src.my_target = target
 	step_away(src,my_target,2)
@@ -604,7 +605,7 @@ var/reverse_mode = 0
 				if (narrator_mode)
 					my_target << sound('sound/vox/hit.ogg')
 				else
-					my_target << sound(pick('sound/impact_sounds/Generic_Punch_2.ogg','sound/impact_sounds/Generic_Punch_3.ogg','sound/impact_sounds/Generic_Punch_4.ogg','sound/impact_sounds/Generic_Punch_5.ogg'))
+					my_target << pick(sounds_punch)
 				my_target.show_message("<span class='alert'><B>[src.name] has punched [my_target]!</B></span>", 1)
 				if (prob(33))
 					if (!locate(/obj/overlay) in my_target.loc)

@@ -5,10 +5,28 @@
  * @license ISC
  */
 
-import EmptyPlaceholder from '../EmptyPlaceholder';
-import Tool from './Tool';
+import { Button } from '../../../components';
+import { EmptyPlaceholder } from '../EmptyPlaceholder';
+import * as styles from '../style';
 
-const Tools = props => {
+const Tool = props => {
+  const {
+    children,
+    onMoveToolDown,
+    onMoveToolUp,
+    onRemoveTool,
+  } = props;
+  return (
+    <div>
+      <Button icon="arrow-up" onClick={onMoveToolUp} title="Move Up" />
+      <Button icon="arrow-down" onClick={onMoveToolDown} title="Move Down" />
+      <Button icon="trash" onClick={onRemoveTool} title="Remove" />
+      <span className={styles.ToolLabel}>{children}</span>
+    </div>
+  );
+};
+
+export const Tools = props => {
   const {
     onMoveToolDown,
     onMoveToolUp,
@@ -29,7 +47,8 @@ const Tools = props => {
                 onMoveToolDown={() => onMoveToolDown(toolRef)}
                 onMoveToolUp={() => onMoveToolUp(toolRef)}
                 onRemoveTool={() => onRemoveTool(toolRef)}
-                key={toolRef}>
+                key={toolRef}
+              >
                 {name}
               </Tool>
             );
@@ -39,5 +58,3 @@ const Tools = props => {
     </div>
   );
 };
-
-export default Tools;

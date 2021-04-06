@@ -57,10 +57,8 @@ var/linenums = 0
 	P = nodes[nodes.len]						// last node in list
 	vnode2 = P.node2							// n2 points to last machine
 
-	if(vnode1)
-		vnode1.buildnodes()
-	if(vnode2)
-		vnode2.buildnodes()
+	vnode1?.buildnodes()
+	vnode2?.buildnodes()
 
 	return
 
@@ -176,7 +174,7 @@ var/linenums = 0
 // build the pipelines (THIS HAPPENS ONCE!)
 /proc/makepipelines()
 
-	for(var/obj/machinery/pipes/P in machine_registry[MACHINES_PIPES])		// look for a pipe
+	for(var/obj/machinery/pipes/P as anything in machine_registry[MACHINES_PIPES])		// look for a pipe
 
 		if(!P.plnum)							// if not already part of a line
 			P.buildnodes(++linenums)			// add it, and spread to all connected pipes
@@ -191,7 +189,7 @@ var/linenums = 0
 
 
 
-	for(var/obj/machinery/pipes/P in machine_registry[MACHINES_PIPES])		// look for pipes
+	for(var/obj/machinery/pipes/P as anything in machine_registry[MACHINES_PIPES])		// look for pipes
 
 		if(P.termination)						// true if pipe is terminated (ends in blank or a machine)
 			var/obj/machinery/pipeline/PL = plines[P.plnum]		// get the pipeline from the pipe's pl-number
@@ -204,7 +202,7 @@ var/linenums = 0
 
 
 
-	for(var/obj/machinery/pipes/P in machine_registry[MACHINES_PIPES])		// all pipes
+	for(var/obj/machinery/pipes/P as anything in machine_registry[MACHINES_PIPES])		// all pipes
 		P.setline()								// 	set the pipeline object for this pipe
 
 		if(P.tag == "dbg")		//add debug tag to line containing debug pipe
@@ -241,7 +239,7 @@ var/linenums = 0
 		newnode = node.next(prev)
 		prev = node
 
-		if(newnode && newnode.ispipe())
+		if(newnode?.ispipe())
 			node = newnode
 		else
 			break
@@ -262,9 +260,9 @@ var/linenums = 0
 /obj/machinery/pipes/next(var/obj/machinery/from)
 
 	if(from == null)		// if from null, then return the next actual pipe
-		if(node1 && node1.ispipe() )
+		if(node1?.ispipe() )
 			return node1
-		if(node2 && node2.ispipe() )
+		if(node2?.ispipe() )
 			return node2
 		return null			// else return null if no real pipe connected
 
@@ -479,7 +477,6 @@ var/linenums = 0
 				makepowernets()
 
 		//src.master = null
-		//SN src = null
 		qdel(src)
 		return
 
@@ -530,8 +527,6 @@ var/linenums = 0
 	//src.master = null
 	defer_powernet_rebuild = 0
 	makepowernets()
-
-	//SN src = null
 	qdel(src)
 	return
 */
@@ -571,13 +566,13 @@ var/linenums = 0
 
 	termination = 0
 
-	if(node1 && node1.ispipe() )
+	if(node1?.ispipe() )
 
 		node1.buildnodes(linenum)
 	else
 		termination++
 
-	if(node2 && node2.ispipe() )
+	if(node2?.ispipe() )
 		node2.buildnodes(linenum)
 	else
 		termination++
@@ -614,13 +609,13 @@ var/linenums = 0
 
 	termination = 0
 
-	if(node1 && node1.ispipe() )
+	if(node1?.ispipe() )
 
 		node1.buildnodes(linenum)
 	else
 		termination++
 
-	if(node2 && node2.ispipe() )
+	if(node2?.ispipe() )
 		node2.buildnodes(linenum)
 	else
 		termination++

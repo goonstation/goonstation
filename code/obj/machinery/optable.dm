@@ -22,12 +22,10 @@
 
 	switch(severity)
 		if(1.0)
-			//SN src = null
 			qdel(src)
 			return
 		if(2.0)
 			if (prob(50))
-				//SN src = null
 				qdel(src)
 				return
 		if(3.0)
@@ -41,7 +39,7 @@
 		qdel(src)
 
 /obj/machinery/optable/attack_hand(mob/user as mob)
-	if (usr.is_hulk())
+	if (user.is_hulk())
 		user.visible_message("<span class='alert'>[user] destroys the table.</span>")
 		src.set_density(0)
 		qdel(src)
@@ -92,7 +90,7 @@
 			qdel(W)
 			return
 	user.drop_item()
-	if(W && W.loc)
+	if(W?.loc)
 		W.set_loc(src.loc)
 	return
 

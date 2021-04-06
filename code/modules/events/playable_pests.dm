@@ -82,15 +82,18 @@
 			if (src.num_pests) //customized
 				src.num_pests = min(src.num_pests, candidates.len)
 			else
-				src.num_pests = candidates.len
+				src.num_pests = length(candidates)
 
 			for (var/i in 1 to src.num_pests)
-				if (!candidates || !candidates.len)
+				if (!candidates || !length(candidates))
 					break
 
 				var/datum/mind/M = pick(candidates)
 				if (M.current)
 					M.current.make_ghost_critter(pestlandmark,select)
+					var/obj/item/implant/access/infinite/assistant/O = new /obj/item/implant/access/infinite/assistant(M.current)
+					O.owner = M.current
+					O.implanted = 1
 				candidates -= M
 
 			pestlandmark.visible_message("A group of pests emerge from their hidey-hole!")

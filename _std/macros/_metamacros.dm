@@ -31,6 +31,7 @@ Example:
 #define TUPLE_GET_7(x) x(_GETTER_7)
 #define TUPLE_GET_8(x) x(_GETTER_8)
 
-
+/// Given x, evaluates to x.
 #define IDENTITY(x) x
+/// Evaluates to nothing.
 #define NOTHING(x)

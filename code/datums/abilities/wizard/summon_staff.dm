@@ -29,8 +29,7 @@
 
 		var/list/staves = list()
 		var/we_hold_it = 0
-		for (var/X in by_type[/obj/item/staff/cthulhu])
-			var/obj/item/staff/cthulhu/S = X
+		for_by_tcl(S, /obj/item/staff/cthulhu)
 			if (M.mind && M.mind.key == S.wizard_key)
 				if (S == M.find_in_hand(S))
 					we_hold_it = 1

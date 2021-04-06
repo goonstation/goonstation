@@ -1,4 +1,5 @@
 
+
 /proc/scan_health(var/mob/M as mob, var/verbose_reagent_info = 0, var/disease_detection = 1, var/organ_scan = 0, var/visible = 0)
 	if (!M)
 		return "<span class='alert'>ERROR: NO SUBJECT DETECTED</span>"
@@ -161,6 +162,8 @@
 				organ_data1 += organ_health_scan("spleen", H, obfuscate)
 				organ_data1 += organ_health_scan("pancreas", H, obfuscate)
 				organ_data1 += organ_health_scan("appendix", H, obfuscate)
+				if(H.organHolder.tail || H.mob_flags & SHOULD_HAVE_A_TAIL)
+					organ_data1 += organ_health_scan("tail", H, obfuscate)
 
 				//Don't give organ readings for Vamps.
 				if (organ_data1 && !isvampire(H))
@@ -178,14 +181,14 @@
 	if (R)
 		rad_data = "&emsp;<span class='alert'>Radiation poisoning: Lv [R.stage]</span>"
 	if (NR)
-		nrad_data = "&emsp;<span class='notice'>Neutron Radiation poisoning: Lv [NR.stage]</span>"
+		nrad_data = "&emsp;<span class='alert'>Neutron Radiation poisoning: Lv [NR.stage]</span>"
 	for (var/datum/ailment_data/A in M.ailments)
 		if (disease_detection >= A.detectability)
 			disease_data += "<br>[A.scan_info()]"
 
 	if (M.reagents)
 		if (verbose_reagent_info)
-			reagent_data = scan_reagents(M, 0)
+			reagent_data = scan_reagents(M, 0, 0, 0, 1)
 		else
 			var/ephe_amt = M.reagents:get_reagent_amount("ephedrine")
 			var/epi_amt = M.reagents:get_reagent_amount("epinephrine")
@@ -246,20 +249,23 @@
 /proc/obfuscate_organ_health(var/obj/item/organ/O)
 	if (!O)
 		return null
+	var/list/ret = list()
 	var/damage = O.get_damage()
-
 	if (damage >= O.MAX_DAMAGE)
-		return "<br><span class='alert'><b>[O.name]</b> - Dead</span>"
+		ret += "<br><span class='alert'><b>[O.name]</b> - Dead</span>"
 	else if (damage >= O.MAX_DAMAGE*0.9)
-		return "<br><span class='alert'><b>[O.name]</b> - Critical</span>"
+		ret += "<br><span class='alert'><b>[O.name]</b> - Critical</span>"
 	else if (damage >= O.MAX_DAMAGE*0.65)
-		return "<br><span class='alert'><b>[O.name]</b> - Significant</span>"
+		ret += "<br><span class='alert'><b>[O.name]</b> - Significant</span>"
 	else if (damage >= O.MAX_DAMAGE*0.30)
-		return "<br><span style='color:purple'><b>[O.name]</b> - Moderate</span>"
+		ret += "<br><span style='color:purple'><b>[O.name]</b> - Moderate</span>"
 	else if (damage > 0)
-		return "<br><span style='color:purple'><b>[O.name]</b> - Minor</span>"
-
-	return null
+		ret += "<br><span style='color:purple'><b>[O.name]</b> - Minor</span>"
+	else if (O.robotic)
+		ret += "<br><span style='color:purple'><b>[O.name]</b></span>"
+	if (O.robotic)
+		ret += "<span style='color:purple'> - Robotic organ detected</span>"
+	return ret.Join()
 
 /proc/update_medical_record(var/mob/living/carbon/human/M)
 	if (!M || !ishuman(M))
@@ -273,8 +279,8 @@
 		if (E.fields["name"] == patientname)
 			switch (M.stat)
 				if (0)
-					if (M.bioHolder && M.bioHolder.HasEffect("fat"))
-						E.fields["p_stat"] = "Physically Unfit"
+					if (M.bioHolder && M.bioHolder.HasEffect("strong"))
+						E.fields["p_stat"] = "Very Active"
 					else
 						E.fields["p_stat"] = "Active"
 				if (1)
@@ -293,7 +299,7 @@
 			break
 	return
 
-/proc/scan_reagents(var/atom/A as turf|obj|mob, var/show_temp = 1, var/single_line = 0, var/visible = 0)
+/proc/scan_reagents(var/atom/A as turf|obj|mob, var/show_temp = 1, var/single_line = 0, var/visible = 0, var/medical = 0)
 	if (!A)
 		return "<span class='alert'>ERROR: NO SUBJECT DETECTED</span>"
 
@@ -320,20 +326,20 @@
 					data = "<span class='alert'>ERR: SPECTROSCOPIC ANALYSIS OF THIS SUBSTANCE IS NOT POSSIBLE.</span>"
 					return data
 
-			var/reagents_length = reagents.reagent_list.len
+			var/reagents_length = length(reagents.reagent_list)
 			data = "<span class='notice'>[reagents_length] chemical agent[reagents_length > 1 ? "s" : ""] found in [A].</span>"
 
 			for (var/current_id in reagents.reagent_list)
 				var/datum/reagent/current_reagent = reagents.reagent_list[current_id]
+				var/show_OD = (medical && current_reagent.overdose != 0 && current_reagent.volume >= current_reagent.overdose)
 				if (single_line)
-					reagent_data += " [current_reagent] ([current_reagent.volume]),"
+					reagent_data += "<span [show_OD ? "class='alert'" : "class='notice'"]>[current_reagent] ([current_reagent.volume])[show_OD? " - OD!":""]</span>,"
 				else
-					reagent_data += "<br>&emsp;[current_reagent.name] - [current_reagent.volume]"
-
+					reagent_data += "<span [show_OD ? "class='alert'" : "class='notice'"]><br>&emsp;[current_reagent.name] - [current_reagent.volume][show_OD? " - OD!":""]</span>"
 			if (single_line)
-				data += "<span class='notice'>[copytext(reagent_data, 1, -1)]</span>"
+				data += "[copytext(reagent_data, 1, -1)]"
 			else
-				data += "<span class='notice'>[reagent_data]</span>"
+				data += "[reagent_data]"
 
 			if (show_temp)
 				data += "<br><span class='notice'>Overall temperature: [reagents.total_temperature - T0C]&deg;C ([reagents.total_temperature * 1.8-459.67]&deg;F)</span>"
@@ -509,7 +515,7 @@
 
 		if (istype(A, /turf/simulated/wall))
 			var/turf/simulated/wall/W = A
-			if (W.forensic_impacts && islist(W.forensic_impacts) && W.forensic_impacts.len)
+			if (W.forensic_impacts && islist(W.forensic_impacts) && length(W.forensic_impacts))
 				for(var/i in W.forensic_impacts)
 					forensic_data += "<br><span class='notice'>Forensic signature found:</span> [i]"
 
@@ -535,6 +541,8 @@
 
 // Made this a global proc instead of 10 or so instances of duplicate code spread across the codebase (Convair880).
 /proc/scan_atmospheric(var/atom/A as turf|obj, var/pda_readout = 0, var/simple_output = 0, var/visible = 0)
+	if (istype(A, /obj/ability_button))
+		return
 	if (!A)
 		if (pda_readout == 1)
 			return "Unable to obtain a reading."
@@ -569,8 +577,8 @@
 		var/obj/item/assembly/proximity_bomb/PB = A
 		if (PB.part3)
 			check_me = PB.part3.air_contents
-	if (istype(A, /obj/item/flamethrower/assembled/))
-		var/obj/item/flamethrower/assembled/FT = A
+	if (istype(A, /obj/item/gun/flamethrower/assembled/))
+		var/obj/item/gun/flamethrower/assembled/FT = A
 		if (FT.gastank)
 			check_me = FT.gastank.air_contents
 

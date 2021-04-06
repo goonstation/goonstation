@@ -1,7 +1,7 @@
 // NO GLOVES NO LOVES
 
 var/list/glove_IDs = new/list() //Global list of all gloves. Identical to Cogwerk's forensic ID system (Convair880).
-
+ABSTRACT_TYPE(/obj/item/clothing/gloves)
 /obj/item/clothing/gloves
 	name = "gloves"
 	w_class = 2.0
@@ -44,7 +44,6 @@ var/list/glove_IDs = new/list() //Global list of all gloves. Identical to Cogwer
 			src.glove_ID = src.CreateID()
 			if (glove_IDs) // fix for Cannot execute null.Add(), maybe??
 				glove_IDs.Add(src.glove_ID)
-		return
 
 	examine()
 		. = ..()
@@ -176,19 +175,18 @@ var/list/glove_IDs = new/list() //Global list of all gloves. Identical to Cogwer
 	proc/setSpecialOverride(var/type = null, active = 1)
 		if(!ispath(type))
 			if(isnull(type))
-				if(src.specialoverride)
-					src.specialoverride.onRemove()
+				src.specialoverride?.onRemove()
 				src.specialoverride = null
 			return null
 
-		if(src.specialoverride)
-			src.specialoverride.onRemove()
+		src.specialoverride?.onRemove()
 
 		var/datum/item_special/S = new type
 		S.master = src
 		src.overridespecial = active
 		S.onAdd()
 		src.specialoverride = S
+		src.tooltip_rebuild = true;
 		return S
 
 
@@ -327,6 +325,14 @@ var/list/glove_IDs = new/list() //Global list of all gloves. Identical to Cogwer
 		setProperty("conductivity", 0.3)
 		setProperty("deflection", 20)
 
+/obj/item/clothing/gloves/swat/knight
+	name = "combat gauntlets"
+	desc = "Heavy-duty combat gloves that help you keep hold of your weapon."
+
+	setupProperties()
+		..()
+		setProperty("deflection", 25)
+
 /obj/item/clothing/gloves/swat/NT
 	desc = "A pair of Nanotrasen tactical gloves that are quite fire and electrically-resistant. They also help you block attacks. They do not specifically help you block against blocking though. Just regular attacks."
 	icon_state = "swat_NT"
@@ -429,7 +435,7 @@ var/list/glove_IDs = new/list() //Global list of all gloves. Identical to Cogwer
 
 	New()
 		..()
-		BLOCK_ROPE
+		BLOCK_SETUP(BLOCK_ROPE)
 
 /obj/item/clothing/gloves/powergloves
 	desc = "Now I'm playin' with power!"

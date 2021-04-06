@@ -80,9 +80,9 @@ var/maniac_previous_victim = "Unknown"
 			SPAWN_DBG(8 SECONDS)
 				aaah.repeat = 1
 				target << aaah
-				SPAWN_DBG(rand(100,400))
-					if(target)	target << sound('sound/misc/chefsong_end.ogg',channel=7)
-					qdel(src)
+				sleep(rand(100,400))
+				if(target)	target << sound('sound/misc/chefsong_end.ogg',channel=7)
+				qdel(src)
 		..()
 
 
@@ -94,7 +94,6 @@ var/maniac_previous_victim = "Unknown"
 	invisibility = 101
 	anchored = 1
 	density = 0
-	var/obj/chaser/master/master = null
 	event_handler_flags = USE_HASENTERED
 
 	HasEntered(atom/movable/AM as mob|obj)
@@ -115,7 +114,6 @@ var/maniac_previous_victim = "Unknown"
 	invisibility = 101
 	anchored = 1
 	density = 0
-	var/obj/chaser/master/master = null
 	event_handler_flags = USE_HASENTERED
 
 	HasEntered(atom/movable/AM as mob|obj)
@@ -159,17 +157,18 @@ var/maniac_previous_victim = "Unknown"
 						if (!P.density)
 							SPAWN_DBG( 0 )
 								P.close()
-				sleep(5 SECONDS)
-				if(id == "evilreaverbridge")
-					playsound(src.loc, 'sound/machines/driveclick.ogg', 50, 1)
-					var/obj/item/paper/PA = unpool(/obj/item/paper)
-					PA.set_loc(src.loc)
+				SPAWN_DBG(5 SECONDS)
+					if(id == "evilreaverbridge")
+						playsound(src.loc, 'sound/machines/driveclick.ogg', 50, 1)
+						var/obj/item/paper/PA = unpool(/obj/item/paper)
+						PA.set_loc(src.loc)
 
-					PA.info = "<center>YOU DO NOT BELONG HERE<BR><font size=30>LEAVE NOW</font></center>" //rude!
-					PA.name = "Paper - PR1-OUT"
+						PA.info = "<center>YOU DO NOT BELONG HERE<BR><font size=30>LEAVE NOW</font></center>" //rude!
+						PA.name = "Paper - PR1-OUT"
 
-				icon_state = "pr1_0"
-				SPAWN_DBG(30 SECONDS) 	alert = 0
+					icon_state = "pr1_0"
+					sleep(30 SECONDS)
+					alert = 0
 
 
 
@@ -231,35 +230,6 @@ var/maniac_previous_victim = "Unknown"
 	icon_state = "bridge"
 	name = "Forgotten Bridge"
 
-//// Jam Mansion 3.0
-/area/crypt/sigma
-	name = "Research Facility Sigma"
-	icon_state = "derelict"
-	sound_loop = 'sound/ambience/spooky/Evilreaver_Ambience.ogg'
-
-/area/crypt/sigma/mainhall
-	icon_state = "chapel"
-	name = "Research Facility Sigma"
-
-/area/crypt/sigma/rd
-	icon_state = "bridge"
-	name = "Director's Quarters"
-
-/area/crypt/sigma/lab
-	icon_state = "toxlab"
-	name = "Laboratory"
-
-/area/crypt/sigma/crew
-	icon_state = "crewquarters"
-	name = "Crew Quarters"
-
-/area/crypt/sigma/kitchen
-	icon_state = "kitchen"
-	name = "Kitchen"
-
-/area/crypt/sigma/storage
-	icon_state = "storage"
-	name = "Storage Rooms"
 
 ///////////////////////////
 
@@ -319,8 +289,8 @@ var/maniac_previous_victim = "Unknown"
 			SPAWN_DBG(8 SECONDS)
 				aaah.repeat = 1
 				target << aaah
-				SPAWN_DBG(rand(100,400))
-					if(target)	target << sound('sound/misc/chefsong_end.ogg',channel=7)
-					qdel(src)
+				sleep(rand(100,400))
+				if(target)	target << sound('sound/misc/chefsong_end.ogg',channel=7)
+				qdel(src)
 		..()
 

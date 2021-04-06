@@ -1,22 +1,38 @@
-#define XP_ROUND_CAP 6000 //Hard CAP on XP earned per round, used to prevent exploiting.
-#define XP_GLOBAL_MOD 1 //Global multiplier for xp earned. normalXP * XP_GLOBAL_MOD. For events or adjustments.
-#define XP_CONSTANT 0.2 //Constant for scaling the XP curve.
-#define XP_FOR_LEVEL(LV) (((LV/XP_CONSTANT)**2)) //Returns XP required for the given level.
-#define LEVEL_FOR_XP(XP) (XP_CONSTANT * sqrt(XP))//Returns the level for the given amount of XP. Recommend rounding it down.
 
-//Defines the range of time that is throttled, see below. Currently very roughly one minute "game time".
+/// Hard CAP on XP earned per round, used to prevent exploiting.
+#define XP_ROUND_CAP 6000
+/// Global multiplier for xp earned. normalXP * XP_GLOBAL_MOD. For events or adjustments.
+#define XP_GLOBAL_MOD 1
+/// Constant for scaling the XP curve.
+#define XP_CONSTANT 0.2
+/// Returns XP required for the given level.
+#define XP_FOR_LEVEL(LV) (((LV/XP_CONSTANT)**2))
+/// Returns the level for the given amount of XP. Recommend rounding it down.
+#define LEVEL_FOR_XP(XP) (XP_CONSTANT * sqrt(XP))
+
+/// Defines the range of time that is throttled, see below. Currently very roughly one minute "game time".
 #define XP_THROTTLE_TICKS 600
 
-//This much XP is allowed per XP_THROTTLE_TICKS. Should prevent people from exploiting certain things. This cap is ignored if a person if awarded XP in excess of this cap in one burst.
-//Roughly 2 times the expected XP per minute, currently.
+/**
+	* This much XP is allowed per XP_THROTTLE_TICKS. Should prevent people from exploiting certain things.
+	* This cap is ignored if a person if awarded XP in excess of this cap in one burst.
+	*
+	* Roughly 2 times the expected XP per minute, currently.
+	*/
 #define XP_THROTTLE_AMT 10
 
-//Short macro that will give USR in the current context XP amount if they have the appropriate job.
-//USR_JOB_XP("Clown", 5) //Would give usr 5xp if they are a clown.
+/**
+	* Gives USR in the current context XP amount if they have the appropriate job.
+	*
+	* `USR_JOB_XP("Clown", 5)` would give usr 5xp if they are a clown.
+	*/
 #define USR_JOB_XP(JOB, XP) if(usr.job == JOB && usr.key) award_xp(usr.key, JOB, XP)
 
-//Short macro that will give TRG, XP amount if they have the appropriate job.
-//JOB_XP(someMobHere, "Clown", 5) //Would give someMobHere 5xp if they are a clown.
+/**
+	* Gives TRG, XP amount if they have the appropriate job.
+	*
+	* `JOB_XP(someMobHere, "Clown", 5)` would give someMobHere 5xp if they are a clown.
+	*/
 #define JOB_XP(TRG, JOB, XP) if(ismob(TRG) && TRG:job == JOB && TRG:key) award_xp_and_archive(TRG:key, JOB, XP)
 
 //0.2, 25, 100, 225, 400, 625 ... 7=1225,10=2500,20=10000,30=22500,50=62500,100=250000

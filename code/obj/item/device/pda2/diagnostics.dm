@@ -47,7 +47,7 @@
 		if(mode == 0)
 			dat += "<a href='byond://?src=\ref[src];send=1'>Send ping</A><BR><HR>"
 
-			if(result && result.len > 0)
+			if(length(result))
 				for(var/t in result)
 					dat+=t
 
@@ -66,22 +66,19 @@
 
 		if (href_list["send"])
 			SPAWN_DBG( 0 )
-
-
+				if(result) result.Cut()
 				var/datum/signal/signal = get_free_signal()
 				signal.source = src
 				signal.transmission_method = TRANSMISSION_RADIO
 				signal.data["address_1"] = "ping"
 				signal.data["sender"] = master.net_id
 
-				src.post_signal(signal,"[send_freq]")
 				mode = 1
-				if(result) result.Cut()
 				master.updateSelfDialog()
-				SPAWN_DBG(2 SECONDS)
-					mode = 0
-					master.updateSelfDialog()
-				return
+				src.post_signal(signal,"[send_freq]")
+				sleep(2 SECONDS)
+				mode = 0
+				master.updateSelfDialog()
 
 		else if (href_list["range"])
 			var/rd = text2num(href_list["range"])
@@ -366,7 +363,7 @@
 			if(!newkey)
 				return
 
-			if (!src.master || !in_range(src.master, usr) && src.master.loc != usr)
+			if (!src.master?.is_user_in_interact_range(usr))
 				return
 
 			if(!(src.holder in src.master))
@@ -378,7 +375,7 @@
 				newval = codekey
 				return
 
-			if (!src.master || !in_range(src.master, usr) && src.master.loc != usr)
+			if (!src.master?.is_user_in_interact_range(usr))
 				return
 
 			if(!(src.holder in src.master))
@@ -401,7 +398,7 @@
 			if(!newkey)
 				return
 
-			if (!src.master || !in_range(src.master, usr) && src.master.loc != usr)
+			if (!src.master?.is_user_in_interact_range(usr))
 				return
 
 			if(!(src.holder in src.master))
@@ -415,7 +412,7 @@
 			if(!keyval)
 				keyval = new()
 
-			if (!src.master || !in_range(src.master, usr) && src.master.loc != usr)
+			if (!src.master?.is_user_in_interact_range(usr))
 				return
 
 			if(!(src.holder in src.master))
@@ -440,9 +437,9 @@
 
 				src.post_signal(signal,"[send_freq]")
 				master.updateSelfDialog()
-				SPAWN_DBG(1 SECOND)
-					mode = 0
-					master.updateSelfDialog()
+				sleep(1 SECOND)
+				mode = 0
+				master.updateSelfDialog()
 
 
 

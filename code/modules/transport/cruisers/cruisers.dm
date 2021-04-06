@@ -188,13 +188,12 @@
 		return
 
 	New()
+		..()
 		if(interior_type)
 			interior_area = locate(interior_type)
 			interior_area.ship = src
 		if(!interior_area)
 			del(src)
-
-		SubscribeToProcess()
 
 		shield_obj = new(src.loc)
 		var/matrix/mtx = new
@@ -241,10 +240,10 @@
 		engine = new/obj/item/shipcomponent/engine(src)
 		life_support = new/obj/item/shipcomponent/life_support(src)
 
-		pods_and_cruisers += src
+		START_TRACKING_CAT(TR_CAT_PODS_AND_CRUISERS)
 
 	disposing()
-		pods_and_cruisers -= src
+		STOP_TRACKING_CAT(TR_CAT_PODS_AND_CRUISERS)
 
 		del(camera)
 		if(interior_area)
@@ -261,7 +260,7 @@
 	Move(NewLoc,Dir=0,step_x=0,step_y=0)
 		var/preserve_dir = src.dir
 		. = ..(NewLoc,Dir,step_x,step_y)
-		dir = preserve_dir
+		set_dir(preserve_dir)
 		camera.set_loc(locate(src.x + 2, src.y + 2, src.z))
 		shield_obj.set_loc(src.loc)
 		return
@@ -696,7 +695,7 @@
 				walk(src, src.dir, base_speed + stall)
 				flying = src.dir
 		else
-			src.dir = direction
+			src.set_dir(direction)
 		return
 
 	proc/getProjectileOrigins()
@@ -780,7 +779,7 @@
 				unsubscribe_interior(user)
 				user.set_eye(user)
 		else
-			boutput(usr, "<span class='alert'>The exit is blocked.</span>")
+			boutput(user, "<span class='alert'>The exit is blocked.</span>")
 		return
 
 	proc/enterShip(atom/movable/O as obj, mob/user as mob)
@@ -858,6 +857,8 @@
 	var/image/barBot
 
 	New()
+		..()
+		UnsubscribeProcess()
 		barTop = image('icons/obj/ship.dmi',src,"statpanel1",src.layer+1)
 		barTop.color = "#8A1919"
 
@@ -1102,7 +1103,7 @@
 	name = "Left turret slot"
 	install_component()
 		var/area/ship_interior/interior = get_area(src)
-		if(interior && interior.ship)
+		if(interior?.ship)
 			for(var/atom/movable/A in src.loc)
 				if(istype(A, container_type))
 					A.set_loc(interior.ship)
@@ -1111,7 +1112,7 @@
 		return
 	uninstall_component()
 		var/area/ship_interior/interior = get_area(src)
-		if(interior && interior.ship && interior.ship.turret_left)
+		if(interior?.ship?.turret_left)
 			interior.ship.turret_left.set_loc(src.loc)
 			interior.ship.turret_left = null
 		return
@@ -1120,7 +1121,7 @@
 	name = "Right turret slot"
 	install_component()
 		var/area/ship_interior/interior = get_area(src)
-		if(interior && interior.ship)
+		if(interior?.ship)
 			for(var/atom/movable/A in src.loc)
 				if(istype(A, container_type))
 					A.set_loc(interior.ship)
@@ -1129,7 +1130,7 @@
 		return
 	uninstall_component()
 		var/area/ship_interior/interior = get_area(src)
-		if(interior && interior.ship && interior.ship.turret_right)
+		if(interior?.ship?.turret_right)
 			interior.ship.turret_right.set_loc(src.loc)
 			interior.ship.turret_right = null
 		return
@@ -1141,7 +1142,7 @@
 	health_max = 75
 	install_component()
 		var/area/ship_interior/interior = get_area(src)
-		if(interior && interior.ship)
+		if(interior?.ship)
 			for(var/atom/movable/A in src.loc)
 				if(istype(A, container_type))
 					A.set_loc(interior.ship)
@@ -1150,7 +1151,7 @@
 		return
 	uninstall_component()
 		var/area/ship_interior/interior = get_area(src)
-		if(interior && interior.ship && interior.ship.engine)
+		if(interior?.ship?.engine)
 			interior.ship.engine.set_loc(src.loc)
 			interior.ship.engine = null
 		return
@@ -1166,7 +1167,7 @@
 
 	install_component()
 		var/area/ship_interior/interior = get_area(src)
-		if(interior && interior.ship)
+		if(interior?.ship)
 			for(var/atom/movable/A in src.loc)
 				if(istype(A, container_type))
 					A.set_loc(interior.ship)
@@ -1176,7 +1177,7 @@
 
 	uninstall_component()
 		var/area/ship_interior/interior = get_area(src)
-		if(interior && interior.ship && interior.ship.life_support)
+		if(interior?.ship?.life_support)
 			interior.ship.life_support.set_loc(src.loc)
 			interior.ship.life_support = null
 		return
@@ -1291,6 +1292,7 @@
 		return "Reboot complete."
 
 	New()
+		..()
 		interior = get_area(src)
 		icon_state = icon_state_empty
 		AbHolder = new()
@@ -1298,8 +1300,6 @@
 		AbHolder.addAbility(/datum/targetable/cruiser/toggle_interior)
 		for(var/T in abilities)
 			AbHolder.addAbility(T)
-		SubscribeToProcess()
-		return
 
 	attack_hand(mob/user as mob)
 		if(broken)
@@ -1314,7 +1314,6 @@
 	MouseDrop_T(atom/movable/O as obj, mob/user as mob)
 		if(ismob(O) && O:client)
 			attack_hand(O)
-		return
 
 	proc/enterPod(mob/user as mob)
 		var/obj/machinery/cruiser/C = interior.ship

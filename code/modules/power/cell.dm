@@ -35,11 +35,11 @@
 	onMaterialChanged()
 		..()
 		if (istype(src.material))
+			genrate = 0
 			if(src.material.hasProperty("radioactive"))
-				genrate = round((material.getProperty("radioactive") / 6.333))
-			else
-				genrate = 0
-
+				genrate += round((material.getProperty("radioactive") / 6.33))
+			if(src.material.hasProperty("n_radioactive"))
+				genrate += round((material.getProperty("n_radioactive") / 4.33))
 			if(src.material.hasProperty("electrical"))
 				maxcharge = round((src.material.getProperty("electrical") ** 2) * 3.333)
 			else
@@ -79,8 +79,7 @@
 
 	New()
 		..()
-		if (!(src in processing_items))
-			processing_items.Add(src)
+		processing_items |= src
 
 /obj/item/cell/charged
 	charge = 7500
@@ -110,12 +109,11 @@
 	SPAWN_DBG(0.5 SECONDS)
 		updateicon()
 
-	if (genrate && !(src in processing_items))
-		processing_items.Add(src)
+	if (genrate)
+		processing_items |= src
 
 /obj/item/cell/disposing()
-	if (src in processing_items)
-		processing_items.Remove(src)
+	processing_items -= src
 	..()
 
 /obj/item/cell/proc/updateicon()
@@ -212,7 +210,7 @@
 
 /obj/item/cell/proc/explode()
 	if(src in bible_contents)
-		for(var/obj/item/storage/bible/B in by_type[/obj/item/storage/bible])
+		for_by_tcl(B, /obj/item/storage/bible)
 			var/turf/T = get_turf(B.loc)
 			if(T)
 				T.hotspot_expose(700,125)
@@ -264,22 +262,21 @@
 				det.detonate()
 
 //kubius potato battery: main def
-//you may need to alter the plant analyzer path
 
 /obj/item/cell/potato
 	name = "potato cell"
 	desc = "An improvised organic power cell. It looks a bit limp."
 	icon = 'icons/obj/potatocell.dmi'
 	icon_state = "king_tater"
-	maxcharge = 300
+	maxcharge = 600
 	genrate = 0
 	specialicon = 1
 	unusualCell = 1
 
 /obj/item/cell/potato/New(var/loc, var/potency, var/endurance)
 	src.maxcharge += rand(1,100) //slight deviation by specimen
-	src.maxcharge += round(potency*(4+rand())) //more deviation
-	src.genrate = round(endurance/rand(18,24))
+	src.maxcharge += round(potency*(6+rand(1,4))) //more deviation
+	src.genrate = round(endurance/rand(12,16))
 	if(genrate) desc = "An improvised organic power cell. It seems to be holding up well."
 	src.charge = src.maxcharge
 	..()
@@ -294,7 +291,7 @@
 		..()
 
 
-/obj/item/ammo/power_cell/potato
+/obj/item/ammo/power_cell/self_charging/potato
 	name = "potato battery"
 	desc = "An improvised organic power cell, cut down to a compact size. It seems somewhat impractical."
 	icon = 'icons/obj/potatocell.dmi'
@@ -303,15 +300,20 @@
 	m_amt = 20000
 	g_amt = 20000
 	max_charge = 10.0
+	recharge_rate = 0.0
 
-/obj/item/ammo/power_cell/potato/New(var/loc, var/potency)
-	var/rngfactor = 4 + rand()
+/obj/item/ammo/power_cell/self_charging/potato/New(var/loc, var/potency, var/endurance)
+	var/rngfactor = 2 + rand()
 	src.max_charge += round(potency/rngfactor)
+	src.recharge_rate = 0.5 * round(endurance/rand(25,30))
 	src.charge = src.max_charge
 	..()
 
-/obj/item/ammo/power_cell/potato/attackby(obj/item/W, mob/user)
+/obj/item/ammo/power_cell/self_charging/potato/attackby(obj/item/W, mob/user)
 	if (istype(W, /obj/item/plantanalyzer/))
-		boutput(user, "The potato battery has [src.charge] of [src.max_charge] PUs remaining.")
+		if(recharge_rate)
+			boutput(user, "The potato battery has [src.charge] of [src.max_charge] PUs charge remaining, and a regeneration rate of [recharge_rate].")
+		else
+			boutput(user, "The potato battery has [src.charge] of [src.max_charge] PUs charge remaining, and no capacity for regeneration.")
 	else
 		..()

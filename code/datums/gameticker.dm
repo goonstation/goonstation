@@ -29,33 +29,25 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 
 	var/skull_key_assigned = 0
 
+	var/tmp/last_try_dilate = 0
 	var/tmp/useTimeDilation = TIME_DILATION_ENABLED
 	var/tmp/timeDilationLowerBound = MIN_TICKLAG
 	var/tmp/timeDilationUpperBound = OVERLOADED_WORLD_TICKLAG
-	var/tmp/last_tick_realtime = 0
-	var/tmp/last_tick_byondtime = 0
-	var/tmp/last_interval_tick_offset = 0 //how far off the last tick (byondtime - realtime)
-	var/tmp/last_try_dilate = 0
-
-	var/tmp/threshold_dilation = TICKLAG_DILATION_THRESHOLD	//remove later
-	var/tmp/threshold_normalization = TICKLAG_NORMALIZATION_THRESHOLD //remove later
+	var/tmp/highMapCpuCount = 0 // how many times in a row has the map_cpu been high
 
 /datum/controller/gameticker/proc/pregame()
 
 	pregame_timeleft = PREGAME_LOBBY_TICKS
-	boutput(world, "<B><FONT style='notice'>Welcome to the pre-game lobby!</FONT></B><br>Please, setup your character and select ready. Game will start in [pregame_timeleft] seconds.")
-	#if ASS_JAM
-	vote_manager.active_vote = new/datum/vote_new/mode("everyone-is-a-traitor")
-	boutput(world, "<B>ASS JAM: Everyone-Is-A-Traitor Mode vote has been started: [newVoteLinkStat.chat_link()] (120 seconds remaining)<br>(or click on the Status map as you do for map votes)</B>")
-	#endif
+	boutput(world, "<b>Welcome to the pre-game lobby!</b><br>Please, setup your character and select ready. Game will start in [pregame_timeleft] seconds.")
 
 	// let's try doing this here, yoloooo
 	// zamu 20200823: idk if this is even getting called...
-	//if (mining_controls && mining_controls.mining_z && mining_controls.mining_z_asteroids_max)
+	//if (mining_controls?.mining_z && mining_controls.mining_z_asteroids_max)
 	//	mining_controls.spawn_mining_z_asteroids()
 
 	if(master_mode == "battle_royale")
-		lobby_titlecard.icon_state += "_battle_royale"
+		lobby_titlecard = new /datum/titlecard/battleroyale()
+		lobby_titlecard.set_pregame_html()
 
 	#ifdef I_DONT_WANNA_WAIT_FOR_THIS_PREGAME_SHIT_JUST_GO
 	for(var/mob/new_player/C in world)
@@ -63,7 +55,11 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 	pregame_timeleft = 1
 	#endif
 
+
+
 	var/did_mapvote = 0
+	if (!player_capa)
+		new /obj/overlay/zamujasa/round_start_countdown/encourage()
 	var/obj/overlay/zamujasa/round_start_countdown/timer/title_countdown = new()
 	while (current_state <= GAME_STATE_PREGAME)
 		sleep(1 SECOND)
@@ -236,7 +232,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 
 		logTheThing("ooc", null, null, "<b>Current round begins</b>")
 		boutput(world, "<FONT class='notice'><B>Enjoy the game!</B></FONT>")
-		boutput(world, "<span class='notice'><b>Tip:</b> [pick(tips)]</span>")
+		boutput(world, "<span class='notice'><b>Tip:</b> [pick(dd_file2list("strings/roundstart_hints.txt"))]</span>")
 
 		//Setup the hub site logging
 		var hublog_filename = "data/stats/data.txt"
@@ -250,9 +246,9 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 		participationRecorder.releaseHold()
 
 	SPAWN_DBG (6000) // 10 minutes in
-		for(var/obj/machinery/power/generatorTemp/E in machine_registry[MACHINES_POWER])
+		for(var/obj/machinery/power/monitor/smes/E in machine_registry[MACHINES_POWER])
 			LAGCHECK(LAG_LOW)
-			if (E.lastgen <= 0)
+			if(E.powernet?.avail <= 0)
 				command_alert("Reports indicate that the engine on-board [station_name()] has not yet been started. Setting up the engine is strongly recommended, or else stationwide power failures may occur.", "Power Grid Warning")
 			break
 
@@ -380,24 +376,33 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 
 		emergency_shuttle.process()
 
+		#if DM_VERSION >= 514
 		if (useTimeDilation)//TIME_DILATION_ENABLED set this
 			if (world.time > last_try_dilate + TICKLAG_DILATE_INTERVAL) //interval separate from the process loop. maybe consider moving this for cleanup later (its own process loop with diff. interval?)
 				last_try_dilate = world.time
 
-				last_interval_tick_offset = max(0, (world.timeofday - last_tick_realtime) - (world.time - last_tick_byondtime))
-				last_tick_realtime = world.timeofday
-				last_tick_byondtime = world.time
+				// adjust the counter up or down and keep it within the set boundaries
+				if (world.map_cpu >= TICKLAG_MAPCPU_MAX)
+					if (highMapCpuCount < TICKLAG_INCREASE_THRESHOLD)
+						highMapCpuCount++
+				else if (world.map_cpu <= TICKLAG_MAPCPU_MIN)
+					if (highMapCpuCount > -TICKLAG_DECREASE_THRESHOLD)
+						highMapCpuCount--
 
+				// adjust the tick_lag, if needed
 				var/dilated_tick_lag = world.tick_lag
+				if (highMapCpuCount >= TICKLAG_INCREASE_THRESHOLD)
+					dilated_tick_lag = min(world.tick_lag + TICKLAG_DILATION_INC,	timeDilationUpperBound)
+				else if (highMapCpuCount <= -TICKLAG_DECREASE_THRESHOLD)
+					dilated_tick_lag = max(world.tick_lag - TICKLAG_DILATION_DEC, timeDilationLowerBound)
 
-				if (last_interval_tick_offset >= threshold_dilation)
-					dilated_tick_lag = 	min(world.tick_lag + TICKLAG_DILATION_INC,	timeDilationUpperBound)
-				else if (last_interval_tick_offset <= threshold_normalization)
-					dilated_tick_lag =	max(world.tick_lag - TICKLAG_DILATION_DEC, timeDilationLowerBound)
-
+				// only set the value if it changed! earlier iteration of this was
+				// setting world.tick_lag very often, which caused instability with
+				// the networking. do not spam change world.tick_lag! you will regret it!
 				if (world.tick_lag != dilated_tick_lag)
 					world.tick_lag = dilated_tick_lag
-
+					highMapCpuCount = 0
+		#endif
 
 		// Minds are sometimes kicked out of the global list, hence the fallback (Convair880).
 		if (src.last_readd_lost_minds_to_ticker && world.time > src.last_readd_lost_minds_to_ticker + 1800)
@@ -479,7 +484,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 	round_end_data(1) //Export round end packet (normal completion)
 
 	var/pets_rescued = 0
-	for(var/pet in pets)
+	for(var/pet in by_cat[TR_CAT_PETS])
 		if(iscritter(pet))
 			var/obj/critter/P = pet
 			if(P.alive && in_centcom(P)) pets_rescued++
@@ -501,6 +506,9 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 				if (player.check_contents_for(/obj/item/gnomechompski))
 					player.unlock_medal("Guardin' gnome", 1)
 
+				if (player.mind.assigned_role == "Security Assistant")
+					player.unlock_medal("I helped!", 1)
+
 				if (ishuman(player))
 					var/mob/living/carbon/human/H = player
 					if (H && istype(H) && H.implant && H.implant.len > 0)
@@ -518,7 +526,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 	//logTheThing("debug", null, null, "Zamujasa: [world.timeofday] Processing crew objectives")
 	var/list/successfulCrew = list()
 	for (var/datum/mind/crewMind in minds)
-		if (!crewMind.current || !crewMind.objectives.len)
+		if (!crewMind.current || !length(crewMind.objectives))
 			continue
 
 		var/count = 0
@@ -561,13 +569,8 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 	boutput(world, score_tracker.heisenhat_stats())
 
 	//logTheThing("debug", null, null, "Zamujasa: [world.timeofday] ai law display")
-	for (var/mob/living/silicon/ai/aiPlayer in by_type[/mob/living/silicon/ai])
-		if (!isdead(aiPlayer))
-			boutput(world, "<b>The AI, [aiPlayer.name] ([aiPlayer.get_message_mob().key]) had the following laws at the end of the game:</b>")
-		else
-			boutput(world, "<b>The AI, [aiPlayer.name] ([aiPlayer.get_message_mob().key]) had the following laws when it was deactivated:</b>")
+	boutput(world, "<b>AIs and Cyborgs had the following laws at the end of the game:</b><br>[ticker.centralized_ai_laws.format_for_logs()]")
 
-		aiPlayer.show_laws(1)
 
 	//logTheThing("debug", null, null, "Zamujasa: [world.timeofday] resetting gauntlet (why? who cares! the game is over!)")
 	if (gauntlet_controller.state)
@@ -575,10 +578,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 #ifdef CREW_OBJECTIVES
 	//logTheThing("debug", null, null, "Zamujasa: [world.timeofday] displaying completed crew objectives")
 	if (successfulCrew.len)
-		boutput(world, "<B>The following crewmembers completed all of their Crew Objectives:</B>")
-		for (var/i in successfulCrew)
-			boutput(world, "<B>[i]</B>")
-		boutput(world, "Good job!")
+		boutput(world, "<B>The following crewmembers completed all of their Crew Objectives:</B><br>[successfulCrew.Join("<br>")]<br>Good job!")
 	else
 		boutput(world, "<B>Nobody completed all of their Crew Objectives!</B>")
 #endif
@@ -610,7 +610,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 	logTheThing("debug", null, null, "Revving up the spacebux loop...")
 
 	for(var/mob/player in mobs)
-		if (player && player.client && player.mind && !player.mind.joined_observer && !istype(player,/mob/new_player))
+		if (player?.client && player.mind && !player.mind.joined_observer && !istype(player,/mob/new_player))
 			logTheThing("debug", null, null, "Iterating on [player.client]")
 			//logTheThing("debug", null, null, "Zamujasa: [world.timeofday] spacebux calc start: [player.mind.ckey]")
 
@@ -618,7 +618,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 
 			//get base wage + initial earnings calculation
 			var/job_wage = 100
-			if (wagesystem.jobs.Find(player.mind.assigned_role))
+			if (player.mind.assigned_role in wagesystem.jobs)
 				job_wage = wagesystem.jobs[player.mind.assigned_role]
 
 			if (isrobot(player))
@@ -678,14 +678,14 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 				player_loses_held_item = 1
 
 			//handle traitors
-			if (player.mind && ticker.mode.traitors.Find(player.mind)) // Roundstart people get the full bonus
+			if (player.mind && (player.mind in ticker.mode.traitors)) // Roundstart people get the full bonus
 				earnings = job_wage
 				bank_earnings.badguy = 1
 				player_loses_held_item = 0
-			else if (istype(player.loc, /obj/cryotron) || player.mind && all_the_baddies.Find(player.mind)) // Cryo'd or was a baddie at any point? Keep your shit, but you don't get the extra bux
+			else if (istype(player.loc, /obj/cryotron) || player.mind && (player.mind in all_the_baddies)) // Cryo'd or was a baddie at any point? Keep your shit, but you don't get the extra bux
 				player_loses_held_item = 0
 			//some might not actually have a wage
-			if (isnukeop(player) ||  (isblob(player) && (player.mind && player.mind.special_role == "blob")) || iswraith(player) || (iswizard(player) && (player.mind && player.mind.special_role == "wizard")) )
+			if (!isvirtual(player) && (isnukeop(player) ||  (isblob(player) && (player.mind && player.mind.special_role == "blob")) || iswraith(player) || (iswizard(player) && (player.mind && player.mind.special_role == "wizard")) ))
 				bank_earnings.wage_base = 0 //only effects the end of round display
 				earnings = 800
 
@@ -696,9 +696,6 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 					earnings += 100; // ALL CREW OBJECTIVE SBUX BONUS
 					bank_earnings.all_objs = 100
 
-#if ASS_JAM
-				earnings *= 2
-#endif
 
 			//pilot's bonus check and reward
 			var/pilot_bonus = 500 //for receipt
@@ -729,6 +726,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 					if (player.client.persistent_bank != player.client.persistent_bank)
 						player.client.set_persistent_bank(50000)
 					if (player_loses_held_item)
+						logTheThing("debug", null, null, "[player.ckey] lost held item")
 						player.client.set_last_purchase(0)
 
 					bank_earnings.pilot_bonus = pilot_bonus
@@ -740,8 +738,13 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 
 	logTheThing("debug", null, null, "Done with spacebux")
 
-	for(var/obj/bookshelf/persistent/P in by_type[/obj/bookshelf/persistent]) //make the bookshelf save its contents
+	for_by_tcl(P, /obj/bookshelf/persistent) //make the bookshelf save its contents
 		P.build_curr_contents()
+
+#ifdef SECRETS_ENABLED
+	for_by_tcl(S, /obj/santa_helper)
+		S.save_mail()
+#endif
 
 	logTheThing("debug", null, null, "Done with books")
 
@@ -772,7 +775,19 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 
 	//logTheThing("debug", null, null, "Zamujasa: [world.timeofday] finished spacebux updates")
 
-
+	var/list/playtimes = list() //associative list with the format list("ckeys\[[player_ckey]]" = playtime_in_seconds)
+	for_by_tcl(P, /datum/player)
+		if (!P.ckey)
+			continue
+		P.log_leave_time() //get our final playtime for the round (wont cause errors with people who already d/ced bc of smart code)
+		if (!P.current_playtime)
+			continue
+		playtimes["ckeys\[[P.ckey]]"] = round((P.current_playtime / (1 SECOND))) //rounds 1/10th seconds to seconds
+	try
+		apiHandler.queryAPI("playtime/record-multiple", playtimes)
+	catch(var/exception/e)
+		logTheThing("debug", null, null, "playtime was unable to be logged because of: [e.name]")
+		logTheThing("diary", null, null, "playtime was unable to be logged because of: [e.name]", "debug")
 	return 1
 
 /////

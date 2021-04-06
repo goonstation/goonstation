@@ -212,15 +212,7 @@
 	SPAWN_DBG(0)
 		for (var/obj/machinery/door/window/brigdoor/M in range(30, src))
 			if (M.id == src.id)
-				/*
-				if (M.density)
-					if (M.id == "genpop")	// opens the inner gen pop door and not the outer so that the perp (and anyone who manages to stow away with him) can be processed for release
-						SPAWN_DBG( 50 )
-							M.open()
-							SPAWN_DBG( 250 )
-								M.close()
-				*/
-				SPAWN_DBG (0)
+				SPAWN_DBG(0)
 					if (M) M.close()
 			LAGCHECK(LAG_HIGH)
 
@@ -275,7 +267,7 @@
 /obj/machinery/door_timer/Topic(href, href_list)
 	if (..())
 		return
-	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
+	if ((usr.contents.Find(src) || (in_interact_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
 		src.add_dialog(usr)
 		if (href_list["time"])
 			if (src.allowed(usr))

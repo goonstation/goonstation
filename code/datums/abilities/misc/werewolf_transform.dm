@@ -58,7 +58,7 @@
 		..()
 
 		var/mob/living/M = owner
-		M.werewolf_transform(0, 1)
+		M.werewolf_transform()
 
 	onInterrupt()
 		..()

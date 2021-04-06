@@ -16,7 +16,7 @@
 	heal_amt = null
 	initial_volume = null
 	initial_reagents = null
-	food_effects = null
+	food_effects = list()
 	var/image/fluid_icon
 
 	New(var/datum/custom_soup/S)
@@ -45,11 +45,12 @@
 
 		..()
 
-		src.overlays = null
 		if(reagents.total_volume)
 			var/datum/color/average = reagents.get_average_color()
 			fluid_icon.color = average.to_rgba()
-			src.overlays += fluid_icon
+			src.UpdateOverlays(src.fluid_icon, "fluid")
+		else
+			src.UpdateOverlays(null, "fluid")
 
 /obj/stove
 	name = "stove"
@@ -77,27 +78,39 @@
 		if (!src.on && src.pot)
 
 			if (isweldingtool(W) && W:try_weld(user,0,-1,0,0))
-				src.light(user, "<span class='alert'><b>[user]</b> casually lights [src] with [W], what a badass.</span>")
+				src.light(user, "<span class='alert'><b>[user] casually lights [src] with [W], what a badass.</b></span>")
 				return
 
 			else if (istype(W, /obj/item/clothing/head/cakehat) && W:on)
-				src.light(user, "<span class='alert'>Did [user] just light \his [src] with [W]? Holy Shit.</span>")
+				src.light(user, "<span class='alert'><b>Did [user] just light \his [src] with [W]? Holy Shit.</b></span>")
 				return
 
 			else if (istype(W, /obj/item/device/igniter))
-				src.light(user, "<span class='alert'><b>[user]</b> fumbles around with [W]; a small flame erupts from [src].</span>")
+				src.light(user, "<span class='alert'>[user] fumbles around with [W]; a small flame erupts from [src].</span>")
 				return
 
 			else if (istype(W, /obj/item/device/light/zippo) && W:on)
-				src.light(user, "<span class='alert'>With a single flick of their wrist, [user] smoothly lights [src] with [W]. Damn they're cool.</span>")
+				src.light(user, "<span class='alert'><b>With a single flick of their wrist, [user] smoothly lights [src] with [W]. Damn they're cool.</b></span>")
 				return
 
-			else if ((istype(W, /obj/item/match) || istype(W, /obj/item/device/light/candle)) && W:on)
-				src.light(user, "<span class='alert'><b>[user] lights [src] with [W].</span>")
+			else if (istype(W, /obj/item/match))
+				var/obj/item/match/match = W
+				switch (match.on)
+					if (-1) // broken
+						user.visible_message("[user] stares at [match] for a while. Seeming confused, they just chuck it into [src].", "\The [match] confuses you, so you just chuck it into [src].")
+					if (0) // unlit
+						src.light(user, "<span class='alert'><b>With a swift motion, [user] strikes [match] on [src] and lights both ablaze. Damn, they're slick.</b></span>")
+						return
+					if (1) // lit
+						src.light(user, "<span class='alert'>[user] lights [src] with [match].</span>")
+						return
+
+			else if (istype(W, /obj/item/device/light/candle) && W:on)
+				src.light(user, "<span class='alert'>[user] lights [src] with [W].</span>")
 				return
 
 			else if (W.burning)
-				src.light(user, "<span class='alert'><b>[user]</b> lights [src] with [W]. Goddamn.</span>")
+				src.light(user, "<span class='alert'><b>[user] lights [src] with [W]. Goddamn.</b></span>")
 				return
 
 			else
@@ -105,9 +118,14 @@
 				if(!pot.my_soup)
 					W.afterattack(pot,user) // ????
 
+	MouseDrop_T(obj/item/W as obj, mob/user as mob)
+		if (istype(W, /obj/item/soup_pot) && in_interact_range(W, user) && in_interact_range(src, user))
+			return src.attackby(W, user)
+		return ..()
+
 	attack_hand(mob/user as mob)
 		if(src.on)
-			boutput(user,"<span class='alert'><b>Cooking soup takes time, be patient!</span>")
+			boutput(user,"<span class='alert'><b>Cooking soup takes time, be patient!</b></span>")
 			return
 		if(src.pot)
 			src.icon_state = "stove0"
@@ -115,15 +133,18 @@
 			user.put_in_hand_or_drop(src.pot)
 			src.pot = null
 
+	attack_ai(mob/user as mob)
+		return src.attack_hand(user)
+
 	proc/light(var/mob/user, var/message as text)
 		if(pot.my_soup)
-			boutput(user,"<span class='alert'><b>There's still soup in the pot, dummy!</span>")
+			boutput(user,"<span class='alert'><b>There's still soup in the pot, dummy!</b></span>")
 			return
 		if(!pot.total_wclass)
-			boutput(user,"<span class='alert'><b>You can't have a soup with no ingredients, dummy!</span>")
+			boutput(user,"<span class='alert'><b>You can't have a soup with no ingredients, dummy!</b></span>")
 			return
 		if(!pot.reagents.total_volume)
-			boutput(user,"<span class='alert'><b>You can't have a soup with no broth, dummy!</span>")
+			boutput(user,"<span class='alert'><b>You can't have a soup with no broth, dummy!</b></span>")
 			return
 		user.visible_message(message)
 		src.on = 1
@@ -287,10 +308,7 @@
 	New()
 		..()
 		fluid_icon = image("icon" = 'icons/obj/soup_pot.dmi', "icon_state" = "souppot-f")
-		var/datum/reagents/R = new/datum/reagents(max_reagents)
-		reagents = R
-		R.my_atom = src
-		return
+		src.create_reagents(max_reagents)
 
 	get_desc(var/dist)
 		if(dist>1)
@@ -334,14 +352,19 @@
 	on_reagent_change()
 		if(my_soup)
 			return
-		src.overlays = null
 		if(reagents.total_volume)
 			var/datum/color/average = reagents.get_average_color()
 			fluid_icon.color = average.to_rgba()
-			src.overlays += fluid_icon
+			src.UpdateOverlays(src.fluid_icon, "fluid")
+		else
+			src.UpdateOverlays(null, "fluid")
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if(istype(W) && !istype(W,/obj/item/ladle))
+			if (W.cant_drop) // For borg held items
+				if (!(W.flags & OPENCONTAINER)) // don't warn about a bucket or whatever
+					boutput(user, "<span class='alert'>You can't put that in \the [src] when it's attached to you!</span>")
+				return ..()
 			if(src.my_soup)
 				boutput(user,"<span class='alert'><b>There's still soup in the pot, dummy!</span>")
 				return
@@ -379,7 +402,7 @@
 					src.total_wclass++
 					tooltip_rebuild = 1
 					L.my_soup = null
-					L.overlays = null
+					L.UpdateOverlays(null, "fluid")
 					user.visible_message("[user] empties [L] into [src].", "You empty [L] into [src]")
 				else
 					boutput(user,"<span class='alert'><b>You can't mix soups! That'd be ridiculous!</span>")
@@ -394,6 +417,11 @@
 
 			return
 		..()
+
+	MouseDrop_T(obj/item/W as obj, mob/user as mob)
+		if (istype(W) && in_interact_range(W, user) && in_interact_range(src, user))
+			return src.attackby(W, user)
+		return ..()
 
 	MouseDrop(atom/over_object, src_location, over_location)
 		if (usr.is_in_hands(src))
@@ -453,4 +481,4 @@
 
 	proc/add_soup_overlay(var/new_color)
 		fluid_icon.color = new_color
-		src.overlays += fluid_icon
+		src.UpdateOverlays(fluid_icon, "fluid")

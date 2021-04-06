@@ -1,5 +1,6 @@
 
-/obj/item/item_box // for when you want something that "contains" a certain amount of an item
+/// for when you want something that "contains" a certain amount of an item
+/obj/item/item_box
 	name = "box"
 	desc = "A little cardboard box for keeping stuff in. Woah! We're truly in the future with technology like this."
 	icon = 'icons/obj/items/storage.dmi'
@@ -105,6 +106,28 @@
 		desc = "It's like a box that a pile of sticky notes would come in, but it's actually the pile, too. So there's a pile in the box. Or the pile... IS the box? Quantum sticky note pile-box? Whatever, I've been trying to get this to work for a few hours and making a special little sticky note container is the last thing I want to do right now. Fuck."
 		contained_item = /obj/item/sticker/postit
 
+	crayon // stonepillar's crayon project
+		name = "rapid crayon creation device"
+		desc = "It's the StephiMatic(tm) rapid crayon creation device! Perfect for the budding artist. Ages 5 and up!"
+		contained_item = /obj/item/pen/crayon
+
+		add_to(var/obj/item/I)
+			if(..())
+				qdel(I)
+				return 1
+			return 0
+
+		take_from()
+			var/newColor = input("Pick crayon color:","Crayon color") as null|color
+			if(!isnull(newColor))
+				var/obj/item/pen/crayon/newCrayon = new /obj/item/pen/crayon
+				newCrayon.color = newColor
+				newCrayon.font_color = newColor
+				newCrayon.name = "cheap-looking [hex2color_name(newColor)] crayon"
+				return newCrayon
+			return 0
+
+
 	assorted
 		name = "box of assorted things"
 		desc = "Wow! A marvel of technology, this box doesn't store just ONE item, but an assortment of items! The future really is here."
@@ -119,7 +142,7 @@
 			desc = "Oh my god.. ALL THE STICKERS! ALL IN ONE PLACE? WHAT CAN THIS MEAN!!!"
 
 			set_contained_items()
-				contained_items = childrentypesof( /obj/item/sticker/ ) - /obj/item/sticker/spy
+				contained_items = childrentypesof( /obj/item/sticker/ ) - /obj/item/sticker/spy - childrentypesof( /obj/item/sticker/barcode )
 
 			robot//this type sticks things by clicking on them with a cooldown
 				name = "box shaped sticker dispenser"
@@ -150,7 +173,7 @@
 				max_item_amount = 10
 
 				set_contained_items()
-					contained_items = childrentypesof( /obj/item/sticker/ ) - /obj/item/sticker/spy - /obj/item/sticker/ribbon/first_place - /obj/item/sticker/ribbon/second_place - /obj/item/sticker/ribbon/third_place
+					contained_items = childrentypesof( /obj/item/sticker/ ) - childrentypesof( /obj/item/sticker/barcode ) - /obj/item/sticker/spy - /obj/item/sticker/ribbon/first_place - /obj/item/sticker/ribbon/second_place - /obj/item/sticker/ribbon/third_place
 
 		ornaments
 			name = "box of assorted ornaments"
@@ -186,12 +209,28 @@
 		icon_closed = "patchbox-med"
 		icon_open = "patchbox-med-open"
 		icon_empty = "patchbox-med-empty"
+		var/icon_color = "patchbox-med-coloring"
+		var/image/box_color
 
-#if ASS_JAM
+		proc/build_overlay(var/datum/color/average = null) //ChemMasters provide average for medical boxes
+			var/obj/item/reagent_containers/patch/temp = src.take_from()
+			if (temp)
+				src.item_amount++
+				if (temp.medical && temp.reagents.total_volume)
+					average = temp.reagents.get_average_color()
+				else
+					return
+			else if (!average)
+				return
+			if (!src.box_color)
+				src.box_color = image('icons/obj/items/storage.dmi', icon_color, -1)
+			average.a = 255;
+			src.box_color.color = average.to_rgba()
+			src.UpdateOverlays(src.box_color, "reagentcolour")
+
 		New()
-			. = ..()
-			ADD_MORTY(13, 11, 7, 7)
-#endif
+			..()
+			build_overlay()
 
 		attack(mob/M as mob, mob/user as mob)
 			if (src.open)
@@ -261,11 +300,12 @@
 			src.inventory_counter.update_number(src.item_amount)
 		else
 			SPAWN_DBG(1 SECOND)
+				if (QDELETED(src)) return
 				if (!ispath(src.contained_item))
 					logTheThing("debug", src, null, "has a non-path contained_item, \"[src.contained_item]\", and is being disposed of to prevent errors")
 					qdel(src)
 					return
-				else if (src.item_amount == 0 && src.contents.len) // count if we already have things inside!
+				else if (src.item_amount == 0 && length(src.contents)) // count if we already have things inside!
 					for (var/obj/item/thing in src.contents)
 						if (istype(thing, src.contained_item))
 							src.item_amount++
@@ -314,7 +354,7 @@
 
 	MouseDrop(atom/over_object, src_location, over_location)
 		..()
-		if (usr && usr.is_in_hands(src))
+		if (usr?.is_in_hands(src))
 			if (!src.open)
 				boutput(usr, "<span class='alert'>[src] isn't open, you goof!</span>")
 				return
@@ -341,7 +381,7 @@
 	MouseDrop_T(atom/movable/O as obj, mob/user as mob)
 		if (user.restrained() || user.getStatusDuration("paralysis") || user.sleeping || user.stat || user.lying)
 			return
-		if (!in_range(user, src) || !in_range(user, O))
+		if (!in_interact_range(user, src) || !in_interact_range(user, O))
 			boutput(user, "<span class='alert'>That's too far away!</span>")
 			return
 		if (!istype(O, src.contained_item))

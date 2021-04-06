@@ -16,14 +16,3 @@
 		return
 
 	src.set_mentorhelp_visibility()
-
-/*
-/proc/proxy_check(address)
-	if(address)
-		var/result = world.Export("http://autisticpowers.info/ss13/check_ip.php?ip=[address]")
-		if("STATUS" in result && lowertext(result["STATUS"]) == "200 ok")
-			var/using_proxy = text2num(file2text(result["CONTENT"]))
-			if(using_proxy)
-				return 1
-	return 0
-*/

@@ -51,6 +51,7 @@
 
 		if (target.bioHolder && target.traitHolder.hasTrait("training_chaplain"))
 			boutput(target, __blue("[M]'s foul gaze falters as it stares upon your righteousness!"))
+			JOB_XP(target, "Chaplain", 2)
 			target.visible_message("<span class='alert'><B>[target] glares right back at [M]!</B></span>")
 		else
 			target.apply_flash(30, 15, stamina_damage = 350)

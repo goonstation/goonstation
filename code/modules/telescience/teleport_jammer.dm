@@ -27,7 +27,7 @@
 		src.display_battery = image('icons/obj/meteor_shield.dmi', "")
 		src.display_panel = image('icons/obj/meteor_shield.dmi', "")
 
-		teleport_jammers += src
+		START_TRACKING_CAT(TR_CAT_TELEPORT_JAMMERS)
 		..()
 
 	disposing()
@@ -41,14 +41,14 @@
 		sound_off = null
 		sound_battwarning = null
 
-		teleport_jammers -= src
+		STOP_TRACKING_CAT(TR_CAT_TELEPORT_JAMMERS)
 		..()
 
 	get_desc(dist, mob/user)
 		. = ..()
 		if(user.client)
 			var/charge_percentage = 0
-			if (PCEL && PCEL.charge > 0 && PCEL.maxcharge > 0)
+			if (PCEL?.charge > 0 && PCEL.maxcharge > 0)
 				charge_percentage = round((PCEL.charge/PCEL.maxcharge)*100)
 				. += "It has [PCEL.charge]/[PCEL.maxcharge] ([charge_percentage]%) battery power left."
 				. += "The jammer's range is [src.range] units of distance."
@@ -65,7 +65,7 @@
 
 			var/charge_percentage = 0
 			var/current_battery_level = 0
-			if (PCEL && PCEL.charge > 0 && PCEL.maxcharge > 0)
+			if (PCEL?.charge > 0 && PCEL.maxcharge > 0)
 				charge_percentage = round((PCEL.charge/PCEL.maxcharge)*100)
 				switch(charge_percentage)
 					if (75 to 100)

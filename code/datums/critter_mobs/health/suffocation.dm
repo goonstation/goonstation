@@ -103,7 +103,8 @@
 					TakeDamage(3 + toxin_damage)
 
 			if (length(breath.trace_gases))	// If there's some other shit in the air lets deal with it here.
-				for (var/datum/gas/sleeping_agent/SA in breath.trace_gases)
+				var/datum/gas/sleeping_agent/SA = breath.get_trace_gas_by_type(/datum/gas/sleeping_agent)
+				if(SA)
 					var/SA_pp = (SA.moles/TOTAL_MOLES(breath))*breath_pressure
 					if (SA_pp > sa_para_min) // Enough to make us paralysed for a bit
 						holder.changeStatus("paralysis", 30)
@@ -112,7 +113,8 @@
 					else if (SA_pp > 0.01)	// There is sleeping gas in their lungs, but only a little, so give them a bit of a warning
 						if (prob(20))
 							holder.emote(pick("giggle", "laugh"))
-				for (var/datum/gas/rad_particles/RV in breath.trace_gases)
+				var/datum/gas/rad_particles/RV = breath.get_trace_gas_by_type(/datum/gas/rad_particles)
+				if(RV)
 					holder.changeStatus("radiation", RV.moles,  2)
 
 			var/FARD_pp = (breath.farts/TOTAL_MOLES(breath))*breath_pressure

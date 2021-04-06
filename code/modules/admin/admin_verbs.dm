@@ -19,6 +19,7 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_admin_view_playernotes,
 		/client/proc/toggle_pray,
 		/client/proc/cmd_whois,
+		/client/proc/cmd_whodead,
 
 		/client/proc/cmd_admin_pm,
 		/client/proc/dsay,
@@ -61,8 +62,11 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_shame_cube,
 		/client/proc/removeSelf,
 		/client/proc/toggle_station_name_changing,
-		/client/proc/cmd_admin_remove_label_from,
+		/client/proc/cmd_admin_remove_all_labels,
 		/client/proc/cmd_admin_antag_popups,
+		/client/proc/retreat_to_office,
+		/client/proc/summon_office,
+
 		),
 
 
@@ -70,6 +74,7 @@ var/list/admin_verbs = list(
 		// LEVEL_SA, secondary administrator
 		/client/proc/stealth,
 		/datum/admins/proc/pixelexplosion,
+		/datum/admins/proc/turn_off_pixelexplosion,
 		/datum/admins/proc/camtest,
 		/client/proc/alt_key,
 		/client/proc/create_portal,
@@ -81,6 +86,7 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_admin_murraysay,
 		/client/proc/cmd_admin_hssay,
 		/client/proc/cmd_admin_bradsay,
+		/client/proc/cmd_admin_beepsay,
 		/datum/admins/proc/restart,
 		/datum/admins/proc/toggleenter,
 		/client/proc/respawn_self,
@@ -172,7 +178,10 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_scale_type,
 		/client/proc/cmd_rotate_type,
 		/client/proc/cmd_spin_type,
-		/client/proc/cmd_get_type
+		/client/proc/cmd_get_type,
+
+		/client/proc/vpn_whitelist_add,
+		/client/proc/vpn_whitelist_remove
 		),
 
 	4 = list(
@@ -233,6 +242,7 @@ var/list/admin_verbs = list(
 		/client/proc/rspawn_panel,
 		/client/proc/cmd_admin_manageabils,
 		/client/proc/create_all_wizard_rings,
+		/client/proc/toggle_vpn_blacklist,
 
 		// moved up from admin
 		//client/proc/cmd_admin_delete,
@@ -241,6 +251,7 @@ var/list/admin_verbs = list(
 		/client/proc/respawn_as_self,
 		/client/proc/cmd_give_pet,
 		/client/proc/cmd_give_pets,
+		/client/proc/cmd_give_player_pets,
 		/client/proc/cmd_customgrenade,
 		/client/proc/cmd_admin_gib,
 		/client/proc/cmd_admin_partygib,
@@ -258,12 +269,17 @@ var/list/admin_verbs = list(
 		/client/proc/removeOther,
 		/client/proc/toggle_map_voting,
 		/client/proc/show_admin_lag_hacks,
+		/client/proc/spawn_survival_shit,
+		/client/proc/respawn_heavenly,
+		/client/proc/respawn_demonically,
 		/datum/admins/proc/spawn_atom,
 		/datum/admins/proc/heavenly_spawn_obj,
 		/datum/admins/proc/supplydrop_spawn_obj,
+		/datum/admins/proc/demonically_spawn_obj,
 
 		// moved down from coder. shows artists, atmos etc
 		/client/proc/SetInfoOverlay,
+		/client/proc/SetInfoOverlayAlias,
 
 		),
 
@@ -286,6 +302,7 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_debug_del_all,
 		/client/proc/cmd_admin_godmode,
 		/client/proc/cmd_admin_godmode_self,
+		/client/proc/cmd_admin_omnipresence,
 		/client/proc/cmd_admin_get_mobject,
 		/client/proc/cmd_admin_get_mobject_loc,
 		/client/proc/Getmob,
@@ -314,6 +331,10 @@ var/list/admin_verbs = list(
 		/client/proc/sharkban,
 		/client/proc/toggle_literal_disarm,
 		/client/proc/implant_all,
+		/client/proc/cmd_crusher_walls,
+		/client/proc/cmd_disco_lights,
+		/client/proc/cmd_blindfold_monkeys,
+		/client/proc/cmd_swampify_station,
 
 		/datum/admins/proc/toggleaprilfools,
 		/client/proc/cmd_admin_pop_off_all_the_limbs_oh_god,
@@ -402,6 +423,9 @@ var/list/admin_verbs = list(
 		/verb/print_flow_networks,
 		/client/proc/toggle_hard_reboot,
 		/client/proc/cmd_modify_respawn_variables,
+		/client/proc/set_nukie_score,
+
+		/client/proc/player_panel_tgui,
 
 #ifdef MACHINE_PROCESSING_DEBUG
 		/client/proc/cmd_display_detailed_machine_stats,
@@ -519,7 +543,7 @@ var/list/special_pa_observing_verbs = list(
 		if ("Inactive")
 			src.holder.dispose()
 			src.holder = null
-			boutput(src, "<span style='color:red;font-size:150%'><b>You are set to Inactive admin status! Please join #ss13admin on irc.synirc.net if you would like to become active again!</b></span>")
+			boutput(src, "<span style='color:red;font-size:150%'><b>You are set to Inactive admin status! Please join the Goonstation Discord if you would like to become active again!</b></span>")
 			return
 
 		if ("Banned")
@@ -563,7 +587,7 @@ var/list/special_pa_observing_verbs = list(
 	src.verbs -= special_admin_observing_verbs
 	src.verbs -= special_pa_observing_verbs
 
-	src.buildmode = 0
+	src.buildmode = null
 	src.show_popup_menus = 1
 
 	if (widescreen)
@@ -595,8 +619,7 @@ var/list/special_pa_observing_verbs = list(
 
 	blink(get_turf(src.mob))
 	if(!istype(src.mob, /mob/dead/observer) && !istype(src.mob, /mob/dead/target_observer))
-		if(src.mob.mind)
-			src.mob.mind.damned = 0
+		src.mob.mind?.damned = 0
 		src.mob.ghostize()
 		boutput(src, "<span class='notice'>You are now observing</span>")
 	else
@@ -643,6 +666,15 @@ var/list/special_pa_observing_verbs = list(
 		src.holder.player()
 	return
 
+/client/proc/player_panel_tgui()
+	set name = "Player Panel TGUI"
+	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
+	admin_only
+	if (src.holder.tempmin)
+		return
+	if (src.holder.level >= LEVEL_SA)
+		global.player_panel.ui_interact(src.mob)
+
 /client/proc/rspawn_panel()
 	set name = "Respawn Panel"
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
@@ -650,18 +682,10 @@ var/list/special_pa_observing_verbs = list(
 		src.holder.s_respawn()
 	return
 
-/client/proc/jobbans()
+/client/proc/jobbans(key as text)
 	set name = "Jobban Panel"
 	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
-	if(src.holder)
-		src.holder.Jobbans()
-	return
-
-/client/proc/rebuild_jobbans_panel()
-	set name = "Rebuild Jobbans Panel"
-	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
-	if (src.holder)
-		src.holder.buildjobbanspanel()
+	src.holder?.Topic(null, list("action"="jobbanpanel","target"=key))
 	return
 
 /client/proc/game_panel()
@@ -720,7 +744,7 @@ var/list/special_pa_observing_verbs = list(
 	if (src.owner:stealth)
 		var/ircmsg[] = new()
 		ircmsg["key"] = src.owner:key
-		ircmsg["name"] = (usr && usr.real_name) ? usr.real_name : "NULL"
+		ircmsg["name"] = (usr?.real_name) ? stripTextMacros(usr.real_name) : "NULL"
 		ircmsg["msg"] = "Has enabled stealth mode as ([src.owner:fakekey])"
 		ircbot.export("admin", ircmsg)
 
@@ -763,7 +787,7 @@ var/list/special_pa_observing_verbs = list(
 	if (src.alt_key)
 		var/ircmsg[] = new()
 		ircmsg["key"] = src.owner:key
-		ircmsg["name"] = (usr && usr.real_name) ? usr.real_name : "NULL"
+		ircmsg["name"] = (usr?.real_name) ? stripTextMacros(usr.real_name) : "NULL"
 		ircmsg["msg"] = "Has set their displayed key to ([src.owner:fakekey])"
 		ircbot.export("admin", ircmsg)
 */
@@ -849,16 +873,27 @@ var/list/fun_images = list()
 	set name = "Show Rules to Player"
 	set popup_menu = 0
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
+
+	var/crossness = input("How cross are we with this guy?", "Enter Crossness", "A bit") as anything in list("A bit", "A lot", "Cancel")
+	if (!crossness || crossness == "Cancel")
+		return
+
+	message_admins(crossness)
 	if(!M.client)
 		alert("[M] is logged out, so you should probably ban them!")
 		return
 	logTheThing("admin", src, M, "forced [constructTarget(M,"admin")] to view the rules")
 	logTheThing("diary", src, M, "forced [constructTarget(M,"diary")] to view the rules", "admin")
 	message_admins("[key_name(src)] forced [key_name(M)] to view the rules.")
-	M << csound("sound/misc/klaxon.ogg")
-	boutput(M, "<span class='alert'><B>WARNING: An admin is likely very cross with you and wants you to read the rules right fucking now!</B></span>")
-	// M.Browse(rules, "window=rules;size=480x320")
-	M << browse(rules, "window=rules;size=480x320")
+	switch(crossness)
+		if ("A bit")
+			M << csound("sound/misc/newsting.ogg")
+			boutput(M, "<span class='alert'><B>Here are the rules, you can read this, you have a good chance of being able to read them too.</B></span>")
+		if ("A lot")
+			M << csound("sound/misc/klaxon.ogg")
+			boutput(M, "<span class='alert'><B>WARNING: An admin is likely very cross with you and wants you to read the rules right fucking now!</B></span>")
+
+	M << browse(rules, "window=rules;size=800x1000")
 
 /client/proc/view_fingerprints(obj/O as obj in world)
 	set name = "View Object Fingerprints"
@@ -866,7 +901,7 @@ var/list/fun_images = list()
 	set popup_menu = 0
 
 	admin_only
-	if(!O.fingerprintshidden || !O.fingerprintshidden.len)
+	if(!O.fingerprintshidden || !length(O.fingerprintshidden))
 		alert("There are no fingerprints on this object.", null, null, null, null, null)
 		return
 
@@ -876,6 +911,32 @@ var/list/fun_images = list()
 
 	boutput(src, "<b>Last touched by:</b> [O.fingerprintslast].")
 	return
+
+/client/proc/respawn_heavenly()
+	set name = "Respawn Heavenly"
+	SET_ADMIN_CAT(ADMIN_CAT_SELF)
+	set desc = "Respawn yourself from the heavens"
+	set popup_menu = 0
+	admin_only
+
+	src.respawn_as_self()
+
+	var/mob/M = src.mob
+	M.UpdateOverlays(image('icons/misc/32x64.dmi',"halo"), "halo")
+	heavenly_spawn(M)
+
+/client/proc/respawn_demonically()
+	set name = "Respawn Demonically"
+	SET_ADMIN_CAT(ADMIN_CAT_SELF)
+	set desc = "Respawn yourself from the depths of the underfloor."
+	set popup_menu = 0
+	admin_only
+
+	src.respawn_as_self()
+
+	var/mob/living/carbon/human/M = src.mob
+	M.bioHolder.AddEffect("hell_fire", magical = 1)
+	demonic_spawn(M)
 
 /client/proc/respawn_as(var/client/cli in clients)
 	set name = "Respawn As"
@@ -893,16 +954,18 @@ var/list/fun_images = list()
 		boutput(src, "<span class='alert'>No preferences found on target client.</span>")
 
 	var/mob/mymob = src.mob
-	var/mob/living/carbon/human/H = new(mymob.loc)
+	var/mob/living/carbon/human/H = new(mymob.loc, cli.preferences.AH)
 	cli.preferences.copy_to(H,src.mob,1)
 	if (!mymob.mind)
 		mymob.mind = new /datum/mind()
+		mymob.mind.ckey = ckey
 		mymob.mind.key = key
 		mymob.mind.current = mymob
 		ticker.minds += mymob.mind
 	mymob.mind.transfer_to(H)
 	qdel(mymob)
 	H.JobEquipSpawned("Staff Assistant", 1)
+	H.update_colorful_parts()
 
 
 /client/proc/respawn_as_self()
@@ -920,17 +983,19 @@ var/list/fun_images = list()
 			return
 
 	var/mob/mymob = src.mob
-	var/mob/living/carbon/human/H = new()
-	H.set_loc(mymob.loc)
+	var/mob/living/carbon/human/H = new(mymob.loc, src.preferences.AH)
+	//H.set_loc(mymob.loc)
 	src.preferences.copy_to(H,src.mob,1)
 	if (!mymob.mind)
 		mymob.mind = new /datum/mind()
+		mymob.mind.ckey = ckey
 		mymob.mind.key = key
 		mymob.mind.current = mymob
 		ticker.minds += mymob.mind
 	mymob.mind.transfer_to(H)
 	qdel(mymob)
 	H.Equip_Rank("Staff Assistant", 2) //ZeWaka: joined_late is 2 so you don't get announced.
+	H.update_colorful_parts()
 	if (flourish)
 		for (var/mob/living/M in oviewers(5, get_turf(H)))
 			M.apply_flash(animation_duration = 30, weak = 5, uncloak_prob = 0, stamina_damage = 250)
@@ -941,12 +1006,12 @@ var/list/fun_images = list()
 	set popup_menu = 0
 
 	if (!ticker)
-		SPAWN_DBG (0)
+		SPAWN_DBG(0)
 			alert("Wait until the game starts.")
 		return
 
 	if (istype(M, /mob/new_player) || istype(M, /mob/dead/target_observer)/* || istype(M, /mob/living/intangible/aicamera)*/)
-		SPAWN_DBG (0)
+		SPAWN_DBG(0)
 			alert("You can't humanize new_player mobs or target observers.")
 		return
 
@@ -1098,7 +1163,7 @@ var/list/fun_images = list()
 		src.apply_depth_filter()
 
 	// Get fucked ghost HUD
-	for (var/obj/screen/ability/hudItem in src.screen)
+	for (var/atom/movable/screen/ability/hudItem in src.screen)
 		del(hudItem)
 
 	// Also get fucked giant...planet...things
@@ -1341,7 +1406,7 @@ var/list/fun_images = list()
 	set popup_menu = 0
 
 	var/msg
-	if (args && args.len > 0)
+	if (length(args))
 		msg = args[1]
 
 	msg = input(src, "Sends a message as voice to all players", "Dectalk", msg) as null|message
@@ -1402,14 +1467,15 @@ var/list/fun_images = list()
 	logTheThing("diary", usr ? usr : src, M, "gave [constructTarget(M,"diary")] a pet [pet_path]!", "admin")
 	message_admins("[key_name(usr ? usr : src)] gave [M] a pet [pet_path]!")
 
-/client/proc/cmd_give_pets()
+/client/proc/cmd_give_pets(pet_input=null as text)
 	set popup_menu = 0
 	set name = "Give Pets"
-	set desc = "Assigns everyone a pet!  Woo!"
+	set desc = "Assigns everyone a pet! Enter part of the path of the thing you want to give."
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	admin_only
 
-	var/pet_input = input("Enter path of the thing you want to give people as pets or enter a part of the path to search", "Enter Path", pick("/obj/critter/domestic_bee", "/obj/critter/parrot/random", "/obj/critter/cat")) as null|text
+	if(isnull(pet_input))
+		pet_input = input("Enter path of the thing you want to give people as pets or enter a part of the path to search", "Enter Path", pick("/obj/critter/domestic_bee", "/obj/critter/parrot/random", "/obj/critter/cat")) as null|text
 	if (!pet_input)
 		return
 	var/pet_path = get_one_match(pet_input, /obj)
@@ -1422,6 +1488,7 @@ var/list/fun_images = list()
 
 		//Pets should probably not attack their owner
 		if (istype(Pet, /obj/critter))
+
 			var/obj/critter/CritterPet = Pet
 			CritterPet.atkcarbon = 0
 			CritterPet.atksilicon = 0
@@ -1431,6 +1498,40 @@ var/list/fun_images = list()
 	logTheThing("admin", usr ? usr : src, null, "gave everyone a pet [pet_path]!")
 	logTheThing("diary", usr ? usr : src, null, "gave everyone a pet [pet_path]!", "admin")
 	message_admins("[key_name(usr ? usr : src)] gave everyone a pet [pet_path]!")
+
+/client/proc/cmd_give_player_pets(pet_input=null as text)
+	set popup_menu = 0
+	set name = "Give Player Pets"
+	set desc = "Assigns every living player a pet! Enter part of the path of the thing you want to give."
+	SET_ADMIN_CAT(ADMIN_CAT_FUN)
+	admin_only
+
+	if(isnull(pet_input))
+		pet_input = input("Enter path of the thing you want to give people as pets or enter a part of the path to search", "Enter Path", pick("/obj/critter/domestic_bee", "/obj/critter/parrot/random", "/obj/critter/cat")) as null|text
+	if (!pet_input)
+		return
+	var/pet_path = get_one_match(pet_input, /obj)
+	if (!pet_path)
+		return
+
+	for (var/client/cl as anything in clients)
+		var/mob/living/L = cl.mob
+		if(!istype(L) || isdead(L))
+			continue
+		var/obj/Pet = new pet_path(get_turf(L))
+		Pet.name = "[L]'s pet [Pet.name]"
+
+		//Pets should probably not attack their owner
+		if (istype(Pet, /obj/critter))
+			var/obj/critter/CritterPet = Pet
+			CritterPet.atkcarbon = 0
+			CritterPet.atksilicon = 0
+
+		LAGCHECK(LAG_LOW)
+
+	logTheThing("admin", usr ? usr : src, null, "gave every player a pet [pet_path]!")
+	logTheThing("diary", usr ? usr : src, null, "gave every player a pet [pet_path]!", "admin")
+	message_admins("[key_name(usr ? usr : src)] gave every player a pet [pet_path]!")
 
 /client/proc/cmd_customgrenade()
 	set popup_menu = 0
@@ -1749,7 +1850,11 @@ var/list/fun_images = list()
 					if(C)
 						winshow(C, "pregameBrowser", 0)
 				catch()
-
+			var/turf/T = landmarks[LANDMARK_LOBBY_LEFTSIDE][1]
+			T = locate(T.x + 3, T.y, T.z)
+			if (locate(/obj/titlecard) in T) return
+			if (alert("Replace with a title card turf?",, "Yes", "No") == "Yes")
+				new /obj/titlecard(T)
 			return
 	var/newHTML = null
 	if(alert("Do you want to upload an HTML file, or type it in?", "HTML Source", "Here", "Upload") == "Here")
@@ -1796,10 +1901,27 @@ var/list/fun_images = list()
 			H.implant.Add(MB)
 			MB.implanted(H, 0)
 			implanted ++
-		SPAWN_DBG (30)
+		SPAWN_DBG(3 SECONDS)
 			boutput(usr, "<span class='alert'>Implanted [implanted] people with microbombs. Any further humans that spawn will also have bombs.</span>")
 	else
 		boutput(usr, "<span class='alert'>Turned off spawning with microbombs. No existing microbombs have been deleted or disabled.</span>")
+
+/client/proc/set_nukie_score()
+	set popup_menu = 0
+	set name = "Set Nuke-Ops Scoreboard Values"
+	set desc = "Manually assign values to the nuke ops win/loss scoreboard."
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
+	admin_only
+
+	var/win_value = input("Enter new win value.") as num
+	world.save_intra_round_value("nukie_win", win_value)
+
+	var/lose_value = input("Enter new lose value.") as num
+	world.save_intra_round_value("nukie_loss", lose_value)
+
+	logTheThing("admin", usr ? usr : src, null, "set nuke ops values to [win_value] wins and [lose_value] loses.")
+	logTheThing("diary", usr ? usr : src, null, "set nuke ops values to [win_value] wins and [lose_value] loses.", "admin")
+	message_admins("[key_name(usr ? usr : src)] set nuke ops values to [win_value] wins and [lose_value] loses.")
 
 
 /mob/verb/admin_interact_verb()
@@ -1822,10 +1944,9 @@ var/list/fun_images = list()
 		var/x_shift = round(text2num(parameters["icon-x"]) / 32)
 		var/y_shift = round(text2num(parameters["icon-y"]) / 32)
 		clicked_turf = locate(clicked_turf.x + x_shift, clicked_turf.y + y_shift, clicked_turf.z)
-		var/list/atoms = list(clicked_turf)
-		for(var/thing in clicked_turf)
-			var/atom/atom = thing
-			atoms += atom
+		var/list/atom/atoms = list(clicked_turf)
+		for(var/atom/thing as anything in clicked_turf)
+			atoms += thing
 		if (atoms.len)
 			A = input(usr, "Which item to admin-interact with?") as null|anything in atoms
 			if (isnull(A)) return
@@ -1867,6 +1988,8 @@ var/list/fun_images = list()
 			C.view_fingerprints(A)
 		if("Delete")
 			C.cmd_admin_delete(A)
+		if("Copy Here")
+			semi_deep_copy(A, src.loc)
 
 		if("Player Options")
 			C.cmd_admin_playeropt(A)
@@ -1928,3 +2051,31 @@ var/list/fun_images = list()
 			C.cmd_emag_target(A)
 
 	src.update_cursor()
+
+
+/client/proc/vpn_whitelist_add(vpnckey as text)
+	set name = "VPN whitelist add"
+	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
+	vpnckey = ckey(vpnckey)
+	try
+		apiHandler.queryAPI("vpncheck-whitelist/add", list("ckey" = vpnckey, "akey" = src.ckey))
+	catch(var/exception/e)
+		message_admins("Error while adding ckey [vpnckey] to the VPN whitelist: [e.name]")
+		return 0
+	global.vpn_ip_checks?.Cut() // to allow them to reconnect this round
+	message_admins("Ckey [vpnckey] added to the VPN whitelist by [src.key].")
+	logTheThing("admin", src, null, "Ckey [vpnckey] added to the VPN whitelist.")
+	return 1
+
+/client/proc/vpn_whitelist_remove(vpnckey as text)
+	set name = "VPN whitelist remove"
+	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
+	vpnckey = ckey(vpnckey)
+	try
+		apiHandler.queryAPI("vpncheck-whitelist/remove", list("ckey" = vpnckey, "akey" = src.ckey))
+	catch(var/exception/e)
+		message_admins("Error while removing ckey [vpnckey] from the VPN whitelist: [e.name]")
+		return 0
+	message_admins("Ckey [vpnckey] removed from the VPN whitelist by [src.key].")
+	logTheThing("admin", src, null, "Ckey [vpnckey] removed from the VPN whitelist.")
+	return 1

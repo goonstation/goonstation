@@ -1,5 +1,5 @@
 //stole this from vampire. prevents runtimes. IDK why this isn't in the parent.
-/obj/screen/ability/topBar/santa
+/atom/movable/screen/ability/topBar/santa
 	clicked(params)
 		var/datum/targetable/santa/spell = owner
 		var/datum/abilityHolder/holder = owner.holder
@@ -37,7 +37,7 @@
 		return
 
 
-////////////////////////////////////////////////// Ability holder /////////////////////////////////////////////
+/* 	/		/		/		/		/		/		Ability Holder		/		/		/		/		/		/		/		/		*/
 
 /datum/abilityHolder/santa
 	usesPoints = 0
@@ -70,7 +70,7 @@
 	var/not_when_handcuffed = 0
 
 	New()
-		var/obj/screen/ability/topBar/santa/B = new /obj/screen/ability/topBar/santa(null)
+		var/atom/movable/screen/ability/topBar/santa/B = new /atom/movable/screen/ability/topBar/santa(null)
 		B.icon = src.icon
 		B.icon_state = src.icon_state
 		B.owner = src
@@ -83,7 +83,7 @@
 	updateObject()
 		..()
 		if (!src.object)
-			src.object = new /obj/screen/ability/topBar/santa()
+			src.object = new /atom/movable/screen/ability/topBar/santa()
 			object.icon = src.icon
 			object.owner = src
 		if (src.last_cast > world.time)
@@ -261,4 +261,3 @@
 			return
 
 		boutput(holder.owner, "<span class='alert'>Can't find any Krampuses to banish! (you must be within 7 tiles)</span>")
-

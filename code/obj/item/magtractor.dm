@@ -28,8 +28,7 @@
 
 	New(mob/user)
 		..()
-		if (!(src in processing_items))
-			processing_items.Add(src)
+		processing_items |= src
 		if (user)
 			src.holder = user
 			src.verbs |= /obj/item/magtractor/proc/toggleHighPower
@@ -110,7 +109,7 @@
 			actions.start(new/datum/action/bar/private/icon/magPicker(target, src), user)
 
 		else if ((src.holding && src.holding.loc != src) || src.holding.disposed) // it's gone!!
-			actions.stopId("magpickerhold", usr)
+			actions.stopId("magpickerhold", user)
 
 		return 1
 
@@ -122,9 +121,9 @@
 
 	dropped(mob/user as mob)
 		..()
-		actions.stopId("magpicker", usr)
+		actions.stopId("magpicker", user)
 		if (src.holding)
-			actions.stopId("magpickerhold", usr)
+			actions.stopId("magpickerhold", user)
 
 	examine()
 		. = ..()
@@ -170,9 +169,10 @@
 	proc/updateHeldOverlay(obj/item/W as obj)
 		if (W && !W.disposed)
 			var/image/heldItem = GetOverlayImage("heldItem")
-			if (!heldItem) heldItem = image(W.icon, W.icon_state)
+			if (!heldItem)
+				heldItem = image(W.icon, W.icon_state)
+				heldItem.transform *= 0.85
 			heldItem.color = W.color
-			heldItem.transform *= 0.85
 			heldItem.pixel_y = 1
 			heldItem.layer = -1
 			src.UpdateOverlays(heldItem, "heldItem")

@@ -1,11 +1,11 @@
 /datum/datacore
 	var/name = "datacore"
-	var/list/medical = list(  )
-	var/list/general = list(  )
-	var/list/security = list(  )
-	var/list/bank = list (  )
-	var/list/fines = list (  )
-	var/list/tickets = list (  )
+	var/list/datum/data/record/medical = list(  )
+	var/list/datum/data/record/general = list(  )
+	var/list/datum/data/record/security = list(  )
+	var/list/datum/data/record/bank = list (  )
+	var/list/datum/fine/fines = list (  )
+	var/list/datum/ticket/tickets = list (  )
 	var/obj/machinery/networked/mainframe/mainframe = null
 
 /datum/datacore/proc/addManifest(var/mob/living/carbon/human/H as mob, var/sec_note = "", var/med_note = "")
@@ -86,12 +86,18 @@
 			else traitStr = T.cleanName
 			if (istype(T, /obj/trait/random_allergy))
 				var/obj/trait/random_allergy/AT = T
-				if (M.fields["notes"] == "No notes.") //is it in its default state?
-					M.fields["notes"] = "[G.fields["name"]] has an allergy to [AT.allergen_name]."
+				if (M.fields["alg"] == "None") //is it in its default state?
+					M.fields["alg"] = reagent_id_to_name(AT.allergic_players[H])
+					M.fields["alg_d"] = "Allergy information imported from CentCom database."
 				else
-					M.fields["notes"] += " [G.fields["name"]] has an allergy to [AT.allergen_name]."
+					M.fields["alg"] += ", [reagent_id_to_name(AT.allergic_players[H])]"
 
 	M.fields["traits"] = traitStr
+
+	if(!length(sec_note))
+		S.fields["notes"] = "No notes."
+	else
+		S.fields["notes"] = sec_note
 
 	if(H.traitHolder.hasTrait("jailbird"))
 		S.fields["criminal"] = "*Arrest*"
@@ -135,7 +141,20 @@
 								"Throwing explosive tomatoes at people.",\
 								"Caused multiple seemingly unrelated accidents.")
 		S.fields["ma_crim_d"] = "No details provided."
-		S.fields["notes"] = pick("Huge nerd.", "Total jerkface.", "Absolute dingus.", "Insanely endearing.", "Worse than clown.", "Massive crapstain.");
+
+		var/randomNote = pick("Huge nerd.", "Total jerkface.", "Absolute dingus.", "Insanely endearing.", "Worse than clown.", "Massive crapstain.");
+		if(S.fields["notes"] == "No notes.")
+			S.fields["notes"] = randomNote
+		else
+			S.fields["notes"] += " [randomNote]"
+
+		boutput(H, "<span class='notice'>You are currently on the run because you've committed the following crimes:</span>")
+		boutput(H, "<span class='notice'>- [S.fields["mi_crim"]]</span>")
+		boutput(H, "<span class='notice'>- [S.fields["ma_crim"]]</span>")
+
+		H.mind.store_memory("You've committed the following crimes before arriving on the station:")
+		H.mind.store_memory("- [S.fields["mi_crim"]]")
+		H.mind.store_memory("- [S.fields["ma_crim"]]")
 	else
 		S.fields["criminal"] = "None"
 		S.fields["mi_crim"] = "None"
@@ -143,10 +162,6 @@
 		S.fields["ma_crim"] = "None"
 		S.fields["ma_crim_d"] = "No major crime convictions."
 
-		if(!length(sec_note))
-			S.fields["notes"] = "No notes."
-		else
-			S.fields["notes"] = sec_note
 
 	B.fields["job"] = H.job
 	B.fields["current_money"] = 100.0
@@ -162,7 +177,7 @@
 	// Otherwise give them a default wage
 	else
 		var/datum/job/J = find_job_in_controller_by_string(G.fields["rank"])
-		if (J && J.wages)
+		if (J?.wages)
 			B.fields["wage"] = round(J.wages * wageMult)
 		else
 			B.fields["wage"] = 0
@@ -180,7 +195,7 @@
 
 		var/username = format_username(H.real_name)
 		if (!src.mainframe || !src.mainframe.hd || !(src.mainframe.hd in src.mainframe))
-			for (var/obj/machinery/networked/mainframe/newMainframe in machine_registry[MACHINES_MAINFRAMES])
+			for (var/obj/machinery/networked/mainframe/newMainframe as anything in machine_registry[MACHINES_MAINFRAMES])
 				if (newMainframe.z != 1 || newMainframe.status)
 					continue
 
@@ -227,6 +242,7 @@
 	var/issuer_byond_key = null
 
 	New()
+		..()
 		SPAWN_DBG(1 SECOND)
 			statlog_ticket(src, usr)
 
@@ -248,6 +264,7 @@
 	var/approver_byond_key = null
 
 	New()
+		..()
 		generate_ID()
 		SPAWN_DBG(1 SECOND)
 			for(var/datum/data/record/B in data_core.bank) //gross

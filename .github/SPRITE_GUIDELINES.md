@@ -26,6 +26,7 @@
 ## Implementation :wrench:
 
 * Keep the names of your icon_states simple but descriptive.
+* Follow the icon state naming convention where names are lowercase, spaces in names are replaced by underscores and sub-states are delimited by dashes. Example: `fancy_door-open`
 * Use already existing .dmi files that fit your purpose if possible.
 * Use the `widthXheight` files (ex: 120x120) for larger-than-normal sprites.
 

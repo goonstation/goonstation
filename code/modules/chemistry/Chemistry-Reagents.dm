@@ -1,8 +1,9 @@
-//The reaction procs must ALWAYS set src = null, this detaches the proc from the object (the reagent)
 //so that it can continue working when the reagent is deleted while the proc is still active.
 
 //important MBC reagent note : implement mult for on_mob_life(). needed for proper realtime processing. lookk for examples, there are plenty
 //dont put them on byond-time effects like drowsy. just use them for damage, counters, statuseffects(realtime) etc.
+
+ABSTRACT_TYPE(/datum/reagent)
 
 datum
 	reagent
@@ -47,6 +48,9 @@ datum
 		var/stun_resist = 0
 		var/smoke_spread_mod = 0 //base minimum-required-to-spread on a smoke this chem is in. Highest value in the smoke is used
 		var/minimum_reaction_temperature = INFINITY // Minimum temperature for reaction_temperature() to occur, use -INFINITY to bypass this check
+		var/random_chem_blacklisted = 0 // will not appear in random chem sources oddcigs/artifacts/etc
+		var/boiling_point = T0C + 100
+		var/can_crack = 0 // used by organic chems
 
 		New()
 			..()
@@ -78,7 +82,7 @@ datum
 
 		proc/on_remove()
 			if (stun_resist > 0)
-				if (ismob(holder.my_atom))
+				if (ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
 					M.remove_stun_resist_mod("reagent_[src.id]")
 			return
@@ -112,6 +116,7 @@ datum
 			return 1
 
 		proc/reaction_mob(var/mob/M, var/method=TOUCH, var/volume, var/paramslist = 0) //By default we have a chance to transfer some
+			SHOULD_CALL_PARENT(TRUE)
 			var/datum/reagent/self = src					  //of the reagent to the mob on TOUCHING it.
 			var/did_not_react = 1
 			switch(method)
@@ -160,25 +165,20 @@ datum
 						if (H.sims)
 							H.sims.affectMotive("Thirst", volume * thirst_value)
 */
-			if(M.material)
-				M.material.triggerChem(M, src, volume)
+			M.material?.triggerChem(M, src, volume)
 			for(var/atom/A in M)
 				if(A.material) A.material.triggerChem(A, src, volume)
-			src = null
 			return did_not_react
 
 		proc/reaction_obj(var/obj/O, var/volume) //By default we transfer a small part of the reagent to the object
-			src = null						//if it can hold reagents. nope!
-			if(O.material)
-				O.material.triggerChem(O, src, volume)
+								//if it can hold reagents. nope!
+			O.material?.triggerChem(O, src, volume)
 			//if(O.reagents)
 			//	O.reagents.add_reagent(id,volume/3)
 			return 1
 
 		proc/reaction_turf(var/turf/T, var/volume)
-			src = null
-			if(T.material)
-				T.material.triggerChem(T, src, volume)
+			T.material?.triggerChem(T, src, volume)
 			return 1 // returns 1 to spawn fluid. Checked in 'reaction()' proc of Chemistry-Holder.dm
 
 
@@ -256,7 +256,7 @@ datum
 			if(ishuman(M))
 				var/mob/living/carbon/human/H = M
 				if(H.traitHolder.hasTrait("chemresist"))
-					amount *= (0.65 ** mult)
+					amount *= (0.65)
 			if (amount >= src.overdose * 2)
 				return do_overdose(2, M, mult)
 			else if (amount >= src.overdose)
@@ -325,6 +325,9 @@ datum
 		proc/physical_shock(var/force)
 			return
 
+		proc/crack(var/amount) //this proc is called by organic chemistry machines. It should return nothing.
+			return							//rather it should subtract its own volume and create the appropriate byproducts.
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
@@ -340,7 +343,6 @@ datum
 			transparency = 40
 
 			reaction_turf(var/turf/T, var/volume)
-				src = null
 				if(volume >= 5)
 					if(!locate(/turf/unsimulated/floor/void) in T)
 						playsound(T, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)

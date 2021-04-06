@@ -18,13 +18,13 @@
 
 /datum/artifact/melee
 	associated_object = /obj/item/artifact/melee_weapon
-	rarity_class = 2
+	type_name = "Melee Weapon"
+	rarity_weight = 350
 	validtypes = list("ancient","martian","wizard","eldritch","precursor")
 	react_xray = list(14,95,95,7,"DENSE")
 	var/damtype = "brute"
 	var/dmg_amount = 5
-	var/stun_time = 0
-	var/KO_time = 0
+	var/stamina_dmg = 0
 	var/deadly = 0
 	var/sound/hitsound = null
 	examine_hint = "It seems to have a handle you're supposed to hold it by."
@@ -38,10 +38,8 @@
 		src.dmg_amount *= rand(1,5)
 		if (prob(5))
 			src.dmg_amount *= rand(1,5)
-		if (prob(40))
-			src.stun_time = rand(3,12)
-		if (prob(15))
-			src.KO_time = rand(3,12)
+		if (prob(45))
+			src.stamina_dmg = rand(50,120)
 		if (prob(1))
 			src.deadly = 1
 		src.hitsound = pick('sound/impact_sounds/Metal_Hit_Heavy_1.ogg','sound/impact_sounds/Wood_Hit_1.ogg','sound/effects/exlow.ogg','sound/effects/mag_magmisimpact.ogg','sound/impact_sounds/Energy_Hit_1.ogg',
@@ -66,10 +64,6 @@
 				if ("fire")
 					random_burn_damage(target, dmg_amount)
 				if ("toxin")
-					if (ishuman(target))
-						var/mob/living/carbon/human/H = target
-						H.toxloss += rand(1, dmg_amount)
-			if (src.stun_time)
-				target.changeStatus("stunned", src.stun_time * 15)
-			if (src.KO_time)
-				target.changeStatus("paralysis", src.KO_time*15)
+					target.take_toxin_damage(rand(1, dmg_amount))
+			if (src.stamina_dmg)
+				target.do_disorient(stamina_damage = src.stamina_dmg, weakened = src.stamina_dmg - 20, disorient = src.stamina_dmg - 40)

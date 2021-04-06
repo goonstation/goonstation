@@ -44,7 +44,7 @@
 			else
 				user.visible_message("<span class='notice'>[user] begins cutting eyeholes out of [src].</span>",\
 				"<span class='notice'>You begin cutting eyeholes out of [src].</span>")
-				if (!do_after(user, 20))
+				if (!do_after(user, 2 SECONDS))
 					user.show_text("You were interrupted!", "red")
 					return
 				src.eyeholes = TRUE

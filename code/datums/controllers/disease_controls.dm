@@ -5,6 +5,7 @@ var/datum/disease_controller/disease_controls
 	var/list/custom_diseases = list()
 
 	New()
+		..()
 		for (var/X in typesof(/datum/ailment))
 			if (X == /datum/ailment || X == /datum/ailment/disease || X == /datum/ailment/parasite || X == /datum/ailment/disability)
 				continue
@@ -28,7 +29,7 @@ var/datum/disease_controller/disease_controls
 	if (!istext(disease_name))
 		logTheThing("debug", null, null, "<b>Disease:</b> Attempt to find disase with non-string")
 		return null
-	if (!disease_controls.standard_diseases.len && !disease_controls.custom_diseases.len)
+	if (!disease_controls.standard_diseases.len && !length(disease_controls.custom_diseases))
 		logTheThing("debug", null, null, "<b>Disease:</b> Cant find schematic due to empty disease lists")
 		return null
 	for (var/datum/ailment/A in (disease_controls.standard_diseases + disease_controls.custom_diseases))
