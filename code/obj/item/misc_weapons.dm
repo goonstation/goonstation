@@ -1434,9 +1434,9 @@ obj/item/whetstone
 	desc = "A heavy cyalume saber variant, builds generator charge when used in combat & supports multiple attack types."
 	icon = 'icons/obj/64x32.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_cswords.dmi'
-	wear_image_icon = 'icons/mob/back.dmi' //todo back sprites
-	icon_state = "hadar_sword2" //todo new sprite
-	item_state = "hadar_sword2" //todo new sprite
+	wear_image_icon = 'icons/mob/back.dmi'
+	icon_state = "hadar_sword2"
+	item_state = "hadar_sword2"
 	flags = ONBACK
 	hit_type = DAMAGE_CUT | DAMAGE_STAB
 	tool_flags = TOOL_CUTTING | TOOL_CHOPPING
@@ -1472,8 +1472,8 @@ obj/item/whetstone
 	..()
 */
 /obj/item/heavy_power_sword/attack(mob/M as mob, mob/user as mob, def_zone)
-	if(ishuman (M) && !isdead(M) && force <= maximum_force)
-		force += 5
+	if(ishuman(M) && isalive(M) && src.force <= src.maximum_force)
+		src.force += 5
 		boutput(user, "<span class='alert'>[src]'s generator builds charge!</span>")
 		if(src.mode == 2)
 			var/turf/throw_target = get_edge_target_turf(M, get_dir(user,M))
