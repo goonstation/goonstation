@@ -322,7 +322,7 @@
 		else
 			html_parts += "<B>Current ID:</B> None<BR>"
 
-	if (src.product_list.len == 0)
+	if (length(src.product_list) <= 0 && length(src.player_list) <= 0)
 		html_parts += "<font color = 'red'>No product loaded!</font>"
 
 	else if (src.paying_for)
@@ -338,6 +338,14 @@
 				html_parts += "<tr><td><a href='byond://?src=\ref[src];vend=\ref[R]'>[R.product_name]</a></td><td style='text-align: right;'>[R.product_amount]</td><td style='text-align: right;'> $[R.product_cost]</td></tr>"
 			else
 				html_parts += "<tr><td>[R.product_name]</a></td><td colspan='2' style='text-align: center;'><strong>SOLD OUT</strong></td></tr>"
+		if(player_list)
+			for (var/datum/data/vending_product/player_product/R in src.player_list)
+				if (R.product_hidden && !src.extended_inventory)
+					continue
+				if (R.product_amount > 0)
+					html_parts += "<tr><td><a href='byond://?src=\ref[src];vend=\ref[R]'>[R.product_name]</a></td><td style='text-align: right;'>[R.product_amount]</td><td style='text-align: right;'> $[R.product_cost]</td></tr>"
+				else
+					html_parts += "<tr><td>[R.product_name]</a></td><td colspan='2' style='text-align: center;'><strong>SOLD OUT</strong></td></tr>"
 
 		html_parts += "</table>";
 
@@ -1634,52 +1642,11 @@
 			player_list += new/datum/data/vending_product/player_product(target, 200)
 		src.generate_HTML(1)
 
-	generate_vending_HTML()
-		var/list/html_parts = list()
-		html_parts += "<b>Welcome!</b><br>"
-
-		if (src.paying_for && (!istype(src.paying_for, /datum/data/vending_product) || !src.pay))
-			src.paying_for = null
-
-		if (src.pay && src.acceptcard)
-			if (src.paying_for && !src.scan)
-				html_parts += "<B>You have selected the following item:</b><br>"
-				html_parts += "&emsp;<b>[src.paying_for.product_name]</b><br>"
-				html_parts += "Please swipe your card to authorize payment.<br>"
-				html_parts += "<B>Current ID:</B> None<BR>"
-			else if (src.scan)
-				if (src.paying_for)
-					html_parts += "<B>You have selected the following item for purchase:</b><br>"
-					html_parts += "&emsp;[src.paying_for.product_name]<br>"
-					html_parts += "<B>Please swipe your card to authorize payment.</b><br>"
-				var/datum/data/record/account = null
-				account = FindBankAccountByName(src.scan.registered)
-				html_parts += "<B>Current ID:</B> <a href='byond://?src=\ref[src];logout=1'><u>([src.scan])</u></A><BR>"
-				html_parts += "<B>Credits on Account: [account.fields["current_money"]] Credits</B> <BR>"
-			else
-				html_parts += "<B>Current ID:</B> None<BR>"
-
-		if (length(src.player_list) == 0)
-			html_parts += "<font color = 'red'>No product loaded!</font>"
-		else if (src.paying_for)
-			html_parts += "<a href='byond://?src=\ref[src];vend=\ref[src.paying_for]'><u><b>Continue</b></u></a>"
-			html_parts += " | <a href='byond://?src=\ref[src];cancel_payfor=1;logout=1'><u><b>Cancel</b></u></a>"
-
-		else
-			html_parts += "<table style='width: 100%; border: none; border-collapse: collapse;'><thead><tr><th>Product</th><th>Amt.</th><th>Price</th></tr></thead>"
-			for (var/datum/data/vending_product/player_product/R in src.player_list)
-				if (R.product_amount > 0)
-					html_parts += "<tr><td><a href='byond://?src=\ref[src];vend=\ref[R]'>[R.product_name]</a></td><td style='text-align: right;'>[R.product_amount]</td><td style='text-align: right;'> $[R.product_cost]</td></tr>"
-			html_parts += "</table>";
-
-			if (src.pay)
-				html_parts += "<BR><B>Available Credits:</B> $[src.credit] <a href='byond://?src=\ref[src];return_credits=1'>Return Credits</A>"
-				if (!src.acceptcard)
-					html_parts += "<BR>This machine only takes credit bills."
-
-		src.vending_HTML = jointext(html_parts, "")
-
-
+/obj/machinery/vending/player/fallen
+	New()
+		. = ..()
+		icon_state = "standard"
+		src.fall()
 //Somewhere out in the vast nothingness of space, a chef (and an admin) is crying.
 
 /obj/machinery/vending/pizza
@@ -1784,10 +1751,7 @@
 			add_fingerprint(usr)
 			updateUsrDialog()
 		return
-/obj/machinery/vending/player/fallen
-	New()
-		. = ..()
-		src.fall()
+
 /obj/machinery/vending/pizza/fallen
 	New()
 		. = ..()
