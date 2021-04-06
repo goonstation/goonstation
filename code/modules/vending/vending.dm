@@ -1600,12 +1600,13 @@
 	var/product_type
 	var/real_name
 	product_amount = 1
-	New(obj/item/product)
+	New(obj/item/product,var/price)
 		..()
 		product_type = product.type
 		product_name = product.name
 		real_name = product.real_name
 		contents += product
+		product_cost = price
 //The burden of these machinations weighs on my shoulders
 //And thus you will be burdened
 /obj/machinery/vending/player
@@ -1630,9 +1631,8 @@
 				existed = 1
 				break
 		if(existed == 0)
-			player_list += new/datum/data/vending_product/player_product(target)
+			player_list += new/datum/data/vending_product/player_product(target, 200)
 		src.generate_HTML(1)
-	//Topic ()
 
 	generate_vending_HTML()
 		var/list/html_parts = list()
@@ -1784,7 +1784,10 @@
 			add_fingerprint(usr)
 			updateUsrDialog()
 		return
-
+/obj/machinery/vending/player/fallen
+	New()
+		. = ..()
+		src.fall()
 /obj/machinery/vending/pizza/fallen
 	New()
 		. = ..()
