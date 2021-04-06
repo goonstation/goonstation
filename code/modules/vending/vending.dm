@@ -344,9 +344,7 @@
 					continue
 				if (R.product_amount > 0)
 					html_parts += "<tr><td><a href='byond://?src=\ref[src];vend=\ref[R]'>[R.product_name]</a></td><td style='text-align: right;'>[R.product_amount]</td><td style='text-align: right;'> $[R.product_cost]</td></tr>"
-				else
-					html_parts += "<tr><td>[R.product_name]</a></td><td colspan='2' style='text-align: center;'><strong>SOLD OUT</strong></td></tr>"
-
+					//Player vending machines don't have "out of stock" items
 		html_parts += "</table>";
 
 		if (src.pay)
