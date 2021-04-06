@@ -1388,6 +1388,7 @@ obj/item/fragile_sword
 	stamina_cost = 25
 	stamina_crit_chance = 15
 	pickup_sfx = "sound/items/blade_pull.ogg"
+
 	var/minimum_force = 5
 	var/maximum_force = 70
 
@@ -1448,7 +1449,8 @@ obj/item/whetstone
 	stamina_damage = 25
 	stamina_cost = 20
 	stamina_crit_chance = 15
-	pickup_sfx = "sound/items/blade_pull.ogg" // could use a cool lasery sfx
+	pickup_sfx = "sound/weapons/hadar-pickup.ogg"
+	hitsound = 'sound/impact_sounds/Blade_Small_Bloody.ogg'
 	two_handed = 1
 	uses_multiple_icon_states = 1
 
@@ -1473,7 +1475,6 @@ obj/item/whetstone
 	if(src.mode == 1) // only knock back on the sweep attack
 		var/turf/throw_target = get_edge_target_turf(M, get_dir(user,M))
 		M.throw_at(throw_target, 2, 2)
-	playsound(M, "sound/impact_sounds/Blade_Small_Bloody.ogg", 60, 1)
 	..()
 
 /obj/item/heavy_power_sword/dropped(mob/user)
