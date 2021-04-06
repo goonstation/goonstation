@@ -605,7 +605,8 @@
 				else
 					src.credit -= R.product_cost
 				wagesystem.shipping_budget += round(R.product_cost * profit) // cogwerks - maybe money shouldn't just vanish into the aether idk
-
+				if(R.product_amount <= 0 && !isplayer == 0)
+					src.player_list -= R
 			SPAWN_DBG(src.vend_delay)
 				src.vend_ready = 1 // doin this at the top here just in case something goes fucky and the proc crashes
 
