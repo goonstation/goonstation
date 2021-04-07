@@ -492,11 +492,6 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 					del(src)
 					return
 
-// Let's throw it here, why not! -ZeWaka
-#if DM_BUILD < 1526 && !defined(SPACEMAN_DMM)
-#error Please update your BYOND version to the latest stable release.
-#endif
-
 		else
 			if (noir)
 				animate_fade_grayscale(src, 1)
