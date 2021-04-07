@@ -441,6 +441,26 @@
 			return
 		..()
 		return
+		
+/obj/item/plant/flower/sunflower
+	name = "sunflower"
+	desc = "This nice flower resembles the sun."
+	icon_state = "sunflower"
+	
+/obj/item/plant/flower/uvsunflower
+	name = "UV sunflower"
+	desc = "This nice flower resembles the sun, it even glows!"
+	icon_state = "UVsunflower"
+	
+/obj/item/plant/flower/stunflower
+	name = "stunflower"
+	desc = "Is- is this an organic stun baton?"
+	icon_state = "stunflower"
+	
+/obj/item/plant/flower/moonflower
+	name = "moonflower"
+	desc = "This nice flower resembles the moon, kinda."
+	icon_state = "moonflower"
 
 /obj/item/plant/herb/hcordata
 	name = "houttuynia cordata"
