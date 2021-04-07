@@ -1,5 +1,9 @@
 
 (t)tue apr 06 21
+(u)Penny
+(p)4068
+(e)🆕|feature
+(+)Multitools now detect if your equipment or data terminal is unplugged
 (u)TTerc & Virvatuli
 (p)4224
 (e)|
