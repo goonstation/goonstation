@@ -2,7 +2,7 @@
 // dummy stuff so the linter doesn't compile on 514
 #if DM_VERSION < 514
 proc/generator(type, A, B, rand)
-	var/generator/gen = generator()
+	var/generator/gen = new
 	gen.lower = A
 	gen.upper = B
 	return gen
