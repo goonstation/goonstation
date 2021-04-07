@@ -1682,6 +1682,7 @@
 				owner = src.scan.registered
 				cardname = src.scan.name
 				unlocked = 1
+				owneruser = lastuser
 			else if (owner == src.scan?.registered)
 				unlocked = !unlocked
 				if(unlocked == 0 && loading == 1) loading = 0
