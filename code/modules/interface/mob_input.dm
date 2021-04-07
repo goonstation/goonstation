@@ -9,51 +9,52 @@
 
 	if (istype(used_ability, /datum/targetable))
 		var/datum/targetable/S = used_ability
-		src.targeting_ability = null
-		update_cursor()
+		if (S.targeted)
+			src.targeting_ability = null
+			update_cursor()
 
-		if (!S.target_anything && !ismob(target))
-			src.show_text("You have to target a person.", "red")
-			if(S.sticky)
-				src.targeting_ability = S
-				update_cursor()
+			if (!S.target_anything && !ismob(target))
+				src.show_text("You have to target a person.", "red")
+				if(S.sticky)
+					src.targeting_ability = S
+					update_cursor()
+				return 100
+			if (!S.target_in_inventory && !isturf(target.loc) && !isturf(target))
+				if(S.sticky)
+					src.targeting_ability = S
+					update_cursor()
+				return 100
+			if (S.target_in_inventory && (!IN_RANGE(src, target, 1) && !isturf(target) && !isturf(target.loc)))
+				if(S.sticky)
+					src.targeting_ability = S
+					update_cursor()
+				return 100
+			if (S.check_range && !IN_RANGE(src, target, S.max_range))
+				src.show_text("You are too far away from the target.", "red") // At least tell them why it failed.
+				if(S.sticky)
+					src.targeting_ability = S
+					update_cursor()
+				return 100
+			if (!S.can_target_ghosts && ismob(target) && (!isliving(target) || iswraith(target) || isintangible(target)))
+				src.show_text("It would have no effect on this target.", "red")
+				if(S.sticky)
+					src.targeting_ability = S
+					update_cursor()
+				return 100
+			if (!S.castcheck(src))
+				if(S.sticky)
+					src.targeting_ability = S
+					update_cursor()
+				return 100
+			actions.interrupt(src, INTERRUPT_ACTION)
+			SPAWN_DBG(0)
+				S.handleCast(target)
+				if(S)
+					if((S.ignore_sticky_cooldown && !S.cooldowncheck()) || (S.sticky && S.cooldowncheck()))
+						if(src)
+							src.targeting_ability = S
+							src.update_cursor()
 			return 100
-		if (!S.target_in_inventory && !isturf(target.loc) && !isturf(target))
-			if(S.sticky)
-				src.targeting_ability = S
-				update_cursor()
-			return 100
-		if (S.target_in_inventory && (!IN_RANGE(src, target, 1) && !isturf(target) && !isturf(target.loc)))
-			if(S.sticky)
-				src.targeting_ability = S
-				update_cursor()
-			return 100
-		if (S.check_range && !IN_RANGE(src, target, S.max_range))
-			src.show_text("You are too far away from the target.", "red") // At least tell them why it failed.
-			if(S.sticky)
-				src.targeting_ability = S
-				update_cursor()
-			return 100
-		if (!S.can_target_ghosts && ismob(target) && (!isliving(target) || iswraith(target) || isintangible(target)))
-			src.show_text("It would have no effect on this target.", "red")
-			if(S.sticky)
-				src.targeting_ability = S
-				update_cursor()
-			return 100
-		if (!S.castcheck(src))
-			if(S.sticky)
-				src.targeting_ability = S
-				update_cursor()
-			return 100
-		actions.interrupt(src, INTERRUPT_ACTION)
-		SPAWN_DBG(0)
-			S.handleCast(target)
-			if(S)
-				if((S.ignore_sticky_cooldown && !S.cooldowncheck()) || (S.sticky && S.cooldowncheck()))
-					if(src)
-						src.targeting_ability = S
-						src.update_cursor()
-		return 100
 
 	else if (istype(src.targeting_ability, /obj/ability_button))
 		var/obj/ability_button/B = src.targeting_ability
