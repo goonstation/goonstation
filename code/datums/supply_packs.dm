@@ -955,7 +955,7 @@
 	name = "Extra Large Air Mix Canister"
 	desc = "Spare canister filled with a mix of nitrogen, oxygen and minimal amounts of carbon dioxide. Used for emergency re-pressurisation efforts."
 	category = "Engineering Department"
-	contains = list(/obj/machinery/portable_atmospherics/canister/oxygen)
+	contains = list(/obj/machinery/portable_atmospherics/canister/air/large)
 	cost = 8000
 	containertype = /obj/storage/crate/wooden
 	containername = "Spare Oxygen Canister Crate"
