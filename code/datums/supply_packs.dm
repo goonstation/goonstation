@@ -951,23 +951,23 @@
 	containertype = /obj/storage/crate/wooden
 	containername = "EVA Equipment Crate"
 
+/datum/supply_packs/XL_air_canister
+	name = "Extra Large Air Mix Canister"
+	desc = "Spare canister filled with a mix of nitrogen, oxygen and minimal amounts of carbon dioxide. Used for emergency re-pressurisation efforts."
+	category = "Engineering Department"
+	contains = list(/obj/machinery/portable_atmospherics/canister/oxygen)
+	cost = 8000
+	containertype = /obj/storage/crate/wooden
+	containername = "Spare Oxygen Canister Crate"
 /datum/supply_packs/oxygen_canister
 	name = "Spare Oxygen Canister"
-	desc = "Spare oxygen canister, for Engineering gas resupplies or emergency re-pressurisation efforts."
+	desc = "Spare oxygen canister, for resupplying Engineering's fuel or refilling oxygen tanks."
 	category = "Engineering Department"
 	contains = list(/obj/machinery/portable_atmospherics/canister/oxygen)
 	cost = 10000
 	containertype = /obj/storage/crate/wooden
 	containername = "Spare Oxygen Canister Crate"
 
-/datum/supply_packs/plasma_canister
-	name = "Spare Plasma Canister"
-	desc = "Spare Plasma canister, for Engineering gas resupplies or impromptu gas lit campfires."
-	category = "Engineering Department"
-	contains = list(/obj/machinery/portable_atmospherics/canister/toxins)
-	cost = 80000
-	containertype = /obj/storage/crate/wooden
-	containername = "Spare Plasma Canister Crate"
 /datum/supply_packs/abcu
 	name = "ABCU Unit Crate"
 	desc = "An additional ABCU Unit, for large construction projects."
