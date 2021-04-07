@@ -1196,7 +1196,7 @@
 		BLOCK_SETUP(BLOCK_ROD)
 
 	attack_hand(mob/living/carbon/human/user as mob)
-		if(user.r_hand == src || user.l_hand == src || user.belt == src)
+		if(src.sword_inside && (user.r_hand == src || user.l_hand == src || user.belt == src))
 			draw_sword(user)
 		else
 			return ..()
@@ -1235,9 +1235,6 @@
 			user.update_clothing()
 		else
 			boutput(user, "You don't have a free hand to draw with!")
-			return
-	else
-		return
 
 /obj/item/katana_sheath/reverse
 	name = "reverse-blade katana sheath"
