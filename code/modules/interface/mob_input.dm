@@ -127,9 +127,7 @@
 			src.pulling = null
 
 /**
-  *
 	* Return the ability bound to the pressed ability hotkey combination
-	*
   */
 /mob/proc/get_ability_hotkey(mob/user, parameters)
 	if(!parameters["left"]) return
