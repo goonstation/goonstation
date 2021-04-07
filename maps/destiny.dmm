@@ -14108,11 +14108,7 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/machinery/firealarm{
-	layer = 3.5;
-	pixel_x = -5;
-	pixel_y = 28
-	},
+/obj/machinery/power/apc/autoname_north,
 /turf/simulated/floor,
 /area/station/engine/gas)
 "bkj" = (
@@ -38494,10 +38490,6 @@
 	name = "Crew Quarters P02"
 	})
 "mdQ" = (
-/obj/machinery/power/apc/autoname_north,
-/obj/cable{
-	icon_state = "0-8"
-	},
 /obj/table/reinforced/auto,
 /obj/random_item_spawner/tools_w_igloves{
 	max_amt2spawn = 14;
@@ -38507,7 +38499,12 @@
 /obj/item/storage/toolbox/electrical,
 /obj/item/storage/box/cablesbox,
 /obj/cable{
-	icon_state = "0-4"
+	icon_state = "4-8"
+	},
+/obj/machinery/firealarm{
+	layer = 3.5;
+	pixel_x = -5;
+	pixel_y = 28
 	},
 /turf/simulated/floor,
 /area/station/engine/gas)
@@ -57864,12 +57861,11 @@
 /turf/simulated/floor,
 /area/station/mining/staff_room)
 "wHL" = (
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	dir = 4
+	},
 /obj/cable{
 	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/valve{
-	dir = 4;
-	name = "Purge Valve"
 	},
 /turf/simulated/floor/plating/random,
 /area/station/science/storage)
