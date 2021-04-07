@@ -906,10 +906,12 @@
 	stamina_damage = 24
 	stamina_cost = 30
 	stamina_crit_chance = 15
+	mats = list("wood" = 8)
 
 	New()
 		..()
 		src.setItemSpecial(/datum/item_special/swipe)
+		src.AddComponent(/datum/component/holdertargeting/baseball_bat_reflect)
 		BLOCK_SETUP(BLOCK_ROD)
 
 /obj/item/ratstick
