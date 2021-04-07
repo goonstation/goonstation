@@ -441,7 +441,7 @@
 			return
 		..()
 		return
-		
+
 /obj/item/plant/herb/hcordata
 	name = "houttuynia cordata"
 	desc = "Also known as fish mint or heart leaf, used in cuisine for its distinct fishy flavor."
