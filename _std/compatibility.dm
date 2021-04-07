@@ -8,6 +8,7 @@
 
 #define NORMAL_RAND 69
 proc/generator(type, A, B, rand)
+	var/generator/gen = new
 	gen.lower = A
 	gen.upper = B
 	return gen
