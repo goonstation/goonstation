@@ -23,12 +23,12 @@
 				src.targeting_ability = S
 				update_cursor()
 			return 100
-		if (S.target_in_inventory && ( get_dist(src, target) > 1 && !isturf(target) && !isturf(target.loc)))
+		if (S.target_in_inventory && (!IN_RANGE(src, target, 1) && !isturf(target) && !isturf(target.loc)))
 			if(S.sticky)
 				src.targeting_ability = S
 				update_cursor()
 			return 100
-		if (S.check_range && (get_dist(src, target) > S.max_range))
+		if (S.check_range && !IN_RANGE(src, target, S.max_range))
 			src.show_text("You are too far away from the target.", "red") // At least tell them why it failed.
 			if(S.sticky)
 				src.targeting_ability = S
@@ -131,11 +131,12 @@
   */
 /mob/proc/get_ability_hotkey(mob/user, parameters)
 	if(!parameters["left"]) return
-	if (parameters["ctrl"] && user?.abilityHolder?.ctrlPower)
+	if(!user?.abilityHolder) return
+	if(parameters["ctrl"] && user.abilityHolder.ctrlPower)
 		return user.abilityHolder.ctrlPower
-	if (parameters["alt"] && user?.abilityHolder?.altPower)
+	if(parameters["alt"] && user.abilityHolder.altPower)
 		return user.abilityHolder.altPower
-	if (parameters["shift"] && user?.abilityHolder?.shiftPower)
+	if(parameters["shift"] && user.abilityHolder.shiftPower)
 		return user.abilityHolder.shiftPower
 
 /**
