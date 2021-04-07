@@ -1621,9 +1621,16 @@
 	icon_state = "player"
 	desc = "Sells your stuff!"
 	pay = 1
+	//Product loading chute
 	var/loading = 0
+	var/unlocked = 0
+	//Registered owner
+	var/owner = null
+	//card display name
+	var/cardname
+	//Bank account
+	var/datum/data/record/account = null
 	player_list = list()
-
 	create_products()
 		..()
 	proc/addproduct(obj/item/target, mob/user)
@@ -1643,6 +1650,13 @@
 		. = ..()
 		var/list/html_parts = list()
 		html_parts += "<table border=\"1\" style=\"width:100%\"><tbody><tr><td><small>"
+		html_parts += "Registered Owner: "
+		if(!owner)
+			html_parts += "<a href='?src=\ref[src];unlock=true'>Unregistered</a></br>"
+		else
+			html_parts += "<a href='?src=\ref[src];unlock=true'>[src.cardname] "
+			if (!unlocked == 1) html_parts += "(locked) </a></br>"
+			else html_parts += "(unlocked) </a></br>"
 		html_parts += "Loading Chute:  "
 		if(!loading == 0)
 			html_parts += "<a href='?src=\ref[src];loading=false'>Open</a> "
@@ -1653,18 +1667,29 @@
 
 	Topic(href, href_list)
 		. = ..()
-		if (href_list["loading"] == "true")
-			loading = 1
-		else
-			loading = 0
-		src.generate_HTML(0, 1)
+		if (href_list["loading"])
+			if (href_list["loading"] == "true" && src.panel_open == 1 && src.unlocked == 1)
+				loading = 1
+			else
+				loading = 0
+			src.generate_HTML(0, 1)
+		else if (href_list["unlock"] && src.panel_open == 1)
+			if (!owner)
+				owner = src.scan.registered
+				cardname = src.scan.name
+				unlocked = 1
+			else if (owner == src.scan?.registered)
+				unlocked = !unlocked
+			src.generate_HTML(0, 1)
 
 	attackby(obj/item/target, mob/user)
 		if(!loading == 0 && !panel_open == 0)
-			. = ..()
 			addproduct(target, user)
 		else
 			. = ..()
+		if(!panel_open == 1)
+			loading = 0
+			unlocked = 0
 		src.generate_HTML(1)
 
 /obj/machinery/vending/player/fallen
