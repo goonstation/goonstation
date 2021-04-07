@@ -1,5 +1,9 @@
 
 (t)wed apr 07 21
+(u)Sovexe
+(p)4174
+(e)⚖🐛🆕|balance, bug, feature
+(*)Critter abilities can now be bound to ctrl/alt/shift+left click
 (u)Asche
 (p)4198
 (e)🆕|feature
