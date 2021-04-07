@@ -1233,3 +1233,17 @@ Other Goonstation servers:[serverList]</span>"})
 	amt1 = 15
 	venom2 = "omnizine"
 	amt2 = 5
+
+
+
+
+// i am not sorry for this
+/obj/machinery/shower/cowbrush
+	name = "\improper PLEASEDMOO cattle cleaner"
+	icon = 'icons/obj/stationobjs.dmi'
+	icon_state = "cowbrush"
+	desc = "A huge rotary brush attached to a wall. Supposedly, cows love it."
+
+	attack_hand(mob/user as mob)
+		..()
+		src.icon_state = "cowbrush[src.on ? "_on" : ""]"

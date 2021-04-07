@@ -211,6 +211,10 @@
 	burn_possible = 1
 	rand_pos = 1
 
+	attack(mob/M as mob, mob/user as mob)
+		src.add_fingerprint(user)
+		M.emote("sneeze")
+
 var/list/parrot_species = list("eclectus" = /datum/species_info/parrot/eclectus,
 	"eclectusf" = /datum/species_info/parrot/eclectus/female,
 	"agrey" = /datum/species_info/parrot/grey,
@@ -1387,7 +1391,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	icon_state = "spacelipstick0"
 	color = null
 	font_color = "#FF0000"
-	font = "Dancing Script, cursive"
+	font = "'Dancing Script', cursive"
 	webfont = "Dancing Script"
 	uses_handwriting = 1
 	var/open = 0

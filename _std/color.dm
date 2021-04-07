@@ -111,6 +111,8 @@
 // Clamps each of the RGB values between 50 and 190
 /proc/fix_colors(var/hex)
 	var/list/L = hex_to_rgb_list(hex)
+	if(isnull(L))
+		return rgb(22, 210, 22)
 	for (var/i in 1 to 3)
 		L[i] = min(L[i], 190)
 		L[i] = max(L[i], 50)

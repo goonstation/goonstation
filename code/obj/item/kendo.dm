@@ -233,7 +233,7 @@
 			..()
 
 	attackby(obj/item/W as obj, mob/user as mob)
-		if(istype(W, /obj/item/shinai) && open && (length((shinai + src.contents) < 2)))
+		if(istype(W, /obj/item/shinai) && open && shinai + length(src.contents) < 2)
 			user.u_equip(W)
 			W.set_loc(src)
 			update_sprite(user)

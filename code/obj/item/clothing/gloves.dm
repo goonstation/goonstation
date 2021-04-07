@@ -186,6 +186,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 		src.overridespecial = active
 		S.onAdd()
 		src.specialoverride = S
+		src.tooltip_rebuild = true;
 		return S
 
 
@@ -323,6 +324,14 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 		setProperty("heatprot", 10)
 		setProperty("conductivity", 0.3)
 		setProperty("deflection", 20)
+
+/obj/item/clothing/gloves/swat/knight
+	name = "combat gauntlets"
+	desc = "Heavy-duty combat gloves that help you keep hold of your weapon."
+
+	setupProperties()
+		..()
+		setProperty("deflection", 25)
 
 /obj/item/clothing/gloves/swat/NT
 	desc = "A pair of Nanotrasen tactical gloves that are quite fire and electrically-resistant. They also help you block attacks. They do not specifically help you block against blocking though. Just regular attacks."

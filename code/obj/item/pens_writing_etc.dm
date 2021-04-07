@@ -158,7 +158,7 @@
 	desc = "A pretty swag pen."
 	icon_state = "pen_fancy"
 	font_color = "blue"
-	font = "Dancing Script, cursive"
+	font = "'Dancing Script', cursive"
 	webfont = "Dancing Script"
 	uses_handwriting = 1
 
@@ -178,7 +178,7 @@
 	desc = "The core is graphite, not lead, don't worry!"
 	icon_state = "pencil-y"
 	font_color = "#808080"
-	font = "Dancing Script, cursive"
+	font = "'Dancing Script', cursive"
 	webfont = "Dancing Script"
 	uses_handwriting = 1
 	clicknoise = 0
@@ -195,7 +195,7 @@
 	desc = "Try not to sniff it too much. Weirdo."
 	icon_state = "marker"
 	color = "#333333"
-	font = "Permanent Marker, cursive"
+	font = "'Permanent Marker', cursive"
 	webfont = "Permanent Marker"
 	clicknoise = 0
 
@@ -311,7 +311,7 @@
 		color = "#FF00FF"
 		font_color = "#FF00FF"
 		color_name = "pink"
-	
+
 	golden // HoP's crayon
 		name = "golden crayon"
 		desc = "The result of years of bribes and extreme bureaucracy."
@@ -1122,11 +1122,11 @@
 /* =============== STICKY NOTES =============== */
 
 /obj/item/postit_stack
-	name = "stack of crappy old sticky notes"
-	desc = "A little stack of notepaper that you can stick to things. These are the old ones that suck a lot."
+	name = "SHOULDN'T BE SEEING THIS"
+	desc = "OLD AND BAD"
 	icon = 'icons/obj/writing.dmi'
 	icon_state = "postit_stack"
-	force = 1
+	/* force = 1
 	throwforce = 1
 	w_class = 1
 	amount = 10
@@ -1168,3 +1168,4 @@
 		if (src.amount < 0)
 			qdel(src)
 			return
+*/

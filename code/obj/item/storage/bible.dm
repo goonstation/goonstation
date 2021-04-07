@@ -46,7 +46,7 @@ var/global/list/bible_contents = list()
 				if(prob(25))
 					H.cure_disease_by_path(/datum/ailment/disability/clumsy/cluwne)
 			M.HealDamage("All", heal_amt, heal_amt)
-			if(prob(30))
+			if(prob(40))
 				JOB_XP(user, "Chaplain", 1)
 
 	attackby(var/obj/item/W, var/mob/user, obj/item/storage/T)

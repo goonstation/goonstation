@@ -1,4 +1,171 @@
 
+(t)wed apr 07 21
+(u)Erinexx
+(p)4219
+(e)🎨|sprites
+(+)TEG now has an additional turbine speed animation when at >10k atm.
+(+)Local generator now displays anchored state and whether there is a tank loaded.
+(u)pali
+(*)Baseball bats got a small overhaul. The range and angle of reflection is now slightly randomized and depends on a few factors (athletic trait, alcohol, ...). Bats are now scannable and craftable using wood.
+(u)Sovexe
+(p)4174
+(e)⚖🐛🆕|balance, bug, feature
+(*)Critter abilities can now be bound to ctrl/alt/shift+left click
+(u)Asche
+(p)4198
+(e)🆕|feature
+(+)Security personnel can now baton-fry dough into donuts. Remember to hold the baton the right way.
+(t)tue apr 06 21
+(u)Penny
+(p)4068
+(e)🆕|feature
+(+)Multitools now detect if your equipment or data terminal is unplugged
+(u)TTerc & Virvatuli
+(p)4224
+(e)|
+(+)Added a notification sound for receiving mentor PMs. You can adjusts its volume via the Audio tab in the top menu.
+(u)NeekothingFan2020
+(p)4187
+(e)🎨|sprites
+(+)Chief Engineer now has access to all engineering PDA groups and programs.
+(u)Flaborized
+(p)4226
+(e)🎨|sprites
+(+)Resprited most organs.
+(t)mon apr 05 21
+(u)DimWhat
+(p)4210
+(e)⚖|balance
+(+)NTSO, Security Assistants, and Part-time Vice Officers now heal more from donuts
+(u)Gannets
+(p)4212
+(e)🆕🎨|feature, sprites
+(*)The long awaited nuclear operatives melee class is being added in a prototype state.
+(*)It's listed in the syndicate weapons vendor under Knight (Prototype)
+(u)Flappybat
+(p)4116
+(e)⚖|balance
+(+)Removes the following items from spy rewards: Boom Boots, Banana Grenades, Surplus crate
+(u)tarmunora
+(e)⚖|balance
+(*)Wizard den teleport computer now puts the teleport spell on cooldown if the person being teleported knows the spell.
+(u)tarmunora
+(e)⚖|balance
+(*)Replaced high-capacity power cell from sec vendor with distuptor charger power cell, reduced cost to 1 token
+(+)shivering status shorter duration at milder temperatures
+(t)sun apr 04 21
+(u)Camryn Buttes
+(p)3967
+(e)🐛🆕🗺|bug, feature, mapping
+(*)Added a new prefab to the pool of space prefabs: the candy shop! Complete with an open-ended mystery and some clues that don't quite add up. (also lots of candy)
+(u)TTerc
+(p)3963
+(e)🐛|bug
+(+)You can now split material stacks (ores, bars) by clicking them with empty hand and click material stacks with each other to stack them together, similarly to sheets.
+(u)Azrun
+(p)4152
+(e)⚖🆕|balance, feature
+(+)Riding through fires on segways, forklifts, and cats may catch you on fire.
+(t)tue mar 30 21
+(u)w arc
+(e)🗺|mappig
+(*)compl,ete re-pipe of jhorizon, a;so remodele secuty , please repot bugs @ discod
+(u)pali
+(*)January monthly contest posters have been added to the game!
+(u)Tarmunora
+(p)4160
+(e)⚖🆕|balance, feature
+(*)Blocking unarmed while wearing concussive gauntlets will charge up a slam attack, similar to the power hammer.
+(u)TTerc
+(p)4119
+(e)|
+(+)Added actionbars to welding/unwelding singularity emitters and field generators.
+(t)mon mar 29 21
+(u)kyle
+(p)4129
+(e)⚖🆕🎨|balance, feature, sprites
+(*)Injecting the right amount of formaldehyde into a corpse can now temporarily prevent a wraith from absorbing it.
+(+)Slight rework to Poltergeists. Now they aren't strictly bound to X distance from their anchor/master, instead they can travel wherever and just take a bit of damage (up to 50%) and certain abilities require being close to their anchor/master.
+(+)Poltergeists also have a new ability that lets them teleport to their anchor or inside their master Wraith. When inside their master they can use all their spells and get increased point generation. Clicking on the master also makes em start following em.
+(u)Gremy
+(p)4167
+(e)🗺|mapping
+(*)Revamps the Atlas, Cog2 and Horizon ranches to include two pens, more access to other departments and extra amenities. Also chicken masks. Bok!
+(u)TTerc
+(p)3974
+(e)🗺|mapping
+(*)Donut 3: Expanded and improved the botany and ranch areas.
+(u)Flappybat
+(p)4016
+(e)⚖|balance
+(*)Rebalanced firearm melee damage
+(u)Sovexe
+(p)4157
+(e)🆕🗺🎨|feature, mapping, sprites
+(+)New handheld sea elevator pinpointers are now available on Oshan.
+(t)sun mar 28 21
+(u)DisturbHerb
+(p)4023
+(e)🆕|feature
+(+)You can now check the time on your PDA or the status screen, hooray!
+(u)Gremy
+(p)3969
+(e)🗺|mapping
+(*)Expands the Manta ranch and changes the construction area below it to be a market stall with a cute little duck with a hat in it.
+(u)Lythine
+(p)4113
+(e)🆕🎨|feature, sprites
+(*)Added the Block Stacker medal and a Tetris AI skin reward for it.
+(u)TTerc
+(p)4162
+(e)⛔|removal
+(+)Removed unused matsci recipes from the refining nanofab.
+(u)BatElite
+(p)3833
+(e)🆕🎨|feature, sprites
+(+)You can now place butts on chairs. Pry them back off with a crowbar.
+(t)sat mar 27 21
+(u)zjdtmkhzt
+(p)3896
+(e)⚖🆕|balance, feature
+(+)Some minor changes to how artifact selling and the analysis forms work.
+(+)The research department now receives a score based on the accuracy of the artifact analysis forms they filled out.
+(u)Tarmunora
+(p)4158
+(e)⚖|balance
+(*)Random dodge chance from blocking removed.
+(*)Blocking armor bonus and disorient resist buffed, and blocking now prevent stamina criticals ("devastating hit")
+(+)Deflection object property now provides passive block chance against disarm attempts
+(t)fri mar 26 21
+(u)Azrun
+(p)3933
+(e)⚖🐛|balance, bug
+(+)Nanotrasen no longer pockets money from rounding down when paying out for PTL.  Lower end MW drastically improved.
+(t)thu mar 25 21
+(u)Jan.antilles
+(p)4132
+(e)🎨|sprites
+(+)Resprite of Omelette, Mashed Potatoes, and Mashed Brains.
+(u)Mean Bitch Warc
+(p)4136
+(e)|
+(*)Reverted buggy eating changes and various dependencies, pending rework.
+(u)Azrun
+(p)4127
+(e)⚖🐛|balance, bug
+(+)Spliced and normal mutations can now coexist in the Gene Booth.  Charge the crew accordingly.
+(t)wed mar 24 21
+(u)Nihisohel
+(p)4045
+(e)⚖|balance
+(*)Replaces Part Time Viceoffs token with Assistant token
+(u)pali
+(*)Books from the February monthly contest have been added into the game. Most are in the Books4u vending machine, two are in Cairngorm.
+(t)tue mar 23 21
+(u)DimWhat
+(p)4110
+(e)🗺|mapping
+(+)Bombini is back from their fishing trip in oshan. buzz buzz.
 (t)sun mar 21 21
 (u)Penny
 (p)4012

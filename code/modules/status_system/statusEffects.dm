@@ -1450,7 +1450,14 @@
 		var/mob/M = owner
 		if(istype(M))
 			M.emote("shiver")
+			M.thermoregulation_mult *= 3
 		. = ..()
+
+	onRemove()
+		. = ..()
+		var/mob/M = owner
+		if(istype(M))
+			M.thermoregulation_mult /= 3
 
 /datum/statusEffect/maxhealth/decreased/hungry
 	id = "hungry"
@@ -1498,6 +1505,8 @@
 		var/weighting = 0.035 * mult
 		weighted_average = (1 - weighting) * weighted_average + weighting * how_miasma
 		var/mob/living/L = owner
+		if(!isalive(L))
+			return
 		var/puke_prob = 0
 		var/tox = 0
 		switch(how_miasma)

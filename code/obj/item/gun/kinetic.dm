@@ -347,7 +347,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	desc = "The M134 Minigun is a 7.62×51mm NATO, six-barrel rotary machine gun with a high rate of fire."
 	icon_state = "minigun"
 	item_state = "heavy"
-	force = 5
+	force = MELEE_DMG_LARGE
 	caliber = 0.308
 	max_ammo_capacity = 100
 	auto_eject = 1
@@ -377,7 +377,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	desc = "A hefty combat revolver developed by Cormorant Precision Arms. Uses .357 caliber rounds."
 	icon_state = "revolver"
 	item_state = "revolver"
-	force = 8.0
+	force = MELEE_DMG_REVOLVER
 	caliber = list(0.38, 0.357) // Just like in RL (Convair880).
 	max_ammo_capacity = 7
 
@@ -393,7 +393,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	name = "derringer"
 	desc = "A small and easy-to-hide gun that comes with 2 shots. (Can be hidden in worn clothes and retrieved by using the wink emote)"
 	icon_state = "derringer"
-	force = 5.0
+	force = MELEE_DMG_PISTOL
 	caliber = 0.41
 	max_ammo_capacity = 2
 	w_class = 2
@@ -414,11 +414,17 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		set_current_projectile(new/datum/projectile/bullet/derringer)
 		..()
 
+/obj/item/gun/kinetic/derringer/empty
+	New()
+		..()
+		ammo.amount_left = 0
+		update_icon()
+
 /obj/item/gun/kinetic/faith
 	name = "Faith"
 	desc = "'Cause ya gotta have Faith."
 	icon_state = "faith"
-	force = 5.0
+	force = MELEE_DMG_PISTOL
 	caliber = 0.22
 	max_ammo_capacity = 4
 	auto_eject = 1
@@ -438,7 +444,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	icon_state = "detective"
 	item_state = "detective"
 	w_class = 2.0
-	force = 2.0
+	force = MELEE_DMG_REVOLVER
 	caliber = 0.38
 	max_ammo_capacity = 7
 	gildable = 1
@@ -454,7 +460,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	icon_state = "colt_saa"
 	item_state = "colt_saa"
 	w_class = 3.0
-	force = 5.0
+	force = MELEE_DMG_REVOLVER
 	caliber = 0.45
 	spread_angle = 1
 	max_ammo_capacity = 7
@@ -464,7 +470,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		name = "Peacemaker"
 		desc = "A barely adequate replica of a nearly ancient single action revolver. Used by war reenactors for the last hundred years or so. Its calibur is obviously the wrong size though."
 		w_class = 2.0
-		force = 2.0
+		force = MELEE_DMG_REVOLVER
 		caliber = 0.38
 		New()
 			..()
@@ -505,7 +511,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	item_state = "glock"
 	shoot_delay = 2
 	w_class = 2.0
-	force = 7.0
+	force = MELEE_DMG_PISTOL
 	caliber = 0.355
 	max_ammo_capacity = 18
 	auto_eject = 1
@@ -544,6 +550,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 /obj/item/gun/kinetic/clock_188/boomerang
 	desc = "Jokingly called a \"Gunarang\" in some circles. Uses 9mm NATO rounds."
 	name = "Clock 180"
+	force = MELEE_DMG_PISTOL
 	throw_range = 10
 	throwforce = 1
 	throw_speed = 1
@@ -587,7 +594,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	desc = "Multi-purpose high-grade military shotgun. Very spiffy."
 	icon_state = "spas"
 	item_state = "spas"
-	force = 18.0
+	force = MELEE_DMG_RIFLE
 	contraband = 7
 	caliber = 0.72
 	max_ammo_capacity = 8
@@ -633,7 +640,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	icon = 'icons/obj/48x32.dmi'
 	icon_state = "shotty-empty"
 	item_state = "shotty"
-	force = 15.0
+	force = MELEE_DMG_RIFLE
 	contraband = 5
 	caliber = 0.72
 	max_ammo_capacity = 8
@@ -712,7 +719,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	icon = 'icons/obj/48x32.dmi' // big guns get big icons
 	icon_state = "ak47"
 	item_state = "ak47"
-	force = 30.0
+	force = MELEE_DMG_RIFLE
 	contraband = 8
 	caliber = 0.308
 	max_ammo_capacity = 30 // It's magazine-fed (Convair880).
@@ -732,7 +739,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	icon = 'icons/obj/48x32.dmi'
 	icon_state = "ohr"
 	item_state = "ohr"
-	force = 10
+	force = MELEE_DMG_RIFLE
 	contraband = 8
 	caliber = 0.308
 	max_ammo_capacity = 4 // It's magazine-fed (Convair880).
@@ -753,7 +760,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	icon = 'icons/obj/48x32.dmi'
 	icon_state = "tranq"
 	item_state = "tranq"
-	force = 10
+	force = MELEE_DMG_RIFLE
 	//contraband = 8
 	caliber = 0.308
 	max_ammo_capacity = 4 // It's magazine-fed (Convair880).
@@ -771,7 +778,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	name = "Zip Gun"
 	desc = "An improvised and unreliable gun."
 	icon_state = "zipgun"
-	force = 3
+	force = MELEE_DMG_PISTOL
 	contraband = 6
 	caliber = null // use any ammo at all BA HA HA HA HA
 	max_ammo_capacity = 2
@@ -810,7 +817,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	icon_state = "silenced"
 	w_class = 2
 	silenced = 1
-	force = 3
+	force = MELEE_DMG_PISTOL
 	contraband = 4
 	caliber = 0.22
 	max_ammo_capacity = 10
@@ -829,7 +836,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	name = "Virtual Pistol"
 	desc = "This thing would be better if it wasn't such a piece of shit."
 	icon_state = "railgun"
-	force = 10.0
+	force = MELEE_DMG_PISTOL
 	contraband = 0
 	max_ammo_capacity = 200
 
@@ -852,7 +859,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	name = "Flare Gun"
 	icon_state = "flare"
 	item_state = "flaregun"
-	force = 5.0
+	force = MELEE_DMG_PISTOL
 	contraband = 2
 	caliber = 0.72
 	max_ammo_capacity = 1
@@ -868,7 +875,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	name = "Riot launcher"
 	icon_state = "40mm"
 	item_state = "40mm"
-	force = 5.0
+	force = MELEE_DMG_SMG
 	contraband = 7
 	caliber = 1.57
 	max_ammo_capacity = 1
@@ -907,7 +914,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	w_class = 4
 	throw_speed = 2
 	throw_range = 4
-	force = 5
+	force = MELEE_DMG_LARGE
 	contraband = 8
 	caliber = 1.58
 	max_ammo_capacity = 1
@@ -945,7 +952,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	icon = 'icons/obj/items/assemblies.dmi'
 	icon_state = "coilgun_2"
 	item_state = "flaregun"
-	force = 10.0
+	force = MELEE_DMG_RIFLE
 	contraband = 6
 	caliber = 1.0
 	max_ammo_capacity = 2
@@ -959,6 +966,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	name = "Airzooka"
 	desc = "The new double action air projection device from Donk Co!"
 	icon_state = "airzooka"
+	force = MELEE_DMG_PISTOL
 	max_ammo_capacity = 10
 	caliber = 4.6 // I rolled a dice
 	muzzle_flash = "muzzle_flash_launch"
@@ -973,7 +981,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	desc = "An automatic submachine gun"
 	icon_state = "walthery1"
 	w_class = 2
-	force = 3
+	force = MELEE_DMG_SMG
 	contraband = 4
 	caliber = 0.355
 	max_ammo_capacity = 30
@@ -995,7 +1003,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	desc = "A semi-automatic, 9mm caliber service pistol, developed by Mabinogi Firearms Company."
 	icon_state = "9mm_pistol"
 	w_class = 3
-	force = 3
+	force = MELEE_DMG_PISTOL
 	contraband = 4
 	caliber = 0.355
 	max_ammo_capacity = 15
@@ -1020,7 +1028,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	icon = 'icons/obj/48x32.dmi'
 	icon_state = "mp52"
 	w_class = 2
-	force = 3
+	force = MELEE_DMG_SMG
 	contraband = 4
 	caliber = 0.355
 	max_ammo_capacity = 30
@@ -1046,7 +1054,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	icon_state = "tranq_pistol"
 	item_state = "tranq_pistol"
 	w_class = 2
-	force = 3
+	force = MELEE_DMG_PISTOL
 	contraband = 4
 	caliber = 0.355
 	max_ammo_capacity = 15
@@ -1065,7 +1073,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	desc = "Multi-purpose high-grade military shotgun, painted a menacing black colour."
 	icon_state = "tactical_shotgun"
 	item_state = "shotgun"
-	force = 5
+	force = MELEE_DMG_RIFLE
 	contraband = 7
 	caliber = 0.72
 	max_ammo_capacity = 8
@@ -1085,7 +1093,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	icon = 'icons/obj/64x32.dmi'
 	icon_state = "assault_rifle"
 	item_state = "assault_rifle"
-	force = 20.0
+	force = MELEE_DMG_RIFLE
 	contraband = 8
 	caliber = 0.223
 	max_ammo_capacity = 30
@@ -1141,7 +1149,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	icon_state = "lmg"
 	item_state = "lmg"
 	wear_image_icon = 'icons/mob/back.dmi'
-	force = 5
+	force = MELEE_DMG_RIFLE
 	caliber = 0.308
 	max_ammo_capacity = 100
 	auto_eject = 0
@@ -1175,7 +1183,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	icon_state = "cannon"
 	item_state = "cannon"
 	wear_image_icon = 'icons/mob/back.dmi'
-	force = 10
+	force = MELEE_DMG_LARGE
 	caliber = 0.787
 	max_ammo_capacity = 1
 	auto_eject = 1
@@ -1212,7 +1220,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	icon = 'icons/obj/64x32.dmi'
 	icon_state = "grenade_launcher"
 	item_state = "grenade_launcher"
-	force = 5.0
+	force = MELEE_DMG_RIFLE
 	contraband = 7
 	caliber = 1.57
 	max_ammo_capacity = 4 // to fuss with if i want 6 packs of ammo
@@ -1250,7 +1258,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	icon_state = "slamgun-ready"
 	inhand_image_icon = 'icons/obj/slamgun.dmi'
 	item_state = "slamgun-ready-world"
-	force = 9
+	force = MELEE_DMG_RIFLE
 	caliber = 0.72
 	max_ammo_capacity = 1
 	auto_eject = 0
@@ -1375,7 +1383,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	icon_state = "sniper"
 	item_state = "sniper"
 	wear_image_icon = 'icons/mob/back.dmi'
-	force = 5
+	force = MELEE_DMG_RIFLE
 	caliber = 0.308
 	max_ammo_capacity = 4
 	auto_eject = 1
@@ -1505,7 +1513,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	desc = "A powerful antique flintlock pistol."
 	icon_state = "flintlock"
 	item_state = "flintlock"
-	force = 4
+	force = MELEE_DMG_PISTOL
 	contraband = 0 //It's so old that futuristic security scanners don't even recognize it.
 	caliber = 0.58
 	max_ammo_capacity = 1 // It's magazine-fed (Convair880).
@@ -1539,7 +1547,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	w_class = 4
 	throw_speed = 2
 	throw_range = 4
-	force = 5
+	force = MELEE_DMG_LARGE
 	caliber = 1.12 //Based on APILAS
 	max_ammo_capacity = 1
 	can_dual_wield = 0
@@ -1565,8 +1573,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	w_class = 3
 	caliber = 3//fuck if i know lol, derringers are about 3 inches in size so ill just set this to 3
 	max_ammo_capacity = 6 //6 guns
-	force = 5
-
+	force = MELEE_DMG_SMG
 	New()
 		ammo = new /obj/item/ammo/bullets/gun
 		ammo.amount_left = 6 //spawn full please
@@ -1580,7 +1587,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	icon_state = "blaster"
 
 	color = "#ff7b00"
-	force = 5
+	force = MELEE_DMG_LARGE
 	caliber = 20
 	max_ammo_capacity = 1
 	auto_eject = 0
@@ -1623,7 +1630,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
 	item_state = "sec-case"
 	desc = "A large briefcase with a digital locking system. This one has a small hole in the side of it. Odd."
-	force = 8.0
+	force = MELEE_DMG_SMG
 	caliber = 0.355
 	max_ammo_capacity = 30
 	auto_eject = 0

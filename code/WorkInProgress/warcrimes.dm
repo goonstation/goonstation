@@ -8,6 +8,9 @@ var/fartcount = 0
 	icon_state = "green"
 	name = "Big Yank's Cheap Tug"
 
+/area/diner/jucer_trader
+	icon_state = "green"
+	name = "Placeholder Paul's $STORE_NAME.shuttle"
 
 /obj/item/clothing/head/paper_hat/john
 	name = "John Bill's paper bus captain hat"
@@ -78,7 +81,9 @@ var/fartcount = 0
 
 	create_products()
 		..()
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/ingredient/meat, 20, cost=PAY_UNTRAINED/5)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat, 10, cost=PAY_UNTRAINED/4)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat, 10, cost=PAY_UNTRAINED/5)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/ingredient/meat/synthmeat, 20, cost=PAY_UNTRAINED/6)
 
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat, 2, cost=PAY_UNTRAINED, hidden=1)
 
@@ -604,8 +609,6 @@ Urs' Hauntdog critter
 		if (H.reagents)
 			H.reagents.add_reagent("ectoplasm", 10)
 		H.update_icon()
-		H.AddComponent(/datum/component/consume/foodheal, H.heal_amt)
-
 
 		qdel(src)
 

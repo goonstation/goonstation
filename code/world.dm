@@ -711,6 +711,9 @@ var/f_color_selector_handler/F_Color_Selector
 			var/line = details["line"]
 			var/name = details["name"]
 			world.log << "\[[timestamp]\] [file],[line]: [name]"
+#ifndef PREFAB_CHECKING
+	text2file(debug_map_apc_count("\n", zlim=Z_LEVEL_STATION), "no_runtimes.txt")
+#endif
 	shutdown()
 #endif
 	SPAWN_DBG(world.tick_lag)
@@ -1343,6 +1346,7 @@ var/f_color_selector_handler/F_Color_Selector
 
 				if (M?.client)
 					boutput(M, "<span class='mhelp'><b>MENTOR PM: FROM <a href=\"byond://?action=mentor_msg_irc&nick=[ckey(nick)]\">[nick]</a> (Discord)</b>: <span class='message'>[game_msg]</span></span>")
+					M.playsound_local(M, "sound/misc/mentorhelp.ogg", 100, flags = SOUND_IGNORE_SPACE, channel = VOLUME_CHANNEL_MENTORPM)
 					logTheThing("admin", null, M, "Discord: [nick] Mentor PM'd [constructTarget(M,"admin")]: [msg]")
 					logTheThing("diary", null, M, "Discord: [nick] Mentor PM'd [constructTarget(M,"diary")]: [msg]", "admin")
 					for (var/client/C)
