@@ -211,6 +211,10 @@
 	burn_possible = 1
 	rand_pos = 1
 
+	attack(mob/M as mob, mob/user as mob)
+			src.add_fingerprint(user)
+			M.emote("sneeze")
+
 var/list/parrot_species = list("eclectus" = /datum/species_info/parrot/eclectus,
 	"eclectusf" = /datum/species_info/parrot/eclectus/female,
 	"agrey" = /datum/species_info/parrot/grey,
