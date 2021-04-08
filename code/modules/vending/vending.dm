@@ -1722,12 +1722,16 @@
 				var/datum/data/vending_product/player_product/R = locate(href_list["setprice"]) in src.player_list
 				R.product_cost = inp
 				src.generate_HTML(1, 0)
+		else if(href_list["vend"] && length(player_list) <= 0)
+			icon_state = "player"
 	attackby(obj/item/target, mob/user)
-		lastuser = user
 		if(!loading == 0 && !panel_open == 0)
 			addproduct(target, user)
+			if(src.icon_state != "player-display")
+				src.icon_state = "player-display"
 		else
 			. = ..()
+		lastuser = user
 		if(!panel_open == 1)
 			loading = 0
 			unlocked = 0
