@@ -339,12 +339,13 @@
 			else
 				html_parts += "<tr><td>[R.product_name]</a></td><td colspan='2' style='text-align: center;'><strong>SOLD OUT</strong></td></tr>"
 		if(player_list)
+			var/obj/machinery/vending/player/T = src
 			for (var/datum/data/vending_product/player_product/R in src.player_list)
-				if (R.product_hidden && !src.extended_inventory)
-					continue
-				if (R.product_amount > 0)
+				if (!T.unlocked == 1)
 					html_parts += "<tr><td><a href='byond://?src=\ref[src];vend=\ref[R]'>[R.product_name]</a></td><td style='text-align: right;'>[R.product_amount]</td><td style='text-align: right;'> $[R.product_cost]</td></tr>"
 					//Player vending machines don't have "out of stock" items
+				else if (!T.unlocked == 0)
+					html_parts += "<tr><td><a href='byond://?src=\ref[src];vend=\ref[R]'>[R.product_name]</a></td><td style='text-align: right;'>[R.product_amount]</td><td style='text-align: right;'><a href='byond://?src=\ref[src];setprice=\ref[R]'>$[R.product_cost]</a></td></tr>"
 		html_parts += "</table>";
 
 		if (src.pay)
@@ -1669,36 +1670,48 @@
 		html_parts += "</small></td></tr></tbody></table></TT><br>"
 		src.wire_HTML += jointext(html_parts, "")
 
+	proc/returnmob()
+		if(in_interact_range(src, owneruser) || owneruser.stat)
+			return owneruser
+		else if(in_interact_range(src, lastuser) || lastuser.stat)
+			return lastuser
+	attack_hand(mob/user as mob)
+		. = ..()
+		lastuser = user
+	attack_ai(mob/user as mob)
+		. = ..()
+		lastuser = user
 	Topic(href, href_list)
 		. = ..()
 		if (href_list["loading"])
-			if (href_list["loading"] == "true" && src.panel_open == 1 && src.unlocked == 1)
+			if (src.panel_open == 1 && src.unlocked == 1)
 				loading = !loading
-			src.generate_HTML(0, 1)
+				src.generate_HTML(0, 1)
 		else if (href_list["unlock"] && src.panel_open == 1)
 			if (!owner && src.scan?.registered)
 				owner = src.scan.registered
 				cardname = src.scan.name
 				unlocked = 1
 				owneruser = lastuser
-			else if (owner == src.scan?.registered)
+			else if (src.scan?.registered && owner == src.scan.registered)
 				unlocked = !unlocked
 				if(unlocked == 0 && loading == 1) loading = 0
 				//When we get unlocked, if the original owner mob isn't here replace the saved mob with this one
-				if(!in_interact_range(src, owneruser) || owneruser.stat && unlocked == 0) owneruser = lastuser
+				if(!in_interact_range(src, owneruser) && unlocked == 0) owneruser = lastuser
 			src.generate_HTML(0, 1)
 		else if (href_list["rename"] && src.panel_open == 1 && src.unlocked == 1)
-			//If the
 			var/inp
-			if(!in_interact_range(src, owneruser) || owneruser.stat)
-				inp = input(owneruser,"Enter new name:","Vendor Name", "") as text
-			else if(!in_interact_range(src, owneruser) || owneruser.stat)
-				inp = input(lastuser,"Enter new name:","Vendor Name", "") as text
-			else
-				return 0
-			src.name = inp
-			src.generate_HTML(0, 1)
-
+			inp = input(returnmob(),"Enter new name:","Vendor Name", "") as text
+			if(inp)
+				src.name = inp
+				src.generate_HTML(0, 1)
+		else if (href_list["setprice"] && src.panel_open == 1 && src.unlocked == 1)
+			var/inp
+			inp = input(returnmob(),"Enter the new price:","Item Price", "") as num
+			if(inp)
+				var/datum/data/vending_product/player_product/R = locate(href_list["setprice"]) in src.player_list
+				R.product_cost = inp
+				src.generate_HTML(0, 1)
 	attackby(obj/item/target, mob/user)
 		lastuser = user
 		if(!loading == 0 && !panel_open == 0)
@@ -1713,7 +1726,6 @@
 /obj/machinery/vending/player/fallen
 	New()
 		. = ..()
-		icon_state = "standard"
 		src.fall()
 //Somewhere out in the vast nothingness of space, a chef (and an admin) is crying.
 
