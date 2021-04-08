@@ -1213,24 +1213,11 @@
 						if (src.bioHolder.HasEffect("chime_snaps"))
 							src.sound_fingersnap = 'sound/musical_instruments/WeirdChime_5.ogg'
 							src.sound_snap = 'sound/impact_sounds/Glass_Shards_Hit_1.ogg'
-						if (prob(5))
-							message = "<font color=red><B>[src]</B> snaps [his_or_her(src)] fingers RIGHT OFF!</font>"
-							/*
-							if (src.bioHolder)
-								src.bioHolder.AddEffect("[src.hand ? "left" : "right"]_arm")
-							else
-							*/
-							random_brute_damage(src, 20)
-							if (narrator_mode)
-								playsound(src.loc, 'sound/vox/break.ogg', 100, 1, channel=VOLUME_CHANNEL_EMOTE)
-							else
-								playsound(src.loc, src.sound_snap, 100, 1, channel=VOLUME_CHANNEL_EMOTE)
-						else
-							message = "<B>[src]</B> snaps [his_or_her(src)] fingers."
 							if (narrator_mode)
 								playsound(src.loc, 'sound/vox/deeoo.ogg', 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 							else
 								playsound(src.loc, src.sound_fingersnap, 50, 1, channel=VOLUME_CHANNEL_EMOTE)
+								message = "<B>[src]</B> snaps [his_or_her(src)] fingers."
 
 			if ("airquote","airquotes")
 				if (param)
