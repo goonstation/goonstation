@@ -341,12 +341,13 @@
 		if(player_list)
 			var/obj/machinery/vending/player/T = src
 			for (var/datum/data/vending_product/player_product/R in src.player_list)
+				var/nextproduct = R.contents[1]?.name
 				if (!T.unlocked == 1)
-					html_parts += "<tr><td><a href='byond://?src=\ref[src];vend=\ref[R]'>[R.contents[1].name]</a></td><td style='text-align: right;'>[R.product_amount]</td><td style='text-align: right;'> $[R.product_cost]</td></tr>"
+					html_parts += "<tr><td><a href='byond://?src=\ref[src];vend=\ref[R]'>[nextproduct]</a></td><td style='text-align: right;'>[R.product_amount]</td><td style='text-align: right;'> $[R.product_cost]</td></tr>"
 					//Player vending machines don't have "out of stock" items
 				else if (!T.unlocked == 0)
 					//Links for setting prices when player vending machines are unlocked
-					html_parts += "<tr><td><a href='byond://?src=\ref[src];vend=\ref[R]'>[R.contents[1].name]</a></td><td style='text-align: right;'>[R.product_amount]</td><td style='text-align: right;'><a href='byond://?src=\ref[src];setprice=\ref[R]'>$[R.product_cost]</a></td></tr>"
+					html_parts += "<tr><td><a href='byond://?src=\ref[src];vend=\ref[R]'>[nextproduct]</a></td><td style='text-align: right;'>[R.product_amount]</td><td style='text-align: right;'><a href='byond://?src=\ref[src];setprice=\ref[R]'>$[R.product_cost]</a></td></tr>"
 		html_parts += "</table>";
 
 		if (src.pay)
