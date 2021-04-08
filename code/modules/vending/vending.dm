@@ -346,7 +346,7 @@
 					//Player vending machines don't have "out of stock" items
 				else if (!T.unlocked == 0)
 					//Links for setting prices when player vending machines are unlocked
-					html_parts += "<tr><td><a href='byond://?src=\ref[src];vend=\ref[R]'>[R.product_name]</a></td><td style='text-align: right;'>[R.product_amount]</td><td style='text-align: right;'><a href='byond://?src=\ref[src];setprice=\ref[R]'>$[R.product_cost]</a></td></tr>"
+					html_parts += "<tr><td><a href='byond://?src=\ref[src];vend=\ref[R]'>[R.contents[1].name]</a></td><td style='text-align: right;'>[R.product_amount]</td><td style='text-align: right;'><a href='byond://?src=\ref[src];setprice=\ref[R]'>$[R.product_cost]</a></td></tr>"
 		html_parts += "</table>";
 
 		if (src.pay)
@@ -625,7 +625,7 @@
 					// else, just let it spawn where it is
 				else if (player_list)
 					var/datum/data/vending_product/player_product/T = R
-					var/obj/item/vended = pick(T.contents)
+					var/obj/item/vended = T.contents[1]
 					usr.put_in_hand_or_eject(vended)
 					T.contents -= vended
 				else if (isicon(R.product_path))
@@ -1690,6 +1690,7 @@
 	attack_ai(mob/user as mob)
 		. = ..()
 		lastuser = user
+
 	Topic(href, href_list)
 		. = ..()
 		if (href_list["loading"])
@@ -1724,6 +1725,7 @@
 				src.generate_HTML(1, 0)
 		else if(href_list["vend"] && length(player_list) <= 0)
 			icon_state = "player"
+
 	attackby(obj/item/target, mob/user)
 		if(!loading == 0 && !panel_open == 0)
 			addproduct(target, user)
