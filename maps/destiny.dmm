@@ -19644,7 +19644,7 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
-/obj/machinery/atmospherics/pipe/simple/insulated{
+/obj/machinery/atmospherics/valve{
 	dir = 4
 	},
 /turf/simulated/floor/plating/random,
@@ -43941,7 +43941,7 @@
 /turf/simulated/floor/blue/side,
 /area/station/medical/medbay)
 "pdk" = (
-/obj/machinery/atmospherics/pipe/simple/insulated{
+/obj/machinery/atmospherics/valve{
 	dir = 4
 	},
 /turf/simulated/floor/plating/random,
