@@ -11867,7 +11867,7 @@
 /turf/simulated/floor/stairs{
 	icon_state = "Stairs2_wide"
 	},
-/area/station/security/brig)
+/area/station/security/main)
 "aCG" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -12555,7 +12555,7 @@
 	pixel_y = 3
 	},
 /turf/simulated/floor/bot,
-/area/station/security/brig)
+/area/station/security/main)
 "aEa" = (
 /obj/table/reinforced/auto,
 /obj/machinery/power/data_terminal,
@@ -60403,24 +60403,6 @@
 	},
 /turf/simulated/floor/grime,
 /area/station/engine/coldloop)
-"gmO" = (
-/obj/grille/catwalk{
-	dir = 8
-	},
-/obj/cable/yellow,
-/obj/cable/yellow{
-	icon_state = "0-2"
-	},
-/obj/cable/yellow{
-	icon_state = "0-4"
-	},
-/obj/cable/yellow{
-	icon_state = "0-8"
-	},
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 4
-	},
-/area/station/solar/north)
 "gom" = (
 /obj/cable{
 	icon_state = "0-8"
@@ -60841,30 +60823,6 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
-"iwO" = (
-/obj/cable/brown{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/engine,
-/area/station/engine/core)
-"izm" = (
-/obj/grille/catwalk{
-	dir = 4
-	},
-/obj/cable/yellow,
-/obj/cable/yellow{
-	icon_state = "0-2"
-	},
-/obj/cable/yellow{
-	icon_state = "0-4"
-	},
-/obj/cable/yellow{
-	icon_state = "0-8"
-	},
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 4
-	},
-/area/station/solar/south)
 "iAg" = (
 /obj/machinery/atmospherics/pipe/simple/insulated,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -61145,14 +61103,6 @@
 /obj/item/gun/flamethrower/assembled/loaded,
 /turf/simulated/floor/bot,
 /area/station/security/main)
-"jMS" = (
-/obj/disposalpipe/segment,
-/obj/grille/catwalk,
-/obj/cable/brown{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/airless/plating/catwalk,
-/area/space)
 "jMV" = (
 /obj/table/auto,
 /obj/item/hand_labeler{
@@ -61996,6 +61946,12 @@
 	},
 /turf/simulated/floor/circuit,
 /area/station/bridge)
+"nzv" = (
+/obj/cable/brown{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core)
 "nAl" = (
 /obj/disposalpipe/segment,
 /turf/simulated/floor/stairs{
@@ -62303,6 +62259,12 @@
 	icon_state = "Stairs2_wide"
 	},
 /area/station/hydroponics/bay)
+"oOI" = (
+/obj/cable/brown{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
 "oOM" = (
 /obj/table/auto,
 /obj/item/bandage{
@@ -62759,6 +62721,24 @@
 	icon_state = "swampgrass_edge"
 	},
 /area/station/ranch)
+"qXd" = (
+/obj/grille/catwalk{
+	dir = 8
+	},
+/obj/cable/yellow,
+/obj/cable/yellow{
+	icon_state = "0-2"
+	},
+/obj/cable/yellow{
+	icon_state = "0-4"
+	},
+/obj/cable/yellow{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 4
+	},
+/area/station/solar/north)
 "rae" = (
 /obj/machinery/light{
 	dir = 4
@@ -63750,6 +63730,14 @@
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/medical/cdc)
+"wQU" = (
+/obj/disposalpipe/segment,
+/obj/grille/catwalk,
+/obj/cable/brown{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/airless/plating/catwalk,
+/area/space)
 "wSv" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -63807,6 +63795,24 @@
 	},
 /turf/simulated/floor/delivery,
 /area/station/engine/inner)
+"xfn" = (
+/obj/grille/catwalk{
+	dir = 4
+	},
+/obj/cable/yellow,
+/obj/cable/yellow{
+	icon_state = "0-2"
+	},
+/obj/cable/yellow{
+	icon_state = "0-4"
+	},
+/obj/cable/yellow{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 4
+	},
+/area/station/solar/south)
 "xfX" = (
 /obj/table/wood/auto,
 /obj/item/storage/box/nerd_kit{
@@ -63885,12 +63891,6 @@
 	},
 /turf/simulated/floor,
 /area/station/science/artifact)
-"xJB" = (
-/obj/cable/brown{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/plating/airless,
-/area/space)
 "xKG" = (
 /obj/machinery/light{
 	dir = 8
@@ -107073,7 +107073,7 @@ adC
 aah
 adC
 aag
-xJB
+oOI
 aaG
 adC
 aah
@@ -107375,7 +107375,7 @@ adC
 aah
 adC
 aag
-xJB
+oOI
 aaG
 adC
 aah
@@ -111880,7 +111880,7 @@ bdv
 bjI
 bfi
 boI
-jMS
+wQU
 bqu
 btm
 btH
@@ -111901,7 +111901,7 @@ bsP
 bsP
 bsP
 bvg
-iwO
+nzv
 bwV
 bCn
 byJ
@@ -116054,7 +116054,7 @@ adC
 adC
 adC
 aaY
-gmO
+qXd
 abl
 adC
 adC
@@ -116356,7 +116356,7 @@ adC
 adC
 adC
 aaY
-gmO
+qXd
 abl
 adC
 adC
@@ -116658,7 +116658,7 @@ adC
 adC
 adC
 aaY
-gmO
+qXd
 abl
 adC
 adC
@@ -116960,7 +116960,7 @@ adC
 adC
 adC
 aaY
-gmO
+qXd
 abl
 adC
 adC
@@ -117262,7 +117262,7 @@ adC
 adC
 adC
 aaY
-gmO
+qXd
 abl
 adC
 adC
@@ -117866,7 +117866,7 @@ adC
 adC
 adC
 aaY
-gmO
+qXd
 abl
 adC
 adC
@@ -118168,7 +118168,7 @@ abl
 adC
 adC
 aaY
-gmO
+qXd
 abl
 adC
 adC
@@ -118470,7 +118470,7 @@ abl
 adC
 adC
 aaY
-gmO
+qXd
 abl
 adC
 adC
@@ -118772,7 +118772,7 @@ abl
 adC
 adC
 aaY
-gmO
+qXd
 abl
 adC
 adC
@@ -119074,7 +119074,7 @@ abl
 adC
 adC
 aaY
-gmO
+qXd
 abl
 adC
 adC
@@ -120107,12 +120107,12 @@ adC
 adC
 adC
 csh
-izm
+xfn
 cCd
 adC
 adC
 csh
-izm
+xfn
 cCd
 adC
 aal
@@ -120409,12 +120409,12 @@ adC
 adC
 adC
 csh
-izm
+xfn
 cCd
 adC
 adC
 csh
-izm
+xfn
 cCd
 aar
 aap
@@ -120711,12 +120711,12 @@ adC
 adC
 adC
 csh
-izm
+xfn
 cCd
 adC
 adC
 csh
-izm
+xfn
 cCd
 adC
 aai
@@ -120881,17 +120881,17 @@ aaq
 aaq
 aaq
 aaY
-gmO
+qXd
 abl
 adC
 adC
 aaY
-gmO
+qXd
 abl
 adC
 adC
 aaY
-gmO
+qXd
 abl
 aaq
 agz
@@ -121013,12 +121013,12 @@ adC
 adC
 adC
 csh
-izm
+xfn
 cCd
 adC
 adC
 csh
-izm
+xfn
 cCd
 aar
 aap
@@ -121183,17 +121183,17 @@ adC
 adC
 adC
 aaY
-gmO
+qXd
 abl
 adC
 adC
 aaY
-gmO
+qXd
 abl
 adC
 adC
 aaY
-gmO
+qXd
 abl
 adC
 aaj
@@ -121315,12 +121315,12 @@ adC
 adC
 adC
 csh
-izm
+xfn
 cCd
 adC
 adC
 csh
-izm
+xfn
 cCd
 adC
 aah
@@ -121485,17 +121485,17 @@ adC
 adC
 adC
 aaY
-gmO
+qXd
 abl
 adC
 adC
 aaY
-gmO
+qXd
 abl
 adC
 adC
 aaY
-gmO
+qXd
 abl
 adC
 adC
@@ -121617,7 +121617,7 @@ adC
 adC
 adC
 csh
-izm
+xfn
 cCd
 adC
 adC
@@ -121787,17 +121787,17 @@ adC
 adC
 adC
 aaY
-gmO
+qXd
 abl
 adC
 adC
 aaY
-gmO
+qXd
 abl
 adC
 adC
 aaY
-gmO
+qXd
 abl
 adC
 adC
@@ -122089,17 +122089,17 @@ adC
 adC
 adC
 aaY
-gmO
+qXd
 abl
 adC
 adC
 aaY
-gmO
+qXd
 abl
 adC
 adC
 aaY
-gmO
+qXd
 abl
 adC
 adC
@@ -122396,7 +122396,7 @@ abl
 adC
 adC
 aaY
-gmO
+qXd
 abl
 adC
 adC
