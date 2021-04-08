@@ -345,6 +345,7 @@
 					html_parts += "<tr><td><a href='byond://?src=\ref[src];vend=\ref[R]'>[R.product_name]</a></td><td style='text-align: right;'>[R.product_amount]</td><td style='text-align: right;'> $[R.product_cost]</td></tr>"
 					//Player vending machines don't have "out of stock" items
 				else if (!T.unlocked == 0)
+					//Links for setting prices when player vending machines are unlocked
 					html_parts += "<tr><td><a href='byond://?src=\ref[src];vend=\ref[R]'>[R.product_name]</a></td><td style='text-align: right;'>[R.product_amount]</td><td style='text-align: right;'><a href='byond://?src=\ref[src];setprice=\ref[R]'>$[R.product_cost]</a></td></tr>"
 		html_parts += "</table>";
 
@@ -606,6 +607,7 @@
 				if(isplayer == 0)
 					wagesystem.shipping_budget += round(R.product_cost * profit) // cogwerks - maybe money shouldn't just vanish into the aether idk
 				else
+					//Players get 90% of profit from player vending machines QMs get 10%
 					var/obj/machinery/vending/player/T = src
 					T.owneraccount.fields["current_money"] += round(R.product_cost * profit)
 					wagesystem.shipping_budget += R.product_cost - round(R.product_cost * profit) // cogwerks - maybe money shouldn't just vanish into the aether idk
@@ -1719,7 +1721,7 @@
 			if(inp)
 				var/datum/data/vending_product/player_product/R = locate(href_list["setprice"]) in src.player_list
 				R.product_cost = inp
-				src.generate_HTML(0, 1)
+				src.generate_HTML(1, 0)
 	attackby(obj/item/target, mob/user)
 		lastuser = user
 		if(!loading == 0 && !panel_open == 0)
