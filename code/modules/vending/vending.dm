@@ -342,7 +342,7 @@
 			var/obj/machinery/vending/player/T = src
 			for (var/datum/data/vending_product/player_product/R in src.player_list)
 				if (!T.unlocked == 1)
-					html_parts += "<tr><td><a href='byond://?src=\ref[src];vend=\ref[R]'>[R.product_name]</a></td><td style='text-align: right;'>[R.product_amount]</td><td style='text-align: right;'> $[R.product_cost]</td></tr>"
+					html_parts += "<tr><td><a href='byond://?src=\ref[src];vend=\ref[R]'>[R.contents[1].name]</a></td><td style='text-align: right;'>[R.product_amount]</td><td style='text-align: right;'> $[R.product_cost]</td></tr>"
 					//Player vending machines don't have "out of stock" items
 				else if (!T.unlocked == 0)
 					//Links for setting prices when player vending machines are unlocked
@@ -614,6 +614,12 @@
 
 				if(R.product_amount <= 0 && !isplayer == 0)
 					src.player_list -= R
+			//Gotta do this before the SPAWN_DBG
+			var/obj/item/playervended
+			if (player_list)
+				var/datum/data/vending_product/player_product/T = R
+				playervended = T.contents[1]
+				T.contents -= playervended
 			SPAWN_DBG(src.vend_delay)
 				src.vend_ready = 1 // doin this at the top here just in case something goes fucky and the proc crashes
 
@@ -624,10 +630,7 @@
 						usr.put_in_hand_or_eject(vended) // try to eject it into the users hand, if we can
 					// else, just let it spawn where it is
 				else if (player_list)
-					var/datum/data/vending_product/player_product/T = R
-					var/obj/item/vended = T.contents[1]
-					usr.put_in_hand_or_eject(vended)
-					T.contents -= vended
+					usr.put_in_hand_or_eject(playervended)
 				else if (isicon(R.product_path))
 					var/icon/welp = icon(R.product_path)
 					if (welp.Width() > 32 || welp.Height() > 32)
@@ -1708,7 +1711,7 @@
 				unlocked = !unlocked
 				if(unlocked == 0 && loading == 1) loading = 0
 				//When we get unlocked, if the original owner mob isn't here replace the saved mob with this one
-				if(!in_interact_range(src, owneruser) && unlocked == 0) owneruser = lastuser
+				owneruser = returnmob()
 			src.generate_HTML(0, 1)
 		else if (href_list["rename"] && src.panel_open == 1 && src.unlocked == 1)
 			var/inp
@@ -1723,8 +1726,12 @@
 				var/datum/data/vending_product/player_product/R = locate(href_list["setprice"]) in src.player_list
 				R.product_cost = inp
 				src.generate_HTML(1, 0)
-		else if(href_list["vend"] && length(player_list) <= 0)
+		else if(href_list["vend"] && (length(player_list) <= 0))
 			icon_state = "player"
+			src.generate_HTML(1, 0)
+		else if(href_list["vend"])
+			//Vends can change the name of list entries so generate HTML
+			src.generate_HTML(1, 0)
 
 	attackby(obj/item/target, mob/user)
 		if(!loading == 0 && !panel_open == 0)
