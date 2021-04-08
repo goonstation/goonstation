@@ -1,4 +1,20 @@
 
+(t)wed apr 07 21
+(u)Erinexx
+(p)4219
+(e)🎨|sprites
+(+)TEG now has an additional turbine speed animation when at >10k atm.
+(+)Local generator now displays anchored state and whether there is a tank loaded.
+(u)pali
+(*)Baseball bats got a small overhaul. The range and angle of reflection is now slightly randomized and depends on a few factors (athletic trait, alcohol, ...). Bats are now scannable and craftable using wood.
+(u)Sovexe
+(p)4174
+(e)⚖🐛🆕|balance, bug, feature
+(*)Critter abilities can now be bound to ctrl/alt/shift+left click
+(u)Asche
+(p)4198
+(e)🆕|feature
+(+)Security personnel can now baton-fry dough into donuts. Remember to hold the baton the right way.
 (t)tue apr 06 21
 (u)Penny
 (p)4068

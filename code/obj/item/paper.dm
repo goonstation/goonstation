@@ -558,6 +558,27 @@ Only trained personnel should operate station systems. Follow all procedures car
 		STOP_TRACKING
 		. = ..()
 
+/obj/item/paper/hellburn
+	name = "paper- 'memo #R13-08-A'"
+	info = {"<h3 style="border-bottom: 1px solid black; width: 80%;">Nanotrasen Toxins Research</h3>
+<tt>
+<strong>MEMORANDUM &nbsp; &nbsp; * CONFIDENTIAL *</strong><br>
+<br><strong>DATE:</strong> 02/19/53
+<br><strong>FROM:</strong> NT Research Division.
+<br><strong>TO:&nbsp&nbsp;</strong> Space Station 13's Research Director
+<br><strong>SUBJ:</strong> Toxins Research Project #08-A
+<br>
+<p>
+The enclosed samples are to be used in continued plasma research.  Our current understanding is that the gas released from "Molitz Beta" in the presence of sufficient temperatures and plasma cause an unusual phenomenon. The gas, Oxygen Agent B, seems to disrupt the typical equilibrium formed in exothermic oxidation allowing for temperatures we have been unable to fully realize. This only seems to occur when combustion is incomplete and can be observed visually as a gentle swirling of the flame.
+</p>
+<p>
+Please exercise caution in your testing, the result can best be described as a hellfire.  Ensure adequite safety messures are in place to purge the fire.
+</p>
+<p>All findings and documents related to Project #08-A are to be provided in triplicate to CentComm on physical documents only. <b>DO NOT</b> provide this data digitally as it may become compromised.
+</p>
+</tt>
+<center><span style="font-family: 'Dancing Script';">Is this a Hellburn???!!?</span></center>"}
+
 /obj/item/paper/zeta_boot_kit
 	name = "Paper-'Instructions'"
 	info = {"<center><b>RECOVERY INSTRUCTIONS:</b></center><ul>

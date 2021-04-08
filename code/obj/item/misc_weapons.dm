@@ -906,10 +906,12 @@
 	stamina_damage = 24
 	stamina_cost = 30
 	stamina_crit_chance = 15
+	mats = list("wood" = 8)
 
 	New()
 		..()
 		src.setItemSpecial(/datum/item_special/swipe)
+		src.AddComponent(/datum/component/holdertargeting/baseball_bat_reflect)
 		BLOCK_SETUP(BLOCK_ROD)
 
 /obj/item/ratstick
@@ -1196,7 +1198,7 @@
 		BLOCK_SETUP(BLOCK_ROD)
 
 	attack_hand(mob/living/carbon/human/user as mob)
-		if(user.r_hand == src || user.l_hand == src || user.belt == src)
+		if(src.sword_inside && (user.r_hand == src || user.l_hand == src || user.belt == src))
 			draw_sword(user)
 		else
 			return ..()
@@ -1235,9 +1237,6 @@
 			user.update_clothing()
 		else
 			boutput(user, "You don't have a free hand to draw with!")
-			return
-	else
-		return
 
 /obj/item/katana_sheath/reverse
 	name = "reverse-blade katana sheath"
