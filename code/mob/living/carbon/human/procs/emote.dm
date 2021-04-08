@@ -1033,11 +1033,6 @@
 
 			// targeted emotes
 
-			if ("tweak","tweaknipples","tweaknips","nippletweak")
-				if (!src.restrained())
-					message = "<B>[src]</b> tweaks [his_or_her(src)] nipples."
-				m_type = 1
-
 			if ("flipoff","flipbird","middlefinger")
 				m_type = 1
 				if (!src.restrained())
@@ -1213,11 +1208,11 @@
 						if (src.bioHolder.HasEffect("chime_snaps"))
 							src.sound_fingersnap = 'sound/musical_instruments/WeirdChime_5.ogg'
 							src.sound_snap = 'sound/impact_sounds/Glass_Shards_Hit_1.ogg'
-							if (narrator_mode)
-								playsound(src.loc, 'sound/vox/deeoo.ogg', 50, 1, channel=VOLUME_CHANNEL_EMOTE)
-							else
-								playsound(src.loc, src.sound_fingersnap, 50, 1, channel=VOLUME_CHANNEL_EMOTE)
-								message = "<B>[src]</B> snaps [his_or_her(src)] fingers."
+						if (narrator_mode)
+							playsound(src.loc, 'sound/vox/deeoo.ogg', 50, 1, channel=VOLUME_CHANNEL_EMOTE)
+						else
+							playsound(src.loc, src.sound_fingersnap, 50, 1, channel=VOLUME_CHANNEL_EMOTE)
+							message = "<B>[src]</B> snaps [his_or_her(src)] fingers."
 
 			if ("airquote","airquotes")
 				if (param)
