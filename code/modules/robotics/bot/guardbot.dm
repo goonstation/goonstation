@@ -826,16 +826,17 @@
 		var/long_day = "[pick("Hooh", "Yeah", "Yeesh", "Blimey")], [pick("wow,", "heh,", "huh,")] guess it's been a long [pick("day", "shift", "morning")][shiftTime > 6000 ? "." : " already!"]"
 		switch(trickery)
 			if ("togglelock")
-				speak("Sorry, only people authorized by Thinktronic Data Systems may access my controls and accessories.")
-				if (deceptioncheck_passed)
-					src.locked = !src.locked
-					SPAWN_DBG(2 SECONDS)
-						speak(its_the_rd)
-						speak(long_day)
-						speak("Okay, everything's [src.locked ? "locked" : "unlocked"] now!")
-					return 1
-				else
-					return 0
+				if(!ON_COOLDOWN(src, "speak cooldown", 5 SECOND))
+					speak("Sorry, only people authorized by Thinktronic Data Systems may access my controls and accessories.")
+					if (deceptioncheck_passed)
+						src.locked = !src.locked
+						SPAWN_DBG(2 SECONDS)
+							speak(its_the_rd)
+							speak(long_day)
+							speak("Okay, everything's [src.locked ? "locked" : "unlocked"] now!")
+						return 1
+					else
+						return 0
 			if ("removetool")
 				if(W)
 					user.visible_message("<b>[user]</b> tries to pry the tool out of [src], but it's locked firmly in place!","You try to pry the gun off of [src]'s gun mount, but it's locked firmly in place!")
@@ -957,8 +958,9 @@
 				if (src.locked) // Are we locked?
 					if(src.on && !src.idle)
 						if(!DeceptionCheck(null, user, "togglelock")) // Let's try to unlock em
-							speak("Well shoot, I'd love to hold that gun! But... I have a tool module installed, and the combined mass and power draw of both a tool module <I>and</I> a gun would definitely fry my drive train and void my warranty. ")
-							return	// welp
+							if(!ON_COOLDOWN(src, "speak cooldown", 5 SECOND))
+								speak("Well shoot, I'd love to hold that gun! But... I have a tool module installed, and the combined mass and power draw of both a tool module <I>and</I> a gun would definitely fry my drive train and void my warranty. ")
+								return	// welp
 					else	// Can't charm our way in if they're asleep
 						boutput(user, "You try to give [src] your [Q], but its tool module is in the way.")
 						return
