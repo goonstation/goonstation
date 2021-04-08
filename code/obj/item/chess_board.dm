@@ -9,12 +9,12 @@
 	proc/uiSetup()
 		usr.Browse((grabResource("html/chess.htm")), "window=chess;size=496x496;border=0;can_resize=0;can_minimize=1;")
 
-	attack_hand(mob/user as mob)
+	attack_hand(var/mob/user)
 		if(!(user in src.openwindows) && istype(user,/mob/living/carbon/human) && !(src in user.contents))
 			src.openwindows.Add(user)
 		uiSetup()
 
-	MouseDrop(mob/user as mob) // because picking up the board is cool
+	MouseDrop(var/mob/user) // because picking up the board is cool
 		if((istype(user,/mob/living/carbon/human))&&(!user.stat)&&!(src in user.contents))
 			user.put_in_hand_or_drop(src)
 
@@ -26,6 +26,17 @@
 	w_class = 1
 	var/pieceAffinity // black, white
 	var/pieceType // king, queen, bishop, etc.
+
+	attack(mob/M as mob, var/mob/user, def_zone) // okay you know what you can eat the pieces now and it really fucking hurts
+		if (user == M && ishuman(M))
+			user.visible_message("[user] shoves \the [src] into [his_or_her(user)] mouth and crunches into it! What the fuck?!")
+			boutput(user, "<span class='alert'>The piece splinters, cutting up the inside of your mouth! WHY DID YOU DO THAT?!</span>")
+			playsound(user.loc, "sound/misc/chalkeat_[rand(1,2)].ogg", 60, 1) // thanks adhara
+			random_brute_damage(user, 3)
+			take_bleeding_damage(user, null, 0, DAMAGE_STAB, 0)
+			bleed(user, 3, 1)
+			user.emote("scream")
+			qdel(src)
 
 	proc/setPieceInfo()
 		// determining piece colour based on pieceAffinity
@@ -157,7 +168,7 @@
 		setExamine(src)
 		src.visible_message("[user] removes all of the remaining draughtsmen from [src.name].")
 
-	proc/grabBox(mob/user as mob) // because picking up boxes is cool HA HA FUCK YOU, MAKE A CONTEXT ACTION
+	proc/grabBox(var/mob/user) // because picking up boxes is cool HA HA FUCK YOU, MAKE A CONTEXT ACTION
 		if((istype(user,/mob/living/carbon/human))&&(!user.stat)&&!(src in user.contents))
 			user.put_in_hand_or_drop(src)
 
@@ -175,7 +186,7 @@
 
 		setExamine(src)
 
-	attack_hand(mob/user as mob)
+	attack_hand(var/mob/user)
 		// open box if closed
 		if(icon_state == "[affinity]box")
 			icon_state = "[affinity]box-open"
@@ -195,7 +206,7 @@
 				piece.set_loc(src)
 				src.visible_message("[user] places [piece.name] in the [src.name].")
 
-	MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob) //handles piling pieces into a chessbox
+	MouseDrop_T(atom/movable/O as mob|obj, var/mob/user) //handles piling pieces into a chessbox
 		if(istype(O,/obj/item/chessman))
 			user.visible_message("[user.name] scoops pieces into the [src.name]!")
 			SPAWN_DBG(0.05 SECONDS)
@@ -242,6 +253,24 @@
 			boutput(usr, "<span class='alert'>You can't use that as an output target.</span>")
 		return
 
+	custom_suicide = 1
+	suicide(var/mob/user)
+		if(!src.user_can_suicide(user))
+			user.suiciding = 0
+			return 0
+		user.visible_message("<span class='alert'>[user] grabs a king and rook from the chess box, and stuffs a piece in each ear!</span>")
+		user.visible_message("<span class='alert'><b>[user] castles the king in [his_or_her(user)] ear! Oh god, there's a gaping hole in [his_or_her(user)] head!</b></span>")
+		SPAWN_DBG(5 DECI SECONDS) // just in case you start to regret your decision
+		user.take_brain_damage(75)
+		user.TakeDamage("head", 125)
+		take_bleeding_damage(user, null, 0, DAMAGE_STAB, 0)
+		bleed(user, 20, 20)
+		user.emote("scream")
+		user.drop_item(src)
+		SPAWN_DBG(50 SECONDS)
+			if(user)
+				user.suiciding = 0
+		return 1
 	proc/getOutputLocation() // returns a location to output tiles if the user's hands are full
 		if (!src.outputTarget)
 			return src.loc
