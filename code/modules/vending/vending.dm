@@ -603,7 +603,13 @@
 					account.fields["current_money"] -= R.product_cost
 				else
 					src.credit -= R.product_cost
-				wagesystem.shipping_budget += round(R.product_cost * profit) // cogwerks - maybe money shouldn't just vanish into the aether idk
+				if(isplayer == 0)
+					wagesystem.shipping_budget += round(R.product_cost * profit) // cogwerks - maybe money shouldn't just vanish into the aether idk
+				else
+					var/obj/machinery/vending/player/T = src
+					T.owneraccount.fields["current_money"] += round(R.product_cost * profit)
+					wagesystem.shipping_budget += R.product_cost - round(R.product_cost * profit) // cogwerks - maybe money shouldn't just vanish into the aether idk
+
 				if(R.product_amount <= 0 && !isplayer == 0)
 					src.player_list -= R
 			SPAWN_DBG(src.vend_delay)
@@ -1632,7 +1638,7 @@
 	//card display name
 	var/cardname
 	//Bank account
-	var/datum/data/record/account = null
+	var/datum/data/record/owneraccount = null
 	player_list = list()
 	create_products()
 		..()
@@ -1675,6 +1681,7 @@
 			return owneruser
 		else if(in_interact_range(src, lastuser) || lastuser.stat)
 			return lastuser
+
 	attack_hand(mob/user as mob)
 		. = ..()
 		lastuser = user
@@ -1689,6 +1696,7 @@
 				src.generate_HTML(0, 1)
 		else if (href_list["unlock"] && src.panel_open == 1)
 			if (!owner && src.scan?.registered)
+				owneraccount = FindBankAccountByName(src.scan.registered)
 				owner = src.scan.registered
 				cardname = src.scan.name
 				unlocked = 1
