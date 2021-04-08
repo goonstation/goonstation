@@ -1673,12 +1673,10 @@
 		. = ..()
 		if (href_list["loading"])
 			if (href_list["loading"] == "true" && src.panel_open == 1 && src.unlocked == 1)
-				loading = 1
-			else
-				loading = 0
+				loading = !loading
 			src.generate_HTML(0, 1)
 		else if (href_list["unlock"] && src.panel_open == 1)
-			if (!owner)
+			if (!owner && src.scan?.registered)
 				owner = src.scan.registered
 				cardname = src.scan.name
 				unlocked = 1
@@ -1686,17 +1684,23 @@
 			else if (owner == src.scan?.registered)
 				unlocked = !unlocked
 				if(unlocked == 0 && loading == 1) loading = 0
-				if(!in_interact_range(src, owneruser) || owneruser.stat) owneruser = lastuser
+				//When we get unlocked, if the original owner mob isn't here replace the saved mob with this one
+				if(!in_interact_range(src, owneruser) || owneruser.stat && unlocked == 0) owneruser = lastuser
 			src.generate_HTML(0, 1)
 		else if (href_list["rename"] && src.panel_open == 1 && src.unlocked == 1)
-			var/inp = input(owneruser,"Enter new name:","Vendor Name", "") as text
+			//If the
+			var/inp
 			if(!in_interact_range(src, owneruser) || owneruser.stat)
+				inp = input(owneruser,"Enter new name:","Vendor Name", "") as text
+			else if(!in_interact_range(src, owneruser) || owneruser.stat)
+				inp = input(lastuser,"Enter new name:","Vendor Name", "") as text
+			else
 				return 0
 			src.name = inp
 			src.generate_HTML(0, 1)
 
 	attackby(obj/item/target, mob/user)
-		if(!owneruser || !isliving(owneruser)) lastuser = user
+		lastuser = user
 		if(!loading == 0 && !panel_open == 0)
 			addproduct(target, user)
 		else
