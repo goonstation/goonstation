@@ -826,7 +826,7 @@
 		var/long_day = "[pick("Hooh", "Yeah", "Yeesh", "Blimey")], [pick("wow,", "heh,", "huh,")] guess it's been a long [pick("day", "shift", "morning")][shiftTime > 6000 ? "." : " already!"]"
 		switch(trickery)
 			if ("togglelock")
-				if(!ON_COOLDOWN(src, "speak cooldown", 5 SECOND))
+				if(!ON_COOLDOWN(src, "speak cooldown", 2 SECOND))
 					speak("Sorry, only people authorized by Thinktronic Data Systems may access my controls and accessories.")
 					if (deceptioncheck_passed)
 						src.locked = !src.locked
