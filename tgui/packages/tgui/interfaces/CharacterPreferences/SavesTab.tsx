@@ -7,27 +7,25 @@ export const SavesTab = (_props, context) => {
   const { act, data } = useBackend<CharacterPreferencesData>(context);
 
   return (
-    <Fragment>
-      <Section title="Cloud Saves">
-        {data.cloudSaves ? (
-          <Fragment>
-            {data.cloudSaves.map((save, index) => (
-              <Fragment key={save.name}>
-                <Cloudsave name={save.name} index={index} />
-                <Divider />
-              </Fragment>
-            ))}
-            <Box mt="5px">
-              <Button onClick={() => act('cloud-new')}>Create new save</Button>
-            </Box>
-          </Fragment>
-        ) : (
-          <Box italic color="label">
-            Cloud saves could not be loaded.
+    <Section title="Cloud Saves">
+      {data.cloudSaves ? (
+        <Fragment>
+          {data.cloudSaves.map((save, index) => (
+            <Fragment key={save.name}>
+              <Cloudsave name={save.name} index={index} />
+              <Divider />
+            </Fragment>
+          ))}
+          <Box mt="5px">
+            <Button onClick={() => act('cloud-new')}>Create new save</Button>
           </Box>
-        )}
-      </Section>
-    </Fragment>
+        </Fragment>
+      ) : (
+        <Box italic color="label">
+          Cloud saves could not be loaded.
+        </Box>
+      )}
+    </Section>
   );
 };
 
