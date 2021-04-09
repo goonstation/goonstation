@@ -64667,7 +64667,7 @@
 /area/station/hangar/escape)
 "cWb" = (
 /obj/wingrille_spawn/auto,
-/turf/simulated/floor/engine,
+/turf/simulated/floor/plating,
 /area/station/science/storage)
 "cWc" = (
 /obj/machinery/atmospherics/portables_connector{
