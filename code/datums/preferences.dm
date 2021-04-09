@@ -117,7 +117,7 @@ datum/preferences
 
 	ui_data(mob/user)
 		if (isnull(src.preview))
-			src.preview = new(user.client, "preferences2", "preferences2_character_preview")
+			src.preview = new(user.client, "preferences", "preferences_character_preview")
 			src.update_preview_icon()
 
 		var/client/client = ismob(user) ? user.client : user
@@ -238,8 +238,13 @@ datum/preferences
 
 			if ("save")
 				var/index = params["index"]
+				if (isnull(src.profile_name) || is_blank_string(src.profile_name))
+					alert(usr, "You need to give your profile a name.")
+					return
+
 				if (!isnull(index) && isnum(index))
 					src.savefile_save(client, index)
+					src.profile_number = index
 					boutput(usr, "<span class='notice'><b>Character saved to Slot [index].</b></span>")
 					return TRUE
 
@@ -362,6 +367,8 @@ datum/preferences
 				else
 					be_random_look = 1
 				blType = "A+"
+
+				update_preview_icon()
 
 				return TRUE
 
