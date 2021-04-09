@@ -17225,6 +17225,9 @@
 	dir = 1;
 	tag = "icon-pool (NORTH)"
 	},
+/obj/disposalpipe/segment/food{
+	dir = 4
+	},
 /turf/simulated/floor/blue/checker,
 /area/station/crew_quarters/pool)
 "aPW" = (
@@ -17603,7 +17606,6 @@
 	},
 /obj/access_spawn/rancher,
 /obj/firedoor_spawn,
-/obj/disposalpipe/segment/mail/vertical,
 /obj/decal/tile_edge/stripe,
 /turf/simulated/floor/wood,
 /area/station/hydroponics/bay)
@@ -19666,7 +19668,6 @@
 "aWk" = (
 /obj/machinery/door/firedoor/pyro,
 /obj/machinery/door/airlock/pyro/maintenance,
-/obj/disposalpipe/segment,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -27921,7 +27922,6 @@
 /area/station/engine/gas)
 "bqe" = (
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide,
-/obj/disposalpipe/segment,
 /obj/machinery/power/apc/autoname_west,
 /obj/cable{
 	icon_state = "0-4"
@@ -27931,7 +27931,6 @@
 /area/station/engine/gas)
 "bqf" = (
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide,
-/obj/disposalpipe/segment,
 /obj/cable{
 	icon_state = "2-8"
 	},
@@ -27943,7 +27942,6 @@
 /area/station/engine/gas)
 "bqg" = (
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide,
-/obj/disposalpipe/segment,
 /turf/simulated/floor/bot,
 /area/station/engine/gas)
 "bqh" = (
@@ -32468,21 +32466,6 @@
 /obj/machinery/computer/card,
 /turf/simulated/floor/black,
 /area/station/security/checkpoint/podbay)
-"bAm" = (
-/obj/disposalpipe/segment{
-	dir = 4
-	},
-/obj/machinery/door/poddoor/pyro{
-	density = 0;
-	dir = 4;
-	icon_state = "pdoor0";
-	id = "lockdown_checkpoint3";
-	name = "Checkpoint Lockdown Doors";
-	opacity = 0
-	},
-/obj/wingrille_spawn/auto,
-/turf/simulated/floor/plating,
-/area/station/security/checkpoint/podbay)
 "bAn" = (
 /obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor/grey/side{
@@ -32970,17 +32953,6 @@
 	},
 /obj/cable{
 	icon_state = "0-4"
-	},
-/obj/wingrille_spawn/auto,
-/turf/simulated/floor/plating,
-/area/station/security/checkpoint/sec_foyer)
-"bBt" = (
-/obj/disposalpipe/segment,
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/cable{
-	icon_state = "0-8"
 	},
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
@@ -68733,7 +68705,6 @@
 /turf/simulated/floor/carpet/arcade,
 /area/station/medical/medbay)
 "dfg" = (
-/obj/disposalpipe/segment,
 /obj/machinery/vending/snack,
 /obj/machinery/light_switch/north,
 /turf/simulated/floor/carpet/arcade,
@@ -70028,7 +69999,6 @@
 /area/station/solar/south)
 "dic" = (
 /obj/machinery/door/firedoor/pyro,
-/obj/disposalpipe/segment/mail/horizontal,
 /obj/disposalpipe/segment/mail/vertical,
 /obj/machinery/door/poddoor/pyro{
 	density = 0;
@@ -73293,13 +73263,6 @@
 	},
 /turf/simulated/floor/dirt,
 /area/station/ranch)
-"fHY" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/disposalpipe/segment/mail/horizontal,
-/turf/simulated/floor/plating,
-/area/station/maintenance/northwest)
 "gcY" = (
 /obj/machinery/power/apc/autoname_south,
 /obj/cable,
@@ -104598,7 +104561,7 @@ aTB
 aUV
 aKC
 bah
-fHY
+aYI
 akw
 aaI
 aaa
@@ -106131,7 +106094,7 @@ btd
 buW
 bwU
 byI
-bAm
+bDZ
 bBY
 bDZ
 byI
@@ -132103,7 +132066,7 @@ bus
 bwc
 byh
 bzR
-bBt
+bPE
 bDl
 bFp
 bHh
