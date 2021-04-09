@@ -40,9 +40,18 @@
 /turf/space,
 /area/space)
 "aai" = (
-/obj/wingrille_spawn/auto,
-/turf/simulated/floor,
-/area/station/hangar/arrivals)
+/obj/wingrille_spawn/auto/crystal,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/plating,
+/area/station/turret_protected/ai)
 "aaj" = (
 /obj/cable,
 /obj/cable{
@@ -499,9 +508,18 @@
 /turf/simulated/floor/plating,
 /area/station/turret_protected/ai)
 "abm" = (
-/obj/wingrille_spawn/auto,
-/turf/simulated/floor,
-/area/station/hydroponics/bay)
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/wingrille_spawn/auto/crystal,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/plating,
+/area/station/turret_protected/ai)
 "abn" = (
 /obj/cable,
 /obj/cable{
@@ -519,11 +537,16 @@
 /turf/simulated/floor/plating,
 /area/station/turret_protected/ai)
 "abp" = (
+/obj/wingrille_spawn/auto/crystal,
+/obj/cable,
 /obj/cable{
-	icon_state = "2-4"
+	icon_state = "0-8"
 	},
-/turf/simulated/floor,
-/area/station/hydroponics/bay)
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/plating,
+/area/station/turret_protected/ai)
 "abr" = (
 /obj/cable{
 	icon_state = "0-2"
@@ -568,14 +591,9 @@
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
 "abx" = (
-/obj/disposalpipe/segment{
-	dir = 4
-	},
-/obj/cable{
-	icon_state = "4-8"
-	},
+/obj/wingrille_spawn/auto,
 /turf/simulated/floor,
-/area/station/hydroponics/lobby)
+/area/station/hangar/arrivals)
 "aby" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -800,10 +818,8 @@
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
 "abV" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/green/side,
+/obj/wingrille_spawn/auto,
+/turf/simulated/floor,
 /area/station/hydroponics/bay)
 "abW" = (
 /obj/machinery/door/poddoor/pyro{
@@ -1282,6 +1298,7 @@
 /turf/simulated/floor/caution/east,
 /area/station/turret_protected/ai)
 "acW" = (
+/obj/grille/steel,
 /obj/cable{
 	icon_state = "0-4"
 	},
@@ -1289,7 +1306,6 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/grille/steel,
 /turf/simulated/floor/plating,
 /area/station/turret_protected/ai)
 "acX" = (
@@ -1609,12 +1625,11 @@
 	},
 /area/station/solar/north)
 "adO" = (
-/obj/disposalpipe/segment/mail/horizontal,
 /obj/cable{
-	icon_state = "1-2"
+	icon_state = "2-4"
 	},
-/turf/simulated/floor/green/side,
-/area/station/hydroponics/lobby)
+/turf/simulated/floor,
+/area/station/hydroponics/bay)
 "adQ" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/turret_protected/ai_upload)
@@ -1936,17 +1951,14 @@
 /turf/simulated/floor/plating,
 /area/station/turret_protected/ai)
 "aeH" = (
-/obj/disposalpipe/segment/morgue{
+/obj/disposalpipe/segment{
 	dir = 4
 	},
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/cable{
-	icon_state = "2-4"
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/north)
+/turf/simulated/floor,
+/area/station/hydroponics/lobby)
 "aeI" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -2795,12 +2807,11 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
 "agP" = (
-/obj/disposalpipe/segment,
 /obj/cable{
-	icon_state = "4-8"
+	icon_state = "1-2"
 	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/north)
+/turf/simulated/floor/green/side,
+/area/station/hydroponics/bay)
 "agQ" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -3788,14 +3799,17 @@
 /turf/simulated/floor/plating,
 /area/station/turret_protected/ai)
 "ajp" = (
+/obj/grille/steel,
+/obj/disposalpipe/segment/bent/south,
 /obj/cable{
 	icon_state = "0-8"
 	},
 /obj/cable{
+	icon_state = "0-2"
+	},
+/obj/cable{
 	icon_state = "0-4"
 	},
-/obj/grille/steel,
-/obj/disposalpipe/segment/bent/south,
 /turf/simulated/floor/plating,
 /area/station/turret_protected/ai)
 "ajq" = (
@@ -3908,11 +3922,12 @@
 /turf/simulated/floor/plating/airless,
 /area/station/solar/small_backup2)
 "ajB" = (
+/obj/disposalpipe/segment/mail/horizontal,
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/specialroom/arcade,
-/area/station/janitor/supply)
+/turf/simulated/floor/green/side,
+/area/station/hydroponics/lobby)
 "ajC" = (
 /turf/simulated/floor/plating/random{
 	icon_state = "quiltystair"
@@ -3944,11 +3959,17 @@
 /turf/simulated/floor/grey/blackgrime,
 /area/station/hangar/catering)
 "ajI" = (
+/obj/disposalpipe/segment/morgue{
+	dir = 4
+	},
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/grass/leafy,
-/area/station/garden/owlery)
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/north)
 "ajJ" = (
 /obj/machinery/light/emergency,
 /obj/cable{
@@ -4339,10 +4360,11 @@
 /area/station/turret_protected/ai)
 "akD" = (
 /obj/disposalpipe/segment,
+/obj/wingrille_spawn/auto/crystal,
+/obj/cable,
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating,
 /area/station/turret_protected/ai)
 "akE" = (
@@ -9379,11 +9401,12 @@
 /turf/simulated/floor/plating,
 /area/station/hangar/arrivals)
 "axh" = (
+/obj/disposalpipe/segment,
 /obj/cable{
-	icon_state = "2-8"
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/northeast)
+/area/station/maintenance/north)
 "axi" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -15473,10 +15496,10 @@
 /area/station/hydroponics/bay)
 "aLK" = (
 /obj/cable{
-	icon_state = "1-4"
+	icon_state = "1-2"
 	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/northeast)
+/turf/simulated/floor/specialroom/arcade,
+/area/station/janitor/supply)
 "aLL" = (
 /obj/machinery/vending/cards,
 /turf/simulated/floor{
@@ -18665,8 +18688,13 @@
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade)
 "aTt" = (
-/obj/wingrille_spawn/auto,
-/turf/simulated/floor,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "aTu" = (
 /obj/disposalpipe/segment/mail/bent/west,
@@ -18675,21 +18703,17 @@
 	},
 /area/station/crew_quarters/arcade)
 "aTv" = (
-/obj/wingrille_spawn/auto,
-/turf/simulated/floor,
-/area/station/hangar/main)
-"aTw" = (
-/obj/machinery/door/poddoor/pyro{
-	density = 0;
-	dir = 6;
-	icon_state = "pdoor0";
-	id = "lockdown_checkpoint3";
-	name = "Checkpoint Lockdown Doors";
-	opacity = 0
+/obj/cable{
+	icon_state = "4-8"
 	},
-/obj/wingrille_spawn/auto,
+/turf/simulated/floor/grass/leafy,
+/area/station/garden/owlery)
+"aTw" = (
+/obj/cable{
+	icon_state = "2-8"
+	},
 /turf/simulated/floor/plating,
-/area/station/security/checkpoint/podbay)
+/area/station/maintenance/northeast)
 "aTx" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -18711,17 +18735,11 @@
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade)
 "aTy" = (
-/obj/machinery/door/poddoor/pyro{
-	density = 0;
-	dir = 5;
-	icon_state = "pdoor0";
-	id = "lockdown";
-	name = "Bridge Lockdown Doors";
-	opacity = 0
+/obj/cable{
+	icon_state = "1-4"
 	},
-/obj/wingrille_spawn/auto,
-/turf/simulated/floor/circuit/off,
-/area/station/bridge)
+/turf/simulated/floor/plating,
+/area/station/maintenance/northeast)
 "aTz" = (
 /obj/machinery/firealarm{
 	dir = 8;
@@ -19803,9 +19821,6 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "aWp" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
 /obj/reagent_dispensers/fueltank,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
@@ -20610,17 +20625,12 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
 "aYh" = (
-/obj/wingrille_spawn/auto,
-/obj/machinery/door/poddoor/pyro{
-	density = 0;
-	dir = 10;
-	icon_state = "pdoor0";
-	id = "lockdown";
-	name = "Bridge Lockdown Doors";
-	opacity = 0
+/obj/disposalpipe/segment/mail/horizontal,
+/obj/cable{
+	icon_state = "1-2"
 	},
-/turf/simulated/floor/circuit/off,
-/area/station/bridge)
+/turf/simulated/floor/plating,
+/area/station/maintenance/northeast)
 "aYi" = (
 /obj/disposalpipe/trunk,
 /obj/machinery/camera{
@@ -20638,17 +20648,9 @@
 /turf/simulated/floor/specialroom/arcade,
 /area/station/janitor/supply)
 "aYj" = (
-/obj/machinery/door/poddoor/pyro{
-	density = 0;
-	dir = 6;
-	icon_state = "pdoor0";
-	id = "lockdown";
-	name = "Bridge Lockdown Doors";
-	opacity = 0
-	},
 /obj/wingrille_spawn/auto,
-/turf/simulated/floor/circuit/off,
-/area/station/bridge)
+/turf/simulated/floor,
+/area/station/maintenance/northeast)
 "aYk" = (
 /obj/disposalpipe/segment{
 	dir = 4;
@@ -22000,17 +22002,12 @@
 	},
 /area/station/crew_quarters/arcade/dungeon)
 "bbu" = (
-/obj/wingrille_spawn/auto,
-/obj/machinery/door/poddoor/pyro{
-	density = 0;
-	dir = 10;
-	icon_state = "pdoor0";
-	id = "lockdown_checkpoint3";
-	name = "Checkpoint Lockdown Doors";
-	opacity = 0
+/obj/machinery/atmospherics/pipe/manifold/north,
+/obj/cable{
+	icon_state = "2-8"
 	},
 /turf/simulated/floor/plating,
-/area/station/security/checkpoint/podbay)
+/area/station/hangar/main)
 "bbv" = (
 /obj/shrub,
 /obj/item/storage/pill_bottle/cyberpunk,
@@ -22028,9 +22025,6 @@
 /turf/simulated/floor/grass/leafy,
 /area/station/garden/owlery)
 "bbx" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
 /obj/disposalpipe/segment,
 /turf/simulated/floor/grass/leafy,
 /area/station/garden/owlery)
@@ -22049,17 +22043,15 @@
 /turf/simulated/floor/grass/leafy,
 /area/station/garden/owlery)
 "bbA" = (
-/obj/machinery/door/poddoor/pyro{
-	density = 0;
-	dir = 5;
-	icon_state = "pdoor0";
-	id = "lockdown_checkpoint3";
-	name = "Checkpoint Lockdown Doors";
-	opacity = 0
+/obj/cable{
+	icon_state = "4-8"
 	},
-/obj/wingrille_spawn/auto,
+/obj/machinery/atmospherics/valve/vertical,
+/obj/cable{
+	icon_state = "1-8"
+	},
 /turf/simulated/floor/plating,
-/area/station/security/checkpoint/podbay)
+/area/station/hangar/main)
 "bbB" = (
 /obj/shrub{
 	dir = 1
@@ -22251,17 +22243,11 @@
 /turf/simulated/floor/delivery,
 /area/station/crew_quarters/cafeteria)
 "bcc" = (
-/obj/machinery/door/poddoor/pyro{
-	density = 0;
-	dir = 10;
-	icon_state = "pdoor0";
-	id = "lockdown_checkpoint3";
-	name = "Checkpoint Lockdown Doors";
-	opacity = 0
+/obj/cable{
+	icon_state = "1-2"
 	},
-/obj/wingrille_spawn/auto,
-/turf/simulated/floor/plating,
-/area/station/security/checkpoint/podbay)
+/turf/simulated/floor/shuttlebay,
+/area/station/hangar/main)
 "bcd" = (
 /obj/table/auto,
 /obj/item/device/light/lava_lamp,
@@ -22426,12 +22412,18 @@
 /area/station/engine/substation/west)
 "bcx" = (
 /obj/wingrille_spawn/auto,
-/turf/simulated/floor/black,
-/area/station/science/teleporter)
-"bcy" = (
-/obj/wingrille_spawn/auto,
 /turf/simulated/floor,
-/area/station/medical/medbay/lobby)
+/area/station/hangar/main)
+"bcy" = (
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/horizontal,
+/obj/cable{
+	icon_state = "2-8"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/shuttlebay,
+/area/station/hangar/main)
 "bcz" = (
 /obj/decal/poster/wallsign/stencil/left/r{
 	pixel_x = -8
@@ -22460,6 +22452,39 @@
 /obj/machinery/light/small/floor/greenish,
 /turf/simulated/floor/grass/leafy,
 /area/station/crew_quarters/garden)
+"bcC" = (
+/obj/machinery/door/poddoor/pyro{
+	density = 0;
+	dir = 6;
+	icon_state = "pdoor0";
+	id = "lockdown_checkpoint3";
+	name = "Checkpoint Lockdown Doors";
+	opacity = 0
+	},
+/obj/wingrille_spawn/auto,
+/turf/simulated/floor/plating,
+/area/station/security/checkpoint/podbay)
+"bcD" = (
+/obj/securearea{
+	desc = "This hazard stripe marks a high-intensity beamline.";
+	dir = 8;
+	icon_state = "magwarning";
+	layer = 2.5;
+	name = "Beamline"
+	},
+/obj/machinery/door/airlock/pyro/glass{
+	autoclose = 0;
+	density = 0;
+	icon_state = "glass_open";
+	id = "pt_laser";
+	name = "Beamline Interlock";
+	req_access_txt = "54"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/shuttlebay,
+/area/station/hangar/main)
 "bcE" = (
 /obj/disposalpipe/segment/mail/bent/east,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -22641,6 +22666,18 @@
 /obj/machinery/door/airlock/pyro/external,
 /turf/simulated/floor/caution/northsouth,
 /area/station/crew_quarters/cafeteria)
+"bdb" = (
+/obj/machinery/door/poddoor/pyro{
+	density = 0;
+	dir = 5;
+	icon_state = "pdoor0";
+	id = "lockdown";
+	name = "Bridge Lockdown Doors";
+	opacity = 0
+	},
+/obj/wingrille_spawn/auto,
+/turf/simulated/floor/circuit/off,
+/area/station/bridge)
 "bdc" = (
 /obj/storage/closet/wardrobe/green,
 /turf/simulated/floor/grime,
@@ -22806,6 +22843,12 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/substation/west)
+"bdu" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/circuit/off,
+/area/station/hangar/main)
 "bdv" = (
 /obj/storage/cart/mechcart{
 	desc = "A big rolling supply cart equipped for handling hull breaches.";
@@ -22839,10 +22882,43 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/substation/west)
+"bdw" = (
+/obj/securearea{
+	desc = "This hazard stripe marks a high-intensity beamline.";
+	dir = 4;
+	icon_state = "magwarning";
+	layer = 2.5;
+	name = "Beamline"
+	},
+/obj/machinery/door/airlock/pyro/glass{
+	autoclose = 0;
+	density = 0;
+	icon_state = "glass_open";
+	id = "pt_laser";
+	name = "Beamline Interlock";
+	req_access_txt = "54"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/shuttlebay,
+/area/station/hangar/main)
 "bdx" = (
 /obj/disposalpipe/segment,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/substation/west)
+"bdy" = (
+/obj/wingrille_spawn/auto,
+/obj/machinery/door/poddoor/pyro{
+	density = 0;
+	dir = 10;
+	icon_state = "pdoor0";
+	id = "lockdown";
+	name = "Bridge Lockdown Doors";
+	opacity = 0
+	},
+/turf/simulated/floor/circuit/off,
+/area/station/bridge)
 "bdz" = (
 /obj/rack,
 /obj/item/clothing/suit/fire,
@@ -23153,9 +23229,6 @@
 "bel" = (
 /obj/disposalpipe/segment{
 	dir = 4
-	},
-/obj/cable{
-	icon_state = "0-8"
 	},
 /obj/machinery/atmospherics/valve/notify_admins/horizontal{
 	name = "Air Reserve (Escape Hallway)"
@@ -24982,6 +25055,30 @@
 "biK" = (
 /turf/simulated/floor/bot,
 /area/station/hallway/primary/west)
+"biL" = (
+/obj/machinery/door/poddoor/pyro{
+	density = 0;
+	dir = 6;
+	icon_state = "pdoor0";
+	id = "lockdown";
+	name = "Bridge Lockdown Doors";
+	opacity = 0
+	},
+/obj/wingrille_spawn/auto,
+/turf/simulated/floor/circuit/off,
+/area/station/bridge)
+"biM" = (
+/obj/wingrille_spawn/auto,
+/obj/machinery/door/poddoor/pyro{
+	density = 0;
+	dir = 10;
+	icon_state = "pdoor0";
+	id = "lockdown_checkpoint3";
+	name = "Checkpoint Lockdown Doors";
+	opacity = 0
+	},
+/turf/simulated/floor/plating,
+/area/station/security/checkpoint/podbay)
 "biN" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -25213,6 +25310,18 @@
 /obj/machinery/door/airlock/pyro/glass,
 /turf/simulated/floor/delivery,
 /area/station/hallway/primary/west)
+"bjB" = (
+/obj/machinery/door/poddoor/pyro{
+	density = 0;
+	dir = 5;
+	icon_state = "pdoor0";
+	id = "lockdown_checkpoint3";
+	name = "Checkpoint Lockdown Doors";
+	opacity = 0
+	},
+/obj/wingrille_spawn/auto,
+/turf/simulated/floor/plating,
+/area/station/security/checkpoint/podbay)
 "bjC" = (
 /obj/grille/catwalk{
 	dir = 4
@@ -25787,10 +25896,16 @@
 /area/station/hangar/main)
 "bkT" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/southeast,
+/obj/cable{
+	icon_state = "2-4"
+	},
 /turf/simulated/floor/orangeblack,
 /area/station/hangar/main)
 "bkU" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/horizontal,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/orangeblack,
 /area/station/hangar/main)
 "bkV" = (
@@ -25803,16 +25918,25 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/horizontal,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/delivery,
 /area/station/hangar/main)
 "bkW" = (
 /obj/machinery/atmospherics/valve/notify_admins/horizontal{
 	name = "Air Reserve (Pod Bay #1)"
 	},
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/plating,
 /area/station/hangar/main)
 "bkX" = (
 /obj/machinery/atmospherics/pipe/manifold/north,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/plating,
 /area/station/hangar/main)
 "bkY" = (
@@ -25863,6 +25987,23 @@
 	},
 /turf/simulated/floor/bot,
 /area/station/hallway/primary/west)
+"blf" = (
+/obj/machinery/door/poddoor/pyro{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "lockdown";
+	name = "Bridge Lockdown Doors";
+	opacity = 0
+	},
+/obj/wingrille_spawn/auto,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/plating,
+/area/station/bridge)
 "blg" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -26341,6 +26482,9 @@
 /area/station/hangar/main)
 "bmp" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/northwest,
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/orangeblack,
 /area/station/hangar/main)
 "bmq" = (
@@ -27020,6 +27164,9 @@
 /turf/simulated/floor/stairs,
 /area/station/hangar/main)
 "bnT" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/stairs,
 /area/station/hangar/main)
 "bnU" = (
@@ -28473,6 +28620,9 @@
 "brl" = (
 /obj/machinery/vehicle/miniputt/armed{
 	dir = 8
+	},
+/obj/cable{
+	icon_state = "1-2"
 	},
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/main)
@@ -30075,6 +30225,9 @@
 /obj/machinery/vehicle/pod_smooth/light{
 	dir = 8
 	},
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/main)
 "buT" = (
@@ -30510,6 +30663,18 @@
 	icon_state = "red2"
 	},
 /area/station/security/main)
+"bvY" = (
+/obj/machinery/door/poddoor/pyro{
+	density = 0;
+	dir = 10;
+	icon_state = "pdoor0";
+	id = "lockdown_checkpoint3";
+	name = "Checkpoint Lockdown Doors";
+	opacity = 0
+	},
+/obj/wingrille_spawn/auto,
+/turf/simulated/floor/plating,
+/area/station/security/checkpoint/podbay)
 "bvZ" = (
 /obj/machinery/light{
 	dir = 1;
@@ -30904,6 +31069,9 @@
 /area/space)
 "bwM" = (
 /obj/machinery/r_door_control/podbay/mainpod1,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hangar/main)
 "bwN" = (
@@ -30914,10 +31082,16 @@
 	layer = 9.1;
 	pixel_x = -10
 	},
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/main)
 "bwO" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/northeast,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/main)
 "bwP" = (
@@ -35917,6 +36091,9 @@
 /obj/machinery/door/firedoor/pyro{
 	dir = 4
 	},
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
 "bGZ" = (
@@ -36792,6 +36969,7 @@
 	icon_state = "0-2"
 	},
 /obj/wingrille_spawn/auto/crystal,
+/obj/cable,
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
 "bIP" = (
@@ -37174,6 +37352,9 @@
 "bJv" = (
 /obj/table/auto,
 /obj/machinery/recharger,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/circuit/off,
 /area/station/bridge)
 "bJw" = (
@@ -37940,6 +38121,9 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe/overfloor/horizontal,
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
 "bKJ" = (
@@ -39667,16 +39851,6 @@
 /obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
-"bNW" = (
-/obj/cable{
-	icon_state = "0-4"
-	},
-/obj/cable{
-	icon_state = "0-8"
-	},
-/obj/wingrille_spawn/auto/crystal,
-/turf/simulated/floor/engine,
-/area/station/ai_monitored/armory)
 "bNX" = (
 /obj/cable{
 	icon_state = "0-4"
@@ -39689,9 +39863,6 @@
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
 "bNY" = (
-/obj/cable{
-	icon_state = "1-8"
-	},
 /obj/cable{
 	icon_state = "0-4"
 	},
@@ -41294,10 +41465,16 @@
 /area/space)
 "bRC" = (
 /obj/machinery/r_door_control/podbay/mainpod2,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hangar/main)
 "bRD" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/southeast,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/main)
 "bRE" = (
@@ -44202,9 +44379,6 @@
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 5
 	},
-/obj/cable{
-	icon_state = "1-4"
-	},
 /turf/simulated/floor/caution/south,
 /area/station/engine/coldloop)
 "bYj" = (
@@ -44647,6 +44821,9 @@
 	},
 /area/station/hangar/main)
 "bZf" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/stairs{
 	dir = 1
 	},
@@ -45076,6 +45253,9 @@
 /area/station/maintenance/east)
 "cai" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/southwest,
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/orangeblack,
 /area/station/hangar/main)
 "caj" = (
@@ -45618,16 +45798,25 @@
 /area/station/hangar/main)
 "cbz" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/northeast,
+/obj/cable{
+	icon_state = "1-4"
+	},
 /turf/simulated/floor/orangeblack,
 /area/station/hangar/main)
 "cbA" = (
 /obj/machinery/atmospherics/valve/notify_admins/horizontal{
 	name = "Air Reserve (Pod Bay #2)"
 	},
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/plating,
 /area/station/hangar/main)
 "cbB" = (
 /obj/machinery/atmospherics/pipe/manifold/south,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/plating,
 /area/station/hangar/main)
 "cbC" = (
@@ -46050,9 +46239,6 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/east)
 "ccy" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4;
 	name = "NanoPutt Bay";
@@ -48469,6 +48655,9 @@
 "cjb" = (
 /obj/machinery/door/airlock/pyro/external,
 /obj/machinery/door/firedoor/pyro,
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "cjc" = (
@@ -49739,6 +49928,9 @@
 	dir = 4
 	},
 /obj/landmark/halloween,
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "cmb" = (
@@ -52890,9 +53082,6 @@
 /obj/decal/cleanable/cobweb,
 /obj/item/storage/toolbox/emergency,
 /obj/item/storage/firstaid/regular,
-/obj/cable{
-	icon_state = "1-2"
-	},
 /turf/simulated/floor/plating,
 /area/station/medical/robotics)
 "ctA" = (
@@ -59096,7 +59285,6 @@
 "cIp" = (
 /obj/table/auto,
 /obj/item/paper_bin,
-/obj/disposalpipe/segment/mail/vertical,
 /obj/item/clothing/head/plunger,
 /obj/machinery/light/small{
 	dir = 1;
@@ -62176,9 +62364,6 @@
 /turf/simulated/floor/delivery,
 /area/station/quartermaster/office)
 "cPL" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
 /obj/machinery/manufacturer/robotics,
 /turf/simulated/floor/delivery,
 /area/station/quartermaster/office)
@@ -70339,6 +70524,22 @@
 	icon_state = "catwalk_cross"
 	},
 /area/station/solar/south)
+"dic" = (
+/obj/machinery/door/firedoor/pyro,
+/obj/disposalpipe/segment/mail/horizontal,
+/obj/disposalpipe/segment/mail/vertical,
+/obj/machinery/door/poddoor/pyro{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "lockdown";
+	name = "Bridge Lockdown Doors";
+	opacity = 0
+	},
+/obj/machinery/door/airlock/pyro/command{
+	name = "Bridge Access"
+	},
+/turf/simulated/floor/plating,
+/area/station/security/checkpoint/customs)
 "did" = (
 /obj/grille/catwalk,
 /obj/cable{
@@ -70699,6 +70900,16 @@
 	},
 /turf/simulated/floor/plating,
 /area/research_outpost)
+"diO" = (
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/horizontal,
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/shuttlebay,
+/area/station/hangar/main)
 "diP" = (
 /obj/machinery/firealarm{
 	pixel_y = 24;
@@ -70891,6 +71102,16 @@
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/engine,
 /area/research_outpost)
+"djl" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/valve/vertical,
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/plating,
+/area/station/hangar/main)
 "djm" = (
 /obj/decal/poster/wallsign/biohazard,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -71225,6 +71446,13 @@
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/engine,
 /area/research_outpost/chamber)
+"dkc" = (
+/obj/machinery/atmospherics/pipe/manifold/south,
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/plating,
+/area/station/hangar/main)
 "dkd" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -71271,6 +71499,10 @@
 	icon_state = "engine_caution_east"
 	},
 /area/research_outpost/hangar)
+"dkj" = (
+/obj/wingrille_spawn/auto,
+/turf/simulated/floor/black,
+/area/station/science/teleporter)
 "dkk" = (
 /turf/simulated/floor/purple/side{
 	dir = 4
@@ -73252,6 +73484,15 @@
 	dir = 4
 	},
 /area/space)
+"doU" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/southeast)
 "doV" = (
 /obj/cable{
 	icon_state = "2-8"
@@ -73530,6 +73771,10 @@
 	},
 /turf/simulated/floor/wood,
 /area/station/ranch)
+"etE" = (
+/obj/wingrille_spawn/auto,
+/turf/simulated/floor,
+/area/station/medical/medbay/lobby)
 "eQI" = (
 /obj/item/device/radio/intercom/catering{
 	dir = 8
@@ -100338,9 +100583,9 @@ azn
 aCd
 aDl
 aKu
-abm
-abm
-abm
+abV
+abV
+abV
 aKu
 axr
 azn
@@ -101849,8 +102094,8 @@ awh
 awh
 aEH
 aFI
-abp
-abV
+adO
+agP
 aKw
 awh
 awh
@@ -103691,27 +103936,27 @@ bgQ
 bkT
 bmp
 bnT
-bpx
-bpx
+bcc
+bcc
 brl
-bpx
-bwP
-bpx
+bcc
+bcy
+bcc
 brl
-bpx
-bpx
-bAw
-bHN
-bLM
-bpx
-bpx
-bpx
+bcc
+bcc
+bcD
+bdu
+bdw
+bcc
+bcc
+bcc
 buS
-bwP
-bpx
+diO
+bcc
 buS
-bpx
-bpx
+bcc
+bcc
 bZf
 cai
 cbz
@@ -104335,7 +104580,7 @@ cjw
 ckV
 ckV
 ckV
-bcx
+dkj
 crQ
 ctk
 cuI
@@ -104567,7 +104812,7 @@ auT
 aDx
 ase
 aFR
-abx
+aeH
 aJi
 aKA
 aLQ
@@ -104870,7 +105115,7 @@ aDy
 ase
 aFS
 aHE
-adO
+ajB
 aKB
 aLR
 aNk
@@ -104913,7 +105158,7 @@ bHO
 byI
 bDZ
 bDZ
-bbu
+biM
 byG
 bwQ
 bpx
@@ -104939,7 +105184,7 @@ cjw
 ckV
 ckV
 ckV
-bcx
+dkj
 crS
 ctl
 cuH
@@ -105198,8 +105443,8 @@ bgm
 bgm
 bgm
 bwS
-bkX
-bms
+bbu
+bbA
 bnV
 bgQ
 bro
@@ -105207,7 +105452,7 @@ bsZ
 bsZ
 bwR
 byH
-aTw
+bcC
 bBV
 bMW
 bFS
@@ -105215,16 +105460,16 @@ bHP
 bJO
 bLq
 bNb
-bbA
-bcc
+bjB
+bvY
 byF
 bsZ
 bsZ
 bro
 bgQ
 bZh
-bms
-cbB
+djl
+dkc
 bwS
 bgm
 bgm
@@ -106711,7 +106956,7 @@ bib
 blc
 bgQ
 bgQ
-aTv
+bcx
 bgQ
 bte
 buX
@@ -108569,7 +108814,7 @@ crZ
 coz
 cwl
 cxM
-bcy
+etE
 cAF
 cCh
 cDC
@@ -116655,9 +116900,9 @@ aaa
 aam
 aBt
 aDQ
-aeH
+ajI
 aTV
-ajB
+aLK
 bFV
 aYk
 aZQ
@@ -117863,7 +118108,7 @@ ayU
 azT
 awU
 awU
-agP
+axh
 aPd
 aQg
 aRD
@@ -120888,7 +121133,7 @@ aSP
 aVz
 aSQ
 aSQ
-ajI
+aTv
 bbv
 beR
 beJ
@@ -121190,7 +121435,7 @@ aSQ
 aVA
 aSQ
 aSQ
-ajI
+aTv
 bbw
 beR
 bdv
@@ -121492,7 +121737,7 @@ aSQ
 aVB
 aWP
 aSM
-ajI
+aTv
 aSR
 beR
 beR
@@ -121794,7 +122039,7 @@ aUe
 aVC
 aWQ
 aYw
-ajI
+aTv
 aSQ
 bbB
 beR
@@ -122398,7 +122643,7 @@ aUg
 aVE
 aWS
 aYy
-ajI
+aTv
 aSQ
 bbG
 beR
@@ -122700,7 +122945,7 @@ aSQ
 aVF
 aWT
 aSM
-ajI
+aTv
 bcL
 beR
 beR
@@ -123002,7 +123247,7 @@ aSQ
 aVG
 aSQ
 aYz
-ajI
+aTv
 bby
 beR
 bdz
@@ -123304,7 +123549,7 @@ aSQ
 aSQ
 aSQ
 aSQ
-ajI
+aTv
 bbz
 beR
 bdz
@@ -123908,8 +124153,8 @@ aSQ
 aSQ
 aVG
 aYu
-axh
-aLK
+aTw
+aTy
 cia
 baT
 bbn
@@ -127864,7 +128109,7 @@ bGV
 bEK
 bKD
 bMH
-bNW
+bNY
 bBn
 bQZ
 bSF
@@ -128468,7 +128713,7 @@ bGX
 bIR
 bKF
 bMr
-bNW
+bNY
 bBn
 bRb
 bSH
@@ -128743,7 +128988,7 @@ aWF
 clX
 aZZ
 baR
-aTt
+aYj
 cXb
 aEz
 aaF
@@ -128770,7 +129015,7 @@ bGX
 bIS
 bKG
 bMs
-bNW
+bNY
 bBn
 bRc
 bSI
@@ -129041,9 +129286,9 @@ aTa
 aRU
 aRU
 aSZ
-cnG
+aTt
 cma
-ckp
+aYh
 cjb
 bbi
 bbs
@@ -129347,7 +129592,7 @@ aWI
 clX
 bad
 cha
-aTt
+aYj
 cXb
 aFA
 aaF
@@ -129908,8 +130153,8 @@ abf
 abf
 abf
 abf
-adn
 abj
+abI
 abI
 abI
 abI
@@ -130006,7 +130251,7 @@ cjK
 cls
 cmZ
 cnE
-cew
+doU
 cnM
 cnE
 cnT
@@ -130199,8 +130444,8 @@ aap
 aaj
 aaG
 aaa
-aaZ
-abh
+aai
+abi
 abf
 abf
 abJ
@@ -132917,7 +133162,7 @@ aap
 aak
 aaG
 aaa
-aaZ
+abm
 abi
 abf
 abu
@@ -133532,8 +133777,8 @@ abf
 abf
 abf
 abf
-adq
 abg
+aeF
 aeF
 aeF
 aeF
@@ -134135,7 +134380,7 @@ afl
 afl
 afl
 afl
-afl
+abp
 afl
 ajy
 aaX
@@ -135366,8 +135611,8 @@ aux
 axm
 azf
 azf
-aai
-aai
+abx
+abx
 azd
 azd
 aHf
@@ -139040,7 +139285,7 @@ bLf
 bMP
 bBF
 bPR
-bAa
+dic
 bjr
 bMN
 bjr
@@ -141150,7 +141395,7 @@ bDH
 bFC
 bHD
 bJz
-aYh
+bdy
 bHA
 bOv
 bPX
@@ -141752,9 +141997,9 @@ bAc
 bBM
 bDJ
 bFF
-aTy
+bdb
 bJB
-aYj
+biL
 bMT
 bOx
 bBM
@@ -143871,7 +144116,7 @@ bJI
 bLn
 bMY
 bOD
-bAf
+blf
 aaI
 aaa
 aaa
