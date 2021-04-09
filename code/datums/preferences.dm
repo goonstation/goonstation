@@ -125,8 +125,7 @@ datum/preferences
 		if (!client)
 			return
 
-		var/list/profiles = new
-		profiles.len = SAVEFILE_PROFILES_MAX
+		var/list/profiles = new/list(SAVEFILE_PROFILES_MAX)
 		for (var/i = 1, i <= SAVEFILE_PROFILES_MAX, i++)
 			profiles[i] = list(
 				"active" = i == src.profile_number,
@@ -136,8 +135,7 @@ datum/preferences
 		var/list/cloud_saves = null
 
 		if (client.cloud_available())
-			cloud_saves = new
-			cloud_saves.len = length(client.player.cloudsaves)
+			cloud_saves = new/list(length(client.player.cloudsaves))
 			for (var/name in client.player.cloudsaves)
 				cloud_saves[++length(cloud_saves)] += list("name" = name)
 
