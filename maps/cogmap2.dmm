@@ -6246,7 +6246,7 @@
 /area/space)
 "aps" = (
 /obj/wingrille_spawn/auto,
-/turf/simulated/floor/engine,
+/turf/simulated/floor/plating/scorched,
 /area/station/hallway/secondary/construction)
 "apt" = (
 /obj/machinery/portable_reclaimer,
