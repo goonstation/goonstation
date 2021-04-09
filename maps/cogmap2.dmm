@@ -44467,20 +44467,7 @@
 	name = "Brig Visitor Lockdown";
 	opacity = 0
 	},
-/obj/grille/steel,
-/obj/window/reinforced{
-	dir = 1
-	},
-/obj/window/reinforced{
-	dir = 8
-	},
-/obj/window/reinforced{
-	dir = 4
-	},
-/obj/window/reinforced{
-	dir = 2
-	},
-/obj/window/reinforced,
+/obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/security/brig)
 "bYQ" = (
@@ -45000,20 +44987,7 @@
 	name = "Brig Visitor Lockdown";
 	opacity = 0
 	},
-/obj/grille/steel,
-/obj/window/reinforced{
-	dir = 1
-	},
-/obj/window/reinforced{
-	dir = 8
-	},
-/obj/window/reinforced{
-	dir = 4
-	},
-/obj/window/reinforced{
-	dir = 2
-	},
-/obj/window/reinforced,
+/obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/security/brig)
 "cad" = (
@@ -45979,20 +45953,7 @@
 	name = "Brig Visitor Lockdown";
 	opacity = 0
 	},
-/obj/grille/steel,
-/obj/window/reinforced{
-	dir = 1
-	},
-/obj/window/reinforced{
-	dir = 8
-	},
-/obj/window/reinforced{
-	dir = 4
-	},
-/obj/window/reinforced{
-	dir = 2
-	},
-/obj/window/reinforced,
+/obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/security/brig)
 "cct" = (
