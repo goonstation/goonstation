@@ -17,15 +17,15 @@
 /turf/simulated/floor/airless/plating/catwalk,
 /area/station/solar/small_backup2)
 "aad" = (
-/turf/simulated/floor/plating/airless/asteroid,
+/turf/simulated/floor/airless/plating/asteroid,
 /area/space)
 "aae" = (
 /obj/landmark/artifact,
-/turf/simulated/floor/plating/airless/asteroid,
+/turf/simulated/floor/airless/plating/asteroid,
 /area/space)
 "aaf" = (
 /obj/storage/crate/loot,
-/turf/simulated/floor/plating/airless/asteroid,
+/turf/simulated/floor/airless/plating/asteroid,
 /area/space)
 "aag" = (
 /obj/lattice{
@@ -99,7 +99,7 @@
 /turf/space,
 /area/space)
 "aan" = (
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "aao" = (
 /obj/lattice{
@@ -113,10 +113,7 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/solar/small_backup2,
-/turf/simulated/floor/airless{
-	icon_state = "solarbase";
-	name = "solar paneling"
-	},
+/turf/simulated/floor/airless/solar,
 /area/station/solar/small_backup2)
 "aaq" = (
 /obj/machinery/conveyor{
@@ -124,11 +121,11 @@
 	name = "cargo belt - east";
 	operating = 1
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "aar" = (
 /obj/machinery/launcher_loader/east,
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "aas" = (
 /obj/machinery/mass_driver{
@@ -137,14 +134,14 @@
 	id = "catering_relay";
 	name = "cargo driver"
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "aat" = (
 /obj/machinery/cargo_router{
 	default_direction = 2;
 	destinations = list("Arrivals" = 4)
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "aau" = (
 /obj/machinery/mass_driver{
@@ -153,7 +150,7 @@
 	id = "chapel_relayE";
 	name = "cargo driver"
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "aav" = (
 /obj/grille/catwalk{
@@ -237,7 +234,7 @@
 	name = "cargo belt - south";
 	operating = 1
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "aaD" = (
 /obj/machinery/conveyor{
@@ -245,7 +242,7 @@
 	name = "cargo belt - north";
 	operating = 1
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "aaE" = (
 /obj/securearea{
@@ -261,10 +258,7 @@
 "aaG" = (
 /obj/cable,
 /obj/machinery/power/solar/small_backup2,
-/turf/simulated/floor/airless{
-	icon_state = "solarbase";
-	name = "solar paneling"
-	},
+/turf/simulated/floor/airless/solar,
 /area/station/solar/small_backup2)
 "aaH" = (
 /obj/lattice{
@@ -304,7 +298,7 @@
 /area/space)
 "aaM" = (
 /obj/machinery/launcher_loader/south,
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "aaN" = (
 /obj/machinery/conveyor{
@@ -312,7 +306,7 @@
 	name = "cargo belt - west";
 	operating = 1
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "aaO" = (
 /obj/machinery/mass_driver{
@@ -321,11 +315,11 @@
 	id = "chapel_relayW";
 	name = "cargo driver"
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "aaP" = (
 /obj/machinery/launcher_loader/west,
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "aaQ" = (
 /obj/machinery/cargo_router{
@@ -338,7 +332,7 @@
 	default_direction = 2;
 	destinations = list("Catering" = 8)
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "aaS" = (
 /obj/lattice{
@@ -366,7 +360,7 @@
 	id = null;
 	name = "cargo driver"
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "aaV" = (
 /obj/grille/catwalk{
@@ -386,7 +380,7 @@
 	id = "catering_in";
 	name = "cargo driver"
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "aaX" = (
 /obj/securearea,
@@ -441,7 +435,7 @@
 	id = "arrivals_in";
 	name = "cargo driver"
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "abd" = (
 /obj/machinery/mass_driver{
@@ -449,7 +443,7 @@
 	id = "chapel_in";
 	name = "cargo driver"
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "abe" = (
 /obj/machinery/networked/secdetector{
@@ -552,10 +546,7 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/solar/west,
-/turf/simulated/floor/airless{
-	icon_state = "solarbase";
-	name = "solar paneling"
-	},
+/turf/simulated/floor/airless/solar,
 /area/station/solar/north)
 "abs" = (
 /obj/lattice{
@@ -766,7 +757,7 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/tracker/west,
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/airless/plating,
 /area/station/solar/north)
 "abQ" = (
 /obj/grille/catwalk{
@@ -786,10 +777,7 @@
 "abR" = (
 /obj/cable,
 /obj/machinery/power/solar/west,
-/turf/simulated/floor/airless{
-	icon_state = "solarbase";
-	name = "solar paneling"
-	},
+/turf/simulated/floor/airless/solar,
 /area/station/solar/north)
 "abS" = (
 /obj/cable{
@@ -1686,7 +1674,7 @@
 /area/station/maintenance/north)
 "aea" = (
 /obj/wingrille_spawn/auto,
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/airless/plating,
 /area/station/solar/small_backup2)
 "aeb" = (
 /obj/table/wood/auto,
@@ -1969,7 +1957,7 @@
 	icon_state = "4-8"
 	},
 /obj/landmark/gps_waypoint,
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/airless/plating,
 /area/station/solar/small_backup2)
 "aeL" = (
 /obj/cable{
@@ -1978,7 +1966,7 @@
 /obj/machinery/power/solar_control/small_backup2{
 	dir = 8
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/airless/plating,
 /area/station/solar/small_backup2)
 "aeM" = (
 /obj/machinery/door/airlock/pyro/engineering,
@@ -2211,14 +2199,14 @@
 /turf/simulated/floor/airless/plating/damaged3,
 /area/station/solar/small_backup2)
 "afw" = (
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/airless/plating,
 /area/station/solar/small_backup2)
 "afx" = (
 /turf/simulated/floor/airless/plating/damaged3,
 /area/station/solar/small_backup2)
 "afy" = (
 /obj/table/auto,
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/airless/plating,
 /area/station/solar/small_backup2)
 "afz" = (
 /obj/lattice{
@@ -2643,7 +2631,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/airless/plating,
 /area/station/solar/small_backup2)
 "agu" = (
 /obj/machinery/mass_driver{
@@ -2878,7 +2866,7 @@
 	dir = 4;
 	pixel_x = 12
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/airless/plating,
 /area/station/solar/small_backup2)
 "ahd" = (
 /obj/machinery/light/runway_light,
@@ -3422,7 +3410,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/airless/plating,
 /area/station/solar/small_backup2)
 "aiu" = (
 /obj/table/auto,
@@ -3896,7 +3884,7 @@
 /area/station/solar/small_backup2)
 "ajA" = (
 /obj/machinery/portable_reclaimer,
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/airless/plating,
 /area/station/solar/small_backup2)
 "ajB" = (
 /obj/disposalpipe/segment/mail/horizontal,
@@ -4872,7 +4860,7 @@
 	dir = 4;
 	pixel_x = 12
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "alS" = (
 /turf/simulated/floor/caution/corner/sw,
@@ -4906,7 +4894,7 @@
 	dir = 8;
 	pixel_x = -12
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "alW" = (
 /obj/table/auto,
@@ -5452,7 +5440,7 @@
 /area/station/crew_quarters/catering)
 "anf" = (
 /obj/disposalpipe/segment,
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "ang" = (
 /obj/machinery/door/airlock/pyro/external{
@@ -5466,7 +5454,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "ani" = (
 /obj/lattice{
@@ -23697,7 +23685,7 @@
 /area/station/maintenance/east)
 "bfJ" = (
 /obj/machinery/atmospherics/unary/vent_pump/high_volume/east,
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/airless/plating,
 /area/station/catwalk/north)
 "bfK" = (
 /obj/decal/poster/wallsign/stencil/left/c{
@@ -23902,7 +23890,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "bgk" = (
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/airless/plating,
 /area/station/catwalk/north)
 "bgl" = (
 /obj/machinery/atmospherics/pipe/simple{
@@ -23922,7 +23910,7 @@
 	},
 /area/station/catwalk/north)
 "bgm" = (
-/turf/simulated/floor/plating/airless/shuttlebay{
+/turf/simulated/floor/airless/plating/shuttlebay{
 	name = "landing pad plating"
 	},
 /area/station/hangar/main)
@@ -24382,7 +24370,7 @@
 /obj/disposalpipe/segment/food{
 	dir = 4
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/airless/plating,
 /area/station/catwalk/north)
 "bhq" = (
 /obj/cable{
@@ -24432,7 +24420,7 @@
 /obj/disposalpipe/segment/food{
 	dir = 4
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/airless/plating,
 /area/station/catwalk/north)
 "bhw" = (
 /obj/stool/chair{
@@ -24459,7 +24447,7 @@
 "bhy" = (
 /obj/disposalpipe/segment/mail/vertical,
 /obj/machinery/atmospherics/unary/vent_pump/high_volume/east,
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/airless/plating,
 /area/station/catwalk/north)
 "bhz" = (
 /obj/machinery/mass_driver{
@@ -24894,7 +24882,7 @@
 /area/station/maintenance/north)
 "biH" = (
 /obj/machinery/light/small,
-/turf/simulated/floor/plating/airless/shuttlebay{
+/turf/simulated/floor/airless/plating/shuttlebay{
 	name = "landing pad plating"
 	},
 /area/station/hangar/main)
@@ -27023,7 +27011,7 @@
 /area/station/hangar/main)
 "bnY" = (
 /obj/machinery/atmospherics/pipe/vent,
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "bnZ" = (
 /obj/machinery/light{
@@ -27947,7 +27935,7 @@
 "bqh" = (
 /obj/disposalpipe/segment/mail/vertical,
 /obj/wingrille_spawn/auto,
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/airless/plating,
 /area/station/engine/gas)
 "bqi" = (
 /obj/reagent_dispensers/watertank/fountain,
@@ -30134,7 +30122,7 @@
 	opacity = 0
 	},
 /obj/wingrille_spawn/auto,
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/airless/plating,
 /area/station/engine/engineering)
 "bvj" = (
 /obj/machinery/door/airlock/pyro/engineering,
@@ -30169,7 +30157,7 @@
 	opacity = 0
 	},
 /obj/wingrille_spawn/auto,
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/airless/plating,
 /area/station/engine/hotloop)
 "bvo" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
@@ -30208,7 +30196,7 @@
 	},
 /obj/disposalpipe/segment/mail/vertical,
 /obj/wingrille_spawn/auto,
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/airless/plating,
 /area/station/engine/gas)
 "bvs" = (
 /obj/machinery/portable_atmospherics/canister/toxins,
@@ -31044,7 +31032,7 @@
 	dir = 4
 	},
 /obj/wingrille_spawn/auto,
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/airless/plating,
 /area/station/engine/inner)
 "bxj" = (
 /obj/machinery/door/poddoor/pyro{
@@ -31059,7 +31047,7 @@
 	dir = 4
 	},
 /obj/wingrille_spawn/auto,
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/airless/plating,
 /area/station/engine/inner)
 "bxk" = (
 /obj/machinery/atmospherics/valve{
@@ -32624,7 +32612,7 @@
 	icon_state = "0-8"
 	},
 /obj/wingrille_spawn/auto,
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/airless/plating,
 /area/station/engine/inner)
 "bAA" = (
 /obj/disposalpipe/segment{
@@ -32663,7 +32651,7 @@
 	icon_state = "0-2"
 	},
 /obj/wingrille_spawn/auto,
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/airless/plating,
 /area/station/engine/core)
 "bAE" = (
 /obj/machinery/door/poddoor/pyro{
@@ -32677,7 +32665,7 @@
 	icon_state = "0-4"
 	},
 /obj/wingrille_spawn/auto,
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/airless/plating,
 /area/station/engine/core)
 "bAF" = (
 /obj/machinery/atmospherics/binary/passive_gate{
@@ -32714,7 +32702,7 @@
 	opacity = 0
 	},
 /obj/wingrille_spawn/auto,
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/airless/plating,
 /area/station/engine/core)
 "bAJ" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
@@ -33408,7 +33396,7 @@
 	opacity = 0
 	},
 /obj/wingrille_spawn/auto,
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/airless/plating,
 /area/station/engine/inner)
 "bCn" = (
 /obj/machinery/atmospherics/pipe/simple/insulated,
@@ -33436,7 +33424,7 @@
 	icon_state = "0-4"
 	},
 /obj/wingrille_spawn/auto,
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/airless/plating,
 /area/station/engine/core)
 "bCp" = (
 /obj/machinery/door/poddoor/pyro{
@@ -33455,7 +33443,7 @@
 	icon_state = "0-4"
 	},
 /obj/wingrille_spawn/auto,
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/airless/plating,
 /area/station/engine/core)
 "bCq" = (
 /obj/cable{
@@ -33560,7 +33548,7 @@
 	icon_state = "0-8"
 	},
 /obj/wingrille_spawn/auto,
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/airless/plating,
 /area/station/engine/core)
 "bCy" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -33569,7 +33557,7 @@
 	})
 "bCz" = (
 /obj/wingrille_spawn/auto,
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/airless/plating,
 /area/station/engine/power{
 	name = "Engineering Control Room"
 	})
@@ -33696,7 +33684,7 @@
 /area/station/engine/core)
 "bCN" = (
 /obj/grille/steel,
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/airless/plating,
 /area/station/com_dish/auxdish)
 "bCO" = (
 /obj/machinery/light{
@@ -34368,7 +34356,7 @@
 	opacity = 0
 	},
 /obj/wingrille_spawn/auto,
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/airless/plating,
 /area/station/engine/inner)
 "bEf" = (
 /obj/machinery/atmospherics/pipe/simple/insulated,
@@ -34387,7 +34375,7 @@
 	},
 /obj/cable,
 /obj/wingrille_spawn/auto,
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/airless/plating,
 /area/station/engine/core)
 "bEh" = (
 /obj/cable{
@@ -34606,7 +34594,7 @@
 	dir = 4
 	},
 /obj/wingrille_spawn/auto,
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/airless/plating,
 /area/station/crew_quarters/ce)
 "bEC" = (
 /turf/simulated/floor/carpet{
@@ -34721,7 +34709,7 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/airless/plating,
 /area/station/com_dish/auxdish)
 "bEM" = (
 /obj/disposalpipe/segment/transport{
@@ -35421,7 +35409,7 @@
 	opacity = 0
 	},
 /obj/wingrille_spawn/auto,
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/airless/plating,
 /area/station/engine/power{
 	name = "Engineering Control Room"
 	})
@@ -36295,7 +36283,7 @@
 /area/station/engine/inner)
 "bHZ" = (
 /obj/wingrille_spawn/auto,
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/airless/plating,
 /area/station/engine/core)
 "bIa" = (
 /obj/machinery/power/terminal{
@@ -36370,7 +36358,7 @@
 	opacity = 0
 	},
 /obj/wingrille_spawn/auto,
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/airless/plating,
 /area/station/engine/power{
 	name = "Engineering Control Room"
 	})
@@ -36561,7 +36549,7 @@
 	},
 /obj/cable,
 /obj/machinery/power/data_terminal,
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/airless/plating,
 /area/station/com_dish/auxdish)
 "bIz" = (
 /obj/machinery/power/data_terminal,
@@ -37306,7 +37294,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/airless/plating,
 /area/station/com_dish/comdish)
 "bJL" = (
 /obj/machinery/power/data_terminal,
@@ -37316,7 +37304,7 @@
 /obj/machinery/communications_dish{
 	tag = "MAIN_DISH_SS13"
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/airless/plating,
 /area/station/com_dish/comdish)
 "bJM" = (
 /obj/shrub,
@@ -37538,7 +37526,7 @@
 	opacity = 0
 	},
 /obj/wingrille_spawn/auto,
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/airless/plating,
 /area/station/engine/power{
 	name = "Engineering Control Room"
 	})
@@ -38264,7 +38252,7 @@
 	icon_state = "0-2"
 	},
 /obj/wingrille_spawn/auto,
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/airless/plating,
 /area/station/engine/inner)
 "bLA" = (
 /obj/machinery/atmospherics/pipe/simple/insulated,
@@ -38283,7 +38271,7 @@
 	opacity = 0
 	},
 /obj/wingrille_spawn/auto,
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/airless/plating,
 /area/station/engine/core)
 "bLC" = (
 /obj/cable{
@@ -38608,7 +38596,7 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/airless/plating,
 /area/station/com_dish/auxdish)
 "bMb" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
@@ -39260,7 +39248,7 @@
 	icon_state = "4-8"
 	},
 /obj/wingrille_spawn/auto,
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/airless/plating,
 /area/station/engine/inner)
 "bNq" = (
 /obj/machinery/door/poddoor/pyro{
@@ -39279,7 +39267,7 @@
 	icon_state = "4-8"
 	},
 /obj/wingrille_spawn/auto,
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/airless/plating,
 /area/station/engine/core)
 "bNr" = (
 /obj/machinery/door/poddoor/pyro{
@@ -39303,7 +39291,7 @@
 	icon_state = "4-8"
 	},
 /obj/wingrille_spawn/auto,
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/airless/plating,
 /area/station/engine/core)
 "bNs" = (
 /obj/machinery/atmospherics/portables_connector{
@@ -39407,7 +39395,7 @@
 	icon_state = "0-8"
 	},
 /obj/wingrille_spawn/auto,
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/airless/plating,
 /area/station/engine/core)
 "bNz" = (
 /obj/machinery/door/firedoor/pyro,
@@ -40060,7 +40048,7 @@
 	icon_state = "0-8"
 	},
 /obj/wingrille_spawn/auto,
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/airless/plating,
 /area/station/engine/inner)
 "bOV" = (
 /obj/disposalpipe/segment/transport{
@@ -40094,7 +40082,7 @@
 	},
 /obj/cable,
 /obj/wingrille_spawn/auto,
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/airless/plating,
 /area/station/engine/core)
 "bOY" = (
 /obj/machinery/door/poddoor/pyro{
@@ -40111,7 +40099,7 @@
 	icon_state = "0-8"
 	},
 /obj/wingrille_spawn/auto,
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/airless/plating,
 /area/station/engine/core)
 "bOZ" = (
 /obj/machinery/door/firedoor/pyro,
@@ -40132,7 +40120,7 @@
 	opacity = 0
 	},
 /obj/wingrille_spawn/auto,
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/airless/plating,
 /area/station/engine/core)
 "bPb" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
@@ -41360,7 +41348,7 @@
 	opacity = 0
 	},
 /obj/wingrille_spawn/auto,
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/airless/plating,
 /area/station/engine/inner)
 "bRV" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
@@ -41376,7 +41364,7 @@
 	opacity = 0
 	},
 /obj/wingrille_spawn/auto,
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/airless/plating,
 /area/station/engine/inner)
 "bRW" = (
 /obj/machinery/atmospherics/pipe/manifold{
@@ -42134,7 +42122,7 @@
 	opacity = 0
 	},
 /obj/wingrille_spawn/auto,
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/airless/plating,
 /area/station/storage/emergency)
 "bTC" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -42152,7 +42140,7 @@
 	opacity = 0
 	},
 /obj/wingrille_spawn/auto,
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/airless/plating,
 /area/station/engine/coldloop)
 "bTF" = (
 /obj/machinery/door/airlock/pyro/engineering,
@@ -44551,7 +44539,7 @@
 /obj/machinery/atmospherics/pipe/vent{
 	dir = 1
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "bZj" = (
 /obj/cable{
@@ -46305,7 +46293,7 @@
 	dir = 1;
 	pixel_y = 21
 	},
-/turf/simulated/floor/plating/airless/shuttlebay{
+/turf/simulated/floor/airless/plating/shuttlebay{
 	name = "landing pad plating"
 	},
 /area/station/hangar/main)
@@ -46712,7 +46700,7 @@
 /area/station/maintenance/southeast)
 "cez" = (
 /obj/disposalpipe/segment/mail/bent/west,
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/airless/plating,
 /area/station/catwalk/south)
 "ceA" = (
 /turf/simulated/floor/grime,
@@ -46744,7 +46732,7 @@
 /area/station/maintenance/southeast)
 "ceG" = (
 /obj/machinery/atmospherics/unary/vent_pump/high_volume/south,
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/airless/plating,
 /area/station/catwalk/south)
 "ceH" = (
 /obj/disposalpipe/switch_junction/left/east{
@@ -46766,7 +46754,7 @@
 "ceK" = (
 /obj/disposalpipe/segment/mail/vertical,
 /obj/machinery/atmospherics/unary/vent_pump/high_volume/east,
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/airless/plating,
 /area/station/catwalk/south)
 "ceL" = (
 /obj/stool/chair{
@@ -46940,7 +46928,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
 "cfh" = (
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/airless/plating,
 /area/station/catwalk/south)
 "cfi" = (
 /obj/structure/girder,
@@ -57332,7 +57320,7 @@
 /obj/machinery/atmospherics/pipe/vent{
 	dir = 4
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "cEM" = (
 /obj/lattice,
@@ -65842,7 +65830,7 @@
 /turf/simulated/floor/airless/plating/damaged3,
 /area/station/mining/magnet)
 "cYA" = (
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/airless/plating,
 /area/station/mining/magnet)
 "cYB" = (
 /turf/simulated/floor/airless/plating/damaged3,
@@ -67180,7 +67168,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/airless/plating,
 /area/station/mining/magnet)
 "dbr" = (
 /obj/table/reinforced/auto,
@@ -67189,7 +67177,7 @@
 /area/station/mining/magnet)
 "dbs" = (
 /obj/wingrille_spawn/auto,
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/airless/plating,
 /area/station/mining/magnet)
 "dbt" = (
 /obj/lattice{
@@ -67496,7 +67484,7 @@
 	dir = 8;
 	icon_state = "QMreq"
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/airless/plating,
 /area/station/mining/magnet)
 "dcj" = (
 /obj/machinery/door/airlock/pyro/external{
@@ -69367,10 +69355,7 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/solar/east,
-/turf/simulated/floor/airless{
-	icon_state = "solarbase";
-	name = "solar paneling"
-	},
+/turf/simulated/floor/airless/solar,
 /area/station/solar/south)
 "dgE" = (
 /obj/grille/catwalk{
@@ -69419,7 +69404,7 @@
 	id = "cargo_in";
 	name = "cargo driver"
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "dgK" = (
 /obj/machinery/mass_driver{
@@ -69428,7 +69413,7 @@
 	id = "medsci_in";
 	name = "cargo driver"
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "dgL" = (
 /obj/wingrille_spawn/auto,
@@ -69508,15 +69493,12 @@
 "dgU" = (
 /obj/cable,
 /obj/machinery/power/solar/east,
-/turf/simulated/floor/airless{
-	icon_state = "solarbase";
-	name = "solar paneling"
-	},
+/turf/simulated/floor/airless/solar,
 /area/station/solar/south)
 "dgV" = (
 /obj/cable,
 /obj/machinery/power/tracker/east,
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/airless/plating,
 /area/station/solar/south)
 "dgW" = (
 /obj/disposalpipe/segment/mail/vertical,
@@ -69530,7 +69512,7 @@
 	id = "escape_in";
 	name = "cargo driver"
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "dgY" = (
 /obj/wingrille_spawn/auto,
@@ -69538,7 +69520,7 @@
 /area/station/crew_quarters/market)
 "dgZ" = (
 /obj/machinery/launcher_loader/north,
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "dha" = (
 /obj/machinery/mass_driver{
@@ -69547,7 +69529,7 @@
 	id = "medsci_relay";
 	name = "cargo driver"
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "dhb" = (
 /obj/lattice{
@@ -69568,14 +69550,14 @@
 /area/space)
 "dhd" = (
 /obj/machinery/cargo_router,
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "dhe" = (
 /obj/machinery/cargo_router{
 	default_direction = 2;
 	destinations = list("Escape" = 4)
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "dhf" = (
 /obj/machinery/mass_driver{
@@ -69584,7 +69566,7 @@
 	id = "cargo_relayE";
 	name = "cargo driver"
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "dhg" = (
 /obj/machinery/mass_driver{
@@ -69593,7 +69575,7 @@
 	id = "cargo_relayE";
 	name = "cargo driver"
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "dhh" = (
 /obj/machinery/drainage,
@@ -69632,10 +69614,7 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/solar/small_backup1,
-/turf/simulated/floor/airless{
-	icon_state = "solarbase";
-	name = "solar paneling"
-	},
+/turf/simulated/floor/airless/solar,
 /area/station/solar/small_backup1)
 "dhn" = (
 /obj/lattice{
@@ -69734,7 +69713,7 @@
 /obj/machinery/cargo_router{
 	destinations = list("MedSci" = 2)
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "dhx" = (
 /obj/grille/catwalk{
@@ -69783,7 +69762,7 @@
 	id = "escape_relay";
 	name = "cargo driver"
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "dhD" = (
 /obj/cable{
@@ -69815,10 +69794,7 @@
 "dhF" = (
 /obj/cable,
 /obj/machinery/power/solar/small_backup1,
-/turf/simulated/floor/airless{
-	icon_state = "solarbase";
-	name = "solar paneling"
-	},
+/turf/simulated/floor/airless/solar,
 /area/station/solar/small_backup1)
 "dhG" = (
 /obj/lattice{
@@ -69836,7 +69812,7 @@
 	id = "cargo_relayW";
 	name = "cargo driver"
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "dhI" = (
 /obj/machinery/mass_driver{
@@ -69845,7 +69821,7 @@
 	id = "cargo_relayW";
 	name = "cargo driver"
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "dhJ" = (
 /obj/disposalpipe/segment/mail/vertical,
@@ -69947,33 +69923,30 @@
 "dhU" = (
 /obj/item/raw_material/gold,
 /obj/critter/fermid,
-/turf/simulated/floor/plating/airless/asteroid,
+/turf/simulated/floor/airless/plating/asteroid,
 /area/space)
 "dhV" = (
 /obj/item/raw_material/gold,
-/turf/simulated/floor/plating/airless/asteroid,
+/turf/simulated/floor/airless/plating/asteroid,
 /area/space)
 "dhW" = (
 /obj/item/seed/cannabis,
-/turf/simulated/floor/plating/airless/asteroid,
+/turf/simulated/floor/airless/plating/asteroid,
 /area/space)
 "dhX" = (
 /obj/item/seed/alien,
-/turf/simulated/floor/plating/airless/asteroid,
+/turf/simulated/floor/airless/plating/asteroid,
 /area/space)
 "dhY" = (
 /obj/critter/fermid,
-/turf/simulated/floor/plating/airless/asteroid,
+/turf/simulated/floor/airless/plating/asteroid,
 /area/space)
 "dhZ" = (
 /obj/machinery/power/solar/east,
 /obj/cable{
 	icon_state = "0-2"
 	},
-/turf/simulated/floor/airless{
-	icon_state = "solarbase";
-	name = "solar paneling"
-	},
+/turf/simulated/floor/airless/solar,
 /area/space)
 "dia" = (
 /obj/grille/catwalk/cross{
@@ -70026,10 +69999,7 @@
 "die" = (
 /obj/machinery/power/solar/east,
 /obj/cable,
-/turf/simulated/floor/airless{
-	icon_state = "solarbase";
-	name = "solar paneling"
-	},
+/turf/simulated/floor/airless/solar,
 /area/space)
 "dif" = (
 /obj/grille/catwalk,
@@ -70137,7 +70107,7 @@
 "diq" = (
 /obj/item/raw_material/rock,
 /obj/storage/crate/loot,
-/turf/simulated/floor/plating/airless/asteroid,
+/turf/simulated/floor/airless/plating/asteroid,
 /area/space)
 "dir" = (
 /obj/machinery/vending/snack,
@@ -70523,7 +70493,7 @@
 /area/research_outpost)
 "djf" = (
 /obj/item/raw_material/rock,
-/turf/simulated/floor/plating/airless/asteroid,
+/turf/simulated/floor/airless/plating/asteroid,
 /area/space)
 "djg" = (
 /turf/simulated/floor/purple/side{
@@ -71164,7 +71134,7 @@
 	id = "research_outpost";
 	name = "cargo driver"
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "dkK" = (
 /obj/cable{
@@ -71497,7 +71467,7 @@
 /area/space)
 "dlB" = (
 /obj/item/raw_material/scrap_metal,
-/turf/simulated/floor/plating/airless/asteroid,
+/turf/simulated/floor/airless/plating/asteroid,
 /area/space)
 "dlC" = (
 /obj/machinery/light_switch/west,
@@ -71665,7 +71635,7 @@
 /area/research_outpost)
 "dlU" = (
 /obj/grille/steel,
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "dlV" = (
 /obj/warp_beacon/research,
@@ -71675,7 +71645,7 @@
 /area/space)
 "dlW" = (
 /obj/item/raw_material/char,
-/turf/simulated/floor/plating/airless/asteroid,
+/turf/simulated/floor/airless/plating/asteroid,
 /area/space)
 "dlX" = (
 /obj/machinery/light,
@@ -71783,11 +71753,11 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "dml" = (
 /obj/item/raw_material/cobryl,
-/turf/simulated/floor/plating/airless/asteroid,
+/turf/simulated/floor/airless/plating/asteroid,
 /area/space)
 "dmm" = (
 /obj/machinery/vending/medical_public,
@@ -71965,10 +71935,7 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/solar/small_backup4,
-/turf/simulated/floor/airless{
-	icon_state = "solarbase";
-	name = "solar paneling"
-	},
+/turf/simulated/floor/airless/solar,
 /area/listeningpost/solars)
 "dmI" = (
 /obj/machinery/door/airlock/pyro/external,
@@ -72126,7 +72093,7 @@
 	},
 /area/station/solar/small_backup1)
 "dmU" = (
-/turf/simulated/floor/plating/airless/asteroid,
+/turf/simulated/floor/airless/plating/asteroid,
 /turf/simulated/wall/asteroid{
 	dir = 10
 	},
@@ -72203,10 +72170,7 @@
 "dnd" = (
 /obj/cable,
 /obj/machinery/power/solar/small_backup4,
-/turf/simulated/floor/airless{
-	icon_state = "solarbase";
-	name = "solar paneling"
-	},
+/turf/simulated/floor/airless/solar,
 /area/listeningpost/solars)
 "dne" = (
 /turf/simulated/wall/asteroid{
@@ -72303,10 +72267,10 @@
 "dno" = (
 /obj/machinery/power/tracker/east,
 /obj/cable,
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "dnp" = (
-/turf/simulated/floor/plating/airless/asteroid,
+/turf/simulated/floor/airless/plating/asteroid,
 /turf/simulated/wall/asteroid{
 	dir = 9
 	},
@@ -72397,7 +72361,7 @@
 	},
 /area/space)
 "dnD" = (
-/turf/simulated/floor/plating/airless/asteroid,
+/turf/simulated/floor/airless/plating/asteroid,
 /turf/simulated/wall/asteroid{
 	dir = 5
 	},
@@ -72455,7 +72419,7 @@
 	},
 /area/listeningpost)
 "dnK" = (
-/turf/simulated/floor/plating/airless/asteroid,
+/turf/simulated/floor/airless/plating/asteroid,
 /turf/simulated/wall/asteroid{
 	dir = 1
 	},
@@ -72848,11 +72812,11 @@
 /area/space)
 "doK" = (
 /obj/item/space_thing,
-/turf/simulated/floor/plating/airless/asteroid,
+/turf/simulated/floor/airless/plating/asteroid,
 /area/space)
 "doL" = (
 /obj/item/skull/odd,
-/turf/simulated/floor/plating/airless/asteroid,
+/turf/simulated/floor/airless/plating/asteroid,
 /area/space)
 "doM" = (
 /turf/space,
