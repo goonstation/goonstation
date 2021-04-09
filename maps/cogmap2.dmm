@@ -17,15 +17,15 @@
 /turf/simulated/floor/airless/plating/catwalk,
 /area/station/solar/small_backup2)
 "aad" = (
-/turf/simulated/floor/airless/plating/asteroid,
+/turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "aae" = (
 /obj/landmark/artifact,
-/turf/simulated/floor/airless/plating/asteroid,
+/turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "aaf" = (
 /obj/storage/crate/loot,
-/turf/simulated/floor/airless/plating/asteroid,
+/turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "aag" = (
 /obj/lattice{
@@ -23910,7 +23910,7 @@
 	},
 /area/station/catwalk/north)
 "bgm" = (
-/turf/simulated/floor/airless/plating/shuttlebay{
+/turf/simulated/floor/plating/airless/shuttlebay{
 	name = "landing pad plating"
 	},
 /area/station/hangar/main)
@@ -24882,7 +24882,7 @@
 /area/station/maintenance/north)
 "biH" = (
 /obj/machinery/light/small,
-/turf/simulated/floor/airless/plating/shuttlebay{
+/turf/simulated/floor/plating/airless/shuttlebay{
 	name = "landing pad plating"
 	},
 /area/station/hangar/main)
@@ -46293,7 +46293,7 @@
 	dir = 1;
 	pixel_y = 21
 	},
-/turf/simulated/floor/airless/plating/shuttlebay{
+/turf/simulated/floor/plating/airless/shuttlebay{
 	name = "landing pad plating"
 	},
 /area/station/hangar/main)
@@ -69923,23 +69923,23 @@
 "dhU" = (
 /obj/item/raw_material/gold,
 /obj/critter/fermid,
-/turf/simulated/floor/airless/plating/asteroid,
+/turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "dhV" = (
 /obj/item/raw_material/gold,
-/turf/simulated/floor/airless/plating/asteroid,
+/turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "dhW" = (
 /obj/item/seed/cannabis,
-/turf/simulated/floor/airless/plating/asteroid,
+/turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "dhX" = (
 /obj/item/seed/alien,
-/turf/simulated/floor/airless/plating/asteroid,
+/turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "dhY" = (
 /obj/critter/fermid,
-/turf/simulated/floor/airless/plating/asteroid,
+/turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "dhZ" = (
 /obj/machinery/power/solar/east,
@@ -70107,7 +70107,7 @@
 "diq" = (
 /obj/item/raw_material/rock,
 /obj/storage/crate/loot,
-/turf/simulated/floor/airless/plating/asteroid,
+/turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "dir" = (
 /obj/machinery/vending/snack,
@@ -70493,7 +70493,7 @@
 /area/research_outpost)
 "djf" = (
 /obj/item/raw_material/rock,
-/turf/simulated/floor/airless/plating/asteroid,
+/turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "djg" = (
 /turf/simulated/floor/purple/side{
@@ -71467,7 +71467,7 @@
 /area/space)
 "dlB" = (
 /obj/item/raw_material/scrap_metal,
-/turf/simulated/floor/airless/plating/asteroid,
+/turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "dlC" = (
 /obj/machinery/light_switch/west,
@@ -71645,7 +71645,7 @@
 /area/space)
 "dlW" = (
 /obj/item/raw_material/char,
-/turf/simulated/floor/airless/plating/asteroid,
+/turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "dlX" = (
 /obj/machinery/light,
@@ -71757,7 +71757,7 @@
 /area/space)
 "dml" = (
 /obj/item/raw_material/cobryl,
-/turf/simulated/floor/airless/plating/asteroid,
+/turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "dmm" = (
 /obj/machinery/vending/medical_public,
@@ -72093,7 +72093,7 @@
 	},
 /area/station/solar/small_backup1)
 "dmU" = (
-/turf/simulated/floor/airless/plating/asteroid,
+/turf/simulated/floor/plating/airless/asteroid,
 /turf/simulated/wall/asteroid{
 	dir = 10
 	},
@@ -72270,7 +72270,7 @@
 /turf/simulated/floor/airless/plating,
 /area/space)
 "dnp" = (
-/turf/simulated/floor/airless/plating/asteroid,
+/turf/simulated/floor/plating/airless/asteroid,
 /turf/simulated/wall/asteroid{
 	dir = 9
 	},
@@ -72361,7 +72361,7 @@
 	},
 /area/space)
 "dnD" = (
-/turf/simulated/floor/airless/plating/asteroid,
+/turf/simulated/floor/plating/airless/asteroid,
 /turf/simulated/wall/asteroid{
 	dir = 5
 	},
@@ -72419,7 +72419,7 @@
 	},
 /area/listeningpost)
 "dnK" = (
-/turf/simulated/floor/airless/plating/asteroid,
+/turf/simulated/floor/plating/airless/asteroid,
 /turf/simulated/wall/asteroid{
 	dir = 1
 	},
@@ -72812,11 +72812,11 @@
 /area/space)
 "doK" = (
 /obj/item/space_thing,
-/turf/simulated/floor/airless/plating/asteroid,
+/turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "doL" = (
 /obj/item/skull/odd,
-/turf/simulated/floor/airless/plating/asteroid,
+/turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "doM" = (
 /turf/space,
