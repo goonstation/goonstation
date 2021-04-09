@@ -557,7 +557,6 @@ ABSTRACT_TYPE(/datum/ore_cluster)
 		// bestow_objective(player,/datum/objective/battle_royale/win)
 		// SHOW_TIPS(H)
 		if (istype(mode))
-			boutput(H, "<h1> KYELELLELELE</h1>")
 			mode.stats_manager?.add_player(H.mind, H.real_name, team_num, (H.mind == commander ? "Commander" : "Pilot"))
 
 /obj/pod_base_critical_system
@@ -1127,7 +1126,7 @@ ABSTRACT_TYPE(/obj/machinery/macrofab/pod_wars)
 		team_num = 1
 
 		mining
-			name = "Emergency Mining  Pod Fabricator"
+			name = "Emergency Mining Pod Fabricator"
 			createdObject = /obj/machinery/vehicle/pod_wars_dingy/nanotrasen/mining
 
 
@@ -2141,12 +2140,9 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 	proc/inc_death(var/mob/M)
 		if (!ismob(M) || !M.ckey)
 			return
-		message_admins("1.[M]")
 		var/datum/pw_player_stats/stat = player_stats[M.ckey]
-		message_admins("2.[stat]")
 		if (istype(stat))
 			stat.death_count ++
-			message_admins("3.[stat.death_count]")
 
 		src.inc_longest_life(M.ckey)
 
@@ -2157,14 +2153,17 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 		// 	return
 		var/datum/pw_player_stats/stat = player_stats[ckey]
 		if (istype(stat))
-			var/shift_time = round(ticker.round_elapsed_ticks / 600)
+			var/shift_time = round(ticker.round_elapsed_ticks / (1 MINUTES), 0.01)		//this converts shift time to "minutes"
+
 
 			//I feel like I should explain this, but I'm not gonna cause it's not confusing enough to need it. Just the long names make it look weird.
 			if (!stat.longest_life)
 				stat.time_of_last_death = shift_time
+				stat.longest_life = shift_time
 			else
 				if (stat.time_of_last_death < shift_time - stat.time_of_last_death)
-					stat.time_of_last_death = shift_time - stat.time_of_last_death
+					stat.time_of_last_death = shift_time
+					stat.longest_life = shift_time - stat.time_of_last_death
 
 	proc/inc_farts(var/mob/M)
 		if (!ismob(M) || !M.ckey)
@@ -2204,20 +2203,20 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 				var/mob/living/carbon/human/opp = pet
 				if (isalive(opp))
 					if (istype(get_area(opp), /area/pod_wars/team2))
-						pet_dat += "<span class='notice'>Oppenhimer is safe and sound on the Lodbrok! Good job Syndicates!</span><br>"
+						pet_dat += "<span class='notice'>Oppenheimer is safe and sound on the Lodbrok! Good job Syndicates!</span><br>"
 					else if (istype(get_area(opp), /area/pod_wars/team1))
-						pet_dat += "<span class='alert'>Oppenhimer was captured by NanoTrasen! Oh no!</span><br>"
+						pet_dat += "<span class='alert'>Oppenheimer was captured by NanoTrasen! Oh no!</span><br>"
 					else
-						pet_dat += "<span class='notice'>Oppenhimer survived! Yay!</span><br>"
+						pet_dat += "<span class='notice'>Oppenheimer survived! Yay!</span><br>"
 
 				else
-					pet_dat += "<span class='alert'>Oppenhimer was killed! Oh no!</span><br>"
+					pet_dat += "<span class='alert'>Oppenheimer was killed! Oh no!</span><br>"
 
 
 		. = {"<h2>
 Game Stats
 </h2>
-<p>[pet_dat]</p>
+[pet_dat]
 <h3>
 Player Stats
 </h3>
@@ -2228,11 +2227,11 @@ Player Stats
     <th>Deaths</th>
     <th>Friendly Fire</th>
     <th>Longest Life</th>
-    <th>Alcohol Metabolized (u)</th>
+    <th>Alcohol Metabolized</th>
     <th>Farts</th>
     <th>Ctrl Pts</th>
   </tr>
-  
+
 "}
 		message_admins("player stats loop")
 		var/dat = ""
@@ -2248,8 +2247,8 @@ Player Stats
  <td>[stat.initial_name] ([stat.ckey])</td>
  <td>[stat.death_count]</td>
  <td>[stat.friendly_fire_count]</td>
- <td>[stat.longest_life]</td>
- <td>[round(stat.alcohol_metabolized, 0.01)]</td>
+ <td>[stat.longest_life] (min)</td>
+ <td>[round(stat.alcohol_metabolized, 0.01)](u)</td>
  <td>[stat.farts]</td>
  <td>[stat.control_point_capture_count]</th>  d
 </tr>
@@ -2258,8 +2257,8 @@ Player Stats
 		. += {"
 <style>
  body {background-color: #448;}
- h2 {color:white}
- td, th 
+ h2, h3, h4, span {color:white}
+ td, th
  {
   border: 1px solid #66A;
   text-align: center;
@@ -2285,7 +2284,7 @@ Player Stats
 	var/death_count = 0
 	var/friendly_fire_count = 0
 	var/control_point_capture_count = 0			//should be determined by being in the control point area when captured
-	var/longest_life = 0
+	var/longest_life = 0						//this value is in "minutes" byond time.
 	var/alcohol_metabolized = 0
 	var/farts = 0
 
@@ -2336,3 +2335,106 @@ Player Stats
 					if (owner.mind)
 						owner.mind.traitor_crate_items += item_datum
 				telecrystals += item_datum.cost
+
+
+// var/list/item_tier_low = list(/obj/item/storage/firstaid/regular, /obj/item/storage/firstaid/crit, /obj/item/reagent_containers/mender/both, 	///obj/item/tank/plasma
+// /obj/item/tank/oxygen,/obj/item/old_grenade/smoke,/obj/item/chem_grenade/flashbang)
+// var/list/item_tier_med = list(/obj/item/tank/jetpack,)
+// var/list/item_tier_high = list()
+
+// Low Tier: Blaster (team colored), EMP Grenade (mega situational, after all), flashbang, regular flash, pocket oxy tank
+// Medium Tier: Revolver, Cloaking Field Projector, Radbow, pickpocket gun??, maybe other traitor or rare gear, jetpack
+// High tier: Stims, Cloaker, concussive RPG (no damage to structures, but same damage to people), Deployable team oriented turret (limited ammo and can be destroyed), MAYBE an emag (probably very limited use)
+
+//basically like stinger in that it shoots projectiles, but has no explosions, different icon
+
+/obj/item/old_grenade/energy_frag
+	name = "blast grenade"
+	desc = "It is set to detonate in 3 seconds."
+	icon_state = "energy_stinger"
+	det_time = 30.0
+	org_det_time = 30
+	alt_det_time = 60
+	item_state = "fragnade"
+	is_syndicate = 0
+	sound_armed = "sound/weapons/armbomb.ogg"
+	icon_state_armed = "energy_stinger1"
+	var/datum/projectile/custom_projectile_type = /datum/projectile/laser/blaster/blast
+	var/pellets_to_fire = 10
+
+	prime()
+		var/turf/T = ..()
+		if (T)
+			playsound(T, "sound/weapons/grenade.ogg", 25, 1)
+			var/datum/projectile/special/spreader/uniform_burst/circle/PJ = new(T)
+			PJ.pellets_to_fire = src.pellets_to_fire
+			if(src.custom_projectile_type)
+				PJ.spread_projectile_type = src.custom_projectile_type
+				PJ.pellet_shot_volume = 75 / PJ.pellets_to_fire
+			message_admins(initial(custom_projectile_type.power))
+			//if you're on top of it, eat all the shots. Deal 1/4 damage per shot. Doesn't make sense logically, but w/e.
+			var/mob/living/L = locate(/mob/living) in get_turf(src)
+			message_admins(L)
+			if (istype(L))
+				message_admins("111")
+
+				// var/datum/projectile/P = new PJ.spread_projectile_type		//dummy projectile to get power level
+				L.TakeDamage("chest", 0, ((initial(custom_projectile_type.power)/4)*pellets_to_fire)/L.get_ranged_protection(), 0, DAMAGE_BURN)
+				L.emote("twitch_v")
+			else
+				message_admins("222")
+				shoot_projectile_ST(get_turf(src), PJ, get_step(src, NORTH))
+			SPAWN_DBG(0.5 SECONDS)
+				qdel(src)
+		else
+			qdel(src)
+		return
+
+/obj/item/old_grenade/energy_concussion
+	name = "concussion grenade"
+	desc = "It is set to detonate in 3 seconds."
+	icon_state = "concussion"
+	det_time = 30.0
+	org_det_time = 30
+	alt_det_time = 60
+	item_state = "fragnade"
+	is_syndicate = 0
+	sound_armed = "sound/weapons/armbomb.ogg"
+	icon_state_armed = "concussion1"
+
+	prime()
+		var/turf/T = ..()
+		if (T)
+			playsound(T, "sound/weapons/grenade.ogg", 25, 1)
+			var/obj/overlay/O = new/obj/overlay(get_turf(T))
+			O.anchored = 1
+			O.name = "Explosion"
+			O.layer = NOLIGHT_EFFECTS_LAYER_BASE
+			O.icon = 'icons/effects/64x64.dmi'
+			O.icon_state = "explo_energy"
+			O.pixel_x = -16
+			O.pixel_y = -16
+
+			//if you're on the tile directly.
+			var/mob/living/L = locate(/mob/living) in get_turf(src)
+			if (istype(L))
+				L.do_disorient(stamina_damage = 120, weakened = 60, stunned = 0, disorient = 0, remove_stamina_below_zero = 0)
+				L.TakeDamage("chest", rand(20, 40)/L.get_melee_protection(), 0, 0, DAMAGE_BLUNT)
+				L.emote("twitch_v")
+			else
+
+				for (var/atom/movable/A in orange(src, 3))
+					var/turf/target = get_ranged_target_turf(A, get_dir(T, A), 10)
+					//eh, another typecheck, no way around it I don't think. unless we wanna apply the status effect directly? idk.
+					if (isliving(A))
+						var/mob/living/M = A
+						M.do_disorient(stamina_damage = 60, weakened = 30, stunned = 0, disorient = 20, remove_stamina_below_zero = 0)
+					if (target)
+						A.throw_at(target, 10 - get_dist(src, A)*2, 1)		//throw things farther if they are closer to the epicenter.
+
+			SPAWN_DBG(0.5 SECONDS)
+				qdel(O)
+				qdel(src)
+		else
+			qdel(src)
+		return
