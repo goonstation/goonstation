@@ -417,6 +417,28 @@ ABSTRACT_TYPE(/datum/ore_cluster)
 
 	..()
 
+//Plays a sound for a particular team. 
+//pw_team can be the team datum or TEAM_NANOTRASEN|TEAM_SYNDICATE
+//filepath; sound file path as a string.
+/datum/game_mode/pod_wars/proc/playsound_to_team(var/pw_team, var/filepath)
+	if (isnull(S))
+		return 0
+	var/datum/pod_wars_team/team = pw_team
+	if (!istype(team))
+		if (pw_team == TEAM_NANOTRASEN)
+			team = team_NT 
+		else if (pw_team == TEAM_SYNDICATE)
+			team = team_SY
+		else
+			logTheThing("debug", null, null, "Something went wrong trying to play a sound for a team=[team]|[pw_team].!!!")
+			message_admins("Something went wrong trying to play a sound for a team")
+			return 0
+
+	for (var/datum/mind/M in team.members)
+		M.current.playsound_local(M.current, filepath, 50, 0)
+
+	return 1
+
 //outputs the team members to world for declare_completion
 /datum/game_mode/pod_wars/proc/output_team_members(var/datum/pod_wars_team/pw_team)
 	var/string = ""
