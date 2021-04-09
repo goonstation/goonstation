@@ -1,5 +1,31 @@
 
+(t)fri apr 09 21
+(u)Gannets
+(p)4255
+(e)|
+(*)The new prototype melee class, the Knight is now avaliable in syndicate weapons vendors on the Cairngorm. Full details in minor changes.
+(+)The new prototype knight crate includes:
+(+)Hadar heavy power-sword, a two-handed melee weapon that can be used in-hand to swap between a long range stab special attack and a wide sweep that applies knockback. The sword will build up additional attack damage when used to hit living humans outside of the Cairngorm up to a maximum force of 100 (or 105?)
+(+)Citadel heavy combat cuirass and a great helm, a massive suit of armour that provides multiple large damage resistances at the cost of a slow walk speed.
+(+)Combat gauntlets that reduce the likelihood of disarms against you.
+(+)Combat sabatons with non-slip properties and magnetised soles to keep you planted on the point.
+(t)thu apr 08 21
+(u)Arthur Holiday
+(p)3961
+(e)⚖|balance
+(*)Securitrons don't target invisible people anymore. This includes those who are using a cloaking device or a genetics, vampire ability.
 (t)wed apr 07 21
+(u)Erinexx
+(p)4219
+(e)🎨|sprites
+(+)TEG now has an additional turbine speed animation when at >10k atm.
+(+)Local generator now displays anchored state and whether there is a tank loaded.
+(u)pali
+(*)Baseball bats got a small overhaul. The range and angle of reflection is now slightly randomized and depends on a few factors (athletic trait, alcohol, ...). Bats are now scannable and craftable using wood.
+(u)Sovexe
+(p)4174
+(e)⚖🐛🆕|balance, bug, feature
+(*)Critter abilities can now be bound to ctrl/alt/shift+left click
 (u)Asche
 (p)4198
 (e)🆕|feature

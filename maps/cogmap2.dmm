@@ -6830,7 +6830,8 @@
 /obj/machinery/light{
 	dir = 8;
 	layer = 9.1;
-	pixel_x = -10
+	pixel_x = -10;
+	pixel_y = 13
 	},
 /turf/simulated/floor/carpet{
 	dir = 9;
@@ -6849,7 +6850,8 @@
 /obj/machinery/light{
 	dir = 4;
 	layer = 9.1;
-	pixel_x = 10
+	pixel_x = 10;
+	pixel_y = 13
 	},
 /turf/simulated/floor/carpet{
 	dir = 5;
@@ -6863,7 +6865,8 @@
 /obj/machinery/light{
 	dir = 8;
 	layer = 9.1;
-	pixel_x = -10
+	pixel_x = -10;
+	pixel_y = 13
 	},
 /turf/simulated/floor/bot,
 /area/station/chapel/sanctuary)
@@ -8892,6 +8895,7 @@
 /area/station/chapel/sanctuary)
 "aua" = (
 /obj/table/reinforced/bar/auto,
+/obj/machinery/light/small/floor,
 /turf/simulated/floor/carpet{
 	dir = 4;
 	icon_state = "fpurple1"
@@ -9563,6 +9567,7 @@
 /obj/machinery/light{
 	dir = 1;
 	layer = 9.1;
+	pixel_x = 5;
 	pixel_y = 21
 	},
 /obj/table/wood/round/auto,
@@ -10024,7 +10029,6 @@
 	},
 /area/station/chapel/sanctuary)
 "awQ" = (
-/obj/machinery/light,
 /turf/simulated/floor/carpet{
 	icon_state = "fpurple1"
 	},
@@ -10945,6 +10949,7 @@
 	},
 /area/station/chapel/sanctuary)
 "ayF" = (
+/obj/machinery/light/small/floor,
 /turf/simulated/floor/carpet{
 	dir = 1;
 	icon_state = "fblue4"

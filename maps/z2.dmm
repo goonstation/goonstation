@@ -64769,10 +64769,10 @@
 /area/shuttle/escape/centcom/sealab)
 "doi" = (
 /obj/machinery/door/airlock/pyro/external,
-/turf/unsimulated/floor/shuttle{
-	dir = 8
+/turf/unsimulated/floor{
+	icon_state = "floor"
 	},
-/area/shuttle/escape/centcom/sealab)
+/area/centcom)
 "doj" = (
 /turf/simulated/wall/auto/shuttle{
 	icon_state = "12"
@@ -76208,7 +76208,7 @@
 /turf/unsimulated/outdoors/grass,
 /area/centcom/outside)
 "dRy" = (
-/obj/machinery/door/airlock/pyro/external,
+/obj/wingrille_spawn/auto,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -77338,6 +77338,11 @@
 	},
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/efrem)
+"enn" = (
+/turf/unsimulated/floor/stairs/wide{
+	dir = 1
+	},
+/area/centcom)
 "enx" = (
 /turf/unsimulated/wall/setpieces/leadwall{
 	dir = 5
@@ -77630,6 +77635,9 @@
 /obj/decal/fakeobjects/dreambeach/sticks,
 /turf/unsimulated/floor/dream/beach,
 /area/titlescreen)
+"fdJ" = (
+/turf/unsimulated/floor/stairs/wide,
+/area/centcom)
 "fen" = (
 /obj/structure/woodwall,
 /turf/unsimulated/floor/plating,
@@ -77979,6 +77987,15 @@
 	icon_state = "diagonalWall"
 	},
 /area/hospital/samostrel)
+"guw" = (
+/obj/item/storage/wall/fire{
+	dir = 4;
+	pixel_z = -4
+	},
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "11"
+	},
+/area/shuttle/escape/centcom/sealab)
 "guE" = (
 /obj/rack,
 /obj/item/clothing/suit/space/soviet{
@@ -78155,6 +78172,12 @@
 "hnO" = (
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/mrfishstick)
+"hnU" = (
+/turf/unsimulated/floor/stairs{
+	dir = 1;
+	icon_state = "stairs_middle"
+	},
+/area/centcom)
 "hoh" = (
 /turf/unsimulated/wall/auto/sengoku{
 	icon_state = "9";
@@ -79895,6 +79918,9 @@
 	icon_state = "floor3"
 	},
 /area/hospital/samostrel)
+"nnn" = (
+/turf/unsimulated/floor/stairs/wide/middle,
+/area/centcom)
 "nnN" = (
 /obj/machinery/light{
 	dir = 8
@@ -81689,6 +81715,12 @@
 	icon_state = "floor3"
 	},
 /area/shuttle/escape/centcom/destiny)
+"syJ" = (
+/obj/machinery/door/airlock/pyro/external,
+/turf/unsimulated/floor/shuttle{
+	dir = 8
+	},
+/area/shuttle/escape/centcom/sealab)
 "sBm" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
@@ -139775,7 +139807,7 @@ dos
 doA
 dos
 dos
-dot
+guw
 dos
 dos
 dpf
@@ -140672,9 +140704,9 @@ dms
 dny
 dny
 dmu
-djp
-aES
-dog
+dnL
+dnZ
+doj
 dom
 dom
 don
@@ -140688,9 +140720,9 @@ dpg
 don
 dom
 dom
-dog
-aES
-djp
+doj
+dnJ
+dnu
 dRF
 dmu
 djp
@@ -140974,9 +141006,9 @@ dny
 dny
 dny
 dmu
-dnL
-dnZ
-doh
+doi
+fdJ
+syJ
 dom
 don
 don
@@ -140990,9 +141022,9 @@ doj
 don
 don
 dom
-dof
-dnJ
-dnu
+syJ
+doK
+doi
 dkX
 dmu
 djp
@@ -141277,8 +141309,8 @@ dEO
 dny
 dmu
 dRy
-doa
-doi
+nnn
+dog
 don
 don
 don
@@ -141292,8 +141324,8 @@ doC
 don
 don
 don
-doi
-dnK
+dog
+hnU
 dRy
 dkX
 dmu
@@ -141578,9 +141610,9 @@ dny
 dny
 dny
 dmu
-dnL
-dnZ
-doh
+doi
+dpd
+syJ
 dom
 don
 don
@@ -141594,9 +141626,9 @@ doj
 don
 don
 dom
-dof
-dnJ
-dnt
+syJ
+enn
+doi
 dkX
 dmu
 djp
@@ -141880,9 +141912,9 @@ dny
 dny
 dny
 dnT
-djp
-aES
-dog
+dnL
+dnZ
+doj
 dom
 don
 don
@@ -141896,9 +141928,9 @@ dph
 don
 don
 dom
-dog
-aES
-djp
+doj
+dnJ
+dnt
 dRF
 dmu
 djp
@@ -143097,7 +143129,7 @@ dos
 dog
 dog
 dog
-dos
+doT
 dog
 dog
 dog
