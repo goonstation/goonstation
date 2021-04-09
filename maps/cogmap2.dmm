@@ -37044,7 +37044,7 @@
 	name = "Bridge Lockdown Doors";
 	opacity = 0
 	},
-/turf/simulated/floor,
+/turf/simulated/floor/black,
 /area/station/security/checkpoint/customs)
 "bJr" = (
 /obj/cable{
