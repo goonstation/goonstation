@@ -995,8 +995,8 @@
 	//testing pali's solution for getting the direction opposite of the map edge you are nearest to.
 	// A.set_loc(A.loc)
 	var/atom/target = get_edge_target_turf(A, (A.x + A.y > world.maxx ? SOUTH | WEST : NORTH | EAST) & (A.x - A.y > 0 ? NORTH | WEST : SOUTH | EAST))
-	if (target && A)
-		A?.throw_at(target, 1, 1)
+	if (!istype(A, /obj/machinery/vehicle) && target)	//Throw everything but vehicles(pods)
+		A.throw_at(target, 1, 1)
 
 	return
 #else
