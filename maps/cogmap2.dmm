@@ -24401,9 +24401,6 @@
 	icon_state = "4-8"
 	},
 /obj/disposalpipe/segment/mail/horizontal,
-/obj/cable{
-	icon_state = "2-4"
-	},
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
 "bhr" = (
@@ -24929,18 +24926,6 @@
 "biK" = (
 /turf/simulated/floor/bot,
 /area/station/hallway/primary/west)
-"biL" = (
-/obj/cable{
-	icon_state = "1-4"
-	},
-/turf/simulated/floor/bot,
-/area/station/hallway/primary/west)
-"biM" = (
-/obj/cable{
-	icon_state = "2-8"
-	},
-/turf/simulated/floor/bot,
-/area/station/hallway/primary/west)
 "biN" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -25170,14 +25155,6 @@
 "bjA" = (
 /obj/machinery/door/firedoor/pyro,
 /obj/machinery/door/airlock/pyro/glass,
-/turf/simulated/floor/delivery,
-/area/station/hallway/primary/west)
-"bjB" = (
-/obj/machinery/door/firedoor/pyro,
-/obj/machinery/door/airlock/pyro/glass,
-/obj/cable{
-	icon_state = "1-2"
-	},
 /turf/simulated/floor/delivery,
 /area/station/hallway/primary/west)
 "bjC" = (
@@ -25827,15 +25804,6 @@
 "ble" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 4
-	},
-/turf/simulated/floor/bot,
-/area/station/hallway/primary/west)
-"blf" = (
-/obj/machinery/atmospherics/pipe/simple/insulated{
-	dir = 4
-	},
-/obj/cable{
-	icon_state = "1-2"
 	},
 /turf/simulated/floor/bot,
 /area/station/hallway/primary/west)
@@ -28522,9 +28490,6 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/cable{
-	icon_state = "1-2"
-	},
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
 "brx" = (
@@ -30489,12 +30454,6 @@
 	icon_state = "red2"
 	},
 /area/station/security/main)
-"bvY" = (
-/obj/cable{
-	icon_state = "1-4"
-	},
-/turf/simulated/floor,
-/area/station/hallway/primary/west)
 "bvZ" = (
 /obj/machinery/light{
 	dir = 1;
@@ -30712,9 +30671,6 @@
 /area/station/ai_monitored/storage/eva)
 "bwu" = (
 /obj/machinery/light,
-/obj/cable{
-	icon_state = "0-8"
-	},
 /turf/simulated/floor/grey/side{
 	dir = 4
 	},
@@ -108535,11 +108491,11 @@ bfQ
 bgo
 bgP
 bhq
-bhu
-bhu
-bhu
-bhu
-biL
+bvx
+bvx
+bvx
+bvx
+biK
 bhA
 ble
 bmy
@@ -108840,13 +108796,13 @@ bhr
 bhw
 bhT
 bhV
-bie
-biM
-bjB
-blf
-bhu
+bgV
+biK
+bjA
+ble
+bvx
 brw
-bvY
+bvx
 bhA
 aaI
 aaa
