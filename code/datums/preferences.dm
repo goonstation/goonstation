@@ -116,7 +116,6 @@ datum/preferences
 			src.preview = null
 
 	ui_data(mob/user)
-		// . = ..()
 		if (isnull(src.preview))
 			src.preview = new(user.client, "preferences2", "preferences2_character_preview")
 			src.update_preview_icon()
