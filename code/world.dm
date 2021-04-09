@@ -26,6 +26,9 @@
 	hub_password = "kMZy3U5jJHSiBQjr"
 	name = "Goonstation 13"
 
+#if DM_VERSION >= 514
+	movement_mode = TILE_MOVEMENT_MODE
+#endif
 
 //Let's clarify something. I don't know if it needs clarifying, but here I go anyways.
 
