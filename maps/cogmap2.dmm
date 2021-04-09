@@ -511,11 +511,17 @@
 /turf/simulated/floor/plating,
 /area/station/turret_protected/ai)
 "abm" = (
+/obj/disposalpipe/segment/morgue{
+	dir = 4
+	},
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/grass/leafy,
-/area/station/garden/owlery)
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/north)
 "abn" = (
 /obj/cable,
 /obj/cable{
@@ -533,11 +539,12 @@
 /turf/simulated/floor/plating,
 /area/station/turret_protected/ai)
 "abp" = (
+/obj/disposalpipe/segment,
 /obj/cable{
-	icon_state = "2-8"
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/northeast)
+/area/station/maintenance/north)
 "abr" = (
 /obj/cable{
 	icon_state = "0-2"
@@ -583,10 +590,10 @@
 /area/station/turret_protected/ai)
 "abx" = (
 /obj/cable{
-	icon_state = "1-4"
+	icon_state = "1-2"
 	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/northeast)
+/turf/simulated/floor/specialroom/arcade,
+/area/station/janitor/supply)
 "aby" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -810,6 +817,12 @@
 	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
+"abV" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/grass/leafy,
+/area/station/garden/owlery)
 "abW" = (
 /obj/machinery/door/poddoor/pyro{
 	density = 0;
@@ -1617,6 +1630,12 @@
 	dir = 9
 	},
 /area/station/solar/north)
+"adO" = (
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/northeast)
 "adQ" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/turret_protected/ai_upload)
@@ -1937,6 +1956,12 @@
 /obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating,
 /area/station/turret_protected/ai)
+"aeH" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/northeast)
 "aeI" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -16305,11 +16330,17 @@
 /obj/disposalpipe/segment/morgue{
 	dir = 4
 	},
+/obj/cable{
+	icon_state = "2-4"
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
 "aNG" = (
 /obj/disposalpipe/segment/morgue{
 	dir = 4
+	},
+/obj/cable{
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
@@ -16318,12 +16349,18 @@
 /obj/disposalpipe/segment/morgue{
 	dir = 4
 	},
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
 "aNI" = (
 /obj/disposalpipe/segment/mail/vertical,
 /obj/disposalpipe/segment/morgue{
 	dir = 4
+	},
+/obj/cable{
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
@@ -16415,6 +16452,9 @@
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/vertical,
 /obj/disposalpipe/segment/morgue{
 	icon_state = "pipe-c"
+	},
+/obj/cable{
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/stairs{
 	dir = 4
@@ -16770,6 +16810,9 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment/mail/bent/north,
+/obj/cable{
+	icon_state = "2-8"
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
 "aOO" = (
@@ -18888,6 +18931,9 @@
 	req_access_txt = "26"
 	},
 /obj/machinery/door/firedoor/pyro,
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/specialroom/arcade,
 /area/station/janitor/supply)
 "aTW" = (
@@ -19417,25 +19463,16 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
-/obj/cable{
-	icon_state = "4-8"
-	},
 /obj/machinery/atmospherics/pipe/simple/overfloor/vertical,
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
 "aVs" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/horizontal,
 /obj/disposalpipe/junction/left/south,
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
 "aVt" = (
 /obj/disposalpipe/segment,
-/obj/cable{
-	icon_state = "2-8"
-	},
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -20585,16 +20622,7 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
-"aYh" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/wall/auto/supernorn,
-/area/station/janitor/supply)
 "aYi" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
 /obj/disposalpipe/trunk,
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -20610,28 +20638,22 @@
 /obj/machinery/disposal,
 /turf/simulated/floor/specialroom/arcade,
 /area/station/janitor/supply)
-"aYj" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/specialroom/arcade,
-/area/station/janitor/supply)
 "aYk" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
 /obj/disposalpipe/segment{
 	dir = 4;
 	icon_state = "pipe-c"
 	},
+/obj/cable{
+	icon_state = "1-4"
+	},
 /turf/simulated/floor/specialroom/arcade,
 /area/station/janitor/supply)
 "aYl" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
 /obj/disposalpipe/junction{
 	dir = 4
+	},
+/obj/cable{
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/specialroom/arcade,
 /area/station/janitor/supply)
@@ -20645,9 +20667,6 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hangar/arrivals)
 "aYn" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/northeast,
 /obj/disposalpipe/segment/morgue{
 	dir = 1;
@@ -22147,12 +22166,6 @@
 /obj/stool/chair{
 	dir = 8
 	},
-/obj/cable{
-	icon_state = "0-8"
-	},
-/obj/cable{
-	icon_state = "0-4"
-	},
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "E APC";
@@ -22164,6 +22177,9 @@
 	},
 /obj/landmark/start{
 	name = "Janitor"
+	},
+/obj/cable{
+	icon_state = "0-8"
 	},
 /turf/simulated/floor/specialroom/arcade,
 /area/station/janitor/supply)
@@ -35283,6 +35299,9 @@
 /area/station/security/checkpoint/podbay)
 "bFV" = (
 /obj/landmark/gps_waypoint,
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/specialroom/arcade,
 /area/station/janitor/supply)
 "bFW" = (
@@ -115769,7 +115788,7 @@ aNG
 aTU
 aTU
 aTU
-aYh
+aTU
 aZN
 bbk
 aCL
@@ -116373,7 +116392,7 @@ aNH
 aTU
 aVm
 aVn
-aYj
+aVn
 aZP
 bbl
 aPL
@@ -116671,9 +116690,9 @@ aaa
 aam
 aBt
 aDQ
-aNG
+abm
 aTV
-aVn
+abx
 bFV
 aYk
 aZQ
@@ -117879,7 +117898,7 @@ ayU
 azT
 awU
 awU
-awU
+abp
 aPd
 aQg
 aRD
@@ -120904,7 +120923,7 @@ aSP
 aVz
 aSQ
 aSQ
-abm
+abV
 bbv
 beR
 beJ
@@ -121206,7 +121225,7 @@ aSQ
 aVA
 aSQ
 aSQ
-abm
+abV
 bbw
 beR
 bdv
@@ -121508,7 +121527,7 @@ aSQ
 aVB
 aWP
 aSM
-abm
+abV
 aSR
 beR
 beR
@@ -121810,7 +121829,7 @@ aUe
 aVC
 aWQ
 aYw
-abm
+abV
 aSQ
 bbB
 beR
@@ -122414,7 +122433,7 @@ aUg
 aVE
 aWS
 aYy
-abm
+abV
 aSQ
 bbG
 beR
@@ -122716,7 +122735,7 @@ aSQ
 aVF
 aWT
 aSM
-abm
+abV
 bcL
 beR
 beR
@@ -123018,7 +123037,7 @@ aSQ
 aVG
 aSQ
 aYz
-abm
+abV
 bby
 beR
 bdz
@@ -123320,7 +123339,7 @@ aSQ
 aSQ
 aSQ
 aSQ
-abm
+abV
 bbz
 beR
 bdz
@@ -123924,8 +123943,8 @@ aSQ
 aSQ
 aVG
 aYu
-abp
-abx
+adO
+aeH
 cia
 baT
 bbn
