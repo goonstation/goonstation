@@ -14,9 +14,17 @@
 			src.openwindows.Add(user)
 		uiSetup()
 
+	attackby(var/obj/item/chessman/piece, var/mob/user)
+
 	MouseDrop(var/mob/user) // because picking up the board is cool
 		if((istype(user,/mob/living/carbon/human))&&(!user.stat)&&!(src in user.contents))
 			user.put_in_hand_or_drop(src)
+
+	disposing() // close windows when you throw the board into the bin
+		..()
+		for(var/mob/user in src.openwindows)
+			user << browse(null, "window=chess")
+		src.openwindows = null
 
 /obj/item/chessman
 	name = "chessman"
@@ -26,17 +34,27 @@
 	w_class = 1
 	var/pieceAffinity // black, white
 	var/pieceType // king, queen, bishop, etc.
+	var/position // position of the piece on the board, ranging from 0 to 63
 
-	attack(mob/M as mob, var/mob/user, def_zone) // okay you know what you can eat the pieces now and it really fucking hurts
-		if (user == M && ishuman(M))
-			user.visible_message("[user] shoves \the [src] into [his_or_her(user)] mouth and crunches into it! What the fuck?!")
-			boutput(user, "<span class='alert'>The piece splinters, cutting up the inside of your mouth! WHY DID YOU DO THAT?!</span>")
-			playsound(user.loc, "sound/misc/chalkeat_[rand(1,2)].ogg", 60, 1) // thanks adhara
-			random_brute_damage(user, 3)
-			take_bleeding_damage(user, null, 0, DAMAGE_STAB, 0)
-			bleed(user, 3, 1)
-			user.emote("scream")
-			qdel(src)
+	attack(mob/M as mob, var/mob/user) // okay you know what you can eat the pieces now and it really fucking hurts
+		if(ishuman(M))
+			if(user == M)
+				if(user.zone_sel.selecting == "head")
+					if(user.a_intent == "harm")
+						M.visible_message("<span class='alert'>[M] shoves \the [src] into [his_or_her(M)] mouth and crunches into it! What the fuck?!</span>")
+						eatPiece(user);
+					else
+						user.visible_message("[user] wildly smooshes \the [src] onto [his_or_her(user)] face! What the fuck?")
+				else
+					user.visible_message("[user] meticulously inspects \the [src], feeling it in [his_or_her(user)] hand.")
+			else
+				if(user.zone_sel.selecting == "head")
+					if(user.a_intent == "harm")
+						boutput(user, "<span class='alert'>You can't just shove \the [src] into someone else's mouth, you monster!</span>")
+					else
+						user.visible_message("[user] excitedly shows [M] \the [src], shoving it in [his_or_her(M)] face!")
+				else
+					user.visible_message("[user] taps [M] with \the [src]. Weird.")
 
 	proc/setPieceInfo()
 		// determining piece colour based on pieceAffinity
@@ -54,6 +72,20 @@
 		else
 			icon_state = "king"
 			name = "broken chessman"
+
+	proc/eatPiece(mob/M as mob)
+		var/chocolateChance = rand(1,5)
+		playsound(M.loc, "sound/misc/chalkeat_[rand(1,2)].ogg", 60, 1) // thanks adhara
+		qdel(src)
+		if(chocolateChance == 1)
+			boutput(M, "<span class='success'>The piece has a satisfying snap to it as you bite in! It's... Chocolate!</span>")
+			M.reagents.add_reagent("chocolate", 10)
+		else
+			boutput(M, "<span class='alert'>The piece splinters, cutting up the inside of your mouth! WHY DID YOU DO THAT?!</span>")
+			random_brute_damage(M, 3)
+			take_bleeding_damage(M, null, 0, DAMAGE_STAB, 0)
+			bleed(M, 3, 1)
+			M.emote("scream")
 
 /obj/item/chessbox
 	name = "STOP LOOKING AT ME"
@@ -260,6 +292,7 @@
 			return 0
 		user.visible_message("<span class='alert'>[user] grabs a king and rook from the chess box, and stuffs a piece in each ear!</span>")
 		user.visible_message("<span class='alert'><b>[user] castles the king in [his_or_her(user)] ear! Oh god, there's a gaping hole in [his_or_her(user)] head!</b></span>")
+		playsound(user.loc, "sound/impact_sounds/Flesh_Stab_[rand(1,3)].ogg", 60, 1)
 		SPAWN_DBG(5 DECI SECONDS) // just in case you start to regret your decision
 		user.take_brain_damage(75)
 		user.TakeDamage("head", 125)
