@@ -286,6 +286,7 @@
 
 		New()
 			..()
+			src.root.add_file( new /datum/computer/file/pda_program/manifest(src))
 			src.root.add_file( new /datum/computer/file/pda_program/power_checker(src))
 			src.root.add_file( new /datum/computer/file/pda_program/atmos_alerts(src))
 			src.root.add_file( new /datum/computer/file/pda_program/signaler(src))
