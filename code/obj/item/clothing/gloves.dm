@@ -234,9 +234,6 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 		..()
 		setProperty("heatprot", 7)
 
-/obj/item/clothing/gloves/black/attackby()
-	..()
-
 /obj/item/clothing/gloves/black/attackby(obj/item/W as obj, mob/user as mob)
 	if (istool(W, TOOL_CUTTING | TOOL_SNIPPING))
 		user.visible_message("<span class='notice'>[user] cuts off the fingertips from the [src].</span>")
