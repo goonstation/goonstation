@@ -1622,7 +1622,7 @@
 	var/product_type
 	var/real_name
 	product_amount = 1
-	New(obj/item/product,var/price)
+	New(obj/item/product,price)
 		..()
 		product_type = product.type
 		product_name = product.name
@@ -1646,9 +1646,18 @@
 	var/cardname
 	//Bank account
 	var/datum/data/record/owneraccount = null
+	var/image/itemoverlay = null
 	player_list = list()
 	create_products()
 		..()
+	proc/getScaledIcon(obj/item/target)
+		var/image/itemoverlayoriginal = SafeGetOverlayImage("item", target, target.icon_state)
+		itemoverlayoriginal.transform = matrix(itemoverlayoriginal.transform, 0.5, 0.5, MATRIX_SCALE)
+		return itemoverlayoriginal
+	proc/setItemOverlay(obj/item/target)
+		UpdateOverlays(null, "item", 0, 1)
+		UpdateOverlays(getScaledIcon(target), "item", 0, 1)
+
 	proc/addproduct(obj/item/target, mob/user)
 		user.u_equip(target)
 		target.set_loc(src)
@@ -1730,16 +1739,14 @@
 				src.generate_HTML(1, 0)
 		else if(href_list["vend"] && (length(player_list) <= 0))
 			icon_state = "player"
-			src.generate_HTML(1, 0)
-		else if(href_list["vend"])
+		if(href_list["vend"])
 			//Vends can change the name of list entries so generate HTML
 			src.generate_HTML(1, 0)
-
 	attackby(obj/item/target, mob/user)
 		if(!loading == 0 && !panel_open == 0)
-			addproduct(target, user)
 			if(src.icon_state != "player-display")
 				src.icon_state = "player-display"
+				addproduct(target, user)
 		else
 			. = ..()
 		lastuser = user
@@ -1747,7 +1754,6 @@
 			loading = 0
 			unlocked = 0
 		src.generate_HTML(1)
-
 /obj/machinery/vending/player/fallen
 	New()
 		. = ..()
