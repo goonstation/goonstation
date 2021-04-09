@@ -1,5 +1,10 @@
 
 (t)fri apr 09 21
+(u)Comradef191
+(p)4256
+(e)🗺|mapping
+(*)You can now tell which cables on Cogmap 1 are directly connected to the Engine thanks to their Brown colour!
+(+)You can also now tell which cables are connected to the Solar Arrays on Cogmap 1, as they are now Yellow.
 (u)Gannets
 (p)4255
 (e)|
