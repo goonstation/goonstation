@@ -1651,12 +1651,29 @@
 	create_products()
 		..()
 	proc/getScaledIcon(obj/item/target)
-		var/image/itemoverlayoriginal = SafeGetOverlayImage("item", target, target.icon_state)
-		itemoverlayoriginal.transform = matrix(itemoverlayoriginal.transform, 0.5, 0.5, MATRIX_SCALE)
+		var/image/itemoverlayoriginal = null
+		itemoverlayoriginal = SafeGetOverlayImage("item", target, target.icon_state)
+		itemoverlayoriginal.transform = matrix(null, 0.45, 0.45, MATRIX_SCALE)
+		itemoverlayoriginal.transform = matrix(itemoverlayoriginal.transform, -2.8, -3.7, MATRIX_TRANSLATE)
+		itemoverlayoriginal.layer = src.layer + 0.1
+		itemoverlayoriginal.plane 10
+		src.set_icon_state("player-display")
 		return itemoverlayoriginal
 	proc/setItemOverlay(obj/item/target)
 		UpdateOverlays(null, "item", 0, 1)
 		UpdateOverlays(getScaledIcon(target), "item", 0, 1)
+	proc/setCrtOverlayStatus(status)
+		if(status == 1)
+			var/image/screenoverlay = null
+			screenoverlay = SafeGetOverlayImage("screen", 'icons/obj/64x64.dmi', "genebooth_screen")
+			screenoverlay.blend_mode = BLEND_MULTIPLY
+			screenoverlay.layer = src.layer + 0.2
+			screenoverlay.transform = matrix(null, -6	, 0, MATRIX_TRANSLATE)
+			screenoverlay.transform = matrix(screenoverlay.transform, 1, 1.35, MATRIX_SCALE)
+			screenoverlay.plane = 10
+			UpdateOverlays(screenoverlay, "screen", 0, 1)
+		else
+			UpdateOverlays(null, "screen", 0, 1)
 
 	proc/addproduct(obj/item/target, mob/user)
 		user.u_equip(target)
@@ -1697,6 +1714,22 @@
 			return owneruser
 		else if(in_interact_range(src, lastuser) || lastuser.stat)
 			return lastuser
+	attackby(obj/item/target, mob/user)
+		setItemOverlay(target)
+		setCrtOverlayStatus(1)
+		if(!loading == 0 && !panel_open == 0)
+
+			addproduct(target, user)
+
+			if(src.icon_state != "player-display")
+				src.icon_state = "player-display"
+		else
+			. = ..()
+		lastuser = user
+		if(!panel_open == 1)
+			loading = 0
+			unlocked = 0
+		src.generate_HTML(1)
 
 	attack_hand(mob/user as mob)
 		. = ..()
@@ -1742,18 +1775,6 @@
 		if(href_list["vend"])
 			//Vends can change the name of list entries so generate HTML
 			src.generate_HTML(1, 0)
-	attackby(obj/item/target, mob/user)
-		if(!loading == 0 && !panel_open == 0)
-			if(src.icon_state != "player-display")
-				src.icon_state = "player-display"
-				addproduct(target, user)
-		else
-			. = ..()
-		lastuser = user
-		if(!panel_open == 1)
-			loading = 0
-			unlocked = 0
-		src.generate_HTML(1)
 /obj/machinery/vending/player/fallen
 	New()
 		. = ..()
