@@ -1402,7 +1402,7 @@ automatically adopt your criminal control strategy of choice.<br>
 <td>The perfect crowd control option, this Mode stuns all your enemies within a close radius, but leaves you untouched!</td>
 </tr>
 <tr>
-<td><b>"Execute"</b></td>
+<td><b>"Execute" / "Exterminate"</b></td>
 <td>30 PU</td>
 <td>Turn your Lawbringer™ into your favourite sidearm with these .38 Full Metal Jacket rounds!</td>
 </tr>
@@ -1417,7 +1417,7 @@ automatically adopt your criminal control strategy of choice.<br>
 <td>Never use a riot launcher again! These smoke grenades will let you manage line of sight with ease.</td>
 </tr>
 <tr>
-<td><b>"Knockout"</b></td>
+<td><b>"Knockout" /  "Sleepshot"</b></td>
 <td>60 PU</td>
 <td>When you just can't get things to slow down, <i>make 'em</i> slow down with these handy haloperidol tranquilizer darts!</td>
 </tr>
@@ -1432,7 +1432,7 @@ automatically adopt your criminal control strategy of choice.<br>
 <td>Lawbringer™ warranty is voided if exposed to clowns. Keep them at bay.</td>
 </tr>
 <tr>
-<td><b>"Pulse"</b></td>
+<td><b>"Pulse" / "Push"</b></td>
 <td>35 PU</td>
 <td>Just like our patented Pulse Rifle™s, this Mode sends your enemies flying! Keep crime at arm's length!</td>
 </tr>
