@@ -424,3 +424,8 @@
 		..()
 
 #undef CLEANBOT_MOVE_SPEED
+
+/mob/living/critter/bot/cleanbot
+	name = "cleanbot"
+
+	emagged
