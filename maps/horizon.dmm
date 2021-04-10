@@ -20525,6 +20525,7 @@
 /obj/machinery/door/airlock/pyro/glass/command{
 	name = "Director's Office"
 	},
+/obj/access_spawn/medical_director,
 /turf/simulated/floor/white,
 /area/station/crew_quarters/md)
 "aXu" = (
@@ -35226,7 +35227,8 @@
 /area/station/maintenance/southeast)
 "bHF" = (
 /obj/machinery/door/airlock/pyro/security{
-	dir = 4
+	dir = 4;
+	req_access = null
 	},
 /obj/cable{
 	d1 = 4;

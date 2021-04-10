@@ -18349,18 +18349,10 @@
 	},
 /area/station/hallway/secondary/exit)
 "aRw" = (
-/turf/simulated/floor/stairs,
+/turf/simulated/floor/stairs/wide/middle,
 /area/station/hallway/secondary/exit)
 "aRx" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 4;
-	name = "autoname - SS13";
-	pixel_x = -10;
-	tag = ""
-	},
-/obj/machinery/door/airlock/pyro/external,
-/turf/simulated/floor,
+/turf/simulated/floor/stairs/wide,
 /area/station/hallway/secondary/exit)
 "aRy" = (
 /obj/cable{
@@ -47133,6 +47125,17 @@
 	},
 /turf/simulated/floor/engine,
 /area/research_outpost/chamber)
+"mbv" = (
+/obj/machinery/door/airlock/pyro/external,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 4;
+	name = "autoname - SS13";
+	pixel_x = -10;
+	tag = ""
+	},
+/turf/simulated/floor,
+/area/station/hallway/secondary/exit)
 "mhq" = (
 /turf/simulated/floor/caution/corner/misc{
 	dir = 6
@@ -47713,6 +47716,12 @@
 /area/station/hangar/catering{
 	name = "Catering Hangar"
 	})
+"rdQ" = (
+/obj/machinery/light/incandescent/cool/very,
+/turf/simulated/floor/stairs{
+	icon_state = "Stairs2_wide"
+	},
+/area/station/hallway/secondary/exit)
 "rdX" = (
 /obj/machinery/door/airlock/pyro/alt{
 	name = "Catering Hangar"
@@ -48222,6 +48231,10 @@
 	},
 /turf/simulated/floor,
 /area/research_outpost)
+"wOb" = (
+/obj/machinery/door/airlock/pyro/external,
+/turf/simulated/floor,
+/area/station/hallway/secondary/exit)
 "xhN" = (
 /obj/machinery/power/apc/autoname_north,
 /obj/cable{
@@ -112548,8 +112561,8 @@ bzg
 byY
 byY
 bCM
+byo
 byq
-aqn
 bFU
 bFU
 bFU
@@ -112850,8 +112863,8 @@ bWZ
 byY
 byY
 bCM
-byo
-byq
+aRx
+mbv
 bFU
 bFU
 bFU
@@ -113153,7 +113166,7 @@ byY
 byY
 kLf
 aRw
-aRx
+byp
 bFU
 bFU
 bFU
@@ -113453,9 +113466,9 @@ byq
 bzk
 byY
 byY
-bCQ
-byo
-byq
+bCM
+rdQ
+wOb
 bFU
 bFU
 bFU
@@ -113756,8 +113769,8 @@ bzl
 bAp
 bAp
 bCR
+byo
 byq
-aqn
 bFU
 bFU
 bFU

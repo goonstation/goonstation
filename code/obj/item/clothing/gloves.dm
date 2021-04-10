@@ -325,6 +325,14 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 		setProperty("conductivity", 0.3)
 		setProperty("deflection", 20)
 
+/obj/item/clothing/gloves/swat/knight
+	name = "combat gauntlets"
+	desc = "Heavy-duty combat gloves that help you keep hold of your weapon."
+
+	setupProperties()
+		..()
+		setProperty("deflection", 25)
+
 /obj/item/clothing/gloves/swat/NT
 	desc = "A pair of Nanotrasen tactical gloves that are quite fire and electrically-resistant. They also help you block attacks. They do not specifically help you block against blocking though. Just regular attacks."
 	icon_state = "swat_NT"

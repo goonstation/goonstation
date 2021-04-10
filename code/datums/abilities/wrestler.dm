@@ -226,6 +226,10 @@
 				HH.make_wrestler(0, 1, 1)
 				return 0
 
+		if (fake && !istype(get_turf(M), /turf/simulated/floor/specialroom/gym))
+			boutput(M, __red("You cannot use your \"powers\" outside of The Ring!"))
+			return 0
+
 		if (!(ishuman(M) || ismobcritter(M))) // Not all critters have arms to grab people with, but whatever.
 			boutput(M, __red("You cannot use any powers in your current form."))
 			return 0

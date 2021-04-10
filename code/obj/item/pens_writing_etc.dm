@@ -158,7 +158,7 @@
 	desc = "A pretty swag pen."
 	icon_state = "pen_fancy"
 	font_color = "blue"
-	font = "Dancing Script, cursive"
+	font = "'Dancing Script', cursive"
 	webfont = "Dancing Script"
 	uses_handwriting = 1
 
@@ -178,7 +178,7 @@
 	desc = "The core is graphite, not lead, don't worry!"
 	icon_state = "pencil-y"
 	font_color = "#808080"
-	font = "Dancing Script, cursive"
+	font = "'Dancing Script', cursive"
 	webfont = "Dancing Script"
 	uses_handwriting = 1
 	clicknoise = 0
@@ -195,7 +195,7 @@
 	desc = "Try not to sniff it too much. Weirdo."
 	icon_state = "marker"
 	color = "#333333"
-	font = "Permanent Marker, cursive"
+	font = "'Permanent Marker', cursive"
 	webfont = "Permanent Marker"
 	clicknoise = 0
 

@@ -356,7 +356,7 @@ proc/build_syndi_buylist_cache()
 	cost = 12
 	vr_allowed = 0
 	desc = "A crate containing 18-24 credits worth of whatever junk we had lying around."
-	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/revolution)
+	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/spy_theft, /datum/game_mode/revolution)
 
 	run_on_spawn(var/obj/storage/crate/syndicate_surplus/crate, var/mob/living/owner, in_surplus_crate)
 		crate.spawn_items(owner)
@@ -481,7 +481,7 @@ This is basically useless for anyone but miners.
 	desc = "These big red boots have an explosive step sound. The entire station is sure to want to show you their appreciation."
 	job = list("Clown")
 	not_in_crates = 1
-	blockedmode = list(/datum/game_mode/spy)
+	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/spy_theft)
 
 /datum/syndicate_buylist/traitor/clown_mask
 	name = "Clown Mask"
@@ -967,7 +967,7 @@ This is basically useless for anyone but miners.
 	item = /obj/item/storage/box/banana_grenade_kit
 	cost = 2
 	desc = "Honk."
-	blockedmode = list(/datum/game_mode/spy)
+	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/spy_theft)
 
 /datum/syndicate_buylist/surplus/turboflash_box
 	name = "Flash/cell assembly box"

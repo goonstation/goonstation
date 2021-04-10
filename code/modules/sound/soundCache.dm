@@ -747,6 +747,7 @@ var/global/list/soundCache = list(
  	"sound/misc/mechanical_footstep1.ogg" = 'sound/misc/mechanical_footstep1.ogg',\
  	"sound/misc/mechanical_footstep2.ogg" = 'sound/misc/mechanical_footstep2.ogg',\
  	"sound/misc/mechanical_footstep3.ogg" = 'sound/misc/mechanical_footstep3.ogg',\
+	"sound/misc/mentorhelp.ogg" = 'sound/misc/mentorhelp.ogg',\
  	"sound/misc/miccheck.ogg" = 'sound/misc/miccheck.ogg',\
  	"sound/misc/molly_revived.ogg" = 'sound/misc/molly_revived.ogg',\
  	"sound/misc/NewRound.ogg" = 'sound/misc/NewRound.ogg',\

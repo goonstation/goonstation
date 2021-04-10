@@ -323,7 +323,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	allow_spy_theft = 0
 
 	slot_back = /obj/item/storage/backpack/withO2
-	slot_belt = /obj/item/device/pda2/heads
+	slot_belt = /obj/item/device/pda2/chiefengineer
 	slot_glov = /obj/item/clothing/gloves/yellow
 	slot_foot = /obj/item/clothing/shoes/brown
 	slot_head = /obj/item/clothing/head/helmet/hardhat
