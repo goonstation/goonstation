@@ -236,7 +236,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 
 /obj/item/clothing/gloves/black/attackby(obj/item/W as obj, mob/user as mob)
 	if (istool(W, TOOL_CUTTING | TOOL_SNIPPING))
-		user.visible_message("<span class='notice'>[user] cuts off the fingertips from the [src].</span>")
+		user.visible_message("<span class='notice'>[user] cuts off the fingertips from [src].</span>")
 		if(src.loc == user)
 			user.u_equip(src)
 		src.set_loc(user)
