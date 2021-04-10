@@ -3,18 +3,81 @@
 	desc = "It's a board for playing chess! Or checkers... Or anything that uses an 8x8 checkered board..."
 	icon = 'icons/obj/items/chess.dmi'
 	icon_state = "chessboard"
-	var/list/openwindows = list()
-	var/list/piecelist = list()
+	layer = 2.9
+	var/list/openWindows = list()
+	var/lastMoveSpaces[2]
+	var/pieceList[64]
+	var/selectedSpace[1]
 
 	proc/uiSetup()
-		usr.Browse((grabResource("html/chess.htm")), "window=chess;size=496x496;border=0;can_resize=0;can_minimize=1;")
+		usr.Browse(replacetext(replacetext(replacetext(replacetext(grabResource("html/chess.htm"), "!!PIECES!!", json_encode(pieceList)), "!!SELECTION!!", json_encode(selectedSpace)), "!!LASTMOVE!!", json_encode(lastMoveSpaces)), "!!SRC_REF!!", "\ref[src]"), "window=chess;size=496x496;border=0;can_resize=0;can_minimize=1;")
 
-	attack_hand(var/mob/user)
-		if(!(user in src.openwindows) && istype(user,/mob/living/carbon/human) && !(src in user.contents))
-			src.openwindows.Add(user)
+	New()
+		..()
+
+	Topic(href, href_list)
+		switch(href_list["command"])
+			if("close")
+				if(usr in src.openWindows)
+					src.openWindows.Remove(usr)
+				return
+			if("checkHand")
+				if((istype(usr,/mob/living/carbon/human)) && (usr in range(1,src)))
+					var/mob/living/carbon/human/user = usr
+					var/equipped = user.equipped()
+					if(!equipped)
+						return
+					if(istype(equipped,/obj/item/chessman))
+						var/obj/item/chessman/piece = equipped
+						piece.position = ((text2num(href_list["position"])) + 1)
+						pieceList[piece.position] = "[piece.pieceType][piece.pieceAffinity]"
+						user.u_equip(piece)
+						piece.set_loc(src)
+						uiSetup()
+						//user.visible_message("[user] puts \the [piece] onto the board.")
+						return
+			if("changePos")
+				if((istype(usr,/mob/living/carbon/human)) && (usr in range(1,src)))
+					var/pieceFromPosition = (text2num(href_list["fromPosition"]))
+					var/pieceToPosition = (text2num(href_list["toPosition"]))
+					pieceList[pieceFromPosition] = null
+					for(var/obj/item/chessman/piece in src)
+						if(piece.position == (pieceFromPosition + 1))
+							piece.position = pieceToPosition
+							pieceList[pieceToPosition] = "[piece.pieceType][piece.pieceAffinity]"
+							pieceList[pieceFromPosition] = null
+							lastMoveSpaces[1] = pieceFromPosition
+							lastMoveSpaces[2] = pieceToPosition
+							uiSetup()
+							return
+			if("remove")
+				if(istype(usr,/mob/living/carbon/human) && (usr in range(1,src)))
+					var/mob/living/carbon/human/user = usr
+					for(var/obj/item/chessman/piece in src)
+						var/piecePosition = ((text2num(href_list["position"])) + 1) // because BYOND counts from 1 smh
+						if(piece.position == piecePosition)
+							user.put_in_hand_or_drop(piece)
+							//user.visible_message("[user] removes \the [piece] from the board.")
+							pieceList[piece.position] = null
+							uiSetup()
+							return
+			if("sendSelection")
+				if(istype(usr,/mob/living/carbon/human) && (usr in range(1,src)))
+					selectedSpace = text2num(href_list["position"])
+					uiSetup()
+
+	attack_hand(var/mob/user) // open browser window when board is clicked
+		if(!(user in src.openWindows) && istype(user,/mob/living/carbon/human) && !(src in user.contents))
+			src.openWindows.Add(user)
 		uiSetup()
 
-	attackby(var/obj/item/chessman/piece, var/mob/user)
+	attackby(var/obj/item/chessman/piece, var/mob/user) // open browser window if board is thwacked with a chess/checkers piece
+		if(istype(piece,/obj/item/chessman))
+			if(!(user in src.openWindows) && istype(user,/mob/living/carbon/human) && !(src in user.contents))
+				src.openWindows.Add(user)
+			uiSetup()
+		else
+			..()
 
 	MouseDrop(var/mob/user) // because picking up the board is cool
 		if((istype(user,/mob/living/carbon/human))&&(!user.stat)&&!(src in user.contents))
@@ -22,9 +85,9 @@
 
 	disposing() // close windows when you throw the board into the bin
 		..()
-		for(var/mob/user in src.openwindows)
+		for(var/mob/user in src.openWindows)
 			user << browse(null, "window=chess")
-		src.openwindows = null
+		src.openWindows = null
 
 /obj/item/chessman
 	name = "chessman"
@@ -34,7 +97,7 @@
 	w_class = 1
 	var/pieceAffinity // black, white
 	var/pieceType // king, queen, bishop, etc.
-	var/position // position of the piece on the board, ranging from 0 to 63
+	var/position // position of the piece on the board, ranging from 1 to 64
 
 	attack(mob/M as mob, var/mob/user) // okay you know what you can eat the pieces now and it really fucking hurts
 		if(ishuman(M))
@@ -91,6 +154,7 @@
 	name = "STOP LOOKING AT ME"
 	desc = "if you see this, everything has gone disastrously wrong, please send a bug report."
 	icon = 'icons/obj/items/chess.dmi'
+	var/maxCapacity
 	var/affinity //black or white, for setting the piece colour dispensed by a box
 	var/spawnType
 	var/outputTarget
@@ -217,6 +281,7 @@
 				spawnPiece(possiblePieces[i])
 
 		setExamine(src)
+		maxCapacity = contents.len
 
 	attack_hand(var/mob/user)
 		// open box if closed
@@ -230,6 +295,9 @@
 	attackby(var/obj/item/chessman/piece, var/mob/user)
 		// check chess piece for correct affinity, then places it into box's contents
 		if(istype(piece,/obj/item/chessman))
+			if(contents.len >= maxCapacity)
+				boutput(user, "The box is full!")
+				return
 			if(piece.pieceAffinity != affinity)
 				boutput(user, "That doesn't belong in this box!")
 				return

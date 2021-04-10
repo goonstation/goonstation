@@ -71,7 +71,7 @@ createpiece = function(x,y,color,tile,type,position){
 }
 
 checkhand = function(color){
-	createpiece(globalx,globaly,color,globaltile);
+	createpiece(globalxglobalx,globaly,color,globaltile);
 	globalx = null;
 	globaly = null;
 	globatile = null;

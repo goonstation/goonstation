@@ -5,7 +5,12 @@
 		<link rel="stylesheet" type="text/css" href="{{resource("css/chess.css")}}">
 		<!-- Jquery used for string appending when drawing pieces on the board -->
 		<script src="{{resource("js/jquery.min.js")}}"></script>
-		<script>json = "!!PIECES!!";</script> <!-- Piece list converted into a json list -->
+		<script>
+			srcRef = "!!SRC_REF!!";
+			piecejson = !!PIECES!!; /* Piece list converted into a json list */
+			lastmovejson = !!LASTMOVE!!; /* Last move converted into a json list */
+			selection = !!SELECTION!!; /* Selected space */
+		</script>
 	</head>
 <body>
 	<div class="chessboard">

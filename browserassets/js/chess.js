@@ -2,20 +2,21 @@
 var tileSize = 60;
 var files = 8, ranks = 8;
 var white = "#f0ce99", black = "#8a613f";
-var whiteSide = "w", blackSide = "b";
+var whiteSide = "white", blackSide = "black";
 var imagesPath = "{{resource('images/chessboard/)}}";
 var notationOffset = 10;
 var notationColor, notationTextStyle = "10px", weirdnessMultiplier = "5" // for whatever reason, some offsets have to be divided by this so it looks less weird. dunno why.
 
 // piece handling and selection
-var pieceList = Array.apply(null, Array(files*ranks)); // sets array of length 64 with all values set to null
-var fromSpace = null, toSpace = null;
-var selectionColor = "rgba(34, 139, 34, 0.3)", lastMoveColor = "rgba(255, 255, 0, 0.3)";
+var pieceList
+var fromSpace, toSpace;
+var selectionColor = "rgba(34, 139, 34, 0.7)", lastMoveColor = "rgba(255, 255, 0, 0.3)";
+var selectionSquare, lastMoveFromPos, lastMoveToPos;
 
 function byond() { // i have no idea what this does.
 	url = "?src=" + srcRef;
 	currentIsKey = true;
-	for(var i = 0; i < arguments.length; i++) {
+	for(let i = 0; i < arguments.length; i++) {
 			if(currentIsKey)
 					url += ";";
 			else
@@ -30,16 +31,15 @@ function byond() { // i have no idea what this does.
 }
 
 //////////////////BOARD DRAWING//////////////////
-
-drawBoard = function() {
-	var canvas = document.getElementById('chessboard');
-	var ctx = canvas.getContext('2d');
-	for(var rank = 0; rank < ranks; ++rank) { // for each rank on the board
-		for(var file = 0; file < files; ++file)	{ // for each file in the rank
+function drawBoard() {
+	let canvas = document.getElementById('chessboard');
+	let ctx = canvas.getContext('2d');
+	for(let rank = 0; rank < ranks; ++rank) { // for each rank on the board
+		for(let file = 0; file < files; ++file)	{ // for each file in the rank
 			ctx.fillStyle = ((file+rank)%2==0) ? white:black; // ternary for setting colour based on board space even-ness
 			ctx.fillRect((tileSize*file), (tileSize*rank), tileSize, tileSize);
 			if((rank + 1)== ranks){
-				var coordinateString = (String.fromCharCode((file) + 65));
+				let coordinateString = (String.fromCharCode((file) + 65));
 				notationColor = ((file) % 2 == 0)? white:black;
 				ctx.fillStyle = notationColor;
 				ctx.font = notationTextStyle;
@@ -53,6 +53,31 @@ drawBoard = function() {
 	}
 }
 
+function drawHighlights(){
+	clearCanvas("selectionSquares"); // clear selectionSquares canvas
+	clearCanvas("lastMoveSquares"); // clear selectionSquares canvas
+	selectionSquare = parseInt(selection[0]);
+	drawSingleSquare(selectionSquare, "selectionSquares", selectionColor); // draw selection square at selected position
+	lastMoveFromPos = parseInt(lastmovejson[0]);
+	lastMoveToPos = parseInt(lastmovejson[1]);
+	drawSingleSquare(lastMoveFromPos, "lastMoveSquares", lastMoveColor);
+	drawSingleSquare(lastMoveToPos, "lastMoveSquares", lastMoveColor);
+}
+
+function drawSingleSquare(squarePosition, selectedCanvas, selectedColor){ // draws a single square of a certain colour at a certain position on the board
+	let drawSquareFile = squarePosition % ranks, drawSquareRank = Math.floor(squarePosition/ranks);
+	let selectionCanvas = document.getElementById(selectedCanvas);
+	let selectionctx = selectionCanvas.getContext('2d');
+	selectionctx.fillStyle = selectedColor;
+	selectionctx.fillRect((tileSize*drawSquareFile), (tileSize*drawSquareRank), tileSize, tileSize);
+}
+
+function clearCanvas(clrCanvas){ // clears the canvas used in the argument
+	let clearCanvas = document.getElementById(clrCanvas);
+	let clearctx = clearCanvas.getContext('2d');
+	clearctx.clearRect(0, 0, clearCanvas.width, clearCanvas.height);
+}
+
 //////////////////PIECE DRAWING//////////////////
 // CHESS PIECE LICENCE INFORMATION
 // Source: https://en.wikipedia.org/wiki/User:Cburnett/GFDL_images/Chess
@@ -62,169 +87,147 @@ drawBoard = function() {
 
 // following vars are how i have to import the piece images because i have no other choice
 // these damn things make me want to *cry*
-var whitePieceList = [
-	"{{resource("images/chessboard/kw.png")}}",
-	"{{resource("images/chessboard/qw.png")}}",
-	"{{resource("images/chessboard/bw.png")}}",
-	"{{resource("images/chessboard/nw.png")}}",
-	"{{resource("images/chessboard/rw.png")}}",
-	"{{resource("images/chessboard/pw.png")}}",
-];
-
-var blackPieceList = [
-	"{{resource("images/chessboard/kb.png")}}",
-	"{{resource("images/chessboard/qb.png")}}",
-	"{{resource("images/chessboard/bb.png")}}",
-	"{{resource("images/chessboard/nb.png")}}",
-	"{{resource("images/chessboard/rb.png")}}",
-	"{{resource("images/chessboard/pb.png")}}",
+var pieceImageList = [
+	"{{resource("images/chessboard/kingblack.png")}}",
+	"{{resource("images/chessboard/queenblack.png")}}",
+	"{{resource("images/chessboard/bishopblack.png")}}",
+	"{{resource("images/chessboard/knightblack.png")}}",
+	"{{resource("images/chessboard/rookblack.png")}}",
+	"{{resource("images/chessboard/pawnblack.png")}}",
+	"{{resource("images/chessboard/kingwhite.png")}}",
+	"{{resource("images/chessboard/queenwhite.png")}}",
+	"{{resource("images/chessboard/bishopwhite.png")}}",
+	"{{resource("images/chessboard/knightwhite.png")}}",
+	"{{resource("images/chessboard/rookwhite.png")}}",
+	"{{resource("images/chessboard/pawnwhite.png")}}",
 ];
 
 Number.isInteger = Number.isInteger || function(value) { // fuck IE
 	return typeof value === 'number' &&
 	  isFinite(value) &&
 	  Math.floor(value) === value;
-  };
+  }
 
-drawPiece = function(position, pieceType, pieceColor) { // file and rank start at zero, small-brain.
-	var file = position % ranks, rank = Math.floor(position/ranks);
-	var pieceImage = pieceType + pieceColor;
-	var sourceString;
-	switch(pieceColor){ // both cases check the piece type and piece colour given, and they draw the pieces to the board. it's terrible code, and i want to cry.
-		case whiteSide:
-			var whitePieceListLen = whitePieceList.length;
-			for(var i = 0; i < whitePieceListLen; i++){
-				if((whitePieceList[i].search(pieceImage)) != -1){
-					sourceString = whitePieceList[i];
-					break;
-				}
-			}
-		case blackSide:
-			var blackPieceListLen = blackPieceList.length;
-			for(var i = 0; i < blackPieceListLen; i++){
-				if((blackPieceList[i].search(pieceImage)) != -1){
-					sourceString = blackPieceList[i];
-					break;
-				}
-			}
-	}
-	// this next part's gonna be a long one.
-	pieceImageString = "<image src=\""+sourceString+"\" class=\'piece\' style=\'width: "+tileSize+"px; height: "+tileSize+"px; transform: translate("+(file*tileSize)+"px,"+(rank*tileSize)+"px);'>";
-	$("#chesspieces").append(pieceImageString);
-}
-
-//THIS FUNCTION IS PRIMARILY USED FOR DEBUGGING PURPOSES AND TESTING HOW PIECES ARE DISPLAYED ON THE BOARD//
-loadFEN = function(positionalFEN) {
-	var fenBoard = positionalFEN.split("");
-	var selectedFile = 0, selectedRank = 0, selectedPieceType = 0, selectedPieceColor = 0;
-	pieceList = Array.apply(null, Array(files*ranks));
-	for(var i = 0; i < fenBoard.length; i++){
-		if(fenBoard[i] == "/"){ // go to next rank at end of file
-			selectedFile = 0;
-			selectedRank++;
-		} else if(Number.isInteger(parseInt(fenBoard[i]))){ // skip the number of spaces allotted by an integer in the FEN string
-			selectedFile += parseInt(fenBoard[i]);
-		} else {
-			selectedPieceColor = (fenBoard[i] == fenBoard[i].toUpperCase()) ? whiteSide:blackSide; // set piece colour based on
-			selectedPieceType = fenBoard[i].toLowerCase();
-			pieceList[((selectedRank * ranks) + selectedFile)] = selectedPieceType + selectedPieceColor;
-			selectedFile++;
+function drawPiece(position, pieceName) { // file and rank start at zero, small-brain.
+	let file = position % ranks, rank = Math.floor(position/ranks);
+	let sourceString;
+	let pieceImageListLen = pieceImageList.length;
+	for(let i = 0; i < pieceImageListLen; i++){
+		if((pieceImageList[i].search(pieceName)) != -1){
+			sourceString = pieceImageList[i];
+			break;
 		}
 	}
-	initialisePieces();
+	// this next part's gonna be a long one.
+	let pieceImageString = "<image src=\""+sourceString+"\" class=\'piece\' style=\'width: "+tileSize+"px; height: "+tileSize+"px; transform: translate("+(file*tileSize)+"px,"+(rank*tileSize)+"px);'>";
+	$("#chesspieces").append(pieceImageString);
 }
 
 function initialisePieces() { // function for initialising chess pieces after... every... move.
 	clearPieces();
-	for(var i = 0; i < pieceList.length; i++){
+	pieceList = piecejson;
+	console.log(pieceList);
+	for(let i = 0; i < pieceList.length; i++){
 		if(pieceList[i] != null) {
-			var singlePieceArray = pieceList[i].split("");
-			drawPiece(i, singlePieceArray[0], singlePieceArray[1]);
+			drawPiece(i, pieceList[i]);
 		}
 	}
+	drawHighlights();
 }
 
 function clearPieces(){document.getElementById("chesspieces").innerHTML = "";}
 
 //////////////////PIECE INTERACTION//////////////////
-function processMovement(event){ // fired on-click
+function processClick(event){
 	var selectedSpace = getClickedPos(event);
 	if(!Number.isInteger(selectedSpace)){ // if clicked space isn't valid
-		return;
-	} else if(!Number.isInteger(fromSpace)){ // if no fromSpace has been selected prior, set clicked square to fromSpace
-		fromSpace = selectedSpace;
-		if(!pieceList[fromSpace]){ // if clicked space is empty, return and set fromSpace to null
-			fromSpace = null;
+			console.log("invalid space");
+			return;
+	}
+	else if(fromSpace == null){
+		if(!pieceList[selectedSpace]){
+			byond("command","checkHand","position",selectedSpace);
 			return;
 		}
-		drawSingleSquare(parseInt(fromSpace), "selectionSquares", selectionColor); // draw selection square at fromSpace position
+		else{
+			console.log("no fromSpace; processing movement");
+			processMovement(selectedSpace);
+		}
+	}
+	else{
+		console.log("no toSpace/all other cases; processing movement");
+		processMovement(selectedSpace);
+	}
+}
+
+function processMovement(clickedPiece){ // fired on-click
+	if(!Number.isInteger(fromSpace)){ // if no fromSpace has been selected prior, set clicked square to fromSpace
+		fromSpace = clickedPiece;
+		console.log("fromSpace selected " + fromSpace);
 		return;
-	} else if(!Number.isInteger(toSpace)){ // if no toSpace has been selected, which, hm...
-		toSpace = selectedSpace;
-		clearCanvas("selectionSquares"); // clear selectionSquares canvas
+	}
+	else if(!Number.isInteger(toSpace)){ // if no toSpace has been selected, which, hm...
+		console.log("toSpace selected " + toSpace);
+		toSpace = clickedPiece;
 		if(toSpace == fromSpace){ // if toSpace and fromSpace are the same, revert everything
 			fromSpace = null, toSpace = null;
 			return;
 		}
-		pieceList[toSpace] = pieceList[fromSpace]; // change the piece positions in the array
-		pieceList[fromSpace] = null;
-		handleLastMoveSquare(fromSpace, toSpace); // draw highlights for last move made
-		initialisePieces(); // redraw pieces on the board
-		fromSpace = null, toSpace = null; // reset variables, time to start this again
+	pieceList[toSpace] = pieceList[fromSpace]; // change the piece positions in the array
+	pieceList[fromSpace] = null;
+	initialisePieces(); // redraw pieces on the board
+	byond("command","changePos","fromPosition",fromSpace,"toPosition",toSpace); // communicates change in position to chess_board.dm
+	fromSpace = null, toSpace = null; // reset letiables, time to start this again
 	}
 }
 
 function deleteClickedPiece(event){ // deletes piece under cursor when fired
-	var selectedSpace = getClickedPos(event);
-	if(!Number.isInteger(selectedSpace)){ // if clicked space isn't valid
+	let pieceToDelete = getClickedPos(event);
+	if(!pieceList[pieceToDelete]){
 		return;
 	}
-	pieceList[selectedSpace] = null;
-	clearCanvas("selectionSquares"); // clear selectionSquares canvas
-	clearCanvas("lastMoveSquares"); // clear selectionSquares canvas
-	initialisePieces();
+	if(!Number.isInteger(pieceToDelete)){ // if clicked space isn't valid
+		return;
+	}
+	byond("command","remove","position",pieceToDelete);
 }
 
-function handleLastMoveSquare(lastFrom, lastTo){ // draw highlights for last move made
+/* function handleLastMoveSquare(lastFrom, lastTo){ // draw highlights for last move made
 	clearCanvas("lastMoveSquares")
 	drawSingleSquare(lastFrom, "lastMoveSquares", lastMoveColor);
 	drawSingleSquare(lastTo, "lastMoveSquares", lastMoveColor);
-}
-
-function drawSingleSquare(squarePosition, selectedCanvas, selectedColor){ // draws a single square of a certain colour at a certain position on the board
-	var drawSquareFile = squarePosition % ranks, drawSquareRank = Math.floor(squarePosition/ranks);
-	var selectionCanvas = document.getElementById(selectedCanvas);
-	var selectionctx = selectionCanvas.getContext('2d');
-	selectionctx.fillStyle = selectedColor;
-	selectionctx.fillRect((tileSize*drawSquareFile), (tileSize*drawSquareRank), tileSize, tileSize);
-}
-
-function clearCanvas(clrCanvas){ // clears the canvas used in the argument
-	var clearCanvas = document.getElementById(clrCanvas);
-	var clearctx = clearCanvas.getContext('2d');
-	clearctx.clearRect(0, 0, clearCanvas.width, clearCanvas.height);
-}
+} */
 
 // get mouse position with event listeners
 function getClickedPos(event) {
 	event = event || window.event;
-	var boardX = (event.pageX - $('#chessboard').offset().left);
-	var boardY = (event.pageY - $('#chessboard').offset().top);
+	let boardX = (event.pageX - $('#chessboard').offset().left);
+	let boardY = (event.pageY - $('#chessboard').offset().top);
 	if(boardX < 0 || boardX > (files*tileSize)|| boardY < 0 || boardY > (ranks*tileSize)){
 		return;
 	}
-	var clickedFile = Math.floor(boardX/tileSize);
-	var clickedRank = Math.floor(boardY/tileSize);
-	var clickedSpace = ((clickedRank * files) + clickedFile);
+	let clickedFile = Math.floor(boardX/tileSize);
+	let clickedRank = Math.floor(boardY/tileSize);
+	let clickedSpace = ((clickedRank * files) + clickedFile);
 	return clickedSpace;
 }
 
+//////////////////STUFF THAT INTERFACES WITH CHESS_BOARD.DM//////////////////
+window.onbeforeunload = windowclose;
+function windowclose(){
+   byond("command","close");
+}
+
+////////////////////////////////////////////////////////////////////////
 window.onload = function() {
 	document.body.scroll="no";
 	drawBoard();
-	//loadFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR"); // starting FEN for testing
+	console.log("highlights drawn");
+	console.log("selection " + selection);
+	console.log("last move " + lastmovejson);
+	initialisePieces();
 	document.addEventListener("click", function(event){ // event listener that triggers when the board is clicked
-		processMovement(event);
+		processClick(event);
 	});
 	document.addEventListener("contextmenu", function(event){ // event listener that triggers upon right-clicking to facilitate piece deletion
 		deleteClickedPiece(event);
