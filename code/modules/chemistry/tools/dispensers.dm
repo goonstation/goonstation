@@ -503,7 +503,7 @@
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W,/obj/item/reagent_containers/food) || istype(W, /obj/item/plant))
 			var/load = 0
-			if (src.brew(W))
+			if (src.brew(W, user))
 				load = 1
 			else
 				load = 0
@@ -535,7 +535,7 @@
 				if (src.reagents.is_full())
 					user.show_text("[src] is full!", "red")
 					break
-				if (src.brew(P))
+				if (src.brew(P, user))
 					amtload++
 					pool(P)
 				else
@@ -555,7 +555,7 @@
 				if (user.loc != staystill)
 					user.show_text("You were interrupted!", "red")
 					break
-				if (src.brew(O))
+				if (src.brew(O, user))
 					pool(O)
 				else
 					continue
