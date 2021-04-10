@@ -472,22 +472,22 @@
 		if (!W || !(istype(W,/obj/item/reagent_containers/food) || istype(W, /obj/item/plant)))
 			return 0
 
-		if (!W:brewable || !W:brew_result)
+		if (!W.brewable || !W.brew_result)
 			return 0
 
 		if (istype(W,/obj/item/reagent_containers/food/snacks/snack_cake) || istype(W,/obj/item/reagent_containers/food/snacks/burrito))
-			if (islist(W:brew_result) && W:brew_result:len)
-				W:brew_result += W.reagents.reagent_list
+			if (islist(W.brew_result) && W.brew_result.len)
+				W.brew_result += W.reagents.reagent_list
 
 		//var/brewed_name = null
-		if (islist(W:brew_result) && W:brew_result:len)
-			for (var/i in W:brew_result)
+		if (islist(W.brew_result) && W.brew_result.len)
+			for (var/i in W.brew_result)
 				//brewed_name += ", [reagent_id_to_name(i)]"
 				src.reagents.add_reagent(i, 10)
 			//brewed_name = copytext(brewed_name, 3)
 		else
-			src.reagents.add_reagent(W:brew_result, 20)
-			//brewed_name = reagent_id_to_name(W:brew_result)
+			src.reagents.add_reagent(W.brew_result, 20)
+			//brewed_name = reagent_id_to_name(W.brew_result)
 
 		src.visible_message("<span class='notice'>[src] brews up [W]!</span>")// into [brewed_name]!")
 		return 1
@@ -567,27 +567,23 @@
 "oxygen","phosphorus","plasma","potassium","radium","silver","sugar","hydrogen","water",\
 "carbon","chlorine","sulfur","calcium","iron","ethanol")
 
-	brew(var/obj/item/W as obj, mob/user as mob)
-		if (!W || !(istype(W,/obj/item/reagent_containers/food) || istype(W, /obj/item/plant)))
-			return 0
+	brew(obj/item/W)
+		. = ..()
+		var/brew_count = 0
+		if (istype(W, /obj/item/reagent_containers/food))
+			var/obj/item/reagent_containers/food/F = W
+			brew_count = length(F.brew_result)
+		else if (istype(W, /obj/item/plant))
+			var/obj/item/plant/P = W
+			brew_count = length(P.brew_result)
 
-		if (!W:brewable || !W:brew_result)
-			return 0
+		if (!brew_count) return
 
-		if (istype(W,/obj/item/reagent_containers/food/snacks/snack_cake) || istype(W,/obj/item/reagent_containers/food/snacks/burrito))
-			user.show_text("No way man, you'll clog the pipes with that stuff!", "red")
-			return 0
-
-		if (islist(W:brew_result) && W:brew_result:len)
-			for (var/i in W:brew_result)
-				src.reagents.add_reagent(i, 10)
+		if (brew_count > 1)
+			for (var/i in 1 to brew_count)
 				src.reagents.add_reagent(random_reagents_list, 10)
 		else
-			src.reagents.add_reagent(W:brew_result, 20)
-			src.reagents.add_reagent(pick(random_reagents_list), 20)
-
-		src.visible_message("<span class='notice'>[src] brews up [W]!</span>")
-		return 1
+			src.reagents.add_reagent(random_reagents_list, 20)
 
 /* ==================================================== */
 /* --------------- Water Cooler Bottle ---------------- */
