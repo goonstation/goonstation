@@ -15,7 +15,7 @@ const logger = createLogger('ByondUi');
 // Stack of currently allocated BYOND UI element ids.
 const byondUiStack = [];
 
-const createByondUiElement = elementId => {
+const createByondUiElement = (elementId) => {
   // Reserve an index in the stack
   const index = byondUiStack.length;
   byondUiStack.push(null);
@@ -24,7 +24,7 @@ const createByondUiElement = elementId => {
   logger.log(`allocated '${id}'`);
   // Return a control structure
   return {
-    render: params => {
+    render: (params) => {
       logger.log(`rendering '${id}'`);
       byondUiStack[index] = id;
       Byond.winset(id, params);
@@ -56,17 +56,11 @@ window.addEventListener('beforeunload', () => {
 /**
  * Get the bounding box of the DOM element.
  */
-const getBoundingBox = element => {
+const getBoundingBox = (element) => {
   const rect = element.getBoundingClientRect();
   return {
-    pos: [
-      rect.left,
-      rect.top,
-    ],
-    size: [
-      rect.right - rect.left,
-      rect.bottom - rect.top,
-    ],
+    pos: [rect.left, rect.top],
+    size: [rect.right - rect.left, rect.bottom - rect.top],
   };
 };
 
@@ -78,19 +72,24 @@ export class ByondUi extends Component {
     this.handleResize = debounce(() => {
       this.forceUpdate();
     }, 100);
+
+    let lock = false;
+    this.handleScroll = () => {
+      if (!lock) {
+        window.requestAnimationFrame(() => {
+          this.componentDidUpdate();
+          lock = false;
+        });
+
+        lock = true;
+      }
+    };
   }
 
   shouldComponentUpdate(nextProps) {
-    const {
-      params: prevParams = {},
-      ...prevRest
-    } = this.props;
-    const {
-      params: nextParams = {},
-      ...nextRest
-    } = nextProps;
-    return shallowDiffers(prevParams, nextParams)
-      || shallowDiffers(prevRest, nextRest);
+    const { params: prevParams = {}, ...prevRest } = this.props;
+    const { params: nextParams = {}, ...nextRest } = nextProps;
+    return shallowDiffers(prevParams, nextParams) || shallowDiffers(prevRest, nextRest);
   }
 
   componentDidMount() {
@@ -99,7 +98,7 @@ export class ByondUi extends Component {
       return;
     }
     window.addEventListener('resize', this.handleResize);
-    window.addEventListener('scroll', () => this.componentDidUpdate());
+    window.addEventListener('scroll', this.handleScroll, true);
     this.componentDidUpdate();
     this.handleResize();
   }
@@ -109,10 +108,7 @@ export class ByondUi extends Component {
     if (Byond.IS_LTE_IE10) {
       return;
     }
-    const {
-      params = {},
-      hideOnScroll,
-    } = this.props;
+    const { params = {}, hideOnScroll } = this.props;
     const box = getBoundingBox(this.containerRef.current);
     logger.debug('bounding box', box);
     if (hideOnScroll && box.pos[1] < 32) {
@@ -133,7 +129,7 @@ export class ByondUi extends Component {
       return;
     }
     window.removeEventListener('resize', this.handleResize);
-    window.removeEventListener('scroll', this.handleResize);
+    window.removeEventListener('scroll', this.handleScroll, true);
     this.byondUiElement.unmount();
   }
 
@@ -141,9 +137,7 @@ export class ByondUi extends Component {
     const { params, ...rest } = this.props;
     const boxProps = computeBoxProps(rest);
     return (
-      <div
-        ref={this.containerRef}
-        {...boxProps}>
+      <div ref={this.containerRef} {...boxProps}>
         {/* Filler */}
         <div style={{ 'min-height': '22px' }} />
       </div>
