@@ -237,6 +237,9 @@ var/global/list/job_start_locations = list()
 /obj/landmark/lrt/workshop
 	name = "Hidden Workshop"
 
+/obj/landmark/character_preview_spawn
+	name = LANDMARK_CHARACTER_PREVIEW_SPAWN
+
 /obj/landmark/viscontents_spawn
 	name = "visual mirror spawn"
 	desc = "Links a pair of corresponding turfs in holy Viscontent Matrimony. You shouldnt be seeing this."
