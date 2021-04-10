@@ -1,7 +1,7 @@
 name: "Post Labeled PRs to the Forum"
 on:
   pull_request_target:
-    types: [labeled, closed, edited]
+    types: [labeled, closed, edited, reopened]
 
 jobs:
   post-to-forums:

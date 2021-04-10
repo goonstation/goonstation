@@ -59,7 +59,7 @@
 
 		for (var/turf/P in start_location)
 			if (istype(P, centcom_turf))
-				new map_turf(P)
+				P.ReplaceWith(map_turf, FALSE, TRUE, FALSE, TRUE)
 
 		end_location.color = null
 
@@ -83,7 +83,7 @@
 
 			for (var/turf/O in end_location)
 				if (istype(O, map_turf))
-					new centcom_turf(O)
+					O.ReplaceWith(centcom_turf, FALSE, TRUE, FALSE, TRUE)
 
 			end_location.move_contents_to(start_location, map_turf)
 

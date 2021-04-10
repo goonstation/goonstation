@@ -6162,7 +6162,7 @@
 "mN" = (
 /obj/table/reinforced/auto,
 /obj/item/instrument/harmonica,
-/obj/item/card_box/suit,
+/obj/item/card_box/plain,
 /turf/simulated/floor/black/grime,
 /area/station/security/secwing)
 "mO" = (
@@ -9453,8 +9453,8 @@
 "th" = (
 /obj/table/reinforced/auto,
 /obj/item/kitchen/rollingpin,
-/obj/item/reagent_containers/glass/bottle/icing,
-/obj/item/reagent_containers/glass/bottle/icing,
+/obj/item/reagent_containers/food/drinks/drinkingglass/icing,
+/obj/item/reagent_containers/food/drinks/drinkingglass/icing,
 /obj/item/kitchen/utensil/knife,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/cafeteria{
@@ -13835,7 +13835,7 @@
 /area/station/chapel/sanctuary)
 "Bk" = (
 /obj/table/auto,
-/obj/item/card_box/suit,
+/obj/item/card_box/plain,
 /obj/machinery/light_switch/west,
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/captain{
@@ -14620,6 +14620,7 @@
 "CL" = (
 /obj/table/wood/auto,
 /obj/displaycase{
+	displayed = new /obj/item/captaingun
 	pixel_y = 6
 	},
 /turf/simulated/floor/black,
@@ -17574,7 +17575,7 @@
 	pixel_x = -4;
 	pixel_y = 8
 	},
-/obj/item/postit_stack{
+/obj/item/item_box/postit{
 	pixel_x = 3;
 	pixel_y = 1
 	},
@@ -18183,7 +18184,7 @@
 "JG" = (
 /obj/table/wood/auto,
 /obj/item/reagent_containers/food/drinks/bottle/tequila,
-/obj/item/playing_cards/suit,
+/obj/item/card_group/plain,
 /obj/item/spacecash/hundred,
 /turf/simulated/floor/orangeblack,
 /area/listeningpost)

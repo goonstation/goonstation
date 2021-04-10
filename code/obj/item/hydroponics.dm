@@ -209,7 +209,13 @@
 /obj/item/saw/syndie/attack(mob/living/carbon/human/target as mob, mob/user as mob)
 	var/mob/living/carbon/human/H = target
 
-	if (H.organHolder && active == 1)
+	if(!active)
+		src.visible_message("<span class='notify'>[user] gently taps [target] with the turned off [src].</span>")
+
+	if(active && prob(35))
+		gibs(target.loc, blood_DNA=H.bioHolder.Uid, blood_type=H.bioHolder.bloodType, headbits=FALSE, source=H)
+
+	if (H.organHolder && active)
 		if (H.organHolder.appendix)
 			H.organHolder.drop_organ("appendix")
 			playsound(target.loc,'sound/impact_sounds/Slimy_Splat_2_Short.ogg', 50, 1)
@@ -458,6 +464,7 @@
 	rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
 	module_research = list("tools" = 2, "hydroponics" = 4)
 	initial_volume = 120
+	can_recycle = FALSE
 
 	New()
 		..()
@@ -591,3 +598,10 @@
 	rc_flags = RC_SCALE
 	initial_volume = 250
 	initial_reagents = list("saltpetre"=50, "ammonia"=50, "potash"=50, "poo"=50, "space_fungus"=50)
+
+/obj/item/reagent_containers/glass/water_pipe
+	name = "water pipe"
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "bong"
+
+	filled

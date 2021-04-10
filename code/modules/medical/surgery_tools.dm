@@ -1109,7 +1109,7 @@ CONTAINS:
 			src.w_class = 4.0
 		else if (!src.open)
 			src.overlays -= src.open_image
-			if (src.contents && src.contents.len)
+			if (src.contents && length(src.contents))
 				src.icon_state = "bodybag-closed1"
 			else
 				src.icon_state = "bodybag-closed0"
@@ -1157,7 +1157,7 @@ CONTAINS:
 		if(isturf(over_object))
 			..() //Lets it do the turf-to-turf slide
 			return
-		else if (istype(over_object, /obj/screen/hud))
+		else if (istype(over_object, /atom/movable/screen/hud))
 			over_object = usr //Try to fold & pick up the bag with your mob instead
 		else if (!(over_object == usr))
 			return
@@ -1524,7 +1524,7 @@ keeping this here because I want to make something else with it eventually
 		if (.)
 			if (prob(75))
 				playsound(get_turf(src), "sound/misc/chair/office/scoot[rand(1,5)].ogg", 40, 1)
-			if (islist(bring_this_stuff) && bring_this_stuff.len)
+			if (islist(bring_this_stuff) && length(bring_this_stuff))
 				var/stuff_moved = 0
 				for (var/obj/item/I in bring_this_stuff)
 					LAGCHECK(LAG_HIGH)
@@ -1611,6 +1611,13 @@ keeping this here because I want to make something else with it eventually
 	proc/detach(obj/item/I as obj) //remove from the attached items list and deregister signals
 		src.attached_objs.Remove(I)
 		UnregisterSignal(I, list(COMSIG_ITEM_PICKUP, COMSIG_MOVABLE_MOVED, COMSIG_PARENT_PRE_DISPOSING))
+
+	attack_hand(mob/user as mob)
+		if (!anchored)
+			boutput(user, "You apply \the [name]'s brake.")
+		else
+			boutput(user, "You release \the [name]'s brake.")
+		anchored = !anchored
 
 /* ---------- Surgery Tray Parts ---------- */
 /obj/item/furniture_parts/surgery_tray

@@ -9,10 +9,10 @@
 		var/timetoreach = rand(30,60)
 		var/actualtime = timetoreach * 10 + timetoreachsec
 
-		for (var/mob/N in mobs) // why N?  why not M?
-			N.flash(3 SECONDS)
+		for (var/mob/M in mobs)
+			M.flash(3 SECONDS)
 		var/sound/siren = sound('sound/misc/airraid_loop_short.ogg')
-		siren.repeat = 1
+		siren.repeat = TRUE
 		siren.channel = 5
 		siren.volume = 50 // wire note: lets not deafen players with an air raid siren
 		world << siren
@@ -21,8 +21,8 @@
 		SPAWN_DBG(0)
 			for_by_tcl(A, /obj/machinery/door/airlock)
 				LAGCHECK(LAG_LOW)
-				if (A.z != 1)
-					break
+				if (A.z != Z_LEVEL_STATION)
+					continue
 				if (!(istype(A, /obj/machinery/door/airlock/maintenance) || istype(A, /obj/machinery/door/airlock/pyro/maintenance) || istype(A, /obj/machinery/door/airlock/gannets/maintenance) || istype(A, /obj/machinery/door/airlock/gannets/glass/maintenance)))
 					continue
 				A.req_access = null
@@ -31,20 +31,19 @@
 
 			for (var/area/A in world)
 				LAGCHECK(LAG_LOW)
-				if (A.z != 1)
-					break
+				if (A.z != Z_LEVEL_STATION)
+					continue
 				if (A.do_not_irradiate)
 					continue
 				else
 					if (!A.irradiated)
-						A.irradiated = 1
+						A.irradiated = TRUE
+						A.icon_state = "blowout"
 					for (var/turf/T in A)
-						if (rand(0,1000) < 5 && T.z == 1 && istype(T,/turf/simulated/floor))
+						if (rand(0,1000) < 5 && istype(T,/turf/simulated/floor))
 							Artifact_Spawn(T)
-						else
-							continue
 
-			siren.repeat = 0
+			siren.repeat = FALSE
 			siren.channel = 5
 			siren.volume = 50
 
@@ -54,7 +53,7 @@
 	#ifndef UNDERWATER_MAP
 			for (var/turf/space/S in world)
 				LAGCHECK(LAG_LOW)
-				if (S.z == 1)
+				if (S.z == Z_LEVEL_STATION)
 					S.color = src.space_color
 				else
 					break
@@ -64,7 +63,7 @@
 
 			sleep(0.4 SECONDS)
 
-			blowout = 1
+			blowout = TRUE
 
 			var/sound/blowoutsound = sound('sound/misc/blowout.ogg')
 			blowoutsound.repeat = 0
@@ -84,18 +83,19 @@
 
 			for (var/area/A in world)
 				LAGCHECK(LAG_LOW)
-				if (A.z != 1)
-					break
+				if (A.z != Z_LEVEL_STATION)
+					continue
 				if (!A.permarads)
-					A.irradiated = 0
-			blowout = 0
+					A.irradiated = FALSE
+				A.icon_state = null
+			blowout = FALSE
 
 			command_alert("All radiation alerts onboard [station_name(1)] have been cleared. You may now leave the tunnels freely. Maintenance doors will regain their normal access requirements shortly.", "All Clear")
 
 	#ifndef UNDERWATER_MAP
 			for (var/turf/space/S in world)
 				LAGCHECK(LAG_LOW)
-				if (S.z == 1)
+				if (S.z == Z_LEVEL_STATION)
 					S.color = null
 				else
 					break
@@ -106,7 +106,7 @@
 			sleep(rand(25 SECONDS,50 SECONDS))
 
 			for_by_tcl(A, /obj/machinery/door/airlock)
-				if (A.z != 1)
+				if (A.z != Z_LEVEL_STATION)
 					break
 				if (!(istype(A, /obj/machinery/door/airlock/maintenance) || istype(A, /obj/machinery/door/airlock/pyro/maintenance) || istype(A, /obj/machinery/door/airlock/gannets/maintenance) || istype(A, /obj/machinery/door/airlock/gannets/glass/maintenance)))
 					continue

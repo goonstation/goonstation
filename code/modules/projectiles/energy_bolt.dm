@@ -306,8 +306,8 @@ toxic - poisons
 	icon_state = "pulse"
 	power = 20
 	cost = 35
-	sname = "pulse"
-	shot_sound = 'sound/weapons/Taser.ogg'
+	sname = "kinetic pulse"
+	shot_sound = 'sound/weapons/pulse.ogg'
 	damage_type = D_ENERGY
 	hit_ground_chance = 30
 	brightness = 1
@@ -339,6 +339,34 @@ toxic - poisons
 	impact_image_effect(var/type, atom/hit, angle, var/obj/projectile/O)
 		return
 
+
+/datum/projectile/energy_bolt/electromagnetic_pulse
+	name = "pulse"
+	icon = 'icons/obj/projectiles.dmi'
+	icon_state = "pulse"
+	power = 20
+	cost = 100
+	sname = "electromagnetic pulse"
+	shot_sound = 'sound/weapons/Taser.ogg'
+	damage_type = D_SPECIAL
+	hit_ground_chance = 0
+	brightness = 1
+	color_red = 0.18
+	color_green = 0.2
+	color_blue = 1
+
+	disruption = 25
+
+	hit_mob_sound = 'sound/effects/sparks6.ogg'
+
+	on_hit(atom/H, angle, var/obj/projectile/P)
+		var/turf/T = get_turf(H)
+		for(var/turf/tile in range(1, T))
+			for(var/atom/movable/O in tile.contents)
+				if(!istype(O, /obj/machinery/nuclearbomb)) //emp does not affect nuke
+					O.emp_act()
+		elecflash(T)
+
 /datum/projectile/energy_bolt/signifer_tase
 	name = "signifer spark"
 	icon = 'icons/obj/projectiles.dmi'
@@ -358,5 +386,42 @@ toxic - poisons
 
 	disruption = 2
 	ie_type = "T"
+
+	hit_mob_sound = 'sound/effects/sparks6.ogg'
+
+/datum/projectile/energy_bolt/smgburst
+	name = "energy bolt"
+	icon = 'icons/obj/projectiles.dmi'
+	icon_state = "taser_projectile"
+	power = 15
+	cost = 50
+	max_range = 12
+	ks_ratio = 0.0
+	sname = "burst"
+	shot_sound = 'sound/weapons/Taser.ogg'
+	shot_sound_extrarange = 5
+	shot_number = 2
+	damage_type = D_ENERGY
+
+	disruption = 8
+
+	hit_mob_sound = 'sound/effects/sparks6.ogg'
+
+/datum/projectile/energy_bolt/smgauto
+	name = "energy bolt"
+	icon = 'icons/obj/projectiles.dmi'
+	icon_state = "signifer2_tase"
+	power = 10
+	cost = 12
+	max_range = 8
+	ks_ratio = 0.0
+	sname = "full-auto"
+	shot_sound = 'sound/weapons/SigTase.ogg'
+	shot_sound_extrarange = 5
+	shot_number = 1
+	damage_type = D_ENERGY
+	fullauto_valid = 1
+
+	disruption = 8
 
 	hit_mob_sound = 'sound/effects/sparks6.ogg'

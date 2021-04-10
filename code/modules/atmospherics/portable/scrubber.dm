@@ -43,7 +43,7 @@
 
 		if(length(removed.trace_gases))
 			var/datum/gas/filtered_gas
-			for(var/datum/gas/trace_gas as() in removed.trace_gases)
+			for(var/datum/gas/trace_gas as anything in removed.trace_gases)
 				filtered_gas = filtered_out.get_or_add_trace_gas_by_type(trace_gas.type)
 				filtered_gas.moles = trace_gas.moles
 				removed.remove_trace_gas(trace_gas)
@@ -115,7 +115,19 @@
 			src.contained = 1
 			src.set_loc(W)
 			elecflash(user)
-	..()
+	else if(iswrenchingtool(W))
+		if(!connected_port)//checks for whether the scrubber is connected to a port, if it is calls parent.
+			var/obj/machinery/atmospherics/portables_connector/possible_port = locate(/obj/machinery/atmospherics/portables_connector/) in loc
+			if(!possible_port)//checks for whether there's something that could be connected to on the scrubber's loc, if there is it calls parent.
+				if(src.anchored)
+					src.anchored = 0
+					boutput(user, "<span class='notice'>You unanchor [name] from the floor.</span>")
+				else
+					src.anchored = 1
+					boutput(user, "<span class='notice'>You anchor [name] to the floor.</span>")
+			else ..()
+		else ..()
+	else ..()
 
 
 /obj/machinery/portable_atmospherics/scrubber/attack_ai(var/mob/user as mob)

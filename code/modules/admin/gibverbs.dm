@@ -116,7 +116,7 @@
 			logTheThing("diary", usr, M, "has icegibbed [constructTarget(M,"diary")]", "admin")
 			message_admins("[key_name(usr)] has icegibbed [key_name(M)]")
 
-		SPAWN_DBG(0.5 SECONDS) M:become_ice_statue()
+		SPAWN_DBG(0.5 SECONDS) M.become_statue_ice()
 
 /client/proc/cmd_admin_goldgib(mob/M as mob in world)
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
@@ -138,7 +138,7 @@
 			message_admins("[key_name(usr)] has goldgibbed [key_name(M)]")
 
 		M.desc = "A dumb looking statue. Very shiny, though."
-		SPAWN_DBG(0.5 SECONDS) M:become_gold_statue()
+		SPAWN_DBG(0.5 SECONDS) M.become_statue(getMaterial("gold"))
 
 /client/proc/cmd_admin_spidergib(mob/M as mob in world)
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
@@ -475,11 +475,10 @@
 			for(var/mob/O in AIviewers(src, null))
 				O.show_message("<span class='alert'><B>[src]</B> KOs [tysontarget2] in one punch!</span>", 1)
 			playsound(src.loc, 'sound/impact_sounds/generic_hit_3.ogg', 30, 1, -2)
-			if(tysontarget2?.client)
-				logTheThing("admin", caller:client, tysontarget2, "tysongibbed [constructTarget(tysontarget2,"admin")]")
-				logTheThing("diary", caller:client, tysontarget2, "tysongibbed [constructTarget(tysontarget2,"diary")]", "admin")
-				message_admins("<span class='internal'>[caller?.client?.ckey] has tysongibbed [tysontarget2.ckey].</span>")
-				tysontarget2.gib()
+			logTheThing("admin", caller:client, tysontarget2, "tysongibbed [constructTarget(tysontarget2,"admin")]")
+			logTheThing("diary", caller:client, tysontarget2, "tysongibbed [constructTarget(tysontarget2,"diary")]", "admin")
+			message_admins("<span class='internal'>[caller?.client?.ckey] has tysongibbed [tysontarget2] ([tysontarget2.ckey]).</span>")
+			tysontarget2.gib()
 			sleep(0.5 SECONDS)
 			playsound(src.loc, pick('sound/misc/knockout.ogg'), 50, 0)
 			sleep(0.5 SECONDS)

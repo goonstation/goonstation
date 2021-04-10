@@ -424,6 +424,13 @@ TRAYS
 		user.TakeDamage("head", 150, 0)
 		return 1
 
+/obj/item/kitchen/utensil/knife/pizza_cutter/traitor
+	var/sharpener_mode = FALSE
+
+	attack_self(mob/user as mob)
+		sharpener_mode = !sharpener_mode
+		boutput(user, "You flip a hidden switch in the pizza cutter to the [sharpener_mode ? "ON" : "OFF"] position.")
+
 /obj/item/kitchen/food_box // I came in here just to make donut/egg boxes put the things in your hand when you take one out and I end up doing this instead, kill me. -haine
 	name = "food box"
 	desc = "A box that can hold food! Well, not this one, I mean. You shouldn't be able to see this one."
@@ -433,7 +440,7 @@ TRAYS
 	amount = 6
 	var/max_amount = 6
 	var/box_type = "donutbox"
-	var/contained_food = /obj/item/reagent_containers/food/snacks/donut/random
+	var/contained_food = /obj/item/reagent_containers/food/snacks/donut/custom/random
 	var/contained_food_name = "donut"
 	tooltip_flags = REBUILD_DIST
 
@@ -489,7 +496,7 @@ TRAYS
 
 	MouseDrop(mob/user as mob) // no I ain't even touchin this mess it can keep doin whatever it's doin
 		// I finally came back and touched that mess because it was broke - Haine
-		if(user == usr && !usr.restrained() && !usr.stat && (usr.contents.Find(src) || in_range(src, usr)))
+		if(user == usr && !user.restrained() && !user.stat && (user.contents.Find(src) || in_interact_range(src, user)))
 			if(!user.put_in_hand(src))
 				return ..()
 
@@ -537,6 +544,7 @@ TRAYS
 	var/list/throw_targets = list()
 	var/throw_dist = 3
 	tooltip_flags = REBUILD_DIST
+	var/hit_sound = "sound/items/plate_tap.ogg"
 
 	New()
 		..()
@@ -583,8 +591,6 @@ TRAYS
 	proc/unique_attack_garbage_fuck(mob/M as mob, mob/user as mob)
 		attack_particle(user,M)
 		M.TakeDamageAccountArmor("head", force, 0, 0, DAMAGE_BLUNT)
-		M.changeStatus("weakened", 2 SECONDS)
-		M.force_laydown_standup()
 		playsound(get_turf(src), "sound/impact_sounds/plate_break.ogg", 50, 1)
 
 		var/turf/shardturf = get_turf(M)
@@ -604,9 +610,6 @@ TRAYS
 			O.throw_at(get_offset_target_turf(shardturf, rand(-4,4), rand(-4,4)), 7, 1)
 
 		qdel(src)
-
-	proc/unique_tap_garbage_fluck(mob/M as mob, mob/user as mob)
-		playsound(get_turf(src), "sound/items/plate_tap.ogg", 30, 1)
 
 	throw_impact(atom/A, datum/thrown_thing/thr)
 		..()
@@ -673,6 +676,9 @@ TRAYS
 		if(ordered_contents.len == max_food)
 			boutput(user, "That won't fit, \the [src] is too full!")
 			return
+		if(W.w_class > 3)
+			boutput(user, "You try to think of a way to put [W] on \the [src] but it's not possible! It's too large!")
+			return
 		user.drop_item()
 		W.set_loc(src)
 		src.add_contents(W)
@@ -716,12 +722,35 @@ TRAYS
 			else
 				M.visible_message("<span class='alert'><B>[user] smashes [src] over [M]'s head!</B></span>")
 				logTheThing("combat", user, M, "smashes [src] over [constructTarget(M,"combat")]'s head! ")
-			if(ordered_contents.len != 0)
+			if(length(ordered_contents))
 				src.shit_goes_everywhere()
+
+			if(ishuman(M))
+				var/mob/living/carbon/human/H = M
+				if(istype(H.head, /obj/item/clothing/head/helmet))
+					M.do_disorient(stamina_damage = 150, weakened = 0.1 SECONDS, disorient = 1 SECOND)
+				else
+					M.changeStatus("weakened", 1 SECONDS)
+					M.force_laydown_standup()
+			else if(ismobcritter(M))
+				var/mob/living/critter/L = M
+				var/has_helmet = FALSE
+				for(var/datum/equipmentHolder/head/head in L.equipment)
+					if(istype(head.item, /obj/item/clothing/head/helmet))
+						has_helmet = TRUE
+						break
+				if(has_helmet)
+					M.do_disorient(stamina_damage = 150, weakened = 0.1 SECONDS, disorient = 1 SECOND)
+				else
+					M.changeStatus("weakened", 1 SECONDS)
+					M.force_laydown_standup()
+			else //borgs, ghosts, whatever
+				M.do_disorient(stamina_damage = 150, weakened = 0.1 SECONDS, disorient = 1 SECOND)
+
 			unique_attack_garbage_fuck(M, user)
 		else
 			M.visible_message("<span class='alert'>[user] taps [M] over the head with [src].</span>")
-			unique_tap_garbage_fluck(M,user)
+			playsound(get_turf(src), src.hit_sound, 30, 1)
 			logTheThing("combat", user, M, "taps [constructTarget(M,"combat")] over the head with [src].")
 
 	attack_hand(mob/user as mob)
@@ -782,6 +811,7 @@ TRAYS
 	var/y_counter = 0
 	var/y_mod = 0
 	var/tray_health = 5 //number of times u can smash with a tray + 1, get_desc values are hardcoded so please adjust them (i know im a bad coder)
+	hit_sound = "step_lattice"
 
 	New()
 		..()
@@ -861,7 +891,6 @@ TRAYS
 
 	unique_attack_garbage_fuck(mob/M as mob, mob/user as mob)
 		M.TakeDamageAccountArmor("head", src.force, 0, 0, DAMAGE_BLUNT)
-		M.changeStatus("weakened", 2 SECONDS)
 		playsound(get_turf(src), "sound/weapons/trayhit.ogg", 50, 1)
 		src.visible_message("\The [src] falls out of [user]'s hands due to the impact!")
 		user.drop_item(src)
@@ -876,65 +905,6 @@ TRAYS
 		tooltip_rebuild = 1
 
 		src.visible_message("\The [src] looks less sturdy now.")
-
-	unique_tap_garbage_fluck(mob/M as mob, mob/user as mob)
-		playsound(src, "step_lattice", 50, 1)
-
-/obj/item/fish
-	throwforce = 3
-	force = 5
-	icon = 'icons/obj/foodNdrink/food_related.dmi'
-	inhand_image_icon = 'icons/mob/inhand/hand_food.dmi'
-	w_class = 3
-	flags = ONBELT
-	var/fillet_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/fish
-
-	New()
-		..()
-		src.setItemSpecial(/datum/item_special/swipe)
-
-	salmon
-		name = "salmon"
-		desc = "A commercial saltwater fish prized for its flavor."
-		icon_state = "salmon"
-		fillet_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/fish/salmon
-
-	carp
-		name = "carp"
-		desc = "A common run-of-the-mill carp."
-		icon_state = "carp"
-
-	bass
-		name = "largemouth bass"
-		desc = "A freshwater fish native to North America."
-		icon_state = "bass"
-		fillet_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/fish/white
-
-	red_herring
-		name = "peculiarly coloured clupea pallasi"
-		desc = "What is this? Why is this here? WHAT IS THE PURPOSE OF THIS?"
-		icon_state = "red_herring"
-
-/obj/item/fish/attack(mob/M as mob, mob/user as mob)
-	if(user?.bioHolder.HasEffect("clumsy") && prob(50))
-		user.visible_message("<span class='alert'><b>[user]</b> swings [src] and hits \himself in the face!.</span>")
-		user.changeStatus("weakened", 20 * src.force)
-		JOB_XP(user, "Clown", 1)
-		return
-	else
-		playsound(src.loc, pick('sound/impact_sounds/Slimy_Hit_1.ogg', 'sound/impact_sounds/Slimy_Hit_2.ogg'), 50, 1, -1)
-		user.visible_message("<span class='alert'><b>[user] slaps [M] with [src]!</b>.</span>")
-
-/obj/item/fish/attackby(var/obj/item/W as obj, var/mob/user as mob)
-	if(istype(W, /obj/item/kitchen/utensil/knife))
-		if(fillet_type)
-			var/obj/fillet = new fillet_type(src.loc)
-			user.put_in_hand_or_drop(fillet)
-			boutput(user, "<span class='notice'>You skin and gut [src] using your knife.</span>")
-			qdel(src)
-			return
-	..()
-	return
 
 //sushiiiiiii
 /obj/item/kitchen/sushi_roller

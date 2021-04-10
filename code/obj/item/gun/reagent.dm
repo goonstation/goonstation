@@ -108,7 +108,6 @@
 	throw_speed = 2
 	throw_range = 10
 	force = 4.0
-	current_projectile = new/datum/projectile/syringe
 	contraband = 3
 	add_residue = 1 // Does this gun add gunshot residue when fired? These syringes are probably propelled by CO2 or something, but whatever (Convair880).
 	mats = 12 // These are some of the few syndicate items that would be genuinely useful to non-antagonists when scanned.
@@ -117,6 +116,10 @@
 	projectile_reagents = 1
 	dump_reagents_on_turf = 1
 	tooltip_flags = REBUILD_DIST
+
+	New()
+		set_current_projectile(new/datum/projectile/syringe)
+		. = ..()
 
 	get_desc(dist)
 		if (dist > 2)
@@ -139,7 +142,7 @@
 
 	New()
 		..()
-		if (src.safe && islist(global.chem_whitelist) && global.chem_whitelist.len)
+		if (src.safe && islist(global.chem_whitelist) && length(global.chem_whitelist))
 			src.ammo_reagents = global.chem_whitelist
 
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
@@ -167,7 +170,7 @@
 	desc = "A weapon that launches concentrated ectoplasm. Harmless to humans, deadly to ghosts."
 
 	New()
-		current_projectile = new/datum/projectile/ectoblaster
+		set_current_projectile(new/datum/projectile/ectoblaster)
 		projectiles = list(current_projectile)
 		..()
 

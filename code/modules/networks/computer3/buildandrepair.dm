@@ -133,7 +133,7 @@
 				else
 					boutput(user, "<span class='alert'>There is no more room for peripheral cards.</span>")
 
-			if (ispryingtool(P) && src.peripherals.len)
+			if (ispryingtool(P) && length(src.peripherals))
 				playsound(src.loc, "sound/items/Crowbar.ogg", 50, 1)
 				boutput(user, "<span class='notice'>You remove the peripheral boards.</span>")
 				for(var/obj/item/peripheral/W in src.peripherals)
@@ -141,14 +141,11 @@
 					src.peripherals.Remove(W)
 					W.uninstalled()
 
-			if (istype(P, /obj/item/cable_coil))
-				if(P:amount >= 5)
+			var/obj/item/cable_coil/C = P
+			if (istype(C))
+				if (C.amount >= 5)
 					playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
-					if(do_after(user, 2 SECONDS))
-						if (!P) //Wire: Fix for Cannot read null.amount
-							return
-						P:amount -= 5
-						if(!P:amount) qdel(P)
+					if (do_after(user, 2 SECONDS) && C?.use(5))
 						boutput(user, "<span class='notice'>You add cables to the frame.</span>")
 						src.state = 3
 						src.icon_state = "3"
@@ -181,10 +178,7 @@
 				if (S.material && S.material.material_flags & MATERIAL_CRYSTAL)
 					if (S.amount >= src.glass_needed)
 						playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
-						if(do_after(user, 2 SECONDS) && S)
-							S.amount -= src.glass_needed
-							if(S.amount < 1)
-								qdel(S)
+						if(do_after(user, 2 SECONDS) && S?.consume_sheets(src.glass_needed))
 							boutput(user, "<span class='notice'>You put in the glass panel.</span>")
 							src.state = 4
 							src.icon_state = "4"

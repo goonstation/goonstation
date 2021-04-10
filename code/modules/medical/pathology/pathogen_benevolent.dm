@@ -433,7 +433,7 @@ datum/pathogeneffects/benevolent/genetictemplate
 		var/datum/bioEffect/BEE = mutationMap[origin.name_base] // remove old version of mutation
 		M.bioHolder.RemoveEffect(BEE.id)
 
-		var/datum/bioEffect/BE = new BEE.type
+		var/datum/bioEffect/BE = BEE.GetCopy()
 		var/datum/dna_chromosome/chromo = new /datum/dna_chromosome/anti_mutadone() // reinforce always
 		chromo.apply(BE)
 		if (origin.stage >= 2)

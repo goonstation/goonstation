@@ -9,7 +9,7 @@
 	var/obj/item/item							// the item being worn in this slot
 
 	var/list/type_filters = list()				// a list of parent types whose subtypes are equippable
-	var/obj/screen/hud/screenObj				// ease of life
+	var/atom/movable/screen/hud/screenObj				// ease of life
 
 	var/mob/holder = null
 
@@ -134,6 +134,10 @@
 
 		intercom
 			after_setup(var/datum/hud/hud)
-				equip(new /obj/item/device/radio/intercom(holder))
+				var/obj/item/device/radio/intercom/O = new(holder)
+				equip(O)
+				// it's a built in radio, they can't take it off.
+				O.cant_self_remove = TRUE
+				O.cant_other_remove = TRUE
 				if (item)
 					hud.add_object(item, HUD_LAYER+1, screenObj.screen_loc)

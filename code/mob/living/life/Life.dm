@@ -166,6 +166,7 @@
 	add_lifeprocess(/datum/lifeprocess/stuns_lying)
 	add_lifeprocess(/datum/lifeprocess/blindness)
 	add_lifeprocess(/datum/lifeprocess/robot_oil)
+	add_lifeprocess(/datum/lifeprocess/robot_locks)
 
 
 /mob/living/silicon/drone/New()
@@ -200,9 +201,11 @@
 
 		var/datum/lifeprocess/L
 		for (var/thing in src.lifeprocesses)
-			if (!thing) continue
 			if(src.disposed) return
 			L = src.lifeprocesses[thing]
+			if(!L)
+				logTheThing("debug", src, null, "had lifeprocess [thing] removed during Life() probably.")
+				continue
 			L.process(environment)
 
 		for (var/obj/item/implant/I in src.implant)
@@ -366,7 +369,6 @@
 
 	hud.update()
 	process_killswitch()
-	process_locks()
 
 /mob/living/silicon/hivebot/Life(datum/controller/process/mobs/parent)
 	if (..(parent))
@@ -422,7 +424,7 @@
 			src.death(0)
 
 	for (var/atom/A as obj|mob in src)
-		if (A != src.item && A != src.dummy && A != src.owner && !istype(A, /obj/screen))
+		if (A != src.item && A != src.dummy && A != src.owner && !istype(A, /atom/movable/screen))
 			if (isobj(A) || ismob(A)) // what the heck else would this be?
 				A:set_loc(src.loc)
 
@@ -470,7 +472,7 @@
 		if (src.getStatusDuration("burning"))
 
 			if (src.getStatusDuration("burning") > 200)
-				for (var/atom/A as() in src.contents)
+				for (var/atom/A as anything in src.contents)
 					if (A.event_handler_flags & HANDLE_STICKER)
 						if (A:active)
 							src.visible_message("<span class='alert'><b>[A]</b> is burnt to a crisp and destroyed!</span>")
@@ -529,13 +531,13 @@
 						if (!spotted_by_mob)
 							O:score++
 
-	proc/update_canmove()
-		var/datum/lifeprocess/L = lifeprocesses[/datum/lifeprocess/canmove]
+	proc/update_sight()
+		var/datum/lifeprocess/L = lifeprocesses[/datum/lifeprocess/sight]
 		if (L)
 			L.process()
 
-	proc/update_sight()
-		var/datum/lifeprocess/L = lifeprocesses[/datum/lifeprocess/sight]
+	update_canmove()
+		var/datum/lifeprocess/L = lifeprocesses[/datum/lifeprocess/canmove]
 		if (L)
 			L.process()
 
@@ -565,7 +567,7 @@
 		//Modify stamina.
 		var/stam_time_passed = max(tick_spacing, TIME - last_stam_change)
 
-		var/final_mod = (src.stamina_regen + src.get_stam_mod_regen()) * (stam_time_passed / tick_spacing)
+		var/final_mod = (src.stamina_regen + GET_MOB_PROPERTY(src, PROP_STAMINA_REGEN_BONUS)) * (stam_time_passed / tick_spacing)
 		if (final_mod > 0)
 			src.add_stamina(abs(final_mod))
 		else if (final_mod < 0)
@@ -621,7 +623,7 @@
 		thermal_protection += GET_MOB_PROPERTY(src, PROP_COLDPROT)
 
 /*
-		for (var/obj/item/C as() in src.get_equipped_items())
+		for (var/obj/item/C as anything in src.get_equipped_items())
 			thermal_protection += C.getProperty("coldprot")*/
 
 		/*
@@ -669,7 +671,7 @@
 					if (src.eyes_protected_from_light())
 						resist_prob += 190
 
-		for (var/obj/item/C as() in src.get_equipped_items())
+		for (var/obj/item/C as anything in src.get_equipped_items())
 			resist_prob += C.getProperty("viralprot")
 
 		if(src.getStatusDuration("food_disease_resist"))
@@ -682,17 +684,7 @@
 		// calculate 0-100% insulation from rads
 		if (!src)
 			return 0
-
-		var/rad_protection = 0
-
-		// Resistance from Clothing
-		rad_protection += GET_MOB_PROPERTY(src, PROP_RADPROT)
-
-		if (bioHolder?.HasEffect("food_rad_resist"))
-			rad_protection += 100
-
-		rad_protection = clamp(rad_protection, 0, 100)
-		return rad_protection
+		return clamp(GET_MOB_PROPERTY(src, PROP_RADPROT), 0, 100)
 
 	get_ranged_protection()
 		if (!src)
@@ -712,23 +704,18 @@
 		var/a_zone = zone
 		if (a_zone in list("l_leg", "r_arm", "l_leg", "r_leg"))
 			a_zone = "chest"
-		if(a_zone=="All")
-			protection=(5*get_melee_protection("chest",damage_type)+get_melee_protection("head",damage_type))/6
-
-		else
-
 			//protection from clothing
-			if (a_zone == "chest")
-				protection = GET_MOB_PROPERTY(src, PROP_MELEEPROT_BODY)
-			else //can only be head
-				protection = GET_MOB_PROPERTY(src, PROP_MELEEPROT_HEAD)
-			protection += GET_MOB_PROPERTY(src, PROP_ENCHANT_ARMOR)/2
-			//protection from blocks
-			var/obj/item/grab/block/G = src.check_block()
-			if (G)
-				protection += 1
-				if (G != src.equipped()) // bare handed block is less protective
-					protection += G.can_block(damage_type)
+		if(a_zone == "All")
+			protection = (5 * GET_MOB_PROPERTY(src, PROP_MELEEPROT_BODY) + GET_MOB_PROPERTY(src, PROP_MELEEPROT_HEAD))/6
+		if (a_zone == "chest")
+			protection = GET_MOB_PROPERTY(src, PROP_MELEEPROT_BODY)
+		else //can only be head
+			protection = GET_MOB_PROPERTY(src, PROP_MELEEPROT_HEAD)
+		protection += GET_MOB_PROPERTY(src, PROP_ENCHANT_ARMOR)/2
+		//protection from blocks
+		var/obj/item/grab/block/G = src.check_block()
+		if (G && damage_type)
+			protection += G.can_block(damage_type)
 
 		if (isnull(protection)) //due to GET_MOB_PROPERTY returning null if it doesnt exist
 			protection = 0
@@ -741,7 +728,7 @@
 		var/protection = 0
 
 		// Resistance from Clothing
-		for (var/obj/item/C as() in src.get_equipped_items())
+		for (var/obj/item/C as anything in src.get_equipped_items())
 			if(C.hasProperty("deflection"))
 				var/curr = C.getProperty("deflection")
 				protection += curr
@@ -819,7 +806,7 @@
 	proc/Thumper_createHeartbeatOverlays()
 		for (var/mob/x in (src.observers + src))
 			if(!heartbeatOverlays[x] && x.client)
-				var/obj/screen/hb = new
+				var/atom/movable/screen/hb = new
 				hb.icon = x.client.widescreen ? 'icons/effects/overlays/crit_thicc.png' : 'icons/effects/overlays/crit_thin.png'
 				hb.screen_loc = "1,1"
 				hb.layer = HUD_LAYER_UNDER_2
@@ -837,7 +824,7 @@
 #define HEARTBEAT_THUMP_INTENSITY 0.2
 #define HEARTBEAT_THUMP_INTENSITY_BASE 0.1
 		for(var/mob/x in src.heartbeatOverlays)
-			var/obj/screen/overlay = src.heartbeatOverlays[x]
+			var/atom/movable/screen/overlay = src.heartbeatOverlays[x]
 			if(x.client)
 				x.client << thud
 				if(animateInitial)
@@ -869,7 +856,7 @@
 		if(doThumps)//we're thumping dangit
 			doThumps = 0
 		for(var/mob/x in src.heartbeatOverlays)
-			var/obj/screen/overlay = src.heartbeatOverlays[x]
+			var/atom/movable/screen/overlay = src.heartbeatOverlays[x]
 			if(x.client)
 				animate(overlay, alpha = 255,
 					color = list( list(0,0,0,0), list( 0,0,0,0 ), list(0,0,0,0), list(0,0,0,4) ),
@@ -879,7 +866,7 @@
 		if(doThumps)
 			doThumps = 0
 		for(var/mob/x in src.heartbeatOverlays)
-			var/obj/screen/overlay = src.heartbeatOverlays[x]
+			var/atom/movable/screen/overlay = src.heartbeatOverlays[x]
 			if(x.client)
 				animate(overlay,
 					alpha = 255,
@@ -890,6 +877,6 @@
 		Thumper_createHeartbeatOverlays()
 		doThumps = 0
 		for(var/mob/x in src.heartbeatOverlays)
-			var/obj/screen/overlay = src.heartbeatOverlays[x]
+			var/atom/movable/screen/overlay = src.heartbeatOverlays[x]
 			if(x.client)
 				animate(overlay, color = list( list(0,0,0,0), list( 0,0,0,0 ), list(0,0,0,0), list(0,0,0,-100), list(0,0,0,0) ), alpha = 0, 20, SINE_EASING )

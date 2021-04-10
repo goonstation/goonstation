@@ -237,6 +237,22 @@ AI MODULES
 
 	attack_self(var/mob/user)
 		input_law_info(user, "Freeform", "Please enter anything you want the AI to do. Anything. Serious.", (lawTarget ? lawTarget : "Eat shit and die"))
+		if(src.lawTarget && src.lawTarget != "Eat shit and die")
+			phrase_log.log_phrase("ailaw", src.get_law_text(), no_duplicates=TRUE)
+
+/******************** Random ********************/
+
+/obj/item/aiModule/random
+	name = "AI Module"
+	var/law_text
+
+	New()
+		..()
+		src.law_text = global.phrase_log.random_custom_ai_law(replace_names=TRUE)
+		src.lawNumber = rand(4, 100)
+
+	get_law_text()
+		return src.law_text
 
 /******************** Reset ********************/
 
@@ -286,6 +302,7 @@ AI MODULES
 	attack_self(var/mob/user)
 		input_law_info(user, "Rename", "What will the AI be renamed to?", pick_string_autokey("names/ai.txt"))
 		lawTarget = replacetext(copytext(html_encode(lawTarget),1, 128), "http:","")
+		phrase_log.log_phrase("name-ai", lawTarget, no_duplicates=TRUE)
 
 	install(obj/machinery/computer/aiupload/comp)
 		if (comp.status & NOPOWER)
@@ -387,10 +404,10 @@ AI MODULES
 /obj/machinery/computer/aiupload
 	attack_hand(mob/user as mob)
 		if (src.status & NOPOWER)
-			boutput(usr, "\The [src] has no power.")
+			boutput(user, "\The [src] has no power.")
 			return
 		if (src.status & BROKEN)
-			boutput(usr, "\The [src] computer is broken.")
+			boutput(user, "\The [src] computer is broken.")
 			return
 
 		var/datum/ai_laws/LAWS = ticker.centralized_ai_laws
@@ -440,6 +457,7 @@ AI MODULES
 					qdel(src)
 				else
 					boutput(user, "<span class='notice'>You disconnect the monitor.</span>")
+					logTheThing("station", user, null, "disconnects the AI upload at [log_loc(src)].")
 					var/obj/computerframe/A = new /obj/computerframe(src.loc)
 					if(src.material) A.setMaterial(src.material)
 					var/obj/item/circuitboard/aiupload/M = new /obj/item/circuitboard/aiupload(A)

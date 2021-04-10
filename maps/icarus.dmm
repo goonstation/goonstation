@@ -4495,8 +4495,8 @@
 /obj/table/reinforced/auto,
 /obj/item/storage/box/plates,
 /obj/item/storage/box/cutlery,
-/obj/item/reagent_containers/glass/bottle/icing,
-/obj/item/reagent_containers/glass/bottle/icing,
+/obj/item/reagent_containers/food/drinks/drinkingglass/icing,
+/obj/item/reagent_containers/food/drinks/drinkingglass/icing,
 /obj/machinery/power/apc/autoname_east,
 /obj/cable{
 	d2 = 8;
@@ -12669,7 +12669,7 @@
 /turf/simulated/floor/plating,
 /area/station/engine/engineering/ce)
 "aBu" = (
-/obj/storage/crate/rcd,
+/obj/storage/crate/rcd/CE,
 /turf/simulated/floor/yellowblack{
 	dir = 8
 	},
@@ -17365,6 +17365,7 @@
 	},
 /obj/table/wood/auto,
 /obj/displaycase{
+	displayed = new /obj/item/captaingun
 	pixel_y = 6
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/ne,
@@ -25775,7 +25776,7 @@
 "bcs" = (
 /obj/table/wood/auto,
 /obj/item/reagent_containers/food/drinks/bottle/tequila,
-/obj/item/playing_cards/suit,
+/obj/item/card_group/plain,
 /obj/item/spacecash/hundred,
 /turf/simulated/floor/orangeblack,
 /area/listeningpost)

@@ -132,15 +132,9 @@ var/sound/iomoon_alarm_sound = null
 					iomoon_alarm_sound.status = SOUND_UPDATE
 
 	Entered(atom/movable/Obj,atom/OldLoc)
-		..()
+		. = ..()
 		if(ambientSound && ismob(Obj))
-//			if(Obj:client)
-//				ambientSound.status = SOUND_UPDATE
-//				Obj << ambientSound
-			if (!soundSubscribers:Find(Obj))
-				soundSubscribers += Obj
-
-		return
+			soundSubscribers |= Obj
 /*
 	Exited(atom/movable/Obj)
 		if(ambientSound && ismob(Obj))

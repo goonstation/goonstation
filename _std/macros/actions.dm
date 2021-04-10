@@ -11,40 +11,36 @@
 *
 * just make sure to start it once its been made!
 */
-#define SETUP_GENERIC_ACTIONBAR(owner, target, duration, proc_path, action_icon, action_icon_state, end_message) \
-	actions.start(new /datum/action/bar/icon/callback(owner, target, duration, proc_path, action_icon, action_icon_state,\
+#define SETUP_GENERIC_ACTIONBAR(owner, target, duration, proc_path, proc_args, action_icon, action_icon_state, end_message) \
+	actions.start(new /datum/action/bar/icon/callback(owner, target, duration, proc_path, proc_args, action_icon, action_icon_state,\
 	end_message), owner)
 
 /* example that uses the macro:
-
 /obj/item/foo
 	name = "foo"
 	icon = 'icons/obj/foo.dmi'
 	icon_state = "foo"
-
 	attack_self(var/mob/M)
 		M.visible_message("[M] starts fiddling with \the [src].")
-		SETUP_GENERIC_ACTIONBAR(M, src, 5 SECONDS, /obj/item/foo/proc/cool_proc, src.icon, src.icon_state,\
+		SETUP_GENERIC_ACTIONBAR(M, src, 5 SECONDS, /obj/item/foo/proc/cool_proc, null, src.icon, src.icon_state,\
 		"[M] finishes fiddling with \the [src]")
-
 	proc/cool_proc()
 		boutput(world, "farts")
 */
 
-/* example that doesnt use the macro because it needs extra functionality the macro doesnt provide (NOT EVERY SCENARIO, BUT STILL GOOD TO SEE)
+// Example that calls a proc that need arguments. Provide a list for the proc_args argument.
 
+/*
 /obj/item/foo
 	name = "foo"
-	icon = 'icons/obj/foo.dmi'
-	icon_state = "foo"
+	icon = 'icons/obj/items/items.dmi'
+	icon_state = "barricade"
 
 	attack_self(var/mob/M)
 		M.visible_message("[M] starts fiddling with \the [src].")
-		var/datum/action/bar/icon/callback/action_bar = new /datum/action/bar/icon/callback(M, src, 5 SECONDS, /obj/item/foo/proc/cool_proc,\
-		src.icon, src.icon_state, "[M] finishes fiddling with \the [src]")
-		action_bar.proc_args = list("[M]")
-		actions.start(action_bar, M)
+		SETUP_GENERIC_ACTIONBAR(M, src, 5 SECONDS, /obj/item/foo/proc/cool_proc, list(M, src), src.icon, src.icon_state,\
+		 "[M] finishes fiddling with \the [src]")
 
-	proc/cool_proc(var/arg_1)
-		boutput(world, "[arg_1] farted!")
+	proc/cool_proc(var/mob/arg_1, var/obj/item/arg_2)
+		boutput(world, "[arg_1.name] farted, [arg_2.name]!")
 */

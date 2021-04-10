@@ -38,7 +38,7 @@ var/list/observers = list()
 
 
 		for (var/datum/hud/H in huds)
-			for (var/obj/screen/hud/S in H.objects)
+			for (var/atom/movable/screen/hud/S in H.objects)
 				if (S:master == src)
 					S:master = null
 			detach_hud(H)

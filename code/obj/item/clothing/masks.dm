@@ -186,6 +186,19 @@
 	is_syndicate = 1
 	mats = 6
 
+/obj/item/clothing/mask/monkey_translator
+	name = "vocal translator"
+	desc = "Nanotechnology and questionable science combine to make a face-hugging translator, capable of making monkeys speak human lanauge. Or whoever wears this."
+	icon = 'icons/obj/items/items.dmi'
+	wear_image_icon = 'icons/mob/mask.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_headgear.dmi'
+	icon_state = "voicechanger"
+	item_state = "muzzle"			// @TODO new sprite ok
+	mats = 12	// 2x voice changer cost. It's complicated ok
+	w_class = 2
+	c_flags = COVERSMOUTH	// NOT usable for internals.
+	var/new_language = "english"	// idk maybe you can varedit one so that humans speak monkey instead. who knows
+
 /obj/item/clothing/mask/breath
 	desc = "A close-fitting mask that can be connected to an air supply but does not work very well in hard vacuum without a helmet."
 	name = "Breath Mask"
@@ -296,27 +309,27 @@
 
 	unequipped(mob/user)
 		. = ..()
-		if ( src.victim )
+		if (src.victim)
 			src.victim.change_misstep_chance(-25)
 			src.victim = null
 			processing_items -= src
 
 	process()
-		if ( src.victim )
+		if (src.victim)
 			if ( src.victim.health <= 0 )
 				return
-			if ( prob(45) )
+			if (prob(45))
 				boutput (src.victim, __red("[src] burns your face!"))
-				if ( prob(25) )
+				if (prob(25))
 					src.victim.emote("scream")
 				src.victim.TakeDamage("head",0,3,0,DAMAGE_BURN)
-			if ( prob(20) )
+			if (prob(20))
 				src.victim.take_brain_damage(3)
-			if ( prob(10) )
+			if (prob(10))
 				src.victim.changeStatus("stunned", 2 SECONDS)
-			if ( prob(10) )
+			if (prob(10))
 				src.victim.changeStatus("slowed", 4 SECONDS)
-			if ( prob(60) )
+			if (prob(60))
 				src.victim.emote("laugh")
 
 	afterattack(atom/target, mob/user, reach, params)

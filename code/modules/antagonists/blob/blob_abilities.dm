@@ -9,13 +9,13 @@
 	var/last_used = 0
 	var/targeted = 1
 	var/mob/living/intangible/blob_overmind/owner
-	var/obj/screen/blob/button
+	var/atom/movable/screen/blob/button
 	var/special_screen_loc = null
 	var/helpable = 1
 
 	New()
 		..()
-		var/obj/screen/blob/B = new /obj/screen/blob(null)
+		var/atom/movable/screen/blob/B = new /atom/movable/screen/blob(null)
 		B.icon = src.icon
 		B.icon_state = src.icon_state
 		B.ability = src
@@ -564,6 +564,11 @@
 
 //The owner is the blob tile object...
 /datum/action/bar/blob_absorb //This is used when you try to set someones internals
+	bar_icon_state = "bar-blob"
+	border_icon_state = "border-blob"
+	color_active = "#d73715"
+	color_success = "#167935"
+	color_failure = "#8d1422"
 	duration = 10 SECONDS
 
 	// interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
@@ -788,7 +793,7 @@
 		if (!tutorial_check("bridge", T))
 			return 1
 
-		var/turf/simulated/floor/blob/B = new /turf/simulated/floor/blob(T)
+		var/turf/simulated/floor/blob/B = T.ReplaceWith(/turf/simulated/floor/blob, FALSE, TRUE, FALSE)
 		B.setOvermind(owner)
 		src.deduct_bio_points()
 		src.do_cooldown()
@@ -1059,12 +1064,12 @@
 	var/scaling_cost_mult = 1
 	var/scaling_cost_add = 0
 	var/mob/living/intangible/blob_overmind/owner
-	var/obj/screen/blob/button
+	var/atom/movable/screen/blob/button
 	var/upgradename = "upgrade"
 
 	New()
 		..()
-		var/obj/screen/blob/B = new /obj/screen/blob(null)
+		var/atom/movable/screen/blob/B = new /atom/movable/screen/blob(null)
 		B.icon = src.icon
 		B.icon_state = src.icon_state
 		B.upgrade = src
@@ -1408,4 +1413,4 @@
 		if (..())
 			return 1
 		owner.add_ability(/datum/blob_ability/build/reflective)
-		
+

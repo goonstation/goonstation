@@ -54,7 +54,7 @@
 				PDA.eject_id_card()
 			ID.set_loc(src)
 			src.user_id = ID
-			update_static_data(usr)
+			update_static_data(user)
 			tgui_process.update_uis(src)
 			return
 
@@ -106,8 +106,12 @@
 		src.beaker =  B
 		if(!B.cant_drop)
 			user.drop_item()
-			B.set_loc(src)
-		boutput(user, "You add the [glass_name] to the machine!")
+			if(!B.qdeled)
+				B.set_loc(src)
+		if(B.qdeled)
+			B = null
+		else
+			boutput(user, "You add the [glass_name] to the machine!")
 		src.update_icon()
 		src.ui_interact(user)
 
@@ -132,7 +136,10 @@
 
 	proc/eject_card()
 		if (src.user_id)
-			usr.put_in_hand_or_eject(src.user_id) // try to eject it into the users hand, if we can
+			if(IN_RANGE(usr, src, 1))
+				usr.put_in_hand_or_drop(src.user_id)
+			else
+				src.user_id.set_loc(src.loc)
 			src.user_id = null
 		return
 
@@ -280,7 +287,10 @@
 			if ("eject")
 				if (beaker)
 					if(beaker.loc == src)
-						usr.put_in_hand_or_drop(beaker)
+						if(IN_RANGE(usr, src, 1))
+							usr.put_in_hand_or_drop(beaker)
+						else
+							beaker.set_loc(src.loc)
 					beaker = null
 					src.update_icon()
 					. = TRUE

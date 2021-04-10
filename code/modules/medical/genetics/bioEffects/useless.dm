@@ -79,7 +79,7 @@
 		var/datum/appearanceHolder/AH = H.bioHolder.mobAppearance
 		holder_skin = AH.s_tone
 		var/list/L = hex_to_rgb_list(AH.s_tone)
-		var/new_color = ((L["r"] + L["g"] + L["b"]) / 3) - 20
+		var/new_color = ((L[1] + L[2] + L[3]) / 3) - 20
 		if (new_color < 0)
 			new_color = 0
 		AH.s_tone = rgb(new_color, new_color, new_color)
@@ -248,8 +248,8 @@
 	can_scramble = 0
 	curable_by_mutadone = 0
 	reagent_to_add = "bee"
-	reagent_threshold = 40
-	add_per_tick = 1.2
+	reagent_threshold = 12
+	add_per_tick = 6 //ensures we always have bee sickness
 
 /datum/bioEffect/drunk/pentetic
 	name = "Pentetic Acid Production"
@@ -267,7 +267,7 @@
 	can_scramble = 0
 	curable_by_mutadone = 0
 	reagent_to_add = "penteticacid"
-	reagent_threshold = 40
+	reagent_threshold = 12
 	add_per_tick = 4
 
 /datum/bioEffect/drunk/random
@@ -297,7 +297,7 @@
 	New()
 		..()
 		if (all_functional_reagent_ids.len > 1)
-			reagent_to_add = pick(all_functional_reagent_ids - list("big_bang_precursor", "big_bang", "nitrotri_parent", "nitrotri_wet", "nitrotri_dry"))
+			reagent_to_add = pick(all_functional_reagent_ids)
 		else
 			reagent_to_add = "water"
 

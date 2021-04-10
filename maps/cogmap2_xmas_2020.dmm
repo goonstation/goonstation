@@ -5134,7 +5134,7 @@
 	pixel_x = -24
 	},
 /obj/item/storage/firstaid/toxin,
-/obj/item/card_box/suit,
+/obj/item/card_box/plain,
 /obj/item/reagent_containers/emergency_injector/calomel,
 /obj/item/reagent_containers/emergency_injector/calomel,
 /obj/storage/crate/xmas,
@@ -13333,10 +13333,7 @@
 "aDB" = (
 /obj/table/auto,
 /obj/item/plate,
-/obj/item/reagent_containers/food/snacks/cake/chocolate{
-	desc = "Holy shit! This cake probably costs more than the gross domestic product of Bulgaria!";
-	name = "Extravagant Chocolate Gateau"
-	},
+/obj/item/reagent_containers/food/snacks/cake/chocolate/gateau,
 /obj/disposalpipe/junction{
 	dir = 4;
 	icon_state = "pipe-j2"
@@ -13981,7 +13978,7 @@
 /area/station/crew_quarters/cafeteria)
 "aES" = (
 /obj/table/reinforced/bar/auto,
-/obj/item/card_box/suit,
+/obj/item/card_box/plain,
 /turf/simulated/floor/carpet{
 	icon_state = "fpurple1"
 	},
@@ -17741,7 +17738,7 @@
 /area/station/hallway/secondary/entry)
 "aOf" = (
 /obj/table/auto,
-/obj/item/card_box/suit,
+/obj/item/card_box/plain,
 /turf/simulated/floor/neutral/side,
 /area/station/hallway/secondary/entry)
 "aOg" = (
@@ -26518,7 +26515,7 @@
 /obj/item/mop,
 /obj/item/storage/box/mousetraps,
 /obj/item/storage/box/balloonbox,
-/obj/item/card_box/suit,
+/obj/item/card_box/plain,
 /obj/item/basketball,
 /obj/disposalpipe/segment/mail/bent/south,
 /obj/item/clothing/under/gimmick/yay,
@@ -43243,7 +43240,7 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/ce)
 "bNC" = (
-/obj/storage/crate/rcd,
+/obj/storage/crate/rcd/CE,
 /obj/cable{
 	d1 = 1;
 	d2 = 4;
@@ -45692,7 +45689,7 @@
 	icon_state = "chair_couch-blue";
 	name = "ratty blue couch"
 	},
-/obj/item/playing_cards/suit,
+/obj/item/card_group/plain,
 /turf/simulated/floor/plating/damaged3,
 /area/station/routing/depot)
 "bSA" = (
@@ -48225,6 +48222,7 @@
 "bXI" = (
 /obj/table/wood/auto,
 /obj/displaycase{
+	displayed = new /obj/item/captaingun
 	pixel_y = 6
 	},
 /obj/cable{
@@ -48735,7 +48733,7 @@
 /area/station/security/brig)
 "bYM" = (
 /obj/table/reinforced/auto,
-/obj/item/card_box/suit,
+/obj/item/card_box/plain,
 /obj/disposalpipe/segment,
 /obj/disposalpipe/segment/brig{
 	dir = 4
@@ -60066,7 +60064,7 @@
 "cxy" = (
 /obj/table/reinforced/auto,
 /obj/item/paper/book/dwainedummies,
-/obj/item/postit_stack,
+/obj/item/item_box/postit,
 /obj/item/device/radio/headset/research,
 /obj/item/device/radio/headset/research,
 /turf/simulated/floor/carpet{

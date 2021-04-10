@@ -10,4 +10,3 @@
 
 /// At which alpha do opague objects become see-through?
 #define MATERIAL_ALPHA_OPACITY 190
-

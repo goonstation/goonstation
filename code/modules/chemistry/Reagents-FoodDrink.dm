@@ -169,8 +169,8 @@ datum
 					taste = initial(taste)
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed, var/mult = 1)
+				. = ..()
 				var/mytemp = holder.total_temperature
-				src = null
 				if(!volume_passed) return 1
 				if(method == INGEST)
 					if(mytemp <= T0C+7) //Nice & cold.
@@ -365,13 +365,18 @@ datum
 			depletion_rate = 0.2
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed)
-				src = null
+				. = ..()
 				if(!volume_passed) return
 				if(method == INGEST)
 					if(M.client && (istraitor(M) || isspythief(M)))
 						M.reagents.add_reagent("omnizine",10)
-						M.reagents.del_reagent("moonshine")
 						return
+
+			on_mob_life(var/mob/target, var/mult = 1)
+				if(target.client && (istraitor(target) || isspythief(target)))
+					target.reagents.del_reagent("moonshine")
+					return
+				..()
 
 		fooddrink/alcoholic/bojack // Bar Contest Winner's Drink
 			name = "Bo Jack Daniel's"
@@ -419,7 +424,7 @@ datum
 				return
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed)
-				src = null
+				. = ..()
 				if(!volume_passed) return
 				if(method == INGEST)
 					var/alch = volume_passed * 0.75
@@ -529,6 +534,7 @@ datum
 				return
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume, var/list/paramslist = 0)
+				. = ..()
 				var/mob/living/carbon/human/H = M
 
 				if (method == TOUCH)
@@ -663,8 +669,8 @@ datum
 			taste = "bitter"
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed)
+				. = ..()
 				var/datum/reagents/old_holder = src.holder
-				src = null
 				if(!volume_passed)
 					return
 
@@ -757,12 +763,11 @@ datum
 			depletion_rate = 1
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed)
-				src = null
 				if (!volume_passed)
 					return
 				if (!ishuman(M))
 					return
-				if (!islist(mutini_effects) || !mutini_effects.len)
+				if (!islist(mutini_effects) || !length(mutini_effects))
 					return ..()
 				var/power_granted = pick(mutini_effects)
 				var/power_time = rand(1,10)
@@ -774,7 +779,7 @@ datum
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M)
 					M = holder.my_atom
-				if (!islist(mutini_effects) || !mutini_effects.len)
+				if (!islist(mutini_effects) || !length(mutini_effects))
 					return ..()
 				var/power_granted = pick(mutini_effects)
 				var/power_time = rand(1,10)
@@ -981,7 +986,7 @@ datum
 
 			// lights drinker on fire
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
-				src = null
+				. = ..()
 				if(method == INGEST && prob(20))
 					var/mob/living/L = M
 					if(istype(L) && L.getStatusDuration("burning"))
@@ -1038,7 +1043,7 @@ datum
 			thirst_value = -0.3
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed)
-				src = null
+				. = ..()
 				if(!volume_passed)
 					return
 				if(!ishuman(M))
@@ -1046,7 +1051,7 @@ datum
 
 
 				var/do_stunny = 1
-				var/list/covered = holder?.covered_turf()
+				var/list/covered = holder.covered_turf()
 				if (length(covered) > 1)
 					do_stunny = prob(100/length(covered))
 
@@ -1420,7 +1425,7 @@ datum
 					boutput(M, "<span class='notice'><b>Oh. God.</b></span>")
 					SPAWN_DBG(2 SECONDS)
 						if (M)
-							M:become_ice_statue()
+							M.become_statue_ice()
 				..()
 				return
 
@@ -1705,7 +1710,6 @@ datum
 			hunger_value = 2
 
 			reaction_turf(var/turf/T, var/volume)
-				src = null
 				if(volume >= 5 && !(locate(/obj/item/reagent_containers/food/snacks/breadslice) in T))
 					new /obj/item/reagent_containers/food/snacks/breadslice(T)
 
@@ -1722,7 +1726,7 @@ datum
 			thirst_value = 5
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed)
-				src = null
+				. = ..()
 				if(!volume_passed)
 					return
 				//var/mob/living/carbon/human/H = M
@@ -1788,7 +1792,7 @@ datum
 				..()
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed)
-				src = null
+				. = ..()
 				if(!volume_passed)
 					return
 
@@ -1849,7 +1853,7 @@ datum
 					M.emote(pick("cough"))
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed)
-				src = null
+				. = ..()
 				if(!volume_passed)
 					return
 				//var/mob/living/carbon/human/H = M
@@ -1923,7 +1927,6 @@ datum
 
 
 			reaction_turf(var/turf/T, var/volume)
-				src = null
 				if(volume >= 5 && !(locate(/obj/item/reagent_containers/food/snacks/ingredient/cheese) in T))
 					new /obj/item/reagent_containers/food/snacks/ingredient/cheese(T)
 
@@ -1950,7 +1953,6 @@ datum
 			viscosity = 0.6
 
 			reaction_turf(var/turf/T, var/volume)
-				src = null
 				if(volume >= 5 && !(locate(/obj/item/reagent_containers/food/snacks/ingredient/gcheese) in T))
 					new /obj/item/reagent_containers/food/snacks/ingredient/gcheese(T)
 
@@ -1973,8 +1975,6 @@ datum
 
 			reaction_turf(var/turf/T, var/volume)
 				var/list/covered = holder.covered_turf()
-				src = null
-
 				if (covered.len > 9)
 					volume = (volume/covered.len)
 
@@ -2001,26 +2001,22 @@ datum
 			addiction_prob2 = 20
 			addiction_min = 10
 			max_addiction_severity = "LOW"
-			var/remove_buff = 0
 			thirst_value = 0.3
 			bladder_value = -0.1
 			energy_value = 0.3
 			stun_resist = 7
 
-			pooled()
-				..()
-				remove_buff = 0
-
 			on_add()
-				if(istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"add_stam_mod_regen"))
-					remove_buff = holder.my_atom:add_stam_mod_regen("consumable_good", 2)
-				..()
+				if(ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
+					APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "consumable_good", 2)
+				. = ..()
 
 			on_remove()
-				if(remove_buff)
-					if(istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"remove_stam_mod_regen"))
-						holder.my_atom:remove_stam_mod_regen("consumable_good")
-				..()
+				if(ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
+					REMOVE_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "consumable_good")
+				. = ..()
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				..()
@@ -2052,14 +2048,16 @@ datum
 			stun_resist = 10
 
 			on_add()
-				if (istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"add_stam_mod_regen")) //gotta get hyped
-					holder.my_atom:add_stam_mod_regen("caffeine rush", src.caffeine_rush)
-				..()
+				if(ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
+					APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "caffeine rush", src.caffeine_rush)
+				. = ..()
 
 			on_remove()
-				if (istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"remove_stam_mod_regen"))
-					holder.my_atom:remove_stam_mod_regen("caffeine rush")
-				..()
+				if(ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
+					REMOVE_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "caffeine rush")
+				. = ..()
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				..()
@@ -2264,7 +2262,6 @@ datum
 				..()
 
 			reaction_turf(var/turf/T, var/volume)
-				src = null
 				if(volume >= 3)
 					if(locate(/obj/item/reagent_containers/food/snacks/candy/chocolate) in T) return
 					new /obj/item/reagent_containers/food/snacks/candy/chocolate(T)
@@ -2298,7 +2295,6 @@ datum
 				..()
 
 			reaction_turf(var/turf/T, var/volume)
-				src = null
 				if (volume >= 5)
 					if (locate(/obj/item/reagent_containers/food/snacks/ingredient/honey) in T)
 						return
@@ -2406,7 +2402,7 @@ datum
 			transparency = 245
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
-				src = null
+				. = ..()
 				if ( (method==TOUCH && prob(33)) || method==INGEST)
 					if(M.bioHolder.HasAnyEffect(EFFECT_TYPE_POWER) && prob(4))
 						M.bioHolder.RemoveAllEffects(EFFECT_TYPE_POWER)
@@ -2456,7 +2452,6 @@ datum
 
 			reaction_turf(var/turf/T, var/volume)
 				var/list/covered = holder.covered_turf()
-				src = null
 				if (volume >= 10 && covered.len < 2)
 					if (!T.messy)
 						make_cleanable(/obj/decal/cleanable/saltpile,T)
@@ -2476,7 +2471,7 @@ datum
 				return
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
-				src = null
+				. = ..()
 				if (istype(M, /mob/living/critter/small_animal/slug))
 					M.show_text("<span class='alert'><b>OH GOD THE SALT [pick("IT BURNS","HOLY SHIT THAT HURTS","JESUS FUCK YOU'RE DYING")]![pick("","!","!!")]</b></span>")
 					M.TakeDamage(null, volume, volume)
@@ -2524,8 +2519,6 @@ datum
 
 			reaction_turf(var/turf/T, var/volume) //Makes the kechup splats
 				var/list/covered = holder.covered_turf()
-				src = null
-
 				if (covered.len > 9)
 					volume = (volume/covered.len)
 
@@ -2581,7 +2574,7 @@ datum
 			transparency = 250
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed, var/mult = 1)
-				src = null
+				. = ..()
 				if(!volume_passed || method != INGEST)
 					return
 				if (!iswizard(M))
@@ -2747,7 +2740,7 @@ datum
 			depletion_rate = 0.2
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed)
-				src = null
+				. = ..()
 				if(!volume_passed)
 					return
 				if(!ishuman(M))
@@ -2893,6 +2886,7 @@ datum
 			hunger_value = 0.25
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
+				. = ..()
 				if(method == TOUCH)
 					if(ishuman(M))
 						var/mob/living/carbon/human/H = M
@@ -2912,7 +2906,6 @@ datum
 						M.TakeDamage("head", 1, 0, 0, DAMAGE_BLUNT)
 
 			reaction_turf(var/turf/T, var/volume)
-				src = null
 				if(volume >= 20 && !(locate(/obj/item/reagent_containers/food/snacks/ingredient/pepperoni_log) in T))
 					new /obj/item/reagent_containers/food/snacks/ingredient/pepperoni_log(T)
 
@@ -2945,6 +2938,7 @@ datum
 			bladder_value = -1.5
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
+				. = ..()
 				if(method == TOUCH)
 					if(ishuman(M))
 						var/mob/living/carbon/human/H = M
@@ -2978,6 +2972,7 @@ datum
 			bladder_value = -1.5
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
+				. = ..()
 				if(method == TOUCH)
 					if(ishuman(M))
 						var/mob/living/carbon/human/H = M
@@ -3003,6 +2998,7 @@ datum
 			bladder_value = -1.5
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
+				. = ..()
 				if(method == TOUCH)
 					if(ishuman(M))
 						var/mob/living/carbon/human/H = M
@@ -3150,6 +3146,7 @@ datum
 				..(M)
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
+				. = ..()
 				if(method == TOUCH)
 					if(ishuman(M))
 						var/mob/living/carbon/human/H = M
@@ -3202,6 +3199,7 @@ datum
 			fluid_g = 229
 			fluid_b = 72
 			reaction_mob(var/mob/M, var/method=INGEST, var/volume)
+				. = ..()
 				if(method == INGEST)
 					if (M.get_toxin_damage())
 						M.take_toxin_damage(rand(1,2) * -1) //I assume this was not supposed to be poison.
@@ -3222,16 +3220,11 @@ datum
 			thirst_value = -2
 			bladder_value = -2
 			stun_resist = 100
-			var/remove_buff = 0
-
-			pooled()
-				..()
-				remove_buff = 0
 
 			on_add()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
-					remove_buff = M.add_stam_mod_regen("tripletriple", 3333)
+					APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "tripletriple", 3333)
 
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
@@ -3239,6 +3232,7 @@ datum
 				..()
 
 			reaction_mob(var/mob/M, var/method=INGEST, var/volume)
+				. = ..()
 				if(method == INGEST)
 					if (M.get_toxin_damage())
 						M.take_toxin_damage(9 * -1) //I assume this was not supposed to be poison.
@@ -3255,7 +3249,7 @@ datum
 
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
-					remove_buff = M.remove_stam_mod_regen("tripletriple")
+					REMOVE_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "tripletriple")
 				..()
 
 			on_mob_life(var/mob/M, var/mult = 1)
@@ -3337,6 +3331,7 @@ datum
 			bladder_value = -0.2
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
+				. = ..()
 				if(method == TOUCH)
 					if(ishuman(M))
 						var/mob/living/carbon/human/H = M
@@ -3375,8 +3370,8 @@ datum
 			var/bioeffect_id = null
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed)
+				. = ..()
 				var/tempbioid = src.bioeffect_id //needed because we detatch the proc from src below
-				src = null
 				if(!volume_passed)
 					return
 				if(!ishuman(M))
@@ -3498,14 +3493,13 @@ datum
 			hunger_value = 0.25
 
 			reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume_passed)
+				. = ..()
 				if(!volume_passed)
 					return
 				if(!ishuman(M))
 					return
 
 				var/list/covered = holder.covered_turf()
-				src = null
-
 				var/do_stunny = 1
 				if (covered.len > 1)
 					do_stunny = prob(100/covered.len)
@@ -3671,7 +3665,6 @@ datum
 			on_mob_life(var/mob/M, var/mult = 1)
 				..(M)
 				if(!M) M = holder.my_atom
-				src = null
 				if(probmult(10))
 					boutput(M, "<span class='alert'>Your body feels like it's being tickled from the inside out!</span>")
 					M.changeStatus("weakened", 1 SECONDS)

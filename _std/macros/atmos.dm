@@ -129,9 +129,19 @@
 //Plasma fire properties
 #define PLASMA_MINIMUM_BURN_TEMPERATURE		(100+T0C)
 #define PLASMA_UPPER_TEMPERATURE			(2370+T0C)
-#define PLASMA_MINIMUM_OXYGEN_NEEDED		2
+#define PLASMA_MINIMUM_OXYGEN_NEEDED		(2 MOLES)
 #define PLASMA_MINIMUM_OXYGEN_PLASMA_RATIO	30
 #define PLASMA_OXYGEN_FULLBURN				10
+
+/// Hotspot Maximum Temperature without a catalyst
+#define HOTSPOT_MAX_NOCAT_TEMPERATURE (80000)
+/// Hotspot Maximum Temperature to maintain maths works to 1e35-sh in practice)
+#define HOTSPOT_MAX_CAT_TEMPERATURE (INFINITY)
+
+//Gas Reaction Flags
+#define REACTION_ACTIVE (1<<0) 	//! Reaction is Active
+#define COMBUSTION_ACTIVE (1<<1) //! Combustion is Active
+#define CATALYST_ACTIVE (1<<2)	//! Hotspot Catalyst is Active
 
 // tank properties
 
@@ -244,6 +254,7 @@ proc/gas_text_color(gas_id)
 
 #define ATMOS_EPSILON 0.0001
 #define MINIMUM_HEAT_CAPACITY	0.0003
+#define MINIMUM_REACT_QUANTITY MINIMUM_HEAT_CAPACITY
 #define QUANTIZE(variable)		(round(variable, ATMOS_EPSILON))
 
 /// Given a gas mixture, zeroes it
@@ -258,7 +269,7 @@ proc/gas_text_color(gas_id)
 
 /datum/gas_mixture/proc/total_moles_full()
 	. = BASE_GASES_TOTAL_MOLES(src)
-	for(var/datum/gas/trace_gas as() in trace_gases)
+	for(var/datum/gas/trace_gas as anything in trace_gases)
 		. += trace_gas.moles
 
 /// Returns total moles of a given gas mixture
@@ -271,7 +282,7 @@ proc/gas_text_color(gas_id)
 #define ADD_MIXTURE_PRESSURE(MIXTURE, VAR) do { \
 	var/_moles = BASE_GASES_TOTAL_MOLES(MIXTURE); \
 	if(length(MIXTURE.trace_gases)) { \
-		for(var/datum/gas/trace_gas as() in MIXTURE.trace_gases) { \
+		for(var/datum/gas/trace_gas as anything in MIXTURE.trace_gases) { \
 			_moles += trace_gas.moles; \
 		} \
 	} \
@@ -286,14 +297,14 @@ proc/gas_text_color(gas_id)
 
 /datum/gas_mixture/proc/heat_capacity_full()
 	. = BASE_GASES_HEAT_CAPACITY(src)
-	for(var/datum/gas/trace_gas as() in trace_gases)
+	for(var/datum/gas/trace_gas as anything in trace_gases)
 		. += trace_gas.moles * trace_gas.specific_heat
 
 #define HEAT_CAPACITY(MIXTURE) (length((MIXTURE).trace_gases) ? (MIXTURE).heat_capacity_full() : BASE_GASES_HEAT_CAPACITY(MIXTURE))
 
 /datum/gas_mixture/proc/heat_capacity_archived_full()
 	. = BASE_GASES_HEAT_CAPACITY(src)
-	for(var/datum/gas/trace_gas as() in trace_gases)
+	for(var/datum/gas/trace_gas as anything in trace_gases)
 		. += trace_gas.ARCHIVED(moles) * trace_gas.specific_heat
 
 #define HEAT_CAPACITY_ARCHIVED(MIXTURE) (length((MIXTURE).trace_gases) ? (MIXTURE).heat_capacity_archived_full() : BASE_GASES_ARCH_HEAT_CAPACITY(MIXTURE))
@@ -310,9 +321,10 @@ proc/gas_text_color(gas_id)
 
 // requires var/total_moles = TOTAL_MOLES(MIXTURE) defined beforehand
 #define _CONCENTRATION_REPORT(GAS, _, NAME, MIXTURE, SEP) "[NAME]: [round(MIXTURE.GAS / total_moles * 100)]%[SEP]" +
-#define _UNKNOWN_CONCETRATION_REPORT(MIXTURE) (length((MIXTURE).trace_gases) ? "Unknown: [round((total_moles - BASE_GASES_TOTAL_MOLES(MIXTURE)) / total_moles * 100)]%": "")
-#define CONCENTRATION_REPORT(MIXTURE, SEP) (APPLY_TO_GASES(_CONCENTRATION_REPORT, MIXTURE, SEP) _UNKNOWN_CONCETRATION_REPORT(MIXTURE))
+#define _UNKNOWN_CONCENTRATION_REPORT(MIXTURE, SEP) (length((MIXTURE).trace_gases) ? "Unknown: [round((total_moles - BASE_GASES_TOTAL_MOLES(MIXTURE)) / total_moles * 100)]%[SEP]": "")
+#define CONCENTRATION_REPORT(MIXTURE, SEP) (APPLY_TO_GASES(_CONCENTRATION_REPORT, MIXTURE, SEP) _UNKNOWN_CONCENTRATION_REPORT(MIXTURE, SEP))
 
 #define _LIST_CONCENTRATION_REPORT(GAS, _, NAME, MIXTURE, LIST) LIST += "[NAME]: [round(MIXTURE.GAS / total_moles * 100)]%";
+#define _LIST_UNKNOWN_CONCENTRATION_REPORT(MIXTURE, LIST) LIST += (length((MIXTURE).trace_gases) ? "Unknown: [round((total_moles - BASE_GASES_TOTAL_MOLES(MIXTURE)) / total_moles * 100)]%": "")
 #define LIST_CONCENTRATION_REPORT(MIXTURE, LIST) APPLY_TO_GASES(_LIST_CONCENTRATION_REPORT, MIXTURE, LIST) \
-	LIST += _UNKNOWN_CONCETRATION_REPORT(MIXTURE)
+_LIST_UNKNOWN_CONCENTRATION_REPORT(MIXTURE, LIST)

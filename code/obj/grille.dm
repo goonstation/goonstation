@@ -55,11 +55,13 @@
 		desc = "Looks like its been in this sorry state for quite some time."
 		icon_state = "grille-cut"
 		ruined = 1
+		density = 0
+		health = 0
 
-		New()
-			..()
-			damage_slashing(1000)
-			update_icon()
+		corroded
+			icon_state = "grille-corroded"
+		melted
+			icon_state = "grille-melted"
 
 	catwalk
 		name = "catwalk surface"

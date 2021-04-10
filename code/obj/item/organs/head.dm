@@ -541,5 +541,17 @@
 					src.organ_name = "chicken head"
 					src.desc = "Mike would be proud."
 
+				if(HEAD_HUNTER)
+					src.organ_name = "hunter head"
+					src.desc = "Ironic, isn't it?"
+
+				if(HEAD_ITHILLID)
+					src.organ_name = "squid head"
+					src.desc = "Blub, blub."
+
+				if(HEAD_VIRTUAL)
+					src.organ_name = "virtual head"
+					src.desc = "W311, 5h17." // 1337 5p34k
+
 		src.update_icon(makeshitup = 0)	// so our head actually looks like the thing its supposed to be
 		// though if our head's a transplant, lets run it anyway, in case their hair changed or something

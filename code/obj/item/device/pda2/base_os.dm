@@ -94,6 +94,7 @@
 				if(MODE_MAINMENU)
 					. += {"<h2>PERSONAL DATA ASSISTANT</h2>
 					Owner: [src.master.owner]<br>
+					Time: [time2text(world.timeofday, "DDD MMM DD, hh:mm:ss")]<br>
 
 					<h4>General Functions</h4>
 					<ul>
@@ -152,7 +153,6 @@
 
 				if(MODE_MESSAGE)
 					//Messenger.  Uses Radio.  Is a messenger.
-					// src.master.overlays = null //Remove existing alerts
 					src.master.update_overlay("idle") //Remove existing alerts
 					. += "<h4>SpaceMessenger V4.0.5</h4>"
 
@@ -203,7 +203,7 @@
 								count++
 							. += "</ul>"
 
-							if (count == 0 && !page_departments.len)
+							if (count == 0 && !length(page_departments))
 								. += "None detected.<br>"
 
 					else if (src.message_mode == 1)
@@ -307,7 +307,7 @@
 							var/sendButton = "<a href='byond://?src=\ref[src];input=send_file;group=[mailgrp]'>Send File</a>"
 							if(!src.master.fileshare_program)
 								sendButton = ""
-							else if(!src.clipboard || !src.clipboard?.dont_copy)
+							else if(!src.clipboard || src.clipboard?.dont_copy)
 								sendButton = "<strike>Send File</strike>"
 							var/msgButton = "<a href='byond://?src=\ref[src];input=message;target=[mailgrp];department=1'>Mail</a>"
 							if((mailgrp in src.master.mailgroup_ringtones) && istype(src.master.mailgroup_ringtones[mailgrp], /datum/ringtone))
@@ -414,7 +414,7 @@
 				var/new_color = input(usr, "Choose a color", "PDA", src.master.bg_color) as color | null
 				if (new_color)
 					var/list/color_vals = hex_to_rgb_list(new_color);
-					src.master.update_colors(new_color, rgb(color_vals["r"] * 0.8, color_vals["g"] * 0.8, color_vals["b"] * 0.8))
+					src.master.update_colors(new_color, rgb(color_vals[1] * 0.8, color_vals[2] * 0.8, color_vals[3] * 0.8))
 
 			else if(href_list["toggle_departments_list"])
 				expand_departments_list = !expand_departments_list
@@ -426,7 +426,7 @@
 						if (!t)
 							return
 
-						if (!src.master || !in_range(src.master, usr) && src.master.loc != usr)
+						if (!src.master?.is_user_in_interact_range(usr))
 							return
 
 						if(!(src.holder in src.master))
@@ -469,7 +469,7 @@
 						if (!t)
 							return
 
-						if (!src.master || !in_range(src.master, usr) && src.master.loc != usr)
+						if (!src.master?.is_user_in_interact_range(usr))
 							return
 
 						if(!(src.holder in src.master))
@@ -563,7 +563,7 @@
 						t = copytext(sanitize(strip_html(t)), 1, 16)
 						if (!t)
 							return
-						if (!in_range(src.master, usr) || !(F.holder in src.master))
+						if (!src.master.is_user_in_interact_range(usr))
 							return
 						if(F.holder.read_only)
 							return
@@ -820,9 +820,6 @@
 					if(src.master.r_tone?.readMessages)
 						src.master.r_tone.MessageAction(signal.data["message"])
 
-					if(length(src.hosted_files) >= 1)
-						src.CheckForPasskey(signal.data["message"], signal.data["sender"])
-
 					src.master.display_alert(alert_beep, previewtext, groupAddress, src.ManageRecentCallers(senderName))
 					var/displayMessage = "<i><b>[bicon(master)] <a href='byond://?src=\ref[src];input=message;norefresh=1;target=[signal.data["sender"]]'>[messageFrom]</a>"
 					if (groupAddress)
@@ -832,6 +829,9 @@
 							displayMessage += " to <a href='byond://?src=\ref[src];input=message;[groupAddress in src.master.alertgroups ? "" : "target=[groupAddress]"];department=1'>[groupAddress]</a>"
 					displayMessage += ":</b></i> [signal.data["message"]]"
 					src.master.display_message(displayMessage)
+
+					if(length(src.hosted_files) >= 1)
+						src.CheckForPasskey(signal.data["message"], signal.data["sender"])
 
 					src.master.updateSelfDialog()
 
@@ -964,7 +964,7 @@
 					. += "<a href='byond://?src=\ref[src.master];eject_id_card=1'>Eject [src.master.ID_card]</a><br>"
 
 		pda_message(var/target_id, var/target_name, var/message, var/is_department_message)
-			if (!src.master || !src.master.is_user_in_range(usr))
+			if (!src.master || !src.master.is_user_in_interact_range(usr))
 				return 1
 
 			if (!target_id || !target_name || !message)
@@ -975,8 +975,12 @@
 
 			message = copytext(adminscrub(message), 1, 257)
 
-			if (findtext(message, "viagra") != 0 || findtext(message, "erect") != 0 || findtext(message, "pharm") != 0 || findtext(message, "girls") != 0 || findtext(message, "scient") != 0 || findtext(message, "luxury") != 0 || findtext(message, "vid") != 0 || findtext(message, "quality") != 0)
+			phrase_log.log_phrase("pda", message)
+
+			if (findtext(message, "bitcoin") != 0 || findtext(message, "drug") != 0 || findtext(message, "pharm") != 0 || findtext(message, "lottery") != 0 || findtext(message, "scient") != 0 || findtext(message, "luxury") != 0 || findtext(message, "vid") != 0 || findtext(message, "quality") != 0)
 				usr.unlock_medal("Spamhaus", 1)
+
+			src.master.display_message("<b>To [target_name]:</b> [message]")
 
 			var/datum/signal/signal = get_free_signal()
 			signal.data["command"] = "text_message"
@@ -1025,6 +1029,8 @@
 			signal.data["address_1"] = target_id
 			src.post_signal(signal)
 			src.message_last = world.time
+
+			src.master.display_message("<b>Sent file to [target_name]:</b> [clipfile.name]")
 
 		/// Hosts a file on your PDA with an md5 passkey for others to request
 		proc/HostFile(var/datum/computer/file/file, var/passkey, var/group, var/msg)

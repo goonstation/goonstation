@@ -2,7 +2,7 @@
 
 
 /mob/living/proc/handle_skin(var/mult = 1)
-	if (src.skin_process && src.skin_process.len)
+	if (src.skin_process && length(src.skin_process))
 		for(var/obj/item/reagent_containers/patch/P in skin_process)
 			//P.process_skin(src, XXX * mult)
 			continue
@@ -476,7 +476,7 @@
 
 	New()
 		..()
-		if (!tampered && islist(chem_whitelist) && chem_whitelist.len)
+		if (!tampered && islist(chem_whitelist) && length(chem_whitelist))
 			src.whitelist = chem_whitelist
 		if (src.reagents)
 			src.reagents.temperature_cap = 330
@@ -498,13 +498,14 @@
 		.= (iscarbon(A) || ismobcritter(A))
 
 	proc/update_icon()
-		src.overlays = null
 		if (reagents.total_volume)
 			if (!src.fluid_image)
 				src.fluid_image = image('icons/obj/chemical.dmi', "mender-fluid", -1)
 			var/datum/color/average = reagents.get_average_color()
 			src.fluid_image.color = average.to_rgba()
-			src.overlays += src.fluid_image
+			src.UpdateOverlays(src.fluid_image, "fluid")
+		else
+			src.UpdateOverlays(null, "fluid")
 		signal_event("icon_updated")
 
 	emag_act(var/mob/user, var/obj/item/card/emag/E)

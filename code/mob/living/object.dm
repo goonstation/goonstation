@@ -296,3 +296,9 @@
 			return "<span class='alert'><B>[src] attacks [T] in the [d_zone]!</B></span>"
 		else
 			return "<span class='alert'><B>[src] attacks [T]!</B></span>"
+
+	return_air()
+		return loc?.return_air()
+
+	assume_air(datum/air_group/giver)
+		return loc?.assume_air(giver)

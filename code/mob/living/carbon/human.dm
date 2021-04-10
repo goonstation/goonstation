@@ -42,7 +42,6 @@
 	var/image/fire_standing = null
 	//var/image/face_standing = null
 	var/image/hands_standing = null
-	var/list/inhands_standing = list()
 
 	var/image/body_damage_standing = null
 	var/image/head_damage_standing = null
@@ -235,6 +234,7 @@
 	src.update_body()
 	src.update_face()
 	src.UpdateDamageIcon()
+	START_TRACKING
 
 	// for pope
 	if (microbombs_4_everyone)
@@ -465,6 +465,24 @@
 			return
 		return 0
 
+	proc/randomize(var/target, var/mob/user, var/show_message = 1)
+		if (!src.holder || !target)
+			return 0
+		if (istext(target))
+			var/randlimb = null
+			if (target == "all" || target == "both_arms" || target == "l_arm")
+				randlimb = pick(all_valid_random_left_arms)
+				. += src.replace_with("l_arm", randlimb, user, show_message)
+			if (target == "all" || target == "both_arms" || target == "r_arm")
+				randlimb = pick(all_valid_random_right_arms)
+				. += src.replace_with("r_arm", randlimb, user, show_message)
+			if (target == "all" || target == "both_legs" || target == "r_leg")
+				randlimb = pick(all_valid_random_right_legs)
+				. += src.replace_with("r_leg", randlimb, user, show_message)
+			if (target == "all" || target == "both_legs" || target == "l_leg")
+				randlimb = pick(all_valid_random_left_legs)
+				. += src.replace_with("l_leg", randlimb, user, show_message)
+		return .
 
 
 /mob/living/carbon/human/proc/is_vampire()
@@ -489,6 +507,7 @@
 		hud.inventory_bg = null
 		hud.inventory_items = null
 		qdel(hud)
+	STOP_TRACKING
 
 
 	for(var/obj/item/implant/imp in src.implant)
@@ -689,7 +708,7 @@
 
 	if (istype(src.wear_suit, /obj/item/clothing/suit/armor/suicide_bomb))
 		var/obj/item/clothing/suit/armor/suicide_bomb/A = src.wear_suit
-		A.trigger(src)
+		INVOKE_ASYNC(A, /obj/item/clothing/suit/armor/suicide_bomb.proc/trigger, src)
 
 	src.time_until_decomposition = rand(4 MINUTES, 10 MINUTES)
 
@@ -701,6 +720,9 @@
 			remove_mindslave_status(src, "vthrall", "death")
 		else if (src.mind.master)
 			remove_mindslave_status(src, "otherslave", "death")
+#ifdef DATALOGGER
+		game_stats.Increment("playerdeaths")
+#endif
 
 	logTheThing("combat", src, null, "dies [log_health(src)] at [log_loc(src)].")
 	//src.icon_state = "dead"
@@ -773,7 +795,7 @@
 	if (!antag_removal && src.spell_soulguard)
 		boutput(src, "<span class='notice'>Your Soulguard enchantment activates and saves you...</span>")
 		//soulguard ring puts you in the same spot
-		if(istype(src.gloves, /obj/item/clothing/gloves/ring/wizard/teleport))
+		if(src.spell_soulguard == 2)	//istype(src.gloves, /obj/item/clothing/gloves/ring/wizard/teleport)
 			reappear_turf = get_turf(src)
 		else
 			reappear_turf = pick(job_start_locations["wizard"])
@@ -1141,7 +1163,7 @@
 		if (O.move_triggered)
 			O.move_trigger(src, ev)
 	reagents?.move_trigger(src, ev)
-	for (var/datum/statusEffect/S as() in statusEffects)
+	for (var/datum/statusEffect/S as anything in statusEffects)
 		if (S?.move_triggered)
 			S.move_trigger(src, ev)
 
@@ -1302,6 +1324,7 @@
 	if (LinkBlocked(usr.loc,src.loc)) return
 	if (isAI(usr) || isAI(src)) return
 	if (isghostcritter(usr) && !isdead(src)) return
+	if(!isliving(usr)) return
 	src.show_inv(usr)
 
 /mob/living/carbon/human/verb/fuck()
@@ -1323,7 +1346,7 @@
 		if (G.state == GRAB_PIN)
 			canmove_or_pinning = 1
 
-	if (!usr.stat && canmove_or_pinning && !usr.restrained() && in_range(src, usr) && ticker && usr.can_strip(src))
+	if (!usr.stat && canmove_or_pinning && !usr.restrained() && in_interact_range(src, usr) && ticker && usr.can_strip(src))
 		if (href_list["slot"] == "handcuff")
 			actions.start(new/datum/action/bar/icon/handcuffRemovalOther(src), usr)
 		else if (href_list["slot"] == "internal")
@@ -1384,6 +1407,10 @@
 	if (mutantrace?.override_language)
 		say_language = mutantrace.override_language
 
+	if (istype(src.wear_mask, /obj/item/clothing/mask/monkey_translator))
+		var/obj/item/clothing/mask/monkey_translator/mask = src.wear_mask
+		say_language = mask.new_language
+
 	message = copytext(message, 1, MAX_MESSAGE_LEN)
 
 	if (src.fakedead)
@@ -1413,7 +1440,7 @@
 	if (src.stamina < STAMINA_WINDED_SPEAK_MIN && !ignore_stamina_winded)
 		//src.emote(pick("gasp", "choke", "cough"))
 		//boutput(src, "<span class='alert'>You are too exhausted to speak.</span>")
-		whisper(message)
+		whisper(message, forced=TRUE)
 		src.say_language = original_language
 		return
 
@@ -1470,7 +1497,7 @@
 	return ..(text,special)
 
 //Lallander was here
-/mob/living/carbon/human/whisper(message as text)
+/mob/living/carbon/human/whisper(message as text, forced=FALSE)
 	if (src.bioHolder.HasEffect("revenant"))
 		return src.say(message)
 	var/message_mode = null
@@ -1615,6 +1642,8 @@
 		processed = saylist(messages[2], heard_b, olocs, thickness, italics, processed, 1)
 
 	message = messages[1]
+	if(src.client && !forced)
+		phrase_log.log_phrase("whisper", message)
 	for (var/mob/M in eavesdropping)
 		if (M.say_understands(src, lang_id))
 			var/message_c = stars(message)
@@ -1860,6 +1889,15 @@
 	src.update_inhands()
 	return 1
 
+/mob/living/carbon/human/has_any_hands()
+	. = ..()
+	if (src.limbs && src.limbs.l_arm && !istype(src.limbs.l_arm, /obj/item/parts/human_parts/arm/left/item))
+		. = TRUE
+	else if (src.limbs && src.limbs.r_arm && !istype(src.limbs.r_arm, /obj/item/parts/human_parts/arm/right/item))
+		. = TRUE
+	else if (istype(src.l_hand, /obj/item/magtractor) || istype(src.r_hand, /obj/item/magtractor))
+		. = TRUE
+
 /mob/living/carbon/human/put_in_hand(obj/item/I, hand)
 	if (!istype(I))
 		return 0
@@ -2078,7 +2116,7 @@
 	if (equipped)
 		if (slot != slot_in_backpack && slot != slot_in_belt)
 			I.set_loc(src)
-		if (islist(I.ability_buttons) && I.ability_buttons.len)
+		if (islist(I.ability_buttons) && length(I.ability_buttons))
 			I.set_mob(src)
 			if (slot != slot_in_backpack && slot != slot_in_belt)
 				I.show_buttons()
@@ -2156,7 +2194,7 @@
 		if (slot_head)
 			if (istype(I, /obj/item/clothing/head))
 				var/obj/item/clothing/H = I
-				if ((src.mutantrace && !src.mutantrace.uses_human_clothes && !H.compatible_species.Find(src.mutantrace.name)))
+				if ((src.mutantrace && !src.mutantrace.uses_human_clothes && !(src.mutantrace.name in H.compatible_species)))
 					//DEBUG_MESSAGE("[src] can't wear [I].")
 					return 0
 				else
@@ -2164,7 +2202,7 @@
 		if (slot_shoes)
 			if (istype(I, /obj/item/clothing/shoes))
 				var/obj/item/clothing/SH = I
-				if ((src.mutantrace && !src.mutantrace.uses_human_clothes && !SH.compatible_species.Find(src.mutantrace.name)))
+				if ((src.mutantrace && !src.mutantrace.uses_human_clothes && !(src.mutantrace.name in SH.compatible_species)))
 					//DEBUG_MESSAGE("[src] can't wear [I].")
 					return 0
 				else
@@ -2172,7 +2210,7 @@
 		if (slot_wear_suit)
 			if (istype(I, /obj/item/clothing/suit))
 				var/obj/item/clothing/SU = I
-				if ((src.mutantrace && !src.mutantrace.uses_human_clothes && !SU.compatible_species.Find(src.mutantrace.name)))
+				if ((src.mutantrace && !src.mutantrace.uses_human_clothes && !(src.mutantrace.name in SU.compatible_species)))
 					//DEBUG_MESSAGE("[src] can't wear [I].")
 					return 0
 				else
@@ -2180,7 +2218,7 @@
 		if (slot_w_uniform)
 			if (istype(I, /obj/item/clothing/under))
 				var/obj/item/clothing/U = I
-				if ((src.mutantrace && !src.mutantrace.uses_human_clothes && !U.compatible_species.Find(src.mutantrace.name)))
+				if ((src.mutantrace && !src.mutantrace.uses_human_clothes && !(src.mutantrace.name in U.compatible_species)))
 					//DEBUG_MESSAGE("[src] can't wear [I].")
 					return 0
 				else
@@ -2559,7 +2597,7 @@
 		playsound(src.loc, 'sound/impact_sounds/Slimy_Hit_4.ogg', 100, 1)
 		SPAWN_DBG(1 SECOND)
 			make_cleanable(/obj/decal/cleanable/vomit/spiders,src.loc)
-			for (var/I = 0, I < 4, I++)
+			for (var/i in 1 to 4)
 				new /obj/critter/spider/baby(src.loc)
 
 	if (src.mind || src.client)
@@ -2700,7 +2738,7 @@
 	for (var/atom/movable/A in contents)
 		if (A in processed)
 			continue
-		if (istype(A, /obj/screen)) // maybe people will stop gibbing out their stamina bars now  :|
+		if (istype(A, /atom/movable/screen)) // maybe people will stop gibbing out their stamina bars now  :|
 			continue
 		if (prob(dump_contents_chance) || istype(A, /obj/item/reagent_containers/food/snacks/shell)) //For dudes who got fried and eaten so they eject -ZeWaka
 			ret += A
@@ -2868,10 +2906,7 @@
 	return .
 
 /mob/living/carbon/human/Bump(atom/movable/AM as mob|obj, yes)
-	//Could just do a wearing_football_gear() check here, but I don't wanna deal with proc call overhead on every Bump()
-	if ( (src.wear_suit && istype(src.wear_suit,/obj/item/clothing/suit/armor/football)) \
-			&& (src.shoes && istype(src.shoes,/obj/item/clothing/shoes/cleats)) \
-			&& (src.w_uniform && istype(src.w_uniform,/obj/item/clothing/under/football)) )
+	if (wearing_football_gear())
 		src.tackle(AM)
 	..()
 
@@ -2884,7 +2919,7 @@
 	bleeding = max(bleeding - amt, 0)
 
 /mob/living/carbon/human/proc/juggling()
-	if (islist(src.juggling) && src.juggling.len)
+	if (islist(src.juggling) && length(src.juggling))
 		return 1
 	return 0
 
@@ -2953,6 +2988,8 @@
 
 	if(ispath(mutantrace_type, /datum/mutantrace) )	//Set a new mutantrace only if passed one
 		src.mutantrace = new mutantrace_type(src)
+		src.mutantrace.MutateMutant(src, "set")
+
 		. = 1
 
 	if(.)

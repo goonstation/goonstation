@@ -317,7 +317,7 @@ var/list/cached_colors = new/list()
 			1 - paint_intensity + add_orig, 0, 0,
 			0, 1 - paint_intensity + add_orig, 0,
 			0, 0, 1 - paint_intensity + add_orig,
-			paint_intensity * color_list["r"]/255, paint_intensity * color_list["g"]/255, paint_intensity * color_list["b"]/255)
+			paint_intensity * color_list[1]/255, paint_intensity * color_list[2]/255, paint_intensity * color_list[3]/255)
 
 /obj/item/paint_can/random
 	name = "random paint can"

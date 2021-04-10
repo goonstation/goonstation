@@ -70,7 +70,7 @@ datum/controller/process/lighting
 
 				count++
 
-			if (world.tick_usage > LIGHTING_MAX_TICKUSAGE && count >= chunk_count)
+			if (APPROX_TICK_USE > LIGHTING_MAX_TICKUSAGE && count >= chunk_count)
 				chunk_count = min(max_chunk_size, chunk_count + chunk_count_increase_rate*2)
 				break
 

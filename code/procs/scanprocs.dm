@@ -326,7 +326,7 @@
 					data = "<span class='alert'>ERR: SPECTROSCOPIC ANALYSIS OF THIS SUBSTANCE IS NOT POSSIBLE.</span>"
 					return data
 
-			var/reagents_length = reagents.reagent_list.len
+			var/reagents_length = length(reagents.reagent_list)
 			data = "<span class='notice'>[reagents_length] chemical agent[reagents_length > 1 ? "s" : ""] found in [A].</span>"
 
 			for (var/current_id in reagents.reagent_list)
@@ -515,7 +515,7 @@
 
 		if (istype(A, /turf/simulated/wall))
 			var/turf/simulated/wall/W = A
-			if (W.forensic_impacts && islist(W.forensic_impacts) && W.forensic_impacts.len)
+			if (W.forensic_impacts && islist(W.forensic_impacts) && length(W.forensic_impacts))
 				for(var/i in W.forensic_impacts)
 					forensic_data += "<br><span class='notice'>Forensic signature found:</span> [i]"
 
@@ -577,8 +577,8 @@
 		var/obj/item/assembly/proximity_bomb/PB = A
 		if (PB.part3)
 			check_me = PB.part3.air_contents
-	if (istype(A, /obj/item/flamethrower/assembled/))
-		var/obj/item/flamethrower/assembled/FT = A
+	if (istype(A, /obj/item/gun/flamethrower/assembled/))
+		var/obj/item/gun/flamethrower/assembled/FT = A
 		if (FT.gastank)
 			check_me = FT.gastank.air_contents
 

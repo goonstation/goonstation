@@ -31,7 +31,7 @@
 			ammo--
 		else
 			playsound(src.loc, "sound/machines/click.ogg", 100, 1)
-			boutput(usr, "<span class='alert'>The tape is worn out!</span>")
+			boutput(user, "<span class='alert'>The tape is worn out!</span>")
 		return
 
 	proc/activate(mob/user as mob)

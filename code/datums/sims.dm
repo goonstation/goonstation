@@ -19,7 +19,7 @@
 	var/gain_rate = 1
 	var/drain_rate = 1
 
-	var/obj/screen/hud/hud = new
+	var/atom/movable/screen/hud/hud = new
 
 	New(var/is_control = 0)
 		..()
@@ -673,7 +673,7 @@ var/global/datum/simsControl/simsController = new()
 			var/mob/living/carbon/human/H = owner
 			for (var/name in motives)
 				var/datum/simsMotive/M = motives[name]
-				var/obj/screen/hud/hud = M.hud
+				var/atom/movable/screen/hud/hud = M.hud
 				hud.screen_loc = "NORTH-[SY],EAST"
 				SY++
 				H.hud.add_screen(hud)
@@ -683,7 +683,7 @@ var/global/datum/simsControl/simsController = new()
 			var/mob/living/carbon/human/H = owner
 			for (var/name in motives)
 				var/datum/simsMotive/M = motives[name]
-				var/obj/screen/hud/hud = M.hud
+				var/atom/movable/screen/hud/hud = M.hud
 				H.hud.remove_screen(hud)
 			if (plumbob && islist(H.attached_objs))
 				H.attached_objs -= plumbob
@@ -701,7 +701,7 @@ var/global/datum/simsControl/simsController = new()
 		..()
 
 	proc/updateHudIcons(var/icon/I)
-		if (!I || !src.motives.len)
+		if (!I || !length(src.motives))
 			return
 		for (var/name in motives)
 			var/datum/simsMotive/M = motives[name]
@@ -709,7 +709,7 @@ var/global/datum/simsControl/simsController = new()
 				M.updateHudIcon(I)
 
 	proc/getMoodActionMultiplier()
-		if (!motives || !motives.len)
+		if (!motives || !length(motives))
 			return 1
 		if (!base_mood_value)
 			base_mood_value = 1

@@ -30,6 +30,8 @@
 				continue
 			else if((ticker?.mode && istype(ticker.mode, /datum/game_mode/gang)) && (job != "Staff Assistant"))
 				continue
+			else if ((ticker?.mode && istype(ticker.mode, /datum/game_mode/conspiracy)) && J.cant_spawn_as_con)
+				continue
 
 		if (!J.allow_traitors && player.mind.special_role || !J.allow_spy_theft && player.mind.special_role == "spy_thief")
 			continue
@@ -161,7 +163,7 @@
 		var/datum/job/JOB = find_job_in_controller_by_string(player.client.preferences.job_favorite)
 		// Do a few checks to make sure they're allowed to have this job
 		if (ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution))
-			if(checktraitor(player) && JOB.cant_spawn_as_rev)
+			if(checktraitor(player) && (JOB.cant_spawn_as_rev || JOB.cant_spawn_as_con))
 				// Fixed AI, security etc spawning as rev heads. The special job picker doesn't care about that var yet,
 				// but I'm not gonna waste too much time tending to a basically abandoned game mode (Convair880).
 				continue
@@ -255,7 +257,7 @@
 			//Promote Chief Engineer
 			if (istype(JOB, /datum/job/command/chief_engineer))
 				var/list/picks = FindPromotionCandidates(engineering_staff, JOB)
-				if (!picks || !picks.len)
+				if (!picks || !length(picks))
 					continue
 				var/mob/new_player/candidate = pick(picks)
 				logTheThing("debug", null, null, "<b>kyle:</b> [candidate] took [JOB.name] from Job Promotion Picker")
@@ -265,7 +267,7 @@
 			//Promote Research Director
 			else if (istype(JOB, /datum/job/command/research_director))
 				var/list/picks = FindPromotionCandidates(research_staff, JOB)
-				if (!picks || !picks.len)
+				if (!picks || !length(picks))
 					continue
 				var/mob/new_player/candidate = pick(picks)
 				logTheThing("debug", null, null, "<b>kyle:</b> [candidate] took [JOB.name] from Job Promotion Picker")
@@ -275,7 +277,7 @@
 			//Promote Medical Director
 			else if (istype(JOB, /datum/job/command/medical_director))
 				var/list/picks = FindPromotionCandidates(medical_staff, JOB)
-				if (!picks || !picks.len)
+				if (!picks || !length(picks))
 					continue
 				var/mob/new_player/candidate = pick(picks)
 				logTheThing("debug", null, null, "<b>kyle:</b> [candidate] took [JOB.name] from Job Promotion Picker")
@@ -290,6 +292,7 @@
 		// we really need to fix this or it'll be some kinda weird inf loop shit
 		low_priority_jobs += "Staff Assistant"
 	for (var/mob/new_player/player in unassigned)
+		if(!player?.mind) continue
 		logTheThing("debug", null, null, "<b>I Said No/Jobs:</b> [player] given a low priority role")
 		player.mind.assigned_role = pick(low_priority_jobs)
 		logTheThing("debug", player, null, "assigned job: [player.mind.assigned_role]")
@@ -352,7 +355,7 @@
 		src = possible_new_mob // let's hope this breaks nothing
 
 
-	if (ishuman(src) && JOB.add_to_manifest)
+	if (ishuman(src) && JOB.add_to_manifest && !src.traitHolder.hasTrait("immigrant"))
 		// Manifest stuff
 		var/sec_note = ""
 		var/med_note = ""
@@ -399,7 +402,7 @@
 					qdel(snappedDrone)
 				V.finish_board_pod(src)
 
-			if (prob(10) && islist(random_pod_codes) && random_pod_codes.len)
+			if (prob(10) && islist(random_pod_codes) && length(random_pod_codes))
 				var/obj/machinery/vehicle/V = pick(random_pod_codes)
 				random_pod_codes -= V
 				if (V?.lock?.code)
@@ -417,7 +420,7 @@
 
 		if (joined_late == 1 && map_settings && map_settings.arrivals_type != MAP_SPAWN_CRYO && JOB.radio_announcement)
 			if (src.mind && src.mind.assigned_role) //ZeWaka: I'm adding this back here because hell if I know where it goes.
-				for (var/obj/machinery/computer/announcement/A as() in machine_registry[MACHINES_ANNOUNCEMENTS])
+				for (var/obj/machinery/computer/announcement/A as anything in machine_registry[MACHINES_ANNOUNCEMENTS])
 					if (!A.status && A.announces_arrivals)
 						if (src.mind.assigned_role == "MODE") //ZeWaka: Fix for alien invasion dudes. Possibly not needed now.
 							return
@@ -459,7 +462,7 @@
 					R.fields["abilities"] = A
 
 				SPAWN_DBG(0)
-					if(src.traitHolder && src.traitHolder.traits.len)
+					if(src.traitHolder && length(src.traitHolder.traits))
 						R.fields["traits"] = src.traitHolder.traits.Copy()
 
 				R.fields["imp"] = null
@@ -665,7 +668,7 @@
 
 	if (JOB.slot_back)
 		src.equip_new_if_possible(JOB.slot_back, slot_back)
-	if (JOB.slot_back && JOB?.items_in_backpack.len)
+	if (JOB.slot_back && length(JOB?.items_in_backpack))
 		for (var/X in JOB.items_in_backpack)
 			if(ispath(X))
 				src.equip_new_if_possible(X, slot_in_backpack)

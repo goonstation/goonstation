@@ -1,12 +1,12 @@
 /datum/hud/drone
-	var/obj/screen/charge
-	var/obj/screen/health
-	var/obj/screen/disconnect
+	var/atom/movable/screen/charge
+	var/atom/movable/screen/health
+	var/atom/movable/screen/disconnect
 	var/mob/living/silicon/drone/master
 	var/icon/icon_hud = 'icons/mob/hud_drone.dmi'
 	var/list/tools = list(null, null, null, null, null)
 
-	var/list/statusUiElements = list() //Assoc. List  STATUS EFFECT INSTANCE : UI ELEMENT add_screen(obj/screen/S). Used to hold the ui elements since they shouldnt be on the status effects themselves.
+	var/list/statusUiElements = list() //Assoc. List  STATUS EFFECT INSTANCE : UI ELEMENT add_screen(atom/movable/screen/S). Used to hold the ui elements since they shouldnt be on the status effects themselves.
 
 	New(M)
 		..()
@@ -92,7 +92,7 @@
 
 		set_active_tool()
 			var/list_counter = 0
-			var/obj/screen/S = null
+			var/atom/movable/screen/S = null
 			for (var/obj/item/I in master.equipment_slots)
 				list_counter++
 				if (I == master.active_tool)
@@ -122,10 +122,10 @@
 				add_object(tool5, HUD_LAYER+2, "NORTH, 5")
 
 		update_status_effects()
-			for(var/obj/screen/statusEffect/G in src.objects)
+			for(var/atom/movable/screen/statusEffect/G in src.objects)
 				remove_screen(G)
 
-			for(var/datum/statusEffect/S in src.statusUiElements) //Remove stray effects.
+			for(var/datum/statusEffect/S as anything in src.statusUiElements) //Remove stray effects.
 				if(!master.statusEffects || !(S in master.statusEffects) )
 					pool(statusUiElements[S])
 					src.statusUiElements.Remove(S)
@@ -135,10 +135,10 @@
 			var/pos_x = spacing - 0.2 - 1
 
 			if(master.statusEffects)
-				for(var/datum/statusEffect/S in master.statusEffects) //Add new ones, update old ones.
+				for(var/datum/statusEffect/S as anything in master.statusEffects) //Add new ones, update old ones.
 					if(!S.visible) continue
 					if((S in statusUiElements) && statusUiElements[S])
-						var/obj/screen/statusEffect/U = statusUiElements[S]
+						var/atom/movable/screen/statusEffect/U = statusUiElements[S]
 						U.icon = icon_hud
 						U.screen_loc = "EAST[pos_x < 0 ? "":"+"][pos_x],NORTH+0.3"
 						U.update_value()
@@ -146,7 +146,7 @@
 						pos_x -= spacing
 					else
 						if(S.visible)
-							var/obj/screen/statusEffect/U = unpool(/obj/screen/statusEffect)
+							var/atom/movable/screen/statusEffect/U = unpool(/atom/movable/screen/statusEffect)
 							U.init(master,S)
 							U.icon = icon_hud
 							statusUiElements.Add(S)

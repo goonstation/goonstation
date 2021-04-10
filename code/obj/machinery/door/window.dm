@@ -22,7 +22,7 @@
 	New()
 		..()
 
-		if (src.req_access && src.req_access.len)
+		if (src.req_access && length(src.req_access))
 			src.icon_state = "[src.icon_state]"
 			src.base_state = src.icon_state
 		return
@@ -102,6 +102,13 @@
 				return 1
 
 		if (get_dir(loc, target) == dir) // Check for appropriate border.
+			if(density && mover && mover.flags & DOORPASS && !src.cant_emag)
+				if (ismob(mover) && mover:pulling && src.bumpopen(mover))
+					// If they're pulling something and the door would open anyway,
+					// just let the door open instead.
+					return 0
+				animate_door_squeeze(mover)
+				return 1 // they can pass through a closed door
 			return !density
 		else
 			return 1
@@ -113,6 +120,13 @@
 				return 1
 
 		if (get_dir(loc, target) == dir)
+			if(density && mover && mover.flags & DOORPASS && !src.cant_emag)
+				if (ismob(mover) && mover:pulling && src.bumpopen(mover))
+					// If they're pulling something and the door would open anyway,
+					// just let the door open instead.
+					return 0
+				animate_door_squeeze(mover)
+				return 1 // they can pass through a closed door
 			return !density
 		else
 			return 1
@@ -208,7 +222,7 @@
 			return
 		if (usr.getStatusDuration("stunned") > 0 || usr.getStatusDuration("weakened") || usr.getStatusDuration("paralysis") > 0 || usr.stat || usr.restrained())
 			return
-		if (!in_range(src, usr))
+		if (!in_interact_range(src, usr))
 			usr.show_text("You are too far away.", "red")
 			return
 		if (src.hardened == 1)

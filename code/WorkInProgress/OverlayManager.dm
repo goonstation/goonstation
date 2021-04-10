@@ -36,12 +36,12 @@
 /mob/proc/addOverlaysClient(var/client/CL) //Adds the overlays of current mob to given client
 	if(!CL) return
 	for(var/datum/overlayComposition/C in screenoverlays)
-		for(var/obj/screen/screenoverlay/S in C.instances)
+		for(var/atom/movable/screen/screenoverlay/S in C.instances)
 			CL.screen += S
 
 /mob/proc/removeOverlaysClient(var/client/CL) //Removes all overlays of given client
 	if(!CL) return
-	for(var/obj/screen/screenoverlay/S in CL.screen)
+	for(var/atom/movable/screen/screenoverlay/S in CL.screen)
 		CL.screen -= S
 
 //Because dead mobs don't have a life loop
@@ -53,7 +53,7 @@
 	..()
 	updateOverlaysClient(src.client)
 
-/obj/screen/screenoverlay
+/atom/movable/screen/screenoverlay
 	name = ""
 	icon = 'icons/effects/overlays/cloudy.dmi'
 	layer = HUD_LAYER_UNDER_2
@@ -84,7 +84,7 @@
 		var/list/added_for_fill = list()
 
 		for(var/datum/overlayDefinition/D in definitions)
-			var/obj/screen/screenoverlay/S = new()
+			var/atom/movable/screen/screenoverlay/S = new()
 			S.icon = D.d_icon
 			S.icon_state = D.d_icon_state
 			S.alpha = D.d_alpha
@@ -102,7 +102,7 @@
 			var/matrix/flip = matrix()
 			flip.Scale(-1,1)
 
-			var/obj/screen/screenoverlay/fill_left = new()
+			var/atom/movable/screen/screenoverlay/fill_left = new()
 			fill_left.icon = D.d_icon
 			fill_left.icon_state = D.d_icon_state
 			fill_left.alpha = D.d_alpha
@@ -117,7 +117,7 @@
 			fill_left.screen_loc = "LEFT-12,CENTER-7"
 			fill_left.appearance_flags = TILE_BOUND
 
-			var/obj/screen/screenoverlay/fill_right = new()
+			var/atom/movable/screen/screenoverlay/fill_right = new()
 			fill_right.icon = D.d_icon
 			fill_right.icon_state = D.d_icon_state
 			fill_right.alpha = D.d_alpha
@@ -135,7 +135,7 @@
 			added_for_fill += fill_left
 			added_for_fill += fill_right
 
-		for(var/obj/screen/screenoverlay/S in added_for_fill)
+		for(var/atom/movable/screen/screenoverlay/S in added_for_fill)
 			instances.Add(S)
 
 		return ..()
@@ -149,7 +149,7 @@
 // Debug stuff
 
 /proc/removerlays()
-	for(var/obj/screen/screenoverlay/F in world)
+	for(var/atom/movable/screen/screenoverlay/F in world)
 		del(F)
 		LAGCHECK(LAG_LOW)
 
@@ -161,23 +161,23 @@
 		return
 	var/list/overlist = list()
 	for(var/i=0, i<numover, i++)
-		var/obj/screen/screenoverlay/O = createover(i)
+		var/atom/movable/screen/screenoverlay/O = createover(i)
 		if(O) overlist.Add(O)
 
 	boutput(usr, "<b><font color=\"gold\"> [overlist.len] overlays defined.</font></b>")
 
 	if(overlist.len)
-		for(var/obj/screen/screenoverlay/F in overlist)
+		for(var/atom/movable/screen/screenoverlay/F in overlist)
 			F.add_to_client(usr.client)
 
 		switch(alert("Would you like to add these overlays to everyone?",,"Yes","No"))
 			if("Yes")
 				for(var/client/C in clients)
 					if(C == usr.client) continue
-					for(var/obj/screen/screenoverlay/F in overlist)
+					for(var/atom/movable/screen/screenoverlay/F in overlist)
 						F.add_to_client(C)
 			if("No")
-				for(var/obj/screen/screenoverlay/F in overlist)
+				for(var/atom/movable/screen/screenoverlay/F in overlist)
 					usr.client.screen -= F
 			 return
 
@@ -185,7 +185,7 @@
 
 /proc/createover(var/i)
 /*
-	var/obj/screen/screenoverlay/F = new()
+	var/atom/movable/screen/screenoverlay/F = new()
 
 	var/state = input(usr, "Icon state?","Overlay #[i]", "wiggle") in icon_states(icon('icons/effects/480x480.dmi'))
 	var/blendm = input(usr, "Blend mode?","Overlay #[i] (1=normal,2=add,3=sub,4=mult)", 1) in list(1, 2, 3, 4)

@@ -15,11 +15,37 @@
 /// LUBE Drain
 #define LUBE_DRAIN_OPEN			 (1<<3)
 
+// Warning Lights
+/// Lack of surplus power and drain exceeds current perapc
+#define WARNING_APC_DRAINING (1<<0)
+/// Expected to drain cell in ~5min
+#define WARNING_5MIN (1<<1)
+/// Expected to drain cell in ~1min
+#define WARNING_1MIN (1<<2)
+/// Gas molar quantity is problematic!
+#define WARNING_LOW_MOLES (1<<3)
+
+// Machinery rate is 4 (0.4 seconds) subdivided into 8 groups
+#define TIME_PER_PROCESS (4 * 8)
+#define WARNING_FAIL_5MIN_ITERS (5 MINUTES / TIME_PER_PROCESS)
+#define WARNING_FAIL_1MIN_ITERS (1 MINUTES / TIME_PER_PROCESS)
+
 // TEG variants
-// HIGH TEMP Model
+/// HIGH TEMP Model
 #define TEG_HIGH_TEMP	(1<<0)
-// LOW TEMP Model
+/// LOW TEMP Model
 #define TEG_LOW_TEMP (1<<1)
+
+/// TEG Semiconductor Present and Installed
+#define TEG_SEMI_STATE_INSTALLED 0
+/// TEG Semiconductor Cover unscrewed
+#define TEG_SEMI_STATE_UNSCREWED 1
+/// TEG Semiconductor Connected with Extra Wires
+#define TEG_SEMI_STATE_CONNECTED 2
+/// TEG Semiconductor Present but disconnected
+#define TEG_SEMI_STATE_DISCONNECTED 3
+/// TEG Semiconductor Missing
+#define TEG_SEMI_STATE_MISSING 4
 
 /obj/machinery/atmospherics/binary/circulatorTemp
 	name = "hot gas circulator"
@@ -45,6 +71,7 @@
 	var/repairstate = 0
 	var/repair_desc = ""
 	var/variant_b_active = FALSE
+	var/warning_active = FALSE
 
 	anchored = 1.0
 	density = 1
@@ -80,7 +107,6 @@
 		..()
 
 	get_desc(dist, mob/user)
-
 		if(variant_description || generator.variant_description)
 			. += variant_description
 			. += generator.variant_description
@@ -103,21 +129,21 @@
 			switch(repairstate)
 				if(1)
 					if (isweldingtool(W) && W:try_weld(user,0,-1,0,0))
-						actions.start(new /datum/action/bar/icon/teg_circulator_repair(src, W, 50), user)
+						actions.start(new /datum/action/bar/icon/teg_circulator_repair(src, W, 5 SECONDS), user)
 						return
 				if(2)
 					if (istool(W, TOOL_PRYING))
-						actions.start(new /datum/action/bar/icon/teg_circulator_repair(src, W, 50), user)
+						actions.start(new /datum/action/bar/icon/teg_circulator_repair(src, W, 5 SECONDS), user)
 						return
 				if(3)
 					if (istype(W, /obj/item/rods))
 						var/obj/item/rods/S = W
 						if (S.amount >= 5)
-							actions.start(new /datum/action/bar/icon/teg_circulator_repair(src, W, 50), user)
+							actions.start(new /datum/action/bar/icon/teg_circulator_repair(src, W, 5 SECONDS), user)
 						return
 				if(4)
 					if (isweldingtool(W) && W:try_weld(user,0,-1,0,0))
-						actions.start(new /datum/action/bar/icon/teg_circulator_repair(src, W, 50), user)
+						actions.start(new /datum/action/bar/icon/teg_circulator_repair(src, W, 5 SECONDS), user)
 						return
 
 		if(isscrewingtool(W))
@@ -156,6 +182,7 @@
 		//Calculate necessary moles to transfer using PV = nRT
 		var/pressure_delta = (input_starting_pressure - output_starting_pressure)/2
 
+		src.warning_active = FALSE
 		// Check if fan/blower is required to overcome passive gate
 		if(circulator_flags & BACKFLOW_PROTECTION)
 			if(input_starting_pressure < (output_starting_pressure + desired_pressure))
@@ -168,6 +195,29 @@
 				fan_power_draw = round((total_pressure) / src.fan_efficiency)
 				if(src.reagents.has_reagent("voltagen", 1))
 					fan_power_draw = max(0, 10*log(total_pressure))
+
+
+				if(pressure_delta > desired_pressure) src.warning_active |= WARNING_LOW_MOLES
+				if(src.generator)
+					var/area/A = get_area(src)
+					var/apc_charge
+					var/cell_wattage
+					var/surplus
+					if(istype(A, /area/station/))
+						var/obj/machinery/power/apc/P = A.area_apc
+						if(P)
+							apc_charge = P.terminal.powernet?.perapc
+							cell_wattage = P.cell.charge/CELLRATE
+							surplus = P.surplus()
+
+						if(surplus <= 0 && fan_power_draw > apc_charge)
+							src.warning_active |= WARNING_APC_DRAINING
+
+						if(fan_power_draw * WARNING_FAIL_1MIN_ITERS > (cell_wattage + (apc_charge * WARNING_FAIL_1MIN_ITERS)))
+							src.warning_active |= WARNING_1MIN
+						else if(fan_power_draw * WARNING_FAIL_5MIN_ITERS > (cell_wattage + (apc_charge * WARNING_FAIL_5MIN_ITERS)))
+							src.warning_active |= WARNING_5MIN
+
 		else if(pressure_delta < 0)
 			gas_input = air2
 			gas_output = air1
@@ -178,7 +228,7 @@
 			if(src.status & NOPOWER)
 				src.last_pressure_delta = 0
 				return null
-			else src.use_power(fan_power_draw)
+			else src.use_power(fan_power_draw WATTS)
 
 		// Calculate and perform gas transfer from in to out
 		var/transfer_moles = abs(pressure_delta)*gas_output.volume/max(gas_input.temperature * R_IDEAL_GAS_EQUATION, 1) //Stop annoying runtime errors
@@ -303,7 +353,7 @@
 		var/lube_efficiency = 0.0
 
 		if(src.reagents?.total_volume)
-			for(var/reagent_id as() in src.reagents.reagent_list)
+			for(var/reagent_id as anything in src.reagents.reagent_list)
 				var/datum/reagent/R = src.reagents.reagent_list[reagent_id]
 				// Iterate over reagents looking for sweet sweet lube
 				if (reagent_id in circulator_preferred_reagents)
@@ -315,6 +365,9 @@
 		else lube_efficiency = 0.60
 
 		src.lube_boost = lube_efficiency
+
+		if(src.generator?.transformation_mngr)
+			src.generator.transformation_mngr.check_reagent_transformation()
 
 	process()
 		..()
@@ -388,7 +441,7 @@
 
 	onUpdate()
 		..()
-		if (circ == null || the_tool == null || owner == null || get_dist(owner, circ) > 1)
+		if (circ == null || the_tool == null || owner == null || !in_interact_range(circ, owner))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		var/mob/source = owner
@@ -498,6 +551,9 @@ datum/pump_ui/circulator_ui
 	var/obj/machinery/atmospherics/binary/circulatorTemp/circ1
 	var/obj/machinery/atmospherics/binary/circulatorTemp/right/circ2
 	var/list/obj/machinery/power/furnace/furnaces
+	var/datum/teg_transformation/active_form
+	var/datum/teg_transformation_mngr/transformation_mngr
+	var/obj/item/teg_semiconductor/semiconductor
 
 	var/lastgen = 0
 	var/lastgenlev = -1
@@ -510,9 +566,15 @@ datum/pump_ui/circulator_ui
 	var/variant_b = null
 	var/variant_description
 	var/conductor_temp = T20C
+	var/semiconductor_state = TEG_SEMI_STATE_INSTALLED
+
+	var/semiconductor_repair
+
+	var/warning_light_desc = null // warning light description
 
 	var/boost = 0
 	var/generator_flags = 0
+	var/last_max_warning
 
 	var/grump = 0 // best var 2013
 	var/static/list/grump_prefix
@@ -587,6 +649,7 @@ datum/pump_ui/circulator_ui
 		//List init
 		history = list()
 		furnaces = list()
+		transformation_mngr = new(src)
 		grump_prefix = list("an upsetting", "an unsettling", "a scary", "a loud", "a sassy", "a grouchy", "a grumpy",
 												"an awful", "a horrible", "a despicable", "a pretty rad", "a godawful")
 		grump_suffix = list("noise", "racket", "ruckus", "sound", "clatter", "fracas", "hubbub")
@@ -604,12 +667,16 @@ datum/pump_ui/circulator_ui
 			src.circ1?.side = LEFT_CIRCULATOR
 			src.circ2?.generator = src
 			src.circ2?.side = RIGHT_CIRCULATOR
+			src.transformation_mngr.generator = src
 
 			//furnaces
 			for(var/obj/machinery/power/furnace/F in orange(15, src.loc))
 				src.furnaces += F
 
 			src.generate_variants()
+
+			if(!src.semiconductor)
+				semiconductor = new(src)
 
 			updateicon()
 
@@ -618,17 +685,68 @@ datum/pump_ui/circulator_ui
 		src.circ1 = null
 		src.circ2?.generator = null
 		src.circ2 = null
+		qdel(transformation_mngr)
+		src.active_form = null
 		..()
+
+	get_desc(dist, mob/user)
+		if(dist <= 5 && semiconductor_repair)
+			. += "<br>[semiconductor_repair]"
 
 	proc/updateicon()
 
-		if(status & (NOPOWER|BROKEN))
+		if(status & (NOPOWER))
 			UpdateOverlays(null, "power")
+		else if(status & (BROKEN))
+			UpdateOverlays(image('icons/obj/power.dmi', "teg-err"), "power")
 		else
 			if(lastgenlev != 0)
 				UpdateOverlays(image('icons/obj/power.dmi', "teg-op[lastgenlev]"), "power")
 			else
 				UpdateOverlays(null, "power")
+
+		if(src.variant_b)
+			UpdateOverlays(image('icons/obj/power.dmi', "teg_var"), "variant")
+		else
+			UpdateOverlays(null, "variant")
+
+		var/max_warning = src.circ1?.warning_active | src.circ2?.warning_active
+		if( max_warning )
+			if(max_warning > WARNING_5MIN && !(src.status & (BROKEN | NOPOWER)))
+				if(!ON_COOLDOWN(src, "klaxon", 10 SECOND))
+					playsound(src.loc, "sound/misc/klaxon.ogg", 40, pitch=1.1)
+			var/warning_side = 0
+			if( src.circ1?.warning_active && src.circ2?.warning_active )
+				warning_side = NORTH
+			else if( src.circ1?.warning_active )
+				warning_side = WEST
+			else if( src.circ2?.warning_active )
+				warning_side = EAST
+
+			// Use single light if we are variant b (only has one light) OR if we are ONLY in the APC draining state
+			var/one_light = src.variant_b || ( max_warning == WARNING_APC_DRAINING )
+			var/image/warning = image('icons/obj/power.dmi', one_light ? "tegv_lights" : "teg_lights", dir=warning_side)
+			if(max_warning > WARNING_5MIN)
+				warning.color = "#ff0000"
+				warning_light_desc = "<br><span class='alert'>The power emergency lights are flashing.</span>"
+			else
+				warning.color = "#feb308"
+				warning_light_desc = "<br><span class='alert'>The power caution light[one_light ? " is" : "s are"] flashing.</span>"
+			UpdateOverlays(warning, "warning")
+
+			if(lastgenlev)
+				if(max_warning > WARNING_5MIN)
+					light.set_color(1, 0, 0)
+				else
+					light.set_color(1.0, 0.70, 0.03)
+				light.set_brightness(0.6)
+				light.enable()
+			else
+				light.disable()
+
+		else
+			UpdateOverlays(null, "warning")
+			warning_light_desc = null
 
 			switch (lastgenlev)
 				if(0)
@@ -637,33 +755,29 @@ datum/pump_ui/circulator_ui
 					light.set_color(1, 1, 1)
 					light.set_brightness(0.3)
 				if(12 to 15)
-					light.set_color(0.30,0.30,0.90)
+					light.set_color(0.30, 0.30, 0.90)
 					light.set_brightness(0.6)
 					light.enable()
 				if(16 to 17)
-					light.set_color(0.90,0.90,0.10)
+					light.set_color(0.90, 0.90, 0.10)
 					light.set_brightness(0.6)
 					light.enable()
 				if(18 to 22)
 					playsound(src.loc, "sound/effects/elec_bzzz.ogg", 50,0)
-					light.set_color(0.90,0.10,0.10)
+					light.set_color(0.90, 0.10, 0.10)
 					light.set_brightness(0.6)
 					light.enable()
 				if(18 to 25)
 					playsound(src.loc, "sound/effects/elec_bigzap.ogg", 50,0)
-					light.set_color(0.90,0.10,0.10)
+					light.set_color(0.90, 0.10, 0.10)
 					light.set_brightness(1)
 					light.enable()
 				if(26 to INFINITY)
 					playsound(src.loc, "sound/effects/electric_shock.ogg", 50,0)
-					light.set_color(0.90,0.00,0.90)
+					light.set_color(0.90, 0.00, 0.90)
 					light.set_brightness(1.5)
 					light.enable()
 					// this needs a safer lightbust proc
-		if(src.variant_b)
-			UpdateOverlays(image('icons/obj/power.dmi', "teg_var"), "variant")
-		else
-			UpdateOverlays(null, "variant")
 
 	process()
 		if(!src.circ1 || !src.circ2)
@@ -682,7 +796,7 @@ datum/pump_ui/circulator_ui
 
 		lastgen = 0
 
-		if(cold_air && hot_air)
+		if(!(src.status & BROKEN) && cold_air && hot_air)
 			var/cold_air_heat_capacity = HEAT_CAPACITY(cold_air)
 			var/hot_air_heat_capacity = HEAT_CAPACITY(hot_air)
 
@@ -700,7 +814,7 @@ datum/pump_ui/circulator_ui
 				hot_air.temperature -= energy_transfer/hot_air_heat_capacity
 
 				lastgen = energy_transfer*efficiency
-				add_avail(lastgen)
+				add_avail(lastgen WATTS)
 
 				src.history += src.lastgen
 				if (src.history.len > src.history_max)
@@ -720,11 +834,14 @@ datum/pump_ui/circulator_ui
 		if(hot_air) src.circ1.circulate_gas(hot_air)
 		if(cold_air) src.circ2.circulate_gas(cold_air)
 
-		desc = "Current Output: [engineering_notation(lastgen)]W"
+		desc = "Current Output: [engineering_notation(lastgen)]W [warning_light_desc]"
 		var/genlev = max(0, min(round(26*lastgen / 4000000), 26)) // raised 2MW toplevel to 3MW, dudes were hitting 2mw way too easily
-		if((genlev != lastgenlev) && !spam_limiter)
+		var/warnings = src.circ1?.warning_active | src.circ2?.warning_active
+
+		if(((genlev != lastgenlev) || (warnings != last_max_warning)) && !spam_limiter)
 			spam_limiter = 1
 			lastgenlev = genlev
+			last_max_warning = warnings
 			updateicon()
 			if(!genlev)
 				running = 0
@@ -733,8 +850,14 @@ datum/pump_ui/circulator_ui
 				running = 1
 			SPAWN_DBG(0.5 SECONDS)
 				spam_limiter = 0
+		else if(warnings > WARNING_5MIN && !(src.status & (BROKEN | NOPOWER)))
+			// Allow for klaxon to trigger when off cooldown if updateicon() not called
+			if(!ON_COOLDOWN(src, "klaxon", 10 SECOND))
+				playsound(src.loc, "sound/misc/klaxon.ogg", 40, pitch=1.1)
 
 		process_grump()
+
+		src.transformation_mngr.check_material_transformation()
 
 	proc/get_efficiency_scale(delta_temperature, heat_capacity, cold_capacity)
 		var/efficiency_scale = efficiency_controller
@@ -752,20 +875,56 @@ datum/pump_ui/circulator_ui
 
 		return efficiency_scale * 0.01
 
+	attackby(obj/item/W as obj, mob/user as mob)
+		// Weld > Crowbar > Rods > Weld
+		switch(semiconductor_state)
+			if(TEG_SEMI_STATE_INSTALLED)
+				if (istool(W, TOOL_SCREWING))
+					actions.start(new /datum/action/bar/icon/teg_semiconductor_removal(src, W, 5 SECONDS), user)
+					return
+			if(TEG_SEMI_STATE_UNSCREWED)
+				if (istool(W, TOOL_SNIPPING))
+					actions.start(new /datum/action/bar/icon/teg_semiconductor_removal(src, W, 5 SECONDS), user)
+					return
+				if (istool(W, TOOL_SCREWING))
+					actions.start(new /datum/action/bar/icon/teg_semiconductor_replace(src, W, 5 SECONDS), user)
+					return
+			if(TEG_SEMI_STATE_CONNECTED)
+				if (istool(W, TOOL_SNIPPING))
+					actions.start(new /datum/action/bar/icon/teg_semiconductor_replace(src, W, 5 SECONDS), user)
+					return
+			if(TEG_SEMI_STATE_DISCONNECTED)
+				if (istool(W, TOOL_PRYING))
+					actions.start(new /datum/action/bar/icon/teg_semiconductor_removal(src, W, 5 SECONDS), user)
+					return
+				if (istype(W, /obj/item/cable_coil))
+					var/obj/item/cable_coil/C = W
+					if (C.amount >= 4)
+						actions.start(new /datum/action/bar/icon/teg_semiconductor_replace(src, W, 5 SECONDS), user)
+						return
+			if(TEG_SEMI_STATE_MISSING)
+				if(istype(W,/obj/item/teg_semiconductor))
+					actions.start(new /datum/action/bar/icon/teg_semiconductor_replace(src, W, 5 SECONDS), user)
+					return
+
+		..()
+
 	proc/process_grump()
 		var/stoked_sum = 0
 		if(lastgenlev > 0)
 			if(grump < 0) grump = 0 // no negative grump plz
 			grump++ // get grump'd
 
-		for(var/obj/machinery/power/furnace/F as() in src.furnaces)
+		for(var/obj/machinery/power/furnace/F as anything in src.furnaces)
 			if( F.active ) stoked_sum += F.stoked
 
 		if(stoked_sum > 10)
 			if(prob(50)) grump--
 			if(prob(5)) grump -= min(stoked_sum/10, 15)
 
-		classic_grump()
+		// Use classic grump if not handled by variant
+		if(!src.active_form?.on_grump(src))
+			classic_grump()
 
 	// engine looping sounds and hazards
 	proc/classic_grump()
@@ -981,8 +1140,193 @@ datum/pump_ui/circulator_ui
 			"coldOutletPres" = 0,
 		)
 
-/obj/machinery/atmospherics/unary/furnace_connector
+/*
+  0         1         	2         	3        	4
+Present 	Unscrewed  Connected 	Unconnected		Missing
+     (Screw)                (Snip)        (Pry)              >>-->> REMOVAL
+     (Screw)                (Snip)        (COIL)   (Item)		<<--<< REPLACEMNT
+*/
 
+/datum/action/bar/icon/teg_semiconductor_removal
+	id = "teg_semiconductor_removal"
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
+	duration = 15 SECONDS
+	icon = 'icons/ui/actions.dmi'
+	icon_state = "working"
+
+	var/obj/machinery/power/generatorTemp/generator
+	var/obj/item/the_tool
+
+	New(var/obj/O, var/obj/item/tool, var/duration_i)
+		..()
+		if (O)
+			generator = O
+		if (tool)
+			the_tool = tool
+			icon = the_tool.icon
+			icon_state = the_tool.icon_state
+		if (duration_i)
+			duration = duration_i
+		if (ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			if (H.traitHolder.hasTrait("training_engineer"))
+				duration = round(duration / 2)
+
+	onUpdate()
+		..()
+		if (generator == null || the_tool == null || owner == null || !in_interact_range(generator, owner))
+			interrupt(INTERRUPT_ALWAYS)
+			return
+		var/mob/source = owner
+		if (istype(source) && the_tool != source.equipped())
+			interrupt(INTERRUPT_ALWAYS)
+
+	onStart()
+		..()
+		// SCREW->SNIP->CROW (REMOVAL)
+		switch( generator.semiconductor_state )
+			if (TEG_SEMI_STATE_INSTALLED)
+				owner.visible_message("<span class='notice'>[owner] begins to dismantle \the [generator] to get access to the semiconductor.</span>")
+				playsound(get_turf(generator), "sound/items/Screwdriver.ogg", 50, 1)
+			if (TEG_SEMI_STATE_UNSCREWED)
+				owner.visible_message("<span class='notice'>[owner] begins to snip wiring between the semiconductor and \the [generator].</span>")
+				playsound(get_turf(generator), "sound/items/Scissor.ogg", 60, 1)
+			if (TEG_SEMI_STATE_DISCONNECTED)
+				owner.visible_message("<span class='notice'>[owner] begins prying out the semiconductor from \the [generator].</span>")
+				playsound(get_turf(generator), "sound/items/Crowbar.ogg", 60, 1)
+
+	onEnd()
+		..()
+		// SCREW->SNIP->CROW (REMOVAL)
+		switch( generator.semiconductor_state )
+			if (TEG_SEMI_STATE_INSTALLED)
+				generator.semiconductor_state = TEG_SEMI_STATE_UNSCREWED
+				playsound(get_turf(generator), "sound/items/Screwdriver.ogg", 50, 1)
+				owner.visible_message("<span class='notice'>[owner] opens up access to the semiconductor.</span>", "<span class='notice'>You unscrew \the [generator] to gain access to the semiconductor.</span>")
+				generator.semiconductor_repair = "The semiconductor is visible and needs to be disconnected from the TEG with some wirecutters or closed up with a screwdriver."
+
+			if (TEG_SEMI_STATE_UNSCREWED)
+				generator.semiconductor_state = TEG_SEMI_STATE_DISCONNECTED
+				boutput(owner, "<span class='notice'>You snip the last piece of the electrical system connected to the semiconductor.</span>")
+				playsound(get_turf(generator), "sound/items/Scissor.ogg", 80, 1)
+				generator.semiconductor_repair = "The semiconductor has been disconnected and can be pried out or reconnected with additional cable."
+				generator.status = BROKEN // SEMICONDUCTOR DISCONNECTED IT BROKEN
+				generator.updateicon()
+
+			if (TEG_SEMI_STATE_DISCONNECTED)
+				generator.semiconductor_state = TEG_SEMI_STATE_MISSING
+				boutput(owner, "<span class='notice'>You finish prying the semiconductor out of \the [generator].</span>")
+				playsound(get_turf(generator), "sound/items/Deconstruct.ogg", 80, 1)
+				generator.semiconductor_repair = "The semiconductor is missing..."
+
+				generator.semiconductor.set_loc(get_turf(generator))
+				generator.semiconductor = null
+
+/datum/action/bar/icon/teg_semiconductor_replace
+	id = "teg_semiconductor_removal"
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
+	duration =  15 SECONDS
+	icon = 'icons/ui/actions.dmi'
+	icon_state = "working"
+
+	var/obj/machinery/power/generatorTemp/generator
+	var/obj/item/the_tool
+
+	New(var/obj/O, var/obj/item/tool, var/duration_i)
+		..()
+		if (O)
+			generator = O
+		if (tool)
+			the_tool = tool
+			icon = the_tool.icon
+			icon_state = the_tool.icon_state
+		if (duration_i)
+			duration = duration_i
+		if (ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			if (H.traitHolder.hasTrait("training_engineer"))
+				duration = round(duration / 2)
+
+	onUpdate()
+		..()
+		if (generator == null || the_tool == null || owner == null || !in_interact_range(generator, owner))
+			interrupt(INTERRUPT_ALWAYS)
+			return
+		var/mob/source = owner
+		if (istype(source) && the_tool != source.equipped())
+			interrupt(INTERRUPT_ALWAYS)
+
+	onStart()
+		..()
+		// (INSERT)->(COIL)->SNIP->SCREW
+		switch(generator.semiconductor_state)
+			if (TEG_SEMI_STATE_MISSING)
+				owner.visible_message("<span class='notice'>[owner] begins to insert [the_tool] into \the [generator].</span>")
+				playsound(get_turf(generator), "sound/items/Deconstruct.ogg", 60, 1)
+			if (TEG_SEMI_STATE_DISCONNECTED)
+				owner.visible_message("<span class='notice'>[owner] begins to wire up the semiconductor and \the [generator].</span>")
+				playsound(get_turf(generator), "sound/items/Deconstruct.ogg", 60, 1)
+			if (TEG_SEMI_STATE_CONNECTED)
+				owner.visible_message("<span class='notice'>[owner] begins cutting the excess wire from the semiconductor.</span>")
+				playsound(get_turf(generator), "sound/items/Scissor.ogg", 60, 1)
+			if (TEG_SEMI_STATE_UNSCREWED)
+				owner.visible_message("<span class='notice'>[owner] begins to close up \the [generator] access to the semiconductor.</span>")
+				playsound(get_turf(generator), "sound/items/Screwdriver.ogg", 50, 1)
+
+	onEnd()
+		..()
+		// (INSERT)->(COIL)->SNIP->SCREW
+		switch(generator.semiconductor_state)
+			if (TEG_SEMI_STATE_MISSING)
+				if (the_tool != null)
+					src.generator.semiconductor = the_tool
+					if(ismob(owner))
+						var/mob/M = owner
+						M.drop_item(the_tool)
+					generator.semiconductor.set_loc(generator)
+
+					generator.semiconductor_state = TEG_SEMI_STATE_DISCONNECTED
+					playsound(get_turf(generator), "sound/items/Deconstruct.ogg", 80, 1)
+					owner.visible_message("<span class='notice'>[owner] places [the_tool] inside [generator].</span>", "<span class='notice'>You successfully place semiconductor inside \the [generator].</span>")
+					generator.semiconductor_repair = "The semiconductor has been disconnected and can be pried out or reconnected with additional cable."
+
+			if (TEG_SEMI_STATE_DISCONNECTED)
+				if (the_tool != null)
+					the_tool.amount -= 4
+					if(the_tool.amount <= 0)
+						qdel(the_tool)
+					else if(istype(the_tool, /obj/item/cable_coil))
+						var/obj/item/cable_coil/C = the_tool
+						C.updateicon()
+
+					generator.semiconductor_state = TEG_SEMI_STATE_CONNECTED
+					boutput(owner, "<span class='notice'>You wire up the semicondoctor to \the [generator].</span>")
+					playsound(get_turf(generator), "sound/items/Deconstruct.ogg", 80, 1)
+					generator.semiconductor_repair = "The semiconductor has been wired in but has excess cable that must be removed."
+					generator.status &= ~BROKEN // SEMICONDUCTOR RECONNECTED IT UNBROKEN
+					generator.updateicon()
+
+			if (TEG_SEMI_STATE_CONNECTED)
+				generator.semiconductor_state = TEG_SEMI_STATE_UNSCREWED
+				boutput(owner, "<span class='notice'>You snip the excess wires from the semiconductor.</span>")
+				playsound(get_turf(generator), "sound/items/Scissor.ogg", 80, 1)
+				generator.semiconductor_repair = "The semiconductor is visible and needs to be disconnected from \the [generator] with some wirecutters or closed up with a screwdriver."
+
+			if (TEG_SEMI_STATE_UNSCREWED)
+				generator.semiconductor_state = TEG_SEMI_STATE_INSTALLED
+
+				owner.visible_message("<span class='notice'>[owner] closes up access to the semiconductor in \the [generator].</span>", "<span class='notice'>You successfully replaced the semiconductor.</span>")
+				playsound(get_turf(generator), "sound/items/Deconstruct.ogg", 80, 1)
+				generator.semiconductor_repair = null
+
+/** Thermoelectric Generator Semiconductor - A beautiful array of thermopiles */
+/obj/item/teg_semiconductor
+	name = "Prototype Semiconductor"
+	desc = "A large rectangulr plate stamped with 'Prototype Thermo-Electric Generator Semiconductor.  If found please return to NanoTrasen.'"
+	icon = 'icons/obj/power.dmi'
+	icon_state = "semi"
+
+/obj/machinery/atmospherics/unary/furnace_connector
 	icon = 'icons/obj/atmospherics/heat_reservoir.dmi'
 	icon_state = "intact_off"
 	density = 1
@@ -1288,6 +1632,7 @@ datum/pump_ui/circulator_ui
 			radio_connection = radio_controller.add_object(src, "[frequency]")
 
 	initialize()
+		..()
 		set_frequency(frequency)
 
 #undef PUMP_POWERLEVEL_1
@@ -1302,5 +1647,18 @@ datum/pump_ui/circulator_ui
 #undef LEAKS_GAS
 #undef LEAKS_LUBE
 #undef LUBE_DRAIN_OPEN
+#undef WARNING_APC_DRAINING
+#undef WARNING_5MIN
+#undef WARNING_1MIN
+#undef WARNING_LOW_MOLES
+#undef TIME_PER_PROCESS
+#undef WARNING_FAIL_5MIN_ITERS
+#undef WARNING_FAIL_1MIN_ITERS
+
 #undef TEG_HIGH_TEMP
 #undef TEG_LOW_TEMP
+#undef TEG_SEMI_STATE_INSTALLED
+#undef TEG_SEMI_STATE_UNSCREWED
+#undef TEG_SEMI_STATE_CONNECTED
+#undef TEG_SEMI_STATE_DISCONNECTED
+#undef TEG_SEMI_STATE_MISSING

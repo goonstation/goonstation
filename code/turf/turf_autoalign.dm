@@ -181,7 +181,7 @@
 			user.visible_message("<span class='alert'>[user] inserts [W] into [src]!</span>","<span class='alert'>The key seems to phase into the wall.</span>")
 			H.last_use = world.time
 			blink(src)
-			var/turf/simulated/wall/false_wall/temp/fakewall = new /turf/simulated/wall/false_wall/temp(src)
+			var/turf/simulated/wall/false_wall/temp/fakewall = src.ReplaceWith(/turf/simulated/wall/false_wall/temp, FALSE, TRUE, FALSE, TRUE)
 			fakewall.was_rwall = 1
 			fakewall.opacity = 0
 			fakewall.RL_SetOpacity(1) //Lighting rebuild.
@@ -189,10 +189,8 @@
 
 		else if (istype(W, /obj/item/sheet) && src.d_state)
 			var/obj/item/sheet/S = W
-			var/turf/T = user.loc
 			boutput(user, "<span class='notice'>Repairing wall.</span>")
-			sleep(2.5 SECONDS)
-			if (user.loc == T && user.equipped() == S)
+			if (do_after(user, 2.5 SECONDS) && S.consume_sheets(1))
 				src.d_state = 0
 				src.icon_state = initial(src.icon_state)
 				if (S.material)
@@ -201,22 +199,6 @@
 					var/datum/material/M = getMaterial("steel")
 					src.setMaterial(M)
 				boutput(user, "<span class='notice'>You repaired the wall.</span>")
-				if (S.amount > 1)
-					S.amount--
-				else
-					qdel(W)
-				return
-
-			else if (isrobot(user) && user.loc == T)
-				src.d_state = 0
-				src.icon_state = initial(src.icon_state)
-				if (W.material)
-					src.setMaterial(S.material)
-				boutput(user, "<span class='notice'>You repaired the wall.</span>")
-				if (S.amount > 1)
-					S.amount--
-				else
-					qdel(W)
 				return
 
 		else if (istype(W, /obj/item/grab))

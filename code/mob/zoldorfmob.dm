@@ -400,6 +400,8 @@
 
 	if(istype(over_object,/obj/item) && istype(usr.loc,/obj/machinery/playerzoldorf))
 		var/obj/item/i = over_object
+		if(i.anchored)
+			return
 		var/obj/machinery/playerzoldorf/pz = usr.loc
 		if((i in range(1,usr.loc)) && (Tb in range(1,Ta)))
 			if(!pz.GetOverlayImage("fortunetelling"))

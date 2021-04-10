@@ -65,7 +65,7 @@ var/global/meteor_shower_active = 0
 			command_alert("[comsev] [shower_name] approaching [comdir]. Impact in [commins] seconds.", "Meteor Alert")
 			world << 'sound/machines/engine_alert2.ogg'
 			meteor_shower_active = direction
-			for (var/obj/machinery/shield_generator/S as() in machine_registry[MACHINES_SHIELDGENERATORS])
+			for (var/obj/machinery/shield_generator/S as anything in machine_registry[MACHINES_SHIELDGENERATORS])
 				S.update_icon()
 
 		SPAWN_DBG(warning_delay)
@@ -120,7 +120,7 @@ var/global/meteor_shower_active = 0
 				sleep(delay_between_meteors)
 
 			meteor_shower_active = 0
-			for (var/obj/machinery/shield_generator/S as() in machine_registry[MACHINES_SHIELDGENERATORS])
+			for (var/obj/machinery/shield_generator/S as anything in machine_registry[MACHINES_SHIELDGENERATORS])
 				S.update_icon()
 
 	admin_call(var/source)
@@ -307,7 +307,6 @@ var/global/meteor_shower_active = 0
 			SPAWN_DBG(1 DECI SECOND)
 				explosion(src, get_turf(src), exp_dev, exp_hvy, exp_lit, exp_fsh)
 		var/atom/source = src
-		src = null
 		qdel(source)
 
 	proc/dump_ore()
@@ -321,7 +320,6 @@ var/global/meteor_shower_active = 0
 			A.name = "meteor chunk"
 
 		var/atom/source = src
-		src = null
 		qdel(source)
 
 /////////////////////////HUGE
@@ -365,5 +363,4 @@ var/global/meteor_shower_active = 0
 			var/atom/trg = get_step(src, A)
 			new type(src.loc, trg)
 		var/atom/source = src
-		src = null
 		qdel(source)

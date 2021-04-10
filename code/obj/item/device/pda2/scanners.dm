@@ -128,7 +128,7 @@
 	extension = "GSCN"
 	var/subject_name = null
 	var/subject_uID = null
-	var/list/dna_pool = list()
+	var/list/datum/bioEffect/dna_pool = list()
 
 	disposing()
 		if (dna_pool)

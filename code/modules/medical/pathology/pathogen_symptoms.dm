@@ -623,9 +623,7 @@ datum/pathogeneffects/malevolent/serious_paranoia
 		var/what = pick("I am the traitor.", "I will kill you.", "You will die, [M].")
 		if (prob(50))
 			boutput(M, "<B>[O]</B> points at [M].")
-			var/point = new /obj/decal/point(get_turf(M))
-			SPAWN_DBG(3 SECONDS)
-				qdel(point)
+			make_point(get_turf(M))
 		boutput(M, "<B>[O]</B> [action], \"[what]\"")
 
 	proc/backpack(var/mob/M, var/mob/living/O)
@@ -1660,7 +1658,7 @@ datum/pathogeneffects/malevolent/seriouschills/ultimate
 				if (prob(1) && !M.bioHolder.HasOneOfTheseEffects("cold_resist","thermal_resist"))
 					M.show_message("<span class='alert'>You freeze completely!</span>")
 					logTheThing("pathology", usr, null, "was ice statuified by symptom [src].")
-					M:become_ice_statue()
+					M.become_statue_ice()
 		if (M.bodytemperature < 0)
 			M.bodytemperature = 0
 

@@ -54,7 +54,7 @@
 "bc" = (/obj/mopbucket,/obj/item/caution,/obj/item/caution,/obj/item/caution,/obj/item/caution,/turf/simulated/floor,/area/janitor_setpiece)
 "bd" = (/obj/item/reagent_containers/glass/bottle/cleaner,/obj/item/reagent_containers/glass/bottle/cleaner,/obj/item/reagent_containers/glass/bottle/acetone/janitors,/obj/item/reagent_containers/glass/bottle/acetone/janitors,/obj/item/reagent_containers/glass/bottle/ammonia/janitors,/obj/item/reagent_containers/glass/bottle/ammonia/janitors,/obj/item/chem_grenade/cleaner,/obj/item/chem_grenade/cleaner,/obj/item/storage/box/lightbox/bulbs,/obj/item/storage/box/lightbox/tubes,/obj/storage/crate{name = "cleaning supplies"},/turf/simulated/floor,/area/janitor_setpiece)
 "be" = (/obj/item/storage/toolbox/emergency,/obj/item/storage/box/mousetraps,/obj/item/sponge,/obj/item/spraybottle/cleaner,/obj/item/mop,/obj/item/reagent_containers/glass/bucket,/obj/item/body_bag,/obj/item/body_bag,/obj/item/body_bag,/obj/item/body_bag,/obj/storage/crate{name = "cleaning supplies"},/turf/simulated/floor,/area/janitor_setpiece)
-"bf" = (/obj/item/flamethrower/assembled/loaded,/obj/storage/closet/wardrobe/specialty_janitor,/turf/simulated/floor,/area/janitor_setpiece)
+"bf" = (/obj/item/gun/flamethrower/assembled/loaded,/obj/storage/closet/wardrobe/specialty_janitor,/turf/simulated/floor,/area/janitor_setpiece)
 "bg" = (/obj/shrub,/turf/simulated/floor,/area/janitor_setpiece)
 "bh" = (/obj/table/wood/auto/desk,/obj/machinery/networked/printer,/turf/simulated/floor,/area/janitor_setpiece)
 "bi" = (/obj/table/wood/auto/desk,/obj/random_item_spawner/desk_stuff/g_clip_bin_pen,/turf/simulated/floor,/area/janitor_setpiece)

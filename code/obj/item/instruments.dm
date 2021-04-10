@@ -42,7 +42,7 @@
 
 			//src.contextActions = childrentypesof(/datum/contextAction/vehicle)
 
-			for(var/datum/contextAction/C in src.contextActions)
+			for(var/datum/contextAction/C as anything in src.contextActions)
 				C.dispose()
 			src.contextActions = list()
 

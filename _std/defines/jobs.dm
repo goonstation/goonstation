@@ -40,3 +40,4 @@
 #define MGA_CARGOREQUEST "Cargo Request"
 #define MGA_CRISIS "Crisis Alert"
 #define MGA_RADIO "Radio Alert"
+#define MGA_TRACKING "Tracking Alert"

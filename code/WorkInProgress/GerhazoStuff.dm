@@ -92,7 +92,7 @@
 	icon_state = "cknight_hood"
 	see_face = 0
 
-/obj/screen/ability/topBar/cyalume_knight
+/atom/movable/screen/ability/topBar/cyalume_knight
 	clicked(params)
 		var/datum/targetable/cyalume_knight/spell = owner
 		var/datum/abilityHolder/holder = owner.holder
@@ -138,7 +138,7 @@
 	// notEnoughPointsMessage = "<span class='alert'>You need more blood to use this ability.</span>"
 	points = 100
 	pointName = "force"
-	//var/obj/screen/kudzu/meter/nutrients_meter = null
+	//var/atom/movable/screen/kudzu/meter/nutrients_meter = null
 	var/const/MAX_POINTS = 100
 
 	onLife(var/mult = 1)
@@ -157,7 +157,7 @@
 
 	New(datum/abilityHolder/holder)
 		..(holder)
-		var/obj/screen/ability/topBar/cyalume_knight/B = new /obj/screen/ability/topBar/cyalume_knight(null)
+		var/atom/movable/screen/ability/topBar/cyalume_knight/B = new /atom/movable/screen/ability/topBar/cyalume_knight(null)
 		B.icon = src.icon
 		B.icon_state = src.icon_state
 		B.owner = src

@@ -49,9 +49,9 @@
 		src.current_message = pick(src.dialogue_greet)
 		src.patience = rand(src.base_patience[1],src.base_patience[2])
 		if (src.max_goods_buy > src.base_goods_buy.len)
-			src.max_goods_buy = src.base_goods_buy.len
+			src.max_goods_buy = length(src.base_goods_buy)
 		if (src.max_goods_sell > src.base_goods_sell.len)
-			src.max_goods_sell = src.base_goods_sell.len
+			src.max_goods_sell = length(src.base_goods_sell)
 		src.set_up_goods()
 
 	proc/set_up_goods()
@@ -189,7 +189,7 @@
 			src.listed_name = pick(src.possible_names)
 		else
 			src.listed_name = src.comname
-		if(prob(src.alt_type_chance) && src.possible_alt_types.len)
+		if(prob(src.alt_type_chance) && length(src.possible_alt_types))
 			src.comtype = pick(src.possible_alt_types)
 		src.price = rand(src.price_boundary[1],src.price_boundary[2])
 

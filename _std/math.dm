@@ -12,7 +12,7 @@
 #define nround(x) (((x % 1) >= 0.5)? round(x) : ceil(x))
 
 /// Returns the sign of the given number (1 or -1)
-#define sign(x) ((x) != 0 ? (x) / abs(x) : 0)
+#define sign(x) (((x) > 0) - ((x) < 0))
 
 /// cotangent
 #define cot(x) (cos(x) / sin(x))
@@ -21,14 +21,8 @@
 /// Used for lag-compensating prob rolls.
 #define percentmult(x, mult) (100 * (1 - ((1 - (clamp((x), 0, 100) / 100))**mult)))
 
-//#define angledifference(x,y) ((((y) - (x) + 180) % 360 - 180) + (((((y) - (x) + 180) % 360 - 180) < -180) ? 360 : 0))
-//this is hecka ugly, so im just leaving the proc in
-
-/// difference in degrees between two angles in degrees
-/proc/angledifference(a1,a2)
-	.= ( a2 - a1 + 180 ) % 360 - 180
-	if (. < -180)
-		.+= 360
+/// difference in degrees from angle x to angle y
+#define angledifference(x,y) ((((y) - (x) + 180) % 360 - 180) + (((((y) - (x) + 180) % 360 - 180) < -180) ? 360 : 0))
 
 /// isnum() returns TRUE for NaN. Also, NaN != NaN. Checkmate, BYOND.
 #define isnan(x) ( (x) != (x) )

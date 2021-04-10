@@ -1633,7 +1633,7 @@
 /area/station/hallway/secondary/entry)
 "adN" = (
 /obj/table/reinforced/auto,
-/obj/item/playing_cards/trading/booster,
+/obj/item/stg_booster,
 /obj/item/pen,
 /obj/item/device/radio,
 /turf/simulated/floor/grey/whitegrime,
@@ -10007,7 +10007,7 @@
 	pixel_x = -12
 	},
 /obj/table/wood/auto,
-/obj/item/card_box/booster,
+/obj/item/stg_booster,
 /obj/decal/cleanable/cobweb,
 /turf/simulated/floor/grey/blackgrime,
 /area/tech_outpost)
@@ -11139,7 +11139,7 @@
 /turf/space,
 /area/station/engine/substation/pylon)
 "aAX" = (
-/obj/item/card_box/suit,
+/obj/item/card_box/plain,
 /obj/item/crowbar,
 /obj/stool/chair/comfy/shuttle{
 	dir = 8
@@ -11858,7 +11858,7 @@
 "aCQ" = (
 /obj/machinery/light_switch/north,
 /obj/table/reinforced/auto,
-/obj/item/card_box/trading,
+/obj/item/stg_box,
 /turf/simulated/floor/black,
 /area/station/storage/emergency{
 	name = "Hilarious Storage A"
@@ -20056,7 +20056,9 @@
 /area/station/bridge/captain)
 "aUj" = (
 /obj/table/wood/auto,
-/obj/displaycase,
+/obj/displaycase{
+	displayed = new /obj/item/captaingun
+},
 /turf/simulated/floor/carpet/blue/fancy/innercorner/south,
 /area/station/bridge/captain)
 "aUk" = (
@@ -43031,7 +43033,7 @@
 /area/station/crew_quarters/quarters_south)
 "bRp" = (
 /obj/table/wood/auto,
-/obj/item/card_box/suit,
+/obj/item/card_box/plain,
 /obj/item/clothing/gloves/black,
 /obj/machinery/light{
 	dir = 1;
@@ -45252,10 +45254,7 @@
 "bWg" = (
 /obj/table/auto,
 /obj/disposalpipe/segment/horizontal,
-/obj/item/reagent_containers/food/snacks/cake/chocolate{
-	desc = "Holy shit! This cake probably costs more than the gross domestic product of Bulgaria!";
-	name = "Extravagant Chocolate Gateau"
-	},
+/obj/item/reagent_containers/food/snacks/cake/chocolate/gateau,
 /turf/simulated/floor/white/checker{
 	dir = 6
 	},
@@ -50735,7 +50734,7 @@
 	},
 /area/station/crew_quarters/ce)
 "chC" = (
-/obj/storage/crate/rcd,
+/obj/storage/crate/rcd/CE,
 /obj/item/clothing/shoes/magnetic,
 /obj/item/clothing/gloves/yellow,
 /turf/simulated/floor/yellowblack,
@@ -55553,7 +55552,7 @@
 "ctE" = (
 /obj/table/wood/auto,
 /obj/item/reagent_containers/food/drinks/bottle/tequila,
-/obj/item/playing_cards/suit,
+/obj/item/card_group/plain,
 /obj/item/spacecash/hundred,
 /turf/simulated/floor/carpet/red/fancy/edge/north,
 /area/listeningpost/power)

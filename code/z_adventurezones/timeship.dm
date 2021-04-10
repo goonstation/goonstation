@@ -487,4 +487,5 @@ var/list/timewarp_interior_sounds = list('sound/ambience/industrial/Timeship_Gon
 	desc = "Uhh.  UHHH.  uh!!"
 	icon = 'icons/misc/worlds.dmi'
 	icon_state = "timehole_edge"
+	plane = PLANE_FLOOR
 	anchored = 1

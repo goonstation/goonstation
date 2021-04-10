@@ -34,7 +34,7 @@ var/global/atom_emergency_stop = 0
 		var/transmute_thing = input("enter path of the things you want to transmute", "Enter Path", pick("/obj", "/mob", "/turf")) as null|text
 		if (!transmute_thing)
 			return
-		var/transmute_path = get_one_match(transmute_thing, /atom)
+		var/transmute_path = get_one_match(transmute_thing, /atom, use_concrete_types = FALSE)
 		if (!transmute_path)
 			return
 
@@ -139,7 +139,7 @@ var/global/atom_emergency_stop = 0
 		var/emag_thing = input("enter path of the things you want to emag", "Enter Path", pick("/obj", "/mob", "/turf")) as null|text
 		if (!emag_thing)
 			return
-		var/emag_path = get_one_match(emag_thing, /atom)
+		var/emag_path = get_one_match(emag_thing, /atom, use_concrete_types = FALSE)
 		if (!emag_path)
 			return
 
@@ -264,7 +264,7 @@ var/global/atom_emergency_stop = 0
 		var/scale_thing = input("enter path of the things you want to scale", "Enter Path", pick("/obj", "/mob", "/turf")) as null|text
 		if (!scale_thing)
 			return
-		var/scale_path = get_one_match(scale_thing, /atom)
+		var/scale_path = get_one_match(scale_thing, /atom, use_concrete_types = FALSE)
 		if (!scale_path)
 			return
 
@@ -397,7 +397,7 @@ var/global/atom_emergency_stop = 0
 		var/rotate_thing = input("enter path of the things you want to rotate", "Enter Path", pick("/obj", "/mob", "/turf")) as null|text
 		if (!rotate_thing)
 			return
-		var/rotate_path = get_one_match(rotate_thing, /atom)
+		var/rotate_path = get_one_match(rotate_thing, /atom, use_concrete_types = FALSE)
 		if (!rotate_path)
 			return
 
@@ -537,7 +537,7 @@ var/global/atom_emergency_stop = 0
 		var/spin_thing = input("enter path of the things you want to spin", "Enter Path", pick("/obj", "/mob", "/turf")) as null|text
 		if (!spin_thing)
 			return
-		var/spin_path = get_one_match(spin_thing, /atom)
+		var/spin_path = get_one_match(spin_thing, /atom, use_concrete_types = FALSE)
 		if (!spin_path)
 			return
 
@@ -660,7 +660,7 @@ var/global/atom_emergency_stop = 0
 			else
 				if (!istype(A, /obj) && !ismob(A))
 					continue
-				if (istype(A, /obj/screen) || istype(A, /obj/overlay/tile_effect))
+				if (istype(A, /atom/movable/screen) || istype(A, /obj/overlay/tile_effect))
 					continue
 				A:set_loc(user_location)
 				gotten ++
@@ -686,7 +686,7 @@ var/global/atom_emergency_stop = 0
 		var/get_thing = input("enter path of the things you want to get", "Enter Path", pick("/obj", "/mob")) as null|text
 		if (!get_thing)
 			return
-		var/get_path = get_one_match(get_thing, /atom)
+		var/get_path = get_one_match(get_thing, /atom, use_concrete_types = FALSE)
 		if (!get_path)
 			return
 

@@ -1,7 +1,7 @@
 /datum/hud/ai
 	var/mob/living/silicon/ai/master
 
-	var/obj/screen/hud
+	var/atom/movable/screen/hud
 		health
 		cell
 		tracking

@@ -14,7 +14,8 @@
 	machine_registry_idx = MACHINES_CLONINGCONSOLES
 	can_reconnect = 1
 	var/obj/machinery/clone_scanner/scanner = null //Linked scanner. For scanning.
-	var/obj/machinery/clonepod/pod1 = null //Linked cloning pod.
+	var/max_pods = 3
+	var/list/linked_pods = list() // /obj/machinery/clonepod
 	var/currentStatusMessage = list()
 	var/currentMessageNumber = 0
 	var/menu = 1 //Which menu screen to display
@@ -26,18 +27,21 @@
 	var/recordDeleting = list()
 	var/allow_mind_erasure = 0 // Can you erase minds?
 	var/mindwipe = 0 //Is mind wiping active?
+	var/datum/bioEffect/BE = null // Any bioeffects to add upon cloning (used with the geneclone module)
+	var/gen_analysis = 0 //Are we analysing the genes while reassembling the duder? (read: Do we work faster or do we give a material bonus?)
 	//Sound for scans and toggling gene analysis. They need to be the same so you can fake the former with the latter
 	var/sound_ping = 'sound/machines/ping.ogg'
 
-	lr = 1
-	lg = 0.6
-	lb = 1
+	light_r =1
+	light_g = 0.6
+	light_b = 1
 
 	disposing()
 		scanner?.connected = null
-		pod1?.connected = null
+		for (var/obj/machinery/clonepod/P in linked_pods)
+			P.connected = null
 		scanner = null
-		pod1 = null
+		linked_pods = list()
 		diskette = null
 		records = null
 		STOP_TRACKING
@@ -84,20 +88,20 @@
 	return
 
 /obj/machinery/computer/cloning/connection_scan()
-	if(portable) return
-	scanner?.connected = null
-	pod1?.connected = null
+	if (src.portable)
+		return
+	src.scanner?.connected = null
+	for (var/obj/machinery/clonepod/P in src.linked_pods)
+		P.connected = null
+	src.linked_pods = list()
 	src.scanner = locate(/obj/machinery/clone_scanner, orange(2,src))
-	src.pod1 = locate(/obj/machinery/clonepod, orange(4,src))
-
-	var/hookup_error = FALSE
-	if (isnull(src.scanner))
-		hookup_error = TRUE
-	if (isnull(src.pod1))
-		hookup_error = TRUE
-	if (!hookup_error)
-		src.pod1?.connected = src
-		src.scanner?.connected = src
+	for (var/obj/machinery/clonepod/P in orange(4, src))
+		src.linked_pods += P
+		if (!isnull(src.scanner))
+			src.scanner.connected = src
+			P.connected = src
+		if (src.linked_pods.len >= src.max_pods)
+			break
 
 /obj/machinery/computer/cloning/attackby(obj/item/W as obj, mob/user as mob)
 	if (wagesystem.clones_for_cash && istype(W, /obj/item/spacecash))
@@ -128,6 +132,7 @@
 				var/obj/item/sheet/glass/glass = new/obj/item/sheet/glass(src.loc)
 				glass.amount = 6
 				glass.inventory_counter.update_number(glass.amount)
+			logTheThing("station", user, null, "disconnects the cloning console at [log_loc(src)].")
 			var/obj/computerframe/A = new /obj/computerframe( src.loc )
 			if(src.material) A.setMaterial(src.material)
 			var/obj/item/circuitboard/cloning/M = new /obj/item/circuitboard/cloning( A )
@@ -140,9 +145,9 @@
 			if(src.allow_mind_erasure)
 				new /obj/item/cloneModule/minderaser(src.loc)
 				src.allow_mind_erasure = 0
-			if(src.pod1 && src.pod1.BE)
+			if(src.BE)
 				new /obj/item/cloneModule/genepowermodule(src.loc)
-				src.pod1.BE = null
+				src.BE = null
 			A.circuit = M
 			A.state = 3
 			A.icon_state = "3"
@@ -174,10 +179,10 @@
 		if(module.BE == null)
 			boutput(user, "<span class='alert'>You need to put an injector into the module before it will work!</span>")
 			return
-		if(pod1.BE)
+		if(src.BE)
 			boutput(user,"<span class='alert'>There is already a gene module in this upgrade spot! You can remove it by blowing up the genetics computer and building a new one. Or you could just use a screwdriver, I guess.</span>")
 			return
-		src.pod1.BE = module.BE
+		src.BE = module.BE
 		user.drop_item()
 		user.visible_message("[user] installs [module] into [src].", "You install [module] into [src].")
 		logTheThing("combat", src, user, "[user] has added clone module ([W] - [module.BE]) to ([src]) at [log_loc(user)].")
@@ -258,7 +263,7 @@
 		R.fields["abilities"] = A
 
 	R.fields["traits"] = list()
-	if(subject.traitHolder && subject.traitHolder.traits.len)
+	if(subject.traitHolder && length(subject.traitHolder.traits))
 		R.fields["traits"] = subject.traitHolder.traits.Copy()
 
 	//Add an implant if needed
@@ -295,13 +300,26 @@
 	if (!istype(C))
 		show_message("Invalid or corrupt record.", "danger")
 		return
-	if (!src.pod1)
+
+	var/obj/machinery/clonepod/pod1 = null
+	for (var/obj/machinery/clonepod/P in linked_pods)
+		if (isnull(pod1))
+			pod1 = P
+			continue
+		if (pod1.attempting && !P.attempting)
+			pod1 = P
+			continue
+		if (!P.attempting && pod1.meat_level < P.meat_level)
+			pod1 = P
+			continue
+
+	if (!pod1)
 		show_message("No cloning pod connected.", "danger")
 		return
-	if (src.pod1.attempting)
+	if (pod1.attempting)
 		show_message("Cloning pod in use.", "info")
 		return
-	if (src.pod1.mess)
+	if (pod1.mess)
 		show_message("Abnormal reading from cloning pod.", "danger")
 		return
 
@@ -333,7 +351,7 @@
 			account_credit = Ba.fields["current_money"]
 
 		if ((src.held_credit + account_credit) >= wagesystem.clone_cost)
-			if (src.pod1.growclone(selected, C.fields["name"], C.fields["mind"], C.fields["holder"], C.fields["abilities"] , C.fields["traits"]))
+			if (pod1.growclone(selected, C.fields["name"], C.fields["mind"], C.fields["holder"], C.fields["abilities"] , C.fields["traits"]))
 				var/from_account = min(wagesystem.clone_cost, account_credit)
 				if (from_account > 0)
 					Ba.fields["current_money"] -= from_account
@@ -347,25 +365,12 @@
 		else
 			show_message("Insufficient funds to begin clone cycle.", "warning")
 
-	else if (src.pod1.growclone(selected, C.fields["name"], C.fields["mind"], C.fields["holder"], C.fields["abilities"] , C.fields["traits"]))
+	else if (pod1.growclone(selected, C.fields["name"], C.fields["mind"], C.fields["holder"], C.fields["abilities"] , C.fields["traits"]))
 		show_message("Cloning cycle activated.", "success")
 		src.records.Remove(C)
 		qdel(C)
 		JOB_XP(usr, "Medical Doctor", 15)
 		src.menu = 1
-
-/obj/machinery/computer/cloning/power_change()
-
-	if(status & BROKEN)
-		icon_state = "commb"
-	else
-		if( powered() )
-			icon_state = initial(icon_state)
-			status &= ~NOPOWER
-		else
-			SPAWN_DBG(rand(0, 15))
-				src.icon_state = "c_unpowered"
-				status |= NOPOWER
 
 /// find a ghost mob (or a ghost respawned as critter in vr/afterlife bar)
 proc/find_ghost_by_key(var/find_key)
@@ -499,7 +504,7 @@ proc/find_ghost_by_key(var/find_key)
 		eject_occupant(user)
 
 	MouseDrop(mob/user as mob)
-		if (can_operate(user))
+		if (istype(user) && can_operate(user))
 			eject_occupant(user)
 		else
 			..()
@@ -576,8 +581,8 @@ proc/find_ghost_by_key(var/find_key)
 	proc/find_pods()
 		if (!islist(src.pods))
 			src.pods = list()
-		if (!isnull(src.id) && genResearch && islist(genResearch.clonepods) && genResearch.clonepods.len)
-			for (var/obj/machinery/clonepod/pod in genResearch.clonepods)
+		if (!isnull(src.id) && genResearch && islist(genResearch.clonepods) && length(genResearch.clonepods))
+			for (var/obj/machinery/clonepod/pod as anything in genResearch.clonepods)
 				if (pod.id == src.id && !src.pods.Find(pod))
 					src.pods += pod
 					DEBUG_MESSAGE("[src] adds pod [log_loc(pod)] (ID [src.id]) in genResearch.clonepods")
@@ -685,6 +690,12 @@ proc/find_ghost_by_key(var/find_key)
 	. = ..()
 	if (.)
 		return
+
+	var/any_active = FALSE
+	for (var/obj/machinery/clonepod/P in linked_pods)
+		if (P.attempting)
+			any_active = TRUE
+
 	switch(action)
 		if("delete")
 			if(!src.allowed(usr))
@@ -692,7 +703,7 @@ proc/find_ghost_by_key(var/find_key)
 				return TRUE
 			var/selected_record =	find_record(params["ckey"])
 			if(selected_record)
-				logTheThing("combat", usr, null, "deletes the cloning record [selected_record["fields"]["name"]] for player [selected_record["fields"]["ckey"]] at [log_loc(src)].")
+				logTheThing("station", usr, null, "deletes the cloning record [selected_record["fields"]["name"]] for player [selected_record["fields"]["ckey"]] at [log_loc(src)].")
 				src.records.Remove(selected_record)
 				qdel(selected_record)
 				selected_record = null
@@ -711,13 +722,13 @@ proc/find_ghost_by_key(var/find_key)
 				clone_record(find_record(ckey))
 				. = TRUE
 		if("toggleGeneticAnalysis")
-			if(pod1 && !pod1.attempting)
-				pod1.gen_analysis = !pod1.gen_analysis
-				if (!ON_COOLDOWN(src, "sound_genetoggle", 2 SECONDS))
-					playsound(src.loc, sound_ping, 50, 1)
+			if (any_active)
+				show_message("Cannot toggle any modules while cloner is active.", "warning")
 				. = TRUE
 			else
-				show_message("Cannot toggle any modules while cloner is active.", "warning")
+				src.gen_analysis = !src.gen_analysis
+				if (!ON_COOLDOWN(src, "sound_genetoggle", 2 SECONDS))
+					playsound(src.loc, sound_ping, 50, 1)
 				. = TRUE
 		if("saveToDisk")
 			var/ckey = params["ckey"]
@@ -777,12 +788,12 @@ proc/find_ghost_by_key(var/find_key)
 					src.scanner.locked = 0
 					. = TRUE
 		if("mindWipeToggle")
-			if(!pod1.attempting && src.allow_mind_erasure)
-				pod1.mindwipe = !pod1.mindwipe
+			if (any_active || !src.allow_mind_erasure)
+				show_message("Cannot toggle any modules while cloner is active.", "warning")
 				. = TRUE
 			else
-				show_message("Cannot toggle any modules while cloner is active.", "warning")
-			. = TRUE
+				src.mindwipe = !src.mindwipe
+				. = TRUE
 
 
 /obj/machinery/computer/cloning/ui_data(mob/user)
@@ -791,7 +802,6 @@ proc/find_ghost_by_key(var/find_key)
 		"allowedToDelete" = src.allowed(user),
 		"scannerGone" = isnull(src.scanner),
 		"occupantScanned" = FALSE,
-		"podGone" = isnull(src.pod1),
 
 		"message" = src.currentStatusMessage,
 		"disk" = !isnull(src.diskette),
@@ -799,15 +809,19 @@ proc/find_ghost_by_key(var/find_key)
 		"allowMindErasure" = src.allow_mind_erasure,
 		"clonesForCash" = wagesystem.clones_for_cash,
 		"balance" = src.held_credit,
+
+		"mindWipe" = src.mindwipe,
+		"geneticAnalysis" = src.gen_analysis,
+		"podNames" = list(),
+		"meatLevels" = list(),
+		"cloneSlave" = list(),
+		"completion" = list(),
 	)
-	if(!isnull(src.pod1))
-		. += list(
-			"mindWipe" = pod1.mindwipe,
-			"meatLevels" = pod1.meat_level,
-			"cloneSlave" = pod1.cloneslave,
-			"geneticAnalysis" = pod1.gen_analysis,
-			"completion" = (!isnull(pod1.occupant) ? clamp(100 - ((pod1.occupant.max_health - pod1.occupant.health) - pod1.heal_level), 0, 100) : 0),
-		)
+	for (var/obj/machinery/clonepod/P in src.linked_pods)
+		.["podNames"] += P.name
+		.["meatLevels"] += P.meat_level
+		.["cloneSlave"] += P.cloneslave
+		.["completion"] += (!isnull(P.occupant) ? clamp(100 - ((P.occupant.max_health - P.occupant.health) - P.heal_level), 0, 100) : 0)
 	if(!isnull(src.scanner))
 		. += list(
 			"scannerOccupied" = src.scanner.occupant,

@@ -1,11 +1,11 @@
 /datum/datacore
 	var/name = "datacore"
-	var/list/medical = list(  )
-	var/list/general = list(  )
-	var/list/security = list(  )
-	var/list/bank = list (  )
-	var/list/fines = list (  )
-	var/list/tickets = list (  )
+	var/list/datum/data/record/medical = list(  )
+	var/list/datum/data/record/general = list(  )
+	var/list/datum/data/record/security = list(  )
+	var/list/datum/data/record/bank = list (  )
+	var/list/datum/fine/fines = list (  )
+	var/list/datum/ticket/tickets = list (  )
 	var/obj/machinery/networked/mainframe/mainframe = null
 
 /datum/datacore/proc/addManifest(var/mob/living/carbon/human/H as mob, var/sec_note = "", var/med_note = "")
@@ -195,7 +195,7 @@
 
 		var/username = format_username(H.real_name)
 		if (!src.mainframe || !src.mainframe.hd || !(src.mainframe.hd in src.mainframe))
-			for (var/obj/machinery/networked/mainframe/newMainframe as() in machine_registry[MACHINES_MAINFRAMES])
+			for (var/obj/machinery/networked/mainframe/newMainframe as anything in machine_registry[MACHINES_MAINFRAMES])
 				if (newMainframe.z != 1 || newMainframe.status)
 					continue
 

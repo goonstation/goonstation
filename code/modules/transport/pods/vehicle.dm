@@ -695,22 +695,22 @@
 
 	proc/checkhealth()
 		myhud?.update_health()
+		// sanitize values
+		if(health > maxhealth)
+			health = maxhealth
+		// find percentage of total health
+		health_percentage = (health / maxhealth) * 100
+
 		if(istype(src, /obj/machinery/vehicle/pod_smooth)) // check to see if it's one of the new pods
-			// sanitize values
-			if(health > maxhealth)
-				health = maxhealth
-			if(health < 0)
-				health = 0
-
-			// find percentage of total health
-			health_percentage = (health / maxhealth) * 100
-
 			switch(health_percentage)
 
 			//add or remove damage overlays, murderize the ship
-				if(0 to 0)
+
+				if(-INFINITY to -20)
 					shipdeath()
 					return
+				if(-20 to 0)
+					shipcrit()
 				if(0 to 25)
 					if(damage_overlays != 2)
 						particleMaster.SpawnSystem(new /datum/particleSystem/areaSmoke("#CCCCCC", 50, src))
@@ -739,11 +739,23 @@
 
 // if not a big pod, assume it's an old-style one instead
 		else
-			if(health<=0)
-				shipdeath()
-				return
-			if(health > maxhealth)
-				health = maxhealth
+			switch(health_percentage)
+				if(-INFINITY to -20)
+					shipdeath()
+					return
+				if(-20 to 0)
+					shipcrit()
+
+/obj/machinery/vehicle/proc/shipcrit()
+	if (src.engine)
+		playsound(src.loc, "sound/machines/pod_alarm.ogg", 40, 1)
+		visible_message("<span class='alert'>[src]'s engine bursts into flame!</span>")
+		for(var/mob/living/carbon/human/M in src)
+			M.update_burning(35)
+		engine.deactivate()
+		components -= engine
+		qdel(engine)
+		engine = null
 
 ///////////////////////////////////////////////////////////////////////////
 ////////Install Ship Part////////////////////////////////////////////
@@ -995,6 +1007,8 @@
 	src.find_pilot()
 	if (M.client)
 		M.attach_hud(myhud)
+		if(ishuman(M))
+			myhud.check_hud_layout(M)
 		if (M.client.tooltipHolder)
 			M.client.tooltipHolder.inPod = 1
 
@@ -1186,8 +1200,8 @@
 		return
 
 	if (src.lock && src.locked)
-		boutput(usr, "<span class='alert'>You can't modify parts while [src] is locked.</span>")
-		lock.show_lock_panel(usr, 0)
+		boutput(user, "<span class='alert'>You can't modify parts while [src] is locked.</span>")
+		lock.show_lock_panel(user, 0)
 		return
 
 	src.add_dialog(user)
@@ -1386,6 +1400,10 @@
 /obj/machinery/vehicle/New()
 	..()
 	name += "[pick(rand(1, 999))]"
+	if(prob(1))
+		var/new_name = phrase_log.random_phrase("vehicle")
+		if(new_name)
+			src.name = html_encode(new_name)
 	setup_ion_trail()
 
 	if (!movement_controller)

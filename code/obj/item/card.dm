@@ -49,7 +49,7 @@ GAUNTLET CARDS
 /obj/item/card/emag/fake
 //delicious fake emag
 	attack_hand(mob/user as mob)
-		boutput(user, "<span class='combat'>Turns out that card was actually a kind of [pick("deadly chameleon","spiny anteater","sex toy that George Melons likes to use","Syndicate Top Trumps Card","bag of neckbeard shavings")] in disguise! It stabs you!</span>")
+		boutput(user, "<span class='combat'>Turns out that card was actually a kind of [pick("deadly chameleon","spiny anteater","Discount Dan's latest product prototype","Syndicate Top Trumps Card","bag of neckbeard shavings")] in disguise! It stabs you!</span>")
 		user.changeStatus("paralysis", 100)
 		SPAWN_DBG(1 SECOND)
 			var/obj/storage/closet/C = new/obj/storage/closet(get_turf(user))
@@ -82,6 +82,8 @@ GAUNTLET CARDS
 	var/title = null
 	var/emagged = 0
 	var/datum/reagent_group_account/reagent_account = null
+	/// this determines if the icon_state of the ID changes if it is given a new job
+	var/keep_icon = FALSE
 
 	// YOU START WITH  NO  CREDITS
 	// WOW
@@ -124,12 +126,14 @@ GAUNTLET CARDS
 /obj/item/card/id/clown
 	icon_state = "id_clown"
 	desc = "Wait, this isn't even an ID Card. It's a piece of a Chips Ahoy wrapper with crayon scribbles on it. What the fuck?"
+	keep_icon = TRUE
 
 /obj/item/card/id/gold
 	name = "identification card"
 	icon_state = "gold"
 	item_state = "gold_id"
 	desc = "This card is important!"
+	keep_icon = TRUE
 
 /obj/item/card/id/blank_deluxe
 	name = "Deluxe ID"
@@ -137,7 +141,7 @@ GAUNTLET CARDS
 	item_state = "gold_id"
 	registered = "Member"
 	assignment = "Member"
-	var/jones_swiped = 0
+	keep_icon = TRUE
 
 /obj/item/card/id/captains_spare
 	name = "Captain's spare ID"
@@ -145,6 +149,7 @@ GAUNTLET CARDS
 	item_state = "gold_id"
 	registered = "Captain"
 	assignment = "Captain"
+	keep_icon = TRUE
 	New()
 		access = get_access("Captain")
 		..()
@@ -155,6 +160,7 @@ GAUNTLET CARDS
 	registered = "Dabber"
 	assignment = "Dabber"
 	desc = "This card authorizes the person wearing it to perform sick dabs."
+	keep_icon = TRUE
 	var/dab_count = 0
 	var/dabbed_on_count = 0
 	var/arm_count = 0

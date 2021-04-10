@@ -1,5 +1,5 @@
 /datum/hud/nukewires
-	var/obj/screen/hud
+	var/atom/movable/screen/hud
 		boxes
 		close
 	var/obj/machinery/nuclearbomb/master

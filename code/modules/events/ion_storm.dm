@@ -114,7 +114,13 @@
 		..()
 
 		// Fuck up the AI's laws
-		var/pickedLaw = pick(new_laws)
+		var/pickedLaw
+		if(prob(33))
+			pickedLaw = phrase_log.random_custom_ai_law(replace_names=TRUE)
+		else
+			pickedLaw = pick(new_laws)
+		if(isnull(pickedLaw))
+			pickedLaw = pick(new_laws)
 		if (prob(50))
 			var/num = rand(1,15)
 			ticker.centralized_ai_laws.laws_sanity_check()
@@ -193,8 +199,10 @@
 			// Fuck up a couple of doors
 			if (!station_doors.len)
 				var/turf/T = null
-				for (var/obj/machinery/door/foundDoor in by_type[/obj/machinery/door])
+				for_by_tcl (foundDoor, /obj/machinery/door)
 					if (foundDoor.z != 1)
+						continue
+					if (istype(foundDoor, /obj/machinery/door/poddoor))
 						continue
 					T = get_turf(foundDoor)
 					if (!istype(T.loc,/area/station/))

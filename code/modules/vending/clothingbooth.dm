@@ -29,17 +29,23 @@ var/list/clothingbooth_items = list()
 		return
 	if(!ishuman(user))
 		return
+
+	var/mob/living/carbon/human/H = user
+	src.preview.update_appearance(H.bioHolder.mobAppearance, H.mutantrace)
+	qdel(src.preview_item)
+	src.preview_item = null
+	src.preview.remove_all_clients()
+	src.preview.add_client(user.client)
+
 	user << browse_rsc('browserassets/css/clothingbooth.css')
 	user << browse_rsc('browserassets/js/clothingbooth.js')
-	user.client.preferences.AH = user.bioHolder.mobAppearance
-	user.client.preferences.update_preview_icon()
-	user << browse_rsc(user.client.preferences.preview_icon, "previewimage.png")
-	user << browse(replacetext(replacetext(grabResource("html/clothingbooth.html"), "!!BOOTH_LIST!!", clothingbooth_json), "!!SRC_REF!!", "\ref[src]"), "window=ClothingBooth;size=600x600;can_resize=1;can_minimize=1;")
+	user << browse(replacetext(replacetext(replacetext(grabResource("html/clothingbooth.html"), "!!BOOTH_LIST!!", clothingbooth_json), "!!SRC_REF!!", "\ref[src]"), "!!PREVIEW_ID!!", src.preview.preview_id), "window=ClothingBooth;size=600x600;can_resize=1;can_minimize=1;")
+
 
 //clothing booth stuffs <3
 /obj/machinery/clothingbooth
-	var/icon/previewimage = null
-	var/icon/untaintedpreviewimage = null
+	var/datum/character_preview/multiclient/preview
+	var/obj/item/preview_item = null
 	var/money = 0
 	var/open = 1
 	var/yeeting = 0
@@ -59,6 +65,7 @@ var/list/clothingbooth_items = list()
 		light.set_brightness(0.6)
 		light.set_height(1.5)
 		light.enable()
+		src.preview = new()
 
 	relaymove(mob/user as mob)
 		if (user.stat != 0 || user.getStatusDuration("stunned"))
@@ -98,8 +105,12 @@ var/list/clothingbooth_items = list()
 					src.pixel_x = 0
 					src.pixel_y = 0
 			if("render")
-				usr << browse_rsc(cb_item.get_icon(), "preview_overlay.png")
-				usr << output("preview_overlay.png", "ClothingBooth.browser:preview")
+				if (src.preview_item)
+					src.preview.preview_mob.u_equip(src.preview_item)
+					qdel(src.preview_item)
+					src.preview_item = null
+				src.preview_item = new itempath()
+				src.preview.preview_mob.force_equip(src.preview_item, cb_item.slot)
 
 	Click()
 		if(!ishuman(usr))
@@ -163,13 +174,13 @@ var/list/clothingbooth_items = list()
 		src.set_open(0)
 		sleep(0.5 SECONDS)
 		user.set_loc(src)
-		boutput(user, "<span class='success'><br>Welcome to the clothing booth! Click an item to veiw its preview. Click again to purchase. Purchasing items will pull from the credits you insert into the machine prior to entering.<br></span>")
+		boutput(user, "<span class='success'><br>Welcome to the clothing booth! Click an item to view its preview. Click again to purchase. Purchasing items will pull from the credits you insert into the machine prior to entering.<br></span>")
 		uisetup(user)
 	else
 		if(src.yeeting == 0)
 			src.yeeting = 1
 			user.visible_message("<span class='alert'>Uh oh...It looks like [user.name] is thinking about charging into the clothing booth...</span>","<span class='alert'>You are working up the nerve to pull the occupant out...</span>")
-			SPAWN_DBG(40)
+			SPAWN_DBG(4 SECONDS)
 				if((user in range(1, src)) && (locate(/mob) in src))
 					if (prob(45))
 						user.visible_message("<span class='success'>phew...[user.name] decided not to enter the booth.</span>","<span class='success'>Maybe not...they could be changing...</span>")

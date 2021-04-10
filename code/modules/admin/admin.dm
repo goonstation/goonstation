@@ -21,11 +21,11 @@ var/global/noir = 0
 			continue
 		if (C.player_mode)
 			if (asay && C.player_mode_asay)
-				boutput(C, replacetext(rendered, "%admin_ref%", "\ref[C.holder]"))
+				boutput(C, replacetext(replacetext(rendered, "%admin_ref%", "\ref[C.holder]"), "%client_ref%", "\ref[C]"))
 			else
 				continue
 		else
-			boutput(C, replacetext(rendered, "%admin_ref%", "\ref[C.holder]")) //this doesnt fail if the placeholder doesnt exist ok dont worry
+			boutput(C, replacetext(replacetext(rendered, "%admin_ref%", "\ref[C.holder]"), "%client_ref%", "\ref[C]"))
 
 /proc/message_coders(var/text) //Shamelessly adapted from message_admins
 	var/rendered = "<span class=\"admin\"><span class=\"prefix\">CODER LOG:</span> <span class=\"message\">[text]</span></span>"
@@ -149,6 +149,18 @@ var/global/noir = 0
 				var/client/C = locate(href_list["target"])
 				if(istype(C))
 					C.cloud_put("mentorhelp_banner", "")
+					src.show_chatbans(C)
+		if ("pr_mute")
+			if (src.level >= LEVEL_PA)
+				var/client/C = locate(href_list["target"])
+				if(istype(C))
+					C.cloud_put("prayer_banner", usr.client.key)
+					src.show_chatbans(C)
+		if ("pr_unmute")
+			if (src.level >= LEVEL_PA)
+				var/client/C = locate(href_list["target"])
+				if(istype(C))
+					C.cloud_put("prayer_banner", "")
 					src.show_chatbans(C)
 
 		if ("load_admin_prefs")
@@ -360,7 +372,7 @@ var/global/noir = 0
 				// someone forgetting about leaving shuttle calling disabled would be bad so let's inform the Admin Crew if it happens, just in case
 				var/ircmsg[] = new()
 				ircmsg["key"] = src.owner:key
-				ircmsg["name"] = (usr?.real_name) ? usr.real_name : "NULL"
+				ircmsg["name"] = (usr?.real_name) ? stripTextMacros(usr.real_name) : "NULL"
 				ircmsg["msg"] = "Has [emergency_shuttle.disabled ? "dis" : "en"]abled calling the Emergency Shuttle"
 				ircbot.export("admin", ircmsg)
 			else
@@ -412,7 +424,7 @@ var/global/noir = 0
 
 							var/ircmsg[] = new()
 							ircmsg["key"] = src.owner:key
-							ircmsg["name"] = (usr?.real_name) ? usr.real_name : "NULL"
+							ircmsg["name"] = (usr?.real_name) ? stripTextMacros(usr.real_name) : "NULL"
 							ircmsg["msg"] = "Deleted note [noteId] belonging to [player]"
 							ircbot.export("admin", ircmsg)
 
@@ -434,7 +446,7 @@ var/global/noir = 0
 
 					var/ircmsg[] = new()
 					ircmsg["key"] = src.owner:key
-					ircmsg["name"] = (usr?.real_name) ? usr.real_name : "NULL"
+					ircmsg["name"] = (usr?.real_name) ? stripTextMacros(usr.real_name) : "NULL"
 					ircmsg["msg"] = "Added a note for [player]: [the_note]"
 					ircbot.export("admin", ircmsg)
 
@@ -588,7 +600,7 @@ var/global/noir = 0
 						if(player.cached_jobbans.Find("Engineering Department"))
 							alert("This person is banned from Engineering Department. You must lift that ban first.")
 							return
-					if(job in list("Security Officer","Vice Officer","Detective"))
+					if(job in list("Security Officer","Security Assistant","Vice Officer","Part-time Vice Officer","Detective"))
 						if(player.cached_jobbans.Find("Security Department"))
 							alert("This person is banned from Security Department. You must lift that ban first.")
 							return
@@ -622,7 +634,7 @@ var/global/noir = 0
 							if(player.cached_jobbans.Find("[Trank2]"))
 								jobban_unban(M,Trank2)
 					else if(job == "Security Department")
-						for(var/Trank3 in list("Security Officer","Vice Officer","Detective"))
+						for(var/Trank3 in list("Security Officer","Security Assistant","Vice Officer","Part-time Vice Officer","Detective"))
 							if(player.cached_jobbans.Find("[Trank3]"))
 								jobban_unban(M,Trank3)
 					else if(job == "Heads of Staff")
@@ -648,7 +660,7 @@ var/global/noir = 0
 						if(cache.Find("Engineering Department"))
 							alert("This person is banned from Engineering Department. You must lift that ban first.")
 							return
-					if(job in list("Security Officer","Vice Officer","Detective"))
+					if(job in list("Security Officer","Security Assistant","Vice Officer","Part-time Vice Officer","Detective"))
 						if(cache.Find("Security Department"))
 							alert("This person is banned from Security Department. You must lift that ban first.")
 							return
@@ -681,7 +693,7 @@ var/global/noir = 0
 							if(cache.Find("[Trank2]"))
 								jobban_unban(M,Trank2)
 					else if(job == "Security Department")
-						for(var/Trank3 in list("Security Officer","Vice Officer","Detective"))
+						for(var/Trank3 in list("Security Officer","Security Assistant","Vice Officer","Part-time Vice Officer","Detective"))
 							if(cache.Find("[Trank3]"))
 								jobban_unban(M,Trank3)
 					else if(job == "Heads of Staff")
@@ -815,15 +827,14 @@ var/global/noir = 0
 					world.save_mode(requestedMode)
 					master_mode = requestedMode
 					if(master_mode == "battle_royale")
-						lobby_titlecard.icon_state += "_battle_royale"
-					else
-						lobby_titlecard.icon_state = "title_main"
-					#ifdef MAP_OVERRIDE_OSHAN
-						lobby_titlecard.icon_state = "title_oshan"
-					#endif
-					#ifdef MAP_OVERRIDE_MANTA
-						lobby_titlecard.icon_state = "title_manta"
-					#endif
+						lobby_titlecard = new /datum/titlecard/battleroyale()
+						lobby_titlecard.set_pregame_html()
+					else if(master_mode == "disaster")
+						lobby_titlecard = new /datum/titlecard/disaster()
+						lobby_titlecard.set_pregame_html()
+					else if (lobby_titlecard.is_game_mode)
+						lobby_titlecard = new /datum/titlecard()
+						lobby_titlecard.set_pregame_html()
 					if (alert("Declare mode change to all players?","Mode Change","Yes","No") == "Yes")
 						boutput(world, "<span class='notice'><b>The mode is now: [requestedMode]</b></span>")
 				else
@@ -1646,7 +1657,7 @@ var/global/noir = 0
 			if (src.level >= LEVEL_PA)
 				var/mob/M = locate(href_list["target"])
 				if (!M) return
-				var/ab_to_add = input("Which holder?", "Ability", null) as() in childrentypesof(/datum/abilityHolder)
+				var/ab_to_add = input("Which holder?", "Ability", null) as anything in childrentypesof(/datum/abilityHolder)
 				M.add_ability_holder(ab_to_add)
 				M.abilityHolder.updateButtons()
 				message_admins("[key_name(usr)] created abilityHolder [ab_to_add] for [key_name(M)].")
@@ -2104,7 +2115,7 @@ var/global/noir = 0
 
 					var/ircmsg[] = new()
 					ircmsg["key"] = usr.client.key
-					ircmsg["name"] = (usr?.real_name) ? usr.real_name : "NULL"
+					ircmsg["name"] = (usr?.real_name) ? stripTextMacros(usr.real_name) : "NULL"
 					ircmsg["msg"] = "has removed [C]'s adminship"
 					ircbot.export("admin", ircmsg)
 
@@ -2119,7 +2130,7 @@ var/global/noir = 0
 
 					var/ircmsg[] = new()
 					ircmsg["key"] = usr.client.key
-					ircmsg["name"] = (usr?.real_name) ? usr.real_name : "NULL"
+					ircmsg["name"] = (usr?.real_name) ? stripTextMacros(usr.real_name) : "NULL"
 					ircmsg["msg"] = "has made [C] a [rank]"
 					ircbot.export("admin", ircmsg)
 
@@ -2624,7 +2635,7 @@ var/global/noir = 0
 								alert("No ability holder detected. Create a holder first!")
 								return
 
-							var/ab_to_do = input("Which ability?", "[adding ? "Give" : "Remove"] Ability", null) as() in childrentypesof(/datum/targetable)
+							var/ab_to_do = input("Which ability?", "[adding ? "Give" : "Remove"] Ability", null) as anything in childrentypesof(/datum/targetable)
 							if (adding)
 								M.abilityHolder.addAbility(ab_to_do)
 							else
@@ -3495,7 +3506,7 @@ var/global/noir = 0
 
 		if ("view_logs_web")
 			if ((src.level >= LEVEL_MOD) && !src.tempmin)
-				usr << link("https://mini.xkeeper.net/ss13/admin/log-get.php?id=[config.server_id]&date=[roundLog_date]")
+				usr << link("https://mini.xkeeper.net/ss13/admin/log-viewer.php?server=[config.server_id]&redownload=1&view=[roundLog_date].html")
 
 		if ("view_logs")
 			if ((src.level >= LEVEL_MOD) && !src.tempmin)
@@ -3653,7 +3664,7 @@ var/global/noir = 0
 			else
 				alert ("You must be at least a Secondary Admin to respawn a target.")
 		if ("showrules")
-			if (src.level >= LEVEL_SA && alert("Are you sure you want to show this player the rules?", "PARENTAL CONTROL", "Sure thing!", "Not really.") == "Sure thing!")
+			if (src.level >= LEVEL_SA)
 				var/mob/M = locate(href_list["target"])
 				if (!M) return
 				usr.client.show_rules_to_player(M)
@@ -3865,6 +3876,84 @@ var/global/noir = 0
 				usr.client.holder.playeropt(target)
 
 ///////////////////////////////////////////////////////////////////////////////////////////////Panels
+
+/datum/player_panel
+
+/datum/player_panel/ui_state(mob/user)
+	return tgui_admin_state.can_use_topic(src, user)
+
+/datum/player_panel/ui_status(mob/user)
+  return tgui_admin_state.can_use_topic(src, user)
+
+/datum/player_panel/ui_interact(mob/user, datum/tgui/ui)
+	ui = tgui_process.try_update_ui(user, src, ui)
+	if (!ui)
+		ui = new(user, src, "PlayerPanel")
+		ui.open()
+
+/datum/player_panel/ui_data(mob/user)
+	var/list/players = list()
+	for (var/mob/M in mobs)
+		if (M.ckey)
+			var/area/A = get_area(M)
+			players[M.ckey] = list(
+				"mobRef" = "\ref[M]",
+				"ckey" = M.ckey,
+				"name" = M.name ? M.name : "N/A",
+				"realName" = M.real_name ? M.real_name : "N/A",
+				"assignedRole" = M.mind?.assigned_role ? M.mind.assigned_role : "N/A",
+				"specialRole" = M.mind?.special_role ? M.mind.special_role : "N/A",
+				"playerType" = M.type,
+				"computerId" = M.computer_id ? M.computer_id : "N/A",
+				"ip" = M.lastKnownIP ? M.lastKnownIP : "N/A",
+				"joined" = M.client?.joined_date ? M.client.joined_date : "N/A",
+				"playerLocation" = A?.name ? A.name : "N/A",
+			)
+	. = list(
+		"players" = players
+	)
+
+/datum/player_panel/ui_act(action, params)
+	. = ..()
+	if (.)
+		return
+
+	switch(action)
+		if("open-player-options")
+			if(!usr.client) return
+			var/mobRef = params["mobRef"]
+			var/mob/M = locate(mobRef)
+			if(ismob(M) && M.ckey == params["ckey"])
+				usr.client.holder.playeropt(M)
+			else //mob ref was no good
+				for(M in mobs)
+					if(M.ckey == params["ckey"])
+						usr.client.holder.playeropt(M)
+						break
+
+		if("private-message-player")
+			if(!usr.client) return
+			var/mobRef = params["mobRef"]
+			var/mob/M = locate(mobRef)
+			if(ismob(M) && M.ckey == params["ckey"])
+				do_admin_pm(M.ckey, usr)
+			else
+				for(M in mobs)
+					if(M.ckey == params["ckey"])
+						do_admin_pm(M.ckey, usr)
+						break
+
+		if("jump-to-player-loc")
+			if(!usr.client) return
+			var/mobRef = params["mobRef"]
+			var/mob/M = locate(mobRef)
+			if(ismob(M) && M.ckey == params["ckey"])
+				usr.client.jumptomob(M)
+			else
+				for(M in mobs)
+					if(M.ckey == params["ckey"])
+						usr.client.jumptomob(M)
+						break
 
 /datum/admins/proc/player()
 	var/dat = {"<html>
@@ -4218,7 +4307,7 @@ var/global/noir = 0
 
 		var/ircmsg[] = new()
 		ircmsg["key"] = usr.client.key
-		ircmsg["name"] = (usr?.real_name) ? usr.real_name : "NULL"
+		ircmsg["name"] = (usr?.real_name) ? stripTextMacros(usr.real_name) : "NULL"
 		ircmsg["msg"] = "manually restarted the server."
 		ircbot.export("admin", ircmsg)
 
@@ -4298,7 +4387,7 @@ var/global/noir = 0
 
 		var/ircmsg[] = new()
 		ircmsg["key"] = (usr?.client) ? usr.client.key : "NULL"
-		ircmsg["name"] = (usr?.real_name) ? usr.real_name : "NULL"
+		ircmsg["name"] = (usr?.real_name) ? stripTextMacros(usr.real_name) : "NULL"
 		ircmsg["msg"] = "has delayed the server restart."
 		ircbot.export("admin", ircmsg)
 
@@ -4311,7 +4400,7 @@ var/global/noir = 0
 
 		var/ircmsg[] = new()
 		ircmsg["key"] = (usr?.client) ? usr.client.key : "NULL"
-		ircmsg["name"] = (usr?.real_name) ? usr.real_name : "NULL"
+		ircmsg["name"] = (usr?.real_name) ? stripTextMacros(usr.real_name) : "NULL"
 		ircmsg["msg"] = "has removed the server restart delay."
 		ircbot.export("admin", ircmsg)
 
@@ -4606,8 +4695,12 @@ var/global/noir = 0
 
 	return chosen
 
-/proc/get_matches(var/object, var/base = /atom)
-	var/list/types = concrete_typesof(base)
+/proc/get_matches(var/object, var/base = /atom, use_concrete_types = TRUE)
+	var/list/types
+	if(use_concrete_types)
+		types = concrete_typesof(base)
+	else
+		types = childrentypesof(base)
 
 	var/list/matches = new()
 
@@ -4615,24 +4708,24 @@ var/global/noir = 0
 		if(findtext("[path]", object))
 			matches += path
 
-	return matches
+	. = matches
 
-/proc/get_one_match(var/object, var/base = /atom)
-	var/list/matches = get_matches(object, base)
+/proc/get_one_match(var/object, var/base = /atom, use_concrete_types = TRUE)
+	var/list/matches = get_matches(object, base, use_concrete_types)
 
-	if(matches.len==0)
+	if(!matches.len)
 		return null
 
 	var/chosen
-	if(matches.len==1)
+	if(matches.len == 1)
 		chosen = matches[1]
 	else
 		var/safe_matches = matches - list(/database, /client, /icon, /sound, /savefile)
-		chosen = input("Select an atom type", "Matches for pattern", null) as null|anything in safe_matches
+		chosen = tgui_input_list(usr, "Select an atom type", "Matches for pattern", safe_matches)
 		if(!chosen)
 			return null
 
-	return chosen
+	. = chosen
 
 /datum/admins/proc/spawn_atom(var/object as text)
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
@@ -4644,7 +4737,7 @@ var/global/noir = 0
 	var/client/client = usr.client
 
 	if (client.holder.level >= LEVEL_PA)
-		var/chosen = get_one_match(object)
+		var/chosen = get_one_match(object, use_concrete_types = FALSE)
 
 		if (chosen)
 			if (ispath(chosen, /turf))
@@ -4746,6 +4839,13 @@ var/global/noir = 0
 	else
 		built += "<a href='?src=\ref[src];target=\ref[C];action=mh_mute'>Mentorhelp Mute</a><br/>"
 		logTheThing("admin", src, C, "muted [constructTarget(C,"admin")] from mentorhelping.")
+
+	if(C.cloud_get( "prayer_banner" ))
+		built += "<a href='?src=\ref[src];target=\ref[C];action=pr_unmute' class='alert'>Prayer Mute</a> (Last by [C.cloud_get( "prayer_banner" )])<br/>"
+		logTheThing("admin", src, C, "unmuted [constructTarget(C,"admin")] from praying.")
+	else
+		built += "<a href='?src=\ref[src];target=\ref[C];action=pr_mute'>Prayer Mute</a><br/>"
+		logTheThing("admin", src, C, "muted [constructTarget(C,"admin")] from praying.")
 
 	usr.Browse(built, "window=chatban;size=500x100")
 
@@ -4973,7 +5073,7 @@ var/global/noir = 0
 	set popup_menu = 0
 	if (!M) return
 
-	if (!forced && alert(src, "Respawn [M]?", "Confirmation", "Yes", "No") != "Yes")
+	if (!forced && tgui_alert(src, "Respawn [M]?", "Confirmation", list("Yes", "No")) != "Yes")
 		return
 
 	logTheThing("admin", src, M, "respawned [constructTarget(M,"admin")]")

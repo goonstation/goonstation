@@ -310,14 +310,14 @@
 	src.UpdateDamageIcon()
 	return
 
-/mob/living/carbon/human/TakeDamage(zone, brute, burn, tox, damage_type, disallow_limb_loss)
+/mob/living/carbon/human/TakeDamage(zone, brute, burn, tox, damage_type, disallow_limb_loss, var/bypass_reversal = FALSE)
 	if (src.nodamage) return
 
 	hit_twitch(src)
 
-	if (src.traitHolder && src.traitHolder.hasTrait("reversal"))
-		brute *= -1
-		burn *= -1
+	if (src.traitHolder && src.traitHolder.hasTrait("reversal") && !bypass_reversal)
+		src.HealDamage(zone, brute, burn, tox, TRUE)
+		return
 
 	if (src.traitHolder && src.traitHolder.hasTrait("deathwish"))
 		brute *= 2
@@ -425,12 +425,10 @@
 	*///Begone, message spam. Nobody asked for this
 	TakeDamage(zone, max(brute, 0), max(burn, 0), 0, damage_type)
 
-/mob/living/carbon/human/HealDamage(zone, brute, burn, tox)
+/mob/living/carbon/human/HealDamage(zone, brute, burn, tox, var/bypass_reversal = FALSE)
 
 	if (src.traitHolder && src.traitHolder.hasTrait("reversal"))
-		brute *= -1
-		burn *= -1
-		tox *= -1
+		src.TakeDamage(zone, brute, burn, tox, null, FALSE, TRUE)
 
 	if (zone == "All")
 		var/bruteOrganCount = 0.0 		//How many organs have brute damage?
@@ -639,7 +637,7 @@
 		return //???
 	var/list/zones = themob.get_valid_target_zones()
 	if(checkarmor)
-		if (!zones || !zones.len)
+		if (!zones || !length(zones))
 			themob.TakeDamageAccountArmor("All", damage, 0, 0, DAMAGE_BLUNT)
 		else
 			if (prob(100 / zones.len + 1))
@@ -648,7 +646,7 @@
 				var/zone=pick(zones)
 				themob.TakeDamageAccountArmor(zone, damage, 0, 0, DAMAGE_BLUNT)
 	else
-		if (!zones || !zones.len)
+		if (!zones || !length(zones))
 			themob.TakeDamage("All", damage, 0, 0, DAMAGE_BLUNT)
 		else
 			if (prob(100 / zones.len + 1))
@@ -661,7 +659,7 @@
 	if (!themob || !ismob(themob))
 		return //???
 	var/list/zones = themob.get_valid_target_zones()
-	if (!zones || !zones.len)
+	if (!zones || !length(zones))
 		themob.TakeDamage("All", 0, damage, 0, DAMAGE_BURN)
 	else
 		if (prob(100 / zones.len + 1))
@@ -687,9 +685,6 @@
 	if (!isnum(amount) || amount == 0)
 		return 1
 
-	//old way that has damage attached to var on /mob/living/carbon/human not on /obj/item/organ/brain
-	// src.brainloss = max(0,min(src.brainloss + amount,120))
-
 	if (src.organHolder && src.organHolder.brain)
 		if (amount > 0)
 			src.organHolder.damage_organ(amount, 0, 0, "brain")
@@ -698,10 +693,7 @@
 
 	if (src.organHolder && src.organHolder.brain && src.organHolder.brain.get_damage() >= 120 && isalive(src))
 		src.visible_message("<span class='alert'><b>[src.name]</b> goes limp, their facial expression utterly blank.</span>")
-		src.death()
-		return
-	return
-
+		INVOKE_ASYNC(src, /mob/living/carbon/human.proc/death)
 
 /mob/living/carbon/human/get_brain_damage()
 	if (src.organHolder && src.organHolder.brain)

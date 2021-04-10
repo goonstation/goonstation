@@ -51,7 +51,6 @@ Contains:
 			return null
 
 		var/loc_to_check = istype(src.loc, /obj/item/magtractor) ? src.loc.loc : src.loc
-		src = null
 		for(var/turf/T in range(1, loc_to_check))
 
 			if(T.interesting)
@@ -101,7 +100,6 @@ Contains:
 			return null
 
 		var/loc_to_check = istype(src.loc, /obj/item/magtractor) ? src.loc.loc : src.loc
-		src = null
 		for(var/turf/T in range(2, loc_to_check))
 
 			if(T.interesting)
@@ -139,6 +137,7 @@ that cannot be itched
 	mats = 3
 	hide_attack = 2
 	var/active = 0
+	var/distancescan = 0
 	var/target = null
 
 	attack_self(mob/user as mob)
@@ -166,6 +165,13 @@ that cannot be itched
 
 		user.show_text("No match found in security records.", "red")
 		return
+
+	pixelaction(atom/target, params, mob/user, reach)
+		if(distancescan)
+			if(!IN_RANGE(user, target, 1) && IN_RANGE(user, target, 3))
+				user.visible_message("<span class='notice'><b>[user]</b> takes a distant forensic scan of [target].</span>")
+				boutput(user, scan_forensic(target, visible = 1))
+				src.add_fingerprint(user)
 
 	afterattack(atom/A as mob|obj|turf|area, mob/user as mob)
 
@@ -214,6 +220,11 @@ that cannot be itched
 		SPAWN_DBG(0.5 SECONDS)
 			.(T)
 
+/obj/item/device/detective_scanner/detective
+	name = "cool forensic scanner"
+	desc = "Used to scan objects for DNA and fingerprints. This model seems to have an upgrade that lets it scan for prints at a distance. You feel cool holding it."
+	distancescan = 1
+
 ///////////////////////////////////// Health analyzer ////////////////////////////////////////
 
 /obj/item/device/analyzer/healthanalyzer
@@ -234,9 +245,15 @@ that cannot be itched
 	var/reagent_scan = 0
 	var/organ_upgrade = 0
 	var/organ_scan = 0
+	var/image/scanner_status
 	module_research = list("analysis" = 2, "medicine" = 2, "devices" = 1)
 	module_research_type = /obj/item/device/analyzer/healthanalyzer
 	hide_attack = 2
+
+	New()
+		..()
+		scanner_status = image('icons/obj/items/device.dmi', icon_state = "health_over-basic")
+		UpdateOverlays(scanner_status, "status")
 
 	attack_self(mob/user as mob)
 		if (!src.reagent_upgrade && !src.organ_upgrade)
@@ -246,28 +263,40 @@ that cannot be itched
 			if (src.reagent_scan && src.organ_scan)				//if both active, make both off
 				src.reagent_scan = 0
 				src.organ_scan = 0
+				scanner_status.icon_state = "health_over-basic"
+				UpdateOverlays(scanner_status, "status")
 				boutput(user, "<span class='alert'>All upgrades disabled.</span>")
 
 			else if (!src.reagent_scan && !src.organ_scan)		//if both inactive, turn reagent on
 				src.reagent_scan = 1
 				src.organ_scan = 0
+				scanner_status.icon_state = "health_over-reagent"
+				UpdateOverlays(scanner_status, "status")
 				boutput(user, "<span class='alert'>Reagent scanner enabled.</span>")
 
 			else if (src.reagent_scan)							//if reagent active, turn reagent off, turn organ on
 				src.reagent_scan = 0
 				src.organ_scan = 1
+				scanner_status.icon_state = "health_over-organ"
+				UpdateOverlays(scanner_status, "status")
 				boutput(user, "<span class='alert'>Reagent scanner disabled. Organ scanner enabled.</span>")
 
 			else if (src.organ_scan)							//if organ active, turn BOTH on
 				src.reagent_scan = 1
 				src.organ_scan = 1
+				scanner_status.icon_state = "health_over-both"
+				UpdateOverlays(scanner_status, "status")
 				boutput(user, "<span class='alert'>All upgrades enabled.</span>")
 
 		else if (src.reagent_upgrade)
 			src.reagent_scan = !(src.reagent_scan)
+			scanner_status.icon_state = !reagent_scan ? "health_over-basic" : "health_over-reagent"
+			UpdateOverlays(scanner_status, "status")
 			boutput(user, "<span class='notice'>Reagent scanner [src.reagent_scan ? "enabled" : "disabled"].</span>")
 		else if (src.organ_upgrade)
 			src.organ_scan = !(src.organ_scan)
+			scanner_status.icon_state = !organ_scan ? "health_over-basic" : "health_over-organ"
+			UpdateOverlays(scanner_status, "status")
 			boutput(user, "<span class='notice'>Organ scanner [src.organ_scan ? "enabled" : "disabled"].</span>")
 
 	attackby(obj/item/W as obj, mob/user as mob)
@@ -287,6 +316,28 @@ that cannot be itched
 		user.visible_message("<span class='alert'><b>[user]</b> has analyzed [M]'s vitals.</span>",\
 		"<span class='alert'>You have analyzed [M]'s vitals.</span>")
 		boutput(user, scan_health(M, src.reagent_scan, src.disease_detection, src.organ_scan, visible = 1))
+
+		// lord forgive me for this sin
+		// output a pop-up overhead thing to the client,
+		// if they want flying text
+		if (user.client && !user.client.preferences?.flying_chat_hidden)
+
+			var/image/chat_maptext/chat_text = null
+			var/h_pct = M.max_health ? round(100 * M.health / M.max_health) : M.health
+			var/oxy = round(M.get_oxygen_deprivation())
+			var/tox = round(M.get_toxin_damage())
+			var/burn = round(M.get_burn_damage())
+			var/brute = round(M.get_brute_damage())
+
+			var/popup_text = "<span class='ol c pixel'><span class='vga'>[h_pct]%</span>\n<span style='color: #40b0ff;'>[oxy]</span> - <span style='color: #33ff33;'>[tox]</span> - <span style='color: #ffee00;'>[burn]</span> - <span style='color: #ff6666;'>[brute]</span></span>"
+			chat_text = make_chat_maptext(M, popup_text, force = 1)
+			if(chat_text)
+				chat_text.measure(user.client)
+				for(var/image/chat_maptext/I in user.chat_text.lines)
+					if(I != chat_text)
+						I.bump_up(chat_text.measured_height)
+				chat_text.show_to(user.client)
+
 		update_medical_record(M)
 
 		if (M.stat > 1)
@@ -312,6 +363,11 @@ that cannot be itched
 	reagent_scan = 1
 	organ_upgrade = 1
 	organ_scan = 1
+
+	New()
+		..()
+		scanner_status.icon_state = "health_over-both"
+		UpdateOverlays(scanner_status, "status")
 
 /obj/item/device/analyzer/healthanalyzer/vr
 	icon = 'icons/effects/VR.dmi'
@@ -415,7 +471,7 @@ that cannot be itched
 	pixelaction(atom/target, params, mob/user, reach)
 		var/turf/T = get_turf(target)
 		if ((analyzer_upgrade == 1) && (get_dist(user, T)>1))
-			usr.visible_message("<span class='notice'><b>[user]</b> takes a distant atmospheric reading of [T].</span>")
+			user.visible_message("<span class='notice'><b>[user]</b> takes a distant atmospheric reading of [T].</span>")
 			boutput(user, scan_atmospheric(T, visible = 1))
 			src.add_fingerprint(user)
 			return
@@ -492,6 +548,8 @@ that cannot be itched
 				a.reagent_scan = 1
 				a.reagent_upgrade = 1
 				a.icon_state = a.organ_upgrade ? "health" : "health-r-up"
+				a.scanner_status.icon_state = a.organ_scan ? "health_over-both" : "health_over-reagent"
+				a.UpdateOverlays(a.scanner_status, "status")
 				a.item_state = "healthanalyzer"
 
 			else if (istype(W, /obj/item/device/analyzer/healthanalyzer_organ_upgrade))
@@ -501,6 +559,8 @@ that cannot be itched
 				a.organ_upgrade = 1
 				a.organ_scan = 1
 				a.icon_state = a.reagent_upgrade ? "health" : "health-o-up"
+				a.scanner_status.icon_state = a.reagent_scan ? "health_over-both" : "health_over-organ"
+				a.UpdateOverlays(a.scanner_status, "status")
 				a.item_state = "healthanalyzer"
 		else if(istype(src, /obj/item/device/analyzer/atmospheric) && istype(W, /obj/item/device/analyzer/atmosanalyzer_upgrade))
 			if (upgraded)
@@ -625,4 +685,63 @@ that cannot be itched
 			boutput(user, "<span class='notice'>you switch the record mode to Incarcerated</span>")
 
 		add_fingerprint(user)
+		return
+
+/obj/item/device/ticket_writer
+	name = "Security TicketWriter 2000"
+	desc = "A device used to issue tickets from the security department."
+	icon_state = "ticketwriter"
+	item_state = "electronic"
+	w_class = 2
+
+	flags = FPRINT | TABLEPASS | ONBELT | CONDUCT
+
+	attack_self(mob/user)
+		var/menuchoice = alert("What would you like to do?",,"Ticket","Nothing")
+		if (menuchoice == "Nothing")
+			return
+		else if (menuchoice == "Ticket")
+			src.ticket(user)
+
+	proc/ticket(mob/user)
+		var/obj/item/card/id/I
+		if (ishuman(user))
+			var/mob/living/carbon/human/H = user
+			I = H.wear_id
+		else if (ismobcritter(user))
+			I = locate(/obj/item/card/id) in user.contents
+		if (!I || !(access_security in I.access))
+			boutput(user, "<span class='alert'>Insufficient access.</span>")
+			return
+		playsound(get_turf(src), "sound/machines/keyboard3.ogg", 30, 1)
+		var/issuer = I.registered
+		var/issuer_job = I.assignment
+		var/ticket_target = input(user, "Ticket recipient:", "Recipient", "Ticket Recipient") as text
+		if (!ticket_target)
+			return
+		ticket_target = copytext(sanitize(html_encode(ticket_target)), 1, MAX_MESSAGE_LEN)
+		var/ticket_reason = input(user, "Ticket reason:", "Reason") as text
+		if (!ticket_reason)
+			return
+		ticket_reason = copytext(sanitize(html_encode(ticket_reason)), 1, MAX_MESSAGE_LEN)
+
+		var/ticket_text = "[ticket_target] has been officially [pick("cautioned","warned","told off","yelled at","berated","sneered at")] by Nanotrasen Corporate Security for [ticket_reason] on [time2text(world.realtime, "DD/MM/53")].<br>Issued by: [issuer] - [issuer_job]<br>"
+
+		var/datum/ticket/T = new /datum/ticket()
+		T.target = ticket_target
+		T.reason = ticket_reason
+		T.issuer = issuer
+		T.issuer_job = issuer_job
+		T.text = ticket_text
+		T.target_byond_key = get_byond_key(T.target)
+		T.issuer_byond_key = user.key
+		data_core.tickets += T
+
+		playsound(get_turf(src), "sound/machines/printer_thermal.ogg", 50, 1)
+		SPAWN_DBG(3 SECONDS)
+			var/obj/item/paper/p = unpool(/obj/item/paper)
+			p.set_loc(get_turf(src))
+			p.name = "Official Caution - [ticket_target]"
+			p.info = ticket_text
+			p.icon_state = "paper_caution"
 		return

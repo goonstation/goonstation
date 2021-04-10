@@ -530,7 +530,7 @@ var/const/PHASER_SNIPER = 256
 	Topic(href, href_list)
 		if(overloading) return
 		if(usr.stat || usr.restrained()) return
-		if(!in_range(src, usr)) return
+		if(!in_interact_range(src, usr)) return
 		src.add_dialog(usr)
 		if (href_list["power"])
 			var/change = href_list["power"]

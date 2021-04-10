@@ -37,9 +37,9 @@
 	. = list()
 
 /datum/aiTask/sequence/goalbased/proc/score_target(var/atom/target)
-	if(target)
-		return max_dist - distance(get_turf(holder.owner), get_turf(target))
 	. = 0
+	if(target)
+		return max_dist - GET_MANHATTAN_DIST(get_turf(holder.owner), get_turf(target))
 
 /datum/aiTask/sequence/goalbased/proc/precondition()
 	// useful for goals that have a requirement, return 0 to instantly make this state score 0 and not be picked
@@ -63,9 +63,10 @@
 		if(M && !M.move_target)
 			var/target_turf = get_turf(holder.target)
 			if(can_be_adjacent_to_target)
-				var/list/tempPath = cirrAstar(get_turf(holder.owner), target_turf, 1, null, /proc/heuristic, 40)
-				if(tempPath.len > 0) // fix runtime Cannot read null.len
-					M.move_target = tempPath[tempPath.len]
+				var/list/tempPath = cirrAstar(get_turf(holder.owner), target_turf, 1, 40)
+				var/length_of_path = length(tempPath)
+				if(length_of_path) // fix runtime Cannot read length(null)
+					M.move_target = tempPath[length_of_path]
 					if(M.move_target)
 						return
 			M.move_target = target_turf
@@ -118,9 +119,9 @@
 	. = list()
 
 /datum/aiTask/timed/targeted/proc/score_target(var/atom/target)
-	if(target)
-		return target_range - distance(get_turf(holder.owner), get_turf(target))
 	. = 0
+	if(target)
+		return target_range - GET_MANHATTAN_DIST(get_turf(holder.owner), get_turf(target))
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 // MOVE TASK
@@ -136,7 +137,7 @@
 	if(!move_target)
 		fails++
 		return
-	src.found_path = cirrAstar(get_turf(holder.owner), get_turf(move_target), 0, null, /proc/heuristic, 60)
+	src.found_path = cirrAstar(get_turf(holder.owner), get_turf(move_target), 0, 60)
 	if(!src.found_path) // no path :C
 		fails++
 
@@ -179,3 +180,31 @@
 	minimum_task_ticks = 10
 	maximum_task_ticks = 10
 
+/datum/aiTask/timed/hibernate
+	name = "hibernate"
+	minimum_task_ticks = 1
+	maximum_task_ticks = 1
+	var/min_time_between_hibernations = 20 SECONDS
+	var/hibernation_priority = 100
+
+	evaluate()
+		. = ..()
+		var/mob/living/critter/M = holder.owner
+		if (!M)
+			return -1
+		var/area/A = get_area(M)
+		if (A?.active)
+			return -1
+		if ((M.last_hibernation_wake_tick + min_time_between_hibernations) >= TIME)
+			return -1
+		return hibernation_priority
+
+	on_tick()
+		. = ..()
+		var/mob/living/critter/M = holder.owner
+		if (!M) return
+		holder.enabled = FALSE
+		M.is_hibernating = TRUE
+		M.registered_area = get_area(M)
+		if(M.registered_area)
+			M.registered_area.registered_mob_critters |= M

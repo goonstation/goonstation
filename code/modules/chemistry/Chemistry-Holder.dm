@@ -58,6 +58,7 @@ datum
 		var/temperature_min = 0
 
 		var/postfoam = 0 //attempt at killing infinite foam
+		var/can_be_heated = TRUE //can be heated by external sources
 
 		New(maximum=100)
 			..()
@@ -114,6 +115,8 @@ datum
 
 		proc/temperature_reagents(exposed_temperature, exposed_volume, divisor = 35, change_cap = 15) //This is what you use to change the temp of a reagent holder.
 			                                                      //Do not manually change the reagent unless you know what youre doing.
+			if (!src.can_be_heated)
+				return
 			last_temp = total_temperature
 			var/difference = abs(total_temperature - exposed_temperature)
 			if (!difference)
@@ -348,7 +351,7 @@ datum
 
 		//multiplier is used to handle realtime metabolizations over byond time
 		proc/metabolize(var/mob/target, var/multiplier = 1)
-			if (islist(src.addiction_tally) && src.addiction_tally.len) // if we got some addictions to process
+			if (islist(src.addiction_tally) && length(src.addiction_tally)) // if we got some addictions to process
 				//DEBUG_MESSAGE("metabolize([target]) addiction_tally processing")
 				for (var/rid in src.addiction_tally) // look at each addiction tally
 					if (src.reagent_list.Find(rid)) // if we find that we've got that reagent in us right now
@@ -563,9 +566,10 @@ datum
 			for(var/current_id in reagent_list)
 				var/datum/reagent/current_reagent = reagent_list[current_id]
 				if(current_reagent)
-					if(current_reagent.volume <= 0)
+					if(current_reagent.volume <= 0.001)
 						del_reagent(current_id)
 					else
+						current_reagent.volume = max(round(current_reagent.volume, 0.001), 0.001)
 						total_volume += current_reagent.volume
 			if(isitem(my_atom))
 				var/obj/item/I = my_atom
@@ -718,12 +722,16 @@ datum
 				fluid_turf.fluid_react(temp_fluid_reagents, temp_fluid_reagents.total_volume)
 
 		proc/add_reagent(var/reagent, var/amount, var/sdata, var/temp_new=T20C, var/donotreact = 0, var/donotupdate = 0)
-			if(!isnum(amount) || amount <= 0)
+			if(!isnum(amount) || amount <= 0 || src.disposed)
 				return 1
 			var/added_new = 0
 			if (!donotupdate)
 				update_total()
-			if(total_volume + amount > maximum_volume) amount = (maximum_volume - total_volume) //Doesnt fit in. Make it disappear. Shouldnt happen. Will happen.
+			amount = round(amount, CHEM_EPSILON)
+			if(amount < CHEM_EPSILON)
+				return 0
+			if(total_volume + amount > maximum_volume)
+				amount = (maximum_volume - total_volume) //Doesnt fit in. Make it disappear. Shouldnt happen. Will happen.
 
 			var/datum/reagent/current_reagent = reagent_list[reagent]
 
@@ -1055,9 +1063,9 @@ datum
 				logTheThing("combat", our_user, null, "Smoke reaction ([my_atom ? log_reagents(my_atom) : log_reagents(src)]) at [T ? "[log_loc(T)]" : "null"].[our_fingerprints ? " Container last touched by: [our_fingerprints]." : ""]")
 
 			if (classic)
-				classic_smoke_reaction(src, min(round(volume / 5) + 1, 4), location = my_atom ? get_turf(my_atom) : 0)
+				classic_smoke_reaction(src, min(round(volume / 5), 4), location = my_atom ? get_turf(my_atom) : 0)
 			else
-				smoke_reaction(src, round(min(5, volume/10)), location = my_atom ? get_turf(my_atom) : 0)
+				smoke_reaction(src, round(min(5, round(volume/10))), location = my_atom ? get_turf(my_atom) : 0)
 
 ///////////////////////////////////////////////////////////////////////////////////
 

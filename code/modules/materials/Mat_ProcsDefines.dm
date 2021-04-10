@@ -20,7 +20,7 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 /proc/getMaterial(var/mat)
 	if(!istext(mat) || !length(mat)) return null
 	if(!material_cache.len) buildMaterialCache()
-	if(material_cache.Find(mat))
+	if(mat in material_cache)
 		return material_cache[mat]
 	return null
 
@@ -35,7 +35,7 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 
 	if(l2)
 		for(var/x in l2)
-			if(merged.Find(x))
+			if(x in merged)
 				merged[x] = round(merged[x] * oBias + l2[x] * bias)
 			else
 				merged.Add(x)
@@ -57,7 +57,7 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 			if(X in triggerVars)
 				M.vars[X] = getFusedTriggers(base.vars[X], list()) //Pass in an empty list to basically copy the first one.
 			else
-				if(M.vars.Find(X))
+				if(X in M.vars)
 					if(istype(base.vars[X],/list))
 						var/list/oldList = base.vars[X]
 						M.vars[X] = oldList.Copy()
@@ -68,6 +68,8 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 /proc/isSameMaterial(var/datum/material/M1, var/datum/material/M2) //Compares two materials to determine if stacking should be allowed.
 	if(isnull(M1) != isnull(M2))
 		return 0
+	if(isnull(M1) && isnull(M2))
+		return 1
 	if(M1.properties.len != M2.properties.len || M1.mat_id != M2.mat_id)
 		return 0
 	if(M1.value != M2.value || M1.name != M2.name  || M1.color != M2.color ||M1.alpha != M2.alpha || M1.material_flags != M2.material_flags || M1.texture != M2.texture)
@@ -138,19 +140,16 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 /// if a material is listed in here then we don't take on its color/alpha (maybe, if this works)
 /atom/var/list/mat_appearances_to_ignore = null
 
-/proc/getMaterialPrefixList(var/datum/material/base)
-	var/list/thelist = list()
+/proc/getMaterialPrefixList(datum/material/base)
+	. = list()
 
 	for(var/datum/material_property/P in base.properties)
 		if(base.properties[P] >= P.prefix_high_min)
-			if(!thelist.Find(P.getAdjective(base)))
-				thelist.Add(P.getAdjective(base))
+			. |= P.getAdjective(base)
 			continue
 		else if(base.properties[P] <= P.prefix_low_max)
-			if(!thelist.Find(P.getAdjective(base)))
-				thelist.Add(P.getAdjective(base))
+			. |= P.getAdjective(base)
 			continue
-	return thelist
 
 /// Sets the material of an object. PLEASE USE THIS TO SET MATERIALS UNLESS YOU KNOW WHAT YOU'RE DOING.
 /atom/proc/setMaterial(var/datum/material/mat1, var/appearance = 1, var/setname = 1, var/copy = 1, var/use_descriptors = 0)
@@ -188,8 +187,8 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 	src.alpha = 255
 	src.color = null
 	src.UpdateOverlays(null, "material")
-	if (islist(src.mat_appearances_to_ignore) && src.mat_appearances_to_ignore.len)
-		if (src.mat_appearances_to_ignore.Find(mat1.name))
+	if (islist(src.mat_appearances_to_ignore) && length(src.mat_appearances_to_ignore))
+		if (mat1.name in src.mat_appearances_to_ignore)
 			set_color_alpha = 0
 	if (set_color_alpha && src.mat_changeappearance && appearance && mat1.applyColor)
 		if (mat1.texture)
@@ -232,10 +231,11 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 	return toDo
 
  /// Fuses two material trigger lists.
-/proc/getFusedTriggers(var/list/L1 , var/list/L2)
+/proc/getFusedTriggers(var/list/L1 , var/list/L2, datum/material/newMat)
 	var/list/newList = list()
 	for(var/datum/materialProc/toCopy in L1) //Copy list 1 with new instances of trigger datum.
 		var/datum/materialProc/P = new toCopy.type()
+		P.owner = newMat
 		newList.Add(P)	//Add new instance of datum
 		newList[P] = L1[toCopy] //Set generation
 		for(var/varCopy in toCopy.vars)
@@ -250,6 +250,7 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 			else newList[existing] = L2[A]			//Otherwise set the generation to the generation of the second copy because it is lower.
 		else	//Trigger type isnt in the list yet.
 			var/datum/materialProc/newProc = new A.type()	//Create a new instance
+			newProc.owner = newMat
 			newList.Add(newProc)	//Add to list
 			newList[newProc] = L2[A]	//Set generation
 			for(var/varCopy in A.vars)
@@ -285,17 +286,17 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 	newMat.mixOnly = 0
 
 	//--
-	newMat.triggersFail = getFusedTriggers(mat1.triggersFail, mat2.triggersFail)
-	newMat.triggersTemp = getFusedTriggers(mat1.triggersTemp, mat2.triggersTemp)
-	newMat.triggersChem = getFusedTriggers(mat1.triggersChem, mat2.triggersChem)
-	newMat.triggersPickup = getFusedTriggers(mat1.triggersPickup, mat2.triggersPickup)
-	newMat.triggersDrop = getFusedTriggers(mat1.triggersDrop, mat2.triggersDrop)
-	newMat.triggersExp = getFusedTriggers(mat1.triggersExp, mat2.triggersExp)
-	newMat.triggersOnAdd = getFusedTriggers(mat1.triggersOnAdd, mat2.triggersOnAdd)
-	newMat.triggersOnLife = getFusedTriggers(mat1.triggersOnLife, mat2.triggersOnLife)
-	newMat.triggersOnAttack = getFusedTriggers(mat1.triggersOnAttack, mat2.triggersOnAttack)
-	newMat.triggersOnAttacked = getFusedTriggers(mat1.triggersOnAttacked, mat2.triggersOnAttacked)
-	newMat.triggersOnEntered = getFusedTriggers(mat1.triggersOnEntered, mat2.triggersOnEntered)
+	newMat.triggersFail = getFusedTriggers(mat1.triggersFail, mat2.triggersFail, newMat)
+	newMat.triggersTemp = getFusedTriggers(mat1.triggersTemp, mat2.triggersTemp, newMat)
+	newMat.triggersChem = getFusedTriggers(mat1.triggersChem, mat2.triggersChem, newMat)
+	newMat.triggersPickup = getFusedTriggers(mat1.triggersPickup, mat2.triggersPickup, newMat)
+	newMat.triggersDrop = getFusedTriggers(mat1.triggersDrop, mat2.triggersDrop, newMat)
+	newMat.triggersExp = getFusedTriggers(mat1.triggersExp, mat2.triggersExp, newMat)
+	newMat.triggersOnAdd = getFusedTriggers(mat1.triggersOnAdd, mat2.triggersOnAdd, newMat)
+	newMat.triggersOnLife = getFusedTriggers(mat1.triggersOnLife, mat2.triggersOnLife, newMat)
+	newMat.triggersOnAttack = getFusedTriggers(mat1.triggersOnAttack, mat2.triggersOnAttack, newMat)
+	newMat.triggersOnAttacked = getFusedTriggers(mat1.triggersOnAttacked, mat2.triggersOnAttacked, newMat)
+	newMat.triggersOnEntered = getFusedTriggers(mat1.triggersOnEntered, mat2.triggersOnEntered, newMat)
 
 	handleTriggerGenerations(newMat.triggersFail)
 	handleTriggerGenerations(newMat.triggersTemp)

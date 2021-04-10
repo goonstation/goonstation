@@ -38,7 +38,7 @@ var/list/rollList = list()
 			initialDesc = desc
 
 	get_desc()
-		if (src.last_roll && !src.dicePals.len)
+		if (src.last_roll && !length(src.dicePals))
 			if (isnum(src.last_roll))
 				. += "<br>[src] currently shows [get_english_num(src.last_roll)]."
 			else
@@ -68,9 +68,8 @@ var/list/rollList = list()
 			src.pixel_y = rand(-8,8)
 			src.pixel_x = rand(-8,8)
 
-		src.name = initialName//initial(src.name)
-		src.desc = initialDesc//initial(src.desc)
-		//src.overlays = null
+		src.name = initialName
+		src.desc = initialDesc
 		if(src.colorcache)
 			src.color = src.colorcache
 			src.colorcache = null
@@ -197,7 +196,7 @@ var/list/rollList = list()
 		if(Pal.dicePals.len)
 			src.dicePals |= Pal.dicePals // |= adds things to lists that aren't already present
 
-			var/startoverlay = src.overlays.len
+			var/startoverlay = length(src.overlays)
 			var/endoverlay = (src.overlays.len-1)+(Pal.overlays.len-1)
 
 			for(var/i=startoverlay, i<=endoverlay, i++) //src.overlays.len will return dice position + 1 as the decoy overlay will be registered
@@ -448,9 +447,8 @@ var/list/rollList = list()
 			src.pixel_y = rand(-8,8)
 			src.pixel_x = rand(-8,8)
 
-		src.name = initialName//initial(src.name)
-		src.desc = initialDesc//initial(src.desc)
-		//src.overlays = null
+		src.name = initialName
+		src.desc = initialDesc
 
 		if (src.sides && isnum(src.sides))
 			src.last_roll = rand(1, src.sides)
@@ -597,7 +595,7 @@ var/list/rollList = list()
 	var/diceinchatstring
 
 	proc/addDice(var/obj/item/dice/D as obj, var/baseoverlay, mob/living/user as mob) //takes a dice object, a base overlay (dicecup, diceboxt), and a user must be passed to the proc
-		var/looplength = D.dicePals.len
+		var/looplength = length(D.dicePals)
 		for(var/i=1,i<=looplength,i++)
 			if((istype(D.dicePals[i], /obj/item/dice/coin)) || (istype(D.dicePals[i], /obj/item/dice/magic8ball)))
 				user.put_in_hand_or_drop(D.contents[i])
@@ -686,7 +684,7 @@ var/list/rollList = list()
 		src.dicelist = list()
 
 	proc/pourout(atom/target,mob/living/user as mob) //requires the target and user to be passed to the proc
-		if((src.dicelist.len)&&(istype(target, /turf/simulated/floor)) || (src.dicelist.len)&&(istype(target, /turf/unsimulated/floor)))
+		if((src.dicelist.len)&&(istype(target, /turf/simulated/floor)) || length(src.dicelist) && (istype(target, /turf/unsimulated/floor)))
 			hiddenroll()
 			src.ClearAllOverlays()
 			src.diceinchatstring = src.dicelist[1].diceInChat(1,src.localRollList)

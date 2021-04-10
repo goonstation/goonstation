@@ -72,7 +72,7 @@
 	/datum/commodity/drugs/morphine,
 	/datum/commodity/drugs/krokodil,
 	/datum/commodity/drugs/lsd,
-	/datum/commodity/drugs/lsd_bee,
+	/datum/commodity/drug/lsd_bee,
 	/datum/commodity/drugs/shrooms,
 	/datum/commodity/drugs/cannabis,
 	/datum/commodity/drugs/cannabis_mega,
@@ -192,7 +192,7 @@
 		if(..())
 			return
 
-		if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
+		if ((usr.contents.Find(src) || (in_interact_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
 			src.add_dialog(usr)
 		///////////////////////////////
 		///////Generate Purchase List//

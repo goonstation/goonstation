@@ -22,6 +22,8 @@
 
 	var/interesting = ""
 	var/stops_space_move = 0
+	/// Anything can speak... if it can speak
+	var/obj/chat_maptext_holder/chat_text
 
 	/// Gets the atoms name with all the ugly prefixes things remove
 	proc/clean_name()
@@ -99,9 +101,9 @@
 		if (istext(num)) // :v
 			src.name_prefixes -= num
 			return
-		if (islist(src.name_prefixes) && src.name_prefixes.len)
+		if (islist(src.name_prefixes) && length(src.name_prefixes))
 			for (var/i in src.name_prefixes)
-				if (num <= 0 || !src.name_prefixes.len)
+				if (num <= 0 || !length(src.name_prefixes))
 					return
 				src.name_prefixes -= i
 				num --
@@ -112,9 +114,9 @@
 		if (istext(num))
 			src.name_suffixes -= num
 			return
-		if (islist(src.name_suffixes) && src.name_suffixes.len)
+		if (islist(src.name_suffixes) && length(src.name_suffixes))
 			for (var/i in src.name_suffixes)
-				if (num <= 0 || !src.name_suffixes.len)
+				if (num <= 0 || !length(src.name_suffixes))
 					return
 				src.name_suffixes -= i
 				num --
@@ -153,7 +155,7 @@
 		tag = null
 
 		if(length(src.statusEffects))
-			for(var/datum/statusEffect/effect in src.statusEffects)
+			for(var/datum/statusEffect/effect as anything in src.statusEffects)
 				src.delStatus(effect)
 			src.statusEffects = null
 		..()
@@ -393,6 +395,7 @@
 		if(isturf(src.loc)) // call it on the area too
 			src.loc.loc.Entered(src, null)
 
+
 /atom/movable/disposing()
 	if (temp_flags & MANTA_PUSHING)
 		mantaPushList.Remove(src)
@@ -474,7 +477,7 @@
 	if (A != src.loc && A?.z == src.z)
 		src.last_move = get_dir(A, src.loc)
 		if (length(src.attached_objs))
-			for (var/atom/movable/M as() in attached_objs)
+			for (var/atom/movable/M as anything in attached_objs)
 				M.set_loc(src.loc)
 		if (islist(src.tracked_blood))
 			src.track_blood()
@@ -533,10 +536,6 @@
 /atom/movable/proc/OnMove(source = null)
 
 /atom/movable/proc/pull()
-	//set name = "Pull"
-	//set src in oview(1)
-	//set category = "Local"
-
 	if (!( usr ))
 		return
 
@@ -597,7 +596,7 @@
 
 /atom/proc/examine(mob/user)
 	RETURN_TYPE(/list)
-	if(src.hiddenFrom?.Find(user.client)) //invislist
+	if(src.hiddenFrom && (user.client in src.hiddenFrom)) //invislist
 		return list()
 
 	var/dist = get_dist(src, user)
@@ -625,7 +624,7 @@
 	else if (src.desc)
 		. += "<br>[src.desc]"
 
-	var/extra = src.get_desc(dist, usr)
+	var/extra = src.get_desc(dist, user)
 	if (extra)
 		. += " [extra]"
 
@@ -834,7 +833,7 @@
 	if((my_area != new_area || !isturf(oldloc)) && isturf(newloc))
 		new_area.Entered(src, oldloc)
 
-	if (islist(src.attached_objs) && attached_objs.len)
+	if (islist(src.attached_objs) && length(attached_objs))
 		for (var/atom/movable/M in src.attached_objs)
 			M.set_loc(src.loc)
 
@@ -911,10 +910,10 @@
 
 //same as above :)
 /atom/movable/setMaterial(var/datum/material/mat1, var/appearance = 1, var/setname = 1, var/copy = 1, var/use_descriptors = 0)
-	var/prev_mat_triggeronentered = (src.material && src.material.triggersOnEntered && src.material.triggersOnEntered.len)
+	var/prev_mat_triggeronentered = (src.material && src.material.triggersOnEntered && length(src.material.triggersOnEntered))
 	var/prev_added_hasentered = src.material?.owner_hasentered_added
 	..(mat1,appearance,setname,copy,use_descriptors)
-	var/cur_mat_triggeronentered = (src.material && src.material.triggersOnEntered && src.material.triggersOnEntered.len)
+	var/cur_mat_triggeronentered = (src.material && src.material.triggersOnEntered && length(src.material.triggersOnEntered))
 	src.material?.owner_hasentered_added = prev_added_hasentered
 
 	if (prev_mat_triggeronentered != cur_mat_triggeronentered)
@@ -1005,7 +1004,7 @@
 
 
 /atom/proc/interact(var/mob/user)
-	if (isdead(user) || (!iscarbon(user) && !ismobcritter(user) && !issilicon(usr)))
+	if (isdead(user) || (!iscarbon(user) && !ismobcritter(user) && !issilicon(user)))
 		return
 
 	if (!isturf(src) && !istype(src.loc, /turf) || is_incapacitated(user) || user.restrained())

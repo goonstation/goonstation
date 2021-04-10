@@ -47,7 +47,6 @@
 	src.UpdateOverlays(src.r_arm_damage_standing, "r_arm_damage")
 	src.UpdateOverlays(src.l_leg_damage_standing, "l_leg_damage")
 	src.UpdateOverlays(src.r_leg_damage_standing, "r_leg_damage")
-	src.UpdateOverlays(src.inhands_standing, "inhands")
 
 	UpdateOverlays(src.fire_standing, "fire")
 
@@ -78,7 +77,7 @@
 			wear_sanity_check(src.w_uniform)
 			suit_image = src.w_uniform.wear_image
 
-			if (islist(override_states) && override_states.Find("js-[src.w_uniform.icon_state]"))
+			if (islist(override_states) && ("js-[src.w_uniform.icon_state]" in override_states))
 				suit_image.icon = src.mutantrace.clothing_icon_override
 				suit_image.icon_state = "js-[src.w_uniform.icon_state]"
 			else
@@ -260,22 +259,26 @@
 	// Shoes
 	if (src.shoes)
 		wear_sanity_check(src.shoes)
-		//. = src.limbs && (!src.limbs.l_leg || istype(src.limbs.l_leg, /obj/item/parts/robot_parts) //(src.bioHolder && src.bioHolder.HasOneOfTheseEffects("lost_left_leg","robot_left_leg","robot_treads"))
 		src.shoes.wear_image.layer = MOB_CLOTHING_LAYER
+		src.shoes.wear_image.color = src.shoes.color
+		src.shoes.wear_image.alpha = src.shoes.alpha
+		src.shoes.wear_image.overlays = null
+		var/shoes_count = 0
 		if (src.limbs && src.limbs.l_leg && src.limbs.l_leg.accepts_normal_human_overlays)
+			shoes_count++
 			src.shoes.wear_image.icon_state = "left_[src.shoes.icon_state]"
-			src.shoes.wear_image.color = src.shoes.color
-			UpdateOverlays(src.shoes.wear_image, "wear_shoes_l")
-		else
-			UpdateOverlays(null, "wear_shoes_l")
 
 		if (src.limbs && src.limbs.r_leg && src.limbs.r_leg.accepts_normal_human_overlays)
-			src.shoes.wear_image.icon_state = "right_[src.shoes.icon_state]"//[!( src.lying ) ? null : "2"]"
-			src.shoes.wear_image.color = src.shoes.color
-			src.shoes.wear_image.alpha = src.shoes.alpha
-			UpdateOverlays(src.shoes.wear_image, "wear_shoes_r")
+			shoes_count++
+			if(shoes_count == 1)
+				src.shoes.wear_image.icon_state = "right_[src.shoes.icon_state]"
+			else
+				src.shoes.wear_image.overlays += image(src.shoes.wear_image.icon, "right_[src.shoes.icon_state]")
+
+		if(shoes_count)
+			UpdateOverlays(src.shoes.wear_image, "wear_shoes")
 		else
-			UpdateOverlays(null, "wear_shoes_r")
+			UpdateOverlays(null, "wear_shoes")
 
 		if (src.shoes.blood_DNA)
 			blood_image.layer = MOB_CLOTHING_LAYER+0.1
@@ -302,8 +305,7 @@
 	else
 		UpdateOverlays(null, "bloody_shoes_l")
 		UpdateOverlays(null, "bloody_shoes_r")
-		UpdateOverlays(null, "wear_shoes_l")
-		UpdateOverlays(null, "wear_shoes_r")
+		UpdateOverlays(null, "wear_shoes")
 
 	if (src.wear_suit)
 		wear_sanity_check(src.wear_suit)
@@ -314,7 +316,7 @@
 		else
 			src.wear_suit.wear_image.layer = MOB_ARMOR_LAYER
 
-		if (islist(override_states) && override_states.Find("suit-[src.wear_suit.icon_state]"))
+		if (islist(override_states) && ("suit-[src.wear_suit.icon_state]" in override_states))
 			src.wear_suit.wear_image.icon = src.mutantrace.clothing_icon_override
 			src.wear_suit.wear_image.icon_state = "suit-[src.wear_suit.icon_state]"
 		else
@@ -440,7 +442,7 @@
 	if (src.wear_mask)
 		wear_sanity_check(src.wear_mask)
 		var/no_offset = 0
-		if (islist(override_states) && override_states.Find("mask-[src.wear_mask.icon_state]"))
+		if (islist(override_states) && ("mask-[src.wear_mask.icon_state]" in override_states))
 			src.wear_mask.wear_image.icon = src.mutantrace.clothing_icon_override
 			src.wear_mask.wear_image.icon_state = "mask-[src.wear_mask.icon_state]"
 			no_offset = 1
@@ -484,7 +486,7 @@
 		wear_sanity_check(src.head)
 
 		var/no_offset = 0
-		if (islist(override_states) && override_states.Find("head-[src.head.icon_state]"))
+		if (islist(override_states) && ("head-[src.head.icon_state]" in override_states))
 			src.head.wear_image.icon = src.mutantrace.clothing_icon_override
 			src.head.wear_image.icon_state = "head-[src.head.icon_state]"
 			no_offset = 1
@@ -568,7 +570,7 @@
 
 	var/shielded = 0
 
-	for (var/atom/A as() in src)
+	for (var/atom/A as anything in src)
 		if (A.flags & NOSHIELD)
 			if (istype(A,/obj/item/device/shield))
 				var/obj/item/device/shield/S = A
@@ -719,7 +721,6 @@
 
 /mob/living/carbon/human/update_inhands()
 
-	src.inhands_standing.len = 0
 	var/image/i_r_hand = null
 	var/image/i_l_hand = null
 
@@ -742,7 +743,10 @@
 						state = I.item_state ? I.item_state + "-L" : (I.icon_state ? I.icon_state + "-L" : "L")
 
 					I.inhand_image.icon_state = state
-					I.inhand_image.color = I.color
+					if (I.color)
+						I.inhand_image.color = I.color
+					else if (I.inhand_color)
+						I.inhand_image.color = I.inhand_color
 					I.inhand_image.pixel_x = 0
 					I.inhand_image.pixel_y = hand_offset
 					i_r_hand = null
@@ -755,7 +759,10 @@
 					if (!I.inhand_image)
 						I.inhand_image = image(I.inhand_image_icon, "", MOB_INHAND_LAYER)
 					I.inhand_image.icon_state = I.item_state ? I.item_state + "-R" : (I.icon_state ? I.icon_state + "-R" : "R")
-					I.inhand_image.color = I.color
+					if (I.color)
+						I.inhand_image.color = I.color
+					else if (I.inhand_color)
+						I.inhand_image.color = I.inhand_color
 					I.inhand_image.pixel_x = 0
 					I.inhand_image.pixel_y = hand_offset
 					i_r_hand = I.inhand_image
@@ -767,7 +774,10 @@
 					if (!I.inhand_image)
 						I.inhand_image = image(I.inhand_image_icon, "", MOB_INHAND_LAYER)
 					I.inhand_image.icon_state = I.item_state ? I.item_state + "-L" : (I.icon_state ? I.icon_state + "-L" : "L")
-					I.inhand_image.color = I.color
+					if (I.color)
+						I.inhand_image.color = I.color
+					else if (I.inhand_color)
+						I.inhand_image.color = I.inhand_color
 					I.inhand_image.pixel_x = 0
 					I.inhand_image.pixel_y = hand_offset
 					i_l_hand = I.inhand_image

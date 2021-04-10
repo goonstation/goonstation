@@ -120,6 +120,7 @@
 	proc/addTrigger(var/list/L, var/datum/materialProc/D)
 		for(var/datum/materialProc/P in L)
 			if(P.type == D.type) return 0
+		D.owner = src
 		L.Add(D)
 		L[D] = 0
 		return
@@ -451,7 +452,7 @@
 
 /datum/material/metal/iridiumalloy
 	mat_id = "iridiumalloy"
-	name = "iridium-alloy"
+	name = "iridium alloy"
 	canMix = 1 //Can not be easily modified.
 	desc = "Some sort of advanced iridium alloy."
 	color = "#756596"
@@ -498,7 +499,21 @@
 	New()
 		setProperty("density", 40)
 		setProperty("hard", 40)
+		addTrigger(triggersTemp, new /datum/materialProc/moltiz_temp())
+		addTrigger(triggersExp, new /datum/materialProc/moltiz_exp())
 		return ..()
+
+	beta
+		mat_id = "molitz_b"
+		name = "molitz beta"
+		color = "#ff2288"
+		desc = "A rare form of Molitz. When heated produces a powerful plasma fire catalyst."
+
+		New()
+			..()
+			removeTrigger(triggersTemp, /datum/materialProc/moltiz_temp)
+			addTrigger(triggersTemp, new /datum/materialProc/moltiz_temp/agent_b())
+			return
 
 /datum/material/crystal/claretine
 	mat_id = "claretine"
@@ -1054,6 +1069,24 @@
 		addTrigger(triggersPickup, new /datum/materialProc/ffart_pickup())
 		return ..()
 
+/datum/material/organic/hamburgris
+	mat_id = "hamburgris"
+	name = "hamburgris"
+	desc = "Ancient medium ground chuck, petrified by the ages into a sturdy composite. Or worse."
+	color = "#816962"
+	material_flags = MATERIAL_ORGANIC
+
+	New()
+		setProperty("density", 65)
+		setProperty("corrosion", 75)
+		setProperty("permeable", 25)
+		setProperty("hard", 30)
+		setProperty("thermal", 20)
+		setProperty("flammable", 10)
+		addTrigger(triggersOnLife, new /datum/materialProc/generic_reagent_onlife("cholesterol", 1))
+
+		return ..()
+
 /datum/material/organic/pizza
 	mat_id = "pizza"
 	name = "pizza"
@@ -1349,7 +1382,7 @@
 	mat_id = "negativematter"
 	name = "negative matter"
 	desc = "It seems to repel matter."
-	color = "#111111"
+	color = list(-1, 0, 0, 0, -1, 0, 0, 0, -1, 1, 1, 1)
 
 	New()
 		addTrigger(triggersOnAdd, new /datum/materialProc/negative_add())

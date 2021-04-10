@@ -642,7 +642,7 @@
 	icon_state = "0-8"
 	},
 /obj/item/device/radio/intercom/security{
-
+	
 	},
 /obj/machinery/light/emergency{
 	icon_state = "ebulb1";
@@ -1138,6 +1138,7 @@
 "acr" = (
 /obj/table/wood/auto,
 /obj/displaycase{
+	displayed = new /obj/item/captaingun
 	pixel_y = 8
 	},
 /obj/machinery/light,
@@ -9281,7 +9282,7 @@
 	id = "crematorium"
 	},
 /obj/item/device/radio/intercom/medical{
-
+	
 	},
 /turf/simulated/floor/black,
 /area/station/medical/crematorium)
@@ -9297,7 +9298,7 @@
 "aqn" = (
 /obj/storage/closet/coffin,
 /obj/item/device/radio/intercom/security{
-
+	
 	},
 /obj/machinery/light{
 	icon_state = "tube1";
@@ -10224,7 +10225,7 @@
 	pixel_x = 6
 	},
 /obj/item/device/radio/intercom/catering{
-
+	
 	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
@@ -10591,20 +10592,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/primary/central)
-"asz" = (
-/obj/machinery/door/firedoor/border_only,
-/obj/table/reinforced/auto,
-/obj/window/reinforced/south,
-/obj/machinery/door/window/westleft{
-	req_access_txt = "28"
-	},
-/obj/machinery/cashreg,
-/obj/item/reagent_containers/food/snacks/cake/chocolate{
-	desc = "Holy shit! This cake probably costs more than the gross domestic product of Bulgaria!";
-	name = "Extravagant Chocolate Gateau"
-	},
-/turf/simulated/floor/black,
-/area/station/crew_quarters/kitchen)
 "asA" = (
 /obj/landmark/start{
 	name = "Chef"
@@ -13964,7 +13951,7 @@
 	icon_state = "line3"
 	},
 /obj/item/device/radio/intercom/medical{
-
+	
 	},
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -17828,7 +17815,7 @@
 /area/station/medical/robotics)
 "aFk" = (
 /obj/item/device/radio/intercom/medical{
-
+	
 	},
 /turf/simulated/floor/stairs{
 	dir = 8;
@@ -19022,7 +19009,7 @@
 /obj/shrub,
 /obj/item/cigpacket,
 /obj/item/device/radio/intercom/medical{
-
+	
 	},
 /obj/machinery/light/emergency{
 	dir = 8
@@ -19061,7 +19048,7 @@
 	d2 = 2
 	},
 /obj/item/device/radio/intercom/science{
-
+	
 	},
 /obj/item/reagent_containers/food/drinks/eggnog,
 /turf/simulated/floor/white/checker,
@@ -20006,7 +19993,7 @@
 	dir = 1
 	},
 /obj/item/device/radio/intercom/medical{
-
+	
 	},
 /obj/machinery/meter,
 /turf/simulated/floor/red,
@@ -22805,7 +22792,7 @@
 	name = "autoname - SS13"
 	},
 /obj/item/device/radio/intercom/medical{
-
+	
 	},
 /obj/machinery/autoclave,
 /turf/simulated/floor/purplewhite/corner{
@@ -23693,7 +23680,7 @@
 	d2 = 8
 	},
 /obj/item/device/radio/intercom/medical{
-
+	
 	},
 /turf/simulated/floor/purple,
 /area/station/science/research_director{
@@ -23748,7 +23735,7 @@
 	network = "Zeta"
 	},
 /obj/item/device/radio/intercom/science{
-
+	
 	},
 /turf/simulated/floor/purple,
 /area/station/science/research_director{
@@ -27342,7 +27329,7 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
-/obj/storage/crate/rcd,
+/obj/storage/crate/rcd/CE,
 /obj/machinery/light/emergency,
 /turf/simulated/floor/yellow,
 /area/station/engine/engineering/ce)
@@ -27729,7 +27716,7 @@
 	pltanks = 15
 	},
 /obj/item/device/radio/intercom/medical{
-
+	
 	},
 /turf/simulated/floor/plating/random,
 /area/station/science/storage)
@@ -27886,7 +27873,7 @@
 /obj/stool/bed/moveable,
 /obj/item/clothing/suit/bedsheet,
 /obj/item/device/radio/intercom/medical{
-
+	
 	},
 /obj/landmark/start{
 	name = "Geneticist"
@@ -32209,7 +32196,7 @@
 	d2 = 8
 	},
 /obj/item/device/radio/intercom/medical{
-
+	
 	},
 /turf/simulated/floor/bluewhite/corner{
 	dir = 4
@@ -32502,7 +32489,7 @@
 	dir = 4
 	},
 /obj/item/device/radio/intercom/brig{
-
+	
 	},
 /obj/decal/tile_edge/line/red{
 	icon_state = "line1";
@@ -33174,7 +33161,7 @@
 	d2 = 4
 	},
 /obj/item/device/radio/intercom/science{
-
+	
 	},
 /turf/simulated/floor/engine,
 /area/station/science/testchamber)
@@ -33338,16 +33325,6 @@
 /turf/simulated/floor/redwhite{
 	dir = 8
 	},
-/area/station/medical/medbay/cloner)
-"bei" = (
-/obj/machinery/computer/cloning{
-	dir = 8
-	},
-/obj/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/turf/simulated/floor/white,
 /area/station/medical/medbay/cloner)
 "bej" = (
 /obj/wingrille_spawn/reinforced,
@@ -34974,16 +34951,6 @@
 /turf/simulated/floor/bluewhite/corner{
 	dir = 1
 	},
-/area/station/medical/medbay/cloner)
-"bha" = (
-/obj/machinery/clonepod{
-	gen_analysis = 0
-	},
-/obj/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/turf/simulated/floor/white,
 /area/station/medical/medbay/cloner)
 "bhb" = (
 /obj/decal/tile_edge/line/black{
@@ -39151,7 +39118,7 @@
 	d2 = 8
 	},
 /obj/item/device/radio/intercom/medical{
-
+	
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/west)
@@ -39209,7 +39176,7 @@
 	},
 /obj/table/reinforced/auto,
 /obj/item/instrument/harmonica,
-/obj/item/card_box/suit,
+/obj/item/card_box/plain,
 /turf/simulated/floor/grime,
 /area/station/security/brig)
 "bnL" = (
@@ -40061,7 +40028,7 @@
 	},
 /obj/machinery/light_switch/west,
 /obj/item/device/radio/intercom/engineering{
-
+	
 	},
 /obj/machinery/meter,
 /turf/simulated/floor/engine{
@@ -41063,7 +41030,7 @@
 	network = "SS13"
 	},
 /obj/item/device/radio/intercom/cargo{
-
+	
 	},
 /obj/item/device/radio/beacon,
 /turf/simulated/floor/black,
@@ -44923,7 +44890,7 @@
 	icon_state = "0-8"
 	},
 /obj/item/device/radio/intercom/engineering{
-
+	
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/east)
@@ -45098,7 +45065,7 @@
 	},
 /obj/machinery/power/data_terminal,
 /obj/item/device/radio/intercom/engineering{
-
+	
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/west)
@@ -47313,6 +47280,36 @@
 	layer = 2
 	},
 /area/space)
+"fra" = (
+/obj/machinery/clonepod,
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/white,
+/area/station/medical/medbay/cloner)
+"oSY" = (
+/obj/machinery/door/firedoor/border_only,
+/obj/table/reinforced/auto,
+/obj/window/reinforced/south,
+/obj/machinery/door/window/westleft{
+	req_access_txt = "28"
+	},
+/obj/machinery/cashreg,
+/obj/item/reagent_containers/food/snacks/cake/chocolate/gateau,
+/turf/simulated/floor/black,
+/area/station/crew_quarters/kitchen)
+"qNW" = (
+/obj/machinery/computer/cloning{
+	dir = 8;
+	gen_analysis = 0
+	},
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/white,
+/area/station/medical/medbay/cloner)
 
 (1,1,1) = {"
 aaa
@@ -80139,9 +80136,9 @@ aYr
 aZz
 baV
 bcr
-bei
+qNW
 bfJ
-bha
+fra
 bit
 baV
 anJ
@@ -93997,7 +93994,7 @@ aqY
 art
 anB
 asd
-asz
+oSY
 arP
 atr
 atN

@@ -31,9 +31,11 @@ var opts = {
     'subOptionsLoop': null, //Contains the interval loop for closing the options menu
     'suppressOptionsClose': false, //Whether or not we should be hiding the suboptions menu
     'highlightTerms': [],
-    'highlightLimit': 5,
+    'highlightLimit': 10,
     'highlightColor': '#FFFF00', //The color of the highlighted message
     'pingDisabled': false, //Has the user disabled the ping counter
+    'twemoji': false, // whether Twemoji are used instead of the default emoji
+    'messageLimitEnabled': true, // whether old messages get deleted
 
     //Ping display
     'pingCounter': 0, //seconds counter
@@ -60,8 +62,8 @@ var opts = {
 };
 
 var themes = { // "css-class": "Option name"
-    "theme-default": "Windows 3.1 (default)",
-    "theme-dark": "Dark",
+    'theme-default': 'Windows 3.1 (default)',
+    'theme-dark': 'Dark',
 }
 
 //Polyfill for fucking date now because of course IE8 and below don't support it
@@ -102,7 +104,7 @@ function getTextNodes(elem, pattern) {
 
 // Highlight all text terms matching the registered regex patterns
 function highlightTerms(el) {
-    var pattern = new RegExp("(" + opts.highlightTerms.join('|') + ")", 'gi');
+    var pattern = new RegExp('(' + opts.highlightTerms.join('|') + ')', 'gi');
     var nodes = getTextNodes(el, pattern);
 
     nodes.each(function (idx, node) {
@@ -158,8 +160,16 @@ function handleStreakCounter($el) {
 
 // Wrap all emojis in an element so we can enforce styles
 function parseEmojis(message) {
-    var pattern = /((?:\u00a9|\u00ae|[\u2000-\u3300]|\ud83c[\ud000-\udfff]|\ud83d[\ud000-\udfff]|\ud83e[\ud000-\udfff])+)/g;
-    return message.replace(pattern, '<span class="emoji">$1</span>');
+    if (opts.twemoji) {
+      return twemoji.parse(message, {
+        folder: 'svg',
+        ext: '.svg'
+      });
+    }
+    else {
+      var pattern = /((?:\u00a9|\u00ae|[\u2000-\u3300]|\ud83c[\ud000-\udfff]|\ud83d[\ud000-\udfff]|\ud83e[\ud000-\udfff])+)/g;
+      return message.replace(pattern, '<span class="emoji">$1</span>');
+    }
 }
 
 //Send a message to the client
@@ -265,7 +275,7 @@ function output(message, group) {
     opts.messageCount++;
 
     //Pop the top message off if history limit reached
-    if (opts.messageCount >= opts.messageLimit) {
+    if (opts.messageCount >= opts.messageLimit && opts.messageLimitEnabled) {
         $messages.children('div.entry:nth-child(-n+' + opts.messageLimit / 2 + ')').remove();
         opts.messageCount -= opts.messageLimit / 2; //I guess the count should only ever equal the limit
     }
@@ -335,6 +345,14 @@ function output(message, group) {
     }
 }
 
+//Receive a large number of messages all at once to cut down on round trips.
+function outputBatch(messages) {
+    var list = JSON.parse(messages);
+    for (var i = 0; i < list.length; i++) {
+        output(list[i].message, list[i].group);
+    }
+}
+
 //Runs a route within byond, client or server side. Consider this "ehjax" for byond.
 function runByond(uri) {
     window.location = uri;
@@ -364,9 +382,9 @@ function getCookie(cname) {
 function rgbToHex(R,G,B) {return toHex(R)+toHex(G)+toHex(B);}
 function toHex(n) {
     n = parseInt(n,10);
-    if (isNaN(n)) return "00";
+    if (isNaN(n)) return '00';
     n = Math.max(0,Math.min(n,255));
-    return "0123456789ABCDEF".charAt((n-n%16)/16) + "0123456789ABCDEF".charAt(n%16);
+    return '0123456789ABCDEF'.charAt((n-n%16)/16) + '0123456789ABCDEF'.charAt(n%16);
 }
 
 function changeMode(mode) {
@@ -508,7 +526,7 @@ function ehjaxCallback(data) {
                     $playMusic.attr('src', data.playMusic);
                     var music = $playMusic.get(0);
                     music.volume = data.volume * 0.3; /*   Added the multiplier here because youtube is consistently   */
-                    if (music.paused) {								/* louder than admin music, which makes people lower the volume. */
+                    if (music.paused) {                /* louder than admin music, which makes people lower the volume. */
                         music.play();
                     }
                 } catch (e) {
@@ -617,6 +635,8 @@ $(function() {
         'shighlightTerms': getCookie('highlightterms'),
         'shighlightColor': getCookie('highlightcolor'),
         'stheme': getCookie('theme'),
+        'stwemoji': getCookie('twemoji'),
+        'smessageLimitEnabled': getCookie('messageLimitEnabled')
     };
 
     if (savedConfig.sfontSize) {
@@ -654,6 +674,12 @@ $(function() {
         body.addClass(savedConfig.stheme);
         opts.currentTheme = savedConfig.stheme;
         output('<span class="internal boldnshit">Loaded theme setting of: '+themes[savedConfig.stheme]+'</span>');
+    }
+    if (savedConfig.stwemoji) {
+      opts.twemoji = true;
+    }
+    if (savedConfig.smessageLimitEnabled) {
+      opts.messageLimitEnabled = savedConfig.smessageLimitEnabled;
     }
 
     (function() {
@@ -897,33 +923,40 @@ $(function() {
         setCookie('pingdisabled', (opts.pingDisabled ? 'true' : 'false'), 365);
     });
 
+    $('#toggleEmojiFont').click(function(e) {
+        opts.twemoji = !opts.twemoji;
+        setCookie('twemoji', opts.twemoji, 365);
+        output('<span class="internal boldnshit">Emoji set to '+(opts.twemoji?'Twemoji':'Windows emoji')+'</span>');
+    });
+
+    $('#toggleMessageLimit').click(function(e) {
+        opts.messageLimitEnabled = !opts.messageLimitEnabled;
+        setCookie('messageLimitEnabled', opts.messageLimitEnabled, 365);
+        output('<span class="internal boldnshit">'+(opts.messageLimitEnabled ? 'Old messages will get deleted.' : 'Old messages no longer get deleted. This might cause performance issues.')+'</span>');
+    });
+
     $('#saveLog').click(function(e) {
         var saved = '';
 
         if (window.XMLHttpRequest) {
             xmlHttp = new XMLHttpRequest();
         } else {
-            xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
+            xmlHttp = new ActiveXObject('Microsoft.XMLHTTP');
         }
-        xmlHttp.open('GET', 'browserOutput.css', false);
+        xmlHttp.open('GET', 'http://cdn.goonhub.com/css/browserOutput.css', false);
         xmlHttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
         xmlHttp.send();
         saved += '<style>'+xmlHttp.responseText+'</style>';
+        saved += '<body class="' + opts.currentTheme + '">';
 
         saved += $messages.html();
-        saved = saved.replace(/&/g, '&amp;');
-        saved = saved.replace(/</g, '&lt;');
+        saved += '</body>';
 
-        var win;
-        try {
-            win = window.open('', 'Chat Log', 'toolbar=no, location=no, directories=no, status=no, menubar=yes, scrollbars=yes, resizable=yes, width=780, height=200, top='+(screen.height-400)+', left='+(screen.width-840));
-        } catch (e) {
-            return;
-        }
-        if (win && win.document && window.document.body) {
-            win.document.body.innerHTML = saved;
-        }
-    });
+        var now = new Date();
+        var filename = 'log_' + now.getFullYear() + '-' + (now.getMonth() + 1) + '-' + now.getDate() + '_' + now.getHours() + '-' + now.getMinutes() + '.html';
+
+        navigator.msSaveBlob(new Blob([saved], {type : 'text/html'}), filename);
+      });
 
     $('#highlightTerm').click(function(e) {
         if ($('.popup .highlightTerm').is(':visible')) {return;}

@@ -44,10 +44,16 @@
 		return
 
 	attackby(obj/item/W as obj, mob/user as mob)
+		if(W.type == src.type)
+			stack_item(W)
+			if(!user.is_in_hands(src))
+				user.put_in_hand(src)
+			boutput(user, "<span class='notice'>You add the ores to the stack. It now has [src.amount] ores.</span>")
+			return
 		if (istype(W, /obj/item/satchel/mining/))
 			if (W.contents.len < W:maxitems)
 				src.set_loc(W)
-				var/oreamt = W.contents.len
+				var/oreamt = length(W.contents)
 				boutput(user, "<span class='notice'>You put [src] in [W].</span>")
 				src.desc = "A leather bag. It holds [oreamt]/[W:maxitems] [W:itemstring]."
 				if (oreamt == W:maxitems) boutput(user, "<span class='notice'>[W] is now full!</span>")
@@ -55,6 +61,18 @@
 			else
 				boutput(user, "<span class='alert'>[W] is full!</span>")
 		else ..()
+
+	attack_hand(mob/user as mob)
+		if(user.is_in_hands(src) && src.amount > 1)
+			var/splitnum = round(input("How many ores do you want to take from the stack?","Stack of [src.amount]",1) as num)
+			if (splitnum >= amount || splitnum < 1)
+				boutput(user, "<span class='alert'>Invalid entry, try again.</span>")
+				return
+			var/obj/item/raw_material/new_stack = split_stack(splitnum)
+			user.put_in_hand_or_drop(new_stack)
+			new_stack.add_fingerprint(user)
+		else
+			..(user)
 
 	HasEntered(AM as mob|obj)
 		if (isobserver(AM))
@@ -87,7 +105,7 @@
 			boutput(usr, "<span class='alert'>Quit that! You're dead!</span>")
 			return
 
-		if(!istype(over_object, /obj/screen/hud))
+		if(!istype(over_object, /atom/movable/screen/hud))
 			if (get_dist(usr,src) > 1)
 				boutput(usr, "<span class='alert'>You're too far away from it to do that.</span>")
 				return
@@ -122,8 +140,8 @@
 						continue
 					src.stack_item(I)
 				usr.visible_message("<span class='notice'>[usr.name] stacks \the [src]!</span>")
-		else if(istype(over_object, /obj/screen/hud))
-			var/obj/screen/hud/H = over_object
+		else if(istype(over_object, /atom/movable/screen/hud))
+			var/atom/movable/screen/hud/H = over_object
 			var/mob/living/carbon/human/dude = usr
 			switch(H.id)
 				if("lhand")
@@ -190,6 +208,17 @@
 
 	setup_material()
 		src.setMaterial(getMaterial("molitz"), appearance = 0, setname = 0)
+		return ..()
+
+/obj/item/raw_material/molitz_beta
+	name = "molitz crystal"
+	desc = "An unusual crystal of Molitz."
+	icon_state = "molitz"
+	material_name = "Molitz Beta"
+	crystal = 1
+
+	setup_material()
+		src.setMaterial(getMaterial("molitz_b"), appearance = 1, setname = 0)
 		return ..()
 
 /obj/item/raw_material/pharosium

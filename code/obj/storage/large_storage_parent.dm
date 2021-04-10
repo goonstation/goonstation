@@ -53,6 +53,7 @@
 	var/made_stuff
 
 	var/grab_stuff_on_spawn = TRUE
+
 	New()
 		..()
 		START_TRACKING
@@ -69,6 +70,7 @@
 		..()
 
 	proc/make_my_stuff() // use this rather than overriding the container's New()
+		. = 1
 		if (!islist(src.spawn_contents))
 			return 0
 
@@ -80,7 +82,6 @@
 				amt = abs(spawn_contents[thing])
 			do new thing(src)	//Two lines! I TOLD YOU I COULD DO IT!!!
 			while (--amt > 0)
-		return 1
 
 	proc/update_icon()
 		if (src.open)
@@ -96,7 +97,7 @@
 			src.UpdateOverlays(null, "welded")
 
 	emp_act()
-		if (!src.open && src.contents.len)
+		if (!src.open && length(src.contents))
 			for (var/atom/A in src.contents)
 				if (ismob(A))
 					var/mob/M = A
@@ -104,10 +105,9 @@
 				if (isitem(A))
 					var/obj/item/I = A
 					I.emp_act()
-		return
 
 	alter_health()
-		return get_turf(src)
+		. = get_turf(src)
 
 	relaymove(mob/user as mob)
 		if (is_incapacitated(user))
@@ -154,7 +154,7 @@
 		src.visible_message("<span class='alert'><b>[user]</b> kicks [src] open!</span>")
 
 	attack_hand(mob/user as mob)
-		if (!in_range(src, user))
+		if (!in_interact_range(src, user))
 			return
 
 		interact_particle(user,src)
@@ -172,7 +172,7 @@
 			return
 
 		else if (istype(W, /obj/item/satchel/))
-			var/amt = W.contents.len
+			var/amt = length(W.contents)
 			if (amt)
 				user.visible_message("<span class='notice'>[user] dumps out [W]'s contents into [src]!</span>")
 				var/amtload = 0
@@ -296,7 +296,7 @@
 
 	MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
 		var/turf/T = get_turf(src)
-		if (!in_range(user, src) || !in_range(user, O) || user.restrained() || user.getStatusDuration("paralysis") || user.sleeping || user.stat || user.lying || isAI(user))
+		if (!in_interact_range(user, src) || !in_interact_range(user, O) || user.restrained() || user.getStatusDuration("paralysis") || user.sleeping || user.stat || user.lying || isAI(user))
 			return
 
 		if (!src.is_acceptable_content(O))
@@ -403,17 +403,17 @@
 
 	attack_ai(mob/user)
 		if (can_reach(user, src) <= 1 && (isrobot(user) || isshell(user)))
-			return src.attack_hand(user)
+			. = src.attack_hand(user)
 
 	alter_health()
-		return get_turf(src)
+		. = get_turf(src)
 
 	CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+		. = open
 		if (air_group || (height==0))
 			return 1
 		if (src.is_short)
 			return 0
-		return open
 
 	ex_act(severity)
 		switch (severity)
@@ -445,13 +445,13 @@
 		return
 
 	proc/is_acceptable_content(var/atom/A)
+		. = TRUE
 		if (!A || !(isobj(A) || ismob(A)))
 			return 0
 		if (istype(A, /obj/decal/skeleton)) // uuuuuuugh
 			return 1
-		if (isobj(A) && ((A.density && !istype(A, /obj/critter)) || A:anchored || A == src || istype(A, /obj/decal) || istype(A, /obj/screen) || istype(A, /obj/storage)))
+		if (isobj(A) && ((A.density && !istype(A, /obj/critter)) || A:anchored || A == src || istype(A, /obj/decal) || istype(A, /atom/movable/screen) || istype(A, /obj/storage)))
 			return 0
-		return 1
 
 	var/obj/storage/entangled
 	proc/open(var/entangleLogic, var/mob/user)
@@ -506,7 +506,7 @@
 		for (var/mob/M in get_turf(src))
 			if (M.anchored || M.buckled)
 				continue
-			if (src.is_short && !M.lying)
+			if (src.is_short && !M.lying && ( M != src.loc ) ) // ignore movement when container is inside the mob (possessed)
 				step_away(M, src, 1)
 				continue
 #ifdef HALLOWEEN
@@ -551,11 +551,12 @@
 		p_class = initial(p_class) + maxPClass
 
 	proc/can_open()
+		. = TRUE
 		if (src.welded || src.locked)
 			return 0
-		return 1
 
 	proc/can_close()
+		. = TRUE
 		var/turf/T = get_turf(src)
 		if (!T) return 0
 		if (T.contents.len > src.max_capacity)
@@ -563,12 +564,11 @@
 		for (var/obj/storage/S in T)
 			if (S != src)
 				return 0
-		return 1
 
 	proc/intact_frame()
+		. = TRUE
 		if (!src.intact_frame)
 			return 0
-		return 1
 
 	proc/dump_contents(var/mob/user)
 		if(src.spawn_contents && make_my_stuff()) //Make the stuff when the locker is first opened.
@@ -578,9 +578,9 @@
 		for (var/obj/O in src)
 			O.set_loc(newloc)
 			if(istype(O,/obj/item/mousetrap))
-				var/obj/item/mousetrap/m = O
-				if(m.armed && user)
-					m.triggered(user)
+				var/obj/item/mousetrap/our_trap = O
+				if(our_trap.armed && user)
+					INVOKE_ASYNC(our_trap, /obj/item/mousetrap.proc/triggered,user)
 
 		for (var/mob/M in src)
 			M.set_loc(newloc)

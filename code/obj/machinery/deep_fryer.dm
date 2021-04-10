@@ -23,7 +23,7 @@
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (isghostdrone(user) || isAI(user))
-			boutput(usr, "<span class='alert'>The [src] refuses to interface with you, as you are not a properly trained chef!</span>")
+			boutput(user, "<span class='alert'>The [src] refuses to interface with you, as you are not a properly trained chef!</span>")
 			return
 		if (W.cant_drop) //For borg held items
 			boutput(user, "<span class='alert'>You can't put that in [src] when it's attached to you!</span>")
@@ -89,7 +89,7 @@
 		return
 
 	MouseDrop_T(obj/item/W as obj, mob/user as mob)
-		if (istype(W) && in_range(W, user) && in_range(src, user))
+		if (istype(W) && in_interact_range(W, user) && in_interact_range(src, user))
 			return src.attackby(W, user)
 		return ..()
 
@@ -102,7 +102,7 @@
 
 	attack_hand(mob/user as mob)
 		if (isghostdrone(user))
-			boutput(usr, "<span class='alert'>The [src] refuses to interface with you, as you are not a properly trained chef!</span>")
+			boutput(user, "<span class='alert'>The [src] refuses to interface with you, as you are not a properly trained chef!</span>")
 			return
 		if (!src.fryitem)
 			boutput(user, "<span class='alert'>There is nothing in the fryer.</span>")
@@ -179,48 +179,43 @@
 				user.suiciding = 0
 		return 1
 
-	proc/eject_food()
-		if (!src.fryitem)
-			UnsubscribeProcess()
-			return
+	proc/fryify(atom/movable/thing, burnt=FALSE)
+		var/obj/item/reagent_containers/food/snacks/shell/deepfry/fryholder = new(src)
 
-		var/obj/item/reagent_containers/food/snacks/shell/deepfry/fryholder = new /obj/item/reagent_containers/food/snacks/shell/deepfry(src)
-
-		if (src.cooktime >= 60)
-			if (ismob(src.fryitem))
-				var/mob/M = src.fryitem
+		if(burnt)
+			if (ismob(thing))
+				var/mob/M = thing
 				M.ghostize()
 			else
-				for (var/mob/M in src.fryitem)
+				for (var/mob/M in thing)
 					M.ghostize()
-			qdel(src.fryitem)
-			src.fryitem = new /obj/item/reagent_containers/food/snacks/yuckburn (src)
-			if (!src.fryitem.reagents)
-				src.fryitem.create_reagents(50)
+			qdel(thing)
+			thing = new /obj/item/reagent_containers/food/snacks/yuckburn (src)
+			if (!thing.reagents)
+				thing.create_reagents(50)
 
-			src.fryitem.reagents.add_reagent("grease", 50)
+			thing.reagents.add_reagent("grease", 50)
 			fryholder.desc = "A heavily fried...something.  Who can tell anymore?"
-		else
-			if (istype(src.fryitem, /obj/item/reagent_containers/food/snacks))
-				fryholder.food_effects += fryitem:food_effects
+		if (istype(thing, /obj/item/reagent_containers/food/snacks))
+			fryholder.food_effects += thing:food_effects
 
-		var/icon/composite = new(src.fryitem.icon, src.fryitem.icon_state)//, src.fryitem.dir, 1)
-		for(var/O in src.fryitem.underlays + src.fryitem.overlays)
+		var/icon/composite = new(thing.icon, thing.icon_state)
+		for(var/O in thing.underlays + thing.overlays)
 			var/image/I = O
 			composite.Blend(icon(I.icon, I.icon_state, I.dir, 1), ICON_OVERLAY)
 
 		switch(src.cooktime)
 			if (0 to 15)
-				fryholder.name = "lightly-fried [src.fryitem.name]"
+				fryholder.name = "lightly-fried [thing.name]"
 				fryholder.color = ( rgb(166,103,54) )
 
 
 			if (16 to 49)
-				fryholder.name = "fried [src.fryitem.name]"
+				fryholder.name = "fried [thing.name]"
 				fryholder.color = ( rgb(103,63,24) )
 
 			if (50 to 59)
-				fryholder.name = "deep-fried [src.fryitem.name]"
+				fryholder.name = "deep-fried [thing.name]"
 				fryholder.color = ( rgb(63, 23, 4) )
 
 			else
@@ -230,17 +225,27 @@
 
 		fryholder.charcoaliness = src.cooktime
 		fryholder.icon = composite
-		fryholder.overlays = fryitem.overlays
-		fryholder.set_loc(get_turf(src))
-		if (ismob(fryitem))
-			fryholder.amount = 5
+		fryholder.overlays = thing.overlays
+		if (isitem(thing))
+			var/obj/item/item = thing
+			fryholder.amount = item.w_class
 		else
-			fryholder.amount = src.fryitem.w_class
-		fryholder.reagents.maximum_volume += src.fryitem.reagents.total_volume
-		src.fryitem.reagents.trans_to(fryholder, src.fryitem.reagents.total_volume)
+			fryholder.amount = 5
+		if(thing.reagents)
+			fryholder.reagents.maximum_volume += thing.reagents.total_volume
+			thing.reagents.trans_to(fryholder, thing.reagents.total_volume)
 		fryholder.reagents.my_atom = fryholder
 
-		src.fryitem.set_loc(fryholder)
+		thing.set_loc(fryholder)
+		return fryholder
+
+	proc/eject_food()
+		if (!src.fryitem)
+			UnsubscribeProcess()
+			return
+
+		var/obj/item/reagent_containers/food/snacks/shell/deepfry/fryholder = src.fryify(src.fryitem, src.cooktime >= 60)
+		fryholder.set_loc(get_turf(src))
 
 		src.fryitem = null
 		src.icon_state = "fryer0"

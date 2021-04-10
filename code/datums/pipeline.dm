@@ -72,7 +72,7 @@ datum/pipeline
 			member.air_temporary.temperature = air.temperature
 
 			if(length(air.trace_gases))
-				for(var/datum/gas/trace_gas as() in air.trace_gases)
+				for(var/datum/gas/trace_gas as anything in air.trace_gases)
 					var/datum/gas/corresponding = member.air_temporary.get_or_add_trace_gas_by_type(trace_gas.type)
 					corresponding.moles = trace_gas.moles*member.volume/air.volume
 
@@ -104,11 +104,11 @@ datum/pipeline
 			for(var/obj/machinery/atmospherics/pipe/borderline in possible_expansions)
 
 				var/list/result = borderline.pipeline_expansion()
-				var/edge_check = result.len
+				var/edge_check = length(result)
 
 				if(result.len>0)
 					for(var/obj/machinery/atmospherics/pipe/item in result)
-						if(!members.Find(item))
+						if(!(item in members))
 							members += item
 							possible_expansions += item
 
@@ -129,12 +129,10 @@ datum/pipeline
 		air.volume = volume
 
 	proc/network_expand(datum/pipe_network/new_network, obj/machinery/atmospherics/pipe/reference)
-
-		if(new_network.line_members.Find(src))
+		if(src in new_network.line_members)
 			return 0
 
 		new_network.line_members += src
-
 		network = new_network
 
 		for(var/obj/machinery/atmospherics/pipe/edge in edges)

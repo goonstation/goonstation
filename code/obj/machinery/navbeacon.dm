@@ -204,7 +204,7 @@
 		interacted(user, 1)
 
 	attack_hand(var/mob/user)
-		if (isnpcmonkey(user))
+		if (isnpc(user))
 			return
 		interacted(user, 0)
 
@@ -260,7 +260,7 @@ Transponder Codes:<UL>"}
 		..()
 		if (usr.stat)
 			return
-		if ((in_range(src, usr) && istype(src.loc, /turf)) || (issilicon(usr)))
+		if ((in_interact_range(src, usr) && istype(src.loc, /turf)) || (issilicon(usr)))
 			if(open && !locked)
 				src.add_dialog(usr)
 

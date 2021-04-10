@@ -54,6 +54,11 @@
 	density = 1
 	opacity = 0 // this causes some of the super ugly lighting issues too
 
+	elm_random
+		New()
+			. = ..()
+			src.dir = pick(cardinal - SOUTH)
+
 // what the hell is all this and why wasn't it just using a big icon? the lighting system gets all fucked up with this stuff
 
 /*
@@ -112,6 +117,11 @@
 	anchored = 1
 	density=1
 
+	random
+		New()
+			. = ..()
+			src.dir = pick(alldirs)
+
 /obj/shrub
 	name = "shrub"
 	icon = 'icons/misc/worlds.dmi'
@@ -162,7 +172,7 @@
 		if (max_uses > 0 && ((last_use + time_between_uses) < world.time) && prob(spawn_chance))
 			var/something = null
 
-			if (override_default_behaviour && islist(additional_items) && additional_items.len)
+			if (override_default_behaviour && islist(additional_items) && length(additional_items))
 				something = pick(additional_items)
 			else
 				something = pick(trinket_safelist)
@@ -207,6 +217,11 @@
 			qdel(src)
 			return
 
+	random
+		New()
+			. = ..()
+			src.dir = pick(alldirs)
+
 /obj/shrub/captainshrub
 	name = "\improper Captain's bonsai tree"
 	icon = 'icons/misc/worlds.dmi'
@@ -240,7 +255,7 @@
 		if (!W) return
 		if (!user) return
 		if (inafterlife(user))
-			boutput(usr, "You can't bring yourself to hurt such a beautiful thing!")
+			boutput(user, "You can't bring yourself to hurt such a beautiful thing!")
 			return
 		if (src.destroyed) return
 		if (user.mind && user.mind.assigned_role == "Captain")
@@ -297,7 +312,7 @@
 		if (!W) return
 		if (!user) return
 		if (inafterlife(user))
-			boutput(usr, "You can't bring yourself to hurt such a beautiful thing!")
+			boutput(user, "You can't bring yourself to hurt such a beautiful thing!")
 			return
 		if (src.destroyed) return
 		if (user.mind && user.mind.assigned_role == "Captain")
@@ -481,7 +496,7 @@
 	proc/toggle()
 		src.on = !(src.on)
 		src.icon_state = "light[!(src.on)]"
-		if (!islist(myBlinds) || !myBlinds.len)
+		if (!islist(myBlinds) || !length(myBlinds))
 			return
 		for (var/obj/window_blinds/blind in myBlinds)
 			blind.toggle(src.on)

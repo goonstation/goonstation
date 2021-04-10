@@ -33,6 +33,10 @@
 	var/setup_os_string = null
 	var/setup_font_color = "#19A319"
 	var/setup_bg_color = "#1B1E1B"
+	/// does it have a glow in the dark screen? see computer_screens.dmi
+	var/glow_in_dark_screen = TRUE
+	var/image/screen_image
+
 	power_usage = 250
 
 	generic //Generic computer, standard os and card scanner
@@ -314,6 +318,14 @@
 
 		src.base_icon_state = src.icon_state
 
+		if(glow_in_dark_screen)
+			src.screen_image = image('icons/obj/computer_screens.dmi', src.icon_state, -1)
+			screen_image.plane = PLANE_LIGHTING
+			screen_image.blend_mode = BLEND_ADD
+			screen_image.layer = LIGHTING_LAYER_BASE
+			screen_image.color = list(0.33,0.33,0.33, 0.33,0.33,0.33, 0.33,0.33,0.33)
+			src.UpdateOverlays(screen_image, "screen_image")
+
 		src.post_system()
 
 		switch(rand(1,3))
@@ -326,7 +338,7 @@
 	return
 
 /obj/machinery/computer3/attack_hand(mob/user as mob)
-	if(..())
+	if(..() && !istype(user, /mob/dead/target_observer/mentor_mouse_observer))
 		return
 
 	if(!user.literate)
@@ -632,17 +644,27 @@ function lineEnter (ev)
 		icon_state = src.base_icon_state
 		src.icon_state += "b"
 		light.disable()
+		if(glow_in_dark_screen)
+			src.ClearSpecificOverlays("screen_image")
 
 	else if(powered())
 		icon_state = src.base_icon_state
 		status &= ~NOPOWER
 		light.enable()
+		if(glow_in_dark_screen)
+			screen_image.plane = PLANE_LIGHTING
+			screen_image.blend_mode = BLEND_ADD
+			screen_image.layer = LIGHTING_LAYER_BASE
+			screen_image.color = list(0.33,0.33,0.33, 0.33,0.33,0.33, 0.33,0.33,0.33)
+			src.UpdateOverlays(screen_image, "screen_image")
 	else
 		SPAWN_DBG(rand(0, 15))
 			icon_state = src.base_icon_state
 			src.icon_state += "0"
 			status |= NOPOWER
 			light.disable()
+			if(glow_in_dark_screen)
+				src.ClearSpecificOverlays("screen_image")
 
 /obj/machinery/computer3/attackby(obj/item/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/disk/data/floppy)) //INSERT SOME DISKETTES
@@ -1136,6 +1158,7 @@ function lineEnter (ev)
 	desc = "This fine piece of hardware sports an incredible 2 kilobytes of RAM, all for a price slightly higher than the whole economy of greece."
 	icon_state = "oldlapshut"
 	luggable_type = /obj/machinery/computer3/luggable/personal
+	w_class = 3.0
 
 
 /obj/machinery/computer3/luggable/personal

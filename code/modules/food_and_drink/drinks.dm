@@ -91,7 +91,7 @@
 	New()
 		switch(rand(1,12))
 			if (1)
-				src.name += "Ballin' Banana Testicular Torsion flavor"
+				src.name += "Crunchy Kidney Stone Lemonade flavor"
 				src.initial_reagents["urine"] = 10
 			if (2)
 				src.name += "Radical Roadkill Rampage flavor"
@@ -207,6 +207,7 @@
 	heal_amt = 1
 	rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
 	initial_volume = 50
+	can_recycle = FALSE
 	initial_reagents = list("chickensoup"=30)
 
 /obj/item/reagent_containers/food/drinks/weightloss_shake

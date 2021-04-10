@@ -1,5 +1,5 @@
 /datum/hud/ghostdrone
-	var/obj/screen/hud
+	var/atom/movable/screen/hud
 		mod1
 		charge
 		pulling
@@ -21,8 +21,8 @@
 	var/list/screen_tools = list()
 	var/list/screen_tools_bg = list()
 
-	var/list/obj/screen/hud/upgrade_bg = list()
-	var/list/obj/screen/hud/upgrade_slots = list()
+	var/list/atom/movable/screen/hud/upgrade_bg = list()
+	var/list/atom/movable/screen/hud/upgrade_slots = list()
 	var/show_upgrades = 1
 
 	var/items_screen = 1
@@ -32,9 +32,9 @@
 	var/mob/living/silicon/ghostdrone/master
 	var/icon/icon_hud = 'icons/mob/hud_drone.dmi'
 
-	var/list/statusUiElements = list() //Assoc. List  STATUS EFFECT INSTANCE : UI ELEMENT add_screen(obj/screen/S). Used to hold the ui elements since they shouldnt be on the status effects themselves.
+	var/list/statusUiElements = list() //Assoc. List  STATUS EFFECT INSTANCE : UI ELEMENT add_screen(atom/movable/screen/S). Used to hold the ui elements since they shouldnt be on the status effects themselves.
 
-	var/obj/screen/hud
+	var/atom/movable/screen/hud
 
 
 	clear_master()
@@ -108,8 +108,8 @@
 				if (i > master.tools.len)
 					break
 				var/obj/item/I = master.tools[i]
-				var/obj/screen/hud/S = screen_tools[sid]
-				var/obj/screen/hud/BG = screen_tools_bg[sid]
+				var/atom/movable/screen/hud/S = screen_tools[sid]
+				var/atom/movable/screen/hud/BG = screen_tools_bg[sid]
 				S.name = I.name
 				BG.name = I.name
 				S.icon = I.icon
@@ -198,7 +198,7 @@
 		update_equipment()
 
 
-	scrolled(id, dx, dy, user, parms, obj/screen/hud/scr)
+	scrolled(id, dx, dy, user, parms, atom/movable/screen/hud/scr)
 		if(!master || user != master) return
 
 		if(scr.item)
@@ -354,9 +354,9 @@
 			if(isdead(master))
 				return
 
-			for(var/obj/screen/ability/topBar/genetics/G in master.client.screen)
+			for(var/atom/movable/screen/ability/topBar/genetics/G in master.client.screen)
 				master.client.screen -= G
-			for(var/obj/screen/pseudo_overlay/PO in master.client.screen)
+			for(var/atom/movable/screen/pseudo_overlay/PO in master.client.screen)
 				master.client.screen -= PO
 			for(var/obj/ability_button/B in master.client.screen)
 				master.client.screen -= B
@@ -382,10 +382,10 @@
 						pos_y++
 
 		update_status_effects()
-			for(var/obj/screen/statusEffect/G in src.objects)
+			for(var/atom/movable/screen/statusEffect/G in src.objects)
 				remove_screen(G)
 
-			for(var/datum/statusEffect/S in src.statusUiElements) //Remove stray effects.
+			for(var/datum/statusEffect/S as anything in src.statusUiElements) //Remove stray effects.
 				if(!master.statusEffects || !(S in master.statusEffects))
 					pool(statusUiElements[S])
 					src.statusUiElements.Remove(S)
@@ -395,10 +395,10 @@
 			var/pos_x = spacing - 0.2 - 1
 
 			if(master.statusEffects)
-				for(var/datum/statusEffect/S in master.statusEffects) //Add new ones, update old ones.
+				for(var/datum/statusEffect/S as anything in master.statusEffects) //Add new ones, update old ones.
 					if(!S.visible) continue
 					if((S in statusUiElements) && statusUiElements[S])
-						var/obj/screen/statusEffect/U = statusUiElements[S]
+						var/atom/movable/screen/statusEffect/U = statusUiElements[S]
 						U.icon = icon_hud
 						U.screen_loc = "EAST[pos_x < 0 ? "":"+"][pos_x],NORTH+0.3"
 						U.update_value()
@@ -406,7 +406,7 @@
 						pos_x -= spacing
 					else
 						if(S.visible)
-							var/obj/screen/statusEffect/U = unpool(/obj/screen/statusEffect)
+							var/atom/movable/screen/statusEffect/U = unpool(/atom/movable/screen/statusEffect)
 							U.init(master,S)
 							U.icon = icon_hud
 							statusUiElements.Add(S)

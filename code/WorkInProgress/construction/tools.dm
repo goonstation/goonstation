@@ -112,7 +112,7 @@
 				T.control = src
 
 	attack_hand(var/mob/user as mob)
-		if (!in_range(src,user))
+		if (!in_interact_range(src,user))
 			boutput(user, text("Too far away."))
 			src.remove_dialog(user)
 			user.Browse(null, "window=turretid")
@@ -451,7 +451,7 @@
 
 	var/selecting = 0
 	var/mode = "floors"
-	var/icons = list("floors" = 'icons/turf/construction_floors.dmi', "walls" = 'icons/turf/construction_walls.dmi')
+	var/icons = list("floors" = 'icons/turf/construction_floors.dmi', "walls" = 'icons/turf/construction_walls.dmi', "restore original")
 	var/marker_class = list("floors" = /obj/plan_marker/floor, "walls" = /obj/plan_marker/wall)
 	var/selected = "floor"
 	// var/pod_turf = 0
@@ -469,6 +469,10 @@
 		mode = input("What to mark?", "Marking", mode) in icons
 		selected = null
 		var/states = list()
+		if (mode == "restore original")
+			boutput(user, "<span class='notice'>Now set for restoring appearance.</span>")
+			selecting = 0
+			return
 		if (mode == "walls")
 			states += "* AUTO *"
 		states += icon_states(icons[mode])
@@ -491,6 +495,22 @@
 		if (!T)
 			return 0
 
+		if (mode == "restore original") //For those who want to undo the carnage
+			if (istype(T, /turf/simulated/floor))
+				if (!T.intact)
+					return
+				var/turf/simulated/floor/F = T
+				F.icon = initial(F.icon)
+				F.icon_state = F.roundstart_icon_state
+				F.set_dir(F.roundstart_dir)
+			else if (istype(T, /turf/simulated/wall))
+				T.icon = initial(T.icon)
+				//T.icon_state = initial(T.icon_state)
+				if (istype(T, /turf/simulated/wall/auto))
+					var/turf/simulated/wall/auto/W = T
+					W.update_icon()
+					W.update_neighbors()
+			return
 		var/obj/plan_marker/old = null
 		for (var/obj/plan_marker/K in T)
 			if (istype(K, /obj/plan_marker/floor) || istype(K, /obj/plan_marker/wall))
@@ -766,11 +786,11 @@
 
 	proc/check()
 		var/turf/T = get_turf(src)
-		if (istype(T, /turf/simulated/floor))
+		if (istype(T, /turf/simulated/floor) && T.intact)
 			// Same deal as above, only checked for that specific type of floor
 			// so the various alternate designs weren't able to be converted
 			T.icon = src.icon
 			T.icon_state = src.icon_state
 			T.set_dir(src.dir)
 			// T:allows_vehicles = src.allows_vehicles
-			qdel(src)
+		qdel(src)

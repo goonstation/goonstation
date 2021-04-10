@@ -29,7 +29,6 @@ o+`        `-` ``..-:yooos-..----------..`
            `d.                     .d`
 */
 
-
 //////////// OPTIONS TO GO FAST
 
 //#define IM_REALLY_IN_A_FUCKING_HURRY_HERE 1  // Skip setup for atmos, Z5, don't show changelogs, skip pregame lobby
@@ -138,6 +137,8 @@ var/global/ci_dm_version_minor = "100"
 #define BUILD_TIME_MINUTE 31
 #define BUILD_TIME_SECOND 30
 #define BUILD_TIME_UNIX 1234567890 // Unix epoch, second precision
+
+#define SERVER_NUMBER 0
 
 // Uncomment and set to a URL with a zip of the RSC to offload RSC sending to an external webserver/CDN.
 //#define PRELOAD_RSC_URL ""

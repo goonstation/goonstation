@@ -10,9 +10,9 @@
 	var/id = 0.0
 	var/perma = 0
 
-	lr = 0.85
-	lg = 0.86
-	lb = 1
+	light_r =0.85
+	light_g = 0.86
+	light_b = 1
 
 
 /obj/machinery/computer/robotics/attackby(obj/item/I as obj, user as mob)
@@ -142,7 +142,7 @@
 /obj/machinery/computer/robotics/Topic(href, href_list)
 	if(..())
 		return
-	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
+	if ((usr.contents.Find(src) || (in_interact_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
 		src.add_dialog(usr)
 
 	var/mob/living/silicon/robot/R = locate(href_list["bot"])

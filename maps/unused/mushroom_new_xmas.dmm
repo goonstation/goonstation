@@ -19605,7 +19605,7 @@
 	layer = 9.1;
 	pixel_x = -10
 	},
-/obj/item/card_box/suit,
+/obj/item/card_box/plain,
 /turf/simulated/floor{
 	tag = "icon-carpet2 (WEST)";
 	icon_state = "carpet2";
@@ -20817,7 +20817,7 @@
 	},
 /obj/table/reinforced/bar/auto,
 /obj/item/plate,
-/obj/item/card_box/suit,
+/obj/item/card_box/plain,
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/cafeteria)
 "aRG" = (
@@ -22652,10 +22652,7 @@
 	desc = "It appears to be a Martian brand of donuts.";
 	name = "Robust Donuts"
 	},
-/obj/item/reagent_containers/food/snacks/cake/chocolate{
-	desc = "Holy shit! This cake probably costs more than the gross domestic product of Bulgaria!";
-	name = "Extravagant Chocolate Gateau"
-	},
+/obj/item/reagent_containers/food/snacks/cake/chocolate/gateau,
 /obj/decal/tile_edge/stripe/xmas{
 	icon_state = "xmas";
 	dir = 5
@@ -24485,10 +24482,7 @@
 /obj/item/paper/book/cookbook,
 /obj/item/reagent_containers/glass/bottle/icing,
 /obj/item/reagent_containers/glass/bottle/icing,
-/obj/item/reagent_containers/food/snacks/cake/chocolate{
-	desc = "Holy shit! This cake probably costs more than the gross domestic product of Bulgaria!";
-	name = "Extravagant Chocolate Gateau"
-	},
+/obj/item/reagent_containers/food/snacks/cake/chocolate/gateau,
 /turf/simulated/floor/specialroom/cafeteria{
 	dir = 8
 	},

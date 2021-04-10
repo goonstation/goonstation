@@ -49,7 +49,7 @@
 	// I wandered in and made things hopefully a bit easier to work with since we have multiple maps now - Haine
 	var/list/list/target_locations = null
 
-	if (map_settings && islist(map_settings.valid_nuke_targets) && map_settings.valid_nuke_targets.len)
+	if (map_settings && islist(map_settings.valid_nuke_targets) && length(map_settings.valid_nuke_targets))
 		target_locations = map_settings.valid_nuke_targets
 	else
 		if (ismap("COGMAP2"))
@@ -102,7 +102,7 @@
 			"the robotics lab" = list(/area/station/medical/robotics))
 			//"the public pool" = list(/area/station/crew_quarters/pool)) // Don't ask, it just fits all criteria. Deathstar weakness or something.
 
-	if (!islist(target_locations) || !target_locations.len)
+	if (!islist(target_locations) || !length(target_locations))
 		target_locations = list("the station (anywhere)" = list(/area/station))
 		message_admins("<span class='alert'><b>CRITICAL BUG:</b> nuke mode setup encountered an error while trying to choose a target location for the bomb and the target has defaulted to anywhere on the station! The round will be able to be played like this but it will be unbalanced! Please inform a coder!")
 		logTheThing("debug", null, null, "<b>CRITICAL BUG:</b> nuke mode setup encountered an error while trying to choose a target location for the bomb and the target has defaulted to anywhere on the station.")
@@ -391,16 +391,14 @@
 
 
 /datum/game_mode/nuclear/proc/random_radio_frequency()
-	var/f = 0
+	. = 0
 	var/list/blacklisted = list(0, 1451, 1457) // The old blacklist was rather incomplete and thus ineffective (Convair880).
 	blacklisted.Add(R_FREQ_BLACKLIST)
 
 	do
-		f = rand(1352, 1439)
+		. = rand(1352, 1439)
 
-	while (blacklisted.Find(f))
-
-	return f
+	while (. in blacklisted)
 
 /datum/game_mode/nuclear/process()
 	set background = 1

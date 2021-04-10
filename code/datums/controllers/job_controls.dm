@@ -26,12 +26,12 @@ var/datum/job_controller/job_controls
 			new /datum/job/civilian/chaplain ())
 
 		else
-			for (var/A in typesof(/datum/job/command)) src.staple_jobs += new A(src)
-			for (var/A in typesof(/datum/job/security)) src.staple_jobs += new A(src)
-			for (var/A in typesof(/datum/job/research)) src.staple_jobs += new A(src)
-			for (var/A in typesof(/datum/job/engineering)) src.staple_jobs += new A(src)
-			for (var/A in typesof(/datum/job/civilian)) src.staple_jobs += new A(src)
-			for (var/A in typesof(/datum/job/special)) src.special_jobs += new A(src)
+			for (var/A in concrete_typesof(/datum/job/command)) src.staple_jobs += new A(src)
+			for (var/A in concrete_typesof(/datum/job/security)) src.staple_jobs += new A(src)
+			for (var/A in concrete_typesof(/datum/job/research)) src.staple_jobs += new A(src)
+			for (var/A in concrete_typesof(/datum/job/engineering)) src.staple_jobs += new A(src)
+			for (var/A in concrete_typesof(/datum/job/civilian)) src.staple_jobs += new A(src)
+			for (var/A in concrete_typesof(/datum/job/special)) src.special_jobs += new A(src)
 		job_creator = new /datum/job/created(src)
 		//Add special daily variety job
 		var/variety_job_path = text2path("/datum/job/daily/[lowertext(time2text(world.realtime,"Day"))]")
@@ -822,14 +822,14 @@ var/datum/job_controller/job_controls
 
 		if(href_list["GetAccess"])
 			var/picker = input("Make this job's access comparable to which job?","Job Creator") in list("Captain","Head of Security",
-			"Head of Personnel","Chief Engineer","Research Director","Security Officer","Detective","Geneticist","Roboticist","Scientist",
+			"Head of Personnel","Chief Engineer","Research Director","Security Officer","Detective","Geneticist","Pathologist","Roboticist","Scientist",
 			"Medical Doctor","Quartermaster","Miner","Mechanic","Engineer","Chef","Bartender","Botanist","Janitor","Chaplain","Staff Assistant","No Access")
 			src.job_creator.access = get_access(picker)
 			src.job_creator()
 
 		if(href_list["AddAccess"])
 			var/picker = input("Make this job's access comparable to which job?","Job Creator") in list("Captain","Head of Security",
-			"Head of Personnel","Chief Engineer","Research Director","Security Officer","Detective","Geneticist","Roboticist","Scientist",
+			"Head of Personnel","Chief Engineer","Research Director","Security Officer","Detective","Geneticist","Pathologist","Roboticist","Scientist",
 			"Medical Doctor","Quartermaster","Miner","Mechanic","Engineer","Chef","Bartender","Botanist","Janitor","Chaplain","Staff Assistant","No Access")
 			src.job_creator.access |= get_access(picker)
 			src.job_creator()

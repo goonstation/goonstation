@@ -59,7 +59,7 @@
 
 	var/list/leaders_possible = get_possible_leaders(num_teams)
 	if (num_teams > leaders_possible.len)
-		num_teams = leaders_possible.len
+		num_teams = length(leaders_possible)
 
 	if (!leaders_possible.len)
 		return 0
@@ -97,7 +97,7 @@
 		boutput(leaderMind.current, "<h1><font color=red>You are the leader of a gang!</font></h1>")
 		boutput(leaderMind.current, "<span class='alert'>You must recruit people to your gang and compete for wealth and territory!</span>")
 		boutput(leaderMind.current, "<span class='alert'>You can harm whoever you want, but be careful - the crew can harm gang members too!</span>")
-		boutput(leaderMind.current, "<span class='alert'>To set your gang's home turf and spawn your locker, use the Set Gang Base command. Make sure to pick somewhere safe, as your locker can be broken into and looted. You can only do this once!</span>")
+		boutput(leaderMind.current, "<span class='alert'>To set your gang's home turf and spawn your locker, use the Set Gang Base ability in the top left. Make sure to pick somewhere safe, as your locker can be broken into and looted. You can only do this once!</span>")
 		boutput(leaderMind.current, "<span class='alert'>Build up a stash of cash, guns and drugs. Use the items on your locker to store them.</span>")
 		boutput(leaderMind.current, "<span class='alert'>Use recruitment flyers obtained from the locker to invite new members, up to a limit of [current_max_gang_members].</span>")
 //		boutput(leaderMind.current, "<span class='alert'>Once all active gangs are at the current maximum size, the member cap will increase, up to an absolute maximum of [absolute_max_gang_members].</span>")
@@ -806,7 +806,7 @@
 	New()
 		..()
 		default_screen_overlay = image('icons/obj/large_storage.dmi', "gang_overlay_yellow")
-		overlays += default_screen_overlay
+		src.UpdateOverlays(default_screen_overlay, "screen")
 		buyable_items = list(
 			new/datum/gang_item/misc/ratstick,
 			new/datum/gang_item/ninja/throwing_knife,
@@ -948,25 +948,22 @@
 			boutput(user, "<span class='alert'>The locker's screen briefly displays the message \"Access Denied\".</span>")
 			overlay = image('icons/obj/large_storage.dmi', "gang_overlay_red")
 
-		src.overlays -= default_screen_overlay
-		src.overlays += overlay
+		src.UpdateOverlays(overlay, "screen")
 		SPAWN_DBG(1 SECOND)
-			src.overlays -= overlay
-			src.overlays += default_screen_overlay
+			src.UpdateOverlays(default_screen_overlay, "screen")
 
 	proc/update_icon()
-		src.overlays = null
-
 		if(health <= 0)
+			src.UpdateOverlays(null, "light")
+			src.UpdateOverlays(null, "screen")
 			return
 
-		src.overlays += default_screen_overlay
+		src.UpdateOverlays(default_screen_overlay, "screen")
 
 		if(gang.can_be_joined())
-			src.overlays += image('icons/obj/large_storage.dmi', "greenlight")
+			src.UpdateOverlays(image('icons/obj/large_storage.dmi', "greenlight"), "light")
 		else
-			src.overlays += image('icons/obj/large_storage.dmi', "redlight")
-		return
+			src.UpdateOverlays(image('icons/obj/large_storage.dmi', "redlight"), "light")
 
 	proc/insert_item(var/obj/item/item,var/mob/user)
 		if(!user)
@@ -1249,7 +1246,7 @@
 			boutput(target, "<span class='alert'>You're already in a gang, you can't switch sides!</span>")
 			return
 
-		if(target.mind.assigned_role in list("Security Officer","Vice Officer","Part-time Vice Officer","Head of Security","Captain","Head of Personnel","Communications Officer", "Medical Director", "Chief Engineer", "Research Director", "Detective", "Nanotrasen Security Operative"))
+		if(target.mind.assigned_role in list("Security Officer", "Security Assistant", "Vice Officer","Part-time Vice Officer","Head of Security","Captain","Head of Personnel","Communications Officer", "Medical Director", "Chief Engineer", "Research Director", "Detective", "Nanotrasen Security Operative"))
 			boutput(target, "<span class='alert'>You are too responsible to join a gang!</span>")
 			return
 

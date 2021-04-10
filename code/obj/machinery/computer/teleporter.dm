@@ -6,9 +6,9 @@
 	var/id = null
 	desc = "A computer that sets which beacon the connected teleporter attempts to create a portal to."
 
-	lr = 1
-	lg = 0.3
-	lb = 0.9
+	light_r =1
+	light_g = 0.3
+	light_b = 0.9
 
 /obj/machinery/computer/teleporter/New()
 	src.id = text("[]", rand(1000, 9999))
@@ -63,15 +63,14 @@
 	var/list/areaindex = list()
 
 	for_by_tcl(R, /obj/item/device/radio/beacon)
-		if (!istype(R, /obj/item/device/radio/beacon/jones))
-			var/turf/T = get_turf(R)
-			if (!T)	continue
-			var/tmpname = T.loc.name
-			if(areaindex[tmpname])
-				tmpname = "[tmpname] ([++areaindex[tmpname]])"
-			else
-				areaindex[tmpname] = 1
-			L[tmpname] = R
+		var/turf/T = get_turf(R)
+		if (!T)	continue
+		var/tmpname = T.loc.name
+		if(areaindex[tmpname])
+			tmpname = "[tmpname] ([++areaindex[tmpname]])"
+		else
+			areaindex[tmpname] = 1
+		L[tmpname] = R
 
 	for_by_tcl(I, /obj/item/implant/tracking)
 		if (!I.implanted || !ismob(I.loc))

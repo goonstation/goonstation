@@ -156,6 +156,12 @@
 /mob/living/silicon/proc/damage_mob(var/brute = 0, var/fire = 0, var/tox = 0)
 	return
 
+/mob/living/silicon/has_any_hands()
+	// no hands :(
+
+	// unless...
+	. = istype(src.equipped(), /obj/item/magtractor)
+
 /mob/living/silicon/put_in_hand(obj/item/I, hand)
 	if (!I) return 0
 	if (src.equipped() && istype(src.equipped(), /obj/item/magtractor))
@@ -171,7 +177,7 @@
 			var/obj/O = target
 			if(O.receive_silicon_hotkey(src)) return
 
-	var/inrange = in_range(target, src)
+	var/inrange = in_interact_range(target, src)
 	var/obj/item/equipped = src.equipped()
 	if (src.client.check_any_key(KEY_OPEN | KEY_BOLT | KEY_SHOCK | KEY_EXAMINE | KEY_POINT) || (equipped && (inrange || (equipped.flags & EXTRADELAY))) || istype(target, /turf) || ishelpermouse(target)) // slightly hacky, oh well, tries to check whether we want to click normally or use attack_ai
 		..()
@@ -485,10 +491,17 @@ var/global/list/module_editors = list()
 	else
 		return 1
 
-/mob/living/silicon/choose_name(var/retries = 3)
+/mob/living/silicon/choose_name(var/retries = 3, var/what_you_are = null, var/default_name = null, var/force_instead = 0)
 	var/newname
+	if(isnull(default_name))
+		default_name = src.real_name
 	for (retries, retries > 0, retries--)
-		newname = input(src, "You are a Robot. Would you like to change your name to something else?", "Name Change", src.real_name) as null|text
+		if(force_instead)
+			newname = default_name
+		else
+			newname = input(src, "You are a Robot. Would you like to change your name to something else?", "Name Change", default_name) as null|text
+			if(newname && newname != default_name)
+				phrase_log.log_phrase("name-cyborg", newname, no_duplicates=TRUE)
 		if (!newname)
 			src.real_name = borgify_name("Robot")
 			src.name = src.real_name

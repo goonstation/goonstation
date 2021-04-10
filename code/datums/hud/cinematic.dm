@@ -5,7 +5,7 @@
 		create_screen("bg", "", 'icons/mob/hud_common.dmi', "cinematic_bg", "1, 1 to NORTH, EAST", 98)
 		switch (name)
 			if ("nuke")
-				var/obj/screen/hud/anim = create_screen("cinematic", "", 'icons/effects/station_explosion.dmi', "start_nuke", "1:6, 1:50", 99)
+				var/atom/movable/screen/hud/anim = create_screen("cinematic", "", 'icons/effects/station_explosion.dmi', "start_nuke", "1:6, 1:50", 99)
 				clients << sound('sound/misc/airraid_loop_short.ogg')
 				SPAWN_DBG(3.5 SECONDS)//45)
 					anim.icon_state = "explode"
@@ -16,7 +16,7 @@
 					/*sleep(7 SECONDS)
 					del(src)*/
 			if ("malf")
-				var/obj/screen/hud/anim = create_screen("cinematic", "", 'icons/effects/station_explosion.dmi', "start_malf", "1:6, 1:50", 99)
+				var/atom/movable/screen/hud/anim = create_screen("cinematic", "", 'icons/effects/station_explosion.dmi', "start_malf", "1:6, 1:50", 99)
 				SPAWN_DBG(3.5 SECONDS)//45)
 					anim.icon_state = "explode"
 					sleep(1 SECOND)

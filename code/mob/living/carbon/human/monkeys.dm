@@ -85,11 +85,21 @@
 	real_name = "Oppenheimer"
 	gender = "male"
 	ai_offhand_pickup_chance = 40 // went through training as a spy thief, skilled at snatch- wait, I'm getting a feeling of deja vu
+	ai_aggressive = TRUE
+	ai_calm_down = FALSE
+	ai_default_intent = INTENT_HARM
+	ai_aggression_timeout = 0
+
 	New()
 		..()
 		SPAWN_DBG(1 SECOND)
 			src.equip_new_if_possible(/obj/item/clothing/suit/space/syndicate, slot_wear_suit)
 			src.equip_new_if_possible(/obj/item/clothing/head/helmet/space, slot_head)
+
+	ai_is_valid_target(mob/M)
+		if(!isliving(M) || !isalive(M))
+			return FALSE
+		return !istype(M.get_id(), /obj/item/card/id/syndicate)
 
 /mob/living/carbon/human/npc/monkey/horse
 	name = "????"
@@ -163,6 +173,12 @@
 		STOP_TRACKING
 		..()
 
+	initializeBioholder()
+		if (src.name == "monkey" || !src.name)
+			randomize_look(src, 1, 1, 1, 0, 1, 0)
+			src.gender = src.bioHolder?.mobAppearance.gender
+		. = ..()
+
 	ai_action()
 		if(ai_aggressive)
 			return ..()
@@ -210,6 +226,7 @@
 		if(ismonkey(T) && T:ai_active && prob(90))
 			return ..()
 		//src.ai_aggressive = 1
+		var/aggroed = src.ai_state != AI_ATTACKING
 		src.target = T
 		src.ai_state = AI_ATTACKING
 		src.ai_threatened = world.timeofday
@@ -234,6 +251,8 @@
 			pals ++
 			if (prob(40))
 				src.emote("scream")
+		if(aggroed)
+			walk_towards(src, ai_target, ai_movedelay)
 
 	proc/shot_by(var/atom/A as mob|obj)
 		if (src.ai_state == AI_ATTACKING)
@@ -248,7 +267,7 @@
 	proc/done_with_you(var/atom/T as mob|obj)
 		if (!T)
 			return 0
-		if (src.health <= 0 || (get_dist(src, T) >= 7))
+		if (src.health <= 0 || (get_dist(src, T) >= 11))
 			if(src.health <= 0)
 				src.ai_state = AI_FLEEING
 			else
@@ -504,6 +523,7 @@
 	name = "sea monkey"
 	max_health = 150
 	static_type_override = /datum/mutantrace/monkey/seamonkey
+	ai_useitems = FALSE // or they eat all the floor pills and die before anyone visits
 
 	New()
 		..()

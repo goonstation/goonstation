@@ -244,6 +244,13 @@
 	cookbonus = 16
 	output = /obj/item/reagent_containers/food/snacks/spaghetti/meatball
 
+/datum/cookingrecipe/lasagna
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/pasta/sheet
+	item2 = /obj/item/reagent_containers/food/snacks/condiment/ketchup
+	item3 = /obj/item/reagent_containers/food/snacks/ingredient/cheese
+	cookbonus = 16
+	output = /obj/item/reagent_containers/food/snacks/lasagna
+
 /datum/cookingrecipe/spaghetti_pg
 	item1 = /obj/item/reagent_containers/food/snacks/ingredient/spaghetti
 	item2 = /obj/item/reagent_containers/food/snacks/condiment/ketchup
@@ -756,6 +763,13 @@
 	output = /obj/item/reagent_containers/food/drinks/eggnog
 
 //Cookies
+/datum/cookingrecipe/stroopwafel
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough_cookie
+	amt1 = 2
+	item2 = /obj/item/reagent_containers/food/snacks/condiment/syrup
+	cookbonus = 4
+	output = /obj/item/reagent_containers/food/snacks/stroopwafel
+
 /datum/cookingrecipe/cookie
 	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough_cookie
 	cookbonus = 4
@@ -1073,6 +1087,34 @@
 	cookbonus = 15
 	output = /obj/item/reagent_containers/food/snacks/pie/ass
 
+/datum/cookingrecipe/pie_chocolate
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough_s
+	item2 = /obj/item/reagent_containers/food/snacks/candy
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/butter
+	cookbonus = 10
+	output = /obj/item/reagent_containers/food/snacks/pie/chocolate
+
+/datum/cookingrecipe/pot_pie
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough_s
+	item2 = /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget
+	item3 = /obj/item/reagent_containers/food/snacks/plant/carrot
+	cookbonus = 12
+	output = /obj/item/reagent_containers/food/snacks/pie/pot
+
+/datum/cookingrecipe/pie_weed
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough_s
+	item2 = /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget
+	item3 = /obj/item/plant/herb/cannabis
+	cookbonus = 12
+	output = /obj/item/reagent_containers/food/snacks/pie/weed
+
+/datum/cookingrecipe/pie_fish
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough_s
+	item2 = /obj/item/reagent_containers/food/snacks/ingredient/meat/fish
+	item3 = /obj/item/reagent_containers/food/snacks/plant/potato
+	cookbonus = 10
+	output = /obj/item/reagent_containers/food/snacks/pie/fish
+
 /datum/cookingrecipe/custard
 	item1 = /obj/item/reagent_containers/food/drinks/milk
 	item2 = /obj/item/reagent_containers/food/snacks/ingredient/egg
@@ -1170,32 +1212,38 @@
 	item2 = /obj/item/reagent_containers/food/snacks/ingredient/egg
 	amt2 = 2
 	cookbonus = 10
-	output = /obj/item/reagent_containers/food/snacks/cake/batter
+	output = /obj/item/reagent_containers/food/snacks/cake_batter
 
 /datum/cookingrecipe/cake_cream
-	item1 = /obj/item/reagent_containers/food/snacks/cake/batter
+	item1 = /obj/item/reagent_containers/food/snacks/cake_batter
 	item2 = /obj/item/reagent_containers/food/snacks/condiment/cream
 	cookbonus = 14
 	output = /obj/item/reagent_containers/food/snacks/cake/cream
 
 /datum/cookingrecipe/cake_chocolate
-	item1 = /obj/item/reagent_containers/food/snacks/cake/batter
+	item1 = /obj/item/reagent_containers/food/snacks/cake_batter
 	item2 = /obj/item/reagent_containers/food/snacks/candy
 	cookbonus = 14
 	output = /obj/item/reagent_containers/food/snacks/cake/chocolate
 
 /datum/cookingrecipe/cake_meat
-	item1 = /obj/item/reagent_containers/food/snacks/cake/batter
+	item1 = /obj/item/reagent_containers/food/snacks/cake_batter
 	item2 = /obj/item/reagent_containers/food/snacks/ingredient/meat/
 	cookbonus = 14
 	output = /obj/item/reagent_containers/food/snacks/cake/meat
 
 /datum/cookingrecipe/cake_bacon
-	item1 = /obj/item/reagent_containers/food/snacks/cake/batter
+	item1 = /obj/item/reagent_containers/food/snacks/cake_batter
 	item2 = /obj/item/reagent_containers/food/snacks/ingredient/meat/bacon
 	amt2 = 3
 	cookbonus = 14
 	output = /obj/item/reagent_containers/food/snacks/cake/bacon
+
+/datum/cookingrecipe/cake_true_bacon
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/meat/bacon
+	amt1 = 7
+	cookbonus = 14
+	output = /obj/item/reagent_containers/food/snacks/cake/true_bacon
 
 #ifdef XMAS
 
@@ -1209,7 +1257,7 @@
 		if (!ourCooker)
 			return null
 
-		var fruitcake = new /obj/item/reagent_containers/food/snacks/cake/fruit
+		var/fruitcake = new /obj/item/reagent_containers/food/snacks/fruit_cake
 		playsound(ourCooker.loc, "sound/effects/splat.ogg", 50, 1)
 
 		return fruitcake
@@ -1217,32 +1265,39 @@
 #endif
 
 /datum/cookingrecipe/cake_custom
-	item1 = /obj/item/reagent_containers/food/snacks/cake/batter
+	item1 = /obj/item/reagent_containers/food/snacks/cake_batter
 	cookbonus = 14
 	output = null
 
 	specialOutput(var/obj/submachine/ourCooker)
-		if (!ourCooker)
+		if(!ourCooker)
 			return null
 
-		var/obj/item/reagent_containers/food/snacks/cake/batter/docakeitem = locate() in ourCooker.contents
-		if (!istype( docakeitem ))
-			return null
+		var/obj/item/reagent_containers/food/snacks/cake_batter/docakeitem = locate() in ourCooker.contents
 
-		var/obj/item/reagent_containers/food/snacks/S = docakeitem.custom_item
-		var/obj/item/reagent_containers/food/snacks/cake/custom/B = new /obj/item/reagent_containers/food/snacks/cake/custom(ourCooker)
-		B.food_color = S ? S.food_color : "#F0F0F0"
-		B.update_icon(0)
-		if (S)
+		var/obj/item/reagent_containers/food/snacks/S
+		if(docakeitem.custom_item)
+			S = docakeitem.custom_item
+		var/obj/item/reagent_containers/food/snacks/cake/B = new /obj/item/reagent_containers/food/snacks/cake(ourCooker)
+		var/image/overlay = new /image('icons/obj/foodNdrink/food_dessert.dmi',"cake1-base_custom")
+		B.food_color = S ? S.food_color : "#CC8555"
+		overlay.color = B.food_color
+		overlay.alpha = 255
+		B.UpdateOverlays(overlay,"first")
+		B.cake_bases = list("base_custom")
+		if(S)
 			S.reagents.trans_to(B, 50)
 			B.food_effects += S.food_effects
 			if(S.real_name)
 				B.name = "[S.real_name] cake"
-
+				for(var/food_effect in S.food_effects)
+					if(food_effect in B.food_effects)
+						continue
+					B.food_effects += food_effect
 			else
 				B.name = "[S.name] cake"
 		else
-			B.name = "[rand(50) ? "yellow" : "white"] cake"
+			B.name = "plain cake"
 
 		B.desc = "Mmm! A delicious-looking [B.name]!"
 		return B
@@ -1267,7 +1322,7 @@
 		return B
 
 /datum/cookingrecipe/mix_cake_custom
-	item1 = /obj/item/reagent_containers/food/snacks/cake/batter
+	item1 = /obj/item/reagent_containers/food/snacks/cake_batter
 	amt1 = 1
 	output = null
 
@@ -1279,24 +1334,11 @@
 			if (istype(I, item1))
 				continue
 			else if (istype(I,/obj/item/reagent_containers/food/snacks/))
-				/*
-				var/obj/item/reagent_containers/food/snacks/S = I
-				var/obj/item/reagent_containers/food/snacks/cake/custom/B = new /obj/item/reagent_containers/food/snacks/cake/custom(src.loc)
-				B.food_color = S.food_color
-				B.update_icon(0)
-				S.reagents.trans_to(B, 50)
-				if(S.real_name)
-					B.name = "[S.real_name] cake"
-
-				else
-					B.name = "[S.name] cake"
-				B.desc = "Mmm! A delicious-looking [B.name]!"
-				*/
-				var/obj/item/reagent_containers/food/snacks/cake/batter/batter = new
+				var/obj/item/reagent_containers/food/snacks/cake_batter/batter = new
 
 				batter.custom_item = I
 				I.set_loc(batter)
-				batter.name = "uncooked [I:real_name ? I:real_name : I.name] cake"
+				batter.name = "[I:real_name ? I:real_name : I.name] cake batter"
 				for (var/obj/M in ourCooker.contents)
 					qdel(M)
 

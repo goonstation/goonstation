@@ -239,6 +239,11 @@
 	<br>The \"set rgb\" Input takes a Color in the HTML Color Code Format, for Example: #FF1200 .
 	<br>
 	<br>
+	<br><B>Letter Display Component:</B>
+	<br>Displays a single letter from the input signal.
+	<br>Set the letter index to choose which letter is displayed.  For example, if the letter index is 2, and an input signal of "Hello" arrives, "E" will be displayed.
+	<br>
+	<br>
 	<br><B>Microphone Component:</B>
 	<br>Forwards nearby speech as signal.
 	<br>The "Toggle Show-Source" option determines whether the component adds the source's name to the signal or not.
@@ -311,11 +316,6 @@
 	<br><B>Wifi Signal Splitter Component:</B>
 	<br>Returns the value of a field within a Radio signal. The components Trigger Field is the Field you want the Value of.
 	<br>For example: Set the Trigger Field to \"user_id\". When a Signal with \"user_id=captain\" arrives the Component forwards \"captain\"
-	<br>
-	<br>
-	<br><B>Letter Display Component:</B>
-	<br>Displays a single letter from the input signal.
-	<br>Set the letter index to choose which letter is displayed.  For example, if the letter index is 2, and an input signal of "Hello" arrives, "E" will be displayed.
 	<br>
 	<br>
 	"}
@@ -922,8 +922,8 @@
 	"}
 
 /obj/item/paper/book/monster_manual
-	name = "Creature Conspectus"
-	desc = "A large book detailing many creatures of myth and legend. Nerds."
+	name = "Creature Conspectus Original Edition"
+	desc = "A large book detailing many creatures of myth and legend. Wait a minute, there's only 2 entries! What a scam."
 	icon_state = "book3"
 
 	info = {"
@@ -973,6 +973,138 @@
 	<hr>
 "}
 
+/obj/item/paper/book/monster_manual_revised
+	name = "Creature Conspectus Revised Edition"
+	desc = "A large book detailing many creatures of myth and legend for the tabletop RPG, Stations and Syndicates."
+	icon_state = "book3"
+
+	info = {"
+<body>
+<h2>Note for the Game Master</h2>
+<p>This bestiary is written to be flexible. As such, feel free to consider the stats as pure guidelines. If you think a creature is too strong, feel free to lower its stats. Same applies vice versa. Certain details have been omitted, for example the saving throws listed in monster abilities are absent to allow the GM to tweak them at will. Vulnerabilities are also open to interpretation.
+<hr>
+<p>
+
+<b>Killer Tomato</b><br>
+Type : Plant<br>
+Size : Small<br>
+DC To Hit : 5<br>
+Resolve : 1<br>
+Damage per attack : 1 (Bite)<br>
+Vulnerability : Slashing / Blunt<br>
+<br>
+<b>Messy Death</b><br>
+<i>On death, the creature's body will splash its boiling inner fluids in a random direction, dealing one resolve damage.</i><br>
+<br>
+
+<b>Maneater plant</b><br>
+Type : Plant<br>
+Size : Medium<br>
+DC To Hit : 9<br>
+Resolve : 3<br>
+Damage per attack : 2 (Vine Whip / Bite)<br>
+Vulnerability : Fire<br>
+<br>
+<b>False Appearance</b><br>
+<i>While this plant remains motionless, it is indistinguishable from a normal shrub.</i>
+<br>
+<br>
+<b>Space Bear</b><br>
+Type : Beast<br>
+Size : Large<br>
+DC To Hit : 12<br>
+Resolve : 6<br>
+Damage per attack : 3 (Claw Swipe)<br>
+Vulnerability : Slashing<br>
+<br>
+<b>Ferocious Roar</b><br>
+<i>This creature lets out a deafening roar. Every target within close hearing range must roll a Constitution saving throw or be petrified and miss one turn.</i><br>
+<br>
+<b>Wendigo</b><br>
+Type : Beast<br>
+Size : Large<br>
+DC To Hit : 15<br>
+Resolve : 10<br>
+Damage Per Attack : 5 (Claw Swipe)<br>
+Vulnerability : Fire<br>
+<br>
+<b>Ferocious Roar</b><br>
+<i>This creature lets out a deafening roar. Every target within close hearing range must roll a Constitution saving throw or be petrified and miss one turn.</i><br>
+<br>
+<b>Zombie</b><br>
+Type : Undead<br>
+Size : Medium<br>
+DC To Hit : 10<br>
+Resolve : 4<br>
+Damage Per Attack : 1 (Flailing Punch)<br>
+Vulnerability : Holy<br>
+<br>
+<b>Zombie Bite</b><br>
+<i>The zombie lunges straight at you! When an undead latches onto its target, the target must make a Strength saving throw to throw the zombie off. If the target fails, the zombie will bite into them, dealing 1 resolve and healing 1 resolve on the zombie</i><br>
+<br>
+
+<b>Syndicate Agent</b><br>
+Type : Human<br>
+Size : Medium<br>
+DC To Hit : 15<br>
+Resolve : 15<br>
+Damage per attack : 5 (Revolver Fire)<br>
+Vulnerability : Blunt <br>
+<br>
+<b>Microbomb Implant</b><br>
+<i>On death, the creature will explode, damaging anyone in range for 5 resolve.</i>
+<br>
+
+</p>
+</body>
+"}
+
+/obj/item/paper/book/DNDrulebook
+	name = "Stations and Syndicates 8th Edition Rulebook"
+	desc = "A book detailing the ruleset for the tabletop RPG, Stations and Syndicates. You don't know what happened to the previous 7 editions but maybe its probably not worth looking for them."
+	icon_state = "bookcc"
+
+	info = {"
+<body>
+<h2>Character Creation</h2>
+<hr>
+<p>
+<br>1 – Select your race as well as a job assignment appropriate to the setting of your session. Job assignments can be provided by your GM
+<br><b>Human/Lizard/Skeleton/Squid/Cow/Monkey</b>
+<br>
+<br>2 – Rank your attributes.<br>
+Apply one of each of the following modifiers to an attribute listed below.
+<br><b>+3, +2, +1, 0, -1, -2</b>
+<br><b>Strength, Dexterity, Constitution, Intelligence, Wisdom, Charisma.</b>
+<br>
+<br>3 – Rank your archetypes.
+<br>These are skills corresponding to your attributes. Apply one of each of the modifiers to an attribute, just as you did above.
+<b>Fighter, Rogue, Explorer, Sage, Artist, Diplomat.</b>
+<br>
+<br>4 – Give yourself 10 points of resolve. How resolve works is explained in “Playing the game”
+<br>
+<br>5 – Choose a name and appearance.
+<br>
+<br>6 – Start with whatever basic gear makes sense for your race and job assigment.<br>
+<br>Basic gear identifies as a set or a collection of minor tools or items. For example, someone with a engineering assignment could possess a belt of tools, fire extinguisher and similar items. The plausability and limit of what items you could possess should be consulted with your GM.
+
+<h2>Playing The Game</h2>
+<hr>
+<p>
+<br>1 – Start a quest<br>
+<br>2 – To take an action, describe what you want to do and then – if the GM asks – make a success check. If you fail, the GM can make a reaction against you.<br>
+<br><b>Success Check or Reaction = 1d20 +  Attribute +  Archetype vs Difficulty Class</b><br>
+<br>3 – If something attacks or acts against you, make a success check to defend.<br>
+<br>4 – If you suffer harm, you lose 1 resolve. If you deal harm, your target loses 1 resolve.<br>
+<br>5 – You can spend 1 resolve to roll with advantage or attempt an extraordinary feat.<br>
+<br>6 – If you have 0 resolve, you are knocked out. You gain 1 resolve when you finish a long rest.<br>
+<br>7 – You can carry 3 significant items at once.<br>
+<br>8 – When the quest is resolved, the game ends! If you survive, gain a perk. Choose either +1  Attribute point, +1 Archetype point or +1 maximum resolve.<br>
+
+This ruleset is entirely based upon the Quick Quest system, with minor changes. The source material is made by GiffyGlyph, which can be found <a href="https://giffyglyph.com/quickquest" target="_blank">here</a>.
+</p>
+"}
+
 /obj/item/diary
 	name = "Beepsky's private journal"
 	icon = 'icons/obj/writing.dmi'
@@ -988,7 +1120,7 @@
 	examine(mob/user)
 		if (!issilicon(user))
 			. = list("What...what is this? It's written entirely in barcodes or something, cripes. You can't make out ANY of this.")
-			var/mob/living/carbon/jerk = usr
+			var/mob/living/carbon/jerk = user
 			if (!istype(jerk))
 				return
 
@@ -2680,6 +2812,11 @@ I'm being taken somewhere. I can feel it. Piece by piece, particle by particle, 
 	For certain crimes, the accused's intent is important. The difference between Assault and Attempted Murder can be very hard to ascertain, and, when in doubt, you should default to the less serious crime. It is important to note though, that Assault and Attempted Murder are mutually exclusive. You cannot be charged with Assault and Attempted Murder from the same crime as the intent of each is different. Likewise, 'Assault With a Deadly Weapon' and 'Assaulting an Officer' are also crimes that exclude others. Pay careful attention to the requirements of each law and select the one that best fits the crime when deciding sentence.<br><br>
 	Security roles and their superiors can read the Miranda warning to suspects by using the Recite Miranda Rights verb or *miranda emote. The wording is also customizable via Set Miranda Rights.<br><br>
 	Additionally: It is <b><i>highly illegal</i></b> for Nanotrasen personnel to make use of Syndicate devices. Do not use traitor gear as a non-traitor, even to apprehend traitors.<hr>
+
+As a Security Assistant, generally the same principles apply to you, but with half of the responsibility. Your primary role is to assist the Security team in the best way you can, whether that be in sorting out Security records, wardening any prisoners being held in the brig or manning the security cameras. Despite what your fellow officers might tell you, supplying the Security team with alcohol is NOT within your role expectation and should NOT be done while on duty.<br><br>
+In the case of conflict arising, either between two crew members, the crew and Security or antagonistic forces against the station, you are advised to tactically retreat and reconvene with your team in order to tackle the issue together. Do not attempt to handle these yourself. The equipment you are given is to serve you purely in the case of supporting the team and if worse comes to worst, in the case of self-defence. As such, leave the responsibility of performing arrests and takedowns to the Security officers. Better to catch a criminal another day than to lose a team mate.<br><br>
+On that note, CentComm would like to remind trainees that they do not recieve cloning data disks or health implants and as such, your health and safety is entirely your responsibility. Thank you for your understanding.<br><br>
+
 	Here's a guideline for how you should probably treat suspects by each particular crime.
 	<h4>Minor Crimes:</h4>
 	<i>No suspect may be sentenced for more than five minutes in the Brig for Minor Crimes. Minor Crime sentences are not cumulative (e.g: max five minutes for committing multiple Minor Crimes).</i>
@@ -3413,6 +3550,64 @@ soon the light of the unwaking will rise and the shining ones will not be prepar
 		if (voidMessage)
 			boutput(wearer, "[voidMessage]")
 		return
+
+/obj/item/paper/book/from_file
+	var/file_path = null
+
+	New()
+		..()
+		if(isnull(src.file_path))
+			CRASH("from_file book has no file path")
+		src.info = file2text(src.file_path)
+
+/obj/item/paper/from_file
+	var/file_path = null
+
+	New()
+		..()
+		if(isnull(src.file_path))
+			CRASH("from_file paper has no file path")
+		src.info = file2text(src.file_path)
+
+/obj/item/paper/book/from_file/ai_programming_101
+	name = "AI Programming 101"
+	icon_state = "cyanbook"
+	file_path = "strings/books/ai_programming_101.txt"
+
+/obj/item/paper/book/from_file/captaining_101
+	name = "Captaining 101"
+	icon_state = "greenbook"
+	file_path = "strings/books/captaining_101.txt"
+
+/obj/item/paper/book/from_file/commanders_diary
+	name = "Commander's Diary"
+	icon_state = "redbook"
+	file_path = "strings/books/commanders_diary.txt"
+
+/obj/item/paper/book/from_file/dealing_with_clonelieness
+	name = "Dealing With Clonelieness"
+	icon_state = "cyanbook"
+	file_path = "strings/books/dealing_with_clonelieness.txt"
+
+/obj/item/paper/book/from_file/elective_prosthetics_for_dummies
+	name = "Elective Prosthetics for Dummies"
+	icon_state = "whitebook"
+	file_path = "strings/books/elective_prosthetics_for_dummies.txt"
+
+/obj/item/paper/book/from_file/fun_facts_about_shelterfrogs
+	name = "Fun Facts About Shelterfrogs"
+	icon_state = "greenbook"
+	file_path = "strings/books/fun_facts_about_shelterfrogs.txt"
+
+/obj/item/paper/book/from_file/syndies_guide
+	name = "A SYNDIE'S GUIDE TO DOING YOUR FUCKING JOB"
+	icon_state = "redbook"
+	file_path = "strings/books/syndies_guide.txt"
+
+/obj/item/paper/book/from_file/teg_guide
+	name = "Thermo-electric Power Generation"
+	icon_state = "yelbook"
+	file_path = "strings/books/teg_guide.txt"
 
 /obj/item/paper/book/custom //custom book parent, just to avoid cluttering up normal books
 	var/custom_cover = 0 //if 1, goes thru with the build custom icon process

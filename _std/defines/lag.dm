@@ -4,41 +4,59 @@
 #define MIN_DELETE_CHUNK_SIZE 1
 #define MAX_DELETE_CHUNK_SIZE 100
 
-//lagcheck stuff
-#ifdef SPACEMAN_DMM
-#define LAGCHECK(x) // this is wrong and bad, but it'd be way too much effort to remove lagchecks from everything :/
+//close only counts in horseshoes and byond
+#define EXTRA_TICK_SPACE 2
+
+#if DM_VERSION >= 514
+#define APPROX_TICK_USE (world.tick_usage + world.map_cpu + EXTRA_TICK_SPACE)
 #else
-#define LAGCHECK(x) if (lagcheck_enabled && world.tick_usage > x) sleep(world.tick_lag)
+#define APPROX_TICK_USE (world.tick_usage + EXTRA_TICK_SPACE)
+#endif
+
+//lagcheck stuff
+#ifndef SPACEMAN_DMM
+#define LAGCHECK(x) if (lagcheck_enabled && APPROX_TICK_USE > x) sleep(world.tick_lag)
+#else
+#define LAGCHECK(x) // this is wrong and bad, but it'd be way too much effort to remove lagchecks from everything :/
 #endif
 
 //for light queue - when should we queue? and when should we pause processing our dowork loop?
 #define LIGHTING_MAX_TICKUSAGE 90
 
-//lag levels
-#define LAG_LOW 13
-#define LAG_MED 20
-#define LAG_HIGH 40
-#define LAG_REALTIME 66
+//LAGCHECK parameter levels. "when the tick is this% complete, sleep here."
+//lower numbers will sleep more often, and should be used for lower priority tasks.
+//higher numbers will sleep less often, and should be used for high priority tasks.
+#define LAG_LOW 90
+#define LAG_MED 90
+#define LAG_HIGH 90
+#define LAG_REALTIME 90
 
 /// Waits until a given condition is true, tg-style async
 #define UNTIL(X) while(!(X)) sleep(1)
 
-//ticklag stuff
+//ticklag stuff. code lives in gameticker's process() in datums/gameticker.dm
 #define TIME_DILATION_ENABLED 1
 /// min value ticklag can be
 #define MIN_TICKLAG 0.4
 /// max value ticklag can be
-#define OVERLOADED_WORLD_TICKLAG 1
+#define OVERLOADED_WORLD_TICKLAG 1.4
 /// how ticklag much to increase by when appropriate
 #define TICKLAG_DILATION_INC 0.2
 /// how much to decrease by when appropriate //MBCX I DONT KNOW WHY BUT MOST VALUES CAUSE ROUNDING ERRORS, ITS VERY IMPORTANT THAT THIS REMAINS 0.2 FIOR NOW
 #define TICKLAG_DILATION_DEC 0.2
-#define TICKLAG_DILATION_THRESHOLD 5 // these values dont make sense to you? read the math in gameticker
-#define TICKLAG_NORMALIZATION_THRESHOLD 0.3 // these values dont make sense to you? read the math in gameticker
+/// what map_cpu percent is too high in the dilation check
+#define TICKLAG_MAPCPU_MAX 70
+/// what map_cpu percent is low enough in the dilation check
+#define TICKLAG_MAPCPU_MIN 55
+/// number of times the dilation check needs to see lag in a row to slow down the ticker
+#define TICKLAG_INCREASE_THRESHOLD 5
+/// number of times to see no lag in a row to speed up the ticker
+#define TICKLAG_DECREASE_THRESHOLD 10
+/// how often to check for time dilation, against world.time, so counted in game ticks.
 #define TICKLAG_DILATE_INTERVAL 20
 
 /// when pcount is above this number on round start, increase ticklag to OVERLOADED_WORLD_TICKLAG to try to maintain smoothness
-#define OVERLOAD_PLAYERCOUNT 95
+#define OVERLOAD_PLAYERCOUNT 120
 /// when pcount is above this number on game load, dont generate lighting surrounding the station because it lags the map to heck
 #define OSHAN_LIGHT_OVERLOAD 18
 /// whenn pcount is >= this number, slow Life() processing a bit

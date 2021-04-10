@@ -5212,7 +5212,7 @@
 	pixel_x = -6;
 	pixel_y = 8
 	},
-/obj/item/reagent_containers/food/snacks/donut/frosted{
+/obj/item/reagent_containers/food/snacks/donut/custom/frosted{
 	pixel_x = 7;
 	pixel_y = -6
 	},
@@ -5679,7 +5679,7 @@
 "amU" = (
 /obj/table/reinforced/auto,
 /obj/machinery/cashreg,
-/obj/item/postit_stack,
+/obj/item/item_box/postit,
 /obj/cable{
 	d1 = 1;
 	d2 = 2;
@@ -8023,10 +8023,7 @@
 	p_open = 1
 	},
 /obj/item/plate,
-/obj/item/reagent_containers/food/snacks/cake/chocolate{
-	desc = "Holy shit! This cake probably costs more than the gross domestic product of Bulgaria!";
-	name = "Extravagant Chocolate Gateau"
-	},
+/obj/item/reagent_containers/food/snacks/cake/chocolate/gateau,
 /obj/machinery/door/firedoor/pyro{
 	dir = 4
 	},
@@ -11443,7 +11440,7 @@
 /obj/storage/secure/crate/plasma/armory/anti_biological{
 	req_access = null
 	},
-/obj/item/flamethrower/assembled/loaded,
+/obj/item/gun/flamethrower/assembled/loaded,
 /obj/access_spawn/sec_lockers,
 /turf/simulated/floor/bot,
 /area/station/security/brig)
@@ -13123,7 +13120,7 @@
 /obj/table/reinforced/bar/auto,
 /obj/item/plate,
 /obj/item/kitchen/utensil/spoon,
-/obj/item/card_box/suit,
+/obj/item/card_box/plain,
 /turf/simulated/floor/specialroom/bar/edge,
 /area/station/crew_quarters/cafeteria)
 "aDd" = (
@@ -19550,7 +19547,7 @@
 /obj/machinery/light/emergency{
 	dir = 1
 	},
-/obj/item/postit_stack,
+/obj/item/item_box/postit,
 /turf/simulated/floor/black,
 /area/station/bridge)
 "aPN" = (
@@ -21725,7 +21722,7 @@
 /obj/stool/chair/comfy{
 	dir = 4
 	},
-/obj/item/card_box/suit,
+/obj/item/card_box/plain,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/jazz)
 "aUE" = (
@@ -26815,7 +26812,7 @@
 	tag = ""
 	},
 /obj/item/stamp,
-/obj/item/postit_stack,
+/obj/item/item_box/postit,
 /obj/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/security/checkpoint)
@@ -27668,7 +27665,9 @@
 /turf/simulated/floor/plating,
 /area/space)
 "bgH" = (
-/obj/displaycase,
+/obj/displaycase{
+	displayed = new /obj/item/captaingun
+},
 /obj/window/reinforced{
 	dir = 2
 	},
@@ -45186,7 +45185,7 @@
 /obj/item/clipboard,
 /obj/item/device/radio/headset/engineer,
 /obj/item/device/radio/headset/engineer,
-/obj/item/postit_stack,
+/obj/item/item_box/postit,
 /turf/simulated/floor/yellow/side{
 	dir = 8
 	},
@@ -56878,7 +56877,7 @@
 	},
 /obj/table/glass/auto,
 /obj/random_item_spawner/desk_stuff,
-/obj/item/card_box/suit,
+/obj/item/card_box/plain,
 /turf/simulated/floor/escape,
 /area/station/hallway/secondary/exit)
 "cnJ" = (
@@ -59602,7 +59601,7 @@
 /obj/machinery/networked/printer{
 	print_id = "Information"
 	},
-/obj/item/postit_stack{
+/obj/item/item_box/postit{
 	pixel_x = 5;
 	pixel_y = 3
 	},
@@ -64032,7 +64031,7 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
-/obj/item/postit_stack,
+/obj/item/item_box/postit,
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/head)
 "cCJ" = (

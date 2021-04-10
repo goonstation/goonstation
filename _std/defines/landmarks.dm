@@ -45,6 +45,10 @@
 #define LANDMARK_BIGBOOM "bigboom" // unfinished Manta event
 #define LANDMARK_TUTORIAL_START "tutorial_start_marker"
 #define LANDMARK_CRUISER_ENTRANCE "cruiser_entrance"
+// loading screen maptext landmarks
+#define LANDMARK_LOBBY_LEFTSIDE "lobby_leftside"
+#define LANDMARK_LOBBY_STATUS "lobby_status"
+#define LANDMARK_LOBBY_TIMER "lobby_timer"
 
 // VR networks
 
@@ -55,6 +59,7 @@
 
 // falling down holes
 
+#define LANDMARK_FALL_DEBUG "pit_debug" // locations to fall if you fucked up the warptarget on a hole_xy
 #define LANDMARK_FALL_ICE "icefall" // locations for people to fall if they enter the deep abyss on the ice moon
 #define LANDMARK_FALL_POLARIS "polarisfall" // locations for people to fall if they enter the deep in the trench
 #define LANDMARK_FALL_MARJ "marjfall" // locations for people to fall if they enter the deep in the trench

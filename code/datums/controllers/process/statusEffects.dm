@@ -21,7 +21,7 @@ datum/controller/process/statusEffects
 
 		var/list/notifyUiUpdate = list() //List of objects that need to update their status ui.
 
-		for (var/datum/statusEffect/S as() in globalStatusInstances)
+		for (var/datum/statusEffect/S as anything in globalStatusInstances)
 			if(S == null) continue
 			if(S.owner)
 				S.onUpdate(actual)
@@ -31,11 +31,11 @@ datum/controller/process/statusEffects
 						if(S.owner)
 							S.owner.delStatus(S)
 					else
-						if(!notifyUiUpdate.Find(S.owner))
+						if(!(S.owner in notifyUiUpdate))
 							notifyUiUpdate.Add(S.owner)
 				else
 					//if it's a permanent one, you can still update the icon
-					if(!notifyUiUpdate.Find(S.owner))
+					if(!(S.owner in notifyUiUpdate))
 						notifyUiUpdate.Add(S.owner)
 			else
 				logTheThing("debug", null, null, "Deleting orphaned status effect - type:[S.type], duration:[S.duration], OwnerInfo(was):[S.archivedOwnerInfo]")
@@ -43,7 +43,7 @@ datum/controller/process/statusEffects
 					S.onRemove()
 				catch()
 					logTheThing("debug", null, null, "Orphaned onRemove failed - type:[S.type]")
-				if(globalStatusInstances.Find(S)) globalStatusInstances.Remove(S)
+				globalStatusInstances -= S
 
 		for(var/atom/A in notifyUiUpdate)
 			SPAWN_DBG(0) if(A?.statusEffects) A.updateStatusUi()

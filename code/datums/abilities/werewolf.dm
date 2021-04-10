@@ -97,7 +97,7 @@
 
 			M.visible_message("<span class='alert'><B>[M] [pick("metamorphizes", "transforms", "changes")] into a werewolf! Holy shit!</B></span>")
 			if (M.find_ailment_by_type(/datum/ailment/disease/lycanthropy))
-				boutput(M, "<span class='notice'><h3>You are now a werewolf.</span></h3>")
+				boutput(M, "<span class='alert'><h2>You've been turned into a werewolf!</h2> Your transformation was achieved by in-game means, you are <i>not</i> an antagonist unless you already were one.</span>")
 			else
 				boutput(M, "<span class='notice'><h3>You are now a werewolf. You can remain in this form indefinitely or change back at any time.</span></h3>")
 
@@ -324,6 +324,21 @@
 			playsound(src.loc, "sound/items/eatfood.ogg", 50, 1, -1)
 			if (prob(40))
 				playsound(target.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
+			if (prob(60) && ishuman(target))
+				var/mob/living/carbon/human/H = target
+				//These are the non-essential organs. no brain, skull heart. I guess liver is kinda essential, but idk.
+				var/list/choosable_organs = list("left_lung", "right_lung", "butt", "left_kidney", "right_kidney", "liver", "stomach", "intestines", "spleen", "pancreas", "appendix", "tail")
+				var/obj/item/organ/organ = null
+				var/count = 0
+				//Do this search 5 times or until you find an organ.
+				while (!organ && count <= 5)
+					count++
+					var/organ_name = pick(choosable_organs)
+					organ = H.organHolder.get_organ(organ_name)
+
+				if (organ)
+					H.organHolder.drop_and_throw_organ(organ, src.loc, get_offset_target_turf(src.loc, rand(5)-rand(5), rand(5)-rand(5)), rand(1,4), 1, 0)
+
 			SPAWN_DBG(1 SECOND)
 				if (src && ishuman(src) && prob(50))
 					src.emote("burp")
@@ -332,7 +347,7 @@
 
 //////////////////////////////////////////// Ability holder /////////////////////////////////////////
 
-/obj/screen/ability/topBar/werewolf
+/atom/movable/screen/ability/topBar/werewolf
 	clicked(params)
 		var/datum/targetable/werewolf/spell = owner
 		if (!istype(spell))
@@ -402,7 +417,7 @@
 
 	New()
 		..()
-		var/obj/screen/ability/topBar/werewolf/B = new /obj/screen/ability/topBar/werewolf(null)
+		var/atom/movable/screen/ability/topBar/werewolf/B = new /atom/movable/screen/ability/topBar/werewolf(null)
 		B.icon = src.icon
 		B.icon_state = src.icon_state
 		B.owner = src
@@ -414,7 +429,7 @@
 	updateObject()
 		..()
 		if (!src.object)
-			src.object = new /obj/screen/ability/topBar/werewolf()
+			src.object = new /atom/movable/screen/ability/topBar/werewolf()
 			object.icon = src.icon
 			object.owner = src
 		if (src.last_cast > world.time)

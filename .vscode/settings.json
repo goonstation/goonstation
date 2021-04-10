@@ -1,11 +1,25 @@
 {
-	"eslint.nodePath": "tgui/.yarn/sdks",
+	"eslint.nodePath": "./tgui/.yarn/sdks",
 	"eslint.workingDirectories": [
 		"./tgui"
 	],
+	"typescript.tsdk": "./tgui/.yarn/sdks/typescript/lib",
+	"typescript.enablePromptUseWorkspaceTsdk": true,
 	"search.exclude": {
 		"tgui/.yarn": true,
 		"tgui/.pnp.*": true
+	},
+	"editor.codeActionsOnSave": {
+		"source.fixAll.eslint": true
+	},
+	"[javascript]": {
+		"editor.rulers": [120]
+	},
+	"[typescript]": {
+		"editor.rulers": [120]
+	},
+	"[scss]": {
+		"editor.rulers": [120]
 	},
 	// Lets you preview .dmi files in the editor
 	"workbench.editorAssociations": [
@@ -13,6 +27,6 @@
 				"filenamePattern": "*.dmi",
 				"viewType": "imagePreview.previewEditor"
 		}
-	]
-
+	],
+	"gitlens.advanced.blame.customArguments": ["-w"],
 }

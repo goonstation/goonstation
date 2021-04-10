@@ -18,6 +18,7 @@ Contains:
 	var/datum/gas_mixture/air_contents = null
 	var/distribute_pressure = ONE_ATMOSPHERE
 	var/integrity = 3
+	var/compatible_with_TTV = 1
 	flags = FPRINT | TABLEPASS | CONDUCT | ONBACK | TGUI_INTERACTIVE
 
 	pressure_resistance = ONE_ATMOSPHERE*5
@@ -194,7 +195,7 @@ Contains:
 			var/obj/item/icon = src
 			. = list()
 			icon = src.loc
-			if (!in_range(src, usr))
+			if (!in_interact_range(src, usr))
 				if (icon == src)
 					. += "<span class='notice'>It's a [bicon(icon)]! If you want any more information you'll need to get closer.</span>"
 				return
@@ -358,6 +359,7 @@ Contains:
 	desc = "A jetpack that can be toggled on, letting the user use the gas inside as a propellant. Can also be hooked up to a compatible mask to allow you to breathe the gas inside. This is labelled to contain oxygen."
 	module_research = list("atmospherics" = 4)
 	distribute_pressure = 17 // setting these things to start at the minimum pressure needed to breathe - Haine
+	compatible_with_TTV = 0
 
 	New()
 		..()
@@ -460,6 +462,7 @@ Contains:
 /obj/item/tank/plasma
 	name = "Gas Tank (BIOHAZARD)"
 	icon_state = "plasma"
+	item_state = "plasma"
 	desc = "This is a tank that can be hooked up to a compatible recepticle. When a mask is worn and the release valve on the tank is open, the user will breathe the gas inside the tank. This is labelled to contain deadly plasma."
 	module_research = list("atmospherics" = 2)
 

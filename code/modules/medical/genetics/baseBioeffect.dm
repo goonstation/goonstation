@@ -1,5 +1,9 @@
 //Effect type defines in _std/_defines/bioeffect.dm
 
+//If the icon sprite sheet is changed, also update:
+// tgui/packages/tgui/assets/genetics_powers.png
+// tgui/packages/tgui/components/GeneIcon.scss
+
 ABSTRACT_TYPE(/datum/bioEffect)
 /datum/bioEffect
 	var/name = "" //Name of the effect.
@@ -65,11 +69,10 @@ ABSTRACT_TYPE(/datum/bioEffect)
 
 	var/removed = 0
 
-
 	var/icon = 'icons/mob/genetics_powers.dmi'
 	var/icon_state = "unknown"
 
-	New(var/for_global_list = 0)
+	New(for_global_list = 0)
 		if (!for_global_list)
 			global_instance = bioEffectList[src.id]
 			if (istype(global_instance, /datum/bioEffect/power))
@@ -132,12 +135,12 @@ ABSTRACT_TYPE(/datum/bioEffect)
 
 /datum/dnaBlocks
 	var/datum/bioEffect/owner = null
-	var/list/blockList = new/list()
-	//List of CORRECT blocks for this mutation. This is global and should not be modified since it represents the correct solution.
-	var/list/blockListCurr = new/list()
-	// List of CURRENT blocks for this mutation. This is local and represents the research people are doing.
+	/// List of CORRECT blocks for this mutation. This is global and should not be modified since it represents the correct solution.
+	var/list/datum/basePair/blockList = list()
+	/// List of CURRENT blocks for this mutation. This is local and represents the research people are doing.
+	var/list/datum/basePair/blockListCurr = list()
 
-	New(var/holder)
+	New(holder)
 		owner = holder
 		return ..()
 
@@ -148,7 +151,7 @@ ABSTRACT_TYPE(/datum/bioEffect)
 		..()
 
 	proc/sequenceCorrect()
-		if(blockList.len != blockListCurr.len)
+		if(length(blockList) != length(blockListCurr))
 			//Things went completely and entirely wrong and everything is broken HALP.
 			//Some dickwad probably messed with the global sequence.
 			return 0
@@ -156,26 +159,26 @@ ABSTRACT_TYPE(/datum/bioEffect)
 			var/datum/basePair/correct = blockList[i+1]
 			var/datum/basePair/current = blockListCurr[i+1]
 			if(correct.bpp1 != current.bpp1 || correct.bpp2 != current.bpp2) //NOPE
-				return 0
-		return 1
+				return FALSE
+		return TRUE
 
 	proc/pairCorrect(var/pair_index)
 		if(blockList.len != blockListCurr.len || !pair_index)
-			return 0
+			return FALSE
 		var/datum/basePair/correct = blockList[pair_index]
 		var/datum/basePair/current = blockListCurr[pair_index]
 		if(correct.bpp1 != current.bpp1 || correct.bpp2 != current.bpp2) //NOPE
-			return 0
-		return 1
+			return FALSE
+		return TRUE
 
 	proc/ModBlocks() //Gets the normal sequence for this mutation and then "corrupts" it locally.
-		for(var/datum/basePair/bp in blockList)
+		for(var/datum/basePair/bp as anything in blockList)
 			var/datum/basePair/bpNew = new()
 			bpNew.bpp1 = bp.bpp1
 			bpNew.bpp2 = bp.bpp2
 			blockListCurr.Add(bpNew)
 
-		for(var/datum/basePair/bp in blockListCurr)
+		for(var/datum/basePair/bp as anything in blockListCurr)
 			if(prob(33))
 				if(prob(50))
 					bp.bpp1 = "?"
@@ -187,6 +190,9 @@ ABSTRACT_TYPE(/datum/bioEffect)
 		var/list/gapList = new/list()
 		//Make sure you don't have more gaps than basepairs or youll get an error.
 		//But at that point the mutation would be unsolvable.
+
+		if(owner.blockGaps > length(blockListCurr))
+			CRASH("bioEffect [owner.name] has [owner.blockGaps] block gaps but only [length(blockListCurr)] blocks")
 
 		for(var/i=0, i<owner.blockGaps, i++)
 			var/datum/basePair/bp = pick(blockListCurr - gapList)
@@ -224,13 +230,14 @@ ABSTRACT_TYPE(/datum/bioEffect)
 
 		return sequenceCorrect()
 
-	proc/GenerateBlocks() //Generate DNA blocks. This sequence will be used globally.
-		for(var/i=0, i < owner.blockCount, i++)
-			for(var/a=0, a < 4, a++) //4 pairs per block.
-				var/S = pick("G", "T", "C" , "A")
+	/// Generate DNA blocks. This sequence will be used globally.
+	proc/GenerateBlocks()
+		for(var/i in 1 to owner.blockCount)
+			for(var/j in 1 to 4) //4 pairs per block.
+				var/symbol = pick("G", "T", "C" , "A")
 				var/datum/basePair/B = new()
-				B.bpp1 = S
-				switch(S)
+				B.bpp1 = symbol
+				switch(symbol)
 					if("G")
 						B.bpp2 = "C"
 					if("C")
@@ -240,15 +247,13 @@ ABSTRACT_TYPE(/datum/bioEffect)
 					if("A")
 						B.bpp2 = "T"
 				blockList.Add(B)
-		return
 
 	proc/ChangeAllMarkers(var/sprite_state)
 		if(!istext(sprite_state))
 			sprite_state = "white"
-		for(var/datum/basePair/bp in blockListCurr)
+		for(var/datum/basePair/bp as anything in blockListCurr)
 			bp.marker = sprite_state
 			bp.style = ""
-		return
 
 /datum/basePair
 	var/bpp1 = ""
@@ -258,7 +263,7 @@ ABSTRACT_TYPE(/datum/bioEffect)
 	var/lockcode = ""
 	var/locktries = 0
 
-/obj/screen/ability/topBar/genetics
+/atom/movable/screen/ability/topBar/genetics
 	tens_offset_x = 19
 	tens_offset_y = 7
 	secs_offset_x = 23
@@ -305,7 +310,7 @@ ABSTRACT_TYPE(/datum/bioEffect)
 	var/mob/living/owner = null
 
 	New()
-		var/obj/screen/ability/topBar/genetics/B = new /obj/screen/ability/topBar/genetics(null)
+		var/atom/movable/screen/ability/topBar/genetics/B = new /atom/movable/screen/ability/topBar/genetics(null)
 		B.icon = src.icon
 		B.icon_state = src.icon_state
 		B.name = src.name

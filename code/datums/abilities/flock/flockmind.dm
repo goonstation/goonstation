@@ -6,7 +6,7 @@
 	topBarRendered = 1
 	rendered = 1
 
-/obj/screen/ability/topBar/flockmind
+/atom/movable/screen/ability/topBar/flockmind
 	tens_offset_x = 19
 	tens_offset_y = 7
 	secs_offset_x = 23
@@ -25,7 +25,7 @@
 	theme = "flock"
 
 /datum/targetable/flockmindAbility/New()
-	var/obj/screen/ability/topBar/flockmind/B = new /obj/screen/ability/topBar/flockmind(null)
+	var/atom/movable/screen/ability/topBar/flockmind/B = new /atom/movable/screen/ability/topBar/flockmind(null)
 	B.icon = src.icon
 	B.icon_state = src.icon_state
 	B.owner = src
@@ -216,7 +216,7 @@
 			// skip this one
 			continue
 		var/obj/item/device/radio/R = M.ears
-		if(R?.listening)
+		if(istype(R) && R.listening)
 			// your headset's on, you're fair game!!
 			targets += M
 	if(targets.len >= 1)
@@ -313,17 +313,28 @@
 	name = "Fabricate Structure"
 	desc = "Create a structure tealprint for your drones to construct onto."
 	icon_state = "fabstructure"
-	cooldown = 4
+	cooldown = 4 SECONDS
 	targeted = 0
 
 /datum/targetable/flockmindAbility/createStructure/cast()
 	var/resourcecost = null
 	var/structurewantedtype = null
-	var/structurewanted = input("Select which structure you would like to create", "Tealprint Selection", "cancel") as null|anything in list("Collector")
+	var/turf/T = get_turf(holder.owner)
+	if(!istype(T, /turf/simulated/floor/feather))
+		boutput(holder.owner, "<span class='alert'>You aren't above a flocktile.</span>")//todo maybe make this flock themed?
+		return 1
+	if(locate(/obj/flock_structure) in T)
+		boutput(holder.owner, "<span class='alert'>There is already a flock structure on this flocktile!</span>")
+		return 1
+	//todo: replace with FANCY tgui/chui window with WHEELS and ICONS and stuff!
+	var/structurewanted = tgui_input_list(holder.owner, "Select which structure you would like to create", "Tealprint selection", list("Collector", "Sentinel"))
 	switch(structurewanted)
 		if("Collector")
 			structurewantedtype = /obj/flock_structure/collector
 			resourcecost = 200
+		if("Sentinel")
+			structurewantedtype = /obj/flock_structure/sentinel
+			resourcecost = 300
 	if(structurewantedtype)
 		var/mob/living/intangible/flock/F = holder.owner
 		F.createstructure(structurewantedtype, resourcecost)

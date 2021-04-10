@@ -14500,10 +14500,7 @@
 "azC" = (
 /obj/machinery/door/firedoor/border_only,
 /obj/table/reinforced/auto,
-/obj/item/reagent_containers/food/snacks/cake/chocolate{
-	desc = "Holy shit! This cake probably costs more than the gross domestic product of Bulgaria!";
-	name = "Extravagant Chocolate Gateau"
-	},
+/obj/item/reagent_containers/food/snacks/cake/chocolate/gateau,
 /obj/disposalpipe/segment/food{
 	dir = 4
 	},
@@ -16742,7 +16739,7 @@
 /area/station/crew_quarters/bar)
 "aEy" = (
 /obj/table/wood/auto,
-/obj/item/card_box/suit,
+/obj/item/card_box/plain,
 /turf/simulated/floor/carpet{
 	dir = 5;
 	icon_state = "fpurple1"
@@ -30474,6 +30471,7 @@
 	},
 /obj/table/wood/auto,
 /obj/displaycase{
+	displayed = new /obj/item/captaingun
 	pixel_y = 8
 	},
 /turf/simulated/floor/carpet/arcade,
@@ -34213,7 +34211,7 @@
 "bjS" = (
 /obj/table/reinforced/auto,
 /obj/decal/cleanable/dirt,
-/obj/item/card_box/suit,
+/obj/item/card_box/plain,
 /obj/disposalpipe/segment/brig,
 /turf/simulated/floor/grime,
 /area/station/security/brig)
@@ -35662,7 +35660,7 @@
 	},
 /obj/table/reinforced/auto,
 /obj/decal/cleanable/dirt,
-/obj/item/card_box/suit,
+/obj/item/card_box/plain,
 /obj/machinery/power/data_terminal,
 /obj/disposalpipe/segment/brig{
 	dir = 4
@@ -49093,7 +49091,7 @@
 	icon_state = "line1"
 	},
 /obj/storage/secure/crate/plasma/armory/anti_biological,
-/obj/item/flamethrower/assembled/loaded,
+/obj/item/gun/flamethrower/assembled/loaded,
 /turf/simulated/floor/black,
 /area/station/security/armory)
 "bMO" = (

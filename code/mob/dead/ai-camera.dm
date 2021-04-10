@@ -144,7 +144,7 @@
 				O.receive_silicon_hotkey(src)
 				return
 
-		//var/inrange = in_range(target, src)
+		//var/inrange = in_interact_range(target, src)
 		//var/obj/item/equipped = src.equipped()
 
 		if (!src.client.check_any_key(KEY_EXAMINE | KEY_OPEN | KEY_BOLT | KEY_SHOCK | KEY_POINT) ) // ugh
@@ -505,23 +505,18 @@
 	var/list/prev_tiles = 0
 	var/list/new_tiles = list()
 
-	if (coveredTiles != null && coveredTiles.len)
+	if (coveredTiles != null && length(coveredTiles))
 		prev_tiles = coveredTiles
 
 	for(var/turf/T in view(CAM_RANGE, get_turf(src)))
 		new_tiles += T
 
 	if (prev_tiles)
-		for(var/turf/O as() in (prev_tiles - new_tiles))
-			//O.removeCameraCoverage(src)
-			//removeCameraCoverage copy+paste begin!
+		for(var/turf/O as anything in (prev_tiles - new_tiles))
+			//copy+paste begin!
 			if(O.cameras == null) continue
 
-			//if(O.cameras.Find(src))
-			//	O.cameras.Remove(src)
 			O.cameras -= src
-			//if(src.coveredTiles.Find(O))
-			//	src.coveredTiles.Remove(O)
 			src.coveredTiles -= O
 
 			if(!O.cameras.len)
@@ -530,31 +525,22 @@
 				if (O.aiImage)
 					O.aiImage.loc = O
 
-			LAGCHECK(LAG_HIGH)
 			//copy paste end!
 
-	for(var/turf/t as() in (new_tiles - prev_tiles))
-
-		//t.addCameraCoverage(src)
-		//add camera coverage copy+paste begin!
+	for(var/turf/t as anything in (new_tiles - prev_tiles))
+		//copy+paste begin!
 		var/cam_amount = t.cameras ? t.cameras.len : 0
 		if(t.cameras == null)
 			t.cameras = list(src)
 			if(src.coveredTiles == null)
 				src.coveredTiles = list(t)
 			else
-				//if(!src.coveredTiles.Find(t))
-				//	src.coveredTiles.Add(t)
 				src.coveredTiles += t
 		else
-			//if(!t.cameras.Find(src))
-			//	t.cameras.Add(src)
 			t.cameras += src
 			if(src.coveredTiles == null)
 				src.coveredTiles = list(t)
 			else
-				//if(!src.coveredTiles.Find(t))
-				//	src.coveredTiles.Add(t)
 				src.coveredTiles += t
 
 		if (cam_amount < t.cameras.len)
@@ -562,9 +548,7 @@
 				t.aiImage.loc = null
 		//copy paste end!
 
-
-		//t.adjustCameraImage()
-		//adjustCameraImage copy+paste begin!
+		//copy+paste begin!
 		if(!istype(t.aiImage)) continue
 
 		if( t.cameras.len >= 1 )
@@ -572,7 +556,6 @@
 		else if( t.cameras == null )
 			t.aiImage.loc = t
 
-		LAGCHECK(LAG_HIGH)
 		//copy paste end!
 
 	return
@@ -617,7 +600,7 @@ world/proc/updateCameraVisibility()
 			cam_candidates += t
 
 
-		for(var/turf/t as() in cam_candidates) //ugh
+		for(var/turf/t as anything in cam_candidates) //ugh
 			t.aiImage = new
 			t.aiImage.appearance = ma
 			t.aiImage.dir = pick(alldirs)
@@ -639,7 +622,7 @@ world/proc/updateCameraVisibility()
 		for(var/turf/t in view(CAM_RANGE, get_turf(C)))
 			LAGCHECK(LAG_HIGH)
 			if (!t.aiImage) continue
-			if (t.cameras && t.cameras.len)
+			if (t.cameras && length(t.cameras))
 				t.aiImage.loc = null
 			else
 				t.aiImage.loc = t

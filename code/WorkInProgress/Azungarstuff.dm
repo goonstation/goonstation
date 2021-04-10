@@ -889,9 +889,12 @@
 	flags = FPRINT | TABLEPASS
 	anchored = 2
 
+/obj/juggleplaque/manta
+	name = "dedication plaque"
+	desc = "Dedicated to Lieutenant Emily Claire for her brave sacrifice aboard NSS Manta - \"May their sacrifice not paint a grim picture of things to come. - Space Commodore J. Ledger\""
+	pixel_y = 25
 
-
-/obj/holosigntest
+/obj/abzuholo
 	desc = "... is that Absu..?"
 	name = "... is that Absu..?"
 	icon = 'icons/effects/96x96.dmi'
@@ -901,7 +904,7 @@
 	anchored = 2
 	layer = EFFECTS_LAYER_BASE
 	var/datum/light/light
-	var/obj/holoparticles/particles
+	var/obj/holoparticles/holoparticles
 
 	New(var/_loc)
 		set_loc(_loc)
@@ -918,14 +921,14 @@
 			animate(src, pixel_y=10, time=15, flags=ANIMATION_PARALLEL, easing=SINE_EASING, loop=-1)
 			animate(pixel_y=16, easing=SINE_EASING, time=15)
 
-		particles = new/obj/holoparticles(src.loc)
-		attached_objs = list(particles)
+		holoparticles = new/obj/holoparticles(src.loc)
+		attached_objs = list(holoparticles)
 		..(_loc)
 
 	disposing()
-		if(particles)
-			particles.invisibility = 101
-			qdel(particles)
+		if(holoparticles)
+			holoparticles.invisibility = 101
+			qdel(holoparticles)
 		..()
 
 /obj/holoparticles
@@ -1167,7 +1170,7 @@
 
 	Bumped(mob/user as mob)
 		if(busy) return
-		if(get_dist(usr, src) > 1 || usr.z != src.z) return
+		if(get_dist(user, src) > 1 || user.z != src.z) return
 		src.add_dialog(user)
 		busy = 1
 		showswirl(user.loc)

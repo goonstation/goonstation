@@ -8,7 +8,28 @@
 	density = 1
 	anchored = 1
 	desc = "Shows the power usage of the station."
+	var/datum/light/light
+	var/light_r = 1
+	var/light_g = 1
+	var/light_b = 1
 	var/window_tag = "powcomp"
+	/// does it have a glow in the dark screen? see computer_screens.dmi
+	var/glow_in_dark_screen = TRUE
+	var/image/screen_image
+
+/obj/machinery/power/monitor/New()
+	..()
+	light = new/datum/light/point
+	light.set_brightness(0.4)
+	light.set_color(light_r, light_g, light_b)
+	light.attach(src)
+	if(glow_in_dark_screen)
+		src.screen_image = image('icons/obj/computer_screens.dmi', src.icon_state, -1)
+		screen_image.plane = PLANE_LIGHTING
+		screen_image.blend_mode = BLEND_ADD
+		screen_image.layer = LIGHTING_LAYER_BASE
+		screen_image.color = list(0.33,0.33,0.33, 0.33,0.33,0.33, 0.33,0.33,0.33)
+		src.UpdateOverlays(screen_image, "screen_image")
 
 /obj/machinery/power/monitor/attack_ai(mob/user)
 	add_fingerprint(user)
@@ -26,7 +47,7 @@
 
 /obj/machinery/power/monitor/proc/interacted(mob/user)
 
-	if ( (!in_range(src, user)) || (status & (BROKEN|NOPOWER)) )
+	if ( (!in_interact_range(src, user)) || (status & (BROKEN|NOPOWER)) )
 		src.remove_dialog(user)
 		user.Browse(null, "window=[window_tag]")
 		return
@@ -40,8 +61,8 @@
 
 		var/list/L = list()
 		for(var/obj/machinery/power/terminal/term in powernet.nodes)
-			if(istype(term.master, /obj/machinery/power/apc))
-				var/obj/machinery/power/apc/A = term.master
+			var/obj/machinery/power/apc/A = term.master
+			if(istype(A) && (!A.area || A.area.requires_power))
 				L += A
 
 		t += "<PRE>Total power: [engineering_notation(powernet.avail)]W<BR>Total load:  [engineering_notation(powernet.viewload)]W<BR>"
@@ -82,35 +103,9 @@
 
 	src.updateDialog()
 
-/obj/machinery/power/monitor/power_change()
-
-	if(status & BROKEN)
-		icon_state = "broken"
-	else
-		if( powered() )
-			icon_state = initial(icon_state)
-			status &= ~NOPOWER
-		else
-			SPAWN_DBG(rand(0, 15))
-				src.icon_state = "c_unpowered"
-				status |= NOPOWER
-
 /obj/machinery/power/monitor/console_upper
 	icon = 'icons/obj/computerpanel.dmi'
 	icon_state = "power1"
-
-/obj/machinery/power/monitor/power_change()
-
-	if(status & BROKEN)
-		icon_state = "broken"
-	else
-		if( powered() )
-			icon_state = initial(icon_state)
-			status &= ~NOPOWER
-		else
-			SPAWN_DBG(rand(0, 15))
-				src.icon_state = "power10"
-				status |= NOPOWER
 
 /obj/machinery/power/monitor/console_lower
 	icon = 'icons/obj/computerpanel.dmi'
@@ -120,14 +115,27 @@
 
 	if(status & BROKEN)
 		icon_state = "broken"
+		light.disable()
+		if(glow_in_dark_screen)
+			src.ClearSpecificOverlays("screen_image")
 	else
 		if( powered() )
 			icon_state = initial(icon_state)
 			status &= ~NOPOWER
+			light.enable()
+			if(glow_in_dark_screen)
+				screen_image.plane = PLANE_LIGHTING
+				screen_image.blend_mode = BLEND_ADD
+				screen_image.layer = LIGHTING_LAYER_BASE
+				screen_image.color = list(0.33,0.33,0.33, 0.33,0.33,0.33, 0.33,0.33,0.33)
+				src.UpdateOverlays(screen_image, "screen_image")
 		else
 			SPAWN_DBG(rand(0, 15))
 				src.icon_state = "power20"
 				status |= NOPOWER
+				light.disable()
+				if(glow_in_dark_screen)
+					src.ClearSpecificOverlays("screen_image")
 
 // tweaked version to hook up to the engine->smes powernet and show SMES usage stats and power produced
 /obj/machinery/power/monitor/smes
@@ -141,7 +149,7 @@
 
 /obj/machinery/power/monitor/smes/interacted(mob/user)
 
-	if ( (!in_range(src,user)) || (status & (BROKEN|NOPOWER)) )
+	if ( (!in_interact_range(src,user)) || (status & (BROKEN|NOPOWER)) )
 		src.remove_dialog(user)
 		user.Browse(null, "window=[window_tag]")
 		return

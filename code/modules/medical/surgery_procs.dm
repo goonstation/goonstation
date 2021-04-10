@@ -214,7 +214,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 	if (user && user.a_intent != INTENT_HELP)
 		return 0
 
-	if (!islist(H.bandaged) || !H.bandaged.len)
+	if (!islist(H.bandaged) || !length(H.bandaged))
 		return 0
 
 	var/removing = pick(H.bandaged)
@@ -657,12 +657,14 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 				surgeon, "<span class='alert'>You cut out an implant from [surgeon == patient ? "yourself" : "[patient]"] with [src]!</span>",\
 				patient, "<span class='alert'>[patient == surgeon ? "You cut" : "<b>[surgeon]</b> cuts"] out an implant from you with [src]!</span>")
 
-				var/obj/item/implantcase/newcase = new /obj/item/implantcase(patient.loc)
-				newcase.imp = I
+				var/obj/item/implantcase/newcase = new /obj/item/implantcase(patient.loc, usedimplant = I)
 				I.on_remove(patient)
 				patient.implant.Remove(I)
-				I.set_loc(newcase)
-				newcase.icon_state = "implantcase-b"
+				var/image/wadblood = image('icons/obj/surgery.dmi', icon_state = "implantpaper-blood")
+				wadblood.color = patient.blood_color
+				newcase.UpdateOverlays(wadblood, "blood")
+				newcase.blood_DNA = patient.bioHolder.Uid
+				newcase.blood_type = patient.bioHolder.bloodType
 
 				return 1
 

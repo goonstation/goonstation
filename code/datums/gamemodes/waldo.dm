@@ -34,7 +34,7 @@
 	return 1
 
 /datum/game_mode/waldo/post_setup()
-	var/num_waldos = waldos.len
+	var/num_waldos = length(waldos)
 	for(var/turf/T in landmarks[LANDMARK_TELEPORT_SCROLL])
 		for(var/scrollcount in 1 to num_waldos)
 			new /obj/item/teleportation_scroll(T)
@@ -284,7 +284,7 @@
 	for(var/A in possible_modes)
 		intercepttext += i_text.build(A, pick(waldos))
 /*
-	for (var/obj/machinery/computer/communications/comm as() in machine_registry[MACHINES_COMMSCONSOLES])
+	for (var/obj/machinery/computer/communications/comm as anything in machine_registry[MACHINES_COMMSCONSOLES])
 		if (!(comm.status & (BROKEN | NOPOWER)) && comm.prints_intercept)
 			var/obj/item/paper/intercept = new /obj/item/paper( comm.loc )
 			intercept.name = "paper- 'Cent. Com. Status Summary'"

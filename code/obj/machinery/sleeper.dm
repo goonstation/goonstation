@@ -133,6 +133,8 @@
 			use_obj = src.loc
 			if (user in use_obj)
 				return UI_CLOSE
+		if (src.our_sleeper?.occupant == user)
+			return UI_DISABLED
 		return min(
 			tgui_broken_state.can_use_topic(use_obj, user),
 			tgui_default_state.can_use_topic(use_obj, user),

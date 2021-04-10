@@ -448,7 +448,7 @@ proc/get_angle(atom/a, atom/b)
 	* Given a list, returns a text string representation of the list's contents.
 	*/
 /proc/english_list(var/list/input, nothing_text = "nothing", and_text = " and ", comma_text = ", ", final_comma_text = "," )
-	var/total = input.len
+	var/total = length(input)
 	if (!total)
 		return "[nothing_text]"
 	else if (total == 1)
@@ -520,24 +520,27 @@ proc/get_angle(atom/a, atom/b)
 
 
 /proc/DirBlocked(turf/loc,var/dir)
+	. = FALSE
 	for(var/obj/window/D in loc)
-		if(!D.density)			continue
-		if(D.dir == SOUTHWEST)	return 1
-		if(D.dir == dir)		return 1
+		if(!D.density)
+			continue
+		if(D.dir == SOUTHWEST)	return TRUE
+		if(D.dir == dir)				return TRUE
 
 	for(var/obj/machinery/door/D in loc)
-		if(!D.density)			continue
+		if(!D.density)
+			continue
 		if(istype(D, /obj/machinery/door/window))
-			if((dir & SOUTH) && (D.dir & (EAST|WEST)))		return 1
-			if((dir & EAST ) && (D.dir & (NORTH|SOUTH)))	return 1
-		else return 1	// it's a real, air blocking door
-	return 0
+			if((dir & SOUTH) && (D.dir & (EAST|WEST)))		return TRUE
+			if((dir & EAST ) && (D.dir & (NORTH|SOUTH)))	return TRUE
+		else
+			return TRUE	// it's a real, air blocking door
 
 /proc/TurfBlockedNonWindow(turf/loc)
+	. = FALSE
 	for(var/obj/O in loc)
 		if(O.density && !istype(O, /obj/window))
-			return 1
-	return 0
+			return TRUE
 
 /proc/getline(atom/M,atom/N)//Ultra-Fast Bresenham Line-Drawing Algorithm
 	var/px=M.x		//starting x
@@ -638,8 +641,7 @@ proc/get_angle(atom/a, atom/b)
 	* Returns true if the given key is a guest key
 	*/
 /proc/IsGuestKey(key)
-	//Wire note: This seems like it would work just fine and is a whole bunch shorter
-	return copytext(key, 1, 7) == "Guest-"
+	. = copytext(key, 1, 7) == "Guest-"
 
 
 /**
@@ -654,61 +656,57 @@ proc/get_angle(atom/a, atom/b)
 	. = "[round(f / 10)].[f % 10]"
 
 /proc/sortmobs()
+	. = list()
 
-	var/list/mob_list = list()
 	for_by_tcl(M, /mob/living/silicon/ai)
-		mob_list.Add(M)
+		. += M
 		LAGCHECK(LAG_REALTIME)
 	for(var/mob/dead/aieye/M in mobs)
-		mob_list.Add(M)
+		. += M
 		LAGCHECK(LAG_REALTIME)
 	for(var/mob/living/silicon/robot/M in mobs)
-		mob_list.Add(M)
+		. += M
 		LAGCHECK(LAG_REALTIME)
 	for(var/mob/living/silicon/hivebot/M in mobs)
-		mob_list.Add(M)
+		. += M
 		LAGCHECK(LAG_REALTIME)
 	for(var/mob/living/silicon/hive_mainframe/M in mobs)
-		mob_list.Add(M)
+		. += M
 		LAGCHECK(LAG_REALTIME)
 	for(var/mob/living/carbon/human/M in mobs)
-		mob_list.Add(M)
+		. += M
 		LAGCHECK(LAG_REALTIME)
 	for(var/mob/living/critter/C in mobs)
 		if(C.client)
-			mob_list.Add(C)
+			. += C
 		LAGCHECK(LAG_REALTIME)
 	for(var/mob/wraith/M in mobs)
-		mob_list.Add(M)
+		. += M
 		LAGCHECK(LAG_REALTIME)
 	for(var/mob/living/intangible/blob_overmind/M in mobs)
-		mob_list.Add(M)
+		. += M
 		LAGCHECK(LAG_REALTIME)
-//	for(var/mob/living/carbon/alien/M in mobs)
-//		mob_list.Add(M)
 	for(var/mob/dead/observer/M in mobs)
-		mob_list.Add(M)
+		. += M
 		LAGCHECK(LAG_REALTIME)
 	for(var/mob/dead/target_observer/M in mobs)
-		mob_list.Add(M)
+		. += M
 		LAGCHECK(LAG_REALTIME)
 	for(var/mob/new_player/M in mobs)
-		mob_list.Add(M)
+		. += M
 		LAGCHECK(LAG_REALTIME)
 	for(var/mob/living/carbon/wall/M in mobs)
-		mob_list.Add(M)
+		. += M
 		LAGCHECK(LAG_REALTIME)
 	for(var/mob/living/silicon/ghostdrone/M in mobs)
-		mob_list.Add(M)
+		. += M
 		LAGCHECK(LAG_REALTIME)
 	for(var/mob/zoldorf/M in mobs)
-		mob_list.Add(M)
+		. += M
 		LAGCHECK(LAG_REALTIME)
 	for(var/mob/living/seanceghost/M in mobs)
-		mob_list.Add(M)
+		. += M
 		LAGCHECK(LAG_REALTIME)
-
-	return mob_list
 
 //Include details shows traitor status etc
 //Admins replaces the src ref for links with a placeholder for message_admins
@@ -818,12 +816,12 @@ proc/get_angle(atom/a, atom/b)
 // Otherwise, the user mob's machine var will be reset directly.
 //
 /proc/onclose(mob/user, windowid, var/datum/ref=null)
-
 	var/param = "null"
 	if(ref)
 		param = "\ref[ref]"
 
-	if (user?.client) winset(user, windowid, "on-close=\".windowclose [param]\"")
+	if (user?.client)
+		winset(user, windowid, "on-close=\".windowclose [param]\"")
 
 	//boutput(world, "OnClose [user]: [windowid] : ["on-close=\".windowclose [param]\""]")
 
@@ -851,7 +849,6 @@ proc/get_angle(atom/a, atom/b)
 	// so just reset the user mob's machine var
 	if(src?.mob)
 		src.mob.remove_dialogs()
-	return
 
 // returns the turf located at the map edge in the specified direction relative to A
 // used for mass driver
@@ -904,7 +901,7 @@ proc/get_angle(atom/a, atom/b)
 
 // extends pick() to associated lists
 /proc/alist_pick(var/list/L)
-	if(!L || !L.len)
+	if(!L || !length(L))
 		return null
 	return L[pick(L)]
 
@@ -1092,8 +1089,6 @@ proc/get_angle(atom/a, atom/b)
 			return SOUTHWEST
 		if("SW")
 			return SOUTHWEST
-		else
-	return
 
 /proc/dir2text(direction)
 	switch(direction)
@@ -1115,8 +1110,6 @@ proc/get_angle(atom/a, atom/b)
 			return "northwest"
 		if(SOUTHWEST)
 			return "southwest"
-		else
-	return
 
 // Marquesas: added an extra parameter to fix issue with changeling.
 // Unfortunately, it has to be this extra parameter, otherwise the spawn(0) in the mob say will
@@ -1126,19 +1119,9 @@ proc/get_angle(atom/a, atom/b)
 		for(var/obj/O in src)
 			O.hear_talk(M,text,real_name)
 
-	/*var/mob/mo = locate(/mob) in src
-	if(mo)
-		var/heardname = M.name
-		if (real_name)
-			heardname = real_name
-		var/rendered = "<span class='game say'><span class='name'>[heardname]: </span> <span class='message'>[text]</span></span>"
-		mo.show_message(rendered, 2)*/
-	return
-
 /**
   * Returns true if given value is a hex value
   */
-
 /proc/is_hex(hex)
 	if (!( istext(hex) ))
 		return FALSE
@@ -1156,7 +1139,7 @@ proc/get_angle(atom/a, atom/b)
 	else //Ex: John Smith becomes JSmith
 		playerName = copytext( ( copytext(name_temp[1],1, 2) + name_temp[name_temp.len] ), 1, 16)
 
-	return lowertext(replacetext(playerName, "/", null))
+	. = lowertext(replacetext(playerName, "/", null))
 
 /proc/engineering_notation(var/value=0 as num)
 	if (!value)
@@ -1199,23 +1182,20 @@ proc/get_angle(atom/a, atom/b)
 			suffix = "Y"
 
 	value = round( (value / (10 ** (3 * power))), 0.001 )
-	return "[value] [suffix]"
+	. = "[value] [suffix]"
 
 /proc/obj_loc_chain(var/atom/movable/whose)
-	if (isturf(whose) || isarea(whose))
-		return list()
-	if (isturf(whose.loc))
-		return list()
-	var/list/chain = list()
+	. = list()
+	if (isturf(whose) || isarea(whose) || isturf(whose.loc))
+		return
 	var/atom/movable/M = whose
 	while (ismob(M.loc) || isobj(M.loc))
-		chain += M.loc
+		. += M.loc
 		M = M.loc
-	return chain
 
 /proc/all_hearers(var/range,var/centre)
 	. = list()
-	for(var/atom/A as() in (view(range,centre) | hearers(range, centre))) //Why was this view(). Oh no, the invisible man hears naught 'cause the sound can't find his ears.
+	for(var/atom/A as anything in (view(range,centre) | hearers(range, centre))) //Why was this view(). Oh no, the invisible man hears naught 'cause the sound can't find his ears.
 		if (ismob(A))
 			. += A
 		if (isobj(A) || ismob(A))
@@ -1232,7 +1212,7 @@ proc/get_angle(atom/a, atom/b)
 				if (can_hear)
 					. += M
 	if(length(by_cat[TR_CAT_OMNIPRESENT_MOBS]))
-		for(var/mob/M as() in by_cat[TR_CAT_OMNIPRESENT_MOBS])
+		for(var/mob/M as anything in by_cat[TR_CAT_OMNIPRESENT_MOBS])
 			if(get_step(M, 0)?.z == get_step(centre, 0)?.z)
 				. |= M
 
@@ -1240,20 +1220,20 @@ proc/get_angle(atom/a, atom/b)
 
 /proc/all_viewers(var/range,var/centre)
 	. = list()
-	for (var/atom/A as() in viewers(range,centre))
+	for (var/atom/A as anything in viewers(range,centre))
 		if (ismob(A))
 			. += A
 		else if (isobj(A))
 			for(var/mob/M in A.contents)
 				. += M
 	if(length(by_cat[TR_CAT_OMNIPRESENT_MOBS]))
-		for(var/mob/M as() in by_cat[TR_CAT_OMNIPRESENT_MOBS])
+		for(var/mob/M as anything in by_cat[TR_CAT_OMNIPRESENT_MOBS])
 			if(get_step(M, 0)?.z == get_step(centre, 0)?.z)
 				. |= M
 
 /proc/all_range(var/range,var/centre) //above two are blocked by opaque objects
 	. = list()
-	for (var/atom/A as() in range(range,centre))
+	for (var/atom/A as anything in range(range,centre))
 		if (ismob(A))
 			. += A
 		else if (isobj(A))
@@ -1288,7 +1268,6 @@ proc/get_angle(atom/a, atom/b)
 		// we have our winner.
 		if(weighted_num <= running_total)
 			return choices[i]
-	return
 
 /* Get the highest ancestor of this object in the tree that is an immediate child of
    a given ancestor.
@@ -1309,7 +1288,7 @@ proc/get_angle(atom/a, atom/b)
 	var/parentstart = ancestorposition + length(stringancestor) + 1
 	var/parentend = findtextEx(stringtype, "/", parentstart)
 	var/stringtarget = copytext(stringtype, 1, parentend ? parentend : 0)
-	return text2path(stringtarget)
+	. = text2path(stringtarget)
 
 //Returns a list of minds that are some type of antagonist role
 //This may be a stop gap until a better solution can be figured out
@@ -1442,11 +1421,16 @@ var/list/hex_chars = list("0","1","2","3","4","5","6","7","8","9","A","B","C","D
 var/list/all_functional_reagent_ids = list()
 
 proc/get_all_functional_reagent_ids()
-	for (var/datum/reagent/R as() in concrete_typesof(/datum/reagent))
+	for (var/datum/reagent/R as anything in filtered_concrete_typesof(/datum/reagent, /proc/filter_blacklisted_chem))
 		all_functional_reagent_ids += initial(R.id)
 
+
+proc/filter_blacklisted_chem(type)
+	var/datum/reagent/fakeInstance = type
+	return !initial(fakeInstance.random_chem_blacklisted)
+
 proc/reagent_id_to_name(var/reagent_id)
-	if (!reagent_id || !reagents_cache.len)
+	if (!reagent_id || !length(reagents_cache))
 		return
 	var/datum/reagent/R = reagents_cache[reagent_id]
 	if (!R)
@@ -1464,7 +1448,7 @@ proc/RarityClassRoll(var/scalemax = 100, var/mod = 0, var/list/category_boundari
 
 	var/picker = rand(1,scalemax)
 	picker += mod
-	var/list_counter = category_boundaries.len
+	var/list_counter = length(category_boundaries)
 
 	for (var/X in category_boundaries)
 		if (!isnum(X))
@@ -1501,52 +1485,50 @@ proc/RarityClassRoll(var/scalemax = 100, var/mod = 0, var/list/category_boundari
 /proc/get_fraction_of_percentage_and_whole(var/perc,var/whole)
 	if (!isnum(perc) || !isnum(whole) || perc == 0 || whole == 0)
 		return 0
-	return (perc / whole) * 100
+	. = (perc / whole) * 100
 
 /proc/get_percentage_of_fraction_and_whole(var/fraction,var/whole)
 	if (!isnum(fraction) || !isnum(whole) || fraction == 0 || whole == 0)
 		return 0
-	return (fraction * 100) / whole
+	. = (fraction * 100) / whole
 
 /proc/get_whole_of_percentage_and_fraction(var/fraction,var/perc)
 	if (!isnum(fraction) || !isnum(perc) || fraction == 0 || perc == 0)
 		return 0
-	return (100 * fraction) / perc
+	. = (100 * fraction) / perc
 
 /proc/get_damage_after_percentage_based_armor_reduction(var/armor,var/damage)
 	if (!isnum(armor) || !isnum(damage) || damage <= 0)
 		return 0
 	// [13:22] <volundr> it would be ( (100 - armorpercentage) / 100 ) * damageamount
 	armor = max(0,min(armor,100))
-	return ((100 - armor) / 100) * damage
+	. = ((100 - armor) / 100) * damage
 
 /proc/get_filtered_atoms_in_touch_range(var/atom/center,var/filter)
+	. = list()
 	if (!center)
-		return list()
+		return
 
-	var/list/list_to_return = list()
 	var/target_loc = get_turf(center)
 
 	for(var/atom/A in range(1,target_loc))
 		if (ispath(filter))
 			if (istype(A,filter))
-				list_to_return += A
+				. += A
 		else
-			list_to_return += A
+			. += A
 
 	for(var/atom/B in center.contents)
 		if (ispath(filter))
 			if (istype(B,filter))
-				list_to_return += B
+				. += B
 		else
-			list_to_return += B
-
-	return list_to_return
+			. += B
 
 /proc/is_valid_color_string(var/string)
 	if (!istext(string))
 		return 0
-	return (findtext(string, color_regex) == 1)
+	. = (findtext(string, color_regex) == 1)
 
 /proc/get_digit_from_number(var/number,var/slot)
 	// note this works "backwards", so slot 1 of 52964 would be 4, not 5
@@ -1554,7 +1536,7 @@ proc/RarityClassRoll(var/scalemax = 100, var/mod = 0, var/list/category_boundari
 		return 0
 	var/string = num2text(number)
 	string = reverse_text(string)
-	return text2num(copytext(string,slot,slot+1))
+	. = text2num(copytext(string,slot,slot+1))
 
 /**
   * Returns the current timeofday in o'clock format
@@ -1598,16 +1580,16 @@ proc/RarityClassRoll(var/scalemax = 100, var/mod = 0, var/list/category_boundari
 
 /proc/strip_bad_characters(var/text)
 	var/list/bad_characters = list("_", "'", "\"", "<", ">", ";", "[", "]", "{", "}", "|", "\\", "/")
+	. = text
 	for(var/c in bad_characters)
-		text = replacetext(text, c, " ")
-	return text
+		. = replacetext(., c, " ")
 
 var/list/english_num = list("0" = "zero", "1" = "one", "2" = "two", "3" = "three", "4" = "four", "5" = "five", "6" = "six", "7" = "seven", "8" = "eight", "9" = "nine",\
 "10" = "ten", "11" = "eleven", "12" = "twelve", "13" = "thirteen", "14" = "fourteen", "15" = "fifteen", "16" = "sixteen", "17" = "seventeen", "18" = "eighteen", "19" = "nineteen",\
 "20" = "twenty", "30" = "thirty", "40" = "forty", "50" = "fifty", "60" = "sixty", "70" = "seventy", "80" = "eighty", "90" = "ninety")
 
 /proc/get_english_num(var/num, var/sep) // can only do up to 999,999 because of scientific notation kicking in after 6 digits
-	if (!num || !english_num.len)
+	if (!num || !length(english_num))
 		return
 
 	DEBUG_MESSAGE("<b>get_english_num recieves num \"[num]\"</b>")
@@ -1677,10 +1659,8 @@ var/list/english_num = list("0" = "zero", "1" = "one", "2" = "two", "3" = "three
 	if (!islist(B.attached_objs))
 		B.attached_objs = list()
 
-	if (!A.attached_objs.Find(B))
-		A.attached_objs.Add(B)
-	if (!B.attached_objs.Find(A))
-		B.attached_objs.Add(A)
+	A.attached_objs |= B
+	B.attached_objs |= A
 
 /proc/mutual_detach(var/atom/movable/A as obj|mob, var/atom/movable/B as obj|mob)
 	if (!istype(A) || !istype(B))
@@ -1694,14 +1674,12 @@ var/list/english_num = list("0" = "zero", "1" = "one", "2" = "two", "3" = "three
 
 // This function counts a passed job.
 proc/countJob(rank)
-	var/jobCount = 0
+	. = 0
 	for(var/mob/H in mobs)
 		if(H.mind && H.mind.assigned_role == rank)
-			jobCount++
+			.++
 		LAGCHECK(LAG_REALTIME)
-	return jobCount
 
-//alldirs = list(NORTH, SOUTH, EAST, WEST, NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST)
 /atom/proc/letter_overlay(var/letter as text, var/lcolor, var/dir)
 	if (!letter) // you get something random you shithead
 		letter = pick("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z")
@@ -1991,31 +1969,30 @@ proc/countJob(rank)
 /**
   * Looks up a player based on a string. Searches a shit load of things ~whoa~. Returns a list of mob refs.
   */
-/proc/whois(target, limit = 0, admin)
+/proc/whois(target, limit = null, admin)
 	target = trim(ckey(target))
-	if (!target) return 0
-	var/list/found = list()
+	if (!target)
+		return null
+	. = list()
 	for (var/mob/M in mobs)
-		if (M.ckey && (limit == 0 || found.len < limit))
+		if (M.ckey && (!limit || length(.) < limit))
 			if (findtext(M.real_name, target))
-				found += M
+				. += M
 			else if (findtext(M.ckey, target))
-				found += M
+				. += M
 			else if (findtext(M.key, target))
-				found += M
+				. += M
 			else if (M.mind)
 				if (findtext(M.mind.assigned_role, target))
-					if (M.mind.assigned_role == "MODE") //We matched on the internal MODE job this doesn't fuckin' count
+					if (M.mind.assigned_role == "MODE") // We matched on the internal MODE job this doesn't fuckin' count
 						continue
 					else
-						found += M
+						. += M
 				else if (findtext(M.mind.special_role, target))
-					found += M
+					. += M
 
-	if (found.len > 0)
-		return found
-	else
-		return 0
+	if (!length(.))
+		return null
 
 /**
   * A universal ckey -> mob reference lookup proc, adapted from whois() (Convair880).
@@ -2039,11 +2016,10 @@ proc/countJob(rank)
   * Finds whoever's dead.
 	*/
 /proc/whodead()
-	var/list/found = new
+	. = list()
 	for (var/mob/M in mobs)
 		if (M.ckey && isdead(M))
-			found += M
-	return found
+			. += M
 
 /**
   * Returns random hex value of length given
@@ -2051,10 +2027,9 @@ proc/countJob(rank)
 /proc/random_hex(var/digits as num)
 	if (!digits)
 		digits = 6
-	var/return_hex = ""
-	for (var/i = 0, i < digits, i++)
-		return_hex += pick(hex_chars)
-	return return_hex
+	. = ""
+	for (var/i in 1 to digits)
+		. += pick(hex_chars)
 
 //A global cooldown on this so it doesnt destroy the external server
 var/global/nextDectalkDelay = 5 //seconds
@@ -2117,13 +2092,14 @@ var/global/list/allowed_restricted_z_areas
 
 // Helper for blob, wraiths and whoever else might need them (Convair880).
 /proc/restricted_z_allowed(var/mob/M, var/T)
+	. = FALSE
 	if(!allowed_restricted_z_areas)
 		allowed_restricted_z_areas = concrete_typesof(/area/shuttle/escape) + concrete_typesof(/area/shuttle_transit_space) + concrete_typesof(/area/football/field)
 
 	if (M && isblob(M))
 		var/mob/living/intangible/blob_overmind/B = M
 		if (B.tutorial)
-			return 1
+			return TRUE
 
 	var/area/A
 	if (T && istype(T, /area))
@@ -2132,8 +2108,7 @@ var/global/list/allowed_restricted_z_areas
 		A = get_area(T)
 
 	if (A && istype(A) && (A.type in allowed_restricted_z_areas))
-		return 1
-	return 0
+		return TRUE
 
 /**
   * Given center turf/atom, range, and list of things to smash, will damage said objects within range of center.
@@ -2143,7 +2118,7 @@ var/global/list/allowed_restricted_z_areas
 	if (!center || !isnum(range) || range <= 0)
 		return 0
 
-	if (!islist(smash) || !smash.len)
+	if (!islist(smash) || !length(smash))
 		return 0
 
 	var/turf/CT
@@ -2197,20 +2172,18 @@ var/global/list/allowed_restricted_z_areas
 			C = M.client
 	if (!C || !C.preferences)
 		return
-	return C.preferences.hud_style
+	. = C.preferences.hud_style
 
 /**
   * Returns list of all mobs within an atom. Not cheap! (unlike ur mum)
   */
-/proc/get_all_mobs_in(var/atom/what)
-	var/list/ret = list()
-	if(ismob( what ))
-		ret[++ret.len] = what
-	for(var/atom/thing in what)
+/proc/get_all_mobs_in(atom/found)
+	. = list()
+	if(ismob(found))
+		. += found
+	for(var/atom/thing in found)
 		var/list/outp = get_all_mobs_in(thing)
-		ret.len += outp.len
-		ret += outp
-	return ret
+		. += outp
 
 /**
   * Given user, will proompt user to select skin color from list (or custom) and returns skin tone after blending
@@ -2483,7 +2456,7 @@ proc/angle_to_vector(ang)
   * * TA: Target Atom. The thing that the user is adding the reagent to
   */
 proc/check_whitelist(var/atom/TA, var/list/whitelist, var/mob/user as mob, var/custom_message = "")
-	if (!whitelist || (!TA || !TA.reagents) || (islist(whitelist) && !whitelist.len))
+	if (!whitelist || (!TA || !TA.reagents) || (islist(whitelist) && !length(whitelist)))
 		return
 	if (!custom_message)
 		custom_message = "<span class='alert'>[TA] identifies and removes a harmful substance.</span>"
@@ -2499,9 +2472,9 @@ proc/check_whitelist(var/atom/TA, var/list/whitelist, var/mob/user as mob, var/c
 		else if (ismob(TA.loc))
 			var/mob/M = TA.loc
 			boutput(M, "[custom_message]")
-		else if(ismob(usr))
+		else if(ismob(user))
 			 // some procs don't know user, for instance because they are in on_reagent_change
-			boutput(usr, "[custom_message]")
+			boutput(user, "[custom_message]")
 		else
 			TA.visible_message("[custom_message]")
 
@@ -2655,3 +2628,11 @@ proc/is_incapacitated(mob/M)
 		M.hasStatus("weakened") || \
 		M.hasStatus("paralysis") || \
 		M.stat)
+
+/// sets up the list of ringtones players can select through character setup
+proc/get_all_character_setup_ringtones()
+	if(!length(selectable_ringtones))
+		for (var/datum/ringtone/R as anything in filtered_concrete_typesof(/datum/ringtone, /proc/filter_is_character_setup_ringtone))
+			var/datum/ringtone/R_prime = new R
+			selectable_ringtones[R_prime.name] = R_prime
+	return selectable_ringtones

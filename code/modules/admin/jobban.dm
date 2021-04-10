@@ -5,17 +5,17 @@
 	if(ismob(M)) //Correct to ckey if provided a mob.
 		var/mob/keysource = M
 		M = keysource.ckey
-	var/server_nice = input(usr, "What server does the ban apply to?", "Ban") as null|anything in list("All", "Roleplay", "Main", "Roleplay Overflow", "Main Overflow")
-	var/server = null //heehoo copy pasta
+	var/server_nice = input(usr, "What server does the ban apply to?", "Ban") as null|anything in list("All", "1 Classic: Heisenbee", "2 Classic: Bombini", "3 Roleplay: Morty", "4 Roleplay: Sylvester")
+	var/server = null
 	switch (server_nice)
-		if ("Roleplay")
-			server = "rp"
-		if ("Main")
-			server = "main"
-		if ("Roleplay Overflow")
+		if ("1 Classic: Heisenbee")
+			server = "main1"
+		if ("2 Classic: Bombini")
 			server = "main2"
-		if ("Main Overflow")
+		if ("3 Roleplay: Morty")
 			server = "main3"
+		if ("4 Roleplay: Sylvester")
+			server = "main4"
 	if(apiHandler.queryAPI("jobbans/add", list("ckey"=M,"rank"=rank, "akey"=akey, "applicable_server"=server)))
 		var/datum/player/player = make_player(M) //Recache the player.
 		player?.cached_jobbans = apiHandler.queryAPI("jobbans/get/player", list("ckey"=M), 1)[M]
@@ -30,8 +30,8 @@
 		return FALSE
 	if(ismob(M))
 		var/mob/M2 = M
-		if(isnull(M2.client))
-			return FALSE
+		//if(isnull(M2.client))
+			//return FALSE
 		var/datum/player/player = make_player(M2.ckey) // Get the player so we can use their bancache.
 		if(player.cached_jobbans == null) // Shit they aren't cached.
 			var/api_response = apiHandler.queryAPI("jobbans/get/player", list("ckey"=M2.ckey), 1)
@@ -59,7 +59,7 @@
 			return TRUE
 
 	if(cache.Find("Security Department") || cache.Find("Security Officer"))
-		if(rank in list("Security Officer","Vice Officer","Detective"))
+		if(rank in list("Security Officer","Security Assistant","Vice Officer","Part-time Vice Officer","Detective"))
 			return TRUE
 
 	if(cache.Find("Heads of Staff"))

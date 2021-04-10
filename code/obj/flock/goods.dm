@@ -63,13 +63,12 @@
 	force = 1.0
 	rechargeable = 0 // yeah this is weird alien technology good fucking luck charging it
 	cell = new/obj/item/ammo/power_cell/self_charging
-	current_projectile = new/datum/projectile/energy_bolt/flockdrone
 	projectiles = null
 	is_syndicate = 1 // it's less that this is a syndicate weapon and more that replicating it isn't trivial
 	custom_cell_max_capacity = 100
 
 /obj/item/gun/energy/flock/New()
-	current_projectile = new/datum/projectile/energy_bolt/flockdrone
+	set_current_projectile(new/datum/projectile/energy_bolt/flockdrone)
 	projectiles = list(current_projectile)
 	..()
 

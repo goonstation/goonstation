@@ -106,6 +106,18 @@
 	degrade_to = "radioactive"
 	icon_state  = "rad_res"
 
+	OnAdd()
+		. = ..()
+		if(ismob(owner))
+			var/mob/M = owner
+			APPLY_MOB_PROPERTY(M, PROP_RADPROT, src, 100)
+
+	OnRemove()
+		. = ..()
+		if(ismob(owner))
+			var/mob/M = owner
+			REMOVE_MOB_PROPERTY(M, PROP_RADPROT, src)
+
 /datum/bioEffect/alcres
 	name = "Alcohol Resistance"
 	desc = "Strongly reinforces the subject's nervous system against alcoholic intoxication."
@@ -562,11 +574,11 @@ var/list/radio_brains = list()
 	icon_state  = "strong"
 
 	OnAdd()
-		src.owner.add_stam_mod_regen("g-fitness-buff", 2)
+		APPLY_MOB_PROPERTY(src.owner, PROP_STAMINA_REGEN_BONUS, "g-fitness-buff", 2)
 		src.owner.add_stam_mod_max("g-fitness-buff", 30)
 
 	OnRemove()
-		src.owner.remove_stam_mod_regen("g-fitness-buff")
+		REMOVE_MOB_PROPERTY(src.owner, PROP_STAMINA_REGEN_BONUS, "g-fitness-buff")
 		src.owner.remove_stam_mod_max("g-fitness-buff")
 
 /datum/bioEffect/blood_overdrive

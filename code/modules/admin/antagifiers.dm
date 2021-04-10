@@ -158,6 +158,13 @@
 	desc = "Self-extracting archive containing some sweet Syndicate stuff!"
 	var/in_use = 0
 
+	//People keep blowing up the murderbox
+	ex_act(severity)
+		return
+
+	meteorhit(obj/meteor)
+		return
+
 	attack_hand(mob/M as mob)
 
 		if (!istype(M, /mob/living/carbon/human))

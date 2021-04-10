@@ -56,7 +56,7 @@
 		if(master.status & (NOPOWER|BROKEN))
 			return 1
 
-		if ((!usr.contents.Find(src.master) && (!in_range(src.master, usr) || !istype(src.master.loc, /turf))) && (!issilicon(usr)))
+		if ((!usr.contents.Find(src.master) && (!in_interact_range(src.master, usr) || !istype(src.master.loc, /turf))) && (!issilicon(usr)))
 			return 1
 
 		if(!(holder in src.master.contents) && !(holder.loc in src.master.contents))

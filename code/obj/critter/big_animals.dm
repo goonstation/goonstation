@@ -377,7 +377,7 @@ obj/critter/bear/care
 		if (src.task == "wandering" || src.task == "thinking")
 			if (ishuman(over_object) && usr == over_object)
 				var/mob/living/carbon/human/H = over_object
-				if (H && !H.restrained() && !H.stat && in_range(src, H))
+				if (H && !H.restrained() && !H.stat && in_interact_range(src, H))
 					src.task = "drink mob"
 					src.drink_target = H
 					src.set_loc(H.loc)

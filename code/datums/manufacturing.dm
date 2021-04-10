@@ -115,6 +115,14 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 	create = 1
 	frame_path = /obj/disposalpipe/loafer
 
+/******************** AI display (temp) *******************/
+
+/datum/manufacture/mechanics/ai_status_display
+	name = "AI display"
+	time = 5 SECONDS
+	create = 1
+	frame_path = /obj/machinery/ai_status_display
+
 /*
 /datum/manufacture/iron
 	// purely a test
@@ -632,8 +640,8 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 
 /datum/manufacture/RCD
 	name = "Rapid Construction Device"
-	item_paths = list("MET-3","DEN-1","CON-1")
-	item_amounts = list(5,1,10)
+	item_paths = list("MET-3", "DEN-3", "CON-2", "POW-2")
+	item_amounts = list(20, 10, 10, 10)
 	item_outputs = list(/obj/item/rcd)
 	time = 90 SECONDS
 	create = 1
@@ -642,20 +650,38 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 /datum/manufacture/RCDammo
 	name = "Compressed Matter Cartridge"
 	item_paths = list("DEN-1")
-	item_amounts = list(5)
+	item_amounts = list(40)
 	item_outputs = list(/obj/item/rcd_ammo)
 	time = 10 SECONDS
 	create = 1
 	category = "Resource"
 
+/datum/manufacture/RCDammomedium
+	name = "Medium Compressed Matter Cartridge"
+	item_paths = list("DEN-2")
+	item_amounts = list(40)
+	item_outputs = list(/obj/item/rcd_ammo/medium)
+	time = 20 SECONDS
+	create = 1
+	category = "Resource"
+
 /datum/manufacture/RCDammolarge
 	name = "Large Compressed Matter Cartridge"
-	item_paths = list("DEN-1")
-	item_amounts = list(45)
+	item_paths = list("DEN-3")
+	item_amounts = list(40)
 	item_outputs = list(/obj/item/rcd_ammo/big)
 	time = 30 SECONDS
 	create = 1
 	category = "Resource"
+
+/datum/manufacture/sds
+	name = "Syndicate Destruction System"
+	item_paths = list("MET-3","DEN-1","CON-1")
+	item_amounts = list(16,12,8)
+	item_outputs = list(/obj/item/syndicate_destruction_system)
+	time = 90 SECONDS
+	create = 1
+	category = "Tool"
 
 /datum/manufacture/jumpsuit
 	name = "Grey Jumpsuit"
@@ -1675,6 +1701,24 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 	create = 2
 	category = "Resource"
 
+/datum/manufacture/penlight
+	name = "Penlight"
+	item_paths = list("MET-1","CRY-1")
+	item_amounts = list(1,1)
+	item_outputs = list(/obj/item/device/light/flashlight/penlight)
+	time = 2 SECONDS
+	create = 1
+	category = "Tool"
+
+/datum/manufacture/stethoscope
+	name = "Stethoscope"
+	item_paths = list("MET-1","CRY-1")
+	item_amounts = list(2,1)
+	item_outputs = list(/obj/item/medical/medicaldiagnosis/stethoscope)
+	time = 5 SECONDS
+	create = 1
+	category = "Tool"
+
 /datum/manufacture/spacesuit
 	name = "Space Suit Set"
 	item_paths = list("FAB-1","MET-1","CRY-1")
@@ -2004,6 +2048,15 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 	create = 1
 	category = "Clothing"
 
+/datum/manufacture/pride_lgbt
+	name = "LGBT Pride Jumpsuit"
+	item_paths = list("FAB-1")
+	item_amounts = list(4)
+	item_outputs = list(/obj/item/clothing/under/pride)
+	time = 5 SECONDS
+	create = 1
+	category = "Clothing"
+
 /datum/manufacture/pride_ace
 	name = "Asexual Pride Jumpsuit"
 	item_paths = list("FAB-1")
@@ -2202,6 +2255,15 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 	create = 1
 	category = "Clothing"
 
+/datum/manufacture/eyepatch
+	name = "Medical Eyepatch"
+	item_paths = list("FAB-1")
+	item_amounts = list(5)
+	item_outputs = list(/obj/item/clothing/glasses/eyepatch)
+	time = 15 SECONDS
+	create = 1
+	category = "Clothing"
+
 /datum/manufacture/blindfold
 	name = "Blindfold"
 	item_paths = list("FAB-1")
@@ -2368,6 +2430,23 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 	create = 1
 	category = "Tool"
 
+/datum/manufacture/pod/sps
+	name = "Syndicate Purge System"
+	item_paths = list("MET-1","CON-1","CRY-1")
+	item_amounts = list(8,12,16)
+	item_outputs = list(/obj/item/shipcomponent/mainweapon/syndicate_purge_system)
+	time = 90 SECONDS
+	create = 1
+	category = "Tool"
+
+/datum/manufacture/pod/srs
+	name = "Syndicate Rewind System"
+	item_paths = list("MET-1","CON-1","CRY-1")
+	item_amounts = list(16,12,8)
+	item_outputs = list(/obj/item/shipcomponent/secondary_system/syndicate_rewind_system)
+	time = 90 SECONDS
+	create = 1
+	category = "Tool"
 //// deployable warp beacon
 
 /datum/manufacture/beaconkit

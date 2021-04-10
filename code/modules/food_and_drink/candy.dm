@@ -325,7 +325,7 @@
 		SPAWN_DBG(0)
 			if (src.icon_state == "lpop-")
 				src.icon_state = "lpop-[rand(1,6)]"
-			if (islist(src.flavors) && src.flavors.len)
+			if (islist(src.flavors) && length(src.flavors))
 				for (var/i=5, i>0, i--)
 					src.reagents.add_reagent(pick(src.flavors), 1)
 

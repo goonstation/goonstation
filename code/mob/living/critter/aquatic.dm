@@ -107,7 +107,7 @@
 		src.update_water_status()
 		if(src.critter_owner)
 			if(src.water_need)
-				if(prob(10 * src.water_need) && !critter_owner.nodamage) // question: this gets rid of like one proc call; worth it?
+				if(prob(50 * src.water_need) && !critter_owner.nodamage) // question: this gets rid of like one proc call; worth it?
 					var/datum/healthHolder/Br = critter_owner.get_health_holder("brute")
 					Br?.TakeDamage(src.water_need * src.out_of_water_debuff)
 					var/datum/healthHolder/Bu = critter_owner.get_health_holder("burn")
@@ -123,13 +123,12 @@
 					Bu.TakeDamage(-src.in_water_buff)
 		else if(src.human_owner)
 			if(src.water_need)
-				if(prob(10 * src.water_need) && !human_owner.nodamage) // question: this gets rid of like one proc call; worth it?
-					human_owner.TakeDamage("All",src.water_need * src.out_of_water_debuff,0,0)
-					if(!human_owner.is_heat_resistant())
-						human_owner.TakeDamage("All",0,src.water_need * src.out_of_water_debuff,0,0)
+				if(prob(50 * src.water_need) && !human_owner.nodamage) // question: this gets rid of like one proc call; worth it?
+					human_owner.take_oxygen_deprivation(10*src.water_need)
 					hit_twitch(critter_owner)
 			else if(human_owner.max_health > human_owner.health && prob(10 * src.in_water_buff))
 				human_owner.HealDamage("All", src.in_water_buff, src.in_water_buff,0)
+				human_owner.take_oxygen_deprivation(-10)
 
 
 	proc/update_water_status(loc = null)

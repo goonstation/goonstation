@@ -45,7 +45,7 @@
 		if (dist > src.examine_range && !issilicon(usr))
 			. += "<br>It's too far away to see what it says.[prob(10) ? " Who decided the text should be <i>that</i> small?!" : null]"
 		else
-			if (!src.partners || !src.partners.len)
+			if (!src.partners || !length(src.partners))
 				return . += "<font color='red'>ERROR: NO CONNECTED SCANNERS</font>"
 			var/data = null
 			for (var/obj/health_scanner/floor/my_partner in src.partners)
@@ -72,9 +72,7 @@
 					src.add_partner(possible_partner)
 
 	proc/add_partner(obj/health_scanner/floor/F)
-		if (src.partners.Find(F))
-			return
-		src.partners += F
+		src.partners |= F
 
 /obj/health_scanner/floor
 	name = "health scanner"

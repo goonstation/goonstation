@@ -28,9 +28,9 @@
 	var/stat_msg2
 	desc = "A computer that allows one to call and recall the emergency shuttle, as well as recieve messages from Centcom."
 
-	lr = 0.6
-	lg = 1
-	lb = 0.1
+	light_r =0.6
+	light_g = 1
+	light_b = 0.1
 
 	disposing()
 		radio_controller.remove_object(src, status_display_freq)
@@ -170,7 +170,7 @@
 /proc/disablelockdown(var/mob/usr)
 	boutput(world, "<span class='alert'>Lockdown cancelled by [usr.name]!</span>")
 
-	for(var/obj/machinery/firealarm/FA as() in machine_registry[MACHINES_FIREALARMS]) //deactivate firealarms
+	for(var/obj/machinery/firealarm/FA as anything in machine_registry[MACHINES_FIREALARMS]) //deactivate firealarms
 		SPAWN_DBG(0)
 			if(FA.lockdownbyai == 1)
 				FA.lockdownbyai = 0
@@ -231,7 +231,7 @@
 		var/timeleft = emergency_shuttle.timeleft()
 		dat += "<B>Emergency shuttle</B><br><BR><br>ETA: [timeleft / 60 % 60]:[add_zero(num2text(timeleft % 60), 2)]<BR>"
 
-	if (issilicon(user) || isAI(usr))
+	if (issilicon(user) || isAI(user))
 		var/dat2 = src.interact_ai(user) // give the AI a different interact proc to limit its access
 		if(dat2)
 			dat +=  dat2

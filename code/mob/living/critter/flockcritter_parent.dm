@@ -165,7 +165,7 @@
 	onUpdate()
 		..()
 		var/mob/living/critter/flock/F = owner
-		if (target == null || owner == null || !in_range(owner, target, 1) || isfeathertile(target) || !F?.can_afford(20))
+		if (target == null || owner == null || !in_interact_range(owner, target, 1) || isfeathertile(target) || !F?.can_afford(20))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -239,7 +239,7 @@
 	onUpdate()
 		..()
 		var/mob/living/critter/flock/F = owner
-		if (target == null || owner == null || !in_range(owner, target, 1) || !F?.can_afford(src.cost) || locate(structurepath) in target)
+		if (target == null || owner == null || !in_interact_range(owner, target, 1) || !F?.can_afford(src.cost) || locate(structurepath) in target)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -337,7 +337,7 @@
 	onUpdate()
 		..()
 		var/mob/living/critter/flock/F = owner
-		if (target == null || owner == null || !in_range(owner, target, 1) || !F.can_afford(10))
+		if (target == null || owner == null || !in_interact_range(owner, target, 1) || !F.can_afford(10))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -404,7 +404,7 @@
 	onUpdate()
 		..()
 		var/mob/living/critter/flock/F = owner
-		if (target == null || owner == null || !in_range(owner, target, 1) || !F.can_afford(15))
+		if (target == null || owner == null || !in_interact_range(owner, target, 1) || !F.can_afford(15))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -435,7 +435,7 @@
 		if(src.decal)
 			pool(src.decal)
 		var/mob/living/critter/flock/F = owner
-		if(F && target && in_range(owner, target))
+		if(F && target && in_interact_range(owner, target))
 			var/obj/icecube/flockdrone/cage = new /obj/icecube/flockdrone(target.loc, target, F.flock)
 			cage.visible_message("<span class='alert'>[cage] forms around [target], entombing them completely!</span>")
 			F.pay_resources(15)
@@ -460,7 +460,7 @@
 
 	onUpdate()
 		..()
-		if (target == null || owner == null || !in_range(owner, target, 1))
+		if (target == null || owner == null || !in_interact_range(owner, target, 1))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -520,7 +520,7 @@
 
 	onUpdate()
 		..()
-		if (target == null || owner == null || !in_range(owner, target, 1))
+		if (target == null || owner == null || !in_interact_range(owner, target, 1))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -537,3 +537,5 @@
 		amounttopay = min(F.resources, difference, 10)
 		F.pay_resources(amounttopay)
 		target.currentmats += amounttopay
+		if(F.resources && !F.is_npc) //npc check just to make sure it doesnt interfere with their ai.
+			src.onRestart() //restart the action akin to automenders

@@ -50,8 +50,17 @@ mob/new_player
 		src.set_loc(pick_landmark(LANDMARK_NEW_PLAYER, locate(1,1,1)))
 		src.sight |= SEE_TURFS
 
+
+		// byond members get a special join message :]
+		if (src.client?.IsByondMember())
+			var/list/msgs_which_are_gifs = list(8, 9, 10) //not all of these are normal jpgs
+			var/num = rand(1,16)
+			var/resource = resource("images/member_msgs/byond_member_msg_[num].[(msgs_which_are_gifs.Find(num)) ? "gif" : "jpg"]")
+			boutput(src, "<img src='[resource]' style='margin: auto; display: block; max-width: 100%;'>")
+
+
 		if (src.ckey && !adminspawned)
-			if (spawned_in_keys.Find("[src.ckey]"))
+			if ("[src.ckey]" in spawned_in_keys)
 				if (!(client && client.holder) && !abandon_allowed)
 					 //They have already been alive this round!!
 					var/mob/dead/observer/observer = new()
@@ -267,8 +276,10 @@ mob/new_player
 			return 0
 		if (!JOB.no_jobban_from_this_job && jobban_isbanned(src,JOB.name))
 			return 0
+		if (JOB.requires_supervisor_job && countJob(JOB.requires_supervisor_job) <= 0)
+			return 0
 		if (JOB.requires_whitelist)
-			if (!NT.Find(src.ckey))
+			if (!(src.ckey in NT))
 				return 0
 		if (JOB.needs_college && !src.has_medal("Unlike the director, I went to college"))
 			return 0
@@ -640,7 +651,7 @@ a.latejoin-card:hover {
 							break
 
 					var/bad_type = null
-					if (islist(ticker.mode.latejoin_antag_roles) && ticker.mode.latejoin_antag_roles.len)
+					if (islist(ticker.mode.latejoin_antag_roles) && length(ticker.mode.latejoin_antag_roles))
 						bad_type = pick(ticker.mode.latejoin_antag_roles)
 					else
 						bad_type = "traitor"

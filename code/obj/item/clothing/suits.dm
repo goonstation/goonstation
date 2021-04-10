@@ -193,9 +193,9 @@
 		setProperty("rangedprot", 0.5)
 
 /obj/item/clothing/suit/bio_suit/attackby(obj/item/W, mob/user)
-	var/turf/T = usr.loc
+	var/turf/T = user.loc
 	if(istype(W, /obj/item/clothing/suit/armor/vest))
-		boutput(usr, "<span class='notice'>You attach [W] to [src].</span>")
+		boutput(user, "<span class='notice'>You attach [W] to [src].</span>")
 		if (istype(src, /obj/item/clothing/suit/bio_suit/paramedic))
 			new/obj/item/clothing/suit/bio_suit/paramedic/armored(T)
 		else
@@ -293,6 +293,7 @@
 		setProperty("meleeprot", 4)
 		setProperty("rangedprot", 2)
 		setProperty("movespeed", 1)
+		setProperty("disorient_resist", 35) //it's a special item
 
 /obj/item/clothing/suit/rad // re-added for Russian Station as there is a permarads area there!
 	name = "\improper Class II radiation suit"
@@ -318,6 +319,7 @@
 		setProperty("heatprot", 15)
 		setProperty("meleeprot", 3)
 		setProperty("rangedprot", 0.5)
+		setProperty("disorient_resist", 15)
 
 /obj/item/clothing/suit/det_suit
 	name = "coat"
@@ -468,6 +470,18 @@
 		icon_state = "MDlabcoat-alt"
 		item_state = "MDlabcoat-alt"
 		coat_style = "MDlabcoat-alt"
+
+/obj/item/clothing/suit/labcoat/pathology
+	name = "pathologist's labcoat"
+	desc = "A protective laboratory coat with the orange markings of a Pathologist."
+	icon_state = "PTlabcoat"
+	item_state = "PTlabcoat"
+	coat_style = "PTlabcoat"
+
+	april_fools
+		icon_state = "PTlabcoat-alt"
+		item_state = "PTlabcoat-alt"
+		coat_style = "PTlabcoat-alt"
 
 /obj/item/clothing/suit/labcoat/science
 	name = "scientist's labcoat"
@@ -828,6 +842,7 @@
 		setProperty("meleeprot", 3)
 		setProperty("rangedprot", 0.5)
 		setProperty("movespeed", 1)
+		setProperty("disorient_resist", 15)
 
 /obj/item/clothing/suit/fire/armored
 	name = "armored firesuit"
@@ -865,6 +880,7 @@
 		setProperty("meleeprot", 4)
 		setProperty("rangedprot", 0.8)
 		setProperty("movespeed", 2)
+		setProperty("disorient_resist", 25)
 
 /obj/item/clothing/suit/fire/old
 	name = "old firesuit"
@@ -1059,17 +1075,19 @@
 			setProperty("meleeprot", 6)
 			setProperty("rangedprot", 3)
 
-	heavy // nukie melee class armor
-		name = "citadel heavy combat armor"
-		desc = "A syndicate issue heavy combat dress system, pressurized for space travel and reinforced for greater protection in firefights."
-		icon_state = "syndie_specialist-heavy"
-		item_state = "syndie_specialist-heavy"
+	knight // nukie melee class armor
+		name = "citadel heavy combat cuirass"
+		desc = "A syndicate issue super-heavy combat armor suit, pressurized for space travel and reinforced for superior staying-power in extended battle."
+		icon_state = "syndie_specialist-knight"
+		item_state = "syndie_specialist-knight"
 
 		setupProperties()
 			..()
-			setProperty("meleeprot", 8)
-			setProperty("rangedprot", 2)
-			setProperty("movespeed", 0.5)
+			setProperty("meleeprot", 6)
+			setProperty("rangedprot", 1)
+			setProperty("exploprot", 30)
+			setProperty("space_movespeed", 1.2)
+			setProperty("disorient_resist", 65)
 
 	specialist
 		name = "specialist operative combat dress"
@@ -1517,3 +1535,18 @@
 
 	attack_self(mob/user as mob)
 		user.visible_message("[user] flashes the badge: <br><span class='bold'>[bicon(src)] Nanotrasen's Finest [badge_owner_job]: [badge_owner_name].</span>", "You show off the badge: <br><span class='bold'>[bicon(src)] Nanotrasen's Finest [badge_owner_job] [badge_owner_name].</span>")
+
+/obj/item/clothing/suit/hosmedal
+	name = "war medal"
+	desc = ""
+	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
+	w_class = 1.0
+	wear_image_icon = 'icons/mob/overcoats/worn_suit_gimmick.dmi'
+	icon_state = "hosmedal"
+	icon_state = "hosmedal"
+
+	get_desc(var/dist, var/mob/user)
+		if (user.mind?.assigned_role == "Head of Security")
+			. = "It's your war medal, you remember when you got this for saving a man's life during the war."
+		else
+			. = "It's the HoS's old war medal, you heard they got it for their acts of heroism in the war."

@@ -542,29 +542,7 @@ datum
 			instant = 1
 			mix_phrase = "The mixture explodes with a big bang."
 			on_reaction(var/datum/reagents/holder, var/created_volume)
-				var/atom/source = get_turf(holder.my_atom)
-				new/obj/decal/shockwave(source)
-				playsound(source, 'sound/weapons/flashbang.ogg', 25, 1)
-				if (holder?.my_atom)
-					for(var/atom/movable/M in view(2+ (created_volume > 30 ? 1:0), source))
-						if(M.anchored || M == source || M.throwing) continue
-						M.throw_at(get_edge_cheap(source, get_dir(source, M)),  20 + round(created_volume * 2), 1 + round(created_volume / 10))
-						LAGCHECK(LAG_MED)
-				else
-					var/limit_count = 0
-					var/turf/location = 0
-					var/amt = max(1, (holder.covered_cache.len * (created_volume / holder.covered_cache_volume)))
-					for (var/i = 0, i < amt && holder.covered_cache.len, i++)
-						location = pick(holder.covered_cache)
-						holder.covered_cache -= location
-						limit_count = 0
-						for(var/atom/movable/M in location)
-							if(M.anchored || M == source || M.throwing) continue
-							limit_count++
-							M.throw_at(get_edge_cheap(location, pick(cardinal)),  (20 + round(created_volume * 2)/holder.covered_cache.len), (1 + round(created_volume / 10))/holder.covered_cache.len)
-							if (limit_count > 5) break
-							LAGCHECK(LAG_MED)
-
+				sorium_reaction(holder, created_volume, id)
 				return
 
 		ldmatter
@@ -2392,33 +2370,12 @@ datum
 			mix_sound = 'sound/weapons/flashbang.ogg'
 
 			on_reaction(var/datum/reagents/holder, var/created_volume)
-				var/turf/location = 0
 				if (holder?.my_atom)
-					location = get_turf(holder.my_atom)
-					elecflash(location)
-
-					for (var/mob/living/M in all_viewers(5, location))
-						if (isintangible(M))
-							continue
-
-						var/dist = get_dist(M, location)
-						if (issilicon(M))
-							M.apply_flash(30, max(2 * (3 - dist), 0), max(2 * (5 - dist), 0))
-						else
-							M.apply_flash(60, 0, (3 - dist), 0, ((5 - dist) * 2), (2 - dist))
+					flashpowder_reaction(get_turf(holder.my_atom), created_volume)
 				else
 					var/amt = max(1, (holder.covered_cache.len * (created_volume / holder.covered_cache_volume)))
 					for (var/i = 0, i < amt && holder.covered_cache.len, i++)
-						location = pick(holder.covered_cache)
-						holder.covered_cache -= location
-						for (var/mob/living/M in location)
-							if (isintangible(M))
-								continue
-							var/dist = get_dist(M, location)
-							if (issilicon(M))
-								M.apply_flash(30, max(2 * (3 - dist), 0), max(2 * (5 - dist), 0))
-							else
-								M.apply_flash(60, 0, (3 - dist), 0, ((5 - dist) * 2), (2 - dist))
+						flashpowder_reaction(get_turf(pick(holder.covered_cache)), created_volume)
 
 
 
@@ -3647,12 +3604,8 @@ datum
 			mix_phrase = "The substance bubbles and gives off an almost lupine howl."
 			var/static/list/full_moon_days_2053 = list("Jan 04", "Feb 03", "Mar 04", "Apr 03", "May 02", "Jun 01", "Jul 01", "Jul 30", "Aug 29", "Sep 27", "Oct 27", "Nov 25", "Dec 25")
 
-			on_reaction(var/datum/reagents/holder, var/created_volume)
-
-				if (!(time2text(world.realtime, "MMM DD") in full_moon_days_2053))
-					holder.my_atom.visible_message("<span class='alert'>The solution bubbles even more rapidly and dissipates into nothing!</span>")
-					holder.remove_reagent("werewolf_serum",created_volume + 1)
-				return
+			does_react(var/datum/reagents/holder)
+				return time2text(world.realtime, "MMM DD") in full_moon_days_2053 //just doesn't react unless it's a full moon
 
 		 vampire_serum
 		 	name = "Vampire Serum Omega"

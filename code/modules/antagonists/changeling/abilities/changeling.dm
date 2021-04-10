@@ -44,7 +44,7 @@
 
 	return
 
-/obj/screen/ability/topBar/changeling
+/atom/movable/screen/ability/topBar/changeling
 	clicked(params)
 		var/datum/targetable/changeling/spell = owner
 		var/datum/abilityHolder/holder = owner.holder
@@ -304,7 +304,7 @@
 	preferred_holder_type = /datum/abilityHolder/changeling
 
 	New()
-		var/obj/screen/ability/topBar/changeling/B = new /obj/screen/ability/topBar/changeling(null)
+		var/atom/movable/screen/ability/topBar/changeling/B = new /atom/movable/screen/ability/topBar/changeling(null)
 		B.icon = src.icon
 		B.icon_state = src.icon_state
 		B.owner = src
@@ -315,7 +315,7 @@
 	updateObject()
 		..()
 		if (!src.object)
-			src.object = new /obj/screen/ability/topBar/changeling()
+			src.object = new /atom/movable/screen/ability/topBar/changeling()
 			object.icon = src.icon
 			object.owner = src
 		if (src.last_cast > world.time)

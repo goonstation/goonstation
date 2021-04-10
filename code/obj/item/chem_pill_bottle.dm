@@ -34,7 +34,7 @@
 
 	// spawn a pill, returns a pill or null if there aren't any left in the bottle
 	proc/create_pill()
-		var/totalpills = src.pcount + src.contents.len
+		var/totalpills = src.pcount + length(src.contents)
 
 		if(totalpills <= 0)
 			return null
@@ -68,7 +68,7 @@
 		return P
 
 	proc/rebuild_desc()
-		var/totalpills = src.pcount + src.contents.len
+		var/totalpills = src.pcount + length(src.contents)
 		if(totalpills > 15)
 			src.desc = "A [src.pname] pill bottle. There are too many to count."
 			src.inventory_counter.update_text("**")
@@ -123,7 +123,7 @@
 	MouseDrop_T(atom/movable/O as obj, mob/user as mob)
 		if (user.restrained() || user.getStatusDuration("paralysis") || user.sleeping || user.stat || user.lying)
 			return
-		if (!in_range(user, src) || !in_range(user, O))
+		if (!in_interact_range(user, src) || !in_interact_range(user, O))
 			user.show_text("That's too far away!", "red")
 			return
 		if (!istype(O, /obj/item/reagent_containers/pill))

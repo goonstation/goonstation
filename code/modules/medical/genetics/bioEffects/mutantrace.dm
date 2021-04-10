@@ -76,11 +76,6 @@
 	msgLose = "You feel dry."
 	icon_state  = "squid"
 
-	OnAdd()
-		if (ishuman(owner))
-			overlay_image = image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "squidhead", layer = MOB_HAIR_LAYER2)
-		..()
-
 /datum/bioEffect/mutantrace/dwarf
 	name = "Dwarfism"
 	desc = "Greatly reduces the overall size of the subject, resulting in markedly dimished height."

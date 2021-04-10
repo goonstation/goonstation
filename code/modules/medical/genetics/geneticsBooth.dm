@@ -62,9 +62,9 @@
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
 
 	var/datum/light/light
-	var/lr = 0.88
-	var/lg = 0.88
-	var/lb = 1
+	var/light_r =0.88
+	var/light_g = 0.88
+	var/light_b = 1
 
 	New()
 		..()
@@ -72,7 +72,7 @@
 		light.attach(src)
 		light.set_brightness(0.6)
 		light.set_height(1.5)
-		light.set_color(lr,lg,lb)
+		light.set_color(light_r, light_g, light_b)
 
 		contextLayout = new /datum/contextLayout/flexdefault(4, 32, 32)
 
@@ -132,7 +132,7 @@
 			user.show_text("Something went wrong, showing backup menu...", "blue")
 			var/list/names = list()
 
-			for (var/datum/geneboothproduct/P in offered_genes)
+			for (var/datum/geneboothproduct/P as anything in offered_genes)
 				names += P.name
 
 			var/name_sel = input(user, "Offered Products", "Selection") as null|anything in names
@@ -142,7 +142,7 @@
 				user.show_text("There's someone else inside!")
 				return
 
-			for (var/datum/geneboothproduct/P in offered_genes)
+			for (var/datum/geneboothproduct/P as anything in offered_genes)
 				if (name_sel == P.name)
 					select_product(P)
 					break
@@ -150,11 +150,11 @@
 			user.show_text("[src] has no products available for purchase right now.", "blue")
 
 	proc/reload_contexts()//IM ASORRY
-		for(var/datum/contextAction/C in src.contextActions)
+		for(var/datum/contextAction/C as anything in src.contextActions)
 			C.dispose()
 		src.contextActions = list()
 
-		for (var/datum/geneboothproduct/P in offered_genes)
+		for (var/datum/geneboothproduct/P as anything in offered_genes)
 			var/datum/contextAction/genebooth_product/newcontext = new /datum/contextAction/genebooth_product
 			newcontext.GBP = P
 			newcontext.GB = src
@@ -169,7 +169,7 @@
 		playsound(src.loc, "sound/machines/keypress.ogg", 50, 1, extrarange = -15, pitch = 0.60)
 
 	proc/just_pick_anything()
-		for (var/datum/geneboothproduct/P in offered_genes)
+		for (var/datum/geneboothproduct/P as anything in offered_genes)
 			selected_product = P
 			abilityoverlay = SafeGetOverlayImage("abil", P.BE.icon, P.BE.icon_state,src.layer + 0.1)
 			updateicon()

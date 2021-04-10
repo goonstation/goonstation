@@ -149,10 +149,25 @@
 /obj/decal/point
 	name = "point"
 	icon = 'icons/mob/screen1.dmi'
+	appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM | PIXEL_SCALE
 	icon_state = "arrow"
 	layer = EFFECTS_LAYER_1
 	plane = PLANE_HUD
 	anchored = 1
+
+proc/make_point(atom/movable/target, pixel_x=0, pixel_y=0, color="#ffffff", time=2 SECONDS, invisibility=0)
+	// note that `target` can also be a turf, but byond sux and I can't declare the var as atom because areas don't have vis_contents
+	var/obj/decal/point/point = new
+	point.pixel_x = pixel_x
+	point.pixel_y = pixel_y
+	point.color = color
+	point.invisibility = invisibility
+	target.vis_contents += point
+	SPAWN_DBG(time)
+		if(target)
+			target.vis_contents -= point
+		qdel(point)
+	return point
 
 /* - Replaced by functional version: /obj/item/instrument/large/jukebox
 /obj/decal/jukebox
@@ -439,7 +454,7 @@ obj/decal/fakeobjects/teleport_pad
 	can_buckle(var/mob/M as mob, var/mob/user as mob)
 		if (M != user)
 			return 0
-		if ((!( iscarbon(M) ) || get_dist(src, user) > 1 || user.restrained() || usr.stat || !user.canmove))
+		if ((!( iscarbon(M) ) || get_dist(src, user) > 1 || user.restrained() || user.stat || !user.canmove))
 			return 0
 		return 1
 
@@ -522,7 +537,7 @@ obj/decal/fakeobjects/teleport_pad
 		var/mob/M =	AM
 		// drsingh fix for undefined variable mob/living/carbon/monkey/var/shoes
 
-		if (M.getStatusDuration("weakened") || M.getStatusDuration("stunned"))
+		if (M.getStatusDuration("weakened") || M.getStatusDuration("stunned") || M.getStatusDuration("frozen"))
 			return
 
 		if (M.slip(0))

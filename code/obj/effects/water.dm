@@ -17,7 +17,6 @@
 	//if (istype(T, /turf))
 	//	T.firelevel = 0 //TODO: FIX
 	if (--src.life < 1)
-		//SN src = null
 		if (!disposed)
 			pool(src)
 		return 0

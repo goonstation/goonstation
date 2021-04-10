@@ -196,6 +196,9 @@
 	if (!R && istype(traitor_mob.l_store, /obj/item/device/pda2))
 		R = traitor_mob.l_store
 		loc = "In your pocket"
+	if (!R && istype(traitor_mob.wear_id, /obj/item/device/pda2))
+		R = traitor_mob.wear_id
+		loc = "In your ID slot"
 	if (!R && istype(traitor_mob.l_hand, /obj/item/storage))
 		var/obj/item/storage/S = traitor_mob.l_hand
 		var/list/L = S.get_contents()
@@ -298,7 +301,7 @@
 /// returns a decimal representing the percentage of alive crew that are also antags
 /proc/get_alive_antags_percentage()
 	var/alive = 0
-	var/alive_antags = ticker.mode.traitors.len + ticker.mode.Agimmicks.len
+	var/alive_antags = ticker.mode.traitors.len + length(ticker.mode.Agimmicks)
 
 	for (var/datum/mind/antag in ticker.mode.traitors)
 		var/mob/M = antag.current

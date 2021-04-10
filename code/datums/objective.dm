@@ -117,7 +117,7 @@ proc/create_fluff(var/datum/mind/target)
 
 	//Pick which flufftext we want to use
 	var/flufftext
-	if(general_fluff && special_fluff.len)
+	if(general_fluff && length(special_fluff))
 		flufftext = pick(prob(50) ? general_fluff : special_fluff)
 	else if (general_fluff)
 		flufftext = pick(general_fluff)
@@ -165,7 +165,7 @@ proc/create_fluff(var/datum/mind/target)
 			if("aurora MKII utility belt")
 				steal_target = /obj/item/storage/belt/utility/prepared/ceshielded
 			if("Head of Security\'s war medal")
-				steal_target = /obj/item/hosmedal
+				steal_target = /obj/item/clothing/suit/hosmedal
 			if("Research Director\'s Diploma")
 				steal_target = /obj/item/rddiploma
 			if("Medical Director\'s Medical License")
@@ -179,7 +179,7 @@ proc/create_fluff(var/datum/mind/target)
 #else
 	set_up()
 		var/list/items = list("Head of Security\'s beret", "prisoner\'s beret", "DetGadget hat", "horse mask", "authentication disk",
-		"\'freeform\' AI module", "gene power module", "mainframe memory board", "yellow cake", "aurora MKII utility belt", "much coveted Gooncode")
+		"\'freeform\' AI module", "gene power module", "mainframe memory board", "yellow cake", "aurora MKII utility belt", "much coveted Gooncode", "golden crayon")
 
 		target_name = pick(items)
 		switch(target_name)
@@ -205,6 +205,8 @@ proc/create_fluff(var/datum/mind/target)
 				steal_target = /obj/item/toy/gooncode
 			if("horse mask")
 				steal_target = /obj/item/clothing/mask/horse_mask
+			if("golden crayon")
+				steal_target = /obj/item/pen/crayon/golden
 #endif
 
 		explanation_text = "Steal the [target_name]."
@@ -381,6 +383,22 @@ proc/create_fluff(var/datum/mind/target)
 
 /datum/objective/regular/bonsaitree
 	// Brought this back as a very rare gimmick objective (Convair880).
+#ifdef MAP_OVERRIDE_MANTA
+	explanation_text = "Destroy the Captain's ship in a bottle."
+
+	check_completion()
+		var/area/cap_quarters = locate(/area/station/captain)
+		var/obj/captain_bottleship/cap_ship
+
+		for (var/obj/captain_bottleship/T in cap_quarters)
+			cap_ship = T
+		if (!cap_ship)
+			return 1  // Somebody deleted it somehow, I suppose?
+		else if (cap_ship?.destroyed == 1)
+			return 1
+		else
+			return 0
+#else
 	explanation_text = "Destroy the Captain's prized bonsai tree."
 
 	check_completion()
@@ -390,12 +408,12 @@ proc/create_fluff(var/datum/mind/target)
 		for (var/obj/shrub/captainshrub/T in cap_quarters)
 			our_tree = T
 		if (!our_tree)
-			return 1  // Somebody deleted it somehow, I suppose?
+			return 1
 		else if (our_tree?.destroyed == 1)
 			return 1
 		else
 			return 0
-
+#endif
 ///////////////////////////////////////////////////////////////
 // Regular objectives not currently used in current gameplay //
 ///////////////////////////////////////////////////////////////

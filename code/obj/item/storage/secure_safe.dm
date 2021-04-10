@@ -2,8 +2,8 @@
 
 /obj/item/storage/secure
 	name = "storage/secure"
-	var/obj/screen/storage/boxes = null
-	var/obj/screen/close/closer = null
+	var/atom/movable/screen/storage/boxes = null
+	var/atom/movable/screen/close/closer = null
 	var/icon_locking = "secureb"
 	var/icon_sparking = "securespark"
 	var/icon_open = "secure0"
@@ -594,6 +594,7 @@
 	random_code = 1
 	spawn_contents = list(/obj/item/clothing/shoes/cyborg, /obj/item/clothing/suit/cyborg_suit, /obj/item/clothing/gloves/cyborg, /obj/item/paper/thevonricken)
 
+
 /obj/item/paper/thevonricken
 	name = "This is hell! Oh god!"
 
@@ -706,6 +707,13 @@
 	spawn_contents = list(/obj/item/gun/kinetic/revolver,
 	/obj/item/chilly_orb, // a thing to confuse people
 	/obj/item/spacecash/thousand = 3)
+
+/obj/item/storage/secure/ssafe/candy_shop
+	configure_mode = 0
+	random_code = 1
+	spawn_contents = list(/obj/item/robot_foodsynthesizer,\
+	/obj/item/spacecash/thousand,\
+	/obj/item/gun/kinetic/derringer/empty)
 
 /obj/item/storage/secure/ssafe/marsvault
 	name = "secure vault"

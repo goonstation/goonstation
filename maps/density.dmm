@@ -1832,7 +1832,7 @@
 /area/station/crew_quarters/kitchen)
 "eh" = (
 /obj/table/wood/auto,
-/obj/item/card_box/suit,
+/obj/item/card_box/plain,
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/kitchen)
 "ei" = (
@@ -2327,14 +2327,6 @@
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/bar)
 "fi" = (
-/turf/simulated/floor/specialroom/bar,
-/area/station/crew_quarters/bar)
-"fj" = (
-/obj/table/wood/auto,
-/obj/item/reagent_containers/food/snacks/cake/chocolate{
-	desc = "Holy shit! This cake probably costs more than the gross domestic product of Bulgaria!";
-	name = "Extravagant Chocolate Gateau"
-	},
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/bar)
 "fk" = (
@@ -5139,25 +5131,6 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/research)
-"kS" = (
-/obj/cable{
-	d2 = 4;
-	icon_state = "0-4";
-	pixel_y = 0
-	},
-/obj/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/obj/cable{
-	d2 = 2;
-	icon_state = "0-2"
-	},
-/obj/machinery/clonepod{
-	gen_analysis = 0
-	},
-/turf/simulated/floor/white,
-/area/station/medical/research)
 "kT" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
@@ -5292,25 +5265,6 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
-/turf/simulated/floor/white,
-/area/station/medical/research)
-"lf" = (
-/obj/cable{
-	d2 = 4;
-	icon_state = "0-4";
-	pixel_y = 0
-	},
-/obj/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1";
-	layer = 9.1;
-	pixel_x = 10
-	},
-/obj/machinery/computer/cloning,
 /turf/simulated/floor/white,
 /area/station/medical/research)
 "lg" = (
@@ -7179,6 +7133,49 @@
 /obj/machinery/weapon_stand/taser_rack/recharger/empty,
 /turf/simulated/floor/red,
 /area/station/security/main)
+"wZ" = (
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4";
+	pixel_y = 0
+	},
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/machinery/light{
+	dir = 4;
+	icon_state = "tube1";
+	layer = 9.1;
+	pixel_x = 10
+	},
+/obj/machinery/computer/cloning{
+	gen_analysis = 0
+	},
+/turf/simulated/floor/white,
+/area/station/medical/research)
+"Ct" = (
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4";
+	pixel_y = 0
+	},
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/obj/machinery/clonepod,
+/turf/simulated/floor/white,
+/area/station/medical/research)
+"GM" = (
+/obj/table/wood/auto,
+/obj/item/reagent_containers/food/snacks/cake/chocolate/gateau,
+/turf/simulated/floor/specialroom/bar,
+/area/station/crew_quarters/bar)
 "Ri" = (
 /obj/machinery/recharger/wall/sticky{
 	dir = 1
@@ -45683,7 +45680,7 @@ cE
 dK
 eh
 eI
-fj
+GM
 fD
 fD
 gz
@@ -53548,8 +53545,8 @@ jq
 jP
 kj
 kF
-kS
-lf
+Ct
+wZ
 lr
 lD
 nx

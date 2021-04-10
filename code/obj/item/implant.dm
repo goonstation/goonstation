@@ -28,6 +28,30 @@ THROWING DARTS
 	var/online = 0
 	var/instant = 1
 
+	//For PDA/signal alert stuff on implants
+	var/uses_radio = 0
+	var/list/mailgroups = null
+	var/net_id = null
+	var/pda_alert_frequency = 1149
+	var/datum/radio_frequency/radio_connection
+
+	New()
+		..()
+		if (uses_radio)
+			SPAWN_DBG(10 SECONDS)
+				if (radio_controller)
+					radio_connection = radio_controller.add_object(src, "[pda_alert_frequency]")
+				if (!src.net_id)
+					src.net_id = generate_net_id(src)
+
+	disposing()
+		owner = null
+		former_implantee = null
+		if (uses_radio)
+			radio_controller.remove_object(src, "[pda_alert_frequency]")
+			mailgroups.Cut()
+		. = ..()
+
 	proc/can_implant(mob/target, mob/user)
 		return 1
 
@@ -44,12 +68,6 @@ THROWING DARTS
 			M.update_clothing()
 		activate()
 		return
-
-	disposing()
-		owner = null
-		former_implantee = null
-		. = ..()
-
 
 	// called when an implant is removed from M
 	proc/on_remove(var/mob/M)
@@ -100,6 +118,37 @@ THROWING DARTS
 		death_triggered = 1
 		deactivate()
 
+	proc/get_coords()
+		if (ishuman(src.owner))
+			var/mob/living/carbon/human/H = src.owner
+			if (locate(src) in H.implant)
+				var/turf/T = get_turf(H)
+				if (istype(T))
+					return " at [T.x],[T.y],[T.z]"
+		else if (ismobcritter(src.owner))
+			var/mob/living/critter/C = src.owner
+			if (locate(src) in C.implants)
+				var/turf/T = get_turf(C)
+				if (istype(T))
+					return " at [T.x],[T.y],[T.z]"
+
+	proc/send_message(var/message, var/alertgroup, var/sender_name)
+		DEBUG_MESSAGE("sending message: [message]")
+		if(!radio_connection)
+			return
+		var/datum/signal/newsignal = get_free_signal()
+		newsignal.source = src
+		newsignal.transmission_method = TRANSMISSION_RADIO
+		newsignal.data["command"] = "text_message"
+		newsignal.data["sender_name"] = sender_name
+		newsignal.data["message"] = "[message]"
+
+		newsignal.data["address_1"] = "00000000"
+		newsignal.data["group"] = mailgroups + alertgroup
+		newsignal.data["sender"] = src.net_id
+
+		radio_connection.post_signal(src, newsignal)
+
 	attackby(obj/item/I as obj, mob/user as mob)
 		if (!istype(src, /obj/item/implant/projectile))
 			if (istype(I, /obj/item/pen))
@@ -108,7 +157,7 @@ THROWING DARTS
 					return
 				if (user.equipped() != I)
 					return
-				if ((!in_range(src, usr) && src.loc != user))
+				if ((!in_interact_range(src, user) && src.loc != user))
 					return
 				t = copytext(adminscrub(t),1,128)
 				if (t)
@@ -157,22 +206,9 @@ THROWING DARTS
 	impcolor = "b"
 	//life_tick_energy = 0.1
 	var/healthstring = ""
-	var/list/mailgroups = list(MGD_MEDBAY, MGD_MEDRESEACH, MGD_SPIRITUALAFFAIRS)
-	var/net_id = null
-	var/frequency = 1149
-	var/datum/radio_frequency/radio_connection
+	uses_radio = 1
+	mailgroups = list(MGD_MEDBAY, MGD_MEDRESEACH, MGD_SPIRITUALAFFAIRS)
 
-	New()
-		..()
-		SPAWN_DBG(10 SECONDS)
-			if (radio_controller)
-				radio_connection = radio_controller.add_object(src, "[frequency]")
-			if (!src.net_id)
-				src.net_id = generate_net_id(src)
-	disposing()
-		radio_controller.remove_object(src, "[frequency]")
-		mailgroups.Cut()
-		..()
 
 	implanted(mob/M, mob/I)
 		..()
@@ -265,10 +301,8 @@ THROWING DARTS
 	proc/health_alert()
 		if (!src.owner)
 			return
-		var/coords = src.get_coords()
-		var/myarea = get_area(src)
 		//DEBUG_MESSAGE("implant reporting crit")
-		src.send_message("HEALTH ALERT: [src.owner][coords] in [myarea]: [src.sensehealth()]", MGA_MEDCRIT)
+		src.send_message("HEALTH ALERT: [src.owner][src.get_coords()] in [get_area(src)]: [src.sensehealth()]", MGA_MEDCRIT, "HEALTH-MAILBOT")
 
 	proc/death_alert()
 		if (!src.owner)
@@ -284,21 +318,7 @@ THROWING DARTS
 				message += "[has_record ? "genetic record detected in cloning console at [has_record]" : "genetic record not detected."]"
 
 		//DEBUG_MESSAGE("implant reporting death")
-		src.send_message(message, MGA_DEATH)
-
-	proc/get_coords()
-		if (ishuman(src.owner))
-			var/mob/living/carbon/human/H = src.owner
-			if (locate(/obj/item/implant/tracking) in H.implant)
-				var/turf/T = get_turf(H)
-				if (istype(T))
-					return " at [T.x],[T.y],[T.z]"
-		else if (ismobcritter(src.owner))
-			var/mob/living/critter/C = src.owner
-			if (locate(/obj/item/implant/tracking) in C.implants)
-				var/turf/T = get_turf(C)
-				if (istype(T))
-					return " at [T.x],[T.y],[T.z]"
+		src.send_message(message, MGA_DEATH, "HEALTH-MAILBOT")
 
 	proc/check_for_valid_record() //returns the area of the cloner where we found our valid record - jank, but idk
 		if (src.owner && src.owner.ckey)
@@ -306,23 +326,6 @@ THROWING DARTS
 				if (comp.find_record(src.owner.ckey))
 					return get_area(comp)
 		return null
-
-	proc/send_message(var/message, var/alertgroup)
-		DEBUG_MESSAGE("sending message: [message]")
-		if(!radio_connection)
-			return
-		var/datum/signal/newsignal = get_free_signal()
-		newsignal.source = src
-		newsignal.transmission_method = TRANSMISSION_RADIO
-		newsignal.data["command"] = "text_message"
-		newsignal.data["sender_name"] = "HEALTH-MAILBOT"
-		newsignal.data["message"] = "[message]"
-
-		newsignal.data["address_1"] = "00000000"
-		newsignal.data["group"] = mailgroups + alertgroup
-		newsignal.data["sender"] = src.net_id
-
-		radio_connection.post_signal(src, newsignal)
 
 /obj/item/implant/health/security
 	name = "health implant - security issue"
@@ -379,8 +382,10 @@ THROWING DARTS
 /obj/item/implant/tracking
 	name = "tracking implant"
 	//life_tick_energy = 0.1
-	var/frequency = 1451
+	uses_radio = 1
+	mailgroups = list(MGD_SECURITY)
 	var/id = 1.0
+	var/frequency = 1451		//This is the nonsense frequency that the implant uses. I guess it was never finished. -kyle
 
 	New()
 		..()
@@ -388,6 +393,13 @@ THROWING DARTS
 
 	disposing()
 		STOP_TRACKING
+		..()
+
+	on_remove(var/mob/M)
+		if (!src.owner)
+			return
+		var/message = "TRACKING IMPLANT LOST: [src.owner][src.get_coords()] in [get_area(src)], "
+		src.send_message(message, MGA_TRACKING, "TRACKER-MAILBOT")
 		..()
 
 /** Deprecated **/
@@ -1169,6 +1181,8 @@ THROWING DARTS
 	w_class = 1.0
 	var/implant_type = /obj/item/implant/tracking
 	tooltip_flags = REBUILD_DIST
+	//Whether this is the paper type that goes away when emptied
+	var/disposable = FALSE
 
 /obj/item/implantcase/tracking
 	name = "glass case - 'Tracking'"
@@ -1245,8 +1259,16 @@ THROWING DARTS
 			if (dist <= 1 && src.imp)
 				. += "It appears to contain \a [src.imp.name] with unlimited charges."
 
-/obj/item/implantcase/New()
-	src.imp = new implant_type(src)
+/obj/item/implantcase/New(obj/item/implant/usedimplant = null)
+	if (usedimplant && istype(usedimplant))
+		src.imp = usedimplant
+		imp.set_loc(src)
+		disposable = TRUE
+		name = "removed implant"
+		desc = "A paper wad containing an implant extracted from someone. An implanting tool can reuse the implant."
+	else
+		src.imp = new implant_type(src)
+	update()
 	..()
 	return
 
@@ -1257,8 +1279,14 @@ THROWING DARTS
 /obj/item/implantcase/proc/update()
 	tooltip_rebuild = 1
 	if (src.imp)
-		src.icon_state = src.imp.impcolor ? "implantcase-[imp.impcolor]" : "implantcase-g"
+		if (disposable)
+			src.icon_state = src.imp.impcolor ? "implantpaper-[imp.impcolor]" : "implantpaper-g"
+		else
+			src.icon_state = src.imp.impcolor ? "implantcase-[imp.impcolor]" : "implantcase-g"
 	else
+		if (disposable) //ditch that grody paper "case"
+			qdel(src)
+			return
 		src.icon_state = "implantcase-0"
 	return
 
@@ -1267,7 +1295,7 @@ THROWING DARTS
 		var/t = input(user, "What would you like the label to be?", null, "[src.name]") as null|text
 		if (user.equipped() != I)
 			return
-		if ((!in_range(src, usr) && src.loc != user))
+		if ((!in_interact_range(src, user) && src.loc != user))
 			return
 		t = copytext(adminscrub(t),1,128)
 		if (t)
@@ -1344,8 +1372,8 @@ THROWING DARTS
 		src.add_fingerprint(user)
 		update()
 	else
-		if (user.contents.Find(src))
-			SPAWN_DBG( 0 )
+		if (src in user.contents)
+			SPAWN_DBG(0)
 				src.attack_self(user)
 				return
 		else
@@ -1487,7 +1515,7 @@ circuitry. As a result neurotoxins can cause massive damage.<BR>
 	..()
 	if (usr.stat)
 		return
-	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))))
+	if ((usr.contents.Find(src) || (in_interact_range(src, usr) && istype(src.loc, /turf))))
 		src.add_dialog(usr)
 		if (href_list["freq"])
 			if ((istype(src.case, /obj/item/implantcase) && istype(src.case.imp, /obj/item/implant/tracking)))
@@ -1526,7 +1554,7 @@ circuitry. As a result neurotoxins can cause massive damage.<BR>
 	var/obj/item/implant/my_implant = null
 
 	New()
-		current_projectile = new/datum/projectile/implanter
+		set_current_projectile(new/datum/projectile/implanter)
 		..()
 
 	get_desc()
@@ -1569,7 +1597,7 @@ circuitry. As a result neurotoxins can cause massive damage.<BR>
 			user.show_text("You load [I] into [src].", "blue")
 
 			if (!current_projectile)
-				current_projectile = new/datum/projectile/implanter
+				set_current_projectile(new/datum/projectile/implanter)
 			var/datum/projectile/implanter/my_datum = current_projectile
 			my_datum.my_implant = my_implant
 			my_datum.implant_master = user
@@ -1586,7 +1614,7 @@ circuitry. As a result neurotoxins can cause massive damage.<BR>
 		if (!my_implant)
 			return 0
 		if (!current_projectile)
-			current_projectile = new/datum/projectile/implanter
+			set_current_projectile(new/datum/projectile/implanter)
 		var/datum/projectile/implanter/my_datum = current_projectile
 		if (ismob(user) && my_datum.implant_master != user)
 			my_datum.implant_master = user
@@ -1680,7 +1708,7 @@ circuitry. As a result neurotoxins can cause massive damage.<BR>
 			var/mob/living/carbon/human/H = M
 			H.implant.Add(src)
 			src.visible_message("<span class='alert'>[src] gets embedded in [M]!</span>")
-			playsound(src.loc, "sound/weapons/slashcut.ogg", 100, 1)
+			playsound(src.loc, "sound/impact_sounds/Flesh_Cut_1.ogg", 100, 1)
 			H.changeStatus("weakened", 2 SECONDS)
 			random_brute_damage(M, 20)//if it can get in you, it probably doesn't give a damn about your armor
 			take_bleeding_damage(M, null, 10, DAMAGE_CUT)

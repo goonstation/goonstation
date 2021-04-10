@@ -117,7 +117,7 @@
 	if(viewcheck && !(dist <= 1 || (src_object in view(src)))) // If the object is obscured, close it.
 		return UI_CLOSE
 
-	if(in_range(src_object, src)) // Open and interact if 1-0 tiles away (or in range for other reasons)
+	if(in_interact_range(src_object, src)) // Open and interact if 1-0 tiles away (or in range for other reasons)
 		return UI_INTERACTIVE
 	else if(dist <= 2) // View only if 2-3 tiles away.
 		return UI_UPDATE

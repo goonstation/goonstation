@@ -6,7 +6,7 @@
 	notEnoughPointsMessage = "<span class='alert'>You do not have enough souls to use that ability.</span>"
 	cast_while_dead = 1
 
-/obj/screen/ability/topBar/zoldorf
+/atom/movable/screen/ability/topBar/zoldorf
 	tens_offset_x = 19
 	tens_offset_y = 7
 	secs_offset_x = 23
@@ -22,7 +22,7 @@
 	preferred_holder_type = /datum/abilityHolder/zoldorf
 
 	New()
-		var/obj/screen/ability/topBar/zoldorf/B = new /obj/screen/ability/topBar/zoldorf(null)
+		var/atom/movable/screen/ability/topBar/zoldorf/B = new /atom/movable/screen/ability/topBar/zoldorf(null)
 		B.icon = src.icon
 		B.icon_state = src.icon_state
 		B.owner = src
@@ -338,7 +338,7 @@
 		if(istype(user.loc,/obj/machinery/playerzoldorf))
 			var/obj/machinery/playerzoldorf/pz = user.loc
 			user.homebooth = pz
-			var/staticiterations = pz.brandlist.len
+			var/staticiterations = length(pz.brandlist)
 			for(var/i=1,i<=staticiterations,i++)
 				if(pz.brandlist[i]==null)
 					pz.brandlist -= pz.brandlist[i]

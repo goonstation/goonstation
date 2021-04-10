@@ -59,7 +59,7 @@ proc/build_syndi_buylist_cache()
 	cost = 8
 	desc = "Not exactly stealthy, but it'll certainly make an impression."
 	not_in_crates = 1
-	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/revolution)
+	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/spy_theft, /datum/game_mode/revolution)
 
 /datum/syndicate_buylist/generic/radbow
 	name = "Rad Poison Crossbow"
@@ -146,7 +146,7 @@ proc/build_syndi_buylist_cache()
 	cost = 5
 	desc = "Lights too bright? Airlocks too automatic? Alarms too functional? Or maybe just nostalgic about the good ol' days before electricity came along? The XL-100 Power Sink addresses all these ills and more. Simply screw to the nearest exposed wiring and flip the switch, and this little wonder will get to work on draining all of that nasty power."
 	not_in_crates = 1
-	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/revolution)
+	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/spy_theft, /datum/game_mode/revolution)
 
 /datum/syndicate_buylist/generic/detomatix
 	name = "Detomatix Cartridge"
@@ -189,7 +189,7 @@ proc/build_syndi_buylist_cache()
 	cost = 7
 	desc = "A powerful melee weapon, crafted using the latest in applied photonics! When inactive, it is small enough to fit in a pocket!"
 	not_in_crates = 1
-	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/revolution)
+	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/spy_theft, /datum/game_mode/revolution)
 
 /datum/syndicate_buylist/generic/katana
 	name = "Katana"
@@ -225,7 +225,7 @@ proc/build_syndi_buylist_cache()
 	cost = 12
 	desc = "Think you're tough shit buddy?"
 	not_in_crates = 1 //see /datum/syndicate_buylist/surplus/bighat
-
+	blockedmode = list(/datum/game_mode/spy_theft)
 
 //////////////////////////////////////////////////// Standard items (traitor uplink) ///////////////////////////////////
 
@@ -267,7 +267,7 @@ proc/build_syndi_buylist_cache()
 	name = "Cloaking Field Generator"
 	item = /obj/item/cloak_gen
 	cost = 3
-	desc = "Remote-controlled device that produces an area of effect cloaking field while active. Don't loose the remote!"
+	desc = "Remote-controlled device that produces an area of effect cloaking field while active. Don't lose the remote!"
 	blockedmode = list(/datum/game_mode/revolution)
 
 /datum/syndicate_buylist/traitor/floorcloset
@@ -341,6 +341,7 @@ proc/build_syndi_buylist_cache()
 	item = /obj/item/disk/data/cartridge/ringtone_syndie
 	cost = 1
 	desc = "A pirated copy of SounDreamS PRO, a PDA cartridge loaded with dozens of realistic, illegal-sounding sound effects that'll play whenever someone sends a message to your PDA."
+	blockedmode = list(/datum/game_mode/spy_theft)
 
 /datum/syndicate_buylist/traitor/sonicgrenades
 	name = "Sonic Grenades"
@@ -355,7 +356,7 @@ proc/build_syndi_buylist_cache()
 	cost = 12
 	vr_allowed = 0
 	desc = "A crate containing 18-24 credits worth of whatever junk we had lying around."
-	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/revolution)
+	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/spy_theft, /datum/game_mode/revolution)
 
 	run_on_spawn(var/obj/storage/crate/syndicate_surplus/crate, var/mob/living/owner, in_surplus_crate)
 		crate.spawn_items(owner)
@@ -382,6 +383,7 @@ This is basically useless for anyone but miners.
 	not_in_crates = 1
 	vr_allowed = 0
 	objective = /datum/objective/regular/assassinate
+	blockedmode = list(/datum/game_mode/spy_theft)
 
 	run_on_spawn(var/obj/item/idtracker/tracker,var/mob/living/owner, in_surplus_crate)
 		tracker.owner = owner
@@ -395,6 +397,7 @@ This is basically useless for anyone but miners.
 	vr_allowed = 0
 	not_in_crates = 1
 	objective = /datum/objective/spy_theft/assasinate
+	blockedmode = list(/datum/game_mode/spy_theft) // Unused due to balance. Previously disabled by not_in_crates, now blocked directly
 
 	run_on_spawn(var/obj/item/idtracker/tracker,var/mob/living/owner, in_surplus_crate)
 		tracker.owner = owner
@@ -477,7 +480,8 @@ This is basically useless for anyone but miners.
 	vr_allowed = 0
 	desc = "These big red boots have an explosive step sound. The entire station is sure to want to show you their appreciation."
 	job = list("Clown")
-	blockedmode = list(/datum/game_mode/spy)
+	not_in_crates = 1
+	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/spy_theft)
 
 /datum/syndicate_buylist/traitor/clown_mask
 	name = "Clown Mask"
@@ -487,7 +491,7 @@ This is basically useless for anyone but miners.
 	desc = "A clown mask haunted by the souls of those who honked before. Only true clowns should attempt to wear this. It also functions like a gas mask."
 	job = list("Clown")
 	not_in_crates = 1
-	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/revolution)
+	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/spy_theft, /datum/game_mode/revolution)
 
 /datum/syndicate_buylist/traitor/fake_revolver
 	name = "Funny-looking Revolver"
@@ -512,7 +516,7 @@ This is basically useless for anyone but miners.
 	desc = "Disguised as a screwdriver, this stealthy device can be loaded with dna injectors which will be injected into the target instantly and stealthily. The dna injector will be altered when inserted so that there will be a ten second delay before the gene manifests in the victim."
 	job = list("Geneticist")
 	not_in_crates = 1
-	blockedmode = list(/datum/game_mode/revolution)
+	blockedmode = list(/datum/game_mode/spy_theft, /datum/game_mode/revolution)
 
 /datum/syndicate_buylist/traitor/minibible
 	name = "Miniature Bible"
@@ -531,7 +535,7 @@ This is basically useless for anyone but miners.
 	job = list("Chaplain")
 	not_in_crates = 1
 	vr_allowed = 0
-	blockedmode = list(/datum/game_mode/revolution)
+	blockedmode = list(/datum/game_mode/spy_theft, /datum/game_mode/revolution)
 
 	run_on_spawn(var/obj/item/storage/briefcase/satan/Q,var/mob/living/owner, in_surplus_crate)
 		if (istype(Q) && owner)
@@ -554,7 +558,7 @@ This is basically useless for anyone but miners.
 	desc = "A tool designed to hack mining charges so that they will attach to any surface, disguised as a geological scanner."
 	not_in_crates = 1
 	job = list("Miner")
-	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/revolution)
+	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/spy_theft, /datum/game_mode/revolution)
 
 /datum/syndicate_buylist/traitor/maneater
 	name = "Maneater Seed"
@@ -563,7 +567,7 @@ This is basically useless for anyone but miners.
 	desc = "A boon for the green-thumbed agent! Simply plant and nurture to raise your own faithful guard-plant! Feed me, Seymour!"
 	not_in_crates = 1
 	job = list("Botanist")
-	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/revolution)
+	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/spy_theft, /datum/game_mode/revolution)
 
 /datum/syndicate_buylist/traitor/saw
 	name = "Chainsaw"
@@ -572,7 +576,7 @@ This is basically useless for anyone but miners.
 	desc = "This old earth beauty is made by hand with strict attention to detail. Unlike today's competing botanical chainsaw, it actually cuts things!"
 	not_in_crates = 1
 	job = list("Botanist")
-	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/revolution)
+	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/spy_theft, /datum/game_mode/revolution)
 
 /datum/syndicate_buylist/traitor/waspgrenade
 	name = "Wasp Grenades"
@@ -589,7 +593,7 @@ This is basically useless for anyone but miners.
 	desc = "Become the member of the Space Cobra Unit you always wanted to be! Spread pain and fear far and wide using this scattershot wasp egg launcher! Through the power of sheer wasp-y fury, this crossbow will slowly recharge between shots and is guaranteed to light up your day with maniacal joy and to bring your enemies no end of sorrow."
 	not_in_crates = 1 //the value of the item goes down significantly for non-botanists since only botanists are treated kindly by wasps
 	job = list("Botanist", "Apiculturist")
-	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/revolution)
+	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/spy_theft, /datum/game_mode/revolution)
 
 /datum/syndicate_buylist/traitor/fakegrenade
 	name = "Fake Cleaner Grenades"
@@ -607,7 +611,7 @@ This is basically useless for anyone but miners.
 	not_in_crates = 1
 	vr_allowed = 0
 	job = list("Janitor")
-	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/revolution)
+	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/spy_theft, /datum/game_mode/revolution)
 
 	run_on_spawn(var/obj/storage/cart/trash/syndicate/cart,var/mob/living/owner, in_surplus_crate)
 		if (istype(cart) && owner)
@@ -640,14 +644,14 @@ This is basically useless for anyone but miners.
 	desc = "The shell of a standard Nanotrasen mechanic's analyzer with cutting-edge Syndicate internals. This baby can scan almost anything!"
 	not_in_crates = 1
 	job = list("Mechanic")
-	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/revolution)
+	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/spy_theft, /datum/game_mode/revolution)
 
 /datum/syndicate_buylist/traitor/stimulants
 	name = "Stimulants"
 	item = /obj/item/stimpack
 	cost = 4
 	desc = "When top agents need energy, they turn to our new line of X-Cite 500 stimulants. This all-natural* and worry-free** blend accelerates perception, endurance, and reaction time to superhuman levels! Shrug off even the cruelest of blows without a scratch! <br><br><font size=-1>*Contains less than 0.5 grams unnatural material per 0.49 gram serving.<br>**May cause dizziness, blurred vision, heart failure, renal compaction, adenoid calcification, or death. Women who are currently pregnant or may be pregnant should not handle X-Cite due to the risk of a specific birth defect.</font>"
-	job = list("Medical Doctor","Medical Director","Scientist","Geneticist","Research Director")
+	job = list("Medical Doctor","Medical Director","Scientist","Geneticist","Pathologist","Research Director")
 	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/revolution)
 
 /datum/syndicate_buylist/traitor/syringegun
@@ -665,7 +669,7 @@ This is basically useless for anyone but miners.
 	desc = "These marvels of modern technology employ nanites and space science to draw energy from nearby cables to zap things. BZZZZT!"
 	not_in_crates = 1
 	job = list("Engineer", "Chief Engineer", "Mechanic")
-	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/revolution)
+	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/spy_theft, /datum/game_mode/revolution)
 
 /datum/syndicate_buylist/traitor/pickpocket
 	name = "Pickpocket Gun"
@@ -698,17 +702,17 @@ This is basically useless for anyone but miners.
 	not_in_crates = 1
 	desc = "A handheld version of the Chemicompiler machine in Chemistry."
 	job = list("Research Director", "Scientist")
-	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/revolution)
+	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/spy_theft, /datum/game_mode/revolution)
 
 /datum/syndicate_buylist/traitor/robosuit
-	name = "Syndicate Robot Suit"
+	name = "Syndicate Robot Frame"
 	item = /obj/item/parts/robot_parts/robot_frame/syndicate
 	cost = 2
 	desc = "A cyborg shell crafted from the finest recycled steel and reverse-engineered microelectronics. A cyborg crafted from this will see only Syndicate operatives (Such as yourself!) as human. Cyborg also comes preloaded with popular game \"Angry About the Bird\" and is compatible with most headphones."
 	not_in_crates = 1
 	vr_allowed = 0
 	job = list("Roboticist")
-	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/revolution)
+	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/spy_theft, /datum/game_mode/revolution)
 
 /datum/syndicate_buylist/traitor/conversion_chamber
 	name = "Conversion Chamber"
@@ -718,7 +722,7 @@ This is basically useless for anyone but miners.
 	desc = "A modified standard-issue cyborg recharging station that will automatically convert any human placed inside into a cyborg. Be aware that cyborgs will follow the active lawset in place on-station."
 	job = list("Roboticist")
 	not_in_crates = 1
-	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/revolution)
+	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/spy_theft, /datum/game_mode/revolution)
 
 /datum/syndicate_buylist/traitor/safari
 	name = "Safari Kit"
@@ -727,6 +731,15 @@ This is basically useless for anyone but miners.
 	desc = "Almost everything you need to hunt the most dangerous game. Tranquilizer rifle not included."
 	job = list("Medical Director")
 	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/revolution)
+
+/datum/syndicate_buylist/traitor/pizza_sharpener
+	name = "Pizza Sharpener"
+	item = /obj/item/kitchen/utensil/knife/pizza_cutter/traitor
+	cost = 5
+	desc = "Have you ever been making a pizza and thought \"this pizza would be better if I could fatally injure someone by throwing it at them\"? Well think no longer! Because you're sharpening pizzas now. You weirdo."
+	job = list("Chef")
+	blockedmode = list(/datum/game_mode/revolution)
+
 
 /datum/syndicate_buylist/traitor/syndiesauce
 	name = "Syndicate Sauce"
@@ -751,7 +764,7 @@ This is basically useless for anyone but miners.
 	desc = "An extremely sharp knife with a weighted handle for accurate throwing. Caution: May cause extreme bleeding if the cutting edge comes into contact with human flesh."
 	not_in_crates = 1
 	job = list("Chef")
-	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/revolution)
+	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/spy_theft, /datum/game_mode/revolution)
 
 /datum/syndicate_buylist/traitor/moonshine
 	name = "Jug of Moonshine"
@@ -843,21 +856,13 @@ This is basically useless for anyone but miners.
 	job = list("Janitor")
 	blockedmode = list(/datum/game_mode/revolution)
 
-/datum/syndicate_buylist/traitor/lawndarts
-	name = "Lawn Darts"
-	item = /obj/item/storage/box/lawndart_kit
-	cost = 4
-	desc = "Three deadly throwing darts that embed themselves into your target."
-	job = list("Assistant","Technical Assistant","Medical Assistant","Staff Assistant","Bartender","Clown")
-	blockedmode = list(/datum/game_mode/revolution)
-
 /datum/syndicate_buylist/traitor/monkey_barrel
 	name = "Barrel-O-Monkeys"
 	item = /obj/storage/monkey_barrel
 	cost = 6
 	vr_allowed = 0
 	desc = "A barrel of bloodthirsty apes. Careful!"
-	job = list("Staff Assistant","Test Subject","Geneticist")
+	job = list("Staff Assistant","Test Subject","Geneticist","Pathologist")
 	blockedmode = list(/datum/game_mode/revolution)
 
 /datum/syndicate_buylist/traitor/mindslave_module
@@ -881,7 +886,7 @@ This is basically useless for anyone but miners.
 /datum/syndicate_buylist/traitor/buddy_ammofab
 	name = "Guardbuddy Ammo Replicator"
 	item = /obj/item/device/guardbot_module/ammofab
-	cost = 4
+	cost = 1
 	vr_allowed = 0
 	desc = "A device that allows PR-6S Guardbuddy units to use their internal charge to replenish kinetic ammunition."
 	job = list("Research Director")
@@ -962,7 +967,7 @@ This is basically useless for anyone but miners.
 	item = /obj/item/storage/box/banana_grenade_kit
 	cost = 2
 	desc = "Honk."
-	blockedmode = list(/datum/game_mode/spy)
+	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/spy_theft)
 
 /datum/syndicate_buylist/surplus/turboflash_box
 	name = "Flash/cell assembly box"
@@ -1043,6 +1048,13 @@ This is basically useless for anyone but miners.
 	vr_allowed = 0
 	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/revolution)
 
+/datum/syndicate_buylist/traitor/lawndarts
+	name = "Lawn Darts"
+	item = /obj/item/storage/box/lawndart_kit
+	cost = 0 // 20 brute damage, 10 bleed throwing weapon. Embed is nice but rad poison bow is stealthier and more effective
+	desc = "Three deadly throwing darts that embed themselves into your target."
+	job = list("Assistant","Technical Assistant","Medical Assistant","Staff Assistant","Bartender","Clown")
+	blockedmode = list(/datum/game_mode/revolution)
 
 // round specific
 

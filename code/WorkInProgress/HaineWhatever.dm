@@ -211,6 +211,10 @@
 	burn_possible = 1
 	rand_pos = 1
 
+	attack(mob/M as mob, mob/user as mob)
+		src.add_fingerprint(user)
+		M.emote("sneeze")
+
 var/list/parrot_species = list("eclectus" = /datum/species_info/parrot/eclectus,
 	"eclectusf" = /datum/species_info/parrot/eclectus/female,
 	"agrey" = /datum/species_info/parrot/grey,
@@ -874,6 +878,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 			src.bioHolder.AddEffect(my_mutation)
 
 	was_harmed(var/mob/M as mob, var/obj/item/weapon = 0, var/special = 0, var/intent = null)
+		. = ..()
 		src.protect_from(M, null, weapon)
 
 	proc/protect_from(var/mob/M as mob, var/mob/customer as mob, var/obj/item/weapon as obj)
@@ -1273,7 +1278,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 		BLOCK_SETUP(BLOCK_KNIFE)
 
 	attack(mob/living/carbon/M as mob, mob/user as mob)
-		if (!ismob(M) || !M.contents.len)
+		if (!ismob(M) || !length(M.contents))
 			return ..()
 		var/atom/movable/AM = pick(M.contents)
 		if (!AM)
@@ -1386,7 +1391,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	icon_state = "spacelipstick0"
 	color = null
 	font_color = "#FF0000"
-	font = "Dancing Script, cursive"
+	font = "'Dancing Script', cursive"
 	webfont = "Dancing Script"
 	uses_handwriting = 1
 	var/open = 0
@@ -1915,7 +1920,7 @@ Now, his life is in my fist! NOW, HIS LIFE IS IN MY FIST!
 	on_add()
 		if(ismob(holder?.my_atom))
 			var/mob/M = holder.my_atom
-			M.add_stam_mod_regen("r_cocaine", 200)
+			APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "r_cocaine", 200)
 			M.addOverlayComposition(/datum/overlayComposition/cocaine)
 		return
 
@@ -1923,7 +1928,7 @@ Now, his life is in my fist! NOW, HIS LIFE IS IN MY FIST!
 		if(ismob(holder?.my_atom))
 			var/mob/M = holder.my_atom
 			if (remove_buff)
-				M.remove_stam_mod_regen("r_cocaine")
+				REMOVE_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "r_cocaine")
 			M.removeOverlayComposition(/datum/overlayComposition/cocaine)
 			M.removeOverlayComposition(/datum/overlayComposition/cocaine_minor_od)
 			M.removeOverlayComposition(/datum/overlayComposition/cocaine_major_od)

@@ -27,6 +27,7 @@
 
 /obj/machinery/firealarm/New()
 	..()
+	START_TRACKING
 	if(!alarm_zone)
 		var/area/A = get_area(loc)
 		alarm_zone = A.name
@@ -40,6 +41,7 @@
 		frequency = radio_controller.return_frequency(alarm_frequency)
 
 /obj/machinery/firealarm/disposing()
+		STOP_TRACKING
 		radio_controller.remove_object(src, alarm_frequency)
 		..()
 

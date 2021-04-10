@@ -27,9 +27,9 @@
 		..()
 
 	build_click(var/mob/user, var/datum/buildmode_holder/holder, var/list/pa, var/atom/object)
-		if (pa.Find("left"))
+		if ("left" in pa)
 			var/turf/T = get_turf(object)
-			if (pa.Find("ctrl"))
+			if ("ctrl" in pa)
 				finished = 1
 				clear_selections()
 				return
@@ -42,7 +42,7 @@
 				button.triggered_unpress = selected_triggerable_untrigger.Copy()
 				SPAWN_DBG(1 SECOND)
 					button.color = color_rgb
-		else if (pa.Find("right"))
+		else if ("right" in pa)
 			if (istype(object, /obj/adventurepuzzle/triggerable))
 				if (object in selected_triggerable)
 					object.overlays -= selection
@@ -50,7 +50,7 @@
 					selected_triggerable_untrigger -= object
 				else
 					var/list/actions = object:trigger_actions()
-					if (islist(actions) && actions.len)
+					if (islist(actions) && length(actions))
 						var/act_name = input("Do what on press?", "Do what?", actions[1]) in actions
 						var/act = actions[act_name]
 						var/unact_name = input("Do what on unpress?", "Do what?", actions[1]) in actions
@@ -61,7 +61,7 @@
 						selected_triggerable_untrigger += object
 						selected_triggerable_untrigger[object] = unact
 					else
-						boutput(usr, "<span class='alert'>ERROR: Missing actions definition for triggerable [object].</span>")
+						boutput(user, "<span class='alert'>ERROR: Missing actions definition for triggerable [object].</span>")
 
 /obj/adventurepuzzle/triggerer/twostate/pressurepad
 	icon = 'icons/obj/randompuzzles.dmi'

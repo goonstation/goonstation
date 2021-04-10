@@ -7,12 +7,14 @@ on:
   pull_request:
     branches: master
   push:
+    branches:
+      - "master"
 
 jobs:
 
   runtime:
     name: Runtime Checker
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-20.04
     if: "!contains(github.event.head_commit.message, 'skip ci')"
     strategy:
       fail-fast: false
@@ -24,7 +26,6 @@ jobs:
 
       - name: Install Dependencies
         run: |
-          curl https://raw.githubusercontent.com/goonstation/goonstation/master/tools/ci/sources.list | sudo tee /etc/apt/sources.list
           sudo dpkg --add-architecture i386
           sudo apt-get update
           sudo apt install libstdc++6:i386 libssl1.1:i386
@@ -59,22 +60,22 @@ jobs:
       - name: Compile map
         if: "matrix.map != 'SPACE_PREFAB' && matrix.map != 'UNDERWATER_PREFAB' && matrix.map != 'FULL'"
         run: |
-          tools/ci/dm.sh -DTRAVISBUILDING -DMAP_OVERRIDE_${{ matrix.map}} -DRUNTIME_CHECKING -DIM_REALLY_IN_A_FUCKING_HURRY_HERE goonstation.dme
+          tools/ci/dm.sh -DCIBUILD -DMAP_OVERRIDE_${{ matrix.map}} -DRUNTIME_CHECKING -DIM_REALLY_IN_A_FUCKING_HURRY_HERE goonstation.dme
 
       - name: Compile space prefabs
         if: "matrix.map == 'SPACE_PREFAB'"
         run: |
-          tools/ci/dm.sh -DTRAVISBUILDING -DSPACE_PREFAB_RUNTIME_CHECKING  -DIM_REALLY_IN_A_FUCKING_HURRY_HERE goonstation.dme
+          tools/ci/dm.sh -DCIBUILD -DSPACE_PREFAB_RUNTIME_CHECKING  -DIM_REALLY_IN_A_FUCKING_HURRY_HERE goonstation.dme
 
       - name: Compile underwater prefabs
         if: "matrix.map == 'UNDERWATER_PREFAB'"
         run: |
-          tools/ci/dm.sh -DTRAVISBUILDING -DUNDERWATER_PREFAB_RUNTIME_CHECKING  -DIM_REALLY_IN_A_FUCKING_HURRY_HERE goonstation.dme
+          tools/ci/dm.sh -DCIBUILD -DUNDERWATER_PREFAB_RUNTIME_CHECKING  -DIM_REALLY_IN_A_FUCKING_HURRY_HERE goonstation.dme
 
       - name: Compile with full pre-round setup
         if: "matrix.map == 'FULL'"
         run: |
-          tools/ci/dm.sh -DTRAVISBUILDING -DRUNTIME_CHECKING goonstation.dme
+          tools/ci/dm.sh -DCIBUILD -DRUNTIME_CHECKING goonstation.dme
 
       - name: Run map and check for runtime errors
         run: |
@@ -82,7 +83,7 @@ jobs:
 
   runtime_full:
     name: "Runtime Checker with Secret Submodule"
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-20.04
     if: |
       ((github.event_name == 'push' && github.repository == 'goonstation/goonstation') || (github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == 'goonstation/goonstation')) && !contains(github.event.head_commit.message, 'skip ci')
     strategy:
@@ -99,7 +100,6 @@ jobs:
 
       - name: Install Dependencies
         run: |
-          curl https://raw.githubusercontent.com/goonstation/goonstation/master/tools/ci/sources.list | sudo tee /etc/apt/sources.list
           sudo dpkg --add-architecture i386
           sudo apt-get update
           sudo apt install libstdc++6:i386 libssl1.1:i386
@@ -134,22 +134,22 @@ jobs:
       - name: Compile map
         if: "matrix.map != 'SPACE_PREFAB' && matrix.map != 'UNDERWATER_PREFAB' && matrix.map != 'FULL'"
         run: |
-          tools/ci/dm.sh -DTRAVISBUILDING -DMAP_OVERRIDE_${{ matrix.map}} -DRUNTIME_CHECKING -DIM_REALLY_IN_A_FUCKING_HURRY_HERE goonstation.dme
+          tools/ci/dm.sh -DCIBUILD -DMAP_OVERRIDE_${{ matrix.map}} -DRUNTIME_CHECKING -DIM_REALLY_IN_A_FUCKING_HURRY_HERE goonstation.dme
 
       - name: Compile space prefabs
         if: "matrix.map == 'SPACE_PREFAB'"
         run: |
-          tools/ci/dm.sh -DTRAVISBUILDING -DSPACE_PREFAB_RUNTIME_CHECKING  -DIM_REALLY_IN_A_FUCKING_HURRY_HERE goonstation.dme
+          tools/ci/dm.sh -DCIBUILD -DSPACE_PREFAB_RUNTIME_CHECKING  -DIM_REALLY_IN_A_FUCKING_HURRY_HERE goonstation.dme
 
       - name: Compile underwater prefabs
         if: "matrix.map == 'UNDERWATER_PREFAB'"
         run: |
-          tools/ci/dm.sh -DTRAVISBUILDING -DUNDERWATER_PREFAB_RUNTIME_CHECKING  -DIM_REALLY_IN_A_FUCKING_HURRY_HERE goonstation.dme
+          tools/ci/dm.sh -DCIBUILD -DUNDERWATER_PREFAB_RUNTIME_CHECKING  -DIM_REALLY_IN_A_FUCKING_HURRY_HERE goonstation.dme
 
       - name: Compile with full pre-round setup
         if: "matrix.map == 'FULL'"
         run: |
-          tools/ci/dm.sh -DTRAVISBUILDING -DRUNTIME_CHECKING goonstation.dme
+          tools/ci/dm.sh -DCIBUILD -DRUNTIME_CHECKING goonstation.dme
 
       - name: Run map and check for runtime errors
         run: |

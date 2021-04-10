@@ -129,11 +129,11 @@ Returns:
 //Gets a line of turfs between the two atoms. Doesn't miss tiles, like bresenham.
 //Adapted from http://playtechs.blogspot.com/2007/03/raytracing-on-grid.html
 /proc/raytrace(var/atom/source, var/atom/target)
+	. = list()
 	var/x0 = source.x
 	var/y0 = source.y
 	var/x1 = target.x
 	var/y1 = target.y
-	var/list/crossed = list()
 	var/dx = abs(x1 - x0)
 	var/dy = abs(y1 - y0)
 	var/x = x0
@@ -145,7 +145,7 @@ Returns:
 	dx *= 2
 	dy *= 2
 	while(n>0)
-		crossed += get_turf(locate(x, y, source.z))
+		. += get_turf(locate(x, y, source.z))
 		if(error > 0)
 			x += x_inc
 			error -= dy
@@ -159,7 +159,6 @@ Returns:
 			error += dx
 			n--
 		n--
-	return crossed
 
 /proc/testLine()
 	var/atom/source = get_turf(usr)
@@ -193,7 +192,7 @@ Returns:
 	return
 
 /proc/testShroud()
-	var/obj/screen/S = new(usr)
+	var/atom/movable/screen/S = new(usr)
 	var/image/I = image('icons/effects/160x160.dmi',S,"tearmed")
 	I.render_target = "*test"
 	S.screen_loc = "CENTER"
@@ -676,7 +675,7 @@ Returns:
 	for(var/atom/T in oneContents)
 		if(istype(T, /obj/machinery/door))
 			var/obj/machinery/door/D = T
-			if(D.req_access && D.req_access.len)
+			if(D.req_access && length(D.req_access))
 				oneAccess |= D.req_access
 
 		if(isturf(T))
@@ -686,14 +685,14 @@ Returns:
 	for(var/atom/T in twoContents)
 		if(istype(T, /obj/machinery/door))
 			var/obj/machinery/door/D = T
-			if(D.req_access && D.req_access.len)
+			if(D.req_access && length(D.req_access))
 				twoAccess |= D.req_access
 
 		if(isturf(T))
 			if(!T.density)
 				twoTurfs.Add(T)
 
-	if(!twoTurfs.len || !oneTurfs.len)
+	if(!twoTurfs.len || !length(oneTurfs))
 		return
 
 	var/list/oneTurfsExpend = oneTurfs.Copy()
@@ -1035,7 +1034,7 @@ Returns:
 
 	onMouseDrag(src_object,atom/over_object,src_location,over_location,src_control,over_control,params)
 		var/list/parameters = params2list(params)
-		if(ismob(over_object.loc) || istype(over_object, /obj/screen)) return
+		if(ismob(over_object.loc) || istype(over_object, /atom/movable/screen)) return
 		if(parameters["left"])
 			//animate_shake(over_object)
 			if(beam)
@@ -1048,7 +1047,7 @@ Returns:
 
 	onMouseDown(atom/target,location,control,params)
 		var/list/parameters = params2list(params)
-		if(ismob(target.loc) || istype(target, /obj/screen)) return
+		if(ismob(target.loc) || istype(target, /atom/movable/screen)) return
 		if(parameters["left"])
 			if(beam)
 				qdel(beam)
@@ -1205,7 +1204,7 @@ Returns:
 	onMouseDown(atom/target,location,control,params)
 		var/mob/user = usr
 		var/list/parameters = params2list(params)
-		if(ismob(target.loc) || istype(target, /obj/screen)) return
+		if(ismob(target.loc) || istype(target, /atom/movable/screen)) return
 		if(parameters["left"])
 			var/attackDir =  getAttackDir(user, target)
 			user.set_dir(attackDir)
@@ -1597,10 +1596,10 @@ Returns:
 			call(procpath)(arglist(argcopy))
 
 /datum/admins/proc/pixelexplosion()
-	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
-	set name = "Pixel animation mode"
-	set desc="Enter pixel animation mode"
-	alert("Due to me being a lazy fuck you have to close & reopen your client to exit this mode. ITS A DEBUG THING OKAY")
+	SET_ADMIN_CAT(ADMIN_CAT_FUN)
+	set name = "Pixel explosion mode"
+	set desc = "Enter pixel explosion mode."
+	alert("Clicking on things will now explode them into pixels!")
 	pixelmagic()
 
 /datum/targetable/pixelpicker
@@ -1627,9 +1626,17 @@ Returns:
 	M.update_cursor()
 
 /proc/dothepixelthing(var/atom/A)
+	if (isturf(A)) //deleting turfs is bad!
+		return
+
+	if (ismob(A)) //deleting mobs crashes them - lets transfer their client to a ghost first
+		var/mob/M = A
+		M.ghostize()
+
 	var/list/pixels = list()
-	var/icon/I = icon(A.icon, A.icon_state, A.dir)
+	var/icon/I = getFlatIcon(A)
 	var/atom/movable/AT = A.loc
+
 	playsound(AT, 'sound/effects/ExplosionFirey.ogg', 75, 1)
 	for(var/y = 1, y <= I.Height(), y++)
 		for(var/x = 1, x <= I.Width(), x++)
@@ -1669,6 +1676,18 @@ Returns:
 		alpha = 255
 		transform = matrix()
 		..()
+
+/datum/admins/proc/turn_off_pixelexplosion()
+	SET_ADMIN_CAT(ADMIN_CAT_FUN)
+	set name = "Turn off pixel explosion mode"
+	set desc = "Turns off pixel explosion mode."
+
+	var/mob/M = usr
+	if (istype(M.targeting_ability, /datum/targetable/pixelpicker))
+		var/datum/targetable/pixelpicker/pixel_picker = M.targeting_ability
+		M.targeting_ability = null
+		qdel(pixel_picker)
+		M.update_cursor()
 
 /obj/item/craftedmelee/spear
 	name = "spear"
@@ -1830,9 +1849,6 @@ Returns:
 	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
 	item_state = "ouijaboard"
 	w_class = 3.0
-	var/ready = 1
-	var/list/users = list()
-	var/use_delay = 30
 
 	New()
 		. = ..()
@@ -1846,34 +1862,33 @@ Returns:
 	Click(location,control,params)
 		if(isobserver(usr) || iswraith(usr))
 
-			if(!users.Find(usr))
-				users[usr] = 0
-
-			if((world.time - users[usr]) >= use_delay)
+			if(GET_COOLDOWN(src, usr) == 0)
 				var/list/words = list()
 				for(var/i=0, i<rand(5, 10), i++)
 					var/picked = pick(strings("ouija_board.txt", "ouija_board_words"))
-					if(!words.Find(picked)) words.Add(picked)
+					words |= picked
 
 				if(words.len)
 					var/selected = input(usr, "Select a word:", src.name) as null|anything in words
 					if(!selected) return
 
-					if((world.time - users[usr]) < use_delay)
+					if(ON_COOLDOWN(src, usr, 3 SECONDS))
 						usr.show_text("Please wait a moment before using the board again.", "red")
 						return
 
-					users[usr] = world.time
-
-					SPAWN_DBG(0)
-						if(src && selected)
-							animate_float(src, 1, 5, 1)
-							for (var/mob/O in observersviewers(7, src))
-								O.show_message("<B><span class='notice'>The board spells out a message ... \"[selected]\"</span></B>", 1)
+					if(src && selected)
+						animate_float(src, 1, 5, 1)
+						if(prob(20) && !ON_COOLDOWN(src, "bother chaplains", 1 MINUTE))
+							var/area/AR = get_area(src)
+							for(var/mob/M in by_cat[TR_CAT_CHAPLAINS])
+								if(M.client)
+									boutput(M, "<span class='notice'>You sense a disturbance emanating from \a [src] in \the [AR.name].</span>")
+						for (var/mob/O in observersviewers(7, src))
+							O.show_message("<B><span class='notice'>The board spells out a message ... \"[selected]\"</span></B>", 1)
 #ifdef HALLOWEEN
-							if (istype(usr.abilityHolder, /datum/abilityHolder/ghost_observer))
-								var/datum/abilityHolder/ghost_observer/GH = usr.abilityHolder
-								GH.change_points(30)
+						if (istype(usr.abilityHolder, /datum/abilityHolder/ghost_observer))
+							var/datum/abilityHolder/ghost_observer/GH = usr.abilityHolder
+							GH.change_points(30)
 #endif
 			else
 				usr.show_text("Please wait a moment before using the board again.", "red")
@@ -1922,21 +1937,24 @@ Returns:
 	anchored = 1
 	opacity = 0
 
-	var/datum/particleSystem/barrelSmoke/particles
+	var/datum/particleSystem/barrelSmoke/smoke_part
 	var/datum/light/light
 
 	New()
-		particles = particleMaster.SpawnSystem(new /datum/particleSystem/barrelSmoke(src))
+		smoke_part = particleMaster.SpawnSystem(new /datum/particleSystem/barrelSmoke(src))
 		light = new /datum/light/point
 		light.attach(src)
 		light.set_brightness(1)
 		light.set_color(0.5, 0.3, 0)
 		light.enable()
-
 		..()
 
 	disposing()
 		particleMaster.RemoveSystem(/datum/particleSystem/barrelSmoke, src)
+		smoke_part = null
+		light.disable()
+		light.detach()
+		light = null
 		..()
 
 	attackby(obj/item/W as obj, mob/user as mob)
@@ -2510,7 +2528,6 @@ Returns:
 		if ((!( src.current ) || src.loc == src.current))
 			src.current = locate(min(max(src.x + src.xo, 1), world.maxx), min(max(src.y + src.yo, 1), world.maxy), src.z)
 		if ((src.x == 1 || src.x == world.maxx || src.y == 1 || src.y == world.maxy))
-			//SN src = null
 			qdel(src)
 			return
 		step_towards(src, src.current)
@@ -3235,6 +3252,7 @@ Returns:
 	density = 1
 	anchored = 1
 	icon = 'icons/obj/fluid.dmi'
+	plane = PLANE_FLOOR
 	icon_state = "pool"
 
 /obj/pool_springboard
@@ -3371,164 +3389,6 @@ var/list/lag_list = new/list()
 /proc/get_lag_average()
 	boutput(usr, "<span class='success'>[average_tenth] at [lag_list.len] samples.</span>")
 
-
-/obj/mirror
-	//Expect those to be laggy as fuck.
-	name = "Mirror"
-	desc = "Its a mirror."
-	density = 0
-	anchored = 1
-	pixel_y = 32
-	var/icon/base
-	var/broken = 0
-	var/health = 3
-	var/list/spooky = new/list()
-	var/spooked = 0
-	var/spooking = 0
-	event_handler_flags = USE_HASENTERED
-
-	proc/hear_once(var/mob/M)
-		if(broken) return
-		if(!(M in spooky))
-			spooky += M
-			spooky[M] = 1
-		else
-			spooky[M]++
-		if(spooky[M] >= 3)
-			do_it(M)
-
-	proc/do_it(var/mob/M)
-		if(spooking || broken) return
-		spooking = 1
-		break_it()
-		playsound(src, "sound/impact_sounds/Glass_Shatter_3.ogg", 75, 0)
-		M:transforming = 1
-		sleep(3 SECONDS)
-		var/obj/screen/creepy = new /obj/screen()
-		creepy.name = "GARHLGHARLHGARHGL"
-		creepy.icon = 'icons/creepy.png'
-		creepy.screen_loc = "SOUTH,WEST"
-		creepy.mouse_opacity = 0
-		if(!M) return
-		var/client/the_client = M.client
-		creepy.add_to_client(the_client)
-		playsound(src, "sound/effects/ghost2.ogg", 100, 0)
-		sleep(0.5 SECONDS)
-		if(!M)
-			the_client.screen -= creepy
-			return
-		M:gib()
-		sleep(0.5 SECONDS)
-		the_client.screen -= creepy
-		sleep(3 SECONDS)
-
-	New()
-		..()
-		build_base()
-		update()
-
-	HasEntered(atom/A)
-		if(ismob(A)) rebuild_icon()
-		return
-
-	attackby(obj/item/W as obj, mob/user as mob)
-		..()
-
-		if(W.force <= 1 || broken)
-			playsound(src, "sound/impact_sounds/Generic_Stab_1.ogg", 25, 0)
-			return
-
-		health--
-		if(health <= 0)
-			break_it()
-			boutput(user, "<span class='alert'>You break the mirror ...</span>")
-			playsound(src, "sound/impact_sounds/Glass_Shatter_3.ogg", 75, 0)
-		else
-			playsound(src, "sound/impact_sounds/Glass_Hit_1.ogg", 75, 0)
-
-	ex_act()
-		playsound(src, "sound/impact_sounds/Glass_Shatter_3.ogg", 75, 0)
-		break_it()
-
-	hitby(atom/movable/AM, datum/thrown_thing/thr)
-		. = ..()
-		playsound(src, "sound/impact_sounds/Glass_Shatter_3.ogg", 75, 0)
-		break_it()
-
-	proc
-
-		break_it()
-			if(broken) return
-			broken = 1
-			build_base()
-			rebuild_icon()
-			new /obj/item/raw_material/shard/glass( src.loc )
-			new /obj/item/raw_material/shard/plasmacrystal( src.loc )
-
-		build_base()
-			var/turf/T = src.loc
-			var/icon/composite = icon(T.icon, T.icon_state, T.dir)
-			composite.Flip(NORTH)
-			composite.Blend(icon('icons/misc/old_or_unused.dmi', "mirror"), ICON_OVERLAY)
-			if(broken) composite.Blend(icon('icons/misc/old_or_unused.dmi', "mirror_broken"), ICON_OVERLAY)
-			composite.Crop(7,8,26,31)
-			composite.Crop(1,1,32,32)
-			composite.Shift(NORTH,7)
-			composite.Shift(EAST,6)
-			base = composite
-
-		rebuild_icon()
-
-			src.icon = base
-			pixel_y = 0
-			var/turf/T = src.loc
-			var/icon/composite = icon(T.icon, T.icon_state, T.dir)
-			composite.Flip(NORTH)
-			var/the_dir
-
-			for(var/atom/C in T)
-				var/icon/curr
-
-				if(hasvar(C, "body_standing"))
-					if(!C:lying)
-						if(C.dir == NORTH || C.dir == SOUTH)
-							the_dir = turn(C.dir,180)
-							curr = icon(C:body_standing, dir=turn(C.dir,180))
-						else
-							the_dir = C.dir
-							curr = icon(C:body_standing, dir=C.dir)
-					else
-						continue
-				else
-					if(C.dir == NORTH || C.dir == SOUTH)
-						the_dir = turn(C.dir,180)
-						curr = icon(C.icon, C.icon_state, turn(C.dir,180))
-					else
-						the_dir = C.dir
-						curr = icon(C.icon, C.icon_state, C.dir)
-
-				if(!curr || C.invisibility) continue
-
-				composite.Blend(curr, ICON_OVERLAY)
-
-				for(var/O in C.overlays)
-					var/image/I = O
-					var/icon/II = icon(I.icon, I.icon_state, the_dir)
-					composite.Blend(II, ICON_OVERLAY)
-
-			composite.Blend(icon('icons/misc/old_or_unused.dmi', "mirror"), ICON_OVERLAY)
-			if(broken) composite.Blend(icon('icons/misc/old_or_unused.dmi', "mirror_broken"), ICON_OVERLAY)
-			composite.Crop(7,8,26,31)
-			composite.Crop(1,1,32,32) //UNCROP - http://www.youtube.com/watch?v=KUFkb0d1kbU
-			composite.Shift(NORTH,7)
-			composite.Shift(EAST,6)
-
-			src.icon = composite
-			pixel_y = 32
-
-		update()
-			rebuild_icon()
-			SPAWN_DBG(0.5 SECONDS) update()
 
 /obj/spook
 	var/active = 0
@@ -3872,7 +3732,7 @@ var/list/lag_list = new/list()
 
 	Topic(href, href_list)
 		if(usr.stat || usr.restrained()) return
-		if(!in_range(src, usr)) return
+		if(!in_interact_range(src, usr)) return
 		src.add_dialog(usr)
 		if (href_list["set_mode"])
 			active_mode = locate(href_list["set_mode"]) in modes

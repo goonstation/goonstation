@@ -1582,7 +1582,7 @@
 /area/station/security/armory)
 "adP" = (
 /obj/storage/secure/crate/plasma/armory/anti_biological,
-/obj/item/flamethrower/assembled/loaded,
+/obj/item/gun/flamethrower/assembled/loaded,
 /turf/simulated/floor/caution/west,
 /area/station/security/armory)
 "adQ" = (
@@ -5767,7 +5767,7 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
-/obj/item/postit_stack,
+/obj/item/item_box/postit,
 /turf/simulated/floor/red,
 /area/station/security/checkpoint/arrivals)
 "ani" = (
@@ -7128,7 +7128,7 @@
 /obj/machinery/door/firedoor/pyro{
 	dir = 4
 	},
-/obj/item/reagent_containers/food/snacks/cake/fruit,
+/obj/item/reagent_containers/food/snacks/fruit_cake,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/cafeteria)
 "aqm" = (
@@ -15156,7 +15156,7 @@
 	tag = ""
 	},
 /obj/item/stamp,
-/obj/item/postit_stack,
+/obj/item/item_box/postit,
 /obj/decal/garland,
 /turf/simulated/floor/black,
 /area/station/security/checkpoint)
@@ -19668,7 +19668,7 @@
 /obj/machinery/light/emergency{
 	dir = 1
 	},
-/obj/item/postit_stack,
+/obj/item/item_box/postit,
 /turf/simulated/floor/black,
 /area/station/bridge)
 "aQl" = (
@@ -28268,7 +28268,9 @@
 /turf/simulated/floor/plating,
 /area/space)
 "bhu" = (
-/obj/displaycase,
+/obj/displaycase{
+	displayed = new /obj/item/captaingun
+},
 /obj/window/reinforced{
 	dir = 2
 	},
@@ -33544,7 +33546,7 @@
 /obj/machinery/networked/printer{
 	print_id = "Information"
 	},
-/obj/item/postit_stack,
+/obj/item/item_box/postit,
 /turf/simulated/floor/carpet{
 	dir = 5;
 	icon_state = "fred2"
@@ -44852,7 +44854,7 @@
 /obj/item/clipboard,
 /obj/item/device/radio/headset/engineer,
 /obj/item/device/radio/headset/engineer,
-/obj/item/postit_stack,
+/obj/item/item_box/postit,
 /turf/simulated/floor/yellow/side{
 	dir = 8
 	},
@@ -53165,7 +53167,7 @@
 	dir = 4
 	},
 /obj/table/glass/auto,
-/obj/item/card_box/suit,
+/obj/item/card_box/plain,
 /obj/item/a_gift/festive,
 /turf/simulated/floor/escape,
 /area/station/hallway/secondary/exit)
@@ -53755,7 +53757,7 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
-/obj/item/postit_stack,
+/obj/item/item_box/postit,
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/head)
 "ciH" = (
@@ -54027,14 +54029,14 @@
 /obj/item/plate,
 /obj/item/decoration/ashtray,
 /obj/item/kitchen/utensil/fork,
-/obj/item/reagent_containers/food/snacks/cake/fruit,
+/obj/item/reagent_containers/food/snacks/fruit_cake,
 /turf/simulated/floor/carpet/purple/fancy/edge/east,
 /area/station/crew_quarters/cafeteria)
 "cje" = (
 /obj/table/reinforced/bar/auto,
 /obj/item/plate,
 /obj/item/kitchen/utensil/spoon,
-/obj/item/card_box/suit,
+/obj/item/card_box/plain,
 /turf/simulated/floor/carpet/purple/fancy/edge/east,
 /area/station/crew_quarters/cafeteria)
 "cjf" = (
@@ -63908,7 +63910,7 @@
 /obj/stool/chair/comfy{
 	dir = 4
 	},
-/obj/item/card_box/suit,
+/obj/item/card_box/plain,
 /turf/simulated/floor/snow,
 /area/station/crew_quarters/jazz)
 "cDu" = (

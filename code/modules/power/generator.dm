@@ -23,14 +23,13 @@
 		updateicon()
 
 /obj/machinery/power/generator/proc/updateicon()
-
 	if(status & (NOPOWER|BROKEN))
-		overlays = null
+		src.UpdateOverlays(null, "power-screen")
 	else
-		overlays = null
-
 		if(lastgenlev != 0)
-			overlays += image('icons/obj/power.dmi', "teg-op[lastgenlev]")
+			src.UpdateOverlays(image('icons/obj/power.dmi', "teg-op[lastgenlev]"), "power-screen")
+		else
+			src.UpdateOverlays(null, "power-screen")
 
 #define GENRATE 800		// generator output coefficient from Q
 

@@ -108,7 +108,7 @@
 					post_status("alert", href_list["alert"])
 
 				if("setmsg1")
-					if (!src.master || !in_range(src.master, usr) && src.master.loc != usr)
+					if (!src.master?.is_user_in_interact_range(usr))
 						return
 
 					if(!(src.holder in src.master))
@@ -119,7 +119,7 @@
 					src.master.updateSelfDialog()
 
 				if("setmsg2")
-					if (!src.master || !in_range(src.master, usr) && src.master.loc != usr)
+					if (!src.master?.is_user_in_interact_range(usr))
 						return
 
 					if(!(src.holder in src.master))
@@ -738,7 +738,7 @@ Code:
 
 		if (isAIeye(usr))
 			var/turf/eye_loc = get_turf(usr)
-			if (!(eye_loc.cameras && eye_loc.cameras.len))
+			if (!(eye_loc.cameras && length(eye_loc.cameras)))
 				an_area = get_area(eye_loc)
 
 		signal.data["message"] = "<b><span class='alert'>***CRISIS ALERT*** Location: [an_area ? an_area.name : "nowhere"]!</span></b>"
@@ -972,7 +972,7 @@ Using electronic "Detomatix" BOMB program is perhaps less simple!<br>
 			T.issuer_job = PDAownerjob
 			T.text = ticket_text
 			T.target_byond_key = get_byond_key(T.target)
-			T.issuer_byond_key = get_byond_key(T.issuer)
+			T.issuer_byond_key = usr.key
 			data_core.tickets += T
 
 			playsound(get_turf(src.master), "sound/machines/printer_thermal.ogg", 50, 1)
@@ -1026,7 +1026,7 @@ Using electronic "Detomatix" BOMB program is perhaps less simple!<br>
 			F.issuer = PDAowner
 			F.issuer_job = PDAownerjob
 			F.target_byond_key = get_byond_key(F.target)
-			F.issuer_byond_key = get_byond_key(F.issuer)
+			F.issuer_byond_key = usr.key
 			data_core.fines += F
 
 			if(PDAownerjob in list("Head of Security","Head of Personnel","Captain"))
