@@ -1133,6 +1133,7 @@
 
 /datum/mutantrace/abomination
 	name = "abomination"
+	mutant_folder = 'icons/mob/abomination.dmi'
 	icon = 'icons/mob/abomination.dmi'
 	icon_state = "abomination"
 	human_compatible = 0
