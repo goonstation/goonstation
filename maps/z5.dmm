@@ -412,7 +412,7 @@
 "hV" = (/turf/simulated/floor/carpet/blue/fancy/edge/sw,/area/diner/hallway)
 "hW" = (/turf/simulated/floor/carpet/blue/fancy/edge/se,/area/diner/hallway)
 "hX" = (/obj/decal/cleanable/dirt,/obj/machinery/door/airlock/classic,/turf/simulated/floor/carpet/grime,/area/diner/motel)
-"hY" = (/obj/decal/cleanable/dirt,/turf/simulated/floor/plating,/turf/simulated/floor/plating/damaged2,/area/diner/kitchen)
+"hY" = (/obj/decal/cleanable/dirt,/obj/reagent_dispensers/still/shittystill,/turf/simulated/floor/plating,/turf/simulated/floor/plating/damaged2,/area/diner/kitchen)
 "hZ" = (/obj/cable{icon_state = "4-8"},/obj/cable{icon_state = "1-8"},/turf/simulated/floor/grime,/area/diner/hallway)
 "ia" = (/obj/cable{icon_state = "1-8"},/turf/simulated/floor/grime,/area/diner/hallway)
 "ib" = (/obj/decal/cleanable/dirt,/obj/stool/bed,/obj/item/clothing/suit/bedsheet{bcolor = "green"; icon_state = "bedsheet-green"},/turf/simulated/floor/carpet/grime,/area/diner/motel)
