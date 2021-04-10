@@ -457,6 +457,7 @@ AI MODULES
 					qdel(src)
 				else
 					boutput(user, "<span class='notice'>You disconnect the monitor.</span>")
+					logTheThing("station", user, null, "disconnects the AI upload at [log_loc(src)].")
 					var/obj/computerframe/A = new /obj/computerframe(src.loc)
 					if(src.material) A.setMaterial(src.material)
 					var/obj/item/circuitboard/aiupload/M = new /obj/item/circuitboard/aiupload(A)

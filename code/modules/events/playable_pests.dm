@@ -13,7 +13,8 @@
 	list(/mob/living/critter/small_animal/dog/pug/weak,/mob/living/critter/small_animal/dog/corgi/weak,/mob/living/critter/small_animal/dog/shiba/weak),\
 	list(/mob/living/critter/changeling/eyespider,/mob/living/critter/changeling/buttcrab),\
 	list(/mob/living/critter/small_animal/frog/weak),\
-	list(/mob/living/critter/small_animal/cockroach/robo/weak),)
+	list(/mob/living/critter/small_animal/cockroach/robo/weak),\
+	list(/mob/living/critter/bot/cleanbot),)
 
 	admin_call(var/source)
 		if (..())

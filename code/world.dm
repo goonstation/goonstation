@@ -26,7 +26,6 @@
 	hub_password = "kMZy3U5jJHSiBQjr"
 	name = "Goonstation 13"
 
-
 //Let's clarify something. I don't know if it needs clarifying, but here I go anyways.
 
 //The UNDERWATER_MAP define is for things that should only be changed if the map is an underwater one.
