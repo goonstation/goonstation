@@ -33,21 +33,19 @@
 						pieceList[piece.position] = "[piece.pieceType][piece.pieceAffinity]"
 						user.u_equip(piece)
 						piece.set_loc(src)
+						pieceList = json_decode((href_list["pieceList"]))
 						uiSetup()
 						//user.visible_message("[user] puts \the [piece] onto the board.")
 						return
-			if("changePos")
+			if("changePos") // set variables to the fromPosition and toPosition variables given by the js file and adds th
 				if((istype(usr,/mob/living/carbon/human)) && (usr in range(1,src)))
-					var/pieceFromPosition = (text2num(href_list["fromPosition"]))
-					var/pieceToPosition = (text2num(href_list["toPosition"]))
+					var/pieceFromPosition = (text2num(href_list["fromPosition"])) + 1
+					var/pieceToPosition = (text2num(href_list["toPosition"])) + 1
 					pieceList[pieceFromPosition] = null
 					for(var/obj/item/chessman/piece in src)
 						if(piece.position == (pieceFromPosition + 1))
 							piece.position = pieceToPosition
-							pieceList[pieceToPosition] = "[piece.pieceType][piece.pieceAffinity]"
-							pieceList[pieceFromPosition] = null
-							lastMoveSpaces[1] = pieceFromPosition
-							lastMoveSpaces[2] = pieceToPosition
+							pieceList = json_decode((href_list["pieceList"]))
 							uiSetup()
 							return
 			if("remove")
@@ -58,7 +56,7 @@
 						if(piece.position == piecePosition)
 							user.put_in_hand_or_drop(piece)
 							//user.visible_message("[user] removes \the [piece] from the board.")
-							pieceList[piece.position] = null
+							pieceList = json_decode((href_list["pieceList"]))
 							uiSetup()
 							return
 			if("sendSelection")

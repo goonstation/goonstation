@@ -13,7 +13,7 @@ var fromSpace, toSpace;
 var selectionColor = "rgba(34, 139, 34, 0.7)", lastMoveColor = "rgba(255, 255, 0, 0.3)";
 var selectionSquare, lastMoveFromPos, lastMoveToPos;
 
-function byond() { // i have no idea what this does.
+function byond() {
 	url = "?src=" + srcRef;
 	currentIsKey = true;
 	for(let i = 0; i < arguments.length; i++) {
@@ -125,7 +125,6 @@ function drawPiece(position, pieceName) { // file and rank start at zero, small-
 
 function initialisePieces() { // function for initialising chess pieces after... every... move.
 	clearPieces();
-	pieceList = piecejson;
 	console.log(pieceList);
 	for(let i = 0; i < pieceList.length; i++){
 		if(pieceList[i] != null) {
@@ -146,7 +145,7 @@ function processClick(event){
 	}
 	else if(fromSpace == null){
 		if(!pieceList[selectedSpace]){
-			byond("command","checkHand","position",selectedSpace);
+			byond("command","checkHand","position",selectedSpace,"pieceList",pieceList);
 			return;
 		}
 		else{
@@ -175,8 +174,9 @@ function processMovement(clickedPiece){ // fired on-click
 		}
 	pieceList[toSpace] = pieceList[fromSpace]; // change the piece positions in the array
 	pieceList[fromSpace] = null;
+	byond("command","changePos","fromPosition",fromSpace,"toPosition",toSpace,"pieceList",pieceList); // communicates change in position to chess_board.dm
+	console.log("pieceList");
 	initialisePieces(); // redraw pieces on the board
-	byond("command","changePos","fromPosition",fromSpace,"toPosition",toSpace); // communicates change in position to chess_board.dm
 	fromSpace = null, toSpace = null; // reset letiables, time to start this again
 	}
 }
@@ -189,14 +189,8 @@ function deleteClickedPiece(event){ // deletes piece under cursor when fired
 	if(!Number.isInteger(pieceToDelete)){ // if clicked space isn't valid
 		return;
 	}
-	byond("command","remove","position",pieceToDelete);
+	byond("command","remove","position",pieceToDelete,"pieceList",pieceList);
 }
-
-/* function handleLastMoveSquare(lastFrom, lastTo){ // draw highlights for last move made
-	clearCanvas("lastMoveSquares")
-	drawSingleSquare(lastFrom, "lastMoveSquares", lastMoveColor);
-	drawSingleSquare(lastTo, "lastMoveSquares", lastMoveColor);
-} */
 
 // get mouse position with event listeners
 function getClickedPos(event) {
@@ -222,9 +216,6 @@ function windowclose(){
 window.onload = function() {
 	document.body.scroll="no";
 	drawBoard();
-	console.log("highlights drawn");
-	console.log("selection " + selection);
-	console.log("last move " + lastmovejson);
 	initialisePieces();
 	document.addEventListener("click", function(event){ // event listener that triggers when the board is clicked
 		processClick(event);
