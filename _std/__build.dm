@@ -89,7 +89,7 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define MAP_OVERRIDE_DESTINY			// Destiny/RP
 //#define MAP_OVERRIDE_CLARION			// Destiny/Alt RP
 //#define MAP_OVERRIDE_COGMAP			// Cogmap
-//#define MAP_OVERRIDE_COGMAP2			// Cogmap 2
+#define MAP_OVERRIDE_COGMAP2			// Cogmap 2
 //#define MAP_OVERRIDE_DONUT2			// Updated Donut2
 //#define MAP_OVERRIDE_DONUT3			// Donut3 by Ryumi
 //#define MAP_OVERRIDE_MUSHROOM			// Updated Mushroom
@@ -97,7 +97,7 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define MAP_OVERRIDE_CHIRON			// Chiron by Kusibu
 //#define MAP_OVERRIDE_OSHAN			// Oshan
 //#define MAP_OVERRIDE_HORIZON			// Horizon by Warcrimes
-#define MAP_OVERRIDE_ATLAS			// gannetmap OR IS IT KUBIUSGANNETMAP??
+//#define MAP_OVERRIDE_ATLAS			// gannetmap OR IS IT KUBIUSGANNETMAP??
 //#define MAP_OVERRIDE_MANTA			// manta map
 //#define MAP_OVERRIDE_DENSITY
 //#define MAP_OVERRIDE_KONDARU
