@@ -179,9 +179,9 @@
 			boutput(user, "<span class='notice'>You cut [src] in half</span>")
 			new /obj/item/reagent_containers/food/snacks/deviledegg(get_turf(src))
 			new /obj/item/reagent_containers/food/snacks/deviledegg(get_turf(src))
+			if (prob(25))
+				JOB_XP(user, "Chef", 1)
 			qdel(src)
-		if (prob(25))
-			JOB_XP(user, "Chef", 1)
 		else ..()
 
 
