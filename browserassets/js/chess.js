@@ -51,13 +51,11 @@ function drawBoard() {
 		ctx.font = notationTextStyle;
 		ctx.fillText(String(ranks - rank), (notationOffset/weirdnessMultiplier), ((rank * tileSize) + notationOffset)); // places algebraic values for ranks
 	}
+	drawHighlights();
 }
 
 function drawHighlights(){
-	clearCanvas("selectionSquares"); // clear selectionSquares canvas
 	clearCanvas("lastMoveSquares"); // clear selectionSquares canvas
-	selectionSquare = parseInt(selection[0]);
-	drawSingleSquare(selectionSquare, "selectionSquares", selectionColor); // draw selection square at selected position
 	lastMoveFromPos = parseInt(lastmovejson[0]);
 	lastMoveToPos = parseInt(lastmovejson[1]);
 	drawSingleSquare(lastMoveFromPos, "lastMoveSquares", lastMoveColor);
@@ -131,7 +129,6 @@ function initialisePieces() { // function for initialising chess pieces after...
 			drawPiece(i, pieceList[i]);
 		}
 	}
-	drawHighlights();
 }
 
 function clearPieces(){document.getElementById("chesspieces").innerHTML = "";}
@@ -140,12 +137,14 @@ function clearPieces(){document.getElementById("chesspieces").innerHTML = "";}
 function processClick(event){
 	var selectedSpace = getClickedPos(event);
 	if(!Number.isInteger(selectedSpace)){ // if clicked space isn't valid
+	clearCanvas("selectionSquares"); // clear selectionSquares canvas
 			console.log("invalid space");
 			return;
 	}
 	else if(fromSpace == null){
 		if(!pieceList[selectedSpace]){
-			byond("command","checkHand","position",selectedSpace,"pieceList",pieceList);
+			clearCanvas("selectionSquares"); // clear selectionSquares canvas
+			byond("command","checkHand","position",selectedSpace);
 			return;
 		}
 		else{
@@ -162,34 +161,37 @@ function processClick(event){
 function processMovement(clickedPiece){ // fired on-click
 	if(!Number.isInteger(fromSpace)){ // if no fromSpace has been selected prior, set clicked square to fromSpace
 		fromSpace = clickedPiece;
-		console.log("fromSpace selected " + fromSpace);
+		drawSingleSquare(clickedPiece, "selectionSquares", selectionColor); // draw selection square at selected position
 		return;
 	}
 	else if(!Number.isInteger(toSpace)){ // if no toSpace has been selected, which, hm...
-		console.log("toSpace selected " + toSpace);
 		toSpace = clickedPiece;
 		if(toSpace == fromSpace){ // if toSpace and fromSpace are the same, revert everything
 			fromSpace = null, toSpace = null;
+			clearCanvas("selectionSquares"); // clear selectionSquares canvas
 			return;
 		}
-	pieceList[toSpace] = pieceList[fromSpace]; // change the piece positions in the array
-	pieceList[fromSpace] = null;
-	byond("command","changePos","fromPosition",fromSpace,"toPosition",toSpace,"pieceList",pieceList); // communicates change in position to chess_board.dm
-	console.log("pieceList");
-	initialisePieces(); // redraw pieces on the board
-	fromSpace = null, toSpace = null; // reset letiables, time to start this again
+		if(pieceList[toSpace]) // check if there's a piece on the square a piece is moving to
+		{
+			byond("command","capture","capturedPosition",toSpace); // send command to eject captured piece from board
+		}
+		pieceList[toSpace] = pieceList[fromSpace]; // change the piece positions in the array
+		pieceList[fromSpace] = null;
+		byond("command","changePos","fromPosition",fromSpace,"toPosition",toSpace); // communicates change in position to chess_board.dm
+		fromSpace = null, toSpace = null; // reset letiables, time to start this again
 	}
 }
 
 function deleteClickedPiece(event){ // deletes piece under cursor when fired
 	let pieceToDelete = getClickedPos(event);
+	clearCanvas("selectionSquares"); // clear selectionSquares canvas
 	if(!pieceList[pieceToDelete]){
 		return;
 	}
 	if(!Number.isInteger(pieceToDelete)){ // if clicked space isn't valid
 		return;
 	}
-	byond("command","remove","position",pieceToDelete,"pieceList",pieceList);
+	byond("command","remove","position",pieceToDelete);
 }
 
 // get mouse position with event listeners

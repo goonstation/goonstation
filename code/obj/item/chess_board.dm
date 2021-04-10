@@ -7,10 +7,9 @@
 	var/list/openWindows = list()
 	var/lastMoveSpaces[2]
 	var/pieceList[64]
-	var/selectedSpace[1]
 
 	proc/uiSetup()
-		usr.Browse(replacetext(replacetext(replacetext(replacetext(grabResource("html/chess.htm"), "!!PIECES!!", json_encode(pieceList)), "!!SELECTION!!", json_encode(selectedSpace)), "!!LASTMOVE!!", json_encode(lastMoveSpaces)), "!!SRC_REF!!", "\ref[src]"), "window=chess;size=496x496;border=0;can_resize=0;can_minimize=1;")
+		usr.Browse(replacetext(replacetext(replacetext(grabResource("html/chess.htm"), "!!PIECES!!", json_encode(pieceList)), "!!LASTMOVE!!", json_encode(lastMoveSpaces)), "!!SRC_REF!!", "\ref[src]"), "window=chess;size=496x496;border=0;can_resize=0;can_minimize=1;")
 
 	New()
 		..()
@@ -33,36 +32,59 @@
 						pieceList[piece.position] = "[piece.pieceType][piece.pieceAffinity]"
 						user.u_equip(piece)
 						piece.set_loc(src)
-						pieceList = json_decode((href_list["pieceList"]))
 						uiSetup()
-						//user.visible_message("[user] puts \the [piece] onto the board.")
+						for(var/mob/living/carbon/human/u in src.openWindows)
+							if(u == usr)
+								continue
+							if(u.client && !(u in range(u.client.view,src)))
+								u.Browse(null, "window=chess")
+								break
 						return
 			if("changePos") // set variables to the fromPosition and toPosition variables given by the js file and adds th
 				if((istype(usr,/mob/living/carbon/human)) && (usr in range(1,src)))
-					var/pieceFromPosition = (text2num(href_list["fromPosition"])) + 1
+					var/pieceFromPosition = (text2num(href_list["fromPosition"])) + 1 // dang you DM for counting from 1
 					var/pieceToPosition = (text2num(href_list["toPosition"])) + 1
-					pieceList[pieceFromPosition] = null
+					lastMoveSpaces[1] = pieceFromPosition - 1
+					lastMoveSpaces[2] = pieceToPosition - 1
 					for(var/obj/item/chessman/piece in src)
-						if(piece.position == (pieceFromPosition + 1))
+						if(piece.position == pieceFromPosition)
 							piece.position = pieceToPosition
-							pieceList = json_decode((href_list["pieceList"]))
+							pieceList[pieceToPosition] = pieceList[pieceFromPosition]
+							pieceList[pieceFromPosition] = null
 							uiSetup()
-							return
+							for(var/mob/living/carbon/human/u in src.openWindows)
+								if(u == usr)
+									continue
+								if(u.client && !(u in range(u.client.view,src)))
+									u.Browse(null, "window=chess")
+									break
+								return
 			if("remove")
 				if(istype(usr,/mob/living/carbon/human) && (usr in range(1,src)))
 					var/mob/living/carbon/human/user = usr
 					for(var/obj/item/chessman/piece in src)
 						var/piecePosition = ((text2num(href_list["position"])) + 1) // because BYOND counts from 1 smh
 						if(piece.position == piecePosition)
-							user.put_in_hand_or_drop(piece)
-							//user.visible_message("[user] removes \the [piece] from the board.")
-							pieceList = json_decode((href_list["pieceList"]))
+							user.put_in_hand_or_eject(piece)
+							pieceList[piecePosition] = null;
 							uiSetup()
+							for(var/mob/living/carbon/human/u in src.openWindows)
+								if(u == usr)
+									continue
+								if(u.client && !(u in range(u.client.view,src)))
+									u.Browse(null, "window=chess")
+									break
 							return
-			if("sendSelection")
+			if("capture")
 				if(istype(usr,/mob/living/carbon/human) && (usr in range(1,src)))
-					selectedSpace = text2num(href_list["position"])
-					uiSetup()
+					var/mob/living/carbon/human/user = usr
+					for(var/obj/item/chessman/piece in src)
+						var/piecePosition = ((text2num(href_list["capturedPosition"])) + 1) // because BYOND counts from 1 smh
+						if(piece.position == piecePosition)
+							user.put_in_hand_or_eject(piece)
+							user.visible_message("[user] has captured \the [piece], removing it from the board!")
+							for(var/mob/living/carbon/human/u in src.openWindows)
+							return
 
 	attack_hand(var/mob/user) // open browser window when board is clicked
 		if(!(user in src.openWindows) && istype(user,/mob/living/carbon/human) && !(src in user.contents))
