@@ -1650,13 +1650,17 @@
 	player_list = list()
 	create_products()
 		..()
+	New()
+		. = ..()
+		setCrtOverlayStatus(1)
+
 	proc/getScaledIcon(obj/item/target)
 		var/image/itemoverlayoriginal = null
 		itemoverlayoriginal = SafeGetOverlayImage("item", target, target.icon_state)
 		itemoverlayoriginal.transform = matrix(null, 0.45, 0.45, MATRIX_SCALE)
 		itemoverlayoriginal.transform = matrix(itemoverlayoriginal.transform, -2.8, -3.7, MATRIX_TRANSLATE)
 		itemoverlayoriginal.layer = src.layer + 0.1
-		itemoverlayoriginal.plane 10
+		itemoverlayoriginal.plane = 10
 		src.set_icon_state("player-display")
 		return itemoverlayoriginal
 	proc/setItemOverlay(obj/item/target)
@@ -1716,7 +1720,6 @@
 			return lastuser
 	attackby(obj/item/target, mob/user)
 		setItemOverlay(target)
-		setCrtOverlayStatus(1)
 		if(!loading == 0 && !panel_open == 0)
 
 			addproduct(target, user)
