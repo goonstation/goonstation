@@ -239,10 +239,8 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 		user.visible_message("<span class='notice'>[user] cuts off the fingertips from [src].</span>")
 		if(src.loc == user)
 			user.u_equip(src)
-		src.set_loc(user)
-		var/obj/item/clothing/gloves/black/I = new /obj/item/clothing/gloves/fingerless
-		user.put_in_hand_or_drop(I)
 		qdel(src)
+		user.put_in_hand_or_drop(new /obj/item/clothing/gloves/fingerless)
 	else . = ..()
 /obj/item/clothing/gloves/cyborg
 	desc = "beep boop borp"
