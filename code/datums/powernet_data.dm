@@ -8,7 +8,7 @@
 	/// associated list of various data fields
 	var/list/fields = list(  )
 
-proc/FindRecordByField(var/list/datum/data/record/L, var/field, var/value)
+proc/FindRecordByFieldValue(var/list/datum/data/record/L, var/field, var/value)
 	if (!value) return
 	for(var/datum/data/record/R in L)
 		if(R.fields[field] == value)

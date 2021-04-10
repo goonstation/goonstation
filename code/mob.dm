@@ -2660,7 +2660,7 @@
 					if(!src.traitHolder.hasTrait("immigrant"))// stowaway entertainers shouldn't be on the manifest
 						for (var/L in list(data_core.bank, data_core.security, data_core.general, data_core.medical))
 							if (L)
-								var/datum/data/record/R = FindRecordByField(L, "name", src.real_name)
+								var/datum/data/record/R = FindRecordByFieldValue(L, "name", src.real_name)
 								if (R)
 									R.fields["name"] = newname
 									if (R.fields["full_name"])
