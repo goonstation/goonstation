@@ -80,12 +80,12 @@
 			system.reply("Ban length invalid.", user)
 			return
 		data["mins"] = length
-		data["akey"] = ckey(user)
+		data["akey"] = ckey(user) + " (Discord)"
 		addBan(data) // logging, messaging, and noting are all taken care of by this proc
 
 		var/ircmsg[] = new()
 		ircmsg["name"] = user
-		ircmsg["msg"] = "Banned [ckey] from all servers for [length], reason: [reason]"
+		ircmsg["msg"] = "Banned [ckey] from all servers for [length] minutes, reason: [reason]"
 		ircbot.export("admin", ircmsg)
 
 /datum/spacebee_extension_command/announce
