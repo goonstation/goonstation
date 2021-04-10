@@ -107,6 +107,7 @@ datum/preferences
 		ui = tgui_process.try_update_ui(user, src, ui)
 		if (!ui)
 			ui = new(user, src, "CharacterPreferences")
+			ui.set_autoupdate(FALSE)
 			ui.open()
 
 	ui_close(mob/user)
