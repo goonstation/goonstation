@@ -580,7 +580,7 @@ datum/preferences
 			if (usr.has_medal("Contributor"))
 				switch(alert(usr, "Goonstation contributors get to pick any colour for their skin tone!", "Thanks, pal!", "Paint me like a posh fence!", "Use Standard tone.", "Cancel"))
 					if("Paint me like a posh fence!")
-						new_tone = input(usr, "Please select skin color.", "Character Generation")  as null|color
+						new_tone = input(usr, "Please select skin color.", "Character Generation", AH.s_tone)  as null|color
 					if("Use Standard tone.")
 						new_tone = get_standard_skintone(usr)
 					else
@@ -602,7 +602,7 @@ datum/preferences
 					return TRUE
 
 		if (params["eyeColor"])
-			var/new_color = input(usr, "Please select an eye color.", "Character Generation") as null|color
+			var/new_color = input(usr, "Please select an eye color.", "Character Generation", AH.e_color) as null|color
 			if (new_color)
 				AH.e_color = new_color
 
@@ -611,7 +611,17 @@ datum/preferences
 
 		if (params["detail"])
 			if (params["color"])
-				var/new_color = input(usr, "Please select a color.", "Character Generation") as null|color
+				var/current_color
+				switch(params["id"])
+					if ("custom1")
+						current_color = src.AH.customization_first_color
+					if ("custom2")
+						current_color = src.AH.customization_second_color
+					if ("custom3")
+						current_color = src.AH.customization_third_color
+					if ("underwear")
+						current_color = src.AH.u_color
+				var/new_color = input(usr, "Please select a color.", "Character Generation", current_color) as null|color
 				if (new_color)
 					switch(params["id"])
 						if ("custom1")
