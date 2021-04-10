@@ -31,11 +31,6 @@ export const CharacterPreferences = (_props, context) => {
 
         <Tabs>
           <Tabs.Tab
-            selected={menu === CharacterPreferencesTabKeys.Saves}
-            onClick={() => setMenu(CharacterPreferencesTabKeys.Saves)}>
-            Saves
-          </Tabs.Tab>
-          <Tabs.Tab
             selected={menu === CharacterPreferencesTabKeys.General}
             onClick={() => setMenu(CharacterPreferencesTabKeys.General)}>
             General
@@ -51,6 +46,11 @@ export const CharacterPreferences = (_props, context) => {
             selected={menu === CharacterPreferencesTabKeys.GameSettings}
             onClick={() => setMenu(CharacterPreferencesTabKeys.GameSettings)}>
             Game Settings
+          </Tabs.Tab>
+          <Tabs.Tab
+            selected={menu === CharacterPreferencesTabKeys.Saves}
+            onClick={() => setMenu(CharacterPreferencesTabKeys.Saves)}>
+            Cloud Saves
           </Tabs.Tab>
         </Tabs>
         {menu === CharacterPreferencesTabKeys.General || menu === CharacterPreferencesTabKeys.Character ? (
@@ -82,8 +82,8 @@ export const CharacterPreferences = (_props, context) => {
           </Flex>
         ) : (
           <Fragment>
-            {menu === CharacterPreferencesTabKeys.Saves && <SavesTab />}
             {menu === CharacterPreferencesTabKeys.GameSettings && <GameSettingsTab />}
+            {menu === CharacterPreferencesTabKeys.Saves && <SavesTab />}
           </Fragment>
         )}
 
