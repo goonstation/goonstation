@@ -243,7 +243,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 		var/obj/item/clothing/gloves/black/I = new /obj/item/clothing/gloves/fingerless
 		user.put_in_hand_or_drop(I)
 		qdel(src)
-
+	else . = ..()
 /obj/item/clothing/gloves/cyborg
 	desc = "beep boop borp"
 	name = "cyborg gloves"
