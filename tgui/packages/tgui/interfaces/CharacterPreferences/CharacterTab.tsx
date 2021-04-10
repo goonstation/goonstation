@@ -8,17 +8,13 @@ export const CustomDetail = ({ id, color, style }, context) => {
 
   return (
     <Fragment>
-      <Box mb="5px">
-        <Button icon="chevron-left" onClick={() => act('update', { detail: 1, id, previousStyle: 1 })} />
-        <Button onClick={() => act('update', { detail: 1, id, nextStyle: 1 })} icon="chevron-right" />
-        <Button onClick={() => act('update', { detail: 1, id, style: 1 })}>{style}</Button>
-      </Box>
-      <Box>
-        <Button onClick={() => act('update', { detail: 1, id, color: 1 })}>
-          <ColorBox color={color} mr="5px" />
-          <Box as="code">{color}</Box>
-        </Button>
-      </Box>
+      <Button onClick={() => act('update', { detail: 1, id, color: 1 })}>
+        <ColorBox color={color} mr="5px" />
+        <Box as="code">{color}</Box>
+      </Button>
+      <Button icon="chevron-left" onClick={() => act('update', { detail: 1, id, previousStyle: 1 })} />
+      <Button onClick={() => act('update', { detail: 1, id, nextStyle: 1 })} icon="chevron-right" />
+      <Button onClick={() => act('update', { detail: 1, id, style: 1 })}>{style}</Button>
     </Fragment>
   );
 };
