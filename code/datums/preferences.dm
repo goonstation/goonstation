@@ -257,6 +257,7 @@ datum/preferences
 						return FALSE
 
 					boutput(usr, "<span class='notice'><b>Character loaded from Slot [index].</b></span>")
+					update_preview_icon()
 					return TRUE
 
 			if ("cloud-new")
@@ -293,6 +294,7 @@ datum/preferences
 					boutput(usr, "<span class='alert'>Failed to load savefile: [ret]</span>")
 				else
 					boutput(usr, "<span class='notice'>Savefile loaded!</span>")
+					update_preview_icon()
 					return TRUE
 
 			if ("cloud-delete")
