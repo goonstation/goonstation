@@ -238,6 +238,7 @@
 		return
 	var/message = TGUI_CREATE_MESSAGE(type, payload)
 	// Place into queue if window is still loading
+	boutput(world,"TGUI WINDOW MESSAGE LENGTH [length(message)] BYTES md5 [md5(message)]") // TODO AZRUN DELETE THIS!!!
 	if(!force && status != TGUI_WINDOW_READY)
 		if(!message_queue)
 			message_queue = list()

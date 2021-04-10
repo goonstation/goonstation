@@ -1103,6 +1103,14 @@
 			"cooldown" = src.equipment[GENETICS_RECLAIMER] - world.time,
 		))
 
+
+	for(var/key in .)
+		var/json = json_encode(.[key])
+		var/msg = url_encode(json)
+		boutput(world,"[key]:[length(msg)]:[md5(msg)]")
+
+
+
 /obj/machinery/computer/genetics/ui_static_data(mob/user)
 	var/to_send = list()
 	for (var/id as anything in bioEffectList)
