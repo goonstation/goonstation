@@ -1,5 +1,9 @@
 
 (t)fri apr 09 21
+(u)Camryn Buttes
+(p)4109
+(e)🐛🆕🗺|bug, feature, mapping
+(+)Made a bunch of minor improvements and additions to Donut 3.
 (u)Jan.antilles
 (p)4267
 (e)🆕🎨|feature, sprites
