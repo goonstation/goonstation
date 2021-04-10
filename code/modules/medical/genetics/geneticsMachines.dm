@@ -861,7 +861,7 @@
 			scanner_alert(ui.user, "Decryption code \"[code]\" failed.", error = TRUE)
 			on_ui_interacted(ui.user)
 
-/obj/machinery/computer/genetics/proc/serialize_bioeffect_for_tgui(datum/bioEffect/BE, active = FALSE, potential = FALSE)
+/obj/machinery/computer/genetics/proc/serialize_bioeffect_for_tgui(datum/bioEffect/BE, active = FALSE, potential = FALSE, add_dna = TRUE)
 	var/datum/bioEffect/GBE = BE.get_global_instance()
 	var/research_level = GBE.research_level
 
@@ -871,13 +871,13 @@
 		blockList = BE.dnaBlocks.blockListCurr
 
 	var/list/dna = list()
-	for (var/datum/basePair/BP as anything in blockList)
-		dna += list(list(
-			"upper" = BP.bpp1,
-			"lower" = BP.bpp2,
-			"style" = BP.style,
-			"marker" = BP.marker,
-		))
+	if(add_dna)
+		for (var/datum/basePair/BP as anything in blockList)
+			dna += list(list(
+				"pair" = "[BP.bpp1][BP.bpp2]",
+				"style" = BP.style,
+				"marker" = BP.marker,
+			))
 
 	. = list(
 		"ref" = "\ref[BE]",
@@ -988,7 +988,7 @@
 			var/datum/bioEffect/GBE = BE.get_global_instance()
 			if (GBE.secret && !genResearch.see_secret)
 				continue
-			genes += list(serialize_bioeffect_for_tgui(BE))
+			genes += list(serialize_bioeffect_for_tgui(BE, add_dna=(BE == src.currently_browsing)))
 		.["record"] = list(
 			"ref" = "\ref[selected_record]",
 			"name" = selected_record.subject_name,
@@ -1024,7 +1024,7 @@
 				continue
 			if (GBE.secret && !genResearch.see_secret)
 				continue
-			.["subjectPotential"] += list(serialize_bioeffect_for_tgui(BE, potential = TRUE))
+			.["subjectPotential"] += list(serialize_bioeffect_for_tgui(BE, potential = TRUE, add_dna=(BE == src.currently_browsing)))
 		for (var/D in subject.bioHolder.effects)
 			var/datum/bioEffect/BE = subject.bioHolder.effects[D]
 			var/datum/bioEffect/GBE = BE.get_global_instance()
@@ -1032,7 +1032,7 @@
 				continue
 			if (GBE.secret && !genResearch.see_secret)
 				continue
-			.["subjectActive"] += list(serialize_bioeffect_for_tgui(BE, active = TRUE))
+			.["subjectActive"] += list(serialize_bioeffect_for_tgui(BE, active = TRUE, add_dna=(BE == src.currently_browsing)))
 		if (src.modify_appearance)
 			.["modifyAppearance"] = src.modify_appearance.ui_data(user)
 		else
@@ -1060,15 +1060,16 @@
 
 				availTier += list(list(
 					"ref" = "\ref[C]",
-					"name" = C.name,
-					"desc" = C.desc,
+					// "name" = C.name,
+					// "desc" = C.desc,
 					"cost" = research_cost,
 					"time" = research_time,
 				))
 			else if (C.isResearched == 1)
 				finishedTier += list(list(
-					"name" = C.name,
-					"desc" = C.desc,
+					"ref" = "\ref[C]",
+					// "name" = C.name,
+					// "desc" = C.desc,
 				))
 
 		.["availableResearch"][text2num(R)] = availTier
@@ -1112,16 +1113,23 @@
 
 
 /obj/machinery/computer/genetics/ui_static_data(mob/user)
+	. = list("bioEffects"=list(),
+					"research"=list())
 	var/to_send = list()
 	for (var/id as anything in bioEffectList)
 		var/datum/bioEffect/BE = bioEffectList[id]
 		if (!BE.scanner_visibility || BE.research_level < EFFECT_RESEARCH_IN_PROGRESS)
 			continue
 		to_send += list(serialize_bioeffect_for_tgui(BE))
+	.["bioEffects"] = to_send
 
-	. = list(
-		"bioEffects" = to_send
-	)
+	for(var/key as anything in genResearch.researchTree)
+		var/datum/geneticsResearchEntry/R = genResearch.researchTree[key]
+		.["research"]["\ref[R]"] = list(
+			"name" = R.name,
+			"desc" = R.desc
+		)
+
 
 /obj/machinery/computer/genetics/ui_interact(mob/user, datum/tgui/ui)
 	ui = tgui_process.try_update_ui(user, src, ui)
