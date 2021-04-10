@@ -1,5 +1,9 @@
 
 (t)fri apr 09 21
+(u)Jan.antilles
+(p)4267
+(e)🆕🎨|feature, sprites
+(+)Added Lasagna as a tasty new food item for the Chef to cook.
 (u)Comradef191
 (p)4256
 (e)🗺|mapping
