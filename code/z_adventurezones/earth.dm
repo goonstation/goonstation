@@ -296,6 +296,10 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 	name = "NT Data Center"
 	icon_state = "pink"
 
+/area/centcom/reconstitutioncenter
+	name = "NT Reconstitution Center"
+	icon_state = "purple"
+
 /area/retentioncenter
 	name = "NT Retention Center"
 	icon_state = "dk_yellow"
