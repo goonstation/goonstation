@@ -45,7 +45,14 @@ datum/character_preview
 		src.handler.screen_loc = "[src.preview_id]:1,1"
 		src.viewer?.screen += src.handler
 
-		var/mob/living/carbon/human/H = new()
+		var/turf/loc = null
+		if(length(landmarks[LANDMARK_CHARACTER_PREVIEW_SPAWN]))
+			shuffle_list(landmarks[LANDMARK_CHARACTER_PREVIEW_SPAWN])
+			for(var/turf/T in landmarks[LANDMARK_CHARACTER_PREVIEW_SPAWN])
+				if(isnull(locate(/mob/living) in T))
+					loc = T
+					break
+		var/mob/living/carbon/human/H = new(loc)
 		src.preview_mob = H
 		H.screen_loc = "[src.preview_id];1,1"
 		src.handler.vis_contents += H
