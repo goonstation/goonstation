@@ -22583,7 +22583,8 @@
 	icon_state = "1-4"
 	},
 /obj/machinery/door/airlock/pyro/glass/security{
-	name = "Security"
+	name = "Security";
+	req_access = null
 	},
 /obj/access_spawn/security,
 /obj/firedoor_spawn,
@@ -25711,7 +25712,8 @@
 	icon_state = "2-4"
 	},
 /obj/machinery/door/airlock/pyro/glass/security{
-	name = "Locker Room"
+	name = "Locker Room";
+	req_access = null
 	},
 /obj/access_spawn/sec_lockers,
 /obj/firedoor_spawn,
@@ -27651,7 +27653,8 @@
 "bam" = (
 /obj/disposalpipe/segment/ejection,
 /obj/machinery/door/airlock/pyro/glass/security{
-	name = "Processing room"
+	name = "Processing room";
+	req_access = null
 	},
 /obj/access_spawn/security,
 /obj/firedoor_spawn,
@@ -27692,10 +27695,6 @@
 	},
 /area/station/security/main)
 "bar" = (
-/obj/machinery/firealarm{
-	dir = 4;
-	pixel_x = 24
-	},
 /obj/cable{
 	d1 = 1;
 	d2 = 2;
@@ -28402,6 +28401,11 @@
 	dir = 6;
 	name = "autoname  - SS13";
 	pixel_y = 21
+	},
+/obj/machinery/firealarm{
+	dir = 1;
+	pixel_y = 28;
+	text = "NF"
 	},
 /turf/simulated/floor/caution/north,
 /area/station/security/main)
@@ -29693,7 +29697,8 @@
 "bdZ" = (
 /obj/machinery/door/airlock/pyro/glass/security{
 	dir = 4;
-	name = "Interrogation Room"
+	name = "Interrogation Room";
+	req_access = null
 	},
 /obj/access_spawn/security,
 /obj/firedoor_spawn,
@@ -29746,7 +29751,8 @@
 	},
 /obj/machinery/door/airlock/pyro/glass/security{
 	dir = 4;
-	name = "Interrogation Room"
+	name = "Interrogation Room";
+	req_access = null
 	},
 /obj/firedoor_spawn,
 /obj/access_spawn/security,
@@ -30205,7 +30211,8 @@
 	},
 /obj/machinery/door/airlock/pyro/glass/security{
 	dir = 8;
-	name = "Solitary Brig"
+	name = "Solitary Brig";
+	req_access = null
 	},
 /obj/access_spawn/brig,
 /obj/firedoor_spawn,
@@ -31341,7 +31348,8 @@
 	},
 /obj/disposalpipe/segment/ejection,
 /obj/machinery/door/airlock/pyro/glass/security{
-	name = "Brig"
+	name = "Brig";
+	req_access = null
 	},
 /obj/access_spawn/brig,
 /obj/firedoor_spawn,
@@ -47619,8 +47627,9 @@
 /area/station/security/armory)
 "bMR" = (
 /obj/machinery/portable_atmospherics/canister/sleeping_agent,
-/obj/machinery/recharger/wall{
-	pixel_y = -21
+/obj/machinery/firealarm{
+	dir = 1;
+	pixel_y = -19
 	},
 /turf/simulated/floor/redblack,
 /area/station/security/armory)
@@ -49956,7 +49965,8 @@
 "lOY" = (
 /obj/machinery/door/airlock/pyro/glass/security{
 	dir = 8;
-	name = "Armory"
+	name = "Armory";
+	req_access = null
 	},
 /obj/access_spawn/security,
 /obj/firedoor_spawn,
@@ -51513,6 +51523,10 @@
 	print_id = "Security"
 	},
 /obj/machinery/power/data_terminal,
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = 24
+	},
 /turf/simulated/floor/red/side{
 	dir = 4
 	},
@@ -51547,7 +51561,8 @@
 "vxc" = (
 /obj/machinery/door/airlock/pyro/glass/security{
 	dir = 8;
-	name = "Security"
+	name = "Security";
+	req_access = null
 	},
 /obj/access_spawn/security,
 /obj/firedoor_spawn,
