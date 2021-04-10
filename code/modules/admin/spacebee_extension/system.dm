@@ -50,7 +50,7 @@ var/global/datum/spacebee_extension_system/spacebee_extension_system = new
 			current_message.Cut()
 			current_length = 0
 		current_message += line
-		current_length += 1 + line
+		current_length += 1 + length(line)
 	if(length(current_message))
 		return ircbot.export("admin", list("msg" = jointext(current_message, "\n")))
 
