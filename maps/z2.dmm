@@ -77316,6 +77316,14 @@
 /area/centcom/offices{
 	icon_state = "blue"
 	})
+"efl" = (
+/obj/stool/chair/comfy/shuttle{
+	dir = 8
+	},
+/turf/unsimulated/floor/shuttle{
+	dir = 8
+	},
+/area/shuttle/escape/centcom/sealab)
 "eih" = (
 /obj/kudzu_marker{
 	icon_state = "kudzu-benign-3"
@@ -83194,6 +83202,15 @@
 	dir = 8
 	},
 /area/shuttle/escape/centcom/donut2)
+"ydD" = (
+/obj/machinery/light/small/floor,
+/obj/stool/chair/comfy/shuttle{
+	dir = 8
+	},
+/turf/unsimulated/floor/shuttle{
+	dir = 8
+	},
+/area/shuttle/escape/centcom/sealab)
 "yeV" = (
 /obj/indestructible/shuttle_corner{
 	dir = 4;
@@ -141009,7 +141026,7 @@ dmu
 doi
 fdJ
 syJ
-dom
+don
 don
 don
 doj
@@ -141021,7 +141038,7 @@ dpa
 doj
 don
 don
-dom
+don
 syJ
 doK
 doi
@@ -141613,7 +141630,7 @@ dmu
 doi
 dpd
 syJ
-dom
+don
 don
 don
 doj
@@ -141625,7 +141642,7 @@ doH
 doj
 don
 don
-dom
+don
 syJ
 enn
 doi
@@ -141915,8 +141932,8 @@ dnT
 dnL
 dnZ
 doj
-dom
-don
+efl
+efl
 don
 doD
 doG
@@ -141926,8 +141943,8 @@ dos
 doG
 dph
 don
-don
-dom
+efl
+efl
 doj
 dnJ
 dnt
@@ -142217,19 +142234,19 @@ dmu
 djp
 aES
 dog
-dom
-don
-don
-don
-dom
-dom
-dom
-dom
-dom
-don
+efl
+efl
 don
 don
 dom
+dom
+dom
+dom
+dom
+don
+don
+efl
+efl
 dog
 aES
 djp
@@ -142520,17 +142537,17 @@ djp
 aES
 dof
 doo
-don
-dox
-dom
-dom
-dom
-dom
-dom
-dom
-dom
+efl
 dox
 don
+don
+don
+don
+don
+don
+don
+dox
+efl
 dpk
 doh
 aES
@@ -142823,15 +142840,15 @@ aES
 dod
 dok
 doo
-don
-don
-don
-dox
-don
-dox
-don
-don
-don
+efl
+efl
+efl
+ydD
+efl
+ydD
+efl
+efl
+efl
 dpk
 dok
 dpn
