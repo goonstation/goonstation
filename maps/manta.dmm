@@ -31287,7 +31287,7 @@
 "bGt" = (
 /obj/forcefield/energyshield/perma/doorlink,
 /obj/machinery/door/poddoor/blast/pyro/podbay_autoclose/mainpod2_horizontal{
-	name = "Submarine Bay (Starboard)"
+	name = "Submarine Bay (Port)"
 	},
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/port)
@@ -31676,7 +31676,7 @@
 "bHN" = (
 /obj/forcefield/energyshield/perma/doorlink,
 /obj/machinery/door/poddoor/blast/pyro/podbay_autoclose/mainpod1_horizontal{
-	name = "Submarine Bay (Port)"
+	name = "Submarine Bay (Starboard)"
 	},
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/starboard)
