@@ -49,9 +49,10 @@
 		attack_type = pick("lightning","fire","ice","sonic")
 		if(prob(10))
 			attack_type = "all"
-		cooldown = rand(25,900)
-		if (prob(5))
-			cooldown = 0
+		// cooldown
+		cooldown = rand(3 SECONDS, 70 SECONDS)
+		if(attack_type == "lightning")
+			cooldown = max(30 SECONDS, cooldown)
 		// fire
 		powerVars["fireTemp"] = rand(1000,10000)
 		if(prob(10))
