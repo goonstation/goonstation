@@ -34474,7 +34474,6 @@
 /obj/plasticflaps,
 /obj/forcefield/energyshield/perma,
 /obj/machinery/cargo_router{
-	default_direction = NORTH;
 	destinations = list("Market" = SOUTH)
 	},
 /turf/simulated/floor/plating/random,
@@ -45518,7 +45517,6 @@
 "cjz" = (
 /obj/disposalpipe/segment/transport,
 /obj/machinery/cargo_router{
-	default_direction = NORTH;
 	destinations = list("Mining" = SOUTH)
 	},
 /turf/simulated/floor/shuttlebay,
@@ -46192,7 +46190,7 @@
 "clC" = (
 /obj/plasticflaps,
 /obj/machinery/cargo_router{
-	default_direction = SOUTH;
+	default_direction = 2;
 	destinations = list("Tool Storage" = NORTH)
 	},
 /turf/simulated/floor,
@@ -46218,7 +46216,7 @@
 /area/station/crew_quarters/info)
 "clH" = (
 /obj/machinery/cargo_router{
-	default_direction = EAST;
+	default_direction = 4;
 	destinations = list("Tool Storage" = NORTH)
 	},
 /turf/simulated/floor/plating/random,
@@ -46246,7 +46244,7 @@
 "clL" = (
 /obj/lattice,
 /obj/machinery/cargo_router{
-	default_direction = WEST;
+	default_direction = 8;
 	destinations = list("Market" = SOUTH)
 	},
 /turf/space/fluid,
@@ -46765,7 +46763,7 @@
 	dir = 4
 	},
 /obj/machinery/cargo_router{
-	default_direction = SOUTH;
+	default_direction = 2;
 	destinations = list("Research" = WEST)
 	},
 /turf/simulated/floor/plating/random,
@@ -47738,7 +47736,6 @@
 	dir = 4
 	},
 /obj/machinery/cargo_router{
-	default_direction = NORTH;
 	destinations = list("QM" = EAST)
 	},
 /turf/simulated/floor/shuttlebay,
@@ -47866,7 +47863,6 @@
 	dir = 4
 	},
 /obj/machinery/cargo_router{
-	default_direction = NORTH;
 	destinations = list("Catering" = EAST)
 	},
 /turf/simulated/floor/shuttlebay,
@@ -48845,7 +48841,7 @@
 "rul" = (
 /obj/disposalpipe/segment/transport,
 /obj/machinery/cargo_router{
-	default_direction = EAST;
+	default_direction = 4;
 	destinations = list("Medbay" = SOUTH)
 	},
 /turf/simulated/floor/plating/random,
@@ -49006,7 +49002,7 @@
 "sNP" = (
 /obj/disposalpipe/segment/transport,
 /obj/machinery/cargo_router{
-	default_direction = EAST;
+	default_direction = 4;
 	destinations = list("Robotics" = SOUTH)
 	},
 /turf/simulated/floor/plating/random,
@@ -49154,7 +49150,7 @@
 	})
 "tNB" = (
 /obj/machinery/cargo_router{
-	default_direction = SOUTH;
+	default_direction = 2;
 	destinations = list("Engineering Storage" = WEST)
 	},
 /obj/disposalpipe/segment/transport{
