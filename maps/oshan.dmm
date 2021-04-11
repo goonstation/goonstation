@@ -3320,7 +3320,7 @@
 /area/station/medical/medbay/treatment2)
 "aht" = (
 /obj/wingrille_spawn/auto,
-/turf/simulated/floor/plating/random,
+/turf/simulated/floor/red/checker,
 /area/station/medical/medbay/surgery/storage)
 "ahu" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -6143,16 +6143,12 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/medical/head)
 "aoh" = (
-/obj/shrub{
-	dir = 4;
-	icon = 'icons/obj/stationobjs.dmi';
-	icon_state = "plant"
-	},
 /obj/machinery/power/apc/autoname_east,
 /obj/cable{
 	d2 = 8;
 	icon_state = "0-8"
 	},
+/obj/storage/secure/closet/medical/uniforms,
 /turf/simulated/floor/red/checker,
 /area/station/medical/medbay/surgery/storage)
 "aoi" = (
@@ -8012,6 +8008,11 @@
 /area/station/medical/medbay)
 "asw" = (
 /obj/machinery/light/incandescent/warm,
+/obj/shrub{
+	dir = 4;
+	icon = 'icons/obj/stationobjs.dmi';
+	icon_state = "plant"
+	},
 /turf/simulated/floor/red/checker,
 /area/station/medical/medbay/surgery/storage)
 "asx" = (
@@ -46949,7 +46950,9 @@
 /turf/simulated/floor/shuttlebay,
 /area/station/mining/staff_room)
 "fUm" = (
-/obj/storage/secure/closet/medical/uniforms,
+/obj/machinery/computer/ordercomp{
+	dir = 4
+	},
 /turf/simulated/floor/red/checker,
 /area/station/medical/medbay/surgery/storage)
 "fVJ" = (
