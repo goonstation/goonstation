@@ -136,9 +136,9 @@ datum/preferences
 		var/list/cloud_saves = null
 
 		if (client.cloud_available())
-			cloud_saves = new/list(length(client.player.cloudsaves))
+			cloud_saves = list()
 			for (var/name in client.player.cloudsaves)
-				cloud_saves[++length(cloud_saves)] += list("name" = name)
+				cloud_saves += name
 
 		sanitize_null_values()
 		user << browse_rsc(icon(cursors_selection[target_cursor]), "tcursor_[src.target_cursor].png")

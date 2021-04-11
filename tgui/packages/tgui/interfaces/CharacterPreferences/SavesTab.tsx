@@ -10,9 +10,9 @@ export const SavesTab = (_props, context) => {
     <Section title="Cloud Saves">
       {data.cloudSaves ? (
         <Fragment>
-          {data.cloudSaves.map((save, index) => (
-            <Fragment key={save.name}>
-              <Cloudsave name={save.name} index={index} />
+          {data.cloudSaves.map((name, index) => (
+            <Fragment key={name}>
+              <Cloudsave name={name} index={index} />
               <Divider />
             </Fragment>
           ))}
