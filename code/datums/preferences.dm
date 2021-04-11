@@ -561,7 +561,7 @@ datum/preferences
 			if(!length(selectable_ringtones))
 				src.pda_ringtone_index = "Two-Beep"
 				alert(usr, "Oh no! The JamStar-DCXXI PDA ringtone distribution satellite is out of range! Please try again later.", "x.x ringtones broke x.x", "Okay")
-				logTheThing("debug", usr ? usr : null, null, "get_all_character_setup_ringtones() didn't return anything!")
+				logTheThing("debug", usr, null, "get_all_character_setup_ringtones() didn't return anything!")
 			else
 				src.pda_ringtone_index = input(usr, "Choose a ringtone", "PDA") as null|anything in selectable_ringtones
 				if (!(src.pda_ringtone_index in selectable_ringtones))
