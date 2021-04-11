@@ -104,7 +104,8 @@ const SavesAndProfile = (_props, context) => {
             buttons={
               activeProfileIndex > -1 ? (
                 <Fragment>
-                  <Button onClick={() => act('load', { index: activeProfileIndex + 1 })}>Reload</Button> -{' '}
+                  <Button onClick={() => act('load', { index: activeProfileIndex + 1 })}>Reload</Button>
+                  {' - '}
                   <Button onClick={() => act('save', { index: activeProfileIndex + 1 })}>Save</Button>
                 </Fragment>
               ) : null
@@ -114,7 +115,7 @@ const SavesAndProfile = (_props, context) => {
             </Button>
           </LabeledList.Item>
         </LabeledList>
-        {data.profileModified ? (
+        {!!data.profileModified && (
           <Fragment>
             <Divider />
             <NoticeBox danger mt="10px">
@@ -129,7 +130,7 @@ const SavesAndProfile = (_props, context) => {
               </Flex>
             </NoticeBox>
           </Fragment>
-        ) : null}
+        )}
       </Section>
     </Fragment>
   );
@@ -163,8 +164,9 @@ const Profile = (
       {/* Just a small gap between these so you dont accidentally hit one */}
       <Button disabled={!profile.name} onClick={() => act('load', { index: index + 1 })}>
         Load
-      </Button>{' '}
-      - <Button onClick={() => act('save', { index: index + 1 })}>Save</Button>
+      </Button>
+      {' - '}
+      <Button onClick={() => act('save', { index: index + 1 })}>Save</Button>
     </Section>
   );
 };
