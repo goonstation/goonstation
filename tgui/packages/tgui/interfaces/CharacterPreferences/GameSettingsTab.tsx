@@ -1,5 +1,5 @@
 import { useBackend } from '../../backend';
-import { Box, Button, LabeledList, Section } from '../../components';
+import { Box, Button, Image, LabeledList, Section } from '../../components';
 import { CharacterPreferencesData, CharacterPreferencesTooltip } from './type';
 
 export const GameSettingsTab = (_props, context) => {
@@ -93,10 +93,8 @@ export const GameSettingsTab = (_props, context) => {
             </Button>
           </Box>
           <Box>
-            <img
-              style={{
-                "-ms-interpolation-mode": "nearest-neighbor",
-              }}
+            <Image
+              pixelated
               src={`hud_preview_${data.hudTheme}.png`}
               width="32px"
               height="32px"
@@ -110,10 +108,8 @@ export const GameSettingsTab = (_props, context) => {
             </Button>
           </Box>
           <Box>
-            <img
-              style={{
-                "-ms-interpolation-mode": "nearest-neighbor",
-              }}
+            <Image
+              pixelated
               src={`tcursor_${data.targetingCursor}.png`}
               width="32px"
               height="32px"
