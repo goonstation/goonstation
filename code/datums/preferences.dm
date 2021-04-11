@@ -218,7 +218,6 @@ datum/preferences
 			if ("previewSound")
 				return src.ui_act_preview_sound(action, params, ui, state)
 
-
 			if ("rotate-clockwise")
 				src.spessman_direction = turn(src.spessman_direction, 90)
 				update_preview_icon()
@@ -322,7 +321,7 @@ datum/preferences
 				AH.customization_first_color = initial(AH.customization_first_color)
 				AH.customization_second_color = initial(AH.customization_second_color)
 				AH.customization_third_color = initial(AH.customization_third_color)
-				AH.e_color = 0
+				AH.e_color = "#101010"
 				AH.u_color = "#FEFEFE"
 
 				AH.s_tone = "#FAD7D0"
