@@ -2076,6 +2076,9 @@
 		product_list += new/datum/data/vending_product(/obj/item/goboard, 1, cost=PAY_TRADESMAN/2)
 		product_list += new/datum/data/vending_product(/obj/item/gobowl/b, 1, cost=PAY_TRADESMAN/4)
 		product_list += new/datum/data/vending_product(/obj/item/gobowl/w, 1, cost=PAY_TRADESMAN/4)
+		product_list += new/datum/data/vending_product(/obj/item/chessboard, 1, cost=PAY_TRADESMAN/2)
+		product_list += new/datum/data/vending_product(/obj/item/chessbox/black, 1, cost=PAY_TRADESMAN/4)
+		product_list += new/datum/data/vending_product(/obj/item/chessbox/white, 1, cost=PAY_TRADESMAN/4)
 		product_list += new/datum/data/vending_product(/obj/item/card_box/clow, 5, cost=PAY_TRADESMAN/2) // (this is an anime joke)
 		product_list += new/datum/data/vending_product(/obj/item/clow_key, 5, cost=PAY_TRADESMAN/2)      //      (please laugh)
 
