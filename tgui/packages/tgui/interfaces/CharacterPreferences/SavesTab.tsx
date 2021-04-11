@@ -9,7 +9,7 @@ export const SavesTab = (_props, context) => {
   return (
     <Section title="Cloud Saves">
       {data.cloudSaves ? (
-        <Fragment>
+        <>
           {data.cloudSaves.map((name, index) => (
             <Fragment key={name}>
               <Cloudsave name={name} index={index} />
@@ -19,7 +19,7 @@ export const SavesTab = (_props, context) => {
           <Box mt="5px">
             <Button onClick={() => act('cloud-new')}>Create new save</Button>
           </Box>
-        </Fragment>
+        </>
       ) : (
         <Box italic color="label">
           Cloud saves could not be loaded.
@@ -42,12 +42,12 @@ const Cloudsave = ({ name, index }: CloudSaveProps, context: any) => {
       <LabeledList.Item
         label={`Cloud save ${index + 1}`}
         buttons={
-          <Fragment>
+          <>
             {/* Just a small gap between these so you dont accidentally hit one */}
             <Button onClick={() => act('cloud-load', { name })}>Load</Button> -{' '}
             <Button onClick={() => act('cloud-save', { name })}>Save</Button> -{' '}
             <Button.Confirm onClick={() => act('cloud-delete', { name })} content="Delete" />
-          </Fragment>
+          </>
         }>
         {name}
       </LabeledList.Item>

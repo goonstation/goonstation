@@ -1,6 +1,6 @@
 import { decodeHtmlEntities } from 'common/string';
 import { useBackend } from '../../backend';
-import { BlockQuote, Box, Button, ColorBox, LabeledList, Section } from '../../components';
+import { BlockQuote, Box, Button, LabeledList, Section } from '../../components';
 import { CharacterPreferencesData } from './type';
 
 export const GeneralTab = (_props, context) => {

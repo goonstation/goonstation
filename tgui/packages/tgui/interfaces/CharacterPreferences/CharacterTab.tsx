@@ -1,18 +1,17 @@
-import { Fragment } from 'inferno';
 import { useBackend } from '../../backend';
-import { Box, Button, ColorBox, LabeledList, Section } from '../../components';
+import { Button, LabeledList, Section } from '../../components';
 import { CharacterPreferencesData } from './type';
 
 const CustomDetail = ({ id, color, style }, context) => {
   const { act, data } = useBackend<CharacterPreferencesData>(context);
 
   return (
-    <Fragment>
+    <>
       <Button.Color color={color} onClick={() => act('update-detail-color', { id })} />
       <Button icon="chevron-left" onClick={() => act('update-detail-style-cycle', { id, direction: -1 })} />
       <Button icon="chevron-right" onClick={() => act('update-detail-style-cycle', { id, direction: 1 })} />
       <Button onClick={() => act('update-detail-style', { id })}>{style}</Button>
-    </Fragment>
+    </>
   );
 };
 
@@ -20,7 +19,7 @@ export const CharacterTab = (_props, context) => {
   const { act, data } = useBackend<CharacterPreferencesData>(context);
 
   return (
-    <Fragment>
+    <>
       <Section title="Appearance">
         <LabeledList>
           <LabeledList.Item label="Skin Tone">
@@ -72,6 +71,6 @@ export const CharacterTab = (_props, context) => {
           </LabeledList.Item>
         </LabeledList>
       </Section>
-    </Fragment>
+    </>
   );
 };

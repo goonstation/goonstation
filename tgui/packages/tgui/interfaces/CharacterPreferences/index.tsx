@@ -1,4 +1,3 @@
-import { Fragment } from 'inferno';
 import { useBackend, useLocalState } from '../../backend';
 import { Box, Button, ByondUi, Divider, Flex, Icon, LabeledList, NoticeBox, Section, Tabs } from '../../components';
 import { Window } from '../../layouts';
@@ -68,10 +67,10 @@ export const CharacterPreferences = (_props, context) => {
             </Flex.Item>
           </Flex>
         ) : (
-          <Fragment>
+          <>
             {menu === CharacterPreferencesTabKeys.GameSettings && <GameSettingsTab />}
             {menu === CharacterPreferencesTabKeys.Saves && <SavesTab />}
-          </Fragment>
+          </>
         )}
 
         <Section mt="5px">
@@ -88,7 +87,7 @@ const SavesAndProfile = (_props, context) => {
   const activeProfileIndex = data.profiles.findIndex((p) => p.active);
 
   return (
-    <Fragment>
+    <>
       <Flex mb="5px">
         {data.profiles.map((profile, index) => (
           <Flex.Item key={index} ml={index === 0 ? '0' : '5px'} grow="1">
@@ -103,11 +102,11 @@ const SavesAndProfile = (_props, context) => {
             label="Profile Name"
             buttons={
               activeProfileIndex > -1 ? (
-                <Fragment>
+                <>
                   <Button onClick={() => act('load', { index: activeProfileIndex + 1 })}>Reload</Button>
                   {' - '}
                   <Button onClick={() => act('save', { index: activeProfileIndex + 1 })}>Save</Button>
-                </Fragment>
+                </>
               ) : null
             }>
             <Button onClick={() => act('update', { profileName: 1 })}>
@@ -116,7 +115,7 @@ const SavesAndProfile = (_props, context) => {
           </LabeledList.Item>
         </LabeledList>
         {!!data.profileModified && (
-          <Fragment>
+          <>
             <Divider />
             <NoticeBox danger mt="10px">
               <Flex>
@@ -129,10 +128,10 @@ const SavesAndProfile = (_props, context) => {
                 </Flex.Item>
               </Flex>
             </NoticeBox>
-          </Fragment>
+          </>
         )}
       </Section>
-    </Fragment>
+    </>
   );
 };
 
