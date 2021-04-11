@@ -13,7 +13,7 @@ var fromSpace, toSpace;
 var selectionColor = "rgba(34, 139, 34, 0.7)", lastMoveColor = "rgba(255, 255, 0, 0.3)";
 var selectionSquare, lastMoveFromPos, lastMoveToPos;
 
-function byond() {
+function byond() { // used for sending instructions to chess_board.dm
 	url = "?src=" + srcRef;
 	currentIsKey = true;
 	for(let i = 0; i < arguments.length; i++) {
@@ -54,7 +54,7 @@ function drawBoard() {
 	drawHighlights();
 }
 
-function drawHighlights(){
+function drawHighlights(){ // draws the highlight squares when initialised
 	clearCanvas("lastMoveSquares"); // clear selectionSquares canvas
 	lastMoveFromPos = parseInt(lastmovejson[0]);
 	lastMoveToPos = parseInt(lastmovejson[1]);
@@ -82,6 +82,8 @@ function clearCanvas(clrCanvas){ // clears the canvas used in the argument
 // Author: Cburnett
 // Licenced under CC BY-SA 3.0
 // Modified from original by DisturbHerb
+
+// Draughts pieces drawn by DisturbHer
 
 // following vars are how i have to import the piece images because i have no other choice
 // these damn things make me want to *cry*
@@ -210,17 +212,12 @@ function getClickedPos(event) {
 	return clickedSpace;
 }
 
-//////////////////STUFF THAT INTERFACES WITH CHESS_BOARD.DM//////////////////
-window.onbeforeunload = windowclose;
-function windowclose(){
-   byond("command","close");
-}
-
 ////////////////////////////////////////////////////////////////////////
 window.onload = function() {
 	document.body.scroll="no";
-	drawBoard();
-	initialisePieces();
+	byond("command","bodge"); // bodge o'clock! it's a glorified fucking sanity check, because i'm going insane
+	drawBoard(); // draws the board
+	initialisePieces(); // draws the pieces on the board
 	document.addEventListener("click", function(event){ // event listener that triggers when the board is clicked
 		processClick(event);
 	});
@@ -228,4 +225,8 @@ window.onload = function() {
 		deleteClickedPiece(event);
 		event.preventDefault();
 	});
+}
+
+window.onunload = function() { // tells BYOND to remove the player from the list of users viewing the board, which SHOULD work if the sanity check doesn't pass
+  byond("command","close");
 }

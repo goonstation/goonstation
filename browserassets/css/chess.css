@@ -12,11 +12,11 @@ canvas, .chesspieces {
 	left: 0;
 }
 
-#chessboard {
+#chessboard { /* for the canvas named chessboard */
 	z-index: -1;
 }
 
-.chessboard {
+.chessboard { /* for the div named chessboard */
 	position: relative;
 	width: 480px;
 	height: 480px;

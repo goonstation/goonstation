@@ -1,6 +1,7 @@
+// whatever poor sod has to review or maintain this code, i am so, so sorry - disturbherb
 /obj/item/chessboard
 	name = "chess board"
-	desc = "It's a board for playing chess! Or checkers... Or anything that uses an 8x8 checkered board..."
+	desc = "It's a board for playing chess! Or checkers... Or anything that uses an 8x8 checkered board... Right click the pieces on the board to remove them."
 	icon = 'icons/obj/items/chess.dmi'
 	icon_state = "chessboard"
 	layer = 2.9
@@ -10,10 +11,10 @@
 	var/offsetX = 3
 	var/offsetY = 3
 
-	proc/uiSetup()
-		usr.Browse(replacetext(replacetext(replacetext(grabResource("html/chess.htm"), "!!PIECES!!", json_encode(pieceList)), "!!LASTMOVE!!", json_encode(lastMoveSpaces)), "!!SRC_REF!!", "\ref[src]"), "window=chess;size=496x496;border=0;can_resize=0;can_minimize=1;")
+	proc/uiSetup(mob/player) // initialises the browser window, replacing some placeholders with some json lists
+		player.Browse(replacetext(replacetext(replacetext(grabResource("html/chess.htm"), "!!PIECES!!", json_encode(pieceList)), "!!LASTMOVE!!", json_encode(lastMoveSpaces)), "!!SRC_REF!!", "\ref[src]"), "window=chess;size=496x496;border=0;can_resize=0;can_minimize=1;")
 
-	proc/drawOverlay()
+	proc/drawOverlay() // draws the piece overlays over the board sprite, according to the piece positions
 		src.ClearAllOverlays()
 		for(var/obj/item/chessman/piece in src)
 			var/image/pieceDisplay = new /image('icons/obj/items/chess.dmi',"piece-render-[piece.pieceAffinity]")
@@ -27,11 +28,15 @@
 
 	Topic(href, href_list)
 		switch(href_list["command"])
-			if("close")
+			if("bodge") // this exists, because openWindows wasn't having its players added or subtracted properly. oh god.
+				if(!(usr in src.openWindows))
+					src.openWindows.Add(usr)
+				return
+			if("close") // nominally fired when the program is unloaded; but that happens *every time* so the bodge above has to exist.
 				if(usr in src.openWindows)
 					src.openWindows.Remove(usr)
 				return
-			if("checkHand")
+			if("checkHand") // checks if user has a piece equipped, then places it in the board at the location selected by the player
 				if((istype(usr,/mob/living/carbon/human)) && (usr in range(1,src)))
 					var/mob/living/carbon/human/user = usr
 					var/equipped = user.equipped()
@@ -46,15 +51,10 @@
 						lastMoveSpaces[1] = null
 						lastMoveSpaces[2] = null
 						drawOverlay()
-						uiSetup()
-						for(var/mob/living/carbon/human/u in src.openWindows)
-							if(u == usr)
-								continue
-							if(u.client && !(u in range(u.client.view,src)))
-								u.Browse(null, "window=chess")
-								break
+						for(var/mob/player in src.openWindows)
+							uiSetup(player)
 						return
-			if("changePos") // set variables to the fromPosition and toPosition variables given by the js file and adds th
+			if("changePos") // set variables to the fromPosition and toPosition variables given by the js file and changes the pieceList entries
 				if((istype(usr,/mob/living/carbon/human)) && (usr in range(1,src)))
 					var/pieceFromPosition = (text2num(href_list["fromPosition"])) + 1 // dang you DM for counting from 1
 					var/pieceToPosition = (text2num(href_list["toPosition"])) + 1
@@ -66,15 +66,10 @@
 							pieceList[pieceToPosition] = pieceList[pieceFromPosition]
 							pieceList[pieceFromPosition] = null
 							drawOverlay()
-							uiSetup()
-							for(var/mob/living/carbon/human/u in src.openWindows)
-								if(u == usr)
-									continue
-								if(u.client && !(u in range(u.client.view,src)))
-									u.Browse(null, "window=chess")
-									break
-								return
-			if("remove")
+							for(var/mob/player in src.openWindows)
+								uiSetup(player)
+							return
+			if("remove") // ejects the piece at the location selected by the player
 				if(istype(usr,/mob/living/carbon/human) && (usr in range(1,src)))
 					var/mob/living/carbon/human/user = usr
 					for(var/obj/item/chessman/piece in src)
@@ -86,13 +81,8 @@
 							lastMoveSpaces[1] = null
 							lastMoveSpaces[2] = null
 							drawOverlay()
-							uiSetup()
-							for(var/mob/living/carbon/human/u in src.openWindows)
-								if(u == usr)
-									continue
-								if(u.client && !(u in range(u.client.view,src)))
-									u.Browse(null, "window=chess")
-									break
+							for(var/mob/player in src.openWindows)
+								uiSetup(player)
 							return
 			if("capture")
 				if(istype(usr,/mob/living/carbon/human) && (usr in range(1,src)))
@@ -102,19 +92,18 @@
 						if(piece.position == piecePosition)
 							user.put_in_hand_or_eject(piece)
 							user.visible_message("[user] has captured \the [piece], removing it from the board!")
-							for(var/mob/living/carbon/human/u in src.openWindows)
 							return
 
 	attack_hand(var/mob/user) // open browser window when board is clicked
 		if(!(user in src.openWindows) && istype(user,/mob/living/carbon/human) && !(src in user.contents))
 			src.openWindows.Add(user)
-		uiSetup()
+			uiSetup(user)
 
 	attackby(var/obj/item/chessman/piece, var/mob/user) // open browser window if board is thwacked with a chess/checkers piece
 		if(istype(piece,/obj/item/chessman))
 			if(!(user in src.openWindows) && istype(user,/mob/living/carbon/human) && !(src in user.contents))
 				src.openWindows.Add(user)
-			uiSetup()
+				uiSetup(user)
 		else
 			..()
 
@@ -177,7 +166,7 @@
 
 	proc/eatPiece(mob/M as mob)
 		var/chocolateChance = rand(1,5)
-		playsound(M.loc, "sound/misc/chalkeat_[rand(1,2)].ogg", 60, 1) // thanks adhara
+		playsound(M.loc, "sound/misc/chalkeat_[rand(1,2)].ogg", 60, 1, 25) // thanks adhara
 		qdel(src)
 		if(chocolateChance == 1)
 			boutput(M, "<span class='success'>The piece has a satisfying snap to it as you bite in! It's... Chocolate!</span>")
@@ -209,6 +198,12 @@
 	proc/closeBox()
 		icon_state = "[affinity]box"
 
+	proc/adjustIcon()
+		if(contents.len > 0)
+			icon_state = "[affinity]box-open"
+		else
+			icon_state = "[affinity]box-open-empty"
+
 	proc/spawnPiece(spawnType)
 		var/obj/item/chessman/piece = new
 		piece.pieceAffinity = "[affinity]" // sets created piece affinity
@@ -216,7 +211,7 @@
 		piece.setPieceInfo(src) // set piece information based on box and type
 		piece.set_loc(src)
 
-	/proc/setExamine(var/obj/item/chessbox/box)
+	proc/setExamine(var/obj/item/chessbox/box)
 		box.desc = "A wooden box designed to contain [box.affinity] pieces for chess and checkers."
 		if(box.contents.len <= 0)
 			box.desc = "[box.desc] There is nothing in it."
@@ -245,7 +240,7 @@
 			// create an alphabeticall sorted list of pieces in the box
 			var/list/pieceListSorted = sortNames(contents)
 			pieceListSorted.Add("CANCEL")
-			var/selectedType = input(user,"Pick a piece type:","CHEEEESS") in pieceListSorted
+			var/selectedType = input(user,"Pick a piece type:","[affinity] chess box") in pieceListSorted
 			return selectedType
 
 	proc/ejectPiece(var/obj/spawnedPiece, var/mob/user) // if there's an output target, eject it to that. else, put it in the user's hand or eject onto same turf
@@ -255,7 +250,7 @@
 			spawnedPiece.set_loc(outputTarget)
 
 	proc/grabPiece(var/mob/user, var/obj/item/chessman/piece) // checks if the box is empty, then iterates through every piece in contents to grab the ONE PIECE YOU INPUTTED AAA
-		if(!isnull(checkEmpty()))
+		if(!isnull(checkEmpty(user)))
 			return
 		else
 			piece = pieceInput(user)
@@ -267,11 +262,12 @@
 			for(var/i in 1 to contents.len)
 				if(piece == contents[i].name)
 					ejectPiece(contents[i], user)
+					adjustIcon()
 					src.visible_message("[user] removes the [piece] from the [src.name].")
 					return
 
 	proc/grabSet(var/mob/user,chosenSet)
-		if(!isnull(checkEmpty()))
+		if(!isnull(checkEmpty(user)))
 			return true
 		else
 			var/pieceFound
@@ -295,11 +291,13 @@
 
 	proc/grabChess(var/mob/user)
 		while(isnull(grabSet(user,chosenSet = "chess")))
+		adjustIcon()
 		setExamine(src)
 		src.visible_message("[user] removes all of the remaining chessmen from [src.name].")
 
 	proc/grabDraughts(var/mob/user)
 		while(isnull(grabSet(user,chosenSet = "draughts")))
+		adjustIcon()
 		setExamine(src)
 		src.visible_message("[user] removes all of the remaining draughtsmen from [src.name].")
 
@@ -324,8 +322,7 @@
 
 	attack_hand(var/mob/user)
 		// open box if closed
-		if(icon_state == "[affinity]box")
-			icon_state = "[affinity]box-open"
+		adjustIcon()
 
 		// update and show context actions
 		updateChessActions()
@@ -355,10 +352,11 @@
 					if(piece.loc == user)
 						user.u_equip(piece)
 					piece.set_loc(src)
+					adjustIcon()
 					sleep(0.05 SECONDS)
 					setExamine(src)
 
-	MouseDrop(over_object, src_location, over_location)
+	MouseDrop(over_object, src_location, over_location) // checks for targeting locations for piece ejection
 		if(!istype(usr,/mob/living/))
 			boutput(usr, "<span class='alert'>Only living mobs are able to set the output target for [src].</span>")
 			return
@@ -399,7 +397,7 @@
 			return 0
 		user.visible_message("<span class='alert'>[user] grabs a king and rook from the chess box, and stuffs a piece in each ear!</span>")
 		user.visible_message("<span class='alert'><b>[user] castles the king in [his_or_her(user)] ear! Oh god, there's a gaping hole in [his_or_her(user)] head!</b></span>")
-		playsound(user.loc, "sound/impact_sounds/Flesh_Stab_[rand(1,3)].ogg", 60, 1)
+		playsound(user.loc, "sound/impact_sounds/Flesh_Stab_[rand(1,3)].ogg", 60, 1, 25)
 		SPAWN_DBG(5 DECI SECONDS) // just in case you start to regret your decision
 		user.take_brain_damage(75)
 		user.TakeDamage("head", 125)
