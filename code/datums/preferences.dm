@@ -402,7 +402,7 @@ datum/preferences
 			var/new_name = input(usr, "Please select a first name:", "Character Generation", src.name_first) as null|text
 			if (isnull(new_name))
 				return
-			//new_name = trim(new_name)
+			new_name = trim(new_name)
 			for (var/c in bad_name_characters)
 				new_name = replacetext(new_name, c, "")
 			if (length(new_name) < NAME_CHAR_MIN)
@@ -429,6 +429,7 @@ datum/preferences
 			var/new_name = input(usr, "Please select a middle name:", "Character Generation", src.name_middle) as null|text
 			if (isnull(new_name))
 				return
+			new_name = trim(new_name)
 			for (var/c in bad_name_characters)
 				new_name = replacetext(new_name, c, "")
 			if (length(new_name) > NAME_CHAR_MAX)
@@ -447,7 +448,7 @@ datum/preferences
 			var/new_name = input(usr, "Please select a last name:", "Character Generation", src.name_last) as null|text
 			if (isnull(new_name))
 				return
-			//new_name = trim(new_name)
+			new_name = trim(new_name)
 			for (var/c in bad_name_characters)
 				new_name = replacetext(new_name, c, "")
 			if (length(new_name) < NAME_CHAR_MIN)
