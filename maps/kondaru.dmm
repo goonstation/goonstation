@@ -8722,7 +8722,9 @@
 /area/station/engine/engineering)
 "axu" = (
 /obj/table/auto,
-/obj/machinery/phone,
+/obj/machinery/computer/security/wooden_tv/small{
+	pixel_y = 8
+	},
 /turf/simulated/floor,
 /area/station/engine/engineering)
 "axv" = (
@@ -10099,14 +10101,15 @@
 	desc = "Smells a bit funny, but gets the job done.";
 	name = "mending patch";
 	pixel_x = -1;
-	pixel_y = 4
+	pixel_y = 6
 	},
 /obj/item/reagent_containers/food/snacks/chips{
-	pixel_y = 2
+	pixel_x = 5;
+	pixel_y = 2;
+	rand_pos = 0
 	},
 /obj/item/reagent_containers/food/drinks/mug/random_color{
-	pixel_x = 4;
-	pixel_y = 1
+	pixel_x = -7
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
@@ -12564,6 +12567,10 @@
 /turf/simulated/floor/grime,
 /area/station/maintenance/disposal)
 "aHf" = (
+/obj/machinery/phone/wall{
+	pixel_x = 24;
+	pixel_y = 8
+	},
 /turf/simulated/floor/yellow/side{
 	dir = 4
 	},
@@ -18626,7 +18633,7 @@
 /area/station/hallway/primary/north)
 "aYX" = (
 /obj/machinery/camera/television{
-	c_tag = "boxing";
+	c_tag = "Boxing Ring";
 	dir = 1;
 	name = "camera - boxing"
 	},
@@ -33043,6 +33050,9 @@
 /obj/cable{
 	d2 = 8;
 	icon_state = "0-4"
+	},
+/obj/landmark/spawner{
+	name = "monkeyspawn_albert"
 	},
 /turf/simulated/floor/engine,
 /area/station/science/teleporter)
@@ -50348,7 +50358,7 @@
 /area/station/crew_quarters/md)
 "kQR" = (
 /obj/machinery/camera/television{
-	c_tag = "test chamber";
+	c_tag = "Test Chamber";
 	dir = 1;
 	name = "camera - test chamber"
 	},
@@ -55923,12 +55933,6 @@
 	dir = 1
 	},
 /area/station/hallway/primary/south)
-"rPP" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_albert"
-	},
-/turf/simulated/floor/white,
-/area/station/science/teleporter)
 "rQB" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -98499,7 +98503,7 @@ bOp
 bRa
 bSA
 bSA
-rPP
+bSA
 bWe
 bLL
 bzR
