@@ -666,7 +666,7 @@ ABSTRACT_TYPE(/datum/job/research)
 	slot_back = /obj/item/storage/backpack/medic
 	slot_belt = /obj/item/storage/belt/medical
 	slot_jump = /obj/item/clothing/under/rank/medical
-	slot_suit = /obj/item/clothing/suit/labcoat
+	slot_suit = /obj/item/clothing/suit/labcoat/medical
 	slot_foot = /obj/item/clothing/shoes/red
 	slot_lhan = /obj/item/storage/firstaid/regular/doctor_spawn
 	slot_ears = /obj/item/device/radio/headset/medical

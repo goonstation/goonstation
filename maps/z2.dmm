@@ -67659,7 +67659,7 @@
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/darkchis)
 "dwd" = (
-/obj/item/clothing/suit/labcoat/medical/april_fools,
+/obj/item/clothing/suit/labcoat/medical/blue,
 /obj/machinery/light{
 	dir = 1
 	},

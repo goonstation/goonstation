@@ -586,3 +586,25 @@ mob/verb/checkrewards()
 		C.mob.put_in_hand_or_drop(I)
 		boutput(C.mob, "You look away for a second and the shaker turns into golden from top to bottom!")
 
+/////////////Medical Doctor////////////////
+
+/datum/jobXpReward/medical_doctor/blue_labcoat
+	name = "Blue Labcoat"
+	desc = "Woops. Looks like you put too much detergent into the washing machine when you put your work clothes in. Let's hope the Medical Director doesn't enforce a dress code."
+	required_levels = list("Medical Doctor"=5)
+	icon_state = "?"
+	claimable = 1
+	claimPerRound = 1
+	var/path_to_spawn = /obj/item/clothing/suit/labcoat/medical/blue
+
+	activate(var/client/C)
+		var/obj/item/clothing/suit/labcoat/medical/labcoat = locate(/obj/item/clothing/suit/labcoat/medical/) in C.mob.contents
+
+		if(!istype(labcoat))
+			return
+		C.mob.remove_item(labcoat)
+		qdel(labcoat)
+		var/obj/item/I = new path_to_spawn()
+		I.set_loc(get_turf(C.mob))
+		C.mob.put_in_hand_or_drop(I)
+		boutput(C.mob, "You sneeze and suddenly your labcoat changes color. Wierd.")

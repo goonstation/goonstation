@@ -9948,7 +9948,7 @@
 "cEO" = (
 /obj/displaycase{
 	displayed = new /obj/item/captaingun
-},
+	},
 /obj/machinery/light/incandescent/greenish{
 	dir = 1
 	},
@@ -23952,19 +23952,13 @@
 /area/listeningpost)
 "gQV" = (
 /obj/rack,
-/obj/item/clothing/suit/labcoat/medical/april_fools{
-	pixel_x = 4;
-	pixel_y = 5
+/obj/item/sponge{
+	pixel_x = -5;
+	pixel_y = 1
 	},
-/obj/item/clothing/suit/labcoat/medical{
-	pixel_x = -8;
-	pixel_y = 5
-	},
-/obj/item/clothing/suit/labcoat/medical{
-	pixel_x = -3
-	},
-/obj/item/clothing/suit/labcoat/medical/april_fools{
-	pixel_x = 9
+/obj/item/reagent_containers/glass/bucket{
+	pixel_x = 6;
+	pixel_y = -5
 	},
 /turf/simulated/floor/carpet/arcade,
 /area/station/medical/breakroom)
@@ -42759,7 +42753,9 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/se)
 "mCO" = (
-/obj/stool/chair/comfy,
+/obj/stool/chair/comfy{
+	dir = 8
+	},
 /turf/simulated/floor/carpet/arcade,
 /area/station/medical/breakroom)
 "mCZ" = (

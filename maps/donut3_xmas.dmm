@@ -24386,7 +24386,7 @@
 /area/space)
 "gQV" = (
 /obj/rack,
-/obj/item/clothing/suit/labcoat/medical/april_fools{
+/obj/item/clothing/suit/labcoat/medical/blue{
 	pixel_x = 4;
 	pixel_y = 5
 	},
@@ -24397,7 +24397,7 @@
 /obj/item/clothing/suit/labcoat/medical{
 	pixel_x = -3
 	},
-/obj/item/clothing/suit/labcoat/medical/april_fools{
+/obj/item/clothing/suit/labcoat/medical/blue{
 	pixel_x = 9
 	},
 /turf/simulated/floor/carpet/arcade,

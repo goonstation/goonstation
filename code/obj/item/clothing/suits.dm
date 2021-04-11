@@ -466,7 +466,7 @@
 	item_state = "MDlabcoat"
 	coat_style = "MDlabcoat"
 
-	april_fools
+	blue
 		icon_state = "MDlabcoat-alt"
 		item_state = "MDlabcoat-alt"
 		coat_style = "MDlabcoat-alt"
