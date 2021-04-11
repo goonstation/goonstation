@@ -3,7 +3,7 @@ import { useBackend } from '../../backend';
 import { Box, Button, ByondUi, ColorBox, Flex, LabeledList, Section } from '../../components';
 import { CharacterPreferencesData } from './type';
 
-export const CustomDetail = ({ id, color, style }, context) => {
+const CustomDetail = ({ id, color, style }, context) => {
   const { act, data } = useBackend<CharacterPreferencesData>(context);
 
   return (

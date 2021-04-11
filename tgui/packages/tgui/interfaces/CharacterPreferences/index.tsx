@@ -28,7 +28,6 @@ export const CharacterPreferences = (_props, context) => {
     <Window width={600} height={750} title="Character Setup">
       <Window.Content scrollable>
         <SavesAndProfile />
-
         <Tabs>
           <Tabs.Tab
             selected={menu === CharacterPreferencesTabKeys.General}

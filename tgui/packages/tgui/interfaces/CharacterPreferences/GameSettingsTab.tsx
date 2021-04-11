@@ -19,7 +19,7 @@ export const GameSettingsTab = (_props, context) => {
         >
           <Box mb="5px" color="label">
             Changes the font size used in popup windows. Only works when CHUI is
-            disabled at the moment. CHUI support coming soon™.
+            disabled.
           </Box>
           <Button onClick={() => act("update", { fontSize: 1 })}>
             {data.fontSize ? data.fontSize + "%" : "Default"}

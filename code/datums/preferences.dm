@@ -263,7 +263,7 @@ datum/preferences
 			if ("cloud-new")
 				if (!client.cloud_available())
 					return
-				if(client.player.cloudsaves.len >= SAVEFILE_CLOUD_PROFILES_MAX)
+				if(length(client.player.cloudsaves) >= SAVEFILE_CLOUD_PROFILES_MAX)
 					alert(usr, "You have hit your cloud save limit. Please write over an existing save.")
 				else
 					var/new_name = input(usr, "What would you like to name the save?", "Save Name") as null|text
@@ -503,9 +503,9 @@ datum/preferences
 
 			if (blTypeNew)
 				if (blTypeNew == "Random")
-					src.random_blood = 1
+					src.random_blood = TRUE
 				else
-					src.random_blood = 0
+					src.random_blood = FALSE
 					src.blType = blTypeNew
 
 				return TRUE
