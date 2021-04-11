@@ -260,8 +260,8 @@
 
 		medic
 			name = "specialist health monitor"
-			icon_state = "syndie_specialist-medic"
-			item_state = "syndie_specialist-medic"
+			icon_state = "syndie_specialist"
+			item_state = "syndie_specialist"
 			permeability_coefficient = 0.01
 			c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH | BLOCKCHOKE
 			var/client/assigned = null
