@@ -591,7 +591,7 @@ mob/verb/checkrewards()
 /datum/jobXpReward/medical_doctor/blue_labcoat
 	name = "Blue Labcoat"
 	desc = "Woops. Looks like you put too much detergent into the washing machine when you put your work clothes in. Let's hope the Medical Director doesn't enforce a dress code."
-	required_levels = list("Medical Doctor"=5)
+	required_levels = list("Medical Doctor"=10)
 	icon_state = "?"
 	claimable = 1
 	claimPerRound = 1
