@@ -1,5 +1,5 @@
 import { Fragment } from 'inferno';
-import { useBackend, useSharedState } from '../../backend';
+import { useBackend, useLocalState } from '../../backend';
 import { Box, Button, ByondUi, Divider, Flex, Icon, LabeledList, NoticeBox, Section, Tabs } from '../../components';
 import { Window } from '../../layouts';
 import { CharacterTab } from './CharacterTab';
@@ -10,7 +10,7 @@ import { CharacterPreferencesData, CharacterPreferencesProfile, CharacterPrefere
 
 export const CharacterPreferences = (_props, context) => {
   const { act, data } = useBackend<CharacterPreferencesData>(context);
-  const [menu, setMenu] = useSharedState(context, 'menu', CharacterPreferencesTabKeys.General);
+  const [menu, setMenu] = useLocalState(context, 'menu', CharacterPreferencesTabKeys.General);
 
   return (
     <Window width={600} height={750} title="Character Setup">
