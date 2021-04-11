@@ -80,8 +80,6 @@ export const CharacterPreferences = (_props, context) => {
             )}
           </Stack.Item>
           <Stack.Item>
-
-
             <Section>
               <Button.Confirm content="Reset All" onClick={() => act('reset')} />
             </Section>
