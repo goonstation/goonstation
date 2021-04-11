@@ -27,8 +27,8 @@ export const CharacterPreferences = (_props, context) => {
             onClick={() => setMenu(CharacterPreferencesTabKeys.Character)}>
             Appearance
           </Tabs.Tab>
-          <Tabs.Tab onClick={() => act('occupation-window')}>Occupation</Tabs.Tab>
-          <Tabs.Tab onClick={() => act('traits-window')}>Traits</Tabs.Tab>
+          <Tabs.Tab onClick={() => act('open-occupation-window')}>Occupation</Tabs.Tab>
+          <Tabs.Tab onClick={() => act('open-traits-window')}>Traits</Tabs.Tab>
           <Tabs.Tab
             selected={menu === CharacterPreferencesTabKeys.GameSettings}
             onClick={() => setMenu(CharacterPreferencesTabKeys.GameSettings)}>
