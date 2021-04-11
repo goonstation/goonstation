@@ -48010,13 +48010,6 @@
 /area/station/hangar/catering{
 	name = "Catering Hangar"
 	})
-"mAI" = (
-/obj/machinery/floorflusher/industrial,
-/obj/disposalpipe/trunk/transport{
-	dir = 4
-	},
-/turf/simulated/floor/grime,
-/area/space)
 "mAL" = (
 /obj/table/auto,
 /obj/item/decoration/ashtray{
@@ -101919,8 +101912,8 @@ aEV
 aEV
 aEV
 aEV
-sVf
-sVf
+aCD
+aCD
 aCD
 aKm
 aMY
@@ -102222,7 +102215,7 @@ bjl
 cjN
 aDr
 aCD
-mAI
+nPt
 aCD
 aKL
 aMZ
