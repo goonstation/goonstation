@@ -213,25 +213,25 @@ datum/preferences
 		var/client/client = ismob(usr) ? usr.client : usr
 
 		switch(action)
-			if ("update")
-				return src.ui_act_update(action, params, ui, state)
 			if ("previewSound")
 				return src.ui_act_preview_sound(action, params, ui, state)
 
 			if ("rotate-clockwise")
 				src.spessman_direction = turn(src.spessman_direction, 90)
 				update_preview_icon()
+				return
 
 			if ("rotate-counter-clockwise")
 				src.spessman_direction = turn(src.spessman_direction, -90)
 				update_preview_icon()
+				return
 
-			if ("occupation-window")
+			if ("open-occupation-window")
 				src.SetChoices(usr)
 				ui.close()
 				return TRUE
 
-			if ("traits-window")
+			if ("open-traits-window")
 				traitPreferences.showTraits(usr)
 				ui.close()
 				return TRUE
@@ -306,6 +306,490 @@ datum/preferences
 					boutput(usr, "<span class='notice'>Savefile deleted!</span>")
 					return TRUE
 
+			if ("update-profileName")
+				var/new_profile_name = input(usr, "New profile name:", "Character Generation", src.profile_name)
+
+				for (var/c in bad_name_characters)
+					new_profile_name = replacetext(new_profile_name, c, "")
+
+				new_profile_name = trim(new_profile_name)
+
+				if (new_profile_name)
+					if (length(new_profile_name) >= 26)
+						new_profile_name = copytext(new_profile_name, 1, 26)
+					src.profile_name = new_profile_name
+					src.profile_modified = TRUE
+					return TRUE
+
+			if ("update-randomName")
+				src.be_random_name = !src.be_random_name
+				src.profile_modified = TRUE
+				return TRUE
+
+			if ("update-nameFirst")
+				var/new_name = input(usr, "Please select a first name:", "Character Generation", src.name_first) as null|text
+				if (isnull(new_name))
+					return
+				new_name = trim(new_name)
+				for (var/c in bad_name_characters)
+					new_name = replacetext(new_name, c, "")
+				if (length(new_name) < NAME_CHAR_MIN)
+					alert("Your first name is too short. It must be at least [NAME_CHAR_MIN] characters long.")
+					return
+				else if (length(new_name) > NAME_CHAR_MAX)
+					alert("Your first name is too long. It must be no more than [NAME_CHAR_MAX] characters long.")
+					return
+				else if (is_blank_string(new_name))
+					alert("Your first name cannot contain only spaces.")
+					return
+				else if (!character_name_validation.Find(new_name))
+					alert("Your first name must contain at least one letter.")
+					return
+				new_name = capitalize(new_name)
+
+				if (new_name)
+					src.name_first = new_name
+					src.real_name = src.name_first + " " + src.name_last
+					src.profile_modified = TRUE
+					return TRUE
+
+			if ("update-nameMiddle")
+				var/new_name = input(usr, "Please select a middle name:", "Character Generation", src.name_middle) as null|text
+				if (isnull(new_name))
+					return
+				new_name = trim(new_name)
+				for (var/c in bad_name_characters)
+					new_name = replacetext(new_name, c, "")
+				if (length(new_name) > NAME_CHAR_MAX)
+					alert("Your middle name is too long. It must be no more than [NAME_CHAR_MAX] characters long.")
+					return
+				else if (is_blank_string(new_name) && new_name != "")
+					alert("Your middle name cannot contain only spaces.")
+					return
+				new_name = capitalize(new_name)
+				src.name_middle = new_name // don't need to check if there is one in case someone wants no middle name I guess
+				src.profile_modified = TRUE
+
+				return TRUE
+
+			if ("update-nameLast")
+				var/new_name = input(usr, "Please select a last name:", "Character Generation", src.name_last) as null|text
+				if (isnull(new_name))
+					return
+				new_name = trim(new_name)
+				for (var/c in bad_name_characters)
+					new_name = replacetext(new_name, c, "")
+				if (length(new_name) < NAME_CHAR_MIN)
+					alert("Your last name is too short. It must be at least [NAME_CHAR_MIN] characters long.")
+					return
+				else if (length(new_name) > NAME_CHAR_MAX)
+					alert("Your last name is too long. It must be no more than [NAME_CHAR_MAX] characters long.")
+					return
+				else if (is_blank_string(new_name))
+					alert("Your last name cannot contain only spaces.")
+					return
+				else if (!character_name_validation.Find(new_name))
+					alert("Your last name must contain at least one letter.")
+					return
+				new_name = capitalize(new_name)
+
+				if (new_name)
+					src.name_last = new_name
+					src.real_name = src.name_first + " " + src.name_last
+					src.profile_modified = TRUE
+					return TRUE
+
+			if ("update-gender")
+				if (!AH.pronouns)
+					if (src.gender == MALE)
+						src.gender = FEMALE
+						AH.gender = FEMALE
+					else if (src.gender == FEMALE)
+						src.gender = MALE
+						AH.gender = MALE
+						AH.pronouns = 1
+				else
+					if (src.gender == MALE)
+						src.gender = FEMALE
+						AH.gender = FEMALE
+					else if (src.gender == FEMALE)
+						src.gender = MALE
+						AH.gender = MALE
+						AH.pronouns = 0
+				update_preview_icon()
+				src.profile_modified = TRUE
+				return TRUE
+
+			if ("update-age")
+				var/new_age = input(usr, "Please select type in age: 20-80", "Character Generation", src.age)  as null|num
+
+				if (new_age)
+					src.age = max(min(round(text2num(new_age)), 80), 20)
+					src.profile_modified = TRUE
+
+					return TRUE
+
+			if ("update-bloodType")
+				var/blTypeNew = input(usr, "Please select a blood type:", "Character Generation", src.blType)  as null|anything in list("Random", "A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-")
+
+				if (blTypeNew)
+					if (blTypeNew == "Random")
+						src.random_blood = TRUE
+					else
+						src.random_blood = FALSE
+						src.blType = blTypeNew
+					src.profile_modified = TRUE
+					return TRUE
+
+			if ("update-pin")
+				if (params["random"])
+					src.pin	= null
+					return TRUE
+				else
+					var/new_pin = input(usr, "Please select a PIN between 1000 and 9999", "Character Generation", src.pin)  as null|num
+					if (new_pin)
+						src.pin = max(min(round(text2num(new_pin)), 9999), 1000)
+						src.profile_modified = TRUE
+						return TRUE
+
+			if ("update-flavorText")
+				var/new_text = input(usr, "Please enter new flavor text (appears when examining you):", "Character Generation", src.flavor_text) as null|text
+				if (!isnull(new_text))
+					new_text = html_encode(new_text)
+					if (length(new_text) > FLAVOR_CHAR_LIMIT)
+						alert("Your flavor text is too long. It must be no more than [FLAVOR_CHAR_LIMIT] characters long. The current text will be trimmed down to meet the limit.")
+						new_text = copytext(new_text, 1, FLAVOR_CHAR_LIMIT+1)
+					src.flavor_text = new_text
+					src.profile_modified = TRUE
+
+					return TRUE
+
+			if ("update-securityNote")
+				var/new_text = input(usr, "Please enter new flavor text (appears when examining you):", "Character Generation", src.security_note) as null|text
+				if (!isnull(new_text))
+					new_text = html_encode(new_text)
+					if (length(new_text) > FLAVOR_CHAR_LIMIT)
+						alert("Your flavor text is too long. It must be no more than [FLAVOR_CHAR_LIMIT] characters long. The current text will be trimmed down to meet the limit.")
+						new_text = copytext(new_text, 1, FLAVOR_CHAR_LIMIT+1)
+					src.security_note = new_text
+					src.profile_modified = TRUE
+
+					return TRUE
+
+			if ("update-medicalNote")
+				var/new_text = input(usr, "Please enter new flavor text (appears when examining you):", "Character Generation", src.medical_note) as null|text
+				if (!isnull(new_text))
+					new_text = html_encode(new_text)
+					if (length(new_text) > FLAVOR_CHAR_LIMIT)
+						alert("Your flavor text is too long. It must be no more than [FLAVOR_CHAR_LIMIT] characters long. The current text will be trimmed down to meet the limit.")
+						new_text = copytext(new_text, 1, FLAVOR_CHAR_LIMIT+1)
+					src.medical_note = new_text
+					src.profile_modified = TRUE
+
+					return TRUE
+
+			if ("update-pdaRingtone")
+				get_all_character_setup_ringtones()
+				if(!length(selectable_ringtones))
+					src.pda_ringtone_index = "Two-Beep"
+					alert(usr, "Oh no! The JamStar-DCXXI PDA ringtone distribution satellite is out of range! Please try again later.", "x.x ringtones broke x.x", "Okay")
+					logTheThing("debug", usr, null, "get_all_character_setup_ringtones() didn't return anything!")
+				else
+					src.pda_ringtone_index = input(usr, "Choose a ringtone", "PDA") as null|anything in selectable_ringtones
+					if (!(src.pda_ringtone_index in selectable_ringtones))
+						src.pda_ringtone_index = "Two-Beep"
+
+					src.profile_modified = TRUE
+					return TRUE
+
+			if ("update-pdaColor")
+				var/new_color = input(usr, "Choose a color", "PDA", src.PDAcolor) as color | null
+				if (!isnull(new_color))
+					src.PDAcolor = new_color
+					src.profile_modified = TRUE
+
+					return TRUE
+
+			if ("update-skinTone")
+				var/new_tone = "#FEFEFE"
+				if (usr.has_medal("Contributor"))
+					switch(alert(usr, "Goonstation contributors get to pick any colour for their skin tone!", "Thanks, pal!", "Paint me like a posh fence!", "Use Standard tone.", "Cancel"))
+						if("Paint me like a posh fence!")
+							new_tone = input(usr, "Please select skin color.", "Character Generation", AH.s_tone)  as null|color
+						if("Use Standard tone.")
+							new_tone = get_standard_skintone(usr)
+						else
+							return
+
+					if(new_tone)
+						AH.s_tone = new_tone
+						AH.s_tone_original = new_tone
+
+						update_preview_icon()
+						src.profile_modified = TRUE
+						return TRUE
+				else
+					new_tone = get_standard_skintone(usr)
+					if(new_tone)
+						AH.s_tone = new_tone
+						AH.s_tone_original = new_tone
+
+						update_preview_icon()
+						src.profile_modified = TRUE
+						return TRUE
+
+			if ("update-eyeColor")
+				var/new_color = input(usr, "Please select an eye color.", "Character Generation", AH.e_color) as null|color
+				if (new_color)
+					AH.e_color = new_color
+
+					update_preview_icon()
+					src.profile_modified = TRUE
+					return TRUE
+
+			if ("update-randomAppearance")
+				src.be_random_look = !src.be_random_look
+				src.profile_modified = TRUE
+				return TRUE
+
+			if ("update-detail-color")
+				var/current_color
+				switch(params["id"])
+					if ("custom1")
+						current_color = src.AH.customization_first_color
+					if ("custom2")
+						current_color = src.AH.customization_second_color
+					if ("custom3")
+						current_color = src.AH.customization_third_color
+					if ("underwear")
+						current_color = src.AH.u_color
+				var/new_color = input(usr, "Please select a color.", "Character Generation", current_color) as null|color
+				if (new_color)
+					switch(params["id"])
+						if ("custom1")
+							src.AH.customization_first_color = new_color
+						if ("custom2")
+							src.AH.customization_second_color = new_color
+						if ("custom3")
+							src.AH.customization_third_color = new_color
+						if ("underwear")
+							src.AH.u_color = new_color
+
+					update_preview_icon()
+					src.profile_modified = TRUE
+					return TRUE
+
+			if ("update-detail-style")
+				var/new_style
+				switch(params["id"])
+					if ("custom1", "custom2", "custom3")
+						new_style = input(usr, "Select a hair style", "Character Generation") as null|anything in customization_styles
+					if ("underwear")
+						new_style = input(usr, "Select an underwear style", "Character Generation") as null|anything in underwear_styles
+
+				if (new_style)
+					switch(params["id"])
+						if ("custom1")
+							src.AH.customization_first = new_style
+						if ("custom2")
+							src.AH.customization_second = new_style
+						if ("custom3")
+							src.AH.customization_third = new_style
+						if ("underwear")
+							src.AH.underwear = new_style
+
+					update_preview_icon()
+					src.profile_modified = TRUE
+					return TRUE
+
+			if ("update-detail-style-cycle")
+				var/new_style
+				var/current_style
+				var/current_index
+				var/list/style_list
+
+				switch(params["id"])
+					if ("custom1")
+						current_style = src.AH.customization_first
+					if ("custom2")
+						current_style = src.AH.customization_second
+					if ("custom3")
+						current_style = src.AH.customization_third
+					if ("underwear")
+						current_style = src.AH.underwear
+
+				if (isnull(current_style))
+					return
+
+				switch(params["id"])
+					if ("custom1", "custom2", "custom3")
+						style_list = customization_styles
+					if ("underwear")
+						style_list = underwear_styles
+
+				if (isnull(style_list))
+					return
+
+				current_index = style_list.Find(current_style)
+				if (params["direction"] == 1)
+					new_style = style_list[current_index + 1 > length(style_list) ? 1 : current_index + 1]
+				else if (params["direction"] == -1)
+					new_style = style_list[current_index - 1 < 1 ? length(style_list) : current_index - 1]
+
+				if (new_style)
+					switch(params["id"])
+						if ("custom1")
+							src.AH.customization_first = new_style
+						if ("custom2")
+							src.AH.customization_second = new_style
+						if ("custom3")
+							src.AH.customization_third = new_style
+						if ("underwear")
+							src.AH.underwear = new_style
+
+					update_preview_icon()
+					src.profile_modified = TRUE
+					return TRUE
+
+			if ("update-fartsound")
+				var/list/sound_list = list_keys(AH.fartsounds)
+				var/new_sound = input(usr, "Select a farting sound") as null|anything in sound_list
+
+				if (new_sound)
+					src.AH.fartsound = new_sound
+					preview_sound(sound(src.AH.fartsounds[src.AH.fartsound]))
+					src.profile_modified = TRUE
+					return TRUE
+
+			if ("update-screamsound")
+				var/list/sound_list = list_keys(AH.screamsounds)
+				var/new_sound = input(usr, "Select a screaming sound") as null|anything in sound_list
+
+				if (new_sound)
+					src.AH.screamsound = new_sound
+					preview_sound(sound(src.AH.screamsounds[src.AH.screamsound]))
+					src.profile_modified = TRUE
+					return TRUE
+
+			if ("update-chatsound")
+				var/list/sound_list = list_keys(AH.voicetypes)
+				var/new_sound = input(usr, "Select a chatting sound") as null|anything in sound_list
+
+				if (new_sound)
+					new_sound = src.AH.voicetypes[new_sound]
+					src.AH.voicetype = new_sound
+					preview_sound(sound(sounds_speak[src.AH.voicetype]))
+					src.profile_modified = TRUE
+					return TRUE
+
+			if ("update-fontSize")
+				if (params["reset"])
+					src.font_size = initial(src.font_size)
+					return TRUE
+				else
+					var/new_font_size = input(usr, "Desired font size (in percent):", "Font setting", (src.font_size ? src.font_size : 100)) as null|num
+					if (!isnull(new_font_size))
+						src.font_size = new_font_size
+						src.profile_modified = TRUE
+						return TRUE
+
+			if ("update-seeMentorPms")
+				src.see_mentor_pms = !src.see_mentor_pms
+				src.profile_modified = TRUE
+				return TRUE
+
+			if ("update-listenOoc")
+				src.listen_ooc = !src.listen_ooc
+				src.profile_modified = TRUE
+				return TRUE
+
+			if ("update-listenLooc")
+				src.listen_looc = !src.listen_looc
+				src.profile_modified = TRUE
+				return TRUE
+
+			if ("update-flyingChatHidden")
+				src.flying_chat_hidden = !src.flying_chat_hidden
+				src.profile_modified = TRUE
+				return TRUE
+
+			if ("update-autoCapitalization")
+				src.auto_capitalization = !src.auto_capitalization
+				src.profile_modified = TRUE
+				return TRUE
+
+			if ("update-localDeadchat")
+				src.local_deadchat = !src.local_deadchat
+				src.profile_modified = TRUE
+				return TRUE
+
+			if ("update-hudTheme")
+				var/new_hud = input(usr, "Please select a HUD style:", "New") as null|anything in hud_style_selection
+
+				if (new_hud)
+					src.hud_style = new_hud
+					src.profile_modified = TRUE
+					return TRUE
+
+			if ("update-targetingCursor")
+				var/new_cursor = input(usr, "Please select a cursor:", "Cursor") as null|anything in cursors_selection
+
+				if (new_cursor)
+					src.target_cursor = new_cursor
+					src.profile_modified = TRUE
+					return TRUE
+
+			if ("update-tooltipOption")
+				if (params["value"] == TOOLTIP_ALWAYS || params["value"] == TOOLTIP_ALT || params["value"] == TOOLTIP_NEVER)
+					src.tooltip_option = params["value"]
+					src.profile_modified = TRUE
+					return TRUE
+
+			if ("update-tguiFancy")
+				src.tgui_fancy = !src.tgui_fancy
+				src.profile_modified = TRUE
+				return TRUE
+
+			if ("update-tguiLock")
+				src.tgui_lock = !src.tgui_lock
+				src.profile_modified = TRUE
+				return TRUE
+
+			if ("update-viewChangelog")
+				src.view_changelog = !src.view_changelog
+				src.profile_modified = TRUE
+				return TRUE
+
+			if ("update-viewScore")
+				src.view_score = !src.view_score
+				src.profile_modified = TRUE
+				return TRUE
+
+			if ("update-viewTickets")
+				src.view_tickets = !src.view_tickets
+				src.profile_modified = TRUE
+				return TRUE
+
+			if ("update-useClickBuffer")
+				src.use_click_buffer = !src.use_click_buffer
+				src.profile_modified = TRUE
+				return TRUE
+
+			if ("update-useWasd")
+				src.use_wasd = !src.use_wasd
+				src.profile_modified = TRUE
+				return TRUE
+
+			if ("update-useAzerty")
+				src.use_azerty = !src.use_azerty
+				src.profile_modified = TRUE
+				return TRUE
+
+			if ("update-preferredMap")
+				src.preferred_map = mapSwitcher.clientSelectMap(usr.client,pickable=0)
+				src.profile_modified = TRUE
+				return TRUE
+
 			if ("reset")
 				src.profile_modified = TRUE
 
@@ -373,458 +857,6 @@ datum/preferences
 				update_preview_icon()
 
 				return TRUE
-
-	proc/ui_act_update(var/action, var/list/params, var/datum/tgui/ui, var/datum/ui_state/state)
-		src.profile_modified = TRUE
-
-		if (params["profileName"])
-			var/new_profile_name = input(usr, "New profile name:", "Character Generation", src.profile_name)
-
-			for (var/c in bad_name_characters)
-				new_profile_name = replacetext(new_profile_name, c, "")
-
-			new_profile_name = trim(new_profile_name)
-
-			if (new_profile_name)
-				if (length(new_profile_name) >= 26)
-					new_profile_name = copytext(new_profile_name, 1, 26)
-				src.profile_name = new_profile_name
-
-				return TRUE
-
-		if (params["randomName"])
-			src.be_random_name = !src.be_random_name
-
-			return TRUE
-
-		if (params["nameFirst"])
-			var/new_name = input(usr, "Please select a first name:", "Character Generation", src.name_first) as null|text
-			if (isnull(new_name))
-				return
-			new_name = trim(new_name)
-			for (var/c in bad_name_characters)
-				new_name = replacetext(new_name, c, "")
-			if (length(new_name) < NAME_CHAR_MIN)
-				alert("Your first name is too short. It must be at least [NAME_CHAR_MIN] characters long.")
-				return
-			else if (length(new_name) > NAME_CHAR_MAX)
-				alert("Your first name is too long. It must be no more than [NAME_CHAR_MAX] characters long.")
-				return
-			else if (is_blank_string(new_name))
-				alert("Your first name cannot contain only spaces.")
-				return
-			else if (!character_name_validation.Find(new_name))
-				alert("Your first name must contain at least one letter.")
-				return
-			new_name = capitalize(new_name)
-
-			if (new_name)
-				src.name_first = new_name
-				src.real_name = src.name_first + " " + src.name_last
-
-				return TRUE
-
-		if (params["nameMiddle"])
-			var/new_name = input(usr, "Please select a middle name:", "Character Generation", src.name_middle) as null|text
-			if (isnull(new_name))
-				return
-			new_name = trim(new_name)
-			for (var/c in bad_name_characters)
-				new_name = replacetext(new_name, c, "")
-			if (length(new_name) > NAME_CHAR_MAX)
-				alert("Your middle name is too long. It must be no more than [NAME_CHAR_MAX] characters long.")
-				return
-			else if (is_blank_string(new_name) && new_name != "")
-				alert("Your middle name cannot contain only spaces.")
-				return
-			new_name = capitalize(new_name)
-
-			src.name_middle = new_name // don't need to check if there is one in case someone wants no middle name I guess
-
-			return TRUE
-
-		if (params["nameLast"])
-			var/new_name = input(usr, "Please select a last name:", "Character Generation", src.name_last) as null|text
-			if (isnull(new_name))
-				return
-			new_name = trim(new_name)
-			for (var/c in bad_name_characters)
-				new_name = replacetext(new_name, c, "")
-			if (length(new_name) < NAME_CHAR_MIN)
-				alert("Your last name is too short. It must be at least [NAME_CHAR_MIN] characters long.")
-				return
-			else if (length(new_name) > NAME_CHAR_MAX)
-				alert("Your last name is too long. It must be no more than [NAME_CHAR_MAX] characters long.")
-				return
-			else if (is_blank_string(new_name))
-				alert("Your last name cannot contain only spaces.")
-				return
-			else if (!character_name_validation.Find(new_name))
-				alert("Your last name must contain at least one letter.")
-				return
-			new_name = capitalize(new_name)
-
-			if (new_name)
-				src.name_last = new_name
-				src.real_name = src.name_first + " " + src.name_last
-
-				return TRUE
-
-		if (params["gender"])
-			if (!AH.pronouns)
-				if (src.gender == MALE)
-					src.gender = FEMALE
-					AH.gender = FEMALE
-				else if (src.gender == FEMALE)
-					src.gender = MALE
-					AH.gender = MALE
-					AH.pronouns = 1
-			else
-				if (src.gender == MALE)
-					src.gender = FEMALE
-					AH.gender = FEMALE
-				else if (src.gender == FEMALE)
-					src.gender = MALE
-					AH.gender = MALE
-					AH.pronouns = 0
-			update_preview_icon()
-			return TRUE
-
-		if (params["age"])
-			var/new_age = input(usr, "Please select type in age: 20-80", "Character Generation")  as null|num
-
-			if (new_age)
-				src.age = max(min(round(text2num(new_age)), 80), 20)
-
-				return TRUE
-
-		if (params["bloodType"])
-			var/blTypeNew = input(usr, "Please select a blood type:", "Character Generation")  as null|anything in list("Random", "A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-")
-
-			if (blTypeNew)
-				if (blTypeNew == "Random")
-					src.random_blood = TRUE
-				else
-					src.random_blood = FALSE
-					src.blType = blTypeNew
-
-				return TRUE
-
-		if (params["pin"] == "random")
-			src.pin	= null
-
-			return TRUE
-
-		else if (params["pin"])
-			var/new_pin = input(usr, "Please select a PIN between 1000 and 9999", "Character Generation")  as null|num
-			if (new_pin)
-				src.pin = max(min(round(text2num(new_pin)), 9999), 1000)
-
-				return TRUE
-
-		if (params["flavorText"])
-			var/new_text = input(usr, "Please enter new flavor text (appears when examining you):", "Character Generation", src.flavor_text) as null|text
-			if (!isnull(new_text))
-				new_text = html_encode(new_text)
-				if (length(new_text) > FLAVOR_CHAR_LIMIT)
-					alert("Your flavor text is too long. It must be no more than [FLAVOR_CHAR_LIMIT] characters long. The current text will be trimmed down to meet the limit.")
-					new_text = copytext(new_text, 1, FLAVOR_CHAR_LIMIT+1)
-				src.flavor_text = new_text
-
-				return TRUE
-
-		if (params["securityNote"])
-			var/new_text = input(usr, "Please enter new flavor text (appears when examining you):", "Character Generation", src.security_note) as null|text
-			if (!isnull(new_text))
-				new_text = html_encode(new_text)
-				if (length(new_text) > FLAVOR_CHAR_LIMIT)
-					alert("Your flavor text is too long. It must be no more than [FLAVOR_CHAR_LIMIT] characters long. The current text will be trimmed down to meet the limit.")
-					new_text = copytext(new_text, 1, FLAVOR_CHAR_LIMIT+1)
-				src.security_note = new_text
-
-				return TRUE
-
-		if (params["medicalNote"])
-			var/new_text = input(usr, "Please enter new flavor text (appears when examining you):", "Character Generation", src.medical_note) as null|text
-			if (!isnull(new_text))
-				new_text = html_encode(new_text)
-				if (length(new_text) > FLAVOR_CHAR_LIMIT)
-					alert("Your flavor text is too long. It must be no more than [FLAVOR_CHAR_LIMIT] characters long. The current text will be trimmed down to meet the limit.")
-					new_text = copytext(new_text, 1, FLAVOR_CHAR_LIMIT+1)
-				src.medical_note = new_text
-
-				return TRUE
-
-		if (params["pdaRingtone"])
-			get_all_character_setup_ringtones()
-			if(!length(selectable_ringtones))
-				src.pda_ringtone_index = "Two-Beep"
-				alert(usr, "Oh no! The JamStar-DCXXI PDA ringtone distribution satellite is out of range! Please try again later.", "x.x ringtones broke x.x", "Okay")
-				logTheThing("debug", usr, null, "get_all_character_setup_ringtones() didn't return anything!")
-			else
-				src.pda_ringtone_index = input(usr, "Choose a ringtone", "PDA") as null|anything in selectable_ringtones
-				if (!(src.pda_ringtone_index in selectable_ringtones))
-					src.pda_ringtone_index = "Two-Beep"
-
-				return TRUE
-
-		if (params["pdaColor"])
-			var/new_color = input(usr, "Choose a color", "PDA", src.PDAcolor) as color | null
-			if (!isnull(new_color))
-				src.PDAcolor = new_color
-
-				return TRUE
-
-		if (params["skinTone"])
-			var/new_tone = "#FEFEFE"
-			if (usr.has_medal("Contributor"))
-				switch(alert(usr, "Goonstation contributors get to pick any colour for their skin tone!", "Thanks, pal!", "Paint me like a posh fence!", "Use Standard tone.", "Cancel"))
-					if("Paint me like a posh fence!")
-						new_tone = input(usr, "Please select skin color.", "Character Generation", AH.s_tone)  as null|color
-					if("Use Standard tone.")
-						new_tone = get_standard_skintone(usr)
-					else
-						return
-
-				if(new_tone)
-					AH.s_tone = new_tone
-					AH.s_tone_original = new_tone
-
-					update_preview_icon()
-					return TRUE
-			else
-				new_tone = get_standard_skintone(usr)
-				if(new_tone)
-					AH.s_tone = new_tone
-					AH.s_tone_original = new_tone
-
-					update_preview_icon()
-					return TRUE
-
-		if (params["eyeColor"])
-			var/new_color = input(usr, "Please select an eye color.", "Character Generation", AH.e_color) as null|color
-			if (new_color)
-				AH.e_color = new_color
-
-				update_preview_icon()
-				return TRUE
-
-		if (params["detail"])
-			if (params["color"])
-				var/current_color
-				switch(params["id"])
-					if ("custom1")
-						current_color = src.AH.customization_first_color
-					if ("custom2")
-						current_color = src.AH.customization_second_color
-					if ("custom3")
-						current_color = src.AH.customization_third_color
-					if ("underwear")
-						current_color = src.AH.u_color
-				var/new_color = input(usr, "Please select a color.", "Character Generation", current_color) as null|color
-				if (new_color)
-					switch(params["id"])
-						if ("custom1")
-							src.AH.customization_first_color = new_color
-						if ("custom2")
-							src.AH.customization_second_color = new_color
-						if ("custom3")
-							src.AH.customization_third_color = new_color
-						if ("underwear")
-							src.AH.u_color = new_color
-
-					update_preview_icon()
-					return TRUE
-
-			if (params["style"])
-				var/new_style
-				switch(params["id"])
-					if ("custom1", "custom2", "custom3")
-						new_style = input(usr, "Select a hair style", "Character Generation") as null|anything in customization_styles
-					if ("underwear")
-						new_style = input(usr, "Select an underwear style", "Character Generation") as null|anything in underwear_styles
-
-				if (new_style)
-					switch(params["id"])
-						if ("custom1")
-							src.AH.customization_first = new_style
-						if ("custom2")
-							src.AH.customization_second = new_style
-						if ("custom3")
-							src.AH.customization_third = new_style
-						if ("underwear")
-							src.AH.underwear = new_style
-
-					update_preview_icon()
-					return TRUE
-
-		if (params["nextStyle"] || params["previousStyle"])
-			var/new_style
-			var/current_style
-			var/current_index
-			var/list/style_list
-
-			switch(params["id"])
-				if ("custom1")
-					current_style = src.AH.customization_first
-				if ("custom2")
-					current_style = src.AH.customization_second
-				if ("custom3")
-					current_style = src.AH.customization_third
-				if ("underwear")
-					current_style = src.AH.underwear
-
-			if (isnull(current_style))
-				return
-
-			switch(params["id"])
-				if ("custom1", "custom2", "custom3")
-					style_list = customization_styles
-				if ("underwear")
-					style_list = underwear_styles
-
-			if (isnull(style_list))
-				return
-
-			current_index = style_list.Find(current_style)
-			if (params["nextStyle"])
-				new_style = style_list[current_index + 1 > length(style_list) ? 1 : current_index + 1]
-			if (params["previousStyle"])
-				new_style = style_list[current_index - 1 < 1 ? length(style_list) : current_index - 1]
-
-			if (new_style)
-				switch(params["id"])
-					if ("custom1")
-						src.AH.customization_first = new_style
-					if ("custom2")
-						src.AH.customization_second = new_style
-					if ("custom3")
-						src.AH.customization_third = new_style
-					if ("underwear")
-						src.AH.underwear = new_style
-
-				update_preview_icon()
-				return TRUE
-
-		if (params["fartsound"] || params["screamsound"] || params["chatsound"])
-			var/list/sound_list
-			var/new_sound
-
-			if (params["fartsound"])
-				sound_list = list_keys(AH.fartsounds)
-				new_sound = input(usr, "Select a farting sound") as null|anything in sound_list
-			if (params["screamsound"])
-				sound_list = list_keys(AH.screamsounds)
-				new_sound = input(usr, "Select a screaming sound") as null|anything in sound_list
-			if (params["chatsound"])
-				sound_list = list_keys(AH.voicetypes)
-				new_sound = input(usr, "Select a farting sound") as null|anything in sound_list
-				if (new_sound)
-					new_sound = src.AH.voicetypes[new_sound]
-
-			if (new_sound)
-				if (params["fartsound"])
-					src.AH.fartsound = new_sound
-					preview_sound(sound(src.AH.fartsounds[src.AH.fartsound]))
-					return TRUE
-
-				if (params["screamsound"])
-					src.AH.screamsound = new_sound
-					preview_sound(sound(src.AH.screamsounds[src.AH.screamsound]))
-					return TRUE
-
-				if (params["chatsound"])
-					src.AH.voicetype = new_sound
-					preview_sound(sound(sounds_speak[src.AH.voicetype]))
-					return TRUE
-
-		if (params["fontSize"])
-			if (params["fontSize"] == "reset")
-				src.font_size = initial(src.font_size)
-				return TRUE
-			else
-				var/new_font_size = input(usr, "Desired font size (in percent):", "Font setting", (src.font_size ? src.font_size : 100)) as null|num
-				if (!isnull(new_font_size))
-					src.font_size = new_font_size
-					return TRUE
-
-		if (params["seeMentorPms"])
-			src.see_mentor_pms = !src.see_mentor_pms
-			return TRUE
-
-		if (params["listenOoc"])
-			src.listen_ooc = !src.listen_ooc
-			return TRUE
-
-		if (params["listenLooc"])
-			src.listen_looc = !src.listen_looc
-			return TRUE
-
-		if (params["flyingChatHidden"])
-			src.flying_chat_hidden = !src.flying_chat_hidden
-			return TRUE
-
-		if (params["autoCapitalization"])
-			src.auto_capitalization = !src.auto_capitalization
-			return TRUE
-
-		if (params["localDeadchat"])
-			src.local_deadchat = !src.local_deadchat
-			return TRUE
-
-		if (params["hudTheme"])
-			var/new_hud = input(usr, "Please select a HUD style:", "New") as null|anything in hud_style_selection
-
-			if (new_hud)
-				src.hud_style = new_hud
-				return TRUE
-
-		if (params["targetingCursor"])
-			var/new_cursor = input(usr, "Please select a cursor:", "Cursor") as null|anything in cursors_selection
-
-			if (new_cursor)
-				src.target_cursor = new_cursor
-				return TRUE
-
-		if (params["tooltipOption"] == TOOLTIP_ALWAYS || params["tooltipOption"] == TOOLTIP_ALT || params["tooltipOption"] == TOOLTIP_NEVER)
-			src.tooltip_option = params["tooltipOption"]
-			return TRUE
-
-		if (params["tguiFancy"])
-			src.tgui_fancy = !src.tgui_fancy
-			return TRUE
-
-		if (params["tguiLock"])
-			src.tgui_lock = !src.tgui_lock
-			return TRUE
-
-		if (params["viewChangelog"])
-			src.view_changelog = !src.view_changelog
-			return TRUE
-
-		if (params["viewScore"])
-			src.view_score = !src.view_score
-			return TRUE
-
-		if (params["viewTickets"])
-			src.view_tickets = !src.view_tickets
-			return TRUE
-
-		if (params["useClickBuffer"])
-			src.use_click_buffer = !src.use_click_buffer
-			return TRUE
-
-		if (params["useWasd"])
-			src.use_wasd = !src.use_wasd
-			return TRUE
-
-		if (params["useAzerty"])
-			src.use_azerty = !src.use_azerty
-			return TRUE
-
-		if (params["preferredMap"])
-			src.preferred_map = mapSwitcher.clientSelectMap(usr.client,pickable=0)
-			return TRUE
 
 	proc/ui_act_preview_sound(var/action, var/list/params, var/datum/tgui/ui, var/datum/ui_state/state)
 		. = FALSE

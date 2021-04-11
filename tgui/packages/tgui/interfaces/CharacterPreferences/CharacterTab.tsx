@@ -8,10 +8,10 @@ const CustomDetail = ({ id, color, style }, context) => {
 
   return (
     <Fragment>
-      <Button.Color color={color} onClick={() => act('update', { detail: 1, id, color: 1 })} />
-      <Button icon="chevron-left" onClick={() => act('update', { detail: 1, id, previousStyle: 1 })} />
-      <Button onClick={() => act('update', { detail: 1, id, nextStyle: 1 })} icon="chevron-right" />
-      <Button onClick={() => act('update', { detail: 1, id, style: 1 })}>{style}</Button>
+      <Button.Color color={color} onClick={() => act('update-detail-color', { id })} />
+      <Button icon="chevron-left" onClick={() => act('update-detail-style-cycle', { id, direction: -1 })} />
+      <Button icon="chevron-right" onClick={() => act('update-detail-style-cycle', { id, direction: 1 })} />
+      <Button onClick={() => act('update-detail-style', { id })}>{style}</Button>
     </Fragment>
   );
 };
@@ -24,11 +24,11 @@ export const CharacterTab = (_props, context) => {
       <Section title="Appearance">
         <LabeledList>
           <LabeledList.Item label="Skin Tone">
-            <Button.Color color={data.skinTone} onClick={() => act('update', { eyeColor: 1 })} />
+            <Button.Color color={data.skinTone} onClick={() => act('update-skinTone')} />
           </LabeledList.Item>
           <LabeledList.Divider />
           <LabeledList.Item label="Eye Color">
-            <Button.Color color={data.eyeColor} onClick={() => act('update', { eyeColor: 1 })} />
+            <Button.Color color={data.eyeColor} onClick={() => act('update-eyeColor')} />
           </LabeledList.Item>
           <LabeledList.Divider />
           <LabeledList.Item label="Top Detail">
@@ -46,26 +46,26 @@ export const CharacterTab = (_props, context) => {
           </LabeledList.Item>
           <LabeledList.Divider />
           <LabeledList.Item label="Randomization">
-            <Button.Checkbox checked={data.randomAppearance}>Always use a randomized appearance</Button.Checkbox>
+            <Button.Checkbox checked={data.randomAppearance} onClick={() => act('update-randomAppearance')}>Always use a randomized appearance</Button.Checkbox>
           </LabeledList.Item>
         </LabeledList>
       </Section>
       <Section title="Sounds">
         <LabeledList>
           <LabeledList.Item label="Fart">
-            <Button onClick={() => act('update', { fartsound: 1 })}>{data.fartsound}</Button>
+            <Button onClick={() => act('update-fartsound')}>{data.fartsound}</Button>
             <Button icon="volume-up" onClick={() => act('previewSound', { fartsound: 1 })}>
               Preview
             </Button>
           </LabeledList.Item>
           <LabeledList.Item label="Scream">
-            <Button onClick={() => act('update', { screamsound: 1 })}>{data.screamsound}</Button>
+            <Button onClick={() => act('update-screamsound')}>{data.screamsound}</Button>
             <Button icon="volume-up" onClick={() => act('previewSound', { screamsound: 1 })}>
               Preview
             </Button>
           </LabeledList.Item>
           <LabeledList.Item label="Chat">
-            <Button onClick={() => act('update', { chatsound: 1 })}>{data.chatsound}</Button>
+            <Button onClick={() => act('update-chatsound')}>{data.chatsound}</Button>
             <Button icon="volume-up" onClick={() => act('previewSound', { chatsound: 1 })}>
               Preview
             </Button>

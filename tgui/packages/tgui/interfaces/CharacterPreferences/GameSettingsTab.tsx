@@ -11,7 +11,7 @@ export const GameSettingsTab = (_props, context) => {
         <LabeledList.Item
           label="Popup Font Size"
           buttons={
-            <Button onClick={() => act("update", { fontSize: "reset" })}>
+            <Button onClick={() => act("update-fontSize", { reset: 1 })}>
               Reset
             </Button>
           }
@@ -20,7 +20,7 @@ export const GameSettingsTab = (_props, context) => {
             Changes the font size used in popup windows. Only works when CHUI is
             disabled.
           </Box>
-          <Button onClick={() => act("update", { fontSize: 1 })}>
+          <Button onClick={() => act("update-fontSize")}>
             {data.fontSize ? data.fontSize + "%" : "Default"}
           </Button>
         </LabeledList.Item>
@@ -34,7 +34,7 @@ export const GameSettingsTab = (_props, context) => {
             <Box mb="5px">
               <Button.Checkbox
                 checked={data.seeMentorPms}
-                onClick={() => act("update", { seeMentorPms: 1 })}
+                onClick={() => act("update-seeMentorPms")}
               >
                 Display Mentorhelp
               </Button.Checkbox>
@@ -43,7 +43,7 @@ export const GameSettingsTab = (_props, context) => {
           <Box mb="5px">
             <Button.Checkbox
               checked={data.listenOoc}
-              onClick={() => act("update", { listenOoc: 1 })}
+              onClick={() => act("update-listenOoc")}
               tooltip="Out-of-Character chat. This mostly just shows up on the RP server and at the end of rounds."
             >
               Display OOC chat
@@ -52,7 +52,7 @@ export const GameSettingsTab = (_props, context) => {
           <Box mb="5px">
             <Button.Checkbox
               checked={data.listenLooc}
-              onClick={() => act("update", { listenLooc: 1 })}
+              onClick={() => act("update-listenLooc")}
               tooltip="Local Out-of-Character is OOC chat, but only appears for nearby players. This is basically only used on the RP server."
             >
               Display LOOC chat
@@ -61,7 +61,7 @@ export const GameSettingsTab = (_props, context) => {
           <Box mb="5px">
             <Button.Checkbox
               checked={!data.flyingChatHidden}
-              onClick={() => act("update", { flyingChatHidden: 1 })}
+              onClick={() => act("update-flyingChatHidden")}
               tooltip="Chat messages will appear over characters as they're talking."
             >
               See chat above people&apos;s heads
@@ -70,7 +70,7 @@ export const GameSettingsTab = (_props, context) => {
           <Box mb="5px">
             <Button.Checkbox
               checked={data.autoCapitalization}
-              onClick={() => act("update", { autoCapitalization: 1 })}
+              onClick={() => act("update-autoCapitalization")}
               tooltip="Chat messages you send will be automatically capitalized."
             >
               Auto-capitalize your messages
@@ -79,7 +79,7 @@ export const GameSettingsTab = (_props, context) => {
           <Box mb="5px">
             <Button.Checkbox
               checked={data.localDeadchat}
-              onClick={() => act("update", { localDeadchat: 1 })}
+              onClick={() => act("update-localDeadchat")}
               tooltip="You'll only hear chat messages from living people on your screen as a ghost."
             >
               Local ghost hearing
@@ -88,7 +88,7 @@ export const GameSettingsTab = (_props, context) => {
         </LabeledList.Item>
         <LabeledList.Item label="HUD Theme">
           <Box mb="5px">
-            <Button onClick={() => act("update", { hudTheme: 1 })}>
+            <Button onClick={() => act("update-hudTheme")}>
               Change
             </Button>
           </Box>
@@ -105,7 +105,7 @@ export const GameSettingsTab = (_props, context) => {
         </LabeledList.Item>
         <LabeledList.Item label="Targeting Cursor">
           <Box mb="5px">
-            <Button onClick={() => act("update", { targetingCursor: 1 })}>
+            <Button onClick={() => act("update-targetingCursor")}>
               Change
             </Button>
           </Box>
@@ -132,8 +132,8 @@ export const GameSettingsTab = (_props, context) => {
                 data.tooltipOption === CharacterPreferencesTooltip.Always
               }
               onClick={() =>
-                act("update", {
-                  tooltipOption: CharacterPreferencesTooltip.Always,
+                act("update-tooltipOption", {
+                  value: CharacterPreferencesTooltip.Always,
                 })}
             >
               Show Always
@@ -143,8 +143,8 @@ export const GameSettingsTab = (_props, context) => {
             <Button.Checkbox
               checked={data.tooltipOption === CharacterPreferencesTooltip.Alt}
               onClick={() =>
-                act("update", {
-                  tooltipOption: CharacterPreferencesTooltip.Alt,
+                act("update-tooltipOption", {
+                  value: CharacterPreferencesTooltip.Alt,
                 })}
             >
               Show When ALT is held
@@ -154,8 +154,8 @@ export const GameSettingsTab = (_props, context) => {
             <Button.Checkbox
               checked={data.tooltipOption === CharacterPreferencesTooltip.Never}
               onClick={() =>
-                act("update", {
-                  tooltipOption: CharacterPreferencesTooltip.Never,
+                act("update-tooltipOption", {
+                  value: CharacterPreferencesTooltip.Never,
                 })}
             >
               Never Show
@@ -170,7 +170,7 @@ export const GameSettingsTab = (_props, context) => {
           <Box mb="5px">
             <Button.Checkbox
               checked={data.tguiFancy}
-              onClick={() => act("update", { tguiFancy: 1 })}
+              onClick={() => act("update-tguiFancy")}
             >
               Fast & Fancy Windows
             </Button.Checkbox>
@@ -178,7 +178,7 @@ export const GameSettingsTab = (_props, context) => {
           <Box mb="5px">
             <Button.Checkbox
               checked={data.tguiLock}
-              onClick={() => act("update", { tguiLock: 1 })}
+              onClick={() => act("update-tguiLock")}
             >
               Lock initial placement of windows
             </Button.Checkbox>
@@ -192,7 +192,7 @@ export const GameSettingsTab = (_props, context) => {
           <Box mb="5px">
             <Button.Checkbox
               checked={data.viewChangelog}
-              onClick={() => act("update", { viewChangelog: 1 })}
+              onClick={() => act("update-viewChangelog")}
               tooltip="The changelog can be shown at any time by using the 'Changelog' command, under the Commands tab in the top right."
               tooltipPosition="top"
             >
@@ -202,7 +202,7 @@ export const GameSettingsTab = (_props, context) => {
           <Box mb="5px">
             <Button.Checkbox
               checked={data.viewScore}
-              onClick={() => act("update", { viewScore: 1 })}
+              onClick={() => act("update-viewScore")}
               tooltip="The end-of-round scoring shows various stats on how the round went. If this option is off, you won't be able to see it."
               tooltipPosition="top"
             >
@@ -212,7 +212,7 @@ export const GameSettingsTab = (_props, context) => {
           <Box mb="5px">
             <Button.Checkbox
               checked={data.viewTickets}
-              onClick={() => act("update", { viewTickets: 1 })}
+              onClick={() => act("update-viewTickets")}
               tooltip="The end-of-round ticketing summary shows the various tickets and fines that were handed out. If this option is off, you can still see them on Goonhub (goonhub.com)."
               tooltipPosition="top"
             >
@@ -227,7 +227,7 @@ export const GameSettingsTab = (_props, context) => {
           <Box mb="5px">
             <Button.Checkbox
               checked={data.useClickBuffer}
-              onClick={() => act("update", { useClickBuffer: 1 })}
+              onClick={() => act("update-useClickBuffer")}
               tooltip="There is a cooldown after clicking on things in-game. When enabled, if you click something during this cooldown, the game will apply that click after the cooldown. Otherwise, the click is ignored."
               tooltipPosition="top"
             >
@@ -237,7 +237,7 @@ export const GameSettingsTab = (_props, context) => {
           <Box mb="5px">
             <Button.Checkbox
               checked={data.useWasd}
-              onClick={() => act("update", { useWasd: 1 })}
+              onClick={() => act("update-useWasd")}
               tooltip="Enabling this allows you to use WASD to move instead of the arrow keys, and enables a few other hotkeys."
               tooltipPosition="top"
             >
@@ -247,7 +247,7 @@ export const GameSettingsTab = (_props, context) => {
           <Box mb="5px">
             <Button.Checkbox
               checked={data.useAzerty}
-              onClick={() => act("update", { useAzerty: 1 })}
+              onClick={() => act("update-useAzerty")}
               tooltip="If you have an AZERTY keyboard, enable this. Yep. This sure is a tooltip."
               tooltipPosition="top"
             >
@@ -260,12 +260,9 @@ export const GameSettingsTab = (_props, context) => {
           </Box>
         </LabeledList.Item>
         <LabeledList.Item label="Preferred Map">
-          <Box mb="5px" color="label" />
-          <Box>
-            <Button onClick={() => act("update", { preferredMap: 1 })}>
-              {data.preferredMap ? data.preferredMap : <Box italic>None</Box>}
-            </Button>
-          </Box>
+          <Button onClick={() => act("update-preferredMap")}>
+            {data.preferredMap ? data.preferredMap : <Box italic>None</Box>}
+          </Button>
         </LabeledList.Item>
       </LabeledList>
     </Section>
