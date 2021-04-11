@@ -1542,7 +1542,7 @@ proc/HYPadd_harvest_reagents(var/obj/item/I,var/datum/plant/growing,var/datum/pl
 	if(putreagents.len && I.reagents.maximum_volume)
 		var/putamount = round(to_add / putreagents.len)
 		for(var/X in putreagents)
-			I.reagents.add_reagent(X,putamount,,, 1)
+			I?.reagents?.add_reagent(X,putamount,,, 1) // ?. runtime fix
 	// And finally put them in there. We figure out the max volume and add an even amount of
 	// all reagents into the item.
 
