@@ -35,7 +35,7 @@
 		var/datum/player/player = make_player(M2.ckey) // Get the player so we can use their bancache.
 		if(player.cached_jobbans == null) // Shit they aren't cached.
 			var/api_response = apiHandler.queryAPI("jobbans/get/player", list("ckey"=M2.ckey), 1)
-			if(!length(api_response)) // API unavailable or something
+			if(!length(api_response) || !api_response[M2.ckey]) // API unavailable or something
 				return FALSE
 			player.cached_jobbans = api_response[M2.ckey]
 		cache = player.cached_jobbans
