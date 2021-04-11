@@ -53,6 +53,7 @@ datum/character_preview
 					loc = T
 					break
 		var/mob/living/carbon/human/H = new(loc)
+		mobs -= H
 		src.preview_mob = H
 		H.screen_loc = "[src.preview_id];1,1"
 		src.handler.vis_contents += H
