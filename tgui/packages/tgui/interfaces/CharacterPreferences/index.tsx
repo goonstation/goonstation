@@ -1,24 +1,12 @@
-import { useBackend, useLocalState, useSharedState } from '../../backend';
-import {
-  Box,
-  Button,
-  ByondUi,
-  Divider,
-  Flex,
-  Icon,
-  LabeledList,
-  NoticeBox,
-  Section,
-  Stack,
-  Tabs,
-} from '../../components';
-import { Window } from '../../layouts';
-import { CharacterPreferencesData, CharacterPreferencesProfile, CharacterPreferencesTabKeys } from './type';
-import { SavesTab } from './SavesTab';
-import { CharacterTab } from './CharacterTab';
-import { GeneralTab } from './GeneralTab';
-import { GameSettingsTab } from './GameSettingsTab';
 import { Fragment } from 'inferno';
+import { useBackend, useSharedState } from '../../backend';
+import { Box, Button, ByondUi, Divider, Flex, Icon, LabeledList, NoticeBox, Section, Tabs } from '../../components';
+import { Window } from '../../layouts';
+import { CharacterTab } from './CharacterTab';
+import { GameSettingsTab } from './GameSettingsTab';
+import { GeneralTab } from './GeneralTab';
+import { SavesTab } from './SavesTab';
+import { CharacterPreferencesData, CharacterPreferencesProfile, CharacterPreferencesTabKeys } from './type';
 
 export const CharacterPreferences = (_props, context) => {
   const { act, data } = useBackend<CharacterPreferencesData>(context);

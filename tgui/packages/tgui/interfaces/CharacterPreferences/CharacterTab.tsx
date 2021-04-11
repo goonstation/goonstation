@@ -1,6 +1,6 @@
 import { Fragment } from 'inferno';
 import { useBackend } from '../../backend';
-import { Box, Button, ByondUi, ColorBox, Flex, LabeledList, Section } from '../../components';
+import { Box, Button, ColorBox, LabeledList, Section } from '../../components';
 import { CharacterPreferencesData } from './type';
 
 const CustomDetail = ({ id, color, style }, context) => {

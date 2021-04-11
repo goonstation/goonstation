@@ -1,8 +1,8 @@
 import { Fragment } from 'inferno';
-import { useBackend } from '../../backend';
-import { BlockQuote, Box, Button, ByondUi, ColorBox, Flex, LabeledList, Section } from '../../components';
-import { CharacterPreferencesData } from './type';
 import { decodeHtmlEntities } from 'common/string';
+import { useBackend } from '../../backend';
+import { BlockQuote, Box, Button, ColorBox, LabeledList, Section } from '../../components';
+import { CharacterPreferencesData } from './type';
 
 export const GeneralTab = (_props, context) => {
   const { act, data } = useBackend<CharacterPreferencesData>(context);

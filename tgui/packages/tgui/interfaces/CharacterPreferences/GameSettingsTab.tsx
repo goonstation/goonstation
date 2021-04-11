@@ -1,7 +1,6 @@
-import { Fragment } from "inferno";
-import { useBackend } from "../../backend";
-import { Box, Button, Flex, LabeledList, Section } from "../../components";
-import { CharacterPreferencesData, CharacterPreferencesTooltip } from "./type";
+import { useBackend } from '../../backend';
+import { Box, Button, LabeledList, Section } from '../../components';
+import { CharacterPreferencesData, CharacterPreferencesTooltip } from './type';
 
 export const GameSettingsTab = (_props, context) => {
   const { act, data } = useBackend<CharacterPreferencesData>(context);
