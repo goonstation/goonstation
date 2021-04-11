@@ -370,7 +370,7 @@
 			boutput(usr, "<span class='alert'>You are too far away from the target!</span>")
 			return
 
-		if(istype(over_object,/obj/table/) || istype(over_object,/obj/rack/))
+		if(istype(over_object,/obj/table/) || istype(over_object,/obj/rack/) || istype(over_object,/obj/item/chessboard))
 			var/obj/O = over_object
 			src.outputTarget = O.loc
 			boutput(usr, "<span class='notice'>You set [src] to output on top of [O]!</span>")
