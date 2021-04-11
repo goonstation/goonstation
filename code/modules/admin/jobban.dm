@@ -33,12 +33,13 @@
 		//if(isnull(M2.client))
 			//return FALSE
 		var/datum/player/player = make_player(M2.ckey) // Get the player so we can use their bancache.
-		var/mob_ckey = M2.ckey
 		if(player.cached_jobbans == null) // Shit they aren't cached.
-			var/api_response = apiHandler.queryAPI("jobbans/get/player", list("ckey"=mob_ckey), 1)
+			var/api_response = apiHandler.queryAPI("jobbans/get/player", list("ckey"=M2.ckey), 1)
 			if(!length(api_response)) // API unavailable or something
 				return FALSE
-			player.cached_jobbans = api_response[mob_ckey]
+			if(!M2?.ckey)
+				return FALSE // new_player was disposed during api call
+			player.cached_jobbans = api_response[M2.ckey]
 		cache = player.cached_jobbans
 	else if(islist(M))
 		cache = M
