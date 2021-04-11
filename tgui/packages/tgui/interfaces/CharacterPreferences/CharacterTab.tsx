@@ -8,10 +8,7 @@ const CustomDetail = ({ id, color, style }, context) => {
 
   return (
     <Fragment>
-      <Button onClick={() => act('update', { detail: 1, id, color: 1 })}>
-        <ColorBox color={color} mr="5px" />
-        <Box as="code">{color}</Box>
-      </Button>
+      <Button.Color color={color} onClick={() => act('update', { detail: 1, id, color: 1 })} />
       <Button icon="chevron-left" onClick={() => act('update', { detail: 1, id, previousStyle: 1 })} />
       <Button onClick={() => act('update', { detail: 1, id, nextStyle: 1 })} icon="chevron-right" />
       <Button onClick={() => act('update', { detail: 1, id, style: 1 })}>{style}</Button>
@@ -27,17 +24,11 @@ export const CharacterTab = (_props, context) => {
       <Section title="Appearance">
         <LabeledList>
           <LabeledList.Item label="Skin Tone">
-            <Button onClick={() => act('update', { skinTone: 1 })}>
-              <ColorBox color={data.skinTone} mr="5px" />
-              <Box as="code">{data.skinTone}</Box>
-            </Button>
+            <Button.Color color={data.skinTone} onClick={() => act('update', { eyeColor: 1 })} />
           </LabeledList.Item>
           <LabeledList.Divider />
           <LabeledList.Item label="Eye Color">
-            <Button onClick={() => act('update', { eyeColor: 1 })}>
-              <ColorBox color={data.eyeColor} mr="5px" />
-              <Box as="code">{data.eyeColor}</Box>
-            </Button>
+            <Button.Color color={data.eyeColor} onClick={() => act('update', { eyeColor: 1 })} />
           </LabeledList.Item>
           <LabeledList.Divider />
           <LabeledList.Item label="Top Detail">
