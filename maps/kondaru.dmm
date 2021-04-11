@@ -9324,6 +9324,18 @@
 /obj/item/device/analyzer/atmospheric,
 /obj/item/device/analyzer/atmosanalyzer_upgrade,
 /obj/machinery/light/emergency,
+/obj/machinery/door_control{
+	id = "combustion";
+	name = "Chamber Exhaust";
+	pixel_x = 24;
+	pixel_y = -8
+	},
+/obj/machinery/door_control{
+	id = "fireshield";
+	name = "Heat Shield";
+	pixel_x = 24;
+	pixel_y = 8
+	},
 /turf/simulated/floor/yellow/side{
 	dir = 6
 	},
@@ -50165,6 +50177,18 @@
 	},
 /turf/simulated/floor/red/side,
 /area/station/hallway/primary/south)
+"kCB" = (
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 5
+	},
+/obj/machinery/camera{
+	c_tag = "TEG Monitoring";
+	dir = 1;
+	name = "TEG Monitoring";
+	network = "Zeta"
+	},
+/turf/simulated/floor/engine/vacuum,
+/area/station/engine/combustion_chamber)
 "kCR" = (
 /obj/rack,
 /obj/item/clothing/suit/space/emerg,
@@ -53038,18 +53062,6 @@
 	dir = 6
 	},
 /area/station/security/interrogation)
-"ofV" = (
-/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
-	dir = 5
-	},
-/obj/machinery/camera{
-	c_tag = "TEG Monitoring";
-	dir = 1;
-	name = "TEG Monitoring";
-	network = "Zeta"
-	},
-/turf/simulated/floor/engine/vacuum,
-/area/station/engine/combustion_chamber)
 "ogf" = (
 /obj/item/device/radio/intercom{
 	dir = 4
@@ -106316,7 +106328,7 @@ aHv
 xMr
 aJs
 aKA
-ofV
+kCB
 aaY
 abZ
 aaf
