@@ -75,7 +75,7 @@ datum/character_preview
 		. = ..()
 
 	/// Sets the appearance, mutant race, and facing direction of the human mob.
-	proc/update_appearance(datum/appearanceHolder/AH, datum/mutantrace/MR = null, direction = SOUTH)
+	proc/update_appearance(datum/appearanceHolder/AH, datum/mutantrace/MR = null, direction = SOUTH, name = "human")
 		src.preview_mob.dir = direction
 		src.preview_mob.set_mutantrace(null)
 		src.preview_mob.bioHolder.mobAppearance.CopyOther(AH)
@@ -85,6 +85,8 @@ datum/character_preview
 		src.preview_mob.update_colorful_parts()
 		src.preview_mob.set_body_icon_dirty()
 		src.preview_mob.set_face_icon_dirty()
+		src.preview_mob.real_name = name
+		src.preview_mob.name = name
 
 /// Manages its own window.
 /// Basically a simplified version for when you don't need to put other stuff in the preview window.
