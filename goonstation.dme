@@ -1490,6 +1490,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\obj\machinery\implantchair.dm"
 #include "code\obj\machinery\launcherloader.dm"
 #include "code\obj\machinery\launcherloader_kondaru.dm"
+#include "code\obj\machinery\launcherloader_oshan.dm"
 #include "code\obj\machinery\launcherloader_ozy.dm"
 #include "code\obj\machinery\lightswitch.dm"
 #include "code\obj\machinery\manufacturer.dm"
