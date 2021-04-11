@@ -1103,6 +1103,10 @@ Please exercise caution in your testing, the result can best be described as a h
 	src.update()
 	return
 
+/obj/item/paper_bin/attack_self(mob/user as mob)
+	..()
+	src.attack_hand(user)
+
 /obj/item/paper_bin/attackby(obj/item/paper/P as obj, mob/user as mob) // finally you can write on all the paper AND put it back in the bin to mess with whoever shows up after you ha ha
 	if (istype(P))
 		user.drop_item()

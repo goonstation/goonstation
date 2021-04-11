@@ -1,4 +1,11 @@
-
+(t)sat apr 10 21
+(u)Flourish
+(e)⚖|balance
+(*)If you're a human, martian crevices will now, at worst, slash off both your arms. They also no longer contain laser guns, but rather an assortment of various baubles and artifacts.
+(u)Flourish
+(e)|
+(+)Attacking someone with a feather will now make them sneeze.
+(+)Using a paper bin inhand will now dispense papers.
 (t)fri apr 09 21
 (u)Camryn Buttes
 (p)3894
