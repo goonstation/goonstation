@@ -282,21 +282,6 @@
 		default_direction = EAST
 		..()
 
-
-/obj/machinery/cargo_router/oshan_north
-	trigger_when_no_match = 0
-	New()
-		destinations = list("North" = NORTH, "South" = EAST)
-		default_direction = NORTH
-		..()
-
-/obj/machinery/cargo_router/oshan_south
-	trigger_when_no_match = 0
-	New()
-		destinations = list("South" = SOUTH, "North" = WEST)
-		default_direction = SOUTH
-		..()
-
 /obj/machinery/computer/barcode
 	name = "Barcode Computer"
 	desc = "Used to print barcode stickers for the cargo routing system."

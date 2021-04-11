@@ -34471,11 +34471,9 @@
 /turf/simulated/floor/wood,
 /area/station/bridge/customs)
 "bFN" = (
-/obj/plasticflaps,
+/obj/machinery/cargo_router/oshan/market_flap,
 /obj/forcefield/energyshield/perma,
-/obj/machinery/cargo_router{
-	destinations = list("Market" = SOUTH)
-	},
+/obj/plasticflaps,
 /turf/simulated/floor/plating/random,
 /area/station/crew_quarters/info)
 "bFR" = (
@@ -45516,9 +45514,10 @@
 /area/shuttle/sea_elevator_room)
 "cjz" = (
 /obj/disposalpipe/segment/transport,
-/obj/machinery/cargo_router{
-	destinations = list("Mining" = SOUTH)
+/obj/machinery/conveyor/oshan_carousel{
+	dir = 1
 	},
+/obj/machinery/cargo_router/oshan/mining,
 /turf/simulated/floor/shuttlebay,
 /area/station/maintenance/inner/central)
 "cjA" = (
@@ -46189,10 +46188,7 @@
 /area/station/storage/tools)
 "clC" = (
 /obj/plasticflaps,
-/obj/machinery/cargo_router{
-	default_direction = 2;
-	destinations = list("Tool Storage" = NORTH)
-	},
+/obj/machinery/cargo_router/oshan/toolstorage_flap,
 /turf/simulated/floor,
 /area/station/storage/tools)
 "clD" = (
@@ -46215,10 +46211,10 @@
 /turf/simulated/floor/bot,
 /area/station/crew_quarters/info)
 "clH" = (
-/obj/machinery/cargo_router{
-	default_direction = 4;
-	destinations = list("Tool Storage" = NORTH)
+/obj/machinery/conveyor/oshan_carousel{
+	dir = 4
 	},
+/obj/machinery/cargo_router/oshan/toolstorage,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/inner/central)
 "clI" = (
@@ -46243,10 +46239,10 @@
 /area/station/crew_quarters/info)
 "clL" = (
 /obj/lattice,
-/obj/machinery/cargo_router{
-	default_direction = 8;
-	destinations = list("Market" = SOUTH)
+/obj/machinery/conveyor/oshan_carousel{
+	dir = 8
 	},
+/obj/machinery/cargo_router/oshan/market,
 /turf/space/fluid,
 /area/space)
 "clM" = (
@@ -46669,7 +46665,7 @@
 /obj/disposalpipe/segment/transport{
 	dir = 4
 	},
-/turf/simulated/floor/plating/random,
+/turf/simulated/floor/grime,
 /area/station/maintenance/inner/central)
 "dRe" = (
 /obj/shrub{
@@ -46762,11 +46758,9 @@
 /obj/disposalpipe/segment/transport{
 	dir = 4
 	},
-/obj/machinery/cargo_router{
-	default_direction = 2;
-	destinations = list("Research" = WEST)
-	},
-/turf/simulated/floor/plating/random,
+/obj/machinery/conveyor/oshan_carousel,
+/obj/machinery/cargo_router/oshan/research,
+/turf/simulated/floor/grime,
 /area/station/maintenance/inner/central)
 "eVn" = (
 /obj/disposaloutlet/south,
@@ -47073,7 +47067,7 @@
 /obj/disposalpipe/trunk/transport{
 	dir = 1
 	},
-/turf/simulated/floor/plating/random,
+/turf/simulated/floor/grime,
 /area/station/maintenance/inner/central)
 "gqA" = (
 /obj/disposalpipe/segment/transport{
@@ -47735,9 +47729,10 @@
 /obj/disposalpipe/segment/transport{
 	dir = 4
 	},
-/obj/machinery/cargo_router{
-	destinations = list("QM" = EAST)
+/obj/machinery/conveyor/oshan_carousel{
+	dir = 1
 	},
+/obj/machinery/cargo_router/oshan/qm,
 /turf/simulated/floor/shuttlebay,
 /area/station/maintenance/inner/central)
 "knq" = (
@@ -47819,6 +47814,12 @@
 	},
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/bar)
+"lfj" = (
+/obj/disposalpipe/segment/transport{
+	dir = 4
+	},
+/turf/simulated/wall/auto/supernorn,
+/area/station/maintenance/inner/central)
 "lgA" = (
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/carpet{
@@ -47862,9 +47863,10 @@
 /obj/disposalpipe/segment/transport{
 	dir = 4
 	},
-/obj/machinery/cargo_router{
-	destinations = list("Catering" = EAST)
+/obj/machinery/conveyor/oshan_carousel{
+	dir = 1
 	},
+/obj/machinery/cargo_router/oshan/catering,
 /turf/simulated/floor/shuttlebay,
 /area/station/maintenance/inner/central)
 "luP" = (
@@ -48013,7 +48015,7 @@
 /obj/disposalpipe/trunk/transport{
 	dir = 4
 	},
-/turf/simulated/floor/plating/random,
+/turf/simulated/floor/grime,
 /area/space)
 "mAL" = (
 /obj/table/auto,
@@ -48256,7 +48258,7 @@
 /obj/disposalpipe/trunk/transport{
 	dir = 4
 	},
-/turf/simulated/floor/plating/random,
+/turf/simulated/floor/grime,
 /area/station/maintenance/inner/central)
 "nSl" = (
 /obj/table/round/auto,
@@ -48840,11 +48842,11 @@
 /area/station/maintenance/inner/central)
 "rul" = (
 /obj/disposalpipe/segment/transport,
-/obj/machinery/cargo_router{
-	default_direction = 4;
-	destinations = list("Medbay" = SOUTH)
+/obj/machinery/conveyor/oshan_carousel{
+	dir = 4
 	},
-/turf/simulated/floor/plating/random,
+/obj/machinery/cargo_router/oshan/medbay,
+/turf/simulated/floor/grime,
 /area/station/maintenance/inner/central)
 "rva" = (
 /obj/disposalpipe/segment/transport{
@@ -49001,11 +49003,11 @@
 /area/station/hallway/primary/south)
 "sNP" = (
 /obj/disposalpipe/segment/transport,
-/obj/machinery/cargo_router{
-	default_direction = 4;
-	destinations = list("Robotics" = SOUTH)
+/obj/machinery/conveyor/oshan_carousel{
+	dir = 4
 	},
-/turf/simulated/floor/plating/random,
+/obj/machinery/cargo_router/oshan/robotics,
+/turf/simulated/floor/grime,
 /area/station/maintenance/inner/central)
 "sRT" = (
 /obj/item/device/radio/intercom/science,
@@ -49067,7 +49069,7 @@
 /obj/disposalpipe/segment/transport,
 /obj/machinery/conveyor/oshan_carousel,
 /obj/plasticflaps,
-/turf/simulated/floor/plating/random,
+/turf/simulated/floor/grime,
 /area/station/maintenance/inner/central)
 "toE" = (
 /obj/cable{
@@ -49149,14 +49151,12 @@
 	name = "Catering Hangar"
 	})
 "tNB" = (
-/obj/machinery/cargo_router{
-	default_direction = 2;
-	destinations = list("Engineering Storage" = WEST)
-	},
 /obj/disposalpipe/segment/transport{
 	dir = 4
 	},
-/turf/simulated/floor/plating/random,
+/obj/machinery/conveyor/oshan_carousel,
+/obj/machinery/cargo_router/oshan/eng_storage,
+/turf/simulated/floor/grime,
 /area/station/maintenance/inner/central)
 "tRf" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
@@ -87442,8 +87442,8 @@ aEV
 aEV
 aEV
 aEV
-chd
-chd
+lfj
+lfj
 chd
 chd
 chd
