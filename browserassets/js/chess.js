@@ -92,12 +92,14 @@ var pieceImageList = [
 	"{{resource("images/chessboard/knightblack.png")}}",
 	"{{resource("images/chessboard/rookblack.png")}}",
 	"{{resource("images/chessboard/pawnblack.png")}}",
+	"{{resource("images/chessboard/draughtsmanblack.png")}}",
 	"{{resource("images/chessboard/kingwhite.png")}}",
 	"{{resource("images/chessboard/queenwhite.png")}}",
 	"{{resource("images/chessboard/bishopwhite.png")}}",
 	"{{resource("images/chessboard/knightwhite.png")}}",
 	"{{resource("images/chessboard/rookwhite.png")}}",
 	"{{resource("images/chessboard/pawnwhite.png")}}",
+	"{{resource("images/chessboard/draughtsmanwhite.png")}}"
 ];
 
 Number.isInteger = Number.isInteger || function(value) { // fuck IE

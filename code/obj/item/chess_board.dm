@@ -7,9 +7,20 @@
 	var/list/openWindows = list()
 	var/lastMoveSpaces[2]
 	var/pieceList[64]
+	var/offsetX = 3
+	var/offsetY = 3
 
 	proc/uiSetup()
 		usr.Browse(replacetext(replacetext(replacetext(grabResource("html/chess.htm"), "!!PIECES!!", json_encode(pieceList)), "!!LASTMOVE!!", json_encode(lastMoveSpaces)), "!!SRC_REF!!", "\ref[src]"), "window=chess;size=496x496;border=0;can_resize=0;can_minimize=1;")
+
+	proc/drawOverlay()
+		src.ClearAllOverlays()
+		for(var/obj/item/chessman/piece in src)
+			var/image/pieceDisplay = new /image('icons/obj/items/chess.dmi',"piece-render-[piece.pieceAffinity]")
+			var/boardPos = piece.position - 1
+			pieceDisplay.pixel_x = (offsetX * (boardPos % 8))
+			pieceDisplay.pixel_y = -(offsetY * (round(boardPos / 8)))
+			src.UpdateOverlays(pieceDisplay, "[boardPos]")
 
 	New()
 		..()
@@ -32,6 +43,9 @@
 						pieceList[piece.position] = "[piece.pieceType][piece.pieceAffinity]"
 						user.u_equip(piece)
 						piece.set_loc(src)
+						lastMoveSpaces[1] = null
+						lastMoveSpaces[2] = null
+						drawOverlay()
 						uiSetup()
 						for(var/mob/living/carbon/human/u in src.openWindows)
 							if(u == usr)
@@ -51,6 +65,7 @@
 							piece.position = pieceToPosition
 							pieceList[pieceToPosition] = pieceList[pieceFromPosition]
 							pieceList[pieceFromPosition] = null
+							drawOverlay()
 							uiSetup()
 							for(var/mob/living/carbon/human/u in src.openWindows)
 								if(u == usr)
@@ -65,8 +80,12 @@
 					for(var/obj/item/chessman/piece in src)
 						var/piecePosition = ((text2num(href_list["position"])) + 1) // because BYOND counts from 1 smh
 						if(piece.position == piecePosition)
+							piece.position = null
 							user.put_in_hand_or_eject(piece)
 							pieceList[piecePosition] = null;
+							lastMoveSpaces[1] = null
+							lastMoveSpaces[2] = null
+							drawOverlay()
 							uiSetup()
 							for(var/mob/living/carbon/human/u in src.openWindows)
 								if(u == usr)
