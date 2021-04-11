@@ -29,8 +29,13 @@ export const SavesTab = (_props, context) => {
   );
 };
 
-const Cloudsave: (props: { name: string; index: number }, context: any) => JSX.Element = ({ name, index }, context) => {
-  const { act, data } = useBackend<CharacterPreferencesData>(context);
+type CloudSaveProps = {
+  name: string,
+  index: number
+}
+
+const Cloudsave = ({ name, index }: CloudSaveProps, context: any) => {
+  const { act } = useBackend<CharacterPreferencesData>(context);
 
   return (
     <LabeledList>

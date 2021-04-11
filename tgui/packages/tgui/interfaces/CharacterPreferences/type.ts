@@ -1,5 +1,7 @@
+import { BooleanLike } from "common/react";
+
 export interface CharacterPreferencesData {
-  isMentor: number;
+  isMentor: BooleanLike;
 
   profiles: CharacterPreferencesProfile[];
 
@@ -37,26 +39,26 @@ export interface CharacterPreferencesData {
   customStyle3: string;
   underwearColor: string;
   underwearStyle: string;
-  randomAppearance: number;
+  randomAppearance: BooleanLike;
 
   fontSize: string;
-  seeMentorPms: string;
-  listenOoc: string;
-  listenLooc: string;
-  flyingChatHidden: string;
-  autoCapitalization: string;
-  localDeadchat: string;
+  seeMentorPms: BooleanLike;
+  listenOoc: BooleanLike;
+  listenLooc: BooleanLike;
+  flyingChatHidden: BooleanLike;
+  autoCapitalization: BooleanLike;
+  localDeadchat: BooleanLike;
   targetingCursor: string;
   hudTheme: string;
   tooltipOption: CharacterPreferencesTooltip;
-  tguiFancy: string;
-  tguiLock: string;
-  viewChangelog: string;
-  viewScore: string;
-  viewTickets: string;
-  useClickBuffer: string;
-  useWasd: string;
-  useAzerty: string;
+  tguiFancy: BooleanLike;
+  tguiLock: BooleanLike;
+  viewChangelog: BooleanLike;
+  viewScore: BooleanLike;
+  viewTickets: BooleanLike;
+  useClickBuffer: BooleanLike;
+  useWasd: BooleanLike;
+  useAzerty: BooleanLike;
   preferredMap: string;
 }
 

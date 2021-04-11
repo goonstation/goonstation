@@ -147,11 +147,16 @@ const SavesAndProfile = (_props, context) => {
   );
 };
 
-const Profile: (props: { index: number; profile: CharacterPreferencesProfile }, context: any) => JSX.Element = (
-  { profile, index },
-  context
+type ProfileProps = {
+  index: number,
+  profile: CharacterPreferencesProfile
+}
+
+const Profile = (
+  { profile, index } : ProfileProps,
+  context: any
 ) => {
-  const { act, data } = useBackend<CharacterPreferencesData>(context);
+  const { act } = useBackend<CharacterPreferencesData>(context);
 
   return (
     <Section
