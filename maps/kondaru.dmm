@@ -29473,7 +29473,6 @@
 /obj/decal/xmas_lights/ephemeral{
 	pixel_y = 32
 	},
-/obj/machinery/portableowl/judgementowl,
 /turf/simulated/floor/stairs/wood/wide{
 	dir = 9
 	},
@@ -32212,6 +32211,7 @@
 /area/station/security/brig)
 "bNA" = (
 /obj/machinery/light,
+/obj/machinery/portableowl/judgementowl,
 /turf/simulated/floor/stairs/wood/wide{
 	dir = 8
 	},
@@ -113843,7 +113843,7 @@ abZ
 abZ
 abZ
 abZ
-aCo
+aCh
 aDw
 aCh
 aFx
@@ -115966,7 +115966,7 @@ xEt
 xEt
 xEt
 xEt
-aCo
+aCh
 mAq
 mEy
 mEy
@@ -116268,7 +116268,7 @@ xPz
 xPz
 xPz
 bEN
-aCh
+aCo
 bUy
 mEy
 dDe
