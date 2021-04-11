@@ -1,5 +1,5 @@
 import { useBackend, useLocalState } from '../../backend';
-import { Box, Button, ByondUi, Divider, Flex, Icon, LabeledList, NoticeBox, Section, Tabs } from '../../components';
+import { Box, Button, ByondUi, Divider, Icon, LabeledList, NoticeBox, Section, Stack, Tabs } from '../../components';
 import { Window } from '../../layouts';
 import { CharacterTab } from './CharacterTab';
 import { GameSettingsTab } from './GameSettingsTab';
@@ -13,69 +13,80 @@ export const CharacterPreferences = (_props, context) => {
 
   return (
     <Window width={600} height={750} title="Character Setup">
-      <Window.Content scrollable>
-        <SavesAndProfile />
-        <Tabs>
-          <Tabs.Tab
-            selected={menu === CharacterPreferencesTabKeys.General}
-            onClick={() => setMenu(CharacterPreferencesTabKeys.General)}>
-            General
-          </Tabs.Tab>
-          <Tabs.Tab
-            selected={menu === CharacterPreferencesTabKeys.Character}
-            onClick={() => setMenu(CharacterPreferencesTabKeys.Character)}>
-            Appearance
-          </Tabs.Tab>
-          <Tabs.Tab onClick={() => act('open-occupation-window')}>Occupation</Tabs.Tab>
-          <Tabs.Tab onClick={() => act('open-traits-window')}>Traits</Tabs.Tab>
-          <Tabs.Tab
-            selected={menu === CharacterPreferencesTabKeys.GameSettings}
-            onClick={() => setMenu(CharacterPreferencesTabKeys.GameSettings)}>
-            Game Settings
-          </Tabs.Tab>
-          <Tabs.Tab
-            selected={menu === CharacterPreferencesTabKeys.Saves}
-            onClick={() => setMenu(CharacterPreferencesTabKeys.Saves)}>
-            Cloud Saves
-          </Tabs.Tab>
-        </Tabs>
-        {menu === CharacterPreferencesTabKeys.General || menu === CharacterPreferencesTabKeys.Character ? (
-          <Flex>
-            <Flex.Item grow="1">
-              <Box>
-                {menu === CharacterPreferencesTabKeys.General && <GeneralTab />}
-                {menu === CharacterPreferencesTabKeys.Character && <CharacterTab />}
-              </Box>
-            </Flex.Item>
-            <Flex.Item ml="5px">
-              <Section fill>
-                <ByondUi
-                  params={{
-                    id: data.preview,
-                    type: 'map',
-                  }}
-                  style={{
-                    width: '80px',
-                    height: '80px',
-                  }}
-                />
-                <Box textAlign="center" mt="5px">
-                  <Button icon="chevron-left" onClick={() => act('rotate-clockwise')} />
-                  <Button icon="chevron-right" onClick={() => act('rotate-counter-clockwise')} />
-                </Box>
+      <Window.Content>
+        <Stack vertical fill>
+          <Stack.Item>
+            <SavesAndProfile />
+          </Stack.Item>
+          <Stack.Item>
+            <Tabs>
+              <Tabs.Tab
+                selected={menu === CharacterPreferencesTabKeys.General}
+                onClick={() => setMenu(CharacterPreferencesTabKeys.General)}>
+                General
+              </Tabs.Tab>
+              <Tabs.Tab
+                selected={menu === CharacterPreferencesTabKeys.Character}
+                onClick={() => setMenu(CharacterPreferencesTabKeys.Character)}>
+                Appearance
+              </Tabs.Tab>
+              <Tabs.Tab onClick={() => act('open-occupation-window')}>Occupation</Tabs.Tab>
+              <Tabs.Tab onClick={() => act('open-traits-window')}>Traits</Tabs.Tab>
+              <Tabs.Tab
+                selected={menu === CharacterPreferencesTabKeys.GameSettings}
+                onClick={() => setMenu(CharacterPreferencesTabKeys.GameSettings)}>
+                Game Settings
+              </Tabs.Tab>
+              <Tabs.Tab
+                selected={menu === CharacterPreferencesTabKeys.Saves}
+                onClick={() => setMenu(CharacterPreferencesTabKeys.Saves)}>
+                Cloud Saves
+              </Tabs.Tab>
+            </Tabs>
+          </Stack.Item>
+          <Stack.Item grow="1">
+            {menu === CharacterPreferencesTabKeys.General || menu === CharacterPreferencesTabKeys.Character ? (
+              <Stack fill>
+                <Stack.Item grow="1">
+                  <Section scrollable fill>
+                    {menu === CharacterPreferencesTabKeys.General && <GeneralTab />}
+                    {menu === CharacterPreferencesTabKeys.Character && <CharacterTab />}
+                  </Section>
+                </Stack.Item>
+                <Stack.Item ml="5px">
+                  <Section fill>
+                    <ByondUi
+                      params={{
+                        id: data.preview,
+                        type: 'map',
+                      }}
+                      style={{
+                        width: '80px',
+                        height: '80px',
+                      }}
+                    />
+                    <Box textAlign="center" mt="5px">
+                      <Button icon="chevron-left" onClick={() => act('rotate-clockwise')} />
+                      <Button icon="chevron-right" onClick={() => act('rotate-counter-clockwise')} />
+                    </Box>
+                  </Section>
+                </Stack.Item>
+              </Stack>
+            ) : (
+              <Section scrollable fill>
+                {menu === CharacterPreferencesTabKeys.GameSettings && <GameSettingsTab />}
+                {menu === CharacterPreferencesTabKeys.Saves && <SavesTab />}
               </Section>
-            </Flex.Item>
-          </Flex>
-        ) : (
-          <>
-            {menu === CharacterPreferencesTabKeys.GameSettings && <GameSettingsTab />}
-            {menu === CharacterPreferencesTabKeys.Saves && <SavesTab />}
-          </>
-        )}
+            )}
+          </Stack.Item>
+          <Stack.Item>
 
-        <Section mt="5px">
-          <Button.Confirm content="Reset All" onClick={() => act('reset')} />
-        </Section>
+
+            <Section>
+              <Button.Confirm content="Reset All" onClick={() => act('reset')} />
+            </Section>
+          </Stack.Item>
+        </Stack>
       </Window.Content>
     </Window>
   );
@@ -87,51 +98,54 @@ const SavesAndProfile = (_props, context) => {
   const activeProfileIndex = data.profiles.findIndex((p) => p.active);
 
   return (
-    <>
-      <Flex mb="5px">
-        {data.profiles.map((profile, index) => (
-          <Flex.Item key={index} ml={index === 0 ? '0' : '5px'} grow="1">
-            <Profile profile={profile} index={index} />
-          </Flex.Item>
-        ))}
-      </Flex>
-
-      <Section>
-        <LabeledList>
-          <LabeledList.Item
-            label="Profile Name"
-            buttons={
-              activeProfileIndex > -1 ? (
-                <>
-                  <Button onClick={() => act('load', { index: activeProfileIndex + 1 })}>Reload</Button>
-                  {' - '}
-                  <Button onClick={() => act('save', { index: activeProfileIndex + 1 })}>Save</Button>
-                </>
-              ) : null
-            }>
-            <Button onClick={() => act('update', { profileName: 1 })}>
-              {data.profileName ? data.profileName : <Box italic>None</Box>}
-            </Button>
-          </LabeledList.Item>
-        </LabeledList>
-        {!!data.profileModified && (
-          <>
-            <Divider />
-            <NoticeBox danger mt="10px">
-              <Flex>
-                <Flex.Item align="center" mr="5px">
-                  <Icon name="exclamation-triangle" />
-                </Flex.Item>
-                <Flex.Item>
-                  <Box>You may have unsaved changes!</Box>
-                  <Box>Any unsaved changes will take effect for this round only.</Box>
-                </Flex.Item>
-              </Flex>
-            </NoticeBox>
-          </>
-        )}
-      </Section>
-    </>
+    <Stack vertical>
+      <Stack.Item>
+        <Stack>
+          {data.profiles.map((profile, index) => (
+            <Stack.Item key={index} ml={index === 0 ? '0' : '5px'} grow="1">
+              <Profile profile={profile} index={index} />
+            </Stack.Item>
+          ))}
+        </Stack>
+      </Stack.Item>
+      <Stack.Item>
+        <Section>
+          <LabeledList>
+            <LabeledList.Item
+              label="Profile Name"
+              buttons={
+                activeProfileIndex > -1 ? (
+                  <>
+                    <Button onClick={() => act('load', { index: activeProfileIndex + 1 })}>Reload</Button>
+                    {' - '}
+                    <Button onClick={() => act('save', { index: activeProfileIndex + 1 })}>Save</Button>
+                  </>
+                ) : null
+              }>
+              <Button onClick={() => act('update', { profileName: 1 })}>
+                {data.profileName ? data.profileName : <Box italic>None</Box>}
+              </Button>
+            </LabeledList.Item>
+          </LabeledList>
+          {!!data.profileModified && (
+            <>
+              <Divider />
+              <NoticeBox danger>
+                <Stack>
+                  <Stack.Item align="center">
+                    <Icon name="exclamation-triangle" />
+                  </Stack.Item>
+                  <Stack.Item>
+                    <Box>You may have unsaved changes!</Box>
+                    <Box>Any unsaved changes will take effect for this round only.</Box>
+                  </Stack.Item>
+                </Stack>
+              </NoticeBox>
+            </>
+          )}
+        </Section>
+      </Stack.Item>
+    </Stack>
   );
 };
 
