@@ -8888,12 +8888,21 @@
 	})
 "aya" = (
 /obj/table/reinforced/auto,
-/obj/item/storage/toolbox/mechanical,
+/obj/item/storage/toolbox/mechanical{
+	pixel_y = -10
+	},
 /obj/machinery/alarm{
 	dir = 8;
 	pixel_x = 20
 	},
-/obj/item/paper/engine,
+/obj/item/storage/firstaid/fire{
+	pixel_x = -4;
+	pixel_y = 6
+	},
+/obj/item/storage/firstaid/toxin{
+	pixel_x = 4;
+	pixel_y = 6
+	},
 /turf/simulated/floor/yellow/side{
 	dir = 4
 	},
@@ -12656,11 +12665,8 @@
 /area/space)
 "aHs" = (
 /obj/table/reinforced/auto,
-/obj/item/storage/firstaid/fire{
-	pixel_x = -4
-	},
-/obj/item/storage/firstaid/toxin{
-	pixel_x = 4
+/obj/machinery/computer/security/wooden_tv/small{
+	pixel_y = 8
 	},
 /turf/simulated/floor/yellow/side,
 /area/station/engine/power{
@@ -51297,11 +51303,7 @@
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 10
 	},
-/obj/machinery/light{
-	dir = 4;
-	layer = 9.1;
-	pixel_x = 10
-	},
+/obj/machinery/light,
 /turf/simulated/floor/orangeblack,
 /area/station/engine/hotloop)
 "lSk" = (
@@ -53036,6 +53038,18 @@
 	dir = 6
 	},
 /area/station/security/interrogation)
+"ofV" = (
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 5
+	},
+/obj/machinery/camera{
+	c_tag = "TEG Monitoring";
+	dir = 1;
+	name = "TEG Monitoring";
+	network = "Zeta"
+	},
+/turf/simulated/floor/engine/vacuum,
+/area/station/engine/combustion_chamber)
 "ogf" = (
 /obj/item/device/radio/intercom{
 	dir = 4
@@ -105698,7 +105712,7 @@ auN
 aIt
 aJq
 jkC
-aGk
+jkC
 aGk
 gtY
 ceD
@@ -106000,7 +106014,7 @@ auL
 auL
 aJr
 izD
-auL
+izD
 aML
 aaa
 ach
@@ -106302,7 +106316,7 @@ aHv
 xMr
 aJs
 aKA
-aLI
+ofV
 aaY
 abZ
 aaf
