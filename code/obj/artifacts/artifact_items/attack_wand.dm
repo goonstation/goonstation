@@ -22,7 +22,6 @@
 			user.lastattacked = src
 			var/turf/U = (istype(target, /atom/movable) ? target.loc : target)
 			A.effect_click_tile(src,user,U)
-			src.ArtifactFaultUsed(user)
 
 /datum/artifact/attack_wand
 	associated_object = /obj/item/artifact/attack_wand
@@ -146,4 +145,6 @@
 
 				if (R.total_volume)
 					R.clear_reagents()
+
+		O.ArtifactFaultUsed(user)
 		return
