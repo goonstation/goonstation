@@ -18,18 +18,16 @@ obj/item/rocko
 
 	New()
 		. = ..()
-		var/matrix/xf = matrix()
 		if(prob(20))
-			bright = TRUE
+			src.bright = TRUE
 
 		src.chat_text = new
 		src.vis_contents += src.chat_text
 
 		src.icon_state = "rock[pick(1,3)]"
-		src.transform = xf*1.2
+		src.transform = matrix()*1.2
 		src.rocko_is = list("a great listener", "a good friend", "trustworthy", "wise", "sweet", "great at parties")
-		src.hat = new /obj/item/clothing/head/helmet/hardhat
-		src.hat.set_loc(src)
+		src.hat = new /obj/item/clothing/head/helmet/hardhat(src)
 		update_icon()
 		START_TRACKING_CAT(TR_CAT_PETS)
 		processing_items |= src
@@ -85,7 +83,7 @@ obj/item/rocko
 			if(1)
 				emote("<B>[src]</B> winks.", "<I>winks</I>")
 			if(2)
-				if(holder) boutput(holder,"<B>[src]</B> feels warm.")
+				if(holder) boutput(src.holder,"<B>[src]</B> feels warm.")
 			if(3)
 				emote("<B>[src]</B> whispers something about a hellburn.", "<I>whispers something about a hellburn</I>")
 			if(4)
@@ -97,11 +95,11 @@ obj/item/rocko
 		var/list/targets
 		var/image/chat_maptext/chat_text = null
 
-		if(!holder)
+		if(!src.holder)
 			targets = hearers(src, null)
 			chat_text = make_chat_maptext(src, message, "color: ["#bfd6d8"];", alpha = 200)
 		else
-			targets = list(holder)
+			targets = list(src.holder)
 
 		for(var/mob/O in targets)
 			if(src.can_mob_observe(O))
@@ -111,11 +109,11 @@ obj/item/rocko
 		var/list/targets
 		var/image/chat_maptext/chat_text = null
 
-		if(!holder)
+		if(!src.holder)
 			targets = viewers(src, null)
 			chat_text = make_chat_maptext(src, maptext_out, "color: #C2BEBE;", alpha = 120)
 		else
-			targets = list(holder)
+			targets = list(src.holder)
 
 		for (var/mob/O in targets)
 			if(src.can_mob_observe(O))
@@ -152,13 +150,10 @@ obj/item/rocko
 		else
 			. = "A rock with a [src.smile ? "smiley" : "frowny"] face painted on it."
 
-	attack()
-
 	attackby(obj/item/W, mob/living/user)
 		if(istype(W,/obj/item/clothing/head))
 			if(src.hat)
 				src.hat.set_loc(get_turf(src))
-				src.hat = null
 
 			src.hat = W
 			user.drop_item(W)
@@ -169,8 +164,8 @@ obj/item/rocko
 
 	attack_self(mob/user as mob)
 		. = "[user] shakes [src]"
-		if(hat && prob(40))
-			. += "and knocks [src.hat] off"
+		if(src.hat && prob(40))
+			. += " and knocks [src.hat] off"
 			src.hat.set_loc(get_turf(src))
 			src.hat = null
 			update_hat()
