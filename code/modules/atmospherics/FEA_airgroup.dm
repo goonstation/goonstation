@@ -317,12 +317,6 @@
 	// This logic is not inverted because group processing may have been
 	// suspended in the above block.
 	if(!group_processing) //Revert to individual processing
-		// space fastpath if we didn't revert (avoid regrouping tiles prior to processing individual cells)
-		/*if (!abort_group && members.len && length_space_border)
-			//Disabling fastpath to fix Issue #3545
-			if (space_fastpath(parent_controller))
-				// If the fastpath resulted in the group being zeroed, return early.
-				return*/
 		var/totalPressure = 0
 		var/maxTemperature = 0
 		for(var/turf/simulated/member as anything in members)
@@ -347,62 +341,6 @@
 		air.react()
 
 
-// If group processing is off, and the air group is bordered by a space tile,
-// execute a fast evacuation of the air in the group.
-// If the average pressure in the group is < 5kpa, the group will be zeroed
-// returns: 1 if the group is zeroed, 0 if not
-//Disabling fastpath to fix Issue #3545
-/*/datum/air_group/proc/space_fastpath(var/datum/controller/process/parent_controller)
-	var/minDist
-	var/turf/space/sample
-	. = 0
-	sample = air_master.space_sample
-
-	if (!sample || !(sample.turf_flags & CAN_BE_SPACE_SAMPLE))
-		sample = air_master.update_space_sample()
-
-	if (!sample)
-		return
-
-	var/totalPressure = 0
-
-	for(var/turf/simulated/member as anything in members)
-		ATMOS_TILE_OPERATION_DEBUG(member)
-/* // commented out temporarily, it will probably have to be reenabled later
-		minDist = null
-		// find nearest space border tile
-		for(var/turf/simulated/b in space_borders)
-			if (b == member)
-				continue
-
-			var/dist = get_dist(b, member)
-			if (minDist == null || dist < minDist)
-				minDist = dist
-*/
-		minDist = member.dist_to_space
-
-		// Don't space hotspots, it breaks them
-		if(member.active_hotspot)
-			return 0
-
-		if (member.air && !isnull(minDist))
-			var/datum/gas_mixture/member_air = member.air
-			// Todo - retain nearest space tile border and apply force proportional to amount
-			// of air leaving through it
-			member_air.mimic(sample, clamp(length_space_border / (2 * max(1, minDist)), 0.1, 1))
-			ADD_MIXTURE_PRESSURE(member_air, totalPressure) // Build your own atmos disaster
-
-		LAGCHECK(LAG_REALTIME)
-
-	//mbc : bringing this silly fix back in for now
-	if (map_currently_underwater)
-		if (totalPressure / members.len < 65)
-			space_group()
-			return 1
-	else
-		if (totalPressure / members.len < 5)
-			space_group()
-			return 1*/
 /datum/air_group/proc/space_group()
 	for(var/turf/simulated/member as anything in members)
 		member.air?.zero()
