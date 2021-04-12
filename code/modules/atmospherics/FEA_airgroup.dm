@@ -318,11 +318,11 @@
 	// suspended in the above block.
 	if(!group_processing) //Revert to individual processing
 		// space fastpath if we didn't revert (avoid regrouping tiles prior to processing individual cells)
-		if (!abort_group && members.len && length_space_border)
+		/*if (!abort_group && members.len && length_space_border)
+			//Disabling fastpath to fix Issue #3545
 			if (space_fastpath(parent_controller))
 				// If the fastpath resulted in the group being zeroed, return early.
-				return
-
+				return*/
 		var/totalPressure = 0
 		var/maxTemperature = 0
 		for(var/turf/simulated/member as anything in members)
@@ -351,7 +351,8 @@
 // execute a fast evacuation of the air in the group.
 // If the average pressure in the group is < 5kpa, the group will be zeroed
 // returns: 1 if the group is zeroed, 0 if not
-/datum/air_group/proc/space_fastpath(var/datum/controller/process/parent_controller)
+//Disabling fastpath to fix Issue #3545
+/*/datum/air_group/proc/space_fastpath(var/datum/controller/process/parent_controller)
 	var/minDist
 	var/turf/space/sample
 	. = 0
@@ -401,8 +402,7 @@
 	else
 		if (totalPressure / members.len < 5)
 			space_group()
-			return 1
-
+			return 1*/
 /datum/air_group/proc/space_group()
 	for(var/turf/simulated/member as anything in members)
 		member.air?.zero()
