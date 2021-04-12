@@ -39512,6 +39512,9 @@
 /obj/item/pen/fancy,
 /obj/item/stamp/ce,
 /obj/item/reagent_containers/food/drinks/mug/random_color,
+/obj/item/rocko{
+	pixel_x = -12
+	},
 /turf/simulated/floor/carpet{
 	icon_state = "fblue1"
 	},
