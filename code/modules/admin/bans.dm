@@ -11,7 +11,7 @@
 	var/CMinutes = (world.realtime / 10) / 60
 	minutes = text2num(minutes)
 	var/exp = minutes - CMinutes
-	if (exp <= 0)
+	if (minutes <= 0)
 		return 0
 	else
 		if (exp >= ((24 HOURS) / (1 MINUTE))) // 1 day in minutes
