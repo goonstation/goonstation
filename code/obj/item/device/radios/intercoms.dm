@@ -7,7 +7,8 @@
 #endif
 	anchored = 1.0
 	plane = PLANE_NOSHADOW_ABOVE
-	mats = 0
+	mats = 3
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WIRECUTTERS | DECON_MULTITOOL
 	chat_class = RADIOCL_INTERCOM
 	var/number = 0
 	rand_pos = 0
@@ -43,8 +44,6 @@
 		src.UpdateOverlays(screen_image, "screen")
 		if(src.pixel_x == 0 && src.pixel_y == 0)
 			change_dir(src,null,src.dir)
-	mats = 3
-	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WIRECUTTERS | DECON_MULTITOOL
 
 /obj/item/device/radio/intercom/attack_ai(mob/user as mob)
 	src.add_fingerprint(user)
