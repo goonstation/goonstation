@@ -1742,6 +1742,11 @@
 	attack_ai(mob/user as mob)
 		. = ..()
 		lastuser = user
+	power_change()
+		var/original_icon = src.icon_state
+		. = ..()
+		if (!(status & BROKEN) && powered())
+			src.icon_state = original_icon
 
 	Topic(href, href_list)
 		. = ..()
@@ -1776,6 +1781,7 @@
 				R.product_cost = inp
 				src.generate_HTML(1, 0)
 		else if(href_list["vend"] && (length(player_list) <= 0))
+			src.setItemOverlay(null)
 			icon_state = "player"
 		else if(href_list["icon"] && src.panel_open == 1 && src.unlocked == 1)
 			var/datum/data/vending_product/player_product/R = locate(href_list["icon"]) in src.player_list
