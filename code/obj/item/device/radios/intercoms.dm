@@ -15,7 +15,7 @@
 	desc = "A wall-mounted radio intercom, used to communicate with the specified frequency. Usually turned off except during emergencies."
 	hardened = 0
 
-/obj/item/device/radio/intercom/proc/change_dir(obj/item/AM, old_dir, new_dir)
+/obj/item/device/radio/intercom/proc/update_pixel_offset_dir(obj/item/AM, old_dir, new_dir)
 	src.pixel_x = 0
 	src.pixel_y = 0
 	switch(new_dir)
@@ -29,10 +29,8 @@
 			src.pixel_x = 21
 
 /obj/item/device/radio/intercom/New()
-	//Register before calling our parent
-	//There's a possible race condition in assembly from a frame if you don't
-	RegisterSignal(src, COMSIG_ATOM_DIR_CHANGED, .proc/change_dir)
 	. = ..()
+	RegisterSignal(src, COMSIG_ATOM_DIR_CHANGED, .proc/update_pixel_offset_dir)
 	if(src.icon_state == "intercom") // if something overrides the icon we don't want this
 		var/image/screen_image = image(src.icon, "intercom-screen")
 		screen_image.color = src.device_color
@@ -43,7 +41,7 @@
 		screen_image.alpha = 180
 		src.UpdateOverlays(screen_image, "screen")
 		if(src.pixel_x == 0 && src.pixel_y == 0)
-			change_dir(src,null,src.dir)
+			update_pixel_offset_dir(src,null,src.dir)
 
 /obj/item/device/radio/intercom/attack_ai(mob/user as mob)
 	src.add_fingerprint(user)
