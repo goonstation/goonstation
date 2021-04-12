@@ -1,5 +1,9 @@
 
 (t)mon apr 12 21
+(u)Jawns
+(p)4232
+(e)🐛|bug
+(+)Clown names are now properly updated in security records.
 (u)Carbadox
 (p)4262
 (e)🆕|feature
