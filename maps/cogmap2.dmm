@@ -42380,6 +42380,10 @@
 /obj/item/dice/d1,
 /obj/disposalpipe/segment/mail/bent/north,
 /obj/item/stamp/ce,
+/obj/item/rocko{
+	pixel_x = -13;
+	pixel_y = 8
+	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/ce)
 "bNC" = (
@@ -42393,9 +42397,6 @@
 /obj/disposalpipe/switch_junction/left/south{
 	mail_tag = "engineering";
 	name = "mail junction (engineering)"
-	},
-/obj/item/rocko{
-	pixel_y = 4
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/ce)
