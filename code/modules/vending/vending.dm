@@ -1653,7 +1653,7 @@
 	var/image/itemoverlay = null
 	player_list = list()
 	create_products()
-		..()
+		. = ..()
 	New()
 		. = ..()
 		setCrtOverlayStatus(1)
@@ -1662,15 +1662,18 @@
 		var/image/itemoverlayoriginal = null
 		itemoverlayoriginal = SafeGetOverlayImage("item", target, target.icon_state)
 		itemoverlayoriginal.transform = matrix(null, 0.45, 0.45, MATRIX_SCALE)
-		itemoverlayoriginal.transform = matrix(itemoverlayoriginal.transform, -2.8, -3.7, MATRIX_TRANSLATE)
+		//itemoverlayoriginal.transform = matrix(itemoverlayoriginal.transform, -2.8, -3.7, MATRIX_TRANSLATE)
+		itemoverlayoriginal.pixel_x = -3
+		itemoverlayoriginal.pixel_y = - 4
 		itemoverlayoriginal.layer = src.layer + 0.1
 		itemoverlayoriginal.plane = PLANE_DEFAULT
 		return itemoverlayoriginal
 	proc/setItemOverlay(image/target)
 		src.icon_state = "player-display"
+		//Sometimes the offsets go wild if I don't remove it?
 		setCrtOverlayStatus(0)
 		UpdateOverlays(null, "item", 0, 1)
-		UpdateOverlays(target, "item", 0, 1)
+		UpdateOverlays(target, "item", 1, 1)
 		setCrtOverlayStatus(1)
 	proc/setCrtOverlayStatus(status)
 		if(status == 1)
@@ -1735,13 +1738,14 @@
 			loading = 0
 			unlocked = 0
 		src.generate_HTML(1)
-
+	//Keep track of what user touched the machine last for topic
 	attack_hand(mob/user as mob)
 		. = ..()
 		lastuser = user
 	attack_ai(mob/user as mob)
 		. = ..()
 		lastuser = user
+	//Save and restore icon state in case we're in product display mode
 	power_change()
 		var/original_icon = src.icon_state
 		. = ..()
@@ -1786,6 +1790,7 @@
 		else if(href_list["icon"] && src.panel_open == 1 && src.unlocked == 1)
 			var/datum/data/vending_product/player_product/R = locate(href_list["icon"]) in src.player_list
 			src.setItemOverlay(R.icon)
+			src.generate_HTML(1, 0)
 		if(href_list["vend"])
 			//Vends can change the name of list entries so generate HTML
 			src.generate_HTML(1, 0)
