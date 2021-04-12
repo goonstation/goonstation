@@ -506,13 +506,17 @@
 	desc = "An ornamental dagger for syndicate higher-ups. It sounds fancy, but it's basically the munitions company equivalent of those glass cubes with the company logo frosted on."
 
 /obj/item/dagger/syndicate/specialist //Infiltrator class knife
-	name = "syndicate combat knife"
+	name = "syndicate fighting utiltiy knife"
 	desc = "A light but robust combat knife that allows you to move faster in fights."
 	icon_state = "combat_knife"
+	force = 15
+	throwforce = 20
+	stamina_cost = 5
 
 	setupProperties()
 		..()
 		setProperty("movespeed", -0.5)
+		setProperty("frenzy")
 
 /obj/item/dagger/throwing_knife
 	name = "cheap throwing knife"
