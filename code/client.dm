@@ -300,7 +300,7 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 
 	Z_LOG_DEBUG("Client/New", "[src.ckey] - Ban check complete")
 
-//vpn check (for ban evasion purposes) api documentation: https://vpnapi.io/api-documentation
+//vpn check (for ban evasion purposes)
 #ifdef DO_VPN_CHECKS
 	if (vpn_blacklist_enabled)
 		var/vpn_kick_string = {"
@@ -322,11 +322,15 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 			logTheThing("admin", src, null, "[src.address] is using a vpn that they've already logged in with during this round.")
 			logTheThing("diary", src, null, "[src.address] is using a vpn that they've already logged in with during this round.", "admin")
 			message_admins("[key_name(src)] [src.address] attempted to connect with a VPN or proxy but was kicked!")
-			src.mob.Browse(vpn_kick_string, "window=vpnbonked")
-			sleep(3 SECONDS)
+			if(do_compid_analysis)
+				do_computerid_test(src) //Will ban yonder fucker in case they are prix
+				check_compid_list(src) //Will analyze their computer ID usage patterns for aberrations
 			if (src)
-				del(src)
-			return
+				src.mob.Browse(vpn_kick_string, "window=vpnbonked")
+				sleep(3 SECONDS)
+				if (src)
+					del(src)
+				return
 
 		// Client has not been checked for VPN status this round, go do so, but only for relatively new accounts
 		// NOTE: adjust magic numbers here if we approach vpn checker api rate limits
@@ -350,7 +354,7 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 						data = json_decode(html_decode(data["response"]))
 
 						// VPN checker service returns error responses in a "message" property
-						if (data["message"])
+						if (data["success"] == false)
 							// Yes, we're forcing a cache for a no-VPN response here on purpose
 							// Reasoning: The goonhub API has cached the VPN checker error response for the foreseeable future and further queries won't change that
 							//			  so we want to avoid spamming the goonhub API this round for literally no gain
@@ -359,24 +363,27 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 							logTheThing("diary", src, null, "unable to check VPN status of [src.address] because: [data["message"]]", "debug")
 
 						// Successful VPN check
-						else
-							var/list/security_info = data["security"]
-
-							// IP is a known VPN, cache locally and kick
-							if (security_info["vpn"] == true)
-								global.vpn_ip_checks["[src.address]"] = true
-								logTheThing("admin", src, null, "[src.address] is using a vpn. vpn info: [json_encode(data["network"])]")
-								logTheThing("diary", src, null, "[src.address] is using a vpn. vpn info: [json_encode(data["network"])]", "admin")
-								message_admins("[key_name(src)] [src.address] attempted to connect with a VPN or proxy but was kicked!")
+						// IP is a known VPN, cache locally and kick
+						else if (data["vpn"] == true || data["tor"] == true)
+							global.vpn_ip_checks["[src.address]"] = true
+							addPlayerNote(src.ckey, "VPN Blocker", "[src.address] attempted to connect via vpn or proxy. Info: [data["host"]], ASN: [data["ASN"]], org: [data["organization"]]")
+							logTheThing("admin", src, null, "[src.address] is using a vpn. vpn info: host: [data["host"]], ASN: [data["ASN"]], org: [data["organization"]]")
+							logTheThing("diary", src, null, "[src.address] is using a vpn. vpn info: host: [data["host"]], ASN: [data["ASN"]], org: [data["organization"]]", "admin")
+							message_admins("[key_name(src)] [src.address] attempted to connect with a VPN or proxy but was kicked!")
+							ircbot.export("admin", list(key="VPN Blocker", name="[src.key]", msg="[src.address] is using a vpn. vpn info: host: [data["host"]], ASN: [data["ASN"]], org: [data["organization"]]"))
+							if(do_compid_analysis)
+								do_computerid_test(src) //Will ban yonder fucker in case they are prix
+								check_compid_list(src) //Will analyze their computer ID usage patterns for aberrations
+							if (src)
 								src.mob.Browse(vpn_kick_string, "window=vpnbonked")
 								sleep(3 SECONDS)
 								if (src)
 									del(src)
 								return
 
-							// IP is not a known VPN
-							else
-								global.vpn_ip_checks["[src.address]"] = false
+						// IP is not a known VPN
+						else
+							global.vpn_ip_checks["[src.address]"] = false
 
 			catch(var/exception/e)
 				logTheThing("admin", src, null, "unable to check VPN status of [src.address] because: [e.name]")
@@ -484,11 +491,6 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 					alert(src, "You won't be able to play without updating, sorry!")
 					del(src)
 					return
-
-// Let's throw it here, why not! -ZeWaka
-#if DM_BUILD < 1526 && !defined(SPACEMAN_DMM)
-#error Please update your BYOND version to the latest stable release.
-#endif
 
 		else
 			if (noir)
@@ -1047,12 +1049,15 @@ var/global/curr_day = null
 
 				if (src.holder)
 					boutput(M, "<span class='mhelp'><b>MENTOR PM: FROM [key_name(src.mob,0,0,1)]</b>: <span class='message'>[t]</span></span>")
+					M.playsound_local(M, "sound/misc/mentorhelp.ogg", 100, flags = SOUND_IGNORE_SPACE, channel = VOLUME_CHANNEL_MENTORPM)
 					boutput(src.mob, "<span class='mhelp'><b>MENTOR PM: TO [key_name(M,0,0,1)][(M.real_name ? "/"+M.real_name : "")] <A HREF='?src=\ref[src.holder];action=adminplayeropts;targetckey=[M.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: <span class='message'>[t]</span></span>")
 				else
 					if (M.client && M.client.holder)
 						boutput(M, "<span class='mhelp'><b>MENTOR PM: FROM [key_name(src.mob,0,0,1)][(src.mob.real_name ? "/"+src.mob.real_name : "")] <A HREF='?src=\ref[M.client.holder];action=adminplayeropts;targetckey=[src.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: <span class='message'>[t]</span></span>")
+						M.playsound_local(M, "sound/misc/mentorhelp.ogg", 100, flags = SOUND_IGNORE_SPACE, channel = VOLUME_CHANNEL_MENTORPM)
 					else
 						boutput(M, "<span class='mhelp'><b>MENTOR PM: FROM [key_name(src.mob,0,0,1)]</b>: <span class='message'>[t]</span></span>")
+						M.playsound_local(M, "sound/misc/mentorhelp.ogg", 100, flags = SOUND_IGNORE_SPACE, channel = VOLUME_CHANNEL_MENTORPM)
 					boutput(usr, "<span class='mhelp'><b>MENTOR PM: TO [key_name(M,0,0,1)]</b>: <span class='message'>[t]</span></span>")
 
 				logTheThing("mentor_help", src.mob, M, "Mentor PM'd [constructTarget(M,"mentor_help")]: [t]")
@@ -1095,7 +1100,7 @@ var/global/curr_day = null
 			ehjax.topic("main", href_list, src)
 
 		if("resourcePreloadComplete")
-			bout(src, "<span class='notice'><b>Preload completed.</b></span>")
+			boutput(src, "<span class='notice'><b>Preload completed.</b></span>")
 			src.Browse(null, "window=resourcePreload")
 			return
 

@@ -63,6 +63,8 @@
 #define COMSIG_ATOM_DIR_CHANGED "atom_dir_changed"
 /// when an atom is collided by a projectile (/obj/projectile)
 #define COMSIG_ATOM_HITBY_PROJ "atom_hitby_proj"
+/// when an atom is hit by a thrown thing (thrown_atom, /datum/thrown_thing)
+#define COMSIG_ATOM_HITBY_THROWN "atom_hitby_thrown"
 
 // ---- atom/movable signals ----
 
@@ -101,6 +103,9 @@
 #define COMSIG_ITEM_SWAP_TO "itm_swap_to"
 /// When an item is swapped away from [does not include being picked up/taken out of bags/etc] (user)
 #define COMSIG_ITEM_SWAP_AWAY "itm_swap_away"
+/// After an item's itemspecial is used (user)
+#define COMSIG_ITEM_SPECIAL_POST "itm_special_post"
+
 
 // ---- implant signals ----
 /// When implanted

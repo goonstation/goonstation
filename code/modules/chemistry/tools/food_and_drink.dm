@@ -134,7 +134,7 @@
 		..()
 
 	process()
-		if (world.time - create_time >= 1 MINUTES)
+		if (world.time - create_time >= 3 MINUTES)
 			create_time = world.time
 			if (!src.pooled && isturf(src.loc) && !on_table())
 				if (prob(50))
@@ -1054,7 +1054,7 @@
 				"You add [W] to [src].")
 				src.reagents.add_reagent("ice", 5, null, (T0C - 1))
 				pool(W)
-				if ((user.mind.assigned_role == "Bartender") && (prob(20)))
+				if ((user.mind.assigned_role == "Bartender") && (prob(40)))
 					JOB_XP(user, "Bartender", 1)
 				return
 
@@ -1068,7 +1068,7 @@
 			W.set_loc(src)
 			src.wedge = W
 			src.update_icon()
-			if ((user.mind.assigned_role == "Bartender") && (prob(20)))
+			if ((user.mind.assigned_role == "Bartender") && (prob(40)))
 				JOB_XP(user, "Bartender", 1)
 			return
 
@@ -1114,7 +1114,7 @@
 				W.reagents.remove_reagent("salt", 5)
 				src.salted = 1
 				src.update_icon()
-				if ((user.mind.assigned_role == "Bartender") && (prob(20)))
+				if ((user.mind.assigned_role == "Bartender") && (prob(40)))
 					JOB_XP(user, "Bartender", 1)
 				return
 			else
@@ -1407,6 +1407,7 @@
 	icon_state = "icing_tube"
 	initial_volume = 50
 	amount_per_transfer_from_this = 5
+	can_recycle = FALSE
 	rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
 	var/image/chem = new /image('icons/obj/foodNdrink/food.dmi',"icing_tube_chem")
 
@@ -1540,6 +1541,7 @@
 	icon_state = "duo"
 	item_state = "duo"
 	initial_volume = 30
+	can_recycle = FALSE
 	var/image/fluid_image
 
 	New()
@@ -1572,6 +1574,7 @@
 	icon_state = "skullchalice"
 	item_state = "skullchalice"
 	rc_flags = RC_SPECTRO
+	can_recycle = FALSE
 
 /obj/item/reagent_containers/food/drinks/mug
 	name = "mug"
@@ -1746,6 +1749,7 @@
 	rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
 	g_amt = 30
 	initial_volume = 50
+	can_recycle = FALSE
 	initial_reagents = list("coconut_milk"=20)
 
 /obj/item/reagent_containers/food/drinks/energyshake
@@ -1771,6 +1775,7 @@
 	rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
 	g_amt = 5
 	initial_volume = 40
+	can_recycle = FALSE
 	initial_reagents = list("bojack"=40)
 
 /obj/item/reagent_containers/food/drinks/cocktailshaker

@@ -133,7 +133,7 @@ var/datum/score_tracker/score_tracker
 		// RESEARCH DEPARTMENT SECTION
 		for(var/obj/O in artifact_controls.artifacts)
 			if(O.disposed)
-				return
+				continue
 			var/obj/item/sticker/postit/artifact_paper/pap = locate(/obj/item/sticker/postit/artifact_paper/) in O.vis_contents
 			if(pap)
 				artifacts_analyzed++

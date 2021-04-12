@@ -11309,13 +11309,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
-"Bp" = (
-/obj/potted_plant{
-	dir = 1;
-	pixel_y = 28
-	},
-/turf/space,
-/area/station/shield_zone)
 "Bq" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -11613,6 +11606,18 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/listeningpost/power)
+"Cj" = (
+/obj/machinery/door/airlock/pyro/alt{
+	dir = 4;
+	tag = "icon-generic2_closed (EAST)"
+	},
+/obj/access_spawn/rancher,
+/obj/firedoor_spawn,
+/obj/railing/orange/reinforced{
+	dir = 8
+	},
+/turf/simulated/floor/plating/random,
+/area/station/maintenance/east)
 "Ck" = (
 /obj/firedoor_spawn,
 /obj/disposalpipe/segment,
@@ -12058,14 +12063,6 @@
 	},
 /turf/simulated/floor/red,
 /area/station/hos)
-"Dw" = (
-/obj/storage/secure/closet/command/chief_engineer,
-/obj/item/pinpointer/teg_semi,
-/obj/item/deconstructor,
-/obj/item/rocko,
-/obj/item/stamp/ce,
-/turf/simulated/floor/yellow,
-/area/station/engine/engineering/ce)
 "Dx" = (
 /obj/storage/secure/closet/command/medical_director,
 /obj/item/device/analyzer/healthanalyzer/borg,
@@ -12866,15 +12863,6 @@
 /obj/item/clothing/mask/chicken,
 /turf/simulated/floor/dirt,
 /area/station/ranch)
-"Fv" = (
-/obj/machinery/door/airlock/pyro/alt{
-	dir = 4;
-	tag = "icon-generic2_closed (EAST)"
-	},
-/obj/access_spawn/rancher,
-/obj/firedoor_spawn,
-/turf/simulated/floor/plating/random,
-/area/station/maintenance/east)
 "Fw" = (
 /obj/decal/fakeobjects/vacuumtape,
 /obj/decal/fakeobjects{
@@ -14814,12 +14802,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/science/storage)
-"Kf" = (
-/obj/shrub{
-	dir = 1
-	},
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/maintenance/southwest)
 "Kh" = (
 /obj/machinery/atmospherics/portables_connector/north,
 /obj/machinery/portable_atmospherics/canister/empty,
@@ -16756,13 +16738,6 @@
 	},
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
-"Ph" = (
-/obj/potted_plant{
-	dir = 1;
-	pixel_y = 28
-	},
-/turf/space,
-/area/space)
 "Pi" = (
 /obj/disposalpipe/segment,
 /obj/machinery/light{
@@ -17030,18 +17005,6 @@
 	},
 /turf/simulated/floor/bluewhite/corner{
 	dir = 8
-	},
-/area/station/medical/medbay)
-"PK" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/item/device/radio/intercom/medical,
-/obj/machinery/vending/medical,
-/turf/simulated/floor/bluewhite{
-	dir = 1
 	},
 /area/station/medical/medbay)
 "PL" = (
@@ -18306,18 +18269,6 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/science/storage)
-"Ug" = (
-/obj/stool/bench/blue/auto,
-/obj/machinery/light{
-	dir = 8;
-	layer = 9.1;
-	light_type = /obj/item/light/tube/blueish;
-	pixel_x = -10
-	},
-/turf/simulated/floor/bluewhite{
-	dir = 9
-	},
-/area/station/medical/medbay)
 "Uh" = (
 /obj/cable{
 	icon_state = "2-8"
@@ -18391,6 +18342,18 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
+"Uy" = (
+/obj/machinery/light{
+	dir = 8;
+	layer = 9.1;
+	light_type = /obj/item/light/tube/blueish;
+	pixel_x = -10
+	},
+/obj/machinery/vending/medical,
+/turf/simulated/floor/bluewhite{
+	dir = 9
+	},
+/area/station/medical/medbay)
 "Uz" = (
 /obj/table/reinforced/bar/auto,
 /obj/machinery/camera{
@@ -18793,6 +18756,14 @@
 	icon_state = "fgreen2"
 	},
 /area/station/crew_quarters/heads)
+"VV" = (
+/obj/storage/secure/closet/command/chief_engineer,
+/obj/item/pinpointer/teg_semi,
+/obj/item/deconstructor,
+/obj/item/rocko,
+/obj/item/stamp/ce,
+/turf/simulated/floor/yellow,
+/area/station/engine/engineering/ce)
 "VY" = (
 /obj/disposalpipe/segment,
 /turf/simulated/wall/auto/supernorn,
@@ -19154,6 +19125,18 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
+"Xi" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/item/device/radio/intercom/medical,
+/obj/stool/bench/blue/auto,
+/turf/simulated/floor/bluewhite{
+	dir = 1
+	},
+/area/station/medical/medbay)
 "Xj" = (
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/catering)
@@ -54085,7 +54068,7 @@ PS
 PS
 PS
 PS
-Bp
+PS
 aa
 aa
 aa
@@ -54387,7 +54370,7 @@ PS
 aa
 aa
 aa
-Ph
+aa
 iW
 iW
 iW
@@ -54689,7 +54672,7 @@ aa
 iW
 iW
 iW
-Kf
+ii
 iX
 jW
 jY
@@ -67697,7 +67680,7 @@ Rn
 Di
 Tj
 Bx
-Fv
+Cj
 Gj
 Gj
 Gj
@@ -68901,7 +68884,7 @@ zX
 dn
 Bx
 Bx
-PK
+Xi
 yF
 ZH
 Bx
@@ -69201,7 +69184,7 @@ To
 zg
 wW
 vY
-Ug
+Uy
 Fy
 PL
 wb
@@ -77056,7 +77039,7 @@ AX
 Qj
 Cp
 Ya
-Dw
+VV
 BK
 EX
 FQ

@@ -6825,47 +6825,12 @@
 /obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor/carpet/grime,
 /area/station/chapel/office)
-"apj" = (
-/obj/shrub,
-/obj/machinery/light{
-	dir = 8;
-	layer = 9.1;
-	pixel_x = -10
-	},
-/turf/simulated/floor/carpet{
-	dir = 9;
-	icon_state = "fpurple2"
-	},
-/area/station/chapel/sanctuary)
 "apk" = (
 /obj/item/instrument/large/organ,
 /turf/simulated/floor/carpet{
 	dir = 1;
 	icon_state = "fpurple2"
 	},
-/area/station/chapel/sanctuary)
-"apl" = (
-/obj/shrub,
-/obj/machinery/light{
-	dir = 4;
-	layer = 9.1;
-	pixel_x = 10
-	},
-/turf/simulated/floor/carpet{
-	dir = 5;
-	icon_state = "fpurple2"
-	},
-/area/station/chapel/sanctuary)
-"apm" = (
-/obj/machinery/conveyor_switch{
-	id = "chapel"
-	},
-/obj/machinery/light{
-	dir = 8;
-	layer = 9.1;
-	pixel_x = -10
-	},
-/turf/simulated/floor/bot,
 /area/station/chapel/sanctuary)
 "apn" = (
 /obj/machinery/conveyor{
@@ -8890,13 +8855,6 @@
 	icon_state = "fpurple1"
 	},
 /area/station/chapel/sanctuary)
-"aua" = (
-/obj/table/reinforced/bar/auto,
-/turf/simulated/floor/carpet{
-	dir = 4;
-	icon_state = "fpurple1"
-	},
-/area/station/chapel/sanctuary)
 "aub" = (
 /obj/table/reinforced/bar/auto,
 /obj/loudspeaker,
@@ -9559,19 +9517,6 @@
 	dir = 4
 	},
 /area/station/chapel/sanctuary)
-"avF" = (
-/obj/machinery/light{
-	dir = 1;
-	layer = 9.1;
-	pixel_y = 21
-	},
-/obj/table/wood/round/auto,
-/obj/disposalpipe/segment/mail/horizontal,
-/obj/item/decoration/flower_vase,
-/turf/simulated/floor/specialroom/chapel{
-	dir = 1
-	},
-/area/station/chapel/sanctuary)
 "avG" = (
 /obj/stool/chair/couch{
 	dir = 8;
@@ -10021,12 +9966,6 @@
 /turf/simulated/floor/carpet{
 	dir = 9;
 	icon_state = "fpurple3"
-	},
-/area/station/chapel/sanctuary)
-"awQ" = (
-/obj/machinery/light,
-/turf/simulated/floor/carpet{
-	icon_state = "fpurple1"
 	},
 /area/station/chapel/sanctuary)
 "awR" = (
@@ -10942,12 +10881,6 @@
 /turf/simulated/floor/carpet{
 	dir = 6;
 	icon_state = "fpurple3"
-	},
-/area/station/chapel/sanctuary)
-"ayF" = (
-/turf/simulated/floor/carpet{
-	dir = 1;
-	icon_state = "fblue4"
 	},
 /area/station/chapel/sanctuary)
 "ayG" = (
@@ -42372,20 +42305,6 @@
 /area/station/engine/power{
 	name = "Engineering Control Room"
 	})
-"bNB" = (
-/obj/table/wood/auto,
-/obj/item/item_box/gold_star{
-	item_amount = 20
-	},
-/obj/item/dice/d1,
-/obj/disposalpipe/segment/mail/bent/north,
-/obj/item/stamp/ce,
-/obj/item/rocko{
-	pixel_x = -13;
-	pixel_y = 8
-	},
-/turf/simulated/floor/black,
-/area/station/crew_quarters/ce)
 "bNC" = (
 /obj/storage/crate/rcd/CE,
 /obj/cable{
@@ -78797,6 +78716,18 @@
 	icon_state = "fgreen4"
 	},
 /area/station/hydroponics/bay)
+"dFX" = (
+/obj/machinery/conveyor_switch{
+	id = "chapel"
+	},
+/obj/machinery/light{
+	dir = 8;
+	layer = 9.1;
+	pixel_x = -10;
+	pixel_y = 13
+	},
+/turf/simulated/floor/bot,
+/area/station/chapel/sanctuary)
 "dJs" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -78971,6 +78902,14 @@
 	icon_state = "blue1"
 	},
 /area/station/crew_quarters/arcade/dungeon)
+"hLs" = (
+/obj/table/reinforced/bar/auto,
+/obj/machinery/light/small/floor,
+/turf/simulated/floor/carpet{
+	dir = 4;
+	icon_state = "fpurple1"
+	},
+/area/station/chapel/sanctuary)
 "hRi" = (
 /turf/space,
 /area/shuttle/arrival/station)
@@ -79105,6 +79044,11 @@
 	icon_state = "blue5"
 	},
 /area/station/crew_quarters/arcade/dungeon)
+"jWl" = (
+/turf/simulated/floor/carpet{
+	icon_state = "fpurple1"
+	},
+/area/station/chapel/sanctuary)
 "kBU" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -79117,6 +79061,20 @@
 	icon_state = "blue1"
 	},
 /area/station/crew_quarters/arcade/dungeon)
+"kLw" = (
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	pixel_x = 5;
+	pixel_y = 21
+	},
+/obj/table/wood/round/auto,
+/obj/disposalpipe/segment/mail/horizontal,
+/obj/item/decoration/flower_vase,
+/turf/simulated/floor/specialroom/chapel{
+	dir = 1
+	},
+/area/station/chapel/sanctuary)
 "kSZ" = (
 /obj/table/wood/auto,
 /obj/item/clothing/head/apprentice{
@@ -79173,6 +79131,19 @@
 	icon_state = "blue1"
 	},
 /area/station/crew_quarters/arcade/dungeon)
+"mcZ" = (
+/obj/shrub,
+/obj/machinery/light{
+	dir = 8;
+	layer = 9.1;
+	pixel_x = -10;
+	pixel_y = 13
+	},
+/turf/simulated/floor/carpet{
+	dir = 9;
+	icon_state = "fpurple2"
+	},
+/area/station/chapel/sanctuary)
 "mgV" = (
 /obj/submachine/seed_manipulator{
 	dir = 4
@@ -79276,6 +79247,20 @@
 	icon_state = "wooden"
 	},
 /area/station/security/detectives_office)
+"ntg" = (
+/obj/table/wood/auto,
+/obj/item/item_box/gold_star{
+	item_amount = 20
+	},
+/obj/item/dice/d1,
+/obj/disposalpipe/segment/mail/bent/north,
+/obj/item/stamp/ce,
+/obj/item/rocko{
+	pixel_x = -13;
+	pixel_y = 8
+	},
+/turf/simulated/floor/black,
+/area/station/crew_quarters/ce)
 "nCq" = (
 /turf/simulated/floor/stairs{
 	icon_state = "Stairs_wide"
@@ -79777,6 +79762,19 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
+"wuz" = (
+/obj/shrub,
+/obj/machinery/light{
+	dir = 4;
+	layer = 9.1;
+	pixel_x = 10;
+	pixel_y = 13
+	},
+/turf/simulated/floor/carpet{
+	dir = 5;
+	icon_state = "fpurple2"
+	},
+/area/station/chapel/sanctuary)
 "wSb" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -79790,6 +79788,13 @@
 "xfw" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/ranch)
+"xiD" = (
+/obj/machinery/light/small/floor,
+/turf/simulated/floor/carpet{
+	dir = 1;
+	icon_state = "fblue4"
+	},
+/area/station/chapel/sanctuary)
 "xBG" = (
 /turf/simulated/floor/carpet{
 	dir = 10;
@@ -123847,7 +123852,7 @@ bGv
 bIu
 bKk
 bLU
-bNB
+ntg
 bPj
 bQE
 bSm
@@ -127112,7 +127117,7 @@ aao
 aaa
 aam
 aod
-apj
+mcZ
 aqu
 aqw
 asJ
@@ -127418,10 +127423,10 @@ apk
 aqv
 arA
 asK
-aua
+hLs
 avA
-awQ
-ayF
+jWl
+xiD
 aAd
 aBF
 aCS
@@ -127716,7 +127721,7 @@ aao
 aaa
 aam
 aod
-apl
+wuz
 aqw
 aqu
 asL
@@ -128320,7 +128325,7 @@ akt
 alK
 alK
 akt
-apm
+dFX
 aqy
 arx
 aqy
@@ -128929,7 +128934,7 @@ alM
 arC
 alM
 alM
-avF
+kLw
 arx
 ayK
 aod

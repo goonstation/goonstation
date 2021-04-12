@@ -61,13 +61,13 @@
 
 // Audio log players
 /obj/item/device/audio_log/radioship/large
-	name = "Audio log"
+	name = "audio log"
 	desc = "A bulky recording device."
 	icon = 'icons/obj/radiostation.dmi'
 	icon_state = "audiolog_newLarge"
 
 /obj/item/device/audio_log/radioship/small
-	name = "Audio log"
+	name = "audio log"
 	desc = "A handheld recording device."
 	icon = 'icons/obj/radiostation.dmi'
 	icon_state = "audiolog_newSmall"

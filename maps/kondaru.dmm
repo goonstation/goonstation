@@ -27928,14 +27928,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/east)
-"bCR" = (
-/obj/table/wood/auto,
-/obj/displaycase{
-	displayed = new /obj/item/captaingun;
-	pixel_y = 6
-	},
-/turf/simulated/floor/carpet/arcade,
-/area/station/bridge/captain)
 "bCT" = (
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/machinery/door/airlock/pyro/glass/command{
@@ -44442,25 +44434,6 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
-"dTK" = (
-/obj/table/wood/auto,
-/obj/machinery/power/apc/autoname_north,
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/machinery/phone,
-/obj/item/stamp/ce{
-	pixel_x = -12;
-	rand_pos = 0
-	},
-/obj/item/rocko{
-	pixel_x = 13;
-	pixel_y = 4
-	},
-/turf/simulated/floor/yellowblack{
-	dir = 1
-	},
-/area/station/crew_quarters/ce)
 "dUm" = (
 /obj/table/reinforced/auto,
 /obj/item/clothing/gloves/latex,
@@ -57880,6 +57853,14 @@
 /obj/decal/poster/wallsign/hazard_bio,
 /turf/simulated/floor/plating,
 /area/station/medical/cdc)
+"uiz" = (
+/obj/table/wood/auto,
+/obj/displaycase{
+	displayed = new /obj/item/captaingun;
+	pixel_y = 6
+	},
+/turf/simulated/floor/carpet/arcade,
+/area/station/bridge/captain)
 "uiE" = (
 /obj/disposalpipe/segment/vertical,
 /obj/disposalpipe/segment/mail/horizontal,
@@ -59028,6 +59009,25 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/west)
+"vIm" = (
+/obj/table/wood/auto,
+/obj/machinery/power/apc/autoname_north,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/phone,
+/obj/item/stamp/ce{
+	pixel_x = -12;
+	rand_pos = 0
+	},
+/obj/item/rocko{
+	pixel_x = 13;
+	pixel_y = 4
+	},
+/turf/simulated/floor/yellowblack{
+	dir = 1
+	},
+/area/station/crew_quarters/ce)
 "vIY" = (
 /obj/wingrille_spawn/auto,
 /obj/cable,
@@ -122989,7 +122989,7 @@ qFo
 bwi
 bxy
 byG
-bCR
+uiz
 vDJ
 bBJ
 bxm
@@ -126610,7 +126610,7 @@ bpS
 czi
 vaG
 xcv
-dTK
+vIm
 puJ
 dxL
 cGD

@@ -292,6 +292,7 @@
 		// we really need to fix this or it'll be some kinda weird inf loop shit
 		low_priority_jobs += "Staff Assistant"
 	for (var/mob/new_player/player in unassigned)
+		if(!player?.mind) continue
 		logTheThing("debug", null, null, "<b>I Said No/Jobs:</b> [player] given a low priority role")
 		player.mind.assigned_role = pick(low_priority_jobs)
 		logTheThing("debug", player, null, "assigned job: [player.mind.assigned_role]")

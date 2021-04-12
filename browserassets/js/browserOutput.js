@@ -62,8 +62,8 @@ var opts = {
 };
 
 var themes = { // "css-class": "Option name"
-    "theme-default": "Windows 3.1 (default)",
-    "theme-dark": "Dark",
+    'theme-default': 'Windows 3.1 (default)',
+    'theme-dark': 'Dark',
 }
 
 //Polyfill for fucking date now because of course IE8 and below don't support it
@@ -104,7 +104,7 @@ function getTextNodes(elem, pattern) {
 
 // Highlight all text terms matching the registered regex patterns
 function highlightTerms(el) {
-    var pattern = new RegExp("(" + opts.highlightTerms.join('|') + ")", 'gi');
+    var pattern = new RegExp('(' + opts.highlightTerms.join('|') + ')', 'gi');
     var nodes = getTextNodes(el, pattern);
 
     nodes.each(function (idx, node) {
@@ -382,9 +382,9 @@ function getCookie(cname) {
 function rgbToHex(R,G,B) {return toHex(R)+toHex(G)+toHex(B);}
 function toHex(n) {
     n = parseInt(n,10);
-    if (isNaN(n)) return "00";
+    if (isNaN(n)) return '00';
     n = Math.max(0,Math.min(n,255));
-    return "0123456789ABCDEF".charAt((n-n%16)/16) + "0123456789ABCDEF".charAt(n%16);
+    return '0123456789ABCDEF'.charAt((n-n%16)/16) + '0123456789ABCDEF'.charAt(n%16);
 }
 
 function changeMode(mode) {
@@ -926,13 +926,13 @@ $(function() {
     $('#toggleEmojiFont').click(function(e) {
         opts.twemoji = !opts.twemoji;
         setCookie('twemoji', opts.twemoji, 365);
-        output('<span class="internal boldnshit">Emoji set to '+(opts.twemoji?"Twemoji":"Windows emoji")+'</span>');
+        output('<span class="internal boldnshit">Emoji set to '+(opts.twemoji?'Twemoji':'Windows emoji')+'</span>');
     });
 
     $('#toggleMessageLimit').click(function(e) {
         opts.messageLimitEnabled = !opts.messageLimitEnabled;
         setCookie('messageLimitEnabled', opts.messageLimitEnabled, 365);
-        output('<span class="internal boldnshit">'+(opts.messageLimitEnabled ? "Old messages will get deleted." : "Old messages no longer get deleted. This might cause performance issues.")+'</span>');
+        output('<span class="internal boldnshit">'+(opts.messageLimitEnabled ? 'Old messages will get deleted.' : 'Old messages no longer get deleted. This might cause performance issues.')+'</span>');
     });
 
     $('#saveLog').click(function(e) {
@@ -941,7 +941,7 @@ $(function() {
         if (window.XMLHttpRequest) {
             xmlHttp = new XMLHttpRequest();
         } else {
-            xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
+            xmlHttp = new ActiveXObject('Microsoft.XMLHTTP');
         }
         xmlHttp.open('GET', 'http://cdn.goonhub.com/css/browserOutput.css', false);
         xmlHttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
@@ -950,10 +950,10 @@ $(function() {
         saved += '<body class="' + opts.currentTheme + '">';
 
         saved += $messages.html();
-        saved += "</body>";
+        saved += '</body>';
 
         var now = new Date();
-        var filename = "log_" + now.getFullYear() + "-" + (now.getMonth() + 1) + "-" + now.getDate() + "_" + now.getHours() + "-" + now.getMinutes() + ".html";
+        var filename = 'log_' + now.getFullYear() + '-' + (now.getMonth() + 1) + '-' + now.getDate() + '_' + now.getHours() + '-' + now.getMinutes() + '.html';
 
         navigator.msSaveBlob(new Blob([saved], {type : 'text/html'}), filename);
       });

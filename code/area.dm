@@ -1150,6 +1150,12 @@ ABSTRACT_TYPE(/area/prefab)
 	name ="Von Ricken"
 	icon_state = "blue"
 
+/area/prefab/candy_shop
+	name = "Candy Shop"
+	icon_state = "blue"
+	sound_loop = 'sound/ambience/music/shoptheme.ogg'
+	sound_environment = 2
+
 // Sealab trench areas //
 
 /area/shuttle/sea_elevator_room
@@ -2574,6 +2580,9 @@ ABSTRACT_TYPE(/area/station/security)
 	icon_state = "HOS"
 	sound_environment = 4
 	workplace = 0 //As does the hos
+
+/area/station/security/hos/horizon
+	name = "Hovel of Security"
 
 /area/station/security/visitation
 	name ="Visitation"

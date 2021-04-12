@@ -277,6 +277,12 @@
 			return
 		if (A in src.abilities)
 			src.abilities -= A
+			if (A == src.altPower)
+				src.altPower = null
+			if (A == src.ctrlPower)
+				src.ctrlPower = null
+			if (A == src.shiftPower)
+				src.shiftPower = null
 			qdel(A)
 			return
 		src.updateButtons()

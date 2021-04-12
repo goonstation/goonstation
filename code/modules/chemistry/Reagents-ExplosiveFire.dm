@@ -578,7 +578,7 @@ datum
 			reaction_temperature(exposed_temperature, exposed_volume)
 				if(!src.reacting)
 					var/list/covered = holder.covered_turf()
-					if (covered.len > 1 && length(exposed_volume/covered) > 0.5)
+					if (length(covered) && ((exposed_volume / length(covered)) > 0.5))
 						return
 
 					src.reacting = ldmatter_reaction(holder, volume, id)
@@ -651,7 +651,7 @@ datum
 						for(var/turf/turf in covered)
 							var/radius = min(max(min_radius, ((volume/covered.len) * volume_radius_multiplier + volume_radius_modifier)), max_radius)
 							fireflash_sm(turf, radius, 2200 + radius * 250, radius * 50)
-							if(holder && length(volume/covered) >= explosion_threshold)
+							if(holder && volume/length(covered) >= explosion_threshold)
 								if(holder.my_atom)
 									holder.my_atom.visible_message("<span class='alert'><b>[holder.my_atom] explodes!</b></span>")
 									// Added log entries (Convair880).
