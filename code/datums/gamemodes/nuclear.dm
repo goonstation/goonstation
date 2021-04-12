@@ -38,7 +38,7 @@
 
 		if (player.ready)
 			num_players++
-	var/num_synds = max(1, min(round(num_players / 4), agents_possible))
+	var/num_synds = clamp( round(num_players / 6 ), 1, agents_possible)
 
 	possible_syndicates = get_possible_syndicates(num_synds)
 
