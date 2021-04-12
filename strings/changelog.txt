@@ -1,5 +1,9 @@
 
 (t)mon apr 12 21
+(u)Carbadox
+(p)4262
+(e)🆕|feature
+(+)Added the ability to make fingerless gloves by using snipping tools on black gloves.
 (u)Jan.antilles
 (p)4268
 (e)🎨|sprites
