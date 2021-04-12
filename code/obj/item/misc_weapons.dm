@@ -516,7 +516,6 @@
 	setupProperties()
 		..()
 		setProperty("movespeed", -0.5)
-		setProperty("frenzy")
 
 /obj/item/dagger/throwing_knife
 	name = "cheap throwing knife"
