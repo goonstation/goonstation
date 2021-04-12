@@ -1660,21 +1660,20 @@
 		itemoverlayoriginal.transform = matrix(null, 0.45, 0.45, MATRIX_SCALE)
 		itemoverlayoriginal.transform = matrix(itemoverlayoriginal.transform, -2.8, -3.7, MATRIX_TRANSLATE)
 		itemoverlayoriginal.layer = src.layer + 0.1
-		itemoverlayoriginal.plane = 10
-		src.set_icon_state("player-display")
+		itemoverlayoriginal.plane = PLANE_DEFAULT
 		return itemoverlayoriginal
 	proc/setItemOverlay(obj/item/target)
-		UpdateOverlays(null, "item", 0, 1)
-		UpdateOverlays(getScaledIcon(target), "item", 0, 1)
+		if(src.icon_state == "player-display")
+			setCrtOverlayStatus(0)
+			UpdateOverlays(null, "item", 0, 1)
+			UpdateOverlays(getScaledIcon(target), "item", 0, 1)
+			setCrtOverlayStatus(1)
 	proc/setCrtOverlayStatus(status)
 		if(status == 1)
 			var/image/screenoverlay = null
-			screenoverlay = SafeGetOverlayImage("screen", 'icons/obj/64x64.dmi', "genebooth_screen")
-			screenoverlay.blend_mode = BLEND_MULTIPLY
+			screenoverlay = SafeGetOverlayImage("screen", src.icon, "player-crt")
 			screenoverlay.layer = src.layer + 0.2
-			screenoverlay.transform = matrix(null, -6	, 0, MATRIX_TRANSLATE)
-			screenoverlay.transform = matrix(screenoverlay.transform, 1, 1.35, MATRIX_SCALE)
-			screenoverlay.plane = 10
+			screenoverlay.plane = PLANE_DEFAULT
 			UpdateOverlays(screenoverlay, "screen", 0, 1)
 		else
 			UpdateOverlays(null, "screen", 0, 1)
@@ -1682,6 +1681,7 @@
 	proc/addproduct(obj/item/target, mob/user)
 		user.u_equip(target)
 		target.set_loc(src)
+		target.layer = (initial(target.layer))
 		var/existed = 0
 		for (var/datum/data/vending_product/player_product/R in src.player_list)
 			if(istype(target,R.product_type) && R.real_name == target.real_name)
@@ -1719,6 +1719,7 @@
 		else if(in_interact_range(src, lastuser) || lastuser.stat)
 			return lastuser
 	attackby(obj/item/target, mob/user)
+		src.icon_state = "player-display"
 		setItemOverlay(target)
 		if(!loading == 0 && !panel_open == 0)
 
