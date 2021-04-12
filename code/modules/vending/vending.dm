@@ -348,7 +348,7 @@
 					//Player vending machines don't have "out of stock" items
 				else if (!T.unlocked == 0)
 					//Links for setting prices when player vending machines are unlocked
-					html_parts += "<tr><td><a href='byond://?src=\ref[src];vend=\ref[R]'>[nextproduct]</a></td><td style='text-align: right;'>[R.product_amount]</td><td style='text-align: right;'><a href='byond://?src=\ref[src];setprice=\ref[R]'>$[R.product_cost]</a></td></tr>"
+					html_parts += "<tr><td><a href='byond://?src=\ref[src];vend=\ref[R]'>[nextproduct]</a></td><td style='text-align: right;'>[R.product_amount]</td><td style='text-align: right;'><a href='byond://?src=\ref[src];setprice=\ref[R]'>$[R.product_cost]</a> (<a href='byond://?src=\ref[src];icon=\ref[R]'>*</a>)</td></tr>"
 		html_parts += "</table>";
 
 		if (src.pay)
@@ -627,7 +627,10 @@
 
 				if (ispath(product_path))
 					var/atom/movable/vended = new product_path(src.get_output_location()) // changed from obj, because it could be a mob, THANKS VALUCHIMP
-					vended.layer = src.layer + 0.1 //So things stop spawning under the fukin thing
+					if(!player_list)
+						vended.layer = src.layer + 0.1 //So things stop spawning under the fukin thing
+					else
+						vended.layer = src.layer + 0.3 //Player vending machines have a CRT overlay we need to go above
 					if(isitem(vended))
 						usr.put_in_hand_or_eject(vended) // try to eject it into the users hand, if we can
 					// else, just let it spawn where it is
@@ -1621,6 +1624,7 @@
 	var/contents = list()
 	var/product_type
 	var/real_name
+	var/image/icon
 	product_amount = 1
 	New(obj/item/product,price)
 		..()
@@ -1662,12 +1666,12 @@
 		itemoverlayoriginal.layer = src.layer + 0.1
 		itemoverlayoriginal.plane = PLANE_DEFAULT
 		return itemoverlayoriginal
-	proc/setItemOverlay(obj/item/target)
-		if(src.icon_state == "player-display")
-			setCrtOverlayStatus(0)
-			UpdateOverlays(null, "item", 0, 1)
-			UpdateOverlays(getScaledIcon(target), "item", 0, 1)
-			setCrtOverlayStatus(1)
+	proc/setItemOverlay(image/target)
+		src.icon_state = "player-display"
+		setCrtOverlayStatus(0)
+		UpdateOverlays(null, "item", 0, 1)
+		UpdateOverlays(target, "item", 0, 1)
+		setCrtOverlayStatus(1)
 	proc/setCrtOverlayStatus(status)
 		if(status == 1)
 			var/image/screenoverlay = null
@@ -1690,7 +1694,10 @@
 				existed = 1
 				break
 		if(existed == 0)
-			player_list += new/datum/data/vending_product/player_product(target, 15)
+			var/datum/data/vending_product/player_product/itemEntry = new/datum/data/vending_product/player_product(target, 15)
+			itemEntry.icon = getScaledIcon(target)
+			player_list += itemEntry
+
 
 	generate_wire_HTML()
 		. = ..()
@@ -1719,14 +1726,8 @@
 		else if(in_interact_range(src, lastuser) || lastuser.stat)
 			return lastuser
 	attackby(obj/item/target, mob/user)
-		src.icon_state = "player-display"
-		setItemOverlay(target)
 		if(!loading == 0 && !panel_open == 0)
-
 			addproduct(target, user)
-
-			if(src.icon_state != "player-display")
-				src.icon_state = "player-display"
 		else
 			. = ..()
 		lastuser = user
@@ -1776,6 +1777,9 @@
 				src.generate_HTML(1, 0)
 		else if(href_list["vend"] && (length(player_list) <= 0))
 			icon_state = "player"
+		else if(href_list["icon"] && src.panel_open == 1 && src.unlocked == 1)
+			var/datum/data/vending_product/player_product/R = locate(href_list["icon"]) in src.player_list
+			src.setItemOverlay(R.icon)
 		if(href_list["vend"])
 			//Vends can change the name of list entries so generate HTML
 			src.generate_HTML(1, 0)
