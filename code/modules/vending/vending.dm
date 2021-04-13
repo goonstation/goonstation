@@ -1625,6 +1625,7 @@
 	var/product_type
 	var/real_name
 	var/image/icon
+	var/label
 	product_amount = 1
 	New(obj/item/product,price)
 		..()
@@ -1690,8 +1691,19 @@
 		target.set_loc(src)
 		target.layer = (initial(target.layer))
 		var/existed = 0
+		var/regex/labelFinder = new("\\*? \\(.*?\\)")
+		var/regex/labelExtractor = new("(?:.*?\\()(.*?)\\)")
+		var/label = null
+		if((target.real_name != target.name) && labelFinder.Find(target.name))
+			label = labelExtractor.Replace(target.name, "$1")
+		//Add the item to an existing entry if there is one
 		for (var/datum/data/vending_product/player_product/R in src.player_list)
-			if(istype(target,R.product_type) && R.real_name == target.real_name)
+			if(label == R.label)
+				R.contents += target
+				R.product_amount += 1
+				existed = 1
+				break
+			else if(istype(target,R.product_type) && R.real_name == target.real_name)
 				R.contents += target
 				R.product_amount += 1
 				existed = 1
@@ -1700,6 +1712,7 @@
 			var/datum/data/vending_product/player_product/itemEntry = new/datum/data/vending_product/player_product(target, 15)
 			itemEntry.icon = getScaledIcon(target)
 			player_list += itemEntry
+			if(label) itemEntry.label = label
 
 
 	generate_wire_HTML()
