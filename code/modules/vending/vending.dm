@@ -1779,7 +1779,7 @@
 		else if (href_list["rename"] && src.panel_open == 1 && src.unlocked == 1)
 			var/inp
 			inp = html_encode(sanitize(input(usr,"Enter new name:","Vendor Name", "") as text))
-			if(inp)
+			if(inp && inp != "")
 				src.name = inp
 				src.generate_HTML(0, 1)
 		else if (href_list["setprice"] && src.panel_open == 1 && src.unlocked == 1)
