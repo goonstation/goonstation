@@ -1753,6 +1753,11 @@
 
 	Topic(href, href_list)
 		. = ..()
+		if (status & (BROKEN|NOPOWER))
+			return
+		if (usr.stat || usr.restrained() || !in_interact_range(src, usr))
+			return
+
 		if (href_list["loading"])
 			if (src.panel_open == 1 && src.unlocked == 1)
 				loading = !loading
