@@ -229,7 +229,7 @@
 	icon_state = "captain"
 	c_flags = SPACEWEAR
 	item_state = "caphat"
-	desc = "A symbol of the captain's rank, and the source of all his power."
+	desc = "A symbol of the captain's rank, and the source of all their power."
 	setupProperties()
 		..()
 		setProperty("meleeprot_head", 4)
