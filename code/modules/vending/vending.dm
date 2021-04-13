@@ -1779,13 +1779,13 @@
 		else if (href_list["rename"] && src.panel_open == 1 && src.unlocked == 1)
 			var/inp
 			inp = html_encode(sanitize(input(usr,"Enter new name:","Vendor Name", "") as text))
-			if(inp && inp != "")
+			if(inp && inp != "" && (usr.stat || usr.restrained() || in_interact_range(src, usr)))
 				src.name = inp
 				src.generate_HTML(0, 1)
 		else if (href_list["setprice"] && src.panel_open == 1 && src.unlocked == 1)
 			var/inp
 			inp = input(usr,"Enter the new price:","Item Price", "") as num
-			if(inp)
+			if(inp && (usr.stat || usr.restrained() || in_interact_range(src, usr)))
 				var/datum/data/vending_product/player_product/R = locate(href_list["setprice"]) in src.player_list
 				R.product_cost = inp
 				src.generate_HTML(1, 0)
