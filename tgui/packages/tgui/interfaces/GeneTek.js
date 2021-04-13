@@ -84,7 +84,7 @@ export const GeneTek = (props, context) => {
                 Record
               </Tabs.Tab>
             )}
-            {!!subject && (
+            {subject && (
               <Tabs.Tab
                 icon="dna"
                 selected={menu === "scanner"}
@@ -128,7 +128,7 @@ export const GeneTek = (props, context) => {
                 onClick={() => setBuyMats(1)} />
             </Flex.Item>
           </Flex>
-          {!!subject && (
+          {subject && (
             <LabeledList>
               <LabeledList.Item label="Occupant">
                 {name}
