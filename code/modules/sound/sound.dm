@@ -302,6 +302,10 @@ var/global/list/default_channel_volumes = list(1, 1, 0.1, 0.5, 0.5, 1, 1)
 
 					M << S
 
+/**
+	Plays a sound to some clients without caring about its source location and stuff.
+	`target` can be either a list of clients or a list of mobs or `world` or an area.
+*/
 /proc/playsound_global(target, soundin, vol as num, vary, pitch, ignore_flag = 0, channel = VOLUME_CHANNEL_GAME)
 	// don't play if over the per-tick sound limit
 	if (!limiter || !limiter.canISpawn(/sound))
