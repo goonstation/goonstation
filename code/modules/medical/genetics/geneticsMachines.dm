@@ -861,10 +861,6 @@
 			scanner_alert(ui.user, "Decryption code \"[code]\" failed.", error = TRUE)
 			on_ui_interacted(ui.user)
 
-#define BE_CAN_RESEARCH (1<<0)
-#define BE_CAN_INJECT (1<<1)
-#define BE_CAN_SCRAMBLE (1<<2)
-#define BE_CAN_RECLAIM (1<<3)
 /obj/machinery/computer/genetics/proc/serialize_bioeffect_for_tgui(datum/bioEffect/BE, active = FALSE, potential = FALSE, full_data = TRUE)
 	var/datum/bioEffect/GBE = BE.get_global_instance()
 	var/research_level = GBE.research_level
@@ -890,11 +886,6 @@
 				"marker" = BP.marker,
 			))
 
-		var/canFlags = BE_CAN_RESEARCH * BE.can_research
-		canFlags += BE_CAN_INJECT * BE.can_make_injector
-		canFlags += BE_CAN_SCRAMBLE * BE.can_scramble
-		canFlags += BE_CAN_RECLAIM * BE.can_reclaim
-
 		. += list(
 			"desc" = research_level >= EFFECT_RESEARCH_ACTIVATED && !isnull(BE.researched_desc) ? BE.researched_desc \
 				: research_level >= EFFECT_RESEARCH_DONE ? BE.desc \
@@ -902,14 +893,13 @@
 				: "Research on a non-active instance of this gene is required.",
 			"icon" = research_level >= EFFECT_RESEARCH_DONE ? BE.icon_state : "unknown",
 			"time" = GBE.research_finish_time,
-			"canFlags" = canFlags,
+			"canResearch" = BE.can_research,
+			"canInject" = BE.can_make_injector,
+			"canScramble" = BE.can_scramble,
+			"canReclaim" = BE.can_reclaim,
 			"spliceError" = src.to_splice?.check_apply(BE),
 			"dna" = dna,
 			)
-#undef BE_CAN_RESEARCH
-#undef BE_CAN_INJECT
-#undef BE_CAN_SCRAMBLE
-#undef BE_CAN_RECLAIM
 
 /obj/machinery/computer/genetics/ui_data(mob/user)
 	var/mut_research_cost = genResearch.mut_research_cost
