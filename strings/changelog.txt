@@ -1,5 +1,10 @@
 
 (t)tue apr 13 21
+(u)Gannets
+(p)4310
+(e)⚖🗺|balance, mapping
+(*)Raised the total nuclear operatives possible in a round from 8 to 10. Scaling is also adjusted to account for higher population, for example, 48 players ready at round-start will result in 8 operatives. Any fewer players will mean less operatives.
+(*)Renamed the syndicate combat knife to syndicate fighting utility knife, increased it's damage, throwing damage & reduced it's stamina cost.
 (u)Penny
 (p)4170
 (e)|
