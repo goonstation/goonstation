@@ -120,10 +120,6 @@
 	pixel_y = 0
 	flags = FPRINT | NOSPLASH
 
-	New()
-		..()
-		src.create_reagents(10)
-
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/reagent_containers/glass) || istype(W, /obj/item/reagent_containers/food/drinks))
 			if (W.reagents.total_volume <= (W.reagents.maximum_volume - 10))
