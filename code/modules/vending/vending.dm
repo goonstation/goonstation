@@ -612,8 +612,7 @@
 					//Players get 90% of profit from player vending machines QMs get 10%
 					var/obj/machinery/vending/player/T = src
 					T.owneraccount.fields["current_money"] += round(R.product_cost * profit)
-					wagesystem.shipping_budget += R.product_cost - round(R.product_cost * profit) // cogwerks - maybe money shouldn't just vanish into the aether idk
-
+					wagesystem.shipping_budget += round(R.product_cost / (profit * 10))
 				if(R.product_amount <= 0 && !isplayer == 0)
 					src.player_list -= R
 			//Gotta do this before the SPAWN_DBG
@@ -1670,11 +1669,8 @@
 		return itemoverlayoriginal
 	proc/setItemOverlay(image/target)
 		src.icon_state = "player-display"
-		//Sometimes the offsets go wild if I don't remove it?
-		setCrtOverlayStatus(0)
 		UpdateOverlays(null, "item", 0, 1)
 		UpdateOverlays(target, "item", 1, 1)
-		setCrtOverlayStatus(1)
 	proc/setCrtOverlayStatus(status)
 		if(status == 1)
 			var/image/screenoverlay = null
