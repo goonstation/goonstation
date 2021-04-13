@@ -57,6 +57,7 @@ export const BioEffect = (props, context) => {
   } = data;
   const {
     gene,
+    hideSequence,
     isSample,
     isPotential,
     isActive,
@@ -287,7 +288,9 @@ export const BioEffect = (props, context) => {
         <Box inline />
       </Box>
       <Description text={desc} />
-      <DNASequence {...props} />
+      {!hideSequence && (
+        <DNASequence {...props} />
+      )}
     </Section>
   );
 };
