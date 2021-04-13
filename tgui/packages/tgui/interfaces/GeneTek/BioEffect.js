@@ -68,13 +68,22 @@ export const BioEffect = (props, context) => {
     desc,
     icon,
     research,
-    canResearch,
-    canInject,
-    canScramble,
-    canReclaim,
+    canFlags,
     spliceError,
     dna,
   } = gene;
+
+  const bioEffectCanFlags = {
+    canResearch: 1<<0,
+    canInject: 1<<1,
+    canScramble: 1<<2,
+    canReclaim: 1<<3,
+  };
+
+  const canResearch = (canFlags & bioEffectCanFlags.canReclaim) === bioEffectCanFlags.canReclaim;
+  const canInject = (canFlags & bioEffectCanFlags.canInject) === bioEffectCanFlags.canInject;
+  const canScramble = (canFlags & bioEffectCanFlags.canScramble) === bioEffectCanFlags.canScramble;
+  const canReclaim = (canFlags & bioEffectCanFlags.canReclaim) === bioEffectCanFlags.canReclaim;
 
   const dnaGood = dna.every(pair => !pair.style);
   const dnaGoodExceptLocks = dna.every(pair =>
