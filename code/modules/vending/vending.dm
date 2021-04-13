@@ -1663,7 +1663,6 @@
 		var/image/itemoverlayoriginal = null
 		itemoverlayoriginal = SafeGetOverlayImage("item", target, target.icon_state)
 		itemoverlayoriginal.transform = matrix(null, 0.45, 0.45, MATRIX_SCALE)
-		//itemoverlayoriginal.transform = matrix(itemoverlayoriginal.transform, -2.8, -3.7, MATRIX_TRANSLATE)
 		itemoverlayoriginal.pixel_x = -3
 		itemoverlayoriginal.pixel_y = - 4
 		itemoverlayoriginal.layer = src.layer + 0.1
@@ -1783,6 +1782,9 @@
 				if(unlocked == 0 && loading == 1) loading = 0
 				//When we get unlocked, if the original owner mob isn't here replace the saved mob with this one
 				owneruser = returnmob()
+			else
+				unlocked = 0
+				loading = 0
 			src.generate_HTML(0, 1)
 		else if (href_list["rename"] && src.panel_open == 1 && src.unlocked == 1)
 			var/inp
