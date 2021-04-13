@@ -1788,7 +1788,7 @@
 			src.generate_HTML(0, 1)
 		else if (href_list["rename"] && src.panel_open == 1 && src.unlocked == 1)
 			var/inp
-			inp = input(returnmob(),"Enter new name:","Vendor Name", "") as text
+			inp = html_encode(sanitize(input(returnmob(),"Enter new name:","Vendor Name", "") as text))
 			if(inp)
 				src.name = inp
 				src.generate_HTML(0, 1)
