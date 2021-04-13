@@ -1667,8 +1667,8 @@
 		return itemoverlayoriginal
 	proc/setItemOverlay(image/target)
 		src.icon_state = "player-display"
-		UpdateOverlays(null, "item", 0, 1)
-		UpdateOverlays(target, "item", 1, 1)
+		ClearSpecificOverlays(1, "item")
+		UpdateOverlays(target, "item", 0, 1)
 	proc/setCrtOverlayStatus(status)
 		if(status == 1)
 			var/image/screenoverlay = null
