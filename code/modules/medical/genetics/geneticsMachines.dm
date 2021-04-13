@@ -941,11 +941,6 @@
 		"savedMutations" = list(),
 		"savedChromosomes" = list(),
 		"combining" = list(),
-		"mutantRaces" = list(list(
-			"name" = "Human",
-			"icon" = "template",
-			"ref" = "\ref[null]",
-		)),
 		"unlock" = null,
 	)
 
@@ -971,15 +966,6 @@
 
 	for (var/datum/bioEffect/BE as anything in combining)
 		.["combining"] += "\ref[BE]"
-
-	for (var/X as anything in bioEffectList)
-		var/datum/bioEffect/BE = bioEffectList[X]
-		if (BE.effectType == EFFECT_TYPE_MUTANTRACE && BE.research_level >= EFFECT_RESEARCH_DONE && BE.mutantrace_option)
-			.["mutantRaces"] += list(list(
-				"name" = BE.mutantrace_option,
-				"icon" = BE.icon_state,
-				"ref" = "\ref[BE]",
-			))
 
 	if (!src.decrypt_sanity_check())
 		.["unlock"] = list(
@@ -1125,13 +1111,26 @@
 					"saveSlots" = genResearch.isResearched(/datum/geneticsResearchEntry/saver) ? genResearch.max_save_slots : 0,
 					"precisionEmitter" = genResearch.isResearched(/datum/geneticsResearchEntry/rad_precision),
 					"materialMax" = genResearch.max_material,
+					"mutantRaces" = list(list(
+						"name" = "Human",
+						"icon" = "template",
+						"ref" = "\ref[null]",
+						)),
 					)
+
 	var/bioEffects = list()
 	for (var/id as anything in bioEffectList)
 		var/datum/bioEffect/BE = bioEffectList[id]
 		if (!BE.scanner_visibility || BE.research_level < EFFECT_RESEARCH_IN_PROGRESS)
 			continue
 		bioEffects += list(serialize_bioeffect_for_tgui(BE))
+
+		if (BE.effectType == EFFECT_TYPE_MUTANTRACE && BE.research_level >= EFFECT_RESEARCH_DONE && BE.mutantrace_option)
+			.["mutantRaces"] += list(list(
+				"name" = BE.mutantrace_option,
+				"icon" = BE.icon_state,
+				"ref" = "\ref[BE]",
+			))
 	.["bioEffects"] = bioEffects
 
 	for(var/key as anything in genResearch.researchTree)
