@@ -163,6 +163,7 @@ var/datum/geneticsResearchManager/genResearch = new()
 	var/hidden = 0 // Is this one accessible by players?
 	var/htmlIcon = null
 
+	// Note: Parent should be called LAST to ensure any updates are forwarded as static data where applicable
 	proc/onFinish()
 		for_by_tcl(computer, /obj/machinery/computer/genetics)
 			for (var/datum/tgui/ui as anything in tgui_process.get_uis(computer))
@@ -213,11 +214,10 @@ var/datum/geneticsResearchManager/genResearch = new()
 		return
 
 	onFinish()
-		..()
 		if (global_instance.research_level < EFFECT_RESEARCH_DONE)
 			global_instance.research_level = max(global_instance.research_level, EFFECT_RESEARCH_DONE)
 			genResearch.mutations_researched++
-		return
+		..()
 
 // TIER ONE
 // researchTime = 600 is one minute, keep that in mind
@@ -247,10 +247,10 @@ var/datum/geneticsResearchManager/genResearch = new()
 	tier = 1
 
 	onFinish()
-		..()
 		genResearch.mut_research_cost = 10
 		genResearch.mut_research_time = 450
 		genResearch.see_secret = 1
+		..()
 
 /datum/geneticsResearchEntry/improvedcooldowns
 	name = "Biotic Cooling Mechanisms"
@@ -261,8 +261,8 @@ var/datum/geneticsResearchManager/genResearch = new()
 	tier = 1
 
 	onFinish()
-		..()
 		genResearch.equipment_cooldown_multiplier -= 0.5
+		..()
 
 /datum/geneticsResearchEntry/genebooth
 	name = "Gene Booth"
@@ -282,9 +282,9 @@ var/datum/geneticsResearchManager/genResearch = new()
 	requiredMutRes = list("early_secret_access")
 
 	onFinish()
-		..()
 		genResearch.cost_discount += 0.15
 		genResearch.time_discount += 0.15
+		..()
 
 /datum/geneticsResearchEntry/complex_saver
 	name = "Complex DNA Mutation Storage"
@@ -295,8 +295,8 @@ var/datum/geneticsResearchManager/genResearch = new()
 	requiredMutRes = list("early_secret_access")
 
 	onFinish()
-		..()
 		genResearch.max_save_slots += 5
+		..()
 
 /datum/geneticsResearchEntry/complex_max_materials
 	name = "Complex Material Storage"
@@ -307,8 +307,8 @@ var/datum/geneticsResearchManager/genResearch = new()
 	requiredMutRes = list("early_secret_access")
 
 	onFinish()
-		..()
 		genResearch.max_material += 50
+		..()
 
 // TIER TWO
 
@@ -338,8 +338,8 @@ var/datum/geneticsResearchManager/genResearch = new()
 	requiredResearch = list(/datum/geneticsResearchEntry/rademitter)
 
 	onFinish()
-		..()
 		genResearch.emitter_radiation -= 45
+		..()
 
 /datum/geneticsResearchEntry/rad_coolant
 	name = "Emitter Coolant System"
@@ -360,8 +360,8 @@ var/datum/geneticsResearchManager/genResearch = new()
 	requiredResearch = list(/datum/geneticsResearchEntry/reclaimer)
 
 	onFinish()
-		..()
 		genResearch.max_save_slots += 3
+		..()
 
 /datum/geneticsResearchEntry/rad_precision
 	name = "Precision Radiation Emitters"
@@ -381,8 +381,8 @@ var/datum/geneticsResearchManager/genResearch = new()
 	requiredResearch = list(/datum/geneticsResearchEntry/reclaimer)
 
 	onFinish()
-		..()
 		genResearch.max_material += 50
+		..()
 
 /datum/geneticsResearchEntry/bio_rad_dampers
 	name = "Biotic Radiation Dampeners"
@@ -394,8 +394,8 @@ var/datum/geneticsResearchManager/genResearch = new()
 	requiredMutRes = list("food_rad_resist","radioactive")
 
 	onFinish()
-		..()
 		genResearch.emitter_radiation -= 30
+		..()
 
 // TIER FOUR
 
@@ -408,8 +408,8 @@ var/datum/geneticsResearchManager/genResearch = new()
 	requiredResearch = list(/datum/geneticsResearchEntry/saver)
 
 	onFinish()
-		..()
 		genResearch.max_save_slots += 2
+		..()
 
 ///////////////////////////////////
 // Things related to DNA samples //

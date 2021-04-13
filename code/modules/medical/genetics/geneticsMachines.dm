@@ -914,16 +914,11 @@
 	. = list(
 		"haveScanner" = !isnull(get_scanner()),
 		"materialCur" = genResearch.researchMaterial,
-		"materialMax" = genResearch.max_material,
 		"mutationsResearched" = genResearch.mutations_researched,
 		"autoDecryptors" = genResearch.lock_breakers,
 		"budget" = wagesystem.research_budget,
 		"costPerMaterial" = 50,
 		"researchCost" = mut_research_cost,
-		"boothCost" = genResearch.isResearched(/datum/geneticsResearchEntry/genebooth) ? genResearch.genebooth_cost : -1,
-		"injectorCost" = genResearch.isResearched(/datum/geneticsResearchEntry/injector) ? genResearch.injector_cost : -1,
-		"saveSlots" = genResearch.isResearched(/datum/geneticsResearchEntry/saver) ? genResearch.max_save_slots : 0,
-		"precisionEmitter" = genResearch.isResearched(/datum/geneticsResearchEntry/rad_precision),
 		"toSplice" = src.to_splice?.name,
 		"activeGene" = "\ref[src.currently_browsing]",
 		"scannerAlert" = src.last_scanner_alert,
@@ -1006,20 +1001,21 @@
 		var/mob/living/carbon/human/H = subject
 		var/datum/character_preview/multiclient/P = src.get_occupant_preview()
 		P?.add_client(user?.client)
-		.["haveSubject"] = TRUE
-		.["subjectPreview"] = P?.preview_id
-		.["subjectName"] = subject.name
-		.["subjectStat"] = subject.stat
-		.["subjectHealth"] = subject.health / subject.max_health
-		.["subjectStability"] = subject.bioHolder.genetic_stability
-		.["subjectHuman"] = istype(H)
-		.["subjectBloodType"] = subject.bioHolder.bloodType
-		.["subjectAge"] = subject.bioHolder.age
-		.["subjectMutantRace"] = istype(H) ? capitalize(H.mutantrace?.name || "human") : "Unknown"
-		.["subjectCanAppearance"] = istype(H) && (!H.mutantrace || length(H.mutantrace.color_channel_names) || H.mutantrace.mutant_appearance_flags & (HAS_HUMAN_SKINTONE | HAS_HUMAN_EYES | HAS_HUMAN_HAIR))
-		.["subjectPremature"] = isprematureclone(subject)
-		.["subjectPotential"] = list()
-		.["subjectActive"] = list()
+		.["subject"] = list(
+			"preview" = P?.preview_id,
+			"name" = subject.name,
+			"stat" = subject.stat,
+			"health" = subject.health / subject.max_health,
+			"stability" = subject.bioHolder.genetic_stability,
+			"human" = istype(H),
+			"bloodType" = subject.bioHolder.bloodType,
+			"age" = subject.bioHolder.age,
+			"mutantRace" = istype(H) ? capitalize(H.mutantrace?.name || "human") : "Unknown",
+			"canAppearance" = istype(H) && (!H.mutantrace || length(H.mutantrace.color_channel_names) || H.mutantrace.mutant_appearance_flags & (HAS_HUMAN_SKINTONE | HAS_HUMAN_EYES | HAS_HUMAN_HAIR)),
+			"premature" = isprematureclone(subject),
+			"potential" = list(),
+			"active" = list()
+			)
 		for (var/D in subject.bioHolder.effectPool)
 			var/datum/bioEffect/BE = subject.bioHolder.effectPool[D]
 			var/datum/bioEffect/GBE = BE.get_global_instance()
@@ -1027,7 +1023,7 @@
 				continue
 			if (GBE.secret && !genResearch.see_secret)
 				continue
-			.["subjectPotential"] += list(serialize_bioeffect_for_tgui(BE, potential = TRUE, full_data=(BE == src.currently_browsing)))
+			.["subject"]["potential"] += list(serialize_bioeffect_for_tgui(BE, potential = TRUE, full_data=(BE == src.currently_browsing)))
 		for (var/D in subject.bioHolder.effects)
 			var/datum/bioEffect/BE = subject.bioHolder.effects[D]
 			var/datum/bioEffect/GBE = BE.get_global_instance()
@@ -1035,13 +1031,13 @@
 				continue
 			if (GBE.secret && !genResearch.see_secret)
 				continue
-			.["subjectActive"] += list(serialize_bioeffect_for_tgui(BE, active = TRUE, full_data=(BE == src.currently_browsing)))
+			.["subject"]["active"] += list(serialize_bioeffect_for_tgui(BE, active = TRUE, full_data=(BE == src.currently_browsing)))
 		if (src.modify_appearance)
 			.["modifyAppearance"] = src.modify_appearance.ui_data(user)
 		else
 			.["modifyAppearance"] = null
 	else
-		.["haveSubject"] = FALSE
+		.["subject"] = null
 
 	for(var/R as anything in genResearch.researchTreeTiered)
 		if (text2num(R) == 0)
@@ -1113,21 +1109,30 @@
 
 /obj/machinery/computer/genetics/ui_static_data(mob/user)
 	. = list("bioEffects"=list(),
-					"research"=list())
-	var/to_send = list()
+					"research"=list(),
+					"boothCost" = genResearch.isResearched(/datum/geneticsResearchEntry/genebooth) ? genResearch.genebooth_cost : -1,
+					"injectorCost" = genResearch.isResearched(/datum/geneticsResearchEntry/injector) ? genResearch.injector_cost : -1,
+					"saveSlots" = genResearch.isResearched(/datum/geneticsResearchEntry/saver) ? genResearch.max_save_slots : 0,
+					"precisionEmitter" = genResearch.isResearched(/datum/geneticsResearchEntry/rad_precision),
+					"materialMax" = genResearch.max_material,
+					)
+	var/bioEffects = list()
 	for (var/id as anything in bioEffectList)
 		var/datum/bioEffect/BE = bioEffectList[id]
 		if (!BE.scanner_visibility || BE.research_level < EFFECT_RESEARCH_IN_PROGRESS)
 			continue
-		to_send += list(serialize_bioeffect_for_tgui(BE))
-	.["bioEffects"] = to_send
+		bioEffects += list(serialize_bioeffect_for_tgui(BE))
+	.["bioEffects"] = bioEffects
 
 	for(var/key as anything in genResearch.researchTree)
 		var/datum/geneticsResearchEntry/R = genResearch.researchTree[key]
-		.["research"]["\ref[R]"] = list(
-			"name" = R.name,
-			"desc" = R.desc
-		)
+
+		//Only need name/description for available and completed research items
+		if ((R.isResearched == 1) || R.meetsRequirements())
+			.["research"]["\ref[R]"] = list(
+				"name" = R.name,
+				"desc" = R.desc
+				)
 
 
 /obj/machinery/computer/genetics/ui_interact(mob/user, datum/tgui/ui)

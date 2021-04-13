@@ -17,30 +17,33 @@ export const ScannerTab = (props, context) => {
   let [changingMutantRace, setChangingMutantRace] = useSharedState(context, "changingmutantrace", false);
   const {
     haveScanner,
-    haveSubject,
-    subjectPreview,
-    subjectName,
-    subjectHealth,
-    subjectHuman,
-    subjectAge,
-    subjectBloodType,
-    subjectMutantRace,
-    subjectCanAppearance,
-    subjectPremature,
-    subjectPotential,
-    subjectActive,
+    subject,
     modifyAppearance,
     equipmentCooldown,
     mutantRaces,
   } = data;
 
+  const {
+    preview,
+    name,
+    health,
+    human,
+    age,
+    bloodType,
+    mutantRace,
+    canAppearance,
+    premature,
+    potential,
+    active,
+  } = subject || {};
+
   if (changingMutantRace
-    && (!haveSubject || !subjectHuman || subjectPremature)) {
+    && (!subject || !human || premature)) {
     changingMutantRace = false;
     setChangingMutantRace(false);
   }
 
-  if (!haveSubject) {
+  if (!subject) {
     return (
       <Section title="Scanner Error">
         {haveScanner ? "Subject has absconded." : "Check connection to scanner."}
@@ -59,7 +62,7 @@ export const ScannerTab = (props, context) => {
             <Box key={mr.ref}>
               <Button
                 color="blue"
-                disabled={subjectMutantRace === mr.name}
+                disabled={mutantRace === mr.name}
                 mt={0.5}
                 onClick={() => {
                   setChangingMutantRace(false);
@@ -99,48 +102,48 @@ export const ScannerTab = (props, context) => {
                     buttons={haveDevice(equipmentCooldown, "Emitter") && (
                       <Button
                         icon="radiation"
-                        disabled={onCooldown(equipmentCooldown, "Emitter") || subjectHealth <= 0}
+                        disabled={onCooldown(equipmentCooldown, "Emitter") || health <= 0}
                         color="bad"
                         onClick={() => act("emitter")}>
                         Scramble DNA
                       </Button>
                     )}>
-                    {subjectName}
+                    {name}
                   </LabeledList.Item>
                   <LabeledList.Item
                     label="Body Type"
-                    buttons={!!subjectHuman && (
+                    buttons={!!human && (
                       <Fragment>
                         <Button
                           icon="user"
                           color="blue"
-                          disabled={!!subjectPremature}
+                          disabled={!!premature}
                           onClick={() => setChangingMutantRace(true)}>
                           Change
                         </Button>
                         <Button
                           icon="wrench"
                           color="average"
-                          disabled={!subjectCanAppearance}
+                          disabled={!canAppearance}
                           onClick={() => act("editappearance")} />
                       </Fragment>
                     )}>
-                    {subjectMutantRace}
+                    {mutantRace}
                   </LabeledList.Item>
                   <LabeledList.Item
                     label="Physical Age">
-                    {subjectAge} years
+                    {age} years
                   </LabeledList.Item>
                   <LabeledList.Item label="Blood Type">
-                    {subjectBloodType}
+                    {bloodType}
                   </LabeledList.Item>
                 </LabeledList>
               </Flex.Item>
-              {!!subjectHuman && (
+              {!!human && (
                 <Flex.Item grow={0} shrink={0}>
                   <ByondUi
                     params={{
-                      id: subjectPreview,
+                      id: preview,
                       type: "map",
                     }}
                     style={{
@@ -154,13 +157,13 @@ export const ScannerTab = (props, context) => {
           </Section>
           <Section title="Potential Genes">
             <GeneList
-              genes={subjectPotential}
+              genes={potential}
               noGenes="All detected potential mutations are active."
               isPotential />
           </Section>
           <Section title="Active Mutations">
             <GeneList
-              genes={subjectActive}
+              genes={active}
               noGenes="Subject has no detected mutations."
               isActive />
           </Section>
