@@ -1687,7 +1687,9 @@
 		target.set_loc(src)
 		target.layer = (initial(target.layer))
 		var/existed = 0
+		//Finds parenthesis
 		var/regex/labelFinder = new("\\*? \\(.*?\\)")
+		//Extracts label contents via regex replace
 		var/regex/labelExtractor = new("(?:.*?\\()(.*?)\\)")
 		var/label = null
 		if((target.real_name != target.name) && labelFinder.Find(target.name))
@@ -1732,11 +1734,6 @@
 		html_parts += "</small></td></tr></tbody></table></TT><br>"
 		src.wire_HTML += jointext(html_parts, "")
 
-	proc/returnmob()
-		if(in_interact_range(src, owneruser) || owneruser.stat)
-			return owneruser
-		else if(in_interact_range(src, lastuser) || lastuser.stat)
-			return lastuser
 	attackby(obj/item/target, mob/user)
 		if(!loading == 0 && !panel_open == 0)
 			addproduct(target, user)
@@ -1747,13 +1744,6 @@
 			loading = 0
 			unlocked = 0
 		src.generate_HTML(1)
-	//Keep track of what user touched the machine last for topic
-	attack_hand(mob/user as mob)
-		. = ..()
-		lastuser = user
-	attack_ai(mob/user as mob)
-		. = ..()
-		lastuser = user
 	//Save and restore icon state in case we're in product display mode
 	power_change()
 		var/original_icon = src.icon_state
@@ -1777,8 +1767,6 @@
 			else if (src.scan?.registered && owner == src.scan.registered)
 				unlocked = !unlocked
 				if(unlocked == 0 && loading == 1) loading = 0
-				//When we get unlocked, if the original owner mob isn't here replace the saved mob with this one
-				owneruser = returnmob()
 			else
 				unlocked = 0
 				loading = 0
@@ -1791,7 +1779,7 @@
 				src.generate_HTML(0, 1)
 		else if (href_list["setprice"] && src.panel_open == 1 && src.unlocked == 1)
 			var/inp
-			inp = input(returnmob(),"Enter the new price:","Item Price", "") as num
+			inp = input(usr,"Enter the new price:","Item Price", "") as num
 			if(inp)
 				var/datum/data/vending_product/player_product/R = locate(href_list["setprice"]) in src.player_list
 				R.product_cost = inp
