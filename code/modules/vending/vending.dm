@@ -342,7 +342,7 @@
 			var/obj/machinery/vending/player/T = src
 			for (var/datum/data/vending_product/player_product/R in src.player_list)
 				var/obj/item/productholder = R.contents[1]
-				var/nextproduct = productholder.name
+				var/nextproduct = html_encode(sanitize(productholder.name))
 				if (!T.unlocked == 1)
 					html_parts += "<tr><td><a href='byond://?src=\ref[src];vend=\ref[R]'>[nextproduct]</a></td><td style='text-align: right;'>[R.product_amount]</td><td style='text-align: right;'> $[R.product_cost]</td></tr>"
 					//Player vending machines don't have "out of stock" items
