@@ -626,14 +626,12 @@
 
 				if (ispath(product_path))
 					var/atom/movable/vended = new product_path(src.get_output_location()) // changed from obj, because it could be a mob, THANKS VALUCHIMP
-					if(!player_list)
-						vended.layer = src.layer + 0.1 //So things stop spawning under the fukin thing
-					else
-						vended.layer = src.layer + 0.3 //Player vending machines have a CRT overlay we need to go above
+					vended.layer = src.layer + 0.1 //So things stop spawning under the fukin thing
 					if(isitem(vended))
 						usr.put_in_hand_or_eject(vended) // try to eject it into the users hand, if we can
 					// else, just let it spawn where it is
 				else if (player_list)
+					playervended.layer = src.layer + 0.1
 					usr.put_in_hand_or_eject(playervended)
 				else if (isicon(R.product_path))
 					var/icon/welp = icon(R.product_path)
@@ -1665,7 +1663,7 @@
 		itemoverlayoriginal.pixel_x = -3
 		itemoverlayoriginal.pixel_y = - 4
 		itemoverlayoriginal.layer = src.layer + 0.1
-		itemoverlayoriginal.plane = PLANE_DEFAULT
+		itemoverlayoriginal.plane = PLANE_SCREEN_OVERLAYS
 		return itemoverlayoriginal
 	proc/setItemOverlay(image/target)
 		src.icon_state = "player-display"
@@ -1676,7 +1674,7 @@
 			var/image/screenoverlay = null
 			screenoverlay = SafeGetOverlayImage("screen", src.icon, "player-crt")
 			screenoverlay.layer = src.layer + 0.2
-			screenoverlay.plane = PLANE_DEFAULT
+			screenoverlay.plane = PLANE_SCREEN_OVERLAYS
 			UpdateOverlays(screenoverlay, "screen", 0, 1)
 		else
 			UpdateOverlays(null, "screen", 0, 1)
@@ -1693,7 +1691,7 @@
 			label = labelExtractor.Replace(target.name, "$1")
 		//Add the item to an existing entry if there is one
 		for (var/datum/data/vending_product/player_product/R in src.player_list)
-			if(label == R.label)
+			if(label && label == R.label)
 				R.contents += target
 				R.product_amount += 1
 				existed = 1
