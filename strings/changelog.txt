@@ -1,4 +1,9 @@
 
+(t)wed apr 14 21
+(u)Carbdox
+(p)4276
+(e)|
+(+)Added some extra phrases for switching modes on the Lawbringer, specifically "exterminate" for execute, "sleepshot" for knockout and "push" for pulse
 (t)tue apr 13 21
 (u)zjdtmkhzt
 (p)4291
