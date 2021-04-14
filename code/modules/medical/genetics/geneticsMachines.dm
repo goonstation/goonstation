@@ -1085,14 +1085,6 @@
 			"cooldown" = src.equipment[GENETICS_RECLAIMER] - world.time,
 		))
 
-
-	for(var/key in .)
-		var/json = json_encode(.[key])
-		var/msg = url_encode(json)
-		boutput(world,"[key]:[length(msg)]:[md5(msg)]")
-
-
-
 /obj/machinery/computer/genetics/ui_static_data(mob/user)
 	. = list("research"=list(),
 					"boothCost" = genResearch.isResearched(/datum/geneticsResearchEntry/genebooth) ? genResearch.genebooth_cost : -1,
