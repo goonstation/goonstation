@@ -318,7 +318,6 @@
 				if(I != chat_text)
 					I.bump_up(chat_text.measured_height)
 			chat_text.show_to(C.client)
-	return
 
 /proc/scan_reagents(var/atom/A as turf|obj|mob, var/show_temp = 1, var/single_line = 0, var/visible = 0, var/medical = 0)
 	if (!A)
