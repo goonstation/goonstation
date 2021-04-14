@@ -3,7 +3,7 @@
  *
  * `icon` / `icon_state` can also be set. `duration` should be in seconds. `end_message` is a string that displays once the action succeeds.
  *
- * You can also directly instantiate a [/datum/action/bar/icon/callback](callback actionbar) if you need to modify variables on it that the macro doesnt easily let you do.
+ * You can also directly instantiate a [callback actionbar][/datum/action/bar/icon/callback] if you need to modify variables on it that the macro doesnt easily let you do.
  * For instance, callback actionbars have an `args` variable you can modify to call the callback proc with arguements. Just make sure to start it once its been made!
  *
  * Example:
