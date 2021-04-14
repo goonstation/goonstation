@@ -7,6 +7,7 @@
 	anchored = 0
 	event_handler_flags = IMMUNE_MANTA_PUSH
 	var/health = 150
+	var/max_health = 150
 	var/armed = 0
 	var/det_time = 0
 	var/timer_default = 6000 // 10 min.
@@ -249,7 +250,10 @@
 			playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 100, 1)
 			attack_particle(user,src)
 
-		..()
+		if (istype(W, /obj/item/wrench/battle) && src.health <= src.max_health)
+			SETUP_GENERIC_ACTIONBAR(user, src, 5 SECONDS, /obj/machinery/nuclearbomb/proc/repair_nuke, null, 'icons/obj/items/tools/wrench.dmi', "battle-wrench", "[usr] repairs the [src]!")
+			return
+
 		return
 
 	ex_act(severity)
@@ -287,6 +291,11 @@
 			src.take_damage(damage / 1.7)
 		else if (P.proj_data.damage_type == D_PIERCING)
 			src.take_damage(damage)
+
+	proc/repair_nuke()
+		src.health += 5
+		playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
+		return
 
 	proc/open_wire_panel(var/mob/user)
 		user.s_active = src.wirepanel
