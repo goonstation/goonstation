@@ -14569,13 +14569,12 @@
 /turf/unsimulated/floor/specialroom/medbay,
 /area/marsoutpost)
 "aVd" = (
-/obj/syndi_putt_spawner,
-/obj/decal/tile_edge/stripe/extra_big{
-	icon_state = "delivery2"
+/obj/indestructible/shuttle_corner{
+	dir = 8;
+	icon_state = "wall3_trans"
 	},
-/obj/access_spawn/syndie_shuttle,
-/turf/unsimulated/floor/shuttlebay,
-/area/syndicate_station/battlecruiser)
+/turf/space,
+/area/space)
 "aVe" = (
 /obj/submachine/chef_sink/chem_sink{
 	dir = 8
@@ -45842,9 +45841,12 @@
 /turf/unsimulated/floor/darkpurple,
 /area/syndicate_station/battlecruiser)
 "cvY" = (
-/obj/machinery/light/small/floor,
-/turf/unsimulated/floor/darkpurple,
-/area/syndicate_station/battlecruiser)
+/obj/indestructible/shuttle_corner{
+	dir = 1;
+	icon_state = "wall3_trans"
+	},
+/turf/space,
+/area/space)
 "cvZ" = (
 /obj/rack,
 /obj/item/tank/jetpack/syndicate,
@@ -45892,10 +45894,10 @@
 /turf/unsimulated/floor/red,
 /area/syndicate_station/battlecruiser)
 "cwh" = (
-/obj/submachine/weapon_vendor/syndicate,
-/obj/machinery/light,
-/turf/unsimulated/floor/red,
-/area/syndicate_station/battlecruiser)
+/turf/simulated/shuttle/wall{
+	icon_state = "wall3"
+	},
+/area/space)
 "cwi" = (
 /obj/decal/boxingrope{
 	dir = 4
@@ -51155,6 +51157,14 @@
 /obj/machinery/light/lamp/green,
 /turf/unsimulated/floor/wood/two,
 /area/owlery/owleryhall)
+"cIL" = (
+/obj/syndi_putt_spawner,
+/obj/decal/tile_edge/stripe/extra_big{
+	icon_state = "delivery2"
+	},
+/obj/access_spawn/syndie_shuttle,
+/turf/unsimulated/floor/shuttlebay,
+/area/syndicate_station/battlecruiser)
 "cIM" = (
 /obj/storage/crate/loot,
 /turf/simulated/floor/white,
@@ -61435,6 +61445,10 @@
 /obj/death_button/clean_gunsim,
 /turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/sim/gunsim)
+"dfn" = (
+/obj/wingrille_spawn/auto/crystal,
+/turf/unsimulated/floor/plating/random,
+/area/space)
 "dfo" = (
 /obj/decal/tile_edge/stripe{
 	dir = 6;
@@ -62081,7 +62095,6 @@
 /obj/rack,
 /obj/item/tank/jetpack/syndicate,
 /obj/item/tank/jetpack/syndicate,
-/obj/machinery/light,
 /turf/unsimulated/floor/darkpurple,
 /area/syndicate_station/battlecruiser)
 "dgx" = (
@@ -77254,6 +77267,7 @@
 /obj/item/clothing/gloves/yellow,
 /obj/item/clothing/gloves/yellow,
 /obj/item/clothing/gloves/yellow,
+/obj/machinery/light,
 /turf/unsimulated/floor/darkblue,
 /area/syndicate_station/battlecruiser)
 "ecr" = (
@@ -82639,6 +82653,14 @@
 	opacity = 0
 	},
 /area/titlescreen)
+"woz" = (
+/obj/machinery/light{
+	dir = 4;
+	layer = 9.1;
+	pixel_x = 10
+	},
+/turf/unsimulated/floor/red,
+/area/space)
 "wpG" = (
 /obj/item/storage/wall/fire{
 	pixel_y = 32
@@ -107463,16 +107485,16 @@ cnw
 cnw
 cnw
 cnw
-aJC
-aKf
-aKz
-aKz
-aKz
-aKf
-aKf
-aKf
-aKf
-aKf
+aVd
+cwh
+dfn
+dfn
+dfn
+cwh
+cwh
+cwh
+cwh
+cwh
 cnw
 cnw
 cnw
@@ -108666,8 +108688,8 @@ cnw
 bBm
 bDt
 ccu
-aVd
 cIJ
+cIL
 cIJ
 cUT
 dds
@@ -108676,7 +108698,7 @@ bqV
 dfo
 dfQ
 dfQ
-dgv
+bqV
 aKf
 dgQ
 xQV
@@ -108968,8 +108990,8 @@ btF
 bvh
 bDt
 ccu
+cIL
 cIJ
-aVd
 cIJ
 cUT
 ddB
@@ -109270,13 +109292,13 @@ cnw
 bBm
 bDt
 ccu
-aVd
 cIJ
-aVd
+cIJ
+cIJ
 cIJ
 ddG
 des
-cvY
+bqV
 dfo
 dfQ
 dfQ
@@ -109572,8 +109594,8 @@ btF
 bvh
 bDt
 ccu
+cIL
 cIJ
-aVd
 cIJ
 cUT
 dds
@@ -109874,8 +109896,8 @@ cnw
 bBm
 bDt
 ccu
-aVd
 cIJ
+cIL
 cIJ
 cUT
 ddB
@@ -113193,7 +113215,7 @@ aKf
 aKz
 aKz
 aKf
-byE
+woz
 cas
 cIa
 cKQ
@@ -114115,7 +114137,7 @@ btf
 dhh
 btf
 cwa
-cwh
+cwg
 aKf
 dhx
 bqW
@@ -115323,7 +115345,7 @@ btf
 pbO
 btf
 cwa
-cwh
+cwg
 aKf
 cwk
 dhN
@@ -116227,7 +116249,7 @@ dgk
 dgM
 dgO
 eaP
-dfH
+btf
 dgi
 cwg
 aKf
@@ -116523,16 +116545,16 @@ cnw
 cnw
 cnw
 cnw
-aKA
-aKf
-aKf
-aKf
-aKf
-aKf
-aKf
-aKf
-aKf
-aKf
+cvY
+cwh
+cwh
+cwh
+cwh
+cwh
+cwh
+cwh
+cwh
+cwh
 cnw
 cnw
 cnw
