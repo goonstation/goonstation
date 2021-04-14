@@ -1,5 +1,9 @@
 
 (t)wed apr 14 21
+(u)Azrun
+(p)4317
+(e)📄|tgui
+(+)GeneTek Console now has toggle for DNA Sequence display on Mutations page.
 (u)Carbdox
 (p)4276
 (e)|
