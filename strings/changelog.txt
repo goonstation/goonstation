@@ -1,5 +1,9 @@
 
 (t)tue apr 13 21
+(u)zjdtmkhzt
+(p)4291
+(e)⚖|balance
+(+)Reduced the maximum power level of melee and magic wand artifacts.
 (u)Azrun
 (p)4308
 (e)📄|tgui
