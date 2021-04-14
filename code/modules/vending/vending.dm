@@ -1671,7 +1671,7 @@
 		itemoverlayoriginal = SafeGetOverlayImage("item", target, target.icon_state)
 		itemoverlayoriginal.transform = matrix(null, 0.45, 0.45, MATRIX_SCALE)
 		itemoverlayoriginal.pixel_x = -3
-		itemoverlayoriginal.pixel_y = - 4
+		itemoverlayoriginal.pixel_y = -4
 		itemoverlayoriginal.layer = src.layer + 0.1
 		itemoverlayoriginal.plane = PLANE_DEFAULT
 		return itemoverlayoriginal
@@ -1698,11 +1698,11 @@
 			user.visible_message("<b>[user.name]</b> loads [target] into [src].")
 			return
 		var/action = input(user, "What do you want to do with [targetContainer]?") as null|anything in list("Empty it into the vending machine","Place it in the vending machine")
-		if(action == "Place it in the vending machine")
+		if(action == "Place it in the vending machine" && (user.stat || user.restrained() || in_interact_range(src, user)))
 			productListUpdater(targetContainer, user)
 			user.visible_message("<b>[user.name]</b> loads [target] into [src].")
 			return
-		else if (!action)
+		else if (!action || !(usr.stat || usr.restrained() || in_interact_range(src, user)))
 			return
 		user.visible_message("<b>[user.name]</b> dumps out [targetContainer] into [src].")
 		for(var/obj/item/R in targetContainer)
