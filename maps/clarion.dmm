@@ -22593,19 +22593,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/security/main)
-"aQV" = (
-/obj/wingrille_spawn/auto,
-/obj/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/obj/cable{
-	d2 = 4;
-	dir = 0;
-	icon_state = "0-4"
-	},
-/turf/simulated/floor/plating,
-/area/space)
 "aQW" = (
 /obj/wingrille_spawn/auto,
 /obj/disposalpipe/segment/mail,
@@ -22619,7 +22606,7 @@
 	icon_state = "0-4"
 	},
 /turf/simulated/floor/plating,
-/area/space)
+/area/station/security/main)
 "aQX" = (
 /obj/wingrille_spawn/auto,
 /obj/cable{
@@ -22627,7 +22614,7 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/plating,
-/area/space)
+/area/station/security/main)
 "aQY" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/bridge)
@@ -30856,6 +30843,11 @@
 /obj/table/reinforced/auto,
 /obj/machinery/computer3/generic/personal,
 /obj/machinery/power/data_terminal,
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/machinery/power/data_terminal,
 /turf/simulated/floor/redblack{
 	dir = 10
 	},
@@ -30864,6 +30856,11 @@
 /obj/stool/bed/brig,
 /obj/item/clothing/glasses/vr{
 	network = "arcadevr"
+	},
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/redblack{
 	dir = 6
@@ -48640,6 +48637,10 @@
 	},
 /obj/cable{
 	icon_state = "1-4"
+	},
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
 	},
 /turf/simulated/floor/plating,
 /area/station/security/brig)
@@ -82093,7 +82094,7 @@ aMd
 aNs
 aOu
 aPH
-aQV
+aWB
 aSt
 aTT
 aVq
