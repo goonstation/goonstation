@@ -1626,6 +1626,7 @@
 	product_amount = 1
 	New(obj/item/product,price)
 		..()
+
 		product_type = product.type
 		product_name = product.name
 		real_name = product.real_name
@@ -1657,7 +1658,7 @@
 		setCrtOverlayStatus(1)
 	proc/pick_product_name()
 		var/datum/data/vending_product/player_product/R = pick(src.player_list)
-		var/itemPromo = sanitize(html_encode(R.name))
+		var/itemPromo = sanitize(html_encode(R.product_name))
 		return itemPromo
 	proc/generate_slogans()
 		slogan_list = list("[src.name] now offering [pick_product_name()]!",
@@ -1695,12 +1696,18 @@
 		var/obj/item/storage/targetContainer = target
 		if(!istype(targetContainer))
 			productListUpdater(target, user)
+			user.visible_message("<b>[user.name]</b> loads [target] into [src].")
 			return
 		var/action = input(user, "What do you want to do with [targetContainer]?") as null|anything in list("Empty it into the vending machine","Place it in the vending machine")
 		if(action == "Place it in the vending machine")
 			productListUpdater(targetContainer, user)
+			user.visible_message("<b>[user.name]</b> loads [target] into [src].")
 			return
+		else if (!action)
+			return
+		user.visible_message("<b>[user.name]</b> dumps out [targetContainer] into [src].")
 		for(var/obj/item/R in targetContainer)
+			targetContainer.hud.remove_object(R)
 			productListUpdater(R, user)
 	proc/productListUpdater(obj/item/target, mob/user)
 		user.u_equip(target)
