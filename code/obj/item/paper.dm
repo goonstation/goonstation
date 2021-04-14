@@ -1432,12 +1432,12 @@ automatically adopt your criminal control strategy of choice.<br>
 <td>Turn your Lawbringer™ into your favourite sidearm with these .38 Full Metal Jacket rounds!</td>
 </tr>
 <tr>
-<td><b>"Hotshot"</b></td>
+<td><b>"Hotshot" / "Incendiary"</b></td>
 <td>60 PU</td>
 <td>This handy flare gun/flamethrower option is sure to heat things up! The Lawbringer™ is not certified fireproof. Do not set on fire.</td>
 </tr>
 <tr>
-<td><b>"Smokeshot"</b></td>
+<td><b>"Smokeshot" / "Fog"</b></td>
 <td>50 PU</td>
 <td>Never use a riot launcher again! These smoke grenades will let you manage line of sight with ease.</td>
 </tr>
@@ -1452,12 +1452,12 @@ automatically adopt your criminal control strategy of choice.<br>
 <td>You'll be the talk of the station when you bust down a wall with one of these explosive rounds! May cause loss of limbs or life.</td>
 </tr>
 <tr>
-<td><b>"Clownshot"</b></td>
+<td><b>"Clownshot" / "Clown"</b></td>
 <td>15 PU</td>
 <td>Lawbringer™ warranty is voided if exposed to clowns. Keep them at bay.</td>
 </tr>
 <tr>
-<td><b>"Pulse" / "Push"</b></td>
+<td><b>"Pulse" / "Push" / "Punch"</b></td>
 <td>35 PU</td>
 <td>Just like our patented Pulse Rifle™s, this Mode sends your enemies flying! Keep crime at arm's length!</td>
 </tr>
