@@ -1691,16 +1691,18 @@
 			UpdateOverlays(screenoverlay, "screen", 0, 1)
 		else
 			UpdateOverlays(null, "screen", 0, 1)
-	proc/loadContainerContents(obj/item/storage/targetContainer,mob/user)
-		if(!targetContainer)
+	proc/addProduct(obj/item/target, mob/user)
+		var/obj/item/storage/targetContainer = target
+		if(!istype(targetContainer))
+			productListUpdater(target, user)
 			return
 		var/action = input(user, "What do you want to do with [targetContainer]?") as null|anything in list("Empty it into the vending machine","Place it in the vending machine")
 		if(action == "Place it in the vending machine")
-			addProduct(targetContainer)
+			productListUpdater(targetContainer, user)
 			return
-		for(var/obj/item/R in targetContainer.contents)
-			addProduct(R, user)
-	proc/addProduct(obj/item/target, mob/user)
+		for(var/obj/item/R in targetContainer)
+			productListUpdater(R, user)
+	proc/productListUpdater(obj/item/target, mob/user)
 		user.u_equip(target)
 		target.set_loc(src)
 		target.layer = (initial(target.layer))
