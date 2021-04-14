@@ -57,7 +57,7 @@ export const BioEffect = (props, context) => {
   } = data;
   const {
     gene,
-    showSequence=true,
+    showSequence,
     isSample,
     isPotential,
     isActive,
@@ -361,6 +361,7 @@ export const GeneList = (props, context) => {
         <BioEffect
           key={ag.ref}
           gene={ag}
+          showSequence
           {...rest} />
       )}
     </Fragment>
