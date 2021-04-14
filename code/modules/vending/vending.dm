@@ -1626,7 +1626,6 @@
 	product_amount = 1
 	New(obj/item/product,price)
 		..()
-
 		product_type = product.type
 		product_name = product.name
 		real_name = product.real_name
@@ -1739,7 +1738,7 @@
 			itemEntry.icon = getScaledIcon(target)
 			player_list += itemEntry
 			if(label) itemEntry.label = label
-		generate_slogans()
+			generate_slogans()
 
 	generate_wire_HTML()
 		. = ..()
@@ -1810,6 +1809,7 @@
 			if(inp && inp != "" && (usr.stat || usr.restrained() || in_interact_range(src, usr)))
 				src.name = inp
 				src.generate_HTML(0, 1)
+				generate_slogans()
 		else if (href_list["setprice"] && src.panel_open == 1 && src.unlocked == 1)
 			var/inp
 			inp = input(usr,"Enter the new price:","Item Price", "") as num
