@@ -1655,7 +1655,17 @@
 	New()
 		. = ..()
 		setCrtOverlayStatus(1)
-
+	proc/pick_product_name()
+		var/datum/data/vending_product/player_product/R = pick(src.player_list)
+		var/itemPromo = sanitize(html_encode(R.name))
+		return itemPromo
+	proc/generate_slogans()
+		slogan_list = list("[src.name] now offering [pick_product_name()]!",
+	"Potentially well stocked!",
+	"Buy my stuff!",
+	"Don't miss out on [pick_product_name()]!",
+	"[src.name]. What else were you going to buy?",
+	"New and improved [pick_product_name()]!")
 	proc/getScaledIcon(obj/item/target)
 		var/image/itemoverlayoriginal = null
 		itemoverlayoriginal = SafeGetOverlayImage("item", target, target.icon_state)
@@ -1681,13 +1691,22 @@
 			UpdateOverlays(screenoverlay, "screen", 0, 1)
 		else
 			UpdateOverlays(null, "screen", 0, 1)
-
-	proc/addproduct(obj/item/target, mob/user)
+	proc/loadContainerContents(obj/item/storage/targetContainer,mob/user)
+		if(!targetContainer)
+			return
+		var/action = input(user, "What do you want to do with [targetContainer]?") as null|anything in list("Empty it into the vending machine","Place it in the vending machine")
+		if(action == "Place it in the vending machine")
+			addProduct(targetContainer)
+			return
+		for(var/obj/item/R in targetContainer.contents)
+			addProduct(R, user)
+	proc/addProduct(obj/item/target, mob/user)
 		user.u_equip(target)
 		target.set_loc(src)
 		target.layer = (initial(target.layer))
+
 		var/existed = 0
-		//Finds parenthesis
+		//Finds items that have been labeled
 		var/regex/labelFinder = new("\\*? \\(.*?\\)")
 		//Extracts label contents via regex replace
 		var/regex/labelExtractor = new("(?:.*?\\()(.*?)\\)")
@@ -1711,7 +1730,7 @@
 			itemEntry.icon = getScaledIcon(target)
 			player_list += itemEntry
 			if(label) itemEntry.label = label
-
+		generate_slogans()
 
 	generate_wire_HTML()
 		. = ..()
@@ -1736,7 +1755,7 @@
 
 	attackby(obj/item/target, mob/user)
 		if(!loading == 0 && !panel_open == 0)
-			addproduct(target, user)
+			addProduct(target, user)
 		else
 			. = ..()
 		lastuser = user
