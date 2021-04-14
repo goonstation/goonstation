@@ -15,6 +15,7 @@ import { GeneIcon } from "../GeneIcon";
 export const ScannerTab = (props, context) => {
   const { data, act } = useBackend(context);
   let [changingMutantRace, setChangingMutantRace] = useSharedState(context, "changingmutantrace", false);
+  const [showPreview, togglePreview] = useSharedState(context, 'togglePreview', false);
   const {
     haveScanner,
     subject,
@@ -131,7 +132,16 @@ export const ScannerTab = (props, context) => {
                     {mutantRace}
                   </LabeledList.Item>
                   <LabeledList.Item
-                    label="Physical Age">
+                    label="Physical Age"
+                    buttons={!!human && (
+                      <Button.Checkbox
+                        inline
+                        color="good"
+                        content="DNA Render"
+                        checked={showPreview}
+                        onClick={() => togglePreview(!showPreview)}
+                      />
+                    )}>
                     {age} years
                   </LabeledList.Item>
                   <LabeledList.Item label="Blood Type">
@@ -139,7 +149,7 @@ export const ScannerTab = (props, context) => {
                   </LabeledList.Item>
                 </LabeledList>
               </Flex.Item>
-              {!!human && (
+              {human && showPreview && (
                 <Flex.Item grow={0} shrink={0}>
                   <ByondUi
                     params={{
