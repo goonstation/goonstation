@@ -347,63 +347,15 @@
 			var/obj/item/clothing/glasses/healthgoggles/G = H.glasses
 			if (G.scan_upgrade && G.health_scan)
 				. += "<br><span class='alert'>Your ProDocs analyze [src]'s vitals.</span><br>[scan_health(src, 0, 0)]"
-				if (usr.client && !usr.client.preferences?.flying_chat_hidden)
-
-					var/image/chat_maptext/chat_text = null
-					var/h_pct = src.max_health ? round(100 * src.health / src.max_health) : src.health
-					var/oxy = round(src.get_oxygen_deprivation())
-					var/tox = round(src.get_toxin_damage())
-					var/burn = round(src.get_burn_damage())
-					var/brute = round(src.get_brute_damage())
-
-					var/popup_text = "<span class='ol c pixel'><span class='vga'>[h_pct]%</span>\n<span style='color: #40b0ff;'>[oxy]</span> - <span style='color: #33ff33;'>[tox]</span> - <span style='color: #ffee00;'>[burn]</span> - <span style='color: #ff6666;'>[brute]</span></span>"
-					chat_text = make_chat_maptext(src, popup_text, force = 1)
-					if(chat_text)
-						chat_text.measure(usr.client)
-						for(var/image/chat_maptext/I in usr.chat_text.lines)
-							if(I != chat_text)
-								I.bump_up(chat_text.measured_height)
-						chat_text.show_to(usr.client)
+				scan_health_overhead(src, usr)
 			update_medical_record(src)
 		else if (H.organ_istype("left_eye", /obj/item/organ/eye/cyber/prodoc) && H.organ_istype("right_eye", /obj/item/organ/eye/cyber/prodoc)) // two prodoc eyes = scan upgrade because that's cool
 			. += "<br><span class='alert'>Your ProDocs analyze [src]'s vitals.</span><br>[scan_health(src, 0, 0)]"
-			if (usr.client && !usr.client.preferences?.flying_chat_hidden)
-
-				var/image/chat_maptext/chat_text = null
-				var/h_pct = src.max_health ? round(100 * src.health / src.max_health) : src.health
-				var/oxy = round(src.get_oxygen_deprivation())
-				var/tox = round(src.get_toxin_damage())
-				var/burn = round(src.get_burn_damage())
-				var/brute = round(src.get_brute_damage())
-
-				var/popup_text = "<span class='ol c pixel'><span class='vga'>[h_pct]%</span>\n<span style='color: #40b0ff;'>[oxy]</span> - <span style='color: #33ff33;'>[tox]</span> - <span style='color: #ffee00;'>[burn]</span> - <span style='color: #ff6666;'>[brute]</span></span>"
-				chat_text = make_chat_maptext(src, popup_text, force = 1)
-				if(chat_text)
-					chat_text.measure(usr.client)
-					for(var/image/chat_maptext/I in usr.chat_text.lines)
-						if(I != chat_text)
-							I.bump_up(chat_text.measured_height)
-					chat_text.show_to(usr.client)
+			scan_health_overhead(src, usr)
 			update_medical_record(src)
 		else if (istype(H.head, /obj/item/clothing/head/helmet/space/syndicate/specialist/medic))
 			. += "<br><span class='alert'>Your health monitor analyzes [src]'s vitals.</span><br>[scan_health(src, 0, 0)]"
-			if (usr.client && !usr.client.preferences?.flying_chat_hidden)
-
-				var/image/chat_maptext/chat_text = null
-				var/h_pct = src.max_health ? round(100 * src.health / src.max_health) : src.health
-				var/oxy = round(src.get_oxygen_deprivation())
-				var/tox = round(src.get_toxin_damage())
-				var/burn = round(src.get_burn_damage())
-				var/brute = round(src.get_brute_damage())
-
-				var/popup_text = "<span class='ol c pixel'><span class='vga'>[h_pct]%</span>\n<span style='color: #40b0ff;'>[oxy]</span> - <span style='color: #33ff33;'>[tox]</span> - <span style='color: #ffee00;'>[burn]</span> - <span style='color: #ff6666;'>[brute]</span></span>"
-				chat_text = make_chat_maptext(src, popup_text, force = 1)
-				if(chat_text)
-					chat_text.measure(usr.client)
-					for(var/image/chat_maptext/I in usr.chat_text.lines)
-						if(I != chat_text)
-							I.bump_up(chat_text.measured_height)
-					chat_text.show_to(usr.client)
+			scan_health_overhead(src, usr)
 			update_medical_record(src)
 
 	return jointext(., "")

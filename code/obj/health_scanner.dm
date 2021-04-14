@@ -103,23 +103,7 @@
 			on_cooldown = TRUE
 			for (var/mob/living/carbon/human/H in get_turf(src))
 				data += "[scan_health(H, 1, 1, 1, 1)]"
-				if (H.client && !H.client.preferences?.flying_chat_hidden)
-
-					var/image/chat_maptext/chat_text = null
-					var/h_pct = H.max_health ? round(100 * H.health / H.max_health) : H.health
-					var/oxy = round(H.get_oxygen_deprivation())
-					var/tox = round(H.get_toxin_damage())
-					var/burn = round(H.get_burn_damage())
-					var/brute = round(H.get_brute_damage())
-
-					var/popup_text = "<span class='ol c pixel'><span class='vga'>[h_pct]%</span>\n<span style='color: #40b0ff;'>[oxy]</span> - <span style='color: #33ff33;'>[tox]</span> - <span style='color: #ffee00;'>[burn]</span> - <span style='color: #ff6666;'>[brute]</span></span>"
-					chat_text = make_chat_maptext(H, popup_text, force = 1)
-					if(chat_text)
-						chat_text.measure(H.client)
-						for(var/image/chat_maptext/I in H.chat_text.lines)
-							if(I != chat_text)
-								I.bump_up(chat_text.measured_height)
-						chat_text.show_to(H.client)
+				scan_health_overhead(H, H)
 				if (alert && H.health < 0)
 					src.crit_alert(H)
 			playsound(src.loc, "sound/machines/scan2.ogg", 30, 0)
