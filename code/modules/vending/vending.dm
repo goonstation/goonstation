@@ -1642,7 +1642,7 @@
 	src.icon_state = pick("board1", "board2", "board3")
 	src.pixel_x = rand(8, 12)
 	src.pixel_y = rand(8, 12)
-/obj/machinery/vendingFrame
+/obj/machinery/vendingframe
 	name = "vending machine frame"
 	desc = "A generic vending machine frame."
 	icon = 'icons/obj/vending.dmi'
@@ -1652,6 +1652,7 @@
 	var/glassed = 0
 	var/boardinstalled = 0
 	var/wiresinstalled = 0
+	var/vendingtype = "/obj/machinery/vending/player"
 
 	attackby(obj/item/target, mob/user)
 
@@ -1665,7 +1666,46 @@
 				wrenched = 0
 				anchored = 0
 				boutput(user, "<span class='notice'>You unfasten the frame.</span>")
-		//if(istype(target, ))
+		if(istype(target, /obj/item/machinery/board))
+			if(wrenched && !boardinstalled)
+				playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
+				boutput(user, "<span class='notice'>You place the circuit board inside the frame.</span>")
+				user.u_equip(target)
+				target.set_loc(target)
+				boardinstalled = 1
+		if(istype(target, /obj/item/cable_coil))
+			var/obj/item/cable_coil/targetcoil = target
+			if(targetcoil.amount >= 5 && boardinstalled && !wiresinstalled && do_after(user, 2 SECONDS))
+				playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
+				targetcoil.use(5)
+				wiresinstalled = 1
+				boutput(user, "<span class='notice'>You add cables to the frame.</span>")
+			else
+				boutput(user, "<span class='alert'>You need at least five pieces of cable to wire the vending machine.</span>")
+			if(istype(target, /obj/item/sheet) && wiresinstalled && !glassed)
+				var/obj/item/sheet/S = target
+				if (!(S.material && S.amount >= 2 && S.material.material_flags & MATERIAL_CRYSTAL))
+					return
+				playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
+				if(do_after(user, 2 SECONDS))
+					S.change_stack_amount(-2)
+					glassed = 1
+					boutput(user, "<span class='notice'>You put in the glass panel.</span>")
+			if (isscrewingtool(target) && glassed)
+				boutput(user, "<span class='notice'>You connect the screen.</span>")
+				var/obj/machinery/vending/B = new vendingtype(src.loc)
+				logTheThing("station", user, null, "assembles [B] [log_loc(B)]")
+				qdel(src)
+			if (ispryingtool(target))
+				if (glassed)
+					var/obj/item/sheet/glass/A = new /obj/item/sheet/glass(src.loc)
+					A.amount = 2
+					glassed = 0
+				else if (!wiresinstalled && boardinstalled)
+					playsound(src.loc, "sound/items/Crowbar.ogg", 50, 1)
+					boutput(user, "<span class='notice'>You remove the glass panel.</span>")
+					wiresinstalled = 0
+
 /obj/machinery/vending/player
 	name = "YouVend"
 	icon_state = "player"
