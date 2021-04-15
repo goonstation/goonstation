@@ -2005,6 +2005,39 @@
 		if (slot_r_store)
 			return src.r_store
 
+/mob/living/carbon/human/proc/clear_slot(slot)
+	switch(slot)
+		if (slot_back)
+			src.back = null
+		if (slot_wear_mask)
+			src.wear_mask = null
+		if (slot_l_hand)
+			src.l_hand = null
+		if (slot_r_hand)
+			src.r_hand = null
+		if (slot_belt)
+			src.belt = null
+		if (slot_wear_id)
+			src.wear_id = null
+		if (slot_ears)
+			src.ears = null
+		if (slot_glasses)
+			src.glasses = null
+		if (slot_gloves)
+			src.gloves = null
+		if (slot_head)
+			src.head = null
+		if (slot_shoes)
+			src.shoes = null
+		if (slot_wear_suit)
+			src.wear_suit = null
+		if (slot_w_uniform)
+			src.w_uniform = null
+		if (slot_l_store)
+			src.l_store = null
+		if (slot_r_store)
+			src.r_store = null
+
 /mob/living/carbon/human/proc/force_equip(obj/item/I, slot)
 	//warning: icky code
 	var/equipped = 0
@@ -2269,6 +2302,11 @@
 			SEND_SIGNAL(src.equipped(), COMSIG_ITEM_SWAP_TO, src)
 	if(src.equipped() && (src.equipped().item_function_flags & USE_INTENT_SWITCH_TRIGGER) && !src.equipped().two_handed)
 		src.equipped().intent_switch_trigger(src)
+
+/mob/living/carbon/human/don_doff(obj/item/I, slot)
+	if(!dondoffscale) return
+	actions.start(new/datum/action/bar/icon/donDoffItem(src, I, slot), usr)
+	return TRUE
 
 /mob/living/carbon/human/emp_act()
 	boutput(src, "<span class='alert'><B>Your equipment malfunctions.</B></span>")

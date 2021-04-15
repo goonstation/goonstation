@@ -1283,6 +1283,9 @@
 /mob/proc/swap_hand()
 	return
 
+/mob/proc/don_doff()
+	return
+
 /mob/proc/u_equip(obj/item/W)
 	if (W == src.r_hand)
 		src.r_hand = null

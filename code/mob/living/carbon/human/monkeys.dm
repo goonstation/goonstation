@@ -439,7 +439,7 @@
 			if(I.duration_remove > 0)
 				duration = I.duration_remove
 			else
-				duration = 25
+				duration = 2.5 SECONDS
 		..()
 
 	onStart()

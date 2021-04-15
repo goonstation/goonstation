@@ -576,6 +576,116 @@ var/datum/action_controller/actions
 	icon = 'icons/mob/screen1.dmi'
 	icon_state = "grabbed"
 
+/datum/action/bar/icon/donDoffItem //Putting items on or removing items from others.
+	id = "otheritem"
+	interrupt_flags = INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
+	icon = 'icons/mob/screen1.dmi'
+	icon_state = "grabbed"
+
+	var/mob/living/carbon/human/source  //The person doing the action
+	var/obj/item/item				//The item if any. If theres no item, we tried to remove something from that slot instead of putting an item there.
+	var/slot						    //The slot number
+	var/turf/start
+	var/hidden
+
+	New(var/Source, var/Item, var/Slot, var/ExtraDuration = 0, var/Hidden = 0)
+		source = Source
+		item = Item
+		slot = Slot
+		hidden = Hidden
+		start = get_turf(source)
+		duration = 0
+
+		// don
+		if(item)
+			if(item.duration_put > 0)
+				duration += item.duration_put
+			else
+				duration += 4.5 SECONDS
+
+		// doff
+		var/obj/item/I = source.get_slot(slot)
+		if(I)
+			if(I.duration_remove > 0)
+				duration += I.duration_remove
+			else
+				duration += 2.5 SECONDS
+
+		if( source.bioHolder?.HasEffect("clumsy")	)
+			duration *= 1.2
+
+		duration += ExtraDuration
+
+		if(source.reagents && source.reagents.has_reagent("crime"))
+			duration *= 0.9
+
+		duration *= dondoffscale
+
+		..()
+
+	onStart()
+		if(item)
+			icon = item.icon
+			icon_state = item.icon_state
+			for(var/mob/O in AIviewers(owner))
+				O.show_message("<span class='alert'><B>[source] tries to put on [item]!</B></span>", 1)
+		else
+			var/obj/item/I = source.get_slot(slot)
+
+			var/name = "something"
+			if (!hidden)
+				icon = I.icon
+				icon_state = I.icon_state
+				name = I.name
+
+			for(var/mob/O in AIviewers(owner))
+				O.show_message("<span class='alert'><B>[source] tries to remove [name]!</B></span>", 1)
+		..() // we call our parents here because we need to set our icon and icon_state before calling them
+
+	onEnd()
+		..()
+
+		if(!source || !start || get_dist(source, start) > 1)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+		source.u_equip(item)
+		var/obj/item/I = source.get_slot(slot)
+
+		if(I)
+			I.unequipped(source)
+			source.clear_slot(slot)
+			if(!source.put_in_hand(I))
+				source.drop_from_slot(I, get_turf(I))
+
+		source.force_equip(item, slot)
+
+	onUpdate()
+		var/animate_color
+		if(!source || get_dist(source, start) > 1)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+		else if(get_turf(source) != start)
+			animate_color = TRUE
+			src.duration += 0.5 SECONDS
+
+		// Update duration prior to calling parent if applicable.
+		..()
+
+		if(animate_color)
+			bar.color = "#FFFF00"
+			animate( bar, color = src.color_active, time = 2.5, flags=ANIMATION_PARALLEL)
+
+		// allow hopping/waddling when putting your pants on to get out the door
+		start = get_turf(source)
+
+		// if(item)
+		// 	if(item != source.equipped() || target.get_slot(slot))
+		// 		interrupt(INTERRUPT_ALWAYS)
+		// else
+		// 	if(!target.get_slot(slot=slot))
+		// 		interrupt(INTERRUPT_ALWAYS)
+
 /datum/action/bar/icon/otherItem//Putting items on or removing items from others.
 	id = "otheritem"
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
@@ -600,14 +710,14 @@ var/datum/action_controller/actions
 			if(item.duration_put > 0)
 				duration = item.duration_put
 			else
-				duration = 45
+				duration = 4.5 SECONDS
 		else
 			var/obj/item/I = target.get_slot(slot)
 			if(I)
 				if(I.duration_remove > 0)
 					duration = I.duration_remove
 				else
-					duration = 25
+					duration = 2.5 SECONDS
 
 		duration += ExtraDuration
 

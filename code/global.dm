@@ -387,6 +387,8 @@ var/global
 	manualblinking = 0
 	speechpopups = 1
 
+	dondoffscale = 1
+
 	monkeysspeakhuman = 0
 	late_traitors = 1
 	no_automatic_ending = 0
