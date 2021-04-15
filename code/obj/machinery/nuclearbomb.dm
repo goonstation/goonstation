@@ -6,8 +6,8 @@
 	density = 1
 	anchored = 0
 	event_handler_flags = IMMUNE_MANTA_PUSH
-	var/_health = 150
-	var/_max_health = 150
+	_health = 150
+	_max_health = 150
 	var/armed = 0
 	var/det_time = 0
 	var/timer_default = 6000 // 10 min.
@@ -235,6 +235,10 @@
 				//	open_wire_panel(user)
 				//	return
 
+		if (istype(W, /obj/item/wrench/battle) && src._health <= src._max_health)
+			SETUP_GENERIC_ACTIONBAR(user, src, 5 SECONDS, /obj/machinery/nuclearbomb/proc/repair_nuke, null, 'icons/obj/items/tools/wrench.dmi', "battle-wrench", "[usr] repairs the [src]!")
+			return
+
 		if (W && !(istool(W, TOOL_SCREWING | TOOL_SNIPPING) || istype(W, /obj/item/disk/data/floppy/read_only/authentication)))
 			switch (W.force)
 				if (0 to 19)
@@ -249,10 +253,6 @@
 			logTheThing("combat", user, null, "attacks [src] with [W] at [log_loc(src)].")
 			playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 100, 1)
 			attack_particle(user,src)
-
-		if (istype(W, /obj/item/wrench/battle) && src._health <= src._max_health)
-			SETUP_GENERIC_ACTIONBAR(user, src, 5 SECONDS, /obj/machinery/nuclearbomb/proc/repair_nuke, null, 'icons/obj/items/tools/wrench.dmi', "battle-wrench", "[usr] repairs the [src]!")
-			return
 
 		return
 
@@ -293,7 +293,7 @@
 			src.take_damage(damage)
 
 	proc/repair_nuke()
-		src._health += min(src._health+5, src._max_health)
+		src._health = min(src._health+5, src._max_health)
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
 		return
 
@@ -443,7 +443,7 @@
 	icon_state = "nuclearbomb"
 	density = 1
 	anchored = 0
-	var/_health = 10
+	_health = 10
 
 	proc/checkhealth()
 		if (src._health <= 0)
