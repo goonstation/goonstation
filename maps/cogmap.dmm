@@ -61447,7 +61447,6 @@
 /turf/simulated/floor,
 /area/station/security/main)
 "kZL" = (
-/obj/disposalpipe/segment,
 /obj/item/cell/supercell/charged{
 	pixel_x = -7;
 	pixel_y = 11
@@ -104099,7 +104098,7 @@ cvi
 ctD
 cwi
 ctD
-cwi
+ctD
 cxq
 cxq
 cxq
