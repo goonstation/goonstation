@@ -60556,16 +60556,6 @@
 	},
 /turf/unsimulated/floor/shuttlebay,
 /area/syndicate_station/battlecruiser)
-"dds" = (
-/obj/machinery/vehicle/pod_smooth/syndicate,
-/obj/decal/tile_edge/stripe/extra_big,
-/obj/decal/tile_edge/stripe{
-	dir = 6;
-	icon_state = "bot2"
-	},
-/obj/access_spawn/syndie_shuttle,
-/turf/unsimulated/floor/shuttlebay,
-/area/syndicate_station/battlecruiser)
 "ddt" = (
 /obj/disposalpipe/segment/horizontal,
 /turf/unsimulated/floor/grey,
@@ -60620,10 +60610,6 @@
 /area/afterlife/bar)
 "ddB" = (
 /obj/decal/tile_edge/stripe/extra_big,
-/obj/decal/tile_edge/stripe{
-	dir = 6;
-	icon_state = "bot2"
-	},
 /turf/unsimulated/floor/shuttlebay,
 /area/syndicate_station/battlecruiser)
 "ddD" = (
@@ -60647,6 +60633,11 @@
 /turf/unsimulated/floor/grey,
 /area/afterlife/bar)
 "ddG" = (
+/obj/syndi_putt_spawner,
+/obj/decal/tile_edge/stripe/extra_big{
+	icon_state = "delivery2"
+	},
+/obj/access_spawn/syndie_shuttle,
 /obj/decal/tile_edge/stripe/extra_big,
 /turf/unsimulated/floor/shuttlebay,
 /area/syndicate_station/battlecruiser)
@@ -82601,6 +82592,15 @@
 	name = "plating"
 	},
 /area/hospital/samostrel)
+"vZe" = (
+/obj/machinery/vehicle/pod_smooth/syndicate,
+/obj/decal/tile_edge/stripe{
+	dir = 6;
+	icon_state = "bot2"
+	},
+/obj/access_spawn/syndie_shuttle,
+/turf/unsimulated/floor/shuttlebay,
+/area/syndicate_station/battlecruiser)
 "wiU" = (
 /obj/admin_plaque{
 	desc = "Scream!";
@@ -108666,11 +108666,11 @@ cnw
 bBm
 bDt
 ccu
-aVd
-cIJ
-cIJ
 cUT
-dds
+vZe
+cIJ
+cIJ
+ddG
 des
 bqV
 dfo
@@ -108968,10 +108968,10 @@ btF
 bvh
 bDt
 ccu
+cUT
+cUT
 cIJ
 aVd
-cIJ
-cUT
 ddB
 des
 bqV
@@ -109270,7 +109270,7 @@ cnw
 bBm
 bDt
 ccu
-aVd
+cIJ
 cIJ
 aVd
 cIJ
@@ -109572,11 +109572,11 @@ btF
 bvh
 bDt
 ccu
+cUT
+vZe
 cIJ
 aVd
-cIJ
-cUT
-dds
+ddB
 des
 bqV
 dfo
@@ -109874,11 +109874,11 @@ cnw
 bBm
 bDt
 ccu
-aVd
-cIJ
-cIJ
 cUT
-ddB
+cUT
+cIJ
+cIJ
+ddG
 des
 bqV
 dfo
