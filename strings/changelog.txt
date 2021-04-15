@@ -1,5 +1,9 @@
 
 (t)thu apr 15 21
+(u)Carbadox
+(p)3778
+(e)🆕|feature
+(+)Added some basic ways to earn Job XP for Chefs.
 (u)Lythine
 (p)4312
 (e)|
