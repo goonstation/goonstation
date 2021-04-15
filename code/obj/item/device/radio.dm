@@ -149,7 +149,7 @@ var/list/headset_channel_lookup
 /obj/item/device/radio/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if (.)
-		return .
+		return
 
 	switch(action)
 		if ("set-frequency")
