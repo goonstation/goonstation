@@ -1852,7 +1852,12 @@
 	src.streak_cleanable(dirs)
 
 
-
+/obj/disposaloutlet/random_range
+	var/min_range = 1
+	var/max_range = 6
+	expel(obj/disposalholder/H)
+		src.throw_range = rand(min_range, max_range)
+		. = ..()
 
 /obj/disposaloutlet/artifact
 	throw_range = 10

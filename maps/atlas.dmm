@@ -12865,6 +12865,9 @@
 	},
 /obj/access_spawn/rancher,
 /obj/firedoor_spawn,
+/obj/railing/orange/reinforced{
+	dir = 8
+	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/east)
 "Fw" = (

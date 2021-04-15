@@ -769,6 +769,18 @@ obj/item/contract/hair
 
 		return 1
 
+obj/item/contract/limbs
+	desc = "This contract is really just a sketch of one of those inflatable air tube dancer things you see near used pod dealerships with some signature fields tacked onto the bottom."
+
+
+	MagicEffect(var/mob/user as mob, var/mob/badguy as mob)
+		if(!..())
+			return 0
+		SPAWN_DBG(1 DECI SECOND)
+			user.traitHolder.addTrait("contract_limbs")
+
+		return 1
+
 obj/item/contract/greed
 	desc = "This contract is positively covered in dollar signs."
 	var/number_of_cash_piles = 7

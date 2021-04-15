@@ -941,7 +941,7 @@ datum/preferences
 				mutantRace = T.mutantRace
 				break
 
-		src.preview?.update_appearance(src.AH, mutantRace, src.spessman_direction)
+		src.preview?.update_appearance(src.AH, mutantRace, src.spessman_direction, name=src.real_name)
 
 
 	proc/ShowChoices(mob/user)

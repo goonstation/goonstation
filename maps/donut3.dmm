@@ -896,6 +896,7 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
+/obj/item/storage/wall/office,
 /turf/simulated/floor/carpet{
 	dir = 1;
 	icon_state = "fblue6"
@@ -9948,7 +9949,7 @@
 "cEO" = (
 /obj/displaycase{
 	displayed = new /obj/item/captaingun
-},
+	},
 /obj/machinery/light/incandescent/greenish{
 	dir = 1
 	},
@@ -17749,6 +17750,9 @@
 /obj/table/reinforced/bar/auto{
 	name = "table"
 	},
+/obj/item/storage/toolbox/artistic{
+	pixel_y = -3
+	},
 /obj/item/matchbook{
 	pixel_x = -7;
 	pixel_y = 6
@@ -18641,6 +18645,10 @@
 /area/station/hallway/primary/west)
 "fkB" = (
 /obj/table/auto,
+/obj/item/item_box/pens{
+	pixel_x = -7;
+	pixel_y = 9
+	},
 /obj/item/device/audio_log{
 	pixel_y = 1
 	},
@@ -22273,10 +22281,17 @@
 	pixel_x = 2;
 	pixel_y = 8
 	},
+/obj/item/device/light/zippo{
+	pixel_y = -8
+	},
 /obj/machinery/light/lamp/green{
 	pixel_x = -5;
 	pixel_y = 4;
 	switchon = 1
+	},
+/obj/item/cigpacket/propuffs{
+	pixel_x = 9;
+	pixel_y = -6
 	},
 /turf/simulated/floor/carpet,
 /area/station/security/detectives_office)
@@ -25238,6 +25253,7 @@
 /obj/disposalpipe/segment/morgue{
 	dir = 4
 	},
+/obj/item/device/camera_viewer,
 /turf/simulated/floor/carpet,
 /area/station/security/detectives_office)
 "hki" = (
@@ -28037,6 +28053,7 @@
 /turf/simulated/floor/sanitary/blue,
 /area/station/crew_quarters/bathroom)
 "ibI" = (
+/obj/storage/closet/biohazard,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 1;
@@ -37798,6 +37815,7 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
+/obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
 "lhf" = (
@@ -38344,6 +38362,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/item/storage/wall/office,
 /turf/simulated/floor/carpet/arcade/half,
 /area/station/crew_quarters/arcade/dungeon)
 "loJ" = (
@@ -39573,6 +39592,16 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/ne)
+"lGM" = (
+/obj/grille/catwalk/jen/side{
+	dir = 1
+	},
+/obj/decal/cleanable/dirt/jen,
+/obj/submachine/GTM{
+	pixel_y = 32
+	},
+/turf/simulated/floor/plating/jen,
+/area/station/maintenance/outer/se)
 "lGU" = (
 /obj/indestructible/shuttle_corner{
 	dir = 4
@@ -46118,6 +46147,7 @@
 /obj/item/suture,
 /obj/item/hemostat,
 /obj/item/scissors/surgical_scissors,
+/obj/item/surgical_spoon,
 /obj/machinery/light/incandescent/netural,
 /turf/simulated/floor/bluewhite{
 	dir = 6
@@ -57005,6 +57035,9 @@
 /obj/item/clothing/under/misc/mime/alt,
 /obj/item/clothing/suit/suspenders,
 /obj/item/clothing/suit/scarf,
+/obj/item/clothing/glasses/eyepatch{
+	name = "costume eyepatch"
+	},
 /obj/storage/closet/dresser{
 	anchored = 1;
 	name = "costume dresser"
@@ -61553,6 +61586,7 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
+/obj/item/storage/secure/sbriefcase,
 /turf/simulated/floor/wood/seven,
 /area/station/security/detectives_office)
 "rWx" = (
@@ -61576,6 +61610,7 @@
 "rWD" = (
 /obj/table/round/auto,
 /obj/random_item_spawner/desk_stuff/few,
+/obj/item/storage/wall/office,
 /turf/simulated/floor/carpet/red/fancy/narrow/north,
 /area/station/quartermaster/office)
 "rWM" = (
@@ -62104,6 +62139,11 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/se)
+"sev" = (
+/obj/decal/cleanable/dirt/jen,
+/obj/storage/closet/biohazard,
+/turf/simulated/floor/plating/jen,
+/area/station/maintenance/inner/sw)
 "sew" = (
 /obj/machinery/light/emergency{
 	dir = 4;
@@ -62327,6 +62367,15 @@
 	dir = 4;
 	pixel_x = 24
 	},
+/obj/storage/cart/forensic,
+/obj/item/storage/box/body_bag,
+/obj/item/storage/box/evidence,
+/obj/item/storage/box/evidence,
+/obj/item/spraybottle/detective,
+/obj/item/device/audio_log,
+/obj/item/audio_tape,
+/obj/item/audio_tape,
+/obj/item/hand_labeler,
 /turf/simulated/floor/wood/seven,
 /area/station/security/detectives_office)
 "siB" = (
@@ -64749,6 +64798,7 @@
 	dir = 1
 	},
 /obj/machinery/power/apc/autoname_north,
+/obj/storage/closet/welding_supply,
 /obj/cable{
 	d2 = 4;
 	icon_state = "0-4"
@@ -78920,6 +78970,11 @@
 /area/station/maintenance/inner/north)
 "xdq" = (
 /obj/machinery/light/incandescent/netural,
+/obj/item/storage/wall/office{
+	dir = 8;
+	pixel_x = 32;
+	pixel_y = 0
+	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/market)
 "xdw" = (
@@ -81752,6 +81807,10 @@
 	dir = 10;
 	name = "autoname - SS13";
 	tag = ""
+	},
+/obj/item/storage/box/trackimp_kit2{
+	pixel_x = 8;
+	pixel_y = 3
 	},
 /obj/item/gun/implanter{
 	pixel_x = -3;
@@ -117165,7 +117224,7 @@ mCx
 suS
 qnq
 lnO
-hzf
+sev
 ugO
 oLI
 vMF
@@ -142507,7 +142566,7 @@ lVy
 wPF
 qwP
 nxQ
-wPF
+lGM
 vfx
 nxQ
 qtx

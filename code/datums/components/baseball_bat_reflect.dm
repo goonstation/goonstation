@@ -49,8 +49,8 @@
 		playsound(owner, "sound/items/woodbat.ogg", 50, 1)
 		if(homerun)
 			playsound(owner, "sound/items/batcheer.ogg", 50, 1)
-			owner.visible_message("<span class='alert'>[owner] hits \the [thing] with \the [owner] and scores a HOMERUN! Woah!!!!</span>")
+			owner.visible_message("<span class='alert'>[owner] hits \the [thing] with \the [src.parent] and scores a HOMERUN! Woah!!!!</span>")
 		else
-			owner.visible_message("<span class='alert'>[owner] hits \the [thing] with \the [owner]!</span>")
+			owner.visible_message("<span class='alert'>[owner] hits \the [thing] with \the [src.parent]!</span>")
 
 	return TRUE
