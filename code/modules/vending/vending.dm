@@ -1646,6 +1646,9 @@
 /obj/item/machineboard/vending
 	name = "vending machine module"
 	machinepath = "/obj/machinery/vending/player"
+/obj/item/machineboard/vending/monkeys
+	name = "monkey vending module"
+	machinepath = "/obj/machinery/vending/monkey"
 /obj/machinery/vendingframe
 	name = "vending machine frame"
 	desc = "A generic vending machine frame."
@@ -1751,8 +1754,7 @@
 	var/datum/data/record/owneraccount = null
 	var/image/crtoverlay = null
 	player_list = list()
-	create_products()
-		. = ..()
+
 	New()
 		crtoverlay = SafeGetOverlayImage("screen", src.icon, "player-crt")
 		crtoverlay.layer = src.layer + 0.2
