@@ -1,5 +1,9 @@
 
 (t)thu apr 15 21
+(u)Gannets
+(p)4321
+(e)⚖🆕|balance, feature
+(*)Nuke ops combat engineers can now hit the nuclear bomb with their battle wrench to repair a small amount of damage dealt to it.
 (u)Arthur Holiday
 (p)4271
 (e)🗺|mapping
