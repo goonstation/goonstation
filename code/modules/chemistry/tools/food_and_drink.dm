@@ -186,13 +186,11 @@
 			return 0
 		if (iscarbon(M) || ismobcritter(M))
 			if (M == user)
-#ifdef RP_MODE
 				if (ishuman(M))
 					var/mob/living/carbon/human/H = M
 					if ((M.wear_mask && (HAS_FLAG(M.wear_mask.c_flags, COVERSMOUTH))) || H.head && (HAS_FLAG(H.head.c_flags, COVERSMOUTH)))
 						boutput(M, "<span class='alert'>You can't eat [src] with your mouth covered!</span>")
 						return 0
-#endif
 				//can this person eat this food?
 				if(!M.can_eat(src))
 					boutput(M, "<span class='alert'>You can't eat [src]!</span>")
@@ -284,7 +282,6 @@
 				user, "<span class='alert'>You try to feed [M] [src], but they can't eat that!</span>",\
 				M, "<span class='alert'><b>[user]</b> tries to feed you [src], but you can't eat that!</span>")
 				return 0
-#ifdef RP_MODE
 			else if (ishuman(M))
 				var/mob/living/carbon/human/H = M
 				if ((M.wear_mask && (HAS_FLAG(M.wear_mask.c_flags, COVERSMOUTH))) || H.head && (HAS_FLAG(H.head.c_flags, COVERSMOUTH)))
@@ -292,7 +289,6 @@
 					user, "<span class='alert'>You try to feed [M] [src], but their mouth is covered!</span>",\
 					M, "<span class='alert'><b>[user]</b> tries to feed you [src], but your mouth is covered!</span>")
 					return 0
-#endif
 			else
 				user.tri_message("<span class='alert'><b>[user]</b> tries to feed [M] [src]!</span>",\
 				user, "<span class='alert'>You try to feed [M] [src]!</span>",\
@@ -501,24 +497,19 @@
 
 		if (iscarbon(M) || ismobcritter(M))
 			if (M == user)
-#ifdef RP_MODE
 				if (ishuman(M))
 					var/mob/living/carbon/human/H = M
 					if ((M.wear_mask && (HAS_FLAG(M.wear_mask.c_flags, COVERSMOUTH))) || H.head && (HAS_FLAG(H.head.c_flags, COVERSMOUTH)))
 						boutput(M, "<span class='alert'>You can't drink [src] with your mouth covered!</span>")
 						return
-#endif
 				M.visible_message("<span class='notice'>[M] takes a sip from [src].</span>")
 			else
 				user.visible_message("<span class='alert'>[user] attempts to force [M] to drink from [src].</span>")
-				logTheThing("combat", user, M, "attempts to force [constructTarget(M,"combat")] to drink from [src] [log_reagents(src)] at [log_loc(user)].")
-#ifdef RP_MODE
 				if (ishuman(M))
 					var/mob/living/carbon/human/H = M
 					if ((M.wear_mask && (HAS_FLAG(M.wear_mask.c_flags, COVERSMOUTH))) || H.head && (HAS_FLAG(H.head.c_flags, COVERSMOUTH)))
 						user.visible_message("<span class='alert'>[user] attempts to force [M] to drink from [src], but their mouth is covered!.</span>")
 						return
-#endif
 				if (!do_mob(user, M))
 					if (user && ismob(user))
 						user.show_text("You were interrupted!", "red")
