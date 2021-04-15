@@ -156,7 +156,6 @@ var/list/headset_channel_lookup
 			if (src.locked_frequency)
 				return FALSE
 			set_frequency(sanitize_frequency(params["value"]))
-			// TODO: traitor uplinks
 
 			// We check "finish" here which is true whenever the user inputs a number
 			// with the input field or stops dragging so its harder to bruteforce the
