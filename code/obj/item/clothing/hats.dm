@@ -1316,7 +1316,7 @@
 	desc = "Actually, this hat is from a fast-food restaurant, that's why it folds like it was made of paper."
 	setupProperties()
 		..()
-		setProperty("meleeprot_head", 3)
+		setProperty("meleeprot_head", 7)
 
 /obj/item/clothing/head/hos_hat/attack_self(mob/user as mob)
 	if(user.r_hand == src || user.l_hand == src)
