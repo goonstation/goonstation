@@ -1643,7 +1643,7 @@
 	src.pixel_x = rand(8, 12)
 	src.pixel_y = rand(8, 12)
 /obj/item/machineboard/vending
-	name = "vending machine board"
+	name = "vending machine module"
 	machinepath = "/obj/machinery/vending/player"
 /obj/machinery/vendingframe
 	name = "vending machine frame"
@@ -1724,7 +1724,7 @@
 			if (T.try_weld(user,0,-1,0,1) && do_after(user, 2 SECONDS))
 				boutput(user, "<span class='notice'>You deconstruct the frame.</span>")
 				var/obj/item/sheet/A = new /obj/item/sheet(src.loc)
-				A.amount = 5
+				A.amount = 3
 				if (src.material)
 					A.setMaterial(src.material)
 				else
