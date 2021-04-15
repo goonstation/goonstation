@@ -683,7 +683,7 @@
 	w_class = 3
 	icon_dynamic = 0
 	icon_empty = "40mmR-0"
-	sound_load = 'sound/weapons/gunload_heavy.ogg'
+	sound_load = 'sound/weapons/gunload_40mm.ogg'
 
 	explosive
 		desc = "High Explosive Dual Purpose grenade rounds compatible with grenade launchers. Effective against infantry and armour."
@@ -708,7 +708,7 @@
 	w_class = 3
 	icon_dynamic = 0
 	icon_empty = "40mmB-0"
-	sound_load = 'sound/weapons/gunload_heavy.ogg'
+	sound_load = 'sound/weapons/gunload_40mm.ogg'
 
 	single
 		amount_left = 1
@@ -725,7 +725,7 @@
 	w_class = 3
 	icon_dynamic = 0
 	icon_empty = "40mmB-0"
-	sound_load = 'sound/weapons/gunload_heavy.ogg'
+	sound_load = 'sound/weapons/gunload_40mm.ogg'
 
 //basically an internal object for converting hand-grenades into shells, but can be spawned independently.
 /obj/item/ammo/bullets/grenade_shell
@@ -741,7 +741,7 @@
 	icon_dynamic = 0
 	icon_empty = "paintballb-4"
 	delete_on_reload = 0 //deleting it before the shell can be fired breaks things
-	sound_load = 'sound/weapons/gunload_heavy.ogg'
+	sound_load = 'sound/weapons/gunload_40mm.ogg'
 	force_new_current_projectile = 1
 
 	attackby(obj/item/W as obj, mob/living/user as mob)
@@ -1082,7 +1082,7 @@
 	charge = 100.0
 	max_charge = 100.0
 	cycle = 0
-	recharge_rate = 5.0
+	recharge_rate = 7.5
 
 /obj/item/ammo/power_cell/self_charging/ntso_baton
 	name = "Power Cell - NTSO Stun Baton"

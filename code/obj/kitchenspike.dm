@@ -27,6 +27,7 @@
 		G.affecting.unequip_all()
 		qdel(G.affecting)
 		qdel(G)
+		JOB_XP(user, "Chef", 2)
 
 	else
 		boutput(user, "<span class='alert'>The spike already has a monkey on it, finish collecting his meat first!</span>")

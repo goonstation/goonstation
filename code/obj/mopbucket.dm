@@ -8,7 +8,24 @@
 	pressure_resistance = ONE_ATMOSPHERE
 	flags = FPRINT | TABLEPASS | OPENCONTAINER
 	var/rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
+	var/image/fluid_image
 	p_class = 1.2
+
+	New()
+		. = ..()
+		src.fluid_image = image(src.icon, "fluid", -1)
+
+	proc/update_icon()
+		if (reagents.total_volume)
+			var/datum/color/average = reagents.get_average_color()
+			src.fluid_image.color = average.to_rgba()
+			src.UpdateOverlays(src.fluid_image, "fluid")
+		else
+			src.ClearSpecificOverlays("fluid")
+
+	on_reagent_change()
+		..()
+		src.update_icon()
 
 /obj/mopbucket/New()
 	..()

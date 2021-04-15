@@ -240,6 +240,20 @@ AI MODULES
 		if(src.lawTarget && src.lawTarget != "Eat shit and die")
 			phrase_log.log_phrase("ailaw", src.get_law_text(), no_duplicates=TRUE)
 
+/******************** Random ********************/
+
+/obj/item/aiModule/random
+	name = "AI Module"
+	var/law_text
+
+	New()
+		..()
+		src.law_text = global.phrase_log.random_custom_ai_law(replace_names=TRUE)
+		src.lawNumber = rand(4, 100)
+
+	get_law_text()
+		return src.law_text
+
 /******************** Reset ********************/
 
 /obj/item/aiModule/reset
@@ -443,6 +457,7 @@ AI MODULES
 					qdel(src)
 				else
 					boutput(user, "<span class='notice'>You disconnect the monitor.</span>")
+					logTheThing("station", user, null, "disconnects the AI upload at [log_loc(src)].")
 					var/obj/computerframe/A = new /obj/computerframe(src.loc)
 					if(src.material) A.setMaterial(src.material)
 					var/obj/item/circuitboard/aiupload/M = new /obj/item/circuitboard/aiupload(A)

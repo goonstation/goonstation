@@ -22,7 +22,7 @@ Whatever, it's been cleaned up a lot and it's no longer quite so awful.
 	total_souls_value = max(0, (total_souls_value + to_adjust))
 	total_souls_sold = max(total_souls_sold, (total_souls_sold + to_adjust)) //total souls sold can never go down
 	if (length(by_cat[TR_CAT_SOUL_TRACKING_ITEMS]))
-		for (var/obj/item/Q as() in by_cat[TR_CAT_SOUL_TRACKING_ITEMS])
+		for (var/obj/item/Q as anything in by_cat[TR_CAT_SOUL_TRACKING_ITEMS])
 			soulbuff(Q)
 	return 1
 
@@ -165,7 +165,7 @@ proc/is_weak_rollable_contract(type)
 	if(C.mind)
 		shake_camera(C, 20, 16)
 		boutput(C, "<font color=red>[screamstring]</font>")
-		boutput(C, "<i><b><font face = Tempus Sans ITC>You have sold your soul and become an avatar of evil! Spread darkness across the land!</font></b></i>")
+		boutput(C, "<span style=\"color:purple; font-size:150%\"><i><b><font face = Tempus Sans ITC>You have sold your soul and become an antagonist and an avatar of evil! Spread darkness across the land!</font></b></i></span>")
 		C.mind.special_role = "Faustian Cluwne"
 		logTheThing("admin", src, null, "has transformed into a demonic cluwne at [log_loc(C)]!")
 		ticker.mode.Agimmicks.Add(C)
@@ -492,9 +492,11 @@ obj/item/contract/satan
 		if(!..())
 			return 0
 		SPAWN_DBG(1 DECI SECOND)
+			user.unequip_all()
 			user.satanclownize()
-			boutput(user, "<span style=\"color:red; font-size:150%\"><b>Note that you are not an antagonist (unless you were already one), you simply have some of the powers of one.</b></span>")
-
+			//boutput(user, "<span style=\"color:red; font-size:150%\"><b>Note that you are not an antagonist (unless you were already one), you simply have some of the powers of one.</b></span>")
+			//this didn't actually render for the user due to the order in which these procs were called, so most people never saw this alert
+			//given the content of the OTHER big, highly visible text message, I think that moving this up would break with the current precident
 		return 1
 
 obj/item/contract/macho
@@ -507,8 +509,9 @@ obj/item/contract/macho
 		if(!..())
 			return 0
 		SPAWN_DBG(1 DECI SECOND)
-			user.machoize(1)
+			user.unequip_all()
 			boutput(user, "<span style=\"color:red; font-size:150%\"><b>Note that you are not an antagonist (unless you were already one), you simply have some of the powers of one.</b></span>")
+			user.machoize(1)
 
 		return 1
 
@@ -548,6 +551,7 @@ obj/item/contract/yeti
 		if(!..())
 			return 0
 		SPAWN_DBG(1 DECI SECOND)
+			user.unequip_all()
 			user.makesuperyeti()
 			// UNNEEDED UNTIL YETI CRITTER MOB IMPLEMENTED boutput(user, "<span style=\"color:red; font-size:150%\"><b>Note that you are not an antagonist (unless you were already one), you simply have some of the powers of one.</b></span>")
 
@@ -763,6 +767,18 @@ obj/item/contract/hair
 			return 0
 		SPAWN_DBG(1 DECI SECOND)
 			user.traitHolder.addTrait("contract_hair")
+
+		return 1
+
+obj/item/contract/limbs
+	desc = "This contract is really just a sketch of one of those inflatable air tube dancer things you see near used pod dealerships with some signature fields tacked onto the bottom."
+
+
+	MagicEffect(var/mob/user as mob, var/mob/badguy as mob)
+		if(!..())
+			return 0
+		SPAWN_DBG(1 DECI SECOND)
+			user.traitHolder.addTrait("contract_limbs")
 
 		return 1
 

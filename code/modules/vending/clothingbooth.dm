@@ -31,7 +31,7 @@ var/list/clothingbooth_items = list()
 		return
 
 	var/mob/living/carbon/human/H = user
-	src.preview.update_appearance(H.bioHolder.mobAppearance, H.mutantrace)
+	src.preview.update_appearance(H.bioHolder.mobAppearance, H.mutantrace, name=user.real_name)
 	qdel(src.preview_item)
 	src.preview_item = null
 	src.preview.remove_all_clients()

@@ -236,7 +236,7 @@
 			src.visible_message("<span class='alert'>\The [src] makes a grumpy ratchetting noise and shuts down!</span>")
 			is_busy = 0
 			update_icon(0)
-		song_length = note_names.len
+		song_length = length(note_names)
 		compiled_notes = list()
 		for (var/i = 1, i <= note_names.len, i++)
 			var/string = lowertext("[note_names[i]][note_accidentals[i]][note_octaves[i]]")

@@ -67,7 +67,7 @@
 		return
 
 	proc/add_abilities_to_host()
-		if (src.host && islist(src.ability_buttons) && src.ability_buttons.len)
+		if (src.host && islist(src.ability_buttons) && length(src.ability_buttons))
 			for (var/obj/ability_button/B in src.ability_buttons)
 				if (!islist(src.host.ability_buttons))
 					src.host.ability_buttons = list()
@@ -80,7 +80,7 @@
 				src.host.the_mob.update_item_abilities()
 
 	proc/remove_abilities_from_host()
-		if (src.host && islist(src.host.ability_buttons) && src.host.ability_buttons.len && islist(src.ability_buttons) && src.ability_buttons.len)
+		if (src.host && islist(src.host.ability_buttons) && src.host.ability_buttons.len && islist(src.ability_buttons) && length(src.ability_buttons))
 			for (var/obj/ability_button/B in src.ability_buttons)
 				src.host.ability_buttons.Remove(B)
 				if (src.host.the_mob?.item_abilities)
@@ -321,7 +321,7 @@
 		if (!src.host)
 			boutput(usr, "<span class='alert'>No PDA detected.")
 			return
-		if (PROC_ON_COOLDOWN(5 MINUTES))
+		if (ON_COOLDOWN(src, 5 MINUTES, "send_alert"))
 			boutput(usr, "<span class='alert'>[src] is still on cooldown mode!</span>")
 			return
 		var/datum/signal/signal = get_free_signal()

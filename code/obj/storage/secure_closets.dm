@@ -151,6 +151,7 @@
 	/obj/item/device/multitool,
 	/obj/item/device/flash,
 	/obj/item/stamp/ce,
+	/obj/item/clothing/suit/hi_vis,
 #ifdef UNDERWATER_MAP
 	/obj/item/clothing/suit/space/diving/engineering,
 	/obj/item/clothing/head/helmet/space/engineer/diving,
@@ -192,7 +193,7 @@
 	/obj/item/storage/box/spy_sticker_kit/radio_only/detective,
 	/obj/item/storage/box/lglo_kit/random,
 	/obj/item/clothing/head/det_hat/gadget,
-	/obj/item/device/detective_scanner,
+	/obj/item/device/detective_scanner/detective,
 	/obj/item/bloodtracker,
 	/obj/item/device/flash,
 	/obj/item/camera_film,
@@ -431,7 +432,8 @@
 	req_access = list(access_medical)
 	spawn_contents = list(/obj/item/device/radio/signaler,
 	/obj/item/device/radio/electropack = 5,
-	/obj/item/clothing/glasses/blindfold = 2)
+	/obj/item/clothing/glasses/blindfold = 2,
+	/obj/item/clothing/mask/monkey_translator = 2)
 
 /* ==================== */
 /* ----- Research ----- */
@@ -522,7 +524,8 @@
 	/obj/item/deconstructor,
 	/obj/item/electronics/frame/mech_cabinet=2,
 	/obj/item/storage/mechanics/housing_handheld=1,
-	/obj/item/paper/manufacturer_blueprint/ai_status_display)
+	/obj/item/paper/manufacturer_blueprint/ai_status_display,
+	/obj/item/clothing/suit/hi_vis)
 
 /obj/storage/secure/closet/engineering/atmos
 	name = "\improper Atmospheric Technician's locker"
@@ -545,7 +548,8 @@
 	/obj/item/clothing/head/helmet/hardhat,
 	/obj/item/clothing/glasses/meson,
 	/obj/item/pen/infrared,
-	/obj/item/clothing/head/helmet/welding)
+	/obj/item/clothing/head/helmet/welding,
+	/obj/item/clothing/suit/hi_vis)
 
 /obj/storage/secure/closet/engineering/mining
 	name = "\improper Miner's locker"

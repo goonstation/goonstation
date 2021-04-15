@@ -98,7 +98,7 @@
 		reagents.postfoam = 1
 		reagents.handle_reactions()
 		for(var/atom/A in src.loc)
-			if(A == src)
+			if(A == src || istype(A, /obj/overlay) || istype(A, /obj/effects))
 				continue
 			if(isliving(A))
 				var/mob/living/L = A
@@ -106,6 +106,7 @@
 			if (reagents)
 				reagents.reaction(A, TOUCH, 5, 0)
 		if (reagents)
+			reagents.reaction(src.loc, TOUCH, 5, 0)
 			reagents.postfoam = 0
 	pool(src)
 

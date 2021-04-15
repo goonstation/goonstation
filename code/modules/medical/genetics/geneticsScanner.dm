@@ -276,7 +276,7 @@ var/list/genetek_hair_styles = null
 		var/mob/living/carbon/human/H = src.occupant
 		if (istype(H))
 			if (src.occupant_preview)
-				src.occupant_preview.update_appearance(H.bioHolder.mobAppearance, H.mutantrace)
+				src.occupant_preview.update_appearance(H.bioHolder.mobAppearance, H.mutantrace, name=H.real_name)
 		else
 			qdel(src.occupant_preview)
 			src.occupant_preview = null
@@ -351,9 +351,9 @@ var/list/genetek_hair_styles = null
 
 		if (isnull(genetek_hair_styles))
 			genetek_hair_styles = list()
-			for (var/S as() in customization_styles)
+			for (var/S as anything in customization_styles)
 				genetek_hair_styles += S
-			for (var/S as() in customization_styles_gimmick)
+			for (var/S as anything in customization_styles_gimmick)
 				genetek_hair_styles += S
 
 		var/fixColors = !!(src.target_mob.mutantrace?.mutant_appearance_flags & FIX_COLORS)

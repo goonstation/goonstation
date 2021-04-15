@@ -1004,7 +1004,7 @@ proc/is_teleportation_allowed(var/turf/T)
 		if(allow_bookmarks)
 			dat += "<br><A href='?src=\ref[src];addbookmark=1'>Add Bookmark</A>"
 
-		if(allow_bookmarks && bookmarks.len)
+		if(allow_bookmarks && length(bookmarks))
 			dat += "<br><br><br>Bookmarks:"
 			for (var/datum/teleporter_bookmark/b in bookmarks)
 				dat += "<br>[b.name] ([b.x]/[b.y]/[b.z]) <A href='?src=\ref[src];restorebookmark=\ref[b]'>Restore</A> <A href='?src=\ref[src];deletebookmark=\ref[b]'>Delete</A>"

@@ -133,6 +133,7 @@
 				frostingoverlay.alpha = 255
 				src.UpdateOverlays(frostingoverlay,tag)
 				tube.reagents.trans_to(src,25)
+				JOB_XP(user, "Chef", 1)
 
 	proc/overlay_number_convert(var/original_clayer,var/mode,var/singlecake) //original - original clayer value, mode - which math we're using
 		switch(mode)
@@ -632,7 +633,7 @@
 	initial_reagents = "yuck"
 	festivity = 10
 
-	on_finish_eating(var/mob/M)
+	on_finish(mob/eater)
 		..()
 		eater.show_text("It's so hard it breaks one of your teeth AND it tastes disgusting! Why would you ever eat this?","red")
 		random_brute_damage(eater, 3)
@@ -649,7 +650,7 @@
 	icon_state = "cake1-base_cream"
 
 /obj/item/cake_item/attack(target as mob, mob/user as mob)
-	var/iteminside = src.contents.len
+	var/iteminside = length(src.contents)
 	if(!iteminside)
 		user.show_text("The cake crumbles away!","red")
 		qdel(src)

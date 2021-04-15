@@ -75,6 +75,28 @@ var/global/list/job_start_locations = list()
 		src.data = src.shuttle// save dir
 		..()
 
+	north
+		dir = NORTH
+		shuttle = SHUTTLE_NORTH
+
+		donut3
+			shuttle = SHUTTLE_DONUT3
+
+	south
+		dir = SOUTH
+		shuttle = SHUTTLE_SOUTH
+
+	east
+		dir = EAST
+		shuttle = SHUTTLE_EAST
+
+		oshan
+			shuttle = SHUTTLE_OSHAN
+
+	west
+		dir = WEST
+		shuttle = SHUTTLE_WEST
+
 /obj/landmark/tutorial_start
 	name = LANDMARK_TUTORIAL_START
 
@@ -214,6 +236,9 @@ var/global/list/job_start_locations = list()
 
 /obj/landmark/lrt/workshop
 	name = "Hidden Workshop"
+
+/obj/landmark/character_preview_spawn
+	name = LANDMARK_CHARACTER_PREVIEW_SPAWN
 
 /obj/landmark/viscontents_spawn
 	name = "visual mirror spawn"

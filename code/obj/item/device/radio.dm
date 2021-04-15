@@ -118,7 +118,7 @@ Microphone: [src.broadcasting ? "<a href='?src=\ref[src];talk=0'>Engaged</a>" : 
 [!src.locked_frequency ? "<a href='?src=\ref[src];freq=-10'>-</a> <a href='?src=\ref[src];freq=-2'>-</a> <a href='?src=\ref[src];freq=set'><strong>[format_frequency(src.frequency)]</strong></a> <a href='?src=\ref[src];freq=2'>+</a> <a href='?src=\ref[src];freq=10'>+</a>" : "</strong>[format_frequency(src.frequency)]</strong>"]
 "}
 
-	if (istype(src.secure_frequencies) && src.secure_frequencies.len)
+	if (istype(src.secure_frequencies) && length(src.secure_frequencies))
 		dat += "<hr>Supplementary Channels:<table style='border-collapse: collapse;' cellpadding='2'><tr><th>Channel</th><th>Freq</th><th>Prefix</th></tr>"
 		for (var/sayToken in src.secure_frequencies)
 			dat += {"<tr><td>[ headset_channel_lookup["[src.secure_frequencies["[sayToken]"]]"] ? headset_channel_lookup["[src.secure_frequencies["[sayToken]"]]"] : "???" ]</td><td> <strong>[format_frequency(src.secure_frequencies["[sayToken]"])]</strong></td><td><code>[sayToken]</code></td></tr>
@@ -513,7 +513,7 @@ Green Wire: <a href='?src=\ref[src];wires=[WIRE_TRANSMIT]'>[src.wires & WIRE_TRA
 			// Sender didn't use a secure channel prefix, giving us the 145.9 radio frequency datum.
 			// The devices list is useless here, but we can still receive the message if one of our
 			// secure channels happens to have the same frequency as the sender's radio.
-			if (src.secure_frequencies && istype(src.secure_frequencies) && src.secure_frequencies.len)
+			if (src.secure_frequencies && istype(src.secure_frequencies) && length(src.secure_frequencies))
 				for (var/freq2 in src.secure_frequencies)
 					if (isnum(src.secure_frequencies["[freq2]"]) && src.secure_frequencies["[freq2]"] == R.frequency)
 						//DEBUG_MESSAGE("Match found for transmission from [R] at [log_loc(R)] (frequency compare)")
@@ -551,7 +551,7 @@ Green Wire: <a href='?src=\ref[src];wires=[WIRE_TRANSMIT]'>[src.wires & WIRE_TRA
 			. += "<span class='notice'>\the [src] can be attached and modified!</span>"
 		else
 			. += "<span class='notice'>\the [src] can not be modified or attached!</span>"
-	if (istype(src.secure_frequencies) && src.secure_frequencies.len)
+	if (istype(src.secure_frequencies) && length(src.secure_frequencies))
 		. += "Supplementary Channels:"
 		for (var/sayToken in src.secure_frequencies) //Most convoluted string of the year award 2013
 			. += "[ headset_channel_lookup["[src.secure_frequencies["[sayToken]"]]"] ? headset_channel_lookup["[src.secure_frequencies["[sayToken]"]]"] : "???" ]: \[[format_frequency(src.secure_frequencies["[sayToken]"])]] (Activator: <b>[sayToken]</b>)"
@@ -847,7 +847,19 @@ obj/item/device/radio/signaler/attackby(obj/item/W as obj, mob/user as mob)
 		src.set_loc(A)
 		A.part1 = src
 		src.add_fingerprint(user)
-		boutput(user, "You open the signaler and cram the [W.name] in there!")
+		boutput(user, "You open the signaller and cram the [W.name] in there!")
+	//Commenting this out so the SWORD PR gets merged without being summonable by normal players, so it can be tested first. Both the MSF and SWORD can still be spawned in with admin powers, obviously.
+	//else if (istype(W, /obj/item/cable_coil))
+	//	W.amount -= 1
+	//	if (W.amount <= 0)
+	//		qdel(W)
+	//	else
+	//		W.inventory_counter.update_number(W.amount)
+	//	var/obj/item/makeshift_signaller_frame/A = new /obj/item/makeshift_signaller_frame
+	//	user.put_in_hand_or_drop(A)
+	//	A.add_fingerprint(user)
+	//	boutput(user, "You open the signaller and attach some additional wires to it!")
+	//	qdel(src)
 	else
 		..()
 	return

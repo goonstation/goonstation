@@ -708,7 +708,7 @@
 /obj/trait/immigrant
 	name = "Stowaway (+1) \[Background\]"
 	cleanName = "Stowaway"
-	desc = "You spawn hidden away on-station without an ID or PDA."
+	desc = "You spawn hidden away on-station without an ID, PDA, or entry in NT records."
 	id = "immigrant"
 	icon_state = "stowaway"
 	category = "background"
@@ -1083,3 +1083,22 @@ obj/trait/pilot
 		if(ishuman(owner) && prob(35))
 			var/mob/living/carbon/human/H = owner
 			omega_hairgrownium_grow_hair(H, 1)
+
+/obj/trait/contractlimbs
+	name = "Wacky Waving Limbs"
+	desc = "Sold your soul for ever shifting limbs"
+	id = "contract_limbs"
+	points = 0
+	isPositive = 1
+	unselectable = 1
+
+	onAdd(var/mob/owner)
+		if(ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			randomize_mob_limbs(H)
+		return
+
+	onLife(var/mob/owner) //Just to be safe.
+		if(ishuman(owner) && prob(10))
+			var/mob/living/carbon/human/H = owner
+			randomize_mob_limbs(H)

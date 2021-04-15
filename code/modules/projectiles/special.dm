@@ -279,7 +279,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 				if (!T.density)
 					sfloors += T
 			var/shocks = rand(min_arcs_per_tick, max_arcs_per_tick)
-			while (shocks > 0 && sfloors.len)
+			while (shocks > 0 && length(sfloors))
 				shocks--
 				var/turf/Q = pick(sfloors)
 				arcFlashTurf(P, Q, wattage)
@@ -292,7 +292,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 			if (!T.density)
 				sfloors += T
 		var/arcs = arcs_on_hit
-		while (arcs > 0 && sfloors.len)
+		while (arcs > 0 && length(sfloors))
 			arcs--
 			var/turf/Q = pick(sfloors)
 			arcFlashTurf(A, Q, wattage)
@@ -306,7 +306,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 				for (var/mob/M in view(shock_range, P))
 					smobs += M
 				var/shocks = rand(min_arcs_per_tick, max_arcs_per_tick)
-				while (shocks > 0 && smobs.len)
+				while (shocks > 0 && length(smobs))
 					shocks--
 					var/mob/Q = pick(smobs)
 					arcFlash(P, Q, wattage)
@@ -662,7 +662,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	tick(var/obj/projectile/P)
 		..()
 
-		if (!(P.targets && P.targets.len && P.targets[1]))
+		if (!(P.targets && P.targets.len && P.targets[1] && !(P.targets[1]:disposed)))
 			P.die()
 
 	on_end(var/obj/projectile/P)

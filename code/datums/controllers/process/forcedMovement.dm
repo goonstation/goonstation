@@ -38,7 +38,7 @@ datum/controller/process/fMove
 
 	doWork()
 		//space first :)
-		for (var/atom/movable/M as() in spacePushList)
+		for (var/atom/movable/M as anything in spacePushList)
 			if(!M)
 				continue
 
@@ -99,7 +99,7 @@ datum/controller/process/fMove
 
 
 				if (M && !( M.anchored ) && !(M.flags & NODRIFT))
-					if (! (world.timeofday > (tmob.l_move_time + schedule_interval)) ) //we need to stand still for 5 realtime ticks before space starts pushing us!
+					if (! (TIME > (tmob.l_move_time + schedule_interval)) ) //we need to stand still for 5 realtime ticks before space starts pushing us!
 						continue
 
 					var/pre_inertia_loc = M.loc
@@ -151,7 +151,7 @@ datum/controller/process/fMove
 		//now manta!
 		debugPushList = mantaPushList
 		if(mantaMoving == 1)
-			for (var/atom/movable/M as() in mantaPushList)
+			for (var/atom/movable/M as anything in mantaPushList)
 				if(!M)
 					continue
 

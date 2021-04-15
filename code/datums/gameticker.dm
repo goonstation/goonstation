@@ -29,16 +29,11 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 
 	var/skull_key_assigned = 0
 
+	var/tmp/last_try_dilate = 0
 	var/tmp/useTimeDilation = TIME_DILATION_ENABLED
 	var/tmp/timeDilationLowerBound = MIN_TICKLAG
 	var/tmp/timeDilationUpperBound = OVERLOADED_WORLD_TICKLAG
-	var/tmp/last_tick_realtime = 0
-	var/tmp/last_tick_byondtime = 0
-	var/tmp/last_interval_tick_offset = 0 //how far off the last tick (byondtime - realtime)
-	var/tmp/last_try_dilate = 0
-
-	var/tmp/threshold_dilation = TICKLAG_DILATION_THRESHOLD	//remove later
-	var/tmp/threshold_normalization = TICKLAG_NORMALIZATION_THRESHOLD //remove later
+	var/tmp/highMapCpuCount = 0 // how many times in a row has the map_cpu been high
 
 /datum/controller/gameticker/proc/pregame()
 
@@ -381,24 +376,33 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 
 		emergency_shuttle.process()
 
+		#if DM_VERSION >= 514
 		if (useTimeDilation)//TIME_DILATION_ENABLED set this
 			if (world.time > last_try_dilate + TICKLAG_DILATE_INTERVAL) //interval separate from the process loop. maybe consider moving this for cleanup later (its own process loop with diff. interval?)
 				last_try_dilate = world.time
 
-				last_interval_tick_offset = max(0, (world.timeofday - last_tick_realtime) - (world.time - last_tick_byondtime))
-				last_tick_realtime = world.timeofday
-				last_tick_byondtime = world.time
+				// adjust the counter up or down and keep it within the set boundaries
+				if (world.map_cpu >= TICKLAG_MAPCPU_MAX)
+					if (highMapCpuCount < TICKLAG_INCREASE_THRESHOLD)
+						highMapCpuCount++
+				else if (world.map_cpu <= TICKLAG_MAPCPU_MIN)
+					if (highMapCpuCount > -TICKLAG_DECREASE_THRESHOLD)
+						highMapCpuCount--
 
+				// adjust the tick_lag, if needed
 				var/dilated_tick_lag = world.tick_lag
+				if (highMapCpuCount >= TICKLAG_INCREASE_THRESHOLD)
+					dilated_tick_lag = min(world.tick_lag + TICKLAG_DILATION_INC,	timeDilationUpperBound)
+				else if (highMapCpuCount <= -TICKLAG_DECREASE_THRESHOLD)
+					dilated_tick_lag = max(world.tick_lag - TICKLAG_DILATION_DEC, timeDilationLowerBound)
 
-				if (last_interval_tick_offset >= threshold_dilation)
-					dilated_tick_lag = 	min(world.tick_lag + TICKLAG_DILATION_INC,	timeDilationUpperBound)
-				else if (last_interval_tick_offset <= threshold_normalization)
-					dilated_tick_lag =	max(world.tick_lag - TICKLAG_DILATION_DEC, timeDilationLowerBound)
-
+				// only set the value if it changed! earlier iteration of this was
+				// setting world.tick_lag very often, which caused instability with
+				// the networking. do not spam change world.tick_lag! you will regret it!
 				if (world.tick_lag != dilated_tick_lag)
 					world.tick_lag = dilated_tick_lag
-
+					highMapCpuCount = 0
+		#endif
 
 		// Minds are sometimes kicked out of the global list, hence the fallback (Convair880).
 		if (src.last_readd_lost_minds_to_ticker && world.time > src.last_readd_lost_minds_to_ticker + 1800)
@@ -522,7 +526,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 	//logTheThing("debug", null, null, "Zamujasa: [world.timeofday] Processing crew objectives")
 	var/list/successfulCrew = list()
 	for (var/datum/mind/crewMind in minds)
-		if (!crewMind.current || !crewMind.objectives.len)
+		if (!crewMind.current || !length(crewMind.objectives))
 			continue
 
 		var/count = 0
@@ -559,6 +563,9 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 	else if (final_score <= 0)
 		final_score = 0
 	else
+		final_score = 100
+
+	if(!score_tracker.score_calculated)
 		final_score = 100
 
 	boutput(world, score_tracker.escapee_facts())

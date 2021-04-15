@@ -955,6 +955,7 @@
 
 	dark
 		fullbright = 0
+		luminosity = 1
 
 	lighted
 		fullbright = 1
@@ -1563,6 +1564,7 @@ obj/item/clothing/gloves/concussive
 		T.dig_strength = 4
 		T.hitsound_charged = 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg'
 		T.hitsound_uncharged = 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg'
+		AddComponent(/datum/component/wearertargeting/unarmedblock/concussive, list(SLOT_GLOVES))
 
 /obj/item/mining_tool/power_pick
 	name = "power pick"

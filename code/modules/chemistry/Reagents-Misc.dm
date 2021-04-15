@@ -75,6 +75,7 @@ datum
 					explode(list(get_turf(M)), "splash on [key_name(M)]")
 
 			reaction_obj(var/obj/O, var/volume)
+				return_if_overlay_or_effect(O)
 				if(reagent_state == LIQUID || prob(2 * volume - min(14 + T0C - holder.total_temperature, 100) * 0.1))
 					explode(list(get_turf(O)), "splash on [key_name(O)]")
 
@@ -863,7 +864,7 @@ datum
 					if (!target)
 						return
 
-				for (var/atom/A as() in target)
+				for (var/atom/A as anything in target)
 					if (A.event_handler_flags & HANDLE_STICKER)
 						if (A:active)
 							target.visible_message("<span class='alert'><b>[A]</b> dissolves completely!</span>")
@@ -2523,7 +2524,7 @@ datum
 						M.visible_message("<span class='emote'><B>[M]</B> flaps [his_or_her(M)] arms ANGRILY!</span>")
 					if (ishuman(M))
 						var/mob/living/carbon/human/H = M
-						if (H.sound_list_flap && H.sound_list_flap.len)
+						if (H.sound_list_flap && length(H.sound_list_flap))
 							playsound(get_turf(H), pick(H.sound_list_flap), 80, 0, 0, H.get_age_pitch())
 				..()
 				return
@@ -3700,6 +3701,20 @@ datum
 
 			on_plant_life(var/obj/machinery/plantpot/P)
 				P.HYPdamageplant("poison",1)
+
+			syndicate
+				name = "syndicate miasma"
+				id = "miasma_s"
+				description = "Gross miasma produced by unwashed nerd."
+				fluid_r = 180
+				fluid_b = 60
+				fluid_g = 80
+
+				on_add()
+					..()
+					if (holder && ismob(holder.my_atom))
+						var/mob/bipbip = holder.my_atom
+						bipbip.playsound_local(bipbip.loc, "sound/musical_instruments/Vuvuzela_1.ogg", 50, 1)
 
 		sakuride
 			name = "sakuride"

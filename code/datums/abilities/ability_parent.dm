@@ -235,7 +235,7 @@
 		src.updateButtons()
 
 	proc/resumeAllAbilities()
-		if (src.suspended && src.suspended.len)
+		if (src.suspended && length(src.suspended))
 			src.abilities = src.suspended
 			src.suspended = list()
 		src.updateButtons()
@@ -277,6 +277,12 @@
 			return
 		if (A in src.abilities)
 			src.abilities -= A
+			if (A == src.altPower)
+				src.altPower = null
+			if (A == src.ctrlPower)
+				src.ctrlPower = null
+			if (A == src.shiftPower)
+				src.shiftPower = null
 			qdel(A)
 			return
 		src.updateButtons()

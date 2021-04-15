@@ -14,7 +14,7 @@ var/global/icon/wanted_poster_unknown = icon('icons/obj/decals/posters.dmi', "wa
 	var/p_image
 	if (alert(usr, "Include picture of atom in poster?", "Add Image", "Yes", "No") == "Yes")
 		if (!target)
-			target = input(usr, "Select target", "Select target") as() in world
+			target = input(usr, "Select target", "Select target") as anything in world
 		if (target)
 			if (ismob(target))
 				p_image = target:build_flat_icon()
@@ -555,7 +555,7 @@ var/global/icon/wanted_poster_unknown = icon('icons/obj/decals/posters.dmi', "wa
 			if (!istype(R))
 				boutput(usr, "<span class='alert'>No record found for \"[ptext]\".</span>")
 				return
-			if (!islist(R.fields) || !R.fields.len)
+			if (!islist(R.fields) || !length(R.fields))
 				boutput(usr, "<span class='alert'>Records for \"[ptext]\" are corrupt.</span>")
 				return
 			var/datum/computer/file/image/IMG = R.fields["file_photo"]

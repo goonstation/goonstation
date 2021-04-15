@@ -11,7 +11,7 @@
 	var/CMinutes = (world.realtime / 10) / 60
 	minutes = text2num(minutes)
 	var/exp = minutes - CMinutes
-	if (exp <= 0)
+	if (minutes <= 0)
 		return 0
 	else
 		if (exp >= ((24 HOURS) / (1 MINUTE))) // 1 day in minutes
@@ -432,17 +432,17 @@ var/global/list/playersSeen = list()
 			return
 		data["reason"] = reason
 
-		var/server_nice = input(usr, "What server does the ban apply to?", "Ban") as null|anything in list("All", "Roleplay", "Main")
+		var/server_nice = input(usr, "What server does the ban apply to?", "Ban") as null|anything in list("All", "1 Classic: Heisenbee", "2 Classic: Bombini", "3 Roleplay: Morty", "4 Roleplay: Sylvester")
 		var/server = null
 		switch (server_nice)
-			if ("Roleplay")
-				server = "rp"
-			if ("Main")
-				server = "main"
-			if ("Roleplay Overflow")
+			if ("1 Classic: Heisenbee")
+				server = "main1"
+			if ("2 Classic: Bombini")
 				server = "main2"
-			if ("Main Overflow")
+			if ("3 Roleplay: Morty")
 				server = "main3"
+			if ("4 Roleplay: Sylvester")
+				server = "main4"
 		data["server"] = server
 
 		var/ban_time = input(usr,"How long will the ban be? (select Custom to alter existing duration)","Ban") as null|anything in list("Half-hour","One Hour","Six Hours","One Day","Half a Week","One Week","One Month","Permanent","Custom")

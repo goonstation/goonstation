@@ -4,8 +4,6 @@
 
 //this is the home for checks of mob types
 
-/// Returns true if the given x is a mob
-#define ismob(x) istype(x, /mob)
 /// Returns true if the given x is an observer
 #define isobserver(x) istype(x, /mob/dead)
 /// Returns true if the given x is an observer and an admin
@@ -16,6 +14,7 @@
 
 #define iscarbon(x) istype(x, /mob/living/carbon)
 #define ismonkey(x) (istype(x, /mob/living/carbon/human) && istype(x:mutantrace, /datum/mutantrace/monkey))
+#define isnpc(x) istype(x, /mob/living/carbon/human/npc)
 #define isnpcmonkey(x) (istype(x,/mob/living/carbon/human/npc/monkey) && istype(x:mutantrace, /datum/mutantrace/monkey))
 #define ishuman(x) istype(x, /mob/living/carbon/human)
 #define iscow(x) (istype(x, /mob/living/carbon/human) && istype(x:mutantrace, /datum/mutantrace/cow))

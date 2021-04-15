@@ -505,14 +505,14 @@
 	var/list/prev_tiles = 0
 	var/list/new_tiles = list()
 
-	if (coveredTiles != null && coveredTiles.len)
+	if (coveredTiles != null && length(coveredTiles))
 		prev_tiles = coveredTiles
 
 	for(var/turf/T in view(CAM_RANGE, get_turf(src)))
 		new_tiles += T
 
 	if (prev_tiles)
-		for(var/turf/O as() in (prev_tiles - new_tiles))
+		for(var/turf/O as anything in (prev_tiles - new_tiles))
 			//copy+paste begin!
 			if(O.cameras == null) continue
 
@@ -525,10 +525,9 @@
 				if (O.aiImage)
 					O.aiImage.loc = O
 
-			LAGCHECK(LAG_HIGH)
 			//copy paste end!
 
-	for(var/turf/t as() in (new_tiles - prev_tiles))
+	for(var/turf/t as anything in (new_tiles - prev_tiles))
 		//copy+paste begin!
 		var/cam_amount = t.cameras ? t.cameras.len : 0
 		if(t.cameras == null)
@@ -557,7 +556,6 @@
 		else if( t.cameras == null )
 			t.aiImage.loc = t
 
-		LAGCHECK(LAG_HIGH)
 		//copy paste end!
 
 	return
@@ -602,7 +600,7 @@ world/proc/updateCameraVisibility()
 			cam_candidates += t
 
 
-		for(var/turf/t as() in cam_candidates) //ugh
+		for(var/turf/t as anything in cam_candidates) //ugh
 			t.aiImage = new
 			t.aiImage.appearance = ma
 			t.aiImage.dir = pick(alldirs)
@@ -624,7 +622,7 @@ world/proc/updateCameraVisibility()
 		for(var/turf/t in view(CAM_RANGE, get_turf(C)))
 			LAGCHECK(LAG_HIGH)
 			if (!t.aiImage) continue
-			if (t.cameras && t.cameras.len)
+			if (t.cameras && length(t.cameras))
 				t.aiImage.loc = null
 			else
 				t.aiImage.loc = t

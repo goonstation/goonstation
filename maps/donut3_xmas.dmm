@@ -2011,7 +2011,7 @@
 /area/station/engine/inner)
 "ajc" = (
 /obj/table/reinforced/bar/auto,
-/obj/item/card_box/suit{
+/obj/item/card_box/plain{
 	pixel_x = -5
 	},
 /obj/disposalpipe/segment/transport,
@@ -10147,7 +10147,9 @@
 /turf/simulated/floor/sanitary/blue,
 /area/station/crew_quarters/captain)
 "cEO" = (
-/obj/displaycase,
+/obj/displaycase{
+	displayed = new /obj/item/captaingun
+},
 /obj/machinery/light/incandescent/greenish{
 	dir = 1
 	},
@@ -24065,7 +24067,7 @@
 	pixel_x = 5;
 	pixel_y = 2
 	},
-/obj/item/postit_stack{
+/obj/item/item_box/postit{
 	pixel_x = -6;
 	pixel_y = 4
 	},
@@ -32733,7 +32735,7 @@
 /area/station/crew_quarters/heads)
 "jsA" = (
 /obj/table/glass/reinforced/auto,
-/obj/item/card_box/suit,
+/obj/item/card_box/plain,
 /turf/simulated/floor/carpet,
 /area/station/hallway/secondary/exit)
 "jsD" = (
@@ -40689,7 +40691,7 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/nw)
 "lNT" = (
-/obj/machinery/computer/barcode/qm/donut3{
+/obj/machinery/computer/barcode/qm/no_belthell{
 	dir = 4
 	},
 /turf/simulated/floor/yellow,
@@ -76968,7 +76970,7 @@
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "wmX" = (
-/obj/storage/crate/rcd,
+/obj/storage/crate/rcd/CE,
 /obj/cable{
 	d1 = 1;
 	d2 = 8;

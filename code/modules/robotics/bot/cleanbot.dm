@@ -239,9 +239,9 @@
 				return
 
 			// we are not there. how do we get there
-			if (!src.path || !src.path.len)
+			if (!src.path || !length(src.path))
 				src.navigate_to(get_turf(src.target), CLEANBOT_MOVE_SPEED, max_dist = 120)
-				if (!src.path || !src.path.len)
+				if (!src.path || !length(src.path))
 					// answer: we don't. try to find something else then.
 					src.KillPathAndGiveUp(1)
 		else // No targets found in range? Increase the range!
@@ -424,3 +424,8 @@
 		..()
 
 #undef CLEANBOT_MOVE_SPEED
+
+/mob/living/critter/bot/cleanbot
+	name = "cleanbot"
+
+	emagged

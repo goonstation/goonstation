@@ -2804,8 +2804,8 @@
 				return 0
 			if (!zones.len)
 				return 0
-			brute = brute / zones.len
-			burn = burn / zones.len
+			brute = brute / length(zones)
+			burn = burn / length(zones)
 			if (part_head)
 				if (part_head.ropart_take_damage(brute, burn) == 1)
 					src.compborg_lose_limb(part_head)
@@ -2862,8 +2862,8 @@
 				return 0
 			if (!zones.len)
 				return 0
-			brute = brute / zones.len
-			burn = burn / zones.len
+			brute = brute / length(zones)
+			burn = burn / length(zones)
 			if (part_head)
 				part_head.ropart_mend_damage(brute, burn)
 			if (part_chest)

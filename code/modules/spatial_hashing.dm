@@ -61,7 +61,7 @@ var/global/list/datum/spatial_hashmap/spatial_z_maps = init_spatial_maps()
 		cellwidth = width/cellsize
 
 		buckets_holding_atom = list()
-		buckets_holding_atom.len = hashmap.len
+		buckets_holding_atom.len = length(hashmap)
 
 		my_z = z
 	/* unused, could be useful later idk

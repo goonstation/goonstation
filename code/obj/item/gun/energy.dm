@@ -117,7 +117,7 @@
 			..()
 
 	attack_hand(mob/user as mob)
-		if ((user.r_hand == src || user.l_hand == src) && src.contents && src.contents.len)
+		if ((user.r_hand == src || user.l_hand == src) && src.contents && length(src.contents))
 			if (src.can_swap_cell && src.cell&&!src.rechargeable)
 				var/obj/item/ammo/power_cell/W = src.cell
 				user.put_in_hand_or_drop(W)
@@ -651,7 +651,7 @@
 		var/list/L = list()
 		L += "None (Cancel)" // So we'll always get a list, even if there's only one teleporter in total.
 
-		for(var/obj/machinery/teleport/portal_generator/PG as() in machine_registry[MACHINES_PORTALGENERATORS])
+		for(var/obj/machinery/teleport/portal_generator/PG as anything in machine_registry[MACHINES_PORTALGENERATORS])
 			if (!PG.linked_computer || !PG.linked_rings)
 				continue
 			var/turf/PG_loc = get_turf(PG)
@@ -1318,7 +1318,7 @@
 					set_current_projectile(projectiles["detain"])
 					item_state = "lawg-detain"
 					playsound(M, "sound/vox/detain.ogg", 50)
-				if ("execute")
+				if ("execute", "exterminate")
 					set_current_projectile(projectiles["execute"])
 					current_projectile.cost = 30
 					item_state = "lawg-execute"
@@ -1328,7 +1328,7 @@
 					current_projectile.cost = 50
 					item_state = "lawg-smokeshot"
 					playsound(M, "sound/vox/smoke.ogg", 50)
-				if ("knockout")
+				if ("knockout", "sleepshot")
 					set_current_projectile(projectiles["knockout"])
 					current_projectile.cost = 60
 					item_state = "lawg-knockout"
@@ -1349,7 +1349,7 @@
 					set_current_projectile(projectiles["clownshot"])
 					item_state = "lawg-clownshot"
 					playsound(M, "sound/vox/clown.ogg", 30)
-				if ("pulse")
+				if ("pulse", "push")
 					set_current_projectile(projectiles["pulse"])
 					item_state = "lawg-pulse"
 					playsound(M, "sound/vox/push.ogg", 50)
@@ -1491,7 +1491,7 @@
 
 /obj/item/gun/energy/pulse_rifle
 	name = "pulse rifle"
-	desc = "todo"
+	desc = "A sleek energy rifle with two different pulse settings: Kinetic and Electromagnetic."
 	icon_state = "pulse_rifle"
 	uses_multiple_icon_states = 1
 	item_state = "pulse_rifle"

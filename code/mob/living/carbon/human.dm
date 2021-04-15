@@ -465,6 +465,24 @@
 			return
 		return 0
 
+	proc/randomize(var/target, var/mob/user, var/show_message = 1)
+		if (!src.holder || !target)
+			return 0
+		if (istext(target))
+			var/randlimb = null
+			if (target == "all" || target == "both_arms" || target == "l_arm")
+				randlimb = pick(all_valid_random_left_arms)
+				. += src.replace_with("l_arm", randlimb, user, show_message)
+			if (target == "all" || target == "both_arms" || target == "r_arm")
+				randlimb = pick(all_valid_random_right_arms)
+				. += src.replace_with("r_arm", randlimb, user, show_message)
+			if (target == "all" || target == "both_legs" || target == "r_leg")
+				randlimb = pick(all_valid_random_right_legs)
+				. += src.replace_with("r_leg", randlimb, user, show_message)
+			if (target == "all" || target == "both_legs" || target == "l_leg")
+				randlimb = pick(all_valid_random_left_legs)
+				. += src.replace_with("l_leg", randlimb, user, show_message)
+		return .
 
 
 /mob/living/carbon/human/proc/is_vampire()
@@ -1145,7 +1163,7 @@
 		if (O.move_triggered)
 			O.move_trigger(src, ev)
 	reagents?.move_trigger(src, ev)
-	for (var/datum/statusEffect/S as() in statusEffects)
+	for (var/datum/statusEffect/S as anything in statusEffects)
 		if (S?.move_triggered)
 			S.move_trigger(src, ev)
 
@@ -1388,6 +1406,10 @@
 	var/original_language = src.say_language
 	if (mutantrace?.override_language)
 		say_language = mutantrace.override_language
+
+	if (istype(src.wear_mask, /obj/item/clothing/mask/monkey_translator))
+		var/obj/item/clothing/mask/monkey_translator/mask = src.wear_mask
+		say_language = mask.new_language
 
 	message = copytext(message, 1, MAX_MESSAGE_LEN)
 
@@ -2094,7 +2116,7 @@
 	if (equipped)
 		if (slot != slot_in_backpack && slot != slot_in_belt)
 			I.set_loc(src)
-		if (islist(I.ability_buttons) && I.ability_buttons.len)
+		if (islist(I.ability_buttons) && length(I.ability_buttons))
 			I.set_mob(src)
 			if (slot != slot_in_backpack && slot != slot_in_belt)
 				I.show_buttons()
@@ -2897,7 +2919,7 @@
 	bleeding = max(bleeding - amt, 0)
 
 /mob/living/carbon/human/proc/juggling()
-	if (islist(src.juggling) && src.juggling.len)
+	if (islist(src.juggling) && length(src.juggling))
 		return 1
 	return 0
 

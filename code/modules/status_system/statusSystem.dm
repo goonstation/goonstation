@@ -9,7 +9,7 @@ var/global/list/statusGroupLimits = list("Food"=4)
 /proc/testStatus()
 	var/inp = input(usr,"Which status?","Test status","airrit") as text
 	SPAWN_DBG(0)
-		for(var/datum/statusEffect/status as() in usr.statusEffects)
+		for(var/datum/statusEffect/status as anything in usr.statusEffects)
 			usr.delStatus(status)
 		usr.changeStatus(inp, 15 MINUTES)
 
@@ -118,7 +118,7 @@ var/global/list/statusGroupLimits = list("Food"=4)
 /atom/proc/changeStatus(statusId, duration, optional)
 	. = null
 	var/datum/statusEffect/globalInstance = null
-	for(var/datum/statusEffect/status as() in globalStatusPrototypes)
+	for(var/datum/statusEffect/status as anything in globalStatusPrototypes)
 		if(status.id == statusId)
 			globalInstance = status
 			break
@@ -153,7 +153,7 @@ var/global/list/statusGroupLimits = list("Food"=4)
 	if(statusEffects == null) statusEffects = list()
 
 	var/datum/statusEffect/globalInstance = null
-	for(var/datum/statusEffect/status as() in globalStatusPrototypes)
+	for(var/datum/statusEffect/status as anything in globalStatusPrototypes)
 		if(status.id == statusId)
 			globalInstance = status
 			break
@@ -166,7 +166,7 @@ var/global/list/statusGroupLimits = list("Food"=4)
 		var/groupCount = 0
 		var/list/groupLimits = (length(src.statusLimits) ? src.statusLimits | statusGroupLimits : statusGroupLimits)
 		if(globalInstance.exclusiveGroup != "" && groupLimits.Find(globalInstance.exclusiveGroup))
-			for(var/datum/statusEffect/status as() in statusEffects)
+			for(var/datum/statusEffect/status as anything in statusEffects)
 				if(status.exclusiveGroup == globalInstance.exclusiveGroup && status.id != statusId)
 					groupCount++
 			if(groupCount >= groupLimits[globalInstance.exclusiveGroup])
@@ -236,7 +236,7 @@ var/global/list/statusGroupLimits = list("Food"=4)
 /atom/proc/getStatusDuration(statusId)
 	.= null
 	if(statusEffects)
-		for(var/datum/statusEffect/status as() in statusEffects) //dont typecheck as we loop through StatusEffects - Assume everything inside must be a statuseffect
+		for(var/datum/statusEffect/status as anything in statusEffects) //dont typecheck as we loop through StatusEffects - Assume everything inside must be a statuseffect
 			if(status.id == statusId)
 				. = status.duration
 				break
@@ -250,12 +250,12 @@ var/global/list/statusGroupLimits = list("Food"=4)
 /atom/proc/hasStatus(statusId, optionalArgs = null)
 	if(statusEffects)
 		if (!islist(statusId))
-			for(var/datum/statusEffect/status as() in statusEffects) //dont typecheck as we loop through StatusEffects - Assume everything inside must be a statuseffect
+			for(var/datum/statusEffect/status as anything in statusEffects) //dont typecheck as we loop through StatusEffects - Assume everything inside must be a statuseffect
 				if(status.id == statusId && ((optionalArgs && status.onCheck(optionalArgs)) || (!optionalArgs)))
 					return status
 		else
 			var/list/idlist = statusId
-			for(var/datum/statusEffect/status as() in statusEffects)
+			for(var/datum/statusEffect/status as anything in statusEffects)
 				if((status.id in idlist) && ((optionalArgs && status.onCheck(optionalArgs)) || (!optionalArgs)))
 					return status
 
@@ -268,7 +268,7 @@ var/global/list/statusGroupLimits = list("Food"=4)
 /atom/proc/getStatusList(optionalArgs = null)
 	. = list()
 	if (statusEffects)
-		for(var/datum/statusEffect/status as() in statusEffects)
+		for(var/datum/statusEffect/status as anything in statusEffects)
 			if((!optionalArgs) || (optionalArgs && status.onCheck(optionalArgs)))
 				.[status.id] = status
 
@@ -283,7 +283,7 @@ var/global/list/statusGroupLimits = list("Food"=4)
 		return
 
 	if(istext(status)) //ID was passed in.
-		for(var/datum/statusEffect/statcurr as() in statusEffects)
+		for(var/datum/statusEffect/statcurr as anything in statusEffects)
 			if(statcurr.id == status)
 				globalStatusInstances -= statcurr
 				statusEffects -= statcurr

@@ -1657,7 +1657,7 @@ var/global/noir = 0
 			if (src.level >= LEVEL_PA)
 				var/mob/M = locate(href_list["target"])
 				if (!M) return
-				var/ab_to_add = input("Which holder?", "Ability", null) as() in childrentypesof(/datum/abilityHolder)
+				var/ab_to_add = input("Which holder?", "Ability", null) as anything in childrentypesof(/datum/abilityHolder)
 				M.add_ability_holder(ab_to_add)
 				M.abilityHolder.updateButtons()
 				message_admins("[key_name(usr)] created abilityHolder [ab_to_add] for [key_name(M)].")
@@ -2635,7 +2635,7 @@ var/global/noir = 0
 								alert("No ability holder detected. Create a holder first!")
 								return
 
-							var/ab_to_do = input("Which ability?", "[adding ? "Give" : "Remove"] Ability", null) as() in childrentypesof(/datum/targetable)
+							var/ab_to_do = input("Which ability?", "[adding ? "Give" : "Remove"] Ability", null) as anything in childrentypesof(/datum/targetable)
 							if (adding)
 								M.abilityHolder.addAbility(ab_to_do)
 							else
@@ -3506,7 +3506,7 @@ var/global/noir = 0
 
 		if ("view_logs_web")
 			if ((src.level >= LEVEL_MOD) && !src.tempmin)
-				usr << link("https://mini.xkeeper.net/ss13/admin/log-get.php?id=[config.server_id]&date=[roundLog_date]")
+				usr << link("https://mini.xkeeper.net/ss13/admin/log-viewer.php?server=[config.server_id]&redownload=1&view=[roundLog_date].html")
 
 		if ("view_logs")
 			if ((src.level >= LEVEL_MOD) && !src.tempmin)
@@ -3664,7 +3664,7 @@ var/global/noir = 0
 			else
 				alert ("You must be at least a Secondary Admin to respawn a target.")
 		if ("showrules")
-			if (src.level >= LEVEL_SA && alert("Are you sure you want to show this player the rules?", "PARENTAL CONTROL", "Sure thing!", "Not really.") == "Sure thing!")
+			if (src.level >= LEVEL_SA)
 				var/mob/M = locate(href_list["target"])
 				if (!M) return
 				usr.client.show_rules_to_player(M)
@@ -3876,6 +3876,84 @@ var/global/noir = 0
 				usr.client.holder.playeropt(target)
 
 ///////////////////////////////////////////////////////////////////////////////////////////////Panels
+
+/datum/player_panel
+
+/datum/player_panel/ui_state(mob/user)
+	return tgui_admin_state.can_use_topic(src, user)
+
+/datum/player_panel/ui_status(mob/user)
+  return tgui_admin_state.can_use_topic(src, user)
+
+/datum/player_panel/ui_interact(mob/user, datum/tgui/ui)
+	ui = tgui_process.try_update_ui(user, src, ui)
+	if (!ui)
+		ui = new(user, src, "PlayerPanel")
+		ui.open()
+
+/datum/player_panel/ui_data(mob/user)
+	var/list/players = list()
+	for (var/mob/M in mobs)
+		if (M.ckey)
+			var/area/A = get_area(M)
+			players[M.ckey] = list(
+				"mobRef" = "\ref[M]",
+				"ckey" = M.ckey,
+				"name" = M.name ? M.name : "N/A",
+				"realName" = M.real_name ? M.real_name : "N/A",
+				"assignedRole" = M.mind?.assigned_role ? M.mind.assigned_role : "N/A",
+				"specialRole" = M.mind?.special_role ? M.mind.special_role : "N/A",
+				"playerType" = M.type,
+				"computerId" = M.computer_id ? M.computer_id : "N/A",
+				"ip" = M.lastKnownIP ? M.lastKnownIP : "N/A",
+				"joined" = M.client?.joined_date ? M.client.joined_date : "N/A",
+				"playerLocation" = A?.name ? A.name : "N/A",
+			)
+	. = list(
+		"players" = players
+	)
+
+/datum/player_panel/ui_act(action, params)
+	. = ..()
+	if (.)
+		return
+
+	switch(action)
+		if("open-player-options")
+			if(!usr.client) return
+			var/mobRef = params["mobRef"]
+			var/mob/M = locate(mobRef)
+			if(ismob(M) && M.ckey == params["ckey"])
+				usr.client.holder.playeropt(M)
+			else //mob ref was no good
+				for(M in mobs)
+					if(M.ckey == params["ckey"])
+						usr.client.holder.playeropt(M)
+						break
+
+		if("private-message-player")
+			if(!usr.client) return
+			var/mobRef = params["mobRef"]
+			var/mob/M = locate(mobRef)
+			if(ismob(M) && M.ckey == params["ckey"])
+				do_admin_pm(M.ckey, usr)
+			else
+				for(M in mobs)
+					if(M.ckey == params["ckey"])
+						do_admin_pm(M.ckey, usr)
+						break
+
+		if("jump-to-player-loc")
+			if(!usr.client) return
+			var/mobRef = params["mobRef"]
+			var/mob/M = locate(mobRef)
+			if(ismob(M) && M.ckey == params["ckey"])
+				usr.client.jumptomob(M)
+			else
+				for(M in mobs)
+					if(M.ckey == params["ckey"])
+						usr.client.jumptomob(M)
+						break
 
 /datum/admins/proc/player()
 	var/dat = {"<html>

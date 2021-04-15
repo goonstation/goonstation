@@ -54,14 +54,14 @@
 	*/
 	var/mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_NO_EYES | HAS_NO_HEAD | USES_STATIC_ICON)
 
-	/// if 1, allows human diseases and dna injectors to affect this mutantrace
-	var/human_compatible = 1
-	/// if 0, can only wear clothes listed in an item's compatible_species var
-	var/uses_human_clothes = 1
+	/// if TRUE, allows human diseases and dna injectors to affect this mutantrace
+	var/human_compatible = TRUE
+	/// if FALSE, can only wear clothes if listed in [/obj/item/clothing/var/compatible_species]
+	var/uses_human_clothes = TRUE
 	/// set to an icon to have human.update_clothing() look through its icon_states for matching things
 	var/clothing_icon_override = null
-	/// if 1, only understood by others of this mutantrace
-	var/exclusive_language = 0
+	/// if TRUE, only understood by others of this mutantrace
+	var/exclusive_language = FALSE
 	/// overrides normal voice message if defined (and others don't understand us, ofc)
 	var/voice_message = null
 	var/voice_name = "human"
@@ -980,7 +980,7 @@
 					mob.blood_volume = 500
 
 					if (!mob.organHolder)
-						mob.organHolder = new(src)
+						mob.organHolder = new(mob)
 					mob.organHolder.create_organs()
 
 					if (mob.get_stamina() != (STAMINA_MAX + mob.get_stam_mod_max()))
@@ -1562,6 +1562,7 @@
 					game_stats.Increment("farts")
 	#endif
 					mob.expel_fart_gas(0)
+					mob.add_karma(0.5)
 					SPAWN_DBG(1 SECOND)
 						mob.emote_allowed = 1
 

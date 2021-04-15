@@ -372,9 +372,10 @@
 
 /datum/supply_packs/monkey4
 	name = "Lab Monkey Crate - 4 pack"
-	desc = "x4 Monkey"
+	desc = "x4 Monkey, x1 Monkey Translator"
 	category = "Research Department"
-	contains = list(/mob/living/carbon/human/npc/monkey = 4)
+	contains = list(/mob/living/carbon/human/npc/monkey = 4,
+						/obj/item/clothing/mask/monkey_translator)
 	cost = 500
 	containertype = /obj/storage/crate/medical
 	containername = "Lab Monkey Crate"
@@ -631,10 +632,10 @@
 
 /datum/supply_packs/office
 	name = "Office Supply Crate"
-	desc = "x4 Paper Bins, x2 Clipboards, x1 Sticky Note Stacks, x5 Writing Implement Sets, x1 Stapler, x1 Scissors"
+	desc = "x4 Paper Bins, x2 Clipboards, x1 Sticky Note Box, x5 Writing Implement Sets, x1 Stapler, x1 Scissors"
 	contains = list(/obj/item/paper_bin = 4,
 		/obj/item/clipboard = 2,
-		/obj/item/postit_stack,
+		/obj/item/item_box/postit,
 		/obj/item/storage/box/pen,
 		/obj/item/storage/box/marker/basic,
 		/obj/item/storage/box/marker,
@@ -950,6 +951,23 @@
 	containertype = /obj/storage/crate/wooden
 	containername = "EVA Equipment Crate"
 
+/datum/supply_packs/XL_air_canister
+	name = "Extra Large Air Mix Canister"
+	desc = "Spare canister filled with a mix of nitrogen, oxygen and minimal amounts of carbon dioxide. Used for emergency re-pressurisation efforts."
+	category = "Engineering Department"
+	contains = list(/obj/machinery/portable_atmospherics/canister/air/large)
+	cost = 5000
+	containertype = /obj/storage/crate/wooden
+	containername = "Spare XL Air Mix Canister Crate"
+/datum/supply_packs/oxygen_canister
+	name = "Spare Oxygen Canister"
+	desc = "Spare oxygen canister, for resupplying Engineering's fuel or refilling oxygen tanks."
+	category = "Engineering Department"
+	contains = list(/obj/machinery/portable_atmospherics/canister/oxygen)
+	cost = 10000
+	containertype = /obj/storage/crate/wooden
+	containername = "Spare Oxygen Canister Crate"
+
 /datum/supply_packs/abcu
 	name = "ABCU Unit Crate"
 	desc = "An additional ABCU Unit, for large construction projects."
@@ -1210,6 +1228,17 @@
 	cost = 10000
 	containertype = /obj/storage/crate/classcrate/qm
 	containername = "Anti-Singularity Supply Pack"
+
+/datum/supply_packs/conworksupplies
+	name = "Construction Equipment"
+	desc = "The mothballed tools of our former Construction Workers, in a crate, for you!"
+	category = "Engineering Department"
+	contains = list(/obj/item/lamp_manufacturer/organic,/obj/item/material_shaper,/obj/item/room_planner,/obj/item/clothing/under/rank/orangeoveralls)
+	//i was going to add a version of the construction visualliser w/o seeing invisible monsters but FUCK SIGHT CODE WHAT THE FUCK
+	cost = 8000
+	containertype = /obj/storage/secure/crate
+	containername = "Construction Equipment (Cardlocked \[Engineering])"
+	access = access_engineering
 
 /* ================================================= */
 /* -------------------- Complex -------------------- */

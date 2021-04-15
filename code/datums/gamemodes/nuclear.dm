@@ -11,7 +11,7 @@
 	var/agent_radiofreq = 0 //:h for syndies, randomized per round
 	var/obj/machinery/nuclearbomb/the_bomb = null
 	var/bomb_check_timestamp = 0 // See check_finished().
-	var/const/agents_possible = 8 //If we ever need more syndicate agents. cogwerks - raised from 5
+	var/const/agents_possible = 10 //If we ever need more syndicate agents. cogwerks - raised from 5
 
 
 	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
@@ -38,7 +38,7 @@
 
 		if (player.ready)
 			num_players++
-	var/num_synds = max(1, min(round(num_players / 4), agents_possible))
+	var/num_synds = clamp( round(num_players / 6 ), 1, agents_possible)
 
 	possible_syndicates = get_possible_syndicates(num_synds)
 
@@ -49,7 +49,7 @@
 	// I wandered in and made things hopefully a bit easier to work with since we have multiple maps now - Haine
 	var/list/list/target_locations = null
 
-	if (map_settings && islist(map_settings.valid_nuke_targets) && map_settings.valid_nuke_targets.len)
+	if (map_settings && islist(map_settings.valid_nuke_targets) && length(map_settings.valid_nuke_targets))
 		target_locations = map_settings.valid_nuke_targets
 	else
 		if (ismap("COGMAP2"))
@@ -102,7 +102,7 @@
 			"the robotics lab" = list(/area/station/medical/robotics))
 			//"the public pool" = list(/area/station/crew_quarters/pool)) // Don't ask, it just fits all criteria. Deathstar weakness or something.
 
-	if (!islist(target_locations) || !target_locations.len)
+	if (!islist(target_locations) || !length(target_locations))
 		target_locations = list("the station (anywhere)" = list(/area/station))
 		message_admins("<span class='alert'><b>CRITICAL BUG:</b> nuke mode setup encountered an error while trying to choose a target location for the bomb and the target has defaulted to anywhere on the station! The round will be able to be played like this but it will be unbalanced! Please inform a coder!")
 		logTheThing("debug", null, null, "<b>CRITICAL BUG:</b> nuke mode setup encountered an error while trying to choose a target location for the bomb and the target has defaulted to anywhere on the station.")

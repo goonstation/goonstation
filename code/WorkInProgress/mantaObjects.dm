@@ -661,12 +661,6 @@ var/obj/manta_speed_lever/mantaLever = null
 			world << 'sound/effects/manta_alarm.ogg'
 			command_alert("The Magnetic tether has suffered critical damage aboard NSS Manta. Jetpacks equipped with magnetic attachments are now offline, please do not venture out into the ocean until the tether has been repaired.", "Magnetic Tether Damaged")
 
-/obj/landmark
-	name = "bigboom"
-	icon = 'icons/mob/screen1.dmi'
-	icon_state = "x"
-	anchored = 1.0
-
 /obj/miningteleporter
 	name = "Experimental long-range mining teleporter"
 	desc = "Well this looks somewhat unsafe."

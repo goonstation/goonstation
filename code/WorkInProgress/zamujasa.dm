@@ -24,8 +24,8 @@
 
 
 /obj/item/device/speechtotext
-	name = "dumb microphone"
-	desc = "This is really stupid."
+	name = "prototype flying chat device"
+	desc = "This is a microphone that was a prototype of the floating chat that pali added. It doesn't work that great, but hey."
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "mic"
 	item_state = "mic"
@@ -802,7 +802,7 @@
 	proc/get_value()
 		if (src.monitored_list && !src.monitored_var)
 			var/list/monlist = monitored.vars[src.monitored_list]
-			. = monlist.len
+			. = length(monlist)
 		else if (src.monitored_list)
 			. = monitored.vars[src.monitored_list][src.monitored_var]
 		else
@@ -974,7 +974,7 @@
 				if (0.8 to INFINITY)
 					lagc = "#ff0000; -dm-text-outline: 1px #000000 solid"
 
-			. = "<span style='color: [lagc];'>[world.cpu]% @ [world.tick_lag / 10]s</span>"
+			. = "<span style='color: [lagc];'>[round(world.cpu)]% @ [world.tick_lag / 10]s</span>"
 
 
 /obj/overlay/zamujasa/football_wave_timer
@@ -1154,6 +1154,65 @@ Other Goonstation servers:[serverList]</span>"})
 
 
 
+
+/obj/item/rcd/construction/safe/admin_crimes
+	// do not put this anywhere anyone can get it. it is for crime.
+	name = "ultra hyper super rapid construction device 2 turbo: championship edition hd remix now with NEW funky mode"
+	desc = "Also known as the ultimate in grief technology, this is capable of rapidly (de)constructing walls, flooring, windows, and doors. This admin crime edition features no cooldowns and extremely reduced matter costs. Does not, in fact, have a funky mode."
+
+	matter = 999999
+	max_matter = 999999
+
+	// lol
+	matter_create_floor = 1
+	time_create_floor = 0
+
+	matter_create_wall = 1
+	time_create_wall = 0
+
+	matter_reinforce_wall = 1
+	time_reinforce_wall = 0
+
+	matter_create_wall_girder = 1
+	time_create_wall_girder = 0
+
+	matter_create_door = 1
+	time_create_door = 0
+
+	matter_create_window = 1
+	time_create_window = 0
+
+	matter_create_light_fixture = 1
+	time_create_light_fixture = 0
+
+	matter_remove_door = 1
+	time_remove_door = 0
+
+	matter_remove_floor = 1
+	time_remove_floor = 0
+
+	matter_remove_lattice = 1
+	time_remove_lattice = 0
+
+	matter_remove_wall = 1
+	time_remove_wall = 0
+
+	matter_unreinforce_wall = 1
+	time_unreinforce_wall = 0
+
+	matter_remove_girder = 1
+	time_remove_girder = 0
+
+	matter_remove_window = 1
+	time_remove_window = 0
+
+	matter_remove_light_fixture = 1
+	time_remove_light_fixture = 0
+
+
+
+
+
 /mob/living/critter/small_animal/bee/zombee/zambee
 	name = "zambee"
 	real_name = "zambee"
@@ -1174,3 +1233,17 @@ Other Goonstation servers:[serverList]</span>"})
 	amt1 = 15
 	venom2 = "omnizine"
 	amt2 = 5
+
+
+
+
+// i am not sorry for this
+/obj/machinery/shower/cowbrush
+	name = "\improper PLEASEDMOO cattle cleaner"
+	icon = 'icons/obj/stationobjs.dmi'
+	icon_state = "cowbrush"
+	desc = "A huge rotary brush attached to a wall. Supposedly, cows love it."
+
+	attack_hand(mob/user as mob)
+		..()
+		src.icon_state = "cowbrush[src.on ? "_on" : ""]"

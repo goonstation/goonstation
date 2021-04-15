@@ -6,7 +6,6 @@
 	organ_holder_required_op_stage = 3.0
 	icon_state = "appendix"
 	failure_disease = /datum/ailment/disease/appendicitis
-	bite_damage = INFINITY // 1 bite, 1 kill
 
 	on_life(var/mult = 1)
 		if (!..())

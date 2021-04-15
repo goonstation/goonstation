@@ -2641,8 +2641,7 @@
 /area/radiostation/bedroom)
 "ahR" = (
 /obj/stool/chair/comfy{
-	dir = 4;
-	icon_state = "chair_comfy"
+	dir = 4
 	},
 /obj/machinery/light/emergency{
 	dir = 8;
@@ -2751,8 +2750,7 @@
 /area/mining/dock)
 "aie" = (
 /obj/disposalpipe/trunk/transport{
-	dir = 4;
-	icon_state = "pipe-t"
+	dir = 4
 	},
 /obj/machinery/disposal/transport{
 	name = "transport chute - Bus Dock"
@@ -3478,8 +3476,7 @@
 "akf" = (
 /obj/decal/cleanable/dirt,
 /obj/disposalpipe/trunk/transport{
-	dir = 8;
-	icon_state = "pipe-t"
+	dir = 8
 	},
 /obj/machinery/disposal/transport{
 	name = "transport chute - Mining"
@@ -3533,7 +3530,6 @@
 /area/space)
 "akp" = (
 /obj/lattice{
-	dir = 2;
 	icon_state = "lattice-dir"
 	},
 /obj/item/reagent_containers/food/snacks/eggsalad,
@@ -3987,9 +3983,8 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/light_switch{
-	name = "N light switch";
-	pixel_y = 24
+/obj/machinery/ai_status_display{
+	pixel_y = 28
 	},
 /turf/simulated/floor/yellow/side{
 	dir = 1
@@ -4313,7 +4308,6 @@
 /area/space)
 "ami" = (
 /obj/decal/tile_edge/line/purple{
-	dir = 2;
 	icon_state = "tile1"
 	},
 /turf/simulated/floor/plating/airless/asteroid/lighted,
@@ -4456,7 +4450,6 @@
 	icon_state = "4-8"
 	},
 /obj/decal/tile_edge/stripe/extra_big{
-	dir = 2;
 	icon_state = "xtra_bigstripe-corner"
 	},
 /turf/simulated/floor/industrial,
@@ -4652,7 +4645,6 @@
 /area/space)
 "amZ" = (
 /obj/decal/tile_edge/line/purple{
-	dir = 2;
 	icon_state = "tile1"
 	},
 /obj/machinery/light/small,
@@ -4675,31 +4667,27 @@
 "anc" = (
 /obj/storage/crate/internals,
 /obj/decal/tile_edge/stripe/extra_big{
-	dir = 1;
-	icon_state = "xtra_bigstripe-edge"
+	dir = 1
 	},
 /turf/simulated/floor/industrial,
 /area/space)
 "and" = (
 /obj/decal/tile_edge/stripe/extra_big{
-	dir = 1;
-	icon_state = "xtra_bigstripe-edge"
+	dir = 1
 	},
 /turf/simulated/floor/industrial,
 /area/space)
 "ane" = (
 /obj/storage/crate/loot,
 /obj/decal/tile_edge/stripe/extra_big{
-	dir = 1;
-	icon_state = "xtra_bigstripe-edge"
+	dir = 1
 	},
 /turf/simulated/floor/industrial,
 /area/space)
 "anf" = (
 /obj/storage/crate,
 /obj/decal/tile_edge/stripe/extra_big{
-	dir = 1;
-	icon_state = "xtra_bigstripe-edge"
+	dir = 1
 	},
 /obj/item/paper/tug/warehouse,
 /turf/simulated/floor/industrial,
@@ -4712,8 +4700,7 @@
 	},
 /obj/storage/crate,
 /obj/decal/tile_edge/stripe/extra_big{
-	dir = 1;
-	icon_state = "xtra_bigstripe-edge"
+	dir = 1
 	},
 /obj/item/paper/tug/warehouse,
 /turf/simulated/floor/industrial,
@@ -5049,13 +5036,17 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/power/apc/autoname_north,
-/turf/simulated/floor/caution/south,
-/area/mining/manufacturing)
-"anX" = (
 /obj/machinery/door_control{
 	id = "MINdoorE";
 	name = "East Door Switch";
+	pixel_x = 14;
 	pixel_y = 23
+	},
+/turf/simulated/floor/caution/south,
+/area/mining/manufacturing)
+"anX" = (
+/obj/machinery/ai_status_display{
+	pixel_y = 28
 	},
 /turf/simulated/floor/caution/south,
 /area/mining/manufacturing)
@@ -6320,7 +6311,6 @@
 	icon_state = "0-4"
 	},
 /obj/overlay{
-	anchored = 1;
 	density = 1;
 	desc = "A networked tape drive.  It looks to be in fairly poor condition.  I bet the vacuum columns don't work worth a damn.";
 	icon = 'icons/obj/networked.dmi';
@@ -6987,7 +6977,6 @@
 /obj/machinery/power/data_terminal,
 /obj/cable,
 /obj/overlay{
-	anchored = 1;
 	density = 1;
 	desc = "A networked tape drive.  It looks to be in fairly poor condition.  I bet the vacuum columns don't work worth a damn.";
 	icon = 'icons/obj/networked.dmi';
@@ -7057,7 +7046,6 @@
 /area/buddyfactory)
 "asM" = (
 /obj/overlay{
-	anchored = 1;
 	density = 1;
 	desc = "This is probably meant to keep the part hoppers loaded.";
 	icon = 'icons/mob/hivebot.dmi';
@@ -7539,7 +7527,6 @@
 /area/buddyfactory)
 "atT" = (
 /obj/overlay{
-	anchored = 1;
 	density = 1;
 	desc = "This is probably meant to keep the part hoppers loaded.";
 	icon = 'icons/mob/hivebot.dmi';
@@ -8087,7 +8074,7 @@
 /obj/decal/cleanable/dirt,
 /obj/item/electronics/capacitor,
 /obj/item/light/tube/blacklight,
-/obj/item/playing_cards/trading,
+/obj/item/card_group/stg,
 /obj/storage/crate{
 	name = "Dented Crate"
 	},
@@ -8746,7 +8733,6 @@
 /area/space)
 "axm" = (
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 1;
 	icon = 'icons/turf/martian.dmi';
@@ -8775,7 +8761,6 @@
 "axq" = (
 /obj/storage/crate,
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	icon = 'icons/turf/martian.dmi';
 	icon_state = "sideWall";
@@ -8800,7 +8785,6 @@
 /area/martian_trader)
 "axt" = (
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 8;
 	icon = 'icons/turf/martian.dmi';
@@ -8868,7 +8852,6 @@
 	pixel_y = 32
 	},
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	icon = 'icons/turf/martian.dmi';
 	icon_state = "sideWall";
@@ -8882,7 +8865,6 @@
 	pixel_y = 30
 	},
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	icon = 'icons/turf/martian.dmi';
 	icon_state = "sideWall";
@@ -9009,7 +8991,6 @@
 /area/martian_trader)
 "axT" = (
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	icon = 'icons/turf/martian.dmi';
 	icon_state = "sideWall";
@@ -9035,7 +9016,6 @@
 "axV" = (
 /obj/decal/woodclutter,
 /obj/overlay{
-	anchored = 1;
 	icon = 'icons/misc/beach.dmi';
 	icon_state = "crab";
 	name = "crab"
@@ -9057,7 +9037,6 @@
 /area/martian_trader)
 "axZ" = (
 /obj/overlay{
-	anchored = 1;
 	density = 1;
 	desc = "Looks like a big jet turbine.";
 	icon = 'icons/obj/atmospherics/pipes.dmi';
@@ -9065,7 +9044,6 @@
 	name = "old busted turbine thingy"
 	},
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 8;
 	icon = 'icons/turf/martian.dmi';
@@ -9086,7 +9064,6 @@
 /area/evilreaver/genetics)
 "ayc" = (
 /obj/overlay{
-	anchored = 1;
 	density = 1;
 	desc = "";
 	dir = 4;
@@ -9145,7 +9122,6 @@
 /area/martian_trader)
 "ayj" = (
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 8;
 	icon = 'icons/turf/martian.dmi';
@@ -9166,14 +9142,12 @@
 	pixel_y = 30
 	},
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	icon = 'icons/turf/martian.dmi';
 	icon_state = "sideWall";
 	name = "organic wall"
 	},
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 8;
 	icon = 'icons/turf/martian.dmi';
@@ -9188,7 +9162,6 @@
 /area/martian_trader)
 "aym" = (
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 4;
 	icon = 'icons/turf/martian.dmi';
@@ -9215,7 +9188,6 @@
 	pixel_x = 32
 	},
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 8;
 	icon = 'icons/turf/martian.dmi';
@@ -9364,7 +9336,6 @@
 /area/salyut)
 "ayH" = (
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 8;
 	icon = 'icons/turf/martian.dmi';
@@ -9379,7 +9350,6 @@
 /area/martian_trader)
 "ayI" = (
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 4;
 	icon = 'icons/turf/martian.dmi';
@@ -9387,14 +9357,12 @@
 	name = "organic wall"
 	},
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	icon = 'icons/turf/martian.dmi';
 	icon_state = "sideWall";
 	name = "organic wall"
 	},
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 1;
 	icon = 'icons/turf/martian.dmi';
@@ -9405,7 +9373,6 @@
 /area/martian_trader)
 "ayJ" = (
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 1;
 	icon = 'icons/turf/martian.dmi';
@@ -9416,7 +9383,6 @@
 /area/martian_trader)
 "ayK" = (
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 8;
 	icon = 'icons/turf/martian.dmi';
@@ -9424,7 +9390,6 @@
 	name = "organic wall"
 	},
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 1;
 	icon = 'icons/turf/martian.dmi';
@@ -9490,7 +9455,6 @@
 /area/evilreaver/genetics)
 "ayU" = (
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 4;
 	icon = 'icons/turf/martian.dmi';
@@ -9561,7 +9525,6 @@
 /area/space)
 "aze" = (
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 1;
 	icon = 'icons/turf/martian.dmi';
@@ -9579,7 +9542,6 @@
 	pixel_x = -32
 	},
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 4;
 	icon = 'icons/turf/martian.dmi';
@@ -9596,14 +9558,12 @@
 /area/martian_trader)
 "azh" = (
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	icon = 'icons/turf/martian.dmi';
 	icon_state = "sideWall";
 	name = "organic wall"
 	},
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 1;
 	icon = 'icons/turf/martian.dmi';
@@ -9727,7 +9687,6 @@
 	name = "martian machine"
 	},
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 1;
 	icon = 'icons/turf/martian.dmi';
@@ -9757,7 +9716,6 @@
 	pixel_x = -30
 	},
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 4;
 	icon = 'icons/turf/martian.dmi';
@@ -9772,7 +9730,6 @@
 /area/martian_trader)
 "azA" = (
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 8;
 	icon = 'icons/turf/martian.dmi';
@@ -10074,7 +10031,6 @@
 /area/flock_trader)
 "aAr" = (
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	icon = 'icons/turf/martian.dmi';
 	icon_state = "sideWall";
@@ -10105,7 +10061,6 @@
 	dir = 4
 	},
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 4;
 	icon = 'icons/turf/martian.dmi';
@@ -10182,7 +10137,6 @@
 /area/salyut)
 "aAC" = (
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	icon = 'icons/turf/martian.dmi';
 	icon_state = "sideWall";
@@ -10211,7 +10165,6 @@
 /area/evilreaver/storage/tools)
 "aAH" = (
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	icon = 'icons/turf/martian.dmi';
 	icon_state = "sideWall";
@@ -10224,7 +10177,6 @@
 /area/evilreaver/storage/tools)
 "aAJ" = (
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 8;
 	icon = 'icons/turf/martian.dmi';
@@ -10239,7 +10191,6 @@
 	pixel_y = -30
 	},
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 4;
 	icon = 'icons/turf/martian.dmi';
@@ -10247,7 +10198,6 @@
 	name = "organic wall"
 	},
 /obj/overlay{
-	anchored = 1;
 	density = 1;
 	desc = "";
 	dir = 4;
@@ -10257,7 +10207,6 @@
 	name = "broken clown car"
 	},
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 1;
 	icon = 'icons/turf/martian.dmi';
@@ -10268,7 +10217,6 @@
 /area/evilreaver/storage/tools)
 "aAL" = (
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 1;
 	icon = 'icons/turf/martian.dmi';
@@ -10292,7 +10240,6 @@
 	pixel_x = -28
 	},
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 4;
 	icon = 'icons/turf/martian.dmi';
@@ -10341,7 +10288,6 @@
 	pixel_x = -28
 	},
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 4;
 	icon = 'icons/turf/martian.dmi';
@@ -10403,7 +10349,6 @@
 /obj/decal/fakeobjects/oldcanister,
 /obj/lattice,
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 8;
 	icon = 'icons/turf/martian.dmi';
@@ -10449,7 +10394,6 @@
 /area/space)
 "aBm" = (
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 4;
 	icon = 'icons/turf/martian.dmi';
@@ -10461,7 +10405,6 @@
 	icon_state = "coil1"
 	},
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 1;
 	icon = 'icons/turf/martian.dmi';
@@ -10472,7 +10415,6 @@
 /area/evilreaver/storage/tools)
 "aBn" = (
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 1;
 	icon = 'icons/turf/martian.dmi';
@@ -10502,7 +10444,6 @@
 /area/evilreaver/storage/tools)
 "aBr" = (
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	icon = 'icons/turf/martian.dmi';
 	icon_state = "sideWall";
@@ -10515,7 +10456,6 @@
 "aBs" = (
 /obj/lattice,
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	icon = 'icons/turf/martian.dmi';
 	icon_state = "sideWall";
@@ -10547,7 +10487,6 @@
 /area/evilreaver/atmospherics)
 "aBx" = (
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 8;
 	icon = 'icons/turf/martian.dmi';
@@ -10606,7 +10545,6 @@
 	dir = 4
 	},
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	icon = 'icons/turf/martian.dmi';
 	icon_state = "sideWall";
@@ -10616,7 +10554,6 @@
 /area/evilreaver/storage/tools)
 "aBH" = (
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	icon = 'icons/turf/martian.dmi';
 	icon_state = "sideWall";
@@ -10666,7 +10603,6 @@
 /area/evilreaver/atmospherics)
 "aBN" = (
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 8;
 	icon = 'icons/turf/martian.dmi';
@@ -10687,7 +10623,6 @@
 /area/space)
 "aBP" = (
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 4;
 	icon = 'icons/turf/martian.dmi';
@@ -10695,7 +10630,6 @@
 	name = "organic wall"
 	},
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	icon = 'icons/turf/martian.dmi';
 	icon_state = "sideWall";
@@ -10715,7 +10649,6 @@
 /area/space)
 "aBS" = (
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 1;
 	icon = 'icons/turf/martian.dmi';
@@ -10723,7 +10656,6 @@
 	name = "organic wall"
 	},
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 8;
 	icon = 'icons/turf/martian.dmi';
@@ -10739,7 +10671,6 @@
 /area/evilreaver/atmospherics)
 "aBU" = (
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 1;
 	icon = 'icons/turf/martian.dmi';
@@ -10747,7 +10678,6 @@
 	name = "organic wall"
 	},
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 4;
 	icon = 'icons/turf/martian.dmi';
@@ -10796,7 +10726,6 @@
 	pixel_y = 30
 	},
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	icon = 'icons/turf/martian.dmi';
 	icon_state = "sideWall";
@@ -10904,7 +10833,6 @@
 /area/timewarp)
 "aCu" = (
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 1;
 	icon = 'icons/turf/martian.dmi';
@@ -10918,7 +10846,6 @@
 /area/evilreaver/chapel)
 "aCv" = (
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 1;
 	icon = 'icons/turf/martian.dmi';
@@ -10948,7 +10875,6 @@
 	name = "martian machine"
 	},
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 1;
 	icon = 'icons/turf/martian.dmi';
@@ -10968,7 +10894,6 @@
 	},
 /obj/table/auto,
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	icon = 'icons/turf/martian.dmi';
 	icon_state = "sideWall";
@@ -10996,7 +10921,6 @@
 	name = "paper- 'A Crash Course in Legal SOP"
 	},
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 8;
 	icon = 'icons/turf/martian.dmi';
@@ -11060,7 +10984,6 @@
 /area/evilreaver/chapel)
 "aCN" = (
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 4;
 	icon = 'icons/turf/martian.dmi';
@@ -11090,7 +11013,6 @@
 /area/evilreaver/security)
 "aCS" = (
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	icon = 'icons/turf/martian.dmi';
 	icon_state = "sideWall";
@@ -11105,7 +11027,6 @@
 	pixel_y = 30
 	},
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	icon = 'icons/turf/martian.dmi';
 	icon_state = "sideWall";
@@ -11129,7 +11050,6 @@
 /area/evilreaver/bridge)
 "aCW" = (
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	icon = 'icons/turf/martian.dmi';
 	icon_state = "sideWall";
@@ -11141,7 +11061,6 @@
 /area/evilreaver/bridge)
 "aCX" = (
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	icon = 'icons/turf/martian.dmi';
 	icon_state = "sideWall";
@@ -11153,7 +11072,6 @@
 /area/evilreaver/bridge)
 "aCY" = (
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	icon = 'icons/turf/martian.dmi';
 	icon_state = "sideWall";
@@ -11165,7 +11083,6 @@
 /area/evilreaver/bridge)
 "aCZ" = (
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	icon = 'icons/turf/martian.dmi';
 	icon_state = "sideWall";
@@ -11177,7 +11094,6 @@
 /area/evilreaver/bridge)
 "aDa" = (
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 4;
 	icon = 'icons/turf/martian.dmi';
@@ -11226,7 +11142,6 @@
 /area/evilreaver/bar)
 "aDh" = (
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 1;
 	icon = 'icons/turf/martian.dmi';
@@ -11237,7 +11152,6 @@
 /area/evilreaver/chapel)
 "aDi" = (
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 1;
 	icon = 'icons/turf/martian.dmi';
@@ -11249,7 +11163,6 @@
 /area/evilreaver/chapel)
 "aDj" = (
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 1;
 	icon = 'icons/turf/martian.dmi';
@@ -11268,7 +11181,6 @@
 	name = "martian machine"
 	},
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 1;
 	icon = 'icons/turf/martian.dmi';
@@ -11317,7 +11229,6 @@
 	name = "martian machine"
 	},
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 1;
 	icon = 'icons/turf/martian.dmi';
@@ -11384,7 +11295,6 @@
 /area/evilreaver/bar)
 "aDC" = (
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 4;
 	icon = 'icons/turf/martian.dmi';
@@ -11407,14 +11317,12 @@
 /area/evilreaver/bar)
 "aDE" = (
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	icon = 'icons/turf/martian.dmi';
 	icon_state = "sideWall";
 	name = "organic wall"
 	},
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 8;
 	icon = 'icons/turf/martian.dmi';
@@ -11431,7 +11339,6 @@
 	pixel_x = -28
 	},
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 4;
 	icon = 'icons/turf/martian.dmi';
@@ -11464,7 +11371,6 @@
 /area/evilreaver/bridge)
 "aDK" = (
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 8;
 	icon = 'icons/turf/martian.dmi';
@@ -11486,7 +11392,6 @@
 	pixel_x = -28
 	},
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 4;
 	icon = 'icons/turf/martian.dmi';
@@ -11557,7 +11462,6 @@
 /area/timewarp/ship)
 "aDY" = (
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 4;
 	icon = 'icons/turf/martian.dmi';
@@ -11565,7 +11469,6 @@
 	name = "organic wall"
 	},
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	icon = 'icons/turf/martian.dmi';
 	icon_state = "sideWall";
@@ -11605,7 +11508,6 @@
 "aEe" = (
 /obj/lattice,
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 8;
 	icon = 'icons/turf/martian.dmi';
@@ -11622,7 +11524,6 @@
 /area/evilreaver/security)
 "aEg" = (
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 4;
 	icon = 'icons/turf/martian.dmi';
@@ -11645,7 +11546,6 @@
 /area/evilreaver/bridge)
 "aEi" = (
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	icon = 'icons/turf/martian.dmi';
 	icon_state = "sideWall";
@@ -11713,7 +11613,6 @@
 /area/timewarp/ship)
 "aEt" = (
 /obj/overlay{
-	anchored = 1;
 	density = 1;
 	desc = "You have no idea what this does.";
 	icon = 'icons/misc/worlds.dmi';
@@ -11726,7 +11625,6 @@
 /area/timewarp/ship)
 "aEu" = (
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 4;
 	icon = 'icons/turf/martian.dmi';
@@ -11768,14 +11666,12 @@
 /area/evilreaver/bar)
 "aEz" = (
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	icon = 'icons/turf/martian.dmi';
 	icon_state = "sideWall";
 	name = "organic wall"
 	},
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 4;
 	icon = 'icons/turf/martian.dmi';
@@ -11788,7 +11684,6 @@
 "aEA" = (
 /obj/lattice,
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	icon = 'icons/turf/martian.dmi';
 	icon_state = "sideWall";
@@ -11803,7 +11698,6 @@
 /area/evilreaver/security)
 "aEC" = (
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 8;
 	icon = 'icons/turf/martian.dmi';
@@ -11814,7 +11708,6 @@
 /area/evilreaver/security)
 "aED" = (
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 4;
 	icon = 'icons/turf/martian.dmi';
@@ -11851,7 +11744,6 @@
 /area/evilreaver/bridge)
 "aEH" = (
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	icon = 'icons/turf/martian.dmi';
 	icon_state = "sideWall";
@@ -11925,7 +11817,6 @@
 "aET" = (
 /obj/table/auto,
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 4;
 	icon = 'icons/turf/martian.dmi';
@@ -11951,7 +11842,6 @@
 /area/evilreaver/security)
 "aEX" = (
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 8;
 	icon = 'icons/turf/martian.dmi';
@@ -11968,7 +11858,6 @@
 /area/evilreaver/security)
 "aEZ" = (
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 1;
 	icon = 'icons/turf/martian.dmi';
@@ -11976,14 +11865,12 @@
 	name = "organic wall"
 	},
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	icon = 'icons/turf/martian.dmi';
 	icon_state = "sideWall";
 	name = "organic wall"
 	},
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 8;
 	icon = 'icons/turf/martian.dmi';
@@ -11991,7 +11878,6 @@
 	name = "organic wall"
 	},
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 4;
 	icon = 'icons/turf/martian.dmi';
@@ -12008,7 +11894,6 @@
 "aFb" = (
 /obj/lattice,
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 4;
 	icon = 'icons/turf/martian.dmi';
@@ -12081,7 +11966,6 @@
 /area/evilreaver/bar)
 "aFn" = (
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	icon = 'icons/turf/martian.dmi';
 	icon_state = "sideWall";
@@ -12112,7 +11996,6 @@
 /obj/item/paper/sop,
 /obj/decal/cleanable/dirt,
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 4;
 	icon = 'icons/turf/martian.dmi';
@@ -12234,7 +12117,6 @@
 	name = "martian machine"
 	},
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 1;
 	icon = 'icons/turf/martian.dmi';
@@ -12245,7 +12127,6 @@
 /area/evilreaver/bar)
 "aFD" = (
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 1;
 	icon = 'icons/turf/martian.dmi';
@@ -12254,7 +12135,6 @@
 	},
 /obj/table/auto,
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	dir = 1;
 	icon = 'icons/turf/martian.dmi';
@@ -12431,7 +12311,6 @@
 /area/timewarp/ship)
 "aGf" = (
 /obj/overlay{
-	anchored = 1;
 	density = 1;
 	desc = "You have no idea what this does.";
 	icon = 'icons/obj/machines/nuclear.dmi';
@@ -12514,7 +12393,6 @@
 /area/timewarp/ship)
 "aGq" = (
 /obj/overlay{
-	anchored = 1;
 	desc = "Gross.";
 	icon = 'icons/turf/martian.dmi';
 	icon_state = "sideWall";
@@ -13098,7 +12976,6 @@
 /area/radiostation/bedroom)
 "aIf" = (
 /obj/overlay{
-	anchored = 1;
 	density = 1;
 	desc = "";
 	dir = 4;
@@ -15421,7 +15298,6 @@
 /area/space)
 "aNU" = (
 /obj/overlay{
-	anchored = 1;
 	density = 1;
 	desc = "A device for scanning deep space.";
 	icon = 'icons/mob/hivebot.dmi';
@@ -16949,7 +16825,7 @@
 	pixel_x = 6;
 	pixel_y = 6
 	},
-/obj/item/card_box/suit{
+/obj/item/card_box/plain{
 	pixel_x = -2;
 	pixel_y = 4
 	},
@@ -17952,7 +17828,6 @@
 /area/fermid_hive)
 "aUk" = (
 /obj/overlay{
-	anchored = 1;
 	density = 1;
 	desc = "A networked tape drive.  It looks to be in fairly poor condition.  I bet the vacuum columns don't work worth a damn.";
 	icon = 'icons/obj/networked.dmi';
@@ -19465,7 +19340,6 @@
 	dir = 8
 	},
 /obj/overlay{
-	anchored = 1;
 	desc = "You could probably squeeze through.";
 	icon = 'icons/misc/rstation.dmi';
 	icon_state = "maint-gap";
@@ -20176,7 +20050,6 @@
 "aZn" = (
 /obj/machinery/power/data_terminal,
 /obj/overlay{
-	anchored = 1;
 	density = 1;
 	desc = "A networked tape drive.  It looks to be in fairly poor condition.  I bet the vacuum columns don't work worth a damn.";
 	icon = 'icons/obj/networked.dmi';
@@ -20767,7 +20640,6 @@
 	dir = 8
 	},
 /obj/overlay{
-	anchored = 1;
 	desc = "You could probably squeeze through.";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "bloodydoorext";
@@ -25349,12 +25221,12 @@
 /turf/simulated/wall/asteroid,
 /area/space)
 "boK" = (
-/obj/lattice{
-	dir = 2;
-	icon_state = "lattice-dir"
+/obj/machinery/light_switch{
+	name = "S light switch";
+	pixel_y = -24
 	},
-/turf/space,
-/area/space)
+/turf/simulated/floor/yellow/side,
+/area/mining/dock)
 "boN" = (
 /turf/space,
 /area/shuttle/john/mining)
@@ -25423,6 +25295,22 @@
 /obj/item/reagent_containers/food/snacks/breakfast,
 /turf/simulated/floor/caution/west,
 /area/mining/quarters)
+"oNB" = (
+/turf/simulated/wall/asteroid{
+	name = "weak compacted stone";
+	stone_color = "#575A5E"
+	},
+/area/space)
+"qBE" = (
+/obj/lattice{
+	dir = 1;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/ai_status_display{
+	pixel_y = 28
+	},
+/turf/space,
+/area/space)
 "rdq" = (
 /obj/decal/cleanable/gangtag{
 	icon_state = "gangtag22";
@@ -75066,7 +74954,7 @@ apX
 apX
 apX
 alb
-boP
+qBE
 aaK
 aaK
 aaK
@@ -76857,7 +76745,7 @@ ahD
 ahD
 ahD
 alw
-alQ
+boK
 ajs
 ahD
 ahD
@@ -76904,16 +76792,16 @@ aaa
 aar
 aau
 akp
-boK
+aaK
 aan
-boK
-boK
-boK
+aaK
+aaK
+aaK
 boP
-boK
-boK
-boK
-boK
+aaK
+aaK
+aaK
+aaK
 boO
 aeZ
 aaa
@@ -78208,8 +78096,8 @@ aac
 aac
 aac
 aac
-aHr
-aHr
+oNB
+oNB
 aaa
 aaa
 aaa
@@ -80531,13 +80419,13 @@ aab
 aab
 aab
 aab
-boK
-boK
-boK
-boK
-boK
-boK
-boK
+aaK
+aaK
+aaK
+aaK
+aaK
+aaK
+aaK
 boP
 aeZ
 aaa

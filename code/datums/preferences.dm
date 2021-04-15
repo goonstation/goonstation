@@ -23,18 +23,18 @@ datum/preferences
 	var/medical_note
 	var/employment_note
 
-
-	var/be_changeling = 0
-	var/be_revhead = 0
-	var/be_syndicate = 0
-	var/be_wizard = 0
 	var/be_traitor = 0
-	var/be_werewolf = 0
-	var/be_vampire = 0
+	var/be_syndicate = 0
 	var/be_spy = 0
 	var/be_gangleader = 0
+	var/be_revhead = 0
+	var/be_changeling = 0
+	var/be_wizard = 0
+	var/be_werewolf = 0
+	var/be_vampire = 0
 	var/be_wraith = 0
 	var/be_blob = 0
+	var/be_conspirator = 0
 	var/be_flock = 0
 	var/be_misc = 0
 
@@ -159,7 +159,7 @@ datum/preferences
 				mutantRace = T.mutantRace
 				break
 
-		src.preview?.update_appearance(src.AH, mutantRace, src.spessman_direction)
+		src.preview?.update_appearance(src.AH, mutantRace, src.spessman_direction, name=src.real_name)
 
 	var/list/profile_cache
 	var/rebuild_profile
@@ -952,7 +952,7 @@ $(updateCharacterPreviewPos);
 		if (isnull(src.jobs_med_priority) || isnull(src.jobs_low_priority) || isnull(src.jobs_unwanted))
 			src.ResetAllPrefsToDefault(user)
 			boutput(user, "<span class='alert'><b>Your Job Preferences were null, and have been reset.</b></span>")
-		else if (isnull(src.job_favorite) && !src.jobs_med_priority.len && !src.jobs_low_priority.len && !src.jobs_unwanted.len)
+		else if (isnull(src.job_favorite) && !src.jobs_med_priority.len && !src.jobs_low_priority.len && !length(src.jobs_unwanted))
 			src.ResetAllPrefsToDefault(user)
 			boutput(user, "<span class='alert'><b>Your Job Preferences were empty, and have been reset.</b></span>")
 		else
@@ -1175,17 +1175,18 @@ $(updateCharacterPreviewPos);
 
 		if (jobban_isbanned(user, "Syndicate"))
 			HTML += "You are banned from playing antagonist roles."
-			src.be_changeling = 0
-			src.be_revhead = 0
-			src.be_syndicate = 0
-			src.be_wizard = 0
 			src.be_traitor = 0
-			src.be_werewolf = 0
-			src.be_vampire = 0
+			src.be_syndicate = 0
 			src.be_spy = 0
 			src.be_gangleader = 0
+			src.be_revhead = 0
+			src.be_changeling = 0
+			src.be_wizard = 0
+			src.be_werewolf = 0
+			src.be_vampire = 0
 			src.be_wraith = 0
 			src.be_blob = 0
+			src.be_conspirator = 0
 			src.be_flock = 0
 		else
 
@@ -1201,6 +1202,7 @@ $(updateCharacterPreviewPos);
 			<a href="byond://?src=\ref[src];preferences=1;b_vampire=1" class="[src.be_vampire ? "yup" : "nope"]">[crap_checkbox(src.be_vampire)] Vampire</a>
 			<a href="byond://?src=\ref[src];preferences=1;b_wraith=1" class="[src.be_wraith ? "yup" : "nope"]">[crap_checkbox(src.be_wraith)] Wraith</a>
 			<a href="byond://?src=\ref[src];preferences=1;b_blob=1" class="[src.be_blob ? "yup" : "nope"]">[crap_checkbox(src.be_blob)] Blob</a>
+			<a href="byond://?src=\ref[src];preferences=1;b_conspirator=1" class="[src.be_conspirator ? "yup" : "nope"]">[crap_checkbox(src.be_conspirator)] Conspirator</a>
 			<a href="byond://?src=\ref[src];preferences=1;b_flock=1" class="[src.be_flock ? "yup" : "nope"]">[crap_checkbox(src.be_flock)] Flockmind</a>
 			<a href="byond://?src=\ref[src];preferences=1;b_misc=1" class="[src.be_misc ? "yup" : "nope"]">[crap_checkbox(src.be_misc)] Other Foes</a>
 		"}
@@ -1791,38 +1793,13 @@ $(updateCharacterPreviewPos);
 			rebuild_data["popups"] = 1
 			src.view_tickets = !(src.view_tickets)
 
-		if (link_tags["b_changeling"])
-			src.be_changeling = !( src.be_changeling )
-			src.SetChoices(user)
-			return
-
-		if (link_tags["b_revhead"])
-			src.be_revhead = !( src.be_revhead )
-			src.SetChoices(user)
-			return
-
-		if (link_tags["b_syndicate"])
-			src.be_syndicate = !( src.be_syndicate )
-			src.SetChoices(user)
-			return
-
-		if (link_tags["b_wizard"])
-			src.be_wizard = !( src.be_wizard)
-			src.SetChoices(user)
-			return
-
 		if (link_tags["b_traitor"])
 			src.be_traitor = !( src.be_traitor)
 			src.SetChoices(user)
 			return
 
-		if (link_tags["b_werewolf"])
-			src.be_werewolf = !( src.be_werewolf)
-			src.SetChoices(user)
-			return
-
-		if (link_tags["b_vampire"])
-			src.be_vampire = !( src.be_vampire)
+		if (link_tags["b_syndicate"])
+			src.be_syndicate = !( src.be_syndicate )
 			src.SetChoices(user)
 			return
 
@@ -1836,6 +1813,30 @@ $(updateCharacterPreviewPos);
 			src.SetChoices(user)
 			return
 
+		if (link_tags["b_revhead"])
+			src.be_revhead = !( src.be_revhead )
+			src.SetChoices(user)
+			return
+
+		if (link_tags["b_changeling"])
+			src.be_changeling = !( src.be_changeling )
+			src.SetChoices(user)
+
+		if (link_tags["b_wizard"])
+			src.be_wizard = !( src.be_wizard)
+			src.SetChoices(user)
+			return
+
+		if (link_tags["b_werewolf"])
+			src.be_werewolf = !( src.be_werewolf)
+			src.SetChoices(user)
+			return
+
+		if (link_tags["b_vampire"])
+			src.be_vampire = !( src.be_vampire)
+			src.SetChoices(user)
+			return
+
 		if (link_tags["b_wraith"])
 			src.be_wraith = !( src.be_wraith)
 			src.SetChoices(user)
@@ -1845,6 +1846,12 @@ $(updateCharacterPreviewPos);
 			src.be_blob = !( src.be_blob)
 			src.SetChoices(user)
 			return
+
+		if (link_tags["b_conspirator"])
+			src.be_conspirator = !( src.be_conspirator )
+			src.SetChoices(user)
+			return
+
 		if (link_tags["b_flock"])
 			src.be_flock = !( src.be_flock)
 			src.SetChoices(user)
@@ -2001,19 +2008,20 @@ $(updateCharacterPreviewPos);
 			admin_music_volume = 50
 			radio_music_volume = 50
 			use_click_buffer = 0
-			be_changeling = 0
-			be_revhead = 0
-			be_syndicate = 0
-			be_wizard = 0
-			be_wraith = 0
-			be_blob = 0
-			be_flock = 0
-			be_misc = 0
 			be_traitor = 0
-			be_werewolf = 0
-			be_vampire = 0
+			be_syndicate = 0
 			be_spy = 0
 			be_gangleader = 0
+			be_revhead = 0
+			be_changeling = 0
+			be_wizard = 0
+			be_werewolf = 0
+			be_vampire = 0
+			be_wraith = 0
+			be_blob = 0
+			be_conspirator = 0
+			be_flock = 0
+			be_misc = 0
 			tooltip_option = TOOLTIP_ALWAYS
 			tgui_fancy = TRUE
 			tgui_lock = FALSE

@@ -335,6 +335,7 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_disco_lights,
 		/client/proc/cmd_blindfold_monkeys,
 		/client/proc/cmd_swampify_station,
+		/client/proc/cmd_trenchify_station,
 
 		/datum/admins/proc/toggleaprilfools,
 		/client/proc/cmd_admin_pop_off_all_the_limbs_oh_god,
@@ -424,6 +425,8 @@ var/list/admin_verbs = list(
 		/client/proc/toggle_hard_reboot,
 		/client/proc/cmd_modify_respawn_variables,
 		/client/proc/set_nukie_score,
+
+		/client/proc/player_panel_tgui,
 
 #ifdef MACHINE_PROCESSING_DEBUG
 		/client/proc/cmd_display_detailed_machine_stats,
@@ -664,6 +667,15 @@ var/list/special_pa_observing_verbs = list(
 		src.holder.player()
 	return
 
+/client/proc/player_panel_tgui()
+	set name = "Player Panel TGUI"
+	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
+	admin_only
+	if (src.holder.tempmin)
+		return
+	if (src.holder.level >= LEVEL_SA)
+		global.player_panel.ui_interact(src.mob)
+
 /client/proc/rspawn_panel()
 	set name = "Respawn Panel"
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
@@ -862,16 +874,27 @@ var/list/fun_images = list()
 	set name = "Show Rules to Player"
 	set popup_menu = 0
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
+
+	var/crossness = input("How cross are we with this guy?", "Enter Crossness", "A bit") as anything in list("A bit", "A lot", "Cancel")
+	if (!crossness || crossness == "Cancel")
+		return
+
+	message_admins(crossness)
 	if(!M.client)
 		alert("[M] is logged out, so you should probably ban them!")
 		return
 	logTheThing("admin", src, M, "forced [constructTarget(M,"admin")] to view the rules")
 	logTheThing("diary", src, M, "forced [constructTarget(M,"diary")] to view the rules", "admin")
 	message_admins("[key_name(src)] forced [key_name(M)] to view the rules.")
-	M << csound("sound/misc/klaxon.ogg")
-	boutput(M, "<span class='alert'><B>WARNING: An admin is likely very cross with you and wants you to read the rules right fucking now!</B></span>")
-	// M.Browse(rules, "window=rules;size=480x320")
-	M << browse(rules, "window=rules;size=480x320")
+	switch(crossness)
+		if ("A bit")
+			M << csound("sound/misc/newsting.ogg")
+			boutput(M, "<span class='alert'><B>Here are the rules, you can read this, you have a good chance of being able to read them too.</B></span>")
+		if ("A lot")
+			M << csound("sound/misc/klaxon.ogg")
+			boutput(M, "<span class='alert'><B>WARNING: An admin is likely very cross with you and wants you to read the rules right fucking now!</B></span>")
+
+	M << browse(rules, "window=rules;size=800x1000")
 
 /client/proc/view_fingerprints(obj/O as obj in world)
 	set name = "View Object Fingerprints"
@@ -879,7 +902,7 @@ var/list/fun_images = list()
 	set popup_menu = 0
 
 	admin_only
-	if(!O.fingerprintshidden || !O.fingerprintshidden.len)
+	if(!O.fingerprintshidden || !length(O.fingerprintshidden))
 		alert("There are no fingerprints on this object.", null, null, null, null, null)
 		return
 
@@ -1492,7 +1515,7 @@ var/list/fun_images = list()
 	if (!pet_path)
 		return
 
-	for (var/client/cl as() in clients)
+	for (var/client/cl as anything in clients)
 		var/mob/living/L = cl.mob
 		if(!istype(L) || isdead(L))
 			continue
@@ -1923,7 +1946,7 @@ var/list/fun_images = list()
 		var/y_shift = round(text2num(parameters["icon-y"]) / 32)
 		clicked_turf = locate(clicked_turf.x + x_shift, clicked_turf.y + y_shift, clicked_turf.z)
 		var/list/atom/atoms = list(clicked_turf)
-		for(var/atom/thing as() in clicked_turf)
+		for(var/atom/thing as anything in clicked_turf)
 			atoms += thing
 		if (atoms.len)
 			A = input(usr, "Which item to admin-interact with?") as null|anything in atoms
@@ -2041,8 +2064,8 @@ var/list/fun_images = list()
 		message_admins("Error while adding ckey [vpnckey] to the VPN whitelist: [e.name]")
 		return 0
 	global.vpn_ip_checks?.Cut() // to allow them to reconnect this round
-	message_admins("Ckey [vpnckey] added to the VPN whitelist.")
-	logTheThing("admin", null, null, "Ckey [vpnckey] added to the VPN whitelist.")
+	message_admins("Ckey [vpnckey] added to the VPN whitelist by [src.key].")
+	logTheThing("admin", src, null, "Ckey [vpnckey] added to the VPN whitelist.")
 	return 1
 
 /client/proc/vpn_whitelist_remove(vpnckey as text)
@@ -2054,6 +2077,6 @@ var/list/fun_images = list()
 	catch(var/exception/e)
 		message_admins("Error while removing ckey [vpnckey] from the VPN whitelist: [e.name]")
 		return 0
-	message_admins("Ckey [vpnckey] removed from the VPN whitelist.")
-	logTheThing("admin", null, null, "Ckey [vpnckey] removed from the VPN whitelist.")
+	message_admins("Ckey [vpnckey] removed from the VPN whitelist by [src.key].")
+	logTheThing("admin", src, null, "Ckey [vpnckey] removed from the VPN whitelist.")
 	return 1

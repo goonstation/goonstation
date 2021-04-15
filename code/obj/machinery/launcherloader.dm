@@ -73,7 +73,7 @@
 
 				sleep(door ? 20 : 10)
 				if (driver)
-					for(var/obj/machinery/mass_driver/D as() in machine_registry[MACHINES_MASSDRIVERS])
+					for(var/obj/machinery/mass_driver/D as anything in machine_registry[MACHINES_MASSDRIVERS])
 						if(D.id == driver.id)
 							D.drive()
 	process()
@@ -123,17 +123,18 @@
 
 	var/trigger_when_no_match = 1
 
+	proc/get_next_dir()
+		for(var/atom/movable/AM in src.loc)
+			if(AM.anchored || AM == src) continue
+			if(AM.delivery_destination)
+				if(destinations.Find(AM.delivery_destination))
+					return destinations[AM.delivery_destination]
+		return null
+
 	proc/activate()
 		if(operating || !isturf(src.loc)) return
 
-		var/next_dest = null
-
-		for(var/atom/movable/AM in src.loc)
-			if(AM.anchored || AM == src) continue
-			if(AM.delivery_destination && !next_dest)
-				if(destinations.Find(AM.delivery_destination))
-					next_dest = destinations[AM.delivery_destination]
-					break
+		var/next_dest = src.get_next_dir()
 
 		if(next_dest)
 			src.set_dir(next_dest)
@@ -188,6 +189,10 @@
 
 		return_if_overlay_or_effect(A)
 		activate()
+
+/obj/machinery/cargo_router/random
+	get_next_dir()
+		return src.destinations[pick(src.destinations)]
 
 /obj/machinery/cargo_router/exampleRouter
 	New()
@@ -415,10 +420,10 @@
 
 	destinations = list("North","South")
 
-/obj/machinery/computer/barcode/qm/donut3
+/obj/machinery/computer/barcode/qm/no_belthell
 	name = "Barcode Computer"
 	desc = "Used to print barcode stickers for the off-station merchants."
-	destinations = list()
+	destinations = list("Shipping Market")
 
 /obj/item/sticker/barcode
 	name = "barcode sticker"

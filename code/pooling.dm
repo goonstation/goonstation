@@ -125,7 +125,7 @@ proc/getPoolingJson()
 	for(var/type in pool_stats)
 		var/count = 0
 		var/list/L = object_pools[type]
-		if(L) count = L.len
+		if(L) count = length(L)
 		L = pool_stats[type]
 
 		json += ",{path:'[type]',count:[count],hits:[L[POOL_HIT_COUNT]],misses:[L[POOL_MISS_COUNT]],poolings:[L[POOLINGS]],unpoolings:[L[UNPOOLINGS]],evictions:[L[EVICTIONS]]}"
