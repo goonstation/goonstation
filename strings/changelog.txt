@@ -1,5 +1,110 @@
 
+(t)thu apr 15 21
+(u)Lythine
+(p)4312
+(e)|
+(+)Added overhead health pop-up to upgraded ProDocs and floor scanners.
+(t)wed apr 14 21
+(u)Carbadox
+(p)4049
+(e)|
+(+)Ice dispensers now pour ice into containers if interacted with a glass in hand.
+(u)Azrun
+(p)4317
+(e)📄|tgui
+(+)GeneTek Console now has toggle for DNA Sequence display on Mutations page.
+(u)Carbdox
+(p)4276
+(e)|
+(+)Added some extra phrases for switching modes on the Lawbringer, specifically "exterminate" for execute, "sleepshot" for knockout and "push" for pulse
+(t)tue apr 13 21
+(u)zjdtmkhzt
+(p)4291
+(e)⚖|balance
+(+)Reduced the maximum power level of melee and magic wand artifacts.
+(u)Azrun
+(p)4308
+(e)📄|tgui
+(+)GeneTek Console now has toggle for Subject Preview (DNA Render).
+(u)Gannets
+(p)4310
+(e)⚖🗺|balance, mapping
+(*)Raised the total nuclear operatives possible in a round from 8 to 10. Scaling is also adjusted to account for higher population, for example, 48 players ready at round-start will result in 8 operatives. Any fewer players will mean less operatives.
+(*)Renamed the syndicate combat knife to syndicate fighting utility knife, increased it's damage, throwing damage & reduced it's stamina cost.
+(u)Penny
+(p)4170
+(e)|
+(+)Intercoms may now be fabricated by mechanics as well as deconstructed.
+(t)mon apr 12 21
+(u)Jawns
+(p)4232
+(e)🐛|bug
+(+)Clown names are now properly updated in security records.
+(u)Carbadox
+(p)4262
+(e)🆕|feature
+(+)Added the ability to make fingerless gloves by using snipping tools on black gloves.
+(u)Jan.antilles
+(p)4268
+(e)🎨|sprites
+(+)Resprited granola bar and yoghurt cup.
+(t)sun apr 11 21
+(u)Carbadox
+(p)4244
+(e)🆕|feature
+(+)Additional large air mix and oxygen canisters can now be purchased through the Quartermaster console
+(t)sat apr 10 21
+(u)Flourish
+(e)⚖|balance
+(*)If you're a human, martian crevices will now, at worst, slash off both your arms. They also no longer contain laser guns, but rather an assortment of various baubles and artifacts.
+(u)Flourish
+(e)|
+(+)Attacking someone with a feather will now make them sneeze.
+(+)Using a paper bin inhand will now dispense papers.
+(t)fri apr 09 21
+(u)Camryn Buttes
+(p)3894
+(e)🆕|feature
+(+)Added a new limb randomizing contract to the pool of satanic contracts
+(u)Camryn Buttes
+(p)4109
+(e)🐛🆕🗺|bug, feature, mapping
+(+)Made a bunch of minor improvements and additions to Donut 3.
+(u)Jan.antilles
+(p)4267
+(e)🆕🎨|feature, sprites
+(+)Added Lasagna as a tasty new food item for the Chef to cook.
+(u)Comradef191
+(p)4256
+(e)🗺|mapping
+(*)You can now tell which cables on Cogmap 1 are directly connected to the Engine thanks to their Brown colour!
+(+)You can also now tell which cables are connected to the Solar Arrays on Cogmap 1, as they are now Yellow.
+(u)Gannets
+(p)4255
+(e)|
+(*)The new prototype melee class, the Knight is now avaliable in syndicate weapons vendors on the Cairngorm. Full details in minor changes.
+(+)The new prototype knight crate includes:
+(+)Hadar heavy power-sword, a two-handed melee weapon that can be used in-hand to swap between a long range stab special attack and a wide sweep that applies knockback. The sword will build up additional attack damage when used to hit living humans outside of the Cairngorm up to a maximum force of 100 (or 105?)
+(+)Citadel heavy combat cuirass and a great helm, a massive suit of armour that provides multiple large damage resistances at the cost of a slow walk speed.
+(+)Combat gauntlets that reduce the likelihood of disarms against you.
+(+)Combat sabatons with non-slip properties and magnetised soles to keep you planted on the point.
+(t)thu apr 08 21
+(u)Arthur Holiday
+(p)3961
+(e)⚖|balance
+(*)Securitrons don't target invisible people anymore. This includes those who are using a cloaking device or a genetics, vampire ability.
 (t)wed apr 07 21
+(u)Erinexx
+(p)4219
+(e)🎨|sprites
+(+)TEG now has an additional turbine speed animation when at >10k atm.
+(+)Local generator now displays anchored state and whether there is a tank loaded.
+(u)pali
+(*)Baseball bats got a small overhaul. The range and angle of reflection is now slightly randomized and depends on a few factors (athletic trait, alcohol, ...). Bats are now scannable and craftable using wood.
+(u)Sovexe
+(p)4174
+(e)⚖🐛🆕|balance, bug, feature
+(*)Critter abilities can now be bound to ctrl/alt/shift+left click
 (u)Asche
 (p)4198
 (e)🆕|feature

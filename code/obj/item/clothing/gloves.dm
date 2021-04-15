@@ -234,6 +234,14 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 		..()
 		setProperty("heatprot", 7)
 
+/obj/item/clothing/gloves/black/attackby(obj/item/W, mob/user)
+	if (istool(W, TOOL_CUTTING | TOOL_SNIPPING))
+		user.visible_message("<span class='notice'>[user] cuts off the fingertips from [src].</span>")
+		if(src.loc == user)
+			user.u_equip(src)
+		qdel(src)
+		user.put_in_hand_or_drop(new /obj/item/clothing/gloves/fingerless)
+	else . = ..()
 /obj/item/clothing/gloves/cyborg
 	desc = "beep boop borp"
 	name = "cyborg gloves"

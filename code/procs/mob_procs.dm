@@ -251,7 +251,7 @@
 			mod_animation = 20
 			if (hulk == 0)
 				mod_weak = rand(1, 2)
-			mod_eyeblurry = rand(4, 6)
+			mod_eyeblurry = rand(6, 8)
 			mod_eyedamage = rand(2, 3)
 		else if (istype(H.glasses, /obj/item/clothing/glasses/nightvision) || H.eye_istype(/obj/item/organ/eye/cyber/nightvision))
 			H.show_text("<b>Your night vision goggles intensify the bright flash of light.</b>", "red")
@@ -259,8 +259,10 @@
 			mod_animation = 30
 			if (hulk == 0)
 				mod_weak = rand(3, 4)
-			mod_eyeblurry = rand(6, 8)
+			mod_eyeblurry = rand(8, 10)
 			mod_eyedamage = rand(3, 5)
+		else
+			mod_eyeblurry = rand(4, 6)
 
 	// No negative values.
 	animation_duration = max(0, animation_duration + mod_animation)
@@ -280,7 +282,7 @@
 
 	// Stun target mob.
 	if (safety == 0)
-		src.flash(animation_duration)
+		//src.flash(animation_duration)
 #ifdef USE_STAMINA_DISORIENT
 		src.do_disorient(stamina_damage, weakened = weak*20, stunned = stun*20, disorient = disorient_time, remove_stamina_below_zero = 0, target_type = DISORIENT_EYE)
 #else

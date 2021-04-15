@@ -159,7 +159,7 @@ datum/preferences
 				mutantRace = T.mutantRace
 				break
 
-		src.preview?.update_appearance(src.AH, mutantRace, src.spessman_direction)
+		src.preview?.update_appearance(src.AH, mutantRace, src.spessman_direction, name=src.real_name)
 
 	var/list/profile_cache
 	var/rebuild_profile

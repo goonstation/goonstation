@@ -443,6 +443,7 @@ table#cooktime a#start {
 			src.recipes += new /datum/cookingrecipe/crumpet(src)
 			src.recipes += new /datum/cookingrecipe/ice_cream_cone(src)
 			src.recipes += new /datum/cookingrecipe/waffles(src)
+			src.recipes += new /datum/cookingrecipe/lasagna(src)
 			src.recipes += new /datum/cookingrecipe/spaghetti_pg(src)
 			src.recipes += new /datum/cookingrecipe/spaghetti_m(src)
 			src.recipes += new /datum/cookingrecipe/spaghetti_s(src)

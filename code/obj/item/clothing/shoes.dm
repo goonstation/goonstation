@@ -353,6 +353,7 @@
 	color = "#FF0000"
 	step_sound = "explosion"
 	contraband = 10
+	step_priority = 999
 	is_syndicate = 1
 
 /obj/item/clothing/shoes/ziggy

@@ -63,6 +63,8 @@
 #define COMSIG_ATOM_DIR_CHANGED "atom_dir_changed"
 /// when an atom is collided by a projectile (/obj/projectile)
 #define COMSIG_ATOM_HITBY_PROJ "atom_hitby_proj"
+/// when an atom is hit by a thrown thing (thrown_atom, /datum/thrown_thing)
+#define COMSIG_ATOM_HITBY_THROWN "atom_hitby_thrown"
 
 // ---- atom/movable signals ----
 

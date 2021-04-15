@@ -506,9 +506,12 @@
 	desc = "An ornamental dagger for syndicate higher-ups. It sounds fancy, but it's basically the munitions company equivalent of those glass cubes with the company logo frosted on."
 
 /obj/item/dagger/syndicate/specialist //Infiltrator class knife
-	name = "syndicate combat knife"
+	name = "syndicate fighting utility knife"
 	desc = "A light but robust combat knife that allows you to move faster in fights."
 	icon_state = "combat_knife"
+	force = 15
+	throwforce = 20
+	stamina_cost = 5
 
 	setupProperties()
 		..()
@@ -906,10 +909,12 @@
 	stamina_damage = 24
 	stamina_cost = 30
 	stamina_crit_chance = 15
+	mats = list("wood" = 8)
 
 	New()
 		..()
 		src.setItemSpecial(/datum/item_special/swipe)
+		src.AddComponent(/datum/component/holdertargeting/baseball_bat_reflect)
 		BLOCK_SETUP(BLOCK_ROD)
 
 /obj/item/ratstick
@@ -1196,7 +1201,7 @@
 		BLOCK_SETUP(BLOCK_ROD)
 
 	attack_hand(mob/living/carbon/human/user as mob)
-		if(user.r_hand == src || user.l_hand == src || user.belt == src)
+		if(src.sword_inside && (user.r_hand == src || user.l_hand == src || user.belt == src))
 			draw_sword(user)
 		else
 			return ..()
@@ -1235,9 +1240,6 @@
 			user.update_clothing()
 		else
 			boutput(user, "You don't have a free hand to draw with!")
-			return
-	else
-		return
 
 /obj/item/katana_sheath/reverse
 	name = "reverse-blade katana sheath"

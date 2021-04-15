@@ -718,6 +718,12 @@
 			src.KillPathAndGiveUp(kpagu)
 			return
 
+		// If the target is or goes invisible, give up, securitrons don't have thermal vision! :p
+		if((src.target.invisibility > 0)  && (!src.is_beepsky))
+			speak("?!", just_float = 1)
+			src.KillPathAndGiveUp(kpagu)
+			return
+
 		/// Tango hidden inside something or someone? Welp, can't hit them through a locker, so may as well give up!
 		if(src.target?.loc && !isturf(src.target.loc))
 			speak("?", just_float = 1)
@@ -1182,6 +1188,8 @@
 			)
 
 		var/say_thing = pick(voice_lines)
+		if(say_thing == 'sound/voice/binsultbeep.ogg' && prob(90))
+			say_thing = 'sound/voice/bsecureday.ogg'
 		switch(say_thing)
 			if('sound/voice/bgod.ogg')
 				src.speak("GOD MADE TOMORROW FOR THE CROOKS WE DON'T CATCH TO-DAY.")
