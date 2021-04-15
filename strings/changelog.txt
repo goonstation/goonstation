@@ -1,5 +1,9 @@
 
 (t)thu apr 15 21
+(u)Arthur Holiday
+(p)4271
+(e)🗺|mapping
+(*)Revamped the security department on Clarion.
 (u)Gannets
 (p)4319
 (e)🗺|mapping
