@@ -271,7 +271,7 @@
 /obj/machinery/door_timer/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if (.)
-		return .
+		return
 
 	switch(action)
 		if ("set-time")
