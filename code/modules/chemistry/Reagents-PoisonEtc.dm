@@ -119,6 +119,8 @@ datum
 						for(var/mob/M in AIviewers(5, O))
 							boutput(M, "<span class='alert'>\the [O] melts.</span>")
 						qdel(O)
+					else
+						O.visible_message("The acidic substance slides off \the [O] harmlessly.")
 
 			on_plant_life(var/obj/machinery/plantpot/P)
 				P.HYPdamageplant("acid",5)
@@ -833,6 +835,7 @@ datum
 									qdel(K)
 								else
 									boutput(M, "<span class='alert'>Your [H.wear_mask] protects you from the acid!</span>")
+									K.visible_message("The blueish acidic substance slides off \the [K] harmlessly.")
 								melted = 1
 							if (H.head)
 								var/obj/item/clothing/head/D = H.head
@@ -843,6 +846,7 @@ datum
 									qdel(D)
 								else
 									boutput(M, "<span class='alert'>Your [H.head] protects you from the acid!</span>")
+									D.visible_message("The blueish acidic substance slides off \the [D] harmlessly.")
 								melted = 1
 							if (melted)
 								return
@@ -868,6 +872,8 @@ datum
 						for(var/mob/M in AIviewers(5, O))
 							boutput(M, "<span class='alert'>\the [O] melts.</span>")
 						qdel(O)
+					else
+						O.visible_message("The blueish acidic substance slides off \the [O] harmlessly.")
 
 			on_plant_life(var/obj/machinery/plantpot/P)
 				P.HYPdamageplant("acid",10)
