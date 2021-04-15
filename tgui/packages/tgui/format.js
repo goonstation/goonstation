@@ -150,3 +150,14 @@ export const formatPressure = value => {
 export const truncate = (str, n = 25) => {
   return (str.length > n) ? str.substr(0, n-1) + '…' : str;
 };
+
+/**
+ * Formats radio frequencies.
+ *
+ * @param {number} f
+ * @returns {string}
+ */
+export const formatFrequency = f => {
+  f = Math.round(f);
+  return Math.floor(f / 10) + "." + (f % 10);
+};

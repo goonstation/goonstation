@@ -9,13 +9,9 @@ import {
   Stack,
   Table,
 } from "../../components";
+import { formatFrequency } from "../../format";
 import { Window } from "../../layouts";
 import { RadioData, RadioWires } from "./type";
-
-const formatFrequency = f => {
-  f = Math.round(f);
-  return Math.floor(f / 10) + "." + (f % 10);
-};
 
 export const Radio = (_props, context) => {
   const { data, act } = useBackend<RadioData>(context);
