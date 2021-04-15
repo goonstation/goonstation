@@ -1631,7 +1631,41 @@
 		real_name = product.real_name
 		contents += product
 		product_cost = price
+/obj/item/machinery/board
+	name = "machine circuit board"
+	desc = "A board used in the construction of machinery."
+	icon = 'icons/obj/electronics.dmi'
+	icon_state = "board1"
 
+/obj/item/electronics/board/New()
+	. = ..()
+	src.icon_state = pick("board1", "board2", "board3")
+	src.pixel_x = rand(8, 12)
+	src.pixel_y = rand(8, 12)
+/obj/machinery/vendingFrame
+	name = "vending machine frame"
+	desc = "A generic vending machine frame."
+	icon = 'icons/obj/vending.dmi'
+	icon_state = "standard-off"
+	density = 1
+	var/wrenched = 0
+	var/glassed = 0
+	var/boardinstalled = 0
+	var/wiresinstalled = 0
+
+	attackby(obj/item/target, mob/user)
+
+		if(iswrenchingtool(target))
+			playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
+			if(!wrenched && do_after(user, 2 SECONDS))
+				wrenched = 1
+				anchored = 1
+				boutput(user, "<span class='notice'>You wrench the frame into place.</span>")
+			else if(!boardinstalled && do_after(user, 2 SECONDS))
+				wrenched = 0
+				anchored = 0
+				boutput(user, "<span class='notice'>You unfasten the frame.</span>")
+		//if(istype(target, ))
 /obj/machinery/vending/player
 	name = "YouVend"
 	icon_state = "player"
