@@ -9,6 +9,7 @@
 
 	var/static/list/product_name_cache = list(/obj/item/reagent_containers/mender/brute = "brute auto-mender", /obj/item/reagent_containers/mender/burn = "burn auto-mender")
 
+
 	New(productpath, amount=0, cost=0, hidden=0, logged_on_vend=FALSE)
 		..()
 		if (istext(productpath))
@@ -1738,6 +1739,7 @@
 	icon_state = "player"
 	desc = "Sells your stuff!"
 	pay = 1
+	layer = OBJ_LAYER - 0.3
 	//Product loading chute
 	var/loading = 0
 	var/unlocked = 0
@@ -1747,11 +1749,17 @@
 	var/cardname
 	//Bank account
 	var/datum/data/record/owneraccount = null
-	var/image/itemoverlay = null
+	var/image/crtoverlay = null
 	player_list = list()
 	create_products()
 		. = ..()
 	New()
+		crtoverlay = SafeGetOverlayImage("screen", src.icon, "player-crt")
+		crtoverlay.layer = src.layer + 0.2
+		crtoverlay.plane = PLANE_DEFAULT
+		//These stop the overlay from being selected instead of the item by your mouse?
+		crtoverlay.appearance_flags = NO_CLIENT_COLOR
+		crtoverlay.mouse_opacity = 0
 		. = ..()
 		setCrtOverlayStatus(1)
 	proc/pick_product_name()
@@ -1759,12 +1767,13 @@
 		var/itemPromo = sanitize(html_encode(R.product_name))
 		return itemPromo
 	proc/generate_slogans()
-		slogan_list = list("[src.name] now offering [pick_product_name()]!",
-	"Potentially well stocked!",
-	"Buy my stuff!",
-	"Don't miss out on [pick_product_name()]!",
-	"[src.name]. What else were you going to buy?",
-	"New and improved [pick_product_name()]!")
+		if(length(player_list) <= 0)
+			slogan_list = list("[src.name] now offering [pick_product_name()]!",
+		"Potentially well stocked!",
+		"Buy my stuff!",
+		"Don't miss out on [pick_product_name()]!",
+		"[src.name]. What else were you going to buy?",
+		"New and improved [pick_product_name()]!")
 	proc/getScaledIcon(obj/item/target)
 		var/image/itemoverlayoriginal = null
 		itemoverlayoriginal = SafeGetOverlayImage("item", target, target.icon_state)
@@ -1781,14 +1790,7 @@
 		UpdateOverlays(target, "item", 0, 1)
 	proc/setCrtOverlayStatus(status)
 		if(status == 1)
-			var/image/screenoverlay = null
-			screenoverlay = SafeGetOverlayImage("screen", src.icon, "player-crt")
-			screenoverlay.layer = src.layer + 0.2
-			screenoverlay.plane = PLANE_DEFAULT
-			//These stop the overlay from being selected instead of the item by your mouse?
-			screenoverlay.appearance_flags = NO_CLIENT_COLOR
-			screenoverlay.mouse_opacity = 0
-			UpdateOverlays(screenoverlay, "screen", 0, 1)
+			UpdateOverlays(crtoverlay, "screen", 0, 1)
 		else
 			UpdateOverlays(null, "screen", 0, 1)
 	proc/addProduct(obj/item/target, mob/user)
@@ -1865,7 +1867,7 @@
 			addProduct(target, user)
 		else
 			. = ..()
-		if(panel_open)
+		if(panel_open) //lock up if the service panel is closed
 			loading = 0
 			unlocked = 0
 		src.generate_HTML(1)
@@ -1875,10 +1877,14 @@
 		. = ..()
 		if (!(status & BROKEN) && powered())
 			src.icon_state = original_icon
+			setCrtOverlayStatus(1)
+		else
+			setCrtOverlayStatus(0)
 
 	Topic(href, href_list)
 		. = ..()
 		if (status & (BROKEN|NOPOWER))
+			setCrtOverlayStatus(0)
 			return
 		if (usr.stat || usr.restrained() || !in_interact_range(src, usr))
 			return
