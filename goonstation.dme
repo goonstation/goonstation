@@ -25,6 +25,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\__secret_public.dme"
 
 // BEGIN_INCLUDE
+#include "_std\__build.dm"
 #include "code\area.dm"
 #include "code\atom.dm"
 #include "code\base_lighting.dm"
