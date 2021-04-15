@@ -1713,7 +1713,7 @@
 				var/obj/item/machineboard/vending/E = locate()
 				E.set_loc(src.loc)
 				boardinstalled = 0
-		else if (issnippingtool(target) && !glassed)
+		else if (issnippingtool(target) && wiresinstalled && !glassed)
 			playsound(src.loc, "sound/items/Wirecutter.ogg", 50, 1)
 			boutput(user, "<span class='notice'>You remove the cables.</span>")
 			var/obj/item/cable_coil/C = new /obj/item/cable_coil(src.loc)
@@ -1743,8 +1743,6 @@
 	var/unlocked = 0
 	//Registered owner
 	var/owner = null
-	var/mob/lastuser = null
-	var/mob/owneruser = null
 	//card display name
 	var/cardname
 	//Bank account
@@ -1778,6 +1776,7 @@
 		return itemoverlayoriginal
 	proc/setItemOverlay(image/target)
 		src.icon_state = "player-display"
+		//Offsets go weird if I don't clear
 		ClearSpecificOverlays(1, "item")
 		UpdateOverlays(target, "item", 0, 1)
 	proc/setCrtOverlayStatus(status)
@@ -1813,7 +1812,6 @@
 		user.u_equip(target)
 		target.set_loc(src)
 		target.layer = (initial(target.layer))
-
 		var/existed = 0
 		//Finds items that have been labeled
 		var/regex/labelFinder = new("\\*? \\(.*?\\)")
@@ -1834,7 +1832,7 @@
 				R.product_amount += 1
 				existed = 1
 				break
-		if(existed == 0)
+		if(!existed)
 			var/datum/data/vending_product/player_product/itemEntry = new/datum/data/vending_product/player_product(target, 15)
 			itemEntry.icon = getScaledIcon(target)
 			player_list += itemEntry
@@ -1863,12 +1861,11 @@
 		src.wire_HTML += jointext(html_parts, "")
 
 	attackby(obj/item/target, mob/user)
-		if(!loading == 0 && !panel_open == 0)
+		if(loading && panel_open)
 			addProduct(target, user)
 		else
 			. = ..()
-		lastuser = user
-		if(!panel_open == 1)
+		if(panel_open)
 			loading = 0
 			unlocked = 0
 		src.generate_HTML(1)
@@ -1887,31 +1884,30 @@
 			return
 
 		if (href_list["loading"])
-			if (src.panel_open == 1 && src.unlocked == 1)
+			if (src.panel_open && src.unlocked)
 				loading = !loading
 				src.generate_HTML(0, 1)
-		else if (href_list["unlock"] && src.panel_open == 1)
+		else if (href_list["unlock"] && src.panel_open)
 			if (!owner && src.scan?.registered)
 				owneraccount = FindBankAccountByName(src.scan.registered)
 				owner = src.scan.registered
 				cardname = src.scan.name
 				unlocked = 1
-				owneruser = lastuser
 			else if (src.scan?.registered && owner == src.scan.registered)
 				unlocked = !unlocked
-				if(unlocked == 0 && loading == 1) loading = 0
+				if(!unlocked && loading) loading = 0
 			else
 				unlocked = 0
 				loading = 0
 			src.generate_HTML(0, 1)
-		else if (href_list["rename"] && src.panel_open == 1 && src.unlocked == 1)
+		else if (href_list["rename"] && src.panel_open && src.unlocked)
 			var/inp
 			inp = html_encode(sanitize(input(usr,"Enter new name:","Vendor Name", "") as text))
 			if(inp && inp != "" && (usr.stat || usr.restrained() || in_interact_range(src, usr)))
 				src.name = inp
 				src.generate_HTML(0, 1)
 				generate_slogans()
-		else if (href_list["setprice"] && src.panel_open == 1 && src.unlocked == 1)
+		else if (href_list["setprice"] && src.panel_open && src.unlocked)
 			var/inp
 			inp = input(usr,"Enter the new price:","Item Price", "") as num
 			if(inp && (usr.stat || usr.restrained() || in_interact_range(src, usr)))
@@ -1921,7 +1917,7 @@
 		else if(href_list["vend"] && (length(player_list) <= 0))
 			src.setItemOverlay(null)
 			icon_state = "player"
-		else if(href_list["icon"] && src.panel_open == 1 && src.unlocked == 1)
+		else if(href_list["icon"] && src.panel_open && src.unlocked)
 			var/datum/data/vending_product/player_product/R = locate(href_list["icon"]) in src.player_list
 			src.setItemOverlay(R.icon)
 			src.generate_HTML(1, 0)
