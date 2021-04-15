@@ -214,7 +214,27 @@ datum/preferences
 
 		switch(action)
 			if ("previewSound")
-				return src.ui_act_preview_sound(action, params, ui, state)
+				var/sound_file
+
+				if (params["pdaRingtone"])
+					get_all_character_setup_ringtones()
+					var/datum/ringtone/RT = selectable_ringtones[src.pda_ringtone_index]
+					if(istype(RT) && length(RT.ringList))
+						sound_file = RT.ringList[rand(1,length(RT.ringList))]
+
+				if (params["fartsound"])
+					sound_file = sound(src.AH.fartsounds[src.AH.fartsound])
+
+				if (params["screamsound"])
+					sound_file = sound(src.AH.screamsounds[src.AH.screamsound])
+
+				if (params["chatsound"])
+					sound_file = sounds_speak[AH.voicetype]
+
+				if (sound_file)
+					preview_sound(sound_file)
+
+				return FALSE
 
 			if ("rotate-clockwise")
 				src.spessman_direction = turn(src.spessman_direction, 90)
@@ -857,29 +877,6 @@ datum/preferences
 				update_preview_icon()
 
 				return TRUE
-
-	proc/ui_act_preview_sound(var/action, var/list/params, var/datum/tgui/ui, var/datum/ui_state/state)
-		. = FALSE
-
-		var/sound_file
-
-		if (params["pdaRingtone"])
-			get_all_character_setup_ringtones()
-			var/datum/ringtone/RT = selectable_ringtones[src.pda_ringtone_index]
-			if(istype(RT) && length(RT.ringList))
-				sound_file = RT.ringList[rand(1,length(RT.ringList))]
-
-		if (params["fartsound"])
-			sound_file = sound(src.AH.fartsounds[src.AH.fartsound])
-
-		if (params["screamsound"])
-			sound_file = sound(src.AH.screamsounds[src.AH.screamsound])
-
-		if (params["chatsound"])
-			sound_file = sounds_speak[AH.voicetype]
-
-		if (sound_file)
-			preview_sound(sound_file)
 
 	proc/preview_sound(var/sound/S)
 		// tgui kinda adds the ability to spam stuff very fast. This just limits people to spam sound previews.
