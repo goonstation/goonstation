@@ -1,5 +1,9 @@
 
 (t)thu apr 15 21
+(u)Gannets
+(p)4319
+(e)🗺|mapping
+(+)Additional pods added to the Syndicate Battlecruiser Cairngorm.
 (u)Carbadox
 (p)3778
 (e)🆕|feature
