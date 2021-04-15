@@ -271,6 +271,7 @@ MATERIAL
 				L["tcomputer"] = "Computer Terminal Frame (3 Sheets)"
 				L["computer"] = "Console Frame (5 Sheets)"
 				L["hcomputer"] = "Computer Frame (5 Sheets)"
+				L["vending"] = "Vending Machine Frame (3 Sheets)"
 		if (src?.material.material_flags & MATERIAL_CRYSTAL)
 			L["smallwindow"] = "Thin Window"
 			L["bigwindow"] = "Large Window (2 Sheets)"
@@ -485,6 +486,14 @@ MATERIAL
 					a_icon_state = "0"
 					a_name = "a terminal frame"
 
+				if("vending")
+					if (!amount_check(3,usr)) return
+					a_type = /obj/machinery/vendingframe
+					a_amount = 1
+					a_cost = 3
+					a_icon = 'icons/obj/terminal_frame.dmi'
+					a_icon_state = "0"
+					a_name = "a vending machine frame"
 				if("construct")
 					var/turf/T = get_turf(usr)
 					var/area/A = get_area (usr)

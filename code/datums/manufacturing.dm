@@ -599,7 +599,7 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 ////////////////////////////////
 
 /datum/manufacture/circuit_board
-	name = "Vending Machine Module"
+	name = "Vending Module"
 	item_paths = list("CON-1")
 	item_amounts = list(2)
 	item_outputs = list(/obj/item/machineboard/vending)

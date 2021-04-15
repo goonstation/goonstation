@@ -1632,8 +1632,8 @@
 		contents += product
 		product_cost = price
 /obj/item/machineboard
-	name = "machine circuit board"
-	desc = "A board used in the construction of machinery."
+	name = "machine module"
+	desc = "A circuit board assembly used in the construction of machinery."
 	icon = 'icons/obj/electronics.dmi'
 	icon_state = "board1"
 	var/machinepath = null
