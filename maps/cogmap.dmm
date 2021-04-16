@@ -7446,7 +7446,7 @@
 /obj/cable/yellow{
 	icon_state = "0-2"
 	},
-/obj/machinery/power/tracker/west,
+/obj/machinery/power/solar/west,
 /turf/simulated/floor/airless/solar,
 /area/station/solar/west)
 "asG" = (
@@ -9702,7 +9702,7 @@
 /area/station/hydroponics/bay)
 "axX" = (
 /obj/cable/yellow,
-/obj/machinery/power/tracker/west,
+/obj/machinery/power/solar/west,
 /turf/simulated/floor/airless/solar,
 /area/station/solar/west)
 "axY" = (
@@ -10395,7 +10395,7 @@
 /obj/cable/yellow{
 	icon_state = "0-4"
 	},
-/obj/machinery/power/solar/west,
+/obj/machinery/power/tracker/west,
 /turf/simulated/floor/airless/solar,
 /area/station/solar/west)
 "azz" = (
