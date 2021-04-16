@@ -491,8 +491,8 @@ MATERIAL
 					a_type = /obj/machinery/vendingframe
 					a_amount = 1
 					a_cost = 3
-					a_icon = 'icons/obj/terminal_frame.dmi'
-					a_icon_state = "0"
+					a_icon = 'icons/obj/vending.dmi'
+					a_icon_state = "standard-frame"
 					a_name = "a vending machine frame"
 				if("construct")
 					var/turf/T = get_turf(usr)

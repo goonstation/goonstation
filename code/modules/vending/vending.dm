@@ -1653,7 +1653,7 @@
 	name = "vending machine frame"
 	desc = "A generic vending machine frame."
 	icon = 'icons/obj/vending.dmi'
-	icon_state = "standard-off"
+	icon_state = "standard-frame"
 	density = 1
 	var/wrenched = 0
 	var/glassed = 0
@@ -1662,7 +1662,6 @@
 	var/vendingtype = null
 
 	attackby(obj/item/target, mob/user)
-
 		if(iswrenchingtool(target))
 			playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
 			if(!wrenched && do_after(user, 2 SECONDS))
@@ -1678,6 +1677,7 @@
 			vendingtype = V.machinepath
 			if(wrenched && !boardinstalled)
 				playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
+				icon_state = "standard-frame-electronics"
 				boutput(user, "<span class='notice'>You place the circuit board inside the frame.</span>")
 				user.u_equip(target)
 				target.set_loc(target)
@@ -1688,8 +1688,9 @@
 				playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
 				targetcoil.use(5)
 				wiresinstalled = 1
+				icon_state = "standard-frame-wired"
 				boutput(user, "<span class='notice'>You add cables to the frame.</span>")
-			else if(!wiresinstalled)
+			else if(!wiresinstalled && boardinstalled)
 				boutput(user, "<span class='alert'>You need at least five pieces of cable to wire the vending machine.</span>")
 		else if(istype(target, /obj/item/sheet) && wiresinstalled && !glassed)
 			var/obj/item/sheet/S = target
@@ -1699,6 +1700,7 @@
 			if(do_after(user, 2 SECONDS))
 				S.change_stack_amount(-2)
 				glassed = 1
+				icon_state = "standard-frame-glassed"
 				boutput(user, "<span class='notice'>You put in the glass panel.</span>")
 		else if (isscrewingtool(target) && glassed)
 			boutput(user, "<span class='notice'>You connect the screen.</span>")
@@ -1711,14 +1713,17 @@
 				A.amount = 2
 				glassed = 0
 				playsound(src.loc, "sound/items/Crowbar.ogg", 50, 1)
+				icon_state = "standard-frame-wired"
 				boutput(user, "<span class='notice'>You remove the glass panel.</span>")
 			else if (!wiresinstalled && boardinstalled)
+				icon_state = "standard-frame"
 				boutput(user, "<span class='notice'>You remove the circuit board.</span>")
 				var/obj/item/machineboard/vending/E = locate()
 				E.set_loc(src.loc)
 				boardinstalled = 0
 		else if (issnippingtool(target) && wiresinstalled && !glassed)
 			playsound(src.loc, "sound/items/Wirecutter.ogg", 50, 1)
+			icon_state = "standard-frame-electronics"
 			boutput(user, "<span class='notice'>You remove the cables.</span>")
 			var/obj/item/cable_coil/C = new /obj/item/cable_coil(src.loc)
 			C.amount = 5
@@ -1756,13 +1761,13 @@
 	player_list = list()
 
 	New()
+		. = ..()
 		crtoverlay = SafeGetOverlayImage("screen", src.icon, "player-crt")
 		crtoverlay.layer = src.layer + 0.2
 		crtoverlay.plane = PLANE_DEFAULT
 		//These stop the overlay from being selected instead of the item by your mouse?
 		crtoverlay.appearance_flags = NO_CLIENT_COLOR
 		crtoverlay.mouse_opacity = 0
-		. = ..()
 		setCrtOverlayStatus(1)
 	proc/pick_product_name()
 		var/datum/data/vending_product/player_product/R = pick(src.player_list)
