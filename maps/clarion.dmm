@@ -20927,6 +20927,9 @@
 	location = "tour17";
 	name = "tour beacon - end"
 	},
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/carpet{
 	icon_state = "blue1"
 	},
@@ -21415,6 +21418,9 @@
 	icon_state = "pipe-c"
 	},
 /obj/item/device/radio/beacon,
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/carpet{
 	icon_state = "blue1"
 	},
@@ -21979,6 +21985,9 @@
 	codes_txt = "patrol;next_patrol=arrivals";
 	location = "bridge";
 	name = "bot navigation beacon"
+	},
+/obj/cable{
+	icon_state = "1-2"
 	},
 /turf/simulated/floor/carpet{
 	icon_state = "fblue2"
@@ -22651,9 +22660,6 @@
 	dir = 0;
 	icon_state = "2-4"
 	},
-/obj/machinery/door/airlock/pyro/command{
-	name = "Bridge"
-	},
 /obj/access_spawn/heads,
 /obj/firedoor_spawn,
 /obj/machinery/secscanner{
@@ -22667,6 +22673,12 @@
 	layer = 4;
 	name = "Bridge Lockdown Door";
 	opacity = 0
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/door/airlock/pyro/command{
+	name = "Bridge"
 	},
 /turf/simulated/floor/blue,
 /area/station/bridge)
@@ -27152,11 +27164,14 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/obj/stool/chair/comfy/blue{
-	dir = 8
+/obj/cable{
+	icon_state = "1-4"
 	},
 /obj/cable{
 	icon_state = "1-2"
+	},
+/obj/stool/chair/comfy/blue{
+	dir = 8
 	},
 /turf/simulated/floor/black,
 /area/station/bridge)
@@ -27164,9 +27179,14 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
 /obj/machinery/power/apc{
+	dir = 4;
 	name = "E APC";
-	pixel_x = 20
+	pixel_x = 24
 	},
 /turf/simulated/floor/black,
 /area/station/bridge)
@@ -30395,7 +30415,7 @@
 	req_access_txt = null
 	},
 /turf/simulated/floor/black,
-/area/station/bridge)
+/area/station/turret_protected/ai)
 "bft" = (
 /obj/machinery/light_switch/north{
 	pixel_y = 28
