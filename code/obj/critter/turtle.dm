@@ -216,8 +216,8 @@
 	gender = MALE
 	var/obj/item/wearing_beret = 0	//Don't really need this var, but I like it better than checking contents every time we wanna see if he's got the beret
 	var/search_frequency = 30	//number of cycles between searches
-	var/preferred_hat = /obj/item/clothing/head/helmet/HoS 	//if this is not null then the only hat type he will wear is this path.
-	
+	var/preferred_hat = /obj/item/clothing/head/hos_hat 	//if this is not null then the only hat type he will wear is this path.
+
 	ai_think()
 		..()
 		//find clown
@@ -298,7 +298,7 @@
 	proc/give_beret(var/obj/hat, var/mob/user)
 		if (shell_count || wearing_beret) return 0
 
-		var/obj/item/clothing/head/helmet/HoS/beret = hat
+		var/obj/item/clothing/head/hos_hat/beret = hat
 		if (istype(beret))
 			if (beret.folds == 0)
 				beret.folds = 1
@@ -339,7 +339,7 @@
 		if (beret)
 			if (ishuman(M))
 				var/mob/living/carbon/human/H = M
-				if (H.job == "Head of Security" && istype(beret, /obj/item/clothing/head/helmet/HoS))
+				if (H.job == "Head of Security" && istype(beret, /obj/item/clothing/head/hos_hat))
 					H.put_in_hand_or_drop(beret)
 				else if (H.job == "NanoTrasen Commander" && istype(beret, /obj/item/clothing/head/NTberet/commander))
 					H.put_in_hand_or_drop(beret)
@@ -380,7 +380,7 @@
 	proc/update_icon()
 		if (src.alive)
 			if (src.wearing_beret)
-				if (istype(wearing_beret, /obj/item/clothing/head/helmet/HoS))
+				if (istype(wearing_beret, /obj/item/clothing/head/hos_hat))
 					src.icon_state = "turtle-beret"
 				else if (istype(wearing_beret, /obj/item/clothing/head/NTberet/commander))
 					src.icon_state = "turtle-beret-com"
@@ -389,7 +389,7 @@
 				src.icon_state = "turtle"
 		else
 			if (src.wearing_beret)
-				if (istype(wearing_beret, /obj/item/clothing/head/helmet/HoS))
+				if (istype(wearing_beret, /obj/item/clothing/head/hos_hat))
 					src.icon_state = "turtle-dead-beret"
 				else if (istype(wearing_beret, /obj/item/clothing/head/NTberet/commander))
 					src.icon_state = "turtle-dead-beret-com"
@@ -405,7 +405,7 @@
 	New()
 		..()
 		//Make the beret
-		var/obj/item/clothing/head/helmet/HoS/beret = new/obj/item/clothing/head/helmet/HoS(src)
+		var/obj/item/clothing/head/hos_hat/beret = new/obj/item/clothing/head/hos_hat(src)
 		//fold it
 		beret.folds = 1
 		beret.name = "HoS Beret"
