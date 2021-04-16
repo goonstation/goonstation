@@ -1,0 +1,134 @@
+import { useBackend, useSharedState } from '../../backend';
+import { Box, LabeledList, Table, Tooltip } from '../../components';
+import { formatPower } from '../../format';
+import { PowerMonitorApcData, PowerMonitorApcItemData } from './type';
+
+const apcState = {
+  [0]: 'Off',
+  [1]: (
+    <Box inline>
+      Off{' '}
+      <Box inline color="grey">
+        (Auto)
+      </Box>
+    </Box>
+  ),
+  [2]: 'On',
+  [3]: (
+    <Box inline>
+      On{' '}
+      <Box inline color="grey">
+        (Auto)
+      </Box>
+    </Box>
+  ),
+};
+
+const apcCellState = {
+  [0]: 'Discharging',
+  [1]: 'Charging',
+  [2]: 'Charged',
+};
+
+export const PowerMonitorApcGlobal = (_props, context) => {
+  const { data } = useBackend<PowerMonitorApcData>(context);
+
+  return (
+    <LabeledList>
+      <LabeledList.Item label="Total Power">{formatPower(data.available)}</LabeledList.Item>
+      <LabeledList.Item label="Total Load">{formatPower(data.load)}</LabeledList.Item>
+    </LabeledList>
+  );
+};
+
+export const PowerMonitorApcTableHeader = (_props, context) => {
+  return (
+    <>
+      <Table.Cell header>Area</Table.Cell>
+      <Table.Cell header collapsing position="relative">
+        Eqp.
+        <Tooltip content="Equipment" />
+      </Table.Cell>
+      <Table.Cell header collapsing position="relative">
+        Lgt.
+        <Tooltip content="Lighting" />
+      </Table.Cell>
+      <Table.Cell header collapsing position="relative">
+        Env.
+        <Tooltip content="Environment" />
+      </Table.Cell>
+      <Table.Cell textAlign="right" header>
+        Load
+      </Table.Cell>
+      <Table.Cell textAlign="right" header>
+        Cell Charge
+      </Table.Cell>
+      <Table.Cell header>Cell State</Table.Cell>
+    </>
+  );
+};
+
+export const PowerMonitorApcTableRows = (_props, context) => {
+  const { data } = useBackend<PowerMonitorApcData>(context);
+
+  return (
+    <>
+      {data.apcs.map((apc) => (
+        <PowerMonitorApcTableRow key={apc.ref} apc={apc} />
+      ))}
+    </>
+  );
+};
+
+type PowerMonitorApcTableRowProps = {
+  apc: PowerMonitorApcItemData;
+};
+
+const PowerMonitorApcTableRow = ({ apc }: PowerMonitorApcTableRowProps, context) => {
+  const { data } = useBackend<PowerMonitorApcData>(context);
+  const [search] = useSharedState(context, 'search', '');
+  const { name = 'N/A' } = data.apcsStatic[apc.ref] ?? {};
+
+  if (search && !name.toLowerCase().includes(search.toLowerCase())) {
+    return null;
+  }
+
+  return (
+    <Table.Row>
+      <Table.Cell>{name}</Table.Cell>
+      <ApcState state={apc.equipment} />
+      <ApcState state={apc.lighting} />
+      <ApcState state={apc.environment} />
+      <Table.Cell textAlign="right" nowrap>
+        {formatPower(apc.load)}
+      </Table.Cell>
+      {apc.cell ? (
+        <>
+          <Table.Cell textAlign="right" nowrap>
+            {apc.cell.charge}%
+          </Table.Cell>
+          <Table.Cell color={apc.cell.charging > 0 ? (apc.cell.charging === 1 ? 'average' : 'good') : 'bad'} nowrap>
+            {apcCellState[apc.cell.charging]}
+          </Table.Cell>
+        </>
+      ) : (
+        <>
+          <Table.Cell />
+          <Table.Cell color="bad">N/A</Table.Cell>
+        </>
+      )}
+    </Table.Row>
+  );
+};
+
+type ApcStateProps = {
+  state: number;
+};
+
+const ApcState = ({ state }: ApcStateProps) => {
+  return (
+    <Table.Cell nowrap color={state >= 2 ? 'good' : 'bad'}>
+      {apcState[state]}
+    </Table.Cell>
+  );
+};
