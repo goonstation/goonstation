@@ -39,7 +39,7 @@
 	ui_static_data(mob/user)
 		. = list("stock" = list())
 
-		for (var/datum/materiel/M in materiel_stock)
+		for (var/datum/materiel/M as anything in materiel_stock)
 			.["stock"] += list(list(
 				"ref" = "\ref[M]",
 				"name" = M.name,
