@@ -2820,7 +2820,7 @@
 	dir = 1
 	},
 /turf/simulated/floor,
-/area/station/security/brig)
+/area/station/security/main)
 "ahr" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -4153,7 +4153,7 @@
 	dir = 1
 	},
 /turf/simulated/floor,
-/area/station/security/brig)
+/area/station/security/main)
 "akr" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -4599,7 +4599,7 @@
 	dir = 1
 	},
 /turf/simulated/floor,
-/area/station/security/brig)
+/area/station/security/main)
 "alz" = (
 /obj/cable,
 /obj/wingrille_spawn/auto,
@@ -5493,7 +5493,7 @@
 /turf/simulated/floor/red/side{
 	dir = 1
 	},
-/area/station/security/brig)
+/area/station/security/main)
 "anB" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
@@ -5506,7 +5506,7 @@
 /turf/simulated/floor/red/side{
 	dir = 5
 	},
-/area/station/security/brig)
+/area/station/security/main)
 "anH" = (
 /obj/machinery/computer/arcade{
 	desc = "The VR representation of a popular computer game."
@@ -5985,7 +5985,7 @@
 /turf/simulated/floor/red/side{
 	dir = 8
 	},
-/area/station/security/brig)
+/area/station/security/main)
 "aoN" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/maintenance/solar/north)
@@ -8100,7 +8100,7 @@
 /obj/disposalpipe/segment/transport,
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
-/area/station/security/brig)
+/area/station/security/main)
 "aul" = (
 /obj/cable{
 	icon_state = "0-2"
@@ -42597,7 +42597,7 @@
 	},
 /obj/machinery/light/small,
 /turf/simulated/floor/grime,
-/area/space)
+/area/station/routing/depot)
 "bRc" = (
 /obj/cable{
 	icon_state = "0-4"
@@ -61447,7 +61447,6 @@
 /turf/simulated/floor,
 /area/station/security/main)
 "kZL" = (
-/obj/disposalpipe/segment,
 /obj/item/cell/supercell/charged{
 	pixel_x = -7;
 	pixel_y = 11
@@ -61838,7 +61837,7 @@
 	dir = 1
 	},
 /turf/simulated/floor,
-/area/station/security/brig)
+/area/station/security/main)
 "nhn" = (
 /obj/item/device/radio/beacon,
 /obj/machinery/light{
@@ -104099,7 +104098,7 @@ cvi
 ctD
 cwi
 ctD
-cwi
+ctD
 cxq
 cxq
 cxq
@@ -108610,8 +108609,8 @@ caY
 bYe
 caY
 caY
-aif
-aif
+cir
+cir
 cir
 ahh
 cnO
