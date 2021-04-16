@@ -803,7 +803,7 @@ datum
 									H.u_equip(D)
 									qdel(D)
 								else
-									boutput(M, "<span class='alert'>Your [H.head] protects you from the acid!</span>")
+									H.visible_message("<span class='alert'>The blueish acidic substance slides off \the [D] harmlessly.</span>", "<span class='alert'>Your [H.head] protects you from the acid!</span>")
 								melted = 1
 							if (!(H?.head.c_flags & SPACEWEAR))
 								if (H.wear_mask)
@@ -814,7 +814,7 @@ datum
 										H.u_equip(K)
 										qdel(K)
 									else
-										boutput(M, "<span class='alert'>Your [H.wear_mask] protects you from the acid!</span>")
+										H.visible_message("<span class='alert'>The blueish acidic substance slides off \the [K] harmlessly.</span>", "<span class='alert'>Your [H.wear_mask] protects you from the acid!</span>")
 									melted = 1
 
 							if (melted)
@@ -825,18 +825,7 @@ datum
 					if (ishuman(M))
 						var/mob/living/carbon/human/H = M
 						var/melted = 0
-						if (H.wear_mask && H.head)
-							if (H.wear_mask)
-								var/obj/item/clothing/mask/K = H.wear_mask
-								if (!(K.item_function_flags & IMMUNE_TO_ACID))
-									boutput(M, "<span class='alert'>Your [H.wear_mask] melts away!</span>")
-									K.dropped(H)
-									H.u_equip(K)
-									qdel(K)
-								else
-									boutput(M, "<span class='alert'>Your [H.wear_mask] protects you from the acid!</span>")
-									K.visible_message("The blueish acidic substance slides off \the [K] harmlessly.")
-								melted = 1
+						if (H.wear_mask || H.head)
 							if (H.head)
 								var/obj/item/clothing/head/D = H.head
 								if (!(D.item_function_flags & IMMUNE_TO_ACID))
@@ -845,9 +834,20 @@ datum
 									H.u_equip(D)
 									qdel(D)
 								else
-									boutput(M, "<span class='alert'>Your [H.head] protects you from the acid!</span>")
-									D.visible_message("The blueish acidic substance slides off \the [D] harmlessly.")
+									H.visible_message("<span class='alert>The blueish acidic substance slides off \the [D] harmlessly.</span>", "<span class='alert'>Your [H.head] protects you from the acid!</span>")
 								melted = 1
+							if (!(H?.head.c_flags & SPACEWEAR))
+								if (H.wear_mask)
+									var/obj/item/clothing/mask/K = H.wear_mask
+									if (!(K.item_function_flags & IMMUNE_TO_ACID))
+										boutput(M, "<span class='alert'>Your [H.wear_mask] melts away!</span>")
+										K.dropped(H)
+										H.u_equip(K)
+										qdel(K)
+									else
+										H.visible_message("<span class='alert'>The blueish acidic substance slides off \the [K] harmlessly.</span>", "<span class='alert'>Your [H.wear_mask] protects you from the acid!</span>")
+									melted = 1
+
 							if (melted)
 								return
 				else if (volume >= 5)
