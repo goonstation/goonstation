@@ -1774,7 +1774,7 @@
 		var/itemPromo = sanitize(html_encode(R.product_name))
 		return itemPromo
 	proc/generate_slogans()
-		if(length(player_list) >= 0)
+		if(!length(player_list) <= 0)
 			slogan_list = list("[src.name] now offering [pick_product_name()]!",
 		"Potentially well stocked!",
 		"Buy my stuff!",
