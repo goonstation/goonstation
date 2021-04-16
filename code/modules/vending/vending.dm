@@ -1652,6 +1652,7 @@
 	name = "monkey vending module"
 	machinepath = "/obj/machinery/vending/monkey"
 	icon_state = "monkey-module"
+	mats = 0 //No!!
 /obj/machinery/vendingframe
 	name = "vending machine frame"
 	desc = "A generic vending machine frame."
@@ -1681,7 +1682,7 @@
 			if(wrenched && !boardinstalled)
 				playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
 				icon_state = "standard-frame-electronics"
-				boutput(user, "<span class='notice'>You place the circuit board inside the frame.</span>")
+				boutput(user, "<span class='notice'>You install the module inside the frame.</span>")
 				user.u_equip(target)
 				target.set_loc(target)
 				boardinstalled = 1
@@ -1720,7 +1721,7 @@
 				boutput(user, "<span class='notice'>You remove the glass panel.</span>")
 			else if (!wiresinstalled && boardinstalled)
 				icon_state = "standard-frame"
-				boutput(user, "<span class='notice'>You remove the circuit board.</span>")
+				boutput(user, "<span class='notice'>You remove the vending module.</span>")
 				var/obj/item/machineboard/vending/E = locate()
 				E.set_loc(src.loc)
 				boardinstalled = 0
