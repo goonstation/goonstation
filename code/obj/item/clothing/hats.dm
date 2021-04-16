@@ -1303,3 +1303,33 @@
 	wear_image_icon = 'icons/mob/fruithat.dmi'
 	icon_state = "headsprout"
 	item_state = "headsprout"
+
+
+/obj/item/clothing/head/hos_hat
+	name = "HoS Hat"
+	icon_state = "hoscap"
+	uses_multiple_icon_states = 1
+	item_state = "hoscap"
+	c_flags = SPACEWEAR
+	var/is_a_communist = 0
+	var/folds = 0
+	desc = "Actually, this hat is from a fast-food restaurant, that's why it folds like it was made of paper."
+	setupProperties()
+		..()
+		setProperty("meleeprot_head", 7)
+
+/obj/item/clothing/head/hos_hat/attack_self(mob/user as mob)
+	if(user.r_hand == src || user.l_hand == src)
+		if(!src.folds)
+			src.folds = 1
+			src.name = "HoS Beret"
+			src.icon_state = "hosberet"
+			src.item_state = "hosberet"
+			boutput(user, "<span class='notice'>You fold the hat into a beret.</span>")
+		else
+			src.folds = 0
+			src.name = "HoS Hat"
+			src.icon_state = "hoscap"
+			src.item_state = "hoscap"
+			boutput(user, "<span class='notice'>You unfold the beret back into a hat.</span>")
+		return
