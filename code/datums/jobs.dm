@@ -261,7 +261,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	slot_poc1 = /obj/item/requisition_token/security
 	slot_poc2 = /obj/item/storage/security_pouch //replaces sec starter kit
 	slot_foot = /obj/item/clothing/shoes/swat
-	slot_head = /obj/item/clothing/head/helmet/HoS
+	slot_head = /obj/item/clothing/head/hos_hat
 	slot_ears = /obj/item/device/radio/headset/command/hos
 	slot_eyes = /obj/item/clothing/glasses/sunglasses/sechud
 
@@ -274,7 +274,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	slot_jump = /obj/item/clothing/under/rank/head_of_securityold
 	slot_suit = /obj/item/clothing/suit/armor/vest
 	slot_foot = /obj/item/clothing/shoes/swat
-	slot_head = /obj/item/clothing/head/helmet/HoS
+	slot_head = /obj/item/clothing/head/hos_hat
 	slot_ears = /obj/item/device/radio/headset/command/hos
 	slot_eyes = /obj/item/clothing/glasses/sunglasses/sechud
 #endif
