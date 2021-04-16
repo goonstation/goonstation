@@ -133,6 +133,7 @@
 				frostingoverlay.alpha = 255
 				src.UpdateOverlays(frostingoverlay,tag)
 				tube.reagents.trans_to(src,25)
+				JOB_XP(user, "Chef", 1)
 
 	proc/overlay_number_convert(var/original_clayer,var/mode,var/singlecake) //original - original clayer value, mode - which math we're using
 		switch(mode)

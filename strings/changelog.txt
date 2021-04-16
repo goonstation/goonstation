@@ -1,5 +1,26 @@
 
+(t)fri apr 16 21
+(u)DimWhat
+(p)4313
+(e)⚖|balance
+(+)Anyone wearing the Head of Security's hat is now able to be choked or receive CPR.
 (t)thu apr 15 21
+(u)Gannets
+(p)4321
+(e)⚖🆕|balance, feature
+(*)Nuke ops combat engineers can now hit the nuclear bomb with their battle wrench to repair a small amount of damage dealt to it.
+(u)Arthur Holiday
+(p)4271
+(e)🗺|mapping
+(*)Revamped the security department on Clarion.
+(u)Gannets
+(p)4319
+(e)🗺|mapping
+(+)Additional pods added to the Syndicate Battlecruiser Cairngorm.
+(u)Carbadox
+(p)3778
+(e)🆕|feature
+(+)Added some basic ways to earn Job XP for Chefs.
 (u)Lythine
 (p)4312
 (e)|

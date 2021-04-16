@@ -349,7 +349,7 @@
 	station_bounties[/obj/item/clothing/head/merchant_hat] = 1
 	station_bounties[/obj/item/clothing/head/beret/prisoner] = 2
 	station_bounties[/obj/item/clothing/head/caphat] = 3
-	station_bounties[/obj/item/clothing/head/helmet/HoS] = 3
+	station_bounties[/obj/item/clothing/head/hos_hat] = 3
 
 	station_bounties[/obj/item/disk/data/floppy/read_only/communications] = 2
 	station_bounties[/obj/item/disk/data/floppy/read_only/authentication] = 3
