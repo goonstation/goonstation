@@ -783,7 +783,7 @@
 		else
 			prot = 1
 
-		if (get_dist(src, user) > 1)
+		if (!in_interact_range(src, user))
 			return
 		if (prot > 0 || user.is_heat_resistant())
 			boutput(user, "You remove the light [fitting].")
