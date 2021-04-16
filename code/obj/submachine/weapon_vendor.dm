@@ -21,6 +21,7 @@
 	density = 1
 	opacity = 0
 	anchored = 1
+	flags = TGUI_INTERACTIVE
 
 	var/sound_token = 'sound/machines/capsulebuy.ogg'
 	var/sound_buy = 'sound/machines/spend.ogg'
@@ -29,6 +30,69 @@
 	var/list/datum/materiel_stock = list()
 	var/token_accepted = /obj/item/requisition_token
 	var/log_purchase = FALSE
+
+	ui_interact(mob/user, datum/tgui/ui)
+		ui = tgui_process.try_update_ui(user, src, ui)
+		if(!ui)
+			ui = new(user, src, "WeaponVendor", src.name)
+			ui.open()
+
+	ui_static_data(mob/user)
+		. = list("stock" = list())
+
+		for (var/datum/materiel/M in materiel_stock)
+			.["stock"] += list(list(
+				"ref" = "\ref[M]",
+				"name" = M.name,
+				"description" = M.description,
+				"cost" = M.cost,
+				"category" = M.category,
+			))
+
+	ui_data(mob/user)
+		. = list(
+			"credits" = src.credits,
+		)
+
+	ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+		. = ..()
+		if (.)
+			return
+
+		switch(action)
+			if ("redeem")
+				var/datum/materiel/sidearm/S = locate(params["ref"]) in materiel_stock
+				if(istype(S))
+					if(src.credits["Sidearm"] >= S.cost)
+						src.credits["Sidearm"] -= S.cost
+						var/atom/A = new S.path(src.loc)
+						playsound(src.loc, sound_buy, 80, 1)
+						src.vended(A)
+						return TRUE
+				var/datum/materiel/loadout/L = locate(params["ref"]) in materiel_stock
+				if(istype(L))
+					if(src.credits["Loadout"] >= L.cost)
+						src.credits["Loadout"] -= L.cost
+						var/atom/A = new L.path(src.loc)
+						playsound(src.loc, sound_buy, 80, 1)
+						src.vended(A)
+						return TRUE
+				var/datum/materiel/utility/U = locate(params["ref"]) in materiel_stock
+				if(istype(U))
+					if(src.credits["Utility"] >= U.cost)
+						src.credits["Utility"] -= U.cost
+						var/atom/A = new U.path(src.loc)
+						playsound(src.loc, sound_buy, 80, 1)
+						src.vended(A)
+						return TRUE
+				var/datum/materiel/assistant/AS = locate(params["ref"]) in materiel_stock
+				if(istype(AS))
+					if(src.credits["Assistant"] >= AS.cost)
+						src.credits["Assistant"] -= AS.cost
+						var/atom/A = new AS.path(src.loc)
+						playsound(src.loc, sound_buy, 80, 1)
+						src.vended(A)
+						return TRUE
 
 	attackby(var/obj/item/I, var/mob/user)
 		if(istype(I, token_accepted))
@@ -39,116 +103,17 @@
 			..()
 
 	proc/accepted_token(var/token, var/mob/user)
-		src.updateUsrDialog()
+		src.ui_interact(user)
 		playsound(src.loc, sound_token, 80, 1)
 		boutput(user, "<span class='notice'>You insert the requisition token into [src].</span>")
 		if(log_purchase)
 			logTheThing("debug", user, null, "inserted [token] into [src] at [log_loc(get_turf(src))]")
 
-	attack_hand(var/mob/user as mob)
-		if(..())
-			return
-
-		src.add_dialog(user)
-		var/list/dat = list("<span style=\"inline-flex\">")
-		dat += "<br><b>Balance remaining:</b> <font color='blue'>[src.credits["Sidearm"]] sidearm credit, [src.credits["Loadout"]] loadout credit, [src.credits["Utility"]] utility credit.</font>"
-
-		src.redeem_menu()
-		dat += src.temp
-
-		dat += "<br><a href='?action=mach_close&window=swv'>Close</a></span>"
-		user.Browse(dat.Join(), "window=swv;size=600x500;title=Syndicate Weapons Vendor")
-		onclose(user, "swv")
 
 	proc/vended(var/atom/A)
 		if(log_purchase)
 			logTheThing("debug", usr, null, "bought [A] from [src] at [log_loc(get_turf(src))]")
 		.= 0
-
-	proc/redeem_menu()
-		src.temp = list("<br>Please select the material that you wish to spend your credits on:<br><br>")
-		src.temp += {"
-		<style>
-			table {border-collapse: collapse;}
-			th {padding: 5px; text-align: center; background-color: #800000; color: white; height: 25px;}
-			td {padding: 5px; text-align: center;}
-			tr:hover {background-color: #707070;}
-			.reward {display:block; color:white; padding: 2px 5px; margin: -5px -5px 2px -5px;
-															width: auto;
-															height: auto;
-															filter: glow(color=black,strength=1);
-															text-shadow: -1px -1px 0 #000,
-																						1px -1px 0 #000,
-																						-1px 1px 0 #000,
-																							1px 1px 0 #000;}
-		</style>"}
-
-		src.temp += "<table border=1>"
-		src.temp += "<tr><th>Materiel</th><th>Category</th><th>Cost</th><th>Description</th></tr>"
-
-		for (var/datum/materiel/M in materiel_stock)
-			src.temp += "<tr style=\"color:[(M.cost > src.credits[M.category]) ? "red" : "black"]\"><td><a href='?src=\ref[src];buy=\ref[M]'><b><u>[M.name]</u></b></a></td><td>[M.category]</td><td>[M.cost]</td><td>[M.description]</td></tr>"
-
-		src.temp += "</table></div>"
-		src.temp = jointext(src.temp, "")
-
-	Topic(href, href_list)
-		if(..())
-			return
-		src.add_dialog(usr)
-
-		if (href_list["buy"])
-			var/datum/materiel/sidearm/S = locate(href_list["buy"]) in materiel_stock
-			if(istype(S))
-				if(src.credits["Sidearm"] < S.cost)
-					src.temp = "<br><font color='red'>Insufficient credits.</font><br>"
-					src.temp += "<br><a href='?src=\ref[src];redeem=1'>Redeem credits.</a>"
-				else
-					src.credits["Sidearm"] -= S.cost
-					src.temp = "<br>Transaction complete."
-					src.temp += "<br><a href='?src=\ref[src];redeem=1'>Redeem credits.</a>"
-					var/atom/A = new S.path(src.loc)
-					playsound(src.loc, sound_buy, 80, 1)
-					src.vended(A)
-			var/datum/materiel/loadout/L = locate(href_list["buy"]) in materiel_stock
-			if(istype(L))
-				if(src.credits["Loadout"] < L.cost)
-					src.temp = "<br><font color='red'>Insufficient credits.</font><br>"
-					src.temp += "<br><a href='?src=\ref[src];redeem=1'>Redeem credits.</a>"
-				else
-					src.credits["Loadout"] -= L.cost
-					src.temp = "<br>Transaction complete."
-					src.temp += "<br><a href='?src=\ref[src];redeem=1'>Redeem credits.</a>"
-					var/atom/A = new L.path(src.loc)
-					playsound(src.loc, sound_buy, 80, 1)
-					src.vended(A)
-			var/datum/materiel/utility/U = locate(href_list["buy"]) in materiel_stock
-			if(istype(U))
-				if(src.credits["Utility"] < U.cost)
-					src.temp = "<br><font color='red'>Insufficient credits.</font><br>"
-					src.temp += "<br><a href='?src=\ref[src];redeem=1'>Redeem credits.</a>"
-				else
-					src.credits["Utility"] -= U.cost
-					src.temp = "<br>Transaction complete."
-					src.temp += "<br><a href='?src=\ref[src];redeem=1'>Redeem credits.</a>"
-					var/atom/A = new U.path(src.loc)
-					playsound(src.loc, sound_buy, 80, 1)
-					src.vended(A)
-			var/datum/materiel/assistant/AS = locate(href_list["buy"]) in materiel_stock
-			if(istype(AS))
-				if(src.credits["Assistant"] < AS.cost)
-					src.temp = "<br><font color='red'>Insufficient credits.</font><br>"
-					src.temp += "<br><a href='?src=\ref[src];redeem=1'>Redeem credits.</a>"
-				else
-					src.credits["Assistant"] -= AS.cost
-					src.temp = "<br>Transaction complete."
-					src.temp += "<br><a href='?src=\ref[src];redeem=1'>Redeem credits.</a>"
-					var/atom/A = new AS.path(src.loc)
-					playsound(src.loc, sound_buy, 80, 1)
-					src.vended(A)
-
-		src.updateUsrDialog()
-
 
 /obj/submachine/weapon_vendor/security
 	name = "Security Weapons Vendor"

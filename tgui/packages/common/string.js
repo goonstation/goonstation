@@ -160,3 +160,5 @@ export const buildQueryString = obj => Object.keys(obj)
   .map(key => encodeURIComponent(key)
     + '=' + encodeURIComponent(obj[key]))
   .join('&');
+
+export const pluralize = (word, n) => n !== 1 ? word + 's' : word;

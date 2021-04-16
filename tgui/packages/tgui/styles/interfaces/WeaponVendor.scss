@@ -1,0 +1,11 @@
+@use '../colors.scss';
+
+.WeaponVendor__Row {
+  &:not(:last-child) {
+    border-bottom: 2px solid colors.bg(colors.$primary);
+  }
+}
+
+.WeaponVendor__Cell {
+  padding: 5px 10px;
+}
