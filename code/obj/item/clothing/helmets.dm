@@ -564,35 +564,6 @@
 		setProperty("disorient_resist_eye", 25)
 		setProperty("exploprot", 20)
 
-/obj/item/clothing/head/helmet/HoS
-	name = "HoS Hat"
-	icon_state = "hoscap"
-	uses_multiple_icon_states = 1
-	item_state = "hoscap"
-	c_flags = SPACEWEAR | COVERSEYES | BLOCKCHOKE
-	var/is_a_communist = 0
-	var/folds = 0
-	desc = "Actually, you got this hat from a fast-food restaurant, that's why it folds like it was made of paper."
-	setupProperties()
-		..()
-		setProperty("meleeprot_head", 7)
-
-/obj/item/clothing/head/helmet/HoS/attack_self(mob/user as mob)
-	if(user.r_hand == src || user.l_hand == src)
-		if(!src.folds)
-			src.folds = 1
-			src.name = "HoS Beret"
-			src.icon_state = "hosberet"
-			src.item_state = "hosberet"
-			boutput(user, "<span class='notice'>You fold the hat into a beret.</span>")
-		else
-			src.folds = 0
-			src.name = "HoS Hat"
-			src.icon_state = "hoscap"
-			src.item_state = "hoscap"
-			boutput(user, "<span class='notice'>You unfold the beret back into a hat.</span>")
-		return
-
 /obj/item/clothing/head/helmet/siren
 	name = "siren helmet"
 	desc = "A big flashing light that you put on your head. It also plays a siren for when you need to arrest someone!"

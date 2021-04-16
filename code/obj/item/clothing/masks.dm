@@ -158,7 +158,7 @@
 	item_state = "gas_alt"
 
 /obj/item/clothing/mask/gas/swat
-	name = "SWAT Mask"
+	name = "SWAT mask"
 	desc = "A close-fitting tactical mask that can filter some environmental toxins or be connected to an air supply."
 	icon_state = "swat"
 	item_state = "swat"
@@ -201,7 +201,7 @@
 
 /obj/item/clothing/mask/breath
 	desc = "A close-fitting mask that can be connected to an air supply but does not work very well in hard vacuum without a helmet."
-	name = "Breath Mask"
+	name = "breath mask"
 	icon_state = "breath"
 	item_state = "breath"
 	c_flags = COVERSMOUTH | MASKINTERNALS
@@ -244,7 +244,7 @@
 		setProperty("heatprot", 5)
 
 /obj/item/clothing/mask/gas/death_commando
-	name = "Death Commando Mask"
+	name = "Death Commando mask"
 	icon_state = "death_commando_mask"
 	item_state = "death_commando_mask"
 	setupProperties()
@@ -458,7 +458,7 @@
 				src.color = P.font_color
 
 /obj/item/clothing/mask/melons
-	name = "Flimsy 'George Melons' Mask"
+	name = "flimsy 'George Melons' mask"
 	desc = "Haven't seen that fellow in a while."
 	icon_state = "melons"
 	item_state = "melons"

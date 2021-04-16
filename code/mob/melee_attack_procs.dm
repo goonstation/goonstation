@@ -1181,7 +1181,7 @@
 	return null
 
 /mob/living/check_attack_resistance(var/obj/item/I)
-	if (reagents?.get_reagent_amount("ethanol") >= 100 && prob(40) && (!I || I.force <= 15))
+	if (reagents?.get_reagent_amount("ethanol") >= 100 && prob(40) && !I)
 		return "<span class='alert'>You drunkenly shrug off the blow!</span>"
 	return null
 
