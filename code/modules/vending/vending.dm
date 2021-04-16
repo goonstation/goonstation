@@ -1640,15 +1640,18 @@
 	var/machinepath = null
 /obj/item/machineboard/New()
 	. = ..()
-	src.icon_state = pick("board1", "board2", "board3")
-	src.pixel_x = rand(8, 12)
-	src.pixel_y = rand(8, 12)
 /obj/item/machineboard/vending
 	name = "vending machine module"
+	desc = "An assembly used in the construction of a vending machine."
 	machinepath = "/obj/machinery/vending/player"
+	icon = 'icons/obj/vending.dmi'
+	icon_state = "base-module"
+/obj/item/machineboard/vending/player
+	icon_state = "player-module"
 /obj/item/machineboard/vending/monkeys
 	name = "monkey vending module"
 	machinepath = "/obj/machinery/vending/monkey"
+	icon_state = "monkey-module"
 /obj/machinery/vendingframe
 	name = "vending machine frame"
 	desc = "A generic vending machine frame."

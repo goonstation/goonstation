@@ -602,7 +602,7 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 	name = "Vending Module"
 	item_paths = list("CON-1")
 	item_amounts = list(2)
-	item_outputs = list(/obj/item/machineboard/vending)
+	item_outputs = list(/obj/item/machineboard/vending/player)
 	time = 5 SECONDS
 	create = 1
 	category = "Component"
