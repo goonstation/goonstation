@@ -658,7 +658,8 @@
 
 			if(R.logged_on_vend)
 				logTheThing("station", usr, null, "vended a logged product ([R.product_name]) from [src] at [log_loc(src)].")
-
+			if(player_list)
+				logTheThing("station", usr, null, "vended a player product ([R.product_name]) from [src] at [log_loc(src)].")
 		if (href_list["logout"])
 			src.scan = null
 			src.generate_HTML(1)
@@ -1849,6 +1850,7 @@
 			itemEntry.icon = getScaledIcon(target)
 			player_list += itemEntry
 			if(label) itemEntry.label = label
+			logTheThing("station", user, null, "Added player product ([target.name]) to [src] at [log_loc(src)].")
 			generate_slogans()
 
 	generate_wire_HTML()
