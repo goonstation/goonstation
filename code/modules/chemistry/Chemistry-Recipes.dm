@@ -1902,10 +1902,10 @@ datum
 			name = "Iron Oxide"
 			id = "iron_oxide"
 			result = "iron_oxide"
-			required_reagents = list("iron" = 1, "oxygen" = 1, "water" = 1)
-			result_amount = 3
+			required_reagents = list("iron" = 1, "oxygen" = 1, "acetic_acid" = 1, "salt" = 1)
+			result_amount = 4
 			mix_phrase = "The iron rapidly rusts."
-			required_temperature = T0C + 75
+			required_temperature = T0C + 100
 
 		thermite
 			name = "Thermite"
