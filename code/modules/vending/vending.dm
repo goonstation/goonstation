@@ -1665,16 +1665,24 @@
 	var/wiresinstalled = 0
 	var/vendingtype = null
 
+
 	attackby(obj/item/target, mob/user)
+		var/basedesc = "A generic vending machine frame."
+		var/boarddesc = "[basedesc] Looks like it's ready for a vending module."
+		var/wiresdesc = "[basedesc] Looks like it needs wires installed."
+		var/glassdesc = "[basedesc] It's just missing glass."
+		var/readydesc = "[basedesc] Looks like a screwdriver would activate this."
 		if(iswrenchingtool(target))
 			playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
 			if(!wrenched && do_after(user, 2 SECONDS))
 				wrenched = 1
 				anchored = 1
+				desc = boarddesc
 				boutput(user, "<span class='notice'>You wrench the frame into place.</span>")
 			else if(!boardinstalled && wrenched && do_after(user, 2 SECONDS))
 				wrenched = 0
 				anchored = 0
+				desc = basedesc
 				boutput(user, "<span class='notice'>You unfasten the frame.</span>")
 		else if(istype(target, /obj/item/machineboard/vending))
 			var/obj/item/machineboard/vending/V = target
@@ -1682,6 +1690,7 @@
 			if(wrenched && !boardinstalled)
 				playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
 				icon_state = "standard-frame-electronics"
+				desc = wiresdesc
 				boutput(user, "<span class='notice'>You install the module inside the frame.</span>")
 				user.u_equip(target)
 				target.set_loc(target)
@@ -1693,6 +1702,7 @@
 				targetcoil.use(5)
 				wiresinstalled = 1
 				icon_state = "standard-frame-wired"
+				desc = glassdesc
 				boutput(user, "<span class='notice'>You add cables to the frame.</span>")
 			else if(!wiresinstalled && boardinstalled)
 				boutput(user, "<span class='alert'>You need at least five pieces of cable to wire the vending machine.</span>")
@@ -1705,6 +1715,7 @@
 				S.change_stack_amount(-2)
 				glassed = 1
 				icon_state = "standard-frame-glassed"
+				desc = readydesc
 				boutput(user, "<span class='notice'>You put in the glass panel.</span>")
 		else if (isscrewingtool(target) && glassed)
 			boutput(user, "<span class='notice'>You connect the screen.</span>")
@@ -1718,9 +1729,11 @@
 				glassed = 0
 				playsound(src.loc, "sound/items/Crowbar.ogg", 50, 1)
 				icon_state = "standard-frame-wired"
+				desc = glassdesc
 				boutput(user, "<span class='notice'>You remove the glass panel.</span>")
 			else if (!wiresinstalled && boardinstalled)
 				icon_state = "standard-frame"
+				desc = boarddesc
 				boutput(user, "<span class='notice'>You remove the vending module.</span>")
 				var/obj/item/machineboard/vending/E = locate()
 				E.set_loc(src.loc)
@@ -1728,6 +1741,7 @@
 		else if (issnippingtool(target) && wiresinstalled && !glassed)
 			playsound(src.loc, "sound/items/Wirecutter.ogg", 50, 1)
 			icon_state = "standard-frame-electronics"
+			desc = wiresdesc
 			boutput(user, "<span class='notice'>You remove the cables.</span>")
 			var/obj/item/cable_coil/C = new /obj/item/cable_coil(src.loc)
 			C.amount = 5
@@ -1850,7 +1864,7 @@
 			itemEntry.icon = getScaledIcon(target)
 			player_list += itemEntry
 			if(label) itemEntry.label = label
-			logTheThing("station", user, null, "Added player product ([target.name]) to [src] at [log_loc(src)].")
+			logTheThing("station", user, null, "added player product ([target.name]) to [src] at [log_loc(src)].")
 			generate_slogans()
 
 	generate_wire_HTML()
