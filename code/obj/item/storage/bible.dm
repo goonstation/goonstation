@@ -87,7 +87,7 @@ var/global/list/bible_contents = list()
 			var/mob/H = M
 			// ******* Check
 			if ((ishuman(H) && prob(60) && !(M.traitHolder?.hasTrait("atheist"))))
-				bless(M)
+				bless(M, user)
 				M.visible_message("<span class='alert'><B>[user] heals [M] with the power of Christ!</B></span>")
 				boutput(M, "<span class='alert'>May the power of Christ compel you to be healed!</span>")
 				if (narrator_mode)
