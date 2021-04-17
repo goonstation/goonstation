@@ -1639,8 +1639,6 @@
 	icon_state = "board1"
 	mats = 2
 	var/machinepath = null
-/obj/item/machineboard/New()
-	. = ..()
 /obj/item/machineboard/vending
 	name = "vending machine module"
 	desc = "An assembly used in the construction of a vending machine."
@@ -1689,8 +1687,8 @@
 				boardinstalled = 1
 		else if(istype(target, /obj/item/cable_coil))
 			var/obj/item/cable_coil/targetcoil = target
+			playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
 			if(targetcoil.amount >= 5 && boardinstalled && !wiresinstalled && do_after(user, 2 SECONDS))
-				playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
 				targetcoil.use(5)
 				wiresinstalled = 1
 				icon_state = "standard-frame-wired"
