@@ -19972,11 +19972,13 @@
 /area/station/janitor/office)
 "aWo" = (
 /obj/table/reinforced/auto,
-/obj/item/clothing/glasses/vr,
 /obj/machinery/light{
 	dir = 8;
 	layer = 9.1;
 	pixel_x = -10
+	},
+/obj/item/clothing/glasses/vr{
+	network = "arcadevr"
 	},
 /turf/simulated/floor/red/side{
 	dir = 1
@@ -21512,7 +21514,9 @@
 /area/station/janitor/office)
 "aZG" = (
 /obj/table/reinforced/auto,
-/obj/item/clothing/glasses/vr,
+/obj/item/clothing/glasses/vr{
+	network = "arcadevr"
+	},
 /turf/simulated/floor,
 /area/station/security/checkpoint/arrivals)
 "aZH" = (
@@ -23698,7 +23702,7 @@
 /obj/item/chair/folded,
 /obj/machinery/light/incandescent/harsh/very,
 /turf/simulated/floor/plating/random,
-/area/station/security/brig)
+/area/station/security/main)
 "bet" = (
 /obj/machinery/atmospherics/pipe/tank/sleeping_agent/south,
 /obj/machinery/light{
@@ -34833,7 +34837,7 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/plating/random,
-/area/station/security/brig)
+/area/station/security/main)
 "bGp" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -35249,6 +35253,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/machinery/light/emergency,
 /turf/simulated/floor/plating/random,
 /area/station/security/hos/horizon)
 "bHH" = (
@@ -35271,7 +35276,14 @@
 "bHI" = (
 /obj/table/folding,
 /obj/machinery/recharger,
-/obj/item/storage/box/crayon/basic,
+/obj/item/storage/box/crayon/basic{
+	pixel_x = 9;
+	pixel_y = -1
+	},
+/obj/item/reagent_containers/food/drinks/mug/HoS{
+	pixel_x = -7;
+	pixel_y = 13
+	},
 /turf/simulated/floor/plating/random,
 /area/station/security/hos/horizon)
 "bHJ" = (
@@ -38808,7 +38820,7 @@
 	pixel_y = 21
 	},
 /turf/simulated/floor/black,
-/area/station/security/brig/genpop)
+/area/station/security/main)
 "bQW" = (
 /obj/cable{
 	icon_state = "5-8"
@@ -40023,7 +40035,7 @@
 	},
 /obj/access_spawn/brig,
 /turf/simulated/floor/black,
-/area/station/security/brig)
+/area/station/security/main)
 "bTO" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe/horizontal,
 /obj/cable{
@@ -40039,7 +40051,7 @@
 	pixel_y = 32
 	},
 /turf/simulated/floor/black,
-/area/station/security/brig)
+/area/station/security/main)
 "bTQ" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe/horizontal,
 /obj/cable{
@@ -40055,20 +40067,20 @@
 	dir = 8
 	},
 /turf/simulated/floor/black,
-/area/station/security/brig)
+/area/station/security/main)
 "bTR" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe/horizontal,
 /obj/disposalpipe/junction/right/east,
 /obj/machinery/door_timer/genpop/new_walls/north,
 /turf/simulated/floor/black,
-/area/station/security/brig)
+/area/station/security/main)
 "bTS" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe/horizontal,
 /obj/disposalpipe/segment/brig{
 	dir = 8
 	},
 /turf/simulated/floor/black,
-/area/station/security/brig)
+/area/station/security/main)
 "bTT" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe/southwest,
 /obj/disposalpipe/segment/brig{
@@ -40076,10 +40088,12 @@
 	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/black,
-/area/station/security/brig)
+/area/station/security/main)
 "bTV" = (
 /obj/table/reinforced/auto,
-/obj/item/clothing/glasses/vr,
+/obj/item/clothing/glasses/vr{
+	network = "arcadevr"
+	},
 /turf/simulated/floor/white,
 /area/station/security/brig)
 "bTW" = (
@@ -41029,6 +41043,11 @@
 /area/station/hangar/sec)
 "bWd" = (
 /obj/machinery/manufacturer/hangar,
+/obj/machinery/door_control{
+	id = "hangar_sec";
+	name = "Security Hangar Door Control";
+	pixel_y = 23
+	},
 /turf/simulated/floor,
 /area/station/hangar/sec)
 "bWf" = (
@@ -41099,7 +41118,7 @@
 	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/black,
-/area/station/security/brig)
+/area/station/security/main)
 "bWp" = (
 /obj/cable{
 	d1 = 2;
@@ -41107,11 +41126,11 @@
 	icon_state = "2-9"
 	},
 /turf/simulated/floor/black,
-/area/station/security/brig)
+/area/station/security/main)
 "bWq" = (
 /obj/machinery/atmospherics/pipe/manifold/west,
 /turf/simulated/floor/black,
-/area/station/security/brig)
+/area/station/security/main)
 "bWs" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -42101,7 +42120,7 @@
 	pixel_x = -10
 	},
 /turf/simulated/floor/black,
-/area/station/security/brig)
+/area/station/security/main)
 "bYK" = (
 /obj/decal/cleanable/blood/tracks{
 	dir = 4
@@ -42121,7 +42140,7 @@
 	pixel_y = 8
 	},
 /turf/simulated/floor/black,
-/area/station/security/brig)
+/area/station/security/main)
 "bYM" = (
 /obj/disposalpipe/segment/morgue{
 	dir = 1;
@@ -43063,7 +43082,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/black,
-/area/station/security/brig)
+/area/station/security/main)
 "caL" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe/horizontal,
 /obj/machinery/door/airlock/pyro/glass/brig{
@@ -43765,7 +43784,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating/random,
-/area/station/security/brig)
+/area/station/security/main)
 "ccs" = (
 /obj/cable{
 	d1 = 1;
@@ -43773,10 +43792,7 @@
 	icon_state = "1-8"
 	},
 /turf/simulated/floor/black,
-/area/station/security/brig)
-"cct" = (
-/turf/simulated/floor/black,
-/area/station/security/brig)
+/area/station/security/main)
 "ccu" = (
 /obj/machinery/optable{
 	id = "robotics"
@@ -44271,7 +44287,12 @@
 /turf/simulated/floor/red/side,
 /area/station/hallway/primary/east)
 "cdB" = (
-/obj/machinery/door/poddoor/blast/pyro/podbay_autoclose/security_horizontal,
+/obj/machinery/door/poddoor/blast/pyro{
+	autoclose = 1;
+	icon_state = "bdoorleft1";
+	id = "hangar_sec";
+	name = "Security Hangar"
+	},
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/sec)
 "cdE" = (
@@ -45531,16 +45552,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/engine/engineering)
-"cgH" = (
-/obj/grille/catwalk{
-	dir = 4
-	},
-/obj/machinery/r_door_control/podbay/security/new_walls/north,
-/turf/space,
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 4
-	},
-/area/space)
 "cgI" = (
 /obj/item/storage/wall/fire{
 	dir = 1;
@@ -45674,11 +45685,16 @@
 /turf/space,
 /area/space)
 "cgW" = (
-/obj/machinery/door/poddoor/blast/pyro/podbay_autoclose/security_horizontal,
 /obj/forcefield/energyshield/perma/doorlink{
 	desc = "A door-linked force field that prevents gasses from passing through it.";
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
+	},
+/obj/machinery/door/poddoor/blast/pyro{
+	autoclose = 1;
+	icon_state = "bdoorleft1";
+	id = "hangar_sec";
+	name = "Security Hangar"
 	},
 /turf/simulated/floor/shuttlebay,
 /area/station/maintenance/southeast)
@@ -45686,11 +45702,16 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/door/poddoor/blast/pyro/podbay_autoclose/security_horizontal,
 /obj/forcefield/energyshield/perma/doorlink{
 	desc = "A door-linked force field that prevents gasses from passing through it.";
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
+	},
+/obj/machinery/door/poddoor/blast/pyro{
+	autoclose = 1;
+	icon_state = "bdoormid1";
+	id = "hangar_sec";
+	name = "Security Hangar"
 	},
 /turf/simulated/floor/shuttlebay,
 /area/station/maintenance/southeast)
@@ -52019,9 +52040,6 @@
 	},
 /turf/simulated/floor/airless,
 /area/space)
-"cxu" = (
-/turf/space,
-/area/syndicate_teleporter)
 "cxv" = (
 /obj/reagent_dispensers/fueltank,
 /obj/machinery/light/small{
@@ -54860,6 +54878,12 @@
 	},
 /turf/simulated/floor,
 /area/station/bridge/hos)
+"dUN" = (
+/obj/disposalpipe/segment/brig{
+	dir = 8
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/security/main)
 "dVo" = (
 /obj/disposalpipe/segment/brig{
 	dir = 8
@@ -55319,7 +55343,7 @@
 "fCV" = (
 /obj/storage/closet/wardrobe/orange,
 /turf/simulated/floor/black,
-/area/station/security/brig)
+/area/station/security/main)
 "fEt" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -55921,7 +55945,7 @@
 	},
 /obj/item/pen/pencil,
 /turf/simulated/floor/plating/random,
-/area/station/security/brig)
+/area/station/security/main)
 "hOk" = (
 /obj/disposalpipe/segment/transport{
 	icon_state = "pipe-c"
@@ -56536,7 +56560,6 @@
 /area/station/ranch)
 "jMc" = (
 /obj/table/reinforced/auto,
-/obj/item/clothing/glasses/vr,
 /obj/item/decoration/ashtray{
 	pixel_x = -6;
 	pixel_y = 7
@@ -56545,6 +56568,9 @@
 	dir = 4;
 	layer = 9.1;
 	pixel_x = 10
+	},
+/obj/item/clothing/glasses/vr{
+	network = "arcadevr"
 	},
 /turf/simulated/floor/white,
 /area/station/security/brig/genpop)
@@ -56937,7 +56963,7 @@
 "kXH" = (
 /obj/machinery/atmospherics/unary/vent_pump/east,
 /turf/simulated/floor/black,
-/area/station/security/brig)
+/area/station/security/main)
 "kYZ" = (
 /obj/decal/tile_edge/stripe{
 	icon_state = "bot2";
@@ -57100,7 +57126,9 @@
 /area/station/ranch)
 "lFF" = (
 /obj/table/reinforced/auto,
-/obj/item/clothing/glasses/vr,
+/obj/item/clothing/glasses/vr{
+	network = "arcadevr"
+	},
 /turf/simulated/floor/white,
 /area/station/security/brig/genpop)
 "lFJ" = (
@@ -57687,10 +57715,6 @@
 /obj/disposalpipe/segment/bent/east,
 /turf/simulated/floor/darkblue,
 /area/station/bridge)
-"ngp" = (
-/obj/wingrille_spawn/auto,
-/turf/simulated/floor/plating/random,
-/area/station/security/brig)
 "nhI" = (
 /obj/grille/steel,
 /obj/window/auto/reinforced,
@@ -57727,6 +57751,17 @@
 	},
 /turf/simulated/wall/auto/supernorn,
 /area/station/maintenance/northeast)
+"njE" = (
+/obj/disposalpipe/segment/morgue{
+	dir = 4
+	},
+/obj/machinery/r_door_control/podbay/security/new_walls/south{
+	id = "hangar_sec";
+	pixel_x = 25;
+	pixel_y = 0
+	},
+/turf/simulated/floor/shuttlebay,
+/area/station/hangar/sec)
 "nkk" = (
 /obj/disposalpipe/segment/brig{
 	dir = 8
@@ -57913,9 +57948,15 @@
 	},
 /turf/simulated/floor/white,
 /area/station/security/brig/genpop)
-"nJN" = (
-/turf/simulated/wall/auto/supernorn,
-/area/station/security/brig)
+"nIY" = (
+/obj/machinery/door/poddoor/blast/pyro{
+	autoclose = 1;
+	icon_state = "bdoormid1";
+	id = "hangar_sec";
+	name = "Security Hangar"
+	},
+/turf/simulated/floor/shuttlebay,
+/area/station/hangar/sec)
 "nKf" = (
 /obj/cable{
 	d1 = 4;
@@ -58089,6 +58130,9 @@
 /area/station/hallway/secondary/west)
 "ojd" = (
 /obj/burning_barrel,
+/obj/decal/poster/wallsign/medal{
+	pixel_y = 27
+	},
 /turf/simulated/floor/plating/random,
 /area/station/security/hos/horizon)
 "ojv" = (
@@ -58330,7 +58374,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/black,
-/area/station/security/brig)
+/area/station/security/main)
 "plf" = (
 /obj/table/reinforced/auto,
 /obj/item/device/transfer_valve{
@@ -58361,14 +58405,33 @@
 	},
 /turf/simulated/floor/shuttlebay,
 /area/station/maintenance/northwest)
+"pmG" = (
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
+/obj/machinery/door/poddoor/blast/pyro{
+	autoclose = 1;
+	icon_state = "bdoorright1";
+	id = "hangar_sec";
+	name = "Security Hangar"
+	},
+/turf/simulated/floor/shuttlebay,
+/area/station/maintenance/southeast)
 "pow" = (
-/obj/machinery/door/poddoor/blast/pyro/podbay_autoclose/security_horizontal,
 /obj/forcefield/energyshield/perma/doorlink{
 	desc = "A door-linked force field that prevents gasses from passing through it.";
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
 	},
 /obj/disposalpipe/segment,
+/obj/machinery/door/poddoor/blast/pyro{
+	autoclose = 1;
+	icon_state = "bdoormid1";
+	id = "hangar_sec";
+	name = "Security Hangar"
+	},
 /turf/simulated/floor/shuttlebay,
 /area/station/maintenance/southeast)
 "poY" = (
@@ -58853,7 +58916,7 @@
 	},
 /obj/item/handcuffs,
 /turf/simulated/floor/plating/random,
-/area/station/security/brig)
+/area/station/security/main)
 "qGX" = (
 /obj/disposalpipe/segment/brig{
 	dir = 2;
@@ -59010,6 +59073,15 @@
 /obj/disposalpipe/segment/bent/east,
 /turf/simulated/floor/neutral,
 /area/station/crew_quarters/courtroom)
+"rkw" = (
+/obj/machinery/door/poddoor/blast/pyro{
+	autoclose = 1;
+	icon_state = "bdoorright1";
+	id = "hangar_sec";
+	name = "Security Hangar"
+	},
+/turf/simulated/floor/shuttlebay,
+/area/station/hangar/sec)
 "rkE" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe/horizontal,
 /obj/disposalpipe/trunk{
@@ -60279,7 +60351,7 @@
 "vEt" = (
 /obj/machinery/atmospherics/pipe/manifold/south,
 /turf/simulated/floor/black,
-/area/station/security/brig)
+/area/station/security/main)
 "vEY" = (
 /obj/disposalpipe/segment/food{
 	dir = 4
@@ -60553,10 +60625,6 @@
 "wxI" = (
 /obj/machinery/computer/security,
 /obj/item/device/radio/intercom/bridge,
-/obj/machinery/light/emergency{
-	dir = 1;
-	pixel_y = 21
-	},
 /turf/simulated/floor/plating/random,
 /area/station/security/hos/horizon)
 "wyr" = (
@@ -60580,12 +60648,6 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/security/hos/horizon)
-"wBt" = (
-/obj/disposalpipe/segment/brig{
-	dir = 8
-	},
-/turf/simulated/floor/black,
-/area/station/security/brig)
 "wBW" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
@@ -60800,8 +60862,10 @@
 /area/station/security/checkpoint/arrivals)
 "wYB" = (
 /obj/table/reinforced/auto,
-/obj/item/clothing/glasses/vr,
 /obj/item/instrument/harmonica,
+/obj/item/clothing/glasses/vr{
+	network = "arcadevr"
+	},
 /turf/simulated/floor/white,
 /area/station/security/brig/genpop)
 "wYN" = (
@@ -61038,7 +61102,7 @@
 	pixel_x = -10
 	},
 /turf/simulated/floor/black,
-/area/station/security/brig)
+/area/station/security/main)
 "xPE" = (
 /obj/landmark/start{
 	name = "Botanist"
@@ -119360,7 +119424,7 @@ lkr
 nGT
 ceN
 cgP
-bBN
+aKD
 aal
 aaa
 aaa
@@ -119961,7 +120025,7 @@ bWb
 bYr
 cas
 ccb
-cdB
+nIY
 ceR
 cfT
 cgX
@@ -120263,7 +120327,7 @@ bWc
 bYt
 cas
 nyF
-cdB
+nIY
 ggF
 sPB
 pow
@@ -120564,11 +120628,11 @@ nGT
 bWd
 bYt
 cau
-ccb
-cdB
+njE
+rkw
 ceR
 cfV
-cgW
+pmG
 arE
 aaa
 aaa
@@ -120870,8 +120934,8 @@ bBS
 nGT
 bbp
 cfW
-bBN
-cgH
+aKD
+arE
 aaa
 aaa
 aaa
@@ -121172,7 +121236,7 @@ ccd
 mGp
 ceM
 cfX
-aKD
+bBN
 arE
 aaa
 aaa
@@ -125393,11 +125457,11 @@ vVg
 vVg
 vVg
 bTN
-jPo
-bCl
-ngp
-ngp
-bCl
+dUN
+mGp
+roN
+roN
+mGp
 dEu
 cgl
 bbu
@@ -125696,10 +125760,10 @@ bOc
 vVg
 bTO
 xIu
-nJN
+caC
 hMN
 bes
-bCl
+mGp
 dEu
 cgl
 bbv
@@ -125997,11 +126061,11 @@ bKR
 kLB
 lLh
 pjs
-wBt
-nJN
+wnf
+caC
 qGV
 bGo
-bCl
+mGp
 dEu
 cgl
 bBN
@@ -126300,10 +126364,10 @@ vOL
 bQS
 bTQ
 bWo
-nJN
-nJN
+caC
+caC
 ccr
-bCl
+mGp
 dEu
 cgl
 bBN
@@ -126605,7 +126669,7 @@ bWp
 bYJ
 caJ
 ccs
-bCl
+mGp
 dEu
 cgk
 bBN
@@ -126903,11 +126967,11 @@ bYK
 tIo
 tIo
 bTS
-cct
-cct
+oMy
+oMy
 kXH
-cct
-bCl
+oMy
+mGp
 dEu
 cgk
 bBN
@@ -127209,7 +127273,7 @@ bWq
 bYL
 vEt
 fCV
-bCl
+mGp
 dEu
 cgk
 bBN
@@ -136069,7 +136133,7 @@ aaa
 aaa
 aaa
 aaa
-cxu
+aaa
 aaa
 aaa
 aaa
