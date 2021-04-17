@@ -1668,10 +1668,10 @@
 
 	attackby(obj/item/target, mob/user)
 		var/basedesc = "A generic vending machine frame."
-		var/boarddesc = "[basedesc] Looks like it's ready for a vending module."
-		var/wiresdesc = "[basedesc] Looks like it needs wires installed."
-		var/glassdesc = "[basedesc] It's just missing glass."
-		var/readydesc = "[basedesc] Looks like a screwdriver would activate this."
+		var/boarddesc = "[basedesc] Seems to be missing the module, and everything else."
+		var/wiresdesc = "[basedesc] Nothing has been wired up."
+		var/glassdesc = "[basedesc] Isn't there usually glass?"
+		var/readydesc = "[basedesc] Just needs a few screws tightened."
 		if(iswrenchingtool(target))
 			playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
 			if(!wrenched && do_after(user, 2 SECONDS))
