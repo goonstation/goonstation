@@ -1919,16 +1919,6 @@
 			unlocked = 0
 		src.generate_HTML(1)
 
-	//Save and restore icon state in case we're in product display mode
-	power_change()
-		var/original_icon = src.icon_state
-		. = ..()
-		if (!(status & BROKEN) && powered())
-			src.icon_state = original_icon
-			setCrtOverlayStatus(1)
-		else
-			setCrtOverlayStatus(0)
-
 	Topic(href, href_list)
 		. = ..()
 		if (status & (BROKEN|NOPOWER))
