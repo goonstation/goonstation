@@ -193,6 +193,7 @@
 					duration = 1
 
 	simplehot //Simple heal over time.
+		id = "simplehot"
 		var/tickCount = 0
 		var/tickSpacing = 1 SECOND //Time between ticks.
 		var/heal_brute = 0
