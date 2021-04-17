@@ -1744,7 +1744,6 @@
 					A.setMaterial(M)
 				qdel(src)
 
-
 /obj/machinery/vending/player
 	name = "YouVend"
 	icon_state = "player"
@@ -1778,7 +1777,8 @@
 		return itemPromo
 	proc/generate_slogans()
 		if(!length(player_list) <= 0)
-			slogan_list = list("[src.name] now offering [pick_product_name()]!",
+			slogan_list = list("[By popular demand: [pick_product_name()]!",
+		"[src.name]. The better vending machine."
 		"Potentially well stocked!",
 		"Buy my stuff!",
 		"Don't miss out on [pick_product_name()]!",
