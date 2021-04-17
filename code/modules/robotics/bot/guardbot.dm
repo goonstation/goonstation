@@ -4984,7 +4984,7 @@
 
 			W.set_loc(src)
 			src.created_cell = W
-			src.stage = 3
+			src.stage = 2
 			src.icon_state = "goldbuddy_frame-[buddy_model]-2"
 			boutput(user, "You add the power cell to [src]!")
 

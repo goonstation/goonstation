@@ -1,5 +1,9 @@
 
 (t)fri apr 16 21
+(u)Sovexe
+(p)4337
+(e)⚖🐛|balance, bug
+(+)The Nuclear Bomb Teleporter Remote can now summon a nuke contained within a pod's cargo hold.
 (u)DimWhat
 (p)4313
 (e)⚖|balance
