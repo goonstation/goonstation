@@ -84,3 +84,6 @@
 
 	get_ranged_protection()
 		return 2
+
+	get_disorient_protection()
+		return max(..(), 80)
