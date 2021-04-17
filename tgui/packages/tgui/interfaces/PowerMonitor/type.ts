@@ -15,6 +15,7 @@ export interface PowerMonitorApcData extends PowerMonitorData {
   load: number;
   apcs: PowerMonitorApcItemData[];
   apcsStatic: Record<string, PowerMonitorApcStaticItemData>;
+  history: { available: number; load: number }[];
 }
 
 export interface PowerMonitorApcItemData {
@@ -39,6 +40,7 @@ export interface PowerMonitorSmesData extends PowerMonitorData {
   load: number;
   units: PowerMonitorSmesItemData[];
   unitsStatic: Record<string, PowerMonitorSmesStaticItemData>;
+  history: { available: number; load: number }[];
 }
 
 export interface PowerMonitorSmesItemData {

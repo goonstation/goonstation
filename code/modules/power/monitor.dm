@@ -17,9 +17,13 @@
 	/// does it have a glow in the dark screen? see computer_screens.dmi
 	var/glow_in_dark_screen = TRUE
 	var/image/screen_image
+	var/list/history
+	var/const/history_max = 50
 
 /obj/machinery/power/monitor/New()
 	..()
+	history = list()
+
 	light = new/datum/light/point
 	light.set_brightness(0.4)
 	light.set_color(light_r, light_g, light_b)
@@ -63,6 +67,7 @@
 		"available" = src.powernet.avail,
 		"load" = src.powernet.viewload,
 		"apcs" = list(),
+		"history" = src.history,
 	)
 
 	var/list/L = list()
@@ -93,8 +98,20 @@
 	..()
 
 /obj/machinery/power/monitor/process()
-	if(!(status & (NOPOWER|BROKEN)) )
-		use_power(250)
+	if (status & (NOPOWER|BROKEN))
+		return
+
+	use_power(250)
+	add_history()
+	if (src.history.len > src.history_max)
+		src.history.Cut(1, 2) //drop the oldest entry
+
+/obj/machinery/power/monitor/proc/add_history()
+	src.history += list(list(
+		"available" = src.powernet.avail,
+		"load" = src.powernet.viewload,
+	))
+
 /obj/machinery/power/monitor/console_upper
 	icon = 'icons/obj/computerpanel.dmi'
 	icon_state = "power1"
@@ -167,7 +184,8 @@
 	. = list(
 		"available" = src.powernet.avail,
 		"load" = src.powernet.viewload,
-		"units" = list()
+		"units" = list(),
+		"history" = src.history,
 	)
 
 	var/list/L = list()

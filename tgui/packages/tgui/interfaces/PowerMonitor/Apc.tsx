@@ -1,5 +1,5 @@
 import { useBackend, useSharedState } from '../../backend';
-import { Box, LabeledList, Table, Tooltip } from '../../components';
+import { Box, Chart, LabeledList, Stack, Table, Tooltip } from '../../components';
 import { formatPower } from '../../format';
 import { PowerMonitorApcData, PowerMonitorApcItemData } from './type';
 
@@ -33,11 +33,46 @@ const apcCellState = {
 export const PowerMonitorApcGlobal = (_props, context) => {
   const { data } = useBackend<PowerMonitorApcData>(context);
 
+  const availableHistory = data.history.map((v) => v.available);
+  const availableHistoryData = availableHistory.map((v, i) => [i, v]);
+
+  const loadHistory = data.history.map((v) => v.load);
+  const loadHistoryData = loadHistory.map((v, i) => [i, v]);
+
+  const max = Math.max(...availableHistory, ...loadHistory);
+
+
   return (
-    <LabeledList>
-      <LabeledList.Item label="Total Power">{formatPower(data.available)}</LabeledList.Item>
-      <LabeledList.Item label="Total Load">{formatPower(data.load)}</LabeledList.Item>
-    </LabeledList>
+    <Stack fill>
+      <Stack.Item width="50%">
+        <LabeledList>
+          <LabeledList.Item label="Total Power">{formatPower(data.available)}</LabeledList.Item>
+        </LabeledList>
+        <Chart.Line
+          mt="5px"
+          height="5em"
+          data={availableHistoryData}
+          rangeX={[0, availableHistoryData.length - 1]}
+          rangeY={[0, max]}
+          strokeColor="rgba(1, 184, 170, 1)"
+          fillColor="rgba(1, 184, 170, 0.25)"
+        />
+      </Stack.Item>
+      <Stack.Item width="50%">
+        <LabeledList>
+          <LabeledList.Item label="Total Load">{formatPower(data.load)}</LabeledList.Item>
+        </LabeledList>
+        <Chart.Line
+          mt="5px"
+          height="5em"
+          data={loadHistoryData}
+          rangeX={[0, loadHistoryData.length - 1]}
+          rangeY={[0, max]}
+          strokeColor="rgba(1, 184, 170, 1)"
+          fillColor="rgba(1, 184, 170, 0.25)"
+        />
+      </Stack.Item>
+    </Stack>
   );
 };
 
