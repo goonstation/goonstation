@@ -2196,7 +2196,7 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 	name = "Navy Scrubs"
 	item_paths = list("FAB-1")
 	item_amounts = list(4)
-	item_outputs = list(/obj/item/clothing/under/scrub/navy)
+	item_outputs = list(/obj/item/clothing/under/scrub/blue)
 	time = 5 SECONDS
 	create = 1
 	category = "Clothing"
@@ -2205,7 +2205,7 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 	name = "Violet Scrubs"
 	item_paths = list("FAB-1")
 	item_amounts = list(4)
-	item_outputs = list(/obj/item/clothing/under/scrub/violet)
+	item_outputs = list(/obj/item/clothing/under/scrub/purple)
 	time = 5 SECONDS
 	create = 1
 	category = "Clothing"
