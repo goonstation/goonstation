@@ -1637,6 +1637,7 @@
 	desc = "A circuit board assembly used in the construction of machinery."
 	icon = 'icons/obj/electronics.dmi'
 	icon_state = "board1"
+	mats = 2
 	var/machinepath = null
 /obj/item/machineboard/New()
 	. = ..()
@@ -1672,7 +1673,7 @@
 				wrenched = 1
 				anchored = 1
 				boutput(user, "<span class='notice'>You wrench the frame into place.</span>")
-			else if(!boardinstalled && do_after(user, 2 SECONDS))
+			else if(!boardinstalled && wrenched && do_after(user, 2 SECONDS))
 				wrenched = 0
 				anchored = 0
 				boutput(user, "<span class='notice'>You unfasten the frame.</span>")
@@ -1878,7 +1879,7 @@
 			addProduct(target, user)
 		else
 			. = ..()
-		if(panel_open) //lock up if the service panel is closed
+		if(!panel_open) //lock up if the service panel is closed
 			loading = 0
 			unlocked = 0
 		src.generate_HTML(1)
@@ -1910,13 +1911,14 @@
 				owner = src.scan.registered
 				cardname = src.scan.name
 				unlocked = 1
+				loading = 1
 			else if (src.scan?.registered && owner == src.scan.registered)
 				unlocked = !unlocked
 				if(!unlocked && loading) loading = 0
 			else
 				unlocked = 0
 				loading = 0
-			src.generate_HTML(0, 1)
+			src.generate_HTML(1, 1)
 		else if (href_list["rename"] && src.panel_open && src.unlocked)
 			var/inp
 			inp = html_encode(sanitize(input(usr,"Enter new name:","Vendor Name", "") as text))
