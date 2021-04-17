@@ -1112,11 +1112,11 @@
 		icon_state = "scrub-m"
 		item_state = "darkred"
 
-	navy
+	blue
 		icon_state = "scrub-n"
 		item_state = "darkblue"
 
-	violet
+	purple
 		icon_state = "scrub-v"
 		item_state = "lightpurple"
 
