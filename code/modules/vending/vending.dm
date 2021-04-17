@@ -323,7 +323,7 @@
 		else
 			html_parts += "<B>Current ID:</B> None<BR>"
 
-	if (length(src.product_list) <= 0 && length(src.player_list) <= 0)
+	if (!length(src.product_list) && !length(src.player_list))
 		html_parts += "<font color = 'red'>No product loaded!</font>"
 
 	else if (src.paying_for)
@@ -339,15 +339,15 @@
 				html_parts += "<tr><td><a href='byond://?src=\ref[src];vend=\ref[R]'>[R.product_name]</a></td><td style='text-align: right;'>[R.product_amount]</td><td style='text-align: right;'> $[R.product_cost]</td></tr>"
 			else
 				html_parts += "<tr><td>[R.product_name]</a></td><td colspan='2' style='text-align: center;'><strong>SOLD OUT</strong></td></tr>"
-		if(player_list)
+		if (player_list)
 			var/obj/machinery/vending/player/T = src
 			for (var/datum/data/vending_product/player_product/R in src.player_list)
 				var/obj/item/productholder = R.contents[1]
 				var/nextproduct = html_encode(sanitize(productholder.name))
-				if (!T.unlocked == 1)
+				if (!T.unlocked)
 					html_parts += "<tr><td><a href='byond://?src=\ref[src];vend=\ref[R]'>[nextproduct]</a></td><td style='text-align: right;'>[R.product_amount]</td><td style='text-align: right;'> $[R.product_cost]</td></tr>"
 					//Player vending machines don't have "out of stock" items
-				else if (!T.unlocked == 0)
+				else if (T.unlocked)
 					//Links for setting prices when player vending machines are unlocked
 					html_parts += "<tr><td><a href='byond://?src=\ref[src];vend=\ref[R]'>[nextproduct]</a></td><td style='text-align: right;'>[R.product_amount]</td><td style='text-align: right;'><a href='byond://?src=\ref[src];setprice=\ref[R]'>$[R.product_cost]</a> (<a href='byond://?src=\ref[src];icon=\ref[R]'>*</a>)</td></tr>"
 		html_parts += "</table>";
@@ -534,9 +534,9 @@
 			src.vend_ready = 0 //One thing at a time!!
 
 			var/datum/data/vending_product/R = locate(href_list["vend"]) in src.product_list
-			if(!R)
+			if (!R)
 				R = locate(href_list["vend"]) in src.player_list
-				isplayer = 1
+				isplayer = TRUE
 			if (!R || !istype(R))
 				src.vend_ready = 1
 				return
@@ -548,7 +548,7 @@
 			if (istext(product_path))
 				product_path = text2path(product_path)
 
-			if (!product_path && isplayer == 0)
+			if (!product_path && !isplayer)
 				src.vend_ready = 1
 				return
 
@@ -607,13 +607,13 @@
 					account.fields["current_money"] -= R.product_cost
 				else
 					src.credit -= R.product_cost
-				if(isplayer == 0)
+				if (!isplayer)
 					wagesystem.shipping_budget += round(R.product_cost * profit) // cogwerks - maybe money shouldn't just vanish into the aether idk
 				else
 					//Players get 90% of profit from player vending machines QMs get 10%
 					var/obj/machinery/vending/player/T = src
 					T.owneraccount.fields["current_money"] += round(R.product_cost * profit)
-					wagesystem.shipping_budget += round(R.product_cost / (profit * 10))
+					wagesystem.shipping_budget += round(R.product_cost * (1 - profit))
 				if(R.product_amount <= 0 && !isplayer == 0)
 					src.player_list -= R
 			//Gotta do this before the SPAWN_DBG
@@ -1617,22 +1617,25 @@
 
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/breakfast, rand(2, 4), hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/snack_cake, rand(1, 3), hidden=1)
+
 //The burden of these machinations weighs on my shoulders
 //And thus you will be burdened
 /datum/data/vending_product/player_product
-	var/contents = list()
+	var/contents
 	var/product_type
 	var/real_name
 	var/image/icon
 	var/label
 	product_amount = 1
 	New(obj/item/product,price)
-		..()
+		. = ..()
+		contents = list()
 		product_type = product.type
 		product_name = product.name
 		real_name = product.real_name
 		contents += product
 		product_cost = price
+
 /obj/item/machineboard
 	name = "machine module"
 	desc = "A circuit board assembly used in the construction of machinery."
@@ -1640,19 +1643,23 @@
 	icon_state = "board1"
 	mats = 2
 	var/machinepath = null
+
 /obj/item/machineboard/vending
 	name = "vending machine module"
 	desc = "An assembly used in the construction of a vending machine."
 	machinepath = "/obj/machinery/vending/player"
 	icon = 'icons/obj/vending.dmi'
 	icon_state = "base-module"
+
 /obj/item/machineboard/vending/player
 	icon_state = "player-module"
+
 /obj/item/machineboard/vending/monkeys
 	name = "monkey vending module"
 	machinepath = "/obj/machinery/vending/monkey"
 	icon_state = "monkey-module"
 	mats = 0 //No!!
+
 /obj/machinery/vendingframe
 	name = "vending machine frame"
 	desc = "A generic vending machine frame."
@@ -1751,6 +1758,7 @@
 			boutput(user, "<span class='notice'>You remove the cables.</span>")
 			var/obj/item/cable_coil/C = new /obj/item/cable_coil(src.loc)
 			C.amount = 5
+			C.updateicon()
 			wiresinstalled = 0
 		else if (isweldingtool(target) && !wrenched)
 			var/obj/item/weldingtool/T = target
@@ -1792,10 +1800,12 @@
 		crtoverlay.appearance_flags = NO_CLIENT_COLOR
 		crtoverlay.mouse_opacity = 0
 		setCrtOverlayStatus(1)
+
 	proc/pick_product_name()
 		var/datum/data/vending_product/player_product/R = pick(src.player_list)
 		var/itemPromo = sanitize(html_encode(R.product_name))
 		return itemPromo
+
 	proc/generate_slogans()
 		if(!length(player_list) <= 0)
 			slogan_list = list("By popular demand: [pick_product_name()]!",
@@ -1805,6 +1815,7 @@
 		"Don't miss out on [pick_product_name()]!",
 		"[src.name]. What else were you going to buy?",
 		"New and improved [pick_product_name()]!")
+
 	proc/getScaledIcon(obj/item/target)
 		var/image/itemoverlayoriginal = null
 		itemoverlayoriginal = SafeGetOverlayImage("item", target, target.icon_state)
@@ -1814,16 +1825,19 @@
 		itemoverlayoriginal.layer = src.layer + 0.1
 		itemoverlayoriginal.plane = PLANE_DEFAULT
 		return itemoverlayoriginal
+
 	proc/setItemOverlay(image/target)
 		src.icon_state = "player-display"
 		//Offsets go weird if I don't clear
 		ClearSpecificOverlays(1, "item")
 		UpdateOverlays(target, "item", 0, 1)
+
 	proc/setCrtOverlayStatus(status)
 		if(status == 1)
 			UpdateOverlays(crtoverlay, "screen", 0, 1)
 		else
 			UpdateOverlays(null, "screen", 0, 1)
+
 	proc/addProduct(obj/item/target, mob/user)
 		var/obj/item/storage/targetContainer = target
 		if(!istype(targetContainer))
@@ -1841,6 +1855,7 @@
 		for(var/obj/item/R in targetContainer)
 			targetContainer.hud.remove_object(R)
 			productListUpdater(R, user)
+
 	proc/productListUpdater(obj/item/target, mob/user)
 		user.u_equip(target)
 		target.set_loc(src)
@@ -1903,6 +1918,7 @@
 			loading = 0
 			unlocked = 0
 		src.generate_HTML(1)
+
 	//Save and restore icon state in case we're in product display mode
 	power_change()
 		var/original_icon = src.icon_state
@@ -1949,7 +1965,7 @@
 		else if (href_list["setprice"] && src.panel_open && src.unlocked)
 			var/inp
 			inp = input(usr,"Enter the new price:","Item Price", "") as num
-			if(inp && (usr.stat || usr.restrained() || in_interact_range(src, usr)))
+			if(inp && inp >= 0 && (usr.stat || usr.restrained() || in_interact_range(src, usr)))
 				var/datum/data/vending_product/player_product/R = locate(href_list["setprice"]) in src.player_list
 				R.product_cost = inp
 				src.generate_HTML(1, 0)
@@ -1963,6 +1979,7 @@
 		if(href_list["vend"])
 			//Vends can change the name of list entries so generate HTML
 			src.generate_HTML(1, 0)
+
 /obj/machinery/vending/player/fallen
 	New()
 		. = ..()
