@@ -26138,13 +26138,13 @@
 	dir = 8;
 	pixel_x = -10
 	},
-/obj/rack,
-/obj/item/storage/box/stma_kit,
-/obj/item/storage/box/lglo_kit,
+/obj/storage/closet/medicalclothes,
 /turf/simulated/floor/black,
 /area/station/medical/medbay/surgery)
 "aXz" = (
 /obj/rack,
+/obj/item/storage/box/lglo_kit,
+/obj/item/storage/box/stma_kit,
 /obj/item/clothing/under/scrub/teal,
 /obj/item/clothing/under/scrub/maroon,
 /obj/item/clothing/under/scrub/blue,
@@ -27587,7 +27587,6 @@
 	dir = 4;
 	icon_state = "line1"
 	},
-/obj/storage/closet/medicalclothes,
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "baf" = (

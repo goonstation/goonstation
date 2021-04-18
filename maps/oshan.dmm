@@ -3315,7 +3315,7 @@
 /turf/simulated/floor/bluegreen,
 /area/station/medical/medbay/treatment2)
 "aht" = (
-/obj/storage/secure/closet/fridge/blood,
+/obj/storage/closet/medicalclothes,
 /turf/simulated/floor/red/checker,
 /area/station/medical/medbay/surgery/storage)
 "ahu" = (
@@ -4039,7 +4039,6 @@
 	pixel_y = 20;
 	tag = ""
 	},
-/obj/storage/closet/medicalclothes,
 /turf/simulated/floor/bluewhite{
 	dir = 4
 	},
@@ -6046,6 +6045,7 @@
 	icon_state = "line2"
 	},
 /obj/blind_switch/area/west,
+/obj/storage/secure/closet/fridge/blood,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/surgery)
 "anX" = (
