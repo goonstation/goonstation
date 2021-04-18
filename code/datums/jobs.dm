@@ -2357,6 +2357,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 	allow_spy_theft = 0
 	cant_spawn_as_rev = 1
 	receives_badge = 1
+	recieves_miranda = 1
 	recieves_implant = /obj/item/implant/health
 	slot_back = /obj/item/storage/backpack/NT
 	slot_belt = /obj/item/storage/belt/security/ntso //special secbelt subtype that spawns with the NTSO gear inside
