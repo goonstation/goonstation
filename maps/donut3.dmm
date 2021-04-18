@@ -2477,6 +2477,10 @@
 	pixel_x = -6;
 	pixel_y = -1
 	},
+/obj/item/clothing/head/helmet/firefighter{
+	pixel_x = 10;
+	pixel_y = -5
+	},
 /turf/simulated/floor/plating/jen,
 /area/station/science/gen_storage)
 "arX" = (
@@ -17961,7 +17965,7 @@
 	pixel_y = 8
 	},
 /obj/item/clothing/head/helmet/firefighter{
-	pixel_x = -10;
+	pixel_x = -6;
 	pixel_y = -5
 	},
 /obj/decal/mule/beacon/no_auto_dropoff_spawn,
@@ -32942,7 +32946,7 @@
 	pixel_y = 8
 	},
 /obj/item/clothing/head/helmet/firefighter{
-	pixel_x = -10;
+	pixel_x = -8;
 	pixel_y = -5
 	},
 /obj/decal/mule/beacon/no_auto_dropoff_spawn,
@@ -33222,6 +33226,14 @@
 /obj/item/clothing/mask/gas/emergency{
 	pixel_x = 1;
 	pixel_y = 9
+	},
+/obj/item/clothing/head/helmet/firefighter{
+	pixel_x = 8;
+	pixel_y = -5
+	},
+/obj/item/clothing/head/helmet/firefighter{
+	pixel_x = 3;
+	pixel_y = -2
 	},
 /turf/simulated/floor/yellow/side,
 /area/station/storage/emergency)
@@ -49856,7 +49868,7 @@
 	pixel_y = 8
 	},
 /obj/item/clothing/head/helmet/firefighter{
-	pixel_x = -10;
+	pixel_x = -8;
 	pixel_y = -5
 	},
 /obj/decal/mule/beacon/no_auto_dropoff_spawn,
