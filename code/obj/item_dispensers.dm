@@ -16,6 +16,7 @@
 	var/withdraw_type = null //this is a type that this item will dispense
 	var/cant_deposit = 0 //set this to 1 if you want people to not be able to put items into it
 	var/cant_withdraw = 0 //set this to 1 if you want people to not be able to take items out of it (why would you ever use this? why????)
+	var/display_amount = 1 //displays amount of item in dispenser
 
 	New()
 		..()
@@ -23,7 +24,8 @@
 		src.update_icon()
 
 	get_desc()
-		. += "There's [src.amount] left."
+		if(display_amount)
+			. += "There's [src.amount] left."
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (src.cant_deposit)
@@ -33,7 +35,7 @@
 			user.u_equip(W)
 			src.amount++
 			src.update_icon()
-			boutput(user, "<span class='notice'>You put \the [W] into \the [src]. There's [src.amount] left.</span>")
+			boutput(user, "<span class='notice'>You put \the [W] into \the [src]. [display_amount ? "There's [src.amount] left.": null ]</span>")
 			qdel(W)
 
 	attack_hand(mob/user as mob)
@@ -45,7 +47,7 @@
 			src.amount--
 			src.update_icon()
 			var/obj/item/I = new src.withdraw_type
-			boutput(user, "<span class='notice'>You take \the [I] out of \the [src]. There's [src.amount] left.</span>")
+			boutput(user, "<span class='notice'>You put \the [I] into \the [src]. [display_amount ? "There's [src.amount] left.": null ]</span>")
 			user.put_in_hand_or_drop(I)
 		else
 			boutput(user, "<span class='alert'>There's nothing in \the [src] to take!</span>")
@@ -113,4 +115,16 @@
 	filled_icon_state = "dispenser_ice"
 	withdraw_type = /obj/item/raw_material/ice
 	deposit_type = null
-	amount = 100
+	amount = 10000
+	display_amount = 0
+	pixel_y = 0
+	flags = FPRINT | NOSPLASH
+
+	attackby(obj/item/W as obj, mob/user as mob)
+		if (istype(W, /obj/item/reagent_containers/glass) || istype(W, /obj/item/reagent_containers/food/drinks))
+			if (W.reagents.total_volume <= (W.reagents.maximum_volume - 10))
+				W.reagents.add_reagent("ice", 10, null, (T0C - 50))
+				user.visible_message("[user] adds some ice to the [W].",\
+			"<span class='notice'>You add some ice to the [W].</span>")
+			else
+				boutput(user, "<span class='alert'>[W] is too full!</span>")

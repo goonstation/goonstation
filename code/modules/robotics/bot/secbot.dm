@@ -1188,6 +1188,8 @@
 			)
 
 		var/say_thing = pick(voice_lines)
+		if(say_thing == 'sound/voice/binsultbeep.ogg' && prob(90))
+			say_thing = 'sound/voice/bsecureday.ogg'
 		switch(say_thing)
 			if('sound/voice/bgod.ogg')
 				src.speak("GOD MADE TOMORROW FOR THE CROOKS WE DON'T CATCH TO-DAY.")
