@@ -202,9 +202,9 @@
 	switch(state)
 		if(0)
 			if(user.equipped(P) && iswrenchingtool(P))
+				boutput(user, "<span class='notice'>You wrench the frame into place.</span>")
 				src.anchored = 1
 				src.state = 1
-				boutput(user, "<span class='notice'>You wrench the frame into place.</span>")
 			if(user.equipped(P) && isweldingtool(P))
 				boutput(user, "<span class='notice'>You deconstruct the frame.</span>")
 				var/obj/item/sheet/A = new /obj/item/sheet( src.loc )
@@ -222,13 +222,13 @@
 				src.state = 0
 		if(2)
 			if(user.equipped(P) && istype(P, /obj/item/cable_coil))
-				P.change_stack_amount(-5)
 				boutput(user, "<span class='notice'>You add cables to the frame.</span>")
+				P.change_stack_amount(-5)
 				src.state = 3
 				src.icon_state = "3"
 		if(3)
 			if(user.equipped(P) && istype(P, /obj/item/sheet))
-				P.change_stack_amount(glass_needed)
 				boutput(user, "<span class='notice'>You put in the glass panel.</span>")
+				P.change_stack_amount(glass_needed)
 				src.state = 4
 				src.icon_state = "4"
