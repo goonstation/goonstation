@@ -165,6 +165,7 @@ var/datum/geneticsResearchManager/genResearch = new()
 
 	// Note: Parent should be called LAST to ensure any updates are forwarded as static data where applicable
 	proc/onFinish()
+		SHOULD_CALL_PARENT(TRUE)	
 		for_by_tcl(computer, /obj/machinery/computer/genetics)
 			for (var/datum/tgui/ui as anything in tgui_process.get_uis(computer))
 				computer.update_static_data(null, ui)
