@@ -128,9 +128,8 @@
 					src.peripherals.Remove(W)
 					W.uninstalled()
 
-			var/obj/item/cable_coil/C = P
-			if (istype(C))
-				if (C.amount >= 5)
+			if (istype(P, /obj/item/cable_coil))
+				if (P:amount >= 5)
 					playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
 					actions.start(action_bar, user)
 		if(3)
@@ -229,6 +228,6 @@
 		if(3)
 			if(user.equipped(P) && istype(P, /obj/item/sheet))
 				boutput(user, "<span class='notice'>You put in the glass panel.</span>")
-				P.change_stack_amount(glass_needed)
+				P.change_stack_amount(-glass_needed)
 				src.state = 4
 				src.icon_state = "4"

@@ -178,9 +178,7 @@
 			if (istype(P, /obj/item/cable_coil))
 				if (P:amount >= 5)
 					playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
-					if (P) //Wire: fix for Cannot read null.amount (&& P)
-						//my_cable = P:take(5, src) // Haine: fix for Cannot execute null.set loc()
-						actions.start(action_bar, user)
+					actions.start(action_bar, user)
 				else
 					boutput(user, "<span class='alert'>You need at least five pieces of cable to wire the computer.</span>")
 
