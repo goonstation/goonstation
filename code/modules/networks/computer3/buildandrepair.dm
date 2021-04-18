@@ -141,6 +141,7 @@
 				src.icon_state = "2"
 				var/obj/item/cable_coil/A = new /obj/item/cable_coil( src.loc )
 				A.amount = 5
+				A.updateicon()
 				if(src.hd)
 					src.hd.set_loc(src.loc)
 					src.hd = null
@@ -221,7 +222,7 @@
 				src.state = 0
 		if(2)
 			if(user.equipped(P) && istype(P, /obj/item/cable_coil))
-				P:use(5)
+				P.change_stack_amount(-5)
 				boutput(user, "<span class='notice'>You add cables to the frame.</span>")
 				src.state = 3
 				src.icon_state = "3"
