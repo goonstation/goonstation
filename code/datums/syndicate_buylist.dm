@@ -659,7 +659,7 @@ This is basically useless for anyone but miners.
 	item = /obj/item/gun/reagent/syringe
 	cost = 3
 	desc = "This stainless-steel, revolving wonder fires needles. Perfect for today's safari-loving Syndicate doctor! Loaded by transferring reagents to the gun's internal reservoir."
-	job = list("Medical Doctor", "Medical Director", "Research Director", "Scientist", "Bartender")
+	job = list("Medical Doctor", "Medical Director", "Research Director", "Scientist", "Bartender", "Botanist")
 	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/revolution)
 
 /datum/syndicate_buylist/traitor/powergloves
@@ -684,7 +684,7 @@ This is basically useless for anyone but miners.
 	item = /obj/item/reagent_containers/glass/bottle/poison
 	cost = 1
 	desc = "A bottle of poison. Which poison? Who knows."
-	job = list("Medical Doctor", "Medical Director", "Research Director", "Scientist", "Bartender")
+	job = list("Medical Doctor", "Medical Director", "Research Director", "Scientist", "Bartender", "Botanist")
 	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/revolution)
 
 /datum/syndicate_buylist/traitor/poisonbundle
@@ -692,7 +692,7 @@ This is basically useless for anyone but miners.
 	item = /obj/item/storage/box/poison
 	cost = 7
 	desc = "A box filled with seven random poison bottles."
-	job = list("Medical Doctor", "Medical Director", "Research Director", "Scientist", "Bartender")
+	job = list("Medical Doctor", "Medical Director", "Research Director", "Scientist", "Bartender", "Botanist")
 	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/revolution)
 
 /datum/syndicate_buylist/traitor/chemicompiler
