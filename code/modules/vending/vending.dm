@@ -1842,7 +1842,7 @@
 
 	proc/getScaledIcon(obj/item/target)
 		var/image/itemoverlayoriginal = null
-		itemoverlayoriginal = SafeGetOverlayImage("item", target, target.icon_state)
+		itemoverlayoriginal = SafeGetOverlayImage(null, target, target.icon_state)
 		itemoverlayoriginal.transform = matrix(null, 0.45, 0.45, MATRIX_SCALE)
 		itemoverlayoriginal.pixel_x = -3
 		itemoverlayoriginal.pixel_y = -4
@@ -1850,9 +1850,9 @@
 		itemoverlayoriginal.plane = PLANE_DEFAULT
 		return itemoverlayoriginal
 	proc/setItemOverlay(image/target)
-		src.icon_state = "player-display"
 		//Offsets go weird if I don't clear
-		ClearSpecificOverlays(1, "item")
+		//Also it just breaks randomly if I leave caching on
+		ClearSpecificOverlays(0, "item")
 		UpdateOverlays(target, "item", 0, 1)
 
 	proc/setCrtOverlayStatus(status)
