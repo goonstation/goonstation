@@ -1971,7 +1971,7 @@
 		/datum/manufacture/glass,
 		/datum/manufacture/glassR,
 		/datum/manufacture/atmos_can,
-		/datum/manufacture/circuit_board,
+		/datum/manufacture/player_module,
 		/datum/manufacture/cable,
 		/datum/manufacture/powercell,
 		/datum/manufacture/powercellE,

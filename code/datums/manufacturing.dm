@@ -598,7 +598,7 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 
 ////////////////////////////////
 
-/datum/manufacture/circuit_board
+/datum/manufacture/player_module
 	name = "Vending Module"
 	item_paths = list("CON-1")
 	item_amounts = list(2)
