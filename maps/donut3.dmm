@@ -17960,7 +17960,7 @@
 /obj/item/clothing/mask/gas/emergency{
 	pixel_y = 8
 	},
-/obj/item/clothing/head/helmet/hardhat{
+/obj/item/clothing/head/helmet/firefighter{
 	pixel_x = -10;
 	pixel_y = -5
 	},
@@ -32941,7 +32941,7 @@
 /obj/item/clothing/mask/gas/emergency{
 	pixel_y = 8
 	},
-/obj/item/clothing/head/helmet/hardhat{
+/obj/item/clothing/head/helmet/firefighter{
 	pixel_x = -10;
 	pixel_y = -5
 	},
@@ -49855,7 +49855,7 @@
 /obj/item/clothing/mask/gas/emergency{
 	pixel_y = 8
 	},
-/obj/item/clothing/head/helmet/hardhat{
+/obj/item/clothing/head/helmet/firefighter{
 	pixel_x = -10;
 	pixel_y = -5
 	},
