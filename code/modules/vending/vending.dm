@@ -1867,6 +1867,7 @@
 			setCrtOverlayStatus(0)
 			setItemOverlay(null)
 			return
+
 	proc/setItemOverlay(image/target)
 		UpdateOverlays(null, "item", 1, 1)
 		UpdateOverlays(target, "item", 0, 1)
