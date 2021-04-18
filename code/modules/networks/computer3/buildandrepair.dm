@@ -129,7 +129,7 @@
 					W.uninstalled()
 
 			if (istype(P, /obj/item/cable_coil))
-				if (P:amount >= 5)
+				if (P.amount >= 5)
 					playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
 					actions.start(action_bar, user)
 		if(3)
