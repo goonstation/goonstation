@@ -198,6 +198,9 @@
 			else
 				threatcount += 2
 
+		if(perp.traitHolder.hasTrait("immigrant") && perp.traitHolder.hasTrait("jailbird"))
+			threatcount +=5
+
 		//if((isnull(perp:wear_id)) || (istype(perp:wear_id, /obj/item/card/id/syndicate)))
 		var/obj/item/card/id/perp_id = perp.equipped()
 		if (!istype(perp_id))
