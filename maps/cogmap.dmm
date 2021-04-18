@@ -63408,7 +63408,6 @@
 /area/station/engine/hotloop)
 "uOs" = (
 /obj/storage/closet/medicalclothes,
-/obj/storage/closet/medicalclothes,
 /turf/simulated/floor/arrival{
 	dir = 6
 	},
