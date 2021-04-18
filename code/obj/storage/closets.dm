@@ -514,9 +514,9 @@
 	icon_state = "medical_clothes"
 	icon_opened = "secure_white-open"
 	desc = "A handy medical locker for storing your doctoring apparel."
-	spawn_contents = list(/obj/item/clothing/head/nursehat = 1,
-					/obj/item/clothing/suit/nursedress = 1,
-					/obj/item/clothing/head/headmirror = 1,
+	spawn_contents = list(/obj/item/clothing/head/nursehat = 2,
+					/obj/item/clothing/suit/nursedress = 2,
+					/obj/item/clothing/head/headmirror = 2,
 					/obj/item/clothing/suit/labcoat/medical = 2)
 
 /obj/storage/closet/command/ruined //replacements for azones and mining level flavor
