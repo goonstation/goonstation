@@ -270,7 +270,8 @@
 	category = "Engineering Department"
 	contains = list(/obj/item/extinguisher = 3,
 	/obj/item/chem_grenade/firefighting = 3,
-	/obj/item/clothing/suit/fire = 2)
+	/obj/item/clothing/suit/fire = 2,
+	/obj/item/clothing/head/helmet/firefighter = 2)
 	cost = 1000
 	containertype = /obj/storage/crate
 	containername = "Firefighting Supplies Crate"
