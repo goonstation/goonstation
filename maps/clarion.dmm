@@ -27587,6 +27587,7 @@
 	dir = 4;
 	icon_state = "line1"
 	},
+/obj/storage/closet/medicalclothes,
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "baf" = (
@@ -32717,7 +32718,7 @@
 "bjC" = (
 /obj/disposalpipe/segment,
 /obj/machinery/light,
-/obj/storage/closet/medicalclothes,
+/obj/storage/secure/closet/medical/uniforms,
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "bjD" = (
