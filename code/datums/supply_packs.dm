@@ -266,7 +266,7 @@
 
 /datum/supply_packs/firefighting
 	name = "Firefighting Supplies Crate"
-	desc = "x3 Extinguisher, x3 Firefighting Grenade, x2 Firesuit"
+	desc = "x3 Extinguisher, x3 Firefighting Grenade, x2 Firesuit, x2 Firefighter Helmets"
 	category = "Engineering Department"
 	contains = list(/obj/item/extinguisher = 3,
 	/obj/item/chem_grenade/firefighting = 3,
