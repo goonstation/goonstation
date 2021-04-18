@@ -49486,6 +49486,7 @@
 /obj/machinery/light/emergency{
 	dir = 4
 	},
+/obj/storage/closet/medicalclothes,
 /turf/simulated/floor/bluewhite/corner{
 	dir = 8
 	},
@@ -51015,6 +51016,7 @@
 	name = "autoname - SS13"
 	},
 /obj/disposalpipe/segment/morgue,
+/obj/storage/secure/closet/medical/uniforms,
 /turf/simulated/floor/bluewhite/corner{
 	dir = 1
 	},

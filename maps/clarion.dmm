@@ -32716,8 +32716,8 @@
 /area/station/medical/medbay)
 "bjC" = (
 /obj/disposalpipe/segment,
-/obj/storage/secure/closet/medical/uniforms,
 /obj/machinery/light,
+/obj/storage/closet/medicalclothes,
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "bjD" = (

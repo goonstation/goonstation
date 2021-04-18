@@ -4039,6 +4039,7 @@
 	pixel_y = 20;
 	tag = ""
 	},
+/obj/storage/closet/medicalclothes,
 /turf/simulated/floor/bluewhite{
 	dir = 4
 	},

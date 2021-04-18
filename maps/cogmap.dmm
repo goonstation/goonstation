@@ -63406,6 +63406,13 @@
 /obj/machinery/atmospherics/pipe/simple/insulated,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/hotloop)
+"uOs" = (
+/obj/storage/closet/medicalclothes,
+/obj/storage/closet/medicalclothes,
+/turf/simulated/floor/arrival{
+	dir = 6
+	},
+/area/station/medical/medbay)
 "uOD" = (
 /obj/machinery/power/data_terminal,
 /obj/machinery/computer/aiupload{
@@ -99265,7 +99272,7 @@ sMR
 cuf
 cuW
 nIv
-cvU
+uOs
 ckG
 ckG
 adC
