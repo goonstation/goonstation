@@ -1813,6 +1813,7 @@
 	//Bank account
 	var/datum/data/record/owneraccount = null
 	var/image/crtoverlay = null
+	var/image/promoimage = null
 	player_list = list()
 
 	New()
@@ -1823,7 +1824,7 @@
 		//These stop the overlay from being selected instead of the item by your mouse?
 		crtoverlay.appearance_flags = NO_CLIENT_COLOR
 		crtoverlay.mouse_opacity = 0
-		setCrtOverlayStatus(1)
+		updateAppearance()
 
 	proc/pick_product_name()
 		var/datum/data/vending_product/player_product/R = pick(src.player_list)
@@ -1841,18 +1842,33 @@
 		"New and improved [pick_product_name()]!")
 
 	proc/getScaledIcon(obj/item/target)
-		var/image/itemoverlayoriginal = null
-		itemoverlayoriginal = SafeGetOverlayImage(null, target, target.icon_state)
-		itemoverlayoriginal.transform = matrix(null, 0.45, 0.45, MATRIX_SCALE)
-		itemoverlayoriginal.pixel_x = -3
-		itemoverlayoriginal.pixel_y = -4
-		itemoverlayoriginal.layer = src.layer + 0.1
-		itemoverlayoriginal.plane = PLANE_DEFAULT
-		return itemoverlayoriginal
+		var/image/itemoverlay = null
+		itemoverlay = SafeGetOverlayImage(null, target, target.icon_state)
+		itemoverlay.transform = matrix(null, 0.45, 0.45, MATRIX_SCALE)
+		itemoverlay.pixel_x = -3
+		itemoverlay.pixel_y = -4
+		itemoverlay.layer = src.layer + 0.1
+		itemoverlay.plane = PLANE_DEFAULT
+		return itemoverlay
+
+	proc/updateAppearance()
+		if (status & BROKEN)
+			setCrtOverlayStatus(0)
+			setItemOverlay(null)
+			return
+		else if (powered())
+			setCrtOverlayStatus(1)
+			if (promoimage)
+				icon_state = "[initial(icon_state)]-display"
+				setItemOverlay(promoimage)
+			else
+				icon_state = initial(icon_state)
+		else
+			setCrtOverlayStatus(0)
+			setItemOverlay(null)
+			return
 	proc/setItemOverlay(image/target)
-		//Offsets go weird if I don't clear
-		//Also it just breaks randomly if I leave caching on
-		ClearSpecificOverlays(0, "item")
+		UpdateOverlays(null, "item", 1, 1)
 		UpdateOverlays(target, "item", 0, 1)
 
 	proc/setCrtOverlayStatus(status)
@@ -1910,7 +1926,9 @@
 			if(label) itemEntry.label = label
 			logTheThing("station", user, null, "added player product ([target.name]) to [src] at [log_loc(src)].")
 			generate_slogans()
-
+	power_change()
+		. = ..()
+		updateAppearance()
 	generate_wire_HTML()
 		. = ..()
 		var/list/html_parts = list()
@@ -1983,11 +2001,12 @@
 				R.product_cost = inp
 				src.generate_HTML(1, 0)
 		else if(href_list["vend"] && (length(player_list) <= 0))
-			src.setItemOverlay(null)
-			icon_state = "player"
+			promoimage = null
+			updateAppearance()
 		else if(href_list["icon"] && src.panel_open && src.unlocked)
 			var/datum/data/vending_product/player_product/R = locate(href_list["icon"]) in src.player_list
-			src.setItemOverlay(R.icon)
+			promoimage = R.icon
+			updateAppearance()
 			src.generate_HTML(1, 0)
 		if(href_list["vend"])
 			//Vends can change the name of list entries so generate HTML
