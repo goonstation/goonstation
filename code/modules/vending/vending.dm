@@ -1683,75 +1683,59 @@
 		wiresdesc = "[desc] Nothing has been wired up."
 		glassdesc = "[desc] Isn't there usually glass?"
 		readydesc = "[desc] Just needs a few screws tightened."
-
-	attackby(obj/item/target, mob/user)
-		if(iswrenchingtool(target))
-			playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
-			if(!wrenched && do_after(user, 2 SECONDS))
-				wrenched = 1
-				anchored = 1
-				desc = boarddesc
-				boutput(user, "<span class='notice'>You wrench the frame into place.</span>")
-			else if(!boardinstalled && wrenched && do_after(user, 2 SECONDS))
-				wrenched = 0
-				anchored = 0
-				desc = basedesc
-				boutput(user, "<span class='notice'>You unfasten the frame.</span>")
-		else if(istype(target, /obj/item/machineboard/vending))
+	proc/setFrameState(state, mob/user, obj/item/target)
+		if (state == "WRENCHED")
+			wrenched = 1
+			anchored = 1
+			desc = boarddesc
+			boutput(user, "<span class='notice'>You wrench the frame into place.</span>")
+		else if (state == "UNWRENCHED")
+			wrenched = 0
+			anchored = 0
+			desc = basedesc
+			boutput(user, "<span class='notice'>You unfasten the frame.</span>")
+		else if (state == "BOARDINSTALLED")
 			var/obj/item/machineboard/vending/V = target
 			vendingtype = V.machinepath
-			if(wrenched && !boardinstalled)
-				playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
-				icon_state = "standard-frame-electronics"
-				desc = wiresdesc
-				boutput(user, "<span class='notice'>You install the module inside the frame.</span>")
-				user.u_equip(target)
-				target.set_loc(target)
-				boardinstalled = 1
-		else if(istype(target, /obj/item/cable_coil))
+			playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
+			icon_state = "standard-frame-electronics"
+			desc = wiresdesc
+			boutput(user, "<span class='notice'>You install the module inside the frame.</span>")
+			user.u_equip(target)
+			target.set_loc(target)
+			boardinstalled = 1
+		else if (state == "WIRESINSTALLED")
 			var/obj/item/cable_coil/targetcoil = target
 			playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
-			if(targetcoil.amount >= 5 && boardinstalled && !wiresinstalled && do_after(user, 2 SECONDS))
-				targetcoil.use(5)
-				wiresinstalled = 1
-				icon_state = "standard-frame-wired"
-				desc = glassdesc
-				boutput(user, "<span class='notice'>You add cables to the frame.</span>")
-			else if(!wiresinstalled && boardinstalled)
-				boutput(user, "<span class='alert'>You need at least five pieces of cable to wire the vending machine.</span>")
-		else if(istype(target, /obj/item/sheet) && wiresinstalled && !glassed)
-			var/obj/item/sheet/S = target
-			if (!(S.material && S.amount >= 2 && S.material.material_flags & MATERIAL_CRYSTAL))
-				return
+			targetcoil.use(5)
+			wiresinstalled = 1
+			icon_state = "standard-frame-wired"
+			desc = glassdesc
+			boutput(user, "<span class='notice'>You add cables to the frame.</span>")
+		else if (state == "GLASSINSTALLED")
+			var/obj/item/sheet/glass/S = target
 			playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
-			if(do_after(user, 2 SECONDS))
-				S.change_stack_amount(-2)
-				glassed = 1
-				icon_state = "standard-frame-glassed"
-				desc = readydesc
-				boutput(user, "<span class='notice'>You put in the glass panel.</span>")
-		else if (isscrewingtool(target) && glassed)
-			boutput(user, "<span class='notice'>You connect the screen.</span>")
-			var/obj/machinery/vending/B = new vendingtype(src.loc)
-			logTheThing("station", user, null, "assembles [B] [log_loc(B)]")
-			qdel(src)
-		else if (ispryingtool(target))
-			if (glassed)
-				var/obj/item/sheet/glass/A = new /obj/item/sheet/glass(src.loc)
-				A.amount = 2
-				glassed = 0
-				playsound(src.loc, "sound/items/Crowbar.ogg", 50, 1)
-				icon_state = "standard-frame-wired"
-				desc = glassdesc
-				boutput(user, "<span class='notice'>You remove the glass panel.</span>")
-			else if (!wiresinstalled && boardinstalled)
-				icon_state = "standard-frame"
-				desc = boarddesc
-				boutput(user, "<span class='notice'>You remove the vending module.</span>")
-				var/obj/item/machineboard/vending/E = locate()
-				E.set_loc(src.loc)
-				boardinstalled = 0
-		else if (issnippingtool(target) && wiresinstalled && !glassed)
+			S.change_stack_amount(-2)
+			glassed = 1
+			icon_state = "standard-frame-glassed"
+			desc = readydesc
+			boutput(user, "<span class='notice'>You put in the glass panel.</span>")
+		else if (state == "GLASSREMOVED")
+			var/obj/item/sheet/glass/A = new /obj/item/sheet/glass(src.loc)
+			A.amount = 2
+			glassed = 0
+			playsound(src.loc, "sound/items/Crowbar.ogg", 50, 1)
+			icon_state = "standard-frame-wired"
+			desc = glassdesc
+			boutput(user, "<span class='notice'>You remove the glass panel.</span>")
+		else if (state == "BOARDREMOVED")
+			icon_state = "standard-frame"
+			desc = boarddesc
+			boutput(user, "<span class='notice'>You remove the vending module.</span>")
+			var/obj/item/machineboard/vending/E = locate()
+			E.set_loc(src.loc)
+			boardinstalled = 0
+		else if (state == "WIRESREMOVED")
 			playsound(src.loc, "sound/items/Wirecutter.ogg", 50, 1)
 			icon_state = "standard-frame-electronics"
 			desc = wiresdesc
@@ -1760,19 +1744,59 @@
 			C.amount = 5
 			C.updateicon()
 			wiresinstalled = 0
+		else if (state == "DECONSTRUCTED")
+			boutput(user, "<span class='notice'>You deconstruct the frame.</span>")
+			var/obj/item/sheet/A = new /obj/item/sheet(src.loc)
+			A.amount = 3
+			if (src.material)
+				A.setMaterial(src.material)
+			else
+				var/datum/material/M = getMaterial("steel")
+				A.setMaterial(M)
+			qdel(src)
+
+	attackby(obj/item/target, mob/user)
+		if (iswrenchingtool(target))
+			playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
+			if (!wrenched)
+				SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/machinery/vendingframe/proc/setFrameState,\
+				list("WRENCHED", user), target.icon, target.icon_state, null)
+			else if (!boardinstalled && wrenched)
+				SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/machinery/vendingframe/proc/setFrameState,\
+				list("UNWRENCHED", user), target.icon, target.icon_state, null)
+		else if (istype(target, /obj/item/machineboard/vending))
+			if (wrenched && !boardinstalled)
+				SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/machinery/vendingframe/proc/setFrameState,\
+				list("BOARDINSTALLED", user, target), target.icon, target.icon_state, null)
+		else if(istype(target, /obj/item/cable_coil) && boardinstalled && !wiresinstalled)
+			var/obj/item/cable_coil/targetcoil = target
+			if(targetcoil.amount >= 5)
+				SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/machinery/vendingframe/proc/setFrameState,\
+				list("WIRESINSTALLED", user, target), target.icon, target.icon_state, null)
+			else if(!wiresinstalled && boardinstalled)
+				boutput(user, "<span class='alert'>You need at least five pieces of cable to wire the vending machine.</span>")
+		else if(istype(target, /obj/item/sheet) && wiresinstalled && !glassed)
+			var/obj/item/sheet/glass/S = target
+			if (!(S.material && S.amount >= 2))
+				return
+			setFrameState("GLASSINSTALLED", user, target)
+		else if (isscrewingtool(target) && glassed)
+			boutput(user, "<span class='notice'>You connect the screen.</span>")
+			var/obj/machinery/vending/B = new vendingtype(src.loc)
+			logTheThing("station", user, null, "assembles [B] [log_loc(B)]")
+			qdel(src)
+		else if (ispryingtool(target))
+			if (glassed)
+				setFrameState("GLASSREMOVED", user)
+			else if (!wiresinstalled && boardinstalled)
+				setFrameState("BOARDREMOVED", user)
+		else if (issnippingtool(target) && wiresinstalled && !glassed)
+			setFrameState("WIRESREMOVED", user)
 		else if (isweldingtool(target) && !wrenched)
 			var/obj/item/weldingtool/T = target
-			if (T.try_weld(user,0,-1,0,1) && do_after(user, 2 SECONDS))
-				boutput(user, "<span class='notice'>You deconstruct the frame.</span>")
-				var/obj/item/sheet/A = new /obj/item/sheet(src.loc)
-				A.amount = 3
-				if (src.material)
-					A.setMaterial(src.material)
-				else
-					var/datum/material/M = getMaterial("steel")
-					A.setMaterial(M)
-				qdel(src)
-
+			if (T.try_weld(user,0,-1,0,1))
+				SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/machinery/vendingframe/proc/setFrameState,\
+				list("DECONSTRUCTED", user, target), target.icon, target.icon_state, null)
 /obj/machinery/vending/player
 	name = "YouVend"
 	icon_state = "player"
@@ -1825,7 +1849,6 @@
 		itemoverlayoriginal.layer = src.layer + 0.1
 		itemoverlayoriginal.plane = PLANE_DEFAULT
 		return itemoverlayoriginal
-
 	proc/setItemOverlay(image/target)
 		src.icon_state = "player-display"
 		//Offsets go weird if I don't clear
