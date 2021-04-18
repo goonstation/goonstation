@@ -9169,6 +9169,9 @@
 /area/station/engine/engineering)
 "ayv" = (
 /obj/table/wood/auto,
+/obj/machinery/computer/security/wooden_tv/small{
+	pixel_y = 8
+	},
 /turf/simulated/floor/darkblue/checker/other,
 /area/station/crew_quarters/radio/news_office)
 "ayw" = (
@@ -35594,11 +35597,8 @@
 /area/station/maintenance/southwest)
 "bXQ" = (
 /obj/table/auto,
-/obj/item/storage/firstaid/regular{
-	pixel_x = 7
-	},
-/obj/item/storage/firstaid/regular{
-	pixel_x = -7
+/obj/machinery/computer/security/wooden_tv/small{
+	pixel_y = 8
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
@@ -36792,12 +36792,6 @@
 /area/station/maintenance/south)
 "caZ" = (
 /obj/table/auto,
-/obj/item/storage/firstaid/oxygen{
-	pixel_x = 7
-	},
-/obj/item/storage/firstaid/oxygen{
-	pixel_x = -7
-	},
 /obj/cable{
 	d1 = 2;
 	d2 = 8;
@@ -36810,6 +36804,20 @@
 /obj/item/storage/firstaid/toxin{
 	pixel_x = -7;
 	pixel_y = 16
+	},
+/obj/item/storage/firstaid/oxygen{
+	pixel_x = -7;
+	pixel_y = 8
+	},
+/obj/item/storage/firstaid/regular{
+	pixel_x = 7;
+	pixel_y = 8
+	},
+/obj/item/storage/firstaid/oxygen{
+	pixel_x = -7
+	},
+/obj/item/storage/firstaid/regular{
+	pixel_x = 7
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
@@ -39453,21 +39461,22 @@
 "cgY" = (
 /obj/table/auto,
 /obj/item/storage/toolbox/emergency{
-	pixel_y = 9
+	pixel_y = 5
 	},
 /obj/decal/xmas_lights/ephemeral{
 	pixel_y = 32
 	},
 /obj/item/reagent_containers/glass/oilcan{
 	pixel_x = 6;
-	pixel_y = 3
-	},
-/obj/item/reagent_containers/glass/oilcan{
-	pixel_x = -7;
-	pixel_y = 3
+	pixel_y = 1
 	},
 /obj/item/reagent_containers/food/drinks/fueltank{
-	pixel_y = -9
+	pixel_x = -7;
+	pixel_y = -5
+	},
+/obj/item/reagent_containers/glass/oilcan{
+	pixel_x = 6;
+	pixel_y = -10
 	},
 /turf/simulated/floor/caution/east,
 /area/station/medical/robotics)
@@ -46769,6 +46778,9 @@
 /obj/item/clothing/ears/earmuffs,
 /obj/item/chem_grenade/metalfoam,
 /obj/machinery/power/apc/autoname_north,
+/obj/cable{
+	icon_state = "0-2"
+	},
 /turf/simulated/floor/black,
 /area/station/engine/storage)
 "guN" = (
@@ -54164,7 +54176,9 @@
 /area/station/maintenance/west)
 "pDb" = (
 /obj/table/reinforced/bar/auto,
-/obj/item/game_kit,
+/obj/machinery/computer/security/wooden_tv/small{
+	pixel_y = 8
+	},
 /turf/simulated/floor/carpet/blue,
 /area/station/bridge)
 "pDf" = (
@@ -59133,9 +59147,11 @@
 /obj/table/reinforced/auto,
 /obj/item/storage/toolbox/emergency,
 /obj/item/paper/book/materials,
-/obj/item/device/matanalyzer,
 /obj/decal/xmas_lights/ephemeral{
 	pixel_y = 32
+	},
+/obj/item/device/matanalyzer{
+	rand_pos = 0
 	},
 /turf/simulated/floor/orangeblack/side{
 	dir = 8
@@ -110101,11 +110117,8 @@ aaa
 aaa
 ach
 arv
-aWE
-aWE
 buO
 buO
-aWE
 buO
 buO
 aWE
@@ -110113,6 +110126,9 @@ buO
 buO
 buO
 buO
+buO
+buO
+aWE
 buO
 iPb
 aaa
