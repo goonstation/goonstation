@@ -134,7 +134,7 @@
 		..()
 
 	process()
-		if (world.time - create_time >= 1 MINUTES)
+		if (world.time - create_time >= 3 MINUTES)
 			create_time = world.time
 			if (!src.pooled && isturf(src.loc) && !on_table())
 				if (prob(50))
@@ -944,7 +944,8 @@
 	desc = "Caution - fragile."
 	icon = 'icons/obj/foodNdrink/drinks.dmi'
 	icon_state = "glass-drink"
-	item_state = "drink_glass"
+	item_state = "glass-drink"
+	var/icon_style = "drink"
 	rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
 	g_amt = 30
 	var/glass_style = "drink"
@@ -974,21 +975,22 @@
 		..()
 
 	on_reagent_change()
-		..()
 		src.update_icon()
 
 	proc/update_icon()
-		if (src.reagents.total_volume <= 0)
-			icon_state = "glass-[glass_style]"
-			src.UpdateOverlays(null, "fluid")
-		else
-			icon_state = "glass-[glass_style]1"
-
-			var/datum/color/average = reagents.get_average_color()
+		src.underlays = null
+		if (reagents.total_volume)
+			var/fluid_state = round(clamp((src.reagents.total_volume / src.reagents.maximum_volume * 3 + 1), 1, 3))
 			if (!src.fluid_image)
-				src.fluid_image = image(src.icon, "fluid-[glass_style]", layer = FLOAT_LAYER + 0.3)
+				src.fluid_image = image(src.icon, "fluid-[src.glass_style][fluid_state]", -1)
+			else
+				src.fluid_image.icon_state = "fluid-[src.glass_style][fluid_state]"
+			src.icon_state = "glass-[src.glass_style][fluid_state]"
+			var/datum/color/average = reagents.get_average_color()
 			src.fluid_image.color = average.to_rgba()
-			src.UpdateOverlays(src.fluid_image, "fluid")
+			src.underlays += src.fluid_image
+		else
+			src.icon_state = "glass-[src.glass_style]"
 
 		if (src.salted)
 			if (!src.image_salt)
@@ -1052,7 +1054,7 @@
 				"You add [W] to [src].")
 				src.reagents.add_reagent("ice", 5, null, (T0C - 1))
 				pool(W)
-				if ((user.mind.assigned_role == "Bartender") && (prob(20)))
+				if ((user.mind.assigned_role == "Bartender") && (prob(40)))
 					JOB_XP(user, "Bartender", 1)
 				return
 
@@ -1066,7 +1068,7 @@
 			W.set_loc(src)
 			src.wedge = W
 			src.update_icon()
-			if ((user.mind.assigned_role == "Bartender") && (prob(20)))
+			if ((user.mind.assigned_role == "Bartender") && (prob(40)))
 				JOB_XP(user, "Bartender", 1)
 			return
 
@@ -1112,7 +1114,7 @@
 				W.reagents.remove_reagent("salt", 5)
 				src.salted = 1
 				src.update_icon()
-				if ((user.mind.assigned_role == "Bartender") && (prob(20)))
+				if ((user.mind.assigned_role == "Bartender") && (prob(40)))
 					JOB_XP(user, "Bartender", 1)
 				return
 			else
@@ -1405,6 +1407,7 @@
 	icon_state = "icing_tube"
 	initial_volume = 50
 	amount_per_transfer_from_this = 5
+	can_recycle = FALSE
 	rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
 	var/image/chem = new /image('icons/obj/foodNdrink/food.dmi',"icing_tube_chem")
 
@@ -1538,6 +1541,7 @@
 	icon_state = "duo"
 	item_state = "duo"
 	initial_volume = 30
+	can_recycle = FALSE
 	var/image/fluid_image
 
 	New()
@@ -1570,6 +1574,7 @@
 	icon_state = "skullchalice"
 	item_state = "skullchalice"
 	rc_flags = RC_SPECTRO
+	can_recycle = FALSE
 
 /obj/item/reagent_containers/food/drinks/mug
 	name = "mug"
@@ -1744,6 +1749,7 @@
 	rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
 	g_amt = 30
 	initial_volume = 50
+	can_recycle = FALSE
 	initial_reagents = list("coconut_milk"=20)
 
 /obj/item/reagent_containers/food/drinks/energyshake
@@ -1769,6 +1775,7 @@
 	rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
 	g_amt = 5
 	initial_volume = 40
+	can_recycle = FALSE
 	initial_reagents = list("bojack"=40)
 
 /obj/item/reagent_containers/food/drinks/cocktailshaker

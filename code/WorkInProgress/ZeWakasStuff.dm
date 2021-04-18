@@ -3,11 +3,11 @@
  * 90 101 87 97 107 97 39 115 83 116 117 102 102
  */
 
-//foo 40: bodacious grandiose bargaloo mambo prime preceed wow github cdn sub jekyll docs rsc ci2
+//foo 41: bodacious grandiose bargaloo mambo prime preceed wow github cdn sub jekyll docs rsc ci2 rename
 
 
 /* 514 checklist
-	`as() in` -> `as anything in`
+	`as anything in` -> `as anything in`
 	?[] experimentation perhaps
 	hsv/hsl/hcy destruction
 	make some lib animate stuff better with spaces? (better rainbow anyone?)
@@ -17,6 +17,7 @@
 	particle abuse
 */
 
+// cat
 
 // Greek Adventurezone Thingy
 

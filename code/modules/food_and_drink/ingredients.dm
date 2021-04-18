@@ -396,6 +396,28 @@
 			user.u_equip(src)
 			user.put_in_hand_or_drop(F)
 			qdel(src)
+		else if (istype(W, /obj/item/baton))
+			var/obj/item/baton/baton = W
+			if (!baton.uses_electricity)
+				..()
+			if (baton.status == 1) //baton is on
+				if (user.a_intent != "harm")
+					if (user.traitHolder.hasTrait("training_security"))
+						playsound(get_turf(src), "sound/impact_sounds/Energy_Hit_3.ogg", 30, 1, -1) //bit quieter than a baton hit
+						user.visible_message("<span class='notice'>[user] [pick("expertly", "deftly", "casually", "smoothly")] baton-fries the dough, yielding a tasty donut.</span>", group = "batonfry")
+						var/obj/item/reagent_containers/food/snacks/donut/result = new /obj/item/reagent_containers/food/snacks/donut(src.loc)
+						user.u_equip(src)
+						user.put_in_hand_or_drop(result)
+						qdel(src)
+					else
+						boutput(user, "<span class='alert'>You just aren't experienced enough to baton-fry.</span>")
+				else
+					user.visible_message("<b class='alert'>[user] tries to baton fry the dough, but fries [his_or_her(user)] hand instead!</b>")
+					playsound(get_turf(src), "sound/impact_sounds/Energy_Hit_3.ogg", 30, 1, -1)
+					user.do_disorient(baton.stamina_damage, weakened = baton.stun_normal_weakened * 10, disorient = 80) //cut from batoncode to bypass all the logging stuff
+					user.emote("scream")
+			else
+				boutput(user, "<span class='notice'>You [user.a_intent == "harm" ? "beat" : "prod"] the dough. The dough doesn't react.</span>")
 		else ..()
 
 /obj/item/reagent_containers/food/snacks/ingredient/dough/semolina

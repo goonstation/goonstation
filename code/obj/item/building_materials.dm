@@ -157,7 +157,7 @@ MATERIAL
 				else
 					boutput(user, "<span class='alert'>You can't mix different materials!</span>")
 					return
-			if (S.reinforcement != src.reinforcement || (S.reinforcement && src.reinforcement && !isSameMaterial(S.reinforcement, src.reinforcement)))
+			if (!isSameMaterial(S.reinforcement, src.reinforcement))
 				boutput(user, "<span class='alert'>You can't mix different reinforcements!</span>")
 				return
 			if (S.amount >= src.max_stack)
@@ -274,6 +274,7 @@ MATERIAL
 		if (src?.material.material_flags & MATERIAL_CRYSTAL)
 			L["smallwindow"] = "Thin Window"
 			L["bigwindow"] = "Large Window (2 Sheets)"
+			L["displaycase"] = "Display Case (3 Sheets)"
 			if (istype(src.reinforcement))
 				L["remetal"] = "Remove Reinforcement"
 		if (src?.material.mat_id == "cardboard")
@@ -322,7 +323,7 @@ MATERIAL
 			switch(href_list["make"])
 				if("rods")
 					var/makerods = min(src.amount,25)
-					var/rodsinput = input("Use how many sheets? (Get 2 rods for each sheet used)","Min: 2, Max: [makerods]",1) as num
+					var/rodsinput = input("Use how many sheets? (Get 2 rods for each sheet used)","Min: 1, Max: [makerods]",1) as num
 					if (rodsinput < 1) return
 					rodsinput = min(rodsinput,makerods)
 
@@ -526,6 +527,15 @@ MATERIAL
 					a_icon_state = "window"
 					a_name = "a full window"
 					a_callback = /proc/window_reinforce_full_callback
+
+				if("displaycase")
+					if (!amount_check(3,usr)) return
+					a_type = /obj/displaycase
+					a_amount = 1
+					a_cost = 3
+					a_icon = 'icons/obj/stationobjs.dmi'
+					a_icon_state = "glassbox0"
+					a_name = "a display case"
 
 				if("retable")
 					if (!amount_check(2,usr)) return
@@ -914,7 +924,7 @@ MATERIAL
 
 
 		if(heads.len > 0)
-			var/pixely = 8 - 8*head_offset - 8*heads.len
+			var/pixely = 8 - 8*head_offset - length(8*heads)
 			for(var/obj/item/organ/head/H in heads)
 				H.pixel_x = 0
 				H.pixel_y = pixely

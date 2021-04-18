@@ -15,6 +15,10 @@ var/datum/score_tracker/score_tracker
 	var/score_structural_damage = 0
 	var/final_score_eng = 0
 	// RESEARCH DEPARTMENT
+	var/artifacts_analyzed = 0
+	var/artifacts_correctly_analyzed = 0
+	var/score_artifact_analysis = 0
+	var/final_score_res = 0
 	// CIVILIAN DEPARTMENT
 	var/score_cleanliness = 0
 	var/score_expenses = 0
@@ -127,7 +131,18 @@ var/datum/score_tracker/score_tracker
 		final_score_eng = (score_power_outages + score_structural_damage) * 0.5
 
 		// RESEARCH DEPARTMENT SECTION
-		// yeah coming soon or w/e idgaf, fucking academics
+		for(var/obj/O in artifact_controls.artifacts)
+			if(O.disposed)
+				return
+			var/obj/item/sticker/postit/artifact_paper/pap = locate(/obj/item/sticker/postit/artifact_paper/) in O.vis_contents
+			if(pap)
+				artifacts_analyzed++
+			if(pap?.lastAnalysis >= 3)
+				artifacts_correctly_analyzed++
+		if(artifacts_analyzed)
+			score_artifact_analysis = (artifacts_correctly_analyzed/artifacts_analyzed)*100
+
+		final_score_res = score_artifact_analysis
 
 		// CIVILIAN DEPARTMENT SECTION
 		if (!istype(wagesystem))
@@ -166,12 +181,12 @@ var/datum/score_tracker/score_tracker
 		// AND THE WINNER IS.....
 
 		var/department_score_sum = 0
-		department_score_sum = final_score_sec + final_score_eng + final_score_civ
+		department_score_sum = final_score_sec + final_score_eng + final_score_civ + final_score_res
 
 		if (department_score_sum == 0 || department_score_sum != department_score_sum) //check for 0 and for NaN values
 			final_score_all = 0
 		else
-			final_score_all = round(department_score_sum / 3)
+			final_score_all = round(department_score_sum / 4)
 
 		switch(final_score_all)
 			if (100 to INFINITY) grade = "NanoTrasen's Finest"
@@ -358,7 +373,8 @@ var/datum/score_tracker/score_tracker
 		score_tracker.score_text += "<BR>"
 
 		score_tracker.score_text += "<B><U>RESEARCH DEPARTMENT</U></B><BR>"
-		score_tracker.score_text += "Scores for this department are not done yet.<br>"
+		score_tracker.score_text += "<B>Artifacts correctly analyzed:</B> [round(score_tracker.score_artifact_analysis)]% ([score_tracker.artifacts_correctly_analyzed]/[score_tracker.artifacts_analyzed])<BR>"
+		score_tracker.score_text += "<B>Total Department Score:</B> [round(score_tracker.final_score_res)]%<BR>"
 		score_tracker.score_text += "<BR>"
 
 		score_tracker.score_text += "<B><U>CIVILIAN DEPARTMENT</U></B><BR>"
@@ -378,7 +394,7 @@ var/datum/score_tracker/score_tracker
 	src.Browse(score_tracker.score_text, "window=roundscore;size=500x700;title=Round Statistics")
 
 /mob/proc/showtickets()
-	if(!data_core.tickets.len && !data_core.fines.len) return
+	if(!data_core.tickets.len && !length(data_core.fines)) return
 
 	if (!score_tracker.tickets_text)
 		logTheThing("debug", null, null, "Zamujasa/SHOWTICKETS: [world.timeofday] generating showtickets text")

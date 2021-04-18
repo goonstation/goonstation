@@ -51,8 +51,19 @@
 		src.max_charge = 1 // no divide by 0 pls
 		src.charge = 1
 
+	reagent_act(reagent_id,volume)
+		if (..())
+			return
+		src.Artifact_reagent_act(reagent_id, volume)
+		return
+
+	emp_act()
+		src.Artifact_emp_act()
+		..()
+
 /datum/artifact/energyammo
 	associated_object = /obj/item/ammo/power_cell/self_charging/artifact
+	type_name = "Small power cell"
 	rarity_weight = 0
 	validtypes = list("ancient","eldritch","precursor")
 	automatic_activation = 1

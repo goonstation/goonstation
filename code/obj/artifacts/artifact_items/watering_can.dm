@@ -6,6 +6,7 @@
 	module_research_no_diminish = 1
 	mat_changename = 0
 	mat_changedesc = 0
+	can_recycle = FALSE
 
 	New(var/loc, var/forceartiorigin)
 		..()
@@ -87,7 +88,7 @@
 			reagents.add_reagent("liquid spacetime", 25)
 			usedCapacity += 25
 		if (prob(1))
-			reagents.add_reagent("fuzz", 5) // THE MOST DANGEROUS
+			reagents.add_reagent("rat_venom", 5) // THE MOST DANGEROUS
 			usedCapacity += 5
 		if (prob(3))
 			reagents.add_reagent("loose_screws", 25)
@@ -158,6 +159,7 @@
 
 /datum/artifact/watercan
 	associated_object = /obj/item/reagent_containers/glass/wateringcan/artifact
+	type_name = "Beaker"
 	rarity_weight = 350
 	validtypes = list("martian","wizard","precursor")
 	min_triggers = 0

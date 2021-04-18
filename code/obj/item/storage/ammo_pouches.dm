@@ -30,6 +30,10 @@
 			name = "small pistol magazine pouch"
 			spawn_contents = list(/obj/item/ammo/bullets/bullet_9mm = 2)
 
+		smg
+			name = "smg magazine pouch"
+			spawn_contents = list(/obj/item/ammo/bullets/bullet_9mm/smg = 5)
+
 	tranq_pistol_dart
 		name = "tranq pistol dart pouch"
 		icon_state = "ammopouch-double"
@@ -148,7 +152,7 @@
 	spawn_contents = list(/obj/item/handcuffs = 2,\
 	/obj/item/device/flash = 2,\
 	/obj/item/instrument/whistle,\
-	/obj/item/reagent_containers/food/snacks/donut/frosted)
+	/obj/item/reagent_containers/food/snacks/donut/custom/frosted)
 
 /obj/item/storage/ntso_pouch
 	name = "tacticool pouch"

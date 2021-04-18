@@ -153,14 +153,15 @@
 	mats = 10
 	var/obj/tug_cart/cart = null
 	throw_dropped_items_overboard = 1
+	ability_buttons_to_initialize = list(/obj/ability_button/vehicle_speed)
 	var/start_with_cart = 1
-	var/speed = 4
+	delay = 4
 
 	security
 		name = "security wagon"
 		icon_state = "tractor-sec"
 		var/weeoo_in_progress = 0
-		speed = 2
+		delay = 2
 
 
 		/*
@@ -199,9 +200,6 @@
 		..()
 		if (start_with_cart)
 			cart = new/obj/tug_cart/(get_turf(src))
-		if (!islist(src.ability_buttons))
-			ability_buttons = list()
-		ability_buttons += new /obj/ability_button/vehicle_speed
 
 	eject_rider(var/crashed, var/selfdismount)
 		var/mob/living/rider = src.rider
@@ -238,23 +236,6 @@
 		rider = null
 		overlays = null
 		return
-
-	relaymove(mob/user as mob, dir) // only triggers when user hits a movement key
-		if (rider)
-			if (istype(src.loc, /turf/space))
-				return
-			src.glide_size = (32 / speed) * world.tick_lag
-			for (var/mob/M in src)
-				M.glide_size = src.glide_size
-				M.animate_movement = SYNC_STEPS
-			walk(src, dir, speed)
-			src.glide_size = (32 / speed) * world.tick_lag
-			for (var/mob/M in src)
-				M.glide_size = src.glide_size
-				M.animate_movement = SYNC_STEPS
-		else
-			for (var/mob/M in src.contents)
-				M.set_loc(src.loc)
 
 	MouseDrop_T(var/atom/movable/C, mob/user)
 		if (!in_interact_range(user, src) || !in_interact_range(user, C) || user.restrained() || user.getStatusDuration("paralysis") || user.sleeping || user.stat || user.lying)
@@ -341,18 +322,6 @@
 					src.visible_message("<span class='alert'><B>[M] has attempted to shove [rider] off of [src]!</B></span>")
 		return
 
-	bullet_act(flag, A as obj)
-		if (rider)
-			rider.bullet_act(flag, A)
-			eject_rider()
-		return
-
-	meteorhit()
-		if (rider)
-			rider.meteorhit()
-			eject_rider()
-		return
-
 	disposing()
 		if (rider)
 			boutput(rider, "<span class='alert'><B>[src] is destroyed!</B></span>")
@@ -378,11 +347,11 @@
 			return
 		if (istype(the_mob.loc, /obj/vehicle/tug))
 			var/obj/vehicle/tug/T = the_mob.loc
-			if (T.speed == 2)
+			if (T.delay == 2)
 				src.icon_state = "lo"
-				T.speed = 4
+				T.delay = 4
 			else
-				T.speed = 2
+				T.delay = 2
 				src.icon_state = "hi"
 			T.relaymove(the_mob, T.dir)
 

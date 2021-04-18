@@ -443,6 +443,7 @@ table#cooktime a#start {
 			src.recipes += new /datum/cookingrecipe/crumpet(src)
 			src.recipes += new /datum/cookingrecipe/ice_cream_cone(src)
 			src.recipes += new /datum/cookingrecipe/waffles(src)
+			src.recipes += new /datum/cookingrecipe/lasagna(src)
 			src.recipes += new /datum/cookingrecipe/spaghetti_pg(src)
 			src.recipes += new /datum/cookingrecipe/spaghetti_m(src)
 			src.recipes += new /datum/cookingrecipe/spaghetti_s(src)
@@ -559,7 +560,7 @@ table#cooktime a#start {
 			if (src.working)
 				boutput(usr, "<span class='alert'>It's already working.</span>")
 				return
-			var/amount = src.contents.len
+			var/amount = length(src.contents)
 			if (!amount)
 				boutput(usr, "<span class='alert'>There's nothing in \the [src] to cook.</span>")
 				return
@@ -747,7 +748,7 @@ table#cooktime a#start {
 		if (src.working)
 			boutput(user, "<span class='alert'>It's already on! Putting a new thing in could result in a collapse of the cooking waveform into a really lousy eigenstate, like a vending machine chili dog.</span>")
 			return
-		var/amount = src.contents.len
+		var/amount = length(src.contents)
 		if (amount >= 8)
 			boutput(user, "<span class='alert'>\The [src] cannot hold any more items.</span>")
 			return
@@ -1059,7 +1060,7 @@ var/list/mixer_recipes = list()
 		return
 
 	attackby(obj/item/W as obj, mob/user as mob)
-		var/amount = src.contents.len
+		var/amount = length(src.contents)
 		if (amount >= 4)
 			boutput(user, "<span class='alert'>The mixer is full.</span>")
 			return
@@ -1135,7 +1136,7 @@ var/list/mixer_recipes = list()
 		return 1
 
 	proc/mix()
-		var/amount = src.contents.len
+		var/amount = length(src.contents)
 		if (!amount)
 			boutput(usr, "<span class='alert'>There's nothing in the mixer.</span>")
 			return

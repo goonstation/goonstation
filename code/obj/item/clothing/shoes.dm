@@ -353,6 +353,7 @@
 	color = "#FF0000"
 	step_sound = "explosion"
 	contraband = 10
+	step_priority = 999
 	is_syndicate = 1
 
 /obj/item/clothing/shoes/ziggy
@@ -445,6 +446,13 @@
 		else
 			. = "Looks like some big shoes to fill!"
 		. = ..()
+
+/obj/item/clothing/shoes/swat/knight // so heavy you can't get shoved!
+	name = "combat sabatons"
+	desc = "Massive, armored footwear for syndicate super-heavies."
+	icon_state = "swatheavy"
+	magnetic = 1
+	c_flags = NOSLIP
 
 /obj/item/clothing/shoes/fuzzy //not boolean slippers
 	name = "fuzzy slippers"
@@ -610,3 +618,48 @@
 			else
 				kick_bonus = 0
 		return
+
+/obj/item/clothing/shoes/bootsblk
+	name = "Black Boots"
+	icon_state = "bootsblk"
+	desc = "Fashionable, synthleather black boots."
+
+/obj/item/clothing/shoes/bootswht
+	name = "White Boots"
+	icon_state = "bootswht"
+	desc = "Fashionable, synthleather white boots."
+
+/obj/item/clothing/shoes/bootsbrn
+	name = "Brown Boots"
+	icon_state = "bootsbrn"
+	desc = "Fashionable, synthleather brown boots."
+
+/obj/item/clothing/shoes/bootsblu
+	name = "Blue Boots"
+	icon_state = "bootsblu"
+	desc = "Fashionable, synthleather blue boots."
+
+/obj/item/clothing/shoes/flatsblk
+	name = "Black Flats"
+	icon_state = "flatsblk"
+	desc = "Simple black flats. Goes with anything!"
+
+/obj/item/clothing/shoes/flatswht
+	name = "White Flats"
+	icon_state = "flatswht"
+	desc = "Simple white flats. Minimal."
+
+/obj/item/clothing/shoes/flatsbrn
+	name = "Brown Flats"
+	icon_state = "flatsbrn"
+	desc = "Simple brown flats. Would look great with tweed."
+
+/obj/item/clothing/shoes/flatsblu
+	name = "Blue Flats"
+	icon_state = "flatsblu"
+	desc = "Simple blue flats. Reminds you of the ocean."
+
+/obj/item/clothing/shoes/flatspnk
+	name = "Pink Flats"
+	icon_state = "flatspnk"
+	desc = "Simple pink flats. So bright they almost glow! Almost."

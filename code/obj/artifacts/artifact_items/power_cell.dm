@@ -103,8 +103,19 @@
 		src.maxcharge = 1
 		src.charge = 1
 
+	reagent_act(reagent_id,volume)
+		if (..())
+			return
+		src.Artifact_reagent_act(reagent_id, volume)
+		return
+		
+	emp_act()
+		src.Artifact_emp_act()
+		..()
+
 /datum/artifact/powercell
 	associated_object = /obj/item/cell/artifact
+	type_name = "Large power cell"
 	rarity_weight = 350
 	validtypes = list("ancient","martian","wizard","precursor")
 	automatic_activation = 1

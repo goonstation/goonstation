@@ -233,7 +233,7 @@
 			B2.pixel_y = 6
 			B2.pixel_x = 5
 
-			new /obj/item/postit_stack(src)
+			new /obj/item/item_box/postit(src)
 			new /obj/item/hand_labeler(src)
 
 			var/obj/item/pen/B3 = new /obj/item/pen(src)
@@ -404,7 +404,7 @@
 			return
 
 		else if (istype(W, /obj/item/satchel/))
-			var/amt = W.contents.len
+			var/amt = length(W.contents)
 			if (amt)
 				user.visible_message("<span class='notice'>[user] dumps out [W]'s contents into [src]!</span>")
 				var/amtload = 0

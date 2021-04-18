@@ -217,9 +217,9 @@
 				src.attacking = 0
 				return
 
-			if (planter.current.assoc_reagents.len || (planter.plantgenes && planter.plantgenes.mutation && planter.plantgenes.mutation.assoc_reagents.len))
+			if (planter.current.assoc_reagents.len || (planter.plantgenes && planter.plantgenes.mutation && length(planter.plantgenes.mutation.assoc_reagents)))
 				var/list/additional_reagents = planter.current.assoc_reagents
-				if (planter.plantgenes && planter.plantgenes.mutation && planter.plantgenes.mutation.assoc_reagents.len)
+				if (planter.plantgenes && planter.plantgenes.mutation && length(planter.plantgenes.mutation.assoc_reagents))
 					additional_reagents = additional_reagents | planter.plantgenes.mutation.assoc_reagents
 
 				/*var/associated_reagent = planter.current.associated_reagent
@@ -1289,6 +1289,15 @@
 	icon_state = "madbee-wings"
 	icon_body = "madbee"
 	sleeping_icon_state = "madbee-sleep"
+
+/obj/critter/domestic_bee/moth
+	name = "moth"
+	desc = "It appears to be a hybrid of a domestic space-bee and a moth. How cute!"
+	icon_state = "moth-wings"
+	sleeping_icon_state = "moth-sleep"
+	icon_body = "moth"
+	honey_color = rgb(207, 207, 207)
+	angertext = "squeaks threateningly at"
 
 /obj/critter/domestic_bee/zombee
 	name = "zombee"

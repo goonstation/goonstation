@@ -102,3 +102,6 @@
 
 //rancher job
 #define access_ranch 83
+
+//pathologist job
+#define access_pathology 84

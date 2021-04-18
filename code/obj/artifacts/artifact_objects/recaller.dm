@@ -4,6 +4,7 @@
 
 /datum/artifact/recaller
 	associated_object = /obj/artifact/teleport_recaller
+	type_name = "Recaller"
 	rarity_weight = 450
 	validtypes = list("wizard","eldritch","precursor")
 	validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/electric,/datum/artifact_trigger/heat,
@@ -15,8 +16,7 @@
 
 	New()
 		..()
-		src.recall_delay = rand(2,600) // how long *10 it takes for the recall to happen
-		src.recall_delay *= 10
+		src.recall_delay = rand(2,600) SECONDS // how long it takes for the recall to happen
 
 	effect_touch(var/obj/O,var/mob/living/user)
 		if (..())
@@ -26,7 +26,7 @@
 
 		O.ArtifactFaultUsed(user)
 		SPAWN_DBG(src.recall_delay)
-			if (user && src.activated) //Wire note: Fix for Cannot execute null.visible message()
+			if (user && src.activated && !user.hibernating) //Wire note: Fix for Cannot execute null.visible message()
 				user.visible_message("<span class='alert'><b>[user]</b> is suddenly pulled through space!</span>")
 				playsound(user.loc, "sound/effects/mag_warp.ogg", 50, 1, -1)
 				var/turf/T = get_turf(O)

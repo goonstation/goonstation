@@ -4,6 +4,7 @@
 
 /datum/artifact/noisy_thing
 	associated_object = /obj/machinery/artifact/noisy_thing
+	type_name = "Noisemaker"
 	rarity_weight = 450
 	validtypes = list("ancient","martian","wizard","eldritch","precursor")
 	validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/electric,/datum/artifact_trigger/heat,

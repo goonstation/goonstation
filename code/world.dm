@@ -26,7 +26,6 @@
 	hub_password = "kMZy3U5jJHSiBQjr"
 	name = "Goonstation 13"
 
-
 //Let's clarify something. I don't know if it needs clarifying, but here I go anyways.
 
 //The UNDERWATER_MAP define is for things that should only be changed if the map is an underwater one.
@@ -396,7 +395,7 @@ var/f_color_selector_handler/F_Color_Selector
 	tick_lag = MIN_TICKLAG//0.4//0.25
 //	loop_checks = 0
 
-	// Load in the current commit SHA from TGS...
+	// Load in the current commit SHA from TGS if avail, by MCterra10
 	if(TgsAvailable())
 		var/datum/tgs_revision_information/rev = TgsRevision()
 		vcs_revision = rev.commit
@@ -711,13 +710,16 @@ var/f_color_selector_handler/F_Color_Selector
 			var/line = details["line"]
 			var/name = details["name"]
 			world.log << "\[[timestamp]\] [file],[line]: [name]"
+#ifndef PREFAB_CHECKING
+	text2file(debug_map_apc_count("\n", zlim=Z_LEVEL_STATION), "no_runtimes.txt")
+#endif
 	shutdown()
 #endif
 	SPAWN_DBG(world.tick_lag)
 		for (var/client/C)
 			if (C.mob)
 				if (prob(40))
-					C.mob << sound(pick('sound/misc/NewRound2.ogg', 'sound/misc/NewRound3.ogg', 'sound/misc/TimeForANewRound.ogg'))
+					C.mob << sound(pick('sound/misc/NewRound2.ogg', 'sound/misc/NewRound3.ogg', 'sound/misc/NewRound4.ogg', 'sound/misc/TimeForANewRound.ogg'))
 				else
 					C.mob << sound('sound/misc/NewRound.ogg')
 
@@ -1343,6 +1345,7 @@ var/f_color_selector_handler/F_Color_Selector
 
 				if (M?.client)
 					boutput(M, "<span class='mhelp'><b>MENTOR PM: FROM <a href=\"byond://?action=mentor_msg_irc&nick=[ckey(nick)]\">[nick]</a> (Discord)</b>: <span class='message'>[game_msg]</span></span>")
+					M.playsound_local(M, "sound/misc/mentorhelp.ogg", 100, flags = SOUND_IGNORE_SPACE, channel = VOLUME_CHANNEL_MENTORPM)
 					logTheThing("admin", null, M, "Discord: [nick] Mentor PM'd [constructTarget(M,"admin")]: [msg]")
 					logTheThing("diary", null, M, "Discord: [nick] Mentor PM'd [constructTarget(M,"diary")]: [msg]", "admin")
 					for (var/client/C)
@@ -1505,7 +1508,7 @@ var/f_color_selector_handler/F_Color_Selector
 				var/msgText = file2text(msgFile)
 
 				//Prints to every networked printer in the world
-				for (var/obj/machinery/networked/printer/P as() in machine_registry[MACHINES_PRINTERS])
+				for (var/obj/machinery/networked/printer/P as anything in machine_registry[MACHINES_PRINTERS])
 					P.print_buffer += "[msgTitle]&title;[msgText]"
 					P.print()
 

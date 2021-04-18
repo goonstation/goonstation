@@ -248,6 +248,12 @@
 		mailgroups = list(MGO_MINING,MGD_PARTY)
 		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_SALES)
 
+	chiefengineer
+		icon_state = "pda-ce"
+		setup_default_cartridge = /obj/item/disk/data/cartridge/chiefengineer
+		mailgroups = list(MGO_ENGINEER,MGO_MECHANIC,MGO_MINING,MGD_STATIONREPAIR,MGD_CARGO,MGD_COMMAND,MGD_PARTY)
+		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_ENGINE, MGA_CRISIS, MGA_SALES, MGA_CARGOREQUEST, MGA_SHIPPING, MGA_RKIT)
+
 	chef
 		mailgroups = list(MGD_KITCHEN,MGD_PARTY)
 
@@ -318,6 +324,14 @@
 			src.hd.root.add_file(new /datum/computer/file/pda_program/cargo_request(src))
 			if(length(src.default_muted_mailgroups))
 				src.host_program.muted_mailgroups = src.default_muted_mailgroups
+			if(ismob(src.loc))
+				var/mob/mob = src.loc
+				get_all_character_setup_ringtones()
+				if(mob.client && (mob.client.preferences.pda_ringtone_index in selectable_ringtones) && mob.client?.preferences.pda_ringtone_index != "Two-Beep")
+					src.set_ringtone(selectable_ringtones[mob.client.preferences.pda_ringtone_index], FALSE, FALSE, "main", null, FALSE)
+					var/rtone_program = src.ringtone2program(src.r_tone)
+					if(rtone_program)
+						src.hd.root.add_file(new rtone_program)
 
 		src.net_id = format_net_id("\ref[src]")
 
@@ -843,7 +857,32 @@
 			src.current_overlay = mode
 		src.UpdateOverlays(src.overlay_images[src.current_overlay], "screen_overlay")
 
-	proc/set_ringtone(var/datum/ringtone/RT, var/temp = 0, var/overrideAlert = 0, var/groupType, var/groupName)
+	/// Takes a ringtone datum and outputs the program that supposedly holds it
+	proc/ringtone2program(var/ringtone)
+		if(istype(ringtone, /datum/ringtone))
+			var/datum/ringtone/RTone = ringtone
+			ringtone = RTone.name
+		switch(ringtone)
+			if("Two-Beep")
+				return /datum/computer/file/pda_program/ringtone
+			if("WOLF PACK", "dog pack")
+				return /datum/computer/file/pda_program/ringtone/dogs
+			if("Norman Number's Counting Safari")
+				return /datum/computer/file/pda_program/ringtone/numbers
+			if("Nooty's Tooter", "Buzzo's Bleater", "Hobo's Harp")
+				return /datum/computer/file/pda_program/ringtone/clown
+			if("Retrospection", "Introspection", "Perspection", "Inspection", "Spectrum", "Spectral", "Refraction", "Reboundance", "Reflection", "Relaxation", "Stance")
+				return /datum/computer/file/pda_program/ringtone/basic
+			if("Spacechimes", "Shy Spacechimes", "Perky Spacechimes", "Sedate Spacechimes", "Focused Spacechimes")
+				return /datum/computer/file/pda_program/ringtone/chimes
+			if("BEEP 2: The Fourth", "Moonlit Peahen", "Plinkoe's Journey", "ringtone.dm,58: Cannot read null.name", "Fweeuweeu")
+				return /datum/computer/file/pda_program/ringtone/beepy
+			if("KABLAMMO - Realistic Explosion FX", "Modern Commando - Realistic Gunfire FX", "Plinkoe's Journey", "ringtone.dm,58: Cannot read null.name", "Fweeuweeu")
+				return /datum/computer/file/pda_program/ringtone/syndie
+			else
+				return /datum/computer/file/pda_program/ringtone
+
+	proc/set_ringtone(var/datum/ringtone/RT, var/temp = 0, var/overrideAlert = 0, var/groupType, var/groupName, var/announceIt = 1)
 		if(!istype(RT)) // Invalid ringtone? use the default
 			qdel(src.r_tone)
 			qdel(src.r_tone_temp)
@@ -886,7 +925,7 @@
 						RTone.holder = src
 						if(overrideAlert)
 							RTone.overrideAlert = overrideAlert
-				if (ismob(src.loc))
+				if (announceIt && ismob(src.loc))
 					var/mob/M = src.loc
 					M.show_message("[bicon(src)] [RT?.succText]")
 

@@ -217,7 +217,7 @@ var/global/list/generic_exit_list = list("command"=DWAINE_COMMAND_EXIT)
 				if (!success)
 					src.master.processing.len++
 					src.master.processing[src.master.processing.len]= D
-					D.progid = src.master.processing.len
+					D.progid = length(src.master.processing)
 
 		D.initialize(connect_file)
 		return
@@ -1076,7 +1076,7 @@ var/global/list/generic_exit_list = list("command"=DWAINE_COMMAND_EXIT)
 
 							if (!success)
 								src.master.processing += special_driver
-								special_driver.progid = src.master.processing.len
+								special_driver.progid = length(src.master.processing)
 
 					special_driver.initialize()
 /*
@@ -1106,7 +1106,7 @@ var/global/list/generic_exit_list = list("command"=DWAINE_COMMAND_EXIT)
 
 							if (!success)
 								src.master.processing += hui_driver
-								hui_driver.progid = src.master.processing.len
+								hui_driver.progid = length(src.master.processing)
 
 					hui_driver.initialize()
 */
@@ -1153,7 +1153,7 @@ var/global/list/generic_exit_list = list("command"=DWAINE_COMMAND_EXIT)
 
 						if (!success)
 							src.master.processing += newdriver
-							newdriver.progid = src.master.processing.len
+							newdriver.progid = length(src.master.processing)
 
 				newdriver.initialize()
 

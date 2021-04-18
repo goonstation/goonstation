@@ -16,12 +16,10 @@
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/device/pda2) && W:ID_card)
 			W = W:ID_card
-		if (iswrenchingtool(W))
-			user.visible_message("<span class='alert'>[user] smacks [src] with the wrench!</span>")
-			if(prob(33))
-				new/obj/item/scrap(get_turf(src))
-				src.visible_message("<span class='alert'>[src] breaks!</span>")
-				qdel(src)//honk
+		if(istool(W, TOOL_SCREWING | TOOL_WRENCHING))
+			user.visible_message("<b>[user]</b> [anchored ? "unbolts the [src] from" : "secures the [src] to"] the floor.")
+			playsound(src.loc, "sound/items/Screwdriver.ogg", 80, 1)
+			src.anchored = !src.anchored
 		if (istype(W, /obj/item/card/id))
 			var/obj/item/card/id/card = W
 			if (!mainaccount)

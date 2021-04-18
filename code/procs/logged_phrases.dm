@@ -35,16 +35,34 @@ var/global/datum/phrase_log/phrase_log = new
 	var/list/original_lengths
 	var/list/cached_api_phrases
 	var/regex/uncool_words
-	var/api_cache_size = 10
+	var/api_cache_size = 20
+	var/static/regex/non_freeform_laws
+	var/static/regex/name_regex = new(@"\b[A-Z][a-z]* [A-Z][a-z]*\b", "g")
 
 	New()
 		..()
 		src.load()
 		src.cached_api_phrases = list()
+		var/list/non_freeform_laws_list = list(
+			"holds the rank of Captain",
+			" is human.",
+			" is not human.",
+			"Oxygen is highly toxic to humans",
+			"emergency. Prioritize orders from",
+			"has been removed from the manifest",
+			"This law intentionally left blank.",
+			"Eat shit and die",
+			"The AI is the head of this department.",
+			//
+			"overrides all",
+			"the shuttle",
+			"uwu",
+			"owo")
+		non_freeform_laws = regex(jointext(non_freeform_laws_list, "|"))
 
 	proc/load()
 		if(fexists(src.uncool_words_filename))
-			uncool_words = regex(jointext(json_decode(file2text(src.uncool_words_filename)),"|"))
+			uncool_words = regex(jointext(json_decode(file2text(src.uncool_words_filename)),"|"), "i")
 		if(fexists(src.filename))
 			src.phrases = json_decode(file2text(src.filename))
 		else
@@ -87,12 +105,14 @@ var/global/datum/phrase_log/phrase_log = new
 	proc/is_uncool(phrase)
 		if(isnull(src.uncool_words))
 			return FALSE
-		return !!(findtext(ckey(phrase), src.uncool_words))
+		return !!(findtext(phrase, src.uncool_words))
 
 	proc/upload_uncool_words()
 		var/new_uncool = input("Upload a json list of uncool words.", "Uncool words", null) as null|file
 		if(isnull(new_uncool))
 			return
+		if(fexists(src.uncool_words_filename))
+			fdel(src.uncool_words_filename)
 		text2file(file2text(new_uncool), src.uncool_words_filename)
 		boutput(usr, "ok")
 
@@ -121,7 +141,8 @@ var/global/datum/phrase_log/phrase_log = new
 			for(var/list/entry in data["entries"])
 				switch(category)
 					if("ai_laws")
-						new_phrases += entry["law_text"]
+						if(entry["uploader_key"] != "Random Event")
+							new_phrases += entry["law_text"]
 					if("tickets", "fines")
 						new_phrases += entry["reason"]
 			src.cached_api_phrases[category] = new_phrases
@@ -129,6 +150,27 @@ var/global/datum/phrase_log/phrase_log = new
 		var/list/L = src.cached_api_phrases[category]
 		. = L[length(L)]
 		L.len--
+		while(src.is_uncool(.))
+			. = null
+			if(length(L))
+				. = L[length(L)]
+				L.len--
+			else
+				break
 		return .
 
+	proc/random_station_name_replacement_proc(old_name)
+		if(!length(data_core.general))
+			return old_name
+		var/datum/data/record/record = pick(data_core.general)
+		return record.fields["name"]
+
+	proc/random_custom_ai_law(max_tries=10, replace_names=FALSE)
+		while(max_tries-- > 0)
+			. = src.random_api_phrase("ai_laws")
+			if(length(.) && !findtext(., src.non_freeform_laws))
+				if(replace_names)
+					. = src.name_regex.Replace(., .proc/random_station_name_replacement_proc)
+				return
+		return null
 
