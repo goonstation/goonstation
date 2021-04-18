@@ -257,10 +257,3 @@
 				boutput(user, "<span class='notice'>You put in the glass panel.</span>")
 				src.state = 4
 				src.icon_state = "4"
-
-
-
-
-
-
-
