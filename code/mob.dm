@@ -1283,7 +1283,7 @@
 /mob/proc/swap_hand()
 	return
 
-/mob/proc/don_doff()
+/mob/proc/don_doff(obj/item/I, slot)
 	return
 
 /mob/proc/u_equip(obj/item/W)

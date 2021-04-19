@@ -324,6 +324,8 @@
 					autoequip_slot(slot_head, head)
 					autoequip_slot(slot_back, back)
 
+					if(actions.hasAction(master,"dondoff"))
+						return
 
 					for (var/datum/hud/storage/S in user.huds) //ez storage stowing
 						S.master.attackby(I, user, params)
@@ -370,7 +372,7 @@
 			if ("equip")
 				var/obj/item/I = master.equipped()
 				if (I)
-					#define autoequip_slot(slot, var_name) if (master.can_equip(I, master.slot) && !(master.var_name && master.var_name.cant_self_remove)) { master.u_equip(I); var/obj/item/C = master.var_name; if (C) { /*master.u_equip(C);*/ C.unequipped(master); master.var_name = null; if(!master.put_in_hand(C)){master.drop_from_slot(C, get_turf(C))} } master.force_equip(I, master.slot); return }
+					#define autoequip_slot(slot, var_name) if (master.can_equip(I, master.slot) && !(master.var_name && master.var_name.cant_self_remove) && !master.don_doff(I, master.slot)) { master.u_equip(I); var/obj/item/C = master.var_name; if (C) { /*master.u_equip(C);*/ C.unequipped(master); master.var_name = null; if(!master.put_in_hand(C)){master.drop_from_slot(C, get_turf(C))} } master.force_equip(I, master.slot); return }
 					autoequip_slot(slot_shoes, shoes)
 					autoequip_slot(slot_gloves, gloves)
 					autoequip_slot(slot_wear_id, wear_id)
@@ -535,7 +537,7 @@
 					else
 						master.client << link("https://wiki.ss13.co/Construction")
 
-			#define clicked_slot(slot) var/obj/item/W = master.get_slot(master.slot); if (W) { master.click(W, params); } else { var/obj/item/I = master.equipped(); if (!I || !master.can_equip(I, master.slot) || istype(I.loc, /obj/item/parts/)) { return; } master.u_equip(I); master.force_equip(I, master.slot); }
+			#define clicked_slot(slot) var/obj/item/W = master.get_slot(master.slot); if (W) { master.click(W, params); } else { var/obj/item/I = master.equipped(); if (!I || !master.can_equip(I, master.slot) || istype(I.loc, /obj/item/parts/) || master.don_doff(I, master.slot)) { return; } master.u_equip(I); master.force_equip(I, master.slot); }
 			if("belt")
 				clicked_slot(slot_belt)
 			if("storage1")

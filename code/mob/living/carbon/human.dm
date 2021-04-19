@@ -2305,7 +2305,12 @@
 
 /mob/living/carbon/human/don_doff(obj/item/I, slot)
 	if(!dondoffscale) return
+	if( slot in list(slot_l_store,  slot_r_store,  slot_l_hand, slot_r_hand) )
+		if(actions.hasAction(src,"dondoff"))
+			return TRUE
+		return FALSE
 	actions.start(new/datum/action/bar/icon/donDoffItem(src, I, slot), usr)
+
 	return TRUE
 
 /mob/living/carbon/human/emp_act()

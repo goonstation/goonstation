@@ -23,6 +23,7 @@
 	desc = "Helps protect against vacuum."
 	seal_hair = 1
 	path_prot = 0
+	duration_put = 1 SECOND
 
 	onMaterialChanged()
 		if(src.material)

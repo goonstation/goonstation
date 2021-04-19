@@ -183,6 +183,8 @@
 	body_parts_covered = TORSO|LEGS|ARMS
 	permeability_coefficient = 0.01
 	over_hair = 1
+	duration_put = 3 SECONDS
+	duration_remove = 1 SECONDS
 
 	setupProperties()
 		..()
@@ -969,6 +971,7 @@
 	permeability_coefficient = 0.02
 	protective_temperature = 1000
 	over_hair = 1
+	duration_put = 2.5 SECONDS
 
 	onMaterialChanged()
 		if(src.material)

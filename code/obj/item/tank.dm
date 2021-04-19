@@ -360,6 +360,7 @@ Contains:
 	module_research = list("atmospherics" = 4)
 	distribute_pressure = 17 // setting these things to start at the minimum pressure needed to breathe - Haine
 	compatible_with_TTV = 0
+	duration_put = 2 SECONDS
 
 	New()
 		..()

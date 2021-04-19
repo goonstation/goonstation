@@ -39,7 +39,7 @@
 	var/hitsound = 'sound/impact_sounds/Generic_Hit_1.ogg'
 	var/stamina_damage = STAMINA_ITEM_DMG //amount of stamina removed from target per hit.
 	var/stamina_cost = STAMINA_ITEM_COST  //amount of stamina removed from USER per hit. This cant bring you below 10 points and you will not be able to attack if it would.
-	
+
 	var/stamina_crit_chance = STAMINA_CRIT_CHANCE //Crit chance when attacking with this.
 	var/datum/item_special/special = null // Contains the datum which executes the items special, if it has one, when used beyond melee range.
 	var/hide_attack = 0 //If 1, hide the attack animation + particles. Used for hiding attacks with silenced .22 and sleepy pen
@@ -120,7 +120,7 @@
 	var/rarity = ITEM_RARITY_COMMON // Just a little thing to indicate item rarity. RPG fluff.
 	pressure_resistance = 50
 	var/obj/item/master = null
-	
+
 	var/last_tick_duration = 1 // amount of time spent between previous tick and this one (1 = normal)
 	var/last_processing_tick = -1
 
@@ -1051,13 +1051,18 @@
 
 	if (src.loc == user)
 		var/in_pocket = 0
+		var/slot
 		if(issilicon(user)) //if it's a borg's shit, stop here
 			return 0
 		if (ishuman(user))
 			var/mob/living/carbon/human/H = user
 			if(H.l_store == src || H.r_store == src)
 				in_pocket = 1
+			slot = H.get_slot_from_item(src)
+
 		if (!cant_self_remove || (!cant_drop && (user.l_hand == src || user.r_hand == src)) || in_pocket == 1)
+			if( user.don_doff(null, slot))
+				return 0
 			user.u_equip(src)
 		else
 			boutput(user, "<span class='alert'>You can't remove this item.</span>")
@@ -1088,6 +1093,7 @@
 		bible_contents.Remove(src) // UNF
 		for_by_tcl(bible, /obj/item/storage/bible)
 			bible.hud.remove_item(src)
+
 	user.put_in_hand_or_drop(src)
 
 	if (src.artifact)
@@ -1518,3 +1524,6 @@
 
 /obj/item/proc/can_pickup(mob/user)
 	return !src.anchored
+
+/obj/item/proc/get_dondoff_familiarity(mob/user)
+	return

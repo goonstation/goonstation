@@ -110,6 +110,8 @@
 	color_b = 0.8
 	path_prot = 0
 
+	duration_put = 2 SECONDS
+
 	setupProperties()
 		..()
 		setProperty("coldprot", 7)

@@ -577,7 +577,7 @@ var/datum/action_controller/actions
 	icon_state = "grabbed"
 
 /datum/action/bar/icon/donDoffItem //Putting items on or removing items from others.
-	id = "otheritem"
+	id = "dondoff"
 	interrupt_flags = INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	icon = 'icons/mob/screen1.dmi'
 	icon_state = "grabbed"
@@ -595,21 +595,31 @@ var/datum/action_controller/actions
 		hidden = Hidden
 		start = get_turf(source)
 		duration = 0
+		var/item_duration
+		var/familiarity_scale
 
 		// don
 		if(item)
+			familiarity_scale = item.get_dondoff_familiarity(source)
+
 			if(item.duration_put > 0)
-				duration += item.duration_put
+				item_duration += item.duration_put
 			else
-				duration += 4.5 SECONDS
+				item_duration += 1.5 SECONDS
+
+			item_duration *= familiarity_scale ? familiarity_scale : 1
+			duration += item_duration
 
 		// doff
 		var/obj/item/I = source.get_slot(slot)
 		if(I)
-			if(I.duration_remove > 0)
+			familiarity_scale = item.get_dondoff_familiarity(source)
+			if(I.duration_remove  > 0)
 				duration += I.duration_remove
 			else
-				duration += 2.5 SECONDS
+				duration += 0.5 SECONDS
+
+			item_duration *= familiarity_scale ? familiarity_scale : 1
 
 		if( source.bioHolder?.HasEffect("clumsy")	)
 			duration *= 1.2
@@ -649,16 +659,27 @@ var/datum/action_controller/actions
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
-		source.u_equip(item)
-		var/obj/item/I = source.get_slot(slot)
+		if(item)
+			source.u_equip(item)
 
+		var/obj/item/I = source.get_slot(slot)
 		if(I)
-			I.unequipped(source)
-			source.clear_slot(slot)
+			if(item)
+				I.unequipped(source)
+				source.clear_slot(slot)
+			else
+				source.u_equip(I)
+				if (I.hide_attack != 1)
+					if (I.pickup_sfx)
+						playsound(source.loc, I.pickup_sfx, 56, vary=0.2)
+					else
+						playsound(source.loc, "sound/items/pickup_[max(min(I.w_class,3),1)].ogg", 56, vary=0.2)
+
 			if(!source.put_in_hand(I))
 				source.drop_from_slot(I, get_turf(I))
 
-		source.force_equip(item, slot)
+		if(item)
+			source.force_equip(item, slot)
 
 	onUpdate()
 		var/animate_color
@@ -707,17 +728,13 @@ var/datum/action_controller/actions
 		hidden = Hidden
 
 		if(item)
-			if(item.duration_put > 0)
-				duration = item.duration_put
-			else
-				duration = 4.5 SECONDS
+			duration = max(4.5 SECONDS, item.duration_put)
 		else
 			var/obj/item/I = target.get_slot(slot)
 			if(I)
-				if(I.duration_remove > 0)
-					duration = I.duration_remove
-				else
-					duration = 2.5 SECONDS
+				duration = max(2.5 SECONDS, I.duration_remove)
+				if(slot == SLOT_W_UNIFORM)
+					duration = max( duration, 6.5 SECONDS)
 
 		duration += ExtraDuration
 

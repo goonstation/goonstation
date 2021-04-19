@@ -10,6 +10,9 @@
 	item_state = "armor"
 	body_parts_covered = TORSO|LEGS|ARMS
 
+	duration_put = 3.0 SECONDS
+	duration_remove = 2.0 SECONDS
+
 	setupProperties()
 		..()
 		setProperty("coldprot", 10)
