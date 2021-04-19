@@ -2283,6 +2283,7 @@ ABSTRACT_TYPE(/area/station/engine)
 /area/station/engine/combustion_chamber
 	name = "Combustion Chamber"
 	icon_state = "combustion_chamber"
+	requires_power = FALSE
 
 /area/station/engine/coldloop
 	name = "Cold Loop"
@@ -3262,6 +3263,7 @@ ABSTRACT_TYPE(/area/station/turret_protected)
 /area/station/turret_protected/armory_outside
 	name = "Armory Outer Perimeter"
 	icon_state = "secext"
+	requires_power = FALSE
 
 // // // //  OLD AREAS THAT ARE NOT USED BUT ARE IN HERE // // // //
 
