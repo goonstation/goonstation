@@ -127,7 +127,7 @@
 	/// Obey the threat threshold. Otherwise, just cuff em
 	var/warn_minor_crime = 0
 
-	var/added_to_records = 0
+	var/added_to_records = FALSE
 	/// Set a bot to guard an area, and they'll go there and mill around
 	var/area/guard_area
 	/// Arrest anyone who arent security / heads if they're in this area?
@@ -941,7 +941,7 @@
 			else if ((R.fields["name"] == perp.name && perp.traitHolder.hasTrait("immigrant") && perp.traitHolder.hasTrait("jailbird")))
 				if(!added_to_records)
 					threatcount -= 5
-					added_to_records = 1
+					added_to_records = TRUE
 
 		//Agent cards lower threat level
 		if((istype(perp.wear_id, /obj/item/card/id/syndicate)))

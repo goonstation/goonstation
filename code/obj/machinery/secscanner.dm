@@ -20,7 +20,7 @@
 	var/check_records = 1
 
 	var/last_perp = 0
-	var/added_to_records = 0
+	var/added_to_records = FALSE
 	var/last_contraband = 0
 	//var/area/area = 0
 	var/emagged = 0
@@ -206,7 +206,7 @@
 			else if ((R.fields["name"] == perp.name && perp.traitHolder.hasTrait("immigrant") && perp.traitHolder.hasTrait("jailbird")))
 				if(!added_to_records)
 					threatcount -= 5
-					added_to_records = 1
+					added_to_records = TRUE
 
 		//if((isnull(perp:wear_id)) || (istype(perp:wear_id, /obj/item/card/id/syndicate)))
 		var/obj/item/card/id/perp_id = perp.equipped()
