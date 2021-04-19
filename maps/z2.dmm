@@ -41740,6 +41740,7 @@
 /area/sim/racing_entry)
 "cla" = (
 /obj/table/reinforced/auto,
+/obj/traitorifier/virtual/wizard,
 /turf/unsimulated/floor/setpieces/gauntlet{
 	desc = "This place is going to be a fucking mess.";
 	name = "\proper the murderbox"
@@ -42099,7 +42100,7 @@
 /area/sim/gunsim)
 "clQ" = (
 /obj/table/reinforced/auto,
-/obj/traitorifier/virtual/wizard,
+/obj/item/requisition_token/vr,
 /turf/unsimulated/floor/setpieces/gauntlet{
 	desc = "This place is going to be a fucking mess.";
 	name = "\proper the murderbox"
@@ -80903,6 +80904,13 @@
 	icon_state = "floor"
 	},
 /area/centcom/lounge)
+"qcU" = (
+/obj/submachine/weapon_vendor/syndicate,
+/turf/unsimulated/floor/setpieces/gauntlet{
+	desc = "This place is going to be a fucking mess.";
+	name = "\proper the murderbox"
+	},
+/area/sim/gunsim)
 "qcZ" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-47"
@@ -143672,7 +143680,7 @@ ciN
 ciw
 ciw
 ciw
-cla
+qcU
 clQ
 cmG
 clr
