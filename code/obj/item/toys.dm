@@ -186,7 +186,7 @@
 
 /obj/item/toy/handheld
 	name = "arcade toy"
-	desc = "A handheld gaming machine! What incerdible technology!"
+	desc = "These high tech gadgets compress the full arcade experience into a large, clunky handheld!"
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "arcade-generic"
 	mats = 2
