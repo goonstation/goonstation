@@ -1,4 +1,10 @@
 
+(t)mon apr 19 21
+(u)Chickenish
+(p)3950
+(e)⚖|balance
+(*)Nuclear Operative garb and some other antag garb is now immune to acid splashing, see minor changes for details.
+(+)The Syndicate space suit and helmet, the Safari hat and clothing, the Football armor, helmet, pants, and cleats, the Hunter suit, mask, belt, and boots, the Faustian lawyer suit and briefcase, the Wrestling Belt, and the Bowling suit and Syndicate Hat are now all immune to acid. The transition from the inside of a beaker to the outside of clothes may have removed the fire immunity property of that coating, but it looks like it acid-proofs just fine!
 (t)sat apr 17 21
 (u)Eagletanker
 (p)4328
