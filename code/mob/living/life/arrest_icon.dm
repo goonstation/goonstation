@@ -22,8 +22,9 @@
 
 			for (var/datum/data/record/R as anything in data_core.security)
 				if (R.fields["name"] != H.name && H.traitHolder.hasTrait("immigrant") && H.traitHolder.hasTrait("jailbird"))
-					arrestState = "*Arrest*"
-					jailbird_spotted = 1
+					if(!added_to_records)
+						arrestState = "*Arrest*"
+						jailbird_spotted = 1
 				else if (R.fields["name"] == H.name && H.traitHolder.hasTrait("immigrant") && H.traitHolder.hasTrait("jailbird"))
 					if(!added_to_records && jailbird_spotted)
 						arrestState = ""

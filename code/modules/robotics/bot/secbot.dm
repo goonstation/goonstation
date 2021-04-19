@@ -937,8 +937,9 @@
 
 		for (var/datum/data/record/R as anything in data_core.security)
 			if (R.fields["name"] != perp.name && perp.traitHolder.hasTrait("immigrant") && perp.traitHolder.hasTrait("jailbird"))
-				threatcount += 5
-				jailbird_spotted = 1
+				if(!added_to_records)
+					threatcount += 5
+					jailbird_spotted = 1
 			else if ((R.fields["name"] == perp.name && perp.traitHolder.hasTrait("immigrant") && perp.traitHolder.hasTrait("jailbird")))
 				if(!added_to_records && jailbird_spotted)
 					threatcount -= 5
