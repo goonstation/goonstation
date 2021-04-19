@@ -1928,9 +1928,17 @@
 			if (label) itemEntry.label = label
 			logTheThing("station", user, null, "added player product ([target.name]) to [src] at [log_loc(src)].")
 			generate_slogans()
+
 	power_change()
 		. = ..()
 		updateAppearance()
+
+	process()
+		. = ..()
+		//Don't update if we're working, always handle that in power_change()
+		if ((status & BROKEN) || status & NOPOWER)
+			updateAppearance()
+
 	generate_wire_HTML()
 		. = ..()
 		var/list/html_parts = list()
