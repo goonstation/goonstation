@@ -233,14 +233,8 @@
 		materiel_stock += new/datum/materiel/utility/noslip_boots
 		materiel_stock += new/datum/materiel/utility/bomb_decoy
 
-	accepted_token()
-		src.credits["Sidearm"]++
-		src.credits["Loadout"]++
-		src.credits["Utility"]++
-		..()
-
 	accepted_token(var/token)
-		if (istype(token, /obj/item/requisition_token/vr))
+		if (istype(token, /obj/item/requisition_token/syndicate/vr))
 			src.credits["Sidearm"] += 999
 			src.credits["Loadout"] += 999
 			src.credits["Utility"] += 999
@@ -249,6 +243,7 @@
 			src.credits["Loadout"]++
 			src.credits["Utility"]++
 		..()
+
 // Materiel avaliable for purchase:
 
 /datum/materiel
@@ -524,8 +519,8 @@
 		desc = "A Syndicate credit card charged with currency compatible with the Syndicate Weapons Vendor."
 		icon_state = "req-token"
 
-	vr
-		name = "NUKE_TKN.EXE"
+		vr
+			name = "NUKE_TKN.EXE"
 
 	security
 		desc = "An NT-provided token compatible with the Security Weapons Vendor."
