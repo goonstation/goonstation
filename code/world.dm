@@ -618,6 +618,10 @@ var/f_color_selector_handler/F_Color_Selector
 	Z_LOG_DEBUG("World/Init", "Running map-specific initialization...")
 	map_settings.init()
 
+	Z_LOG_DEBUG("World/Init", "Initialize prefab shuttle datums...")
+	var/datum/prefab_shuttle/D = new
+	D.inialize_prefabs()
+
 	UPDATE_TITLE_STATUS("Ready")
 	current_state = GAME_STATE_PREGAME
 	Z_LOG_DEBUG("World/Init", "Now in pre-game state.")

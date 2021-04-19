@@ -291,3 +291,25 @@ var/global/list/job_start_locations = list()
 		var/obj/overlay/tile_effect/lighting/L = locate() in vistarget.vis_contents
 		if(L)
 			vistarget.vis_contents -= L
+
+/obj/landmark/load_prefab_shuttledmm
+	name = "custom shuttle dmm loading location"
+	desc = "Tells the dmm loader where to put the bottom left corner of the shuttle prefab."
+	icon = 'icons/effects/mapeditor.dmi'
+	icon_state = "landmark"
+	color = "#ff0000"
+
+	cog1
+		name = LANDMARK_SHUTTLE_COG1
+	cog2
+		name = LANDMARK_SHUTTLE_COG2
+	sealab
+		name = LANDMARK_SHUTTLE_SEALAB
+	manta
+		name = LANDMARK_SHUTTLE_MANTA
+	donut2
+		name = LANDMARK_SHUTTLE_DONUT2
+	donut3
+		name = LANDMARK_SHUTTLE_DONUT3
+	destiny
+		name = LANDMARK_SHUTTLE_DESTINY
