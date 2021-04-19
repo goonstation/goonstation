@@ -6,7 +6,8 @@
 	density = 1
 	anchored = 0
 	event_handler_flags = IMMUNE_MANTA_PUSH
-	var/health = 150
+	_health = 150
+	_max_health = 150
 	var/armed = 0
 	var/det_time = 0
 	var/timer_default = 6000 // 10 min.
@@ -96,7 +97,7 @@
 			else
 				. += "It is firmly anchored to the floor by its floor bolts. A screwdriver could undo them."
 
-			switch(src.health)
+			switch(src._health)
 				if(80 to 125)
 					. += "<span class='alert'>It is a little bit damaged.</span>"
 				if(40 to 79)
@@ -234,6 +235,10 @@
 				//	open_wire_panel(user)
 				//	return
 
+		if (istype(W, /obj/item/wrench/battle) && src._health <= src._max_health)
+			SETUP_GENERIC_ACTIONBAR(user, src, 5 SECONDS, /obj/machinery/nuclearbomb/proc/repair_nuke, null, 'icons/obj/items/tools/wrench.dmi', "battle-wrench", "[usr] repairs the [src]!")
+			return
+
 		if (W && !(istool(W, TOOL_SCREWING | TOOL_SNIPPING) || istype(W, /obj/item/disk/data/floppy/read_only/authentication)))
 			switch (W.force)
 				if (0 to 19)
@@ -249,7 +254,6 @@
 			playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 100, 1)
 			attack_particle(user,src)
 
-		..()
 		return
 
 	ex_act(severity)
@@ -288,6 +292,11 @@
 		else if (P.proj_data.damage_type == D_PIERCING)
 			src.take_damage(damage)
 
+	proc/repair_nuke()
+		src._health = min(src._health+5, src._max_health)
+		playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
+		return
+
 	proc/open_wire_panel(var/mob/user)
 		user.s_active = src.wirepanel
 		wirepanel.update()
@@ -300,7 +309,7 @@
 
 	proc/take_damage(var/amount)
 		if(!isitspacemas)
-			switch(src.health)
+			switch(src._health)
 				if(80 to 125)
 					src.icon_state = "nuclearbomb1"
 				if(40 to 80)
@@ -309,8 +318,8 @@
 					src.icon_state = "nuclearbomb3"
 		if (!isnum(amount) || amount < 1)
 			return
-		src.health = max(0,src.health - amount)
-		if (src.health < 1)
+		src._health = max(0,src._health - amount)
+		if (src._health < 1)
 			src.visible_message("<b>[src]</b> breaks and falls apart into useless pieces!")
 			robogibs(src.loc,null)
 			playsound(src.loc, 'sound/impact_sounds/Machinery_Break_1.ogg', 50, 2)
@@ -434,10 +443,10 @@
 	icon_state = "nuclearbomb"
 	density = 1
 	anchored = 0
-	var/health = 10
+	_health = 10
 
 	proc/checkhealth()
-		if (src.health <= 0)
+		if (src._health <= 0)
 			src.visible_message("<span class='alert'><b>[src] pops!</b></span>")
 			playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 100, 1)
 			var/obj/decal/cleanable/balloon/decal = make_cleanable(/obj/decal/cleanable/balloon,src.loc)
@@ -448,6 +457,6 @@
 		..()
 		user.lastattacked = src
 		playsound(src.loc, 'sound/impact_sounds/Slimy_Hit_1.ogg', 100, 1)
-		src.health -= W.force
+		src._health -= W.force
 		checkhealth()
 		return

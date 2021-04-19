@@ -14569,12 +14569,13 @@
 /turf/unsimulated/floor/specialroom/medbay,
 /area/marsoutpost)
 "aVd" = (
-/obj/indestructible/shuttle_corner{
-	dir = 8;
-	icon_state = "wall3_trans"
+/obj/syndi_putt_spawner,
+/obj/decal/tile_edge/stripe/extra_big{
+	icon_state = "delivery2"
 	},
-/turf/space,
-/area/space)
+/obj/access_spawn/syndie_shuttle,
+/turf/unsimulated/floor/shuttlebay,
+/area/syndicate_station/battlecruiser)
 "aVe" = (
 /obj/submachine/chef_sink/chem_sink{
 	dir = 8
@@ -45841,12 +45842,9 @@
 /turf/unsimulated/floor/darkpurple,
 /area/syndicate_station/battlecruiser)
 "cvY" = (
-/obj/indestructible/shuttle_corner{
-	dir = 1;
-	icon_state = "wall3_trans"
-	},
-/turf/space,
-/area/space)
+/obj/machinery/light/small/floor,
+/turf/unsimulated/floor/darkpurple,
+/area/syndicate_station/battlecruiser)
 "cvZ" = (
 /obj/rack,
 /obj/item/tank/jetpack/syndicate,
@@ -45894,10 +45892,10 @@
 /turf/unsimulated/floor/red,
 /area/syndicate_station/battlecruiser)
 "cwh" = (
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3"
-	},
-/area/space)
+/obj/submachine/weapon_vendor/syndicate,
+/obj/machinery/light,
+/turf/unsimulated/floor/red,
+/area/syndicate_station/battlecruiser)
 "cwi" = (
 /obj/decal/boxingrope{
 	dir = 4
@@ -51157,14 +51155,6 @@
 /obj/machinery/light/lamp/green,
 /turf/unsimulated/floor/wood/two,
 /area/owlery/owleryhall)
-"cIL" = (
-/obj/syndi_putt_spawner,
-/obj/decal/tile_edge/stripe/extra_big{
-	icon_state = "delivery2"
-	},
-/obj/access_spawn/syndie_shuttle,
-/turf/unsimulated/floor/shuttlebay,
-/area/syndicate_station/battlecruiser)
 "cIM" = (
 /obj/storage/crate/loot,
 /turf/simulated/floor/white,
@@ -60566,16 +60556,6 @@
 	},
 /turf/unsimulated/floor/shuttlebay,
 /area/syndicate_station/battlecruiser)
-"dds" = (
-/obj/machinery/vehicle/pod_smooth/syndicate,
-/obj/decal/tile_edge/stripe/extra_big,
-/obj/decal/tile_edge/stripe{
-	dir = 6;
-	icon_state = "bot2"
-	},
-/obj/access_spawn/syndie_shuttle,
-/turf/unsimulated/floor/shuttlebay,
-/area/syndicate_station/battlecruiser)
 "ddt" = (
 /obj/disposalpipe/segment/horizontal,
 /turf/unsimulated/floor/grey,
@@ -60630,10 +60610,6 @@
 /area/afterlife/bar)
 "ddB" = (
 /obj/decal/tile_edge/stripe/extra_big,
-/obj/decal/tile_edge/stripe{
-	dir = 6;
-	icon_state = "bot2"
-	},
 /turf/unsimulated/floor/shuttlebay,
 /area/syndicate_station/battlecruiser)
 "ddD" = (
@@ -60657,6 +60633,11 @@
 /turf/unsimulated/floor/grey,
 /area/afterlife/bar)
 "ddG" = (
+/obj/syndi_putt_spawner,
+/obj/decal/tile_edge/stripe/extra_big{
+	icon_state = "delivery2"
+	},
+/obj/access_spawn/syndie_shuttle,
 /obj/decal/tile_edge/stripe/extra_big,
 /turf/unsimulated/floor/shuttlebay,
 /area/syndicate_station/battlecruiser)
@@ -61445,10 +61426,6 @@
 /obj/death_button/clean_gunsim,
 /turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/sim/gunsim)
-"dfn" = (
-/obj/wingrille_spawn/auto/crystal,
-/turf/unsimulated/floor/plating/random,
-/area/space)
 "dfo" = (
 /obj/decal/tile_edge/stripe{
 	dir = 6;
@@ -62095,6 +62072,7 @@
 /obj/rack,
 /obj/item/tank/jetpack/syndicate,
 /obj/item/tank/jetpack/syndicate,
+/obj/machinery/light,
 /turf/unsimulated/floor/darkpurple,
 /area/syndicate_station/battlecruiser)
 "dgx" = (
@@ -77267,7 +77245,6 @@
 /obj/item/clothing/gloves/yellow,
 /obj/item/clothing/gloves/yellow,
 /obj/item/clothing/gloves/yellow,
-/obj/machinery/light,
 /turf/unsimulated/floor/darkblue,
 /area/syndicate_station/battlecruiser)
 "ecr" = (
@@ -82615,6 +82592,15 @@
 	name = "plating"
 	},
 /area/hospital/samostrel)
+"vZe" = (
+/obj/machinery/vehicle/pod_smooth/syndicate,
+/obj/decal/tile_edge/stripe{
+	dir = 6;
+	icon_state = "bot2"
+	},
+/obj/access_spawn/syndie_shuttle,
+/turf/unsimulated/floor/shuttlebay,
+/area/syndicate_station/battlecruiser)
 "wiU" = (
 /obj/admin_plaque{
 	desc = "Scream!";
@@ -82653,14 +82639,6 @@
 	opacity = 0
 	},
 /area/titlescreen)
-"woz" = (
-/obj/machinery/light{
-	dir = 4;
-	layer = 9.1;
-	pixel_x = 10
-	},
-/turf/unsimulated/floor/red,
-/area/space)
 "wpG" = (
 /obj/item/storage/wall/fire{
 	pixel_y = 32
@@ -107485,16 +107463,16 @@ cnw
 cnw
 cnw
 cnw
-aVd
-cwh
-dfn
-dfn
-dfn
-cwh
-cwh
-cwh
-cwh
-cwh
+aJC
+aKf
+aKz
+aKz
+aKz
+aKf
+aKf
+aKf
+aKf
+aKf
 cnw
 cnw
 cnw
@@ -108688,17 +108666,17 @@ cnw
 bBm
 bDt
 ccu
-cIJ
-cIL
-cIJ
 cUT
-dds
+vZe
+cIJ
+cIJ
+ddG
 des
 bqV
 dfo
 dfQ
 dfQ
-bqV
+dgv
 aKf
 dgQ
 xQV
@@ -108990,10 +108968,10 @@ btF
 bvh
 bDt
 ccu
-cIL
-cIJ
-cIJ
 cUT
+cUT
+cIJ
+aVd
 ddB
 des
 bqV
@@ -109294,11 +109272,11 @@ bDt
 ccu
 cIJ
 cIJ
-cIJ
+aVd
 cIJ
 ddG
 des
-bqV
+cvY
 dfo
 dfQ
 dfQ
@@ -109594,11 +109572,11 @@ btF
 bvh
 bDt
 ccu
-cIL
-cIJ
-cIJ
 cUT
-dds
+vZe
+cIJ
+aVd
+ddB
 des
 bqV
 dfo
@@ -109896,11 +109874,11 @@ cnw
 bBm
 bDt
 ccu
-cIJ
-cIL
-cIJ
 cUT
-ddB
+cUT
+cIJ
+cIJ
+ddG
 des
 bqV
 dfo
@@ -113215,7 +113193,7 @@ aKf
 aKz
 aKz
 aKf
-woz
+byE
 cas
 cIa
 cKQ
@@ -114137,7 +114115,7 @@ btf
 dhh
 btf
 cwa
-cwg
+cwh
 aKf
 dhx
 bqW
@@ -115345,7 +115323,7 @@ btf
 pbO
 btf
 cwa
-cwg
+cwh
 aKf
 cwk
 dhN
@@ -116249,7 +116227,7 @@ dgk
 dgM
 dgO
 eaP
-btf
+dfH
 dgi
 cwg
 aKf
@@ -116545,16 +116523,16 @@ cnw
 cnw
 cnw
 cnw
-cvY
-cwh
-cwh
-cwh
-cwh
-cwh
-cwh
-cwh
-cwh
-cwh
+aKA
+aKf
+aKf
+aKf
+aKf
+aKf
+aKf
+aKf
+aKf
+aKf
 cnw
 cnw
 cnw

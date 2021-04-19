@@ -2348,7 +2348,7 @@ var/global/list/female_screams = list("female", "femalescream1", "femalescream2"
 	else
 		return
 
-	if (H && remove_effects)
+	if (H?.bioHolder && remove_effects)
 		H.bioHolder.RemoveAllEffects()
 		H.bioHolder.BuildEffectPool()
 

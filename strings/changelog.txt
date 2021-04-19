@@ -1,5 +1,50 @@
 
+(t)mon apr 19 21
+(u)Chickenish
+(p)3950
+(e)⚖|balance
+(*)Nuclear Operative garb and some other antag garb is now immune to acid splashing, see minor changes for details.
+(+)The Syndicate space suit and helmet, the Safari hat and clothing, the Football armor, helmet, pants, and cleats, the Hunter suit, mask, belt, and boots, the Faustian lawyer suit and briefcase, the Wrestling Belt, and the Bowling suit and Syndicate Hat are now all immune to acid. The transition from the inside of a beaker to the outside of clothes may have removed the fire immunity property of that coating, but it looks like it acid-proofs just fine!
+(t)sat apr 17 21
+(u)Eagletanker
+(p)4328
+(e)🗺|mapping
+(+)The Atlas record is back on the NCS Atlas. Find it in the command room.
+(t)fri apr 16 21
+(u)Sovexe
+(p)4337
+(e)⚖🐛|balance, bug
+(+)The Nuclear Bomb Teleporter Remote can now summon a nuke contained within a pod's cargo hold.
+(u)DimWhat
+(p)4313
+(e)⚖|balance
+(+)Anyone wearing the Head of Security's hat is now able to be choked or receive CPR.
+(t)thu apr 15 21
+(u)Gannets
+(p)4321
+(e)⚖🆕|balance, feature
+(*)Nuke ops combat engineers can now hit the nuclear bomb with their battle wrench to repair a small amount of damage dealt to it.
+(u)Arthur Holiday
+(p)4271
+(e)🗺|mapping
+(*)Revamped the security department on Clarion.
+(u)Gannets
+(p)4319
+(e)🗺|mapping
+(+)Additional pods added to the Syndicate Battlecruiser Cairngorm.
+(u)Carbadox
+(p)3778
+(e)🆕|feature
+(+)Added some basic ways to earn Job XP for Chefs.
+(u)Lythine
+(p)4312
+(e)|
+(+)Added overhead health pop-up to upgraded ProDocs and floor scanners.
 (t)wed apr 14 21
+(u)Carbadox
+(p)4049
+(e)|
+(+)Ice dispensers now pour ice into containers if interacted with a glass in hand.
 (u)Azrun
 (p)4317
 (e)📄|tgui

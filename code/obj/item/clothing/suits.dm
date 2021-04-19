@@ -1059,6 +1059,7 @@
 	item_state = "space_suit_syndicate"
 	desc = "A suit that protects against low pressure environments. Issued to syndicate operatives."
 	contraband = 3
+	item_function_flags = IMMUNE_TO_ACID
 
 	setupProperties()
 		..()

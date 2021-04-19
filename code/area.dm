@@ -428,6 +428,7 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
 	teleport_blocked = 2
 	force_fullbright = 1
 	expandable = 0//oh god i know some fucker would try this
+	requires_power = FALSE
 
 	Entered(atom/movable/O) // TODO: make this better and not copy n pasted from area_that_kills_you_if_you_enter_it
 		..()
@@ -2176,6 +2177,7 @@ ABSTRACT_TYPE(/area/station/com_dish)
 /area/station/com_dish
 	name = "Communications Dish"
 	icon_state = "yellow"
+	requires_power = FALSE
 
 /area/station/com_dish/comdish
 	name = "Communications Dish"
@@ -2960,6 +2962,7 @@ ABSTRACT_TYPE(/area/station/catwalk)
 /area/station/catwalk
 	icon_state = "yellow"
 	force_fullbright = 1
+	requires_power = FALSE
 
 /area/station/catwalk/north
 	name = "North Maintenance Catwalk"

@@ -702,6 +702,10 @@
 			boutput(user, "<span class='alert'>You cannot deconstruct [target] without sufficient access to operate it.</span>")
 			return
 
+		if(locate(/mob/living) in O)
+			boutput(user, "<span class='alert'>You cannot deconstruct [target] while someone is inside it!</span>")
+			return
+
 		if (isrestrictedz(O.z) && !isitem(target))
 			boutput(user, "<span class='alert'>You cannot bring yourself to deconstruct [target] in this area.</span>")
 			return
