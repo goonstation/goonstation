@@ -31,6 +31,7 @@
 
 /obj/storage/secure/closet/command/captain
 	name = "\improper Captain's locker"
+	req_access_txt = "20"
 	spawn_contents = list(/obj/item/gun/energy/egun,
 	/obj/item/storage/box/id_kit,
 	/obj/item/storage/box/clothing/captain,
