@@ -23,7 +23,8 @@
 	/datum/commodity/trader/josh/fingerless,
 	/datum/commodity/trader/josh/energydrink,
 	/datum/commodity/trader/josh/hoodie,
-	/datum/commodity/trader/josh/flyswatter)
+	/datum/commodity/trader/josh/flyswatter,
+	/datum/commodity/trader/josh/robustris)
 
 	dialogue_greet = list("What's up my bro? I got some fresh stuff for ya.",
 	"Sup bro, what's shakin' the bacon? Ho boy, I got some blazing hot items today.",
