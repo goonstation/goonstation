@@ -1,6 +1,4 @@
 var/list/prefab_shuttles = list()
-
-ABSTRACT_TYPE(/datum/prefab_shuttle)
 /datum/prefab_shuttle
 	var/prefab_path = null
 	var/landmark = null
