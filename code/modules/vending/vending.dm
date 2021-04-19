@@ -1666,10 +1666,10 @@
 	icon = 'icons/obj/vending.dmi'
 	icon_state = "standard-frame"
 	density = 1
-	var/wrenched = 0
-	var/glassed = 0
-	var/boardinstalled = 0
-	var/wiresinstalled = 0
+	var/wrenched = FALSE
+	var/glassed = FALSE
+	var/boardinstalled = FALSE
+	var/wiresinstalled = FALSE
 	var/vendingtype = null
 	var/basedesc
 	var/boarddesc
@@ -1685,13 +1685,13 @@
 		readydesc = "[desc] Just needs a few screws tightened."
 	proc/setFrameState(state, mob/user, obj/item/target)
 		if (state == "WRENCHED")
-			wrenched = 1
-			anchored = 1
+			wrenched = TRUE
+			anchored = TRUE
 			desc = boarddesc
 			boutput(user, "<span class='notice'>You wrench the frame into place.</span>")
 		else if (state == "UNWRENCHED")
-			wrenched = 0
-			anchored = 0
+			wrenched = FALSE
+			anchored = TRUE
 			desc = basedesc
 			boutput(user, "<span class='notice'>You unfasten the frame.</span>")
 		else if (state == "BOARDINSTALLED")
@@ -1703,12 +1703,12 @@
 			boutput(user, "<span class='notice'>You install the module inside the frame.</span>")
 			user.u_equip(target)
 			target.set_loc(target)
-			boardinstalled = 1
+			boardinstalled = TRUE
 		else if (state == "WIRESINSTALLED")
 			var/obj/item/cable_coil/targetcoil = target
 			playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
 			targetcoil.use(5)
-			wiresinstalled = 1
+			wiresinstalled = TRUE
 			icon_state = "standard-frame-wired"
 			desc = glassdesc
 			boutput(user, "<span class='notice'>You add cables to the frame.</span>")
@@ -1716,14 +1716,14 @@
 			var/obj/item/sheet/glass/S = target
 			playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
 			S.change_stack_amount(-2)
-			glassed = 1
+			glassed = TRUE
 			icon_state = "standard-frame-glassed"
 			desc = readydesc
 			boutput(user, "<span class='notice'>You put in the glass panel.</span>")
 		else if (state == "GLASSREMOVED")
 			var/obj/item/sheet/glass/A = new /obj/item/sheet/glass(src.loc)
 			A.amount = 2
-			glassed = 0
+			glassed = FALSE
 			playsound(src.loc, "sound/items/Crowbar.ogg", 50, 1)
 			icon_state = "standard-frame-wired"
 			desc = glassdesc
@@ -1734,7 +1734,7 @@
 			boutput(user, "<span class='notice'>You remove the vending module.</span>")
 			var/obj/item/machineboard/vending/E = locate()
 			E.set_loc(src.loc)
-			boardinstalled = 0
+			boardinstalled = FALSE
 		else if (state == "WIRESREMOVED")
 			playsound(src.loc, "sound/items/Wirecutter.ogg", 50, 1)
 			icon_state = "standard-frame-electronics"
@@ -1743,7 +1743,7 @@
 			var/obj/item/cable_coil/C = new /obj/item/cable_coil(src.loc)
 			C.amount = 5
 			C.updateicon()
-			wiresinstalled = 0
+			wiresinstalled = TRUE
 		else if (state == "DECONSTRUCTED")
 			boutput(user, "<span class='notice'>You deconstruct the frame.</span>")
 			var/obj/item/sheet/A = new /obj/item/sheet(src.loc)
@@ -1797,6 +1797,7 @@
 			if (T.try_weld(user,0,-1,0,1))
 				SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/machinery/vendingframe/proc/setFrameState,\
 				list("DECONSTRUCTED", user, target), target.icon, target.icon_state, null)
+
 /obj/machinery/vending/player
 	name = "YouVend"
 	icon_state = "player"
@@ -1804,8 +1805,8 @@
 	pay = 1
 	layer = OBJ_LAYER - 0.3
 	//Product loading chute
-	var/loading = 0
-	var/unlocked = 0
+	var/loading = FALSE
+	var/unlocked = FALSE
 	//Registered owner
 	var/owner = null
 	//card display name
@@ -1832,7 +1833,7 @@
 		return itemPromo
 
 	proc/generate_slogans()
-		if(!length(player_list) <= 0)
+		if (!length(player_list) <= 0)
 			slogan_list = list("By popular demand: [pick_product_name()]!",
 		"[src.name]. The better vending machine.",
 		"Potentially well stocked!",
@@ -1873,26 +1874,26 @@
 		UpdateOverlays(target, "item", 0, 1)
 
 	proc/setCrtOverlayStatus(status)
-		if(status == 1)
+		if (status == 1)
 			UpdateOverlays(crtoverlay, "screen", 0, 1)
 		else
 			UpdateOverlays(null, "screen", 0, 1)
 
 	proc/addProduct(obj/item/target, mob/user)
 		var/obj/item/storage/targetContainer = target
-		if(!istype(targetContainer))
+		if (!istype(targetContainer))
 			productListUpdater(target, user)
 			user.visible_message("<b>[user.name]</b> loads [target] into [src].")
 			return
 		var/action = input(user, "What do you want to do with [targetContainer]?") as null|anything in list("Empty it into the vending machine","Place it in the vending machine")
-		if(action == "Place it in the vending machine" && !(user.stat || user.restrained() || !in_interact_range(src, user)))
+		if (action == "Place it in the vending machine" && !(user.stat || user.restrained() || !in_interact_range(src, user)))
 			productListUpdater(targetContainer, user)
 			user.visible_message("<b>[user.name]</b> loads [target] into [src].")
 			return
 		else if (!action || (usr.stat || usr.restrained() || !in_interact_range(src, user)))
 			return
 		user.visible_message("<b>[user.name]</b> dumps out [targetContainer] into [src].")
-		for(var/obj/item/R in targetContainer)
+		for (var/obj/item/R in targetContainer)
 			targetContainer.hud.remove_object(R)
 			productListUpdater(R, user)
 
@@ -1906,25 +1907,25 @@
 		//Extracts label contents via regex replace
 		var/regex/labelExtractor = new("(?:.*?\\()(.*?)\\)")
 		var/label = null
-		if((target.real_name != target.name) && labelFinder.Find(target.name))
+		if ((target.real_name != target.name) && labelFinder.Find(target.name))
 			label = labelExtractor.Replace(target.name, "$1")
 		//Add the item to an existing entry if there is one
 		for (var/datum/data/vending_product/player_product/R in src.player_list)
-			if(label && label == R.label)
+			if (label && label == R.label)
 				R.contents += target
 				R.product_amount += 1
 				existed = 1
 				break
-			else if(istype(target,R.product_type) && R.real_name == target.real_name)
+			else if (istype(target,R.product_type) && R.real_name == target.real_name)
 				R.contents += target
 				R.product_amount += 1
 				existed = 1
 				break
-		if(!existed)
+		if (!existed)
 			var/datum/data/vending_product/player_product/itemEntry = new/datum/data/vending_product/player_product(target, 15)
 			itemEntry.icon = getScaledIcon(target)
 			player_list += itemEntry
-			if(label) itemEntry.label = label
+			if (label) itemEntry.label = label
 			logTheThing("station", user, null, "added player product ([target.name]) to [src] at [log_loc(src)].")
 			generate_slogans()
 	power_change()
@@ -1935,14 +1936,14 @@
 		var/list/html_parts = list()
 		html_parts += "<table border=\"1\" style=\"width:100%\"><tbody><tr><td><small>"
 		html_parts += "Registered Owner: "
-		if(!owner)
+		if (!owner)
 			html_parts += "<a href='?src=\ref[src];unlock=true'>Unregistered (locked)</a></br>"
 		else
 			html_parts += "<a href='?src=\ref[src];unlock=true'>[src.cardname] "
 			if (!unlocked == 1) html_parts += "(locked) </a></br>"
 			else html_parts += "(unlocked) </a></br>"
 		html_parts += "Loading Chute:  "
-		if(!loading == 0)
+		if (!loading == 0)
 			html_parts += "<a href='?src=\ref[src];loading=false'>Open</a></br> "
 		else
 			html_parts += "<a href='?src=\ref[src];loading=true'>Closed</a></br> "
@@ -1952,13 +1953,13 @@
 		src.wire_HTML += jointext(html_parts, "")
 
 	attackby(obj/item/target, mob/user)
-		if(loading && panel_open)
+		if (loading && panel_open)
 			addProduct(target, user)
 		else
 			. = ..()
-		if(!panel_open) //lock up if the service panel is closed
-			loading = 0
-			unlocked = 0
+		if (!panel_open) //lock up if the service panel is closed
+			loading = FALSE
+			unlocked = FALSE
 		src.generate_HTML(1)
 
 	Topic(href, href_list)
@@ -1978,14 +1979,14 @@
 				owneraccount = FindBankAccountByName(src.scan.registered)
 				owner = src.scan.registered
 				cardname = src.scan.name
-				unlocked = 1
-				loading = 1
+				unlocked = TRUE
+				loading = TRUE
 			else if (src.scan?.registered && owner == src.scan.registered)
 				unlocked = !unlocked
-				if(!unlocked && loading) loading = 0
+				if(!unlocked && loading) loading = FALSE
 			else
-				unlocked = 0
-				loading = 0
+				unlocked = FALSE
+				loading = FALSE
 			src.generate_HTML(1, 1)
 		else if (href_list["rename"] && src.panel_open && src.unlocked)
 			var/inp
@@ -1997,19 +1998,19 @@
 		else if (href_list["setprice"] && src.panel_open && src.unlocked)
 			var/inp
 			inp = input(usr,"Enter the new price:","Item Price", "") as num
-			if(inp && inp >= 0 && (usr.stat || usr.restrained() || in_interact_range(src, usr)))
+			if (inp && inp >= 0 && (usr.stat || usr.restrained() || in_interact_range(src, usr)))
 				var/datum/data/vending_product/player_product/R = locate(href_list["setprice"]) in src.player_list
 				R.product_cost = inp
 				src.generate_HTML(1, 0)
-		else if(href_list["vend"] && (length(player_list) <= 0))
+		else if (href_list["vend"] && (length(player_list) <= 0))
 			promoimage = null
 			updateAppearance()
-		else if(href_list["icon"] && src.panel_open && src.unlocked)
+		else if (href_list["icon"] && src.panel_open && src.unlocked)
 			var/datum/data/vending_product/player_product/R = locate(href_list["icon"]) in src.player_list
 			promoimage = R.icon
 			updateAppearance()
 			src.generate_HTML(1, 0)
-		if(href_list["vend"])
+		if (href_list["vend"])
 			//Vends can change the name of list entries so generate HTML
 			src.generate_HTML(1, 0)
 
