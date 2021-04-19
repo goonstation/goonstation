@@ -222,3 +222,11 @@
 /obj/item/toy/handheld/arcade
 	arcademode = TRUE
 	icon_state = "arcade-adventure"
+/obj/item/item_box/figure_capsule/gaming_capsule
+	New()
+		contained_item = pick(40;/obj/item/toy/handheld/arcade, 60;/obj/item/toy/handheld/robustris)
+		. = ..()
+		if (ispath(contained_item, /obj/item/toy/handheld/robustris))
+			itemstate = "robustris-fig"
+		else if (ispath(contained_item, /obj/item/toy/handheld/arcade))
+			itemstate = "arcade-fig"
