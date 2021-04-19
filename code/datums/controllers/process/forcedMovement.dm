@@ -99,7 +99,7 @@ datum/controller/process/fMove
 
 
 				if (M && !( M.anchored ) && !(M.flags & NODRIFT))
-					if (! (world.timeofday > (tmob.l_move_time + schedule_interval)) ) //we need to stand still for 5 realtime ticks before space starts pushing us!
+					if (! (TIME > (tmob.l_move_time + schedule_interval)) ) //we need to stand still for 5 realtime ticks before space starts pushing us!
 						continue
 
 					var/pre_inertia_loc = M.loc

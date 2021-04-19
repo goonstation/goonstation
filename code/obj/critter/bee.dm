@@ -796,7 +796,7 @@
 		/obj/item/clothing/head/mj_hat,
 		/obj/item/clothing/head/that,
 		/obj/item/clothing/head/NTberet,
-		/obj/item/clothing/head/helmet/HoS,
+		/obj/item/clothing/head/hos_hat,
 		/obj/item/clothing/head/hosberet,
 		/obj/item/clothing/head/caphat,
 		/obj/item/clothing/head/fancy/captain,

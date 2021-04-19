@@ -10633,6 +10633,10 @@
 "zt" = (
 /obj/table/wood/auto,
 /obj/machinery/light/lamp,
+/obj/item/record/atlas{
+	pixel_x = 5;
+	pixel_y = -10
+	},
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/heads)
 "zu" = (
@@ -62232,7 +62236,7 @@ ss
 tE
 uM
 vH
-Gk
+qD
 Tu
 VZ
 Zy
@@ -62534,7 +62538,7 @@ rw
 tF
 rw
 rw
-Gk
+qD
 qD
 By
 Zy

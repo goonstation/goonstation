@@ -147,7 +147,7 @@ proc/create_fluff(var/datum/mind/target)
 		target_name = pick(items)
 		switch(target_name)
 			if("Head of Security\'s beret")
-				steal_target = /obj/item/clothing/head/helmet/HoS
+				steal_target = /obj/item/clothing/head/hos_hat
 			if("prisoner\'s beret")
 				steal_target = /obj/item/clothing/head/beret/prisoner
 			if("DetGadget hat")
@@ -184,7 +184,7 @@ proc/create_fluff(var/datum/mind/target)
 		target_name = pick(items)
 		switch(target_name)
 			if("Head of Security\'s beret")
-				steal_target = /obj/item/clothing/head/helmet/HoS
+				steal_target = /obj/item/clothing/head/hos_hat
 			if("prisoner\'s beret")
 				steal_target = /obj/item/clothing/head/beret/prisoner
 			if("DetGadget hat")

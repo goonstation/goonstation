@@ -512,6 +512,7 @@
 	force = 15
 	throwforce = 20
 	stamina_cost = 5
+	c_flags = EQUIPPED_WHILE_HELD
 
 	setupProperties()
 		..()

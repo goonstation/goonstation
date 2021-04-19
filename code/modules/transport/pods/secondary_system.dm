@@ -149,6 +149,10 @@
 		maxcap = 1
 		name = "Small Cargo Hold"
 
+	Exited(Obj, newloc)
+		. = ..()
+		src.load -= Obj
+
 /obj/item/shipcomponent/secondary_system/cargo/Use(mob/user as mob)
 	activate()
 	return
@@ -198,7 +202,7 @@
 	return
 
 /obj/item/shipcomponent/secondary_system/cargo/Clickdrag_PodToObject(var/mob/living/user,var/atom/A)
-	if (load.len < 1)
+	if (!length(src.load))
 		boutput(user, "<span class='alert'>[src] has nothing to unload.</span>")
 		return
 	var/turf/T = get_turf(A)
@@ -224,7 +228,7 @@
 	return
 
 /obj/item/shipcomponent/secondary_system/cargo/Clickdrag_ObjectToPod(var/mob/living/user,var/atom/A)
-	if (src.load.len > src.maxcap)
+	if (length(src.load) > src.maxcap)
 		boutput(user, "<span class='alert'>[src] has no available cargo space.</span>")
 		return
 
@@ -250,7 +254,7 @@
 	return
 
 /obj/item/shipcomponent/secondary_system/cargo/proc/load(var/atom/movable/C)
-	if(load.len >= maxcap)
+	if(length(src.load) >= maxcap)
 		playsound(src.loc, "sound/machines/buzz-sigh.ogg", 50, 0)
 		boutput(usr, "[ship.ship_message("Cargo hold is full!")]")
 		return 2
@@ -274,7 +278,8 @@
 			acceptable_cargo = 1
 			break
 	if (isliving(C))
-		if(C:stat == 2) // isliving ***should*** prevent any runtimes from happening. hopefully.
+		var/mob/living/L = C
+		if(isdead(L))
 			acceptable_cargo = 1
 	if (!acceptable_cargo)
 		playsound(src.loc, "sound/machines/buzz-sigh.ogg", 50, 0)
@@ -284,7 +289,6 @@
 	sleep(0.2 SECONDS)
 	C.set_loc(src)
 	load += C
-	C.anchored = 1 // fix for pulled items getting pulled back out of the cargo hold
 	playsound(src.loc, "sound/machines/ping.ogg", 50, 0)
 	return 0
 
@@ -296,10 +300,7 @@
 		C.set_loc(T)
 	else
 		C.set_loc(ship.loc)
-	C.anchored = 0
 	step(C, turn(ship.dir,180))
-
-	load -= C
 	return C
 
 /obj/item/shipcomponent/secondary_system/cargo/on_shipdeath(var/obj/machinery/vehicle/ship)
@@ -960,7 +961,7 @@
 					boutput(ship.pilot, "<span class='alert'><B>Snapshot discarded!</B></span>")
 				return
 		return
-	
+
 	attackby(obj/item/W, mob/user)
 		if (isscrewingtool(W) && core_inserted)
 			core_inserted = false
