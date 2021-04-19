@@ -21,7 +21,6 @@
 
 	var/last_perp = 0
 	var/added_to_records = 0
-	var/jailbird_spotted = 0
 	var/last_contraband = 0
 	//var/area/area = 0
 	var/emagged = 0
@@ -204,9 +203,8 @@
 			if (R.fields["name"] != perp.name && perp.traitHolder.hasTrait("immigrant") && perp.traitHolder.hasTrait("jailbird"))
 				if(!added_to_records)
 					threatcount += 5
-					jailbird_spotted = 1
 			else if ((R.fields["name"] == perp.name && perp.traitHolder.hasTrait("immigrant") && perp.traitHolder.hasTrait("jailbird")))
-				if(!added_to_records && jailbird_spotted)
+				if(!added_to_records)
 					threatcount -= 5
 					added_to_records = 1
 

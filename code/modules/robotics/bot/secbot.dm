@@ -128,7 +128,6 @@
 	var/warn_minor_crime = 0
 
 	var/added_to_records = 0
-	var/jailbird_spotted = 0
 	/// Set a bot to guard an area, and they'll go there and mill around
 	var/area/guard_area
 	/// Arrest anyone who arent security / heads if they're in this area?
@@ -939,9 +938,8 @@
 			if (R.fields["name"] != perp.name && perp.traitHolder.hasTrait("immigrant") && perp.traitHolder.hasTrait("jailbird"))
 				if(!added_to_records)
 					threatcount += 5
-					jailbird_spotted = 1
 			else if ((R.fields["name"] == perp.name && perp.traitHolder.hasTrait("immigrant") && perp.traitHolder.hasTrait("jailbird")))
-				if(!added_to_records && jailbird_spotted)
+				if(!added_to_records)
 					threatcount -= 5
 					added_to_records = 1
 
