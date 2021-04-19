@@ -117,7 +117,14 @@
 	possible_names = list("There's a mask out there that lets you consume the vapor form of chemicals. That would be sick.")
 
 /* Josh sells this stuff */
+/datum/commodity/trader/josh/robustris
+	comname = "Sick Gaming Device"
+	comtype = /obj/item/toy/handheld/robustris
+	possible_names = list("You don't have the latest equipment? Let me hook you up bro.",
+	"Looking for some hardcore gaming dude? We got a sweet set.",
+	"Get pumped with some tight games my bro-nado.")
 
+	price_boundary = list(50,300)
 /datum/commodity/trader/josh/skateboards
 	comname = "Slickin' Skateboards"
 	comtype = /obj/vehicle/skateboard
