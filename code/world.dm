@@ -645,6 +645,7 @@ var/f_color_selector_handler/F_Color_Selector
 	placeAllPrefabs()
 #endif
 #ifdef RUNTIME_CHECKING
+	populate_station()
 	SPAWN_DBG(10 SECONDS)
 		Reboot_server()
 #endif
