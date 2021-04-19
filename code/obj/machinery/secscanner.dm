@@ -20,6 +20,8 @@
 	var/check_records = 1
 
 	var/last_perp = 0
+	var/added_to_records = 0
+	var/jailbird_spotted = 0
 	var/last_contraband = 0
 	//var/area/area = 0
 	var/emagged = 0
@@ -198,8 +200,14 @@
 			else
 				threatcount += 2
 
-		if(perp.traitHolder.hasTrait("immigrant") && perp.traitHolder.hasTrait("jailbird"))
-			threatcount += 5
+		for (var/datum/data/record/R as anything in data_core.security)
+			if (R.fields["name"] != perp.name && perp.traitHolder.hasTrait("immigrant") && perp.traitHolder.hasTrait("jailbird"))
+				threatcount += 5
+				jailbird_spotted = 1
+			else if ((R.fields["name"] == perp.name && perp.traitHolder.hasTrait("immigrant") && perp.traitHolder.hasTrait("jailbird")))
+				if(!added_to_records && jailbird_spotted)
+					threatcount -= 5
+					added_to_records = 1
 
 		//if((isnull(perp:wear_id)) || (istype(perp:wear_id, /obj/item/card/id/syndicate)))
 		var/obj/item/card/id/perp_id = perp.equipped()
