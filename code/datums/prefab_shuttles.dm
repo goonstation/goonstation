@@ -31,6 +31,10 @@ ABSTRACT_TYPE(/datum/prefab_shuttle)
 				for(var/prefab_type in concrete_typesof(/datum/prefab_shuttle/donut3))
 					var/datum/prefab_shuttle/D = new prefab_type()
 					prefab_shuttles.Add(D)
+			if(/area/shuttle/escape/centcom/destiny)
+				for(var/prefab_type in concrete_typesof(/datum/prefab_shuttle/destiny))
+					var/datum/prefab_shuttle/D = new prefab_type()
+					prefab_shuttles.Add(D)
 			else
 				return
 
