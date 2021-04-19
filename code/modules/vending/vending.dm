@@ -1801,7 +1801,7 @@
 /obj/machinery/vending/player
 	name = "YouVend"
 	icon_state = "player"
-	desc = "Sells your stuff!"
+	desc = "A vending machine offering goods sold by other crewmembers."
 	pay = 1
 	layer = OBJ_LAYER - 0.3
 	//Product loading chute
