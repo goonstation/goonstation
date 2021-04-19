@@ -1285,13 +1285,15 @@
 /obj/item/clothing/head/that/white
 	name = "white hat"
 	desc = "A white tophat."
-	wear_image_icon = 'icons/mob/fruithat.dmi'
+	icon = 'icons/obj/clothing/item_hats.dmi'
+	wear_image_icon = 'icons/mob/head.dmi'
 	icon_state = "whtophat"
 	item_state = "whtophat"
 
 /obj/item/clothing/head/headsprout
 	name = "leaf hairclip"
 	desc = "A sign of a healthy, growing Staff Assistant."
-	wear_image_icon = 'icons/mob/fruithat.dmi'
+	wear_image_icon = 'icons/mob/head.dmi'
 	icon_state = "headsprout"
 	item_state = "headsprout"
+
