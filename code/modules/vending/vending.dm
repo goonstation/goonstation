@@ -1799,7 +1799,7 @@
 				list("DECONSTRUCTED", user, target), target.icon, target.icon_state, null)
 
 /obj/machinery/vending/player
-	name = "Build-A-Vend" // Thanks Eagletaker
+	name = "Build-A-Vend" // Thanks Eagletanker
 	icon_state = "player"
 	desc = "A vending machine offering presumably legal goods sold by other crewmembers."
 	pay = 1
