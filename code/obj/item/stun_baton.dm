@@ -21,7 +21,7 @@
 	force = 10
 	throwforce = 7
 	w_class = 3
-	mats = 8
+	mats = list("MET-2"=5, "CON-2"=3)
 	contraband = 4
 	stamina_damage = 15
 	stamina_cost = 21
@@ -485,6 +485,7 @@
 	item_on = "cane"
 	item_off = "cane"
 	cell_type = /obj/item/ammo/power_cell
+	mats = list("MET-2"=4, "CON-2"=3, "gem"=1, "gold"=1)
 
 /obj/item/baton/classic
 	name = "police baton"
@@ -515,6 +516,7 @@
 	icon_state = "ntso_baton-c"
 	item_state = "ntso-baton-c"
 	force = 7
+	mats = list("MET-2"=4, "CON-2"=3, "POW-1"=2 )
 	icon_on = "ntso-baton-a-1"
 	icon_off = "ntso-baton-c"
 	var/icon_off_open = "ntso-baton-a-0"
