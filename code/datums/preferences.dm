@@ -2344,11 +2344,15 @@ var/global/list/female_screams = list("female", "femalescream1", "femalescream2"
 		AH = to_randomize
 		if (ishuman(AH.owner))
 			H = AH.owner
-
 	else
 		return
 
-	if (H?.bioHolder && remove_effects)
+	if (!AH)
+		H.bioHolder.mobAppearance = new/datum/appearanceHolder()
+		H.bioHolder.mobAppearance.owner = H
+		H.bioHolder.mobAppearance.parentHolder = H.bioHolder
+
+	if (H.bioHolder && remove_effects)
 		H.bioHolder.RemoveAllEffects()
 		H.bioHolder.BuildEffectPool()
 
