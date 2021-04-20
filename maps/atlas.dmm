@@ -1343,7 +1343,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/light/small/sticky/warm{
+/obj/machinery/light/small/sticky{
 	dir = 4;
 	pixel_x = 10
 	},
@@ -4511,7 +4511,7 @@
 /area/station/security/brig/genpop)
 "lf" = (
 /turf/simulated/wall/auto/supernorn,
-/area/station/maintenance/northeast)
+/area/station/maintenance/east)
 "lg" = (
 /obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating,
@@ -11200,7 +11200,7 @@
 "AS" = (
 /obj/storage/closet/emergency,
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/northeast)
+/area/station/maintenance/east)
 "AU" = (
 /obj/machinery/door/airlock/pyro/alt{
 	dir = 4;
@@ -11209,7 +11209,7 @@
 /obj/access_spawn/maint,
 /obj/firedoor_spawn,
 /turf/simulated/floor/plating,
-/area/station/maintenance/northeast)
+/area/station/maintenance/east)
 "AV" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/lounge)
@@ -11460,7 +11460,7 @@
 /obj/item/tank/air,
 /obj/item/device/light/flashlight,
 /turf/simulated/floor/plating,
-/area/station/maintenance/northeast)
+/area/station/maintenance/east)
 "BH" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -11849,7 +11849,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/northeast)
+/area/station/maintenance/east)
 "CM" = (
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northeast)
@@ -12037,7 +12037,7 @@
 	},
 /mob/living/critter/spider/baby,
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/northeast)
+/area/station/maintenance/east)
 "Dq" = (
 /obj/machinery/light{
 	dir = 8;
@@ -12439,7 +12439,7 @@
 "El" = (
 /obj/reagent_dispensers/foamtank,
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/northeast)
+/area/station/maintenance/east)
 "Em" = (
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
@@ -12666,7 +12666,7 @@
 "ER" = (
 /obj/reagent_dispensers/fueltank,
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/northeast)
+/area/station/maintenance/east)
 "ES" = (
 /obj/machinery/sim/vr_bed{
 	dir = 4;
@@ -13002,7 +13002,7 @@
 /obj/item/reagent_containers/food/drinks/fueltank,
 /obj/item/reagent_containers/food/drinks/fueltank,
 /turf/simulated/floor/plating,
-/area/station/maintenance/northeast)
+/area/station/maintenance/east)
 "FI" = (
 /obj/machinery/light{
 	dir = 8;
@@ -13360,9 +13360,9 @@
 /area/station/garden/owlery)
 "Gy" = (
 /obj/storage/crate/robotics_supplies,
-/obj/machinery/light/incandescent/warm,
+/obj/machinery/light/small/sticky,
 /turf/simulated/floor/plating,
-/area/station/maintenance/northeast)
+/area/station/maintenance/east)
 "Gz" = (
 /obj/machinery/clothingbooth,
 /turf/simulated/floor/black,
@@ -14308,7 +14308,7 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
-/obj/machinery/light/small/sticky/cool{
+/obj/machinery/light/small/sticky{
 	dir = 4;
 	pixel_x = 10
 	},
@@ -16972,7 +16972,7 @@
 	icon_state = "1-8"
 	},
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/northeast)
+/area/station/maintenance/east)
 "PE" = (
 /obj/machinery/conveyor{
 	id = "inbound";
@@ -17189,9 +17189,8 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "Qa" = (
-/obj/machinery/light/incandescent/warm,
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/northeast)
+/area/station/maintenance/east)
 "Qb" = (
 /obj/stool/chair/green,
 /obj/railing/orange/reinforced{
@@ -17782,18 +17781,10 @@
 	},
 /area/station/hallway/primary/east)
 "Sd" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+/obj/machinery/light/small/sticky{
+	dir = 4;
+	pixel_x = 10
 	},
-/obj/disposalpipe/segment{
-	dir = 4
-	},
-/obj/cable{
-	icon_state = "0-4"
-	},
-/obj/machinery/power/apc/autoname_north,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/east)
 "Sf" = (
@@ -18573,7 +18564,7 @@
 	icon_state = "2-8"
 	},
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/northeast)
+/area/station/maintenance/east)
 "Ve" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -73176,7 +73167,7 @@ FG
 PB
 Hd
 Dn
-Sd
+Ia
 IH
 aa
 PS
@@ -74071,10 +74062,10 @@ tz
 sC
 sF
 lf
-CM
-CM
 Qa
-CM
+Qa
+Qa
+Sd
 CM
 El
 ER
