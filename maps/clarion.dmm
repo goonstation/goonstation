@@ -2446,11 +2446,11 @@
 /obj/table/auto,
 /obj/item/storage/toolbox/emergency,
 /obj/item/device/light/flashlight,
-/obj/machinery/firealarm{
-	layer = 3.5;
-	pixel_y = 24
-	},
 /obj/random_item_spawner/med_kit,
+/obj/machinery/power/apc/autoname_north,
+/obj/cable{
+	icon_state = "0-2"
+	},
 /turf/simulated/floor/orangeblack/side{
 	dir = 9
 	},
@@ -2466,6 +2466,10 @@
 /obj/item/storage/wall/fire{
 	dir = 1;
 	pixel_y = 30
+	},
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = 24
 	},
 /turf/simulated/floor/orangeblack/side{
 	dir = 5
@@ -2800,6 +2804,9 @@
 	name = "Entry Hallway"
 	})
 "afh" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/orangeblack/corner{
 	dir = 1
 	},
@@ -3064,6 +3071,9 @@
 /obj/disposalpipe/junction{
 	icon_state = "pipe-j2"
 	},
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/black,
 /area/station/hallway/secondary/entry{
 	name = "Entry Hallway"
@@ -3076,6 +3086,9 @@
 	dir = 4
 	},
 /obj/firedoor_spawn,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/black,
 /area/station/hallway/secondary/entry{
 	name = "Entry Hallway"
@@ -3084,6 +3097,9 @@
 /obj/disposalpipe/segment{
 	dir = 2;
 	icon_state = "pipe-c"
+	},
+/obj/cable{
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/orangeblack/side{
 	dir = 8
@@ -3101,6 +3117,9 @@
 	codes_txt = "patrol;next_patrol=research";
 	location = "arrivals";
 	name = "bot navigation beacon"
+	},
+/obj/cable{
+	icon_state = "4-8"
 	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/entry{
@@ -31492,6 +31511,10 @@
 "bhv" = (
 /obj/disposalpipe/segment/food,
 /obj/storage/secure/closet/security/armory,
+/obj/machinery/recharger/wall{
+	dir = 8;
+	pixel_x = -19
+	},
 /turf/simulated/floor/redblack{
 	dir = 9
 	},
@@ -34450,9 +34473,6 @@
 	dir = 1;
 	name = "autoname - SS13";
 	tag = ""
-	},
-/obj/machinery/recharger/wall{
-	pixel_y = -21
 	},
 /obj/deployable_turret/riot{
 	active = 1;
@@ -48724,6 +48744,18 @@
 	dir = 8
 	},
 /area/station/science/lobby)
+"dZF" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/plating,
+/area/station/engine/gas)
 "efM" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -49106,13 +49138,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/quartermaster/office)
-"gAc" = (
-/obj/wingrille_spawn/auto,
-/obj/window_blinds/cog2{
-	dir = 4
-	},
-/turf/simulated/floor/plating,
-/area/station/engine/engineering/ce/private)
 "gAX" = (
 /turf/simulated/floor/red/side,
 /area/station/security/main)
@@ -49490,6 +49515,13 @@
 	},
 /turf/simulated/floor/white,
 /area/station/crew_quarters/pool)
+"iFZ" = (
+/obj/wingrille_spawn/auto,
+/obj/window_blinds/cog2{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/station/engine/engineering/ce/private)
 "iIr" = (
 /obj/window_blinds/cog2/right{
 	dir = 8
@@ -49686,6 +49718,14 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/hangar/qm)
+"jOC" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor,
+/area/station/hallway/secondary/entry{
+	name = "Entry Hallway"
+	})
 "jVa" = (
 /obj/wingrille_spawn/auto,
 /obj/cable{
@@ -49775,6 +49815,9 @@
 	},
 /area/station/security/hos)
 "kFh" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/redblack/corner{
 	dir = 8
 	},
@@ -50146,6 +50189,14 @@
 /obj/machinery/drone_recharger,
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
+"mHs" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor,
+/area/station/hallway/secondary/entry{
+	name = "Entry Hallway"
+	})
 "mIy" = (
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/neutral/corner{
@@ -50320,9 +50371,6 @@
 /obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating,
 /area/station/security/armory)
-"obt" = (
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/security/hos)
 "ohJ" = (
 /obj/machinery/door/airlock/pyro/glass/med,
 /obj/firedoor_spawn,
@@ -50737,6 +50785,9 @@
 /obj/item/clothing/glasses/sunglasses/tanning,
 /turf/simulated/floor/blue/checker,
 /area/station/crew_quarters/pool)
+"qmA" = (
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/security/hos)
 "qpR" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -50897,6 +50948,10 @@
 	},
 /obj/storage/secure/crate/plasma/armory/anti_biological,
 /obj/item/gun/flamethrower/assembled/loaded,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/power/apc/autoname_north,
 /turf/simulated/floor/redblack{
 	dir = 5
 	},
@@ -51135,6 +51190,17 @@
 /obj/machinery/light/emergency,
 /turf/simulated/floor/circuit/green,
 /area/station/turret_protected/Zeta)
+"sth" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/black,
+/area/station/hallway/secondary/entry{
+	name = "Entry Hallway"
+	})
 "szt" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -51362,6 +51428,15 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
+"umJ" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/black,
+/area/station/security/armory)
 "urR" = (
 /obj/wingrille_spawn/auto,
 /obj/cable{
@@ -51683,18 +51758,6 @@
 /obj/machinery/light,
 /turf/simulated/floor/grass/random,
 /area/station/hydroponics/bay)
-"wtI" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/insulated{
-	dir = 4
-	},
-/obj/cable{
-	icon_state = "1-8"
-	},
-/turf/simulated/floor/plating,
-/area/station/engine/gas)
 "wwI" = (
 /obj/disposalpipe/junction{
 	dir = 8;
@@ -79095,7 +79158,7 @@ bxN
 byN
 bzY
 bBg
-wtI
+dZF
 bzX
 bzX
 bzX
@@ -82932,7 +82995,7 @@ aQY
 aQR
 lOY
 rvp
-obt
+qmA
 kAn
 bjW
 blh
@@ -83961,7 +84024,7 @@ bei
 bfn
 bMT
 bhw
-biM
+umJ
 biM
 bll
 bmB
@@ -84147,7 +84210,7 @@ abp
 aby
 abW
 acq
-gAc
+iFZ
 adz
 acq
 acq
@@ -87236,7 +87299,7 @@ adI
 acu
 acu
 acu
-acu
+sth
 adb
 acu
 agT
@@ -88264,7 +88327,7 @@ dQx
 acc
 aeE
 afg
-afM
+mHs
 afM
 afM
 agW
@@ -88778,7 +88841,7 @@ xzR
 acc
 aeG
 afg
-afM
+mHs
 afM
 afM
 agY
@@ -89035,7 +89098,7 @@ vpa
 acc
 aeH
 afh
-afM
+jOC
 afM
 agH
 agZ
