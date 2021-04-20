@@ -10,7 +10,6 @@
 	compatible_species = list("human", "cow", "werewolf")
 	var/is_muzzle = 0
 	var/use_bloodoverlay = 1
-	var/acid_proof = 0	//Is this mask immune to flouroacid?
 	var/stapled = 0
 	var/allow_staple = 1
 	var/path_prot = 1 // protection from airborne pathogens, multiplier for chance to be infected
@@ -281,7 +280,7 @@
 	desc = "I AM THE ONE WHO HONKS."
 	icon_state = "clown"
 	item_state = "clown_hat"
-	acid_proof = 1
+	item_function_flags = IMMUNE_TO_ACID
 	burn_possible = 0
 	color_r = 1.0
 	color_g = 1.0
