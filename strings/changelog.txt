@@ -1,5 +1,9 @@
 
 (t)mon apr 19 21
+(u)TTerc
+(p)4366
+(e)🐛|bug
+(+)Having jailbird + stowaway trait combo sets you to arrest again. Creating a security record with a proper name clears the arrest status.
 (u)Chickenish
 (p)3950
 (e)⚖|balance
