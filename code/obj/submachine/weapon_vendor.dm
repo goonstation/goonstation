@@ -182,6 +182,7 @@
 		src.credits[WEAPON_VENDOR_CATEGORY_LOADOUT]++
 		src.credits[WEAPON_VENDOR_CATEGORY_UTILITY]++
 		..()
+
 // Materiel avaliable for purchase:
 
 /datum/materiel
@@ -429,6 +430,9 @@
 	syndicate
 		desc = "A Syndicate credit card charged with currency compatible with the Syndicate Weapons Vendor."
 		icon_state = "req-token"
+
+		vr
+			name = "NUKE_TKN.EXE"
 
 	security
 		desc = "An NT-provided token compatible with the Security Weapons Vendor."
