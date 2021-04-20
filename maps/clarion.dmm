@@ -45696,13 +45696,11 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/power/data_terminal,
-/obj/cable{
-	d2 = 4;
-	dir = 0;
-	icon_state = "0-4"
-	},
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 6
+	},
+/obj/cable{
+	icon_state = "0-8"
 	},
 /turf/simulated/floor/engine/vacuum,
 /area/station/engine/combustion_chamber)
