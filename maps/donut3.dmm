@@ -26384,7 +26384,7 @@
 	},
 /obj/decal/mule/dropoff,
 /turf/simulated/floor/grey,
-/area/station/crew_quarters/pool)
+/area/spacehabitat/pool)
 "hAG" = (
 /obj/disposalpipe/segment{
 	dir = 4
