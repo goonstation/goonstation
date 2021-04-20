@@ -13090,15 +13090,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/janitor/office)
-"FQ" = (
-/obj/machinery/conveyor{
-	dir = 4;
-	id = "trash";
-	name = "cargo belt - east";
-	operating = 1
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/disposal)
 "FR" = (
 /obj/machinery/conveyor{
 	dir = 4;
@@ -13847,7 +13838,7 @@
 /obj/access_spawn/medical,
 /obj/firedoor_spawn,
 /turf/simulated/floor/blue,
-/area/station/maintenance/northeast)
+/area/station/maintenance/east)
 "HE" = (
 /obj/machinery/computer/mining_shuttle,
 /turf/simulated/floor/orangeblack,
@@ -77391,7 +77382,7 @@ Th
 Dx
 zf
 EY
-FQ
+Rd
 GD
 Hk
 HL
@@ -77693,7 +77684,7 @@ ZW
 uX
 zf
 EZ
-FQ
+Rd
 GE
 Zj
 HM
