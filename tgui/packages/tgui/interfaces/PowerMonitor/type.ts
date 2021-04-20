@@ -14,44 +14,38 @@ export interface PowerMonitorApcData extends PowerMonitorData {
   available: number;
   load: number;
   apcs: PowerMonitorApcItemData[];
-  apcsStatic: Record<string, PowerMonitorApcStaticItemData>;
-  history: { available: number; load: number }[];
+  apcNames: Record<string, string>;
+  history: [available: number, load: number][];
 }
 
-export interface PowerMonitorApcItemData {
-  ref: string;
-  equipment: number;
-  lighting: number;
-  environment: number;
-  load: number;
-  cell?: {
-    charge: number;
-    charging: number;
-  };
-}
-
-export interface PowerMonitorApcStaticItemData {
-  name: string;
-}
+export type PowerMonitorApcItemData = [
+  ref: string,
+  equipment: number,
+  lighting: number,
+  environment: number,
+  load: number,
+  cellCharge?: number,
+  cellCharging?: number
+];
 
 export interface PowerMonitorSmesData extends PowerMonitorData {
   type: PowerMonitorType.Smes;
   available: number;
   load: number;
   units: PowerMonitorSmesItemData[];
-  unitsStatic: Record<string, PowerMonitorSmesStaticItemData>;
-  history: { available: number; load: number }[];
+  unitNames: Record<string, string>;
+  history: [available: number, load: number][];
 }
 
-export interface PowerMonitorSmesItemData {
-  ref: string;
-  stored: number;
-  charging: BooleanLike;
-  input: number;
-  output: number;
-  online: BooleanLike;
-  load?: number;
-}
+export type PowerMonitorSmesItemData = [
+  ref: string,
+  stored: number,
+  charging: BooleanLike,
+  input: number,
+  output: number,
+  online: BooleanLike,
+  load?: number
+];
 
 export interface PowerMonitorSmesStaticItemData {
   name: string;

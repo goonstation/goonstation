@@ -33,14 +33,13 @@ const apcCellState = {
 export const PowerMonitorApcGlobal = (_props, context) => {
   const { data } = useBackend<PowerMonitorApcData>(context);
 
-  const availableHistory = data.history.map((v) => v.available);
+  const availableHistory = data.history.map((v) => v[0]);
   const availableHistoryData = availableHistory.map((v, i) => [i, v]);
 
-  const loadHistory = data.history.map((v) => v.load);
+  const loadHistory = data.history.map((v) => v[1]);
   const loadHistoryData = loadHistory.map((v, i) => [i, v]);
 
   const max = Math.max(...availableHistory, ...loadHistory);
-
 
   return (
     <Stack fill>
@@ -109,7 +108,7 @@ export const PowerMonitorApcTableRows = (_props, context) => {
   return (
     <>
       {data.apcs.map((apc) => (
-        <PowerMonitorApcTableRow key={apc.ref} apc={apc} />
+        <PowerMonitorApcTableRow key={apc[0]} apc={apc} />
       ))}
     </>
   );
@@ -119,10 +118,12 @@ type PowerMonitorApcTableRowProps = {
   apc: PowerMonitorApcItemData;
 };
 
-const PowerMonitorApcTableRow = ({ apc }: PowerMonitorApcTableRowProps, context) => {
+const PowerMonitorApcTableRow = (props: PowerMonitorApcTableRowProps, context) => {
+  const { apc } = props;
+  const [ref, equipment, lighting, environment, load, cellCharge, cellCharging] = apc;
   const { data } = useBackend<PowerMonitorApcData>(context);
   const [search] = useSharedState(context, 'search', '');
-  const { name = 'N/A' } = data.apcsStatic[apc.ref] ?? {};
+  const name = data.apcNames[ref] ?? 'N/A';
 
   if (search && !name.toLowerCase().includes(search.toLowerCase())) {
     return null;
@@ -131,19 +132,19 @@ const PowerMonitorApcTableRow = ({ apc }: PowerMonitorApcTableRowProps, context)
   return (
     <Table.Row>
       <Table.Cell>{name}</Table.Cell>
-      <ApcState state={apc.equipment} />
-      <ApcState state={apc.lighting} />
-      <ApcState state={apc.environment} />
+      <ApcState state={equipment} />
+      <ApcState state={lighting} />
+      <ApcState state={environment} />
       <Table.Cell textAlign="right" nowrap>
-        {formatPower(apc.load)}
+        {formatPower(load)}
       </Table.Cell>
-      {apc.cell ? (
+      {typeof cellCharge === 'number' ? (
         <>
           <Table.Cell textAlign="right" nowrap>
-            {apc.cell.charge}%
+            {cellCharge}%
           </Table.Cell>
-          <Table.Cell color={apc.cell.charging > 0 ? (apc.cell.charging === 1 ? 'average' : 'good') : 'bad'} nowrap>
-            {apcCellState[apc.cell.charging]}
+          <Table.Cell color={cellCharging > 0 ? (cellCharging === 1 ? 'average' : 'good') : 'bad'} nowrap>
+            {apcCellState[cellCharging]}
           </Table.Cell>
         </>
       ) : (

@@ -46,7 +46,7 @@
 /obj/machinery/power/monitor/ui_static_data(mob/user)
 	. = list(
 		"type" = "apc",
-		"apcsStatic" = list(),
+		"apcNames" = list(),
 	)
 
 	var/list/L = list()
@@ -56,10 +56,8 @@
 			L += A
 
 	for(var/obj/machinery/power/apc/A as anything in L)
-		.["apcsStatic"] += list(
-			"\ref[A]" = list(
-				"name" = A.area.name
-			)
+		.["apcNames"] += list(
+			"\ref[A]" =  A.area.name
 		)
 
 /obj/machinery/power/monitor/ui_data(mob/user)
@@ -78,18 +76,16 @@
 
 	for(var/obj/machinery/power/apc/A as anything in L)
 		var/list/data = list(
-			"ref" = "\ref[A]",
-			"equipment" = A.equipment,
-			"lighting" = A.lighting,
-			"environment" = A.environ,
-			"load" = A.lastused_total,
+			"\ref[A]",
+			A.equipment,
+			A.lighting,
+			A.environ,
+			A.lastused_total,
 		)
 
 		if (A.cell)
-			data["cell"] = list(
-				"charge" = round(A.cell.percent()),
-				"charging" = A.charging,
-			)
+			data += round(A.cell.percent())
+			data += A.charging
 
 		.["apcs"] += list(data)
 
@@ -108,8 +104,8 @@
 
 /obj/machinery/power/monitor/proc/add_history()
 	src.history += list(list(
-		"available" = src.powernet.avail,
-		"load" = src.powernet.viewload,
+		src.powernet.avail,
+		src.powernet.viewload,
 	))
 
 /obj/machinery/power/monitor/console_upper
@@ -159,7 +155,7 @@
 /obj/machinery/power/monitor/smes/ui_static_data(mob/user)
 	. = list(
 		"type" = "smes",
-		"unitsStatic" = list(),
+		"unitNames" = list(),
 	)
 
 	var/list/L = list()
@@ -174,10 +170,8 @@
 	for(var/obj/machinery/power/A as anything in L)
 		var/area/place = get_area(A)
 		if (place)
-			.["unitsStatic"] += list(
-				"\ref[A]" = list(
-					"name" = place.name,
-				)
+			.["unitNames"] += list(
+				"\ref[A]" = place.name
 			)
 
 /obj/machinery/power/monitor/smes/ui_data(mob/user)
@@ -199,21 +193,21 @@
 
 	for(var/obj/machinery/power/smes/A in L)
 		.["units"] += list(list(
-			"ref" = "\ref[A]",
-			"stored" = round(100.0*A.charge/A.capacity, 0.1),
-			"charging" = A.charging,
-			"input" = A.chargelevel,
-			"output" = A.output,
-			"online" = A.online,
-			"load" = A.loaddemand
+			"\ref[A]",
+			round(100.0*A.charge/A.capacity, 0.1),
+			A.charging,
+			A.chargelevel,
+			A.output,
+			A.online,
+			A.loaddemand
 		))
 
 	for(var/obj/machinery/power/pt_laser/P in L)
 		.["units"] += list(list(
-			"ref" = "\ref[P]",
-			"stored" = round(100.0*P.charge/P.output, 0.1),
-			"charging" = P.charging,
-			"input" = P.chargelevel,
-			"output" = P.output,
-			"online" = P.online,
+			"\ref[P]",
+			round(100.0*P.charge/P.output, 0.1),
+			P.charging,
+			P.chargelevel,
+			P.output,
+			P.online,
 		))

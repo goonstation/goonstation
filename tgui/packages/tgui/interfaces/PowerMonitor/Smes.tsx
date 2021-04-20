@@ -6,10 +6,10 @@ import { PowerMonitorSmesData, PowerMonitorSmesItemData } from './type';
 export const PowerMonitorSmesGlobal = (_props, context) => {
   const { data } = useBackend<PowerMonitorSmesData>(context);
 
-  const availableHistory = data.history.map((v) => v.available);
+  const availableHistory = data.history.map((v) => v[0]);
   const availableHistoryData = availableHistory.map((v, i) => [i, v]);
 
-  const loadHistory = data.history.map((v) => v.load);
+  const loadHistory = data.history.map((v) => v[1]);
   const loadHistoryData = loadHistory.map((v, i) => [i, v]);
 
   const max = Math.max(...availableHistory, ...loadHistory);
@@ -46,8 +46,6 @@ export const PowerMonitorSmesGlobal = (_props, context) => {
       </Stack.Item>
     </Stack>
   );
-
-
 };
 
 export const PowerMonitorSmesTableHeader = (props, context) => {
@@ -70,7 +68,7 @@ export const PowerMonitorSmesTableRows = (props, context) => {
   return (
     <>
       {data.units.map((unit) => (
-        <PowerMonitorSmesTableRow key={unit.ref} unit={unit} />
+        <PowerMonitorSmesTableRow key={unit[0]} unit={unit} />
       ))}
     </>
   );
@@ -80,10 +78,12 @@ type PowerMonitorSmesTableRowProps = {
   unit: PowerMonitorSmesItemData;
 };
 
-const PowerMonitorSmesTableRow = ({ unit }: PowerMonitorSmesTableRowProps, context) => {
+const PowerMonitorSmesTableRow = (props: PowerMonitorSmesTableRowProps, context) => {
+  const { unit } = props;
+  const [ref, stored, charging, input, output, online, load] = unit;
   const { data } = useBackend<PowerMonitorSmesData>(context);
   const [search] = useSharedState(context, 'search', '');
-  const { name = 'N/A' } = data.unitsStatic[unit.ref] ?? {};
+  const name = data.unitNames[ref] ?? 'N/A';
 
   if (search && !name.toLowerCase().includes(search.toLowerCase())) {
     return null;
@@ -92,12 +92,12 @@ const PowerMonitorSmesTableRow = ({ unit }: PowerMonitorSmesTableRowProps, conte
   return (
     <Table.Row>
       <Table.Cell>{name}</Table.Cell>
-      <Table.Cell>{unit.stored}%</Table.Cell>
-      <Table.Cell color={unit.charging ? 'good' : 'bad'}>{unit.charging ? 'Yes' : 'No'}</Table.Cell>
-      <Table.Cell>{formatPower(unit.input)}</Table.Cell>
-      <Table.Cell>{formatPower(unit.output)}</Table.Cell>
-      <Table.Cell color={unit.online ? 'good' : 'bad'}>{unit.online ? 'Yes' : 'No'}</Table.Cell>
-      <Table.Cell>{unit.load ? formatPower(unit.load) : 'N/A'}</Table.Cell>
+      <Table.Cell>{stored}%</Table.Cell>
+      <Table.Cell color={charging ? 'good' : 'bad'}>{charging ? 'Yes' : 'No'}</Table.Cell>
+      <Table.Cell>{formatPower(input)}</Table.Cell>
+      <Table.Cell>{formatPower(output)}</Table.Cell>
+      <Table.Cell color={online ? 'good' : 'bad'}>{online ? 'Yes' : 'No'}</Table.Cell>
+      <Table.Cell>{load ? formatPower(load) : 'N/A'}</Table.Cell>
     </Table.Row>
   );
 };
