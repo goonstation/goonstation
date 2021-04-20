@@ -44750,12 +44750,6 @@
 /obj/access_spawn/engineering,
 /turf/simulated/floor/engine,
 /area/station/engine/gas)
-"bGi" = (
-/turf/simulated/wall/auto/reinforced/supernorn{
-	explosion_resistance = 15;
-	name = "very reinforced wall"
-	},
-/area/station/engine/hotloop)
 "bGj" = (
 /obj/machinery/atmospherics/pipe/simple/insulated,
 /obj/decal/poster/wallsign/fire,
@@ -44778,7 +44772,7 @@
 	opacity = 0
 	},
 /turf/simulated/floor/plating,
-/area/station/engine/hotloop)
+/area/station/engine/combustion_chamber)
 "bGl" = (
 /obj/wingrille_spawn/auto/crystal,
 /obj/machinery/door/poddoor/blast{
@@ -44791,7 +44785,7 @@
 	opacity = 0
 	},
 /turf/simulated/floor/plating,
-/area/station/engine/hotloop)
+/area/station/engine/combustion_chamber)
 "bGm" = (
 /obj/wingrille_spawn/auto/crystal,
 /obj/cable{
@@ -44809,7 +44803,7 @@
 	opacity = 0
 	},
 /turf/simulated/floor/plating,
-/area/station/engine/hotloop)
+/area/station/engine/combustion_chamber)
 "bGn" = (
 /obj/wingrille_spawn/auto/crystal,
 /obj/machinery/atmospherics/pipe/simple/insulated{
@@ -44826,14 +44820,14 @@
 	opacity = 0
 	},
 /turf/simulated/floor/plating,
-/area/station/engine/hotloop)
+/area/station/engine/combustion_chamber)
 "bGo" = (
 /obj/decal/poster/wallsign/fire,
 /turf/simulated/wall/auto/reinforced/supernorn{
 	explosion_resistance = 15;
 	name = "very reinforced wall"
 	},
-/area/station/engine/hotloop)
+/area/station/engine/combustion_chamber)
 "bGp" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	can_rupture = 0
@@ -45289,7 +45283,7 @@
 	explosion_resistance = 15;
 	name = "very reinforced wall"
 	},
-/area/station/engine/hotloop)
+/area/station/engine/combustion_chamber)
 "bHm" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	can_rupture = 0;
@@ -81044,11 +81038,11 @@ bEx
 bJk
 bFL
 bGo
-bGi
+dpo
 bHl
-bGi
-bGi
-bGi
+dpo
+dpo
+dpo
 bNy
 aay
 aaa
