@@ -3205,23 +3205,31 @@
 	dir = 8;
 	icon_state = "wall3_space"
 	},
-/area/tech_outpost)
+/area/station/storage/emergency{
+	name = "Hilarious Storage A"
+	})
 "ahR" = (
 /obj/grille/steel,
 /obj/window/auto/reinforced,
 /turf/simulated/floor/plating,
-/area/tech_outpost)
+/area/station/storage/emergency{
+	name = "Hilarious Storage A"
+	})
 "ahS" = (
 /obj/grille/steel,
 /obj/window/auto,
 /turf/simulated/floor/plating,
-/area/tech_outpost)
+/area/station/storage/emergency{
+	name = "Hilarious Storage A"
+	})
 "ahT" = (
 /turf/simulated/shuttle/wall{
 	dir = 1;
 	icon_state = "wall3_space"
 	},
-/area/tech_outpost)
+/area/station/storage/emergency{
+	name = "Hilarious Storage A"
+	})
 "ahU" = (
 /obj/grille/steel,
 /obj/window/auto,
@@ -3418,7 +3426,9 @@
 	dir = 4;
 	icon_state = "wall3"
 	},
-/area/tech_outpost)
+/area/station/storage/emergency{
+	name = "Hilarious Storage A"
+	})
 "aiB" = (
 /obj/machinery/light/small{
 	dir = 8;
@@ -3428,17 +3438,23 @@
 /obj/item/stg_booster,
 /obj/decal/cleanable/cobweb,
 /turf/simulated/floor/grey/blackgrime,
-/area/tech_outpost)
+/area/station/storage/emergency{
+	name = "Hilarious Storage A"
+	})
 "aiC" = (
 /obj/table/wood/auto,
 /obj/item/chem_grenade/cleaner,
 /turf/simulated/floor/grey/blackgrime,
-/area/tech_outpost)
+/area/station/storage/emergency{
+	name = "Hilarious Storage A"
+	})
 "aiD" = (
 /obj/item/raw_material/shard,
 /obj/reagent_dispensers/watertank,
 /turf/simulated/floor/plating,
-/area/tech_outpost)
+/area/station/storage/emergency{
+	name = "Hilarious Storage A"
+	})
 "aiE" = (
 /obj/barber_pole,
 /turf/simulated/shuttle/wall{
@@ -3628,7 +3644,9 @@
 	},
 /obj/machinery/power/apc/autoname_west,
 /turf/simulated/floor/plating,
-/area/tech_outpost)
+/area/station/storage/emergency{
+	name = "Hilarious Storage A"
+	})
 "aje" = (
 /obj/cable{
 	d1 = 2;
@@ -3636,14 +3654,20 @@
 	icon_state = "2-8"
 	},
 /turf/simulated/floor/plating,
-/area/tech_outpost)
+/area/station/storage/emergency{
+	name = "Hilarious Storage A"
+	})
 "ajf" = (
 /obj/item/reagent_containers/glass/compostbag,
 /turf/simulated/floor/grey/blackgrime,
-/area/tech_outpost)
+/area/station/storage/emergency{
+	name = "Hilarious Storage A"
+	})
 "ajg" = (
 /turf/simulated/shuttle/wall,
-/area/tech_outpost)
+/area/station/storage/emergency{
+	name = "Hilarious Storage A"
+	})
 "ajh" = (
 /turf/simulated/floor/grey/blackgrime,
 /area/station/science/spectral)
@@ -3808,10 +3832,14 @@
 "ajz" = (
 /obj/machinery/door/airlock/external,
 /turf/simulated/floor/plating,
-/area/tech_outpost)
+/area/station/storage/emergency{
+	name = "Hilarious Storage A"
+	})
 "ajA" = (
 /turf/simulated/floor/grey/blackgrime,
-/area/tech_outpost)
+/area/station/storage/emergency{
+	name = "Hilarious Storage A"
+	})
 "ajB" = (
 /obj/cable{
 	d1 = 2;
@@ -3819,17 +3847,25 @@
 	icon_state = "1-6"
 	},
 /turf/simulated/floor/plating,
-/area/tech_outpost)
+/area/station/storage/emergency{
+	name = "Hilarious Storage A"
+	})
 "ajC" = (
 /turf/simulated/floor/plating,
-/area/tech_outpost)
+/area/station/storage/emergency{
+	name = "Hilarious Storage A"
+	})
 "ajD" = (
 /obj/machinery/door/airlock/external,
 /turf/simulated/floor/darkblue,
-/area/tech_outpost)
+/area/station/storage/emergency{
+	name = "Hilarious Storage A"
+	})
 "ajE" = (
 /turf/simulated/floor/darkblue,
-/area/tech_outpost)
+/area/station/storage/emergency{
+	name = "Hilarious Storage A"
+	})
 "ajF" = (
 /obj/machinery/door/airlock/external,
 /turf/simulated/floor/plating,
@@ -4021,7 +4057,9 @@
 "akb" = (
 /obj/decal/cleanable/balloon,
 /turf/simulated/floor/plating,
-/area/tech_outpost)
+/area/station/storage/emergency{
+	name = "Hilarious Storage A"
+	})
 "akc" = (
 /obj/cable{
 	d1 = 2;
@@ -4030,7 +4068,9 @@
 	},
 /obj/machinery/light_switch/east,
 /turf/simulated/floor/plating,
-/area/tech_outpost)
+/area/station/storage/emergency{
+	name = "Hilarious Storage A"
+	})
 "akd" = (
 /obj/table/auto,
 /obj/item/pen{
@@ -4212,7 +4252,9 @@
 "akz" = (
 /obj/item/wrench,
 /turf/simulated/floor/grey/blackgrime,
-/area/tech_outpost)
+/area/station/storage/emergency{
+	name = "Hilarious Storage A"
+	})
 "akA" = (
 /obj/cable{
 	d1 = 2;
@@ -4220,7 +4262,9 @@
 	icon_state = "5-10"
 	},
 /turf/simulated/floor/grey/blackgrime,
-/area/tech_outpost)
+/area/station/storage/emergency{
+	name = "Hilarious Storage A"
+	})
 "akB" = (
 /obj/machinery/light/small{
 	dir = 4;
@@ -4228,7 +4272,9 @@
 	},
 /obj/item/wirecutters,
 /turf/simulated/floor/grey/blackgrime,
-/area/tech_outpost)
+/area/station/storage/emergency{
+	name = "Hilarious Storage A"
+	})
 "akC" = (
 /obj/item/clothing/under/misc/clown/blue,
 /turf/space,
@@ -4351,9 +4397,6 @@
 /obj/item/skull,
 /turf/space,
 /area/space)
-"akR" = (
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/tech_outpost)
 "akS" = (
 /obj/grille/steel,
 /obj/window/auto/reinforced,
@@ -4361,18 +4404,24 @@
 	icon_state = "2-5"
 	},
 /turf/simulated/floor/plating,
-/area/tech_outpost)
+/area/station/storage/emergency{
+	name = "Hilarious Storage A"
+	})
 "akT" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "wall3"
 	},
-/area/tech_outpost)
+/area/station/storage/emergency{
+	name = "Hilarious Storage A"
+	})
 "akU" = (
 /turf/simulated/shuttle/wall{
 	dir = 4;
 	icon_state = "wall3_space"
 	},
-/area/tech_outpost)
+/area/station/storage/emergency{
+	name = "Hilarious Storage A"
+	})
 "akV" = (
 /obj/stool/chair/comfy/shuttle{
 	dir = 4
@@ -4582,18 +4631,24 @@
 	},
 /obj/stool/chair/e_chair,
 /turf/simulated/floor/plating,
-/area/tech_outpost)
+/area/station/storage/emergency{
+	name = "Hilarious Storage A"
+	})
 "alt" = (
 /obj/grille/steel,
 /turf/simulated/floor/plating,
-/area/tech_outpost)
+/area/station/storage/emergency{
+	name = "Hilarious Storage A"
+	})
 "alu" = (
 /obj/machinery/shuttle/engine/heater,
 /turf/simulated/shuttle/wall{
 	dir = 4;
 	icon_state = "wall3"
 	},
-/area/tech_outpost)
+/area/station/storage/emergency{
+	name = "Hilarious Storage A"
+	})
 "alv" = (
 /obj/item/clothing/shoes/rocket,
 /turf/space,
@@ -4765,7 +4820,9 @@
 	icon_state = "9-10"
 	},
 /turf/simulated/floor/plating,
-/area/tech_outpost)
+/area/station/storage/emergency{
+	name = "Hilarious Storage A"
+	})
 "alP" = (
 /obj/item/raw_material/shard,
 /obj/cable{
@@ -4935,7 +4992,9 @@
 "amm" = (
 /obj/item/clothing/gloves/yellow/unsulated,
 /turf/simulated/floor/carpet/red/standard/edge/north,
-/area/tech_outpost)
+/area/station/storage/emergency{
+	name = "Hilarious Storage A"
+	})
 "amn" = (
 /obj/cable{
 	d1 = 2;
@@ -4943,7 +5002,9 @@
 	icon_state = "4-10"
 	},
 /turf/simulated/floor/carpet/red/standard/edge/north,
-/area/tech_outpost)
+/area/station/storage/emergency{
+	name = "Hilarious Storage A"
+	})
 "amo" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -4953,7 +5014,9 @@
 	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/carpet/red/standard/edge/north,
-/area/tech_outpost)
+/area/station/storage/emergency{
+	name = "Hilarious Storage A"
+	})
 "amp" = (
 /obj/cable{
 	d1 = 2;
@@ -4969,10 +5032,14 @@
 	dir = 4
 	},
 /turf/simulated/floor/carpet/red/standard/edge/ne,
-/area/tech_outpost)
+/area/station/storage/emergency{
+	name = "Hilarious Storage A"
+	})
 "amq" = (
 /turf/simulated/floor/carpet/grime,
-/area/tech_outpost)
+/area/station/storage/emergency{
+	name = "Hilarious Storage A"
+	})
 "amr" = (
 /obj/stool/chair/couch{
 	dir = 8;
@@ -4983,7 +5050,9 @@
 	dir = 4
 	},
 /turf/simulated/floor/carpet/grime,
-/area/tech_outpost)
+/area/station/storage/emergency{
+	name = "Hilarious Storage A"
+	})
 "ams" = (
 /obj/machinery/light{
 	dir = 1;
@@ -4997,7 +5066,9 @@
 /obj/item/reagent_containers/iv_drip,
 /obj/disposalpipe/junction/left/east,
 /turf/simulated/floor/carpet/grime,
-/area/tech_outpost)
+/area/station/storage/emergency{
+	name = "Hilarious Storage A"
+	})
 "amt" = (
 /obj/stool/chair/couch{
 	dir = 4;
@@ -5009,7 +5080,9 @@
 	dir = 4
 	},
 /turf/simulated/floor/carpet/grime,
-/area/tech_outpost)
+/area/station/storage/emergency{
+	name = "Hilarious Storage A"
+	})
 "amu" = (
 /obj/cable{
 	d1 = 2;
@@ -5020,7 +5093,9 @@
 	dir = 4
 	},
 /turf/simulated/floor/carpet/grime,
-/area/tech_outpost)
+/area/station/storage/emergency{
+	name = "Hilarious Storage A"
+	})
 "amv" = (
 /obj/cable{
 	d1 = 1;
@@ -5172,13 +5247,17 @@
 	dir = 4
 	},
 /turf/simulated/floor/carpet/red/standard/edge/south,
-/area/tech_outpost)
+/area/station/storage/emergency{
+	name = "Hilarious Storage A"
+	})
 "amM" = (
 /obj/disposalpipe/segment{
 	dir = 4
 	},
 /turf/simulated/floor/carpet/red/standard/edge/south,
-/area/tech_outpost)
+/area/station/storage/emergency{
+	name = "Hilarious Storage A"
+	})
 "amN" = (
 /obj/machinery/light/small,
 /obj/disposalpipe/segment{
@@ -5186,10 +5265,14 @@
 	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/carpet/red/standard/edge/south,
-/area/tech_outpost)
+/area/station/storage/emergency{
+	name = "Hilarious Storage A"
+	})
 "amO" = (
 /turf/simulated/floor/carpet/red/standard/edge/se,
-/area/tech_outpost)
+/area/station/storage/emergency{
+	name = "Hilarious Storage A"
+	})
 "amP" = (
 /obj/cable{
 	d1 = 2;
@@ -5197,7 +5280,9 @@
 	icon_state = "4-9"
 	},
 /turf/simulated/floor/carpet/grime,
-/area/tech_outpost)
+/area/station/storage/emergency{
+	name = "Hilarious Storage A"
+	})
 "amQ" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -5208,14 +5293,18 @@
 	icon_state = "6-8"
 	},
 /turf/simulated/floor/carpet/grime,
-/area/tech_outpost)
+/area/station/storage/emergency{
+	name = "Hilarious Storage A"
+	})
 "amR" = (
 /obj/cable{
 	icon_state = "4-8"
 	},
 /obj/disposalpipe/segment,
 /turf/simulated/floor/carpet/grime,
-/area/tech_outpost)
+/area/station/storage/emergency{
+	name = "Hilarious Storage A"
+	})
 "amS" = (
 /obj/cable{
 	d1 = 2;
@@ -5223,17 +5312,23 @@
 	icon_state = "5-8"
 	},
 /turf/simulated/floor/carpet/grime,
-/area/tech_outpost)
+/area/station/storage/emergency{
+	name = "Hilarious Storage A"
+	})
 "amT" = (
 /obj/item/chair/folded,
 /turf/simulated/floor/carpet/grime,
-/area/tech_outpost)
+/area/station/storage/emergency{
+	name = "Hilarious Storage A"
+	})
 "amU" = (
 /obj/machinery/firealarm,
 /turf/simulated/shuttle/wall{
 	icon_state = "wall3"
 	},
-/area/tech_outpost)
+/area/station/storage/emergency{
+	name = "Hilarious Storage A"
+	})
 "amV" = (
 /obj/machinery/shuttle/engine/heater,
 /turf/simulated/shuttle/wall{
@@ -5376,9 +5471,6 @@
 /area/station/storage/emergency2{
 	name = "Hilarious Storage B"
 	})
-"anm" = (
-/turf/simulated/floor/black,
-/area/tech_outpost)
 "ann" = (
 /obj/cable{
 	d1 = 2;
@@ -5387,12 +5479,16 @@
 	},
 /obj/disposalpipe/segment,
 /turf/simulated/floor/black,
-/area/tech_outpost)
+/area/station/storage/emergency{
+	name = "Hilarious Storage A"
+	})
 "ano" = (
 /obj/table/wood/auto,
 /obj/item/dice/coin,
 /turf/simulated/floor/black,
-/area/tech_outpost)
+/area/station/storage/emergency{
+	name = "Hilarious Storage A"
+	})
 "anp" = (
 /obj/machinery/shuttle/engine/propulsion,
 /turf/space,
@@ -17756,7 +17852,6 @@
 	},
 /obj/storage/secure/closet/command/chief_engineer,
 /obj/machinery/atmospherics/pipe/simple/color_pipe/green_pipe/overfloor/horizontal,
-/obj/item/rocko,
 /turf/simulated/floor/carpet/blue/fancy/edge/ne,
 /area/station/crew_quarters/ce)
 "aRu" = (
@@ -46355,6 +46450,7 @@
 /obj/table/auto,
 /obj/item/furniture_parts/table/reinforced,
 /obj/item/device/radio/intercom/engineering,
+/obj/item/rocko,
 /turf/simulated/floor/yellowblack{
 	dir = 9
 	},
@@ -60468,7 +60564,9 @@
 	dir = 4
 	},
 /turf/simulated/floor/carpet/grime,
-/area/tech_outpost)
+/area/station/storage/emergency{
+	name = "Hilarious Storage A"
+	})
 "vVg" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/brig/genpop)
@@ -85619,10 +85717,10 @@ aaa
 aae
 akQ
 aaa
-akR
+anH
 amm
 amL
-akR
+anH
 anE
 anG
 anH
@@ -85921,10 +86019,10 @@ aaB
 aae
 aaB
 aaa
-akR
+anH
 amn
 amM
-akR
+anH
 anF
 anG
 anH
@@ -86221,12 +86319,12 @@ aiA
 ajz
 aiA
 aiA
-akR
-akR
-akR
+anH
+anH
+anH
 amo
 amN
-akR
+anH
 anG
 anX
 aoq
@@ -86528,7 +86626,7 @@ als
 ajC
 amp
 amO
-akR
+anH
 anG
 anY
 aor
@@ -86830,7 +86928,7 @@ alt
 alO
 vUW
 amP
-akR
+anH
 anH
 anZ
 aos
@@ -87129,10 +87227,10 @@ akc
 akB
 akT
 alu
-akR
+anH
 amr
 amQ
-anm
+apt
 anI
 aoa
 aot
@@ -87431,7 +87529,7 @@ aiA
 aiA
 akU
 aaa
-akR
+anH
 ams
 amR
 ann
@@ -87733,7 +87831,7 @@ ajg
 akC
 aaa
 alv
-akR
+anH
 amt
 amS
 ano
@@ -88035,10 +88133,10 @@ agg
 agg
 ahZ
 agg
-akR
+anH
 amu
 amq
-akR
+anH
 anH
 aod
 aow
@@ -88340,7 +88438,7 @@ alw
 alP
 amv
 amT
-akR
+anH
 anG
 anF
 aox
@@ -88642,7 +88740,7 @@ alx
 aho
 uXi
 amU
-akR
+anH
 anG
 anG
 anH
