@@ -1,5 +1,10 @@
 
 (t)tue apr 20 21
+(u)Flaborized
+(p)4400
+(e)🆕🔄🎨|feature, rework, sprites
+(*)The Human Resprite has finally been completed, humans have been resprited! Huge thanks to everyone who helped make this impossibly large project a reality, see a full list in minor changelog.
+(+)For Human Resprite: Huge thanks to Erinexx, Gannets, Supernorn, Jan-antilles, Flourish, Batelite, Skeletonman0, Matheus, Schwick, Virvatuli, Retrino and Walpvrgis for contributing sprites, and to Mordent, Zewaka and Pali6 for coding help and other technical stuff.
 (u)Luxizzle
 (p)4326
 (e)📄|tgui
