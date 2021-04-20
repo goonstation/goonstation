@@ -2328,7 +2328,7 @@ var/global/list/masculine_ustyles = list("No Underwear" = "none",\
 var/global/list/male_screams = list("male", "malescream4", "malescream5", "malescream6", "malescream7")
 var/global/list/female_screams = list("female", "femalescream1", "femalescream2", "femalescream3", "femalescream4")
 
-/proc/randomize_look(var/to_randomize, var/change_gender = 1, var/change_blood = 1, var/change_age = 1, var/change_name = 1, var/change_underwear = 1, var/remove_effects = 1)
+/proc/randomize_look(to_randomize, change_gender = 1, change_blood = 1, change_age = 1, change_name = 1, change_underwear = 1, remove_effects = 1, optional_donor)
 	if (!to_randomize)
 		return
 
@@ -2344,13 +2344,10 @@ var/global/list/female_screams = list("female", "femalescream1", "femalescream2"
 		AH = to_randomize
 		if (ishuman(AH.owner))
 			H = AH.owner
+		else
+			H = optional_donor
 	else
 		return
-
-	if (!AH)
-		H.bioHolder.mobAppearance = new/datum/appearanceHolder()
-		H.bioHolder.mobAppearance.owner = H
-		H.bioHolder.mobAppearance.parentHolder = H.bioHolder
 
 	if (H.bioHolder && remove_effects)
 		H.bioHolder.RemoveAllEffects()
