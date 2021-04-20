@@ -219,11 +219,13 @@ var/f_color_selector_handler/F_Color_Selector
 #endif
 		Z_LOG_DEBUG("Preload", "Map preload running.")
 
+#ifndef RUNTIME_CHECKING
 		world.log << ""
 		world.log << "========================================"
 		world.log << "\[[time2text(world.timeofday,"hh:mm:ss")]] Starting new round"
 		world.log << "========================================"
 		world.log << ""
+#endif
 
 		Z_LOG_DEBUG("Preload", "Loading config...")
 		config = new /datum/configuration()
@@ -538,7 +540,9 @@ var/f_color_selector_handler/F_Color_Selector
 
 	Z_LOG_DEBUG("World/Init", "Notifying Discord of new round")
 	ircbot.event("serverstart", list("map" = getMapNameFromID(map_setting), "gamemode" = (ticker?.hide_mode) ? "secret" : master_mode))
+#ifndef RUNTIME_CHECKING
 	world.log << "Map: [getMapNameFromID(map_setting)]"
+#endif
 
 	Z_LOG_DEBUG("World/Init", "Notifying hub of new round")
 	round_start_data() //Tell the hub site a round is starting
