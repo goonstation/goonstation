@@ -6855,6 +6855,10 @@
 /area/station/engine/storage)
 "auj" = (
 /obj/item/storage/toilet/random,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/apc/autoname_north,
 /turf/simulated/floor/sanitary,
 /area/station/engine/engineering/restroom)
 "auk" = (
@@ -7035,6 +7039,9 @@
 /area/station/engine/engineering/restroom)
 "auI" = (
 /obj/machinery/drainage,
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/sanitary,
 /area/station/engine/engineering/restroom)
 "auJ" = (
@@ -7157,6 +7164,9 @@
 /area/station/engine/storage)
 "auY" = (
 /obj/machinery/door/airlock/pyro,
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/sanitary,
 /area/station/engine/engineering/restroom)
 "auZ" = (
@@ -7358,6 +7368,9 @@
 /obj/decal/tile_edge/line/black{
 	dir = 9;
 	icon_state = "line1"
+	},
+/obj/cable{
+	icon_state = "1-2"
 	},
 /turf/simulated/floor/yellow,
 /area/station/engine/engineering/private)
@@ -8343,6 +8356,9 @@
 	},
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "1-4"
 	},
 /turf/simulated/floor/yellow,
 /area/station/engine/engineering/private)
@@ -14622,6 +14638,9 @@
 	},
 /obj/firedoor_spawn,
 /obj/access_spawn/research_director,
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/wood/eight{
 	dir = 4
 	},
@@ -23782,6 +23801,10 @@
 "bmr" = (
 /obj/table/wood/auto,
 /obj/machinery/light/lamp,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/apc/autoname_north,
 /turf/simulated/floor/wood/eight{
 	dir = 4
 	},
@@ -24221,6 +24244,9 @@
 /turf/simulated/floor/carpet/blue/fancy/edge/east,
 /area/station/medical/head)
 "bnt" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
 /turf/simulated/floor/wood/eight{
 	dir = 4
 	},
@@ -26969,6 +26995,10 @@
 /obj/storage/secure/closet/command/research_director,
 /obj/item/reagent_containers/hypospray,
 /obj/item/remote/porter/port_a_sci,
+/obj/machinery/power/apc/autoname_north,
+/obj/cable{
+	icon_state = "0-4"
+	},
 /turf/simulated/floor/wood/eight{
 	dir = 4
 	},
@@ -26985,6 +27015,9 @@
 /obj/decoration/bookcase{
 	dir = 1;
 	pixel_y = 28
+	},
+/obj/cable{
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/wood/eight{
 	dir = 4
@@ -28066,6 +28099,9 @@
 	name = "autoname - SS13";
 	pixel_x = 10;
 	tag = ""
+	},
+/obj/cable{
+	icon_state = "1-2"
 	},
 /turf/simulated/floor/wood/eight{
 	dir = 4
@@ -29275,6 +29311,9 @@
 	},
 /area/station/crew_quarters/hor)
 "bAJ" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/wood/eight{
 	dir = 4
 	},
@@ -29864,6 +29903,9 @@
 	},
 /obj/cable{
 	icon_state = "2-4"
+	},
+/obj/cable{
+	icon_state = "1-2"
 	},
 /turf/simulated/floor/wood/eight{
 	dir = 4
@@ -37606,7 +37648,6 @@
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/courtroom)
 "fkd" = (
-/obj/machinery/power/apc/autoname_north,
 /obj/cable{
 	icon_state = "0-2"
 	},
@@ -37618,6 +37659,7 @@
 	nostick = 1;
 	pixel_x = 10
 	},
+/obj/machinery/power/apc/autoname_north,
 /turf/simulated/floor/bot/blue,
 /area/station/ai_monitored/storage/eva)
 "fme" = (
@@ -39883,6 +39925,9 @@
 	pixel_x = -7;
 	pixel_y = 21
 	},
+/obj/cable{
+	icon_state = "2-8"
+	},
 /turf/simulated/floor/wood/eight{
 	dir = 4
 	},
@@ -41774,6 +41819,9 @@
 	dir = 4;
 	nostick = 1;
 	pixel_x = 10
+	},
+/obj/cable{
+	icon_state = "1-2"
 	},
 /turf/simulated/floor/wood/eight{
 	dir = 4
@@ -83957,8 +84005,8 @@ auj
 auI
 auY
 avA
-axs
-axs
+ayy
+ayy
 axV
 ayA
 ayA
