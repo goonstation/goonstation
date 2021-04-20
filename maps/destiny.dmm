@@ -24420,7 +24420,6 @@
 	},
 /area/station/crew_quarters/observatory)
 "eAZ" = (
-/obj/storage/closet/office,
 /obj/bookshelf/persistent,
 /turf/simulated/floor,
 /area/station/crew_quarters/lounge/starboard)
@@ -37478,10 +37477,6 @@
 	},
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade)
-"lxr" = (
-/obj/bookshelf/persistent,
-/turf/simulated/floor/grey,
-/area/station/maintenance/inner)
 "lyi" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -110998,7 +110993,7 @@ ahU
 axX
 amG
 ugm
-lxr
+dJq
 dJq
 dJq
 dJq
