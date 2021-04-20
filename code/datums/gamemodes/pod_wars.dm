@@ -4,6 +4,12 @@
 #define FORTUNA "FORTUNA"
 #define RELIANT "RELIANT"
 #define UBV67 "UBV67"
+
+//idk if this is a good idea. I'm setting them in the game mode, they'll be useless outisde of it...
+var/list/pw_rewards_tier1 = null
+var/list/pw_rewards_tier2 = null
+var/list/pw_rewards_tier3 = null
+
 /datum/game_mode/pod_wars
 	name = "pod wars"
 	config_tag = "pod_wars"
@@ -121,6 +127,10 @@
 
 	SPAWN_DBG(-1)
 		setup_asteroid_ores()
+
+	//setup rewards crate lists
+	setup_pw_crate_lists()
+
 
 	if(round_limit > 0)
 		SPAWN_DBG (round_limit) // this has got to end soon
@@ -352,6 +362,7 @@ ABSTRACT_TYPE(/datum/ore_cluster)
 		if (M.current)
 			M.current.playsound_local(M.current, "sound/effects/ship_alert_major.ogg", 50, 0)
 
+	//Gah, why? Gotta say "The" I guess.
 	var/team_name_string = team?.name
 	if (team.team_num == TEAM_SYNDICATE)
 		team_name_string = "The Syndicate"
@@ -390,15 +401,7 @@ ABSTRACT_TYPE(/datum/ore_cluster)
 /datum/game_mode/pod_wars/proc/handle_control_point_rewards()
 
 	for (var/datum/control_point/P in src.control_points)
-		if (!P.computer)
-			message_admins("SOMETHING WENT TERRIBLY WRONG WITH THE CONTROL POINTS!!!")
-			logTheThing("debug", null, null, "PW CONTROL POINT has null computer var.!!!")
-			continue
-
-		var/turf/T = get_step(P.computer, P.computer.dir)
-
-/datum/game_mode/pod_wars/proc/do_item_delivery()
-
+		P.do_item_delivery(P.owner_team)
 
 /datum/game_mode/pod_wars/declare_completion()
 	var/datum/pod_wars_team/winner = team_NT.points > team_SY.points ? team_NT : team_SY
@@ -421,7 +424,7 @@ ABSTRACT_TYPE(/datum/ore_cluster)
 //pw_team can be the team datum or TEAM_NANOTRASEN|TEAM_SYNDICATE
 //filepath; sound file path as a string.
 /datum/game_mode/pod_wars/proc/playsound_to_team(var/pw_team, var/filepath)
-	if (isnull(S))
+	if (isnull(filepath))
 		return 0
 	var/datum/pod_wars_team/team = pw_team
 	if (!istype(team))
@@ -451,6 +454,13 @@ ABSTRACT_TYPE(/datum/ore_cluster)
 		string += "<b>[m.current]</b> ([m.ckey])</b><br>"
 	boutput(world, "[active_players] active players/[length(pw_team.members)] total players")
 	boutput(world, "")	//L.something
+
+//this is global so admins can run this proc to spawn
+proc/setup_pw_crate_lists()
+	pw_rewards_tier1 = list()
+	pw_rewards_tier2 = list()
+	pw_rewards_tier3 = list()
+
 
 /datum/pod_wars_team
 	var/name = "NanoTrasen"
@@ -1741,11 +1751,13 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 		owner_team = team_num
 		update_light_color()
 
-		ctrl_pt.receive_capture(user, team_num)
+		ctrl_pt.capture(user, team_num)
 
 	attack_hand(mob/user as mob)
 		if (owner_team != get_pod_wars_team(user))
 			var/duration = is_commander(user) ? 7 SECONDS : 15 SECONDS
+			playsound(get_turf(src), "sound/machines/warning-buzzer.ogg", 100, 1)
+
 			SETUP_GENERIC_ACTIONBAR(user, src, duration, /obj/control_point_computer/proc/capture, list(user),\
 			 null, null, "[user] successfully enters [his_or_her(user)] command code into \the [src]!")
 
@@ -1802,14 +1814,15 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 
 	// proc/prevent_capture(var/mob/user, var/user_team)
 	// 	if (owner_team != user_team && capturing_team != user_team)
-	// 		receive_capture_start(user, user_team)
+	// 		capture_start(user, user_team)
 	// 	return
 
 	// proc/start_capture(var/mob/user, var/user_team)
 
-	// 	receive_capture_start(user, user_team)
+	// 	capture_start(user, user_team)
 
 	//change colour and owner team when captured.
+	//this doesn't work right now. idc -kyle
 	proc/update_light_color()
 		//blue for NT|1, red for SY|2, white for neutral|0.
 		if (owner_team == TEAM_NANOTRASEN)
@@ -1858,8 +1871,10 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 	var/capture_value = 0				//values from -100 to 100. Positives denote NT, negatives denote SY.  	/////////UNUSED
 	var/capture_rate = 1				//1 or 3 based on if a commander has entered their code.  				/////////UNUSED
 	var/capturing_team					//0 if not moving, either uncaptured or at max capture. 1=NT, 2=SY  	/////////UNUSED
-	var/owner_team						//1=NT, 2=SY
+	var/owner_team = 0						//1=NT, 2=SY
 	var/true_name						//backend name, var/name is the user readable name
+	var/last_cap_time					//Time it was last captured. 
+	var/crate_rewards_tier = 0			//var 0-3 none/low/med/high. Should correlate to holding the point for <5 min, <10 min, <15
 	var/datum/game_mode/pod_wars/mode
 
 	New(var/obj/control_point_computer/computer, var/area/capture_area, var/name, var/true_name, var/datum/game_mode/pod_wars/mode)
@@ -1874,9 +1889,46 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 			if (B.control_point == name)
 				src.beacons += B
 
+	//deliver crate for appropriate tier.in front of this control point.
+	proc/do_item_delivery(var/owner_team)
+		if (!src.computer)
+			message_admins("SOMETHING WENT THE CONTROL POINTS!!!owner_team=[owner_team]|1 is NT, 2 is SY")
+			logTheThing("debug", null, null, "PW CONTROL POINT has null computer var.!!!owner_team=[owner_team]")
+			return 0
+		if (src.owner_team == 0)
+			return 0
 
-	proc/receive_capture(var/mob/user, var/team_num)
+		var/turf/T = get_step(src.computer, src.computer.dir)		//tile in front of computer
+
+		//GAZE UPON MY WORKS AND DESPAIR!!!
+		//Spawns a crate at the correct time at the correct tier.
+		if (TIME > last_cap_time + 5 MINUTES && src.crate_rewards_tier == 0)	//Do anything special on capture here? idk, not yet at least...
+			src.crate_rewards_tier ++
+			return 0
+		else if (TIME > last_cap_time + 10 MINUTES && src.crate_rewards_tier == 1)
+			new/obj/storage/crate/pod_wars_rewards(loc = T, team_num = src.owner_team, tier = src.crate_rewards_tier)
+
+			src.crate_rewards_tier ++
+		else if (TIME > last_cap_time + 15 MINUTES && src.crate_rewards_tier == 2)
+			new/obj/storage/crate/pod_wars_rewards(loc = T, team_num = src.owner_team, tier = src.crate_rewards_tier)
+			src.crate_rewards_tier ++
+
+		//ok, this is shit. To explain, if the tier is 3, then it'll be 15 minutes, if it's 4, it'll be 20 minutes, if it's 5, it'll be 25 minutes, etc...
+		else if (TIME >= last_cap_time + (15 MINUTES + 5 MINUTES * (src.crate_rewards_tier-3) ) && src.crate_rewards_tier == 3)
+			new/obj/storage/crate/pod_wars_rewards(loc = T, team_num = src.owner_team, tier = src.crate_rewards_tier)
+			src.crate_rewards_tier ++
+
+		return 1
+
+
+
+	proc/capture(var/mob/user, var/team_num)
 		src.owner_team = team_num
+		src.last_cap_time = TIME
+		//rewards tier goes to back down to 1 AFTER giving the enemy a crate. A little sort of catchup mechanic...
+		if (src.crate_rewards_tier > 0)
+			src.do_item_delivery(src.owner_team)
+			src.crate_rewards_tier = 1
 
 		//update beacon teams
 		for (var/obj/warp_beacon/pod_wars/B in beacons)
@@ -1903,7 +1955,7 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 	// 	capturing_team = 0
 	// 	return
 
-	// proc/receive_capture_start(var/mob/user, var/user_team)
+	// proc/capture_start(var/mob/user, var/user_team)
 	// 	if (owner_team == user_team)
 	// 		boutput_
 	// 	if (capturing_team == user_team)
@@ -2133,7 +2185,28 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 
 ////////////////////////////player stats tracking datum//////////////////
 /datum/pw_stats_manager
-	var/list/player_stats = list()			//assoc list of ckey to /datum/pw_player_stats
+	var/list/player_stats = list()			//assoc list of ckey -> /datum/pw_player_stats
+
+	var/list/item_rewards = list()		//assoc list of item name -> amount
+	var/list/crate_list = list()			//assoc list of crate tier -> amount
+
+	proc/add_item_reward(var/string, var/team_num)
+		switch(team_num)
+			if (TEAM_NANOTRASEN)
+				string = "NT,[string]"
+			if (TEAM_SYNDICATE)
+				string = "SY,[string]"
+
+		item_rewards[string] ++
+
+	proc/add_crate(var/string, var/team_num)
+		switch(team_num)
+			if (TEAM_NANOTRASEN)
+				string = "NT,[string]"
+			if (TEAM_SYNDICATE)
+				string = "SY,[string]"
+
+		crate_list[string] ++
 
 	proc/add_player(var/datum/mind/mind, var/initial_name, var/team_num, var/rank)
 		//only add new stat tracker datum if one doesn't exist
@@ -2234,8 +2307,26 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 				else
 					pet_dat += "<span class='alert'>Oppenheimer was killed! Oh no!</span><br>"
 
-
-		. = {"<h2>
+		//write the player stats as a simple table
+		var/p_stat_text = ""
+		for (var/ckey in player_stats)
+			var/datum/pw_player_stats/stat = player_stats[ckey]
+			message_admins("[stat.team_num], [stat.initial_name]")
+			//first update longest life
+			inc_longest_life(stat.ckey)
+			// p_stat_text += stat.build_text()
+			p_stat_text += {"
+<tr>
+ <td>[stat.team_num == 1? "NT" : stat.team_num == 2 ? "SY" : ""]</td>
+ <td>[stat.initial_name] ([stat.ckey])</td>
+ <td>[stat.death_count]</td>
+ <td>[stat.friendly_fire_count]</td>
+ <td>[stat.longest_life] (min)</td>
+ <td>[round(stat.alcohol_metabolized, 0.01)](u)</td>
+ <td>[stat.farts]</td>
+ <td>[stat.control_point_capture_count]</th>  d
+</tr>
+<h2>
 Game Stats
 </h2>
 [pet_dat]
@@ -2253,31 +2344,24 @@ Player Stats
     <th>Farts</th>
     <th>Ctrl Pts</th>
   </tr>
+[p_stat_text]</table>
+<h2>Two Equal Columns</h2>
+[build_rewards_text(src.crate_list)]
+<h2>Two Equal Columns</h2>
+[build_rewards_text(src.item_rewards)]
 
-"}
-		message_admins("player stats loop")
-		var/dat = ""
-		for (var/ckey in player_stats)
-			var/datum/pw_player_stats/stat = player_stats[ckey]
-			message_admins("[stat.team_num], [stat.initial_name]")
-			//first update longest life
-			inc_longest_life(stat.ckey)
-
-			dat += {"
-<tr>
- <td>[stat.team_num == 1? "NT" : stat.team_num == 2 ? "SY" : ""]</td>
- <td>[stat.initial_name] ([stat.ckey])</td>
- <td>[stat.death_count]</td>
- <td>[stat.friendly_fire_count]</td>
- <td>[stat.longest_life] (min)</td>
- <td>[round(stat.alcohol_metabolized, 0.01)](u)</td>
- <td>[stat.farts]</td>
- <td>[stat.control_point_capture_count]</th>  d
-</tr>
-"}
-		. += "[dat]</table>"
-		. += {"
 <style>
+* {
+  box-sizing: border-box;
+}
+
+.column {
+  border: 1px solid #66A;
+  float: left;
+  width: 50%;
+  padding: 10px;
+}
+
  body {background-color: #448;}
  h2, h3, h4, span {color:white}
  td, th
@@ -2286,7 +2370,38 @@ Player Stats
   text-align: center;
   color:white;
  }
+
 </style>"}
+	
+	//Assumes Lists are an assoc list in the format where the key starts with either "NT," or "SY," followed by the item/crate_tier name
+	//and the value stored is just an int for the amount.
+	//returns html text
+	proc/build_rewards_text(var/list/L)
+		if (!islist(L) || !length(L))
+			logTheThing("debug", null, null, "Something trying to write one of the lists for stats...")
+			return
+
+		var/cr_stats_NT = ""
+		var/cr_stats_SY = ""
+		for (var/stat in L)
+			if (!istext(stat) || length(stat) <= 4) continue
+			
+			if (copytext(1,3) == "NT")
+				cr_stats_NT = "<tr>[copytext(stat, 4)] = [L[stat]]</tr>"
+			else if (copytext(1,3) == "SY")
+				cr_stats_SY = "<tr>[copytext(stat, 4)] = [L[stat]]</tr>"
+
+		return {"
+
+<div class=\"column\">
+  <h3>NanoTrasen</h3>
+  [cr_stats_NT]
+</div>
+<div class=\"column\">
+  <h3>Syndicate</h3>
+  [cr_stats_SY]
+</div>
+"}
 
 	proc/display_HTML_to_clients()
 		var/string = build_HTML()
@@ -2321,42 +2436,85 @@ Player Stats
 
 
 /obj/storage/crate/pod_wars_rewards
-	var/ready = 0
-	grab_stuff_on_spawn = FALSE
-	req_access = list(access_maxsec)
-	New()
+	desc = "It looks like a crate of some kind, probably locked. Who can say?"
+	grab_stuff_on_spawn = TRUE
+	req_access = list()
+	var/team_num = 0						//should be 1 or 2
+	var/tier = 1							//acceptable values, 1-3.
+
+	New(var/team_num, var/tier)
+		src.team_num = team_num
+		src.tier = tier
+
+		//handle name, color, and access for types...
+		var/team_name_str
+		switch(team_num)
+			if (TEAM_NANOTRASEN)
+				req_access = list(access_heads)
+				color = "#004EFF"
+				team_name_str = "NanoTrasen"
+			if (TEAM_SYNDICATE)
+				req_access = list(access_syndicate_shuttle)
+				color = "#FF004E"
+				team_name_str = "Syndicate"
+
+		var/tier_flavor
+		switch(tier)
+			if (1)
+				tier_flavor = "I"
+			if (2)
+				tier_flavor = "II"
+			if (3)
+				tier_flavor = "III"
+
+
+		name = "[team_name_str] secure crate tier [tier_flavor]"
 		..()
-		SPAWN_DBG(2 SECONDS)
-			if (!ready)
-				spawn_items()
+		SPAWN_DBG(1 SECONDS)
+			spawn_items()
 
-	proc/spawn_items(var/mob/owner)
-		ready = 1
-		var/telecrystals = 0
-		var/list/possible_items = list()
+	//Selects the items that this crate spawns with based on its possible contents.
+	proc/spawn_items(var/mob/owner)		
+		var/tier1_max_points = 20
+		var/tier2_max_points = 10
+		var/tier3_max_points = 10
 
-		if (islist(syndi_buylist_cache))
-			for (var/datum/syndicate_buylist/S in syndi_buylist_cache)
-				var/blocked = 0
-				if (ticker?.mode && S.blockedmode && islist(S.blockedmode) && length(S.blockedmode))
-					for (var/V in S.blockedmode)
-						if (ispath(V) && istype(ticker.mode, V))
-							blocked = 1
-							break
+		//This feels really stupid, but idk how better to do it. -kly
+		switch (tier)
+			if (1)
+				make_items_in_tier(pw_rewards_tier1, tier1_max_points)
+			if (2)
+				make_items_in_tier(pw_rewards_tier1, tier1_max_points/2)
+				make_items_in_tier(pw_rewards_tier2, tier2_max_points)
 
-				if (blocked == 0 && !S.not_in_crates)
-					possible_items += S
+			if (3)
+				make_items_in_tier(pw_rewards_tier1, tier1_max_points/2)
+				make_items_in_tier(pw_rewards_tier2, tier2_max_points/2)
+				make_items_in_tier(pw_rewards_tier3, tier3_max_points)
 
-		if (islist(possible_items) && length(possible_items))
-			while(telecrystals < 18)
-				var/datum/syndicate_buylist/item_datum = pick(possible_items)
-				if(telecrystals + item_datum.cost > 24) continue
-				var/obj/item/I = new item_datum.item(src)
-				if (owner)
-					item_datum.run_on_spawn(I, owner, TRUE)
-					if (owner.mind)
-						owner.mind.traitor_crate_items += item_datum
-				telecrystals += item_datum.cost
+
+	//makes the items in the crate randomly picking from a rewards list, 
+	proc/make_items_in_tier(var/list/possible_rewards, var/max_points)
+
+#ifdef MAP_OVERRIDE_POD_WARS
+//Kinda cheesey here with the map defs, but I'm too lazy to care. makes a temp var for the mode, if it's not the right type (which idk why it wouldn't be)
+//then it is null so that the ?. will fail. So it still works regardless of mode, not that it would have the populated rewards lists if the mdoe was wrong...
+		var/datum/game_mode/pod_wars/mode = ticker.mode
+		if (!istype(mode))
+			mode = null
+#endif
+
+		var/points = 0
+		while (points < max_points)
+			var/selected = pick(possible_rewards)
+			var/obj/item/I = new selected(src)
+			message_admins("[I.name] = [possible_rewards[selected]]pts")
+			points += possible_rewards[selected] ? possible_rewards[selected] : 1			//just in case
+			//assuming we have the coorect mode, that is the pod wars mode. These shouldn't really be spawning anyway if it isn't that mode...
+#ifdef MAP_OVERRIDE_POD_WARS
+			mode?.stats_manager.add_item_reward(I.name, team_num)
+		mode?.stats_manager.add_crate(src.name, team_num)
+#endif
 
 
 // var/list/item_tier_low = list(/obj/item/storage/firstaid/regular, /obj/item/storage/firstaid/crit, /obj/item/reagent_containers/mender/both, 	///obj/item/tank/plasma
@@ -2365,8 +2523,31 @@ Player Stats
 // var/list/item_tier_high = list()
 
 // Low Tier: Blaster (team colored), EMP Grenade (mega situational, after all), flashbang, regular flash, pocket oxy tank
-// Medium Tier: Revolver, Cloaking Field Projector, Radbow, pickpocket gun??, maybe other traitor or rare gear, jetpack
-// High tier: Stims, Cloaker, concussive RPG (no damage to structures, but same damage to people), Deployable team oriented turret (limited ammo and can be destroyed), MAYBE an emag (probably very limited use)
+// Medium Tier: dsaber, Revolver, Cloaking Field Projector, Radbow, pickpocket gun??, maybe other traitor or rare gear, jetpack
+// High tier: csaber Stims, Cloaker, Deployable team oriented turret (limited ammo and can be destroyed), 
+
+
+//This is dumb. I should really have these all be one object, but I figure we might wanna specifically admin spawn thse from time to time. -kyle
+
+/obj/storage/crate/pod_wars_rewards/nanotrasen
+	req_access = list(access_heads)
+	team_num = 1		//should be 1 or 2
+	tier = 1			//acceptable values, 1-3.
+
+	medium
+		tier = 2
+	high
+		tier = 3
+/obj/storage/crate/pod_wars_rewards/syndicate
+	req_access = list(access_syndicate_shuttle)
+	team_num = 2		//should be 1 or 2
+	tier = 1			//acceptable values, 1-3.
+
+	medium
+		tier = 2
+	high
+		tier = 3
+
 
 //basically like stinger in that it shoots projectiles, but has no explosions, different icon
 
