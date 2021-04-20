@@ -1,5 +1,9 @@
 
 (t)tue apr 20 21
+(u)Azrun
+(p)4229
+(e)🆕🗺🎨|feature, mapping, sprites
+(*)Chief Engineer now has a pet!
 (u)Luxizzle
 (p)4261
 (e)🆕🔄📄|feature, rework, tgui
