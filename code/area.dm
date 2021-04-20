@@ -1023,7 +1023,7 @@ ABSTRACT_TYPE(/area/adventure)
 /area/fermid_hive
 	name = "Fermid Hive"
 	icon_state = "purple"
-
+	requires_power = FALSE
 
 /area/iss
 	name = "Derelict Space Station"
@@ -1040,6 +1040,7 @@ ABSTRACT_TYPE(/area/adventure)
 /area/abandonedship
 	name = "Abandoned ship"
 	icon_state = "yellow"
+	requires_power = FALSE
 
 /area/spacehabitat
 	name = "Habitat Dome"
@@ -1053,11 +1054,15 @@ ABSTRACT_TYPE(/area/adventure)
 /area/salyut
 	name = "Soviet derelict"
 	icon_state = "yellow"
+	requires_power = FALSE
 
 /area/hollowasteroid/ //evilderelict.dm
 	name = "Forgotten Subterranean Wreckage"
 	icon_state = "derelict"
 	sound_loop = 'sound/ambience/spooky/Evilreaver_Ambience.ogg'
+	requires_power = FALSE
+
+
 ABSTRACT_TYPE(/area/diner)
 /area/diner
 	sound_environment = 12
@@ -2270,6 +2275,7 @@ ABSTRACT_TYPE(/area/station/engine)
 /area/station/engine/singcore
 	name = "Singularity Core"
 	icon_state = "red"
+	requires_power = FALSE
 
 /area/station/engine/eva
 	name = "Engineering EVA"
