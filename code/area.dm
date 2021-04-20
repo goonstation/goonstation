@@ -992,6 +992,9 @@ ABSTRACT_TYPE(/area/adventure)
 /area/martian_trader
 	name ="Martian Trade Outpost"
 	sound_environment = 8
+#ifdef MAP_OVERRIDE_OSHAN
+	requires_power = FALSE
+#endif
 
 /area/abandonedmedicalship
 	name = "Abandoned Medical ship"
@@ -1043,6 +1046,9 @@ ABSTRACT_TYPE(/area/adventure)
 	icon_state = "derelict"
 #ifdef SUBMARINE_MAP
 	force_fullbright = 1
+#endif
+#ifdef MAP_OVERRIDE_OSHAN
+	requires_power = FALSE
 #endif
 
 /area/spacehabitat/pool
