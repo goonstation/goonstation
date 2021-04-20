@@ -1862,27 +1862,27 @@
 
 	proc/updateAppearance()
 		if (status & BROKEN)
-			setCrtOverlayStatus(0)
+			setCrtOverlayStatus(FALSE)
 			setItemOverlay(null)
-			return
+			return FALSE
 		else if (powered())
-			setCrtOverlayStatus(1)
+			setCrtOverlayStatus(TRUE)
 			if (promoimage)
 				icon_state = "[initial(icon_state)]-display"
 				setItemOverlay(promoimage)
 			else
 				icon_state = initial(icon_state)
 		else
-			setCrtOverlayStatus(0)
+			setCrtOverlayStatus(FALSE)
 			setItemOverlay(null)
-			return
+			return FALSE
 
 	proc/setItemOverlay(image/target)
 		UpdateOverlays(null, "item", 1, 1)
 		UpdateOverlays(target, "item", 0, 1)
 
 	proc/setCrtOverlayStatus(status)
-		if (status == 1)
+		if (status)
 			UpdateOverlays(crtoverlay, "screen", 0, 1)
 		else
 			UpdateOverlays(null, "screen", 0, 1)
@@ -1915,7 +1915,7 @@
 		user.u_equip(target)
 		target.set_loc(src)
 		target.layer = (initial(target.layer))
-		var/existed = 0
+		var/existed = FALSE
 		//Finds items that have been labeled
 		var/regex/labelFinder = new("\\*? \\(.*?\\)")
 		//Extracts label contents via regex replace
@@ -1928,12 +1928,12 @@
 			if (label && label == R.label)
 				R.contents += target
 				R.product_amount += 1
-				existed = 1
+				existed = TRUE
 				break
 			else if (istype(target,R.product_type) && R.real_name == target.real_name)
 				R.contents += target
 				R.product_amount += 1
-				existed = 1
+				existed = TRUE
 				break
 		if (!existed)
 			var/datum/data/vending_product/player_product/itemEntry = new/datum/data/vending_product/player_product(target, 15)
@@ -1986,7 +1986,8 @@
 
 	Topic(href, href_list)
 		. = ..()
-		updateAppearance()
+		if(!updateAppearance()) //updateAppearance returns FALSE if we're broken/off
+			return
 		if ((isdead(usr) || !can_act(usr) || !in_interact_range(src, usr)))
 			return
 
