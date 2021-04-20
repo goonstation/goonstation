@@ -7,7 +7,7 @@ import { GeneralTab } from './GeneralTab';
 import { SavesTab } from './SavesTab';
 import { CharacterPreferencesData, CharacterPreferencesProfile, CharacterPreferencesTabKeys } from './type';
 
-export const CharacterPreferences = (_props, context) => {
+export const CharacterPreferences = (_props: any, context: any) => {
   const { act, data } = useBackend<CharacterPreferencesData>(context);
   const [menu, setMenu] = useLocalState(context, 'menu', CharacterPreferencesTabKeys.General);
 
@@ -90,7 +90,7 @@ export const CharacterPreferences = (_props, context) => {
   );
 };
 
-const SavesAndProfile = (_props, context) => {
+const SavesAndProfile = (_props: any, context: any) => {
   const { act, data } = useBackend<CharacterPreferencesData>(context);
 
   const activeProfileIndex = data.profiles.findIndex((p) => p.active);
@@ -120,7 +120,7 @@ const SavesAndProfile = (_props, context) => {
                   </>
                 ) : null
               }>
-              <Button onClick={() => act('update', { profileName: 1 })}>
+              <Button onClick={() => act('update-profileName')}>
                 {data.profileName ? data.profileName : <Box italic>None</Box>}
               </Button>
             </LabeledList.Item>
@@ -152,10 +152,11 @@ type ProfileProps = {
   profile: CharacterPreferencesProfile
 }
 
-const Profile = (
-  { profile, index } : ProfileProps,
-  context: any
-) => {
+const Profile = (props: ProfileProps, context: any) => {
+  const {
+    index,
+    profile,
+  } = props;
   const { act } = useBackend<CharacterPreferencesData>(context);
 
   return (
@@ -172,7 +173,6 @@ const Profile = (
           </Box>
         )}
       </Box>
-      {/* Just a small gap between these so you dont accidentally hit one */}
       <Button disabled={!profile.name} onClick={() => act('load', { index: index + 1 })}>
         Load
       </Button>

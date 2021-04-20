@@ -28,7 +28,7 @@ export const GeneralTab = (_props, context) => {
             <Button onClick={() => act('update-age')}>{data.age}</Button>
           </LabeledList.Item>
           <LabeledList.Item label="Blood Type">
-            <Button onClick={() => act('update', { bloodType: 1 })}>
+            <Button onClick={() => act('update-bloodType')}>
               {data.bloodRandom ? (
                 <Box as="span" italic>
                   Random
