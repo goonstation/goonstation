@@ -23318,19 +23318,6 @@
 /area/station/crew_quarters/arcade)
 "bls" = (
 /obj/machinery/manufacturer/uniform,
-/obj/machinery/power/apc/autoname_west,
-/obj/cable{
-	icon_state = "0-4"
-	},
-/turf/simulated/floor/sanitary,
-/area/station/crew_quarters/bathroom)
-"blt" = (
-/obj/cable{
-	icon_state = "2-8"
-	},
-/obj/cable{
-	icon_state = "1-2"
-	},
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/bathroom)
 "blu" = (
@@ -34237,33 +34224,9 @@
 /obj/item/storage/toilet/random,
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/bathroom)
-"bPi" = (
-/obj/cable{
-	icon_state = "2-4"
-	},
-/turf/simulated/floor/orange,
-/area/station/mining/staff_room)
-"bPj" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/orange,
-/area/station/mining/staff_room)
 "bPk" = (
 /obj/item/storage/wall/fire{
 	pixel_y = 32
-	},
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/orange,
-/area/station/mining/staff_room)
-"bPl" = (
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 1
-	},
-/obj/cable{
-	icon_state = "4-8"
 	},
 /turf/simulated/floor/orange,
 /area/station/mining/staff_room)
@@ -34275,9 +34238,6 @@
 	dir = 6;
 	icon_state = "xtra_bigstripe-corner2"
 	},
-/obj/cable{
-	icon_state = "4-8"
-	},
 /turf/simulated/floor/orange,
 /area/station/mining/staff_room)
 "bPn" = (
@@ -34285,9 +34245,6 @@
 	dir = 1
 	},
 /obj/decal/tile_edge/stripe/extra_big,
-/obj/cable{
-	icon_state = "4-8"
-	},
 /turf/simulated/floor/orange,
 /area/station/mining/staff_room)
 "bPo" = (
@@ -34298,17 +34255,11 @@
 	dir = 10;
 	icon_state = "xtra_bigstripe-corner2"
 	},
-/obj/cable{
-	icon_state = "4-8"
-	},
 /turf/simulated/floor/orange,
 /area/station/mining/staff_room)
 "bPp" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
-	},
-/obj/cable{
-	icon_state = "2-8"
 	},
 /turf/simulated/floor/orange,
 /area/station/mining/staff_room)
@@ -34378,11 +34329,6 @@
 /obj/item/storage/toolbox/mechanical,
 /obj/item/device/t_scanner,
 /obj/table/auto,
-/turf/simulated/floor/orange,
-/area/station/mining/staff_room)
-"bPy" = (
-/obj/machinery/power/apc/autoname_south,
-/obj/cable,
 /turf/simulated/floor/orange,
 /area/station/mining/staff_room)
 "bPz" = (
@@ -35063,9 +35009,6 @@
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/mining)
 "bRn" = (
-/obj/cable{
-	icon_state = "1-4"
-	},
 /obj/machinery/disposal/small,
 /obj/disposalpipe/trunk{
 	dir = 4
@@ -35101,9 +35044,6 @@
 /turf/simulated/floor/plating,
 /area/station/mining/staff_room)
 "bRr" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
 /obj/disposalpipe/segment{
 	dir = 4
 	},
@@ -35256,21 +35196,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/seaturtlehallway)
-"bRI" = (
-/obj/machinery/door/airlock/pyro/engineering{
-	dir = 4;
-	name = "Mining"
-	},
-/obj/firedoor_spawn,
-/obj/access_spawn/mining,
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/disposalpipe/segment{
-	dir = 4
-	},
-/turf/simulated/floor,
-/area/station/mining/staff_room)
 "bRJ" = (
 /obj/decal/tile_edge/line/green{
 	color = "#8D8C8C";
@@ -35279,9 +35204,6 @@
 	},
 /obj/cable{
 	icon_state = "1-2"
-	},
-/obj/cable{
-	icon_state = "2-8"
 	},
 /obj/cable{
 	icon_state = "2-4"
@@ -35559,8 +35481,8 @@
 	},
 /area/station/hangar/mining)
 "bSy" = (
-/obj/machinery/power/apc/autoname_south,
 /obj/cable,
+/obj/machinery/power/apc/autoname_south,
 /turf/simulated/floor,
 /area/station/hangar/mining)
 "bSz" = (
@@ -36470,12 +36392,6 @@
 /obj/machinery/fluid_canister,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/upperport)
-"crJ" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor,
-/area/station/crewquarters/garbagegarbs)
 "csu" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -36522,9 +36438,6 @@
 	},
 /obj/disposalpipe/trunk{
 	dir = 1
-	},
-/obj/cable{
-	icon_state = "1-2"
 	},
 /turf/simulated/floor/greenblack{
 	dir = 4
@@ -36649,9 +36562,6 @@
 /obj/disposalpipe/segment{
 	dir = 4;
 	icon_state = "pipe-c"
-	},
-/obj/cable{
-	icon_state = "2-4"
 	},
 /turf/simulated/floor/greenblack{
 	dir = 5
@@ -37147,15 +37057,6 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/upperstarboard)
-"dWi" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/disposalpipe/segment{
-	dir = 4
-	},
-/turf/simulated/floor/green,
-/area/station/crewquarters/garbagegarbs)
 "dWm" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -37220,9 +37121,6 @@
 	name = "Backroom"
 	},
 /obj/firedoor_spawn,
-/obj/cable{
-	icon_state = "4-8"
-	},
 /turf/simulated/floor/greenblack{
 	dir = 1
 	},
@@ -37236,9 +37134,6 @@
 /area/station/maintenance/upperstarboard)
 "ebD" = (
 /obj/disposalpipe/segment/mail,
-/obj/cable{
-	icon_state = "4-8"
-	},
 /obj/disposalpipe/segment{
 	dir = 4
 	},
@@ -37468,9 +37363,6 @@
 "eIF" = (
 /obj/disposalpipe/segment{
 	dir = 4
-	},
-/obj/cable{
-	icon_state = "4-8"
 	},
 /turf/simulated/floor/green,
 /area/station/crewquarters/garbagegarbs)
@@ -41568,11 +41460,6 @@
 	},
 /turf/simulated/floor/carpet/red/fancy/edge/nw,
 /area/station/security/hos)
-"oMt" = (
-/obj/machinery/power/apc/autoname_south,
-/obj/cable,
-/turf/simulated/floor,
-/area/station/crewquarters/garbagegarbs)
 "oMG" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet/red,
@@ -41975,9 +41862,6 @@
 	name = "Backroom"
 	},
 /obj/firedoor_spawn,
-/obj/cable{
-	icon_state = "1-2"
-	},
 /turf/simulated/floor,
 /area/station/crewquarters/garbagegarbs)
 "pws" = (
@@ -43005,9 +42889,6 @@
 /turf/simulated/floor/caution/south,
 /area/station/engine/inner)
 "slL" = (
-/obj/cable{
-	icon_state = "1-4"
-	},
 /obj/machinery/light/incandescent/netural,
 /turf/simulated/floor/greenblack/corner{
 	dir = 8
@@ -43938,14 +43819,6 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/upperport)
-"vdL" = (
-/obj/cable{
-	icon_state = "2-8"
-	},
-/turf/simulated/floor/greenblack{
-	dir = 1
-	},
-/area/station/crewquarters/garbagegarbs)
 "veP" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 1;
@@ -74096,7 +73969,7 @@ bhR
 biB
 bjA
 bjA
-blt
+bjA
 bjA
 bjA
 boT
@@ -77738,10 +77611,10 @@ aQz
 xfR
 eIF
 mnz
-vdL
+ecB
 pwm
-crJ
-oMt
+jtU
+jtU
 arU
 bHD
 bHm
@@ -78038,7 +77911,7 @@ bGK
 gSv
 gTP
 gTP
-dWi
+eIF
 oRE
 fpW
 arU
@@ -122128,8 +122001,8 @@ bOd
 bOm
 bOm
 bEo
-bPi
-bPy
+bEo
+bEo
 bOm
 ulJ
 bPF
@@ -122430,7 +122303,7 @@ bOd
 bOm
 arP
 qbl
-bPj
+bEo
 bPz
 bOm
 bQg
@@ -123034,7 +122907,7 @@ bOm
 bOI
 dqP
 bPc
-bPl
+bPp
 bxb
 bPU
 bQg
@@ -123336,7 +123209,7 @@ bOm
 bOJ
 bAe
 bBG
-bPl
+bPp
 bPB
 bPV
 ulJ
@@ -125149,7 +125022,7 @@ bOL
 bOU
 bPe
 bOm
-bRI
+bUf
 bOm
 bQj
 bTO
