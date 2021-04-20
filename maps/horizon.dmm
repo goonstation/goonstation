@@ -13773,7 +13773,7 @@
 	},
 /obj/disposalpipe/segment/bent/south,
 /turf/simulated/floor/plating/random,
-/area/station/chapel/sanctuary)
+/area/station/maintenance/north)
 "aIu" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/chapel/office)
@@ -20055,6 +20055,10 @@
 /obj/machinery/vehicle/miniputt/nanoputt{
 	dir = 4
 	},
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/apc/autoname_north,
 /turf/simulated/floor/shuttlebay,
 /area/station/storage/eva)
 "aWw" = (
@@ -20775,9 +20779,11 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/science/teleporter)
 "aXQ" = (
-/obj/decal/poster/wallsign/poster_sol,
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/science/teleporter)
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/shuttlebay,
+/area/station/storage/eva)
 "aXR" = (
 /obj/table/wood/round/auto,
 /obj/item/paper_bin,
@@ -21558,6 +21564,9 @@
 	tag = ""
 	},
 /obj/disposalpipe/segment/transport,
+/obj/cable{
+	icon_state = "2-4"
+	},
 /turf/simulated/floor/darkpurple,
 /area/station/storage/eva)
 "aZN" = (
@@ -22325,6 +22334,7 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 5
 	},
+/obj/machinery/power/apc/autoname_north,
 /turf/simulated/floor/engine,
 /area/station/science/teleporter)
 "bbl" = (
@@ -22396,7 +22406,6 @@
 /turf/simulated/floor/plating,
 /area/station/engine/engineering)
 "bbr" = (
-/obj/machinery/power/apc/autoname_north,
 /obj/machinery/disposal/brig{
 	name = "trial chute"
 	},
@@ -30706,6 +30715,9 @@
 	dir = 4
 	},
 /obj/disposalpipe/segment/morgue,
+/obj/cable{
+	icon_state = "1-8"
+	},
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
 "bvX" = (
@@ -30814,6 +30826,9 @@
 	},
 /obj/disposalpipe/segment/transport{
 	dir = 4
+	},
+/obj/cable{
+	icon_state = "2-4"
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
@@ -58404,6 +58419,15 @@
 /obj/structure/woodwall,
 /turf/simulated/floor/plating,
 /area/station/ranch)
+"psQ" = (
+/obj/disposalpipe/segment/cargo{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor,
+/area/station/hallway/primary/central)
 "pvL" = (
 /obj/lattice{
 	dir = 10;
@@ -59478,6 +59502,16 @@
 	dir = 8
 	},
 /area/station/hallway/secondary/east)
+"sxI" = (
+/obj/disposalpipe/segment/cargo{
+	dir = 4
+	},
+/obj/machinery/power/apc/autoname_north,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor,
+/area/station/hallway/primary/central)
 "szx" = (
 /obj/lattice{
 	dir = 9;
@@ -60436,6 +60470,15 @@
 "vVg" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/brig/genpop)
+"vXi" = (
+/obj/disposalpipe/segment/transport{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor,
+/area/station/hallway/primary/east)
 "vXo" = (
 /obj/grille/catwalk/jen/side{
 	dir = 1
@@ -60648,6 +60691,22 @@
 	},
 /turf/simulated/floor/wood,
 /area/station/hallway/secondary/west)
+"wJz" = (
+/obj/stool/bench/blue/auto,
+/obj/landmark/start{
+	name = "Staff Assistant"
+	},
+/obj/disposalpipe/segment/cargo{
+	dir = 4
+	},
+/obj/machinery/power/apc/autoname_north,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/blue/side{
+	dir = 1
+	},
+/area/station/hallway/primary/east)
 "wJE" = (
 /obj/cable{
 	d1 = 4;
@@ -97894,7 +97953,7 @@ aOc
 aQw
 aZK
 aWv
-aWw
+aXQ
 wEp
 bdx
 dfO
@@ -109375,7 +109434,7 @@ bde
 bgj
 bjh
 aGP
-ePs
+sxI
 brV
 btO
 bwk
@@ -109677,7 +109736,7 @@ wYP
 aIr
 bji
 blP
-ePs
+psQ
 brV
 btP
 bwk
@@ -119643,8 +119702,8 @@ aUC
 bgQ
 bjG
 aXk
-cal
-bsi
+wJz
+vXi
 mPI
 ccv
 mJg
@@ -130811,7 +130870,7 @@ aMS
 mTS
 wSz
 cAe
-aXQ
+aXP
 bbk
 swx
 bhn
