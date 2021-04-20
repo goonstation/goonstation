@@ -62,7 +62,7 @@ export const CharacterPreferences = (_props: any, context: any) => {
                       }}
                       style={{
                         width: '64px',
-                        height: '96px',
+                        height: '128px',
                       }}
                     />
                     <Box textAlign="center" mt="5px">
