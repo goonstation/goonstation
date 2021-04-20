@@ -26267,9 +26267,6 @@
 /turf/simulated/floor,
 /area/station/hallway/starboardlowerhallway)
 "btu" = (
-/obj/disposalpipe/segment{
-	dir = 4
-	},
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -26431,12 +26428,14 @@
 /turf/simulated/floor/bot,
 /area/station/quartermaster/cargobay)
 "btR" = (
-/obj/wingrille_spawn/auto,
-/obj/disposalpipe/segment/mail{
-	dir = 4
+/obj/cable{
+	icon_state = "4-8"
 	},
-/turf/simulated/floor/plating,
-/area/station/crewquarters/garbagegarbs)
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/black,
+/area/station/ai_monitored/armory)
 "btS" = (
 /obj/table/glass/auto,
 /turf/simulated/floor,
@@ -31732,7 +31731,6 @@
 /turf/simulated/floor/carpet,
 /area/station/science/restroom)
 "bJN" = (
-/obj/disposalpipe/segment,
 /obj/table/reinforced/auto,
 /obj/machinery/computer/security/wooden_tv/small{
 	pixel_y = 8
@@ -35857,15 +35855,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/centralhallway)
-"czS" = (
-/obj/disposalpipe/switch_junction/left/south{
-	mail_tag = "Mining"
-	},
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor,
-/area/station/hallway/portlowerhallway)
 "cAp" = (
 /obj/machinery/light/incandescent/blueish{
 	dir = 4;
@@ -36957,6 +36946,9 @@
 	},
 /obj/landmark/start{
 	name = "Captain"
+	},
+/obj/disposalpipe/segment{
+	dir = 8
 	},
 /turf/simulated/floor/carpet{
 	dir = 1;
@@ -40485,15 +40477,6 @@
 	},
 /turf/simulated/floor,
 /area/station/crewquarters/garbagegarbs)
-"mQB" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/cable{
-	icon_state = "1-8"
-	},
-/turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
 "mSY" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -42312,9 +42295,6 @@
 /turf/simulated/floor/black,
 /area/station/science/chemistry)
 "qSq" = (
-/obj/disposalpipe/junction{
-	dir = 4
-	},
 /obj/machinery/light/incandescent/netural{
 	dir = 1;
 	pixel_y = 20
@@ -42324,6 +42304,10 @@
 	},
 /obj/cable{
 	icon_state = "2-4"
+	},
+/obj/disposalpipe/segment{
+	dir = 4;
+	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/special/submarinesdown,
 /area/station/hallway/portlowerhallway)
@@ -78706,7 +78690,7 @@ acV
 ghs
 acT
 arU
-btR
+mnz
 mnz
 btU
 btW
@@ -79008,7 +78992,7 @@ bcj
 jnH
 byk
 bcj
-bjW
+bcj
 bcj
 mFN
 bcj
@@ -79310,7 +79294,7 @@ bta
 bta
 bym
 bta
-czS
+bta
 bta
 hlB
 bta
@@ -87121,7 +87105,7 @@ aFB
 aFB
 aqO
 dOI
-mQB
+btR
 azk
 atV
 sUk
