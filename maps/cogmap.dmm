@@ -1298,6 +1298,10 @@
 /area/space)
 "adD" = (
 /obj/machinery/weapon_stand/rifle_rack/recharger,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/power/apc/autoname_north/noaicontrol,
 /turf/simulated/floor/black,
 /area/station/security/armory)
 "adE" = (
@@ -1542,6 +1546,9 @@
 /obj/machinery/light{
 	dir = 1;
 	pixel_y = 21
+	},
+/obj/cable{
+	icon_state = "0-4"
 	},
 /turf/simulated/floor/black,
 /area/station/security/armory)
@@ -2605,11 +2612,10 @@
 /area/station/hallway/secondary/construction)
 "agG" = (
 /obj/cable{
-	icon_state = "0-4"
+	icon_state = "1-2"
 	},
-/obj/machinery/power/apc/autoname_west,
-/turf/simulated/floor/plating,
-/area/station/maintenance/northwest)
+/turf/simulated/floor/specialroom/cafeteria,
+/area/station/crew_quarters/barber_shop)
 "agH" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -5681,6 +5687,10 @@
 "anU" = (
 /obj/table/auto,
 /obj/item/dye_bottle,
+/obj/machinery/power/apc/autoname_north,
+/obj/cable{
+	icon_state = "0-2"
+	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/barber_shop)
 "anV" = (
@@ -6640,6 +6650,9 @@
 	dir = 8;
 	pixel_x = 6
 	},
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/barber_shop)
 "aqw" = (
@@ -7205,6 +7218,9 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
+/obj/cable{
+	icon_state = "1-8"
+	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/barber_shop)
 "arS" = (
@@ -7217,6 +7233,9 @@
 	})
 "arT" = (
 /obj/disposalpipe/segment/mail,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/neutral/side{
 	dir = 8
 	},
@@ -8321,6 +8340,9 @@
 	},
 /area/station/crew_quarters/barber_shop)
 "auA" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/carpet{
 	icon_state = "fred2"
 	},
@@ -8446,6 +8468,9 @@
 	pixel_x = -24
 	},
 /obj/machinery/vending/alcohol,
+/obj/machinery/firealarm{
+	pixel_y = 24
+	},
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/baroffice)
 "auR" = (
@@ -8453,10 +8478,11 @@
 /area/station/crew_quarters/baroffice)
 "auS" = (
 /obj/stool,
-/obj/machinery/firealarm{
-	pixel_y = 24
-	},
 /obj/item/clothing/head/helmet/space/santahat,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/apc/autoname_north,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/baroffice)
 "auT" = (
@@ -8469,14 +8495,11 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/baroffice)
 "auU" = (
-/obj/disposalpipe/segment,
 /obj/cable{
-	icon_state = "0-2"
+	icon_state = "2-4"
 	},
-/obj/cable,
-/obj/machinery/power/apc/autoname_west,
-/turf/simulated/floor/black,
-/area/station/crew_quarters/catering)
+/turf/simulated/floor/specialroom/cafeteria,
+/area/station/crew_quarters/barber_shop)
 "auV" = (
 /obj/machinery/atmospherics/pipe/simple{
 	level = 2
@@ -8768,9 +8791,6 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
 "avD" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
 /obj/item/cigbutt,
 /obj/decal/cleanable/dirt,
 /obj/cable{
@@ -8796,6 +8816,9 @@
 /obj/machinery/door/unpowered/wood/pyro{
 	dir = 8;
 	name = "The Snip"
+	},
+/obj/cable{
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
@@ -8990,6 +9013,9 @@
 "awe" = (
 /obj/cable{
 	icon_state = "1-4"
+	},
+/obj/cable{
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/baroffice)
@@ -9389,15 +9415,9 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/obj/cable{
-	icon_state = "1-4"
-	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
 "awY" = (
-/obj/cable{
-	icon_state = "0-8"
-	},
 /obj/item/cigbutt,
 /obj/decal/cleanable/dirt,
 /obj/decal/cleanable/ash,
@@ -9405,7 +9425,6 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/obj/machinery/power/apc/autoname_east,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
 "awZ" = (
@@ -45068,6 +45087,10 @@
 	dir = 4
 	},
 /obj/machinery/vending/coffee,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/apc/autoname_north,
 /turf/simulated/floor/purple/side{
 	dir = 1
 	},
@@ -51639,19 +51662,12 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
-/obj/cable{
-	icon_state = "0-4"
-	},
 /obj/disposalpipe/segment/transport,
-/obj/machinery/power/apc/autoname_west,
 /turf/simulated/floor/plating,
 /area/station/science/gen_storage)
 "ckA" = (
 /obj/disposalpipe/segment{
 	dir = 4
-	},
-/obj/cable{
-	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating,
 /area/station/science/gen_storage)
@@ -51664,9 +51680,6 @@
 	},
 /obj/disposalpipe/segment{
 	dir = 4
-	},
-/obj/cable{
-	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating,
 /area/station/science/gen_storage)
@@ -57387,7 +57400,6 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/decal/xmas_lights/ephemeral,
 /turf/simulated/floor/carpet{
 	dir = 10;
 	icon_state = "blue2"
@@ -57403,7 +57415,6 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
-/obj/decal/xmas_lights/ephemeral,
 /turf/simulated/floor/carpet{
 	dir = 6;
 	icon_state = "blue2"
@@ -57414,7 +57425,6 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 9
 	},
-/obj/decal/xmas_lights/ephemeral,
 /turf/simulated/floor,
 /area/station/medical/medbay)
 "cwE" = (
@@ -62525,6 +62535,7 @@
 	icon_state = "lattice-dir"
 	},
 /obj/wingrille_spawn/auto,
+/obj/decal/xmas_lights/ephemeral,
 /turf/simulated/floor/plating,
 /area/station/medical/medbay)
 "lGF" = (
@@ -62788,6 +62799,12 @@
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
+"mYD" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/carpet/grime,
+/area/station/crew_quarters/baroffice)
 "naz" = (
 /obj/machinery/space_heater,
 /turf/simulated/floor,
@@ -63599,6 +63616,18 @@
 	icon_state = "Stairs_wide"
 	},
 /area/station/hydroponics/bay)
+"qcu" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor,
+/area/station/science/lobby)
 "qfa" = (
 /obj/item/device/radio/intercom/catering{
 	dir = 8
@@ -63744,6 +63773,20 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
+"qJp" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/decal/tile_edge/stripe/big{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/blue/side{
+	dir = 4
+	},
+/area/station/crew_quarters/locker)
 "qLu" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -64839,6 +64882,14 @@
 	},
 /turf/simulated/floor/bot,
 /area/station/security/main)
+"vPd" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/wood{
+	icon_state = "wooden"
+	},
+/area/station/crew_quarters/barber_shop)
 "vTo" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -64990,6 +65041,14 @@
 	},
 /turf/simulated/floor/black,
 /area/station/engine/coldloop)
+"wVq" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/wood{
+	icon_state = "wooden"
+	},
+/area/station/crew_quarters/barber_shop)
 "wVz" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -96284,7 +96343,7 @@ bJY
 bSC
 bJY
 bVn
-bWx
+qcu
 bXD
 pes
 cau
@@ -99632,7 +99691,7 @@ xTV
 kxk
 cvS
 cwz
-ckG
+sBD
 adC
 aag
 cxe
@@ -99934,7 +99993,7 @@ cuU
 fdL
 cvT
 cwA
-ckG
+sBD
 adC
 aag
 cxe
@@ -100236,7 +100295,7 @@ cuV
 nIv
 cvU
 cwB
-ckG
+sBD
 adC
 cxe
 cxe
@@ -100421,7 +100480,7 @@ aca
 aca
 aca
 aca
-agG
+acB
 ahw
 ais
 ajA
@@ -100537,8 +100596,8 @@ cuf
 cuW
 nIv
 cvU
-sBD
 ckG
+sBD
 adC
 cxe
 cxJ
@@ -100723,7 +100782,7 @@ ahx
 ahx
 ahx
 ahx
-agH
+ahx
 ahx
 ahx
 ahx
@@ -102243,10 +102302,10 @@ aet
 anT
 apf
 ape
-ape
+auU
 atg
 auA
-avF
+vPd
 axc
 avF
 aAb
@@ -102543,12 +102602,12 @@ adM
 adM
 adM
 anU
-ape
+agG
 aqv
 arR
 anQ
 auB
-avF
+wVq
 axb
 avF
 aAc
@@ -102850,7 +102909,7 @@ vea
 anQ
 anQ
 auy
-avF
+wVq
 axc
 avF
 aAd
@@ -103756,7 +103815,7 @@ anX
 anX
 anX
 axe
-axe
+qJp
 axf
 anX
 anX
@@ -116138,7 +116197,7 @@ alg
 asp
 atC
 auS
-auR
+mYD
 axt
 ayT
 aAy
@@ -117043,7 +117102,7 @@ apH
 and
 ass
 atF
-auU
+axw
 awg
 axw
 ayV
