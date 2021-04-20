@@ -242,6 +242,7 @@
 		return null
 	if (!src.scanner.occupant_preview)
 		src.scanner.occupant_preview = new()
+		src.scanner.occupant_preview.add_background("#092426")
 		src.scanner.update_occupant()
 	return src.scanner.occupant_preview
 
