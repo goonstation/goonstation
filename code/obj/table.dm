@@ -683,7 +683,7 @@
 		if (src.glass_broken)
 			if (istype(W, /obj/item/sheet))
 				var/obj/item/sheet/S = W
-				if (!S.material || !S.material.material_flags & MATERIAL_CRYSTAL)
+				if (!S.material || !(S.material.material_flags & MATERIAL_CRYSTAL))
 					boutput(user, "<span class='alert'>You have to use glass or another crystalline material to repair [src]!</span>")
 				else if (S.consume_sheets(1))
 					boutput(user, "<span class='notice'>You add glass to [src]!</span>")

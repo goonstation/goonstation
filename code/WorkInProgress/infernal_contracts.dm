@@ -254,6 +254,7 @@ proc/is_weak_rollable_contract(type)
 	throw_speed = 1
 	throw_range = 8
 	burn_possible = 0 //Only makes sense since it's from hell.
+	item_function_flags = IMMUNE_TO_ACID // we don't get a spare, better make sure it lasts.
 	w_class = 4.0
 	max_wclass = 3
 	desc = "A diabolical human leather-bound briefcase, capable of holding a number of small objects and tormented souls. All those tormented souls give it a good deal of heft; you could use it as a great improvised bludgeoning weapon."
@@ -766,6 +767,18 @@ obj/item/contract/hair
 			return 0
 		SPAWN_DBG(1 DECI SECOND)
 			user.traitHolder.addTrait("contract_hair")
+
+		return 1
+
+obj/item/contract/limbs
+	desc = "This contract is really just a sketch of one of those inflatable air tube dancer things you see near used pod dealerships with some signature fields tacked onto the bottom."
+
+
+	MagicEffect(var/mob/user as mob, var/mob/badguy as mob)
+		if(!..())
+			return 0
+		SPAWN_DBG(1 DECI SECOND)
+			user.traitHolder.addTrait("contract_limbs")
 
 		return 1
 
