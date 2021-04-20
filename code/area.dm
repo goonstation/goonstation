@@ -2939,6 +2939,7 @@ ABSTRACT_TYPE(/area/station/garden)
 	icon_state = "yellow"
 	sound_environment = 15
 	do_not_irradiate = 1
+	requires_power = FALSE
 
 /area/station/garden/aviary
 	name = "Aviary"
