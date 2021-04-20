@@ -87,7 +87,7 @@ const Stock = ({ stock }: StockProps, context) => {
   const { data, act } = useBackend<WeaponVendorData>(context);
 
   return (
-    <Table.Row className="WeaponVendor__Row" opacity={stock.cost > data.credits[stock.category] && 0.5}>
+    <Table.Row className="WeaponVendor__Row" opacity={stock.cost > data.credits[stock.category] ? 0.5 : 1}>
       <Table.Cell className="WeaponVendor__Cell" py="5px">
         <Box mb="5px" bold>
           {stock.name}
