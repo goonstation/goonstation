@@ -751,22 +751,6 @@
 	containertype = /obj/storage/crate/wooden
 	containername = "Junior Medical Science Set: For Ages 7+"
 
-/datum/supply_packs/chemistry_resupply
-	name = "Chemistry Resupply Crate"
-	desc = "All the nessesary precursors needed to jump in to advanced chemistry."
-	category = "Research Department"
-	contains = list(/obj/item/reagent_containers/glass/beaker/large = 4,
-					/obj/item/storage/box/beakerbox = 2,
-					/obj/item/reagent_containers/glass/bottle/oil,
-					/obj/item/reagent_containers/glass/bottle/phenol,
-					/obj/item/reagent_containers/glass/bottle/acetone,
-					/obj/item/reagent_containers/glass/bottle/ammonia,
-					/obj/item/reagent_containers/glass/bottle/diethylamine,
-					/obj/item/reagent_containers/glass/bottle/acid)
-	cost = 3000
-	containertype = /obj/storage/crate/wooden
-	containername = "Chemistry Resupply Crate"
-
 /datum/supply_packs/rcd
 	name = "Rapid-construction-device Replacement"
 	desc = "Contains one empty rapid-construction-device."
