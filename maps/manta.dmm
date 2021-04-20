@@ -39402,15 +39402,6 @@
 /area/station/hangar/engine{
 	name = "Submarine Bay (Engineering)"
 	})
-"knL" = (
-/obj/disposalpipe/segment{
-	dir = 4
-	},
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor,
-/area/station/engine/elect)
 "kpZ" = (
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/white,
@@ -77762,7 +77753,7 @@ bmG
 bnN
 aJJ
 bgr
-knL
+box
 acV
 aHa
 aHj
