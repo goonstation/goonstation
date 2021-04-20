@@ -3,7 +3,7 @@
 
 #define FORTUNA "FORTUNA"
 #define RELIANT "RELIANT"
-#define UBV67 "UBV67"
+#define UVB67 "UVB67"
 
 //idk if this is a good idea. I'm setting them in the game mode, they'll be useless outisde of it...
 var/list/pw_rewards_tier1 = null
@@ -121,7 +121,7 @@ var/list/pw_rewards_tier3 = null
 		//search each of these areas for the computer, then make the control_point datum from em.
 		// add_control_point(/area/pod_wars/spacejunk/reliant, RELIANT)
 		// add_control_point(/area/pod_wars/spacejunk/fstation, FORTUNA)
-		// add_control_point(/area/pod_wars/spacejunk/uvb67, UBV67)
+		// add_control_point(/area/pod_wars/spacejunk/uvb67, UVB67)
 
 		setup_control_points()
 
@@ -157,8 +157,8 @@ var/list/pw_rewards_tier3 = null
 			name = "Fortuna Station"
 			true_name = FORTUNA
 		else if (istype(A, /area/pod_wars/spacejunk/uvb67))
-			name = "UBV-67"
-			true_name = UBV67
+			name = "UVB-67"
+			true_name = UVB67
 		var/datum/control_point/P = new/datum/control_point(CPC, A, name, true_name, src)
 
 		CPC.ctrl_pt = P 		//computer's reference to datum
@@ -817,7 +817,7 @@ proc/setup_pw_crate_lists()
 
 		//Control Points creation and adding to list
 		control_points = list()
-		control_points.Add(new/atom/movable/screen/control_point/ubc67())
+		control_points.Add(new/atom/movable/screen/control_point/uvb67())
 		control_points.Add(new/atom/movable/screen/control_point/reliant())
 		control_points.Add(new/atom/movable/screen/control_point/fortuna())
 
@@ -894,9 +894,9 @@ proc/setup_pw_crate_lists()
 	//fucking FIND that value. Why does that not exist? it seems like it should, after all, the mouse knows the bounds? Well, I don't know.
 
 	//left
-	ubc67
-		name = "UBV-67"
-		true_name = UBV67
+	uvb67
+		name = "UVB-67"
+		true_name = UVB67
 		pixel_x = 25
 
 		screen_loc = "NORTH, CENTER-1:-16"
@@ -1846,7 +1846,7 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 		light.set_color(light_r, light_g, light_b)
 
 /obj/warp_beacon/pod_wars
-	var/control_point 		//currently only use values FORTUNA, RELIANT, UBV67
+	var/control_point 		//currently only use values FORTUNA, RELIANT, UVB67
 	var/current_owner		//which team is the owner right now. Acceptable values: null, TEAM_NANOTRASEN = 1, TEAM_SYNDICATE = 1
 
 	ex_act()
@@ -1908,16 +1908,16 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 			src.crate_rewards_tier ++
 			return 0
 		else if (TIME > last_cap_time + 10 MINUTES && src.crate_rewards_tier == 1)
-			new/obj/storage/crate/pod_wars_rewards(loc = T, team_num = src.owner_team, tier = src.crate_rewards_tier)
+			new/obj/storage/secure/pod_wars_rewards(loc = T, team_num = src.owner_team, tier = src.crate_rewards_tier)
 
 			src.crate_rewards_tier ++
 		else if (TIME > last_cap_time + 15 MINUTES && src.crate_rewards_tier == 2)
-			new/obj/storage/crate/pod_wars_rewards(loc = T, team_num = src.owner_team, tier = src.crate_rewards_tier)
+			new/obj/storage/secure/pod_wars_rewards(loc = T, team_num = src.owner_team, tier = src.crate_rewards_tier)
 			src.crate_rewards_tier ++
 
 		//ok, this is shit. To explain, if the tier is 3, then it'll be 15 minutes, if it's 4, it'll be 20 minutes, if it's 5, it'll be 25 minutes, etc...
 		else if (TIME >= last_cap_time + (15 MINUTES + 5 MINUTES * (src.crate_rewards_tier-3) ) && src.crate_rewards_tier == 3)
-			new/obj/storage/crate/pod_wars_rewards(loc = T, team_num = src.owner_team, tier = src.crate_rewards_tier)
+			new/obj/storage/secure/pod_wars_rewards(loc = T, team_num = src.owner_team, tier = src.crate_rewards_tier)
 			src.crate_rewards_tier ++
 
 		return 1
@@ -2436,7 +2436,7 @@ Player Stats
 		src.ckey = mind?.ckey
 
 
-/obj/storage/crate/pod_wars_rewards
+/obj/storage/secure/pod_wars_rewards
 	desc = "It looks like a crate of some kind, probably locked. Who can say?"
 	grab_stuff_on_spawn = TRUE
 	req_access = list()
@@ -2551,7 +2551,7 @@ Player Stats
 
 //This is dumb. I should really have these all be one object, but I figure we might wanna specifically admin spawn thse from time to time. -kyle
 
-/obj/storage/crate/pod_wars_rewards/nanotrasen
+/obj/storage/secure/pod_wars_rewards/nanotrasen
 	req_access = list(access_heads)
 	team_num = 1		//should be 1 or 2
 	tier = 1			//acceptable values, 1-3.
@@ -2560,7 +2560,7 @@ Player Stats
 		tier = 2
 	high
 		tier = 3
-/obj/storage/crate/pod_wars_rewards/syndicate
+/obj/storage/secure/pod_wars_rewards/syndicate
 	req_access = list(access_syndicate_shuttle)
 	team_num = 2		//should be 1 or 2
 	tier = 1			//acceptable values, 1-3.
