@@ -782,7 +782,7 @@
 		..()
 		setProperty("meleeprot_head", 3)
 		setProperty("coldprot", 5)
-		setProperty("heatprot", 20)
+		setProperty("heatprot", 15)
 		setProperty("disorient_resit_eye", 8)
 		setProperty("disorient_resist_ear", 8)
 
