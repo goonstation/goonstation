@@ -11,7 +11,7 @@
 	var/agent_radiofreq = 0 //:h for syndies, randomized per round
 	var/obj/machinery/nuclearbomb/the_bomb = null
 	var/bomb_check_timestamp = 0 // See check_finished().
-	var/const/agents_possible = 8 //If we ever need more syndicate agents. cogwerks - raised from 5
+	var/const/agents_possible = 10 //If we ever need more syndicate agents. cogwerks - raised from 5
 
 
 	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
@@ -38,7 +38,7 @@
 
 		if (player.ready)
 			num_players++
-	var/num_synds = max(1, min(round(num_players / 4), agents_possible))
+	var/num_synds = clamp( round(num_players / 6 ), 1, agents_possible)
 
 	possible_syndicates = get_possible_syndicates(num_synds)
 

@@ -127,6 +127,7 @@
 	/// Obey the threat threshold. Otherwise, just cuff em
 	var/warn_minor_crime = 0
 
+	var/added_to_records = FALSE
 	/// Set a bot to guard an area, and they'll go there and mill around
 	var/area/guard_area
 	/// Arrest anyone who arent security / heads if they're in this area?
@@ -933,6 +934,15 @@
 		if(istype(perp.mutantrace, /datum/mutantrace/abomination))
 			threatcount += 5
 
+		for (var/datum/data/record/R as anything in data_core.security)
+			if (R.fields["name"] != perp.name && perp.traitHolder.hasTrait("immigrant") && perp.traitHolder.hasTrait("jailbird"))
+				if(!added_to_records)
+					threatcount += 5
+			else if ((R.fields["name"] == perp.name && perp.traitHolder.hasTrait("immigrant") && perp.traitHolder.hasTrait("jailbird")))
+				if(!added_to_records)
+					threatcount -= 5
+					added_to_records = TRUE
+
 		//Agent cards lower threat level
 		if((istype(perp.wear_id, /obj/item/card/id/syndicate)))
 			threatcount -= 2
@@ -1188,6 +1198,8 @@
 			)
 
 		var/say_thing = pick(voice_lines)
+		if(say_thing == 'sound/voice/binsultbeep.ogg' && prob(90))
+			say_thing = 'sound/voice/bsecureday.ogg'
 		switch(say_thing)
 			if('sound/voice/bgod.ogg')
 				src.speak("GOD MADE TOMORROW FOR THE CROOKS WE DON'T CATCH TO-DAY.")

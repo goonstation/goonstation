@@ -54,9 +54,15 @@
 		abilityHolder.addAbility(/datum/targetable/critter/cauterize)
 		abilityHolder.addAbility(/datum/targetable/critter/flamethrower/throwing)
 		abilityHolder.addAbility(/datum/targetable/critter/fire_sprint)
+		var/datum/statusEffect/simplehot/S = src.setStatus("simplehot", INFINITE_STATUS)
+		S.visible = 0
+		S.heal_brute = 0.25
 
 	Life()
 		var/turf/T = src.loc
 		if (istype(T, /turf))
 			T.hotspot_expose(1500,200)
 		.=..()
+
+	get_disorient_protection_eye()
+		return(max(..(), 80))
