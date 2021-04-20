@@ -304,7 +304,7 @@ ABSTRACT_TYPE(/datum/ore_cluster)
 	board.change_control_point_owner(true_name, team, team_num)
 
 	var/team_string = "[team_num == 1 ? "NanoTrasen" : team_num == 2 ? "The Syndicate" : "Something Eldritch"]"
-	boutput(world, "<h4><span class='[team_num == 1 ? "notice":"alert"]'>[user] captured [team.name] for [team_string]!</span></h4>")
+	boutput(world, "<h4><span class='[team_num == 1 ? "notice":"alert"]'>[user] has captured [true_name] for [team_string]!</span></h4>")
 
 	//do one sound for the capturing team, one for the losing
 	//change this sound.		KYLEEEE
@@ -401,6 +401,7 @@ ABSTRACT_TYPE(/datum/ore_cluster)
 /datum/game_mode/pod_wars/proc/handle_control_point_rewards()
 
 	for (var/datum/control_point/P in src.control_points)
+		message_admins("[P.name]-owner=[P.owner_team]-tier=[P.crate_rewards_tier]")
 		P.do_item_delivery(P.owner_team)
 
 /datum/game_mode/pod_wars/declare_completion()
@@ -455,7 +456,7 @@ ABSTRACT_TYPE(/datum/ore_cluster)
 	boutput(world, "[active_players] active players/[length(pw_team.members)] total players")
 	boutput(world, "")	//L.something
 
-//this is global so admins can run this proc to spawn
+//this is global so admins can run this proc to spawn the crates if they like, idk why they'd really want to but might as well be safe.
 proc/setup_pw_crate_lists()
 	pw_rewards_tier1 = list()
 	pw_rewards_tier2 = list()
@@ -1755,12 +1756,13 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 
 	attack_hand(mob/user as mob)
 		if (owner_team != get_pod_wars_team(user))
-			var/duration = is_commander(user) ? 7 SECONDS : 15 SECONDS
-			playsound(get_turf(src), "sound/machines/warning-buzzer.ogg", 100, 1)
+			var/duration = is_commander(user) ? 10 SECONDS : 20 SECONDS
+			playsound(get_turf(src), "sound/machines/warning-buzzer.ogg", 150, 1)	//loud
 
 			SETUP_GENERIC_ACTIONBAR(user, src, duration, /obj/control_point_computer/proc/capture, list(user),\
 			 null, null, "[user] successfully enters [his_or_her(user)] command code into \the [src]!")
-
+		else
+			boutput(user, "You can't think of anything else to do on this console...")
 		// old thing I was doing for capture system where it captured over time instead of all at once.
 		// switch(owner_team)
 		// 	if (TEAM_NANOTRASEN)
@@ -2311,7 +2313,6 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 		var/p_stat_text = ""
 		for (var/ckey in player_stats)
 			var/datum/pw_player_stats/stat = player_stats[ckey]
-			message_admins("[stat.team_num], [stat.initial_name]")
 			//first update longest life
 			inc_longest_life(stat.ckey)
 			// p_stat_text += stat.build_text()
@@ -2442,7 +2443,8 @@ Player Stats
 	var/team_num = 0						//should be 1 or 2
 	var/tier = 1							//acceptable values, 1-3.
 
-	New(var/team_num, var/tier)
+	New(turf/loc, var/team_num, var/tier)
+		..()
 		src.team_num = team_num
 		src.tier = tier
 
@@ -2458,23 +2460,35 @@ Player Stats
 				color = "#FF004E"
 				team_name_str = "Syndicate"
 
+		//Silly, wasn't planning to do this many, but had it keep counting up for fun. idk of an arabic to roman numeral function offhand.
 		var/tier_flavor
-		switch(tier)
+		switch (tier)
 			if (1)
 				tier_flavor = "I"
 			if (2)
 				tier_flavor = "II"
 			if (3)
 				tier_flavor = "III"
+			if (4)
+				tier_flavor = "IV"
+			if (5)
+				tier_flavor = "V"
+			if (6)
+				tier_flavor = "VI"
+			if (7)
+				tier_flavor = "VII"
+			if (8)
+				tier_flavor = "VIII"
+			if (9)
+				tier_flavor = "IX"
 
 
 		name = "[team_name_str] secure crate tier [tier_flavor]"
-		..()
 		SPAWN_DBG(1 SECONDS)
 			spawn_items()
 
 	//Selects the items that this crate spawns with based on its possible contents.
-	proc/spawn_items(var/mob/owner)		
+	proc/spawn_items()		
 		var/tier1_max_points = 20
 		var/tier2_max_points = 10
 		var/tier3_max_points = 10
@@ -2488,17 +2502,24 @@ Player Stats
 				make_items_in_tier(pw_rewards_tier2, tier2_max_points)
 
 			if (3)
-				make_items_in_tier(pw_rewards_tier1, tier1_max_points/2)
+				make_items_in_tier(pw_rewards_tier1, tier1_max_points/3)
 				make_items_in_tier(pw_rewards_tier2, tier2_max_points/2)
+				make_items_in_tier(pw_rewards_tier3, tier3_max_points)
+			else
+				//All "higher" tiers. I guess they'll be about the same, give em a little something to incentivize holding onto em for longer...
+				make_items_in_tier(pw_rewards_tier1, tier1_max_points/2)
+				make_items_in_tier(pw_rewards_tier2, tier2_max_points)
 				make_items_in_tier(pw_rewards_tier3, tier3_max_points)
 
 
 	//makes the items in the crate randomly picking from a rewards list, 
 	proc/make_items_in_tier(var/list/possible_rewards, var/max_points)
+		if (!islist(possible_rewards) || length(possible_rewards) == 0)
+			return 0
 
-#ifdef MAP_OVERRIDE_POD_WARS
 //Kinda cheesey here with the map defs, but I'm too lazy to care. makes a temp var for the mode, if it's not the right type (which idk why it wouldn't be)
 //then it is null so that the ?. will fail. So it still works regardless of mode, not that it would have the populated rewards lists if the mdoe was wrong...
+#ifdef MAP_OVERRIDE_POD_WARS
 		var/datum/game_mode/pod_wars/mode = ticker.mode
 		if (!istype(mode))
 			mode = null
@@ -2515,6 +2536,7 @@ Player Stats
 			mode?.stats_manager.add_item_reward(I.name, team_num)
 		mode?.stats_manager.add_crate(src.name, team_num)
 #endif
+		return 1
 
 
 // var/list/item_tier_low = list(/obj/item/storage/firstaid/regular, /obj/item/storage/firstaid/crit, /obj/item/reagent_containers/mender/both, 	///obj/item/tank/plasma
@@ -2585,7 +2607,6 @@ Player Stats
 				L.TakeDamage("chest", 0, ((initial(custom_projectile_type.power)/4)*pellets_to_fire)/L.get_ranged_protection(), 0, DAMAGE_BURN)
 				L.emote("twitch_v")
 			else
-				message_admins("222")
 				shoot_projectile_ST(get_turf(src), PJ, get_step(src, NORTH))
 			SPAWN_DBG(0.5 SECONDS)
 				qdel(src)
