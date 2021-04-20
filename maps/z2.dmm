@@ -41740,6 +41740,7 @@
 /area/sim/racing_entry)
 "cla" = (
 /obj/table/reinforced/auto,
+/obj/traitorifier/virtual/wizard,
 /turf/unsimulated/floor/setpieces/gauntlet{
 	desc = "This place is going to be a fucking mess.";
 	name = "\proper the murderbox"
@@ -42099,7 +42100,7 @@
 /area/sim/gunsim)
 "clQ" = (
 /obj/table/reinforced/auto,
-/obj/traitorifier/virtual/wizard,
+/obj/item/requisition_token/syndicate/vr,
 /turf/unsimulated/floor/setpieces/gauntlet{
 	desc = "This place is going to be a fucking mess.";
 	name = "\proper the murderbox"
@@ -78652,6 +78653,10 @@
 /turf/space,
 /turf/cordon,
 /area/cordon)
+"jhW" = (
+/obj/landmark/load_prefab_shuttledmm/destiny,
+/turf/unsimulated/outdoors/grass,
+/area/centcom/outside)
 "jiO" = (
 /obj/decal/fakeobjects/core{
 	desc = "It looks inactive.  Hope there isn't any fuel left in there...";
@@ -80275,6 +80280,12 @@
 	dir = 1
 	},
 /area/crypt/graveyard)
+"oag" = (
+/obj/landmark/load_prefab_shuttledmm/manta,
+/turf/unsimulated/wall/setpieces/leadwall{
+	dir = 10
+	},
+/area/centcom)
 "oaM" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -80602,6 +80613,10 @@
 /obj/machinery/light/small/floor,
 /turf/unsimulated/floor/darkblue,
 /area/syndicate_station/battlecruiser)
+"pdC" = (
+/obj/landmark/load_prefab_shuttledmm/donut2,
+/turf/unsimulated/outdoors/grass,
+/area/centcom/outside)
 "peF" = (
 /obj/stool/chair{
 	dir = 1
@@ -80903,6 +80918,13 @@
 	icon_state = "floor"
 	},
 /area/centcom/lounge)
+"qcU" = (
+/obj/submachine/weapon_vendor/syndicate,
+/turf/unsimulated/floor/setpieces/gauntlet{
+	desc = "This place is going to be a fucking mess.";
+	name = "\proper the murderbox"
+	},
+/area/sim/gunsim)
 "qcZ" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-47"
@@ -81546,6 +81568,10 @@
 	},
 /turf/unsimulated/outdoors/snow,
 /area/centcom/offices/virvatuli)
+"rRm" = (
+/obj/landmark/load_prefab_shuttledmm/sealab,
+/turf/unsimulated/outdoors/grass,
+/area/centcom/outside)
 "rTJ" = (
 /obj/fitness/stacklifter,
 /turf/unsimulated/floor/wood/two,
@@ -81942,6 +81968,10 @@
 	icon_state = "Stairs_wide"
 	},
 /area/centcom)
+"trU" = (
+/obj/landmark/load_prefab_shuttledmm/donut3,
+/turf/unsimulated/outdoors/grass,
+/area/centcom/outside)
 "ttO" = (
 /obj/critter/zombie/meatmonaut{
 	desc = "That suit is decidedly not Juicer, but then again who knows what you can salvage in the fleshier parts of the frontier.";
@@ -82721,6 +82751,10 @@
 	opacity = 0
 	},
 /area/titlescreen)
+"wDy" = (
+/obj/landmark/load_prefab_shuttledmm/cog2,
+/turf/unsimulated/outdoors/grass,
+/area/centcom/outside)
 "wEA" = (
 /obj/indestructible/shuttle_corner{
 	dir = 4;
@@ -83079,6 +83113,13 @@
 	icon_state = "shore-7"
 	},
 /area/titlescreen)
+"xNT" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/obj/landmark/load_prefab_shuttledmm/cog1,
+/turf/unsimulated/outdoors/grass,
+/area/centcom/outside)
 "xOg" = (
 /obj/stool/chair{
 	dir = 1
@@ -122903,7 +122944,7 @@ dpM
 dpM
 dpM
 dpT
-aES
+wDy
 aES
 dsh
 dsl
@@ -129850,7 +129891,7 @@ dqZ
 aES
 aES
 aES
-aES
+pdC
 djp
 dkX
 dny
@@ -131385,7 +131426,7 @@ duN
 aCn
 duT
 duK
-aES
+trU
 aES
 aES
 aES
@@ -137404,7 +137445,7 @@ dte
 dte
 dte
 dtl
-aES
+jhW
 aES
 aES
 aES
@@ -138636,7 +138677,7 @@ dob
 dob
 aES
 aES
-aES
+rRm
 aES
 djp
 dRF
@@ -141934,7 +141975,7 @@ dnA
 dkJ
 dkK
 dkK
-dnt
+oag
 dmq
 dny
 dny
@@ -143672,7 +143713,7 @@ ciN
 ciw
 ciw
 ciw
-cla
+qcU
 clQ
 cmG
 clr
@@ -145584,7 +145625,7 @@ dRf
 dRk
 dqA
 dqA
-dqA
+xNT
 dqg
 dse
 dFl

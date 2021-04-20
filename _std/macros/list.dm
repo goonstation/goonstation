@@ -22,6 +22,12 @@
 		L.len-- \
 	}
 
+/proc/list_keys(var/list/L)
+	RETURN_TYPE(/list)
+	. = list()
+	for (var/K in L)
+		. += K
+
 /proc/uniquelist(var/list/L)
 	RETURN_TYPE(/list)
 	. = list()
