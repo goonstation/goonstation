@@ -263,15 +263,6 @@ var/obj/item/dummy/click_dummy = new
 	if(!the_atom) return
 	. = format_net_id("\ref[the_atom]")
 
-/proc/can_act(var/mob/M, var/include_cuffs = 1)
-	if(!M) return 0 //Please pass the M, I need a sprinkle of it on my potatoes.
-	if(include_cuffs && M.hasStatus("handcuffed")) return 0
-	if(M.getStatusDuration("stunned")) return 0
-	if(M.getStatusDuration("weakened")) return 0
-	if(M.getStatusDuration("paralysis")) return 0
-	if(M.stat) return 0
-	return 1
-
 #define CLUWNE_NOISE_DELAY 50
 
 /proc/process_accents(var/mob/living/carbon/human/H, var/message)

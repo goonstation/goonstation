@@ -10630,11 +10630,6 @@
 	},
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/heads)
-"zt" = (
-/obj/table/wood/auto,
-/obj/machinery/light/lamp,
-/turf/simulated/floor/wood/two,
-/area/station/crew_quarters/heads)
 "zu" = (
 /obj/table/wood/auto,
 /obj/random_item_spawner/desk_stuff/g_clip_bin_pen,
@@ -10659,6 +10654,14 @@
 	},
 /turf/simulated/floor/white,
 /area/station/science/artifact)
+"zx" = (
+/obj/storage/secure/closet/command/chief_engineer,
+/obj/item/pinpointer/teg_semi,
+/obj/item/deconstructor,
+/obj/item/rocko,
+/obj/item/stamp/ce,
+/turf/simulated/floor/yellow,
+/area/station/engine/engineering/ce)
 "zD" = (
 /obj/machinery/atmospherics/pipe/simple/junction{
 	dir = 8
@@ -12051,13 +12054,6 @@
 	},
 /turf/simulated/floor/red,
 /area/station/hos)
-"Dw" = (
-/obj/storage/secure/closet/command/chief_engineer,
-/obj/item/pinpointer/teg_semi,
-/obj/item/deconstructor,
-/obj/item/stamp/ce,
-/turf/simulated/floor/yellow,
-/area/station/engine/engineering/ce)
 "Dx" = (
 /obj/storage/secure/closet/command/medical_director,
 /obj/item/device/analyzer/healthanalyzer/borg,
@@ -17418,6 +17414,15 @@
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/black,
 /area/station/storage/tech)
+"QM" = (
+/obj/table/wood/auto,
+/obj/machinery/light/lamp,
+/obj/item/record/atlas{
+	pixel_x = 5;
+	pixel_y = -10
+	},
+/turf/simulated/floor/wood/two,
+/area/station/crew_quarters/heads)
 "QR" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -62232,7 +62237,7 @@ ss
 tE
 uM
 vH
-Gk
+qD
 Tu
 VZ
 Zy
@@ -62534,7 +62539,7 @@ rw
 tF
 rw
 rw
-Gk
+qD
 qD
 By
 Zy
@@ -77032,13 +77037,13 @@ uo
 vf
 yr
 Wz
-zt
+QM
 Ah
 AX
 Qj
 Cp
 Ya
-Dw
+zx
 BK
 EX
 FQ
