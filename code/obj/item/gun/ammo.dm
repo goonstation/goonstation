@@ -1082,7 +1082,7 @@
 	charge = 100.0
 	max_charge = 100.0
 	cycle = 0
-	recharge_rate = 5.0
+	recharge_rate = 7.5
 
 /obj/item/ammo/power_cell/self_charging/ntso_baton
 	name = "Power Cell - NTSO Stun Baton"

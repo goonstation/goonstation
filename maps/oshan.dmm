@@ -4809,11 +4809,6 @@
 	},
 /turf/simulated/floor/bluegreen,
 /area/station/medical/medbay/treatment2)
-"alf" = (
-/turf/simulated/floor/bluewhite{
-	dir = 9
-	},
-/area/station/medical/staff)
 "alg" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -16081,16 +16076,6 @@
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northwest)
-"aLE" = (
-/obj/table/reinforced/auto{
-	icon_state = "3"
-	},
-/obj/machinery/door/airlock/pyro/glass/windoor{
-	dir = 4
-	},
-/obj/access_spawn/hydro,
-/turf/simulated/floor/plating/random,
-/area/station/maintenance/northwest)
 "aLF" = (
 /obj/machinery/plantpot,
 /turf/simulated/floor/grass,
@@ -17852,12 +17837,6 @@
 	},
 /turf/simulated/floor/carpet/arcade/half,
 /area/station/crew_quarters/arcade)
-"aQq" = (
-/obj/table/wood/auto,
-/obj/item/deconstructor,
-/obj/machinery/light/incandescent/warm,
-/turf/simulated/floor/black,
-/area/station/crew_quarters/ce)
 "aQr" = (
 /obj/stool/chair{
 	dir = 1
@@ -18349,18 +18328,10 @@
 	},
 /area/station/hallway/secondary/exit)
 "aRw" = (
-/turf/simulated/floor/stairs,
+/turf/simulated/floor/stairs/wide/middle,
 /area/station/hallway/secondary/exit)
 "aRx" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 4;
-	name = "autoname - SS13";
-	pixel_x = -10;
-	tag = ""
-	},
-/obj/machinery/door/airlock/pyro/external,
-/turf/simulated/floor,
+/turf/simulated/floor/stairs/wide,
 /area/station/hallway/secondary/exit)
 "aRy" = (
 /obj/cable{
@@ -46304,6 +46275,16 @@
 	},
 /turf/simulated/floor,
 /area/station/hangar/sec)
+"dwk" = (
+/obj/table/wood/auto,
+/obj/item/deconstructor,
+/obj/machinery/light/incandescent/warm,
+/obj/item/rocko{
+	pixel_x = -2;
+	pixel_y = 12
+	},
+/turf/simulated/floor/black,
+/area/station/crew_quarters/ce)
 "dBL" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -46439,6 +46420,17 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/research_outpost/maint)
+"fjm" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/bluewhite{
+	dir = 8
+	},
+/area/station/medical/staff)
 "fkH" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -47133,6 +47125,17 @@
 	},
 /turf/simulated/floor/engine,
 /area/research_outpost/chamber)
+"mbv" = (
+/obj/machinery/door/airlock/pyro/external,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 4;
+	name = "autoname - SS13";
+	pixel_x = -10;
+	tag = ""
+	},
+/turf/simulated/floor,
+/area/station/hallway/secondary/exit)
 "mhq" = (
 /turf/simulated/floor/caution/corner/misc{
 	dir = 6
@@ -47175,6 +47178,19 @@
 /obj/item/device/radio/intercom/catering,
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/bar)
+"mmd" = (
+/obj/table/reinforced/auto{
+	icon_state = "3"
+	},
+/obj/machinery/door/airlock/pyro/glass/windoor{
+	dir = 4
+	},
+/obj/access_spawn/hydro,
+/obj/railing/orange/reinforced{
+	dir = 8
+	},
+/turf/simulated/floor/plating/random,
+/area/station/maintenance/northwest)
 "myo" = (
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/catering{
@@ -47434,6 +47450,15 @@
 /obj/machinery/light/incandescent/netural,
 /turf/simulated/floor/black,
 /area/research_outpost)
+"oIf" = (
+/obj/machinery/power/apc/autoname_north,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/bluewhite{
+	dir = 9
+	},
+/area/station/medical/staff)
 "oOi" = (
 /obj/rack,
 /obj/item/furniture_parts/table/wood,
@@ -47713,6 +47738,12 @@
 /area/station/hangar/catering{
 	name = "Catering Hangar"
 	})
+"rdQ" = (
+/obj/machinery/light/incandescent/cool/very,
+/turf/simulated/floor/stairs{
+	icon_state = "Stairs2_wide"
+	},
+/area/station/hallway/secondary/exit)
 "rdX" = (
 /obj/machinery/door/airlock/pyro/alt{
 	name = "Catering Hangar"
@@ -48169,9 +48200,6 @@
 /area/station/hangar/catering{
 	name = "Catering Hangar"
 	})
-"wis" = (
-/turf/simulated/floor/grass,
-/area/station/hydroponics)
 "wqE" = (
 /obj/submachine/GTM{
 	pixel_y = 32
@@ -48222,6 +48250,10 @@
 	},
 /turf/simulated/floor,
 /area/research_outpost)
+"wOb" = (
+/obj/machinery/door/airlock/pyro/external,
+/turf/simulated/floor,
+/area/station/hallway/secondary/exit)
 "xhN" = (
 /obj/machinery/power/apc/autoname_north,
 /obj/cable{
@@ -78379,7 +78411,7 @@ agY
 agY
 bWp
 aia
-aLE
+mmd
 aia
 aia
 aLL
@@ -78995,7 +79027,7 @@ aMf
 aMf
 jKq
 aMf
-wis
+aMf
 aqQ
 bhC
 bhC
@@ -90731,8 +90763,8 @@ bOH
 agG
 ahd
 anP
-alf
-alg
+oIf
+fjm
 amZ
 alg
 amZ
@@ -107379,7 +107411,7 @@ amA
 aoc
 aJZ
 xIn
-aQq
+dwk
 bfe
 akN
 abH
@@ -112548,8 +112580,8 @@ bzg
 byY
 byY
 bCM
+byo
 byq
-aqn
 bFU
 bFU
 bFU
@@ -112850,8 +112882,8 @@ bWZ
 byY
 byY
 bCM
-byo
-byq
+aRx
+mbv
 bFU
 bFU
 bFU
@@ -113153,7 +113185,7 @@ byY
 byY
 kLf
 aRw
-aRx
+byp
 bFU
 bFU
 bFU
@@ -113453,9 +113485,9 @@ byq
 bzk
 byY
 byY
-bCQ
-byo
-byq
+bCM
+rdQ
+wOb
 bFU
 bFU
 bFU
@@ -113756,8 +113788,8 @@ bzl
 bAp
 bAp
 bCR
+byo
 byq
-aqn
 bFU
 bFU
 bFU

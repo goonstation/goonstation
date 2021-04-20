@@ -218,6 +218,7 @@
 		materiel_stock += new/datum/materiel/loadout/firebrand
 		materiel_stock += new/datum/materiel/loadout/engineer
 		materiel_stock += new/datum/materiel/loadout/marksman
+		materiel_stock += new/datum/materiel/loadout/knight
 		materiel_stock += new/datum/materiel/loadout/custom
 /*
 		materiel_stock += new/datum/materiel/storage/rucksack
@@ -232,11 +233,17 @@
 		materiel_stock += new/datum/materiel/utility/noslip_boots
 		materiel_stock += new/datum/materiel/utility/bomb_decoy
 
-	accepted_token()
-		src.credits["Sidearm"]++
-		src.credits["Loadout"]++
-		src.credits["Utility"]++
+	accepted_token(var/token)
+		if (istype(token, /obj/item/requisition_token/syndicate/vr))
+			src.credits["Sidearm"] += 999
+			src.credits["Loadout"] += 999
+			src.credits["Utility"] += 999
+		else
+			src.credits["Sidearm"]++
+			src.credits["Loadout"]++
+			src.credits["Utility"]++
 		..()
+
 // Materiel avaliable for purchase:
 
 /datum/materiel
@@ -319,7 +326,7 @@
 	name = "Crowd Dispersal Grenades"
 	path = /obj/item/storage/box/crowdgrenades
 	category = "Utility"
-	description = "Four 'Crowd Dispersal' pepper gas grenades, capable of clearing out riots. Also seasons food quite well! "
+	description = "Four 'Crowd Dispersal' pepper gas grenades, capable of clearing out riots. Also seasons food quite well!"
 
 /datum/materiel/utility/detscanner
 	name = "Forensics Scanner"
@@ -331,14 +338,13 @@
 	name = "First Aid Kit"
 	path = /obj/item/storage/firstaid/regular/doctor_spawn
 	category = "Utility"
-	description = "An advanced first aid kit, typically used in first responder scenarios before doctors arrive"
+	description = "An advanced first aid kit, typically used in first responder scenarios before doctors arrive."
 
 /datum/materiel/utility/medcappowercell
 	name = "Spare Power Cell"
-	path = /obj/item/ammo/power_cell/high_power
+	path = /obj/item/ammo/power_cell/self_charging/disruptor
 	category = "Utility"
-	description = "An additional high capacity power cell for your weapons. Note: Security Officers already spawn with one in their Security Pouch"
-	cost = 2
+	description = "A small(100u) self-charging power cell repurposed from a decommissioned distruptor blaster."
 
 /datum/materiel/utility/nightvisiongoggles
 	name = "Night Vision Goggles"
@@ -427,6 +433,12 @@
 	category = "Loadout"
 	description = "High-powered sniper rifle that can fire through two solid walls, optical thermal scanner and a pouch of smoke grenades"
 
+/datum/materiel/loadout/knight
+	name = "Knight (Prototype)"
+	path = /obj/storage/crate/classcrate/melee
+	category = "Loadout"
+	description = "A prototype melee focused class. Equipped with massive, heavy armour and a versatile sword that can switch special attack modes."
+
 /datum/materiel/loadout/custom
 	name = "Custom Class Uplink"
 	path = /obj/item/uplink/syndicate
@@ -506,6 +518,9 @@
 	syndicate
 		desc = "A Syndicate credit card charged with currency compatible with the Syndicate Weapons Vendor."
 		icon_state = "req-token"
+
+		vr
+			name = "NUKE_TKN.EXE"
 
 	security
 		desc = "An NT-provided token compatible with the Security Weapons Vendor."

@@ -134,7 +134,7 @@
 		..()
 
 	process()
-		if (world.time - create_time >= 1 MINUTES)
+		if (world.time - create_time >= 3 MINUTES)
 			create_time = world.time
 			if (!src.pooled && isturf(src.loc) && !on_table())
 				if (prob(50))
@@ -1042,7 +1042,7 @@
 					user.visible_message("[user] adds [W] to [src].<br><span class='alert'>[src] is too full and spills!</span>",\
 					"You add [W] to [src].<br><span class='alert'>[src] is too full and spills!</span>")
 					src.reagents.reaction(get_turf(user), TOUCH, src.reagents.total_volume / 2)
-					src.reagents.add_reagent("ice", 5, null, (T0C - 1))
+					src.reagents.add_reagent("ice", 10, null, (T0C - 50))
 					JOB_XP(user, "Clown", 1)
 					pool(W)
 					return
@@ -1052,7 +1052,7 @@
 			else
 				user.visible_message("[user] adds [W] to [src].",\
 				"You add [W] to [src].")
-				src.reagents.add_reagent("ice", 5, null, (T0C - 1))
+				src.reagents.add_reagent("ice", 10, null, (T0C - 50))
 				pool(W)
 				if ((user.mind.assigned_role == "Bartender") && (prob(40)))
 					JOB_XP(user, "Bartender", 1)

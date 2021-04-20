@@ -1318,7 +1318,7 @@
 					set_current_projectile(projectiles["detain"])
 					item_state = "lawg-detain"
 					playsound(M, "sound/vox/detain.ogg", 50)
-				if ("execute")
+				if ("execute", "exterminate")
 					set_current_projectile(projectiles["execute"])
 					current_projectile.cost = 30
 					item_state = "lawg-execute"
@@ -1328,7 +1328,7 @@
 					current_projectile.cost = 50
 					item_state = "lawg-smokeshot"
 					playsound(M, "sound/vox/smoke.ogg", 50)
-				if ("knockout")
+				if ("knockout", "sleepshot")
 					set_current_projectile(projectiles["knockout"])
 					current_projectile.cost = 60
 					item_state = "lawg-knockout"
@@ -1349,7 +1349,7 @@
 					set_current_projectile(projectiles["clownshot"])
 					item_state = "lawg-clownshot"
 					playsound(M, "sound/vox/clown.ogg", 30)
-				if ("pulse")
+				if ("pulse", "push")
 					set_current_projectile(projectiles["pulse"])
 					item_state = "lawg-pulse"
 					playsound(M, "sound/vox/push.ogg", 50)

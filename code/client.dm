@@ -370,6 +370,7 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 							logTheThing("admin", src, null, "[src.address] is using a vpn. vpn info: host: [data["host"]], ASN: [data["ASN"]], org: [data["organization"]]")
 							logTheThing("diary", src, null, "[src.address] is using a vpn. vpn info: host: [data["host"]], ASN: [data["ASN"]], org: [data["organization"]]", "admin")
 							message_admins("[key_name(src)] [src.address] attempted to connect with a VPN or proxy but was kicked!")
+							ircbot.export("admin", list(key="VPN Blocker", name="[src.key]", msg="[src.address] is using a vpn. vpn info: host: [data["host"]], ASN: [data["ASN"]], org: [data["organization"]]"))
 							if(do_compid_analysis)
 								do_computerid_test(src) //Will ban yonder fucker in case they are prix
 								check_compid_list(src) //Will analyze their computer ID usage patterns for aberrations
@@ -490,11 +491,6 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 					alert(src, "You won't be able to play without updating, sorry!")
 					del(src)
 					return
-
-// Let's throw it here, why not! -ZeWaka
-#if DM_BUILD < 1526 && !defined(SPACEMAN_DMM)
-#error Please update your BYOND version to the latest stable release.
-#endif
 
 		else
 			if (noir)
@@ -1053,12 +1049,15 @@ var/global/curr_day = null
 
 				if (src.holder)
 					boutput(M, "<span class='mhelp'><b>MENTOR PM: FROM [key_name(src.mob,0,0,1)]</b>: <span class='message'>[t]</span></span>")
+					M.playsound_local(M, "sound/misc/mentorhelp.ogg", 100, flags = SOUND_IGNORE_SPACE, channel = VOLUME_CHANNEL_MENTORPM)
 					boutput(src.mob, "<span class='mhelp'><b>MENTOR PM: TO [key_name(M,0,0,1)][(M.real_name ? "/"+M.real_name : "")] <A HREF='?src=\ref[src.holder];action=adminplayeropts;targetckey=[M.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: <span class='message'>[t]</span></span>")
 				else
 					if (M.client && M.client.holder)
 						boutput(M, "<span class='mhelp'><b>MENTOR PM: FROM [key_name(src.mob,0,0,1)][(src.mob.real_name ? "/"+src.mob.real_name : "")] <A HREF='?src=\ref[M.client.holder];action=adminplayeropts;targetckey=[src.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: <span class='message'>[t]</span></span>")
+						M.playsound_local(M, "sound/misc/mentorhelp.ogg", 100, flags = SOUND_IGNORE_SPACE, channel = VOLUME_CHANNEL_MENTORPM)
 					else
 						boutput(M, "<span class='mhelp'><b>MENTOR PM: FROM [key_name(src.mob,0,0,1)]</b>: <span class='message'>[t]</span></span>")
+						M.playsound_local(M, "sound/misc/mentorhelp.ogg", 100, flags = SOUND_IGNORE_SPACE, channel = VOLUME_CHANNEL_MENTORPM)
 					boutput(usr, "<span class='mhelp'><b>MENTOR PM: TO [key_name(M,0,0,1)]</b>: <span class='message'>[t]</span></span>")
 
 				logTheThing("mentor_help", src.mob, M, "Mentor PM'd [constructTarget(M,"mentor_help")]: [t]")

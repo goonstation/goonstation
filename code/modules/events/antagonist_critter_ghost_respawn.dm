@@ -101,7 +101,16 @@
 				)
 			)
 		),
-
+		list(new /datum/eventSpawnedCritter(
+			critter_types = list(/mob/living/critter/bot/cleanbot/emagged),
+			drop_tables = list(
+				new /datum/event_item_drop_table(
+					potential_drop_items = list(/obj/item/sponge, /obj/item/mop, /obj/item/reagent_containers/glass/bucket),
+					remove_dropped_items = 1, number_of_rolls = 3, percent_droprate = 50, pity_drop_atleast_one = 1
+					)
+				)
+			)
+		),
 	)
 
 	admin_call(var/source)

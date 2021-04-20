@@ -1153,6 +1153,18 @@
 		. = ..()
 		name = "[random_spaghetti_name()] and meatballs"
 
+/obj/item/reagent_containers/food/snacks/lasagna
+	name = "lasagna"
+	desc = "Layers of saucy, cheesy goodness."
+	icon = 'icons/obj/foodNdrink/food_meals.dmi'
+	icon_state = "lasagna"
+	needfork = 1
+	heal_amt = 2
+	amount = 5
+	initial_volume = 10
+	initial_reagents = "omnizine"
+	food_effects = list("food_energized","food_hp_up","food_brute","food_burn")
+
 /obj/item/reagent_containers/food/snacks/spaghetti/pizzaghetti
 	name = "pizza-ghetti"
 	desc = "This is just- It's pizza and spaghetti on a plate? They're not even touching. What gives?"
@@ -1188,7 +1200,7 @@
 	var/style_step = 1
 
 	heal(var/mob/M)
-		if(ishuman(M) && (M.job in list("Security Officer", "Head of Security", "Detective")))
+		if(ishuman(M) && (M.job in list("Security Officer", "Head of Security", "Detective", "Nanotrasen Security Operative", "Security Assistant", "Part-time Vice Officer")))
 			src.heal_amt *= 2
 			..()
 			src.heal_amt /= 2

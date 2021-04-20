@@ -278,6 +278,25 @@
 			src.root.add_file( new /datum/computer/file/pda_program/scan/health_scan(src))
 			src.read_only = 1
 
+	chiefengineer
+		name = "\improper EngineDaemon Ultimate cartridge"
+		desc = "A limited edition cartridge for high-class engineers. The warranty label is missing."
+		icon_state = "cart-engine"
+		file_amount = 64
+
+		New()
+			..()
+			src.root.add_file( new /datum/computer/file/pda_program/manifest(src))
+			src.root.add_file( new /datum/computer/file/pda_program/power_checker(src))
+			src.root.add_file( new /datum/computer/file/pda_program/atmos_alerts(src))
+			src.root.add_file( new /datum/computer/file/pda_program/signaler(src))
+			src.root.add_file( new /datum/computer/file/pda_program/scan/health_scan(src))
+			src.root.add_file( new /datum/computer/file/pda_program/qm_records(src))
+			src.root.add_file( new /datum/computer/file/pda_program/fileshare(src))
+			src.root.add_file( new /datum/computer/file/pda_program/security_ticket(src))
+			src.root.add_file( new /datum/computer/file/pda_program/bot_control/mulebot(src))
+			src.read_only = 1
+
 	clown
 		name = "\improper Honkworks 5.0 cartridge"
 		desc = "There are some <em>very</em> questionable stains on this thing. Is that blood?"
