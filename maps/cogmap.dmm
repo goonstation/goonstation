@@ -60227,6 +60227,12 @@
 /obj/decal/xmas_lights/ephemeral,
 /turf/simulated/floor/plating,
 /area/station/medical/cdc)
+"nhf" = (
+/obj/storage/closet/medicalclothes,
+/turf/simulated/floor/arrival{
+	dir = 6
+	},
+/area/station/medical/medbay)
 "nhn" = (
 /obj/item/device/radio/beacon,
 /obj/machinery/light{
@@ -100599,7 +100605,7 @@ sMR
 cuf
 cuW
 nIv
-cvU
+nhf
 ckG
 fOM
 adC
