@@ -8534,9 +8534,15 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/engineering/ce/private)
 "ayo" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/yellow,
 /area/station/engine/engineering/ce)
 "ayp" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "yellowblack"
@@ -8547,6 +8553,9 @@
 /obj/item/device/radio/intercom/loudspeaker,
 /obj/cable{
 	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "1-8"
 	},
 /turf/simulated/floor/carpet{
 	dir = 9;
@@ -8875,6 +8884,9 @@
 	},
 /area/station/engine/engineering/ce)
 "azc" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
 /turf/simulated/floor/orangeblack,
 /area/station/engine/engineering/ce/private)
 "azd" = (
@@ -9355,6 +9367,9 @@
 	},
 /obj/access_spawn/engineering_chief,
 /obj/firedoor_spawn,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/yellow,
 /area/station/engine/engineering/ce/private)
 "aAo" = (
@@ -9475,6 +9490,10 @@
 /obj/item/ammo/bullets/antisingularity{
 	pixel_x = 8
 	},
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/apc/autoname_north,
 /turf/simulated/floor/orangeblack,
 /area/station/engine/engineering/ce/private)
 "aAD" = (
