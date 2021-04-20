@@ -130,7 +130,7 @@ datum/preferences
 		for (var/i = 1, i <= SAVEFILE_PROFILES_MAX, i++)
 			profiles[i] = list(
 				"active" = i == src.profile_number,
-				"name" = src.savefile_get_profile_name(usr, i),
+				"name" = src.savefile_get_profile_name(client, i),
 			)
 
 		var/list/cloud_saves = null
