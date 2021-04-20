@@ -786,7 +786,9 @@
 	voice_override = "lizard"
 	special_head = HEAD_LIZARD
 	special_head_state = "head"
-	mutant_organs = list("tail" = /obj/item/organ/tail/lizard)
+	mutant_organs = list("tail" = /obj/item/organ/tail/lizard,
+	"left_eye" = /obj/item/organ/eye/lizard,
+	"right_eye" = /obj/item/organ/eye/lizard)
 	mutant_folder = 'icons/mob/lizard.dmi'
 	special_hair_1_icon = 'icons/mob/lizard.dmi'
 	special_hair_1_state = "head-detail_1"
@@ -1093,7 +1095,9 @@
 	mutant_folder = 'icons/mob/skeleton.dmi'
 	icon_state = "skeleton"
 	voice_override = "skelly"
-	mutant_organs = list("tail" = /obj/item/organ/tail/bone)
+	mutant_organs = list("tail" = /obj/item/organ/tail/bone,
+	"left_eye" = /obj/item/organ/eye/skeleton,
+	"right_eye" = /obj/item/organ/eye/skeleton)
 	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_NO_EYES | BUILT_FROM_PIECES | HEAD_HAS_OWN_COLORS | WEARS_UNDERPANTS)
 	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/skeleton/right
 	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/skeleton/left
@@ -1967,7 +1971,9 @@
 	voice_override = "cow"
 	step_override = "footstep"
 	race_mutation = /datum/bioEffect/mutantrace/cow
-	mutant_organs = list("tail" = /obj/item/organ/tail/cow)
+	mutant_organs = list("tail" = /obj/item/organ/tail/cow,
+	"left_eye" = /obj/item/organ/eye/cow,
+	"right_eye" = /obj/item/organ/eye/cow)
 	mutant_folder = 'icons/mob/cow.dmi'
 	special_head = HEAD_COW
 	special_hair_1_icon = 'icons/mob/cow.dmi'
