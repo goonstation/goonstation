@@ -30094,6 +30094,9 @@
 /area/station/security/brig)
 "hjs" = (
 /obj/disposalpipe/segment/mail,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/black,
 /area/station/hallway/primary/southeast)
 "hju" = (
@@ -31688,6 +31691,9 @@
 /obj/disposalpipe/segment{
 	dir = 2;
 	icon_state = "pipe-c"
+	},
+/obj/cable{
+	icon_state = "1-4"
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/primary/southeast)
@@ -37100,15 +37106,12 @@
 /turf/simulated/floor,
 /area/station/hangar/sec)
 "loJ" = (
-/obj/machinery/power/apc/autoname_north,
-/obj/cable{
-	icon_state = "0-4"
-	},
 /obj/cable{
 	icon_state = "0-8"
 	},
-/turf/simulated/floor/plating/random,
-/area/station/maintenance/central)
+/obj/machinery/power/apc/autoname_east,
+/turf/simulated/floor/black,
+/area/station/hallway/primary/southeast)
 "loK" = (
 /obj/decal/tile_edge/line/blue{
 	dir = 8;
@@ -108819,7 +108822,7 @@ aIu
 tFf
 aJl
 apT
-loJ
+jRm
 anv
 anv
 anv
@@ -113405,7 +113408,7 @@ jZT
 aQM
 eml
 bMM
-bMM
+loJ
 bkR
 aGh
 aMP
