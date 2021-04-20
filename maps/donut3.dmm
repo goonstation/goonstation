@@ -2849,6 +2849,9 @@
 /obj/machinery/light/small/sticky{
 	dir = 1
 	},
+/obj/cable{
+	icon_state = "2-4"
+	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/solar/west)
 "ayN" = (
@@ -7490,7 +7493,6 @@
 	dir = 6;
 	icon_state = "line2"
 	},
-/obj/machinery/power/apc/autoname_south,
 /turf/simulated/floor/black/grime,
 /area/station/hangar/qm)
 "bRC" = (
@@ -7941,6 +7943,10 @@
 /area/station/medical/asylum/maintenance)
 "bXv" = (
 /obj/table/glass/reinforced/auto,
+/obj/machinery/power/apc/autoname_north,
+/obj/cable{
+	icon_state = "0-2"
+	},
 /turf/simulated/floor/blue/side{
 	dir = 1
 	},
@@ -15111,6 +15117,15 @@
 /obj/decal/cleanable/rust/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/sw)
+"egD" = (
+/obj/decal/cleanable/dirt/jen,
+/obj/disposalpipe/segment/mail,
+/obj/random_item_spawner/junk/one_or_zero,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating/jen,
+/area/station/maintenance/inner/west)
 "egK" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -16054,6 +16069,14 @@
 	},
 /turf/simulated/floor/white,
 /area/station/science/lab)
+"eys" = (
+/obj/grille/catwalk/jen/side{
+	dir = 4
+	},
+/obj/cable,
+/obj/machinery/power/apc/autoname_east,
+/turf/simulated/floor/plating/jen,
+/area/station/maintenance/inner/south)
 "eyO" = (
 /obj/table/reinforced/bar/auto{
 	name = "table"
@@ -17550,6 +17573,10 @@
 	dir = 8;
 	icon_state = "line1"
 	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/power/apc/autoname_north,
 /turf/simulated/floor,
 /area/station/hallway/primary/southeast)
 "eTU" = (
@@ -17881,6 +17908,11 @@
 "eYv" = (
 /obj/grille/catwalk/jen/side{
 	dir = 4
+	},
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/south)
@@ -30173,6 +30205,12 @@
 /obj/access_spawn/security,
 /turf/simulated/floor/red/checker,
 /area/station/security/checkpoint/arrivals)
+"iIr" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/purple/side,
+/area/station/hallway/primary/south)
 "iIB" = (
 /obj/machinery/light/incandescent/netural,
 /obj/machinery/camera{
@@ -35774,6 +35812,19 @@
 /obj/access_spawn/syndie_shuttle,
 /turf/simulated/floor/plating/jen,
 /area/listeningpost)
+"kzn" = (
+/obj/railing/orange{
+	dir = 8
+	},
+/obj/decal/cleanable/dirt/jen,
+/obj/disposalpipe/segment/mail,
+/obj/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "1-9"
+	},
+/turf/simulated/floor/plating/jen,
+/area/station/maintenance/inner/west)
 "kzu" = (
 /obj/decal/tile_edge/line/purple{
 	dir = 6;
@@ -42644,11 +42695,6 @@
 	dir = 1
 	},
 /obj/decal/cleanable/dirt/jen,
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
 /obj/random_item_spawner/tools/one,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/sw)
@@ -43830,6 +43876,8 @@
 	pixel_x = 2;
 	pixel_y = -1
 	},
+/obj/cable,
+/obj/machinery/power/apc/autoname_east,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/solar/west)
 "mVp" = (
@@ -45711,6 +45759,11 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/south)
 "nxu" = (
@@ -45884,6 +45937,10 @@
 /obj/decal/cleanable/dirt/jen,
 /obj/disposalpipe/segment/mail,
 /obj/random_item_spawner/junk/one_or_zero,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/apc/autoname_north,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/west)
 "nzQ" = (
@@ -47789,9 +47846,13 @@
 /area/station/hangar/science)
 "oef" = (
 /obj/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
+	icon_state = "0-8"
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/cable{
+	icon_state = "0-2"
 	},
 /turf/simulated/floor/purple/side,
 /area/station/hallway/primary/south)
@@ -49345,6 +49406,9 @@
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/bathroom)
 "oAd" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/stairs{
 	dir = 4;
 	icon_state = "Stairs2_wide"
@@ -49493,6 +49557,9 @@
 /area/station/science/lab)
 "oDo" = (
 /obj/disposalpipe/segment/brig,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor,
 /area/station/hallway/primary/southeast)
 "oDy" = (
@@ -52167,6 +52234,15 @@
 	dir = 4
 	},
 /area/station/hangar/arrivals)
+"ptg" = (
+/obj/disposalpipe/segment/brig{
+	dir = 8
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor,
+/area/station/hallway/primary/south)
 "ptn" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -53191,10 +53267,8 @@
 	},
 /area/station/science/chemistry)
 "pGx" = (
-/obj/machinery/power/apc/autoname_west,
 /obj/decal/cleanable/rust/jen,
 /obj/decal/cleanable/dirt/jen,
-/obj/cable,
 /obj/decal/mule/beacon/no_auto_dropoff_spawn,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/sw)
@@ -65896,6 +65970,12 @@
 	},
 /turf/simulated/floor/black,
 /area/station/science/bot_storage)
+"tox" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/purple/side,
+/area/station/hallway/primary/south)
 "toz" = (
 /obj/table/reinforced/auto,
 /obj/item/robot_module{
@@ -67069,6 +67149,13 @@
 	},
 /turf/simulated/floor/white,
 /area/station/crewquarters/fuq3)
+"tFm" = (
+/obj/machinery/light/incandescent/netural,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/purple/side,
+/area/station/hallway/primary/south)
 "tFr" = (
 /obj/cable{
 	d1 = 4;
@@ -74312,6 +74399,18 @@
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/fitness)
+"vNy" = (
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 10;
+	name = "autoname - SS13";
+	tag = ""
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/purple/side,
+/area/station/hallway/primary/south)
 "vNB" = (
 /turf/simulated/wall/auto/jen/red,
 /area/station/maintenance/outer/sw)
@@ -74931,6 +75030,17 @@
 	},
 /turf/simulated/floor/circuit/vintage,
 /area/station/turret_protected/ai_upload)
+"vXj" = (
+/obj/disposalpipe/segment/mail,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/cable,
+/turf/simulated/floor,
+/area/station/hallway/primary/southeast)
 "vXu" = (
 /obj/machinery/vehicle/pod_smooth/light{
 	dir = 4
@@ -75737,11 +75847,6 @@
 	},
 /obj/grille/catwalk/jen/side{
 	dir = 10
-	},
-/obj/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-9"
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/sw)
@@ -82126,6 +82231,12 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/ne)
+"ybH" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating/jen,
+/area/station/maintenance/solar/west)
 "ycb" = (
 /obj/table/reinforced/auto{
 	icon_state = "3"
@@ -82813,6 +82924,19 @@
 /obj/disposalpipe/segment,
 /turf/simulated/floor/yellowblack,
 /area/station/storage/primary)
+"ylR" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/decal/cleanable/dirt/jen,
+/obj/grille/catwalk/jen/twosides,
+/obj/cable{
+	icon_state = "1-6"
+	},
+/turf/simulated/floor/plating/jen,
+/area/station/maintenance/inner/west)
 "ylX" = (
 /obj/fitness/speedbag/syndie,
 /obj/machinery/light/incandescent/netural{
@@ -107509,7 +107633,7 @@ lJM
 pyq
 pyq
 ayi
-mqx
+ybH
 mVk
 jHS
 rdj
@@ -112326,7 +112450,7 @@ osw
 osw
 evb
 oYS
-ihx
+ylR
 ihx
 cLZ
 gyP
@@ -112628,8 +112752,8 @@ mJS
 cQT
 sTC
 nzJ
-nzJ
-tHl
+egD
+kzn
 sPu
 tHl
 aOC
@@ -121416,7 +121540,7 @@ tDO
 fKU
 nxt
 eYv
-eYv
+eys
 iWz
 eOq
 gyh
@@ -131688,8 +131812,8 @@ nsd
 dCa
 eOq
 bXv
-tYp
-mZl
+ptg
+tox
 sTE
 ktO
 qiH
@@ -131991,7 +132115,7 @@ fOQ
 eOq
 cGI
 tYp
-mfI
+tFm
 sTE
 kxF
 biJ
@@ -132293,7 +132417,7 @@ iLZ
 eOq
 oCr
 tYp
-mZl
+iIr
 vzs
 wno
 wbX
@@ -132897,7 +133021,7 @@ tSw
 eOq
 meH
 tYp
-iKp
+vNy
 vzs
 agT
 iVE
@@ -138021,7 +138145,7 @@ tYb
 wVk
 kcU
 nds
-nds
+vXj
 qhe
 xyV
 wRM
