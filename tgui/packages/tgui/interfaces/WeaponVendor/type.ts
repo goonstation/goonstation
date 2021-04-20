@@ -1,9 +1,9 @@
 export interface WeaponVendorData {
   credits: {
-    Sidearm: number,
-    Loadout: number,
-    Utility: number,
-    Assistant: number,
+    sidearm: number,
+    loadout: number,
+    utility: number,
+    assistant: number,
   };
   stock: WeaponVendorStockData[];
 }

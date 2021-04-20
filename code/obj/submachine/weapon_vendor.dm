@@ -13,6 +13,11 @@
 
 */
 
+#define WEAPON_VENDOR_CATEGORY_SIDEARM "sidearm"
+#define WEAPON_VENDOR_CATEGORY_LOADOUT "loadout"
+#define WEAPON_VENDOR_CATEGORY_UTILITY "utility"
+#define WEAPON_VENDOR_CATEGORY_ASSISTANT "assistant"
+
 /obj/submachine/weapon_vendor
 	name = "Weapons Vendor"
 	icon = 'icons/obj/vending.dmi'
@@ -25,7 +30,7 @@
 
 	var/sound_token = 'sound/machines/capsulebuy.ogg'
 	var/sound_buy = 'sound/machines/spend.ogg'
-	var/list/credits = list("Sidearm" = 0, "Loadout" = 0, "Utility" = 0, "Assistant" = 0)
+	var/list/credits = list(WEAPON_VENDOR_CATEGORY_SIDEARM = 0, WEAPON_VENDOR_CATEGORY_LOADOUT = 0, WEAPON_VENDOR_CATEGORY_UTILITY = 0, WEAPON_VENDOR_CATEGORY_ASSISTANT = 0)
 	var/list/datum/materiel_stock = list()
 	var/token_accepted = /obj/item/requisition_token
 	var/log_purchase = FALSE
@@ -60,38 +65,13 @@
 
 		switch(action)
 			if ("redeem")
-				var/datum/materiel/sidearm/S = locate(params["ref"]) in materiel_stock
-				if(istype(S))
-					if(src.credits["Sidearm"] >= S.cost)
-						src.credits["Sidearm"] -= S.cost
-						var/atom/A = new S.path(src.loc)
-						playsound(src.loc, sound_buy, 80, 1)
-						src.vended(A)
-						return TRUE
-				var/datum/materiel/loadout/L = locate(params["ref"]) in materiel_stock
-				if(istype(L))
-					if(src.credits["Loadout"] >= L.cost)
-						src.credits["Loadout"] -= L.cost
-						var/atom/A = new L.path(src.loc)
-						playsound(src.loc, sound_buy, 80, 1)
-						src.vended(A)
-						return TRUE
-				var/datum/materiel/utility/U = locate(params["ref"]) in materiel_stock
-				if(istype(U))
-					if(src.credits["Utility"] >= U.cost)
-						src.credits["Utility"] -= U.cost
-						var/atom/A = new U.path(src.loc)
-						playsound(src.loc, sound_buy, 80, 1)
-						src.vended(A)
-						return TRUE
-				var/datum/materiel/assistant/AS = locate(params["ref"]) in materiel_stock
-				if(istype(AS))
-					if(src.credits["Assistant"] >= AS.cost)
-						src.credits["Assistant"] -= AS.cost
-						var/atom/A = new AS.path(src.loc)
-						playsound(src.loc, sound_buy, 80, 1)
-						src.vended(A)
-						return TRUE
+				var/datum/materiel/M = locate(params["ref"]) in materiel_stock
+				if (src.credits[M.category] >= M.cost)
+					src.credits[M.category] -= M.cost
+					var/atom/A = new M.path(src.loc)
+					playsound(src.loc, sound_buy, 80, 1)
+					src.vended(A)
+					return TRUE
 
 	attackby(var/obj/item/I, var/mob/user)
 		if(istype(I, token_accepted))
@@ -135,7 +115,7 @@
 		materiel_stock += new/datum/materiel/utility/firstaidsec
 		materiel_stock += new/datum/materiel/utility/nightvisiongoggles
 		materiel_stock += new/datum/materiel/utility/riotrounds
-		materiel_stock += new/datum/materiel/assistant
+		materiel_stock += new/datum/materiel/assistant/basic
 
 	vended(var/atom/A)
 		..()
@@ -152,11 +132,11 @@
 
 	accepted_token(var/token)
 		if (istype(token, /obj/item/requisition_token/security/assistant))
-			src.credits["Assistant"]++
+			src.credits[WEAPON_VENDOR_CATEGORY_ASSISTANT]++
 		else
-			src.credits["Loadout"]++
-			src.credits["Utility"]++
-			src.credits["Utility"]++
+			src.credits[WEAPON_VENDOR_CATEGORY_LOADOUT]++
+			src.credits[WEAPON_VENDOR_CATEGORY_UTILITY]++
+			src.credits[WEAPON_VENDOR_CATEGORY_UTILITY]++
 		..()
 
 /obj/submachine/weapon_vendor/syndicate
@@ -198,9 +178,9 @@
 		materiel_stock += new/datum/materiel/utility/bomb_decoy
 
 	accepted_token()
-		src.credits["Sidearm"]++
-		src.credits["Loadout"]++
-		src.credits["Utility"]++
+		src.credits[WEAPON_VENDOR_CATEGORY_SIDEARM]++
+		src.credits[WEAPON_VENDOR_CATEGORY_LOADOUT]++
+		src.credits[WEAPON_VENDOR_CATEGORY_UTILITY]++
 		..()
 // Materiel avaliable for purchase:
 
@@ -211,115 +191,108 @@
 	var/path = null
 	var/description = "If you see me, gannets is an idiot."
 
+/datum/materiel/sidearm
+	category = WEAPON_VENDOR_CATEGORY_SIDEARM
+
+/datum/materiel/loadout
+	category = WEAPON_VENDOR_CATEGORY_LOADOUT
+
+/datum/materiel/utility
+	category = WEAPON_VENDOR_CATEGORY_UTILITY
+
+/datum/materiel/assistant
+	category = WEAPON_VENDOR_CATEGORY_ASSISTANT
 
 //SECURITY
 
 /datum/materiel/sidearm/barrier
 	name = "Security Barrier"
 	path = /obj/item/barrier
-	category = "Sidearm"
 	description = "A barrier that grants great protection while held and can deploy shields that reflect projectiles."
 
 /datum/materiel/sidearm/EOD
 	name = "EOD Suit"
 	path = /obj/item/clothing/suit/armor/EOD
-	category = "Sidearm"
 	description = "Protective armor with high explosion resistance."
 
 /datum/materiel/sidearm/flaregun
 	name = "Flare Gun"
 	path = /obj/item/storage/box/flaregun
-	category = "Sidearm"
 	description = "Ignite one target. Must be reloaded after each use."
 
 /datum/materiel/loadout/standard
 	name = "Standard"
 	path = /obj/item/storage/belt/security/standard
-	category = "Loadout"
 	description = "One belt containing a taser, a baton, and a barrier. Classic!"
 
 /datum/materiel/loadout/offense
 	name = "Offense"
 	path = /obj/item/storage/belt/security/offense
-	category = "Loadout"
 	description = "One belt containing a wavegun, a baton, and a barrier."
 
 /datum/materiel/loadout/support
 	name = "Support"
 	path = /obj/item/storage/belt/security/support
-	category = "Loadout"
 	description = "One belt containing a baton, two robust donuts, and some morphine auto-injectors."
 
 /datum/materiel/loadout/control
 	name = "Control"
 	path = /obj/item/storage/belt/security/control
-	category = "Loadout"
 	description = "One belt containing a taser shotgun, a baton, and a barrier."
 
 /datum/materiel/loadout/suppression
 	name = "Suppression"
 	path = /obj/item/storage/belt/security/tasersmg
-	category = "Loadout"
 	description = "One belt containing a taser SMG, a baton, and a barrier."
 
 /datum/materiel/loadout/justabaton
 	name = "Just a Baton"
 	path = /obj/item/storage/belt/security/baton
-	category = "Loadout"
 	description = "One belt containing a baton and barrier. Does NOT come with a ranged weapon. Only for officers who DO NOT want a ranged weapon!"
 
 /datum/materiel/utility/morphineinjectors
 	name = "Morphine Autoinjectors"
 	path = /obj/item/storage/box/morphineinjectors
-	category = "Utility"
 	description = "Four Morphine Autoinjectors, capable of ensuring you move at the best possible speed while injured without slowdowns...or used as a makeshift tranquilizer if overdosed."
 
 /datum/materiel/utility/donuts
 	name = "Robust Donuts"
 	path = /obj/item/storage/box/robustdonuts
-	category = "Utility"
 	description = "Two Robust Donuts, which are loaded with helpful chemicals which heals you and helps you resist stuns!"
 
 /datum/materiel/utility/crowdgrenades
 	name = "Crowd Dispersal Grenades"
 	path = /obj/item/storage/box/crowdgrenades
-	category = "Utility"
 	description = "Four 'Crowd Dispersal' pepper gas grenades, capable of clearing out riots. Also seasons food quite well!"
 
 /datum/materiel/utility/detscanner
 	name = "Forensics Scanner"
 	path = /obj/item/device/detective_scanner
-	category = "Utility"
 	description = "A scanner capable of reading fingerprints on objects and looking up the records in real time. A favorite of investigators."
 
 /datum/materiel/utility/firstaidsec
 	name = "First Aid Kit"
 	path = /obj/item/storage/firstaid/regular/doctor_spawn
-	category = "Utility"
 	description = "An advanced first aid kit, typically used in first responder scenarios before doctors arrive."
 
 /datum/materiel/utility/medcappowercell
 	name = "Spare Power Cell"
 	path = /obj/item/ammo/power_cell/self_charging/disruptor
-	category = "Utility"
 	description = "A small(100u) self-charging power cell repurposed from a decommissioned distruptor blaster."
 
 /datum/materiel/utility/nightvisiongoggles
 	name = "Night Vision Goggles"
 	path = /obj/item/clothing/glasses/nightvision
-	category = "Utility"
 	description = "A pair of Night Vision Goggles. Helps you see in the dark, but doesn't give you any protection from flashes or a SecHud."
 
 /datum/materiel/utility/riotrounds
 	name = "40mm Riot Rounds"
 	path = /obj/item/ammo/bullets/pbr
-	category = "Utility"
 	description = "One case of 40mm Riot Rounds, totalling 2 shots, for the Riot Launcher."
 
-/datum/materiel/assistant
+/datum/materiel/assistant/basic
 	name = "Assistant"
 	path = /obj/item/storage/belt/security/assistant
-	category = "Assistant"
 	cost = 0.9
 	description = "One belt containing a security barrier, a forensic scanner, and a security ticket writer."
 
@@ -328,79 +301,66 @@
 /datum/materiel/sidearm/pistol
 	name = "Branwen Pistol"
 	path = /obj/item/storage/belt/pistol
-	category = "Sidearm"
 	description = "A gun-belt containing a semi-automatic, 9mm caliber service pistol and three magazines."
 
 /datum/materiel/sidearm/revolver
 	name = "Predator Revolver"
 	path = /obj/item/storage/belt/revolver
-	category = "Sidearm"
 	description = "A gun-belt containing a hefty combat revolver and two .357 caliber speedloaders."
 
 /datum/materiel/loadout/assault
 	name = "Assault Trooper"
 	path = /obj/storage/crate/classcrate/assault
-	category = "Loadout"
 	description = "A good all-rounder combat class centered around an assault rifle with selectable fire-modes as well as standard and armor-piercing rounds."
 
 /datum/materiel/loadout/heavy
 	name = "Heavy Weapons Specialist"
 	path = /obj/storage/crate/classcrate/heavy
-	category = "Loadout"
 	description = "Light machine gun, three boxes of ammunition and a pouch of high explosive grenades."
 
 /datum/materiel/loadout/grenadier
 	name = "Grenadier"
 	path = /obj/storage/crate/classcrate/demo
-	category = "Loadout"
 	description = "Grenade launcher, two pouches containing 40mm grenade rounds and mixed explosive grenades."
 
 /datum/materiel/loadout/infiltrator
 	name = "Infiltrator"
 	path = /obj/storage/crate/classcrate/infiltrator
-	category = "Loadout"
 	description = "Tranquilizer pistol with a pouch of darts, emag, tools to help you blend in with the crew and pod beacon deployer to help get your team closer to the target location."
 
 /datum/materiel/loadout/scout
 	name = "Scout"
 	path = /obj/storage/crate/classcrate/scout
-	category = "Loadout"
 	description = "Burst-fire submachine gun, personal cloaking device, light breaker and an emag for sneaky flanking actions."
 
 /datum/materiel/loadout/medic
 	name = "Field Medic"
 	path = /obj/storage/crate/classcrate/medic_rework
-	category = "Loadout"
 	description = "Comprehensive combat casualty care supplies provided in a satchel, belt and pouch."
 
 /datum/materiel/loadout/firebrand
 	name = "Firebrand"
 	path = /obj/storage/crate/classcrate/pyro
-	category = "Loadout"
 	description = "Napalm flamethrower, incendiery grenade pouch and a door-breaching fire-axe that can be two-handed to increase damage to both foes and airlocks."
 
 /datum/materiel/loadout/engineer
 	name = "Combat Engineer"
 	path = /obj/storage/crate/classcrate/engineer
-	category = "Loadout"
 	description = "Automated gun turret with an important guide on how to deploy it, full toolbelt with high-capacity welder and a combat shotgun."
 
 /datum/materiel/loadout/marksman
 	name = "Marksman"
 	path = /obj/storage/crate/classcrate/sniper
-	category = "Loadout"
 	description = "High-powered sniper rifle that can fire through two solid walls, optical thermal scanner and a pouch of smoke grenades"
 
 /datum/materiel/loadout/knight
 	name = "Knight (Prototype)"
 	path = /obj/storage/crate/classcrate/melee
-	category = "Loadout"
 	description = "A prototype melee focused class. Equipped with massive, heavy armour and a versatile sword that can switch special attack modes."
 
 /datum/materiel/loadout/custom
 	name = "Custom Class Uplink"
 	path = /obj/item/uplink/syndicate
-	category = "Loadout"
 	description = "A standard syndicate uplink loaded with 12 telecrytals, allowing you to pick and choose from an array of syndicate items."
 /*
 /datum/materiel/storage/rucksack
@@ -424,43 +384,36 @@
 /datum/materiel/utility/belt
 	name = "Tactical Espionage Belt"
 	path = /obj/item/storage/fanny/syndie
-	category = "Utility"
 	description = "The classic 7 slot syndicate belt pack. Has no relation to the fanny pack."
 
 /datum/materiel/utility/knife
 	name = "Combat Knife"
 	path = /obj/item/dagger/syndicate/specialist
-	category = "Utility"
 	description = "A field-tested 10 inch combat knife, helps you move faster when held."
 
 /datum/materiel/utility/rpg_ammo
 	name = "MPRT Rocket Ammunition"
 	path = /obj/item/storage/pouch/rpg
-	category = "Utility"
 	description = "A pouch for keeping MPRT ammunition in. Comes with two additional rockets."
 
 /datum/materiel/utility/donk
 	name = "Warm Donk Pocket"
 	path = /obj/item/reagent_containers/food/snacks/donkpocket_w
-	category = "Utility"
 	description = "A tasty donk pocket, heated by futuristic vending machine technology!"
 
 /datum/materiel/utility/sarin_grenade
 	name = "Sarin Grenade"
 	path = /obj/item/chem_grenade/sarin
-	category = "Utility"
 	description = "A terrifying grenade containing a potent nerve gas. Try not to get caught in the smoke."
 
 /datum/materiel/utility/noslip_boots
 	name = "Hi-grip Assault Boots"
 	path = /obj/item/clothing/shoes/swat/noslip
-	category = "Utility"
 	description = "Avoid slipping in firefights with these combat boots designed to provide enhanced grip and ankle stability."
 
 /datum/materiel/utility/bomb_decoy
 	name = "Decoy Bomb Balloon"
 	path = /obj/bomb_decoy
-	category = "Utility"
 	description = "A realistic inflatable nuclear bomb decoy, it'll fool anyone not looking closely but won't take much punishment before it pops."
 
 // Requisition tokens
@@ -483,3 +436,8 @@
 
 		assistant
 			desc = "An NT-provided token compatible with the Security Weapons Vendor. This one says <i>for security assistant use only</i>."
+
+#undef WEAPON_VENDOR_CATEGORY_SIDEARM
+#undef WEAPON_VENDOR_CATEGORY_LOADOUT
+#undef WEAPON_VENDOR_CATEGORY_UTILITY
+#undef WEAPON_VENDOR_CATEGORY_ASSISTANT

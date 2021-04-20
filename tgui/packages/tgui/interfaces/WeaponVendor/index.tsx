@@ -1,24 +1,10 @@
-import { classes } from 'common/react';
-import { pluralize } from 'common/string';
+import { toTitleCase } from 'common/string';
 import { useBackend, useLocalState } from '../../backend';
 import { Box, Button, Collapsible, LabeledList, Section, Stack, Table } from '../../components';
 import { Window } from '../../layouts';
 import { WeaponVendorData, WeaponVendorStockData } from './type';
 
-const LoadoutConfig = {
-  Sidearm: {
-    color: 'teal',
-  },
-  Loadout: {
-    color: 'yellow',
-  },
-  Utility: {
-    color: 'blue',
-  },
-  Assistant: {
-    color: 'grey',
-  },
-};
+export const pluralize = (word, n) => (n !== 1 ? word + 's' : word);
 
 export const WeaponVendor = (_props, context) => {
   const { data } = useBackend<WeaponVendorData>(context);
@@ -27,13 +13,13 @@ export const WeaponVendor = (_props, context) => {
   return (
     <Window width={550} height={700}>
       <Window.Content>
-        <Stack vertical fill>
+        <Stack className="WeaponVendor" vertical fill>
           <Stack.Item>
             <Section fill>
               <LabeledList>
                 <LabeledList.Item label="Balance">
                   {Object.entries(data.credits).map(([name, value], index) => (
-                    <Box key={name} inline mr="5px" color={LoadoutConfig[name]?.color}>
+                    <Box key={name} inline mr="5px" className={`WeaponVendor__Credits--${name}`}>
                       {value} {name} {pluralize('credit', value)}
                       {index + 1 !== Object.keys(data.credits).length ? ', ' : ''}
                     </Box>
@@ -53,7 +39,7 @@ export const WeaponVendor = (_props, context) => {
                 </Button.Checkbox>
               }>
               {Object.keys(data.credits).map((category) => (
-                <StockCategory key={category} category={category} />
+                <StockCategory key={category} category={category} filterAvailable={filterAvailable} />
               ))}
             </Section>
           </Stack.Item>
@@ -65,26 +51,24 @@ export const WeaponVendor = (_props, context) => {
 
 type StockCategoryProps = {
   category: string;
+  filterAvailable: boolean;
 };
 
-const StockCategory = ({ category }: StockCategoryProps, context) => {
+const StockCategory = ({ category, filterAvailable }: StockCategoryProps, context) => {
   const { data } = useBackend<WeaponVendorData>(context);
-  const [filterAvailable] = useLocalState(context, 'filter-available', false);
 
   let stock = data.stock.filter((stock) => stock.category === category);
   if (filterAvailable) {
     stock = stock.filter((stock) => stock.cost <= data.credits[stock.category]);
   }
 
-  const color = LoadoutConfig[category]?.color;
-
   if (stock.length === 0) {
     return null;
   }
 
   return (
-    <Collapsible title={category} open color={color}>
-      <Table key={category}>
+    <Collapsible className={`WeaponVendor__Category--${category}`} title={toTitleCase(category)} open color={category}>
+      <Table>
         {data.stock
           .filter((stock) => stock.category === category)
           .map((stock) => (
@@ -102,21 +86,18 @@ type StockProps = {
 const Stock = ({ stock }: StockProps, context) => {
   const { data, act } = useBackend<WeaponVendorData>(context);
 
-  const color = LoadoutConfig[stock.category]?.color;
   return (
-    <Table.Row className={'WeaponVendor__Row'} opacity={stock.cost > data.credits[stock.category] && 0.5}>
-      <Table.Cell className="WeaponVendor__Cell">
-        <Box pb="5px">
-          <Box inline bold>
-            {stock.name}
-          </Box>
+    <Table.Row className="WeaponVendor__Row" opacity={stock.cost > data.credits[stock.category] && 0.5}>
+      <Table.Cell className="WeaponVendor__Cell" py="5px">
+        <Box mb="5px" bold>
+          {stock.name}
         </Box>
         <Box>{stock.description}</Box>
       </Table.Cell>
-      <Table.Cell className="WeaponVendor__Cell" textAlign="right">
+      <Table.Cell className="WeaponVendor__Cell" py="5px" textAlign="right">
         <Button
           disabled={stock.cost > data.credits[stock.category]}
-          color={color}
+          color={stock.category}
           onClick={() => act('redeem', { ref: stock.ref })}>
           Redeem {stock.cost} {pluralize('credit', stock.cost)}
         </Button>
