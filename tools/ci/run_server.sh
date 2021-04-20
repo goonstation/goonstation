@@ -1,10 +1,11 @@
 #!/bin/bash
 set -euo pipefail
 
-DreamDaemon goonstation.dmb -once -quiet -close -trusted -verbose
+DreamDaemon goonstation.dmb -once -quiet -close -trusted -verbose -invisible
+touch ./no_runtimes.txt
+sed -i '/^[[:space:]]*$/d' ./no_runtimes.txt
 if [ -s ./no_runtimes.txt ]
 then
-	echo "Runtimes encountered."
 	cat ./no_runtimes.txt
 	exit 1
 else
