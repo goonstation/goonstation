@@ -1754,7 +1754,7 @@
 /obj/table/round/auto,
 /obj/towelbin,
 /turf/simulated/floor/blue,
-/area/station/crew_quarters/pool)
+/area/spacehabitat/pool)
 "agP" = (
 /obj/item/storage/wall/clothingrack/clothes3{
 	dir = 4
@@ -2436,7 +2436,7 @@
 /turf/simulated/floor/bluewhite/corner{
 	dir = 4
 	},
-/area/station/crew_quarters/pool)
+/area/spacehabitat/pool)
 "aqP" = (
 /obj/cable{
 	d1 = 4;
@@ -2764,7 +2764,7 @@
 /turf/simulated/floor/bluewhite/corner{
 	dir = 4
 	},
-/area/station/crew_quarters/pool)
+/area/spacehabitat/pool)
 "awJ" = (
 /obj/wingrille_spawn/auto/tuff,
 /obj/cable,
@@ -4305,7 +4305,7 @@
 	tag = "icon-pool (EAST)"
 	},
 /turf/simulated/floor/white,
-/area/station/crew_quarters/pool)
+/area/spacehabitat/pool)
 "aVz" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -4791,7 +4791,7 @@
 /turf/simulated/floor/bluewhite/corner{
 	dir = 8
 	},
-/area/station/crew_quarters/pool)
+/area/spacehabitat/pool)
 "bdi" = (
 /obj/table/auto,
 /obj/item/matchbook{
@@ -5262,7 +5262,7 @@
 	},
 /obj/item/inner_tube/random,
 /turf/simulated/floor/white,
-/area/station/crew_quarters/pool)
+/area/spacehabitat/pool)
 "bmF" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 5
@@ -8569,7 +8569,7 @@
 /turf/simulated/floor/bluewhite/corner{
 	dir = 8
 	},
-/area/station/crew_quarters/pool)
+/area/spacehabitat/pool)
 "chM" = (
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/purple/side,
@@ -9933,7 +9933,7 @@
 /turf/simulated/floor/bluewhite/corner{
 	dir = 8
 	},
-/area/station/crew_quarters/pool)
+/area/spacehabitat/pool)
 "cEG" = (
 /obj/machinery/light/small/floor,
 /turf/simulated/floor/carpet{
@@ -12906,7 +12906,7 @@
 	tag = "icon-pool (NORTH)"
 	},
 /turf/simulated/floor/white,
-/area/station/crew_quarters/pool)
+/area/spacehabitat/pool)
 "dyw" = (
 /obj/grille/catwalk/jen/side{
 	dir = 6
@@ -16938,7 +16938,7 @@
 "eKr" = (
 /obj/machinery/door/unpowered/wood/pyro,
 /turf/simulated/floor/white,
-/area/station/crew_quarters/pool)
+/area/spacehabitat/pool)
 "eKs" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -17026,7 +17026,7 @@
 /turf/simulated/floor/bluewhite/corner{
 	dir = 8
 	},
-/area/station/crew_quarters/pool)
+/area/spacehabitat/pool)
 "eLp" = (
 /obj/cable{
 	d1 = 4;
@@ -20410,7 +20410,7 @@
 	},
 /obj/decal/mule/dropoff,
 /turf/simulated/floor,
-/area/station/crew_quarters/pool)
+/area/spacehabitat/pool)
 "fJf" = (
 /obj/decal/tile_edge/line/yellow{
 	dir = 4;
@@ -23203,7 +23203,7 @@
 /turf/simulated/floor/bluewhite/corner{
 	dir = 4
 	},
-/area/station/crew_quarters/pool)
+/area/spacehabitat/pool)
 "gDk" = (
 /obj/wingrille_spawn/auto/tuff,
 /turf/simulated/floor/plating,
@@ -24238,7 +24238,7 @@
 	tag = "icon-pool (SOUTHEAST)"
 	},
 /turf/simulated/floor/white,
-/area/station/crew_quarters/pool)
+/area/spacehabitat/pool)
 "gVg" = (
 /obj/machinery/door/poddoor/blast/pyro/podbay_autoclose{
 	dir = 4
@@ -27095,7 +27095,7 @@
 	icon_state = "plant"
 	},
 /turf/simulated/floor/white,
-/area/station/crew_quarters/pool)
+/area/spacehabitat/pool)
 "hLH" = (
 /obj/cable{
 	icon_state = "0-2"
@@ -27641,7 +27641,7 @@
 /turf/simulated/floor/bluewhite/corner{
 	dir = 8
 	},
-/area/station/crew_quarters/pool)
+/area/spacehabitat/pool)
 "hVw" = (
 /turf/simulated/floor/plating/airless,
 /area/space)
@@ -27886,7 +27886,7 @@
 /turf/simulated/floor/bluewhite/corner{
 	dir = 4
 	},
-/area/station/crew_quarters/pool)
+/area/spacehabitat/pool)
 "hZS" = (
 /obj/disposalpipe/segment/morgue{
 	name = "crematorium pipe"
@@ -28771,7 +28771,7 @@
 /turf/simulated/floor/bluewhite/corner{
 	dir = 8
 	},
-/area/station/crew_quarters/pool)
+/area/spacehabitat/pool)
 "imk" = (
 /obj/cable{
 	d2 = 8;
@@ -29254,7 +29254,7 @@
 "itZ" = (
 /obj/critter/walrus,
 /turf/simulated/pool/no_animate,
-/area/station/crew_quarters/pool)
+/area/spacehabitat/pool)
 "iuf" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/railing/orange,
@@ -29362,7 +29362,7 @@
 	})
 "ivU" = (
 /turf/simulated/wall/asteroid,
-/area/station/crew_quarters/pool)
+/area/spacehabitat/pool)
 "ivX" = (
 /obj/decal/tile_edge/line/yellow{
 	dir = 6;
@@ -29648,7 +29648,7 @@
 /turf/simulated/floor/bluewhite/corner{
 	dir = 8
 	},
-/area/station/crew_quarters/pool)
+/area/spacehabitat/pool)
 "iBc" = (
 /obj/decal/tile_edge/stripe/big{
 	dir = 1
@@ -30878,7 +30878,7 @@
 	},
 /obj/machinery/light/small/floor,
 /turf/simulated/pool/no_animate,
-/area/station/crew_quarters/pool)
+/area/spacehabitat/pool)
 "iVK" = (
 /obj/machinery/door/airlock/pyro/medical/alt,
 /obj/access_spawn/medical,
@@ -31028,7 +31028,7 @@
 /obj/rack,
 /obj/item/sponge,
 /turf/simulated/floor/white,
-/area/station/crew_quarters/pool)
+/area/spacehabitat/pool)
 "iYe" = (
 /obj/item/clothing/suit/bedsheet/blue,
 /obj/stool/bed,
@@ -31738,7 +31738,7 @@
 /area/station/ai_monitored/armory)
 "jkx" = (
 /turf/simulated/wall/auto/reinforced/jen,
-/area/station/crew_quarters/pool)
+/area/spacehabitat/pool)
 "jkD" = (
 /obj/machinery/light/small/floor,
 /obj/disposalpipe/segment/morgue,
@@ -32111,7 +32111,7 @@
 "jqw" = (
 /obj/storage/secure/closet/personal,
 /turf/simulated/floor/white,
-/area/station/crew_quarters/pool)
+/area/spacehabitat/pool)
 "jqB" = (
 /obj/decal/tile_edge/line/yellow{
 	dir = 5;
@@ -33371,7 +33371,7 @@
 /turf/simulated/floor/bluewhite/corner{
 	dir = 8
 	},
-/area/station/crew_quarters/pool)
+/area/spacehabitat/pool)
 "jKY" = (
 /obj/grille/catwalk/jen/side{
 	dir = 8
@@ -34016,7 +34016,7 @@
 	pixel_y = 7
 	},
 /turf/simulated/pool/no_animate,
-/area/station/crew_quarters/pool)
+/area/spacehabitat/pool)
 "jVj" = (
 /obj/landmark/start{
 	name = "Botanist"
@@ -34063,7 +34063,7 @@
 	required_to_pass = 210
 	},
 /turf/simulated/floor/white,
-/area/station/crew_quarters/pool)
+/area/spacehabitat/pool)
 "jWe" = (
 /obj/decal/stage_edge/alt,
 /obj/decal/tile_edge/line/yellow{
@@ -34259,7 +34259,7 @@
 /turf/simulated/floor/bluewhite/corner{
 	dir = 4
 	},
-/area/station/crew_quarters/pool)
+/area/spacehabitat/pool)
 "kaD" = (
 /obj/cable{
 	d1 = 2;
@@ -36620,7 +36620,7 @@
 	tag = "icon-pool (WEST)"
 	},
 /turf/simulated/floor/white,
-/area/station/crew_quarters/pool)
+/area/spacehabitat/pool)
 "kMX" = (
 /obj/machinery/light/incandescent/harsh,
 /obj/stool/bench/blue/auto,
@@ -39288,7 +39288,7 @@
 	rand_pos = 1
 	},
 /turf/simulated/floor/white,
-/area/station/crew_quarters/pool)
+/area/spacehabitat/pool)
 "lCu" = (
 /obj/machinery/chem_master{
 	dir = 1
@@ -42992,7 +42992,7 @@
 /obj/table/auto,
 /obj/item/football,
 /turf/simulated/floor/white,
-/area/station/crew_quarters/pool)
+/area/spacehabitat/pool)
 "mFQ" = (
 /obj/submachine/chef_sink/chem_sink{
 	layer = 3;
@@ -46617,7 +46617,7 @@
 "nLD" = (
 /obj/machinery/light/small/floor,
 /turf/simulated/pool/no_animate,
-/area/station/crew_quarters/pool)
+/area/spacehabitat/pool)
 "nLL" = (
 /obj/decal/tile_edge/line/green{
 	icon_state = "line1"
@@ -50460,7 +50460,7 @@
 "oQH" = (
 /obj/pool/perspective,
 /turf/simulated/floor/white,
-/area/station/crew_quarters/pool)
+/area/spacehabitat/pool)
 "oQN" = (
 /obj/decal/tile_edge/check{
 	dir = 9;
@@ -52298,7 +52298,7 @@
 "ptO" = (
 /obj/item/storage/toilet,
 /turf/simulated/floor/white,
-/area/station/crew_quarters/pool)
+/area/spacehabitat/pool)
 "ptT" = (
 /obj/table/reinforced/auto,
 /obj/item/storage/toolbox/mechanical{
@@ -52597,7 +52597,7 @@
 /turf/simulated/floor/bluewhite/corner{
 	dir = 4
 	},
-/area/station/crew_quarters/pool)
+/area/spacehabitat/pool)
 "pxu" = (
 /obj/machinery/camera,
 /turf/space,
@@ -56673,7 +56673,7 @@
 /turf/simulated/floor/bluewhite/corner{
 	dir = 8
 	},
-/area/station/crew_quarters/pool)
+/area/spacehabitat/pool)
 "qBC" = (
 /obj/crematorium,
 /obj/machinery/light/incandescent/cool/very{
@@ -57082,7 +57082,7 @@
 "qHU" = (
 /obj/machinery/light/incandescent/netural,
 /turf/simulated/floor/white,
-/area/station/crew_quarters/pool)
+/area/spacehabitat/pool)
 "qHX" = (
 /obj/sea_plant/tubesponge/small,
 /obj/fluid_spawner{
@@ -57361,7 +57361,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/white,
-/area/station/crew_quarters/pool)
+/area/spacehabitat/pool)
 "qMF" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet{
@@ -58601,7 +58601,7 @@
 /turf/simulated/floor/bluewhite/corner{
 	dir = 4
 	},
-/area/station/crew_quarters/pool)
+/area/spacehabitat/pool)
 "rcS" = (
 /obj/grille/catwalk/jen/side{
 	dir = 8
@@ -60241,7 +60241,7 @@
 /turf/simulated/floor/bluewhite/corner{
 	dir = 4
 	},
-/area/station/crew_quarters/pool)
+/area/spacehabitat/pool)
 "rBc" = (
 /obj/decal/tile_edge/line/blue{
 	dir = 1;
@@ -60952,7 +60952,7 @@
 /turf/simulated/floor/bluewhite/corner{
 	dir = 4
 	},
-/area/station/crew_quarters/pool)
+/area/spacehabitat/pool)
 "rLr" = (
 /obj/disposalpipe/segment/mail,
 /turf/simulated/wall/auto/reinforced/jen/blue,
@@ -60977,7 +60977,7 @@
 /turf/simulated/floor/bluewhite/corner{
 	dir = 4
 	},
-/area/station/crew_quarters/pool)
+/area/spacehabitat/pool)
 "rLN" = (
 /obj/machinery/neosmelter,
 /obj/decal/tile_edge/stripe/extra_big{
@@ -61195,7 +61195,7 @@
 "rPu" = (
 /obj/machinery/light_switch/east,
 /turf/simulated/floor,
-/area/station/crew_quarters/pool)
+/area/spacehabitat/pool)
 "rPw" = (
 /obj/reagent_dispensers/still,
 /turf/simulated/floor/black,
@@ -61253,7 +61253,7 @@
 /obj/machinery/drainage,
 /obj/machinery/light/incandescent/netural,
 /turf/simulated/floor/white,
-/area/station/crew_quarters/pool)
+/area/spacehabitat/pool)
 "rRe" = (
 /obj/machinery/portable_atmospherics/scrubber,
 /obj/machinery/portable_atmospherics/scrubber,
@@ -61916,7 +61916,7 @@
 /turf/simulated/floor/bluewhite/corner{
 	dir = 8
 	},
-/area/station/crew_quarters/pool)
+/area/spacehabitat/pool)
 "saB" = (
 /obj/stool/chair/moveable{
 	dir = 1
@@ -62039,7 +62039,7 @@
 /turf/simulated/floor/bluewhite/corner{
 	dir = 8
 	},
-/area/station/crew_quarters/pool)
+/area/spacehabitat/pool)
 "sco" = (
 /obj/landmark/map{
 	name = "DONUT3"
@@ -62499,7 +62499,7 @@
 /area/station/engine/inner)
 "sjf" = (
 /turf/simulated/pool/no_animate,
-/area/station/crew_quarters/pool)
+/area/spacehabitat/pool)
 "sjg" = (
 /obj/machinery/power/apc/autoname_east,
 /obj/cable{
@@ -62677,7 +62677,7 @@
 /turf/simulated/floor/bluewhite/corner{
 	dir = 8
 	},
-/area/station/crew_quarters/pool)
+/area/spacehabitat/pool)
 "slP" = (
 /obj/machinery/vending/medical,
 /turf/simulated/floor/white,
@@ -64954,7 +64954,7 @@
 /turf/simulated/floor/bluewhite/corner{
 	dir = 4
 	},
-/area/station/crew_quarters/pool)
+/area/spacehabitat/pool)
 "sYJ" = (
 /obj/machinery/field_generator,
 /obj/decal/tile_edge/stripe/extra_big{
@@ -69856,7 +69856,7 @@
 /area/station/crew_quarters/cafeteria)
 "uyp" = (
 /turf/simulated/floor/white,
-/area/station/crew_quarters/pool)
+/area/spacehabitat/pool)
 "uyq" = (
 /obj/table/reinforced/auto,
 /obj/machinery/light/lamp,
@@ -70246,7 +70246,7 @@
 /obj/item/clothing/suit/bathrobe,
 /obj/item/clothing/shoes/fuzzy,
 /turf/simulated/floor/white,
-/area/station/crew_quarters/pool)
+/area/spacehabitat/pool)
 "uDM" = (
 /obj/disposalpipe/segment/mail{
 	dir = 2;
@@ -71747,7 +71747,7 @@
 /turf/simulated/floor/bluewhite/corner{
 	dir = 8
 	},
-/area/station/crew_quarters/pool)
+/area/spacehabitat/pool)
 "uYk" = (
 /obj/stool/chair{
 	dir = 4
@@ -71794,7 +71794,7 @@
 /area/station/security/main)
 "uYM" = (
 /turf/simulated/floor,
-/area/station/crew_quarters/pool)
+/area/spacehabitat/pool)
 "uYT" = (
 /turf/simulated/wall/auto/reinforced/jen,
 /area/station/maintenance/outer/east)
@@ -73339,7 +73339,7 @@
 /turf/simulated/floor/bluewhite/corner{
 	dir = 8
 	},
-/area/station/crew_quarters/pool)
+/area/spacehabitat/pool)
 "vyw" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 1
@@ -74535,7 +74535,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/white,
-/area/station/crew_quarters/pool)
+/area/spacehabitat/pool)
 "vOK" = (
 /obj/machinery/light/small/floor/warm,
 /obj/machinery/camera{
@@ -77852,7 +77852,7 @@
 "wNh" = (
 /obj/critter/sealpup,
 /turf/simulated/floor/white,
-/area/station/crew_quarters/pool)
+/area/spacehabitat/pool)
 "wNn" = (
 /obj/machinery/door/airlock/pyro/alt,
 /obj/decal/mule/dropoff,
@@ -79079,7 +79079,7 @@
 /turf/simulated/floor/bluewhite/corner{
 	dir = 8
 	},
-/area/station/crew_quarters/pool)
+/area/spacehabitat/pool)
 "xdQ" = (
 /turf/simulated/floor/black,
 /area/station/bridge)
@@ -79318,7 +79318,7 @@
 "xhH" = (
 /obj/machinery/drainage,
 /turf/simulated/floor/white,
-/area/station/crew_quarters/pool)
+/area/spacehabitat/pool)
 "xhV" = (
 /obj/disposalpipe/segment/mail,
 /obj/cable{
@@ -80584,7 +80584,7 @@
 	},
 /obj/machinery/light,
 /turf/simulated/floor/white,
-/area/station/crew_quarters/pool)
+/area/spacehabitat/pool)
 "xDv" = (
 /obj/cable{
 	d2 = 8;
@@ -80751,7 +80751,7 @@
 "xEQ" = (
 /obj/machinery/light,
 /turf/simulated/floor/white,
-/area/station/crew_quarters/pool)
+/area/spacehabitat/pool)
 "xER" = (
 /obj/machinery/drainage,
 /obj/cable{
