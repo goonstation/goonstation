@@ -1,4 +1,18 @@
 
+(t)mon apr 19 21
+(u)Kubius
+(p)4362
+(e)🆕🗺|feature, mapping
+(+)Small change batch for Kondaru with assorted fixes and improvements, including a Ranch upgrade, lots more mugs, more clothing closets, and a Hooty duty rotation.
+(u)TTerc
+(p)4366
+(e)🐛|bug
+(+)Having jailbird + stowaway trait combo sets you to arrest again. Creating a security record with a proper name clears the arrest status.
+(u)Chickenish
+(p)3950
+(e)⚖|balance
+(*)Nuclear Operative garb and some other antag garb is now immune to acid splashing, see minor changes for details.
+(+)The Syndicate space suit and helmet, the Safari hat and clothing, the Football armor, helmet, pants, and cleats, the Hunter suit, mask, belt, and boots, the Faustian lawyer suit and briefcase, the Wrestling Belt, and the Bowling suit and Syndicate Hat are now all immune to acid. The transition from the inside of a beaker to the outside of clothes may have removed the fire immunity property of that coating, but it looks like it acid-proofs just fine!
 (t)sat apr 17 21
 (u)Eagletanker
 (p)4328
