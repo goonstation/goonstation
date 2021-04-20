@@ -13767,7 +13767,6 @@
 /obj/item/clothing/suit/space/emerg,
 /obj/item/clothing/head/emerg,
 /obj/item/clothing/mask/gas/emergency,
-/obj/machinery/power/apc/autoname_east,
 /obj/cable{
 	icon_state = "0-2"
 	},
