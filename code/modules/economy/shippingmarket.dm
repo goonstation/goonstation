@@ -1,5 +1,5 @@
 #define SUPPLY_OPEN_TIME 1 SECOND //Time it takes to open supply door in seconds.
-#define SUPPLY_CLOSE_TIME 13 SECONDS //Time it takes to close supply door in seconds.
+#define SUPPLY_CLOSE_TIME 15 SECONDS //Time it takes to close supply door in seconds.
 
 /datum/shipping_market
 
@@ -8,7 +8,7 @@
 	var/time_until_shift = 0.0
 	var/demand_multiplier = 2
 	var/list/active_traders = list()
-	var/max_buy_items_at_once = 20
+	var/max_buy_items_at_once = 99
 	var/last_market_update = 0
 
 	var/list/supply_requests = list() // Pending requests, of type /datum/supply_order
@@ -143,7 +143,7 @@
 		// send artifact resupply
 		if(prob(modifier*40*pap?.lastAnalysis)) // range from 0% to ~78% for fully researched t4 artifact
 			if(!src.artifact_resupply_amount)
-				SPAWN_DBG(rand(3,8) MINUTES)
+				SPAWN_DBG(rand(1,5) MINUTES)
 					// message
 					var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency("1149")
 					var/datum/signal/pdaSignal = get_free_signal()
