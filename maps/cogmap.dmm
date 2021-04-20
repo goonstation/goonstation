@@ -57400,7 +57400,6 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/decal/xmas_lights/ephemeral,
 /turf/simulated/floor/carpet{
 	dir = 10;
 	icon_state = "blue2"
@@ -57416,7 +57415,6 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
-/obj/decal/xmas_lights/ephemeral,
 /turf/simulated/floor/carpet{
 	dir = 6;
 	icon_state = "blue2"
@@ -57427,7 +57425,6 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 9
 	},
-/obj/decal/xmas_lights/ephemeral,
 /turf/simulated/floor,
 /area/station/medical/medbay)
 "cwE" = (
@@ -62538,6 +62535,7 @@
 	icon_state = "lattice-dir"
 	},
 /obj/wingrille_spawn/auto,
+/obj/decal/xmas_lights/ephemeral,
 /turf/simulated/floor/plating,
 /area/station/medical/medbay)
 "lGF" = (
@@ -99693,7 +99691,7 @@ xTV
 kxk
 cvS
 cwz
-ckG
+sBD
 adC
 aag
 cxe
@@ -99995,7 +99993,7 @@ cuU
 fdL
 cvT
 cwA
-ckG
+sBD
 adC
 aag
 cxe
@@ -100297,7 +100295,7 @@ cuV
 nIv
 cvU
 cwB
-ckG
+sBD
 adC
 cxe
 cxe
@@ -100598,8 +100596,8 @@ cuf
 cuW
 nIv
 cvU
-sBD
 ckG
+sBD
 adC
 cxe
 cxJ
