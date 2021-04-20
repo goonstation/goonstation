@@ -1694,7 +1694,7 @@
 			boutput(user, "<span class='notice'>You wrench the frame into place.</span>")
 		else if (state == "UNWRENCHED")
 			wrenched = FALSE
-			anchored = TRUE
+			anchored = FALSE
 			desc = basedesc
 			boutput(user, "<span class='notice'>You unfasten the frame.</span>")
 		else if (state == "BOARDINSTALLED")
@@ -1763,11 +1763,12 @@
 
 	attackby(obj/item/target, mob/user)
 		if (iswrenchingtool(target))
-			playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
 			if (!wrenched)
+				playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
 				SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/machinery/vendingframe/proc/setFrameState,\
 				list("WRENCHED", user), target.icon, target.icon_state, null)
 			else if (!boardinstalled && wrenched)
+				playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
 				SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/machinery/vendingframe/proc/setFrameState,\
 				list("UNWRENCHED", user), target.icon, target.icon_state, null)
 		else if (istype(target, /obj/item/machineboard/vending))
