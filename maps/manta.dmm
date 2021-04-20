@@ -4518,15 +4518,14 @@
 	name = "Captain's Office";
 	req_access = null
 	},
-/obj/disposalpipe/segment{
-	dir = 4;
-	name = "factory pipe"
-	},
 /obj/cable{
 	icon_state = "4-8"
 	},
 /obj/firedoor_spawn,
 /obj/access_spawn/captain,
+/obj/disposalpipe/segment{
+	dir = 8
+	},
 /turf/simulated/floor,
 /area/station/captain)
 "aoq" = (
@@ -10051,9 +10050,6 @@
 /turf/simulated/floor/longtile/black,
 /area/station/turret_protected/port)
 "aCe" = (
-/obj/disposalpipe/junction{
-	icon_state = "pipe-j2"
-	},
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -10061,6 +10057,10 @@
 	color = "#485e81";
 	dir = 4;
 	icon_state = "line1"
+	},
+/obj/disposalpipe/segment{
+	dir = 4;
+	icon_state = "pipe-c"
 	},
 /turf/simulated/floor,
 /area/station/hallway/starboardupperhallway)
@@ -13809,12 +13809,11 @@
 /turf/simulated/floor/yellowblack,
 /area/station/engine/monitoring)
 "aMi" = (
-/obj/disposalpipe/segment{
-	dir = 4;
-	name = "factory pipe"
-	},
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment{
+	dir = 8
 	},
 /turf/simulated/floor/wood/two,
 /area/station/captain)
@@ -13938,18 +13937,14 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/lowerport)
 "aMF" = (
-/obj/disposalpipe/segment{
-	dir = 4;
-	name = "factory pipe"
-	},
 /obj/cable{
 	icon_state = "1-8"
 	},
 /obj/cable{
-	icon_state = "4-8"
-	},
-/obj/cable{
 	icon_state = "2-8"
+	},
+/obj/disposalpipe/segment{
+	dir = 8
 	},
 /turf/simulated/floor/carpet{
 	dir = 8;
@@ -13957,14 +13952,13 @@
 	},
 /area/station/captain)
 "aMG" = (
-/obj/disposalpipe/segment{
-	dir = 4;
-	name = "factory pipe"
-	},
 /obj/table/reinforced/bar/auto{
 	name = "table"
 	},
 /obj/item/hand_tele,
+/obj/disposalpipe/segment{
+	dir = 8
+	},
 /turf/simulated/floor/carpet{
 	dir = 1;
 	icon_state = "fblue1"
@@ -15558,10 +15552,6 @@
 /obj/stool/chair/comfy/blue{
 	dir = 1
 	},
-/obj/disposalpipe/segment{
-	dir = 4;
-	name = "factory pipe"
-	},
 /obj/landmark/start{
 	name = "Captain"
 	},
@@ -17135,6 +17125,9 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/redblack{
 	dir = 3
 	},
@@ -18210,9 +18203,6 @@
 	},
 /area/station/security/secoffquarters)
 "aYv" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 1;
@@ -18744,6 +18734,9 @@
 /obj/landmark/start{
 	name = "Security Officer"
 	},
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/black,
 /area/station/security/secoffquarters)
 "aZU" = (
@@ -19080,6 +19073,9 @@
 /obj/item/storage/firstaid/brute{
 	pixel_y = 4
 	},
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/redblack/corner{
 	dir = 6
 	},
@@ -19221,7 +19217,7 @@
 	name = "Medical Doctor"
 	},
 /obj/cable{
-	icon_state = "0-8"
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/surgery)
@@ -29741,6 +29737,9 @@
 	dir = 4
 	},
 /obj/access_spawn/forensics,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/wood/six,
 /area/station/security/detectives_office_manta)
 "bBV" = (
@@ -39932,6 +39931,14 @@
 	dir = 4
 	},
 /area/station/crew_quarters/hor/horprivate)
+"kNJ" = (
+/obj/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/black,
+/area/station/security/secoffquarters)
 "kNM" = (
 /obj/storage/secure/closet/fridge,
 /obj/item/reagent_containers/food/drinks/milk,
@@ -40293,6 +40300,15 @@
 /obj/window_blinds/cog2/left,
 /turf/simulated/floor/plating,
 /area/station/security/hos)
+"lQm" = (
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/black,
+/area/station/security/secoffquarters)
 "lSg" = (
 /obj/decal/tile_edge/line/purple{
 	dir = 10;
@@ -44464,6 +44480,12 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/starboardlowerhallway)
+"wpX" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/black,
+/area/station/security/secoffquarters)
 "wqN" = (
 /obj/machinery/networked/storage/tape_drive{
 	bank_id = "Artlab";
@@ -44619,6 +44641,14 @@
 	},
 /turf/simulated/floor,
 /area/station/engine/power)
+"wPe" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/black,
+/area/station/security/secoffquarters)
 "wRO" = (
 /obj/wingrille_spawn/auto,
 /obj/cable{
@@ -85478,7 +85508,7 @@ aVF
 aWj
 aWB
 aXd
-aXd
+wPe
 aYv
 bTG
 asU
@@ -85780,7 +85810,7 @@ aVG
 aWJ
 aWC
 aXe
-aXe
+wpX
 aYw
 bTG
 aXP
@@ -86082,7 +86112,7 @@ aVH
 aWJ
 aWD
 aXe
-aXe
+wpX
 aYx
 aZd
 cuz
@@ -86384,7 +86414,7 @@ aVI
 aWJ
 xVb
 aXe
-aXe
+wpX
 aXe
 aZe
 aXe
@@ -86686,9 +86716,9 @@ aVJ
 aWJ
 aWF
 aXe
-aXe
-aXe
-aZe
+kNJ
+aXd
+lQm
 aZR
 baU
 bbY
