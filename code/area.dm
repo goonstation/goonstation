@@ -2266,6 +2266,7 @@ ABSTRACT_TYPE(/area/station/engine)
 /area/station/engine/singcore
 	name = "Singularity Core"
 	icon_state = "red"
+	requires_power = FALSE
 
 /area/station/engine/eva
 	name = "Engineering EVA"
