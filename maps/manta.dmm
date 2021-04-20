@@ -13030,7 +13030,6 @@
 	pixel_y = 26;
 	text = "NF"
 	},
-/obj/machinery/disposal/mail/small/autoname/research/telescience/north,
 /turf/simulated/floor/caution/south,
 /area/station/engine/elect)
 "aKD" = (
@@ -15253,9 +15252,6 @@
 	},
 /obj/cable{
 	icon_state = "1-8"
-	},
-/obj/disposalpipe/segment/ejection{
-	dir = 4
 	},
 /turf/simulated/floor,
 /area/station/security/brig/genpop)
@@ -25250,16 +25246,10 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/medical/medbay/lobby)
 "bqG" = (
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
 /obj/machinery/door/airlock/pyro/glass,
 /turf/simulated/floor,
 /area/station/medical/medbay/lobby)
 "bqH" = (
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
 /obj/machinery/door/airlock/pyro/glass,
 /obj/cable{
 	icon_state = "1-2"
@@ -34760,6 +34750,9 @@
 	dir = 8;
 	layer = -1
 	},
+/obj/disposalpipe/trunk{
+	dir = 8
+	},
 /turf/simulated/floor,
 /area/station/construction)
 "bSj" = (
@@ -37989,9 +37982,6 @@
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen/therustykrab)
 "hco" = (
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
 /obj/wingrille_spawn/auto,
 /obj/cable{
 	icon_state = "0-4"
@@ -44092,9 +44082,6 @@
 /turf/simulated/floor,
 /area/station/hallway/centralhallway)
 "vzA" = (
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
 /obj/wingrille_spawn/auto,
 /obj/cable{
 	icon_state = "0-2"
