@@ -1986,9 +1986,7 @@
 
 	Topic(href, href_list)
 		. = ..()
-		if (status & (BROKEN|NOPOWER))
-			setCrtOverlayStatus(0)
-			return
+		updateAppearance()
 		if ((isdead(usr) || !can_act(usr) || !in_interact_range(src, usr)))
 			return
 
