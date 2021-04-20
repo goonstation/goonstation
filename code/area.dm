@@ -428,6 +428,7 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
 	teleport_blocked = 2
 	force_fullbright = 1
 	expandable = 0//oh god i know some fucker would try this
+	requires_power = FALSE
 
 	Entered(atom/movable/O) // TODO: make this better and not copy n pasted from area_that_kills_you_if_you_enter_it
 		..()
@@ -2176,6 +2177,7 @@ ABSTRACT_TYPE(/area/station/com_dish)
 /area/station/com_dish
 	name = "Communications Dish"
 	icon_state = "yellow"
+	requires_power = FALSE
 
 /area/station/com_dish/comdish
 	name = "Communications Dish"
@@ -2281,6 +2283,7 @@ ABSTRACT_TYPE(/area/station/engine)
 /area/station/engine/combustion_chamber
 	name = "Combustion Chamber"
 	icon_state = "combustion_chamber"
+	requires_power = FALSE
 
 /area/station/engine/coldloop
 	name = "Cold Loop"
@@ -2936,6 +2939,7 @@ ABSTRACT_TYPE(/area/station/garden)
 	icon_state = "yellow"
 	sound_environment = 15
 	do_not_irradiate = 1
+	requires_power = FALSE
 
 /area/station/garden/aviary
 	name = "Aviary"
@@ -2960,6 +2964,7 @@ ABSTRACT_TYPE(/area/station/catwalk)
 /area/station/catwalk
 	icon_state = "yellow"
 	force_fullbright = 1
+	requires_power = FALSE
 
 /area/station/catwalk/north
 	name = "North Maintenance Catwalk"
@@ -3259,6 +3264,7 @@ ABSTRACT_TYPE(/area/station/turret_protected)
 /area/station/turret_protected/armory_outside
 	name = "Armory Outer Perimeter"
 	icon_state = "secext"
+	requires_power = FALSE
 
 // // // //  OLD AREAS THAT ARE NOT USED BUT ARE IN HERE // // // //
 

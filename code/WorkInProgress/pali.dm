@@ -456,3 +456,14 @@
 
 /obj/spawner/amongus_clothing/cursed
 	cursed = TRUE
+
+
+
+/proc/populate_station(chance=100)
+	for(var/job_name in job_start_locations)
+		if(job_name == "AI")
+			continue
+		for(var/turf/T in job_start_locations[job_name])
+			if(prob(chance))
+				var/mob/living/carbon/human/normal/H = new(T)
+				H.JobEquipSpawned(job_name)
