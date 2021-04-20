@@ -531,9 +531,6 @@
 	message = "1";
 	name = "mail chute-'Head of Security'"
 	},
-/obj/cable{
-	icon_state = "0-4"
-	},
 /obj/disposalpipe/trunk/mail{
 	dir = 8
 	},
@@ -5140,9 +5137,6 @@
 /obj/access_spawn/security,
 /obj/machinery/door/airlock/pyro/glass/security{
 	name = "Visitation"
-	},
-/obj/cable{
-	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment/ejection,
 /turf/simulated/floor,
@@ -15276,6 +15270,9 @@
 /obj/disposalpipe/trunk/ejection{
 	dir = 1
 	},
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor,
 /area/station/security/brig/genpop)
 "aRy" = (
@@ -16447,9 +16444,6 @@
 "aUL" = (
 /obj/machinery/door/airlock/pyro/security{
 	name = "Interrogation"
-	},
-/obj/cable{
-	icon_state = "2-8"
 	},
 /obj/cable{
 	icon_state = "1-2"
@@ -18206,9 +18200,6 @@
 /area/station/security/secwing)
 "aZl" = (
 /obj/stool/chair/wooden,
-/obj/cable{
-	icon_state = "1-2"
-	},
 /obj/cable,
 /obj/machinery/power/apc/autoname_west,
 /turf/simulated/floor/wood,
@@ -23781,7 +23772,7 @@
 /obj/machinery/power/apc/autoname_west,
 /obj/cable,
 /obj/cable{
-	icon_state = "1-2"
+	icon_state = "0-2"
 	},
 /turf/simulated/floor/red/checker,
 /area/station/medical/medbay/treatment2)
@@ -30826,9 +30817,6 @@
 /obj/machinery/computer/card/console_lower{
 	dir = 8
 	},
-/obj/cable{
-	icon_state = "2-8"
-	},
 /turf/simulated/floor,
 /area/station/seaturtlebridge)
 "bGC" = (
@@ -35988,9 +35976,6 @@
 	pixel_x = 2;
 	pixel_y = 2
 	},
-/obj/cable{
-	icon_state = "0-4"
-	},
 /turf/simulated/floor/red/checker,
 /area/station/medical/medbay/treatment1)
 "cOx" = (
@@ -36438,10 +36423,11 @@
 /area/abandonedship)
 "dOI" = (
 /obj/machinery/computer3/generic/communications,
-/obj/cable{
-	icon_state = "0-8"
-	},
 /obj/machinery/weapon_stand/rifle_rack/recharger,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/data_terminal,
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
 "dPl" = (
@@ -38136,9 +38122,6 @@
 	anchored = 0;
 	dir = 1
 	},
-/obj/cable{
-	icon_state = "4-8"
-	},
 /obj/machinery/light/incandescent/cool{
 	nostick = 1
 	},
@@ -38775,9 +38758,6 @@
 /area/station/engine/engineering/ce)
 "iIQ" = (
 /obj/submachine/slot_machine,
-/obj/cable{
-	icon_state = "1-2"
-	},
 /obj/machinery/flasher/genpop/new_walls/west{
 	pixel_x = 24
 	},
@@ -40505,6 +40485,15 @@
 	},
 /turf/simulated/floor,
 /area/station/crewquarters/garbagegarbs)
+"mQB" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/black,
+/area/station/ai_monitored/armory)
 "mSY" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -42371,9 +42360,6 @@
 /turf/simulated/floor/carpet/red/fancy/edge/east,
 /area/listeningpost/syndicateassaultvessel)
 "raw" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
 /obj/table/reinforced/auto,
 /obj/machinery/cell_charger,
 /obj/item/cell/supercell/charged,
@@ -43968,6 +43954,9 @@
 /obj/machinery/light/incandescent/netural{
 	dir = 1;
 	pixel_y = 20
+	},
+/obj/cable{
+	icon_state = "0-8"
 	},
 /turf/simulated/floor,
 /area/station/hangar/starboard)
@@ -87132,7 +87121,7 @@ aFB
 aFB
 aqO
 dOI
-xVU
+mQB
 azk
 atV
 sUk
@@ -89558,7 +89547,7 @@ aWz
 abR
 mrf
 aWn
-kIf
+qZI
 ono
 kIf
 wdi
