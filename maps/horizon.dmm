@@ -14330,10 +14330,12 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/machinery/power/apc/autoname_north,
+/obj/machinery/power/apc/autoname_north{
+	areastring = "Main Hallway"
+	},
 /obj/storage/closet/emergency,
 /turf/simulated/floor/plating/random,
-/area/station/hallway/secondary/entry)
+/area/station/maintenance/north)
 "aJQ" = (
 /obj/cable{
 	d1 = 2;
@@ -17754,6 +17756,7 @@
 	},
 /obj/storage/secure/closet/command/chief_engineer,
 /obj/machinery/atmospherics/pipe/simple/color_pipe/green_pipe/overfloor/horizontal,
+/obj/item/rocko,
 /turf/simulated/floor/carpet/blue/fancy/edge/ne,
 /area/station/crew_quarters/ce)
 "aRu" = (
@@ -103985,7 +103988,7 @@ aaa
 aaa
 aaa
 uav
-atE
+aGP
 aJP
 aMc
 aOl
