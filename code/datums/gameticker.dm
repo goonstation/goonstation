@@ -499,7 +499,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 			if (!isdead(player))
 				if (in_centcom(player))
 					player.unlock_medal("100M dash", 1)
-					if (pets_rescued >= 6)
+					if (pets_rescued >= 7)
 						player.unlock_medal("Noah's Shuttle", 1)
 				player.unlock_medal("Survivor", 1)
 

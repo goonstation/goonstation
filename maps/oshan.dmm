@@ -4809,15 +4809,6 @@
 	},
 /turf/simulated/floor/bluegreen,
 /area/station/medical/medbay/treatment2)
-"alf" = (
-/obj/machinery/power/apc/autoname_north,
-/obj/cable{
-	icon_state = "0-2"
-	},
-/turf/simulated/floor/bluewhite{
-	dir = 9
-	},
-/area/station/medical/staff)
 "alg" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -16085,19 +16076,6 @@
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northwest)
-"aLE" = (
-/obj/table/reinforced/auto{
-	icon_state = "3"
-	},
-/obj/machinery/door/airlock/pyro/glass/windoor{
-	dir = 4
-	},
-/obj/access_spawn/hydro,
-/obj/railing/orange/reinforced{
-	dir = 8
-	},
-/turf/simulated/floor/plating/random,
-/area/station/maintenance/northwest)
 "aLF" = (
 /obj/machinery/plantpot,
 /turf/simulated/floor/grass,
@@ -17859,12 +17837,6 @@
 	},
 /turf/simulated/floor/carpet/arcade/half,
 /area/station/crew_quarters/arcade)
-"aQq" = (
-/obj/table/wood/auto,
-/obj/item/deconstructor,
-/obj/machinery/light/incandescent/warm,
-/turf/simulated/floor/black,
-/area/station/crew_quarters/ce)
 "aQr" = (
 /obj/stool/chair{
 	dir = 1
@@ -46303,6 +46275,16 @@
 	},
 /turf/simulated/floor,
 /area/station/hangar/sec)
+"dwk" = (
+/obj/table/wood/auto,
+/obj/item/deconstructor,
+/obj/machinery/light/incandescent/warm,
+/obj/item/rocko{
+	pixel_x = -2;
+	pixel_y = 12
+	},
+/turf/simulated/floor/black,
+/area/station/crew_quarters/ce)
 "dBL" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -46438,6 +46420,17 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/research_outpost/maint)
+"fjm" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/bluewhite{
+	dir = 8
+	},
+/area/station/medical/staff)
 "fkH" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -47185,6 +47178,19 @@
 /obj/item/device/radio/intercom/catering,
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/bar)
+"mmd" = (
+/obj/table/reinforced/auto{
+	icon_state = "3"
+	},
+/obj/machinery/door/airlock/pyro/glass/windoor{
+	dir = 4
+	},
+/obj/access_spawn/hydro,
+/obj/railing/orange/reinforced{
+	dir = 8
+	},
+/turf/simulated/floor/plating/random,
+/area/station/maintenance/northwest)
 "myo" = (
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/catering{
@@ -47444,6 +47450,15 @@
 /obj/machinery/light/incandescent/netural,
 /turf/simulated/floor/black,
 /area/research_outpost)
+"oIf" = (
+/obj/machinery/power/apc/autoname_north,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/bluewhite{
+	dir = 9
+	},
+/area/station/medical/staff)
 "oOi" = (
 /obj/rack,
 /obj/item/furniture_parts/table/wood,
@@ -48185,17 +48200,6 @@
 /area/station/hangar/catering{
 	name = "Catering Hangar"
 	})
-"wis" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/cable{
-	icon_state = "1-4"
-	},
-/turf/simulated/floor/bluewhite{
-	dir = 8
-	},
-/area/station/medical/staff)
 "wqE" = (
 /obj/submachine/GTM{
 	pixel_y = 32
@@ -78407,7 +78411,7 @@ agY
 agY
 bWp
 aia
-aLE
+mmd
 aia
 aia
 aLL
@@ -90759,8 +90763,8 @@ bOH
 agG
 ahd
 anP
-alf
-wis
+oIf
+fjm
 amZ
 alg
 amZ
@@ -107407,7 +107411,7 @@ amA
 aoc
 aJZ
 xIn
-aQq
+dwk
 bfe
 akN
 abH
