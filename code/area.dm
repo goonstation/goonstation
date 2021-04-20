@@ -1032,6 +1032,11 @@ ABSTRACT_TYPE(/area/adventure)
 	force_fullbright = 1
 #endif
 
+/area/spacehabitat/pool
+	name = "Pool Room"
+	icon_state = "yellow"
+	requires_power = FALSE
+
 /area/abandonedship
 	name = "Abandoned ship"
 	icon_state = "yellow"
