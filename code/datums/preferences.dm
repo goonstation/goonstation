@@ -2349,7 +2349,7 @@ var/global/list/female_screams = list("female", "femalescream1", "femalescream2"
 	else
 		return
 
-	if (H.bioHolder && remove_effects)
+	if (H?.bioHolder && remove_effects)
 		H.bioHolder.RemoveAllEffects()
 		H.bioHolder.BuildEffectPool()
 
@@ -2393,9 +2393,8 @@ var/global/list/female_screams = list("female", "femalescream1", "femalescream2"
 	AH.s_tone = blend_skintone(stone, stone, stone)
 	AH.s_tone_original = AH.s_tone
 
-	if (H)
-		if (H.limbs)
-			H.limbs.reset_stone()
+	if (H?.limbs)
+		H.limbs.reset_stone()
 
 	var/list/eye_colors = list("#101010", "#613F1D", "#808000", "#3333CC")
 	AH.e_color = randomize_eye_color(pick(eye_colors))
