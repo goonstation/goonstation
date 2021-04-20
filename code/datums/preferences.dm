@@ -2328,7 +2328,7 @@ var/global/list/masculine_ustyles = list("No Underwear" = "none",\
 var/global/list/male_screams = list("male", "malescream4", "malescream5", "malescream6", "malescream7")
 var/global/list/female_screams = list("female", "femalescream1", "femalescream2", "femalescream3", "femalescream4")
 
-/proc/randomize_look(var/to_randomize, var/change_gender = 1, var/change_blood = 1, var/change_age = 1, var/change_name = 1, var/change_underwear = 1, var/remove_effects = 1)
+/proc/randomize_look(to_randomize, change_gender = 1, change_blood = 1, change_age = 1, change_name = 1, change_underwear = 1, remove_effects = 1, optional_donor)
 	if (!to_randomize)
 		return
 
@@ -2339,12 +2339,20 @@ var/global/list/female_screams = list("female", "femalescream1", "femalescream2"
 		H = to_randomize
 		if (H.bioHolder && H.bioHolder.mobAppearance)
 			AH = H.bioHolder.mobAppearance
+		else if (H.bioHolder)
+			H.bioHolder.mobAppearance = new /datum/appearanceHolder()
+			H.bioHolder.mobAppearance.owner = H
+			H.bioHolder.mobAppearance.parentHolder = H.bioHolder
+		else
+			H.bioHolder = new /datum/bioHolder()
+			H.initializeBioholder()
 
 	else if (istype(to_randomize, /datum/appearanceHolder))
 		AH = to_randomize
 		if (ishuman(AH.owner))
 			H = AH.owner
-
+		else
+			H = optional_donor
 	else
 		return
 
@@ -2392,9 +2400,8 @@ var/global/list/female_screams = list("female", "femalescream1", "femalescream2"
 	AH.s_tone = blend_skintone(stone, stone, stone)
 	AH.s_tone_original = AH.s_tone
 
-	if (H)
-		if (H.limbs)
-			H.limbs.reset_stone()
+	if (H?.limbs)
+		H.limbs.reset_stone()
 
 	var/list/eye_colors = list("#101010", "#613F1D", "#808000", "#3333CC")
 	AH.e_color = randomize_eye_color(pick(eye_colors))
