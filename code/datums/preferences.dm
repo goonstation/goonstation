@@ -119,6 +119,7 @@ datum/preferences
 	ui_data(mob/user)
 		if (isnull(src.preview))
 			src.preview = new(user.client, "preferences", "preferences_character_preview")
+			src.preview.add_background("#191919")
 			src.update_preview_icon()
 
 		var/client/client = ismob(user) ? user.client : user
