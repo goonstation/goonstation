@@ -395,7 +395,7 @@
 		return beez
 
 /datum/supply_packs/chemical
-	name = "Chemistry Resupply Crate (Cardlocked \[Research])"
+	name = "Chemistry Resupply Crate"
 	desc = "x6 Reagent Bottles, x1 Beaker Box, x1 Mechanical Dropper, x1 Spectroscopic Goggles, x1 Reagent Scanner"
 	category = "Research Department"
 	contains = list(/obj/item/storage/box/beakerbox,
@@ -410,8 +410,7 @@
 					/obj/item/device/reagentscanner)
 	cost = 500
 	containertype = /obj/storage/secure/crate/plasma
-	containername = "Chemistry Resupply Crate (Cardlocked \[Research])"
-	access = access_tox
+	containername = "Chemistry Resupply Crate"
 
 
 // Added security resupply crate (Convair880).
@@ -1575,7 +1574,7 @@
 	frames = list(/obj/machinery/clone_scanner,
 					/obj/machinery/clonepod,
 					/obj/machinery/clonegrinder)
-	cost = 30000
+	cost = 50000
 	containertype = /obj/storage/crate
 	containername = "Cloning kit"
 
