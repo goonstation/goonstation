@@ -1775,14 +1775,14 @@
 			if (wrenched && !boardinstalled)
 				SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/machinery/vendingframe/proc/setFrameState,\
 				list("BOARDINSTALLED", user, target), target.icon, target.icon_state, null)
-		else if(istype(target, /obj/item/cable_coil) && boardinstalled && !wiresinstalled)
+		else if (istype(target, /obj/item/cable_coil) && boardinstalled && !wiresinstalled)
 			var/obj/item/cable_coil/targetcoil = target
-			if(targetcoil.amount >= 5)
+			if (targetcoil.amount >= 5)
 				SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/machinery/vendingframe/proc/setFrameState,\
 				list("WIRESINSTALLED", user, target), target.icon, target.icon_state, null)
-			else if(!wiresinstalled && boardinstalled)
+			else if (!wiresinstalled && boardinstalled)
 				boutput(user, "<span class='alert'>You need at least five pieces of cable to wire the vending machine.</span>")
-		else if(istype(target, /obj/item/sheet) && wiresinstalled && !glassed)
+		else if (istype(target, /obj/item/sheet) && wiresinstalled && !glassed)
 			var/obj/item/sheet/glass/S = target
 			if (!(S.material && S.amount >= 2))
 				return
@@ -1910,7 +1910,7 @@
 		generate_HTML(1, 0)
 
 	proc/productListUpdater(obj/item/target, mob/user)
-		if(!target)
+		if (!target)
 			return
 		user.u_equip(target)
 		target.set_loc(src)
@@ -1962,10 +1962,10 @@
 			html_parts += "<a href='?src=\ref[src];unlock=true'>Unregistered (locked)</a></br>"
 		else
 			html_parts += "<a href='?src=\ref[src];unlock=true'>[src.cardname] "
-			if (!unlocked == 1) html_parts += "(locked) </a></br>"
+			if (!unlocked) html_parts += "(locked) </a></br>"
 			else html_parts += "(unlocked) </a></br>"
 		html_parts += "Loading Chute:  "
-		if (!loading == 0)
+		if (loading)
 			html_parts += "<a href='?src=\ref[src];loading=false'>Open</a></br> "
 		else
 			html_parts += "<a href='?src=\ref[src];loading=true'>Closed</a></br> "
@@ -1986,7 +1986,7 @@
 
 	Topic(href, href_list)
 		. = ..()
-		if(!updateAppearance()) //updateAppearance returns FALSE if we're broken/off
+		if (updateAppearance()) //updateAppearance returns FALSE if we're broken/off
 			return
 		if ((isdead(usr) || !can_act(usr) || !in_interact_range(src, usr)))
 			return
@@ -2004,15 +2004,15 @@
 				loading = TRUE
 			else if (src.scan?.registered && owner == src.scan.registered)
 				unlocked = !unlocked
-				if(!unlocked && loading) loading = FALSE
+				if (!unlocked && loading) loading = FALSE
 			else
 				unlocked = FALSE
 				loading = FALSE
-			src.generate_HTML(1, 1)
+			src.generate_HTML(0, 1)
 		else if (href_list["rename"] && src.panel_open && src.unlocked)
 			var/inp
 			inp = html_encode(sanitize(input(usr,"Enter new name:","Vendor Name", "") as text))
-			if(inp && inp != "" && !(isdead(usr) || !can_act(usr) || !in_interact_range(src, usr)))
+			if (inp && inp != "" && !(isdead(usr) || !can_act(usr) || !in_interact_range(src, usr)))
 				src.name = inp
 				src.generate_HTML(0, 1)
 				generate_slogans()
@@ -2030,7 +2030,6 @@
 			var/datum/data/vending_product/player_product/R = locate(href_list["icon"]) in src.player_list
 			promoimage = R.icon
 			updateAppearance()
-			src.generate_HTML(1, 0)
 		if (href_list["vend"])
 			//Vends can change the name of list entries so generate HTML
 			src.generate_HTML(1, 0)
