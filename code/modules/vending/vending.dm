@@ -1759,7 +1759,7 @@
 				qdel(src)
 		else
 			setFrameState("UNWRENCHED")
-			CRASH("Invalid state \"[state]\" set in [src] construction process")
+			CRASH("Invalid state \"[state]\" set in [src] construction process at [log_loc(src)]")
 
 	attackby(obj/item/target, mob/user)
 		if (iswrenchingtool(target))
