@@ -1,4 +1,9 @@
 
+(t)tue apr 20 21
+(u)Luxizzle
+(p)4261
+(e)🆕🔄📄|feature, rework, tgui
+(*)The Character Setup screen has been tgui-fied!
 (t)mon apr 19 21
 (u)Kubius
 (p)4362
