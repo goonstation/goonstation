@@ -4810,6 +4810,10 @@
 /turf/simulated/floor/bluegreen,
 /area/station/medical/medbay/treatment2)
 "alf" = (
+/obj/machinery/power/apc/autoname_north,
+/obj/cable{
+	icon_state = "0-2"
+	},
 /turf/simulated/floor/bluewhite{
 	dir = 9
 	},
@@ -16090,6 +16094,9 @@
 	dir = 4
 	},
 /obj/access_spawn/hydro,
+/obj/railing/orange/reinforced{
+	dir = 8
+	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northwest)
 "aLF" = (
@@ -48180,8 +48187,16 @@
 	name = "Catering Hangar"
 	})
 "wis" = (
-/turf/simulated/floor/grass,
-/area/station/hydroponics)
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/bluewhite{
+	dir = 8
+	},
+/area/station/medical/staff)
 "wqE" = (
 /obj/submachine/GTM{
 	pixel_y = 32
@@ -79009,7 +79024,7 @@ aMf
 aMf
 jKq
 aMf
-wis
+aMf
 aqQ
 bhC
 bhC
@@ -90746,7 +90761,7 @@ agG
 ahd
 anP
 alf
-alg
+wis
 amZ
 alg
 amZ
