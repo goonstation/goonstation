@@ -1882,6 +1882,11 @@ ABSTRACT_TYPE(/area/station/mining)
 	sound_loop = 'sound/ambience/station/underwater/sub_bridge_ambi1.ogg'
 #endif
 
+/area/station/bridge/united_command //currently only on atlas - ET
+    name = "United Command"
+    icon_state ="bridge"
+    sound_environment = 4
+
 /area/station/seaturtlebridge
 	name = "Sea Turtle Bridge"
 	icon_state = "bridge"

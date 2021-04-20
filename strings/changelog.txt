@@ -1,6 +1,18 @@
 
 (t)tue apr 20 21
 (u)Luxizzle
+(p)4326
+(e)📄|tgui
+(*)Converted brig timers to tgui.
+(u)Gannets
+(p)4375
+(e)🆕🗺|feature, mapping
+(*)Added a syndicate weapons vendor to the VR Sim/Murderbox. You can now practice with nuke ops gear without the pressure of letting your team down!
+(u)Azrun
+(p)4229
+(e)🆕🗺🎨|feature, mapping, sprites
+(*)Chief Engineer now has a pet!
+(u)Luxizzle
 (p)4261
 (e)🆕🔄📄|feature, rework, tgui
 (*)The Character Setup screen has been tgui-fied!

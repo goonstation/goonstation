@@ -1171,6 +1171,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\obj\railing.dm"
 #include "code\obj\railway.dm"
 #include "code\obj\random_spawners.dm"
+#include "code\obj\rocko.dm"
 #include "code\obj\screen.dm"
 #include "code\obj\sealab_objects.dm"
 #include "code\obj\shieldgen.dm"
