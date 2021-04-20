@@ -1745,17 +1745,11 @@
 	bcolor = "yellow";
 	icon_state = "bedsheet-yellow"
 	},
-/obj/machinery/power/apc{
-	areastring = "Chief Engineer's Quarters";
-	cell_type = 1000;
-	dir = 4;
-	name = "Chief Engineer's Quarters APC";
-	pixel_x = 24
-	},
 /obj/cable{
 	d2 = 8;
 	icon_state = "0-8"
 	},
+/obj/machinery/power/apc/autoname_east,
 /turf/simulated/floor/carpet{
 	dir = 4;
 	icon_state = "fgreen2"
@@ -2760,6 +2754,10 @@
 /area/station/medical/head/private)
 "afb" = (
 /obj/machinery/portable_atmospherics/scrubber,
+/obj/machinery/power/apc/autoname_east,
+/obj/cable{
+	icon_state = "0-8"
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
 "afc" = (
@@ -3416,17 +3414,11 @@
 	bcolor = "blue";
 	icon_state = "bedsheet-blue"
 	},
-/obj/machinery/power/apc{
-	areastring = "Medical Director's Quarters";
-	cell_type = 1000;
-	dir = 4;
-	name = "Medical Director's Quarters APC";
-	pixel_x = 24
-	},
 /obj/cable{
 	d2 = 8;
 	icon_state = "0-8"
 	},
+/obj/machinery/power/apc/autoname_east,
 /turf/simulated/floor/carpet{
 	dir = 4;
 	icon_state = "fblue2"
@@ -4976,17 +4968,11 @@
 	bcolor = "pink";
 	icon_state = "bedsheet-pink"
 	},
-/obj/machinery/power/apc{
-	areastring = "Research Director's Quarters";
-	cell_type = 1000;
-	dir = 4;
-	name = "Research Director's Quarters APC";
-	pixel_x = 24
-	},
 /obj/cable{
 	d2 = 8;
 	icon_state = "0-8"
 	},
+/obj/machinery/power/apc/autoname_east,
 /turf/simulated/floor/carpet{
 	dir = 4;
 	icon_state = "fpurple2"
@@ -6034,6 +6020,10 @@
 /area/station/storage/primary)
 "ajK" = (
 /obj/machinery/vending/standard,
+/obj/machinery/power/apc/autoname_north,
+/obj/cable{
+	icon_state = "0-2"
+	},
 /turf/simulated/floor/grey/whitegrime/other,
 /area/station/storage/primary)
 "ajL" = (
@@ -6379,6 +6369,9 @@
 	icon_state = "x3";
 	name = "peststart"
 	},
+/obj/cable{
+	icon_state = "1-8"
+	},
 /turf/simulated/floor/grey/whitegrime/other,
 /area/station/storage/primary)
 "ako" = (
@@ -6682,17 +6675,11 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
-/obj/machinery/power/apc{
-	areastring = "Head of Security's Quarters";
-	cell_type = 1000;
-	dir = 4;
-	name = "Head of Security's Quarters APC";
-	pixel_x = 24
-	},
 /obj/cable{
 	d2 = 8;
 	icon_state = "0-8"
 	},
+/obj/machinery/power/apc/autoname_east,
 /turf/simulated/floor/carpet{
 	dir = 4;
 	icon_state = "fred2"
@@ -8164,6 +8151,9 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/cable{
+	icon_state = "2-4"
+	},
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
@@ -8173,6 +8163,10 @@
 	dir = 4
 	},
 /obj/shrub,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/power/apc/autoname_north,
 /turf/simulated/floor/carpet{
 	dir = 8;
 	icon_state = "purple4"
@@ -49466,15 +49460,10 @@
 /turf/simulated/floor/bot,
 /area/station/science/bot_storage)
 "igY" = (
-/obj/machinery/power/apc{
-	areastring = "Fitness Room";
-	dir = 4;
-	name = "Fitness Room APC";
-	pixel_x = 24
-	},
 /obj/cable{
 	icon_state = "0-8"
 	},
+/obj/machinery/power/apc/autoname_east,
 /turf/simulated/floor/blue/checker,
 /area/station/crew_quarters/pool)
 "iiA" = (
@@ -49804,6 +49793,15 @@
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/clown)
+"kmP" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/north)
 "kvE" = (
 /obj/wingrille_spawn/auto,
 /obj/disposalpipe/segment/mail{
@@ -85578,7 +85576,7 @@ acV
 adD
 aeb
 acV
-acV
+kmP
 afG
 acV
 agC
