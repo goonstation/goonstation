@@ -56104,7 +56104,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/hotloop)
 "eKj" = (
-/obj/decal/garland/ephemeral{
+/obj/decal/garland{
 	dir = 6;
 	layer = 4
 	},
@@ -56579,7 +56579,7 @@
 /obj/machinery/chem_master{
 	name = "Rusty CheMaster 3000"
 	},
-/obj/decal/xmas_lights/ephemeral{
+/obj/decal/xmas_lights{
 	pixel_y = 38
 	},
 /turf/simulated/floor/plating/damaged2,
@@ -64780,7 +64780,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/decal/xmas_lights/ephemeral{
+/obj/decal/xmas_lights{
 	pixel_y = 38
 	},
 /turf/simulated/floor/grime,
