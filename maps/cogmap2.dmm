@@ -11266,7 +11266,7 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/power/apc{
-	areastring = "Hydroponics";
+	areastring = "Hydroponics Bay";
 	dir = 8;
 	name = "Hydroponics APC";
 	pixel_x = -24
@@ -17493,6 +17493,7 @@
 	},
 /obj/cable,
 /obj/machinery/power/apc{
+	areastring = "Locker Room";
 	dir = 1;
 	name = "N APC";
 	pixel_y = 24
@@ -21023,23 +21024,13 @@
 	dir = 1;
 	pixel_y = 21
 	},
-/obj/machinery/power/apc{
-	areastring = "Locker Room";
-	dir = 1;
-	name = "N APC";
-	pixel_y = 24
-	},
-/obj/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "aWw" = (
 /obj/table/auto,
 /obj/random_item_spawner/tools,
 /turf/simulated/floor/plating,
-/area/station/maintenance/west)
+/area/station/maintenance/north)
 "aWx" = (
 /obj/disposalpipe/segment/food,
 /turf/simulated/floor/white,
@@ -21085,9 +21076,6 @@
 	d1 = 2;
 	d2 = 4;
 	icon_state = "2-4"
-	},
-/obj/cable{
-	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
@@ -48371,30 +48359,15 @@
 /turf/simulated/floor/orangeblack,
 /area/station/hangar/main)
 "caj" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
 /obj/machinery/portable_atmospherics/scrubber,
 /turf/simulated/floor/plating,
 /area/station/hangar/main)
 "cak" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
 /obj/storage/closet/fire,
 /obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor/plating,
 /area/station/hangar/main)
 "cal" = (
-/obj/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
 /obj/reagent_dispensers/foamtank,
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/vertical,
 /turf/simulated/floor/plating,
@@ -48985,21 +48958,11 @@
 /turf/simulated/floor/plating,
 /area/station/hangar/main)
 "cbE" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
-	},
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/northwest,
 /turf/simulated/floor/plating,
 /area/station/hangar/main)
 "cbF" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/machinery/firealarm{
 	pixel_y = 24;
@@ -49008,11 +48971,6 @@
 /turf/simulated/floor/plating,
 /area/station/hangar/main)
 "cbG" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
 /obj/cable{
 	d1 = 2;
 	d2 = 4;
@@ -53860,11 +53818,6 @@
 	icon_state = "4-8"
 	},
 /obj/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
-/obj/cable{
 	d1 = 1;
 	d2 = 8;
 	icon_state = "1-8"
@@ -53920,13 +53873,8 @@
 /obj/table/auto,
 /obj/random_item_spawner/tools,
 /obj/cable,
-/obj/machinery/power/apc{
-	dir = 4;
-	name = "E APC";
-	pixel_x = 24
-	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/southeast)
+/area/space)
 "cnc" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
@@ -78782,6 +78730,10 @@
 /obj/item/paper/telecrystal_update,
 /turf/simulated/floor/yellow/side,
 /area/listeningpost)
+"dqB" = (
+/obj/machinery/atmospherics/valve/vertical,
+/turf/simulated/floor/plating,
+/area/station/hangar/main)
 "dsV" = (
 /obj/table/wood/auto,
 /obj/item/device/reagentscanner,
@@ -79136,6 +79088,19 @@
 	icon_state = "blue5"
 	},
 /area/station/crew_quarters/arcade/dungeon)
+"lqv" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/southeast)
 "luy" = (
 /obj/machinery/light{
 	dir = 1;
@@ -79168,6 +79133,10 @@
 	name = "reinforced plating"
 	},
 /area/station/quartermaster/refinery)
+"lYN" = (
+/obj/disposalpipe/segment/mail/horizontal,
+/turf/simulated/floor/plating,
+/area/station/hangar/main)
 "maP" = (
 /turf/simulated/floor/carpet{
 	dir = 9;
@@ -79623,7 +79592,7 @@
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},
-/area/station/hydroponics)
+/area/station/hydroponics/bay)
 "tGo" = (
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/purple,
@@ -102964,13 +102933,13 @@ aaI
 aaa
 aaa
 acq
-nbd
-xfw
-nbd
+awc
+awd
+awc
 dpq
-nbd
-xfw
-nbd
+awc
+awd
+awc
 acq
 aaa
 aaa
@@ -109965,7 +109934,7 @@ bpx
 bDT
 bgQ
 bgQ
-bmr
+bib
 cbA
 bgR
 bgm
@@ -110267,7 +110236,7 @@ bpx
 bWv
 bgQ
 bZg
-bms
+dqB
 cbB
 bgR
 bgm
@@ -110569,7 +110538,7 @@ bsZ
 bro
 bgQ
 bZh
-bms
+dqB
 cbB
 bgR
 bgm
@@ -112382,7 +112351,7 @@ bgQ
 aaB
 aaB
 bgQ
-blc
+lYN
 bib
 bib
 bib
@@ -112684,7 +112653,7 @@ bWx
 bXR
 bZi
 bgQ
-blc
+lYN
 bib
 bgQ
 bgQ
@@ -135352,7 +135321,7 @@ cjK
 cls
 cmZ
 cnE
-cew
+lqv
 cnM
 cnE
 cnT
