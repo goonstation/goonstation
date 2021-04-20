@@ -61,8 +61,8 @@ export const CharacterPreferences = (_props: any, context: any) => {
                         type: 'map',
                       }}
                       style={{
-                        width: '80px',
-                        height: '80px',
+                        width: '64px',
+                        height: '96px',
                       }}
                     />
                     <Box textAlign="center" mt="5px">
