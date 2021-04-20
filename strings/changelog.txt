@@ -1,5 +1,9 @@
 
 (t)tue apr 20 21
+(u)Luxizzle
+(p)4326
+(e)📄|tgui
+(*)Converted brig timers to tgui.
 (u)Gannets
 (p)4375
 (e)🆕🗺|feature, mapping
