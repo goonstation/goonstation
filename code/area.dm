@@ -1005,20 +1005,33 @@ ABSTRACT_TYPE(/area/adventure)
 	name ="Robot Trade Outpost"
 	icon_state ="green"
 	sound_environment = 3
+#ifdef UNDERWATER_MAP
+	requires_power = FALSE
+#endif
+
 /area/bee_trader
 	name ="Bombini's Ship"
 	icon_state ="green"
 	sound_environment = 2
+#ifdef UNDERWATER_MAP
+	requires_power = FALSE
+#endif
 
 /area/flock_trader
 	name = "Flocktrader Ship"
 	icon_state = "green"
 	sound_environment = 2
+#ifdef UNDERWATER_MAP
+	requires_power = FALSE
+#endif
 
 /area/skeleton_trader
 	name = "Skeleton Trade Outpost"
 	icon_state = "green"
 	sound_environment = 2
+#ifdef UNDERWATER_MAP
+	requires_power = FALSE
+#endif
 
 /area/fermid_hive
 	name = "Fermid Hive"
@@ -1066,6 +1079,9 @@ ABSTRACT_TYPE(/area/adventure)
 ABSTRACT_TYPE(/area/diner)
 /area/diner
 	sound_environment = 12
+#ifdef UNDERWATER_MAP
+	requires_power = FALSE
+#endif
 
 /area/diner/hangar
 	name = "Space Diner Parking"
@@ -2057,6 +2073,9 @@ ABSTRACT_TYPE(/area/station/crew_quarters/radio)
 	name = "Clown Hole"
 	icon_state = "storage"
 	do_not_irradiate = 1
+#ifdef UNDERWATER_MAP
+	requires_power = FALSE
+#endif
 
 /area/station/crew_quarters/catering
 	name = "Catering Storage"
