@@ -2343,9 +2343,15 @@ var/global/list/female_screams = list("female", "femalescream1", "femalescream2"
 			H.bioHolder.mobAppearance = new /datum/appearanceHolder()
 			H.bioHolder.mobAppearance.owner = H
 			H.bioHolder.mobAppearance.parentHolder = H.bioHolder
+			AH = H.bioHolder.mobAppearance
 		else
 			H.bioHolder = new /datum/bioHolder()
 			H.initializeBioholder()
+
+			H.bioHolder.mobAppearance = new /datum/appearanceHolder()
+			H.bioHolder.mobAppearance.owner = H
+			H.bioHolder.mobAppearance.parentHolder = H.bioHolder
+			AH = H.bioHolder.mobAppearance
 
 	else if (istype(to_randomize, /datum/appearanceHolder))
 		AH = to_randomize
