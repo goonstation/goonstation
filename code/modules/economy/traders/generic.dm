@@ -2,7 +2,7 @@
 	// completely randomised generic trader
 	hiketolerance = 20
 	base_patience = list(4,20)
-	chance_leave = 33
+	chance_leave = 45
 	chance_arrive = 66
 
 	max_goods_buy = 5
@@ -69,7 +69,7 @@
 	comname = "Telecrystals"
 	comtype = /obj/item/raw_material/telecrystal
 	amount = 20
-	price_boundary = list(850,1200)
+	price_boundary = list(900,1200)
 	possible_names = list("We have a limited amount of telecrystal available for purchase.",
 	"We have raw telecrystal stones and no facilities to make use of them, so we're selling them instead.")
 
