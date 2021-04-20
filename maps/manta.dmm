@@ -855,7 +855,9 @@
 	dir = 8
 	},
 /turf/simulated/floor,
-/area/station/hangar/mining)
+/area/station/hangar/engine{
+	name = "Submarine Bay (Engineering)"
+	})
 "acs" = (
 /obj/decal/mantaBubbles/small,
 /turf/space/fluid/manta,
@@ -2232,7 +2234,9 @@
 /obj/item/shipcomponent/secondary_system/repair,
 /obj/item/shipcomponent/secondary_system/repair,
 /turf/simulated/floor,
-/area/station/hangar/mining)
+/area/station/hangar/engine{
+	name = "Submarine Bay (Engineering)"
+	})
 "aic" = (
 /obj/lattice{
 	icon_state = "lattice-dir-b"
@@ -3146,7 +3150,9 @@
 /obj/access_spawn/engineering_engine,
 /obj/access_spawn/engineering_mechanic,
 /turf/simulated/floor,
-/area/station/hangar/mining)
+/area/station/hangar/engine{
+	name = "Submarine Bay (Engineering)"
+	})
 "akL" = (
 /obj/decoration/syndiepc/syndiepc5,
 /obj/map/light/dimred,
@@ -5882,7 +5888,9 @@
 	},
 /obj/reagent_dispensers/foamtank,
 /turf/simulated/floor,
-/area/station/hangar/mining)
+/area/station/hangar/engine{
+	name = "Submarine Bay (Engineering)"
+	})
 "arx" = (
 /turf/simulated/floor/blue,
 /area/station/ai_monitored/storage/eva)
@@ -6253,13 +6261,17 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/shuttlebay,
-/area/station/hangar/mining)
+/area/station/hangar/engine{
+	name = "Submarine Bay (Engineering)"
+	})
 "ass" = (
 /obj/cable{
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/shuttlebay,
-/area/station/hangar/mining)
+/area/station/hangar/engine{
+	name = "Submarine Bay (Engineering)"
+	})
 "ast" = (
 /obj/item/raw_material/rock,
 /turf/simulated/floor/plating/airless/asteroid,
@@ -6276,7 +6288,9 @@
 /obj/firedoor_spawn,
 /obj/access_spawn/cargo,
 /turf/simulated/floor/orange,
-/area/station/hangar/mining)
+/area/station/hangar/engine{
+	name = "Submarine Bay (Engineering)"
+	})
 "asv" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -13112,7 +13126,9 @@
 /obj/table/auto,
 /obj/machinery/recharger,
 /turf/simulated/floor,
-/area/station/hangar/mining)
+/area/station/hangar/engine{
+	name = "Submarine Bay (Engineering)"
+	})
 "aKj" = (
 /obj/stool/chair/boxingrope_corner{
 	dir = 10
@@ -13399,8 +13415,13 @@
 	},
 /area/station/security/brig)
 "aKY" = (
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/storage/eva)
+/obj/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/black,
+/area/station/security/secoffquarters)
 "aKZ" = (
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/cafeteria/the_rising_tide_bar)
@@ -27171,14 +27192,18 @@
 "buZ" = (
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating/random,
-/area/station/hangar/mining)
+/area/station/hangar/engine{
+	name = "Submarine Bay (Engineering)"
+	})
 "bva" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hangar/mining)
 "bvb" = (
 /obj/disposalpipe/segment,
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/hangar/mining)
+/area/station/hangar/engine{
+	name = "Submarine Bay (Engineering)"
+	})
 "bvc" = (
 /obj/storage/crate/wooden,
 /turf/simulated/floor/bot,
@@ -27713,7 +27738,9 @@
 	tag = ""
 	},
 /turf/simulated/floor,
-/area/station/hangar/mining)
+/area/station/hangar/engine{
+	name = "Submarine Bay (Engineering)"
+	})
 "bwC" = (
 /obj/decal/cleanable/dirt/dirt4,
 /obj/cable{
@@ -27723,7 +27750,9 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor,
-/area/station/hangar/mining)
+/area/station/hangar/engine{
+	name = "Submarine Bay (Engineering)"
+	})
 "bwD" = (
 /obj/storage/closet/welding_supply,
 /obj/machinery/power/apc/autoname_north,
@@ -27731,7 +27760,9 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor,
-/area/station/hangar/mining)
+/area/station/hangar/engine{
+	name = "Submarine Bay (Engineering)"
+	})
 "bwE" = (
 /obj/storage/crate/wooden,
 /obj/machinery/light/incandescent/netural{
@@ -28343,20 +28374,28 @@
 	pixel_x = -24
 	},
 /turf/simulated/floor/caution/south,
-/area/station/hangar/mining)
+/area/station/hangar/engine{
+	name = "Submarine Bay (Engineering)"
+	})
 "byp" = (
 /turf/simulated/floor/caution/south,
-/area/station/hangar/mining)
+/area/station/hangar/engine{
+	name = "Submarine Bay (Engineering)"
+	})
 "byq" = (
 /obj/cable{
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/caution/south,
-/area/station/hangar/mining)
+/area/station/hangar/engine{
+	name = "Submarine Bay (Engineering)"
+	})
 "byr" = (
 /obj/decal/cleanable/dirt/dirt3,
 /turf/simulated/floor/caution/south,
-/area/station/hangar/mining)
+/area/station/hangar/engine{
+	name = "Submarine Bay (Engineering)"
+	})
 "bys" = (
 /obj/machinery/disposal/small{
 	dir = 8
@@ -28365,7 +28404,9 @@
 	dir = 1
 	},
 /turf/simulated/floor/caution/south,
-/area/station/hangar/mining)
+/area/station/hangar/engine{
+	name = "Submarine Bay (Engineering)"
+	})
 "byu" = (
 /obj/disposalpipe/segment/mineral,
 /turf/simulated/floor/stairs{
@@ -28922,7 +28963,9 @@
 	dir = 4
 	},
 /turf/simulated/floor/shuttlebay,
-/area/station/hangar/mining)
+/area/station/hangar/engine{
+	name = "Submarine Bay (Engineering)"
+	})
 "bzT" = (
 /obj/machinery/firealarm{
 	dir = 8;
@@ -29521,20 +29564,26 @@
 	},
 /obj/machinery/vehicle/tank/minisub,
 /turf/simulated/floor/shuttlebay,
-/area/station/hangar/mining)
+/area/station/hangar/engine{
+	name = "Submarine Bay (Engineering)"
+	})
 "bBq" = (
 /obj/disposalpipe/segment/mineral{
 	dir = 4
 	},
 /obj/item/wrench,
 /turf/simulated/floor/shuttlebay,
-/area/station/hangar/mining)
+/area/station/hangar/engine{
+	name = "Submarine Bay (Engineering)"
+	})
 "bBr" = (
 /obj/disposalpipe/segment/mineral{
 	dir = 4
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/hangar/mining)
+/area/station/hangar/engine{
+	name = "Submarine Bay (Engineering)"
+	})
 "bBs" = (
 /obj/disposalpipe/segment/mineral{
 	dir = 4
@@ -30170,7 +30219,9 @@
 "bCQ" = (
 /obj/item/device/matanalyzer,
 /turf/simulated/floor/shuttlebay,
-/area/station/hangar/mining)
+/area/station/hangar/engine{
+	name = "Submarine Bay (Engineering)"
+	})
 "bCS" = (
 /obj/stool/chair/office/yellow{
 	dir = 1
@@ -30643,15 +30694,21 @@
 "bEf" = (
 /obj/machinery/vehicle/tank/minisub,
 /turf/simulated/floor/shuttlebay,
-/area/station/hangar/mining)
+/area/station/hangar/engine{
+	name = "Submarine Bay (Engineering)"
+	})
 "bEg" = (
 /obj/decal/cleanable/dirt/dirt3,
 /turf/simulated/floor/shuttlebay,
-/area/station/hangar/mining)
+/area/station/hangar/engine{
+	name = "Submarine Bay (Engineering)"
+	})
 "bEh" = (
 /obj/decal/cleanable/oil/streak,
 /turf/simulated/floor/shuttlebay,
-/area/station/hangar/mining)
+/area/station/hangar/engine{
+	name = "Submarine Bay (Engineering)"
+	})
 "bEi" = (
 /obj/storage/cart,
 /obj/machinery/door_control/podbay/qm/new_walls/west{
@@ -30965,11 +31022,15 @@
 	name = "Submarine Bay (Mining) door control"
 	},
 /turf/simulated/floor/shuttlebay,
-/area/station/hangar/mining)
+/area/station/hangar/engine{
+	name = "Submarine Bay (Engineering)"
+	})
 "bFp" = (
 /obj/item/extinguisher,
 /turf/simulated/floor/shuttlebay,
-/area/station/hangar/mining)
+/area/station/hangar/engine{
+	name = "Submarine Bay (Engineering)"
+	})
 "bFq" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -30978,7 +31039,9 @@
 	tag = ""
 	},
 /turf/simulated/floor/shuttlebay,
-/area/station/hangar/mining)
+/area/station/hangar/engine{
+	name = "Submarine Bay (Engineering)"
+	})
 "bFr" = (
 /obj/machinery/door/airlock/pyro/maintenance{
 	dir = 4;
@@ -30991,7 +31054,9 @@
 /obj/access_spawn/mining,
 /obj/access_spawn/cargo,
 /turf/simulated/floor/plating/random,
-/area/station/hangar/mining)
+/area/station/hangar/engine{
+	name = "Submarine Bay (Engineering)"
+	})
 "bFs" = (
 /obj/machinery/firealarm{
 	pixel_x = 1;
@@ -31409,21 +31474,27 @@
 	name = "Submarine Bay (Mining) door control"
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/hangar/mining)
+/area/station/hangar/engine{
+	name = "Submarine Bay (Engineering)"
+	})
 "bGG" = (
 /obj/machinery/door/poddoor/blast/pyro/podbay_autoclose/mining_horizontal{
 	name = "Submarine Bay (Mining)"
 	},
 /obj/forcefield/energyshield/perma/doorlink,
 /turf/simulated/floor/shuttlebay,
-/area/station/hangar/mining)
+/area/station/hangar/engine{
+	name = "Submarine Bay (Engineering)"
+	})
 "bGH" = (
 /obj/forcefield/energyshield/perma/doorlink,
 /obj/machinery/door/poddoor/blast/pyro/podbay_autoclose/mining_horizontal{
 	name = "Submarine Bay (Mining)"
 	},
 /turf/simulated/floor/shuttlebay,
-/area/station/hangar/mining)
+/area/station/hangar/engine{
+	name = "Submarine Bay (Engineering)"
+	})
 "bGJ" = (
 /obj/voting_box,
 /obj/machinery/light/incandescent/netural,
@@ -37338,6 +37409,19 @@
 /obj/storage/secure/closet/personal,
 /turf/simulated/floor/green,
 /area/station/crew_quarters/market)
+"eDe" = (
+/obj/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/black,
+/area/station/security/secoffquarters)
+"eDr" = (
+/turf/simulated/floor/shuttlebay,
+/area/station/hangar/engine{
+	name = "Submarine Bay (Engineering)"
+	})
 "eEa" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 1;
@@ -37493,7 +37577,9 @@
 	pixel_x = -10
 	},
 /turf/simulated/floor/shuttlebay,
-/area/station/hangar/mining)
+/area/station/hangar/engine{
+	name = "Submarine Bay (Engineering)"
+	})
 "eQD" = (
 /obj/machinery/computer3/generic/communications{
 	dir = 8
@@ -38082,7 +38168,9 @@
 	pixel_x = -10
 	},
 /turf/simulated/floor/shuttlebay,
-/area/station/hangar/mining)
+/area/station/hangar/engine{
+	name = "Submarine Bay (Engineering)"
+	})
 "gdf" = (
 /obj/disposalpipe/segment,
 /obj/cable{
@@ -38305,7 +38393,9 @@
 	pixel_x = 10
 	},
 /turf/simulated/floor/shuttlebay,
-/area/station/hangar/mining)
+/area/station/hangar/engine{
+	name = "Submarine Bay (Engineering)"
+	})
 "gJh" = (
 /obj/table/reinforced/bar/auto{
 	name = "table"
@@ -38443,6 +38533,12 @@
 "gTP" = (
 /turf/simulated/floor/green,
 /area/station/crewquarters/garbagegarbs)
+"gUh" = (
+/obj/machinery/portable_reclaimer,
+/turf/simulated/floor,
+/area/station/hangar/engine{
+	name = "Submarine Bay (Engineering)"
+	})
 "gUj" = (
 /obj/table/auto,
 /obj/item/sheet/steel/reinforced{
@@ -38605,6 +38701,12 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/security/brig/solitary)
+"hrr" = (
+/obj/machinery/light/incandescent/netural,
+/turf/simulated/floor/shuttlebay,
+/area/station/hangar/engine{
+	name = "Submarine Bay (Engineering)"
+	})
 "hsB" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -39537,6 +39639,12 @@
 	},
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/starboard)
+"jGH" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/black,
+/area/station/security/secoffquarters)
 "jLO" = (
 /obj/wingrille_spawn/auto,
 /obj/window_blinds/cog2/right{
@@ -39931,14 +40039,6 @@
 	dir = 4
 	},
 /area/station/crew_quarters/hor/horprivate)
-"kNJ" = (
-/obj/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
-/turf/simulated/floor/black,
-/area/station/security/secoffquarters)
 "kNM" = (
 /obj/storage/secure/closet/fridge,
 /obj/item/reagent_containers/food/drinks/milk,
@@ -40159,7 +40259,9 @@
 	pixel_x = 10
 	},
 /turf/simulated/floor,
-/area/station/hangar/mining)
+/area/station/hangar/engine{
+	name = "Submarine Bay (Engineering)"
+	})
 "lAp" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 1;
@@ -40300,15 +40402,6 @@
 /obj/window_blinds/cog2/left,
 /turf/simulated/floor/plating,
 /area/station/security/hos)
-"lQm" = (
-/obj/disposalpipe/segment{
-	dir = 4
-	},
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/black,
-/area/station/security/secoffquarters)
 "lSg" = (
 /obj/decal/tile_edge/line/purple{
 	dir = 10;
@@ -40421,6 +40514,11 @@
 /obj/machinery/fluid_canister,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/upperstarboard)
+"mko" = (
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/hangar/engine{
+	name = "Submarine Bay (Engineering)"
+	})
 "mkL" = (
 /obj/decal/tile_edge/check{
 	dir = 8;
@@ -41456,7 +41554,9 @@
 	pixel_x = 10
 	},
 /turf/simulated/floor/shuttlebay,
-/area/station/hangar/mining)
+/area/station/hangar/engine{
+	name = "Submarine Bay (Engineering)"
+	})
 "oEq" = (
 /obj/decal/tile_edge/line/black{
 	dir = 9;
@@ -42165,6 +42265,15 @@
 	},
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/cafeteria/the_rising_tide_bar)
+"qgm" = (
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/black,
+/area/station/security/secoffquarters)
 "qgu" = (
 /obj/machinery/flasher/portable,
 /obj/decal/tile_edge/stripe{
@@ -44097,7 +44206,9 @@
 	pixel_y = 20
 	},
 /turf/simulated/floor,
-/area/station/hangar/mining)
+/area/station/hangar/engine{
+	name = "Submarine Bay (Engineering)"
+	})
 "vBy" = (
 /obj/storage/secure/closet/personal,
 /obj/disposalpipe/segment/mail,
@@ -44480,12 +44591,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/starboardlowerhallway)
-"wpX" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/black,
-/area/station/security/secoffquarters)
 "wqN" = (
 /obj/machinery/networked/storage/tape_drive{
 	bank_id = "Artlab";
@@ -44641,14 +44746,6 @@
 	},
 /turf/simulated/floor,
 /area/station/engine/power)
-"wPe" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
-	},
-/turf/simulated/floor/black,
-/area/station/security/secoffquarters)
 "wRO" = (
 /obj/wingrille_spawn/auto,
 /obj/cable{
@@ -45159,6 +45256,12 @@
 /obj/item/constructioncone,
 /turf/simulated/floor,
 /area/station/hallway/secondary/construction)
+"ygS" = (
+/obj/machinery/drainage/big,
+/turf/simulated/floor/shuttlebay,
+/area/station/hangar/engine{
+	name = "Submarine Bay (Engineering)"
+	})
 "yhC" = (
 /obj/cable{
 	icon_state = "6-8"
@@ -65904,12 +66007,12 @@ bqT
 buZ
 acq
 byo
-bCP
+eDr
 gbC
 eQy
-bCP
+eDr
 bFo
-bva
+mko
 act
 aaa
 aaa
@@ -66206,11 +66309,11 @@ cxW
 buZ
 bwA
 byp
-bCP
+eDr
 bBp
-bCP
+eDr
 bEf
-aCF
+hrr
 bGF
 act
 aaa
@@ -66506,12 +66609,12 @@ biY
 gAR
 nuY
 buZ
-aYE
+gUh
 byp
-bCP
+eDr
 bzP
-bCP
-bCP
+eDr
+eDr
 bFp
 bGG
 act
@@ -66812,9 +66915,9 @@ bwC
 byq
 asr
 bzP
-bCP
+eDr
 bEg
-bCP
+eDr
 bGH
 act
 aaa
@@ -67109,14 +67212,14 @@ tPi
 bjS
 kly
 uFt
-bva
+mko
 bwD
 byp
 ass
 bzP
 bCQ
-bCP
-apU
+eDr
+ygS
 bGH
 act
 aaa
@@ -67411,14 +67514,14 @@ aAW
 bjT
 dPl
 cty
-bva
+mko
 aKi
 byp
 ass
 bzP
-bCP
-bCP
-bCP
+eDr
+eDr
+eDr
 bGH
 act
 aaa
@@ -67713,14 +67816,14 @@ bgy
 bkK
 boc
 boc
-bva
+mko
 vAr
 byp
 ass
 bBq
-bCP
+eDr
 bEh
-bCP
+eDr
 bGH
 act
 aaa
@@ -68015,15 +68118,15 @@ boc
 box
 boc
 boc
-bva
+mko
 aia
 byp
 ass
 bzP
-bCP
-bCP
-aCF
-bva
+eDr
+eDr
+hrr
+mko
 act
 aaa
 aaa
@@ -68322,10 +68425,10 @@ arw
 byr
 ass
 bBp
-bCP
+eDr
 bEf
 bFq
-bva
+mko
 aoQ
 aaa
 aaa
@@ -68619,15 +68722,15 @@ bcj
 bpX
 brB
 bsM
-bva
+mko
 luO
 bys
 ass
 oDw
 gFj
-bCP
-bCP
-bva
+eDr
+eDr
+mko
 act
 act
 aaa
@@ -68921,15 +69024,15 @@ bdX
 bpe
 aHk
 btH
-bva
-bva
-bva
+mko
+mko
+mko
 asu
 bBr
-bva
-bva
+mko
+mko
 bFr
-bva
+mko
 bEF
 act
 aaa
@@ -85508,7 +85611,7 @@ aVF
 aWj
 aWB
 aXd
-wPe
+aKY
 aYv
 bTG
 asU
@@ -85810,7 +85913,7 @@ aVG
 aWJ
 aWC
 aXe
-wpX
+jGH
 aYw
 bTG
 aXP
@@ -86112,7 +86215,7 @@ aVH
 aWJ
 aWD
 aXe
-wpX
+jGH
 aYx
 aZd
 cuz
@@ -86414,7 +86517,7 @@ aVI
 aWJ
 xVb
 aXe
-wpX
+jGH
 aXe
 aZe
 aXe
@@ -86716,9 +86819,9 @@ aVJ
 aWJ
 aWF
 aXe
-kNJ
+eDe
 aXd
-lQm
+qgm
 aZR
 baU
 bbY
@@ -90363,11 +90466,11 @@ aDd
 aDd
 aDd
 aCM
-aKY
-aKY
-aKY
-aKY
-aKY
+aLH
+aLH
+aLH
+aLH
+aLH
 bvJ
 bxq
 air
