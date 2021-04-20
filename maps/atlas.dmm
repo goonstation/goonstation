@@ -11850,9 +11850,6 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/east)
-"CM" = (
-/turf/simulated/floor/plating/random,
-/area/station/maintenance/northeast)
 "CN" = (
 /obj/machinery/light_switch/auto,
 /turf/simulated/floor/sanitary,
@@ -74057,7 +74054,7 @@ Qa
 Qa
 Qa
 Sd
-CM
+Qa
 El
 ER
 FH
