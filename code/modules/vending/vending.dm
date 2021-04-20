@@ -1630,6 +1630,8 @@
 	New(obj/item/product,price)
 		. = ..()
 		contents = list()
+		if (!product)
+			return
 		product_type = product.type
 		product_name = product.name
 		real_name = product.real_name
@@ -1683,6 +1685,7 @@
 		wiresdesc = "[desc] Nothing has been wired up."
 		glassdesc = "[desc] Isn't there usually glass?"
 		readydesc = "[desc] Just needs a few screws tightened."
+
 	proc/setFrameState(state, mob/user, obj/item/target)
 		if (state == "WRENCHED")
 			wrenched = TRUE
@@ -1753,7 +1756,10 @@
 			else
 				var/datum/material/M = getMaterial("steel")
 				A.setMaterial(M)
-			qdel(src)
+				qdel(src)
+		else
+			setFrameState("UNWRENCHED")
+			CRASH("Invalid state \"[state]\" set in [src] construction process")
 
 	attackby(obj/item/target, mob/user)
 		if (iswrenchingtool(target))
@@ -1797,6 +1803,7 @@
 			if (T.try_weld(user,0,-1,0,1))
 				SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/machinery/vendingframe/proc/setFrameState,\
 				list("DECONSTRUCTED", user, target), target.icon, target.icon_state, null)
+		else . = ..()
 
 /obj/machinery/vending/player
 	name = "Build-A-Vend" // Thanks Eagletanker
@@ -1886,18 +1893,24 @@
 			user.visible_message("<b>[user.name]</b> loads [target] into [src].")
 			return
 		var/action = input(user, "What do you want to do with [targetContainer]?") as null|anything in list("Empty it into the vending machine","Place it in the vending machine")
-		if (action == "Place it in the vending machine" && !(isdead(user) || !can_act(user) || !in_interact_range(src, user)))
-			productListUpdater(targetContainer, user)
+		var/cantuse
+		if (action)
+			cantuse = ((isdead(user) || !can_act(user) || !in_interact_range(src, user)))
+		if (action == "Place it in the vending machine" && !cantuse)
+			productListUpdater(target, user)
 			user.visible_message("<b>[user.name]</b> loads [target] into [src].")
 			return
-		else if (!action || (isdead(user) || !can_act(user) || !in_interact_range(src, user)))
+		else if (cantuse || !action)
 			return
 		user.visible_message("<b>[user.name]</b> dumps out [targetContainer] into [src].")
 		for (var/obj/item/R in targetContainer)
 			targetContainer.hud.remove_object(R)
 			productListUpdater(R, user)
+		generate_HTML(1, 0)
 
 	proc/productListUpdater(obj/item/target, mob/user)
+		if(!target)
+			return
 		user.u_equip(target)
 		target.set_loc(src)
 		target.layer = (initial(target.layer))
@@ -2010,7 +2023,7 @@
 				var/datum/data/vending_product/player_product/R = locate(href_list["setprice"]) in src.player_list
 				R.product_cost = inp
 				src.generate_HTML(1, 0)
-		else if (href_list["vend"] && (length(player_list) <= 0))
+		else if (href_list["vend"] && !length(player_list))
 			promoimage = null
 			updateAppearance()
 		else if (href_list["icon"] && src.panel_open && src.unlocked)
