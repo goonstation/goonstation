@@ -601,11 +601,8 @@ var/datum/action_controller/actions
 		// don
 		if(item)
 			familiarity_scale = item.get_dondoff_familiarity(source)
-
 			if(item.duration_put > 0)
 				item_duration += item.duration_put
-			else
-				item_duration += 1.5 SECONDS
 
 			item_duration *= familiarity_scale ? familiarity_scale : 1
 			duration += item_duration
@@ -616,8 +613,6 @@ var/datum/action_controller/actions
 			familiarity_scale = item.get_dondoff_familiarity(source)
 			if(I.duration_remove  > 0)
 				duration += I.duration_remove
-			else
-				duration += 0.5 SECONDS
 
 			item_duration *= familiarity_scale ? familiarity_scale : 1
 

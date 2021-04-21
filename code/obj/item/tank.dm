@@ -30,6 +30,7 @@ Contains:
 	stamina_damage = 55
 	stamina_cost = 23
 	stamina_crit_chance = 10
+	duration_put = 2 SECONDS
 
 	New()
 		..()
@@ -64,6 +65,11 @@ Contains:
 			var/mob/living/carbon/location = loc
 			if(location.internal==src)
 				.= 1
+
+	get_dondoff_familiarity(mob/user)
+		. = ..()
+		if(user.traitHolder?.hasTrait("training_engineer"))
+			. = 0.5
 
 	attack_self(mob/user as mob)
 		if (!(src.air_contents))
@@ -360,7 +366,6 @@ Contains:
 	module_research = list("atmospherics" = 4)
 	distribute_pressure = 17 // setting these things to start at the minimum pressure needed to breathe - Haine
 	compatible_with_TTV = 0
-	duration_put = 2 SECONDS
 
 	New()
 		..()

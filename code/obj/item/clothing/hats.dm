@@ -118,6 +118,12 @@
 	desc = "Helps protect from vacuum for a short period of time."
 	seal_hair = 1
 	path_prot = 0
+	duration_put = 1 SECOND
+
+	get_dondoff_familiarity(mob/user)
+		. = ..()
+		if(user.traitHolder?.hasTrait("training_medical") )
+			. = 0.5
 
 	setupProperties()
 		..()
@@ -131,6 +137,12 @@
 	c_flags = COVERSEYES | COVERSMOUTH | BLOCKCHOKE
 	desc = "Asbestos, right near your face. Perfect!"
 	seal_hair = 1
+	duration_put = 2 SECOND
+
+	get_dondoff_familiarity(mob/user)
+		. = ..()
+		if(user.traitHolder?.hasTrait("training_medical") )
+			. = 0.5
 
 	setupProperties()
 		..()
@@ -1117,6 +1129,12 @@
 	permeability_coefficient = 0
 	c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH | BLOCKCHOKE
 	seal_hair = 1
+	duration_put = 2 SECOND
+
+	get_dondoff_familiarity(mob/user)
+		. = ..()
+		if(user.traitHolder?.hasTrait("training_medical") )
+			. = 0.5
 
 	setupProperties()
 		..()
@@ -1311,6 +1329,12 @@
 	setupProperties()
 		..()
 		setProperty("meleeprot_head", 7)
+
+	get_dondoff_familiarity(mob/user)
+		if( user.mind?.assigned_role == "Head of Security" )
+			. = 0.5
+
+
 
 /obj/item/clothing/head/hos_hat/attack_self(mob/user as mob)
 	if(user.r_hand == src || user.l_hand == src)

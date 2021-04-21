@@ -13,6 +13,11 @@
 	duration_put = 3.0 SECONDS
 	duration_remove = 2.0 SECONDS
 
+	get_dondoff_familiarity(mob/user)
+		. = ..()
+		if(user.traitHolder?.hasTrait("training_security"))
+			. = 0.5
+
 	setupProperties()
 		..()
 		setProperty("coldprot", 10)
@@ -90,6 +95,9 @@
 	var/obj/item/pipebomb/bomb/pipebomb = null
 	var/obj/item/reagent_containers/glass/beaker/beaker = null
 	var/payload = ""
+
+	duration_put = 6.0 SECONDS
+	duration_remove = 3 SECONDS
 
 	New()
 		..()
@@ -284,11 +292,28 @@
 		setProperty("meleeprot", 7)
 		setProperty("rangedprot", 1.5)
 
+	get_dondoff_familiarity(mob/user)
+		if(.)
+			. = 1
+		else if( user.mind?.assigned_role == "Captain" )
+			. = 0.5
+		else
+			. = 1.5
+
 /obj/item/clothing/suit/armor/capcoat //old alt armour for the captain
 	name = "captain's coat"
 	desc = "A luxorious formal coat made for the station's captain. It seems to be made out of some thermally resistant material."
 	icon_state = "capcoat"
 	item_state = "capcoat"
+
+	get_dondoff_familiarity(mob/user)
+		if(.)
+			. = 1
+		else if( user.mind?.assigned_role == "Captain" )
+			. = 0.5
+		else
+			. = 1.5
+
 	setupProperties()
 		..()
 		setProperty("coldprot", 35)
@@ -301,6 +326,14 @@
 	desc = "A rather well armored coat tailored in a traditional naval fashion."
 	icon_state = "hopcoat"
 	item_state = "hopcoat"
+
+	get_dondoff_familiarity(mob/user)
+		if(.)
+			. = 1
+		else if( user.mind?.assigned_role == "Head of Personnel" )
+			. = 0.5
+		else
+			. = 1.5
 
 	setupProperties()
 		..()
@@ -343,6 +376,9 @@
 	desc = "A heavily armored suit that protects against moderate damage."
 	icon_state = "heavy"
 	item_state = "heavy"
+	duration_put = 4.0 SECONDS
+	duration_remove = 2.5 SECONDS
+
 	setupProperties()
 		..()
 		setProperty("meleeprot", 12)
@@ -431,6 +467,11 @@
 	desc = "A lightly-armored and stylish cape, made of heat-resistant materials. It probably won't keep you warm, but it would make a great security blanket!"
 	icon_state = "hos-cape"
 	item_state = "hos-cape"
+
+	get_dondoff_familiarity(mob/user)
+		if( user.mind?.assigned_role == "Head of Security" )
+			. = 0.1
+
 	setupProperties()
 		..()
 		setProperty("meleeprot", 3)

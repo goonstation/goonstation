@@ -2305,6 +2305,11 @@
 
 /mob/living/carbon/human/don_doff(obj/item/I, slot)
 	if(!dondoffscale) return
+
+	var/obj/item/removed = src.get_slot(slot)
+	if(removed?.duration_remove <= 0 && I.duration_put <= 0)
+		return
+
 	if( slot in list(slot_l_store,  slot_r_store,  slot_l_hand, slot_r_hand) )
 		if(actions.hasAction(src,"dondoff"))
 			return TRUE

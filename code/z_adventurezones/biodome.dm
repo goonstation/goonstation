@@ -655,6 +655,7 @@ SYNDICATE DRONE FACTORY AREAS
 	cant_other_remove = 1
 	w_class = W_CLASS_NORMAL
 	var/processing = 0
+	duration_put = 4 SECONDS
 
 	setupProperties()
 		..()

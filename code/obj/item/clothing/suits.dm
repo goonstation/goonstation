@@ -183,8 +183,13 @@
 	body_parts_covered = TORSO|LEGS|ARMS
 	permeability_coefficient = 0.01
 	over_hair = 1
-	duration_put = 3 SECONDS
+	duration_put = 4 SECONDS
 	duration_remove = 1 SECONDS
+
+	get_dondoff_familiarity(mob/user)
+		. = ..()
+		if(user.traitHolder?.hasTrait("training_medical") )
+			. = 0.5
 
 	setupProperties()
 		..()
@@ -239,6 +244,8 @@
 	desc = "A suit that protects against biological contamination. Somebody slapped some armor onto the chest."
 	icon_state = "armorbio"
 	item_state = "armorbio"
+	duration_put = 5 SECONDS
+	duration_remove = 2 SECONDS
 	setupProperties()
 		..()
 		setProperty("meleeprot", 5)
@@ -259,11 +266,16 @@
 	desc = "A protective padded suit for emergency response personnel. Offers limited thermal and biological protection. Somebody slapped some armor onto the chest."
 	icon_state = "para_armor"
 	item_state = "paramedic"
+
 	setupProperties()
 		..()
 		setProperty("meleeprot", 5)
 		setProperty("rangedprot", 1.9)
 
+	get_dondoff_familiarity(mob/user)
+		. = ..()
+		if(user.traitHolder?.hasTrait("training_medical") || user.traitHolder?.hasTrait("training_security")  )
+			. = 0.5
 
 	para_troop
 		icon_state = "para_sec"
@@ -288,6 +300,12 @@
 	item_state = "hev"
 	c_flags = SPACEWEAR
 	body_parts_covered = TORSO|LEGS|ARMS
+	duration_put = 5 SECONDS
+	duration_remove = 2 SECONDS
+
+	get_dondoff_familiarity(mob/user)
+		if(user.traitHolder?.hasTrait("training_engineer") )
+			. = 0.5
 
 	setupProperties()
 		..()
@@ -308,6 +326,8 @@
 	body_parts_covered = TORSO|LEGS|ARMS
 	permeability_coefficient = 0.005
 	over_hair = 1
+	duration_put = 5 SECONDS
+	duration_remove = 2 SECONDS
 
 	New()
 		. = ..()
@@ -511,6 +531,7 @@
 	item_state = "straight_jacket"
 	body_parts_covered = TORSO|LEGS|ARMS
 	restrain_wearer = 1
+	duration_put = 2 SECONDS
 
 	setupProperties()
 		..()
@@ -836,6 +857,13 @@
 	permeability_coefficient = 0.50
 	body_parts_covered = TORSO|LEGS|ARMS
 	protective_temperature = 4500
+	duration_put = 2 SECONDS
+	duration_remove = 1 SECONDS
+
+	get_dondoff_familiarity(mob/user)
+		. = ..()
+		if(user.traitHolder?.hasTrait("training_engineer") )
+			. = 0.5
 
 	setupProperties()
 		..()
@@ -874,6 +902,8 @@
 	item_state = "thermal"
 
 	protective_temperature = 100000
+	duration_put = 4 SECONDS
+	duration_remove = 2 SECONDS
 
 	setupProperties()
 		..()
@@ -972,6 +1002,12 @@
 	protective_temperature = 1000
 	over_hair = 1
 	duration_put = 2.5 SECONDS
+	duration_remove = 2 SECONDS
+
+	get_dondoff_familiarity(mob/user)
+		. = ..()
+		if(user.traitHolder?.hasTrait("training_engineer") || user.traitHolder?.hasTrait("training_security") )
+			. = 0.5
 
 	onMaterialChanged()
 		if(src.material)
@@ -1015,6 +1051,7 @@
 	c_flags = SPACEWEAR
 	body_parts_covered = TORSO|LEGS|ARMS
 	var/rip = 0
+	duration_put = 3.5 SECONDS
 
 	setupProperties()
 		..()
@@ -1044,6 +1081,11 @@
 	icon_state = "spacecap"
 	item_state = "spacecap"
 
+	get_dondoff_familiarity(mob/user)
+		. = ..()
+		if( user.mind?.assigned_role == "Captain" )
+			. = 0.5
+
 	setupProperties()
 		..()
 		setProperty("space_movespeed", 0.4)
@@ -1063,6 +1105,11 @@
 	desc = "A suit that protects against low pressure environments. Issued to syndicate operatives."
 	contraband = 3
 	item_function_flags = IMMUNE_TO_ACID
+
+	get_dondoff_familiarity(mob/user)
+		. = ..()
+		if( user.mind?.assigned_role == "MODE" )
+			. = 0.5
 
 	setupProperties()
 		..()
@@ -1224,6 +1271,13 @@
 	c_flags = SPACEWEAR
 	body_parts_covered = TORSO|LEGS|ARMS
 	mats = 45 //should not be cheap to make at mechanics, increased from 15.
+	duration_put = 4 SECONDS
+	duration_remove = 2 SECONDS
+
+	get_dondoff_familiarity(mob/user)
+		. = ..()
+		if(user.traitHolder?.hasTrait("training_engineer") )
+			. = 0.5
 
 
 #ifdef UNDERWATER_MAP
@@ -1251,10 +1305,16 @@
 		desc = "An armored space suit, not for your average expendable chumps. No sir."
 		icon_state = "indusred"
 		item_state = "indusred"
+
 		setupProperties()
 			..()
 			setProperty("meleeprot", 9)
 			setProperty("rangedprot", 2)
+
+		get_dondoff_familiarity(mob/user)
+			. = ..()
+			if( user.mind?.assigned_role == "MODE" )
+				. = 0.5
 
 		specialist
 			name = "specialist heavy operative combat armor"
@@ -1279,6 +1339,14 @@
 	c_flags = SPACEWEAR
 	body_parts_covered = TORSO|LEGS|ARMS
 	mats = 60 //should be the most expensive armor.
+
+	duration_put = 4 SECONDS
+	duration_remove = 2 SECONDS
+
+	get_dondoff_familiarity(mob/user)
+		. = ..()
+		if(user.traitHolder?.hasTrait("training_engineer") || user.traitHolder?.hasTrait("training_security")  )
+			. = 0.5
 
 	setupProperties()
 		..()
@@ -1509,6 +1577,12 @@
 	body_parts_covered = TORSO|LEGS|ARMS
 	permeability_coefficient = 0
 	over_hair = 1
+	duration_put = 4 SECOND
+
+	get_dondoff_familiarity(mob/user)
+		. = ..()
+		if(user.traitHolder?.hasTrait("training_medical") )
+			. = 0.5
 
 /obj/item/clothing/suit/security_badge
 	name = "Security Badge"

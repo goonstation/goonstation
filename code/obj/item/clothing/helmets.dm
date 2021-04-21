@@ -7,6 +7,12 @@
 	item_state = "helmet"
 	desc = "Somewhat protects your head from being bashed in."
 	protective_temperature = 500
+	duration_put = 1 SECOND
+
+	get_dondoff_familiarity(mob/user)
+		. = ..()
+		if(user.traitHolder?.hasTrait("training_security") )
+			. = 0.5
 
 	setupProperties()
 		..()
@@ -24,6 +30,11 @@
 	seal_hair = 1
 	path_prot = 0
 	duration_put = 1 SECOND
+
+	get_dondoff_familiarity(mob/user)
+		. = ..()
+		if(user.traitHolder?.hasTrait("training_engineer") || user.traitHolder?.hasTrait("training_security") )
+			. = 0.5
 
 	onMaterialChanged()
 		if(src.material)
@@ -189,6 +200,12 @@
 	item_state = "space_helmet_syndicate"
 	desc = "The standard space helmet of the dreaded Syndicate."
 	item_function_flags = IMMUNE_TO_ACID
+
+	get_dondoff_familiarity(mob/user)
+		. = ..()
+		if( user.mind?.assigned_role == "MODE" )
+			. = 0.5
+
 	old
 		icon_state = "syndicate-OLD"
 		desc = "A relic of the past."
@@ -533,6 +550,10 @@
 	color_g = 0.5
 	color_b = 0.5
 	var/nodarken = 0
+
+	get_dondoff_familiarity(mob/user)
+		if(user.traitHolder?.hasTrait("training_engineer") )
+			. = 0.5
 
 	setupProperties()
 		..()

@@ -22,6 +22,9 @@
 
 	duration_remove = 6.5 SECONDS
 
+	get_dondoff_familiarity(mob/user)
+		. = 0.07 // don't really care about jumpsuits but want current value for pickpocketing
+
 	setupProperties()
 		..()
 		setProperty("coldprot", 5)

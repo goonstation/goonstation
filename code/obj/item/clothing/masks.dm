@@ -112,6 +112,11 @@
 
 	duration_put = 2 SECONDS
 
+	get_dondoff_familiarity(mob/user)
+		. = ..()
+		if(user.traitHolder?.hasTrait("training_engineer") || user.traitHolder?.hasTrait("training_security") )
+			. = 0.75
+
 	setupProperties()
 		..()
 		setProperty("coldprot", 7)
