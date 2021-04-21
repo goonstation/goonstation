@@ -6,7 +6,7 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	icon_state = "mainboard"
 	item_state = "electronic"
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	var/created_name = null //If defined, result computer will have this name.
 	var/integrated_floppy = 1 //Does the resulting computer have a built-in disk drive?
 	mats = 8

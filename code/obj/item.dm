@@ -56,7 +56,7 @@
 	/*Inventory*/
 	/*‾‾‾‾‾‾‾‾‾*/
 	var/pickup_sfx = 0 //if null, we auto-pick from a list based on w_class
-	var/w_class = 3.0 // how big they are, determines if they can fit in backpacks and pockets and the like
+	var/w_class = W_CLASS_NORMAL // how big they are, determines if they can fit in backpacks and pockets and the like
 	p_class = 1.5 // how hard they are to pull around, determines how much something slows you down while pulling it
 
 	var/cant_self_remove = 0 // Can't remove from non-hand slots
@@ -1024,11 +1024,11 @@
 /obj/item/get_desc()
 	var/t
 	switch(src.w_class)
-		if (-INFINITY to 1.0) t = "tiny"
-		if (2.0) t = "small"
-		if (3.0) t = "normal-sized"
-		if (4.0) t = "bulky"
-		if (5.0 to INFINITY) t = "huge"
+		if (-INFINITY to W_CLASS_TINY) t = "tiny"
+		if (W_CLASS_SMALL) t = "small"
+		if (W_CLASS_NORMAL) t = "normal-sized"
+		if (W_CLASS_BULKY) t = "bulky"
+		if (W_CLASS_HUGE to INFINITY) t = "huge"
 		else
 	if (usr?.bioHolder?.HasEffect("clumsy") && prob(50)) t = "funny-looking"
 	return "It is \an [t] item."

@@ -13,7 +13,7 @@
 	desc = "Just keep rollin' rollin'."
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "bowling_ball"
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	force = 5
 	throw_speed = 1
 

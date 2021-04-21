@@ -10,7 +10,7 @@
 	c_flags = EQUIPPED_WHILE_HELD
 	force = 2
 	throwforce = 6
-	w_class = 2
+	w_class = W_CLASS_SMALL
 	mats = 8
 	stamina_damage = 40
 	stamina_cost = 10
@@ -47,7 +47,7 @@
 
 			playsound(get_turf(src), "sparks", 75, 1, -1)
 			if (src.status)
-				w_class = 4
+				w_class = W_CLASS_BULKY
 				flags &= ~ONBELT //haha NO
 				setProperty("meleeprot_all", 9)
 				setProperty("rangedprot", 1.5)
@@ -60,7 +60,7 @@
 
 				src.setItemSpecial(/datum/item_special/barrier)
 			else
-				w_class = 2
+				w_class = W_CLASS_SMALL
 				flags |= ONBELT
 				delProperty("meleeprot_all", 0)
 				delProperty("rangedprot", 0)
@@ -122,7 +122,7 @@
 	c_flags = EQUIPPED_WHILE_HELD
 	force = 2
 	throwforce = 6
-	w_class = 2
+	w_class = W_CLASS_SMALL
 	stamina_damage = 30
 	stamina_cost = 10
 	stamina_crit_chance = 0

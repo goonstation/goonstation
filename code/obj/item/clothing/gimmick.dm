@@ -544,7 +544,7 @@
 	flags = FPRINT | TABLEPASS| CONDUCT
 	item_state = "vshield"
 	throwforce = 7.0
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 
 	turn_off()
 		if(user)

@@ -28,8 +28,8 @@
 #define MOB_GLASSES_LAYER 	(MOB_OVERLAY_BASE-6)
 #define MOB_HAIR_LAYER2		(MOB_OVERLAY_BASE-7)
 #define MOB_BACK_LAYER 		(MOB_OVERLAY_BASE-8)
-#define MOB_OVERSUIT_LAYER1 (MOB_LAYER_BASE-8.7)	// For mutant oversuit (de)tails when facing north
-#define MOB_OVERSUIT_LAYER2 (MOB_LAYER_BASE-8.8)	// If we have another one
+#define MOB_OVERSUIT_LAYER1 (MOB_OVERLAY_BASE-8.7)	// For mutant oversuit (de)tails when facing north
+#define MOB_OVERSUIT_LAYER2 (MOB_OVERLAY_BASE-8.8)	// If we have another one
 #define MOB_ARMOR_LAYER 	(MOB_OVERLAY_BASE-9)
 #define MOB_HAND_LAYER2 	(MOB_OVERLAY_BASE-10) 	// gloves
 #define MOB_HAND_LAYER1 	(MOB_OVERLAY_BASE-11)
