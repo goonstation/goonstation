@@ -54,7 +54,8 @@ type StockCategoryProps = {
   filterAvailable: boolean;
 };
 
-const StockCategory = ({ category, filterAvailable }: StockCategoryProps, context) => {
+const StockCategory = (props: StockCategoryProps, context) => {
+  const { category, filterAvailable } = props;
   const { data } = useBackend<WeaponVendorData>(context);
 
   let stock = data.stock.filter((stock) => stock.category === category);
