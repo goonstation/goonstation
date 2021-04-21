@@ -1,5 +1,9 @@
 
 (t)wed apr 21 21
+(u)Tarmunora
+(e)⛔⚖|removal, balance
+(*)Removed recipe for aerosol propellant.
+(+)Changed recipe of one secret chem (think of what chem might *propel* something unanchored)
 (u)DimWhat
 (p)4348
 (e)🗺|mapping
