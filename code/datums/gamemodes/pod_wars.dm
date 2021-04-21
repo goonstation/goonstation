@@ -379,8 +379,8 @@ ABSTRACT_TYPE(/datum/ore_cluster)
 	team.change_points(-25)
 
 	//If it's the first one for this team, play the voice line, otherwise play the ship alert sound.
-	if (!first_system_destroyed)
-		first_system_destroyed = 1
+	if (!team.first_system_destroyed)
+		team.first_system_destroyed = 1
 		src.playsound_to_team(team, "sound/voice/pod_wars_voices/{PWTN}Crit_System_Destroyed.ogg")
 	else
 		src.playsound_to_team(team, "sound/effects/ship_alert_major.ogg")
@@ -1956,16 +1956,16 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 			src.crate_rewards_tier ++
 			return 0
 		else if (TIME > last_cap_time + 10 MINUTES && src.crate_rewards_tier == 1)
-			new/obj/storage/secure/pod_wars_rewards(loc = T, team_num = src.owner_team, tier = src.crate_rewards_tier)
+			new/obj/storage/secure/crate/pod_wars_rewards(loc = T, team_num = src.owner_team, tier = src.crate_rewards_tier)
 
 			src.crate_rewards_tier ++
 		else if (TIME > last_cap_time + 15 MINUTES && src.crate_rewards_tier == 2)
-			new/obj/storage/secure/pod_wars_rewards(loc = T, team_num = src.owner_team, tier = src.crate_rewards_tier)
+			new/obj/storage/secure/crate/pod_wars_rewards(loc = T, team_num = src.owner_team, tier = src.crate_rewards_tier)
 			src.crate_rewards_tier ++
 
 		//ok, this is shit. To explain, if the tier is 3, then it'll be 15 minutes, if it's 4, it'll be 20 minutes, if it's 5, it'll be 25 minutes, etc...
 		else if (TIME >= last_cap_time + (15 MINUTES + 5 MINUTES * (src.crate_rewards_tier-3) ) && src.crate_rewards_tier == 3)
-			new/obj/storage/secure/pod_wars_rewards(loc = T, team_num = src.owner_team, tier = src.crate_rewards_tier)
+			new/obj/storage/secure/crate/pod_wars_rewards(loc = T, team_num = src.owner_team, tier = src.crate_rewards_tier)
 			src.crate_rewards_tier ++
 
 		return 1
@@ -2485,7 +2485,7 @@ Player Stats
 		src.ckey = mind?.ckey
 
 
-/obj/storage/secure/pod_wars_rewards
+/obj/storage/secure/crate/pod_wars_rewards
 	desc = "It looks like a crate of some kind, probably locked. Who can say?"
 	grab_stuff_on_spawn = TRUE
 	req_access = list()
@@ -2600,7 +2600,7 @@ Player Stats
 
 //This is dumb. I should really have these all be one object, but I figure we might wanna specifically admin spawn thse from time to time. -kyle
 
-/obj/storage/secure/pod_wars_rewards/nanotrasen
+/obj/storage/secure/crate/pod_wars_rewards/nanotrasen
 	req_access = list(access_heads)
 	team_num = 1		//should be 1 or 2
 	tier = 1			//acceptable values, 1-3.
@@ -2609,7 +2609,7 @@ Player Stats
 		tier = 2
 	high
 		tier = 3
-/obj/storage/secure/pod_wars_rewards/syndicate
+/obj/storage/secure/crate/pod_wars_rewards/syndicate
 	req_access = list(access_syndicate_shuttle)
 	team_num = 2		//should be 1 or 2
 	tier = 1			//acceptable values, 1-3.
