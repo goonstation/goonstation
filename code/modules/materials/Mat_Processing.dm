@@ -659,7 +659,7 @@
 	name = "Material analyzer"
 	desc = "This piece of equipment can detect and analyze materials."
 	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
-	w_class = 2
+	w_class = W_CLASS_SMALL
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
 		if(get_dist(src, target) <= world.view)
@@ -689,7 +689,7 @@
 	icon_state = "shovel"
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "shovel"
-	w_class = 3
+	w_class = W_CLASS_NORMAL
 	flags = ONBELT
 	force = 7 // 15 puts it significantly above most other weapons
 	hitsound = 'sound/impact_sounds/Metal_Hit_1.ogg'

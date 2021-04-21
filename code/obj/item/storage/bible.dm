@@ -9,7 +9,7 @@ var/global/list/bible_contents = list()
 	item_state ="bible"
 	throw_speed = 1
 	throw_range = 5
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	max_wclass = 2
 	flags = FPRINT | TABLEPASS | NOSPLASH
 	event_handler_flags = USE_FLUID_ENTER | IS_FARTABLE
@@ -191,7 +191,7 @@ var/global/list/bible_contents = list()
 	name = "O.C. Bible"
 	desc = "For when you don't want the good book to take up too much space in your life."
 	icon_state = "minibible"
-	w_class = 2
+	w_class = W_CLASS_SMALL
 
 /obj/item/storage/bible/hungry
 	name = "hungry bible"

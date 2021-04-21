@@ -861,7 +861,7 @@
 	icon = 'icons/obj/furniture/chairs.dmi'
 	icon_state = "folded_chair"
 	item_state = "folded_chair"
-	w_class = 4.0
+	w_class = W_CLASS_BULKY
 	throwforce = 10
 	flags = FPRINT | TABLEPASS | CONDUCT
 	force = 5

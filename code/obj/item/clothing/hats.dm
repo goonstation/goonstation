@@ -864,7 +864,7 @@
 	desc = "An unnaturally large piece of headwear"
 	wear_image_icon = 'icons/mob/bighat.dmi'
 	icon_state = "tophat"
-	w_class = 4
+	w_class = W_CLASS_BULKY
 
 /obj/item/clothing/head/bighat/syndicate
 	name = "syndicate hat"
@@ -1166,7 +1166,7 @@
 	wear_image_icon = 'icons/mob/ears.dmi'
 	icon_state = "cat-gray"
 	item_state = "cat-gray"
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	throwforce = 0
 
 	attackby(obj/item/W as obj, mob/user as mob)
@@ -1274,7 +1274,7 @@
 	wear_image_icon = 'icons/mob/bighat.dmi'
 	icon_state = "antlers"
 	item_state = "antlers"
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	throwforce = 0
 
 /obj/item/clothing/head/pajama_cap

@@ -41,7 +41,7 @@ MATERIAL
 	throwforce = 5.0
 	throw_speed = 1
 	throw_range = 4
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	max_stack = 50
 	stamina_damage = 42
 	stamina_cost = 23
@@ -630,7 +630,7 @@ MATERIAL
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	icon_state = "rods"
 	flags = FPRINT | TABLEPASS| CONDUCT
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	force = 9.0
 	throwforce = 15.0
 	throw_speed = 5
@@ -989,7 +989,7 @@ MATERIAL
 	icon = 'icons/obj/metal.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	icon_state = "tile"
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	m_amt = 937.5
 	throw_speed = 3
 	throw_range = 20

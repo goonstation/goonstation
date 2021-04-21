@@ -421,7 +421,7 @@
 	icon = 'icons/obj/fluid.dmi'
 	icon_state = "ladder_off"
 	item_state = "folded_chair"
-	w_class = 4.0
+	w_class = W_CLASS_BULKY
 	throwforce = 10
 	flags = FPRINT | TABLEPASS | CONDUCT
 	force = 9
