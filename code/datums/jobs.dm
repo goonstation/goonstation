@@ -323,14 +323,15 @@ ABSTRACT_TYPE(/datum/job/command)
 	allow_spy_theft = 0
 
 	slot_back = /obj/item/storage/backpack/withO2
-	slot_belt = /obj/item/device/pda2/chiefengineer
+	slot_belt = /obj/item/storage/belt/utility/prepared/ceshielded
 	slot_glov = /obj/item/clothing/gloves/yellow
 	slot_foot = /obj/item/clothing/shoes/brown
 	slot_head = /obj/item/clothing/head/helmet/hardhat
 	slot_eyes = /obj/item/clothing/glasses/meson
 	slot_jump = /obj/item/clothing/under/rank/chief_engineer
 	slot_ears = /obj/item/device/radio/headset/command/ce
-	slot_poc1 = /obj/item/paper/book/pocketguide/engineering
+	slot_poc1 = /obj/item/device/pda2/chiefengineer
+	slot_poc2 = /obj/item/paper/book/pocketguide/engineering
 	items_in_backpack = list(/obj/item/device/flash, /obj/item/rcd_ammo/medium)
 
 	special_setup(var/mob/living/carbon/human/M)
