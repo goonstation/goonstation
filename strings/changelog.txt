@@ -1,5 +1,9 @@
 
 (t)wed apr 21 21
+(u)Luxizzle
+(p)4331
+(e)📄|tgui
+(*)Converted weapon vendor to tgui.
 (u)Tarmunora
 (e)⚖|balance
 (+)Limit acid splash damage against blobs to 10u worth (per acid)
