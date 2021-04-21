@@ -3,6 +3,7 @@
 (u)Tarmunora
 (e)⚖|balance
 (+)Limit acid splash damage against blobs to 10u worth (per acid)
+(+)Un-nerf fire damage against blobs somewhat
 (u)Tarmunora
 (e)⛔⚖|removal, balance
 (*)Removed recipe for aerosol propellant.
