@@ -855,7 +855,7 @@
 			force = 5.0
 			throwforce = 10.0
 			throw_range = 5
-			w_class = 2.0
+			w_class = W_CLASS_SMALL
 			stamina_damage = 15
 			stamina_cost = 15
 			stamina_crit_chance = 50

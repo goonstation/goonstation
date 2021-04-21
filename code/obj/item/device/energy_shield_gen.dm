@@ -6,7 +6,7 @@
 	density = 0
 	opacity = 0
 	anchored = 0
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	pressure_resistance = 2*ONE_ATMOSPHERE
 	var/list/tiles = new/list()
 	var/active = 0

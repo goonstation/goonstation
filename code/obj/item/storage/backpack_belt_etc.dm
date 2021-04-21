@@ -8,7 +8,7 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
 	item_state = "backpack"
 	flags = ONBACK | FPRINT | TABLEPASS | NOSPLASH
-	w_class = 4.0
+	w_class = W_CLASS_BULKY
 	max_wclass = 3
 	wear_image_icon = 'icons/mob/back.dmi'
 	does_not_open_in_pocket = 0
@@ -124,7 +124,7 @@
 	icon_state = "fanny"
 	item_state = "fanny"
 	flags = FPRINT | TABLEPASS | ONBELT | NOSPLASH
-	w_class = 4.0
+	w_class = W_CLASS_BULKY
 	max_wclass = 3
 	does_not_open_in_pocket = 0
 	stamina_damage = 0
@@ -168,7 +168,7 @@
 	stamina_damage = 10
 	stamina_cost = 5
 	stamina_crit_chance = 5
-	w_class = 4.0
+	w_class = W_CLASS_BULKY
 
 	New()
 		..()
@@ -541,7 +541,7 @@
 	icon_state = "pool_ring"
 	item_state = "pool_ring"
 	flags = FPRINT | TABLEPASS | ONBELT
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	mats = 5 // I dunno???
 
 	New()

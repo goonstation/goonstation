@@ -653,7 +653,7 @@
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "bracelet"
 	material_prints = "patterned scratches"
-	w_class = 1
+	w_class = W_CLASS_TINY
 	var/primary = TRUE
 	var/image/gemstone = null
 	var/obj/item/clothing/gloves/psylink_bracelet/twin

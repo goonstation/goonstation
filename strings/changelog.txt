@@ -1,5 +1,24 @@
 
+(t)wed apr 21 21
+(u)Tarmunora
+(e)⛔⚖|removal, balance
+(*)Removed recipe for aerosol propellant.
+(+)Changed recipe of one secret chem (think of what chem might *propel* something unanchored)
+(u)DimWhat
+(p)4348
+(e)🗺|mapping
+(+)Added medical clothing lockers to Atlas, Cog 1, Cog 2, Clarion, Destiny, Horizon, and Oshan.
+(+)Added medical winter coats to medical clothing lockers and increased their amount of clothing.
 (t)tue apr 20 21
+(u)Flaborized
+(p)4400
+(e)🆕🔄🎨|feature, rework, sprites
+(*)The Human Resprite has finally been completed, humans have been resprited! Huge thanks to everyone who helped make this impossibly large project a reality, see a full list in minor changelog.
+(+)For Human Resprite: Huge thanks to Erinexx, Gannets, Supernorn, Jan-antilles, Flourish, Batelite, Skeletonman0, Matheus, Schwick, Virvatuli, Retrino and Walpvrgis for contributing sprites, and to Mordent, Zewaka and Pali6 for coding help and other technical stuff.
+(u)Luxizzle
+(p)4326
+(e)📄|tgui
+(*)Converted brig timers to tgui.
 (u)Gannets
 (p)4375
 (e)🆕🗺|feature, mapping
