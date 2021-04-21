@@ -35,7 +35,6 @@
 			return
 
 		src.event_effect(warning_delay, event_duration, grump_to_overcome)
-		return
 
 	event_effect(warning_delay, event_duration, grump_to_overcome)
 		..()
