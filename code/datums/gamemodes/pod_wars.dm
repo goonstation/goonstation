@@ -2599,9 +2599,7 @@ Player Stats
 			message_admins(initial(custom_projectile_type.power))
 			//if you're on top of it, eat all the shots. Deal 1/4 damage per shot. Doesn't make sense logically, but w/e.
 			var/mob/living/L = locate(/mob/living) in get_turf(src)
-			message_admins(L)
 			if (istype(L))
-				message_admins("111")
 
 				// var/datum/projectile/P = new PJ.spread_projectile_type		//dummy projectile to get power level
 				L.TakeDamage("chest", 0, ((initial(custom_projectile_type.power)/4)*pellets_to_fire)/L.get_ranged_protection(), 0, DAMAGE_BURN)
