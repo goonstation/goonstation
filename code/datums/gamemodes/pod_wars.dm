@@ -299,9 +299,9 @@ ABSTRACT_TYPE(/datum/ore_cluster)
 //user = who did the capturing? //might remove later if I change the capture system
 //team = the team datum
 //team_num = 1 or 2 for NT or SY respectively
-/datum/game_mode/pod_wars/proc/handle_control_pt_change(var/true_name, var/mob/user, var/datum/pod_wars_team/team, var/team_num)
-
-	board.change_control_point_owner(true_name, team, team_num)
+/datum/game_mode/pod_wars/proc/handle_control_pt_change(var/true_name, var/mob/user, var/datum/pod_wars_team/team)
+	var/team_num = team.team_num
+	board.change_control_point_owner(true_name, team_num)
 
 	var/team_string = "[team_num == 1 ? "NanoTrasen" : team_num == 2 ? "The Syndicate" : "Something Eldritch"]"
 	boutput(world, "<h4><span class='[team_num == 1 ? "notice":"alert"]'>[user] has captured [true_name] for [team_string]!</span></h4>")
@@ -370,10 +370,11 @@ ABSTRACT_TYPE(/datum/ore_cluster)
 
 /datum/game_mode/pod_wars/proc/announce_critical_system_damage(var/team_num, var/obj/pod_base_critical_system/CS)
 	var/datum/pod_wars_team/team
-	if (team_num == TEAM_NANOTRASEN)
-		team = team_NT
-	else if (team_num == TEAM_SYNDICATE)
-		team = team_SY
+	switch (team_num)
+		if (TEAM_NANOTRASEN)
+			team = team_NT
+		if (TEAM_SYNDICATE)
+			team = team_SY
 
 	for (var/datum/mind/M in team.members)
 		if (M.current)
@@ -424,19 +425,33 @@ ABSTRACT_TYPE(/datum/ore_cluster)
 //Plays a sound for a particular team. 
 //pw_team can be the team datum or TEAM_NANOTRASEN|TEAM_SYNDICATE
 //filepath; sound file path as a string.
-/datum/game_mode/pod_wars/proc/playsound_to_team(var/pw_team, var/filepath)
-	if (isnull(filepath))
+//format_path; Do we want to format this filepath by prefixing NanoTrasen- or Syndicate-? 
+/datum/game_mode/pod_wars/proc/playsound_to_team(var/pw_team, var/filepath, var/format_path = 0)
+	//playsound(T, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)sound\voice\pod_wars_voices
+
+	if (isnull(pw_team) || isnull(filepath))
 		return 0
-	var/datum/pod_wars_team/team = pw_team
-	if (!istype(team))
-		if (pw_team == TEAM_NANOTRASEN)
-			team = team_NT 
-		else if (pw_team == TEAM_SYNDICATE)
-			team = team_SY
-		else
-			logTheThing("debug", null, null, "Something went wrong trying to play a sound for a team=[team]|[pw_team].!!!")
-			message_admins("Something went wrong trying to play a sound for a team")
-			return 0
+
+	var/datum/pod_wars_team/team = null
+	//If pw_team is a num, make team a one of the pod_wars_team 
+	if (isnum(pw_team))
+		switch(team)
+			if (TEAM_NANOTRASEN)
+				team = team_NT 
+			if (TEAM_SYNDICATE)
+				team = team_SY
+	//handle if we are given a datum of type /datum/pod_wars_team/team
+	else if (istype(pw_team, /datum/pod_wars_team))
+		team = pw_team
+	//error handling...
+	else
+		logTheThing("debug", null, null, "Something went wrong trying to play a sound for a team=[team]|[pw_team].!!!")
+		message_admins("Something went wrong trying to play a sound for a team")
+		return 0
+
+	//format filename to use the format of sound files in /sound/voice/pod_wars_voices, which is {NanoTrasen|Syndicate}-{filepath}. No brackets obv.
+	if (format_path)
+		filepath = "[team.name]-[filepath]"
 
 	for (var/datum/mind/M in team.members)
 		M.current.playsound_local(M.current, filepath, 50, 0)
@@ -830,7 +845,7 @@ proc/setup_pw_crate_lists()
 			src.vis_contents += S
 
 	///takes the control point screen object's true_name var and the team_num of the new owner: NT=1, SY=2
-	proc/change_control_point_owner(var/true_name, var/team, var/team_num)
+	proc/change_control_point_owner(var/true_name, var/team_num)
 
 		for (var/atom/movable/screen/control_point/C in control_points)
 			if (true_name == C.true_name)
@@ -1939,13 +1954,14 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 		var/datum/pod_wars_team/pw_team
 		//This needs to give the actual team up to the control point datum, which in turn gives it to the game_mode datum to handle it
 		//I don't think I do anything special with the team there yet, but I might want it for something eventually. Most things are just fine with the team_num.
-		if (get_pod_wars_team(user) == TEAM_NANOTRASEN)
-			pw_team = mode.team_NT
-		else if (get_pod_wars_team(user) == TEAM_NANOTRASEN)
-			pw_team = mode.team_SY
+		switch(team_num)
+			if (TEAM_NANOTRASEN)
+				pw_team = mode.team_NT
+			if (TEAM_SYNDICATE)
+				pw_team = mode.team_SY
 
 		//update scoreboard
-		mode.handle_control_pt_change(src.true_name, user, pw_team, team_num)
+		mode.handle_control_pt_change(src.true_name, user, pw_team)
 
 		//log player_stats. Increment nearby player's capture point stat
 		if (mode.stats_manager)
