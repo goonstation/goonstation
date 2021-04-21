@@ -787,7 +787,7 @@ this is already used where it needs to be used, you can probably ignore it.
 /obj/item/test_toilet
 	name = "test toilet"
 	desc = "this is for testing bleeding stuff"
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "toilet"
 	flags = FPRINT | CONDUCT | TABLEPASS
@@ -824,7 +824,7 @@ this is already used where it needs to be used, you can probably ignore it.
 /obj/item/test_dagger
 	name = "test dagger"
 	desc = "this is for testing bleeding stuff"
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "dagger"
 	inhand_image_icon = 'icons/mob/inhand/hand_food.dmi'
