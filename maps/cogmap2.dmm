@@ -79683,6 +79683,10 @@
 	icon_state = "fgreen5"
 	},
 /area/station/hydroponics/bay)
+"vxs" = (
+/obj/storage/closet/medicalclothes,
+/turf/simulated/floor/blue,
+/area/station/medical/medbay)
 "vyj" = (
 /obj/table/auto,
 /obj/item/plate,
@@ -110884,7 +110888,7 @@ cQA
 cSn
 cTG
 cVj
-cQA
+vxs
 cXG
 cYQ
 cZH
