@@ -578,7 +578,7 @@ datum
 			reaction_temperature(exposed_temperature, exposed_volume)
 				if(!src.reacting)
 					var/list/covered = holder.covered_turf()
-					if (length(covered) && ((exposed_volume / length(covered)) > 0.5))
+					if (length(covered) > 1 && ((exposed_volume / length(covered)) > 0.5))
 						return
 
 					src.reacting = ldmatter_reaction(holder, volume, id)

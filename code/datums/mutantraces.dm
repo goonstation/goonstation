@@ -786,6 +786,7 @@
 	voice_override = "lizard"
 	special_head = HEAD_LIZARD
 	special_head_state = "head"
+	eye_state = "eyes_lizard"
 	mutant_organs = list("tail" = /obj/item/organ/tail/lizard)
 	mutant_folder = 'icons/mob/lizard.dmi'
 	special_hair_1_icon = 'icons/mob/lizard.dmi'
@@ -1132,6 +1133,8 @@
 
 /datum/mutantrace/abomination
 	name = "abomination"
+	mutant_folder = 'icons/mob/abomination.dmi'
+	icon = 'icons/mob/abomination.dmi'
 	icon_state = "abomination"
 	human_compatible = 0
 	uses_human_clothes = 0
@@ -1226,7 +1229,6 @@
 	icon_state = "werewolf"
 	human_compatible = 0
 	uses_human_clothes = 0
-	head_offset = -1
 	var/original_name
 	jerk = 1
 	override_attack = 0
@@ -1241,6 +1243,9 @@
 	special_head = HEAD_WEREWOLF
 	mutant_organs = list("tail" = /obj/item/organ/tail/wolf)
 
+	head_offset = 5
+	hand_offset = 3
+	arm_offset = 3
 
 	New()
 		..()
@@ -1409,9 +1414,9 @@
 	icon = 'icons/mob/monkey.dmi'
 	mutant_folder = 'icons/mob/monkey.dmi'
 	icon_state = "monkey"
-	head_offset = -8
+	head_offset = -6
 	eye_offset = -8 // jeepers creepers their peepers are a pixel higher than human peepers
-	hand_offset = -5
+	hand_offset = -2
 	body_offset = -7
 	leg_offset = -4
 	arm_offset = -8
