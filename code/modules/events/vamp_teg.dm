@@ -280,7 +280,7 @@ datum/teg_transformation/vampire
 
 			if(target in abilityHolder.ghouls)
 				H = target
-				if(	abilityHolder.points > 100 && target.blood_volume < 50 && !ON_COOLDOWN(src.teg,"heal", 120 SECONDS) )
+				if( abilityHolder.points > 100 && target.blood_volume < 50 && !ON_COOLDOWN(src.teg,"heal", 120 SECONDS) )
 					enthrall(H)
 			else
 				if(isalive(target))
