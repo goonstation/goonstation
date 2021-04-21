@@ -126,7 +126,11 @@ var/global/list/singletons
 #define STOP_TRACKING
 #else
 #define START_TRACKING if(!by_type[......]) { by_type[......] = list() }; by_type[.......][src] = 1 //we use an assoc list here because removing from one is a lot faster
+#if DM_BUILD >= 1552
+#define STOP_TRACKING by_type[......].Remove(src) //ok if ur seeing this and thinking "wtf is up with the ....... in THIS use case it gives us the type path at the particular scope this is called. and the amount of dots varies based on scope in the macro! fun
+#else
 #define STOP_TRACKING by_type[.....].Remove(src) //ok if ur seeing this and thinking "wtf is up with the ...... in THIS use case it gives us the type path at the particular scope this is called. and the amount of dots varies based on scope in the macro! fun
+#endif
 #endif
 
 /// contains lists of objects indexed by their type based on START_TRACKING / STOP_TRACKING

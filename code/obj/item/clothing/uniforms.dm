@@ -695,6 +695,7 @@
 		item_state = "lawyerR"
 
 /obj/item/clothing/under/misc/lawyer/red/demonic
+	item_function_flags = IMMUNE_TO_ACID
 	setupProperties()
 		..()
 		setProperty("coldprot", 40) //slightly worse than a spacesuit
@@ -1113,11 +1114,11 @@
 		item_state = "darkred"
 
 	blue
-		icon_state = "scrub-b"
+		icon_state = "scrub-n"
 		item_state = "darkblue"
 
 	purple
-		icon_state = "scrub-p"
+		icon_state = "scrub-v"
 		item_state = "lightpurple"
 
 		New()

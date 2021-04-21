@@ -414,6 +414,12 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		set_current_projectile(new/datum/projectile/bullet/derringer)
 		..()
 
+/obj/item/gun/kinetic/derringer/empty
+	New()
+		..()
+		ammo.amount_left = 0
+		update_icon()
+
 /obj/item/gun/kinetic/faith
 	name = "Faith"
 	desc = "'Cause ya gotta have Faith."

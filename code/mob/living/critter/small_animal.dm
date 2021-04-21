@@ -2523,6 +2523,8 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			return
 		if(voluntary && M != src.last_poked) // if we poked that person it means we implicitly agree
 			boutput(M, "You extend your hand to the mouse, waiting for it to accept.")
+			if (ON_COOLDOWN(src, "mentor mouse pickup popup", 3 SECONDS))
+				return
 			if (alert(src, "[M] wants to pick you up and put you in their pocket. Is that okay with you?", "Hop in the pocket", "Yes", "No") != "Yes")
 				boutput(M, "\The [src] slips out as you try to pick it up.")
 				return

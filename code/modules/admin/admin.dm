@@ -3902,6 +3902,7 @@ var/global/noir = 0
 	var/list/players = list()
 	for (var/mob/M in mobs)
 		if (M.ckey)
+			var/area/A = get_area(M)
 			players[M.ckey] = list(
 				"mobRef" = "\ref[M]",
 				"ckey" = M.ckey,
@@ -3913,7 +3914,7 @@ var/global/noir = 0
 				"computerId" = M.computer_id ? M.computer_id : "N/A",
 				"ip" = M.lastKnownIP ? M.lastKnownIP : "N/A",
 				"joined" = M.client?.joined_date ? M.client.joined_date : "N/A",
-				"playerLocation" = (get_area(M)).name ? (get_area(M)).name : "N/A",
+				"playerLocation" = A?.name ? A.name : "N/A",
 			)
 	. = list(
 		"players" = players

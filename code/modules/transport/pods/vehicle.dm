@@ -1007,7 +1007,8 @@
 	src.find_pilot()
 	if (M.client)
 		M.attach_hud(myhud)
-		myhud.check_hud_layout(M)
+		if(ishuman(M))
+			myhud.check_hud_layout(M)
 		if (M.client.tooltipHolder)
 			M.client.tooltipHolder.inPod = 1
 

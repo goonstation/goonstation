@@ -322,18 +322,6 @@
 					src.visible_message("<span class='alert'><B>[M] has attempted to shove [rider] off of [src]!</B></span>")
 		return
 
-	bullet_act(flag, A as obj)
-		if (rider)
-			rider.bullet_act(flag, A)
-			eject_rider()
-		return
-
-	meteorhit()
-		if (rider)
-			rider.meteorhit()
-			eject_rider()
-		return
-
 	disposing()
 		if (rider)
 			boutput(rider, "<span class='alert'><B>[src] is destroyed!</B></span>")

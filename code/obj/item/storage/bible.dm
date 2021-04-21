@@ -46,7 +46,7 @@ var/global/list/bible_contents = list()
 				if(prob(25))
 					H.cure_disease_by_path(/datum/ailment/disability/clumsy/cluwne)
 			M.HealDamage("All", heal_amt, heal_amt)
-			if(prob(30))
+			if(prob(40))
 				JOB_XP(user, "Chaplain", 1)
 
 	attackby(var/obj/item/W, var/mob/user, obj/item/storage/T)
@@ -87,7 +87,7 @@ var/global/list/bible_contents = list()
 			var/mob/H = M
 			// ******* Check
 			if ((ishuman(H) && prob(60) && !(M.traitHolder?.hasTrait("atheist"))))
-				bless(M)
+				bless(M, user)
 				M.visible_message("<span class='alert'><B>[user] heals [M] with the power of Christ!</B></span>")
 				boutput(M, "<span class='alert'>May the power of Christ compel you to be healed!</span>")
 				if (narrator_mode)

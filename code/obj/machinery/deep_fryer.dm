@@ -200,7 +200,7 @@
 			fryholder.food_effects += thing:food_effects
 
 		var/icon/composite = new(thing.icon, thing.icon_state)
-		for(var/O in src.fryitem.underlays + thing.overlays)
+		for(var/O in thing.underlays + thing.overlays)
 			var/image/I = O
 			composite.Blend(icon(I.icon, I.icon_state, I.dir, 1), ICON_OVERLAY)
 

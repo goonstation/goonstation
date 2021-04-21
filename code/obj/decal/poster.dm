@@ -632,29 +632,95 @@
 
 		teaparty
 			name = "Weird poster"
-			desc = "Huh."
+			desc = "Seems to be a poster of some sort."
 			icon = 'icons/obj/decals/posters.dmi'
 			icon_state = "teaparty"
 
 			New()
 				..()
-				var/which = rand(1, 4)
+
+				var/which = pick(
+					// old contest winners
+					10;"tea1",
+					10;"tea2",
+					10;"tea3",
+					// the fuck II poster
+					30;"fuckII",
+					// new contest winners
+					50;"contest1",
+					50;"contest2",
+					50;"contest3",
+					50;"contest4",
+					50;"contest5",
+					// new contest not-winners but cool nonetheless
+					5 ;"contest-other1",
+					5 ;"contest-other2",
+					5 ;"contest-other3",
+					5 ;"contest-other4",
+					5 ;"contest-other5",
+					5 ;"contest-other6",
+					5 ;"contest-other7"
+					)
 				switch(which)
-					if(1)
+					if("tea1")
 						src.name = "Tea Hell and Back"
 						src.desc = "<i>Starring Camryn Stern, Edgar Palmer, Ryan Yeets, Jebediah Hawkins, and Frederick Cooper.</i>"
-					if(2)
+					if("tea2")
 						src.icon_state = "teaparty2"
 						src.name = "It Came from the Void"
 						src.desc = "<i>Starring William Carr, Bruce Isaman, and Julio Hayhurst.</i>"
-					if(3)
+					if("tea3")
 						src.icon_state = "teaparty3"
 						src.name = "Afterlife Activity"
 						src.desc = "<i>Starring Marmalade Addison, Lily White, cockroach, and Darcey Paynter.</i>"
-					if (4)
+					if("fuckII")
 						src.name = "\proper fuck II"
 						src.desc = "A poster for \"<em>fuck II: Plumb Fuckled.\"</em>"
 						src.icon_state = "fuckII"
+					if("contest1")
+						src.name = "Explore the Trench"
+						src.icon_state = "explore_the_trench"
+					if("contest2")
+						src.name = "🐟"
+						src.icon_state = "fish_hook"
+					if("contest3")
+						src.name = "Bird Up!"
+						src.icon_state = "bird_up"
+					if("contest4")
+						src.name = "A New You"
+						src.icon_state = "a_new_you"
+					if("contest5")
+						src.name = "Work! Ranch"
+						src.icon_state = "work_ranch"
+					if("contest-other1")
+						src.name = "Pack Smart"
+						src.icon_state = "pack_smart"
+					if("contest-other2")
+						src.name = "Mindslaver Device Poster"
+						src.icon_state = "mindslaver"
+					if("contest-other3")
+						src.name = "Edit Wiki"
+						src.icon_state = "edit_wiki"
+					if("contest-other4")
+						src.name = "Join Us For Boom"
+						src.icon_state = "join_us_for_boom"
+					if("contest-other5")
+						src.name = "Grow Food Not Weed"
+						src.icon_state = "grow_food_not_weed"
+					if("contest-other6")
+						src.name = "More Laser Power"
+						src.icon_state = "more_laser_power"
+					if("contest-other7")
+						src.name = "Code"
+						src.icon_state = "code"
+
+			attack_hand(mob/user)
+				. = ..()
+				switch(src.icon_state)
+					if("code")
+						user << link("https://github.com/goonstation/goonstation")
+					if("edit_wiki")
+						user << link("https://wiki.ss13.co/")
 
 		fuck1 //do not add this to the random sign rotation, fuck I is a long-lost relic overshadowed entirely by its successor
 			name = "\proper fuck"

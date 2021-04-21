@@ -465,6 +465,24 @@
 			return
 		return 0
 
+	proc/randomize(var/target, var/mob/user, var/show_message = 1)
+		if (!src.holder || !target)
+			return 0
+		if (istext(target))
+			var/randlimb = null
+			if (target == "all" || target == "both_arms" || target == "l_arm")
+				randlimb = pick(all_valid_random_left_arms)
+				. += src.replace_with("l_arm", randlimb, user, show_message)
+			if (target == "all" || target == "both_arms" || target == "r_arm")
+				randlimb = pick(all_valid_random_right_arms)
+				. += src.replace_with("r_arm", randlimb, user, show_message)
+			if (target == "all" || target == "both_legs" || target == "r_leg")
+				randlimb = pick(all_valid_random_right_legs)
+				. += src.replace_with("r_leg", randlimb, user, show_message)
+			if (target == "all" || target == "both_legs" || target == "l_leg")
+				randlimb = pick(all_valid_random_left_legs)
+				. += src.replace_with("l_leg", randlimb, user, show_message)
+		return .
 
 
 /mob/living/carbon/human/proc/is_vampire()
