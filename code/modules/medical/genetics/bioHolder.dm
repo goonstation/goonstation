@@ -230,7 +230,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 		e_offset_y = toCopy.e_offset_y
 		e_color_original = toCopy.e_color_original
 
-		s_tone = toCopy.s_tone_original // *usually* we want to have a normal skintone by default. *usually*
+		s_tone = toCopy.s_tone
 		s_tone_original = toCopy.s_tone_original
 
 		underwear = toCopy.underwear
