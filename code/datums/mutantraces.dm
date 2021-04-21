@@ -246,7 +246,7 @@
 			var/list/obj/item/clothing/restricted = list(mob.w_uniform, mob.shoes, mob.wear_suit)
 			for(var/obj/item/clothing/W in restricted)
 				if (istype(W,/obj/item/clothing))
-					if(W.compatible_species.Find(src.name) || (src.human_compatible && W.compatible_species.Find("human")))
+					if(W.compatible_species.Find(src.name) || (src.uses_human_clothes && W.compatible_species.Find("human")))
 						continue
 					mob.u_equip(W)
 					boutput(mob, "<span class='alert'><B>You can no longer wear the [W.name] in your current state!</B></span>")
@@ -1966,7 +1966,7 @@
 /datum/mutantrace/cow
 	name = "cow"
 	icon_state = "cow"
-	human_compatible = FALSE
+	human_compatible = TRUE
 	uses_human_clothes = FALSE
 	override_attack = 0
 	voice_override = "cow"
