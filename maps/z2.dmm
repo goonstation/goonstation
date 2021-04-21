@@ -42100,7 +42100,7 @@
 /area/sim/gunsim)
 "clQ" = (
 /obj/table/reinforced/auto,
-/obj/item/requisition_token/syndicate/vr,
+/obj/traitorifier/virtual/nuclear,
 /turf/unsimulated/floor/setpieces/gauntlet{
 	desc = "This place is going to be a fucking mess.";
 	name = "\proper the murderbox"
