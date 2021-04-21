@@ -209,8 +209,8 @@
 			html += " &middot; <a href='byond://?src=\ref[src];GiveSpecial=\ref[D]'>Give Special</a>"
 	if (A)
 		html += "<br><a href='byond://?src=\ref[src];CreatePoster=\ref[D]'>Create Poster</a>"
-		html += "&middot; <a href='byond://?src=\ref[src];Vars=\ref[A];varToEdit=maptext'>Edit Maptext</a>"
-		html += "&middot; <a href='byond://?src=\ref[src];AdminInteract=\ref[D]'>Interact</a>"
+		html += " &middot; <a href='byond://?src=\ref[src];Vars=\ref[A];varToEdit=maptext'>Edit Maptext</a>"
+		html += " &middot; <a href='byond://?src=\ref[src];AdminInteract=\ref[D]'>Interact</a>"
 
 	if (istype(D,/obj/critter))
 		html += "<br> &middot; <a href='byond://?src=\ref[src];KillCritter=\ref[D]'>Kill Critter</a>"
