@@ -1,4 +1,10 @@
 
+(t)wed apr 21 21
+(u)DimWhat
+(p)4348
+(e)🗺|mapping
+(+)Added medical clothing lockers to Atlas, Cog 1, Cog 2, Clarion, Destiny, Horizon, and Oshan.
+(+)Added medical winter coats to medical clothing lockers and increased their amount of clothing.
 (t)tue apr 20 21
 (u)Flaborized
 (p)4400
