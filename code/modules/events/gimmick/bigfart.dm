@@ -89,8 +89,6 @@
 			B = new /obj/item/clothing/head/butt/cyberbutt(T)
 			B.donor = H
 			ThrowRandom(B, dist = 6, speed = 1)
-		H.visible_message("<span class='alert'><b>[H]</b>'s [magical ? "arse" : "ass"] tears itself away from \his body[magical ? " in a magical explosion" : null]!</span>",\
-		"<span class='alert'>[changer ? "Our" : "Your"] [magical ? "arse" : "ass"] tears itself away from [changer ? "our" : "your"] body[magical ? " in a magical explosion" : null]!</span>")
 		H.changeStatus("weakened", 2 SECONDS)
 		severed_something = TRUE
 		H.force_laydown_standup()
