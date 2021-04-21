@@ -1,6 +1,9 @@
 
 (t)wed apr 21 21
 (u)Tarmunora
+(e)⚖|balance
+(+)Limit acid splash damage against blobs to 10u worth (per acid)
+(u)Tarmunora
 (e)⛔⚖|removal, balance
 (*)Removed recipe for aerosol propellant.
 (+)Changed recipe of one secret chem (think of what chem might *propel* something unanchored)
