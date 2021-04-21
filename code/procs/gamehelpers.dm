@@ -25,7 +25,7 @@ var/list/stinkExclamations = list("Ugh","Good lord","Good grief","Christ","Fuck"
 var/list/stinkThings = list("garbage can","trash heap","cesspool","toilet","pile of poo",
 	"butt","skunk","outhouse","corpse","fart","devil")
 var/list/stinkVerbs = list("took a shit","died","farted","threw up","wiped its ass")
-var/list/stinkThingies = list("ass","taint","armpit","excretions","leftovers","Readster")
+var/list/stinkThingies = list("ass","taint","armpit","excretions","leftovers","administrator")
 
 /proc/stinkString()
 	// i am five - ISN

@@ -24482,13 +24482,13 @@
 	dir = 8;
 	pixel_x = -10
 	},
-/obj/rack,
-/obj/item/storage/box/stma_kit,
-/obj/item/storage/box/lglo_kit,
+/obj/storage/closet/medicalclothes,
 /turf/simulated/floor/black,
 /area/station/medical/medbay/surgery)
 "aXz" = (
 /obj/rack,
+/obj/item/storage/box/lglo_kit,
+/obj/item/storage/box/stma_kit,
 /obj/item/clothing/under/scrub/teal,
 /obj/item/clothing/under/scrub/maroon,
 /obj/item/clothing/under/scrub/blue,
@@ -29733,8 +29733,8 @@
 /area/station/medical/medbay)
 "bjC" = (
 /obj/disposalpipe/segment,
-/obj/storage/secure/closet/medical/uniforms,
 /obj/machinery/light,
+/obj/storage/secure/closet/medical/uniforms,
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "bjD" = (

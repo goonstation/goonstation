@@ -78,7 +78,7 @@
 	var/last_life_process = 0
 	var/use_stunned_icon = 1
 
-	var/pull_w_class = 2
+	var/pull_w_class = W_CLASS_SMALL
 
 	blood_id = "blood"
 
@@ -415,13 +415,13 @@
 		if (!src.ghost_spawned) //if its an admin or wizard made critter, just let them pull everythang
 			return 1
 		if (ismob(A))
-			return (src.pull_w_class >= 3)
+			return (src.pull_w_class >= W_CLASS_NORMAL)
 		else if (isobj(A))
 			if (istype(A,/obj/item))
 				var/obj/item/I = A
 				return (pull_w_class >= I.w_class)
 			else
-				return (src.pull_w_class >= 4)
+				return (src.pull_w_class >= W_CLASS_BULKY)
 		return 0
 
 	click(atom/target, list/params)

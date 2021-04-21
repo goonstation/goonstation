@@ -11,7 +11,7 @@
 	icon_state = "scroll_seal"
 	var/uses = 4.0
 	flags = FPRINT | TABLEPASS
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
 	item_state = "paper"
 	throw_speed = 4
@@ -71,7 +71,7 @@
 	throwforce = 5.0
 	throw_speed = 1
 	throw_range = 5
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	flags = FPRINT | TABLEPASS | NOSHIELD
 	object_flags = NO_ARM_ATTACH
 	var/wizard_key = "" // The owner of this staff.

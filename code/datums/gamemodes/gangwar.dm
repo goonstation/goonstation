@@ -656,7 +656,7 @@
 	icon_state = "spraycan"
 	item_state = "spraycan"
 	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	var/in_use = 0
 
 	afterattack(target as turf|obj, mob/user as mob)
@@ -1186,7 +1186,7 @@
 	name = "gang recruitment flyer"
 	icon = 'icons/obj/writing.dmi'
 	icon_state = "paper_caution"
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	var/datum/gang/gang = null
 
 	attack(mob/target as mob, mob/user as mob)

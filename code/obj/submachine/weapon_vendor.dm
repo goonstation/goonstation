@@ -512,7 +512,7 @@
 	desc = "A Syndicate credit card charged with currency compatible with the Syndicate Weapons Vendor."
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "req-token"
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 
 
 	syndicate

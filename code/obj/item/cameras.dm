@@ -17,7 +17,7 @@
 	desc = "A reusable polaroid camera."
 	icon_state = "camera"
 	item_state = "electropack"
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	flags = FPRINT | TABLEPASS | EXTRADELAY | CONDUCT | ONBELT
 	m_amt = 2000
 	throwforce = 5
@@ -92,7 +92,7 @@
 	icon_state = "camera_film"
 	inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
 	item_state = "box"
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	mats = 10
 	var/pictures = 10
 
@@ -112,7 +112,7 @@
 	icon_state = "photo"
 	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
 	item_state = "paper"
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	var/image/fullImage
 	var/icon/fullIcon
 	var/list/signed = list()

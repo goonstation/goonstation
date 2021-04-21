@@ -171,7 +171,7 @@
 	icon_state = "football"
 	uses_multiple_icon_states = 1
 	item_state = "football"
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	force = 0
 	throw_range = 10
 	throwforce = 0
@@ -185,7 +185,7 @@
 	c_flags = EQUIPPED_WHILE_HELD
 	throw_range = 15
 	throwforce = 10
-	w_class = 5
+	w_class = W_CLASS_HUGE
 	// look it is VERY IMPORTANT
 	plane = PLANE_HUD - 1
 	var/obj/maptext_junk/indicator
