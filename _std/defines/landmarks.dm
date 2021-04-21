@@ -17,6 +17,15 @@
 #define LANDMARK_GPS_WAYPOINT "GPS Waypoint"
 #define LANDMARK_ARTIFACT_SPAWN "artifact spawner"
 
+// centcom shuttle landmarks
+#define LANDMARK_SHUTTLE_COG1 "shuttle-cog1"
+#define LANDMARK_SHUTTLE_COG2 "shuttle-cog2"
+#define LANDMARK_SHUTTLE_SEALAB "shuttle-sealab"
+#define LANDMARK_SHUTTLE_MANTA "shuttle-manta"
+#define LANDMARK_SHUTTLE_DONUT2 "shuttle-donut2"
+#define LANDMARK_SHUTTLE_DONUT3 "shuttle-donut3"
+#define LANDMARK_SHUTTLE_DESTINY "shuttle-destiny"
+
 // nukies
 
 #define LANDMARK_SYNDICATE "Syndicate-Spawn"

@@ -56,7 +56,7 @@
 		abilityHolder.addAbility(/datum/targetable/critter/fire_sprint)
 		var/datum/statusEffect/simplehot/S = src.setStatus("simplehot", INFINITE_STATUS)
 		S.visible = 0
-		S.heal_brute = 0.5
+		S.heal_brute = 0.25
 
 	Life()
 		var/turf/T = src.loc

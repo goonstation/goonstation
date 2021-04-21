@@ -4,11 +4,12 @@
 	icon_state = "doortimer0"
 	desc = "A remote control switch for a door."
 	req_access = list(access_security)
-	anchored = 1.0
+	anchored = TRUE
 	var/id = null
-	var/time = 30.0
-	var/timing = 0.0
+	var/time = 30
+	var/timing = FALSE
 	var/last_tick = 0
+	var/const/max_time = 300
 
 	// Please keep synchronizied with these lists for easy map changes:
 	// /obj/storage/secure/closet/brig/automatic (secure_closets.dm)
@@ -169,18 +170,17 @@
 /obj/machinery/door_timer/process()
 	..()
 	if (src.timing)
-		if (!last_tick) last_tick = world.time
-		var/passed_time = round(max(round(world.time - last_tick),10) / 10)
+		if (!last_tick) last_tick = TIME
+		var/passed_time = round(max(round(TIME - last_tick), 10) / 10)
 		if (src.time > 0)
 			src.time -= passed_time
 		else
 			alarm()
 			src.time = 0
-			src.timing = 0
+			src.timing = FALSE
 			last_tick = 0
-		src.updateDialog()
 		src.update_icon()
-		last_tick = world.time
+		last_tick = TIME
 	else
 		last_tick = 0
 	return
@@ -238,68 +238,83 @@
 	src.update_icon()
 	return
 
-/obj/machinery/door_timer/attack_ai(var/mob/user as mob)
-	return src.attack_hand(user)
+/obj/machinery/door_timer/ui_interact(mob/user, datum/tgui/ui)
+	ui = tgui_process.try_update_ui(user, src, ui)
+	if (!ui)
+		ui = new(user, src, "DoorTimer", name)
+		ui.open()
 
-/obj/machinery/door_timer/attack_hand(var/mob/user as mob)
-	if(..())
-		return
+/obj/machinery/door_timer/ui_static_data(mob/user)
+	. = list("maxTime" = src.max_time)
 
-	var/dat = "<HTML><BODY><TT><B>[src.name] door controls</B>"
-	src.add_dialog(user)
-	var/d2 = "<A href='?src=\ref[src];time=1'>Initiate Time</A><br>"
-	if (src.timing)
-		d2 = "<A href='?src=\ref[src];time=0'>Stop Timed</A><br>"
-	var/second = src.time % 60
-	var/minute = (src.time - second) / 60
-	dat += "<br><HR><br>Timer System: [d2]<br>Time Left: [(minute ? text("[minute]:") : null)][second] <A href='?src=\ref[src];tp=-30'>-</A> <A href='?src=\ref[src];tp=-1'>-</A> <A href='?src=\ref[src];tp=1'>+</A> <A href='?src=\ref[src];tp=30'>+</A>"
+
+/obj/machinery/door_timer/ui_data(mob/user)
+	. = list(
+		"timing" = src.timing,
+		"time" = src.time,
+	)
+
 	for (var/obj/machinery/flasher/F in range(10, src))
 		if (F.id == src.id)
-			if (F.last_flash && world.time < F.last_flash + 150)
-				dat += "<BR><BR><A href='?src=\ref[src];fc=1'>Flash Cell (Charging)</A>"
-			else
-				dat += "<BR><BR><A href='?src=\ref[src];fc=1'>Flash Cell</A>"
-	dat += "<BR><BR><A href='?action=mach_close&window=computer'>Close</A></TT></BODY></HTML>"
-	user.Browse(dat, "window=computer;size=400x500")
-	onclose(user, "computer")
-	return
+			. += list(
+				"flasher" = TRUE,
+				"recharging" = F.last_flash && world.time < F.last_flash + 150
+			)
+			break
 
-/obj/machinery/door_timer/Topic(href, href_list)
-	if (..())
+/obj/machinery/door_timer/ui_status(mob/user, datum/ui_state/state)
+	return min(
+		..(),
+		src.allowed(user) ? UI_INTERACTIVE : UI_UPDATE,
+	)
+
+/obj/machinery/door_timer/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	. = ..()
+	if (.)
 		return
-	if ((usr.contents.Find(src) || (in_interact_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
-		src.add_dialog(usr)
-		if (href_list["time"])
-			if (src.allowed(usr))
-				if (src.timing == 0)
-					for (var/obj/machinery/door/window/brigdoor/M in range(10, src))
-						if (M.id == src.id)
-							M.close()				//close the cell door up when the timer starts.
-				else
-					for (var/obj/machinery/door/window/brigdoor/M in range(10, src))
-						if (M.id == src.id)
-							M.open()				//open the cell door if the timer is stopped.
 
-				src.timing = text2num(href_list["time"])
-				logTheThing("station", usr, null, "[src.timing ? "starts" : "stops"] a door timer: [src] [log_loc(src)].")
+	switch(action)
+		if ("set-time")
+			src.add_fingerprint(usr)
+			var/previous_time = src.time
+			src.time = min(max(round(params["time"]), 0), src.max_time)
+			if (params["finish"])
+				logTheThing("station", usr, null, "set timer to [src.time]sec (previously: [previous_time]sec) on a door timer: [src] [log_loc(src)].")
 
-		else
-			if (href_list["tp"])
-				if(src.allowed(usr))
-					var/tp = text2num(href_list["tp"])
-					src.time += tp
-					src.time = min(max(round(src.time), 0), 300)
-					logTheThing("station", usr, null, "[tp > 0 ? "added" : "removed"] [tp]sec (total: [src.time]sec) to a door timer: [src] [log_loc(src)].")
-			if (href_list["fc"])
-				if (src.allowed(usr))
+			return TRUE
+
+		if ("toggle-timing")
+			if (src.timing == FALSE)
+				for (var/obj/machinery/door/window/brigdoor/M in range(10, src))
+					if (M.id == src.id)
+						M.close() //close the cell door up when the timer starts.
+						break
+			else
+				for (var/obj/machinery/door/window/brigdoor/M in range(10, src))
+					if (M.id == src.id)
+						M.open() //open the cell door if the timer is stopped.
+						break
+
+			src.timing = !src.timing
+			logTheThing("station", usr, null, "[src.timing ? "starts" : "stops"] a door timer: [src] [log_loc(src)].")
+
+			src.add_fingerprint(usr)
+			src.update_icon()
+			return TRUE
+
+		if ("activate-flasher")
+			for (var/obj/machinery/flasher/F in range(10, src))
+				if (F.id == src.id)
+					src.add_fingerprint(usr)
+					F.flash()
 					logTheThing("station", usr, null, "sets off flashers from a door timer: [src] [log_loc(src)].")
-					for (var/obj/machinery/flasher/F in range(10, src))
-						if (F.id == src.id)
-							F.flash()
-		src.add_fingerprint(usr)
-		src.updateUsrDialog()
-		src.update_icon()
-	return
+					return TRUE
+
+/obj/machinery/door_timer/attack_ai(mob/user)
+	return src.attack_hand(user)
+
+/obj/machinery/door_timer/attack_hand(mob/user)
+	return src.ui_interact(user)
 
 /obj/machinery/door_timer/proc/update_icon()
 	if (status & (NOPOWER))

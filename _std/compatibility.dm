@@ -3,7 +3,7 @@
 #if DM_VERSION < 514
 
 #ifndef SPACEMAN_DMM
-#error Please update your BYOND version to the latest beta release in order to host the game.
+#warn Please update your BYOND version to the version in /buildByond.conf in order to host the game properly.
 #endif
 
 #define NORMAL_RAND 69
