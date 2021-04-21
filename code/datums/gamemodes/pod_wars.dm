@@ -4,6 +4,7 @@
 #define FORTUNA "FORTUNA"
 #define RELIANT "RELIANT"
 #define UVB67 "UVB67"
+#define CHUCKS "CHUCKS"
 
 //idk if this is a good idea. I'm setting them in the game mode, they'll be useless outisde of it...
 var/list/pw_rewards_tier1 = null
@@ -143,6 +144,10 @@ var/list/pw_rewards_tier3 = null
 			for(var/mob/living/carbon/M in mobs)
 				M.emote("fart")
 			force_end = 1
+
+	src.playsound_to_team(team_NT, "sound/voice/pod_wars_voices/NanoTrasen-Roundstart.ogg")
+	src.playsound_to_team(team_SY, "sound/voice/pod_wars_voices/Syndicate-Roundstart.ogg")
+
 
 /datum/game_mode/pod_wars/proc/setup_control_points()
 	//hacky way. lame, but fast (for me). What else is going on in the post_setup anyway?
@@ -306,10 +311,15 @@ ABSTRACT_TYPE(/datum/ore_cluster)
 	var/team_string = "[team_num == 1 ? "NanoTrasen" : team_num == 2 ? "The Syndicate" : "Something Eldritch"]"
 	boutput(world, "<h4><span class='[team_num == 1 ? "notice":"alert"]'>[user] has captured [true_name] for [team_string]!</span></h4>")
 
-	//do one sound for the capturing team, one for the losing
-	//change this sound.		KYLEEEE
-	for(var/client/C in clients)
-		C.mob?.playsound_local(C.mob, "sound/misc/newsting.ogg", 50, 0)
+
+	switch(team_num)
+		if (TEAM_NANOTRASEN)
+			src.playsound_to_team(team_NT, "sound/voice/pod_wars_voices/{PWTN}Objective_Secured-[rand(1,2)].ogg")
+			src.playsound_to_team(team_SY, "sound/voice/pod_wars_voices/{PWTN}Lost_[true_name].ogg")
+
+		if (TEAM_SYNDICATE)
+			src.playsound_to_team(team_SY, "sound/voice/pod_wars_voices/{PWTN}Objective_Secured-[rand(1,2)].ogg")
+			src.playsound_to_team(team_NT, "sound/voice/pod_wars_voices/{PWTN}Lost_[true_name].ogg")
 
 /datum/game_mode/pod_wars/proc/handle_point_change(var/datum/pod_wars_team/team)
 	var/fraction = round (team.points/team.max_points, 0.01)
@@ -329,6 +339,8 @@ ABSTRACT_TYPE(/datum/ore_cluster)
 		animate(board.bar_SY, transform = M1, pixel_x = offset, time = 10)
 
 //check which team they are on and iff they are a commander for said team. Deduct/award points
+//Oh man, this is fucking bad. Before I had my "system" set up where I just check for the mind.special_role, 
+//I should fix this soon, but it works good enough for now... -kyle 4/20/21
 /datum/game_mode/pod_wars/on_human_death(var/mob/M)
 	src.stats_manager?.inc_death(M)
 
@@ -337,6 +349,11 @@ ABSTRACT_TYPE(/datum/ore_cluster)
 	if (nt)
 		if (M.mind == team_NT.commander)
 			team_NT.change_points(-1)
+			if (!team_NT.first_commander_death)
+				team_NT.first_commander_death = 1
+				src.playsound_to_team(team_NT, "sound/voice/pod_wars_voices/{PWTN}Commander_Dies.ogg")
+
+
 		team_SY.change_points(1)
 
 		return
@@ -344,23 +361,33 @@ ABSTRACT_TYPE(/datum/ore_cluster)
 	if (sy)
 		if (M.mind == team_SY.commander)
 			team_SY.change_points(-1)
+			if (!team_SY.first_commander_death)
+				team_SY.first_commander_death = 1
+				src.playsound_to_team(team_SY, "sound/voice/pod_wars_voices/{PWTN}Commander_Dies.ogg")
 		team_NT.change_points(1)
 		return
 
 
 /datum/game_mode/pod_wars/proc/announce_critical_system_destruction(var/team_num, var/obj/pod_base_critical_system/CS)
 	var/datum/pod_wars_team/team
-	if (team_num == TEAM_NANOTRASEN)
-		team = team_NT
-		// src.team_NT.change_points(-25)
-	else if (team_num == TEAM_SYNDICATE)
-		team = team_SY
-		// src.team_SY.change_points(-25)
+	switch(team_num)
+		if (TEAM_NANOTRASEN)
+			team = team_NT
+		if (TEAM_SYNDICATE)
+			team = team_SY
 
 	team.change_points(-25)
-	for (var/datum/mind/M in team.members)
-		if (M.current)
-			M.current.playsound_local(M.current, "sound/effects/ship_alert_major.ogg", 50, 0)
+
+	//If it's the first one for this team, play the voice line, otherwise play the ship alert sound.
+	if (!first_system_destroyed)
+		first_system_destroyed = 1
+		src.playsound_to_team(team, "sound/voice/pod_wars_voices/{PWTN}Crit_System_Destroyed.ogg")
+	else
+		src.playsound_to_team(team, "sound/effects/ship_alert_major.ogg")
+
+	// for (var/datum/mind/M in team.members)
+	// 	if (M.current)
+	// 		M.current.playsound_local(M.current, "sound/effects/ship_alert_major.ogg", 50, 0)
 
 	//Gah, why? Gotta say "The" I guess.
 	var/team_name_string = team?.name
@@ -415,18 +442,18 @@ ABSTRACT_TYPE(/datum/ore_cluster)
 	boutput(world, "<FONT size = 3><B>The loser was the [loser.name], commanded by [loser.commander?.current] ([loser.commander?.current?.ckey]):</B></FONT><br>")
 	output_team_members(loser)
 
+
+	src.playsound_to_team(winner, "sound/voice/pod_wars_voices/{PWTN}Win-[rand(1,2)].ogg")
+	src.playsound_to_team(loser, "sound/voice/pod_wars_voices/{PWTN}Lose-[rand(1,2)].ogg")
+
 	// output the player stats on its own popup.
-
 	stats_manager?.display_HTML_to_clients()
-	// for(var/datum/mind/leader_mind in commanders)
-
 	..()
 
 //Plays a sound for a particular team. 
 //pw_team can be the team datum or TEAM_NANOTRASEN|TEAM_SYNDICATE
 //filepath; sound file path as a string.
-//format_path; Do we want to format this filepath by prefixing NanoTrasen- or Syndicate-? 
-/datum/game_mode/pod_wars/proc/playsound_to_team(var/pw_team, var/filepath, var/format_path = 0)
+/datum/game_mode/pod_wars/proc/playsound_to_team(var/pw_team, var/filepath)
 	//playsound(T, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)sound\voice\pod_wars_voices
 
 	if (isnull(pw_team) || isnull(filepath))
@@ -449,10 +476,12 @@ ABSTRACT_TYPE(/datum/ore_cluster)
 		message_admins("Something went wrong trying to play a sound for a team")
 		return 0
 
-	//format filename to use the format of sound files in /sound/voice/pod_wars_voices, which is {NanoTrasen|Syndicate}-{filepath}. No brackets obv.
-	if (format_path)
-		filepath = "[team.name]-[filepath]"
-
+	//use the format of sound files in /sound/voice/pod_wars_voices.
+	//If we find "{PWTN}" in the filepath, then we replace that with the team name, either "NanoTrasen"- or "Syndicate-"?
+	//{PWTN} = PodWarsTeamName
+	if (findtext(filepath, "{PWTN}"))
+		filepath = replacetext(filepath, "{PWTN}", "[team.name]-")
+		
 	for (var/datum/mind/M in team.members)
 		M.current.playsound_local(M.current, filepath, 50, 0)
 
@@ -490,6 +519,10 @@ proc/setup_pw_crate_lists()
 	var/max_points = 200
 	var/list/mcguffins = list()		//Should have 4 AND ONLY 4
 	var/datum/game_mode/pod_wars/mode
+
+	//These two are for playing sounds, they'll only play for the first death or system destruction.
+	var/first_system_destroyed = 0
+	var/first_commander_death = 0
 
 	New(var/datum/game_mode/pod_wars/mode, team_num)
 		..()
