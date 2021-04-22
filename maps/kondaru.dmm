@@ -60978,7 +60978,7 @@
 /area/station/medical/robotics)
 "xHo" = (
 /turf/space,
-/area/station/quartermaster/cargobay)
+/area/supply/delivery_point)
 "xHp" = (
 /obj/disposalpipe/segment/brig{
 	dir = 8

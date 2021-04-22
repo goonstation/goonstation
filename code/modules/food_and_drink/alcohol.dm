@@ -367,7 +367,7 @@
 	desc = "Some kinda li'l thing to put in a cocktail. How are you seeing this?"
 	icon = 'icons/obj/foodNdrink/drinks.dmi'
 	flags = FPRINT | TABLEPASS
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	rand_pos = 1
 
 	drink_umbrella

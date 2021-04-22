@@ -36,7 +36,7 @@
 	var/info = ""
 	var/stampable = 1
 	throwforce = 0
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	throw_speed = 3
 	throw_range = 15
 	layer = OBJ_LAYER
@@ -1066,7 +1066,7 @@ Please exercise caution in your testing, the result can best be described as a h
 	amount = 10.0
 	item_state = "sheet-metal"
 	throwforce = 1
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	throw_speed = 3
 	throw_range = 7
 
@@ -1148,7 +1148,7 @@ Please exercise caution in your testing, the result can best be described as a h
 	item_state = "stamp"
 	flags = FPRINT | TABLEPASS
 	throwforce = 0
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	throw_speed = 7
 	throw_range = 15
 	m_amt = 60

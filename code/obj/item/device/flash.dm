@@ -4,7 +4,7 @@
 	uses_multiple_icon_states = 1
 	icon_state = "flash"
 	throwforce = 5
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	throw_speed = 4
 	throw_range = 10
 	flags = FPRINT | TABLEPASS| CONDUCT | ONBELT

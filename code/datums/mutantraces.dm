@@ -246,7 +246,7 @@
 			var/list/obj/item/clothing/restricted = list(mob.w_uniform, mob.shoes, mob.wear_suit)
 			for(var/obj/item/clothing/W in restricted)
 				if (istype(W,/obj/item/clothing))
-					if(W.compatible_species.Find(src.name) || (src.human_compatible && W.compatible_species.Find("human")))
+					if(W.compatible_species.Find(src.name) || (src.uses_human_clothes && W.compatible_species.Find("human")))
 						continue
 					mob.u_equip(W)
 					boutput(mob, "<span class='alert'><B>You can no longer wear the [W.name] in your current state!</B></span>")
@@ -1966,7 +1966,7 @@
 /datum/mutantrace/cow
 	name = "cow"
 	icon_state = "cow"
-	human_compatible = FALSE
+	human_compatible = TRUE
 	uses_human_clothes = FALSE
 	override_attack = 0
 	voice_override = "cow"
@@ -1978,9 +1978,10 @@
 	special_hair_1_icon = 'icons/mob/cow.dmi'
 	special_hair_1_state = "head-detail1"
 	special_hair_1_color = CUST_1
-	detail_oversuit_1_icon = 'icons/mob/cow.dmi'
-	detail_oversuit_1_state = "cow_over_suit"
-	detail_oversuit_1_color = null
+	special_hair_2_icon = 'icons/mob/cow.dmi'
+	special_hair_2_state = "cow_over_suit"
+	special_hair_2_color = null
+	special_hair_2_layer = MOB_OVERMASK_LAYER
 	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/cow/right
 	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/cow/left
 	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/cow/right

@@ -12,7 +12,7 @@ SHARDS
 	force = 5.0
 	g_amt = 3750
 	throwforce = 5
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	var/crystal = 0
 	var/reinforced = 0
 	throw_speed = 3
@@ -173,7 +173,7 @@ SHARDS
 	g_amt = 3750
 	m_amt = 1875
 	throwforce = 5
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	throw_speed = 3
 	throw_range = 3
 	reinforced = 1
@@ -188,7 +188,7 @@ SHARDS
 	g_amt = 4750
 	m_amt = 2875
 	throwforce = 5
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	throw_speed = 3
 	throw_range = 3
 	reinforced = 1
@@ -203,7 +203,7 @@ SHARDS
 	force = 6.0
 	g_amt = 4750
 	throwforce = 5
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	throw_speed = 3
 	throw_range = 3
 	crystal = 1
@@ -217,7 +217,7 @@ SHARDS
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	icon_state = "large"
 	desc = "Could probably be used as ... a throwing weapon?"
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	force = 5.0
 	throwforce = 15.0
 	item_state = "shard-glass"
@@ -289,7 +289,7 @@ SHARDS
 	icon = 'shards.dmi'
 	icon_state = "clarge"
 	desc = "A shard of Plasma Crystal. Very hard and sharp."
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	force = 10.0
 	throwforce = 20.0
 	item_state = "shard-glass"

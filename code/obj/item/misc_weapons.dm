@@ -34,7 +34,7 @@
 	throwforce = 5.0
 	throw_speed = 1
 	throw_range = 5
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	flags = FPRINT | TABLEPASS | NOSHIELD | USEDELAY
 	tool_flags = TOOL_CUTTING
 	is_syndicate = 1
@@ -51,7 +51,7 @@
 	var/inactive_force = 1
 	var/inactive_stamina_cost = 5
 	var/state_name = "sword"
-	var/off_w_class = 2
+	var/off_w_class = W_CLASS_SMALL
 	var/datum/component/holdertargeting/simple_light/light_c
 	var/do_stun = 0
 
@@ -235,7 +235,7 @@
 				src.bladecolor = null
 		src.icon_state = "[state_name]1-[src.bladecolor]"
 		src.item_state = "[state_name]1-[src.bladecolor]"
-		src.w_class = 4
+		src.w_class = W_CLASS_BULKY
 		user.unlock_medal("The Force is strong with this one", 1)
 	else
 		var/datum/component/holdertargeting/simple_light/light_c = src.GetComponent(/datum/component/holdertargeting/simple_light)
@@ -405,7 +405,7 @@
 	state_name = "d_sword"
 	icon_state = "d_sword0"
 	item_state = "d_sword0"
-	off_w_class = 3
+	off_w_class = W_CLASS_NORMAL
 	active_force = 18
 	inactive_force = 8
 	active_stamina_dmg = 65
@@ -457,7 +457,7 @@
 	throwforce = 15.0
 	throw_range = 5
 	hit_type = DAMAGE_STAB
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	flags = FPRINT | TABLEPASS | NOSHIELD | USEDELAY
 	tool_flags = TOOL_CUTTING
 	desc = "Gets the blood to run out juuuuuust right. Looks like this could be nasty when thrown."
@@ -563,7 +563,7 @@
 /obj/item/implant/projectile/shuriken
 	name = "shuriken"
 	desc = "A cheap replica of an ancient japanese throwing star."
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "shuriken"
 	throw_spin = 1
@@ -592,7 +592,7 @@
 	throwforce = 6.0
 	throw_range = 7
 	hit_type = DAMAGE_BLUNT
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	flags = FPRINT | TABLEPASS | NOSHIELD | USEDELAY
 	desc = "An ancient and questionably effective weapon."
 	burn_type = 0
@@ -617,7 +617,7 @@
 	throwforce = 6.0
 	throw_range = 5
 	hit_type = DAMAGE_BLUNT
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	flags = FPRINT | TABLEPASS | NOSHIELD | USEDELAY
 	c_flags = EQUIPPED_WHILE_HELD
 	desc = "An ancient and effective weapon. It's not just a stick alright!"
@@ -681,7 +681,7 @@
 	throwforce = 15.0
 	throw_speed = 4
 	throw_range = 8
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	flags = FPRINT | TABLEPASS | NOSHIELD | USEDELAY
 	tool_flags = TOOL_CUTTING
 	hit_type = DAMAGE_STAB
@@ -779,7 +779,7 @@
 	throwforce = 25.0
 	throw_speed = 1
 	throw_range = 5
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	contraband = 80
 	flags = FPRINT | CONDUCT | NOSHIELD | TABLEPASS | USEDELAY
 	tool_flags = TOOL_CUTTING
@@ -804,13 +804,13 @@
 		src.hit_type = DAMAGE_BURN
 		src.force = 150
 		src.icon_state = "axe1"
-		src.w_class = 5
+		src.w_class = W_CLASS_HUGE
 	else
 		boutput(user, "<span class='notice'>The axe can now be concealed.</span>")
 		src.hit_type = DAMAGE_CUT
 		src.force = 40
 		src.icon_state = "axe0"
-		src.w_class = 5
+		src.w_class = W_CLASS_HUGE
 	src.add_fingerprint(user)
 	user.update_inhands()
 	return
@@ -842,7 +842,7 @@
 	click_delay = 10
 	two_handed = 0
 
-	w_class = 3
+	w_class = W_CLASS_NORMAL
 	force = 15
 	throwforce = 5
 	throw_speed = 2
@@ -981,7 +981,7 @@
 	throw_range = 5
 	is_syndicate = 1
 	contraband = 7 //Fun fact: sheathing your katana makes you 100% less likely to be tazed by beepsky, probably
-	w_class = 4
+	w_class = W_CLASS_BULKY
 	hitsound = 'sound/impact_sounds/Blade_Small_Bloody.ogg'
 
 	// pickup_sfx = "sound/items/blade_pull.ogg"
@@ -1183,7 +1183,7 @@
 	throwforce = 5.0
 	throw_speed = 1
 	throw_range = 5
-	w_class = 3
+	w_class = W_CLASS_NORMAL
 	flags = FPRINT | TABLEPASS | NOSHIELD | USEDELAY | ONBELT
 	is_syndicate = 1
 	var/obj/item/katana/sword_inside = 1
@@ -1342,7 +1342,7 @@
 	hit_type = DAMAGE_CUT
 	tool_flags = TOOL_CUTTING | TOOL_CHOPPING
 	contraband = 5
-	w_class = 4
+	w_class = W_CLASS_BULKY
 	force = 0
 	throwforce = 5
 	stamina_damage = 25
@@ -1384,7 +1384,7 @@ obj/item/fragile_sword
 	item_state = "fragile_sword"
 	hit_type = DAMAGE_CUT
 	contraband = 5
-	w_class = 4
+	w_class = W_CLASS_BULKY
 	force = 60
 	throwforce = 60
 	stamina_damage = 25
@@ -1446,7 +1446,7 @@ obj/item/whetstone
 	tool_flags = TOOL_CUTTING | TOOL_CHOPPING
 	object_flags = NO_ARM_ATTACH
 	contraband = 5
-	w_class = 4
+	w_class = W_CLASS_BULKY
 	force = 25
 	throwforce = 25
 	stamina_damage = 25
@@ -1519,7 +1519,7 @@ obj/item/whetstone
 
 	tool_flags = TOOL_CHOPPING //to chop through doors
 	hit_type = DAMAGE_BLUNT
-	w_class = 3
+	w_class = W_CLASS_NORMAL
 	two_handed = 1
 	click_delay = 30
 

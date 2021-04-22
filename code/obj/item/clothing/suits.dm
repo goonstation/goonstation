@@ -16,7 +16,7 @@
 	var/over_all = 0 // shows up over all other clothes/hair/etc on people
 	var/over_back = 0
 	flags = FPRINT | TABLEPASS
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	var/restrain_wearer = 0
 	var/bloodoverlayimage = 0
 
@@ -538,7 +538,7 @@
 	item_state = "bedsheet"
 	layer = MOB_LAYER
 	throwforce = 1
-	w_class = 1
+	w_class = W_CLASS_TINY
 	throw_speed = 2
 	throw_range = 10
 	c_flags = COVERSEYES | COVERSMOUTH
@@ -1507,21 +1507,11 @@
 	permeability_coefficient = 0
 	over_hair = 1
 
-/obj/item/clothing/suit/nursedress
-	name = "nurse dress"
-	desc = "A traditional dress worn by a nurse."
-	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
-	wear_image_icon = 'icons/mob/overcoats/worn_suit_gimmick.dmi'
-	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_gimmick.dmi'
-	icon_state = "nursedress"
-	item_state = "nursedress"
-	body_parts_covered = TORSO|LEGS|ARMS
-
 /obj/item/clothing/suit/security_badge
 	name = "Security Badge"
 	desc = "An official badge for a Nanotrasen Security Worker."
 	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	wear_image_icon = 'icons/mob/overcoats/worn_suit_gimmick.dmi'
 	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_gimmick.dmi'
 	icon_state = "security_badge"
@@ -1541,7 +1531,7 @@
 	name = "war medal"
 	desc = ""
 	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	wear_image_icon = 'icons/mob/overcoats/worn_suit_gimmick.dmi'
 	icon_state = "hosmedal"
 	icon_state = "hosmedal"

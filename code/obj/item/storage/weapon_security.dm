@@ -261,7 +261,7 @@
 	sneaky = 1
 	var/cloaked = 0
 	flags = FPRINT | TABLEPASS | NOSPLASH
-	w_class = 2
+	w_class = W_CLASS_SMALL
 	max_wclass = 3
 
 	New()

@@ -428,7 +428,7 @@
 	needspoon = 1
 	amount = 6
 	heal_amt = 1
-	w_class = 2
+	w_class = W_CLASS_SMALL
 	initial_volume = 100
 	food_effects = list("food_warm")
 	dropped_item = /obj/item/reagent_containers/food/drinks/bowl
@@ -628,7 +628,7 @@
 	icon_state = "cereal_box"
 	amount = 11
 	real_name = "cereal"
-	w_class = 2
+	w_class = W_CLASS_SMALL
 	var/prize = 10 //Chance of a rad prize inside!
 
 	New()

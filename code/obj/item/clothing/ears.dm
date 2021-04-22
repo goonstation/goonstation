@@ -5,7 +5,7 @@
 	icon = 'icons/obj/clothing/item_ears.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_headgear.dmi'
 	wear_image_icon = 'icons/mob/ears.dmi'
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	throwforce = 2
 	block_hearing_when_worn = HEARING_BLOCKED
 

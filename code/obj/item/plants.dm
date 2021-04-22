@@ -89,7 +89,7 @@
 	module_research = list("vice" = 10)
 	module_research_type = /obj/item/plant/herb/cannabis
 	contraband = 1
-	w_class = 1
+	w_class = W_CLASS_TINY
 
 /obj/item/plant/herb/cannabis/spawnable
 	make_reagents()

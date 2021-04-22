@@ -129,7 +129,7 @@ datum
 			reaction_blob(var/obj/blob/B, var/volume)
 				if (!blob_damage)
 					return
-				B.take_damage(blob_damage, volume, "mixed")
+				B.take_damage(blob_damage * min(volume, 10), 1, "mixed")
 
 		harmful/acid/clacid
 			name = "hydrochloric acid"
@@ -183,7 +183,7 @@ datum
 			reaction_blob(var/obj/blob/B, var/volume)
 				if (!blob_damage)
 					return
-				B.take_damage(blob_damage, volume, "mixed")
+				B.take_damage(blob_damage * min(volume, 10), 1, "mixed")
 
 		harmful/amanitin
 			name = "amanitin"
@@ -882,7 +882,7 @@ datum
 			reaction_blob(var/obj/blob/B, var/volume)
 				if (!blob_damage)
 					return
-				B.take_damage(blob_damage, volume, "mixed")
+				B.take_damage(blob_damage * min(volume, 10), 1, "mixed")
 
 		harmful/pancuronium
 			name = "pancuronium"
