@@ -528,9 +528,8 @@
 				if (trgloc && isturf(trgloc))
 					var/datum/effects/system/bad_smoke_spread/S = new /datum/effects/system/bad_smoke_spread/(trgloc)
 					if (S)
-						S.set_up(15, 0, trgloc, null, "#000000")
+						S.set_up(15, 0, trglosmc, null, "#000000")
 						S.start()
-				//particleMaster.SpawnSystem(new/datum/particleSystem/areaSmoke("#ffffff", 30, trgloc))
 				return 0
 			if (4)
 				boutput(holder.owner, "<span class='notice'>Matter from your realm appears near the designated location!</span>")
