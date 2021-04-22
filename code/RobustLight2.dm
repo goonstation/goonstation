@@ -19,26 +19,24 @@ proc/get_moving_lights_stats()
 	var/turf/_E = get_step(src, EAST); \
 	var/turf/_NE = get_step(src, NORTHEAST); \
 	if(!_N || !_E || !_NE) { break }; \
-	src.RL_MulOverlay.color = list( \
+	lighting_overlay_mul.color =  list( \
 		src.RL_LumR, src.RL_LumG, src.RL_LumB, 0, \
 		_E.RL_LumR, _E.RL_LumG, _E.RL_LumB, 0, \
 		_N.RL_LumR, _N.RL_LumG, _N.RL_LumB, 0, \
 		_NE.RL_LumR, _NE.RL_LumG, _NE.RL_LumB, 0, \
 		DLL, DLL, DLL, 1 \
 		) ; \
+	lighting_overlay_mul.icon_state = src.RL_OverlayState; \
 	if (src.RL_NeedsAdditive || _E.RL_NeedsAdditive || _N.RL_NeedsAdditive || _NE.RL_NeedsAdditive) { \
-		if(!src.RL_AddOverlay) { \
-			src.RL_AddOverlay = unpool(/obj/overlay/tile_effect/lighting/add) ; \
-			src.RL_AddOverlay.set_loc(src) ; \
-			src.RL_AddOverlay.icon_state = src.RL_OverlayState ; \
-		} \
-		src.RL_AddOverlay.color = list( \
+		lighting_overlay_add.icon_state = src.RL_OverlayState; \
+		lighting_overlay_add.color = list( \
 			src.RL_AddLumR, src.RL_AddLumG, src.RL_AddLumB, 0, \
 			_E.RL_AddLumR, _E.RL_AddLumG, _E.RL_AddLumB, 0, \
 			_N.RL_AddLumR, _N.RL_AddLumG, _N.RL_AddLumB, 0, \
 			_NE.RL_AddLumR, _NE.RL_AddLumG, _NE.RL_AddLumB, 0, \
 			0, 0, 0, 1) ; \
-	} else { if(src.RL_AddOverlay) { pool(src.RL_AddOverlay); src.RL_AddOverlay = null; } } \
+		src.underlays = list(lighting_overlay_mul, lighting_overlay_add); \
+	} else { src.underlays = list(lighting_overlay_mul); } \
 	} while(false)
 
 
@@ -611,29 +609,32 @@ proc
 	event_handler_flags = IMMUNE_SINGULARITY
 	appearance_flags = TILE_BOUND | PIXEL_SCALE
 
-/obj/overlay/tile_effect/lighting
+/mutable_appearance/lighting_overlay
 	icon = 'icons/effects/light_overlay.dmi'
-	appearance_flags = TILE_BOUND | PIXEL_SCALE | RESET_ALPHA | RESET_COLOR
+	appearance_flags = TILE_BOUND | PIXEL_SCALE | RESET_ALPHA | RESET_COLOR | KEEP_APART
 	blend_mode = BLEND_ADD
-	plane = PLANE_LIGHTING
-	layer = LIGHTING_LAYER_BASE
-	anchored = 2
-
-/obj/overlay/tile_effect/lighting/mul
-	plane = PLANE_LIGHTING
-	blend_mode = BLEND_DEFAULT // this maybe (???) fixes a bug where lighting doesn't render on clients when teleporting
 	layer = LIGHTING_LAYER_ROBUST
+	New(icon, loc, icon_state, layer, dir)
+		. = ..()
+		src.icon = initial(src.icon)
+		src.plane = initial(src.plane)
+		src.appearance_flags = initial(src.appearance_flags)
+		src.blend_mode = initial(src.blend_mode)
+		src.layer = initial(src.layer)
 
-/obj/overlay/tile_effect/lighting/add
+/mutable_appearance/lighting_overlay/mul
+	plane = PLANE_LIGHTING
+
+/mutable_appearance/lighting_overlay/add
 	plane = PLANE_SELFILLUM
 
+var/global/mutable_appearance/lighting_overlay/mul/lighting_overlay_mul = new
+var/global/mutable_appearance/lighting_overlay/add/lighting_overlay_add = new
 
 turf
 	var
 		RL_ApplyGeneration = 0
 		RL_UpdateGeneration = 0
-		obj/overlay/tile_effect/lighting/mul/RL_MulOverlay = null
-		obj/overlay/tile_effect/lighting/add/RL_AddOverlay = null
 		RL_LumR = 0
 		RL_LumG = 0
 		RL_LumB = 0
@@ -719,11 +720,8 @@ turf
 			RL_UPDATE_LIGHT(src)
 
 		RL_SetSprite(state)
-			if (src.RL_MulOverlay)
-				src.RL_MulOverlay.icon_state = state
-			if (src.RL_AddOverlay)
-				src.RL_AddOverlay.icon_state = state
 			src.RL_OverlayState = state
+			RL_UPDATE_LIGHT(src)
 
 		// Approximate RGB -> Luma conversion formula.
 		RL_GetBrightness()
@@ -752,18 +750,9 @@ turf
 
 		RL_Init()
 			if (!fullbright && !loc:force_fullbright)
-				if(!src.RL_MulOverlay)
-					src.RL_MulOverlay = unpool(/obj/overlay/tile_effect/lighting/mul)
-					src.RL_MulOverlay.set_loc(src)
-					src.RL_MulOverlay.icon_state = src.RL_OverlayState
 				if (RL_Started) RL_UPDATE_LIGHT(src)
 			else
-				if(src.RL_MulOverlay)
-					pool(src.RL_MulOverlay)
-					src.RL_MulOverlay = null
-				if(src.RL_AddOverlay)
-					pool(src.RL_AddOverlay)
-					src.RL_AddOverlay = null
+				src.underlays = null
 
 atom
 	var
