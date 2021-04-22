@@ -284,15 +284,14 @@
 		scoot_sounds = list( 'sound/misc/chair/office/scoot1.ogg', 'sound/misc/chair/office/scoot2.ogg', 'sound/misc/chair/office/scoot3.ogg', 'sound/misc/chair/office/scoot4.ogg', 'sound/misc/chair/office/scoot5.ogg' )
 
 	Move()
+		if(src.buckled_guy.loc != src.loc)
+			src.unbuckle()
 		. = ..()
 		if (. && src.buckled_guy)
 			var/mob/living/carbon/C = src.buckled_guy
-			if(src.buckled_guy.loc == src.loc)
-				C.buckled = null
-				C.Move(src.loc)
-				C.buckled = src
-			else
-				src.unbuckle()
+			C.buckled = null
+			C.Move(src.loc)
+			C.buckled = src
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/clothing/suit/bedsheet))
