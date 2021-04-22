@@ -644,6 +644,8 @@
 		src.image_eyes = my_head.head_image_eyes
 		if (src.image_eyes)
 			src.image_eyes.pixel_y = AHH.e_offset_y
+			src.image_eyes.color = AHH.e_color
+		UpdateOverlays(image_eyes, "eyes", 1, 1)
 
 		src.image_cust_one = my_head.head_image_cust_one
 		src.cust_one_state = my_head.head_image_cust_one?.icon_state
