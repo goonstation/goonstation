@@ -6,7 +6,7 @@
 	icon = 'icons/obj/items/pda.dmi'
 	icon_state = "pda"
 	item_state = "pda"
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	rand_pos = 0
 	flags = FPRINT | TABLEPASS | ONBELT
 	module_research = list("science" = 1, "miniaturization" = 5, "devices" = 5, "efficiency" = 3)

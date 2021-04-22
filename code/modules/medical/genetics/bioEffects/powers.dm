@@ -166,7 +166,7 @@
 			return
 
 		var/obj/the_item = input("Which item do you want to eat?","Matter Eater") as null|obj in items
-		if (!the_item)
+		if (!the_item || (!istype(the_item, /obj/the_server_ingame_whoa) && the_item.anchored))
 			using = 0
 			return 1
 

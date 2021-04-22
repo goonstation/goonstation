@@ -12,7 +12,7 @@
 	throwforce = 10.0
 	throw_speed = 1
 	throw_range = 7
-	w_class = 4.0
+	w_class = W_CLASS_BULKY
 	max_wclass = 3
 
 	//cogwerks - burn vars
@@ -176,7 +176,7 @@
 			return
 		if (src.contents.len >= 7)
 			return
-		if (((istype(W, /obj/item/storage) && W.w_class > 2) || src.loc == W))
+		if (((istype(W, /obj/item/storage) && W.w_class > W_CLASS_SMALL) || src.loc == W))
 			return
 		if(istype(W, /obj/item/grab))	// It will devour people! It's an evil thing!
 			var/obj/item/grab/G = W

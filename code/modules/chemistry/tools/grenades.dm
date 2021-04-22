@@ -9,7 +9,7 @@
 	icon = 'icons/obj/items/grenade.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	item_state = "flashbang"
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	force = 2.0
 	var/stage = 0
 	var/state = 0
@@ -206,7 +206,7 @@
 	icon_state = "grenade-fuse"
 	item_state = "pen"
 	force = 0
-	w_class = 1
+	w_class = W_CLASS_TINY
 	m_amt = 100
 
 /* =================================================== */

@@ -21,7 +21,7 @@
 #endif
 
 //for light queue - when should we queue? and when should we pause processing our dowork loop?
-#define LIGHTING_MAX_TICKUSAGE 90
+#define LIGHTING_MAX_TICKUSAGE 140
 
 //LAGCHECK parameter levels. "when the tick is this% complete, sleep here."
 //lower numbers will sleep more often, and should be used for lower priority tasks.

@@ -13,7 +13,7 @@
 	uses_multiple_icon_states = 1
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
 	item_state = "IV"
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	flags = FPRINT | TABLEPASS | SUPPRESSATTACK | OPENCONTAINER
 	rc_flags = RC_VISIBLE | RC_FULLNESS | RC_SPECTRO
 	amount_per_transfer_from_this = 5

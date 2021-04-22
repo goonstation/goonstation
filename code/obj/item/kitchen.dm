@@ -17,7 +17,7 @@ TRAYS
 	throwforce = 10.0
 	throw_speed = 2
 	throw_range = 7
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	desc = "A wooden tube, used to roll dough flat in order to make various edible objects. It's pretty sturdy."
 	stamina_damage = 40
 	stamina_cost = 15
@@ -39,7 +39,7 @@ TRAYS
 /obj/item/kitchen/utensil
 	inhand_image_icon = 'icons/mob/inhand/hand_food.dmi'
 	force = 5.0
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	throwforce = 5.0
 	throw_speed = 3
 	throw_range = 5
@@ -274,7 +274,7 @@ TRAYS
 	name = "package of plastic silverware"
 	desc = "These don't look very clean..."
 	icon_state = "plasticpackage"
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	var/list/messages = list("The packaging decides to not open at this time. How rude.", "The plastic is just too strong for your fumbly fingers!", "Almost open! Wait...Nevermind.", "Almost there.....")
 
 	attack_self(mob/user as mob)
@@ -315,7 +315,7 @@ TRAYS
 	inhand_image_icon = 'icons/mob/inhand/hand_food.dmi'
 	icon_state = "chop_closed"
 	item_state = "chop"
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 
 	attack_self(mob/user as mob)
 		if(src.icon_state == "chop_closed")
@@ -676,7 +676,7 @@ TRAYS
 		if(ordered_contents.len == max_food)
 			boutput(user, "That won't fit, \the [src] is too full!")
 			return
-		if(W.w_class > 3)
+		if(W.w_class > W_CLASS_NORMAL)
 			boutput(user, "You try to think of a way to put [W] on \the [src] but it's not possible! It's too large!")
 			return
 		user.drop_item()
@@ -803,7 +803,7 @@ TRAYS
 	throw_speed = 3
 	throw_range = 4
 	force = 10
-	w_class = 4.0 //no trays of loaves in a backpack for you
+	w_class = W_CLASS_BULKY //no trays of loaves in a backpack for you
 	max_food = 30
 	throw_dist = 5
 	two_handed = 1 //decomment this line when porting over please
@@ -911,7 +911,7 @@ TRAYS
 	name = "rolling mat"
 	desc = "a bamboo mat for rolling sushi"
 	icon_state = "roller-0"
-	w_class = 2
+	w_class = W_CLASS_SMALL
 
 	var/seaweed //0 or 1, storage variable for checking if there's a seaweed overlay without using resources pulling image files
 	var/rice //same :)
@@ -1089,7 +1089,7 @@ TRAYS
 	inhand_image_icon = 'icons/obj/foodNdrink/platestackinhand.dmi'
 	icon_state = "platestack1"
 	item_state = "platestack1"
-	w_class = 4 // why the fuck would you put a stack of plates in your backpack, also prevents shenanigans
+	w_class = W_CLASS_BULKY // why the fuck would you put a stack of plates in your backpack, also prevents shenanigans
 	var/platenum = 1 // used for targeting icon_states
 
 	var/platemax = 8
