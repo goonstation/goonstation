@@ -908,7 +908,7 @@
 			//Users loading individual items would make an annoying amount of messages
 			//But loading a container is more noticable and there should be less
 			if (.)
-				user.visible_message("<b>[user.name]</b> loads [S] into [src].")
+				user.visible_message("<b>[user.name]</b> loads [W] into [src].")
 				playsound(get_turf(src), sound_load, 40, 1)
 
 		else if (loadreclaim(W, user))
