@@ -1,5 +1,9 @@
 
 (t)wed apr 21 21
+(u)Flaborized
+(p)4410
+(e)🎨|sprites
+(+)Updated the cow sprite a bit more.
 (u)Flappybat
 (p)4120
 (e)⚖|balance
