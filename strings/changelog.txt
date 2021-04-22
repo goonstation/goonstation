@@ -1,5 +1,258 @@
 
+(t)thu apr 22 21
+(u)Mordent
+(p)4405
+(e)📄|tgui
+(+)Pressing arrow keys when you have a tgui window focused will no longer attempt to move your character.
+(t)wed apr 21 21
+(u)Flaborized
+(p)4410
+(e)🎨|sprites
+(+)Updated the cow sprite a bit more.
+(u)Flappybat
+(p)4120
+(e)⚖|balance
+(*)Removed some spy delivery locations: Asylum, AI core, singularity core and combustion chamber.
+(u)Luxizzle
+(p)4331
+(e)📄|tgui
+(*)Converted weapon vendor to tgui.
+(u)Tarmunora
+(e)⚖|balance
+(+)Limit acid splash damage against blobs to 10u worth (per acid)
+(+)Un-nerf fire damage against blobs somewhat
+(u)Tarmunora
+(e)⛔⚖|removal, balance
+(*)Removed recipe for aerosol propellant.
+(+)Changed recipe of one secret chem (think of what chem might *propel* something unanchored)
+(u)DimWhat
+(p)4348
+(e)🗺|mapping
+(+)Added medical clothing lockers to Atlas, Cog 1, Cog 2, Clarion, Destiny, Horizon, and Oshan.
+(+)Added medical winter coats to medical clothing lockers and increased their amount of clothing.
+(t)tue apr 20 21
+(u)Flaborized
+(p)4400
+(e)🆕🔄🎨|feature, rework, sprites
+(*)The Human Resprite has finally been completed, humans have been resprited! Huge thanks to everyone who helped make this impossibly large project a reality, see a full list in minor changelog.
+(+)For Human Resprite: Huge thanks to Erinexx, Gannets, Supernorn, Jan-antilles, Flourish, Batelite, Skeletonman0, Matheus, Schwick, Virvatuli, Retrino and Walpvrgis for contributing sprites, and to Mordent, Zewaka and Pali6 for coding help and other technical stuff.
+(u)Luxizzle
+(p)4326
+(e)📄|tgui
+(*)Converted brig timers to tgui.
+(u)Gannets
+(p)4375
+(e)🆕🗺|feature, mapping
+(*)Added a syndicate weapons vendor to the VR Sim/Murderbox. You can now practice with nuke ops gear without the pressure of letting your team down!
+(u)Azrun
+(p)4229
+(e)🆕🗺🎨|feature, mapping, sprites
+(*)Chief Engineer now has a pet!
+(u)Luxizzle
+(p)4261
+(e)🆕🔄📄|feature, rework, tgui
+(*)The Character Setup screen has been tgui-fied!
+(t)mon apr 19 21
+(u)Kubius
+(p)4362
+(e)🆕🗺|feature, mapping
+(+)Small change batch for Kondaru with assorted fixes and improvements, including a Ranch upgrade, lots more mugs, more clothing closets, and a Hooty duty rotation.
+(u)TTerc
+(p)4366
+(e)🐛|bug
+(+)Having jailbird + stowaway trait combo sets you to arrest again. Creating a security record with a proper name clears the arrest status.
+(u)Chickenish
+(p)3950
+(e)⚖|balance
+(*)Nuclear Operative garb and some other antag garb is now immune to acid splashing, see minor changes for details.
+(+)The Syndicate space suit and helmet, the Safari hat and clothing, the Football armor, helmet, pants, and cleats, the Hunter suit, mask, belt, and boots, the Faustian lawyer suit and briefcase, the Wrestling Belt, and the Bowling suit and Syndicate Hat are now all immune to acid. The transition from the inside of a beaker to the outside of clothes may have removed the fire immunity property of that coating, but it looks like it acid-proofs just fine!
+(t)sat apr 17 21
+(u)Eagletanker
+(p)4328
+(e)🗺|mapping
+(+)The Atlas record is back on the NCS Atlas. Find it in the command room.
+(t)fri apr 16 21
+(u)Sovexe
+(p)4337
+(e)⚖🐛|balance, bug
+(+)The Nuclear Bomb Teleporter Remote can now summon a nuke contained within a pod's cargo hold.
+(u)DimWhat
+(p)4313
+(e)⚖|balance
+(+)Anyone wearing the Head of Security's hat is now able to be choked or receive CPR.
+(t)thu apr 15 21
+(u)Gannets
+(p)4321
+(e)⚖🆕|balance, feature
+(*)Nuke ops combat engineers can now hit the nuclear bomb with their battle wrench to repair a small amount of damage dealt to it.
+(u)Arthur Holiday
+(p)4271
+(e)🗺|mapping
+(*)Revamped the security department on Clarion.
+(u)Gannets
+(p)4319
+(e)🗺|mapping
+(+)Additional pods added to the Syndicate Battlecruiser Cairngorm.
+(u)Carbadox
+(p)3778
+(e)🆕|feature
+(+)Added some basic ways to earn Job XP for Chefs.
+(u)Lythine
+(p)4312
+(e)|
+(+)Added overhead health pop-up to upgraded ProDocs and floor scanners.
+(t)wed apr 14 21
+(u)Carbadox
+(p)4049
+(e)|
+(+)Ice dispensers now pour ice into containers if interacted with a glass in hand.
+(u)Azrun
+(p)4317
+(e)📄|tgui
+(+)GeneTek Console now has toggle for DNA Sequence display on Mutations page.
+(u)Carbdox
+(p)4276
+(e)|
+(+)Added some extra phrases for switching modes on the Lawbringer, specifically "exterminate" for execute, "sleepshot" for knockout and "push" for pulse
+(t)tue apr 13 21
+(u)zjdtmkhzt
+(p)4291
+(e)⚖|balance
+(+)Reduced the maximum power level of melee and magic wand artifacts.
+(u)Azrun
+(p)4308
+(e)📄|tgui
+(+)GeneTek Console now has toggle for Subject Preview (DNA Render).
+(u)Gannets
+(p)4310
+(e)⚖🗺|balance, mapping
+(*)Raised the total nuclear operatives possible in a round from 8 to 10. Scaling is also adjusted to account for higher population, for example, 48 players ready at round-start will result in 8 operatives. Any fewer players will mean less operatives.
+(*)Renamed the syndicate combat knife to syndicate fighting utility knife, increased it's damage, throwing damage & reduced it's stamina cost.
+(u)Penny
+(p)4170
+(e)|
+(+)Intercoms may now be fabricated by mechanics as well as deconstructed.
+(t)mon apr 12 21
+(u)Jawns
+(p)4232
+(e)🐛|bug
+(+)Clown names are now properly updated in security records.
+(u)Carbadox
+(p)4262
+(e)🆕|feature
+(+)Added the ability to make fingerless gloves by using snipping tools on black gloves.
+(u)Jan.antilles
+(p)4268
+(e)🎨|sprites
+(+)Resprited granola bar and yoghurt cup.
+(t)sun apr 11 21
+(u)Carbadox
+(p)4244
+(e)🆕|feature
+(+)Additional large air mix and oxygen canisters can now be purchased through the Quartermaster console
+(t)sat apr 10 21
+(u)Flourish
+(e)⚖|balance
+(*)If you're a human, martian crevices will now, at worst, slash off both your arms. They also no longer contain laser guns, but rather an assortment of various baubles and artifacts.
+(u)Flourish
+(e)|
+(+)Attacking someone with a feather will now make them sneeze.
+(+)Using a paper bin inhand will now dispense papers.
+(t)fri apr 09 21
+(u)Camryn Buttes
+(p)3894
+(e)🆕|feature
+(+)Added a new limb randomizing contract to the pool of satanic contracts
+(u)Camryn Buttes
+(p)4109
+(e)🐛🆕🗺|bug, feature, mapping
+(+)Made a bunch of minor improvements and additions to Donut 3.
+(u)Jan.antilles
+(p)4267
+(e)🆕🎨|feature, sprites
+(+)Added Lasagna as a tasty new food item for the Chef to cook.
+(u)Comradef191
+(p)4256
+(e)🗺|mapping
+(*)You can now tell which cables on Cogmap 1 are directly connected to the Engine thanks to their Brown colour!
+(+)You can also now tell which cables are connected to the Solar Arrays on Cogmap 1, as they are now Yellow.
+(u)Gannets
+(p)4255
+(e)|
+(*)The new prototype melee class, the Knight is now avaliable in syndicate weapons vendors on the Cairngorm. Full details in minor changes.
+(+)The new prototype knight crate includes:
+(+)Hadar heavy power-sword, a two-handed melee weapon that can be used in-hand to swap between a long range stab special attack and a wide sweep that applies knockback. The sword will build up additional attack damage when used to hit living humans outside of the Cairngorm up to a maximum force of 100 (or 105?)
+(+)Citadel heavy combat cuirass and a great helm, a massive suit of armour that provides multiple large damage resistances at the cost of a slow walk speed.
+(+)Combat gauntlets that reduce the likelihood of disarms against you.
+(+)Combat sabatons with non-slip properties and magnetised soles to keep you planted on the point.
+(t)thu apr 08 21
+(u)Arthur Holiday
+(p)3961
+(e)⚖|balance
+(*)Securitrons don't target invisible people anymore. This includes those who are using a cloaking device or a genetics, vampire ability.
+(t)wed apr 07 21
+(u)Erinexx
+(p)4219
+(e)🎨|sprites
+(+)TEG now has an additional turbine speed animation when at >10k atm.
+(+)Local generator now displays anchored state and whether there is a tank loaded.
+(u)pali
+(*)Baseball bats got a small overhaul. The range and angle of reflection is now slightly randomized and depends on a few factors (athletic trait, alcohol, ...). Bats are now scannable and craftable using wood.
+(u)Sovexe
+(p)4174
+(e)⚖🐛🆕|balance, bug, feature
+(*)Critter abilities can now be bound to ctrl/alt/shift+left click
+(u)Asche
+(p)4198
+(e)🆕|feature
+(+)Security personnel can now baton-fry dough into donuts. Remember to hold the baton the right way.
+(t)tue apr 06 21
+(u)Penny
+(p)4068
+(e)🆕|feature
+(+)Multitools now detect if your equipment or data terminal is unplugged
+(u)TTerc & Virvatuli
+(p)4224
+(e)|
+(+)Added a notification sound for receiving mentor PMs. You can adjusts its volume via the Audio tab in the top menu.
+(u)NeekothingFan2020
+(p)4187
+(e)🎨|sprites
+(+)Chief Engineer now has access to all engineering PDA groups and programs.
+(u)Flaborized
+(p)4226
+(e)🎨|sprites
+(+)Resprited most organs.
+(t)mon apr 05 21
+(u)DimWhat
+(p)4210
+(e)⚖|balance
+(+)NTSO, Security Assistants, and Part-time Vice Officers now heal more from donuts
+(u)Gannets
+(p)4212
+(e)🆕🎨|feature, sprites
+(*)The long awaited nuclear operatives melee class is being added in a prototype state.
+(*)It's listed in the syndicate weapons vendor under Knight (Prototype)
+(u)Flappybat
+(p)4116
+(e)⚖|balance
+(+)Removes the following items from spy rewards: Boom Boots, Banana Grenades, Surplus crate
+(u)tarmunora
+(e)⚖|balance
+(*)Wizard den teleport computer now puts the teleport spell on cooldown if the person being teleported knows the spell.
+(u)tarmunora
+(e)⚖|balance
+(*)Replaced high-capacity power cell from sec vendor with distuptor charger power cell, reduced cost to 1 token
+(+)shivering status shorter duration at milder temperatures
 (t)sun apr 04 21
+(u)Camryn Buttes
+(p)3967
+(e)🐛🆕🗺|bug, feature, mapping
+(*)Added a new prefab to the pool of space prefabs: the candy shop! Complete with an open-ended mystery and some clues that don't quite add up. (also lots of candy)
+(u)TTerc
+(p)3963
+(e)🐛|bug
+(+)You can now split material stacks (ores, bars) by clicking them with empty hand and click material stacks with each other to stack them together, similarly to sheets.
 (u)Azrun
 (p)4152
 (e)⚖🆕|balance, feature

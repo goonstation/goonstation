@@ -16,7 +16,7 @@ THROWING DARTS
 	name = "implant"
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "implant-g"
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	var/implanted = null
 	var/impcolor = "g"
 	var/mob/owner = null
@@ -967,7 +967,7 @@ THROWING DARTS
 	item_state = "syringe_0"
 	throw_speed = 1
 	throw_range = 5
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	hide_attack = 2
 	var/sneaky = 0
 	tooltip_flags = REBUILD_DIST
@@ -1178,7 +1178,7 @@ THROWING DARTS
 	item_state = "implantcase"
 	throw_speed = 1
 	throw_range = 5
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	var/implant_type = /obj/item/implant/tracking
 	tooltip_flags = REBUILD_DIST
 	//Whether this is the paper type that goes away when emptied
@@ -1352,7 +1352,7 @@ THROWING DARTS
 	item_state = "electronic"
 	throw_speed = 1
 	throw_range = 5
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	mats = 5
 	desc = "A small device for analyzing implants."
 
@@ -1672,7 +1672,7 @@ circuitry. As a result neurotoxins can cause massive damage.<BR>
 /obj/item/implant/projectile/bardart
 	name = "dart"
 	desc = "An object of d'art."
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "dart"
 	throw_spin = 0
@@ -1696,7 +1696,7 @@ circuitry. As a result neurotoxins can cause massive damage.<BR>
 /obj/item/implant/projectile/lawndart
 	name = "lawn dart"
 	desc = "An oversized plastic dart with a metal spike at the tip. Fun for the whole family!"
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "lawndart"
 	throw_spin = 0

@@ -15,7 +15,7 @@ AI MODULES
 	desc = "A module that updates an AI's law EEPROMs. "
 	flags = FPRINT | TABLEPASS| CONDUCT
 	force = 5.0
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	throwforce = 5.0
 	throw_speed = 3
 	throw_range = 15
@@ -457,6 +457,7 @@ AI MODULES
 					qdel(src)
 				else
 					boutput(user, "<span class='notice'>You disconnect the monitor.</span>")
+					logTheThing("station", user, null, "disconnects the AI upload at [log_loc(src)].")
 					var/obj/computerframe/A = new /obj/computerframe(src.loc)
 					if(src.material) A.setMaterial(src.material)
 					var/obj/item/circuitboard/aiupload/M = new /obj/item/circuitboard/aiupload(A)

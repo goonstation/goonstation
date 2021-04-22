@@ -861,7 +861,7 @@
 	icon = 'icons/obj/furniture/chairs.dmi'
 	icon_state = "folded_chair"
 	item_state = "folded_chair"
-	w_class = 4.0
+	w_class = W_CLASS_BULKY
 	throwforce = 10
 	flags = FPRINT | TABLEPASS | CONDUCT
 	force = 5
@@ -1168,6 +1168,12 @@
 	var/time_between_uses = 400 // The default time between uses.
 	var/list/items = list (/obj/item/device/light/zippo,
 	/obj/item/wrench,
+	/obj/item/device/multitool,
+	/obj/item/toy/plush/small/buddy,
+	/obj/item/toy/plush/small/stress_ball,
+	/obj/item/paper/lunchbox_note,
+	/obj/item/plant/herb/cannabis/spawnable,
+	/obj/item/reagent_containers/food/snacks/candy/candyheart,
 	/obj/item/bananapeel,
 	/obj/item/reagent_containers/food/snacks/lollipop/random_medical,
 	/obj/item/spacecash/random/small,
@@ -1222,6 +1228,9 @@
 				last_use = world.time
 				max_uses--
 
+		else if (max_uses <= 0)
+			user.visible_message("<span class='notice'><b>[user.name]</b> rummages through the seams and behind the cushions of [src] and pulls out absolutely nothing!</span>",\
+			"<span class='notice'>You rummage through the seams and behind the cushions of [src] and pull out absolutely nothing!</span>")
 		else
 			user.visible_message("<span class='notice'><b>[user.name]</b> rummages through the seams and behind the cushions of [src]!</span>",\
 			"<span class='notice'>You rummage through the seams and behind the cushions of [src]!</span>")

@@ -163,8 +163,8 @@ ABSTRACT_TYPE(/obj/vehicle)
 		if(src.rider)
 			if(src.rider.loc == src)
 				src.rider.set_loc(src.loc)
-			src.overlays -= src.rider
-			src.overlays -= src.booster_image
+			ClearSpecificOverlays("rider")
+			ClearSpecificOverlays("booster_image")
 			handle_button_removal()
 			src.rider = null
 		if (ejectall)
@@ -207,7 +207,7 @@ ABSTRACT_TYPE(/obj/vehicle)
 
 
 	proc/Stopped()
-		src.overlays -= src.booster_image //so we don't see thrusters firing on a parked vehicle
+		ClearSpecificOverlays("booster_image") //so we don't see thrusters firing on a parked vehicle
 		return
 
 	proc/stop()
@@ -352,7 +352,7 @@ ABSTRACT_TYPE(/obj/vehicle)
 		in_bump = 0
 
 	if(isitem(AM))
-		if(AM:w_class >= 4.0)
+		if(AM:w_class >= W_CLASS_BULKY)
 			boutput(rider, "<span class='alert'><B>You crash into [AM]!</B></span>")
 			for (var/mob/C in AIviewers(src))
 				if(C == rider)
@@ -1395,7 +1395,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 		in_bump = 0
 		return
 	if(isitem(AM))
-		if(AM:w_class >= 4.0)
+		if(AM:w_class >= W_CLASS_BULKY)
 			boutput(rider, "<span class='alert'><B>You run into [AM]!</B></span>")
 			for (var/mob/C in AIviewers(src))
 				if(C == rider)
@@ -1443,7 +1443,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 		rider.throw_at(target, 5, 1)
 		rider.buckled = null
 		rider = null
-		overlays = null
+		ClearSpecificOverlays("rider")
 		return
 	if(selfdismount)
 		boutput(rider, "<span class='notice'>You dismount from the [src].</span>")
@@ -1453,7 +1453,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 			C.show_message("<B>[rider]</B> dismounts from the [src].", 1)
 	rider.buckled = null
 	rider = null
-	overlays = null
+	ClearSpecificOverlays("rider")
 	return
 
 /obj/vehicle/cat/do_special_on_relay(mob/user as mob, dir)
@@ -1483,7 +1483,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 	rider = target
 	rider.pixel_x = 0
 	rider.pixel_y = 5
-	overlays += rider
+	src.UpdateOverlays(rider, "rider")
 	if(rider.restrained() || rider.stat)
 		rider.buckled = src
 
@@ -2273,7 +2273,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 			M.glide_size = src.glide_size
 			M.animate_movement = SYNC_STEPS
 		if(src.booster_upgrade)
-			src.overlays += booster_image
+			src.UpdateOverlays(booster_image, "booster_image")
 		walk(src, direction, td)
 		src.glide_size = (32 / td) * world.tick_lag
 		for(var/mob/M in src)

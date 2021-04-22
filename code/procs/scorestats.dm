@@ -133,7 +133,7 @@ var/datum/score_tracker/score_tracker
 		// RESEARCH DEPARTMENT SECTION
 		for(var/obj/O in artifact_controls.artifacts)
 			if(O.disposed)
-				return
+				continue
 			var/obj/item/sticker/postit/artifact_paper/pap = locate(/obj/item/sticker/postit/artifact_paper/) in O.vis_contents
 			if(pap)
 				artifacts_analyzed++
@@ -263,6 +263,9 @@ var/datum/score_tracker/score_tracker
 						command_pets_escaped += pet
 					else if(pet:is_pet)
 						pets_escaped += pet
+			else if(istype(pet, /obj/item/rocko))
+				if(in_centcom(pet))
+					command_pets_escaped += pet
 
 		if (length(by_type[/obj/machinery/bot/secbot/beepsky]))
 			beepsky_alive = 1
@@ -333,7 +336,7 @@ var/datum/score_tracker/score_tracker
 		if (length(command_pets_escaped))
 			var/list/who_escaped = list()
 			for (var/atom/A in command_pets_escaped)
-				who_escaped += "[A.name] [bicon(A)]"
+				who_escaped += "[A.name] [inline_bicon(getFlatIcon(A, no_anim=TRUE))]"
 			. += "<B>Command Pets Escaped:</B> [who_escaped.Join(" ")]<BR><BR>"
 		if (length(pets_escaped))
 			var/list/who_escaped = list()

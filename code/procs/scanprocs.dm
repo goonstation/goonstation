@@ -299,6 +299,26 @@
 			break
 	return
 
+// output a health pop-up overhead thing to the client
+/proc/scan_health_overhead(var/mob/M as mob, var/mob/C as mob) // M is who we're scanning, C is who to give the overhead to
+	if (C.client && !C.client.preferences?.flying_chat_hidden)
+
+		var/image/chat_maptext/chat_text = null
+		var/h_pct = M.max_health ? round(100 * M.health / M.max_health) : M.health
+		var/oxy = round(M.get_oxygen_deprivation())
+		var/tox = round(M.get_toxin_damage())
+		var/burn = round(M.get_burn_damage())
+		var/brute = round(M.get_brute_damage())
+
+		var/popup_text = "<span class='ol c pixel'><span class='vga'>[h_pct]%</span>\n<span style='color: #40b0ff;'>[oxy]</span> - <span style='color: #33ff33;'>[tox]</span> - <span style='color: #ffee00;'>[burn]</span> - <span style='color: #ff6666;'>[brute]</span></span>"
+		chat_text = make_chat_maptext(M, popup_text, force = 1)
+		if(chat_text)
+			chat_text.measure(C.client)
+			for(var/image/chat_maptext/I in C.chat_text.lines)
+				if(I != chat_text)
+					I.bump_up(chat_text.measured_height)
+			chat_text.show_to(C.client)
+
 /proc/scan_reagents(var/atom/A as turf|obj|mob, var/show_temp = 1, var/single_line = 0, var/visible = 0, var/medical = 0)
 	if (!A)
 		return "<span class='alert'>ERROR: NO SUBJECT DETECTED</span>"

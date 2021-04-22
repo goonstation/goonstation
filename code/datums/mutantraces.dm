@@ -246,7 +246,7 @@
 			var/list/obj/item/clothing/restricted = list(mob.w_uniform, mob.shoes, mob.wear_suit)
 			for(var/obj/item/clothing/W in restricted)
 				if (istype(W,/obj/item/clothing))
-					if(W.compatible_species.Find(src.name) || (src.human_compatible && W.compatible_species.Find("human")))
+					if(W.compatible_species.Find(src.name) || (src.uses_human_clothes && W.compatible_species.Find("human")))
 						continue
 					mob.u_equip(W)
 					boutput(mob, "<span class='alert'><B>You can no longer wear the [W.name] in your current state!</B></span>")
@@ -786,6 +786,7 @@
 	voice_override = "lizard"
 	special_head = HEAD_LIZARD
 	special_head_state = "head"
+	eye_state = "eyes_lizard"
 	mutant_organs = list("tail" = /obj/item/organ/tail/lizard)
 	mutant_folder = 'icons/mob/lizard.dmi'
 	special_hair_1_icon = 'icons/mob/lizard.dmi'
@@ -1132,6 +1133,8 @@
 
 /datum/mutantrace/abomination
 	name = "abomination"
+	mutant_folder = 'icons/mob/abomination.dmi'
+	icon = 'icons/mob/abomination.dmi'
 	icon_state = "abomination"
 	human_compatible = 0
 	uses_human_clothes = 0
@@ -1226,7 +1229,6 @@
 	icon_state = "werewolf"
 	human_compatible = 0
 	uses_human_clothes = 0
-	head_offset = -1
 	var/original_name
 	jerk = 1
 	override_attack = 0
@@ -1241,6 +1243,9 @@
 	special_head = HEAD_WEREWOLF
 	mutant_organs = list("tail" = /obj/item/organ/tail/wolf)
 
+	head_offset = 5
+	hand_offset = 3
+	arm_offset = 3
 
 	New()
 		..()
@@ -1409,9 +1414,9 @@
 	icon = 'icons/mob/monkey.dmi'
 	mutant_folder = 'icons/mob/monkey.dmi'
 	icon_state = "monkey"
-	head_offset = -8
+	head_offset = -6
 	eye_offset = -8 // jeepers creepers their peepers are a pixel higher than human peepers
-	hand_offset = -5
+	hand_offset = -2
 	body_offset = -7
 	leg_offset = -4
 	arm_offset = -8
@@ -1961,7 +1966,7 @@
 /datum/mutantrace/cow
 	name = "cow"
 	icon_state = "cow"
-	human_compatible = FALSE
+	human_compatible = TRUE
 	uses_human_clothes = FALSE
 	override_attack = 0
 	voice_override = "cow"
@@ -1973,9 +1978,10 @@
 	special_hair_1_icon = 'icons/mob/cow.dmi'
 	special_hair_1_state = "head-detail1"
 	special_hair_1_color = CUST_1
-	detail_oversuit_1_icon = 'icons/mob/cow.dmi'
-	detail_oversuit_1_state = "cow_over_suit"
-	detail_oversuit_1_color = null
+	special_hair_2_icon = 'icons/mob/cow.dmi'
+	special_hair_2_state = "cow_over_suit"
+	special_hair_2_color = null
+	special_hair_2_layer = MOB_OVERMASK_LAYER
 	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/cow/right
 	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/cow/left
 	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/cow/right

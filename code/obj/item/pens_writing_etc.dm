@@ -22,7 +22,7 @@
 	icon_state = "pen"
 	flags = FPRINT | ONBELT | TABLEPASS
 	throwforce = 0
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	throw_speed = 7
 	throw_range = 15
 	m_amt = 60
@@ -158,7 +158,7 @@
 	desc = "A pretty swag pen."
 	icon_state = "pen_fancy"
 	font_color = "blue"
-	font = "Dancing Script, cursive"
+	font = "'Dancing Script', cursive"
 	webfont = "Dancing Script"
 	uses_handwriting = 1
 
@@ -178,7 +178,7 @@
 	desc = "The core is graphite, not lead, don't worry!"
 	icon_state = "pencil-y"
 	font_color = "#808080"
-	font = "Dancing Script, cursive"
+	font = "'Dancing Script', cursive"
 	webfont = "Dancing Script"
 	uses_handwriting = 1
 	clicknoise = 0
@@ -195,7 +195,7 @@
 	desc = "Try not to sniff it too much. Weirdo."
 	icon_state = "marker"
 	color = "#333333"
-	font = "Permanent Marker, cursive"
+	font = "'Permanent Marker', cursive"
 	webfont = "Permanent Marker"
 	clicknoise = 0
 
@@ -798,7 +798,7 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
 	item_state = "clipboard0"
 	throwforce = 1
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	throw_speed = 3
 	throw_range = 10
 	desc = "You can put paper on it. Ah, technology!"
@@ -944,9 +944,9 @@
 	icon_state = "folder" //futureproofed icons baby
 	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
 	item_state = "folder"
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	throwforce = 0
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	throw_speed = 3
 	throw_range = 10
 	tooltip_flags = REBUILD_DIST
@@ -1006,7 +1006,7 @@
 	burn_output = 900
 	burn_possible = 1
 	health = 10
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 
 	var/offset = 1
 
@@ -1128,7 +1128,7 @@
 	icon_state = "postit_stack"
 	/* force = 1
 	throwforce = 1
-	w_class = 1
+	w_class = W_CLASS_TINY
 	amount = 10
 	burn_point = 220
 	burn_output = 200

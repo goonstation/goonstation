@@ -499,7 +499,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 			if (!isdead(player))
 				if (in_centcom(player))
 					player.unlock_medal("100M dash", 1)
-					if (pets_rescued >= 6)
+					if (pets_rescued >= 7)
 						player.unlock_medal("Noah's Shuttle", 1)
 				player.unlock_medal("Survivor", 1)
 
@@ -563,6 +563,9 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 	else if (final_score <= 0)
 		final_score = 0
 	else
+		final_score = 100
+
+	if(!score_tracker.score_calculated)
 		final_score = 100
 
 	boutput(world, score_tracker.escapee_facts())

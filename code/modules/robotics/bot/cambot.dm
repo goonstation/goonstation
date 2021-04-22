@@ -307,7 +307,7 @@
 	desc = "A camera with a robot arm grafted to it."
 	icon = 'icons/obj/bots/aibots.dmi'
 	icon_state = "camera_arm"
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	flags = TABLEPASS
 	var/build_step = 0
 	var/created_name = "Cambot"

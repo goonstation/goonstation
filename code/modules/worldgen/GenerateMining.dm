@@ -107,7 +107,7 @@ var/list/miningModifiersUsed = list()//Assoc list, type:times used
 	return (count >= minSolid + ((generation==4||generation==3) ? endFill : 0 ) || (count2<=(generation==4?1:2) && fillLarge && (generation==3 || generation==4)) ) //Remove ((generation==4||generation==3)?-1:0) for larger corridors
 
 /datum/mapGenerator/seaCaverns //Cellular automata based generator. Produces cavern-like maps. Empty space is filled with asteroid floor.
-	generate(var/list/miningZ)
+	generate(var/list/miningZ, var/z_level = AST_ZLEVEL, var/generate_borders = TRUE)
 		var/map[world.maxx][world.maxy]
 		for(var/x=1,x<=world.maxx,x++)
 			for(var/y=1,y<=world.maxy,y++)
@@ -123,9 +123,9 @@ var/list/miningModifiersUsed = list()//Assoc list, type:times used
 
 		for(var/x=1,x<=world.maxx,x++)
 			for(var/y=1,y<=world.maxy,y++)
-				var/turf/T = locate(x,y,AST_ZLEVEL)
+				var/turf/T = locate(x,y,z_level)
 				if(map[x][y] && !ISDISTEDGE(T, 3) && T.loc && ((T.loc.type == /area/space) || istype(T.loc , /area/allowGenerate)) )
-					var/turf/simulated/wall/asteroid/N = T.ReplaceWith(/turf/simulated/wall/asteroid, FALSE, TRUE, FALSE, TRUE)
+					var/turf/simulated/wall/asteroid/N = T.ReplaceWith(/turf/simulated/wall/asteroid/dark, FALSE, TRUE, FALSE, TRUE)
 					N.quality = rand(-101,101)
 					generated.Add(N)
 				if(T.loc.type == /area/space || istype(T.loc, /area/allowGenerate))
@@ -156,7 +156,7 @@ var/list/miningModifiersUsed = list()//Assoc list, type:times used
 
 		for(var/i=0, i<80, i++)
 			var/list/L = list()
-			for (var/turf/simulated/wall/asteroid/A in range(4,pick(generated)))
+			for (var/turf/simulated/wall/asteroid/dark/A in range(4,pick(generated)))
 				L+=A
 
 			Turfspawn_Asteroid_SeedOre(L, rand(2,8), rand(1,70))
@@ -174,19 +174,20 @@ var/list/miningModifiersUsed = list()//Assoc list, type:times used
 		for(var/i=0, i<40, i++)
 			Turfspawn_Asteroid_SeedEvents(generated)
 
-		var/list/border = list()
-		border |= (block(locate(1,1,AST_ZLEVEL), locate(AST_MAPBORDER,world.maxy,AST_ZLEVEL))) //Left
-		border |= (block(locate(1,1,AST_ZLEVEL), locate(world.maxx,AST_MAPBORDER,AST_ZLEVEL))) //Bottom
-		border |= (block(locate(world.maxx-(AST_MAPBORDER-1),1,AST_ZLEVEL), locate(world.maxx,world.maxy,AST_ZLEVEL))) //Right
-		border |= (block(locate(1,world.maxy-(AST_MAPBORDER-1),AST_ZLEVEL), locate(world.maxx,world.maxy,AST_ZLEVEL))) //Top
+		if(generate_borders)
+			var/list/border = list()
+			border |= (block(locate(1,1,z_level), locate(AST_MAPBORDER,world.maxy,z_level))) //Left
+			border |= (block(locate(1,1,z_level), locate(world.maxx,AST_MAPBORDER,z_level))) //Bottom
+			border |= (block(locate(world.maxx-(AST_MAPBORDER-1),1,z_level), locate(world.maxx,world.maxy,z_level))) //Right
+			border |= (block(locate(1,world.maxy-(AST_MAPBORDER-1),z_level), locate(world.maxx,world.maxy,z_level))) //Top
 
-		for(var/turf/T in border)
-			T.ReplaceWith(/turf/unsimulated/wall/trench, FALSE, TRUE, FALSE, TRUE)
-			new/area/cordon/dark(T)
-			LAGCHECK(LAG_REALTIME)
+			for(var/turf/T in border)
+				T.ReplaceWith(/turf/unsimulated/wall/trench, FALSE, TRUE, FALSE, TRUE)
+				new/area/cordon/dark(T)
+				LAGCHECK(LAG_REALTIME)
 
 		for (var/i=0, i<55, i++)
-			var/turf/T = locate(rand(1,world.maxx),rand(1,world.maxy),AST_ZLEVEL)
+			var/turf/T = locate(rand(1,world.maxx),rand(1,world.maxy),z_level)
 			for (var/turf/space/fluid/TT in range(rand(2,4),T))
 				TT.spawningFlags |= SPAWN_TRILOBITE
 
