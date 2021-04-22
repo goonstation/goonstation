@@ -311,7 +311,7 @@
 									action_phrase = "wave to"
 								if("blowkiss")
 									action_phrase = "to whom you'll blow a [prob(1) ? "smooch" : "kiss"]"
-							M = tgui_input_list(src, "Pick something to [action_phrase]!", "EmotiConsole v1.1.3", target_list, 0)
+							M = tgui_input_list(src, "Pick something to [action_phrase]!", "EmotiConsole v1.1.3", target_list, (20 SECONDS))
 							if (M && (range > 1 && !IN_RANGE(get_turf(src), get_turf(M), range)) || (range == 1 && !in_interact_range(src, M)) )
 								var/inaction_phrase = "emote upon"
 								switch(act)
@@ -386,7 +386,7 @@
 								action_phrase = "nod to"
 							else
 								action_phrase = "[act] at"
-						M = tgui_input_list(src, "Pick something to [action_phrase]!", "EmotiConsole v1.1.3", target_list, 0)
+						M = tgui_input_list(src, "Pick something to [action_phrase]!", "EmotiConsole v1.1.3", target_list, (20 SECONDS))
 						if (M && !IN_RANGE(get_turf(src), get_turf(M), 8))
 							var/inaction_phrase = "emote upon"
 							switch(act)
@@ -1112,7 +1112,7 @@
 								if("middlefinger")
 									action_phrase = "raise your middle finger at"
 
-							M = tgui_input_list(src, "Pick something to [action_phrase]!", "EmotiConsole v1.1.3", target_list, 0)
+							M = tgui_input_list(src, "Pick something to [action_phrase]!", "EmotiConsole v1.1.3", target_list, (20 SECONDS))
 
 					if (M) // You can totally actively passively aggressively flip people off after they leave the room
 						message = "<B>[src]</B> flips off [M]."
@@ -1147,7 +1147,7 @@
 								if("flip2")
 									action_phrase = "flip off twice"
 
-							M = tgui_input_list(src, "Pick something to [action_phrase]!", "EmotiConsole v1.1.3", target_list, 0)
+							M = tgui_input_list(src, "Pick something to [action_phrase]!", "EmotiConsole v1.1.3", target_list, (20 SECONDS))
 
 					if (M)
 						message = "<B>[src]</B> gives [M] the double deuce!"
@@ -1170,7 +1170,7 @@
 				else
 					var/list/target_list = src.get_targets(8, "both") // Dr. Dingus boggles at robotics manufacturer's stupidity.
 					if(length(target_list))
-						M = tgui_input_list(src, "Pick something to boggle at!", "EmotiConsole v1.1.3", target_list, 0)
+						M = tgui_input_list(src, "Pick something to boggle at!", "EmotiConsole v1.1.3", target_list, (20 SECONDS))
 
 				if (M) // You can totally boggle at something's stupidity without it being nearby
 					message = "<B>[src]</B> boggles at [M]'s stupidity."
@@ -1191,7 +1191,7 @@
 					else
 						var/list/target_list = src.get_targets(8, "both") // Dr. Dingus boggles at robotics manufacturer's stupidity.
 						if(length(target_list))
-							M = tgui_input_list(src, "Pick something to shake your fist at!", "EmotiConsole v1.1.3", target_list, 0)
+							M = tgui_input_list(src, "Pick something to shake your fist at!", "EmotiConsole v1.1.3", target_list, (20 SECONDS))
 
 					if (M)
 						message = "<B>[src]</B> angrily shakes [his_or_her(src)] fist at [M]!"
@@ -1217,7 +1217,7 @@
 					if(!M)
 						var/list/target_list = src.get_targets(1, "mob") // Bobby Boblord shakes hands with grody spacemouse!
 						if(length(target_list))
-							M = tgui_input_list(src, "Pick someone with whom to shake hands!", "EmotiConsole v1.1.3", target_list, 0)
+							M = tgui_input_list(src, "Pick someone with whom to shake hands!", "EmotiConsole v1.1.3", target_list, (20 SECONDS))
 							if (M && !in_interact_range(src, M))
 								boutput(src, "<span class='emote'><B>[M]</B> is out of reach!</span>")
 								return
@@ -1242,7 +1242,7 @@
 					else
 						var/list/target_list = src.get_targets(1, "mob")
 						if(length(target_list))
-							M = tgui_input_list(src, "Pick someone to dap!", "EmotiConsole v1.1.3", target_list, 0)
+							M = tgui_input_list(src, "Pick someone to dap!", "EmotiConsole v1.1.3", target_list, (20 SECONDS))
 							if (M && !in_interact_range(src, M))
 								boutput(src, "<span class='emote'><B>[M]</B> is not in dapping distance!</span>")
 								return
@@ -1272,7 +1272,7 @@
 						else
 							var/list/target_list = src.get_targets(1, "mob") // Funche Arnchlnm slaps shambling abomination across the face!
 							if(length(target_list))
-								M = tgui_input_list(src, "Pick someone to smack!", "EmotiConsole v1.1.3", target_list, 0)
+								M = tgui_input_list(src, "Pick someone to smack!", "EmotiConsole v1.1.3", target_list, (20 SECONDS))
 								if (M && !in_interact_range(src, M))
 									boutput(src, "<span class='emote'><B>[M]</B> is out of reach!</span>")
 									return
@@ -1306,7 +1306,7 @@
 						else
 							var/list/target_list = src.get_targets(1, "mob") // Chrunb Erbrbt and Scales To Lizard highfive!
 							if(length(target_list))
-								M = tgui_input_list(src, "Pick someone to high-five!", "EmotiConsole v1.1.3", target_list, 0)
+								M = tgui_input_list(src, "Pick someone to high-five!", "EmotiConsole v1.1.3", target_list, (20 SECONDS))
 								if (M && !in_interact_range(src, M))
 									boutput(src, "<span class='emote'><B>[M]</B> is out of reach!</span>")
 									return
@@ -2340,7 +2340,7 @@
 					sleep(1 SECOND) //let us do that combo shit people like with throwing
 					src.force_laydown_standup()
 
-/// Looks for the kind_of_target atoms within range, and throws the user an input
+/// Looks for the kind_of_target movables within range, and throws the user an input
 /// Valid kinds: "mob", "obj", "both"
 /mob/living/proc/get_targets(range = 1, kind_of_target = "mob")
 	if(!isturf(get_turf(src))) return
