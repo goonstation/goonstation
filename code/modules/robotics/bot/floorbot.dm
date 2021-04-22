@@ -10,7 +10,7 @@
 	throwforce = 10.0
 	throw_speed = 2
 	throw_range = 5
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	flags = TABLEPASS
 
 /obj/item/toolbox_tiles_sensor
@@ -22,7 +22,7 @@
 	throwforce = 10.0
 	throw_speed = 2
 	throw_range = 5
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	flags = TABLEPASS
 
 //Floorbot
@@ -302,9 +302,9 @@
 			return
 
 		// we are not there. how do we get there
-		if (!length(src.path))
+		if (!src.path || !length(src.path))
 			src.navigate_to(get_turf(src.target), FLOORBOT_MOVE_SPEED, max_dist = 120)
-			if (!length(src.path))
+			if (!src.path || !length(src.path))
 				// answer: we don't. try to find something else then.
 				src.targets_invalid |= turf2coordinates(src.target)
 				src.KillPathAndGiveUp(1)

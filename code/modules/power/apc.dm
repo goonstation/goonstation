@@ -366,6 +366,7 @@ var/zapLimiter = 0
 					icon_state = initial(src.icon_state)
 					operating = 1
 					update()
+					updateicon()
 					return
 			return
 

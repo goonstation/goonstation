@@ -15,7 +15,7 @@
 	var/toggle = 1
 	var/force_dud = 0
 
-	w_class = 6 /// HEH
+	w_class = W_CLASS_GIGANTIC /// HEH
 	p_class = 3 /// H E H
 	mats = 5
 

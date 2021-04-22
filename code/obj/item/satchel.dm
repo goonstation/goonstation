@@ -4,7 +4,7 @@
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "satchel"
 	flags = ONBELT
-	w_class = 1
+	w_class = W_CLASS_TINY
 	event_handler_flags = USE_FLUID_ENTER | NO_MOUSEDROP_QOL
 	var/maxitems = 50
 	var/list/allowed = list(/obj/item/)
@@ -19,7 +19,7 @@
 	attackby(obj/item/W as obj, mob/user as mob)
 		var/proceed = 0
 		for(var/check_path in src.allowed)
-			if(istype(W, check_path) && W.w_class < 4)
+			if(istype(W, check_path) && W.w_class < W_CLASS_BULKY)
 				proceed = 1
 				break
 		if (!proceed)
@@ -53,7 +53,7 @@
 		// This is probably easily fixable by just running the check again
 		// but to be honest this is one of those funny bugs that can be fixed later
 
-		if (get_dist(user, src) <= 0 && src.contents.len)
+		if (get_dist(user, src) <= 0 && length(src.contents))
 			if (user.l_hand == src || user.r_hand == src)
 				var/obj/item/getItem = null
 
@@ -114,7 +114,7 @@
 		var/proceed = 0
 		for(var/check_path in src.allowed)
 			var/obj/item/W = O
-			if(istype(O, check_path) && W.w_class < 4)
+			if(istype(O, check_path) && W.w_class < W_CLASS_BULKY)
 				proceed = 1
 				break
 		if (!proceed)
@@ -215,7 +215,7 @@
 		maxitems = 30
 		allowed = list(/obj/item/toy/figure)
 		flags = null
-		w_class = 3
+		w_class = W_CLASS_NORMAL
 
 		satchel_updateicon()
 			return

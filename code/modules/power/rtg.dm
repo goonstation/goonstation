@@ -92,7 +92,7 @@
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "fuelpellet"
 	throwforce = 5
-	w_class = 1
+	w_class = W_CLASS_TINY
 
 	cerenkite
 		New()

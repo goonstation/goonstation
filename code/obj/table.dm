@@ -176,7 +176,7 @@
 
 	disposing()
 		var/turf/OL = get_turf(src)
-		if (src.desk_drawer && src.desk_drawer.contents.len)
+		if (src.desk_drawer && length(src.desk_drawer.contents))
 			for (var/atom/movable/A in src.desk_drawer)
 				A.set_loc(OL)
 			var/obj/O = src.desk_drawer
@@ -683,7 +683,7 @@
 		if (src.glass_broken)
 			if (istype(W, /obj/item/sheet))
 				var/obj/item/sheet/S = W
-				if (!S.material || !S.material.material_flags & MATERIAL_CRYSTAL)
+				if (!S.material || !(S.material.material_flags & MATERIAL_CRYSTAL))
 					boutput(user, "<span class='alert'>You have to use glass or another crystalline material to repair [src]!</span>")
 				else if (S.consume_sheets(1))
 					boutput(user, "<span class='notice'>You add glass to [src]!</span>")

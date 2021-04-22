@@ -44,7 +44,7 @@
 	throwforce = 10.0
 	throw_speed = 2
 	throw_range = 5
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	flags = TABLEPASS
 	var/extinguisher = 0 //Is the extinguisher added?
 	var/created_name = "Firebot"
@@ -191,7 +191,7 @@
 	if(src.frustration > 8)
 		src.KillPathAndGiveUp(1)
 
-	if(!src.target)
+	if(!src.target || src.target.disposed)
 		src.doing_something = 0
 		src.target = src.look_for_fire()
 

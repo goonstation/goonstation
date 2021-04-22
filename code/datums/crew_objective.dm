@@ -35,7 +35,7 @@
 
 		var/obj_count = 1
 		var/assignCount = min(rand(1,3), objectiveTypes.len)
-		while (assignCount && objectiveTypes.len)
+		while (assignCount && length(objectiveTypes))
 			assignCount--
 			var/selectedType = pick(objectiveTypes)
 			var/datum/objective/crew/newObjective = new selectedType
@@ -100,7 +100,7 @@ ABSTRACT_TYPE(/datum/objective/crew/headofsecurity)
 		explanation_text = "Don't lose your hat/beret!"
 		medal_name = "Hatris"
 		check_completion()
-			if(owner.current && owner.current.check_contents_for(/obj/item/clothing/head/helmet/HoS))
+			if(owner.current && owner.current.check_contents_for(/obj/item/clothing/head/hos_hat))
 				return 1
 			else
 				return 0

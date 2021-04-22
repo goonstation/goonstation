@@ -7,7 +7,7 @@
 	icon_state = "item_box"
 	force = 1
 	throwforce = 1
-	w_class = 2
+	w_class = W_CLASS_SMALL
 	inventory_counter_enabled = 1
 	var/contained_item = /obj/item/sticker/gold_star
 	var/list/contained_items = null
@@ -305,7 +305,7 @@
 					logTheThing("debug", src, null, "has a non-path contained_item, \"[src.contained_item]\", and is being disposed of to prevent errors")
 					qdel(src)
 					return
-				else if (src.item_amount == 0 && src.contents.len) // count if we already have things inside!
+				else if (src.item_amount == 0 && length(src.contents)) // count if we already have things inside!
 					for (var/obj/item/thing in src.contents)
 						if (istype(thing, src.contained_item))
 							src.item_amount++

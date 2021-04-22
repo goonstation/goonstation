@@ -12,7 +12,7 @@
     icon = 'icons/obj/items/playing_card.dmi'
     icon_state = "plain-1-1"
     dir = NORTH
-    w_class = 1.0
+    w_class = W_CLASS_TINY
     burn_point = 220
     burn_output = 900
     burn_possible = 2
@@ -354,7 +354,7 @@
     name = "deck of cards"
     icon = 'icons/obj/items/playing_card.dmi'
     dir = NORTH
-    w_class = 1.0
+    w_class = W_CLASS_TINY
     burn_point = 220
     burn_output = 900
     burn_possible = 2
@@ -1011,7 +1011,7 @@
     desc = "a box for holding cards."
     icon = 'icons/obj/items/playing_card.dmi'
     icon_state = "white-box"
-    w_class = 1.0
+    w_class = W_CLASS_TINY
     burn_point = 220
     burn_output = 900
     burn_possible = 2
@@ -1064,7 +1064,7 @@
 /obj/item/card_box/tarot
     name = "ornate tarot box"
     box_style = "tarot"
-    w_class = 2
+    w_class = W_CLASS_SMALL
 
     New()
         ..()
@@ -1092,7 +1092,7 @@
     desc = "a pick up and play deck of StG cards!"
     icon = 'icons/obj/items/playing_card.dmi'
     icon_state = "stg-box"
-    w_class = 2.0
+    w_class = W_CLASS_SMALL
     var/obj/item/card_group/stored_deck
 
     New()

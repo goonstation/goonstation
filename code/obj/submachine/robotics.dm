@@ -277,7 +277,7 @@
 	icon_state = "oilcan"
 	amount_per_transfer_from_this = 15
 	splash_all_contents = 0
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	rc_flags = RC_FULLNESS
 	initial_volume = 120
 
@@ -345,7 +345,7 @@ ported and crapped up by: haine
 
 	get_desc(dist)
 		if (dist <= 0)
-			if (src.reagents && src.reagents.reagent_list.len)
+			if (src.reagents && length(src.reagents.reagent_list))
 				. += "<br>It contains:"
 				for (var/datum/reagent/R in src.reagents.reagent_list)
 					. += "[R.volume] units of [R.name]"

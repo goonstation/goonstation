@@ -63,7 +63,7 @@
 						m_type = 2
 						if (narrator_mode)
 							playsound(src.loc, 'sound/vox/scream.ogg', 80, 0, 0, src.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
-						else if (src.sound_list_scream && src.sound_list_scream.len)
+						else if (src.sound_list_scream && length(src.sound_list_scream))
 							playsound(src.loc, pick(src.sound_list_scream), 80, 0, 0, src.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
 						else
 							//if (src.gender == MALE)
@@ -627,13 +627,13 @@
 
 			if ("hatstomp", "stomphat")
 				if (!src.restrained())
-					var/obj/item/clothing/head/helmet/HoS/hat = src.find_type_in_hand(/obj/item/clothing/head/helmet/HoS)
+					var/obj/item/clothing/head/hos_hat/hat = src.find_type_in_hand(/obj/item/clothing/head/hos_hat)
 					var/hat_or_beret = null
 					var/already_stomped = null // store the picked phrase in here
 					var/on_head = 0
 
 					if (!hat) // if the find_type_in_hand() returned 0 earlier
-						if (istype(src.head, /obj/item/clothing/head/helmet/HoS)) // maybe it's on our head?
+						if (istype(src.head, /obj/item/clothing/head/hos_hat)) // maybe it's on our head?
 							hat = src.head
 							on_head = 1
 						else // if not then never mind
@@ -684,7 +684,7 @@
 				m_type = 2
 
 			if ("handpuppet")
-				message = "<b>[src]</b> throws their voice, badly, as they flap their thumb and index finger like some sort of lips.[prob(50) ? "  Perhaps they're off their meds?" : null]"
+				message = "<b>[src]</b> throws [his_or_her(src)] voice, badly, while flapping [his_or_her(src)] thumb and index finger like some sort of lips.[prob(10) ? " Admittedly, it is a pretty good impression of the [pick("captain", "head of personnel", "clown", "research director", "chief engineer", "head of security", "medical director", "AI", "chaplain", "detective")]." : null]"
 				m_type = 1
 
 			if ("smile","grin","smirk","frown","scowl","grimace","sulk","pout","blink","drool","shrug","tremble","quiver","shiver","shudder","shake","think","ponder","contemplate","grump")
@@ -778,7 +778,7 @@
 				if (!muzzled)
 					message = "<B>[src]</B> [act]s."
 					maptext_out = "<I>[act]s</I>"
-					if (src.sound_list_laugh && src.sound_list_laugh.len)
+					if (src.sound_list_laugh && length(src.sound_list_laugh))
 						playsound(src.loc, pick(src.sound_list_laugh), 80, 0, 0, src.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
 				else
 					message = "<B>[src]</B> tries to make a noise."
@@ -858,7 +858,7 @@
 				if (!src.restrained())
 					message = "<B>[src]</B> flaps [his_or_her(src)] arms!"
 					maptext_out = "<I>flaps [his_or_her(src)] arms!</I>"
-					if (src.sound_list_flap && src.sound_list_flap.len)
+					if (src.sound_list_flap && length(src.sound_list_flap))
 						playsound(src.loc, pick(src.sound_list_flap), 80, 0, 0, src.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
 				else
 					message = "<B>[src]</B> writhes!"
@@ -869,7 +869,7 @@
 				if (!src.restrained())
 					message = "<B>[src]</B> flaps [his_or_her(src)] arms ANGRILY!"
 					maptext_out = "<I>flaps [his_or_her(src)] arms ANGRILY!</I>"
-					if (src.sound_list_flap && src.sound_list_flap.len)
+					if (src.sound_list_flap && length(src.sound_list_flap))
 						playsound(src.loc, pick(src.sound_list_flap), 80, 0, 0, src.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
 				else
 					message = "<B>[src]</B> writhes angrily!"
@@ -2109,7 +2109,7 @@
 	src.remove_stamina(STAMINA_DEFAULT_FART_COST)
 
 /mob/living/carbon/human/proc/dabbify(var/mob/living/carbon/human/H)
-	if(PROC_ON_COOLDOWN(2 SECONDS))
+	if(ON_COOLDOWN(src, "dab", 2 SECONDS))
 		return
 	H.render_target = "*\ref[H]"
 	var/image/left_arm = image(null, H)

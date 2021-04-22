@@ -654,7 +654,7 @@ datum
 			reaction_turf(var/turf/T, var/volume)
 				var/list/covered = holder.covered_turf()
 				var/spawncleanable = 1
-				if(covered.len > 5 && (volume/covered.len) < 1)
+				if(covered.len > 5 && (length(volume/covered) < 1))
 					spawncleanable = prob((volume/covered.len) * 10)
 
 
@@ -801,7 +801,7 @@ datum
 				var/reacted = 0
 				var/mob/living/M = target
 				if(istype(M))
-					if(by_type[/obj/machinery/playerzoldorf] && by_type[/obj/machinery/playerzoldorf].len)
+					if(by_type[/obj/machinery/playerzoldorf] && length(by_type[/obj/machinery/playerzoldorf]))
 						var/obj/machinery/playerzoldorf/pz = by_type[/obj/machinery/playerzoldorf][1]
 						if(M in pz.brandlist)
 							pz.brandlist -= M

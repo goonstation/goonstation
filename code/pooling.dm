@@ -19,8 +19,7 @@ var
 									/obj/particle = 300,// FUCKING SPARKLES
 									/obj/item/spacecash = 300,
 									/obj/item/paper = 300,
-									/obj/decal/cleanable = 800,
-									/obj/overlay/tile_effect/lighting = 1000) //fine ok its smaller now! //edit : ok actually maybe this matters lets make it biger
+									/obj/decal/cleanable = 800) //fine ok its smaller now! //edit : ok actually maybe this matters lets make it biger
 /datum/proc/pooled(var/pooltype)
 	SHOULD_CALL_PARENT(TRUE)
 	dispose()
@@ -125,7 +124,7 @@ proc/getPoolingJson()
 	for(var/type in pool_stats)
 		var/count = 0
 		var/list/L = object_pools[type]
-		if(L) count = L.len
+		if(L) count = length(L)
 		L = pool_stats[type]
 
 		json += ",{path:'[type]',count:[count],hits:[L[POOL_HIT_COUNT]],misses:[L[POOL_MISS_COUNT]],poolings:[L[POOLINGS]],unpoolings:[L[UNPOOLINGS]],evictions:[L[EVICTIONS]]}"

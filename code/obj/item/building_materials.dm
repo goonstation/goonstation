@@ -41,7 +41,7 @@ MATERIAL
 	throwforce = 5.0
 	throw_speed = 1
 	throw_range = 4
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	max_stack = 50
 	stamina_damage = 42
 	stamina_cost = 23
@@ -157,7 +157,7 @@ MATERIAL
 				else
 					boutput(user, "<span class='alert'>You can't mix different materials!</span>")
 					return
-			if (S.reinforcement != src.reinforcement || (S.reinforcement && src.reinforcement && !isSameMaterial(S.reinforcement, src.reinforcement)))
+			if (!isSameMaterial(S.reinforcement, src.reinforcement))
 				boutput(user, "<span class='alert'>You can't mix different reinforcements!</span>")
 				return
 			if (S.amount >= src.max_stack)
@@ -274,6 +274,7 @@ MATERIAL
 		if (src?.material.material_flags & MATERIAL_CRYSTAL)
 			L["smallwindow"] = "Thin Window"
 			L["bigwindow"] = "Large Window (2 Sheets)"
+			L["displaycase"] = "Display Case (3 Sheets)"
 			if (istype(src.reinforcement))
 				L["remetal"] = "Remove Reinforcement"
 		if (src?.material.mat_id == "cardboard")
@@ -527,6 +528,15 @@ MATERIAL
 					a_name = "a full window"
 					a_callback = /proc/window_reinforce_full_callback
 
+				if("displaycase")
+					if (!amount_check(3,usr)) return
+					a_type = /obj/displaycase
+					a_amount = 1
+					a_cost = 3
+					a_icon = 'icons/obj/stationobjs.dmi'
+					a_icon_state = "glassbox0"
+					a_name = "a display case"
+
 				if("retable")
 					if (!amount_check(2,usr)) return
 
@@ -620,7 +630,7 @@ MATERIAL
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	icon_state = "rods"
 	flags = FPRINT | TABLEPASS| CONDUCT
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	force = 9.0
 	throwforce = 15.0
 	throw_speed = 5
@@ -914,7 +924,7 @@ MATERIAL
 
 
 		if(heads.len > 0)
-			var/pixely = 8 - 8*head_offset - 8*heads.len
+			var/pixely = 8 - 8*head_offset - length(8*heads)
 			for(var/obj/item/organ/head/H in heads)
 				H.pixel_x = 0
 				H.pixel_y = pixely
@@ -979,7 +989,7 @@ MATERIAL
 	icon = 'icons/obj/metal.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	icon_state = "tile"
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	m_amt = 937.5
 	throw_speed = 3
 	throw_range = 20

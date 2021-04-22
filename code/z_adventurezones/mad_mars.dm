@@ -582,18 +582,6 @@
 				src.visible_message("<span class='combat'><B>[M] has attempted to shove [rider] off of the [src]!</B></span>")
 	return
 
-/obj/vehicle/marsrover/bullet_act(flag, A as obj)
-	if(rider)
-		eject_rider()
-		rider.bullet_act(flag, A)
-	return
-
-/obj/vehicle/marsrover/meteorhit()
-	if(rider)
-		eject_rider()
-		rider.meteorhit()
-	return
-
 /obj/vehicle/marsrover/disposing()
 	if(rider)
 		boutput(rider, "<span class='combat'><B>Your rover is destroyed!</B></span>")

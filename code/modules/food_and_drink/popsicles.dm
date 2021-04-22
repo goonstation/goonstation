@@ -4,10 +4,10 @@
 	icon = 'icons/obj/foodNdrink/food_popsicles.dmi'
 	icon_state = "stick"
 	throwforce = 1
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	throw_speed = 4
 	throw_range = 5
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	stamina_damage = 0
 	stamina_cost = 0
 	var/broken = 0
@@ -26,7 +26,7 @@
 	icon = 'icons/obj/foodNdrink/food_popsicles.dmi'
 	icon_state = "popsiclewrapper"
 	throwforce = 1
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	throw_speed = 4
 	throw_range = 6
 
@@ -111,7 +111,7 @@
 				R.add_reagent("expresso", 5) //?
 				R.add_reagent("krokodil", 5)
 
-	on_bite(obj/item/I, mob/M, mob/user)
+	heal(var/mob/M)
 		..()
 		M.bodytemperature = min(M.base_body_temp, M.bodytemperature-20)
 		return

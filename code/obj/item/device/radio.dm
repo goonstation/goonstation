@@ -29,7 +29,7 @@
 	flags = FPRINT | TABLEPASS | ONBELT | CONDUCT
 	throw_speed = 2
 	throw_range = 9
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	mats = 3
 
 	var/icon_override = 0
@@ -118,7 +118,7 @@ Microphone: [src.broadcasting ? "<a href='?src=\ref[src];talk=0'>Engaged</a>" : 
 [!src.locked_frequency ? "<a href='?src=\ref[src];freq=-10'>-</a> <a href='?src=\ref[src];freq=-2'>-</a> <a href='?src=\ref[src];freq=set'><strong>[format_frequency(src.frequency)]</strong></a> <a href='?src=\ref[src];freq=2'>+</a> <a href='?src=\ref[src];freq=10'>+</a>" : "</strong>[format_frequency(src.frequency)]</strong>"]
 "}
 
-	if (istype(src.secure_frequencies) && src.secure_frequencies.len)
+	if (istype(src.secure_frequencies) && length(src.secure_frequencies))
 		dat += "<hr>Supplementary Channels:<table style='border-collapse: collapse;' cellpadding='2'><tr><th>Channel</th><th>Freq</th><th>Prefix</th></tr>"
 		for (var/sayToken in src.secure_frequencies)
 			dat += {"<tr><td>[ headset_channel_lookup["[src.secure_frequencies["[sayToken]"]]"] ? headset_channel_lookup["[src.secure_frequencies["[sayToken]"]]"] : "???" ]</td><td> <strong>[format_frequency(src.secure_frequencies["[sayToken]"])]</strong></td><td><code>[sayToken]</code></td></tr>
@@ -513,7 +513,7 @@ Green Wire: <a href='?src=\ref[src];wires=[WIRE_TRANSMIT]'>[src.wires & WIRE_TRA
 			// Sender didn't use a secure channel prefix, giving us the 145.9 radio frequency datum.
 			// The devices list is useless here, but we can still receive the message if one of our
 			// secure channels happens to have the same frequency as the sender's radio.
-			if (src.secure_frequencies && istype(src.secure_frequencies) && src.secure_frequencies.len)
+			if (src.secure_frequencies && istype(src.secure_frequencies) && length(src.secure_frequencies))
 				for (var/freq2 in src.secure_frequencies)
 					if (isnum(src.secure_frequencies["[freq2]"]) && src.secure_frequencies["[freq2]"] == R.frequency)
 						//DEBUG_MESSAGE("Match found for transmission from [R] at [log_loc(R)] (frequency compare)")
@@ -551,7 +551,7 @@ Green Wire: <a href='?src=\ref[src];wires=[WIRE_TRANSMIT]'>[src.wires & WIRE_TRA
 			. += "<span class='notice'>\the [src] can be attached and modified!</span>"
 		else
 			. += "<span class='notice'>\the [src] can not be modified or attached!</span>"
-	if (istype(src.secure_frequencies) && src.secure_frequencies.len)
+	if (istype(src.secure_frequencies) && length(src.secure_frequencies))
 		. += "Supplementary Channels:"
 		for (var/sayToken in src.secure_frequencies) //Most convoluted string of the year award 2013
 			. += "[ headset_channel_lookup["[src.secure_frequencies["[sayToken]"]]"] ? headset_channel_lookup["[src.secure_frequencies["[sayToken]"]]"] : "???" ]: \[[format_frequency(src.secure_frequencies["[sayToken]"])]] (Activator: <b>[sayToken]</b>)"
@@ -582,7 +582,7 @@ Green Wire: <a href='?src=\ref[src];wires=[WIRE_TRANSMIT]'>[src.wires & WIRE_TRA
 	desc = "An illegal device used to jam radio signals, preventing broadcast or transmission."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "shieldoff"
-	w_class = 1
+	w_class = W_CLASS_TINY
 	var/active = 0
 	is_syndicate = 1
 	mats = 10
@@ -637,7 +637,7 @@ Green Wire: <a href='?src=\ref[src];wires=[WIRE_TRANSMIT]'>[src.wires & WIRE_TRA
 	frequency = 1451
 	throw_speed = 1
 	throw_range = 3
-	w_class = 5.0
+	w_class = W_CLASS_HUGE
 	flags = FPRINT | TABLEPASS | ONBACK | CONDUCT
 	item_state = "electropack"
 	desc = "A device that, when signaled on the correct frequency, causes a disabling electric shock to be sent to the animal (or human) wearing it."
@@ -782,7 +782,7 @@ Code:
 	icon_state = "signaller"
 	item_state = "signaler"
 	var/code = 30.0
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	frequency = 1457
 	var/delay = 0
 	var/airlock_wire = null

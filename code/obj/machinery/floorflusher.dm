@@ -140,6 +140,12 @@
 				flush = 1
 				update()
 
+			if(current_state <= GAME_STATE_PREGAME)
+				SPAWN_DBG(0)
+					flush()
+					sleep(1 SECOND)
+					openup()
+
 	MouseDrop_T(mob/target, mob/user)
 		if (!istype(target) || target.buckled || get_dist(user, src) > 1 || get_dist(user, target) > 1 || is_incapacitated(user) || isAI(user))
 			return
@@ -352,6 +358,12 @@
 				M.set_loc(src)
 				flush = 1
 				update()
+
+			if(current_state <= GAME_STATE_PREGAME)
+				SPAWN_DBG(0)
+					flush()
+					sleep(1 SECOND)
+					openup()
 
 	process()
 		if(status & BROKEN)			// nothing can happen if broken

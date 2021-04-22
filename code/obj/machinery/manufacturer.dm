@@ -803,7 +803,7 @@
 							//any non-divisible amounts go to the shipping budget
 							var/leftovers = 0
 							if(accounts.len)
-								leftovers = subtotal%accounts.len
+								leftovers = length(subtotal%accounts)
 								var/divisible_amount = subtotal - leftovers
 								if(divisible_amount)
 									var/amount_per_account = divisible_amount/length(accounts)
@@ -1896,9 +1896,9 @@
 	desc = "An old manilla folder covered in stains. It looks like it'll fall apart at the slightest touch."
 	icon = 'icons/obj/writing.dmi'
 	icon_state = "folder"
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	throwforce = 0
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	throw_speed = 3
 	throw_range = 10
 
@@ -2520,7 +2520,7 @@
 	onDelete()
 		..()
 		MA.action_bar = null
-		if (src.completed && MA.queue.len)
+		if (src.completed && length(MA.queue))
 			SPAWN_DBG(0.1 SECONDS)
 				MA.begin_work(1)
 

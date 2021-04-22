@@ -50,7 +50,7 @@
 				return
 
 			master.path = thePath
-			if(adjacent && master.path && master.path.len) //Make sure to check it isn't null!!
+			if(adjacent && master.path && length(master.path)) //Make sure to check it isn't null!!
 				master.path.len-- //Only go UP to the target, not the same tile.
 			if(!master.path || !master.path.len || !the_target || (ismob(the_target) && master.path.len >= 21))
 				master.task?.task_input("path_error")
@@ -2007,7 +2007,7 @@
 	icon = 'icons/obj/module.dmi'
 	icon_state = "tool_generic"
 	mats = 6
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	var/is_stun = 0 //Can it be non-lethal?
 	var/is_lethal = 0 //Can it be lethal?
 	var/tool_id = "GENERIC" //Identification ID.
@@ -2302,7 +2302,7 @@
 	icon = 'icons/obj/module.dmi'
 	icon_state = "tool_generic"
 	mats = 6
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	var/tool_id = "MOD"
 	is_syndicate = 1
 
@@ -2380,7 +2380,7 @@
 			return 0
 
 		configure(var/list/confList)
-			if (!confList || !confList.len)
+			if (!confList || !length(confList))
 				return 1
 
 			return 0
@@ -4144,7 +4144,7 @@
 	icon = 'icons/obj/bots/aibots.dmi'
 	icon_state = "robuddy_core-6"
 	mats = 6
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	var/created_default_task = null //Default task path of result
 	var/datum/computer/file/guardbot_task/created_model_task = null
 	var/created_name = "Guardbuddy" //Name of resulting guardbot
@@ -4984,7 +4984,7 @@
 
 			W.set_loc(src)
 			src.created_cell = W
-			src.stage = 3
+			src.stage = 2
 			src.icon_state = "goldbuddy_frame-[buddy_model]-2"
 			boutput(user, "You add the power cell to [src]!")
 
@@ -5100,7 +5100,7 @@
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "coin"
 	item_state = "coin"
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 
 	attack_self(var/mob/user as mob)
 		playsound(src.loc, "sound/items/coindrop.ogg", 100, 1)

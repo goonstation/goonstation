@@ -42,7 +42,7 @@
 	if(revs_possible.len >= 3)
 		rev_number = 3
 	else
-		rev_number = revs_possible.len
+		rev_number = length(revs_possible)
 
 	token_players = antag_token_list()
 	for(var/datum/mind/tplayer in token_players)
@@ -510,7 +510,7 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	item_state = "revsign"
 
-	w_class = 4.0
+	w_class = W_CLASS_BULKY
 	throwforce = 8
 	flags = FPRINT | TABLEPASS | CONDUCT
 	c_flags = EQUIPPED_WHILE_HELD

@@ -187,7 +187,7 @@
 	icon_state = "syndicate"
 	item_state = "space_helmet_syndicate"
 	desc = "The standard space helmet of the dreaded Syndicate."
-
+	item_function_flags = IMMUNE_TO_ACID
 	old
 		icon_state = "syndicate-OLD"
 		desc = "A relic of the past."
@@ -195,8 +195,7 @@
 
 	commissar_cap
 		name = "commander's cap"
-		wear_image_icon = 'icons/mob/fruithat.dmi'
-		icon_state = "commissar_cap"
+		icon_state = "syndie_commander"
 		desc = "A terrifyingly tall, black & red cap, typically worn by a Syndicate Nuclear Operative Commander. Maybe they're trying to prove something to the Head of Security?"
 		seal_hair = 0
 		see_face = 1
@@ -315,6 +314,20 @@
 			name = "specialist combat cover"
 			icon_state = "syndie_specialist-sniper"
 			item_state = "syndie_specialist-sniper"
+
+		knight
+			name = "heavy specialist great helm"
+			desc = "A menacing full-face helmet for syndicate super-heavies."
+			icon_state = "syndie_specialist-knight" //todo
+			item_state = "syndie_specialist-knight" //todo
+
+		setupProperties()
+			..()
+			setProperty("meleeprot", 2)
+			setProperty("rangedprot", 1)
+			setProperty("exploprot", 10)
+			setProperty("disorient_resist_eye", 50)
+			setProperty("disorient_resist_ear", 50)
 
 /obj/item/clothing/head/helmet/space/ntso //recoloured nuke class suits for ntso vs syndicate specialist
 	name = "NT-SO combat helmet"
@@ -549,35 +562,6 @@
 		setProperty("meleeprot_head", 9)
 		setProperty("disorient_resist_eye", 25)
 		setProperty("exploprot", 20)
-
-/obj/item/clothing/head/helmet/HoS
-	name = "HoS Hat"
-	icon_state = "hoscap"
-	uses_multiple_icon_states = 1
-	item_state = "hoscap"
-	c_flags = SPACEWEAR | COVERSEYES | BLOCKCHOKE
-	var/is_a_communist = 0
-	var/folds = 0
-	desc = "Actually, you got this hat from a fast-food restaurant, that's why it folds like it was made of paper."
-	setupProperties()
-		..()
-		setProperty("meleeprot_head", 7)
-
-/obj/item/clothing/head/helmet/HoS/attack_self(mob/user as mob)
-	if(user.r_hand == src || user.l_hand == src)
-		if(!src.folds)
-			src.folds = 1
-			src.name = "HoS Beret"
-			src.icon_state = "hosberet"
-			src.item_state = "hosberet"
-			boutput(user, "<span class='notice'>You fold the hat into a beret.</span>")
-		else
-			src.folds = 0
-			src.name = "HoS Hat"
-			src.icon_state = "hoscap"
-			src.item_state = "hoscap"
-			boutput(user, "<span class='notice'>You unfold the beret back into a hat.</span>")
-		return
 
 /obj/item/clothing/head/helmet/siren
 	name = "siren helmet"

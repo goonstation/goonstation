@@ -130,16 +130,9 @@
 			signal.transmission_method = TRANSMISSION_WIRE
 			signal.channels_passed += "PN[src.netnum];"
 
-			var/iterations = 0
 			for (var/obj/machinery/power/device as anything in src.powernet.data_nodes)
 				if(device != src)
 					device.receive_signal(signal, TRANSMISSION_WIRE)
-
-				if (iterations/100 > 1)
-					iterations = 0
-					LAGCHECK(LAG_REALTIME)
-
-				iterations++
 
 			if (signal)
 				if (!reusable_signals || reusable_signals.len > 10)

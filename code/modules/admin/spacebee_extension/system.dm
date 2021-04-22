@@ -34,6 +34,26 @@ var/global/datum/spacebee_extension_system/spacebee_extension_system = new
 	logTheThing("admin", user, null, "Spacebee command: [msg]")
 	return src.process_raw_command(copytext(msg, 2), user)
 
+/// paginates a message in a way that fits into Discord messages
+/datum/spacebee_extension_system/proc/paginated_send(message)
+	var/msg_length = 1900 // 2000 - some reserve for the initial spacebee stuff
+	if(length(message) < msg_length)
+		return ircbot.export("admin", list("msg" = message))
+	var/list/lines = splittext(message, "\n")
+	var/list/current_message = list()
+	var/current_length = 0
+	for(var/line in lines)
+		if(length(line) + 1 + current_length >= msg_length)
+			. = ircbot.export("admin", list("msg" = jointext(current_message, "\n")))
+			if(!.)
+				return
+			current_message.Cut()
+			current_length = 0
+		current_message += line
+		current_length += 1 + length(line)
+	if(length(current_message))
+		return ircbot.export("admin", list("msg" = jointext(current_message, "\n")))
+
 /// replies to a given user on Discord
 /datum/spacebee_extension_system/proc/reply(msg, user)
 	ENSURE_USER
@@ -41,7 +61,7 @@ var/global/datum/spacebee_extension_system/spacebee_extension_system = new
 	if(config.env == "dev")
 		message_admins("Spacebee command reply to [user]: [replacetext(msg, "\n", "<br>")]")
 		return 1
-	return ircbot.export("admin", list("msg" = msg))
+	return paginated_send(msg)
 
 /// processes and runs a string that's supposed to be a command (with arguments and such)
 /datum/spacebee_extension_system/proc/process_raw_command(msg, user)

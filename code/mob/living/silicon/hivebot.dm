@@ -1056,7 +1056,7 @@ Frequency:
 	icon = 'icons/mob/hivebot.dmi'
 	icon_state = "ai-interface"
 	item_state = "ai-interface"
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 
 //obj/item/cell/shell_cell moved to cells.dm
 
@@ -1066,7 +1066,7 @@ Frequency:
 	icon = 'icons/mob/hivebot.dmi'
 	icon_state = "shell-frame"
 	item_state = "shell-frame"
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	var/build_step = 0
 	var/obj/item/cell/cell = null
 	var/has_radio = 0

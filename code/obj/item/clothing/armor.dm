@@ -269,6 +269,7 @@
 		setProperty("meleeprot", 4)
 		setProperty("rangedprot", 0.8)
 		setProperty("movespeed", 0.5)
+		setProperty("disorient_resist", 20)
 
 /obj/item/clothing/suit/armor/captain
 	name = "captain's armor"
@@ -413,7 +414,7 @@
 	desc = "A suit designed to absorb explosive force; very bulky and unwieldy to maneuver in."
 	icon_state = "eod"
 	item_state = "eod"
-	w_class = 3
+	w_class = W_CLASS_NORMAL
 	setupProperties()
 		..()
 		setProperty("meleeprot", 9)

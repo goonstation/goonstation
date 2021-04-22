@@ -995,7 +995,7 @@ function lineEnter (ev)
 	force = 8.0
 	throw_speed = 1
 	throw_range = 4
-	w_class = 4.0
+	w_class = W_CLASS_BULKY
 	var/obj/machinery/computer3/luggable/luggable = null
 	var/luggable_type = /obj/machinery/computer3/luggable
 
@@ -1158,6 +1158,7 @@ function lineEnter (ev)
 	desc = "This fine piece of hardware sports an incredible 2 kilobytes of RAM, all for a price slightly higher than the whole economy of greece."
 	icon_state = "oldlapshut"
 	luggable_type = /obj/machinery/computer3/luggable/personal
+	w_class = W_CLASS_NORMAL
 
 
 /obj/machinery/computer3/luggable/personal

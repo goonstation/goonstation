@@ -25,7 +25,7 @@ var/list/stinkExclamations = list("Ugh","Good lord","Good grief","Christ","Fuck"
 var/list/stinkThings = list("garbage can","trash heap","cesspool","toilet","pile of poo",
 	"butt","skunk","outhouse","corpse","fart","devil")
 var/list/stinkVerbs = list("took a shit","died","farted","threw up","wiped its ass")
-var/list/stinkThingies = list("ass","taint","armpit","excretions","leftovers","Readster")
+var/list/stinkThingies = list("ass","taint","armpit","excretions","leftovers","administrator")
 
 /proc/stinkString()
 	// i am five - ISN
@@ -81,7 +81,6 @@ var/list/stinkThingies = list("ass","taint","armpit","excretions","leftovers","R
 /proc/get_area_name(N) //get area by it's name
 
 	for(var/area/A in world)
-		LAGCHECK(LAG_LOW)
 		if(A.name == N)
 			return A
 	return 0
@@ -224,7 +223,7 @@ var/obj/item/dummy/click_dummy = new
 	for_by_tcl(theAI, /mob/living/silicon/ai)
 		if (theAI.deployed_to_eyecam)
 			var/mob/dead/aieye/AIeye = theAI.eyecam
-			if(IN_RANGE(center, AIeye, distance) && T.cameras && T.cameras.len)
+			if(IN_RANGE(center, AIeye, distance) && T.cameras && length(T.cameras))
 				. += AIeye
 				. += theAI
 
@@ -264,15 +263,6 @@ var/obj/item/dummy/click_dummy = new
 	if(!the_atom) return
 	. = format_net_id("\ref[the_atom]")
 
-/proc/can_act(var/mob/M, var/include_cuffs = 1)
-	if(!M) return 0 //Please pass the M, I need a sprinkle of it on my potatoes.
-	if(include_cuffs && M.hasStatus("handcuffed")) return 0
-	if(M.getStatusDuration("stunned")) return 0
-	if(M.getStatusDuration("weakened")) return 0
-	if(M.getStatusDuration("paralysis")) return 0
-	if(M.stat) return 0
-	return 1
-
 #define CLUWNE_NOISE_DELAY 50
 
 /proc/process_accents(var/mob/living/carbon/human/H, var/message)
@@ -286,7 +276,7 @@ var/obj/item/dummy/click_dummy = new
 			if (istype(S,/datum/bioEffect/speech/))
 				message = S.OnSpeak(message)
 
-	if (H.grabbed_by && H.grabbed_by.len)
+	if (H.grabbed_by && length(H.grabbed_by))
 		for (var/obj/item/grab/rag_muffle/RM in H.grabbed_by)
 			if (RM.state > 0)
 				message = mufflespeech(message)

@@ -44,7 +44,7 @@
 			var/atom/movable/screen/hud/H = create_screen("hand[i]", HH.name, HH.icon, "[HH.icon_state][i == master.active_hand ? 1 : 0]", SL, HUD_LAYER+1)
 			HH.screenObj = H
 			hands += H
-		nr = hand_s + master.hands.len
+		nr = hand_s + length(master.hands)
 		health = create_screen("health", "health", src.icon_hud, "health0", "EAST[next_topright()],NORTH", HUD_LAYER+1)
 
 		if (master.use_stamina)

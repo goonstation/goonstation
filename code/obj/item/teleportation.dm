@@ -13,7 +13,7 @@ HAND_TELE
 	var/broadcasting = null
 	var/listening = 1.0
 	flags = FPRINT | TABLEPASS| CONDUCT
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	item_state = "electronic"
 	throw_speed = 4
 	throw_range = 20
@@ -52,8 +52,6 @@ Frequency:
 				src.temp += "<B>Located Beacons:</B><BR>"
 
 				for_by_tcl(W, /obj/item/device/radio/beacon)
-					if (istype(src, /obj/item/locator/jones) && istype(W, /obj/item/device/radio/beacon/jones)) //For Jones City
-						src.temp += "Unknown Location-[W.x], [W.y], [W.z]<BR>"
 					if (W.frequency == src.frequency)
 						var/turf/tr = get_turf(W)
 						if (tr.z == sr.z && tr)
@@ -120,7 +118,7 @@ Frequency:
 	icon_state = "hand_tele"
 	item_state = "electronic"
 	throwforce = 5
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	throw_speed = 3
 	throw_range = 5
 	m_amt = 10000
@@ -207,7 +205,11 @@ Frequency:
 			return
 
 		users += user // We're about to show the UI
-		var/t1 = input(user, "Please select a teleporter to lock in on.", "Target Selection") in L
+		var/t1
+		if(user.client)
+			t1 = input(user, "Please select a teleporter to lock in on.", "Target Selection") in L
+		else
+			t1 = pick(L)
 		users -= user // We're done showing the UI
 
 		if (user.stat || user.restrained())

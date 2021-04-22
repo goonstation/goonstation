@@ -23,14 +23,13 @@ const textWidth = (text, font, fontsize) => {
   const c = document.createElement('canvas');
   const ctx = c.getContext("2d");
   ctx.font = font;
-  const width = ctx.measureText(text).width;
-  return width;
+  return ctx.measureText(text).width;
 };
 
 const setFontinText = (text, font, color, bold=false) => {
   return "<span style=\""
     + "color:" + color + ";"
-    + "font-family:'" + font + "';"
+    + "font-family:" + font + ";"
     + ((bold)
       ? "font-weight: bold;"
       : "")
@@ -321,12 +320,11 @@ class PaperSheetStamper extends Component {
         ? radians * (180 / Math.PI) * -1
         : this.state.rotate;
 
-      const pos = [
+      return [
         clamp(currentWidth, widthMin, widthMax),
         clamp(currentHeight, heightMin, heightMax),
         rotate,
       ];
-      return pos;
     }
   }
 

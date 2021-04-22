@@ -98,6 +98,12 @@
 	spawn_contents = list(/obj/item/rcd_ammo = 5,
 	/obj/item/rcd)
 
+/obj/storage/crate/rcd/CE
+	name = "\improper RCD crate"
+	desc = "A crate for the Chief Engineer's personal RCD."
+	spawn_contents = list(/obj/item/rcd_ammo = 5,
+	/obj/item/rcd/construction/chiefEngineer)
+
 /obj/storage/crate/abcumarker
 	name = "\improper ABCU-Marker crate"
 	desc = "A crate for ABCU marker devices."
@@ -260,7 +266,7 @@
 		if (islist(syndi_buylist_cache))
 			for (var/datum/syndicate_buylist/S in syndi_buylist_cache)
 				var/blocked = 0
-				if (ticker?.mode && S.blockedmode && islist(S.blockedmode) && S.blockedmode.len)
+				if (ticker?.mode && S.blockedmode && islist(S.blockedmode) && length(S.blockedmode))
 					for (var/V in S.blockedmode)
 						if (ispath(V) && istype(ticker.mode, V))
 							blocked = 1
@@ -269,7 +275,7 @@
 				if (blocked == 0 && !S.not_in_crates)
 					possible_items += S
 
-		if (islist(possible_items) && possible_items.len)
+		if (islist(possible_items) && length(possible_items))
 			while(telecrystals < 18)
 				var/datum/syndicate_buylist/item_datum = pick(possible_items)
 				if(telecrystals + item_datum.cost > 24) continue
@@ -512,13 +518,13 @@
 		/obj/item/clothing/head/helmet/space/syndicate/specialist/sniper)
 
 	melee //wip, not ready for use
-		name = "Class Crate - Templar"
+		name = "Class Crate - Knight"
 		desc = "A crate containing a Specialist Operative loadout."
 		spawn_contents = list(/obj/item/heavy_power_sword,
-		/obj/item/syndicate_barrier,
-		/obj/item/clothing/shoes/magnetic,
-		/obj/item/clothing/suit/space/syndicate/heavy,
-		/obj/item/clothing/head/helmet/space/syndicate/specialist)
+		/obj/item/clothing/shoes/swat/knight,
+		/obj/item/clothing/gloves/swat/knight,
+		/obj/item/clothing/suit/space/syndicate/knight,
+		/obj/item/clothing/head/helmet/space/syndicate/specialist/knight)
 
 	qm //Hi Gannets, I like your crate and wanted to use it for some QM stuff. Come yell at Azungar if this is not ok.
 		name = "Weapons crate"

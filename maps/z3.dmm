@@ -25295,6 +25295,12 @@
 /obj/item/reagent_containers/food/snacks/breakfast,
 /turf/simulated/floor/caution/west,
 /area/mining/quarters)
+"oNB" = (
+/turf/simulated/wall/asteroid{
+	name = "weak compacted stone";
+	stone_color = "#575A5E"
+	},
+/area/space)
 "qBE" = (
 /obj/lattice{
 	dir = 1;
@@ -78090,8 +78096,8 @@ aac
 aac
 aac
 aac
-aHr
-aHr
+oNB
+oNB
 aaa
 aaa
 aaa

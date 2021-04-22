@@ -217,9 +217,9 @@
 				src.attacking = 0
 				return
 
-			if (planter.current.assoc_reagents.len || (planter.plantgenes && planter.plantgenes.mutation && planter.plantgenes.mutation.assoc_reagents.len))
+			if (planter.current.assoc_reagents.len || (planter.plantgenes && planter.plantgenes.mutation && length(planter.plantgenes.mutation.assoc_reagents)))
 				var/list/additional_reagents = planter.current.assoc_reagents
-				if (planter.plantgenes && planter.plantgenes.mutation && planter.plantgenes.mutation.assoc_reagents.len)
+				if (planter.plantgenes && planter.plantgenes.mutation && length(planter.plantgenes.mutation.assoc_reagents))
 					additional_reagents = additional_reagents | planter.plantgenes.mutation.assoc_reagents
 
 				/*var/associated_reagent = planter.current.associated_reagent
@@ -796,7 +796,7 @@
 		/obj/item/clothing/head/mj_hat,
 		/obj/item/clothing/head/that,
 		/obj/item/clothing/head/NTberet,
-		/obj/item/clothing/head/helmet/HoS,
+		/obj/item/clothing/head/hos_hat,
 		/obj/item/clothing/head/hosberet,
 		/obj/item/clothing/head/caphat,
 		/obj/item/clothing/head/fancy/captain,
@@ -1290,6 +1290,15 @@
 	icon_body = "madbee"
 	sleeping_icon_state = "madbee-sleep"
 
+/obj/critter/domestic_bee/moth
+	name = "moth"
+	desc = "It appears to be a hybrid of a domestic space-bee and a moth. How cute!"
+	icon_state = "moth-wings"
+	sleeping_icon_state = "moth-sleep"
+	icon_body = "moth"
+	honey_color = rgb(207, 207, 207)
+	angertext = "squeaks threateningly at"
+
 /obj/critter/domestic_bee/zombee
 	name = "zombee"
 	desc = "Genetically engineered for extreme size and indistinct segmentation and bred for docility, the greater domestic space-bee is increasingly popular among space traders and science-types.<br>This one seems kinda sick, poor thing."
@@ -1731,7 +1740,7 @@
 					icon_state = "sunbee_egg"
 					bee_name = "sun larva"
 
-		on_bite(obj/item/I, mob/M, mob/user)
+		heal(var/mob/M)
 			boutput(M, "<span class='alert'>You feel as if you have made a grave mistake.  Perhaps a doorway has closed forever.</span>")
 
 		attack_self(mob/user as mob)
@@ -1799,7 +1808,7 @@
 	desc = "A space-age cardboard carton designed to safely transport a single space bee egg."
 	icon = 'icons/misc/bee.dmi'
 	icon_state = "petbee_carton"
-	w_class = 2
+	w_class = W_CLASS_SMALL
 	var/obj/item/reagent_containers/food/snacks/ingredient/egg/bee/ourEgg
 	var/open = 0
 

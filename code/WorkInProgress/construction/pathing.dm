@@ -18,7 +18,7 @@
 /proc/findPath_heapInsert(var/list/heap, var/turf/add, var/value)
 	heap += add
 	heap[add] = value
-	var/i = heap.len
+	var/i = length(heap)
 	while (i > 1)
 		var/p = round(i / 2)
 		var/key1 = heap[i]

@@ -6,6 +6,7 @@
 	module_research_no_diminish = 1
 	mat_changename = 0
 	mat_changedesc = 0
+	can_recycle = FALSE
 
 	New(var/loc, var/forceartiorigin)
 		..()
@@ -87,7 +88,7 @@
 			reagents.add_reagent("liquid spacetime", 25)
 			usedCapacity += 25
 		if (prob(1))
-			reagents.add_reagent("fuzz", 5) // THE MOST DANGEROUS
+			reagents.add_reagent("rat_venom", 5) // THE MOST DANGEROUS
 			usedCapacity += 5
 		if (prob(3))
 			reagents.add_reagent("loose_screws", 25)
@@ -143,6 +144,9 @@
 		if (prob(3))
 			reagents.add_reagent("madness_toxin", 10)
 			usedCapacity += 10
+		if (prob(3))
+			reagents.add_reagent("propellant", 50)
+			usedCapacity += 50
 		reagents.add_reagent("saltpetre", max((capacity-usedCapacity) / 2, 0))
 		//reagents.add_reagent("water", max((capacity-usedCapacity) / 2, 0)) // Was diluting the fliptonium, can't have that
 

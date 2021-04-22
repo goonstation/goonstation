@@ -12669,7 +12669,7 @@
 /turf/simulated/floor/plating,
 /area/station/engine/engineering/ce)
 "aBu" = (
-/obj/storage/crate/rcd,
+/obj/storage/crate/rcd/CE,
 /turf/simulated/floor/yellowblack{
 	dir = 8
 	},
@@ -17365,6 +17365,7 @@
 	},
 /obj/table/wood/auto,
 /obj/displaycase{
+	displayed = new /obj/item/captaingun;
 	pixel_y = 6
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/ne,

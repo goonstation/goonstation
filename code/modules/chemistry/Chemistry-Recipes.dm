@@ -2672,43 +2672,6 @@ datum
 					holder.del_reagent("sugar")
 					holder.del_reagent("phosphorus")
 
-		propellant
-			name = "Aeresol Propellant"
-			id = "propellant"
-			result = "propellant"
-			required_reagents = list("chlorine" = 1, "sugar" = 1, "hydrogen" = 1, "platinum" = 1, "stabiliser" = 1)
-			result_amount = 3
-			mix_phrase = "The mixture becomes volatile and airborne."
-#ifdef CHEM_REACTION_PRIORITY
-			priority = 9
-#endif
-			on_reaction(var/datum/reagents/holder, var/created_volume)
-				if(holder)
-					holder.del_reagent("chlorine")
-					holder.del_reagent("sugar")
-					holder.del_reagent("hydrogen")
-					holder.del_reagent("platinum")
-
-		unstable_propellant
-			name = "unstable propellant"
-			id = "unstable_propellant"
-			required_reagents = list("chlorine" = 1, "sugar" = 1, "hydrogen" = 1, "platinum" = 1)
-			inhibitors = list("stabiliser")
-			instant = 1
-			special_log_handling = 1
-			consume_all = 1
-			mix_phrase = "The mixture violently sprays everywhere!"
-#ifdef CHEM_REACTION_PRIORITY
-			priority = 9
-#endif
-			on_reaction(var/datum/reagents/holder, var/created_volume)
-				if(holder)
-					holder.del_reagent("chlorine")
-					holder.del_reagent("sugar")
-					holder.del_reagent("hydrogen")
-					holder.del_reagent("platinum")
-					holder.smoke_start(created_volume, classic = 1) //moved to a proc in Chemistry-Holder.dm so that the instant reaction and powder can use the same proc
-
 		blackpowder // oh no
 			name = "Black Powder"
 			id = "blackpowder"
@@ -3604,12 +3567,8 @@ datum
 			mix_phrase = "The substance bubbles and gives off an almost lupine howl."
 			var/static/list/full_moon_days_2053 = list("Jan 04", "Feb 03", "Mar 04", "Apr 03", "May 02", "Jun 01", "Jul 01", "Jul 30", "Aug 29", "Sep 27", "Oct 27", "Nov 25", "Dec 25")
 
-			on_reaction(var/datum/reagents/holder, var/created_volume)
-
-				if (!(time2text(world.realtime, "MMM DD") in full_moon_days_2053))
-					holder.my_atom.visible_message("<span class='alert'>The solution bubbles even more rapidly and dissipates into nothing!</span>")
-					holder.remove_reagent("werewolf_serum",created_volume + 1)
-				return
+			does_react(var/datum/reagents/holder)
+				return time2text(world.realtime, "MMM DD") in full_moon_days_2053 //just doesn't react unless it's a full moon
 
 		 vampire_serum
 		 	name = "Vampire Serum Omega"

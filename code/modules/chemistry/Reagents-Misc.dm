@@ -32,7 +32,7 @@ datum
 			// rather explosive as a liquid (14 °C < T <= 50 °C)
 			// explodes instantly as a gas (50 °C < T)
 
-			proc/explode(var/list/covered_turf, expl_reason, del_holder=1)
+			proc/explode(var/list/covered_turf, expl_reason)
 				for (var/turf/T in covered_turf)
 					message_admins("Nitroglycerin explosion (volume = [volume]) due to [expl_reason] at [showCoords(T.x, T.y, T.z)].")
 					var/context = "???"
@@ -45,12 +45,6 @@ datum
 					logTheThing("combat", usr, null, "is associated with a nitroglycerin explosion (volume = [volume]) due to [expl_reason] at [showCoords(T.x, T.y, T.z)]. Context: [context].")
 					explosion_new(usr, T, (12.5 * min(volume/covered_turf.len, 1000))**(2/3), 0.4) // Because people were being shit // okay its back but harder to handle // okay sci can have a little radius, as a treat
 				holder.del_reagent("nitroglycerin")
-				if (del_holder)
-					if(ismob(holder.my_atom))
-						var/mob/M = holder.my_atom
-						M.gib()
-					else
-						qdel(holder.my_atom)
 
 			reaction_temperature(exposed_temperature, exposed_volume)
 				if (exposed_temperature <= T0C + 14)
@@ -75,6 +69,7 @@ datum
 					explode(list(get_turf(M)), "splash on [key_name(M)]")
 
 			reaction_obj(var/obj/O, var/volume)
+				return_if_overlay_or_effect(O)
 				if(reagent_state == LIQUID || prob(2 * volume - min(14 + T0C - holder.total_temperature, 100) * 0.1))
 					explode(list(get_turf(O)), "splash on [key_name(O)]")
 
@@ -663,7 +658,7 @@ datum
 					if (istype(L) && L.getStatusDuration("burning"))
 						L.changeStatus("burning", -300)
 						playsound(get_turf(L), "sound/impact_sounds/burn_sizzle.ogg", 50, 1, pitch = 0.8)
-					if (istype(L,/mob/living/critter/fire_elemental))
+					if (istype(L,/mob/living/critter/fire_elemental) && !ON_COOLDOWN(L, "fire_elemental_fffoam", 5 SECONDS))
 						L.changeStatus("weakened",0.5 SECONDS)
 						L.force_laydown_standup()
 						L.TakeDamage("All", volume * 1.5, 0, 0, DAMAGE_BLUNT)
@@ -2298,11 +2293,6 @@ datum
 				var/speed_temp = text2num("[rand(0,10)].[rand(0,9)]")
 				animate_spin(O, dir_temp, speed_temp)
 
-			reaction_turf(var/turf/T) // oh god what am I doing this is such a bad idea
-				var/dir_temp = pick("L", "R")
-				var/speed_temp = text2num("[rand(0,10)].[rand(0,9)]")
-				animate_spin(T, dir_temp, speed_temp)
-
 			on_add()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
@@ -2523,7 +2513,7 @@ datum
 						M.visible_message("<span class='emote'><B>[M]</B> flaps [his_or_her(M)] arms ANGRILY!</span>")
 					if (ishuman(M))
 						var/mob/living/carbon/human/H = M
-						if (H.sound_list_flap && H.sound_list_flap.len)
+						if (H.sound_list_flap && length(H.sound_list_flap))
 							playsound(get_turf(H), pick(H.sound_list_flap), 80, 0, 0, H.get_age_pitch())
 				..()
 				return
@@ -3700,6 +3690,20 @@ datum
 
 			on_plant_life(var/obj/machinery/plantpot/P)
 				P.HYPdamageplant("poison",1)
+
+			syndicate
+				name = "syndicate miasma"
+				id = "miasma_s"
+				description = "Gross miasma produced by unwashed nerd."
+				fluid_r = 180
+				fluid_b = 60
+				fluid_g = 80
+
+				on_add()
+					..()
+					if (holder && ismob(holder.my_atom))
+						var/mob/bipbip = holder.my_atom
+						bipbip.playsound_local(bipbip.loc, "sound/musical_instruments/Vuvuzela_1.ogg", 50, 1)
 
 		sakuride
 			name = "sakuride"

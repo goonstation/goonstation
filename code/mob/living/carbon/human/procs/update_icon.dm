@@ -644,7 +644,6 @@
 		src.image_eyes = my_head.head_image_eyes
 		if (src.image_eyes)
 			src.image_eyes.pixel_y = AHH.e_offset_y
-		src.hair_standing.overlays += image_eyes
 
 		src.image_cust_one = my_head.head_image_cust_one
 		src.cust_one_state = my_head.head_image_cust_one?.icon_state
@@ -987,19 +986,19 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 										human_untoned_decomp_image.layer = oldlayer
 								else
 									var/image/I = hand_icon_s
-									I.layer = MOB_LAYER_BASE
+									I.layer = MOB_HAND_LAYER1
 									I.pixel_y = armleg_offset
 									if (limb.skintoned)
 										I.color = human_decomp_image.color
-									src.hands_standing.layer = MOB_LAYER_BASE
+									src.hands_standing.layer = MOB_HAND_LAYER1
 									src.hands_standing.overlays += I
 									if(limb.handfoot_overlay_1)
 										I = limb.handfoot_overlay_1
-										I.layer = MOB_LAYER_BASE
+										I.layer = MOB_HAND_LAYER1
 										I.pixel_y = armleg_offset
 										if (limb.skintoned)
 											I.color = human_decomp_image.color
-										src.hands_standing.layer = MOB_LAYER_BASE
+										src.hands_standing.layer = MOB_HAND_LAYER1
 										src.hands_standing.overlays += I
 
 							if (part_icon_s)
@@ -1041,17 +1040,17 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 											human_untoned_decomp_image.layer = oldlayer
 								else
 									var/image/I = part_icon_s
-									I.layer = MOB_LAYER_BASE
+									I.layer = MOB_HAND_LAYER1
 									if (limb.skintoned)
 										I.color = human_decomp_image.color
 									src.body_standing.overlays += I
 									if(limb.handfoot_overlay_1)
 										I = limb.handfoot_overlay_1
-										I.layer = MOB_LAYER_BASE
+										I.layer = MOB_HAND_LAYER1
 										I.pixel_y = armleg_offset
 										if (limb.skintoned)
 											I.color = human_decomp_image.color
-										src.hands_standing.layer = MOB_LAYER_BASE
+										src.hands_standing.layer = MOB_HAND_LAYER1
 										src.hands_standing.overlays += I
 
 						else
@@ -1069,28 +1068,28 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 										human_image.icon = limb.handfoot_overlay_1?.icon
 										human_image.icon_state = limb.handfoot_overlay_1?.icon_state
 										human_image.color = limb.handfoot_overlay_1?.color
-										human_image.layer = MOB_LAYER_BASE
-										src.hands_standing.layer = MOB_LAYER_BASE
+										human_image.layer = MOB_HAND_LAYER1
+										src.hands_standing.layer = MOB_HAND_LAYER1
 										src.hands_standing.overlays += human_image
 									human_image.layer = oldlayer
 
 								else
 									var/image/I = hand_icon_s
-									I.layer = MOB_LAYER_BASE
+									I.layer = MOB_HAND_LAYER1
 									if(!limb.no_icon)
 										I.icon = handlimb_icon
 										I.icon_state = hand_icon_s
 									I.color = limb_skin_tone
 									I.pixel_y = armleg_offset
-									src.hands_standing.layer = MOB_LAYER_BASE
+									src.hands_standing.layer = MOB_HAND_LAYER1
 									src.hands_standing.overlays += I
 									if(limb.handfoot_overlay_1)
 										I = limb.handfoot_overlay_1
-										I.layer = MOB_LAYER_BASE
+										I.layer = MOB_HAND_LAYER1
 										I.pixel_y = armleg_offset
 										if (limb.skintoned)
 											I.color = human_decomp_image.color
-										src.hands_standing.layer = MOB_LAYER_BASE
+										src.hands_standing.layer = MOB_HAND_LAYER1
 										src.hands_standing.overlays += I
 
 							if (part_icon_s)
@@ -1108,21 +1107,21 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 										human_image.icon = limb.handfoot_overlay_1?.icon
 										human_image.icon_state = limb.handfoot_overlay_1?.icon_state
 										human_image.color = limb.handfoot_overlay_1?.color
-										human_image.layer = MOB_LAYER_BASE
-										src.hands_standing.layer = MOB_LAYER_BASE
+										human_image.layer = MOB_HAND_LAYER1
+										src.hands_standing.layer = MOB_HAND_LAYER1
 										src.hands_standing.overlays += human_image
 									if (oldlayer)
 										human_image.layer = oldlayer
 								else
 									var/image/I = part_icon_s
-									I.layer = MOB_LAYER_BASE
+									I.layer = MOB_HAND_LAYER1
 									I.color = limb_skin_tone
 									I.pixel_y = armleg_offset
 									src.body_standing.overlays += I
 									if(limb.handfoot_overlay_1)
 										I = limb.handfoot_overlay_1
-										I.layer = MOB_LAYER_BASE
-										src.hands_standing.layer = MOB_LAYER_BASE
+										I.layer = MOB_HAND_LAYER1
+										src.hands_standing.layer = MOB_HAND_LAYER1
 										src.hands_standing.overlays += I
 
 					else	// Handles stumps

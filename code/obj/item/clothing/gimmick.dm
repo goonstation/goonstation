@@ -20,21 +20,32 @@
 	item_state = "helmet"
 	c_flags = COVERSMOUTH | COVERSEYES | MASKINTERNALS
 	see_face = 0
+	item_function_flags = IMMUNE_TO_ACID
 
 	New()
 		..()
 		src.vchange = new(src) // Built-in voice changer (Convair880).
+
+	equipped(mob/user)
+		. = ..()
+		APPLY_MOB_PROPERTY(user, PROP_THERMALSIGHT_MK2, src)
+
+	unequipped(mob/user)
+		REMOVE_MOB_PROPERTY(user, PROP_THERMALSIGHT_MK2, src)
+		. = ..()
 
 /obj/item/clothing/under/gimmick/hunter
 	name = "Hunter Suit"
 	desc = "Fishnets, bandoliers and plating? What the hell?"
 	icon_state = "hunter"
 	item_state = "hunter"
+	item_function_flags = IMMUNE_TO_ACID
 
 /obj/item/clothing/shoes/cowboy/hunter
 	name = "Space Cowboy Boots"
 	desc = "Fashionable alien footwear. The sole appears to be rubberized,  preventing slipping on wet surfaces."
 	c_flags = NOSLIP // Don't slip on gibs all the time, d'oh (Convair880).
+	item_function_flags = IMMUNE_TO_ACID
 // --------------------------------------------------
 
 /obj/item/clothing/head/helmet/space/santahat
@@ -533,7 +544,7 @@
 	flags = FPRINT | TABLEPASS| CONDUCT
 	item_state = "vshield"
 	throwforce = 7.0
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 
 	turn_off()
 		if(user)
@@ -793,12 +804,14 @@
 	desc = "'ello gents! Cracking time to hunt an elephant!"
 	icon_state = "safari"
 	item_state = "safari"
+	item_function_flags = IMMUNE_TO_ACID
 
 /obj/item/clothing/head/safari
 	name = "safari hat"
 	desc = "Keeps you cool in the hot savannah."
 	icon_state = "safari"
 	item_state = "caphat"
+	item_function_flags = IMMUNE_TO_ACID
 
 /obj/item/clothing/mask/skull
 	name = "skull mask"

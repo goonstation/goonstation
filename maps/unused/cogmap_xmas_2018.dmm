@@ -5807,7 +5807,7 @@
 	d1 = 2;
 	d2 = 4
 	},
-/obj/item/postit_stack,
+/obj/item/item_box/postit,
 /turf/simulated/floor/red,
 /area/station/security/checkpoint/arrivals)
 "amT" = (
@@ -19673,7 +19673,7 @@
 	icon_state = "ebulb1";
 	dir = 1
 	},
-/obj/item/postit_stack,
+/obj/item/item_box/postit,
 /turf/simulated/floor/black,
 /area/station/bridge)
 "aPN" = (
@@ -28256,7 +28256,9 @@
 /turf/simulated/floor/plating,
 /area/space)
 "bgN" = (
-/obj/displaycase,
+/obj/displaycase{
+	displayed = new /obj/item/captaingun
+},
 /obj/window/reinforced{
 	dir = 2
 	},
@@ -31278,7 +31280,7 @@
 	tag = ""
 	},
 /obj/item/stamp,
-/obj/item/postit_stack,
+/obj/item/item_box/postit,
 /obj/item/item_box/assorted/ornaments/ornaments_limited,
 /turf/simulated/floor/black,
 /area/station/security/checkpoint)
@@ -33891,7 +33893,7 @@
 /obj/machinery/networked/printer{
 	print_id = "Information"
 	},
-/obj/item/postit_stack,
+/obj/item/item_box/postit,
 /turf/simulated/floor/carpet{
 	icon_state = "fred2";
 	dir = 5
@@ -45537,7 +45539,7 @@
 /obj/item/clipboard,
 /obj/item/device/radio/headset/engineer,
 /obj/item/device/radio/headset/engineer,
-/obj/item/postit_stack,
+/obj/item/item_box/postit,
 /turf/simulated/floor/yellow/side{
 	dir = 8
 	},
@@ -55602,7 +55604,7 @@
 	d1 = 2;
 	d2 = 8
 	},
-/obj/item/postit_stack,
+/obj/item/item_box/postit,
 /turf/simulated/floor/specialroom/medbay{
 	dir = 2
 	},

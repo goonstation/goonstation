@@ -9,7 +9,7 @@
 	var/preddesc = "A trophy from a less interesting kill." // See assign_gimmick_skull().
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "skull"
-	w_class = 1
+	w_class = W_CLASS_TINY
 	var/mob/donor = null
 	var/donor_name = null
 	var/datum/organHolder/holder = null
@@ -102,7 +102,7 @@
 			qdel(src)
 			return
 
-		if (istype(W, /obj/item/circular_saw))
+		if (istool(W, TOOL_SAWING))
 			user.visible_message("<span class='notice'>[user] hollows out [src].</span>")
 			var/obj/item/clothing/mask/skull/smask = new /obj/item/clothing/mask/skull
 			playsound(user.loc, "sound/machines/mixer.ogg", 50, 1)

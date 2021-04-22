@@ -202,7 +202,9 @@
 		else
 			return "their"
 
-
+//This is kinda messy from me moving it out from the secret repo and then shoehorning in the commander hat wearing.
+//I'd like to let turtles wear any hat, like bees. But I'm gonna keep it this cheesey way for now cause I just wanna get this done
+//Sylvester
 //The HoS's pet turtle. He can wear the beret!
 /obj/critter/turtle/sylvester
 	name = "Sylvester"
@@ -212,5 +214,217 @@
 	generic = 0
 	is_pet = 2
 	gender = MALE
+	var/obj/item/wearing_beret = 0	//Don't really need this var, but I like it better than checking contents every time we wanna see if he's got the beret
+	var/search_frequency = 30	//number of cycles between searches
+	var/preferred_hat = /obj/item/clothing/head/hos_hat 	//if this is not null then the only hat type he will wear is this path.
+
+	ai_think()
+		..()
+		//find clown
+		if (search_frequency <= 0)
+			if (task != "chasing" || task != "attacking" || task != "sleeping")
+				for (var/mob/M in mobs)
+					if (M.job == "Clown" && get_dist(src, M) < 7)
+						target = M
+						attack = 1
+						task = "chasing"
+						src.visible_message("<span class='alert'><b>[src]</b> notices a Clown and starts charging at [src.target]!</span>")
+
+						// walk_to(src, target,1,4)
+						search_frequency = 30
+						seek_target()
+						return
+		search_frequency--
+
+	get_desc()
+		..()
+		if (src.wearing_beret)
+			. += "<br>[src] is wearing an adorable beret!."
+		else
+			. += "<br>[src] looks cold without some sort of hat on."
+
+	attackby(obj/item/W as obj, mob/user as mob)
+		if (istype(W, preferred_hat))
+			give_beret(W, user)
+		else
+			..()
+
+	attack_hand(mob/user as mob)
+		if (!src.alive)
+			take_beret(user)
+			return
+		..()
+
+	//Calls parent, if it returns 0, don't do the effects here and just returun 0
+	enter_shell()
+		if (!..()) return 0
+
+		brutevuln = 0.2
+		firevuln = 0.5
+
+		return
+
+	exit_shell()
+		..()
+		if (wearing_beret)
+			brutevuln = 0.5
+			firevuln = 0.8
+		else
+			brutevuln = 0.7
+			firevuln = 1
+
+		update_icon()
+
+		return 1
+
+	CritterDeath()
+		..()
+		if (src.wearing_beret)
+			src.icon_state = "turtle-dead-beret"
+		else
+			src.icon_state = "turtle-dead"
+
+		update_icon()
+
+	on_revive()
+		..()
+		if (src.wearing_beret)
+			src.icon_state = "turtle-beret"
+		else
+			src.icon_state = "turtle"
+
+		update_icon()
+
+	proc/give_beret(var/obj/hat, var/mob/user)
+		if (shell_count || wearing_beret) return 0
+
+		var/obj/item/clothing/head/hos_hat/beret = hat
+		if (istype(beret))
+			if (beret.folds == 0)
+				beret.folds = 1
+				beret.name = "HoS Beret"
+				beret.icon_state = "hosberet"
+				beret.item_state = "hosberet"
+				boutput(user, "<span class='notice'>[src] folds the hat into a beret before putting it on! </span>")
+			//beret gives bonus protection
+			brutevuln = 0.5
+			firevuln = 0.8
+
+		else if (istype(hat, /obj/item/clothing/head/NTberet/commander))
+			// var/obj/item/clothing/head/NTberet/commander/com_beret = hat
+
+			//beret gives bonus protection
+			brutevuln = 0.5
+			firevuln = 0.8
+
+		user.drop_item()
+		beret.set_loc(src)
+		wearing_beret = hat
+
+
+		update_icon()
+		// if (src.alive)
+		// 	src.icon_state = "turtle-beret"
+		// else
+		// 	src.icon_state = "turtle-dead-beret"
+		return 1
+
+	//The HoS can take the beret whenever Sylvester is out of his shell. ~~And anyone can take it if he's dead.~~ not anymore
+	//This has some extraneous logic in it for non HoS mobs trying to take the beret since the only place this is called
+	//is in attack_hand if src is dead. But still, wanted to be comprehensive.
+	proc/take_beret(var/mob/M)
+		if (shell_count || !wearing_beret) return 0
+
+		var/obj/item/clothing/head/beret = wearing_beret
+		if (beret)
+			if (ishuman(M))
+				var/mob/living/carbon/human/H = M
+				if (H.job == "Head of Security" && istype(beret, /obj/item/clothing/head/hos_hat))
+					H.put_in_hand_or_drop(beret)
+				else if (H.job == "NanoTrasen Commander" && istype(beret, /obj/item/clothing/head/NTberet/commander))
+					H.put_in_hand_or_drop(beret)
+				else
+					if (alive)
+						boutput(M, "<span class='alert'>You try to grab the beret, but [src] pulls into his shell before you can!</span>")
+						playsound(src.loc, "rustle", 10, 1)
+						src.enter_shell()
+					return 0
+
+			//Commented out for now, only the HoS can remove the beret, even when dead. Might change later, idk.
+			// else if (!src.alive && ismob(M))
+			// 	//if this proc fails, don't update icon state
+			// 	if (!M.put_in_hand(beret))
+			// 		return 0
+
+			//SUCCESS
+
+			wearing_beret = null
+			//Remove beret bonus protection
+			brutevuln = initial(brutevuln)
+			firevuln = initial(firevuln)
+
+			update_icon()
+
+			return 1
+		return 0
+
+	MouseDrop(atom/over_object as mob|obj)
+		if (over_object == usr && ishuman(usr))
+			var/mob/living/carbon/human/H = usr
+			if (in_interact_range(src, H))
+				if (take_beret(H))
+					return
+		..()
+
+	//I'm sorry sylvester... I'll fix this later when I have time, I promise. - Kyle
+	proc/update_icon()
+		if (src.alive)
+			if (src.wearing_beret)
+				if (istype(wearing_beret, /obj/item/clothing/head/hos_hat))
+					src.icon_state = "turtle-beret"
+				else if (istype(wearing_beret, /obj/item/clothing/head/NTberet/commander))
+					src.icon_state = "turtle-beret-com"
+
+			else
+				src.icon_state = "turtle"
+		else
+			if (src.wearing_beret)
+				if (istype(wearing_beret, /obj/item/clothing/head/hos_hat))
+					src.icon_state = "turtle-dead-beret"
+				else if (istype(wearing_beret, /obj/item/clothing/head/NTberet/commander))
+					src.icon_state = "turtle-dead-beret-com"
+
+			else
+				src.icon_state = "turtle-dead"
+
 //Starts with the beret on!
 /obj/critter/turtle/sylvester/HoS
+	wearing_beret = 1
+	icon_state = "turtle-beret"
+
+	New()
+		..()
+		//Make the beret
+		var/obj/item/clothing/head/hos_hat/beret = new/obj/item/clothing/head/hos_hat(src)
+		//fold it
+		beret.folds = 1
+		beret.name = "HoS Beret"
+		beret.icon_state = "hosberet"
+		beret.item_state = "hosberet"
+		set_loc(beret)
+
+		wearing_beret = beret
+
+/obj/critter/turtle/sylvester/Commander
+	icon_state = "turtle-beret-com"
+	preferred_hat = /obj/item/clothing/head/NTberet/commander 	//if this is not null then the only hat type he will wear is this path.
+
+	New()
+		..()
+		var/obj/item/clothing/head/NTberet/commander/beret = new/obj/item/clothing/head/NTberet/commander(src)
+		//fold it
+		beret.name = "Sylvester's Beret"
+		set_loc(beret)
+		wearing_beret = beret
+
+

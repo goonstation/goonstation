@@ -320,7 +320,7 @@
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "scroll_seal"
 	flags = FPRINT | TABLEPASS
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
 	item_state = "paper"
 	throw_speed = 4
@@ -467,7 +467,7 @@ obj/item/gun/reagent/syringe/lovefilled
 	item_state = "geiger"
 	flags = FPRINT | ONBELT | TABLEPASS | CONDUCT
 	throwforce = 3
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	throw_speed = 5
 	throw_range = 10
 	mats = 5
@@ -503,7 +503,7 @@ obj/item/gun/reagent/syringe/lovefilled
 		. = ..()
 
 	proc/process()
-		if(!PROC_ON_COOLDOWN(30 SECONDS))
+		if(!ON_COOLDOWN(src, "process", 30 SECONDS))
 			for (var/mob/living/M in view(src, 5))
 				if (M.bioHolder)
 					M.bioHolder.AddEffect("cold_resist", 0, 45)

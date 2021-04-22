@@ -15,7 +15,7 @@
 	icon = 'icons/obj/cloning.dmi'
 	icon_state = "pod_0_lowmeat"
 	object_flags = CAN_REPROGRAM_ACCESS
-	mats = list("MET-1"=20, "uqill"=10, "beeswax"=5)
+	mats = list("MET-1"=35, "beeswax"=5)
 	var/meat_used_per_tick = DEFAULT_MEAT_USED_PER_TICK
 	var/mob/living/occupant
 	var/heal_level = 10 //The clone is released once its health^W damage (maxHP - HP) reaches this level.
@@ -603,6 +603,7 @@
 			speed_bonus = DEFAULT_SPEED_BONUS
 			meat_used_per_tick = DEFAULT_MEAT_USED_PER_TICK
 			light.enable()
+			src.update_icon()
 			user.drop_item()
 			qdel(W)
 			return
@@ -613,13 +614,14 @@
 				return
 			boutput(user, "<span class='notice'>You begin detatching the mindslave cloning module...</span>")
 			playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
-			if(do_after(user,50))
+			if (do_after(user, 50) && cloneslave)
 				new /obj/item/cloneModule/mindslave_module( src.loc )
 				cloneslave = 0
 				implant_master = null
 				boutput(user,"<span class='alert'>The mindslave cloning module falls to the floor with a dull thunk!</span>")
 				playsound(src.loc, "sound/effects/thunk.ogg", 50, 0)
 				light.disable()
+				src.update_icon()
 			else
 				boutput(user,"<span class='alert'>You were interrupted!</span>")
 			return
@@ -879,7 +881,7 @@
 			if (prob(2))
 				src.reagents.add_reagent("beff", 1 * process_per_tick)
 
-		if (src.reagents.total_volume && islist(src.pods) && pods.len)
+		if (src.reagents.total_volume && islist(src.pods) && length(pods))
 			// Distribute reagents to cloning pods nearby
 			// Changed from before to distribute while grinding rather than all at once
 			// give an equal amount of reagents to each pod that happens to be around

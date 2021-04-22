@@ -261,7 +261,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	slot_poc1 = /obj/item/requisition_token/security
 	slot_poc2 = /obj/item/storage/security_pouch //replaces sec starter kit
 	slot_foot = /obj/item/clothing/shoes/swat
-	slot_head = /obj/item/clothing/head/helmet/HoS
+	slot_head = /obj/item/clothing/head/hos_hat
 	slot_ears = /obj/item/device/radio/headset/command/hos
 	slot_eyes = /obj/item/clothing/glasses/sunglasses/sechud
 
@@ -274,7 +274,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	slot_jump = /obj/item/clothing/under/rank/head_of_securityold
 	slot_suit = /obj/item/clothing/suit/armor/vest
 	slot_foot = /obj/item/clothing/shoes/swat
-	slot_head = /obj/item/clothing/head/helmet/HoS
+	slot_head = /obj/item/clothing/head/hos_hat
 	slot_ears = /obj/item/device/radio/headset/command/hos
 	slot_eyes = /obj/item/clothing/glasses/sunglasses/sechud
 #endif
@@ -323,7 +323,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	allow_spy_theft = 0
 
 	slot_back = /obj/item/storage/backpack/withO2
-	slot_belt = /obj/item/device/pda2/heads
+	slot_belt = /obj/item/device/pda2/chiefengineer
 	slot_glov = /obj/item/clothing/gloves/yellow
 	slot_foot = /obj/item/clothing/shoes/brown
 	slot_head = /obj/item/clothing/head/helmet/hardhat
@@ -711,46 +711,6 @@ ABSTRACT_TYPE(/datum/job/engineering)
 	linkcolor = "#FF9900"
 	slot_card = /obj/item/card/id/engineering
 
-/datum/job/engineering/construction_worker
-	name = "Construction Worker"
-	allow_traitors = 0
-	cant_spawn_as_rev = 1
-	limit = 1
-	wages = PAY_TRADESMAN
-
-	slot_back = /obj/item/storage/backpack/withO2
-	slot_belt = /obj/item/storage/belt/utility/prepared
-	slot_jump = /obj/item/clothing/under/rank/orangeoveralls
-	slot_foot = /obj/item/clothing/shoes/magnetic
-	slot_glov = /obj/item/clothing/gloves/black
-	slot_ears = /obj/item/device/radio/headset/engineer
-	slot_rhan = /obj/item/tank/jetpack
-	slot_eyes = /obj/item/clothing/glasses/construction
-#ifdef UNDERWATER_MAP
-	slot_suit = /obj/item/clothing/suit/space/diving/engineering
-	slot_head = /obj/item/clothing/head/helmet/space/engineer/diving
-#else
-	slot_suit = /obj/item/clothing/suit/space/engineer
-	slot_head = /obj/item/clothing/head/helmet/space/engineer
-#endif
-	slot_mask = /obj/item/clothing/mask/breath
-
-	slot_poc1 = /obj/item/material_shaper
-	slot_poc2 = /obj/item/room_planner
-
-	items_in_backpack = list(/obj/item/rcd/construction/safe, /obj/item/rcd_ammo/big, /obj/item/rcd_ammo/big, /obj/item/caution, /obj/item/lamp_manufacturer/organic)
-
-	special_setup(var/mob/living/carbon/human/M)
-		..()
-		if (!M)
-			return
-		M.traitHolder.addTrait("training_engineer")
-
-	New()
-		..()
-		src.access = get_access("Construction Worker")
-		return
-
 /datum/job/engineering/quartermaster
 	name = "Quartermaster"
 	limit = 3
@@ -941,7 +901,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_glov = /obj/item/clothing/gloves/black
 	slot_poc1 = /obj/item/paper/ranch_guide
 	slot_ears = /obj/item/device/radio/headset/civilian
-	items_in_backpack = list(/obj/item/fishing_rod, /obj/item/chicken_carrier)
+	items_in_backpack = list(/obj/item/fishing_rod, /obj/item/chicken_carrier, /obj/item/device/camera_viewer/ranch)
 
 	New()
 		..()
@@ -2397,6 +2357,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 	allow_spy_theft = 0
 	cant_spawn_as_rev = 1
 	receives_badge = 1
+	recieves_miranda = 1
 	recieves_implant = /obj/item/implant/health
 	slot_back = /obj/item/storage/backpack/NT
 	slot_belt = /obj/item/storage/belt/security/ntso //special secbelt subtype that spawns with the NTSO gear inside
@@ -2664,9 +2625,9 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 	slot_belt = /obj/item/device/pda2/security
 	slot_jump = /obj/item/clothing/under/misc/vice
 	slot_foot = /obj/item/clothing/shoes/brown
-	slot_ears =  /obj/item/device/radio/headset/security
+	slot_ears = /obj/item/device/radio/headset/security
 	slot_poc1 = /obj/item/storage/security_pouch //replaces sec starter kit
-	slot_poc2 = /obj/item/requisition_token/security
+	slot_poc2 = /obj/item/requisition_token/security/assistant
 
 	New()
 		..()
