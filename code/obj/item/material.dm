@@ -881,6 +881,7 @@
 			BAR.set_loc(output_location)
 
 		playsound(src.loc, sound_process, 40, 1)
+
 	proc/loadreclaim(obj/item/W as obj, mob/user as mob)
 		. = FALSE
 		if (istype(W,/obj/item/raw_material/) || istype(W,/obj/item/sheet/) || istype(W,/obj/item/rods/) || istype(W,/obj/item/tile/) || istype(W,/obj/item/cable_coil) || istype(W,/obj/item/wizard_crystal))
@@ -893,22 +894,27 @@
 		if (W.cant_drop) //For borg held items
 			boutput(user, "<span class='alert'>You can't put that in [src] when it's attached to you!</span>")
 			return ..()
+
 		if (istype(W,/obj/item/storage/) || istype(W,/obj/item/satchel/))
 			var/obj/item/storage/S = W
 			var/obj/item/satchel/B = W
 			for(var/obj/item/O in W)
 				if (loadreclaim(O))
+					. = TRUE
 					if (istype(S))
 						S.hud.remove_object(O)
 					else if (istype(B))
 						B.satchel_updateicon()
 			//Users loading individual items would make an annoying amount of messages
 			//But loading a container is more noticable and there should be less
-			user.visible_message("<b>[user.name]</b> loads [S] into [src].")
-			playsound(get_turf(src), sound_load, 40, 1)
+			if (.)
+				user.visible_message("<b>[user.name]</b> loads [S] into [src].")
+				playsound(get_turf(src), sound_load, 40, 1)
+
 		else if (loadreclaim(W, user))
 			boutput(user, "You load [W] into [src].")
 			playsound(get_turf(src), sound_load, 40, 1)
+
 		else
 			. = ..()
 
