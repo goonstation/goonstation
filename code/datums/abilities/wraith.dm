@@ -528,7 +528,7 @@
 				if (trgloc && isturf(trgloc))
 					var/datum/effects/system/bad_smoke_spread/S = new /datum/effects/system/bad_smoke_spread/(trgloc)
 					if (S)
-						S.set_up(20, 0, trgloc)
+						S.set_up(20, 0, trgloc, null, "#000000")
 						S.start()
 				//particleMaster.SpawnSystem(new/datum/particleSystem/areaSmoke("#ffffff", 30, trgloc))
 				return 0
