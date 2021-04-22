@@ -1,7 +1,7 @@
 var/RL_Generation = 0
 
 //#define DEBUG_LIGHT_STRIP_APPLY
-// #define DEBUG_MOVING_LIGHTS_STATS
+#define DEBUG_MOVING_LIGHTS_STATS
 
 #ifdef DEBUG_MOVING_LIGHTS_STATS
 var/global/list/moving_lights_stats = list()
