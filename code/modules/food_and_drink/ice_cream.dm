@@ -40,7 +40,7 @@
 		src.cream_image.color = src.food_color
 		src.UpdateOverlays(src.cream_image, "cream")
 
-	on_bite(obj/item/I, mob/M, mob/user)
+	heal(var/mob/M)
 		..()
 		src.update_cone()
 		M.bodytemperature = min(M.base_body_temp, M.bodytemperature-20)

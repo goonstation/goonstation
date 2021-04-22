@@ -411,8 +411,7 @@ obj/machinery/atmospherics/pipe
 					duration = round(duration / 2)
 				var/obj/item/rods/S = W
 				var/datum/action/bar/icon/callback/action_bar = new /datum/action/bar/icon/callback(user, src, duration, /obj/machinery/atmospherics/pipe/simple/proc/reconstruct_pipe,\
-				W.icon, W.icon_state, "[user] finishes working with \the [src].")
-				action_bar.proc_args = list(user,S)
+				list(user, S), W.icon, W.icon_state, "[user] finishes working with \the [src].")
 				actions.start(action_bar, user)
 
 		proc/reconstruct_pipe(proc_args)

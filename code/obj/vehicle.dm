@@ -93,6 +93,9 @@ ABSTRACT_TYPE(/obj/vehicle)
 
 
 	disposing()
+		if(rider)
+			boutput(rider, "<span class='alert'><B>Your [src] is destroyed!</B></span>")
+			eject_rider()
 		. = ..()
 		STOP_TRACKING
 
@@ -103,13 +106,48 @@ ABSTRACT_TYPE(/obj/vehicle)
 		return src.loc.return_air()
 
 	attackby(obj/item/W as obj, mob/user as mob)
-		if(rider && rider_visible && W.force)
-			W.attack(rider, user)
+		if(src.rider && src.rider_visible && W.force)
+			W.attack(src.rider, user)
 			user.lastattacked = src
 			if (attacks_fast_eject || rider.hasStatus(list("weakened", "paralysis", "stunned")))
 				eject_rider()
-			W.visible_message("<span class='alert'>[user] swings at [rider] with [W]!</span>")
+			W.visible_message("<span class='alert'>[user] swings at [src.rider] with [W]!</span>")
 		return
+
+	bullet_act(flag, A as obj)
+		if(src.rider)
+			rider.bullet_act(flag, A)
+			eject_rider()
+		else
+			..()
+
+	meteorhit()
+		if (src.rider && ismob(src.rider))
+			src.rider.meteorhit()
+			src.eject_rider()
+		return
+
+	ex_act(severity)
+		switch(severity)
+			if(1.0)
+				for(var/atom/movable/A as mob|obj in src)
+					A.set_loc(src.loc)
+					A.ex_act(severity)
+				qdel(src)
+
+			if(2.0)
+				if (prob(50))
+					for(var/atom/movable/A as mob|obj in src)
+						A.set_loc(src.loc)
+						A.ex_act(severity)
+					qdel(src)
+
+			if(3.0)
+				if (prob(25))
+					for(var/atom/movable/A as mob|obj in src)
+						A.set_loc(src.loc)
+						A.ex_act(severity)
+					qdel(src)
 
 	Exited(atom/movable/thing, atom/newloc)
 		. = ..()
@@ -125,8 +163,8 @@ ABSTRACT_TYPE(/obj/vehicle)
 		if(src.rider)
 			if(src.rider.loc == src)
 				src.rider.set_loc(src.loc)
-			src.overlays -= src.rider
-			src.overlays -= src.booster_image
+			ClearSpecificOverlays("rider")
+			ClearSpecificOverlays("booster_image")
 			handle_button_removal()
 			src.rider = null
 		if (ejectall)
@@ -167,38 +205,10 @@ ABSTRACT_TYPE(/obj/vehicle)
 	proc/do_special_on_relay(mob/user as mob, dir) //empty placeholder for when we successfully have the rider relay a move
 		return
 
-	ex_act(severity)
-		switch(severity)
-			if(1.0)
-				for(var/atom/movable/A as mob|obj in src)
-					A.set_loc(src.loc)
-					A.ex_act(severity)
-					//Foreach goto(35)
-				qdel(src)
-				return
-			if(2.0)
-				if (prob(50))
-					for(var/atom/movable/A as mob|obj in src)
-						A.set_loc(src.loc)
-						A.ex_act(severity)
-						//Foreach goto(108)
-					qdel(src)
-					return
-			if(3.0)
-				if (prob(25))
-					for(var/atom/movable/A as mob|obj in src)
-						A.set_loc(src.loc)
-						A.ex_act(severity)
-						//Foreach goto(181)
-					qdel(src)
-					return
-			else
-		return
 
 	proc/Stopped()
-		src.overlays -= src.booster_image //so we don't see thrusters firing on a parked vehicle
+		ClearSpecificOverlays("booster_image") //so we don't see thrusters firing on a parked vehicle
 		return
-
 
 	proc/stop()
 		walk(src,0)
@@ -206,6 +216,12 @@ ABSTRACT_TYPE(/obj/vehicle)
 
 	blob_act(var/power)
 		qdel(src)
+
+	temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+		..()
+		// Simulate hotspot Crossed/Process so turfs engulfed in flames aren't simply ignored in vehicles
+		if (src.rider_visible && !src.sealed_cabin && ismob(src.rider) && exposed_volume > (CELL_VOLUME * 0.8) && exposed_temperature > FIRE_MINIMUM_TEMPERATURE_TO_SPREAD)
+			src.rider.update_burning(clamp(exposed_temperature / 60, 0, 10))
 
 //////////////////////////////////////////////////////////// Segway ///////////////////////////////////////////
 
@@ -336,7 +352,7 @@ ABSTRACT_TYPE(/obj/vehicle)
 		in_bump = 0
 
 	if(isitem(AM))
-		if(AM:w_class >= 4.0)
+		if(AM:w_class >= W_CLASS_BULKY)
 			boutput(rider, "<span class='alert'><B>You crash into [AM]!</B></span>")
 			for (var/mob/C in AIviewers(src))
 				if(C == rider)
@@ -560,18 +576,6 @@ ABSTRACT_TYPE(/obj/vehicle)
 			else
 				playsound(src.loc, "sound/impact_sounds/Generic_Swing_1.ogg", 25, 1, -1)
 				src.visible_message("<span class='alert'><B>[M] has attempted to shove [rider] off of the [src]!</B></span>")
-	return
-
-/obj/vehicle/segway/bullet_act(flag, A as obj)
-	if(rider)
-		rider.bullet_act(flag, A)
-		eject_rider()
-	return
-
-/obj/vehicle/segway/meteorhit()
-	if(rider)
-		eject_rider()
-		rider.meteorhit()
 	return
 
 /obj/vehicle/segway/disposing()
@@ -879,18 +883,6 @@ ABSTRACT_TYPE(/obj/vehicle)
 			else
 				playsound(src.loc, "sound/impact_sounds/Generic_Swing_1.ogg", 25, 1, -1)
 				src.visible_message("<span class='alert'><B>[M] has attempted to yank [rider] off of \the [src]!</B></span>")
-	return
-
-/obj/vehicle/floorbuffer/bullet_act(flag, A as obj)
-	if (src.rider && ismob(src.rider))
-		src.rider.bullet_act(flag, A)
-		src.eject_rider()
-	return
-
-/obj/vehicle/floorbuffer/meteorhit()
-	if (src.rider && ismob(src.rider))
-		src.rider.meteorhit()
-		src.eject_rider()
 	return
 
 /obj/vehicle/floorbuffer/disposing()
@@ -1403,7 +1395,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 		in_bump = 0
 		return
 	if(isitem(AM))
-		if(AM:w_class >= 4.0)
+		if(AM:w_class >= W_CLASS_BULKY)
 			boutput(rider, "<span class='alert'><B>You run into [AM]!</B></span>")
 			for (var/mob/C in AIviewers(src))
 				if(C == rider)
@@ -1451,7 +1443,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 		rider.throw_at(target, 5, 1)
 		rider.buckled = null
 		rider = null
-		overlays = null
+		ClearSpecificOverlays("rider")
 		return
 	if(selfdismount)
 		boutput(rider, "<span class='notice'>You dismount from the [src].</span>")
@@ -1461,7 +1453,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 			C.show_message("<B>[rider]</B> dismounts from the [src].", 1)
 	rider.buckled = null
 	rider = null
-	overlays = null
+	ClearSpecificOverlays("rider")
 	return
 
 /obj/vehicle/cat/do_special_on_relay(mob/user as mob, dir)
@@ -1491,7 +1483,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 	rider = target
 	rider.pixel_x = 0
 	rider.pixel_y = 5
-	overlays += rider
+	src.UpdateOverlays(rider, "rider")
 	if(rider.restrained() || rider.stat)
 		rider.buckled = src
 
@@ -1528,17 +1520,6 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 				src.visible_message("<span class='alert'><B>[M] has attempted to shove [rider] off of the [src]!</B></span>")
 	return
 
-/obj/vehicle/cat/bullet_act(flag, A as obj)
-	if(rider)
-		eject_rider()
-		rider.bullet_act(flag, A)
-	return
-
-/obj/vehicle/cat/meteorhit()
-	if(rider)
-		eject_rider()
-		rider.meteorhit()
-	return
 
 /obj/vehicle/cat/disposing()
 	if(rider)
@@ -2292,7 +2273,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 			M.glide_size = src.glide_size
 			M.animate_movement = SYNC_STEPS
 		if(src.booster_upgrade)
-			src.overlays += booster_image
+			src.UpdateOverlays(booster_image, "booster_image")
 		walk(src, direction, td)
 		src.glide_size = (32 / td) * world.tick_lag
 		for(var/mob/M in src)
@@ -2493,5 +2474,6 @@ obj/vehicle/forklift/attackby(var/obj/item/I, var/mob/user)
 /obj/vehicle/forklift/bullet_act(flag, A as obj)
 	if(rider && rider_visible)
 		rider.bullet_act(flag, A)
+		//do not eject!
 	else
 		..()

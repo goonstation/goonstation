@@ -1470,7 +1470,7 @@
 	pixel_x = -4
 	},
 /obj/item/pen/pencil,
-/obj/item/postit_stack{
+/obj/item/item_box/postit{
 	pixel_x = 7;
 	pixel_y = 7
 	},
@@ -6176,6 +6176,7 @@
 "bRA" = (
 /obj/table/wood/auto,
 /obj/displaycase{
+	displayed = new /obj/item/captaingun;
 	pixel_y = 6
 	},
 /obj/machinery/light/small{
@@ -53552,7 +53553,7 @@
 	pixel_x = -4;
 	pixel_y = 8
 	},
-/obj/item/postit_stack{
+/obj/item/item_box/postit{
 	pixel_x = 3;
 	pixel_y = 1
 	},

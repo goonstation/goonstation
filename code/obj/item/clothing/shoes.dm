@@ -353,6 +353,7 @@
 	color = "#FF0000"
 	step_sound = "explosion"
 	contraband = 10
+	step_priority = 999
 	is_syndicate = 1
 
 /obj/item/clothing/shoes/ziggy
@@ -445,6 +446,13 @@
 		else
 			. = "Looks like some big shoes to fill!"
 		. = ..()
+
+/obj/item/clothing/shoes/swat/knight // so heavy you can't get shoved!
+	name = "combat sabatons"
+	desc = "Massive, armored footwear for syndicate super-heavies."
+	icon_state = "swatheavy"
+	magnetic = 1
+	c_flags = NOSLIP
 
 /obj/item/clothing/shoes/fuzzy //not boolean slippers
 	name = "fuzzy slippers"

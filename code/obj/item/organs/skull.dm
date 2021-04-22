@@ -9,7 +9,7 @@
 	var/preddesc = "A trophy from a less interesting kill." // See assign_gimmick_skull().
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "skull"
-	w_class = 1
+	w_class = W_CLASS_TINY
 	var/mob/donor = null
 	var/donor_name = null
 	var/datum/organHolder/holder = null

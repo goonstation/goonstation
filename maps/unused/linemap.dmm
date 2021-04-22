@@ -33709,7 +33709,9 @@
 /turf/simulated/floor/black,
 /area/station/bridge)
 "bzF" = (
-/obj/displaycase,
+/obj/displaycase{
+	displayed = new /obj/item/captaingun
+},
 /obj/machinery/camera{
 	name = "autoname  - SS13";
 	icon_state = "camera";

@@ -44,6 +44,12 @@
 		return
 
 	attackby(obj/item/W as obj, mob/user as mob)
+		if(W.type == src.type)
+			stack_item(W)
+			if(!user.is_in_hands(src))
+				user.put_in_hand(src)
+			boutput(user, "<span class='notice'>You add the ores to the stack. It now has [src.amount] ores.</span>")
+			return
 		if (istype(W, /obj/item/satchel/mining/))
 			if (W.contents.len < W:maxitems)
 				src.set_loc(W)
@@ -55,6 +61,18 @@
 			else
 				boutput(user, "<span class='alert'>[W] is full!</span>")
 		else ..()
+
+	attack_hand(mob/user as mob)
+		if(user.is_in_hands(src) && src.amount > 1)
+			var/splitnum = round(input("How many ores do you want to take from the stack?","Stack of [src.amount]",1) as num)
+			if (splitnum >= amount || splitnum < 1)
+				boutput(user, "<span class='alert'>Invalid entry, try again.</span>")
+				return
+			var/obj/item/raw_material/new_stack = split_stack(splitnum)
+			user.put_in_hand_or_drop(new_stack)
+			new_stack.add_fingerprint(user)
+		else
+			..(user)
 
 	HasEntered(AM as mob|obj)
 		if (isobserver(AM))
@@ -552,7 +570,7 @@
 	item_state = "shard-glass"
 	flags = TABLEPASS | FPRINT
 	tool_flags = TOOL_CUTTING
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	hit_type = DAMAGE_CUT
 	hitsound = 'sound/impact_sounds/Flesh_Stab_1.ogg'
 	force = 5.0

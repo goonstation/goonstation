@@ -30,7 +30,7 @@ CONTAINS:
 	hit_type = DAMAGE_CUT
 	hitsound = 'sound/impact_sounds/Flesh_Cut_1.ogg'
 	force = 5
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	throwforce = 5.0
 	throw_speed = 3
 	throw_range = 5
@@ -102,7 +102,7 @@ CONTAINS:
 	hit_type = DAMAGE_CUT
 	hitsound = 'sound/impact_sounds/circsaw.ogg'
 	force = 8
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	throwforce = 3.0
 	throw_speed = 3
 	throw_range = 5
@@ -171,7 +171,7 @@ CONTAINS:
 	hit_type = DAMAGE_STAB
 	hitsound = 'sound/impact_sounds/Flesh_Stab_1.ogg'
 	force = 5.0
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	throwforce = 5.0
 	throw_speed = 3
 	throw_range = 5
@@ -230,7 +230,7 @@ CONTAINS:
 	desc = "A medical staple gun for securely reattaching limbs."
 	icon = 'icons/obj/items/gun.dmi'
 	icon_state = "staplegun"
-	w_class = 1
+	w_class = W_CLASS_TINY
 	throw_speed = 4
 	throw_range = 20
 	force = 5
@@ -616,7 +616,7 @@ CONTAINS:
 
 /obj/item/robodefibrillator/mounted
 	var/obj/machinery/defib_mount/parent = null	//temp set while not attached
-	w_class = 4
+	w_class = W_CLASS_BULKY
 
 	move_callback(var/mob/living/M, var/turf/source, var/turf/target)
 		if (parent)
@@ -715,7 +715,7 @@ CONTAINS:
 	flags = FPRINT | TABLEPASS | CONDUCT
 	hit_type = DAMAGE_STAB
 	object_flags = NO_ARM_ATTACH
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	force = 1
 	throwforce = 1.0
 	throw_speed = 4
@@ -775,7 +775,7 @@ CONTAINS:
 	item_state = "bandage"
 	flags = FPRINT | TABLEPASS
 	object_flags = NO_ARM_ATTACH
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	force = 0
 	throwforce = 1.0
 	throw_speed = 4
@@ -953,7 +953,7 @@ CONTAINS:
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
 	item_state = "bloodbag"
 	flags = FPRINT | TABLEPASS
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	force = 0
 	throwforce = 1.0
 	throw_speed = 4
@@ -1081,7 +1081,7 @@ CONTAINS:
 	icon_state = "bodybag"
 	uses_multiple_icon_states = 1
 	flags = FPRINT | TABLEPASS
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	force = 0
 	throwforce = 1.0
 	throw_speed = 4
@@ -1106,21 +1106,21 @@ CONTAINS:
 		if (src.open && src.open_image)
 			src.overlays += src.open_image
 			src.icon_state = "bodybag-open"
-			src.w_class = 4.0
+			src.w_class = W_CLASS_BULKY
 		else if (!src.open)
 			src.overlays -= src.open_image
 			if (src.contents && length(src.contents))
 				src.icon_state = "bodybag-closed1"
 			else
 				src.icon_state = "bodybag-closed0"
-			src.w_class = 4.0
+			src.w_class = W_CLASS_BULKY
 		else
 			src.overlays -= src.open_image
 			src.icon_state = "bodybag"
-			src.w_class = 1.0
+			src.w_class = W_CLASS_TINY
 
 	attack_self(mob/user as mob)
-		if (src.icon_state == "bodybag" && src.w_class == 1.0)
+		if (src.icon_state == "bodybag" && src.w_class == W_CLASS_TINY)
 			user.visible_message("<b>[user]</b> unfolds [src].",\
 			"You unfold [src].")
 			user.drop_item()
@@ -1132,7 +1132,7 @@ CONTAINS:
 
 	attack_hand(mob/user as mob)
 		add_fingerprint(user)
-		if (src.icon_state == "bodybag" && src.w_class == 1.0)
+		if (src.icon_state == "bodybag" && src.w_class == W_CLASS_TINY)
 			return ..()
 		else
 			if (src.open)
@@ -1168,7 +1168,7 @@ CONTAINS:
 				"You fold up [src].")
 			src.overlays -= src.open_image
 			src.icon_state = "bodybag"
-			src.w_class = 1.0
+			src.w_class = W_CLASS_TINY
 			src.attack_hand(usr)
 
 	proc/open()
@@ -1210,7 +1210,7 @@ CONTAINS:
 	hit_type = DAMAGE_STAB
 	hitsound = 'sound/impact_sounds/Flesh_Stab_1.ogg'
 	force = 1.5
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	throwforce = 3.0
 	throw_speed = 3
 	throw_range = 6
@@ -1347,7 +1347,7 @@ CONTAINS:
 	item_state = "pen"
 	icon_on = "penlight1"
 	icon_off = "penlight0"
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	throwforce = 0
 	throw_speed = 7
 	throw_range = 15
@@ -1651,7 +1651,7 @@ keeping this here because I want to make something else with it eventually
 	stamina_damage = 5
 	stamina_cost = 5
 	stamina_crit_chance = 35
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	hit_type = DAMAGE_STAB
 	hitsound = 'sound/impact_sounds/Flesh_Cut_1.ogg'
 

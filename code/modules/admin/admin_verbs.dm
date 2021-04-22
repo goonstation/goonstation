@@ -335,6 +335,8 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_disco_lights,
 		/client/proc/cmd_blindfold_monkeys,
 		/client/proc/cmd_swampify_station,
+		/client/proc/cmd_trenchify_station,
+		/client/proc/cmd_special_shuttle,
 
 		/datum/admins/proc/toggleaprilfools,
 		/client/proc/cmd_admin_pop_off_all_the_limbs_oh_god,
@@ -425,6 +427,8 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_modify_respawn_variables,
 		/client/proc/set_nukie_score,
 
+		/client/proc/player_panel_tgui,
+
 #ifdef MACHINE_PROCESSING_DEBUG
 		/client/proc/cmd_display_detailed_machine_stats,
 #endif
@@ -436,9 +440,6 @@ var/list/admin_verbs = list(
 		/client/proc/spawn_dbg,
 #elif defined(ENABLE_SPAWN_DEBUG_2)
 		/client/proc/spawn_dbg,
-#endif
-#ifdef INCLUDE_BUGGY_LUA_SHIT
-		/client/proc/RunLuaString,
 #endif
 		),
 
@@ -663,6 +664,15 @@ var/list/special_pa_observing_verbs = list(
 	if (src.holder && !src.holder.tempmin)
 		src.holder.player()
 	return
+
+/client/proc/player_panel_tgui()
+	set name = "Player Panel TGUI"
+	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
+	admin_only
+	if (src.holder.tempmin)
+		return
+	if (src.holder.level >= LEVEL_SA)
+		global.player_panel.ui_interact(src.mob)
 
 /client/proc/rspawn_panel()
 	set name = "Respawn Panel"
@@ -2052,8 +2062,8 @@ var/list/fun_images = list()
 		message_admins("Error while adding ckey [vpnckey] to the VPN whitelist: [e.name]")
 		return 0
 	global.vpn_ip_checks?.Cut() // to allow them to reconnect this round
-	message_admins("Ckey [vpnckey] added to the VPN whitelist.")
-	logTheThing("admin", null, null, "Ckey [vpnckey] added to the VPN whitelist.")
+	message_admins("Ckey [vpnckey] added to the VPN whitelist by [src.key].")
+	logTheThing("admin", src, null, "Ckey [vpnckey] added to the VPN whitelist.")
 	return 1
 
 /client/proc/vpn_whitelist_remove(vpnckey as text)
@@ -2065,6 +2075,6 @@ var/list/fun_images = list()
 	catch(var/exception/e)
 		message_admins("Error while removing ckey [vpnckey] from the VPN whitelist: [e.name]")
 		return 0
-	message_admins("Ckey [vpnckey] removed from the VPN whitelist.")
-	logTheThing("admin", null, null, "Ckey [vpnckey] removed from the VPN whitelist.")
+	message_admins("Ckey [vpnckey] removed from the VPN whitelist by [src.key].")
+	logTheThing("admin", src, null, "Ckey [vpnckey] removed from the VPN whitelist.")
 	return 1

@@ -20056,7 +20056,9 @@
 /area/station/bridge/captain)
 "aUj" = (
 /obj/table/wood/auto,
-/obj/displaycase,
+/obj/displaycase{
+	displayed = new /obj/item/captaingun
+},
 /turf/simulated/floor/carpet/blue/fancy/innercorner/south,
 /area/station/bridge/captain)
 "aUk" = (

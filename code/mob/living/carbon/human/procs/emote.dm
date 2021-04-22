@@ -627,13 +627,13 @@
 
 			if ("hatstomp", "stomphat")
 				if (!src.restrained())
-					var/obj/item/clothing/head/helmet/HoS/hat = src.find_type_in_hand(/obj/item/clothing/head/helmet/HoS)
+					var/obj/item/clothing/head/hos_hat/hat = src.find_type_in_hand(/obj/item/clothing/head/hos_hat)
 					var/hat_or_beret = null
 					var/already_stomped = null // store the picked phrase in here
 					var/on_head = 0
 
 					if (!hat) // if the find_type_in_hand() returned 0 earlier
-						if (istype(src.head, /obj/item/clothing/head/helmet/HoS)) // maybe it's on our head?
+						if (istype(src.head, /obj/item/clothing/head/hos_hat)) // maybe it's on our head?
 							hat = src.head
 							on_head = 1
 						else // if not then never mind
@@ -684,7 +684,7 @@
 				m_type = 2
 
 			if ("handpuppet")
-				message = "<b>[src]</b> throws their voice, badly, as they flap their thumb and index finger like some sort of lips.[prob(50) ? "  Perhaps they're off their meds?" : null]"
+				message = "<b>[src]</b> throws [his_or_her(src)] voice, badly, while flapping [his_or_her(src)] thumb and index finger like some sort of lips.[prob(10) ? " Admittedly, it is a pretty good impression of the [pick("captain", "head of personnel", "clown", "research director", "chief engineer", "head of security", "medical director", "AI", "chaplain", "detective")]." : null]"
 				m_type = 1
 
 			if ("smile","grin","smirk","frown","scowl","grimace","sulk","pout","blink","drool","shrug","tremble","quiver","shiver","shudder","shake","think","ponder","contemplate","grump")
@@ -2109,7 +2109,7 @@
 	src.remove_stamina(STAMINA_DEFAULT_FART_COST)
 
 /mob/living/carbon/human/proc/dabbify(var/mob/living/carbon/human/H)
-	if(PROC_ON_COOLDOWN(2 SECONDS))
+	if(ON_COOLDOWN(src, "dab", 2 SECONDS))
 		return
 	H.render_target = "*\ref[H]"
 	var/image/left_arm = image(null, H)

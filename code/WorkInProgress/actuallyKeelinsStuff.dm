@@ -1848,7 +1848,7 @@ Returns:
 	icon_state = "lboard"
 	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
 	item_state = "ouijaboard"
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 
 	New()
 		. = ..()
@@ -2166,7 +2166,7 @@ Returns:
 	icon_state = "teslacannon"
 	item_state = "gun"
 	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	var/firing = 0
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
@@ -2383,7 +2383,7 @@ Returns:
 	icon_state = "pstone"
 	item_state = "injector"
 	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
 		var/obj/beam_dummy/B = showLine(get_turf(src), get_turf(target), "beam", 10)
@@ -2502,7 +2502,7 @@ Returns:
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "rpg_rocket"
 	item_state = "chips"
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	throw_speed = 2
 	throw_range = 10
 	force = 5.0
@@ -3390,164 +3390,6 @@ var/list/lag_list = new/list()
 	boutput(usr, "<span class='success'>[average_tenth] at [lag_list.len] samples.</span>")
 
 
-/obj/mirror
-	//Expect those to be laggy as fuck.
-	name = "Mirror"
-	desc = "Its a mirror."
-	density = 0
-	anchored = 1
-	pixel_y = 32
-	var/icon/base
-	var/broken = 0
-	var/health = 3
-	var/list/spooky = new/list()
-	var/spooked = 0
-	var/spooking = 0
-	event_handler_flags = USE_HASENTERED
-
-	proc/hear_once(var/mob/M)
-		if(broken) return
-		if(!(M in spooky))
-			spooky += M
-			spooky[M] = 1
-		else
-			spooky[M]++
-		if(spooky[M] >= 3)
-			do_it(M)
-
-	proc/do_it(var/mob/M)
-		if(spooking || broken) return
-		spooking = 1
-		break_it()
-		playsound(src, "sound/impact_sounds/Glass_Shatter_3.ogg", 75, 0)
-		M:transforming = 1
-		sleep(3 SECONDS)
-		var/atom/movable/screen/creepy = new /atom/movable/screen()
-		creepy.name = "GARHLGHARLHGARHGL"
-		creepy.icon = 'icons/creepy.png'
-		creepy.screen_loc = "SOUTH,WEST"
-		creepy.mouse_opacity = 0
-		if(!M) return
-		var/client/the_client = M.client
-		creepy.add_to_client(the_client)
-		playsound(src, "sound/effects/ghost2.ogg", 100, 0)
-		sleep(0.5 SECONDS)
-		if(!M)
-			the_client.screen -= creepy
-			return
-		M:gib()
-		sleep(0.5 SECONDS)
-		the_client.screen -= creepy
-		sleep(3 SECONDS)
-
-	New()
-		..()
-		build_base()
-		update()
-
-	HasEntered(atom/A)
-		if(ismob(A)) rebuild_icon()
-		return
-
-	attackby(obj/item/W as obj, mob/user as mob)
-		..()
-
-		if(W.force <= 1 || broken)
-			playsound(src, "sound/impact_sounds/Generic_Stab_1.ogg", 25, 0)
-			return
-
-		health--
-		if(health <= 0)
-			break_it()
-			boutput(user, "<span class='alert'>You break the mirror ...</span>")
-			playsound(src, "sound/impact_sounds/Glass_Shatter_3.ogg", 75, 0)
-		else
-			playsound(src, "sound/impact_sounds/Glass_Hit_1.ogg", 75, 0)
-
-	ex_act()
-		playsound(src, "sound/impact_sounds/Glass_Shatter_3.ogg", 75, 0)
-		break_it()
-
-	hitby(atom/movable/AM, datum/thrown_thing/thr)
-		. = ..()
-		playsound(src, "sound/impact_sounds/Glass_Shatter_3.ogg", 75, 0)
-		break_it()
-
-	proc
-
-		break_it()
-			if(broken) return
-			broken = 1
-			build_base()
-			rebuild_icon()
-			new /obj/item/raw_material/shard/glass( src.loc )
-			new /obj/item/raw_material/shard/plasmacrystal( src.loc )
-
-		build_base()
-			var/turf/T = src.loc
-			var/icon/composite = icon(T.icon, T.icon_state, T.dir)
-			composite.Flip(NORTH)
-			composite.Blend(icon('icons/misc/old_or_unused.dmi', "mirror"), ICON_OVERLAY)
-			if(broken) composite.Blend(icon('icons/misc/old_or_unused.dmi', "mirror_broken"), ICON_OVERLAY)
-			composite.Crop(7,8,26,31)
-			composite.Crop(1,1,32,32)
-			composite.Shift(NORTH,7)
-			composite.Shift(EAST,6)
-			base = composite
-
-		rebuild_icon()
-
-			src.icon = base
-			pixel_y = 0
-			var/turf/T = src.loc
-			var/icon/composite = icon(T.icon, T.icon_state, T.dir)
-			composite.Flip(NORTH)
-			var/the_dir
-
-			for(var/atom/C in T)
-				var/icon/curr
-
-				if(hasvar(C, "body_standing"))
-					if(!C:lying)
-						if(C.dir == NORTH || C.dir == SOUTH)
-							the_dir = turn(C.dir,180)
-							curr = icon(C:body_standing, dir=turn(C.dir,180))
-						else
-							the_dir = C.dir
-							curr = icon(C:body_standing, dir=C.dir)
-					else
-						continue
-				else
-					if(C.dir == NORTH || C.dir == SOUTH)
-						the_dir = turn(C.dir,180)
-						curr = icon(C.icon, C.icon_state, turn(C.dir,180))
-					else
-						the_dir = C.dir
-						curr = icon(C.icon, C.icon_state, C.dir)
-
-				if(!curr || C.invisibility) continue
-
-				composite.Blend(curr, ICON_OVERLAY)
-
-				for(var/O in C.overlays)
-					var/image/I = O
-					var/icon/II = icon(I.icon, I.icon_state, the_dir)
-					composite.Blend(II, ICON_OVERLAY)
-
-			composite.Blend(icon('icons/misc/old_or_unused.dmi', "mirror"), ICON_OVERLAY)
-			if(broken) composite.Blend(icon('icons/misc/old_or_unused.dmi', "mirror_broken"), ICON_OVERLAY)
-			composite.Crop(7,8,26,31)
-			composite.Crop(1,1,32,32) //UNCROP - http://www.youtube.com/watch?v=KUFkb0d1kbU
-			composite.Shift(NORTH,7)
-			composite.Shift(EAST,6)
-
-			src.icon = composite
-			pixel_y = 32
-
-		update()
-			rebuild_icon()
-			SPAWN_DBG(0.5 SECONDS) update()
-
 /obj/spook
 	var/active = 0
 	invisibility = 100
@@ -3857,7 +3699,7 @@ var/list/lag_list = new/list()
 	var/ckey_lock = null
 	var/z_level_lock = 0
 	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
 		if(ckey_lock && usr.ckey != ckey_lock)
 			boutput(user, "<span class='alert'>You are not authorized to use this item.</span>")
@@ -3967,7 +3809,7 @@ var/list/lag_list = new/list()
 	item_state = "clown"
 	density = 0
 	anchored = 0
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	force = 0.0
 	throwforce = 0.0
 	throw_speed = 1

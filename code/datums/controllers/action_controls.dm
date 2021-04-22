@@ -379,7 +379,7 @@ var/datum/action_controller/actions
 	/// a list of args for the proc thats called once the action bar finishes, if needed.
 	var/list/proc_args = null
 
-	New(var/owner, var/target, var/duration, var/proc_path, var/icon, var/icon_state, var/end_message)
+	New(owner, target, duration, proc_path, proc_args, icon, icon_state, end_message)
 		..()
 		if (owner)
 			src.owner = owner
@@ -395,6 +395,8 @@ var/datum/action_controller/actions
 			src.proc_path = proc_path
 		else //no proc, dont do the thing
 			CRASH("no proc was specified to be called once the action bar ends")
+		if (proc_args)
+			src.proc_args = proc_args
 		if (icon) //optional, dont always want an icon
 			src.icon = icon
 			if (icon_state) //optional, dont always want an icon state
@@ -432,7 +434,8 @@ var/datum/action_controller/actions
 		if (src.target && !IN_RANGE(src.owner, src.target, src.maximum_range))
 			interrupt(INTERRUPT_ALWAYS)
 
-		src.owner.visible_message("[src.end_message]")
+		if (end_message)
+			src.owner.visible_message("[src.end_message]")
 		if (src.target)
 			INVOKE_ASYNC(arglist(list(src.target, src.proc_path) + src.proc_args))
 		else

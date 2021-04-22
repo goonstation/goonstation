@@ -104,7 +104,7 @@
 	name = "syringe gun"
 	icon_state = "syringegun"
 	item_state = "syringegun"
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	throw_speed = 2
 	throw_range = 10
 	force = 4.0

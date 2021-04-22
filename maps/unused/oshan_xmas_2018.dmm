@@ -20464,7 +20464,7 @@
 "aSN" = (
 /obj/table/wood/auto,
 /obj/item/reagent_containers/patch/bruise,
-/obj/item/postit_stack,
+/obj/item/item_box/postit,
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
@@ -33009,6 +33009,7 @@
 "bwL" = (
 /obj/table/wood/round/auto,
 /obj/displaycase{
+	displayed = new /obj/item/captaingun
 	pixel_y = 8
 	},
 /obj/machinery/light/incandescent/warm,
@@ -33562,7 +33563,7 @@
 "bxS" = (
 /obj/table/wood/round/auto,
 /obj/item/paper_bin,
-/obj/item/postit_stack,
+/obj/item/item_box/postit,
 /obj/item/pen/fancy,
 /obj/item/stamp,
 /turf/simulated/floor/carpet/blue/fancy/junction/nw_e,
@@ -34320,7 +34321,7 @@
 /obj/item/storage/box/crayon{
 	pixel_x = -6
 	},
-/obj/item/postit_stack,
+/obj/item/item_box/postit,
 /obj/machinery/light/incandescent/warm,
 /turf/simulated/floor/carpet{
 	icon_state = "fred2";

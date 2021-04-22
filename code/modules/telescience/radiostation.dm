@@ -61,13 +61,13 @@
 
 // Audio log players
 /obj/item/device/audio_log/radioship/large
-	name = "Audio log"
+	name = "audio log"
 	desc = "A bulky recording device."
 	icon = 'icons/obj/radiostation.dmi'
 	icon_state = "audiolog_newLarge"
 
 /obj/item/device/audio_log/radioship/small
-	name = "Audio log"
+	name = "audio log"
 	desc = "A handheld recording device."
 	icon = 'icons/obj/radiostation.dmi'
 	icon_state = "audiolog_newSmall"
@@ -299,7 +299,7 @@
 	var/song = ""
 	var/record_name = ""
 	var/add_overlay = 1
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	throwforce = 3.0
 	throw_speed = 3
 	throw_range = 8
@@ -681,7 +681,7 @@ ABSTRACT_TYPE(/obj/item/record/random/chronoquest)
 	desc = "A small audio tape. Though, it looks too big to fit in an audio log."
 	icon = 'icons/obj/radiostation.dmi'
 	icon_state = "tape"
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	var/audio = null
 	var/audio_type = "Test"
 	var/name_of_thing = "Beep boop"

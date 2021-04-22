@@ -632,10 +632,10 @@
 
 /datum/supply_packs/office
 	name = "Office Supply Crate"
-	desc = "x4 Paper Bins, x2 Clipboards, x1 Sticky Note Stacks, x5 Writing Implement Sets, x1 Stapler, x1 Scissors"
+	desc = "x4 Paper Bins, x2 Clipboards, x1 Sticky Note Box, x5 Writing Implement Sets, x1 Stapler, x1 Scissors"
 	contains = list(/obj/item/paper_bin = 4,
 		/obj/item/clipboard = 2,
-		/obj/item/postit_stack,
+		/obj/item/item_box/postit,
 		/obj/item/storage/box/pen,
 		/obj/item/storage/box/marker/basic,
 		/obj/item/storage/box/marker,
@@ -950,6 +950,23 @@
 	cost = 5000
 	containertype = /obj/storage/crate/wooden
 	containername = "EVA Equipment Crate"
+
+/datum/supply_packs/XL_air_canister
+	name = "Extra Large Air Mix Canister"
+	desc = "Spare canister filled with a mix of nitrogen, oxygen and minimal amounts of carbon dioxide. Used for emergency re-pressurisation efforts."
+	category = "Engineering Department"
+	contains = list(/obj/machinery/portable_atmospherics/canister/air/large)
+	cost = 5000
+	containertype = /obj/storage/crate/wooden
+	containername = "Spare XL Air Mix Canister Crate"
+/datum/supply_packs/oxygen_canister
+	name = "Spare Oxygen Canister"
+	desc = "Spare oxygen canister, for resupplying Engineering's fuel or refilling oxygen tanks."
+	category = "Engineering Department"
+	contains = list(/obj/machinery/portable_atmospherics/canister/oxygen)
+	cost = 10000
+	containertype = /obj/storage/crate/wooden
+	containername = "Spare Oxygen Canister Crate"
 
 /datum/supply_packs/abcu
 	name = "ABCU Unit Crate"

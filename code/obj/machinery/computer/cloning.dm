@@ -69,7 +69,7 @@
 	desc = "A circuit module designed to improve cloning machine scanning capabilities to the point where even the deceased may be scanned."
 	icon = 'icons/obj/module.dmi'
 	icon_state = "cloner_upgrade"
-	w_class = 1
+	w_class = W_CLASS_TINY
 	throwforce = 1
 
 /obj/item/grinder_upgrade
@@ -77,7 +77,7 @@
 	desc = "A circuit module designed to improve enzymatic reclaimer capabilities so that the machine will be able to reclaim more matter, faster."
 	icon = 'icons/obj/module.dmi'
 	icon_state = "grinder_upgrade"
-	w_class = 1
+	w_class = W_CLASS_TINY
 	throwforce = 1
 
 /obj/machinery/computer/cloning/New()
@@ -132,6 +132,7 @@
 				var/obj/item/sheet/glass/glass = new/obj/item/sheet/glass(src.loc)
 				glass.amount = 6
 				glass.inventory_counter.update_number(glass.amount)
+			logTheThing("station", user, null, "disconnects the cloning console at [log_loc(src)].")
 			var/obj/computerframe/A = new /obj/computerframe( src.loc )
 			if(src.material) A.setMaterial(src.material)
 			var/obj/item/circuitboard/cloning/M = new /obj/item/circuitboard/cloning( A )
@@ -702,7 +703,7 @@ proc/find_ghost_by_key(var/find_key)
 				return TRUE
 			var/selected_record =	find_record(params["ckey"])
 			if(selected_record)
-				logTheThing("combat", usr, null, "deletes the cloning record [selected_record["fields"]["name"]] for player [selected_record["fields"]["ckey"]] at [log_loc(src)].")
+				logTheThing("station", usr, null, "deletes the cloning record [selected_record["fields"]["name"]] for player [selected_record["fields"]["ckey"]] at [log_loc(src)].")
 				src.records.Remove(selected_record)
 				qdel(selected_record)
 				selected_record = null

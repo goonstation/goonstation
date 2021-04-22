@@ -22,17 +22,20 @@ export const GeneTek = (props, context) => {
     materialMax,
     currentResearch,
     equipmentCooldown,
-    haveSubject,
-    subjectName,
-    subjectStat,
-    subjectHealth,
-    subjectStability,
+    subject,
     costPerMaterial,
     budget,
     record,
     scannerAlert,
     scannerError,
   } = data;
+
+  const {
+    name,
+    stat,
+    health,
+    stability,
+  } = subject || {};
 
   const maxBuyMats = Math.min(
     materialMax - materialCur,
@@ -81,7 +84,7 @@ export const GeneTek = (props, context) => {
                 Record
               </Tabs.Tab>
             )}
-            {!!haveSubject && (
+            {subject && (
               <Tabs.Tab
                 icon="dna"
                 selected={menu === "scanner"}
@@ -125,10 +128,10 @@ export const GeneTek = (props, context) => {
                 onClick={() => setBuyMats(1)} />
             </Flex.Item>
           </Flex>
-          {!!haveSubject && (
+          {subject && (
             <LabeledList>
               <LabeledList.Item label="Occupant">
-                {subjectName}
+                {name}
               </LabeledList.Item>
               <LabeledList.Item label="Health">
                 <ProgressBar
@@ -137,13 +140,13 @@ export const GeneTek = (props, context) => {
                     average: [0.15, 0.75],
                     good: [0.75, Infinity],
                   }}
-                  value={subjectHealth}>
-                  {subjectStat < 2 ? subjectHealth <= 0 ? (
+                  value={health}>
+                  {stat < 2 ? health <= 0 ? (
                     <Box color="bad">
                       <Icon name="exclamation-triangle" />
                       {" Critical"}
                     </Box>
-                  ) : (subjectHealth * 100).toFixed(0) + "%" : (
+                  ) : (health * 100).toFixed(0) + "%" : (
                     <Box>
                       <Icon name="skull" />
                       {" Deceased"}
@@ -158,7 +161,7 @@ export const GeneTek = (props, context) => {
                     average: [15, 75],
                     good: [75, Infinity],
                   }}
-                  value={subjectStability}
+                  value={stability}
                   maxValue={100} />
               </LabeledList.Item>
             </LabeledList>

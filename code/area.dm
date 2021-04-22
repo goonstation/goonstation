@@ -428,6 +428,7 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
 	teleport_blocked = 2
 	force_fullbright = 1
 	expandable = 0//oh god i know some fucker would try this
+	requires_power = FALSE
 
 	Entered(atom/movable/O) // TODO: make this better and not copy n pasted from area_that_kills_you_if_you_enter_it
 		..()
@@ -608,6 +609,18 @@ ABSTRACT_TYPE(/area/shuttle)
 
 /area/shuttle/mining/space
 	icon_state = "shuttle2"
+
+/area/shuttle/john/diner
+	icon_state = "shuttle"
+
+/area/shuttle/john/owlery
+	icon_state = "shuttle2"
+
+/area/shuttle/john/mining
+	icon_state = "shuttle2"
+
+/area/shuttle/john/grillnasium
+	icon_state = "shuttle"
 
 /area/shuttle/icebase_elevator/upper
 	icon_state = "shuttle"
@@ -979,6 +992,9 @@ ABSTRACT_TYPE(/area/adventure)
 /area/martian_trader
 	name ="Martian Trade Outpost"
 	sound_environment = 8
+#ifdef MAP_OVERRIDE_OSHAN
+	requires_power = FALSE
+#endif
 
 /area/abandonedmedicalship
 	name = "Abandoned Medical ship"
@@ -992,25 +1008,38 @@ ABSTRACT_TYPE(/area/adventure)
 	name ="Robot Trade Outpost"
 	icon_state ="green"
 	sound_environment = 3
+#ifdef UNDERWATER_MAP
+	requires_power = FALSE
+#endif
+
 /area/bee_trader
 	name ="Bombini's Ship"
 	icon_state ="green"
 	sound_environment = 2
+#ifdef UNDERWATER_MAP
+	requires_power = FALSE
+#endif
 
 /area/flock_trader
 	name = "Flocktrader Ship"
 	icon_state = "green"
 	sound_environment = 2
+#ifdef UNDERWATER_MAP
+	requires_power = FALSE
+#endif
 
 /area/skeleton_trader
 	name = "Skeleton Trade Outpost"
 	icon_state = "green"
 	sound_environment = 2
+#ifdef UNDERWATER_MAP
+	requires_power = FALSE
+#endif
 
 /area/fermid_hive
 	name = "Fermid Hive"
 	icon_state = "purple"
-
+	requires_power = FALSE
 
 /area/iss
 	name = "Derelict Space Station"
@@ -1018,11 +1047,19 @@ ABSTRACT_TYPE(/area/adventure)
 #ifdef SUBMARINE_MAP
 	force_fullbright = 1
 #endif
+#ifdef MAP_OVERRIDE_OSHAN
+	requires_power = FALSE
+#endif
 
+/area/spacehabitat/pool
+	name = "Pool Room"
+	icon_state = "yellow"
+	requires_power = FALSE
 
 /area/abandonedship
 	name = "Abandoned ship"
 	icon_state = "yellow"
+	requires_power = FALSE
 
 /area/spacehabitat
 	name = "Habitat Dome"
@@ -1036,14 +1073,21 @@ ABSTRACT_TYPE(/area/adventure)
 /area/salyut
 	name = "Soviet derelict"
 	icon_state = "yellow"
+	requires_power = FALSE
 
 /area/hollowasteroid/ //evilderelict.dm
 	name = "Forgotten Subterranean Wreckage"
 	icon_state = "derelict"
 	sound_loop = 'sound/ambience/spooky/Evilreaver_Ambience.ogg'
+	requires_power = FALSE
+
+
 ABSTRACT_TYPE(/area/diner)
 /area/diner
 	sound_environment = 12
+#ifdef UNDERWATER_MAP
+	requires_power = FALSE
+#endif
 
 /area/diner/hangar
 	name = "Space Diner Parking"
@@ -1137,6 +1181,12 @@ ABSTRACT_TYPE(/area/prefab)
 /area/prefab/von_ricken
 	name ="Von Ricken"
 	icon_state = "blue"
+
+/area/prefab/candy_shop
+	name = "Candy Shop"
+	icon_state = "blue"
+	sound_loop = 'sound/ambience/music/shoptheme.ogg'
+	sound_environment = 2
 
 // Sealab trench areas //
 
@@ -1832,6 +1882,11 @@ ABSTRACT_TYPE(/area/station/mining)
 	sound_loop = 'sound/ambience/station/underwater/sub_bridge_ambi1.ogg'
 #endif
 
+/area/station/bridge/united_command //currently only on atlas - ET
+    name = "United Command"
+    icon_state ="bridge"
+    sound_environment = 4
+
 /area/station/seaturtlebridge
 	name = "Sea Turtle Bridge"
 	icon_state = "bridge"
@@ -2029,6 +2084,9 @@ ABSTRACT_TYPE(/area/station/crew_quarters/radio)
 	name = "Clown Hole"
 	icon_state = "storage"
 	do_not_irradiate = 1
+#ifdef UNDERWATER_MAP
+	requires_power = FALSE
+#endif
 
 /area/station/crew_quarters/catering
 	name = "Catering Storage"
@@ -2158,6 +2216,7 @@ ABSTRACT_TYPE(/area/station/com_dish)
 /area/station/com_dish
 	name = "Communications Dish"
 	icon_state = "yellow"
+	requires_power = FALSE
 
 /area/station/com_dish/comdish
 	name = "Communications Dish"
@@ -2246,6 +2305,7 @@ ABSTRACT_TYPE(/area/station/engine)
 /area/station/engine/singcore
 	name = "Singularity Core"
 	icon_state = "red"
+	requires_power = FALSE
 
 /area/station/engine/eva
 	name = "Engineering EVA"
@@ -2263,6 +2323,7 @@ ABSTRACT_TYPE(/area/station/engine)
 /area/station/engine/combustion_chamber
 	name = "Combustion Chamber"
 	icon_state = "combustion_chamber"
+	requires_power = FALSE
 
 /area/station/engine/coldloop
 	name = "Cold Loop"
@@ -2562,6 +2623,9 @@ ABSTRACT_TYPE(/area/station/security)
 	icon_state = "HOS"
 	sound_environment = 4
 	workplace = 0 //As does the hos
+
+/area/station/security/hos/horizon
+	name = "Hovel of Security"
 
 /area/station/security/visitation
 	name ="Visitation"
@@ -2915,6 +2979,7 @@ ABSTRACT_TYPE(/area/station/garden)
 	icon_state = "yellow"
 	sound_environment = 15
 	do_not_irradiate = 1
+	requires_power = FALSE
 
 /area/station/garden/aviary
 	name = "Aviary"
@@ -2939,6 +3004,7 @@ ABSTRACT_TYPE(/area/station/catwalk)
 /area/station/catwalk
 	icon_state = "yellow"
 	force_fullbright = 1
+	requires_power = FALSE
 
 /area/station/catwalk/north
 	name = "North Maintenance Catwalk"
@@ -3238,6 +3304,7 @@ ABSTRACT_TYPE(/area/station/turret_protected)
 /area/station/turret_protected/armory_outside
 	name = "Armory Outer Perimeter"
 	icon_state = "secext"
+	requires_power = FALSE
 
 // // // //  OLD AREAS THAT ARE NOT USED BUT ARE IN HERE // // // //
 

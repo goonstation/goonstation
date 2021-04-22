@@ -48,7 +48,7 @@
 	slowdown_time = 15
 
 	two_handed = 1
-	w_class = 4
+	w_class = W_CLASS_BULKY
 
 	New()
 		ammo = new/obj/item/ammo/bullets/beepsky
@@ -456,3 +456,14 @@
 
 /obj/spawner/amongus_clothing/cursed
 	cursed = TRUE
+
+
+
+/proc/populate_station(chance=100)
+	for(var/job_name in job_start_locations)
+		if(job_name == "AI")
+			continue
+		for(var/turf/T in job_start_locations[job_name])
+			if(prob(chance))
+				var/mob/living/carbon/human/normal/H = new(T)
+				H.JobEquipSpawned(job_name)

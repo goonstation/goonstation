@@ -796,7 +796,7 @@
 		/obj/item/clothing/head/mj_hat,
 		/obj/item/clothing/head/that,
 		/obj/item/clothing/head/NTberet,
-		/obj/item/clothing/head/helmet/HoS,
+		/obj/item/clothing/head/hos_hat,
 		/obj/item/clothing/head/hosberet,
 		/obj/item/clothing/head/caphat,
 		/obj/item/clothing/head/fancy/captain,
@@ -1740,7 +1740,7 @@
 					icon_state = "sunbee_egg"
 					bee_name = "sun larva"
 
-		on_bite(obj/item/I, mob/M, mob/user)
+		heal(var/mob/M)
 			boutput(M, "<span class='alert'>You feel as if you have made a grave mistake.  Perhaps a doorway has closed forever.</span>")
 
 		attack_self(mob/user as mob)
@@ -1808,7 +1808,7 @@
 	desc = "A space-age cardboard carton designed to safely transport a single space bee egg."
 	icon = 'icons/misc/bee.dmi'
 	icon_state = "petbee_carton"
-	w_class = 2
+	w_class = W_CLASS_SMALL
 	var/obj/item/reagent_containers/food/snacks/ingredient/egg/bee/ourEgg
 	var/open = 0
 

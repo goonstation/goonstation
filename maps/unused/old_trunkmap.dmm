@@ -5136,7 +5136,9 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/captain)
 "ald" = (
-/obj/displaycase,
+/obj/displaycase{
+	displayed = new /obj/item/captaingun
+},
 /turf/simulated/floor,
 /area/station/crew_quarters/captain)
 "ale" = (

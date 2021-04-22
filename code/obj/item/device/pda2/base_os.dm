@@ -94,6 +94,7 @@
 				if(MODE_MAINMENU)
 					. += {"<h2>PERSONAL DATA ASSISTANT</h2>
 					Owner: [src.master.owner]<br>
+					Time: [time2text(world.timeofday, "DDD MMM DD, hh:mm:ss")]<br>
 
 					<h4>General Functions</h4>
 					<ul>

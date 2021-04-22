@@ -989,7 +989,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 				message = "<B>[src]</B> does a flip!"
 
 				//flick("ai-flip", src)
-				if(faceEmotion != "ai-red")
+				if(faceEmotion != "ai-red" && faceEmotion != "ai-tetris")
 					UpdateOverlays(SafeGetOverlayImage("actual_face", 'icons/mob/ai.dmi', "[faceEmotion]-flip", src.layer+0.2), "actual_face")
 					SPAWN_DBG(0.5 SECONDS)
 						UpdateOverlays(SafeGetOverlayImage("actual_face", 'icons/mob/ai.dmi', faceEmotion, src.layer+0.2), "actual_face")
@@ -1900,7 +1900,11 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 		I.color = faceColor
 		UpdateOverlays(I, "faceplate")
 
-		UpdateOverlays(SafeGetOverlayImage("face_glow", 'icons/mob/ai.dmi', "ai-face_glow", src.layer+0.1), "face_glow")
+		if (faceEmotion != "ai-tetris")
+			UpdateOverlays(SafeGetOverlayImage("face_glow", 'icons/mob/ai.dmi', "ai-face_glow", src.layer+0.1), "face_glow")
+		else
+			UpdateOverlays(null, "face_glow")
+
 		UpdateOverlays(SafeGetOverlayImage("actual_face", 'icons/mob/ai.dmi', faceEmotion, src.layer+0.2), "actual_face")
 
 		if (src.power_mode == 1)

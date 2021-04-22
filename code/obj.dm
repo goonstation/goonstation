@@ -218,7 +218,7 @@
 		else if (istype(usr, /mob/dead/observer))	//ghost
 			if(!src.anchored && isitem(src))
 				var/obj/item/I = src
-				if (I.w_class > 3)
+				if (I.w_class > W_CLASS_NORMAL)
 					return
 				if (istype(usr:abilityHolder, /datum/abilityHolder/ghost_observer))
 					var/datum/abilityHolder/ghost_observer/GH = usr:abilityHolder

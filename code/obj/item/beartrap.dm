@@ -5,7 +5,7 @@
 	icon_state = "bear_trap-close"
 	item_state = "bear_trap"
 	flags = FPRINT
-	w_class = 2
+	w_class = W_CLASS_SMALL
 	force = 5
 	throwforce = 5
 	var/armed = FALSE
@@ -33,8 +33,7 @@
 				return
 			M.visible_message("[M] starts disarming [src]...")
 			var/datum/action/bar/icon/callback/action_bar = new /datum/action/bar/icon/callback(M, src, 3 SECONDS, /obj/item/beartrap/proc/disarm,\
-			src.icon, src.icon_state, "[M] finishes disarming [src]")
-			action_bar.proc_args = list(M)
+			list(M), src.icon, src.icon_state, "[M] finishes disarming [src]")
 			actions.start(action_bar, M)
 		else
 			..()
@@ -43,8 +42,7 @@
 		if (!src.armed)
 			M.show_text("You start to arm the beartrap...", "blue")
 			var/datum/action/bar/icon/callback/action_bar = new /datum/action/bar/icon/callback(M, src, 2 SECONDS, /obj/item/beartrap/proc/arm,\
-			src.icon, src.icon_state, "[M] finishes arming [src]")
-			action_bar.proc_args = list(M)
+			list(M), src.icon, src.icon_state, "[M] finishes arming [src]")
 			actions.start(action_bar, M)
 		return
 
