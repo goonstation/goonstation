@@ -9671,8 +9671,7 @@
 	pixel_x = 6
 	},
 /obj/item_dispenser/icedispenser{
-	dir = 1;
-	pixel_y = 0
+	dir = 1
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/bar)
@@ -73322,6 +73321,10 @@
 	},
 /turf/simulated/floor/wood,
 /area/station/ranch)
+"jlG" = (
+/obj/storage/closet/medicalclothes,
+/turf/simulated/floor/blue,
+/area/station/medical/medbay)
 "jqe" = (
 /obj/machinery/firealarm{
 	dir = 8;
@@ -105147,7 +105150,7 @@ cQA
 cSn
 cTG
 cVj
-cQA
+jlG
 cXG
 cYQ
 cZH
