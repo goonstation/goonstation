@@ -255,10 +255,10 @@ var/zapLimiter = 0
 		var/image/I_wiredarkred = SafeGetOverlayImage("wiredarkred", 'icons/obj/power.dmi', "apccut-darkred")
 		var/image/I_wirewhite = SafeGetOverlayImage("wirewhite", 'icons/obj/power.dmi', "apccut-white")
 		var/image/I_wireyellow = SafeGetOverlayImage("wireyellow", 'icons/obj/power.dmi', "apccut-yellow")
-		UpdateOverlays(isWireColorCut(1) ? I_wireorange : null, "wireorange", 0, 1)
-		UpdateOverlays(isWireColorCut(2) ? I_wiredarkred : null, "wiredarkred", 0, 1)
-		UpdateOverlays(isWireColorCut(3) ? I_wirewhite : null, "wirewhite", 0, 1)
-		UpdateOverlays(isWireColorCut(4) ? I_wireyellow : null, "wireyellow", 0, 1)
+		UpdateOverlays(isWireColorCut(APC_WIRE_IDSCAN) ? I_wireorange : null, "wireorange", 0, 1)
+		UpdateOverlays(isWireColorCut(APC_WIRE_MAIN_POWER1) ? I_wiredarkred : null, "wiredarkred", 0, 1)
+		UpdateOverlays(isWireColorCut(APC_WIRE_MAIN_POWER2) ? I_wirewhite : null, "wirewhite", 0, 1)
+		UpdateOverlays(isWireColorCut(APC_WIRE_AI_CONTROL) ? I_wireyellow : null, "wireyellow", 0, 1)
 
 		return
 	else
