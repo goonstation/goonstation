@@ -221,7 +221,7 @@
 	name = "aurora MKII utility belt"
 	desc = "An utility belt for usage in high-risk salvage operations. Contains a personal shield generator. Can be activated to overcharge the shields temporarily."
 	icon_state = "cebelt"
-	item_state = "utility"
+	item_state = "cebelt"
 	rarity = 4
 	abilities = list(/obj/ability_button/cebelt_toggle)
 	var/active = 0

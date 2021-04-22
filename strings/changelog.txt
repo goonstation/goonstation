@@ -1,5 +1,18 @@
 
+(t)thu apr 22 21
+(u)Mordent
+(p)4405
+(e)📄|tgui
+(+)Pressing arrow keys when you have a tgui window focused will no longer attempt to move your character.
 (t)wed apr 21 21
+(u)Flaborized
+(p)4410
+(e)🎨|sprites
+(+)Updated the cow sprite a bit more.
+(u)Flappybat
+(p)4120
+(e)⚖|balance
+(*)Removed some spy delivery locations: Asylum, AI core, singularity core and combustion chamber.
 (u)Luxizzle
 (p)4331
 (e)📄|tgui
