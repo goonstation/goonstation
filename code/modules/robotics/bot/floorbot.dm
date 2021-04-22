@@ -37,7 +37,7 @@
 	bot_move_delay = FLOORBOT_MOVE_SPEED
 	//weight = 1.0E7
 	var/amount = 50
-	on = 1
+	on = 0
 	var/repairing = 0
 	var/improvefloors = 0
 	var/eattiles = 1
@@ -78,18 +78,14 @@
 /obj/machinery/bot/floorbot/attack_hand(mob/user as mob, params)
 	var/dat
 	dat += "<TT><B>Automatic Station Floor Repairer v1.0</B></TT><BR><BR>"
-	dat += "Status: []<BR>"
+	dat += "Status: \[<A href='?src=\ref[src];operation=start'>[src.on ? "On" : "Off"]</A>]<BR>"
 	dat += "Tiles left: [src.amount]<BR>"
 	dat += "Behaviour controls are [src.locked ? "locked" : "unlocked"]"
-	dat += "<A href='?src=\ref[src];operation=start'>[src.on ? "On" : "Off"]</A>"
 	if (!src.locked)
 		dat += "<hr>"
-		dat += "Improves floors: []<BR>"
-		dat += "Finds tiles: []<BR>"
-		dat += "Make single pieces of metal into tiles when empty: []"
-		dat += "<A href='?src=\ref[src];operation=improve'>[src.improvefloors ? "Yes" : "No"]</A>"
-		dat += "<A href='?src=\ref[src];operation=tiles'>[src.eattiles ? "Yes" : "No"]</A>"
-		dat += "<A href='?src=\ref[src];operation=make'>[src.maketiles ? "Yes" : "No"]</A>"
+		dat += "Improves floors: \[<A href='?src=\ref[src];operation=improve'>[src.improvefloors ? "Yes" : "No"]</A>]<BR>"
+		dat += "Collects tiles: \[<A href='?src=\ref[src];operation=tiles'>[src.eattiles ? "Yes" : "No"]</A>]<BR>"
+		dat += "Collects metal: \[<A href='?src=\ref[src];operation=make'>[src.maketiles ? "Yes" : "No"]</A>]"
 
 	if (user.client.tooltipHolder)
 		user.client.tooltipHolder.showClickTip(src, list(
