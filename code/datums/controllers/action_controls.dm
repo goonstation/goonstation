@@ -587,6 +587,7 @@ var/datum/action_controller/actions
 	var/slot						    //The slot number
 	var/turf/start
 	var/hidden
+	var/clumsy = FALSE
 
 	New(var/Source, var/Item, var/Slot, var/ExtraDuration = 0, var/Hidden = 0)
 		source = Source
@@ -616,7 +617,9 @@ var/datum/action_controller/actions
 
 			item_duration *= familiarity_scale ? familiarity_scale : 1
 
-		if( source.bioHolder?.HasEffect("clumsy")	)
+		if( (source.bioHolder?.HasEffect("clumsy") && prob(33)) \
+			|| (source.reagents && prob(source.reagents.get_reagent_amount("ethanol") * 0.8)) 	)
+			clumsy = TRUE
 			duration *= 1.2
 
 		duration += ExtraDuration
@@ -633,7 +636,7 @@ var/datum/action_controller/actions
 			icon = item.icon
 			icon_state = item.icon_state
 			for(var/mob/O in AIviewers(owner))
-				O.show_message("<span class='alert'><B>[source] tries to put on [item]!</B></span>", 1)
+				O.show_message("<span class='alert'><B>[source] tries to put on [item][clumsy ? " but struggles a bit" : ""]!</B></span>", 1)
 		else
 			var/obj/item/I = source.get_slot(slot)
 
