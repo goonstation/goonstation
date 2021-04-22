@@ -882,7 +882,7 @@
 
 		playsound(src.loc, sound_process, 40, 1)
 
-	proc/loadreclaim(obj/item/W as obj, mob/user as mob)
+	proc/load_reclaim(obj/item/W as obj, mob/user as mob)
 		. = FALSE
 		if (istype(W,/obj/item/raw_material/) || istype(W,/obj/item/sheet/) || istype(W,/obj/item/rods/) || istype(W,/obj/item/tile/) || istype(W,/obj/item/cable_coil) || istype(W,/obj/item/wizard_crystal))
 			W.set_loc(src)
@@ -899,7 +899,7 @@
 			var/obj/item/storage/S = W
 			var/obj/item/satchel/B = W
 			for(var/obj/item/O in W)
-				if (loadreclaim(O))
+				if (load_reclaim(O))
 					. = TRUE
 					if (istype(S))
 						S.hud.remove_object(O)
@@ -911,7 +911,7 @@
 				user.visible_message("<b>[user.name]</b> loads [W] into [src].")
 				playsound(get_turf(src), sound_load, 40, 1)
 
-		else if (loadreclaim(W, user))
+		else if (load_reclaim(W, user))
 			boutput(user, "You load [W] into [src].")
 			playsound(get_turf(src), sound_load, 40, 1)
 
