@@ -14,7 +14,7 @@
 	hit_type = DAMAGE_BLUNT
 	throw_speed = 0.5
 	c_flags = EQUIPPED_WHILE_HELD
-	w_class = 1
+	w_class = W_CLASS_TINY
 	var/on = 0
 	var/exploding = 0 //Does it blow up when it goes out?
 	var/flavor = null
@@ -405,7 +405,7 @@
 	force = 0
 	hit_type = DAMAGE_BLUNT
 	throw_speed = 0.5
-	w_class = 1
+	w_class = W_CLASS_TINY
 	rand_pos = 1
 	var/flavor = null
 
@@ -518,7 +518,7 @@
 	icon_state = "cigpacket"
 	uses_multiple_icon_states = 1
 	item_state = "cigpacket"
-	w_class = 1
+	w_class = W_CLASS_TINY
 	throwforce = 2
 	var/cigcount = 6
 	var/cigtype = /obj/item/clothing/mask/cigarette
@@ -609,7 +609,7 @@
 	desc = "A manky old cigarette butt."
 	icon = 'icons/obj/items/cigarettes.dmi'
 	icon_state = "cigbutt"
-	w_class = 1
+	w_class = W_CLASS_TINY
 	throwforce = 1
 	stamina_damage = 0
 	stamina_cost = 0
@@ -622,7 +622,7 @@
 	icon_state = "cigarbox"
 	uses_multiple_icon_states = 1
 	item_state = "cigarbox"
-	w_class = 1
+	w_class = W_CLASS_TINY
 	throwforce = 2
 	var/cigcount = 5
 	var/cigtype = /obj/item/clothing/mask/cigarette/cigar
@@ -686,7 +686,7 @@
 	icon_state = "cigarbox"
 	uses_multiple_icon_states = 1
 	item_state = "cigarbox"
-	w_class = 1
+	w_class = W_CLASS_TINY
 	throwforce = 2
 	cigcount = 5
 	cigtype = /obj/item/clothing/mask/cigarette/cigar/gold
@@ -770,7 +770,7 @@
 	icon = 'icons/obj/items/cigarettes.dmi'
 	icon_state = "matchbook"
 	uses_multiple_icon_states = 1
-	w_class = 1
+	w_class = W_CLASS_TINY
 	throwforce = 1
 	flags = FPRINT | TABLEPASS | SUPPRESSATTACK
 	stamina_damage = 0
@@ -849,7 +849,7 @@
 	icon = 'icons/obj/items/cigarettes.dmi'
 	icon_state = "match"
 	uses_multiple_icon_states = 1
-	w_class = 1
+	w_class = W_CLASS_TINY
 	throwforce = 1
 	flags = FPRINT | TABLEPASS | SUPPRESSATTACK
 	stamina_damage = 0
@@ -1065,7 +1065,7 @@
 	icon_state = "zippo"
 	item_state = "zippo"
 	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
-	w_class = 1
+	w_class = W_CLASS_TINY
 	throwforce = 4
 	flags = FPRINT | ONBELT | TABLEPASS | CONDUCT | ATTACK_SELF_DELAY
 	click_delay = 0.7 SECONDS

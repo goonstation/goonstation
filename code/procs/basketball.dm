@@ -431,7 +431,7 @@
 	flags = FPRINT | TABLEPASS| CONDUCT | ONBELT
 	item_state = "radio"
 	throwforce = 5
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	throw_speed = 4
 	throw_range = 20
 	m_amt = 100

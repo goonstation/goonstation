@@ -1808,7 +1808,7 @@
 	desc = "A space-age cardboard carton designed to safely transport a single space bee egg."
 	icon = 'icons/misc/bee.dmi'
 	icon_state = "petbee_carton"
-	w_class = 2
+	w_class = W_CLASS_SMALL
 	var/obj/item/reagent_containers/food/snacks/ingredient/egg/bee/ourEgg
 	var/open = 0
 

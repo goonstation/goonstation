@@ -940,7 +940,7 @@
 	flags = FPRINT | TABLEPASS
 	force = 2
 	throwforce = 5
-	w_class = 2
+	w_class = W_CLASS_SMALL
 	var/light_status = 0		// LIGHT_OK, LIGHT_BURNED or LIGHT_BROKEN
 	var/base_state
 	var/breakprob = 0	// number of times switched

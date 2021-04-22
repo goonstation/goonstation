@@ -3,7 +3,7 @@
 	icon = 'icons/obj/items/pinpointers.dmi'
 	icon_state = "disk_pinoff"
 	flags = FPRINT | TABLEPASS| CONDUCT | ONBELT
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	item_state = "electronic"
 	throw_speed = 4
 	throw_range = 20
@@ -108,7 +108,7 @@
 	icon = 'icons/obj/items/pinpointers.dmi'
 	icon_state = "id_pinoff"
 	flags = FPRINT | TABLEPASS| CONDUCT | ONBELT
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	item_state = "electronic"
 	throw_speed = 4
 	throw_range = 20
@@ -223,7 +223,7 @@
 	icon = 'icons/obj/items/pinpointers.dmi'
 	icon_state = "blood_pinoff"
 	flags = FPRINT | TABLEPASS| CONDUCT | ONBELT
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	item_state = "electronic"
 	throw_speed = 4
 	throw_range = 20

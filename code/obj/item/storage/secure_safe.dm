@@ -15,7 +15,7 @@
 	var/emagged = 0
 	var/open = 0
 	var/hackable = 0
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	burn_possible = 0
 	var/random_code = 0 // sets things to already have a randomized code on spawning
 
@@ -51,7 +51,7 @@
 	return 1
 
 /obj/item/storage/secure/attackby(obj/item/W as obj, mob/user as mob, obj/item/storage/T)
-	if ((W.w_class > 3 || istype(W, /obj/item/storage/secure)))
+	if ((W.w_class > W_CLASS_NORMAL || istype(W, /obj/item/storage/secure)))
 		return
 	//Waluigi hates this
 	if (hackable)
@@ -396,7 +396,7 @@
 	force = 8.0
 	throw_speed = 1
 	throw_range = 4
-	w_class = 4.0
+	w_class = W_CLASS_BULKY
 	mats = 8
 	spawn_contents = list(/obj/item/paper,\
 	/obj/item/pen)
@@ -451,7 +451,7 @@
 	icon_sparking = "safespark"
 	flags = FPRINT | TABLEPASS
 	force = 8.0
-	w_class = 4.0
+	w_class = W_CLASS_BULKY
 	anchored = 1.0
 	density = 0
 	mats = 8

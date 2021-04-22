@@ -2,7 +2,7 @@
 /obj/item/mine
 	name = "land mine (parent)"
 	desc = "You shouldn't be able to see this!"
-	w_class = 3
+	w_class = W_CLASS_NORMAL
 	density = 0
 	layer = OBJ_LAYER
 	icon = 'icons/obj/items/weapons.dmi'

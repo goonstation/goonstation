@@ -1161,7 +1161,7 @@
 	item_state = "towel"
 	layer = MOB_LAYER
 	throwforce = 1
-	w_class = 1
+	w_class = W_CLASS_TINY
 	throw_speed = 2
 	throw_range = 10
 	body_parts_covered = TORSO

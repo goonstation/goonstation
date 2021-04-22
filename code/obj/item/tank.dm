@@ -294,7 +294,7 @@ Contains:
 	icon_state = "jetpack_mag0"
 	uses_multiple_icon_states = 1
 	var/on = 0.0
-	w_class = 4.0
+	w_class = W_CLASS_BULKY
 	item_state = "jetpack_mag"
 	mats = 16
 	force = 8
@@ -352,7 +352,7 @@ Contains:
 	icon_state = "jetpack0"
 	uses_multiple_icon_states = 1
 	var/on = 0.0
-	w_class = 4.0
+	w_class = W_CLASS_BULKY
 	item_state = "jetpack"
 	mats = 16
 	force = 8
@@ -422,7 +422,7 @@ Contains:
 	name = "emergency oxygentank"
 	icon_state = "em_oxtank"
 	flags = FPRINT | TABLEPASS | ONBELT | CONDUCT
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	force = 3.0
 	stamina_damage = 30
 	stamina_cost = 16
@@ -601,7 +601,7 @@ Contains:
 	name = "Super Soaker"
 	icon_state = "jetpack0"
 	var/on = 0.0
-	w_class = 4.0
+	w_class = W_CLASS_BULKY
 	item_state = "jetpack"*/
 
 
@@ -610,7 +610,7 @@ Contains:
 	icon_state = "jetpack_mk2_0"
 	uses_multiple_icon_states = 1
 	on = 0.0
-	w_class = 4.0
+	w_class = W_CLASS_BULKY
 	item_state = "jetpack_mk2_0"
 	mats = 16
 	force = 8
