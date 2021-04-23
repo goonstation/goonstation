@@ -106,8 +106,9 @@
 			doupdateicon = 0
 			src.start_interdicting()
 	else
-		doupdateicon = 0
-		src.stop_interdicting()
+		if(src.canInterdict)
+			doupdateicon = 0
+			src.stop_interdicting()
 	if(src.hasInterdicted)
 		src.hasInterdicted = 0
 		playsound(src.loc, src.sound_interdict_run, 50, 0)
