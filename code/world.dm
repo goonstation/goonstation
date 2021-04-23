@@ -210,7 +210,7 @@ var/f_color_selector_handler/F_Color_Selector
 
 #if defined(SERVER_SIDE_PROFILING) && (defined(SERVER_SIDE_PROFILING_FULL_ROUND) || defined(SERVER_SIDE_PROFILING_PREGAME))
 #warn Profiler enabled at start of init
-		world.Profile(PROFILE_START)
+		world.Profile(PROFILE_START, "sendmaps", "json")
 #endif
 		server_start_time = world.timeofday
 
@@ -687,10 +687,10 @@ var/f_color_selector_handler/F_Color_Selector
 #warn Profiler enabled at end of game (full)
 	var/profile_out = file("data/profile/[time2text(world.realtime, "YYYY-MM-DD hh-mm-ss")]-full.log")
 #endif
-	profile_out << world.Profile(PROFILE_START, "json")
+	profile_out << world.Profile(PROFILE_START, "sendmaps", "json")
 	world.log << "Dumped profiler data."
 	// not gonna need this again
-	world.Profile(PROFILE_STOP)
+	world.Profile(PROFILE_STOP, "sendmaps", "json")
 #endif
 
 	lagcheck_enabled = 0

@@ -2293,11 +2293,6 @@ datum
 				var/speed_temp = text2num("[rand(0,10)].[rand(0,9)]")
 				animate_spin(O, dir_temp, speed_temp)
 
-			reaction_turf(var/turf/T) // oh god what am I doing this is such a bad idea
-				var/dir_temp = pick("L", "R")
-				var/speed_temp = text2num("[rand(0,10)].[rand(0,9)]")
-				animate_spin(T, dir_temp, speed_temp)
-
 			on_add()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom

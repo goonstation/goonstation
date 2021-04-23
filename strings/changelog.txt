@@ -1,5 +1,14 @@
 
+(t)fri apr 23 21
+(u)Chickenish
+(p)3984
+(e)⚖🐛|balance, bug
+(*)Mutations are now lag adjusted.
 (t)thu apr 22 21
+(u)BatElite & ZeWaka
+(p)4086
+(e)🎨|sprites
+(*)Material sheets, rods and tiles look a lot better now. They also show roughly the amount that's on a stack.
 (u)Mordent
 (p)4405
 (e)📄|tgui
