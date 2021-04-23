@@ -1946,6 +1946,15 @@
 	desc = "Seems like theres traces of charcoal on the paper. Huh."
 	blueprint = /datum/manufacture/alastor
 
+
+/******************** Spatial Interdictor Phase-Control Rod *******************/
+
+/obj/item/paper/manufacturer_blueprint/interdictor_rod
+	name = "Interdictor Rod Blueprint"
+	icon = 'icons/obj/writing.dmi'
+	icon_state = "blueprint"
+	blueprint = /datum/manufacture/interdictor_rod
+
 // Fabricator Defines
 
 /obj/machinery/manufacturer/general

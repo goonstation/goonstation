@@ -70,7 +70,7 @@
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	id = "push_through_tear"
 	icon = 'icons/ui/actions.dmi'
-	icon_state = "working"
+	icon_state = "tear_push"
 	var/mob/ownerMob
 	var/obj/forcefield/event/spatialtear
 	var/turf/jump_target //where the mob will move to when they complete the jump!
