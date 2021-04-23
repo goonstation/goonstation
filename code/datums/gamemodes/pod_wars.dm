@@ -71,7 +71,7 @@ var/list/pw_rewards_tier3 = null
 		var/length = length(readied_minds)
 		shuffle_list(readied_minds)
 		if (length < 2)
-			if (prob(100))	//change to 50 - KYLE
+			if (prob(0))	//change to 50 - KYLE
 				var/CHANGE_TO_50
 				team_NT.accept_initial_players(readied_minds)
 			else
@@ -315,11 +315,11 @@ ABSTRACT_TYPE(/datum/ore_cluster)
 	switch(team_num)
 		if (TEAM_NANOTRASEN)
 			src.playsound_to_team(team_NT, "sound/voice/pod_wars_voices/{PWTN}Objective_Secured-[rand(1,2)].ogg")
-			src.playsound_to_team(team_SY, "sound/voice/pod_wars_voices/{PWTN}Lost_[true_name].ogg")
+			src.playsound_to_team(team_SY, "sound/voice/pod_wars_voices/{PWTN}Lost_[true_name]-[rand(1,2)].ogg")
 
 		if (TEAM_SYNDICATE)
 			src.playsound_to_team(team_SY, "sound/voice/pod_wars_voices/{PWTN}Objective_Secured-[rand(1,2)].ogg")
-			src.playsound_to_team(team_NT, "sound/voice/pod_wars_voices/{PWTN}Lost_[true_name].ogg")
+			src.playsound_to_team(team_NT, "sound/voice/pod_wars_voices/{PWTN}Lost_[true_name]-[rand(1,2)].ogg")
 
 /datum/game_mode/pod_wars/proc/handle_point_change(var/datum/pod_wars_team/team)
 	var/fraction = round (team.points/team.max_points, 0.01)
@@ -454,8 +454,6 @@ ABSTRACT_TYPE(/datum/ore_cluster)
 //pw_team can be the team datum or TEAM_NANOTRASEN|TEAM_SYNDICATE
 //filepath; sound file path as a string.
 /datum/game_mode/pod_wars/proc/playsound_to_team(var/pw_team, var/filepath)
-	//playsound(T, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)sound\voice\pod_wars_voices
-
 	if (isnull(pw_team) || isnull(filepath))
 		return 0
 
@@ -476,12 +474,14 @@ ABSTRACT_TYPE(/datum/ore_cluster)
 		message_admins("Something went wrong trying to play a sound for a team")
 		return 0
 
+	if (team == team_NT) return
 	//use the format of sound files in /sound/voice/pod_wars_voices.
 	//If we find "{PWTN}" in the filepath, then we replace that with the team name, either "NanoTrasen"- or "Syndicate-"?
 	//{PWTN} = PodWarsTeamName
 	if (findtext(filepath, "{PWTN}"))
 		filepath = replacetext(filepath, "{PWTN}", "[team.name]-")
 		
+	message_admins("filepath is now: [filepath]")
 	for (var/datum/mind/M in team.members)
 		M.current.playsound_local(M.current, filepath, 50, 0)
 
@@ -1389,6 +1389,7 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 
 /obj/machinery/manufacturer/pod_wars/nanotrasen
 	name = "NanoTrasen Ship Component Fabricator"
+	team_num = TEAM_NANOTRASEN
 	add_team_armor()
 		available += list(
 		/datum/manufacture/pod_wars/pod/armor_light/nt,
@@ -1396,6 +1397,7 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 		)
 /obj/machinery/manufacturer/pod_wars/syndicate
 	name = "Syndicate Ship Component Fabricator"
+	team_num = TEAM_SYNDICATE
 	add_team_armor()
 		available += list(
 		/datum/manufacture/pod_wars/pod/armor_light/sy,
@@ -1563,7 +1565,7 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 	name = "Deployable Barricade"
 	item_paths = list("MET-2")
 	item_amounts = list(5)
-	item_outputs = list(/obj/barricade)
+	item_outputs = list(/obj/item/deployer/barricade)
 	time = 1 SECONDS
 	create = 1
 	category = "Miscellaneous"
@@ -2493,6 +2495,7 @@ Player Stats
 		..()
 		src.team_num = team_num
 		src.tier = tier
+		playsound(loc, "sound/effects/mag_warp.ogg", 100, 1, -1)
 
 		//handle name, color, and access for types...
 		var/team_name_str
@@ -2535,9 +2538,9 @@ Player Stats
 
 	//Selects the items that this crate spawns with based on its possible contents.
 	proc/spawn_items()		
-		var/tier1_max_points = 20
+		var/tier1_max_points = 15
 		var/tier2_max_points = 10
-		var/tier3_max_points = 10
+		var/tier3_max_points = 6
 
 		//This feels really stupid, but idk how better to do it. -kly
 		switch (tier)
@@ -2570,44 +2573,43 @@ Player Stats
 		if (!istype(mode))
 			mode = null
 #endif
-
+		var/failsafe_counter = 0		//I'm paranoid okay... what if some admin accidentally fucks with the list, could hang the server.
 		var/points = 0
 		while (points < max_points)
 			var/selected = pick(possible_rewards)
-			var/amt_to_spawn = possible_rewards[selected]			//if null or 1 we spawn 1, if some other number, we spawn that many
-			var/total_spawned = 1				//cause we always spawn at least 1, which we do on the line below
+			if(points + possible_rewards[selected] > max_points) continue
 			var/obj/item/I = new selected(src)
-
-			//create extra items for this spawn. (If this path maps to a number value which indicates the amount of items that should be spawned)
-			if (isnum(amt_to_spawn))
-				total_spawned += amt_to_spawn - 1
-
-				//loops to value-1 cause we'll always spawn at least 1, and have already spawned it above. 
-				for (var/i = 0; i < amt_to_spawn - 1; i++)
-					new selected(src)
+			var/val = possible_rewards[selected]
 
 			message_admins("[I.name] = [possible_rewards[selected]]pts")
-			
-			points += total_spawned
+			//if possible_rewards[selected] is null or 0, we increment by 1 null or 1 we spawn 1, if some other number, we add that many points
+			points += possible_rewards[selected] ? possible_rewards[selected] : 1
+			// points += total_spawned
+
+			failsafe_counter++
+			if (failsafe_counter > 50)
+				break
+
 
 			//assuming we have the corect mode, that is the pod wars mode. These shouldn't really be spawning anyway if it isn't that mode...
 #ifdef MAP_OVERRIDE_POD_WARS
-			mode?.stats_manager.add_item_reward(I.name, team_num, total_spawned)
+			mode?.stats_manager.add_item_reward(I.name, team_num)
 		mode?.stats_manager.add_crate(src.name, team_num)
 #endif
 		return 1
 
 //this is global so admins can run this proc to spawn the crates if they like, idk why they'd really want to but might as well be safe.
+//The list here is set up where the object path is the key, and the value is its point amount
 proc/setup_pw_crate_lists()
 	pw_rewards_tier1 = list(/obj/item/storage/firstaid/regular, /obj/item/reagent_containers/mender/both, 	///obj/item/tank/plasma
-		/obj/item/tank/oxygen, /obj/item/old_grenade/energy_frag = 3, /obj/item/old_grenade/energy_concussion = 3, /obj/item/device/flash, /obj/barricade = 4,
+		/obj/item/tank/oxygen, /obj/item/old_grenade/energy_frag = 3, /obj/item/old_grenade/energy_concussion = 3, /obj/item/device/flash, /obj/item/deployer/barricade = 4,
 		/obj/item/shipcomponent/mainweapon/taser, /obj/item/shipcomponent/mainweapon/laser/short, /obj/item/shipcomponent/mainweapon/foamer,
-		/obj/item/material_piece/steel = 10, /obj/item/material_piece/copper = 10, /obj/item/material_piece/glass = 10 )
+		/obj/item/material_piece/steel{amount=10}, /obj/item/material_piece/copper{amount=10}, /obj/item/material_piece/glass{amount=10} )
 	
 	pw_rewards_tier2 = list(/obj/item/tank/jetpack, /obj/item/old_grenade/smoke = 3,/obj/item/chem_grenade/flashbang = 3, /obj/item/barrier,
 		/obj/item/old_grenade/emp, /obj/item/sword/discount, /obj/item/storage/firstaid/crit, /obj/item/wrench/battle, /obj/item/dagger/syndicate/specialist,
 		/obj/item/shipcomponent/mainweapon/mining, /obj/item/shipcomponent/mainweapon/laser, /obj/item/shipcomponent/mainweapon/disruptor_light,
-		/obj/item/material_piece/cerenkite = 5, /obj/item/material_piece/claretine = 10, /obj/item/material_piece/bohrum = 10, /obj/item/material_piece/plasmastone = 10, /obj/item/material_piece/uqill = 10)
+		/obj/item/material_piece/cerenkite{amount=5}, /obj/item/material_piece/claretine{amount=5}, /obj/item/material_piece/bohrum{amount=10}, /obj/item/material_piece/plasmastone{amount=10}, /obj/item/material_piece/uqill{amount=10})
 	
 	pw_rewards_tier3 = list(/obj/item/sword, /obj/item/gun/energy/crossbow, /obj/item/cloak_gen, /obj/item/device/chameleon, 
 		/obj/item/gun/energy/vuvuzela_gun, /obj/item/gun/flamethrower/backtank,
