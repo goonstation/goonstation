@@ -1,6 +1,11 @@
 //device for engineers to construct that counteracts the effects of random events in its radius,
 //if it has been set up a sufficient time in advance
 
+//todo: ensure interdictor only operates/charges/shows grid tie indicator while anchored in position
+//check for full battery in the anchor/unanchor proc (use ternary to swap between functions)
+
+//todo: add visual field that indicates the interdictor's range of protection
+
 /obj/machinery/interdictor
 	name = "spatial interdictor"
 	desc = "A sophisticated device that lessens or nullifies the effects of assorted stellar phenomena."
@@ -9,13 +14,16 @@
 	power_usage = 120
 	density = 1
 	anchored = 0
-	var/obj/item/cell/intcap = null
+	var/obj/item/cell/intcap = null //short for internal capacitor.
 	var/chargerate = 400 // internal cell charge rate, per tick
 	var/canInterdict = 0 // indication of operability
 	//if 0, whether from depletion or new installation, battery charge must reach 100% to set to 1 and activate interdiction
+	var/hasInterdicted = 0 // indication of operation in progress
+	//if 1, play interdiction active sound on next machine tick
 
 	var/sound/sound_interdict_on = "sound/machines/interdictor_activate.ogg"
 	var/sound/sound_interdict_off = "sound/machines/interdictor_deactivate.ogg"
+	var/sound/sound_interdict_run = "sound/machines/interdictor_operate.ogg"
 
 	New()
 		src.intcap = new /obj/item/cell/supercell(src) //deliberately not charged
@@ -23,16 +31,16 @@
 		src.updateicon()
 
 	disposing()
-		PCEL?.dispose()
-		PCEL = null
-		sound_on = null
-		sound_off = null
+		intcap?.dispose()
+		intcap = null
+		sound_interdict_on = null
+		sound_interdict_off = null
+		sound_interdict_run = null
 		..()
 
 /obj/machinery/interdictor/proc/updateicon()
 	var/ratio = max(0, src.intcap.charge / src.intcap.maxcharge)
 	ratio = round(ratio, 0.33) * 100
-	boutput(world, "yep [ratio]")
 	var/image/I_chrg = SafeGetOverlayImage("charge", 'icons/obj/machines/interdictor.dmi', "idx-charge-[ratio]")
 	I_chrg.plane = PLANE_OVERLAY_EFFECTS
 	UpdateOverlays(I_chrg, "charge", 0, 1)
@@ -55,16 +63,20 @@
 	if(!intcap)
 		status |= BROKEN
 		src.canInterdict = 0
-		playsound(src.loc, src.sound_interdict_off, 50, 1)
+		playsound(src.loc, src.sound_interdict_off, 50, 0)
 		src.updateicon()
 		message_admins("Interdictor at ([showCoords(src.x, src.y, src.z)]) is missing a power cell. This is not supposed to happen, yell at kubius")
 		return
 	if(intcap.charge < intcap.maxcharge)
 		var/added = intcap.give(src.chargerate * mult)
+		//boutput(world, "yep [added / CELLRATE]")
 		use_power(added / CELLRATE)
-	if(intcap.charge == intcap.maxcharge)
+	if(intcap.charge == intcap.maxcharge && !src.canInterdict)
 		src.canInterdict = 1
-		playsound(src.loc, src.sound_interdict_on, 50, 1)
+		playsound(src.loc, src.sound_interdict_on, 50, 0)
+	if(src.hasInterdicted)
+		src.hasInterdicted = 0
+		playsound(src.loc, src.sound_interdict_run, 50, 0)
 
 	src.updateicon()
 
@@ -76,7 +88,7 @@
 		return 0
 	if (!intcap || intcap.charge < stopcost)
 		src.canInterdict = 0
-		playsound(src.loc, src.sound_interdict_off, 50, 1)
+		playsound(src.loc, src.sound_interdict_off, 50, 0)
 		return 0
 	else
 		intcap.use(stopcost)

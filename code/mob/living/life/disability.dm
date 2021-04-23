@@ -41,7 +41,16 @@
 		if (owner.loc && isarea(owner.loc.loc))
 			var/area/A = owner.loc.loc
 			if (A.irradiated)
-				owner.changeStatus("radiation", (A.irradiated * 10 * mult) SECONDS)
+				//spatial interdictor: mitigate effect of radiation
+				//consumes 100 units of charge per person per tick
+				var/interdictor_influence = 0
+				for (var/obj/machinery/interdictor/IX in orange(7, T))
+					if (IX.expend_interdict(100))
+						owner.changeStatus("radiation", (A.irradiated * 10 * mult) SECONDS)
+						interdictor_influence = 1
+						break
+				if(!interdictor_influence)
+					owner.changeStatus("radiation", (A.irradiated * 10 * mult) SECONDS)
 
 		if (owner.bioHolder)
 			var/total_stability = owner.bioHolder.genetic_stability
